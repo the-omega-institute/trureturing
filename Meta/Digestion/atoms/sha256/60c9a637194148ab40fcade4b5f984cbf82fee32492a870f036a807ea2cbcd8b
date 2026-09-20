@@ -1,0 +1,90 @@
+**定理 21.4（参数与时间的不同稳定常数）。** 现在把真实参数和该次真实读数限制在已认证范围
+
+$$
+0<\ell\le r\le R<\infty,\qquad
+0<u_{\min}\le u\le u_{\max}<1.
+\tag{21.109}
+$$
+
+这些是有效的参数/取得约束，不能仅因把观测值截入区间就宣称真实值满足它们。假设同一误差事件上有
+
+$$
+|\widehat u-u|\le\delta_u,\qquad
+|\widehat v-v|\le\delta_v.
+\tag{21.110}
+$$
+
+先取
+
+$$
+\widetilde u=\operatorname{proj}_{[u_{\min},u_{\max}]}(\widehat u),
+\qquad
+J(\widetilde u)=[G_R(\widetilde u),G_\ell(\widetilde u)],
+$$
+
+$$
+\widetilde v=\operatorname{proj}_{J(\widetilde u)}(\widehat v).
+$$
+
+令 $\widehat r\in[\ell,R]$ 满足
+
+$$
+G_{\widehat r}(\widetilde u)=\widetilde v,\qquad
+\widehat t=-\log\widetilde u.
+\tag{21.111}
+$$
+
+存在唯一逆像；$\ell=R$ 时参数本来已知，直接取该值即可。
+
+由(21.106)及 $H$ 单调性，整个矩形上的参数灵敏度下界为
+
+$$
+\boxed{
+m=\frac{H((1+2/R)(-\log u_{\max}))}{(R+2)^2}>0.}
+\tag{21.112}
+$$
+
+它正是在角点 $(R,u_{\max})$ 取得的最小灵敏度。类似地，(21.105)给
+
+$$
+L_u=\frac{1+u_{\max}^{2/R}}2<1,\qquad
+|\partial_uG_r(u)|\le L_u.
+$$
+
+投影不增加 $\widetilde u$ 到真实 $u$ 的距离，因此 $|\widetilde u-u|\le\delta_u$。关键是用 $G_r(\widetilde u)\in J(\widetilde u)$ 作为第二次投影的比较点：
+
+$$
+\begin{aligned}
+|\widetilde v-G_r(\widetilde u)|
+&\le|\widehat v-G_r(\widetilde u)|\\
+&\le\delta_v+|G_r(u)-G_r(\widetilde u)|\\
+&\le\delta_v+L_u\delta_u.
+\end{aligned}
+$$
+
+直接复用恢复几何卷定理19.3的导数下界/差商界，得到
+
+$$
+\boxed{
+|\widehat r-r|
+\le\frac{L_u\delta_u+\delta_v}{m}
+\le\frac{\delta_u+\delta_v}{m}.}
+\tag{21.113}
+$$
+
+参数误差界成立，并可使用这里稍紧的 $L_u<1$。若数值求根仅认证了额外核残差 $\eta$，则(21.113)的分子另加 $\eta$，沿用恢复几何卷定理19.3的误差规则。
+
+时间误差是独立的一项：
+
+$$
+\boxed{
+|\widehat t-t|
+\le\frac{|\widetilde u-u|}{u_{\min}}
+\le\frac{\delta_u}{u_{\min}}.}
+\tag{21.114}
+$$
+
+直接用 $G_r(u)$ 处理参数反演，避免了把时间误差的 $1/u_{\min}$ 因子再无谓地加进(21.113)；但恢复时间本身仍必须承担它。若要报告两项绝对误差之和，可把(21.113)与(21.114)相加。
+
+本结论没有全域统一常数：$u_{\max}\uparrow1$ 时参数灵敏度消失；没有有限 $R$ 时同样失去参数逆稳定。另一方面，(21.112)的 $m$ 和 $L_u$ 都不依赖 $u_{\min}$。保持 $u_{\max}<1$ 与 $[\ell,R]$ 固定而令 $u_{\min}\downarrow0$，不会破坏(21.113)的参数稳定常数；失去统一稳定性的是(21.114)中的内部时间恢复。这两个条件数不能混同。$u=0$ 本身仍是无限经过时间极限，不能称为一次有限时刻可取得的读数。
+

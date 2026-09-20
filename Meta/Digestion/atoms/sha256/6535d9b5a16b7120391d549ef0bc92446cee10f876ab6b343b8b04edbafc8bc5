@@ -1,0 +1,81 @@
+**定义 20.6（有限区间证书链）。**
+
+以下全部区间运算向外包络；有理四则精确执行，平方根、log使用经验证的单调端点包络。对区间J，记J⁻、J⁺为端点，sq(J)为平方函数的区间像。只有分母区间不含零时才做除法。
+
+**第一步：幅度及差分。** 令A=Y₀，要求A⁻>0。取I₀={1}、I_n=Y_n/A（n≥1），并令
+$$
+D_j=(I_j-I_{j+1})\ \cap\ \frac{Y_j-Y_{j+1}}A,
+\qquad j=0,1,2,3.
+\tag{20.163}
+$$
+两种写法都包含真实d_j=(F_j−F_{j+1})/F₀；交集可减轻重复变量造成的过宽外界。I₀必须用精确的1，不能误给F₀/F₀一份独立归一化噪声。
+
+也可给显式的中心误差读数。设\hat f_n=y_n/y₀，\hat f₀=1，\hat d_j=\hat f_j−\hat f_{j+1}，则
+$$
+|f_n-\hat f_n|\le
+\eta_n:=\frac{\epsilon_n+|\hat f_n|\epsilon_0}{A^-}
+\quad(n\ge1),\qquad \eta_0=0,
+\tag{20.164}
+$$
+$$
+|d_j-\hat d_j|\le
+\min\left\{\eta_j+\eta_{j+1},\
+\frac{\epsilon_j+\epsilon_{j+1}+|\hat d_j|\epsilon_0}{A^-}\right\}.
+\tag{20.165}
+$$
+证明是分别展开F_n/F₀−y_n/y₀以及(F_j−F_{j+1})/F₀−(y_j−y_{j+1})/y₀；第二项分子始终是同一对原始读数的误差。上述都是确定性外界，不是新的误差分布。可将(20.165)区间继续与D_j相交。
+
+**第二步：Hankel、递推和根。** 计算
+$$
+\mathcal D=D_0D_2-\operatorname{sq}(D_1),\qquad
+\mathcal S=\frac{D_0D_3-D_1D_2}{\mathcal D},\qquad
+\mathcal P=\frac{D_1D_3-\operatorname{sq}(D_2)}{\mathcal D}.
+\tag{20.166}
+$$
+先要求𝒟⁻>0才做两个除法。然后计算
+$$
+\mathcal B=\operatorname{sq}(\mathcal S)-4\mathcal P,
+\quad G=\sqrt{\mathcal B},\quad
+X=(\mathcal S+G)/2,\quad Z=(\mathcal S-G)/2.
+\tag{20.167}
+$$
+要求𝒝⁻>0、G⁻>0、Z⁻>0、X⁺<1。数值平方根的向外包络下端可能为零，即使𝒝⁻>0也须单独检查G⁻>0；未取得时可提高根包络精度后再检查，不能先用G作分母。于是实际根满足0<z<x<1，且x−z≥G⁻>0。X和Z两个外包区间不相交是更强的充分检查，不是这里必须的条件；实际根差由同一判别式G控制。
+
+**第三步：正权重与共同钟。** 计算
+$$
+U=(D_1-ZD_0)/G,\quad V=(XD_0-D_1)/G,
+\quad U\leftarrow U\cap(1-X)/2.
+\tag{20.168}
+$$
+要求U,V非空且U⁻>0、V⁻>0。取
+$$
+Q_w=(1-Z)/(2V),\qquad
+Q_t=\log Z/\log X,\qquad Q=Q_w\cap Q_t,
+\tag{20.169}
+$$
+要求Q非空且Q⁻>1。这里log X<0，除法合法；Q_t是同一物理钟下两谱率之比。无需额外要求Q_w⁻>1，只须交后的Q⁻>1。
+
+最后输出
+$$
+\boxed{a\in A,\qquad
+c\in C:=-\log X/h,\qquad
+r\in R:=2/(Q-1).}
+\tag{20.170}
+$$
+每个区间都是当前数据及其误差半径的函数。中点可作为分别估计a,c,r的点估计，逐坐标误差不超过对应区间宽度的一半；中点三元组不自动满足共同物理模型。
+
+**可直接复用的线性求解加强。** 为缩小(20.166)，可另取中心矩阵
+$$
+\widehat K=\begin{pmatrix}\hat d_1&-\hat d_0\\\hat d_2&-\hat d_1\end{pmatrix},
+\quad\hat b=(\hat d_2,\hat d_3)^\mathsf T,
+\quad\hat w=\widehat K^{-1}\hat b.
+$$
+若(20.165)给ρ_j，置δ_K=max(ρ₁+ρ₀,ρ₂+ρ₁)、δ_b=max(ρ₂,ρ₃)，并计算b_inv≥||\hat K⁻¹||∞。在b_inv δ_K<1时，`HoKalmanPerturbation.solve_error_le` 的后验线性求解界 直接给
+$$
+\|(S,P)-\hat w\|_\infty\le
+\frac{b_{\rm inv}(\delta_b+\delta_K\|\hat w\|_\infty)}
+{1-b_{\rm inv}\delta_K}.
+\tag{20.171}
+$$
+将这两个区间与𝒮、𝒫相交即可；此处使用所引一般扰动界。中心不可逆或该余量未通过时，只表示这个加强没有证书，不替代(20.166)或推翻真实模型。
+
