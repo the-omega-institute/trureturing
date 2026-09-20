@@ -201,11 +201,11 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
             Forall, Sp, effect, Sp, InMacro, Sp, matrices, Comma, Sp,
             Derivative(hamiltonian, effect), Sp, Eq, Sp,
             F.Id("i"), Sp, Open, Commutator(hamiltonian, effect), Close);
-        Formula commutator = Call(F.Id("ad"), hamiltonian);
         Formula orbitClause = Seq(
             Exists, Sp, time, Sp, InMacro, Sp, RealNumbers(), Comma, Sp,
             effect, Sp, InMacro, Sp, initial, Comma, Sp,
             observable, Sp, Eq, Sp, Orbit(hamiltonian, effect, time));
+        Formula commutator = Call(F.Id("ad"), hamiltonian);
         Formula spanClause = Seq(
             Call(
                 F.Id("span"),
@@ -228,8 +228,7 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
 
     private static Formula ZeroHamiltonianFormula()
     {
-        Formula hamiltonian = F.Id("H"), effect = F.Id("E"), time = F.Id("t");
-        Formula n = F.Id("n");
+        Formula n = F.Id("n"), effect = F.Id("E"), time = F.Id("t");
         return Disp(Seq(
             Forall, Sp, n, Comma, Sp, Call(F.Id("Fintype"), n), Comma, Sp,
             effect, Sp, InMacro, Sp, Matrices(n), Comma, Sp,
