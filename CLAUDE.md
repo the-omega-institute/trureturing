@@ -881,3 +881,5 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
 > **发现尽可能多的真相,把真相连接成网;逻辑只有对错;账,必须平;而美,是幸存下来的形状。**
 >
 > 仓库可以无人值守,诚实不能。账,平——每次构建平一次。
+
+<!-- Integration probe: registered admission planes remain distinct. -->
