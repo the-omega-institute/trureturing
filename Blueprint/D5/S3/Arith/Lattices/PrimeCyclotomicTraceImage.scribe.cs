@@ -23,11 +23,12 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For n>=0 write an integer vector as (x0,x), with x indexed by Fin n, "
-                        + "and put p=2*n+3. The zeroth output is (n+1)*x0-sum(x); "
-                        + "the ith output is p*x(i)-x0-2*sum(x). At a prime p this is "
-                        + "the trace Gram matrix in the basis 1,t1,...,t(n) of the real "
-                        + "p-cyclotomic field. The definition itself makes no primality "
-                        + "assumption and includes the empty lower block n=0."))),
+                        + "and put m=2*n+3. The zeroth output is (n+1)*x0-sum(x); "
+                        + "the ith output is m*x(i)-x0-2*sum(x). At a prime m this is "
+                        + "the trace Gram matrix of the real m-cyclotomic field. "
+                        + "CTG.3 also identifies it with the complete nontrivial p-power "
+                        + "tower when m=p^k, including composite m. The definition "
+                        + "makes no primality assumption and includes n=0."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("prime-cyclotomic-trace-reconstruction"),
@@ -65,12 +66,27 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                             + "2*n+3 proves uniqueness. The reverse implication reads "
                             + "the same difference identity at the reconstructed vector.")),
                     Paragraph(Text(
-                        "The relation to the saturated Fourier-coefficient lattice "
-                            + "is proved in STL.4 of the existing WSS dossier. This "
-                            + "formal arithmetic statement does not construct a golden "
-                            + "ring-class character, prove a Maass-form existence claim, "
-                            + "or decide an unknown WSS prime. The cyclotomic trace "
-                            + "identification is not an additional Lean theorem here."))),
+                        "STL.4 identifies the prime-layer coefficient lattice; CTG.3 "
+                            + "uses the same template at n=(p^k-3)/2 for the full tower. "
+                            + "The product-algebra trace identification and the inter-packet "
+                            + "gluing are ordinary proofs in the existing WSS dossier. "
+                            + "This formal arithmetic theorem does not construct a golden "
+                            + "ring-class character or decide an unknown WSS prime.")),
+                    Paragraph(
+                        Text("Ambient Maass construction and normalization: "),
+                        Ref(LibraryNoteRef.Create("D5/L/tanaka2026maass").Value),
+                        Text(". CTG retains an existing character and proves the full "
+                            + "tower's congruence module Z/p^k. A normalized integral "
+                            + "trace combination attains depth k; no primitive vector in "
+                            + "that same lattice attains k+1. These are ordinary results, "
+                            + "not extra Lean conclusions or an independent WSS witness.")),
+                    Paragraph(
+                        Text("Frontier comparison and the holomorphic weight restriction: "),
+                        Ref(LibraryNoteRef.Create(
+                            "D5/L/fretwellroberts2026eisenstein").Value),
+                        Text(". Its weight-at-least-three existence results are not "
+                            + "used for the weight-zero family. The current formal "
+                            + "statement, formula and proof source are unchanged."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
