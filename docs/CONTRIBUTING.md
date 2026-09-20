@@ -1,10 +1,14 @@
 # Contributing
 
-You can help by making one result easier to understand, reproducing an example,
-finding a counterexample, or improving a tool. English and Chinese contributions
-are welcome. You do not need to write a new proof to make a useful contribution.
+trureturing is a truth-discovery library. Help turn a precise question into a
+result that others can check and reuse: through examples, counterexamples,
+proofs, clearer explanations or useful tools. The current mathematical subjects
+offer concrete places to start.
 
-[Project entrance](../README.md) · [中文入口](#中文入口) ·
+You do not need to write a new proof to make a useful contribution. Public-facing
+documentation defaults to English.
+
+[Project entrance](../README.md) ·
 [Repository rules](../AGENTS.md) · [Working map](../agents/CONTEXT.md) ·
 [Specification](develop/spec/golden-ledger-repo-spec.md)
 
@@ -174,32 +178,23 @@ green local check is not a merged contribution: completion is **MERGED** into
 `dev`. Clean up an isolated worktree only after confirming the merge and a
 clean working tree.
 
-## 中文入口
+The project is licensed under [Apache-2.0](../LICENSE).
 
-欢迎从一次小而具体的贡献开始：读懂并改进一个结果的说明、复现 README 的
-[首个例子](../README.md#first-run)、修复链接或翻译、报告陈述与实现之间的差异。
-不必先写新定理，也可以帮助项目变得更清楚、更可信。
+## Research boundaries
 
-本地工作需要 Git、Make、Bash、elan、钉版 .NET SDK 10.0.103，以及 Python 3.11+。
-按上方 [Your first change](#your-first-change) 的命令 fork、克隆并创建独立
-worktree；从 `upstream/dev` 开始，PR 也提交到 `dev`。普通文档修正检查链接与
-预览，文中命令要亲跑；[验证部分](#check-your-change) 区分定向构建、本地
-preflight 和远端 CI，请如实报告实际运行的范围与退出码。
+The two excerpts below preserve the original Chinese wording of boundary
+statements in [GICT v3.6](develop/theory/GICT.md), a research input. They describe
+that theory's limits and falsifiability criteria; quoting them does not establish
+a formal result.
 
-修改前阅读[仓库规则](../AGENTS.md)与[工作地图](../agents/CONTEXT.md)。
-生成文档改其 `*.scribe.cs` 源文件，冻结证明与机器维护的账目不得手改。
-数学贡献先查已有库，复用已有结论；输入散文、实验读数和形式证明各有边界。
-报告问题时给出 commit、源码位置、环境、最小输入、命令、预期与实际结果。
+### Limits on interpretation
 
-项目采用 [Apache-2.0](../LICENSE)。下面保留理论原文的两段边界声明；
-它们是引用，不是新增的数学结论。
-
-## 防命理总墙
+Source: GICT v3.6, Appendix C.
 
 > 本理论:不证明黎曼假设;不主张宇宙以 φ 运行;不为黄金比例神秘主义背书;φ 在物理中处处"被选出"(不动点/临界点)而非"被写入"(公理);GCS 为黄金格原生坐标,非唯一非独尊。**凡"本质就是"四字,须过 27.94 之分家检验;凡统一感,须交 27.82 之收据。**
 
-## 可证伪七条
+### Falsifiability
+
+Source: GICT v3.6, Volume IX.
 
 > **可证伪七条**(原样):三轴无压缩则移出样品;depth 必有限分辨率;R 不得过宽;唯一性不得误认(银比平行);复平面不得当底层;固定集不得全称分形;**任何失败若被释为"未看懂"、任何巧合若被释为"深层结构",理论即死。**
-
-以上两段分别忠实转录自 GICT v3.6 附录 C 与第 IX 卷。
