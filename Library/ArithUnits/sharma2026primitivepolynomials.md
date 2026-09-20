@@ -79,8 +79,11 @@ The D5 module contains the mathematical source and refutation, with no inline
 information registration or judge imports. Registration belongs to the
 separate `Reg` package under #5214; this artifact supplies no replacement
 registration. The complete source claim, primitive-lambda witness and universal
-root certificate remain in D5. No frozen identifier or
-`OpenProblemResolutionClaim` is asserted in this pre-Freeze artifact.
+root certificate remain in D5. The existing result Describe now binds
+`D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.result` to
+`Problems/sharma-primitive-polynomial-conjecture-4-2` through a typed
+`OpenProblemResolutionClaim` with kind `Refuted`, following canonical Freeze.
+The generated Blueprint projects that binding.
 
 The candidate was numerically discovered before
 [preregistration #8851](https://github.com/the-omega-institute/trureturing/issues/8851),

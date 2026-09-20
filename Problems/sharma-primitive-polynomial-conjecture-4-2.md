@@ -92,7 +92,9 @@ The utility header requests the typed closed-negation relation from
 `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.fullClaim` to
 `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.result` under
 `certified-instance` / `refutes`. The native producer owns its source-bound
-evidence. No frozen identity or typed open-problem settlement is asserted here.
+evidence. Following canonical Freeze, the existing result Describe binds this
+problem slug to that theorem through `OpenProblemResolutionClaim(Refuted)`;
+the generated Blueprint projects the typed binding.
 
 ## Falsifier
 
@@ -107,7 +109,8 @@ primes or lambdas would not address the universal claim.
 `open-problem-resolution`, subject to final review. The computational
 content is a `certified-instance` with the utility basis `refutes`: the
 conclusion is the negation of the full universal conjecture. The current
-dossier carries no frozen settlement and makes no merge or KPI claim.
+dossier's resolution is derived from that typed result binding. Final review
+and delivery remain pending; no merge or KPI claim is made.
 
 ## ASSUMED-UNVERIFIED
 
@@ -119,5 +122,5 @@ No inspected resolution was found in the checked arXiv, OpenAlex and Crossref
 scope; Semantic Scholar was rate-limited. The repository ownership scan
 covered issue/PR bodies but not every comment. These limits do not establish
 worldwide absence of prior resolution, and no priority claim is made.
-Independent review, Freeze-last settlement and the later typed
-`OpenProblemResolutionClaim` remain caller-owned obligations.
+Final independent review, required CI and ordinary merge remain caller-owned
+obligations.

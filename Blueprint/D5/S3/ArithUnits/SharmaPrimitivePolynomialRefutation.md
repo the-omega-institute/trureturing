@@ -186,6 +186,10 @@ $$\neg fullClaim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sharma-primitive-polynomial-conjecture-4-2` (refuted) by `D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sharma-primitive-polynomial-conjecture-4-2","declaration_gid":"D5/S3/ArithUnits/SharmaPrimitivePolynomialRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Avnish K. Sharma (2026). *Primitive Polynomials of the Form g(x)+λ over Finite Fields: Non-Existence Results and Conjectures*. URL: <https://arxiv.org/abs/2608.07262v2>.

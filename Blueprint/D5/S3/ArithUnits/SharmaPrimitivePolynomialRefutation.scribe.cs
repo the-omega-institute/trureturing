@@ -97,17 +97,21 @@ internal sealed class SharmaPrimitivePolynomialRefutationDocument : IScribeDocum
                     + "the full universal conjecture is negated unconditionally. The certificate is for "
                     + "the source multiplicative-generator/minimal-polynomial meaning, not a polynomial "
                     + "coefficient-content surrogate.",
-                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sharma-primitive-polynomial-conjecture-4-2"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string name, string title, Formula? formula, string prose,
-        AssessedProvenance provenance, DescribeRole role) => Describe.Lean(
+        AssessedProvenance provenance, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("sharma-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name),
         H(title),
         formula is null ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(Disp(formula)),
         provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula SourcePrimitiveFormula()
     {
