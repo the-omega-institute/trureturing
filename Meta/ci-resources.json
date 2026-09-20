@@ -72,6 +72,20 @@
       ]
     },
     {
+      "id": "current-scribe",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "SL-006",
+        "SL-023",
+        "SL-025"
+      ],
+      "steps": [
+        "check-current"
+      ]
+    },
+    {
       "id": "delta",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
@@ -95,6 +109,14 @@
     },
     {
       "id": "delta-metadata",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "delta-scribe",
       "projects": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj"
       ],
