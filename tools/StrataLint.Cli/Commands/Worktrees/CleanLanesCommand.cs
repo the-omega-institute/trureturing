@@ -7,33 +7,13 @@ namespace StrataLint.Cli;
 
 internal sealed record CleanLanesOptions(string Base, bool Force, bool LanesOnly);
 
-internal sealed record PullRequestInfo(
-    string HeadBranch,
-    string HeadOid,
-    string State,
-    string? MergeCommitOid);
-
-internal sealed record PullRequestProbeOutcome(
-    bool Success,
-    IReadOnlyList<PullRequestInfo> PullRequests);
-
-internal sealed record LaneProcessProbeOutcome(bool Success, bool InUse);
-
-internal delegate PullRequestProbeOutcome PullRequestProbe(
-    string repositoryRoot,
-    string branch,
-    IWorktreeProcessRunner runner);
-
-internal delegate LaneProcessProbeOutcome LaneProcessProbe(
-    string canonicalLanePath,
-    IWorktreeProcessRunner runner);
-
 internal static partial class CleanLanesCommand
 {
     internal const string Usage =
         "USAGE: StrataLint clean-lanes [--base REV] [--force] [--lanes-only]";
 
-    private const long MinimumReclaimableLaneAgeSeconds = 24L * 60 * 60; // #2769 safety grace bound.
+    private const long MinimumReclaimableLaneAgeSeconds = 24L * 60 * 60;
+    private const long MinimumBehindCommits = 300;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
@@ -53,31 +33,12 @@ internal static partial class CleanLanesCommand
         IReadOnlyList<string> arguments,
         IWorktreeProcessRunner runner,
         IReadOnlyList<string> tempRoots,
-        DateTimeOffset now) =>
-        Run(
-            repositoryRoot,
-            arguments,
-            runner,
-            tempRoots,
-            now,
-            ProbePullRequests,
-            ProbeLaneProcesses);
-
-    internal static CommandResult Run(
-        string repositoryRoot,
-        IReadOnlyList<string> arguments,
-        IWorktreeProcessRunner runner,
-        IReadOnlyList<string> tempRoots,
-        DateTimeOffset now,
-        PullRequestProbe pullRequestProbe,
-        LaneProcessProbe laneProcessProbe)
+        DateTimeOffset now)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(tempRoots);
-        ArgumentNullException.ThrowIfNull(pullRequestProbe);
-        ArgumentNullException.ThrowIfNull(laneProcessProbe);
         try
         {
             var root = Path.GetFullPath(repositoryRoot);
@@ -95,14 +56,13 @@ internal static partial class CleanLanesCommand
             InspectRegisteredLanes(
                 root,
                 currentGitDirectory,
+                commonGitDirectory,
                 baseCommit,
                 options.Force,
                 inventory,
                 events,
                 runner,
-                now,
-                pullRequestProbe,
-                laneProcessProbe);
+                now);
             if (!options.LanesOnly)
             {
                 // 建树时的回收够不到这两类:判官树的判据(未注册 / 无 .git 的快照)
@@ -212,22 +172,27 @@ internal static partial class CleanLanesCommand
     private static void InspectRegisteredLanes(
         string repositoryRoot,
         string currentGitDirectory,
+        string commonGitDirectory,
         string baseCommit,
         bool force,
         IReadOnlyList<RegisteredWorktree> inventory,
         ICollection<CleanLaneEvent> events,
         IWorktreeProcessRunner runner,
-        DateTimeOffset now,
-        PullRequestProbe pullRequestProbe,
-        LaneProcessProbe laneProcessProbe)
+        DateTimeOffset now)
     {
-        foreach (var item in inventory.Where(static item =>
-            item.Branch is not null && WorktreeCommand.IsManagedBranch(item.Branch)))
+        var remainingPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
+        foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
             if (string.Equals(item.Path, repositoryRoot, StringComparison.Ordinal)
                 || string.Equals(item.GitDirectory, currentGitDirectory, StringComparison.Ordinal))
             {
                 events.Add(BlockedWorktree(item, "current"));
+                continue;
+            }
+
+            if (string.Equals(item.GitDirectory, commonGitDirectory, StringComparison.Ordinal))
+            {
+                events.Add(BlockedWorktree(item, "main_worktree"));
                 continue;
             }
 
@@ -255,166 +220,35 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            ProcessOutput status;
-            try
+            if (remainingPaths.Any(path => IsNestedWorktree(item.Path, path)))
             {
-                status = RunGit(
-                    item.Path,
-                    ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
-                    runner,
-                    "could not inspect worktree status");
-            }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            {
-                events.Add(BlockedWorktree(item, "unreadable"));
+                events.Add(BlockedWorktree(item, "nested_worktree"));
                 continue;
             }
 
-            if (status.StandardOutput.Length != 0)
+            var reason = ReclaimBlockReason(item, baseCommit, runner, now);
+            if (reason is not null)
             {
-                events.Add(BlockedWorktree(item, "dirty"));
+                events.Add(BlockedWorktree(item, reason));
                 continue;
-            }
-
-            var creation = ReadCreationRecord(item.GitDirectory);
-            if (!creation.Valid)
-            {
-                events.Add(BlockedWorktree(item, "creation_unknown"));
-                continue;
-            }
-
-            // The age term trusts the local Git clock and the worktree's own creation reflog.
-            var creationSeconds = creation.Timestamp.ToUnixTimeSeconds();
-            var nowSeconds = now.ToUnixTimeSeconds();
-            if (creationSeconds > nowSeconds)
-            {
-                events.Add(BlockedWorktree(item, "age_unverifiable"));
-                continue;
-            }
-
-            if (nowSeconds - creationSeconds < MinimumReclaimableLaneAgeSeconds)
-            {
-                events.Add(BlockedWorktree(item, "too_young"));
-                continue;
-            }
-
-            if (string.Equals(item.Head, creation.InitialHead, StringComparison.Ordinal))
-            {
-                events.Add(BlockedWorktree(item, "never_worked"));
-                continue;
-            }
-
-            {
-                PullRequestProbeOutcome probe;
-                try
-                {
-                    probe = pullRequestProbe(repositoryRoot, item.Branch!, runner);
-                }
-                catch (Exception exception) when (exception is not OutOfMemoryException)
-                {
-                    events.Add(BlockedWorktree(item, "pr_unknown"));
-                    continue;
-                }
-
-                if (!probe.Success || probe.PullRequests is null)
-                {
-                    events.Add(BlockedWorktree(item, "pr_unknown"));
-                    continue;
-                }
-
-                var authorized = false;
-                var malformed = false;
-                try
-                {
-                    foreach (var pullRequest in probe.PullRequests)
-                    {
-                        if (!PullRequestIsWellFormed(pullRequest))
-                        {
-                            malformed = true;
-                            break;
-                        }
-
-                        if (pullRequest.State == "MERGED"
-                            && string.Equals(
-                                pullRequest.HeadBranch,
-                                item.Branch,
-                                StringComparison.Ordinal)
-                            && string.Equals(
-                                pullRequest.HeadOid,
-                                item.Head,
-                                StringComparison.Ordinal)
-                            && IsAncestor(
-                                repositoryRoot,
-                                pullRequest.MergeCommitOid!,
-                                baseCommit,
-                                runner))
-                        {
-                            authorized = true;
-                            break;
-                        }
-                    }
-                }
-                catch (Exception exception) when (exception is not OutOfMemoryException)
-                {
-                    events.Add(BlockedWorktree(item, "pr_unknown"));
-                    continue;
-                }
-
-                if (malformed)
-                {
-                    events.Add(BlockedWorktree(item, "pr_unknown"));
-                    continue;
-                }
-
-                if (!authorized)
-                {
-                    events.Add(BlockedWorktree(item, "pr_not_merged"));
-                    continue;
-                }
-            }
-
-            {
-                LaneProcessProbeOutcome probe;
-                try
-                {
-                    probe = laneProcessProbe(CanonicalPath(item.Path), runner);
-                }
-                catch (Exception exception) when (exception is not OutOfMemoryException)
-                {
-                    events.Add(BlockedWorktree(item, "in_use_unknown"));
-                    continue;
-                }
-
-                if (!probe.Success)
-                {
-                    events.Add(BlockedWorktree(item, "in_use_unknown"));
-                    continue;
-                }
-
-                if (probe.InUse)
-                {
-                    events.Add(BlockedWorktree(item, "in_use"));
-                    continue;
-                }
             }
 
             if (force)
             {
-                events.Add(RemovalEvent(item, RemoveLane(
-                    repositoryRoot,
-                    item,
-                    runner,
-                    laneProcessProbe)));
+                var removal = RemoveLane(repositoryRoot, item, baseCommit, runner, now);
+                events.Add(RemovalEvent(item, removal));
+                if (removal.Outcome == LaneRemovalOutcome.Removed) remainingPaths.Remove(item.Path);
                 continue;
             }
 
             events.Add(new CleanLaneEvent(
-                "merged_worktree",
+                "stale_worktree",
                 item.Path,
                 item.Branch,
                 item.Head,
                 "would_remove",
-                "merged_clean"));
+                "stale_behind"));
+            remainingPaths.Remove(item.Path);
         }
     }
 
@@ -479,6 +313,7 @@ internal static partial class CleanLanesCommand
         ICollection<CleanLaneEvent> events,
         IWorktreeProcessRunner runner)
     {
+        var registeredPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
         var registeredByGitDirectory = inventory
             .Where(static item => item.GitDirectory is not null)
             .ToDictionary(
@@ -487,6 +322,7 @@ internal static partial class CleanLanesCommand
                 StringComparer.Ordinal);
         foreach (var path in tempRoots
             .Where(Directory.Exists)
+            .Select(ResolveDirectoryPath)
             .SelectMany(static root => Directory.EnumerateDirectories(
                 root,
                 "trureturing-*",
@@ -495,6 +331,13 @@ internal static partial class CleanLanesCommand
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal))
         {
+            if (registeredPaths.Contains(path)) continue;
+            if (registeredPaths.Any(registered => IsNestedWorktree(path, registered)))
+            {
+                events.Add(new CleanLaneEvent("temp_judge", path, null, null,
+                    "skipped", "nested_worktree"));
+                continue;
+            }
             if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != 0)
             {
                 events.Add(new CleanLaneEvent(
@@ -509,36 +352,9 @@ internal static partial class CleanLanesCommand
 
             var scannedGitDirectory = TryResolveGitDirectory(path, runner);
             if (scannedGitDirectory is not null
-                && registeredByGitDirectory.TryGetValue(scannedGitDirectory, out var registered))
+                && registeredByGitDirectory.TryGetValue(scannedGitDirectory, out _))
             {
-                if (registered.Branch is not null)
-                {
-                    events.Add(new CleanLaneEvent(
-                        "temp_judge",
-                        path,
-                        registered.Branch,
-                        registered.Head,
-                        "skipped",
-                        "attached_branch"));
-                    continue;
-                }
-
-                if (force)
-                {
-                    RunGit(
-                        repositoryRoot,
-                        ["worktree", "remove", "--force", path],
-                        runner,
-                        "could not remove detached judge worktree");
-                }
-
-                events.Add(new CleanLaneEvent(
-                    "temp_judge",
-                    path,
-                    null,
-                    registered.Head,
-                    force ? "removed" : "would_remove",
-                    "detached_same_repository"));
+                // Every registered worktree was already evaluated using the inactivity policy.
                 continue;
             }
 
@@ -681,6 +497,18 @@ internal static partial class CleanLanesCommand
         return result.ExitCode == 0
             ? Decode(result.StandardOutput).Trim()
             : null;
+    }
+
+    private static bool IsNestedWorktree(string parent, string candidate) =>
+        candidate.StartsWith(Path.TrimEndingDirectorySeparator(parent) + Path.DirectorySeparatorChar,
+            StringComparison.Ordinal);
+
+    private static string ResolveDirectoryPath(string path)
+    {
+        var directory = new DirectoryInfo(path);
+        if (directory.Parent is null) return directory.FullName;
+        var physical = new DirectoryInfo(Path.Combine(ResolveDirectoryPath(directory.Parent.FullName), directory.Name));
+        return physical.ResolveLinkTarget(returnFinalTarget: true)?.FullName ?? physical.FullName;
     }
 
     private static bool HasGitMarker(string path) =>
