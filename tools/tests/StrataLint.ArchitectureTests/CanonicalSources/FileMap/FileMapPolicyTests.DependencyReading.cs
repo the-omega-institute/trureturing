@@ -56,9 +56,15 @@ public sealed partial class FileMapPolicyTests
             return files[path];
         });
 
-        Assert.Equal(FileMapPolicy.InspectDependencies(manifest, files), findings);
-        Assert.Equal(files.Keys.Order(StringComparer.Ordinal), reads.Order(StringComparer.Ordinal));
-        Assert.Equal(2, findings.Count);
+        FileMapFinding[] expected = [
+            new("FILEMAP-DATA-GENERATED-DEPENDENCY", "Data/input.toml",
+                "machine-readable data references generated artifact Generated/output.json"),
+            new("FILEMAP-LEAN-GENERATED-IMPORT", "Main.lean",
+                "Lean imports generated artifact Generated/Proof.lean"),
+        ];
+        Assert.Equal(expected, findings);
+        Assert.Equal(expected, FileMapPolicy.InspectDependencies(manifest, files));
+        Assert.Equal(new[] { "Data/input.toml", "Generated/Proof.lean", "Generated/output.json", "Main.lean" }, reads);
     }
 
     [Fact]
