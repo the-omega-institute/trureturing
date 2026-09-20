@@ -4657,3 +4657,571 @@ $$
 **命题 22.4（有限变换与旧记录的同一纤维）。** 保留完整已获记录 $Q$，任何仅依赖该记录的 Fourier、Laplace 或有限向量变换 $FQ$ 均在每条 $Q$ 纤维上恒定；可逆有限 DFT 与原向量具有相同核。证明。直接应用[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)定理2.2的实际像因子化原则和上下文几何卷定理13.4的记录保留原则；等式经函数保持，可逆性给反向。上下文几何卷命题22.2的两个来源／钟对象有相同完整标记曲线，却有不同物理最小维数及物理 Laplace 值，因此处理该曲线的变换不能恢复这两个目标。增加定理22.1的认证参照或定理22.3的同钟关系，会改变完整记录；届时须重新检验纤维。噪声情况下，参照通道、目标通道、全部零点和既有记录必须使用同一份来源／钟及原始残差可行集，不能把分别相容的边缘值拼成实际共同模型。$\square$
 
 ## 22.99 追加锚
+
+## 23. 实际短时读数、校准与非线性响应的逆
+
+**约定 23.1（瞬时系数与实际取得）。** 固定同一准备、方程、黏性、Fourier 相位、增益和内部钟，隐藏参数记为 $\beta$。本节先处理实际标量响应的充分条件，第24节由有限维二次方程供应这些条件，第25节直接由不截断的周期 Navier–Stokes 方程供应它们。瞬时恒等式的既有来源是 [LowModeReversalWitness](../../../D5/S3/FluidDynamics/Fourier/LowModeReversalWitness.lean) 的 `transverse_acceleration` 与 [AugmentedReadoutRecovery](../../../D5/S3/FluidDynamics/Fourier/AugmentedReadoutRecovery.lean) 的 `low_observation_visible`、`augmented_readout_im`：准备的可见系数为 $\alpha/2$，横向加速度虚部为 $-\alpha\beta/4$。它们本身不提供一次实际延时实验。
+
+这里的 Fourier 端口是全空间加权积分；必须有可执行的取得协议，不能仅凭“接口”一词把它解释成物理空间边界的局部测量。一次实验的完整观察者保留全部已获档案、来源标识、取得历史和当前原始读数。下面的参数候选约束可以与全部旧档案约束取共同实现交集；丢开旧约束得到的仅是外包候选集。精确共同实现的定义与部分操作见[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义25.5及第27节。任何差分和拟合输出都是原始记录的派生值，不替代原始记录。
+
+**定理 23.2（绝对余项与校准误差）。** 设 $I\subseteq[-B_0,B_0]$ 非空，$B_0\ge0$，$0<a\le|\alpha|$，$\tau>0$。对每个 $\beta\in I$，同一实际演化给出 $y_\beta\in C^2([0,\tau];\mathbb R)$，满足
+$$
+y_\beta(0)=0,\qquad y_\beta'(0)=-\alpha\beta/4,
+\qquad |y_\beta''(s)|\le M\quad(0\le s\le\tau),
+\tag{23.101}
+$$
+其中 $M\ge0$ 与参数无关。若在已知内部时刻 $0<t\le\tau$ 实际取得的增量 $\Delta y_{\rm obs}$ 满足 $|\Delta y_{\rm obs}-(y_\beta(t)-y_\beta(0))|\le\eta$，则
+$$
+\widetilde\beta=-\frac{4\Delta y_{\rm obs}}{\alpha t},\qquad
+|\widetilde\beta-\beta|\le\frac{2Mt}{a}+\frac{4\eta}{at}.
+\tag{23.102}
+$$
+若分母使用 $\widehat\alpha$，且 $|\widehat\alpha-\alpha|\le\delta<a$，相应估计满足
+$$
+|\widetilde\beta-\beta|
+\le\frac{2Mt+4\eta/t+B_0\delta}{a-\delta}.
+\tag{23.103}
+$$
+
+证明。微积分基本定理两次积分给
+$$
+y_\beta(t)=-\frac{\alpha\beta t}{4}
+ +\int_0^t(t-s)y_\beta''(s)\,ds,
+\qquad
+\left|\int_0^t(t-s)y_\beta''(s)\,ds\right|\le Mt^2/2.
+$$
+代入估计器并取三角界即得（23.102）。使用 $\widehat\alpha$ 时，将差写为 $((\alpha-\widehat\alpha)\beta-4\rho/t-4e/t)/\widehat\alpha$，其中 $|\rho|\le Mt^2/2$、$|e|\le\eta$，再用 $|\widehat\alpha|\ge a-\delta$ 得（23.103）。这只是在固定真实模型下对标量估计器的校准误差界，不证明未知 $\alpha$ 下的联合参数／时间识别。
+
+两个端点误差各至多 $\epsilon$ 时，取 $\eta=2\epsilon$；若准备已精确认证初始横向系数为零而只读末端，可取 $\eta=\epsilon$。这些三角界在同一个联合误差事件上成立，无需独立噪声。初始可见系数实部误差 $\epsilon_\alpha$ 给 $\delta=2\epsilon_\alpha$，仍须验证正分母裕量。$\square$
+
+**命题 23.3（该误差上界的时间选择与分辨率）。** 当 $M,\eta>0$ 时，（23.102）右侧在 $(0,\tau]$ 上的最小点为
+$$
+t_{\rm opt}=\min\{\tau,\sqrt{2\eta/M}\}.
+\tag{23.104}
+$$
+若根号项不超过 $\tau$，最小值为 $4\sqrt{2M\eta}/a$。$M=0<\eta$ 时取 $t=\tau$；$\eta=0<M$ 时下确界零由 $t\downarrow0$ 逼近但不在正时间达到；两者均零时每个允许时间的界均为零。
+
+证明。对 $2Mt/a+4\eta/(at)$ 求导得到 $2M/a-4\eta/(at^2)$，其符号在根号点由负变正；退化情形直接由单项单调性得出。这是所列上界的优化，不是实验费用或最小最大风险的最优性。
+
+对两参数，同一积分表达及绝对界还给
+$$
+|y_\beta(t)-y_{\beta'}(t)|
+\ge\frac{at}{4}|\beta-\beta'|-Mt^2.
+\tag{23.105}
+$$
+故指定间隔 $|\beta-\beta'|\ge d>0$ 时，$Mt\le ad/8$ 保证间距至少 $adt/8$；末端误差各至多 $\epsilon$ 且 $adt/8>2\epsilon$ 时，两种读数区间不交。这个时间选择依赖 $d$，不蕴含一个固定时间对整个连续参数族单射。$\square$
+
+**定理 23.4（差分余项与真实响应的精确逆）。** 在定理23.2的初始值条件下，进一步假设
+$$
+|y_\beta''(s)-y_{\beta'}''(s)|
+\le L_{\rm resp}|\beta-\beta'|
+\quad(\beta,\beta'\in I,\ 0\le s\le\tau).
+\tag{23.106}
+$$
+则对每个正时间 $t\le\tau$，
+$$
+|y_\beta(t)-y_{\beta'}(t)|
+\ge t\left(\frac a4-\frac{L_{\rm resp}t}{2}\right)|\beta-\beta'|.
+\tag{23.107}
+$$
+特别，$L_{\rm resp}t\le a/4$ 时实际响应在 $I$ 上单射，像上的逆满足
+$$
+|\beta-\beta'|\le\frac8{at}|y_\beta(t)-y_{\beta'}(t)|.
+\tag{23.108}
+$$
+若真实参数和候选对同一个末端读数的残差均至多 $\epsilon$，二者参数差至多 $16\epsilon/(at)$。
+
+证明。对两条响应之差使用定理23.2中的积分恒等式，余项差至多 $L_{\rm resp}t^2|\beta-\beta'|/2$。反三角不等式给（23.107），小时间条件使括号至少 $a/8$。残差结论再用一次三角不等式。这里的精确逆是实际方程响应映射在实际像上的逆，不是截断估计器（23.102）；其计算、认证和取得费用仍需单独承担。对外包集成立的直径上界也对旧档案共同实现交集成立，但交集非空及拟合见证不能从成对残差单独推出。$\square$
+
+**命题 23.5（绝对界不能替代差分界）。** 任给 $M,t_*,\alpha>0$，取 $0<d\le2Mt_*/\alpha$，在 $\beta\in[0,d]$ 上定义
+$$
+y_\beta(t)=-\frac{\alpha\beta t}{4}
+ +\frac{\alpha\beta t^2}{4t_*}.
+\tag{23.109}
+$$
+它们有（23.101）的初始斜率及 $|y_\beta''|=\alpha\beta/(2t_*)\le M$，而所有 $y_\beta(t_*)=0$。逐项求导与代入便是证明。此反例反驳绝对二阶界对指定时刻单射性的充分性，不是 Navier–Stokes 反例。Taylor 积分余项、Gronwall 比较与 Picard–Lindelöf 局部适定性是本节及下一节使用的标准分析工具；钉版 Mathlib 的相应来源为 `Analysis/Calculus/Taylor.lean`、`Analysis/ODE/Gronwall.lean`、`Analysis/ODE/PicardLindelof.lean`。$\square$
+
+## 24. 二次有限维演化与共轭对称 Galerkin 供应
+
+**定理 24.1（共同半径、变分与标量响应常数）。** 设 $E$ 为有限维实赋范空间，$L:E\to E$ 连续线性，$B:E\times E\to E$ 连续双线性，$V(v)=Lv-B(v,v)$。准备为 $v_{\alpha,\beta}(0)=\alpha a_0+\beta b_0$，参数位于紧集，初始范数至多 $R_0<R$。记
+$$
+l=\|L\|,\quad b=\|B\|,\quad
+F_0=lR+bR^2,\quad D_0=l+2bR.
+\tag{24.101}
+$$
+若 $F_0>0$，取 $0<\tau\le(R-R_0)/(2F_0)$。全部初态在 $[0,\tau]$ 上有唯一光滑解，范数至多 $(R+R_0)/2$。任意连续实线性读出 $\ell$ 的实际响应 $y=\ell(v)$ 满足
+$$
+|y''|\le M_\ell:=\|\ell\|D_0F_0,
+\qquad
+|y_\beta''-y_{\beta'}''|
+\le C_\ell|\beta-\beta'|,
+\tag{24.102}
+$$
+其中比较使用同一 $\alpha$，且
+$$
+C_\ell=\|\ell\|(2bF_0+D_0^2)e^{D_0\tau}\|b_0\|.
+\tag{24.103}
+$$
+在参数开邻域的解存在处，$w_\beta=\partial_\beta v_{\alpha,\beta}$ 满足真实变分方程
+$$
+\partial_t w_\beta=DV(v_{\alpha,\beta})w_\beta,\quad w_\beta(0)=b_0,
+\quad \|w_\beta(t)\|\le e^{D_0t}\|b_0\|,
+\quad |\partial_\beta y''|\le C_\ell.
+\tag{24.104}
+$$
+若 $F_0=0$，球内向量场为零，解为常值，以上响应界均为零，时间可任取。
+
+证明。$DV(v)h=Lh-B(h,v)-B(v,h)$，在半径 $R$ 球中有 $\|V(v)\|\le F_0$、$\|DV(v)\|\le D_0$。局部存在唯一性来自局部 Lipschitz 性。在第一次离开该球前，位移至多 $F_0t\le(R-R_0)/2$，故实际轨迹留在严格较小的紧球；若最大寿命不超过 $\tau$，有限维延拓定理将其继续，矛盾。这也在紧初态族周围留下正的半径裕量，稍扩初态范围仍有共同解。
+
+链式法则给 $y''=g_\ell(v)$，其中 $g_\ell(v)=\ell(DV(v)V(v))$。在球内，
+$$
+\|DV(v)-DV(w)\|\le2b\|v-w\|,
+$$
+$$
+|g_\ell(v)-g_\ell(w)|
+\le\|\ell\|(2bF_0+D_0^2)\|v-w\|.
+\tag{24.105}
+$$
+后一式由将差展开为 $(DV(v)-DV(w))V(v)+DV(w)(V(v)-V(w))$ 得到。Gronwall 给 $\|v_{\alpha,\beta}(t)-v_{\alpha,\beta'}(t)\|\le e^{D_0t}\|b_0\||\beta-\beta'|$，遂得（24.102）。
+
+变分方程可由实际差商核验。令 $q_h=(v_{\alpha,\beta+h}-v_{\alpha,\beta})/h$，两个积分方程相减、使用二次展开得
+$$
+q_h(t)=b_0+\int_0^t DV(v_{\alpha,\beta}(s))q_h(s)\,ds
+ -h\int_0^t B(q_h(s),q_h(s))\,ds,
+$$
+前述差估计使 $q_h$ 一致有界；减去线性变分方程并用 Gronwall，余项范数至多常数乘 $|h|$，因此 $q_h$ 一致收敛到变分解。线性积分方程及同样的差估计给该解随参数连续。最后
+$$
+Dg_\ell(v)h=\ell\bigl(D^2V(v)[h,V(v)]+DV(v)DV(v)h\bigr)
+$$
+的范数至多 $\|\ell\|(2bF_0+D_0^2)\|h\|$，和变分界合成得（24.104）。多项式向量场的高阶局部正则性或逐次微分给所需光滑性。$\square$
+
+**推论 24.2（两个有限维端口的混合界）。** 若 $x=\ell_x(v)$、$y=\ell_y(v)$，$\alpha\ne0$ 已知，置 $r=1-2x/\alpha$、$z=-4y/\alpha$。沿用定理24.1的常数，则
+$$
+|r_{tt}|\le\frac{2M_{\ell_x}}{|\alpha|},\quad
+|r_{\beta tt}|\le\frac{2C_{\ell_x}}{|\alpha|},\quad
+|z_{tt}|\le\frac{4M_{\ell_y}}{|\alpha|},\quad
+|z_{\beta tt}|\le\frac{4C_{\ell_y}}{|\alpha|}.
+\tag{24.106}
+$$
+证明。对已证明的读出导数乘相应固定比例。若另外核实初始进度与隐藏斜率，这些就是上下文几何卷定义25.1所需的四个常数；不另假设准备平面不变。$\square$
+
+**定义 24.3（实对称截断空间）。** 固定整数 $Q\ge2$、黏性 $\nu\ge0$，令
+$$
+S_Q=\{k\in\mathbb Z^2:0<|k|^2\le Q\},\quad
+\widetilde k=(k_1,k_2,0),\quad
+E_Q=\{(v_k)_{k\in S_Q}:v_{-k}=\overline{v_k},\ \widetilde k\cdot v_k=0\}.
+$$
+这里 $v_k\in\mathbb C^3$，$E_Q$ 视为实向量空间，范数为 $\|v\|_1=\sum_{k\in S_Q}|v_k|_2$。合成场 $\sum_kv_ke^{i(k_1X_1+k_2X_2)}$ 在 $2\pi$ 周期空间中实值、均值零、无散度，且与第三坐标无关。定义
+$$
+P_kw=w-\widetilde k\frac{\widetilde k\cdot w}{|k|^2},\quad
+(L_Qv)_k=-\nu|k|^2v_k,
+$$
+$$
+B_Q(v,w)_k=iP_k\sum_{\substack{p,q\in S_Q\\p+q=k}}
+ (\widetilde q\cdot v_p)w_q,\qquad \dot v=L_Qv-B_Q(v,v).
+\tag{24.107}
+$$
+所有复向量范数为 Hermitian Euclidean 范数，点乘频率表示实频率对复向量的线性收缩。
+
+**命题 24.4（真实截断方程与准备识别）。** 上述 $L_Q,B_Q$ 在 $E_Q$ 内封闭，且是实线性、实双线性映射。它们给出实际 Fourier Galerkin 方程
+$$
+\partial_tu=\nu\Delta u-\Pi_Q\mathbb P((u\cdot\nabla)u).
+\tag{24.108}
+$$
+取 $e=(1,0)$、$q=(-1,1)$、$h=(0,1)$，在 $\pm e$ 上置 $(a_0)_k=(0,1/2,0)$，在 $\pm q$ 上置 $(b_0)_k=(1/2,1/2,0)$，其余为零。则准备 $v(0)=\alpha a_0+\beta b_0$ 合成为
+$$
+u_0(X)=\alpha(0,\cos X_1,0)
+ +\beta(\cos(X_2-X_1),\cos(X_2-X_1),0).
+\tag{24.109}
+$$
+对 $x(t)=\operatorname{Re}(v_e(t))_2$、$y(t)=\operatorname{Im}(v_h(t))_1$，有
+$$
+x(0)=\alpha/2,\quad x'(0)=-\nu\alpha/2,
+\qquad y(0)=0,\quad y'(0)=-\alpha\beta/4.
+\tag{24.110}
+$$
+
+证明。$P_k$ 为范数一的实正交投影，给横向性。将卷积索引换成 $(-p,-q)$，来自 $q$ 的负号和 $i$ 的共轭负号相合，得到 $B_Q(v,w)_{-k}=\overline{B_Q(v,w)_k}$；零输出因 $q=-p$ 而 $q\cdot v_p=0$，确实为零。设 $A_k=i\sum_{p+q=k}(\widetilde q\cdot v_p)v_q$，压力系数 $\widehat p_k=i\widetilde k\cdot A_k/|k|^2$ 满足 $-A_k-i\widetilde k\widehat p_k=-P_kA_k$，且有共轭对称性。这证明含压力的保留模方程恰为（24.108）。未保留输出被 $\Pi_Q$ 丢弃，故它是指定的截断演化。
+
+准备合成直接复用 [ReversalWaveSynthesis](../../../D5/S3/FluidDynamics/Fourier/ReversalWaveSynthesis.lean) 的 `synthesis_eq_realVelocity`，其 `realVelocity_contDiff`、`realVelocity_periodic`、`realVelocity_divergence` 供应初始实场的光滑、周期、无散度性质；这些是初态性质，不是实际 PDE 演化。$Q\ge2$ 保留全部输入及 $\pm h$。没有非零初始频率对相加为 $e$，所以该处初始非线性为零。相加为 $h$ 的有序对仅 $(e,q),(q,e)$，乘 $i$ 前的和为 $(\alpha\beta/4,\alpha\beta/2,0)$；$P_h$ 去掉第二分量，负非线性给 $-i\alpha\beta/4$。这正是约定23.1引用的既有系数恒等式在实际 ODE 初始导数中的应用。$\square$
+
+**定理 24.5（截止依赖的可用常数）。** 固定 $0<a\le A_\alpha$、$B_0\ge0$，准备范围为 $a\le|\alpha|\le A_\alpha$、$|\beta|\le B_0$。记
+$$
+\rho=A_\alpha+\sqrt2B_0,\quad \lambda_Q=\nu Q,\quad b_Q=\sqrt Q,
+\quad R_0=\rho,\quad R=2\rho,
+$$
+$$
+F_Q=2\lambda_Q\rho+4b_Q\rho^2,\quad
+D_Q=\lambda_Q+4b_Q\rho,\quad
+\tau_Q=(4\lambda_Q+8b_Q\rho)^{-1}.
+\tag{24.111}
+$$
+所有准备在 $[0,\tau_Q]$ 上有唯一光滑 Galerkin 解，$\|v(t)\|_1\le3\rho/2$。横向端口可用
+$$
+M_Q=\rho(\lambda_Q+4b_Q\rho)(\lambda_Q+2b_Q\rho),
+$$
+$$
+C_Q^{\rm resp}=\sqrt{e/2}
+ (\lambda_Q^2+12\lambda_Qb_Q\rho+24b_Q^2\rho^2).
+\tag{24.112}
+$$
+即 $|y''|\le M_Q$、$|y_\beta''-y_{\beta'}''|\le C_Q^{\rm resp}|\beta-\beta'|$。因此 $0<t\le\min\{\tau_Q,a/(4C_Q^{\rm resp})\}$ 时有（23.108）的真实响应逆，任意 $0<t\le\tau_Q$ 时有（23.102）及（23.103）的估计界。
+
+证明。逐有序对求和，$\|P_k\|=1$ 和 $|\widetilde q\cdot v_p|\le\sqrt Q|v_p|_2$ 给
+$$
+\|L_Q\|\le\lambda_Q,\quad
+\|B_Q(v,w)\|_1\le\sqrt Q\|v\|_1\|w\|_1.
+$$
+不把 $\|L_Q\|$ 一律写成 $\nu Q$，因为 $Q$ 未必为两平方和。共轭成对给 $\|\ell_y\|=1/2$：上界由 $\|v\|_1\ge2|v_h|_2$，等号由 $v_h=i(1,0,0)/2$、$v_{-h}=\overline{v_h}$ 达到。可见端口同理范数 $1/2$。准备支持不交，故
+$$
+\|a_0\|_1=1,\quad\|b_0\|_1=\sqrt2,\quad
+\|\alpha a_0+\beta b_0\|_1=|\alpha|+\sqrt2|\beta|.
+$$
+$\tau_Q=(R-R_0)/(2F_Q)$ 且 $F_Q>0$，可应用定理24.1。其 $M_\ell=D_QF_Q/2=M_Q$。又 $D_Q\tau_Q\le1/2$，而 $2b_QF_Q+D_Q^2=\lambda_Q^2+12\lambda_Qb_Q\rho+24b_Q^2\rho^2$，代入（24.103）即得所列 $C_Q^{\rm resp}$。最后使用已核实的初始斜率与定理23.4。$\square$
+
+**注记 24.6（闭包来源与截断边界）。** $Q=2$ 时有八个非零保留频率，$\lambda_Q=2\nu$、$b_Q=\sqrt2$，故 $\tau_Q=(8\nu+8\sqrt2\rho)^{-1}$，其余常数直接代入（24.112）。这些常数随截止恶化，不供应 $Q\to\infty$ 的极限估计。
+
+既有 [QuadraticObservationClosure](../../../D5/S3/Observer/Reversal/QuadraticObservationClosure.lean) 的 `quadratic_closure_iff` 给出隐藏线性、隐藏自作用及混合作用三项消失的闭包条件；[AdvectionClosureInstance](../../../D5/S3/FluidDynamics/Fourier/AdvectionClosureInstance.lean) 的 `mixed_witness`、`no_exact_closure`、`family_acceleration` 给出五槽消费者。其额外模 $h$ 占据索引0，原有四模随后排列，且没有 $-h$，故不是本节的实共轭空间。它们说明瞬时低模未闭合，不能据此假定有限 Fourier 平面在 PDE 下不变。事实上 $\alpha\beta\ne0$ 时初始横向导数已经离开准备平面。第25节的全 PDE 结论另作直接证明，既不替换这些有限模型，也不使用未证的截止统一性。[LowCutoffObservationFibres](../../../D5/S3/FluidDynamics/Fourier/LowCutoffObservationFibres.lean) 的瞬时纤维与稳定性源码仅作相关源命题，不在此将它称为已冻结结果。
+
+## 25. 全模周期 PDE 的共同解与实际延时恢复
+
+**定义 25.1（环面、方程与准备范围）。** 本节统一采用
+$$
+\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2,\quad
+ d\mu=(2\pi)^{-2}\,dX_1dX_2,\quad
+\widehat v(k)=\int v(X)e^{-ik\cdot X}\,d\mu,
+$$
+$$
+\|v\|_{H^2}^2=\sum_{k\in\mathbb Z^2}(1+|k|^2)^2|\widehat v(k)|^2,
+\quad \widehat{\partial_jv}(k)=ik_j\widehat v(k),
+\quad \widehat{\Delta v}(k)=-|k|^2\widehat v(k).
+\tag{25.101}
+$$
+向量系数用 Hermitian Euclidean 范数，张量系数用 Frobenius 范数。$H^2_\sigma$ 是实值、均值零、无散度的二维向量场闭子空间；在 Fourier 侧即 $\widehat v(-k)=\overline{\widehat v(k)}$、$\widehat v(0)=0$、$k\cdot\widehat v(k)=0$。固定 $\nu>0$、$A_\alpha>0$、$B_0\ge0$，考虑
+$$
+u_t+(u\cdot\nabla)u=\nu\Delta u-\nabla p,
+\quad \nabla\cdot u=0,\quad\int p\,d\mu=0,
+$$
+$$
+u_{\alpha,\beta}(0)=\alpha a_0+\beta b_0,
+\quad a_0=(0,\cos X_1),\quad
+b_0=(\cos(X_2-X_1),\cos(X_2-X_1)),
+\tag{25.102}
+$$
+其中 $|\alpha|\le A_\alpha$、$|\beta|\le B_0$。记
+$$
+R=2\sqrt{2A_\alpha^2+9B_0^2},\quad
+\tau=\frac{\nu}{16384R^2},\quad
+M_F=\nu R+4R^2,\quad D_F=\nu+8R,
+$$
+$$
+J=\nu^2+10\nu R+12R^2,\qquad M=(\nu+R)M_F.
+\tag{25.103}
+$$
+第24节引用的 `ReversalWaveSynthesis` 精确识别此准备加零第三分量后的原场；本节在该准备上构造真正保留全部频率的演化。
+
+**引理 25.2（显式乘积与热估计）。** 对上述归一化空间，
+$$
+\sum_k|\widehat v(k)|\le4\|v\|_{H^2},\quad
+\|v\|_\infty\le4\|v\|_{H^2},\quad
+\|v\otimes w\|_{H^2}\le16\|v\|_{H^2}\|w\|_{H^2}.
+\tag{25.104}
+$$
+令 $\mathbb P$ 的符号为 $P_k=I-k\otimes k/|k|^2$（$k\ne0$）、$P_0=I$，$E(t)=e^{\nu t\Delta}$。对 $t>0$，
+$$
+\|E(t)v\|_{H^2}\le\|v\|_{H^2},\qquad
+\|E(t)\mathbb P\operatorname{div}Q\|_{H^2}
+\le(\nu t)^{-1/2}\|Q\|_{H^2},
+\tag{25.105}
+$$
+其中 $(v\otimes w)_{ij}=v_iw_j$、$(\operatorname{div}Q)_i=\sum_j\partial_jQ_{ij}$。
+
+证明。置 $W(k)=1+|k|^2$。方形壳 $\max(|k_1|,|k_2|)=n$ 有 $8n$ 点，故
+$$
+\sum_k W(k)^{-2}\le1+8\sum_{n\ge1}\frac{n}{(1+n^2)^2}
+\le1+8\sum_{n\ge1}n^{-3}\le13<16.
+$$
+最后使用 $\sum_{n\ge1}n^{-3}\le1+\int_1^\infty s^{-3}\,ds=3/2$。Cauchy–Schwarz 得 Fourier 绝对和界及一致收敛，从而给 $L^\infty$ 界。$W(p+q)\le2(W(p)+W(q))$，卷积三角界与离散 Young 不等式给
+$$
+\|v\otimes w\|_{H^2}
+\le2\bigl(\|W\widehat v\|_{\ell^2}\|\widehat w\|_{\ell^1}
+ +\|\widehat v\|_{\ell^1}\|W\widehat w\|_{\ell^2}\bigr),
+$$
+继而得常数十六。$|v_p\otimes w_q|_{\rm F}=|v_p|_2|w_q|_2$，所以没有遗漏分量计数。先在三角多项式证明，再由稠密性延拓。$P_k$ 为正交收缩，张量与 $k$ 收缩的算子范数至多 $|k|$，且
+$$
+\sup_{r\ge0}re^{-\nu tr^2}=(2e\nu t)^{-1/2}\le(\nu t)^{-1/2},
+$$
+逐模相乘求和即得（25.105）。$\square$
+
+**定理 25.3（不截断的共同温和解）。** 对定义25.1的全部准备，（25.102）有唯一的 $C([0,\tau];H^2_\sigma)$ 温和解，满足 $\sup_t\|u(t)\|_{H^2}\le R$。同一 $\alpha$ 的两条解满足
+$$
+\sup_{0\le t\le\tau}\|u_{\alpha,\beta}(t)-u_{\alpha,\beta'}(t)\|_{H^2}
+\le6|\beta-\beta'|.
+\tag{25.106}
+$$
+
+证明。在 $X_T=C([0,T];H^2_\sigma)$ 上定义真正的双线性积分
+$$
+\mathcal B(u,v)(t)=\int_0^t E(t-s)\mathbb P\operatorname{div}(u(s)\otimes v(s))\,ds.
+\tag{25.107}
+$$
+这是 $H^2$ 中的 Bochner 积分。引理25.2和 $\int_0^t(t-s)^{-1/2}ds=2\sqrt t$ 给
+$$
+\|\mathcal B(u,v)\|_{X_T}\le32\sqrt{T/\nu}\,\|u\|_{X_T}\|v\|_{X_T}.
+\tag{25.108}
+$$
+距积分上端 $\epsilon$ 内的部分一致为 $O(\sqrt\epsilon)$，余下部分用热半群强连续性和控制收敛，证明所得函数在时间上连续，包括零点。实系数乘子、乘积共轭性、$P_k$ 及散度零模共同保证积分位于 $X_T$。
+
+准备的两组 Fourier 支持不交，故 $\|u_0\|_{H^2}^2=2\alpha^2+9\beta^2\le R^2/4$，且 $\|b_0\|_{H^2}=3$。在 $T=\tau$ 置 $\lambda=32\sqrt{\tau/\nu}=1/(4R)$。映射
+$$
+\Phi_{u_0}(u)=E(\cdot)u_0-\mathcal B(u,u)
+\tag{25.109}
+$$
+将 $X_\tau$ 的闭 $R$ 球映入闭 $3R/4$ 球，且
+$$
+\|\Phi_{u_0}(u)-\Phi_{u_0}(v)\|_{X_\tau}
+\le\lambda(\|u\|_{X_\tau}+\|v\|_{X_\tau})\|u-v\|_{X_\tau}
+\le\tfrac12\|u-v\|_{X_\tau}.
+$$
+Banach 不动点定理给解。任意两条 $C_tH^2$ 温和解在共同紧区间的范数均有限；将 Duhamel 公式在短子区间重启，使（25.108）的差系数小于一，逐段得相等，故唯一性不限于最初的 $R$ 球。
+
+两份初态的解相减，吸收 $1/2$ 差项，给 $\|u-v\|_{X_\tau}\le2\|u_0-v_0\|_{H^2}$。同一 $\alpha$ 下初态差范数为 $3|\beta-\beta'|$，证明（25.106）。本论证没有预设参数可微，也没有取有限截止极限。$\square$
+
+**定理 25.4（实际时间导数、压力与光滑延拓）。** 定理25.3的解属于 $C^1([0,\tau];L^2)$，在零点使用右导数，且
+$$
+u_t=F(u),\quad
+F(u)=\nu\Delta u-\mathbb P((u\cdot\nabla)u):H^2_\sigma\to L^2_\sigma.
+\tag{25.110}
+$$
+在半径 $R$ 球中有
+$$
+\|F(u)\|_2\le M_F,\qquad
+\|F(u)-F(v)\|_2\le D_F\|u-v\|_{H^2}.
+\tag{25.111}
+$$
+零均值压力使（25.102）在 $L^2$ 中成立；该解实际上在闭区间 $[0,\tau]$ 上光滑。
+
+证明。$\|\nabla u\|_2,\|\Delta u\|_2\le\|u\|_{H^2}$，与（25.104）合用得第一界。将对流差写成 $((u-v)\cdot\nabla)u+(v\cdot\nabla)(u-v)$ 给第二界及 $F$ 连续性。因此 $f(t)=F(u(t))$ 连续取值于 $L^2$。对每个单独 Fourier 模，（25.109）是有连续强迫项的常微分方程变常数公式，给
+$$
+\widehat u(t,k)=\widehat u_0(k)+\int_0^t\widehat f(s,k)\,ds.
+$$
+Fourier 系数是 $L^2$ 上有界线性泛函，可以穿过 Bochner 积分；完备 Fourier 基遂给 $u(t)=u_0+\int_0^tF(u(s))ds$ 这一 $L^2$ 等式。Banach 值微积分基本定理证明（25.110）。这里没有对无限级数逐项作二次时间微分，也没有假定 $F$ 映入 $H^2$。
+
+取
+$$
+\widehat p(0)=0,\qquad
+\widehat p(k)=-\frac{\sum_{i,j}k_ik_j\widehat{u_iu_j}(k)}{|k|^2}\quad(k\ne0).
+\tag{25.112}
+$$
+乘积估计保证该实周期压力有意义；其梯度为 $-(I-\mathbb P)\operatorname{div}(u\otimes u)$。又因无散度，$\operatorname{div}(u\otimes u)=(u\cdot\nabla)u$，从而投影方程恰还原为原方程。零空间均值去除了压力的任意时间函数。
+
+光滑性使用 Tao, *254A, Notes 1: Local well-posedness of the Navier–Stokes equations*（2018-09-16）[原文](https://terrytao.wordpress.com/2018/09/16/254a-notes-1-local-well-posedness-of-the-navier-stokes-equations/)的 Corollary 40 及 Proposition 39：光滑周期无散度初态有唯一最大光滑解，有限最大寿命迫使速度 $L^\infty$ 范数无界。其局部光滑解满足（25.109），故由已证 $C_tH^2$ 唯一性与本解一致。如果该寿命不超过 $\tau$，（25.104）及共同半径将给全程 $\|u(t)\|_\infty\le4R$，矛盾；故光滑解存在到 $\tau$ 并超过它。
+
+该原文使用单位环面。令 $c=2\pi$，正确的同时间换元为 $v(t,z)=u(t,cz)/c$、$q(t,z)=p(t,cz)/c^2$，满足
+$$
+v_t+(v\cdot\nabla_z)v=(\nu/c^2)\Delta_zv-\nabla_zq.
+\tag{25.113}
+$$
+时间导数、对流与压力梯度各为原式的 $1/c$ 倍，$\Delta_zv=c\Delta_Xu$，故黏性须变为 $\nu/c^2$。此可逆换元保留寿命与有界性。原文 Theorem 37 的温和解类还要求 $L^2_tH^{s+1}_x$；这里所用 $C_tH^2$ 唯一性已直接证明，不将不同函数类混同。原文 Exercise 43 的定性依赖也不替代（25.106）的明确常数。$\square$
+
+**引理 25.5（两个端口的共同二次泛函）。** 对任意实 $\phi\in L^\infty(\mathbb T^2)$、$\|\phi\|_\infty\le1$，在实 Banach 空间 $L^2(\mathbb T^2;\mathbb R^2)$ 上定义
+$$
+Q_\phi(u)=\int u_1u_2\phi\,d\mu.
+$$
+它为 $C^2$ 连续二次泛函，且
+$$
+DQ_\phi(u)h=\int(h_1u_2+u_1h_2)\phi\,d\mu,
+\quad D^2Q_\phi(h,k)=\int(h_1k_2+k_1h_2)\phi\,d\mu,
+$$
+$$
+|Q_\phi(u)|\le\tfrac12\|u\|_2^2,\quad
+|DQ_\phi(u)h|\le\|u\|_2\|h\|_2,\quad
+|D^2Q_\phi(h,k)|\le\|h\|_2\|k\|_2.
+\tag{25.114}
+$$
+特别，固定符号的读出
+$$
+\ell_x(u)=\operatorname{Re}\widehat u_2(1,0)=\int u_2\cos X_1\,d\mu,
+\quad
+\ell_y(u)=\operatorname{Im}\widehat u_1(0,1)=-\int u_1\sin X_2\,d\mu
+\tag{25.115}
+$$
+范数均至多一，实际响应 $x=\ell_x(u)$、$y=\ell_y(u)$ 满足
+$$
+x'=-\nu x-Q_{\sin X_1}(u),\qquad
+y'=-\nu y-Q_{\cos X_2}(u).
+\tag{25.116}
+$$
+
+证明。坐标交换是 $\mathbb R^2$ 的等距映射，故逐点 $|h_1u_2+h_2u_1|\le|h||u|$，积分 Cauchy–Schwarz 给所有导数界。恒等式 $Q_\phi(u+h)-Q_\phi(u)-DQ_\phi(u)h=Q_\phi(h)$ 给 Fréchet 可微性，导数差仍是上述连续双线性式，给 $C^2$ 性及二阶导数。线性端口界由 Cauchy–Schwarz。
+
+在频率 $(1,0)$，Leray 留下第二分量；在 $(0,1)$，留下第一分量。对流写成散度，对 $x$ 端口有 $-\int\partial_1(u_1u_2)\cos X_1=-\int u_1u_2\sin X_1$，其另一散度项积分为零。对 $y$ 端口的负正弦，有 $\int\partial_2(u_1u_2)\sin X_2=-\int u_1u_2\cos X_2$，另一项亦为零。黏性在两频率均为 $-\nu$，得（25.116）；这些等式包括实际场的全部相互作用。$\square$
+
+**定理 25.6（标量二阶响应与已知时刻识别）。** 对任一配对 $(\ell,\phi)=(\ell_x,\sin X_1)$ 或 $(\ell_y,\cos X_2)$，令
+$$
+G_\phi(u)=-\nu\ell(F(u))-DQ_\phi(u)F(u).
+\tag{25.117}
+$$
+实际端口 $a(t)=\ell(u(t))$ 属于 $C^2([0,\tau])$ 且 $a''=G_\phi(u)$。在半径 $R$ 球中，
+$$
+|G_\phi(u)|\le M,\qquad
+|G_\phi(u)-G_\phi(v)|\le J\|u-v\|_{H^2}.
+\tag{25.118}
+$$
+从而两个端口均满足 $|a''|\le M$ 及 $|a_\beta''-a_{\beta'}''|\le6J|\beta-\beta'|$。若 $0<a\le|\alpha|\le A_\alpha$ 已知且固定，则横向响应在每个
+$$
+0<t\le T_{\rm obs}:=\min\{\tau,a/(24J)\}
+\tag{25.119}
+$$
+上对 $\beta\in[-B_0,B_0]$ 单射，逆 Lipschitz 常数至多 $8/(at)$。
+
+证明。定理25.4的 $C^1_tL^2$ 性与引理25.5的 $L^2$ 链式法则使（25.116）可以再微分，给（25.117）。右端连续至零，不需要 $u_{tt}\in L^2$。绝对界为 $(\nu+R)M_F$。对差的三项展开给
+$$
+|G_\phi(u)-G_\phi(v)|
+\le\bigl(\nu D_F+M_F+RD_F\bigr)\|u-v\|_{H^2}
+=J\|u-v\|_{H^2}.
+$$
+其中第二项用 $|(DQ_\phi(u)-DQ_\phi(v))F(u)|\le\|u-v\|_2 M_F$，第三项用 $\|v\|_2\|F(u)-F(v)\|_2$。与（25.106）合成即得 $6J$。
+
+准备的初始 Fourier 系数及相位与命题24.4完全相同；此处（25.110）将既有 `transverse_acceleration` 恒等式识别为实际 PDE 导数，因而 $y(0)=0$、$y'(0)=-\alpha\beta/4$，可见初值为 $\alpha/2$。定理23.4取 $L_{\rm resp}=6J$ 得所列单射和常数。$B_0>0$ 时映射严格单调，方向与 $\alpha$ 符号相反；$B_0=0$ 是单点参数集。
+
+同一末端读数的真实参数及相容候选残差各至多 $\epsilon$，参数差至多 $16\epsilon/(at)$；任意 $0<t\le\tau$ 的截断估计器则按（23.102）使用这里的 $M$。精确取得初始可见系数还可确定 $\alpha$，但含噪 $\alpha$ 的标量界（23.103）不能冒充未知 $\alpha$ 的联合逆定理。实验所取是延时系数，不必测时间导数；求逆计算仍是另一义务。$\square$
+
+**命题 25.7（退化、二阶初始值及单端口干扰参数）。** 当 $\alpha=0$ 时，完整无外力解为
+$$
+u_\beta(X,t)=\beta e^{-2\nu t}(\cos(X_2-X_1),\cos(X_2-X_1)),\qquad p=0.
+\tag{25.120}
+$$
+其整个 $|k|^2\le1$ 截止历史恒零。对一般准备，则有精确初始恒等式
+$$
+y_{\beta,\nu}''(0)=\nu\alpha\beta,\quad
+ y_{\beta,\nu}(t)=-\alpha\beta t/4+\nu\alpha\beta t^2/2+o(t^2).
+\tag{25.121}
+$$
+当 $B_0>0$、$\alpha\ne0$ 时，只取一个已知正时刻的横向标量，若黏性未知，存在不同 $\beta$、不同正黏性的精确碰撞；若黏性固定但取样内部时刻未知，亦有附近不同参数／时刻的精确碰撞。
+
+证明。（25.120）中 $(\partial_1+\partial_2)\cos(X_2-X_1)=0$，故对流为零；Laplacian 给 $-2$ 倍，直接满足方程。频率仅 $\pm(-1,1)$，故低截止完全不可见。非零可见准备可以避开此退化，但准备合法性、能量、同源性和费用须已声明。
+
+令 $Q=Q_{\cos X_2}$。直接积分或既有系数身份给 $Q(\alpha a_0+\beta b_0)=\alpha\beta/4$。初始两波在 $X\mapsto-X$ 下为偶函数，对流为奇函数，偶 Leray 乘子保留奇性，所以 $DQ(u_0)$ 作用于非线性加速度的积分为零。黏性方向是 $\dot\alpha=-\nu\alpha$、$\dot\beta=-2\nu\beta$，故 $DQ(u_0)F(u_0)=-3\nu\alpha\beta/4$。将其代入 $y''=-\nu y'-DQ(u)F(u)$ 给（25.121）。这只计算真实 PDE 的初始导数，不延伸为不变平面。
+
+选非零内点 $\beta_0\in(-B_0,B_0)$ 和不同正黏性 $\nu_1,\nu_2$。两条固定黏性定理在充分小共同 $t>0$ 上适用，且（25.121）给输出差 $(\nu_1-\nu_2)\alpha\beta_0t^2/2+o(t^2)\ne0$。取 $d>0$ 使 $[\beta_0-d,\beta_0+d]$ 在参数内点区间。在黏性 $\nu_2$ 下，两个端点相对 $\beta_0$ 的输出差符号相反，绝对值至少 $atd/8$；上述 $O(t^2)$ 位移严格较小。连续性和严格单调性因此给唯一 $\beta_2(t)\ne\beta_0$，使 $y_{\beta_2(t),\nu_2}(t)=y_{\beta_0,\nu_1}(t)$，且（23.108）给 $|\beta_2(t)-\beta_0|=O(t)$。这证明精确同时间碰撞，不需要黏性可微性。
+
+固定黏性时，$y_{\beta_0}'(0)\ne0$ 使其在充分小时间邻域严格改变。固定其中 $t_0>0$，在 $t_0$ 处取上述两个参数端点，它们的输出严格夹住 $y_{\beta_0}(t_0)$；时间连续性使附近 $t'\ne t_0$ 仍夹住同一值，而 $y_{\beta_0}(t')\ne y_{\beta_0}(t_0)$。参数介值定理给不同的附近参数补偿时间改变，产生同值。两种反例均针对单端口协议，不排除已知黏性下的同时双端口识别。$\square$
+
+**注记 25.8（实际 PDE 与适用域）。** 将速度加零第三分量、令速度及压力独立于第三空间坐标，得到 $2\pi$ 周期三维方程的平面嵌入；归一化三维体积下，第三频率为零的系数恰与本节相同。这不供应一般三维初态的结论，更不供应下一节另行引用的受迫三维奇异解。这里的全模构造、导数识别和参数恢复是普通分析证明，不将原有系数 Lean 源码冒充 PDE 形式核验。不主张任意初态可观测、任意干预闭合、全域传感器数最优，亦不从场名或钟名推出物理时间起源。有限模型留下的全 PDE 运送缺口，在本节明确准备和范数内由直接证明履行；其不变子空间及截止统一极限仍未被假定。
+
+## 26. 有界读数、完整档案几何与无界任务的稳定性边界
+
+**引理 26.1（全有界像中的任意大任务差）。** 设 $X\ne\varnothing$，$q:X\to Z$、$h:X\to Y$，其中 $Z,Y$ 是度量空间。若 $q(X)$ 全有界、$h(X)$ 无界，则任意 $\delta,A>0$ 都有 $x,x'\in X$ 满足
+$$
+d_Z(q(x),q(x'))<\delta,\qquad d_Y(h(x),h(x'))>A.
+\tag{26.101}
+$$
+
+证明。以有限个半径 $\delta/3$ 开球覆盖 $q(X)$，删去空原像。若每个原像的任务像有界，选各像一点，与其有限半径及有限个中心间距离合并，会给有限并 $h(X)$ 一个共同有限界，矛盾。因此某个原像的任务像无界；在其中取任务距离大于 $A$ 的一对。读数在同一球中，距离小于 $2\delta/3$。这说明每个正分辨率内的任务差上确界为无穷，不保证严格相同读数，因而不能由此跳到非单射性。$\square$
+
+**定理 26.2（统一连续恢复与全坐标噪声）。** 在引理26.1下，任意有限 $C\ge0$ 都不存在统一连续的 $R:q(X)\to Y$ 满足 $d_Y(R(q(x)),h(x))\le C$ 对全部 $x$ 成立。若进一步 $Z$ 为实或复赋范空间，对全部坐标允许 $z=q(x)+e$、$\|e\|\le\eta$，其中 $\eta>0$，则任何定义在这些合法含噪输出上的恢复器（不要求连续）都有
+$$
+\sup_{x\in X}\sup_{\|e\|\le\eta}
+ d_Y(R(q(x)+e),h(x))=+\infty.
+\tag{26.102}
+$$
+
+证明。统一连续性在目标误差一处给某个 $\delta>0$，引理26.1选取任务差大于 $2C+1$、读数差小于 $\delta$ 的一对，三角不等式却给任务差小于 $C+1+C$，矛盾。第二项对任意 $A>0$，取读数差小于 $2\eta$、任务差大于 $2A$ 的一对。共同中点 $z=(q(x)+q(x'))/2$ 对二者都是合法含噪输出；$R(z)$ 至少距一项目标大于 $A$。让 $A$ 任意即得结论。$\square$
+
+**约定 26.3（精确旁路与同一完整输入）。** 上述噪声结论要求所有用到的读数坐标都服从声明的噪声几何；它不要求也不使用随机独立性。若另给精确旁路 $s(x)$，恢复器输入为 $(s(x),q(x)+e)$，中点证明必须另找到满足 $s(x)=s(x')$ 的一对。引理26.1不供应这一点。精确时间、来源身份、档案长度、外力标签均可能成为这种旁路；对一条完全已知轨迹，精确时间甚至允许直接查询目标而忽略传感器。
+
+有界时间戳若加入普通乘积度量的读数向量，像仍全有界，所以统一连续性障碍仍适用；要继续使用（26.102），则也允许时间坐标受所声明噪声。两种量词不能混用。非统一的精确逆并未被排除，例如 $q(t)=t$、$h(t)=1/(1-t)$、$0\le t<1$ 的精确逆逐点连续。也不能将任意新增档案 $C$ 丢掉后，声称有关较小输入 $q$ 的下界已适用于完整观察者。
+
+**假设 26.4（独立的受迫三维存在来源）。** 本节的流体应用仅以 OpenAI, *Finite time blowup for Navier–Stokes*，[166页论文](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf) Theorem 1.1 的下述结论为外部前提：对每个 $\nu>0$，存在 $f\in C_c^\infty(\mathbb R^3\times(0,\infty);\mathbb R^3)$、共同紧空间支撑 $K$ 及 $[0,1)$ 上光滑 $u,p$，满足受迫不可压缩 Navier–Stokes 方程、$u(0)=0$，且
+$$
+E_0:=\sup_{0\le t<1}\|u(t)\|_{L^2(\mathbb R^3)}<\infty,
+\qquad \limsup_{t\uparrow1}\|u(t)\|_{L^\infty(\mathbb R^3)}=+\infty.
+\tag{26.103}
+$$
+每个空间切片的速度支撑于同一 $K$。其竞争解结论对应官方 C，周期化结论对应 D；这是受迫命题，不是无外力爆破。相关明确版本为官方仓库提交 `f9e8bc5b38b6e212696e8a30e3e91517af887bbd` 的 [R3 问题陈述](https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/ProblemStatement.lean)、[Theorem](https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/Theorem.lean)、[ComparatorR3Theorem](https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ComparatorR3Theorem.lean) 与 [ComparatorTheorem](https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ComparatorTheorem.lean)。这些引用不等于本卷独立完成其全依赖内核核验；以下是以（26.103）为前提的普通数学推论。[Clay 2026-09-11 公告](https://www.claymath.org/news/navier-stokes-announcement/)使用 “has apparently been settled” 并保留后续评价程序，不将它写成最终评奖认定。第25节的平面周期解不承担本假设。
+
+**推论 26.5（同一外力轨迹上的有限传感器）。** 在假设26.4下，固定有限个 $\phi_i\in L^2(\mathbb R^3;\mathbb R^3)$，$1\le i\le m$，$m\ge1$，取
+$$
+q_i(t)=\int\phi_i\cdot u(t),\quad
+q(t)=(q_i(t))_{i=1}^m,\quad
+C_{\rm sen}=\max_i\|\phi_i\|_2,
+\quad P(t)=\|u(t)\|_\infty.
+\tag{26.104}
+$$
+则 $q([0,1))$ 在 $\ell^\infty$ 距离下全有界。定理26.2分别适用于任务 $P(t)\in\mathbb R$ 与 $u(t)\in L^\infty(\mathbb R^3;\mathbb R^3)$。特别，没有全视界上统一连续且统一有限加性误差的解码器；无额外精确旁路时，任意固定正幅值的全传感器对抗噪声都使统一最坏误差无穷。
+
+证明。Cauchy–Schwarz 给 $\|q(t)\|_\infty\le C_{\rm sen}E_0$，有限维有界集全有界。$P(t)$ 每个值有限而像无界；$u(0)=0$ 使场任务像也无界。应用定理26.2。这里所有实现为同一 $u,p,f,\nu$ 的不同时间切片，不需要读数在奇异时刻收敛。
+
+在 $\mathbb R^3$ 上平面波不属于 $L^2$，不能直接把任意 Fourier 系数称作全空间 $L^2$ 有界泛函；共同紧支撑允许将固定频率的核换为 $\mathbf1_K\cos(k\cdot x)e_j$ 或 $\mathbf1_K\sin(k\cdot x)e_j$，核范数至多 $|K|^{1/2}$，且在这条轨迹上的读数完全相同，故有限 Fourier 端口适用。点值、导数及范数随尺度无界的核不自动适用。受限参数的短时恢复也不以无界任务为目标，故与第25节没有冲突。$\square$
+
+**命题 26.6（有限视界的必要常数）。** 置 $P_T=\sup_{0\le t\le T}P(t)$，$0\le T<1$。若在该视界存在 Lipschitz 常数 $L_T$、加性误差至多 $C\ge0$ 的标量或完整 $L^\infty$ 场恢复器，且 $C_{\rm sen}>0$，则
+$$
+L_T\ge\frac{(P_T-2C)_+}{C_{\rm sen}E_0}.
+\tag{26.105}
+$$
+特别精确恢复取 $C=0$。这些是存在时的必要界，不宣称每个有限视界都有恢复器。
+
+证明。紧集 $[0,T]\times K$ 上连续性给 $P_T<\infty$。$E_0>0$，否则全部光滑切片为零，违反（26.103）。以零时刻为参照，$q(0)=0$，标量任务及场范数均从零开始；三角界给 $P(t)\le2C+L_T\|q(t)\|_\infty$，取上确界即得公式。$P_T$ 随 $T\uparrow1$ 单调趋无穷，故这样的恢复器族无统一常数。
+
+若 $C_{\rm sen}=0$，则 $q\equiv0$；$P_T>0$ 排除精确恢复，$P_T>2C$ 排除误差 $C$ 的恢复。$P_T=0$ 时常值零恢复器成立。即使 $C_{\rm sen}>0$，实际读数也可能全为零，须先检查观察纤维，不能凭分母非零推出存在性。$\square$
+
+**命题 26.7（读数宽度与覆盖数的必要界）。** 一般标量任务 $h:X\to\mathbb R$ 的像若含长度 $M_*>0$ 的区间，$q(X)\subset\mathbb R^m$ 可由 $N$ 个半径 $\eta>0$ 的闭 $\ell^\infty$ 球覆盖，而全坐标噪声 $\|e\|_\infty\le\eta$ 下有统一误差 $\epsilon>0$ 的恢复器，则
+$$
+M_*\le2\epsilon N.
+\tag{26.106}
+$$
+若 $q(X)\subset[-B,B]^m$，$B\ge0$，则进一步
+$$
+M_*\le2\epsilon(1+2B/\eta)^m.
+\tag{26.107}
+$$
+$B>0$、$M_*>2\epsilon$ 时，必要地 $m\ge\log(M_*/(2\epsilon))/\log(1+2B/\eta)$。
+
+证明。删去不接触实际像的覆盖球，其余中心都是某个实现的合法含噪输出。每个中心 $z_j$ 的 $R(z_j)$ 周围长 $2\epsilon$ 的区间覆盖该球原像的任务值。因此这些区间覆盖长 $M_*$ 的区间；有限并长度至多长度之和，得（26.106）。$B>0$ 时将每个坐标区间均分成 $n=\lceil2B/\eta\rceil$ 份，各格中心到格内点的 sup 距离至多 $\eta/2$，$N\le n^m\le(1+2B/\eta)^m$；$B=0$ 时一个中心足够。取对数给最后一式。
+
+假设26.4中 $P$ 在 $[0,T]$ 连续，因为共同紧支撑及一致连续性给 $|P(t)-P(s)|\le\|u(t)-u(s)\|_\infty\to0$；介值定理及 $P(0)=0$ 使其像含 $[0,P_T]$。故可取 $M_*=P_T$、$B=C_{\rm sen}E_0$。固定传感器数、统一有界增益、固定正噪声与固定有限误差不可能覆盖所有趋近奇异时刻的视界。该必要界不供应算法或最优常数；提高传感器范数会改变 $B$。精确时间旁路须在同一时间纤维重新论证，不能拿不同时间的任务跨度直接代入。$\square$
+
+**命题 26.8（保留全部坐标的衰减权重档案）。** 设 $0\le B<\infty$，$q:X\to[-B,B]^{\mathbb N_{\ge1}}$ 是同一实现的完整可数记录，给定严格正权重 $w_k\to0$，无需单调。距离
+$$
+d_w(b,b')=\sup_{k\ge1}w_k|b_k-b_k'|
+\tag{26.108}
+$$
+使整个序列立方体全有界，且零距离恰为逐坐标相等。因此只要任务像无界，引理26.1及定理26.2的统一连续性障碍仍适用；没有删去任何一条旧记录。
+
+证明。权重收敛故有界，距离有限，正性给分离性。$B=0$ 为单点。$B>0$ 时给定 $\epsilon>0$，选 $N$ 使 $2B\sup_{k>N}w_k<\epsilon/2$，把第 $k\le N$ 个坐标分成 $\max\{1,\lceil4Bw_k/\epsilon\rceil\}$ 个闭区间。每个格内前缀加权差至多 $\epsilon/2$，尾差小于 $\epsilon/2$。有限前缀格中各取一条实际序列，便给有限 $\epsilon$ 网。$\square$
+
+若继续使用噪声结论，所需赋范空间是 $E_w=\{b:\sup_kw_k|b_k|<\infty\}$，噪声为 $\|e\|_w\le\eta$。相距小于 $2\eta$ 的两份档案有共同合法中点，且中点仍在立方体内，故（26.102）成立。这允许第 $k$ 坐标误差达 $\eta/w_k$，不同于无衰减的共同误差保证 $|e_k|\le\eta$。精确档案长度、来源或时间标签仍受约定26.3限制。
+
+**命题 26.9（同一累计档案在 sup 几何中的反例）。** 取 $X=\mathbb N_0$、$h(n)=n$，$q(n)_k=\mathbf1_{\{k\le n\}}$。无衰减 sup 距离下，$n\ne m$ 时 $\|q(n)-q(m)\|_\infty=1$，所以像不全有界；精确恢复 $q(n)\mapsto n$ 统一连续，但没有有限全局 Lipschitz 常数。对固定 $0\le\eta<1/2$，在合法域 $Z_\eta=\bigcup_n\{z\in\ell^\infty:\|z-q(n)\|_\infty\le\eta\}$ 上，
+$$
+R_\eta(z)=\min\{k\ge1:z_k<1/2\}-1
+\tag{26.109}
+$$
+统一连续并以零误差恢复任意 $n$。$\eta\ge1/2$ 时统一最坏误差为无穷。
+
+证明。不同源在第一个不同占用位相差一；半径小于 $1/2$ 的球至多含一个源。输入距离小于一则精确源相同，证明精确恢复统一连续；比较 $q(n),q(0)$ 得 $n\le L$，排除有限 Lipschitz 常数。含噪时前 $n$ 项大于 $1/2$、其后小于 $1/2$，故公式确实找到 $n+1$。不同源的合法噪声球间距至少 $1-2\eta>0$，给统一连续性。$\eta\ge1/2$ 时 $(q(0)+q(n))/2$ 对两源均合法，三角界给至少 $n/2$ 误差。
+
+这些数据可解释为已写入 $n$ 条事件的占用档案：实际记录为 $n$ 个一，下次事件追加一个一；未写地址的零只是当前占用填充，不是未来事件内容。公式（26.109）的顺序查询需到第 $n+1$ 项，没有共同有限查询预算；若容器另公开精确长度，则那是单列的旁路。对完全相同的数据改用（26.108），有 $d_w(q(n),\mathbf1)=\sup_{k>n}w_k\to0$；全一序列仅是环境中的极限点，不是某个有限阶段已经取得的档案。于是相同保留信息可以有全有界或一致离散的误差几何。$\square$
+
+**约定 26.10（流体历史的适用条件）。** 推论26.5仅指定瞬时有限端口。把命题26.8用于该流体还须给出在当前时刻已经合法取得的因果记录映射，证明全部记录的共同界，指定误差拓扑，并纳入旧档案、来源身份、时间旁路与访问规则。完整未来轨迹和未执行样点不能算已获历史。这里未构造新的因果流体档案，因此有限传感器障碍不自动成为完整观察者障碍。任何上游领先背景流的尺度指数也不等于完整修正解的读数渐近；上述结论只用（26.103），没有从领先近似导入全流指数。
+
+**命题 26.11（同一精确时刻、不同外力的独立边界）。** 固定 $\nu>0$，选非零 $v\in C_c^\infty(\mathbb R^3;\mathbb R^3)$、$\operatorname{div}v=0$，例如适当紧支撑光滑向量势的非零旋度。选 $a\in C_c^\infty((0,\infty))$ 在一附近恒为一。对整数 $n\ge1$，定义
+$$
+u_n(t,x)=a(t)n v(nx),\quad p_n=0,\quad
+f_n=\partial_tu_n+(u_n\cdot\nabla)u_n-\nu\Delta u_n.
+\tag{26.110}
+$$
+这些是从静止开始的全局光滑受迫精确解，且
+$$
+\sup_t\|u_n(t)\|_2=\|a\|_\infty n^{-1/2}\|v\|_2\to0,
+\qquad \|u_n(1)\|_\infty=n\|v\|_\infty\to\infty.
+\tag{26.111}
+$$
+固定有限 $L^2$ 传感器在同一时刻一的读数都趋零，任何固定正全坐标噪声使充分大的这些源均能产生零读数；若没有额外可识别 $n$ 的精确外力标签，则峰值统一最坏恢复误差无穷。
+
+证明。光滑性、紧支撑及散度条件由定义保留，方程由 $f_n$ 的定义逐项成立；$a$ 在零附近为零。空间换元 $y=nx$ 给 $L^2$ 缩放 $n\cdot n^{-3/2}=n^{-1/2}$，sup 范数给第二式。Cauchy–Schwarz 使各读数趋零，故固定噪声球含零，而目标无界。精确时间在所有实现上都为一，不提供区别；读数趋零本身并不证明严格相等。
+
+令 $b=(v\cdot\nabla)v-\nu\Delta v$，分部积分给 $\langle b,v\rangle=\nu\|\nabla v\|_2^2>0$，因为紧支撑非零 $v$ 不可能梯度恒零，故 $b\ne0$。$a$ 在一附近常值使 $f_n(1,x)=n^3b(nx)$，于是外力范数无共同上界。这是不同 $f_n$ 的尺度族，每个实例一直光滑；不能替换假设26.4供应的同一外力下一条实际奇异轨迹，也没有无外力爆破结论。$\square$
+
+## 26.99 追加锚

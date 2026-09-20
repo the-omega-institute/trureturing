@@ -1,0 +1,11 @@
+**定义 24.7（单个高位与固定连续协议）。** 对 $k\ge0$，令 $P=p^k$，
+$$
+d_k(x)=\left\lfloor\frac{[q_{k+1}(x)]}{P}\right\rfloor\in\{0,\ldots,p-1\},
+\qquad [q_{k+1}(x)]=bP+r,\quad 0\le b<p,\ 0\le r<P.
+$$
+该传感器只读第 $k$ 位，不是完整低模 $q_k$。固定协议
+$$
+W_{k,N}(x)=(d_k(x),d_k(Tx),\ldots,d_k(T^Nx))
+$$
+使用 $N$ 次演化、$N+1$ 次实际读取，样点恰为 $0,\ldots,N$。
+
