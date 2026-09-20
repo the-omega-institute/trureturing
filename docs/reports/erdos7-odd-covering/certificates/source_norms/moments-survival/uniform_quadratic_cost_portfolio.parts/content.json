@@ -1,0 +1,66 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-uniform-quadratic-cost-portfolio-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/moments-survival/complete_off_face_quadratic_cost.py": "f3f4065f5334810da2af00f0f8d29463024ec53e2d7f32d0ffa5d02cc74436da",
+      "frontier/moments-survival/uniform_factorial_neighborhood.py": "f88deae1854a1fc5af0a40a0a3bbf5918c813959145c5d45dcb8cd91a5c31d3c",
+      "frontier/comparison-bounds/uniform_k_neighborhood_cost.py": "365265347aca1ee5a179df991be2316219f0cb4dbe7a5606a020664c3a56723b",
+      "frontier/comparison-bounds/uniform_mean_cost_portfolio.py": "ac23f83b0b99ff97bbff947826aff3c170aa4279517d3f440550f9277b769238",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
+      "frontier/comparison-bounds/complete_off_face_cost.py": "0d53ac6dc99eac6db322525d94375c498e61cb1c5cacd8776327c70d311306c8",
+      "frontier/cover-geometry/complete_off_face_omitted_tails.py": "33e8c164c64790483ba512c984e8090cf5c44b92bf6ca1cb08a17cb56a93201d",
+      "frontier/moments-survival/complete_off_face_factorial_tail.py": "6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498",
+      "frontier/retained-transport/joint_deep_mean_transport.py": "efbb0825f227e5cc97a0fc24b71acf3e16a35f6b3db662f0e4b392afb8e3d0d0",
+      "frontier/moments-survival/whole_quadratic_same_head.py": "84d7995521352aebd522659d189081eee31dbd200ccb4b1f638e7881d3c145b7",
+      "frontier/endpoint-bounds/broad_weighted_identity_source.py": "bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6",
+      "certificates/source_norms/moments-survival/whole_quadratic_same_head.json": "c0f131821927a5aaa8e6e4f1b9fa7ed972ee3c5481e78ff39234f2653a25704f",
+      "certificates/source_norms/comparison-bounds/whole_cost_mean_stop_loss.json": "cb1decc204e827ab7ca7fd3f199364b44010e219cdc63f69d960a36520d66cf6",
+      "frontier/source-budgets/shared_budget_affine_tail.py": "bdf09dc45ec3f38d7791853c974d1fc637ce3da30cc78c155e643c9d66c60ebd",
+      "frontier/source-budgets/actual_five_slot_source_modulus.py": "4dd89f4919d2150fa27ba405e586f6bfe74f76b6037b934441ca7ff5357afa86"
+    }
+  },
+  "indices": {
+    "kind": "inline",
+    "value": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51
+    ]
+  },
+  "same_head_indices": {
+    "kind": "inline",
+    "value": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      48,
+      49,
+      50,
+      51
+    ]
+  },
+  "radius_results": {
+    "path": "content/004-radius_results.json",
+    "sha256": "d319917945fa418eaae268865c38296fb2060a218e0bd0c9b5aa9f84c2acf8de",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Continuous whole-K-source neighborhood for ten positive quadratic rows, preserving their exact adopted face controllers: nine same-head positive expansions plus original raw81 n2 controller. Independent original tests share one q polygon and shifted residual coordinate. All polynomial and geometric tails retained. All f(1)=0. Does not replace raw81 n1, square complement, remaining linear rows, full signed numerator or survival denominator; no new global K, Lean or unrestricted Erdos7 claim."
+  }
+}

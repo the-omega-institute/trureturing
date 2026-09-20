@@ -7,6 +7,46 @@ namespace StrataLint.EngineeringScope.Tests;
 [Collection("Engineering scope process boundary")]
 public sealed partial class CommonCheckExecutionTests
 {
+    [Theory]
+    [InlineData("none")]
+    [InlineData("source")]
+    [InlineData("build")]
+    [InlineData("trx")]
+    [InlineData("check")]
+    public void CombinedEngineeringSealReadsPostExecutionSourcesAndMaterials(string damage)
+    {
+        using var fixture = new Fixture();
+        var root = fixture.Tree.Root;
+        var build = fixture.Tree.Build();
+        Assert.Equal(0, Program.RunCurrentTests(root, (_, directory) =>
+        {
+            fixture.Tree.WriteTrx(directory, "Passed");
+            return 0;
+        }, TextWriter.Null, build));
+        var checks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, TextWriter.Null);
+        foreach (var id in checks.Ids) checks.Run(id, () => new CheckWork(Fixture.Work(id)));
+        var path = damage switch
+        {
+            "source" => CurrentExecutionContractTests.CandidateFixture.First,
+            "build" => build.Materials[0].Path,
+            "trx" => CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Materials[0].Path,
+            "check" => checks.Completed.First().Materials[0].Path,
+            _ => null,
+        };
+        if (path is not null) File.AppendAllText(Path.Combine(root, path), "changed after execution");
+        StageStep[] steps = [new("tests", 0, 0, "executed", "build/ci/fixture-build.log")];
+        if (damage == "none")
+        {
+            checks.SealEngineering(steps);
+            _ = CommonExecutionEvidence.ValidateEngineering(root);
+        }
+        else
+        {
+            Assert.Throws<InvalidDataException>(() => checks.SealEngineering(steps));
+            Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
+        }
+    }
+
     [Fact]
     public void NativeEngineeringSeedPackReadsCandidateOnce()
     {

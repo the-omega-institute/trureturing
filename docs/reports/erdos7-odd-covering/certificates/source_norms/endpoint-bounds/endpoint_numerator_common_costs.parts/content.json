@@ -1,0 +1,130 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-endpoint-numerator-common-costs-v1"
+  },
+  "source_vertex": {
+    "kind": "inline",
+    "value": 404
+  },
+  "carrier": {
+    "kind": "inline",
+    "value": [
+      0,
+      1
+    ]
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/comparison-bounds/exact_tensor_numerator_reference.py": "3b0e5106da53afc055f72554587feb6e0f40784e0ce849d96343163e4d86e892",
+      "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+      "certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json": "1ffe75268b153784a15a2c2a56176c7b4ba3aea7530343c3e9ba371cf949389a",
+      "frontier/endpoint-bounds/endpoint_square_common_pure3.py": "4d9ff11fde216b78a89cf68b32215366cd77c4fc231d2813552bbf3504c28a09",
+      "certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json": "295db96a2db87d488b1f401ab2357bcdbecf2925bea1732bbce6ca7cabece184",
+      "frontier/moments-survival/exact_survival_comparison_boundary.py": "e84d2f45275a8be328a7bb8bdcb0ef0d6d413148231517d9f457aeb278e7dd79",
+      "certificates/source_norms/moments-survival/exact_survival_comparison_boundary.json": "23fa4a41ee72adafa5df06c2313d2234bde2031f3282cd234593665019b29dda",
+      "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529",
+      "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+      "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+      "certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json": "3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2",
+      "certificates/source_norms/moments-survival/joint_survival_carriers.json": "9ba4c4a91d99e1fac1f224632663675371151f4cc250f18dd5ba4c774ecde89a",
+      "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2",
+      "frontier/comparison-bounds/verify_allocated_seven_thresholds.py": "3703d61f0f10775934f831e54c13b4bbdbb7fb06c5ca3c860cd2b50548fc0e84",
+      "frontier/source-budgets/verify_full_linear_carrier_frontier.py": "f012753c39ea325be5b648c51c0e1e0739420b55d3749d8a99eea3a36f0a961d",
+      "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d"
+    }
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1157/1800"
+  },
+  "square_upper": {
+    "kind": "inline",
+    "value": "469/100"
+  },
+  "universal_cost_constraint_bounds": {
+    "path": "content/007-universal_cost_constraint_bounds.json",
+    "sha256": "c8cfe8b30085c8a87b44e2731e5907fda601be9a0713b45cb2014f993eecdb31",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/008-majorants.json",
+    "sha256": "b5bb0983af29ca2c194fc2396977e1618a7c55c91fb014528b3e68a212e606c4",
+    "kind": "array"
+  },
+  "new_cost_bounds": {
+    "path": "content/009-new_cost_bounds.json",
+    "sha256": "f613f50b3c07d17b1293970e6906367bc6b9535398f5efb8da760c69c131f78a",
+    "kind": "value"
+  },
+  "M41": {
+    "kind": "inline",
+    "value": "12054317882574240736398126192465379314484621/6875675238881480166212544922455000000000000"
+  },
+  "Mquad": {
+    "kind": "inline",
+    "value": "69585899942526905572539481263343/82293058112687296875000000000000"
+  },
+  "signed_square_margin": {
+    "kind": "inline",
+    "value": "103/50"
+  },
+  "raw81": {
+    "kind": "inline",
+    "value": "3513459886637893123363472031284253859/533968794196435611685546875000000000"
+  },
+  "fixed_numerator": {
+    "kind": "inline",
+    "value": "16632177193488738812476720877032433019439/449729701159543356783713630148000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "60715223853310715587770770761289520296229525714779/1686486379348287587938926113055000000000000000000"
+  },
+  "improvement_components": {
+    "kind": "inline",
+    "value": {
+      "linear41": "9523183269882513281471686239999510457/54031537479520955625506235000000000000",
+      "quadratic5_and_complement": "43150252296253200651787401275128751/79001335788179805000000000000000000",
+      "square_raw81_tail": "104580660421795819/5754156199367004000",
+      "six_raw81_costs": "16895970565057807283751342593986867/70117114389430938908203125000000000"
+    }
+  },
+  "total_numerator_improvement": {
+    "kind": "inline",
+    "value": "18191655189802801747438818984418720073260706431/18532817355475687779548638605000000000000000000"
+  },
+  "positive_cost_residual_slope": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "witness_denominator": {
+    "kind": "inline",
+    "value": "12117093811/128357460000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "witness_denominator_benchmark": {
+    "kind": "inline",
+    "value": "315184399966027375160328729173316107415572534836709227/782180451829094744399558301523206650250000000000000"
+  },
+  "benchmark_slack_below403": {
+    "kind": "inline",
+    "value": "34322121097806832693266340536172635177465163290773/782180451829094744399558301523206650250000000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Uniform endpoint upper bound for the AP-transformed numerator over independent original tests. The ratio using the specified actual tensor denominator is only a benchmark; that denominator is not a universal lower bound. No global K improvement, Lean verification or unrestricted Erdos7 resolution is claimed."
+  }
+}
