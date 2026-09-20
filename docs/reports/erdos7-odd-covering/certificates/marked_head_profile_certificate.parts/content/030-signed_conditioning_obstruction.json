@@ -1,0 +1,440 @@
+{
+  "status": "PASS",
+  "scope": "prescribed uniformly conditioned law, height one in 11 and 13",
+  "old_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      16
+    ],
+    [
+      35,
+      24
+    ],
+    [
+      63,
+      25
+    ],
+    [
+      105,
+      19
+    ],
+    [
+      315,
+      109
+    ]
+  ],
+  "old_histogram": {
+    "1": 5,
+    "2": 38,
+    "3": 14,
+    "4": 18,
+    "6": 8,
+    "8": 2,
+    "12": 1
+  },
+  "old_survivors": 86,
+  "old_load_sum": 271,
+  "old_squared_sum": 1131,
+  "max_cross_sum": 1131,
+  "max_mean_sum": 271,
+  "criterion_cylinder_maximizers": [
+    {
+      "d": 3,
+      "residue": 2,
+      "count_low": 58,
+      "square_low": 494
+    },
+    {
+      "d": 5,
+      "residue": 2,
+      "count_low": 21,
+      "square_low": 124
+    },
+    {
+      "d": 7,
+      "residue": 6,
+      "count_low": 16,
+      "square_low": 94
+    },
+    {
+      "d": 9,
+      "residue": 2,
+      "count_low": 22,
+      "square_low": 184
+    },
+    {
+      "d": 15,
+      "residue": 2,
+      "count_low": 17,
+      "square_low": 117
+    },
+    {
+      "d": 21,
+      "residue": 2,
+      "count_low": 11,
+      "square_low": 83
+    },
+    {
+      "d": 35,
+      "residue": 34,
+      "count_low": 5,
+      "square_low": 19
+    },
+    {
+      "d": 45,
+      "residue": 2,
+      "count_low": 6,
+      "square_low": 36
+    },
+    {
+      "d": 63,
+      "residue": 2,
+      "count_low": 4,
+      "square_low": 28
+    },
+    {
+      "d": 105,
+      "residue": 2,
+      "count_low": 3,
+      "square_low": 17
+    },
+    {
+      "d": 315,
+      "residue": 34,
+      "count_low": 1,
+      "square_low": 1
+    }
+  ],
+  "criterion_intercept": "192443/10320",
+  "criterion_slope": "3847/10320",
+  "criterion_unique_fixed_point": "192443/6473",
+  "global_lipschitz_upper": "1447/3440",
+  "criterion_at_30": "307853/10320",
+  "original_47_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      11,
+      0
+    ],
+    [
+      13,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      21,
+      16
+    ],
+    [
+      33,
+      17
+    ],
+    [
+      35,
+      24
+    ],
+    [
+      39,
+      37
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      55,
+      2
+    ],
+    [
+      63,
+      25
+    ],
+    [
+      65,
+      54
+    ],
+    [
+      77,
+      5
+    ],
+    [
+      91,
+      55
+    ],
+    [
+      99,
+      47
+    ],
+    [
+      105,
+      19
+    ],
+    [
+      117,
+      95
+    ],
+    [
+      143,
+      86
+    ],
+    [
+      165,
+      62
+    ],
+    [
+      195,
+      41
+    ],
+    [
+      231,
+      191
+    ],
+    [
+      273,
+      272
+    ],
+    [
+      315,
+      109
+    ],
+    [
+      385,
+      192
+    ],
+    [
+      429,
+      362
+    ],
+    [
+      455,
+      139
+    ],
+    [
+      495,
+      272
+    ],
+    [
+      585,
+      356
+    ],
+    [
+      693,
+      488
+    ],
+    [
+      715,
+      252
+    ],
+    [
+      819,
+      727
+    ],
+    [
+      1001,
+      461
+    ],
+    [
+      1155,
+      752
+    ],
+    [
+      1287,
+      812
+    ],
+    [
+      1365,
+      244
+    ],
+    [
+      2145,
+      647
+    ],
+    [
+      3003,
+      2606
+    ],
+    [
+      3465,
+      997
+    ],
+    [
+      4095,
+      3709
+    ],
+    [
+      5005,
+      4479
+    ],
+    [
+      6435,
+      6041
+    ],
+    [
+      9009,
+      3110
+    ],
+    [
+      15015,
+      8951
+    ],
+    [
+      45045,
+      23407
+    ]
+  ],
+  "test_center": 17018,
+  "actual_survivors": 6872,
+  "actual_squared_load_sum": 177110,
+  "actual_conditioned_moment": "88555/3436",
+  "actual_retained_mass": "859/1290",
+  "survivor_histogram": [
+    {
+      "A": 1,
+      "factor": 1,
+      "count": 270
+    },
+    {
+      "A": 1,
+      "factor": 2,
+      "count": 77
+    },
+    {
+      "A": 1,
+      "factor": 4,
+      "count": 5
+    },
+    {
+      "A": 2,
+      "factor": 1,
+      "count": 2172
+    },
+    {
+      "A": 2,
+      "factor": 2,
+      "count": 605
+    },
+    {
+      "A": 2,
+      "factor": 4,
+      "count": 38
+    },
+    {
+      "A": 3,
+      "factor": 1,
+      "count": 868
+    },
+    {
+      "A": 3,
+      "factor": 2,
+      "count": 232
+    },
+    {
+      "A": 3,
+      "factor": 4,
+      "count": 14
+    },
+    {
+      "A": 4,
+      "factor": 1,
+      "count": 1210
+    },
+    {
+      "A": 4,
+      "factor": 2,
+      "count": 307
+    },
+    {
+      "A": 4,
+      "factor": 4,
+      "count": 18
+    },
+    {
+      "A": 6,
+      "factor": 1,
+      "count": 608
+    },
+    {
+      "A": 6,
+      "factor": 2,
+      "count": 144
+    },
+    {
+      "A": 6,
+      "factor": 4,
+      "count": 8
+    },
+    {
+      "A": 8,
+      "factor": 1,
+      "count": 152
+    },
+    {
+      "A": 8,
+      "factor": 2,
+      "count": 36
+    },
+    {
+      "A": 8,
+      "factor": 4,
+      "count": 2
+    },
+    {
+      "A": 12,
+      "factor": 1,
+      "count": 86
+    },
+    {
+      "A": 12,
+      "factor": 2,
+      "count": 19
+    },
+    {
+      "A": 12,
+      "factor": 4,
+      "count": 1
+    }
+  ],
+  "warning": "Not an obstruction to arbitrary supported laws and not an odd covering system."
+}

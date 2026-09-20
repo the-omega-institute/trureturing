@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a4116ef3bbe0d7e28e8fa09984e4f8c1ed85f3a04e57064e5b3580b80e4d7faf
+  normalized_sha256: sha256:a4116ef3bbe0d7e28e8fa09984e4f8c1ed85f3a04e57064e5b3580b80e4d7faf
+cas_ref: sha256:a4116ef3bbe0d7e28e8fa09984e4f8c1ed85f3a04e57064e5b3580b80e4d7faf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶设定 Schmidt 输入族和逐历史控制表，不断言协议最优性或其他控制的等效性。
+    previous_atom_id: 04efcdc482974512b44705a8e769bc9c721bb7071a8f2472fb416e217d2a1688
+    next_atom_id: 1fab8440440ae18590f6d4d6a5ae146e15e1fdb22c4d4acf23fd04d12ceeaf7d

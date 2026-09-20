@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d92a9344c8e61c6b8a09e753b982cf1e2e234c7ea95c37a31509e3ae39f200e
+  normalized_sha256: sha256:0d92a9344c8e61c6b8a09e753b982cf1e2e234c7ea95c37a31509e3ae39f200e
+cas_ref: sha256:0d92a9344c8e61c6b8a09e753b982cf1e2e234c7ea95c37a31509e3ae39f200e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子仅定义事件投影、随机核事件概率及粗标签预测缺陷，没有声称该缺陷满足尚待证明的性质。
+    previous_atom_id: d617b6c65eb4dceea03fa0fb2cd61cf9d91158df30b0b74c65e27af0b572ae58
+    next_atom_id: f785f73f26cf8c4cf807d8471b90bbad3f1bdbd265ade938aaf2e9bbd38cebd3

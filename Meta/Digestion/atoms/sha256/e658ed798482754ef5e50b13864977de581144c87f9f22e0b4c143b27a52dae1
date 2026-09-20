@@ -1,0 +1,28 @@
+**定理 38.4（严格择一、整系数证书及支撑界）。** 设 $B\in\mathbb R^{m\times d}$，两个维数均允许为零。以下两者恰有一个成立：
+$$
+\exists\xi\in\mathbb R^d,\quad B\xi>0;
+$$
+$$
+\exists\lambda\in\mathbb R^m,\quad
+\lambda\ge0,\quad \sum_{\ell=1}^m\lambda_\ell=1,\quad B^{\mathsf T}\lambda=0.
+$$
+第二式等价于存在 $\lambda\ge0,\lambda\ne0$ 且 $B^{\mathsf T}\lambda=0$。第一式等价于存在不受符号限制的 $\xi$ 满足 $B\xi\ge\mathbf1$。
+
+若 $B$ 为有理矩阵，第二种情形总有有理证书。每个包含极小的非零非负证书支撑 $S$ 都满足
+$$
+|S|\le\operatorname{rank}_{\mathbb R}(B)+1\le d+1;
+$$
+在该支撑上归一化到系数和为一后，证书唯一且为有理向量。清除分母得到同支撑的非零非负整数证书。当 $B$ 为整数矩阵时，第一种情形又等价于
+$$
+\exists z\in\mathbb Z^d,\qquad Bz\ge\mathbf1.
+$$
+因此，在相位恒等式成立的前提下，
+$$
+(x,y)\notin\mathcal G_A
+\quad\Longleftrightarrow\quad
+\exists c\in\mathbb N_0^m\setminus\{0\},\qquad B(A;x,y)^{\mathsf T}c=0.
+$$
+右侧可要求支撑大小至多为 $\operatorname{rank}_{\mathbb R}(B)+1$。这里不对证书系数大小作额外断言。
+
+所用成熟择一形式为 Dvorak–Kolmogorov，[《Duality theory in linear optimization and its extensions: formally verified》，第1节定理1.1、1.2](https://arxiv.org/html/2409.08119v3#S1)，对应固定声明 [equality_farkas、inequality_farkas](https://github.com/the-omega-institute/trureturing/blob/48b8fc89309eb665163095a8a9602798f11179b4/D5/S3/Analytic/Convexity/FarkasAlternative.lean#L700-L783)。有理权重的反证条件与 [RationalFarkas 的 Certificate 及 infeasible_of_certificate](https://github.com/the-omega-institute/trureturing/blob/48b8fc89309eb665163095a8a9602798f11179b4/D5/S0/Certificates/RationalFarkas.lean#L22-L114)相同；证书存在性另由以下论证给出。
+

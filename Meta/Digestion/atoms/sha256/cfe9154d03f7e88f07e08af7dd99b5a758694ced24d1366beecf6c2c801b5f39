@@ -1,0 +1,13 @@
+每个记录单元另带正交擦除标志，记
+$$
+\mathcal E=\mathcal Q\oplus\mathbb C|\bot\rangle,\qquad
+Q_i=|e_i\rangle\langle e_i|,\qquad Q_\bot=|\bot\rangle\langle\bot|.
+$$
+固定整数$m\ge1$及复振幅列向量$\alpha=(\alpha_1,\ldots,\alpha_n)^{\mathsf T}$，其中
+$$
+p_i=|\alpha_i|^2,\qquad \sum_{i=1}^n p_i=1.
+$$
+指定记录写入完成后的联合态为
+$$
+|\Psi_\alpha\rangle=\sum_{i=1}^n\alpha_i|i\rangle\otimes e_i^{\otimes m}.
+$$

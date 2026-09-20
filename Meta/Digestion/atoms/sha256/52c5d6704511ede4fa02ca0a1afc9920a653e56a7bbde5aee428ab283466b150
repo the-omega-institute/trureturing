@@ -1,0 +1,8 @@
+**Proof.** Every map between the finite discrete images is continuous. Thus (39.38) implies equality of the two continuous maps $Q_F$ and $h\circ Q_G$ on the dense set of iterates. Their target is Hausdorff, so their equalizer is closed and contains all of $\mathscr E$. This proves the claimed equivalence; the converse is restriction to iterates. Identity and composition of the factor maps prove reflexivity and transitivity. For inclusion, use the restriction bonding map.
+
+Suppose $p,q$ have equal $Q_G$ values for every $G\in\mathcal C$. Given any finite $F$, cofinality supplies such a $G$ and a factor $h$, so $Q_F(p)=Q_F(q)$. Taking singleton digit sets proves $p=q$. Hence $(Q_G)_{G\in\mathcal C}$ is a separating family of continuous finite-valued observations. Theorem 39.8 forces $|\mathcal C|\ge\mathfrak c$.
+
+Since $|\mathcal A|=\mathfrak c$, its set of finite subsets also has cardinality $\mathfrak c$: singleton subsets give the lower bound, and finite tuples, followed by a countable union over their lengths, give the upper bound in ZFC. The full family is cofinal for both orders. An inclusion-cofinal family is also cofinal for $\preceq$, so the same lower bound applies to it.
+
+Finally, a countable family has only countably many finite subfamilies, hence only countably many finite unions of digit supports. Such bundling cannot yield a cofinal family of cardinality $\mathfrak c$. $\square$
+

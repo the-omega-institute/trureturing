@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ccd9f776dc2af94df60ab428e01b6e85dcb6eebb8a291f784ecf02cb4698a88
+  normalized_sha256: sha256:6ccd9f776dc2af94df60ab428e01b6e85dcb6eebb8a291f784ecf02cb4698a88
+cas_ref: sha256:6ccd9f776dc2af94df60ab428e01b6e85dcb6eebb8a291f784ecf02cb4698a88
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Put”将负整数倍旋转相位、它们组成的集合及二元符号集命名；未断言相位索引唯一、该集合正好等于分裂集或任何稠密性，定义未夹带结论，故本叶无需证明。
+    previous_atom_id: e4334966b5effb0bd1f0b5c7e0bdd87826affc258617f13976259629b798447b
+    next_atom_id: 14a804cb443e108c3f117ed58eb5d3d02f44de36bdd0f206e9e653b69456557b

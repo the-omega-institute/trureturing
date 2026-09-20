@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b0dcb899ba045da55257b4090e64ffae09ee29af27b948126a3c3c628b02ff77
+  normalized_sha256: sha256:b0dcb899ba045da55257b4090e64ffae09ee29af27b948126a3c3c628b02ff77
+cas_ref: sha256:b0dcb899ba045da55257b4090e64ffae09ee29af27b948126a3c3c628b02ff77
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这一叶以“对完整乘积上的任意选择规则”及“固定输出属性”引出 J 的有限加权求和定义。它尚未断言该和可由剖面决定、规则可下降或两行能够重建输出，定义中没有夹带这些命题。
+    previous_atom_id: 48c7cafaa4ebe08112b966945ed85ae5c006ffaf1680bbb3f43a2eeaf6413ddf
+    next_atom_id: ff2d0688085ab8f6b5339d3b882110bbca1d7d29617c9ec24e0798b4de2feb54

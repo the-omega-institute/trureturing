@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b6ee487b928b5306307c5a4089c52fbb19c09c4cee1b6bd36b1f5b41781efd73
+  normalized_sha256: sha256:b6ee487b928b5306307c5a4089c52fbb19c09c4cee1b6bd36b1f5b41781efd73
+cas_ref: sha256:b6ee487b928b5306307c5a4089c52fbb19c09c4cee1b6bd36b1f5b41781efd73
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对原文非空概率分布集合，有限有界损失给出期望像的上界，使用 csSup_le_csSup 取得逐动作风险单调，再用 le_csInf 与 csInf_le 取得有限非空动作集的最小风险单调；探针保留了分布归一化、集合包含和两类非空条件，仓内无冻结 GID。
+    previous_atom_id: 0b5102edb7577117e26e762a5d1a25a178755540ecafeb39a0d653d3a0faec6c
+    next_atom_id: 288042792d4c43f512082c90bb825d5336a137312919b3d14bf659a6f2f8795f

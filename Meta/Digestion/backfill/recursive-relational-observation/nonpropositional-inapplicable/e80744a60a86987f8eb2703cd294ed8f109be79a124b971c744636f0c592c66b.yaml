@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e80744a60a86987f8eb2703cd294ed8f109be79a124b971c744636f0c592c66b
+  normalized_sha256: sha256:e80744a60a86987f8eb2703cd294ed8f109be79a124b971c744636f0c592c66b
+cas_ref: sha256:e80744a60a86987f8eb2703cd294ed8f109be79a124b971c744636f0c592c66b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 探针以 Option 实数具体表示有限参数和形式无穷，排除有限参数正负一后分绝对值小于一及大于一两支，规范化证明全部显示的不等式与范数常数公式，并单独核对形式无穷，仓内无冻结 GID。
+    previous_atom_id: 837d66b5fa3e8fbf9a6fa3b2e8fd4d73b9ba5771b7360f07ad0a6d317d082cef
+    next_atom_id: 0657559cb1164ab2318c7dbb06d92eea8ddf03c6f8ffb05366898fb771db65ec

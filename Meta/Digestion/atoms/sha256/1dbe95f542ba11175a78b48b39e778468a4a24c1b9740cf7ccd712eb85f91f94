@@ -1,0 +1,20 @@
+**Proof.** The sequential approximation follows from Theorem 37.4; for an iterate, use its constant sequence.
+
+Fix $P_\theta^s$ and set $a=E_1-\theta$. If $a\notin E$, put $b=k_a$; if $a=E_l$, put $b=x_l^{-s}$. Choose natural phases $n_j\delta\to_{-s}a$. Theorem 37.2 gives $Z(n_j)\to b$. On the other hand, the phases of $P_\theta^s(Z(n_j))$ approach $E_1$ from side $-s$, so
+$$
+P_\theta^s(Z(n_j))\longrightarrow x_1^{-s},\qquad P_\theta^s(b)=x_1^s.
+$$
+These are different, proving discontinuity.
+
+Define a continuous injection
+$$
+j:K\to[0,1],\qquad j(x)=\sum_{r\ge0}\frac{2x_r}{3^{r+1}}.
+$$
+Uniform convergence gives continuity. If two points first differ at coordinate $r$, the leading difference $2/3^{r+1}$ exceeds the maximal possible tail difference $1/3^{r+1}$, so $j$ is injective. The map
+$$
+J:\mathscr E\to\mathbb R^K,\qquad J(p)=j\circ p,
+$$
+is continuous and injective for the pointwise topologies. Compactness of $\mathscr E$ and the Hausdorff property of $\mathbb R^K$ make it a homeomorphism onto its compact image. Every $j\circ p$ is a pointwise sequential limit of continuous real-valued functions $j\circ T^{n_j}$. Hence the image lies in the Baire-one functions on $K$, which is the defining Rosenthal representation.
+
+The compact metric semigroup criterion identifies such an enveloping compactum, equivalently an enveloping semigroup consisting of Baire-one maps, with tameness. Its hypotheses apply to the continuous action of the discrete monoid $\mathbb N$ by the actual iterates. No invertibility is required for this criterion. $\square$
+

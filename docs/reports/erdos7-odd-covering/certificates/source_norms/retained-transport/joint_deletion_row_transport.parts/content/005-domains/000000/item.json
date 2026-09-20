@@ -1,0 +1,41 @@
+{
+  "source_domain": {
+    "kind": "inline",
+    "value": "wide_fresh_full_slot_source_comparison"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "1/20"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "1/1000"
+  },
+  "gap": {
+    "kind": "inline",
+    "value": "1/60"
+  },
+  "dual_count": {
+    "kind": "inline",
+    "value": 2060
+  },
+  "joint_row_error_maximum": {
+    "kind": "inline",
+    "value": "51281741812630813651/67830000000000000000"
+  },
+  "all_priced_rows_sha256": {
+    "kind": "inline",
+    "value": "618699f7fd4d31f04f4aae6fa3c5a5fd2a760ef695882ce9b6a2326829baf958"
+  },
+  "maximizing_dual_keys": {
+    "kind": "inline",
+    "value": [
+      "931c74da012c1534a0e29557f85ce5e1be265bbb19d70f5000133d441fb68691"
+    ]
+  },
+  "complete_heavy_controllers": {
+    "path": "content/005-domains/000000/item/008-complete_heavy_controllers.json",
+    "sha256": "b7e025dc080eca02089f1c5ee55ac51bf46f126c35c2805df55eb5fc4ddbc538",
+    "kind": "array"
+  }
+}

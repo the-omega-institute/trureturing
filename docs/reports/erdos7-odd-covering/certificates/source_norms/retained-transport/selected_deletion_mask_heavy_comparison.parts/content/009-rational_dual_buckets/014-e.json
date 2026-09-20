@@ -1,0 +1,57 @@
+{
+  "1": {
+    "path": "content/009-rational_dual_buckets/014-e/000-1.json",
+    "sha256": "cba144088438621849f33bae2449dc7630ca10a6a601f8b409508e072a9e80a0",
+    "kind": "value"
+  },
+  "2": {
+    "path": "content/009-rational_dual_buckets/014-e/001-2.json",
+    "sha256": "726d87d2e80e788093333ea8c300e615dc99d07ea1d6258f5bedcff66fb3c9a6",
+    "kind": "value"
+  },
+  "3": {
+    "path": "content/009-rational_dual_buckets/014-e/002-3.json",
+    "sha256": "8254f2bdbedf0b906a7b7d83ba64ec6231cf7440d381956edd8bb62b8b15ff7e",
+    "kind": "value"
+  },
+  "4": {
+    "path": "content/009-rational_dual_buckets/014-e/003-4.json",
+    "sha256": "58649d189fe461bcc72a3e3f6b5c72c9288aedb535f9f47f11ff7e740a15b923",
+    "kind": "value"
+  },
+  "6": {
+    "path": "content/009-rational_dual_buckets/014-e/004-6.json",
+    "sha256": "cf0b6c6d7373f1c82a17a19851e4b27927d181760cb766ea8aaef70aebe3518f",
+    "kind": "value"
+  },
+  "8": {
+    "path": "content/009-rational_dual_buckets/014-e/005-8.json",
+    "sha256": "c1f2e0c0f6c0bb4330a6f97da1ce4c12657b1c5bd062b4e7b2ff31a439b939db",
+    "kind": "value"
+  },
+  "9": {
+    "path": "content/009-rational_dual_buckets/014-e/006-9.json",
+    "sha256": "3a38c730d0408bd6593ff628272bbb79497a5f40fea8a006e174a97d2a037e7e",
+    "kind": "object"
+  },
+  "a": {
+    "path": "content/009-rational_dual_buckets/014-e/007-a.json",
+    "sha256": "5233145dc4c434904e21cbe043f6a9f4535c491ed03a2a8b259a04224fc3afa7",
+    "kind": "value"
+  },
+  "b": {
+    "path": "content/009-rational_dual_buckets/014-e/008-b.json",
+    "sha256": "9dda70fb2750a9e326d7160c1c58f3569a4166d685ce25695c01fd72814b0877",
+    "kind": "object"
+  },
+  "e": {
+    "path": "content/009-rational_dual_buckets/014-e/009-e.json",
+    "sha256": "433e575dc40152bb738d9bcd3d628cf63b9ca721597c4a744815da93cef70105",
+    "kind": "object"
+  },
+  "f": {
+    "path": "content/009-rational_dual_buckets/014-e/010-f.json",
+    "sha256": "c0656b9a3482f2177cd34b2694549ff352ff3b86d901cc0e49d6c0946c7f8e97",
+    "kind": "object"
+  }
+}

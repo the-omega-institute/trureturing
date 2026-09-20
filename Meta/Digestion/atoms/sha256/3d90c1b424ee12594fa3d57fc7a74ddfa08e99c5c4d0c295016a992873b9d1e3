@@ -1,0 +1,4 @@
+**证明。** 这是主卷定理124.14在同一$P$的边缘上的直接应用。其支持条件是：若$P(a,b,c)>0$，则$P_{AB}(a,b),P_{BC}(b,c),P_B(b)$均正，所以$P^{\mathrm{glue}}(a,b,c)>0$。所有熵与该KL因而有限。CMI零集亦由[`MarkovDataProcessing`](../../../D5/S3/Entropy/Submodularity/MarkovDataProcessing.lean)的`conditional_mutual_information_eq_zero_iff_conditional_product`给出，只约束正质量条件切片。
+
+该结论不声明拼接恢复了原来的共同来源。主卷命题124.15取$B$恒定、$A=C$为公平位，原律给$\Pr(A=C)=1$，拼接律给$1/2$。式（9.4）的熵差只比较同一边缘约束下的两份联合律；其假设没有指定物理耗散过程，故不给产热结论。证毕。
+

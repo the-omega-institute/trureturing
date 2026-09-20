@@ -1,183 +1,179 @@
 #!/bin/bash
-# preflight: 一键预证 CI 三 required check 会绿(本地=CI 同一器,器律②)。
-# 提交前不强制跑本器(用户 2026-08-26 定,见 CLAUDE.md 器律②);CI 红了用它定位。
-# 覆盖 engineering 全步骤、lean-inspect 的数学内容检查与 baseline admission(gate);
-# CI=true 复现 CI 独有构建属性。
 set -euo pipefail
-
+MODE="${MODE:-}"
+BASE_SHA="${BASE:-}"
 ROOT=""
-PREFLIGHT_STARTED=0
-BASE_SHA="${BASE-}"
-CANDIDATE_SHA=""
-PREFLIGHT_DEADLINE_AT="${PREFLIGHT_DEADLINE_AT:-}"
-
-preflight_base_invalid() {
-  printf 'PREFLIGHT_BASE_INVALID reason=%s\n' "$1" >&2
-  exit 2
-}
-
-[[ -n "$BASE_SHA" ]] || preflight_base_invalid missing
-[[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ ]] || preflight_base_invalid not-40-hex
-BASE_SHA="$BASE"
-
-# Remaining seconds of preflight's optional absolute deadline, or empty when unbounded.
-remaining_deadline_seconds() {
-  local deadline="$PREFLIGHT_DEADLINE_AT"
-  [[ "$deadline" =~ ^[0-9]+$ ]] || return 1
-  local now
-  now="$(date +%s)"
-  [[ "$now" =~ ^[0-9]+$ ]] || return 1
-  printf '%s\n' "$(( deadline - now ))"
-}
-
-finish_preflight() {
-  local rc="$1"
+CANDIDATE=""
+TEMPORARY=""
+stage="input"
+reason=""
+finish() {
+  local raw=$?
   trap - EXIT
-  trap '' INT TERM
   set +e
-  if [[ -n "$ROOT" ]] && declare -F resource_observe >/dev/null; then
-    resource_observe preflight-finish "$ROOT" || true
+  local rc=2
+  case "$raw" in 0|1|2) rc="$raw" ;; esac
+  if [[ -n "$ROOT" ]] && declare -F resource_observe >/dev/null; then resource_observe preflight-finish "$ROOT" || true; fi
+  if [[ -n "$TEMPORARY" && -d "$CANDIDATE/build/ci" ]]; then
+    local retained="$ROOT/build/preflight"
+    mkdir -p "$retained" || rc=2
+    local bundle
+    bundle="$(mktemp "$retained/candidate.XXXXXXXX")" || rc=2
+    # Current includes the shared runtime and report; engineering's records and
+    # failure diagnostics live under build/ci. Archive each common member once.
+    # Python writes complete PAX path records. Some native tar producers split
+    # PAX names into a USTAR prefix that System.Formats.Tar does not restore.
+    python3 -B - "$CANDIDATE" "$bundle" <<'PY' || rc=2
+import os, pathlib, sys, tarfile
+root = pathlib.Path(sys.argv[1])
+paths = root / "build/ci/current-paths.nul"
+if not paths.is_file():
+    paths = root / "build/ci/build-paths.nul"
+members = []
+if paths.is_file():
+    members = [os.fsdecode(path) for path in paths.read_bytes().split(b"\0") if path]
+    members = [path for path in members if path != "build/ci" and not path.startswith("build/ci/")]
+members.append("build/ci")
+with tarfile.open(sys.argv[2], "w:gz", format=tarfile.PAX_FORMAT) as archive:
+    for path in members:
+        archive.add(root / path, arcname=path)
+PY
+    printf 'PREFLIGHT_ARTIFACT bundle=%s\n' "$bundle"
   fi
+  if [[ -n "$TEMPORARY" ]]; then rm -rf -- "$TEMPORARY"; fi
+  printf 'PREFLIGHT_RESULT mode=%s stage=%s exit=%s raw_exit=%s reason=%s\n' "$MODE" "$stage" "$rc" "$raw" "$reason"
   exit "$rc"
 }
-trap 'finish_preflight "$?"' EXIT
-trap 'exit 130' INT
-trap 'exit 143' TERM
-
-for tool in git make dotnet lake; do
-  command -v "$tool" >/dev/null 2>&1 || exit 127
-done
-dotnet --version >/dev/null
-lake --version >/dev/null
-
-ROOT="$(git rev-parse --show-toplevel)"
-cd "$ROOT"
-if ! base_type="$(git cat-file -t "$BASE" 2>/dev/null)"; then
-  preflight_base_invalid object-missing
-fi
-[[ "$base_type" == commit ]] || preflight_base_invalid not-commit
-set +e
-git merge-base --is-ancestor "$BASE" HEAD
-ancestor_rc=$?
-set -e
-case "$ancestor_rc" in
-  0) ;;
-  1) preflight_base_invalid not-ancestor ;;
-  *) preflight_base_invalid ancestor-check-failed ;;
+trap finish EXIT
+trap 'reason=interrupted; exit 2' HUP INT TERM
+usage() {
+  cat >&2 <<'USAGE'
+Choose an explicit local preflight mode (there is no default):
+  make preflight MODE=fast
+    Quick .NET structure tests (make -C tools check-fast); no Lean/admission proof.
+  make preflight MODE=push BASE=<40-hex-commit-sha>
+    Registered checks for the complete BASE-to-worktree delta, including dirty/untracked files.
+  make preflight MODE=pr BASE=<40-hex-commit-sha>
+    Clean committed source; isolated merge candidate, shared checks and cross-tree delta.
+  make preflight MODE=full
+    Registered checks for the whole current input; normal caches/incremental builds remain valid.
+Use fast for harness iteration, targeted make lean for Lean iteration, push for delta validation,
+pr for integration, and full for deliberate whole-tree diagnostics. fast/full reject BASE;
+only push accepts a matching complete CI_PUSH_BEFORE/CI_PUSH_AFTER pair. No positional arguments.
+USAGE
+}
+fail_input() { reason="$1"; usage; exit 2; }
+[[ $# == 0 ]] || fail_input unexpected-arguments
+case "$MODE" in fast|push|pr|full) ;; *) fail_input invalid-mode ;; esac
+case "$MODE" in
+  push|pr)
+    [[ "$BASE_SHA" =~ ^[0-9a-fA-F]{40}$ && "$BASE_SHA" != 0000000000000000000000000000000000000000 ]] || fail_input invalid-base-sha
+    ;;
+  fast|full) [[ -z "$BASE_SHA" ]] || fail_input unexpected-base ;;
 esac
-CANDIDATE_SHA="$(git rev-parse HEAD)"
-source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
-
-PREFLIGHT_STARTED="$(date +%s)"
-resource_observe preflight-start "$ROOT" || true
-
-record_timing() {
-  local stage="$1"
-  local elapsed="$(( $(date +%s) - T ))"
-  printf '[preflight] %-22s %ss\n' "$stage" "$elapsed"
-  T=$(date +%s)
-}
-T=$(date +%s)
-
-dotnet restore tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode >/dev/null
-dotnet restore tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode >/dev/null
-record_timing restore-proofs
-
-CI=true make -C tools dotnet
-record_timing dotnet
-
-make lean-report
-record_timing lean-report
-
-STRATALINT_SCRIBE_BASE="$BASE_SHA" \
-  /bin/bash "$ROOT/tools/scripts/workflow/scribe-content-checks.sh" \
-  "$ROOT/.lake/build/stratalint/raw-lean-report.json"
-record_timing scribe-content-checks
-
-ENGINEERING_HEAD="$CANDIDATE_SHA"
-ENGINEERING_BASE="$(git rev-parse HEAD^1)"
-CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE"
-record_timing test
-
-make -C tools selftest
-record_timing selftest
-
-expect_compile_failure() {
-  local project="$1"
-  local label="$2"
-  local failure_reason="$3"
-  local rc=0
-  set +e
-  dotnet build "$project" --no-restore --configuration Release >/dev/null 2>&1
-  rc=$?
-  set -e
-  if [[ "$rc" -eq 0 ]]; then
-    echo "[preflight] FAIL: $label 竟然编译通过($failure_reason)" >&2
-    return 1
-  fi
-  case "$rc" in
-    124|126|127|130|143) return "$rc" ;;
-  esac
-  return 0
-}
-
-prove_banned_api_compile_failure() {
-  local project="tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj"
-  local proof="tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"
-  local output=""
-  local status=0
-  set +e
-  output="$(dotnet build "$project" --no-restore --configuration Release 2>&1)"
-  status=$?
-  set -e
-  printf '%s\n' "$output"
-  test "$status" -ne 0
-  case "$status" in
-    124|126|127|130|143) return "$status" ;;
-  esac
-  local expected_lines=()
-  local actual_lines=()
-  while IFS= read -r line; do expected_lines+=("$line"); done \
-    < <(grep -nF "// banned-api-proof" "$proof" | cut -d: -f1)
-  while IFS= read -r line; do actual_lines+=("$line"); done \
-    < <(sed -n 's#.*BannedApiViolations.cs(\([0-9][0-9]*\),[0-9][0-9]*): error RS0030:.*#\1#p' <<<"$output" | sort -nu)
-  test "${#expected_lines[@]}" -gt 0
-  test "${#actual_lines[@]}" -eq "${#expected_lines[@]}"
-  test -z "$(grep -F ': error ' <<<"$output" | grep -vF ': error RS0030:' || true)"
-  local index=0
-  for expected_line in "${expected_lines[@]}"; do
-    test "${actual_lines[$index]}" = "$expected_line"
-    ((index += 1))
-  done
-}
-
-expect_compile_failure \
-  tools/tests/CompileFailProof/CompileFailProof.csproj \
-  CompileFailProof \
-  "能力链证明失效"
-prove_banned_api_compile_failure
-record_timing compile-fail-proofs
-
-# Measure what is left of the outer deadline before entering the most expensive stage,
-# and name the owner when it is already spent. Without this the gate starts, runs its
-# own report production against an inner budget, and the eventual timeout is reported as
-# whatever inner step happened to be running -- pointing at the symptom rather than at
-# the budget that actually ran out.
-if gate_remaining="$(remaining_deadline_seconds)"; then
-  if [[ "$gate_remaining" -le 0 ]]; then
-    printf 'PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline stage=gate remaining_seconds=%s deadline_at=%s\n' \
-      "$gate_remaining" "$PREFLIGHT_DEADLINE_AT" >&2
-    exit 124
-  fi
-  printf 'PREFLIGHT_BUDGET owner=outer-deadline stage=gate remaining_seconds=%s\n' "$gate_remaining"
+if [[ "$MODE" != push && ( -n "${CI_PUSH_BEFORE:-}" || -n "${CI_PUSH_AFTER:-}" ) ]]; then
+  fail_input unexpected-push-range
 fi
-
-set +e
-make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
-gate_rc=$?
-set -e
-record_timing gate
-
-if [[ "$gate_rc" -ne 0 ]]; then exit "$gate_rc"; fi
-
-echo "[preflight] PASS — CI 三 required check 预证绿"
+# Native push changes both planning and every child's plan validation. This
+# local door must never acquire an immutable CI event's different scope.
+[[ "${GITHUB_EVENT_NAME:-}" != push ]] || fail_input inherited-push-event
+ROOT="$(git rev-parse --show-toplevel)" || fail_input invalid-repository
+cd "$ROOT"
+CANDIDATE="$ROOT"
+if [[ "$MODE" == fast ]]; then
+  stage=fast
+  make -C tools check-fast
+  stage=complete
+  exit 0
+fi
+# Reuse the shared parser for the only reusable-workflow identity input.
+# Keep the accepted local environment intact throughout child validation.
+python3 -B - "$ROOT" <<'PY' || fail_input inherited-workflow-inputs
+import pathlib, sys
+sys.path.insert(0, str(pathlib.Path(sys.argv[1]) / "tools/scripts/workflow"))
+import ci_plan
+try:
+    if ci_plan.workflow_candidate() is not None:
+        raise ValueError("local preflight does not accept reusable workflow candidate inputs")
+except ValueError as error:
+    print(str(error), file=sys.stderr)
+    sys.exit(2)
+PY
+if [[ "$MODE" == push || "$MODE" == pr ]]; then
+  [[ "$(git cat-file -t "$BASE_SHA" 2>/dev/null)" == commit ]] || fail_input unavailable-base-commit
+  BASE_SHA="$(git rev-parse --verify "$BASE_SHA^{commit}")" || fail_input unavailable-base-commit
+fi
+HEAD_SHA="$(git rev-parse --verify 'HEAD^{commit}')" || fail_input uncommitted-head
+[[ -z "${CANDIDATE_SHA:-}" || "$CANDIDATE_SHA" == "$HEAD_SHA" ]] || fail_input candidate-head-mismatch
+export CANDIDATE_SHA="$HEAD_SHA"
+if [[ "$MODE" == push && ( -n "${CI_PUSH_BEFORE:-}" || -n "${CI_PUSH_AFTER:-}" ) ]]; then
+  [[ "${CI_PUSH_BEFORE:-}" == "$BASE_SHA" && "${CI_PUSH_AFTER:-}" == "$HEAD_SHA" ]] || fail_input conflicting-push-range
+fi
+if [[ "$MODE" == pr ]]; then
+  status_output="$(git status --porcelain --untracked-files=all)" || fail_input status-observation-failed
+  [[ -z "$status_output" ]] || fail_input dirty-tree
+  stage=merge-tree
+  merge_rc=0
+  merge_output="$(git merge-tree --write-tree "$BASE_SHA" "$HEAD_SHA" 2>&1)" || merge_rc=$?
+  if [[ "$merge_rc" != 0 ]]; then
+    printf '%s\n' "$merge_output" >&2
+    reason=merge-failed
+    [[ "$merge_rc" == 1 ]] && exit 1
+    exit 2
+  fi
+  TREE_SHA="${merge_output%%$'\n'*}"
+  [[ "$TREE_SHA" =~ ^[0-9a-fA-F]{40}$ ]] || fail_input invalid-merge-tree
+  TEMPORARY="$(mktemp -d "${TMPDIR:-/tmp}/ci-preflight.XXXXXXXX")"
+  CANDIDATE="$TEMPORARY/candidate"
+  git clone --quiet --shared --no-checkout --origin origin "$ROOT" "$CANDIDATE"
+  # Bind the merged tree to its protected first parent and triggering head.
+  CANDIDATE_SHA="$(git -C "$CANDIDATE" -c user.name=Preflight -c user.email=preflight@example.invalid \
+    commit-tree "$TREE_SHA" -p "$BASE_SHA" -p "$HEAD_SHA" -m 'Preflight candidate')"
+  git -C "$CANDIDATE" checkout --quiet --detach "$CANDIDATE_SHA"
+  git -C "$CANDIDATE" remote remove origin
+  stage=plan
+  python3 -B "$CANDIDATE/tools/scripts/workflow/ci.py" pr-plan --repository "$CANDIDATE" \
+    --commit "$CANDIDATE_SHA" --base "$BASE_SHA" --head "$HEAD_SHA"
+  export CANDIDATE_SHA
+  export CI_PLAN_PATH="$CANDIDATE/build/ci/plan.json"
+  export CI_CHANGES_PATH="$CANDIDATE/build/ci/changes.json"
+  printf 'PREFLIGHT_CANDIDATE path=%s\n' "$CANDIDATE"
+else
+  stage=plan
+  range_options=()
+  if [[ "$MODE" == push ]]; then range_options=(--before "$BASE_SHA" --after "$HEAD_SHA"); fi
+  python3 -B tools/scripts/workflow/ci.py push-plan --repository "$ROOT" --commit "$HEAD_SHA" ${range_options[@]+"${range_options[@]}"}
+  export CI_PLAN_PATH="$ROOT/build/ci/plan.json"
+  export CI_CHANGES_PATH="$ROOT/build/ci/changes.json"
+fi
+if [[ -f "$ROOT/tools/scripts/lib/resource-observation-lib.sh" ]]; then
+  source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
+  resource_observe preflight-start "$CANDIDATE" || true
+fi
+cd "$CANDIDATE"
+# Engineering normally owns the canonical build. A current-only plan needs the
+# same producer before engineering records its honest not-required result.
+build_without_engineering="$(python3 -B - "$CI_PLAN_PATH" <<'PY'
+import json, sys
+stages = json.load(open(sys.argv[1]))["stages"]
+print("yes" if stages["build"]["status"] == "required" and stages["engineering"]["status"] == "not-required" else "no")
+PY
+)"
+if [[ "$build_without_engineering" == yes ]]; then
+  stage=build
+  /bin/bash tools/scripts/ci-stage.sh "$stage"
+fi
+for stage in engineering current; do
+  if [[ "$MODE" == pr && "$stage" == current ]]; then
+    # The private clone has its own Git inventory. Only Lean's optional seed
+    # lookup reads the source inventory; candidate code still owns all work.
+    STRATALINT_LEAN_CACHE_DONOR_REPOSITORY="$ROOT" /bin/bash tools/scripts/ci-stage.sh "$stage"
+  else
+    /bin/bash tools/scripts/ci-stage.sh "$stage"
+  fi
+done
+if [[ "$MODE" == pr ]]; then
+  stage="delta"
+  /bin/bash tools/scripts/ci-stage.sh delta "$BASE_SHA"
+fi
+stage=complete

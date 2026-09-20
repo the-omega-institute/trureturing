@@ -1,0 +1,32 @@
+**definition 28.1 (Measure spaces and bounded residual coordinates).** For a compact metric space $X$, let $M(X)$ be the real vector space of all finite real signed regular Borel measures, with
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(X),\qquad \varepsilon_X(\mu)=\mu(X).
+$$
+There is no factor of one half in this norm. A Borel map $f:X\to Y$ has pushforward
+$$
+(f_\#\mu)(D)=\mu(f^{-1}(D)).
+$$
+We use the classical compact Riesz representation identification $M(X)=C(X)^*$; in particular, $M(X)$ is complete. Its weak-star topology is $\sigma(M(X),C(X))$, not the Banach weak topology $\sigma(M(X),M(X)^*)$. These conventions are those of [Daniel V. Tausk, *Weak\* topology for the space of finite measures on a topological space*, §2, Definition 3.1, Corollary C.6 and §C.1](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+Define
+$$
+\rho_t=\begin{cases}
+|t|,&t\ne\infty,\ |t|<1,\\
+|t|^{-1},&t\ne\infty,\ |t|>1,\\
+0,&t=\infty,
+\end{cases}
+\qquad C_t=\frac{1+\rho_t}{1-\rho_t},
+$$
+$$
+d'_m=\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+For each positive integer $m$, define the Borel scalar function
+$$
+r_m(x)=d'_m\bigl((1-p_m)\mathbf1_{\{x_m^+\}}(x)-p_m\mathbf1_{\{x_m^-\}}(x)\bigr).
+$$
+Thus each $r_m$ is supported on its specified two-point fiber.
+

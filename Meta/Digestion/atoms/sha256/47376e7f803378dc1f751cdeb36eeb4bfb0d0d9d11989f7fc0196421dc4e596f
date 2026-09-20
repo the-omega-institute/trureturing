@@ -1,0 +1,20 @@
+对损失函数
+
+$$
+0\le \ell(\theta,a)\le 1
+$$
+
+定义完整过程的最优 Bayes 风险
+
+$$
+R^*(I)
+=
+\inf_{\rho,D}
+\sum_{\theta\in\Theta}
+\mu(\theta)\,
+\mathbb E_{a\sim D(I_\theta(\rho))}
+[\ell(\theta,a)],
+$$
+
+并以同样方式定义 $$R^*(\widetilde I)$$。这里的后处理可以包含任意对输出记忆的量子控制，但模拟器 $$S$$ 必须在所有参数之间共用。
+

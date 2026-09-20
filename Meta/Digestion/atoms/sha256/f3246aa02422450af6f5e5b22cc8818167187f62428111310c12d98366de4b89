@@ -1,0 +1,76 @@
+**theorem 35.7 (Finite adaptive covers and the exact normalization).** Under the normalization of 35.0, put
+$$
+c:=\frac1{A_+}=\frac{\sqrt{5}}{\phi^3}=5-2\sqrt{5}.
+$$
+For every subset $A\subseteq X_\beta$ and every $\delta>0$,
+$$
+\boxed{\mathcal H^{h_1}_{\rho,\delta}(A)=\mathcal H^{h_1}_\rho(A)=c\eta^*(A).}
+$$
+In particular, as Borel measures,
+$$
+\mathcal H^{h_1}_\rho=c\eta,\qquad
+\mathcal H^{h_1}_\rho(X_\beta)=c,\qquad
+\mathcal H^{h_1}_\rho(D_p)=c\alpha^{|p|}.
+$$
+For every clopen $B\subseteq X_\beta$ (in particular, every block cylinder), every $\delta>0$ and every $\tau>0$, there is a finite cover of $B$ by block cylinders of $\rho$-diameter at most $\delta$ and total $h_1$-cost at most $c\eta(B)+\tau$, obtained by stopping different positional paths at different depths. For arbitrary subsets $A$, the matching upper bound is obtained from at most countable covers.
+
+**Proof.** The lower bound at every scale is already proved in 35.3. We construct the matching upper covers, including all exceptional paths.
+
+Fix $\epsilon$ with $0<\epsilon<A_+$, a scale $\delta>0$, and a block cylinder $D_q$. Choose $k\ge1$ so large that
+$$
+A_0\alpha^k<\epsilon/2.
+$$
+By the closed form for $G_L$, choose $L_0\ge k$ sufficiently large that for every $L\ge L_0$,
+$$
+\alpha^L\bigl(G_{L+1}-G_{L-k}\bigr)\ge A_+-\epsilon,
+\qquad
+2^{-(G_L-1)}\le\delta.
+$$
+Hence every block prefix of length at least $L_0$ ending in $k$ zeros satisfies
+$$
+\mathcal D(p)\ge A_+-\epsilon,
+\qquad
+\operatorname{diam}_\rho D_p\le\delta.
+$$
+The latter diameter bound follows from $k_p\ge G_L-1$.
+
+Choose $L_*\ge\max\{L_0,|q|\}$. Along each positional path in $C_q$, inspect in order the $J$ disjoint blocks of positions
+$$
+L_*+(j-1)k,\ldots,L_*+jk-1,\qquad 1\le j\le J.
+$$
+At the first all-zero test block, stop and take the cylinder of the entire prefix ending at that block. Its prefix ends in zero and has length at least $L_0$, so it is a block cylinder satisfying the preceding density and diameter bounds. Different first stops are prefix-incomparable, hence their cylinders are disjoint.
+
+For paths failing all $J$ tests, take their full positional prefixes of length $L_*+Jk$ as fallback cylinders. If such a prefix ends in one, append its forced zero without changing the cylinder. These are again block cylinders of diameter at most $\delta$. There are only finitely many stopped and fallback cylinders, and together they form a partition of $D_q$ after application of $\Phi$.
+
+Let $B_J\subseteq D_q$ be the union of the fallback cylinders. The conditional estimate in 35.6, applied inside $C_q$, gives
+$$
+\eta(B_J)\le\eta(D_q)(1-\alpha^k)^J.
+$$
+Every stopped cylinder has cost at most its mass divided by $A_+-\epsilon$. Every fallback cylinder has cost at most its mass by 35.3. Therefore this finite cover has total cost at most
+$$
+\frac{\eta(D_q)}{A_+-\epsilon}+\eta(D_q)(1-\alpha^k)^J.
+$$
+Letting $J\to\infty$ proves
+$$
+\mathcal H^{h_1}_{\rho,\delta}(D_q)\le\frac{\eta(D_q)}{A_+-\epsilon}.
+$$
+Now let $\epsilon\downarrow0$. Together with the arbitrary-cover lower bound, this gives
+$$
+\mathcal H^{h_1}_{\rho,\delta}(D_q)=\frac{\eta(D_q)}{A_+}.
+$$
+In particular, no null exceptional set was omitted from any finite covering argument.
+
+A clopen set is a finite disjoint union of block cylinders, so subadditivity gives its upper bound with the same factor $A_+^{-1}$. Finally take any countable clopen cover of an arbitrary $A$. Applying the clopen bound and then the clopen outer-measure formula of 35.3 yields
+$$
+\mathcal H^{h_1}_{\rho,\delta}(A)
+\le\frac1{A_+}\inf\left\{\sum_i\eta(B_i):A\subseteq\bigcup_iB_i,\ B_i\text{ clopen}\right\}
+=\frac{\eta^*(A)}{A_+}.
+$$
+The lower inequality holds for every arbitrary-subset diameter cover, proving equality at every scale. Taking the scale limit proves the measure identity and shows that the constant $c_0$ in 35.5 is $c$.
+
+Finally $\phi^3=2+\sqrt{5}$, so rationalization gives
+$$
+\frac{\sqrt{5}}{\phi^3}=\frac{\sqrt{5}}{2+\sqrt{5}}=5-2\sqrt{5}.
+$$
+The denominator $M_p-1$ throughout came from the actual diameter exponent $M_p-2$ and the specified additive one in the gauge. $\square$
+

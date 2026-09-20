@@ -1,0 +1,19 @@
+**Assumption 28.0 (Fixed carrier and exact finite multiplication).** Retain Definition 25.0 and the exact-fiber and exact-graph hypotheses of Assumption 25.1. Give $K$ its original compact digit topology, and give $\mathbb T=\mathbb R/\mathbb Z$ its original compact group topology. Fix
+$$
+t\in(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},
+$$
+where $\infty$ is a separate formal parameter. Use the finite multiplication of Definition 25.8 and theorem 25.9. In particular, its rows $P^{(t)}_{x,y}$ are finite real signed measures, have mass one, are supported in the exact fiber $\Gamma(x,y)$, and satisfy
+$$
+P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}.
+$$
+Write
+$$
+S=\{x_m^+,x_m^-:m\ge1\},\qquad K^\circ=K\setminus S,\qquad \mathbb T^\circ=\mathbb T\setminus E,
+$$
+$$
+v_m=\delta_{x_m^+}-\delta_{x_m^-},\qquad
+\pi_{E_m}=p_m\delta_{x_m^+}+(1-p_m)\delta_{x_m^-},\qquad
+\pi_\theta=\delta_{k_\theta}\quad(\theta\notin E).
+$$
+The quantities $p_m,c_{m,n},\pi_\theta$ have the values belonging to this fixed parameter. All conclusions below are conditional on these exact carrier and graph hypotheses.
+

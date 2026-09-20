@@ -1,0 +1,4 @@
+**约定 23.1（瞬时系数与实际取得）。** 固定同一准备、方程、黏性、Fourier 相位、增益和内部钟，隐藏参数记为 $\beta$。本节先处理实际标量响应的充分条件，第24节由有限维二次方程供应这些条件，第25节直接由不截断的周期 Navier–Stokes 方程供应它们。瞬时恒等式的既有来源是 [LowModeReversalWitness](../../../D5/S3/FluidDynamics/Fourier/LowModeReversalWitness.lean) 的 `transverse_acceleration` 与 [AugmentedReadoutRecovery](../../../D5/S3/FluidDynamics/Fourier/AugmentedReadoutRecovery.lean) 的 `low_observation_visible`、`augmented_readout_im`：准备的可见系数为 $\alpha/2$，横向加速度虚部为 $-\alpha\beta/4$。它们本身不提供一次实际延时实验。
+
+这里的 Fourier 端口是全空间加权积分；必须有可执行的取得协议，不能仅凭“接口”一词把它解释成物理空间边界的局部测量。一次实验的完整观察者保留全部已获档案、来源标识、取得历史和当前原始读数。下面的参数候选约束可以与全部旧档案约束取共同实现交集；丢开旧约束得到的仅是外包候选集。精确共同实现的定义与部分操作见[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义25.5及第27节。任何差分和拟合输出都是原始记录的派生值，不替代原始记录。
+

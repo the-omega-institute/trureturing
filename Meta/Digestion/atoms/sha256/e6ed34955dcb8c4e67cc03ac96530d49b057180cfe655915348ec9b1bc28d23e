@@ -1,0 +1,33 @@
+**theorem 27.10 (Compactness and the atomic isometric embedding).** The digit space $K$ is compact and metrizable by $d_K$. Every $a\in B$ defines a finite signed regular Borel measure
+$$
+\iota(a)(D)=\sum_{x\in D}a(x)\qquad(D\subseteq K\text{ Borel}),
+$$
+and this gives a linear isometric embedding
+$$
+\iota:B\longrightarrow M(K),\qquad
+\|\iota(a)\|_{\mathrm{TV}}=\|a\|_1.
+$$
+In particular, all the kernels can be regarded as finite signed regular Borel measures. For distinct points,
+$$
+\|\delta_x-\delta_y\|_1
+=\|\delta_x-\delta_y\|_{\mathrm{TV}}=2.
+$$
+
+**Proof.** Agreement of the first $N$ digits bounds $d_K$ by the tail sum $2^{-N}$, while $d_K(x,y)<2^{-N}$ forces agreement of the first $N$ digits. Thus the metric induces the digit topology. Given a sequence in $K$, successively choose subsequences constant in each digit and take a diagonal subsequence. It converges coordinatewise, hence in $d_K$. Its limit still has no adjacent ones, since each prohibited adjacent pair is determined by two coordinates. Therefore $K$ is sequentially compact, and hence compact as a metric space.
+
+For $a\in B$, theorem 27.3 gives at most countable support. Absolute summability permits interchange over disjoint Borel sets, so the displayed formula for $\iota(a)$ is countably additive. Splitting the coefficients into their positive and negative parts shows that its variation is
+$$
+|\iota(a)|(D)=\sum_{x\in D}|a(x)|.
+$$
+For completeness, the positive and negative coefficient measures are concentrated on disjoint countable Borel sets, so they are mutually singular and form the Jordan decomposition. The asserted variation formula follows.
+
+This variation measure is regular. Given a Borel set $D$ and $\epsilon>0$, choose a finite subset of $D\cap\operatorname{supp}(a)$ whose omitted mass inside $D$ is less than $\epsilon$; this subset is compact and proves inner regularity. For outer regularity, choose a finite $F\subseteq\operatorname{supp}(a)$ with total omitted mass less than $\epsilon$. The open set
+$$
+U=K\setminus(F\setminus D)
+$$
+contains $D$ and satisfies
+$$
+|\iota(a)|(U\setminus D)<\epsilon.
+$$
+Thus the variation, and consequently both Jordan parts, are regular. Taking $D=K$ in the variation formula proves the isometry. Linearity follows from absolute summability, and injectivity follows by evaluating singleton sets. Finally, for $x\ne y$, the two nonzero coefficients of $\delta_x-\delta_y$ have absolute value one, giving norm two. QED.
+

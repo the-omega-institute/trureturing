@@ -1,0 +1,8 @@
+**证明。** 饱和且符号相反时 $b_iz_i=-|b_i|$，于是对应余量为 $2|b_i|$，利用式（9.6）即可。另一方面，
+$$
+\left\|\sum_i b_i v_i-v\right\|
+\le\widetilde\rho+\nu+\sum_i|b_i|\|v_i-\widetilde v_i\|
+\le\widetilde\rho+\nu+\tau(\gamma^*+\varepsilon).
+$$
+代入定理9.2即得结论。证毕。
+

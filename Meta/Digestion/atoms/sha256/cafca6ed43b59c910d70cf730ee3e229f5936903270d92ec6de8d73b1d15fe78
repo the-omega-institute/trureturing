@@ -1,0 +1,8 @@
+**定理 47.6（在完成内无参数解释标准自然数）。** 对每个 $L_{\mathrm{sr}}$ 公式 $\varphi(\bar x)$ 与每个 $\bar n\in\mathbb N_0^k$，有
+$$
+(\mathbb N_0,0,1,+,\cdot)\models\varphi(\bar n)
+\Longleftrightarrow
+K\models\varphi^N(\iota(\bar n)).
+$$
+因此 $K$ 的纯幺半环结构无参数解释标准自然数幺半环。
+

@@ -1,0 +1,23 @@
+**定理 16.4（共同任务体的支撑函数与兼容性证书）。** 对式（16.7）的 $m\ge1$ 个任务，记 $c=(c_j)_{j=1}^m$，置 $u_{j\lambda}=P_\lambda^{1/2}a_j,w_{j\lambda}=Q_\lambda^{1/2}v_{j,\lambda}$。对每个 $\alpha\in\mathbb R^m$，令
+$$
+S_\lambda(\alpha)=\sum_{j=1}^m\alpha_j u_{j\lambda}w_{j\lambda}^*:U_B\to U_A,
+\qquad
+\Gamma(\alpha)=\sum_\lambda\|S_\lambda(\alpha)\|_*,
+\tag{16.8}
+$$
+其中 $w^*$ 为 $x\mapsto\langle w,x\rangle$，$\|\cdot\|_*$ 为全部奇异值之和。则两响应类的 $\mathcal C$ 非空、紧致、凸，关于 $c$ 对称，其支撑函数为
+$$
+\boxed{h_{\mathcal C}(\alpha):=\max_{z\in\mathcal C}\alpha\cdot z
+=\alpha\cdot c+\Gamma(\alpha).}
+\tag{16.9}
+$$
+因此，一组待同时实现的任务值 $z\in\mathbb R^m$ 属于 $\mathcal C$，当且仅当
+$$
+\boxed{\forall\alpha\in\mathbb R^m,\quad
+|\alpha\cdot(z-c)|\le\Gamma(\alpha).}
+\tag{16.10}
+$$
+$\Gamma$ 一般只是半范数，不要求 $\mathcal C$ 具有非空内部；空谱或所有任务余量为零时 $\mathcal C=\{c\}$。
+
+对完整档案类，令 $\mathcal C_{\mathcal D,h}$ 为式（16.7）在 $\mathbb F(\mathcal D,h)$ 上的像。式（16.10）始终是成员资格的必要条件；当 $\mathbb F(\mathcal D,h)=\mathbb B$ 时亦充分。更小的可行域须另证其任务像等于 $\mathcal C$ 才能沿用充分性；档案约束一般不保留凸性、对称性或闭性。
+

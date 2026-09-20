@@ -1,0 +1,18 @@
+**推论 72.7（有限细化塔的标量望远镜）。** 设 $N\ge1$，$I_0,\ldots,I_N$ 为有限非空标签集，各层有严格正概率 $p^{(\ell)}$，并有 $r_\ell:I_\ell\to I_{\ell-1}$ 满足 $p^{(\ell-1)}=(r_\ell)_*p^{(\ell)}$。令
+$$
+R=r_1\circ\cdots\circ r_N,\qquad
+\rho_\ell=\operatorname{diag}(p^{(\ell)}),
+\qquad
+\sigma_\ell=U_{r_\ell}\rho_{\ell-1}U_{r_\ell}^*.
+$$
+用端点权重构造 $U_R$，则
+$$
+U_R=U_{r_N}\cdots U_{r_1},
+\qquad
+D(U_R\rho_0U_R^*\Vert\rho_N)
+=H(p^{(N)})-H(p^{(0)})
+=\sum_{\ell=1}^N D(\sigma_\ell\Vert\rho_\ell).
+$$
+
+证明。有限推前复合使端点权重相容，定理 72.2 逐次消去中间权重即得 $U_R$。定理 72.6 对每条边给出 $D(\sigma_\ell\Vert\rho_\ell)=H(p^{(\ell)})-H(p^{(\ell-1)})$，对端点细化给出左端相对熵。有限求和中间熵逐项抵消。各相对熵使用各边指定的提升态与该层对角态；等式来自这些标量熵差，不是一条适用于任意三个量子态的相对熵链式法则。证毕。
+

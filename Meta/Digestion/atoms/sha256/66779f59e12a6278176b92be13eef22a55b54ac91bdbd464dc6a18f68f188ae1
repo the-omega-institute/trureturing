@@ -1,0 +1,42 @@
+**Proof.** The density formula uses the exact exponent $k_p=M_p-2$, so its denominator is $k_p+1=M_p-1$. The full range of $N_p$ in 35.1 gives both finite-depth extrema. Induction on the recurrence gives $G_L\ge\phi^L$, hence $\alpha^LG_L\ge1$. The Fibonacci closed form gives
+$$
+G_L=\frac{\phi^{L+2}-(-\alpha)^{L+2}}{\sqrt{5}},
+$$
+and therefore
+$$
+\alpha^L(G_{L+1}-1)
+=A_+-\alpha^L-\frac{(-1)^{L+3}\alpha^{2L+3}}{\sqrt{5}}<A_+.
+$$
+The strict inequality follows from $\alpha^{2L+3}/\sqrt{5}<\alpha^L$. The asserted extremal words exist by the finite value bijection. Their diameter witnesses are the split pairs in 35.1.
+
+If $A$ is empty or a singleton, the mass inequality follows from nonatomicity. Otherwise, among the first-difference indices of its distinct point pairs, choose the smallest index $k$. All points of $A$ have the same prefix of length $k$, and some pair first differs at $k$. Hence
+$$
+\operatorname{diam}_\rho A=2^{-k}.
+$$
+The common length-$k$ cylinder has diameter exactly $2^{-k}$, since it contains that pair. By 35.1 it is a set $D_p$ with $k_p=k$. Consequently
+$$
+\eta^*(A)\le\eta(D_p)=\mathcal D(p)h_1(2^{-k})\le A_+h_1(\operatorname{diam}_\rho A).
+$$
+This argument applies to nonmeasurable sets as well.
+
+For every admissible diameter cover, outer subadditivity now gives
+$$
+\eta^*(A)\le\sum_i\eta^*(A_i)
+\le A_+\sum_i h_1(\operatorname{diam}_\rho A_i),
+$$
+which proves the lower content bound.
+
+For the upper bound, the clopen algebra used to construct $\nu$ in 33.1, transported by $\Phi$, gives
+$$
+\eta^*(A)=\inf\left\{\sum_i\eta(B_i):A\subseteq\bigcup_iB_i,\ B_i\text{ clopen}\right\}.
+$$
+Every clopen set is a finite disjoint union of sufficiently deep positional cylinders transported by $\Phi$. A positional word ending in one can be extended by its forced zero without changing its cylinder, making every member a set $D_p$. These refinements can have arbitrarily small temporal diameter, by 35.1. On each member,
+$$
+h_1(\operatorname{diam}_\rho D_p)=\frac{\eta(D_p)}{\mathcal D(p)}\le\eta(D_p).
+$$
+Refining a clopen cover to diameter at most $\delta$ therefore proves the upper bound.
+
+For completeness, the diameter construction is an outer measure: countable covers can be combined, and the increasing limit as $\delta\downarrow0$ preserves the resulting subadditivity bound. Every clopen set and its complement are disjoint compact sets and, when both are nonempty, have positive mutual distance. At scales below that distance, no covering set meets both. Splitting covers across the two sides proves the Carathéodory equality for the clopen set. Thus all clopen sets are measurable, and their generated Borel sigma algebra is measurable. Finiteness and positivity follow from the displayed bounds with $A=X_\beta$. $\square$
+
+Reference: the corresponding cylinder-tree cover mechanism is Bellissard–Julien, [§§6.1–6.2, Proposition 14 and its proof, pp. 21–22](https://arxiv.org/pdf/1202.4330v2#page=21). The arbitrary-subset mass inequality and its constant are proved above, rather than inferred from the number of cylinders.
+

@@ -1,0 +1,38 @@
+### 127.8 有限路径 KL：完整方向性与观察后方向性的准确关系
+
+令 $\Omega$ 为有限非空合法路径载体，$\mathbb P,\mathbb R$ 为其上的概率，假设 $\mathbb P\ll\mathbb R$，即 $\mathbb P(\omega)>0$ 蕴含 $\mathbb R(\omega)>0$。固定同一个路径观察 $r:\Omega\to\mathcal Y$。写 $\mathbb P_Y=r_*\mathbb P$、$\mathbb R_Y=r_*\mathbb R$。
+
+对 $\mathbb P_Y(y)>0$，绝对连续性保证 $\mathbb R_Y(y)>0$，两个条件律均可定义；对 $\mathbb P(\omega)>0$ 且 $r(\omega)=y$，
+
+$$
+\frac{\mathbb P(\omega)}{\mathbb R(\omega)}
+=\frac{\mathbb P_Y(y)}{\mathbb R_Y(y)}
+\frac{\mathbb P(\omega\mid y)}{\mathbb R(\omega\mid y)}.
+\tag{127.54}
+$$
+
+对数后按 $\mathbb P$ 求和，就得到
+
+$$
+\boxed{
+D(\mathbb P\|\mathbb R)
+=D(\mathbb P_Y\|\mathbb R_Y)
++\sum_{y:\mathbb P_Y(y)>0}\mathbb P_Y(y)
+D\bigl(\mathbb P(\cdot\mid y)\|\mathbb R(\cdot\mid y)\bigr).
+}
+\tag{127.55}
+$$
+
+$\mathbb P_Y(y)=0$ 的纤维贡献定义为零，无需在那里选取条件律。有限载体和支撑包含保证所有所写 KL 有限。由条件 KL 非负性，观察不会增加这对实验的可区分性；等号恰在每个正 $\mathbb P_Y$ 纤维上的两份条件律相同。这比仅说“观察压缩信息”多给出了具体隐藏项。
+
+若要把 $\mathbb R$ 称作反向实验，必须先声明其来源。例如可以给路径反演 $\Theta^2=I$ 后取 $\mathbb R=\Theta_*\mathbb P$，也可以另给一份反向准备实验 $\widetilde{\mathbb P}$ 再取 $\mathbb R=\Theta_*\widetilde{\mathbb P}$。两者一般不同。
+
+要进一步把观察后的参考写成粗路径的反演，还需给 $\bar\Theta$ 并证明
+
+$$
+r\Theta=\bar\Theta r.
+\tag{127.56}
+$$
+
+此时 $r_*\Theta_*\widetilde{\mathbb P}=\bar\Theta_*r_*\widetilde{\mathbb P}$。式（127.55）本身不要求粗过程 Markov；完整路径的条件依赖已经保存在 $\mathbb P_Y$ 中。
+

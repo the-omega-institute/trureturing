@@ -1,0 +1,2 @@
+**证明。** $R_\alpha$ 在每个 $C$ 类上常值，故在实际像上定义 $h_\alpha([\omega])=R_\alpha(\omega)$，良定义且唯一。这给 $\sigma(R_\alpha:\alpha\in A)\subseteq\sigma(C)$。固定 $\omega$；对每个不在其类中的 $\omega'$，选择一个区分二者的指标 $\alpha_{\omega'}$。这样的 $\omega'$ 只有有限个，相应等值事件的交恰为 $[\omega]$。无类外点时这个交为 $\Omega$。每个类均属于右侧的 $\sigma$ 代数，故反向包含成立。最后，若 $M(\omega)=M(\omega')$，全部 $R_\alpha$ 相同，所以 $C(\omega)=C(\omega')$；按 $M$ 的非空纤维定义因子即得结论。$\square$
+

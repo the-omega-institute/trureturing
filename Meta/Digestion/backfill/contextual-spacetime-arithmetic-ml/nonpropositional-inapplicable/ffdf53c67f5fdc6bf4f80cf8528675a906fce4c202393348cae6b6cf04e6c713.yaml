@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ffdf53c67f5fdc6bf4f80cf8528675a906fce4c202393348cae6b6cf04e6c713
+  normalized_sha256: sha256:ffdf53c67f5fdc6bf4f80cf8528675a906fce4c202393348cae6b6cf04e6c713
+cas_ref: sha256:ffdf53c67f5fdc6bf4f80cf8528675a906fce4c202393348cae6b6cf04e6c713
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “应报告为一个向量”要求列出任务区别、关系族、获取增益和成本，属于研究报告口径；这里没有数值界或独立数学结论，不把任何增益塞进对象定义。
+    previous_atom_id: e66a6e22f5518ea579232150e27f8e1fa70ffdc1bca5d3d460949aa430a5ea52
+    next_atom_id: b4689912cd3899eb7198449aeb4ab7c69d79c812ba10b2d765fec0cdb8c8ff93

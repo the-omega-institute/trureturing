@@ -1,0 +1,7 @@
+**定理。** 对每个素数 p>=7，
+
+\[
+\boxed{\mathrm{WSS}(p)\iff e\ge2
+\iff \delta(p)<\frac1p.}\tag{FD11}
+\]
+

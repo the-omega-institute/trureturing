@@ -1,0 +1,44 @@
+**定理 30.12（显式对偶给出的全部通道最优值）。** 在定义30.11下，字典非空有界，且
+$$
+\boxed{\Gamma_{\mathfrak A}(\mathcal D_\lambda^{-1})=\lambda^{-1}.}
+\tag{30.32}
+$$
+极小值由
+$$
+\mathcal D_\lambda^{-1}=a_+\operatorname{id}+a_-\operatorname{Ad}_Z,\qquad
+\operatorname{Ad}_Z(M)=ZMZ,\qquad
+ a_\pm=\frac{1\pm\lambda^{-1}}2
+\tag{30.33}
+$$
+取得。任一可行表示满足 $\sum_j a_j=1$；任一最优表示的负系数总质量为 $(\lambda^{-1}-1)/2$。此结论不要求或宣称最优分解唯一。
+
+证明。恒等与酉共轭都是 CPTP，故字典非空，其实张成按定义为 $\mathcal V$。用未归一化向量 $|\Omega\rangle=|00\rangle+|11\rangle$ 定义 Choi 矩阵
+$J(\Phi)=(\Phi\otimes\operatorname{id})(|\Omega\rangle\langle\Omega|)$。通道的 $J(\Phi)\succeq0$ 且 $\operatorname{Tr}J(\Phi)=2$，所以 $\|J(\Phi)\|_1=2$；Choi 线性对应是有限维同构，因此字典在任意固定算子坐标范数中有界。定理5.2的有限维、有界、张成条件全部满足。
+
+量子实在卷式（222.2）的矩阵恒等式在此取参数 $\lambda^{-1}$；比较对角与非对角元仍给式（30.33），但不延伸其凸性或 CPTP 断言。两个系数的绝对值和为 $\lambda^{-1}$，给上界及目标属于 $\mathcal V$。
+
+显式对偶泛函取
+$$
+\ell(\Phi)=\operatorname{Tr}\bigl[X\Phi(\rho_+)\bigr]\quad(\Phi\in\mathcal V).
+\tag{30.34}
+$$
+它是实线性泛函。对每个 CPTP 原子，$\sigma=\Phi(\rho_+)\in\mathcal D_2$；由于 $-I\preceq X\preceq I$，有 $-1\le\operatorname{Tr}(X\sigma)\le1$，故 $|\ell(\Phi)|\le1$ 对全部字典成立。同时
+$$
+\mathcal D_\lambda^{-1}(\rho_+)=\tfrac12(I+\lambda^{-1}X),\qquad
+\ell(\mathcal D_\lambda^{-1})=\lambda^{-1}.
+$$
+定理5.2的对偶公式于是给下界 $\lambda^{-1}$。也可对任一表示直接写
+$\lambda^{-1}=\sum_ja_j\ell(\Phi_j)\le\sum_j|a_j|$，与式（30.33）相合。最后，逆映射保持迹，对任意迹一输入取表示两侧的迹得到 $\sum_ja_j=1$。记正、负系数质量为 $P_a,N_a$，则 $P_a-N_a=1$、$P_a+N_a=\sum_j|a_j|$；在最优表示中解得所列 $N_a$。$\square$
+
+逆作用于 $\rho_+$ 的两个特征值为 $(1\pm\lambda^{-1})/2$。故 $0<\lambda<1$ 时它不是全态正映射，更不是全态 CPTP 恢复；$\lambda=1$ 为恒等，$\lambda=0$ 消去非对角元而不具线性逆。令 $Y=\bigl(\begin{smallmatrix}0&-\mathrm i\\\mathrm i&0\end{smallmatrix}\bigr)$，用 Pauli 向量写 $\rho=(I+r_xX+r_yY+r_zZ)/2$。三个坐标为实数，$(r_xX+r_yY+r_zZ)^2=(r_x^2+r_y^2+r_z^2)I$，所以 $\rho$ 的特征值为 $(1\pm\sqrt{r_x^2+r_y^2+r_z^2})/2$；故 $\rho\in\mathcal D_2$ 恰为 $r_x^2+r_y^2+r_z^2\le1$。相位阻尼将前两坐标乘 $\lambda$，因而实际输出域是
+$$
+\mathcal E_\lambda=\mathcal D_\lambda[\mathcal D_2]
+=\left\{\rho:\frac{r_x^2+r_y^2}{\lambda^2}+r_z^2\le1\right\}.
+\tag{30.35}
+$$
+逆在这个域上恢复合法态，因为它只把前两个坐标除以 $\lambda$。域内代数合法性不提供在全部未知输入上可执行的逆通道。
+
+若仍要求一份固定线性组合在整个 $\mathcal E_\lambda$ 上等于逆映射，最优值也不能下降。证明是两线性映射之差在该椭球上为零：$I/2$ 是其相对内点，对任意无迹 Hermitian $H$，存在 $\varepsilon>0$ 使 $I/2\pm\varepsilon H$ 都在椭球内；相减得差映射消去 $H$，再用 $I/2$ 得消去整个 $\operatorname{Herm}_2$。所以回到定理30.12的全线性任务。$\lambda<1$ 时对偶测试所用 $\rho_+$ 不在实际输出椭球中；它在这个线性延拓论证之后作为分离测试合法使用，不是声称已经从噪声通道取得该输入。
+
+若任务只有一份已知准备态 $\rho_0$ 的恢复，允许制备 $\rho_0$ 的常值通道 $M\mapsto\operatorname{Tr}(M)\rho_0$ 已以成本一满足该单态任务；仅恢复对角输入时恒等也成本一。两者至少一的下界均由在一份迹一输入上取迹得到 $\sum a_j=1$。这些任务的量词不同于整个椭球上的一份共同线性逆。未知 $\lambda$、不同原子价格、受限可调用字典、非线性或自适应恢复都须重新指定问题，式（30.32）不替代那些合同。
+

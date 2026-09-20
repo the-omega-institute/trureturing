@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/002-fixtures/000000-000001.json",
+        "sha256": "9c17f4a3b624587be8cbcecb27d0dd45575b571c685cd9aef762fc3e2ea7bc83",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/002-fixtures/000001/single.json",
+        "sha256": "cced609440233109bdd459ab2389e9796badbca9684c3ed70afa11d582ffd0fb",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

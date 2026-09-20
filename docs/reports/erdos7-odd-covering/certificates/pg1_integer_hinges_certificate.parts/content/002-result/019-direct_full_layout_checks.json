@@ -1,0 +1,46 @@
+[
+  {
+    "root3": 1,
+    "root9": 1,
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "threshold": 3,
+    "numerator": 642060548
+  },
+  {
+    "root3": 1,
+    "root9": 1,
+    "depth": [
+      0,
+      0,
+      1
+    ],
+    "threshold": 3,
+    "numerator": 1144239009
+  },
+  {
+    "root3": 1,
+    "root9": 7,
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "threshold": 7,
+    "numerator": 87522248
+  },
+  {
+    "root3": 2,
+    "root9": 8,
+    "depth": [
+      0,
+      0,
+      0
+    ],
+    "threshold": 8,
+    "numerator": 66489036
+  }
+]

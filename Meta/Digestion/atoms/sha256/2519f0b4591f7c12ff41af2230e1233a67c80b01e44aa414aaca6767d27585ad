@@ -1,0 +1,23 @@
+**命题 15.9（仿射钟接入与时间积分单位）。** 在引理15.8下，若 $\phi_A(\tau)=c_A\tau,\phi_B(\sigma)=c_B\sigma$，$c_A,c_B>0$，且两本地零标签对应同一经过时间零点，则
+$$
+h_{BA}(\tau)=\frac{c_A}{c_B}\tau,\qquad
+\frac{F_A'(0)}{F_B'(0)}=\frac{c_A}{c_B}.
+\tag{15.20}
+$$
+因此相对钟率可由同源共享响应恢复。一般仿射钟 $\phi_i(\tau)=c_i\tau+b_i$ 的匹配为 $h_{BA}(\tau)=(c_A\tau+b_A-b_B)/c_B$，仅在覆盖交集内使用；微分比须取匹配的点。恢复并扣除经过时间原点后，两响应才按共同的半群延迟变量应用定理15.4，不能把有偏移的响应标签直接当作从零开始的延迟。
+
+取 $A$ 钟为共同参考，用 $\sigma=h_{BA}(\tau)$ 重标 $B$ 处整个矩阵响应。在共享零点情形得到固定生成元 $C_{\rm ref}=c_A C$，谱率变为 $c_A\lambda$，谱系数及零时刻Gram几何不变。更一般地，对已校准的同一核和 $t=c\tau,c>0$，记 $Z=\int_0^\infty K(t)dt$，则
+$$
+K_{\rm ref}(\tau)=K(c\tau),\qquad C_{\rm ref}=cC,\qquad
+Z_{\rm ref}=\int_0^\infty K_{\rm ref}(\tau)d\tau=Z/c.
+\tag{15.21}
+$$
+对局部可积输入 $g$ 及 $y(t)=\int_0^tK(t-s)g(s)ds$，必须同时运输输入密度
+$$
+g_{\rm ref}(\sigma)=c\,g(c\sigma),\qquad
+\boxed{y(c\tau)=\int_0^\tau K_{\rm ref}(\tau-\sigma)
+ g_{\rm ref}(\sigma)d\sigma.}
+\tag{15.22}
+$$
+故积分增益的数值不会在忽略时间测度、输入单位及Jacobian的情况下保持不变。匹配所用迹由 $D_\lambda$ 固定；校准不限制 $T_\lambda$，不消除定理15.5的几何歧义。
+

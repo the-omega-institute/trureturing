@@ -1,0 +1,11 @@
+## 27. PR3 增补 I：来源语言与来源–位置双电荷
+
+本节沿用定义 1 的来源树集合 $T$，将定义 12／命题 9 的联合分箱 $f(e)=(x(e),\rho(e))$ 向全域补零。记全局读数为 $\rho_{\rm src}$，与逐事件来源函数 $\rho(e)$ 区分：
+
+$$
+\rho_{\rm src}(X)=(w_X^\rho,z_X^\rho),\qquad
+w_X^\rho(p,r)=\sum_{\substack{e\in\Omega_X\\x(e)=p,\ \rho(e)=r}}\sigma(e),\quad
+z_X^\rho(p,r)=\sum_{\substack{e\in A_X\\x(e)=p,\ \rho(e)=r}}\sigma(e).
+\tag{SRC}
+$$
+

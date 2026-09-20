@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4a897b77ceda50adb266c419d16b2e378dc40e6d1aabb1d3fdedf2a70e74eddf
+  normalized_sha256: sha256:4a897b77ceda50adb266c419d16b2e378dc40e6d1aabb1d3fdedf2a70e74eddf
+cas_ref: sha256:4a897b77ceda50adb266c419d16b2e378dc40e6d1aabb1d3fdedf2a70e74eddf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 真实可复合对满足原边界相等，将本条已给的两条边界下降方程代入即可得到观察边界相等，故真实联合像包含于候选拼接域；只用像的成员展开和等式代入，仓内无冻结 GID。
+    previous_atom_id: 9754a52db04addd4a118cc56b46755e3d07012ba927d615392894741aa2c8655
+    next_atom_id: ac0d3585c0bbf152b22a7b07e9583e0455263c4fddfd1b7515614048e59e9297

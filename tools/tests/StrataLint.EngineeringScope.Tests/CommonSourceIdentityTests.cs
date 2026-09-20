@@ -1,0 +1,191 @@
+using StrataLint.TestSupport;
+using Xunit;
+
+namespace StrataLint.EngineeringScope.Tests;
+
+public sealed class CommonSourceIdentityTests
+{
+    [Theory]
+    [InlineData("valid", null)]
+    [InlineData("opaque", null)]
+    [InlineData("non-lean-invalid-utf8", typeof(InvalidDataException))]
+    [InlineData("changed-lean", typeof(FormatException))]
+    [InlineData("additional-lean", typeof(FormatException))]
+    [InlineData("invalid-materials", typeof(InvalidDataException))]
+    public void ReportValidationPreservesSourceBindingsAndOtherFileValidation(string scenario, Type? errorType)
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        const string source = "D5/S0/Carrier/ReportSource.lean";
+        fixture.Write(source, "theorem source : True := True.intro\n");
+        fixture.Write("docs/report.json", "{\"value\":1}\n");
+        var path = Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath);
+        CiTransportTests.Report(fixture.Root);
+        var hash = CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, source));
+        TemporaryFileSystem.File.WriteAllText(path,
+            "{\"modules\": [{\"declarations\": [], \"imports\": [], \"module\": \"D5.S0.Carrier.ReportSource\", "
+            + "\"source_path\": \"" + source + "\", \"source_sha256\": \"sha256:" + hash
+            + "\"}], \"schema\": \"stratalint-raw-lean-report-v2\"}\n");
+        switch (scenario)
+        {
+            case "opaque":
+                fixture.Write("docs/develop/theory/opaque.bin", "initial");
+                TemporaryFileSystem.File.WriteAllBytes(Path.Combine(fixture.Root, "docs/develop/theory/opaque.bin"), [0xff]);
+                break;
+            case "non-lean-invalid-utf8":
+                TemporaryFileSystem.File.WriteAllBytes(Path.Combine(fixture.Root, "docs/report.json"), [0xff]);
+                break;
+            case "changed-lean": fixture.Write(source, "theorem changed : True := True.intro\n"); break;
+            case "additional-lean": fixture.Write("D5/S0/Carrier/Additional.lean", "theorem extra : True := True.intro\n"); break;
+            case "invalid-materials": TemporaryFileSystem.File.WriteAllText(path + ".materials.zip", "invalid archive"); break;
+        }
+
+        var viewError = Record.Exception(() => CommonStages.ValidateProducedReport(fixture.Root));
+        if (errorType is null) Assert.Null(viewError);
+        else Assert.IsType(errorType, viewError);
+    }
+
+    [Fact]
+    public void CandidateRejectsInvalidTextButPreservesOpaqueBytesInIdentity()
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        fixture.Write("docs/report.txt", "valid\n");
+        var textPath = Path.Combine(fixture.Root, "docs/report.txt");
+        TemporaryFileSystem.File.WriteAllBytes(textPath, [0xff]);
+        var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
+        Assert.Contains("strict UTF-8: docs/report.txt", error.Message, StringComparison.Ordinal);
+        TemporaryFileSystem.File.Delete(textPath);
+
+        fixture.Write("docs/develop/theory/opaque.bin", "initial\n");
+        var opaquePath = Path.Combine(fixture.Root, "docs/develop/theory/opaque.bin");
+        TemporaryFileSystem.File.WriteAllBytes(opaquePath, [0xff]);
+        var before = CommonExecutionEvidence.Candidate(fixture.Root);
+        TemporaryFileSystem.File.WriteAllBytes(opaquePath, [0xfe]);
+        Assert.NotEqual(before, CommonExecutionEvidence.Candidate(fixture.Root));
+    }
+
+    [Fact]
+    public void FreshIdentityIncludesUnregisteredDataBytesAndExecutableMode()
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        fixture.Write("docs/report.json", "{\"value\":1}\n");
+        var before = CommonExecutionEvidence.Candidate(fixture.Root);
+        fixture.Write("docs/report.json", "{\"value\":2}\n");
+        var changed = CommonExecutionEvidence.Candidate(fixture.Root);
+        Assert.NotEqual(before, changed);
+        if (OperatingSystem.IsWindows()) return;
+        var path = Path.Combine(fixture.Root, "docs/report.json");
+        File.SetUnixFileMode(path, File.GetUnixFileMode(path) | UnixFileMode.UserExecute);
+        Assert.NotEqual(changed, CommonExecutionEvidence.Candidate(fixture.Root));
+    }
+
+    [Theory]
+    [InlineData("absent", "missing engineering project registration")]
+    [InlineData("duplicate", "duplicate engineering project registration")]
+    [InlineData("uncovered", "unregistered engineering source")]
+    public void CandidateRejectsInvalidRegistrationBeforeIssuingIdentity(string defect, string diagnostic)
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        if (defect == "absent") TemporaryFileSystem.File.Delete(manifest);
+        else if (defect == "duplicate") TemporaryFileSystem.File.WriteAllText(manifest,
+            EngineeringRegistrationFixture.Append(TemporaryFileSystem.File.ReadAllText(manifest),
+                new EngineeringProjectFixture(CurrentExecutionContractTests.CandidateFixture.First,
+                    "First", "cross-cutting-test", true, [])));
+        else TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "Unregistered.cs"), "class Unregistered { }");
+
+        var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
+
+        Assert.Contains(diagnostic, error.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(".sshx-extra.cs", false)]
+    [InlineData("local/Other.cs", false)]
+    [InlineData("release/Conditional.cs", true)]
+    public void UnrepresentedRegisteredCompileInputCannotReceiveCandidateEvidence(string source, bool releaseOnly)
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        WriteProject(fixture.Root, releaseOnly);
+        TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ".gitignore"),
+            ".sshx-*\nlocal/\nrelease/\n**/obj/\n**/bin/\n");
+        var before = CommonExecutionEvidence.Candidate(fixture.Root);
+        var path = Path.Combine(fixture.Root, "tools/tests/First", source);
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        TemporaryFileSystem.File.WriteAllText(path, "public class AdditionalSource { }\n");
+
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        var registration = TemporaryFileSystem.File.ReadAllText(manifest);
+        TemporaryFileSystem.File.WriteAllText(manifest, registration.Replace("tools/tests/First/**/*.cs",
+            "tools/tests/First/" + source, StringComparison.Ordinal));
+        var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.Candidate(fixture.Root));
+
+        Assert.Contains("registered Compile input is absent", error.Message, StringComparison.Ordinal);
+        Assert.Contains(source, error.Message, StringComparison.Ordinal);
+        TemporaryFileSystem.File.Delete(path);
+        TemporaryFileSystem.File.WriteAllText(manifest, registration);
+        Assert.Equal(before, CommonExecutionEvidence.Candidate(fixture.Root));
+    }
+
+    [Fact]
+    public void DirtyRepresentedSourceChangesIdentityAndUnconsumedIgnoredFileDoesNot()
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        WriteProject(fixture.Root, false);
+        TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ".gitignore"), "local/\n");
+        var before = CommonExecutionEvidence.Candidate(fixture.Root);
+        var path = Path.Combine(fixture.Root, "tools/tests/First/Additional.cs");
+        TemporaryFileSystem.File.WriteAllText(path, "public class AdditionalSource { }\n");
+        var dirty = CommonExecutionEvidence.Candidate(fixture.Root);
+        Assert.NotEqual(before, dirty);
+        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(fixture.Root, "local"));
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "local/Unconsumed.cs"), "class Unconsumed { }");
+        Assert.Equal(dirty, CommonExecutionEvidence.Candidate(fixture.Root));
+        _ = fixture.Build();
+        Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) =>
+        {
+            fixture.WriteTrx(results, "Passed");
+            return 0;
+        }, TextWriter.Null));
+        CommonExecutionEvidence.ValidateTests(fixture.Root);
+        TemporaryFileSystem.File.AppendAllText(path, "// dirty edit\n");
+        Assert.NotEqual(dirty, CommonExecutionEvidence.Candidate(fixture.Root));
+        Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void EngineeringSealRejectsChangedStageStartEvenAfterNewTestsPass(bool modeOnly)
+    {
+        if (modeOnly && OperatingSystem.IsWindows()) return;
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var started = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+        var source = Path.Combine(fixture.Root, CurrentExecutionContractTests.CandidateFixture.First);
+        if (modeOnly) File.SetUnixFileMode(source, File.GetUnixFileMode(source) | UnixFileMode.UserExecute);
+        else TemporaryFileSystem.File.AppendAllText(source, "\n");
+        _ = fixture.Build();
+        Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) =>
+        {
+            fixture.WriteTrx(results, "Passed");
+            return 0;
+        }, TextWriter.Null));
+        const string log = CommonExecutionEvidence.RootPath + "/fixture.log";
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "executed\n");
+        var steps = CommonExecutionEvidence.EngineeringSteps
+            .Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
+
+        var error = Assert.Throws<InvalidDataException>(() =>
+            CommonExecutionEvidence.SealEngineering(fixture.Root, started, steps));
+
+        Assert.Equal("common evidence candidate identity or round mismatch", error.Message);
+        Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.EngineeringPath)));
+    }
+
+    private static void WriteProject(string root, bool releaseOnly) => TemporaryFileSystem.File.WriteAllText(
+        Path.Combine(root, CurrentExecutionContractTests.CandidateFixture.First),
+        "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework>"
+        + "<IsTestProject>true</IsTestProject></PropertyGroup>"
+        + (releaseOnly ? "<ItemGroup><Compile Remove=\"release/**/*.cs\" />"
+            + "<Compile Include=\"release/**/*.cs\" Condition=\"'$(Configuration)' == 'Release'\" /></ItemGroup>" : "")
+        + "</Project>\n");
+}

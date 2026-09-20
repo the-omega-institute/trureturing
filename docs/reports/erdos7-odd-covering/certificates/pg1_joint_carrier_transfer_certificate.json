@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "0312a030b479ffa26fbac66f68a4ed2f593f87f09a7a27a071c51b301ce1ca54",
+  "parts_directory": "pg1_joint_carrier_transfer_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "bfd9db0643a7dddbba253b7d04200de6f90490105785b6319334d8ab7f991e47",
+    "kind": "object"
+  }
+}

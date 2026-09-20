@@ -66,6 +66,20 @@ public sealed class AnchorReferenceRuleTests
             ("D5/B.lean", ["D5.C"]),
             ("D5/C.lean", [Target])));
 
+    [Theory]
+    [InlineData("LeanInformationAudit.Syntax")]
+    [InlineData("LeanInformationAuditAnalysis.Probe")]
+    public void ImportClosureUsesInspectorSourceRootForTooling(string module)
+    {
+        var path = "tools/lean-inspector/" + module.Replace('.', '/') + ".lean";
+        var report = Report(("D5/A.lean", [module]), (path, ["D5.B"]),
+            ("D5/B.lean", [Target]));
+        Assert.Equal(module, LeanImportClosure.ModuleName(RepoPath.CreateKnown(path)));
+        Assert.Contains(RepoPath.CreateKnown("D5/B.lean"),
+            LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown("D5/A.lean")));
+        Assert.True(LeanImportClosure.ImportsExternalModule(report, "D5.A", Target));
+    }
+
     [Fact]
     public void ImportClosureRejectsUnreachableTarget() =>
         Assert.False(IsReachable(("D5/A.lean", ["Mathlib.Data.Nat.Fib.Basic"])));
@@ -225,6 +239,7 @@ public sealed class AnchorReferenceRuleTests
             [helper] = "-- helper\n",
             [unrelated] = "-- unrelated\n",
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
+            [EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Manifest(),
             [RuleFixture.FixtureBackfillSourcePath] = RuleFixture.FixtureBackfillSource,
             [RuleFixture.FixtureDigestionSourcePath] = RuleFixture.FixtureDigestionSource,
             ["lean-toolchain"] = "leanprover/lean4:v4.23.0\n",
@@ -253,7 +268,7 @@ public sealed class AnchorReferenceRuleTests
             [new DomainSyntax("Carrier", "S0", "Synthetic carrier")])).Policy;
         var changes = RawChangeSet.CreateWithKinds(
             [(changedPath, added ? RawChangeKind.Added : RawChangeKind.Modified)]);
-        var context = RuleEvaluationContext.Create(
+        var context = DeltaRuleContext.Create(
             SyntheticSnapshot(current),
             SyntheticSnapshot(baseline),
             policy,

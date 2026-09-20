@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c0b249aac5e33136cbbfcccce0d5c06d12c9961d35941acf8ab3d980b652cead
+  normalized_sha256: sha256:c0b249aac5e33136cbbfcccce0d5c06d12c9961d35941acf8ab3d980b652cead
+cas_ref: sha256:c0b249aac5e33136cbbfcccce0d5c06d12c9961d35941acf8ab3d980b652cead
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 紧空间的闭子集紧，直接应用 IsClosed.isCompact，未添加源空间的 Hausdorff 假设；仓内无冻结 GID。
+    previous_atom_id: 883d254dd909ef053e02bddf7879c13bffbd5eabe81cee0b381fdc346fef5a16
+    next_atom_id: f0eb44ce42f4aa6e4769f25d64d8681ecfdb78a3e05a0465fe615b936b529e4f

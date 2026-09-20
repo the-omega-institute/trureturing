@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c551c0fbb2fa9d4e0222dbe555e58d50362edc19dbc9d9d3ec102e5cd690e69f
+  normalized_sha256: sha256:c551c0fbb2fa9d4e0222dbe555e58d50362edc19dbc9d9d3ec102e5cd690e69f
+cas_ref: sha256:c551c0fbb2fa9d4e0222dbe555e58d50362edc19dbc9d9d3ec102e5cd690e69f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅说明后文沿用命题及符号的原陈述和证明，属于引用说明，没有独立待证命题，故无需证明探针。
+    previous_atom_id: 67aa4265a049a985393911d2e0f5f61b39d0b22bb13b5027c2084fdd71458add
+    next_atom_id: 8e15405d12041107126cd8e9b084f8b70ef3d003f0fc1c0439c796333daf74de

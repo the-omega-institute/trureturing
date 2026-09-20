@@ -1,0 +1,9 @@
+**定义 6.1（近似实现的局部缺陷）。** 在定理4.2的全参数模型中，给同签名实现 $\widetilde X_s,\widetilde g$ 及映射 $r_s:\widetilde X_s\to X_s$，不要求满射或单射。对每个组合，指定有限非负数 $\delta_g$，并要求在实际将使用的全部输入上
+$$
+D_t\bigl(r_t\widetilde g(\widetilde x_1,\ldots,\widetilde x_m),
+g(r_{s_1}\widetilde x_1,\ldots,r_{s_m}\widetilde x_m)\bigr)
+\le\delta_g.
+\tag{6.1}
+$$
+这些输入可以限制在一个已经证明在执行中封闭的可达域。对部分操作，式(6.1)中插入的中间元组也必须合法，或按已声明失败规则总化。只在两个实际端点各自合法时检验当前读数，不足以提供式(6.1)。
+

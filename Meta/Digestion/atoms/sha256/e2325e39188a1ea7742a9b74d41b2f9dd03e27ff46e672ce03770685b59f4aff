@@ -1,0 +1,44 @@
+**Proof 22.9.** The series for $e$ converges uniformly and so defines a continuous map. If $x,y$ first differ at index $j$, with $x_j=0$ and $y_j=1$, then
+$$
+e(y)-e(x)\geq \frac{2}{3^{j+1}}-\sum_{k>j}\frac{2}{3^{k+1}}
+=\frac1{3^{j+1}}>0.
+$$
+Thus $e$ is injective and preserves the stated order. Compactness makes it a homeomorphism onto $e[K]$. The image of each nonempty compact fiber has an attained minimum and maximum, giving unique $A_{\min}$ and $A_{\max}$. Moreover,
+$$
+\{\xi:e(A_{\min}(\xi))\leq t\}=\operatorname{Hit}(\{z:e(z)\leq t\}),
+$$
+$$
+\{\xi:e(A_{\max}(\xi))\geq t\}=\operatorname{Hit}(\{z:e(z)\geq t\}).
+$$
+These sets are closed by Theorem 22.4, proving the two scalar semicontinuity claims.
+
+For a same-target construction, partition $X$ by the first $n$ digits of each input. This is a finite clopen partition. Denote the cell containing $\xi$ by $C_n(\xi)$, and define
+$$
+T_n(\xi)=\bigcup_{\eta\in C_n(\xi)}\Gamma(\eta).
+$$
+It is a nonempty compact set, being the projection of $\Gamma\cap(C_n(\xi)\times K)$. These sets decrease with $n$, and
+$$
+\bigcap_{n\geq1}T_n(\xi)=\Gamma(\xi).
+$$
+The inclusion from right to left is immediate. For the reverse inclusion, if $z$ belongs to every $T_n(\xi)$, choose $\eta_n\in C_n(\xi)$ with $z\in\Gamma(\eta_n)$. The cell diameter is at most $2^{-n}$, so $\eta_n\to\xi$. Closedness gives $z\in\Gamma(\xi)$.
+
+Set
+$$
+a_n(\xi)=e^{-1}\bigl(\min e[T_n(\xi)]\bigr),\qquad
+b_n(\xi)=e^{-1}\bigl(\max e[T_n(\xi)]\bigr).
+$$
+Each map is constant on each cell of a finite clopen partition, hence is continuous as a map into $K$. At a fixed $\xi$, the numbers $e(a_n(\xi))$ increase and are bounded above by $e(A_{\min}(\xi))$. Let their limit be $\ell$. A convergent subsequence of $a_n(\xi)$ has limit in every $T_m(\xi)$: all sufficiently late terms lie there, and the set is closed. Thus its limit belongs to $\Gamma(\xi)$ and has $e$-value $\ell$. Minimality gives $\ell\geq e(A_{\min}(\xi))$, proving equality. Continuity of $e^{-1}$ on $e[K]$ now gives convergence of the full sequence to $A_{\min}(\xi)$. For the maximum, $e(b_n(\xi))$ decreases and is bounded below by $e(A_{\max}(\xi))$; the same compact-limit argument places its limiting value in the fiber, where maximality gives the reverse inequality. Hence
+$$
+a_n(\xi)\longrightarrow A_{\min}(\xi),\qquad
+b_n(\xi)\longrightarrow A_{\max}(\xi)
+$$
+in $K$ at every input. The approximants are continuous digit-space-valued maps, but are not required to be selections at their own inputs.
+
+For completeness, any pointwise limit $f$ of continuous $K$-valued maps $f_n$ is Borel. For a proper nonempty open $O\subset K$, distance to the nonempty closed set $K\setminus O$ gives
+$$
+f^{-1}(O)=
+\bigcup_{k,N\geq1}\ \bigcap_{n\geq N}
+\{\xi:d_K(f_n(\xi),K\setminus O)\geq1/k\}.
+$$
+If $f(\xi)\in O$, its distance to the complement is positive; convergence gives the displayed eventual inequality for a sufficiently large $k$. Conversely, that inequality passes to the limit and excludes membership in the complement. Each inner intersection is closed, so the inverse image is $F_\sigma$. Empty and full open sets give empty and full inverse images. Applying this to $a_n$ and $b_n$ proves Borelness. This construction, rather than an inference from meagre discontinuities or from an ambient real-valued approximation, proves the claimed target-valued Baire class.
+

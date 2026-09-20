@@ -11,7 +11,9 @@ internal static class TestProcessRunner
         string workingDirectory,
         TimeSpan timeout,
         int maximumOutputBytes,
-        ReadOnlyMemory<byte> standardInput = default) =>
+        ReadOnlyMemory<byte> standardInput = default,
+        Stream? standardOutput = null,
+        Stream? standardError = null) =>
         Classify(
             () => BoundedProcessRunner.Run(
                 fileName,
@@ -19,7 +21,9 @@ internal static class TestProcessRunner
                 workingDirectory,
                 timeout,
                 maximumOutputBytes,
-                standardInput),
+                standardInput,
+                standardOutput: standardOutput,
+                standardError: standardError),
             fileName);
 
     internal static ProcessOutput Classify(Func<ProcessOutput> run, string command) =>

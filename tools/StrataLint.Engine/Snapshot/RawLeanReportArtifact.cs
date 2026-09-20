@@ -15,12 +15,12 @@ internal static class RawLeanReportArtifact
     internal static readonly AsyncLocal<Action?> Reading = new();
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-    internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot)
+    internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot, bool validateMaterials = false)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var fullPath = Path.GetFullPath(path);
         var bytes = File.ReadAllBytes(fullPath);
-        return Read(bytes, snapshot, MaterialsPath(fullPath));
+        return Read(bytes, snapshot, MaterialsPath(fullPath), validateMaterials);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
@@ -29,7 +29,8 @@ internal static class RawLeanReportArtifact
     private static LeanAxiomReport Read(
         ReadOnlySpan<byte> bytes,
         RepositorySnapshot snapshot,
-        string? materialPath)
+        string? materialPath,
+        bool validateMaterials = false)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         Reading.Value?.Invoke();
@@ -74,6 +75,7 @@ internal static class RawLeanReportArtifact
         foreach (var moduleElement in RequiredArray(root, "modules").EnumerateArray())
         {
             var moduleProperties = new List<string> { "declarations", "imports", "module", "source_path", "source_sha256" };
+            if (moduleElement.TryGetProperty("information_templates", out _)) moduleProperties.Add("information_templates");
             if (moduleElement.TryGetProperty("utility_refutation", out _)) moduleProperties.Add("utility_refutation");
             if (moduleElement.TryGetProperty("information_registration_errors", out _)) moduleProperties.Add("information_registration_errors");
             RequireProperties(moduleElement, moduleProperties, "raw Lean module");
@@ -105,6 +107,8 @@ internal static class RawLeanReportArtifact
             if (!reports.TryAdd(sourcePath, new LeanFileReport(imports, declarations)
                 {
                     Refutation = ReadRefutation(moduleElement, source.File, snapshot),
+                    InformationTemplates = moduleElement.TryGetProperty("information_templates", out var templates)
+                        ? templates.Clone() : null,
                     InformationRegistrationErrors = moduleElement.TryGetProperty("information_registration_errors", out _)
                         ? ReadSortedStrings(RequiredArray(moduleElement, "information_registration_errors"), "information_registration_errors")
                         : null,
@@ -125,6 +129,7 @@ internal static class RawLeanReportArtifact
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
         }
 
+        if (validateMaterials) materialArchive!.ValidateAll();
         return LeanAxiomReport.Create(reports);
     }
 
@@ -170,6 +175,7 @@ internal static class RawLeanReportArtifact
                             .Distinct(StringComparer.Ordinal)
                             .Order(StringComparer.Ordinal),
                         information_registration_errors = fileReport.InformationRegistrationErrors,
+                        information_templates = fileReport.InformationTemplates,
                         module = item.Key,
                         source_path = item.Value.Path.Value,
                         source_sha256 = Sha256(item.Value.File.RawBytes.AsSpan()),
@@ -469,11 +475,20 @@ internal static class RawLeanReportArtifact
             return material.GetOrAdd(
                 address,
                 value => new Lazy<string>(
-                    () => ReadCore(value),
+                    () => ReadCore(value, materialize: true)!,
                     LazyThreadSafetyMode.ExecutionAndPublication)).Value;
         }
 
-        private string ReadCore(string address)
+        internal void ValidateAll()
+        {
+            _ = addressesValidated.Value;
+            // Validate every entry without retaining expanded strings in the
+            // demand-read cache for the lifetime of the report.
+            foreach (var name in contents.Value.Entries.Keys)
+                _ = ReadCore("sha256:" + name[EntryPrefix.Length..], materialize: false);
+        }
+
+        private string? ReadCore(string address, bool materialize)
         {
             var archive = contents.Value;
             if (!archive.Entries.TryGetValue(EntryName(address), out var entry))
@@ -492,10 +507,11 @@ internal static class RawLeanReportArtifact
                 stream.ReadExactly(bytes);
             }
 
-            string value;
+            string? value = null;
             try
             {
-                value = StrictUtf8.GetString(bytes);
+                if (materialize) value = StrictUtf8.GetString(bytes);
+                else _ = StrictUtf8.GetCharCount(bytes);
             }
             catch (DecoderFallbackException exception)
             {

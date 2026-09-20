@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d45fb7974dc26fb0740b9c3378447bbb1170b2812c0d971d89fe8655ca9bfac4
+  normalized_sha256: sha256:d45fb7974dc26fb0740b9c3378447bbb1170b2812c0d971d89fe8655ca9bfac4
+cas_ref: sha256:d45fb7974dc26fb0740b9c3378447bbb1170b2812c0d971d89fe8655ca9bfac4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只设定有限维谱投影代数的分块表示及完整输出维数的资源口径，最小值公式位于另一子叶，本叶没有独立待证结论。
+    previous_atom_id: 2ce44837d491e333662dadde08b6dfb0c4139ef9fb115718a1b44b62e0b00cbf
+    next_atom_id: b24bdad82f330a0769d819394f11454a956e21d3d3b9ab84ba07d784c68d3773

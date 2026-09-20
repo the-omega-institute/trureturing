@@ -1,0 +1,7 @@
+**证明。** 首步相同等价于 ΔBΣ+ΣΔA=0。对 i≠j，利用两矩阵对称，两个条目方程给
+
+$$\sigma_j\Delta B_{ij}+\sigma_i\Delta A_{ij}=0,
+\qquad\sigma_i\Delta B_{ij}+\sigma_j\Delta A_{ij}=0.$$
+
+系数行列式σ_j²-σ_i²非零，故两个非对角元均为零。对角方程给ΔB_ii=-ΔA_ii。反向直接代入，所以第一项是充要条件。
+

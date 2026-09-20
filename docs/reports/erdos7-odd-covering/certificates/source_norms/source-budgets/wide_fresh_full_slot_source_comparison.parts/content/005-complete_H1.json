@@ -1,0 +1,37 @@
+{
+  "upper": {
+    "kind": "inline",
+    "value": "4593224413/8282400000"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "443/900"
+  },
+  "excess": {
+    "kind": "inline",
+    "value": "1549329239/24847200000"
+  },
+  "bounded_labels": {
+    "path": "content/005-complete_H1/003-bounded_labels.json",
+    "sha256": "83c6f1280903aca9fb16aa910fbd06a333d6855ea6d9c19afda8d9f3605b9d33",
+    "kind": "value"
+  },
+  "layout_rows": {
+    "path": "content/005-complete_H1/004-layout_rows.json",
+    "sha256": "57b02609756ac70292f99c02a1b51413f8156f453979ef5cc8ae4dc555c58615",
+    "kind": "array"
+  },
+  "complete_exponent_tails": {
+    "path": "content/005-complete_H1/005-complete_exponent_tails.json",
+    "sha256": "219fcabe7ad5585edc8db7c98afca7139a9529644ebf828119155f2b2c694971",
+    "kind": "value"
+  },
+  "deep_mixed_upper": {
+    "kind": "inline",
+    "value": "1/72"
+  },
+  "complete_positive7_upper": {
+    "kind": "inline",
+    "value": "121/720"
+  }
+}

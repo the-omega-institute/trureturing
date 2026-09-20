@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:985de80931b80ab36b787230197cc508910e72a7dfb0e36e773c2f36d8a519a9
+  normalized_sha256: sha256:985de80931b80ab36b787230197cc508910e72a7dfb0e36e773c2f36d8a519a9
+cas_ref: sha256:985de80931b80ab36b787230197cc508910e72a7dfb0e36e773c2f36d8a519a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句为依赖档案的因果查询明确规定共同有限参数、部分定义域以及重命名时参数运输，是类型与操作约定，无独立待证明命题。
+    previous_atom_id: bb35b5ad902809448a7a0e4d62d8e6ff33141f3bc76d84faece8094c7a30ac77
+    next_atom_id: 82e3b2bc651e2751eca537a6103f70bd674bd38bb0ea3edc7bf6edd0f988fa8f

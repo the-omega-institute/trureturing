@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e89e652856fbddfdb3de46f0a112c3c7f4dd07f438786f89236f9001f6190c48
+  normalized_sha256: sha256:e89e652856fbddfdb3de46f0a112c3c7f4dd07f438786f89236f9001f6190c48
+cas_ref: sha256:e89e652856fbddfdb3de46f0a112c3c7f4dd07f438786f89236f9001f6190c48
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “记录接口是条件概率核”给定行归一的输入对象，“定义 Blackwell 预序”用共同随机核存在性命名关系；自反传递另在下一叶，本叶未证明也未偷渡该关系的序性质，只有核复合及关系的定义。
+    previous_atom_id: e200449d0e510d27b179161a24b91815725a0e5df2d44f093e80c609e5208773
+    next_atom_id: 5c2e554cedca5d301eedf6a7975df773af275f85801c55b493c184e52b110390

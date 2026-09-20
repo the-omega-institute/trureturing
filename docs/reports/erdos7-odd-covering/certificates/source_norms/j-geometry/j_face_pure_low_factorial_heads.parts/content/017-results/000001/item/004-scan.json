@@ -1,0 +1,91 @@
+{
+  "scanner_kind": {
+    "kind": "inline",
+    "value": "pure-factorial-complete-conditional"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {}
+  },
+  "complete_cost_upper": {
+    "kind": "inline",
+    "value": "555471722428229/484497070312500"
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "layouts": 12500,
+      "layout_bounded": 12495,
+      "conditional_projections": 25000,
+      "conditional_bounded": 24425,
+      "joint_dual_branches": 575
+    }
+  },
+  "covered_containing_choices": {
+    "kind": "inline",
+    "value": 62500000
+  },
+  "seed_upper": {
+    "kind": "inline",
+    "value": "8627356095583/7560000000000"
+  },
+  "seed_records": {
+    "path": "content/017-results/000001/item/004-scan/006-seed_records.json",
+    "sha256": "d13b2bd379f2b5a1262ecefe0cba7070d2d2361d8fccf090a6f91c7ece6fa8e5",
+    "kind": "array"
+  },
+  "maximizing_certificate_branch": {
+    "kind": "inline",
+    "value": {
+      "layout": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        4,
+        4
+      ],
+      "conditional_affine": [
+        "1234909/1058400",
+        "8431/7200"
+      ],
+      "dual_upper": "555471722428229/484497070312500",
+      "adopted": "555471722428229/484497070312500",
+      "dual_key": "07db750638f6c488b80425ee707c5a1f9b59f904118c04948b5e4d45c63709c5",
+      "constant": "10900427/15876000",
+      "projection21_35_63_105_147_245": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ]
+    }
+  },
+  "complete_tail_constant": {
+    "kind": "inline",
+    "value": "10900427/15876000"
+  },
+  "independent_affine_checks": {
+    "kind": "inline",
+    "value": 0
+  },
+  "maximum_pruned": {
+    "kind": "inline",
+    "value": {
+      "layout": "8143/7200",
+      "conditional": "402589/352800"
+    }
+  },
+  "new_distinct_duals": {
+    "kind": "inline",
+    "value": 575
+  },
+  "all_branch_decisions_sha256": {
+    "kind": "inline",
+    "value": "fb77b4f45918b1b38a337d7e90ec5244273349d700fbfc4c2930c1955db30d45"
+  }
+}

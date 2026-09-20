@@ -1,0 +1,30 @@
+**theorem 44.2 (Cofinal cylinders and phase neighborhoods).** The space $K$ is compact metrizable, and every nonempty digit cylinder contains $Z(n)$ for arbitrarily large $n$. Every tail $\{\gamma(n):n\ge B\}$ is dense in $\mathbb T$. Natural phases avoid $E$, and $H^{-1}(\{0\})=\{0_K\}$.
+
+For every $x\in K$ and neighborhood $U$ of $x$, there is $\delta\in(0,1/2)$ such that
+$$
+\gamma(n)\in J(x,\delta)\quad\Longrightarrow\quad Z(n)\in U,
+$$
+where
+$$
+J(x,\delta)=
+\begin{cases}
+H(x)+[(-\delta,\delta)],&H(x)\notin E,\\
+H(x)+[\{\varepsilon:0<s\varepsilon<\delta\}],&x=z_{H(x)}^s.
+\end{cases}
+$$
+The number $\delta$ can be required to be smaller than any prescribed positive number.
+
+**Proof.** The forbidden adjacent blocks define open subsets of the binary product, so $K$ is closed in that compact product. The displayed metric induces its topology. For a legal word $u=(u_0,\ldots,u_{L-1})$, set $v(u)=\sum_{i<L}u_iG_i$. For every $j\ge L+1$, the legal word having prefix $u$, one additional digit $1$ at position $j$, and zeros elsewhere represents
+$$
+n=v(u)+G_j.
+$$
+Thus its encoding has prefix $u$, while $n$ tends to infinity with $j$. This proves the cofinal assertion and density of $Z[\mathbb N_0]$. In particular, for any fixed $c$, the encodings of $c+G_j$, with $j$ beyond the support of $Z(c)$ by at least two positions, converge to $Z(c)$. No padded numerical point is isolated.
+
+Continuity and surjectivity of $H$ imply density of $\gamma[\mathbb N_0]$. Its tail starting at $B$ is the translate by $\gamma(B)$ of the same dense set. The equality $\gamma(n)=E_m$ would imply $(n+m)\phi\in\mathbb Z$, which contradicts irrationality of $\phi$. Hence $0\notin E$; its fiber is the singleton containing $Z(0)$.
+
+If $H(x)$ is ordinary, the compact set $H(K\setminus U)$ does not contain $H(x)$, after replacing $U$ by an open neighborhood when necessary. A sufficiently small phase neighborhood therefore has its whole inverse image inside $U$. If $x=z_\beta^s$ and no suitable one-sided neighborhood existed, one could choose natural numbers $n_j$ outside $U$ with
+$$
+\gamma(n_j)=\beta+[\varepsilon_j],\qquad 0<s\varepsilon_j<1/j.
+$$
+Assumption 44.1 would force $Z(n_j)\to x$, a contradiction. Shrinking a suitable $\delta$ preserves the implication. The same compactness argument also shows that, at any ordinary phase $\beta$, convergence $\gamma(n_j)\to\beta$ forces convergence of $Z(n_j)$ to its unique lift. $\square$
+

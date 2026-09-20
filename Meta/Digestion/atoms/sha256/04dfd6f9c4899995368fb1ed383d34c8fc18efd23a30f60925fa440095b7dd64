@@ -1,0 +1,68 @@
+**Assumption 34.0 (The exact compact carrier, oriented fibers, and multiplication graph).** Put
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+The topology on $K$ is its original compact digit topology. Write $Z(a)$ for the finite Zeckendorf expansion of $a\in\mathbb N$, padded by zeros, and put
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad
+S^\pm=\{x_m^\pm:m\ge1\},\qquad S=S^+\cup S^-.
+$$
+Retain the following exact premises from Sections 20 and 25. The continuous map $H$ is onto, its fibers are
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad
+H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),
+$$
+$$
+H^{-1}(\{[a\phi]\})=\{Z(a)\}\quad(a\in\mathbb N),
+$$
+and $x_m^-,x_m^+$ have the fixed negative-side and positive-side phase orientation. In particular,
+$$
+x_1^-=(01)^\infty,\qquad x_1^+=(10)^\infty.
+$$
+For
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},
+$$
+define
+$$
+\mathcal S(x)=
+\begin{cases}
+\{+1\},&x\in S^+,\\
+\{-1\},&x\in S^-,\\
+\{-1,+1\},&x\notin S.
+\end{cases}
+$$
+The graph premise is the full equality
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_{H(x)+H(y)}\},&H(x)+H(y)\notin E,\\
+\{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&H(x)+H(y)=E_r.
+\end{cases}
+$$
+It is not replaced by phase compatibility alone.
+
+Let $q_L(x)=(x_0,\ldots,x_{L-1})$, and let $C_p$ denote a nonempty length-$L$ cylinder. For $L\ge1$, retain the precise conclusion of Theorem 20.2: the $G_L$ cylinder images are consecutive closed circle arcs with disjoint interiors $J_p$, their boundary set is
+$$
+B_L=\{E_1,\ldots,E_{G_L}\},
+$$
+and
+$$
+H^{-1}(J_p)\subseteq C_p\subseteq H^{-1}(\overline{J_p}),\qquad
+q_L(x_m^+)\ne q_L(x_m^-)\ \Longleftrightarrow\ m\le G_L.
+$$
+At every boundary the positive-side lift belongs to the following arc and the negative-side lift to the preceding arc, in the positive circle orientation. The lengths are
+$$
+\lambda(J_p)=
+\begin{cases}
+\alpha^L,&p_{L-1}=0,\\
+\alpha^{L+1},&p_{L-1}=1,
+\end{cases}
+$$
+where $\lambda$ is normalized circle Haar measure. At depth zero there is a single cylinder and no phase boundary. All conclusions below are conditional on these premises and use the multiplication specified next.[^rro34-input]
+

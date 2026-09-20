@@ -1,0 +1,23 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-original9-convex-transfer-v1"
+  },
+  "mod3_source_sha256": {
+    "kind": "inline",
+    "value": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+  },
+  "original9_source_sha256": {
+    "kind": "inline",
+    "value": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23"
+  },
+  "rounded_Gamma13_upper": {
+    "kind": "inline",
+    "value": "152329/1000"
+  },
+  "result": {
+    "path": "content/004-result.json",
+    "sha256": "54d7128ab5098f5d1a28aced499fb2e6d109d6900734b0c66abe19e58932d1e2",
+    "kind": "object"
+  }
+}

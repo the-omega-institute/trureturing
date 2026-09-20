@@ -1,0 +1,8 @@
+**命题 124.22（关系的精确后继商）。** 这样的 $\bar R_u$ 存在且唯一，当且仅当
+
+$$
+q(x)=q(y)\quad\Longrightarrow\quad
+q[R_u(x)]=q[R_u(y)].
+\tag{124.2}
+$$
+

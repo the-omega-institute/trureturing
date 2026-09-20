@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1db57e011af71fda442bb834ada9afd94f2d06b56f5c503d4b7d90d94ee59d20
+  normalized_sha256: sha256:1db57e011af71fda442bb834ada9afd94f2d06b56f5c503d4b7d90d94ee59d20
+cas_ref: sha256:1db57e011af71fda442bb834ada9afd94f2d06b56f5c503d4b7d90d94ee59d20
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 预测等价是完整响应签名的核关系，Mathlib 的 Finite.of_surjective 与 Quotient.mk_surjective 将有限载体的任意关系商保持为有限类型，得到本叶的有限类数断言；仓内无冻结 GID。
+    previous_atom_id: e264f9c25e8b05843e68696c1468e64f3416ef785a1ee711a4b8774664414c68
+    next_atom_id: 8af6498861984ca37e2ef53cff25f36f3624afb07ca092711e453d8d25181460

@@ -1,0 +1,13 @@
+**定义 19.9（同一顶点预算的能量读数距离）。**
+
+现在独立定义
+
+$$
+\mathcal F_m=\left\{f:V\to\mathbb R:
+\sum_yw_{xy}(f(y)-f(x))^2\le2m_x\quad\forall x\right\},
+$$
+$$
+\boxed{\ D_m(i,j)=\sup_{f\in\mathcal F_m}|f(i)-f(j)|.\ }
+\tag{19.119}
+$$
+

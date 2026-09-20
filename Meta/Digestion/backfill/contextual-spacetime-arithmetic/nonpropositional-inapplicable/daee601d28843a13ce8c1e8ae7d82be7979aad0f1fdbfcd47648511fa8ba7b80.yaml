@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:daee601d28843a13ce8c1e8ae7d82be7979aad0f1fdbfcd47648511fa8ba7b80
+  normalized_sha256: sha256:daee601d28843a13ce8c1e8ae7d82be7979aad0f1fdbfcd47648511fa8ba7b80
+cas_ref: sha256:daee601d28843a13ce8c1e8ae7d82be7979aad0f1fdbfcd47648511fa8ba7b80
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子只给出主卷标题，没有量词化断言或需要证明的数学结论。
+    previous_atom_id: null
+    next_atom_id: 1dbae695063a5fb5cdb77f691f2778ac67e7e3676aff06ada670629adafbbefd

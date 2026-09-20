@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cbfb8704f1c9e70e76b8f8f71a7552d9bd7f7dcaca034bfa83e13797a510f659
+  normalized_sha256: sha256:cbfb8704f1c9e70e76b8f8f71a7552d9bd7f7dcaca034bfa83e13797a510f659
+cas_ref: sha256:cbfb8704f1c9e70e76b8f8f71a7552d9bd7f7dcaca034bfa83e13797a510f659
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子规定有限候选历史、有限协议族及各协议的结果分布，并约定记录值的取域，没有声称跨协议联合分布或其他待证结论。
+    previous_atom_id: deb69a8cee9edcbc55ac726a95132be3563bb29bee08826d101bdaabd0d52ad3
+    next_atom_id: e264f9c25e8b05843e68696c1468e64f3416ef785a1ee711a4b8774664414c68

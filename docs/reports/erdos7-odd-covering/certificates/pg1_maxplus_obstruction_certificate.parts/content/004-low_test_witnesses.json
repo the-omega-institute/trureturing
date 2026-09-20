@@ -1,0 +1,41 @@
+{
+  "length": 34,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 11,
+      "part": {
+        "path": "content/004-low_test_witnesses/000000-000011.json",
+        "sha256": "bae13179b15fda52077694640e67753d88840a9f16a985d432e410ed2227f105",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11,
+      "stop": 22,
+      "part": {
+        "path": "content/004-low_test_witnesses/000011-000022.json",
+        "sha256": "d88f0798840cf1269e9e2c27076710f3a0ddc752e23b442be37c7ffbd9a94a3c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 22,
+      "stop": 33,
+      "part": {
+        "path": "content/004-low_test_witnesses/000022-000033.json",
+        "sha256": "03892f96444bf4fa7e6f5937fd0d4b32649245a55c467fbb3aaeb513449de8f3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 33,
+      "stop": 34,
+      "part": {
+        "path": "content/004-low_test_witnesses/000033-000034.json",
+        "sha256": "20a634a496475680c32275db6a8b3d6bed7ee74dbdff77fdf2aabbb064b16d72",
+        "kind": "value"
+      }
+    }
+  ]
+}

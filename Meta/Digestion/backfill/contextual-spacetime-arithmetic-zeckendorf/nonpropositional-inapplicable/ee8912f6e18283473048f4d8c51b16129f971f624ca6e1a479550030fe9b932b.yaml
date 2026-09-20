@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ee8912f6e18283473048f4d8c51b16129f971f624ca6e1a479550030fe9b932b
+  normalized_sha256: sha256:ee8912f6e18283473048f4d8c51b16129f971f624ca6e1a479550030fe9b932b
+cas_ref: sha256:ee8912f6e18283473048f4d8c51b16129f971f624ca6e1a479550030fe9b932b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 实向量逐坐标加法用 add_le_add_iff_left 消去公共平移，用 add_right_inj 保持并反映不等号所需的非等性，故弱支配及严格支配均双向保持；仓内无冻结 GID，探针对任意维数及全部向量编译。
+    previous_atom_id: 6d3be0b82a53dbfc126a6d24c8431024bc3b97e467d2c03a1b887fd950a2e046
+    next_atom_id: 1824d821e1f515e0bff37dfc72620fc146d292c4d982053919a178a2ed273f80

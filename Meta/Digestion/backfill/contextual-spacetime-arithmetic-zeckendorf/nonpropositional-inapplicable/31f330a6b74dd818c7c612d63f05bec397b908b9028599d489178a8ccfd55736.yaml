@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:31f330a6b74dd818c7c612d63f05bec397b908b9028599d489178a8ccfd55736
+  normalized_sha256: sha256:31f330a6b74dd818c7c612d63f05bec397b908b9028599d489178a8ccfd55736
+cas_ref: sha256:31f330a6b74dd818c7c612d63f05bec397b908b9028599d489178a8ccfd55736
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶规定有限支撑原始表、补零求值、空表、行权值及四种有向规则的语法与适用方式，属于定义，没有独立待证命题，故无需证明探针。
+    previous_atom_id: 65d745d25c43e0ddb60e29b6eb336e1cea4ad38f9539239f273ac9ac6e119350
+    next_atom_id: 67aa4265a049a985393911d2e0f5f61b39d0b22bb13b5027c2084fdd71458add

@@ -1,0 +1,54 @@
+**定理 33.4（同一参考的原始复误差运输）。** 使用定义33.1、定理33.3的同一正域 $U$ 和共同分支，且保留（33.104）的两个实际配对；现在原始参考及读数可有误差。置 $a_{\rm ref}=a_{\rm cal}/2=|A_0|$。在一份实际联合事件 $\mathcal E_H$ 上，对每份完整候选同时要求
+$$
+|A_0^{\rm obs}-A_0|\le e_0<a_{\rm ref},\qquad
+|A_j^{\rm obs}-A_j|\le e_A,\quad
+|C_j^{\rm obs}-C_j|\le e_C\quad(j=1,2),
+\qquad e_0,e_A,e_C\ge0.
+\tag{33.112}
+$$
+这里 $A_j,C_j$ 在每个 $j$ 内来自同一真实内部时刻，两个除法共用同一个 $A_0^{\rm obs}$。定义计算摘要
+$$
+V_j=1-\frac{A_j^{\rm obs}}{A_0^{\rm obs}},\qquad
+r_{{\rm obs},j}=\operatorname{Re}V_j,\qquad
+W_j=\frac{2iC_j^{\rm obs}}{A_0^{\rm obs}},\qquad
+z_{{\rm obs},j}=|W_j|.
+\tag{33.113}
+$$
+令 $L_g=\sup_{p\in U,\,0\le r\le r_*}|g'_p(r)|$，并取
+$$
+B_A=\max\{1,|1-r_*|\},\quad B_Z=L_gr_*,\qquad
+e_r=\frac{e_A+B_Ae_0}{a_{\rm ref}-e_0},\quad
+e_Z=\frac{2e_C+B_Ze_0}{a_{\rm ref}-e_0}.
+\tag{33.114}
+$$
+则每份完整候选的真实 $r_j=R(t_j)$、$Z_j=\omega g_p(r_j)$ 满足
+$$
+|V_j-r_j|\le e_r,\quad
+|r_{{\rm obs},j}-r_j|\le e_r,\quad
+|\operatorname{Im}V_j|\le e_r,
+$$
+$$
+|W_j-Z_j|\le e_Z,\qquad
+\bigl||W_j|-g_p(r_j)\bigr|\le e_Z.
+\tag{33.115}
+$$
+可将（33.114）两分母统一替换为实际非零的 $|A_0^{\rm obs}|$ 得到同样有效且不大的误差界。
+
+证明。任何完整候选都有 $|A_0^{\rm obs}|\ge a_{\rm ref}-e_0>0$，所以计算摘要定义良好。精确除法恒等式为
+$$
+\frac{A_j^{\rm obs}}{A_0^{\rm obs}}-\frac{A_j}{A_0}
+ =\frac{(A_j^{\rm obs}-A_j)
+       -(A_j/A_0)(A_0^{\rm obs}-A_0)}{A_0^{\rm obs}}.
+\tag{33.116}
+$$
+共同实际分支给 $A_j/A_0=1-r_j$、$|1-r_j|\le B_A$，故三角不等式得 $|V_j-r_j|\le e_r$。由于真实 $r_j$ 为实数，其实部与虚部界同时跟随，不能只保留实部而抛掉虚部约束。第二端口同样给
+$$
+W_j-Z_j
+ =\frac{2i(C_j^{\rm obs}-C_j)-Z_j(A_0^{\rm obs}-A_0)}{A_0^{\rm obs}}.
+\tag{33.117}
+$$
+由 $g_p(0)=0$、$|g'_p|\le L_g$ 以及 $0\le r_j\le r_*$，得
+$|Z_j|=g_p(r_j)\le B_Z$，从而 $|W_j-Z_j|\le e_Z$。复模的反三角不等式及 $g_p(r_j)\ge0$ 得最后一界。保留精确分母即可得到所述改进。所有分支和范数包络须对同一完整候选域成立。
+
+式（33.116）—（33.117）显示同一参考误差同时进入两个位置和两个复响应；投影后的误差一般相关。整个复数摘要 $V_j$（包括 $\operatorname{Im}V_j$）、$W_j$ 及对应原始复读数、参考与来源记录仍由（33.103）保留。仅各边缘误差事件有某概率，不证明这些界在同一联合事件上仍有该概率；若另给真实联合事件的概率保证，本定理只在该事件上作确定性运输，不添加独立性假设。$\square$
+

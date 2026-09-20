@@ -1,0 +1,4 @@
+**注记 69.3（因子化方向）。** 这正是
+D5/S3/Entropy/Forgetting/CompletionEntropyMinimality.lean
+中 completion_conditional_entropy_le_of_factorization 的结论。它给出“保留相同预测任务的完成中，因子化完成不会增加剩余信息”的方向；它不声称任意两个完成之间都有这样的因子。
+

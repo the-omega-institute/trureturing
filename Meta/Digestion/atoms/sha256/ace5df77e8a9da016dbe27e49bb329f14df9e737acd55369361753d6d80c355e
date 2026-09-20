@@ -1,0 +1,22 @@
+**命题 2.7（仿射近似的剩余项）。** 若实际规范化读数在区域 $\mathcal A$ 上只有近似表达
+
+$$
+\frac{F_\tau(x)}{\ell_\tau}
+=c_\tau+h_\tau(x)+r_\tau(x),
+\qquad |r_\tau(x)|\le\zeta_\tau,
+\qquad\zeta_\tau\ge0,
+$$
+
+并且 $\zeta=\sup_\tau\zeta_\tau<\infty$、线性任务族的常数 $B<\infty$，则
+
+$$
+\sup_\tau\frac{|F_\tau(x)-F_\tau(y)|}{\ell_\tau}
+\le B\|Qx-Qy\|_{\infty,w}+2\zeta
+\qquad(x,y\in\mathcal A).
+\tag{2.15}
+$$
+
+证明。逐任务相减，常数消去，两个残差的绝对值和不超过 $2\zeta_\tau$。对每项使用 $|h_\tau(x-y)|\le B\|Qx-Qy\|_{\infty,w}$，再取上确界即得。证毕。
+
+该式给近似恢复上界；除非残差另有精确消去关系，它不保留定理 2.2 的零距离核等式。RRO 第 125.7 节和量子伴卷第 69.5 节的任务误差分解，可在相同输出单位与实际状态域内为这些剩余项提供具体界。
+

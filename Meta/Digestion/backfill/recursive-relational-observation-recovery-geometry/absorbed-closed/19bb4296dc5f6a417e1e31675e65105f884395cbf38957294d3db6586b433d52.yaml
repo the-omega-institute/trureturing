@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:19bb4296dc5f6a417e1e31675e65105f884395cbf38957294d3db6586b433d52
+  normalized_sha256: sha256:19bb4296dc5f6a417e1e31675e65105f884395cbf38957294d3db6586b433d52
+cas_ref: sha256:19bb4296dc5f6a417e1e31675e65105f884395cbf38957294d3db6586b433d52
+coverage_gids:
+  - gid: D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.eq_moorePenroseInverse_of_isMoorePenroseInverse
+    target_statement_id: sha256:2c0330c2dba1ed429dd7cb2af63e01e95a7b603cf2228e4240f19f41f137f6b8
+  - gid: D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.isMoorePenroseInverse_moorePenroseInverse
+    target_statement_id: sha256:18736e4b1629c6ccacac40723a79c65171780f9e9f6296b93251162549f27768
+  - gid: D5/S3/Observer/Hilbert/FiniteSynthesisGramDistance.finite_synthesis_gram_projection
+    target_statement_id: sha256:a7587edb071ecb68f233f89f6532e6059ddcbed53b17692d2195b2fb2bf35124
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,18 @@
+**命题 9.3（共同边缘下的经典拼接）。** 从定义9.1中$P$的两份重叠边缘构造
+$$
+P^{\mathrm{glue}}(a,b,c)=
+\begin{cases}
+P_{AB}(a,b)P_{BC}(b,c)/P_B(b),&P_B(b)>0,\\
+0,&P_B(b)=0.
+\end{cases}
+\tag{9.3}
+$$
+$P^{\mathrm{glue}}$是概率，保留$AB$与$BC$两个边缘，并有
+$$
+D(P\Vert P^{\mathrm{glue}})
+=I_P(A:C\mid B)
+=H(P^{\mathrm{glue}})-H(P).
+\tag{9.4}
+$$
+它是在给定两份边缘的相容联合律中唯一的最大熵者；缺陷为零当且仅当$A\perp C\mid B$。
+

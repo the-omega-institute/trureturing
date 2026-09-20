@@ -313,7 +313,8 @@ case "$COMMAND" in
     verify_added_frozen_events_v5
     align_delivery_ledger
     run_digest_status
-    make preflight BASE="$(git rev-parse HEAD^1)"
+    preflight_base="$(git rev-parse --verify "$BASE^{commit}")"
+    make preflight MODE=push BASE="$preflight_base"
     verify_added_frozen_events_v5
     ;;
   deposit)

@@ -1,0 +1,37 @@
+**Proof.** Theorem 34.3 removes each residual relative to its own lift. The signed atom-correction formula of Theorem 28.5 gives
+$$
+(L_t-L_s)\xi=\sum_{m\ge1}\bigl(p_m(t)-p_m(s)\bigr)\xi(\{E_m\})v_m
+$$
+for every circle measure $\xi$. This series converges in total variation. Pushforward discards exactly the terms with $m>G_L$, proving the formula.
+
+For the first counterexample put $\theta=[-\phi/n]$. If $\theta=E_m$, then $(m-1/n)\phi$ is an integer. Since $n\ge2$, its rational coefficient is nonzero, contradicting irrationality of $\phi$. Thus $\theta\notin E$. For $\mu=\delta_{k_\theta}$, all residual coordinates are zero, and
+$$
+\mu_t^{(n)}=\pi^{(t)}_{E_1},\qquad
+\mu_s^{(n)}=\pi^{(s)}_{E_1}.
+$$
+The coefficient $p_1$ distinguishes the parameters by Theorem 25.10, and $q_L$ separates the two lifts of $E_1$. Hence the two prefix laws differ. Notice that in this example every residual is already zero: the entire difference belongs to the phase lifts.
+
+For a fixed-input example take
+$$
+\theta=[-\phi/2],\qquad
+\mu=\frac12\bigl(\delta_{Z(0)}+\delta_{k_\theta}\bigr).
+$$
+Both support points are nonsplit, so $R_t\mu=0$ for every parameter. The binomial expansion on the circle gives
+$$
+\nu^{(n)}=2^{-n}\sum_{j=0}^n\binom nj\delta_{j\theta}.
+$$
+Irrationality shows that $j\theta=E_m$ exactly when $j=2m$. At depth one,
+$$
+w_{1,1}=\delta_1-\delta_0,\qquad w_{2,1}=\delta_0-\delta_1,
+$$
+by the explicit oriented fibers in Theorem 20.2. Since the endpoint lifts have $p_m(\infty)-p_m(0)=1$, the difference of the probabilities of digit one is
+$$
+\bigl((q_1)_\#\mu_\infty^{(n)}-(q_1)_\#\mu_0^{(n)}\bigr)(\{1\})
+=2^{-n}\left(\binom n2-\binom n4\right).
+$$
+Binomial coefficients beyond $n$ are interpreted as zero. For $n\ge7$,
+$$
+\frac{\binom n4}{\binom n2}=\frac{(n-2)(n-3)}{12}>1,
+$$
+so the difference is nonzero. Nevertheless, for every nonzero integer $k$, the two unit complex numbers $1$ and $e^{2\pi i k\theta}$ are distinct. Their average has modulus less than one. This input therefore satisfies the ordinary convergence criterion proved in Theorem 34.7. $\square$
+

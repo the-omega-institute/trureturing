@@ -1,0 +1,2 @@
+**Proof.** EMW-C3 makes all four neighbouring Fibonacci terms powerful. The four positive odd numbers 60k-1,60k+1,30k-1,30k+1 are pairwise coprime and coprime to 30. Their largest prime factors are therefore four distinct primes at least seven. Apply ZBD1 to each neighbouring index, using the same largest prime for an even index and its odd half. This produces four powerful prime-index blocks. Their Fibonacci values are pairwise coprime. Apply PBC8 in each block. No sieve condition on k is needed, and the antecedent is not asserted to hold.
+

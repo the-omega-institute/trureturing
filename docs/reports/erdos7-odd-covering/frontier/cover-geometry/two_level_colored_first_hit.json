@@ -1,0 +1,107 @@
+{
+  "comparable_original_pairs_checked_disjoint": 5,
+  "dual_cap_atoms_old_CRT_residue": [
+    71,
+    176
+  ],
+  "dual_cap_price": "1/110",
+  "dual_columns_checked": 144,
+  "dual_equality_price": "1/10",
+  "dual_equality_rows": [
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      7,
+      1
+    ]
+  ],
+  "first_hit_costs": {
+    "minus": "97/5775",
+    "plus": "2327/138600",
+    "product": "133/7920"
+  },
+  "first_hit_nonidentifiability_gap": "1/138600",
+  "full_AP_joint_nonzero_pattern_probabilities": {
+    "0": "3991/4356",
+    "16": "65/4356",
+    "32": "1/44",
+    "64": "1/2178",
+    "72": "1/1452",
+    "8": "65/1452",
+    "80": "1/4356"
+  },
+  "full_pair_marginal_cells_checked": 252,
+  "full_period": 38115,
+  "identical_full_AP_joint_pattern_count": 128,
+  "identical_full_AP_unary_and_pair_moments": 28,
+  "identical_old_unary_and_pair_moments": 28,
+  "literal_additive_row_costs": {
+    "minus": "617/34650",
+    "plus": "2467/138600",
+    "product": "47/2640"
+  },
+  "literal_current_fibres_checked": 144,
+  "literal_current_points_checked": 17424,
+  "model": {
+    "current_height": 2,
+    "current_prime": 11,
+    "lp": "144 actual old survivor atoms; all pair-coordinate marginals equal pure-survivor product marginals; atom upper cap 1/140",
+    "old7_conditional_atom_cap": "6/35",
+    "old_period": 315,
+    "original_modulus_residue_pairs": [
+      [
+        3,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        33,
+        22
+      ],
+      [
+        99,
+        11
+      ],
+      [
+        55,
+        1
+      ],
+      [
+        847,
+        484
+      ]
+    ],
+    "perturbation": "1/35",
+    "threshold": "1/11"
+  },
+  "model_sha256": "0b1c4f4fe56e66b0ba05817a22e558f1509e1812e8ce280c1a61e75cdb02f348",
+  "old_survivor_atoms": 144,
+  "producer_sha256": "908f81c967df5cfcc4a20e657982c6344007c42619db4bdd8af56529fd06b4ce",
+  "scope": "Ordinary finite exact certificate; no Lean, no unrestricted head bound, no claim that incoming kernels equal an earlier prescribed BBMST policy. The plus, minus and product laws are realized by normalized full-history kernels satisfying the stated caps; the uncapped comparator explicitly violates the seven cap.",
+  "sharp_capped_LP_optimum": "97/5775",
+  "sharp_uncapped_pair_LP_optimum": "3/176",
+  "strict_cap_gain": "23/92400",
+  "triple_ABC": {
+    "minus": "23/840",
+    "plus": "71/2520",
+    "product": "1/36"
+  },
+  "two_layer_union_saving": "1/990"
+}

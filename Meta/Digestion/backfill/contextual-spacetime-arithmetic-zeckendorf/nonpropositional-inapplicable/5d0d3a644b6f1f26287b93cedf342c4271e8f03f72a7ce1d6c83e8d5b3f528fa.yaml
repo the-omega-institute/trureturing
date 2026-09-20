@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5d0d3a644b6f1f26287b93cedf342c4271e8f03f72a7ce1d6c83e8d5b3f528fa
+  normalized_sha256: sha256:5d0d3a644b6f1f26287b93cedf342c4271e8f03f72a7ce1d6c83e8d5b3f528fa
+cas_ref: sha256:5d0d3a644b6f1f26287b93cedf342c4271e8f03f72a7ce1d6c83e8d5b3f528fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由 abs_le 和 mul_nonneg 得到整个独立扰动盒内的余量下界，再验证正文给出的两个端点属于该盒且恰好达到下界，故同时覆盖最小值及其达到方式；仓内无冻结 GID。
+    previous_atom_id: f32113a0c2e3992242334292393b2b01f09a011b9923c0f5a01189046e19fe85
+    next_atom_id: dfebb1b8c1511f190dacf622669162c824b4c5a775b4f6dc3692a5207f0d418a

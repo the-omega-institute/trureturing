@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using Tomlyn;
 using Tomlyn.Model;
 
 namespace StrataLint.Engine;
@@ -28,7 +27,8 @@ internal static class FileMapSymlinkPolicy
 
         var resolved = Resolve(path, target, location);
         if (IsReserved(path) || IsReserved(resolved)
-            || path == AdmissionPlanePolicy.FileMapPath
+            || FileMapDocuments.IsPolicyPath(path)
+            || FileMapDocuments.IsPolicyPath(resolved)
             || AdmissionPlanePolicy.FileMapPath.StartsWith(path + "/", StringComparison.Ordinal)
             || resolved == path || resolved.StartsWith(path + "/", StringComparison.Ordinal)
             || (rawKind is "directory" && path.StartsWith(resolved + "/", StringComparison.Ordinal)))
@@ -39,31 +39,28 @@ internal static class FileMapSymlinkPolicy
         return new FileMapSymlink(path, target, (string)rawKind, resolved);
     }
 
-    internal static ImmutableArray<FileMapSymlink> Parse(ReadOnlySpan<byte> bytes, string location)
+    internal static ImmutableArray<FileMapSymlink> Parse(
+        ReadOnlySpan<byte> bytes,
+        string location,
+        Func<string, byte[]>? readInclude = null)
     {
-        TomlTable root;
-        try
+        FileMapDocuments.RequireCanonicalBytes(bytes, location);
+        var documents = FileMapDocuments.Resolve(bytes, location, readInclude);
+        var tables = new List<(TomlTable Table, string Location)>();
+        foreach (var document in documents)
         {
-            if (bytes.IsEmpty || bytes[^1] != (byte)'\n' || bytes.Contains((byte)'\r')
-                || bytes.StartsWith(new byte[] { 0xEF, 0xBB, 0xBF }))
-                throw Invalid(location, "bytes must be strict UTF-8 without BOM/CR and end in LF");
-            root = TomlSerializer.Deserialize<TomlTable>(StrictUtf8.GetString(bytes))
-                ?? throw Invalid(location, "TOML decoded to null");
-        }
-        catch (Exception exception) when (exception is TomlException or DecoderFallbackException)
-        {
-            throw new FileMapParseException(location, "invalid UTF-8 TOML", exception);
+            if (!document.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L or 4L))
+                throw Invalid(document.Path, "symlink declarations require schema_version 2, 3 or 4");
+            if (!document.Table.TryGetValue("files", out var rawFiles) && document.Table.ContainsKey("include")) continue;
+            var files = FileMapTomlTables.Parse(rawFiles, document.Path, allowEmpty: false);
+            tables.AddRange(files.Select((table, index) => (table, $"{document.Path}:files[{index}]")));
         }
 
-        if (!root.TryGetValue("schema_version", out var version) || version is not 2L
-            || !root.TryGetValue("files", out var rawFiles) || rawFiles is not TomlTableArray files)
-            throw Invalid(location, "symlink declarations require schema_version 2 and files tables");
-
-        var declarations = files.Select((table, index) => ParseEntry(table, $"{location}:files[{index}]"))
+        var declarations = tables.Select(item => ParseEntry(item.Table, item.Location))
             .OfType<FileMapSymlink>().ToImmutableArray();
-        var patterns = files.Select(table => table.TryGetValue("pattern", out var rawPattern) && rawPattern is string pattern
+        var patterns = tables.Select(item => item.Table.TryGetValue("pattern", out var rawPattern) && rawPattern is string pattern
             ? FileMapGlob.Create(pattern)
-            : throw Invalid(location, "file pattern must be a string")).ToArray();
+            : throw Invalid(item.Location, "file pattern must be a string")).ToArray();
         ValidateCoverage(declarations, path => patterns.Count(pattern => pattern.IsMatch(path)), location);
         return declarations;
     }
@@ -90,7 +87,12 @@ internal static class FileMapSymlinkPolicy
         ImmutableArray<FileMapSymlink> declarations;
         try
         {
-            declarations = Parse(fileMap.Bytes.AsSpan(), AdmissionPlanePolicy.FileMapPath);
+            declarations = Parse(fileMap.Bytes.AsSpan(), AdmissionPlanePolicy.FileMapPath, path =>
+            {
+                if (linkPaths.Contains(path) || !byPath.TryGetValue(path, out var included))
+                    throw new FileMapParseException(path, "a plain included FILEMAP must be present in the same snapshot");
+                return included.Bytes.ToArray();
+            });
         }
         catch (FormatException exception)
         {

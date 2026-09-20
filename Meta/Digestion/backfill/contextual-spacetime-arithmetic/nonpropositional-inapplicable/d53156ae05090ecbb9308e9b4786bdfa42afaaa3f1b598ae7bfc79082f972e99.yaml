@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d53156ae05090ecbb9308e9b4786bdfa42afaaa3f1b598ae7bfc79082f972e99
+  normalized_sha256: sha256:d53156ae05090ecbb9308e9b4786bdfa42afaaa3f1b598ae7bfc79082f972e99
+cas_ref: sha256:d53156ae05090ecbb9308e9b4786bdfa42afaaa3f1b598ae7bfc79082f972e99
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句申明构造的基础与解释边界，没有增加不可达基数或普遍集合假设，无独立待证明命题。
+    previous_atom_id: b22116f40cdc74cc093dc2167715b48d0ebc8654adcf65616df8ebef09d91aaa
+    next_atom_id: 31c02919c4a2aa2bb8cd999558922341d4ea6481eaa21be33951692e75c36026

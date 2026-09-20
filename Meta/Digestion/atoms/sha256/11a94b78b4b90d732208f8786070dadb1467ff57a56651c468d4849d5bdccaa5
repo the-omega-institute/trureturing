@@ -1,0 +1,25 @@
+**Proof.** IP8 supplies the shape and exponent. Since $n$ is odd, $r(q)$
+is odd and greater than one. It divides the even number $q-\chi(q)$,
+so $r(q)\le(q+1)/2<q$. All prime factors of $r(q)$ are therefore less
+than $q$, proving that $q$ is the largest prime factor of $n$. The
+largest prime factor is unique.
+
+Let $P=P(n)$ be that largest prime factor, let
+$t=n/P^{v_P(n)}$, and define
+
+$$
+E_n=\begin{cases}P,&t=r(P),\\1,&t\ne r(P),\end{cases}
+\qquad
+\mathcal R_n=\mathcal C_n/E_n.
+$$
+
+IP8-IP9 prove the exact identity
+
+$$
+\boxed{\mathcal R_n=\prod_{r(p)=n}p^{h_p}.}       \tag{IP9}
+$$
+
+The product is over prime values. It is finite because all such primes
+divide $F_n$. This is a genuinely primitive block; its prime
+multiplicities are exactly the initial WSS depths.
+

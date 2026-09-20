@@ -1,0 +1,70 @@
+**证明。** 定理28.10保证原子投影线性，故该公式实双线性；各项均为有限实有符号正则 Borel 测度，所以运算良定义。
+
+若 $\mu,\nu\ge0$，其原子与非原子部分均正。记四部分的质量为
+$$
+a_0=\varepsilon_K(\mu_{\mathrm{at}}),\quad
+u_0=\varepsilon_K(\mu_{\mathrm{na}}),\quad
+b_0=\varepsilon_K(\nu_{\mathrm{at}}),\quad
+v_0=\varepsilon_K(\nu_{\mathrm{na}}).
+$$
+$\mathfrak m$ 的系数为
+$$
+(a_0+u_0)(b_0+v_0)-a_0b_0=a_0v_0+u_0b_0+u_0v_0\ge0.
+$$
+第一项也是正测度，故 $\widehat B_t$ 保持正性。对任意有符号输入，第一项的质量为 $\varepsilon_K(\mu_{\mathrm{at}})\varepsilon_K(\nu_{\mathrm{at}})$，故直接读取整个空间的质量得到
+$$
+\varepsilon_K(\widehat B_t(\mu,\nu))
+=\varepsilon_K(\mu)\varepsilon_K(\nu).
+$$
+因此定理30.2适用，给出双线性范数恰为一。交换律由公式及 $\star_t$ 的交换律直接得到。
+
+定理28.11保证两个原子测度的 $\star_t$ 乘积仍原子，而 $\mathfrak m$ 非原子。因此
+$$
+\bigl(\widehat B_t(\mu,\nu)\bigr)_{\mathrm{at}}
+=\mu_{\mathrm{at}}\star_t\nu_{\mathrm{at}}.
+$$
+为检查全部有符号输入的结合律，记
+$$
+a=\mu_{\mathrm{at}},\quad b=\nu_{\mathrm{at}},\quad c=\xi_{\mathrm{at}},
+\qquad
+M=\varepsilon_K(\mu),\quad N=\varepsilon_K(\nu),\quad
+R=\varepsilon_K(\xi).
+$$
+刚证的原子部分及质量公式使左括号准确等于
+$$
+(a\star_t b)\star_t c
++\Bigl(MNR-\varepsilon_K(a)\varepsilon_K(b)
+                  \varepsilon_K(c)\Bigr)\mathfrak m,
+$$
+右括号准确等于
+$$
+a\star_t(b\star_t c)
++\Bigl(MNR-\varepsilon_K(a)\varepsilon_K(b)
+                  \varepsilon_K(c)\Bigr)\mathfrak m.
+$$
+原子子代数的结合律使两式相等。这证明全部测度上的结合律，而不只是 Dirac 三元组的结合律。
+
+若 $\mu,\nu$ 均原子，$\mathfrak m$ 的系数为零，所以 $\widehat B_t(\mu,\nu)=\mu\star_t\nu$。于是整个原子子代数、所有 Dirac 点行及其闭图支撑均被保留。
+
+最后给出全测度相位律的实际失败输入。令
+$$
+J=\{[r]\in\mathbb T:0\le r<1/2\},\qquad
+\sigma=2\lambda|_J,\qquad n=s_\#\sigma.
+$$
+$J$ 是闭半圆去掉一个端点所得的 Borel 集，且 $J$ 与其半周平移不交并覆盖圆周。Haar 平移不变性给 $\lambda(J)=1/2$，所以 $\sigma$ 是非原子概率，并且
+$$
+\sigma(J)=1\ne\tfrac12=\lambda(J).
+$$
+Borel 截面推前使 $n$ 为正则概率且 $H_\#n=\sigma$；由定理30.3的正测度非原子判据，$n$ 非原子。因此公式给
+$$
+\widehat B_t(\delta_{0_K},n)=\mathfrak m,
+$$
+但
+$$
+H_\#\widehat B_t(\delta_{0_K},n)=\lambda
+\ne\sigma
+=\delta_0*_{\mathbb T}\sigma
+=(H_\#\delta_{0_K})*_{\mathbb T}(H_\#n).
+$$
+这在两个具体正概率输入处违反全测度相位契约。定理30.3则给 $\delta_{0_K}\star_t n=s_\#\sigma=n$，所以两运算确实不同。由此，正性、全变差有界性乃至完整结合律和全部原子乘法，都不能代替被省略的全测度相位要求。证毕。
+

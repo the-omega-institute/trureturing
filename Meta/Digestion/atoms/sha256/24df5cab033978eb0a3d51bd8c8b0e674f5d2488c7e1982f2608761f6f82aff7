@@ -1,0 +1,30 @@
+### 定义 55.1（条件记录与 Gram 记录通道）
+
+设构型标签集 $I$ 有限，系统空间为
+
+$$
+\mathcal H_S=\operatorname{span}\{|i\rangle:i\in I\},
+$$
+
+记录空间为 $\mathcal H_R$。固定记录初态 $|m_\ast\rangle$，并假设内部耦合在这些输入上满足
+
+$$
+|i\rangle|m_\ast\rangle\longmapsto |i\rangle|r_i\rangle,
+\qquad \langle r_i|r_i\rangle=1.
+$$
+
+定义 Gram 矩阵
+
+$$
+R_{ij}:=\langle r_j|r_i\rangle.
+$$
+
+对系统算符定义记录后的局部通道
+
+$$
+\mathcal C_R(\rho)=R\circ\rho,
+\qquad
+(R\circ\rho)_{ij}=R_{ij}\rho_{ij}.
+$$
+
+这里的 $\circ$ 是逐项乘积。

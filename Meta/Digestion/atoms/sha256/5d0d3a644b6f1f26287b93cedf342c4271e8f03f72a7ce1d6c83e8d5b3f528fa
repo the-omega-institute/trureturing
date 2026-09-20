@@ -1,0 +1,5 @@
+第三余量同样准确最小为
+$$
+2u-v-\varepsilon(2u+v),
+$$
+由 $u'=(1-\varepsilon)u,v'=(1+\varepsilon)v$ 达到。

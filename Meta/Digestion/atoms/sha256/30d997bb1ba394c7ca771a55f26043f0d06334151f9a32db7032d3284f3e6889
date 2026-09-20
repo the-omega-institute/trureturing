@@ -1,0 +1,126 @@
+**theorem 51.5 (两个边界输入的联合闭包精确分类).** 固定 $x,y\in R$ 与 $G_*,L_*\in K$。四元组
+$$
+\bigl(\tau(x),\tau(y),G_*,L_*\bigr)
+$$
+属于 $C$ 当且仅当存在 $z,w\in R$ 满足全部三个方程
+$$
+xR+yR=zR,\qquad xR\cap yR=wR,\qquad zw=xy,
+$$
+并且输出具有下列两种形态之一：
+$$
+(G_*,L_*)=(\tau(z),\tau(w)),
+$$
+或对某个正整数 $d\ge1$，
+$$
+z=d,\qquad (G_*,L_*)=(j(d),\tau(w)).
+$$
+特别地，两个边界输入时，最小公倍数输出必在边界，最大公因数输出不可能为 $j(0)$。每一项允许的联合输出都由一条共同自然输入序列实现。
+
+**证明。** 先证必要性。由 theorem 51.0.1 的紧致可度量性与闭包序列判据，取一条 $\Gamma$ 中的序列趋于所给四元组。记其共同输入为 $a_N,b_N$，其输出为
+$$
+g_N=\gcd(a_N,b_N),\qquad \ell_N=\operatorname{lcm}(a_N,b_N).
+$$
+由 theorem 51.1，$a_N,b_N\to+\infty$，故最终均为正。定义
+$$
+z=\sigma(G_*),\qquad w=\sigma(L_*).
+$$
+影子的连续性给出 $a_N\to x$、$b_N\to y$、$g_N\to z$、$\ell_N\to w$ 于 $R$。自然数上的恒等式给出
+$$
+g_N\ell_N=a_Nb_N,
+$$
+$$
+a_NR+b_NR=g_NR,\qquad a_NR\cap b_NR=\ell_NR.
+$$
+在最后两个等式中，逐素数使用赋值的最小值和最大值公式，再用 theorem 51.2.1 中 $\rho$、$\min$、$\max$ 的连续性取极限，得到
+$$
+xR+yR=zR,\qquad xR\cap yR=wR.
+$$
+在拓扑环 $R$ 中对乘积恒等式取极限，得到 $zw=xy$。
+
+若 $L_*=j(L)$，孤立性强迫 $\ell_N=L$ 最终成立。但最终输入为正，故 $a_N,b_N\le\ell_N$，与二者趋于无穷矛盾。因此 $L_*=\tau(w)$。若 $G_*=j(0)$，孤立性强迫 $g_N=0$ 最终成立，而自然数最大公因数为零当且仅当两个输入同时为零，仍然矛盾。若 $G_*=j(d)$ 且 $d>0$，则 $g_N=d$ 最终成立，其影子必为 $z=d$。其余可能性恰为 $G_*=\tau(z)$。必要性得证。
+
+为证明充分性，先证明一个有限精度的同步提升断言。假设三个方程已经成立。任给 $M\ge1$、正整数 $g\equiv z\pmod M$ 与整数 $B\ge1$，存在正整数 $U,V>B$，使
+$$
+\gcd(U,V)=1
+$$
+且同时满足
+$$
+gU\equiv x,\qquad gV\equiv y,\qquad g\equiv z,\qquad gUV\equiv w\pmod M.
+$$
+
+为此，对每个 $p^e\parallel M$，令
+$$
+k=\min\{v_p(z_p),e\}.
+$$
+若 $k<e$，则 $z_p\ne0$ 且 $v_p(z_p)=k$。第一个理想方程保证唯一的商
+$$
+A_p=x_p/z_p\in\mathbb Z_p,\qquad B_p=y_p/z_p\in\mathbb Z_p
+$$
+存在，并且其中至少一个是单位：最小输入赋值恰为 $k$，故至少一个输入除以 $z_p$ 后赋值为零。这个结论仍允许另一个商为零。由乘积方程在非零 $z_p$ 处消去，得到
+$$
+w_p=z_pA_pB_p.
+$$
+规定辅助剩余类
+$$
+U_0\equiv A_p\pmod{p^{e-k}},\qquad V_0\equiv B_p\pmod{p^{e-k}},
+$$
+并把它们任意提升到模 $p^e$ 的类。因为 $e-k\ge1$，这两个模 $p^e$ 的类不同时被 $p$ 整除。
+
+若 $k=e$，两个理想方程分别给出
+$$
+v_p(x_p),v_p(y_p)\ge e,\qquad v_p(w_p)\ge e.
+$$
+这些不等式也涵盖无穷赋值。此时规定
+$$
+U_0\equiv V_0\equiv1\pmod{p^e}.
+$$
+这两个类仍不同时被 $p$ 整除。
+
+各素数幂条件由中国剩余定理组成模 $M$ 的 $U_0,V_0$；它们满足 theorem 51.3 的假设。该定理给出 $U,V>B$，与这些类同余且互素。检查所有同余条件：在 $k<e$ 的分量中，$g-z_p\in p^e\mathbb Z_p$，且 $U-A_p,V-B_p\in p^{e-k}\mathbb Z_p$，因而
+$$
+gU-x_p=(g-z_p)U+z_p(U-A_p)\in p^e\mathbb Z_p,
+$$
+$$
+gV-y_p=(g-z_p)V+z_p(V-B_p)\in p^e\mathbb Z_p,
+$$
+以及
+$$
+gUV-w_p=(g-z_p)UV+z_p\bigl((U-A_p)V+A_p(V-B_p)\bigr)\in p^e\mathbb Z_p.
+$$
+在 $k=e$ 的分量中，$g,x_p,y_p,w_p$ 都属于 $p^e\mathbb Z_p$，故三个同余也成立。连同预先规定的 $g\equiv z\pmod M$，得到四坐标同时同余。若 $M=1$，素数幂条件为空，theorem 51.3 仍给出所需互素数，全部同余自动成立。有限同步提升断言得证。
+
+现在考虑边界最大公因数输出 $\tau(z)$。取 $M_N=\operatorname{lcm}(1,\ldots,N)$，在 $z\bmod M_N$ 中选取正整数 $g_N>N$。把有限同步提升断言用于 $M=M_N$、$g=g_N$、$B=N$，得到互素的 $U_N,V_N>N$。置
+$$
+a_N=g_NU_N,\qquad b_N=g_NV_N.
+$$
+每个阶段精确满足
+$$
+\gcd(a_N,b_N)=g_N,\qquad \operatorname{lcm}(a_N,b_N)=g_NU_NV_N,
+$$
+且同时有
+$$
+(a_N,b_N,g_N,g_NU_NV_N)\equiv(x,y,z,w)\pmod{M_N}.
+$$
+四个自然序列都趋于无穷：$g_N>N$，$a_N,b_N>N^2$，并且 $g_NU_NV_N>N^3$。每个固定模数最终整除 $M_N$，所以 theorem 51.1 同时适用于四坐标，给出
+$$
+\bigl(j(a_N),j(b_N),j(g_N),j(g_NU_NV_N)\bigr)\longrightarrow\bigl(\tau(x),\tau(y),\tau(z),\tau(w)\bigr).
+$$
+这是同一对输入逐阶段产生两个指定输出的序列。
+
+最后考虑自然最大公因数输出。此时 $z=d\ge1$。固定 $g_N=d$，再次把已证有限同步提升断言用于 $M=M_N$、$g=d$、$B=N$。得到互素的 $U_N,V_N>N$，并令
+$$
+a_N=dU_N,\qquad b_N=dV_N.
+$$
+每个阶段有
+$$
+\gcd(a_N,b_N)=d,\qquad \operatorname{lcm}(a_N,b_N)=dU_NV_N,
+$$
+$$
+(a_N,b_N,d,dU_NV_N)\equiv(x,y,d,w)\pmod{M_N}.
+$$
+其中 $a_N,b_N\to+\infty$，$dU_NV_N\to+\infty$，而最大公因数始终精确等于 $d$，不仅是与 $d$ 同余。因此
+$$
+\bigl(j(a_N),j(b_N),j(d),j(dU_NV_N)\bigr)\longrightarrow\bigl(\tau(x),\tau(y),j(d),\tau(w)\bigr).
+$$
+这一构造同样同时控制全部四个坐标，完成充分性。证毕。
+

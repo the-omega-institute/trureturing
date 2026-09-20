@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cc69aca903473f38e3971caf17eb16668f24633ee60fc51bd44ae2d653fa9ef8
+  normalized_sha256: sha256:cc69aca903473f38e3971caf17eb16668f24633ee60fc51bd44ae2d653fa9ef8
+cas_ref: sha256:cc69aca903473f38e3971caf17eb16668f24633ee60fc51bd44ae2d653fa9ef8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “不要求约分”与“充分条件等价于”说明本叶是带正分母的有理不等式等价命题，不是命名约定；探针对任意整数分子和正整数分母直接使用 div_pow、div_le_div_iff₀ 及整数强制转换，交叉乘积正规化为原式，没有增添互素前提。仓内无冻结 GID 承载该专用整数判据。
+    previous_atom_id: 8b357056da84ad929a096d839ab35838fa48745b790f22ee9c3a3131c025bc76
+    next_atom_id: 136bb171e06da86b7f12c458cc53c804293a685ceb76f4542c58e40ae6ef5e0c

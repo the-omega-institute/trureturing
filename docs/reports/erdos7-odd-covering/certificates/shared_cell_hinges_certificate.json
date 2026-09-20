@@ -1,0 +1,258 @@
+{
+  "schema": "shared-cell-hinge-v1",
+  "source_sha256": {
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a"
+  },
+  "vertex_count": 1296,
+  "minimum_raw_survivor_denominator": "53/432",
+  "targets": {
+    "3": "1318076/584325",
+    "4": "94745926/61354125",
+    "6": "578163435166/676429228125"
+  },
+  "minimum_raw_margins": {
+    "3": "0",
+    "4": "0",
+    "6": "0"
+  },
+  "strict_gains_from_PR": {
+    "3": "28957/83475",
+    "4": "10127609/61354125",
+    "6": "30045536369/676429228125"
+  },
+  "relaxed_maximum_vertices": {
+    "3": [
+      [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "1/4"
+      ],
+      [
+        "0",
+        "1/4",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "1/72",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "3/4"
+    ],
+    "4": [
+      [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "1/4"
+      ],
+      [
+        "0",
+        "0",
+        "1/4",
+        "0",
+        "0"
+      ],
+      [
+        "1/72",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "3/4"
+    ],
+    "6": [
+      [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "1/4"
+      ],
+      [
+        "0",
+        "0",
+        "1/4",
+        "0",
+        "0"
+      ],
+      [
+        "1/72",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "3/4"
+    ]
+  },
+  "twelve_branches": [
+    {
+      "ternary_case": "modulus3_absent",
+      "modulus5_present": false,
+      "modulus7_present": false,
+      "hinge_bounds": {
+        "3": "217449/261100",
+        "4": "4733643/9138500",
+        "6": "8571397321/33583987500"
+      }
+    },
+    {
+      "ternary_case": "modulus3_absent",
+      "modulus5_present": false,
+      "modulus7_present": true,
+      "hinge_bounds": {
+        "3": "40071/42140",
+        "4": "880853/1474900",
+        "6": "4863891173/16260772500"
+      }
+    },
+    {
+      "ternary_case": "modulus3_absent",
+      "modulus5_present": true,
+      "modulus7_present": false,
+      "hinge_bounds": {
+        "3": "66663/65275",
+        "4": "1474581/2284625",
+        "6": "2728191607/8395996875"
+      }
+    },
+    {
+      "ternary_case": "modulus3_absent",
+      "modulus5_present": true,
+      "modulus7_present": true,
+      "hinge_bounds": {
+        "3": "12249/10535",
+        "4": "273611/368725",
+        "6": "1544732891/4065193125"
+      }
+    },
+    {
+      "ternary_case": "modulus9_absent_or_ineffective",
+      "modulus5_present": false,
+      "modulus7_present": false,
+      "hinge_bounds": {
+        "3": "1236042/939925",
+        "4": "27397854/32897375",
+        "6": "16819818446/40299284375"
+      }
+    },
+    {
+      "ternary_case": "modulus9_absent_or_ineffective",
+      "modulus5_present": false,
+      "modulus7_present": true,
+      "hinge_bounds": {
+        "3": "226998/146657",
+        "4": "5086434/5132995",
+        "6": "9534307798/18863756625"
+      }
+    },
+    {
+      "ternary_case": "modulus9_absent_or_ineffective",
+      "modulus5_present": true,
+      "modulus7_present": false,
+      "hinge_bounds": {
+        "3": "188667/114625",
+        "4": "4257009/4011875",
+        "6": "2674377241/4914546875"
+      }
+    },
+    {
+      "ternary_case": "modulus9_absent_or_ineffective",
+      "modulus5_present": true,
+      "modulus7_present": true,
+      "hinge_bounds": {
+        "3": "34533/17885",
+        "4": "787839/625975",
+        "6": "1512496133/2300458125"
+      }
+    },
+    {
+      "ternary_case": "modulus9_effective",
+      "modulus5_present": false,
+      "modulus7_present": false,
+      "hinge_bounds": {
+        "3": "202193/114660",
+        "4": "4510531/4013100",
+        "6": "8356079857/14748142500"
+      }
+    },
+    {
+      "ternary_case": "modulus9_effective",
+      "modulus5_present": false,
+      "modulus7_present": true,
+      "hinge_bounds": {
+        "3": "37087/17640",
+        "4": "836701/617400",
+        "6": "4734908141/6806835000"
+      }
+    },
+    {
+      "ternary_case": "modulus9_effective",
+      "modulus5_present": true,
+      "modulus7_present": false,
+      "hinge_bounds": {
+        "3": "184893/83825",
+        "4": "4201431/2933875",
+        "6": "2656439119/3593996875"
+      }
+    },
+    {
+      "ternary_case": "modulus9_effective",
+      "modulus5_present": true,
+      "modulus7_present": true,
+      "hinge_bounds": {
+        "3": "1318076/584325",
+        "4": "94745926/61354125",
+        "6": "578163435166/676429228125"
+      }
+    }
+  ],
+  "generic_integer_hinges": {
+    "1": "2486726/584325",
+    "2": "1902401/584325",
+    "3": "1318076/584325",
+    "4": "94745926/61354125",
+    "5": "811368634658/676429228125",
+    "6": "578163435166/676429228125",
+    "7": "123701336587/175370540625",
+    "8": "9480670987427/18413906765625",
+    "9": "796298699261467/1933460210390625",
+    "10": "67064983742536307/203013322091015625",
+    "11": "5627311634056139947/21316398819556640625",
+    "12": "442432515511738016387/2238221876053447265625"
+  },
+  "complete_test_first_moment": "3071051/584325",
+  "unchanged_nonunit_cylinder_cap_sum": "1649/360",
+  "same_actual_AP13_consumer": {
+    "T11": 4,
+    "T13": 6,
+    "b11": "47372963/184062375",
+    "b13": "9492718910453/38266567762500",
+    "survival_lower": "18925009844347/38266567762500",
+    "physical_square": "324599/3816",
+    "supported_square": "6471426752685569/37850019688694",
+    "supported_Haar_density": "1039695426000000/18925009844347"
+  },
+  "scope": "Same actual uniform357 law and all original labels/heights. Ordinary continuous-domain proof; not actual-family sharpness or Lean verification."
+}

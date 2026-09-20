@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "7de374511e45d398614346ea59005da07783795a8586d78f1c866c120850d719",
+  "parts_directory": "carrier_dominance_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "8dfe59302a96f24371b3b0b1d78e228af802cd598b350c9ec324b3c81de724c8",
+    "kind": "object"
+  }
+}

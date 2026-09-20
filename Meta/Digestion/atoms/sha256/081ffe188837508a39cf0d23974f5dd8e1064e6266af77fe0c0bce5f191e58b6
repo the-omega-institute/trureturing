@@ -1,0 +1,236 @@
+**命题 152.1（逐支纠缠破坏的二元过程与有限更新记忆的统一预测界）。** 固定实数 $0<p<1/2$，令 $R=\mathbb C^2$、$E_i=|i\rangle\langle i|$、$I_2=E_0+E_1$，初态固定为 $\rho=I_2/2$。报告字母表为 $\{0,1\}$，每次使用同一个复线性仪器，对所有 $X\in M_2(\mathbb C)$ 定义
+$$
+\phi_0(X)=pX_{00}E_0+(1-p)X_{11}E_1,
+\qquad
+\phi_1(X)=(1-p)X_{00}E_0+pX_{11}E_1.
+$$
+没有反馈、重置或中间插入的其他操作。记
+$$
+(c_{bi})_{b,i=0}^1=
+\begin{pmatrix}p&1-p\\1-p&p\end{pmatrix},
+\qquad K_{bi}=\sqrt{c_{bi}}E_i.
+$$
+每个报告分支使用两个分别列出的秩一 Kraus 算子 $K_{b0},K_{b1}$，即 $\phi_b(X)=\sum_{i=0}^1K_{bi}XK_{bi}^{\dagger}$。这使每支完全正且不增迹，其效应分别为
+$$
+F_0=pE_0+(1-p)E_1,\qquad
+F_1=(1-p)E_0+pE_1,\qquad F_0+F_1=I_2.
+$$
+非选择通道为计算基退相干 $X\mapsto X_{00}E_0+X_{11}E_1$。特别地，这里没有用单个对角 Kraus 算子替代每支的两个秩一算子。
+
+令 $\mathcal W=\bigcup_{N\ge0}\{0,1\}^N$ 包含空词 $\varnothing$；词按报告的时间顺序书写，连接记为 $wv$，且
+$$
+\phi_w=\phi_{w_{|w|}}\circ\cdots\circ\phi_{w_1},
+\qquad \phi_{\varnothing}=\operatorname{Id}.
+$$
+令 $z(w),o(w)$ 分别为零、一的出现次数，并定义
+$$
+d(w)=z(w)-o(w),\qquad
+L_0(w)=p^{z(w)}(1-p)^{o(w)},\qquad
+L_1(w)=(1-p)^{z(w)}p^{o(w)},\qquad
+\kappa=\frac{1-p}{p}>1.
+$$
+对任意有限维参考 $A$ 和任意正算子
+$$
+\Omega_{AR}=\sum_{i,j=0}^1A_{ij}\otimes|i\rangle\langle j|\ge0,
+$$
+每个 $A_{ii}\ge0$；对所有非空 $w$，有
+$$
+\phi_w(X)=L_0(w)X_{00}E_0+L_1(w)X_{11}E_1,
+\qquad
+(\operatorname{Id}_A\otimes\phi_w)(\Omega_{AR})
+=L_0(w)A_{00}\otimes E_0+L_1(w)A_{11}\otimes E_1.
+$$
+因此每个非空报告分支均为纠缠破坏操作：其参考扩张输出是有限正乘积和，非零输出归一化后可分。参考块无须相互交换。这个关于任意输入的公式只断言非空词；空词的恒等操作仍可保持输入纠缠。
+
+对于上面指定的对角初态 $I_2/2$，以下公式则对全部 $w\in\mathcal W$ 成立，包括空词：
+$$
+Q_w:=\phi_w(I_2/2)=\frac{L_0(w)E_0+L_1(w)E_1}{2},\qquad
+P(w):=\operatorname{Tr}Q_w=\frac{L_0(w)+L_1(w)}2>0,
+\qquad
+\sum_{|w|=N}P(w)=1\quad(N\ge0).
+$$
+令
+$$
+q_1(w)=\frac{L_1(w)}{L_0(w)+L_1(w)}
+=\frac{\kappa^{d(w)}}{1+\kappa^{d(w)}},
+\qquad
+\rho_w=\frac{Q_w}{P(w)}=(1-q_1(w))E_0+q_1(w)E_1.
+$$
+给定历史 $w$ 后下一实际报告为零的概率是
+$$
+P(0\mid w)=f(d(w)),\qquad
+f(d)=p+(1-2p)\frac{\kappa^d}{1+\kappa^d}\quad(d\in\mathbb Z).
+$$
+对每个有限未来词 $v$，包括空词，完整条件词概率和其末端归一化态分别为
+$$
+P(v\mid w)=\frac{P(wv)}{P(w)}
+=\frac{L_0(w)L_0(v)+L_1(w)L_1(v)}{L_0(w)+L_1(w)},
+\qquad
+\rho_{wv}=
+\frac{E_0+\kappa^{d(w)+d(v)}E_1}{1+\kappa^{d(w)+d(v)}}.
+$$
+以全部有限未来报告律相等定义有限历史上的预测等价关系，即
+$$
+w\sim u\quad\Longleftrightarrow\quad
+P(v\mid w)=P(v\mid u)\ \text{对所有 }v\in\mathcal W.
+$$
+则 $w\sim u$ 当且仅当 $d(w)=d(u)$；加入上述每个未来词末端的归一化端点态仍得到同一等价关系。可达商恰为 $\mathbb Z$，零、一报告的更新分别为 $d\mapsto d+1$ 与 $d\mapsto d-1$。在固定长度 $N$，恰有 $N+1$ 个不同可达类 $-N,-N+2,\ldots,N$。跨长度的等价不要求未归一化算子 $Q_w$ 或过去词概率 $P(w)$ 相同。
+
+该报告过程同时有一个精确的两隐状态经典生成实现：起初一次性均匀抽取 $I\in\{0,1\}$ 并始终保留它；给定 $I$，各步使用新的独立随机性，满足
+$$
+\Pr(0\mid I=0)=p,\qquad \Pr(0\mid I=1)=1-p.
+$$
+其全部有限词概率恰为 $P(w)$，后验为 $\Pr(I=i\mid w)=L_i(w)/(L_0(w)+L_1(w))$。两个后验质量在每个有限词后均严格为正，所以隐标签 $I$ 不是已观察历史的确定函数。
+
+现在把观察者限定为任意一个非空有限集 $S$、固定初态 $s_0\in S$、两个固定的确定性全函数 $T_0,T_1:S\to S$，以及固定读出 $a:S\to[0,1]$。允许 $a$ 取任意精确实数。递归状态为
+$$
+s(\varnothing)=s_0,\qquad s(wb)=T_b(s(w))\quad(b\in\{0,1\}).
+$$
+全部随历史演化且可读的记忆均须包含在 $S$ 内；没有可免费读取的完整档案、无界时钟、生成器隐标签或共享隐藏随机种子。该观察者用 $a(s(w))$ 预测下一报告为零的概率，定义
+$$
+\mathcal E(S,s_0,T_0,T_1,a)
+=\sup_{w\in\mathcal W}|a(s(w))-f(d(w))|,
+\qquad \delta=\frac12-p>0.
+$$
+则每个这样的有限确定性观察者均有
+$$
+\mathcal E(S,s_0,T_0,T_1,a)\ge\delta,
+\qquad
+\inf_{\substack{S\ne\varnothing\ \text{有限},\ s_0\in S\\
+T_0,T_1:S\to S,\ a:S\to[0,1]}}
+\mathcal E(S,s_0,T_0,T_1,a)=\delta.
+$$
+一个单状态观察者取恒定读出 $a=1/2$ 即达到这个下确界。对该观察者，每个有限词的误差都严格小于 $\delta$，但其上确界等于 $\delta$；不要求存在达到上确界的有限词。二元分布的总变差距离恰等于所定义的绝对概率误差。特别地，$p=1/3$ 时锐界为 $1/6$。
+
+此界的量词覆盖所有可能的有限报告历史，包括概率任意小的历史；它不是平均、典型、几乎必然、有限视界、分类风险或遗憾界。初态及均匀隐先验固定如上，观察者的更新和读出时间齐次且确定；结论不扩张到任意先验、随机观察者、免费时钟或时间依赖的更新与读出。有限视界 $H$ 内存在精确的有限计数器，因而统一无限视界的限制不可省略。这里的整数商是从指定初态出发的有限前缀商，不是无限过去上的因果状态基数结论；两隐状态只给生成实现，不声称隐状态数最小、量子记忆最小或普遍经典性。
+
+证明。由 $E_iXE_i=X_{ii}E_i$ 得所列两个 Kraus 项之和恰为 $\phi_b(X)$，这个等式对全部复矩阵成立。完全正性由 Kraus 表示得到，且
+$$
+\sum_iK_{bi}^{\dagger}K_{bi}=F_b\le I_2,
+\qquad \sum_{b,i}K_{bi}^{\dagger}K_{bi}=I_2,
+$$
+故各支不增迹，总通道保迹。两支相加给退相干公式。若误用单个
+$D_b=\sqrt{c_{b0}}E_0+\sqrt{c_{b1}}E_1$，则
+$$
+D_b|0\rangle\langle1|D_b^{\dagger}
+=\sqrt{p(1-p)}\,|0\rangle\langle1|\ne0,
+\qquad \phi_b(|0\rangle\langle1|)=0.
+$$
+因此单个对角 Kraus 确实定义了保留非对角相干的另一仪器，不能与这里的逐支退相干混用。
+
+参考块的正性来自压缩：对任意 $u\in A$，
+$$
+\langle u,A_{ii}u\rangle
+=\langle u\otimes i,\Omega_{AR}(u\otimes i)\rangle\ge0.
+$$
+将右侧四个矩阵单位逐个代入 $\phi_b$，非对角块消失，得到
+$$
+(\operatorname{Id}_A\otimes\phi_b)(\Omega_{AR})
+=c_{b0}A_{00}\otimes E_0+c_{b1}A_{11}\otimes E_1.
+$$
+这是正乘积和，不需要把 $A_{00},A_{11}$ 同时对角化。它们可以不交换，参考系统仍是量子系统。每个后续报告只把两个右对角分量分别再乘以 $c_{b0},c_{b1}$，按非空词长度归纳即得 $L_i(w)$ 的一般输入公式及参考公式。若 $\Omega_{AR}\ne0$，则
+$$
+\operatorname{Tr}\Omega_{AR}=\operatorname{Tr}A_{00}+\operatorname{Tr}A_{11}>0,
+$$
+且两个 $L_i(w)>0$，所以每个非空输出的迹均严格为正。删去迹零的正因子项，并将各项除以其迹，便把归一化输出写成乘积密度的凸组合；零输入的输出为零。特别地每个一步分支已经纠缠破坏。空词不经过任何这样的消相干步骤，其参考输出仍为 $\Omega_{AR}$，故上述一般输入结论没有偷偷包含恒等分支。
+
+对指定 $I_2/2$，非空词的 $Q_w$ 公式由一般输入式直接得到；空词则由 $L_0(\varnothing)=L_1(\varnothing)=1$ 单独核实。$0<p<1$ 保证每个 $P(w)>0$。逐位置求和或用二项式展开，给出
+$$
+\sum_{|w|=N}L_0(w)=(p+(1-p))^N=1,
+\qquad
+\sum_{|w|=N}L_1(w)=((1-p)+p)^N=1.
+$$
+因此每个长度的词概率和为一，包括 $N=0$；又因 $c_{0i}+c_{1i}=1$，有 $P(w0)+P(w1)=P(w)$，这些词律具有前缀一致性。直接相除可得
+$$
+\frac{L_1(w)}{L_0(w)}=\left(\frac{1-p}{p}\right)^{z(w)-o(w)}=\kappa^{d(w)},
+$$
+故得到 $q_1(w)$ 和 $\rho_w$。下一零报告的条件概率由效应 $F_0$ 给出
+$$
+\operatorname{Tr}(F_0\rho_w)
+=p(1-q_1(w))+(1-p)q_1(w)=f(d(w)).
+$$
+连接词满足 $L_i(wv)=L_i(w)L_i(v)$ 及 $d(wv)=d(w)+d(v)$，故条件词概率和条件末端态均等于陈述中的表达式。对于 $v=\varnothing$，两式分别给一和 $\rho_w$。
+
+这些公式已证明相同 $d$ 决定所有有限未来报告律及归一化末端态。反过来，
+$$
+f(d+1)-f(d)
+=(1-2p)\frac{(\kappa-1)\kappa^d}{(1+\kappa^d)(1+\kappa^{d+1})}>0.
+$$
+所以不同整数 $d$ 的下一零报告概率已不同，不会落在同一预测类。每个 $d\ge0$ 由 $0^d$ 达到，每个 $d<0$ 由 $1^{-d}$ 达到；固定长度 $N$ 时，$z=0,\ldots,N$ 给 $d=2z-N$，且每个词都有正概率。这同时证明商为 $\mathbb Z$、指定的两个更新以及固定长度的 $N+1$ 个类。
+
+这一商的充分性和区分类义也可直接置于既有 `causal_state_factorization` 的假设中：以有限词为过去集，以 $w\mapsto(P(v\mid w))_{v\in\mathcal W}$ 为未来律映射，以任一能恢复该映射的确定摘要为接口。该结果给出摘要的可达像到未来律可达像的唯一因子；不同未来律须有不同接口值。此处已经由显式公式把未来律可达像识别为 $\mathbb Z$，无需另加一个有限状态假设或重建因子化定理。它只约束这些有限前缀及指定的未来律。归一化之所以关键，可由同为 $d=0$ 的 $\varnothing$ 与 $01$ 看出：
+$$
+Q_{\varnothing}=I_2/2,\qquad P(\varnothing)=1,
+\qquad
+Q_{01}=p(1-p)I_2/2,\qquad P(01)=p(1-p),
+\qquad
+\rho_{\varnothing}=\rho_{01}=I_2/2.
+$$
+因此相同预测类并没有抹掉过去发生该词的权重差异。
+
+再看生成实现。给定 $I=0$ 或 $I=1$，独立条件发射的词概率分别为 $L_0(w),L_1(w)$；均匀混合即为 $P(w)$。Bayes 公式遂给两项所述后验，而 $L_i(w)>0$ 排除了任何有限词完全揭示 $I$ 的可能。这正是《情境时空算术·机器学习》命题30.4中一维重复噪声示范的计数或对数赔率摘要：取潜在无噪声答案为 $1-I$、翻转噪声率为 $p$，对数后验赔率为 $d(w)\log\kappa$。依该卷命题32.1的目标变量区分，$q_1(w)$ 是潜在标签的后验，实际下一报告的零概率则是 $p+(1-2p)q_1(w)$，两者不能替换。依定理32.3，本过程的动作及发射协议固定，无另需读取的动态控制状态；故这里的后验充分性并未省去一个随历史变化的策略模式。命题30.4的计数表示也不表示计数取值有限，且其一般显式后验表成本须按勘误32.5理解为所指定表示的上界。
+
+现在先固定任意一个符合陈述的有限观察者，再选择依赖于它的历史。将既有 `finite_orbit_and_readout_eventually_periodic` 应用于有限集 $S$ 上的自映射 $T_0$、读出 $a$ 和初态 $s_0$，得到整数 $n\ge0$、$\ell\ge1$，满足 $n+\ell\le|S|$，且零输入轨道从 $n$ 起以 $\ell$ 为周期。重复该周期等式便有
+$$
+s(0^{n+k\ell})=s(0^n)\quad(k\ge0).
+$$
+这里直接使用有限轨道结论，不要求读出值有限精度，也不要求零输入轨道最终固定。
+
+对任意整数 $m\ge1$，取两条历史
+$$
+w_m^-=0^n1^{n+m\ell},\qquad
+w_m^+=0^{n+2m\ell}1^{n+m\ell}.
+$$
+两个零前缀的观察者状态相同，再按相同时间顺序读入共同的一串 $n+m\ell$ 个一，确定性给出
+$$
+s(w_m^-)=T_1^{\,n+m\ell}(s(0^n))
+=T_1^{\,n+m\ell}(s(0^{n+2m\ell}))
+=s(w_m^+)=:s_m.
+$$
+幂号在此表示函数迭代。实际计数却为
+$$
+d(w_m^-)=-m\ell,\qquad d(w_m^+)=m\ell.
+$$
+两条词的长度分别为 $2n+m\ell$ 与 $2n+3m\ell$，不相等，但都属于所定义上确界的范围且概率严格为正。允许 $s_m$ 及 $a(s_m)$ 随 $m$ 改变；论证不取这列读出的极限。
+
+令 $t_m=\kappa^{m\ell}>1$。用同一读出值 $a(s_m)$ 对两项真概率的三角不等式，得到
+$$
+\begin{aligned}
+\mathcal E
+&\ge\max\{|a(s_m)-f(-m\ell)|,\ |a(s_m)-f(m\ell)|\}\\
+&\ge\frac{f(m\ell)-f(-m\ell)}2
+=\delta\frac{t_m-1}{t_m+1}.
+\end{aligned}
+$$
+第二步只使用 $|x-y|\le|x-a|+|a-y|\le2\max\{|x-a|,|a-y|\}$，即已有半直径论证的基本不等式。这里没有把带有限状态及折扣条件的 ML 定理17.5整体应用于无限的有限历史集合。
+
+由于 $\kappa^\ell>1$，有 $t_m\to\infty$，故右端趋于 $\delta$。等价地，对任意 $0\le\varepsilon<\delta$，可取 $m\ge1$ 使
+$$
+\kappa^{m\ell}>\frac{\delta+\varepsilon}{\delta-\varepsilon},
+$$
+从而 $\mathcal E>\varepsilon$。这样的 $m$ 存在，例如由
+$(\kappa^\ell)^m\ge1+m(\kappa^\ell-1)$ 可知左端无界。若 $\mathcal E<\delta$，取 $\varepsilon=\mathcal E$ 即矛盾，因此每个有限观察者都满足 $\mathcal E\ge\delta$；所需历史可以随观察者和精度要求改变，状态数只影响这些历史的选择而不改变地板。
+
+另一方面，单点集上的两个更新皆为恒等，取 $a=1/2$，则每个有限整数 $d$ 都有
+$$
+\left|\frac12-f(d)\right|
+=\delta\frac{|\kappa^d-1|}{1+\kappa^d}<\delta.
+$$
+沿 $0^N$ 或 $1^N$ 令 $N\to\infty$，误差趋于 $\delta$，所以该单状态观察者的上确界恰为 $\delta$。结合下界，得到所有有限观察者的最优统一误差及其达到者。对二元预测分布直接计算
+$$
+\operatorname{TV}\bigl((a,1-a),(f,1-f)\bigr)
+=\tfrac12\bigl(|a-f|+|(1-a)-(1-f)|\bigr)=|a-f|,
+$$
+即可得到同一总变差结论；代入 $p=1/3$ 给 $\delta=1/6$。
+
+最后明确有限视界边界。对任意整数 $H\ge0$，令
+$$
+S_H=\{-H,-H+1,\ldots,H\},\qquad
+s_0=0,\qquad
+T_0(j)=\min\{H,j+1\},\qquad
+T_1(j)=\max\{-H,j-1\},\qquad a(j)=f(j).
+$$
+对长度至多 $H$ 的历史，归纳中每个真正计数都在 $[-H,H]$，且在尚需进行的前 $H$ 步内不会因截断丢失计数，故 $s(w)=d(w)$，下一报告预测完全精确。$H=0$ 时仅要求空词处精确，也成立。这不反驳上面的界，因为那里的同状态历史长度没有预先统一上限。精确实数读出已获允许，所以所证障碍来自固定有限状态的更新记忆，而非舍入精度。任意参考的正块公式只表明所指定右侧分支逐支纠缠破坏，不把参考经典化，也不把生成器持有的隐标签赠予观察者。整个显式构造与下界不以命题146.1—151.1的分块、输入族或支持界为数学前提；它具体体现命题151.1所区分的有限生成隐支持与可访问的递归充分观察者状态。证毕。
+
+本命题的后验引用为[《情境时空算术·机器学习》命题30.4、命题32.1、定理32.3及勘误32.5](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)；半直径步骤仅引用该卷定理17.5证明中的三角不等式，不沿用其有限状态与折扣假设。所直接使用的抽象结果分别为 [`causal_state_factorization`](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean) 和 [`finite_orbit_and_readout_eventually_periodic`](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean)，应用域及参数已在证明中给出。关于有限记忆的相关问题，T. Berg、O. Ordentlich、O. Shayevitz，*Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules*，2020 IEEE International Symposium on Information Theory，1259–1264，[arXiv:2005.07445](https://arxiv.org/abs/2005.07445)，[DOI:10.1109/ISIT44484.2020.9174505](https://doi.org/10.1109/ISIT44484.2020.9174505)，研究长时间极限中的二元假设分类 Bayes 错误及其随状态数的变化；其损失不同于本命题对全部有限历史的下一报告概率误差上确界，不能将这里的 $1/2-p$ 地板归于该文。上述逐式推导不附加新颖性或穷尽文献的主张。
+

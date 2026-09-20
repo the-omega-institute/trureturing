@@ -1,0 +1,152 @@
+{
+  "30f407a9bb30a2705d646e47b19e2894e225cdec5742d58c0a43d165e09acdd6": {
+    "path": "content/009-rational_dual_buckets/003-3/000-30f407a9bb30a2705d646e47b19e2894e225cdec5742d58c0a43d165e09acdd6.json",
+    "sha256": "567629c71ecd283817d0210c40fd07cab9b8af6a448fc72c1a8acfb99ff6a46c",
+    "kind": "value"
+  },
+  "310a8f5e4f1a2de83977e93fa45cfa83f6dad71059af1a788657dccfa8d7ec40": {
+    "path": "content/009-rational_dual_buckets/003-3/001-310a8f5e4f1a2de83977e93fa45cfa83f6dad71059af1a788657dccfa8d7ec40.json",
+    "sha256": "2dcc7bcbcf0f4f681a8107f8fa024214d0424b6e10f18ae48b3227edcec59d4f",
+    "kind": "value"
+  },
+  "31a073a578ef1a0d1af1a517e7b8732bde506f11d4542fd60424f59bbd2d50a4": {
+    "path": "content/009-rational_dual_buckets/003-3/002-31a073a578ef1a0d1af1a517e7b8732bde506f11d4542fd60424f59bbd2d50a4.json",
+    "sha256": "e6b9f80bc4b59e04b9d6a63934a3de1c5b7659481926e24121f0462ed68fc483",
+    "kind": "value"
+  },
+  "33b143e2f9a7b071d00ca388358740e023301669fd5b0459d3f19bd1de4f6fa8": {
+    "path": "content/009-rational_dual_buckets/003-3/003-33b143e2f9a7b071d00ca388358740e023301669fd5b0459d3f19bd1de4f6fa8.json",
+    "sha256": "959b9e614fe84a2accbf6d543274003b62cd88d138af740fd8657caa74e45e0c",
+    "kind": "value"
+  },
+  "33e62065798c30e87a4a431e4871640cee8ced0757e3a31c819f04e05f736583": {
+    "path": "content/009-rational_dual_buckets/003-3/004-33e62065798c30e87a4a431e4871640cee8ced0757e3a31c819f04e05f736583.json",
+    "sha256": "49a78d4ae83b2f27b82c9a4a1c58977ad61d7dd1999eb93dcbf203e3cfd85fdc",
+    "kind": "value"
+  },
+  "345d9e4b1b3214f845332f2e17289deee200c7e51eb492ae14759aeaf744ebe4": {
+    "path": "content/009-rational_dual_buckets/003-3/005-345d9e4b1b3214f845332f2e17289deee200c7e51eb492ae14759aeaf744ebe4.json",
+    "sha256": "f41596006149a04640d530758581778dd18b55acc788704a96d04adb390fb99d",
+    "kind": "value"
+  },
+  "3476e339c60982aaebb90f479f1ae3877c59f2d369ef052c79fa5f0f38671f5a": {
+    "path": "content/009-rational_dual_buckets/003-3/006-3476e339c60982aaebb90f479f1ae3877c59f2d369ef052c79fa5f0f38671f5a.json",
+    "sha256": "d9176283ae1cadb85c80f9971b14e1d9bb2a920a967d37649294174784b48723",
+    "kind": "value"
+  },
+  "34ab7ea754bde7d217491f525b2ade0a0244924bbf82cca5ca75a89d86fc5beb": {
+    "path": "content/009-rational_dual_buckets/003-3/007-34ab7ea754bde7d217491f525b2ade0a0244924bbf82cca5ca75a89d86fc5beb.json",
+    "sha256": "9035fbc85510ce5ddff55851ae4d05fb2bfe48b120bb0df271a3d798ca53fe4e",
+    "kind": "value"
+  },
+  "3501a4e75d96b916c9becbc8b0c484fe580529640897a11d5a057eb13abf4304": {
+    "path": "content/009-rational_dual_buckets/003-3/008-3501a4e75d96b916c9becbc8b0c484fe580529640897a11d5a057eb13abf4304.json",
+    "sha256": "267a406d9f5b711db42ffb459a9ec629939dbbe4ecd11d25d81568206c47b6cc",
+    "kind": "value"
+  },
+  "35fdb713d54dca68a96410a3ead84d2cc04ca300c786087c0c7a5bfd3719afd2": {
+    "path": "content/009-rational_dual_buckets/003-3/009-35fdb713d54dca68a96410a3ead84d2cc04ca300c786087c0c7a5bfd3719afd2.json",
+    "sha256": "fb161eaae8645dd762beafd38161a5f5550845e4513e1075c8cd29feb6cb16a7",
+    "kind": "value"
+  },
+  "366bb1f6a3b7981eeb0e25effc942536d7976032a2b24d4e9e02a7ffe8d0c1e0": {
+    "path": "content/009-rational_dual_buckets/003-3/010-366bb1f6a3b7981eeb0e25effc942536d7976032a2b24d4e9e02a7ffe8d0c1e0.json",
+    "sha256": "0629a856c9dfaf725488a45ec2ad716911d8931a7af23e55c6dee44c282319a3",
+    "kind": "value"
+  },
+  "36be1ca57aabd716dd861a3f22ebd111bdd154d2e48831513bb0dd179b313639": {
+    "path": "content/009-rational_dual_buckets/003-3/011-36be1ca57aabd716dd861a3f22ebd111bdd154d2e48831513bb0dd179b313639.json",
+    "sha256": "d675075d774469af8e9ea4699a13906c30a25298a02c056fd3106b5788fc14e8",
+    "kind": "value"
+  },
+  "36eab1526cf93f5a494826f5d7ea948a906fad8fd4df329c52f499ef6d143cef": {
+    "path": "content/009-rational_dual_buckets/003-3/012-36eab1526cf93f5a494826f5d7ea948a906fad8fd4df329c52f499ef6d143cef.json",
+    "sha256": "53b7f88e5cdd6d3e8fc7f1451793396ae70ce9c41877df7dcb95f2c5c2c4af67",
+    "kind": "value"
+  },
+  "37083c0bf32fe8d327a4d78034d67a0519fd3572ab97d65dc23e2fd728e9af2e": {
+    "path": "content/009-rational_dual_buckets/003-3/013-37083c0bf32fe8d327a4d78034d67a0519fd3572ab97d65dc23e2fd728e9af2e.json",
+    "sha256": "c414c524a894b1796b4a541cd318ad555b3341e5473caa0045950639b9d06e41",
+    "kind": "value"
+  },
+  "37b06ea0dff9c8efef310d0f357fd54c82b8aad51788e203dc7ae2b02e35af80": {
+    "path": "content/009-rational_dual_buckets/003-3/014-37b06ea0dff9c8efef310d0f357fd54c82b8aad51788e203dc7ae2b02e35af80.json",
+    "sha256": "2712b862f662dc904a3dda3af062cfcffefb3795487541403f65f7e96544ebd3",
+    "kind": "value"
+  },
+  "387f714ec3a6cf6ca8af2bd4ed3ca3d09270a72d311f757401821b0a2ae5d551": {
+    "path": "content/009-rational_dual_buckets/003-3/015-387f714ec3a6cf6ca8af2bd4ed3ca3d09270a72d311f757401821b0a2ae5d551.json",
+    "sha256": "b0c85feea05a825a75f40a3a712bc5a0d66fd49ca3fb84fc452e8b91357a2af8",
+    "kind": "value"
+  },
+  "395acfb93c494af9a5ab5406b9e058df79b48362e6a5a7033aeadca2059d0581": {
+    "path": "content/009-rational_dual_buckets/003-3/016-395acfb93c494af9a5ab5406b9e058df79b48362e6a5a7033aeadca2059d0581.json",
+    "sha256": "4088bd3e4969adcef4f986fa9403411b1f7ee0a6a3ccc442258ceee99737c94b",
+    "kind": "value"
+  },
+  "39774447f67ed2f4b2f237937a28535aca28dd9b79d4e53323be9c1471087adf": {
+    "path": "content/009-rational_dual_buckets/003-3/017-39774447f67ed2f4b2f237937a28535aca28dd9b79d4e53323be9c1471087adf.json",
+    "sha256": "3512e093a74687965afac6396fb209c9d538418759c715f8db166da811acf2fc",
+    "kind": "value"
+  },
+  "3a49106d018c6ffdcf01725813ddb823823ea3d5549b99fd08357a675da00bce": {
+    "path": "content/009-rational_dual_buckets/003-3/018-3a49106d018c6ffdcf01725813ddb823823ea3d5549b99fd08357a675da00bce.json",
+    "sha256": "3c8a48e30ee6fc3f1a7d6d720c3999f62df1ffe29a1373f6beffbf36a2a7d899",
+    "kind": "value"
+  },
+  "3afdd6a27dabee6acb4ac649488110116fa085040bd980c46cf54ce5823486e0": {
+    "path": "content/009-rational_dual_buckets/003-3/019-3afdd6a27dabee6acb4ac649488110116fa085040bd980c46cf54ce5823486e0.json",
+    "sha256": "b825d2883893eb98ab15c106d595fde2d25295d289bb587286ab5407e0005a5b",
+    "kind": "value"
+  },
+  "3b80091689bbeb1739631faabfe23d3fc611f452ac36f461105f71307cafd981": {
+    "path": "content/009-rational_dual_buckets/003-3/020-3b80091689bbeb1739631faabfe23d3fc611f452ac36f461105f71307cafd981.json",
+    "sha256": "6d3e2f5350ec512614fdf8becdf5040c19ed7055be3ae12f9db1aef8d4afd5b2",
+    "kind": "value"
+  },
+  "3bfde3314536e8a0c60a6374175eb04b519ae59ea71d76d3b0a93dc3009ba921": {
+    "path": "content/009-rational_dual_buckets/003-3/021-3bfde3314536e8a0c60a6374175eb04b519ae59ea71d76d3b0a93dc3009ba921.json",
+    "sha256": "86129d45811c7ca8721c459ca3b247178031171c2396b6f0d90a9be0c4b58e31",
+    "kind": "value"
+  },
+  "3c0d8be3fdb7836598e80c708193461f2a01bab52399d37c2ecef6a20c974d88": {
+    "path": "content/009-rational_dual_buckets/003-3/022-3c0d8be3fdb7836598e80c708193461f2a01bab52399d37c2ecef6a20c974d88.json",
+    "sha256": "18592b451a7fdb146996cb9258feb408e9bbe07e5c7ba176a2511db741080b2f",
+    "kind": "value"
+  },
+  "3c303dc990f125efef6c95049bff683c673294b334a83fb00090f0d296a267ca": {
+    "path": "content/009-rational_dual_buckets/003-3/023-3c303dc990f125efef6c95049bff683c673294b334a83fb00090f0d296a267ca.json",
+    "sha256": "2bb9929d48e0ce1775f1a433365dd17fa36b0b08a2db17fa0a0b9f1cd6b8a8e6",
+    "kind": "value"
+  },
+  "3c3984a41afcc27061298da93d346a89908adfb2ba987a7819703a7bf7eef28b": {
+    "path": "content/009-rational_dual_buckets/003-3/024-3c3984a41afcc27061298da93d346a89908adfb2ba987a7819703a7bf7eef28b.json",
+    "sha256": "662b45c0a39334f2d60ccd9898409e054307bd7f24ebb2ec36764632f7671d37",
+    "kind": "value"
+  },
+  "3c8f0296769b423dc0741da684c04fb93825c1493a445dcafd3ee8e2cac576fb": {
+    "path": "content/009-rational_dual_buckets/003-3/025-3c8f0296769b423dc0741da684c04fb93825c1493a445dcafd3ee8e2cac576fb.json",
+    "sha256": "3769a36d7db6844bc7c170d3a9ae471e5cacda8c0e904d02e92498b4fbd5785f",
+    "kind": "value"
+  },
+  "3c975ffc40841e42fdbb3ffd33e29488d5630d8431ffb3b06351075ff45f7f64": {
+    "path": "content/009-rational_dual_buckets/003-3/026-3c975ffc40841e42fdbb3ffd33e29488d5630d8431ffb3b06351075ff45f7f64.json",
+    "sha256": "682d3b6d9afd4d1a0edd77d40fed25cdce54932c88e3414cb5912dc99322bc82",
+    "kind": "value"
+  },
+  "3e55a8e6cd5a245bccd6d39683f869ef3baecc5295c9d0d32108f56b7b91cc0e": {
+    "path": "content/009-rational_dual_buckets/003-3/027-3e55a8e6cd5a245bccd6d39683f869ef3baecc5295c9d0d32108f56b7b91cc0e.json",
+    "sha256": "6ce36d0219e6bc4aeb5b50983d5298e5766561a1eacc21a28d71b0b52857c7cb",
+    "kind": "value"
+  },
+  "3fb146b91229d7cfc0d89ba1bc0d5631f28e8f2541c4a96f253e7de9ceb97b72": {
+    "path": "content/009-rational_dual_buckets/003-3/028-3fb146b91229d7cfc0d89ba1bc0d5631f28e8f2541c4a96f253e7de9ceb97b72.json",
+    "sha256": "0b90f80d5fafdcb2a89b2f49375762e8791779db4fa8418accc11ecce1d34501",
+    "kind": "value"
+  },
+  "3ff65a443e64945c763a3e9aad4ecdc6445422d8b071c670a049d251d168fc42": {
+    "path": "content/009-rational_dual_buckets/003-3/029-3ff65a443e64945c763a3e9aad4ecdc6445422d8b071c670a049d251d168fc42.json",
+    "sha256": "53e2ddbc0642aebb3cd50e12c43c5fa82ee103959da54ba681e29827725bf37f",
+    "kind": "value"
+  }
+}

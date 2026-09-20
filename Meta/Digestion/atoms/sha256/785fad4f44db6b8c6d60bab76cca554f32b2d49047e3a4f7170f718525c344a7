@@ -1,0 +1,6 @@
+**theorem 36.9 (Why irrationality alone cannot replace golden spacing).** Let $\theta$ be irrational and suppose that along some integers $k_\ell\to\infty$,
+$$
+k_\ell\|k_\ell\theta\|\longrightarrow0.
+$$
+For the Bernoulli rotation law with angle $\theta$ and parameter $1/2$, an estimate $\mathscr D=O(n^{-1/2})$ fails, even with a constant allowed to depend on $\theta$.
+

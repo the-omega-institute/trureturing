@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:78e121698634b1e1b5339c054f41eff2ee3f4fe650f78bc6574b6baa3488a130
+  normalized_sha256: sha256:78e121698634b1e1b5339c054f41eff2ee3f4fe650f78bc6574b6baa3488a130
+cas_ref: sha256:78e121698634b1e1b5339c054f41eff2ee3f4fe650f78bc6574b6baa3488a130
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “两条不同历史映到同一数，正是非单射的定义”把不同历史与相同读数同时给作前提；探针直接反证 Function.Injective，并验证这种映射不存在左逆，没有将非单射偷放入定义，仓内无冻结 GID。
+    previous_atom_id: 9a17412708624d17756b5ddfc358cb4cdba1bc12d4f8899d7dd1f526c159b214
+    next_atom_id: 3da68b36c7686e7013ca82be963bdee3b85c2dd14c10a35f577c95ec19211c79

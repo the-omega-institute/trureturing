@@ -1,0 +1,2 @@
+The upper error bound ensures mixing whenever $G_L\le\varepsilon s/64$. Conversely, if $e_{L,p}(n)\le\varepsilon<1$, Theorem 36.12 excludes $s^2\le G_L^2/16384$, so $G_L<128s$. For sufficiently large $s$ the sufficient set contains depth one, while the necessary set is finite. Depth monotonicity makes the maximum well defined. Applying the displayed growth formula for $G_L$ to the two bounds proves the depth estimate.
+
