@@ -403,8 +403,6 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             const string log = "build/ci/fixture-build.log";
             Directory.CreateDirectory(Path.Combine(root, "build/ci"));
             File.WriteAllText(Path.Combine(root, log), "fixture build material");
-            var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
-                CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
             var commit = Git(root, "rev-parse", "HEAD");
             var entry = Git(root, "ls-tree", "HEAD", "--", RuleFixture.RingPath).Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
             var changes = Path.Combine(root, "build/scope.json");
@@ -423,6 +421,10 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 return [];
             }
             Assert.True(planning.ExitCode == 0, Encoding.UTF8.GetString(planning.StandardError));
+            var execution = ResourceExecutionPlan.Load(root, plan, changes)!;
+            var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],
+                CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray(),
+                execution.Projects, execution.Retain(root));
             return [.. metadata ? Array.Empty<string>() : new[] { "--candidate-lean-report", report },
                 "--common-build-round", build.Round, "--common-plan", plan, "--common-changes", changes];
         }

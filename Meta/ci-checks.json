@@ -188,10 +188,48 @@
     {
       "id": "filemap",
       "program_projects": ["tools/StrataLint.Cli/StrataLint.Cli.csproj"],
-      "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Meta/FILEMAP.docs.reports.toml", "Meta/FILEMAP.toml", ".gitignore", "Meta/registry.yaml", "Meta/domains.yaml", "*.lean", "D5/**/*.lean", "Evidence/D5/**/*.json", "Golden/Frozen/state/**/*.json", "Golden/Frozen/accepted/*.json", "Golden/Projection/*.json", "Golden/values-kernels.toml", "Library/**/*.yaml"],
+      "materials": ["**/*.cs", "**/*.lean", "**/*.json", "**/*.toml", "**/*.yaml", "**/*.yml", "global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Meta/FILEMAP.docs.reports.toml", "Meta/FILEMAP.toml", ".gitignore", "Meta/registry.yaml", "Meta/domains.yaml", "*.lean", "D5/**/*.lean", "Evidence/D5/**/*.json", "Golden/Frozen/state/**/*.json", "Golden/Frozen/accepted/*.json", "Golden/Projection/*.json", "Golden/values-kernels.toml", "Library/**/*.yaml"],
       "material_excludes": [],
       "path_inventory": ["**"],
-      "report_inputs": []
+      "report_inputs": [],
+      "delta_scope": {
+        "whole_tree_inputs": [
+          "Meta/FILEMAP*.toml",
+          "Meta/ci-checks.json",
+          "Meta/registry.yaml",
+          "Meta/domains.yaml",
+          "tools/StrataLint.Cli/Commands/FileMap/**",
+          "tools/StrataLint.EngineeringScope/FileMapInspectionScope.cs",
+          "tools/StrataLint.Scribe/FileMap/**",
+          "tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs"
+        ],
+        "actor_inputs": [
+          "**/*.cs"
+        ],
+        "related": [
+          {
+            "inputs": [
+              "Blueprint/**/*.md",
+              "Generated/**",
+              "Evidence/D5/values.json"
+            ],
+            "paths": [
+              "**/*.json",
+              "**/*.toml",
+              "**/*.yaml",
+              "**/*.yml",
+              "**/*.scribe.cs"
+            ]
+          }
+        ],
+        "inventory_inputs": [
+          "tools/StrataLint.Scribe/**",
+          "tools/StrataLint.Scribe.Documents/**",
+          "Blueprint/**/*.scribe.cs",
+          "Directory.Build.props",
+          "Directory.Build.targets"
+        ]
+      }
     }
   ]
 }
