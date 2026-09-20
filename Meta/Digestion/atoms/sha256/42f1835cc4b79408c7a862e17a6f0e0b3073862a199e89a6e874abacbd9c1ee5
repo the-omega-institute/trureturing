@@ -1,0 +1,9 @@
+**推论 10.3（零条件互信息与精确恢复等价）。** 对有限维三方态，
+$$
+I(A:C\mid B)_\rho=0
+\quad\Longleftrightarrow\quad
+\exists\mathcal R:B\to BC\ \mathrm{CPTP},\
+(\operatorname{id}_A\otimes\mathcal R)(\rho_{AB})=\rho_{ABC}.
+\tag{10.6}
+$$
+

@@ -1,0 +1,13 @@
+**命题 3.4（路径模拟的单向度量控制）。** 设每个源实验 $(C,f)$ 都能由辅助系统中的一个允许实验 $(\widetilde C,\widetilde f)$ 模拟，在比较的全部辅助配置上满足
+$$
+\widetilde f(\widetilde C\widetilde x)=f(Cr_s\widetilde x),
+\qquad
+\widetilde\ell(\widetilde C)\le K_s\ell(C),
+$$
+其中对应读数使用同一个值域和度量，$0<K_s<\infty$ 与具体实验无关。则
+$$
+D_s(r_s\widetilde x,r_s\widetilde y)
+\le K_s\widetilde D_s(\widetilde x,\widetilde y).
+\tag{3.4}
+$$
+

@@ -1,0 +1,12 @@
+**定理 3.2（零核商的规范距离）。** $\sim_s$ 是等价关系，并有自然双射 $X_s/{\sim_s}\cong Q_s$。公式
+$$
+\overline D_s(\beta_sx,\beta_sy)=D_s(x,y)
+\tag{3.1}
+$$
+在 $Q_s$ 上定义良好的扩展度量。每条允许箭头唯一下降为 $\overline h:Q_s\to Q_t$，满足
+$$
+\overline h\,\beta_s=\beta_t h,
+\qquad
+\overline D_t(\overline h b,\overline h b')\le L_h\overline D_s(b,b').
+$$
+

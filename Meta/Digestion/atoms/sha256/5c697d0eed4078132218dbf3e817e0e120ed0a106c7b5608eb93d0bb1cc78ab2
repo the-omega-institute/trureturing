@@ -1,0 +1,32 @@
+**命题 13.3（可见初态商与最小相容能量）。** 固定一个实际模型 $T,J$，令 $P_r$ 为 $\mathcal K_r$ 上的正交投影。若 $z\in\operatorname{ran}H$，则所有满足 $V^*h=z$ 的初态恰为
+$$
+h=h_{\mathrm{vis}}+w,\qquad
+h_{\mathrm{vis}}=VH^\dagger z,\qquad
+w\in\mathcal K_r^\perp.
+\tag{13.7}
+$$
+且
+$$
+P_r=VH^\dagger V^*,\qquad
+\|h\|^2=e_{\min}+\|w\|^2.
+\tag{13.8}
+$$
+所以 $h_{\mathrm{vis}}$ 是该模型内唯一的最小范数相容初态，$e_{\min}$ 也是定理13.2允许的全部模型中的最小相容能量。当 $e_{\min}\le E_*^2$ 时，能量上界下的相容初态纤维为
+$$
+\mathcal H(z,E_*)
+=h_{\mathrm{vis}}+
+\{w\in\mathcal K_r^\perp:\|w\|\le q\},\qquad
+q=\sqrt{E_*^2-e_{\min}}.
+\tag{13.9}
+$$
+若 $e_{\min}>E_*^2$，该纤维为空。式（13.7）恢复了观察商上的可见分量，未识别 $w$。记录给出的 $e_{\min}$ 是实际能量的下界，不能用作实际能量的上界。
+
+**证明。** 既有有限合成 Gram 投影公式给 $P_r=V(V^*V)^\dagger V^*$。因为 $V^*VH^\dagger z=HH^\dagger z=z$，所给 $h_{\mathrm{vis}}$ 相容；任意两份相容初态之差属于 $\ker V^*=\mathcal K_r^\perp$。投影公式又给 $h_{\mathrm{vis}}=P_rh$，正交分解给能量恒等式，其中
+$$
+\|VH^\dagger z\|^2
+=z^*H^\dagger HH^\dagger z=z^*H^\dagger z.
+$$
+因此任何实现的能量均不小于 $e_{\min}$，而式（13.6）达到它。加入范数上界便得到式（13.9）。一般投影与能量恒等式直接复用仓内 [`finite_synthesis_gram_projection`、`finite_synthesis_gram_distance`、`finite_synthesis_gram_quadratic`](https://github.com/the-omega-institute/trureturing/blob/741fcab5fd728179bc481d6e64909a5410a4db4a/D5/S3/Observer/Hilbert/FiniteSynthesisGramDistance.lean)；本条只是把该成熟正交投影结构接到初态交叉记录。证毕。
+
+若要求精确能量 $\|h\|=E_*$，在 $q>0$ 时还须 $\mathcal K_r^\perp\ne\{0\}$；固定模型未必满足这一条件。在只问存在某个实现时可增加一个与 $J$ 正交的不耦合方向来容纳剩余能量，但这不恢复实际模型中那个方向的身份。式（13.3）的充要性因此按能量上界陈述。
+

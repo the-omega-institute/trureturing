@@ -1,0 +1,13 @@
+**证明。** 由有限条件熵链式法则，
+$$
+I(H:F\mid M)=H(F\mid M)-H(F\mid H,M).
+$$
+由于$M=m(H)$，在每个正$H$切片上，加入$M$不会改变$F$的条件律，故$H(F\mid H,M)=H(F\mid H)$。同理，$(M,Z)$由$H$决定，故
+$$
+\Delta_M=H(F\mid M)-H(F\mid H),\qquad
+\Delta_{M^+}=H(F\mid M,Z)-H(F\mid H).
+$$
+两式相减给$H(F\mid M)-H(F\mid M,Z)=I(Z:F\mid M)$。全部条件熵有限，因此这里的减法合法。式（9.2）给非负性及条件独立的等号判据。
+
+同一计算还给$I(F;H)=I(F;M)+\Delta_M$与$I(F;M^+)-I(F;M)=I(F;Z\mid M)$，即主卷式（121.27）的残差表达。所用链式法则为[`MutualInformationChainRule`](../../../D5/S3/Entropy/Submodularity/MutualInformationChainRule.lean)中的`mutual_information_chain_rule`；主卷§81.2、§121.9及§127.7具有相同的固定目标、共同联合律条件。此证明没有独立噪声假设。证毕。
+
