@@ -3295,3 +3295,305 @@ $$
 若实际输入为 $g_M$ 且随补全 $M$ 改变，式（16.5）的 $v_\lambda$ 也随之改变，已不再是固定线性任务在收缩乘积上的像，所给固定输入区间不能直接代入。[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定理12.10、式（12.14）在固定共同反馈、两个核的可积性、小增益及初态外源误差合同下给反馈比较；这些是独立前提，不能由一个标量固定输入区间推出。因此同一几何、时间及记忆表示的这些任务结论，均只在已声明的来源、取得、输入、精度及资源范围内成立。$\square$
 
 ## 16.99 追加锚
+
+## 17. 同源取得关系与尖锐记忆端点
+
+**定义 17.1（保留历史的联合取得纤维）。** 固定有限维实向量空间 $E$、非空紧凸集 $\Gamma\subset E$、线性记录映射 $R:E\to\mathbb R^n$（$n\ge1$）及线性任务 $\ell:E\to\mathbb R$。记录坐标、单位及其 Euclidean 配对固定，$R^*c$ 表示线性泛函 $v\mapsto c\cdot Rv$，不要求先在 $E$ 上选择内积。定义
+$$
+D=R(\Gamma),\qquad \Gamma_y=\{v\in\Gamma:Rv=y\},\qquad
+U^\ell(y)=\max_{v\in\Gamma_y}\ell(v),\quad
+L^\ell(y)=\min_{v\in\Gamma_y}\ell(v)\quad(y\in D),
+$$
+$$
+h_\Gamma(f)=\max_{v\in\Gamma}f(v),\qquad
+F_y^\ell(c)=c\cdot y+h_\Gamma(\ell-R^*c).
+\tag{17.1}
+$$
+无歧义时写 $U=U^\ell,L=L^\ell$。$y\in D$ 指实际可取得的同一份记录；上下端点始终来自同一个 $\Gamma_y$。
+
+这里的联合载体须满足本卷假设15.1、定义8.1及[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义13.1、命题13.2及定义13.3的来源与历史条件：固定已保留历史后，全部旧约束已在 $\Gamma$ 中，或作为同一个 $R,y$ 的附加行保留；不得只保留此次新读数。源、误差、初态和装置等辅助变量按同一实现联合取值。若动作改变物理状态，$v$ 表示含共同来源和合法历史的扩充实现，须同时保留相关动作前后的状态；$\Gamma_y$ 的静态集合交不表示物理状态不变。将实际扩充实现表示为上述紧凸联合域及线性记录、任务，是本节的显式假设，不由记录名称或边缘取值域推出。
+
+**定理 17.2（无严格可行性前提的尖锐端点）。** 在定义17.1下，对每个 $y\in D$，有
+$$
+\boxed{U^\ell(y)=\inf_{c\in\mathbb R^n}
+\bigl[c\cdot y+h_\Gamma(\ell-R^*c)\bigr],\qquad
+L^\ell(y)=-U^{-\ell}(y).}
+\tag{17.2}
+$$
+原问题的两个端点均达到，任务值集为 $[L(y),U(y)]$；式（17.2）的对偶只断言下确界，不断言有限系数达到。允许输出任意实数时，定理3.2–推论3.3的标量纤维结论给出中心 $(L(y)+U(y))/2$、最坏绝对误差 $(U(y)-L(y))/2$，以及单点纤维的精确恢复判据。
+
+**证明。** $\Gamma_y$ 非空、紧、凸，故线性任务达到极值，且其像为闭区间。对任意 $c$ 和 $v\in\Gamma_y$，
+$$
+\ell(v)=c\cdot y+(\ell-R^*c)(v)\le F_y^\ell(c),
+$$
+给出弱对偶 $U(y)\le\inf_c F_y^\ell(c)$。令
+$$
+K=\{(Rv,\ell(v)):v\in\Gamma\}\subset\mathbb R^n\times\mathbb R.
+$$
+它紧且凸。对 $\varepsilon>0$，点 $p=(y,U(y)+\varepsilon)$ 不属于 $K$。由有限维紧凸集与外点的严格分离定理，存在 $(a,b)$ 使
+$$
+a\cdot y+b(U(y)+\varepsilon)
+>\max_{v\in\Gamma}\bigl[a\cdot Rv+b\ell(v)\bigr].
+\tag{17.3}
+$$
+此处的严格分离可直接使用定理16.4证明中的最近点分离论证，应用于 $K,p$。因 $(y,U(y))\in K$，式（17.3）蕴含 $b\varepsilon>0$，故 $b>0$。除以 $b$ 并令 $c=-a/b$，得到 $F_y^\ell(c)<U(y)+\varepsilon$。结合弱对偶并令 $\varepsilon\downarrow0$，即得式（17.2）；对 $-\ell$ 使用同一结论给下端点。标量中心及误差是既有定理3.2在该闭区间上的应用，不要求对偶最优系数存在。$\square$
+
+作为式（17.2）的乘积特例，设 $X$ 是有限维实向量空间，$K\subset X$ 与 $E_{\rm noise}\subset\mathbb R^n$ 均非空、紧、凸，施加记录行之前的实际联合域恰为 $\Gamma=K\times E_{\rm noise}$。取线性映射 $A:X\to\mathbb R^n$、线性任务 $h:X\to\mathbb R$，令 $R(v,e)=Av+e$、$\ell(v,e)=h(v)$；对可取得的同一记录 $y\in R(\Gamma)$，证书目标为
+$$
+F_y^\ell(c)=c\cdot y+h_K(h-A^*c)+h_{E_{\rm noise}}(-c).
+$$
+这是乘积支撑规则的直接应用：残差为 $(h-A^*c)(v)-c\cdot e$，两项在实际乘积上可分别达到最大值。非对称误差域一般不满足 $h_{E_{\rm noise}}(-c)=h_{E_{\rm noise}}(c)$，故不能省去负号。定义17.1的全部旧记录条件仍须保留：旧约束已吸收时实际联合域仍须是上述乘积，否则须作为同一 $R,y$ 的附加行保留；仅给边缘域 $K,E_{\rm noise}$ 不蕴含此公式。
+
+**命题 17.3（相对内部的有限系数代表）。** 记
+$$
+V=\operatorname{span}(D-D),\qquad
+m=\min_{v\in\Gamma}\ell(v),\quad M=\max_{v\in\Gamma}\ell(v).
+$$
+设 $y\in D$ 且存在 $\rho>0$ 使 $y+\rho\overline B_2^V\subset D$，其中 $\overline B_2^V=\{w\in V:\|w\|_2\le1\}$。当 $V\ne\{0\}$ 时，对偶在 $V$ 上达到最小值，且其中每个最小化系数 $c_*$ 满足
+$$
+\boxed{\|c_*\|_2\le\frac{U(y)-m}{\rho}
+\le\frac{M-m}{\rho}.}
+\tag{17.4}
+$$
+相对内部 $y\in\operatorname{ri}D$ 提供这样的相对球。若 $V=\{0\}$，$c=0$ 已达到端点。冗余记录及低维 $D$ 均允许；式（17.4）只约束 $V$ 中的代表，不约束添加任意法向分量后的全部代表。这是达到性的充分条件。
+
+**证明。** 对 $w\in V^\perp$，所有 $v\in\Gamma$ 都有 $w\cdot(y-Rv)=0$，故由
+$$
+F_y^\ell(c)=\max_{v\in\Gamma}\bigl[\ell(v)+c\cdot(y-Rv)\bigr]
+$$
+得到 $F_y^\ell(c+w)=F_y^\ell(c)$。因此投影到 $V$ 不改变目标或下确界。对非零 $c\in V$，相对球条件提供 $v_c\in\Gamma$，使 $Rv_c=y-\rho c/\|c\|_2$；于是
+$$
+F_y^\ell(c)\ge\ell(v_c)+\rho\|c\|_2\ge m+\rho\|c\|_2.
+\tag{17.5}
+$$
+$c=0$ 时该下界也成立，且 $F_y^\ell(0)=M$。紧性使 $F_y^\ell$ 连续，式（17.5）使其在有限维 $V$ 上强制趋于无穷，故最小值达到。定理17.2给该值为 $U(y)$，代回即得式（17.4）。若 $V=\{0\}$，所有记录等于 $y$，所以 $\Gamma_y=\Gamma$，$F_y^\ell(0)=M=U(y)$。$\square$
+
+**假设 17.4（实际交叉取得与固定记忆任务）。** 沿用定义15.3、定理15.4的收缩乘积 $\mathbb B$ 及同一组 $P_\lambda,Q_\lambda,X^0_\lambda$。固定 $n$ 次实际标定测量 $(a_i,b_i,\tau_i)$，其中 $a_i\in U_A,b_i\in U_B,\tau_i\ge0$。其读数为 $y_i=\langle a_i,K_{AB}(\tau_i)b_i\rangle+e_i$。令
+$$
+d_i=\sum_\lambda e^{-\lambda\tau_i}\langle a_i,X^0_\lambda b_i\rangle,
+\qquad
+A_{i,\lambda}=e^{-\lambda\tau_i}
+(P_\lambda^{1/2}a_i)(Q_\lambda^{1/2}b_i)^*,
+$$
+$$
+z_i=y_i-d_i,\qquad
+\mathcal A_i(T)=\sum_\lambda\langle A_{i,\lambda},T_\lambda\rangle_{\rm HS},
+\qquad z=\mathcal A(T)+e.
+\tag{17.6}
+$$
+对同一个候选 $T=(T_\lambda)_\lambda$，固定终时 $\theta\ge0$、$a\in U_A$ 及所有候选共用的 $g\in L^1([0,\theta];U_B)$。按定义16.1置
+$$
+v_\lambda=\int_0^\theta e^{-\lambda(\theta-s)}g(s)\,ds,
+\qquad H_\lambda=(P_\lambda^{1/2}a)(Q_\lambda^{1/2}v_\lambda)^*,
+\qquad m_0=\sum_\lambda\langle a,X^0_\lambda v_\lambda\rangle.
+$$
+记 $\langle H,T\rangle=\sum_\lambda\langle H_\lambda,T_\lambda\rangle_{\rm HS}$，其中 $\langle S,T\rangle_{\rm HS}=\operatorname{tr}(S^*T)$，$uw^*$ 是 $x\mapsto u\langle w,x\rangle$。同一固定输入的记忆任务为
+$$
+q(T)=\int_0^\theta\langle a,K_{AB}(\theta-s)g(s)\rangle ds
+=m_0+\langle H,T\rangle.
+\tag{17.7}
+$$
+端口身份、内积、单位、增益、经过时间标定及制备在候选间固定。未知初态强迫须由有依据的制备消去，或保留在同一扩充载体及任务中；随候选变化的反馈输入不满足这里固定 $g$ 的假设，见命题16.6。
+
+**定理 17.5（乘积取得合同下的尖锐残差公式）。** 在假设17.4下，假定施加记录行之前的真实联合域恰为
+$$
+\Gamma=\mathbb B\times\prod_{i=1}^n[-\epsilon_i,\epsilon_i],\qquad \epsilon_i\ge0,
+\tag{17.8}
+$$
+且全部旧约束已作为同一记录系统中的行保留，其误差亦受式（17.8）的同一联合合同约束。假定 $z$ 可取得。则记忆任务的上端点为
+$$
+\boxed{m_0+\inf_{c\in\mathbb R^n}
+\left[c\cdot z+\sum_\lambda
+\left\|H_\lambda-\sum_i c_iA_{i,\lambda}\right\|_*
++\sum_i\epsilon_i|c_i|\right].}
+\tag{17.9}
+$$
+$\|S\|_*$ 表示 $S$ 的全部奇异值之和，包含奇异与矩形块；下端点由将 $H$ 换成 $-H$ 的上端点残差取负再加 $m_0$ 得到。式（17.8）要求每个所列 $T,e$ 组合有共同合法实现；这是可行域的笛卡尔积条件，不是概率独立性。
+
+若保留旧记录后真实联合域是该乘积的非空紧凸真子集 $\Gamma_{\rm ret}$，则定理17.2使用 $\Gamma_{\rm ret}$ 的实际支撑函数，式（17.9）一般仅是外上界。若旧约束已吸收在 $\Gamma_{\rm ret}$ 中，不得以式（17.8）替换它。非凸联合域另受命题17.9的限制。
+
+**证明。** 式（15.8）的交叉核代入实际测量，利用外积的迹配对得到式（17.6）；定义16.1及式（16.5）直接给式（17.7）。对联合变量 $(T,e)$ 取 $R(T,e)=\mathcal A(T)+e$、$\ell(T,e)=\langle H,T\rangle$。定理16.4的算子范数球支撑公式直接给
+$$
+h_\Gamma(\ell-R^*c)
+=\sum_\lambda\left\|H_\lambda-\sum_i c_iA_{i,\lambda}\right\|_*
++\sum_i\epsilon_i|c_i|.
+$$
+末项是误差盒上线性泛函 $-c\cdot e$ 的最大值；两项相加的等号使用式（17.8）的联合乘积条件。定理15.4保证每组收缩对应同一个共同正实现；记录条件再选择其中匹配实际 $z$ 的联合候选。应用定理17.2并加上固定偏移 $m_0$ 即得式（17.9）。限制联合域只会减小纤维，故乘积端点对真子集仍为外界，不保证精确。$\square$
+
+**命题 17.6（严格盒裕度与全部最优系数的界）。** 在定理17.5的乘积合同下，若存在合法 $T^0\in\mathbb B$ 使
+$$
+\delta=\min_i\bigl(\epsilon_i-|z_i-\mathcal A_i(T^0)|\bigr)>0,
+\tag{17.10}
+$$
+则式（17.9）的残差对偶目标 $F_z^H$ 在整个 $\mathbb R^n$ 上达到最小值，且每个最小化系数满足
+$$
+\boxed{\|c_*\|_1\le
+\frac{\sum_\lambda\|H_\lambda\|_*-\langle H,T^0\rangle}{\delta}.}
+\tag{17.11}
+$$
+仅有各 $\epsilon_i>0$ 不蕴含式（17.10）。
+
+**证明。** 定理16.4的支撑公式及 $T^0$ 的合法性给
+$$
+\begin{aligned}
+F_z^H(c)
+&\ge\langle H,T^0\rangle
++\sum_i c_i(z_i-\mathcal A_i(T^0))+\sum_i\epsilon_i|c_i|\\
+&\ge\langle H,T^0\rangle+\delta\|c\|_1.
+\end{aligned}
+$$
+故连续目标在整个系数空间强制趋于无穷，最小值达到；每个最小值至多为 $F_z^H(0)=\sum_\lambda\|H_\lambda\|_*$，给式（17.11）。这次的强制性是全空间的，不是命题17.3的相对代表界。正宽度仍无严格可行点的实际收缩实例由命题18.4给出。$\square$
+
+**命题 17.7（相同源误差投影不足以替换联合合同）。** 在共同坐标 $(x,e)\in\mathbb R^2$ 中，取
+$$
+\Gamma_+=\{(x,e):|x|\le1,e=x\},\qquad
+\Gamma_-=\{(x,e):|x|\le1,e=-x\}.
+$$
+两者非空、紧、凸，源投影与误差投影均恰为 $[-1,1]$。然而对 $R(x,e)=x+e$、$\ell(x,e)=x$ 和实际记录 $y=0$，两者的任务纤维分别为 $\{0\}$、$[-1,1]$。因此定理17.5的乘积合同不能由精确坐标投影推得。
+
+**证明。** 在 $\Gamma_+$ 上 $R=2x$，故记录零强制 $x=0$；在 $\Gamma_-$ 上 $R=0$ 对每个 $|x|\le1$ 成立。若还令 $x$ 服从该区间上的均匀律，两模型的源边缘律及误差边缘律也分别相同；联合关系仍不同。故即使另给这些概率边缘律，也不能恢复定理17.2所条件化的联合纤维。$\square$
+
+**命题 17.8（共同误差抵消限制边缘盒替换）。** 取精确联合域
+$$
+\Gamma_{\rm sh}=\{(x,e_1,e_2):|x|\le1,\ \exists u\in[-1,1],\ e_1=u,e_2=-u\}.
+$$
+记录为 $y_1=x+e_1=x+u,y_2=x+e_2=x-u$，任务为 $x$。每个误差坐标的投影都是 $[-1,1]$，但在 $y=(0,0)$ 上任务纤维为 $\{0\}$；替换为 $\Gamma_{\rm box}=[-1,1]^3$ 后，任务纤维为 $[-1,1]$。
+
+**证明。** 同一个 $u$ 给 $x=(y_1+y_2)/2$，从而零记录给 $x=u=0$。盒替换后，每个 $x\in[-1,1]$ 都可配 $e_1=e_2=-x$，得到相同零记录。共享误差集的支撑值为
+$$
+\max_{|u|\le1}(c_1u-c_2u)=|c_1-c_2|,
+$$
+而边缘盒的支撑值为 $|c_1|+|c_2|$。这是命题4.7的共同原始误差展开及抵消在实际取得行上的应用；把同一个原始误差改成两个可分别选择的误差，改变的是定理17.5的联合域。$\square$
+
+**命题 17.9（先凸化再条件化会放大任务纤维）。** 取记录—任务联合域
+$$
+K_0=\{(-1,1),(0,0),(1,1)\},\qquad
+R(r,q)=r,\quad\ell(r,q)=q.
+$$
+在记录零处，$K_0$ 的任务纤维是 $\{0\}$，$\operatorname{conv}K_0$ 的任务纤维却是 $[0,1]$。对任意 $B\ge0$，还有
+$$
+\max_{v\in K_0}\bigl[\ell(v)-B|Rv|\bigr]=\max\{0,1-B\},
+\qquad
+\min_{|c|\le B}h_{K_0}(\ell-R^*c)=1.
+\tag{17.12}
+$$
+故定理17.2的凸性与定理18.1的极小极大交换不能仅由相同支撑函数替代。
+
+**证明。** 三点中仅 $(0,0)$ 的记录为零。另两点的中点是 $(0,1)$，它与 $(0,0)$ 的线段给整个 $[0,1]$，且所有点的任务坐标都在该区间。三个惩罚值分别为 $1-B,0,1-B$；支撑目标则为 $\max\{1+c,0,1-c\}=1+|c|$，其受限最小值在零处为一。此例将定理16.4所述支撑只见闭凸包的限制，直接作用于取得后的条件纤维。$\square$
+
+## 18. 有限敏感度证书与边界取得的非达性
+
+**定理 18.1（有界系数证书的惩罚表示与最小主函数）。** 在定义17.1下，对 $B\ge0$ 及任意 $y\in\mathbb R^n$ 定义
+$$
+U_B^\ell(y)=\min_{\|c\|_1\le B}
+\bigl[c\cdot y+h_\Gamma(\ell-R^*c)\bigr].
+\tag{18.1}
+$$
+则
+$$
+\boxed{U_B^\ell(y)=\max_{v\in\Gamma}
+\bigl[\ell(v)-B\|y-Rv\|_\infty\bigr]
+=\sup_{z\in D}\bigl[U^\ell(z)-B\|y-z\|_\infty\bigr].}
+\tag{18.2}
+$$
+式（18.1）的最小值与式（18.2）的源最大值均达到。$U_B^\ell$ 在整个记录空间中为 $B$-Lipschitz，数据范数为这些固定坐标及单位下的 $\|\cdot\|_\infty$。它是所有在 $D$ 上不小于 $U^\ell$ 的全空间 $B$-Lipschitz 函数中逐点最小者。对 $y\in D$，
+$$
+U_B^\ell(y)\ge U^\ell(y),\qquad
+U_B^\ell(y)\downarrow U^\ell(y)\quad(B\to\infty).
+\tag{18.3}
+$$
+本定理不附加统一收敛速率或连续最优系数选择的结论。
+
+**证明。** 在两个非空紧凸集 $\Gamma$ 和 $\{c:\|c\|_1\le B\}$ 上，配对
+$$
+f(v,c)=\ell(v)+c\cdot(y-Rv)
+$$
+连续且分别仿射，满足 Sion，[*On general minimax theorems*](https://doi.org/10.2140/pjm.1958.8.171)，Theorem 3.4 的半连续性与拟凹、拟凸条件。应用该定理得到
+$$
+\min_{\|c\|_1\le B}\max_{v\in\Gamma}f(v,c)
+=\max_{v\in\Gamma}\min_{\|c\|_1\le B}f(v,c).
+$$
+对固定 $v$，内层最小值为 $\ell(v)-B\|y-Rv\|_\infty$，由 $\ell^1$ 球与 $\ell^\infty$ 范数的对偶配对得到。两侧目标连续、可行集紧，所以均达到。按 $z=Rv$ 分组，并用各纤维上任务最大值的达到性，得到式（18.2）的最后一式。
+
+每个 $y\mapsto U^\ell(z)-B\|y-z\|_\infty$ 都为 $B$-Lipschitz，其有限值上确界保持该性质。取 $z=y\in D$ 给主函数性质。若 $G$ 是任一这样的全空间 $B$-Lipschitz 主函数，则
+$$
+G(y)\ge G(z)-B\|y-z\|_\infty
+\ge U^\ell(z)-B\|y-z\|_\infty\qquad(z\in D).
+$$
+取上确界得 $G(y)\ge U_B^\ell(y)$，证明最小性。
+
+扩大系数球给单调性。也可在惩罚表示中，对 $B>0$ 取最大化源 $v_B$，以 $M=\max_\Gamma\ell$ 记，得到
+$$
+B\|y-Rv_B\|_\infty\le\ell(v_B)-U^\ell(y)\le M-U^\ell(y).
+\tag{18.4}
+$$
+沿任一趋于无穷的预算序列，紧性提供收敛子列，其极限 $v_*$ 满足 $Rv_*=y$；又有 $U_B^\ell(y)\le\ell(v_B)$。所以单调极限至多为 $\ell(v_*)\le U^\ell(y)$，结合下界得到式（18.3）。此论证只给逐记录收敛，亦不构造连续的最优系数选择。$\square$
+
+**命题 18.2（证书区间、计算访问与精确预算）。** 对实际记录 $y\in D$，任意 $B\ge0$ 给出包含真实任务区间的证书区间
+$$
+\boxed{[L^\ell(y),U^\ell(y)]
+\subseteq[-U_B^{-\ell}(y),U_B^\ell(y)].}
+\tag{18.5}
+$$
+每个正的端点容差都可由某个有限共同预算满足。上端点在有限 $B$ 下精确，当且仅当式（17.2）存在一个范数 $\|c_*\|_1\le B$ 的对偶最小化系数；精确区间要求两个符号各自满足此条件。命题17.3给出的 Euclidean 代表界经 $\|c\|_1\le\sqrt n\|c\|_2$ 给充分预算，命题17.6给全空间的充分预算，两者均须分别用于 $\ell$ 与 $-\ell$。
+
+计算证书另假定可以精确求出所用 $h_\Gamma(\ell-R^*c)$，或取得其有效上界 $\widehat h$。若 $\|c\|_1\le B$，则 $c\cdot y+\widehat h$ 是实际任务的有效上界。若还知道
+$$
+F_y^\ell(c)\le U_B^\ell(y)+\xi,\qquad
+0\le\widehat h-h_\Gamma(\ell-R^*c)\le\zeta,
+\qquad\xi,\zeta\ge0,
+$$
+则计算所得上界至多为 $U_B^\ell(y)+\xi+\zeta$。$\xi$ 是优化余量，$\zeta$ 是支撑求值余量；定义17.1的一般紧凸性本身不提供可行的支撑求值算法。定理17.5的有限核范数公式是在其联合合同及所需系数、积分数据已知或带有效界时的具体求值接口。
+
+**证明。** 对两个符号应用式（18.3）给区间包含及任意正容差下的有限预算，取两预算的较大者即可。若有预算内对偶最小化系数，代入式（18.1）及弱对偶得精确性；反向若 $U_B^\ell(y)=U^\ell(y)$，式（18.1）达到的系数即为所需的无约束对偶最小化系数。支撑上界保证 $\ell(v)\le c\cdot y+\widehat h$ 对每个 $v\in\Gamma_y$ 成立；两项余量相加得到所述精度。
+
+这些系数及支撑值是既有记录的后处理，按命题8.13不切开来源纤维，也不取得新记录或给出可行源重建。惩罚最大化源 $v_B$ 可满足 $Rv_B\ne y$，故它不必是实际条件纤维中的源。预算 $B$ 控制已声明记录范数下的数据敏感度；只有另给执行及计价合同，才能把它与取得费用相连。它也不同于定义4.5在精确表示等式 $Q^*a=h$ 下另加资源限制的优化问题。$\square$
+
+**命题 18.3（合法重叠圆盘的尖锐端点与有限精度代价）。** 在假设15.1中取单率 $\lambda=1$、$U_A=U_S=\mathbb R$、$U_B=\mathbb R^2$，并取局部系数
+$$
+D=1,\quad E=1,\quad F=(1,0),\quad
+A=2,\quad B_{\rm loc}=\operatorname{diag}(2,1).
+\tag{18.6}
+$$
+则 $P=1,Q=I_2,X^0=(1,0)$。定理15.4给出全部合法余量 $T=(t_1,t_2)$，其中 $t_1^2+t_2^2\le1$，以及
+$$
+K_{AB}(t)=e^{-t}(1+t_1,t_2).
+$$
+取得实际无误差读数 $\langle1,K_{AB}(0)e_1\rangle=2$，即中心化记录 $t_1=1$。固定终时一及输入 $g(s)=e_2/(1-e^{-1})$，$0\le s\le1$，则定义16.1的记忆任务恰为 $t_2$。其真实任务纤维为 $\{0\}$，而上端点对偶满足
+$$
+\inf_{c\in\mathbb R}\bigl[c+\sqrt{1+c^2}\bigr]=0,\qquad
+c+\sqrt{1+c^2}>0\quad(c\in\mathbb R).
+\tag{18.7}
+$$
+因此无有限最小化系数。对两个任务符号，定理18.1的值相同，且
+$$
+\boxed{U_B=\sqrt{1+B^2}-B,\qquad
+[-U_B,U_B]\text{ 是相应证书区间}.}
+\tag{18.8}
+$$
+对 $0<\eta<1$，
+$$
+\boxed{U_B\le\eta\iff B\ge\frac{1-\eta^2}{2\eta}.}
+\tag{18.9}
+$$
+$\eta\ge1$ 时每个 $B\ge0$ 均满足容差；$\eta=0$ 时没有有限预算满足。
+
+**证明。** 两个局部谱块分别为 $\begin{pmatrix}2&1\\1&1\end{pmatrix}$ 和 $\begin{pmatrix}1&1&0\\1&2&0\\0&0&1\end{pmatrix}$，均正定。定义15.3直接给上述 $P,Q,X^0$，行算子的算子范数为 $\sqrt{t_1^2+t_2^2}$，所以定理15.4保证整个圆盘的共同正实现。该固定输入给 $v_1=e_2$，故 $m_0=0,H=(0,1)$，由式（16.5）得到任务 $t_2$。
+
+$t_1=1$ 与圆盘条件迫使 $t_2=0$。已知球约束下的真实零半径由定理3.2–推论3.3直接给出；这一边界纤维的确定性不要求全域线性字典表示，见命题2.5。由定理16.4的支撑公式，记录系数为 $(1,0)$，残差任务为 $(-c,1)$，其核范数为 $\sqrt{1+c^2}$，得到式（18.7）的目标。该目标严格正，且在 $c=-b,b\to\infty$ 时为
+$$
+\sqrt{1+b^2}-b=\frac1{\sqrt{1+b^2}+b}\longrightarrow0.
+$$
+其导数 $1+c/\sqrt{1+c^2}>0$，故 $|c|\le B$ 时最小值在 $c=-B$ 达到。将任务改为 $-t_2$ 只将残差的第二坐标取负，不改范数，证明式（18.8）。式（18.2）的一个惩罚最大化源为 $(t_1,t_2)=(B,1)/\sqrt{1+B^2}$：代入得到 $t_2-B|1-t_1|=\sqrt{1+B^2}-B$，但任意有限 $B$ 都有 $t_1<1$，所以它不在实际记录纤维中。当 $\eta>0$ 时，$\sqrt{1+B^2}\le B+\eta$ 两侧非负，平方并约去 $B^2$ 后恰为 $1\le2B\eta+\eta^2$，给出全部容差分支。$\square$
+
+**命题 18.4（正宽度条带仍可无严格裕度）。** 对命题18.3的圆盘，取任意 $\epsilon>0$，精确联合域为该圆盘与 $[-\epsilon,\epsilon]$ 的乘积，记录为 $z=t_1+e=1+\epsilon$，任务仍为 $t_2$。真实联合纤维只有 $(t_1,t_2,e)=(1,0,\epsilon)$，故任务仍为零，且没有命题17.6的严格裕度点。其上端点对偶为
+$$
+\inf_{c\in\mathbb R}
+\bigl[(1+\epsilon)c+\sqrt{1+c^2}+\epsilon|c|\bigr]=0,
+\tag{18.10}
+$$
+同样不在任何有限 $c$ 处达到；对每个 $B\ge0$，有界系数值仍为式（18.8）。
+
+**证明。** 条带约束 $|1+\epsilon-t_1|\le\epsilon$ 给 $t_1\ge1$，圆盘却给 $t_1\le1$，故只能是所述联合点。对任意圆盘点，$|1+\epsilon-t_1|\ge\epsilon$，排除严格裕度。定理17.5给式（18.10）；当 $c\le0$ 时目标恰为 $c+\sqrt{1+c^2}$，当 $c\ge0$ 时为 $(1+2\epsilon)c+\sqrt{1+c^2}\ge1$。负半轴沿用命题18.3的严格正性、极限及受限最小值，得到全部结论。$\square$
+
+## 18.99 追加锚
