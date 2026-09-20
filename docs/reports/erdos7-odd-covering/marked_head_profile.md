@@ -847,3 +847,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [The private-witness profile upper is automatic for odd divisor labels](profile-notes/arithmetic/384-private-witness-profile-upper-is-automatic.md)
 - [Private congruence hulls force crossed numerical moduli](profile-notes/arithmetic/385-private-congruence-hulls-and-crossed-modulus-closure.md)
 - [Pair-root conflicts and original survivor capacity](profile-notes/arithmetic/386-pair-root-conflicts-and-original-survivor-capacity.md)
+- [Cyclic CRT witnesses and local prime-capacity noncoverage](profile-notes/arithmetic/387-cyclic-crt-prime-capacity-and-forced-crowded-stars.md)
