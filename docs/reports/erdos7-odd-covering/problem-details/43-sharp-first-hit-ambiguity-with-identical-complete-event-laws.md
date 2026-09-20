@@ -16,8 +16,9 @@ closed interval whose two endpoints are attained explicitly.
 The prime order is increasing and every original prime-power height is one.
 This is an ordinary proof for arbitrary \(r\), not an inference from a finite
 experiment. It does not rule out useful bounds from these summaries: the
-proof gives their sharp bounds in this family. These sources are not claimed
-to be outputs of a separately prescribed earlier BBMST policy. The observed
+proof gives their sharp bounds in this family. On these complete coordinates,
+the two displayed sources have positive distance from the single-step
+clipped construction specified in Section 6. The observed
 event law does not include the old coordinates or their joint association
 with the event vector. No unrestricted noncoverage or new Lean result is
 claimed.
@@ -245,6 +246,108 @@ history states or its risk recursion. It gives an explicit family and sharp
 interval testing a weaker proposed summary. A useful unrestricted bridge
 still needs a quantitative actual-prefix or killed-law estimate that can be
 transported across all original labels, depths and future stages.
+
+## 6. The displayed sources are separated from a prescribed clipped step
+
+The normalized sequential realization in Section 2 permits any conditional
+kernel satisfying (FA4). A prescribed clipped step imposes an additional
+restriction. Fix the complete last old coordinate, its uniform
+pure-survivor base \(\nu_r\), and the preceding joint marginal
+\(\nu_{<r}\). For each complete preceding word \(x\), choose a forbidden
+set \(B_x\) and a threshold \(0<\delta_x<1\). Put
+\(\alpha_x=\nu_r(B_x)\) and use density
+
+\[
+ k_x(y)=
+ \begin{cases}
+ [1-\min(\alpha_x,\delta_x)]^{-1},&y\notin B_x,\\
+ (\alpha_x-\delta_x)_+/[\alpha_x(1-\delta_x)],
+       &y\in B_x,\ \alpha_x>0.
+ \end{cases}
+ \tag{FA12}
+\]
+
+The empty forbidden set gives density one. The full forbidden set also
+gives density one. Otherwise (FA12) has at most two values on the entire
+resolved coordinate. Allowing arbitrary sets and history-dependent
+thresholds enlarges the family of kernels supplied by a fixed original
+congruence family; a lower distance bound for this enlarged class remains
+valid for such an actual step.
+
+Here is the exact elementary distance calculation. On a uniform space of
+\(n\ge3\) atoms, let the target density be
+\(r_a=(1+a,1-a,1,\ldots,1)\), where \(0<a<1\). Among all nonnegative
+normalized densities \(k\) with at most two values,
+
+\[
+ \inf_k\operatorname{TV}(r_a\nu,k\nu)
+ =\frac{a(n-2)}{n(n-1)},
+ \qquad
+ \operatorname{TV}(\rho,\eta)
+ :=\frac12\sum_z|\rho(z)-\eta(z)|.
+ \tag{FA13}
+\]
+
+To prove the lower bound, the constant density has distance \(a/n\).
+For a nonconstant candidate, write its high and low values as \(1+u\)
+on \(j\) atoms and \(1-v\) on \(n-j\) atoms. Normalization says
+\(ju=(n-j)v\), with \(u,v>0\). Exchanging two assigned values cannot
+increase absolute error when their order is aligned with the target;
+thus a minimizing assignment puts the positive exceptional atom in the
+high group and the negative exceptional atom in the low group. The sum
+of absolute density errors is
+
+\[
+ E=|u-a|+(j-1)u+|v-a|+(n-j-1)v.
+\]
+
+For \(2\le j\le n-2\),
+\(E\ge2a+(j-2)u+(n-j-2)v\ge2a\). If \(j=1\), substitute
+\(u=(n-1)v\). The resulting piecewise linear function has its minimum
+\(2a(n-2)/(n-1)\) at \(v=a/(n-1)\); the breakpoints are
+\(a/(n-1)\) and \(a\). The case \(j=n-1\) is the same with
+\(u,v\) exchanged. Division by \(2n\) proves the lower bound.
+
+For attainment, give the negative exceptional atom density \(1-a\)
+and every other atom density \(1+a/(n-1)\). This is also a kernel
+of form (FA12): take the forbidden set to be that single atom and
+\(\delta=a/(n-1+a)<1/n=\alpha\). Thus (FA13) is sharp even within
+the enlarged class of clipped rows. This does not assert that this
+particular row is obtainable using the original arithmetic labels.
+
+For (FA6), put \(n=p_r-1\). On the event
+\(A=\{\prod_{i<r}h_i(X_i)\ne0\}\), the conditional target density
+relative to \(\nu_r\) is a permutation of \(r_\epsilon\). Its
+preceding marginal is \(\nu_{<r}\), and
+\(\nu_{<r}(A)=\prod_{i<r}2/(p_i-1)\). Total variation of joint laws
+with a common preceding marginal is the average conditional total
+variation. Consequently every law
+\(\widetilde\mu=\nu_{<r}K_r\) of the specified form satisfies
+
+\[
+ \operatorname{TV}(\mu_\pm,\widetilde\mu)
+ \ge
+ \left(\prod_{i<r}\frac2{p_i-1}\right)
+ \frac{\epsilon(p_r-3)}{(p_r-1)(p_r-2)}>0.
+ \tag{FA14}
+\]
+
+For the four-coordinate example this lower bound is \(2/13365\).
+The same calculation applies to Chapter 42's displayed sources: their
+complete last old coordinate has six pure-survivor atoms, the nonzero
+perturbation has amplitude \(1/35\), and the active preceding rows have
+mass \(1/2\). Every single clipped step from that fixed preceding
+\(\nu_3\otimes\nu_5\) and fixed \(\nu_7\) has joint distance at least
+\(1/525\) from either displayed source.
+
+These bounds concern the declared complete carriers and base laws.
+Marginalizing additional hidden prime-power digits, mixing different
+operations, changing the base, or changing the preceding joint marginal
+does not satisfy this comparison contract. The result does not exclude
+other ambiguity pairs within a prescribed arithmetic process. It leaves
+the cap-class interval (FA10) unchanged, while showing why that interval
+cannot by itself disprove a stronger estimate using the actual source
+construction.
 
 The zero-mean product perturbation, finite conditional-kernel construction
 and convexity argument are standard methods. The elementary prime-choice
