@@ -34,6 +34,11 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [The complete original-AP event law can agree while first-hit costs differ; a two-level cap-aware LP has exact optimum 97/5775](../docs/reports/erdos7-odd-covering/problem-details/42-two-level-fixed-colors-and-first-hit-moment-obstruction.md)
+- [Natural increasing prime order with at most four smaller neighbours gives full Haar density greater than (3/800)(11/24)^M, including books with three private primes per page](../docs/reports/erdos7-odd-covering/problem-details/41-natural-four-predecessor-orders-are-noncovering.md)
+- [The fixed-order independent-run scalar ledger has global minimum 1.002553… over all real thresholds; actual cofactor colors require a stronger joint comparison](../docs/reports/erdos7-odd-covering/problem-details/40-fixed-order-scalar-threshold-barrier-and-cofactor-colors.md)
+- [An order anchored at 3,5 with 7 first and at most three earlier neighbours per later prime gives explicit full Haar density, allowing arbitrary overlap and large-prime continuation](../docs/reports/erdos7-odd-covering/problem-details/39-anchored-three-predecessor-orders-are-noncovering.md)
+- [An eight-prime core containing 3,5,7,11 admits arbitrary seven-vertex attachments; extendible core Haar density exceeds 1/2200000](../docs/reports/erdos7-odd-covering/problem-details/38-eight-prime-cores-containing-three-five-seven-eleven.md)
 - [A book of N four-prime pages has full Haar density greater than (67/4000)(3/16)^N, supplying a computable cutoff for arbitrary large-prime constraints joining head pages](../docs/reports/erdos7-odd-covering/problem-details/37-full-density-and-large-prime-continuation-for-spine-books.md)
 - [Arbitrarily many four-prime pages sharing the spine {3,5} are noncovering, with a uniform positive measure of common boundary configurations admitting all page extensions](../docs/reports/erdos7-odd-covering/problem-details/36-common-spine-books-of-four-prime-pages.md)
 - [One actual block on the first eight odd primes admits arbitrarily many seven-vertex attachments; extendible core configurations have Haar density greater than 1/1200000](../docs/reports/erdos7-odd-covering/problem-details/35-eight-prime-core-with-seven-vertex-attachments.md)
