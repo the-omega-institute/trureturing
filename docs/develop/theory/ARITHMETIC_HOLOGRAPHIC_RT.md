@@ -1445,6 +1445,481 @@ $$
 
 一般稳定子互补恢复、辅助纠缠、秘密共享和串联码原理分别归属 [PRR22, Harlow, CGL99, HaPPY, Cao24]。本节对具体循环模环的恢复子群、实际熵正规形和有限树的可执行验证承担结果责任；未完成等价文献形式的全面优先权排查，未作 Lean 内核或独立多模型审查。
 
+## 27. 几何读数的动力学闭合与原码内的同谱反例
+
+本节将本卷的区域熵／恢复结构与 `SYMPLECTIC_PREDICTIVE_COMPLETION.md` 第 1–2 节的预测闭合关系连接。对象保持为既有编码；几何读数、完整量子态和动力学生成元分开定义。所有有限量子公式取 $\hbar=1$；第 30 节恢复有量纲的 $\hbar$。本节没有把静态熵图当作已经闭合的动力学状态。
+
+**命题 27.1（观测纤维上的速度条件）。** 设 $q:M\to G$ 为光滑满射次浸没，$X$ 为 $M$ 上的光滑向量场。存在 $G$ 上的光滑向量场 $Y$ 使 $Dq\,X=Y\circ q$，当且仅当 $Dq_xX(x)$ 在每个完整纤维 $q^{-1}(g)$ 上相同。可微区间内的确定性观测演化因此要求同一读数有同一速度。
+
+**证明。** 必要性由等式直接给出。充分性据纤维值定义 $Y(g)$；每点附近的光滑局部截面使 $Y=Dq\,X\circ s$ 光滑，纤维一致性保证局部定义相容。由链式法则，投影后的积分曲线满足该方程。证毕。即使熵映射不是次浸没，同读数不同速度仍足以排除 $\dot g=F(g)$；它是必要性而无需正则秩假设。本条件是线性关系 $OA=KO$ 的非线性对应，属于标准下降条件；当前实例承担下述反例的具体内容。
+
+**定理 27.2（全部区域同谱、同一局部生成元、相反熵速度）。** 取第 20、24 节原单自由历史码 $V=V_{3,3,\{1\}}$，$\alpha=1$，六腿依次为 $(a_0,b_0,a_1,b_1,a_2,b_2)$。令逻辑
+
+$$
+Z=\operatorname{diag}(1,\omega_3,\omega_3^2),\quad
+h=|0\rangle\langle1|+|1\rangle\langle0|,
+$$
+
+$$
+|\psi\rangle=\frac{\sqrt3}{2}|0\rangle+\frac i2|1\rangle,
+\quad \rho=\frac12|\psi\rangle\langle\psi|+\frac16I_3,
+\quad\widetilde\rho=Z\rho Z^*.
+$$
+
+二者严格正定。对每个物理腿集合 $A$，$[V\rho V^*]_A$ 与 $[V\widetilde\rho V^*]_A$ 的完整谱相同。用同一逻辑演化 $\rho(t)=e^{-ith}\rho e^{ith}$ 及其带波浪版本，对区域 $B_0=\{a_0,b_0\}$，
+
+$$
+\left.\frac{dS_{B_0}(\rho(t))}{dt}\right|_0
+=\frac{\sqrt3}{4}\log\frac7{13}<0,
+\qquad
+\left.\frac{dS_{B_0}(\widetilde\rho(t))}{dt}\right|_0
+=-\frac{\sqrt3}{8}\log\frac7{13}>0.
+$$
+
+该演化可由仅支撑于前两个相邻顶点块的四腿 Hermitian 算符精确实现。
+
+**证明。** 原振幅给出 $\overline Z=Z_0^{-1}Z_1$、$\overline X=X_0X_1^2X_2X_3$ 满足 $\overline ZV=VZ$、$\overline XV=VX$。$\overline Z$ 是单腿幺正的乘积，所以所有区域的边缘态分别局部幺正等价。令
+
+$$
+\overline P_0=(I+\overline Z+\overline Z^2)/3,\qquad
+\overline H=\overline P_0\overline X^{-1}+\overline X\overline P_0.
+$$
+
+它是四腿 Hermitian 算符并满足 $\overline HV=Vh$，故实现同一实际物理演化，不只是给码空间取一个无局部性声明的压缩算符。
+
+由第 20.2 节或直接偏迹，$S_{B_0}(V\rho V^*)=\log3+H(\operatorname{diag}\rho)$。两输入具有相同的对角概率 $(13,7,4)/24$，但 $\rho_{01}=-i\sqrt3/8$，而 $\widetilde\rho_{01}=\omega_3^{-1}\rho_{01}$。$\dot p_0=-2\operatorname{Im}\rho_{01}$、$\dot p_1=-\dot p_0$、$\dot p_2=0$，所以 $\dot H=\dot p_0\log(p_1/p_0)$，代入得结论。证毕。
+
+因此，全部瞬时区域谱组成的读数也不足以定义自治几何速度；只对这些谱再作确定性图重建无法消除这个区别。这里只固定了同一个物理 Hamiltonian，没有同时将 Hamiltonian 作 $\overline Z$ 共轭；这是两种真实初态，不是改变整个实验坐标的规范等价。反例不排除时间历史、额外相位观测、随机动力学或更高阶状态表示。
+
+**推论 27.3（可取得的相位电流补全）。** 对上述 $h$，记
+
+$$
+r=\rho_{00}+\rho_{11},\quad z=\rho_{00}-\rho_{11},\quad
+j=-2\operatorname{Im}\rho_{01},\quad u=2\operatorname{Re}\rho_{01}.
+$$
+
+直接交换子计算给出 $\dot r=\dot u=0$、$\dot z=2j$、$\dot j=-2z$。在对角概率正的区间，
+
+$$
+\dot S_{B_0}=j\log\frac{r-z}{r+z}.
+$$
+
+因此给定 $r$，$(z,j)$ 为该读出的自治振子状态，可采用 $dz\wedge dj$ 和 Hamilton 函数 $z^2+j^2$。它不是完整任意 qutrit 状态的最小坐标证明，也不宣称所有区域熵只由这两个数决定。$j$ 是明确的逻辑 Hermitian 观测期望，可通过第 24 节的授权区域恢复取得。任意有限维线性量子动力学还可对所选观测取交换子迭代线性包，得到至多 $d^2$ 维的预测闭包；这是统一预测卷的有限可观测性接口。
+
+## 28. 面积变化、区域自治和精度相容的共同限制
+
+**命题 28.1（保持区域代数的连续流固定中心面积）。** 固定有限维逻辑 $*$-代数 $\mathcal M$ 及其中心内的自伴面积算符 $\mathcal L$。若 $U_t$ 为从恒等出发的连续单参数幺正群，且对全部 $t$ 有 $U_t^*\mathcal M U_t=\mathcal M$，则 $U_t^*\mathcal L U_t=\mathcal L$。
+
+**证明。** 共轭必须将有限集合中的最小中心投影置换到同一集合。连续路径不能改变离散置换，且起点为恒等，因此每个最小中心投影分别固定。中心算符是这些投影的线性组合，结论成立。证毕。该命题不要求稳定子；“面积非标量”本身还不足以在区域观测自治的连续闭系统中获得面积变化。时间依赖码、变化的区域代数、开放演化不在本命题的假设中。
+
+若对一个 qutrit 同时要求 $Z$ 基与互补 $W$ 基的完整对角代数各自被连续幺正流保持，生成元必须在两个代数中同时对角。互补基下，第一组对角算符的另一组对角元都是同一平均值，故这样的生成元只能是标量。此处约束的是两个区域的观测代数自治，不是单独的静态可恢复性。
+
+**推论 28.2（现有深树在根幺正下的几何盲性）。** 第 25 节根分享树对任意区域有通道正规形，谱由固定最大混合因子及零份或一份根密度矩阵构成。因此任意根逻辑幺正演化保持全部叶区域的完整谱。深度和擦除距离的增长本身不改变这一结论。它是该树正规形的直接应用；不认领一般“幺正演化不能改变纠缠”的错误命题。根输入更改、不同逻辑子系统耦合或编码变化需另行研究。
+
+**命题 28.3（原精度塔的自治生成元条件）。** 在数字分解 $W:\mathbb C^D\to\mathbb C^d\otimes\mathbb C^e$、$D=de$ 下，令 $Q=\operatorname{Tr}_e\operatorname{Ad}_W$。给定自伴 $H_D,H_d$，以下关系对所有输入矩阵成立，当且仅当存在自伴 $K_e$ 使
+
+$$
+Q(-i[H_D,\rho])=-i[H_d,Q\rho],
+\qquad
+WH_DW^*=H_d\otimes I_e+I_d\otimes K_e.
+$$
+
+**证明。** 对偶关系要求 $[WH_DW^*,O\otimes I]=[H_d,O]\otimes I$ 对所有 $O$ 成立。故差算符位于完整矩阵代数 $M_d\otimes I$ 的交换子 $I\otimes M_e$ 中；反向代入即可。证毕。这是统一预测卷完整子系统闭合条件的实际数字分解应用，不是新的一般无相互作用定理。对 $p$ 进的每级精度同时实施该条件，迭代得到各数字层生成元之和。因而真正跨层相互作用需要改变当前粗化规则、放松全输入幺正自治或保留记忆。
+
+例如一般线性分块系统 $\dot x=Ax+Bh,\dot h=Cx+Dh$ 精确消去隐藏变量后为
+
+$$
+\dot x(t)=Ax(t)+Be^{Dt}h(0)+\int_0^tBe^{D(t-s)}Cx(s)\,ds.
+$$
+
+隐藏初态与卷积不可省略。仓库已形式化的 Schur 结合律约束分层消元的一致性；它不自动为无界场算子、噪声或任意初始相关提供额外物理性质。
+
+**构造 28.4（原中心子码中的面积–相位动力学）。** 取第 18 节三维三角环的 $|Z|=9$，分为大小 $3$ 与 $6$ 的两组，均匀固定组内相干并将 $a,b$ 因子固定到一个计算基向量。所得二维子码仍在原物理空间内。其实际支撑坐标可写成
+
+$$
+J_c|0\rangle=3^{-1/2}\sum_{z=0}^{2}|z,z\rangle,\qquad
+J_c|1\rangle=6^{-1/2}\sum_{z=3}^{8}|z,z\rangle.
+$$
+
+这仅使用第 18 节的两侧局部支撑等距，不添加物理维数。对任意逻辑输入，$p=\rho_{11}$，有
+
+$$
+S_X=h_2(p)+a(p),\qquad
+\mathcal L=\operatorname{diag}(\log3,\log6),\qquad
+ a(p)=\log3+p\log2.
+$$
+
+取 $h=(\Omega/2)\sigma_x$。对纯态 $\sqrt{1-p}|0\rangle+e^{i\phi}\sqrt p|1\rangle$、$0<p<1$，Schrödinger 方程等价于
+
+$$
+\dot p=-\Omega\sqrt{p(1-p)}\sin\phi,\qquad
+\dot\phi=-\frac{\Omega(1-2p)}{2\sqrt{p(1-p)}}\cos\phi,
+\qquad\dot a=(\log2)\dot p.
+$$
+
+**证明。** 边缘态两组支持正交，谱为 $(1-p)/3$ 的三重值和 $p/6$ 的六重值。直接计算熵得到第一式。将两振幅代入 Schrödinger 方程，概率导数及相位比导数给出后式。它也是 $dp\wedge d\phi$ 与 $E=\Omega\sqrt{p(1-p)}\cos\phi$ 的 Hamilton 流，采用 $\iota_{X_E}\omega=dE$。证毕。
+
+这是非标量面积期望真实变化的有限模型。相同 $p$、不同 $\phi$ 可有不同面积速度，加入相位后闭合。生成元混合中心扇区，因而不保持两侧的对角恢复代数自治，符合命题 28.1。物理实现 $J_chJ_c^*$ 一般跨该划分非局部，未证明几何局域性或多区域动力学。非稳定子算子代数码可以有这种中心面积，并不与 [Magic26] 明确限定的子系统码近似恢复论证冲突。
+
+## 29. 几何相空间、移动编码与真实曲率的区分
+
+### 29.1 双曲模空间提供真实的几何共轭变量
+
+对第 17 节固定拓扑、固定外边界长度的曲面，在标记的 Fenchel–Nielsen 图册中使用内部长度 $\ell_e$ 与扭转 $\tau_e$。标准 Weil–Petersson 辛形式取归一化为
+
+$$
+\omega_{\rm WP}=\sum_e d\ell_e\wedge d\tau_e.
+$$
+
+这是 Wolpert 的既有公式。本节扭转采用 $\tau_e=-\tau_e^{\rm WP25}$，因为 [WP25] 式 (1) 写为 $\sum_e d\tau_e^{\rm WP25}\wedge d\ell_e$；这样上式及随后的 Hamilton 方程使用同一符号约定。[WP25] 给出一个新的证明，固定测地边界的模空间参照 [Do10]。带固定测地边界的情形使用对应的固定边界长度辛叶，不把可变外边界参数误当已配对的自由度。
+
+在第 17 节的短领圈开区间内，全部选定边界熵读数为 $s_A=\lambda^{-1}\min_C\sum_{e\in C}\ell_e$，与扭转无关。固定极小割组合的光滑子区间中，若自行选择的 Hamilton 函数仅依赖这些读数，即 $H=F((s_A))$，则
+
+$$
+\dot\ell_e=\partial_{\tau_e}H=0,
+\qquad\dot\tau_e=-\partial_{\ell_e}H,
+\qquad\dot s_A=0.
+$$
+
+这是 Hamilton 方程的直接后果，说明单靠这些面积读数作为能量函数不能生成长度变化。若选择 $H=\tfrac12\tau^TM^{-1}\tau+U(\ell)$，其中 $M>0$，则 $\dot\ell=M^{-1}\tau$，同一长度纤维上不同扭转可有不同速度。该几何 Hamilton 模型是一种明确选择，未从边界量子理论推导，也不能把 WP 扭转无证明地识别为量子态相位、Lorentz 时空的外曲率或 ADM 正则动量。
+
+### 29.2 移动码的无泄漏输运必须含连接项
+
+**定理 29.1（移动编码的精确生成元）。** 令 $V(t):\mathbb C^k\to\mathbb C^N$ 为光滑等距，$P=VV^*$、$Q=I-P$，给定物理自伴 $H_B(t)$。所有码内初态保持在随时间移动的码空间，当且仅当
+
+$$
+Q(H_BV-i\dot V)=0,
+$$
+
+等价地 $\dot P=-i[H_B,P]$。此时逻辑生成元是
+
+$$
+h(t)=V^*H_BV-iV^*\dot V.
+$$
+
+指定任意逻辑自伴 $h(t)$ 时，一个实际物理实现为
+
+$$
+H_B=i[\dot P,P]+V\bigl(h+iV^*\dot V\bigr)V^*+QH_\perp Q,
+$$
+
+其中 $H_\perp$ 自伴。
+
+**证明。** 对 $|\Psi\rangle=V|\psi\rangle$ 将 Schrödinger 方程分解到 $P,Q$ 两块，得到法向条件及逻辑生成元。由 $P^2=P$ 可知 $\dot P$ 纯为两侧非对角块；法向条件及其共轭恰等价于投影演化方程。$i[\dot P,P]V=iQ\dot V$，另有 $V(iV^*\dot V)=iP\dot V$，故所列 $H_BV=Vh+i\dot V$，实现全方程。证毕。忽略 $iV^*\dot V$ 只在平行框架中正确。
+
+连接 $\mathcal A=iV^*dV$ 的曲率为
+
+$$
+\mathcal F=d\mathcal A-i\mathcal A\wedge\mathcal A
+=i\,dV^*Q\wedge dV.
+$$
+
+这与 #8340 的局部观察子丛关系相同；存在环境连接时必须加 $V^*F^{\rm ambient}V$，不能省掉该项。反绝热输运原理有 [Berry09] 等已有基础。连接描述码子空间及基的运输，其曲率不自动等于物理时空的 Riemann 曲率。换局部框 $V\mapsto Vg$ 时，$h\mapsto g^*hg-i g^*\dot g$、$\mathcal A\mapsto g^*\mathcal A g+i g^*dg$，曲率协变。因此非平凡 Chern 类应沿用 #8340 的局部图册，不要求存在一个全局等距框。给定 $V(t)$ 后构造输运不等于推导了决定 $V$ 的动力学。法向耦合的不可避免强度为 $\|QH_BV\|=\|Q\dot V\|$，单位恢复后右侧乘 $\hbar$。
+
+### 29.3 真实几何与预测几何之间还需要变分字典
+
+量子态射影空间的辛结构与 Schrödinger 流是 [AS97] 的几何量子力学；双曲模空间的 WP 辛结构是另一个载体。把二者相连至少需给出一个明确映射 $\Phi$，检验 $D\Phi\,X_h=X_{H_g}\circ\Phi$ 及指定的 Poisson／辛配对相容。单凭面积数值、维数、相位外形或投影连接，均不能省略该映射。若目标是物理引力，相空间应由所选引力作用量、约束及边界条件决定，不能先指定任意 WP Hamilton 函数再宣称得到 Einstein 动力学。
+
+## 30. 因果记忆如何真正进入度量方程与面积系数
+
+本节吸收此前未写回远端的《因果记忆、质量矩阵相对熵与诱导曲率项》中的模型，重新列出必要前提。相关基础是正常双曲算子的因果 Green 理论、共同热核正规化及锥形变分 [Bar15, HK03, Cone95]。这里讨论四维低导数有效场论的相对系数，不是当前有限码已经具有该场论对偶。
+
+### 30.1 隐藏变量的传播和度量作用不能只留一个
+
+给定全局双曲 Lorentz 背景，正常双曲块算子及零阶局部耦合 $B$ 满足
+
+$$
+P_Vv+Bh=f,\qquad P_Hh+B^Tv=0.
+$$
+
+在指定源／初值函数空间，$h=h_{\rm hom}-G_H^RB^Tv$，所以精确可见方程为
+
+$$
+(P_V-BG_H^RB^T)v=f-Bh_{\rm hom}.
+$$
+
+记忆核保持延迟因果支持，隐藏初值项也保留。另一方面，在同一个有限模式 Euclidean 正定正规化中，Gaussian 积分同时产生 Schur 算子及隐藏行列式：
+
+$$
+\log\det\begin{pmatrix}P&B\\B^T&Q\end{pmatrix}
+=\log\det Q+\log\det(P-BQ^{-1}B^T).
+$$
+
+度量若进入 $Q$，隐藏行列式就参与度量变分。只保留可见传播而丢弃此项不能定义相同的几何反作用。连续作用量必须用共同正规化和反项；实时耗散需要闭时路径与初态，不能把 Euclidean 行列式直接当延迟影响泛函。
+
+### 30.2 同一个谱差控制相对曲率项与局部锥熵
+
+**命题 30.1（相对面积系数的有限谱公式）。** 考虑四维有限实标量场，恒定严格正定质量平方矩阵
+
+$$
+\mathsf M=\begin{pmatrix}A&B\\B^T&C\end{pmatrix},\qquad
+\mathsf M_0=A\oplus C,
+\qquad D_g=-\nabla_g^2I+\xi RI+\mathsf M.
+$$
+
+比较模型具有同样的场、曲率耦合、正规化与有限重整化处方，仅将跨块质量耦合关闭。设 Euclidean 作用量线性曲率项为 $\Gamma_{E,R}=-\kappa\int\sqrt g R$。在低曲率、低导数展开的这一项中，
+
+$$
+\Delta\kappa=\frac{\hbar}{32\pi^2}(1/6-\xi)\,\mathcal I,
+\quad
+\mathcal I=\operatorname{tr}(\mathsf M\log\mathsf M-\mathsf M_0\log\mathsf M_0)
+=\operatorname{tr}(\mathsf M)\,D\left(\frac{\mathsf M}{\operatorname{tr}\mathsf M}\middle\|\frac{\mathsf M_0}{\operatorname{tr}\mathsf M}\right).
+$$
+
+对一个有适当平滑锥正规化的静态分岔视界截面 $\Sigma$，只取同一局部曲率项的复制熵，则
+
+$$
+\boxed{\Delta S^{(R)}_\Sigma
+=\frac{4\pi}{\hbar}\Delta\kappa\,\operatorname{Area}(\Sigma)
+=\frac{1/6-\xi}{8\pi}\operatorname{Area}(\Sigma)\,\mathcal I.}
+$$
+
+**证明。** 标量热核线性项为 $(4\pi s)^{-2}e^{-s\mathsf M}[1+s(1/6-\xi)R]$。两谱的维数与迹相同，故差的 $s^{-2}$ 积分在紫外有限，正质量保证红外收敛，逐谱积分得 $\mathcal I$。块对角 $\log\mathsf M_0$ 使 $\operatorname{tr}(\mathsf M\log\mathsf M_0)=\operatorname{tr}(\mathsf M_0\log\mathsf M_0)$，得到相对熵式。
+
+复制角为 $2\pi n$ 的锥在一阶有 $\int R_n=n\int R_1+4\pi(1-n)\operatorname{Area}(\Sigma)+O((n-1)^2)$。对 $S=(n\partial_n-1)\Gamma_E/\hbar|_{n=1}$ 代入局部项，得到最后两式。证毕。$\mathcal I$ 的对数可统一写为 $\log(\mathsf M/\mu^2)$，迹相同使 $\mu$ 抵消。
+
+此为局部复制／Wald 型贡献，尤其当 $\xi\ne0$ 时含非最小耦合接触项，不能无条件等同于正的普通物质 von Neumann 纠缠熵。[Cone95, NonMin97] 的比较边界适用。归一化质量矩阵亦不是实际物质场密度态。完整真空能、高曲率项、非局域项和引力子圈未被该有限相对系数决定。
+
+**推论 30.2（可计算的耦合响应）。** 对两场 $\mathsf M(b)=\left(\begin{smallmatrix}\mu&b\\b&\mu\end{smallmatrix}\right)$，$\mu=m^2>|b|$，有
+
+$$
+\mathcal I(b)=(\mu+b)\log(\mu+b)+(\mu-b)\log(\mu-b)-2\mu\log\mu,
+$$
+
+$$
+\mathcal I'(b)=\log\frac{\mu+b}{\mu-b},\qquad
+\mathcal I''(b)=\frac{2\mu}{\mu^2-b^2}>0.
+$$
+
+对 $b>0$，$\xi<1/6$ 时相对曲率系数严格递增；$\xi=1/6$ 时仅此线性曲率差为零。上述等式直接微分得到。慢变 $b$ 作为局域系数时，变化率需要同时计入面积形变和 $b$ 的变化，不能把二者合并为一项“观察产生曲率”。
+
+### 30.3 纳入控制器后才是一个自洽的几何动力学模型
+
+取上述耦合为实际标量控制场 $b(x)$，在低导数截断中另给定已重整化的 $Z(b)>0,U(b)$、基础引力系数及边界条件。考虑明确的 Lorentz 有效作用量
+
+$$
+S_{\rm eff}=\int\sqrt{-g}\left[\kappa(b)R-\frac12Z(b)(\nabla b)^2-U(b)\right]+S_{\rm probe}[g,b],
+$$
+
+其中 $\kappa(b)$ 的相对物质圈贡献由命题 30.1 决定，其他有限系数是模型输入，未由该谱差推导。对这一定义的局部模型，变分给出
+
+$$
+\kappa G_{\mu\nu}+(g_{\mu\nu}\Box-\nabla_\mu\nabla_\nu)\kappa
+=\tfrac12(T^{(b)}_{\mu\nu}+T^{\rm probe}_{\mu\nu}),
+$$
+
+$$
+Z\Box b+\tfrac12Z'(\nabla b)^2-U'+\kappa'R+\mathcal O_b^{\rm probe}=0.
+$$
+
+这里 $T^{(b)}_{\mu\nu}=Z\nabla_\mu b\nabla_\nu b-g_{\mu\nu}[Z(\nabla b)^2/2+U]$，$\mathcal O_b^{\rm probe}=(\sqrt{-g})^{-1}\delta S_{\rm probe}/\delta b$。这些是所选标量–张量作用量的 Euler–Lagrange 方程，不是从 RT 静态熵独立推出 Einstein 方程。
+
+**一致性检查。** 在其他探针变量在壳、无微分同胚异常时，$\nabla_\mu T^{\rm probe\,\mu}{}_{\nu}=\mathcal O_b^{\rm probe}\partial_\nu b$。$b$ 方程给出完整右侧散度 $-R\partial_\nu\kappa/2$，恰与左侧由 Bianchi 恒等式计算的散度相同。若只外部规定 $b(t)$ 而丢弃其控制器应力能，这个一致性就不自动成立。局部视界熵的相应系数为 $(4\pi/\hbar)\int_\Sigma\kappa(b)dA$。超出低导数／近平衡范围必须恢复因果非局域有效作用量，不能沿用截断方程宣称完整 UV 理论。
+
+### 30.4 回接现有时空模型的真实义务
+
+已有共同传播锥与内部钟可以约束因果结构和尺度；已有 Schur 记忆约束有效传播；本节说明物质消元的行列式可以改变几何作用系数。它们分别提供输入，尚没有证明与有限 RT 码属于同一个微观物理实现。平直响应不识别 $\xi$，因而不能单靠平直观察确定曲背景反作用。
+
+[FGHMR14] 在已有半经典全息 CFT、AdS 真空邻域、全部球形区域和适当熵泛函等假设下，证明纠缠第一定律对应线性化引力方程。[LVR16] 将相对熵二阶变分与相应引力正则能量联系。当前有限码还缺少这些连续区域、应力能字典和统一几何响应映射。将参数空间 Berry 曲率、WP 辛形式或有限态 Fisher 度量直接改名为时空曲率会遗漏这些前提。
+
+本轮的新落点是：原码的同谱动力学反例；受既有区域代数与粗化约束的动态条件；原非稳定子中心子码的闭合面积–相位流；以及同一质量谱差进入局部几何作用和锥熵的条件化连接。下一步应在一个独立给定的微观模型中共同检验传播、应力能响应、相位／记忆预测和面积变分，之后再争取从这些共同关系推出几何方程。这里没有结算原始引力 RT，也没有认领通用的几何量子力学、反绝热驱动、WP 公式或诱导引力机制为新发现。
+
+## 31. 当前区域读数的最优预测误差
+
+本节沿用构造 28.4 的同一个中心分组码，不另换物理载体。取 $\mathcal H_X=\mathbb C^3\oplus\mathbb C^6$ 为该区域的实际支撑，$\tau_0=I_3/3$、$\tau_1=I_6/6$ 放在两个正交块上。区域通道、面积算符及面积跨度为
+
+$$
+\mathcal N(\rho)=\rho_{00}\tau_0+\rho_{11}\tau_1,
+\qquad \mathcal L=\operatorname{diag}(\log3,\log6),\qquad \Delta a=\log2.
+$$
+
+令 $\Delta$ 为逻辑计算基退相干，$\mathcal E$ 为将两个经典标签准备成 $\tau_i$ 的通道，$\mathcal M$ 为读取两个正交支持的测量通道。因此 $\mathcal N=\mathcal E\Delta$，$\mathcal M\mathcal N=\Delta$。实际区域空间更大时，将 $\mathcal M$ 在支撑外任意保迹补全即可。钻石范数 $\|\cdot\|_\diamond$ 采用**不含二分之一**的完全有界迹范数，包含任意被动参考系统 [Wat09]。
+
+**定义 31.1（当前区域预测任务）。** 对已知逻辑信道 $\Phi_t$，仅允许预测器读取时刻零的区域态，定义
+
+$$
+\delta(t)=\inf_{\mathcal C\ {\rm CPTP}}
+\|\mathcal N\Phi_t-\mathcal C\mathcal N\|_\diamond,
+$$
+
+其中 $\mathcal C$ 作用于该区域，可依赖已知的 $t$ 和生成元，但不能访问丢失的逻辑相干、未来读数或先前历史。此量不等于全码的静态擦除恢复误差；静态中心代数仍能被精确恢复。它也不是 [BO10] 采用最坏纠缠保真度的近似纠错优化量。
+
+**引理 31.2（秩一映射的完全范数）。** 若 $B=B^*$、$Y$ 为有限矩阵，$\Xi(X)=\operatorname{Tr}(BX)Y$，则
+
+$$
+\|\Xi\|_\diamond=\|B\|_\infty\|Y\|_1.
+$$
+
+**证明。** 对 $B$ 作谱分解。先测量其谱投影并保留参考系统，得到直和块 $X_i$；该保迹完全正映射的完全迹范数为一。随后 $\|\sum_i\lambda_iX_i\|_1\le\max_i|\lambda_i|\sum_i\|X_i\|_1$，再张量乘 $Y$ 给出上界。输入最大绝对本征值的单位本征向量投影达到下界。证毕。完全范数框架采用 [Wat09]，这个具体计算在这里直接证明。
+
+**定理 31.3（同一中心码的精确预测缺陷）。** 设 $\Phi_t$ 是一个保单位的逻辑信道，且它的区域可见坐标满足
+
+$$
+z_t=\alpha_tz_0+\beta_ty_0,
+\quad z=\operatorname{Tr}(\sigma_z\rho),\quad
+ y=\operatorname{Tr}(\sigma_y\rho)=-2\operatorname{Im}\rho_{01}.
+$$
+
+则 $|\alpha_t|\le1$，并且
+
+$$
+\boxed{\delta(t)=|\beta_t|.}
+$$
+
+一个达到下确界的实际预测器是 $\mathcal C_t=\mathcal E T_{\alpha_t}\mathcal M$，其中对角二态信道
+
+$$
+T_c=\frac12\begin{pmatrix}1+c&1-c\\1-c&1+c\end{pmatrix}
+\qquad(-1\le c\le1)
+$$
+
+采用列概率约定。在给定当前 $p=\rho_{11}$ 的全部相容逻辑密度矩阵中，仅依赖 $p$ 的实数面积预测器的精确 minimax 绝对风险是
+
+$$
+\boxed{\mathcal R_t(p)=\Delta a\,\sqrt{p(1-p)}\,|\beta_t|.}
+$$
+
+**证明。** 正性应用于两种 $\sigma_z$ 本征态给出 $|\alpha_t|\le1$，所以 $T_{\alpha_t}$ 是合法随机信道。直接计算差映射为
+
+$$
+(\mathcal N\Phi_t-\mathcal C_t\mathcal N)(X)
+=\beta_t\operatorname{Tr}(\sigma_yX)\frac{\tau_0-\tau_1}{2}.
+$$
+
+两块正交，$\|(\tau_0-\tau_1)/2\|_1=1$，引理 31.2 给出上界 $|\beta_t|$，包括任意参考纠缠。反向取 $\rho_\pm=(I\pm\sigma_y)/2$；当前区域态完全相同，未来区域态的迹范数距离为 $2|\beta_t|$。任意同输入预测器输出相同，三角不等式强迫至少一个误差不小于 $|\beta_t|$。
+
+固定 $p$ 时，正性等价于 $|\rho_{01}|\le\sqrt{p(1-p)}$，所以 $y_0$ 的准确范围是 $[-2\sqrt{p(1-p)},2\sqrt{p(1-p)}]$。未来 $p_t$ 的范围以 $[1-\alpha_t(1-2p)]/2$ 为中心、半径为 $\sqrt{p(1-p)}|\beta_t|$。纯态的两种相反虚相干达到端点。面积是 $\log3+\Delta a p_t$，区间中点给出上界，两端共同当前读数给出匹配下界。证毕。此任务提供了完整当前区域密度矩阵；只知道其熵不会改善下界。
+
+对于第 28.4 节的闭系统 $h=(\Omega/2)\sigma_x$，$\alpha_t=\cos\Omega t$、$\beta_t=\sin\Omega t$。因此当前面积或中心概率在某些时间可完全不足以预测未来区域态，虽然全局编码和时间演化都是精确的。
+
+## 32. 同一面积模型的因果记忆与受控自治极限
+
+**定义 32.1（明确的开放演化）。** 保持上述码，取 $\Omega>0$、$\gamma\ge0$，指定逻辑 Lindblad 生成元
+
+$$
+\mathcal G_\gamma(\rho)
+=-i[(\Omega/2)\sigma_x,\rho]
++\frac\gamma2(\sigma_z\rho\sigma_z-\rho).
+$$
+
+这是一项额外的物理噪声假设，不由静态 RT 公式推出。令 $P_c=J_cJ_c^*$，取 $H_B=J_c(\Omega\sigma_x/2)J_c^*$ 和 Hermitian involution $Z_B=J_c\sigma_zJ_c^*+(I-P_c)$，即给出在原物理空间上保持该子码的实际生成元。它一般跨原区域划分非局部，不声称几何局域性。
+
+**命题 32.2（完整记忆与相位缺陷）。** 该流满足
+
+$$
+\dot z=\Omega y,\qquad\dot y=-\Omega z-\gamma y,
+$$
+
+$$
+\binom{z_t}{y_t}
+=\begin{pmatrix}\alpha_t&\beta_t\\-\beta_t&\eta_t\end{pmatrix}
+\binom{z_0}{y_0}
+=\exp\!\left[t\begin{pmatrix}0&\Omega\\-\Omega&-\gamma\end{pmatrix}\right]
+\binom{z_0}{y_0}.
+$$
+
+精确消元为
+
+$$
+\boxed{\dot z(t)=\Omega e^{-\gamma t}y_0
+-\Omega^2\int_0^te^{-\gamma(t-s)}z(s)\,ds.}
+$$
+
+当前区域的最优完整预测缺陷和面积 minimax 风险仍分别为 $|\beta_t|$ 与定理 31.3 的值。若 $\gamma>0$，则
+
+$$
+|\beta_t|\le\min(1,\Omega/\gamma)\qquad(t\ge0).
+$$
+
+**证明。** Pauli 交换子给出两个实方程，变参数公式给出带隐藏初值的卷积。二维生成矩阵的对称部是 $\operatorname{diag}(0,-\gamma)$，故传播矩阵的欧氏范数不超过一，特别是 $|\alpha_t|,|\beta_t|\le1$。从初态 $(z_0,y_0)=(1,0)$ 得 $y_t=-\beta_t$，其第二式给出 $\beta_t=\Omega\int_0^te^{-\gamma(t-s)}\alpha_sds$，因此 $|\beta_t|\le\Omega/\gamma$。代入定理 31.3 即得全部操作结论。证毕。
+
+**推论 32.3（逐时最优预测器不组成半群）。** 对该固定生成元，
+
+$$
+\alpha_{t+s}=\alpha_t\alpha_s-\beta_t\beta_s,
+\qquad
+\|T_{\alpha_{t+s}}-T_{\alpha_t}T_{\alpha_s}\|_\diamond
+=|\beta_t\beta_s|.
+$$
+
+这里经典信道通过计算基测量扩展到量子输入。因此最优预测器的复合缺陷恰是两步隐藏相位缺陷的乘积。由于 $\alpha_u=1-\Omega^2u^2/2+O(u^3)$，固定 $t$ 时 $(\alpha_{t/n})^n\to1$。反复只保存当前概率的这套离散预测复合会冻结概率，而非恢复原来的真实有限时演化。
+
+**证明。** 传播矩阵半群的第一行第一列给出恒等式；两个二态信道的参数相乘，它们之差的完全迹范数等于参数差的绝对值，可用引理 31.2 验证。指数的二阶展开及极限给出最后结论。证毕。这里比较预测器复合，不把它与未经实际干预的原量子轨道混同。
+
+**定理 32.4（全时间、带参考系统的 Markov 近似）。** 假设 $\gamma\ge4\Omega$，记 $\epsilon=\Omega/\gamma\le1/4$、$k=\Omega^2/\gamma$。则对所有 $t\ge0$，
+
+$$
+|\alpha_t-e^{-kt}|\le2\epsilon^2,
+$$
+
+$$
+\boxed{
+\|\mathcal N e^{t\mathcal G_\gamma}
+-\mathcal E T_{e^{-kt}}\Delta\|_\diamond
+=\sqrt{(\alpha_t-e^{-kt})^2+\beta_t^2}
+\le\epsilon\sqrt{1+4\epsilon^2}.}
+$$
+
+若初态在逻辑计算基上已退相干，包括与参考系统相关的经典-量子态，则相应完整误差至多 $2\epsilon^2$。一般输入的面积期望误差至多为右侧钻石界乘 $\Delta a/2$。
+
+**证明。** 设 $q=\sqrt{1-4\epsilon^2}$、$r_-=(\gamma-\sqrt{\gamma^2-4\Omega^2})/2$、$r_+=(\gamma+\sqrt{\gamma^2-4\Omega^2})/2$。解二阶方程得
+
+$$
+\alpha_t=\frac{r_+e^{-r_-t}-r_-e^{-r_+t}}{r_+-r_-},\qquad
+\beta_t=\frac{\Omega(e^{-r_-t}-e^{-r_+t})}{r_+-r_-}.
+$$
+
+$k=r_-r_+/\gamma$，且 $r_->k$。写 $\alpha_t=e^{-r_-t}+\frac{r_-}{r_+-r_-}(e^{-r_-t}-e^{-r_+t})$，再用 $te^{-kt}\le1/(\exp(1)k)$，得到
+
+$$
+|\alpha_t-e^{-kt}|
+\le\frac{r_-}{r_+-r_-}+\frac{r_--k}{\exp(1)k}
+=\epsilon^2\left[\frac2{q(1+q)}+\frac4{\exp(1)(1+q)^2}\right].
+$$
+
+$q\ge5/6$、$\exp(1)\ge5/2$ 将括号控制在 $72/55+288/605=216/121<2$。差通道恰为
+
+$$
+X\longmapsto\operatorname{Tr}\!\left([ (\alpha_t-e^{-kt})\sigma_z+\beta_t\sigma_y]X\right)
+\frac{\tau_0-\tau_1}{2}.
+$$
+
+两 Pauli 反对易，其系数矩阵的算子范数为所列平方根，引理 31.2 给出精确钻石范数。命题 32.2 给出最终上界。先作用 $\Delta$ 时 $\sigma_y$ 项消失。区域面积读数可用 $A_X=(\log3)P_0+(\log6)P_1$ 实现，减去谱区间中点后范数为 $\Delta a/2$；两输出迹相同，迹对偶界给出面积误差。证毕。这里没有用有限时间网格代替 $\sup_{t\ge0}$ 的证明。
+
+在慢时间 $\tau=kt$ 上，有效方程是 $dp/d\tau=1/2-p$，从而
+
+$$
+\frac{d\bar a}{d\tau}=a_{\rm mid}-\bar a,
+\qquad a_{\rm mid}=\log3+\tfrac12\log2.
+$$
+
+这条自治面积方程来自同一中心量子模型的受控极限。若只令 $\gamma\to\infty$ 却固定原始时间，得到的是冻结，不能误报为非平凡的耗散几何。开放量子系统的绝热消元与 CP/TP 保持已有 [ASR16] 等研究；其任意阶的一般 Lindblad 断言在该文为猜想，本节仅证明上面这个指定模型的精确有限时间结果。#8330 已有同类驱动二能级传播与完全相对熵收缩；这里的新增目标是当前区域因子化的最优钻石误差、固定面积预测风险与统一时间 Markov 比较，不再次认领二阶阻尼方程本身。
+
+## 33. 预测自治、静态 RT 与热平衡的区别
+
+**命题 33.1（有效面积变化不等于面积单调增加）。** 在定理 32.4 的有效二态流中，$\dot p=k(1/2-p)$。当前区域熵和相对给定平衡态的缺陷分别为
+
+$$
+S_X=h_2(p)+\log3+p\log2,
+\qquad D(\mathcal N\rho\Vert\mathcal N(I_2/2))=\log2-h_2(p).
+$$
+
+对 $0<p<1$，
+
+$$
+\dot S_X=k(1/2-p)\left[\log\frac{1-p}{p}+\log2\right],
+\qquad
+\frac d{dt}D=k(1/2-p)\log\frac p{1-p}\le0.
+$$
+
+特别是 $1/2<p<2/3$ 时区域熵与面积期望都下降。固定码平衡态的扇区概率是 $(1/2,1/2)$，它不等于整个九维区域的最大混合态，后者对应 $(1/3,2/3)$。
+
+**证明。** 正交块谱给出两式，随后直接求导；函数 $\log(p/(1-p))$ 与 $p-1/2$ 同号，得到相对熵耗散。整体九维最大混合态按块维数分配权重，故其第二扇区概率为六除九。证毕。没有引入独立视界条件或重力能量条件，因此不能从本有效流宣称广义第二定律或物理视界面积定理。
+
+**统一边界。** 同一个固定子码在整个演化中仍满足精确的面积加中心代数熵公式；动态预测误差非零不表示该静态身份失效。当前区域无法自治的原因是相位被该区域通道消去。强退相干使这部分影响可被量化地忽略，但没有恢复被噪声丢弃的完整逻辑量子信息。噪声率、控制 Hamiltonian、环境及时间尺度都是模型前提，多区域几何局域性、连续 CFT 字典和 Einstein 动力学仍未由本结果推出。
+
+上述结论为普通纸面推导。来源说明和相应 Library 引用区分已有几何量子力学、Wolpert 公式、反绝热驱动、热核及诱导曲率机制、钻石范数和绝热消元，与本卷指定编码中的计算。没有 Lean 声明、内核验证、独立审查或具名开放问题结算。具体结果的文献优先权未作穷尽排查。
+
 ## 参考文献
 
 [RT] S. Ryu, T. Takayanagi. Holographic Derivation of Entanglement Entropy from AdS/CFT. Phys. Rev. Lett. 96 (2006), 181602. arXiv:hep-th/0603001.
@@ -1471,7 +1946,7 @@ $$
 
 [BZ24] W. Bruzda, K. Życzkowski. Two-unitary complex Hadamard matrices of order 36. Special Matrices 12 (2024), 20240010. DOI: 10.1515/spma-2024-0010. 使用第 4 节 Conjecture 1 和式 (10)–(15)。
 
-[Tan26] I. Tan. Transversal gates of the ((3,3,2)) qutrit code and local symmetries of the absolutely maximally entangled state of four qutrits. arXiv:2601.19677 (2026).
+[Tan26] I. Tan. Transversal gates of the ((3,3,2)) qutrit code and local symmetries of the absolutely maximally entangled state of four qutrits. arXiv:2601.19677 (2026)。
 
 [Rather24] S. A. Rather. Construction of perfect tensors using biunimodular vectors. Quantum 8 (2024), 1528. DOI: 10.22331/q-2024-11-20-1528. arXiv:2309.01504v2. 第 5.2 节已有固定三个代表的局部不等价性。
 
@@ -1504,6 +1979,36 @@ $$
 [Cao24] C. Cao. Non-trivial Area Operators Require Non-local Magic. JHEP 11 (2024), 105. DOI: 10.1007/JHEP11(2024)105. arXiv:2306.14996v2. 使用 Theorem 2.1 及局部幺正变换、稳定子串联的适用边界；“非平凡面积”在此指不与逻辑恒等成比例，而不是仅指非零。
 
 [CGL99] R. Cleve, D. Gottesman, H.-K. Lo. How to share a quantum secret. Phys. Rev. Lett. 83 (1999), 648–651. DOI: 10.1103/PhysRevLett.83.648. arXiv:quant-ph/9901025. 使用三份量子秘密共享及其纠错背景，奇数循环模环的具体解码在第 25 节直接给出。
+
+[AS97] A. Ashtekar, T. A. Schilling. Geometrical Formulation of Quantum Mechanics. arXiv:gr-qc/9706069 (1997). 使用射影量子态的 Kähler／Hamilton 表述背景。
+
+[WP25] N. Kawazumi. A topological proof of Wolpert's formula for the Weil-Petersson symplectic form in terms of the Fenchel-Nielsen coordinates. Geometriae Dedicata 219 (2025), 56. DOI:10.1007/s10711-025-01016-3. arXiv:2408.04937v2. 公式本身归于 Wolpert；本卷扭转坐标相对该文式 (1) 换号，固定测地边界的应用保持边界长度不变。
+
+[Berry09] M. V. Berry. Transitionless quantum driving. J. Phys. A 42 (2009), 365303. DOI:10.1088/1751-8113/42/36/365303. 使用既有无跃迁输运背景；本卷明确写出一般框架的连接项。
+
+[Magic26] C. Cao, G. Cheng, K. Karthikeyan, C. Li, J. Preskill. State-dependent geometries from magic-enriched quantum codes. arXiv:2603.13475v2 (2026-06-27), §1–2. 本文子系统码论证的范围不包括一般算子代数码；正文脚注明确保留后者的非平凡中心面积。
+
+[Bar15] C. Bär. Green-hyperbolic operators on globally hyperbolic spacetimes. Commun. Math. Phys. 333 (2015), 1585–1615. arXiv:1310.0738. 连续 Green 算子的函数空间与因果性不由有限矩阵 Schur 恒等式替代。
+
+[HK03] D. V. Vassilevich. Heat kernel expansion: user's manual. Phys. Rep. 388 (2003), 279–360. arXiv:hep-th/0306138v3. 使用标量线性曲率热核及共同正规化背景。
+
+[Cone95] S. N. Solodukhin. Conical singularity and quantum corrections to the entropy of a black hole. Phys. Rev. D 51 (1995), 609. DOI:10.1103/PhysRevD.51.609. 使用平滑锥几何与局部作用量熵变分。
+
+[NonMin97] S. N. Solodukhin. Nonminimal coupling and quantum entropy of a black hole. Phys. Rev. D 56 (1997), 4968. DOI:10.1103/PhysRevD.56.4968. 接触项与统计熵的解释须区分。
+
+[FGHMR14] T. Faulkner, M. Guica, T. Hartman, R. C. Myers, M. Van Raamsdonk. Gravitation from Entanglement in Holographic CFTs. JHEP 03 (2014), 051. arXiv:1312.7856v2. 使用 AdS 真空邻域、全体球区域和既定全息熵字典的限定推导。
+
+[LVR16] N. Lashkari, M. Van Raamsdonk. Canonical Energy is Quantum Fisher Information. JHEP 04 (2016), 153. arXiv:1508.00897. 使用全息真空附近相对熵 Hessian 与正则能量的条件化关系。
+
+[Do10] N. Do. The asymptotic Weil-Petersson form and intersection theory on M_{g,n}. arXiv:1010.4126 (2010). 固定测地边界长度的模空间辛结构背景。
+
+[Wat09] J. Watrous. Semidefinite Programs for Completely Bounded Norms. Theory of Computing 5 (2009), 217–238. DOI:10.4086/toc.2009.v005a011. 使用完全有界迹范数与带参考系统的信道距离框架；本卷不含二分之一。
+
+[ASR16] R. Azouit, A. Sarlette, P. Rouchon. Adiabatic elimination for open quantum systems with effective Lindblad master equations. arXiv:1603.04630v1 (2016). 使用开放系统约化的比较背景，保留其无退相干子空间前件及任意阶断言的猜想身份。
+
+[BO10] C. Bény, O. Oreshkov. General conditions for approximate quantum error correction and near-optimal recovery channels. Phys. Rev. Lett. 104 (2010), 120501. DOI:10.1103/PhysRevLett.104.120501. arXiv:0907.5391. 用于区分其最坏纠缠保真度恢复任务与第 31 节当前区域预测任务。
+
+第 27–33 节的来源条目已分别存入 `Library/notes`，Scribe 来源说明为 `Blueprint/D5/S3/Quantum/Entanglement/GeometricDynamicsSources.scribe.cs`。它使用具名 Library 引用与普通说明，不声明这些新增纸面结果已有 Lean 真源。
 
 ## 附录 A. 36 阶矩阵的精确整数重放
 
