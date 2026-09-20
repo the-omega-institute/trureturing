@@ -360,7 +360,7 @@ def main():
         } for x in SOURCE],
     }
     output = Path(__file__).resolve().with_suffix(".json")
-    output.write_text(json.dumps(serializable(payload), ensure_ascii=False, indent=2) + "\n",
+    output.write_text(json.dumps(serializable(payload), ensure_ascii=False, separators=(",", ":")) + "\n",
                       encoding="utf-8")
     print(json.dumps(serializable({
         "states": len(SOURCE), "absorbing_states": len(ABSORBING),
