@@ -3,6 +3,7 @@ using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
 
+[Collection("Engineering scope process boundary")]
 public sealed class CommonSourceIdentityTests
 {
     [Theory]
@@ -14,14 +15,14 @@ public sealed class CommonSourceIdentityTests
     [InlineData("invalid-materials", typeof(InvalidDataException))]
     public void ReportValidationPreservesSourceBindingsAndOtherFileValidation(string scenario, Type? errorType)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ResourceRouteTests.ResourceFixture(["lean-report"]);
         const string source = "D5/S0/Carrier/ReportSource.lean";
         fixture.Write(source, "theorem source : True := True.intro\n");
         fixture.Write("docs/report.json", "{\"value\":1}\n");
         var path = Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath);
-        CiTransportTests.Report(fixture.Root);
+        fixture.Report();
         var hash = CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, source));
-        TemporaryFileSystem.File.WriteAllText(path,
+        fixture.Write(CommonExecutionEvidence.ReportPath,
             "{\"modules\": [{\"declarations\": [], \"imports\": [], \"module\": \"D5.S0.Carrier.ReportSource\", "
             + "\"source_path\": \"" + source + "\", \"source_sha256\": \"sha256:" + hash
             + "\"}], \"schema\": \"stratalint-raw-lean-report-v2\"}\n");
@@ -29,19 +30,29 @@ public sealed class CommonSourceIdentityTests
         {
             case "opaque":
                 fixture.Write("docs/develop/theory/opaque.bin", "initial");
-                TemporaryFileSystem.File.WriteAllBytes(Path.Combine(fixture.Root, "docs/develop/theory/opaque.bin"), [0xff]);
+                File.WriteAllBytes(Path.Combine(fixture.Root, "docs/develop/theory/opaque.bin"), [0xff]);
                 break;
             case "non-lean-invalid-utf8":
-                TemporaryFileSystem.File.WriteAllBytes(Path.Combine(fixture.Root, "docs/report.json"), [0xff]);
+                File.WriteAllBytes(Path.Combine(fixture.Root, "docs/report.json"), [0xff]);
                 break;
             case "changed-lean": fixture.Write(source, "theorem changed : True := True.intro\n"); break;
             case "additional-lean": fixture.Write("D5/S0/Carrier/Additional.lean", "theorem extra : True := True.intro\n"); break;
-            case "invalid-materials": TemporaryFileSystem.File.WriteAllText(path + ".materials.zip", "invalid archive"); break;
+            case "invalid-materials": fixture.Write(CommonExecutionEvidence.ReportPath + ".materials.zip", "invalid archive"); break;
         }
 
-        var viewError = Record.Exception(() => CommonStages.ValidateProducedReport(fixture.Root));
+        fixture.CommitPlan();
+        var viewError = Record.Exception(() =>
+        {
+            fixture.Processes(prepareReport: false);
+            var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+            var plan = ResourceExecutionPlan.Load(fixture.Root, fixture.Plan, fixture.Changes);
+            CommonExecutionEvidence.CompleteCurrent(fixture.Root, build,
+                [new StageStep("lean-report", 0, 0, "executed", "build/ci/log")], plan);
+        });
         if (errorType is null) Assert.Null(viewError);
         else Assert.IsType(errorType, viewError);
+        Assert.Equal(errorType is null,
+            File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
     }
 
     [Fact]

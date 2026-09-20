@@ -108,6 +108,48 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
         Assert.Equal(new[] { "make --no-print-directory lean-report", "dotnet check-current" }, File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
     }
 
+    [Theory]
+    [InlineData(false, "missing")]
+    [InlineData(false, "invalid")]
+    [InlineData(false, "materials")]
+    [InlineData(true, "missing")]
+    [InlineData(true, "invalid")]
+    [InlineData(true, "materials")]
+    public void FinalizationRejectsBadReportWithoutACandidateChecker(bool filemap, string damage)
+    {
+        using var fixture = new ResourceFixture(filemap ? ["lean-report", "filemap"] : ["lean-report"]);
+        fixture.Processes();
+        var report = Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath);
+        if (damage == "missing") File.Delete(report);
+        if (damage == "invalid") File.WriteAllText(report, "not JSON");
+        if (damage == "materials") File.WriteAllText(report + ".materials.zip", "not a ZIP archive");
+
+        using var output = new StringWriter();
+        Assert.Equal(2, fixture.Run("current", output));
+        var launched = File.ReadAllLines(Path.Combine(fixture.Root, "build/launched"));
+        Assert.Equal(filemap ? new[] { "make --no-print-directory lean-report", "dotnet filemap-conform" }
+            : ["make --no-print-directory lean-report"], launched);
+        Assert.Contains("CURRENT_FINALIZE phase=seal status=started", output.ToString(), StringComparison.Ordinal);
+        Assert.DoesNotContain("CURRENT_FINALIZE phase=seal status=completed", output.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void InspectorCompileObligationReachesTheReportEntryFromRegistration(bool compile)
+    {
+        using var fixture = new ResourceFixture([compile ? "lean-inspector-build" : "lean-report"]);
+        fixture.Processes();
+        fixture.Write("build/bin/make", "#!/bin/bash\nset -euo pipefail\nprintf '%s' \"${STRATALINT_LEAN_BUILD_TARGETS:-[]}\" > build/program-targets.json\n");
+        using var output = new StringWriter();
+        Assert.True(fixture.Run("current", output) == 0, output.ToString());
+        var targets = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/program-targets.json")))!.AsArray();
+        Assert.Equal(compile ? new[] { "FixtureAudit", "fixture/inspector" } : [],
+            targets.Select(value => value!.GetValue<string>()));
+        Assert.Equal(new[] { "lean-report" }, CommonExecutionEvidence.ValidateCurrent(fixture.Root).Steps.Select(step => step.Name));
+    }
+
     [Fact]
     public void DeltaCannotSubstituteAnotherBaseForTheValidatedPrScope()
     {
@@ -373,14 +415,17 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
                 new { id = "build", projects = Array.Empty<string>(), checks = Array.Empty<string>(), steps = Array.Empty<string>() },
                 new { id = "filemap", projects = new[] { Foo }, checks = new[] { "filemap" }, steps = new[] { "filemap" } },
                 new { id = "lean", projects = new[] { Bar }, checks = Array.Empty<string>(), steps = new[] { "lean" } },
+                new { id = "lean-inspector-build", projects = Array.Empty<string>(), checks = Array.Empty<string>(), steps = Array.Empty<string>() },
                 new { id = "lean-report", projects = new[] { Bar }, checks = Array.Empty<string>(), steps = new[] { "lean-report" } },
                 new { id = "scribe", projects = new[] { Foo }, checks = new[] { "scribe-describe", "scribe-markdown", "scribe-projections" }, steps = new[] { "scribe" } },
                 new { id = "current", projects = new[] { Foo }, checks = new[] { "SL-015" }, steps = new[] { "check-current" } }
             };
-            Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1", resources = mapping }));
+            var manifest = JsonSerializer.SerializeToNode(new { schema = "ci-resource-execution-v1", resources = mapping })!;
+            manifest["resources"]!.AsArray().Single(row => row!["id"]!.ToString() == "lean-inspector-build")!["lean_targets"] = new JsonArray("FixtureAudit", "fixture/inspector");
+            Write("Meta/ci-resources.json", manifest.ToJsonString());
             var rows = mapping.OrderBy(row => row.id, StringComparer.Ordinal).Select(row =>
                 "  { id = \"" + row.id + "\", stage = \"" + (row.id == "build" ? "build" : "current")
-                + "\", owner = \"tools/scripts/workflow/ci.py\", prerequisites = " + (row.id == "build" ? "[]" : row.id == "lean-report" ? "[\"lean\"]" : row.id is "scribe" or "current" ? "[\"lean-report\"]" : "[\"build\"]")
+                + "\", owner = \"tools/scripts/workflow/ci.py\", prerequisites = " + (row.id == "build" ? "[]" : row.id == "lean-report" ? "[\"lean\"]" : row.id is "scribe" or "current" or "lean-inspector-build" ? "[\"lean-report\"]" : "[\"build\"]")
                 + ", tools = [], cache_layers = [], cache_activation = {}, materials = [\"Meta/ci-checks.json\", \"Meta/ci-resources.json\", \"Meta/engineering-projects.json\"] },");
             Write("Meta/FILEMAP.toml", "schema_version = 4\nresources = [\n" + string.Join("\n", rows) + "\n]\n"
                 + "[residence_policy]\ncase_id = \"FIXTURE\"\ndesired = \"registered\"\nknown_violation_count = 0\nstatus = \"closed\"\n"
@@ -508,7 +553,7 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
             CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root),
                 [CommonExecutionEvidence.CliPath, CommonExecutionEvidence.LeanProducerPath],
                 CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/log")).ToArray());
-            if (prepareReport && required.Any(id => id is "lean-report" or "scribe" or "current")) Report();
+            if (prepareReport && required.Any(id => id is "lean-report" or "scribe" or "current" or "lean-inspector-build")) Report();
         }
         internal void Report() => CiTransportTests.Report(fixture.Root);
         internal void Write(string path, string text) => fixture.Write(path, text);

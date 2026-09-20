@@ -19,11 +19,12 @@ public sealed class CommonStageContractTests
             exit {commandExit}
             """);
         using var output = new StringWriter();
-        // Successful production is followed by the independent missing-report check.
+        // Successful production reaches the checker; this fixture has no valid CLI.
         Assert.Equal(2, new CommonStages(fixture.Root, output).Run("current", null));
         using var summary = System.Text.Json.JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(
             Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "current-result.json")));
-        var step = Assert.Single(summary.RootElement.GetProperty("steps").EnumerateArray());
+        var step = Assert.Single(summary.RootElement.GetProperty("steps").EnumerateArray(),
+            step => step.GetProperty("name").GetString() == "lean-report");
         Assert.Equal(rawExit, step.GetProperty("raw_exit").GetInt32());
         Assert.Equal(rawExit, step.GetProperty("exit").GetInt32());
         Assert.Equal(status, step.GetProperty("status").GetString());
@@ -445,9 +446,12 @@ public sealed class CommonStageContractTests
     internal static System.Text.Json.JsonElement ProcessObservation(StringWriter output)
     {
         const string prefix = "STAGE_PROCESS ";
-        var line = Assert.Single(output.ToString().Split('\n'), line => line.StartsWith(prefix, StringComparison.Ordinal));
-        using var document = System.Text.Json.JsonDocument.Parse(line[prefix.Length..]);
-        var observation = document.RootElement.Clone();
+        var observation = Assert.Single(output.ToString().Split('\n')
+            .Where(line => line.StartsWith(prefix, StringComparison.Ordinal)).Select(line =>
+            {
+                using var document = System.Text.Json.JsonDocument.Parse(line[prefix.Length..]);
+                return document.RootElement.Clone();
+            }), observation => observation.GetProperty("command").GetString() == "/usr/bin/env");
         Assert.Equal("current", observation.GetProperty("stage").GetString());
         Assert.Equal("/usr/bin/env", observation.GetProperty("command").GetString());
         Assert.Contains(observation.GetProperty("arguments").EnumerateArray(), value => value.GetString() == "lean-report");

@@ -49,11 +49,10 @@ internal static partial class CommonExecutionEvidence
         validation ??= new ValidationScope(snapshot);
         if (!ReferenceEquals(snapshot, validation.Snapshot))
             throw new InvalidDataException("common check validation snapshot mismatch");
-        var files = snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray();
-        var registry = EngineeringProjectRegistry.Read(files);
+        var registry = EngineeringProjectRegistry.Read(snapshot);
         var checks = validation.CheckManifest(registry).Where(check => selectedIds is null || selectedIds.Contains(check.Id)).ToArray();
-        var sources = registry.Sources(files);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        var sources = registry.SourcePaths(paths);
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
         var registeredProjects = projects.Keys.ToHashSet(StringComparer.Ordinal);
         var environment = executionEnvironment ?? ExecutionEnvironment(root);
@@ -98,7 +97,7 @@ internal static partial class CommonExecutionEvidence
             foreach (var project in selected.Select(path => projects[path]))
             {
                 materialPaths.Add(project.Path);
-                materialPaths.UnionWith(sources[project.Path].Select(source => source.Path));
+                materialPaths.UnionWith(sources[project.Path]);
                 materialPaths.UnionWith(EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path));
             }
             object ProjectProjection(EngineeringProjectRegistration project) => new

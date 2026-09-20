@@ -144,6 +144,52 @@ public sealed partial class ResourceAdapterTests
     }
 
     [Theory]
+    [InlineData(true, true, true)]
+    [InlineData(false, true, false)]
+    [InlineData(true, false, true)]
+    [InlineData(false, false, true)]
+    public void ReportSeedCannotRemoveRegisteredInspectorBuildResources(bool compileInspector, bool seedAvailable, bool needsLake)
+    {
+        using var fixture = new ResourceRouteTests.ResourceFixture(["lean-report"]);
+        var environment = EnvironmentFor(fixture);
+        environment["CANDIDATE_SHA"] = fixture.Commit;
+        environment["GITHUB_ENV"] = Path.Combine(fixture.Root, "build/adapter-environment");
+        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
+            ["-B", "-c", """
+            import json, pathlib, sys
+            from unittest.mock import patch
+            source = pathlib.Path(sys.argv[1])
+            root = pathlib.Path.cwd()
+            sys.path.insert(0, str(source / 'tools/scripts/worktree'))
+            sys.path.insert(0, str(source / 'tools/scripts/workflow'))
+            import lean_actions, ci_plan
+            targets = ['LeanInformationAudit', 'leanInspector/reportInspector'] if json.loads(sys.argv[2]) else []
+            report = str(root / 'optional-seed/raw-lean-report.json') if json.loads(sys.argv[3]) else None
+            # Planning and report acceptance have independent behavioral tests.
+            # Exercise the real CLI's resource decision after those boundaries.
+            plan = {'execution': {'steps': ['lean-report'], 'lean_targets': targets}}
+            requirements = {'required': True, 'tools': ['lake'],
+                'cache_layers': ['dependency', 'elan', 'project']}
+            with patch.object(sys, 'argv', ['lean_actions.py', 'prepare-report', '--repository', str(root), '--stage', 'current']), \
+                    patch.object(ci_plan, 'validate_plan', return_value=plan), \
+                    patch.object(ci_plan, 'stage_requirements', return_value=requirements), \
+                    patch.object(lean_actions.shutil, 'which', return_value='/fixture/lake'), \
+                    patch.object(lean_actions, 'report_seed', return_value=report) as probe:
+                code = lean_actions.main()
+                probe.assert_called_once_with(root, pathlib.Path('/fixture/lake'))
+            raise SystemExit(code)
+            """, TestRepositoryLayout.FindRoot(), compileInspector ? "true" : "false", seedAvailable ? "true" : "false"],
+            environment, TestBudgets.WorkflowProcessHangGuard);
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Equal(new[] { "needs_lake=" + (needsLake ? "true" : "false") },
+            File.ReadAllLines(environment["GITHUB_OUTPUT"]));
+        Assert.Equal(new[] { "STRATALINT_LEAN_REPORT_REUSE=" + (seedAvailable
+            ? Path.Combine(fixture.Root, "optional-seed/raw-lean-report.json") : "") },
+            File.ReadAllLines(environment["GITHUB_ENV"]));
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, ".lake")));
+    }
+
+    [Theory]
     [InlineData("current")]
     [InlineData("lean")]
     public void SelectedLeanWorkRequestsDeclaredNativeBuildSeeds(string resource)

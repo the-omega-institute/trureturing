@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -244,15 +243,17 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         // envelope. Nested defaults must not silently shorten that allowance.
         if (runReport)
         {
+            string[] targetSelection = resourcePlan is null ? [] :
+                [$"STRATALINT_LEAN_BUILD_TARGETS={JsonSerializer.Serialize(resourcePlan.LeanBuildTargets)}"];
             Step("lean-report", "/usr/bin/env", [$"STRATALINT_LEAN_PRODUCER_DLL={Path.Combine(root, CommonExecutionEvidence.LeanProducerPath)}",
+                .. targetSelection,
                 $"STRATALINT_BUILD_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_BUILD_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
                 $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
                 "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
-            ValidateProducedReport(root);
-            // This process now waits while the child validates its own fresh
-            // snapshot. Reclaim the completed report validation's temporary
-            // snapshot before those independent heaps coexist in one cgroup.
+            // The candidate checker validates its report input. Finalization also
+            // validates it before sealing, including stages with no check units.
+            // Do not materialize a discarded snapshot/report in this parent.
             CommonExecutionEvidence.ReleaseTemporarySnapshots();
         }
         else if (obligations.Contains("lean"))
@@ -293,39 +294,6 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
             output.WriteLine("CURRENT_FINALIZE phase=seed-export status=completed");
         }
-    }
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    internal static void ValidateProducedReport(string root)
-    {
-        var entries = new List<RawRepositoryEntry>();
-        var folded = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var utf8 = new UTF8Encoding(false, true);
-        GitRepositorySnapshotReader.VisitCurrent(root, entry =>
-        {
-            if (!RepoPath.TryCreate(entry.Path, out var path) || !folded.Add(entry.Path))
-                throw new InvalidDataException($"Repository path is invalid, duplicated or case-colliding: {entry.Path}.");
-            if (!DigestionOpaquePathPolicy.IsOpaque(path))
-            {
-                try { _ = utf8.GetCharCount(entry.Bytes.AsSpan()); }
-                catch (DecoderFallbackException exception)
-                { throw new InvalidDataException($"Repository file must be strict UTF-8: {entry.Path}.", exception); }
-            }
-            // Only this report reader consumes the view: expected modules and
-            // refutation claim sources use .lean bodies. Keep the full path
-            // inventory; VisitCurrent finishes link validation before the view
-            // reaches the report reader.
-            entries.Add(entry.Path.EndsWith(".lean", StringComparison.Ordinal)
-                ? entry : entry with { Bytes = [] });
-        });
-        var snapshot = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries)) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
-            _ => throw new InvalidDataException("report input snapshot unavailable"),
-        };
-        _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath),
-            snapshot, validateMaterials: true);
     }
 
     private void ValidateBase(string? baseSha)
