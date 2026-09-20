@@ -78,5 +78,49 @@ internal sealed class GeometricDynamicsSourcesDocument : IScribeDocumentDefiniti
                 Equal(Id("logicalGenerator"), Num(0)),
                 AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/knill1997qec")),
-                Blocks(Paragraph(Text("Under the standard scalar compression condition, a fixed-code invariant GKLS generator with every jump and Hamiltonian term supported below the code distance acts trivially on logical states. The proof uses nonnegative instantaneous leakage and the usual detection condition. It does not exclude temporary leakage, active correction, approximate encodings, moving codes or high-order effective interactions. The depth-dependent support comparison is a paper result, without a Lean declaration.")))))));
+                Blocks(Paragraph(Text("Under the standard scalar compression condition, a fixed-code invariant GKLS generator with every jump and Hamiltonian term supported below the code distance acts trivially on logical states. The proof uses nonnegative instantaneous leakage and the usual detection condition. It does not exclude temporary leakage, active correction, approximate encodings, moving codes or high-order effective interactions. The depth-dependent support comparison is a paper result, without a Lean declaration.")))),
+            Describe.Remark(
+                DescribeId.Create("operator-cut-and-entropy-limit"),
+                H("A common area network and its entropy scope"),
+                Equal(Id("SA"), Add(Id("expectedCutArea"), Id("recoverableEntropy"))),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/harlow2017rtqec"),
+                    LibraryNoteRef.Create("D5/L/akers2019holographicrenyi"),
+                    LibraryNoteRef.Create("D5/L/hayden2013monogamy")),
+                Blocks(Paragraph(Text("The variable-rank edge encoding has one fixed logical and physical construction for all complete vertex regions. Its operator cut function and entropy decomposition hold for correlated inputs. Large common sector rank makes the leading area law uniformly accurate, but does not remove finite correlation-dependent prediction defects. Logical entropy may violate pure-area monogamy even while the area-plus-algebra identity is exact. These are finite paper calculations, not a continuum RT proof.")))),
+            Describe.Remark(
+                DescribeId.Create("local-interaction-and-correlation-memory"),
+                H("Local interactions and overlapping region autonomy"),
+                Equal(Id("delta"), Id("b")),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/hasenoehrl2022semicausal"),
+                    LibraryNoteRef.Create("D5/L/watrous2009completelybounded")),
+                Blocks(Paragraph(Text("For the specified conditional-flip generator, b is one half of one minus exp(-2 nu t), and delta is the optimal unhalved diamond error of predicting a future vertex marginal from its present marginal. The all-input formula and the overlapping-algebra rigidity statement are paper proofs. Classical inter-edge correlations survive arbitrary local sector dephasing. The rigidity implication assumes a simple graph and, for its rate conclusion, single-edge flips; it does not rule out every common-noise process.")))),
+            Describe.Remark(
+                DescribeId.Create("pure-code-local-precision"),
+                H("A common Schmidt factor across area sectors"),
+                Equal(Id("rs"), Multiply(Id("m"), Id("ds"))),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/harlow2017rtqec"),
+                    LibraryNoteRef.Create("D5/L/akers2019holographicrenyi")),
+                Blocks(Paragraph(Text("For the specified maximally entangled sector encodings, exact preservation of every logical superposition by independent local channels forces the same discarded pure environment for all sectors. Thus rs equals m times ds with a common positive integer m, and all area gaps are preserved. Communication, supplied shared entanglement, approximate outputs, and changing the logical target are outside this statement. No Lean coverage or general gravitational renormalization theorem is asserted.")))),
+            Describe.Remark(
+                DescribeId.Create("discarded-area-and-coherence"),
+                H("Area-sector differences constrain local coarse graining"),
+                Equal(Id("kappa"), Call("exp", Id("negativeHalfAreaGap"))),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/harlow2017rtqec"),
+                    LibraryNoteRef.Create("D5/L/akers2019holographicrenyi"),
+                    LibraryNoteRef.Create("D5/L/kretschmann2008continuity"),
+                    LibraryNoteRef.Create("D5/L/harrow2010entanglementspread"),
+                    LibraryNoteRef.Create("D5/L/watrous2009completelybounded")),
+                Blocks(Paragraph(Text("Conditional entanglement disposal and entanglement spread are established mechanisms. Under independent local maps and exact pure outputs on each basis sector, discarded flat Schmidt ranks determine a sharp coherence bound. The two-sector optimum and the weaker unrestricted-error lower bound are proved separately. Static endpoint marginals can remain exact while later dynamics detects the lost coherence. Nested environmental records explain why separately optimal coarse-graining steps need not be directly optimal. These are paper results without Lean declarations.")))),
+            Describe.Remark(
+                DescribeId.Create("virasoro-replica-tail-conditions"),
+                H("A conditional CFT interface and spectral-tail requirements"),
+                Equal(Id("entropy"), Add(Id("sectorMultiplicity"), Id("remainingEntropy"))),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/lin2026virasoroarea"),
+                    LibraryNoteRef.Create("D5/L/akers2021leadingqes")),
+                Blocks(Paragraph(Text("The Virasoro source retains explicit block, saddle and positivity assumptions. A finite positive-spectrum example shows why leading moments for replica index at least one alone do not control the derivative at one. Subunit-Renyi or rank-tail estimates give sufficient conditions. This does not determine the unknown Virasoro block, identify the finite code with a CFT, or settle the gravitational RT formula.")))))));
 }
