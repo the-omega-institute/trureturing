@@ -67,9 +67,8 @@ internal static partial class CommonExecutionEvidence
 
     private static string Candidate(string root, RepositorySnapshot snapshot)
     {
-        var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
-        var registry = EngineeringProjectRegistry.Read(files);
-        _ = registry.Sources(files);
+        var registry = EngineeringProjectRegistry.Read(snapshot);
+        _ = registry.SourcePaths(snapshot.Files.Keys.Select(path => path.Value));
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
         foreach (var (path, file) in snapshot.Files.OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
         {
@@ -103,7 +102,7 @@ internal static partial class CommonExecutionEvidence
         if (!manifest.Checks.Select(check => check.Id).Order(StringComparer.Ordinal).SequenceEqual(expected.Order(StringComparer.Ordinal)))
             throw new InvalidDataException("common check registration mismatch: missing=[" + string.Join(",", expected.Except(manifest.Checks.Select(check => check.Id)))
                 + "] unexpected-or-duplicate=[" + string.Join(",", manifest.Checks.GroupBy(check => check.Id).Where(group => group.Count() != 1 || !expected.Contains(group.Key)).Select(group => group.Key)) + "]");
-        registry ??= EngineeringProjectRegistry.Read(snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray());
+        registry ??= EngineeringProjectRegistry.Read(snapshot);
         var projects = registry.Projects.Select(project => project.Path).ToHashSet(StringComparer.Ordinal);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         foreach (var check in manifest.Checks)

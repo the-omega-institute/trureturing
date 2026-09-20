@@ -10,11 +10,10 @@ internal static partial class CommonExecutionEvidence
 {
     internal static IReadOnlyDictionary<string, RegisteredTestInput> TestInputs(string root, RepositorySnapshot snapshot)
     {
-        var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
-        var registry = EngineeringProjectRegistry.Read(files);
-        var sources = registry.Sources(files);
+        var registry = EngineeringProjectRegistry.Read(snapshot);
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        var sources = registry.SourcePaths(paths);
         var compile = new Dictionary<string, string>(StringComparer.Ordinal);
         var materials = new Dictionary<string, object>(StringComparer.Ordinal);
         // Validate ALL current declarations before selection, including disabled tests.
@@ -56,7 +55,7 @@ internal static partial class CommonExecutionEvidence
                 include = project.Include.Order(StringComparer.Ordinal), exclude = project.Exclude.Order(StringComparer.Ordinal),
                 build_inputs = project.BuildInputs!.Order(StringComparer.Ordinal),
                 references = project.References.Order(StringComparer.Ordinal).Select(reference => new { path = reference, input = Compile(reference) }),
-                materials = sources[path].Select(source => source.Path).Concat(buildInputs[path]).Append(path)
+                materials = sources[path].Concat(buildInputs[path]).Append(path)
                     .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).Select(Material),
             });
             compile.Add(path, value);
@@ -66,7 +65,7 @@ internal static partial class CommonExecutionEvidence
         void AddCompilePaths(string path, HashSet<string> relevant)
         {
             relevant.Add(path);
-            relevant.UnionWith(sources[path].Select(source => source.Path));
+            relevant.UnionWith(sources[path]);
             relevant.UnionWith(buildInputs[path]);
             foreach (var reference in projects[path].References) AddCompilePaths(reference, relevant);
         }

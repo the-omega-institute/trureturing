@@ -6,6 +6,28 @@ namespace StrataLint.Tests;
 
 public sealed class SnapshotTests
 {
+    [Fact]
+    public void DecodingValidatesUtf8WithoutMaterializingUnusedText()
+    {
+        var text = new string('x', 8 * 1024 * 1024);
+        var raw = RawRepositorySnapshot.Create([RawRepositoryEntry.FromText("data.json", text)]);
+        _ = SnapshotDecoder.Decode(RawRepositorySnapshot.Create([RawRepositoryEntry.FromText("warm.txt", "warm")]));
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        var decoded = SnapshotDecoder.Decode(raw);
+        var allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(decoded).Snapshot;
+        var file = Assert.Single(snapshot.Files).Value;
+        Assert.False(file.HasBom);
+        Assert.False(file.HasCarriageReturn);
+        Assert.False(file.HasTrailingWhitespace);
+        Assert.True(allocated < text.Length,
+            $"Decoding allocated {allocated} bytes before any consumer requested text.");
+        Assert.Equal(text, file.Text);
+        Assert.Same(file.Text, file.Text);
+    }
+
     [Theory]
     [InlineData("", false)]
     [InlineData("\n\n", false)]
