@@ -799,7 +799,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         {
             Assert.Contains($"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(firstProject)}",
                 console.Output, StringComparison.Ordinal);
-            Assert.Contains($"base test project has no current accepted-success coverage: {firstProject}",
+            Assert.Contains($"base test project is missing from current CI registration: {firstProject}",
                 console.Error, StringComparison.Ordinal);
         }
         if (scenario == "annotation")
