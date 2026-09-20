@@ -838,3 +838,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Deep prime-prefix projections and complete tree contraction](profile-notes/arithmetic/375-deep-prime-prefix-projections-and-tree-contraction.md)
 - [Complete prime-chain transport and one common prefix law](profile-notes/arithmetic/376-complete-prime-chain-transport-and-joint-prefix-laws.md)
 - [Ternary shadow covers retain distinct labels but lose original prime arity](profile-notes/arithmetic/377-ternary-shadow-covers-and-original-prime-arity.md)
+- [Saturated prime fibres yield joint caps and a mixed-tail dichotomy](profile-notes/arithmetic/378-saturated-prime-fibres-and-mixed-tail-incidence.md)
