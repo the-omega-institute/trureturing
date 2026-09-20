@@ -39,7 +39,7 @@ public sealed class CommonSourceIdentityTests
             case "invalid-materials": TemporaryFileSystem.File.WriteAllText(path + ".materials.zip", "invalid archive"); break;
         }
 
-        var viewError = Record.Exception(() => CommonStages.ValidateProducedReport(fixture.Root));
+        var viewError = Record.Exception(() => CommonExecutionEvidence.ValidationScope.Create(fixture.Root).Report(path));
         if (errorType is null) Assert.Null(viewError);
         else Assert.IsType(errorType, viewError);
     }
