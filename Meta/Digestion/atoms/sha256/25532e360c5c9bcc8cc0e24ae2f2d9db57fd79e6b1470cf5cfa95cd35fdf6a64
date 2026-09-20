@@ -1,0 +1,25 @@
+**证明。** 在两个非空紧凸集 $\Gamma$ 和 $\{c:\|c\|_1\le B\}$ 上，配对
+$$
+f(v,c)=\ell(v)+c\cdot(y-Rv)
+$$
+连续且分别仿射，满足 Sion，[*On general minimax theorems*](https://doi.org/10.2140/pjm.1958.8.171)，Theorem 3.4 的半连续性与拟凹、拟凸条件。应用该定理得到
+$$
+\min_{\|c\|_1\le B}\max_{v\in\Gamma}f(v,c)
+=\max_{v\in\Gamma}\min_{\|c\|_1\le B}f(v,c).
+$$
+对固定 $v$，内层最小值为 $\ell(v)-B\|y-Rv\|_\infty$，由 $\ell^1$ 球与 $\ell^\infty$ 范数的对偶配对得到。两侧目标连续、可行集紧，所以均达到。按 $z=Rv$ 分组，并用各纤维上任务最大值的达到性，得到式（18.2）的最后一式。
+
+每个 $y\mapsto U^\ell(z)-B\|y-z\|_\infty$ 都为 $B$-Lipschitz，其有限值上确界保持该性质。取 $z=y\in D$ 给主函数性质。若 $G$ 是任一这样的全空间 $B$-Lipschitz 主函数，则
+$$
+G(y)\ge G(z)-B\|y-z\|_\infty
+\ge U^\ell(z)-B\|y-z\|_\infty\qquad(z\in D).
+$$
+取上确界得 $G(y)\ge U_B^\ell(y)$，证明最小性。
+
+扩大系数球给单调性。也可在惩罚表示中，对 $B>0$ 取最大化源 $v_B$，以 $M=\max_\Gamma\ell$ 记，得到
+$$
+B\|y-Rv_B\|_\infty\le\ell(v_B)-U^\ell(y)\le M-U^\ell(y).
+\tag{18.4}
+$$
+沿任一趋于无穷的预算序列，紧性提供收敛子列，其极限 $v_*$ 满足 $Rv_*=y$；又有 $U_B^\ell(y)\le\ell(v_B)$。所以单调极限至多为 $\ell(v_*)\le U^\ell(y)$，结合下界得到式（18.3）。此论证只给逐记录收敛，亦不构造连续的最优系数选择。$\square$
+

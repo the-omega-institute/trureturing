@@ -1,0 +1,41 @@
+**定理 14.5（逐旧记录纤维的条件 ANOVA）。** 在假设14.4下，对任意 $S,T,A\subseteq E$，
+$$
+P_SP_T=P_{S\cap T},\qquad
+P_AD_S=
+\begin{cases}
+D_S,&S\subseteq A,\\
+0,&S\nsubseteq A.
+\end{cases}
+\tag{14.8}
+$$
+全部 $D_S$ 是两两正交的自伴投影，并且 $QD_S=D_SQ=0$。因此
+$$
+\mathcal H=\operatorname{ran}Q\ \oplus\bigoplus_{S\subseteq E}\operatorname{ran}D_S,
+\qquad
+\|f\|_2^2=\|Qf\|_2^2+\sum_{S\subseteq E}\|D_Sf\|_2^2.
+\tag{14.9}
+$$
+这是标准 Hoeffding／函数 ANOVA 在固定旧记录纤维上的有限乘积形式。非条件乘积分解及正交性见 Owen 所引附录§A.2—A.3，尤其引理A.3—A.4；[QUANTUM-RH 卷](QUANTUM-RH.md)题为“三十一、把 $5040$ 的 $(4,2,1,1)$ 从‘指数向量’提升为真正的交互几何”的一节也使用其有限寄存器形式。这里保留变化的条件权重、完整 $C$ 与 $Q$。
+
+**证明。** 任取 $f\in\mathcal H$，先令 $g=P_Ef$。由嵌套塔式关系，对所有 $S$ 有 $P_Sf=P_Sg$，所以隐藏变量先通过 $g$ 的全记录条件平均进入计算。固定正概率 $c$，把 $g$ 写成全记录上的函数 $g(c,x_E)$。式（14.7）使正概率记录支撑恰为各正条件边缘支撑的乘积；在该支撑上
+$$
+(P_Sg)(c,x_S)
+=\sum_{z_{E\setminus S}}g(c,x_S,z_{E\setminus S})
+\prod_{e\notin S}p_e(z_e\mid c).
+\tag{14.10}
+$$
+分母中固定坐标的正权重约去即得此式；零权重项可以删去。
+
+令 $A_0=S\cap T$、$B_0=S\setminus T$、$D_0=T\setminus S$、$F_0=E\setminus(S\cup T)$。先取 $P_Tg$，式（14.10）对 $B_0,F_0$ 求积权平均，结果只依赖 $A_0,D_0$。再取 $P_S$，对 $D_0$ 求平均，已经不出现的 $F_0$ 的权重和为一，已经在第一步消去的 $B_0$ 不会重新出现。合并有限求和恰对 $B_0,D_0,F_0$ 全部求平均，所得是 $P_{A_0}g$。各正概率 $c$ 都成立，故 $P_SP_Tf=P_{S\cap T}f$ 在 $\mathcal H$ 成立。
+
+将这一等式代入 $P_AD_S$。若 $S\subseteq A$，每个 $T\subseteq S$ 有 $A\cap T=T$，故得 $D_S$。否则选 $e\in S\setminus A$，在式（14.3）中将不含 $e$ 的 $T$ 与 $T\cup\{e\}$ 配对；二者交 $A$ 后相同而符号相反，所以和为零。
+
+为证明投影性，对每个 $S$ 有算子乘积表示
+$$
+D_S=P_S\prod_{e\in S}\bigl(\operatorname{Id}-P_{E\setminus\{e\}}\bigr).
+\tag{14.11}
+$$
+展开右侧，对选择的 $R\subseteq S$ 使用已经证明的交集乘法律，得到 $(-1)^{|R|}P_{S\setminus R}$，总和即式（14.3）；$S=\varnothing$ 时为空乘积。右侧各因子均为互相交换的自伴投影，所以乘积自伴且平方等于自身。
+
+若 $S\ne T$，交换二者名称后可取 $e\in S\setminus T$。由式（14.8），$P_TD_S=0$，而 $D_T=P_TD_T=D_TP_T$，故 $D_TD_S=0$；取伴随得反向复合也为零。又 $P_ED_S=D_S$，故与 $Q$ 正交。式（14.4）已给这些投影之和为恒等，因而得到直和；分量的存在来自该算子恒等式，唯一性与范数公式来自正交性。$\square$
+

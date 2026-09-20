@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Every original prime graph with at most one cycle per component is noncovering, at arbitrary heights and residues](../docs/reports/erdos7-odd-covering/problem-details/06-block-saturation-and-the-actual-crossing-budget.md#arbitrary-odd-pseudoforests-are-noncovering)
 - [Current bounds and comparisons](../docs/reports/erdos7-odd-covering/problem-details/01-current-bounds-and-comparisons.md)
 - [Actual AP(4,5): layout costs and complete finite-core tails](../docs/reports/erdos7-odd-covering/profile-notes/001-064/35-ap45-layout-costs-and-complete-core-tails.md)
 - [Original-layout distance forces a Jensen loss](../docs/reports/erdos7-odd-covering/profile-notes/001-064/34-original-layout-distance-forces-a-jensen-loss.md)
