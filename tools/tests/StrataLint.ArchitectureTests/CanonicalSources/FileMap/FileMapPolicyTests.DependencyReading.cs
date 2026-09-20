@@ -5,6 +5,46 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
+    public void DependencyInspectionHandlesLargeUnrelatedDataAgainstCompleteGeneratedIndex()
+    {
+        var manifest = Parse(
+            Entry("Data/**/*.json", "data", "none", "loader", "SnapshotDecoder"),
+            Entry("Generated/**/*.json", "generated", "JsonEmitter", "program", "JsonEmitter"));
+        const string input = "Data/input.json";
+        var paths = Enumerable.Range(0, 8192).Select(index => $"Generated/{index:D5}.json")
+            .Append(input).ToArray();
+        var source = new string('x', 32 * 1024 * 1024);
+        var reads = new List<string>();
+
+        var findings = FileMapPolicy.InspectDependencies(manifest, paths, path =>
+        {
+            reads.Add(path);
+            return source;
+        }, new HashSet<string>([input], StringComparer.Ordinal));
+
+        Assert.Empty(findings);
+        Assert.Equal(new[] { input }, reads);
+    }
+
+    [Fact]
+    public void DependencyInspectionPreservesOverlappingOrdinalReferencesInPathOrder()
+    {
+        var manifest = Parse(
+            Entry("Data/**/*.json", "data", "none", "loader", "SnapshotDecoder"),
+            Entry("Generated/**/*.json", "generated", "JsonEmitter", "program", "JsonEmitter"));
+        const string input = "Data/input.json";
+        string[] paths = [input, "Generated/é.json", "Generated/x/a.json", "Generated/a.json.long.json",
+            "Generated/a.json", "Generated/E.json"];
+        var findings = FileMapPolicy.InspectDependencies(manifest, paths,
+            _ => "Generated/a.json.long.json Generated/x/a.json GENERATED/E.json Generated/é.json Generated/a.json Generated/a.json",
+            new HashSet<string>([input], StringComparer.Ordinal));
+
+        Assert.Equal(new[] { "Generated/a.json", "Generated/a.json.long.json", "Generated/x/a.json", "Generated/é.json" }
+            .Select(path => new FileMapFinding("FILEMAP-DATA-GENERATED-DEPENDENCY", input,
+                $"machine-readable data references generated artifact {path}")), findings);
+    }
+
+    [Fact]
     public void DeltaDependencyInspectionReadsOnlySelectedBodiesAndUsesCompleteGeneratedIndex()
     {
         var manifest = Parse(
