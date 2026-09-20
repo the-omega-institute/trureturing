@@ -16,6 +16,13 @@ run_cmd do
   let copyInfo ← getConstInfo `ProvenanceProbe.copyArena
   unless aliasInfo.value! == copyInfo.value! do
     throwError "the eta counterexample must have identical imported Expr values"
+  let localAliasInfo ← getConstInfo `ProvenanceProbe.localFunctionAlias
+  let localCopyInfo ← getConstInfo `ProvenanceProbe.localFunctionCopy
+  unless localAliasInfo.value! == localCopyInfo.value! do
+    throwError "the local-function eta counterexample must have identical imported Expr values"
+  for name in #[`ProvenanceProbe.localFunctionAlias, `ProvenanceProbe.localFunctionCopy] do
+    let actual ← liftTermElabM <| resolveCanonicalArenaName name
+    logInfo m!"local-function provenance: {name}: {actual}"
   for name in #[`ProvenanceProbe.aliasArena, `ProvenanceProbe.copyArena] do
     let some idx := env.getModuleIdxFor? name | throwError "missing compiler owner"
     unless env.header.moduleNames[idx]! ==
@@ -39,6 +46,17 @@ run_cmd do
       (`ProvenanceProbe.inlineLive, `ProvenanceProbe.inlineLive),
       (`ProvenanceProbe.inlineDead, `ProvenanceProbe.arena),
       (`ProvenanceProbe.localCopy, `ProvenanceProbe.localCopy),
+      (`ProvenanceProbe.localFunctionAlias, `ProvenanceProbe.arena),
+      (`ProvenanceProbe.localFunctionCopy, `ProvenanceProbe.localFunctionCopy),
+      (`ProvenanceProbe.localFunctionUnused, `ProvenanceProbe.arena),
+      (`ProvenanceProbe.localFunctionDead, `ProvenanceProbe.arena),
+      (`ProvenanceProbe.localFunctionBinders, `ProvenanceProbe.localFunctionBinders),
+      (`ProvenanceProbe.localFunctionLambda, `ProvenanceProbe.localFunctionLambda),
+      (`ProvenanceProbe.localFunctionNested, `ProvenanceProbe.localFunctionNested),
+      (`ProvenanceProbe.localFunctionUnsupportedDead, `ProvenanceProbe.arena),
+      (`ProvenanceProbe.localFunctionUnsupportedUnused, `ProvenanceProbe.arena),
+      (`ProvenanceProbe.localImplicitAlias, `ProvenanceProbe.arena),
+      (`ProvenanceProbe.localImplicitDead, `ProvenanceProbe.arena),
       (`ProvenanceProbe.throughParameter, `ProvenanceProbe.throughParameter),
       (`ProvenanceProbe.reservedForward, `ProvenanceProbe.copyArena),
       (`ProvenanceProbe.explicit, `ProvenanceProbe.copyArena),
@@ -70,10 +88,29 @@ run_cmd do
     unless compiled == expected do
       throwError "compiled provenance: {name}: expected {expected}, actual {compiled}"
 
+-- Publish unsupported evidence too: erasure still preserves the original value,
+-- and the next importing module must reject the same live paths without IO.
+run_cmd do
+  for name in #[`ProvenanceProbe.localFunctionUnsupported, `ProvenanceProbe.localImplicitCopy] do
+    let .defnInfo info ← getConstInfo name | throwError "expected a definition"
+    let recovered ← liftTermElabM <| ArenaProvenance.declarationValue info
+    unless withoutMetadata recovered == withoutMetadata info.value do
+      throwError "unsupported provenance must preserve the compiled Expr: {name}"
+
 /-- error: IE-C003 ArenaSourceUnsupported arena=ProvenanceProbe.unsupportedLive owner=ProvenanceProbe.unsupportedLive -/
 #guard_msgs (error) in
 run_cmd do
   discard <| liftTermElabM <| resolveCanonicalArenaName `ProvenanceProbe.unsupportedLive
+
+/-- error: IE-C003 ArenaSourceUnsupported arena=ProvenanceProbe.localFunctionUnsupported owner=ProvenanceProbe.localFunctionUnsupported -/
+#guard_msgs (error) in
+run_cmd do
+  discard <| liftTermElabM <| resolveCanonicalArenaName `ProvenanceProbe.localFunctionUnsupported
+
+/-- error: IE-C003 ArenaSourceUnsupported arena=ProvenanceProbe.localImplicitCopy owner=ProvenanceProbe.localImplicitCopy -/
+#guard_msgs (error) in
+run_cmd do
+  discard <| liftTermElabM <| resolveCanonicalArenaName `ProvenanceProbe.localImplicitCopy
 
 -- A repeated binder name across partial applications is not a globally named
 -- argument. Recovery must reject that ambiguity instead of marking the dead input.

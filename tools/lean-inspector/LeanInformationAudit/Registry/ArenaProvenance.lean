@@ -91,6 +91,10 @@ private partial def recover (stx : Syntax) (value : Expr) : MetaM Expr := do
     let type ← whnfR (← inferType value)
     if arenaType type then
       return mkAnnotation construction value
+    -- A function-valued literal still has unmatched elaborated binders (for
+    -- example an implicit lambda inserted from the expected type). It cannot
+    -- silently lose the construction merely because its type is not yet Arena.
+    if type.isForall then return reject stx value
     return value
   if stx.isIdent then
     -- Even a bare identifier can elaborate to an application (defaults and
@@ -156,7 +160,12 @@ private partial def recover (stx : Syntax) (value : Expr) : MetaM Expr := do
   if stx.isOfKind ``Parser.Term.let &&
       stx[2][0].isOfKind ``Parser.Term.letIdDecl then
     let .letE name type rhs body nondep := value | return reject stx value
-    let rhs ← recover stx[2][0][4] rhs
+    let decl := Elab.Term.mkLetIdDeclView stx[2][0]
+    -- elabLetDeclAux wraps the RHS in one lambda per elaborated source binder.
+    -- Recover under those binders, leaving any explicit RHS lambdas to `recover`.
+    let counts := decl.binders.map binderCount
+    let rhs ← if counts.any (· == 0) then pure (reject stx[2] rhs)
+      else recoverLambdas (counts.foldl (· + ·) 0) decl.value rhs
     return ← withLetDecl name type rhs fun x => do
       let body ← recover stx[4] (body.instantiate1 x)
       return .letE name type rhs (body.abstract #[x]) nondep

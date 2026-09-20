@@ -37,6 +37,66 @@ def localCopy := let x : Arena :=
     { State := arena.State, stateFintype := arena.stateFintype,
       stateDecidableEq := arena.stateDecidableEq }
   x
+def localFunctionAlias : Arena :=
+  let copy (a : Arena) : Arena := a
+  copy arena
+def localFunctionCopy : Arena :=
+  let copy (a : Arena) : Arena :=
+    { State := a.State
+      stateFintype := a.stateFintype
+      stateDecidableEq := a.stateDecidableEq }
+  copy arena
+def localFunctionUnused : Arena :=
+  let copy (a : Arena.{0}) : Arena :=
+    { State := a.State, stateFintype := a.stateFintype,
+      stateDecidableEq := a.stateDecidableEq }
+  arena
+def localFunctionDead : Arena :=
+  let copy (a : Arena) : Arena :=
+    { State := a.State, stateFintype := a.stateFintype,
+      stateDecidableEq := a.stateDecidableEq }
+  (fun _ : Arena => arena) (copy arena)
+def localFunctionBinders : Arena :=
+  let copy (_ _a : Arena) {_b : Arena} ⦃c : Arena⦄ [Inhabited Unit] : Arena :=
+    { State := c.State, stateFintype := c.stateFintype,
+      stateDecidableEq := c.stateDecidableEq }
+  copy arena arena (_b := arena) (c := arena)
+def localFunctionLambda : Arena :=
+  let copy (_ : Unit) : Arena → Arena := fun a =>
+    { State := a.State, stateFintype := a.stateFintype,
+      stateDecidableEq := a.stateDecidableEq }
+  copy () arena
+def localFunctionNested : Arena :=
+  let copy a : Arena :=
+    let forward (_ : Unit) :=
+      ({ State := (a : Arena).State, stateFintype := a.stateFintype,
+         stateDecidableEq := a.stateDecidableEq } : Arena)
+    forward ()
+  copy arena
+def localFunctionUnsupported : Arena :=
+  let copy (a : Arena) : Arena := by first | exact a
+  copy arena
+def localFunctionUnsupportedDead : Arena :=
+  let copy (a : Arena) : Arena := by first | exact a
+  (fun _ : Arena => arena) (copy arena)
+def localFunctionUnsupportedUnused : Arena :=
+  let copy (a : Arena.{0}) : Arena := by first | exact a
+  arena
+-- Expected types can insert an implicit lambda with no source binder. These
+-- literals must fail closed until recovery supports that extra alignment step.
+def localImplicitCopy : Arena :=
+  let copy : {_u : Unit} → Arena :=
+    { State := arena.State, stateFintype := arena.stateFintype,
+      stateDecidableEq := arena.stateDecidableEq }
+  copy (_u := ())
+def localImplicitAlias : Arena :=
+  let copy : {_u : Unit} → Arena := arena
+  copy (_u := ())
+def localImplicitDead : Arena :=
+  let copy : {_u : Unit} → Arena :=
+    { State := arena.State, stateFintype := arena.stateFintype,
+      stateDecidableEq := arena.stateDecidableEq }
+  (fun _ : Arena => arena) (copy (_u := ()))
 def copyParameter (a : Arena) : Arena where
   State := a.State
   stateFintype := a.stateFintype
