@@ -222,7 +222,9 @@ coordinates the bound is
 \[
  \binom82+\binom83+\binom84+\binom85+\binom86=238.
 \]
-This bound is attained by a real reduced odd family. Use earlier primes
+This bound is attained by a real reduced odd family. The coordinate
+order in this example differs from Sections 1--2: prime 5 is processed
+after the eight displayed cofactor primes. Use earlier primes
 \(3,7,11,13,17,19,23,29\), retain Boolean cofactors of ranks 2 through
 6, and give each class zero earlier residues and current 5-residue
 \(\mathrm{rank}-2\). Moduli are distinct; comparable cofactors have
