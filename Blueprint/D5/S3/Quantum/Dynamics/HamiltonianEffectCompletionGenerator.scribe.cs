@@ -144,7 +144,57 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     + "decoding on a restricted invariant family. Closure of a linear span of "
                     + "effects, by itself, does not establish recovery of arbitrary quantum "
                     + "states. These literature acknowledgements add no Lean theorem or "
-                    + "machine-verified claim about statistical sufficiency.")))))));
+                    + "machine-verified claim about statistical sufficiency.")))),
+            Describe.Remark(
+                DescribeId.Create("finite-horizon-autonomous-rollout-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Finite-horizon autonomous rollout has a specified model class"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/goyal2019timelimited"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/redmann2020timelimited"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/peng2017marginal"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/koenig2023dataassimilation")),
+                Blocks(Paragraph(Text(
+                    "Finite-time H2 reduction, time-limited error bounds, Bayesian balancing "
+                    + "and symplectic projection are established prior art. Section 14 of the "
+                    + "unified theory fixes one initial feature, a canonical encoder/decoder "
+                    + "and a reference generator, then evaluates actual autonomous rollout. "
+                    + "Its spectral optimum is restricted to that class. Peng and Carlberg's "
+                    + "abstract was retrieved; its interior theorems were not checked here. "
+                    + "The existing Lean declaration proves observable closure, not this "
+                    + "finite-horizon statistical optimization.")))),
+            Describe.Remark(
+                DescribeId.Create("supervised-finite-horizon-score-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Supervised trajectory scores require joint data and a noise budget"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/sakamoto2026regularized"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/tropp2012matrix")),
+                Blocks(Paragraph(Text(
+                    "Sakamoto and Sato's version 2 uses noisy impulse responses to construct "
+                    + "a regularized finite-time objective and gradient. The unified theory "
+                    + "instead pairs an initial feature with a later supervised state target. "
+                    + "Its sample-score certificate directly applies Tropp's matrix Bernstein "
+                    + "inequality after checking independence, centering, a norm bound and a "
+                    + "variance bound. Unpaired observations, overlapping trajectories and "
+                    + "empirical maxima do not automatically satisfy those premises. These "
+                    + "remarks add literature links, not a new kernel-verified theorem.")))),
+            Describe.Remark(
+                DescribeId.Create("finite-time-frequency-coherence-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Frequency clustering keeps its time scale and physical assumptions"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/xie2021spectral"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/trushechkin2021unified")),
+                Blocks(Paragraph(Text(
+                    "Xie and E study coarse spectral components for quantum unitary dynamics. "
+                    + "Trushechkin treats nearly degenerate Bohr-frequency clusters with an "
+                    + "explicit weak-coupling bath limit. Finite-time phase averaging is a "
+                    + "related mechanism in the unified theory, but a classical Gaussian "
+                    + "risk optimizer is not thereby a quantum channel or a GKLS generator. "
+                    + "The referenced Lean statement supplies the commutator-orbit interface "
+                    + "only; complete positivity and finite-temperature recovery retain "
+                    + "their separate hypotheses.")))))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {
