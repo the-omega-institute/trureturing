@@ -7,6 +7,7 @@
    digest: Quadratic weighted tensor convolution on the integer lattice has norm bound sixteen. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.Analysis.MeanInequalities
 import Mathlib.Analysis.Normed.Ring.InfiniteSum
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Topology.Algebra.InfiniteSum.NatInt
@@ -113,19 +114,17 @@ theorem weighted_tensor_convolution
       (hus : Summable (fun p => u p ^ 2)) (hvs : Summable (fun p => v p ^ 2)) :
       Summable (fun p => u p * v p) ∧
       (∑' p, u p * v p) ^ 2 ≤ (∑' p, u p ^ 2) * (∑' p, v p ^ 2) := by
-    have hfin (s : Finset (ℤ × ℤ)) : ∑ p ∈ s, u p * v p ≤
-        Real.sqrt (∑' p, u p ^ 2) * Real.sqrt (∑' p, v p ^ 2) := by
-      apply (Real.sum_mul_le_sqrt_mul_sqrt s u v).trans
-      gcongr
-      · exact hus.sum_le_tsum s (fun _ _ => sq_nonneg _)
-      · exact hvs.sum_le_tsum s (fun _ _ => sq_nonneg _)
-    have huv := summable_of_sum_le (fun p => mul_nonneg (hu p) (hv p)) hfin
+    obtain ⟨huv, hbound⟩ := Real.summable_and_inner_le_Lp_mul_Lq_tsum_of_nonneg
+      Real.HolderConjugate.two_two hu hv
+      (by simpa only [Real.rpow_two] using hus)
+      (by simpa only [Real.rpow_two] using hvs)
+    simp only [Real.rpow_two, ← Real.sqrt_eq_rpow] at hbound
     refine ⟨huv, ?_⟩
     calc
       (∑' p, u p * v p) ^ 2 ≤
           (Real.sqrt (∑' p, u p ^ 2) * Real.sqrt (∑' p, v p ^ 2)) ^ 2 := by
         exact pow_le_pow_left₀ (tsum_nonneg (fun p => mul_nonneg (hu p) (hv p)))
-          (huv.tsum_le_of_sum_le hfin) 2
+          hbound 2
       _ = _ := by rw [mul_pow, Real.sq_sqrt (tsum_nonneg (fun _ => sq_nonneg _)),
         Real.sq_sqrt (tsum_nonneg (fun _ => sq_nonneg _))]
   let A := fun k => weight k ^ 2 * ‖a k‖ ^ 2
