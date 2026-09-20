@@ -7,10 +7,10 @@ open LeanInformationAudit
 -- independent production rows are retained from the prior source snapshot,
 -- with contributor addresses translated to their genuine Reg leaves.
 def fixedInformationSourceSnapshot : InformationSourceSnapshot :=
-{ sourceIdentity := "sha256:05292903d4272d7712fe55b35a6c143c7a1b7701f6675476c245e034377d4304",
-  sourceRevision := "c442912028e6a706eceb688f175c449090bb2837",
-  enumeratorIdentity := "sha256:c668e6b0e8a2b58abe5f30ba730a24a99810806edc6e74f1bca032f8fd36b60d",
-  moduleCount := 3406,
+{ sourceIdentity := "sha256:2c32c9b03da35d58b6ce78e246177436837edf8c37f9380b20917949b71e4d37",
+  sourceRevision := "d546406db3057e86981b826b37df2bbff4af8c7b",
+  enumeratorIdentity := "sha256:6a904349f3b891690da20f124a94a5b61c6083afd9b96968800898dd6ddf2011",
+  moduleCount := 4793,
   occurrences := #[{ objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena,
                      theoremName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application,
                      statementIdentity := "sha256:a3a2c21de13a5366dbb0d8ab39bc747e95b22c7cbeecb7ef39d86092b4c70ab0",
