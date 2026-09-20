@@ -34,12 +34,11 @@ run_meta do
     #[`Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape, `Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability].contains entry.registrationModuleName
   unless entries.size == 2 do throwError "relocated production occurrence count"
   for entry in entries do
-    if true then
-      let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName)
-      let some (.lit (.strVal diagnostic)) := info.value?
-        | throwError "registration diagnostic is not a literal"
-      if diagnostic.isEmpty then
-        logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} support=[readout[0]]"
-      else
-        logWarning diagnostic
+    let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName)
+    let some (.lit (.strVal diagnostic)) := info.value?
+      | throwError "registration diagnostic is not a literal"
+    if diagnostic.isEmpty then
+      logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} support=[readout[0]]"
+    else
+      logWarning diagnostic
 end
