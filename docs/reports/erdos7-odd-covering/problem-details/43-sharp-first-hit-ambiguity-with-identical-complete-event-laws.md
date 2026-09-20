@@ -23,6 +23,12 @@ event law does not include the old coordinates or their joint association
 with the event vector. No unrestricted noncoverage or new Lean result is
 claimed.
 
+Section 7 supplies a separate, reachable ambiguity pair on deeper complete
+coordinates. Its two earlier families share numerical moduli but differ
+in two residues. All next-stage labels are fixed, and their complete
+incoming event-vector law agrees. Equality of the entire original-family
+event law is not claimed for that pair and is explicitly disproved below.
+
 ## 1. One original family in natural prime order
 
 Let \(p_1<\cdots<p_r\) be the first \(r\) odd primes and put
@@ -390,10 +396,247 @@ the cap-class interval (FA10) unchanged, while showing why that interval
 cannot by itself disprove a stronger estimate using the actual source
 construction.
 
+## 7. A reachable pair with the same incoming next-stage event law
+
+Arithmetic reachability does not make all proper old marginals and the
+complete incoming **next-stage** AP vector sufficient. The following two
+families use the same numerical moduli, pure-survivor root source, prime
+order and threshold schedule. Only two earlier residues differ. Their
+actual prescribed outputs have the same indicated summaries, but different
+next physical charges and different genuine first-hit masses.
+
+### Literal families and the prescribed kernels
+
+Use prime order \((3,5,7,11)\), complete coordinates
+\(\mathbb Z/27\times\mathbb Z/5\times\mathbb Z/49\times\mathbb Z/11\),
+and thresholds \(\delta_7=1/96\) and \(\delta_p=1/2\) at the other
+primes. Pure-power classes are removed in the stated bases before mixed
+clipping, as in (FA12). There are no mixed stages at three and five.
+
+| Original modulus | Family 1 residue | Family 2 residue |
+|---:|---:|---:|
+| 5 | 0 | 0 |
+| 9 | 1 | 1 |
+| 49 | 1 | 1 |
+| 21 | 1 | 1 |
+| 1323 | 2 | 2 |
+| 735 | 541 | 247 |
+| 945 | 596 | 407 |
+| 33 | 1 | 1 |
+| 55 | 46 | 46 |
+| 539 | 443 | 443 |
+| 165 | 136 | 136 |
+| 1617 | 247 | 247 |
+| 2695 | 1766 | 1766 |
+
+The last six rows are the fixed eleven-ending labels. All thirteen
+numerical moduli are distinct odd integers greater than one, with full
+period \(72765\). No class contains another, and the integer 14553
+avoids every class in both families. These are noncovering information
+examples, not counterexamples to Erdős #7.
+
+Write the old coordinates as \((x,z,y)\). The common pure-survivor bases
+are uniform on
+
+\[
+ V_3=\{x\pmod{27}:x\not\equiv1\pmod9\},\quad
+ V_5=\{1,2,3,4\},\quad V_7=(\mathbb Z/49)\setminus\{1\},
+ \qquad (|V_3|,|V_5|,|V_7|)=(24,4,48).
+ \tag{FA16}
+\]
+
+Let \(\nu=\nu_3\otimes\nu_5\otimes\nu_7\), and define disjoint
+regions on the indicated coordinates:
+
+\[
+ \begin{aligned}
+ A&=\{x\in V_3:x\equiv1\pmod3\},& B&=\{2\pmod{27}\},\\
+ C&=\{y\in V_7:y\equiv1\pmod7\},& D&=\{2\pmod{49}\}.
+ \end{aligned}
+ \qquad
+ \nu_3(A):\nu_3(B)=6:1=\nu_7(C):\nu_7(D).
+ \tag{FA17}
+\]
+
+Their probabilities are \(1/4,1/24,1/8,1/48\), respectively. The
+literal moduli 21 and 1323 forbid \(C\) on \(A\) and \(D\) on \(B\).
+In family \(j\in\{1,2\}\), the moduli 735 and 945 additionally forbid
+\(D\) on \(A\) and \(C\) on \(B\), exactly when \(z=j\). Thus the
+actual seven-stage forbidden set is
+
+\[
+ E_j(x,z)=
+ \begin{cases}
+ C\cup D,&x\in A\cup B,\ z=j,\\
+ C,&x\in A,\ z\ne j,\\
+ D,&x\in B,\ z\ne j,\\
+ \varnothing,&x\notin A\cup B.
+ \end{cases}
+ \tag{FA18}
+\]
+
+This is a statement about the literal congruences, not a reassignment of
+colours after observing a word. For instance, 541 has residues
+\((1,1,2)\) modulo \((3,5,49)\), whereas 247 changes only its
+five-residue to two. Similarly 596 and 407 have residues \((2,1,1)\)
+and \((2,2,1)\) modulo \((27,5,7)\).
+
+For any probability base \(\rho\), its clipped kernel with forbidden
+set \(E\) and threshold \(0<d<1\), \(d\le\rho(E)\), obeys the
+measure identity
+
+\[
+ K_E=\frac{\rho-d\rho(\,\cdot\mid E)}{1-d}.
+ \qquad
+ K_{C\cup D}=\frac67K_C+\frac17K_D
+ \quad(\rho=\nu_7,\ d=1/96).
+ \tag{FA19}
+\]
+
+The first equality follows directly from (FA12), inside and outside
+\(E\). The second uses disjointness and the 6:1 mass ratio. All three
+nonempty loads \(1/8,1/48,7/48\) exceed \(d\). This is an identity
+among prescribed kernels, not a claim that arbitrary mixtures of
+arithmetic operations are permitted. Each actual row uses its own single
+set from (FA18).
+
+### What the summaries preserve and omit
+
+Let
+\(\mu_j(dx,dz,dy)=\nu_3(dx)\nu_5(dz)K_{E_j(x,z)}(dy)\).
+Both are strictly positive on all 4608 old survivor atoms. Their full
+\((3,5)\) marginals agree because each row is normalized. For the
+\((3,7)\) marginal, each family merges at one of the four equal-mass
+five-atoms. For the \((5,7)\) marginal, (FA19) gives
+\((7/24)K_{C\cup D}=(1/4)K_C+(1/24)K_D\). Hence all proper
+marginals of the **complete** old coordinates agree.
+
+More explicitly, their nonzero difference is
+
+\[
+ \frac{d(\mu_1-\mu_2)}{d\nu}(x,z,y)
+ =\frac8{665}
+   (\mathbf1_A(x)-6\mathbf1_B(x))
+   (\mathbf1_{\{1\}}(z)-\mathbf1_{\{2\}}(z))
+   (\mathbf1_C(y)-6\mathbf1_D(y)).
+ \tag{FA20}
+\]
+
+Each factor has mean zero. This also verifies the marginal equalities,
+without asserting that those common marginals equal the product base.
+In particular the common seven-marginal is not \(\nu_7\): at the unused
+residue zero, both laws give mass \(2287/109440\), exceeding the base
+mass \(1/48=2280/109440\). Thus the unused-residue rigidity in Section 6
+does not apply to this pair.
+
+Set \(Q_3=\mathbf1_A\), \(Q_5=\mathbf1_{\{z=1\}}\), and
+\(Q_7=\mathbf1_D\). The six eleven-ending labels correspond to the
+nonempty proper subsets of these three conditions, with distinct
+eleven-colours \(1,2,3,4,5,6\) in the table's order. Read their AP
+indicators under \(\mu_j\otimes H_{11}\), using an independent Haar
+current coordinate **before** applying the eleven kernel. At most one
+indicator is one. The probability of its singleton pattern is
+\(\mu_j(\prod_{i\in S}Q_i=1)/11\), equal between the two families
+because \(S\) is proper. Every multiple-one pattern has zero probability,
+and normalization fixes the all-zero pattern. Thus the entire incoming
+six-dimensional AP event law agrees. It does not retain the joint law
+of \((Q_3,Q_5,Q_7)\) or the old word alongside that vector.
+
+If \(s=Q_3+Q_5+Q_7\), the next forbidden count is respectively
+\(0,1,3,6\) for \(s=0,1,2,3\). At threshold one half,
+\(\beta_{11}=\mathbf1_T/11\), where \(T=A\times\{1\}\times D\).
+Here \(\nu(T)=1/768\). Family 1 uses the merged row on \(T\), with
+density \(624/665\); family 2 uses \(K_C\), with density \(96/95\).
+Consequently
+
+\[
+ \begin{aligned}
+ \mu_1(T)&=\frac{13}{10640},&\mu_2(T)&=\frac1{760},\\
+ \mu_1(\beta_{11})&=\frac{13}{117040},&
+ \mu_2(\beta_{11})&=\frac1{8360},&
+ \mu_2(\beta_{11})-\mu_1(\beta_{11})&=\frac1{117040}.
+ \end{aligned}
+ \tag{FA21}
+\]
+
+For genuine first-hit mass, use the same-chain killed sources
+\(\eta_j=\mathbf1_{\{y\notin E_j(x,z)\}}\mu_j\).
+Every point of \(T\) was already killed in family 1; every such point
+survived stage seven in family 2. Thus
+
+\[
+ \eta_1(\beta_{11})=0,\qquad
+ \eta_2(\beta_{11})=\frac1{8360}.
+ \qquad
+ \eta_1(1)=\eta_2(1)=\frac{2207}{2280}.
+ \tag{FA22}
+\]
+
+The common earlier loss is \(73/2280\). The equality of proper
+marginals concerns \(\mu_1,\mu_2\), not \(\eta_1,\eta_2\).
+Keeping just the total earlier loss does not repair the missing joint
+relation between survival and the next matching conditions.
+
+The entire thirteen-label original-family event law is **not** equal.
+Under \(\mu_1\otimes H_{11}\), the intersection of its 735-class and
+the common 55-class has mass \(13/117040\). In family 2 that intersection
+is empty: the classes require five-residues two and one. Likewise the
+earlier residues themselves are different known inputs. With a fully
+fixed family, root law, order and schedule, the prescribed construction
+determines one law; this example concerns compression across legal families.
+
+### A range of thresholds and exact verification
+
+The same construction works whenever
+\(0<d=\delta_7<1/48\) and \(3/11\le e=\delta_{11}<6/11\).
+Equation (FA19) and all marginal/event-law equalities remain valid.
+Writing \(\gamma(e)=(6/11-e)/(1-e)>0\), direct evaluation on \(T\)
+gives
+
+\[
+ \begin{aligned}
+ \mu_2(\beta_{11})-\mu_1(\beta_{11})
+   &=\gamma(e)\frac{d}{112(1-d)},\\
+ \eta_1(\beta_{11})&=0,&
+ \eta_2(\beta_{11})&=\frac{\gamma(e)}{768(1-d)}.
+ \end{aligned}
+ \tag{FA23}
+\]
+
+This parameter interval concerns these two fixed finite families. It is
+not an all-height ambiguity theorem. A single-number prediction based
+only on the shared summaries at \((d,e)=(1/96,1/2)\) has worst-case
+absolute error at least \(1/234080\) for the physical fee or \(1/16720\)
+for genuine first-hit mass. This is a two-point lower bound; no assertion
+is made that an interval of intermediate source laws is reachable.
+
+The [literal-congruence producer](../frontier/cover-geometry/reachable_clipped_ambiguity.py)
+and its [exact output](../frontier/cover-geometry/reachable_clipped_ambiguity.json)
+reconstruct all 4608 old atoms and 50688 incoming extended atoms per
+family. They check normalization, strict positivity, all full proper
+marginals, the entire next-stage vector law, (FA20), both kinds of cost,
+the distinguishing earlier/current event, numerical distinctness,
+noncontainment and the avoiding integer. Nine threshold pairs
+check the stated formulas using the same literal row unions. The proof
+of the whole interval is (FA19) and the displayed evaluation, not those
+finite checks. All executable checks remain active under Python \(-O\).
+
+```sh
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/reachable_clipped_ambiguity.py --output /tmp/reachable-clipped-ambiguity.json
+```
+
+The new arithmetic ingredient is that literal pure-power exclusions make
+the two disjoint mass ratios in (FA17) agree, enabling a legal kernel
+identity to move a highest-order interaction between contexts. The generic
+kernel formula is already available. This removes an exact-sufficiency
+claim for the stated summaries even within actual arithmetic outputs;
+it does not rule out useful quantitative bounds that retain additional
+original-label or cover-completion information.
+
 The zero-mean product perturbation, finite conditional-kernel construction
 and convexity argument are standard methods. The elementary prime-choice
 input is Bertrand's postulate; the repository's pinned Mathlib records it
 as `Nat.exists_prime_lt_and_le_two_mul` in
 [`Mathlib/NumberTheory/Bertrand.lean`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Bertrand.lean#L222).
-This ordinary arithmetic construction and its sharp first-hit interval
+The sharp interval in Sections 1--5 and the reachable pair in Section 7
 are repository-derived; no literature-priority assertion is made.
