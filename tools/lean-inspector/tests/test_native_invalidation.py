@@ -31,6 +31,11 @@ class NativeInvalidationTests:
     def test_declared_helper_comment_preserves_report_and_plan_identity(self):
         # Exercise the production enrollment/assessment/export path, including a
         # nonempty certificate. The ordinary native fixtures use statement mode.
+        # On-demand probe: it needs a complete warm Lean build of this checkout and
+        # copies its build outputs, so it is not in the registered engineering set.
+        # The registered pins of the same contract are the compile-time assertions
+        # imported_line_endings_preserve_verdict and
+        # enrollment_encoding_omits_source_hashes in Tests/RegistrationGates.
         prepared = self.guarded_command(['make', 'lean',
             'LEAN_TARGETS=D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates '
             'LeanInformationAudit.Syntax'], cwd=ROOT, env=os.environ,
