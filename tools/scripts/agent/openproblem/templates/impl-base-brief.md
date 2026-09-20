@@ -125,7 +125,10 @@ dominating_theorem_search: <scope, method, found | not-found-in-searched-scope>
 
 ## Provenance
   skill context
-  carriers and roles: search seat, the orchestrator WITH ITS OWN CARRIER AND MODEL, probe, implementation
+  carriers and roles: search (name the track that surfaced the candidate — the standing ChatGPT-Pro arXiv search
+  rounds or the standing codex-cli journal-corpus rounds; a single-seat search stage is codex-cli under sshx and is
+  not a fallback — writing "codex-cli because a browser seat cannot run in-repository dedupe" read as an undisclosed
+  fallback and was a quality reject, #9066 round 2), the orchestrator WITH ITS OWN CARRIER AND MODEL, probe, implementation
   seat count / carrier count / vendor split — and NO model-family count
   review seat layout, mixing mode and standing, as ONE table of completed rounds:
       | round | head | seat | carrier | decision |
@@ -157,9 +160,24 @@ Four rules decide most of the rejections, and each was reported by seats in two 
    stand in the artifacts. This one has bitten hardest: the sentence that gets added is almost always written
    while trimming other narration.
 4. **No claim about the work you did not measure at the delivered head.** Do not say the head's parent equals
-   `origin/dev` (it stops being true when dev moves), do not carry a verification snapshot from a superseded
-   head next to the current one, and do not describe an edit you intended rather than the one you made — each of
-   those was a separate blocking finding this week. Before writing 「now X is Y」, run the command that shows it.
+   `origin/dev` (it stops being true when dev moves), and do not describe an edit you intended rather than the
+   one you made — each of those was a separate blocking finding. Before writing 「now X is Y」, run the command
+   that shows it.
+5. **Every verification reading carries the head it was measured at.** Never caption a table
+   「all at the delivered head」 unless every row was executed there. The pipeline makes that caption false by
+   construction: Stage B measures at the builder commit, the lane then merges dev, and the delivered head is a
+   later merge commit. Three lanes were blocked on exactly this in one day (#9020 rounds 1 and 2, #9037 round 2;
+   six independent seat-runs across three carriers). When the lane has merged dev since measuring, write both
+   halves:
+   - **Per-module readings transfer, and you must show why.** Give the byte-identity command with the delivered
+     paths spelled out, not a `<the paths>` placeholder:
+     `git diff --quiet <measured-head> HEAD -- <path1> <path2> …` exits 0.
+   - **Repository-wide readings do NOT transfer.** Counts that range over the whole tree — the Scribe graph's
+     `receipt-free` / `wired` / `truth-anchor`, any tree-wide grep total — change with every dev merge. Either
+     restate them at the delivered head, or keep the measured-head value and say plainly that it is a
+     measured-head reading and why the difference is tree-wide growth rather than a change in this delivery.
+   Do **not** rerun a freeze, a deposit or an emit merely to repair an attribution: the readings are sound, the
+   label was wrong. A reading you did not run yourself is marked seat-reported (§5.2), never written as yours.
 
 **L-plane notes need a DOI or an arXiv id (Scribe emit fails otherwise: `requires a DOI for academic citation`, EM v2 attempt 1).** For a DOI-less classic (Kotzig 1964, Laguerre 1880s, Moser 1953, Erdős 1950 …) do NOT invent or borrow a DOI: attest through a DOI/arXiv-bearing secondary source that STATES the theorem (a survey, a modern paper, a textbook chapter with DOI), make the note about THAT source (its authors/year/title/DOI), put the original attribution inside `claim`, and say in the Describe prose "X (year); literature attestation via Y (year), Theorem N". Verify the DOI online before writing it.
 
