@@ -16,7 +16,7 @@ from pathlib import Path
 import sys
 
 
-HELPER_SHA256 = '6282f94780ba7d16307bfe8420b316addc227ddb8ac90267361504d8c9890f69'
+HELPER_SHA256 = 'e8455f314b463dfc3d513289b2043b3143793bd2dca2ef4e480c37e034e646c6'
 ROOT = ((3,Q(2)),(5,Q(4,3)))
 THREE = ROOT + ((7,Q(3,2)),)
 EARLY_FOUR = THREE + ((11,Q(5,3)),)

@@ -1,7 +1,7 @@
 {
   "schema": "four-predecessor-one-schedule-v1",
   "scope": "Natural increasing prime order; at most four actual earlier neighbours per prime; arbitrary finite original heights/residues and distinct odd nonunit numerical moduli.",
-  "helper_sha256": "6282f94780ba7d16307bfe8420b316addc227ddb8ac90267361504d8c9890f69",
+  "helper_sha256": "e8455f314b463dfc3d513289b2043b3143793bd2dca2ef4e480c37e034e646c6",
   "schedule": {
     "7": "1/5",
     "11": "1/3",
