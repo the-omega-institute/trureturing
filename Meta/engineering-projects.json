@@ -466,6 +466,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
+        "Meta/ci-cache-paths.json",
         "tools/**",
         "Meta/Digestion/atomizers.toml",
         "Meta/FILEMAP.toml",
@@ -567,6 +568,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
+        "Meta/ci-cache-paths.json",
         "tools/scripts/**",
         "tools/Architecture/**",
         "tools/**/*.csproj",
@@ -769,6 +771,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
+        "Meta/ci-cache-paths.json",
         "tools/scripts/**",
         "tools/Makefile",
         "Makefile",

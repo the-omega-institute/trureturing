@@ -38,6 +38,8 @@ public sealed partial class CurrentExecutionContractTests
             (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
             (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts),
             (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: true),
+            (Path: "Meta/ci-cache-paths.json", Invalidates: project is "StrataLint.Cache.Tests"
+                or "StrataLint.EngineeringScope.Tests" or "StrataLint.ScriptTests"),
         };
         foreach (var change in changes) fixture.Write(change.Path, "original fixture material\n");
         fixture.Track();
