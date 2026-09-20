@@ -9,8 +9,77 @@ You do not need to write a new proof to make a useful contribution. Public-facin
 documentation defaults to English.
 
 [Project entrance](../README.md) ·
+[Use Claude Code or Codex](#use-claude-code-or-codex) ·
 [Repository rules](../AGENTS.md) · [Working map](../agents/CONTEXT.md) ·
 [Specification](develop/spec/golden-ledger-repo-spec.md)
+
+## Use Claude Code or Codex
+
+Choose either client: follow the official [Claude Code setup](https://code.claude.com/docs/en/setup)
+or [Codex CLI setup](https://learn.chatgpt.com/docs/codex/cli) to install and sign
+in. Open the checkout as your client's workspace, or, in a terminal, change to
+the checkout directory and start `claude` **or** `codex`. You need only one.
+If you have not cloned the repository yet, follow the clone commands in the
+README's [First run](../README.md#first-run); source exploration does not require
+the build step.
+
+Ask the agent to read [AGENTS.md](../AGENTS.md), [README.md](../README.md) and
+this guide. In this repository, `AGENTS.md` points to `CLAUDE.md`; both names
+lead to the same rules.
+Work that produces or checks proofs needs the [build prerequisites](#prerequisites).
+Client access, build tools, network search and independent review services
+depend on your environment; the repository skills do not install them.
+
+### Choose a skill for the question
+
+[skills/](../skills/) is the canonical source. The existing `.claude/skills`
+and `.codex/skills` directories are aliases to it. Discovery varies by client;
+the portable way to use a skill is to ask the agent to read its canonical
+`SKILL.md` explicitly. For example, paste this into the **client conversation**:
+
+> Read skills/codex-formal-answer/SKILL.md and use it to examine whether knowing every part determines the whole, making the assumptions and unresolved questions explicit.
+
+| Skill | When to use it / what to provide | Work and outcome |
+| --- | --- | --- |
+| [codex-formal-answer](../skills/codex-formal-answer/SKILL.md) | A mathematical, philosophical or conceptual question: “Does knowing every part determine the whole?” | Reasons from repository results, uses formal checking where applicable, and returns an ordinary answer with its assumptions and unresolved boundaries; can create and retain scoped formal artifacts under repository rules. |
+| [codex-formalize](../skills/codex-formalize/SKILL.md) | One existing open digestion atom: “Work on atom `<atom-id>`, reusing results first.” | Searches for reusable results first, then works on formalization or settlement of that source claim; a new theorem or closure is not guaranteed. |
+| [codex-theory-ingest](../skills/codex-theory-ingest/SKILL.md) | Externally authored material: “Ingest the document at `<path>` from `<source-URL>` under `<license>`.” | Brings reference input through the digestion workflow into open formalization atoms; ingestion is not proof. |
+| [theory-volume-template](../skills/theory-volume-template/SKILL.md) | Your own volume: “Draft a new volume on `<topic>`,” or “Append to `<volume-path>` while preserving existing atoms.” | Structures the volume for digestion while preserving existing atoms; use this for authoring and appending, and the ingest skill for externally authored material. |
+
+A digestion atom is a source claim tracked by the repository's ingestion
+workflow. Replace the placeholders with your actual input; each linked skill
+contains the full workflow. A skill guides the work; [repository rules](../AGENTS.md), the
+[specification](develop/spec/golden-ledger-repo-spec.md) and actual checks govern
+what can be claimed or admitted.
+
+If the skill appears in your client's list, [Codex](https://learn.chatgpt.com/docs/build-skills)
+lets you select it with `/skills` or mention it as `$codex-formal-answer`;
+[Claude Code](https://code.claude.com/docs/en/skills) uses `/codex-formal-answer`.
+Substitute another listed skill name for the other workflows. These are client
+inputs, not shell commands. Current Codex documentation describes repository
+discovery under `.agents/skills`; do not assume this checkout's `.codex/skills`
+alias is automatically discovered. Explicitly reading the canonical file
+works without copying skills or changing global configuration.
+
+### Take an exploration into a contribution
+
+Give your agent a precise task, such as clarifying one explanation against its
+linked source or reproducing a mismatch. Documentation and typo fixes do not
+need a mathematical skill. A contribution request you can paste:
+
+> Read AGENTS.md and docs/CONTRIBUTING.md, then clarify one README example against its linked source in an isolated worktree, preserve its assumptions and scope, check the changed documentation and prepare the diff for independent review and a PR to dev.
+
+1. Define the expected improvement using [Choose a starting point](#choose-a-starting-point)
+   and read the linked rules before editing.
+2. Follow [Your first change](#your-first-change) to create an isolated worktree;
+   open that directory as the agent's workspace for the contribution.
+3. [Edit the owning source](#edit-the-owning-source), run
+   [focused validation](#check-your-change), and arrange independent review of
+   the actual diff. Ask the agent to distinguish checks it ran from unmet
+   prerequisites or unverified claims.
+4. Follow [Open a pull request](#open-a-pull-request) to target `dev` and inspect
+   the required remote checks. Local checks and an agent's confidence do not
+   replace those results or independent review.
 
 ## Choose a starting point
 
