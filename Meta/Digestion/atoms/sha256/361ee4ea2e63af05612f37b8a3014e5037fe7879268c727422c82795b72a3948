@@ -1,0 +1,21 @@
+**定义 9.1（带接触面的有限恢复证书）。** 设 $V$ 是维数 $d\ge1$ 的实赋范空间，$I$ 为有限非空指标集，$v_i\in V$ 为单位价格原子。具有原价格 $w_i>0$ 的字典 $u_i$ 按第5节取 $v_i=u_i/w_i$，系数同步取 $b_i=w_i a_i$；以下的 $\ell^1$ 成本因而为原加权成本。定义合成映射
+$$
+Tb=\sum_{i\in I}b_iv_i,\qquad \Gamma(b)=\sum_{i\in I}|b_i|.
+$$
+给定目标 $v\in V$、一份可行系数 $b^*$、一个线性泛函 $\varphi\in V^*$ 和非空集合 $S\subseteq I$，假设：$b^*$ 在 $I\setminus S$ 上为零；$\{v_i:i\in S\}$ 为 $V$ 的一组基；$|\varphi(v_i)|\le1$ 对所有 $i$ 成立；且
+$$
+Tb^*=v,\qquad \varphi(v)=\Gamma(b^*)=:\gamma^*.
+\tag{9.1}
+$$
+记 $z_i=\varphi(v_i)$，无论 $I\setminus S$ 是否为空，均定义
+$$
+M=\max_{i\in I}\|v_i\|,\qquad
+\kappa=\|T_S^{-1}\|_{V\to\ell^1(S)}<\infty.
+$$
+当 $I\setminus S\ne\varnothing$ 时，另假设每个该集合中的 $|z_i|<1$，并定义
+$$
+\eta=\min_{i\notin S}(1-|z_i|)>0.
+\tag{9.2}
+$$
+这里 $T_S$ 是 $T$ 在支撑 $S$ 上的限制，$\|\varphi\|_*$ 是所选 $V$ 范数的对偶范数。所有常数均相对于同一字典、目标和范数。有限原子规范及其对偶属于第1、5节的结构；成熟框架可参见 Chandrasekaran、Recht、Parrilo、Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，§2.1。
+

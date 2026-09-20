@@ -1,0 +1,14 @@
+**证明。** 给定历史时 $Y_n$ 的协方差为 $S_n$；再给定 $Z$ 后只剩噪声 $R_n$。Gaussian 条件熵之差给第一式。另一方面，
+$$
+\frac{\det J_{n+1}}{\det J_n}
+=\det(I+\Sigma_n^{1/2}H_n^TR_n^{-1}H_n\Sigma_n^{1/2})
+=\det(I+R_n^{-1/2}H_n\Sigma_nH_n^TR_n^{-1/2}),
+$$
+用到了 $\det(I+UV)=\det(I+VU)$。提取 $R_n^{1/2}$ 后，这也是 $\det S_n/\det R_n$。增加项半正定，行列式为其特征值加一后的乘积；等于一当且仅当增加项为零，即 $H_n=0$。证毕。
+
+信息链式法则或逐项相消给
+$$
+I(Z;\mathcal Y_n)=\sum_{t<n}\frac12\log\frac{\det S_t}{\det R_t}.
+$$
+这些是指定概率实验中的辨识信息，不自动等于物理耗散或取得成本；换成 bit 时整体除以 $\log2$。
+

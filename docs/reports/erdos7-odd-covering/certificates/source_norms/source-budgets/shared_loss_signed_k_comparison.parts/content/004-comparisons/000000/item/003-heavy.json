@@ -1,0 +1,41 @@
+{
+  "norms": {
+    "kind": "inline",
+    "value": {
+      "loss_order": [
+        "alpha",
+        "z",
+        "beta",
+        "deficit",
+        "late",
+        "carrier"
+      ],
+      "source_mass_prices": [
+        "1/6",
+        "5/36",
+        "1/18",
+        "1/9",
+        "1/36",
+        "0"
+      ],
+      "shared_loss_upper": "1/49",
+      "mass_L1": "1/294",
+      "pure_L1": "1/450",
+      "availability_Linfinity": "1/196",
+      "carrier_mass_minus_raw_mass_increase_without_rho": "2/2205"
+    }
+  },
+  "costs": {
+    "path": "content/004-comparisons/000000/item/003-heavy/001-costs.json",
+    "sha256": "eb7493333179f28d92142aa770699098ed9b6b6a9e0daccb3bf9c0e15b9717f3",
+    "kind": "array"
+  },
+  "weighted_G_error": {
+    "kind": "inline",
+    "value": "1070379835958781162324436816114152154584830069/2224500051369962600939172732191353676250000000"
+  },
+  "weighted_barrier": {
+    "kind": "inline",
+    "value": "9842264924061537171771956384088145223/143243234143364170129428019217812500"
+  }
+}

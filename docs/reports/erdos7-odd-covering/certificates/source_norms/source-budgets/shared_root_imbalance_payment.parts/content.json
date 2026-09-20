@@ -1,0 +1,60 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-shared-root-imbalance-payment-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "6a661dd78a7a4db24f473f05b8d3c5b841a1d436b58f4b15977ef4971ddffb2a",
+    "kind": "value"
+  },
+  "cost_rows": {
+    "path": "content/002-cost_rows.json",
+    "sha256": "ea713a32ba98daa43316543ed24deb114e64cee72751dd39c1740b89cbd56140",
+    "kind": "array"
+  },
+  "generic_tied_root_layout_pairs": {
+    "kind": "inline",
+    "value": 100
+  },
+  "original_cost_layout_pair_checks": {
+    "kind": "inline",
+    "value": 4600
+  },
+  "source_checks_reused": {
+    "kind": "inline",
+    "value": {
+      "prefix_increment_checks": 365,
+      "layout_cell_floor_checks": 23000
+    }
+  },
+  "deep_bridge": {
+    "kind": "inline",
+    "value": "Q_D-P_D>=-kappa*E_D-sigma_D*C*chi"
+  },
+  "capacity_penalty": {
+    "kind": "inline",
+    "value": "kappa=max(36*vmax/125,36*(vmax-vmin)/25)"
+  },
+  "root0_partition": {
+    "kind": "inline",
+    "value": "Sum of u_e*eta(A) over BOTH root0 cells is at most sigma_D, not two copies of sigma_D."
+  },
+  "shared_budget": {
+    "kind": "inline",
+    "value": "E_D+(E5-r/5)+omega<=rho-r/5"
+  },
+  "general_residual_coefficient": {
+    "kind": "inline",
+    "value": "P=max(vmax,36*(vmax-vmin)/25,vmin*m/G)"
+  },
+  "uniform_default": {
+    "path": "content/011-uniform_default.json",
+    "sha256": "653a71c07ed76e9f4d98232a2cb3275c1f5a09ccd5a2a0697d0cdc1e8b5429b8",
+    "kind": "object"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary refinement of the generic deep-capacity bridge on Delta<=1/18. Uniform positive credit additionally requires the concentration and packing guards. Same actual measures, independent original labels, complete infinite tails, curvature and one residual. No new global K, optimality, Lean or unrestricted Erdos7 claim."
+  }
+}

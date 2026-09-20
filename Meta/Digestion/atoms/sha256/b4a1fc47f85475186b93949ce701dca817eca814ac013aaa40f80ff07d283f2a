@@ -1,0 +1,25 @@
+**定理 4.2（共同方向的有限对偶）。** 令 $W=\prod_{d\in\mathcal D}W_d$、$a_i=(a_{i,d})_d$、$t=(t_d)_d$。则共同表示问题正是向量等式 $t=\sum_i c_i a_i$，并满足
+
+$$
+\boxed{
+\Gamma_{\mathrm{com}}(t)
+=\sup\left\{
+\left|\sum_d\varphi_d(t_d)\right|:
+\varphi_d\in W_d^*,
+\left|\sum_d\varphi_d(a_{i,d})\right|\le w_i\ \text{对全部 }i
+\right\}.
+}
+\tag{4.3}
+$$
+
+共同可行时最小值达到，而且
+
+$$
+\Gamma_{\mathrm{com}}(t)\ge\max_{d\in\mathcal D}\Gamma_d(t_d).
+\tag{4.4}
+$$
+
+证明。乘积向量相等当且仅当每个方向坐标相等，所以两种可行系数集合相同。在定理 1.2 中取状态空间 $V=W^*$，令 $q_i(\varphi)=\varphi(a_i)$、$h_t(\varphi)=\varphi(t)$。有限维线性泛函分离向量，故 $h_t=\sum_i c_iq_i$ 当且仅当 $t=\sum_i c_i a_i$。有限乘积的每个线性泛函唯一写成 $\varphi((x_d)_d)=\sum_d\varphi_d(x_d)$，因此式（1.4）正好成为式（4.3），并给出有限时达到。任一共同可行系数对每个单独方向也可行，故它的成本支配每个方向的最小成本；取下确界得到式（4.4）。证毕。
+
+式（4.3）的乘积空间用来登记同一系数必须满足的全部等式。对偶泛函的方向求和是数学证书，不声明能够同时获得未知方向的所有实验记录。共同准备、方向可知性与实际调用仍按原实验接口决定。
+

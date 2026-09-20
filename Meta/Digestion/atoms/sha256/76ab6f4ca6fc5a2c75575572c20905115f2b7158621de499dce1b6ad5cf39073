@@ -1,0 +1,108 @@
+**定理 127.1。** 对式（127.1）—（127.7）的固定 $L,q,P,\pi$，下列条件等价：
+
+1. 对每个严格正微观初态 $p_0$，$t\mapsto D_c(T_tp_0)$ 在 $[0,\infty)$ 上不增。
+2. $PLQ=0$。
+3. $[P,L]=0$。
+4. 存在标签上的随机半群 $S_t$，使 $\mathsf CT_t=S_t\mathsf C$ 对所有 $t\ge0$ 成立。
+5. 式（127.22）的 $K(t)$ 对所有 $t\ge0$ 为零。
+
+**结构部分。** 因 $P,L$ 自伴，$(PLQ)^*=QLP$。若 $PLQ=0$，两个交叉块均零，故交换；反向立即成立。与条件 5 的等价已由式（127.24）证明。
+
+若交换，定义
+
+$$
+S_t=\mathsf CT_t\mathsf U.
+\tag{127.27}
+$$
+
+$\mathsf C,\mathsf U,T_t$ 都将概率送到概率，所以 $S_t$ 非负且列和为一。由 $P\mathsf U=\mathsf U$ 以及交换性，
+
+$$
+\begin{aligned}
+S_tS_s
+&=\mathsf CT_tPT_s\mathsf U
+=\mathsf CT_{t+s}\mathsf U=S_{t+s},\\
+\mathsf CT_t
+&=\mathsf CT_tP=S_t\mathsf C,
+\qquad S_t\bar\pi=\bar\pi.
+\end{aligned}
+\tag{127.28}
+$$
+
+这里 $\mathsf CT_tQ=0$ 使用了交换性；没有它，压缩得到的每个 $\mathsf CT_t\mathsf U$ 虽是随机矩阵，未必组成半群。反之，条件 4 使 $\mathsf CT_th=S_t\mathsf Ch=0$ 对每个 $h\in\ker P$ 成立；在 $t=0$ 求导并乘 $\mathsf U$ 得 $PLh=0$，故条件 2 成立。
+
+**闭合推出熵单调。** 有限 KL 的数据处理给
+
+$$
+D(S_s b_t\|S_s\bar\pi)\le D(b_t\|\bar\pi).
+\tag{127.29}
+$$
+
+为完整说明其依据，对任何共同随机核 $S$，在输入输出对上取联合律 $\mu_iS_{ai}$、$\nu_iS_{ai}$。完整联合 KL 逐项约去 $S_{ai}$，等于 $D(\mu\|\nu)$；按输出纤维使用式（127.13）的同类似然比分解，则等于输出 KL 加非负的后验 KL 平均。后验 KL 的非负性来自 $\log u\le u-1$，其等号条件为两份概率相同。零核项不参与求和。因 $b_{t+s}=S_sb_t$、$S_s\bar\pi=\bar\pi$，式（127.29）即条件 1。
+
+**熵单调推出闭合。** 若隐藏空间非零，任取单位 $h\in\ker P$。由 $h\perp\mathbf1$、$|h_i|\le1$，每个 $0<\varepsilon<1/N$ 都给严格正归一化初态
+
+$$
+p_0=\pi+\varepsilon h,
+\qquad Pp_0=\pi.
+\tag{127.30}
+$$
+
+初始粗 KL 为零。若条件 1 成立，KL 非负性迫使 $D(PT_tp_0\|\pi)=0$ 对所有 $t\ge0$ 成立。KL 的等号条件使 $PT_tp_0=\pi$，再由 $T_t\pi=\pi$ 得 $PT_th=0$。在 $t=0$ 求导，得到 $PLh=0$。这对每个隐藏单位向量成立，线性性遂给 $PLQ=0$。隐藏空间为零时该结论直接成立，证明完毕。
+
+严格保留“每个严格正微观初态”这一量词是必要的。某一个初态，甚至某个受限初态族上的单调，不能代替上面对全部隐藏方向的测试。该等价的证明本身可放宽图连通性；本节保留连通性用于唯一平衡与严格耗散等其他结论。
+
+闭合时，标签生成元为 $\bar L=\mathsf CL\mathsf U$，对 $a\ne b$，
+
+$$
+\bar L_{ab}=-\frac1{n_b}\sum_{i\in F_a,j\in F_b}w_{ij},
+\qquad
+\bar L_{ab}\bar\pi_b=\bar L_{ba}\bar\pi_a.
+\tag{127.31}
+$$
+
+负号对应 $\dot b=-\bar Lb$；该粗链在 $\bar\pi$ 下可逆，一般不在标签均匀律下对称。若 $D_n=\operatorname{diag}(n_a)$，式（127.8）给正交坐标算子和概率生成元的关系 $A=D_n^{-1/2}\bar L D_n^{1/2}$，这里 $A$ 用纤维归一基表示。
+
+**非闭合的局部见证。** 仍取式（127.30），令 $x(t)=PT_t(\pi+\varepsilon h)$。则 $x(0)=\pi$、$x'(0)=-\varepsilon PLh$，且对 $D(x(t)\|\pi)$，
+
+$$
+D'(t)=\sum_i x'_i(t)\log(Nx_i(t)),
+$$
+
+$$
+D''(t)=\sum_i\frac{x'_i(t)^2}{x_i(t)}
++\sum_i x''_i(t)\log(Nx_i(t)).
+\tag{127.32}
+$$
+
+在 $t=0$ 第二项为零，故精确地
+
+$$
+\boxed{D_c''(0;\pi+\varepsilon h)=N\varepsilon^2\|PLh\|_2^2}.
+\tag{127.33}
+$$
+
+若 $[P,L]\ne0$，自伴交叉块判据保证存在此类 $h$ 使 $PLh\ne0$。于是
+
+$$
+D_c(t;\pi+\varepsilon h)
+=\frac{N\varepsilon^2}{2}\|PLh\|_2^2t^2+O(t^3)>0
+\tag{127.34}
+$$
+
+对充分小的 $t>0$ 成立，而完整 KL 仍下降。这里 $\varepsilon$ 已固定在合法正区间，二阶系数不是仅在 $\varepsilon\to0$ 极限下成立。
+
+对隐藏空间的一组正交归一基 $h_j$，分别准备不同初态 $\pi+\varepsilon h_j$，有
+
+$$
+\boxed{
+\sum_jD_c''(0;\pi+\varepsilon h_j)
+=N\varepsilon^2\|B\|_{\mathrm{HS}}^2
+=\frac{N\varepsilon^2}{2}\|[P,L]\|_{\mathrm{HS}}^2
+=N\varepsilon^2\operatorname{Tr}K(0).
+}
+\tag{127.35}
+$$
+
+这是不同准备实验的曲率之和，不是一个初态的曲率，不是信息容量，也不是除以隐藏维数后的平均。它把同一个交叉块的三种读法对齐：未来显露的隐藏方向、记忆核初值，以及从粗平衡出发的熵曲率。
+

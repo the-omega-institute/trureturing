@@ -1,0 +1,263 @@
+[
+  {
+    "name": "R19",
+    "tuple": [
+      6,
+      0
+    ],
+    "weight": "15/17",
+    "old_margin": "1043483114/52259800239471825",
+    "inherited_margin": "3654702628991/597254859879678000",
+    "new_margin": "1582541166967/228042764681331600",
+    "constant": "1366626685/7373516788638",
+    "previous_constant": "64281366311/446664959311725",
+    "constant_increase": "481121504789/11613288942104850",
+    "minimizers": [
+      [
+        8,
+        7
+      ],
+      [
+        8,
+        8
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        9,
+        7
+      ],
+      [
+        9,
+        8
+      ],
+      [
+        9,
+        9
+      ]
+    ]
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      0,
+      0
+    ],
+    "weight": "13299/1360",
+    "old_margin": "0",
+    "inherited_margin": "0",
+    "new_margin": "2466815074/5927440694175",
+    "constant": "3637504822792688/2394554319542385",
+    "previous_constant": "3637504822792688/2394554319542385",
+    "constant_increase": "0",
+    "minimizers": [
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      0,
+      1
+    ],
+    "weight": "13299/1360",
+    "old_margin": "2074050739/3429097922250",
+    "inherited_margin": "349703865211/17145489611250",
+    "new_margin": "23873292187/1143032640750",
+    "constant": "11969252/24191167",
+    "previous_constant": "5280598124/14654264625",
+    "constant_increase": "25610083888/190505440125",
+    "minimizers": [
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      0,
+      2
+    ],
+    "weight": "13299/1360",
+    "old_margin": "0",
+    "inherited_margin": "807888593/489871131750",
+    "new_margin": "207617/115672050",
+    "constant": "99556/2199197",
+    "previous_constant": "26489768/777573225",
+    "constant_increase": "60972724/5443012575",
+    "minimizers": [
+      [
+        1,
+        6
+      ]
+    ]
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      0,
+      3
+    ],
+    "weight": "13299/1360",
+    "old_margin": "821/53440487100",
+    "inherited_margin": "1203434/9542944125",
+    "new_margin": "22999/161940870",
+    "constant": "8244/2199197",
+    "previous_constant": "330254/114189075",
+    "constant_increase": "1271398/1484457975",
+    "minimizers": [
+      [
+        1,
+        6
+      ]
+    ]
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      1,
+      0
+    ],
+    "weight": "13299/1360",
+    "old_margin": "137744159071/197983533908160",
+    "inherited_margin": "2319278484427/98991766954080",
+    "new_margin": "79025926613/3299725565136",
+    "constant": "176622575/311765454",
+    "previous_constant": "17433940453/42304173912",
+    "constant_increase": "84920996411/549954260856",
+    "minimizers": [
+      [
+        1,
+        7
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        1,
+        9
+      ]
+    ]
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      1,
+      1
+    ],
+    "weight": "13299/1360",
+    "old_margin": "0",
+    "inherited_margin": "432537929/133917433650",
+    "new_margin": "804047/221351130",
+    "constant": "13700/143143",
+    "previous_constant": "109767128/1487971485",
+    "constant_increase": "32644372/1487971485",
+    "minimizers": [
+      [
+        1,
+        6
+      ]
+    ]
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      2,
+      0
+    ],
+    "weight": "13299/1360",
+    "old_margin": "0",
+    "inherited_margin": "736270541/328737301200",
+    "new_margin": "1323563/543367440",
+    "constant": "16175/263538",
+    "previous_constant": "21077239/456579585",
+    "constant_increase": "13891897/913159170",
+    "minimizers": [
+      [
+        1,
+        6
+      ]
+    ]
+  },
+  {
+    "name": "R5",
+    "tuple": [
+      3,
+      0
+    ],
+    "weight": "13299/1360",
+    "old_margin": "87287/6526929689280",
+    "inherited_margin": "471757549/2331046317600",
+    "new_margin": "11268133/49446437040",
+    "constant": "16025/2664662",
+    "previous_constant": "32351041/6973215480",
+    "constant_increase": "124606967/90651801240",
+    "minimizers": [
+      [
+        1,
+        6
+      ]
+    ]
+  },
+  {
+    "name": "linear",
+    "tuple": null,
+    "weight": "94212612766226/1174116234095805",
+    "old_margin": "349/291600",
+    "inherited_margin": "58723/364500",
+    "new_margin": "8879/48600",
+    "constant": "6",
+    "previous_constant": "19901/4050",
+    "constant_increase": "4399/4050",
+    "minimizers": [
+      [
+        8,
+        7
+      ],
+      [
+        8,
+        8
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        9,
+        7
+      ],
+      [
+        9,
+        8
+      ],
+      [
+        9,
+        9
+      ]
+    ]
+  }
+]

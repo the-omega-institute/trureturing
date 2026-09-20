@@ -1,0 +1,95 @@
+{
+  "length": 10,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/034-verified_node_batches/000000/single.json",
+        "sha256": "87d1edb14b1a4ea9aee91fbb0dd0b49b9515140e2fc6a9b3c62651e56fc4e83e",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/034-verified_node_batches/000001/single.json",
+        "sha256": "4f6ad64f58be0bce74df3fa972d3a51feed9af38b27b415e65d417dd9d473970",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/034-verified_node_batches/000002/single.json",
+        "sha256": "f34321adc5044d57ed5a691052fefb82735716cdf7fb378755d4ae2b8e0dbc0f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/034-verified_node_batches/000003/single.json",
+        "sha256": "a442877638775bff46dcb1380e8d6e8f2ae5d93d464703337798667d6c6dc12f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/034-verified_node_batches/000004/single.json",
+        "sha256": "86d411a5daa8419a6b064886bfea6f0e1eb2feb530eea162b31c0b57ef5067f2",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/034-verified_node_batches/000005/single.json",
+        "sha256": "5840112f8b2adc8ee00fcfc47de128a76329691891b40ec35066bfcedb69bfab",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/034-verified_node_batches/000006/single.json",
+        "sha256": "439a7ed889e8220c4d491de0a32f247bb33146aea50d9fcf91eafc9631f1bc4a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/034-verified_node_batches/000007/single.json",
+        "sha256": "e281bf195779c0c1c4e2568c7b9336508c643045eaa35523844e737e649adf4a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/034-verified_node_batches/000008/single.json",
+        "sha256": "581df7f865bf50160013ea948d5023785f712ee85c553c3f142e7e30f3b0930c",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/034-verified_node_batches/000009-000010.json",
+        "sha256": "158db85e3064853ad6454944760ac4c2104ae646b4b79771ad7acffd344da0fd",
+        "kind": "value"
+      }
+    }
+  ]
+}

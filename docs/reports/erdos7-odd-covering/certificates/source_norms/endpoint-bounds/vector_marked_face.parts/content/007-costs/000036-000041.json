@@ -1,0 +1,514 @@
+[
+  {
+    "index": 36,
+    "name": "R5",
+    "tuple": [
+      1,
+      0
+    ],
+    "weight": "13299/1360",
+    "constant_old_margin": "79025926613/3299725565136",
+    "uniform_source_gain": "2525546/7014722715",
+    "uniform_residual_coefficient": "235090985/623530908",
+    "constant_old_support": {
+      "common": {
+        "constant": "2957210561/183318086952",
+        "affine_source_coefficient": "2272639/363726363",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 1,
+              "value": "34193/2774772"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/19404"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/135828"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "1/11319",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 5
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 1,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "79025926613/3299725565136"
+      }
+    },
+    "vertex_new_minima": [
+      "36460883387/1499875256880",
+      "36460883387/1499875256880",
+      "36460883387/1499875256880"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "738d447da6ebb767b77c6cc7a79e6a3407595914d839e2b4d9c20e7431f996a7",
+      "9069ea5b5199b47926c84bf8061d8c7be1887ab49e5f76b65ac088d361cc30c5",
+      "e5483a6d12002fb27127fa3682628e8d09bf9ab14d0a6f0533babafd19fd67bb"
+    ],
+    "fixed_capacity_duals_sha256": "226c7e136c9e1963e3926353148da947b3172b14cceb44101d62b7c231a7c422"
+  },
+  {
+    "index": 37,
+    "name": "R5",
+    "tuple": [
+      1,
+      1
+    ],
+    "weight": "13299/1360",
+    "constant_old_margin": "9046747/2434862430",
+    "uniform_source_gain": "1808/6441435",
+    "uniform_residual_coefficient": "12570/143143",
+    "constant_old_support": {
+      "common": {
+        "constant": "51815/18036018",
+        "affine_source_coefficient": "160344/49098049",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/21021"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/147147"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/1030029"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "4/343343",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 5
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "9046747/2434862430"
+      }
+    },
+    "vertex_new_minima": [
+      "884561/221351130",
+      "884561/221351130",
+      "884561/221351130"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "524c9af92397e24fe30f1ec7bbc49b8c76e2a234ecc75f5e0f9d9b52eff27750",
+      "0372d99f1223f09f680d426c5db1991ab240db9c93b12cf3eaad487c7e162c6d",
+      "5417a5d4dbb22b6ae9ac68fa5d1fa100f1838e124343ff9a663370848d205ac3"
+    ],
+    "fixed_capacity_duals_sha256": "93a42d16fe92624fabd8fb2cb197f1fc55ce9c349cbd2e89b8bcd6d934e82ce4"
+  },
+  {
+    "index": 38,
+    "name": "R5",
+    "tuple": [
+      2,
+      0
+    ],
+    "weight": "13299/1360",
+    "constant_old_margin": "14717953/5977041840",
+    "uniform_source_gain": "662/5929605",
+    "uniform_residual_coefficient": "30695/527076",
+    "constant_old_support": {
+      "common": {
+        "constant": "39475/22137192",
+        "affine_source_coefficient": "22027/15065589",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/30492"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/213444"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/1494108"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "1/124509",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 5
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "14717953/5977041840"
+      }
+    },
+    "vertex_new_minima": [
+      "1398659/543367440",
+      "1398659/543367440",
+      "1398659/543367440"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "8488d4e8c9e2c8fe68764fea19ee59e4fa94594f89cef68697a22af032ca7fe9",
+      "8b3c76aac20178f721c25866803c0d24a0374765e6e452287ff2c3d340e6c41b",
+      "9f8f8d16a64be9131d224b4f77febe0ba6f1cb98fde05c6e706652bfe773bd57"
+    ],
+    "fixed_capacity_duals_sha256": "7f07969c0f06c2fd99bdae445427c9b668c7f94b7aa032892444446a1bc73e79"
+  },
+  {
+    "index": 39,
+    "name": "R5",
+    "tuple": [
+      3,
+      0
+    ],
+    "weight": "13299/1360",
+    "constant_old_margin": "126837383/543910807440",
+    "uniform_source_gain": "3214/179864685",
+    "uniform_residual_coefficient": "88115/15987972",
+    "constant_old_support": {
+      "common": {
+        "constant": "364055/2014484472",
+        "affine_source_coefficient": "13537/65284219",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/335412"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/2347884"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/16435188"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "1/1369599",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 5
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "126837383/543910807440"
+      }
+    },
+    "vertex_new_minima": [
+      "12414229/49446437040",
+      "12414229/49446437040",
+      "12414229/49446437040"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "8d6162e53cb9429b1226b2aa90c3b6ada45075bee42ff67c7b23d0397a003b54",
+      "5dc007dce678d4028efb21649df30fe4629e34464b67d21bf795964e3eb383ea",
+      "cab4893399944e99ce35c6c3ad8e4024f3cf71f54eca8f4e17b383c4fe873fce"
+    ],
+    "fixed_capacity_duals_sha256": "d41cd62e06a511a99260d2fe2ebcc4951c1abea17a09ff85d8cf12dfba2210b8"
+  },
+  {
+    "index": 40,
+    "name": "linear",
+    "tuple": null,
+    "weight": "94212612766226/1174116234095805",
+    "constant_old_margin": "9257/48600",
+    "uniform_source_gain": "4/225",
+    "uniform_residual_coefficient": "9/2",
+    "constant_old_support": {
+      "common": {
+        "constant": "29/72",
+        "affine_source_coefficient": "1",
+        "raw_supports": [
+          {
+            "seven_block": "complete_tail",
+            "weight": "1/5",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 2
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          2,
+          2,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "9257/48600"
+      }
+    },
+    "vertex_new_minima": [
+      "10121/48600",
+      "10121/48600",
+      "10121/48600"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "0a00cf4c15784208feb0fdce42ca8636c3684dac0ad9e51908cb653ced027ca1",
+      "50bb2f25d9fb8c1c3f2304b3e981bdffa9d152e90f7646bd1a197a531910583d",
+      "9a846a3c27db4cadb2e78ccd2b122ecfca40adc29f34544d296ccc53d80996e3"
+    ],
+    "fixed_capacity_duals_sha256": "4db33c75688d07aac3f0350d2453bb705a4e7cbdc3685d5b6a267523f536a3d2"
+  }
+]

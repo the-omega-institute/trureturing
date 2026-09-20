@@ -142,9 +142,83 @@ class NativeInvalidationTests:
         self.assertNotIn('D5.Added', [row['module'] for row in self.report()[0]])
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
-        # The fixed injected driver also governs modules with no registry import.
+        # The fixed judge is version-gated outside a module's compiler closure.
         self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 2\n')
-        changed(['D5.B', 'D5.A', 'D5.Alone', 'Fixture'])
+        changed([])
+
+    def test_native_judge_semantic_version_gate(self):
+        self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n')
+        driver = 'import LeanInformationAudit.Support\ndef fixtureDriver : Nat := judgeSupport\n'
+        self.write('LeanInformationAudit/Registry.lean', driver)
+        self.write('D5/A.lean', 'import LeanInformationAudit.Registry\n' +
+                   (self.root / 'D5/A.lean').read_text())
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['dependency_sources']['include'].append(
+            dict(pattern='LeanInformationAudit/Support.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.build()
+        before = self.stamps()
+        original = self.report()[1:]
+        origins = self.origins()
+
+        def changed(expected):
+            nonlocal before
+            built = self.build()
+            after = self.stamps()
+            actual = {name for name in after if after[name] != before[name]}
+            self.assertEqual(actual, set(expected), '[FAIL] judge_semantic_version_reuse')
+            records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+            self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), len(expected))
+            before = after
+            self.publish()  # Includes current-source and cached-origin validation.
+            return built
+
+        # Change a transitive judge source, preserving its report semantics.
+        self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n-- compatible judge\n')
+        changed({'D5.A', 'Fixture'})
+        for name in before:
+            self.assertEqual('LeanInformationAudit/Support.lean' in origins[name]['input_sources'],
+                             name in {'D5.A', 'Fixture'})
+        self.assertEqual(self.report()[1:], original)
+        for name in ['D5.B', 'D5.Alone']:
+            self.assertEqual(self.origins()[name], origins[name])
+        changed(set())
+        self.write('LeanInformationAudit/Registry.lean', driver + '-- compatible driver\n')
+        changed({'D5.A', 'Fixture'})
+        self.assertEqual(self.report()[1:], original)
+
+        policy['report_semantic_version'] += 1
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        changed(set(before))
+        self.assertEqual(self.report()[1:], original)
+        self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text() + '-- content bytes\n')
+        changed({'D5.B'})
+        self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
+        changed({'D5.B', 'D5.A', 'Fixture'})
+
+        # Compatible judge edits cannot license damaged, incomplete or foreign rows.
+        state = native.state(self.root)
+        artifact = state / 'modules/D5.Alone.zip'
+        valid = artifact.read_bytes()
+        foreign = (state / 'modules/D5.B.zip').read_bytes()
+        with zipfile.ZipFile(io.BytesIO(valid)) as archive:
+            incomplete = io.BytesIO()
+            with zipfile.ZipFile(incomplete, 'w') as writer:
+                writer.writestr(publication.RAW, archive.read(publication.RAW))
+        for data in [b'damaged', incomplete.getvalue(), foreign]:
+            with self.subTest(damage=data[:16]):
+                artifact.unlink()
+                artifact.write_bytes(data)
+                with self.assertRaises(native.ROW_ERRORS):
+                    native.validate('module', self.root, 'D5.Alone',
+                                    state / 'inputs/D5.Alone.json', artifact)
+                changed({'D5.Alone'})
+
+        # The judge must still build even when this module does not import it.
+        self.write('LeanInformationAudit/Registry.lean', driver + 'unknown_command\n')
+        self.run_lake('build', 'D5.Alone:report', success=False)
+        self.assertEqual(before, self.stamps())
+
     def test_reported_module_proof_axioms_invalidate_public_trace(self):
         # Both registered modules use module headers. The public theorem body
         # in B is not exposed to A's ordinary public import, but Inspector reads

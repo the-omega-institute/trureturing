@@ -1,0 +1,32 @@
+{
+  "length": 2313,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/035-proof_data/007-encoded_covering_duals/003-rational_table/000000-000798.json",
+        "sha256": "42192f971a1742894c982fa0463a827ab3171fb803bf2545cc714241585c8e21",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/035-proof_data/007-encoded_covering_duals/003-rational_table/000798-001596.json",
+        "sha256": "eb17a33d254157cdeb073fc677762140b591d24b02b2318b7296bfaff8046520",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2313,
+      "part": {
+        "path": "content/035-proof_data/007-encoded_covering_duals/003-rational_table/001596-002313.json",
+        "sha256": "5477f93c1e3c61b18fd9567e871dca983dd769556614a7776d104edf2350702c",
+        "kind": "value-zlib-base85"
+      }
+    }
+  ]
+}

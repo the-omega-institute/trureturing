@@ -167,14 +167,17 @@ def load_filemap(raw, read_include=None, document_bytes=None, historical=False):
         if rid in resources or resource["stage"] not in STAGES:
             raise ValueError(f"duplicate/conflicting resource or invalid stage: {rid}")
         path(string(resource["owner"], rid + ":owner"))
-        names(resource["tools"], rid + ":tools", TOOLS)
-        names(resource["cache_layers"], rid + ":cache_layers", CACHES)
+        # Historical declarations identify removed endpoints; only the candidate
+        # resource graph supplies executable tools, caches and activation policy.
+        names(resource["tools"], rid + ":tools", None if historical else TOOLS)
+        names(resource["cache_layers"], rid + ":cache_layers", None if historical else CACHES)
         activation = resource["cache_activation"]
         exact(activation, resource["cache_layers"], rid + ":cache_activation")
         for layer, phase in activation.items():
-            if not isinstance(phase, str) or phase not in CACHE_PHASES:
+            name(phase, rid + ":cache activation")
+            if not historical and phase not in CACHE_PHASES:
                 raise ValueError(f"{rid}: unknown cache activation: {layer}")
-            if any(row["cache_activation"].get(layer, phase) != phase for row in resources.values()):
+            if not historical and any(row["cache_activation"].get(layer, phase) != phase for row in resources.values()):
                 raise ValueError(f"conflicting cache activation: {layer}")
         materials = resource["materials"]
         if not isinstance(materials, list):
@@ -719,6 +722,7 @@ def make_plan(root, commit, changes_file):
             endpoint_require = match(p)["require"]
         required.update(endpoint_require)
         scope.append({"path": p, "pattern": entry["pattern"], "require": endpoint_require})
+    names(sorted(required), "selected endpoint requirements", resources)
     roots = [r for r in required if data["mode"] == "pr" or resources[r]["stage"] != "delta"]
     selected = closure(resources, roots)
     active = [resources[r] for r in selected]

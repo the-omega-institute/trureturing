@@ -1,0 +1,59 @@
+{
+  "length": 6,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/014-cover_node_batches/000000/single.json",
+        "sha256": "cb9b289dd9f98d2720495e164b9a70cc5f20fd18cd04a55049174e8c1889d2d1",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/014-cover_node_batches/000001/single.json",
+        "sha256": "b7ae34100ef2fbd6d7bd6a32b9edbed202eac7e13f50b7b3790479a1f8ae79ca",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/014-cover_node_batches/000002/single.json",
+        "sha256": "165e383fd06a6ea990e2e857cbe9792bc51e4ebb1cf7e5667c2e87ccd17c1776",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/014-cover_node_batches/000003/single.json",
+        "sha256": "12b6309f48c448855c84bd9e30bf1e1249d4a40ed75c687b6ac2eaf43ee054fc",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/014-cover_node_batches/000004/single.json",
+        "sha256": "ae3fcce5f43e04589441ac83a98109054ba49a068ab613cd332a22f207e17884",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/014-cover_node_batches/000005-000006.json",
+        "sha256": "751b51aa9e555a8535b4e120f5b254cbb4204bfd3fe5971040d7ef73db2ddd7d",
+        "kind": "value"
+      }
+    }
+  ]
+}

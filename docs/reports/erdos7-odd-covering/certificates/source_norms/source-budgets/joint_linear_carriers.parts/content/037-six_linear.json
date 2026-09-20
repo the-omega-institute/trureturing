@@ -1,0 +1,85 @@
+{
+  "directions": {
+    "path": "content/037-six_linear/000-directions.json",
+    "sha256": "416b6a136f0820bf619c4908eb4edf9ad7b00ef64d14c91811768c414c23c85e",
+    "kind": "value"
+  },
+  "carriers": {
+    "path": "content/037-six_linear/001-carriers.json",
+    "sha256": "caa72d19ae7d793200011cf566477c88f8666d80d6d052e989ee87d30cf98a3e",
+    "kind": "value"
+  },
+  "source_vertices": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "refined_predecessor_vertices": {
+    "kind": "inline",
+    "value": [
+      398,
+      410,
+      422,
+      616,
+      628,
+      640
+    ]
+  },
+  "old_layout_checks": {
+    "kind": "inline",
+    "value": 77760
+  },
+  "new_layout_checks": {
+    "kind": "inline",
+    "value": 777600
+  },
+  "conditional_layout_checks": {
+    "kind": "inline",
+    "value": 13996800
+  },
+  "conditional_margin_values": {
+    "kind": "inline",
+    "value": 139968
+  },
+  "selected_old_and_new_margin_checks": {
+    "kind": "inline",
+    "value": 72
+  },
+  "positive_independent_gain_vertices": {
+    "kind": "inline",
+    "value": 1143
+  },
+  "minimum_independent_gain": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "maximum_independent_gain": {
+    "kind": "inline",
+    "value": "31692216024628/171232569983475"
+  },
+  "positive_joint_minimum_gain_vertices": {
+    "kind": "inline",
+    "value": 168
+  },
+  "maximum_joint_minimum_gain": {
+    "kind": "inline",
+    "value": "18596603625134353588440439147913/462000432650747202481625606250000"
+  },
+  "control_directions": {
+    "path": "content/037-six_linear/014-control_directions.json",
+    "sha256": "fed4defca796726efe787e8d45acb7de2b316fedd9b8dec4ecf4908c21b633b4",
+    "kind": "value"
+  },
+  "conditional_margin_sha256": {
+    "kind": "inline",
+    "value": "774516bff04f72c26ec791f56d60190cc2db5420b9dbcbb86f8a81ecefe1a5e6"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Six independently labelled source tests share the survival-carrier mixture. At six previously refined vertices replace their new independent margins; elsewhere replace their old one-event margins. Other35 costs keep existing lower bounds. All source and cofactor tails remain complete."
+  },
+  "row_blocks": {
+    "path": "content/037-six_linear/017-row_blocks.json",
+    "sha256": "354d8e34003af6f147087f0696b03722f8d3b4dc9326c9dc8b05012fa7265e30",
+    "kind": "array"
+  }
+}

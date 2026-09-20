@@ -1,0 +1,57 @@
+### 129.3 向量乘法的观察缺陷恰为隐藏内积
+
+对任意 $a,b\in V$，式（129.5）、（129.8）给
+
+$$
+\mathcal E_P(\iota_Q(a)\iota_Q(b))
+=g(a,b)1_{\rm Cl}+j_Q(Pa\wedge Pb).
+\tag{129.12}
+$$
+
+而由式（129.7）、（129.10），
+
+$$
+\mathcal E_P(\iota_Q(a))\mathcal E_P(\iota_Q(b))
+=g(Pa,Pb)1_{\rm Cl}+j_Q(Pa\wedge Pb).
+\tag{129.13}
+$$
+
+二阶部分相消，得到
+
+$$
+\mathcal E_P(\iota_Q(a)\iota_Q(b))
+-\mathcal E_P(\iota_Q(a))\mathcal E_P(\iota_Q(b))
+=[g(a,b)-g(Pa,Pb)]1_{\rm Cl}.
+\tag{129.14}
+$$
+
+式（129.14）对任意线性 $P$ 及式（129.9）的相应定义都成立。对正交投影，
+
+$$
+a=Pa+Q_\perp a,\qquad b=Pb+Q_\perp b,
+\qquad g(Pa,Q_\perp b)=g(Q_\perp a,Pb)=0,
+$$
+
+所以
+
+$$
+\boxed{
+\mathcal E_P(\iota_Q(a)\iota_Q(b))
+-\mathcal E_P(\iota_Q(a))\mathcal E_P(\iota_Q(b))
+=\langle Q_\perp a,Q_\perp b\rangle1_{\rm Cl}.
+}
+\tag{129.15}
+$$
+
+特别地，
+
+$$
+\boxed{\mathcal E_P(\iota_Q(a)^2)-\mathcal E_P(\iota_Q(a))^2
+=\|Q_\perp a\|^2 1_{\rm Cl}}.
+\tag{129.16}
+$$
+
+因此一个隐藏向量即使自身读出为零，其平方关系仍可留下非零标量。混合缺陷是双线性配对，可以为负；平方缺陷在所选正内积约定下非负。
+
+正交性不能只用 $P^2=P$ 代替。例如在 $\mathbb R^2$ 上取斜投影 $P(x,y)=(x+y,0)$ 和 $a=e_2$。则式（129.14）的标量为 $\|e_2\|^2-\|e_1\|^2=0$，而 $\|a-Pa\|^2=2$，故式（129.16）在该斜投影下不成立。
+
