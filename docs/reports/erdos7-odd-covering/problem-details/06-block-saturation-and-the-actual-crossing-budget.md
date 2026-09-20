@@ -668,6 +668,14 @@ particular, the statement retains three-prime labels on a triangular
 cycle. This is an ordinary mathematical proof, not a Lean-certified
 noncoverage theorem or a literature-priority claim.
 
+The existence conclusion already follows from
+[Schroeder, Theorem 1.1](../../../../Library/Arith/schroeder2026noncoverage.md):
+every modulus here has at most three distinct prime factors, since its
+support is a clique in a pseudoforest. The cited source has the repository
+audit described in that reference. The independent argument below supplies
+the specified retained-domain reserve, coordinate bounds and exact extension
+weights; it does not add a new noncoverage case beyond that theorem.
+
 Different components use disjoint CRT coordinates, so their avoiding
 assignments combine. Tree components were treated above. For a connected
 component with one cycle, retain the cycle and, if 3 occurs off it, the
@@ -812,11 +820,21 @@ number of cycles, vertex degrees, prime powers in the moduli, or residues.
 Triangles may carry all the original three-prime moduli; they are not replaced
 by pairwise projections. Different connected components are allowed.
 
-The preceding pseudoforest result allows one cycle per component. The
-following argument permits arbitrarily many cycles joined at articulation
-primes, by bounding entire blocked parent fibres and assigning summable
-fees to distinct child primes. The forest subcase was already established;
-no new forest theorem or literature priority is claimed.
+This existence conclusion is also a specialization of
+[Schroeder, Theorem 1.1](../../../../Library/Arith/schroeder2026noncoverage.md):
+a cactus has no clique larger than three, so each original modulus has at
+most three distinct prime factors. The theorem permits arbitrary heights
+and arbitrarily many primes in the family. We use this as the existing
+noncoverage boundary, without adding a Lean wrapper or claiming a new
+existence result.
+
+The following argument extends the preceding quantitative pseudoforest
+analysis to arbitrarily many cycles joined at articulation primes. It
+bounds entire blocked parent fibres, assigns summable fees to distinct
+child primes, and certifies the actual recursively feasible coordinate
+domains in (CA22)--(CA25). Those quantitative domains and their extension
+counts are the additional objects established here. No literature priority
+is claimed for the argument.
 
 ##### Exact block recursion on original prime-power coordinates
 
@@ -1217,7 +1235,7 @@ the theorem.
 
 ##### What the theorem does and does not assert
 
-The new step is a uniform whole-fibre blocker estimate with a summable
+The quantitative step is a uniform whole-fibre blocker estimate with a summable
 child-prime fee. It permits arbitrarily many triangular or longer cycle
 blocks sharing articulation primes, with unbounded heights and arbitrary
 original residues. It uses one explicit product law per block, built from
@@ -1253,10 +1271,13 @@ the parent from a cycle leaves a path, whose internal cost obeys (CA7); a
 triangle's extra three-prime labels are explicitly covered by (CA6).
 A general biconnected block has no fee established by this argument. Already
 a theta graph, consisting of three internally disjoint paths between the
-same two endpoints, falls outside the theorem. A possible next approach is
-to retain a joint two-endpoint obstruction, or to prove a different summable
-fee for the whole block. The current one-coordinate cycle fees do not
-establish such a bound. Larger prime cliques also remain outside the theorem.
+same two endpoints, falls outside this fee argument. Its noncoverage already
+follows from Schroeder's theorem because its cliques have size at most
+three. Further work on such a graph therefore requires a specified stronger
+quantitative target, such as a joint two-endpoint extension bound. The
+current cycle fees establish no such bound for general blocks. Moduli with
+four or more distinct prime factors, and their larger cliques, remain
+outside both this cactus argument and the cited three-factor theorem.
 
 <a id="a-bounded-number-of-cycle-breaking-vertices-in-each-component"></a>
 #### A bounded number of cycle-breaking vertices in each component
