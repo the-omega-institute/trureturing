@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.RootContract
-import LeanInformationAudit.FixedSnapshot
-import LeanInformationAudit.FrozenBaseline
+import Reg.Support.FixedSnapshot
+import Reg.Support.FrozenBaseline
 
 namespace Reg.Support.InformationRootContract
 open Lean LeanInformationAudit
@@ -10,9 +10,9 @@ def rootId : Name := `Reg.Catalogs.InformationRoot
 
 def contract : RootCatalogContract := {
   rootId
-  expected := frozenInformationRootBaseline
-  source := fixedInformationSourceSnapshot.occurrences
-  baseline := frozenInformationRootBaseline
+  expected := Reg.Support.frozenInformationRootBaseline
+  source := Reg.Support.fixedInformationSourceSnapshot.occurrences
+  baseline := Reg.Support.frozenInformationRootBaseline
   companionPrefix := some rootId }
 
 -- Accepted seal reference with only the four generated-name fields relocated.
