@@ -1,4 +1,4 @@
-[Index](../../../../Problems/erdos-7-odd-covering-systems.md) · [Previous](06-block-saturation-and-the-actual-crossing-budget.md) · [Next](08-arbitrary-head-transfer-by-the-joint-load-invariant.md)
+[Index](../../../../Problems/erdos-7-odd-covering-systems.md) · [Previous](17-odd-cactus-noncoverage-and-cycle-breaking-vertices.md) · [Next](08-arbitrary-head-transfer-by-the-joint-load-invariant.md)
 
 <a id="ordered-local-kernels-unbounded-feedback-sets-and-treewidth"></a>
 #### Ordered local kernels: unbounded feedback sets and treewidth
