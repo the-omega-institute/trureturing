@@ -66,11 +66,23 @@ reward among complete split phases from the same arbitrary raw start. Ones
 take priority; otherwise the highest duplicate is recomputed after each split.
 This comparison excludes merges and does not yet establish full-game optimality.
 
+`OrderedGame.greedy_attainment` now constructs a complete raw greedy path to
+binary nonadjacent digits whose full reward is the concrete recursive `G`.
+`greedyDecision` selects zero first, otherwise the highest duplicate, otherwise
+the least consecutive pair; every decision retains a labelled legal carry and
+its actual priority. The recursion uses the strict carry measure, not a maximum.
+`shared_input_merge_repair` proves all five shared-input detours, with arbitrary
+spectators, exact common endpoint, and exact natural-number reward gain.
+`ones_terminal_promotion` promotes combining ones against every terminal raw
+path, including arbitrary interleaved merges, preserving endpoint and weakly
+increasing full reward. Its replacement tail is only required to be legal.
+
 The remaining proof candidate uses strict-successor induction on the existing
-carry measure, with greedy continuation cost rather than a global maximum.
+carry measure to compare arbitrary terminal paths with that concrete `G`.
 Preferred promotion and greedy comparison for complete split-only phases are
-now proved. The remaining comparison must handle interleaved merges and the
-five shared-input merge detours.
+now proved. Beyond the ones-first branch and the shared-input repairs, the
+remaining comparison must handle nonzero preferred splits with interleaved
+merges and the least-merge branches in binary states.
 For singleton inputs, the high block C_a;S_(a+2);...;S_r advances one duplicate
 through a binary tail, fills the preceding holes and has reward one per move.
 A lower preferred split can be extracted across this block. Prefix recognition

@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Carry;
 internal sealed class OrderedGameDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Ordered paths erase with identical carry reward and satisfy the inversion potential bound.",
+        "Concrete raw greedy continuation, shared-input repairs, and ordered reward erasure.",
         H("Ordered Zeckendorf Paths and the Inversion Potential"),
         Blocks(
             Paragraph(Text("A state is one list of natural-number raw W indices. Decode maps "
@@ -16,6 +16,58 @@ internal sealed class OrderedGameDocument : IScribeDocumentDefinition
                 + "Move records the position of its adjacent window and one of five actions: "
                 + "an inversion switch, combining ones, splitting twos, a general split, or "
                 + "a consecutive merge. No predecessor map is used.")),
+            Describe.Lean(DescribeId.Create("ordered-game-greedy-attainment"),
+                DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.greedy_attainment"),
+                H("Concrete greedy continuation attains its reward"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("c"), Comma, Sp, Exists, Sp, F.Id("d"), Comma, Sp,
+                    Call("RawGreedyPath", F.Id("c"), F.Id("d"), Call("G", F.Id("c"))),
+                    Sp, Land, Sp, Call("CanonicalRaw", F.Id("d"))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every finite raw multiplicity state, the concrete "
+                    + "continuation G is attained by a finite RawGreedyPath to binary nonadjacent "
+                    + "digits. Each decision combines ones first, otherwise splits the highest "
+                    + "duplicate, otherwise merges the least occupied consecutive pair. Priority "
+                    + "is recomputed after every move. G recurses on the existing strict carry "
+                    + "measure and is not defined as a maximum over paths. Labels remain data. "
+                    + "This establishes raw attainment, not the comparison with competitors or "
+                    + "ordered LGS completion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-game-shared-input-merge-repair"),
+                DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.shared_input_merge_repair"),
+                H("All five shared-input merge repairs"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("With unrestricted spectators, a legal merge sharing an "
+                    + "input with an enabled split has a split-first legal path to the exact merge "
+                    + "endpoint. If the lower input is duplicated it is split first; otherwise the "
+                    + "upper input is split. In positive paper indices the lower-input detours "
+                    + "are S1;S2, S2;S3;S1, and Sa;S(a+1);C(a-2), with gains c1-1, "
+                    + "2c2+c1-2, and 2c(a-1)+2ca-2. The upper-input detours are S2;S1 "
+                    + "at a=1, gaining zero, and S(a+1);C(a-1) at a>=2, gaining one. "
+                    + "The theorem gives exact reward equality with a natural-number gain. "
+                    + "Replacement tails are legal; no greedy-tail assertion is made."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-game-ones-terminal-promotion"),
+                DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.ones_terminal_promotion"),
+                H("Ones first against arbitrary interleaved terminal paths"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Call("RawPath", F.Id("c"), F.Id("e"), F.Id("w")), Sp, Land, Sp,
+                    Call("CanonicalRaw", F.Id("e")), Sp, Land, Sp,
+                    Call("SplitStep", D(0), F.Id("c"), F.Id("cPrime")), Sp, Rightarrow, Sp,
+                    Exists, Sp, F.Id("v"), Comma, Sp,
+                    Call("RawPath", F.Id("cPrime"), F.Id("e"), F.Id("v")), Sp, Land, Sp,
+                    new Formula.Relation(F.Id("w"), FormulaRelationOperator.LessThanOrEqual,
+                        Add(Call("splitReward", F.Id("c"), D(0)), F.Id("v")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If combining ones is enabled, every raw path to binary "
+                    + "nonadjacent digits can be replaced by one beginning with that split, "
+                    + "retaining its endpoint and at least its full reward. The competing path "
+                    + "may interleave merges and splits arbitrarily. The proof promotes ones "
+                    + "through split steps, repairs a merge consuming a one, and commutes past "
+                    + "higher merges. This closes the ones-first promotion branch; highest "
+                    + "nonzero splits and least binary merges still require their own proofs."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("ordered-game-path-raw-erasure"),
                 DeclarationHandle.Create("D5/S1/Digit/Carry/OrderedGame.path_raw_erasure"),
                 H("Erasure preserves the complete reward"),

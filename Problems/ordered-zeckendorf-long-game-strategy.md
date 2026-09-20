@@ -74,6 +74,17 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
 
 ## Gap
 
+- `OrderedGame.greedy_attainment` constructs the concrete full raw greedy
+  continuation, recursively using the strict carry measure, and attains its
+  reward `G` at a binary nonadjacent endpoint. This is raw completion, not yet
+  ordered completion or domination of all competitors.
+- `shared_input_merge_repair` proves all five shared-input detours with
+  unrestricted spectators, exact endpoints, and exact full reward gains.
+  `ones_terminal_promotion` proves ones-first promotion against arbitrary
+  terminal raw paths, including interleaved merges. Highest nonzero duplicate
+  promotion, binary least-merge domination, and the full bound `weight ≤ G`
+  remain open. The singleton-input binary-cascade boundary conditions below
+  still require proof.
 - `OrderedGame` defines ordered legality and the switch move, and
   `path_raw_erasure` proves erasure into a labelled raw path with identical
   accumulated reward. Exact sorted attainment and length optimality remain
@@ -143,10 +154,13 @@ remain unproved.
    least-action bound, unique complete split counts and endpoint, and existence
    of complete split phases. Weighted preferred-split promotion and maximal
    reward among complete split-only phases are also proved.
-4. Define greedy continuation cost by the existing strict carry measure.
-   Prove split-first bounds before the five duplicated-input merge repairs.
-   Then extract the preferred move using the singleton-input and binary-tail
-   cascades. Apply the induction hypothesis only after a strict first successor.
+4. `greedyDecision`, `G`, and `greedy_attainment` now give a concrete full raw
+   greedy continuation by the strict carry measure. `ones_terminal_promotion`
+   handles arbitrary terminal competitors for the ones-first branch, and
+   `shared_input_merge_repair` proves the five duplicated-input merge repairs.
+   Complete highest-nonzero-split promotion and extract the preferred move
+   using the singleton-input and binary-tail cascades. Apply the induction
+   hypothesis only after a strict first successor.
 5. Prove legal cascade replay separately from recognition of a greedy prefix:
    a split at j=a-1 changes the lower boundary, as does a merge at b=a+3.
    The replay needs unchanged high inputs and reward coordinates, not the old
