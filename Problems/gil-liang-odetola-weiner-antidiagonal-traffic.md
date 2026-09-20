@@ -56,7 +56,7 @@ Their complete domain accounting is in the mathematical Scribe. They are
 literature inputs, not Lean-verified grid/path theorems here.
 
 No prior exact resolution was identified in the bounded September 20, 2026
-search recorded in `Library/Arith/gil2026grid.md`. This does not certify
+search recorded in `Library/Combinatorics/gil2026grid.md`. This does not certify
 worldwide novelty or an exhaustive third-party Lean search.
 
 ## Route

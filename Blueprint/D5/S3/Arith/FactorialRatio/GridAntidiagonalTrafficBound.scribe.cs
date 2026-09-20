@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FactorialRatio;
 internal sealed class GridAntidiagonalTrafficBoundDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/FactorialRatio/GridAntidiagonalTrafficBound.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Arith/gil2026grid");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/gil2026grid");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A uniform strict binomial-ratio bound for antidiagonal grid obstructions at every n at least 496.",
