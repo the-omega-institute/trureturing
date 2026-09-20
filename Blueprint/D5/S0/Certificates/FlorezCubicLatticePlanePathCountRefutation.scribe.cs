@@ -95,13 +95,23 @@ internal sealed class FlorezCubicLatticePlanePathCountRefutationDocument
                 "At k = 3, the printed xz-plane predicate selects 14 of the 216 signed "
                     + "three-step paths, while the printed formula equals 36. Hence the universal "
                     + "claim is false.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+                DescribeRole.Theorem,
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "florez-junes-ramirez-cubic-lattice-xz-plane-path-count-refutation"),
+                    ResolutionKind.Refuted)),
             Node("florez-conjecture-two-refuted", "Conjecture 2 is false", "result2",
                 ResultFormula("claim2"),
                 "At k = 3, the printed yz-plane predicate selects 14 of the 216 signed "
                     + "three-step paths, while the printed formula equals 36. Hence the universal "
                     + "claim is false.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem,
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "florez-junes-ramirez-cubic-lattice-yz-plane-path-count-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -110,14 +120,16 @@ internal sealed class FlorezCubicLatticePlanePathCountRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula StepFormula() =>
         Disp(Equal(F.Id("Step"),

@@ -184,6 +184,10 @@ $$\neg claim1$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/FlorezCubicLatticePlanePathCountRefutation.result1` (`✓ std3`). ∎
 
+*Resolves.* `Problems/florez-junes-ramirez-cubic-lattice-xz-plane-path-count-refutation` (refuted) by `D5/S0/Certificates/FlorezCubicLatticePlanePathCountRefutation.result1`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"florez-junes-ramirez-cubic-lattice-xz-plane-path-count-refutation","declaration_gid":"D5/S0/Certificates/FlorezCubicLatticePlanePathCountRefutation.result1","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Rigoberto Flórez, Leandro Junes, José L. Ramírez (2018). *Further Results on Paths in an n-Dimensional Cubic Lattice*. URL: <https://cs.uwaterloo.ca/journals/JIS/VOL21/Florez/florez4.pdf>.
@@ -197,6 +201,10 @@ At k = 3, the printed xz-plane predicate selects 14 of the 216 signed three-step
 $$\neg claim2$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/FlorezCubicLatticePlanePathCountRefutation.result2` (`✓ std3`). ∎
+
+*Resolves.* `Problems/florez-junes-ramirez-cubic-lattice-yz-plane-path-count-refutation` (refuted) by `D5/S0/Certificates/FlorezCubicLatticePlanePathCountRefutation.result2`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"florez-junes-ramirez-cubic-lattice-yz-plane-path-count-refutation","declaration_gid":"D5/S0/Certificates/FlorezCubicLatticePlanePathCountRefutation.result2","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 

@@ -14,7 +14,7 @@ triage: anchor
 
 # Cubic-lattice paths in coordinate planes
 
-Section 1, printed pages 2--3, defines the path families:
+Section 2 (Background), printed page 3, defines the path families:
 
 > We use C_n^±(k) to mean the set of all paths of length k in the
 > n-dimensional cubic lattice. We divide C_n^±(k) into subfamilies depending
@@ -27,8 +27,8 @@ Section 1, printed pages 2--3, defines the path families:
 > P = (±e_{j_1})(±e_{j_2}) · · · (±e_{j_k}) that satisfy that the nth
 > coordinate of V_k is zero. We use C_n^≥(k) to denote all paths in C_n^±(k)
 > with P = (±e_{j_1})(±e_{j_2}) · · · (±e_{j_k}) and that nth coordinate of
-> V_r is non-negative for all 0 < r ≤ k. We now let C_n^+(k) be C_n(k) ∩
-> C_n^≥(k). [...] For example, Figure 1 depicts the 14 paths in C_2^+(3).
+> V_r is non-negative for all 0 < r ≤ k. We now let C_n^+(k) be C_n^≥(k) ∩
+> C_n(k). [...] For example, Figure 1 depicts the 14 paths in C_2^+(3).
 > Figure 2 depicts the 17 paths in C_3^+(2).
 
 The paper defines paths as starting at `p_0 = (0, ..., 0)` with each step in
@@ -38,7 +38,7 @@ one of the positive or negative coordinate directions. In the formal reading,
 coordinate. The initial vertex needs no separate clause because it is the
 origin.
 
-Section 6, printed page 23, gives the anchor and the two conjectures:
+Section 6, printed pages 23--24, gives the anchor, the two conjectures and Table 4:
 
 > **Proposition 20.** For k ≥ 1, the number of paths in C_3^+(k) that are
 > completely contained in the xy-plane is 4^k.
@@ -65,5 +65,5 @@ formula beyond `k ≤ 4` and do not determine the authors' intended reading.
 ## Verified locator
 
 - URL: https://cs.uwaterloo.ca/journals/JIS/VOL21/Florez/florez4.pdf
-- Scope: Section 1 on printed pages 2--3 and Proposition 20, Conjectures 1--2,
-  and Table 4 on printed page 23.
+- Scope: Section 2 on printed page 3, Proposition 20 and Conjectures 1--2 on
+  printed page 23, and Table 4 on printed page 24.
