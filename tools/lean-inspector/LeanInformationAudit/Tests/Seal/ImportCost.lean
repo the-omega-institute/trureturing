@@ -41,8 +41,8 @@ run_cmd do
   let inRepo := (← getEnv).header.moduleNames.filter fun name =>
     name != `LeanInformationAudit.Tests.Seal.M3 &&
       LeanInformationAudit.Repository.isModule name
-  -- Count the split closure's five Interface owners as well as its 136 D5/Impl modules.
+  -- Count the split closure's five Interface owners as well as its 134 D5/Impl modules.
   let interface := inRepo.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
-  if inRepo.size > 141 || interface.size != 5 then
+  if inRepo.size > 139 || interface.size != 5 then
     throwError "ImportCost: M3 closure changed: modules={inRepo.size} interface={interface.size}"
-  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=141 interface={interface.size}"
+  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=139 interface={interface.size}"
