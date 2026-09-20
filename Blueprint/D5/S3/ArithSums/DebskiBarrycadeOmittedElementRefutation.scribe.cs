@@ -66,7 +66,8 @@ internal sealed class DebskiBarrycadeOmittedElementRefutationDocument
             Call("mu", i));
         var set = Seq(OpenBrace, s, Sp, Bar, Sp,
             Exists("k", Nat(), Equal(s, prefix)), CloseBrace);
-        return Disp(Universal("mu", Equal(Call("partialSums", mu), set)));
+        return Disp(UniversalTyped("mu", new Formula.TypeArrow(Nat(), Nat()),
+            Equal(Call("partialSums", mu), set)));
     }
 
     private static Formula RowFormula()

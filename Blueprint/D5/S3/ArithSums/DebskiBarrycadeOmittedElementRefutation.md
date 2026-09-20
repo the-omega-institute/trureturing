@@ -6,7 +6,7 @@ The printed i >= 3 relation in Conjecture 2 (2) is false at i = 3.
 
 **Definition 1.1 (The partial-sum set).**
 
-$$\forall mu \in \mathrm{Nat},\; \operatorname{partialSums}\left(mu\right) = \{s | \exists k \in \mathrm{Nat},\; s = \sum_{i \in \operatorname{range}\left(k + 1\right)} \operatorname{mu}\left(i\right)\}$$
+$$\forall mu \in \mathrm{Nat} \to \mathrm{Nat},\; \operatorname{partialSums}\left(mu\right) = \{s | \exists k \in \mathrm{Nat},\; s = \sum_{i \in \operatorname{range}\left(k + 1\right)} \operatorname{mu}\left(i\right)\}$$
 
 *Formalization.* `D5/S3/ArithSums/DebskiBarrycadeOmittedElementRefutation.partialSums` (`✓ std3`).
 
