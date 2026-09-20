@@ -1,0 +1,27 @@
+**定理 19.10（能量读数距离与容量比较）。** 等价地，`Γ_m(f)(x)=(2m_x)⁻¹Σ_yw_xy(f(y)−f(x))²≤1`；因子 2 在这里固定，不与论文的逐边约定混用。所有点对使用同一个 `𝓕_m`，因此直接承接本卷定理2.2的固定读数族上确界伪度量结构。可行函数在每条边的差不超过 `√[2min(m_x,m_y)/w_xy]`，连通性给有限的路径上界。取 $\delta=\min_x\sqrt{2m_x/d_x}>0$，函数 $\delta\mathbf1_{\{i\}}$ 在每个顶点的平方差和不超过 $\delta^2d_x\le2m_x$，且分离 $i$ 与任意其他顶点。因此在当前有限连通模型上它确为距离。
+
+它没有逐边 `1` 截断，齐次性准确给出
+
+$$
+\mathcal F_{\alpha m}=\sqrt\alpha\,\mathcal F_m,
+\qquad
+\boxed{\ D_{\alpha m}=\sqrt\alpha\,D_m.\ }
+\tag{19.120}
+$$
+
+对 （19.113），同一个可行集包含关系
+
+$$
+\sqrt a\,\mathcal F_m\subseteq\mathcal F_n
+\subseteq\sqrt b\,\mathcal F_m
+$$
+
+给出
+
+$$
+\boxed{\ \sqrt a\,D_m(i,j)\le D_n(i,j)\le\sqrt b\,D_m(i,j).\ }
+\tag{19.121}
+$$
+
+这些是对同一组 `w`、同一顶点及整体可行读数族的比较；无需把不同点对的最优读数认作同一函数。
+
