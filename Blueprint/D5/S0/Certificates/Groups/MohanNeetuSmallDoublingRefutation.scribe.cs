@@ -84,7 +84,8 @@ internal sealed class MohanNeetuSmallDoublingRefutationDocument
                     + "{(-1,2),(0,0),(0,1),(0,2),(1,1),(1,2)}, so |S|=3 and "
                     + "|S²|=6=3|S|-3. The identity belongs to S, while "
                     + "(0,1)(1,1)=(-1,2) and (1,1)(0,1)=(1,2). The coordinate proof "
-                    + "that the ambient group is torsion-free is shared by all three results."),
+                    + "that the ambient group is torsion-free is shared by all three results.",
+                "mohan-neetu-small-doubling-conjecture-63-refutation"),
             RepositoryTheorem(
                 "mohan-neetu-conjecture-61-counterexample",
                 "Two disjoint abelian pieces",
@@ -92,7 +93,8 @@ internal sealed class MohanNeetuSmallDoublingRefutationDocument
                 ResultFormula("claim61"),
                 "Use the same S, with A={(0,0),(0,1)} and B={(1,1)}. The pieces are "
                     + "disjoint and generate abelian subgroups, while S has the same six "
-                    + "products and contains the same noncommuting pair."),
+                    + "products and contains the same noncommuting pair.",
+                "mohan-neetu-small-doubling-conjecture-61-refutation"),
             RepositoryTheorem(
                 "mohan-neetu-conjecture-62-counterexample",
                 "Three singleton abelian pieces",
@@ -101,7 +103,8 @@ internal sealed class MohanNeetuSmallDoublingRefutationDocument
                 "Take S={(1,1),(2,1),(3,1)} and let A, B and C be its singleton "
                     + "pieces. The product set is {(-2,2),(-1,2),(0,2),(1,2),(2,2)}, "
                     + "so |S²|=5=3|S|-4. Yet (1,1)(2,1)=(-1,2) and "
-                    + "(2,1)(1,1)=(1,2)."))));
+                    + "(2,1)(1,1)=(1,2).",
+                "mohan-neetu-small-doubling-conjecture-62-refutation"))));
 
     private static DocumentBlock LiteratureDefinition(
         string id, string title, string declaration, Formula formula, string prose) =>
@@ -111,11 +114,14 @@ internal sealed class MohanNeetuSmallDoublingRefutationDocument
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static DocumentBlock RepositoryTheorem(
-        string id, string title, string declaration, Formula formula, string prose) =>
+        string id, string title, string declaration, Formula formula, string prose,
+        string problemSlug) =>
         Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create(problemSlug),
+                ResolutionKind.Refuted));
 
     private static Formula KleinBottleGroupFormula() => Disp(Equal(
         F.Id("KleinBottleGroup"),

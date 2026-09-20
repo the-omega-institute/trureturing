@@ -94,6 +94,10 @@ $$\neg claim63$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result63` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mohan-neetu-small-doubling-conjecture-63-refutation` (refuted) by `D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result63`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mohan-neetu-small-doubling-conjecture-63-refutation","declaration_gid":"D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result63","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
@@ -106,6 +110,10 @@ $$\neg claim61$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result61` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mohan-neetu-small-doubling-conjecture-61-refutation` (refuted) by `D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result61`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mohan-neetu-small-doubling-conjecture-61-refutation","declaration_gid":"D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result61","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
@@ -117,6 +125,10 @@ Use the same S, with A={(0,0),(0,1)} and B={(1,1)}. The pieces are disjoint and 
 $$\neg claim62$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result62` (`✓ std3`). ∎
+
+*Resolves.* `Problems/mohan-neetu-small-doubling-conjecture-62-refutation` (refuted) by `D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result62`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mohan-neetu-small-doubling-conjecture-62-refutation","declaration_gid":"D5/S0/Certificates/Groups/MohanNeetuSmallDoublingRefutation.result62","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
