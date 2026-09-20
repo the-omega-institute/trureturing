@@ -8,6 +8,25 @@ namespace StrataLint.Engine;
 internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sources,
     ImmutableHashSet<string>? theorems = null)
 {
+    internal static IEnumerable<RepoPath> ChangedProducers(DeltaRuleContext context) =>
+        RepositoryRules.ChangedOrFirstPinD5Modules(context).Concat(context.Changes.Paths.Where(path =>
+            IsRegSource(path) && context.Current.Files.TryGetValue(path, out var current)
+            && (!context.Baseline.Files.TryGetValue(path, out var baseline)
+                || !current.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan()))))
+        .Distinct().OrderBy(path => path.Value, StringComparer.Ordinal);
+
+    internal static bool IsRegSource(RepoPath path) =>
+        path.Value.StartsWith("Reg/", StringComparison.Ordinal) && path.Value.EndsWith(".lean", StringComparison.Ordinal);
+
+    internal static bool HasTheorems(JsonElement value, ImmutableHashSet<string> names) =>
+        value.ValueKind == JsonValueKind.Object && value.EnumerateObject().Any(property =>
+            property.Value.ValueKind == JsonValueKind.Array && (property.Name switch
+            {
+                "inventory" or "registered" => property.Value.EnumerateArray().Any(key => IncludesTheorem(key, names)),
+                "records" => property.Value.EnumerateArray().Any(record => HasTheorem(record, names)),
+                _ => false,
+            }));
+
     private readonly ImmutableHashSet<string> modules = sources
         .Select(InformationTemplateEvidence.ModuleForSource).ToImmutableHashSet(StringComparer.Ordinal);
 
