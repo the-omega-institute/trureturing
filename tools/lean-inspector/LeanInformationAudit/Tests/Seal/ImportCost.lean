@@ -41,6 +41,6 @@ run_cmd do
   let inRepo := (← getEnv).header.moduleNames.filter fun name =>
     name != `LeanInformationAudit.Tests.Seal.M3 &&
       (name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit.")
-  -- Capacity-only splits add nine generic judge modules to the 125-module baseline.
-  if inRepo.size > 134 then
-    throwError "ImportCost: M3 import closure exceeded 134 modules: {inRepo.size}"
+  -- Rooted source IO adds Registry.Repository to the existing 134-module closure.
+  if inRepo.size > 135 then
+    throwError "ImportCost: M3 import closure exceeded 135 modules: {inRepo.size}"

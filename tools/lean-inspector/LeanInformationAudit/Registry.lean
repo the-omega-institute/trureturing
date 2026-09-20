@@ -114,7 +114,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
     | .ok (identity, _) => identity
     | .error _ => ""
   let path := sourcePath entry.registrationModuleName
-  let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile path)) catch _ => pure ""
+  let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile (← Repository.source path))) catch _ => pure ""
   -- An occurrence can name a separate finite object arena. Witness checks use
   -- the original law arena, which retains the quantifier domain and predicate.
   let bridgeType := (← getConstInfo entry.realizationName).type
@@ -251,11 +251,11 @@ private def certificateJson (certificate : TemplateBindingCertificate) : Json :=
   ("extraction_inputs", Json.arr (certificate.extractionInputs.map dependencyJson))]
 
 private def isRepositoryModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
+  #[`D5, `Reg, `LeanInformationAudit, `LeanInformationAuditInterface].any (·.isPrefixOf name) ||
     name == `Trureturing
 
 private def isRecordedModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit.Tests." ||
+  #[`D5, `Reg, `LeanInformationAudit.Tests].any (·.isPrefixOf name) ||
     name == `Trureturing
 
 private def moduleSourceInputs (env : Environment) (root : Name) :

@@ -1,4 +1,5 @@
 import LeanInformationAudit.Registry.Entries
+import LeanInformationAudit.Registry.Repository
 
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
@@ -427,12 +428,12 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
   let (_, state) ← action.run { remaining := limit, tokens := some {} }
   if state.bytes.size > 65536 then throw s!"incomplete_closure:E8.plan_bytes:{state.bytes.size}"
   return (state.bytes, limit - state.remaining)
-
 def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except String ByteArray :=
   (planEncodingWithWork plan fuel).map Prod.fst
 
 def sourcePath (name : Name) : String :=
-  (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
+  (if (`LeanInformationAuditInterface).isPrefixOf name then "tools/lean-inspector-interface/"
+    else if (`LeanInformationAudit).isPrefixOf name then "tools/lean-inspector/" else "") ++
     name.toString.replace "." "/" ++ ".lean"
 
 private abbrev HashWorker := IO.Process.Child {
@@ -441,12 +442,12 @@ private abbrev HashWorker := IO.Process.Child {
 private initialize hashWorker : Std.Mutex (Option HashWorker) ← Std.Mutex.new none
 
 /-- Reuse only the fixed worker process, never a file digest. Requests carry the
-caller's current directory because isolated source fixtures may change it. The
+current repository root; copied oleans never retain the build host's root. The
 mutex keeps each request/response together; any failure retires the stream. -/
 private def fileInputBatch (paths : Array String) (readVersion : Bool := false) :
     IO (Array String × Option Nat) := do
   if paths.isEmpty && !readVersion then return (#[], none)
-  let request := Json.arr #[toJson (← IO.currentDir).toString, toJson paths, toJson readVersion]
+  let request := Json.arr #[toJson (← Repository.root).toString, toJson paths, toJson readVersion]
   hashWorker.atomically do
     try
       let child ← match ← get with
@@ -535,9 +536,8 @@ private structure Snapshot where
   inputs : Array SourceInput
   data : ModuleData
 
-
 private def repositoryModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
+  #[`D5, `Reg, `LeanInformationAudit, `LeanInformationAuditInterface].any (·.isPrefixOf name) ||
     name == `Trureturing
 
 private def parseHash (text : String) : Except String UInt64 := do
@@ -778,8 +778,8 @@ private def verifyImported (env : Environment) (name : Name)
   let artifact ← moduleFile env name
   let tracePath := artifact.withExtension "trace"
   let source := sourcePath name
-  let sourceBytes ← IO.FS.readBinFile source
-  let sourceText ← IO.FS.readFile source
+  let sourceBytes ← IO.FS.readBinFile (← Repository.source source)
+  let sourceText ← IO.FS.readFile (← Repository.source source)
   let traceBytes ← IO.FS.readBinFile tracePath
   let trace ← ofExcept <| Json.parse (← IO.FS.readFile tracePath)
   unless trace.getObjValAs? String "schemaVersion" == .ok "2025-09-10" &&
@@ -886,7 +886,7 @@ def validate (roots : Array Name) : CoreM Unit := do
   let mut retainedInputs : Array SourceInput := #[]
   for name in names do
     if name == env.header.mainModule then
-      unless (← IO.FS.readFile (sourcePath name)) == (← getFileMap).source do
+      unless (← IO.FS.readFile (← Repository.source (sourcePath name))) == (← getFileMap).source do
         throwError "incomplete_closure:E7.current_source:{name}"
       continue
     if let some snapshot := cache.snapshots[name]? then

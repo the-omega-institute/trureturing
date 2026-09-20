@@ -9,8 +9,8 @@ run_cmd do
   let modules := env.header.moduleNames.filter fun name =>
     name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit."
   let core := #[`LeanInformationAudit.Registry, `LeanInformationAudit.Syntax,
-    `LeanInformationAudit.SealCommand].all modules.contains
+    `LeanInformationAudit.SealCommand, `LeanInformationAudit.Registry.Repository].all modules.contains
   (if core then logInfo else logError) m!"[{if core then "PASS" else "FAIL"}] existing_finite_seal_core_accepted"
-  -- The original 89 modules plus nine generic judge modules split for capacity.
-  (if modules.size == 98 then logInfo else logError) m!"[{if modules.size == 98 then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
-  logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=98"
+  -- Rooted source IO adds Registry.Repository to the existing 98-module closure.
+  (if modules.size == 99 then logInfo else logError) m!"[{if modules.size == 99 then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
+  logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=99"
