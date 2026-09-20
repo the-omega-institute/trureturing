@@ -58,10 +58,8 @@ internal static class Program
                 arguments = arguments.Take(2).ToArray();
             }
             var repository = RepositoryOption(arguments);
-            var build = CommonExecutionEvidence.ValidateBuild(repository, buildRound);
-            var inputs = CommonExecutionEvidence.TestInputs(repository, CommonExecutionEvidence.Snapshot(repository));
-            var testAssemblies = CommonExecutionEvidence.ValidateTestBuild(repository, build, inputs);
-            return RunCurrentTests(repository, (project, results) => RunTests(repository, testAssemblies[project], results), output, build);
+            var prepared = CommonExecutionEvidence.PrepareRegisteredTests(repository, round: buildRound);
+            return RunPreparedTests(repository, (project, results) => RunTests(repository, prepared.Assemblies[project], results), output, prepared);
         }
         catch (Exception exception)
         {
@@ -112,12 +110,17 @@ internal static class Program
     }
 
     internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
+        => RunPreparedTests(root, run, output, CommonExecutionEvidence.PrepareRegisteredTests(root, build));
+
+    private static int RunPreparedTests(string root, Func<string, string, int> run, TextWriter output,
+        CommonExecutionEvidence.PreparedTests prepared)
     {
-        var candidate = CommonExecutionEvidence.Candidate(root);
-        var inputs = CommonExecutionEvidence.TestInputs(root, CommonExecutionEvidence.Snapshot(root));
-        build ??= CommonExecutionEvidence.ValidateBuild(root);
-        CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
-        _ = CommonExecutionEvidence.ValidateTestBuild(root, build, inputs);
+        var candidate = prepared.Candidate;
+        var build = prepared.Build;
+        var inputs = prepared.Inputs;
+        // Only fingerprints, assembly paths and receipts survive preparation.
+        // Release its source heap before seed copying or any test execution.
+        CommonExecutionEvidence.ReleaseTemporarySnapshots();
         File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
         var reused = CommonExecutionEvidence.ImportTestSeed(root, inputs, output);
         var projects = inputs.Keys.Order(StringComparer.Ordinal).ToArray();
@@ -154,15 +157,7 @@ internal static class Program
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'));
         CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath,
             new TestExecutionRecord(2, candidate, build.Round, records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
-        if (CommonExecutionEvidence.Candidate(root) != candidate) throw new InvalidDataException("candidate changed during test execution");
-        CommonExecutionEvidence.ValidateStartedBuild(root, build, candidate);
-        try { CommonExecutionEvidence.ValidateTests(root); }
-        catch (Exception exception)
-        {
-            output.WriteLine($"ENGINEERING_TEST_EVIDENCE_FAILED {exception.Message}");
-            return 1;
-        }
-        return 0;
+        return CommonExecutionEvidence.FinishRegisteredTests(root, prepared, output);
     }
 
     private static int RunTests(string root, string project, string results)

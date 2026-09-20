@@ -2867,3 +2867,1793 @@ $$
 每个 $j$ 有 $d+1$ 次制备，每次读出 $d$ 个经典坐标并演化 $jh$，直接求和得式(14.29)。零时刻设置仍计准备及读出，但不计演化时长。使用推论14.9的增长前缀时，这一具体协议的制备数和标量读出数为 $O(n\log n)$，串行演化时间为 $O(n(\log n)^2)$。能否以更少轨迹取得多时刻数据需要另行认证探测反作用与相关读数模型。位移后的辅助初态仅由三角不等式得到 $\|h_0+Je_k\|\le E_*+\sqrt{m_*}$；装置须能承担这一准备范围，其额外制备能力及费用不能从目标初态的 $E_*$ 界推出。本命题也不赋予不相容量子观测同一份样本上的联合读出。$\square$
 
 ## 14.99 追加锚
+
+## 15. 重叠时间响应的共同几何与完整记录约束
+
+**假设 15.1（共同来源、端口和完整档案）。** 取有限维实内积空间 $U_A,U_S,U_B$，允许零维；$S$ 是同一组有固定身份、单位及内积的共享端口。所有响应时间均已换算到同一个已校准的经过时间 $t\ge0$。给定两份精确完整局部响应
+$$
+K^{AS}(t)=\sum_{\lambda\in\Lambda}e^{-\lambda t}
+\begin{pmatrix}A_\lambda&E_\lambda\\E_\lambda^*&D_\lambda\end{pmatrix},\qquad
+K^{SB}(t)=\sum_{\lambda\in\Lambda}e^{-\lambda t}
+\begin{pmatrix}D_\lambda&F_\lambda\\F_\lambda^*&B_\lambda\end{pmatrix}.
+\tag{15.1}
+$$
+这里 $\Lambda\subset(0,\infty)$ 是两局部响应可见衰减率的有限并集，各率互异；某个局部响应没有的率填零块。每个显示的局部谱系数块均半正定，共享的 $D_\lambda$ 相同。$E_\lambda:U_S\to U_A$、$F_\lambda:U_B\to U_S$，伴随始终按指定内积取。$\Lambda=\varnothing$ 时两个响应均为零，以下空和、余量和任务区间均取零。
+
+记 $\mathcal M_2$ 为所有匹配这两份响应的有限维实正实现：其成员由有限维实内积空间 $H$、$C=C^*>0$ 及线性耦合 $J_i:U_i\to H$ 组成，满足
+$$
+K_{ij}(t)=J_i^*e^{-tC}J_j\qquad(t\ge0),
+\tag{15.2}
+$$
+且在 $AS$、$SB$ 两个块上等于式（15.1）。不固定隐藏维数，不要求最小实现，不附加局部性或 $C$ 的稀疏结构；允许不可见状态。相同端口标签、制备、增益、重复取得及反作用合同须属于同一实际来源，不能由正矩阵完成的存在性反推这些经验前提。
+
+在把 $\mathcal M_2$ 解释为观察者的不确定性之前，保留完整的来源索引档案 $\mathcal D$ 和固定合法取得历史 $h$。$\mathcal D$ 包含此前全部已获信息、内部记录、外部档案及关系读数，保留各自的来源身份；$h$ 包含实际动作、答复和资源、控制状态。这里沿用本卷定义8.1的同一来源与合法历史合同，以及[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义13.1、命题13.2、定义13.3的完整记录与合法割，不把观察者缩为此次两份响应或有限身体。该卷的完整记录商在此记为 $C_{\rm rec}$，以区别于生成元 $C$。定义
+$$
+\mathcal M(\mathcal D,h)
+:=\{M\in\mathcal M_2:M\text{ 能在同一来源上同时符合全部 }\mathcal D
+\text{ 及合法历史 }h\}.
+\tag{15.3}
+$$
+若记录还涉及环境、初态或取得装置，式（15.3）的相容性要求存在同一份这些辅助数据的扩充，不能对不同记录分别任配来源。谈完整观察者的任务范围时假设此集非空；局部正性本身不保证这一点。本节使用的是既有合同的记录保留原则，不把有限来源上的预算递推定理无条件移用到全部有限维模型的连续族。
+
+运动作为动作时须在 $h$ 中保留它所改变的取得映射、可用操作或扰动关系。若另赋概率律，独立性须在完整 $C_{\rm rec}$ 所保留的信息下检验；动作先后是否合法与读数条件独立是不同关系。本节的代数参数分别可选不提供概率独立性，也不从“时间”“空间”或“记忆”的名称推导物理波动、半衰期或场方程。式（15.2）采用[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)第126.1–126.5节的伴随耦合正实现；空间内积、时间演化及下节记忆任务将使用同一份 $C,J$。
+
+**引理 15.2（完整局部响应的逐谱识别）。** 在假设15.1的有限正谱类内，精确完整局部响应唯一决定其可见率及各谱系数。若两份局部谱表起初不同，先取并集、补零，则共同 $S$ 响应相等当且仅当每个 $\lambda$ 的 $D_\lambda$ 相等。此结论不假定有限带噪样本已经给出精确谱表。
+
+**证明。** 对任意有限组互异正数 $\lambda_1<\cdots<\lambda_n$，若 $\sum_k e^{-\lambda_k t}V_k=0$ 对所有 $t\ge0$ 成立，乘以 $e^{\lambda_1t}$ 并令 $t\to\infty$ 得 $V_1=0$；有限维中可按矩阵元取极限，也可取算子范数极限。逐项消去得全部 $V_k=0$。比较两种表示时用其率的并集，便得系数逐项相等；零系数对应的不可见率不计入可见谱。对共享块用同一论证即得所述等价。空谱情形直接成立。这是主卷第126.5节正谱表示上的有限指数线性独立性。$\square$
+
+**定义 15.3（共享投影余量与保留档案的收缩像）。** 令 $D_\lambda^\dagger$ 为 Moore–Penrose 逆，并置
+$$
+P_\lambda=A_\lambda-E_\lambda D_\lambda^\dagger E_\lambda^*,\qquad
+Q_\lambda=B_\lambda-F_\lambda^*D_\lambda^\dagger F_\lambda,\qquad
+X^0_\lambda=E_\lambda D_\lambda^\dagger F_\lambda.
+\tag{15.4}
+$$
+下述定理给 $P_\lambda,Q_\lambda\succeq0$。定义收缩球的有限乘积
+$$
+\mathbb B=\prod_{\lambda\in\Lambda}
+\{T_\lambda:U_B\to U_A:\|T_\lambda\|\le1\},\qquad
+\Phi(T)_\lambda=X^0_\lambda+P_\lambda^{1/2}T_\lambda Q_\lambda^{1/2}.
+\tag{15.5}
+$$
+空乘积含唯一空元组。对 $M\in\mathcal M_2$，记其 $AB$ 谱系数元组为 $X(M)$，定义
+$$
+\mathbb F(\mathcal D,h)
+=\{T\in\mathbb B:\exists M\in\mathcal M(\mathcal D,h),\ X(M)=\Phi(T)\}.
+\tag{15.6}
+$$
+奇异余量时 $T$ 不必唯一；式（15.6）保留同一谱系数元组的全部收缩代表。对任一仅依赖交叉核的任务 $q$，完整观察者的实际可行值集为 $q[\Phi(\mathbb F(\mathcal D,h))]$；两响应问题的值集则为 $q[\Phi(\mathbb B)]$。额外记录可使前者不凸、不对称或不闭。以下用整个 $\mathbb B$ 给出的精确区间与联合值集均指没有额外约束的两响应问题；若 $\mathbb F(\mathcal D,h)=\mathbb B$，它们也是完整观察者的精确结论，否则一般只给外界。
+
+**定理 15.4（全部共同正实现的交叉响应参数化）。** 在假设15.1下，局部正性蕴含
+$$
+P_\lambda,Q_\lambda\succeq0,\qquad
+E_\lambda\ker D_\lambda=0,\qquad
+\operatorname{ran}F_\lambda\subseteq\operatorname{ran}D_\lambda.
+\tag{15.7}
+$$
+$\mathcal M_2$ 非空，其全部可能的未测响应恰为
+$$
+\boxed{K_{AB}(t)=\sum_{\lambda\in\Lambda}e^{-\lambda t}
+\bigl(X^0_\lambda+P_\lambda^{1/2}T_\lambda Q_\lambda^{1/2}\bigr),
+\qquad T\in\mathbb B.}
+\tag{15.8}
+$$
+每一组按谱层分别选择的收缩都有一个有限维共同正实现；不存在只在 $AB$ 出现而在两个局部响应均不可见的额外谱率。整个交叉响应在 $\mathcal M_2$ 上唯一，当且仅当
+$$
+\boxed{\forall\lambda\in\Lambda,\quad P_\lambda=0\ \text{或}\ Q_\lambda=0.}
+\tag{15.9}
+$$
+这比要求共享端口在每层覆盖两侧全部方向弱：准确条件只需每层至少一侧余量为零。
+
+本定理将成熟的块正性因子化用于同一谱响应的缺失块。算子形式见 Moslehian、Kian、Xu，[*Positivity of $2\times2$ block matrices of operators*](https://arxiv.org/pdf/1904.08680v1)，Theorem 5.11的收缩因子化及Theorem 5.12的Gram实现。[QUANTUM-RH卷](QUANTUM-RH.md)“三张切片真正的拼接条件”式（7）已给单位标量复块的圆盘 $|z-ab|^2\le(1-|a|^2)(1-|b|^2)$。下面补足这里所需的有限实矩形、奇异余量及逐谱共同实现证明。
+
+**证明。** 分六步。
+
+1. 固定一层并省略 $\lambda$。若 $d\in\ker D$，$AS$ 的正二次型在 $(a,sd)$ 上对每个 $s\in\mathbb R$ 非负，其线性项 $2s\langle a,Ed\rangle$ 必为零，故 $Ed=0$。$SB$ 同理给 $F^*\ker D=0$，由自伴 $D$ 的 $\operatorname{ran}D=(\ker D)^\perp$ 得到式（15.7）的范围条件，亦有 $\operatorname{ran}E^*\subseteq\operatorname{ran}D$。在两个局部二次型中分别取共享向量 $-D^\dagger E^*a$、$-D^\dagger Fb$，得 $\langle a,Pa\rangle\ge0$、$\langle b,Qb\rangle\ge0$。几何上，这是本卷命题13.3的奇异Gram正交投影：投到共同耦合的像后，两侧剩余向量的Gram算子为 $P,Q$。
+
+2. 对候选交叉块 $X:U_B\to U_A$，令
+$$
+W=\begin{pmatrix}A&E&X\\E^*&D&F\\X^*&F^*&B\end{pmatrix},\qquad
+Z=X-ED^\dagger F.
+$$
+利用 $DD^\dagger E^*=E^*$、$DD^\dagger F=F$，其在 $(a,s,b)$ 上的二次型精确等于
+$$
+\|D^{1/2}(s+D^\dagger E^*a+D^\dagger Fb)\|^2
++\langle a,Pa\rangle+2\langle a,Zb\rangle+\langle b,Qb\rangle.
+\tag{15.10}
+$$
+若残差块 $\begin{pmatrix}P&Z\\Z^*&Q\end{pmatrix}$ 半正定，上式非负；反向取 $s=-D^\dagger E^*a-D^\dagger Fb$ 消去平方项，得到残差块半正定。因此两种正性等价，未要求 $D$ 可逆。
+
+3. 给出有限实矩形情形的收缩因子化。残差块半正定时，对 $(ra,sb)$ 的二次型判别式给
+$$
+|\langle a,Zb\rangle|^2\le\langle a,Pa\rangle\langle b,Qb\rangle.
+\tag{15.11}
+$$
+故在 $\operatorname{ran}P^{1/2}\times\operatorname{ran}Q^{1/2}$ 上，
+$$
+\beta(P^{1/2}a,Q^{1/2}b)=\langle a,Zb\rangle
+$$
+良定义且 $|\beta(u,w)|\le\|u\|\|w\|$：改变任一代表元的差在相应平方根的核中，式（15.11）使变化为零。对每个 $w$，有限维Riesz表示给唯一 $Tw\in\operatorname{ran}P^{1/2}$，满足 $\langle u,Tw\rangle=\beta(u,w)$；唯一性给 $T$ 的线性，范数界给 $\|Tw\|\le\|w\|$。在 $\operatorname{ran}Q^{1/2}$ 的正交补上令 $T=0$，便得 $T:U_B\to U_A$、$\|T\|\le1$ 及 $Z=P^{1/2}TQ^{1/2}$。反过来，此因子化给
+$$
+\langle a,Pa\rangle+2\langle a,Zb\rangle+\langle b,Qb\rangle
+\ge(\|P^{1/2}a\|-\|Q^{1/2}b\|)^2\ge0.
+$$
+这也覆盖任一像空间为零、奇异矩阵及两端口维数不同的情形。
+
+4. 对任意 $M\in\mathcal M_2$，写 $C=\sum_\mu\mu\Pi_\mu$，令 $J(a,s,b)=J_Aa+J_Ss+J_Bb$，则 $W_\mu=J^*\Pi_\mu J\succeq0$。引理15.2迫使可见局部系数等于给定值。若 $\mu\notin\Lambda$，$W_\mu$ 的三个对角块均为零，所以 $\|\Pi_\mu J_i u\|^2=0$ 对各 $i,u$ 成立；于是所有交叉块也为零。故额外不可见率不能只贡献 $AB$ 项。对 $\lambda\in\Lambda$，前面三步给式（15.8）的必要性。
+
+5. 反向，对任意 $T\in\mathbb B$，前面三步使对应的每个 $W_\lambda\succeq0$。取
+$$
+H_\lambda=\operatorname{ran}W_\lambda^{1/2},\qquad
+H=\bigoplus_{\lambda\in\Lambda}H_\lambda,\qquad
+C|_{H_\lambda}=\lambda I,
+$$
+并令 $J:U_A\oplus U_S\oplus U_B\to H$ 的第 $\lambda$ 分量为 $W_\lambda^{1/2}$，陪域限制在其像。于是 $C=C^*>0$ 且
+$$
+J^*e^{-tC}J=\sum_\lambda e^{-\lambda t}W_\lambda.
+\tag{15.12}
+$$
+将 $J$ 限制到三个端口即实现全部给定局部块及所选交叉块。这证明每个收缩元组都可实现，并给 $\mathcal M_2\ne\varnothing$。空谱时取 $H=\{0\},J=0$，正定条件对非零向量为空条件。也可直和任意与 $J$ 正交的不耦合正块；它不改变响应。
+
+6. 若某层 $P=0$ 或 $Q=0$，其残差 $Z$ 必为零。若两者均非零，选 $a,b$ 使 $u=P^{1/2}a\ne0,w=Q^{1/2}b\ne0$，秩一收缩
+$$
+T^\pm x=\pm\frac{u}{\|u\|}\left\langle\frac{w}{\|w\|},x\right\rangle
+\tag{15.13}
+$$
+给 $\langle a,P^{1/2}T^\pm Q^{1/2}b\rangle=\pm\|u\|\|w\|$，故产生不同系数。其余层固定，引理15.2保证完整响应不同。这证明式（15.9）。$\square$
+
+主卷第126.1–126.5节已经确定：选定整个核后，有效实现具有保持边界耦合的正交唯一性，额外不可见状态仍不确定。这里的自由度是整个核尚未确定的交叉块，与主卷第137.7–137.9节的有限矩前缀扩张问题、以及本卷定理13.4在固定完整核下的初态纤维问题不同。若固定隐藏维数、局部性或稀疏结构，步骤5构造的模型未必满足这些附加限制；式（15.8）的全乘积须再与相应限制求交。上述范围说明均是本定理量词的一部分。
+
+**定理 15.5（单个交叉任务与响应内积距离的精确区间）。** 固定 $a\in U_A,b\in U_B,t\ge0$，令
+$$
+c_t=\sum_\lambda e^{-\lambda t}\langle a,X^0_\lambda b\rangle,\qquad
+R_t=\sum_\lambda e^{-\lambda t}
+\sqrt{\langle a,P_\lambda a\rangle\langle b,Q_\lambda b\rangle}.
+\tag{15.14}
+$$
+在 $\mathcal M_2$ 上，$\langle a,K_{AB}(t)b\rangle$ 的值集恰为 $[c_t-R_t,c_t+R_t]$。定义响应内积距离
+$$
+d_t^2(a,b)=\|e^{-tC/2}(J_Aa-J_Bb)\|^2,
+$$
+以及仅由局部数据给出的
+$$
+D_t=\langle a,K_{AA}(t)a\rangle+\langle b,K_{BB}(t)b\rangle-2c_t.
+$$
+则其平方距离的值集恰为
+$$
+\boxed{[D_t-2R_t,D_t+2R_t],\qquad D_t-2R_t\ge0.}
+\tag{15.15}
+$$
+$t=0$ 时，这是耦合向量的原始内积距离；将它认作观察位置之间的物理Euclidean距离另需识别合同，参见[机器学习伴卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)命题5.4的任务几何与物理度量边界。
+
+**证明。** 令 $u_\lambda=P_\lambda^{1/2}a,w_\lambda=Q_\lambda^{1/2}b$。每层的残差标量为 $\langle u_\lambda,T_\lambda w_\lambda\rangle$，其绝对值不超过 $\|u_\lambda\|\|w_\lambda\|$。两向量非零时式（15.13）取得正负端点；任一为零时该层贡献恒为零。各层同时取正号得到总正端点，同时取负号得到总负端点。对任意 $\eta\in[-1,1]$，将所有正端点收缩同乘 $\eta$ 得 $c_t+\eta R_t$，并由定理15.4得到共同实现；$R_t=0$ 时为单点。这证明整个区间均可达，不只证明端点可达。展开平方范数得
+$$
+d_t^2=\langle a,K_{AA}(t)a\rangle+\langle b,K_{BB}(t)b\rangle
+-2\langle a,K_{AB}(t)b\rangle,
+$$
+即式（15.15）；下端也由合法Gram实现取得，因而非负。每个区间针对指定的 $a,b,t$，不同任务分别取得的极值不表示同一实现能同时取得它们。对 $\mathcal M(\mathcal D,h)$，按定义15.3把收缩域换成 $\mathbb F(\mathcal D,h)$；全乘积区间是外界，只有另证所需任务像相等时才是完整档案下的精确值集。$\square$
+
+**命题 15.6（奇异共享块、零余量和零重叠）。** 单谱、$U_A=U_B=\mathbb R,U_S=\mathbb R^2$ 时，取
+$$
+D=\operatorname{diag}(1,0),\quad E=(1,0),\quad F=(1,0)^*,\quad A=B=2.
+$$
+局部块半正定，全部合法交叉系数恰为 $X\in[0,2]$，$X=5/2$ 不合法。若只将 $A$ 改为 $1$，则交叉系数唯一为 $X=1$。一般地，若某层 $D=0$，局部正性强制 $E=F=0$，而该层的交叉自由度为 $A^{1/2}TB^{1/2}$。
+
+**证明。** 第一组 $D^\dagger=D$，故 $P=Q=1,X^0=1$；局部二次型各为 $(a+s_1)^2+a^2$ 或 $(s_1+b)^2+b^2$。定理15.4给 $X=1+T,|T|\le1$。候选 $X=5/2$ 的 $A,B$ 主子式为 $4-25/4=-9/4<0$，所以不能是Gram矩阵。改成 $A=1$ 时 $P=0$，唯一系数为 $X^0=1$。最后 $\ker D=U_S$ 时，式（15.7）给 $E=F=0$；代入式（15.4）–（15.8）即得零重叠结论。这包括 $U_S=\{0\}$。$\square$
+
+**命题 15.7（连通非零重叠与旧档案的区别）。** 在 $H=\mathbb R^3$ 上取 $C=I$，三个端口均为 $\mathbb R$，标准正交基为 $e_0,e_1,e_2$，并令
+$$
+J_S1=e_0,\qquad J_A1=e_0+e_1,\qquad
+J_B1=e_0+\cos\theta\,e_1+\sin\theta\,e_2.
+\tag{15.16}
+$$
+全部 $\theta$ 给出相同两局部响应
+$$
+K^{AS}(t)=e^{-t}\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+K^{SB}(t)=e^{-t}\begin{pmatrix}1&1\\1&2\end{pmatrix},
+$$
+而 $K_{AB}(t)=e^{-t}(1+\cos\theta)$、$d_0^2(1,1)=2-2\cos\theta$。所以非零共享端口及连通的 $A$—$S$—$B$ 重叠仍给两响应平方距离范围 $[0,4]$。但是若完整档案保留同源旧记录 $K_{AB}(0)=3/2$，完整观察者的这个平方距离范围就是单点 $\{1\}$。
+
+**证明。** 直接取各耦合向量的内积得所列局部矩阵，$\langle J_A1,J_B1\rangle=1+\cos\theta$，范数平方均为 $2$，故得到全部公式。$\cos\theta$ 遍历 $[-1,1]$，取得平方距离区间每一点。$\theta=\pi/3$ 与 $2\pi/3$ 时，$\sin\theta\ne0$，三个耦合向量张成三维有效空间；两者局部时间轨迹及维数相同，距离平方分别为 $1$、$3$。旧记录却强制 $\cos\theta=1/2$。不仅在所示族中如此：定理15.4给整个两响应类都只有率 $1$ 的可见项，$P=Q=1,X^0=1$，旧记录强制其标量收缩 $T=1/2$。于是所有符合档案的实现均有 $d_0^2=4-2(3/2)=1$，并由 $\theta=\pi/3$ 证成非空。删除旧记录才会重新得到 $[0,4]$；该删除改变了信息类。$\square$
+
+**引理 15.8（同一共享响应的相对钟匹配）。** 设 $H,U_S$ 有限维实内积，$C=C^*>0$，共享耦合 $J_S\ne0$。两处使用同一 $C,J_S$、伴随输入输出、端口内积和增益。令
+$$
+f(t)=\operatorname{tr}(J_S^*e^{-tC}J_S),\qquad t\ge0.
+$$
+则 $f$ 从 $[0,\infty)$ 连续严格递减地映到 $(0,f(0)]$，且 $f(t)>0,f'(t)<0$。取实区间 $I_A,I_B$，设 $\phi_A:I_A\to I,\phi_B:I_B\to I$ 是到同一个非退化经过时间区间 $I\subseteq[0,\infty)$ 的严格递增双射。给定精确完整观测函数 $F_A=f\circ\phi_A,F_B=f\circ\phi_B$，唯一的同值匹配为
+$$
+\boxed{h_{BA}=F_B^{-1}\circ F_A=\phi_B^{-1}\circ\phi_A.}
+\tag{15.17}
+$$
+$F_B^{-1}$ 只在实际值域 $f(I)$ 上使用；覆盖的实际时间区间不相同时，只在公共区间或等价的观测值域交集内匹配。若在匹配点 $\sigma=h_{BA}(\tau)$，两换钟可微且导数严格正，则
+$$
+h_{BA}'(\tau)=\frac{F_A'(\tau)}{F_B'(\sigma)}
+=\frac{\phi_A'(\tau)}{\phi_B'(\sigma)}.
+\tag{15.18}
+$$
+端点只取存在的单侧导数。在式（15.1）的共同实现中，所用迹
+$$
+f(t)=\sum_\lambda e^{-\lambda t}\operatorname{tr}D_\lambda
+\tag{15.19}
+$$
+由共享数据固定，与未测的 $T_\lambda$ 无关。
+
+**证明。** 谱分解给 $w_\lambda=\operatorname{tr}(J_S^*\Pi_\lambda J_S)=\|\Pi_\lambda J_S\|_{\rm HS}^2\ge0$，且 $\sum_\lambda w_\lambda=\|J_S\|_{\rm HS}^2>0$。于是
+$$
+f(t)=\sum_\lambda w_\lambda e^{-\lambda t}>0,\qquad
+f'(t)=-\sum_\lambda\lambda w_\lambda e^{-\lambda t}<0,\qquad
+\lim_{t\to\infty}f(t)=0.
+$$
+有限和可逐项微分，连续性、严格单调性及极限给所述实际像。$f$ 的单射性使 $F_A(\tau)=F_B(\sigma)$ 等价于 $\phi_A(\tau)=\phi_B(\sigma)$，证明式（15.17）及唯一性。严格单调函数在区间上的逆在对应点连续；若该点导数非零，用逆函数的差商得到逆的导数为原导数的倒数。对 $F_B^{-1}\circ F_A$ 用此结论及链式法则，约去共同的非零 $f'$，得到式（15.18）。共享谱系数等于 $D_\lambda$，给式（15.19）。此证明只使用主卷第126.5节的正谱表示。多钟覆盖同一区间时的 $h_{CB}\circ h_{BA}=h_{CA}$ 及逆关系直接由主卷命题133.1的唯一相容转换承担。$\square$
+
+**命题 15.9（仿射钟接入与时间积分单位）。** 在引理15.8下，若 $\phi_A(\tau)=c_A\tau,\phi_B(\sigma)=c_B\sigma$，$c_A,c_B>0$，且两本地零标签对应同一经过时间零点，则
+$$
+h_{BA}(\tau)=\frac{c_A}{c_B}\tau,\qquad
+\frac{F_A'(0)}{F_B'(0)}=\frac{c_A}{c_B}.
+\tag{15.20}
+$$
+因此相对钟率可由同源共享响应恢复。一般仿射钟 $\phi_i(\tau)=c_i\tau+b_i$ 的匹配为 $h_{BA}(\tau)=(c_A\tau+b_A-b_B)/c_B$，仅在覆盖交集内使用；微分比须取匹配的点。恢复并扣除经过时间原点后，两响应才按共同的半群延迟变量应用定理15.4，不能把有偏移的响应标签直接当作从零开始的延迟。
+
+取 $A$ 钟为共同参考，用 $\sigma=h_{BA}(\tau)$ 重标 $B$ 处整个矩阵响应。在共享零点情形得到固定生成元 $C_{\rm ref}=c_A C$，谱率变为 $c_A\lambda$，谱系数及零时刻Gram几何不变。更一般地，对已校准的同一核和 $t=c\tau,c>0$，记 $Z=\int_0^\infty K(t)dt$，则
+$$
+K_{\rm ref}(\tau)=K(c\tau),\qquad C_{\rm ref}=cC,\qquad
+Z_{\rm ref}=\int_0^\infty K_{\rm ref}(\tau)d\tau=Z/c.
+\tag{15.21}
+$$
+对局部可积输入 $g$ 及 $y(t)=\int_0^tK(t-s)g(s)ds$，必须同时运输输入密度
+$$
+g_{\rm ref}(\sigma)=c\,g(c\sigma),\qquad
+\boxed{y(c\tau)=\int_0^\tau K_{\rm ref}(\tau-\sigma)
+ g_{\rm ref}(\sigma)d\sigma.}
+\tag{15.22}
+$$
+故积分增益的数值不会在忽略时间测度、输入单位及Jacobian的情况下保持不变。匹配所用迹由 $D_\lambda$ 固定；校准不限制 $T_\lambda$，不消除定理15.5的几何歧义。
+
+**证明。** 代入式（15.17）给仿射匹配。共享零点时 $F_A'(0)=c_Af'(0)$、$F_B'(0)=c_Bf'(0)$，而 $f'(0)<0$，得到式（15.20）。重标矩阵响应得到 $J_i^*e^{-\tau c_A C}J_j$，说明谱系数及 $K(0)$ 不变。式（15.21）和式（15.22）分别由 $t=c\tau$、$s=c\sigma$ 换元得到；严格正有限谱使无穷积分收敛。它们是上下文几何卷定理12.7的时间及费用测度运输在固定生成元中的特例。最后，各收缩元组有相同式（15.19），所以钟匹配不能分开这些交叉响应。$\square$
+
+**命题 15.10（相对匹配的必要边界）。** 精确共享迹匹配不单独识别绝对时间尺度，不认证来源，也不提供全时间统一噪声稳定性。正共享变化、导数和固定生成元等假设的边界由以下实例给出。
+
+**证明。** 若 $J_S=0$，迹恒零，任意相对钟均相容。若只要求 $C\succeq0$，取 $C=\operatorname{diag}(0,1),J_S1=e_0$，则 $J_S\ne0$ 而迹恒为 $1$；从非负谱展开可知，此时严格递减的准确条件为 $C^{1/2}J_S\ne0$，即至少一个正率具有正权重。
+
+令 $f(t)=e^{-t},\phi_A(\tau)=\tau,\phi_B(\sigma)=\sigma+\log2$，两本地参数取非负值。两钟速率相同，但未匹配的零点导数之比为 $2$；公共经过时间区间 $[\log2,\infty)$ 上，完整曲线仍给 $h_{BA}(\tau)=\tau-\log2$。这只否定未对齐零点的导数比公式，不否定从完整同源曲线恢复相对偏移。
+
+再取 $\phi_A(\tau)=\tau,\phi_B(\sigma)=\sigma+\sigma^2$，则零点导数比为 $1$，但 $h_{BA}(\tau)=(\sqrt{1+4\tau}-1)/2$；初始同速不能推出全程同速。取 $\phi_B(\sigma)=\sigma^2$ 时匹配仍为 $\sqrt\tau$，但 $F_B'(0)=0$，导数比在该点不能使用。若参考钟本身取 $\phi_A(\tau)=\tau+\tau^2,C=1$，对齐后的响应为 $e^{-\tau-\tau^2}$。其对数导数为 $-1-2\tau$，不是固定率指数；也不可能是非零有限正权指数和，因为后者的对数导数是有限个固定率的负加权平均，始终有界。一般可微参考钟的瞬时生成元为 $\phi_A'(\tau)C$，这是上下文几何卷定理12.7的公式；点对点对齐本身不恢复固定生成元前提。
+
+对任意 $a_0>0$，同时作 $C\mapsto C/a_0,\phi_i\mapsto a_0\phi_i$，有 $e^{-(a_0\phi_i)C/a_0}=e^{-\phi_i C}$，全部本地记录不变，绝对钟率及生成元数值却改变。相对匹配和相对钟率不变。
+
+两台不同来源系统 $C_A=1,C_B=2,J_A=J_B=1$，本地钟均为真实时间时，分别给 $e^{-\tau},e^{-2\sigma}$。反函数匹配给 $\sigma=\tau/2$，真实钟却同速；失效的是共同 $f$ 合同。未知增益亦能与偏移混淆，因为 $k e^{-t}=e^{-(t-\log k)}$。只比较迹也不认证完整共享矩阵相同：$e^{-t}\operatorname{diag}(1,2)$ 与 $e^{-t}\operatorname{diag}(2,1)$ 在固定端口身份下不同，却有相同迹，且均可用 $C=I$ 及相应对角平方根耦合实现。
+
+最后，$e^{-T}-e^{-(T+1)}=e^{-T}(1-e^{-1})\to0$，对应的经过时间差始终为 $1$；故逆函数在全部时间上的统一误差模不能由严格单调性推出。有限样本导数估计、带噪校准、取得这些完整曲线的资源及共同来源的认证均是另需假设的问题。以上实例只判定所列数学合同的范围。$\square$
+
+## 16. 同一交叉补全下的记忆读数与联合任务几何
+
+**定义 16.1（固定输入的跨端口记忆任务）。** 沿用假设15.1及定义15.3，全部候选共用有限正谱集、经过校准的时间和端口内积，交叉核由同一组 $T_\lambda$ 按式（15.8）给出。固定 $T\ge0$、$a\in U_A$ 和已知 $g\in L^1([0,T];U_B)$，所有竞争实现使用同一个预先固定的输入 $g$。令
+$$
+y_T=\int_0^T\langle a,K_{AB}(T-s)g(s)\rangle\,ds,\qquad
+v_\lambda=\int_0^T e^{-\lambda(T-s)}g(s)\,ds,
+$$
+$$
+c_T=\sum_\lambda\langle a,X^0_\lambda v_\lambda\rangle,\qquad
+R_T=\sum_\lambda\|P_\lambda^{1/2}a\|\,\|Q_\lambda^{1/2}v_\lambda\|.
+\tag{16.1}
+$$
+积分按有限维Lebesgue／Bochner意义取值，连续有限谱核在有限区间有界，故积分存在；$T=0$ 或 $\Lambda=\varnothing$ 时全部量为零。两响应问题的参数域为 $\mathbb B$；完整观察者保留全部 $\mathcal D,h$ 后的参数域为 $\mathbb F(\mathcal D,h)$，不因任务只读取 $y_T$ 而删去旧档案。
+
+**定理 16.2（固定输入读数的精确区间与minimax误差）。** 在两响应类 $\mathcal M_2$ 上，任务 $y_T$ 的值集恰为
+$$
+\boxed{[c_T-R_T,c_T+R_T].}
+\tag{16.2}
+$$
+允许仅根据两份局部数据及固定任务输出任意实数 $z$ 时，最坏绝对误差为
+$$
+\sup_{M\in\mathcal M_2}|z-y_T(M)|=R_T+|z-c_T|.
+\tag{16.3}
+$$
+故唯一minimax点估计为 $c_T$，最优最坏绝对误差为 $R_T$，平方误差为 $R_T^2$，$R_T=0$ 时中心仍唯一。此任务可精确恢复，当且仅当每层满足
+$$
+P_\lambda^{1/2}a=0\quad\text{或}\quad Q_\lambda^{1/2}v_\lambda=0.
+\tag{16.4}
+$$
+完整交叉核仍可不唯一。这里是无附加输出限制的确定性标量估计；若要求本卷定义8.1的可调用终端动作及费用，中心是否属于该合法集合仍由执行合同承担。
+
+对非空的完整档案类 $\mathcal M(\mathcal D,h)$，式（16.2）仅给外界，式（16.3）的右侧仅给该 $z$ 的最坏误差上界，$R_T$ 仅给最优误差上界。若 $\mathbb F(\mathcal D,h)=\mathbb B$，这些精确结论全部适用；否则必须用受限任务像判定，不能仍把 $c_T$ 称为其minimax中心。式（16.4）仍充分，但不再必要。
+
+**证明。** 交换有限求和与积分，置 $u_\lambda=P_\lambda^{1/2}a,w_\lambda=Q_\lambda^{1/2}v_\lambda$，得
+$$
+y_T=c_T+\sum_\lambda\langle u_\lambda,T_\lambda w_\lambda\rangle.
+\tag{16.5}
+$$
+收缩性给各层绝对值至多 $\|u_\lambda\|\|w_\lambda\|$。非零的两向量用式（15.13）的秩一收缩取得正负端点，零向量的层取零算子。各层同时选正号或负号，由定理15.4得到两端点的共同实现；对 $\eta\in[-1,1]$，将所有正端点收缩同乘 $\eta$，得到 $c_T+\eta R_T$。故区间每一点均可达。两端点给
+$$
+\max\{|z-(c_T-R_T)|,|z-(c_T+R_T)|\}=R_T+|z-c_T|,
+$$
+这在且仅在 $z=c_T$ 时最小，平方损失由非负函数平方的单调性得到。$R_T$ 是有限个非负项之和，故为零当且仅当式（16.4）成立。
+
+限制到 $\mathbb F(\mathcal D,h)$ 只缩小任务像，得到所述上界。精确恢复的受限判据是式（16.5）在 $\mathbb F(\mathcal D,h)$ 上为常数。例如命题15.7的旧交叉记录固定唯一的交叉核，所有这里的固定输入任务随之确定，即使按两响应类计算的 $R_T>0$。受限集合含两端点足以使式（16.3）仍尖锐，却不足以推出其任务像填满式（16.2）；后者还须另证每个中间值可行。$\square$
+
+**命题 16.3（积分抵消与同一补全的联合约束）。** 定义16.1的精确半径满足
+$$
+R_T\le\int_0^T\sum_\lambda e^{-\lambda(T-s)}
+\|P_\lambda^{1/2}a\|\,\|Q_\lambda^{1/2}g(s)\|\,ds,
+\tag{16.6}
+$$
+且可严格小于右侧。给定有限个固定任务 $(a_j,g_j,T_j)$，$1\le j\le m$，按式（16.1）记 $v_{j,\lambda},c_j$，则全部共同实现的联合值集为
+$$
+\mathcal C=\left\{\left(c_j+\sum_\lambda
+\langle P_\lambda^{1/2}a_j,T_\lambda Q_\lambda^{1/2}v_{j,\lambda}\rangle\right)_{j=1}^m:
+T\in\mathbb B\right\}.
+\tag{16.7}
+$$
+它一般严格小于各标量区间的直积。同一组 $T_\lambda$ 也必须用于第15节的不同时间响应和距离任务。
+
+**证明。** 积分三角不等式给
+$$
+\|Q_\lambda^{1/2}v_\lambda\|
+\le\int_0^T e^{-\lambda(T-s)}\|Q_\lambda^{1/2}g(s)\|ds,
+$$
+乘相应 $\|P_\lambda^{1/2}a\|$ 后求和得式（16.6）。这是本卷命题11.6中同一输入的核误差到卷积误差估计所用的三角不等式；这里的精确值先在一个固定核内积分，再对该核的共同余量取最坏情形。
+
+单谱标量情形取 $P=Q=1,\lambda=1,a=1,T=2$，$g(s)=1$ 于 $[0,1]$，$g(s)=-e^{-1}$ 于 $(1,2]$。则
+$$
+\int_0^1e^{-(2-s)}ds=e^{-1}-e^{-2},\qquad
+-e^{-1}\int_1^2e^{-(2-s)}ds=-e^{-1}+e^{-2}.
+$$
+故 $v=0,R_T=0$，而式（16.6）右侧为 $2(e^{-1}-e^{-2})>0$。逐时分别选择最坏符号会丢失同一固定补全允许的抵消。
+
+式（16.7）由定理15.4及式（16.5）给出双向包含。取 $X^0=0,P=Q=1$ 的单谱模型，两个任务均令 $a=1$、终时相同，输入分别为同一个非零非负 $g$ 和 $-g$。两中心为零，半径同为 $R>0$，联合值必为 $(z,-z)$，$|z|\le R$。于是 $(R,R)$ 属于边缘区间乘积而不属于 $\mathcal C$。该模型的合法局部块可取 $U_S=\mathbb R,D=1,E=F=0,A=B=1$，所以它在当前重叠合同内实际可实现。限制为完整档案类时，只将式（16.7）的域换为 $\mathbb F(\mathcal D,h)$；任何任务均不能另选一个与其他任务不一致的补全。$\square$
+
+**定理 16.4（共同任务体的支撑函数与兼容性证书）。** 对式（16.7）的 $m\ge1$ 个任务，记 $c=(c_j)_{j=1}^m$，置 $u_{j\lambda}=P_\lambda^{1/2}a_j,w_{j\lambda}=Q_\lambda^{1/2}v_{j,\lambda}$。对每个 $\alpha\in\mathbb R^m$，令
+$$
+S_\lambda(\alpha)=\sum_{j=1}^m\alpha_j u_{j\lambda}w_{j\lambda}^*:U_B\to U_A,
+\qquad
+\Gamma(\alpha)=\sum_\lambda\|S_\lambda(\alpha)\|_*,
+\tag{16.8}
+$$
+其中 $w^*$ 为 $x\mapsto\langle w,x\rangle$，$\|\cdot\|_*$ 为全部奇异值之和。则两响应类的 $\mathcal C$ 非空、紧致、凸，关于 $c$ 对称，其支撑函数为
+$$
+\boxed{h_{\mathcal C}(\alpha):=\max_{z\in\mathcal C}\alpha\cdot z
+=\alpha\cdot c+\Gamma(\alpha).}
+\tag{16.9}
+$$
+因此，一组待同时实现的任务值 $z\in\mathbb R^m$ 属于 $\mathcal C$，当且仅当
+$$
+\boxed{\forall\alpha\in\mathbb R^m,\quad
+|\alpha\cdot(z-c)|\le\Gamma(\alpha).}
+\tag{16.10}
+$$
+$\Gamma$ 一般只是半范数，不要求 $\mathcal C$ 具有非空内部；空谱或所有任务余量为零时 $\mathcal C=\{c\}$。
+
+对完整档案类，令 $\mathcal C_{\mathcal D,h}$ 为式（16.7）在 $\mathbb F(\mathcal D,h)$ 上的像。式（16.10）始终是成员资格的必要条件；当 $\mathbb F(\mathcal D,h)=\mathbb B$ 时亦充分。更小的可行域须另证其任务像等于 $\mathcal C$ 才能沿用充分性；档案约束一般不保留凸性、对称性或闭性。
+
+**证明。** 有限维实矩形算子空间的闭收缩球非空、紧致、凸、中心对称；有限乘积保持这些性质。式（16.7）是该乘积的线性像加 $c$，故 $\mathcal C$ 具有所述性质。其任意线性目标残差为
+$$
+\sum_j\alpha_j(z_j-c_j)
+=\sum_\lambda\operatorname{tr}(S_\lambda(\alpha)^*T_\lambda).
+\tag{16.11}
+$$
+对任意实矩形算子 $S:U_B\to U_A$，取奇异值分解 $S=\sum_{k=1}^r\sigma_k p_kq_k^*$，其中 $\sigma_k>0$，两组向量分别正交规范。任意收缩 $T$ 满足
+$$
+\operatorname{tr}(S^*T)=\sum_k\sigma_k\langle p_k,Tq_k\rangle
+\le\sum_k\sigma_k=\|S\|_*.
+$$
+取 $T_{\rm opt}=\sum_kp_kq_k^*$，在初始空间的正交补上为零，则 $\|T_{\rm opt}x\|^2=\sum_k|\langle q_k,x\rangle|^2\le\|x\|^2$，且每个 $T_{\rm opt}q_k=p_k$，达到等号。$S=0$ 或某个端口空间为零时取零算子；该论证包括奇异及矩形情形。各谱层分别选该收缩，定理15.4将整组选择实现于同一个有限维模型，证明式（16.9）的上界和实际可达性。$\Gamma$ 是线性映射后核范数的有限和，所以绝对齐次且满足三角不等式；不同任务的线性依赖可使其对非零 $\alpha$ 为零，因此只保证半范数。
+
+支撑公式及 $\Gamma(-\alpha)=\Gamma(\alpha)$ 给式（16.10）的必要性。若 $z\notin\mathcal C$，紧性使距离最近点 $z_0\in\mathcal C$ 存在，令 $\alpha=z-z_0\ne0$。对任意 $x\in\mathcal C$，凸性使 $z_0+s(x-z_0)\in\mathcal C$ 对 $0\le s\le1$ 成立；距离平方在 $s=0$ 处的一侧导数非负，给 $\alpha\cdot(x-z_0)\le0$。于是
+$$
+h_{\mathcal C}(\alpha)=\alpha\cdot z_0
+<\alpha\cdot z_0+\|\alpha\|^2=\alpha\cdot z,
+$$
+违反式（16.10），证明充分性。该最近点论证也覆盖低维和单点集合。
+
+受限类满足 $\mathcal C_{\mathcal D,h}\subseteq\mathcal C$，所以必要性保留。不能由端点可行补出充分性：在命题16.3的单谱标量模型中，额外同源记录 $(K_{AB}(0))^2=1$ 把收缩限制到 $\{-1,1\}$。一个非零非负输入的读数值集为 $\{-R,R\}$，$R>0$；两端都可达且其支撑函数与 $[-R,R]$ 相同，但零读数不可达。一般任何线性泛函在一个集合、其凸包及其闭凸包上的上确界相同，分别由凸组合的线性性和连续性得到；故即使求得受限支撑函数，若未另证闭凸性，也只识别其闭凸包，不能恢复原可行像中的孔隙。
+
+这里使用的奇异值分解和核范数—算子范数对偶是成熟线性代数。[量子伴卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)定理13.3的证明已用收缩迹对偶作精确求值；本卷命题1.3给评价极性，命题7.1给共同系数不能替为边缘乘积的边界。本定理将这些结构应用于同一谱补全的联合任务，不额外假定不同任务的最优值能共同取得。$\square$
+
+**推论 16.5（既有零频积分恒等式的缺失块范围）。** 假设15.1的严格正有限谱使每个合法交叉核在算子范数中可积。应用主卷第126.7节及本卷命题11.8的记忆积分恒等式，其 $AB$ 块为
+$$
+Z_{AB}:=\int_0^\infty K_{AB}(t)dt
+=\sum_\lambda\lambda^{-1}X_\lambda=J_A^*C^{-1}J_B.
+\tag{16.12}
+$$
+固定 $a\in U_A,b\in U_B$，两响应类上 $\langle a,Z_{AB}b\rangle$ 的精确区间中心及半径分别为
+$$
+c_0=\sum_\lambda\lambda^{-1}\langle a,X^0_\lambda b\rangle,\qquad
+R_0=\sum_\lambda\lambda^{-1}\|P_\lambda^{1/2}a\|\,\|Q_\lambda^{1/2}b\|.
+\tag{16.13}
+$$
+它也有定理16.2的唯一标量minimax中心和最坏误差公式。恒定输入 $g(s)=b$ 在每个有限时刻的卷积存在，其中
+$$
+v_\lambda(T)=\frac{1-e^{-\lambda T}}{\lambda}b,
+\qquad
+\lim_{T\to\infty}\int_0^T K_{AB}(T-s)b\,ds=Z_{AB}b.
+\tag{16.14}
+$$
+$ b\ne0$ 时恒定输入不属于 $L^1([0,\infty))$，不影响上述有限时刻及极限结论。完整档案的精确性限定与定理16.2相同；积分增益在换钟下按命题15.9运输。
+
+**证明。** 对所有补全统一有
+$$
+\int_0^\infty\|K_{AB}(t)\|dt
+\le\sum_\lambda\frac{\|X^0_\lambda\|+
+\sqrt{\|P_\lambda\|\|Q_\lambda\|}}{\lambda}<\infty.
+$$
+故既有积分恒等式适用，逐谱积分即其式（16.12）的表达。缺失块的新增范围由
+$$
+\langle a,Z_{AB}b\rangle-c_0
+=\sum_\lambda\lambda^{-1}
+\langle P_\lambda^{1/2}a,T_\lambda Q_\lambda^{1/2}b\rangle
+$$
+和定理16.2证明中的秩一收缩及共同缩放给出：两端和全部中间值都有共同实现，区间为 $[c_0-R_0,c_0+R_0]$，最坏误差为 $R_0+|z-c_0|$。标量指数积分给式（16.14）的 $v_\lambda(T)$，有限和逐项取极限得到卷积极限；同一统一范数界亦给全部补全上的衰减尾界。额外记录只留下其中的可行收缩，故不改变前述信息类限定。$\square$
+
+**命题 16.6（未知初态与反馈输入的合同边界）。** 定理16.2及推论16.5只结算固定输入的卷积任务，不由局部核数据控制未知初态强迫，也不直接结算随补全改变的反馈输入。对固定实现，若某时刻 $J_A^*e^{-TC}\ne0$，则当初态不受额外约束而遍历整个 $H$ 时，$J_A^*e^{-TC}h_0$ 的幅度无统一有限界；对每个固定 $h_0$，此项仍在 $T\to\infty$ 时趋零。
+
+**证明。** 取 $v$ 使 $J_A^*e^{-TC}v\ne0$，令 $h_0=rv$，随 $|r|\to\infty$ 幅度无界，而核不依赖 $h_0$。若固定 $h_0$，$H=\{0\}$ 时结论直接成立；否则有限维严格正 $C$ 的最小特征值 $\mu>0$ 给
+$$
+\|J_A^*e^{-TC}h_0\|\le\|J_A\|e^{-\mu T}\|h_0\|\to0.
+$$
+这不是对整个无约束初态空间的统一收敛。加入初态交叉记录及能量约束时，应使用本卷第13节的同一初态相容条件；定理13.4的精确半径还假定完整核固定。
+
+若实际输入为 $g_M$ 且随补全 $M$ 改变，式（16.5）的 $v_\lambda$ 也随之改变，已不再是固定线性任务在收缩乘积上的像，所给固定输入区间不能直接代入。[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定理12.10、式（12.14）在固定共同反馈、两个核的可积性、小增益及初态外源误差合同下给反馈比较；这些是独立前提，不能由一个标量固定输入区间推出。因此同一几何、时间及记忆表示的这些任务结论，均只在已声明的来源、取得、输入、精度及资源范围内成立。$\square$
+
+## 16.99 追加锚
+
+## 17. 同源取得关系与尖锐记忆端点
+
+**定义 17.1（保留历史的联合取得纤维）。** 固定有限维实向量空间 $E$、非空紧凸集 $\Gamma\subset E$、线性记录映射 $R:E\to\mathbb R^n$（$n\ge1$）及线性任务 $\ell:E\to\mathbb R$。记录坐标、单位及其 Euclidean 配对固定，$R^*c$ 表示线性泛函 $v\mapsto c\cdot Rv$，不要求先在 $E$ 上选择内积。定义
+$$
+D=R(\Gamma),\qquad \Gamma_y=\{v\in\Gamma:Rv=y\},\qquad
+U^\ell(y)=\max_{v\in\Gamma_y}\ell(v),\quad
+L^\ell(y)=\min_{v\in\Gamma_y}\ell(v)\quad(y\in D),
+$$
+$$
+h_\Gamma(f)=\max_{v\in\Gamma}f(v),\qquad
+F_y^\ell(c)=c\cdot y+h_\Gamma(\ell-R^*c).
+\tag{17.1}
+$$
+无歧义时写 $U=U^\ell,L=L^\ell$。$y\in D$ 指实际可取得的同一份记录；上下端点始终来自同一个 $\Gamma_y$。
+
+这里的联合载体须满足本卷假设15.1、定义8.1及[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义13.1、命题13.2及定义13.3的来源与历史条件：固定已保留历史后，全部旧约束已在 $\Gamma$ 中，或作为同一个 $R,y$ 的附加行保留；不得只保留此次新读数。源、误差、初态和装置等辅助变量按同一实现联合取值。若动作改变物理状态，$v$ 表示含共同来源和合法历史的扩充实现，须同时保留相关动作前后的状态；$\Gamma_y$ 的静态集合交不表示物理状态不变。将实际扩充实现表示为上述紧凸联合域及线性记录、任务，是本节的显式假设，不由记录名称或边缘取值域推出。
+
+**定理 17.2（无严格可行性前提的尖锐端点）。** 在定义17.1下，对每个 $y\in D$，有
+$$
+\boxed{U^\ell(y)=\inf_{c\in\mathbb R^n}
+\bigl[c\cdot y+h_\Gamma(\ell-R^*c)\bigr],\qquad
+L^\ell(y)=-U^{-\ell}(y).}
+\tag{17.2}
+$$
+原问题的两个端点均达到，任务值集为 $[L(y),U(y)]$；式（17.2）的对偶只断言下确界，不断言有限系数达到。允许输出任意实数时，定理3.2–推论3.3的标量纤维结论给出中心 $(L(y)+U(y))/2$、最坏绝对误差 $(U(y)-L(y))/2$，以及单点纤维的精确恢复判据。
+
+**证明。** $\Gamma_y$ 非空、紧、凸，故线性任务达到极值，且其像为闭区间。对任意 $c$ 和 $v\in\Gamma_y$，
+$$
+\ell(v)=c\cdot y+(\ell-R^*c)(v)\le F_y^\ell(c),
+$$
+给出弱对偶 $U(y)\le\inf_c F_y^\ell(c)$。令
+$$
+K=\{(Rv,\ell(v)):v\in\Gamma\}\subset\mathbb R^n\times\mathbb R.
+$$
+它紧且凸。对 $\varepsilon>0$，点 $p=(y,U(y)+\varepsilon)$ 不属于 $K$。由有限维紧凸集与外点的严格分离定理，存在 $(a,b)$ 使
+$$
+a\cdot y+b(U(y)+\varepsilon)
+>\max_{v\in\Gamma}\bigl[a\cdot Rv+b\ell(v)\bigr].
+\tag{17.3}
+$$
+此处的严格分离可直接使用定理16.4证明中的最近点分离论证，应用于 $K,p$。因 $(y,U(y))\in K$，式（17.3）蕴含 $b\varepsilon>0$，故 $b>0$。除以 $b$ 并令 $c=-a/b$，得到 $F_y^\ell(c)<U(y)+\varepsilon$。结合弱对偶并令 $\varepsilon\downarrow0$，即得式（17.2）；对 $-\ell$ 使用同一结论给下端点。标量中心及误差是既有定理3.2在该闭区间上的应用，不要求对偶最优系数存在。$\square$
+
+作为式（17.2）的乘积特例，设 $X$ 是有限维实向量空间，$K\subset X$ 与 $E_{\rm noise}\subset\mathbb R^n$ 均非空、紧、凸，施加记录行之前的实际联合域恰为 $\Gamma=K\times E_{\rm noise}$。取线性映射 $A:X\to\mathbb R^n$、线性任务 $h:X\to\mathbb R$，令 $R(v,e)=Av+e$、$\ell(v,e)=h(v)$；对可取得的同一记录 $y\in R(\Gamma)$，证书目标为
+$$
+F_y^\ell(c)=c\cdot y+h_K(h-A^*c)+h_{E_{\rm noise}}(-c).
+$$
+这是乘积支撑规则的直接应用：残差为 $(h-A^*c)(v)-c\cdot e$，两项在实际乘积上可分别达到最大值。非对称误差域一般不满足 $h_{E_{\rm noise}}(-c)=h_{E_{\rm noise}}(c)$，故不能省去负号。定义17.1的全部旧记录条件仍须保留：旧约束已吸收时实际联合域仍须是上述乘积，否则须作为同一 $R,y$ 的附加行保留；仅给边缘域 $K,E_{\rm noise}$ 不蕴含此公式。
+
+**命题 17.3（相对内部的有限系数代表）。** 记
+$$
+V=\operatorname{span}(D-D),\qquad
+m=\min_{v\in\Gamma}\ell(v),\quad M=\max_{v\in\Gamma}\ell(v).
+$$
+设 $y\in D$ 且存在 $\rho>0$ 使 $y+\rho\overline B_2^V\subset D$，其中 $\overline B_2^V=\{w\in V:\|w\|_2\le1\}$。当 $V\ne\{0\}$ 时，对偶在 $V$ 上达到最小值，且其中每个最小化系数 $c_*$ 满足
+$$
+\boxed{\|c_*\|_2\le\frac{U(y)-m}{\rho}
+\le\frac{M-m}{\rho}.}
+\tag{17.4}
+$$
+相对内部 $y\in\operatorname{ri}D$ 提供这样的相对球。若 $V=\{0\}$，$c=0$ 已达到端点。冗余记录及低维 $D$ 均允许；式（17.4）只约束 $V$ 中的代表，不约束添加任意法向分量后的全部代表。这是达到性的充分条件。
+
+**证明。** 对 $w\in V^\perp$，所有 $v\in\Gamma$ 都有 $w\cdot(y-Rv)=0$，故由
+$$
+F_y^\ell(c)=\max_{v\in\Gamma}\bigl[\ell(v)+c\cdot(y-Rv)\bigr]
+$$
+得到 $F_y^\ell(c+w)=F_y^\ell(c)$。因此投影到 $V$ 不改变目标或下确界。对非零 $c\in V$，相对球条件提供 $v_c\in\Gamma$，使 $Rv_c=y-\rho c/\|c\|_2$；于是
+$$
+F_y^\ell(c)\ge\ell(v_c)+\rho\|c\|_2\ge m+\rho\|c\|_2.
+\tag{17.5}
+$$
+$c=0$ 时该下界也成立，且 $F_y^\ell(0)=M$。紧性使 $F_y^\ell$ 连续，式（17.5）使其在有限维 $V$ 上强制趋于无穷，故最小值达到。定理17.2给该值为 $U(y)$，代回即得式（17.4）。若 $V=\{0\}$，所有记录等于 $y$，所以 $\Gamma_y=\Gamma$，$F_y^\ell(0)=M=U(y)$。$\square$
+
+**假设 17.4（实际交叉取得与固定记忆任务）。** 沿用定义15.3、定理15.4的收缩乘积 $\mathbb B$ 及同一组 $P_\lambda,Q_\lambda,X^0_\lambda$。固定 $n$ 次实际标定测量 $(a_i,b_i,\tau_i)$，其中 $a_i\in U_A,b_i\in U_B,\tau_i\ge0$。其读数为 $y_i=\langle a_i,K_{AB}(\tau_i)b_i\rangle+e_i$。令
+$$
+d_i=\sum_\lambda e^{-\lambda\tau_i}\langle a_i,X^0_\lambda b_i\rangle,
+\qquad
+A_{i,\lambda}=e^{-\lambda\tau_i}
+(P_\lambda^{1/2}a_i)(Q_\lambda^{1/2}b_i)^*,
+$$
+$$
+z_i=y_i-d_i,\qquad
+\mathcal A_i(T)=\sum_\lambda\langle A_{i,\lambda},T_\lambda\rangle_{\rm HS},
+\qquad z=\mathcal A(T)+e.
+\tag{17.6}
+$$
+对同一个候选 $T=(T_\lambda)_\lambda$，固定终时 $\theta\ge0$、$a\in U_A$ 及所有候选共用的 $g\in L^1([0,\theta];U_B)$。按定义16.1置
+$$
+v_\lambda=\int_0^\theta e^{-\lambda(\theta-s)}g(s)\,ds,
+\qquad H_\lambda=(P_\lambda^{1/2}a)(Q_\lambda^{1/2}v_\lambda)^*,
+\qquad m_0=\sum_\lambda\langle a,X^0_\lambda v_\lambda\rangle.
+$$
+记 $\langle H,T\rangle=\sum_\lambda\langle H_\lambda,T_\lambda\rangle_{\rm HS}$，其中 $\langle S,T\rangle_{\rm HS}=\operatorname{tr}(S^*T)$，$uw^*$ 是 $x\mapsto u\langle w,x\rangle$。同一固定输入的记忆任务为
+$$
+q(T)=\int_0^\theta\langle a,K_{AB}(\theta-s)g(s)\rangle ds
+=m_0+\langle H,T\rangle.
+\tag{17.7}
+$$
+端口身份、内积、单位、增益、经过时间标定及制备在候选间固定。未知初态强迫须由有依据的制备消去，或保留在同一扩充载体及任务中；随候选变化的反馈输入不满足这里固定 $g$ 的假设，见命题16.6。
+
+**定理 17.5（乘积取得合同下的尖锐残差公式）。** 在假设17.4下，假定施加记录行之前的真实联合域恰为
+$$
+\Gamma=\mathbb B\times\prod_{i=1}^n[-\epsilon_i,\epsilon_i],\qquad \epsilon_i\ge0,
+\tag{17.8}
+$$
+且全部旧约束已作为同一记录系统中的行保留，其误差亦受式（17.8）的同一联合合同约束。假定 $z$ 可取得。则记忆任务的上端点为
+$$
+\boxed{m_0+\inf_{c\in\mathbb R^n}
+\left[c\cdot z+\sum_\lambda
+\left\|H_\lambda-\sum_i c_iA_{i,\lambda}\right\|_*
++\sum_i\epsilon_i|c_i|\right].}
+\tag{17.9}
+$$
+$\|S\|_*$ 表示 $S$ 的全部奇异值之和，包含奇异与矩形块；下端点由将 $H$ 换成 $-H$ 的上端点残差取负再加 $m_0$ 得到。式（17.8）要求每个所列 $T,e$ 组合有共同合法实现；这是可行域的笛卡尔积条件，不是概率独立性。
+
+若保留旧记录后真实联合域是该乘积的非空紧凸真子集 $\Gamma_{\rm ret}$，则定理17.2使用 $\Gamma_{\rm ret}$ 的实际支撑函数，式（17.9）一般仅是外上界。若旧约束已吸收在 $\Gamma_{\rm ret}$ 中，不得以式（17.8）替换它。非凸联合域另受命题17.9的限制。
+
+**证明。** 式（15.8）的交叉核代入实际测量，利用外积的迹配对得到式（17.6）；定义16.1及式（16.5）直接给式（17.7）。对联合变量 $(T,e)$ 取 $R(T,e)=\mathcal A(T)+e$、$\ell(T,e)=\langle H,T\rangle$。定理16.4的算子范数球支撑公式直接给
+$$
+h_\Gamma(\ell-R^*c)
+=\sum_\lambda\left\|H_\lambda-\sum_i c_iA_{i,\lambda}\right\|_*
++\sum_i\epsilon_i|c_i|.
+$$
+末项是误差盒上线性泛函 $-c\cdot e$ 的最大值；两项相加的等号使用式（17.8）的联合乘积条件。定理15.4保证每组收缩对应同一个共同正实现；记录条件再选择其中匹配实际 $z$ 的联合候选。应用定理17.2并加上固定偏移 $m_0$ 即得式（17.9）。限制联合域只会减小纤维，故乘积端点对真子集仍为外界，不保证精确。$\square$
+
+**命题 17.6（严格盒裕度与全部最优系数的界）。** 在定理17.5的乘积合同下，若存在合法 $T^0\in\mathbb B$ 使
+$$
+\delta=\min_i\bigl(\epsilon_i-|z_i-\mathcal A_i(T^0)|\bigr)>0,
+\tag{17.10}
+$$
+则式（17.9）的残差对偶目标 $F_z^H$ 在整个 $\mathbb R^n$ 上达到最小值，且每个最小化系数满足
+$$
+\boxed{\|c_*\|_1\le
+\frac{\sum_\lambda\|H_\lambda\|_*-\langle H,T^0\rangle}{\delta}.}
+\tag{17.11}
+$$
+仅有各 $\epsilon_i>0$ 不蕴含式（17.10）。
+
+**证明。** 定理16.4的支撑公式及 $T^0$ 的合法性给
+$$
+\begin{aligned}
+F_z^H(c)
+&\ge\langle H,T^0\rangle
++\sum_i c_i(z_i-\mathcal A_i(T^0))+\sum_i\epsilon_i|c_i|\\
+&\ge\langle H,T^0\rangle+\delta\|c\|_1.
+\end{aligned}
+$$
+故连续目标在整个系数空间强制趋于无穷，最小值达到；每个最小值至多为 $F_z^H(0)=\sum_\lambda\|H_\lambda\|_*$，给式（17.11）。这次的强制性是全空间的，不是命题17.3的相对代表界。正宽度仍无严格可行点的实际收缩实例由命题18.4给出。$\square$
+
+**命题 17.7（相同源误差投影不足以替换联合合同）。** 在共同坐标 $(x,e)\in\mathbb R^2$ 中，取
+$$
+\Gamma_+=\{(x,e):|x|\le1,e=x\},\qquad
+\Gamma_-=\{(x,e):|x|\le1,e=-x\}.
+$$
+两者非空、紧、凸，源投影与误差投影均恰为 $[-1,1]$。然而对 $R(x,e)=x+e$、$\ell(x,e)=x$ 和实际记录 $y=0$，两者的任务纤维分别为 $\{0\}$、$[-1,1]$。因此定理17.5的乘积合同不能由精确坐标投影推得。
+
+**证明。** 在 $\Gamma_+$ 上 $R=2x$，故记录零强制 $x=0$；在 $\Gamma_-$ 上 $R=0$ 对每个 $|x|\le1$ 成立。若还令 $x$ 服从该区间上的均匀律，两模型的源边缘律及误差边缘律也分别相同；联合关系仍不同。故即使另给这些概率边缘律，也不能恢复定理17.2所条件化的联合纤维。$\square$
+
+**命题 17.8（共同误差抵消限制边缘盒替换）。** 取精确联合域
+$$
+\Gamma_{\rm sh}=\{(x,e_1,e_2):|x|\le1,\ \exists u\in[-1,1],\ e_1=u,e_2=-u\}.
+$$
+记录为 $y_1=x+e_1=x+u,y_2=x+e_2=x-u$，任务为 $x$。每个误差坐标的投影都是 $[-1,1]$，但在 $y=(0,0)$ 上任务纤维为 $\{0\}$；替换为 $\Gamma_{\rm box}=[-1,1]^3$ 后，任务纤维为 $[-1,1]$。
+
+**证明。** 同一个 $u$ 给 $x=(y_1+y_2)/2$，从而零记录给 $x=u=0$。盒替换后，每个 $x\in[-1,1]$ 都可配 $e_1=e_2=-x$，得到相同零记录。共享误差集的支撑值为
+$$
+\max_{|u|\le1}(c_1u-c_2u)=|c_1-c_2|,
+$$
+而边缘盒的支撑值为 $|c_1|+|c_2|$。这是命题4.7的共同原始误差展开及抵消在实际取得行上的应用；把同一个原始误差改成两个可分别选择的误差，改变的是定理17.5的联合域。$\square$
+
+**命题 17.9（先凸化再条件化会放大任务纤维）。** 取记录—任务联合域
+$$
+K_0=\{(-1,1),(0,0),(1,1)\},\qquad
+R(r,q)=r,\quad\ell(r,q)=q.
+$$
+在记录零处，$K_0$ 的任务纤维是 $\{0\}$，$\operatorname{conv}K_0$ 的任务纤维却是 $[0,1]$。对任意 $B\ge0$，还有
+$$
+\max_{v\in K_0}\bigl[\ell(v)-B|Rv|\bigr]=\max\{0,1-B\},
+\qquad
+\min_{|c|\le B}h_{K_0}(\ell-R^*c)=1.
+\tag{17.12}
+$$
+故定理17.2的凸性与定理18.1的极小极大交换不能仅由相同支撑函数替代。
+
+**证明。** 三点中仅 $(0,0)$ 的记录为零。另两点的中点是 $(0,1)$，它与 $(0,0)$ 的线段给整个 $[0,1]$，且所有点的任务坐标都在该区间。三个惩罚值分别为 $1-B,0,1-B$；支撑目标则为 $\max\{1+c,0,1-c\}=1+|c|$，其受限最小值在零处为一。此例将定理16.4所述支撑只见闭凸包的限制，直接作用于取得后的条件纤维。$\square$
+
+## 18. 有限敏感度证书与边界取得的非达性
+
+**定理 18.1（有界系数证书的惩罚表示与最小主函数）。** 在定义17.1下，对 $B\ge0$ 及任意 $y\in\mathbb R^n$ 定义
+$$
+U_B^\ell(y)=\min_{\|c\|_1\le B}
+\bigl[c\cdot y+h_\Gamma(\ell-R^*c)\bigr].
+\tag{18.1}
+$$
+则
+$$
+\boxed{U_B^\ell(y)=\max_{v\in\Gamma}
+\bigl[\ell(v)-B\|y-Rv\|_\infty\bigr]
+=\sup_{z\in D}\bigl[U^\ell(z)-B\|y-z\|_\infty\bigr].}
+\tag{18.2}
+$$
+式（18.1）的最小值与式（18.2）的源最大值均达到。$U_B^\ell$ 在整个记录空间中为 $B$-Lipschitz，数据范数为这些固定坐标及单位下的 $\|\cdot\|_\infty$。它是所有在 $D$ 上不小于 $U^\ell$ 的全空间 $B$-Lipschitz 函数中逐点最小者。对 $y\in D$，
+$$
+U_B^\ell(y)\ge U^\ell(y),\qquad
+U_B^\ell(y)\downarrow U^\ell(y)\quad(B\to\infty).
+\tag{18.3}
+$$
+本定理不附加统一收敛速率或连续最优系数选择的结论。
+
+**证明。** 在两个非空紧凸集 $\Gamma$ 和 $\{c:\|c\|_1\le B\}$ 上，配对
+$$
+f(v,c)=\ell(v)+c\cdot(y-Rv)
+$$
+连续且分别仿射，满足 Sion，[*On general minimax theorems*](https://doi.org/10.2140/pjm.1958.8.171)，Theorem 3.4 的半连续性与拟凹、拟凸条件。应用该定理得到
+$$
+\min_{\|c\|_1\le B}\max_{v\in\Gamma}f(v,c)
+=\max_{v\in\Gamma}\min_{\|c\|_1\le B}f(v,c).
+$$
+对固定 $v$，内层最小值为 $\ell(v)-B\|y-Rv\|_\infty$，由 $\ell^1$ 球与 $\ell^\infty$ 范数的对偶配对得到。两侧目标连续、可行集紧，所以均达到。按 $z=Rv$ 分组，并用各纤维上任务最大值的达到性，得到式（18.2）的最后一式。
+
+每个 $y\mapsto U^\ell(z)-B\|y-z\|_\infty$ 都为 $B$-Lipschitz，其有限值上确界保持该性质。取 $z=y\in D$ 给主函数性质。若 $G$ 是任一这样的全空间 $B$-Lipschitz 主函数，则
+$$
+G(y)\ge G(z)-B\|y-z\|_\infty
+\ge U^\ell(z)-B\|y-z\|_\infty\qquad(z\in D).
+$$
+取上确界得 $G(y)\ge U_B^\ell(y)$，证明最小性。
+
+扩大系数球给单调性。也可在惩罚表示中，对 $B>0$ 取最大化源 $v_B$，以 $M=\max_\Gamma\ell$ 记，得到
+$$
+B\|y-Rv_B\|_\infty\le\ell(v_B)-U^\ell(y)\le M-U^\ell(y).
+\tag{18.4}
+$$
+沿任一趋于无穷的预算序列，紧性提供收敛子列，其极限 $v_*$ 满足 $Rv_*=y$；又有 $U_B^\ell(y)\le\ell(v_B)$。所以单调极限至多为 $\ell(v_*)\le U^\ell(y)$，结合下界得到式（18.3）。此论证只给逐记录收敛，亦不构造连续的最优系数选择。$\square$
+
+**命题 18.2（证书区间、计算访问与精确预算）。** 对实际记录 $y\in D$，任意 $B\ge0$ 给出包含真实任务区间的证书区间
+$$
+\boxed{[L^\ell(y),U^\ell(y)]
+\subseteq[-U_B^{-\ell}(y),U_B^\ell(y)].}
+\tag{18.5}
+$$
+每个正的端点容差都可由某个有限共同预算满足。上端点在有限 $B$ 下精确，当且仅当式（17.2）存在一个范数 $\|c_*\|_1\le B$ 的对偶最小化系数；精确区间要求两个符号各自满足此条件。命题17.3给出的 Euclidean 代表界经 $\|c\|_1\le\sqrt n\|c\|_2$ 给充分预算，命题17.6给全空间的充分预算，两者均须分别用于 $\ell$ 与 $-\ell$。
+
+计算证书另假定可以精确求出所用 $h_\Gamma(\ell-R^*c)$，或取得其有效上界 $\widehat h$。若 $\|c\|_1\le B$，则 $c\cdot y+\widehat h$ 是实际任务的有效上界。若还知道
+$$
+F_y^\ell(c)\le U_B^\ell(y)+\xi,\qquad
+0\le\widehat h-h_\Gamma(\ell-R^*c)\le\zeta,
+\qquad\xi,\zeta\ge0,
+$$
+则计算所得上界至多为 $U_B^\ell(y)+\xi+\zeta$。$\xi$ 是优化余量，$\zeta$ 是支撑求值余量；定义17.1的一般紧凸性本身不提供可行的支撑求值算法。定理17.5的有限核范数公式是在其联合合同及所需系数、积分数据已知或带有效界时的具体求值接口。
+
+**证明。** 对两个符号应用式（18.3）给区间包含及任意正容差下的有限预算，取两预算的较大者即可。若有预算内对偶最小化系数，代入式（18.1）及弱对偶得精确性；反向若 $U_B^\ell(y)=U^\ell(y)$，式（18.1）达到的系数即为所需的无约束对偶最小化系数。支撑上界保证 $\ell(v)\le c\cdot y+\widehat h$ 对每个 $v\in\Gamma_y$ 成立；两项余量相加得到所述精度。
+
+这些系数及支撑值是既有记录的后处理，按命题8.13不切开来源纤维，也不取得新记录或给出可行源重建。惩罚最大化源 $v_B$ 可满足 $Rv_B\ne y$，故它不必是实际条件纤维中的源。预算 $B$ 控制已声明记录范数下的数据敏感度；只有另给执行及计价合同，才能把它与取得费用相连。它也不同于定义4.5在精确表示等式 $Q^*a=h$ 下另加资源限制的优化问题。$\square$
+
+**命题 18.3（合法重叠圆盘的尖锐端点与有限精度代价）。** 在假设15.1中取单率 $\lambda=1$、$U_A=U_S=\mathbb R$、$U_B=\mathbb R^2$，并取局部系数
+$$
+D=1,\quad E=1,\quad F=(1,0),\quad
+A=2,\quad B_{\rm loc}=\operatorname{diag}(2,1).
+\tag{18.6}
+$$
+则 $P=1,Q=I_2,X^0=(1,0)$。定理15.4给出全部合法余量 $T=(t_1,t_2)$，其中 $t_1^2+t_2^2\le1$，以及
+$$
+K_{AB}(t)=e^{-t}(1+t_1,t_2).
+$$
+取得实际无误差读数 $\langle1,K_{AB}(0)e_1\rangle=2$，即中心化记录 $t_1=1$。固定终时一及输入 $g(s)=e_2/(1-e^{-1})$，$0\le s\le1$，则定义16.1的记忆任务恰为 $t_2$。其真实任务纤维为 $\{0\}$，而上端点对偶满足
+$$
+\inf_{c\in\mathbb R}\bigl[c+\sqrt{1+c^2}\bigr]=0,\qquad
+c+\sqrt{1+c^2}>0\quad(c\in\mathbb R).
+\tag{18.7}
+$$
+因此无有限最小化系数。对两个任务符号，定理18.1的值相同，且
+$$
+\boxed{U_B=\sqrt{1+B^2}-B,\qquad
+[-U_B,U_B]\text{ 是相应证书区间}.}
+\tag{18.8}
+$$
+对 $0<\eta<1$，
+$$
+\boxed{U_B\le\eta\iff B\ge\frac{1-\eta^2}{2\eta}.}
+\tag{18.9}
+$$
+$\eta\ge1$ 时每个 $B\ge0$ 均满足容差；$\eta=0$ 时没有有限预算满足。
+
+**证明。** 两个局部谱块分别为 $\begin{pmatrix}2&1\\1&1\end{pmatrix}$ 和 $\begin{pmatrix}1&1&0\\1&2&0\\0&0&1\end{pmatrix}$，均正定。定义15.3直接给上述 $P,Q,X^0$，行算子的算子范数为 $\sqrt{t_1^2+t_2^2}$，所以定理15.4保证整个圆盘的共同正实现。该固定输入给 $v_1=e_2$，故 $m_0=0,H=(0,1)$，由式（16.5）得到任务 $t_2$。
+
+$t_1=1$ 与圆盘条件迫使 $t_2=0$。已知球约束下的真实零半径由定理3.2–推论3.3直接给出；这一边界纤维的确定性不要求全域线性字典表示，见命题2.5。由定理16.4的支撑公式，记录系数为 $(1,0)$，残差任务为 $(-c,1)$，其核范数为 $\sqrt{1+c^2}$，得到式（18.7）的目标。该目标严格正，且在 $c=-b,b\to\infty$ 时为
+$$
+\sqrt{1+b^2}-b=\frac1{\sqrt{1+b^2}+b}\longrightarrow0.
+$$
+其导数 $1+c/\sqrt{1+c^2}>0$，故 $|c|\le B$ 时最小值在 $c=-B$ 达到。将任务改为 $-t_2$ 只将残差的第二坐标取负，不改范数，证明式（18.8）。式（18.2）的一个惩罚最大化源为 $(t_1,t_2)=(B,1)/\sqrt{1+B^2}$：代入得到 $t_2-B|1-t_1|=\sqrt{1+B^2}-B$，但任意有限 $B$ 都有 $t_1<1$，所以它不在实际记录纤维中。当 $\eta>0$ 时，$\sqrt{1+B^2}\le B+\eta$ 两侧非负，平方并约去 $B^2$ 后恰为 $1\le2B\eta+\eta^2$，给出全部容差分支。$\square$
+
+**命题 18.4（正宽度条带仍可无严格裕度）。** 对命题18.3的圆盘，取任意 $\epsilon>0$，精确联合域为该圆盘与 $[-\epsilon,\epsilon]$ 的乘积，记录为 $z=t_1+e=1+\epsilon$，任务仍为 $t_2$。真实联合纤维只有 $(t_1,t_2,e)=(1,0,\epsilon)$，故任务仍为零，且没有命题17.6的严格裕度点。其上端点对偶为
+$$
+\inf_{c\in\mathbb R}
+\bigl[(1+\epsilon)c+\sqrt{1+c^2}+\epsilon|c|\bigr]=0,
+\tag{18.10}
+$$
+同样不在任何有限 $c$ 处达到；对每个 $B\ge0$，有界系数值仍为式（18.8）。
+
+**证明。** 条带约束 $|1+\epsilon-t_1|\le\epsilon$ 给 $t_1\ge1$，圆盘却给 $t_1\le1$，故只能是所述联合点。对任意圆盘点，$|1+\epsilon-t_1|\ge\epsilon$，排除严格裕度。定理17.5给式（18.10）；当 $c\le0$ 时目标恰为 $c+\sqrt{1+c^2}$，当 $c\ge0$ 时为 $(1+2\epsilon)c+\sqrt{1+c^2}\ge1$。负半轴沿用命题18.3的严格正性、极限及受限最小值，得到全部结论。$\square$
+
+## 18.99 追加锚
+
+## 19. 校准时间下的有限端点识别
+
+**假设 19.1（同源端点、已知钟与真实零点）。** 采用[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)命题18.4的三节点单位导纳路径，保留本卷定义8.1、假设15.1的全部旧档案、来源身份和合法取得历史。
+
+固定
+
+$$
+k_r(t)=\frac1{r+2}+\frac12e^{-t}
+       +\frac{r}{2(r+2)}e^{-(1+2/r)t},\qquad r>0,\ t\ge0.
+$$
+
+本地经过时间标签 `τ` 与本式时间的换算是已知的 `t=cτ`，`c>0`。零标签须对应制备/脉冲的真实经过时间零点。固定同一参数、端口、脉冲、单位和来源，实际核读数为
+
+$$
+Y(\tau)=g\,k_r(c\tau),\qquad g>0,
+$$
+
+其中两次读取使用同一个正增益 `g`，没有未建模的加性基线、未知初态强迫或增益漂移。若仪器存在基线/未知初态响应，须由已认证的配对差分取得该核，再应用此模型。因 `k_r(0)=1`，真实零时刻给 `Y(0)=g`，一个 `τ>0` 的归一化读数给
+
+$$
+q=Y(\tau)/Y(0)=k_r(t).
+$$
+
+这里“一个正时刻样本”指一个额外核值，另需真实零时刻的校准核值；它不是声称一次未经校准的原始仪器读出便足够。
+
+**定理 19.2（一次正时刻核值的精确像）。** 在假设19.1下，任意已知 $t>0$ 的归一化值唯一确定有限正参数 $r$，其像恰为下述开区间。
+
+证明。置
+
+$$
+a_r=1+2/r>1,\qquad h(z)=1-(1+z)e^{-z}.
+$$
+
+核可写成
+
+$$
+k_r(t)=\frac12\left(1+e^{-t}-\frac{1-e^{-a_rt}}{a_r}\right).
+$$
+
+直接对模型参数求导得到
+
+$$
+\boxed{\partial_r k_r(t)
+=-\frac{h(a_rt)}{(r+2)^2}.}
+\tag{19.101}
+$$
+
+对 `t>0`，`a_rt>0`，标准严格指数不等式 $e^z>1+z$（$z>0$）给 `h(a_rt)>0`。由实分析的负导数单调性定理，`r↦k_r(t)` 在 `(0,∞)` 严格递减，因而单射。这里求导是证明已知模型的性质，**实验不需要读取或估计导数**。
+
+端点极限为
+
+$$
+\lim_{r\downarrow0}k_r(t)=\frac{1+e^{-t}}2,
+\qquad
+\lim_{r\to\infty}k_r(t)=e^{-t}.
+$$
+
+所以连续严格递减映射恰把 `(0,∞)` 映到
+
+$$
+\boxed{e^{-t}<q<\frac{1+e^{-t}}2.}
+\tag{19.102}
+$$
+
+精确读数在此开区间中有唯一正参数；落在外面则与本族、校准及精确读数合同不相容。端点对应参数极限，不能把它们宣称为某个有限正 `r`。一般无需闭式反函数：在已给区间内，标量单调求根可给任意指定参数容差；计算误差和所需运算须另外认证。
+
+**定理 19.3（紧参数区间的锐逆稳定界）。** 假设有独立依据保证
+
+$$
+0<\ell\le r\le R<\infty.
+$$
+
+`h′(z)=ze^{-z}>0`。随 `r` 增加，`a_r` 减少、分母 `(r+2)²` 增加，故正灵敏度
+
+$$
+s_t(r):=-\partial_r k_r(t)=\frac{h(a_rt)}{(r+2)^2}
+$$
+
+严格递减。定义
+
+$$
+m_t=\frac{h((1+2/R)t)}{(R+2)^2}>0,
+\qquad
+M_t=\frac{h((1+2/\ell)t)}{(\ell+2)^2}.
+$$
+
+直接应用实函数的均值定理，对任意 `r,s∈[ℓ,R]` 得
+
+$$
+\boxed{m_t|r-s|\le |k_r(t)-k_s(t)|\le M_t|r-s|.}
+\tag{19.103}
+$$
+
+两个常数是该闭区间的最佳统一导数界；在非退化区间中，让两点趋近相应端点即逼近差商极值。`ℓ=R` 时参数已知，稳定估计无需读取。
+
+若归一化实际读数 `q̂` 满足 `|q̂-k_r(t)|≤δ`，先把 `q̂` 截到合法像区间 `[k_R(t),k_ℓ(t)]`，再取其唯一逆像 `r̂`。区间投影不增加到真实核值的误差，因此
+
+$$
+\boxed{|\widehat r-r|\le\delta/m_t.}
+\tag{19.104}
+$$
+
+若返回的是任意模型拟合且仅认证 `|k_r̂(t)-q̂|≤η`，则界为 `(δ+η)/m_t`。若返回完整相容参数集 `{s∈[ℓ,R]:|k_s(t)-q̂|≤δ}`，其直径至多 `2δ/m_t`；它还须与全部既有同源记录相交。拟合残差、点估计误差和候选集直径是三个不同读数，不混用因子二。
+
+没有有限上界 `R` 时不存在全域统一逆 Lipschitz 常数：当 `r→∞`，`s_t(r)∼h(t)/r²→0`。甚至固定相差一的 `r` 与 `r+1`，读数差也趋于零。精确可识别不等于全域稳定。
+
+**命题 19.4（共享零点噪声与时间误差）。** 沿用定理19.3的 $0<\ell\le r\le R$，在同一个误差事件上，设实际两次核读数满足
+
+$$
+\widehat Y_0=g+e_0,\quad
+\widehat Y_t=gk_r(t)+e_t,\qquad
+|e_0|\le\varepsilon_0,\quad |e_t|\le\varepsilon_t.
+$$
+
+用可检查条件 `Ŷ_0>ε_0` 认证正的增益下界。对 `q̂=Ŷ_t/Ŷ_0`，有
+
+$$
+\boxed{
+|\widehat q-k_r(t)|
+\le\frac{\varepsilon_t+k_\ell(t)\varepsilon_0}{\widehat Y_0}
+\le\frac{\varepsilon_t+\varepsilon_0}{\widehat Y_0}.
+}
+\tag{19.105}
+$$
+
+证明。仅用 `(Ŷ_t-k_r(t)Ŷ_0)/Ŷ_0=(e_t-k_r(t)e_0)/Ŷ_0` 和 `0<k_r(t)≤k_ℓ(t)≤1`。把式（19.105）右侧作为 `δ` 代入式（19.104）即可；不假设两次误差独立，也不忽略共享校准导致的相关。若预先知道 `g≥g_min>ε_0`，可用确定性分母 `g_min-ε_0`。仅有 `g>0` 而无实测安全分母或增益下界，不能给统一绝对噪声保证。
+
+若误差证书来自实际有限重复，直接调用本卷命题14.2的有界变量浓缩步骤（Hoeffding, 1963）：取 $0<\alpha<1$，完整两时刻协议重复 $n\ge1$ 次、重复之间独立、同次两值允许相关，坐标宽度为 `W_j`、系统偏差界为 `b_j`，取
+
+$$
+\varepsilon_j=b_j+W_j\sqrt{\frac{\log(4/\alpha)}{2n}},\quad j\in\{0,t\},
+$$
+
+即可在至少 `1−α` 的同一事件上使用式（19.105）。须先认证范围、偏差及同一固定 `(r,g)`；不能把更换参数/设备后的样本平均当作同一模型重复。这个浓缩步骤不要求正谱下界，故可保留零模态；严格正谱下的无限积分或反馈定理则不随之获得。
+
+如经过时间有已认证误差 `|Δt|≤ε_time` 且实际时间非负，
+
+$$
+\partial_t k_r(t)=-\tfrac12(e^{-t}+e^{-a_rt}),\qquad
+|\partial_t k_r(t)|\le1,
+$$
+
+所以可将 `ε_time` 加到归一化核误差预算。时间不确定时，式（19.105）使用 `k≤1` 的后一项，或用已认证时间区间上的统一上界，不能仍把名义时间的 `k_ℓ(t)` 当作实际核上界。已知钟率并不免除实际触发/读出抖动；未知经过时间原点不能当作一个没有上界的“小误差”。
+
+**命题 19.5（短时二阶退化与零模平台）。** 因 `h(z)=∫_0^z u e^{-u}du`，有
+
+$$
+e^{-z}z^2/2\le h(z)\le z^2/2.
+$$
+
+因此紧区间的逆稳定常数满足
+
+$$
+e^{-(1+2/R)t}\frac{t^2}{2R^2}
+\le m_t\le\frac{t^2}{2R^2},
+\qquad
+m_t\sim\frac{t^2}{2R^2}\quad(t\downarrow0).
+\tag{19.106}
+$$
+
+也可直接看到
+
+$$
+k_r(t)=1-t+\tfrac12(1+1/r)t^2+O(t^3).
+$$
+
+零阶值与一阶时间系数都不依赖 `r`，区分参数从二阶开始；式（19.104）的逆误差放大约为 `2R²/t²`。这些渐近在固定正紧参数区间上可一致使用，不能无条件延伸到 `r↓0` 同时发生的不同尺度极限。`t=0` 本身只能校准增益，不能识别 `r`。
+
+对固定 `r`，灵敏度随读取时间严格增加：
+
+$$
+\partial_t s_t(r)=\frac{t}{r^2}e^{-a_rt}>0.
+$$
+
+所以在**固定绝对归一化误差预算**下，延后读取改善式（19.104），并趋向有限极限
+
+$$
+k_r(t)\longrightarrow\frac1{r+2},\qquad
+s_t(r)\longrightarrow\frac1{(r+2)^2},\qquad
+m_t\longrightarrow\frac1{(R+2)^2}.
+\tag{19.107}
+$$
+
+长时的参数信息保存在零模态权重中，未随正模态一起消失。与此相对，`∂_t k_r(t)→0`，故长时响应不适合精确辨认时间偏移或钟率；**参数 `r` 的识别与时间参数的识别不是同一条件数**。把零模态减去再看纯瞬态，或让仪器只能读取时间差/高通输出，都是改变接口，不能沿用本结论。
+
+有限时间若只想用平台近似，也有显式残差：
+
+$$
+0<k_r(t)-\frac1{r+2}
+\le B_R(t):=\frac12e^{-t}+\frac{R}{2(R+2)}e^{-(1+2/R)t}
+\le e^{-t}.
+\tag{19.108}
+$$
+
+直接将无噪声有限值当平台、使用 `r̃=1/k_r(t)−2` 会低估 `r`，误差恰为
+
+$$
+r-\widetilde r
+=\frac{(r+2)^2 b_r(t)}{1+(r+2)b_r(t)}
+\le(R+2)^2B_R(t),
+$$
+
+其中 `b_r(t)=k_r(t)−1/(r+2)`。有限时间精确反函数没有这项平台近似偏差。等待到实际无穷远不是取得动作；本结论也不在噪声随等待变化、增益漂移或等待成本存在时自动选出最优读取时刻。
+
+零模态还意味着 `∫_0^∞ k_r(t)dt=∞`。本有限样本结果不得附带声称严格稳定核的可积增益或小增益反馈结论。
+
+**命题 19.6（未知制备原点的两值歧义）。** 若显示零点其实对应未知真实经过时间 `b≥0`，读到的是
+
+$$
+Y_0=gk_r(b),\qquad Y_t=gk_r(b+t).
+$$
+
+此时 `Y_0` 不是增益，归一化比值是 `k_r(b+t)/k_r(b)`。可以给出同一对读数容许**每个正参数**的明确构造。
+
+固定 `t>0`，任选
+
+$$
+\frac{1+e^{-t}}2<q_*<1,
+\qquad y_*>0.
+$$
+
+对任意 `r>0`，连续函数
+
+$$
+Q_r(b)=k_r(b+t)/k_r(b)
+$$
+
+在 `b=0` 时满足 `Q_r(0)=k_r(t)<q_*`，而由保留的正平台有 `lim_(b→∞)Q_r(b)=1>q_*`。由介值定理，存在有限 `b_r>0` 使 `Q_r(b_r)=q_*`。再置 `g_r=y_*/k_r(b_r)>0`，所有参数都产生相同两值
+
+$$
+(Y_0,Y_t)=(y_*,q_*y_*).
+$$
+
+所以已知两次标签间的钟率/间隔，不能代替真实起点认证。这个反例针对指定两值接口；此前档案若已保存可信的增益或起点、更多同源读数或制备记录，必须保留并共同约束 `(r,g,b)`，不能为宣称歧义而删除它们。独立的真实零时刻增益校准也不能用另一来源或未经证实的设备稳定性来替代。
+
+**命题 19.7（实际端点取得的费用）。** 若已有认证的零初态制备和可重复核探测，每个核值可以由一次单独准备与一次端点读出取得：两值用两次准备、两次读出，总串行自由演化时间为 `t`。若需消去未知但可重复制备的初态强迫，采用本卷命题14.13的基线/脉冲差分恒等式（这里只消费线性恒等式，不搬用严格正谱后续界）：分别在真实延迟 `0,t` 取得基线与位移轨迹，共四次准备、四次标量端点读出，总串行自由演化时间为 `2t`。重复 `n` 个完整协议，相应计数乘 `n`；准备、校准、等待、脉冲、存储和计算费用分别计量。
+
+证明。对两个目标延迟分别计所列准备和读出，零延迟不贡献自由演化时间；配对方案把每个延迟执行两次，故总延迟从 $t$ 变为 $2t$，重复次数线性相乘。这些是明确准备及探测合同下的取得方案，不从核的代数表达自动推出。若装置允许一次运行多次无扰读出，可另证更低成本；本命题不免费赋予这种能力。真实零时刻若因死区不可读取，须改用已有同源校准档案或另行证明可执行校准方式，不能把模型中的 `k_r(0)=1` 当作已取得仪器增益。
+
+完整观察者继续保留全部旧记录、来源身份、动作权限与校准历史。新的有限读数只与旧档案共同缩小候选集，不把观察者重新定义为两个数字。此处识别也以三点路径族、固定端点端口和质量/刚度关系为前提；它不从两个数认证这个物理模型、不恢复一般未知图，更不由一次数学上区分参数的读数证明该端口能够实际取得。
+
+## 20. 未知线性钟的五点识别、四点障碍与联合噪声证书
+
+**假设 20.1（固定连续单端口协议）。** 沿用假设19.1的同源制备与端点核，但钟率 $c>0$ 未知，$a>0$ 为恒定增益。已知 $h>0$，实际读取从真实零点开始的连续前缀 $F_n=a k_r(cnh)$。全部旧记录保持为同一来源、钟及校准的联合约束。节点未知与已知节点的振幅恢复是不同任务。
+
+**定理 20.2（五点精确识别与路径相容性）。** 假设20.1下，五个值 $F_0,\ldots,F_4$ 对所有 $a,c,r>0$ 唯一确定该三元组。下列检查亦刻画任意五个数是否属于此精确模型。一般 Prony 递推、节点及权重识别直接使用 `FinitePronyHankelReconstruction.prony_hankel_factorization`、`FinitePronyNodeIdentification.recurrence_window_identifies_node_roots` 与 `FinitePronyAnnihilatorUniqueness.recurrence_window_identifies_annihilator`；这里证明其端点模型的相容条件。
+
+给定
+$$
+k_r(t)=\frac1{r+2}+\frac{e^{-t}}2
++\frac r{2(r+2)}e^{-(1+2/r)t},\qquad
+F_n=F(nh)=a k_r(cnh),\qquad a,c,r,h>0.
+\tag{20.101}
+$$
+置
+$$
+q=1+\frac2r>1,\quad s=ch>0,\quad
+x=e^{-s},\quad z=e^{-qs},\qquad 0<z<x<1.
+$$
+因为k_r(0)=1，首先a=F₀。归一化f_n=F_n/F₀后，
+$$
+f_n=\frac{q-1}{2q}+\frac{x^n}2+\frac{z^n}{2q}.
+\tag{20.102}
+$$
+由五个样本得到四个相邻差分
+$$
+d_n=f_n-f_{n+1}=u x^n+v z^n\quad(0\le n\le3),
+\qquad u=\frac{1-x}2>0,\quad v=\frac{1-z}{2q}>0.
+\tag{20.103}
+$$
+这正是既有二指数 Prony 理论的两个非零正权重。其Hankel行列式为
+$$
+\Delta=d_0d_2-d_1^2=uv(x-z)^2>0.
+\tag{20.104}
+$$
+因此无需另外假设“泛型参数”：对每个有限a,c,r>0都非退化。解两个递推方程d₂=Sd₁−Pd₀、d₃=Sd₂−Pd₁，得
+$$
+S=\frac{d_0d_3-d_1d_2}{\Delta},\qquad
+P=\frac{d_1d_3-d_2^2}{\Delta},
+\tag{20.105}
+$$
+$$
+x=\frac{S+\sqrt{S^2-4P}}2,\qquad
+z=\frac{S-\sqrt{S^2-4P}}2.
+\tag{20.106}
+$$
+有序实根消除节点交换歧义。再解两个权重：
+$$
+u=\frac{d_1-zd_0}{x-z},\qquad
+v=\frac{xd_0-d_1}{x-z}.
+\tag{20.107}
+$$
+可用权重代数恢复质量参数，再用一个实对数恢复钟率：
+$$
+q_w=\frac{1-z}{2v},\qquad
+r=\frac2{q_w-1}=\frac{4v}{1-z-2v},
+\qquad c=-\frac{\log x}{h},\qquad a=F_0.
+\tag{20.108}
+$$
+在已承诺属于(20.101)的精确数据上，q_w=q且以上即为原参数。也可先用q_t=log z/log x恢复r，再由权重核对。
+
+如果数据尚未被承诺属于该模型，以下是必须执行的相容性检查：F₀>0；Δ>0；(20.106)有0<z<x<1；(20.107)有u,v>0；以及
+$$
+u=\frac{1-x}2,\qquad q_w>1,\qquad
+\log z=q_w\log x.
+\tag{20.109}
+$$
+最后一式是同一物理路径谱率与同一线性钟的关系，不能只检验“可以拟合为两个正指数”。任一失败即表示五点与声明的精确模型不相容，而不是将失败值强行投影成已识别参数。
+
+证明。 Prony 二阶递推及(20.104)保证(20.105)是唯一递推系数，已有未知节点识别定理给(20.106)，已知节点的两点 Vandermonde给(20.107)。若(20.109)通过，(20.108)产生正参数并使候选差分匹配d₀,d₁；由同一递推继续匹配d₂,d₃。候选f₀=1，故逐项求和恢复全部f₀,…,f₄，常数项也已匹配。任何其他正参数三元组都必须给同一节点、权重、幅度，继而给同一r,c,a。证毕。
+
+有限样本只在固定三点路径族、同一来源和同一线性钟合同内完成识别；任意增加隐藏模态、改变时钟为未知非线性函数或改变零点，都不由这五个数排除。后续样本可作为(20.101)的额外可证伪检查。使用log计算是模型反演，不是获得了免费导数。
+
+**定理 20.3（四点不足的全区间有理证书）。** 在假设20.1的固定连续前缀协议中，四个样本不能保证识别全部正参数，即使增益固定为一且真实原点已知。与定理20.2合并，该协议的全参数保证所需最小样本数为五。
+
+证明。固定任意已知步长 `h>0`，考虑已知共同原点的模型
+
+$$
+F_n=a\left(\frac{q-1}{2q}+\frac{x^n}{2}+\frac{x^{qn}}{2q}\right),
+\qquad a>0,\quad q>1,\quad 0<x<1,
+$$
+
+其中 `r=2/(q−1)>0`、`c=−log x/h>0`。以下构造两组不同的正参数，在 `n=0,1,2,3` 给出完全相同的值。两组幅度均固定为 `a=1`，时间原点均固定为零。
+
+第一组取 `q=20`，令
+
+$$
+\xi\in I=\left[\frac{17}{25},\frac{1361}{2000}\right],
+\qquad z_0=\xi^{20},
+$$
+$$
+d_j=\frac{1-\xi}{2}\xi^j+
+\frac{1-z_0}{40}z_0^j,\qquad j=0,1,2.
+\tag{20.121}
+$$
+
+这些是第一组的三个相邻差分 `d_j=F_j−F_(j+1)`。定义
+
+$$
+A=d_0,\qquad B=d_0(\xi-1)-2d_1,\qquad
+C=d_2+2d_1+\xi B,\qquad D=B^2-4AC,
+$$
+$$
+X=\frac{-B+\sqrt D}{2A},\quad
+v=d_0-\frac{1-X}{2},\quad
+Z=\frac{d_1-(1-X)X/2}{v},\quad
+W=\frac{v}{1-Z}.
+\tag{20.122}
+$$
+
+区间证书将保证这些式子在整个 `I` 上定义且连续，并给出
+
+$$
+0<Z<X<1,\qquad 0<W<\frac12,\qquad X>\xi,
+$$
+
+以及连续残差
+
+$$
+R(\xi)=\frac{\log Z}{\log X}-\frac1{2W}
+\tag{20.123}
+$$
+
+在两端严格异号。
+
+对实数有理区间 `J=[l,u]`，使用端点区间运算：
+
+$$
+[l,u]+[b,c]=[l+b,u+c],\qquad -[l,u]=[-u,-l],
+$$
+$$
+[l,u][b,c]
+=[\min\{lb,lc,ub,uc\},\max\{lb,lc,ub,uc\}].
+$$
+
+若 `0<b≤c`，则 `[l,u]/[b,c]=[l,u][1/c,1/b]`。非负区间的整数幂使用 `[l,u]^n=[l^n,u^n]`；其他整数幂可用上述乘法重复外包。以下所有除数区间均严格为正。
+
+定义向外取整
+
+$$
+\mathcal O_H([l,u])=
+\left[\frac{\lfloor Hl\rfloor}{H},
+       \frac{\lceil Hu\rceil}{H}\right],\qquad H\in\mathbb N_{>0}.
+\tag{20.124}
+$$
+
+对 `0<l≤u`，平方根包络取
+
+$$
+\mathcal S_H([l,u])=
+\left[\frac{a}{H},\frac{b+1}{H}\right],
+\quad
+a=\left\lfloor\sqrt{H^2l}\right\rfloor,
+\quad b=\left\lfloor\sqrt{H^2u}\right\rfloor.
+\tag{20.125}
+$$
+
+这里整数 `a,b` 只需核验平方不等式：`a²≤H²l<(a+1)²`、`b²≤H²u<(b+1)²`。若 `l=p/q` 为正有理数，等价于比较整数 `a²q` 与 `H²p`；不需要近似平方根。
+
+每个公式都对整个输入区间作运算。相同变量的多次出现仍使用区间包络，所以相关依赖只会使包络变宽。各步的包含性经有限次复合保留。
+
+分割点明确为
+
+$$
+\frac{10880}{16000},\frac{10881}{16000},\frac{10882}{16000},
+\frac{10883}{16000},\frac{10884}{16000},\frac{10885}{16000},
+\frac{10886}{16000},\frac{10887}{16000},\frac{10888}{16000}.
+$$
+
+它们首尾分别等于 `17/25` 与 `1361/2000`。置
+
+$$
+I_j=\left[\frac{10880+j}{16000},\frac{10881+j}{16000}\right],
+\qquad j=0,\ldots,7.
+$$
+
+八个闭区间的并恰为 `I`。每行按以下顺序复查：
+
+1. 以 `ξ=I_j` 作区间运算，由式（20.121）取得 `z₀,d₀,d₁,d₂`，再计算式（20.122）的 `A,B,C`。
+2. 取 `D_j=O_(10⁶)(B²−4AC)`，再取 `S_j=S_(10⁶)(D_j)`。
+3. 依次取
+
+$$
+X_j=\mathcal O_{10^4}\left(\frac{-B+S_j}{2A}\right),\qquad
+V_j=\mathcal O_{10^6}\left(d_0-\frac{1-X_j}{2}\right),
+$$
+$$
+Z_j=\mathcal O_{10^4}\left(
+\frac{d_1-(1-X_j)X_j/2}{V_j}\right),\qquad
+W_j=\mathcal O_{10^4}\left(\frac{V_j}{1-Z_j}\right).
+\tag{20.126}
+$$
+
+表中每格 `[a,b]` 均除以该列标题所写的分母；各列是式（20.126）中实际使用的外包值，因此可以直接传入下一步。
+
+| 标识 | `j` | `D_j`，分母 `10⁶` | `S_j`，分母 `10⁶` | `X_j`，分母 `10⁴` | `V_j`，分母 `10⁶` | `Z_j`，分母 `10⁴` | `W_j`，分母 `10⁴` |
+| --- |---:|---:|---:|---:|---:|---:|---:|
+| 20.3表1行1 | 0 | `[47,229]` | `[6855,15133]` | `[7665,7893]` | `[68207,79639]` | `[2089,4116]` | `[862,1354]` |
+| 20.3表1行2 | 1 | `[43,226]` | `[6557,15034]` | `[7657,7891]` | `[67776,79508]` | `[2054,4142]` | `[852,1358]` |
+| 20.3表1行3 | 2 | `[40,222]` | `[6324,14900]` | `[7651,7887]` | `[67445,79277]` | `[2035,4147]` | `[846,1355]` |
+| 20.3表1行4 | 3 | `[36,219]` | `[6000,14799]` | `[7642,7885]` | `[66963,79146]` | `[1995,4178]` | `[836,1360]` |
+| 20.3表1行5 | 4 | `[33,215]` | `[5744,14663]` | `[7635,7881]` | `[66582,78914]` | `[1970,4188]` | `[829,1358]` |
+| 20.3表1行6 | 5 | `[29,212]` | `[5385,14561]` | `[7626,7879]` | `[66101,78783]` | `[1930,4220]` | `[819,1364]` |
+| 20.3表1行7 | 6 | `[25,208]` | `[5000,14423]` | `[7616,7875]` | `[65569,78552]` | `[1890,4245]` | `[808,1365]` |
+| 20.3表1行8 | 7 | `[22,204]` | `[4690,14283]` | `[7607,7871]` | `[65088,78320]` | `[1855,4266]` | `[799,1366]` |
+
+这些都是有理数四则运算与整数幂比较。例如最后一行的平方根包络可直接检查
+
+$$
+4690^2=21996100\le22\cdot10^6,
+\qquad
+14283^2=204004089>204\cdot10^6.
+$$
+
+全表给出严格的共同外框
+
+$$
+\boxed{
+D>0,\quad \frac34<X<\frac45,\quad
+\frac16<Z<\frac12,\quad
+\frac3{40}<W<\frac3{20}.}
+\tag{20.127}
+$$
+
+`A=d₀>0` 也直接由式（20.121）及 `0<ξ,z₀<1` 得到；表中 `V_j>0` 认证 `v` 的除法合法，`Z_j<1` 认证 `1−Z` 的除法合法。因此式（20.122）的全部连续运算在整个 `I` 上成立。式（20.127）还给 `X>3/4>1361/2000≥ξ`，并给 `W>1/40`。
+
+对 `0<x<1`，置 `σ=(1−x)/(1+x)∈(0,1)`。定义
+
+$$
+L_N(x)=2\sum_{k=0}^{N-1}\frac{\sigma^{2k+1}}{2k+1},
+\qquad
+E_N(x)=\frac{2\sigma^{2N+1}}{(2N+1)(1-\sigma^2)}.
+$$
+
+由正项展开
+
+$$
+-\log x=2\sum_{k=0}^{\infty}\frac{\sigma^{2k+1}}{2k+1}
+$$
+
+及几何级数上界，有
+
+$$
+L_N(x)\le-\log x\le L_N(x)+E_N(x).
+\tag{20.128}
+$$
+
+对区间 `[l,u]⊂(0,1)`，相应包络为
+
+$$
+\mathcal L_N([l,u])=
+[L_N(u),\ L_N(l)+E_N(l)].
+\tag{20.129}
+$$
+
+以下取 `N=20`。所用有限和、尾界及其端点都是有理数。
+
+分别固定 `ξ=17/25` 与 `ξ=1361/2000` 为单点区间，由式（20.121）计算 `A,B,C,D`；取 `S=S_(10¹²)(D)`，然后按式（20.122）依次将 `X`、`v`、`Z`、`W` 向外取整到分母 `10⁹,10¹⁰,10⁹,10⁹`。所得包络如下。
+
+| 标识 | `ξ` | `S`，分母 `10¹²` | `X`，分母 `10⁹` | `v`，分母 `10¹⁰` | `Z`，分母 `10⁹` | `W`，分母 `10⁹` |
+| --- |---:|---:|---:|---:|---:|---:|
+| 20.3表2行1 | `17/25` | `[11821722466,11821722467]` | `[780156519,780156520]` | `[750670878,750670884]` | `[307125327,307125338]` | `[108341509,108341512]` |
+| 20.3表2行2 | `1361/2000` | `[10555522357,10555522358]` | `[776832349,776832350]` | `[731548373,731548379]` | `[301268955,301268965]` | `[104696703,104696707]` |
+
+对该表的 `X,Z` 应用式（20.129），取 `O_(10⁹)`；对 `1/(2W)` 也取 `O_(10⁹)`。最后由这些有理包络作 `(-log Z)/(-log X)−1/(2W)`，取 `O_(10⁶)`，得到：
+
+| 标识 | `ξ` | `−log X`，分母 `10⁹` | `−log Z`，分母 `10⁹` | `1/(2W)`，分母 `10⁹` | `R(ξ)`，分母 `10⁶` |
+| --- |---:|---:|---:|---:|---:|
+| 20.3表3行1 | `17/25` | `[248260712,248260715]` | `[1180499347,1180499384]` | `[4615036201,4615036330]` | `[140042,140044]` |
+| 20.3表3行2 | `1361/2000` | `[252530717,252530719]` | `[1199751841,1199751875]` | `[4775699392,4775699575]` | `[−24786,−24784]` |
+
+特别地，严格有
+
+$$
+R(17/25)>0,\qquad R(1361/2000)<0.
+\tag{20.130}
+$$
+
+这里 `log X≠0` 由式（20.127）保证；式（20.129）给其正的负对数下界，所以最后的区间除法方向确定。变号来自有理包络的严格符号，不需要把近似对数值当作精确值。
+
+由式（20.127），`R` 在整个闭区间 `I` 连续；式（20.130）及介值定理给某个 `ξ*∈I`，满足 `R(ξ*)=0`。在该点置
+
+$$
+q'=\frac1{2W},\qquad r'=\frac2{q'-1},\qquad
+c'=-\frac{\log X}{h},\qquad a'=1.
+$$
+
+式（20.127）给
+
+$$
+\frac{10}{3}<q'<\frac{20}{3},
+$$
+
+所以 `q′>1` 且 `q′≠20`，`r′,c′` 均严格正。残差为零恰给
+
+$$
+\log Z=q'\log X,\qquad Z=X^{q'}.
+\tag{20.131}
+$$
+
+快模态原始权重是 `W=1/(2q′)`，慢模态原始权重是 `1/2`，零模态原始权重是 `1/2−W=(q′−1)/(2q′)>0`。因此备选节点和权重满足同一三点路径族及同一线性钟的全部约束。
+
+剩下核对前三个差分。令 `u=(1−X)/2`，由式（20.122）已有
+
+$$
+d_0=u+v,\qquad d_1=uX+vZ.
+$$
+
+定义三次多项式
+
+$$
+P(T)=d_0T^3-(d_0+2d_1)T^2+(d_2+2d_1)T
+ -[(1-2d_0)d_2+2d_1^2].
+$$
+
+原模型使 `P(ξ)=0`，多项式除法给
+
+$$
+P(T)=(T-\xi)(AT^2+BT+C).
+$$
+
+式（20.122）所选 `X` 是右侧二次因子的根，故 `P(X)=0`。另一方面直接展开得
+
+$$
+\begin{aligned}
+P(X)
+&=2\big[(d_2-uX^2)(d_0-u)-(d_1-uX)^2\big]\\
+&=2v\big(d_2-uX^2-vZ^2\big).
+\end{aligned}
+$$
+
+因为 `v>0`，第三个差分也匹配：`d₂=uX²+vZ²`。原参数三元组分别为
+
+$$
+(a,c,r)=\left(1,-\log\xi^*/h,2/19\right),\qquad
+(a',c',r')=\left(1,-\log X/h,2/(q'-1)\right).
+$$
+
+两份模型都有 `F₀=F′₀=1`，逐项累加相邻差分即得 `F_n=F′_n`，`n=0,1,2,3`。
+
+两组参数确实不同：`X>ξ*` 给不同钟率，`q′≠20` 给不同 `r`。故四个从零开始的连续等距精确响应值不能在全体正参数上保证识别。更短前缀也被这同一对模型区分失败。
+
+结合五个连续等距精确响应值的恢复结论，得到该协议中保证全体 `a,c,r>0` 唯一识别所需的最少数量为五。此处固定真实共同原点、同一已知 `h>0` 与该路径模型族；结论不比较非等距、自适应选时或额外观测接口。八段是本有理证书的一个充分划分，不声称它是最少分段数。
+
+**命题 20.4（模态碰撞与短窗口的确定性噪声障碍）。** 五样本结论是精确识别，不能推出全参数域上的统一稳定性。对固定s=ch>0，r→∞时q→1，z→x，且
+$$
+x-z=x(1-e^{-2s/r})\sim\frac{2sx}{r},\qquad
+\Delta\sim\frac{s^2x^2(1-x)^2}{r^2}.
+\tag{20.141}
+$$
+两个正衰减模态碰撞，零模态权重也趋零，极限核为e^{-t}。因此式（20.105）的分母没有与r无关的正下界；精确满秩不等于条件良好。
+
+这还给方法无关的确定性噪声障碍。对全部t≥0，
+$$
+0\le k_r(t)-e^{-t}\le\frac1{r+2}.
+\tag{20.142}
+$$
+下界可由三个非负谱权重之和为一、平均衰减率为一，直接用指数函数凸性得到；上界从式（20.101）及e^{-(1+2/r)t}≤e^{-t}得到。故固定a,c时，r与2r的完整轨迹都在a e^{-ct}上方，且相差至多a/(r+2)。若a/(r+2)≤2ε，则两轨迹的逐点中点可同时作为两模型的误差≤ε观测记录，连全时间记录都不能在该确定性误差合同下区分它们。因参数相差r，任何估计器对其中一份模型的绝对r误差至少r/2。固定ε>0时令r任意大，便排除全参数域上统一有限的最坏绝对r误差保证。
+
+短窗也有明确界。写 $q=1+2/r$ 并记 $\widetilde k_q=k_{2/(q-1)}$，则
+$$
+\partial_q \widetilde k_q(t)=\frac{1-(1+qt)e^{-qt}}{2q^2}
+\le\frac{t^2}{4},
+$$
+因为1−(1+u)e^{-u}=∫₀ᵘve^{-v}dv≤u²/2。因此对任意r,R>0、t≥0，
+$$
+|k_r(t)-k_R(t)|\le\frac{t^2}{2}\left|\frac1r-\frac1R\right|.
+\tag{20.143}
+$$
+在观察者时间0≤τ≤T上、同一a,c下，两条轨迹的差至多
+$$
+\frac{a c^2T^2}{2}\left|\frac1r-\frac1R\right|.
+\tag{20.144}
+$$
+若该界≤2ε，同样的中点记录给不可区分的两份合法带噪实现。这是窗口内实际数据的障碍；证明中对模型求导不意味着实验者测到了导数。
+
+相应地，在固定有限r下，s=ch→0时
+$$
+\Delta\sim\frac{s^4}{r^2}.
+\tag{20.145}
+$$
+核的首阶展开为k_r(t)=1−t+(1+1/r)t²/2+O_r(t³)：r的信息从二阶开始，缩短窗口不会免费提供该二阶信息。差分后的误差、F₀的幅度误差、求根及log的误差都须另行计入；本文没有把五点精确公式改称为带噪算法保证，也没有用未来极限或导数替代这五次实际读数。
+
+**假设 20.5（五个原始记录的共同误差）。** 固定已知h>0、共同时间原点和同一线性钟。五个真实记录为
+$$
+F_n(\theta)=a\left[\frac{q-1}{2q}+\frac{x^n}{2}
++\frac{z^n}{2q}\right],\quad
+\theta=(a,c,r)\in(0,\infty)^3,
+\quad q=1+2/r,\ x=e^{-ch},\ z=x^q,
+\quad 0\le n\le4.
+\tag{20.161}
+$$
+仪器给y_n及已认证ε_n≥0，合同为**同一份**真实θ*满足
+$$
+|F_n(\theta_*)-y_n|\le\epsilon_n\quad(0\le n\le4).
+\tag{20.162}
+$$
+这可以是确定性界，也可以是在一个概率至少1−α的联合事件上成立的界；后者可直接接本卷命题14.2。下述全部结论在同一事件上同时成立，数据依赖的检查和区间交不需要额外的独立性假设。
+
+置Y_n=[y_n−ε_n,y_n+ε_n]。若已知更小的联合误差集合E⊂∏[−ε_n,ε_n]，精确可行集应保留y−F(θ)∈E；本节盒传播仍给保守外界。若还知道误差与模型之间的约束，也必须保留在联合可行集，不能只保留五个边缘区间后冒称尖锐。
+
+误差相关性不因差分而消失。相邻差分共享F_n，全部归一化共享F₀；本方法只用区间包含和三角不等式，不对这些差分噪声作独立性、方差相加或重新抽取的假设。
+
+**定义 20.6（有限区间证书链）。**
+
+以下全部区间运算向外包络；有理四则精确执行，平方根、log使用经验证的单调端点包络。对区间J，记J⁻、J⁺为端点，sq(J)为平方函数的区间像。只有分母区间不含零时才做除法。
+
+**第一步：幅度及差分。** 令A=Y₀，要求A⁻>0。取I₀={1}、I_n=Y_n/A（n≥1），并令
+$$
+D_j=(I_j-I_{j+1})\ \cap\ \frac{Y_j-Y_{j+1}}A,
+\qquad j=0,1,2,3.
+\tag{20.163}
+$$
+两种写法都包含真实d_j=(F_j−F_{j+1})/F₀；交集可减轻重复变量造成的过宽外界。I₀必须用精确的1，不能误给F₀/F₀一份独立归一化噪声。
+
+也可给显式的中心误差读数。设\hat f_n=y_n/y₀，\hat f₀=1，\hat d_j=\hat f_j−\hat f_{j+1}，则
+$$
+|f_n-\hat f_n|\le
+\eta_n:=\frac{\epsilon_n+|\hat f_n|\epsilon_0}{A^-}
+\quad(n\ge1),\qquad \eta_0=0,
+\tag{20.164}
+$$
+$$
+|d_j-\hat d_j|\le
+\min\left\{\eta_j+\eta_{j+1},\
+\frac{\epsilon_j+\epsilon_{j+1}+|\hat d_j|\epsilon_0}{A^-}\right\}.
+\tag{20.165}
+$$
+证明是分别展开F_n/F₀−y_n/y₀以及(F_j−F_{j+1})/F₀−(y_j−y_{j+1})/y₀；第二项分子始终是同一对原始读数的误差。上述都是确定性外界，不是新的误差分布。可将(20.165)区间继续与D_j相交。
+
+**第二步：Hankel、递推和根。** 计算
+$$
+\mathcal D=D_0D_2-\operatorname{sq}(D_1),\qquad
+\mathcal S=\frac{D_0D_3-D_1D_2}{\mathcal D},\qquad
+\mathcal P=\frac{D_1D_3-\operatorname{sq}(D_2)}{\mathcal D}.
+\tag{20.166}
+$$
+先要求𝒟⁻>0才做两个除法。然后计算
+$$
+\mathcal B=\operatorname{sq}(\mathcal S)-4\mathcal P,
+\quad G=\sqrt{\mathcal B},\quad
+X=(\mathcal S+G)/2,\quad Z=(\mathcal S-G)/2.
+\tag{20.167}
+$$
+要求𝒝⁻>0、G⁻>0、Z⁻>0、X⁺<1。数值平方根的向外包络下端可能为零，即使𝒝⁻>0也须单独检查G⁻>0；未取得时可提高根包络精度后再检查，不能先用G作分母。于是实际根满足0<z<x<1，且x−z≥G⁻>0。X和Z两个外包区间不相交是更强的充分检查，不是这里必须的条件；实际根差由同一判别式G控制。
+
+**第三步：正权重与共同钟。** 计算
+$$
+U=(D_1-ZD_0)/G,\quad V=(XD_0-D_1)/G,
+\quad U\leftarrow U\cap(1-X)/2.
+\tag{20.168}
+$$
+要求U,V非空且U⁻>0、V⁻>0。取
+$$
+Q_w=(1-Z)/(2V),\qquad
+Q_t=\log Z/\log X,\qquad Q=Q_w\cap Q_t,
+\tag{20.169}
+$$
+要求Q非空且Q⁻>1。这里log X<0，除法合法；Q_t是同一物理钟下两谱率之比。无需额外要求Q_w⁻>1，只须交后的Q⁻>1。
+
+最后输出
+$$
+\boxed{a\in A,\qquad
+c\in C:=-\log X/h,\qquad
+r\in R:=2/(Q-1).}
+\tag{20.170}
+$$
+每个区间都是当前数据及其误差半径的函数。中点可作为分别估计a,c,r的点估计，逐坐标误差不超过对应区间宽度的一半；中点三元组不自动满足共同物理模型。
+
+**可直接复用的线性求解加强。** 为缩小(20.166)，可另取中心矩阵
+$$
+\widehat K=\begin{pmatrix}\hat d_1&-\hat d_0\\\hat d_2&-\hat d_1\end{pmatrix},
+\quad\hat b=(\hat d_2,\hat d_3)^\mathsf T,
+\quad\hat w=\widehat K^{-1}\hat b.
+$$
+若(20.165)给ρ_j，置δ_K=max(ρ₁+ρ₀,ρ₂+ρ₁)、δ_b=max(ρ₂,ρ₃)，并计算b_inv≥||\hat K⁻¹||∞。在b_inv δ_K<1时，`HoKalmanPerturbation.solve_error_le` 的后验线性求解界 直接给
+$$
+\|(S,P)-\hat w\|_\infty\le
+\frac{b_{\rm inv}(\delta_b+\delta_K\|\hat w\|_\infty)}
+{1-b_{\rm inv}\delta_K}.
+\tag{20.171}
+$$
+将这两个区间与𝒮、𝒫相交即可；此处使用所引一般扰动界。中心不可逆或该余量未通过时，只表示这个加强没有证书，不替代(20.166)或推翻真实模型。
+
+**定理 20.7（全部合法模型的外包与联合可行性）。** 假设θ*满足(20.161)–(20.162)，并且(20.163)–(20.169)的证书检查通过，则θ*∈A×C×R。更强地，同一个盒内的**每一份**合法模型都被这个乘积包含；结论不只针对生成数据时暗中选定的一份参数。
+
+**证明。** A包含F₀=a>0。同一个真实原始向量F给f_n∈I_n和d_j∈D_j。定理20.2的五样本反演给真实Δ、S、P与(20.166)同式，因此区间运算的包含性将它们放进𝒟、𝒮、𝒫。正判别式和有序根公式给x∈X、z∈Z、x−z∈G；权重公式给u∈U、v∈V。路径恒等式u=(1−x)/2及q=(1−z)/(2v)=log z/log x保证两次交集都保留真实量。最后c=−log x/h、r=2/(q−1)，再次应用包含性得到(20.170)。对任意相容F逐字同样成立。该证明没有将区间中的不同端点拼成一个实际模型。证毕。
+
+通过检查所得的是**参数外包证书**，不是“外包盒内每点均合法”或“数据已被证实来自该模型”。需要保留精确共同可行集时，用
+$$
+\mathcal L_y=\left\{(a,x,z,q)\in A\times X\times Z\times Q:
+\log z=q\log x,\quad
+a\left[\frac{q-1}{2q}+\frac{x^n}2+\frac{z^n}{2q}\right]\in Y_n
+\ (0\le n\le4)\right\}.
+\tag{20.172}
+$$
+这一个集合中的同一(a,x,z,q)必须匹配全部读数；若有额外联合误差合同，将五个边缘成员条件换成相应向量条件。在只给这五个误差盒的合同下，其经(a,x,z,q)↦(a,−log x/h,2/(q−1))的像恰为原始带噪记录的合法(a,c,r)模型集，不因区间中间量的独立外包而增加真实自由度。对默认闭误差盒，𝓛_y是紧集，若非空，连续参数投影的极值存在；它无需是凸集。换成联合误差或模型约束后，只有该联合约束在当前紧候选域上定义闭集，才保留紧性与极值取得；例如仅增加y−F(θ)∈E时，E闭是一个充分条件。任意联合约束仍可用于精确合法集及外包包含，但不能无条件声称极值取得，也不能默默用E的闭包替代原合同。
+
+若完整旧档案还约束来源、增益、钟或其他辅助变量，精确集合再要求同一份这些变量扩充同时满足旧档案；式（20.172）不得替换该附加联合条件。
+
+Q_w∩Q_t非空、或一个物理残差区间含零，仅是必要条件，不能充当𝓛_y非空的证明。若要交付一份合法拟合，须另给同一个候选满足全部五个原始残差的证书；不能分别从A、C、R挑三个互不相容的端点。任一合法拟合与真实参数的逐坐标差至多对应外包区间的全宽。
+
+检查失败分两类：若只是A⁻≤0、𝒟或𝒝跨零、或Q跨1等严格余量未取得，报告“当前误差盒尚未给有限参数证书”；这允许真实模型存在，也允许区间重复变量造成的外包过宽。只有已证某个**必要条件不可能成立**，如必要区间交为空，或整个判别式包络严格为负，才可判定声明模型与误差合同不相容。全部宽区间覆盖了真正的零余量点时，继续提高算术精度也不能代替取得更精确的信息。
+
+若在严格余量尚未取得时使用分盒细化，必须覆盖完整原始记录盒并保留所有未被必要条件排除的分支；不得只保留数值求解器找到的一个分支。分盒是否有限完成另判，本定理的通过型证书并不要求它总能完成。
+
+**定理 20.8（固定正参数与正紧集上的证书收敛）。**
+
+固定θ*∈(0,∞)³。设一列记录(y^(k),ε^(k))都满足(20.162)，且max_n ε_n^(k)→0；平方根、log及有限精度运算的外包误差也趋零。则(20.163)–(20.169)的检查从某一阶段起全部通过，且
+$$
+\operatorname{diam}A_k+\operatorname{diam}C_k+
+\operatorname{diam}R_k\longrightarrow0.
+\tag{20.173}
+$$
+**证明。** 原始盒收敛到单点F(θ*)。精确反演中的a、Δ、判别式、z、1−x、u、v、q−1都严格为正；对数与除法在相应邻域内连续。有限区间表达式在收敛到非奇异单点的输入上，输出宽度也趋零；逐层归纳即可。因此每个严格检查最终通过，交集始终保留真实量，最后三个区间收敛到真实参数。固定的数值舍入宽度会留下固定底噪，所以算术包络趋零是该结论的明确前提。
+
+若θ*可以在任意预先声明的紧集K⊂(0,∞)³中变化，结论一致成立。上述正余量连续且在K上有共同正下界，正参数和采样记录也有共同有限上界；有限次连续区间运算在这些非奇异范围上一致收敛。因此存在随总输入/算术误差趋零的统一宽度模。实际每份记录的误差界就是(20.170)的算出宽度。这里不重证已经给出的全r域不稳定性，也不把紧集结论外推到r→∞、c→0或a→0等退化方向。
+
+**命题 20.9（实际非零共享误差的区间实例）。** 取h=1、真实a=1、r=2、c=log2，则x=1/2、z=1/4，五个真实记录全为有理数：
+$$
+F=(1,9/16,25/64,81/256,289/1024).
+$$
+给统一误差界ε>0，并取**实际非零误差**记录
+$$
+y_n=F_n+(-1)^n\epsilon/2.
+\tag{20.174}
+$$
+真实模型满足全部误差界；这是一个共同误差向量，没有独立性解释。按定义20.6的区间链（不使用可选线性求解加强）作外包，最终端点向外舍入到九位小数，得到下表。
+
+| 标识 | ε | 认证r区间 | 认证c区间 |
+| --- |---:|---:|---:|
+| 20.9表1行1 | 10⁻⁸ | [1.999250109, 2.000729635] | [0.693086092, 0.693214285] |
+| 20.9表1行2 | 10⁻¹⁰ | [1.999992498, 2.000007294] | [0.693146569, 0.693147852] |
+| 20.9表1行3 | 10⁻¹² | [1.999999924, 2.000000073] | [0.693147174, 0.693147188] |
+
+幅度区间在三种情况下都精确为[1−ε/2,1+3ε/2]。表中外界不是最优值；它展示同一证书链的包含与随噪声减小的收缩。真实a=1、r=2、c=log2同时满足原始五个残差，故这份例子的共同可行性也有明确见证。
+
+证明。原始误差逐坐标恰为 $\epsilon/2$，所以同一个三元组满足全部五条残差。表中外包采用定理20.3的有理四则规则，平方根用 $\mathcal S_{10^{40}}$，负对数用 $\mathcal L_{80}$，再用 $\mathcal O_{10^9}$ 输出端点；各分母通过定义20.6的正性条件。这是有限有理和、整数幂与平方比较给出的外包，包含方向由定理20.7保证。根与对数包络若需进一步缩小，分别提高整数缩放与正项级数项数；正输入下端保证尾界最终达到任给正容差。固定算术精度不承担定理20.8的趋零结论。$\square$
+
+## 21. 非负共同谱的仿射钟、原点与增益
+
+**定义 21.1（可见非负谱与实际公共时间域）。** 固定同一个有限维实共享端口 `U_S`、端口坐标和内积。两处局部读数在各自允许的非负本地时间区间 `I_A,I_B` 上为
+
+$$
+K_A(\tau)=\sum_{k=1}^{p}R_{A,k}e^{-\rho_{A,k}\tau},\qquad
+K_B(\sigma)=\sum_{k=1}^{q}R_{B,k}e^{-\rho_{B,k}\sigma},
+\tag{21.101}
+$$
+
+其中 `p,q≥0`，每边可见衰减率均非负、互异、按递增排序，允许一个零率，每个 `R_{i,k}` 是同一端口空间上的非零半正定算子。零系数与共享端口不可见模态不计入可见谱；非零的零率系数完整保留；允许空可见谱以表示全零响应；全零响应不能识别钟率、偏移或增益。此谱只是 `S` 所见谱，不是完整隐藏生成元的全部谱，也不是 `AS`、`SB` 所见谱的全部并集。
+
+给定 `α>0,β∈ℝ,κ>0`，并要求
+
+$$
+J\subseteq I_A,\qquad \alpha J+\beta\subseteq I_B
+\tag{21.102}
+$$
+
+是非空开区间。
+
+**定理 21.2（共同仿射关系的逐谱充要条件）。** 在定义21.1的公共区间上，有精确等价：
+
+$$
+\boxed{\ K_A(\tau)=\kappa K_B(\alpha\tau+\beta)\quad\forall\tau\in J\ }
+\tag{21.103}
+$$
+
+当且仅当 `p=q`，且逐个有
+
+$$
+\boxed{\ \rho_{A,k}=\alpha\rho_{B,k},\qquad
+R_{A,k}=\kappa e^{-\beta\rho_{B,k}}R_{B,k}.\ }
+\tag{21.104}
+$$
+
+**证明。** 将式（21.103） 的差按有限个不同率展开。对 `J` 的一个内点求 `0,…,N−1` 阶导数，得到同一组矩阵系数的 Vandermonde 方程；逐矩阵元应用`FinitePronyHankelReconstruction.finite_prony_hankel_reconstruction` 的有限 Vandermonde 单射性，全部系数为零。指数因子非零，且显示的谱系数非零，所以两边率集合相同；`α>0` 保持排序，得到式（21.104）。反向将式（21.104） 代入有限和即得式（21.103）。这只在实际公共时间区间上比较函数，没有使用负时半群或从解析延拓取得新观察。
+
+判据还给出一份**数学共同正来源的存在式实现**。若式（21.104） 成立，令
+
+$$
+c_B=1,\quad c_A=\alpha,\quad
+b_B=\max\{0,-\beta\},\quad b_A=b_B+\beta,
+\quad D_k=e^{b_B\rho_{B,k}}R_{B,k}.
+$$
+
+取共同半正定核 `F(t)=Σ_kD_k e^{−ρ_{B,k}t}`、增益 `g_B=1,g_A=κ`，则
+
+$$
+K_i(s)=g_iF(c_is+b_i),\qquad b_i\ge0.
+\tag{21.105}
+$$
+
+每个 `D_k⪰0` 的平方根 Gram 实现给一份有限维 `C=C*⪰0,J_S`，这使用本卷定理15.4证明第5步的逐谱 Gram 构造；加入零率只把该直和分量的生成元取为零。因此式（21.104） 不只是曲线系数拟合。但它只证明抽象有限半正定自伴模型类中有这样一个来源，**不保证指定图或容量族可实现，不认证两地实际实验确属该来源，也不认证准备已经合法执行**；完整旧档案、初态、仪器和未测的 `AB` 块仍须匹配。若协议已经认证真实冲激原点，偏移便须服从该记录，不能再次作为自由的干扰参数。
+
+如果实际本地区间给出的候选 `α,β` 使公共区间为空，则不能使用式（21.103） 宣称已取得相对匹配。有限指数表达在负时间处可以有形式值，不赋予观察者制备或读取负经过时间状态的权限。
+
+**命题 21.3（不同谱率分离增益与原点）。** 只要存在一个正率，率匹配唯一确定 $\alpha$。零率的系数关系是 $R_{A,0}=\kappa R_{B,0}$；因此零率加一个正率，或两个不同正率，均足以分离相对增益与相对原点。全零响应不给任何这些识别。证明。
+
+先由式（21.104） 的率部分，在全部严格正率上检查比值
+
+$$
+\alpha=\rho_{A,k}/\rho_{B,k}
+$$
+
+确为同一个数。再逐层认证**完整矩阵**正比例 `R_{A,k}=η_kR_{B,k}`。因为两者非零半正定，可以用
+
+$$
+\eta_k=\operatorname{tr}R_{A,k}/\operatorname{tr}R_{B,k}>0
+$$
+
+作为候选比例，但还必须核对矩阵等式；迹相同比例不能替代它。
+
+令 `ℓ_k=logη_k`。余下合同恰为
+
+$$
+\boxed{\ \ell_k=\log\kappa-\beta\rho_{B,k}\quad\forall k.\ }
+\tag{21.106}
+$$
+
+任意两个不同非负率 `ρ_{B,k}<ρ_{B,l}` 强制
+
+$$
+\boxed{\ \beta=\frac{\ell_k-\ell_l}{\rho_{B,l}-\rho_{B,k}},\qquad
+\log\kappa=\ell_k+\beta\rho_{B,k}.\ }
+\tag{21.107}
+$$
+
+所以在端口身份、矩阵正比例和仿射钟模型已认证的条件下，两率唯一确定相对偏移和相对增益。三个或更多率必须全部通过同一直线检验；有限旧记录和公共时间域仍须同时通过。单个正率只识别 `κe^{−βρ}`，任意 `β` 都可由相应正 `κ` 补偿；只有零率时只识别矩阵比例给出的 `κ`，钟率和偏移均不受约束，正好保留 本卷命题15.10 的既有障碍。
+
+一个精确失败实例为
+
+$$
+K_B(s)=e^{-s}+e^{-2s}+e^{-3s},\qquad
+K_A(t)=e^{-t}+e^{-2t}+2e^{-3t}.
+\tag{21.108}
+$$
+
+两者都是实际可实现的正标量三谱核，极点集合完全相同。率部分强制 `α=1`；前两个留数比例为 1，强制 `β=0,κ=1`；第三个比例为 2，与之矛盾。因此在任何非空开公共区间上，都不存在满足式（21.103） 的仿射钟和标量增益。仅比较谱支撑会漏掉这个共同实现障碍。
+
+这里识别的是
+
+$$
+\alpha=c_A/c_B,\qquad \beta=(b_A-b_B)/c_B,
+\qquad \kappa=g_A/g_B.
+$$
+
+共同的绝对时间单位、绝对原点和绝对源增益仍有规约自由度，不由式（21.107） 唯一确定。非负有限谱类及仿射钟类也必须预先给定；对任意非线性钟作完整曲线反函数匹配，是 本卷引理15.8 的另一合同，不能据此恢复固定生成元或仿射性。
+
+**命题 21.4（非线性共同钟保留的矩阵形状）。** 在固定端口坐标、有限互异可见率及非零 PSD 系数下，对任意非空开时间区间 `I`，
+
+$$
+\operatorname{span}\{K(t):t\in I\}
+=\operatorname{span}\{R_k:1\le k\le q\}.
+\tag{21.109}
+$$
+
+证明。一个包含显然；反向取任何消去左侧的线性泛函，指数独立性迫使它消去每个 `R_k`，有限维的双重消去即得相等。这只是同一 Vandermonde 接口的直接推论。共同连续严格递增换钟将非退化开区间送到非退化开时间区间，非零共同标量增益也不改变 span，故这个矩阵形状维数保留。
+
+对非零响应（至少有一个可见率），`trK(t)>0`，而
+
+$$
+K(t)/\operatorname{tr}K(t)\text{ 在开区间恒定}
+\quad\Longleftrightarrow\quad
+R_k=a_kS\ \text{对全部 }k,\quad a_k>0,
+\tag{21.110}
+$$
+
+其中 `S` 可取非零 PSD 且 `trS=1`。正向在 `K(t)=trK(t)S` 两边代入有限指数和，指数独立性给 `R_k=(trR_k)S`；反向直接代入。因此同一来源上两次实际矩阵读数的归一化形状确实不同，就已排除“单个固定矩阵方向乘一个标量衰减，再任意共同换钟”的解释，甚至不必先知道钟率。带噪时须另证这种形状差异超出误差合同。
+
+它不是 Hankel 秩或隐藏维数：标量多谱响应的矩阵形状维数恒为 1，Hankel 秩却可为谱数。形状证据也不识别数值衰减率或绝对钟；它只说明完整矩阵记录能保留被迹读数合并的关系。在仿射钟先验成立时继续用式（21.104）–（21.107），不成立时只保留这个已验证的不变量，不硬套仿射校准。
+
+**命题 21.5（Laplace 运输与偏移初始段）。** 以下全半轴变换针对所声明有限谱模型的预测函数，不是把实际有限窗口冒充已取得的无限积分。对定义21.1的响应，证明中只需有限和逐项应用实指数积分（`NegativeSquareLaplaceResolvent.integral_damped_negative_square_kernel` 取 $\delta=0$、阻尼 $s+\rho>0$）给 `s>0` 时
+
+$$
+\widehat K_i(s)=\sum_k\frac{R_{i,k}}{s+\rho_{i,k}}.
+\tag{21.111}
+$$
+
+零率项明确为 $R_{i,0}/s$，仅在 $s>0$ 使用；若该项非零，无权时间积分发散，不能据此取得严格正谱的小增益前提。
+
+因此式（21.104） 同时是这些有限有理表达的极点/系数兼容条件；同一 `R_{i,k}` 也负责时域中的完整矩阵匹配。Laplace 变换没有额外创造数据，没有消除初态强迫，没有把共享端口不可见模态变得可见。
+
+必须特别防止时间平移的错误公式。由式（21.103），以局部零点分别积分所得的准确表达是
+
+$$
+\widehat K_A(s)=\kappa\sum_k
+\frac{e^{-\beta\rho_{B,k}}R_{B,k}}{s+\alpha\rho_{B,k}}.
+\tag{21.112}
+$$
+
+当 `β=0` 时简化为 `(κ/α)K̂_B(s/α)`。当 `β≥0` 时，等价的正时间换元表达为
+
+$$
+\widehat K_A(s)=\frac\kappa\alpha e^{s\beta/\alpha}
+\left[\widehat K_B(s/\alpha)
+-\int_0^\beta e^{-(s/\alpha)u}K_B(u)\,du\right].
+\tag{21.113}
+$$
+
+被减去的初始段是真实积分边界，不能只乘一个移位因子便丢掉它。`β<0` 时不能从 `B` 的非负时档案凭空取得 `[β,0)`；式（21.112） 只是所声明有限谱模型的表达，实际匹配仍限制在式（21.102） 的域内。
+
+**命题 21.6（有限谱样本与差分 Fourier 证书）。** 对实际等距本地采样间隔 `Δ_i>0`，节点为 `q_{i,k}=e^{−ρ_{i,k}Δ_i}∈(0,1]`，零率恰给节点一，不是 `e^{−λ_kΔ_i}`；未知本地钟率已经包含在 `ρ_{i,k}` 中。取得并认证 Prony 节点后，`ρ_{i,k}=−log(q_{i,k})/Δ_i` 是这个正实分支的唯一率。
+
+例如，先验已经限定恰有 $n\ge1$ 个互异可见率、共享块 PSD 且每层非零时，同一来源在本地 `0,Δ,…,(2n−1)Δ` 的精确矩阵读数给严格正的迹权重。直接消费上述 Hankel 满秩和递推窗口接口，首一 `n` 次递推多项式的 `n` 个根就是这些节点；前 `n` 项的 Vandermonde 接口再逐矩阵元确定各系数。本卷定理20.2另外保留三点容量族特有的权重与共同钟约束。有限前缀的秩本身不排除所允许类之外的额外谱原子；原始零模若存在，须计入原序列阶数，或按已认证的差分合同处理后再计正率数。带噪时继续使用原来的同源误差与合法模型证书，有限个点拟合相同不自动给式（21.103） 的开区间函数恒等式。
+
+令一份已取得标量轨迹允许平台：
+
+$$
+y_n=b_0+\sum_{k=1}^{m}b_kq_k^n,\qquad b_0\ge0,\ b_k>0,\ 0<q_k<1.
+$$
+
+差分 `d_n=y_n−y_{n+1}` 消去平台。对 `z=e^{−iθ}`，`FinitePronyGeneratingFunction.finite_prony_rational_generating_function`的严格收敛条件成立，给
+
+$$
+\sum_{n\ge0}d_nz^n
+=\sum_k\frac{b_k(1-q_k)}{1-q_kz}.
+\tag{21.114}
+$$
+
+这是**离散单边 Fourier 和**，频率 `θ` 以每个本地采样步计。它不是连续 Fourier 变换，更不是已做完的无限时间实验。若 `N≥1` 且只实际取得 `y_0,…,y_N`，可计算的对象是
+
+$$
+P_N(\theta)=\sum_{n=0}^{N-1}d_nz^n
+=\sum_k b_k(1-q_k)\frac{1-(q_kz)^N}{1-q_kz}.
+\tag{21.115}
+$$
+
+有限几何和给前式；对尾部逐项取模并求和，得到该模型下的截断尾项界
+
+$$
+\left|\sum_{n\ge0}d_nz^n-P_N(\theta)\right|
+\le\sum_k b_kq_k^N=y_N-b_0,
+\tag{21.116}
+$$
+
+在 `θ=0` 处达到等号。右侧若还未由同源记录或模型证书确定，就仍是含未知参数的界，不能冒充仪器已知精度。
+
+若原始记录误差满足同一事件上的 `|e_n|≤ε_n`，直接收集同一误差变量给
+
+$$
+|\widehat P_N-P_N|
+\le\epsilon_0+\epsilon_N+|1-z|\sum_{n=1}^{N-1}\epsilon_n.
+\tag{21.117}
+$$
+
+这是 `e₀+Σ_{n=1}^{N−1}e_n(zⁿ−z^{n−1})−e_Nz^{N−1}` 的三角界，无需把相邻差分误差误当独立。它把仓内有限联合记录合同直接送入实际可算频率读数；本卷第17节 可继续处理这些线性读数与旧记录的共同纤维。
+
+差分和 Fourier 多项式都作为**派生读数**附在原始档案上。只保留差分会丢掉常值/零模信息；不能因为式（21.114） 收敛就删除原始平台、零时校准或其他旧来源记录。
+
+**假设 21.7（共同来源与未测交叉块的接入）。** 命题21.5、21.6的变换均针对同一实际来源和钟模型。
+
+实际接入须履行：共享的是同一个半正定来源及固定端口坐标；增益真为所假设的共同标量而非每个模态自由增益；本地钟属于仿射类；各本地序列的节点/矩阵系数来自实际有限记录与正确模型阶数；公共时间域非空；所有旧记录仍有同一辅助来源扩充。带噪时还须保留所有原始残差，不能将几组独立拟合的极点区间和留数区间拼成一份实际模型。两率公式的分母与对数也说明：谱率相撞、共享系数趋零时，不能从代数可识别性推出统一稳定性。
+
+在严格正谱情形，相对钟可把两份 $AS$、$SB$ 响应送回本卷第15节的共同时间框架；共享端口不可见的率仍须取两局部可见谱的并集。含零率时逐谱 Gram 代数按定理21.2保留零层，但不搬用第16节严格正谱的无限积分前提。钟匹配不选择未测交叉块的收缩元组 $T_\lambda$。不同频率及旧记录若涉及交叉块，必须共同使用一份 $T_\lambda$，由本卷第16—17节的受限共同像处理，不能逐频各取一个补全。只有选定完整共同核并满足最小性后，才可应用 `MinimalSymmetricRealizationUniqueness.minimal_symmetric_realization_uniqueness` 的全部矩等式与等距唯一性；共享块相容本身不满足这些前提。
+
+## 22. 参照幅度门控、相位纤维与素数校准取得
+
+**定理 22.1（校准参照钟下的实际有限取得）。** 在[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义23.1、推论23.5的共同系统中，γ_*与s_j已知。固定 h>0 使 m_j=e^{s_jh}互异。设真实记录覆盖[0,(N−1)h]，且协议实际取得了同一来源在 N 个标签 τ_n 的参照幅度与 y 读数，并验证
+
+$$
+u(\tau_n)=e^{-\gamma_*nh},\qquad 0\le n<N.
+\tag{22.101}
+$$
+
+则这 N 个 y 读数唯一恢复 Ψ(x)，进而恢复全部内部时间 t≥0 的指定未来 y(T_t x)。无需事先知道 φ 的函数表达式。
+
+**证明。** 上下文几何卷命题23.4及实指数单射给 φ(τ_n)=nh。于是实际记录 y(T_{φ(τ_n)}x)=Σ_jχ_j(x)m_j^n，正是 上下文几何卷命题23.2所引用的既有 Vandermonde 窗口；应用其单射性或V^{-1}即恢复Ψ(x)。上下文几何卷式（23.102）生成全部内部时间未来。□
+
+门控条件说明需要取得哪些同源样点，不声称这些阈值能免费、准确、有限费用地触发。未知 φ 的未来标签读数 y(T_{φ(τ)}x)仍需知道该点内部时间，或同时读取参照钟；本定理没有恢复未采样区间的钟。若γ_*也未知，只能在a_*=γ_*t单位中表述同一结论，并相应要求相对率s_j/γ_*已知。重复查看缓存中的参照值不产生新的时间样点。
+
+带噪时不能先把参照幅度拟合成时间、再把y样本当作时间无误差且独立的资料；须将参照与目标的原始残差留在同一来源/钟可行集内。已取得的旧档案保留，Ψ只作本任务的派生摘要。
+
+**命题 22.2（有限相位的精确别名纤维）。** 在上下文几何卷定义23.3的同源模态合同下，只取得有限非空族精确复数比值 Z_j/Z_0，令a_j=−log|Z_j/Z_0|>0，并令w_j=(Z_j/Z_0)/|Z_j/Z_0|。假设这些数据来自该模态类，取一份真实比率r_0=ω/γ。所有相容比率组成
+
+$$
+\mathcal R_D=\{r\in\mathbb R:e^{ir a_j}=w_j\ \forall j\}
+=r_0+\{d\in\mathbb R:d a_j\in2\pi\mathbb Z\ \forall j\}.
+\tag{22.102}
+$$
+
+单个正a_1给r_0+(2π/a_1)ℤ。若有两个a值比为无理数，集合为单点；若全部a_j/a_1为有理数，集合含无限多个点。先验将r限制到长度严格小于2π/a_1的区间时，单个样本至多留下一个相容r，但仍须检验非空。
+
+**证明。** 同一模态给w_j=e^{ir_0a_j}，消去该因子并用e^{iv}=1当且仅当v∈2πℤ，得到(22.102)。若d≠0且da_1=2πk_1、da_2=2πk_2，则k_1,k_2均非零而a_1/a_2=k_1/k_2，矛盾，故无理比给唯一。若a_j/a_1皆有理，取全部分母的共同倍数q>0，则d=2πq/a_1及其整数倍满足全部约束。区间结论来自不同别名之间至少2π/a_1的间距。□
+
+精确唯一不提供无界频率范围的稳定反演。对任意有限a_1,…,a_m>0，均存在d_n→∞使e^{id_na_j}→1同时成立：令α_j=a_j/a_1。将Q^{m−1}+1个点(kα_2,…,kα_m)模1、0≤k≤Q^{m−1}，放入Q^{m−1}个边长1/Q的盒，抽屉原理给1≤q≤Q^{m−1}且各qα_j到整数的距离≤1/Q。若有无理α_j，误差趋零的这些q必沿子列趋于无穷，否则某个固定非零q将使全部qα_j为整数，矛盾；若全有理，取共同分母的递增倍数即可。令d=2πq/a_1。于是固定真值r_0的有限相位记录可被远离r_0的参数任意逼近。m=1直接用精确别名。该论证只针对无界r与这份有限接口；在一个已知紧区间内，连续且单射的记录映射具有连续逆，但具体误差常数仍需另估。
+
+相位连续提升、整数绕数或足够窄的先验可缩小(22.102)的纤维；它们都是附加信息。模长、有限采样频率与完整相位路径不能互相冒名。本卷命题10.6的等步旋转例是相同采样障碍的既有实例。
+
+**定理 22.3（同钟参照对素数身份的实际识别）。** 在上下文几何卷命题23.7的共同钟代入中，保留 $c=\varphi^2$ 及已声明的素数模态类，取一个已取得的正内部时间h>0处的幅度A=|Z_p|∈(0,1)。以下两种附加接口分别足够；每种均要求与A对应**同一内部时间**、相同零点及已认证的相对增益。
+
+**(a) 已知速率参照。** 若同时取得R=e^{-κh}、κ>0已知，并且a>0已知，则
+$$
+B=-\log R>0,\quad L=-\log A>0,
+\qquad h=B/\kappa,
+\qquad
+\boxed{p=\exp\!\left[\frac{\kappa}{ac}\frac LB\right].}
+\tag{22.111}
+$$
+要仅识别p，已知κ/a亦足够；要恢复h还须知道κ本身。
+
+**(b) 已知素数同钟参照。** 若一个身份已知的素数q_*通道同时给出
+$$
+A_*=e^{-a h c\log q_*}\in(0,1),
+$$
+则即使a与h分别未知，也有
+$$
+\boxed{\log p=\log q_*\,
+\frac{-\log A}{-\log A_*}.}
+\tag{22.112}
+$$
+所以一个共同正时间的幅度对(A,A_*)精确识别p；它仅确定乘积ah，仍不分别确定a与h。
+
+**证明。** (a)由B=κh和L=ach log p消去h，得(22.111)；(b)由−log A_*=ahc log q_*，与L相除得(22.112)。分母正性来自正内部时间、正衰减系数和素数大于一。a→da、h→h/d保持两幅度，说明(b)所述剩余歧义。□
+
+参照身份、相对速率和同钟条件是额外结构，不由“两个读数都呈指数”自动获得。若两个端口各有自由未知增益、各用未知钟或实际非同时，上述比值不再具备该结论；真实零点归一化、已知相对衰减系数或已证时间对齐可以履行这些条件。带噪时两通道必须共用一份来源/钟残差可行集；本定理没有给出靠近A_*=1时的统一稳定常数。
+
+**命题 22.4（有限变换与旧记录的同一纤维）。** 保留完整已获记录 $Q$，任何仅依赖该记录的 Fourier、Laplace 或有限向量变换 $FQ$ 均在每条 $Q$ 纤维上恒定；可逆有限 DFT 与原向量具有相同核。证明。直接应用[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)定理2.2的实际像因子化原则和上下文几何卷定理13.4的记录保留原则；等式经函数保持，可逆性给反向。上下文几何卷命题22.2的两个来源／钟对象有相同完整标记曲线，却有不同物理最小维数及物理 Laplace 值，因此处理该曲线的变换不能恢复这两个目标。增加定理22.1的认证参照或定理22.3的同钟关系，会改变完整记录；届时须重新检验纤维。噪声情况下，参照通道、目标通道、全部零点和既有记录必须使用同一份来源／钟及原始残差可行集，不能把分别相容的边缘值拼成实际共同模型。$\square$
+
+## 22.99 追加锚

@@ -1,0 +1,31 @@
+**定理 17.2（无严格可行性前提的尖锐端点）。** 在定义17.1下，对每个 $y\in D$，有
+$$
+\boxed{U^\ell(y)=\inf_{c\in\mathbb R^n}
+\bigl[c\cdot y+h_\Gamma(\ell-R^*c)\bigr],\qquad
+L^\ell(y)=-U^{-\ell}(y).}
+\tag{17.2}
+$$
+原问题的两个端点均达到，任务值集为 $[L(y),U(y)]$；式（17.2）的对偶只断言下确界，不断言有限系数达到。允许输出任意实数时，定理3.2–推论3.3的标量纤维结论给出中心 $(L(y)+U(y))/2$、最坏绝对误差 $(U(y)-L(y))/2$，以及单点纤维的精确恢复判据。
+
+**证明。** $\Gamma_y$ 非空、紧、凸，故线性任务达到极值，且其像为闭区间。对任意 $c$ 和 $v\in\Gamma_y$，
+$$
+\ell(v)=c\cdot y+(\ell-R^*c)(v)\le F_y^\ell(c),
+$$
+给出弱对偶 $U(y)\le\inf_c F_y^\ell(c)$。令
+$$
+K=\{(Rv,\ell(v)):v\in\Gamma\}\subset\mathbb R^n\times\mathbb R.
+$$
+它紧且凸。对 $\varepsilon>0$，点 $p=(y,U(y)+\varepsilon)$ 不属于 $K$。由有限维紧凸集与外点的严格分离定理，存在 $(a,b)$ 使
+$$
+a\cdot y+b(U(y)+\varepsilon)
+>\max_{v\in\Gamma}\bigl[a\cdot Rv+b\ell(v)\bigr].
+\tag{17.3}
+$$
+此处的严格分离可直接使用定理16.4证明中的最近点分离论证，应用于 $K,p$。因 $(y,U(y))\in K$，式（17.3）蕴含 $b\varepsilon>0$，故 $b>0$。除以 $b$ 并令 $c=-a/b$，得到 $F_y^\ell(c)<U(y)+\varepsilon$。结合弱对偶并令 $\varepsilon\downarrow0$，即得式（17.2）；对 $-\ell$ 使用同一结论给下端点。标量中心及误差是既有定理3.2在该闭区间上的应用，不要求对偶最优系数存在。$\square$
+
+作为式（17.2）的乘积特例，设 $X$ 是有限维实向量空间，$K\subset X$ 与 $E_{\rm noise}\subset\mathbb R^n$ 均非空、紧、凸，施加记录行之前的实际联合域恰为 $\Gamma=K\times E_{\rm noise}$。取线性映射 $A:X\to\mathbb R^n$、线性任务 $h:X\to\mathbb R$，令 $R(v,e)=Av+e$、$\ell(v,e)=h(v)$；对可取得的同一记录 $y\in R(\Gamma)$，证书目标为
+$$
+F_y^\ell(c)=c\cdot y+h_K(h-A^*c)+h_{E_{\rm noise}}(-c).
+$$
+这是乘积支撑规则的直接应用：残差为 $(h-A^*c)(v)-c\cdot e$，两项在实际乘积上可分别达到最大值。非对称误差域一般不满足 $h_{E_{\rm noise}}(-c)=h_{E_{\rm noise}}(c)$，故不能省去负号。定义17.1的全部旧记录条件仍须保留：旧约束已吸收时实际联合域仍须是上述乘积，否则须作为同一 $R,y$ 的附加行保留；仅给边缘域 $K,E_{\rm noise}$ 不蕴含此公式。
+

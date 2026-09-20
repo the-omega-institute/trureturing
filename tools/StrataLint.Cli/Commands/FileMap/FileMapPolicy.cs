@@ -212,13 +212,11 @@ internal static class FileMapPolicy
 
         var paths = TrackedPaths(repositoryRoot);
         var trackedModes = TrackedModes(repositoryRoot);
-        var files = paths
-            .Where(path => path.EndsWith(".lean", StringComparison.Ordinal)
-                || IsMachineDataCandidate(path, manifest))
-            .ToDictionary(
-                static path => path,
-                path => File.ReadAllText(Absolute(repositoryRoot, path)),
-                StringComparer.Ordinal);
+        var dependencyFindings = InspectDependencies(
+            manifest,
+            paths.Where(path => path.EndsWith(".lean", StringComparison.Ordinal)
+                || IsMachineDataCandidate(path, manifest)).ToArray(),
+            path => File.ReadAllText(Absolute(repositoryRoot, path)));
         var availableVerifiers = AvailableDataVerifiers(manifest,
             DataVerifierImplementations.Values
                 .Where(path => File.Exists(Absolute(repositoryRoot, path)))
@@ -254,7 +252,7 @@ internal static class FileMapPolicy
                 GeneratedArtifactInventory.Create(DocumentAssembly.Definitions)))
             .Concat(InspectDeclaredModes(manifest, trackedModes))
             .Concat(InspectDirectoryKinds(manifest, paths))
-            .Concat(InspectDependencies(manifest, files))
+            .Concat(dependencyFindings)
             .Concat(InspectGitIgnore(File.ReadAllLines(Absolute(repositoryRoot, ".gitignore"))))
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
@@ -703,15 +701,27 @@ internal static class FileMapPolicy
         FileMapManifest manifest,
         IReadOnlyDictionary<string, string> files)
     {
-        ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(files);
+        return InspectDependencies(manifest, files.Keys.ToArray(), path => files[path]);
+    }
+
+    internal static IReadOnlyList<FileMapFinding> InspectDependencies(
+        FileMapManifest manifest,
+        IReadOnlyCollection<string> paths,
+        Func<string, string> readText)
+    {
+        ArgumentNullException.ThrowIfNull(manifest);
+        ArgumentNullException.ThrowIfNull(paths);
+        ArgumentNullException.ThrowIfNull(readText);
         var findings = new List<FileMapFinding>();
-        var generatedPaths = files.Keys
+        var generatedPaths = paths
             .Where(path => manifest.Match(path) is [{ Kind: FileMapKind.Generated }])
             .Order(StringComparer.Ordinal)
             .ToArray();
-        foreach (var (path, source) in files.OrderBy(static pair => pair.Key, StringComparer.Ordinal))
+        foreach (var path in paths.Order(StringComparer.Ordinal))
         {
+            // Preserve the selected-file read/error boundary without retaining all bodies.
+            var source = readText(path);
             var matches = manifest.Match(path);
             if (matches.Length != 1)
             {

@@ -1,0 +1,53 @@
+下列构造将有限 Markov Poisson 方程的传感器中心化、环内零和与陷阱慢模分别解出。[^rro112-poisson]
+
+固定 $\delta>0,d$，置 $\widehat q=(-1)^dbq_{\delta,d}$、$c=c_{\delta,d}$、$g=\widehat q-c\mathbf1_{\rm ring}$。因为 $\mu(\mathrm{ring})=3/4$，有 $\mu g=0$。令 $\bar g(x)=\sum_z\eta_zg(x,z)$。传感器中心化部分由
+$$
+h^\perp=A_{\delta,d}^{-1}(I-P)\widehat q
+$$
+解出，满足 $Ph^\perp=0$、$(I-Q)h^\perp=g-\bar g\otimes\mathbf1$ 及 $\|h^\perp\|_\infty\le C_\perp$。
+
+写 $u_0=\bar g(0)$、$u_R=\tfrac13\sum_{i=1}^3\bar g(i)$，则 $u_0+3u_R=0$。令 $w_i=\bar g(i)-u_R$，故 $\sum_iw_i=0$、$\|w\|_\infty\le2$。若 $C_d$ 表示三环正/反循环矩阵，$\chi=a/4\le1/4$，环内零和势为
+$$
+h^{\rm ring}(0)=0,\qquad
+h^{\rm ring}|_{\rm ring}
+=\frac{w+\chi C_dw+\chi^2C_d^2w}{1-\chi^3},
+\qquad \|h^{\rm ring}\|_\infty\le8/3.
+$$
+唯一慢模为 $\zeta=(-3,1,1,1)$，满足
+$K_{\delta,d}\zeta=(1-4\delta/3)\zeta$，所以类常数部分的势为
+$$
+h^{\rm slow}=-\frac{u_0}{4\delta}\zeta.
+$$
+从陷阱、传感器平稳律开始，前 $r$ 步均不离开陷阱的事件独立于传感器路径，条件窗口正是零均值的纯陷阱实验。因此
+$$
+|u_0|\le1-(1-\delta)^r\le r\delta.
+$$
+合并三部分得到
+$$
+(I-Q_{\delta,d})H_{\delta,d}
+=\widehat q-c_{\delta,d}\mathbf1_{\rm ring},\qquad
+\|H_{\delta,d}\|_\infty\le H:=C_\perp+8/3+3r/4.
+\tag{112.2d}
+$$
+此处只要求陷阱均值在 $\eta$ 下为零，不要求每个传感器起点的陷阱均值都为零。纯环核 $R_d\otimes T$ 的均值为 $c_{0,d}$：在 $\delta=0$ 时，$\mu$ 的陷阱质量为 $1/4$、环质量为 $3/4$，而陷阱平均为零。在 $\delta=0$ 的产品核中限制到环闭类，去掉类常数后，同一传感器逆与环内逆给
+$$
+(I-R_d\otimes T)H^R_d=\widehat q^R_d-c_{0,d},
+\qquad \|H^R_d\|_\infty\le H_R:=C_\perp+8/3.
+$$
+
+令 $\overline H=\max\{1,H,H_R\}$、$m=r+1$。采用产品链的发射前滤过，窗口残差
+$D_t=(-1)^dbW_t-\widehat q(X_t,Z_t)$ 的绝对值至多 $2$，在给定窗口起点历史后的条件均值为零，并在 $m$ 步后可测。按 $t\bmod m$ 分组，加上 (112.2d) 的望远镜求和，得到
+$$
+(-1)^dF_{u,L}
+=c_{\delta,d}A_L+M_L+\Delta H+N_L,
+\quad
+A_L=\sum_{t=u}^{u+L-1}\mathbf1_{\{X_t\ne0\}},
+$$
+$$
+|\Delta H|\le2\overline H,\quad
+\Pr(M_L\le-z)\le e^{-z^2/(8\overline H^2L)},\quad
+\Pr(N_L\le-z)\le m e^{-z^2/(8m^2L)}.
+\tag{112.2e}
+$$
+这些有界鞅差界[^rro112-azuma] 对任意产品起点及块首发射前历史条件化后成立；分组之间无需独立。纯环块同样成立，其漂移改为 $c_{0,d}L$。
+

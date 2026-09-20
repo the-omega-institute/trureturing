@@ -126,10 +126,6 @@ internal static class ProducerInputFixture
                 compatibility_sha256 = compatibility,
                 producer_sources_sha256 = new string('1', 64),
                 inspector_executable_sha256 = new string('2', 64),
-                input_sources = new Dictionary<string, string>
-                {
-                    [row.GetProperty("source_path").GetString()!] = row.GetProperty("source_sha256").GetString()![7..],
-                },
             }, StringComparer.Ordinal);
         TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", JsonSerializer.Serialize(new { module_origins = origins }));
     }

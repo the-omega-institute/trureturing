@@ -1,0 +1,18 @@
+**定理 17.9（完整来源—记录联合误差控制总创新）。** 在同一有限字母空间上给两个概率律 $P_{\Theta,H},Q_{\Theta,H}$；记录通过同一个映射 $C=c(H)$ 保留旧档案。假设两律的 $(\Theta,C)$ 边缘相同。给固定 $f:\Theta\to[m_f,M_f]$，$D=M_f-m_f\ge0$，记
+$$
+\delta=\operatorname{TV}(P_{\Theta,H},Q_{\Theta,H}),\qquad
+m_C=\mathbb E[f(\Theta)\mid C]
+$$
+为共同初始条件均值，并定义
+$$
+I(P)=\mathbb E_P[(\mathbb E_P[f(\Theta)\mid H]-m_C)^2],
+\qquad I(Q)\text{ 同理}.
+\tag{17.15}
+$$
+则
+$$
+|I(P)-I(Q)|\le D^2\delta.
+\tag{17.16}
+$$
+常数一不能统一缩小。这里只需完整联合律的 TV，不需要逐历史的后验误差界。
+
