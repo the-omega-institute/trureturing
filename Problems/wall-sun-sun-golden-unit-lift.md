@@ -1300,3 +1300,156 @@ $$\boxed{\det G_{\rm int}
 **Proposition.** STL constructs and saturates the integer-coefficient structure of an existing golden dihedral packet. It does not change the existence condition h_p>=k+1, and supplies no new actual WSS example or non-WSS prime family. In particular L_int being nonzero was derived from the preselected eta, rather than proved without it.
 
 **Proof.** Every spectral form in STL was defined through the packet in SGN, which by ROC requires that original depth condition. The trace-dual argument constructs elements inside that packet; Chebotarev selects auxiliary primes only in its already-existing field. None of the index, local-algebra or determinant calculations asserts that the field or packet exists at a new target p. These formulas do provide a corrected arithmetic normalization for a future independent lattice or congruence obstruction: it must use L_int rather than mistake L_tr or the normalized eigenbasis for the full integer-coefficient lattice.
+
+
+### CTG. Complete-tower gluing and exact rational Eisenstein congruence depth
+
+#### CTG.1 Retain every nontrivial character in one cyclic quotient
+
+**Definition.** Fix p>5 and k>=1, retain K=Q(sqrt(5)), and assume an actual ordinary ring-class character eta of order m=p^k as in ROC. Thus h_p>=k+1 is a hypothesis. Put D_k=(p^k-1)/2. At the common level 5p^(2k+2), take the unscaled oldvector g_(eta^b)(z), not g_(eta^b)(az), for each b=1,...,D_k. This includes all nontrivial characters of the cyclic quotient, modulo inversion, including characters of smaller order. The forms have distinct good eigenvalue systems and are linearly independent. At each order p^j they are the complete primitive packet D_(p,j). No other inducing fields or Hecke characters are added.
+
+Let C_0(X)=2, C_1(X)=X, C_(a+1)(X)=X C_a(X)-C_(a-1)(X). Let Psi_(p^j) be the monic minimal polynomial of zeta_(p^j)+zeta_(p^j)^(-1). Define
+
+$$Q_k(X)=1+\sum_{a=1}^{D_k}C_a(X),\qquad
+E_k=\prod_{j=1}^k B_{p^j},\quad
+B_{p^j}=\mathbb Q(\zeta_{p^j}+\zeta_{p^j}^{-1}),$$
+
+$$t=(\zeta_{p^j}+\zeta_{p^j}^{-1})_{j=1}^k,\qquad R_k=\mathbb Z[t]\subset E_k.$$
+
+The rational algebra E_k is a product of fields, not a number field. Write tau for its algebra trace, the sum of the field traces. Classical real-quadratic Hecke induction supplies the ambient forms, as in Tanaka, arXiv:2601.21588v3, Theorem 1.1 and equation (1.1), with the factor-two Fourier normalization already fixed in SGN1. No Petersson-norm assertion of that paper or SGN is an input below.
+
+**Theorem CTG1.** One has
+
+$$\boxed{Q_k(X)=\prod_{j=1}^k\Psi_{p^j}(X),\quad
+Q_k(2)=p^k,\quad R_k\simeq\mathbb Z[X]/(Q_k(X)).}\tag{CTG1}$$
+
+This R_k is exactly the integral algebra of good Hecke operators on the complete tower. The Z-span of its actual Fourier coefficient vectors is all of R_k, already using coefficient one and finitely many good split-prime coefficients.
+
+**Proof.** For an odd integer m and z^m=1 with z!=1, the complete geometric sum gives 1+sum_(a=1)^((m-1)/2)(z^a+z^(-a))=0. Also C_a(z+z^(-1))=z^a+z^(-a), by its recurrence. The D_k distinct values zeta_m^b+zeta_m^(-b), b=1,...,D_k, are therefore all roots of the monic degree-D_k polynomial Q_k. Partitioning them by their exact orders proves its factorization. Evaluating C_a(2)=2 proves Q_k(2)=1+2D_k=m. Its distinct irreducible factors identify Q[X]/(Q_k) with E_k and give the integral presentation of R_k.
+
+A good inert prime has coefficient zero throughout the tower. At a split prime with eta(q)=zeta_m^a, the simultaneous eigenvalue is C_a(t), reducing a modulo m and inversion if necessary. At arbitrary n, conjugation pairs ideals of norm n with inverse character values; a fixed ideal has value one because the character order is odd. Thus every simultaneous coefficient belongs to R_k. Conversely, Chebotarev in the already-existing dihedral class field of eta supplies a split generator-rotation prime, whose eigenvalue vector is t. It also supplies coefficients C_a(t), 1<=a<D_k, in distinct selected primes. Together with coefficient one these form an integral basis of R_k: the C_a are monic of degree a, a unitriangular change from the power basis. This proves both algebra and Z-span assertions. It makes no claim of class-field existence or a bound on the selected primes without eta.
+
+#### CTG.2 The successive primitive packets are glued integrally
+
+**Theorem CTG2.** For j<k,
+
+$$\Psi_{p^k}(t_j)=p\quad\text{in }B_{p^j},\qquad
+\Psi_{p^k}(X)\equiv p\pmod{Q_{k-1}(X)}.\tag{CTG2}$$
+
+For k>=2 there is a ring isomorphism
+
+$$\boxed{R_k\simeq R_{k-1}\times_{R_{k-1}/pR_{k-1}}O_{B_{p^k}},\qquad
+R_{k-1}/pR_{k-1}\simeq\mathbb F_p[e]/(e^{D_{k-1}}).}\tag{CTG3}$$
+
+The map from the new primitive factor to the common quotient sends t_k to 2+e. With S_k=product_(j=1)^k O_(B_(p^j)), the normalization of R_k, the exact additive index is
+
+$$\boxed{[S_k:R_k]=p^{J_k},\qquad
+J_k=\sum_{j=1}^{k-1}D_j
+=\frac12\left(\frac{p(p^{k-1}-1)}{p-1}-(k-1)\right).}\tag{CTG4}$$
+
+**Proof.** The identity Phi_(p^k)(Z)=Z^(d_k) Psi_(p^k)(Z+Z^(-1)), where d_k=p^(k-1)(p-1)/2, evaluated at a primitive p^j-th root for j<k gives p on the left. The exponent d_k is divisible by p^j, proving the first equality. Since the monic factors of Q_(k-1) are distinct, division by Q_(k-1) proves the second equality integrally.
+
+For monic coprime polynomials f,g over Q, the integer polynomial sequence identifies Z[X]/(fg) with the fiber product of Z[X]/(f) and Z[X]/(g) over Z[X]/(f,g). The intersection ideal is (fg), by rational coprimality and monic integer division. Take f=Q_(k-1), g=Psi_(p^k). CTG2 makes (f,g)=(f,p). Every conjugate of t_j reduces to two above p, so Psi_(p^j)(X) reduces to (X-2)^(d_j); hence Q_(k-1) reduces to (X-2)^(D_(k-1)). This proves CTG3, including the specified homomorphisms. Its additive cokernel has size p^(D_(k-1)). Starting from R_1=O_(B_p) and applying the index formula successively gives CTG4. Thus rational decomposition into packets cannot be substituted for an integral direct product.
+
+#### CTG.3 The full coefficient lattice across different orders
+
+**Definition.** For a in E_k define the rational trace form
+
+$$\mathcal F_a=\sum_{j=1}^k\ \sum_{\sigma:B_{p^j}\hookrightarrow\mathbb R}
+\sigma(a_j)g_{\eta^{p^{k-j}},\sigma}.$$
+
+Its nth coefficient is tau(a A(n)). Let Lambda_k be the full lattice of integer Fourier coefficients in this rational tower. Let Lambda_sep be the direct sum of the separately saturated primitive-packet lattices in STL, embedded into the same space. Put R_k^vee={a in E_k:tau(aR_k) subset Z}.
+
+**Theorem CTG3.** The map a to F_a identifies the rational-coefficient part of the real tower span with E_k and
+
+$$\boxed{\Lambda_k=\mathcal F(R_k^\vee),\qquad
+[\Lambda_k:\Lambda_{\rm sep}]=p^{J_k}.}\tag{CTG5}$$
+
+With e_0=1, e_i=C_i(t) for 1<=i<D_k, its trace matrix is
+
+$$H_{00}=D_k,\qquad H_{0i}=H_{i0}=-1,\qquad
+H_{ij}=p^k\delta_{ij}-2\quad(i,j>0).\tag{CTG6}$$
+
+Consequently
+
+$$\boxed{\operatorname{disc}(R_k)=(p^k)^{D_k-1},\qquad
+\Lambda_k/\mathcal F(R_k)\simeq(\mathbb Z/p^k\mathbb Z)^{D_k-1}.}\tag{CTG7}$$
+
+**Proof.** The sampled coefficient vectors in CTG1 are an integral basis of R_k. Their embedding matrix is invertible because Q_k has distinct roots. Solving the sample equations by its trace-dual basis proves rational descent exactly as in STL2, now for the separable product E_k. Integer coefficients are equivalent to tau(aR_k) subset Z because the actual coefficient span is R_k. The separately saturated lattice is F(S_k^vee). Dualizing the finite-index inclusion R_k subset S_k preserves its index, proving CTG5.
+
+The sum over every nontrivial mth root of unity gives tau(C_a(t))=-1 when m does not divide a, and m-1 otherwise, with m=p^k. Use C_i C_j=C_(i+j)+C_(i-j) and C_(-a)=C_a. In the displayed index range no sum i+j is a nonzero multiple of m, and i-j is zero exactly on the diagonal. This proves CTG6. It is exactly the matrix template of STL4A, with n=D_k-1 and 2n+3=m, including composite m. Its explicit integral-image theorem gives quotient (Z/m)^(D_k-1) and determinant m^(D_k-1). That theorem is already the statement of `PrimeCyclotomicTraceImage.integral_image`; this consumer needs no new Lean wrapper. The automorphic and product-algebra identifications in this paragraph remain ordinary mathematics.
+
+#### CTG.4 Exact gluing to the scalar Eisenstein system
+
+**Definition.** Write b(n)=sum_(d|n)chi_5(d). The scalar good-Hecke system has eigenvalue b(ell)=1+chi_5(ell). Adjoin its one-dimensional coefficient module to the tower; no analytic normalization of a selected Eisenstein series is required for this definition.
+
+**Theorem CTG4.** The good-Hecke algebra on the tower plus this scalar system is
+
+$$\boxed{\widetilde R_k\simeq
+\mathbb Z[X]/((X-2)Q_k(X))
+\simeq R_k\times_{\mathbb Z/p^k\mathbb Z}\mathbb Z.}\tag{CTG8}$$
+
+The map from R_k is evaluation at X=2 modulo p^k. The ideal in R_k generated by all good Hecke discrepancies is (t-2)R_k, and
+
+$$\boxed{R_k/(t-2)R_k\simeq\mathbb Z/p^k\mathbb Z.}\tag{CTG9}$$
+
+The inclusion of the glued algebra into R_k x Z has index p^k.
+
+**Proof.** A split prime acts by (C_a(t),2); an inert prime acts by (0,0). Since C_a(2)=2 and a generator prime gives (t,2), these operators generate exactly Z[(t,2)]. Polynomial evaluation has kernel ((X-2)Q_k), and the sum of the ideals (X-2),(Q_k) gives quotient Z/(Q_k(2))=Z/p^k. The same integer polynomial fiber-product argument as in CTG2 proves CTG8 and the index. Each split discrepancy C_a(t)-2 is divisible by t-2, and the generator discrepancy is t-2 itself. Quotienting gives CTG9. For one isolated primitive packet the identical argument instead gives O_(B_(p^j))/(t_j-2)=F_p, since Psi_(p^j)(2)=p. Thus the complete-tower congruence module has order p^k even though every individual primitive packet has only one p-factor.
+
+#### CTG.5 A normalized integral cusp form and the sharp depth bound
+
+**Definition.** For r>=1 let E_(k,r) be the simultaneous scalar-Eisenstein eigenspace in Lambda_k/p^r Lambda_k: its elements satisfy (T_ell-1-chi_5(ell))f=0 for every good prime ell. Congruence here concerns Fourier coefficients in the specified lattice, not reduction of a real-analytic function pointwise modulo p.
+
+**Theorem CTG5.** The first Fourier coefficient gives an isomorphism
+
+$$\boxed{E_{k,r}\simeq
+\{c\in\mathbb Z/p^r\mathbb Z:p^k c=0\}.}\tag{CTG10}$$
+
+In particular this group is cyclic of order p^min(k,r). A normalized class with first coefficient one exists exactly when r<=k and is then unique. No primitive vector in Lambda_k can satisfy the simultaneous Eisenstein congruence modulo p^(k+1).
+
+An explicit normalized integral cusp form attaining depth k is
+
+$$\boxed{f_m=\mathcal F_{-C_{D_k}(t)},\qquad [1]f_m=1.}\tag{CTG11}$$
+
+For (n,p)=1 it has the exact coefficient formula
+
+$$\boxed{[n]f_m=b(n)-m a_D(n),\qquad
+ a_D(n)=\#\{\mathfrak a:N\mathfrak a=n,\ \eta(\mathfrak a)=\zeta_m^{D_k}\}.}\tag{CTG12}$$
+
+At a good split prime its coefficient is 2-m if the rotation exponent is +/-D_k, and is two otherwise; at a good inert prime it is zero. All coefficients are integers. The class of f_m generates E_(k,r) for r<=k; for r>k the generator is p^(r-k)f_m modulo p^r.
+
+**Proof.** The perfect pairing between R_k and R_k^vee identifies Lambda_k/p^r Lambda_k with Hom_Z(R_k,Z/p^r). Under this pairing the action of t-2 is precomposition with multiplication by t-2. By CTG9, its annihilated functionals are exactly Hom_Z(Z/p^k,Z/p^r), and such a functional is uniquely determined by its value on one. This proves CTG10, including the stated first coefficient and the primitive-vector bound.
+
+For CTG11, the full-root sum gives tau(-C_D(t))=1, and for 1<=i<D gives tau(-C_D(t)C_i(t))=2. Thus its trace functional on the displayed basis is evaluation of C_i at two. Modulo m it factors through R_k/(t-2), proving the required congruence and normalization. It is integral since -C_D(t) lies in R_k and every trace pairing of elements of R_k is integral.
+
+More explicitly, pair conjugate ideals of norm n. A fixed ideal has character one and contributes one both to b(n) and to f_m. A nonfixed pair with character values zeta^a,zeta^(-a) contributes C_a(t). The identity C_D C_a=C_(D+a)+C_(D-a) and the full-root trace show that its contribution to f_m is two, except at a=+/-D, where it is 2-m. Exactly one ideal in each exceptional pair has character zeta^D, because m is odd and D is a unit modulo m. This proves CTG12; the ideal count of norm n in K is b(n). The same computation gives the good-prime formula. The cyclic group in CTG10 and first coefficient one identify all its generators as stated. Chebotarev gives exceptional auxiliary primes in the existing field, so these exact negative coefficients are not suppressed. This supplies no new target prime or character.
+
+#### CTG.6 Exact finite-precision scalar characters
+
+**Theorem CTG6.** Every unital homomorphism R_k -> Z/p^r has t=2 modulo p. The number of such homomorphisms is p^(r-1) for 1<=r<=k and zero for r>k. For the augmented algebra Rtilde_k the number is
+
+$$\boxed{p^{\min(k,r-1)}.}\tag{CTG13}$$
+
+Its only Z_p-valued character is the scalar Eisenstein evaluation t=2.
+
+**Proof.** Each monic shifted polynomial Psi_(p^j)(2+U) reduces to U^(d_j) modulo p and has constant term p. Its degree d_j is at least three for p>5. Hence for u in pZ_p, every nonconstant term has valuation at least two and
+
+$$\Psi_{p^j}(2+u)\equiv p\pmod{p^2},\qquad
+v_p(Q_k(2+u))=k.$$
+
+Reduction modulo p of Q_k is (X-2)^(D_k), so a homomorphism has image t=2+u with u divisible by p. For the cusp algebra, Q_k(2+u)=0 modulo p^r holds exactly when r<=k; every such residue u then works, giving p^(r-1) choices. For the augmented algebra the condition is u Q_k(2+u)=0. Thus u must be a multiple of p^max(1,r-k), giving CTG13. Over Z_p the factor Q_k(2+u) is nonzero, so u=0. These are scalar characters with target Z/p^r or Z_p; the genuine cuspidal characters take values in ramified cyclotomic integer rings. This statement does not rule out those ramified characteristic-zero characters.
+
+#### CTG.7 What is and is not inferred about WSS
+
+**Corollary CTG7.** Fix a prime p>5 and take the complete finite p-power ring-class tower in ROC, whose largest character order is p^(h_p-1). If h_p=1 there is no such cuspidal tower. Otherwise the maximum rational p-adic Eisenstein congruence depth of a primitive integer-coefficient vector in this tower is exactly h_p-1.
+
+**Proof.** Apply CTG5 at k=h_p-1. ROC7 gives precisely the available nontrivial orders p,...,p^k. Higher congruence is excluded within their full coefficient-integral span by CTG10. Conversely CTG11 supplies a normalized vector attaining k. The theorem concerns the complete finite-order, fixed-golden tower, not all Maass forms at the same level.
+
+The inter-packet gluing in CTG3 is an extra step beyond the single-packet lattice STL. It does not change any of STL's statements. For the abstract coefficient tower p=7,k=2, the total dimension is24, the two primitive dimensions are3 and21, and [Lambda_2:Lambda_sep]=7^3. The complete congruence module is Z/49, whereas each isolated primitive module gives Z/7. These algebraic examples do not assert the existence of a golden character of order49 or a WSS prime at seven.
+
+The finite-orbit discipline in the separate CarlitzFiveOrbit result is methodologically relevant: projecting to one primitive factor before doing integer elimination can lose compatibility conditions. Its characteristic19 certificate is not a theorem about these characteristic-zero Hecke orders. Here the complete-orbit polynomial Q_k and its integer fiber products are proved directly; no Carlitz theorem is imported.
+
+For comparison, Fretwell-Roberts, *Hilbert modular Eisenstein congruences of local origin*, arXiv:2411.06987v2 (March 3, 2026), Journal of Number Theory280(2026),861-896, proves congruence existence results in parallel holomorphic weight at least three. Those weight hypotheses are absent from the parameter-zero, weight-zero Maass family here. Its existence theorem is not used to create the character eta. Source roles and the current version locators are recorded in the accompanying Library notes.
+
+All spectral conclusions of CTG start with an existing eta, so CTG7 is an exact recovery of the original depth, not an independently proved bound on it. A new WSS prime-family decision would require an independent restriction or construction for the complete integral Hecke system, with all the weight, conductor, evenness and fixed-field conditions retained. Neither the universal polynomial model nor its finite-precision scalar characters establish such existence. No Petersson-norm inequality, general mod-p modularity theorem or unknown class-group order is used to choose a branch.
