@@ -135,16 +135,20 @@ one you changed when doing mathematical work. It is not a full repository
 check. For harness changes, `make -C tools check-fast` runs the selected fast
 structure checks, and `make -C tools test` runs the full .NET harness test suite.
 
-Commit each logical change and push it to your fork; run local verification
-alongside remote CI. The shared preflight entry selects the applicable
-engineering and current-tree checks:
+Commit each logical change and push it to your fork immediately; run any local
+checks alongside remote CI. Under [AGENTS.md §8.2](../CLAUDE.md#82-本地早反馈与远端-ci-并行),
+local `make preflight` and PR-mode preflight are **optional** early feedback and
+diagnostics. Current remote CI checks remain **required and authoritative**.
+The shared preflight entry selects the applicable engineering and current-tree
+checks:
 
 ```sh
 make preflight
 ```
 
-Before merge, check the combination with the project's `dev` branch. Start
-from a clean, committed worktree and pass an immutable base SHA:
+Optionally, check the combination with the project's `dev` branch before
+merge. To run this diagnostic, start from a clean, committed worktree and pass
+an immutable base SHA:
 
 ```sh
 git fetch upstream dev
@@ -179,7 +183,11 @@ green local check is not a merged contribution: completion is **MERGED** into
 `dev`. Clean up an isolated worktree only after confirming the merge and a
 clean working tree.
 
-The project is licensed under [Apache-2.0](../LICENSE).
+The root [LICENSE](../LICENSE) contains Apache-2.0. The repository's
+[licensing specification](develop/spec/golden-ledger-repo-spec.md#第八部治理)
+assigns Apache-2.0 to repository-produced Lean code, CC-BY-4.0 to text, and CC0
+to data. Third-party dependencies retain their upstream licenses and applicable
+notices.
 
 ## Research boundaries
 
