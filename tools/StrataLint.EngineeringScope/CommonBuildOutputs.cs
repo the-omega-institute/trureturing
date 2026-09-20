@@ -17,7 +17,7 @@ internal static class CommonBuildOutputs
     // When a resource plan supplies roots, only those roots and their explicitly
     // registered references are admitted. A null root set retains the complete
     // engineering entrypoint for callers that explicitly request it.
-    internal static string[] Collect(string root, IEnumerable<string>? selectedRoots)
+    internal static string[] Collect(string root, IEnumerable<string>? selectedRoots, string[]? selectedTests = null)
     {
         var projects = new Dictionary<string, string>(StringComparer.Ordinal);
         var paths = new HashSet<string>(StringComparer.Ordinal);
@@ -78,7 +78,10 @@ internal static class CommonBuildOutputs
             File.Copy(material.Source, target, overwrite: true);
         }
         var testProjects = EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot))
-            .Where(project => selected is null || selected.Contains(project)).ToArray();
+            .Where(project => selectedTests is not null ? selectedTests.Contains(project, StringComparer.Ordinal)
+                : selected is null || selected.Contains(project)).ToArray();
+        if (selectedTests is not null && !testProjects.Order(StringComparer.Ordinal).SequenceEqual(selectedTests.Order(StringComparer.Ordinal)))
+            throw new InvalidDataException("unregistered requested test execution");
         var tests = testProjects.Select(project => new BuiltTestProject(project, projects.TryGetValue(project, out var assembly)
             ? assembly : throw new InvalidDataException("selected test project was not built: " + project))).ToArray();
         var runtime = selected is null ? new[] {

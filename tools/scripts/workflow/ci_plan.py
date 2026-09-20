@@ -752,7 +752,7 @@ def make_plan(root, commit, changes_file):
 def execution_selection(read, active, resources):
     registration = "Meta/ci-resources.json"
     if not active:
-        return {"projects": [], "checks": [], "steps": [], "lean_targets": []}
+        return {"projects": [], "tests": [], "checks": [], "steps": [], "lean_targets": []}
     if not any(registration in row["materials"] for row in active):
         raise ValueError("missing declared resource execution manifest: " + registration)
     declarations = {registration, "Meta/engineering-projects.json", "Meta/ci-checks.json"}
@@ -781,6 +781,12 @@ def execution_selection(read, active, resources):
     selected_projects, selected_checks, steps, targets = set(), set(), set(), set()
     for resource in active:
         row = rows[resource["id"]]
+        stage = resource["stage"]
+        engineering_checks = {"selftest-pair", "capability-proof", "banned-api-proof"}
+        if (row["steps"] and stage != "current"
+                or any(("engineering" if check in engineering_checks else "current") != stage for check in row["checks"])
+                or any(projects.get(project, {}).get("ci") and stage != "engineering" for project in row["projects"])):
+            raise ValueError("resource execution stage mismatch: " + resource["id"])
         selected_projects.update(row["projects"])
         selected_checks.update(row["checks"])
         targets.update(row.get("lean_targets", []))
@@ -814,6 +820,11 @@ def execution_selection(read, active, resources):
         visited.add(project)
     for project in list(selected_projects):
         visit(project)
+    # Compilation references do not request test execution. Only resource rows
+    # explicitly selecting a CI member create an execution obligation.
+    selected_tests = sorted(project for project in selected_projects if projects[project]["ci"])
+    if selected_tests and not any(resource["stage"] == "engineering" for resource in active):
+        raise ValueError("selected CI tests require an engineering resource")
     if "lean-report" in steps:
         steps.discard("lean")  # The report producer enters the Lean incremental path.
     elif targets:
@@ -821,7 +832,7 @@ def execution_selection(read, active, resources):
     order = ["lean", "lean-report", "scribe", "filemap", "check-current"]
     if steps - set(order):
         raise ValueError("unknown current step registration")
-    return {"projects": sorted(selected_projects - dependencies), "checks": sorted(selected_checks),
+    return {"projects": sorted(selected_projects - dependencies), "tests": selected_tests, "checks": sorted(selected_checks),
             "steps": [step for step in order if step in steps], "lean_targets": sorted(targets)}
 
 

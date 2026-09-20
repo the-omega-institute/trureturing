@@ -69,9 +69,9 @@ internal sealed partial class ProductionCliEnvironment
                     .Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
-                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects);
-                acceptedBaseTests = common.Tests.Projects
-                    .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray();
+                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects, prepared.Revision);
+                acceptedBaseTests = common.Tests?.Projects
+                    .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray() ?? [];
                 if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport!), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
                     throw new InvalidDataException("check-delta requires this round's canonical report");
                 if (EvaluateAdmissionPlane(raw, baselineRaw, prepared.Changes) is { } plane)
