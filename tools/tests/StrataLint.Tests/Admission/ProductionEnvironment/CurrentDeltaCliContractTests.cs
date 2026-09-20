@@ -472,6 +472,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("first-freeze", 1, "SL-008")]
     [InlineData("ratchet", 1, "SL-003")]
     [InlineData("unowned-project", 1, "TEST_PROJECT_TOPOLOGY candidate introduces topology debt: missing-owned-project StrataLint.NewProduct -> StrataLint.NewProduct.Tests")]
+    [InlineData("unregistered-project", 2, "changed path must match exactly one FILEMAP entry; path=tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj matches=0")]
     [InlineData("missing-base-project", 2, "base test project")]
     [InlineData("missing-report", 2, "")]
     [InlineData("candidate-mismatch", 2, "candidate identity")]
@@ -595,10 +596,32 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             case "first-freeze": Write("Golden/Frozen/accepted/" + new string('a', 64) + ".json", "{}\n"); break;
             case "ratchet": for (var i = 0; i <= RepositoryRules.DirectoryFileLimit; i++) Write($"docs/reports/ratchet/{i}.json", "{}\n"); break;
             case "unowned-project":
+            case "unregistered-project":
                 const string product = "tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj";
                 Write(product, "<Project />\n");
                 projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(new EngineeringProjectFixture(
                     product, "StrataLint.NewProduct", "production", false, [], OwnedTestAssembly: "StrataLint.NewProduct.Tests")))!["projects"]![0]!.DeepClone());
+                if (scenario == "unowned-project")
+                {
+                    // Reach the owned-test topology predicate with an explicitly registered path.
+                    var filemap = TomlSerializer.Deserialize<TomlTable>(File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml")))!;
+                    var entry = TomlSerializer.Deserialize<TomlTable>("""
+                        pattern = "tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj"
+                        require = ["delta"]
+                        kind = "program"
+                        admission_plane = "judge"
+                        produced_by = "none"
+                        consumed_by = ["dotnet"]
+                        verified_by = ["dotnet-test"]
+                        artifact_id = "none"
+                        runtime_disposition = "committed-source"
+                        """)!;
+                    var rows = new TomlArray();
+                    foreach (var row in ((TomlArray)filemap["files"]).Cast<TomlTable>().Append(entry)
+                        .OrderBy(row => (string)row["pattern"], StringComparer.Ordinal)) rows.Add(row);
+                    filemap["files"] = rows;
+                    Write("Meta/FILEMAP.toml", TomlSerializer.Serialize(filemap));
+                }
                 break;
             case "disabled-base-project":
                 projects.Single(item => item!["path"]!.GetValue<string>() == firstProject)!["ci"] = false;
