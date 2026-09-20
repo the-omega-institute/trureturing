@@ -376,6 +376,8 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 | `make current` | 按登记资源执行 Lean 增量 build/report、Scribe、filemap 与当前树不变量;复用本轮接受的候选 DLL、工程产物与有效检查证据,不重复 engineering。 |
 | `make delta BASE=<sha>` | 候选判官检查 base→candidate 的分区、保护面、首次冻结、棘轮及其余跨树约束;消费本轮 current 报告与 engineering 证据,不重跑共同工作。 |
 
+完整规划验证成功且整轮资源集为空时,规划入口输出 `work_required=false`。PR 保留绑定 M/B、FILEMAP、完整路径范围的 `no-work.json`,下游 required jobs 用 Actions 原生 skipped 表示 `not-required`,不再分配 runner、检出仓库或下载产物;push 在共用 build 入口验证完整事件范围后省去无工作的下游 jobs。单个阶段免跑不等于整轮免跑;缺失输出不能作为整轮免跑依据,须进入下游重验,规划、身份或上游失败仍须由 required jobs 显式失败。需要工作的阶段与本地 preflight 继续走相同共用入口,实际 skipped 检查名称及分支保护接受行为须经 integration 真跑验证。
+
 完整路径与输入范围经登记判为 no-resource 时,由 required-check 编排产出结构化 `not-required` 成功,无需安装 SDK、恢复重缓存或下载构建产物。`required` 必须进入所需共享入口并按真实退出码结算;无工作是经校验的路由结果,不能由缺文件、缓存命中或未知状态推出。
 
 消化 atoms/backfill 的路径显式登记 `current-metadata`、`delta-metadata` 与 `filemap`。push 只检查 SL-003/015/019 与 filemap;PR 的 `delta-metadata` 另要求完整 engineering 证据和正常 Lean report,供 SL-016 等现役 delta 谓词消费,不附带其它 current 谓词或 Scribe。delta 谓词集合保持不变;混入 Lean、冻结或判官等登记路径时按资源并集恢复相应完整义务,不以 metadata 标签豁免其它路径。

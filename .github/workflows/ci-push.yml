@@ -11,6 +11,9 @@ on:
       plan_artifact_id:
         required: true
         type: string
+      no_work:
+        type: boolean
+        default: false
     outputs:
       engineering_artifact_id:
         value: ${{ jobs.engineering.outputs.artifact_id }}
@@ -44,6 +47,7 @@ env:
 jobs:
   build:
     name: build
+    if: ${{ !inputs.no_work }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 30
     outputs:
@@ -52,6 +56,7 @@ jobs:
       run_id: ${{ steps.pack.outputs.run_id }}
       run_attempt: ${{ steps.pack.outputs.run_attempt }}
       commit: ${{ steps.pack.outputs.commit }}
+      work_required: ${{ steps.route.outputs.work_required }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -128,7 +133,7 @@ jobs:
   engineering:
     name: engineering
     needs: build
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && !inputs.no_work && !(needs.build.result == 'success' && needs.build.outputs.work_required == 'false') }}
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
       CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
@@ -305,7 +310,7 @@ jobs:
   current:
     name: current
     needs: build
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && !inputs.no_work && !(needs.build.result == 'success' && needs.build.outputs.work_required == 'false') }}
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
     runs-on: ubuntu-24.04-arm
