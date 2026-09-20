@@ -442,3 +442,192 @@ are existing methods. The certificate does not make a priority claim.
 For five or more actual predecessors the four-slot domination in (RM12)
 is unavailable; additional original-label information or a stronger
 comparison is still required.
+
+## 7. Literal-incidence continuation beyond four predecessors
+
+There is a sufficient condition on the **original prefix conditions and
+current colours** that permits an arbitrary-support continuation of an
+anchored-four head. It confines every later positive fee to one fixed head
+event. The same killed law can lose the mass of that event only once.
+The condition is additional arithmetic information; numerical distinctness
+alone is not asserted to imply it.
+
+Choose an exposed head containing \(3,5,7,11,13\), adjoining absent keys as
+free coordinates if needed. Require the **head-only original subfamily**
+to admit an order as in Sections 1--5: it starts \(3,5,7\), and each later
+head prime has at most four earlier neighbours in that subfamily's graph.
+Every coordinate \(\mathbb Z/p^{E_p}\mathbb Z\) resolves its maximum
+height across the **entire** original family, including labels ending
+after the head. Write \(\mu_H\) for the
+head's normalized physical law, \(U_H\) for avoidance of all head-only
+original classes, and
+
+\[
+ \eta_H=\mathbf1_{U_H}\mu_H,\qquad
+ s=\eta_H(1)>\frac{107}{90000}.
+ \tag{RM26}
+\]
+
+Choose a fixed cylinder \(G_i=\{x_{q_i}=a_i\pmod{q_i^{h_i}}\}\) on each
+\(q_i\in(3,5,7,11,13)\), with \(1\le h_i\le E_{q_i}\), and put
+\(G=\bigcap_{i=1}^5G_i\). These residues and depths are fixed for the
+whole family. They are not selected afresh in different fibres. The
+full-history depth-one caps from (RM3), (RM8) and (RM11) are respectively
+\(2/3,4/15,3/14,5/33,5/33\). Deeper cylinders obey the same upper bounds;
+a free coordinate obeys its smaller Haar cap. Iterated conditioning in
+the actual head order therefore gives
+
+\[
+ \eta_H(G)\le\mu_H(G)
+ \le\frac23\frac4{15}\frac3{14}\frac5{33}\frac5{33}
+ =\frac{20}{22869}.
+ \tag{RM27}
+\]
+
+This product uses conditional caps given the entire preceding word,
+even when 11 and 13 are exposed out of numerical order. It does not assume
+independent head coordinates or condition \(\mu_H\) on survival.
+
+Process the remaining primes in any fixed order after this head. Delete
+their original pure-power classes using the same bases \(\nu_p\) as in
+(RM3), and assign each remaining nonpure original label to its last prime.
+At stage \(p\), write a label as \(A_\ell\times J_\ell\), where
+\(A_\ell\) is its complete original predecessor cylinder and
+\(J_\ell\) its fixed original current-coordinate cylinder. Define
+
+\[
+ D_{p,i}=\bigcup_{\ell:A_\ell\not\subseteq G_i}J_\ell,
+ \qquad J_p^*=\bigcup_\ell J_\ell,
+ \qquad u_p=\nu_p(J_p^*).
+ \tag{RM28}
+\]
+
+The **literal deletion condition** is
+
+\[
+ \nu_p(D_{p,i})\le\frac12
+ \quad\text{for every remaining stage }p\text{ and every key }i.
+ \tag{RM29}
+\]
+
+It is directly checkable on original labels. A predecessor cylinder
+implies \(G_i\) exactly when its original exponent at \(q_i\) is at least
+\(h_i\) and its residue agrees with \(a_i\) modulo \(q_i^{h_i}\).
+For each union, \(\nu_p(D)=H_p(D\cap V_p)/H_p(V_p)\). Prime-power
+cylinders are nested or disjoint, so removal of contained cylinders and
+finite subtraction of the original pure union compute this rational
+mass at every finite height. No current colours are reassigned.
+
+For a complete preceding word \(x\notin G_i\), every active label has
+\(A_\ell\not\subseteq G_i\). Hence the actual forbidden union satisfies
+\(B_p(x)\subseteq D_{p,i}\). Use (RM6) at the deterministic threshold
+\(\delta_p=1/2\) for these later stages. Equations (RM7) and (RM29) give
+
+\[
+ \beta_p(x)=(2\nu_p(B_p(x))-1)_+
+ \le b_p\mathbf1_G(x),\qquad b_p=(2u_p-1)_+\in[0,1].
+ \tag{RM30}
+\]
+
+Thus a head point outside \(G\) always has a nonempty allowed extension
+at every later stage. The quantitative statement follows directly from
+[334's same-chain future-risk certificate (JC6--JC7)](../profile-notes/321-384/334-same-chain-overlap-and-future-risk-certificates.md#a-backward-supersolution-retains-the-future-relation-instead).
+For the successive tail primes \(p_1,\ldots,p_n\), retain the physical
+kernels \(K_j\), their killed restrictions
+\(R_j=K_j\mathbf1_{B_{p_j}^c}\), and
+\(\eta_j=\eta_HR_1\cdots R_j\). An explicit supersolution after stage
+\(j\) is \(r_j=\mathbf1_G[1-\prod_{\ell>j}(1-b_{p_\ell})]\).
+All kernels retain the head word, and (RM30) verifies the local inequality
+in (JC6). Consequently
+
+\[
+ \begin{aligned}
+ \eta_n(1)
+ &\ge s-\eta_H(G)\left[1-\prod_{j=1}^n(1-b_{p_j})\right]\\
+ &\ge s-\eta_H(G)
+ >\frac{107}{90000}-\frac{20}{22869}
+ =\frac{71887}{228690000}>0.
+ \end{aligned}
+ \tag{RM31}
+\]
+
+In particular, the exact first-hit loss telescopes as
+\(\sum_j\eta_{j-1}(\beta_{p_j})=\eta_H(G)-\eta_n(G)\).
+The physical marginal of \(G\) remains fixed, whereas its killed mass
+decreases. Charging that physical marginal separately at every stage
+would discard this saving.
+
+Let \(P_H\) and \(P_T\) be the actual primes assigned to the head and
+tail. The full physical density is bounded by
+\((8/3)\prod_{p\in P_H,p\ge7}C_p\prod_{p\in P_T}2c_p\), using the
+head's (RM8) and each later conditional bound \(K_p\le2\nu_p\).
+Free coordinates contribute one. Thus the complete original family has
+
+\[
+ H(U)>\frac{71887}{609840000}
+       \prod_{\substack{p\in P_H\\p\ge7}}C_p^{-1}
+       \prod_{p\in P_T}\frac{p-2}{2(p-1)}>0.
+ \tag{RM32}
+\]
+
+The tail may start at 17 and need not be numerically larger than every
+head prime. It has no bound on predecessor count, support size, number
+of stages or original exponent heights, **provided (RM29) holds**.
+Tail-ending labels can create extra edges among head primes in the full
+interaction graph; those labels are assigned and paid only in the tail.
+The anchored-four requirement concerns the head-only subfamily, not
+that larger graph.
+
+### An original 27-label example with six-prime supports
+
+Take \((q_1,\ldots,q_5)=(3,5,7,11,13)\), arbitrary positive heights
+\(h_i\), the five pure classes \(0\pmod{q_i}\), and
+\(G_i=\{x_{q_i}=1\pmod{q_i^{h_i}}\}\). At each \(p=17,19\), add one
+original modulus \(p q_i^{h_i}q_j^{h_j}\) for each pair \(i<j\), with
+old residues one and ten distinct fixed current colours \(0,\ldots,9\).
+Also add \(p\prod_{i=1}^5q_i^{h_i}\), with every old residue one and
+current colour 10. CRT specifies each original residue. These 27 odd
+numerical moduli are distinct. There are no pure 17 or 19 exclusions.
+
+The prescribed head law is the product of the five pure-survivor laws on
+the complete coordinates. It gives
+\(\eta_H(G)=\mu_H(G)=1/P_h\), where
+\(P_h=\prod_i(q_i-1)q_i^{h_i-1}\). If exactly \(k\) keys match, the
+current forbidden set has \(\binom{k}{2}+\mathbf1_{k=5}\) colours.
+For a failed key, (RM28) contains exactly the six pair colours omitting
+it; hence \(\nu_p(D_{p,i})=6/p<1/2\). The actual half-threshold hazards
+are \(\beta_{17}=(5/17)\mathbf1_G\) and
+\(\beta_{19}=(3/19)\mathbf1_G\). For \(h_i=1\), \(P_h=5760\), so
+
+\[
+ \begin{aligned}
+ \text{sum of physical charges}
+ &=\frac1{5760}\left(\frac5{17}+\frac3{19}\right)
+   =\frac{146}{1860480},\\
+ \text{actual first-hit loss}
+ &=\frac1{5760}\left(1-\frac{12}{17}\frac{16}{19}\right)
+   =\frac{131}{1860480},\\
+ \text{saving}&=\frac{15}{1860480}=\frac1{124032}.
+ \end{aligned}
+ \tag{RM33}
+\]
+
+The second first-hit contribution uses the surviving trigger mass
+\((1/P_h)(12/17)\), not its original physical mass \(1/P_h\).
+The formulas with \(P_h\) hold at all the stated heights. The head-only
+graph has no edges, but either six-prime label creates a \(K_6\) in the
+full graph. This illustrates the support and graph distinction. Unused
+current colours already make this particular family noncovering; its
+role is the strict same-law saving, not a new existence endpoint.
+
+The added arithmetic input is (RM28--RM29), used with the existing
+supersolution theorem and the head's conditional caps. In a general family
+one deletion union can have pure-base mass one. No proof here forces
+(RM29), or a sufficiently cheap collection of such certificates, for
+every five-predecessor or unrestricted family. If positive fees also occur
+outside \(G\), the same-law loss splits exactly into
+\(\eta_H(G)-\eta_n(G)+\sum_j\eta_{j-1}(\mathbf1_{G^c}\beta_{p_j})\).
+Controlling that additional term jointly with the actual head reserve is
+an unresolved arithmetic obligation; separate marginal bounds cannot
+replace it. This is an ordinary conditional deduction, with no new Lean
+theorem or unrestricted Erdős #7 conclusion.
