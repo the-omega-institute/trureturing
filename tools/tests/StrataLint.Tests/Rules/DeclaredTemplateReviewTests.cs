@@ -271,6 +271,9 @@ public sealed class DeclaredTemplateReviewTests
         var first = literal.IndexOf(open, StringComparison.Ordinal);
         var last = literal.LastIndexOf(close, StringComparison.Ordinal);
         Assert.True(first >= 0 && last > first, "canonical wire literal not found");
+        // One literal only: a second delimiter would put Lean syntax inside the slice.
+        Assert.Equal(first, literal.LastIndexOf(open, StringComparison.Ordinal));
+        Assert.Equal(last, literal.IndexOf(close, first + open.Length, StringComparison.Ordinal));
         var wire = System.Text.Json.Nodes.JsonNode.Parse(literal[(first + open.Length)..last])!;
         Assert.Null(wire["inputs"]);
         Assert.All(wire["records"]!.AsArray(), record => Assert.Null(record!["content_inputs"]));
