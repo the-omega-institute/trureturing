@@ -1,4 +1,4 @@
-[Index](../../../../Problems/erdos-7-odd-covering-systems.md) · [Previous](05-unrestricted-axis-deletions-a-complete-head-bound.md) · [Next](07-ordered-local-kernels-unbounded-feedback-sets-and-treewidth.md)
+[Index](../../../../Problems/erdos-7-odd-covering-systems.md) · [Previous](05-unrestricted-axis-deletions-a-complete-head-bound.md) · [Next](06b-arbitrary-odd-cactus-graphs-are-noncovering.md)
 
 <a id="block-saturation-and-the-actual-crossing-budget"></a>
 ### Block saturation and the actual crossing budget
@@ -668,6 +668,14 @@ particular, the statement retains three-prime labels on a triangular
 cycle. This is an ordinary mathematical proof, not a Lean-certified
 noncoverage theorem or a literature-priority claim.
 
+The existence conclusion already follows from
+[Schroeder, Theorem 1.1](../../../../Library/Arith/schroeder2026noncoverage.md):
+every modulus here has at most three distinct prime factors, since its
+support is a clique in a pseudoforest. The cited source has the repository
+audit described in that reference. The independent argument below supplies
+the specified retained-domain reserve, coordinate bounds and exact extension
+weights; it does not add a new noncoverage case beyond that theorem.
+
 Different components use disjoint CRT coordinates, so their avoiding
 assignments combine. Tree components were treated above. For a connected
 component with one cycle, retain the cycle and, if 3 occurs off it, the
@@ -794,124 +802,3 @@ Their finite examples check the implementation and constants; the
 unbounded graph and height claim follows from PB1--UC7. The existing
 feedback-vertex estimates below retain their stated head and tail-cutoff
 hypotheses and are not being quoted as this all-odd specialization.
-
-<a id="a-bounded-number-of-cycle-breaking-vertices-in-each-component"></a>
-#### A bounded number of cycle-breaking vertices in each component
-
-The same argument extends beyond forests. A feedback vertex set is a set
-of vertices whose deletion leaves a forest. Its size is measured separately
-in each connected component; the number of components remains unrestricted.
-For a tail cutoff `q0` put `D=1+3/(q0-1)+2/(q0-1)^2` and define
-
-\[
- C_0=\frac32D,\qquad
- z_k=C_kD,\qquad C_{k+1}=\frac{4z_k^2}{4z_k-1}.
- \tag{FV1}
-\]
-
-If every tail component has a feedback vertex set of size at most `k`,
-then, for the same actual head law and original distinct moduli,
-
-\[
- \mu\{x:\text{tail fibre is saturated}\}
- \le G C_k\sum_{q\text{ tail}}\frac1{(q-1)^2}.
- \tag{FV2}
-\]
-
-The case `k=0` is (AF2). For the induction step, choose a vertex `r` from
-a nonempty feedback set in one component `J`, independently of the head
-point. Let `alpha_r(x)` be the uniform fraction of its coordinate covered
-by actual classes whose tail support is exactly `{r}`. Absorb the full
-`r` prime power into the head with the unconditioned law `nu=mu times U_r`.
-Each component `J_i` of `J-r` has a feedback set of size at most `k`.
-Every remaining class belongs to exactly one `J_i` after this absorption:
-its residual support is a clique and is therefore connected. In particular,
-a triangle class containing `r` becomes a two-prime class in one residual
-component. No such class is omitted or assigned twice.
-
-Let `beta_i(x)` be the uniform probability over `r` that the family assigned
-to `J_i` saturates its residual fibre. Saturation of `J` implies
-`alpha_r+sum_i beta_i>=1`: otherwise some `r` value avoids its pure classes
-and every residual component has an avoiding extension, which combine by
-CRT. For any `B>1` and `A=B^2/(4(B-1))`, the identity
-
-\[
- A t^2+B(1-t)-1=A\left(t-\frac{B}{2A}\right)^2
- \tag{FV3}
-\]
-
-gives `1[J saturated]<=A alpha_r^2+B sum_i beta_i`. The moment bound gives
-`E_mu alpha_r^2<=G a_r^2`. The uniform transfer bounds `Gamma(nu)<=G D_r`,
-where `D_r=1+3a_r+2a_r^2<=D`. The inductive forest-deletion estimate for all
-the residual components therefore gives
-
-\[
- \mu\{J\text{ saturated}\}
- \le G\left[A a_r^2+B C_kD_r
-                        \sum_{q\in J\setminus\{r\}}a_q^2\right].
- \tag{FV4}
-\]
-
-There is no requirement that `nu` survive the pure-`r` classes: those were
-separately charged through `alpha_r`. The subfamily assigned to each `J_i`
-has no class wholly in its enlarged head. At each residual tail divisor
-`t`, an enlarged head label `m r^f` determines the original modulus
-`m r^f t`; thus distinctness is preserved even when projected moduli repeat.
-
-Now set `z=C_kD`, `B=4z/(4z-1)` and `A=4z^2/(4z-1)=C_(k+1)`.
-Here `z>=3/2`, so all denominators are positive, `A=Bz`, and (FV3) applies.
-Both terms of (FV4) have coefficient at most `G C_(k+1)`.
-Components already having a smaller feedback set obey the same bound,
-because `C_(k+1)>=C_kD>=C_k`. Summation over all components proves (FV2).
-The argument permits arbitrary degrees, exponents, component counts and
-depths of attached trees. A feedback set of size one can break arbitrarily
-many cycles sharing a vertex; this is more general than a single-cycle
-component.
-
-Two exact consequences of (FV2) and the prime-square bound (GS1) are:
-
-| Head | Tail primes | Feedback vertices per component | Saturated-head mass upper bound |
-|---|---|---:|---:|
-| Arbitrary `{3,5,7}` head | `q>=23` | at most 1 | `<0.956460` |
-| Complete star head | `q>73` | at most 2 | `<0.966288` |
-
-For the first row, `D=138/121`, `C_1=3264065424/1458580343`, and
-
-\[
- \frac{1889}{48}C_1S_{23}
- =\frac{1175604260732733206684398339119}
-        {1229120627265994463000000000000}<1.            \tag{FV5}
-\]
-
-For the second row, `D=1580/1521`,
-`C_2=387820588344395661352960000000000/170508100702446502707449794959279`,
-and
-
-\[
- 177C_2S_{79}
- =\frac{16950596065609491264623331474432}
-        {17541985668975977644799361621325}<1.           \tag{FV6}
-\]
-
-Every pseudoforest, meaning at most one cycle in each component, is covered
-by the first row. Arbitrarily branching and deep trees may be attached to
-each cycle, and a modulus may contain all three tail primes of a triangular
-cycle. The second row implies that a full star completion must have a tail
-component for which deleting any two vertices still leaves a cycle. Many
-cycles in separate components do not suffice. These are ordinary proofs;
-the exact recurrence values and inequalities are checked by the same
-adjacent certificate as the forest constants.
-
-Tree elimination has public antecedents in
-[Csikvari--Nagy, *The Density Turan Problem*, Theorem 3.1 and Algorithm 3.3](https://arxiv.org/abs/1407.7873),
-which use prescribed edge densities and a matching-polynomial criterion.
-[He--Li--Liu--Wang--Xia, Theorem 6 and Corollary 38](https://arxiv.org/abs/1709.05143)
-concern a tree event-dependency graph, a different hypothesis from a tree
-of prime variables. Neither supplies the conditional square-energy and
-cubic-potential estimate used here. No exact dominating theorem was found
-in those searched scopes, and no global priority claim is made.
-The verifier also checks all 16384 unary/binary constraint assignments on
-a three-vertex binary path against its eight complete assignments, testing
-exact-message completeness and the local cubic-potential inequality.
-This finite regression checks the implementation against actual feasible
-assignments; it does not replace the arbitrary-tree proof above.
