@@ -1,0 +1,57 @@
+{
+  "0": {
+    "path": "content/009-rational_dual_buckets/003-3/000-0.json",
+    "sha256": "3287c6ac2dae902454cc4137a55829b56aab644c2d7fd9e74bde2e7bd0a71cc7",
+    "kind": "value"
+  },
+  "2": {
+    "path": "content/009-rational_dual_buckets/003-3/001-2.json",
+    "sha256": "dc815e941d0028a26ac0478dce5a7f636aa366e64d14181bb0922c13d3c768cd",
+    "kind": "value"
+  },
+  "3": {
+    "path": "content/009-rational_dual_buckets/003-3/002-3.json",
+    "sha256": "acfd903ddbd23c7a0b93ba4e5c803b00b8637a59d770c66ed66c334662e23ffa",
+    "kind": "object"
+  },
+  "5": {
+    "path": "content/009-rational_dual_buckets/003-3/003-5.json",
+    "sha256": "9f49108f0291a965fc96cc0a7f2a66f72681e12da008a6eb9c5b916cce3153d5",
+    "kind": "value"
+  },
+  "6": {
+    "path": "content/009-rational_dual_buckets/003-3/004-6.json",
+    "sha256": "6cc55caedd9318bb8283fc6a73926c568e8ce18be81acc14277635cb24d077dc",
+    "kind": "value"
+  },
+  "9": {
+    "path": "content/009-rational_dual_buckets/003-3/005-9.json",
+    "sha256": "f9d792cce7edca182c49bf2b202d43db806fe8d0ffef48e1847d8312159f10dc",
+    "kind": "object"
+  },
+  "a": {
+    "path": "content/009-rational_dual_buckets/003-3/006-a.json",
+    "sha256": "4ad0f7c4fced08e040ded7dfc9ba498aab1357f0d6cdc5f2a293c2e2aaf61cb4",
+    "kind": "object"
+  },
+  "b": {
+    "path": "content/009-rational_dual_buckets/003-3/007-b.json",
+    "sha256": "017bb260c1ef833c9fb9ff919024ae2bd2c19f40c6ec1b42ae5335ccda424007",
+    "kind": "object"
+  },
+  "c": {
+    "path": "content/009-rational_dual_buckets/003-3/008-c.json",
+    "sha256": "e45d2c2ba9853812ccb4a3ad34745a6358bed6d01d4e1cd5d560d1eafdac9e65",
+    "kind": "object"
+  },
+  "d": {
+    "path": "content/009-rational_dual_buckets/003-3/009-d.json",
+    "sha256": "a4adc438405e522852173001cf2e3d2f0a766048479066a82348b06305ba6608",
+    "kind": "value"
+  },
+  "f": {
+    "path": "content/009-rational_dual_buckets/003-3/010-f.json",
+    "sha256": "67d44971120ea50fb9fdb28ed68fdfc6d8c8a26f874b1a3db3398faf031b0e15",
+    "kind": "object"
+  }
+}

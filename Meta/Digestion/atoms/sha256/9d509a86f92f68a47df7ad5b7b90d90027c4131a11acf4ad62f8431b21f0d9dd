@@ -1,0 +1,16 @@
+**引理 137.7（共同前缀的正算子扩张）。** 任意匹配给定前缀的正实现，在一个保持输入的正交识别下都可写为
+$$
+\widetilde E=E\oplus F,\qquad
+\widetilde J=\binom J0,\qquad
+\widetilde C=
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}\succeq0,
+\qquad D|_L=0.
+\tag{137.13}
+$$
+反过来，任意有限维 $F$ 和满足式(137.13)的块算子，都给出同一前缀的正实现。每个这样的扩张还满足
+$$
+D|_{\ker C}=0,\qquad
+\widetilde M_{2r+2}-\widehat M_{2r+2}=(De_r)^*(De_r).
+\tag{137.14}
+$$
+

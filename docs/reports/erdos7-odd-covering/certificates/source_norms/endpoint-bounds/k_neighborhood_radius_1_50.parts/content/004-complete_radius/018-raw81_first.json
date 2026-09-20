@@ -1,0 +1,190 @@
+{
+  "index": 46,
+  "tag": [
+    "s",
+    "81"
+  ],
+  "source_prices": {
+    "tag": [
+      "s",
+      "81"
+    ],
+    "mass_L1": "7764926/28824005",
+    "pure_L1": "57201/9800",
+    "availability_Linfinity": "306266/1607445",
+    "separate_source_mass_price": "46/28824005",
+    "finite_seven_blocks": [
+      {
+        "tag": [
+          "seven_block",
+          [
+            [
+              "s",
+              "81"
+            ],
+            0
+          ]
+        ],
+        "mass_L1": "2577227/41177150",
+        "pure_L1": "13833/4900",
+        "availability_Linfinity": "120128/1607445",
+        "positive_five_pure_price": "11699656615119/6433929687500",
+        "polynomial_cutoff": 9
+      },
+      {
+        "tag": [
+          "seven_block",
+          [
+            [
+              "s",
+              "81"
+            ],
+            1
+          ]
+        ],
+        "mass_L1": "2577227/41177150",
+        "pure_L1": "4437/1960",
+        "availability_Linfinity": "18/245",
+        "positive_five_pure_price": "28508258111/20588575000",
+        "polynomial_cutoff": 9
+      },
+      {
+        "tag": [
+          "seven_block",
+          [
+            [
+              "s",
+              "81"
+            ],
+            2
+          ]
+        ],
+        "mass_L1": "2577227/41177150",
+        "pure_L1": "171/280",
+        "availability_Linfinity": "76/2205",
+        "positive_five_pure_price": "304922927/823543000",
+        "polynomial_cutoff": 9
+      },
+      {
+        "tag": [
+          "seven_block",
+          [
+            [
+              "s",
+              "81"
+            ],
+            3
+          ]
+        ],
+        "mass_L1": "2577227/41177150",
+        "pure_L1": "45/392",
+        "availability_Linfinity": "20/3087",
+        "positive_five_pure_price": "62469947/823543000",
+        "polynomial_cutoff": 9
+      },
+      {
+        "tag": [
+          "seven_block",
+          [
+            [
+              "s",
+              "81"
+            ],
+            4
+          ]
+        ],
+        "mass_L1": "632417/41177150",
+        "pure_L1": "279/13720",
+        "availability_Linfinity": "124/108045",
+        "positive_five_pure_price": "11620883/823543000",
+        "polynomial_cutoff": 9
+      },
+      {
+        "tag": [
+          "seven_block",
+          [
+            [
+              "s",
+              "81"
+            ],
+            5
+          ]
+        ],
+        "mass_L1": "24877/8235430",
+        "pure_L1": "333/96040",
+        "availability_Linfinity": "148/756315",
+        "positive_five_pure_price": "409531/164708600",
+        "polynomial_cutoff": 9
+      },
+      {
+        "tag": [
+          "seven_block",
+          [
+            [
+              "s",
+              "81"
+            ],
+            6
+          ]
+        ],
+        "mass_L1": "893/1647086",
+        "pure_L1": "387/672280",
+        "availability_Linfinity": "172/5294205",
+        "positive_five_pure_price": "69331/164708600",
+        "polynomial_cutoff": 9
+      },
+      {
+        "tag": [
+          "seven_block",
+          [
+            [
+              "s",
+              "81"
+            ],
+            7
+          ]
+        ],
+        "mass_L1": "1067/11529602",
+        "pure_L1": "9/96040",
+        "availability_Linfinity": "4/756315",
+        "positive_five_pure_price": "79993/1152960200",
+        "polynomial_cutoff": 9
+      }
+    ],
+    "full_monomial_tail": {
+      "coefficient": "4/1764735",
+      "prices": {
+        "tag": [
+          "s",
+          "0"
+        ],
+        "mass_L1": "9",
+        "pure_L1": "63/8",
+        "availability_Linfinity": "4/9",
+        "positive_five_pure_price": "243/40",
+        "polynomial_cutoff": 2
+      }
+    }
+  },
+  "delta_price": "7726415908741/7564571872200",
+  "face_vertex_indices": [
+    398,
+    410,
+    422,
+    616,
+    628,
+    640
+  ],
+  "face_vertex_values": [
+    "646314683124386207/393988118343750000",
+    "646314683124386207/393988118343750000",
+    "646314683124386207/393988118343750000",
+    "646314683124386207/393988118343750000",
+    "646314683124386207/393988118343750000",
+    "646314683124386207/393988118343750000"
+  ],
+  "face_upper": "646314683124386207/393988118343750000",
+  "uniform_upper": "981544549543987123/590982177515625000",
+  "uniform_excess": "7726415908741/378228593610000",
+  "outside_weight": "316/429"
+}

@@ -1,0 +1,158 @@
+{
+  "uniform_caps": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "14/1215",
+      "14/1215",
+      "2399/252720",
+      "14/1215",
+      "0",
+      "1/45",
+      "1/45",
+      "17/936",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "3221/251160",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "3221/251160",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "3221/251160",
+      "1/45"
+    ]
+  },
+  "cap_increments": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "1/2430",
+      "1/2430",
+      "293/252720",
+      "1/2430",
+      "0",
+      "0",
+      "0",
+      "7/4680",
+      "0",
+      "0",
+      "0",
+      "0",
+      "1291/753480",
+      "0",
+      "0",
+      "0",
+      "0",
+      "1291/753480",
+      "0",
+      "0",
+      "0",
+      "0",
+      "1291/753480",
+      "0"
+    ]
+  },
+  "uniform_budgets": {
+    "kind": "inline",
+    "value": [
+      "743/25272",
+      "41/486",
+      "133/936"
+    ]
+  },
+  "denominator_costs": {
+    "path": "content/005-shells/000001/item/005-complete_heads/003-denominator_costs.json",
+    "sha256": "32e8f39511d0712e841f546fab3daec58962b21ad344eb7a1e5fce4f6ef06045",
+    "kind": "array"
+  },
+  "denominator_shared": {
+    "path": "content/005-shells/000001/item/005-complete_heads/004-denominator_shared.json",
+    "sha256": "54c9695e7e30a23c0fe7a2332a908c0b6243a4321990ad622f1585ca81933f71",
+    "kind": "value"
+  },
+  "H2": {
+    "path": "content/005-shells/000001/item/005-complete_heads/005-H2.json",
+    "sha256": "6d2871d3c8ee055891e55f6ab01885b653a1207bda4c2b11e617fbfc4d4c4f04",
+    "kind": "value"
+  },
+  "mean_costs": {
+    "path": "content/005-shells/000001/item/005-complete_heads/006-mean_costs.json",
+    "sha256": "52a2eb51d320515ab03e4d6dbdf8601a29f1cb916dc7c999ff00939d1bb83391",
+    "kind": "array"
+  },
+  "mean_shared": {
+    "path": "content/005-shells/000001/item/005-complete_heads/007-mean_shared.json",
+    "sha256": "e296d16e64de962c6563f164fb63e048f89fb8581c90988f40d75934cb2fd267",
+    "kind": "value"
+  },
+  "quadratic_costs": {
+    "path": "content/005-shells/000001/item/005-complete_heads/008-quadratic_costs.json",
+    "sha256": "703a2243ffbc8123834a9b0f223994bef23ace1d79537ab5b62e6b5c2cccbb1a",
+    "kind": "array"
+  },
+  "quadratic_shared": {
+    "path": "content/005-shells/000001/item/005-complete_heads/009-quadratic_shared.json",
+    "sha256": "f567ff2cbb37cc8d81ccee4f04af020a653fffcbb88d738ded1f29572c1d1bfa",
+    "kind": "value"
+  },
+  "original_factorial_pairs": {
+    "kind": "inline",
+    "value": {
+      "old_old_distinct": "1019753/6998400",
+      "old_positive7": "683/4050",
+      "positive7_positive7_distinct": "24583/58320",
+      "tail_distinct_pairs": "5149937/6998400",
+      "weighted_old_pure_blocks_before_halving": {
+        "pure3": "11633/262440",
+        "pure5": "33671/2624400",
+        "root5": "2713/48600",
+        "cell5": "386087/10497600"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "raw_coefficient_upper": [
+        "29/108",
+        "17/108",
+        "11/108",
+        "41/54",
+        "122/243",
+        "1/3",
+        "1/9",
+        "1"
+      ],
+      "positive7_pair_prices": [
+        "1/30",
+        "3/10",
+        "17/30",
+        "29/540",
+        "11/120",
+        "13/40",
+        "67/120",
+        "109/2160"
+      ]
+    }
+  },
+  "seven_pair_source_bound": {
+    "path": "content/005-shells/000001/item/005-complete_heads/011-seven_pair_source_bound.json",
+    "sha256": "b680d67675d2e72d79848381bc49704ae7e6799032f31b2f918927c9c4e3b61d",
+    "kind": "value"
+  },
+  "complete_pair_upper": {
+    "kind": "inline",
+    "value": "5043113/6998400"
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "independent_rational_comparisons": {
+    "kind": "inline",
+    "value": 312
+  }
+}

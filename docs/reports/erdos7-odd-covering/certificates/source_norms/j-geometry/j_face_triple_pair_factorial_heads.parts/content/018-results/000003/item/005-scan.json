@@ -1,0 +1,91 @@
+{
+  "scanner_kind": {
+    "kind": "inline",
+    "value": "pure-factorial-complete-conditional"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {}
+  },
+  "complete_cost_upper": {
+    "kind": "inline",
+    "value": "2120267967804001/2646000000000000"
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "layouts": 12500,
+      "layout_bounded": 12490,
+      "conditional_projections": 50000,
+      "conditional_bounded": 49784,
+      "joint_dual_branches": 216
+    }
+  },
+  "covered_containing_choices": {
+    "kind": "inline",
+    "value": 62500000
+  },
+  "seed_upper": {
+    "kind": "inline",
+    "value": "2120267967804001/2646000000000000"
+  },
+  "seed_records": {
+    "path": "content/018-results/000003/item/005-scan/006-seed_records.json",
+    "sha256": "a61d4250ea0eeeb212b70dba32c3b0135c49bca51091c6bfb4779c7c2685976d",
+    "kind": "array"
+  },
+  "maximizing_certificate_branch": {
+    "kind": "inline",
+    "value": {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "conditional_affine": [
+        "887597/1058400",
+        "6143/7200"
+      ],
+      "dual_upper": "2120267967804001/2646000000000000",
+      "adopted": "2120267967804001/2646000000000000",
+      "dual_key": "fb3a0859e8fd3c44ab3c34dc60d4882f88acea5c06e03c8fa51fef491dfa30a2",
+      "constant": "15943421/26460000",
+      "projection21_35_63_105_147_245": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ]
+    }
+  },
+  "complete_tail_constant": {
+    "kind": "inline",
+    "value": "15943421/26460000"
+  },
+  "independent_affine_checks": {
+    "kind": "inline",
+    "value": 0
+  },
+  "maximum_pruned": {
+    "kind": "inline",
+    "value": {
+      "layout": "5687/7200",
+      "conditional": "641/800"
+    }
+  },
+  "new_distinct_duals": {
+    "kind": "inline",
+    "value": 197
+  },
+  "all_branch_decisions_sha256": {
+    "kind": "inline",
+    "value": "2bd82f154b9e10dfc1e5afc5df07fabafdc9dbbfb3de112fc7c9967499bf69ba"
+  }
+}

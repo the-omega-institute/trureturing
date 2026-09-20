@@ -1,0 +1,8 @@
+**定理 122.8。** 在此拓扑下，
+$$
+\operatorname{int}_q A=q^{-1}(L_q(A)),\qquad
+\operatorname{cl}_q A=q^{-1}(U_q(A)),\qquad
+\operatorname{fr}_q A=q^{-1}(\partial_q A).
+$$
+因此 $\operatorname{fr}_q A=\operatorname{fr}_q(A^c)$，且前沿为空当且仅当事件由观察决定。
+

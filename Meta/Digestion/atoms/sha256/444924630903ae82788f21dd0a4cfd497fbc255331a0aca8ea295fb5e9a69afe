@@ -1,0 +1,11 @@
+### 128.7 相关噪声必须使用完整块协方差
+
+令堆叠读数为
+$$
+\mathbf Y_n=\mathbf H_n Z+\boldsymbol\epsilon_n,\qquad
+\mathbf H_n=\begin{pmatrix}H_0\\ \vdots\\H_{n-1}\end{pmatrix}.
+$$
+现在允许噪声跨时相关，但仍要求
+$\boldsymbol\epsilon_n\sim N(0,\mathbf R_n)$、
+$\mathbf R_n\succ0$，且与 $Z$ 独立。
+

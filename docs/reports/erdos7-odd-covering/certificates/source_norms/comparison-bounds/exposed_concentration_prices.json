@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "4cbde5374198bbf645157ef6bb7765e3b8fed57569cd2c99b85c25741f38fd25",
+  "parts_directory": "exposed_concentration_prices.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "13a2e966fc07abb12d8e52e98826b36dcf00f99be19da7590a95a89b45c2be40",
+    "kind": "object"
+  }
+}

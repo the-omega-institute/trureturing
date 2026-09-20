@@ -1,0 +1,7 @@
+**证明。** 代入 $\log\rho_\beta=\log\mu-\beta E-\log Z_\beta$ 并求和即可；严格正先验确保所有分母正。KL 非负及其等号条件表明左侧由 $\rho_\beta$ 唯一最小化。另由有限求和微分得
+$$
+\frac{d}{d\beta}\mathbb E_{\rho_\beta}E
+=-\operatorname{Var}_{\rho_\beta}(E)\le0.
+$$
+这些公式没有把不相容变成相容。$E_*>0$ 时，低温选择最小违约的折中实现；它仍违反至少一条原约束。$E_*=0$ 时才集中到真实共同解。非均匀先验下，不将此能量下降另称为 Shannon 熵的普遍单调性。
+

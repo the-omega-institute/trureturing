@@ -1,0 +1,41 @@
+{
+  "norms": {
+    "kind": "inline",
+    "value": {
+      "loss_order": [
+        "alpha",
+        "z",
+        "beta",
+        "deficit",
+        "late",
+        "carrier"
+      ],
+      "source_mass_prices": [
+        "1/6",
+        "5/36",
+        "1/18",
+        "1/9",
+        "1/36",
+        "0"
+      ],
+      "shared_loss_upper": "0",
+      "mass_L1": "0",
+      "pure_L1": "0",
+      "availability_Linfinity": "0",
+      "carrier_mass_minus_raw_mass_increase_without_rho": "0"
+    }
+  },
+  "costs": {
+    "path": "content/003-zero_radius/001-costs.json",
+    "sha256": "334fc9ffa02f971eb1d02150f09c525ebc2d011e05b1b95638d682c0d334d60f",
+    "kind": "array"
+  },
+  "weighted_G_error": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "weighted_barrier": {
+    "kind": "inline",
+    "value": "9842264924061537171771956384088145223/143243234143364170129428019217812500"
+  }
+}

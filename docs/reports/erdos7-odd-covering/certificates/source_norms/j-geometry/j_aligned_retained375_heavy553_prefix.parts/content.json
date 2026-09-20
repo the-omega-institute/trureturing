@@ -1,0 +1,102 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-aligned-retained375-prefix-v1"
+  },
+  "name": {
+    "kind": "inline",
+    "value": "cost0"
+  },
+  "target_scheduling_upper": {
+    "kind": "inline",
+    "value": "553/100"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "1": "298469622484874903/2311075142665519230",
+      "2": "12386341040791428463/9244300570662076920",
+      "3": "525174571/736900164",
+      "4": "9522349/858858",
+      "5": "1580/4719",
+      "6": "3160/42471",
+      "7": "395/3861",
+      "8": "282583/7722"
+    }
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "layouts": 12500,
+      "two_seen": 125000,
+      "two_closed": 102708,
+      "four_seen": 1114600,
+      "four_closed": 1114165,
+      "six_seen": 4350,
+      "six_closed": 3677,
+      "seven_seen": 3365,
+      "seven_closed": 1638,
+      "eight_seen": 17270,
+      "eight_closed": 7090,
+      "remaining": 10180
+    }
+  },
+  "maximum_pruned_bounds": {
+    "kind": "inline",
+    "value": {
+      "two": "23198053075169524912172153059/4194961911660173223449880000",
+      "four": "10196133474074077780585259/1843939301828647570747200",
+      "six": "7283014626203248581036967/1317099501306176836248000",
+      "seven": "50983735679627660247304873/9219696509143237853736000",
+      "eight": "152954629366560086295284773/27659089527429713561208000"
+    }
+  },
+  "covered_containing_choices": {
+    "kind": "inline",
+    "value": 3125000000
+  },
+  "fractional_compiler_checks": {
+    "kind": "inline",
+    "value": 16
+  },
+  "complete_positive7_tails": {
+    "kind": "inline",
+    "value": {
+      "two": "1129/18900",
+      "four": "667/18900",
+      "six": "991/33075",
+      "seven": "1847/66150",
+      "eight": "1751/66150"
+    }
+  },
+  "source_theta": {
+    "kind": "inline",
+    "value": [
+      "1/405",
+      "1/270"
+    ]
+  },
+  "source_omission_support": {
+    "kind": "inline",
+    "value": [
+      13,
+      17,
+      18,
+      22,
+      23
+    ]
+  },
+  "remaining_leaf_batches": {
+    "path": "content/011-remaining_leaf_batches.json",
+    "sha256": "7721d41af6a2faf96e27579b409b2c62c2395c609272530fda73167b35dfff85",
+    "kind": "array"
+  },
+  "scan_sha256": {
+    "kind": "inline",
+    "value": "e16c3d8cccc886d4726ad483010fcc887404d26f5848527fda63635692cd88da"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Every source branch covered by a newly recomputed complete affine bound <=target or a listed unresolved leaf. No old saturated numerical bound/dual consumed. A universal target needs every remaining leaf closed."
+  }
+}

@@ -673,10 +673,15 @@ internal static partial class BackfillInventoryLoader
                     projectBaselineReferences);
                 if (projectBaselineReferences)
                 {
-                    // The protected baseline is data, not a candidate: an atom filed under two
-                    // state directories is reported as `duplicate atom_id` by the evaluator,
-                    // never by throwing while the baseline is loaded.
-                    baselineAtomIds.TryAdd(atomId, parsedEntry.AtomId);
+                    // Reference projection may be unambiguous even when historical buckets
+                    // repeat an atom. Keep every record below for candidate validation.
+                    if (!baselineAtomIds.TryAdd(atomId, parsedEntry.AtomId)
+                        && baselineAtomIds[atomId] != parsedEntry.AtomId)
+                    {
+                        throw new FormatException(
+                            $"ambiguous baseline atom reference: {atomId} maps to "
+                            + $"{baselineAtomIds[atomId]} and {parsedEntry.AtomId}");
+                    }
                 }
 
                 entries.Add(parsedEntry);

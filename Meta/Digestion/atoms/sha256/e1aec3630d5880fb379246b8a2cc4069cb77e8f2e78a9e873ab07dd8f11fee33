@@ -1,0 +1,23 @@
+**定理 9.2（对偶余量同时控制离支撑质量与系数误差）。** 在定义9.1下，$b^*$ 是精确表示的唯一最优解。若 $I\setminus S\ne\varnothing$，$\varepsilon,\rho\ge0$，而 $b$ 满足
+$$
+\Gamma(b)\le\gamma^*+\varepsilon,\qquad \|Tb-v\|\le\rho,
+$$
+则
+$$
+\sum_{i\notin S}|b_i|
+\le \frac{\varepsilon+\|\varphi\|_*\rho}{\eta},
+\tag{9.3}
+$$
+以及
+$$
+\|b-b^*\|_1
+\le\kappa\rho+
+(1+\kappa M)\frac{\varepsilon+\|\varphi\|_*\rho}{\eta}.
+\tag{9.4}
+$$
+若 $I=S$，不定义对空集的 $\eta$；此时所有系数均在基上，直接有
+$$
+\|b-b^*\|_1\le\kappa\rho.
+\tag{9.5}
+$$
+

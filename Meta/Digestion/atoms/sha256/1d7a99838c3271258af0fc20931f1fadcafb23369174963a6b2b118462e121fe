@@ -1,0 +1,8 @@
+### 131.4 双格、五模相似与体积
+
+定义 $G$-对偶格
+
+$$
+L^\#=\{x\in\mathbb R^6:x^TGz\in\mathbb Z\ \text{对所有 }z\in L\}.
+$$
+

@@ -3,7 +3,7 @@
 <a id="unrestricted-axis-deletions-a-complete-head-bound"></a>
 ### Unrestricted axis deletions: a complete head bound
 
-The [variable-rectangle construction](../profile-notes/04-the-weighted-upper-quantile-lemma.md#unrestricted-axis-deletions-and-the-optimal-scalar-clipped-bound)
+The [variable-rectangle construction](../profile-notes/001-064/04-the-weighted-upper-quantile-lemma.md#unrestricted-axis-deletions-and-the-optimal-scalar-clipped-bound)
 removes the preceding axis restrictions at the level of the supported
 head bound. For every family of distinct nonunit moduli dividing
 `315·11^H·13^J`, with arbitrary finite `H,J≥1`, it constructs one complete
@@ -50,7 +50,7 @@ specified marginal-information relaxation, not optimality among actual
 survivor laws. Further improvement requires information omitted by that
 certificate, such as weighted old test energy.
 
-Retaining the [common old shape and actual survivor count](../profile-notes/04-the-weighted-upper-quantile-lemma.md#retaining-the-common-old-shape-and-survivor-count)
+Retaining the [common old shape and actual survivor count](../profile-notes/001-064/04-the-weighted-upper-quantile-lemma.md#retaining-the-common-old-shape-and-survivor-count)
 sharpens the same construction at the same `C=40/31` to
 
     Gamma <= 2167128283/58962460 < 36.755,
@@ -71,7 +71,7 @@ of `X·N11·N13` as a full increasing-convex comparator, with boundary 3
 and mean `1264886009/229953594`. These stronger bounds preserve the
 full `315·11^H·13^J` scope and do not assert a new tail continuation.
 
-The [actual rectangle hinge profile](../profile-notes/05-the-actual-rectangle-gives-two-further-square-savings.md#actual-rectangle-hinge-bounds-on-the-same-law)
+The [actual rectangle hinge profile](../profile-notes/001-064/05-the-actual-rectangle-gives-two-further-square-savings.md#actual-rectangle-hinge-bounds-on-the-same-law)
 additionally bounds the complete test-load hinges on this same law at
 all integer thresholds from 4 through 12. With the joint-cost refinement,
 
@@ -124,9 +124,9 @@ on all 27,720 layouts and 144 shape/count branches, yielding the stronger
 existing cheap deletion lower bounds for the whole cost and retains the
 exact three-branch partition caps above. All higher-load and normalization
 terms stay on the same branch. The result proof and integer numerator
-bounds are retained in the [whole-cost derivation](../profile-notes/05-the-actual-rectangle-gives-two-further-square-savings.md#whole-convex-costs-on-one-old-layout-and-deletion-configuration).
+bounds are retained in the [whole-cost derivation](../profile-notes/001-064/05-the-actual-rectangle-gives-two-further-square-savings.md#whole-convex-costs-on-one-old-layout-and-deletion-configuration).
 
-The [signed-conditioning obstruction](../profile-notes/05-the-actual-rectangle-gives-two-further-square-savings.md#actual-obstruction-for-uniform-conditioning-and-its-signed-bound)
+The [signed-conditioning obstruction](../profile-notes/001-064/05-the-actual-rectangle-gives-two-further-square-savings.md#actual-obstruction-for-uniform-conditioning-and-its-signed-bound)
 gives a complementary boundary. An actual family containing all 47
 nonunit divisors of 45045 has 6872 survivors and forces
 `Γ≥88555/3436` for its uniformly conditioned reference law. Its signed

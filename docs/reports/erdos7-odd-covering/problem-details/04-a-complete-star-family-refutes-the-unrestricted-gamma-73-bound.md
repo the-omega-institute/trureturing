@@ -252,7 +252,7 @@ misses every one of these new classes.
 
 The published essential-class constraints are stronger than merely counting
 the children in this top fibre. [Lettl--Sun, Theorems 1.3 and
-2.1](../Library/Arith/lettlsun2008cosets.md), imply that an essential modulus
+2.1](../../../../Library/Arith/lettlsun2008cosets.md), imply that an essential modulus
 `d_t` in a cover by `k` classes satisfies
 `k >= 1 + sum_p v_p(d_t)(p-1)`. At a private point `a` of this class,
 retain the original labels `j` whose prime-to-p part divides `a_j-a` but
@@ -590,7 +590,7 @@ active classes d·13 forbid at most one first 13-digit, for d|315. Then the
 family cannot cover. All twelve possible d·143 classes may have arbitrary
 residues, and the later prime heights and interactions are unrestricted.
 
-The [degree-weighted grid proof](../profile-notes/03-arbitrary-height-transfer-for-matching-kernels.md#arbitrary-point-holes-and-a-common-diagonal)
+The [degree-weighted grid proof](../profile-notes/001-064/03-arbitrary-height-transfer-for-matching-kernels.md#arbitrary-point-holes-and-a-common-diagonal)
 allows arbitrary point-hole patterns in each available 10-by-12 rectangle,
 including a whole row deleted by cross classes. The number of actual holes
 has mean at most 271/86. Retaining its correlation with old complete test

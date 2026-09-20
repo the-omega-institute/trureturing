@@ -1,0 +1,154 @@
+{
+  "modulus": 13,
+  "residues": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "labelwise_containment_certificates": [
+    {
+      "original_future_index": 0,
+      "majorant_modulus": 13,
+      "majorant_residue": 1,
+      "modulus_quotient": 1
+    },
+    {
+      "original_future_index": 1,
+      "majorant_modulus": 13,
+      "majorant_residue": 2,
+      "modulus_quotient": 11
+    },
+    {
+      "original_future_index": 2,
+      "majorant_modulus": 13,
+      "majorant_residue": 3,
+      "modulus_quotient": 121
+    },
+    {
+      "original_future_index": 3,
+      "majorant_modulus": 13,
+      "majorant_residue": 4,
+      "modulus_quotient": 1331
+    },
+    {
+      "original_future_index": 4,
+      "majorant_modulus": 13,
+      "majorant_residue": 5,
+      "modulus_quotient": 14641
+    },
+    {
+      "original_future_index": 5,
+      "majorant_modulus": 13,
+      "majorant_residue": 6,
+      "modulus_quotient": 161051
+    },
+    {
+      "original_future_index": 6,
+      "majorant_modulus": 13,
+      "majorant_residue": 7,
+      "modulus_quotient": 1771561
+    },
+    {
+      "original_future_index": 7,
+      "majorant_modulus": 13,
+      "majorant_residue": 8,
+      "modulus_quotient": 19487171
+    },
+    {
+      "original_future_index": 8,
+      "majorant_modulus": 13,
+      "majorant_residue": 9,
+      "modulus_quotient": 214358881
+    },
+    {
+      "original_future_index": 9,
+      "majorant_modulus": 13,
+      "majorant_residue": 10,
+      "modulus_quotient": 2357947691
+    },
+    {
+      "original_future_index": 10,
+      "majorant_modulus": 13,
+      "majorant_residue": 11,
+      "modulus_quotient": 25937424601
+    },
+    {
+      "original_future_index": 11,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 285311670611
+    },
+    {
+      "original_future_index": 12,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 17
+    },
+    {
+      "original_future_index": 13,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 187
+    },
+    {
+      "original_future_index": 14,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 2057
+    },
+    {
+      "original_future_index": 15,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 22627
+    },
+    {
+      "original_future_index": 16,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 248897
+    },
+    {
+      "original_future_index": 17,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 2737867
+    },
+    {
+      "original_future_index": 18,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 30116537
+    },
+    {
+      "original_future_index": 19,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 331281907
+    },
+    {
+      "original_future_index": 20,
+      "majorant_modulus": 13,
+      "majorant_residue": 0,
+      "modulus_quotient": 3644100977
+    }
+  ],
+  "hn_weights": {
+    "11": "0",
+    "13": "12"
+  },
+  "total_cost_B": "12",
+  "relative_hole_lower": "exp(-12)",
+  "current_conditional_leaf_cap": "1/11",
+  "exact_hole_on_chosen_prefix": "1/13",
+  "scope": "Global union majorant; exact union after conditioning on J=0 mod 11^11"
+}

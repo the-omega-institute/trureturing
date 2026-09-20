@@ -1,0 +1,23 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 75,
+      "part": {
+        "path": "content/014-cover_node_batches/000002/item/002-rows/000000-000075.json",
+        "sha256": "99c38b9724afa253fcc9eadc5bdc495bad8bded8191b8833a0ea7a11539b6bc6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 75,
+      "stop": 100,
+      "part": {
+        "path": "content/014-cover_node_batches/000002/item/002-rows/000075-000100.json",
+        "sha256": "a1bb38fff403f48daa7b07ec94a799dd9084d262dfd496a1aff221bc2b96ee90",
+        "kind": "value"
+      }
+    }
+  ]
+}

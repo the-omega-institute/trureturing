@@ -42082,3 +42082,10864 @@ $$
 以上常数均允许依赖固定的 $\varepsilon$。命题 108.3 排除了整段去噪净流符号规则的统一 $O_\varepsilon(1/n)$ 保证。上述结果尚未判定 $\overline R^{*,\varepsilon}_n=O_\varepsilon(1/n)$ 或 $M^\varepsilon_n=O_\varepsilon(1/n)$ 是否成立，也未判定要求共用一条不使用 $k$ 的规则是否改变可达风险阶；命题 108.2 中的对数因子未被证明必要。
 
 ## 108.99 追加锚
+
+## 109. 有限随机读数的环行分离与共同块检验
+
+**定义与假设 109.1（固定有限随机通道的共同准备实验）。** 沿用[定义 103.1](https://github.com/the-omega-institute/trureturing/blob/b260e76f3e856ce2fe009292892659a1a8a083f8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的四状态行核 $K_k$，状态集为 $S=\{0,1,2,3\}$，整数 $k\ge2$，记 $\delta_k=1/k$、$a_k=1-\delta_k/3$。方向 $d=0$ 使用 $\mathsf K_0=K_k$，方向 $d=1$ 使用 $\mathsf K_1=K_k^{\mathsf T}$；两方向均确定准备于 $X_0=1$，先验各为 $1/2$。
+
+固定非空有限字母表 $\mathcal A$ 及已知随机通道
+$$
+E_i(y)=E(y\mid i)\ge0,\qquad
+\sum_{y\in\mathcal A}E_i(y)=1.
+$$
+允许零发射项。通道不依赖时间或参数 $k$；给定整条隐藏路径后，实际读数 $Y_t$ 逐时独立，条件律为 $E_{X_t}$。传感器没有内部状态，其随机性每时刻刷新。有效字母数为
+$|\{y\in\mathcal A:\exists i,\ E_i(y)>0\}|$。
+
+观察 $n\ge0$ 次转移得到 $n+1$ 个读数 $(Y_0,\ldots,Y_n)$，两份律记为 $P^E_{k,n},Q^E_{k,n}$，相应概率记为 $\mathbb P^E_{d,k}$。检验 $\varphi:\mathcal A^{n+1}\to[0,1]$ 的值表示报告方向 $1$ 的概率，风险为
+$$
+R^E_{k,n}(\varphi)
+=\frac12\left(
+\int\varphi\,dP^E_{k,n}
++\int(1-\varphi)\,dQ^E_{k,n}\right).
+\tag{109.1a}
+$$
+定义逐参数最优随机风险、其最坏参数值及共同确定检验的最优最坏风险：
+$$
+R^{*,E}_{k,n}=\inf_{\varphi:\mathcal A^{n+1}\to[0,1]}
+R^E_{k,n}(\varphi),\qquad
+\overline R^{*,E}_n=\sup_{k\ge2}R^{*,E}_{k,n},
+$$
+$$
+M^E_n=
+\inf_{\substack{\varphi:\mathcal A^{n+1}\to\{0,1\}\\
+\varphi\text{ 可使用 }E,n\text{，不使用 }k}}
+\ \sup_{k\ge2}R^E_{k,n}(\varphi).
+\tag{109.1b}
+$$
+前一个下确界允许使用给定的 $k$，后一个要求同一确定规则适用于全部 $k$。无限记录取 $\mathcal A^{\mathbb N_0}$ 的乘积 $\sigma$-代数，允许所有可测随机化检验，相应风险记为 $R^{*,E}_{k,\infty}$。上横线作用于概率或期望时，专指将隐藏初态改为均匀平稳律 $\pi_i=1/4$。
+
+**命题 109.2（环行分离恰为共同统一一致性的条件）。** 在定义与假设 109.1 下，
+$$
+E_1,E_2,E_3\text{ 两两不同}
+\quad\Longleftrightarrow\quad
+M^E_n\longrightarrow0
+\quad\Longleftrightarrow\quad
+\overline R^{*,E}_n\longrightarrow0.
+\tag{109.2a}
+$$
+若三条环行两两不同，可固定选择一个仅依赖 $E$ 的函数 $f:\mathcal A\to(0,1)$，使
+$$
+\theta_i=\sum_{y\in\mathcal A}E_i(y)f(y),\qquad
+V_f=(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1)\ne0.
+\tag{109.2b}
+$$
+令 $b_f=\operatorname{sgn}(V_f)$。原始读数上的四窗函数及其平稳均值为
+$$
+W_f(y_0,y_1,y_2,y_3)
+=(1-f(y_0))(1-f(y_3))(f(y_2)-f(y_1)),\qquad |W_f|\le1,
+$$
+$$
+\overline{\mathbb E}_{d,k}W_f
+=(-1)^d\frac{a_k^3}{256}V_f.
+\tag{109.2c}
+$$
+置
+$$
+c_*=\frac{(5/6)^3|V_f|}{192},\qquad
+\beta=\frac{c_*}{4},\qquad H=6,\qquad
+\kappa=\frac{\beta^2}{128H^2}=\frac{\beta^2}{4608},
+$$
+$$
+L_0=\max\left\{1,
+\left\lceil\frac{8H}{\beta}\right\rceil,
+\left\lceil\frac{\log20}{\kappa}\right\rceil\right\},
+\tag{109.2d}
+$$
+其中 $\log$ 为自然对数。对 $n\ge0$ 取
+$$
+L_n=\max\left\{L_0,
+\left\lceil\frac{3\log(n+1)}{\kappa}\right\rceil\right\},
+\qquad
+T_n=L_n+3,\qquad
+J_n=\left\lfloor\frac{n+1}{T_n}\right\rfloor.
+\tag{109.2e}
+$$
+定义
+$$
+F_{u,L}
+=b_f\sum_{t=u}^{u+L-1}
+W_f(Y_t,Y_{t+1},Y_{t+2},Y_{t+3}).
+$$
+这里 $L$ 计四窗数，$F_{u,L}$ 使用 $L+3$ 个标签。共同确定规则 $\Gamma_{E,n}$ 依次检查 $j=0,\ldots,J_n-1$ 的块 $F_{jT_n,L_n}$：大于 $\beta L_n$ 时声明方向 $0$，小于 $-\beta L_n$ 时声明方向 $1$，其余情形不声明。首次声明作为结果；全部完整块均无声明时报告 $0$。第 $j$ 块读取 $jT_n,\ldots,(j+1)T_n-1$，相邻块不共享标签，跨块四窗不计分，阈值相等时继续检查。
+
+该原始块规则对每个方向都有
+$$
+\mathbb P^E_{d,k}(\Gamma_{E,n}\ne d)
+\le B_{E,n}
+:=
+\frac{32(L_n+3)}{3(n+1)}
++\frac5{(n+1)^2},
+\qquad k\ge2,\ d=0,1,\ n\ge0.
+\tag{109.2f}
+$$
+对 $n\ge1$，
+$$
+\frac1{24n}
+\le\overline R^{*,E}_n
+\le M^E_n
+\le\min\left\{\frac12,B_{E,n}\right\}
+=O_E\!\left(\frac{\log(n+1)}{n+1}\right).
+\tag{109.2g}
+$$
+其中 $1/2$ 上界由另一条恒报 $0$ 的共同确定规则取得；原始块规则的每方向保证是 (109.2f)。
+
+若两条环发射行相等，则对全部 $k\ge2,n\ge1$，
+$$
+R^{*,E}_{k,n}\ge\frac{a_k}{8}\ge\frac5{48},
+\qquad
+R^{*,E}_{k,\infty}\ge\frac{a_k}{8}\ge\frac5{48}.
+\tag{109.2h}
+$$
+任意通道在 $n=0$ 时都有
+$R^{*,E}_{k,0}=\overline R^{*,E}_0=M^E_0=1/2$。
+因此，达到共同统一一致性的静态随机传感器最小有效字母数为 $2$；静态确定传感器的最小值仍为 $3$。
+
+**证明。** 任意共同确定检验都属于各个参数下允许的随机检验，故总有
+$\overline R^{*,E}_n\le M^E_n$；恒报 $0$ 给出 $M^E_n\le1/2$。对完整隐藏路径施加同一个通道 $E$ 是共同随机后处理：任何可见随机检验都能通过对发射取条件期望变成完整路径上的随机检验，且保持两类错误。因此
+$R^{*,E}_{k,n}\ge R^1_{k,n}$，由[命题 105.2](https://github.com/the-omega-institute/trureturing/blob/b260e76f3e856ce2fe009292892659a1a8a083f8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的 $1/(24n)$ 下界，得到 (109.2g) 的下界。$n=0$ 时两方向都只发射同一分布 $E_1$，所以最优风险为 $1/2$。
+
+先处理行碰撞。设 $E_u=E_v$，其中 $u,v$ 是不同环状态；令 $s$ 交换它们，固定 $0$ 和第三个环状态 $t$。既有核满足
+$$
+K_k(si,sj)=K_k(j,i),\qquad E_{si}(y)=E_i(y).
+$$
+反射隐藏路径保持发射因子，故从 $x$ 出发的正向可见律等于从 $s(x)$ 出发的转置可见律；有限柱集也决定无限可见律。若 $s(1)=1$，全部可见律相同，风险恒为 $1/2$。
+
+若 $s(1)\ne1$，则 $t\ne1$，且
+$\{K_k(1,t),K_k(t,1)\}=\{a_k/2,a_k/4\}$。
+条件于 $X_1=t$，从时刻 $1$ 开始的两份可见尾律相同；初始读数均服从 $E_1$，独立于该隐藏事件和尾部。令 $\eta$ 为共同初始读数与尾部组成的概率律，则有限 $n\ge1$ 及无限记录均有
+$$
+P^E\ge\frac{a_k}{4}\eta,\qquad
+Q^E\ge\frac{a_k}{4}\eta.
+$$
+对任意可测随机检验，把两项风险积分限制到这个共同子测度，得到至少 $a_k/8$ 的错误率。这是[命题 106.2](https://github.com/the-omega-institute/trureturing/blob/b260e76f3e856ce2fe009292892659a1a8a083f8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的公共子测度证明在发射核下的应用：确定初始符号换成共同分布 $E_1$，标签不变换成发射行不变。隐藏事件不必从读数中可见；证明也不除以发射概率。因此零发射项和无限可测检验均包含在内，(109.2h) 成立，并排除 (109.2a) 右侧两个收敛结论。
+
+以下设三条环行两两不同。对每对 $1\le i<j\le3$，线性泛函
+$$
+f\longmapsto\sum_y(E_i(y)-E_j(y))f(y)
+$$
+非零。三个真超平面的并不能覆盖开立方体 $(0,1)^{\mathcal A}$，故可以固定选择避开它们的 $f$，得到 (109.2b)。
+
+先计算平稳四窗均值。暂取发射概率为任意 $\theta_i\in[0,1]$ 的条件独立二元读数 $B_t$，令 $q_t=\theta_{X_t}$，隐藏初态为 $\pi$。两词反差为
+$$
+\begin{aligned}
+J&=\overline{\Pr}_{K_k,\theta}(B_0B_1B_2B_3=0010)
+-\overline{\Pr}_{K_k,\theta}(B_0B_1B_2B_3=0100)\\
+&=\overline{\mathbb E}[(1-q_0)(q_2-q_1)(1-q_3)]\\
+&=\overline{\mathbb E}[q_0q_2q_3-q_0q_1q_3].
+\end{aligned}
+\tag{109.2i}
+$$
+最后一步由平稳性使一次项相消、二次项按滞后 $1$ 和 $2$ 分别相消。写 $K=K_k$、$D=\operatorname{diag}(\theta)$，则
+$$
+J=\frac14\theta^{\mathsf T}(K^2DK-KDK^2)\theta.
+\tag{109.2j}
+$$
+这是发射参数的齐次三次多项式。任意环换位将 $K$ 变成 $K^{\mathsf T}$，并保持 $\pi$；平稳隐藏路径反序给出
+$\overline p_{K^{\mathsf T},\theta}(w)=\overline p_{K,\theta}(w^R)$。
+因此 $J$ 对三个环参数交替变号，被三个差因子的乘积整除。由总次数为 $3$，商是仅依赖 $k$ 的常数，也不依赖 $\theta_0$。
+
+置 $B=K^2$、$\zeta=a_k/4$。式 (109.2j) 中 $\theta_2^2\theta_3$ 的系数，来自三组指标 $(2,2,3),(2,3,2),(3,2,2)$，等于
+$$
+\begin{aligned}
+\frac14(&B_{22}K_{23}-K_{22}B_{23}
++B_{23}K_{32}-K_{23}B_{32}
++B_{32}K_{22}-K_{32}B_{22})\\
+&=\frac{\zeta}{4}(B_{22}-B_{32})
+=-\frac{a_k^3}{256},
+\end{aligned}
+$$
+$$
+B_{22}=\frac{\delta_k^2}{9}+\frac{5a_k^2}{16},
+\qquad
+B_{32}=\frac{\delta_k^2}{9}+\frac{6a_k^2}{16}.
+\tag{109.2k}
+$$
+差因子乘积中同一单项式的系数为 $-1$，故
+$$
+\overline p_{K_k,\theta}(0010)-\overline p_{K_k,\theta}(0100)
+=\frac{a_k^3}{256}
+(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1).
+\tag{109.2l}
+$$
+该恒等式也包含二元发射的端点 $\theta_i=0,1$。
+
+回到原通道，逐时条件独立性给出
+$$
+\mathbb E[W_f(Y_0,Y_1,Y_2,Y_3)\mid X_0,X_1,X_2,X_3]
+=(1-\theta_{X_0})(1-\theta_{X_3})
+(\theta_{X_2}-\theta_{X_1}).
+\tag{109.2m}
+$$
+结合 (109.2i)–(109.2l) 即得正向平稳均值；反向均值由路径反序及
+$W_f(y_3,y_2,y_1,y_0)=-W_f(y_0,y_1,y_2,y_3)$
+变号，证明 (109.2c)。分数直接作用于原读数，无需产生辅助二元输出。
+
+为取得统一块界，固定 $k,d$，以下简写 $\delta=\delta_k$、$a=a_k$、$s_d=(-1)^d$。记 $\mathbb P^{E,i}_{d,k}$ 为保持转移核与发射规则不变、将隐藏初态确定重启于 $i$ 的概率律，其期望记为 $\mathbb E^{E,i}_{d,k}$。以下任意起点的块概率均按这份重启律理解。令
+$$
+q_d(i)=\mathbb E^{E,i}_{d,k}\!\left[
+s_db_f W_f(Y_0,Y_1,Y_2,Y_3)\right],
+\qquad c=\frac{a^3|V_f|}{192}.
+$$
+由 $|W_f|\le1$ 及 (109.2c)，有 $|q_d(i)|\le1$、$\sum_{i=0}^3q_d(i)=3c$。从 $X_0=0$ 出发，事件 $X_0=X_1=X_2=X_3=0$ 的概率为 $(1-\delta)^3$。给定该事件，四次发射独立同分布，$W_f$ 的期望为
+$(1-\theta_0)^2(\theta_0-\theta_0)=0$。因此
+$$
+|q_d(0)|\le1-(1-\delta)^3\le3\delta,
+\qquad
+\sum_{i=0}^3q_d(i)=3c.
+\tag{109.2n}
+$$
+平稳均值在此只提供势方程的相容关系，未改变实际准备初态。
+
+在环坐标 $(1,2,3)$ 上，令
+$$
+C_0(v_1,v_2,v_3)=(v_2,v_3,v_1),\qquad
+C_1(v_1,v_2,v_3)=(v_3,v_1,v_2).
+$$
+这是行核对列函数的作用；环内归一化核为
+$R_d=(3/4)U+(1/4)C_d$，其中 $U$ 的各行均为三点均匀分布，$\mathsf K_d$ 的环环块为 $aR_d$。置
+$$
+\bar q=\frac{q_d(1)+q_d(2)+q_d(3)}3
+=c-\frac{q_d(0)}3,\qquad
+v_i=q_d(i)-\bar q,\qquad
+m=-\frac{q_d(0)}{\delta},\qquad \chi=a/4.
+$$
+由 (109.2n)，$\sum_i v_i=0$、$\|v\|_\infty\le2$、$|m|\le3$。定义
+$$
+u=(I-\chi C_d)^{-1}v
+=\frac{v+\chi C_dv+\chi^2C_d^2v}{1-\chi^3},
+$$
+$$
+h_d(0)=0,\qquad h_d(i)=m+u_i\quad(i=1,2,3).
+\tag{109.2o}
+$$
+因为 $C_d^3=I$、$0<\chi\le1/4$，有
+$$
+\sum_i u_i=0,\qquad
+\|u\|_\infty\le\frac2{1-\chi}\le\frac83,\qquad
+\|h_d\|_\infty\le\frac{17}3<H.
+$$
+在状态 $0$，
+$(I-\mathsf K_d)h_d(0)=-\delta m=q_d(0)$；
+在环状态，左侧等于
+$$
+(1-a)m+[(I-\chi C_d)u]_i
+=-\frac{q_d(0)}3+v_i=q_d(i)-c.
+$$
+所以逐状态成立
+$$
+(I-\mathsf K_d)h_d
+=q_d-c\mathbf1_{\{i\ne0\}},\qquad
+\|h_d\|_\infty\le17/3.
+\tag{109.2p}
+$$
+$q_d(0)=O(\delta)$ 抵消了 $m$ 中的除数 $\delta$，故该范数界统一于全部有限 $k$。
+
+现在处理实际四窗重叠。对一个块把起点暂记为 $0$，使用滤过
+$$
+\mathcal F_t
+=\sigma(X_0,\ldots,X_t;\ Y_0,\ldots,Y_{t-1}).
+$$
+当前隐藏状态已知，当前发射尚未读取。定义
+$$
+D_t=s_db_fW_f(Y_t,Y_{t+1},Y_{t+2},Y_{t+3})-q_d(X_t).
+$$
+隐藏链的 Markov 性与独立发射给出
+$$
+|D_t|\le2,\qquad
+\mathbb E[D_t\mid\mathcal F_t]=0,\qquad
+D_t\in\mathcal F_{t+4}.
+\tag{109.2q}
+$$
+按 $t\bmod4$ 分组，每组是滤过
+$\mathcal F_r,\mathcal F_{r+4},\ldots$
+上的有界鞅差和；组之间无需独立。
+
+令
+$$
+N_L=\sum_{t=0}^{L-1}D_t,\qquad
+A_L=\sum_{t=0}^{L-1}\mathbf1_{\{X_t\ne0\}},
+$$
+$$
+M_L=\sum_{t=0}^{L-1}
+\left(h_d(X_{t+1})-(\mathsf K_dh_d)(X_t)\right).
+$$
+$M_L$ 对 $\mathcal F_t$ 是每项绝对值至多 $2H$ 的鞅差和。由 (109.2p) 望远镜求和，
+$$
+s_dF_{0,L}
+=cA_L+M_L+h_d(X_0)-h_d(X_L)+N_L.
+\tag{109.2r}
+$$
+Azuma–Hoeffding 界[^rro109-azuma] 给出，对 $z\ge0$，
+$$
+\Pr(M_L\le-z)\le
+\exp\left(-\frac{z^2}{8H^2L}\right),\qquad
+\Pr(N_L\le-z)\le
+4\exp\left(-\frac{z^2}{128L}\right).
+\tag{109.2s}
+$$
+第二式中，总和小于 $-z$ 必有一个模 $4$ 分组小于 $-z/4$；该组有 $m_r\le L$ 项，每项绝对值至多 $2$，其尾界为
+$\exp[-(z/4)^2/(8m_r)]$，对非空组取并集即得。两式对任意隐藏起点成立，也成立于块开始前实际联合历史的条件概率。
+
+设 $L\ge L_0$。由 (109.2d)，$2H\le\beta L/4$；若
+$M_L\ge-\beta L/4$ 且 $N_L\ge-\beta L/4$，则
+$$
+s_dF_{0,L}\ge cA_L-\frac{3\beta L}{4}.
+$$
+将 $z=\beta L/4$ 代入 (109.2s)，因为 $128H^2=4608\ge2048$，上述两个条件失败的合计概率至多
+$$
+e^{-\beta^2L/(128H^2)}
++4e^{-\beta^2L/2048}
+\le5e^{-\kappa L}.
+$$
+$cA_L\ge0$ 因而排除错向阈值，故从任意隐藏状态开始，
+$$
+\mathbb P^{E,i}_{d,k}(\text{单块错向声明})\le5e^{-\kappa L},\qquad i\in S.
+\tag{109.2t}
+$$
+
+从任意环状态开始，隐藏环指示量每步离环概率为 $\delta/3$，从 $0$ 回环概率为 $\delta$。所以
+$$
+\Pr(X_t\ne0\mid X_0\ne0)
+=\frac34+\frac14(1-4\delta/3)^t\ge\frac34.
+$$
+于是 $\mathbb EA_L\ge3L/4$；结合 $0\le A_L\le L$ 得
+$\Pr(A_L\ge L/2)\ge1/2$。在该事件与上述两个偏差条件上，由 $c\ge c_*=4\beta$，
+$$
+s_dF_{0,L}\ge c_*L/2-3\beta L/4
+=5\beta L/4>\beta L.
+$$
+因此
+$$
+\mathbb P^{E,i}_{d,k}(\text{单块正确声明})
+\ge\frac12-5e^{-\kappa L}\ge\frac14,
+\qquad i\in\{1,2,3\}.
+\tag{109.2u}
+$$
+占用事件与偏差事件无需独立。
+
+应用式 (108.2n)–(108.2r) 的固定块等待论证，此处取 $T=L+3$，并使用块起点历史
+$$
+\mathcal G_j
+=\sigma(X_s:0\le s\le jT;\ Y_s:0\le s<jT).
+$$
+当前块的首次发射尚未读取。令 $0=\sigma_0<\sigma_1<\cdots$ 为隐藏网格 $\mathbf1_{\{X_{jT}\ne0\}}$ 的回环时刻，$C_m=\sigma_{m+1}-\sigma_m$。准备态 $1$ 保证 $\sigma_0=0$；投影核是 (108.2n) 中取 $z=(1-4\delta/3)^T$ 的同一核。该论证给出[^rro109-weber]
+$$
+\mathbb E[C_m\mid\mathcal G_{\sigma_m}]=\frac43.
+\tag{109.2v}
+$$
+
+为核对尝试接口，仅在证明中把 $\sigma_m$ 对应块作为尝试，令 $\nu$ 为首次声明的尝试编号，从 $0$ 开始。此前尝试块的末标签均在当前块起点之前，所以 $\{\nu\ge m\}\in\mathcal G_{\sigma_m}$；式 (109.2u) 对该条件历史仍给至少 $1/4$ 的声明概率。因而 (108.2p)–(108.2r) 可原样应用：只将过去失败事件移出 (109.2v) 的条件期望。若 $W$ 是实际无限固定块扫描首次声明所需的块数，成功块计入，则
+$$
+W\le\sigma_\nu+1\le\sigma_{\nu+1},\qquad
+\mathbb EW\le\mathbb E\sigma_{\nu+1}\le\frac{16}3.
+\tag{109.2w}
+$$
+当前尝试结果与下一次回环间隔可以相关；这里没有把当前成功或失败事件移出条件期望。隐藏网格只承担证明，规则不观察它。
+
+最后取 $L=L_n$。当 $J_n\ge1$，无声明概率由 (109.2w) 至多为 $16/(3J_n)$；对全部扫描块的错向声明应用 (109.2t) 并取并集，得
+$$
+\mathbb P^E_{d,k}(\Gamma_{E,n}\ne d)
+\le\frac{16}{3J_n}+5J_ne^{-\kappa L_n}
+\le\frac{32T_n}{3(n+1)}+\frac5{(n+1)^2}.
+\tag{109.2x}
+$$
+最后一步使用
+$J_n\ge(n+1)/(2T_n)$、
+$J_n\le n+1$ 及
+$e^{-\kappa L_n}\le(n+1)^{-3}$。
+若 $J_n=0$，则 $T_n>n+1$，(109.2f) 右侧已大于 $1$，同一界仍成立。于是 (109.2f) 得证。共同块规则给 $M^E_n\le B_{E,n}$，恒定规则另给 $M^E_n\le1/2$；结合前述比较与下界，得到 (109.2g)。固定 $E$ 时 $L_n=O_E(\log(n+1))$，故两个最坏参数风险均趋零，结合碰撞下界证明 (109.2a)。特别地，统一上界也蕴含每个固定 $k$ 的一致性。
+
+一个有效字母使所有发射行相同，不能一致辨别。二元通道取
+$$
+E_i(1)=p_i,\qquad
+(p_0,p_1,p_2,p_3)=(0,0,1/2,1)
+$$
+已有三条不同环行，故随机最小有效字母数为 $2$；例如可固定
+$f(0)=1/4,f(1)=3/4$ 来执行上述规则。确定发射的各行是点质量，三条环行不同恰要求三个不同环标签，因而至少需要三个有效字母；命题 106.2 给出的三字母读数满足本节行分离条件，由已证统一上界实现一致性，故确定最小值为 $3$。证毕。
+
+平稳公式 (109.2l) 不等于准备态下每个有限窗口的概率公式，行碰撞也不必使全部准备态有限律相同。函数 $f$ 的选择是固定通道下的存在性结论；这里没有给出任意实数通道输入的有效选择算法或计算成本界。全部统一常数允许依赖固定 $E$，没有给出统一 $O_E(1/n)$ 上界，也没有判定对数因子必要。结论针对已知、逐时独立刷新的固定通道和共同环准备态，不包含未知校准、时变或带记忆发射。HMM 的 Vandermonde 通量与发射行分离机制已有成熟三隐藏态结果；二元随机发射保留不可逆性也已有连续时间模型的例子。[^rro109-chen] 此处不对这些机制作新颖性主张。
+
+[^rro109-azuma]: 有界鞅差的 Azuma–Hoeffding 界：若每项绝对值至多 $B$，则 $L$ 项和的下尾至多为 $\exp[-z^2/(2LB^2)]$。钉版 Mathlib 的 [measure_sum_ge_le_of_hasCondSubgaussianMGF](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Moments/SubGaussian.lean#L932) 给出一般条件 sub-Gaussian 求和接口；有界中心化条件分布由 Hoeffding 引理给出所用矩母函数界。
+
+[^rro109-weber]: Richard Weber, [Markov Chains](https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf) (2011), §4.4 Theorem 4.4，印刷页 15（PDF 第 19 页），给出停时后的强 Markov 重启；本处过去读数由独立发射扩充，给定当前隐藏状态后不改变未来隐藏转移与尚未读取的发射。平均命中时间的一阶步方程见同书 Theorem 4.2。
+
+[^rro109-chen]: Yong Chen, *On the reversibility of the observed process of three-state hidden Markov model*, [arXiv:1101.5482v1](https://arxiv.org/pdf/1101.5482v1) (2011), Theorems 4.3–4.4，PDF 第 9 页；连续时间二元随机发射例子见 §3.1 Example 2，PDF 第 6 页。Theorem 4.3 已给不等间隔三点通量的 Vandermonde 因子；Theorem 4.4 的离散三隐藏态判据要求隐藏链不可逆、发射行两两不同，并另有发射秩为 $3$，或秩为 $2$ 且转移矩阵没有零特征值的条件。该三态平稳结论不直接覆盖本节四态共同准备实验。
+
+## 109.99 追加锚
+
+## 110. 递增尺度的最后声明与最坏参数的 $1/n$ 阶
+
+**定义与假设 110.1（递增尺度的最后声明规则）。** 沿用定义 109.1 的有限通道共同准备实验，假设三个环发射行 $E_1,E_2,E_3$ 两两不同。固定命题 109.2 中的 $f,W_f,b_f,\beta,\kappa,L_0$，特别有
+$$
+\beta>0,\qquad \kappa=\beta^2/4608,\qquad
+L_0\ge1,\quad \beta L_0\ge48,\quad 5e^{-\kappa L_0}\le1/4.
+$$
+以 $\mathbb P^{E,x}_{d,k}$、$\mathbb E^{E,x}_{d,k}$ 表示将相同核 $\mathsf K_d$ 及发射机制从确定隐藏起点 $X_0=x$ 重新启动的概率律及期望；原共同准备律是 $x=1$ 的情形。以下局部起点是重启律的参数。
+
+取 $B=64$，定义阶段尺度及开始位置
+$$
+L_j=2^jL_0,\qquad T_j=L_j+3,\qquad
+S_j=B\sum_{r=0}^{j-1}T_r
+=B[L_0(2^j-1)+3j],\qquad j\ge0.
+\tag{110.1a}
+$$
+第 $j$ 阶段连续使用 $B$ 个块，第 $b=0,\ldots,B-1$ 块从 $S_j+bT_j$ 开始。每块计算既有分数
+$$
+F_{u,L}=b_f\sum_{t=u}^{u+L-1}
+W_f(Y_t,Y_{t+1},Y_{t+2},Y_{t+3}).
+$$
+分数大于 $\beta L$ 时声明方向 $0$，小于 $-\beta L$ 时声明方向 $1$，其余情况不声明。
+
+对 $n\ge0$ 次转移所得的 $N=n+1$ 个读数，仅处理其中完整的块，保存**最后一次声明**；没有任何声明则报告 $0$。无声明和阈值相等均保留此前结果，不完整块忽略。所得共同确定规则记为 $\Lambda_{E,n}$。不同块不共享读数，规则可使用固定通道及 $n$，不使用 $k$。
+
+**命题 110.2（共同确定风险的 $1/n$ 阶）。** 在定义与假设 110.1 下，可取有限常数 $C_E$，使
+$$
+\mathbb P^{E,1}_{d,k}(\Lambda_{E,n}\ne d)
+\le\frac{C_E}{n+1},
+\qquad k\ge2,\quad d=0,1,\quad n\ge0.
+\tag{110.2a}
+$$
+具体地，令
+$$
+\lambda=\kappa/4,\qquad \eta=\lambda/(10B),\qquad
+C_0=5+\frac{10B}{1-e^{-\lambda L_0}},\qquad
+A=\max\{C_0,e^{\eta T_0},1\},
+$$
+$$
+C_{\rm trap}=\frac{A}{3(e^\eta-1)},\qquad
+C_{\rm inj}=\frac{5B}{e\kappa},\qquad
+C_{\rm exp}=\frac{2A}{e\eta B},
+$$
+$$
+D=\max\{L_0,C_{\rm exp}+2C_{\rm trap},4C_{\rm inj}\},
+\qquad C_E=5B(D+C_{\rm inj}),
+\tag{110.2b}
+$$
+其中 $e$ 为自然对数的底。于是对 $n\ge1$，
+$$
+\frac1{24n}
+\le\overline R^{*,E}_n
+\le M^E_n
+\le\min\left\{\frac12,\frac{C_E}{n+1}\right\}.
+\tag{110.2c}
+$$
+因此 $\overline R^{*,E}_n=\Theta_E(1/n)$ 且 $M^E_n=\Theta_E(1/n)$。常数允许依赖固定通道及所选 $f$，不主张常数最优；$1/2$ 截断仍由另一条恒报 $0$ 的规则取得，不是每类错误的截断。
+
+**证明。** 固定 $k,d$，简写 $\delta=1/k$、$a=1-\delta/3$。 以下漂移、残差及单侧分数估计均针对有向分数 $(-1)^dF_{u,L}$；实际规则不读取 $d$。式 (109.2t) 给出任意重启起点下的局部界：
+$$
+\mathbb P^{E,x}_{d,k}
+(\text{长度 }L\ge L_0\text{ 的块错向声明})
+\le5e^{-\kappa L}.
+\tag{110.2d}
+$$
+式 (109.2u) 则给出环重启起点下至少 $1/4$ 的正确声明概率。这两项也适用于块首发射尚未读取时的条件历史。
+
+先补出纯环块及首次入陷阱时的条件界。令
+$$
+R_d=(3/4)U+(1/4)C_d
+$$
+为三态归一化环核，其中 $U$ 为三点均匀核，$C_0(v_1,v_2,v_3)=(v_2,v_3,v_1)$，$C_1=C_0^{-1}$。对每个环状态 $x$，以 $\mathbb P^{E,x}_{d,R}$、$\mathbb E^{E,x}_{d,R}$ 表示纯环核 $R_d$ 配上同一发射通道、从确定 $x$ 重启的律及期望。定义
+$$
+q^R_d(i)=\mathbb E^{E,i}_{d,R}
+[(-1)^db_fW_f(Y_0,Y_1,Y_2,Y_3)].
+$$
+其环平均为 $c_\infty=|V_f|/192\ge4\beta$：在 (109.2n) 的有限窗口多项式中取 $\delta\downarrow0$，环均值趋于纯环均值，陷阱均值趋于零，即得此式。于是
+$$
+h^R_d=(I-C_d/4)^{-1}(q^R_d-c_\infty\mathbf1),
+\quad
+\|h^R_d\|_\infty\le8/3,
+\quad
+(I-R_d)h^R_d=q^R_d-c_\infty\mathbf1.
+\tag{110.2e}
+$$
+与 (109.2q)–(109.2s) 相同的势分解及模 $4$ 鞅差分组，使用 Azuma–Hoeffding 界，[^rro110-azuma] 给任意非空段长 $\ell$ 的两个随机残差
+$$
+\Pr(H\le-z)\le e^{-z^2/(288\ell)},\qquad
+\Pr(N\le-z)\le4e^{-z^2/(128\ell)}.
+\tag{110.2f}
+$$
+纯环漂移为 $c_\infty L$，势差绝对值小于 $12$。将两个残差各界于 $-\beta L/4$ 以上，得到超过 $\beta L$ 的正确分数；故
+$$
+\mathbb P^{E,x}_{d,R}
+(\text{长度 }L\ge L_0\text{ 的块没有正确声明})
+\le5e^{-\kappa L}.
+\tag{110.2g}
+$$
+这里包含无声明和错向声明。
+
+在准备律 $\mathbb P^{E,1}_{d,k}$ 下，令
+$$
+\tau=\inf\{t\ge1:X_t=0\}.
+$$
+因为各环状态每步进入 $0$ 的概率均为 $\delta/3$，
+$$
+\Pr(\tau=m)=a^{m-1}\delta/3.
+\tag{110.2h}
+$$
+条件于 $\tau=m$，时刻 $0,\ldots,m-1$ 的隐藏路径正是从 $1$ 开始的纯环 $R_d$ 路径，时刻 $m$ 为 $0$，此后从 $0$ 按 $\mathsf K_d$ 重启。此前环环转移贡献 $aR_d$，末次进入 $0$ 的因子 $\delta/3$ 与离开的环状态无关，因此该条件没有额外偏置纯环终点；发射仍逐时条件独立。
+
+至多一个完整读数块跨越 $m$。对这个块，窗口分成全部时刻小于 $m$ 的纯环段、起点至少为 $m$ 的原核段，以及起点为 $m-3,m-2,m-1$ 的至多三个跨越窗口。前两段分别使用 (110.2e) 与 (109.2p) 的势函数，其漂移均非负。两份势差及三个未分解窗口的总损失至多
+$$
+2(8/3)+2(17/3)+3=59/3<20.
+$$
+前后两段各有一个隐藏鞅残差和一个模 $4$ 窗口残差。对每个非空段，用 (110.2f) 的阈值 $z=\beta L/8$，其中段长 $\ell\le L$；空段残差为零。若四个残差均不低于 $-\beta L/8$，整块分数至少为
+$-20-\beta L/2>-\beta L$，因为 $\beta L\ge48$。所以
+$$
+\Pr(\text{跨越块错向}\mid\tau=m)
+\le2e^{-\beta^2L/18432}+8e^{-\beta^2L/8192}
+\le10e^{-\lambda L}.
+\tag{110.2i}
+$$
+纯环段的有限边缘可按纯环链延拓后应用上述鞅界；原核段从 $0$ 重启。没有把混合块误当作同一个齐次核，也不要求两个段独立。
+
+阶段调度满足
+$$
+S_{j+1}
+=B[(2^{j+1}-1)L_0+3(j+1)]
+\le5BL_j,
+\tag{110.2j}
+$$
+因为 $j+1\le2^j$、$L_0\ge1$。当 $T_0\le m\le n$ 时，取首次入陷阱前最后一个完整块，设其尺度为 $r$。时刻 $m$ 位于紧随其后的块内或块首，后一块的尺度只能为 $r$ 或 $r+1$，因此
+$$
+L_r\ge m/(10B).
+$$
+如果该最后纯环块正确声明，而所有随后完整块都不作错向声明，最后保存的方向必正确。对前者用 (110.2g)，后者用 (110.2d) 及至多一次的 (110.2i)。每尺度至多有 $B$ 个块，故
+$$
+\begin{aligned}
+\Pr(\Lambda_{E,n}\ne d\mid\tau=m)
+&\le5e^{-\lambda L_r}
++10B\sum_{\ell\ge0}e^{-\lambda2^\ell L_r}\\
+&\le C_0e^{-\lambda L_r}
+\le C_0e^{-\eta m}.
+\end{aligned}
+\tag{110.2k}
+$$
+用到 $2^\ell\ge1+\ell$；把未来尚未读取的块也纳入并集只会扩大坏事件。
+
+若 $\tau>N-1$，已读前缀为纯环路径，最后完整块的尺度同样满足 $L_r\ge N/(10B)$，由 (110.2g) 得到指数界。没有完整块或 $m<T_0$ 时用概率不超过 $1$。常数 $A$ 因而同时保证
+$$
+\Pr(\Lambda_{E,N-1}\ne d\mid\tau=m)\le Ae^{-\eta m}
+\quad(1\le m\le N-1),
+$$
+$$
+\Pr(\Lambda_{E,N-1}\ne d\mid\tau>N-1)\le Ae^{-\eta N}.
+$$
+由 (110.2h) 条件求和，
+$$
+\varepsilon_d(N,\delta)
+:=\Pr(\Lambda_{E,N-1}\ne d)
+\le Ae^{-\eta N}
++\frac{A\delta}{3}\sum_{m\ge1}e^{-\eta m}
+=Ae^{-\eta N}+C_{\rm trap}\delta.
+\tag{110.2l}
+$$
+此处没有将错误与首次入陷阱事件独立化。
+
+再处理 $\delta T_j\ge1$ 的尺度。令一对相邻块开始于 $u$，第二块开始于 $v=u+T_j$。给定发射前联合历史 $\mathcal G_u=\sigma(X_s:s\le u;Y_s:s<u)$，第二块起点 $X_v$ 在环上的概率至少为
+$$
+\frac34[1-(1-4\delta/3)^{T_j}]
+\ge\frac34(1-e^{-4/3})>\frac12.
+$$
+这是从陷阱重启时的值；从环重启时的值更大。给定第二块起点的发射前历史 $\mathcal G_v$，若隐藏状态在环上，由 (109.2u)，第二块正确声明的概率至少为 $1/4$。Markov 重启和独立发射保证当前未读发射仍使用原条件律。[^rro110-markov] 因此每对块在其开始前历史下，至少有 $1/8$ 的概率作出声明；第一块的声明只会增加这一概率。以前各对均无声明的事件在下一对开始前可测，逐次条件化得
+$$
+\Pr(\text{本阶段完全无声明}\mid\text{阶段前历史})
+\le(7/8)^{32}<1/4.
+\tag{110.2m}
+$$
+没有假设块对之间独立。
+
+令 $e_j$ 为读取完前 $j$ 个完整阶段、即 $S_j$ 个读数时，保存方向错误的概率，$e_0\le1$。一个阶段出现任何错向声明的概率，由 (110.2d) 至多为
+$$
+p_j=5B e^{-\kappa L_j}\le C_{\rm inj}/L_j,
+\tag{110.2n}
+$$
+这里使用 $xe^{-\kappa x}\le1/(e\kappa)$。若旧方向正确，只有新的错向声明能造成错误；若旧方向错误，而阶段没有错向声明，则仅在完全无声明时仍可能错误。由 (110.2m)，当 $\delta T_j\ge1$ 时，
+$$
+e_{j+1}\le e_j/4+p_j.
+\tag{110.2o}
+$$
+
+为拼接两种估计，设
+$$
+j_*=\min\{j\ge0:\delta T_j\ge1\}.
+$$
+它只用于证明，规则不使用这个参数相关索引。对 $j\ge1$，有
+$S_j\ge BL_j/2$，从而
+$$
+Ae^{-\eta S_j}\le C_{\rm exp}/L_j.
+$$
+若 $1\le j<j_*$，则 $\delta<1/T_j\le1/L_j$，由 (110.2l)，
+$e_j\le(C_{\rm exp}+C_{\rm trap})/L_j$。
+若 $j_*\ge1$，最小性给
+$\delta(L_{j_*}/2+3)<1$，所以
+$$
+e_{j_*}\le(C_{\rm exp}+2C_{\rm trap})/L_{j_*}.
+$$
+对所有 $j_*$，初始界均为 $e_0\le1\le D/L_0$。因此全部 $j\le j_*$ 已满足 $e_j\le D/L_j$。对后续阶段，由 (110.2n)–(110.2o) 归纳：
+$$
+e_{j+1}\le\frac{D/4+C_{\rm inj}}{L_j}
+\le\frac{D}{2L_j}
+=\frac{D}{L_{j+1}}.
+$$
+故对全部阶段、参数及方向，
+$$
+e_j\le D/L_j.
+\tag{110.2p}
+$$
+
+最后，任意 $N\ge1$ 有唯一阶段 $j$ 使 $S_j\le N<S_{j+1}$。除前 $j$ 个完整阶段外，至多又使用当前阶段的 $B-1$ 个完整块；若此前方向正确，只有这些块出现错向声明才能导致错误。由 (110.2n)、(110.2p) 及 (110.2j)，
+$$
+\varepsilon_d(N,\delta)
+\le e_j+p_j
+\le\frac{D+C_{\rm inj}}{L_j}
+\le\frac{5B(D+C_{\rm inj})}{N}.
+$$
+$j=0$ 及没有完整块的情形也包含在内，因为 $D\ge L_0$。令 $N=n+1$，得到 (110.2a)。共同规则的平均风险不超过其每方向上界；再引用 (109.2g) 已有的 $1/(24n)$ 下界及恒定规则的 $1/2$ 上界，即得 (110.2c)。证毕。
+
+本结论只针对定义 109.1 的固定通道、共同环准备态与四态核族。分析中的首次入陷阱时刻和 $j_*$ 均不由规则读取；$f$ 的选择仍是固定已知通道下的存在性选择，没有增加任意实数通道的有效计算承诺。
+
+[^rro110-azuma]: Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967。这里使用有界鞅差的 Azuma–Hoeffding 形式：每项绝对值至多 $b$ 的 $\ell$ 项和，下尾至多为 $\exp[-z^2/(2\ell b^2)]$；窗口残差按模 $4$ 分组后应用。
+
+[^rro110-markov]: Richard Weber, [*Markov Chains*](https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf) (2011), Theorem 4.4。此处只需其确定块起点的 Markov 重启特例；过去读数由独立发射扩充，给定当前隐藏状态后不改变未来隐藏转移及尚未读取的发射。
+
+## 110.99 追加锚
+
+## 111. 仅给读数函数与方向符号的共同 $1/n$ 规则
+
+**定义与假设 111.1（部分标定下的共同规则）。** 沿用定义 109.1 的四态核族、共同准备态 $X_0=1$ 及逐时条件独立发射，改变通道的已知信息：固定非空有限字母表 $\mathcal A$，只给定函数 $f:\mathcal A\to[0,1]$ 和符号 $b\in\{-1,1\}$，不提供通道 $E$ 的各行。记
+$$
+\theta_i(E)=\sum_yE_i(y)f(y),\qquad
+V_f(E)=(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1),
+$$
+$$
+\mathcal C_{f,b}
+=\{E:\ E_i\text{ 为 }\mathcal A\text{ 上的概率分布},\ bV_f(E)>0\}.
+$$
+实际通道是该类中某个固定的 $E$，允许零发射概率。原有窗口恒等式和势估计只用 $0\le f\le1$，所以包含端点。一般已知有界实值读数也可作正向仿射归一化到此区间；该归一化不需要 $E$，并保持 $V_f$ 的符号。
+
+固定
+$$
+B=64,\quad L_j=2^j,\quad T_j=L_j+3,\quad
+S_j=B(2^j-1+3j),\qquad j\ge0,
+$$
+$$
+t(L)=192\sqrt{L\log(eL)},\qquad L\ge1,
+\tag{111.1a}
+$$
+其中 $\log$ 为自然对数。第 $j$ 阶段使用 $B$ 个连续块，块首为 $S_j+aT_j$，$a=0,\ldots,B-1$。块首 $u$ 的分数为
+$$
+F_{u,L}
+=b\sum_{t=u}^{u+L-1}
+(1-f(Y_t))(1-f(Y_{t+3}))(f(Y_{t+2})-f(Y_{t+1})).
+$$
+分数大于 $t(L)$ 时声明方向 $0$，小于 $-t(L)$ 时声明方向 $1$，否则不声明。对 $N=n+1$ 个读数，只处理完整块，保存最后一次声明；没有声明则报告 $0$。阈值相等和不完整块均保留此前结果。记所得确定规则为
+$\Psi^{f,b}_n:\mathcal A^{n+1}\to\{0,1\}$。
+每块使用 $L+3$ 个标签，不同块不共享标签；规则从 $L=1$ 开始，不使用 $E$、任何均值间隔或 $k$。
+
+**命题 111.2（无需通道数值的共同最坏参数阶）。** 定义 111.1 的同一规则族满足
+$$
+\exists(\Psi^{f,b}_n)_{n\ge0}\quad
+\forall E\in\mathcal C_{f,b}\quad
+\exists C_{E,f}<\infty\quad
+\forall k\ge2,\ d\in\{0,1\},\ n\ge0:
+\quad
+\Pr^{E,1}_{d,k}(\Psi^{f,b}_n\ne d)
+\le\frac{C_{E,f}}{n+1}.
+\tag{111.2a}
+$$
+这里先固定共同规则，再固定通道；不对通道取上确界。
+
+具体地，对给定 $E\in\mathcal C_{f,b}$，仅在常数及证明中定义
+$$
+c_*=\frac{(5/6)^3|V_f(E)|}{192},\qquad
+j_0=\min\{j\ge0:c_*L_j\ge4t(L_j)\},\qquad
+\overline L=2^{j_0},
+$$
+$$
+Q=5+\frac{40B}{3},\qquad
+A=(10B)^2\max\{Q,\overline L^2\},\qquad
+C_{\rm trap}=\frac{2A}{3},\qquad U=\frac{4A}{B^2},
+$$
+$$
+P=5B,\qquad
+D=\max\{\overline L,U+2C_{\rm trap},4P\},\qquad
+C_{E,f}=5B(D+P).
+\tag{111.2b}
+$$
+所有这些常数有限。规则不计算 $c_*,j_0$ 或 $\overline L$。对每个固定相容通道，其最坏参数平均风险满足
+$$
+\frac1{24n}
+\le\sup_{k\ge2}R^E_{k,n}(\Psi^{f,b}_n)
+\le\frac{C_{E,f}}{n+1},\qquad n\ge1,
+\tag{111.2c}
+$$
+因而为 $\Theta_{E,f}(1/n)$。
+
+**证明。** 固定 $E,k,d$，记 $\delta=1/k$、$a=1-\delta/3$。因为 $bV_f(E)>0$，式 (109.2p)–(109.2s) 的有向势分解仍给
+$$
+(-1)^dF_{u,L}
+=cA_L+M_L+\Delta h+N_L,\qquad
+c=\frac{a^3|V_f|}{192}\ge c_*,
+$$
+$$
+A_L\ge0,\quad |\Delta h|<12,\qquad
+\Pr(M_L\le-z)\le e^{-z^2/(288L)},\quad
+\Pr(N_L\le-z)\le4e^{-z^2/(128L)}.
+\tag{111.2d}
+$$
+这些 Azuma–Hoeffding 尾界[^rro111-azuma] 对每个 $L\ge1$ 成立，也成立于任意重启隐藏起点和块首当前发射尚未读取的条件历史；不需要 $L$ 达到原通道相关的 $L_0$。势函数本身虽依赖 $E$，其范数统一小于 $6$，规则无需计算它。
+
+由于 $t(L)\ge192$，两个残差都不低于 $-t(L)/4$ 时，有向分数大于 $-12-t(L)/2>-t(L)$。代入 (111.2d)，得到全部尺度上的统一错向尾
+$$
+\begin{aligned}
+\Pr(\text{单块错向声明})
+&\le e^{-t(L)^2/(4608L)}
+ +4e^{-t(L)^2/(2048L)}\\
+&\le5(eL)^{-8}.
+\end{aligned}
+\tag{111.2e}
+$$
+这里 $192^2/4608=8$。
+
+函数 $L/\log(eL)$ 在 $L\ge1$ 上不减且趋于无穷，而
+$$
+c_*L\ge4t(L)
+\quad\Longleftrightarrow\quad
+L/\log(eL)\ge(768/c_*)^2.
+$$
+故 $j_0$ 有限，且该不等式对所有 $L\ge\overline L$ 成立。从任意环状态重启，由 §109 的占用估计，
+$\Pr(A_L\ge L/2)\ge1/2$。在此事件及两个残差均不低于 $-t(L)/4$ 的事件上，
+$$
+(-1)^dF_{u,L}
+>c_*L/2-12-t(L)/2
+\ge3t(L)/2-12>t(L).
+$$
+因此，无须事件独立，对 $L\ge\overline L$ 有
+$$
+\Pr(\text{环起点单块正确声明})
+\ge\frac12-5(eL)^{-8}\ge\frac14.
+\tag{111.2f}
+$$
+最后一步使用 $e^8>20$。
+
+纯环核 $R_d$ 的窗口均值为 $c_\infty=|V_f|/192\ge c_*$，势范数至多 $8/3$，见 (110.2e)。[^rro111-block] 其漂移为 $c_\infty L$，不损失占用比例。相同残差界于是给
+$$
+\Pr(\text{纯环块没有正确声明})
+\le5(eL)^{-8},\qquad L\ge\overline L.
+\tag{111.2g}
+$$
+这里包括无声明和错向声明。
+
+令 $\tau=\inf\{t\ge1:X_t=0\}$。复用 (110.2h) 的条件分解：
+$$
+\Pr(\tau=m)=a^{m-1}\delta/3;
+$$
+给定 $\tau=m$，此前是从 $1$ 出发的纯环路径，此后从 $0$ 按原核重启。离环概率与离开的环状态无关，发射仍逐时条件独立。
+
+至多一个完整标签块跨越 $m$。按 §110 的分段方法，两段势差及至多三个跨越窗口造成的总确定损失小于 $20$；纯环段和原核段漂移均非负。对两段的四个残差分别用阈值 $z=t(L)/8$，段长 $\ell\le L$，空段残差为零。四个残差均不低于 $-t(L)/8$ 时，整块有向分数大于 $-20-t(L)/2>-t(L)$。因此
+$$
+\begin{aligned}
+\Pr(\text{跨越块错向}\mid\tau=m)
+&\le2e^{-t(L)^2/(18432L)}
+ +8e^{-t(L)^2/(8192L)}\\
+&\le10(eL)^{-2},\qquad L\ge1.
+\end{aligned}
+\tag{111.2h}
+$$
+这里 $192^2/18432=2$。纯环段可由纯环延拓计算其有限边缘，未把 $X_m=0$ 当成纯环状态；两段无需独立。
+
+调度仍满足 $S_{j+1}\le5BL_j$。若 $4=T_0\le m\le N-1$，首次入陷阱前的最后完整块存在，设尺度为 $r$，则 $m<10BL_r$。若 $r\ge j_0$，该块正确声明且此后没有错向声明，最终保存值便正确。每个后续尺度至多 $B$ 个块，故由 (111.2e)、(111.2g)、(111.2h)，
+$$
+\begin{aligned}
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau=m)
+&\le5L_r^{-2}
+ +10B\sum_{\ell\ge0}(2^\ell L_r)^{-2}\\
+&=QL_r^{-2}.
+\end{aligned}
+\tag{111.2i}
+$$
+加入未来未读块的并集只会放宽当前错误事件。若 $r<j_0$，或 $m<T_0$，则 $m<10B\overline L$，用概率不超过一处理。
+
+在 $\tau>N-1$ 上，已读的 $N$ 个标签是纯环前缀。若有完整块，最后完整块的尺度满足 $N<10BL_r$；达到 $j_0$ 时使用 (111.2g)，否则 $N<10B\overline L$。没有完整块时同样使用概率不超过一。由 $A$ 的定义，全部情形统一为
+$$
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau=m)\le A/m^2
+\quad(1\le m\le N-1),
+$$
+$$
+\Pr(\Psi^{f,b}_{N-1}\ne d\mid\tau>N-1)\le A/N^2.
+\tag{111.2j}
+$$
+第二个事件包含 $\tau=N$，此时整个已读前缀仍在环上。对 $N<4$，$A/N^2\ge1$ 也覆盖缺块情形。
+
+按首次入陷阱时刻条件求和，使用 $\sum_{m\ge1}m^{-2}\le2$，得到
+$$
+\varepsilon_d(N,\delta)
+:=\Pr(\Psi^{f,b}_{N-1}\ne d)
+\le\frac{A}{N^2}+\frac{A\delta}{3}\sum_{m\ge1}m^{-2}
+\le\frac{A}{N^2}+C_{\rm trap}\delta.
+\tag{111.2k}
+$$
+未把错误与入陷阱事件独立化；可求和的二次尾已足够。
+
+当 $j\ge j_0$ 且 $\delta T_j\ge1$ 时，可将 (111.2f) 代入 (110.2m) 的两块条件法：给定块对开始前历史，第二块首在环的概率大于 $1/2$；再条件于该块首历史，正确声明概率至少 $1/4$。所以每对至少有 $1/8$ 的声明概率。此前各对均无声明的事件在下一对开始前可测，逐次条件化给
+$$
+\Pr(\text{阶段完全无声明}\mid\text{阶段前历史})
+\le(7/8)^{32}<1/4.
+\tag{111.2l}
+$$
+此处不先条件于第一块无声明来估计第二块的环概率，也不要求块对独立。
+
+令 $e_j$ 为读取完前 $j$ 个完整阶段、共用 $S_j$ 个标签后保存值错误的概率；$e_0\le1$。全部尺度都由 (111.2e) 给
+$$
+p_j:=5B(eL_j)^{-8}\le P/L_j
+\tag{111.2m}
+$$
+作为本阶段出现任意错向声明的上界。在 (111.2l) 可用的尺度，旧错误在阶段前历史中可测，故
+$$
+e_{j+1}\le e_j/4+p_j.
+\tag{111.2n}
+$$
+
+仅在证明中设
+$$
+j_\delta=\min\{j\ge0:\delta T_j\ge1\},\qquad
+J=\max\{j_0,j_\delta\}.
+$$
+对 $j\ge1$，$S_j\ge BL_j/2$，所以
+$$
+A/S_j^2\le4A/(B^2L_j^2)\le U/L_j.
+$$
+对所有 $0\le j\le j_0$，直接有
+$e_j\le1\le\overline L/L_j\le D/L_j$，包括 $j=0$，不需要把 (111.2k) 用于 $N=0$。
+
+若 $j_\delta>j_0$，则对 $j_0<j<j_\delta$，有 $j\ge1$ 及 $\delta<1/L_j$，由 (111.2k) 得
+$e_j\le(U+C_{\rm trap})/L_j$。
+在 $j=j_\delta\ge1$，前一尺度未触发给
+$\delta(L_j/2+3)<1$，所以 $\delta<2/L_j$，得到
+$e_j\le(U+2C_{\rm trap})/L_j$。
+若 $j_\delta\le j_0$，则 $J=j_0$ 的起点已由直接界覆盖。因此全部 $j\le J$ 均有 $e_j\le D/L_j$。
+
+对 $j\ge J$，用 (111.2m)–(111.2n) 及 $D\ge4P$ 归纳：
+$$
+e_{j+1}\le\frac{D/4+P}{L_j}
+\le\frac{D}{2L_j}=\frac{D}{L_{j+1}}.
+$$
+故全部阶段、参数和方向都满足 $e_j\le D/L_j$。未知小尺度中的任意错误已由 $D\ge\overline L$ 吸收，规则不判断自己是否超过 $j_0$。
+
+最后，任意 $N\ge1$ 有唯一 $j$ 使 $S_j\le N<S_{j+1}$。除已完成阶段外，至多再使用当前尺度的 $B-1$ 个完整块；此前保存值正确时，只有新的错向声明能造成错误。因而
+$$
+\varepsilon_d(N,\delta)
+\le e_j+p_j
+\le\frac{D+P}{L_j}
+\le\frac{5B(D+P)}{N}.
+\tag{111.2o}
+$$
+无完整块、阶段首精确相等、未完成最后阶段、无声明及阈值等号都由同一规则涵盖。取 $N=n+1$ 得 (111.2a)。平均风险不超过每方向上界；对这条规则应用 (109.2g) 的既有完整路径下界，即得 (111.2c)。证毕。
+
+完全不提供方向标定时，仍有既有反射障碍：令 $s$ 交换环状态 $2,3$，固定 $0,1$，并令 $E^s_i=E_{s(i)}$。直接复用 §§106、109 的反射路径恒等式，有 $P^{E,1}_{d,k,n}=P^{E^s,1}_{1-d,k,n}$ 及 $V_f(E^s)=-V_f(E)$。同一无标定检验遂满足 $R^E(\varphi)+R^{E^s}(\varphi)=1$，不能对这两个固定通道都趋于零。该段只是原反射恒等式的通道参数替换；符号比特恰好区分这对通道，不等于提供整个 $E$。
+
+[^rro111-azuma]: Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967。此处使用 (109.2q)–(109.2s) 已给的有界鞅差尾界；窗口残差按模 $4$ 分组处理。已发布 §109 的固定来源为 [commit 4d98ee11](https://github.com/the-omega-institute/trureturing/blob/4d98ee11bd91a8235d0c026c20f7acf446e7cc36/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+[^rro111-block]: 本卷命题 110.2，固定来源为 [commit 28e3f966](https://github.com/the-omega-institute/trureturing/blob/28e3f966a7258170a6c5e1f45b280fff1f7329ac/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。此处复用 (110.2e) 的纯环势分解、(110.2h) 的首次入陷阱条件律、(110.2j) 的调度几何及 (110.2m) 的两块条件法；新的阈值、尾界和未知信号尺度的衔接由本命题给出。
+
+## 111.99 追加锚
+
+## 112. 未知有限 Markov 记忆下的共同方向规则
+
+**定义与假设 112.1（有记忆传感器与可见窗口签名）。** 沿用第 103 节的四态核族，写 $\delta=1/k$、$a=1-\delta/3$，方向 $d=0,1$ 分别使用 $K_{\delta,0}=K_k$、$K_{\delta,1}=K_k^{\mathsf T}$，共同准备于 $X_0=1$。为定义极限签名，将同一矩阵公式延拓到 $0\le\delta\le1/2$。
+
+固定有限读数字母表 $\mathcal A$、整数 $r\ge1$、已知窗口函数 $W:\mathcal A^{r+1}\to[-1,1]$ 及已知位 $b\in\{-1,1\}$。模型另含固定有限集合 $M$ 上的不可约核 $T$，允许周期，平稳律为 $\eta$；$Z_0\sim\eta$，整个传感器过程 $(Z_t)$ 独立于整个隐藏过程 $(X_t)$。给定 $(X,Z)$ 的完整路径，读数逐时独立，条件律为固定发射行 $E_{X_t,Z_t}$，允许零发射项。两个方向使用相同的 $T,E$。产品核与其固定平稳律记为
+$$
+Q_{\delta,d}=K_{\delta,d}\otimes T,\qquad
+\mu(x,z)=\eta_z/4.
+$$
+平稳律只用于下列签名，实际隐藏初态仍为 $1$。定义
+$$
+q_{\delta,d}(x,z)
+=\mathbb E^{x,z}_{\delta,d}W(Y_0,\ldots,Y_r),\qquad
+c_{\delta,d}=\frac43(-1)^db\,\mu q_{\delta,d}.
+$$
+假设纯陷阱实验 $X_t\equiv0$、$Z_0\sim\eta$ 的窗口均值为零，并且
+$$
+\gamma:=\inf_{\substack{0\le\delta\le1/2\\d\in\{0,1\}}}c_{\delta,d}>0.
+\tag{112.1a}
+$$
+这里比较的是两个隐藏方向；不以传感器自身的时间不可逆性代替 (112.1a)。$q,c$ 都是 $\delta$ 的次数至多 $r$ 的多项式，因此给定模型后的签名条件是有限窗口均值与区间正性条件。
+
+规则只取得 $W,r,b$，不取得 $M,T,E,\eta,\gamma$、混合速度或势函数界。取
+$$
+B=64,\quad L_j=2^j,\quad T_j=L_j+r,\quad
+S_j=B(2^j-1+rj),\qquad
+ t(L)=192\sqrt L\log(eL).
+\tag{112.1b}
+$$
+第 $j$ 阶段有 $B$ 个连续块，块首为 $S_j+aT_j$，$a=0,\ldots,B-1$。块首 $u$ 的分数为
+$$
+F_{u,L}=b\sum_{t=u}^{u+L-1}W(Y_t,\ldots,Y_{t+r}).
+$$
+分数大于 $t(L)$ 时声明 $0$，小于 $-t(L)$ 时声明 $1$，否则不声明。对 $N=n+1$ 个读数，只处理完整块，保存最后一次声明；没有声明则报告 $0$。阈值相等和不完整块均保留此前结果。所得规则记为 $\Psi^{W,r,b}_n$，相邻块不共享读数。
+
+**命题 112.2（无需传感器参数的共同最坏参数阶）。** 定义 112.1 的同一规则满足
+$$
+\forall(T,E)\text{ 满足定义 112.1}\quad
+\exists C_{T,E,W,r,b}<\infty\quad
+\forall k\ge2,d\in\{0,1\},n\ge0:
+\quad
+\Pr_{d,k}(\Psi^{W,r,b}_n\ne d)
+\le\frac{C_{T,E,W,r,b}}{n+1}.
+\tag{112.2a}
+$$
+常数允许依赖固定模型，规则不使用这些依赖量。记公平方向平均风险为 $R^{T,E}_{k,n}$，则对 $n\ge1$，
+$$
+\frac1{24n}
+\le\sup_{k\ge2}R^{T,E}_{k,n}(\Psi^{W,r,b}_n)
+\le\frac{C_{T,E,W,r,b}}{n+1}.
+\tag{112.2b}
+$$
+该模型类包含传感器确实造成读数时间相关的子族，其中有周期传感器，且非周期部分的混合可以任意慢：可取二元读数、$r=3$、$b=1$、$W(y_0,y_1,y_2,y_3)=(1-y_0)(1-y_3)(y_2-y_1)$，并取
+$$
+\kappa_0=125/1327104,\quad \alpha=\kappa_0/64,\quad
+(p_0,p_1,p_2,p_3)=(1/2,1/4,1/2,3/4),
+$$
+$$
+M=\{-1,1\},\quad
+T_\varepsilon(z,z')=(1-\varepsilon)/2+
+ \varepsilon\mathbf1_{\{z=z'\}},\quad
+E_{x,z}(1)=p_x+\alpha z,
+\qquad -1\le\varepsilon<1,\qquad\varepsilon\ne0.
+\tag{112.2c}
+$$
+纯陷阱下该子族有 $\operatorname{Cov}(Y_0,Y_1)=\alpha^2\varepsilon\ne0$，并满足 $\gamma\ge5\kappa_0/6$。
+
+**证明。** 首先建立统一于 $\delta$ 的产品链势。令 $\Pi=\mathbf1\eta$、$P=I_4\otimes\Pi$，则 $P$ 与 $Q_{\delta,d}$ 交换。置
+$$
+A_{\delta,d}=I-Q_{\delta,d}+P.
+$$
+对全部 $0\le\delta\le1/2$，此矩阵均可逆。事实上，若 $A_{\delta,d}h=0$，施加 $P$ 得 $(2I-K_{\delta,d})Ph=0$；由行随机矩阵的无穷范数至多为 $1$，必有 $Ph=0$，进而 $Q_{\delta,d}h=h$。当 $\delta>0$ 时，$K_{\delta,d}$ 全正且 $T$ 不可约，产品链不可约，有限不可约链的调和函数为常数。当 $\delta=0$ 时，产品链有陷阱 $\times M$ 和环 $\times M$ 两个不可约闭类，因为纯环核 $R_d$ 全正；调和函数在每类上为常数。两种情形都由 $Ph=0$ 迫使 $h=0$。这些事实不要求 $T$ 非周期。
+
+有限维矩阵逆连续，参数区间紧，故
+$$
+C_\perp:=\max_{\substack{0\le\delta\le1/2\\d=0,1}}
+\|A_{\delta,d}^{-1}(I-P)\|_\infty<\infty.
+$$
+下列构造将有限 Markov Poisson 方程的传感器中心化、环内零和与陷阱慢模分别解出。[^rro112-poisson]
+
+固定 $\delta>0,d$，置 $\widehat q=(-1)^dbq_{\delta,d}$、$c=c_{\delta,d}$、$g=\widehat q-c\mathbf1_{\rm ring}$。因为 $\mu(\mathrm{ring})=3/4$，有 $\mu g=0$。令 $\bar g(x)=\sum_z\eta_zg(x,z)$。传感器中心化部分由
+$$
+h^\perp=A_{\delta,d}^{-1}(I-P)\widehat q
+$$
+解出，满足 $Ph^\perp=0$、$(I-Q)h^\perp=g-\bar g\otimes\mathbf1$ 及 $\|h^\perp\|_\infty\le C_\perp$。
+
+写 $u_0=\bar g(0)$、$u_R=\tfrac13\sum_{i=1}^3\bar g(i)$，则 $u_0+3u_R=0$。令 $w_i=\bar g(i)-u_R$，故 $\sum_iw_i=0$、$\|w\|_\infty\le2$。若 $C_d$ 表示三环正/反循环矩阵，$\chi=a/4\le1/4$，环内零和势为
+$$
+h^{\rm ring}(0)=0,\qquad
+h^{\rm ring}|_{\rm ring}
+=\frac{w+\chi C_dw+\chi^2C_d^2w}{1-\chi^3},
+\qquad \|h^{\rm ring}\|_\infty\le8/3.
+$$
+唯一慢模为 $\zeta=(-3,1,1,1)$，满足
+$K_{\delta,d}\zeta=(1-4\delta/3)\zeta$，所以类常数部分的势为
+$$
+h^{\rm slow}=-\frac{u_0}{4\delta}\zeta.
+$$
+从陷阱、传感器平稳律开始，前 $r$ 步均不离开陷阱的事件独立于传感器路径，条件窗口正是零均值的纯陷阱实验。因此
+$$
+|u_0|\le1-(1-\delta)^r\le r\delta.
+$$
+合并三部分得到
+$$
+(I-Q_{\delta,d})H_{\delta,d}
+=\widehat q-c_{\delta,d}\mathbf1_{\rm ring},\qquad
+\|H_{\delta,d}\|_\infty\le H:=C_\perp+8/3+3r/4.
+\tag{112.2d}
+$$
+此处只要求陷阱均值在 $\eta$ 下为零，不要求每个传感器起点的陷阱均值都为零。纯环核 $R_d\otimes T$ 的均值为 $c_{0,d}$：在 $\delta=0$ 时，$\mu$ 的陷阱质量为 $1/4$、环质量为 $3/4$，而陷阱平均为零。在 $\delta=0$ 的产品核中限制到环闭类，去掉类常数后，同一传感器逆与环内逆给
+$$
+(I-R_d\otimes T)H^R_d=\widehat q^R_d-c_{0,d},
+\qquad \|H^R_d\|_\infty\le H_R:=C_\perp+8/3.
+$$
+
+令 $\overline H=\max\{1,H,H_R\}$、$m=r+1$。采用产品链的发射前滤过，窗口残差
+$D_t=(-1)^dbW_t-\widehat q(X_t,Z_t)$ 的绝对值至多 $2$，在给定窗口起点历史后的条件均值为零，并在 $m$ 步后可测。按 $t\bmod m$ 分组，加上 (112.2d) 的望远镜求和，得到
+$$
+(-1)^dF_{u,L}
+=c_{\delta,d}A_L+M_L+\Delta H+N_L,
+\quad
+A_L=\sum_{t=u}^{u+L-1}\mathbf1_{\{X_t\ne0\}},
+$$
+$$
+|\Delta H|\le2\overline H,\quad
+\Pr(M_L\le-z)\le e^{-z^2/(8\overline H^2L)},\quad
+\Pr(N_L\le-z)\le m e^{-z^2/(8m^2L)}.
+\tag{112.2e}
+$$
+这些有界鞅差界[^rro112-azuma] 对任意产品起点及块首发射前历史条件化后成立；分组之间无需独立。纯环块同样成立，其漂移改为 $c_{0,d}L$。
+
+再令 $\tau=\inf\{t\ge1:X_t=0\}$。仍有 $\Pr(\tau=h)=a^{h-1}\delta/3$。条件于 $\tau=h$，陷阱前隐藏路径为纯环路径，之后从隐藏状态 $0$ 按原核重启。传感器不在边界重置；由于 $\tau$ 只涉及独立的 $X$，它仍按 $T$ 演化，而上述势与尾界对任意传感器起点统一。
+
+跨越 $h$ 的块分成纯环窗口段、原核窗口段和至多 $r$ 个跨越窗口。有向漂移为 $c_{0,d}\ell_-+c_{\delta,d}A_+\ge0$，两份势差及跨越窗口的确定性损失至多
+$$
+D_0=2H_R+2H+r.
+$$
+前后两段各有一个隐藏鞅和一个窗口残差，段长均不超过 $L$；无需两段独立，也不把跨越块当作一个齐次核。
+
+普通块将两个随机残差各界于 $-t(L)/4$，跨越块将四个残差各界于 $-t(L)/8$。由 (112.2e)，相关坏事件概率均至多
+$$
+\rho(L)=2(1+m)\exp[-a_*\log^2(eL)],\qquad
+ a_*:=\min\{72/\overline H^2,72/m^2\}>0.
+$$
+由于 $t(L)/L\to0$、$t(L)\to\infty$，且 $\rho(L)=o(L^{-p})$ 对每个固定 $p>0$ 成立，可选有限二进制尺度 $\overline L=2^{j_0}$，使全部 $L\ge\overline L$ 满足
+$$
+t(L)\ge\max\{8\overline H,4D_0\},\qquad
+\gamma L\ge4t(L),\qquad
+\rho(L)\le\min\{1/4,L^{-4}\}.
+\tag{112.2f}
+$$
+$\overline L,j_0$ 只在证明中使用，规则仍从 $L=1$ 开始。
+
+因漂移非负，任意产品起点的块在残差好事件上不能错向越阈，故错向概率至多 $L^{-4}$；条件跨越块也有同一界。纯环块的漂移至少 $4t(L)$，故不作正确声明的概率至多 $L^{-4}$。从环起点出发，原隐藏环指示链仍给 $\mathbb EA_L\ge3L/4$，于是 $\Pr(A_L\ge L/2)\ge1/2$。该事件上漂移至少 $2t(L)$，扣除好事件损失仍超过正确阈值；再扣至多 $1/4$ 的坏事件，正确声明概率至少 $1/4$。
+
+以下用这些产品链局部界完成最后声明的结算；阶段几何与第 110、111 节相同。[^rro112-last]
+置 $G=B(r+2)$，则
+$$
+S_{j+1}\le GL_j,\qquad S_j\ge(B/2)L_j\quad(j\ge1).
+\tag{112.2g}
+$$
+若前缀含完整块，最后完整块的尺度 $L$ 满足其前缀长度小于 $2GL$：该块结束时刻不超过所在阶段末 $GL$，下一块尺度至多 $2L$、跨度至多 $(r+2)L\le GL$。
+
+条件于 $\tau=h\le N-1$，当 $h\ge2G\overline L$ 时，陷阱前最后完整纯环块的尺度 $L$ 至少为 $\overline L$，且 $h<2GL$。若它正确声明而后续完整块均不作错向声明，最终方向必正确。每尺度至多 $B$ 块，至多一块跨越陷阱时刻；故条件错误率至多
+$$
+\frac1{L^4}+B\sum_{j\ge0}\frac1{(2^jL)^4}
+\le\frac{(1+16B/15)(2G)^4}{h^4}.
+$$
+较小 $h$ 用概率不超过 $1$。若 $\tau>N-1$，前缀条件律是纯环产品过程，对最后完整块同理。因此，取
+$$
+A=\max\{1,(2G\overline L)^4,(1+16B/15)(2G)^4\},
+\quad C_{\rm trap}=2A/3,
+$$
+并用 $\sum_{h\ge1}h^{-4}<2$，对首次入陷阱时刻条件求和，得到
+$$
+\varepsilon_d(N,\delta)
+\le A/N^4+C_{\rm trap}\delta.
+\tag{112.2h}
+$$
+该式覆盖没有完整块的情形，不假设错误事件与陷阱时刻独立。
+
+当 $j\ge j_0$ 且 $\delta T_j\ge1$ 时，一对相邻块中第二块的隐藏起点在环上的条件概率大于 $1/2$；给定该起点及全部传感器历史，其正确声明概率至少 $1/4$。逐对条件化，整阶段完全无声明的概率至多 $(7/8)^{32}<1/4$。令 $e_j$ 为读完 $S_j$ 个读数后的错误率，则
+$$
+e_{j+1}\le e_j/4+B/L_j^4.
+\tag{112.2i}
+$$
+其中阶段错向事件按 $B$ 个块取并集，没有使用块独立性。
+
+置
+$$
+U=16A/B^4+2C_{\rm trap},\qquad
+D=\max\{\overline L,U,4B\}.
+$$
+对 $j<j_0$，直接用 $e_j\le1\le\overline L/L_j$。对 $j\ge j_0$ 且 $\delta T_j<1$，(112.2g)–(112.2h) 及 $\delta<1/L_j$ 给 $e_j\le U/L_j$；$j=0$ 用 $e_0\le1$。令 $j_*$ 为首个同时满足 $j\ge j_0$、$\delta T_j\ge1$ 的阶段。若 $j_*=j_0$，用 $D\ge\overline L=L_{j_*}$ 起步；否则前一阶段给 $\delta<2/L_{j_*}$，再用 (112.2h) 得 $e_{j_*}\le U/L_{j_*}$。随后由 (112.2i)、$L_{j+1}=2L_j$ 与 $D\ge4B$ 归纳得到全部 $j$ 的
+$$
+e_j\le D/L_j.
+$$
+最后，取 $S_j\le N<S_{j+1}$。若 $j\ge j_0$，不完整阶段增加的错误概率至多 $B/L_j^4$，故 $\varepsilon_d(N,\delta)\le(D+B)/L_j$；若 $j<j_0$，直接以概率 $1$ 和 $D\ge\overline L$ 得到同一界，没有把大尺度尾界用于早期阶段。由 $N<GL_j$，
+$$
+\varepsilon_d(N,\delta)\le\frac{G(D+B)}N.
+$$
+取 $C_{T,E,W,r,b}=G(D+B)$ 证明 (112.2a)。所有模型相关量均仅用于证明常数的有限性。
+
+对下界，独立传感器和相同发射使 $Y_0,\ldots,Y_n$ 成为完整隐藏路径 $X_0,\ldots,X_n$ 的同一个随机后处理：给定隐藏路径后，先按共同律生成 $Z$，再按共同发射生成读数，所得条件核不依赖方向。第 105 节的共同隐藏路径 $(1,0,\ldots,0)$ 在两方向都有质量 $\delta(1-\delta)^{n-1}/3$，推前仍给共同子测度。因此任意可见规则的公平均误差至少为 $\delta(1-\delta)^{n-1}/6$。取 $k=2n$ 并用 Bernoulli 不等式，得到 $1/(24n)$，证明 (112.2b)。
+
+最后核对 (112.2c)。忽略传感器项时，三个环 Bernoulli 参数的 Vandermonde 为 $1/32$，由式 (109.2l) 得有向 $c$ 在全区间至少为 $\kappa_0$。$T_\varepsilon$ 对均匀律可逆，故纯陷阱的平稳观察过程可逆；$W$ 对窗口反序变号，纯陷阱均值精确为零。将真实发射与忽略传感器的 Bernoulli $p_x$ 逐时耦合，每时刻的不一致概率为 $\alpha$，四窗的差异概率至多 $4\alpha$，分数均值变化至多 $8\alpha$，有向 $c$ 的变化至多 $32\alpha/3=\kappa_0/6$。因此 $\gamma\ge5\kappa_0/6$。纯陷阱下 $\mathbb E[Y_t\mid Z_t]=1/2+\alpha Z_t$，传感器满足 $\mathbb E[Z_0Z_1]=\varepsilon$，条件发射独立遂给 $\operatorname{Cov}(Y_0,Y_1)=\alpha^2\varepsilon\ne0$。当 $\varepsilon=-1$ 时传感器为周期二的确定交换；其非周期子族的非平凡特征值为 $\varepsilon$，故 $\varepsilon\uparrow1$ 时不存在共同混合速度。证毕。
+
+条件 (112.1a) 仍是模型的实质限制。独立不可逆传感器可能产生自己的时间箭头，所以反序反对称分数的非零均值本身不推出该条件。这里不包括传感器随 $k$ 变化、与隐藏链耦合演化或给定 $(X,Z)$ 后仍有额外发射记忆的情形，也不提供未知模型是否满足签名条件的认证算法。
+
+[^rro112-poisson]: Jeffrey J. Hunter, [*Generalized inverses of Markovian kernels in terms of properties of the Markov chain*](https://arxiv.org/pdf/1209.3533v1) (2012), §2，给出有限 Markov 基本矩阵 $[I-P+\Pi]^{-1}$ 与群逆 $[I-P+\Pi]^{-1}-\Pi$。这里对产品核显式分离传感器中心化、环内零和与陷阱慢模，并估计各部分；有限维 Poisson 方程及广义逆方法不作新颖性主张。
+
+[^rro112-azuma]: Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967。使用每项绝对值至多 $b$ 的 $\ell$ 项鞅差和下尾 $\exp[-z^2/(2\ell b^2)]$，窗口残差按模 $r+1$ 分组。
+
+[^rro112-last]: [已发布 RRO](https://github.com/the-omega-institute/trureturing/blob/0b2398a77f9df4804156fc869afd24b772bf91a6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 第 110 节 的首次入陷阱条件化与阶段收缩，以及同一快照第 111 节的分析用起用尺度。这里的传感器具有状态，局部块、纯环与跨越界由产品链重新建立；阈值采用 $\sqrt L\log(eL)$，使任意固定未知势范数产生的尾界最终快于每个指定幂。
+
+## 112.99 追加锚
+
+## 113. 独立纯陷阱校准的确定预算阈值
+
+**定义与假设 113.1（未知陷阱基线与独立参考流）。** 沿用第 103、112 节的四态核族 $K_{\delta,d}$，$\delta=1/k$、$k\ge2$，隐藏状态 $0$ 是陷阱，主实验共同准备于 $X_0=1$。传感器是固定有限集合 $M$ 上的不可约 Markov 链 $T$，允许周期，初始律为其平稳律 $\eta$；整个传感器过程独立于整个隐藏过程。给定两条完整路径，有限字母表 $\mathcal A$ 上的读数逐时独立，条件律为固定发射行 $E_{X_t,Z_t}$。传感器和发射不随 $k,d$ 改变。
+
+已知整数 $r\ge1$、窗口函数 $W:\mathcal A^{r+1}\to[-1,1]$ 和位 $b\in\{-1,1\}$。将同一隐藏核公式延拓到 $0\le\delta\le1/2$，定义
+$$
+q_{\delta,d}(x,z)=\mathbb E^{x,z}_{\delta,d}W(Y_0,\ldots,Y_r),
+\qquad q_{\rm tr}(z)=q_{0,d}(0,z),
+\qquad \tau=\eta q_{\rm tr},
+\qquad \mu=\operatorname{unif}_4\otimes\eta.
+\tag{113.1a}
+$$
+与第 112 节不同，$\tau$ 不要求为零，也不提供给规则。相容性条件是
+$$
+c_{\delta,d}=\frac43(-1)^db\,(\mu q_{\delta,d}-\tau),
+\qquad
+\gamma:=\inf_{\substack{0\le\delta\le1/2\\d=0,1}}c_{\delta,d}>0.
+\tag{113.1b}
+$$
+这里 $c_{\delta,d}$ 是未除以二的校准签名；真中心分数 $(W-\tau)/2$ 的对应签名为 $c_{\delta,d}/2$。
+
+参考流 $V_0,V_1,\ldots$ 来自同一传感器的一个独立平稳副本，隐藏状态始终固定在陷阱，发射仍为 $E_{0,z}$。参考流的全部随机量与主实验独立。主记录有 $n+1$ 个标签；预先指定的、与模型无关的整数预算 $m_n\ge0$ 允许规则使用至多前 $m_n$ 个参考标签。不同最终长度的规则可以依据新基线估计重算旧块声明，不要求旧声明不可撤回。若 $m_n$ 非递减，这同时给出累计参考采样计划；不要求单调时，预算按每个有限前缀决策实际使用的信息分别计量。
+
+**命题 113.2（确定共同预算的充要条件）。** 对任一上述确定预算序列 $(m_n)$，下列两项等价：
+
+(a)
+$$
+\frac{m_n}{\log(n+1)}\longrightarrow+\infty
+\qquad(n\longrightarrow\infty).
+\tag{113.2a}
+$$
+
+(b) 对每个已知有限字母表 $\mathcal A$、$W,r,b$，存在一族共同规则 $\Phi_n$，只使用这些已知输入、预算和两份可见记录，使
+$$
+\forall(T,E)\text{ 满足定义 113.1}\quad
+\exists C_{T,E,W,r,b,(m_n)}<\infty\quad
+\forall n\ge0,k\ge2,d\in\{0,1\}:
+\quad
+\Pr_{d,k}(\Phi_n\ne d)\le\frac{C_{T,E,W,r,b,(m_n)}}{n+1}.
+\tag{113.2b}
+$$
+规则不使用 $\tau,T,E,\eta,\gamma$ 或传感器规模界。必要性已经在一个固定三元评分接口 $r=1,b=-1$ 及六状态传感器子类上成立；即使另向规则提供共同已知下界 $\gamma\ge1/256$ 和传感器状态数，仍成立。这里的等价对整个声明的模型类成立，不声称任意单独固定的评分子类都需要该预算。
+
+**证明。** 先证明充分性。写 $N=n+1$、$u_N=\log(eN)$，取
+$$
+K_n=\min\{(m_n-r)_+,N\}.
+$$
+若 $K_n=0$，直接报告 $0$，不读取参考。否则定义
+$$
+\widehat\tau_n=\frac1{K_n}\sum_{s=0}^{K_n-1}W(V_s,\ldots,V_{s+r}),
+\qquad
+a_n=(u_N/K_n)^{1/4}.
+\tag{113.2c}
+$$
+只需 $K_n+r\le m_n$ 个参考标签。由 (113.2a)，有
+$$
+\frac{K_n}{u_N}\to\infty,\qquad a_n\to0,\qquad
+K_na_n^2=\sqrt{K_nu_N},\qquad
+K_na_n=K_n^{3/4}u_N^{1/4}\to\infty.
+\tag{113.2d}
+$$
+
+保留第 112 节的主块日程：
+$$
+B=64,\qquad L_j=2^j,\qquad T_j=L_j+r,\qquad
+S_j=B(2^j-1+rj),\qquad
+t(L)=192\sqrt L\log(eL).
+$$
+第 $j$ 阶段含 $B$ 个连续的 $T_j$ 标签块。对最终长度 $n$，块首 $v$ 的分数和阈值改为
+$$
+\widehat F^{(n)}_{v,L}
+=\frac b2\sum_{s=v}^{v+L-1}
+   [W(Y_s,\ldots,Y_{s+r})-\widehat\tau_n],
+\qquad
+h_n(L)=t(L)+La_n.
+\tag{113.2e}
+$$
+只处理 $N$ 个主标签中的完整块。分数严格大于 $h_n(L)$ 声明 $0$，严格小于 $-h_n(L)$ 声明 $1$，否则保留旧答案；初始答案为 $0$，最终保存最后一次声明。阈值相等和不完整块均不更新。同一最终长度的所有块使用同一估计 $\widehat\tau_n$；下一最终长度可以重算这些声明。
+
+以下先证明一个对确定偏移统一的主过程估计，再条件化参考记录。固定
+$$
+|\widehat\tau-\tau|\le a,\qquad 0\le a\le\gamma/16.
+\tag{113.2f}
+$$
+用这同一对 $(\widehat\tau,a)$ 定义所有阶段及所有辅助长度上的块规则。辅助过程中间长度的答案只用于证明，不声称等于实际较早最终长度输出的答案。
+
+真中心窗口
+$$
+\widetilde W=(W-\tau)/2
+$$
+取值仍在 $[-1,1]$，纯陷阱均值为零，签名下界为 $\gamma/2$。因此它满足第 112 节的数学假设，可以直接复用 (112.2d)–(112.2e) 的产品链势、窗口鞅界以及纯环和首次入陷阱跨越块估计。$\widetilde W$ 在此只用于分析，不作为已知输入交给规则。[^rro113-main]
+
+具体地，令 $\sigma=(-1)^d$。存在有限 $H_X\ge1$，统一控制全部 $0<\delta\le1/2$、两个方向的主过程及纯环势，使普通块具有分解
+$$
+F^0_{v,L}:=\frac{\sigma b}{2}\sum_{s=v}^{v+L-1}
+   [W(Y_s,\ldots,Y_{s+r})-\tau]
+=\frac{c_{\delta,d}}2 A_L+R_L,
+\qquad
+A_L=\sum_{s=v}^{v+L-1}\mathbf1_{\{X_s\ne0\}}.
+\tag{113.2g}
+$$
+残差含至多 $2H_X$ 的势差和 (112.2e) 的两个随机项；该式对正负尾均可应用。纯环漂移为 $c_{0,d}L/2$。条件于首次入陷阱时刻 $\tau_X=m$，跨越块按第 112 节分为纯环段、入陷阱后原核段及至多 $r$ 个跨越窗口。两段漂移均非负，两份势差和跨越窗口的确定性损失至多 $4H_X+r$；传感器保留跨越时的状态，不作重置。
+
+置
+$$
+V_X=\max\{H_X,r+1\},\qquad
+\psi_X(L)=4(r+2)\exp[-18\log^2(eL)/V_X^2].
+$$
+当 $t(L)\ge4(4H_X+r)$，在 (112.2e) 中对普通块的两个随机项各取绝对值阈值 $t/8$，对跨越块的四个随机项各取 $t/16$，便得：绝对残差小于 $t/2$，除去概率至多 $\psi_X(L)$ 的事件。跨越情形是在给定 $\tau_X=m$ 后成立；纯环和普通块同样满足此较松包络。指数常数来自 $192^2/2048=18$。这些界对块首全部潜状态和发射前历史统一，无需块或跨越两段独立。
+
+参考流需估计未中心化窗口的均值。由有限不可约链的 Poisson 方程，存在
+$$
+(I-T)h^V=q_{\rm tr}-\tau,\qquad \|h^V\|_\infty\le H_V<\infty.
+$$
+这里使用 $I-T+\mathbf1\eta$ 的可逆性，允许周期，不要求 $T^n$ 收敛。[^rro113-poisson] 将 $K$ 个参考窗口的中心和分为势差、传感器鞅及窗口残差，势差至多 $2H_V$；窗口残差按起点模 $r+1$ 分组。两类鞅差分别以 $2H_V$ 和 $2$ 为界。取 $H_V\ge1$、$V_V=\max\{H_V,r+1\}$，当 $Ka\ge4H_V$ 时，对两个随机项各取阈值 $Ka/4$，Azuma 界和并集界给
+$$
+\Pr\left(
+\left|\frac1K\sum_{s<K}W(V_s,\ldots,V_{s+r})-\tau\right|>a
+\right)
+\le2(r+2)\exp\left[-\frac{Ka^2}{128V_V^2}\right].
+\tag{113.2h}
+$$
+这是每个参考前缀的边缘尾界，不假设不同前缀估计相互独立。由 (113.2d)，该指数除以 $\log(eN)$ 趋于无穷。因此对全部充分大的 $N=n+1$，
+$$
+a_n\le\gamma/16,\qquad
+\Pr(G_n^c)\le N^{-4},
+\qquad
+G_n=\{|\widehat\tau_n-\tau|\le a_n\}.
+\tag{113.2i}
+$$
+
+回到固定的确定对 (113.2f)。每个块有
+$$
+\sigma\widehat F_{v,L}
+=F^0_{v,L}+\frac{\sigma bL}{2}(\tau-\widehat\tau),
+\qquad
+\left|\frac{\sigma bL}{2}(\tau-\widehat\tau)\right|\le La/2.
+\tag{113.2j}
+$$
+错向越过阈值 $t(L)+La$ 必迫使 $F^0_{v,L}<-t(L)$；非负漂移和绝对残差小于 $t(L)/2$ 排除这种事件。
+
+只在证明中选 $j_0\ge2$，使对全部 $j\ge j_0$，
+$$
+t(L_j)\ge4(4H_X+r),\qquad
+\psi_X(L_j)\le L_j^{-4},\qquad
+t(L_j)/L_j\le\gamma/16.
+$$
+记 $\bar L=2^{j_0}$。该尺度对全部 (113.2f) 的确定对统一，并有
+$$
+\gamma L_j/2\ge4[t(L_j)+L_ja].
+\tag{113.2k}
+$$
+从环起点出发，既有隐藏占用估计 $\mathbb E A_L\ge3L/4$ 给
+$\Pr(A_L\ge L/2)\ge1/2$。在该事件上，真中心漂移至少
+$\gamma L/4\ge2[t(L)+La]$。扣除小于 $t(L)/2$ 的残差和至多 $La/2$ 的估计偏移，仍严格超过正确阈值。因此晚阶段有
+$$
+\begin{array}{ll}
+\Pr(\text{普通块错向}\mid\mathcal F_v)\le L_j^{-4},
+ &\text{任意潜状态起点};\\
+\Pr(\text{普通块正确声明}\mid\mathcal F_v)\ge1/4,
+ &\text{环起点};\\
+\Pr(\text{纯环块不作正确声明})\le L_j^{-4};\\
+\Pr(\text{跨越块错向}\mid\tau_X=m)\le L_j^{-4}.
+\end{array}
+\tag{113.2l}
+$$
+早阶段只用概率不超过一，不使用这些晚阶段尾界。
+
+下面完整结算所有主长度。置 $G=B(r+2)$、$F=2G$，日程满足
+$$
+S_{j+1}\le GL_j,\qquad S_j\ge BL_j/2\quad(j\ge1).
+$$
+若一个 $m$ 标签前缀中最后完整块的尺度为 $L_\ell$，则 $m<FL_\ell$：若它在当前阶段 $j$，用 $m<S_{j+1}$；若当前阶段还没有完整块，最后块在阶段 $j-1$，用
+$m<S_j+T_j\le GL_j=2GL_{j-1}$。完全没有完整块的前缀长度小于 $r+1$。
+
+条件于 $\tau_X=m\le N-1$。若陷阱前最后完整块的尺度 $L_\ell\ge\bar L$，其正确声明会覆盖全部更早错误，之后的最终错误只能来自后续错向声明。将 (113.2l) 的四次尾界放宽为二次尾界，每尺度至多 $B$ 块，得到
+$$
+\Pr(\text{长度 }N\text{ 时错误}\mid\tau_X=m)
+\le L_\ell^{-2}+B\sum_{v\ge0}(2^vL_\ell)^{-2}
+=Q L_\ell^{-2},
+\qquad Q=1+4B/3.
+$$
+并集可多计最后纯环块所在阶段，不影响上界；涉及的尺度全部至少为 $j_0$。若最后纯环块较早或不存在，则用概率一和 $m<F\bar L$。条件于 $\tau_X>N-1$ 时，最后完整块是纯环块，晚尺度失败率至多 $L_\ell^{-4}$；早尺度或无完整块仍用概率一。
+
+所以取
+$$
+A=F^2\max\{Q,\bar L^2\},\qquad C_{\rm trap}=2A/3,
+$$
+有条件界 $A/m^2$ 和 $A/N^2$。再用
+$\Pr(\tau_X=m)=(1-\delta/3)^{m-1}\delta/3$ 及
+$\sum_{m\ge1}m^{-2}\le2$，得全部 $N\ge1$ 的
+$$
+\varepsilon_d(N,\delta)\le A/N^2+C_{\rm trap}\delta.
+\tag{113.2m}
+$$
+
+令 $e_j$ 为该固定对所定义的辅助规则读完 $S_j$ 个主标签后的错误率。若 $j\ge j_0$ 且 $\delta T_j\ge1$，任意起点在一对相邻块的第二块开始时位于环上的条件概率至少
+$$
+\frac34[1-(1-4\delta/3)^{T_j}]
+\ge\frac34(1-e^{-4/3})>1/2.
+$$
+由 (113.2l)，第二块正确声明的条件概率至少 $1/8$。逐对条件化，32 对中全无声明的概率至多 $(7/8)^{32}<1/4$，不要求块对独立。若没有错向声明，最终错误必来自旧答案错误且全阶段无声明；故
+$$
+e_{j+1}\le e_j/4+B L_j^{-4}.
+\tag{113.2n}
+$$
+部分晚阶段把正确旧答案改错的附加概率也至多 $B L_j^{-4}$。
+
+为覆盖全部起用顺序，定义
+$$
+j_\delta=\min\{j:\delta(L_j+r)\ge1\},\qquad
+U=4A/B^2,\qquad
+D=\max\{\bar L,U+2C_{\rm trap},4B\}.
+$$
+对 $j\le j_0$，用 $e_j\le1\le\bar L/L_j$。对 $j_0<j<j_\delta$，由 (113.2m)、$S_j\ge BL_j/2$ 和 $\delta<1/L_j$，有
+$e_j\le(U+C_{\rm trap})/L_j$。若 $j_\delta>j_0$，前一阶段给
+$\delta<2/L_{j_\delta}$，于是该阶段起用界为
+$(U+2C_{\rm trap})/L_{j_\delta}$。从 $\max(j_0,j_\delta)$ 起，(113.2n) 和 $D\ge4B$ 归纳给全部阶段
+$e_j\le D/L_j$。
+
+最后取 $S_j\le N<S_{j+1}$。晚阶段加上 $B L_j^{-4}$，早阶段只用概率一；由 $N<GL_j$，两者均给
+$$
+\varepsilon_d(N,\delta)\le C_{\rm main}/N,\qquad
+C_{\rm main}=G(D+B).
+\tag{113.2o}
+$$
+这些常数对全部满足 (113.2f) 的确定对统一。
+
+固定实际最终长度 $n$，条件于其独立参考前缀，主实验的律不变。在 $G_n$ 上，充分大 $N$ 的实现对 $(\widehat\tau_n,a_n)$ 满足 (113.2f)，辅助规则在最终长度 $N$ 的答案恰是 $\Phi_n$。因此只需加入这一个参考失败事件：
+$$
+\Pr_{d,k}(\Phi_n\ne d)
+\le C_{\rm main}/N+\Pr(G_n^c)
+\le(C_{\rm main}+1)/N.
+\tag{113.2p}
+$$
+没有把不同参考估计当作独立，也没有将校准事件与旧错误事件的概率相乘。剩余有限多个早长度用概率一吸收到常数中，证明充分性和准确的参考标签预算。
+
+再证必要性，并保持共同已知正裕量。下界中用
+$\xi(1)=0,\xi(2)=1,\xi(3)=2$ 将三个环状态标为 $\mathbb Z/3\mathbb Z$；陷阱仍为原状态 $0$。隐藏环内条件增量律为
+$$
+R_+=(1/4,1/2,1/4),\qquad R_-=(1/4,1/4,1/2),
+$$
+顺序为 $(0,+1,-1)$，两个方向分别使用 $R_+,R_-$。写
+$\alpha_\delta=1-\delta/3$。
+
+对每个固定 $s\in(0,1/2]$，传感器状态为 $(Z,H)\in(\mathbb Z/3\mathbb Z)\times\{0,1\}$。快坐标 $Z$ 在模型 $A$ 中的增量律为 $R_-$，在模型 $B$ 中为 $R_+$；慢坐标 $H$ 独立地按
+$$
+P_s=\begin{pmatrix}1-s&s\\s&1-s\end{pmatrix}
+\tag{113.2q}
+$$
+切换。两坐标均从均匀律开始。两传感器核 $R_-\otimes P_s$、$R_+\otimes P_s$ 的全部项严格正，平稳律为六态均匀律；每个固定模型在全部 $n,k,d$ 中保持不变。$H$ 不作为标签提供。
+
+全部模型使用同一发射：环上 $Y=\xi(X)+Z$，完全忽略 $H$；陷阱上 $H=0$ 时发射新均匀三元符号，$H=1$ 时以概率 $1/4$ 发射 $-Z$、否则发射新均匀符号，即
+$$
+E_{0,z,0}(y)=1/3,\qquad
+E_{0,z,1}(y)=1/4+(1/4)\mathbf1_{\{y=-z\}}.
+$$
+给定完整潜路径，随机发射逐时独立。共同已知接口为
+$$
+r=1,\qquad b=-1,\qquad
+W(y,y')=J(y'-y),\qquad
+J(0)=0,\quad J(+1)=1,\quad J(-1)=-1.
+\tag{113.2r}
+$$
+
+两个相邻陷阱时刻只要至少一个 $H=0$，新均匀输出就使分数均值为零。两时刻同时 $H=1$ 的概率为 $(1-s)/2$；其中只有两次都选择 $-Z$ 的分支才贡献均值，该分支概率为 $1/16$，且把快坐标增量取反。快坐标分数均值在 $A,B$ 中分别为 $-1/4,+1/4$。因此
+$$
+t_s=(1-s)/128,\qquad
+\tau_A^s=t_s,\qquad\tau_B^s=-t_s.
+$$
+环发射不受 $H$ 影响，卷积给纯环均值
+$$
+\begin{array}{c|cc}
+\rho_{M,d}&d=0&d=1\\ \hline
+A&0&1/16\\
+B&-1/16&0
+\end{array}.
+$$
+平稳律下，环到陷阱与陷阱到环的窗口均值均为零：环端位置给相应输出一个独立均匀平移。因此
+$$
+\mu q_{M,\delta,d}
+=\frac34\alpha_\delta\rho_{M,d}
+ +\frac14(1-\delta)\tau_M^s.
+$$
+代入 (113.1b)，得
+$$
+c_{M,\delta,d}=
+\begin{cases}
+t_s(1+\delta/3),&(M,d)=(A,0),(B,1),\\
+\alpha_\delta/16-t_s(1+\delta/3),&(M,d)=(A,1),(B,0).
+\end{cases}
+\tag{113.2s}
+$$
+由于 $1/256\le t_s<1/128$，第一行至少为 $1/256$；第二行在全区间至少为
+$$
+\frac5{96}-\frac7{768}=\frac{11}{256}.
+$$
+故这个子类共同满足已知原始裕量下界 $\gamma\ge1/256$；归一化窗口的裕量下界相应为 $1/512$。
+
+主实验前 $n$ 次转移均未入陷阱的概率为 $\alpha_\delta^n$。条件于该事件，环发射始终忽略 $H$；交叉方向 $(A,0)$ 与 $(B,1)$ 的主读数初值均匀、增量分别服从
+$R_+*R_-$、$R_-*R_+$，两者相同。因此完整无陷阱词律同为
+$$
+L_n(y_0,\ldots,y_n)
+=\frac13\prod_{u=1}^n
+ \left(\frac38\mathbf1_{\{y_u=y_{u-1}\}}
+       +\frac5{16}\mathbf1_{\{y_u\ne y_{u-1}\}}\right),
+\tag{113.2t}
+$$
+且不依赖 $s$。对应主记录律都支配 $\alpha_\delta^nL_n$。
+
+对含 $m\ge1$ 个标签的参考前缀，事件
+$H_0=\cdots=H_{m-1}=0$ 的概率为 $\frac12(1-s)^{m-1}$；条件于它，所有参考标签均为新独立均匀三元符号。令 $U_m$ 为该均匀乘积律、$h=(m-1)_+$，两模型的参考词律有
+$$
+Q_{A,m}^s\ge\frac12(1-s)^hU_m,\qquad
+Q_{B,m}^s\ge\frac12(1-s)^hU_m.
+\tag{113.2u}
+$$
+对 $m=0$，令 $U_0$ 为空词单位律，该式仍是有效的较松界。指数计量参考转移数，不把首个标签误算成一次转移。
+
+参考与主实验独立，故两交叉方向的增广律共同支配
+$$
+\frac12\left(1-\frac1{3k}\right)^n(1-s)^{(m-1)_+}
+   (U_m\otimes L_n).
+$$
+任意共同随机规则输出 $1$ 的条件概率记为 $\varphi$。两项交叉错误的积分函数分别是 $\varphi$ 与 $1-\varphi$，限制在该共同子测度上相加，便得[^rro113-testing]
+$$
+e^{A,s}_{0,k,n,m}+e^{B,s}_{1,k,n,m}
+\ge\frac12\left(1-\frac1{3k}\right)^n(1-s)^{(m-1)_+}.
+$$
+公平方向风险 $R^M=(e_0^M+e_1^M)/2$ 因而满足
+$$
+R^{A,s}_{k,n,m}+R^{B,s}_{k,n,m}
+\ge\frac14\left(1-\frac1{3k}\right)^n(1-s)^{(m-1)_+}.
+\tag{113.2v}
+$$
+额外提供 $k$、共同裕量下界和六态规模不改变这份下界。
+
+假设 (113.2b) 成立。固定 $s>0$，使用两模型的有限常数并令 $k\to\infty$，从 (113.2v) 得
+$$
+\frac{C_{A,s}+C_{B,s}}{n+1}
+\ge\frac14(1-s)^{(m_n-1)_+}.
+$$
+常数和不可能为零；于是
+$$
+(m_n-1)_+
+\ge\frac{\log(n+1)-\log[4(C_{A,s}+C_{B,s})]}
+         {-\log(1-s)}.
+\tag{113.2w}
+$$
+对每个固定 $s>0$，都有
+$$
+\liminf_{n\to\infty}\frac{m_n}{\log(n+1)}
+\ge\frac1{-\log(1-s)}.
+$$
+右侧在 $s\downarrow0$ 时无界，故 (113.2a) 必须成立。这里没有让传感器随最终长度变化：若预算比有有界子序列，先据其有限界选一个固定的小 $s$，再沿该子序列增长长度，就与 (113.2w) 矛盾。证毕。
+
+该必要性子类的漂移裕量有共同正下界，慢坐标的特征值 $1-2s$ 却可趋于一；障碍是长中性参考段上两模型的完整词律相同。主无陷阱记录同时在相反方向下同律，所以最坏 $k$ 不能补回缺失的校准区分。若额外限制 $s\ge s_0>0$，本下界只迫使固定常数倍的对数预算，不由此推出该受限类的充分性。结论不涉及自适应停止的期望参考预算、参考与主实验耦合、校准机制不匹配或传感器随 $k$ 改变。$m_n=0$ 已包含在同一界内，不需另设无校准命题。
+
+[^rro113-main]: [已发布 RRO 第 112 节](https://github.com/the-omega-institute/trureturing/blob/4894d2e99f93ea0fbad7938c39c9b0e804c7bf76/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，(112.2d)–(112.2i) 给有限记忆下的统一势、窗口与跨越块界、首次入陷阱结算和块对收缩。本节将真中心窗口 $(W-\tau)/2$ 代入这些既有局部估计，再证明估计偏移与扩大阈值的相容性；不另证产品链 Poisson 分解。
+
+[^rro113-poisson]: Jeffrey J. Hunter, [*Generalized inverses of Markovian kernels in terms of properties of the Markov chain*](https://arxiv.org/abs/1209.3533)，§2，给有限不可约链基本矩阵 $(I-T+\mathbf1\eta)^{-1}$。参考窗口的集中界使用 Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967；按模 $r+1$ 分组的有界鞅差方法同第 112 节。
+
+[^rro113-testing]: 共同子测度的二点检验法同第 105、112 节：两实验正确标签相反时，任意随机规则的两项错误和至少为一份共同子测度的总质量。(113.2v) 中的一个 $1/2$ 来自参考中性初态，另一个来自公平方向风险；只配对一组交叉方向，不能省略后者。
+
+## 113.99 追加锚
+
+## 114. 参考停止可用信息的期望预算分离
+
+**定义与假设 114.1（同一六态子类的两种停止接口）。** 沿用定义 113.1 的四态隐藏核、共同准备 $X_0=1$、独立平稳纯陷阱参考流，以及 (113.2q)–(113.2s) 的六态模型 $A_s,B_s$，其中 $0<s\le1/2$。写 $\delta=1/k$、$k\ge2$、$\alpha_\delta=1-\delta/3$，环坐标为 $\xi(1)=0,\xi(2)=1,\xi(3)=2$。另加入固定模型 $C$：传感器仍有六个状态，其核各行均为六态均匀律；发射完全忽略传感器，环上读数为 $-\xi(X)$，陷阱上每次发射新独立均匀三元符号。参考使用同一传感器和陷阱发射的独立副本，所以 $C$ 的参考标签为独立均匀三元序列。整个模型类为
+$$
+\mathcal M=\{C\}\cup\{A_s,B_s:0<s\le1/2\}.
+\tag{114.1a}
+$$
+共同已知接口仍为 $r=1,b=-1$ 和 $W(y,y')=J(y'-y)$，其中 $J(0)=0,J(+1)=1,J(-1)=-1$；可同时提供六态规模和未除以二的签名下界 $\gamma_0=1/256$。模型身份和 $s$ 不提供给规则。$A_s,B_s$ 的签名见 (113.2s)；$C$ 的基线为零，两个方向的签名均为 $\alpha_\delta/4\ge5/24$，故这些已知条件确在同一类上成立。[^rro114-owner]
+
+在同一条主无限记录和同一条独立参考无限记录上依次作出判断。每个当前长度 $N=n+1$ 先取得完整主前缀 $Y_{0:n}$，再决定该次判断使用的参考前缀。读取只揭示既有记录，不改变两过程的生成机制；已经取得的参考标签保存并复用。令 $U$ 为独立于两实验的公共随机种子，$T_n\in\mathbb N_0$ 为该次判断所用的参考前缀长度；停止记录包含 $(U,T_n,V_0,\ldots,V_{T_n-1})$，允许 $T_n=0$。参考专用停止要求 $T_n$ 是
+$$
+\mathcal F_t^V=\sigma(U,V_0,\ldots,V_{t-1}),\qquad t\ge0,
+\tag{114.1b}
+$$
+的停止时刻，共同停止函数只读取 $n$、已知接口和这些记录，不读取主记录、$k$ 或未知模型。主记录参与的停止则允许在同一滤过初始加入 $Y_{0:n}$。两种接口的最终分类器都可读取主记录、停止记录及 $k$，其随机化也可并入 $U$。要求在每个模型和每个 $n,k,d$ 下几乎必然停止；期望可以为无穷，不预先假设有限。若改用允许不停止的接口，则未给出答案必须计为错误，不能从风险分母删去。
+
+$T_n$ 可随 $n$ 下降；当前规则不使用已经取得但超出所需前缀的标签，也不使用这些额外标签来决定 $T_n$。若所需前缀尚未取得，则沿同一参考记录继续取得缺少的标签。实际累计取得的不同参考标签数为
+$$
+\mathcal T_n=\max_{0\le h\le n}T_h.
+\tag{114.1c}
+$$
+这一定义计量参考前缀的累计取得量，不把每次重读已有标签重复计费。
+
+**命题 114.2（同类上的超对数下界与对数上界）。** 在定义 114.1 的同一模型类上，两种接口有如下分离。
+
+(a) 任意共同参考专用停止和分类规则，若对每个固定 $M\in\mathcal M$ 都有有限常数 $C_M$，使
+$$
+\Pr^M_{d,k}(\Phi_n\ne d)\le C_M/N
+\qquad\text{对全部 }n\ge0,k\ge2,d\in\{0,1\},
+\tag{114.2a}
+$$
+则在固定模型 $C$ 的参考律下，
+$$
+\frac{\mathbb E_C T_n}{\log N}\longrightarrow+\infty
+\qquad(n\longrightarrow\infty).
+\tag{114.2b}
+$$
+此处 $\mathbb E_C T_n$ 与 $k,d$ 无关，因为停止不读取它们或主记录。
+
+(b) 存在一个不读取 $s$、模型身份、混合参数或未来主长度的共同主记录参与规则，在同一对无限记录上满足 $0\le T_n\le\mathcal T_n\le N$，且对每个固定 $M\in\mathcal M$ 存在有限 $C_M',D_M$，使
+$$
+\sup_{k\ge2,\ d\in\{0,1\}}\Pr^M_{d,k}(\Phi_n\ne d)
+ \le C_M'/N,
+\qquad
+\sup_{k\ge2,\ d\in\{0,1\}}\mathbb E^M_{d,k}\mathcal T_n
+ \le D_M\log(eN)
+\quad(n\ge0).
+\tag{114.2c}
+$$
+常数允许依赖固定模型；算法本身不读取这些常数。风险界对每个当前时点分别成立，不声称所有时点同时给出正确答案。
+
+**证明。** 先证 (a)。使用第 113 节已有的参考前缀子测度 (113.2u)，将其按停止长度分到互不相交的记录空间，而不把给定停止长度后的参考词误当作独立均匀词。具体地，对每个 $t\ge0$，共同停止事件可写成前缀函数 $\chi_{n,t}(u,v)\in\{0,1\}$；令 $U_t$ 是 $t$ 个独立均匀三元标签的律，$U_0$ 是空词单位律，种子律为 $\lambda$。两个停止参考律都支配
+$$
+\nu_{n,s}(t,du,dv)
+=\frac12(1-s)^{(t-1)_+}
+  \chi_{n,t}(u,v)\lambda(du)U_t(dv).
+\tag{114.2d}
+$$
+由于 $C$ 的参考恰为该均匀乘积律，且在 $C$ 下几乎必然停止，置 $\beta_s=-\log(1-s)$，这份子测度的总质量为
+$$
+\|\nu_{n,s}\|
+=\frac12\mathbb E_C(1-s)^{(T_n-1)_+}
+\ge\frac12\exp[-\beta_s\mathbb E_C T_n].
+\tag{114.2e}
+$$
+最后一步用 $(T_n-1)_+\le T_n$ 和 Jensen 不等式；若期望为无穷，右端解释为零，所需预算下界已经成立。这里使用停止事件在每个固定前缀上的可测性，不使用独立臂的预期采样次数 KL 公式。[^rro114-stopping]
+
+由 (113.2t)，交叉方向 $(A_s,0)$ 与 $(B_s,1)$ 的主记录律共同支配 $\alpha_\delta^n L_n$。参考专用停止及种子与主记录独立，所以两份增广实验共同支配 $\alpha_\delta^nL_n\otimes\nu_{n,s}$。沿用 (113.2v) 的共同质量检验界，令 $R^M_{k,n}=(\Pr^M_{0,k}(\Phi_n\ne0)+\Pr^M_{1,k}(\Phi_n\ne1))/2$，则公平方向风险满足
+$$
+R^{A_s}_{k,n}+R^{B_s}_{k,n}
+\ge\frac14\alpha_\delta^n
+       \exp[-\beta_s\mathbb E_C T_n].
+\tag{114.2f}
+$$
+最终分类器可以读取 $k$，并不影响同一个 $k$ 下的两点比较。把 (114.2a) 的常数增大到正数，先固定 $s$，再令 $k\to\infty$，得
+$$
+\mathbb E_C T_n
+\ge\frac{\log N-\log[4(C_{A_s}+C_{B_s})]}{-\log(1-s)}.
+\tag{114.2g}
+$$
+故对每个固定 $s>0$，预算比的下极限至少为 $1/[-\log(1-s)]$。令这些固定模型的参数 $s\downarrow0$，右侧无界，得到 (114.2b)。这利用的是风险统一于全部 $k$；没有断言任意一个固定 $k$ 自己就迫使该超对数预算，也没有令传感器随 $n$ 改变。
+
+以下构造 (b)。保留第 112 节的完整块日程，并给出两种主记录函数和一个参考符号检验。对 $r=1$，日程为
+$$
+B=64,\qquad L_j=2^j\ (j\ge0),\qquad \Delta_j=L_j+1,\qquad
+S_j=64(2^j-1+j).
+\tag{114.2h}
+$$
+第 $j$ 阶段含 $B$ 个连续 $\Delta_j$ 标签块，块首为 $S_j+a\Delta_j$，$0\le a<B$；每块含 $L_j$ 个评分窗口。全部规则只处理 $N$ 个主标签中的完整块，块与块不共享标签。
+
+在当前主长度 $N$，令
+$$
+K=2^{22},\qquad
+L_\circ(N)=\min\{2^j:2^j\ge K\log(eN)\}.
+\tag{114.2i}
+$$
+在本次计算中简写 $L_\circ=L_\circ(N)$。第一个主记录函数是 $C$ 筛选：按日程次序检查尺度 $L\ge L_\circ$ 的完整块，第一个满足
+$$
+\left|\sum_{t=v}^{v+L-1}W(Y_t,Y_{t+1})\right|>3L/32
+\tag{114.2j}
+$$
+的块即触发筛选；负分数报告方向 $0$，正分数报告方向 $1$。若没有这样的块，记为主筛漏。
+
+若主筛漏，再读参考。写
+$$
+S_t^V=\sum_{i=0}^{t-1}W(V_i,V_{i+1}),\qquad
+h_N(t)=\sqrt{32t\log(8N^2(t+1)^2)},\qquad t\ge1.
+\tag{114.2k}
+$$
+第一个严格满足 $|S_t^V|>h_N(t)$ 的时刻给出符号：正号选择 $A$，负号选择 $B$。$t$ 个窗口必须读取 $t+1$ 个标签；整个检验最多读取 $N$ 个标签，所以只检验 $1\le t\le N-1$。$N=1$ 时没有可检验窗口。
+
+若参考判出 $A/B$，令 $\epsilon=+1/-1$，使用第二个主记录函数：从尺度 $1$ 开始重读同一块日程，令
+$$
+\ell=3/1024,\qquad u=1/32.
+\tag{114.2l}
+$$
+在一个 $L$ 窗口块中，若 $\epsilon\sum W<\ell L$ 则声明 low；若 $\epsilon\sum W>uL$ 则声明 high；否则不声明，保留最后一次声明，初值固定为 low。$A$ 的 low/high 分别报告 $0/1$；$B$ 的 low/high 分别报告 $1/0$。严格阈值及未完成块都按上述规则处理，不输入 $s$ 或基线估计。若参考读满 $N$ 个标签仍未越界，改用第 112 节原函数 $\Psi_n^{W,1,-1}$ 报告方向。
+
+组合规则因此是：主筛选触发则立即报告并取 $T_n=0$；主筛漏则运行有上限的参考检验，取得符号时使用相应双阈值主函数，未取得时使用原函数 $\Psi_n^{W,1,-1}$。停止必然有限。下面分别核对符号安全性、两个主函数的风险和主筛漏的成本。
+
+参考符号安全性来自明确的潜状态条件漂移。令 $\mathcal F_t^-$ 包含隐藏和传感器路径到 $t$，以及严格早于 $t$ 的发射，不包含当前发射。对参考过程保留对应传感器部分。写 $W_t=W(Y_t,Y_{t+1})$，参考时改用 $V$；设 $q_t=\mathbb E[W_t\mid\mathcal F_t^-]$、$D_t=W_t-q_t$，则 $|D_t|\le2$、$\mathbb E[D_t\mid\mathcal F_t^-]=0$，且 $D_t$ 在 $\mathcal F_{t+2}^-$ 可测。按窗口起点奇偶分组，应用第 112 节使用的 Azuma 界，得任意 $L$ 窗口的一侧及双侧估计
+$$
+\Pr\!\left(\sum D_t\le-z\right)\le2e^{-z^2/(32L)},
+\qquad
+\Pr\!\left(\left|\sum D_t\right|\ge z\right)\le4e^{-z^2/(32L)}.
+\tag{114.2m}
+$$
+这些较松常数也覆盖奇数 $L$，对任意块首潜状态及发射前历史成立。停止检验本身只看可见标签；这里没有将可见分数和直接称为子鞅。[^rro114-concentration]
+
+写 $\epsilon_A=1,\epsilon_B=-1$ 和 $t_s=(1-s)/128$。在 $A_s,B_s$ 的纯陷阱参考中，逐传感器状态有
+$$
+q_{\rm ref}(z,h)
+=\epsilon_M\frac{1-s}{64}\mathbf1_{\{h=1\}},
+\qquad
+\tau_M=\epsilon_Mt_s,\qquad 1/256\le t_s<1/128.
+\tag{114.2n}
+$$
+事实上，$h=0$ 时当前均匀发射给均值零；$h=1$ 时，只有下一慢状态仍为 $1$ 且两次都选择确定发射 $-Z$ 才贡献，其系数为 $(1-s)/16$，快增量取反后的 $J$ 均值为 $\epsilon_M/4$。所以每个潜状态的正确符号条件均值非负。由 (114.2m)，固定 $t$ 的错符号越界概率至多 $1/[4N^2(t+1)^2]$；对全部 $t\ge1$ 求和小于 $1/(2N^2)$。在 $C$ 的参考下条件均值为零，两侧并集给任意符号越界概率小于 $N^{-2}$。
+
+对固定 $s$，(113.2h) 的参考 Poisson 界直接适用。取其中 $H_V\ge1$、$V_V=\max(H_V,2)$，以容差 $t_s/4$ 代入，得
+$$
+\Pr\!\left(\left|S_t^V/t-\epsilon_Mt_s\right|>t_s/4\right)
+\le6\exp[-t t_s^2/(2048V_V^2)]
+\quad(t\ge16H_V/t_s).
+\tag{114.2o}
+$$
+由于 $t_s\ge1/256$，存在绝对 $D$，使 $t\ge D\log(eN)$ 时 $h_N(t)\le t_st/2$；例如 $D=2^{31}$ 足够。在 $t=D\log(eN)$ 处用 $\log\log(eN)\le\log(eN)$ 核对，随后 $\log(8N^2(t+1)^2)/t$ 递减。若到 $t$ 尚未越界，则 $\epsilon_MS_t^V\le h_N(t)\le t_st/2$，其与均值的偏差严格大于 $t_s/4$。将有限 Poisson 起用长度合并到 $D_s\log(eN)$，记未截断越界窗口数为 $\tau_N^V$、$c_s=t_s^2/(2048V_V^2)>0$，遂有
+$$
+\Pr(\tau_N^V>t)\le6e^{-c_st}
+\quad(t\ge D_s\log(eN)),\qquad
+\mathbb E(\tau_N^V+1)
+\le2+D_s\log(eN)+\frac6{1-e^{-c_s}}.
+\tag{114.2p}
+$$
+因此参考检验的期望标签数为 $O_s(\log(eN))$。当 $N-1\ge D_s\log(eN)$ 时，截断未判出的概率指数小；剩余有限多个 $N$ 用概率一吸收，便得所有 $N$ 的截断未判出概率不超过 $C_s/N$。符号安全界统一于 $s$，期望和漏检常数则允许依赖固定 $s$。
+
+现在核对双阈值主函数。在真模型的 $\epsilon_M\sum W$ 中，纯环均值 $\rho$ 为 low 的 $0$ 或 high 的 $1/16$。将 (113.2g) 乘回二并加回基线，普通块精确变成
+$$
+\epsilon_M\sum_{t=v}^{v+L-1}W(Y_t,Y_{t+1})
+=v_{\delta,s,\rho}A_L+t_s(L-A_L)+R_L,
+\qquad
+v_{\delta,s,\rho}=\alpha_\delta\rho-\delta t_s/3,
+\tag{114.2q}
+$$
+其中 $A_L$ 是隐藏环占用窗口数。既有势范数仍对全部 $0<\delta\le1/2$ 一致有限，可依赖固定 $s$；$R_L$ 只有相应固定倍数变化。特别地，
+$$
+v_{\rm low}\le0,
+\qquad
+v_{\rm high}\ge5/96-1/768=13/256.
+$$
+设 (114.2q) 中无残差的漂移为 $D_L$。四个所需间隔是
+$$
+\begin{array}{lll}
+\text{low，任意占用:}&D_L\le L/128,&uL-D_L\ge3L/128;\\
+\text{high，任意占用:}&D_L\ge L/256,&D_L-\ell L\ge L/1024;\\
+\text{low，}A_L\ge2L/3:&D_L\le L/384,&\ell L-D_L\ge L/3072;\\
+\text{high，}A_L\ge2L/3:&D_L\ge13L/384,&D_L-uL\ge L/384.
+\end{array}
+\tag{114.2r}
+$$
+环起点的既有占用估计 $\mathbb EA_L\ge3L/4$ 给 $\Pr(A_L\ge2L/3)\ge1/4$。由产品 Poisson 和窗口尾界，固定 $s$ 后在充分大尺度上，可令相对于上述全部线性间隔的坏残差概率至多 $L^{-4}\le1/8$。于是普通块错宣概率至多 $L^{-4}$，环起点正确声明概率至少 $1/8$。纯环块的漂移为 $\rho L$，故不作正确声明的概率也至多 $L^{-4}$。
+
+条件于首次入陷阱时刻，跨越块仍按第 112、113 节分为纯环前段、原核后段和至多一个跨越窗口，传感器不重置。前段漂移为 $0$ 或 $L_-/16$，后段用 (114.2q)。low 的总漂移不超过 $t_sL+O_s(1)$，high 不小于 $t_sL-O_s(1)$；固定的势端点和跨越损失由 (114.2r) 的线性间隔在充分大尺度吸收。由两段的既有尾界，条件跨越块错宣概率同样至多 $L^{-4}$，没有把跨越块当作齐次核。
+
+为明确完整长度的结算，取上述全部局部界成立的二进制起用尺度 $\bar L=2^{j_*}$。日程给 $G=192,F=384$，且
+$$
+S_{j+1}\le GL_j,\qquad S_j\ge BL_j/2\ (j\ge1);
+\quad\text{最后完整块尺度 }L\text{ 满足其前缀长度 }<FL.
+\tag{114.2s}
+$$
+条件于首次入陷阱时刻 $m$，陷阱前最后完整纯环块一旦宣对，后续错误只能来自错宣；每尺度至多 $B$ 块。依照 (113.2m) 的同一求和，晚尺度用 $L^{-4}\le L^{-2}$，早尺度用概率一，得到有限 $a_s,b_s$，使两个传感器和两个方向的双阈值函数错误率都满足
+$$
+\varepsilon_s(N,\delta)\le a_s/N^2+b_s\delta.
+\tag{114.2t}
+$$
+这里的首次入陷阱分布仍为 $\Pr(\tau_X=m)=\alpha_\delta^{m-1}\delta/3$，条件界为常数乘 $m^{-2}$，故其和确为常数乘 $\delta$。
+
+当 $j\ge j_*$ 且 $\delta(L_j+1)\ge1$，每对块的第二块起点在环上的条件概率大于 $1/2$，因而第二块正确声明概率至少 $1/16$。直接用此事件上界“两块均无声明”，不先条件于第一块失败。逐对条件化给全阶段无声明概率至多 $(15/16)^{32}<1/4$，所以阶段错误满足
+$$
+e_{j+1}\le e_j/4+B L_j^{-4}.
+\tag{114.2u}
+$$
+未达起用尺度用概率一；已达起用尺度但 $\delta(L_j+1)<1$ 时，由 (114.2t) 和 $\delta<1/L_j$ 得 $e_j\le C_s/L_j$。若首个收缩阶段晚于起用尺度，其前一阶段给 $\delta<2/L_j$，仍由 (114.2t) 取得同一形式的初界；若恰在起用尺度则用概率一。增大常数使之至少为 $4B$，(114.2u) 归纳给全部阶段 $e_j\le C_s/L_j$；部分阶段只另加 $B L_j^{-4}$。由 (114.2s)，双阈值主函数对全部 $N,k,d$ 有 $C_s'/N$ 风险。这复用的是既有局部到整体结算，并非声称原单阈值函数已经是这里的双阈值函数。
+
+接着核对主筛选。$A_s,B_s$ 的主窗口在每个潜状态上满足
+$$
+|q_{\rm main}(x,z,h)|\le1/16.
+\tag{114.2v}
+$$
+环到环的隐藏增量与快传感器增量卷积均值为 $0$ 或 $\pm1/16$。环到陷阱只有陷阱确定发射分支可能贡献，其权重至多 $1/4$；快核是 $3/4$ 均匀律加 $1/4$ 点质量，任意相位下的剩余 $J$ 均值绝对值至多 $1/4$。陷阱到环的目的环坐标均匀，均值零；陷阱自环由 (114.2n) 的计算至多 $1/64$。对下一隐藏状态作凸组合即得 (114.2v)，不需要当前环坐标平稳。
+
+因此 (114.2j) 的误筛 $C$ 与条件漂移相距至少 $L/32$，(114.2m) 给每块误筛概率至多 $4e^{-L/32768}$。完整块总数不超过 $N$，由所选 $L_\circ$，
+$$
+\Pr_{A_s/B_s}(\text{误筛 }C)
+\le4N e^{-L_\circ/32768}
+\le4e^{-128}N^{-127}\le N^{-2}.
+\tag{114.2w}
+$$
+这统一于 $s,k,d$。
+
+在 $C$ 中逐隐藏状态精确有
+$$
+(-1)^{d+1}q_C(x)=\frac{\alpha_\delta}{4}\mathbf1_{\{x\ne0\}}.
+\tag{114.2x}
+$$
+环内给 $-\xi$ 的正确方向均值 $\alpha_\delta/4$，其余含均匀陷阱输出或均匀目的环坐标的项均为零。因此错向筛选有同一个 $N^{-2}$ 上界。从环起点出发，$\Pr(A_L\ge L/2)\ge1/2$；该事件上的正确有向漂移至少 $5L/48$，超过阈值 $3L/32$ 的间隔为 $L/96$。由 (114.2m)，坏残差概率至多 $2e^{-L/294912}$；$L\ge L_\circ$ 和所选 $K$ 使之小于 $1/4$。故从任意环起点及过去出发，每个测试块正确筛选的概率至少 $1/4$。
+
+为控制累计参考成本，先把筛选截止暂取为任意固定二进制尺度 $L\ge K$。令 $H_L\in\mathbb N\cup\{+\infty\}$ 是第一个满足 (114.2j)、且块尺度至少为 $L$ 的完整块完成时的主标签数；没有触发时取无穷。写
+$$
+z(M,\delta;L)=\Pr_C(H_L>M).
+$$
+辅助主长度 $M$ 变化时不重选截止 $L$。在条件纯环路径上，$C$ 的正确有向均值为 $1/4$，所以尺度为 $\lambda$ 的完整测试块未筛出的概率至多 $4e^{-c\lambda}$，可取 $c=1/32768$。若首次入陷阱时刻 $m\ge FL$，其前最后完整块的尺度大于 $m/F\ge L$，故条件筛漏概率至多 $4e^{-cm/F}$；较早的 $m$ 用概率一。若到长度 $M\ge FL$ 仍未入陷阱，最后完整块同理。用首次入陷阱分布求和并丢掉其 $\alpha_\delta$ 因子，得
+$$
+z(M,\delta;L)
+\le4e^{-cM/F}+C_1\delta L\quad(M\ge FL),
+\qquad
+C_1=\frac F3+\frac4{3(1-e^{-c/F})}.
+\tag{114.2y}
+$$
+前 $FL$ 个可能入陷阱时刻贡献至多 $F\delta L/3$，其后的指数尾和贡献常数乘 $\delta$，因 $L\ge1$ 并入所写项。此处没有 $\delta L^2$ 损失，也没有假设入陷阱时刻与筛漏独立。
+
+令 $L_{j_L}=L$、$z_j=z(S_j,\delta;L)$。若 $j\ge j_L$ 且 $\delta(L_j+1)\ge1$，每对块第二块正确筛选的条件概率至少 $1/8$；逐对条件化，得
+$$
+z_{j+1}\le qz_j,\qquad q=(7/8)^{32}<1/4.
+\tag{114.2z}
+$$
+这里“尚未筛出”单调，所以没有最后声明算法的附加错宣项。要估计首次筛选的期望，保留 (114.2y) 的指数项和 $\delta L$ 项，直接求尾和。置
+$$
+j_\delta=\min\{j\ge0:\delta(L_j+1)\ge1\},\qquad
+J=\max(j_L,j_\delta),\qquad a_*=c/F,\quad b_*=cB/(2F).
+\tag{114.2ad}
+$$
+因为 $\delta>0$，$j_\delta$ 有限。若 $J=j_L$，收缩前尾和至多 $S_J\le GL$，且 $L_Jz_J\le L$。若 $J>j_L$，则前一阶段不满足收缩条件，故 $\delta L_J<2$。当 $S_J<FL$ 时，收缩前尾和至多 $FL$；由 $S_J\ge BL_J/2$，又有 $L_Jz_J\le L_J<12L$。当 $S_J\ge FL$ 时，将尾和在 $FL$ 处分开，用概率一处理早段，(114.2y) 给
+$$
+\begin{aligned}
+\sum_{M=0}^{S_J-1}z(M,\delta;L)
+&\le FL+\frac4{1-e^{-a_*}}+C_1\delta L S_J
+ \le C_2L,\\
+L_Jz_J
+&\le4L_Je^{-b_*L_J}+C_1\delta LL_J
+ \le\frac4{e b_*}+2C_1L\le C_3L.
+\end{aligned}
+\tag{114.2ae}
+$$
+第一行用了 $S_J\le GL_J$ 和 $\delta L_J<2$；第二行用了 $S_J\ge BL_J/2$ 及 $x e^{-b_*x}\le1/(e b_*)$。将前述 $J=j_L$ 和 $S_J<FL$ 的界并入 $C_2,C_3$，这两个估计对全部起用顺序都成立，常数与 $\delta,d,L$ 无关。
+
+从 $J$ 起，(114.2z) 给 $z_{J+r}\le q^rz_J$。每阶段标签数为 $B(L_j+1)\le2BL_j$，阶段内 $z(M,\delta;L)$ 只会下降。非负整值变量的尾和公式遂给
+$$
+\begin{aligned}
+\mathbb E^C_{d,k}H_L
+&=\sum_{M\ge0}z(M,\delta;L)\\
+&\le C_2L+2BL_Jz_J\sum_{r\ge0}(2q)^r
+ \le\left(C_2+\frac{2BC_3}{1-2q}\right)L=:C_4L.
+\end{aligned}
+\tag{114.2af}
+$$
+因此 $H_L$ 几乎必然有限，且其期望统一于 $k,d$。这里仅需 $L\ge K$，不将大尺度的筛选成功率用于更小尺度。回到当前截止 $L_\circ(N)$，Markov 不等式也给
+$$
+\sup_{k,d}\Pr_C(\text{主筛漏})
+\le C_4L_\circ(N)/N,
+\qquad
+L_\circ(N)<2K\log(eN).
+\tag{114.2aa}
+$$
+该界覆盖尚无完整测试块的长度；这时右侧可以大于一。但累计成本使用的是更强的 (114.2af)，不能只将 $O(L/M)$ 的筛漏界求和。
+
+现将全部当前长度放在同一对无限记录上。对每个 $m\ge1$，用 (114.2k) 中的 $m$ 代替 $N$ 定义未截断越界窗口数 $\tau_m^V$。算法的实际所需前缀长度满足逐路径恒等式
+$$
+T_{m-1}
+=\mathbf1_{\{H_{L_\circ(m)}>m\}}
+  \min\{m,\tau_m^V+1\}.
+\tag{114.2ag}
+$$
+$L_\circ(m)$ 随 $m$ 非递减，而主筛选阈值只依赖块尺度，故 $m\le N$ 时 $H_{L_\circ(m)}\le H_{L_\circ(N)}$。若 $T_{m-1}>0$，必有 $m<H_{L_\circ(N)}$。另一方面，参考边界 $h_m(t)$ 随 $m$ 非递减，所以 $\tau_m^V\le\tau_N^V$，不论首先越过的是哪一侧。因而对每条路径都有
+$$
+\mathcal T_n=\max_{1\le m\le N}T_{m-1}
+\le\min\{N,H_{L_\circ(N)},\tau_N^V+1\},
+\qquad N=n+1.
+\tag{114.2ah}
+$$
+无穷越界时刻按通常扩展实数约定处理，右侧仍不超过 $N$。
+
+这组规则无需未来长度即可执行：在当前 $m$ 取得主前缀后，先做当前筛选；若需要参考，则用保存的标签检查当前边界，只在前缀不足时继续取得标签。已经取得但超出本次所需前缀的标签不参与本次输出或停止判断。于是累计取得量正是 (114.1c)，每个时点的输出仍是前面分析的同一个记录函数。
+
+最后合并风险和成本。在概率空间上预先生成完整独立参考路径，即使主筛选取消读取，也保留其符号检验用于事件上界。在 $C$ 下，最终错误包含于“主筛选错向”“参考误触任一符号”“原函数 $\Psi_n^{W,1,-1}$ 错误”的并集。第三项直接由 (112.2a) 控制，因为 $C$ 的陷阱基线零、签名 $\alpha_\delta/4>0$。所以风险至多 $2N^{-2}+C_C/N$。主筛漏本身不是方向错误，只决定当前是否使用参考；由 (114.2af) 和 (114.2ah)，
+$$
+\mathbb E^C_{d,k}\mathcal T_n
+\le\mathbb E^C_{d,k}H_{L_\circ(N)}
+\le C_4L_\circ(N)=O(\log(eN)),
+\tag{114.2ab}
+$$
+统一于 $k,d$。
+
+在 $A_s,B_s$ 下，最终错误包含于“误筛 $C$”“参考错符号”“参考截断仍未判出”“使用真实 $\epsilon_M$ 的双阈值主函数错误”的并集；四项分别由 (114.2w)、符号安全界、(114.2p) 的截断尾及 (114.2t)–(114.2u) 的结算控制，故总风险为 $O_s(1/N)$。最后一项是完整主记录上的确定函数错误，不需要声称它在筛漏或参考宣对条件下仍有同样的条件风险。累计取得量由 (114.2ah) 逐路径控制，故由 (114.2p)，
+$$
+\mathbb E^{A_s/B_s}_{d,k}\mathcal T_n
+\le\mathbb E_{A_s/B_s}\min\{\tau_N^V+1,N\}
+=O_s(\log(eN)).
+\tag{114.2ac}
+$$
+这些错误事件不要求相互独立。有限早期长度用概率一和 $\mathcal T_n\le N$ 吸收到固定模型常数中，证明 (114.2c)。证毕。
+
+分离发生在停止可读取的信息上：参考专用规则的共同停止测度由固定 iid 参考模型 $C$ 的期望控制；主记录参与规则先用完整主记录决定是否跳过参考。交叉方向的共同主律 $L_n$ 与实际 $C$ 的主律不同，不能把两者下的停止期望等同。构造只用了这份六态子类的逐潜状态符号、共同 $1/16$ 漂移界、基线区间及 $C$ 的更强环信号，不推广为全部未知有限 HMM 的自适应校准定理。累计界只计保存复用同一参考前缀时取得的标签，不计主标签、计算、存储或物理等待时间，也不提供较小的实用常数；每时点的边缘风险界不推出全时同时正确或仅有有限次错误。
+
+[^rro114-owner]: [已发布 RRO 第 113 节](https://github.com/the-omega-institute/trureturing/blob/d61414584006c6e504bbc8d31ca261f6a4f70196/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，(113.2q)–(113.2s) 定义慢门六态子类并核对共同原始裕量，(113.2t)–(113.2u) 给两份完整前缀子测度，(113.2g)–(113.2h) 给主过程和参考的 Poisson—窗口分解。[已发布 RRO 第 112 节](https://github.com/the-omega-institute/trureturing/blob/4894d2e99f93ea0fbad7938c39c9b0e804c7bf76/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 给原主函数、统一势、跨越块、首次入陷阱结算和块对收缩。本节保留这些结果的归属，另核对停止信息、双阈值和固定筛选尺度所需的条件；累计成本使用非负整值变量的标准尾和公式及逐路径比较，不另引新的概率原理。
+
+[^rro114-stopping]: 按停止事件分割有限记录，再应用凸性，是标准停止实验论证。参见 Emilie Kaufmann、Olivier Cappé、Aurélien Garivier, [*On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*](https://www.jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf), JMLR **17** (2016)，Lemma 18、Appendix A.3 的停止似然分割及 Lemma 19 的 Jensen 步骤；本文只使用已明确写出的前缀子测度分割，不将独立抽臂的期望次数散度恒等式移用于有记忆参考流。
+
+[^rro114-concentration]: Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967。这里按奇偶窗口分组，是 (112.2e) 的同一方法。固定模型的参考均值集中直接引用 (113.2h)；一般隐 Markov 集中的混合依赖另见 Daniel Paulin, [*Concentration inequalities for Markov chains by Marton couplings and spectral methods*](https://arxiv.org/abs/1212.2015v5), Corollary 2.17。后者不向未知模型规则免费提供混合证书；本节的任意时符号安全性来自 (114.2n) 的显式条件漂移。
+
+## 114.99 追加锚
+
+## 115. 主记录参与校准停止时的固定模型超对数障碍
+
+**定义与假设 115.1（18 态相容子类与全部参考计费）。** 沿用已发布第 113 节的四态隐藏核 \(K_{\delta,d}\)、共同准备 \(X_0=1\) 和独立平稳纯陷阱参考接口，写
+\[
+\delta=1/k,\qquad k\ge2,\qquad
+\alpha_\delta=1-\delta/3,\qquad
+\xi(1)=0,\ \xi(2)=1,\ \xi(3)=2.
+\tag{115.1a}
+\]
+环坐标与读数均在 \(\mathbb Z/3\mathbb Z\) 中运算。按增量次序 \(0,+1,-1\)，令
+\[
+R_-=(1/4,1/4,1/2),\qquad R_+=(1/4,1/2,1/4).
+\tag{115.1b}
+\]
+传感器有两个独立快坐标 \(Z_-,Z_+\)，分别按增量律 \(R_-,R_+\) 作随机游走，再加一个独立坐标 \(H\in\{0,1\}\)，共 \(18\) 个状态。三坐标初态独立均匀；整个传感器过程独立于隐藏过程。
+
+固定模型 \(C^\star\) 的 \(H\) 每步独立均匀刷新；模型 \(B_s^\star\) 的 \(H\) 使用
+\[
+P_s=\begin{pmatrix}1-s&s\\s&1-s\end{pmatrix},
+\qquad 0<s\le1/2.
+\tag{115.1c}
+\]
+写 \(z=(z_-,z_+,h)\)，两类发射行为
+\[
+\begin{aligned}
+E^{C^\star}_{x,z}(y)
+&=
+\begin{cases}
+\mathbf1_{\{y=\xi(x)+z_-\}},&x\ne0,\\
+\frac14+\frac14\mathbf1_{\{y=-z_-\}},&x=0;
+\end{cases}\\
+E^{B_s^\star}_{x,z}(y)
+&=
+\begin{cases}
+\mathbf1_{\{y=\xi(x)+z_+\}},&x\ne0,\\
+\frac14+\frac14\mathbf1_{\{y=-z_-\}},&x=0,\ h=0,\\
+\frac16+\frac12\mathbf1_{\{y=-z_+\}},&x=0,\ h=1.
+\end{cases}
+\end{aligned}
+\tag{115.1d}
+\]
+给定完整潜路径，各时刻发射独立。参考使用同一传感器和发射的独立平稳副本，隐藏状态恒为陷阱 \(0\)，与主实验的全部随机量独立。模型类记为
+\[
+\mathcal M^\star=\{C^\star\}\cup
+ \{B_s^\star:0<s\le1/2\}.
+\tag{115.1e}
+\]
+\(C^\star\) 不含参数 \(s\)；每个固定模型的传感器和发射均不随 \(n,k,d\) 改变。
+
+共同已知评分接口为 \(r=1,b=-1\) 和
+\[
+W(y,y')=J(y'-y),\qquad
+J(0)=0,\quad J(+1)=1,\quad J(-1)=-1.
+\tag{115.1f}
+\]
+规则还可取得传感器状态数 \(18\) 与原始校准签名下界 \(\gamma_0=1/256\)；下面验证全部模型确实满足这些共同条件。模型身份、\(s\)、传感器核、发射行及真实陷阱基线不提供给规则。
+
+在当前主长度 \(N=n+1\)，完整主前缀 \(Y_{0:n}\) 已取得，不计入参考成本。给定独立于两实验的公共随机种子 \(U\)，同一规则族的参考停止时刻 \(T_{n,k}\in\mathbb N_0\) 可以读取 \(n,k\)、共同已知接口、主前缀和已取得的参考前缀；即相对于
+\[
+\mathcal F^{n,k}_t
+=\sigma(U,Y_{0:n},V_0,\ldots,V_{t-1}),\qquad t\ge0,
+\tag{115.1g}
+\]
+停止，且最终输出 \(\Phi_{n,k}\in\{0,1\}\) 对停止记录可测。分类随机化可并入 \(U\)。要求各模型及全部 \(n,k,d\) 下几乎必然停止，不预先假设期望有限。
+
+\(T_{n,k}\) 按取得的不同参考标签数计费，\(T_{n,k}=0\) 表示空参考记录。若在同一条无限参考记录上进行多次决策并保存旧标签，则 \(T_{n,k}\) 计截至当前决策累计取得的整个参考前缀；所有可访问旧参考信息均在该前缀内并计费，重读同一标签不重复收费。读取记录不改变两过程的生成机制，不允许另用未计费参考信息或未来主标签。[^rro115-interface]
+
+**命题 115.2（主信息可用时仍成立的构造性反例）。** 定义 115.1 的全部模型满足第 113 节的相容性条件，传感器核严格正、平稳律均为 \(18\) 态均匀律，未除以二的原始签名共同下界实际为 \(3/256\)。
+
+对任意上述共同规则族，若每个固定 \(M\in\mathcal M^\star\) 都有 \(1\le C_M<\infty\)，使
+\[
+\Pr^M_{d,k}(\Phi_{n,k}\ne d)\le C_M/N
+\qquad(n\ge0,\ k\ge2,\ d=0,1),
+\tag{115.2a}
+\]
+则同一个固定模型 \(C^\star\) 满足
+\[
+\frac{\mathbb E^{C^\star}_{0,2n}T_{n,2n}}
+     {\log(n+1)}
+\longrightarrow+\infty,
+\qquad
+\frac{\sup_{k\ge2}\mathbb E^{C^\star}_{0,k}T_{n,k}}
+     {\log(n+1)}
+\longrightarrow+\infty.
+\tag{115.2b}
+\]
+第一式按 \(n\ge1\) 理解。更明确地，对每个固定 \(s\in(0,1/2]\)，令
+\[
+\beta_s=-\log(1-s),\qquad
+D_s=C_{C^\star}+C_{B_s^\star},\qquad
+w_{k,n}=\alpha_\delta^n.
+\]
+则全部 \(n\ge0,k\ge2\) 均有扩展实数意义的有限长度界
+\[
+\boxed{
+\mathbb E^{C^\star}_{0,k}T_{n,k}
+\ge
+\frac{w_{k,n}}{\beta_s}
+\log\frac{Nw_{k,n}}{2D_s}.}
+\tag{115.2c}
+\]
+因此不存在同时适用于整个第 113 节相容类的共同规则，在保持每模型统一 \(n,k,d\) 的 \(O_M(1/N)\) 风险时，还使每个固定模型都具有统一 \(k,d\) 的 \(O_M(\log(eN))\) 期望参考成本；即使停止可用完整主前缀和 \(k\)，并已知上述状态数与正签名下界，也不成立。
+
+**证明。** 两个快核的每项严格正、均匀平稳。\(C^\star\) 的慢核各行均为 \((1/2,1/2)\)，每个允许参数的 \(P_s\) 也严格正、均匀平稳。故 \(18\) 态产品核严格正且具有所声明的平稳律。发射行逐行归一化，主与参考的独立性由构造给出。
+
+先核对基线与签名。陷阱发射中，只要一个端点选择新独立均匀符号，该窗口的评分均值就为零；两端均选择确定发射时，
+\[
+\mathbb E J(-\Delta Z_-)=1/4,\qquad
+\mathbb E J(-\Delta Z_+)=-1/4.
+\]
+所以
+\[
+\tau_{C^\star}=\frac{(1/4)^2}{4}=\frac1{64}.
+\tag{115.2d}
+\]
+在 \(B_s^\star\) 的平稳参考中，相邻慢状态同为 \(0\) 或同为 \(1\) 的概率各为 \((1-s)/2\)。跨慢状态时，两端确定发射使用不同的独立均匀快坐标，平稳平均的评分为零。因此
+\[
+\tau_{B_s^\star}
+=\frac{1-s}{2}
+ \left(\frac{(1/4)^2}{4}-\frac{(1/2)^2}{4}\right)
+=-\frac{3(1-s)}{128}.
+\tag{115.2e}
+\]
+这里的跨慢状态消去只在平稳平均后成立，不是逐潜状态消去。负的 \(\tau_{B_s^\star}\) 也不是逐潜状态负漂移：例如当前 \(H=0\)、\(z_--z_+=1\) 时，参考窗口的条件均值为 \((1-s)/64>0\)。后续下界不使用逐状态漂移符号。
+
+两个方向的隐藏纯环增量为 \(R_+,R_-\)。与各自环发射的快增量卷积，得到
+\[
+\begin{array}{c|cc}
+\rho_{M,d}&d=0&d=1\\ \hline
+C^\star&0&1/16\\
+B_s^\star&-1/16&0.
+\end{array}
+\tag{115.2f}
+\]
+例如 \(R_\pm=(3/4)\operatorname{unif}_3+(1/4)\delta_{\pm1}\)，异号卷积的评分为零，同号卷积的确定分支权重为 \(1/16\)，给出表中另外两项。
+
+在四态均匀律与传感器均匀律的乘积 \(\mu\) 下，环到陷阱的分项对当前均匀环坐标求平均后为零；陷阱到环则由目标环坐标均匀而为零。该平均保留传感器两时刻的相关性。故
+\[
+\mu q_{M,\delta,d}
+=\frac34\alpha_\delta\rho_{M,d}
+ +\frac14(1-\delta)\tau_M,
+\qquad
+c_{M,\delta,d}
+=(-1)^{d+1}
+\left[\alpha_\delta\rho_{M,d}-(1+\delta/3)\tau_M\right],
+\tag{115.2g}
+\]
+其中第二式是第 113 节原始校准签名在 \(b=-1\) 下的表达。令 \(\theta_s=3(1-s)/128\in[3/256,3/128)\)，四分支为
+\[
+\begin{array}{c|c|c}
+(M,d)&c_{M,\delta,d}&
+\text{全部 }0\le\delta\le1/2,\ 0<s\le1/2\text{ 下的界}\\ \hline
+(C^\star,0)&(1+\delta/3)/64&\ge1/64\\
+(C^\star,1)&\alpha_\delta/16-(1+\delta/3)/64&\ge13/384\\
+(B_s^\star,0)&\alpha_\delta/16-(1+\delta/3)\theta_s&>19/768\\
+(B_s^\star,1)&(1+\delta/3)\theta_s&\ge3/256.
+\end{array}
+\tag{115.2h}
+\]
+前两项由关于 \(\delta\) 的线性式直接取得；第三项关于 \(\delta\) 递减、关于 \(s\) 递增，下确界为
+\[
+\frac5{96}-\frac76\frac3{128}=\frac{19}{768},
+\]
+仅在 \(s\downarrow0,\delta=1/2\) 时逼近。最后一项在延拓签名域的 \(s=1/2,\delta=0\) 处等于 \(3/256\)。所以原始签名的共同下界为 \(3/256>1/256\)；真中心分数 \((W-\tau_M)/2\) 的下界相应为 \(3/512\)，不与原始签名混同。
+
+接着保留完整词律。令 \(G_{k,n}\) 为主隐藏链前 \(n\) 次转移均未入陷阱的事件。在交叉方向 \((C^\star,0)\)、\((B_s^\star,1)\) 下，
+\[
+\Pr(G_{k,n})=w_{k,n}=\alpha_\delta^n.
+\]
+条件于该事件，环发射均忽略 \(H\)，初始读数均匀，后续独立增量分别服从 \(R_+*R_-\) 和 \(R_-*R_+\)。两卷积相同，因此完整主词律均为
+\[
+L_n(y_0,\ldots,y_n)
+=\frac13\prod_{i=1}^n
+\left(
+\frac38\mathbf1_{\{y_i=y_{i-1}\}}
++\frac5{16}\mathbf1_{\{y_i\ne y_{i-1}\}}
+\right),
+\tag{115.2i}
+\]
+即已发布第 113 节的无陷阱词律。它不依赖 \(k,s\)。条件化只涉及主隐藏路径，独立参考和种子仍与该主词独立。[^rro115-main]
+
+记 \(Q_{C^\star,t}\)、\(Q_{B_s^\star,t}\) 为 \(t\) 个参考标签的完整词律。对 \(t\ge1\)，\(B_s^\star\) 参考中的事件
+\[
+H_0=\cdots=H_{t-1}=0
+\]
+有概率 \(\frac12(1-s)^{t-1}\)，且与两个完整快路径和发射随机化独立。条件于它，每时刻使用的发射行均等于 \(C^\star\) 的陷阱发射，所用 \(Z_-\) 的完整平稳路径律也相同。因此对每个完整词 \(v\)，
+\[
+\Pr_{B_s^\star}(H_0=\cdots=H_{t-1}=0,\ V_{<t}=v)
+=\frac12(1-s)^{t-1}Q_{C^\star,t}(v).
+\]
+于是全部 \(t\ge0\) 均有统一子测度界
+\[
+Q_{B_s^\star,t}\ge a_t Q_{C^\star,t},
+\qquad
+a_t=\frac12(1-s)^{(t-1)_+}.
+\tag{115.2j}
+\]
+\(t=0\) 时两边空词律均有质量一，\(a_0=1/2\) 只是较松系数，不等于空慢状态事件的真实概率。\(t\ge1\) 的指数 \(t-1\) 计慢状态转移数。此处 \(Q_{C^\star,t}\) 保留全部参考相关性，不能换成 iid 均匀词；例如其非零基线 (115.2d) 已排除后一解释。
+
+固定 \(n,k,s\)，简记 \(w=w_{k,n}\)、\(T=T_{n,k}\)，并记 \(e^M_{d,k,n}=\Pr^M_{d,k}(\Phi_{n,k}\ne d)\)。令 \(\widetilde P_C,\widetilde P_B\) 为两实际交叉实验条件于 \(G_{k,n}\) 的可见实验：主词为共同 \(L_n\)，种子为共同律 \(\lambda\)，独立参考分别为 \(Q_{C^\star}\)、\(Q_{B_s^\star}\)，再运行原来的同一个停止与分类函数。实际几乎必然终止且 \(w>0\)，故条件实验也几乎必然终止。其错率和 \(C^\star\) 的条件参考成本满足
+\[
+\widetilde e_C\le\frac{C_{C^\star}}{Nw},\qquad
+\widetilde e_B\le\frac{C_{B_s^\star}}{Nw},\qquad
+m_{n,k}:=\widetilde{\mathbb E}_C T,\qquad
+\mathbb E^{C^\star}_{0,k}T\ge w\,m_{n,k}.
+\tag{115.2k}
+\]
+前两项是条件风险除以事件质量，最后一项是非负实际成本乘回该质量。\(m_{n,k}\) 可以依赖 \(n,k\)，但因 \(C^\star,L_n\) 和共同规则均固定而不依赖 \(s\)。
+
+停止时刻的可测性给出共同的停止叶函数
+\(\chi_{n,k,t}(y,u,v)\in\{0,1\}\)，表示看到主词 \(y\)、种子 \(u\) 和参考词 \(v\in\{0,1,2\}^t\) 后恰在 \(t\) 停止，已包含此前未停的条件。在互不相交的有限停止层上定义
+\[
+\nu_{s,n,k}(dy,du,t,v)
+=w\,a_t\,\chi_{n,k,t}(y,u,v)
+ L_n(dy)\lambda(du)Q_{C^\star,t}(v).
+\tag{115.2l}
+\]
+实际 \(C^\star,0\) 律先支配 \(w\widetilde P_C^{\rm stop}\)，再由 \(a_t\le1\) 支配 \(\nu\)；实际 \(B_s^\star,1\) 律由相同条件化及 (115.2j) 也支配 \(\nu\)。停止对主词和 \(k\) 的依赖始终保留在同一个 \(\chi\) 内，没有把停止后的两份记录重新当作独立。
+
+由于 \(\widetilde P_C\) 几乎必然有限停止，共同子测度的总质量为
+\[
+\|\nu_{s,n,k}\|
+=\frac w2\,\widetilde{\mathbb E}_C(1-s)^{(T-1)_+}.
+\tag{115.2m}
+\]
+在同一个停止记录上，两项交叉错误的指示量之和为一。限制到 \(\nu\) 后积分，得到
+\[
+e^{C^\star}_{0,k,n}+e^{B_s^\star}_{1,k,n}
+\ge
+\frac w2\,\widetilde{\mathbb E}_C(1-s)^{(T-1)_+}.
+\tag{115.2n}
+\]
+这里比较的是逐方向错率之和，系数为 \(1/2\)；没有另取公平方向风险。
+
+若 \(m_{n,k}=+\infty\)，由 (115.2k) 实际期望也为无穷，(115.2c) 自动成立。若 \(m_{n,k}<\infty\)，由 \((T-1)_+\le T\)、\(\beta_s=-\log(1-s)>0\) 和指数函数的 Jensen 不等式，
+\[
+\widetilde{\mathbb E}_C(1-s)^{(T-1)_+}
+\ge\widetilde{\mathbb E}_C e^{-\beta_sT}
+\ge e^{-\beta_s m_{n,k}}.
+\]
+结合 (115.2a)、(115.2n)，得
+\[
+\frac{D_s}{N}\ge\frac w2 e^{-\beta_s m_{n,k}},
+\qquad
+m_{n,k}\ge\frac1{\beta_s}\log\frac{Nw}{2D_s}.
+\tag{115.2o}
+\]
+再用 (115.2k) 乘回 \(w\)，即为 (115.2c)。右端为负时该界仍有效。以上仅使用共同停止叶上的测度比较与 Jensen，不使用参考 iid、逐状态负漂移或独立臂采样次数的 Wald 公式。[^rro115-stopping]
+
+最后取同一个明确对角 \(k=2n\)、\(n\ge1\)。Bernoulli 不等式给
+\[
+w_{2n,n}=\left(1-\frac1{6n}\right)^n\ge\frac56=:w_0.
+\tag{115.2p}
+\]
+固定 \(s\)。在 \(Nw_0\ge2D_s\) 后，(115.2c) 右端的对数非负，因而
+\[
+\mathbb E^{C^\star}_{0,2n}T_{n,2n}
+\ge\frac{w_0}{\beta_s}
+\left[\log N-\log(2D_s/w_0)\right].
+\tag{115.2q}
+\]
+于是对每个固定 \(s>0\)，该成本比的下极限至少为 \(w_0/\beta_s\)。左端始终属于同一个固定 \(C^\star\) 和同一规则族，而 \(\beta_s\downarrow0\)。任给 \(R>0\)，先选一个固定 \(s\) 使 \(w_0/\beta_s>2R\)，再取充分大 \(N\) 使 \(\log N\ge2\log(2D_s/w_0)\)，则此后全部成本比均大于 \(R\)。这证明第一条极限；第二条由 \(\sup_k\) 至少为该对角值得到。
+
+这一顺序允许 \(C_{B_s^\star}\) 随固定 \(s\) 任意增长，只改变起用长度；没有让传感器随 \(n\) 变化，也没有把同一个固定 \(k\) 的结论与对角结论混用。若全相容类存在所述每模型对数期望规则，将其限制到 \(\mathcal M^\star\)，便与固定 \(C^\star\) 的 (115.2b) 矛盾。证毕。
+
+该反例约束的是全未知传感器类的共同保证；某个受限子类上的主信息校准规则成功，并不推出它可覆盖全部相容模型。这里不声称每个固定 \(k\) 或每个方向都有超对数成本，也不声称 \(18\) 态最小或下界常数最优。
+
+[^rro115-interface]: [已发布 RRO 第 113 节](https://github.com/the-omega-institute/trureturing/blob/d61414584006c6e504bbc8d31ca261f6a4f70196/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，定义 113.1 给出未知陷阱基线、原始校准签名和独立平稳纯陷阱参考。其命题 113.2 讨论确定共同参考预算；本节明确采用可读取主前缀和 \(k\) 的停止接口，并按全部实际取得的参考标签计费。
+
+[^rro115-main]: 同一已发布第 113 节的 (113.2t) 给出 \(R_+*R_-=R_-*R_+\) 所产生的完整无陷阱主词律，(113.2v) 使用共同子测度的交叉错误和界。本节的两个独立快坐标与不同陷阱发射另行实现了同一个固定 \(C^\star\) 的主词、参考词匹配；只比较评分均值不足以得到这些完整词等式。
+
+[^rro115-stopping]: 共同子测度检验、停止记录比较与 Jensen 均为成熟概率工具。一般非独立序贯检验的渐近下界见 Georgios Fellouris、Alexander G. Tartakovsky，[*Multichannel Sequential Detection—Part I: Non-i.i.d. Data*](https://arxiv.org/abs/1601.03379v1)，§III Theorem 3.1 与 Remark 3.1。这里直接对有限停止叶使用 (115.2j) 的完整前缀支配，再运输条件风险与实际成本，不把通用序贯下界作为新的概率方法。
+
+## 115.99 追加锚
+
+## 116. 有限参数干预的纯陷阱均值重建
+
+**定义与假设 116.1（同一传感器的有限参数准备实验）。** 沿用第 103、113 节的四态隐藏核、独立平稳传感器及纯陷阱基线。[^rro116-model] 状态集为 $S=\{0,1,2,3\}$，按此顺序写
+$$
+K_{\delta,0}=
+\begin{pmatrix}
+1-\delta&\delta/3&\delta/3&\delta/3\\
+\delta/3&\alpha/4&\alpha/2&\alpha/4\\
+\delta/3&\alpha/4&\alpha/4&\alpha/2\\
+\delta/3&\alpha/2&\alpha/4&\alpha/4
+\end{pmatrix},\qquad
+K_{\delta,1}=K_{\delta,0}^{\mathsf T},\qquad
+\alpha=1-\delta/3.
+\tag{116.1a}
+$$
+实际参数为 $\delta=1/k$，整数 $k\ge2$；分析用核公式仍延拓到 $0\le\delta\le1/2$。方向 $d\in\{0,1\}$ 未知，但在以下全部实验中固定。
+
+固定非空有限传感器状态集 $M$、不可约 Markov 核 $T$ 及其平稳律 $\eta$，允许周期。传感器过程独立于隐藏过程。给定两条完整路径，有限字母表 $\mathcal A$ 上的读数逐时条件独立，概率发射行为 $E_{x,z}$。传感器核、平稳律和发射行在全部参数设置中相同，均不要求已知。固定已知整数 $r\ge1$ 和窗口函数 $W:\mathcal A^{r+1}\to[-1,1]$。纯陷阱参考使用同一传感器的平稳副本、隐藏状态恒为 $0$、发射仍为 $E_{0,z}$，记其窗口均值为
+$$
+\tau=\mathbb E^{\rm tr}W(V_0,\ldots,V_r).
+\tag{116.1b}
+$$
+本节不要求第 113 节的正校准签名条件。
+
+实验接口另允许预先选择互异整数 $k_0,\ldots,k_r\ge2$，置 $\delta_j=1/k_j$。在每个设置 $j$ 取得一个实际主实验：隐藏链按 $K_{\delta_j,d}$ 从 $X^{(j)}_0=1$ 出发，传感器取同一固定模型的平稳副本 $Z^{(j)}_0\sim\eta$，并取得前缀
+$$
+Y^{(j)}_0,\ldots,Y^{(j)}_{r+3}.
+\tag{116.1c}
+$$
+这些设置可由相互独立的平稳副本实现；以下仅要求各设置具有上述边缘实验律，设置之间的耦合不影响所述期望恒等式。每个设置内部仍允许传感器记忆及重叠窗口。重复这一批实验时保持相同的准备条件。选择参数和重复平稳准备是本节声明的额外实验能力，不由一条给定 $k$ 的主记录提供，也不为其准备赋予零成本。没有取得纯陷阱参考记录的要求。定义四个实际主窗口均值
+$$
+m_{j,t}=\mathbb E^{1,\eta}_{\delta_j,d}
+ W(Y_t,\ldots,Y_{t+r}),\qquad 0\le j\le r,\quad 0\le t\le3.
+\tag{116.1d}
+$$
+这些均值是模型的期望量，有限前缀直接给出的只是相应窗口分数。
+
+**命题 116.2（共同三次运输与有限外推）。** 在定义 116.1 下，对 $0<\delta\le1/2$，置
+$$
+c_\delta=\frac{1-\delta/3}{4},\qquad
+\lambda_\delta=1-4\delta/3,\qquad
+H_\delta(z)=z^2+c_\delta z+c_\delta^2,
+$$
+$$
+A_\delta=
+\frac{H_\delta(1)^{-1}+3H_\delta(\lambda_\delta)^{-1}}
+     {1-\lambda_\delta},\qquad
+B_\delta=H_\delta(1)^{-1}-A_\delta,
+$$
+$$
+p_\delta(z)=H_\delta(z)(A_\delta z+B_\delta)
+           =\sum_{t=0}^3a_t(\delta)z^t.
+\tag{116.2a}
+$$
+这些系数均有限、不依赖传感器或方向，且两个方向同时满足
+$$
+\boxed{e_1p_\delta(K_{\delta,d})=e_0,\qquad d=0,1,}
+\qquad \sum_{t=0}^3a_t(\delta)=1,
+\tag{116.2b}
+$$
+其中 $e_i$ 是集中于状态 $i$ 的行概率向量。
+
+令 $Q_d(\delta)$ 为隐藏链按实际 $K_{\delta,d}$ 从状态 $0$ 出发、传感器从 $\eta$ 出发时的 $W$ 窗口均值。它是 $\delta$ 的次数至多 $r$ 的多项式，且 $Q_d(0)=\tau$。定义
+$$
+\ell_j=
+\prod_{\substack{0\le i\le r\\i\ne j}}
+\frac{-\delta_i}{\delta_j-\delta_i}
+=\frac{k_j^r}{\displaystyle\prod_{i\ne j}(k_j-k_i)}.
+\tag{116.2c}
+$$
+则实际准备实验的期望满足
+$$
+Q_d(\delta_j)=\sum_{t=0}^3a_t(\delta_j)m_{j,t},\qquad
+\boxed{\tau=\sum_{j=0}^r\sum_{t=0}^3
+                 \ell_j a_t(\delta_j)m_{j,t}.}
+\tag{116.2d}
+$$
+特别地，对定义 116.1 的一批实际前缀，确定的有符号统计量
+$$
+\widehat\tau_{\rm batch}
+=\sum_{j=0}^r\sum_{t=0}^3
+  \ell_j a_t(\delta_j)
+  W(Y^{(j)}_t,\ldots,Y^{(j)}_{t+r})
+\tag{116.2e}
+$$
+满足 $\mathbb E\widehat\tau_{\rm batch}=\tau$。其系数只使用 $r$ 和预选的 $k_0,\ldots,k_r$。
+
+**证明。** 首先复用第 112 节对实际隐藏核的环零和作用与唯一慢模的分解，并以行向量写出所需运输。置
+$$
+\rho=(0,1/3,1/3,1/3),\qquad
+\pi=(1/4,1/4,1/4,1/4),\qquad
+w=e_0-\rho,\qquad h=e_1-\rho.
+$$
+则
+$$
+e_1=\pi-\frac14w+h,\qquad e_0=\pi+\frac34w.
+\tag{116.2f}
+$$
+在本段中简写 $K=K_{\delta,d}$、$c=c_\delta$、$\lambda=\lambda_\delta$。双随机性给 $\pi K=\pi$；陷阱行及三条环行的平均给
+$$
+e_0K=(1-\delta)e_0+\delta\rho,\qquad
+\rho K=(\delta/3)e_0+\alpha\rho,\qquad
+wK=\lambda w.
+\tag{116.2g}
+$$
+令 $C_d$ 为对应方向的三环置换矩阵。核的环块为 $c(\mathbf1\mathbf1^{\mathsf T}+C_d)$。陷阱坐标为零、环坐标和为零的行向量 $v=(0,v_R)$ 经 $K$ 作用后仍在该子空间，环坐标变为 $cv_RC_d$。因为
+$$
+I_3+C_d+C_d^2=\mathbf1\mathbf1^{\mathsf T},
+$$
+在这个子空间上有
+$$
+vH_\delta(K)=0.
+\tag{116.2h}
+$$
+特别地，$hH_\delta(K)=0$。
+
+由 $c>0$、$1-\lambda=4\delta/3>0$ 及
+$$
+H_\delta(x)=(x+c/2)^2+3c^2/4>0
+\qquad(x\in\mathbb R),
+$$
+式 (116.2a) 的全部分母均非零。定义给出
+$$
+p_\delta(1)=1,\qquad
+p_\delta(\lambda)
+=H_\delta(\lambda)
+ \left[H_\delta(1)^{-1}-A_\delta(1-\lambda)\right]
+=-3.
+\tag{116.2i}
+$$
+故 (116.2f)–(116.2h) 蕴含
+$$
+e_1p_\delta(K)
+=\pi p_\delta(1)-\frac14w p_\delta(\lambda)+hp_\delta(K)
+=\pi+\frac34w=e_0.
+$$
+系数和等于 $p_\delta(1)=1$。环方向只改变 $C_d$ 为其逆，而二者满足同一二次消去式，证明 (116.2b)。若需直接计算系数，展开得到
+$$
+(a_0,a_1,a_2,a_3)
+=(B_\delta c_\delta^2,
+  A_\delta c_\delta^2+B_\delta c_\delta,
+  A_\delta c_\delta+B_\delta,
+  A_\delta).
+\tag{116.2j}
+$$
+
+现在固定同一个 $T,E,\eta,W,d$。沿用第 113 节的窗口条件均值，写
+$$
+q_{\delta,d}(x,z)
+=\mathbb E^{x,z}_{\delta,d}W(Y_0,\ldots,Y_r),\qquad
+ g_{\delta,d}(x)=\sum_z\eta_zq_{\delta,d}(x,z).
+\tag{116.2k}
+$$
+在实际准备于状态 $1$ 的实验中，独立性及 $\eta T^t=\eta$ 给出 $(X_t,Z_t)$ 的联合律为 $(e_1K_{\delta,d}^t)\otimes\eta$。给定这一产品状态，未来窗口的条件均值为 $q_{\delta,d}$。因此
+$$
+\mathbb E^{1,\eta}_{\delta,d}W(Y_t,\ldots,Y_{t+r})
+=e_1K_{\delta,d}^t g_{\delta,d}.
+\tag{116.2l}
+$$
+这是无条件期望等式；没有把已观察历史下传感器的条件分布替换为 $\eta$。将 (116.2b) 作用于同一列向量 $g_{\delta,d}$，即得
+$$
+g_{\delta,d}(0)
+=\sum_{t=0}^3a_t(\delta)
+ \mathbb E^{1,\eta}_{\delta,d}W(Y_t,\ldots,Y_{t+r}).
+\tag{116.2m}
+$$
+左边正是 $Q_d(\delta)$，证明 (116.2d) 的第一式。此时隐藏链可在窗口内离开陷阱，尚未将 $Q_d(\delta)$ 等同于 $\tau$。
+
+为验证有限外推的条件，对隐藏词 $x=(x_0,\ldots,x_r)$ 定义
+$$
+F(x)=
+\sum_{z_0,\ldots,z_r}\eta_{z_0}
+ \prod_{i=0}^{r-1}T(z_i,z_{i+1})
+ \sum_{y_0,\ldots,y_r}
+ W(y_0,\ldots,y_r)
+ \prod_{i=0}^r E_{x_i,z_i}(y_i).
+\tag{116.2n}
+$$
+该有限和仅由固定的传感器、发射和窗口决定，与 $\delta,d$ 无关。按隐藏词分解期望，得
+$$
+Q_d(\delta)=
+\sum_{x_1,\ldots,x_r\in S}
+ F(0,x_1,\ldots,x_r)
+ \prod_{i=0}^{r-1}K_{\delta,d}(x_i,x_{i+1}),
+\qquad x_0=0.
+\tag{116.2o}
+$$
+每个隐藏转移因子都是 $\delta$ 的仿射函数，每项恰有 $r$ 个因子，故 $Q_d$ 是次数至多 $r$ 的多项式。传感器的全部转移位于不随 $\delta$ 改变的 $F$ 内，不增加这一次数。在 $\delta=0$ 时，状态 $0$ 吸收，式 (116.2o) 仅余全零隐藏词，因而
+$$
+Q_d(0)=F(0,\ldots,0)=\tau.
+\tag{116.2p}
+$$
+这一步只在分析中求多项式的常数项，不要求取得 $k=\infty$ 的实验。
+
+节点 $\delta_0,\ldots,\delta_r$ 互异且全部合法。直接应用有限次数多项式的 Lagrange 插值公式，在零点求值得[^rro116-extrapolation]
+$$
+Q_d(0)=\sum_{j=0}^r\ell_jQ_d(\delta_j).
+$$
+对每项代入 (116.2m)，得到 (116.2d) 的第二式。式 (116.2e) 的求和有限、窗口有界、系数有限，故统计量可积；逐项取期望即得 $\mathbb E\widehat\tau_{\rm batch}=\tau$。同一个设置内的四个窗口可以重叠，此处未使用窗口独立性。证毕。
+
+本结果保留跨设置的同一模型与同一方向。三次运输系数不需要知道 $d$，不表示插值节点可以使用不同方向：插值针对的是同一个多项式 $Q_d$。同理，更换传感器、发射或窗口会改变式 (116.2n)，不能继续将不同实验当作同一多项式的取值；依据过去读数选择重启或窗口时，也须重新核对式 (116.2l) 的平稳产品起点条件。
+
+这里恢复的是目标期望，不把有符号系数解释为概率权重。事实上，$t\ge1$ 时 $e_1K_{\delta,d}^t$ 在全部环状态上严格为正，而 $t=0$ 时在状态 $1$ 上有质量一；其任何非负单位质量组合都不能等于 $e_0$。式 (116.2e) 的一次观测值不必等于 $\tau$，也不构造独立纯陷阱参考记录。结论不赋予有限抽样误差为零或新的风险、成本保证；第 115 节针对单条给定参数主记录和计费参考接口的下界不因此改变。
+
+[^rro116-model]: [已发布 RRO](https://github.com/the-omega-institute/trureturing/blob/7b1757adc586d41116a109e022c087ae881a696a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，(103.1a) 给出实际隐藏核；第 112 节证明给出环零和作用及慢模 $1-4\delta/3$；(113.1a) 给出同一平稳传感器的纯陷阱基线。本节复用这些结构，另行说明有限参数选择与实际准备期望之间的运输。
+
+[^rro116-extrapolation]: 有限次数插值直接见钉版 Mathlib [Lagrange.eq_interpolate](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Lagrange.lean)。不同可实施参数处的期望作有符号消阶，是已有的 Richardson 外推机制；例如 Kristan Temme、Sergey Bravyi、Jay M. Gambetta，[*Error mitigation for short-depth quantum circuits*](https://arxiv.org/abs/1612.02058v2)，PDF 第 2 页式 (2)–(6)。该文的物理缩放假设不替代本节的共同传感器及准备条件；这里由 (116.2o) 验证严格有限次数，因此代数截断余项为零，而有限观测的抽样误差仍须另行处理。
+
+## 116.99 追加锚
+
+## 117. 有符号时间准备的滞后与系数总量
+
+**定义与假设 117.1（实际时间行分布与系数总量）。** 沿用式 (116.1a) 的四态行核 $K_{\delta,d}$，状态集为 $S=\{0,1,2,3\}$，方向 $d\in\{0,1\}$，实际共同准备于状态 $1$。[^rro117-model] 核公式取 $0<\delta\le1/2$；实际离散参数仍为 $\delta=1/k$、整数 $k\ge2$。置
+$$
+\lambda_\delta=1-4\delta/3,\qquad
+c_\delta=(1-\delta/3)/4,\qquad
+H_\delta(z)=z^2+c_\delta z+c_\delta^2,
+\qquad \mu_{t,d}=e_1K_{\delta,d}^t,
+\tag{117.1a}
+$$
+其中 $e_i$ 是集中于状态 $i$ 的行概率向量。给定整数 $L\ge0$ 和实系数 $a=(a_0,\ldots,a_L)$，若
+$$
+\sum_{t=0}^L a_t\mu_{t,d}=e_0,
+\tag{117.1b}
+$$
+则称其在方向 $d$ 下给出最大滞后不超过 $L$ 的精确有符号时间准备；若同一组系数对两个方向均成立，则称为共同准备。定义系数总量
+$$
+\Gamma(a)=\sum_{t=0}^L|a_t|.
+\tag{117.1c}
+$$
+这是一份线性表示的系数总变差，不将负系数解释成实际准备概率，也不以 $\Gamma$ 定义样本成本。
+
+**命题 117.2（有限滞后下界与统一有界的延迟构造）。** 对每个 $0<\delta\le1/2$，$L=0$ 时不存在式 (117.1b) 的表示。对任意 $L\ge1$，只要该式对至少一个方向成立，就有
+$$
+\sum_{t=0}^L a_t=1,\qquad
+\boxed{\Gamma(a)\ge\frac{8}{1-\lambda_\delta^L}-1.}
+\tag{117.2a}
+$$
+特别地，在 $\delta=1/k$ 下，右侧至少为 $6k/L-1$；固定最大滞后无法对全部 $k$ 同时保持精确准备和统一有界的系数总量。
+
+另一方面，对每个实际整数 $k\ge2$，以下系数只依赖 $k$，可在两个方向共同实现精确准备。简写 $\lambda=\lambda_{1/k}$、$c=c_{1/k}$、$H=H_{1/k}$，定义
+$$
+A_k=\frac{H(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^k},
+\qquad B_k=H(1)^{-1}-A_k,
+$$
+$$
+p_k(z)=H(z)(A_kz^k+B_k)
+      =\sum_{t=0}^{k+2}a_t^{(k)}z^t.
+\tag{117.2b}
+$$
+则 $A_k>0$，多项式次数恰为 $k+2$，并且
+$$
+\boxed{e_1p_k(K_{1/k,d})=e_0\quad(d=0,1),
+\qquad \Gamma(a^{(k)})\le\frac{5507}{86}<65.}
+\tag{117.2c}
+$$
+上界只声称这一具体构造统一有效，不声称常数最优或刻画所有滞后下的最小系数总量。
+
+**证明。** 先从实际核计算时间行分布的陷阱坐标，令 $b_t=\mu_{t,d}(0)$。两个方向均有陷阱入口概率 $\delta/3$ 和陷阱自环概率 $1-\delta$，故
+$$
+b_0=0,\qquad
+b_{t+1}=(1-\delta)b_t+(\delta/3)(1-b_t)
+       =\delta/3+\lambda_\delta b_t.
+$$
+归纳得到
+$$
+b_t=\frac{1-\lambda_\delta^t}{4}.
+\tag{117.2d}
+$$
+这使用状态 $1$ 的实际准备，没有将其替换为隐藏链的平稳初态。
+
+核保持总质量，所以对式 (117.1b) 右乘全一列向量即得 $\sum_ta_t=1$。当 $L=0$ 时，左边仅为 $a_0e_1$，不可能等于 $e_0$。以下设 $L\ge1$；此时 $0<\lambda_\delta<1$，因而 $0\le b_t\le b_L$ 且 $b_L>0$。定义状态函数
+$$
+f_L(x)=\frac{2\mathbf1_{\{x=0\}}}{b_L}-1.
+$$
+对全部 $0\le t\le L$，有
+$$
+\mu_{t,d}f_L=2b_t/b_L-1\in[-1,1],
+\qquad e_0f_L=2/b_L-1.
+$$
+将此线性泛函作用于式 (117.1b)，直接使用有限和三角不等式，得到[^rro117-dual]
+$$
+\frac{2}{b_L}-1
+=\sum_{t=0}^L a_t\mu_{t,d}f_L
+\le\sum_{t=0}^L|a_t|
+=\Gamma(a).
+\tag{117.2e}
+$$
+代入 (117.2d) 即为 (117.2a)。对 $\delta=1/k$，Bernoulli 不等式给
+$$
+1-\lambda_{1/k}^L
+=1-\left(1-\frac4{3k}\right)^L
+\le\frac{4L}{3k},
+$$
+故 (117.2a) 的右侧至少为 $6k/L-1$。这只给出必要条件，没有断言任意给定 $L$ 都存在精确表示。
+
+下面证明所列延迟构造。固定 $k\ge2$，继续简写 $K=K_{1/k,d}$、$\lambda,c,H$。由于 $c>0$、$0<\lambda<1$，且
+$$
+H(x)=(x+c/2)^2+3c^2/4>0
+\qquad(x\in\mathbb R),
+$$
+式 (117.2b) 的分母均非零，$A_k>0$，并且
+$$
+B_k=-\frac{\lambda^kH(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^k}<0.
+$$
+系数是在变量 $u=z^k$ 的两个节点 $1,\lambda^k$ 上作一次插值得到的；[^rro117-interpolation] 由定义直接核对
+$$
+p_k(1)=1,\qquad
+p_k(\lambda)
+=H(\lambda)\left[H(1)^{-1}-A_k(1-\lambda^k)\right]
+=-3.
+\tag{117.2f}
+$$
+
+复用第 112 节的模式分解及式 (116.2f)–(116.2h) 的行向量关系。具体地，令
+$$
+\rho=(0,1/3,1/3,1/3),\quad
+\pi=(1/4,1/4,1/4,1/4),\quad
+w=e_0-\rho,\quad h=e_1-\rho.
+$$
+已有关系在两个方向均为
+$$
+e_1=\pi-\tfrac14w+h,\qquad e_0=\pi+\tfrac34w,
+\qquad \pi K=\pi,\quad wK=\lambda w,\quad hH(K)=0.
+\tag{117.2g}
+$$
+同一个 $H$ 消去两个方向的环零和作用。因此
+$$
+e_1p_k(K)
+=\pi p_k(1)-\tfrac14w p_k(\lambda)+hp_k(K)
+=\pi+\tfrac34w=e_0.
+$$
+多项式最高次项为 $A_kz^{k+2}$，所以最大非零滞后恰为 $k+2$，也由 $p_k(1)=1$ 得系数和为一。
+
+为控制系数总量，注意 $H$ 的三个系数均为正，系数和为 $H(1)$；乘以 $z^k$ 只移动它们的位置。逐个系数使用三角不等式，得到
+$$
+\begin{aligned}
+\Gamma(a^{(k)})
+&\le (A_k+|B_k|)H(1)\\
+&=(2A_k-H(1)^{-1})H(1)\\
+&=\frac{2(1+3H(1)/H(\lambda))}{1-\lambda^k}-1.
+\end{aligned}
+\tag{117.2h}
+$$
+这是系数绝对和的标准范数估计。[^rro117-interpolation] 当 $k=2$ 时，$H(z)$ 与 $z^kH(z)$ 的支撑在二次项处重叠，上式仍然成立；证明没有把不相交时的系数范数等号用于该边界。
+
+全部合法 $k$ 均满足
+$$
+\frac5{24}\le c\le\frac14,\qquad \lambda\ge\frac13,
+$$
+所以
+$$
+H(1)\le\frac{21}{16},\qquad
+H(\lambda)\ge\frac19+\frac5{72}+\frac{25}{576}
+             =\frac{43}{192},\qquad
+\frac{H(1)}{H(\lambda)}\le\frac{252}{43}.
+\tag{117.2i}
+$$
+再由 Bernoulli 不等式，
+$$
+\lambda^{-k}
+=\left(1+\frac4{3k-4}\right)^k
+\ge1+\frac{4k}{3k-4}\ge\frac73,
+\qquad 1-\lambda^k\ge\frac47.
+\tag{117.2j}
+$$
+对 (117.2h) 代入 (117.2i)–(117.2j)，便得
+$$
+\Gamma(a^{(k)})
+\le\frac72\left(1+\frac{756}{43}\right)-1
+=\frac{5507}{86}<65,
+$$
+证明 (117.2c)。证毕。
+
+这份取舍涉及同一个实际核的可访问时间跨度和线性表示的系数总量。若沿用第 116 节同一个固定平稳独立传感器及跨度为 $r$ 的窗口，并额外取得同一模型在实际准备态 $1$ 下的前缀 $Y_0,\ldots,Y_{L+r}$，记 $0\le t\le L$ 时的窗口均值为 $m_t$，则式 (116.2l) 对上述系数给
+$$
+\sum_{t=0}^L a_tm_t=Q_d(\delta).
+$$
+这里 $Q_d(\delta)$ 是从陷阱状态 $0$ 出发后继续按 $K_{\delta,d}$ 演化的窗口均值；纯陷阱基线 $\tau$ 则在整个窗口中将隐藏状态保持为 $0$。时间准备恒等式本身没有将二者等同。第 116 节取得 $\tau$ 还使用了不同合法参数之间的共同模型及多项式外推，不能将其省略为某个固定 $k$ 下的纯陷阱校准。
+
+对于均值扰动 $\Delta_t$，有限和三角不等式给
+$$
+\left|\sum_{t=0}^L a_t\Delta_t\right|
+\le\Gamma(a)\max_{0\le t\le L}|\Delta_t|.
+$$
+实际窗口的方差还取决于全部协方差，重叠窗口和传感器记忆不能被当成独立样本。[^rro117-statistics] 按完整前缀读取标签时，滞后 $L$ 的最晚窗口需要读到时间 $L+r$，共 $L+r+1$ 个标签；少量非零系数不使中间等待和标签取得免费。以上结果没有给出独立样本数、总实验成本或任意统计算法的风险下界，也没有生成非负准备通道或独立纯陷阱参考流。
+
+[^rro117-model]: [RRO 公开版本](https://github.com/the-omega-institute/trureturing/blob/6db30c04f155a331e167a74558ccd5a0e6e085cd/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，(103.1a)、第 112 节证明及 (116.1a) 给出同一四态核；(116.2f)–(116.2h) 明确给出共同模式分解，(116.2l) 给出平稳独立传感器下的期望运输。这里复用这些结构，研究给定时间字典的系数总量。
+
+[^rro117-dual]: 有限和不等式可直接使用钉版 Mathlib [Finset.abs_sum_le_sum_abs](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean)。以线性泛函约束字典原子、下界化系数绝对和，是成熟弱对偶；一般原子规范的框架见 Venkat Chandrasekaran、Benjamin Recht、Pablo A. Parrilo、Alan S. Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，§2.1，式 (2)、(3)、(5)、(6)。本节只使用显式函数 $f_L$ 的有限字典证书，不使用该文的随机测量恢复保证或强对偶结论。
+
+[^rro117-interpolation]: 两节点插值直接属于钉版 Mathlib [Lagrange.eval_interpolate_at_node](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/LinearAlgebra/Lagrange.lean)。系数绝对和是第 31.6 条已使用的解析 Wiener 代数范数；式 (117.2h) 仅使用其有限多项式三角不等式及次数平移。这里不把插值或范数估计另作通用新定理。
+
+[^rro117-statistics]: Hakop Pashayan、Joel J. Wallman、Stephen D. Bartlett，[*Estimating outcome probabilities of quantum circuits using quasiprobabilities*](https://arxiv.org/abs/1503.07525v2)，PDF 第 2–3 页，式 (4)、(8)–(12)，使用系数 $1$-范数、绝对权重归一化采样及指定的独立重复。其采样保证依赖这些实际实验条件，不由本节的系数范数单独推出。
+
+## 117.99 追加锚
+
+## 118. 固定参数下有限时间准备的下确界与非达性
+
+**定义与假设 118.1（固定核的有限时间字典）。** 固定 $0<\delta\le1/2$，沿用式 (116.1a) 的实际四态行核 $K_{\delta,d}$、方向 $d\in\{0,1\}$ 和准备态 $e_1$；实际离散参数 $\delta=1/k$、整数 $k\ge2$ 是其中的特例。[^rro118-model] 以下保持同一个 $\delta$，简写
+$$
+\lambda=1-4\delta/3,\qquad c=(1-\delta/3)/4,\qquad
+H(z)=z^2+cz+c^2,\qquad R=\frac{H(1)}{H(\lambda)},
+\qquad \pi=(1/4,1/4,1/4,1/4).
+\tag{118.1a}
+$$
+对每个方向，令 $\mathcal G_d$ 为全部有限精确表示的系数总量集合：
+$$
+\mathcal G_d=
+\left\{\sum_{t=0}^{L}|a_t|:
+L\in\mathbb Z_{\ge0},\ a\in\mathbb R^{L+1},\quad
+\sum_{t=0}^{L}a_te_1K_{\delta,d}^t=e_0\right\}.
+\tag{118.1b}
+$$
+$\mathcal G_{\rm com}$ 采用同一定义，但要求同一个 $L,a$ 同时满足两个方向的等式。另定义 $\mathcal G_d^\pi$：允许额外使用行分布 $\pi$，表示与计费分别为
+$$
+\beta\pi+\sum_{t=0}^{L}a_te_1K_{\delta,d}^t=e_0,
+\qquad |\beta|+\sum_{t=0}^{L}|a_t|,
+\qquad \beta\in\mathbb R.
+\tag{118.1c}
+$$
+$\mathcal G_{\rm com}^\pi$ 要求同一组 $L,\beta,a$ 适用于两个方向。式 (118.1c) 将 $\pi$ 作为新增的单位成本字典原子；这里只定义这份有符号表示代价，不预设可用有限等待取得这样的实际准备，也不将系数总量定义为样本成本。
+
+**命题 118.2（共同下确界、有限非达与平稳原子达界）。** 在定义 118.1 下，$\mathcal G_0,\mathcal G_1,\mathcal G_{\rm com}$ 均非空，并且
+$$
+\boxed{\inf\mathcal G_0=\inf\mathcal G_1=\inf\mathcal G_{\rm com}
+=G_\delta:=1+6R.}
+\tag{118.2a}
+$$
+这三个集合的每个元素都严格大于 $G_\delta$，所以任意有限最大滞后的精确表示均不能取得下确界。
+
+具体地，对任意整数 $m\ge3$，置
+$$
+A_m=\frac{H(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^m},\qquad
+B_m=H(1)^{-1}-A_m,\qquad
+p_m(z)=H(z)(A_mz^m+B_m)=\sum_{t=0}^{m+2}a_t^{(m)}z^t.
+\tag{118.2b}
+$$
+同一组系数在两个方向满足 $e_1p_m(K_{\delta,d})=e_0$，其总量精确为
+$$
+\Gamma_m=\sum_{t=0}^{m+2}|a_t^{(m)}|
+=G_\delta+\frac{2(1+3R)\lambda^m}{1-\lambda^m}
+\longrightarrow G_\delta.
+\tag{118.2c}
+$$
+两个方向的实际时间行都满足
+$$
+\mu_{t,d}:=e_1K_{\delta,d}^t\longrightarrow\pi,
+\qquad \mu_{t,d}\ne\pi\quad\text{对每个有限 }t\ge0.
+$$
+因此 $\pi$ 是原实际时间字典遗漏的极限原子。
+
+若按式 (118.1c) 将 $\pi$ 加为单位成本原子，则相同下界在两个单方向及共同表示中均可达到：
+$$
+\boxed{\min\mathcal G_0^\pi=\min\mathcal G_1^\pi
+=\min\mathcal G_{\rm com}^\pi=G_\delta.}
+\tag{118.2d}
+$$
+其中一份共同达界表示是
+$$
+e_0=(1+3R)\pi-\frac3{H(\lambda)}e_1H(K_{\delta,d}),
+\qquad d=0,1.
+\tag{118.2e}
+$$
+$\pi$ 本来已经属于原有限时间字典的有符号线性张成；式 (118.2d) 改变的是允许单独计费的原子，而非线性张成。
+
+**证明。** 首先构造作用于实际状态行的全时间对偶列。参数范围给
+$$
+1/3\le\lambda<1,\qquad 5/24\le c<1/4,\qquad
+b:=\lambda-c=(3-5\delta)/4>0.
+\tag{118.2f}
+$$
+因而 $H(\lambda)>0$。令
+$$
+u_1=1-R,\qquad
+u_2=\frac{1-R\lambda}{c},\qquad
+u_3=\frac{1-R\lambda^2}{c^2}.
+$$
+由 $RH(\lambda)=H(1)$，
+$$
+c^2(u_1+u_2+u_3)=H(1)-RH(\lambda)=0.
+$$
+取列向量
+$$
+s=(-3,1,1,1)^{\mathsf T},\qquad
+v_0=(0,u_1,u_2,u_3)^{\mathsf T},\qquad
+v_1=(0,u_1,u_3,u_2)^{\mathsf T},\qquad
+g_d=Rs+v_d.
+\tag{118.2g}
+$$
+特别地，按状态 $0,1,2,3$ 的顺序，
+$$
+g_0=\left(-3R,\ 1,\ R+\frac{1-R\lambda}{c},
+R+\frac{1-R\lambda^2}{c^2}\right)^{\mathsf T},
+$$
+而 $g_1$ 交换 $g_0$ 的最后两个坐标。两列均满足 $\pi g_d=0$ 和 $e_0g_d=-3R$。
+
+直接作用实际核可得 $K_{\delta,d}s=\lambda s$。对于陷阱坐标为零、环坐标和为零的列，正方向的作用为
+$$
+K_{\delta,0}(0,x_1,x_2,x_3)^{\mathsf T}
+=c(0,x_2,x_3,x_1)^{\mathsf T};
+$$
+反方向则使用相反的循环。于是两个方向的实际评估
+$$
+r_{t,d}:=e_1K_{\delta,d}^tg_d
+=R\lambda^t+c^tu_{1+(t\bmod3)}
+\tag{118.2h}
+$$
+相同，以下记为 $r_t$。构造给出 $r_0=r_1=r_2=1$；没有以任意递推初值替代实际状态列的存在性。
+
+在环零和列上，三个循环作用之和为零，所以 $H(K_{\delta,d})v_d=0$。结合 $K_{\delta,d}s=\lambda s$，得到
+$$
+(K_{\delta,d}-\lambda I)H(K_{\delta,d})g_d=0.
+$$
+展开多项式并左乘 $e_1K_{\delta,d}^t$，得
+$$
+r_{t+3}=b\,r_{t+2}+cb\,r_{t+1}+\lambda c^2r_t.
+\tag{118.2i}
+$$
+三个递推系数均严格正，其和为
+$$
+\sigma=b+cb+\lambda c^2=1-(1-\lambda)H(1),\qquad 0<\sigma<1.
+$$
+由三个初值为一归纳：若前三项都在 $(0,1]$ 内，后一项严格为正且至多为 $\sigma<1$。因此
+$$
+0<r_t\le1\quad(t\ge0),\qquad 0<r_t<1\quad(t\ge3).
+\tag{118.2j}
+$$
+式 (118.2h) 还给出 $r_t\to0$，因为 $0<c,\lambda<1$ 且三个 $u_j$ 固定有限。[^rro118-limit]
+
+令 $\mathbf1$ 为全一列，取
+$$
+f_d=\mathbf1-2g_d.
+$$
+实际核保总质量，故
+$$
+y_t:=e_1K_{\delta,d}^tf_d=1-2r_t\in[-1,1),
+\qquad e_0f_d=1+6R=G_\delta,
+\qquad \pi f_d=1.
+\tag{118.2k}
+$$
+此处有界的是 $f_d$ 在时间行原子上的评估，不是它在四个单独状态上的全部坐标。
+
+现在取任意方向 $d$ 的任意有限精确表示。右乘 $\mathbf1$ 得 $\sum_ta_t=1$，所以至少一个系数严格正；右乘 $f_d$ 得
+$$
+G_\delta=\sum_{t=0}^{L}a_ty_t.
+$$
+若 $a_t>0$，则由 $y_t<1$ 有 $a_ty_t<|a_t|$；若 $a_t<0$，则由 $y_t\ge-1$ 有 $a_ty_t\le|a_t|$；零系数项相等。有限求和中至少有一个严格项，因而
+$$
+G_\delta<\sum_{t=0}^{L}|a_t|.
+\tag{118.2l}
+$$
+这直接使用有限和弱对偶，并以正系数项的严格余量排除有限达界。[^rro118-dual] 共同表示也是任一方向的表示，故同一严格下界适用于 $\mathcal G_{\rm com}$。
+
+为证明下界可由共同有限表示逼近，固定同一个 $\delta$，令独立的滞后参数 $m\ge3$ 变化。式 (118.2b) 复用第 117 节的延迟多项式形状；这里不将 $m$ 与实际参数分母 $k$ 绑定。直接计算给出
+$$
+A_m>0,\qquad
+B_m=-\frac{\lambda^mH(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^m}<0,
+\qquad p_m(1)=1,\quad p_m(\lambda)=-3.
+\tag{118.2m}
+$$
+沿用式 (117.2g) 的共同模式关系，置
+$$
+\rho=(0,1/3,1/3,1/3),\qquad w=e_0-\rho,\qquad h=e_1-\rho.
+$$
+两个方向都满足
+$$
+e_1=\pi-\tfrac14w+h,\qquad e_0=\pi+\tfrac34w,
+\qquad \pi K_{\delta,d}=\pi,\qquad
+wK_{\delta,d}=\lambda w,\qquad hH(K_{\delta,d})=0.
+$$
+因此
+$$
+e_1p_m(K_{\delta,d})
+=\pi p_m(1)-\tfrac14wp_m(\lambda)+hp_m(K_{\delta,d})
+=e_0.
+\tag{118.2n}
+$$
+这也证明三个原字典总量集合非空。由于 $m\ge3$，$H(z)$ 与 $z^mH(z)$ 的系数支撑 $\{0,1,2\}$、$\{m,m+1,m+2\}$ 不交。$H$ 的系数全正，所以系数绝对和恰为
+$$
+\begin{aligned}
+\Gamma_m
+&=(A_m-B_m)H(1)\\
+&=\frac{2(1+3R)}{1-\lambda^m}-1\\
+&=G_\delta+\frac{2(1+3R)\lambda^m}{1-\lambda^m}.
+\end{aligned}
+$$
+固定 $\delta$ 时 $\lambda^m\to0$，故式 (118.2c) 成立。对任意 $\varepsilon>0$，同一共同表示族都有某个有限 $m$ 使 $G_\delta<\Gamma_m<G_\delta+\varepsilon$；与式 (118.2l) 合并，证明式 (118.2a) 及其非达性。
+
+同一模式分解也给出实际时间行的极限：
+$$
+\mu_{t,d}=\pi-\tfrac14\lambda^t w+hK_{\delta,d}^t.
+$$
+这里 $h=(0,2/3,-1/3,-1/3)$。令 $C_d$ 为实际环方向的三环置换矩阵；环零和行上的核作用为 $c$ 倍循环，故
+$$
+hK_{\delta,d}^t=(0,c^t h_R C_d^t),\qquad h_R=(2/3,-1/3,-1/3).
+$$
+$C_d^t$ 只循环排列三个固定坐标，而 $c^t,\lambda^t\to0$，所以 $\mu_{t,d}\to\pi$。另一方面，复用式 (117.2d) 的实际陷阱质量，
+$$
+\mu_{t,d}(0)=\frac{1-\lambda^t}{4}<\frac14=\pi(0)
+$$
+对每个有限 $t\ge0$ 都成立，因为 $\lambda>0$。因此没有有限时间行等于 $\pi$；这个极限原子确实不在原实际时间字典中。
+
+最后考虑加入单位成本平稳原子的字典。由 $\pi f_d=1$，每份式 (118.1c) 的表示都满足
+$$
+G_\delta=\beta+\sum_ta_ty_t\le|\beta|+\sum_t|a_t|.
+\tag{118.2o}
+$$
+而共同模式关系给
+$$
+e_1H(K_{\delta,d})=H(1)\pi-\tfrac14H(\lambda)w.
+$$
+这立即产生式 (118.2e)。该表示的平稳原子系数为 $1+3R>0$，时间 $0,1,2$ 的系数依次为
+$$
+-\frac{3c^2}{H(\lambda)},\qquad
+-\frac{3c}{H(\lambda)},\qquad
+-\frac3{H(\lambda)}.
+$$
+它们在两个方向相同，计费恰为 $(1+3R)+3H(1)/H(\lambda)=G_\delta$，结合式 (118.2o) 得式 (118.2d)。
+
+为精确说明字典变化，定义三次多项式
+$$
+s_\delta(z)=\frac{(z-\lambda)H(z)}{(1-\lambda)H(1)}.
+$$
+它满足 $s_\delta(1)=1$、$s_\delta(\lambda)=0$，且含因子 $H$。同一模式关系给
+$$
+\boxed{e_1s_\delta(K_{\delta,d})=\pi\qquad(d=0,1).}
+\tag{118.2p}
+$$
+故 $\pi$ 已有两个方向共同的有限有符号表示。把这份表示代回式 (118.2e) 仍是原字典的有限表示，须按展开后的时间系数总量计费，并由式 (118.2l) 严格大于 $G_\delta$。式 (118.2d) 之所以达界，是新字典将 $\pi$ 本身作为一个单位成本原子，而不是为它在旧字典中的展开免费计账。证毕。
+
+本命题的下确界允许最大滞后在不同候选之间任意增大，但每份原字典表示仍只有有限支撑；它不求解某个指定有限 $L$ 的最优值。$\delta=0$ 不在范围内，此时原时间行没有陷阱质量，不能表示 $e_0$。结论度量的是有符号线性准备的系数总量，不给出实际方差、独立采样数或实验成本下界；新增单位成本 $\pi$ 的代数接口也不由无限等待极限自动取得。
+
+[^rro118-model]: [已发布 RRO §116–117](https://github.com/the-omega-institute/trureturing/blob/d1b69770e9a08e87b8c2e44c9ad169294c7506a7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，式 (116.1a) 给实际四态核，式 (117.2g) 给两个方向的共同模式关系；式 (117.2b)、(117.2f)–(117.2h) 给所复用的延迟多项式、节点值及系数范数估计。本节在固定参数后独立增加滞后，并以实际状态列核对全时间严格下界。
+
+[^rro118-dual]: 有限和弱对偶沿用 §117 的来源：钉版 Mathlib [Finset.abs_sum_le_sum_abs](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean)；Chandrasekaran、Recht、Parrilo、Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，§2.1，式 (2)、(3)、(5)、(6)。这里逐份使用有限和证书，不引用紧原子集的极小值必达结论，也不使用强对偶推断未包含平稳原子的时间字典已经闭合。
+
+[^rro118-limit]: 几何幂极限直接见钉版 Mathlib [tendsto_pow_atTop_nhds_zero_of_lt_one](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecificLimits/Basic.lean)。本节的正系数递推只用归纳比较；显式列及其实际核作用承担递推与状态空间之间的对应。
+
+## 118.99 追加锚
+
+## 119. 有限最大滞后下的唯一最优时间准备
+
+**定义与假设 119.1（固定有限滞后的实际时间字典）。** 固定 $0<\delta\le1/2$，沿用式 (116.1a) 的实际四态核 $K_{\delta,d}$、准备行 $e_1$、目标行 $e_0$，以及式 (118.1a)、(118.2a) 中的 $\lambda,c,H,R,\pi,G_\delta$；简写 $K_d=K_{\delta,d}$，方向为 $d\in\{0,1\}$。取式 (118.2g) 的实际列 $g_d$ 和式 (118.2h) 的共同轨道 $r_t=e_1K_d^tg_d$。[^rro119-model] 对固定整数 $L\ge0$，令
+$$
+\mu_{t,d}=e_1K_d^t,\qquad
+\mathcal A_{d,L}=\left\{a\in\mathbb R^{L+1}:\sum_{t=0}^La_t\mu_{t,d}=e_0\right\},
+\qquad
+\mathcal A_{{\rm com},L}=\mathcal A_{0,L}\cap\mathcal A_{1,L},
+\tag{119.1a}
+$$
+并按 $\Gamma(a)=\sum_{t=0}^L|a_t|$ 计费。共同可行集要求同一个系数向量同时满足两个方向的等式；字典仅含时刻 $0,\ldots,L$ 的实际时间行。
+
+**命题 119.2（可行阈值、唯一四点最优解与严格滞后前沿）。** 在定义 119.1 下，$\mathcal A_{0,L},\mathcal A_{1,L},\mathcal A_{{\rm com},L}$ 各自非空当且仅当 $L\ge3$。实际共同轨道满足
+$$
+r_0=r_1=r_2=1>r_3>r_4>\cdots>0.
+\tag{119.2a}
+$$
+当 $L\ge3$ 时，置
+$$
+j=L\bmod3,\qquad \ell=L-j,\qquad
+A_L=\frac{1+3R}{1-r_L},\qquad
+B_L=\frac{-3-A_L(\lambda^L-c^\ell\lambda^j)}{H(\lambda)},
+\tag{119.2b}
+$$
+$$
+p_L(z)=A_Lz^L-A_Lc^\ell z^j+B_LH(z)
+=\sum_{t=0}^La_t^*z^t.
+\tag{119.2c}
+$$
+则同一个 $a^*$ 是两个单方向问题及共同问题各自唯一的优化器。其支撑恰为 $\{0,1,2,L\}$，前三个系数严格负，第 $L$ 个系数严格正，并且
+$$
+\boxed{
+\min_{a\in\mathcal A_{0,L}}\Gamma(a)
+=\min_{a\in\mathcal A_{1,L}}\Gamma(a)
+=\min_{a\in\mathcal A_{{\rm com},L}}\Gamma(a)
+=\Gamma^*_{\delta,L}:=\frac{G_\delta+r_L}{1-r_L}.}
+\tag{119.2d}
+$$
+对固定 $\delta$，这条前沿随整数 $L\ge3$ 严格下降，并满足
+$$
+\Gamma^*_{\delta,L}-G_\delta
+=\frac{(G_\delta+1)r_L}{1-r_L}>0,
+\qquad
+\Gamma^*_{\delta,L}\longrightarrow G_\delta.
+\tag{119.2e}
+$$
+
+**证明。** 复用式 (118.2f)–(118.2j) 的实际轨道关系。整个参数区间内，$c,\lambda>0$，且
+$$
+b:=\lambda-c=(3-5\delta)/4\ge1/8>0.
+$$
+令
+$$
+\sigma=b+cb+\lambda c^2=1-(1-\lambda)H(1)\in(0,1),
+\qquad D_t=r_t-r_{t+1}.
+$$
+将式 (118.2i) 在相邻时刻相减，得到
+$$
+D_{t+3}=bD_{t+2}+cbD_{t+1}+\lambda c^2D_t,
+\qquad
+D_0=D_1=0,\quad D_2=1-\sigma>0.
+\tag{119.2f}
+$$
+正系数递推先给出全部 $D_t\ge0$；从 $D_2>0$ 出发，项 $bD_{t+2}$ 又使 $D_{t+3}>0$ 逐步成立。因此 $D_t>0$ 对每个 $t\ge2$ 成立。结合式 (118.2j) 的正性，得到式 (119.2a)。
+
+若 $L\le2$ 且某个方向有可行向量，右乘全一列 $\mathbf1$ 得 $\sum_ta_t=1$；再右乘实际列 $g_d$，利用 $e_0g_d=-3R$ 和 $r_0=r_1=r_2=1$ 得
+$$
+-3R=\sum_{t=0}^La_tr_t=\sum_{t=0}^La_t=1,
+$$
+与 $R>0$ 矛盾。这同时排除两个单方向及共同可行集。
+
+以下固定 $L\ge3$。对每个方向构造实际列
+$$
+g_{d,L}=\frac{g_d-r_L\mathbf1}{1-r_L},\qquad
+f_{d,L}=\mathbf1-2g_{d,L}.
+\tag{119.2g}
+$$
+实际时间行质量为一，故
+$$
+y_{t,L}:=\mu_{t,d}f_{d,L}
+=\frac{1+r_L-2r_t}{1-r_L}.
+$$
+由式 (119.2a)，在 $0\le t\le L$ 内，
+$$
+y_{t,L}=-1\ \Longleftrightarrow\ t\in\{0,1,2\},
+\qquad
+y_{t,L}=1\ \Longleftrightarrow\ t=L,
+\qquad
+-1<y_{t,L}<1\quad(3\le t<L).
+\tag{119.2h}
+$$
+当 $L=3$ 时最后的区间为空。这里受界的是列在实际时间行原子上的评估，不是列的各个状态坐标。目标行评估为
+$$
+e_0f_{d,L}
+=1-2\frac{-3R-r_L}{1-r_L}
+=\frac{G_\delta+r_L}{1-r_L}.
+$$
+因此每份 $a\in\mathcal A_{d,L}$ 都满足有限和弱对偶界[^rro119-dual]
+$$
+\frac{G_\delta+r_L}{1-r_L}
+=\sum_{t=0}^La_ty_{t,L}
+\le\sum_{t=0}^L|a_t|.
+\tag{119.2i}
+$$
+若等号成立，每个非负余量 $|a_t|-a_ty_{t,L}$ 都为零。式 (119.2h) 因而迫使
+$$
+a_t=0\quad(3\le t<L),\qquad
+ a_0,a_1,a_2\le0,\qquad a_L\ge0.
+\tag{119.2j}
+$$
+
+现验证式 (119.2c) 的共同构造。因为 $\ell=3m$，其中 $m\ge1$，而 $\lambda>c>0$，
+$$
+\lambda^L-c^\ell\lambda^j
+=\lambda^j(\lambda^\ell-c^\ell)>0.
+$$
+所以 $A_L>0$、$B_L<0$。多项式 $H$ 的系数为 $c^2,c,1$，全为正；项 $-A_Lc^\ell z^j$ 只进一步减小其中一个低次系数，而 $L\ge3$。具体地，令 $(\eta_0,\eta_1,\eta_2)=(c^2,c,1)$，则
+$$
+a_t^*=B_L\eta_t-A_Lc^\ell\mathbf1_{\{t=j\}}<0\quad(0\le t\le2),
+\qquad a_L^*=A_L>0,
+\qquad a_t^*=0\quad(3\le t<L).
+$$
+又有精确分解
+$$
+z^L-c^\ell z^j
+=z^j(z^{3m}-c^{3m})
+=z^j(z-c)H(z)\sum_{q=0}^{m-1}z^{3(m-1-q)}c^{3q},
+$$
+故 $H$ 整除 $p_L$。$B_L$ 的定义给 $p_L(\lambda)=-3$。由式 (118.2h) 及其中 $u_{1+j}=(1-R\lambda^j)/c^j$，
+$$
+r_L=R\lambda^L+c^\ell(1-R\lambda^j).
+\tag{119.2k}
+$$
+利用 $H(1)=RH(\lambda)$，得到另一个节点值
+$$
+\begin{aligned}
+p_L(1)
+&=A_L(1-c^\ell)+B_LH(1)\\
+&=A_L\bigl[1-c^\ell-R(\lambda^L-c^\ell\lambda^j)\bigr]-3R\\
+&=A_L(1-r_L)-3R=1.
+\end{aligned}
+$$
+复用式 (117.2g) 及式 (118.2n) 所用的共同模式，仍以 $w=e_0-\rho$、$h=e_1-\rho$ 表示既有行，其中 $\rho=(0,1/3,1/3,1/3)$。$H\mid p_L$、上述两个节点值及 $hH(K_d)=0$ 给出
+$$
+e_1p_L(K_d)
+=\pi p_L(1)-\tfrac14wp_L(\lambda)+hp_L(K_d)
+=\pi+\tfrac34w=e_0\qquad(d=0,1).
+\tag{119.2l}
+$$
+故 $a^*$ 是共同可行向量，也证明 $L\ge3$ 的可行性。由 $p_L(1)=1$ 及已证符号，
+$$
+\Gamma(a^*)
+=A_L-\sum_{t=0}^2a_t^*
+=2A_L-1
+=\frac{G_\delta+r_L}{1-r_L}.
+$$
+结合式 (119.2i)，得到三个最小值的等式。
+
+为证明唯一性，必须验证接触原子的实际独立性。置 $\xi=\delta^2/9$，取行 $\mu_{0,0},\mu_{1,0},\mu_{2,0}$ 的环坐标 $1,2,3$，式 (116.1a) 给出子矩阵
+$$
+\begin{pmatrix}
+1&0&0\\
+c&2c&c\\
+\xi+5c^2&\xi+5c^2&\xi+6c^2
+\end{pmatrix}.
+\tag{119.2m}
+$$
+其第三行可由实际核平方直接计算：若 $J$ 是三阶全一矩阵、$C_0$ 是正向三循环矩阵，环块为 $c(J+C_0)$，并且 $J^2=3J$、$JC_0=C_0J=J$，故两步环块为 $\xi J+c^2(5J+C_0^2)$。式 (119.2m) 的行列式为
+$$
+2c(\xi+6c^2)-c(\xi+5c^2)
+=c(\delta^2/9+7c^2)>0.
+$$
+方向一使用反向循环，三个实际行的环子矩阵是式 (119.2m) 交换最后两列，行列式为 $-c(\delta^2/9+7c^2)\ne0$。所以两个方向的前三个实际行均线性独立。
+
+若四个实际行在某个方向满足
+$$
+b_0\mu_{0,d}+b_1\mu_{1,d}+b_2\mu_{2,d}+b_L\mu_{L,d}=0,
+$$
+分别右乘 $\mathbf1$ 与原列 $g_d$，得到
+$$
+b_0+b_1+b_2+b_L=0,\qquad
+b_0+b_1+b_2+r_Lb_L=0.
+$$
+因为 $r_L<1$，相减得 $b_L=0$；前三行独立再给 $b_0=b_1=b_2=0$。因此 $\mu_{0,d},\mu_{1,d},\mu_{2,d},\mu_{L,d}$ 在两个方向都线性独立。任何单方向最优向量由式 (119.2j) 只支撑在这四点，与 $a^*$ 作差即得四行零组合，所以必等于 $a^*$。共同最优向量也是任意单方向的最优向量，因而同样唯一。
+
+最后，式 (119.2d) 直接给出式 (119.2e) 的差值。若 $L'>L\ge3$，式 (119.2a) 给 $r_L>r_{L'}$，于是
+$$
+\Gamma^*_{\delta,L}-\Gamma^*_{\delta,L'}
+=\frac{(G_\delta+1)(r_L-r_{L'})}{(1-r_L)(1-r_{L'})}>0.
+$$
+式 (118.2h) 已给固定 $\delta$ 下 $r_L\to0$，代入即得极限 $G_\delta$。证毕。
+
+[^rro119-model]: [已合并 RRO §116–118](https://github.com/the-omega-institute/trureturing/blob/1b46e9aa0cc3dfa4a6979682be1167c5cf85ece9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，式 (116.1a) 给实际四态核，式 (117.2g) 给共同模式；式 (118.2g)–(118.2j) 给实际对偶列、方向共同轨道、正系数递推与正性，式 (118.2a) 给允许有限最大滞后任意增大时的下确界。本节固定 $L$ 后求解同一时间字典中的系数总量最小化。
+
+[^rro119-dual]: 有限和弱对偶沿用第 118 节的来源：钉版 Mathlib [Finset.abs_sum_le_sum_abs](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean)；Chandrasekaran、Recht、Parrilo、Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，§2.1。这里直接逐项验证对偶不等式及其取等条件，再用实际行的独立性证明唯一性。
+
+## 119.99 追加锚
+
+## 120. 可组合关系的最小行为表示与保真辅助构造
+
+把空间拼接、时间接续、边界读取和记忆更新放在同一套有类型的关系中，统一的承重点是：同一表示是否保留全部指定实验，并允许这些实验继续组合。本节先给共同骨架；后续以观察投影、线性实现和带权关系计算其可恢复范围。
+
+### 120.1 关系结构与允许实验
+
+固定一个多类型签名。每个类型 $s$ 有合法实现集合 $X_s$；每个允许组合 $g$ 有指定输入类型与输出类型；每个基础读数 $f$ 有指定值域。组合包括连接两个组件、执行一步更新、附加一个记录等；它们是否满足结合律、交换律、因果条件或其他等式，均作为模型关系声明。没有被声明的等式不由“组合”这个名称取得。
+
+对部分组合，每个类型先使用带标签的总化载体 $\widehat X_s=X_s\sqcup F_s$，其中 $F_s$ 是声明的失败结果集合。每个有限元组合在全部相应总化输入上给出指定总扩展 $\widehat g$；它在原合法定义域上与原组合一致，在其他输入上按声明的失败或恢复规则返回结果。成功、失败及所需原因纳入基础读数。以下重新以 $X_s,g$ 记这些已指定的总化载体和组合。它们的结合律等式仍须按实际规则检验。空间块的拼接与时间步的接续均可作为这套签名中的组合；它们不必是同一个运算，也不预设两者任意交换。
+
+在这些载体上，签名还可包含指定的谓词 $P\subseteq X_{s_1}\times\cdots\times X_{s_n}$；常量视为零元运算。对函数
+$$
+g:X_{s_1}\times\cdots\times X_{s_n}\to X_t,
+$$
+用图关系
+$$
+G_g(\boldsymbol x,y)\iff y=g(\boldsymbol x)
+$$
+替换它，并保留全定义、单值条件
+$$
+\forall\boldsymbol x,\quad \exists!y\in X_t,\ G_g(\boldsymbol x,y).
+$$
+反之，满足此条件的关系唯一确定原类型的函数；常量的图关系恰有一个元素。因此，函数与谓词可以置于同一份有类型的关系结构中，而不丢失已声明的运算信息。签名列出的是本模型的承重结构，不声称已经列出任意物理系统的全部结构。
+
+**结构保真判据。** 给两份同签名结构，并对每个类型给双射 $h_s:X_s\to X'_s$。这些双射双向保持全部图关系和谓词，当且仅当每个运算满足
+$$
+h_t(g(x_1,\ldots,x_n))
+=g'(h_{s_1}x_1,\ldots,h_{s_n}x_n),
+$$
+并且每个谓词满足
+$$
+P(x_1,\ldots,x_n)
+\iff P'(h_{s_1}x_1,\ldots,h_{s_n}x_n).
+$$
+
+**证明。** 将 $y=g(\boldsymbol x)$ 代入图关系保持式，目标图的单值性给出运算交织式。反之，交织式立即给图关系的向前保持；若像点属于目标图，则
+$h_t(y)=g'(h\boldsymbol x)=h_t(g(\boldsymbol x))$，由 $h_t$ 单射得 $y=g(\boldsymbol x)$，故也向后保持。谓词部分正是所列双向条件；零元运算的同一论证给常量保持。$\square$
+
+例如权重 $w:X\times X\to\mathbb R$、度量 $d:X\times X\to\mathbb R$，以及概率核的数值分量，都可按各自定义域写成图关系。若实数类型和数值含义固定，取 $h_{\mathbb R}=\mathrm{id}$，图关系保持恰好要求数值保持；若允许运输数值类型，则必须连同其中使用的加法、乘法、顺序及命名常数一起运输，不能仅重标数值而保留原来的数值结论不变。
+
+时间也有自己的类型与结构。给时间幺半群 $(T,\cdot,e_T)$ 及作用 $\alpha:T\times X\to X$，把时间乘法、单位和作用都写成图关系。上述判据要求 $h_T$ 是幺半群同构，并满足
+$$
+h_X(\alpha(t,x))=\alpha'(h_T(t),h_X(x)).
+$$
+当时间参数原样固定时，取 $h_T=\mathrm{id}$。若时间还带顺序、方向或命名的计量单位，这些也须作为所要求保持的关系列入。作用律确实随之运输：将 $\alpha(ts,x)=\alpha(t,\alpha(s,x))$ 两边作用 $h_X$，再使用乘法与作用的交织式，便得目标作用的乘法律；将 $\alpha(e_T,x)=x$ 同样运输，得到单位律。$h_T,h_X$ 的满射性使这些等式覆盖全部目标时间和状态。这没有从任意底层关系唯一选出某个距离、时间作用或物理定律。
+
+对类型 $s$，一个闭实验由一个含该类型单孔的允许上下文 $C[-]$，接上一个基础读数 $f$ 构成。上下文由允许组合、声明可用的固定参数和单孔逐层形成，包含恒等上下文，并对合法嵌套闭合。写实验族为 $\mathcal E_s$，结果函数为 $e:X_s\to Y_e$。共享来源、合法性、概率、当前输出与成本若属于任务，就必须是上下文的输入或实验结果分量。
+
+### 120.2 最小可组合边界
+
+**定义 120.1（完整实验行为）。** 定义
+$$
+\beta_s:X_s\longrightarrow\prod_{e\in\mathcal E_s}Y_e,\qquad
+\beta_s(x)=(e(x))_{e\in\mathcal E_s},\qquad
+Q_s=\beta_s[X_s].
+$$
+只把实际可实现行为组成 $Q_s$。令 $x\simeq_s y$ 表示全部允许实验结果相等，即 $\ker\beta_s$。
+
+**定理 120.2（最小任务表示与组合闭合）。** 假设上下文包含允许组合每个孔位的代入，并可固定该组合其余孔位在所讨论总化代数中的全部相应参数。则：
+
+1. $\simeq$ 保持全部基础读数，并且是允许组合的同余关系；相同实验行为的组件可以逐孔替换。
+2. $Q_s$ 上有唯一诱导组合，使 $\beta$ 与全部组合交换，且基础读数也唯一下降。
+3. 若另一实际像表示 $q_s:X_s\twoheadrightarrow B_s$ 保持基础读数且允许全部组合下降，则有唯一满射 $r_s:B_s\to Q_s$ 同时保持这些组合与读数，满足 $r_sq_s=\beta_s$。
+4. 若 $q_s$ 恰好合并全部且仅合并实验等价实现，则 $r_s$ 是双射；两个满足此条件的表示规范同构。
+
+**证明。** 恒等上下文保证等价实现有相同基础读数。设 $g$ 有 $n$ 个输入，且 $x_i\simeq y_i$。固定输出端任意实验 $e$，依次将 $g(x_1,\ldots,x_n)$ 的第 $i$ 个参数换为 $y_i$。每一步把其他参数固定，所得 $e(g(\ldots,[-],\ldots))$ 是允许实验；实验等价保证其结果不变。有限次替换后所有输出实验仍相同，故组合结果等价。这证明同余性。
+
+定义 $\bar g(\beta x_1,\ldots,\beta x_n)=\beta(g(x_1,\ldots,x_n))$，同余性给代表无关；实际像使其取值合法且唯一。基础读数用恒等上下文下降。
+
+对另一表示，组合下降与基础读数下降经上下文归纳，保证每个实验 $e$ 都通过 $q_s$ 因子化。因此 $q_s(x)=q_s(y)$ 蕴含 $\beta_s(x)=\beta_s(y)$，可定义 $r_s(q_s(x))=\beta_s(x)$。它良定义、满射，在实际像上唯一；代入代表即可验证读数及组合交换。它为单射当且仅当反向核包含也成立，即 $\ker q_s=\ker\beta_s$。两个精确表示之间的规范双射由各自到 $Q_s$ 的双射复合给出。$\square$
+
+这里“最小”按保留区别的偏序定义：任何充分且可组合的表示都能唯一映到 $Q$。若载体有限，它也给最少状态数；若没有长度编码、访问协议与计算模型，它不额外断言描述最短或恢复最快。可用上下文受限时，最小性也仅相对于该语言成立。
+
+**命题 120.3（改变任务或操作会改变最小体）。** 若 $\mathcal E_s\subseteq\mathcal E'_s$，则 $\ker\beta'_s\subseteq\ker\beta_s$，并有唯一满射 $Q'_s\to Q_s$ 保留旧实验。该映射不一般可逆。
+
+**证明。** 新实验相等必在旧实验中相等，故按实际像定义映射即可。取两个状态，旧实验均为常值，新实验为状态本身，则新表示有两点、旧表示只有一点，不可逆。$\square$
+
+因此体和边界的等价相对于任务与交互语言。扩大允许干预可以显露旧盲区；这同时改变了实验条件，不能只改名字就获得这种能力。
+
+指定任务的因子化、观察自主更新的核稳定性判据，以及指定期望、完整外部行为与微观状态的严格恢复层级，见第122.1.2节。当前任务充分不保证动态充分；第120.6节还给出核在交换更新下不稳定的线性反例。集合意义上的恢复不自动提供高效算法、稳定估计或低成本实验。
+
+### 120.3 当前状态与完整时间响应
+
+对确定性状态空间 $X$，设允许操作为 $T_a:X\to X$，$a\in A$，当前读数 $o:X\to Y$。将多读数并为一个带类型的乘积读数。对词 $w=a_1\cdots a_n$，令 $T_w=T_{a_n}\cdots T_{a_1}$。完整响应为
+$$
+\Phi(x)(w)=o(T_wx),\qquad w\in A^*.
+$$
+
+**定理 120.4（状态与响应的交织表示）。** $\ker\Phi$ 是 $\ker o$ 内最大的操作稳定等价关系。在实际响应空间 $Q=\Phi[X]$ 上定义
+$$
+(\mathsf S_a b)(w)=b(aw),\qquad \bar o(b)=b(\varepsilon).
+$$
+则 $\Phi T_a=\mathsf S_a\Phi$，$o=\bar o\Phi$，且 $X/\ker\Phi\cong Q$。这给出有效状态与全部允许未来响应之间的可逆表示。
+
+**证明。** 空词给当前读数相等。若 $\Phi(x)=\Phi(y)$，对所有 $w$ 有 $o(T_wT_ax)=o(T_wT_ay)$，故操作后仍等价；并且 $\mathsf S_a\Phi(x)=\Phi(T_ax)$，所以移位保持实际像。若 $E\subseteq\ker o$ 是操作稳定关系，词长归纳得 $xEy\Rightarrow T_wxET_wy$，因此全部响应相等，$E\subseteq\ker\Phi$。最后实际像与核商的双射由 $[x]\mapsto\Phi(x)$ 给出，逆由其等价类给出。$\square$
+
+操作不受控且只有一个时间步 $F$ 时，$\Phi$ 是普通未来序列，$\mathsf S$ 是左移。多种可控操作下，$\Phi$ 包含所有允许分支的响应；一条实际执行的历史不自动提供这整棵响应树。
+
+例如 $X=\{0,1\}^2$，读第一位。允许操作 $a$ 恒等，$b$ 交换两位。不断执行 $a$ 的记录无法分开 $(0,0),(0,1)$，但操作 $b$ 后的读数可以。完整受控行为区分两者，一条特定实验轨迹则没有取得所需信息。
+
+### 120.4 历史如何成为现在可用的记忆
+
+固定响应函数 $s:A^*\to Y$。它可来自某个初态 $x_*$ 的确定系统，$s(w)=o(T_wx_*)$。对已经执行的历史 $h$，定义剩余响应
+$$
+r_h(v)=s(hv),\qquad v\in A^*.
+$$
+令 $M=\{r_h:h\in A^*\}$。
+
+**定理 120.5（历史的最小预测记忆）。** 更新与输出
+$$
+\delta_a(r_h)=r_{ha},\qquad \widehat o(r_h)=r_h(\varepsilon)
+$$
+定义良好，并以初态 $r_\varepsilon$ 实现全部响应 $s$。任何实现相同 $s$ 的可达确定系统，都有唯一保初态、读数和更新的满射到 $M$。两个可达且全部未来读数分离状态的实现，通过唯一这样的双射等价。
+
+**证明。** 若 $r_h=r_k$，则对每个 $v$，$r_{ha}(v)=s(hav)=r_h(av)=r_k(av)=r_{ka}(v)$，所以更新良定义。沿词归纳，从 $r_\varepsilon$ 执行 $h$ 到达 $r_h$，当前输出为 $s(h)$。
+
+设另一系统的可达状态为 $T_hx_*$。若 $T_hx_*=T_kx_*$，则任意继续词 $v$ 的输出相等，故 $r_h=r_k$；于是 $T_hx_*\mapsto r_h$ 良定义且满射，读数与更新保持由定义验证。任何保初态、更新的映射在可达生成元上都被迫取此值，所以唯一。若未来读数分离状态，则 $r_h=r_k$ 还迫使 $T_hx_*=T_kx_*$，故映射双射。$\square$
+
+它把“过去是什么”与“过去对未来还有什么作用”分开。两段不同历史可以具有相同剩余响应，因此记忆状态不必恢复完整档案。完整档案则仍可以保留：从历史到 $M$ 的压缩是另一个操作，是否执行它应单独声明。
+
+对未知初态的实际记录，令 $R_n(x)$ 为已采集的历史，$S_n(x)$ 为当时的目标有效状态。在实际像上存在恢复映射 $d_n:R_n[X]\to S_n[X]$ 使 $S_n=d_nR_n$，当且仅当
+$$
+\ker R_n\subseteq\ker S_n.
+$$
+证明为按记录代表定义 $d_n(R_n(x))=S_n(x)$。该条件明确区分“未来响应在数学上决定状态”和“现在采集的记录已经决定状态”。在线性系统中，它化为可观测矩阵的核包含；在随机系统中，则须对预测律及联合来源给出对应条件。
+
+### 120.5 辅助结构何时是一条保真的辅助线
+
+**定理 120.6（可消去辅助实现的行为等价）。** 设扩展系统 $\widetilde X$ 到原系统 $X$ 有满射 $r$，对相同操作语言满足
+$$
+r\widetilde T_a=T_ar,\qquad \widetilde o=or.
+$$
+扩展系统仅使用这些运输后的任务与操作。则
+$$
+\widetilde\Phi=\Phi r,\qquad
+\ker\widetilde\Phi=(r\times r)^{-1}[\ker\Phi],\qquad
+\widetilde\Phi[\widetilde X]=\Phi[X].
+$$
+所以二者相对于这份一元操作词语言具有相同最小行为表示；辅助坐标可以被消去而不改变声明的行为。
+
+**证明。** 对操作词归纳得到 $r\widetilde T_w=T_wr$，继而 $\widetilde o\widetilde T_w=oT_wr$，即第一式。取共同核得到第二式；$r$ 满射得到像相等。$\square$
+
+若还允许多元拼接，则对每个类型给满射 $r_s$，并要求每个组合满足
+$$
+r_t\widetilde g(\widetilde x_1,\ldots,\widetilde x_n)
+=g(r_{s_1}\widetilde x_1,\ldots,r_{s_n}\widetilde x_n),
+$$
+全部基础读数、固定参数和失败标签也相应运输。对上下文结构归纳，得到同样的完整行为因子化与最小表示等价。一元方块本身不够：同一两点集合上的恒等映射保持恒等更新和当前读数，但不会把二元 AND 运算运输成 OR 运算。
+
+若扩展带概率，还须使推前联合律等于原联合律；若要求成本保真，还须使对应执行的成本一致。增加一个可独立读取辅助变量的实验，会扩展语言，前述行为等价不再由这三个式子保证。逐行归一化的辅助概率核提供一种保留旧联合律的具体构造；仅作全局归一化则可能按见证重数改变原分布。
+
+反向构造的目标是：找到更易推理的实现 $\widetilde X$ 和上述运输，使原先难算的关系成为可分解、线性或正交的关系，再将结论送回原任务。新空间的维数、度量或概率若是辅助选择，就不把它们直接当作原对象未声明的物理性质。
+
+### 120.6 同一边界配对的三种读取
+
+前面的商由实验相等定义。在线性实现中，同一机制具有可计算版本。过去输入的有限线性组合组成向量空间 $P$，未来输出检验组成向量空间 $F$，边界响应给双线性配对 $H:F\times P\to\mathbb R$。等价过去之差是
+$$
+N_P=\{p:H(f,p)=0\text{ 对所有 }f\in F\},
+$$
+配对给线性读出 $H^\#:P\to F^*$，$H^\#(p)(f)=H(f,p)$，其核是 $N_P$。因此 $P/N_P$ 先是这组检验分离的任务商，同构于 $\operatorname{im}H^\#$。若完整配对有限维，其矩阵秩就是商维数；任何经状态空间 $Z$ 的因子化 $H^\#=BA$ 都有 $\operatorname{rank}H^\#\le\dim Z$，取该商达到下界。
+
+动态状态还要求移位良定义。例如给定 $S_P,S_F$ 且 $H(f,S_Pp)=H(S_Ff,p)$，则 $p\in N_P$ 推出 $S_Pp\in N_P$，移位因而下降。完整 Hankel 响应满足这样的过去—未来接续关系，后文再证明可达、可观测最小实现。任意有限截断在没有视界条件时仅给维数下界。反例是 $P=\mathbb R^2,F=\mathbb R,H(f,p)=fp_1$：核为 $\mathbb Re_2$，若更新交换两坐标，则核不稳定，任务商不能自主更新。
+
+若进一步有同一个系数空间上的对称半正定配对 $\gamma$，则其零向量空间 $N=\{v:\gamma(v,v)=0\}$ 是全部配对的根空间，商上可定义真实内积。
+
+**命题 120.7（半正定配对的商几何）。** 对称双线性 $\gamma\ge0$ 满足
+$$
+|\gamma(v,w)|^2\le\gamma(v,v)\gamma(w,w).
+$$
+因此 $N=\{v:\gamma(v,w)=0\text{ 对所有 }w\}$，且 $\langle[v],[w]\rangle=\gamma(v,w)$ 是 $P/N$ 上良定义的正定内积。
+
+**证明。** $\gamma(v+tw,v+tw)\ge0$ 对所有实数 $t$ 成立。若 $\gamma(w,w)>0$，在该二次式最小点 $t=-\gamma(v,w)/\gamma(w,w)$ 处取值得所需不等式；若 $\gamma(w,w)=0$，非零线性项会使某方向的 $t$ 取值为负，故 $\gamma(v,w)=0$。由不等式得零向量对所有向量正交，反向取 $w=v$。根空间为线性子空间，配对不受代表改变，商上零范数仅含零类。$\square$
+
+因此任务商、Hankel 状态商与正定内积商共享“按全部允许配对消去不可区分方向”的机制。但正性、自伴性与输入输出伴随关系是额外数学结构；对可达、可观测的线性动态实现，完整响应确定相似类；要进一步恢复指定内积，还须相应的正性、自伴及伴随耦合条件。
+
+这一共同骨架给后续各章一个具体检验：哪些关系被读数分离，哪些变换保留组合，哪些辅助方向可以消去，以及加入权重、定向或演化后需要哪些额外条件。它不预设所有量都是同一个残差，也不由形式相似直接识别物理时空度量。
+
+数学背景为上下文等价、代数同余、Myhill–Nerode 剩余行为与线性配对商。仓内 `ControlledBehaviorUniversality`、`StrictOneHoleContexts`、`DynamicClosureMinimality` 与 `TargetRecoveryCriterion` 提供对应的任务与组合接口。
+
+## 120.99 追加锚
+
+## 121. 保留式观察的正交增量与记录时间
+
+第120节的完整行为是数学上的实验集合。本节另问有限观察者实际取得哪些记录：档案保留使可见子空间递增，新取得的区别成为互相正交的增量。
+
+### 121.1 固定联合实现及真实档案
+
+先取有限非空样本空间 $\Omega$ 和严格正概率 $\nu$。它描述固定有限协议视界 $0,\ldots,N$ 的全部共同实现，包括所需初态、环境变量、传感器结果、实际执行状态，以及协议使用的随机种子。这里“把种子放进模型”不表示观察者在时刻零已经读到了全部种子；可见性仍由档案映射指定。
+
+令实际累计档案为
+
+$$
+q_n:\Omega\longrightarrow B_n=q_n[\Omega],\qquad 0\le n\le N.
+\tag{121.1}
+$$
+
+只增档案的数学合同是：存在固定前缀映射 $\pi_n:B_{n+1}\to B_n$，使
+
+$$
+\boxed{q_n=\pi_nq_{n+1}}.
+\tag{121.2}
+$$
+
+等价地，在按追加条目表示档案时，可以写
+
+$$
+q_{n+1}=(q_n,W_{n+1}),
+\tag{121.3}
+$$
+
+其中 $W_{n+1}$ 包括该步**实际纳入档案**的全部新字段；不同长度和不同字段类型可用带标签的记录类型表示。式（121.2）足以完成下面关于观察塔的证明，并不要求每一步真的产生新区分。
+
+记录一条解释及后来记录它的修正，可以保持式（121.2）：档案保留“曾在某时给出这份解释”及后续修正事件，当前采用的解释 $I_n=F_n(q_n)$ 可以变化。$I_n$ 自身无需具有前缀关系，因而不能用当前解释或压缩摘要替代本节的完整档案。
+
+记录事实与记录内容的真实性也不同。档案包含某句话，只保证“记录了这句话”；要由此推出某次动作已实际完成、传感器读数准确或某证书有效，必须有相应记录协议或验证谓词的正确性条件。只增合同不会自动证明这些条件。若执行可能失败，应将请求动作、实际执行结果及失败标签按声明范围区分。
+
+### 121.2 纤维与关系核反向缩小
+
+定义观察等价关系
+
+$$
+K_n=\{(\omega,\omega'):q_n(\omega)=q_n(\omega')\}.
+\tag{121.4}
+$$
+
+由式（121.2），若 $q_{n+1}(\omega)=q_{n+1}(\omega')$，取前缀即得 $q_n(\omega)=q_n(\omega')$。因此
+
+$$
+\boxed{K_{n+1}\subseteq K_n},
+\qquad
+\boxed{q_{n+1}^{-1}(q_{n+1}(\omega))
+\subseteq q_n^{-1}(q_n(\omega))}.
+\tag{121.5}
+$$
+
+这表示新增记录只会切细原候选纤维。它不是说某个完整世界被删掉或改变了，而是某条实际记录所兼容的共同实现集合缩小。
+
+前缀映射在实际像上满射：每个 $b=q_n(\omega)$ 都是 $q_{n+1}(\omega)$ 的前缀。故 $B_{n+1}\twoheadrightarrow B_n$。若 $K_{n+1}=K_n$，则该前缀映射还是单射，因为两个后档案具有相同前缀时，可选各自代表，再用核相等得到后档案相等。此时两步实际像之间只是相容换名，没有增加可区分性。
+
+这些是确定观察关系，不依赖概率大小；严格正 $\nu$ 使下一层 Hilbert 表示恰好保留全部这些纤维。
+
+若还要区分实际发生的事件次数，可显式使用带时点的档案 $\widehat q_n=(n,q_n)$。其事件索引由 $n$ 增至 $n+1$；固定阶段的常数标签 $n$ 不改变 $K_n$ 或 $H(q_n)$。因此事件时间可以严格前进，而信息时间停在同一分区。即使每次都追加同一读数或确定的执行标记，这个区别仍成立。
+
+### 121.3 同一 Hilbert 空间中的嵌套观察子空间
+
+令
+
+$$
+\mathcal H=L^2(\Omega,\nu)=\mathbb R^\Omega,
+\qquad\langle f,g\rangle_\nu=\sum_\omega\nu(\omega)f(\omega)g(\omega).
+\tag{121.6}
+$$
+
+定义当前可观察函数空间
+
+$$
+V_n=\{f:\exists a:B_n\to\mathbb R,\ f=a\circ q_n\}.
+\tag{121.7}
+$$
+
+它是纤维常值函数的线性子空间，包含常量。由前缀关系，$a\circ q_n=(a\circ\pi_n)\circ q_{n+1}$，所以
+
+$$
+\boxed{V_n\subseteq V_{n+1}}.
+\tag{121.8}
+$$
+
+对纤维 $F_{n,b}=q_n^{-1}(b)$，定义
+
+$$
+(\Pi_nf)(\omega)
+=\frac{\sum_{\eta\in F_{n,q_n(\omega)}}\nu(\eta)f(\eta)}
+{\nu(F_{n,q_n(\omega)})}.
+\tag{121.9}
+$$
+
+分母严格正。该函数属于 $V_n$，对 $V_n$ 内函数不变。对任意 $g\in V_n$，将求和按纤维分组，得到
+
+$$
+\langle f-\Pi_nf,g\rangle_\nu
+=\sum_b g|_{F_{n,b}}
+\left(\sum_{\omega\in F_{n,b}}\nu(\omega)f(\omega)
+-\nu(F_{n,b})(\Pi_nf)|_{F_{n,b}}\right)=0.
+\tag{121.10}
+$$
+
+故 $\Pi_n$ 正是到 $V_n$ 的正交投影，也就是该共同概率模型中的条件期望。它保持常量、正性和期望。
+
+下文始终在这个固定 $L^2(\nu)$ 中比较算子。不能每获得一条实际记录就任意换成另一个内积空间，再不经嵌入直接相减两份投影。条件后验已经由式（121.9）编码为同一空间中的算子；改变模型或参考律则需要另给相容运输。
+
+记线性隐藏核 $N_n=\ker\Pi_n=V_n^\perp$，则
+
+$$
+\boxed{N_{n+1}\subseteq N_n}.
+\tag{121.11}
+$$
+
+这里 $N_n$ 是函数方向的线性核，式（121.4）的 $K_n$ 是完整实现之间的等价关系核；二者相关，但类型不同。
+
+### 121.4 累计投影两两交换，增量仍可严格非零
+
+若 $m\le n$，$V_m\subseteq V_n$，所以 $\Pi_n\Pi_m=\Pi_m$。取伴随得到 $\Pi_m\Pi_n=\Pi_m$。因此
+
+$$
+\boxed{\Pi_m\Pi_n=\Pi_n\Pi_m=\Pi_{\min(m,n)}}.
+\tag{121.12}
+$$
+
+这也给条件期望的塔式关系。档案持续增长，并不要求累计条件投影不交换。
+
+例如两点等权空间上，$q_0$ 为常值、$q_1$ 为恒等读数。$\Pi_0$ 为平均投影、$\Pi_1=I$，二者交换，但新档案已经区分两点，记录熵从零增至 $\log2$。
+
+因此记录的方向可以由前缀包含关系和协议顺序承担；不能把非交换性设为它的必要条件。这一结论只涉及档案增长，不自行证明热力学不可逆，也不要求实际演化算子或不同干预互相交换。
+
+### 121.5 新增部分是正交投影，且各步增量互相正交
+
+定义
+
+$$
+\Delta_n=\Pi_{n+1}-\Pi_n,\qquad 0\le n<N.
+\tag{121.13}
+$$
+
+由式（121.12），$\Delta_n$ 自伴，且
+
+$$
+\begin{aligned}
+\Delta_n^2
+&=\Pi_{n+1}-\Pi_{n+1}\Pi_n-\Pi_n\Pi_{n+1}+\Pi_n\\
+&=\Pi_{n+1}-\Pi_n=\Delta_n.
+\end{aligned}
+\tag{121.14}
+$$
+
+其像恰为
+
+$$
+\boxed{\mathcal W_n=V_{n+1}\cap V_n^\perp}.
+\tag{121.15}
+$$
+
+确实，$\Delta_nf\in V_{n+1}$ 且 $\Pi_n\Delta_nf=0$；反之，$w\in V_{n+1}\cap V_n^\perp$ 时，$\Delta_nw=w$。所以 $\Delta_n$ 是“新可见且与旧可见空间正交”的投影。
+
+若 $i<j$，再次用式（121.12）逐项展开，
+
+$$
+\Delta_i\Delta_j
+=(\Pi_{i+1}-\Pi_i)(\Pi_{j+1}-\Pi_j)
+=\Pi_{i+1}-\Pi_{i+1}-\Pi_i+\Pi_i=0.
+\tag{121.16}
+$$
+
+取伴随得反向复合也为零。并且 $\Pi_0\Delta_i=\Delta_i\Pi_0=0$。因此不同增量空间互相正交。
+
+这里的“正交投影”或 $\langle f,\Delta_nf\rangle\ge0$ 不意味着 $\Delta_n$ 是保持函数非负性的概率核。事实上 $\Delta_n1=0$；在上一节两点例中，$\Delta_0=I-\Pi_0$ 将单点指标函数送到 $(1/2,-1/2)$。它测量新增方向，不是另一份概率分布或独立新样本。
+
+### 121.6 完整直和必须保留尚未观察的余项
+
+望远镜求和给
+
+$$
+\Pi_n=\Pi_0+\sum_{k=0}^{n-1}\Delta_k.
+$$
+
+结合正交性，得到完整分解
+
+$$
+\boxed{\mathcal H
+=V_0\oplus\bigoplus_{k=0}^{n-1}\mathcal W_k\oplus V_n^\perp},
+\tag{121.17}
+$$
+
+$$
+\boxed{f=\Pi_0f+\sum_{k=0}^{n-1}\Delta_kf+(I-\Pi_n)f}.
+\tag{121.18}
+$$
+
+每个分量属于对应子空间，且彼此正交；算子恒等式给存在性，正交子空间的零和只能各项为零，给唯一性。由 Pythagoras，
+
+$$
+\boxed{\|f\|_\nu^2
+=\|\Pi_0f\|_\nu^2+\sum_{k=0}^{n-1}\|\Delta_kf\|_\nu^2
++\|(I-\Pi_n)f\|_\nu^2}.
+\tag{121.19}
+$$
+
+对 $m\le n$，也有
+
+$$
+\boxed{
+\|(I-\Pi_m)f\|_\nu^2-\|(I-\Pi_n)f\|_\nu^2
+=\sum_{k=m}^{n-1}\|\Delta_kf\|_\nu^2.
+}
+\tag{121.20}
+$$
+
+所以残差能量的每一份下降都有对应的新可见分量。某一步档案可以增加区分，却仍对特定目标 $f$ 有 $\Delta_nf=0$；新增记录不必增加关于每个目标的信息。
+
+只有额外证明 $V_n=\mathcal H$，才可以删去式（121.17）的最终隐藏空间。在当前有限且严格正模型中，这等价于 $q_n$ 单射。若最后仍有多点纤维，就仍有非零隐藏函数，不能因档案单调增长就称它已经完整恢复世界。
+
+若同一有限样本空间上的档案塔延伸到所有整数时点，$\dim V_n=|B_n|\le|\Omega|$。严格增长最多发生 $|\Omega|-|B_0|$ 次，所以投影最终稳定；但这不是一个预先已知的停止时刻界，后续区别可以到很晚才被记录。该有限共同样本空间也不能容纳无限多个独立新随机比特，不能拿此稳定性结论直接描述那种协议。
+
+### 121.7 一般 Hilbert 塔的无穷直和形式
+
+为明确“完整直和”在无限记录时的准确含义，可只保留同一个 Hilbert 空间中嵌套闭子空间 $V_n$ 这一假设，令
+
+$$
+V_\infty=\overline{\bigcup_nV_n}.
+$$
+
+有限正交计算仍成立。对固定 $f$，$\|\Pi_nf\|^2$ 单调且不超过 $\|f\|^2$。若 $n\ge m$，
+
+$$
+\|\Pi_nf-\Pi_mf\|^2
+=\|\Pi_nf\|^2-\|\Pi_mf\|^2,
+$$
+
+故 $\Pi_nf$ 是 Cauchy 列。令其极限为 $u\in V_\infty$。对 $v\in V_k$，所有 $n\ge k$ 都有 $\langle f-\Pi_nf,v\rangle=0$；取极限并用稠密性，得到 $f-u\perp V_\infty$。所以 $u=\Pi_\infty f$，其中 $\Pi_\infty$ 是到 $V_\infty$ 的正交投影。
+
+于是
+
+$$
+\boxed{\mathcal H
+=V_0\oplus\bigoplus_{n\ge0}^{\rm Hilbert}\mathcal W_n\oplus V_\infty^\perp},
+\tag{121.21}
+$$
+
+$$
+\Pi_\infty f=\Pi_0f+\sum_{n\ge0}\Delta_nf,
+\qquad
+\sum_{n\ge0}\|\Delta_nf\|^2
+=\|\Pi_\infty f\|^2-\|\Pi_0f\|^2.
+\tag{121.22}
+$$
+
+级数按 Hilbert 范数收敛。这一证明没有假定每个 $f$ 最终都被观察，也没有为无限离散熵或连续时间路径增加未声明的可积性保证。$V_\infty^\perp$ 可以非零。
+
+### 121.8 单次后验方差可以增加，平均残差仍按定理下降
+
+回到有限共同模型，固定一个实值目标 $\Xi:\Omega\to\mathbb R$。令
+
+$$
+m_n=\Pi_n\Xi,
+\qquad v_n=\Pi_n(\Xi^2)-(\Pi_n\Xi)^2.
+\tag{121.23}
+$$
+
+$v_n$ 是当前档案对应的后验方差函数，非负但随实际档案而变。由式（121.12），
+
+$$
+\Pi_nv_{n+1}
+=\Pi_n(\Xi^2)-\Pi_n(m_{n+1}^2).
+$$
+
+又因 $m_n$ 为旧可见函数且 $\Pi_nm_{n+1}=m_n$，逐纤维取条件平均给
+
+$$
+\Pi_n[(m_{n+1}-m_n)^2]
+=\Pi_n(m_{n+1}^2)-m_n^2.
+$$
+
+两式相加得到条件方差收支
+
+$$
+\boxed{v_n
+=\Pi_nv_{n+1}+\Pi_n[(\Delta_n\Xi)^2]}.
+\tag{121.24}
+$$
+
+因此 $\Pi_nv_{n+1}\le v_n$，即在旧档案下对新记录作条件平均后，后验方差不增。再取总体期望，
+
+$$
+\boxed{\mathbb E_\nu v_n-\mathbb E_\nu v_{n+1}
+=\|\Delta_n\Xi\|_\nu^2\ge0},
+\qquad
+\mathbb E_\nu v_n=\|\Xi-\Pi_n\Xi\|_\nu^2.
+\tag{121.25}
+$$
+
+特别取 $\Xi=\mathbf1_A$、$p_n=\Pi_n\mathbf1_A$，则 $v_n=p_n(1-p_n)$，故
+
+$$
+\mathbb E[p_n(1-p_n)]-\mathbb E[p_{n+1}(1-p_{n+1})]
+=\mathbb E[(p_{n+1}-p_n)^2].
+$$
+
+式（121.25）正是式（121.20）对该目标的单步形式。它不保证每个实际分支的 $v_{n+1}(\omega)\le v_n(\omega)$。
+
+明确反例：令 $\Xi$ 取值 $0,1,3$，概率分别为 $4/5,1/10,1/10$。旧档案为常值，新记录只报告 $\Xi$ 是否非零。事前
+
+$$
+\mathbb E\Xi=\frac25,
+\qquad\operatorname{Var}(\Xi)=1-\frac4{25}=\frac{21}{25}.
+$$
+
+当新记录为“非零”时，两值 $1,3$ 各占一半，后验方差为 $1>21/25$。该分支概率为 $1/5$；另一分支后验方差为零。因此平均后验方差为 $1/5<21/25$，下降量为 $16/25$，恰为条件均值从旧平均增加出的方差。这个例子同时说明“观察者档案增加”与“每次更新都让个案显得更确定”是不同陈述。
+
+### 121.9 档案熵与目标信息的共同联合律收支
+
+以 $C_n=q_n(\omega)$ 记随机档案，式（121.3）给 $C_{n+1}=(C_n,W_{n+1})$。有限熵链式公式由联合质量分解为边缘乘条件质量直接得到，故
+
+$$
+\boxed{H(C_{n+1})-H(C_n)=H(W_{n+1}\mid C_n)\ge0}.
+\tag{121.26}
+$$
+
+对同一个固定目标 $\Xi$，互信息链式法则给
+
+$$
+\boxed{I(\Xi;C_{n+1})-I(\Xi;C_n)
+=I(\Xi;W_{n+1}\mid C_n)\ge0}.
+\tag{121.27}
+$$
+
+条件互信息是按旧档案条件化后，目标与新条目的联合律相对边缘乘积的 KL 平均，所以非负。目标信息增量和记录熵增量的差是
+
+$$
+\boxed{H(W_{n+1}\mid C_n)
+=I(\Xi;W_{n+1}\mid C_n)
++H(W_{n+1}\mid\Xi,C_n)}.
+\tag{121.28}
+$$
+
+因此新记录中可以包含相对于该目标仍未解释的随机性。它不自动是一份独立噪声；公式没有假定独立性。
+
+以上比较要求目标和联合模型固定。若每一步把目标改成新的物理状态，或者改用互不相容的模型概率，式（121.27）没有提供跨这些变化的单调性。
+
+### 121.10 自适应动作与随机元数据必须按完整记录计账
+
+若下一步请求动作由旧档案决定，
+
+$$
+A_n=a_n(C_n),
+\tag{121.29}
+$$
+
+则 $H(A_n\mid C_n)=0$。只在档案上追加这份已确定的动作描述，不切开旧纤维：$\ker(C_n,A_n)=\ker C_n$，所以对应的 $\Delta_n$ 为零。
+
+这不表示执行动作不能取得新证据。动作可以改变实际实验条件，再产生新结果 $Y_{n+1}$；例如旧档案未知一个等权比特，请求动作固定为“测量该比特”，请求本身没有新增信息，测得结果却可以增加 $\log2$ 的档案熵。计划、实际执行结果和测量记录应按协议分别声明。
+
+若实际新增条目为
+
+$$
+W_{n+1}=(A_n,Y_{n+1},Z_{n+1}),
+$$
+
+其中 $Z_{n+1}$ 是来源与版本、随机标签、执行状态或其他实际记录字段，则一般有
+
+$$
+\boxed{
+H(W_{n+1}\mid C_n)
+=H(A_n\mid C_n)+H(Y_{n+1}\mid C_n,A_n)
++H(Z_{n+1}\mid C_n,A_n,Y_{n+1}).
+}
+\tag{121.30}
+$$
+
+在式（121.29）的确定策略下简化为
+
+$$
+\boxed{H(W_{n+1}\mid C_n)
+=H(Y_{n+1}\mid C_n)+H(Z_{n+1}\mid C_n,Y_{n+1})}.
+\tag{121.31}
+$$
+
+只有额外元数据已经由旧档案与新结果确定时，最后一项才为零。不能因为把 $Y$ 称为“新观察”，就漏掉其他新增随机记录。
+
+最小例子：旧档案和传感器结果 $Y$ 都恒定，但额外记入一个独立公平随机标签 $Z$。实际档案熵增为 $\log2$，而 $H(Y\mid C)=0$。若该标签还与固定目标 $\Xi$ 独立，则它对目标的互信息增量为零。档案确实新增了一个可区分方向，却未必增加当前目标的知识。
+
+随机策略也需类型明确。若动作由旧档案和新种子 $R$ 决定，即 $A=a(C,R)$，而 $R$ 尚未纳入档案，便不能使用式（121.29）的 $H(A\mid C)=0$。可以把种子先作为一个实际追加记录，使动作对扩充档案成为确定函数；也可以不记录种子，但在完整联合模型内保留它，并直接用式（121.30）计算实际记录的动作、结果和元数据。没有记录的种子不应被自动计入档案熵。
+
+把完整协议及全部种子放进 $\Omega$ 只为保证这些变量来自一份共同实现。若条件化到完整 $\omega$，一切记录当然都确定；这不等于观察者已经知道该 $\omega$，也不使式（121.28）相对于部分目标的创新项消失。
+
+### 121.11 与共同关系骨架的接合及范围
+
+档案塔给一组可取得实验之间的前缀方块，因而提供命题120.3所述“增加实验使等价核缩小”的具体实例。它还给统一的线性表示：$V_n$ 是当前可用的全部实值纤维函数，$\Pi_n$ 为对应观察，$\Delta_n$ 为新获得的正交方向。
+
+这不意味着一条实际执行的协议已经提供定理120.4中所有可控分支的完整响应。也不能把一个有限时点的核自动当作对全部后续操作稳定的同余关系；动态闭合仍须按共同骨架单独检查。当前档案与全部未来行为是不同接口。
+
+关于证书，本节只提供条件句：若一个检查器已经证明正确，且档案记录了它在明确输入上的成功结果，便可以按该检查器的正确性结论使用证书。追加日志本身不产生正确性证明；错误解释的更正也不改写此前“曾作此解释”这一记录事件。语义闭包、已认证结论与有限预算内实际可调用的知识，由第136节分别描述，这里不把它们混作一个熵量。
+
+本节复用的成熟数学是有限条件期望的正交投影、嵌套投影与 Hilbert 正交和、条件全方差及 Shannon／互信息链式法则。相关接口包括 Mathlib `MeasureTheory.condExpL2`、投影正交接口，以及 D5 的确定读出熵分解、`FutureWordInformationChain`、`MutualInformationChainRule` 和 RRO §81 的记忆信息收支。
+
+若参考有零值，先限制到共同正支持；不为零概率纤维任意指定后验。无穷 Hilbert 部分只证明其自身的范数收敛，有限熵部分始终在固定有限协议模型中使用。随机独立性只在明确的示例或协议假设处出现，不能从正交增量或单调档案自动推出。
+
+这条证明线给“只增观察者”一个精简而具体的含义：保留旧记录，使可取得区别单调细化；在同一个参考空间里，把每一步新增区别分解成正交方向，同时保留尚未区分的余项。它允许解释修正、个案后验不确定性上升以及无关元数据增加，不需要非交换投影，也不借此宣布已经消除了全部隐藏关系。
+
+## 121.99 追加锚
+
+## 122. 相容实现的观察边界、投影缺陷与细化
+
+在同一实现空间上，集合观察保留存在关系，条件平均保留概率读数。两者的补集和乘法行为各有明确条件；下面把这些条件接到任务因子化与正交几何。
+
+### 122.1 关系怎样取得一个共同实现
+
+#### 122.1.1 共同见证与局部相容
+
+**定义 122.1。** 给定可能实现的集合 $X$，将每条约束表示为子集 $A_i\subseteq X$。一份共同实现是一个同时属于全部 $A_i$ 的 $x\in X$；可实现性就是
+$$
+\bigcap_{i\in I}A_i\ne\varnothing.
+$$
+这里各约束必须作用于同一对象。若它们最初写在不同局部载体 $X_i$ 上，先给出共同载体 $X$ 和限制映射 $r_i:X\to X_i$，再把局部条件 $L_i$ 拉回为 $A_i=r_i^{-1}(L_i)$。没有这些映射，“分别满足”并未形成同一个待判命题。
+
+**命题 122.2。** 两两相容不推出共同相容。取 $X=\{0,1\}^3$，写状态为 $(x,y,z)$，令
+$$
+A=\{x=y\},\qquad B=\{y=z\},\qquad C=\{x\ne z\}.
+$$
+则三对交集均非空，三重交集为空。
+
+**证明。** $(0,0,0)\in A\cap B$、$(0,0,1)\in A\cap C$、$(0,1,1)\in B\cap C$。若同时属于三者，前两条给 $x=z$，与第三条矛盾。三个局部交集使用了三份不同见证，不能把它们当作一份全局见证。证毕。
+
+相同的逻辑适用于数据拼接：各个边缘表、各份最优值或各段合法行为分别存在，还没有证明它们来自一份共同的概率律、状态或历史。关系的组合要传递实际中间见证，不能只拼接彼此独立的存在断言。
+
+#### 122.1.2 观察是否保留了指定任务
+
+**定义 122.3。** 给定观察 $q:X\to B$，将 $B$ 取为实际像 $q[X]$，故 $q$ 满射。任务族为 $f_\alpha:X\to Y_\alpha$，$\alpha\in J$。定义
+$$
+x\sim_qx'\iff q(x)=q(x'),\qquad
+x\sim_{\mathcal F}x'\iff\forall\alpha,\ f_\alpha(x)=f_\alpha(x').
+$$
+空任务族给出全体状态等价。集合 $X$ 为空时，实际像也为空，以下实际像上的唯一因子与双射仍成立。
+
+**定理 122.4（任务充分性与精确任务商）。** 下列两条件等价：
+$$
+\sim_q\ \subseteq\ \sim_{\mathcal F},
+\qquad
+\forall\alpha\ \exists!\bar f_\alpha:B\to Y_\alpha,
+\quad f_\alpha=\bar f_\alpha q.
+$$
+若进一步 $\sim_q=\sim_{\mathcal F}$，则存在唯一双射
+$$
+\Phi:B\longrightarrow X/{\sim_{\mathcal F}},\qquad
+\Phi(q(x))=[x].
+$$
+
+**证明。** 若观察核包含关系成立，则同一 $b$ 的任何两个实现有相同 $f_\alpha$ 值。令 $\bar f_\alpha(b)$ 为这个唯一值即可；满射性保证存在该值，也保证因子唯一。反向从 $q(x)=q(x')$ 代入每个因子式得到任务相等。核相等时，$\Phi$ 因 $\sim_q\subseteq\sim_{\mathcal F}$ 良定义，因反向包含而单射，并由任意类 $[x]$ 的代表得到满射；规定了每个实际 $b=q(x)$ 的像后也唯一。证毕。
+
+若只知任务充分性，$q$ 可以保留任务之外的区别，不能反向声称其实际像就是最小任务商。若另外要在观察层执行更新 $T:X\to X$，必须再检查
+$$
+q(x)=q(x')\Longrightarrow q(Tx)=q(Tx').
+$$
+同一因子论证给出：此条件当且仅当存在唯一 $\bar T:B\to B$ 满足 $qT=\bar Tq$。保留一组静态读数不自动保留操作的合法性；动力运输是额外的关系条件。
+
+**三个恢复义务。** 一份指定期望、全部指定外部行为与完整微观状态应分别列量词。期望是对概率律的标量任务；行为是对状态或过程的整族读数；微观恢复要求观察核为对角线。一般不存在把前一义务直接换成后一义务的规则。
+
+例如令 $X=\{0,1\}^3$，$T(a,b,c)=(b,a,c)$，传感器 $r(a,b,c)=a$。完整确定行为为交替词 $(a,b,a,b,\ldots)$，恰识别 $(a,b)$，完全看不见 $c$；因此外部行为相同仍不推出微观状态相同。对概率律再取
+$$
+\rho=\tfrac12(\delta_{000}+\delta_{110}),\qquad
+\eta=\tfrac12(\delta_{010}+\delta_{100}).
+$$
+两者的每一个单时刻传感器期望都为 $1/2$，但前者使前两读数相等的概率为一，后者为零，故完整外部行为律不同。这给出严格分离的实际模型；某些特殊模型中较弱任务也能决定全部状态，是否如此仍由其观察核检查。
+
+#### 122.1.3 软约束与低温极限的含义
+
+**定理 122.5。** 设 $X$ 有限非空，约束指标集有限，每个 $v_i:X\to[0,\infty)$ 满足 $v_i(x)=0\iff x\in A_i$，权重 $\lambda_i>0$。定义
+$$
+E(x)=\sum_i\lambda_i v_i(x),\qquad E_*:=\min_xE(x),
+\qquad M=\{x:E(x)=E_*\}.
+$$
+则 $E_*=0$ 当且仅当存在共同实现。取严格正先验 $\mu_x$、$\sum_x\mu_x=1$，并令
+$$
+\rho_\beta(x)=\frac{\mu_x e^{-\beta E(x)}}{Z_\beta},
+\qquad Z_\beta=\sum_x\mu_xe^{-\beta E(x)},\qquad\beta\ge0.
+$$
+有逐点极限
+$$
+\rho_\beta(x)\longrightarrow\frac{\mu_x1_M(x)}{\mu(M)}
+\quad(\beta\to\infty).
+$$
+若 $M\ne X$，令 $\Delta=\min_{x\notin M}(E(x)-E_*)>0$，则
+$$
+\rho_\beta(X\setminus M)
+\le\frac{1-\mu(M)}{\mu(M)}e^{-\beta\Delta}.
+$$
+
+**证明。** 有限和中的项非负且权重严格正，故 $E(x)=0$ 当且仅当全部 $v_i(x)=0$。最小值可达，得到第一结论。把 Gibbs 式分子分母同时乘以 $e^{\beta E_*}$，最小点的指数因子恒为一，其余严格趋零，给出极限。分母至少为 $\mu(M)$，非最小点的分子和至多为 $(1-\mu(M))e^{-\beta\Delta}$，即得尾界。若 $M=X$，所有 Gibbs 律已经等于 $\mu$，不需要定义空集上的最小间隙。证毕。
+
+对任意概率 $\nu$，还有精确的自由能恒等式
+$$
+\beta\mathbb E_\nu E+D(\nu\Vert\mu)
+=D(\nu\Vert\rho_\beta)-\log Z_\beta.
+$$
+**证明。** 代入 $\log\rho_\beta=\log\mu-\beta E-\log Z_\beta$ 并求和即可；严格正先验确保所有分母正。KL 非负及其等号条件表明左侧由 $\rho_\beta$ 唯一最小化。另由有限求和微分得
+$$
+\frac{d}{d\beta}\mathbb E_{\rho_\beta}E
+=-\operatorname{Var}_{\rho_\beta}(E)\le0.
+$$
+这些公式没有把不相容变成相容。$E_*>0$ 时，低温选择最小违约的折中实现；它仍违反至少一条原约束。$E_*=0$ 时才集中到真实共同解。非均匀先验下，不将此能量下降另称为 Shannon 熵的普遍单调性。
+
+#### 122.1.4 不同类型的“反”及有限词例子
+
+集合补 $A\mapsto X\setminus A$ 作用在幂集；比特翻转或时间反演 $\Theta:X\to X$ 作用在状态或历史；向量取负 $v\mapsto-v$ 作用在线性空间；取向反转作用于已经规定取向的几何对象。它们的定义域、组合律与被保持的结构不同。某一具体实现能把两种操作交织起来时，须给出那条交换关系，不能仅用共同名称识别它们。
+
+取长度 $n\ge0$ 的二进词 $W_n=\{0,1\}^{\{0,\ldots,n-1\}}$，给定 $k\ge1$。令 $L_{n,k}$ 为不含连续 $k$ 个一的词：即不存在整数 $j\ge0$ 满足 $j+k\le n$ 且 $w_j=\cdots=w_{j+k-1}=1$。当 $n<k$ 时，$L_{n,k}=W_n$。定义逐位补 $(cw)_i=1-w_i$ 及反向词 $(rw)_i=w_{n-1-i}$；空词上二者都是恒等。
+
+**命题 122.6。** 集合补 $W_n\setminus L_{n,k}$ 是“至少出现一次 $1^k$”的词；逐位补的像 $c[L_{n,k}]$ 是“不出现 $0^k$”的词；反向词满足 $r[L_{n,k}]=L_{n,k}$。$c,r$ 都是对合且互相交换。
+
+**证明。** 前一等式直接否定定义中的全局避免条件。某位置的零串经 $c$ 恰变成同位置的一串，且 $c^2=\mathrm{id}$，给出第二等式及双向性。原词起点 $j$ 的长度 $k$ 连续串在反向词中起点为 $n-k-j$，其位值不变；这是允许起点之间的双射，故出现 $1^k$ 当且仅当反向词出现。两次反向恢复原索引，两次逐位补恢复原位值；逐位运算与索引反向交换。证毕。
+
+两种“补”不是同一操作，例如 $n=3,k=2$ 时，$010\in c[L_{3,2}]$，但 $010\notin W_3\setminus L_{3,2}$。某些很小参数可能偶然给出相同集合，不改变类型差别。词反向保持该组合规则，也没有自动指定概率上的反向实验，更没有给出物理时间反演。
+
+“以关系统一”在这里是研究取向：先列共同实现、观察和允许操作，再研究它们在运输下保留的结构。关于道、弱或反转的哲学直觉可以提出候选问题；本节的结论只由已给定义和证明承担，也不主张这些现代构造是某个经典语句的唯一解释。
+
+### 122.2 观察纤维怎样产生一个边界
+
+#### 122.2.1 存在读数、全称读数与歧义
+
+设 $q:X\twoheadrightarrow B$，记非空纤维 $X_b=q^{-1}(b)$。本节不要求有限性。对事件 $A\subseteq X$ 定义
+$$
+U_q(A)=\{b:X_b\cap A\ne\varnothing\}=q[A],\qquad
+L_q(A)=\{b:X_b\subseteq A\},
+$$
+$$
+\partial_q A=U_q(A)\setminus L_q(A).
+$$
+上读数记录“这个名字有支持 $A$ 的实现”；下读数记录“这个名字的全部实现都支持 $A$”。二者是不同的量词。
+
+**定理 122.7。** 有
+$$
+L_q(A)\subseteq U_q(A),\quad
+U_q(A^c)=B\setminus L_q(A),\quad
+L_q(A^c)=B\setminus U_q(A),
+$$
+$$
+\partial_q A=U_q(A)\cap U_q(A^c)=\partial_q(A^c).
+$$
+下列条件等价：
+$$
+\begin{gathered}
+U_q(A^c)=B\setminus U_q(A),\qquad \partial_q A=\varnothing,\qquad U_q(A)=L_q(A),\\
+A=q^{-1}(q[A]),\qquad
+\exists!\chi:B\to\{0,1\},\quad1_A=\chi q.
+\end{gathered}
+$$
+
+**证明。** 每条纤维非空，所以全部属于 $A$ 必有一个属于 $A$。某纤维有一个点不在 $A$，恰是否定全部点在 $A$；全部点不在 $A$，恰是否定存在点在 $A$。这证明三个基本式及边界式。空边界等价于每条纤维要么全在 $A$，要么全在 $A^c$；这又恰为 $A$ 是整纤维之并，即所列饱和等式。对二值任务应用定理 122.4 得最后的因子化等价。第一个等式由 $U_q(A^c)=B\setminus L_q(A)$ 得到同一条件。证毕。
+
+一个名字同时属于 $U_q(A)$ 和 $U_q(A^c)$，使用的是该纤维中两个不同见证；没有断言某个 $x$ 同时满足 $A$ 与 $A^c$。实际像约定不可省略：若陪域含空纤维，则全称条件在那里真而存在条件假，$L_q(A)\subseteq U_q(A)$ 就会失败。
+
+#### 122.2.2 分区拓扑的内部、闭包和前沿
+
+在 $X$ 上定义观察拓扑
+$$
+\mathcal T_q=\{q^{-1}(S):S\subseteq B\}.
+$$
+它的开集正是整纤维的任意并，且每个开集也闭。虽然所有开集都闭，一般事件 $A$ 仍可能既不开也不闭。
+
+**定理 122.8。** 在此拓扑下，
+$$
+\operatorname{int}_q A=q^{-1}(L_q(A)),\qquad
+\operatorname{cl}_q A=q^{-1}(U_q(A)),\qquad
+\operatorname{fr}_q A=q^{-1}(\partial_q A).
+$$
+因此 $\operatorname{fr}_q A=\operatorname{fr}_q(A^c)$，且前沿为空当且仅当事件由观察决定。
+
+**证明。** 包含于 $A$ 的最大整纤维并恰由全部包含于 $A$ 的纤维组成，这是内部。包含 $A$ 的最小整纤维并恰由所有与 $A$ 相交的纤维组成，这是闭包。由前沿为闭包减内部及定理 122.7，得到第三式和其余结论。证毕。
+
+这项边界是观察核产生的拓扑边界：它表示当前名字尚未确定的事件区域，不是预先假定的一条物理表面。观察细化 $q_0=\beta q_1$ 时，细纤维包含于粗纤维，故
+$$
+\operatorname{int}_{q_0}A\subseteq\operatorname{int}_{q_1}A,
+\qquad \operatorname{cl}_{q_1}A\subseteq\operatorname{cl}_{q_0}A,
+\qquad \operatorname{fr}_{q_1}A\subseteq\operatorname{fr}_{q_0}A.
+$$
+**证明。** 一条完全在 $A$ 内的粗纤维，其全部细纤维也在 $A$ 内；细闭包所经过的粗纤维必与 $A$ 相交。若一点的细纤维同时遇到 $A,A^c$，其粗纤维亦如此。证毕。此处比较的是两种前沿在共同实现空间 $X$ 中的拉回，不能直接将不同名字空间中的集合作包含比较。
+
+### 122.3 从集合量词到条件平均与压缩效应
+
+#### 122.3.1 同一纤维上的条件期望
+
+现在设 $X$ 有限非空，$\mu_x>0$、$\sum_x\mu_x=1$，且 $q:X\twoheadrightarrow B$。令
+$$
+p_b=\sum_{x\in X_b}\mu_x>0,\qquad
+H=L^2(X,\mu;\mathbb R),\qquad
+\langle f,g\rangle_\mu=\sum_x\mu_x f_xg_x,
+$$
+$$
+(Pf)_x=\bar f_{q(x)},\qquad
+\bar f_b=\frac1{p_b}\sum_{x\in X_b}\mu_xf_x.
+$$
+复值算子部分可以使用同一公式及 $\langle f,g\rangle=\sum\mu_x\overline f_xg_x$；以下方差、事件和熵取实值。
+
+**命题 122.9。** $P$ 是到纤维常值子空间 $U$ 的正交投影，$P1=1$，保持平均、非负性和区间 $[0,1]$。对 $u\in U$，有 $P(uf)=uPf$；因此
+$$
+P(1-f)=1-Pf,
+$$
+$$
+P(fg)-(Pf)(Pg)=P\bigl((f-Pf)(g-Pg)\bigr).
+$$
+
+**证明。** 对每条纤维取加权平均后已得到纤维常数，故 $P^2=P$、像为 $U$；逐纤维求和给
+$$
+\langle Pf,g\rangle_\mu
+=\sum_bp_b\bar f_b\bar g_b=\langle f,Pg\rangle_\mu,
+$$
+故自伴幂等，即正交投影。其余保持性质来自权重 $\mu_x/p_b$ 非负且和为一；纤维常数 $u$ 可提出平均，给模块公式。最后将右侧乘积展开并用模块公式、$P^2=P$，得所列协方差恒等式。证毕。
+
+取 $f=1_A$，记 $a_b=\bar f_b=\mu(A\cap X_b)/p_b$。于是
+$$
+P(f^2)-(Pf)^2=(Pf)(1-Pf),\qquad
+\|(I-P)f\|_\mu^2=\sum_bp_ba_b(1-a_b)=:\mathcal B_q(A).
+$$
+满支撑使 $0<a_b<1$ 当且仅当 $b\in\partial_qA$。因此集合歧义与正条件方差具有同一支持；方差还加入了指定概率权重。条件平均严格保持补 $1-f$，却一般不保持乘法；存在量词的直接像连补都不总保持。两者不能混作一种“投影”。若允许零质量点，方差只决定支持上的饱和性，集合边界仍可含零质量反例。
+
+#### 122.3.2 压缩失去尖锐性恰由交叉耦合承担
+
+**定理 122.10（一般正交投影压缩）。** 设 $H$ 是有限维实或复 Hilbert 空间，$P,Q$ 是正交投影。令 $U=\operatorname{ran}P$、$V=\ker P=U^\perp$，并定义
+$$
+E=PQP|_U:U\to U,\qquad C=(I-P)QP|_U:U\to V.
+$$
+则 $E$ 是效应，即 $E=E^*$、$0\le E\le I_U$，且
+$$
+E-E^2=C^*C.
+$$
+此外，
+$$
+E^2=E\iff C=0\iff PQ=QP,
+$$
+$$
+\|[P,Q]\|_{\mathrm{HS}}^2
+=2\|C\|_{\mathrm{HS}}^2
+=2\operatorname{Tr}_U(E-E^2).
+$$
+
+**证明。** 对 $u\in U$，$\langle u,Eu\rangle=\langle u,Qu\rangle=\|Qu\|^2$，介于零与 $\|u\|^2$ 之间；压缩自伴性也直接成立。相对于 $H=U\oplus V$，写
+$$
+Q=\begin{pmatrix}E&C^*\\C&F\end{pmatrix}.
+$$
+$Q^2=Q$ 的左上块给 $E^2+C^*C=E$。若 $C^*C=0$，对每个 $u$ 有 $\|Cu\|^2=0$，故 $C=0$；反向显然。又
+$$
+[P,Q]=\begin{pmatrix}0&C^*\\-C&0\end{pmatrix},
+$$
+所以其为零当且仅当 $C=0$。最后其伴随乘积的两个对角块分别为 $C^*C$ 和 $CC^*$。在相应正交基中，二者迹同为矩阵元素模平方之和，故给出 HS 恒等式。零维子空间也成立。证毕。
+
+**事件模型的精确特化。** 在命题 122.9 中取 $Q=M_{1_A}$，即乘以事件指标。$Q$ 是尖锐正交投影。以
+$$
+e_b=1_{X_b}/\sqrt{p_b}
+$$
+作为 $U$ 的正交归一基，直接有 $Ee_b=a_be_b$，故
+$$
+\operatorname{Tr}_U(E-E^2)=\sum_ba_b(1-a_b),
+$$
+而
+$$
+\mathcal B_q(A)=\sum_bp_ba_b(1-a_b)
+=\langle1,(E-E^2)1\rangle_\mu=\|C1\|_\mu^2.
+$$
+**证明。** $Pe_b=e_b$，$P(1_Ae_b)=a_be_b$，给出谱式。$1=\sum_b\sqrt{p_b}\,e_b$，将其代入二次型即得概率权重。又 $C1=(I-P)1_A$，从而最后的平方范数正是事件残差。证毕。
+
+概率残差与算子迹通常不同。例如三点质量为 $(1/8,1/8,3/4)$，前两点一个纤维，第三点另一个，事件只含第一点，则 $(a_b)=(1/2,0)$，迹为 $1/4$，概率残差为 $1/16$。若所有 $p_b=1/m$，迹才等于 $m\mathcal B_q(A)$。二者在满支撑下为零，都等价于事件饱和、指标任务因子化和 $[P,Q]=0$；共享零点不使二者数值相等。
+
+这里 $P$ 在原始状态坐标中的矩阵元素为 $P_{xy}=1_{q(x)=q(y)}\mu_y/p_{q(x)}$，一般不满足普通转置对称。伴随必须按 $L^2(\mu)$ 内积计算，或先用 $f_x\mapsto\sqrt{\mu_x}f_x$ 变到正交坐标；直接在未归一化坐标上取欧氏转置会改变命题。
+
+#### 122.3.3 半效应与尖锐补的边界
+
+**命题 122.11。** 对有限维 Hilbert 空间上的效应 $0\le E\le I$，
+$$
+0\le E-E^2\le\tfrac14I,\qquad
+\tfrac14I-(E-E^2)=(E-\tfrac12I)^2.
+$$
+补运算 $E\mapsto I-E$ 在效应中有唯一固定点 $I/2$。若空间非零，该固定点不是投影，且没有任何尖锐投影被补固定。
+
+**证明。** 对自伴 $E$ 取正交谱分解，特征值在 $[0,1]$。标量恒等式 $a(1-a)=1/4-(a-1/2)^2$ 给出算子式及上下界。$I-E=E$ 唯一解为 $E=I/2$；若它又满足幂等，则 $I/4=I/2$，迫使 $I=0$，与非零空间矛盾。一般投影之补仍自伴幂等，由同一固定点计算知不可能固定。零空间中唯一算子满足这些等式，因此非零条件必须保留。证毕。
+
+事件压缩中，$a_b=1/2$ 表示该纤维在所选参考律下对事件两侧等权；它最大化该纤维的二值方差。$E=I/2$ 要求每条纤维都满足这一条件。它不表示原事件等于其集合补，也不构成一个与参考律、观察和任务无关的“本体中点”。
+
+### 122.4 一份不尖锐效应需要多少隐藏方向
+
+#### 122.4.1 单效应投影扩张与精确最小维数
+
+**定理 122.12。** 设 $U$ 是有限维实或复 Hilbert 空间，$0\le E\le I_U$。若要求在 $U\oplus K$ 上有正交投影，其对可见 $U$ 的压缩为 $E$，则最小隐藏维数恰为
+$$
+\min\dim K=\operatorname{rank}(E-E^2).
+$$
+维数和秩均相对于同一实或复标量域。
+
+**证明。** 令 $D=E-E^2$。谱分解写为 $Ee_j=\lambda_je_j$，$0\le\lambda_j\le1$，并定义
+$$
+Re_j=\sqrt{\lambda_j(1-\lambda_j)}\,e_j.
+$$
+于是 $R=R^*$、$R^2=D$、$RE=ER$。在 $U\oplus U$ 上置
+$$
+\Pi=\begin{pmatrix}E&R\\R&I-E\end{pmatrix}.
+$$
+它自伴，并且
+$$
+\Pi^2=
+\begin{pmatrix}
+E^2+R^2&ER+R(I-E)\\
+RE+(I-E)R&R^2+(I-E)^2
+\end{pmatrix}
+=\Pi.
+$$
+故为一个扩张。
+
+令 $K=\operatorname{ran}R$，只保留第二个副本的这个子空间。因 $R(U)\subseteq K$，且 $(I-E)R=R(I-E)$，$I-E$ 保持 $K$。因此 $U\oplus K$ 在 $\Pi$ 下不变；限制仍自伴幂等，压缩仍为 $E$。$R$ 与 $D$ 的非零特征值索引恰同为 $0<\lambda_j<1$，故此扩张满足
+$$
+\dim K=\operatorname{rank}R=\operatorname{rank}D.
+$$
+反之，任一扩张可写为
+$$
+\widetilde Q=\begin{pmatrix}E&T\\T^*&F\end{pmatrix},\qquad T:K\to U.
+$$
+左上块幂等方程给 $D=TT^*$。由于 $\ker(TT^*)=\ker T^*$，秩–零化度或正交核像对偶给 $\operatorname{rank}D=\operatorname{rank}T\le\dim K$。上下界相同，证明最小值。$D=0$ 时可取 $K=0$、投影就是 $E$；$U=0$ 亦包括在内。证毕。
+
+在有限事件模型中，最小隐藏维数就是满足 $0<a_b<1$ 的歧义纤维数，因为 $D$ 的对角元为 $a_b(1-a_b)$。原实现的 $U^\perp$ 可能比这个空间大：扩张最小化只保存这一份效应的压缩关系，不重建整个原始 $X$、所有事件的乘法关系或原概率实验。
+
+本定理针对一份效应。对每份效应各选一个扩张，并不等于已经给出它们共同的投影表示、共同联合律或统一经典隐藏变量；这些都还需要同时实现及相容关系。这里的块矩阵恒等式也不引入量子动力机制或实验取得信息的成本假设。
+
+### 122.5 加权纤维图、方差与阈值截面
+
+#### 122.5.1 由同纤维关系构造能量
+
+仍用同一有限满支撑模型。令
+$$
+w_{xy}=1_{q(x)=q(y)}\frac{\mu_x\mu_y}{p_{q(x)}}.
+$$
+它对称，且 $\sum_yw_{xy}=\mu_x$。对实函数 $f,g$ 定义
+$$
+\mathcal D_q(f,g)=\tfrac12\sum_{x,y}w_{xy}(f_x-f_y)(g_x-g_y),
+\qquad\mathcal D_q(f)=\mathcal D_q(f,f).
+$$
+二重和遍历有序点对，前面的 $1/2$ 负责消去双计数；自环项为零。
+
+**定理 122.13。** 有
+$$
+\mathcal D_q(f,g)=\langle f,(I-P)g\rangle_\mu
+=\langle(I-P)f,(I-P)g\rangle_\mu,
+$$
+特别地，$\mathcal D_q(f)=\|f-Pf\|_\mu^2$。若
+$$
+\operatorname{Cut}_q(A)=\sum_{x\in A,\,y\notin A}w_{xy},
+$$
+则
+$$
+\operatorname{Cut}_q(A)=\mathcal D_q(1_A)=\mathcal B_q(A).
+$$
+
+**证明。** 展开有序和，用对称性合并两项得到
+$$
+\mathcal D_q(f,g)=\sum_x\mu_xf_xg_x-\sum_{x,y}w_{xy}f_xg_y.
+$$
+后一个和等于 $\sum_bp_b\bar f_b\bar g_b=\langle f,Pg\rangle_\mu$，给出首式；正交投影性质给第二式。指标的平方差在跨事件边上为一、其余为零，两种有序方向相同，故 $\mathcal D_q(1_A)=\operatorname{Cut}_q(A)$。逐纤维计算又得
+$$
+\sum_{x\in A\cap X_b,y\in A^c\cap X_b}w_{xy}
+=\frac{\mu(A\cap X_b)\mu(A^c\cap X_b)}{p_b}
+=p_ba_b(1-a_b),
+$$
+于是等于残差。证毕。
+
+满支撑保证同一纤维内任意两点的边权都正。一个点属于观察拓扑前沿，当且仅当它连到某个事件取值相反的点；因此集合边界、图上的跨事件关系及方差的正贡献对齐。加权 cut 衡量的是这条已指定纤维图中的关系，不是另行假定的空间邻接图。
+
+仓内 `conditionalLogicalImpurity` 使用有序不同目标点对的质量，二值特化为
+$$
+\sum_b\frac{\sum_{x,y\in X_b,\,1_A(x)\ne1_A(y)}\mu_x\mu_y}{p_b}
+=2\mathcal B_q(A).
+$$
+系数二不可省略。该量与此处 cut 的关系来自两种方向，而不是定义不同造成可忽略的常数。
+
+#### 122.5.2 Layer-cake、图 coarea 与二次能量的差别
+
+定义
+$$
+\operatorname{TV}_q(f)=\tfrac12\sum_{x,y}w_{xy}|f_x-f_y|.
+$$
+**定理 122.14。** 若 $0\le f\le1$，令 $A_t=\{x:f_x>t\}$，则
+$$
+f_x=\int_0^1 1_{A_t}(x)\,dt,
+$$
+$$
+|f_x-f_y|=\int_0^1|1_{A_t}(x)-1_{A_t}(y)|\,dt,
+$$
+$$
+\operatorname{TV}_q(f)=\int_0^1\operatorname{Cut}_q(A_t)\,dt.
+$$
+任意有限实值 $f$ 可把后两式的积分改为全实轴；第一式则可写成 $f_x=m+\int_m^M1_{\{f_x>t\}}dt$，其中 $m=\min f$、$M=\max f$。
+
+**证明。** 对固定 $x$，指标为一的阈值区间长度是 $f_x$。对两点，两个阈值指标不同的区间位于两个函数值之间，长度为绝对差；阈值端点对积分无影响。将第二式乘以 $w_{xy}/2$，对有限点对求和并交换求和与积分，指标的 TV 恰等于 cut，得到第三式。常函数时区间长度为零，同样成立。证毕。
+
+参数 $t$ 是阈值，不是时间。一般平方差能量并不等于这个无权 cut 积分。例如同一纤维含两个等质量点，$f=(0,1/2)$ 时，$w_{12}=1/4$，有
+$$
+\mathcal D_q(f)=1/16,\qquad\operatorname{TV}_q(f)=1/8.
+$$
+在 $[0,1]$ 上只能直接得到 $\mathcal D_q(f)\le\operatorname{TV}_q(f)$，因为每条边的差 $d\in[0,1]$ 满足 $d^2\le d$。对指标函数二者相同；对非指标函数须保留区别。
+
+另一个必要区别是：$Pf$ 已在每条纤维上常值，所以 $\mathcal D_q(Pf)=\operatorname{TV}_q(Pf)=0$，每个阈值集也饱和。但对原事件 $f=1_A$，
+$$
+\mathbb E_\mu[(Pf)(1-Pf)]=\mathcal B_q(A)
+$$
+仍可严格正。前者检查粗化函数在纤维内是否变化，后者记录粗化后的事件概率仍有多少不确定度。
+
+### 122.6 固定观察的平均化与增加观察的精化
+
+#### 122.6.1 固定纤维下的平均化半群
+
+令 $L=I-P$，$s\ge0$。由于 $P$ 是投影，定义或指数级数直接给出
+$$
+S_s=e^{-sL}=P+e^{-s}(I-P)
+=e^{-s}I+(1-e^{-s})P.
+$$
+$S_{s+t}=S_sS_t$、$S_0=I$，且 $S_s$ 是保持常数、非负性、$\mu$ 平均的 Markov 算子。其核为
+$$
+S_s(x,y)=e^{-s}1_{x=y}+(1-e^{-s})1_{q(x)=q(y)}\mu_y/p_{q(x)}.
+$$
+这给出一份实际的条件重采样实现；$\mu_xS_s(x,y)=\mu_yS_s(y,x)$。同一观察几何也允许 $e^{-\gamma s(I-P)}$ 等其他速率，故观察核没有唯一指定时间标度。
+
+**定理 122.15。** 对 $f:X\to[0,1]$，记 $a=Pf$、$u_s=S_sf$。则
+$$
+u_s=a+e^{-s}(f-a),\qquad Pu_s=a,
+\qquad\dot u_s=-(I-P)u_s,
+$$
+$$
+\mathcal D_q(u_s)=e^{-2s}\mathcal D_q(f),\qquad
+\operatorname{TV}_q(u_s)=e^{-s}\operatorname{TV}_q(f).
+$$
+设 $J(u)=\mathbb E_\mu[u(1-u)]$，则有精确恒等式
+$$
+J(u_s)=J(f)+(1-e^{-2s})\mathcal D_q(f),
+\qquad\frac d{ds}J(u_s)=2\mathcal D_q(u_s).
+$$
+
+**证明。** 前三式来自 $P^2=P$ 与标量指数导数；$u_s$ 是 $f$ 和 $Pf$ 的凸组合，因此仍在 $[0,1]$。$(I-P)u_s=e^{-s}(I-P)f$ 给二次能量式；非零边连接同一纤维，两端 $a$ 相同，故逐边差乘以 $e^{-s}$，给 TV 式。平均保持，且 $a\perp f-a$，所以
+$$
+\|u_s\|_\mu^2=\|a\|_\mu^2+e^{-2s}\|f-a\|_\mu^2.
+$$
+由 $J(u)=\mathbb E u-\|u\|^2$ 相减即得最后两式。证毕。
+
+特别地，指标初值 $f=1_A$ 满足 $J(f)=0$，故 $J(u_s)=(1-e^{-2s})\mathcal B_q(A)$。这描述平均化把一个尖锐事件函数变成混合概率读数的过程：纤维内函数差异下降，点上的二值混合度上升，二者有精确收支。
+
+#### 122.6.2 同一平均化的熵恒等式
+
+令二元熵 $h(a)=-a\log a-(1-a)\log(1-a)$，含端点连续延拓。定义 $\mathcal S(s)=\sum_x\mu_xh(u_s(x))$。
+
+**定理 122.16。** $\mathcal S$ 非减，且
+$$
+\mathcal S(s)\longrightarrow\sum_bp_bh(a_b).
+$$
+对所有 $s\ge0$，有精确 Jensen 缺陷式
+$$
+\sum_bp_bh(a_b)-\mathcal S(s)
+=\sum_x\mu_x d_{\mathrm{Ber}}(u_s(x)\Vert a_{q(x)}),
+$$
+其中 $d_{\mathrm{Ber}}(r\Vert a)=r\log(r/a)+(1-r)\log((1-r)/(1-a))$；当 $a=0$ 或 $1$ 时，该纤维的 $u_s$ 同为该端点，整条纤维贡献约定为零。
+
+**证明。** $h$ 在 $[0,1]$ 凹，故对每个状态的转移概率使用有限 Jensen，
+$$
+h(S_tu_s)\ge S_t h(u_s).
+$$
+乘以 $\mu$ 求和并用平稳性，得 $\mathcal S(s+t)\ge\mathcal S(s)$。有限点逐点 $u_s\to a$，由连续性得极限。若 $a_b\in(0,1)$，在该纤维展开 Bernoulli KL，利用 $\sum_{x\in X_b}\mu_xu_s(x)=p_ba_b$，其和恰为 $p_bh(a_b)-\sum_{x\in X_b}\mu_xh(u_s(x))$。端点均值在满支撑且 $0\le f\le1$ 下迫使原函数整条纤维恒为该端点，故约定与实际零项一致。证毕。
+
+对 $s>0$，在所有 $0<a_b<1$ 的纤维上都有 $0<u_s(x)<1$；端点纤维恒定，去掉它们后可求导，得到
+$$
+\mathcal S'(s)
+=\frac12\sum_{x,y\text{ 位于混合纤维}}
+w_{xy}(u_s(x)-u_s(y))
+\left[\log\frac{u_s(x)}{1-u_s(x)}-
+\log\frac{u_s(y)}{1-u_s(y)}\right]\ge0.
+$$
+**证明。** $\mathcal S'=-\langle h'(u_s),Lu_s\rangle_\mu$，用定理 122.13 的双线性恒等式及 $h'(r)=-\log(r/(1-r))$ 即得；logit 严格递增，故每个边项非负。证明单调性本身无需在 $s=0$ 的尖锐端点使用不存在的有限导数。证毕。
+
+指标初值时，极限 $\sum_bp_bh(a_b)$ 正是原二值目标 $Y=1_A(X)$ 在观察 $q(X)$ 下的条件熵。中间的 $u_s$ 是一个随时间改变的函数，$\mathcal S(s)$ 不是“原固定目标因获得更多记录而增加的条件熵”；观察 $q$ 在此全程不变。一般 $[0,1]$ 初值的同一公式也成立，但若要解释成随机二值目标，必须另外规定以该函数为成功概率的共同概率模型。
+
+#### 122.6.3 增加保留观察时的两份精确收支
+
+设 $q_0=\beta q_1$，两者在同一有限概率空间上，条件投影为 $P_0,P_1$。纤维包含给出可见子空间 $U_0\subseteq U_1$，从而
+$$
+P_0P_1=P_1P_0=P_0.
+$$
+**定理 122.17。** 对任意实函数 $f$，
+$$
+\|f-P_0f\|_\mu^2
+=\|f-P_1f\|_\mu^2+\|P_1f-P_0f\|_\mu^2.
+$$
+对 $f:X\to[0,1]$，亦有
+$$
+J(P_0f)-J(P_1f)=\|P_1f-P_0f\|_\mu^2.
+$$
+
+**证明。** 分解 $f-P_0f=(f-P_1f)+(P_1f-P_0f)$，第一项垂直于 $U_1$，第二项属于 $U_1$，故勾股成立。两种条件期望有相同全局均值，且 $P_0f\perp(P_1f-P_0f)$，所以 $J$ 之差就是范数平方之差，得到第二式。证毕。
+
+对有限值目标 $Y$（可取任一与观察共同定义的随机变量，不要求为二值），令 $Q_i=q_i(X)$，并设 $Q_0=\beta(Q_1)$ 几乎处处。则
+$$
+H(Y\mid Q_0)-H(Y\mid Q_1)
+=I(Y;Q_1\mid Q_0)\ge0,
+$$
+并有显式式子
+$$
+I(Y;Q_1\mid Q_0)
+=\sum_{b_1:p_{b_1}>0}p_{b_1}
+D\bigl(\mathcal L(Y\mid Q_1=b_1)
+\Vert\mathcal L(Y\mid Q_0=\beta b_1)\bigr).
+$$
+**证明。** 对每个粗值，粗条件律是其细条件律按 $p_{b_1}/p_{b_0}$ 的混合。展开右边 KL 并按 $b_0=\beta b_1$ 分组，负的第一项给 $-H(Y\mid Q_1)$，交叉项给 $H(Y\mid Q_0)$。若细条件概率为正，对应粗条件概率也正，故没有非法除零；零质量细值不参与。KL 非负给出方向。这也是条件互信息的熵链公式，因为给定 $Q_1$ 已经决定 $Q_0$。证毕。
+
+记录本身的增加还有
+$$
+H(Q_1)-H(Q_0)=H(Q_1\mid Q_0),
+$$
+$$
+H(Q_1\mid Q_0)=I(Y;Q_1\mid Q_0)+H(Q_1\mid Y,Q_0).
+$$
+因此新增记录熵不必全是关于目标的有效信息。平方残差下降与条件互信息都是同一细化下的合法收支，但它们没有一般的数值相等关系。
+
+两种操作的方向应保持清楚：固定 $P$ 的 $S_s$ 改变被平均的函数，$J(S_sf)$ 增长；增加观察把 $P_0$ 换成 $P_1$，对固定目标有 $J(P_1f)\le J(P_0f)$。它们作用的对象不同，不能把其中一种的单调性当作另一种的时间箭头。
+
+#### 122.6.4 无限增加观察仍可能留下盲核
+
+设 $q_n$ 是同一有限 $X$ 上逐步细化的观察，定义总观察等价关系
+$$
+x\sim_\infty y\iff\forall n,\ q_n(x)=q_n(y),
+$$
+以 $q_\infty:X\to X/{\sim_\infty}$ 表示实际总接口，对应投影 $P_\infty$。
+
+**定理 122.18。** 存在某个有限 $N$，使全部 $n\ge N$ 的观察核已等于 $\sim_\infty$，因而 $P_n=P_\infty$。对任意目标 $f$，
+$$
+\lim_n\|f-P_nf\|_\mu^2=\|f-P_\infty f\|_\mu^2,
+$$
+右侧为零当且仅当总观察决定 $f$。对有限值确定目标 $Y=Y(X)$，
+$$
+\lim_nH(Y\mid q_n)=H(Y\mid q_\infty),
+$$
+且满支撑下极限为零当且仅当总观察决定 $Y$。
+
+**证明。** 对每个不满足 $x\sim_\infty y$ 的点对，选一个首次或任意分离层；这样的点对有限，取这些层的最大值 $N$，无此点对时取 $N=0$。细化保证此后它们永不重新合并，所以第 $N$ 层已实现总核。条件投影只由纤维及参考律决定，故稳定。平方残差为零恰为 $f$ 纤维常值；有限条件熵为零恰为每个正质量纤维上的目标条件律为点质量，满支撑将其提升为整条实际纤维常值。证毕。
+
+不能仅由 $|X|$ 给出最后分离层的时间索引上界：允许长时间重复同一观察后才增加信息。严格细化的次数有有限上界，发生这些变化的时刻仍须由实际观察程序给定。
+
+更一般的 Hilbert 版本也不需要零残差承诺。对同一 Hilbert 空间的递增闭子空间 $U_n$，设 $U_\infty=\overline{\bigcup_nU_n}$，相应正交投影为 $P_n,P_\infty$，则 $P_nf\to P_\infty f$。**证明。** 令 $h=P_\infty f$，有 $P_nf=P_nh$。给定 $\varepsilon>0$，选某个 $v\in U_N$ 使 $\|h-v\|<\varepsilon$；$n\ge N$ 时投影的最佳逼近性质给 $\|h-P_nh\|\le\|h-v\|<\varepsilon$。故结论成立，而极限残差恰为到 $U_\infty$ 的距离。证毕。将这些子空间解释为条件观察空间时，还须按所选概率模型识别其闭并所对应的总可测信息。
+
+这个识别在一般概率空间上也可以明确完成。设 $(X,\mathcal F,\mu)$ 为概率空间，$\mathcal F_n$ 递增，$\mathcal F_\infty=\sigma(\bigcup_n\mathcal F_n)$，令 $U_n=L^2(\mathcal F_n)$，均按几乎处处等价理解。则
+$$
+\overline{\bigcup_nL^2(\mathcal F_n)}=L^2(\mathcal F_\infty).
+$$
+**证明。** 左侧 $V$ 包含常函数并包含每个 $\mathcal F_n$ 事件的指标。令 $\mathscr D$ 为指标属于 $V$ 的 $\mathcal F_\infty$ 事件族。它含全空间，对补封闭；若 $A_j$ 两两不交，有限和 $\sum_{j\le m}1_{A_j}$ 属于 $V$，并以 $L^2$ 范数收敛到 $1_{\bigcup_jA_j}$，因为尾部集合的概率趋零。因此 $\mathscr D$ 是 Dynkin 系统。递增并 $\bigcup_n\mathcal F_n$ 是一个代数，尤其对有限交封闭，且包含于 $\mathscr D$。由 $\pi$–$\lambda$ 定理，$\mathscr D$ 包含整个 $\mathcal F_\infty$。简单函数的 $L^2$ 稠密性给 $L^2(\mathcal F_\infty)\subseteq V$；反向来自每个 $U_n$ 包含于闭子空间 $L^2(\mathcal F_\infty)$。证毕。
+
+故对一般 $f\in L^2(\mu)$，上述 Hilbert 结论就是
+$$
+\mathbb E[f\mid\mathcal F_n]\longrightarrow
+\mathbb E[f\mid\mathcal F_\infty]\quad\text{于 }L^2,
+$$
+残差消失当且仅当 $f$ 有 $\mathcal F_\infty$ 可测代表元。有限值目标 $Y$ 的各条件概率是指标的条件期望，因此同时在 $L^2$ 收敛到总信息的条件概率。概率单纯形上的熵连续且有界，故这些概率向量的依概率收敛给出熵期望收敛：具体地，用熵的一致连续性控制向量距离不超过 $\delta$ 的部分，以其有限上界控制其余部分，再用 $L^2$ 收敛使后者概率趋零。因此
+$$
+H(Y\mid\mathcal F_n)\longrightarrow H(Y\mid\mathcal F_\infty).
+$$
+极限为零恰在总条件律几乎处处为点质量，此时每个目标指标的条件方差为零，故指标等于其总条件期望，等价于总信息决定 $Y$（几乎处处）。这个一般版本的零点不能提升为所有零质量状态上的逐点决定。
+
+各层收支可以逐项相加，得到
+$$
+\|f-P_0f\|^2
+=\|f-P_nf\|^2+\sum_{j<n}\|P_{j+1}f-P_jf\|^2,
+$$
+$$
+H(Y\mid Q_0)-H(Y\mid Q_n)
+=\sum_{j<n}I(Y;Q_{j+1}\mid Q_j).
+$$
+在一般递增条件信息版本中将 $Q_j$ 改成 $\mathcal F_j$，同一结论成立；取极限得到累计增益恰等于初始误差减去总接口残差，而不是无条件耗尽初始误差。
+
+例如 $X=\{0,1\}^2$ 配均匀律，全部 $q_n(a,b)=a$，目标 $f(a,b)=b$。任意层都有 $P_nf=1/2$、残差平方 $1/4$、条件熵 $\log2$。重复已保留的确定观察不能切开其盲纤维。带新噪声或新干预的重复实验是另一份联合接口，不能在未定义它时套用这个确定重复例子或反向排除其信息增益。
+
+分区拓扑与上下近似见 Z. Pawlak, “Rough sets”, DOI 10.1007/BF01001956。条件平均采用标准条件期望；投影扩张使用有限维谱分解。仓内 `PartitionTopologyKernel`、`DirectImageComplementSaturation`、`ConditionalExpectationResidualDecomposition`、`ConditionalExpectationRefinementPythagoras` 与 `SharpEffectComplementBoundary` 分别提供对应接口；各特殊模型条件以上述证明为准。
+
+## 122.99 追加锚
+
+## 123. 有向边界、共同端点与内部读数
+
+观察歧义边界与链的有向边界具有不同类型。本节通过实际的指标差分、配对和路径接续建立它们可比较的部分，并给出内部读数能够下降到边界的核条件。
+
+### 123.1 有向链的边界及其消去律
+
+固定一个有限单纯复形及顶点的全序，以递增排列的 $k$ 维单形为实向量空间 $C_k$ 的基。交换两个顶点改变基向量符号，重复顶点的符号单形取零。定义
+$$
+\partial_k[v_0,\ldots,v_k]
+=\sum_{i=0}^k(-1)^i[v_0,\ldots,\widehat v_i,\ldots,v_k]
+\quad(k\ge1),\qquad \partial_0=0.
+$$
+则 $\partial_{k-1}\partial_k=0$。对每个基单形，删去两个原始位置 $i<j$ 的面出现两次：先删 $i$ 再删 $j$ 的符号为 $(-1)^{i+j-1}$，先删 $j$ 再删 $i$ 的符号为 $(-1)^{i+j}$，两者抵消。全部双删面按此成对，证明结论；线性延拓适用于任意链。
+
+对余链空间 $C^k=\operatorname{Hom}(C_k,\mathbb R)$，定义 $d_k\alpha=\alpha\circ\partial_{k+1}$。于是
+$$
+\langle d\alpha,c\rangle=\langle\alpha,\partial c\rangle,
+\qquad d_{k+1}d_k=0.
+$$
+前式是离散 Stokes 配对，后式由前述边界消去律成立。这里配对取代几何积分；没有假定这份有限复形已是物理流形或时空。
+
+### 123.2 图上的逻辑补集怎样变成有向割
+
+取有限无向图，为每条无向边选一个方向 $e=(e^-,e^+)$。它给出链边界矩阵 $D^{\mathsf T}$，其中
+$$
+\partial e=e^+-e^-,\qquad (Df)(e)=f(e^+)-f(e^-).
+$$
+顶点事件 $A$ 的逻辑补是 $A^c$，其指标满足 $\mathbf1_{A^c}=1-\mathbf1_A$。因为 $D1=0$，得到
+$$
+\boxed{D\mathbf1_{A^c}=-D\mathbf1_A.}
+$$
+$D\mathbf1_A$ 只在跨越 $A,A^c$ 的边上非零：进入 $A$ 时为 $+1$，离开 $A$ 时为 $-1$。所以取反保留无向割的支撑，并翻转其有向符号。这给出逻辑补与定向数据之间的准确对应。
+
+若另把部分边的参考方向反转，以对角符号矩阵 $S_E$ 记录，则新差分矩阵为 $D'=S_ED$，有向边坐标也必须按 $j'=S_Ej$ 运输。因此
+$$
+\langle D'f,j'\rangle=\langle Df,j\rangle.
+$$
+事件补集操作改变事件读数；边参考方向改变坐标约定。两者均能使某个有向量出现负号，但它们作用的对象不同。
+
+此处割是顶点指标的**余边界** $D\mathbf1_A$。若把 $\sum_{x\in A}x$ 当成零维链，它的链边界恒为零，不能将它冒认为这个有向割。观察拓扑的前沿、余链的有向割及路径链的端点边界也分别属于不同集合或向量空间；对应关系由下述公式承担。
+
+### 123.3 路径接续与共同端点抵消
+
+设允许的一条路径为 $\gamma=(x_0,x_1,\ldots,x_T)$。按所选参考边方向，把每一步写成对应有向边或其负，得到一维链 $c_\gamma$。逐步边界相加，内部端点成对消去：
+$$
+\partial c_\gamma=\sum_{t=0}^{T-1}(x_{t+1}-x_t)=x_T-x_0.
+$$
+故对任意顶点读数 $f$，离散 Stokes 具体成为
+$$
+\boxed{\langle Df,c_\gamma\rangle=f(x_T)-f(x_0).}
+$$
+特别地，$f=\mathbf1_A$ 时，沿路径进入 $A$ 的次数减去离开次数，仅由两端是否属于 $A$ 决定；补集使该净数变号。
+
+若 $\gamma_1$ 的末点恰为 $\gamma_2$ 的起点，拼接路径满足
+$$
+c_{\gamma_2\circ\gamma_1}=c_{\gamma_1}+c_{\gamma_2},
+\qquad\partial c_{\gamma_2\circ\gamma_1}=x_{\rm final}-x_{\rm initial}.
+$$
+共同端点在和中一正一负，正是接续的边界抵消。高维相邻区域的链相加也具有同样性质：共同面被赋予相反诱导定向时，在线性边界和中抵消。这一断言只需边界算子的线性性与共同面系数为相反数，不要求内部单形逐点相同。
+
+代数反向链是 $-c_\gamma$，边界变为 $x_0-x_T$；若倒序路径确属允许的过程，则其链等于此负链。某个动力系统不允许逆向步时，负链仍存在于链空间，却不代表可实施的逆过程。链还丢弃路径的若干时序细节，例如不同顺序的闭路可给相同边总计；不能由链相等推出完整历史相等。
+
+### 123.4 同一有向差分给出能量、割权与概率流
+
+给顶点严格正概率权重 $\mu_x$ 和无向边导纳 $w_e>0$。令 $M=\operatorname{diag}(\mu_x)$、$W=\operatorname{diag}(w_e)$，并定义
+$$
+L_\mu=M^{-1}D^{\mathsf T}WD.
+$$
+对任意实函数 $f,g$，有
+$$
+\langle f,L_\mu g\rangle_\mu
+=\sum_e w_e(Df)(e)(Dg)(e).
+$$
+所以 $L_\mu$ 在 $L^2(\mu)$ 中自伴、半正定、消去常数；其核是在每个连通分量上常值的函数。对事件指标，
+$$
+\langle\mathbf1_A,L_\mu\mathbf1_A\rangle_\mu
+=\sum_{e\text{ crosses }A,A^c}w_e.
+$$
+取补集不改变该能量，因为有向差分整体变号后平方保持。
+
+给观察 $q$，将同一纤维内的不同顶点全部连接，并置
+$$
+w_{xy}=\frac{\mu_x\mu_y}{p_{q(x)}},\qquad
+p_b=\sum_{q(z)=b}\mu_z.
+$$
+则
+$$
+(L_\mu f)(x)
+=\frac1{\mu_x}\sum_{y:q(y)=q(x)}w_{xy}(f(x)-f(y))
+=f(x)-(Pf)(x).
+$$
+因此 $L_\mu=I-P$，前述有向割能量就是条件残差平方。严格正权保证：标签 $b$ 属于观察边界 $\partial_qA$，当且仅当该纤维里存在一条 $D\mathbf1_A\ne0$ 的边。于是观察边界的集合判据、有向割的支撑和带权方差经这张具体纤维图相连。
+
+最后，令概率质量 $p_x=\mu_x\rho_x$，并选择动力学 $\dot\rho=-L_\mu\rho$。定义按参考方向的概率流
+$$
+J=-WD\rho.
+$$
+则 $\dot p=D^{\mathsf T}J$。对任意事件 $A$，离散 Stokes 给精确收支
+$$
+\boxed{\frac d{dt}\sum_{x\in A}p_x
+=\langle\mathbf1_A,D^{\mathsf T}J\rangle
+=\langle D\mathbf1_A,J\rangle.}
+$$
+事件内部的总质量变化等于跨割净流入；共同内部边不贡献于总收支。这是“内部体量—边界流—过程变化”的有限关系模型。
+
+在 $\rho_x>0$ 时，相对参考的 KL 满足
+$$
+\begin{aligned}
+\frac d{dt}D(p\Vert\mu)
+&=\sum_x\dot p_x\log\rho_x
+=\langle D\log\rho,J\rangle\\
+&=-\sum_e w_e(D\rho)(e)(D\log\rho)(e)\le0.
+\end{aligned}
+$$
+最后的不等式由对数严格递增逐边得到。对称导纳给出的转移率为 $w_{xy}/\mu_x$，满足关于 $\mu$ 的详细平衡；非负性与质量保持由有限 Markov 生成元性质成立。该动力学是明确添加的关系规则，而非由链边界消去律唯一决定。
+
+### 123.5 一个内部线性读数何时只由边界决定
+
+给线性边界映射 $D:C\to B$ 及内部读数 $V:C\to\mathbb R$。存在唯一 $\lambda:\operatorname{im}D\to\mathbb R$ 满足 $V=\lambda D$，当且仅当 $\ker D\subseteq\ker V$；这也等价于同边界的任意两份内部链具有相同 $V$ 值。必要性由 $Dc=0$ 时 $V(c)=\lambda(0)=0$ 得到。充分性时定义 $\lambda(Dc)=V(c)$；两个代表之差属于 $\ker D$，故值相同，线性与唯一性随之成立。若另外延拓到整个 $B$，在 $\operatorname{im}D$ 以外的取值不由该恢复任务决定。
+
+应用于链复形的 $D=\partial_k$ 时，必须消去全部闭链 $\ker\partial_k$，不能只消去 $\operatorname{im}\partial_{k+1}$ 中的边界链。后者包含于前者，但可能是真子空间。例如只取三角形的三条边而不填入二维面，闭环 $c=e_{12}+e_{23}+e_{31}$ 有 $\partial_1c=0$；$C_2=0$，所以所有二维边界为零。令 $V$ 为这三条循环定向边的系数之和，则 $V(c)=3$。它消去所有二维边界，却不能从端点边界恢复，因为 $c$ 和零链同边界而读数不同。
+
+因此一个有符号体积或内部积分若被建模为线性读数，边界充分性恰是其消去全部边界不可见方向。通常的无符号体量若不是线性函数，只能使用“在同边界纤维上恒定”的一般因子化判据，不能未经线性假设套用核包含式。
+
+所用归属为标准单纯链复形的定向边界、离散 Stokes、图关联矩阵与 Dirichlet 形式。上述有限证明连接这些结构；并不把一般边界算子、逻辑否定、物理反演或观察投影宣称为同一个运算。
+
+## 123.99 追加锚
+
+## 124. 共同来源的拼接、补全与归一化
+
+最小行为表示能否用于实际组件替换，取决于共同见证、分支、权重和来源是否仍被保留。以下分别处理集合、线性约束和概率关系；各自的存在量词与归一化不能交换使用。
+
+### 124.1 纤维积、匹配族与局部延拓
+
+**定义 124.1（相容对）。** 对集合映射 $r_A:A\to B$ 与 $r_C:C\to B$，定义
+$$
+A\times_B C=\{(a,c)\in A\times C:r_A(a)=r_C(c)\}.
+$$
+这里保留两份实现及其相等的边界值。若真实全局实现为 $\Gamma$，并给限制 $\rho_A,\rho_C$，还须检验 $(\rho_A,\rho_C):\Gamma\to A\times_B C$ 的像；任意候选相容对不自动属于该像。
+
+**命题 124.2（共同来源的唯一因子与存在边界）。** 若 $f:W\to A$、$g:W\to C$ 满足 $r_Af=r_Cg$，则存在唯一 $h:W\to A\times_B C$，其两投影分别为 $f,g$。该结论不保证每个 $a\in A$ 有可拼接对象，也不保证对象唯一。
+
+**证明。** 定义 $h(w)=(f(w),g(w))$，给定等式保证其属于纤维积。任何具有这两个投影的映射逐点等于此有序对，故唯一。对于后两点，取 $B=\{0,1\}$，$A$ 的一个元素边界为 $0$，$C$ 的所有元素边界为 $1$，该元素无伙伴；取 $B$ 为单点且 $C$ 有两个元素，则每个 $a$ 有两个伙伴。泛性质与伙伴存在、伙伴唯一是不同量词。$\square$
+
+**定义 124.3（覆盖上的匹配族）。** 设 $F$ 是拓扑空间上的集合值预层，$U=\bigcup_i U_i$。一族 $s_i\in F(U_i)$ 称为匹配族，若在每个 $U_i\cap U_j$ 上两份限制相等。层条件要求每个完整匹配族有唯一 $s\in F(U)$，满足 $s|_{U_i}=s_i$。
+
+**命题 124.4（唯一胶合不蕴含单个局部截面的延拓）。** 层条件等价于限制映射
+$$
+F(U)\longrightarrow\left\{(s_i)_i:\ s_i|_{U_i\cap U_j}=s_j|_{U_i\cap U_j}\right\}
+$$
+是双射。它不保证每个 $s_i$ 都能补成右侧的一份完整匹配族。
+
+**证明。** 满射分别给匹配族的存在式胶合，单射给唯一性，故为定义的展开。取连续实函数层、$U=(-1,1)$，局部开集 $U_1=(0,1)$ 上的 $s_1(x)=1/x$ 不能延拓成 $U$ 上的连续函数：若延拓存在，连续性会使其在 $0$ 的某邻域有界，与 $1/x$ 沿正方向趋于无穷矛盾。即使把 $U_1$ 放进开覆盖，也不能为任意给定 $s_1$ 找到其余匹配截面。另一方面，在两点离散空间上指定一点的函数值，另一点仍可任意，故延拓也不一般唯一。$\square$
+
+### 124.2 完整分隔集与有限树上的共同世界
+
+设 $T$ 是有限非空树，节点 $v$ 的变量集合为 $S_v$，各变量 $x$ 的值域为 $X_x$。局部合法关系为
+$$
+R_v\subseteq\prod_{x\in S_v}X_x.
+$$
+约定只给实际使用变量 $S=\bigcup_vS_v$ 赋值。对每条边 $uv$，完整分隔集为 $S_u\cap S_v$。运行交集条件是：对每个变量 $x$，含有 $x$ 的节点构成连通子树，或为空。
+
+**定理 124.5（指定局部实现的延拓）。** 假设各 $R_v$ 非空、运行交集成立，且每条边满足完整投影像相等：
+$$
+\{a|_{S_u\cap S_v}:a\in R_u\}
+= \{c|_{S_u\cap S_v}:c\in R_v\}.
+$$
+则对任意指定节点 $v_0$ 与 $a_0\in R_{v_0}$，存在 $x\in\prod_{s\in S}X_s$，满足 $x|_{S_v}\in R_v$ 对所有 $v$ 成立，且 $x|_{S_{v_0}}=a_0$。
+
+**证明。** 以 $v_0$ 为根，把节点按父节点先于子节点的次序排列。从 $a_0$ 开始，在已经处理的连通根子树上保持一份共同赋值。设新节点 $v$ 的父节点为 $u$。已有 $u$ 上的合法行，其在 $S_u\cap S_v$ 上的限制属于 $R_v$ 的投影像，因此可选择 $a_v\in R_v$ 与之相等。
+
+若变量 $s\in S_v$ 已在某个旧节点 $w$ 出现，则树上 $v$ 到 $w$ 的唯一路径经过 $u$。运行交集迫使路径的全部节点，特别是 $u$，都含 $s$。故
+$$
+S_v\cap\bigcup_{w\text{ 已处理}}S_w=S_v\cap S_u.
+$$
+新行与全部旧赋值的共同坐标已经在完整分隔集上匹配，可以并成新赋值。有限归纳得到全部节点的共同实现，且根行始终未变。$\square$
+
+**命题 124.6（两项必要的范围限制）。** 上述延拓一般不唯一；逐坐标投影一致不能代替完整分隔集投影一致；去掉运行交集也不能保留普遍延拓保证。
+
+**证明。** 对不唯一性，取两节点，根 scope 为 $\{x\}$，邻点 scope 为 $\{x,y\}$，根固定 $x=0$，邻点允许 $(0,0),(0,1)$。指定根行有两个整体延拓。
+
+对完整分隔集，令两个节点的 scope 都为 $\{x,y\}$，一边要求 $x=y$，另一边要求 $x\ne y$，值域为 Bool。每个单坐标投影都是 Bool，但整份二坐标关系不交，故无共同实现。
+
+对运行交集，取三节点路径，scope 依次为 $\{x\},\{y\},\{x\}$，左右两端分别固定 $x=0,1$。每条边的分隔集为空，投影像相等；但两端的同一个变量不能同时取不同值。失败来自共同来源被切断。$\square$
+
+相反，若两侧的完整赋值已经给出并在完整交集上相同，则它们在变量并集上的胶合唯一。这种唯一性不决定尚未给出的另一侧，也不提供搜索成本界。
+
+### 124.3 补全关系、当前输出与无限线程
+
+令 $A,C$ 为两侧局部记录空间，$K\subseteq A\times C$ 为真实允许的共同关系，其中已经包含边界相等及整体准入要求。定义
+$$
+D(a)=\{c:(a,c)\in K\}.
+$$
+
+**命题 124.7（完整补全的因子化）。** 对摘要 $\beta:A\to B$，存在唯一 $\bar D:\beta[A]\to\mathcal P(C)$ 满足 $D=\bar D\beta$，当且仅当
+$$
+\beta(a)=\beta(a')\Longrightarrow D(a)=D(a').
+$$
+
+**证明。** 若因子存在，同摘要必有同值。反之对实际像中的 $b=\beta(a)$ 定义 $\bar D(b)=D(a)$，假设保证代表无关；任何因子在实际像的每点都被迫等于该值，故唯一。$\square$
+
+**命题 124.8（无补全状态的盲区）。** 只保持 $D$ 不能自动保持当前输出、失败原因、合法动作、概率或成本。
+
+**证明。** 取两个局部状态 $a_0,a_1$，均无合法补全，故 $D(a_0)=D(a_1)=\varnothing$；但令当前输出分别为 $0,1$，合并它们立即损失当前任务。把输出换成不同失败标签或不同允许动作，可得到同样反例。即使可行补全支撑相同，也可给两个结果不同概率，或者给同一动作不同成本，支撑集合仍相同。$\square$
+
+因此，对要求同时保持这些量的实验语言，应取完整签名
+$$
+\Sigma(a)=\bigl(o(a),\ \mathrm{Leg}(a),\ \mathrm{Fail}(a),\ D(a),\
+               (\kappa_e(a),c_e(a))_{e\in\mathcal E}\bigr),
+$$
+其中每个概率核、条件来源及成本函数都在声明的合法域上定义。摘要保真是 $\Sigma$ 的所有分量通过摘要因子化。更新还能下降，则再要求同摘要状态在同合法动作下更新为同摘要状态。它们共同给与任务和动作相容的状态表示；不能由仅仅相同的完成支撑替代。
+
+**定理 124.9（有限层逆系统的非空线程）。** 设 $X_n$ 为非空有限集合，$r_n:X_{n+1}\to X_n$ 为全定义映射。则存在 $(x_n)_{n\ge0}$ 满足 $r_n(x_{n+1})=x_n$ 对所有 $n$ 成立。映射不必满射。
+
+**证明。** 构造根树：深度 $n+1$ 的节点为满足前 $n$ 个相容等式的元组 $(x_0,\ldots,x_n)$，父节点删除末项。每个深度非空，因为任选 $x_n\in X_n$ 后可依次向下投影。每层有限，故每个节点仅有限分支。虚根有任意深后代；若一个这样的节点所有子节点均只有有界深度的后代，有限个界的最大值也会界定该节点的后代深度，矛盾。因此可递归选择具有任意深后代的子节点，得到无穷相容路径。$\square$
+
+**命题 124.10（逐层非空、完整线程与实际像的区别）。** 去掉有限性时，逐层非空不保证线程非空；存在完整线程也不保证来自指定原实现。
+
+**证明。** 第一例取 $X_n=\{m\in\mathbb N:m\ge n\}$，$r_n$ 为包含。线程必须是一个对所有 $n$ 都不小于 $n$ 的固定自然数，不存在。
+
+第二例取原实现 $\Gamma=\mathbb N$，观察 $q_n(m)=m\bmod 2^n$，层间为模约化。线程 $x_n=2^n-1$ 相容。若它来自某个 $m\in\mathbb N$，取 $2^n>m+1$，则 $q_n(m)=m\ne2^n-1$，矛盾。该线程是 $2$-进完成中的 $-1$，但不属于原自然数的实际像。$\square$
+
+有限树延拓、无限线程存在、实际像提升和有限预算取得因此是四个不同的关系条件。
+
+### 124.4 最小残差、不动点与仿射运输
+
+固定有限维实内积空间 $V,W$、线性映射 $D:V\to W$ 与 $b\in W$。记 $D^\dagger$ 为 Moore–Penrose 逆，$D^*$ 为伴随，$P=DD^\dagger$ 为到 $\operatorname{im}D$ 的正交投影。
+
+**定理 124.11（不相容分量与全部最小点）。** 对 $E(x)=\frac12\|Dx-b\|^2$，有
+$$
+E(x)=\frac12\|Dx-Pb\|^2+\frac12\|(I-P)b\|^2,
+$$
+$$
+\min_xE(x)=\frac12\|(I-DD^\dagger)b\|^2,\qquad
+\operatorname{argmin}E=D^\dagger b+\ker D.
+$$
+其中 $D^\dagger b$ 是唯一最小范数极小点。原方程可解当且仅当最小残差为零。
+
+**证明。** $Dx-Pb$ 属于 $\operatorname{im}D$，$(I-P)b$ 属于其正交补，勾股等式给第一式。取 $x=D^\dagger b$ 使第一项为零；任意极小点也必须满足 $Dx=Pb$，故与 $D^\dagger b$ 相差核向量。由伪逆性质 $D^\dagger b\perp\ker D$，其余极小点的范数平方是 $\|D^\dagger b\|^2$ 加核向量范数平方，得到唯一最小范数性。最后 $(I-P)b=0$ 等价于 $b\in\operatorname{im}D$。$\square$
+
+这里的极小值在整个 $V$ 上取得。如果另有非负、整数或离散约束，仍须处理受限可行域；该公式只是其下界。
+
+**定理 124.12（梯度更新的固定点与收敛）。** 令
+$$
+U_\eta(x)=x-\eta D^*(Dx-b).
+$$
+当 $\eta\ne0$ 时，固定点恰为 $E$ 的全部极小点。当 $D\ne0$ 且 $0<\eta<2/\|D\|_{\mathrm{op}}^2$ 时，从任意 $x_0$ 出发迭代收敛于
+$$
+D^\dagger b+\Pi_{\ker D}x_0.
+$$
+若 $\eta=0$，所有点都不动；若 $D=0$，所有点原本都是极小点。
+
+**证明。** $\eta\ne0$ 时，固定点等价于正规方程 $D^*(Dx-b)=0$，即残差与 $\operatorname{im}D$ 正交，也即 $Dx=Pb$。设 $x_*=D^\dagger b$，因为 $D^*(Dx_*-b)=0$，误差满足
+$$
+x_{t+1}-x_*=(I-\eta D^*D)(x_t-x_*).
+$$
+把 $V$ 按自伴非负算子 $D^*D$ 的正交特征基分解。正特征值 $\lambda\le\|D\|_{\mathrm{op}}^2$ 对应因子 $1-\eta\lambda\in(-1,1)$，故该分量趋于零；零特征空间为 $\ker D$，因子为 $1$，核分量保持。其余边界分支直接代入定义。$\square$
+
+例如 $D=0,b\ne0$ 时，每点固定而残差恒为正；因此动态稳定性不能代替精确相容性。非零 $D$ 的边界步长 $\eta=2/\|D\|_{\mathrm{op}}^2$ 在最大特征方向产生因子 $-1$，也说明固定点存在不等于任意初态收敛。
+
+**命题 124.13（共同边界与仿射纤维的运输）。** 若局部更新满足 $r_AU_A=Vr_A$、$r_CU_C=Vr_C$，则它们保持边界相等。对线性 $D,D',A,V$ 与仿射更新 $U(x)=Ax+c$，条件
+$$
+D'A=VD,\qquad D'c=b'-Vb
+$$
+保证 $Dx=b\Rightarrow D'U(x)=b'$。
+
+**证明。** 第一结论由两侧更新后的边界均为原共同值的 $V$ 像得到。第二结论由
+$$
+D'U(x)=VDx+D'c=Vb+b'-Vb=b'
+$$
+得到。特别地，若 $D'=D,c=0,b'=b$，在原仿射纤维非空时，仅有 $DU=VD$ 还须 $Vb=b$；空纤维的保持则为空真。取实直线、$D=I,U=V=2I,b=1$，交换关系成立，但点 $1$ 被送至 $2$，原仿射约束没有保持。$\square$
+
+### 124.5 概率拼接与条件独立的选择成本
+
+取有限集合 $A,B,C$ 上两份概率 $p_{AB},p_{BC}$，假设它们具有相同 $B$ 边缘 $p_B$。定义
+$$
+p^*(a,b,c)=\begin{cases}
+ p_{AB}(a,b)p_{BC}(b,c)/p_B(b),&p_B(b)>0,\\
+ 0,&p_B(b)=0.
+\end{cases}
+$$
+
+**定理 124.14（最大熵拼接及其精确缺陷）。** $p^*$ 是具有指定两份边缘的联合概率；给定 $B$ 后，$A,C$ 条件独立。对具有同样两份边缘的任意联合律 $p$，按 $0\log0=0$ 约定，有
+$$
+D(p\Vert p^*)=I_p(A;C\mid B)=H(p^*)-H(p)\ge0.
+$$
+所以 $p^*$ 是这些边缘下唯一的最大熵联合律，且 $p=p^*$ 当且仅当 $p$ 已经条件独立。
+
+**证明。** $p_B(b)=0$ 时两个边缘在该切片全部为零。正切片上求和得到
+$$
+\sum_c p^*(a,b,c)=p_{AB}(a,b),\qquad
+\sum_a p^*(a,b,c)=p_{BC}(b,c),
+$$
+故总质量为一。除以 $p_B(b)$ 后，条件联合律为 $p(a\mid b)p(c\mid b)$。
+
+若 $p(a,b,c)>0$，对应三份边缘均正，所以 $p^*(a,b,c)>0$。在这份支撑上展开，
+$$
+\begin{aligned}
+D(p\Vert p^*)
+&=\sum_{a,b,c:p>0}p(a,b,c)
+ \log\frac{p(a,b,c)p_B(b)}{p_{AB}(a,b)p_{BC}(b,c)}\\
+&=H(AB)+H(BC)-H(B)-H(ABC).
+\end{aligned}
+$$
+同一展开也等于 $\sum_{b:p_B(b)>0} p_B(b)D(p_{AC|b}\Vert p_{A|b}p_{C|b})$，即条件互信息。对 $p^*$，条件独立给
+$$
+H(p^*)=H(B)+H(A\mid B)+H(C\mid B)
+      =H(AB)+H(BC)-H(B).
+$$
+KL 非负及其等号条件给全部结论。有限支撑使这些熵和差值均为有限实数，没有无穷减无穷。$\square$
+
+**命题 124.15（保留边缘不保证恢复原来源）。** 上述拼接不一般恢复真实共同律，也不自动保持原来的跨 $AC$ 约束。
+
+**证明。** 取 $B$ 为单点，真实 $A=C$ 为公平比特。两个局部边缘均为公平比特；最大熵拼接使 $A,C$ 独立。原律满足 $\Pr(A=C)=1$，拼接律给 $1/2$，且熵从 $\log2$ 增为 $2\log2$。熵差 $\log2$ 来自重新选择耦合；这里没有指定任何物理耗散过程。$\square$
+
+### 124.6 辅助见证的权重与归一化
+
+设 $X$ 为有限非空集合，$A_x$ 为有限辅助集合，$w(x,a)\ge0$，并令 $Z(x)=\sum_{a\in A_x}w(x,a)>0$。给 $X$ 上概率 $\mu$，置 $\bar Z_\mu=\sum_x\mu(x)Z(x)$。
+
+**定理 124.16（全局归一化改变原边缘的精确条件）。** 全局辅助联合律
+$$
+P_\mu(x,a)=\frac{\mu(x)w(x,a)}{\bar Z_\mu}
+$$
+的原状态边缘为 $\mu(x)Z(x)/\bar Z_\mu$。对固定 $\mu$，边缘保持当且仅当 $Z$ 在其正支撑上等于同一正常数；对所有 $\mu$ 保持当且仅当 $Z$ 全局为正常数。
+
+**证明。** 对 $a$ 求和得边缘公式。正支撑上可约去 $\mu(x)$，保持条件恰为 $Z(x)=\bar Z_\mu$；零质量点无约束。如果全部概率均保持，取任意两点上的等权概率，得到 $Z(x)=Z(y)$。反向若 $Z$ 常值，分子分母约去该值即得原律。$\square$
+
+每个 Dirac 概率无论 $Z$ 是否常值都会保持，因此只检验 Dirac 不足以验证“全部先验保持”。例如 $\mu=(1/2,1/2)$，两纤维分别有一个和两个等权见证，所得边缘为 $(1/3,2/3)$。
+
+**定理 124.17（逐行归一化保留整份旧联合律）。** 令 $\kappa(a\mid x)=w(x,a)/Z(x)$。对原状态与共享来源的任意联合律 $J(x,h)$，定义
+$$
+\widetilde J(x,h,a)=J(x,h)\kappa(a\mid x).
+$$
+则 $\sum_a\widetilde J(x,h,a)=J(x,h)$；所以全部旧函数、旧联合事件和旧相关性都保持。这里另有 $A\perp H\mid X$；若核依赖 $h$，逐行归一化仍保持 $J$，但不再断言这份条件独立。
+
+**证明。** 固定 $(x,h)$ 后求和，概率核的行和为一，即得等式；再对任意旧事件求和便得全部旧联合律保持。正质量条件行下 $\widetilde J(a,h\mid x)=J(h\mid x)\kappa(a\mid x)$，给条件独立。$\square$
+
+逐参数边缘保持还不足以声明统计实验等价。例如原 $X$ 恒为一个点，与未知 $\theta\in\{0,1\}$ 无关；新核选择 $A=\theta$。每个参数下原边缘都保持，而新增记录完全识别参数。若核不依赖未知参数，则扩展是原实验的已知随机后处理，投影又恢复原实验；此时两实验可以相互模拟。这是随机核意义的实验等价，不断言逐点的确定行为商等价。能否执行这种后处理及其取得成本仍须由允许操作指定。
+
+### 124.7 边界细化的 Hilbert 等距与缺失的辅助方向
+
+在上一节 $P(x,a)=\mu(x)\kappa(a\mid x)$ 下，按零质量等价类定义实或复 $L^2$，并定义 $(Uf)(x,a)=f(x)$。
+
+**定理 124.18（拉回、伴随和条件投影）。** $U:L^2(\mu)\to L^2(P)$ 是线性等距嵌入，其伴随满足
+$$
+(U^*g)(x)=\sum_a\kappa(a\mid x)g(x,a)
+$$
+于 $\mu$ 几乎处处，且 $U^*U=I$；$UU^*$ 是到仅依赖 $x$ 的子空间上的正交投影。
+
+**证明。** 逐行求和给
+$$
+\|Uf\|_P^2=\sum_x\mu(x)|f(x)|^2\sum_a\kappa(a\mid x)=\|f\|_\mu^2.
+$$
+同样展开内积给 $\langle Uf,g\rangle_P=\langle f,U^*g\rangle_\mu$，证明伴随公式。代入 $Uf$ 得 $U^*U=I$，故 $UU^*$ 自伴幂等；其像恰为 $\operatorname{im}U$，于是是相应正交投影。$\square$
+
+若 $X$ 单点、辅助公平比特，而 $g$ 在两个辅助值上取 $1,-1$，则 $U^*g=0$，$UU^*g\ne g$。等距包含保留旧关系，不恢复任意新增辅助方向。
+
+相反，定理124.16 的全局归一化给
+$$
+\|Uf\|_{P_\mu}^2=\sum_x\frac{\mu(x)Z(x)}{\bar Z_\mu}|f(x)|^2.
+$$
+它一般是重加权边缘的范数，不是旧 $L^2(\mu)$ 范数；必须一起运输参考概率，才能比较几何。
+
+### 124.8 Gibbs 配分函数、重数与边界替换
+
+取有限非空集合 $X$、实能量 $E(x)$、基础权 $w(x)\ge0$，$M=\sum_xw(x)>0$，以及温度 $\tau>0$。令
+$$
+Z_w=\sum_x w(x)e^{-E(x)/\tau},\qquad
+\pi_w(x)=\frac{w(x)e^{-E(x)/\tau}}{Z_w}.
+$$
+对概率 $q\ll w$，定义 $F_w(q)=\mathbb E_qE+\tau\sum_{x:q(x)>0}q(x)\log(q(x)/w(x))$。
+
+**定理 124.19（自由能和基础权重数）。** 有
+$$
+F_w(q)=-\tau\log Z_w+\tau D(q\Vert\pi_w).
+$$
+因此 $\pi_w$ 是唯一极小点。若 $\rho=w/M$，则 $\pi_\rho=\pi_w$，但
+$$
+Z_w=MZ_\rho,\qquad F_w(q)=F_\rho(q)-\tau\log M.
+$$
+
+**证明。** 在 $q$ 正支撑上，$\log\pi_w=\log w-E/\tau-\log Z_w$。乘以 $q$ 求和并重排给第一式，KL 非负与等号条件给唯一极小点。把 $w=M\rho$ 代入配分函数和对数项，得到余下两式。$\square$
+
+按同一正整数重数复制全部微观表示，在遗忘复制标签后保持原状态的归一化 Gibbs 边缘，却改变绝对配分函数与自由能；不同 $x$ 下复制不同重数，则还会按 定理124.16 改变边缘。在辅助能量 $E(x,a)$ 下，$F_{\mathrm{eff}}(x)=-\tau\log\sum_a e^{-E(x,a)/\tau}$ 恰为全局辅助求和产生的有效能量；逐行归一化则除掉这一因子。两种实验定义的区别由同一配分函数给出。
+
+**命题 124.20（完整边界求值的上下文替换）。** 设边界集合有限，或以下全部求和具有有限支撑。半环 $S$ 上两个组件具有相同边界求值 $V_1(b)=V_2(b)$。若上下文通过该完整边界接入，实际整体求值为
+$$
+W_i(z)=\sum_bV_i(b)C(b,z),
+$$
+则 $W_1=W_2$。非交换半环中乘法顺序必须保持；把该代数式认作真实实现求和，还须有保持权重和重数的实现分解。
+
+**证明。** 逐项代入 $V_1(b)=V_2(b)$ 即得等式。真实实现与相容局部对的保持权重双射允许按边界重索引，并将私有变量求和分离，导出给定公式。若分解重复计数、漏掉共享变量或重复乘入同一因子，就未满足这份分解前提。矩阵复合的结合律仅使用加法交换、乘法结合及分配律，不允许交换权重乘法次序。$\square$
+
+**命题 124.21（零值和边缘相等的两类盲区）。** 边界求和值为零不一般意味着无合法见证；归一化边缘相等不一般允许在访问共享来源的上下文中替换。
+
+**证明。** 一个合法见证可以有零权；在带负数或复数的权中，两个非零权见证还可相消。只有非负且每个合法见证严格正等条件，才让正求和值等价于存在见证。
+
+对替换反例，令共享来源 $H$ 为公平比特。组件一输出 $B=H$，组件二输出独立公平比特。两者 $B$ 边缘相同，但可访问 $H$ 的上下文检验 $B=H$，成功概率分别为 $1,1/2$。实际完整边界含有共享 $H$，不能只匹配 $B$ 的平均边缘。$\square$
+
+若两个未归一化边界求值只相差正常数，固定正归一化上下文中的输出分布可相同，但总质量、证据值和绝对自由能仍不同。若比例依赖未纳入边界的参数或来源，还须运输这份依赖，不能把它约成一个全局常数。
+
+### 124.9 非确定性关系需要保留共同分支
+
+#### 124.9.1 关系下降有两个不同强度
+
+设演化为关系 $R_u\subseteq X\times X$，记 $R_u(x)=\{x':xR_ux'\}$。希望标签上的关系 $\bar R_u$ 满足精确后继等式
+
+$$
+\bar R_u(q(x))=q[R_u(x)].
+\tag{124.1}
+$$
+
+**命题 124.22（关系的精确后继商）。** 这样的 $\bar R_u$ 存在且唯一，当且仅当
+
+$$
+q(x)=q(y)\quad\Longrightarrow\quad
+q[R_u(x)]=q[R_u(y)].
+\tag{124.2}
+$$
+
+**证明。** (124.1) 立即推出 (124.2)；反之，定义 $\bar R_u(b)=q[R_u(x)]$，其中 $q(x)=b$，(124.2) 保证定义不依赖代表元。实际像给出唯一性。证毕。
+
+条件 (124.2) 是等价关系形式的双模拟稳定性：同类状态的每个后继，都能由另一个状态的同类后继匹配，反之亦然。它比“在商上画出某条边”强，也比要求原关系完全是商关系的拉回弱。后者要求
+
+$$
+xR_ux'\quad\Longleftrightarrow\quad q(x)\bar R_uq(x'),
+$$
+
+即关系对两个端点分别饱和。以两个状态、恒同关系、单标签观察为例，(124.2) 成立；商关系的拉回却包含所有四个有序对，因此原关系不等于拉回。正文不应混用这两种商。
+
+#### 124.9.2 存在性商边可以拼出不存在的路径
+
+对任何观察都能定义存在性商边
+
+$$
+b\widehat R c
+\quad\Longleftrightarrow\quad
+\exists x,x',\ q(x)=b,\ q(x')=c,\ xRx'.
+$$
+
+但它可能丢失中间见证必须相同的条件。取
+
+$$
+X=\{s,a,b,t\},\qquad R=\{(s,a),(b,t)\},
+$$
+
+并把 $\{s\}$、$\{a,b\}$、$\{t\}$ 分别命名为 $S,M,T$。商上存在 $S\widehat R M\widehat R T$。原空间却没有长度二的 $s$ 到 $t$ 路径：第一步只能到 $a$，而 $a$ 没有后继。两条商边分别使用 $a$ 和 $b$，并没有共同的中间状态。
+
+若 (124.2) 成立，则任意有限商路径都可从指定的起始代表元提升。证明是逐步归纳：给定已提升的 $x_i$，商边 $q(x_i)\bar R q(x_{i+1})$ 与 (124.1) 保证存在具有所需下一标签的真实后继。有限长度归纳即可完成提升。该结论不能倒用于不满足 (124.2) 的存在性商。
+
+#### 124.9.3 相同轨迹集合仍可能丢失分支相容性
+
+取标签动作 $a,b,c$，所有状态的当前任务值相同。关系仅含
+
+$$
+x\xrightarrow a p,\quad x\xrightarrow a q,\quad
+y\xrightarrow a r,\quad
+p\xrightarrow b t,\quad q\xrightarrow c t,\quad
+r\xrightarrow b t,\quad r\xrightarrow c t.
+$$
+
+$x$、$y$ 可执行的有限动作词都恰为 $\{\varepsilon,a,ab,ac\}$，但它们不能属于同一个分支稳定等价类。若 $xEy$，则 $y$ 的后继 $r$ 必须与 $x$ 的某个后继 $p$ 或 $q$ 等价；$p$ 缺少 $c$ 后继，$q$ 缺少 $b$ 后继，均与稳定性矛盾。
+
+区别由一个分支上下文直接检出：
+
+$$
+\langle a\rangle\bigl(\langle b\rangle\top\ \land\ \langle c\rangle\top\bigr).
+$$
+
+它要求同一个 $a$ 后继同时允许 $b$ 与 $c$，在 $y$ 为真、在 $x$ 为假。把两个分别可达的后续实验当作可在同一中间状态上联合实现，会恰好漏掉这个区别。
+
+#### 124.9.4 有限分支下的充分上下文语言
+
+假设每个 $R_u(x)$ 有限。令测试语言包含 $\top$、全部任务值原子 $[f_j=y]$、否定、有限合取，以及模态测试 $\langle u\rangle\varphi$；后者在 $x$ 为真，当且仅当某个 $u$ 后继满足 $\varphi$。令 $E_{\rm mod}$ 表示所有这类测试真值相同。
+
+**命题 124.23（有限分支的最大稳定任务合同）。** $E_{\rm mod}$ 满足第124节的精确后继商判据的后继稳定条件、保持全部当前任务，并包含任意具有这两性质的等价关系。
+
+**证明。** 任务值原子保证当前任务相同。设 $xE_{\rm mod}y$ 且 $xR_ux'$。若没有与 $x'$ 模态等价的 $y$ 后继，把有限后继集写为 $\{y_1,\ldots,y_n\}$。对每个 $i$，选一个在 $x'$ 与 $y_i$ 上真值不同的测试；必要时取否定，得到 $\varphi_i$ 在 $x'$ 真、在 $y_i$ 假。于是 $\varphi=\bigwedge_i\varphi_i$ 在 $x'$ 真，在所有 $y$ 后继假。若后继集为空，取空合取 $\top$。因此 $\langle u\rangle\varphi$ 区分 $x,y$，矛盾。交换 $x,y$ 同理，得到双向后继类匹配。
+
+最后，若 $E$ 已保持任务并满足后继匹配，则对测试的结构归纳证明所有 $E$ 等价状态具有相同真值。布尔步骤直接成立；模态步骤利用对应的等价后继并应用归纳假设。故 $E\subseteq E_{\rm mod}$。证毕。
+
+有限分支用于把全部潜在匹配失败收集为有限合取。本命题没有声称对任意无限分支系统，有限模态测试仍然足够；那需要另加饱和性、紧致性或允许更强测试语言。确定性情形则已由全部操作词的证明解决，不需要这个有限分支区分论证。
+
+### 124.10 加权接口的拼接是对同一个联合实现求和
+
+#### 124.10.1 私有变量分开、共享变量保留的精确公式
+
+令 $X,U,Y,V,Z$ 为有限集合，权重取值于交换半环 $\mathbb S$。例如非负实数用于加权计数，布尔半环用于存在性约束。给定
+
+$$
+w_1:X\times U\times Y\to\mathbb S,
+\qquad w_2:Y\times V\times Z\to\mathbb S.
+$$
+
+$u,v$ 是不同私有变量；$y$ 是同一个共享变量。把完整联合权重明确规定为
+
+$$
+w(x,u,y,v,z)=w_1(x,u,y)w_2(y,v,z).
+$$
+
+定义局部边界响应
+
+$$
+Z_1(x,y)=\sum_u w_1(x,u,y),\qquad
+Z_2(y,z)=\sum_v w_2(y,v,z).
+$$
+
+**命题 124.24（共享接口的求和—乘积拼接）。** 外部边界响应为
+
+$$
+Z(x,z)=\sum_{y,u,v}w(x,u,y,v,z)
+       =\sum_y Z_1(x,y)Z_2(y,z).
+$$
+
+**证明。** 固定 $x,y,z$，有限分配律给出
+
+$$
+\left(\sum_u w_1(x,u,y)\right)
+\left(\sum_v w_2(y,v,z)\right)
+=\sum_u\sum_v w_1(x,u,y)w_2(y,v,z).
+$$
+
+对 $y$ 求和并交换有限和的次序即得结论。证毕。
+
+这里的私有变量独立，首先是变量范围没有偷偷重叠、联合因子已按所写形式定义的结构条件；它不是从两个边缘分布自动推出的概率独立性定理。
+
+#### 124.10.2 结合律与边界身份的变化
+
+对有限接口矩阵定义
+
+$$
+(K_1\star K_2)(x,z)=\sum_yK_1(x,y)K_2(y,z).
+$$
+
+三个接口满足
+
+$$
+((K_1\star K_2)\star K_3)(x,t)
+=\sum_{y,z}K_1(x,y)K_2(y,z)K_3(z,t)
+=(K_1\star(K_2\star K_3))(x,t).
+$$
+
+证明只用有限求和的重排与乘法结合律。多个局部因子亦可在所有共同变量上先写同一个完整乘积，再任意调整合法的有限消元顺序。合法的含义是，某变量只有在所有依赖它的因子都已参加该步时，才可被求和消去。
+
+在局部块中，$y$ 是外露边界；拼接后它可以成为整体的内部变量。这是同一变量相对于不同分块的角色变化，并不是链复形中带符号边界算子满足 $\partial^2=0$。当前构造没有定义链群、方向符号或链边界，因此不能从矩阵拼接推出该式。
+
+#### 124.10.3 共享来源不能被复制或提前遗忘
+
+若两块还共享 $s$，正确响应在保留共同来源后具有形状
+
+$$
+Z(x,z)=\sum_{s,y}\mu(s)
+\left(\sum_u w_1(x,u,s,y)\right)
+\left(\sum_v w_2(s,y,v,z)\right).
+$$
+
+共享先验 $\mu(s)$ 计一次。分别先对 $s$ 求和，再相乘，会把同一个来源替换成两个可独立选择的来源。
+
+例如公平比特 $S$ 同时产生 $X=S$ 与 $Z=S$。各局部输出都均匀，真实联合却是 $P(X=Z)=1$。把两个局部均匀边缘相乘会得到 $P(X=Z)=1/2$，改变了模型。差别来自共享关系被删除，而非求和恒等式失效。
+
+若输入是相容的两个概率边缘 $p_{XY},p_{YZ}$，共同边缘为 $p_Y$，在 $p_Y(y)>0$ 时定义
+
+$$
+p(x,y,z)=\frac{p_{XY}(x,y)p_{YZ}(y,z)}{p_Y(y)};
+$$
+
+在 $p_Y(y)=0$ 的纤维令其为零。非负性成立；对 $z$ 求和给 $p_{XY}$，对 $x$ 求和给 $p_{YZ}$，再求总和为一。这证明两个相容边缘存在一个条件独立的共同扩张。若原始系统已有真实联合分布，只有在其满足 $X\perp Z\mid Y$ 时，才由该公式重现该真实联合。相容边缘本身并不唯一指定联合。
+
+三块以上的循环相容性还可能不存在任何共同扩张。取三个二值变量：$p_{XY}$ 在 $00,11$ 各给 $1/2$；$p_{YZ}$ 同样；$p_{XZ}$ 在 $01,10$ 各给 $1/2$。所有重叠的单变量边缘都均匀，但前两项要求 $X=Y=Z$ 几乎处处，第三项要求 $X\ne Z$ 几乎处处，矛盾。集合约束 $x=y$、$y=z$、$x\ne z$ 也给出同一共同见证障碍：任意两项可以实现，三项的交为空。
+
+对应数学接口包括纤维积、层的匹配族、连接树、Moore–Penrose 逆、条件互信息与 Markov 核。仓内 `SheafPairwiseEqualizer`、`RunningIntersectionRecords`、`HistoryPayloadFactorization`、`LocalLawGluingObstruction`、`FiniteMoorePenroseInverse`、`FiniteSynthesisGramDistance` 及 `GibbsVariationalIdentity` 给出已有组件。
+
+## 124.99 追加锚
+
+## 125. 边界时间记录的可观测性与最小线性实现
+
+第120节按实验行为取商的原则，在线性系统中成为核、秩和矩阵因子化。这里分别证明已知系统的状态恢复、未知有限阶系统的行为重建，以及噪声下恢复的稳定性。
+
+### 125.1 已知图上的合法内部与边界关系
+
+设有限无向图的非负对称边权为 $w_{ij}$，正权边决定连通性，图 Laplace 矩阵为 $L$。顶点分为边界 $B$ 与内部 $I$，并假设每个连通分量都与 $B$ 相交。约定空内部空间允许，空矩阵的逆按零维唯一自同构理解。对内部向量 $v$，将其在边界补零为 $\widetilde v$，有
+$$
+v^{\mathsf T}L_{II}v
+=\widetilde v^{\mathsf T}L\widetilde v
+=\frac12\sum_{i,j}w_{ij}(\widetilde v_i-\widetilde v_j)^2.
+$$
+若该量为零，$\widetilde v$ 在每条正权边两端相等，故在每个连通分量上常值；每个分量含边界零点，故 $v=0$。于是 $L_{II}$ 正定。反过来，若某个分量完全位于内部，其指标向量属于 $\ker L_{II}$，故此边界接触条件也必要。
+
+给定边界值 $a$，内部合法性要求调和关系
+$$
+L_{IB}a+L_{II}h=0.
+$$
+它的唯一解及边界流为
+$$
+h=-L_{II}^{-1}L_{IB}a,
+\qquad j=(L_{BB}-L_{BI}L_{II}^{-1}L_{IB})a.
+$$
+这同时给出两种任务的因子化：在固定图和固定权重的合法解空间内，边界值决定全部内部解；作为外部输入输出关系，网络被表示为 $a\mapsto j$。不同图共享同一个输入输出映射不违反前一种唯一性，因为其合法解空间与内部方程已经不同。
+
+例如，在同一对边界点之间，一条电导为 $1$ 的边与两条电导各为 $2$ 的串联边具有相同响应。后一网络的内部值为 $(a+b)/2$，边界流为 $2(a-(a+b)/2)=a-b$，与前者相同；但两者内部顶点数不同。
+
+对有 $N$ 条单位边的路径，调和条件使差分 $x_{i+1}-x_i$ 恒定；由 $x_0=a,x_N=b$ 得
+$$
+x_i=a+\frac{i}{N}(b-a),\qquad N\ge1.
+$$
+两端点足以恢复内部，是合法解空间受局部关系约束后的结论。
+
+### 125.2 时间记录与目标线性关系的充分性
+
+设有限维实状态空间 $X$、输出空间 $U$，已知线性演化 $A:X\to X$ 与读出 $O:X\to U$。无外部输入时 $z_t=A^tz_0$，$y_t=Oz_t$。长度 $T\ge0$ 的记录映射为
+$$
+\mathcal O_T:X\to U^T,
+\qquad\mathcal O_Tz=(Oz,OAz,\ldots,OA^{T-1}z).
+$$
+对任务线性映射 $F:X\to Y$，存在定义在实际像上的线性恢复映射 $D:\operatorname{ran}\mathcal O_T\to Y$ 满足 $F=D\mathcal O_T$，当且仅当
+$$
+\ker\mathcal O_T\subseteq\ker F.
+$$
+必要性由复合直接得到。充分性时规定 $D(\mathcal O_Tz)=Fz$；同一记录的两个代表之差在 $\ker\mathcal O_T$，故该定义良好，线性且在实际像上唯一。这是目标因子化在边界历史关系中的具体实例。
+
+取 $F=I_X$，得完整状态可恢复当且仅当 $\ker\mathcal O_T=0$，即 $\operatorname{rank}\mathcal O_T=\dim X$。令
+$$
+\mathcal N=\bigcap_{t\ge0}\ker(OA^t).
+$$
+它是 $A$ 不变子空间：$v\in\mathcal N$ 时 $OA^tAv=OA^{t+1}v=0$。因此 $A$ 和 $O$ 下降到商 $X/\mathcal N$；全部未来记录恰区分这个商。若 $n=\dim X$，Cayley–Hamilton 将每个 $A^t$（$t\ge n$）表示为 $I,A,\ldots,A^{n-1}$ 的线性组合，故 $\ker\mathcal O_n=\mathcal N$；零维时两者均为零。
+
+有已知输入 $u_t$ 时，先从读数中减去已知受迫项 $\sum_{j=0}^{t-1}OA^{t-1-j}Ju_j$，剩余为 $OA^tz_0$，再用同一恢复判据。若输入或耦合未知，不能使用这份已知项消去。
+
+这也给出演化相容性：记录恢复的不只是任意标签，而是允许在完整未来商上继续更新的状态关系。对 $T<n$，有限记录的核未必是 $A$ 不变的，因而不能自动把它当作自治状态商。
+
+### 125.3 Fibonacci：当前坐标与边界记忆的精确对应
+
+取
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},
+\quad O=\begin{pmatrix}1&0\end{pmatrix},
+\quad z_0=(x_0,h_0)^{\mathsf T}.
+$$
+两步记录给
+$$
+y_0=x_0,\quad y_1=x_0+h_0,
+\quad\mathcal O_2=\begin{pmatrix}1&0\\1&1\end{pmatrix},
+\quad z_0=(y_0,y_1-y_0)^{\mathsf T}.
+$$
+又 $A^2=A+I$，因此全部边界历史满足 $y_{t+2}=y_{t+1}+y_t$。反过来，任意满足此递推的历史由前两项唯一决定，并由上述初态实现。于是两维一阶状态关系与一维二阶历史关系是相容的两种表示。它保留的是所有合法未来和初态对应；此坐标转换本身没有引入概率耗散。
+
+### 125.4 可控边界实验、Hankel 关系与最小内部
+
+另给输入空间 $V$ 与输入耦合 $J:V\to X$，考虑
+$$
+z_{t+1}=Az_t+Ju_t,\qquad y_t=Oz_t.
+$$
+零初态时
+$$
+y_t=\sum_{s=0}^{t-1}OA^{t-1-s}Ju_s.
+$$
+因此全部零初态输入输出关系等价于全部 Markov 参数 $M_k=OA^kJ$；$M_k$ 是时域响应矩阵，此名称不赋予概率转移性质。
+
+令可达映射与可达空间为
+$$
+\mathcal C_s(v_0,\ldots,v_{s-1})=\sum_{j=0}^{s-1}A^jJv_j,
+\qquad \mathcal R=\operatorname{span}\{A^jJv:j\ge0,v\in V\}.
+$$
+块 Hankel 映射定义为 $\mathcal H_{r,s}=(M_{i+j})_{0\le i<r,0\le j<s}$。逐块相乘即得
+$$
+\mathcal H_{r,s}=\mathcal O_r\mathcal C_s.
+$$
+若 $r,s\ge n=\dim X$，Cayley–Hamilton 给 $\operatorname{ran}\mathcal C_s=\mathcal R$ 与 $\ker\mathcal O_r=\mathcal N$，秩—零度公式用于 $\mathcal O_r|_{\mathcal R}$ 后得到
+$$
+\operatorname{rank}\mathcal H_{r,s}
+=\dim\mathcal R-\dim(\mathcal R\cap\mathcal N).
+$$
+$\mathcal R$ 与 $\mathcal R\cap\mathcal N$ 都 $A$ 不变，故在商
+$$
+X_{\mathrm{eff}}=\mathcal R/(\mathcal R\cap\mathcal N)
+$$
+上有诱导的演化、输入与输出。该商可达；若其状态的全部输出为零，任一代表属于 $\mathcal R\cap\mathcal N$，所以它也可观测。其 Markov 参数等于原参数，因为每个 $A^jJv$ 都投向对应商生成元。
+
+这个最小商保持零初态的输入输出实验；任意未知初态可能含不属于可达空间的可见分量。例如 $J=0$ 而 $O\ne0$ 时，全部 Markov 参数为零，零初态最小实现为零维，但未知非零初态仍可产生输出。恢复任意初态须另外保留它的可观测商。
+
+任意实现同一参数序列的另一内部空间 $X'$，都有 $\operatorname{rank}\mathcal H_{r,s}\le\dim X'$。因此上述商取得全部同响应实现中的最小维数。视界前提可使用已声明的状态阶数上界；不能从任意短有限数据先假定该前提成立。
+
+Fibonacci 例另取 $J=(1,0)^{\mathsf T}$，则 $M_0,M_1,M_2,\ldots=1,1,2,\ldots$，
+$$
+\mathcal H_{2,2}=\begin{pmatrix}1&1\\1&2\end{pmatrix},
+\qquad \det\mathcal H_{2,2}=1.
+$$
+故任何同响应线性实现至少二维，给出的模型达到此界。对 $z^2-z-1\ne0$，直接求逆给
+$$
+O(zI-A)^{-1}J=\frac{z}{z^2-z-1}.
+$$
+它编码响应递推，不能替代每条实际输入及初态的记录。
+
+### 125.5 相同边界行为的实现运输
+
+设 $(X,A,J,O)$ 与 $(X',A',J',O')$ 均可达、可观测，且对所有 $k$ 有 $OA^kJ=O'A'^kJ'$。规定
+$$
+S\left(\sum_jA^jJv_j\right)=\sum_jA'^jJ'v_j.
+$$
+若左括号为零，则右和在任意未来 $t$ 的输出为
+$$
+\sum_jO'A'^{t+j}J'v_j=\sum_jOA^{t+j}Jv_j=0.
+$$
+右系统可观测使右和为零，故 $S$ 良定义。它线性且由右可达性满射；交换两系统作同一构造得到逆映射。对输入生成元及其移位计算，得
+$$
+SA=A'S,\qquad SJ=J',\qquad O'S=O.
+$$
+生成元张成又使这样的 $S$ 唯一。反之，这些关系显然保持全部 Markov 参数。此为一般线性最小实现的相似唯一性；它不要求 $S$ 保持预先各自指定的 Euclidean 长度。
+
+### 125.6 响应度量及它在表示转换下的运输
+
+给 $X,U$ 指定内积。长度 $T$ 的响应距离为
+$$
+d_T(z,z')^2=\sum_{t=0}^{T-1}\|OA^t(z-z')\|^2
+=\langle z-z',G_T(z-z')\rangle,
+\quad G_T=\mathcal O_T^*\mathcal O_T.
+$$
+其零方向是 $\ker\mathcal O_T$，因此它在 $X$ 上是伪距离，在 $X/\ker\mathcal O_T$ 上是距离。$T\ge n$ 时它给完整未来商的内积。坐标转换 $z'=Sz$ 且 $O'=OS^{-1},A'=SAS^{-1}$ 时，$\mathcal O'_T=\mathcal O_TS^{-1}$，从而
+$$
+G'_T=S^{-*}G_TS^{-1},\qquad d'_T(Sz,S\widetilde z)=d_T(z,\widetilde z).
+$$
+这是观察关系定义的几何随表示运输；并不宣称 $G_T$ 等于一份未经运输的外加物理度量。
+
+无限时间加折扣 $\beta>0$。若 $\sqrt\beta\|A\|<1$，则
+$$
+G_\beta=\sum_{t=0}^{\infty}\beta^t(A^t)^*O^*OA^t
+$$
+在算子范数下绝对收敛，因为第 $t$ 项范数不超过 $\|O\|^2(\beta\|A\|^2)^t$。其二次型恰为全部折扣未来输出能量，非负项级数为零当且仅当每项为零，故 $\ker G_\beta=\mathcal N$。这里的范数不等式只是可求和性的充分条件；例如 $A^2=0$ 时级数只有前两项，即使 $\sqrt\beta\|A\|\ge1$ 也收敛。也可以用其他已证可求和条件定义有限的无限时间距离，不能将这个充分估计误报为必要条件。
+
+### 125.7 有逆与稳定逆的分别
+
+设 $\dim X>0$、$\mathcal O_T$ 单射，观测含加性误差 $Y=\mathcal O_Tz+\eta$。令最小二乘恢复
+$$
+\widehat z=(\mathcal O_T^*\mathcal O_T)^{-1}\mathcal O_T^*Y.
+$$
+奇异值分解给恢复算子范数 $1/\sigma_{\min}(\mathcal O_T)$，所以
+$$
+\|\widehat z-z\|\le\frac{\|\eta\|}{\sigma_{\min}(\mathcal O_T)}.
+$$
+具体地，若 $\mathcal O_T=U\Sigma V^*$ 是薄奇异值分解，则恢复算子为 $V\Sigma^{-1}U^*$，其范数等于最大倒数奇异值。单射只给 $\sigma_{\min}>0$，不提供跨模型的统一正下界。若 $X=\{0\}$，唯一状态及其最小二乘恢复都为零，误差恒为零，无须定义空奇异值表的最小值。
+
+同样，对期望重建 $\tau=\sum_i a_i m_i$，若各均值误差为 $\Delta_i$，三角不等式给
+$$
+\left|\sum_i a_i\Delta_i\right|\le\|a\|_1\|\Delta\|_\infty.
+$$
+对有限二阶矩的实际随机读数向量 $W$，中心化展开给
+$$
+\operatorname{Var}(a^{\mathsf T}W)=a^{\mathsf T}\Sigma a,
+\qquad \Sigma_{ij}=\operatorname{Cov}(W_i,W_j).
+$$
+若每项 $|W_i|\le1$，则 $|a^{\mathsf T}W|\le\|a\|_1$，故方差至多 $\|a\|_1^2$；只有另给相互独立且同准备的批次，批均值方差才在该上界中除以批数。重叠窗口和记忆过程的非对角协方差不能删除。
+
+### 125.8 有限数据何时重建整个响应，何时不能
+
+先给出未知阶数下的明确障碍。任取整数 $m\ge0$，取 $m+1$ 维状态基 $e_0,\ldots,e_m$，规定
+$$
+Ae_i=e_{i+1}\ (i<m),\quad Ae_m=0,\quad J(1)=e_0,\quad O=e_m^*.
+$$
+则 $OA^kJ=0$ 对 $0\le k<m$ 成立，$OA^mJ=1$，之后又为零。这是直接由基向量移位得到的。它与零响应系统在任意预先给定的前 $m$ 项一致，却在下一项分开。两者都有限维，但允许的维数随视界增大；因此任意有限前缀不能排除所有未设阶数上界的延迟实现。这个反例属于一般线性实现，不具有正自伴、输入输出互为伴随的额外结构，不能用它否定该更窄模型中额外的矩约束。
+
+现在假设完整响应由至少一个真实线性系统产生，且模型类中全部候选状态维数至多 $n\ge1$；所给有限响应数据精确。输入输出维数分别为 $a,b$。取 $r,s\ge n$，由精确数据构造
+$$
+H=(M_{i+j})_{0\le i<r,0\le j<s},\qquad
+H^+=(M_{i+j+1})_{0\le i<r,0\le j<s},
+\quad d=\operatorname{rank}H.
+$$
+它们最多用到 $M_{r+s-1}$。这里下标 $r+s-1$ 是最大响应阶数，记录共有 $r+s$ 项。若 $d=0$，前述秩公式使有效最小实现维数为零，全部响应都为零。
+
+以下设 $d>0$。选择 $H$ 的 $d$ 个标量行索引 $I$ 和 $d$ 个标量列索引 $J_0$，使子块 $N=H[I,J_0]$ 可逆。令 $G=H^+[I,J_0]$，$H[I,0]$ 表示这些行与第零输入块的交块，$H[0,J_0]$ 表示第零输出块与这些列的交块。定义
+$$
+\widehat A=GN^{-1},\qquad
+\widehat J=H[I,0],\qquad
+\widehat O=H[0,J_0]N^{-1}.
+$$
+则此 $d$ 维系统满足 $\widehat O\widehat A^k\widehat J=M_k$ 对全部 $k\ge0$ 成立。
+
+证明如下。先把任一真实实现限制到可达可观测商，前述定理已保证其维数为 $d$，且保留全部响应。对这个商写 $H=\mathcal O_r\mathcal C_s$、$H^+=\mathcal O_rA\mathcal C_s$。设 $O_I$ 为 $\mathcal O_r$ 的指定行，$R_J$ 为 $\mathcal C_s$ 的指定列，则
+$$
+N=O_IR_J,\qquad G=O_IAR_J.
+$$
+两个因子都是 $d\times d$，$N$ 可逆使它们各自可逆。因此
+$$
+\widehat A=O_IAO_I^{-1},\qquad
+\widehat J=O_IJ,\qquad
+\widehat O=OO_I^{-1}.
+$$
+这正是保持边界的相似运输，代入任意幂得全部响应相等。所用输入和输出第零块存在，因为 $r,s\ge n\ge1$。子块的选择改变坐标，不改变完整响应或最小内部维数。证明同时说明模型阶数上界和子块可逆性各自承担哪一步：前者使有限 Hankel 秩等于有效维数，后者给该维数上的坐标逆；不能只保留后者就忽略未知更高阶尾部。
+
+以上是精确响应值上的代数重建。噪声会改变秩判定和所选子块的逆，稳定性需要另外控制奇异值与实验误差，并不由此有限公式免费提供。
+
+实现论参考：R. E. Kalman (1963), DOI 10.1137/0301010；B. L. Ho 与 R. E. Kalman (1966), DOI 10.1524/auto.1966.14.112.545。仓内 `HankelRankMinimality`、`SequenceHankelRealization`、`FiniteHoKalmanBlocks`、`GramianBehaviorQuotientMetric` 提供相应接口。
+
+## 125.99 追加锚
+
+## 126. 由完整边界响应恢复有效内积几何
+
+一般线性响应只确定最小实现的相似类。增加自伴演化与伴随耦合后，响应本身成为隐藏向量的 Gram 配对，因而能够恢复有效内部的实际内积；这是全息式几何重建的一份具体充分条件。
+
+### 126.1 同一内部关系与它允许的边界读法
+
+固定有限维实内积空间 $U,H$，其中 $U$ 是已指定内积的边界空间。取
+
+$$
+B:H\to U,\qquad C:H\to H,\qquad C=C^*>0.
+$$
+
+正定的含义是 $\langle h,Ch\rangle_H>0$ 对每个非零 $h$ 成立。零维空间也允许。所有伴随均相对于这里已指定的内积；输入耦合是 $B^*$、输出耦合是 $B$，这是本结果的实质假设。
+
+定义完整边界响应和响应矩
+
+$$
+K(t)=Be^{-tC}B^*\quad(t\ge0),\qquad
+M_j=BC^jB^*\quad(j\ge0).
+$$
+
+有限维矩阵指数的幂级数给出
+
+$$
+(-1)^jK^{(j)}(0)=M_j,\qquad
+K(t)=\sum_{j=0}^{\infty}\frac{(-t)^j}{j!}M_j,
+$$
+
+级数对每个有限时间区间在算子范数下绝对一致收敛。在 $t=0$ 可用右导数读出这些矩；矩阵指数本身提供整条实轴上的解析延拓。因此，相同完整 $K(t)$ 给出相同全部 $M_j$，反之亦然。
+
+令
+
+$$
+\mathcal R=\operatorname{span}\{C^jB^*u:j\ge0,\ u\in U\},\qquad
+\mathcal N=\bigcap_{j\ge0}\ker(BC^j).
+$$
+
+前者是边界能够激发的隐藏方向，后者是所有后续边界读数共同看不见的方向。对任意 $h\in H$，
+
+$$
+h\in\mathcal R^\perp
+\ \Longleftrightarrow\
+\langle h,C^jB^*u\rangle_H=0\quad(\forall j,u)
+\ \Longleftrightarrow\ BC^jh=0\quad(\forall j),
+$$
+
+故
+
+$$
+\boxed{\mathcal N=\mathcal R^\perp,\qquad H=\mathcal R\oplus\mathcal N.}
+$$
+
+$C\mathcal R\subseteq\mathcal R$ 由生成元定义成立；自伴性使 $\mathcal N$ 也不变。$B\mathcal N=0$，$B^*U\subseteq\mathcal R$。因此这两个子空间约化 $C$，且
+
+$$
+K(t)=B_{\mathcal R}e^{-tC_{\mathcal R}}B_{\mathcal R}^*,
+\qquad
+C_{\mathcal R}=C|_{\mathcal R},\quad B_{\mathcal R}=B|_{\mathcal R}.
+$$
+
+这里 $B_{\mathcal R}^*u=B^*u$，陪域限制在 $\mathcal R$。任意正自伴的额外不可见块都不改变 $K$；完整 $H$ 不能在没有最小性时被边界响应识别。
+
+### 126.2 响应矩定义边界词的内积关系
+
+令 $\mathcal W=\bigoplus_{j\ge0}U$ 为有限支撑的边界系数串空间。元素写成 $v=(v_0,v_1,\ldots)$，只有有限项非零；也可视为系数在 $U$ 中的多项式。这里的“词”标记各阶响应方向，并不把单个矩等同于某次有限采样结果。
+
+只用边界响应矩定义双线性配对
+
+$$
+\gamma_K(v,w)=\sum_{i,j\ge0}\langle v_i,M_{i+j}w_j\rangle_U.
+$$
+
+两边都是有限和。对实际隐藏关系，定义
+
+$$
+T:\mathcal W\to H,\qquad Tv=\sum_{i\ge0}C^iB^*v_i.
+$$
+
+利用 $C=C^*$，逐项计算：
+
+$$
+\begin{aligned}
+\gamma_K(v,w)
+&=\sum_{i,j}\langle v_i,BC^{i+j}B^*w_j\rangle_U\\
+&=\sum_{i,j}\langle C^iB^*v_i,C^jB^*w_j\rangle_H\\
+&=\boxed{\langle Tv,Tw\rangle_H.}
+\end{aligned}
+$$
+
+因此 $\gamma_K$ 对称、半正定，且它的零范数集合恰为线性子空间
+
+$$
+\mathcal Z_K=\{v:\gamma_K(v,v)=0\}=\ker T.
+$$
+
+若 $v\in\mathcal Z_K$，则对所有 $w$ 有 $\gamma_K(v,w)=0$，所以配对下降到商空间
+
+$$
+\mathcal H_K=\mathcal W/\mathcal Z_K,\qquad
+\langle[v],[w]\rangle_K=\gamma_K(v,w).
+$$
+
+该商内积正定。映射
+
+$$
+\Phi_K:\mathcal H_K\to\mathcal R,\qquad \Phi_K[v]=Tv
+$$
+
+良定义、单射、保内积；由 $\mathcal R$ 的生成定义又满射。因此
+
+$$
+\boxed{\Phi_K:\mathcal H_K\simeq_{\rm orth}\mathcal R.}
+$$
+
+这恢复的是实际隐藏方向的全部两两内积，而不只是维数。特别地，$\mathcal H_K$ 自动有限维且完备；其距离为 $\|[v]-[w]\|_K=\|T(v-w)\|_H$。在 $H/\mathcal N$ 上取标准商内积，即用唯一的 $\mathcal R$ 正交代表计算内积，则也有规范等距对应 $\mathcal H_K\cong H/\mathcal N$。
+
+这一步是标准 Gram 商构造：先在边界描述上记录配对，再商掉所有零配对方向。实际实现证明了该配对的正性与有限秩，不是在任意给定的矩序列上额外假定矩问题已有解。
+
+### 126.3 同一配对同时恢复隐藏演化和边界耦合
+
+在边界词上定义右移
+
+$$
+(\sigma v)_0=0,\qquad (\sigma v)_{j+1}=v_j.
+$$
+
+实际映射满足 $T\sigma=CT$。因此 $v\in\mathcal Z_K$ 蕴含 $\sigma v\in\mathcal Z_K$，右移下降成良定义的算子
+
+$$
+\mathcal C_K[v]=[\sigma v],\qquad
+\Phi_K\mathcal C_K=C_{\mathcal R}\Phi_K.
+$$
+
+由等距性与 $C_{\mathcal R}>0$，$\mathcal C_K$ 是正自伴算子。在边界配对层也能直接看出自伴性：
+
+$$
+\gamma_K(\sigma v,w)
+=\sum_{i,j}\langle v_i,M_{i+j+1}w_j\rangle_U
+=\gamma_K(v,\sigma w).
+$$
+
+定义零次插入 $J_K:U\to\mathcal H_K$，$J_Ku=[(u,0,0,\ldots)]$，再令 $\mathcal B_K=J_K^*$。则
+
+$$
+\Phi_KJ_K=B^*,\qquad
+\mathcal B_K[v]=\sum_{j\ge0}M_jv_j=B\Phi_K[v].
+$$
+
+第二式由对每个 $u\in U$ 与 $J_Ku$ 配对得到，因此也直接证明它不依赖代表元。于是
+
+$$
+\boxed{K(t)=\mathcal B_Ke^{-t\mathcal C_K}\mathcal B_K^*.}
+$$
+
+且 $\operatorname{span}\{\mathcal C_K^j\mathcal B_K^*u\}=\mathcal H_K$，因为所有边界词都是有限次插入及右移之和。这个规范实现已经最小。
+
+因此由响应恢复的对象是三元关系
+
+$$
+(\mathcal H_K,\mathcal C_K,\mathcal B_K),
+$$
+
+连同边界 $U$ 的固定内积与接口；只说“恢复了一个同维 Euclidean 空间”会丢失该构造保留的耦合和演化信息。
+
+### 126.4 有限 Hankel 块的准确秩与视界
+
+对整数 $m\ge0$，令 $U^m$ 是 $m$ 个 $U$ 的正交直和，$U^0=\{0\}$，并定义
+
+$$
+T_m:U^m\to H,\qquad T_m(v_0,\ldots,v_{m-1})
+=\sum_{j=0}^{m-1}C^jB^*v_j,
+\qquad \mathcal R_m=\operatorname{ran}T_m.
+$$
+
+对 $r,s\ge0$，边界矩块
+
+$$
+\mathsf H_{r,s}:U^s\to U^r,\qquad
+(\mathsf H_{r,s}v)_i=\sum_{j=0}^{s-1}M_{i+j}v_j
+$$
+
+满足精确因子化
+
+$$
+\boxed{\mathsf H_{r,s}=T_r^*T_s,\qquad
+\mathsf H_{m,m}=T_m^*T_m,\qquad
+\operatorname{rank}\mathsf H_{m,m}=\dim\mathcal R_m.}
+$$
+
+最后的等式来自 $\ker(T_m^*T_m)=\ker T_m$，因为 $\langle v,T_m^*T_mv\rangle=\|T_mv\|^2$，再用有限维秩—零度公式。它对 $m=0$ 也成立，两边均为零。
+
+令 $d=\dim\mathcal R$。有
+
+$$
+\boxed{\mathcal R_m=\mathcal R\quad\text{对所有 }m\ge d.}
+$$
+
+证明如下。链 $0=\mathcal R_0\subseteq\mathcal R_1\subseteq\cdots$ 若在 $k$ 处停止增长，即 $\mathcal R_k=\mathcal R_{k+1}$，则 $C\mathcal R_k\subseteq\mathcal R_{k+1}=\mathcal R_k$。当 $k\ge1$ 时它还包含 $B^*U$，因此包含全部生成元，等于 $\mathcal R$；当 $k=0$ 时停止增长意味着 $B^*=0$，同样 $\mathcal R=0$。所以到达 $\mathcal R$ 前每一步至少增加一维，至多 $d$ 步必到达。
+
+若 $r,s\ge d$，$T_s$ 满射到 $\mathcal R$，而 $T_r^*$ 限制在 $\mathcal R$ 上单射：其核在 $\mathcal R$ 中等于 $\mathcal R\cap\mathcal R_r^\perp=0$。因而
+
+$$
+\boxed{\operatorname{rank}\mathsf H_{r,s}=d\quad(r,s\ge d).}
+$$
+
+特别地，已知 $n=\dim H$ 时，$r,s\ge n$ 是明确的充分视界；对一个声明了有效阶数上界 $n\ge d$ 的类，也有同样保证。这与 Cayley–Hamilton 给出的有限截断视界相容，以上增长链证明直接处理 $d=0$。
+
+没有这样的视界前提时，任意有限块只具有由因子化得到的界 $\operatorname{rank}\mathsf H_{r,s}\le d$。不能将一个有限块的秩未经进一步条件就认作未知系统的有效阶数上界；本结论也没有把有限带噪记录转成精确全部矩。这里的视界计数指矩的阶数：$\mathsf H_{r,s}$ 最多用到 $M_{r+s-2}$（当 $r,s>0$）。
+
+### 126.5 相同全部边界响应的正交唯一性
+
+设第二个实现 $(H',C',B')$ 满足相同假设，使用相同边界内积空间 $U$。记其有效空间为 $\mathcal R'$。若
+
+$$
+Be^{-tC}B^*=B'e^{-tC'}B'^*\qquad(t\ge0),
+$$
+
+则全部矩相同。对有效隐藏生成元规定
+
+$$
+S\left(\sum_jC^jB^*u_j\right)
+=\sum_jC'^jB'^*u_j.
+$$
+
+这一定义不是凭选取表示成立的：若左边括号中的和为零，该词的 $\gamma_K(v,v)$ 为零；相同矩使右边的和具有同一个零平方范数，因此也为零。于是 $S$ 良定义且线性。相同配对进一步给
+
+$$
+\langle Sx,Sy\rangle_{H'}=\langle x,y\rangle_H\qquad(x,y\in\mathcal R).
+$$
+
+生成定义使 $S$ 满射到 $\mathcal R'$，所以它是正交同构。对生成词右移及零次插入，得到
+
+$$
+\boxed{SC_{\mathcal R}=C'_{\mathcal R'}S,\qquad
+SB^*=B'^*,\qquad B' S=B|_{\mathcal R}.}
+$$
+
+最后一个等式也可由内积直接验证：
+
+$$
+\langle u,B'Sx\rangle_U
+=\langle B'^*u,Sx\rangle_{H'}
+=\langle SB^*u,Sx\rangle_{H'}
+=\langle u,Bx\rangle_U.
+$$
+
+任何同时交织 $C$ 且保持 $B^*$ 的线性映射，在每个 $C^jB^*u$ 上都被强制为 $C'^jB'^*u$，因此在生成空间上唯一。
+
+若两个实现都最小，即 $\mathcal R=H$、$\mathcal R'=H'$，就得到唯一的全空间正交同构 $S:H\to H'$。反过来，若存在这样的正交同构且满足 $SC=C'S$、$SB^*=B'^*$，则由指数幂级数
+
+$$
+Se^{-tC}=e^{-tC'}S,\qquad B'S=B,
+$$
+
+从而 $B'e^{-tC'}B'^*=Be^{-tC}B^*$。这证明双向等价。
+
+这里正交性来自响应矩本身就是隐藏生成向量的 Gram 配对：自伴 $C$ 与伴随输入输出耦合共同承担这一点。对于任意独立的输入矩阵和输出矩阵，通常的最小实现唯一性只给相似变换，不能将本证明的正交结论无条件移植过去。
+
+由有限维谱定理，还可将所确定的内容写成
+
+$$
+C=\sum_{\lambda>0}\lambda P_\lambda,\qquad
+K(t)=\sum_{\lambda>0}e^{-\lambda t}W_\lambda,
+\qquad W_\lambda=BP_\lambda B^*\ge0.
+$$
+
+有效空间分解为 $\mathcal R=\bigoplus_\lambda\operatorname{ran}(P_\lambda B^*)$：谱投影是 $C$ 的多项式，故这些分量属于 $\mathcal R$；反向由各个 $C^jB^*u$ 的谱展开成立。在 $\lambda$ 分量上的有效重数为
+
+$$
+\dim\operatorname{ran}(P_\lambda B^*)=\operatorname{rank}W_\lambda.
+$$
+
+所以完整响应确定的是可见谱及其边界权重；$W_\lambda=0$ 的纯不可见谱不能恢复。上述正交唯一性已经保证这一谱描述不依赖最小实现的选择。
+
+### 126.6 同一内部关系的精确记忆消元
+
+现在额外取 $A=A^*:U\to U$，并可要求能量块
+
+$$
+\mathsf L=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}\ge0.
+$$
+
+考虑同一内部关系的线性演化
+
+$$
+\dot x(t)=-Ax(t)-Bh(t),\qquad
+\dot h(t)=-B^*x(t)-Ch(t),
+\qquad x(0)=x_0,\ h(0)=h_0.
+$$
+
+有限维线性常微分方程有唯一全局解。变常数公式给出精确恒等式
+
+$$
+h(t)=e^{-tC}h_0-\int_0^t e^{-(t-s)C}B^*x(s)\,ds.
+$$
+
+可直接微分右边核验初值和隐藏方程。代回边界方程得到
+
+$$
+\boxed{\dot x(t)=-Ax(t)-Be^{-tC}h_0
++\int_0^t K(t-s)x(s)\,ds.}
+$$
+
+记忆项前的正号来自两次负耦合；隐藏初态强迫项 $-Be^{-tC}h_0$ 保留在式中。$h_0$ 的 $\mathcal N$ 分量对该项没有贡献，但其 $\mathcal R$ 分量一般有贡献。完整 $K$ 确定模型的有效几何，不自行给出某次实验选取的 $h_0$。
+
+对两个等响应最小实现，若采用相同 $A,x_0$ 并运输隐藏初态 $h_0'=Sh_0$，则初态强迫项也相同，边界演化关系完全一致。对非最小实现只需运输有效初态分量，不可见分量任意。这把上面的正交运输落实到同一实际历史关系，而不只是裸算子等式。
+
+### 126.7 静态边界消元恰取记忆核的积分
+
+对固定边界值 $x$，二次能量为
+
+$$
+E(x,h)=\frac12\langle x,Ax\rangle_U+\langle x,Bh\rangle_U
++\frac12\langle h,Ch\rangle_H.
+$$
+
+因 $C>0$，配方给
+
+$$
+\begin{aligned}
+E(x,h)
+={}&\frac12\langle x,(A-BC^{-1}B^*)x\rangle_U\\
+&+\frac12\langle h+C^{-1}B^*x,
+ C(h+C^{-1}B^*x)\rangle_H.
+\end{aligned}
+$$
+
+所以唯一静态内部解是 $h_*(x)=-C^{-1}B^*x$，有效边界能量及响应算子由
+
+$$
+\boxed{S_{\mathrm{stat}}=A-BC^{-1}B^*}
+$$
+
+给出；若 $\mathsf L\ge0$，则 $S_{\mathrm{stat}}\ge0$。
+
+有限维正定性提供某个 $c_0>0$，使 $C\ge c_0I$。因此 $\|e^{-tC}\|\le e^{-c_0t}$，下列积分在算子范数下收敛。由谱定理逐个正特征值积分，或积分 $\frac{d}{dt}e^{-tC}=-Ce^{-tC}$，有
+
+$$
+\int_0^\infty e^{-tC}\,dt=C^{-1},\qquad
+\boxed{\int_0^\infty K(t)\,dt=BC^{-1}B^*,\qquad
+S_{\mathrm{stat}}=A-\int_0^\infty K(t)\,dt.}
+$$
+
+故静态消元与记忆消元确实来自同一内部关系，但读取的是不同边界信息：静态只保留时间核的总积分，动态关系保留其时间形状和初态强迫。将历史积分直接替换成静态算子作用于当前 $x(t)$，不是上述精确消元恒等式。
+
+### 126.8 同一静态响应、不同动态关系的解析族
+
+固定有限维 $U,H$、非零线性映射 $D:H\to U$，以及满足 $A=A^*$、$A-DD^*\ge0$ 的同一个 $A$。对任意参数 $c>0$，令
+
+$$
+C_c=cI_H,\qquad B_c=\sqrt c\,D.
+$$
+
+全部内部块都满足前述正定假设，且
+
+$$
+\begin{aligned}
+2E_c(x,h)
+&=\langle x,(A-DD^*)x\rangle_U
++\|\sqrt c\,h+D^*x\|_H^2\ge0.
+\end{aligned}
+$$
+
+静态有效响应对所有 $c$ 完全相同：
+
+$$
+A-B_cC_c^{-1}B_c^*=A-DD^*.
+$$
+
+而完整动态响应为
+
+$$
+\boxed{K_c(t)=c e^{-ct}DD^*,\qquad \int_0^\infty K_c(t)\,dt=DD^*.}
+$$
+
+若 $c\ne c'$，则 $K_c(0)-K_{c'}(0)=(c-c')DD^*\ne0$，因为 $D\ne0$ 蕴含 $DD^*\ne0$。因此同一静态 Schur 响应不能确定完整记忆核。
+
+该族的有效空间恰为 $\mathcal R_D=\operatorname{ran}D^*$，不可见空间为 $\ker D$。限制到 $\mathcal R_D$ 就得到最小实现；也可一开始选择单射 $D$。有效算子为 $cI_{\mathcal R_D}$，且 $\mathcal R_D\ne0$。不同 $c$ 的有效实现之间不可能存在保演化的正交同构，因为 $ScI=c'IS$ 将迫使 $(c-c')S=0$。
+
+这里可以使用同一维数、同一个抽象内积空间；不同的是其演化及边界耦合关系。因此反例针对的是带接口与时间结构的有效几何，而非宣称同维实 Hilbert 空间作为裸空间不等距。它是对全部 $c>0$ 和上述一般 $D,A$ 的解析非识别族，不靠有界枚举或数值实验。
+
+### 126.9 退化情形、已有结构与结论边界
+
+若 $B=0$，则 $K=M_j=0$，$\mathcal R=0$、$\mathcal N=H$；全部边界词都在零空间中，规范空间 $\mathcal H_K=0$。最小实现于是只能是零隐藏空间，且其正交同构唯一。若 $H=0$，同样各式成立；零空间上的唯一算子同时是零算子和恒等算子，逆算子与积分等式均按该唯一映射理解。证明中的统一正下界可任取 $c_0>0$，因为只有零向量。$U=0$ 也自动归入 $B=0$ 情形。
+
+结论始终相对于固定边界内积、完整精确响应及上述有限正自伴模型；恢复的是有效内部关系到正交同构为止。它没有恢复不可见内部块，也没有提供有限带噪实验的统计或数值稳定性保证，更没有从这个模型推导物理面积律。
+
+证明使用谱定理、Gram 商、变常数公式与 Schur 补。仓内 `MinimalSymmetricRealizationUniqueness` 的公开结论给正交交织映射的存在；本文唯一性由生成元张成给出。`InfiniteObservabilityOrthogonalDuality` 与 `SchurMinimum` 分别提供可达—不可观测对偶及静态最小化接口。
+
+## 126.99 追加锚
+
+## 127. 同一图关系的记忆核、熵收支与路径方向
+
+把第126节的响应结构放入一份明确的对称 Markov 模型，可同时计算隐藏反馈和概率收支。观察切法、完整动力学与反向准备共同决定下述结论。
+
+### 127.1 共同模型：关系、权重、概率与观察必须一起声明
+
+令 $V$ 为有限非空集合，$N=|V|$。给定 $w_{ij}=w_{ji}\ge0$、$w_{ii}=0$，并假设正权边组成的无向图连通。定义作用于列向量的加权 Laplace 算子
+
+$$
+(Lx)_i=\sum_jw_{ij}(x_i-x_j),\qquad T_t=e^{-tL},\qquad p_t=T_tp_0,
+\qquad p_{0,i}>0,\quad\sum_i p_{0,i}=1.
+\tag{127.1}
+$$
+
+这不是仅从连接图自动决定的概率过程：边权、生成元符号和演化规则已经作为模型输入。内积取未除以 $N$ 的 Euclidean 内积；所有对数为自然对数，熵单位为 nat。
+
+对任意 $x,y$，交换 $i,j$ 后取平均得
+
+$$
+\langle x,Ly\rangle
+=\frac12\sum_{i,j}w_{ij}(x_i-x_j)(y_i-y_j).
+\tag{127.2}
+$$
+
+因此 $L=L^*\ge0$、$L\mathbf1=0$。式（127.2）的平方和在 $x=y$ 时为零，当且仅当 $x$ 在每条正权边上相等；连通性使
+
+$$
+\ker L=\mathbb R\mathbf1,
+\qquad \pi=\frac1N\mathbf1
+\tag{127.3}
+$$
+
+成为唯一平稳概率。
+
+概率性可以直接核验。选 $\alpha>\max_i\sum_jw_{ij}$，令 $R=I-L/\alpha$。它非负、对称、行列和均为一，且
+
+$$
+T_t=e^{-\alpha t}\sum_{k=0}^{\infty}\frac{(\alpha t)^k}{k!}R^k.
+\tag{127.4}
+$$
+
+各项非负，Poisson 系数之和为一，所以 $T_t$ 非负、双随机、对称，满足 $T_{t+s}=T_tT_s$ 和 $T_t\pi=\pi$。当 $t>0$ 时，每两个顶点之间的一条正权路径提供某个正的 $(R^k)_{ij}$，所以 $(T_t)_{ij}>0$；$N=1$ 时结论直接成立。即使只用级数的 $k=0$ 项，也已有 $p_{t,i}\ge e^{-\alpha t}p_{0,i}>0$。以下所有有限时间的对数和导数均合法。
+
+固定满射观察 $q:V\to Y$，记 $F_a=q^{-1}(a)$、$n_a=|F_a|>0$。定义纤维求和与均匀提升
+
+$$
+(\mathsf Cx)_a=\sum_{i\in F_a}x_i,
+\qquad (\mathsf Ub)_i=\frac{b_{q(i)}}{n_{q(i)}}.
+\tag{127.5}
+$$
+
+于是
+
+$$
+\mathsf C\mathsf U=I_Y,
+\qquad P=\mathsf U\mathsf C=P^*=P^2,
+\qquad Q=I-P,
+\qquad P\mathbf1=\mathbf1.
+\tag{127.6}
+$$
+
+$P$ 把一条纤维内的数值替换为其算术平均，$Q$ 保留其零和偏差。观察概率及其参考为
+
+$$
+b=\mathsf Cp,
+\qquad \bar\pi=\mathsf C\pi,
+\qquad \boxed{\bar\pi_a=\frac{n_a}{N}}.
+\tag{127.7}
+$$
+
+标签的平稳质量一般不均匀。若改用标签均匀律，就改变了后续 KL 结论中的参考。
+
+还要分清概率和正交坐标。$\operatorname{im}P$ 的一组正交归一基是 $e_a=\mathbf1_{F_a}/\sqrt{n_a}$，故 $Pp$ 的系数为
+
+$$
+v_a=\langle e_a,p\rangle=\frac{b_a}{\sqrt{n_a}}.
+\tag{127.8}
+$$
+
+$v_a$ 不以和为一归一化；一般的隐藏坐标还有正负值。不能把正交分块中的每个坐标或算子直接当作概率或 Markov 核。
+
+### 127.2 完整熵产生：一份共同概率律上的精确收支
+
+对严格正概率 $p$，令
+
+$$
+H(p)=-\sum_i p_i\log p_i,
+\qquad D(p\|\pi)=\sum_i p_i\log\frac{p_i}{\pi_i}=\log N-H(p).
+\tag{127.9}
+$$
+
+由质量守恒 $\sum_i\dot p_i=0$、$\dot p=-Lp$ 和式（127.2），有
+
+$$
+\begin{aligned}
+\frac d{dt}H(p_t)
+&=-\sum_i\dot p_{t,i}\log p_{t,i}\\
+&=\langle Lp_t,\log p_t\rangle\\
+&=\frac12\sum_{i,j}w_{ij}(p_{t,i}-p_{t,j})
+\log\frac{p_{t,i}}{p_{t,j}}
+=: \sigma(p_t)\ge0.
+\end{aligned}
+\tag{127.10}
+$$
+
+非负性逐项来自 $\log$ 严格递增。等号迫使所有正权边的两端概率相等，故在连通图上恰有 $p_t=\pi$。因此
+
+$$
+\boxed{\frac d{dt}D(p_t\|\pi)=-\sigma(p_t)},
+\qquad
+D(p_0\|\pi)-D(p_T\|\pi)
+=H(p_T)-H(p_0)=\int_0^T\sigma(p_t)\,dt.
+\tag{127.11}
+$$
+
+这是指定图热流的数学熵收支。这里没有热浴、温度、功或局部详细平衡的物理解释，故不据此把任意 Shannon 熵变化直接命名为热力学熵产生。
+
+### 127.3 当前边界如何分配完整 KL：可见项与纤维项
+
+令 $p(i\mid a)=p_i/b_a$，$u_{F_a}(i)=1/n_a$。对 $i\in F_a$ 分解似然比：
+
+$$
+\frac{p_i}{1/N}
+=\frac{b_a}{n_a/N}\,
+\frac{p_i/b_a}{1/n_a}.
+\tag{127.12}
+$$
+
+对数后按 $p_i$ 求和，得到精确纤维链式等式
+
+$$
+\boxed{
+D(p\|\pi)
+=D(b\|\bar\pi)
++\sum_a b_aD\bigl(p(\cdot\mid a)\|u_{F_a}\bigr)
+=D(Pp\|\pi)+D(p\|Pp).
+}
+\tag{127.13}
+$$
+
+第二个等号也可直接从 $(Pp)_i=b_a/n_a$ 逐纤维求和得到。定义
+
+$$
+D_c(p)=D(b\|\bar\pi)=D(Pp\|\pi),
+\qquad D_h(p)=D(p\|Pp).
+\tag{127.14}
+$$
+
+$D_h$ 是同一份分布相对于当前纤维均匀重建的 KL 缺陷。它和条件 Shannon 熵的关系是
+
+$$
+D_c(p)=\log N-H(b)-\sum_a b_a\log n_a,
+\qquad
+D_h(p)=\sum_a b_a\log n_a-H(X\mid qX).
+\tag{127.15}
+$$
+
+纤维不等大时，$\sum_ab_a\log n_a$ 也会随动力学改变，不能省略。特别地，$D_h$ 不是未经修正的“隐藏 Shannon 熵”。
+
+沿同一轨道微分式（127.13），得到
+
+$$
+\boxed{\frac d{dt}D_c(p_t)+\frac d{dt}D_h(p_t)=-\sigma(p_t)}.
+\tag{127.16}
+$$
+
+这个式子只规定总和。两项各自不增，需要额外结构。
+
+还可以直接看出粗项为何没有固定符号。令 $x=Pp$。由于 $\log(x/\pi)$ 在每条纤维上常数，$P$ 对它不变；又因质量导数为零，
+
+$$
+\begin{aligned}
+\frac d{dt}D_c(p_t)
+&=\langle P\dot p_t,\log(Pp_t/\pi)\rangle\\
+&=-\frac12\sum_{i,j}w_{ij}(p_{t,i}-p_{t,j})
+\log\frac{(Pp_t)_i}{(Pp_t)_j}.
+\end{aligned}
+\tag{127.17}
+$$
+
+这里同一边上的微观差 $p_i-p_j$ 与纤维平均差 $(Pp)_i-(Pp)_j$ 可以异号，故不能照搬式（127.10）的逐项非负性。
+
+### 127.4 被隐藏的关系如何回到未来：精确记忆与初态强迫
+
+在 $U=\operatorname{im}P$、$\mathcal H=\ker P$ 的正交直和中，记
+
+$$
+L=\begin{pmatrix}A&B\\B^*&C\end{pmatrix},
+\qquad p_t=v_t+h_t,
+\qquad v_t=Pp_t\in U,\quad h_t=Qp_t\in\mathcal H.
+\tag{127.18}
+$$
+
+这里 $C$ 是隐藏算子，与纤维求和 $\mathsf C$ 不同。两个分块方程为
+
+$$
+\dot v=-Av-Bh,
+\qquad\dot h=-B^*v-Ch.
+\tag{127.19}
+$$
+
+若 $h\in\mathcal H$，则 $h\perp\mathbf1$，且
+
+$$
+\langle h,Ch\rangle=\langle h,Lh\rangle
+=\frac12\sum_{i,j}w_{ij}(h_i-h_j)^2.
+\tag{127.20}
+$$
+
+连通性和正交性共同使该量在 $h\ne0$ 时严格为正。因此非零隐藏空间上的 $C$ 正定；零维隐藏空间按唯一零维算子解释。
+
+对式（127.19）的隐藏方程乘以 $e^{tC}$ 并积分，得
+
+$$
+h_t=e^{-tC}h_0-\int_0^t e^{-(t-s)C}B^*v_s\,ds.
+\tag{127.21}
+$$
+
+代回可见方程便得到
+
+$$
+\boxed{
+\dot v_t=-Av_t-Be^{-tC}h_0
++\int_0^t K(t-s)v_s\,ds,
+\qquad K(t)=Be^{-tC}B^*.
+}
+\tag{127.22}
+$$
+
+微分右边并检查 $t=0$ 也可直接验证式（127.21）。记忆项正号来自两次负耦合。初始隐藏状态产生 $-Be^{-tC}h_0$，它一般不能由 $v_0$ 或裸核 $K$ 决定，因而不能删掉。即使初态来自随机实验，$v_0,h_0$ 的联合来源仍须保留；单独指定两个边缘不能确定其联合律。
+
+正交分块同时给出
+
+$$
+[P,L]=\begin{pmatrix}0&B\\-B^*&0\end{pmatrix},
+\qquad K(0)=BB^*,
+\qquad
+\boxed{\|[P,L]\|_{\mathrm{HS}}^2=2\operatorname{Tr}K(0)}.
+\tag{127.23}
+$$
+
+因为 $\langle u,BB^*u\rangle=\|B^*u\|^2$，
+
+$$
+[P,L]=0\iff B=0\iff K(t)=0\quad\hbox{对所有 }t\ge0.
+\tag{127.24}
+$$
+
+这些是整个允许初态类上的闭合性质；$B\ne0$ 不要求每条特殊轨道都显示记忆，平稳轨道就是一个例外。
+
+正定性还给出收敛积分
+
+$$
+\int_0^\infty K(t)\,dt=BC^{-1}B^*.
+\tag{127.25}
+$$
+
+证明是将 $C$ 对角化，逐个正特征值积分 $e^{-\lambda t}$。相应静态二次型经配方成为
+
+$$
+\begin{aligned}
+\frac12\left\langle\binom vh,L\binom vh\right\rangle
+={}&\frac12\langle v,(A-BC^{-1}B^*)v\rangle\\
+&+\frac12\langle h+C^{-1}B^*v,
+C(h+C^{-1}B^*v)\rangle.
+\end{aligned}
+\tag{127.26}
+$$
+
+故静态边界算子为 $A-\int_0^\infty K(t)\,dt$。静态消元只留下核的积分，精确动态消元还需要时间形状与初态强迫。常数向量属于 $U$ 且被 $A$、$B^*$ 消去，所以静态算子保留守恒零模态；不得在整个 $U$ 上宣称它可逆。
+
+这与第126节的有效实现桥梁相接：在正自伴、伴随耦合模型中，全部响应矩 $BC^jB^*$ 给出边界词的 Gram 配对，恢复有效隐藏空间及其 $C,B$ 到保边界正交同构；它既不恢复完全不可见块，也不自行指定本次实验的隐藏初态。完整响应、概率熵和统计取得成本是不同层次的资料。
+
+### 127.5 全部严格正初态的粗 KL 单调性，恰是这个模型中的闭合
+
+下列等价是强可并、正交下降、KL 数据处理和零点不变性方法的成熟结果综合。它的用途在于把结构闭合与可检验的熵行为放在同一模型中；
+
+**定理 127.1。** 对式（127.1）—（127.7）的固定 $L,q,P,\pi$，下列条件等价：
+
+1. 对每个严格正微观初态 $p_0$，$t\mapsto D_c(T_tp_0)$ 在 $[0,\infty)$ 上不增。
+2. $PLQ=0$。
+3. $[P,L]=0$。
+4. 存在标签上的随机半群 $S_t$，使 $\mathsf CT_t=S_t\mathsf C$ 对所有 $t\ge0$ 成立。
+5. 式（127.22）的 $K(t)$ 对所有 $t\ge0$ 为零。
+
+**结构部分。** 因 $P,L$ 自伴，$(PLQ)^*=QLP$。若 $PLQ=0$，两个交叉块均零，故交换；反向立即成立。与条件 5 的等价已由式（127.24）证明。
+
+若交换，定义
+
+$$
+S_t=\mathsf CT_t\mathsf U.
+\tag{127.27}
+$$
+
+$\mathsf C,\mathsf U,T_t$ 都将概率送到概率，所以 $S_t$ 非负且列和为一。由 $P\mathsf U=\mathsf U$ 以及交换性，
+
+$$
+\begin{aligned}
+S_tS_s
+&=\mathsf CT_tPT_s\mathsf U
+=\mathsf CT_{t+s}\mathsf U=S_{t+s},\\
+\mathsf CT_t
+&=\mathsf CT_tP=S_t\mathsf C,
+\qquad S_t\bar\pi=\bar\pi.
+\end{aligned}
+\tag{127.28}
+$$
+
+这里 $\mathsf CT_tQ=0$ 使用了交换性；没有它，压缩得到的每个 $\mathsf CT_t\mathsf U$ 虽是随机矩阵，未必组成半群。反之，条件 4 使 $\mathsf CT_th=S_t\mathsf Ch=0$ 对每个 $h\in\ker P$ 成立；在 $t=0$ 求导并乘 $\mathsf U$ 得 $PLh=0$，故条件 2 成立。
+
+**闭合推出熵单调。** 有限 KL 的数据处理给
+
+$$
+D(S_s b_t\|S_s\bar\pi)\le D(b_t\|\bar\pi).
+\tag{127.29}
+$$
+
+为完整说明其依据，对任何共同随机核 $S$，在输入输出对上取联合律 $\mu_iS_{ai}$、$\nu_iS_{ai}$。完整联合 KL 逐项约去 $S_{ai}$，等于 $D(\mu\|\nu)$；按输出纤维使用式（127.13）的同类似然比分解，则等于输出 KL 加非负的后验 KL 平均。后验 KL 的非负性来自 $\log u\le u-1$，其等号条件为两份概率相同。零核项不参与求和。因 $b_{t+s}=S_sb_t$、$S_s\bar\pi=\bar\pi$，式（127.29）即条件 1。
+
+**熵单调推出闭合。** 若隐藏空间非零，任取单位 $h\in\ker P$。由 $h\perp\mathbf1$、$|h_i|\le1$，每个 $0<\varepsilon<1/N$ 都给严格正归一化初态
+
+$$
+p_0=\pi+\varepsilon h,
+\qquad Pp_0=\pi.
+\tag{127.30}
+$$
+
+初始粗 KL 为零。若条件 1 成立，KL 非负性迫使 $D(PT_tp_0\|\pi)=0$ 对所有 $t\ge0$ 成立。KL 的等号条件使 $PT_tp_0=\pi$，再由 $T_t\pi=\pi$ 得 $PT_th=0$。在 $t=0$ 求导，得到 $PLh=0$。这对每个隐藏单位向量成立，线性性遂给 $PLQ=0$。隐藏空间为零时该结论直接成立，证明完毕。
+
+严格保留“每个严格正微观初态”这一量词是必要的。某一个初态，甚至某个受限初态族上的单调，不能代替上面对全部隐藏方向的测试。该等价的证明本身可放宽图连通性；本节保留连通性用于唯一平衡与严格耗散等其他结论。
+
+闭合时，标签生成元为 $\bar L=\mathsf CL\mathsf U$，对 $a\ne b$，
+
+$$
+\bar L_{ab}=-\frac1{n_b}\sum_{i\in F_a,j\in F_b}w_{ij},
+\qquad
+\bar L_{ab}\bar\pi_b=\bar L_{ba}\bar\pi_a.
+\tag{127.31}
+$$
+
+负号对应 $\dot b=-\bar Lb$；该粗链在 $\bar\pi$ 下可逆，一般不在标签均匀律下对称。若 $D_n=\operatorname{diag}(n_a)$，式（127.8）给正交坐标算子和概率生成元的关系 $A=D_n^{-1/2}\bar L D_n^{1/2}$，这里 $A$ 用纤维归一基表示。
+
+**非闭合的局部见证。** 仍取式（127.30），令 $x(t)=PT_t(\pi+\varepsilon h)$。则 $x(0)=\pi$、$x'(0)=-\varepsilon PLh$，且对 $D(x(t)\|\pi)$，
+
+$$
+D'(t)=\sum_i x'_i(t)\log(Nx_i(t)),
+$$
+
+$$
+D''(t)=\sum_i\frac{x'_i(t)^2}{x_i(t)}
++\sum_i x''_i(t)\log(Nx_i(t)).
+\tag{127.32}
+$$
+
+在 $t=0$ 第二项为零，故精确地
+
+$$
+\boxed{D_c''(0;\pi+\varepsilon h)=N\varepsilon^2\|PLh\|_2^2}.
+\tag{127.33}
+$$
+
+若 $[P,L]\ne0$，自伴交叉块判据保证存在此类 $h$ 使 $PLh\ne0$。于是
+
+$$
+D_c(t;\pi+\varepsilon h)
+=\frac{N\varepsilon^2}{2}\|PLh\|_2^2t^2+O(t^3)>0
+\tag{127.34}
+$$
+
+对充分小的 $t>0$ 成立，而完整 KL 仍下降。这里 $\varepsilon$ 已固定在合法正区间，二阶系数不是仅在 $\varepsilon\to0$ 极限下成立。
+
+对隐藏空间的一组正交归一基 $h_j$，分别准备不同初态 $\pi+\varepsilon h_j$，有
+
+$$
+\boxed{
+\sum_jD_c''(0;\pi+\varepsilon h_j)
+=N\varepsilon^2\|B\|_{\mathrm{HS}}^2
+=\frac{N\varepsilon^2}{2}\|[P,L]\|_{\mathrm{HS}}^2
+=N\varepsilon^2\operatorname{Tr}K(0).
+}
+\tag{127.35}
+$$
+
+这是不同准备实验的曲率之和，不是一个初态的曲率，不是信息容量，也不是除以隐藏维数后的平均。它把同一个交叉块的三种读法对齐：未来显露的隐藏方向、记忆核初值，以及从粗平衡出发的熵曲率。
+
+### 127.6 四点路径：完整熵上升，当前粗熵却下降
+
+取单位边权路径 $1-2-3-4$，
+
+$$
+L=\begin{pmatrix}
+1&-1&0&0\\
+-1&2&-1&0\\
+0&-1&2&-1\\
+0&0&-1&1
+\end{pmatrix},
+\qquad q=12\mid34,
+\qquad p_0=\left(\frac25,\frac1{10},\frac15,\frac3{10}\right).
+\tag{127.36}
+$$
+
+直接相乘得
+
+$$
+Lp_0=\left(\frac3{10},-\frac25,0,\frac1{10}\right),
+\qquad b_0=\left(\frac12,\frac12\right),
+\qquad \dot b_{0,\mathrm{left}}=\frac1{10}.
+\tag{127.37}
+$$
+
+这里纤维等大，所以 $\bar\pi=(1/2,1/2)$。二元熵在 $1/2$ 处的一阶导数为零、二阶导数为 $-4$，故
+
+$$
+H(b_t)=\log2-\frac1{50}t^2+O(t^3),
+\qquad D_c(p_t)=\frac1{50}t^2+O(t^3).
+\tag{127.38}
+$$
+
+与此同时，三条边在式（127.10）的贡献为
+
+$$
+\boxed{\sigma(p_0)=\frac3{10}\log4+\frac1{10}\log2
++\frac1{10}\log\frac32>0}.
+\tag{127.39}
+$$
+
+所以完整状态 Shannon 熵初始增加，而当前标签 Shannon 熵初始下降；它们的差别由式（127.16）准确记账。
+
+这不是只有一项 Taylor 数值的例子。定义有符号坐标
+
+$$
+z=p_1+p_2-p_3-p_4,
+\qquad m=p_1-p_2+p_3-p_4,
+\qquad r=p_1-p_2-p_3+p_4.
+\tag{127.40}
+$$
+
+用 $\dot p=-Lp$ 逐项相减，得到完整的非守恒坐标方程
+
+$$
+\boxed{\dot z=-z+m,\qquad\dot m=z-3m,\qquad\dot r=-2r},
+\qquad z_0=0,\quad m_0=\frac15,\quad r_0=\frac25.
+\tag{127.41}
+$$
+
+加上总质量一，可以反解
+
+$$
+p=\frac14(1+z+m+r,\ 1+z-m-r,\ 1-z+m-r,\ 1-z-m+r).
+\tag{127.42}
+$$
+
+因此没有把额外隐藏方向从完整模型中漏掉；$z,m$ 只是决定这个边界响应所需的耦合子系统。
+
+消去 $m$ 给出精确历史关系
+
+$$
+m(t)=e^{-3t}m_0+\int_0^t e^{-3(t-s)}z(s)\,ds,
+$$
+
+$$
+\boxed{\dot z(t)=-z(t)+e^{-3t}m_0+
+\int_0^t e^{-3(t-s)}z(s)\,ds}.
+\tag{127.43}
+$$
+
+初始隐藏偏差 $m_0$ 正是粗分布从均匀位置离开的原因。对 $z,m$ 的 $2\times2$ 矩阵对角化，或代回式（127.41）核验，得到
+
+$$
+z(t)=\frac1{5\sqrt2}e^{-2t}\sinh(\sqrt2t),
+$$
+
+$$
+m(t)=\frac15e^{-2t}
+\left(\cosh(\sqrt2t)-\frac1{\sqrt2}\sinh(\sqrt2t)\right),
+\qquad r(t)=\frac25e^{-2t}.
+\tag{127.44}
+$$
+
+故 $z(t)>0$ 对每个有限 $t>0$ 成立，而 $z(t)\to0$。粗质量 $b_t=((1+z(t))/2,(1-z(t))/2)$ 从平衡离开，最终又返回平衡。
+
+若取正交归一向量
+
+$$
+e_0=(1,1,1,1)/2,
+\quad e_z=(1,1,-1,-1)/2,
+\quad e_m=(1,-1,1,-1)/2,
+\quad e_r=(1,-1,-1,1)/2,
+\tag{127.45}
+$$
+
+则 $U=\operatorname{span}(e_0,e_z)$、$\mathcal H=\operatorname{span}(e_m,e_r)$，
+
+$$
+Le_z=e_z-e_m,
+\qquad Le_m=-e_z+3e_m,
+\qquad Le_r=2e_r.
+\tag{127.46}
+$$
+
+所以隐藏块的速率为 $3,2$，但 $e_r$ 不耦合到边界。可见核在 $e_z$ 方向为 $e^{-3t}$，在守恒方向为零。式（127.40）的 $z,m,r$ 是正交坐标的两倍，均不是单独的概率；$e_r$ 的速率也不能误作可见记忆核必须包含的速率。
+
+### 127.7 累计历史的熵与知识增长：确定信息、随机创新、丢弃损失
+
+以下全部变量处于同一份有限联合概率律中，不预设独立性或 Markov 性。
+
+先考虑有限确定系统 $Z_k=f^k(Z_0)$ 和读数 $O_k=q(Z_k)$，令累计记录
+
+$$
+M_n=(O_0,\ldots,O_n).
+\tag{127.47}
+$$
+
+$M_n$ 是 $Z_0$ 的确定函数，故 $H(M_n\mid Z_0)=0$。有限联合熵链式等式 $H(A,B)=H(A)+H(B\mid A)$ 来自将联合质量写成边缘乘条件质量；用它两次即得
+
+$$
+\boxed{H(Z_0)=H(M_n)+H(Z_0\mid M_n)}.
+\tag{127.48}
+$$
+
+又因 $M_{n+1}=(M_n,O_{n+1})$，
+
+$$
+\begin{aligned}
+H(M_{n+1})-H(M_n)
+&=H(O_{n+1}\mid M_n)\\
+&=I(Z_0;O_{n+1}\mid M_n),
+\end{aligned}
+\tag{127.49}
+$$
+
+最后一步使用 $H(O_{n+1}\mid Z_0,M_n)=0$。因此累计读数的增长在此确定模型中恰为对初态的新增信息，总量不超过 $H(Z_0)$。观察一个不可逆确定系统也不会凭空增加其初始随机性。
+
+若演化或测量含随机性，仍有精确等式
+
+$$
+\boxed{H(M_n)=I(Z_0;M_n)+H(M_n\mid Z_0)},
+\tag{127.50}
+$$
+
+$$
+\boxed{
+H(O_{n+1}\mid M_n)
+=I(Z_0;O_{n+1}\mid M_n)
++H(O_{n+1}\mid Z_0,M_n).
+}
+\tag{127.51}
+$$
+
+最后一项是给定初态和已有记录后仍未预测出的读数随机性，不自动是一份与历史独立的新噪声。相关环境、潜变量或测量误差都可以进入它。把全部新增记录熵称作“对初态的知识”，会漏掉这项。
+
+对任何固定目标 $\Xi$，互信息链式法则给
+
+$$
+\boxed{I(\Xi;M_{n+1})-I(\Xi;M_n)
+=I(\Xi;O_{n+1}\mid M_n)\ge0}.
+\tag{127.52}
+$$
+
+条件互信息是按 $M_n$ 条件化的联合分布与边缘乘积之间 KL 的平均，故非负。目标必须固定，联合律也必须相同；更换目标或将不同实验的边缘混接，不能据此比较。
+
+若实际存储采用确定压缩更新 $M'=G(M,O)$，就不再具有完整前缀包含关系。对联合变量 $(M,O)$ 先按 $M$、再按其确定函数 $M'$ 展开互信息，有
+
+$$
+I(\Xi;M,O)
+=I(\Xi;M)+I(\Xi;O\mid M)
+=I(\Xi;M')+I(\Xi;(M,O)\mid M').
+$$
+
+故
+
+$$
+\boxed{
+I(\Xi;M')-I(\Xi;M)
+=I(\Xi;O\mid M)-I(\Xi;(M,O)\mid M').
+}
+\tag{127.53}
+$$
+
+丢弃项包括未保留的新读数信息，不能仅称为旧记忆损失。若记忆字母表有 $K$ 个值，则 $I(\Xi;M')\le H(M')\le\log K$；这才是有限记录容量界，与式（127.35）的记忆核幅度不是同一量。
+
+“状态熵”“全部记录熵”“关于目标的互信息”因此承担不同问题。它们共享联合概率与条件分解接口，但不能互相代名。
+
+### 127.8 有限路径 KL：完整方向性与观察后方向性的准确关系
+
+令 $\Omega$ 为有限非空合法路径载体，$\mathbb P,\mathbb R$ 为其上的概率，假设 $\mathbb P\ll\mathbb R$，即 $\mathbb P(\omega)>0$ 蕴含 $\mathbb R(\omega)>0$。固定同一个路径观察 $r:\Omega\to\mathcal Y$。写 $\mathbb P_Y=r_*\mathbb P$、$\mathbb R_Y=r_*\mathbb R$。
+
+对 $\mathbb P_Y(y)>0$，绝对连续性保证 $\mathbb R_Y(y)>0$，两个条件律均可定义；对 $\mathbb P(\omega)>0$ 且 $r(\omega)=y$，
+
+$$
+\frac{\mathbb P(\omega)}{\mathbb R(\omega)}
+=\frac{\mathbb P_Y(y)}{\mathbb R_Y(y)}
+\frac{\mathbb P(\omega\mid y)}{\mathbb R(\omega\mid y)}.
+\tag{127.54}
+$$
+
+对数后按 $\mathbb P$ 求和，就得到
+
+$$
+\boxed{
+D(\mathbb P\|\mathbb R)
+=D(\mathbb P_Y\|\mathbb R_Y)
++\sum_{y:\mathbb P_Y(y)>0}\mathbb P_Y(y)
+D\bigl(\mathbb P(\cdot\mid y)\|\mathbb R(\cdot\mid y)\bigr).
+}
+\tag{127.55}
+$$
+
+$\mathbb P_Y(y)=0$ 的纤维贡献定义为零，无需在那里选取条件律。有限载体和支撑包含保证所有所写 KL 有限。由条件 KL 非负性，观察不会增加这对实验的可区分性；等号恰在每个正 $\mathbb P_Y$ 纤维上的两份条件律相同。这比仅说“观察压缩信息”多给出了具体隐藏项。
+
+若要把 $\mathbb R$ 称作反向实验，必须先声明其来源。例如可以给路径反演 $\Theta^2=I$ 后取 $\mathbb R=\Theta_*\mathbb P$，也可以另给一份反向准备实验 $\widetilde{\mathbb P}$ 再取 $\mathbb R=\Theta_*\widetilde{\mathbb P}$。两者一般不同。
+
+要进一步把观察后的参考写成粗路径的反演，还需给 $\bar\Theta$ 并证明
+
+$$
+r\Theta=\bar\Theta r.
+\tag{127.56}
+$$
+
+此时 $r_*\Theta_*\widetilde{\mathbb P}=\bar\Theta_*r_*\widetilde{\mathbb P}$。式（127.55）本身不要求粗过程 Markov；完整路径的条件依赖已经保存在 $\mathbb P_Y$ 中。
+
+### 127.9 一个明确的反向准备，把完整熵增连接到路径 KL
+
+回到图热流。固定有限时间网格
+
+$$
+0=t_0<t_1<\cdots<t_n=T,
+\qquad \Delta_k=t_k-t_{k-1}>0,
+\qquad K_k=T_{\Delta_k}.
+\tag{127.57}
+$$
+
+这里 $K_k$ 是采样转移核，与连续记忆核 $K(t)$ 的含义不同；以下用下标区分。路径载体为 $V^{n+1}$。定义正向实验
+
+$$
+\mathbb P(x_0,\ldots,x_n)
+=p_0(x_0)\prod_{k=1}^n(K_k)_{x_kx_{k-1}}.
+\tag{127.58}
+$$
+
+其末态边缘是 $p_T$。另行声明反向准备实验：从 $p_T$ 出发，以逆序的间隔运行同一图热核，
+
+$$
+\widetilde{\mathbb P}(y_0,\ldots,y_n)
+=p_T(y_0)\prod_{k=1}^n(K_{n+1-k})_{y_ky_{k-1}}.
+\tag{127.59}
+$$
+
+令 $\Theta(y_0,\ldots,y_n)=(y_n,\ldots,y_0)$，并把 $\mathbb R=\Theta_*\widetilde{\mathbb P}$ 写到正向路径坐标上，得到
+
+$$
+\mathbb R(x_0,\ldots,x_n)
+=p_T(x_n)\prod_{k=1}^n(K_k)_{x_{k-1}x_k}.
+\tag{127.60}
+$$
+
+式（127.4）保证每个 $K_k$ 对称且严格正，$p_0,p_T$ 也严格正，所以两份路径律互相绝对连续。逐因子利用对称性，
+
+$$
+\boxed{\log\frac{\mathbb P(\omega)}{\mathbb R(\omega)}
+=\log p_0(x_0)-\log p_T(x_n)}.
+\tag{127.61}
+$$
+
+取正向期望，用首末边缘求和，即得
+
+$$
+\boxed{
+D(\mathbb P\|\mathbb R)
+=H(p_T)-H(p_0)
+=D(p_0\|\pi)-D(p_T\|\pi)
+=\int_0^T\sigma(p_t)\,dt.
+}
+\tag{127.62}
+$$
+
+每个有限采样网格都满足这条等式；固定终点 $T$ 后，改变或细化网格不改变它的值，因为每个对称转移因子已经逐项相消。这是普通有限采样路径上的等式，不是对连续时间完整路径测度的已证声明。网格间隔反序是实验定义的一部分；不是只将同一初始准备的记录倒放。
+
+现在取完整粗历史
+
+$$
+r(x_0,\ldots,x_n)=(q(x_0),\ldots,q(x_n)).
+\tag{127.63}
+$$
+
+它与坐标顺序反演相容。用式（127.55）分解式（127.62），得到
+
+$$
+\boxed{
+\int_0^T\sigma(p_t)\,dt
+=D(r_*\mathbb P\|r_*\mathbb R)
++\mathbb E_{y\sim r_*\mathbb P}
+D\bigl(\mathbb P(\cdot\mid y)\|\mathbb R(\cdot\mid y)\bigr).
+}
+\tag{127.64}
+$$
+
+右边分别是这对已声明实验在完整粗历史上的方向可区分性，以及相同粗历史之内仍被隐藏的路径区别。它们不等于单个时刻的 $D_c(p_t),D_h(p_t)$；它们比较的是两份路径实验。
+
+**闭合时还能精确落回端点收支。** 假设 $[P,L]=0$。粗过程对全部微观初态具有半群 $S_t$。这不仅是单时刻边缘公式：给定任意过去粗历史，当前微观条件律支撑在当前纤维；$\mathsf CT_t=S_t\mathsf C$ 使下一标签分布只依赖该纤维标签。因此粗路径正向律可按 $S_{\Delta_k}$ 因子化，反向粗实验也可以。
+
+由式（127.27）与 $T_t$ 的对称性，
+
+$$
+(S_t)_{ab}\bar\pi_b
+=\frac1N\sum_{i\in F_a,j\in F_b}(T_t)_{ij}
+=(S_t)_{ba}\bar\pi_a.
+\tag{127.65}
+$$
+
+所以粗核一般非对称，却满足其正确参考下的详细平衡。对一条粗路径 $y=(y_0,\ldots,y_n)$，两份粗路径似然比为
+
+$$
+\begin{aligned}
+\log\frac{(r_*\mathbb P)(y)}{(r_*\mathbb R)(y)}
+&=\log\frac{b_0(y_0)}{b_T(y_n)}
++\sum_{k=1}^n\log\frac{(S_{\Delta_k})_{y_ky_{k-1}}}
+{(S_{\Delta_k})_{y_{k-1}y_k}}\\
+&=\log\frac{b_0(y_0)}{\bar\pi_{y_0}}
+-\log\frac{b_T(y_n)}{\bar\pi_{y_n}},
+\end{aligned}
+\tag{127.66}
+$$
+
+最后一步将详细平衡的参考比逐步相消。取正向期望，得到
+
+$$
+\boxed{D(r_*\mathbb P\|r_*\mathbb R)=D_c(p_0)-D_c(p_T)}.
+\tag{127.67}
+$$
+
+再用式（127.13）、（127.62）、（127.64），得到
+
+$$
+\boxed{
+\mathbb E_{y\sim r_*\mathbb P}
+D\bigl(\mathbb P(\cdot\mid y)\|\mathbb R(\cdot\mid y)\bigr)
+=D_h(p_0)-D_h(p_T)\ge0.
+}
+\tag{127.68}
+$$
+
+因此闭合时，端点的可见／隐藏 KL 下降量分别就是该反向准备下的可见／隐藏路径 KL。也可由交换性和数据处理直接验证隐藏项不增：
+
+$$
+D(T_tp\|PT_tp)=D(T_tp\|T_tPp)\le D(p\|Pp).
+\tag{127.69}
+$$
+
+非闭合时保留式（127.64），不能保留未经证明的式（127.67）。四点路径例子中 $D_c(p_0)=0$ 而 $D_c(p_T)>0$ 对任意有限 $T>0$ 成立，故端点粗差为负，不可能等于非负的粗路径 KL。这清楚地区分了“当前边界离参考更远”与“完整粗历史的方向可区分性”。
+
+若从 $\pi$ 启动，正向实验与上述反向准备一致，详细平衡使 $\mathbb P=\mathbb R$，各路径 KL 及式（127.10）的耗散都为零。若改取 $\mathbb R=\Theta_*\mathbb P$ 而仍使用非平衡初态，式（127.61）通常不成立，不能把式（127.62）的熵增身份沿用过去。整个连接依赖已声明准备，并没有从几何或路径倒放本身推导物理时间箭头。
+
+### 127.10 不可逆系统的忠实换表示，必须保留足够的历史载体
+
+设有限确定演化为 $f:X\to X$，合法长度 $n$ 历史组成
+
+$$
+\Omega_n=\{(x_0,\ldots,x_n):x_{k+1}=f(x_k)\}.
+\tag{127.70}
+$$
+
+即使 $f$ 不单射，$x_0\mapsto(x_0,f(x_0),\ldots,f^n(x_0))$ 仍是从 $X$ 到 $\Omega_n$ 的双射；它保留了原始来源。相反，末态映射 $e_n:\Omega_n\to X$ 一般不可逆。
+
+能否从末态恢复读数历史 $r_n(\omega)=(q(x_0),\ldots,q(x_n))$，有精确判据：存在 $g:e_n(\Omega_n)\to r_n(\Omega_n)$ 使 $r_n=g e_n$，当且仅当 $r_n$ 在每个 $e_n$ 纤维上恒定。必要性来自函数复合；充分性则令 $g(x)$ 为任一末态为 $x$ 的合法历史之读数，纤维恒定性使选择无关。
+
+取 $X=\{0,1\}$、$f(0)=f(1)=0$、$q=\mathrm{id}$。两条一步合法历史 $(0,0),(1,0)$ 的末态相同，读数历史不同，所以恢复函数不存在。若两种初态等权，$H(Z_1)=0$ 而 $H(M_1)=\log2$。只把当前状态加上“记忆”这个名字，不会生成丢失的比特；可以使用原合法历史，或使用已证明包含足够来源信息的扩展状态。
+
+一个可核验的完整运输接口如下。对每个所需有限长度 $n$，给合法历史双射
+
+$$
+\Phi_n:\Omega_n\to\Omega'_n,
+\qquad\Psi_n:\mathcal Y_n\to\mathcal Y'_n,
+\qquad r'_n\Phi_n=\Psi_n r_n.
+\tag{127.71}
+$$
+
+读数空间可取各自的实际像。若讨论跨时刻相容性，还要求截短映射 $\rho_n:\Omega_{n+1}\to\Omega_n$ 满足
+
+$$
+\rho'_n\Phi_{n+1}=\Phi_n\rho_n.
+\tag{127.72}
+$$
+
+若有允许操作 $a$ 的历史扩展 $E_{a,n}:\Omega_n\to\Omega_{n+1}$，则在对应合法定义域上要求
+
+$$
+E'_{a,n}\Phi_n=\Phi_{n+1}E_{a,n}.
+\tag{127.73}
+$$
+
+操作有失败或停止时，其定义域和标签也须运输；不把部分扩展未经说明改成处处可用操作。
+
+同时运输两份实验律：
+
+$$
+\mathbb P'_n=(\Phi_n)_*\mathbb P_n,
+\qquad\mathbb R'_n=(\Phi_n)_*\mathbb R_n.
+\tag{127.74}
+$$
+
+双射使对应点的概率值相同，所以直接重排有限求和给
+
+$$
+D(\mathbb P'_n\|\mathbb R'_n)=D(\mathbb P_n\|\mathbb R_n),
+\qquad H(\mathbb P'_n)=H(\mathbb P_n).
+\tag{127.75}
+$$
+
+交换方块又给 $r'_{n*}\mathbb P'_n=\Psi_{n*}r_{n*}\mathbb P_n$，参考律同理；因此粗路径 KL 也保持。$\Phi_n$ 逐纤维双射，条件概率逐点相同，故式（127.55）的隐藏条件项一并保持。绝对连续性也在双射下保持。
+
+若要运输关于目标的知识，须把同一份联合律 $(\Xi,\omega)$ 一起运输，例如定义 $\Xi'(\Phi_n\omega)=\Xi(\omega)$。于是联合、条件熵和互信息都由有限重排保持。分别匹配目标和记录的边缘分布不足以保证互信息相同；相关性是运输对象的一部分。
+
+若宣称反向实验语义也相同，还要运输反演：$\Theta'_n\Phi_n=\Phi_n\Theta_n$，这里两端按对应的正反历史载体理解。仅保留当前观察的交换方块，并不能替代上述演化、历史、两份权重及目标的条件。
+
+成本没有从这些语义方块自动得到。若给每条历史的费用向量 $c_n$ 和 $c'_n$，并证明 $c'_n\Phi_n=c_n$，则联合费用分布及期望保持；若逐坐标证明 $c'_n\Phi_n\le c_n$，则运输后的期望逐坐标不增。新的编码或算法可以有不同实现成本，但这种改进须另给费用定义和比较证书，不能仅凭语义等价推出。
+
+### 127.11 离散二坐标关系的记忆消元与合法历史
+
+固定实参数 $a,b,c,d$，完整状态为 $z_t=(x_t,h_t)^{\mathsf T}$，时间 $t\in\mathbb N$。规定同一份离散演化关系
+$$
+x_{t+1}=ax_t+bh_t,\qquad
+h_{t+1}=cx_t+dh_t,
+\qquad (x_0,h_0)\in\mathbb R^2.
+$$
+只观察 $x_t$。给定初态后，两条更新式唯一确定全部状态。以下各公式使用同一初态和同一历史；不要求 $b,d$ 非零，也不要求完整更新矩阵可逆。空和为零，零次幂按 $d^0=1$ 解释，包括 $d=0$。
+
+#### 127.11.1 有限历史与初态强迫的精确公式
+
+对每个 $t\ge0$，有
+$$
+\boxed{
+h_t=d^th_0+c\sum_{j=0}^{t-1}d^{t-1-j}x_j,
+}
+$$
+因此
+$$
+\boxed{
+x_{t+1}
+=ax_t+bd^th_0+bc\sum_{j=0}^{t-1}d^{t-1-j}x_j.
+}
+$$
+
+**证明。** $t=0$ 时第一式为 $h_0=h_0$，求和为空。若第一式在 $t$ 成立，则
+$$
+\begin{aligned}
+h_{t+1}
+&=cx_t+dh_t\\
+&=d^{t+1}h_0
+ +c\sum_{j=0}^{t-1}d^{t-j}x_j+cx_t\\
+&=d^{t+1}h_0
+ +c\sum_{j=0}^{t}d^{t-j}x_j.
+\end{aligned}
+$$
+最后一项的系数为 $d^0=1$，所以归纳也包括 $d=0$。将第一式代入 $x$ 更新式即得第二式。$\square$
+
+在 $t=0$，第二式恰为
+$$
+x_1=ax_0+bh_0.
+$$
+过去读数的有限和与初态强迫 $bd^th_0$ 是不同项；不能只保留卷积系数 $bc\,d^{t-1-j}$ 而删去后者。对一份任意给定的序列 $(x_t)$，若它在指定 $h_0$ 下满足第二式，再用第一式定义 $h_t$，上述归纳计算验证隐藏更新，而第二式验证可见更新。因此这份带初态强迫的有限记忆关系与完整系统双向等价。
+
+#### 127.11.2 二阶边界递推
+
+令
+$$
+A=\begin{pmatrix}a&b\\c&d\end{pmatrix}.
+$$
+直接乘法给出二维 Cayley–Hamilton 恒等式
+$$
+A^2-(a+d)A+(ad-bc)I=0.
+$$
+例如左上元为 $a^2+bc-(a+d)a+ad-bc=0$，右下元同理；两个非对角元分别为 $ab+bd-(a+d)b=0$ 和 $ca+dc-(a+d)c=0$。对 $z_t$ 作用并取第一坐标，得到
+$$
+\boxed{
+x_{t+2}=(a+d)x_{t+1}+(bc-ad)x_t
+\qquad(t\ge0).
+}
+$$
+
+也可直接消去同一份 $h_t$：
+$$
+\begin{aligned}
+x_{t+2}
+&=ax_{t+1}+b(cx_t+dh_t)\\
+&=ax_{t+1}+bcx_t+d(x_{t+1}-ax_t).
+\end{aligned}
+$$
+这个推导没有除以 $b$，故二阶关系对 $b=0$ 仍是必要条件。但必要性不意味着任意二阶初值都来自原系统。
+
+#### 127.11.3 反向实现恰由首步相容性决定
+
+给定任意实序列 $(x_t)_{t\ge0}$ 和指定实数 $h_0$，存在隐藏序列以该 $h_0$ 为初值并满足完整两坐标系统，当且仅当以下条件同时成立：
+$$
+\boxed{
+\begin{aligned}
+x_{t+2}&=(a+d)x_{t+1}+(bc-ad)x_t&&\text{对全部 }t\ge0,\\
+x_1&=ax_0+bh_0.&
+\end{aligned}
+}
+$$
+存在时，隐藏序列唯一，正是前述有限和公式。
+
+**证明。** 必要性由完整更新和二阶消元得到。反之，从指定 $h_0$ 出发，按 $h_{t+1}=cx_t+dh_t$ 唯一构造隐藏序列。定义可见更新的误差
+$$
+e_t=x_{t+1}-ax_t-bh_t.
+$$
+使用二阶递推与隐藏更新，逐项得到
+$$
+\begin{aligned}
+e_{t+1}
+&=x_{t+2}-ax_{t+1}-b(cx_t+dh_t)\\
+&=dx_{t+1}-ad x_t-bd h_t
+=d e_t.
+\end{aligned}
+$$
+首步相容性给 $e_0=0$，归纳得全部 $e_t=0$，于是可见更新也成立。隐藏更新的递归唯一性和前述有限和证明给出最后一句。$\square$
+
+因此，对只指定 $(x_0,x_1)$ 的二阶递推，原系统的可实现初态条件是
+$$
+x_1-ax_0\in b\mathbb R.
+$$
+当 $b\ne0$ 时该条件对任意一对实数成立，并且只允许一个 $h_0$；当 $b=0$ 时，它要求 $x_1=ax_0$，而对 $h_0$ 没有约束。这里的存在和唯一性都相对于已经固定的参数与指定读数历史。
+
+#### 127.11.4 可见耦合非零时，两次连续读数恢复隐藏状态
+
+设 $b\ne0$。对任意满足二阶递推的序列，定义
+$$
+\boxed{
+h_t=\frac{x_{t+1}-ax_t}{b}
+\qquad(t\ge0).
+}
+$$
+则 $h_0=(x_1-ax_0)/b$，可见更新按定义成立，而
+$$
+\begin{aligned}
+h_{t+1}
+&=\frac{x_{t+2}-ax_{t+1}}b\\
+&=\frac{dx_{t+1}+(bc-ad)x_t}b
+=cx_t+dh_t.
+\end{aligned}
+$$
+因此每一份二阶历史都唯一提升为完整系统历史；全部 $h_t$ 同时由相邻读数恢复。对指定初态的恢复仍须满足上一节的首步相容性。
+
+将状态与连续读数之间的映射写成
+$$
+T\begin{pmatrix}x\\h\end{pmatrix}
+=\begin{pmatrix}x\\ax+bh\end{pmatrix},
+\qquad
+T=\begin{pmatrix}1&0\\a&b\end{pmatrix},
+\qquad
+N=\begin{pmatrix}0&1\\bc-ad&a+d\end{pmatrix}.
+$$
+矩阵恒等式
+$$
+TA=NT
+$$
+表达完整状态更新与二阶历史更新的相容性：两边第二行均为 $(a^2+bc,ab+bd)$，第一行均为 $(a,b)$。因 $\det T=b\ne0$，这是两份状态表示的真正线性同构，并有 $N=TAT^{-1}$。
+
+这只要求读出耦合 $b\ne0$，不要求 $\det A\ne0$。它证明两次读数能恢复相应状态，没有把原演化变成可逆动力学。实际在时刻 $t+1$ 才取得第二条记录时，公式恢复的是时刻 $t$ 的完整状态；再应用已知 $A$ 可计算时刻 $t+1$ 的状态。数学上的连续读数坐标并不提前提供尚未采集的记录。
+
+#### 127.11.5 可见耦合为零时，二阶方程会保留多余历史
+
+设 $b=0$。原系统直接要求
+$$
+\boxed{x_{t+1}=ax_t,\qquad x_t=a^tx_0.}
+$$
+任意 $h_0\in\mathbb R$ 都能通过隐藏更新提升这条相同的 $x$ 历史，因此全部可见历史也不能区分这些初始隐藏值。
+
+二阶方程此时为
+$$
+x_{t+2}=(a+d)x_{t+1}-ad x_t.
+$$
+对它的任意解，令 $r_t=x_{t+1}-ax_t$。相减得到
+$$
+r_{t+1}=d r_t,\qquad r_t=d^t(x_1-ax_0).
+$$
+所以二阶解符合原系统，当且仅当首步 $x_1=ax_0$；一旦这项条件成立，全部 $r_t$ 为零，恰回到一阶历史。这个等价不需要 $a,d$ 不同或非零。
+
+**多余解的明确例子。** 取
+$$
+a=1,\qquad b=0,\qquad c=0,\qquad d=2.
+$$
+二阶式为 $x_{t+2}=3x_{t+1}-2x_t$，而 $x_t=2^t$ 满足它，因为
+$2^{t+2}=3\cdot2^{t+1}-2\cdot2^t$。但 $x_0=1,x_1=2$ 不满足原系统要求的 $x_1=x_0$，因此不存在任何 $h_0$ 能实现这条可见历史。原系统从 $x_0=1$ 出发只允许恒定历史 $x_t=1$。
+
+此时 $T$ 不可逆，其实际像只有
+$$
+\operatorname{im}T=\{(u,au):u\in\mathbb R\}.
+$$
+该直线在 $N$ 下不变，因为 $N(u,au)=(au,a^2u)$。若把整个 $\mathbb R^2$ 上的二阶方程都当作原系统的合法历史，就擅自加入了这个实际像以外的初值；上面的 $2^t$ 正是这种额外历史。
+
+当 $b=0$ 而 $d=0$ 时，后续隐藏量 $h_{t+1}=cx_t$ 可以由已取得的 $x_t$ 决定；这仍不恢复此前任意的 $h_0$。一般地，同一 $x$ 历史下两个隐藏初态造成的差为 $d^t(h_0-\widetilde h_0)$。不能把“原隐藏初态不可见”加强成每个未来隐藏坐标都必然持续未知。
+
+#### 127.11.6 与当前状态及历史商的回接
+
+对固定参数和读出，完整未来映射为
+$$
+\Phi(x_0,h_0)=(x_0,x_1,x_2,\ldots).
+$$
+若 $b\ne0$，前两项已经恢复 $(x_0,h_0)$，所以 $\ker\Phi$ 是对角关系。若 $b=0$，则
+$$
+\Phi(x_0,h_0)=\Phi(\widetilde x_0,\widetilde h_0)
+\quad\Longleftrightarrow\quad x_0=\widetilde x_0,
+$$
+因为第零项给出必要性，而 $x_t=a^tx_0$ 给出充分性。于是最小未来行为状态只需 $x_0$，整条隐藏初态纤维被合并。
+
+这给当前状态、有限历史和完整行为商一个直接的对接：同一关系可写成两坐标一阶系统、带初态强迫的有限历史和，或带首步相容条件的二阶递推；每次转换都保留实际初态与共同实现。消去隐藏坐标不等于取得它的数值，也不等于物理擦除或热力学熵产生。上述结论来自有限递归、二维 Cayley–Hamilton 恒等式与观察核因子化；没有额外假定概率律、记录独立性或获取成本。
+
+
+### 127.12 动态 Schur 补与零频极限的准确对象
+
+取有限维实内积空间的正交分解 $U\oplus H$，设
+$$
+L=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}\succeq0,\qquad C\succ0.
+$$
+令 $p(t)=(x(t),h(t))=e^{-tL}(x_0,h_0)$。因 $L$ 自伴半正定，谱分解给 $\|e^{-tL}\|\le1$，所以对每个实数 $s>0$，状态的 Laplace 变换
+$$
+X(s)=\int_0^\infty e^{-st}x(t)\,dt,\qquad
+H(s)=\int_0^\infty e^{-st}h(t)\,dt
+$$
+均绝对收敛。此处 $H(s)$ 是变换后的向量，与隐藏空间 $H$ 由参数和类型区分。
+
+**命题 127.2（动态边界消元）。** 这些变换满足
+$$
+\left[sI_U+A-B(sI_H+C)^{-1}B^*\right]X(s)
+=x_0-B(sI_H+C)^{-1}h_0.
+$$
+方括号算子对 $s>0$ 正定，故该式唯一决定 $X(s)$。记忆核 $\mathcal K(t)=Be^{-tC}B^*$ 的变换为
+$$
+\widehat{\mathcal K}(s)=B(sI_H+C)^{-1}B^*,
+$$
+并在 $s=0$ 有
+$$
+\int_0^\infty\mathcal K(t)\,dt=BC^{-1}B^*,\qquad
+\lim_{s\downarrow0}\left[sI_U+A-\widehat{\mathcal K}(s)\right]
+=A-BC^{-1}B^*.
+$$
+
+**证明。** 分块微分方程为
+$$
+\dot x=-Ax-Bh,\qquad \dot h=-B^*x-Ch.
+$$
+由于 $p,\dot p$ 有界，分部积分的无穷端项 $e^{-st}p(t)$ 为零，得到
+$$
+(sI_U+A)X+BH=x_0,\qquad
+B^*X+(sI_H+C)H=h_0.
+$$
+第二式可逆消去 $H$，即得边界公式，隐藏初态项的符号也由此固定。对任意 $u\ne0$，取 $v=-(sI_H+C)^{-1}B^*u$，则
+$$
+\left\langle u,\left[sI_U+A-B(sI_H+C)^{-1}B^*\right]u\right\rangle
+=\langle(u,v),(sI+L)(u,v)\rangle
+\ge s\|u\|^2>0.
+$$
+所以边界算子正定。对 $C$ 作正交谱分解，每个特征值 $\kappa$ 严格正，逐项积分
+$\int_0^\infty e^{-(s+\kappa)t}\,dt=(s+\kappa)^{-1}$；
+有限求和与固定 $B,B^*$ 可移出积分。取 $s=0$ 和连续极限即得剩余结论。$\square$
+
+因此“静态是零频”首先指**有效算子与记忆核的零频极限**。它不自动断言状态积分 $X(0)=\int_0^\infty x(t)\,dt$ 收敛。一般地，对半正定 $L$，设 $P_0$ 为 $\ker L$ 的正交投影，谱分解给
+$$
+p(t)=P_0p_0+\sum_{\lambda>0}e^{-\lambda t}P_\lambda p_0.
+$$
+所以完整状态的无权时间积分收敛当且仅当 $P_0p_0=0$；只看可见部分时，则当且仅当 $\operatorname{pr}_U P_0p_0=0$。必要性来自不衰减的常向量，充分性来自有限个正指数衰减项。
+
+在本章连通图概率热流中，常向量属于可见空间，且概率初态的平稳分量为 $\pi\ne0$。于是 $x(t)\to\pi$，无权积分发散，即使 $C\succ0$、$\int\mathcal K$ 完全有限。可以积分已减去平稳分量的轨迹，或保留 $s>0$ 的折扣；这两种对象都应与原始状态积分区分。零频 Schur 算子也可具有守恒核，因此不能在没有可逆性条件时再把它求逆。
+
+### 127.13 同一图关系不唯一决定热流或波动
+
+固定同一个有限加权图的自伴半正定 Laplace 算子 $L$。下面两种方程都使用这份空间连接，但选择了不同的演化关系：
+$$
+\dot u=-Lu,\qquad
+\ddot z=-Lz.
+$$
+第一种由 $u(0)$ 决定；第二种的一阶状态是 $(z,\dot z)$，须给定位置 $z(0)$ 和速度 $\dot z(0)$。
+
+**命题 127.3（相同算子的两种时间展开）。** 若 $Lv=\lambda v$、$\lambda>0$、$v\ne0$，则热流初态 $u(0)=v$ 给
+$$
+u(t)=e^{-\lambda t}v,
+$$
+而波动初态 $z(0)=v,\dot z(0)=0$ 给
+$$
+z(t)=\cos(\sqrt\lambda\,t)v.
+$$
+热流的平方范数满足
+$$
+\frac d{dt}\frac12\|u(t)\|^2=-\langle u(t),Lu(t)\rangle\le0,
+$$
+波动的相空间能量则满足
+$$
+\frac d{dt}\left(\frac12\|\dot z(t)\|^2+
+\frac12\langle z(t),Lz(t)\rangle\right)=0.
+$$
+
+**证明。** 两个显式式子直接满足各自方程与初值，有限维线性初值问题的唯一性给出所述解。对范数和能量求导，分别代入 $\dot u=-Lu$ 和 $\ddot z=-Lz$；后者的两项为 $-\langle\dot z,Lz\rangle$ 与 $\langle\dot z,Lz\rangle$，由 $L$ 自伴相消。$\square$
+
+在零特征方向，热流保持常值，波动则为 $z_0+t v_0$，再次显示速度是额外状态。若 $z(t)$ 解波动方程，则 $z(-t)$ 仍解同一方程，其速度为 $-\dot z(-t)$；因此相空间流可通过 $(z,\dot z)\mapsto(z,-\dot z)$ 作时间反演。它一般不保持位置坐标的逐点非负性，因此没有在这里成为与热流相同的概率 Markov 模型。上述波动能量与概率 Shannon 熵也不是同一个量。相同空间关系允许不同时间展开，具体选择由演化阶数、状态类型、初值和物理协议共同承担。
+
+
+### 127.14 可逆交换可以增加记录信息
+
+取两比特状态空间 $X=\{0,1\}^2$，定义确定演化与读数
+
+$$
+F(a,b)=(b,a),\qquad o(a,b)=a.
+$$
+
+设初态 $X_0=(A,B)$ 具有任意联合概率律，令 $X_1=F(X_0)$。保留式档案为
+
+$$
+M_0=o(X_0)=A,\qquad
+M_1=(o(X_0),o(X_1))=(A,B).
+$$
+
+**命题 127.4（可逆演化与严格增加的档案）。** $F^2=I$，所以演化可逆，且任意初态律都满足
+
+$$
+H(X_1)=H(X_0),\qquad
+H(M_1)-H(M_0)=H(B\mid A)\ge0.
+$$
+
+完整两次档案 $M_1$ 精确恢复初态。档案熵增为零，当且仅当 $B$ 在每个正概率的 $A$ 条件纤维上确定；否则严格为正。
+
+**证明。** 直接计算 $F(F(a,b))=(a,b)$。若初态概率为 $p(a,b)$，则末态在 $(b,a)$ 的概率仍为 $p(a,b)$；熵和中的项仅被置换，因此 $H(X_1)=H(X_0)$。第一次读到 $A$，第二次读到 $B$，故档案等于原有序对，恒等解码恢复初态。有限联合熵链式公式给
+
+$$
+H(M_1)=H(A,B)=H(A)+H(B\mid A).
+$$
+
+条件熵是正概率 $A$ 纤维上各个二值条件熵的加权和；每项非负，且为零当且仅当该条件律为单点律。因此得到所列不等式及等号条件。证毕。
+
+若初态在四个状态上均匀，以 bit 为单位，$H(M_0)=1$、$H(M_1)=2$；两比特状态的熵在两时刻均为 $2$。增长的是记录已取得的区别。若把档案也纳入联合随机状态，$M_0$ 是 $X_0$ 的确定函数，而 $M_1$ 也是 $X_1$ 的确定函数，因为 $F$ 可逆，所以
+
+$$
+H(X_0,M_0)=H(X_0)=H(X_1,M_1).
+$$
+
+这些是指定有限模型中的概率等式。实际记录装置的准备、维持和擦除尚未在模型中定义，不能从档案熵增加推出物理耗散，也不能从状态交换可逆推出实际记录装置没有费用。
+
+### 127.15 细化记录增加可见的路径方向性
+
+固定有限非空路径载体 $\Omega$，以及在同一载体上已经声明的正向律 $P$ 和反向比较律 $R$，假设 $P\ll R$。反向比较律如何由反向准备与路径反演产生，是实验合同的一部分。以下始终对这同一对概率应用同一份记录映射。
+
+令 $q:\Omega\to Y$ 为细记录，$r:\Omega\to Z$ 为粗记录，且存在 $f:Y\to Z$ 满足 $r=f\circ q$。可以将记录空间限制为实际像。记
+
+$$
+P_Y=q_*P,\quad R_Y=q_*R,\qquad
+P_Z=r_*P=f_*P_Y,\quad R_Z=r_*R=f_*R_Y.
+$$
+
+采用 $0\log0=0$ 的有限 KL 约定。推前保持绝对连续性，所以 $P_Y\ll R_Y$、$P_Z\ll R_Z$；所有以下 KL 都有限。
+
+**命题 127.5（记录细化的路径 KL 收支）。** 有
+
+$$
+\boxed{D(P_Z\Vert R_Z)\le D(P_Y\Vert R_Y)\le D(P\Vert R)}.
+$$
+
+两份差值精确为
+
+$$
+\boxed{
+D(P\Vert R)-D(P_Y\Vert R_Y)
+=\sum_{y:P_Y(y)>0}P_Y(y)
+D\bigl(P(\cdot\mid q=y)\Vert R(\cdot\mid q=y)\bigr),
+}
+$$
+
+$$
+\boxed{
+D(P_Y\Vert R_Y)-D(P_Z\Vert R_Z)
+=\sum_{z:P_Z(z)>0}P_Z(z)
+D\bigl(P_Y(\cdot\mid f=z)\Vert R_Y(\cdot\mid f=z)\bigr).
+}
+$$
+
+第二个不等号取等，当且仅当每个正 $P_Y$ 纤维上的两份路径条件律相同；第一个不等号取等，当且仅当每个正 $P_Z$ 纤维上的两份细记录条件律相同。相应条件在至少一个正权纤维上失败时，对应不等号严格。
+
+**证明。** 先验证通用有限分解。对有限集上的概率 $\alpha\ll\beta$ 和映射 $u$，记 $\alpha_U=u_*\alpha$、$\beta_U=u_*\beta$。若 $\alpha(x)>0$ 且 $u(x)=a$，则 $\beta(x),\alpha_U(a),\beta_U(a)$ 均正，并有
+
+$$
+\frac{\alpha(x)}{\beta(x)}
+=\frac{\alpha_U(a)}{\beta_U(a)}
+\frac{\alpha(x\mid a)}{\beta(x\mid a)}.
+$$
+
+取对数、乘以 $\alpha(x)$，再按纤维求有限和，得到
+
+$$
+D(\alpha\Vert\beta)
+=D(\alpha_U\Vert\beta_U)
++\sum_{a:\alpha_U(a)>0}\alpha_U(a)
+D\bigl(\alpha(\cdot\mid a)\Vert\beta(\cdot\mid a)\bigr).
+$$
+
+这就是式（127.55）的条件 KL 分解。零 $\alpha_U$ 纤维无需选取条件律，其项为零。先代入 $(\alpha,\beta,u)=(P,R,q)$，得到第一份差值；再代入 $(P_Y,R_Y,f)$，得到第二份差值。
+
+有限 KL 非负，且在两概率相同时且仅在此时为零。可由 $-\log t\ge1-t$ 逐项推出：对 $\alpha\ll\beta$，
+
+$$
+D(\alpha\Vert\beta)
+\ge\sum_{x:\alpha(x)>0}(\alpha(x)-\beta(x))
+=1-\beta(\operatorname{supp}\alpha)\ge0.
+$$
+
+等号要求正 $\alpha$ 支撑上 $\beta(x)/\alpha(x)=1$，且支撑外无 $\beta$ 质量，恰为 $\alpha=\beta$。因此两份差值是非负条件 KL 的正权和；它们为零当且仅当各正权条件项都为零，给出全部等号与严格性条件。证毕。
+
+若同一对路径律上的记录塔满足 $q_n=\pi_nq_{n+1}$，代入 $q=q_{n+1}$、$r=q_n$ 得
+
+$$
+D(q_{n*}P\Vert q_{n*}R)
+\le D(q_{n+1*}P\Vert q_{n+1*}R)
+\le D(P\Vert R).
+$$
+
+所以新增保留记录可以揭示原本藏在粗纤维内的正反差异。这里完整实验的 $P,R$ 没有改变，记录扩充并未创造新的路径不对称；特别地，若 $P=R$，所有层的记录 KL 都为零。若同时改变路径视界、正向准备或反向实验，则须另给它们的相容关系，不能直接沿用这一固定概率对的单调性，也不能仅凭统计可区分性把 KL 认作某个未声明装置的物理熵产生。
+
+背景包括 Mori–Zwanzig 消元、有限 Markov 熵耗散及路径相对熵。强可并性参考 Wolfer–Watanabe, arXiv:2203.04575；粗熵与非 Markov 性参考 Strasberg–Esposito, arXiv:1806.09101。仓内 `ZeroMemoryCriterion`、`StochasticDescentLumpability`、`ZeroSupportDPI` 与 `FutureWordInformationChain` 提供相应结构；本节的连续时间、严格正概率及反向准备条件已明列。
+
+## 127.99 追加锚
+
+## 128. 时间读取的 Gaussian 精度几何与充分记忆
+
+在固定线性 Gaussian 实验中，实际取得的独立读取可累计为有限的精度与均值参数。这样得到的当前记忆既可继续更新，也精确表示关于指定初态的后验。
+
+### 128.1 同一潜在状态与完整联合模型
+
+令 $Z\in\mathbb R^d$，$d\ge1$，先验为
+$$
+Z\sim N(m_0,\Sigma_0),\qquad \Sigma_0\succ0.
+$$
+给定已知矩阵 $A$ 与确定性读取矩阵 $C_t$，定义
+$$
+H_t=C_tA^t,\qquad Y_t=H_tZ+\epsilon_t,\qquad
+\epsilon_t\sim N(0,R_t),\quad R_t\succ0.
+$$
+所有噪声相互独立并与 $Z$ 独立；$A,C_t,R_t$ 和读取安排预先固定且已知。各次输出维数可以不同。$A^tZ$ 来自同一初态；本节没有额外过程噪声。
+
+用 $n$ 表示已读取 $t=0,\ldots,n-1$ 共 $n$ 次，历史为 $\mathcal Y_n=(Y_0,\ldots,Y_{n-1})$。令
+$$
+J_0=\Sigma_0^{-1},\qquad
+J_n=J_0+\sum_{t<n}H_t^TR_t^{-1}H_t,\qquad
+\eta_n=J_0m_0+\sum_{t<n}H_t^TR_t^{-1}y_t,
+$$
+$$
+\Sigma_n=J_n^{-1},\qquad m_n=\Sigma_n\eta_n.
+$$
+实空间的转置就是伴随。每项精度增量半正定，故 $J_n\succ0$，逆始终存在。$n=0$ 时空和返回先验。
+
+### 128.2 由完整平方得到后验
+
+**定理 128.1。** 对任意已实现读数，
+$$
+Z\mid\mathcal Y_n=(y_0,\ldots,y_{n-1})\sim N(m_n,\Sigma_n).
+$$
+固定安排下，$\Sigma_n$ 不依赖读数的具体数值。
+
+**证明。** 给定同一 $Z=z$，噪声独立，所以先验乘似然后的负二倍对数密度，去掉与 $z$ 无关的归一化常数，为
+$$
+(z-m_0)^TJ_0(z-m_0)
++\sum_{t<n}(y_t-H_tz)^TR_t^{-1}(y_t-H_tz).
+$$
+展开并完成平方：
+$$
+z^TJ_nz-2z^T\eta_n+c_n
+=(z-m_n)^TJ_n(z-m_n)+c_n-\eta_n^TJ_n^{-1}\eta_n,
+$$
+其中 $c_n=m_0^TJ_0m_0+\sum_{t<n}y_t^TR_t^{-1}y_t$。后两项与 $z$ 无关。正定 Gaussian 积分归一化给密度
+$$
+\frac{\det(J_n)^{1/2}}{(2\pi)^{d/2}}
+\exp[-(z-m_n)^TJ_n(z-m_n)/2].
+$$
+历史密度处处正，因此该式给所有读数上的一个条件密度版本。积分的行列式因子由正定二次型积分承担，其谱分解和 Jacobian 证明见 第130.8—130.9节的 Schur 积分推导。证毕。
+
+可相乘的是给定同一 $Z$ 后的噪声似然。各 $Y_t$ 共享 $Z$，其边缘一般相关，不能直接相乘边缘密度。
+
+### 128.3 创新递推与协方差的准确递减
+
+定义
+$$
+\nu_n=Y_n-H_nm_n,\qquad S_n=R_n+H_n\Sigma_nH_n^T,\qquad
+K_n=\Sigma_nH_n^TS_n^{-1}.
+$$
+
+**定理 128.2。**
+$$
+m_{n+1}=m_n+K_n\nu_n,\qquad
+\Sigma_{n+1}=\Sigma_n-\Sigma_nH_n^TS_n^{-1}H_n\Sigma_n,
+$$
+$$
+J_{n+1}=J_n+H_n^TR_n^{-1}H_n.
+$$
+条件于 $\mathcal Y_n$，$Y_n\sim N(H_nm_n,S_n)$，$\nu_n\sim N(0,S_n)$。
+
+**证明。** 给定历史后，新噪声仍独立于 $Z$ 与过去，线性 Gaussian 相加给预测律。精度式由定理 128.1 得到。略去下标，写 $J'=\Sigma^{-1}+H^TR^{-1}H$，$S=R+H\Sigma H^T$。则
+$$
+J'\Sigma H^TS^{-1}
+=H^TS^{-1}+H^TR^{-1}H\Sigma H^TS^{-1}
+=H^TR^{-1}.
+$$
+因此
+$$
+J'(\Sigma-\Sigma H^TS^{-1}H\Sigma)=I,
+$$
+证明协方差式。再计算
+$$
+J'[m+K(y-Hm)]
+=Jm+H^TR^{-1}Hm+H^TR^{-1}(y-Hm)
+=Jm+H^TR^{-1}y,
+$$
+正是新自然参数，故均值式也成立。证毕。
+
+**推论 128.3。**
+$$
+0\prec\Sigma_{n+1}\preceq\Sigma_n,\qquad
+v^T(\Sigma_n-\Sigma_{n+1})v
+=\|S_n^{-1/2}H_n\Sigma_nv\|^2.
+$$
+故 $v^TZ$ 的条件方差严格下降当且仅当 $H_n\Sigma_nv\ne0$；整个矩阵不变当且仅当 $H_n=0$；差矩阵严格正定当且仅当 $H_n$ 列满秩。
+
+**证明。** 代入定理 128.2 的差矩阵得到平方范数。$S_n,\Sigma_n$ 可逆，使全零及单射条件分别等价于 $H_n=0$ 及 $H_n$ 列满秩。有限历史的 $J_{n+1}\succ0$ 保证后验仍正定。证毕。
+
+固定安排下 $S_n$ 确定，所以创新的条件分布不随过去值改变，$\nu_n$ 独立于过去历史；逐次应用得到创新序列独立。原读数通常相关，这两种陈述不同。
+
+### 128.4 互信息与创新行列式
+
+**定理 128.4。** 对固定安排，
+$$
+I(Z;\mathcal Y_n)
+=\frac12\log\frac{\det\Sigma_0}{\det\Sigma_n}
+=\frac12\log\frac{\det J_n}{\det J_0}.
+$$
+
+**证明。** 正定 Gaussian 的密度给
+$$
+h(N(m,\Sigma))
+=\frac d2\log(2\pi)+\frac12\log\det\Sigma
++\frac12\mathbb E[(Z-m)^T\Sigma^{-1}(Z-m)]
+=\frac12\log((2\pi e)^d\det\Sigma).
+$$
+最后二次期望为 $d$。定理 128.1 的后验协方差不依赖历史值，因此 $h(Z)-h(Z\mid\mathcal Y_n)$ 正是所示行列式比。有限维正定模型使这些熵与信息有限。证毕。
+
+**定理 128.5。**
+$$
+I(Z;Y_n\mid\mathcal Y_n)
+=\frac12\log\frac{\det S_n}{\det R_n}
+=\frac12\log\frac{\det J_{n+1}}{\det J_n}
+$$
+$$
+=\frac12\log\det(I+R_n^{-1/2}H_n\Sigma_nH_n^TR_n^{-1/2})\ge0.
+$$
+增量为零当且仅当 $H_n=0$。
+
+**证明。** 给定历史时 $Y_n$ 的协方差为 $S_n$；再给定 $Z$ 后只剩噪声 $R_n$。Gaussian 条件熵之差给第一式。另一方面，
+$$
+\frac{\det J_{n+1}}{\det J_n}
+=\det(I+\Sigma_n^{1/2}H_n^TR_n^{-1}H_n\Sigma_n^{1/2})
+=\det(I+R_n^{-1/2}H_n\Sigma_nH_n^TR_n^{-1/2}),
+$$
+用到了 $\det(I+UV)=\det(I+VU)$。提取 $R_n^{1/2}$ 后，这也是 $\det S_n/\det R_n$。增加项半正定，行列式为其特征值加一后的乘积；等于一当且仅当增加项为零，即 $H_n=0$。证毕。
+
+信息链式法则或逐项相消给
+$$
+I(Z;\mathcal Y_n)=\sum_{t<n}\frac12\log\frac{\det S_t}{\det R_t}.
+$$
+这些是指定概率实验中的辨识信息，不自动等于物理耗散或取得成本；换成 bit 时整体除以 $\log2$。
+
+### 128.5 Fibonacci 两次读取
+
+取
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\quad
+C_0=C_1=(1,0),\quad m_0=0,\quad\Sigma_0=I_2,\quad R_0=R_1=1.
+$$
+于是 $H_0=(1,0),H_1=(1,1)$，观测为
+$Y_0=Z_1+\epsilon_0,Y_1=Z_1+Z_2+\epsilon_1$。精度与协方差为
+$$
+J_1=\begin{pmatrix}2&0\\0&1\end{pmatrix},\qquad
+J_2=\begin{pmatrix}3&1\\1&2\end{pmatrix},
+$$
+$$
+\Sigma_1=\begin{pmatrix}1/2&0\\0&1\end{pmatrix},\qquad
+\Sigma_2=\frac15\begin{pmatrix}2&-1\\-1&3\end{pmatrix}.
+$$
+均值计算为
+$$
+m_1=(y_0/2,0)^T,\qquad
+\eta_2=(y_0+y_1,y_1)^T,\qquad
+m_2=\frac15(2y_0+y_1,-y_0+2y_1)^T.
+$$
+创新方差 $S_0=2$，$S_1=1+H_1\Sigma_1H_1^T=5/2$，第二次创新为 $\nu_1=Y_1-Y_0/2$。故
+$$
+I(Z;Y_0)=\frac12\log2,\qquad
+I(Z;Y_0,Y_1)=\frac12\log5,\qquad
+I(Z;Y_1\mid Y_0)=\frac12\log(5/2).
+$$
+两步的 $\frac12\log5$ 是累计量，$\frac12\log(5/2)$ 是第二步增量。无噪声时两行 $H_0,H_1$ 线性独立，能恢复 $Z$；当前噪声模型只给所示正定后验协方差，不能称为已经无误恢复初态。
+
+### 128.6 重读缓存与重新测量是不同的联合实验
+
+**命题 128.6。** 若新显示值 $Y'_t$ 只是已有缓存 $Y_t$ 的复制，且 $Y_t$ 已属于历史，则后验不变，并且
+$$
+I(Z;Y'_t\mid\mathcal Y_n)=0.
+$$
+
+**证明。** $Y'_t=Y_t$ 是历史的确定函数，加入它不改变生成的 $\sigma$-代数。因此 $Z$ 的条件律相同；给定历史后该新增变量为常值，其条件互信息为零。证毕。
+
+把同一似然因子再乘一次会错误地把一份噪声当成两份独立噪声。复制的两项噪声完全相关，联合协方差为
+$$
+\begin{pmatrix}R&R\\R&R\end{pmatrix},
+$$
+是奇异矩阵，不是 $\operatorname{diag}(R,R)$。任何历史的确定后处理也不新增信息。
+
+若重新执行同一个传感器，获得 $Y'_t=H_tZ+\epsilon'_t$，且 $\epsilon'_t$ 确实独立于全部旧噪声与 $Z$，那么精度可以再增加 $H_t^TR_t^{-1}H_t$。关键是联合生成关系，不是传感器名字或屏幕数值是否相同。两次独立读数恰巧数值相近，不使它们成为同一缓存；复制缓存也不因换了文件名而成为新实验。
+
+### 128.7 相关噪声必须使用完整块协方差
+
+令堆叠读数为
+$$
+\mathbf Y_n=\mathbf H_n Z+\boldsymbol\epsilon_n,\qquad
+\mathbf H_n=\begin{pmatrix}H_0\\ \vdots\\H_{n-1}\end{pmatrix}.
+$$
+现在允许噪声跨时相关，但仍要求
+$\boldsymbol\epsilon_n\sim N(0,\mathbf R_n)$、
+$\mathbf R_n\succ0$，且与 $Z$ 独立。
+
+**定理 128.7。** 后验仍为正态，精度与自然参数改为
+$$
+J_n=J_0+\mathbf H_n^T\mathbf R_n^{-1}\mathbf H_n,\qquad
+\eta_n=J_0m_0+\mathbf H_n^T\mathbf R_n^{-1}\mathbf y_n.
+$$
+固定噪声联合律和读取安排下，
+$$
+I(Z;\mathbf Y_n)=\frac12\log\frac{\det J_n}{\det J_0}.
+$$
+
+**证明。** 堆叠似然的二次项为
+$(\mathbf y_n-\mathbf H_nz)^T\mathbf R_n^{-1}(\mathbf y_n-\mathbf H_nz)$。
+按定理 128.1 同样展开和完整平方即得后验；其协方差固定，再用定理 128.4 的熵差。证毕。
+
+因此不能在相关情况下只取各边缘 $R_t^{-1}$ 相加。逐步读取仍可以写成独立创新，但必须先消去噪声相关性。将过去与下一次噪声分块为
+$$
+\begin{pmatrix}\epsilon_{\mathrm p}\\\epsilon_{\mathrm n}\end{pmatrix}
+\sim N\left(0,
+\begin{pmatrix}R_{\mathrm{pp}}&R_{\mathrm{pn}}\\
+R_{\mathrm{np}}&R_{\mathrm{nn}}\end{pmatrix}\right),
+$$
+整个块矩阵正定。令
+$$
+L=R_{\mathrm{np}}R_{\mathrm{pp}}^{-1},\qquad
+\widetilde R=R_{\mathrm{nn}}-R_{\mathrm{np}}R_{\mathrm{pp}}^{-1}R_{\mathrm{pn}}\succ0,
+$$
+$$
+\widetilde Y=Y_{\mathrm n}-L\mathbf Y_{\mathrm p},\qquad
+\widetilde H=H_{\mathrm n}-L\mathbf H_{\mathrm p}.
+$$
+
+**命题 128.8。** 有
+$$
+\widetilde Y=\widetilde HZ+\widetilde\epsilon,\qquad
+\widetilde\epsilon=\epsilon_{\mathrm n}-L\epsilon_{\mathrm p}
+\sim N(0,\widetilde R),
+$$
+且 $\widetilde\epsilon$ 独立于 $(Z,\mathbf Y_{\mathrm p})$。因此以 $\widetilde H,\widetilde R$ 替代 $H_n,R_n$ 后，定理128.2、推论128.3及定理128.4—128.5 的单步公式仍成立。
+
+**证明。** 直接相减得模型式，并且
+$$
+\operatorname{Cov}(\widetilde\epsilon,\epsilon_{\mathrm p})
+=R_{\mathrm{np}}-LR_{\mathrm{pp}}=0.
+$$
+联合 Gaussian 的零交叉协方差给独立性；它还与 $Z$ 独立，所以独立于 $(Z,\mathbf Y_{\mathrm p})$。协方差计算给 $\widetilde R$，其正定性由完整噪声块的 Schur 补得到。条件于过去，$\mathbf Y_{\mathrm p}$ 是已知量，$Y_{\mathrm n}\leftrightarrow\widetilde Y$ 为平移双射，不改变本次条件信息。证毕。
+
+本次新增精度为 $\widetilde H^T\widetilde R^{-1}\widetilde H$，创新为
+$\widetilde Y-\widetilde Hm_{\mathrm p}$，预测创新协方差为
+$\widetilde R+\widetilde H\Sigma_{\mathrm p}\widetilde H^T$。这也证明在同一相关噪声联合模型内增加观测仍使协方差按半正定序递减。
+
+缓存复制对应奇异块协方差，故不属于本节正定逆公式；去掉重复坐标即可回到原实验。若要使用奇异 Gaussian 描述，须另行规定其支撑和广义逆，不能把两个重复坐标当独立正定噪声代入。
+
+### 128.8 盲方向：似然不变与边缘不更新的区别
+
+以下写 $\mathbf H,\mathbf R$ 代表某个固定有限历史的堆叠模型，包括独立或已知相关噪声，且 $\mathbf R\succ0$。令
+$$
+L_n=\mathbf H^T\mathbf R^{-1}\mathbf H=J_n-J_0.
+$$
+
+**定理 128.9（似然盲方向）。**
+$$
+\ker L_n=\ker\mathbf H=\bigcap_{t<n}\ker H_t.
+$$
+$v$ 属于这个核，当且仅当把参数 $z$ 改为 $z+av$ 对任意实数 $a$ 都不改变整份条件观测律 $\mathcal L(\mathbf Y_n\mid Z=z)$。此时 $J_nv=J_0v$。
+
+**证明。** $v^TL_nv=\|\mathbf R^{-1/2}\mathbf Hv\|^2$，因此两个核相同；堆叠矩阵的核就是各行块核的交。条件观测律是 $N(\mathbf Hz,\mathbf R)$，平移参数后均值改为 $\mathbf Hz+a\mathbf Hv$；两份具有同一正定协方差的 Gaussian 律相等当且仅当均值相等。最后 $L_nv=0$ 给 $J_nv=J_0v$。证毕。
+
+这并不保证欧氏坐标 $v^TZ$ 的边缘后验保持。协方差是精度矩阵的整体逆，先验相关可把其他方向的读数传递到这个坐标。
+
+**定理 128.10（一个线性目标完全不更新的条件）。** 对 $\ell\in\mathbb R^d$，标量 $\ell^TZ$ 的后验均值和方差对所有历史值都等于先验，当且仅当
+$$
+\mathbf H\Sigma_0\ell=0.
+$$
+同样，若 $P_N$ 为似然盲空间 $N=\ker\mathbf H$ 的欧氏正交投影，则整个向量 $P_NZ$ 的后验边缘等于先验，当且仅当
+$$
+P_N\Sigma_0\mathbf H^T=0.
+$$
+
+**证明。** 把全部历史看成一次测量，由定理 128.2 得
+$$
+\Sigma_0-\Sigma_n
+=\Sigma_0\mathbf H^T
+(\mathbf R+\mathbf H\Sigma_0\mathbf H^T)^{-1}
+\mathbf H\Sigma_0.
+$$
+因中间矩阵正定，$\ell$ 方向的方差损失为零当且仅当 $\mathbf H\Sigma_0\ell=0$。后验均值在该方向上的改变量为
+$$
+\ell^T\Sigma_0\mathbf H^T
+(\mathbf R+\mathbf H\Sigma_0\mathbf H^T)^{-1}
+(\mathbf y-\mathbf Hm_0),
+$$
+在同一条件下恒为零。反向若后验边缘不变，方差已迫使该条件。向量版将 $\ell^T$ 换成 $P_N$，差协方差为 $BB^T$ 型，零矩阵等价于 $P_N\Sigma_0\mathbf H^T=0$。Gaussian 边缘由均值与协方差唯一决定。证毕。
+
+例如
+$$
+\Sigma_0=\begin{pmatrix}1&\rho\\\rho&1\end{pmatrix},
+\quad 0<|\rho|<1,\qquad m_0=0,\qquad
+Y=Z_1+\epsilon,\quad \epsilon\sim N(0,1).
+$$
+$e_2\in\ker(1,0)$ 是似然盲方向，但
+$$
+\mathbb E[Z_2\mid Y=y]=\rho y/2,\qquad
+\operatorname{Var}(Z_2\mid Y)=1-\rho^2/2.
+$$
+所以未直接读取的第二坐标仍会更新。先验为 $\sigma^2I$ 时，
+$P_N\Sigma_0\mathbf H^T=0$ 自动成立，此时盲空间的欧氏投影边缘才保持。
+
+更一般且不需各向同性的正确结论是：在给定可见坐标之后，盲纤维内部的条件律不变。按 $N\oplus N^\perp$ 写 $Z=(Z_{\mathrm h},Z_{\mathrm v})$，似然只依赖 $Z_{\mathrm v}$。于是在有条件密度的版本中
+$$
+p(z_{\mathrm h}\mid z_{\mathrm v},\mathbf y)
+=p(z_{\mathrm h}\mid z_{\mathrm v}),
+$$
+因为 Bayes 式中只依赖 $z_{\mathrm v}$ 的似然因子约去。读数改变各可见纤维的后验权重；若先验中隐藏、可见相关，隐藏边缘随该混合权重改变。这解释了上述例子，没有声称观察区分了同一个似然纤维内的点。
+
+### 128.9 先验白化提供保真的共同 Gram 结构
+
+定义白化状态与白化响应
+$$
+W=\Sigma_0^{-1/2}(Z-m_0)\sim N(0,I),\qquad
+B=\mathbf R^{-1/2}\mathbf H\Sigma_0^{1/2}.
+$$
+相应白化读数为
+$\mathbf R^{-1/2}(\mathbf Y-\mathbf Hm_0)=BW+\xi$，
+$\xi\sim N(0,I)$ 与 $W$ 独立。因此
+$$
+\operatorname{Cov}(W\mid\mathbf Y)=(I+B^TB)^{-1},
+\qquad
+I(Z;\mathbf Y)=\frac12\log\det(I+B^TB).
+$$
+若 $\lambda_1,\ldots,\lambda_d\ge0$ 为共同响应 Gram 矩阵 $B^TB$ 的特征值，则
+$$
+I(Z;\mathbf Y)=\frac12\sum_{j=1}^d\log(1+\lambda_j).
+$$
+
+**证明。** 这是对模型作可逆仿射坐标运输后应用定理 128.1 与定理 128.4；信息在两侧可逆坐标变化下保持。谱分解给行列式乘积。证毕。
+
+在白化坐标中，$\ker B$ 的正交投影 $P_{\ker B}W$ 与整份观测独立：二者是联合 Gaussian，交叉协方差为 $P_{\ker B}B^T=0$。所以这一投影的先验与后验完全相同。注意 $\ker B=\Sigma_0^{-1/2}\ker\mathbf H$，白化也运输了几何，不能把它不经转换当成原坐标里的欧氏投影。
+
+这是一项保真的辅助构造：把先验度量、噪声权重和全部时间读数放入同一个 $B$，其 Gram 矩阵同时给精度增加、可见方向和信息量。时间结构进入 $H_t=C_tA^t$；这些关系并不单独规定外加的物理时空度量。
+
+### 128.10 均值与精度何时是当前充分记忆
+
+**定理 128.11（固定模型内的后验记忆）。** 在第128.1节模型中，给定时刻 $n$ 后，统计量
+$$
+T_n=(m_n,J_n)
+$$
+保留 $Z$ 的完整后验：对任意有界可测 $f$，
+$\mathbb E[f(Z)\mid\mathcal Y_n]$ 是 $T_n$ 的函数。因此
+$$
+\mathcal L(Z\mid T_n)=N(m_n,J_n^{-1})
+$$
+取适当条件律版本。若还按固定已知安排读取未来独立噪声，$(n,m_n,J_n)$ 也决定所有未来读数的条件联合律，并可用定理 128.2 递推更新。
+
+**证明。** 定理 128.1 将条件期望明确写为对 $N(m_n,J_n^{-1})$ 的积分；它只依赖 $T_n$。再对 $\sigma(T_n)$ 作条件期望，塔性质给同一函数，因此后验被保留。对任意有限未来读数块，写
+$\mathbf Y_{\mathrm f}=\mathbf H_{\mathrm f}Z+\epsilon_{\mathrm f}$，
+未来噪声与 $(Z,\mathcal Y_n)$ 独立，则
+$$
+\mathcal L(\mathbf Y_{\mathrm f}\mid\mathcal Y_n)
+=N(\mathbf H_{\mathrm f}m_n,\,
+\mathbf R_{\mathrm f}+\mathbf H_{\mathrm f}J_n^{-1}\mathbf H_{\mathrm f}^T).
+$$
+时刻 $n$ 确定后续安排，当前参数决定该联合律；单步更新由定理 128.2 给出。证毕。
+
+在固定 $n$ 和固定安排下，$J_n$ 预先可算，所以若仅要表示此时后验，$m_n$ 已足够。保留 $(m_n,J_n,n)$ 的作用是清楚表达可更新的状态，并不声称它在所有编码与访问模型中都是最短存储。若任务是保留全部后验，则两个实际可达摘要给同一后验，当且仅当它们的 Gaussian 均值与协方差相同；这是参数化的唯一性，不是未知物理状态已经恢复。
+
+该记忆不是完整档案。许多不同读数历史可能给相同自然参数及后验；查询旧读数、已付成本、失败原因或外部日志，需要另外保留对应任务。若关心当前物理状态 $A^nZ$，其条件律是上述后验的线性推前，均值为 $A^nm_n$、协方差为 $A^nJ_n^{-1}(A^n)^T$；均值仍不等于已知的实际状态。
+
+相关噪声下，$(m_n,J_n)$ 仍保留当前关于 $Z$ 的后验，但可能不保留未来读数预测。第128.7节的新读数条件均值包含
+$$
+L\mathbf y_{\mathrm p}
++(H_{\mathrm n}-L\mathbf H_{\mathrm p})m_{\mathrm p}.
+$$
+第一项未必由 $(m_{\mathrm p},J_{\mathrm p})$ 决定。最小例子是过去读数纯为噪声、$\mathbf H_{\mathrm p}=0$，所以 $Z$ 后验始终为先验；若未来噪声与这份过去噪声相关，其预测均值却随过去值变化。必须额外保留噪声的预测状态或采用适当增广模型，才能取得完整未来行为的充分记忆。
+
+### 128.11 自适应安排的准确边界
+
+上述确定的 $J_n$ 和不带期望号的累计信息式使用固定读取安排。若下一次 $H_n,R_n$ 由已记录过去决定，以下更窄的扩展仍成立：选择规则已知，不利用未记录的 $Z$ 信息；随机选择所用随机源条件于过去与 $Z$ 独立；新噪声按选定 $R_n$ Gaussian 生成，并在该条件下独立于 $Z$ 与过去。
+
+在这些条件下，对每条已实现完整记录（包括选择）作 Bayes 更新，选择概率因给定过去后不依赖 $z$ 而约去，所选 $H_n,R_n$ 在本次条件化中是已知矩阵。故定理 128.1–2 的后验与递推公式逐路径成立。但 $J_n$ 此时一般依赖随机历史，不能把某一条实现的 $\frac12\log(\det J_n/\det J_0)$ 当作整个自适应实验的互信息。
+
+若所需熵与期望有限，对固定读取次数的完整 transcript $\mathcal T_n$，
+$$
+I(Z;\mathcal T_n)
+=\frac12\mathbb E\!\left[\log\frac{\det J_n}{\det J_0}\right].
+$$
+同样，单步条件信息是对应创新 logdet 的历史平均。证明仍是先验熵减条件熵，只是后验协方差现在随机，所以必须取期望；联合 transcript 与 $Z$ 也不必整体为 Gaussian。
+
+此外，均值／精度保留后验，不自动保留选择策略。若策略根据某个未由 $(m_n,J_n)$ 确定的旧读数或成本状态选择下一传感器，两份相同后验历史也可能触发不同下一操作；要形成封闭的在线状态须一并记录策略状态。若策略本来只依赖 $(n,m_n,J_n)$ 及已声明外部随机源，该摘要才足以推进该策略。
+
+若读取安排、缺失机制、停止决定依赖未记录的潜在状态或外部相关信息，选择本身也是观测，不能只更新 Gaussian 读数似然。随机停止还须明确完整停止 transcript 和可积性，不能把固定 $n$ 的式子无条件改成一个随机下标。
+
+### 128.12 与关系核心的对接
+
+固定实验语言时，历史的任务是给出同一潜在状态的条件律及允许未来读取的预测律。完整平方把这份行为压缩成 Gaussian 参数；独立新噪声使压缩后的参数可以继续更新。联合来源、噪声相关和策略状态正是这份压缩能否保持组合的条件。
+
+本节使用的三层结论应分别保留：$\ker\mathbf H$ 给条件观测律的不可区分方向；$\mathbf H\Sigma_0\ell=0$ 给特定先验下线性目标边缘完全不更新的条件；完整允许未来的行为还要求声明噪声与策略记忆。白化后的共同 Gram 矩阵将前两层接入同一加权几何，而没有取消第三层所需的共同历史。
+
+## 128.99 追加锚
+
+## 129. 条件观察的外代数表示与局部信息缺陷
+
+把同一带权函数空间放入外代数与 Clifford 表示，是一条可回接的辅助构造。它将既有隐藏内积编码成向量乘法缺陷，并与局部 KL 的二阶系数对应；不同乘法和不同概率路径的类型保持分开。
+
+### 129.1 先固定乘法约定，再引用已有的线性识别
+
+令 $V$ 为有限维实内积空间，
+
+$$
+g(a,b)=\langle a,b\rangle,
+\qquad Q(v)=g(v,v).
+\tag{129.1}
+$$
+
+采用正 Clifford 约定。记 $\operatorname{Cl}(V,Q)$ 的标量单位为 $1_{\rm Cl}$，生成映射为 $\iota_Q:V\to\operatorname{Cl}(V,Q)$，关系为
+
+$$
+\iota_Q(v)^2=Q(v)1_{\rm Cl}.
+\tag{129.2}
+$$
+
+对 $a+b$ 展开平方并减去 $a,b$ 的平方，得到
+
+$$
+\iota_Q(a)\iota_Q(b)+\iota_Q(b)\iota_Q(a)
+=2g(a,b)1_{\rm Cl}.
+\tag{129.3}
+$$
+
+这里 $\iota_Q(a)\iota_Q(b)$ 是 Clifford 乘法。外代数 $\Lambda V$ 的乘法另记为 $\wedge$，其标量单位为 $1_\Lambda$。不能把两种乘法先行识别：非零 $v$ 的 $v\wedge v=0$，而式（129.2）非零。
+
+直接使用已有的 Clifford—外代数**线性**同构。记其符号映射及逆为
+
+$$
+s_Q:\operatorname{Cl}(V,Q)\xrightarrow{\;\simeq_{\mathbb R}\;}\Lambda V,
+\qquad j_Q=s_Q^{-1}.
+\tag{129.4}
+$$
+
+这是钉版 Mathlib `CliffordAlgebra.equivExterior` 所提供的 module equivalence 在实数上的实例；向量、标量及二向量乘积的计算直接使用其 change-of-form 接口。所用规范识别满足
+
+$$
+s_Q(1_{\rm Cl})=1_\Lambda,
+\qquad s_Q(\iota_Q(v))=v,
+$$
+
+$$
+\boxed{s_Q(\iota_Q(a)\iota_Q(b))=a\wedge b+g(a,b)1_\Lambda}.
+\tag{129.5}
+$$
+
+在实数上，其逆也可用规范反对称化呈示：
+
+$$
+j_Q(v_1\wedge\cdots\wedge v_k)
+=\frac1{k!}\sum_{\sigma\in S_k}\operatorname{sgn}(\sigma)
+\iota_Q(v_{\sigma(1)})\cdots\iota_Q(v_{\sigma(k)}),
+\tag{129.6}
+$$
+
+$k=0$ 时右边为标量单位。使用式（129.4）是引用既有线性同构定理，不在这里重建 PBW 证明或另选一个未声明的有序基分裂。式（129.6）和式（129.5）指定的是同一个 Chevalley／反对称化识别，不需要选择空间定向。
+
+该识别把外代数的整数阶子空间搬到 Clifford 空间中，但乘法不保持阶数相加：两个一阶向量可以产生零阶标量和二阶外积。Clifford 乘法具有通常的奇偶分次；这里的整数阶分解是线性分解。
+
+反向使用式（129.5），得到之后唯一需要的向量积展开：
+
+$$
+\boxed{\iota_Q(a)\iota_Q(b)=g(a,b)1_{\rm Cl}+j_Q(a\wedge b)}.
+\tag{129.7}
+$$
+
+若改用负约定 $\iota(v)^2=-\|v\|^2 1$，式（129.7）的内积项和后文向量缺陷的符号都会反转。本节所有公式始终使用式（129.2）。
+
+### 129.2 观察是逐阶外代数延拓后的线性读出
+
+令 $P:V\to V$ 为正交投影，即 $P^2=P=P^*$，记 $Q_\perp=I-P$。外代数的通用性质给线性映射的外代数延拓
+
+$$
+\Lambda(P):\Lambda V\to\Lambda V,
+\qquad
+\Lambda(P)(v_1\wedge\cdots\wedge v_k)
+=Pv_1\wedge\cdots\wedge Pv_k.
+\tag{129.8}
+$$
+
+$\Lambda(P)$ 保持外积及外代数单位；这里只谈外代数中的乘法。定义同一个 Clifford 空间上的线性观察
+
+$$
+\boxed{\mathcal E_P=j_Q\circ\Lambda(P)\circ s_Q:
+\operatorname{Cl}(V,Q)\longrightarrow\operatorname{Cl}(V,Q)}.
+\tag{129.9}
+$$
+
+这个定义先取符号、再观察各个向量方向、最后回到 Clifford 表示，没有预设它保持几何乘法。由式（129.4）、（129.8）立即得到
+
+$$
+\mathcal E_P(\lambda1_{\rm Cl})=\lambda1_{\rm Cl},
+\qquad\mathcal E_P(\iota_Q(v))=\iota_Q(Pv),
+\qquad\mathcal E_P^2=\mathcal E_P.
+\tag{129.10}
+$$
+
+最后一个等式使用 $\Lambda(P)\Lambda(P)=\Lambda(P^2)=\Lambda(P)$。逐阶定义也证明 $\mathcal E_P$ 保持由式（129.4）选定的外代数阶数。
+
+若希望把值域写成较小空间 $U=\operatorname{im}P$ 的 Clifford 代数，则应另记
+
+$$
+p:V\to U,\qquad
+\mathcal E_{P,U}=j_{Q|_U}\Lambda(p)s_Q:
+\operatorname{Cl}(V,Q)\to\operatorname{Cl}(U,Q|_U).
+\tag{129.11}
+$$
+
+包含 $U\hookrightarrow V$ 保持二次型，因而诱导真正的 Clifford 代数映射。它将式（129.11）接回式（129.9）；外代数识别对该保度量包含相容：把包含诱导的代数映射逐项作用于式（129.6），即得到相同外积生成元的两条像。下面全部差式采用式（129.9）的共同陪域，避免把两个不同代数中的元素直接相减。
+
+### 129.3 向量乘法的观察缺陷恰为隐藏内积
+
+对任意 $a,b\in V$，式（129.5）、（129.8）给
+
+$$
+\mathcal E_P(\iota_Q(a)\iota_Q(b))
+=g(a,b)1_{\rm Cl}+j_Q(Pa\wedge Pb).
+\tag{129.12}
+$$
+
+而由式（129.7）、（129.10），
+
+$$
+\mathcal E_P(\iota_Q(a))\mathcal E_P(\iota_Q(b))
+=g(Pa,Pb)1_{\rm Cl}+j_Q(Pa\wedge Pb).
+\tag{129.13}
+$$
+
+二阶部分相消，得到
+
+$$
+\mathcal E_P(\iota_Q(a)\iota_Q(b))
+-\mathcal E_P(\iota_Q(a))\mathcal E_P(\iota_Q(b))
+=[g(a,b)-g(Pa,Pb)]1_{\rm Cl}.
+\tag{129.14}
+$$
+
+式（129.14）对任意线性 $P$ 及式（129.9）的相应定义都成立。对正交投影，
+
+$$
+a=Pa+Q_\perp a,\qquad b=Pb+Q_\perp b,
+\qquad g(Pa,Q_\perp b)=g(Q_\perp a,Pb)=0,
+$$
+
+所以
+
+$$
+\boxed{
+\mathcal E_P(\iota_Q(a)\iota_Q(b))
+-\mathcal E_P(\iota_Q(a))\mathcal E_P(\iota_Q(b))
+=\langle Q_\perp a,Q_\perp b\rangle1_{\rm Cl}.
+}
+\tag{129.15}
+$$
+
+特别地，
+
+$$
+\boxed{\mathcal E_P(\iota_Q(a)^2)-\mathcal E_P(\iota_Q(a))^2
+=\|Q_\perp a\|^2 1_{\rm Cl}}.
+\tag{129.16}
+$$
+
+因此一个隐藏向量即使自身读出为零，其平方关系仍可留下非零标量。混合缺陷是双线性配对，可以为负；平方缺陷在所选正内积约定下非负。
+
+正交性不能只用 $P^2=P$ 代替。例如在 $\mathbb R^2$ 上取斜投影 $P(x,y)=(x+y,0)$ 和 $a=e_2$。则式（129.14）的标量为 $\|e_2\|^2-\|e_1\|^2=0$，而 $\|a-Pa\|^2=2$，故式（129.16）在该斜投影下不成立。
+
+### 129.4 丢弃正长度方向，为什么不能保留原来的全部几何积
+
+**命题 129.1。** 若 $P$ 是真投影，即 $P\ne I$，则不存在保持单位的实代数同态
+
+$$
+\Phi:\operatorname{Cl}(V,Q)\to\operatorname{Cl}(V,Q)
+$$
+
+使 $\Phi(\iota_Q(v))=\iota_Q(Pv)$ 对所有 $v$ 成立。将陪域改为 $\operatorname{Cl}(U,Q|_U)$，结论相同。
+
+**证明。** 因 $P\ne I$，可取非零 $h\in\ker P$。若 $\Phi$ 存在，则
+
+$$
+0=\Phi(\iota_Q(h))^2
+=\Phi(\iota_Q(h)^2)
+=\|h\|^2 1.
+\tag{129.17}
+$$
+
+正定性使 $\|h\|^2>0$。实 Clifford 代数非平凡，标量嵌入单射；也可由式（129.4）将其标量单位送到外代数的非零标量单位核验。因此右边非零，矛盾。证明完毕。
+
+这个命题排除的是**延拓指定向量投影**的代数同态，不能扩大成“两份 Clifford 代数之间不存在任何其他同态”。$P=I$ 时恒等映射就是所需同态。$V=0$ 时只有恒等投影，也不构成真投影反例；$V\ne0$ 而 $P=0$ 时上述阻碍仍成立。
+
+这也证明式（129.9）在 $P\ne I$ 时确实不保持乘法；它是一个有明确缺陷的线性读出。
+
+### 129.5 改变源二次型可以合法取商，但那是另一份关系
+
+保持同一个线性投影 $p:V\to U$，改为源二次型
+
+$$
+Q_P(v)=\|Pv\|^2,
+\qquad g_P(v,w)=\langle Pv,Pw\rangle.
+\tag{129.18}
+$$
+
+此时 $Q|_U(pv)=Q_P(v)$，所以 $p$ 是这两个二次空间之间的保二次型映射。Clifford 通用性质直接给唯一的保持单位代数同态
+
+$$
+\boxed{\widehat p:\operatorname{Cl}(V,Q_P)\to\operatorname{Cl}(U,Q|_U),
+\qquad\widehat p(\iota_{Q_P}(v))=\iota_{Q|_U}(Pv)}.
+\tag{129.19}
+$$
+
+它满射，因为目标由 $U$ 中的向量生成，而 $p$ 满射。这没有反驳式（129.17）：源代数已经改变，隐藏方向的平方现在被规定为零。
+
+具体地，
+
+$$
+\operatorname{rad}(g_P)
+=\{v:g_P(v,w)=0\text{ 对所有 }w\}
+=\ker P.
+\tag{129.20}
+$$
+
+若 $Pv=0$，左侧条件直接成立；若左侧条件成立，取 $w=v$ 得 $\|Pv\|^2=0$，所以 $Pv=0$。这证明了双向等价。
+
+二次型退化不意味着隐藏生成元在源代数中已经等于零。若 $0\ne h\in\ker P$，由对任意实二次型都适用的式（129.4），$\iota_{Q_P}(h)$ 的符号为非零外代数一阶向量 $h$；因此它本身非零，只是平方为零。式（129.19）再将这些方向杀掉。
+
+若令 $J$ 为 $\operatorname{Cl}(V,Q_P)$ 中由 $\iota_{Q_P}(\ker P)$ 生成的双边理想，则实际上
+
+$$
+\operatorname{Cl}(V,Q_P)/J\cong\operatorname{Cl}(U,Q|_U).
+\tag{129.21}
+$$
+
+证明只用通用性质：式（129.19）杀掉 $J$，因而经商因子化。反向由包含 $U\hookrightarrow V$ 的保二次型映射后接商映射给出。目标向量 $u$ 被两次映射送回自身；源商中的向量 $v$ 与 $Pv$ 相等，因为 $v-Pv\in\ker P$。双方代数均由这些向量和标量生成，所以两个复合均为恒等。
+
+更一般地，对实二次空间之间的线性映射 $T$，若 $Q_W(Tv)=Q_V(v)$ 对所有 $v$ 成立，极化给
+
+$$
+g_W(Tv,Tw)=g_V(v,w).
+$$
+
+因此
+
+$$
+\boxed{\ker T\subseteq\operatorname{rad}(g_V)}.
+\tag{129.22}
+$$
+
+所以不定但非退化的源二次型也不允许非单射保型映射。仅有 $Q(v)=0$ 的非零零模长向量（isotropic）并不足够：在 $g((t,x),(s,y))=ts-xy$ 中，$v=(1,1)$ 虽有 $Q(v)=0$，但 $g(v,(1,0))=1$，故不在根基中，不能被保全部配对的映射直接杀掉。
+
+原来的正定几何、改型后的退化几何，以及随后取掉根基方向的商，是三份明确不同的结构。不能只改变源关系后仍宣称保存了原 Euclidean 几何积。
+
+### 129.6 任意多向量的缺陷不能仍写成一个标量内积
+
+在二维正 Euclidean 空间中取正交归一基 $e_1,e_2$，投影保留 $e_1$、丢弃 $e_2$。省略生成映射记号，令
+
+$$
+A=e_1e_2=j_Q(e_1\wedge e_2),\qquad B=e_2.
+$$
+
+由式（129.9），$\mathcal E_P(A)=\mathcal E_P(B)=0$。但
+
+$$
+AB=e_1e_2^2=e_1,
+\qquad
+\boxed{\mathcal E_P(AB)-\mathcal E_P(A)\mathcal E_P(B)=e_1}.
+\tag{129.23}
+$$
+
+其缺陷为一阶向量，不是标量。又由反交换关系，
+
+$$
+A^2=e_1e_2e_1e_2=-1,
+\qquad\mathcal E_P(A^2)-\mathcal E_P(A)^2=-1.
+\tag{129.24}
+$$
+
+因此式（129.16）的“平方缺陷是非负标量残差范数”也不能把向量输入任意改成多向量输入。这里没有将 $A^2$ 解释成某个带星结构下的正元素；式（129.24）仅说明原向量公式没有这样的无条件延伸。
+
+### 129.7 条件观察使隐藏内积成为平均条件协方差
+
+固定有限非空 $\Omega$、严格正概率 $\nu$，以及满射读出 $r:\Omega\to B$。令
+
+$$
+V=\mathbb R^\Omega,
+\qquad\langle f,g\rangle_\nu=\sum_x\nu(x)f(x)g(x),
+\qquad\nu_b=\sum_{r(x)=b}\nu(x)>0.
+\tag{129.25}
+$$
+
+定义条件投影
+
+$$
+(Pf)(x)=\frac1{\nu_{r(x)}}\sum_{r(y)=r(x)}\nu(y)f(y).
+\tag{129.26}
+$$
+
+它线性，输出在每个纤维上常值，且对这种常值函数保持不变，所以 $P^2=P$。按纤维求和还给
+
+$$
+\langle Pf,g\rangle_\nu
+=\sum_b\frac{\bigl(\sum_{r(x)=b}\nu(x)f(x)\bigr)
+\bigl(\sum_{r(y)=b}\nu(y)g(y)\bigr)}{\nu_b}
+=\langle f,Pg\rangle_\nu.
+\tag{129.27}
+$$
+
+因此它是正交投影。此外，$P1_\Omega=1_\Omega$、$f\ge0\Rightarrow Pf\ge0$，且 $\mathbb E_\nu Pf=\mathbb E_\nu f$。这些概率性质是条件期望结构提供的，任意正交投影并不具备。
+
+下文在此 $V$ 上构造式（129.1）的正 Clifford 代数。函数内的乘法明确记为逐点乘法；例如 $fg$ 表示 $x\mapsto f(x)g(x)$，而 Clifford 积始终写 $\iota_Q(f)\iota_Q(g)$。
+
+因 $Pf,Pg$ 在纤维上常值，
+
+$$
+\mathbb E_\nu[f(Pg)]=\mathbb E_\nu[(Pf)(Pg)]
+=\mathbb E_\nu[(Pf)g].
+$$
+
+展开残差积并约去交叉项得
+
+$$
+\begin{aligned}
+\langle f-Pf,g-Pg\rangle_\nu
+&=\mathbb E_\nu[fg]-\mathbb E_\nu[(Pf)(Pg)]\\
+&=\mathbb E_\nu\bigl[P(fg)-(Pf)(Pg)\bigr].
+\end{aligned}
+\tag{129.28}
+$$
+
+方括号内是条件协方差函数 $\operatorname{Cov}_\nu(f,g\mid r)$。因此式（129.15）在此模型中成为
+
+$$
+\boxed{
+\mathcal E_P(\iota_Q(f)\iota_Q(g))
+-\mathcal E_P(\iota_Q(f))\mathcal E_P(\iota_Q(g))
+=\mathbb E_\nu[\operatorname{Cov}_\nu(f,g\mid r)]\,1_{\rm Cl}.
+}
+\tag{129.29}
+$$
+
+条件协方差通常随读数而变；它的**期望**才是 Clifford 向量缺陷中的标量。
+
+例如四个等权状态分成 $\{1,2\}$、$\{3,4\}$ 两条纤维，取
+
+$$
+f=g=(-1,1,-2,2).
+$$
+
+有 $Pf=0$，但
+
+$$
+\operatorname{Cov}_\nu(f,f\mid r)=(1,1,4,4),
+\qquad\mathbb E_\nu[\operatorname{Cov}_\nu(f,f\mid r)]=\frac52.
+\tag{129.30}
+$$
+
+不能把可见函数 $(1,1,4,4)$、它作为 Clifford 一阶向量的嵌入，以及标量 $(5/2)1_{\rm Cl}$ 写成同一个对象。
+
+尤其 $1_\Omega\in V$ 是一个常量函数，但 $\iota_Q(1_\Omega)$ 仍是 Clifford 一阶向量；$1_{\rm Cl}$ 是零阶单位。式（129.4）分别把它们送到 $\Lambda^1V$ 中的 $1_\Omega$ 和 $\Lambda^0V$ 中的标量 $1$，所以二者不同。虽然
+
+$$
+\iota_Q(1_\Omega)^2=\|1_\Omega\|_\nu^2 1_{\rm Cl}=1_{\rm Cl},
+$$
+
+平方相等并不使一阶常量函数变成代数单位。
+
+### 129.8 概率重建是另一张映射，不是 Clifford 读出的别名
+
+对任意概率质量 $d$，定义参考密度 $\rho=d/\nu$ 和质量重建
+
+$$
+\boxed{\mathscr E_\nu d=\nu\,P(d/\nu)}.
+\tag{129.31}
+$$
+
+这里右边的乘法逐点进行。若 $d_b=\sum_{r(x)=b}d(x)$，则
+
+$$
+(\mathscr E_\nu d)(x)=\nu(x)\frac{d_{r(x)}}{\nu_{r(x)}}.
+\tag{129.32}
+$$
+
+所以重建非负、总质量一、保留每个读数纤维的质量，并且 $\mathscr E_\nu^2=\mathscr E_\nu$。当 $d(x)>0$ 时，其纤维质量 $d_{r(x)}>0$，故 $(\mathscr E_\nu d)(x)>0$；因此始终有 $d\ll\mathscr E_\nu d$，即使 $d$ 有零项也不需要在无质量纤维上任意选取后验。
+
+按正质量纤维分解似然比，得到有限参考链式等式
+
+$$
+D(d\|\nu)=D(r_*d\|r_*\nu)+D(d\|\mathscr E_\nu d).
+\tag{129.33}
+$$
+
+例如对 $r(x)=b$ 且 $d(x)>0$，
+
+$$
+\frac{d(x)}{\nu(x)}
+=\frac{d_b}{\nu_b}\frac{d(x)}{(\mathscr E_\nu d)(x)},
+$$
+
+对数求和即得式（129.33）；$d_b=0$ 的纤维在 $d$ 下不作贡献。
+
+这张质量映射依赖 $P$ 的正性和保常数性质。一般正交投影不能代替它。甚至保常数的正交投影也未必保正：在三点均匀参考上，令
+
+$$
+u=(1,1,-2)/\sqrt6,\qquad P=I-uu^{\mathsf T}.
+$$
+
+因 $u\perp(1,1,1)$，$P$ 保持常量；但 $Pe_2=(-1/6,5/6,1/3)$ 含负分量。以一般 $P$ 定义式（129.31）就不能保证得到概率。
+
+式（129.9）的 $\mathcal E_P$ 是 Clifford 空间上的线性读出；式（129.31）的 $\mathscr E_\nu$ 是概率质量上的参考重建。二者共享条件投影 $P$，并不因此具有相同定义域、乘法或概率解释。
+
+### 129.9 精确线性密度族的局部 KL 公式及显式余项
+
+取 $f\in\mathbb R^\Omega$，要求
+
+$$
+\mathbb E_\nu f=0,
+\qquad M=\max_x|f(x)|.
+\tag{129.34}
+$$
+
+定义**线性**概率路径
+
+$$
+d_\varepsilon(x)=\nu(x)(1+\varepsilon f(x)),
+\qquad
+\mathscr E_\nu d_\varepsilon(x)=\nu(x)(1+\varepsilon Pf(x)).
+\tag{129.35}
+$$
+
+它没有指数族的归一化常数。中心化使两式总质量均为一；条件平均使 $|Pf|\le M$，故 $|\varepsilon|M<1$ 保证两份质量都严格正。若 $M=0$，则 $f=0$，两式对全部实 $\varepsilon$ 均等于 $\nu$，KL 恒零。
+
+设 $M>0$，固定 $0<\theta<1$，将参数限制为 $|\varepsilon|M\le\theta$。令
+
+$$
+h(s)=(1+s)\log(1+s),\qquad -1<s<\infty.
+\tag{129.36}
+$$
+
+因为 $\log(1+\varepsilon Pf)$ 在各纤维上常值，式（129.27）的条件平均关系给
+
+$$
+\begin{aligned}
+D(d_\varepsilon\|\mathscr E_\nu d_\varepsilon)
+&=\mathbb E_\nu\left[(1+\varepsilon f)
+\log\frac{1+\varepsilon f}{1+\varepsilon Pf}\right]\\
+&=\mathbb E_\nu[h(\varepsilon f)]
+-\mathbb E_\nu[h(\varepsilon Pf)].
+\end{aligned}
+\tag{129.37}
+$$
+
+这是精确恒等式，而不是只在零点成立的展开。
+
+求导得
+
+$$
+h(0)=0,\qquad h'(0)=1,\qquad h''(0)=1,
+\qquad h'''(s)=-\frac1{(1+s)^2}.
+\tag{129.38}
+$$
+
+连续三次积分，或已有 Taylor 积分／Lagrange 余项定理，给
+
+$$
+h(s)=s+\frac{s^2}{2}
++\frac{s^3}{2}\int_0^1(1-u)^2h'''(us)\,du.
+\tag{129.39}
+$$
+
+它对正负 $s$ 都成立。若 $|s|\le\theta$，则 $|h'''(us)|\le(1-\theta)^{-2}$，从而
+
+$$
+\left|h(s)-s-\frac{s^2}{2}\right|
+\le\frac{|s|^3}{6(1-\theta)^2}.
+\tag{129.40}
+$$
+
+将式（129.39）代入式（129.37），线性项由 $\mathbb E_\nu f=\mathbb E_\nu Pf=0$ 消失。正交投影恒等式给
+
+$$
+\mathbb E_\nu f^2-\mathbb E_\nu(Pf)^2
+=\|f-Pf\|_\nu^2.
+\tag{129.41}
+$$
+
+于是存在实数余项 $R_\varepsilon$，使
+
+$$
+\boxed{
+D(d_\varepsilon\|\mathscr E_\nu d_\varepsilon)
+=\frac{\varepsilon^2}{2}\|f-Pf\|_\nu^2+R_\varepsilon,
+}
+\tag{129.42}
+$$
+
+而且逐点应用式（129.40）并求期望给显式界
+
+$$
+\boxed{
+|R_\varepsilon|
+\le\frac{|\varepsilon|^3}{6(1-\theta)^2}
+\left(\mathbb E_\nu|f|^3+\mathbb E_\nu|Pf|^3\right)
+\le\frac{M^3}{3(1-\theta)^2}|\varepsilon|^3.
+}
+\tag{129.43}
+$$
+
+所有常数相对于固定的 $\nu,r,f,\theta$；若这些模型资料也随参数改变，不能直接声称同一个统一余项界。式（129.42）比较的是概率质量，不是 $D(f\|Pf)$。
+
+由式（129.16），同一个结果也可写成共同 Clifford 陪域中的等式
+
+$$
+\boxed{
+D(d_\varepsilon\|\mathscr E_\nu d_\varepsilon)1_{\rm Cl}
+=\frac{\varepsilon^2}{2}
+\bigl[\mathcal E_P(\iota_Q(f)^2)-\mathcal E_P(\iota_Q(f))^2\bigr]
++R_\varepsilon1_{\rm Cl}.
+}
+\tag{129.44}
+$$
+
+这给出一条精确连接：局部信息恢复缺陷的二阶系数，等于该方向几何平方的观察缺陷。它没有在 Clifford 代数内部定义对数概率，也没有把全部熵等同于某个几何分量。
+
+### 129.10 指数密度族是另一条路径，共同的只是正规化 Hessian
+
+为明确两种路径的区别，先证明一个标准有限引理。令 $v_\varepsilon,w_\varepsilon>0$ 是逐点 $C^3$ 的密度路径，满足
+
+$$
+\mathbb E_\nu v_\varepsilon=\mathbb E_\nu w_\varepsilon=1,
+\qquad v_0=w_0=1.
+$$
+
+记
+
+$$
+F(\varepsilon)=\mathbb E_\nu\left[v_\varepsilon
+\log\frac{v_\varepsilon}{w_\varepsilon}\right].
+\tag{129.45}
+$$
+
+函数 $\varphi(v,w)=v\log(v/w)$ 在 $(1,1)$ 的梯度及 Hessian 为
+
+$$
+\nabla\varphi(1,1)=(1,-1),
+\qquad
+\nabla^2\varphi(1,1)=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
+\tag{129.46}
+$$
+
+有限求和可逐项微分；正规化又给 $\mathbb E_\nu v'_0=\mathbb E_\nu w'_0=0$ 以及二阶导数的同类等式。因此链式法则得到
+
+$$
+F(0)=F'(0)=0,
+$$
+
+$$
+\boxed{F''(0)
+=\mathbb E_\nu[(v'_0-w'_0)^2]
++\mathbb E_\nu[v''_0-w''_0]
+=\|v'_0-w'_0\|_\nu^2}.
+\tag{129.47}
+$$
+
+这是 RRO 已有正规化密度 Hessian 计算的直接应用形式。对任何小的闭参数区间，正密度和 $C^3$ 性使 $F'''$ 连续有界；Taylor 定理再给
+
+$$
+\left|F(\varepsilon)-\frac{\varepsilon^2}{2}F''(0)\right|
+\le\frac{|\varepsilon|^3}{6}\max_{|s|\le\delta}|F'''(s)|
+\quad(|\varepsilon|\le\delta).
+\tag{129.48}
+$$
+
+现在定义有限指数族
+
+$$
+Z_\varepsilon=\mathbb E_\nu e^{\varepsilon f},
+\qquad\widehat d_\varepsilon(x)
+=\nu(x)\frac{e^{\varepsilon f(x)}}{Z_\varepsilon}.
+\tag{129.49}
+$$
+
+在有限 $\Omega$ 上，$Z_\varepsilon$ 对每个实参数都有限且严格正。若 $f$ 已中心化，则 $Z_0=1,Z'_0=0$，所以密度 $\widehat v_\varepsilon=e^{\varepsilon f}/Z_\varepsilon$ 满足 $\widehat v'_0=f$；其参考重建密度
+
+$$
+\widehat w_\varepsilon=P\widehat v_\varepsilon
+=\frac{P(e^{\varepsilon f})}{Z_\varepsilon}
+\tag{129.50}
+$$
+
+满足 $\widehat w'_0=Pf$。两者都是正且正规化的光滑路径，故式（129.47）—（129.48）给
+
+$$
+D(\widehat d_\varepsilon\|\mathscr E_\nu\widehat d_\varepsilon)
+=\frac{\varepsilon^2}{2}\|f-Pf\|_\nu^2+O(|\varepsilon|^3).
+\tag{129.51}
+$$
+
+这证明共同二阶系数，不把线性族和指数族识别成同一份概率。式（129.43）的常数由线性密度专门推导，不能无证明移作式（129.51）的常数；式（129.48）已经提供指数族的独立余项依据。
+
+指数族的重建还不能把式（129.50）擅改成 $e^{\varepsilon Pf}/\mathbb E_\nu e^{\varepsilon Pf}$。在式（129.30）的四点例中，$Pf=0$，后者恒为一；前者在两条纤维上的值分别为
+
+$$
+\frac{\cosh\varepsilon}{Z_\varepsilon},
+\qquad\frac{\cosh(2\varepsilon)}{Z_\varepsilon},
+\qquad Z_\varepsilon=\frac{\cosh\varepsilon+\cosh(2\varepsilon)}2.
+\tag{129.52}
+$$
+
+当 $\varepsilon\ne0$ 时这两个值不同。因此条件平均与指数化不能自动交换。上述局部投影结果均不要求额外的时间反演假设。
+
+### 129.11 无限 $L^2$ 不能保证线性正性或指数正规化
+
+有限模型提供了有界 $M$、固定正支持和有限求和。只有 $f\in L^2(\nu)$ 时，这些条件并不自动成立。
+
+令状态为正整数，取
+
+$$
+\nu(n)=\frac{c}{n^4},\qquad
+c=\left(\sum_{n=1}^{\infty}n^{-4}\right)^{-1},
+\qquad m=\mathbb E_\nu n,
+\qquad f(n)=n-m.
+\tag{129.53}
+$$
+
+$\sum n^{-3}$、$\sum n^{-2}$ 都收敛，所以 $m<\infty$、$\mathbb E_\nu f=0$ 且 $f\in L^2(\nu)$。
+
+对任何 $\varepsilon<0$，选 $n>m+1/|\varepsilon|$，就有
+
+$$
+1+\varepsilon f(n)<0.
+\tag{129.54}
+$$
+
+因此线性路径不存在以零为中心的双侧正密度邻域。其形式积分仍为一，失败的是逐点正性，不是缺少指数归一化常数。因为 $f$ 有有限下界，它可以在足够小的正参数方向保持正性；本例没有声称所有非零线性参数都失败。
+
+另一方面，对任何 $\varepsilon>0$，指数正规化常数为
+
+$$
+Z_\varepsilon
+=ce^{-\varepsilon m}\sum_{n=1}^{\infty}\frac{e^{\varepsilon n}}{n^4}=+\infty.
+\tag{129.55}
+$$
+
+证明例如看相邻项之比趋向 $e^\varepsilon>1$，故求和项甚至不趋于零。指数密度因而无法正规化；其逐点值始终正，这与式（129.54）的失败是不同机制。
+
+该例的 $\mathbb E_\nu|f|^3$ 也发散：当 $n>2m$ 时，$|n-m|^3\ge n^3/8$，对应求和项至少为 $c/(8n)$。故有限线性族的三阶余项估计不能直接移植。无限版本需要分别承担正性区间、正规化、矩条件及微分／积分交换的支配条件，不能仅用 $L^2$ 身份包办。
+
+### 129.12 支持、来源归属与本桥梁的范围
+
+若有限参考 $\nu$ 允许零值，可先限制到 $S=\{x:\nu(x)>0\}$，并将读数空间限制为 $r(S)$。在该支持上所有参考纤维质量严格正，$V=\mathbb R^S$ 的内积非退化；所有函数只按该支持上的值解释，密度和重建均在此定义。若候选概率允许向 $S$ 外移动质量，就不属于本节的固定参考密度路径，不能随意为 $d/\nu$ 填值。这里没有零概率纤维上的任意后验选择。
+
+Clifford—外代数线性识别采用 Mathlib `CliffordAlgebra.equivExterior` 的 Chevalley 构造；参考 Bourbaki, Algèbre, Chapitre IX §9，以及 D. Grinberg, “The Clifford algebra and the Chevalley map — a computational approach” (2016)。概率重建沿用本卷 §82.1，正规化密度的局部 Hessian 接口见 §92.3；显式线性路径余项由本节直接计算。
+
+## 129.99 追加锚
+
+## 130. Fisher 干扰几何与 Schur 消元的共同投影
+
+同一观测会同时改变目标与干扰方向。将两者提升到共同带权空间，可以分解全部有效信息损失；Schur 补给对应二次最小化，而 Gaussian 积分还保留体积因子。
+
+### 130.1 有限概率的质量切向量与得分坐标
+
+取有限非空集合 $\mathcal X$，严格正概率 $p=(p_i)_{i\in\mathcal X}$，以及固定确定性观察 $r:\mathcal X\to\mathcal B$。$\mathcal B$ 只取实际像，因此
+
+$$
+q_b=\sum_{r(i)=b}p_i>0.
+$$
+
+质量切空间、聚合映射和 Fisher 内积分别是
+
+$$
+T_p=\{v:\sum_i v_i=0\},\qquad
+(C_rv)_b=\sum_{r(i)=b}v_i,\qquad
+\langle u,v\rangle_p^{\mathrm{mass}}=\sum_i\frac{u_iv_i}{p_i}.
+$$
+
+粗质量切空间 $T_q$ 有同样的定义。令
+
+$$
+(R_pw)_i=p_i\frac{w_{r(i)}}{q_{r(i)}},\qquad E_p=R_pC_r.
+$$
+
+$R_p$ 是按**同一基准 $p$** 的条件律重建粗质量；它不是随意选取的右逆。
+
+**命题 130.1。** $C_rR_p=I$，$E_p$ 是 $T_p$ 上关于 Fisher 内积的正交投影，且
+
+$$
+\|E_pv\|_{p,\mathrm{mass}}^2=\|C_rv\|_{q,\mathrm{mass}}^2,
+\qquad
+\|v\|_{p,\mathrm{mass}}^2
+=\|C_rv\|_{q,\mathrm{mass}}^2+\|(I-E_p)v\|_{p,\mathrm{mass}}^2.
+$$
+
+**证明。** 每个纤维求和给
+$\sum_{r(i)=b}p_iw_b/q_b=w_b$，所以 $C_rR_p=I$。并且对 $v\in T_p,w\in T_q$，
+
+$$
+\langle C_rv,w\rangle_q^{\mathrm{mass}}
+=\sum_b\frac{w_b}{q_b}\sum_{r(i)=b}v_i
+=\langle v,R_pw\rangle_p^{\mathrm{mass}}.
+$$
+
+因此 $R_p=C_r^*$，$E_p$ 自伴且由 $C_rR_p=I$ 得幂等。又
+
+$$
+\|R_pw\|_{p,\mathrm{mass}}^2
+=\sum_b\frac{w_b^2}{q_b^2}\sum_{r(i)=b}p_i
+=\sum_b\frac{w_b^2}{q_b}.
+$$
+
+把 $w=C_rv$ 代入，再用正交投影的 Pythagoras 分解即可。证毕。
+
+得分空间为
+
+$$
+\mathcal H=L^2_0(p)
+=\{f:\sum_i p_if_i=0\},\qquad
+\langle f,g\rangle_p=\sum_i p_if_ig_i.
+$$
+
+映射 $D_p:\mathcal H\to T_p$，$D_pf=(p_if_i)_i$，是等距同构。质量投影在该坐标下成为
+
+$$
+\Pi=D_p^{-1}E_pD_p,\qquad
+(\Pi f)_i=\frac{\sum_{r(j)=r(i)}p_jf_j}{q_{r(i)}}.
+$$
+
+它是到可见空间
+$\mathcal V=\{f\in\mathcal H:f_i\text{ 只依赖 }r(i)\}$ 的正交投影，即条件期望。$E_p$ 作用于质量切向量，$\Pi$ 作用于得分或函数；它们由 $D_p$ 共轭，不能省略坐标而使用同一个数组。可见得分在 $\mathcal X$ 上的 $L^2(p)$ 范数等于其在 $\mathcal B$ 上的 $L^2(q)$ 范数。
+
+Fisher 度量确实是局部概率差异的二阶项。例如固定 $v\in T_p$，取足够小的实数 $t$ 使 $p+tv>0$。写 $f_i=v_i/p_i$，逐项 Taylor 展开 $(1+tf_i)\log(1+tf_i)$，有限求和且 $\sum_i p_if_i=0$ 给出
+
+$$
+D(p+tv\Vert p)=\frac{t^2}{2}\sum_i\frac{v_i^2}{p_i}+O(|t|^3).
+$$
+
+同样对粗概率 $q+tC_rv$ 展开，二阶系数差恰为 $\frac12\|(I-E_p)v\|_{p,\mathrm{mass}}^2$。这里只陈述固定有限正参考附近的局部展开；零质量边界、移动支撑和无限维余项需要额外条件。
+
+### 130.2 观察模型的得分与可见干扰
+
+设 $p_i(\theta,\eta)$ 是一个有限正概率模型，在基准参数 $(\theta_0,\eta_0)$ 可微，$\theta$ 为一维目标，$\eta$ 为干扰参数。在该点定义目标得分
+
+$$
+s_i=\partial_\theta\log p_i,\qquad
+n_{a,i}=\partial_{\eta_a}\log p_i.
+$$
+
+概率归一化的导数给出这些向量都属于 $\mathcal H$。令 $N$ 为全部允许干扰切方向所张成的子空间；有限维下它闭合。一般允许路径的定义也必须把所有合法干扰方向纳入 $N$。
+
+**命题 130.2。** 对上述固定观察 $r$，观察模型的目标得分是 $\Pi s$，干扰空间是 $M=\Pi N$。
+
+**证明。** 对 $q_b(\theta,\eta)=\sum_{r(i)=b}p_i(\theta,\eta)$ 求导：
+
+$$
+\partial_\theta\log q_b
+=\frac{\sum_{r(i)=b}\partial_\theta p_i}{q_b}
+=\frac{\sum_{r(i)=b}p_is_i}{q_b}.
+$$
+
+这正是 $\Pi s$ 的标签值。对每个干扰路径同样计算，再取线性张成，得到 $M=\Pi N$。证毕。
+
+若改用随机但参数无关的观察核，类似得分恒等式是在所声明的联合实验中对观测作条件期望；本文这些 $\mathcal H$ 内部的投影公式固定使用确定性 $r$。参数依赖的观察机制还会产生自身得分，不能未经推导套用本命题。
+
+令 $P_N$、$P_M$ 为相应正交投影。完整实验和观察实验的有效得分及信息定义为
+
+$$
+f=(I-P_N)s,\qquad I_{\mathrm{full}}=\|f\|_p^2,
+$$
+
+$$
+g=(I-P_M)\Pi s,\qquad I_{\mathrm{obs}}=\|g\|_p^2.
+$$
+
+等价地，$I_{\mathrm{full}}=\min_{n\in N}\|s-n\|^2$，观察信息是在 $\Pi s$ 中消去所有可见干扰 $M$ 后的平方长度。这里的 $M$ 是 $N$ 的全部像；它一般不同于 $N\cap\mathcal V$。
+
+**命题 130.3（两项损失）。**
+
+$$
+g=(I-P_M)\Pi f,\qquad
+I_{\mathrm{full}}-I_{\mathrm{obs}}
+=\|(I-\Pi)f\|_p^2+\|P_M\Pi f\|_p^2.
+$$
+
+因此 $I_{\mathrm{obs}}\le I_{\mathrm{full}}$，等号成立当且仅当 $\Pi f=f$。
+
+**证明。** $s=f+P_Ns$，而 $\Pi P_Ns\in M$，所以消去 $M$ 后这项为零，得到 $g=(I-P_M)\Pi f$。依次作两次正交分解：
+
+$$
+\|f\|^2=\|(I-\Pi)f\|^2+\|\Pi f\|^2,\qquad
+\|\Pi f\|^2=\|P_M\Pi f\|^2+\|(I-P_M)\Pi f\|^2.
+$$
+
+相加并移项即得。若信息相等，右侧非负项之和为零，第一项迫使 $\Pi f=f$。反之若 $\Pi f=f$，对任意 $n\in N$，
+
+$$
+\langle f,\Pi n\rangle
+=\langle\Pi f,n\rangle
+=\langle f,n\rangle=0,
+$$
+
+所以 $f\perp M$，第二项也为零。证毕。
+
+第一项是完整有效得分中直接不可见的分量，第二项是投影后与可见干扰混合的分量。$f\perp N$ 不保证 $\Pi f\perp\Pi N$，所以“先消干扰，再测一次投影损失”通常不等于观察实验的有效信息。等号判据是给定参数点、给定目标方向的局部结论，不等价于整族概率的全局充分性。
+
+在一般 Hilbert 空间中，若 $N$ 闭合，需令 $M=\overline{\Pi N}$；闭子空间的有界线性像不一定闭。上述证明仍成立，最后从对 $\Pi N$ 的正交性延拓到其闭包。要将这一 Hilbert 结论解释为无限维统计有效信息，仍须有可微实验、平方可积得分和合法干扰路径。多个目标方向可逐方向应用并组合成半正定矩阵关系，不能以一个标量代替整张信息矩阵。
+
+### 130.3 三状态反例与最优可见对比
+
+取 $\mathcal X=\{1,2,3\}$、$p_i=1/3$，观察只区分 $\{1,2\}$ 与 $\{3\}$，并令
+
+$$
+s=(1,-2,1),\qquad n=(1,0,-1),\qquad N=\operatorname{span}\{n\}.
+$$
+
+两得分均中心化，且 $\langle s,n\rangle_p=(1-1)/3=0$，所以 $f=s$。条件均值为
+
+$$
+\Pi s=(-1/2,-1/2,1),\qquad
+\Pi n=(1/2,1/2,-1).
+$$
+
+因此 $\Pi s=-\Pi n\in M$，$g=0$，而
+
+$$
+\|s\|_p^2=2,\qquad
+\|s-\Pi s\|_p^2
+=\frac{(3/2)^2+(-3/2)^2}{3}=\frac32,\qquad
+\|\Pi s\|_p^2=\frac{1/4+1/4+1}{3}=\frac12.
+$$
+
+两项损失之和恰为 $2$。这不是任意不合法切向量的例子：正模型
+
+$$
+p_i(\theta,\eta)=\frac{\exp(\theta s_i+\eta n_i)}
+{\sum_j\exp(\theta s_j+\eta n_j)}
+$$
+
+在 $(0,0)$ 的得分正是 $s,n$，因为二者在均匀基准下均值为零。反例说明观察可以把原本正交的目标与干扰完全合并。
+
+令 $\mathcal W=\mathcal V\cap M^\perp$ 为可见且不受局部干扰的对比空间。
+
+**命题 130.4（闭单位球最优式）。**
+
+$$
+I_{\mathrm{obs}}
+=\max_{\substack{h\in\mathcal W\\\|h\|_p\le1}}
+|\langle h,\Pi s\rangle_p|^2.
+$$
+
+若 $g\ne0$，$h=g/\|g\|$ 达到最大值；若 $g=0$，闭球上每个 $h$ 的配对均为零。
+
+**证明。** 由于 $M\subseteq\mathcal V$，$g=(I-P_M)\Pi s\in\mathcal W$，且 $\Pi s-g=P_M\Pi s\in M$。故对 $h\in\mathcal W$，$\langle h,\Pi s\rangle=\langle h,g\rangle$。Cauchy–Schwarz 给其平方不超过 $\|h\|^2\|g\|^2\le\|g\|^2$；$g\ne0$ 时所示单位向量取等，$g=0$ 时零向量亦在闭球内并取等。证毕。
+
+可见性 $h\in\mathcal V$ 是承重条件，只写 $h\perp M$ 会允许使用未观察到的函数。闭单位球包含零，所以 $\mathcal W=\{0\}$ 时公式仍有意义；单位球面在此情形为空，不能无条件代替闭球。三状态例中可见中心化空间是一维，$M$ 已占满它，故 $\mathcal W=\{0\}$。
+
+### 130.4 概率关系与有效几何的运输
+
+设 $\sigma:\mathcal X\to\mathcal X'$、$\tau:\mathcal B\to\mathcal B'$ 为双射，$r'\sigma=\tau r$，$p'_{\sigma(i)}=p_i$。定义
+
+$$
+(Uf)(\sigma(i))=f(i).
+$$
+
+**命题 130.5。** $U:L^2_0(p)\to L^2_0(p')$ 是等距同构，且 $\Pi'U=U\Pi$。若目标和干扰也按同一实验运输，$s'=Us,N'=UN$，则 $f'=Uf,g'=Ug$，两项损失和有效信息分别保持。
+
+**证明。** 变更求和指标给 $\sum p'(Uf)(Ug)=\sum pfg$，同样保持均值。$\sigma$ 把每个 $r$ 纤维送到相应 $r'$ 纤维并保持其质量，代入条件均值公式即得 $\Pi'U=U\Pi$。等距同构将子空间正交分解运输为其像的正交分解，所以 $P_{UN}U=UP_N$。又 $M'=\Pi'N'=UM$，同理 $P_{M'}U=UP_M$。逐项代入定义即得结论。证毕。
+
+参数坐标变化也必须运输度量：若参数 $\xi=\xi(\zeta)$ 在所考察点有导数矩阵 $T$，得分列按链式法则变为 $T^Ts_\xi$，信息矩阵变为 $I_\zeta=T^TI_\xi T$。若改变了“目标”和“干扰”的划分，便改变了待保持的商关系；不能只凭同一总信息矩阵的坐标变换宣称某个旧目标的有效信息保持。
+
+第131节外幂的 $G'=R^TGR$ 与这里 Fisher 的合同变换形式相同，原因是都在运输双线性配对。它们的载体、产生方式和目标仍需由 $\Psi$、$D_p$ 或 $U$ 这样的实际映射联系，不能仅凭相同公式说它们是同一个物理模型。
+
+### 130.5 Gaussian 共享未知基线
+
+固定非负整数 $n,m$，给定独立样本
+
+$$
+X_i\sim N(\theta+b,1)\ (1\le i\le n),\qquad
+V_j\sim N(b,1)\ (1\le j\le m).
+$$
+
+$\theta$ 是目标，$b$ 是未知共享基线。空和按零处理。设
+
+$$
+S_X=\sum_{i=1}^n(X_i-\theta-b),\qquad
+S_V=\sum_{j=1}^m(V_j-b).
+$$
+
+**命题 130.6。** 当 $n+m>0$ 时，目标与基线得分、信息矩阵和有效得分为
+
+$$
+s_\theta=S_X,\qquad s_b=S_X+S_V,\qquad
+I=\begin{pmatrix}n&n\\n&n+m\end{pmatrix},
+$$
+
+$$
+f=s_\theta-\frac{n}{n+m}s_b
+=\frac{m}{n+m}S_X-\frac{n}{n+m}S_V,
+\qquad
+I_{\mathrm{eff}}=\frac{nm}{n+m}.
+$$
+
+**证明。** 联合对数密度中依赖参数的部分为
+$-\frac12\sum_i(X_i-\theta-b)^2-\frac12\sum_j(V_j-b)^2$，求导给所示得分。独立中心化误差使
+$\operatorname{Var}S_X=n$、$\operatorname{Var}S_V=m$、$\operatorname{Cov}(S_X,S_V)=0$，故信息矩阵如上。将 $s_\theta$ 投影到 $\operatorname{span}(s_b)$ 的系数为
+$\langle s_\theta,s_b\rangle/\|s_b\|^2=n/(n+m)$。残差方差为
+
+$$
+\frac{m^2n+n^2m}{(n+m)^2}=\frac{nm}{n+m}.
+$$
+
+证毕。
+
+所有退化分支都有独立含义：
+
+- 若 $n>0,m=0$，$s_\theta=s_b$，有效得分为零；数据只依赖 $\theta+b$，$(\theta,b)$ 与 $(\theta+c,b-c)$ 完全同分布。
+- 若 $n=0,m>0$，数据不依赖目标 $\theta$，目标得分和有效信息均为零。
+- 若 $n=m=0$，实验只有一个空记录，两得分都是零，有效信息定义为零；不把它代入 $0/0$。
+- 若 $b$ 已知，干扰空间被移除，目标信息为 $n$。
+
+当 $n,m>0$，$T=\overline X-\overline V$ 满足
+
+$$
+\mathbb E T=\theta,\qquad
+\operatorname{Var}T=\frac1n+\frac1m=I_{\mathrm{eff}}^{-1},
+\qquad T-\theta=I_{\mathrm{eff}}^{-1}f.
+$$
+
+这些是指定 Gaussian 模型中的有限样本恒等式。若某个正则无偏估计量满足合法的积分求导，其与 $s_\theta$ 的协方差为一，与 $s_b$ 的协方差为零，因而与 $f$ 的协方差为一；Cauchy–Schwarz 随即给方差至少 $I_{\mathrm{eff}}^{-1}$，上述 $T$ 取等。这里没有借渐近论证替代精确分布。
+
+若两组独立误差的已知方差分别是 $\sigma_X^2,\sigma_V^2>0$，令 $a=n/\sigma_X^2,c=m/\sigma_V^2$，同一得分协方差计算给 $I_{\mathrm{eff}}=ac/(a+c)$（$a+c>0$）。$n\to\infty$、$m$ 固定且方差为一时，信息趋于 $m$；这是本模型的基线校准瓶颈。相关误差、不同偏置、未知方差、参数依赖观察、适应性停止或另一模型类都需重新写实验，不能原样沿用样本数公式。
+
+### 130.6 局部信息严格正仍可全局不可识别
+
+令参数 $\theta\in\mathbb R$，观察
+
+$$
+Z\sim N(\mu(\theta),I_2),\qquad
+\mu(\theta)=(\cos\theta,\sin\theta).
+$$
+
+**命题 130.7。** 单次观察的 Fisher 信息恒为一，但任何记录数都不能区分 $\theta$ 与 $\theta+2\pi$。
+
+**证明。** 对数密度求导给
+
+$$
+s_\theta(Z)=\mu'(\theta)^T(Z-\mu(\theta)),\qquad
+\mu'(\theta)=(-\sin\theta,\cos\theta).
+$$
+
+$Z-\mu(\theta)$ 的协方差为 $I_2$，所以 $\mathbb E s_\theta^2=\|\mu'(\theta)\|^2=1$。但 $\mu(\theta+2\pi)=\mu(\theta)$，两个参数点的整份单次概率律相同，任意独立重复的乘积律亦相同。因此任何基于这些记录的检验在两参数点具有相同输出分布，不能辨识其差别。证毕。
+
+若目标参数改为圆周上的等价类 $\mathbb R/(2\pi\mathbb Z)$，这个全局别名被目标商吸收；这是修改恢复任务，不能当作原实参数已被恢复。局部 Fisher 描述参数点附近的切向分离，有限预算还需模型类、全局分离、访问规则、误差目标和成本单位。任何正局部曲率都不自动提供这些条件。
+
+### 130.7 二次约束的 Schur 最小化
+
+令 $x\in\mathbb R^a$ 为保留变量，$y\in\mathbb R^d$ 为消去变量，并取实对称矩阵
+
+$$
+H=\begin{pmatrix}A&B_0\\B_0^T&D\end{pmatrix},\qquad
+D\succ0,\qquad
+S=A-B_0D^{-1}B_0^T.
+$$
+
+这里 $B_0$ 是耦合矩阵，与外幂的楔配对矩阵 $B$ 不同。定义 $Q(x,y)=\frac12(x,y)^TH(x,y)$。
+
+**命题 130.8。**
+
+$$
+Q(x,y)=\frac12x^TSx+
+\frac12(y+D^{-1}B_0^Tx)^TD(y+D^{-1}B_0^Tx),
+$$
+
+所以对每个固定 $x$，
+
+$$
+\min_yQ(x,y)=\frac12x^TSx,\qquad
+\operatorname{argmin}_yQ(x,y)=\{-D^{-1}B_0^Tx\}.
+$$
+
+此外 $H\succ0$ 当且仅当 $S\succ0$；$\det H=\det D\,\det S$。
+
+**证明。** 展开右侧第二项为
+$\frac12y^TDy+x^TB_0y+\frac12x^TB_0D^{-1}B_0^Tx$，与第一项相加即还原 $Q$。由于 $D$ 正定，第二项非负且只在所示 $y$ 处为零。线性双射
+
+$$
+(x,y)\longmapsto (x,z),\qquad z=y+D^{-1}B_0^Tx
+$$
+
+将二次型合同化为 $\operatorname{diag}(S,D)$；该变换的矩阵为块三角且行列式为一。因此正定性等价于 $S,D$ 都正定，行列式也满足所示乘积式。证毕。
+
+仅求每个纤维的最小值时不要求 $S\succ0$；若 $S$ 不定，纤维最小值仍存在，但随后在全部 $x$ 上再极小化可能无下界。这区分了“隐藏变量有唯一最佳响应”和“整个联合系统有有限最小能量”。
+
+### 130.8 Gaussian 积分保留的行列式因子
+
+**命题 130.9。** 在命题 130.8 的条件下，每个固定 $x$ 都有
+
+$$
+\int_{\mathbb R^d}e^{-Q(x,y)}\,dy
+=(2\pi)^{d/2}(\det D)^{-1/2}
+\exp\left(-\frac12x^TSx\right).
+$$
+
+当 $H\succ0$ 时，整个联合积分为
+
+$$
+\int_{\mathbb R^{a+d}}e^{-Q(x,y)}\,dx\,dy
+=(2\pi)^{(a+d)/2}(\det H)^{-1/2}.
+$$
+
+**证明。** 先用平移 $z=y+D^{-1}B_0^Tx$，其 Jacobian 为一，提取不依赖 $y$ 的有效指数项。由实对称谱定理存在正交 $O$ 使 $D=O\operatorname{diag}(\lambda_1,\ldots,\lambda_d)O^T$，$\lambda_j>0$。变量代换 $z=Ou$ 的 Jacobian 绝对值为一，非负函数的乘积积分给
+
+$$
+\int e^{-z^TDz/2}\,dz
+=\prod_{j=1}^d\int_{\mathbb R}e^{-\lambda_ju_j^2/2}\,du_j
+=\prod_{j=1}^d\sqrt{\frac{2\pi}{\lambda_j}}.
+$$
+
+一维常数可由 $I=\int_{\mathbb R}e^{-t^2/2}dt$ 的平方计算得到：平面极坐标积分给 $I^2=2\pi$，且 $I>0$；再以 $\sqrt{\lambda_j}u_j$ 代换。乘积即 $(2\pi)^{d/2}(\det D)^{-1/2}$。若 $H\succ0$，则 $S\succ0$，对 $x$ 再应用同一公式，并用 $\det H=\det D\det S$ 即得第二式。证毕。
+
+温度参数 $\tau>0$ 下，
+
+$$
+\int e^{-Q(x,y)/\tau}\,dy
+=(2\pi\tau)^{d/2}(\det D)^{-1/2}e^{-x^TSx/(2\tau)}.
+$$
+
+因此相对于所选 Lebesgue 参考测度，负 $\tau$ 倍对数所得有效自由能是
+
+$$
+F_{\mathrm{eff}}(x)
+=\frac12x^TSx+\frac{\tau}{2}\log\det D
+-\frac{\tau d}{2}\log(2\pi\tau).
+$$
+
+极小化和积分共享 $S$，但保留不同结果。例如取单个可见、隐藏坐标以及
+$Q_1(x,y)=sx^2/2+y^2/2$、
+$Q_2(x,y)=sx^2/2+4y^2/2$。二者对 $y$ 的最小值相同，但第二个边界积分恰为第一个的一半。若 $s>0$，进一步归一化后的 $x$ 概率可以相同；未归一化权重和联合配分函数仍不同。
+
+当 $D$ 随待比较的模型参数变化，行列式因子不能从似然或配分比较中删去。若 $D=D(x)$ 随可见变量改变，已超出固定矩阵二次模型；即使逐纤维完成平方有效，行列式项也会改变 $x$ 的相对权重。只知道最小化结论，不能据此宣称完整 Gaussian 边界权重已相同。
+
+#### 130.8.1 退化或不定的隐藏块
+
+设 $D\succeq0$ 但奇异，固定 $x$ 并记 $b=B_0^Tx$。谱分解给
+$\mathbb R^d=\operatorname{im}D\oplus\ker D$。
+
+- 若 $b\notin\operatorname{im}D$，存在 $z\in\ker D$ 使 $b^Tz\ne0$。沿 $y=tz$，能量含线性项 $t\,b^Tz$ 而没有二次项，故下确界为 $-\infty$。
+- 若 $b\in\operatorname{im}D$，令 $D^\dagger$ 为在 $\operatorname{im}D$ 上取逆、在 $\ker D$ 上为零的对称伪逆。完成平方给
+
+$$
+\min_yQ(x,y)
+=\frac12x^T(A-B_0D^\dagger B_0^T)x,\qquad
+\operatorname{argmin}_yQ(x,y)=-D^\dagger b+\ker D.
+$$
+
+这是因为 $DD^\dagger b=b$，而移心后的二次项在且仅在 $\ker D$ 上为零。隐藏块奇异时，即便最小值有限，完整 $\mathbb R^d$ 上的 Gaussian 积分仍沿非零平坦方向发散；不相容的线性方向也使积分在一侧发散。若 $D$ 有负特征值，沿相应方向能量趋于 $-\infty$，积分同样发散。改在某个子空间上积分或加入约束、参考概率，需要明确改变积分载体及测度，不能只把 $D^{-1}$ 改成 $D^\dagger$ 后继承正定公式。
+
+若没有隐藏坐标，即 $d=0$，约定空行列式为一、空维积分为被积函数本身，最小化与积分公式都退化为原可见二次型。
+
+### 130.9 保留观察纤维的坐标变换
+
+设 $T\in GL_a(\mathbb R)$、$R\in GL_d(\mathbb R)$，$L_0:\mathbb R^a\to\mathbb R^d$ 任意，取
+
+$$
+x=Tu,\qquad y=L_0u+Rv.
+$$
+
+这个变换保留可见接口：给定 $u$，旧可见量 $x=Tu$ 已定，而 $v\mapsto y$ 在同一旧纤维中为双射。新二次型为 $Q'(u,v)=Q(Tu,L_0u+Rv)$，隐藏块和耦合块为
+
+$$
+D'=R^TDR,\qquad
+B_0'=T^TB_0R+L_0^TDR.
+$$
+
+**命题 130.10。** 新 Schur 矩阵满足 $S'=T^TST$，而积分满足
+
+$$
+\int e^{-Q'(u,v)}\,dv
+=\frac1{|\det R|}\int e^{-Q(Tu,y)}\,dy.
+$$
+
+若把旧参考测度也运输为 $dy=|\det R|\,dv$，则有效边界权重恰按 $x=Tu$ 运输。
+
+**证明。** 对固定 $u$，$v\mapsto L_0u+Rv$ 是双射，所以
+$\min_vQ'(u,v)=\min_yQ(Tu,y)=u^TT^TSTu/2$。$D'\succ0$，可对 $Q'$ 应用命题 130.8，比较对所有 $u$ 相等的对称二次型得到 $S'=T^TST$。积分由仿射变量代换的 Jacobian 直接得到；同时
+$\det D'=(\det R)^2\det D$，故命题 130.9 的 Gaussian 因子也精确给出 $|\det R|^{-1}$。证毕。
+
+当 $L_0=0$，这是保留分块的合同变换；$L_0\ne0$ 允许在每个隐藏纤维内选择不同原点。若再对可见变量积分，还须计入 $dx=|\det T|du$。正交 $T,R$ 的绝对 Jacobian 为一，但一般可逆换基不具有这一性质。
+
+任意把旧隐藏变量混入新可见变量、却继续使用原观察投影，会改变被消去的纤维。此时可以定义另一个有意义的实验，但不再是上述同一接口的运输。关系的实际纤维、能量和参考测度都属于需要一起运输的数据。
+
+### 130.10 Schur、干扰消除与投影的共同结构
+
+设某个有限维 Hilbert 空间中的线性映射为 $F:\mathbb R^a\to\mathcal K$、$K:\mathbb R^d\to\mathcal K$，并假定 $K$ 单射。考虑
+
+$$
+Q(x,y)=\frac12\|Fx+Ky\|^2.
+$$
+
+其块矩阵为
+
+$$
+A=F^*F,\qquad B_0=F^*K,\qquad D=K^*K\succ0.
+$$
+
+**命题 130.11。** 若 $P_K=K(K^*K)^{-1}K^*$，则 $P_K$ 是到 $\operatorname{im}K$ 的正交投影，且
+
+$$
+S=F^*(I-P_K)F,\qquad
+\min_yQ(x,y)=\frac12\|(I-P_K)Fx\|^2.
+$$
+
+**证明。** $P_K$ 自伴，且
+$P_K^2=K(K^*K)^{-1}(K^*K)(K^*K)^{-1}K^*=P_K$；它在 $\operatorname{im}K$ 上为恒等，像也包含于该空间，因此是所述正交投影。代入 Schur 定义直接得
+$S=F^*F-F^*K(K^*K)^{-1}K^*F$。投影残差平方给出第二式。证毕。
+
+有限得分族的 Fisher 矩阵正是 Gram 矩阵。因此当干扰得分 $n_1,\ldots,n_d$ 线性独立时，取 $Kc=\sum_jc_jn_j$，$F$ 为目标得分映射，便得到熟悉的有效信息 Schur 式
+
+$$
+I_{\mathrm{eff}}
+=I_{\theta\theta}
+-I_{\theta\eta}I_{\eta\eta}^{-1}I_{\eta\theta}.
+$$
+
+若干扰得分相关，干扰 Gram 块奇异，正交投影到其张成空间的定义仍有效；不能写不存在的普通逆。可以先选该空间的一组基，或使用与值域相容的伪逆。
+
+这解释了 Fisher 干扰消除与二次能量最小化为何共享投影／Schur 结构。但是 Gaussian 隐藏积分还保留行列式因子，Fisher 局部有效信息则是得分商上的度量；它们的矩阵来自不同载体。命题 130.3 中还要先对得分施加观察 $\Pi$，此操作可能使目标与干扰重新混合，所以不能把一次 Schur 消元当作任意观察之后的完整答案。
+
+## 130.99 追加锚
+
+## 131. 外幂格、Hodge 定向与黄金递推的几何运输
+
+关系表示若还要求保留整格、内积和定向，就须给出它们的共同运输。以下在自然外幂格中完整建立这条识别，再比较黄金算子和二维递推各自保持的配对。
+
+### 131.1 自然整格与外幂坐标
+
+在标准欧氏空间 $\mathbb R^5$ 中取
+
+$$
+V=\{x:\textstyle\sum_{i=1}^5x_i=0\},\qquad
+A_4=V\cap\mathbb Z^5,\qquad
+b_i=e_i-e_5\quad(1\le i\le4).
+$$
+
+**命题 131.1。** $b_1,\ldots,b_4$ 是 $V$ 的实基，也是 $A_4$ 的整基；其 Gram 矩阵为
+
+$$
+C=I_4+\mathbf1\mathbf1^T,\qquad \det C=5.
+$$
+
+**证明。** 对 $x\in V$，有 $x=\sum_{i=1}^4x_i(e_i-e_5)$，表示唯一；若 $x\in A_4$，系数全为整数。反之整系数组合属于 $A_4$。内积 $\langle b_i,b_j\rangle=\delta_{ij}+1$ 给出 $C$。在 $\mathbf1^\perp\subset\mathbb R^4$ 上 $C$ 为恒等算子，在 $\mathbb R\mathbf1$ 上为乘以 $5$，故正定且行列式为 $5$。证毕。
+
+令 $W=\Lambda^2V$，依次取基
+
+$$
+(w_1,\ldots,w_6)
+=(b_1\wedge b_2,b_1\wedge b_3,b_1\wedge b_4,
+  b_2\wedge b_3,b_2\wedge b_4,b_3\wedge b_4).
+$$
+
+自然外幂内积由
+
+$$
+\langle u_1\wedge u_2,v_1\wedge v_2\rangle
+=\det\begin{pmatrix}
+\langle u_1,v_1\rangle&\langle u_1,v_2\rangle\\
+\langle u_2,v_1\rangle&\langle u_2,v_2\rangle
+\end{pmatrix}
+$$
+
+及双线性延拓定义。取正交规范基可见其正定。定义自然整外幂格
+
+$$
+\Lambda^2_{\mathbb Z}A_4
+=\operatorname{span}_{\mathbb Z}\{u\wedge v:u,v\in A_4\}
+\subset W.
+$$
+
+**命题 131.2。** 坐标映射
+
+$$
+\Psi:W\longrightarrow\mathbb R^6,\qquad
+\Psi\left(\sum_i x_iw_i\right)=(x_1,\ldots,x_6)
+$$
+
+把 $\Lambda^2_{\mathbb Z}A_4$ 双射到 $L=\mathbb Z^6$，并把自然外幂内积运输为 $\langle x,y\rangle_G=x^TGy$，其中
+
+$$
+G_{ij,kl}=C_{ik}C_{jl}-C_{il}C_{jk},\qquad
+G=\begin{pmatrix}
+3&1&1&-1&-1&0\\
+1&3&1&1&0&-1\\
+1&1&3&0&1&1\\
+-1&1&0&3&1&-1\\
+-1&0&1&1&3&1\\
+0&-1&1&-1&1&3
+\end{pmatrix},\qquad \det G=125.
+$$
+
+**证明。** 将 $u,v\in A_4$ 展成 $b_i$ 的整系数组合，其楔积是 $w_i$ 的整系数组合；每个 $w_i$ 本身又是这种楔积。因此自然格恰为 $\sum_i\mathbb Zw_i$，坐标像为 $\mathbb Z^6$。内积定义逐项给出所示二阶子式，故对任意 $x,y$ 有 $\langle\Psi^{-1}x,\Psi^{-1}y\rangle=x^TGy$。为算行列式，正交对角化 $C$ 后，其二阶复合矩阵的特征值是 $C$ 的各对特征值乘积，即 $5,5,5,1,1,1$；故行列式为 $5^3$。证毕。
+
+这给出真实的格与度量识别。只有写出 $\Psi$、$G$ 和自然外幂内积，才能把六个坐标解释为 $\Lambda^2A_4$；$\mathbb R^6$ 的标准点积不在此识别中自动出现。
+
+### 131.2 楔配对、定向与二重向量 Hodge 星
+
+令 $\Omega=b_1\wedge b_2\wedge b_3\wedge b_4$。其自然长度为
+
+$$
+\|\Omega\|=\sqrt{\det C}=\sqrt5.
+$$
+
+先选 $+\Omega$ 的定向，单位顶次向量为 $\omega=\Omega/\sqrt5$。定义楔配对矩阵 $B$，使
+
+$$
+\alpha\wedge\beta=(\Psi\alpha)^TB(\Psi\beta)\,\Omega.
+$$
+
+唯一非零条目为 $B_{16}=B_{61}=1$、$B_{25}=B_{52}=-1$、$B_{34}=B_{43}=1$；故 $B^T=B$、$B^2=I$。楔配对对二重向量是对称的，因为交换两个二重向量的符号为 $(-1)^{2\cdot2}=1$。
+
+Hodge 星 $*_+:W\to W$ 按以下关系定义：
+
+$$
+\alpha\wedge *_+\beta=\langle\alpha,\beta\rangle\,\omega
+\qquad(\alpha,\beta\in W).
+$$
+
+**命题 131.3。** 在上述坐标下，
+
+$$
+S:=\Psi *_+\Psi^{-1}=\frac{BG}{\sqrt5}.
+$$
+
+它满足 $S^2=I$、$S^TGS=G$、$S^TG=GS$；其 $+1,-1$ 特征空间各为三维。
+
+**证明。** 设星的矩阵为 $S$。定义式对所有坐标列 $x,y$ 给出 $x^TBSy=x^TGy/\sqrt5$，所以 $BS=G/\sqrt5$。由于 $B^{-1}=B$，$S=BG/\sqrt5$ 存在且唯一。选一个与 $+\Omega$ 同向的正交规范基 $a_1,\ldots,a_4$，相应六个二重向量构成正交规范基。星将 $a_1\wedge a_2$ 与 $a_3\wedge a_4$ 互换，将 $a_1\wedge a_3$ 与 $-a_2\wedge a_4$ 互换，将 $a_1\wedge a_4$ 与 $a_2\wedge a_3$ 互换。因此它是等距自伴对合，每一对贡献一个正、一个负特征向量。运输回 $w_i$ 坐标得到所述恒等式与维数。证毕。
+
+现在定义既有整数矩阵
+
+$$
+J=-BG=
+\begin{pmatrix}
+0&1&-1&1&-1&-3\\
+-1&0&1&1&3&1\\
+1&-1&0&-3&-1&1\\
+-1&-1&-3&0&-1&-1\\
+1&3&1&1&0&-1\\
+-3&-1&-1&1&1&0
+\end{pmatrix}.
+$$
+
+**推论 131.4。** 在 $+\Omega$ 定向下 $J=-\sqrt5\,S$；在 $-\Omega$ 定向下，令 $*_-=-*_+$，则
+
+$$
+\Psi *_-\Psi^{-1}=J/\sqrt5.
+$$
+
+此外
+
+$$
+J^2=5I,\qquad GJ=-5B,\qquad J^TG=GJ,\qquad J^TGJ=5G.
+$$
+
+**证明。** 改变单位顶次向量的符号，由定义和楔配对的非退化性，星也改变符号。命题 131.3 给出 $BGBG=5I$，从而 $GBG=5B$，于是 $GJ=-GBG=-5B$。其余等式由 $J=-\sqrt5S$、$S$ 自伴等距或直接转置即得。证毕。
+
+这个识别包括格、内积与定向三个环节：$\Psi$ 已证明是自然格的坐标同构和实等距映射，并在选定 $-\Omega$ 定向后交织几何 Hodge 星与 $J/\sqrt5$。普通数学的解释链在此完整成立。仅有 $J^2=5I$ 不足以完成这条链：例如 $\sqrt5I$ 也满足平方恒等式，但不交换给定的互补二重向量。
+
+$J/\sqrt5$ 是 $G$-正交算子；它不是标准六维点积的正交矩阵。其第一列的标准平方长度为 $13/5$。不运输度量而只保留相同坐标名字，会改变等距关系的含义。
+
+### 131.3 二重向量与二形式的 Hodge 矩阵
+
+令 $\theta^1,\ldots,\theta^4$ 是 $b_i$ 的代数对偶基。二形式按同一对指标顺序取基 $\theta^i\wedge\theta^j$。它们的自然 Gram 矩阵为 $G^{-1}$，而与 $+\Omega$ 对应的单位体积形式为
+
+$$
+\operatorname{vol}_+=\sqrt5\,\theta^1\wedge\theta^2\wedge\theta^3\wedge\theta^4.
+$$
+
+这是因为顶次对偶基的平方范数为 $(\det C)^{-1}=1/5$，且该形式在单位顶次向量 $\Omega/\sqrt5$ 上取值一。
+
+**命题 131.5。** 二形式 Hodge 星满足
+
+$$
+S_{\mathrm{cov}}
+=\sqrt5\,BG^{-1}
+=\frac{GB}{\sqrt5}
+=S^T,
+$$
+
+而度量降指标映射 $\flat_2:\Lambda^2V\to\Lambda^2V^*$ 在这些坐标中的矩阵是 $G$，并有
+
+$$
+S_{\mathrm{cov}}G=GS.
+$$
+
+**证明。** 对形式坐标列 $x,y$，星的定义给出
+$x^TBS_{\mathrm{cov}}y=\sqrt5\,x^TG^{-1}y$，故第一式成立。由 $GBG=5B$ 推出 $BG^{-1}=GB/5$，得到第二式与转置式。$\flat_2\alpha$ 在 $\beta$ 上的作用为 $\langle\alpha,\beta\rangle$，故其坐标为 $Gx$。最后两边均等于 $\sqrt5B$。证毕。
+
+因此自然降指标确实交织两种星，但它们在对偶的非正交基中不是同一个数组。改用 $-\Omega$ 时两种星同时变号，交织式仍成立。这里的区别来自载体和坐标，不是两个互相矛盾的 Hodge 定义。
+
+### 131.4 双格、五模相似与体积
+
+定义 $G$-对偶格
+
+$$
+L^\#=\{x\in\mathbb R^6:x^TGz\in\mathbb Z\ \text{对所有 }z\in L\}.
+$$
+
+**命题 131.6。**
+
+$$
+L^\#=G^{-1}L=(J/5)L,\qquad
+\langle Jx/5,Jy/5\rangle_G=\frac15\langle x,y\rangle_G.
+$$
+
+**证明。** 与所有标准整基向量配对为整数等价于 $Gx\in\mathbb Z^6$，故 $L^\#=G^{-1}L$。由 $GJ=-5B$ 得 $J/5=-G^{-1}B$；$B$ 是带符号的整排列矩阵，所以 $BL=L$，得到格等式。配对式由 $J^TGJ=5G$ 除以 $25$ 得到。证毕。
+
+$J/5:L\to L^\#$ 是长度缩放 $1/\sqrt5$ 的双射。其逆在 $L^\#$ 上是 $J$，因为 $J(J/5)=I$。$L$ 在自然度量下的协体积为 $\sqrt{\det G}=\sqrt{125}$，$L^\#$ 的协体积为其倒数；$L\subset L^\#$ 的指数为 $125$。例如后者可由 $G^{-1}L/L\cong L/GL$ 和 $|\det G|=125$ 得到。标准坐标 Lebesgue 测度下 $\mathbb Z^6$ 的协体积为一，是另一种测量，不能与自然外幂度量的协体积混用。
+
+### 131.5 黄金算子与最小整格饱和
+
+置
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\Phi=\frac{I+J}{2},\qquad
+h=(1/2,\ldots,1/2)^T.
+$$
+
+**命题 131.7。** $\Phi^2=\Phi+I$，且
+
+$$
+L_{\max}:=L+\Phi L=L+\mathbb Zh,\qquad [L_{\max}:L]=2.
+$$
+
+$L_{\max}$ 是包含 $L$ 并对 $\Phi$ 稳定的最小加法 $\mathbb Z$-子模，因此也对每个 $a+b\Phi$（$a,b\in\mathbb Z$）稳定。
+
+**证明。** $J^2=5I$ 给出
+$\Phi^2=(I+2J+5I)/4=(3I+J)/2=\Phi+I$。
+上面明确矩阵 $I+J$ 的每个条目均为奇数，所以每列 $\Phi e_j$ 与 $h$ 相差一个整向量。这给 $\Phi L\subset L+\mathbb Zh$；反过来任取一列有 $h\in L+\Phi L$，故两格相等。$h\notin L$ 而 $2h\in L$，指数恰为二。对 $u,v\in L$，
+
+$$
+\Phi(u+\Phi v)=v+\Phi(u+v)\in L+\Phi L,
+$$
+
+所以稳定。任何包含 $L$ 且对 $\Phi$ 稳定的加法子模都包含 $\Phi L$，因而包含 $L_{\max}$。最后整数线性组合的稳定性直接成立。证毕。
+
+为说明这里的“黄金整数阶”，取 $K=\mathbb Q(\sqrt5)$。其代数整数环是 $\mathbb Z[\phi]$：若 $\alpha=a+b\sqrt5$ 为代数整数，它与共轭的和、积都是有理代数整数，因而是整数；于是 $m=2a$ 是整数，且 $(m^2-5(2b)^2)/4$ 是整数。令 $2b=u/v$ 为最简有理数，则 $5u^2/v^2$ 为整数，故 $v^2\mid5$，迫使 $v=1$。于是 $k=2b\in\mathbb Z$；模四关系 $m^2-5k^2\equiv0$ 说明 $m,k$ 同奇偶，从而 $\alpha=(m-k)/2+k\phi$。反向包含由 $\phi^2-\phi-1=0$ 及代数整数对加乘封闭得到。$\mathbb Z[\sqrt5]\subset\mathbb Z[\phi]$ 的系数映射为
+
+$$
+a+b\sqrt5=(a-b)+2b\phi,
+$$
+
+故其加法指数为二。
+
+在 $J$ 的 $\pm\sqrt5$ 两个三维特征空间上，$\Phi$ 的特征值分别是 $\phi$ 和 $1-\phi=-1/\phi$。因此 $a+b\phi\mapsto aI+b\Phi$ 是忠实的 $\mathbb Z[\phi]$ 作用，$L_{\max}$ 对这一作用稳定。“最小饱和”指包含原整格的代数稳定扩张，不是度量完备化；这个具体指数二结论也不声称任意二次整数阶表示都具有同样的指数。
+
+$\Phi$ 对 $G$ 自伴，但不是等距算子；在其两个特征空间上平方长度分别乘以 $\phi^2$ 和 $\phi^{-2}$。真正的 $G$-正交对合是 $J/\sqrt5$。同一个黄金多项式可以出现在不同维数和不同度量的表示中，不自动给这些表示之间的几何等同。
+
+### 131.6 几何关系的运输
+
+**命题 131.8。** 若 $T:V\to V'$ 为四维欧氏空间之间的等距同构，$\Lambda^2T$ 保持自然外幂内积。若它在定向上同向，则
+
+$$
+*_{{V'}}\,\Lambda^2T=\Lambda^2T\,*_V;
+$$
+
+若反向，则右侧多一个负号。
+
+**证明。** 简单二重向量的内积由二阶 Gram 行列式给出，等距性保持每个条目，故保持整个外幂内积。同向时 $\Lambda^4T$ 把单位顶次向量 $\omega$ 送至 $\omega'$，于是
+
+$$
+(\Lambda^2T\alpha)\wedge(\Lambda^2T*_V\beta)
+=\Lambda^4T(\alpha\wedge *_V\beta)
+=\langle\alpha,\beta\rangle\omega'.
+$$
+
+由 Hodge 定义的唯一性得交织式。反向时顶次向量多一个负号，结论随之变号。证毕。
+
+例如 $\mathbb R^5$ 的坐标置换保存 $V,A_4$ 和欧氏内积，因其在常向量线上为恒等，在 $V$ 上的行列式等于该置换的符号。偶置换在 $\Lambda^2V$ 上与 Hodge 星、$J$ 和 $\Phi$ 交换；奇置换与 $J$ 反交换，将 $\Phi$ 共轭成 $I-\Phi$。两者都保持 $L_{\max}$：前者保持 $L+\Phi L$，后者把它送至 $L+(I-\Phi)L=L+\Phi L$。
+
+纯坐标变化同样必须运输内积。若旧二重向量坐标 $x=Ru$，则新内积矩阵为 $G'=R^TGR$，算子矩阵为 $J'=R^{-1}JR$。在未运输 $G$ 的情况下，以标准坐标范数测试 $J'$，回答的是另一个问题。第130节的 Fisher 质量／得分坐标和 Schur 消元服从相同的关系保真原则。
+
+### 131.7 Fibonacci：坐标旋转、增长与不定反等距
+
+令
+
+$$
+A_F=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad
+P=\frac1{\sqrt{\phi^2+1}}
+\begin{pmatrix}\phi&-1\\1&\phi\end{pmatrix}.
+$$
+
+**命题 131.9。** $P\in SO(2)$，且
+
+$$
+P^TA_FP=\begin{pmatrix}\phi&0\\0&-1/\phi\end{pmatrix}.
+$$
+
+**证明。** 两列 $(\phi,1)^T,(-1,\phi)^T$ 互相正交，平方长度均为 $\phi^2+1$；归一化后 $P^TP=I$，其行列式为一。$\phi^2=\phi+1$ 和 $\phi-1=1/\phi$ 给
+
+$$
+A_F(\phi,1)^T=\phi(\phi,1)^T,\qquad
+A_F(-1,\phi)^T=-\phi^{-1}(-1,\phi)^T.
+$$
+
+故在这组正交规范基中恰得到所示对角矩阵。证毕。
+
+$P$ 是欧氏坐标旋转，$A_F$ 本身不是：$A_F^TA_F=\begin{pmatrix}2&1\\1&1\end{pmatrix}\ne I$。一个特征方向被放大 $\phi$ 倍，另一个反号并缩小 $1/\phi$ 倍。不能把“能用旋转换到特征坐标”说成“原动力学是旋转”。
+
+定义另一个二次型
+
+$$
+Q_F(x,y)=x^2-xy-y^2
+=\begin{pmatrix}x&y\end{pmatrix}
+K_F\begin{pmatrix}x\\y\end{pmatrix},\qquad
+K_F=\begin{pmatrix}1&-1/2\\-1/2&-1\end{pmatrix}.
+$$
+
+**命题 131.10。**
+
+$$
+Q_F(A_Fz)=-Q_F(z),\qquad
+Q_F(A_F^2z)=Q_F(z).
+$$
+
+$Q_F$ 是非退化不定型，不是正定平方范数。
+
+**证明。** $A_F(x,y)=(x+y,x)$，所以
+
+$$
+Q_F(x+y,x)
+=(x+y)^2-(x+y)x-x^2
+=-x^2+xy+y^2=-Q_F(x,y).
+$$
+
+再应用一次得到第二式。$\det K_F=-5/4<0$，其两个特征值符号相反，故非退化而不定。证毕。
+
+在上述欧氏特征坐标 $z=P(u,v)$ 中，直接配对得到
+
+$$
+P^TK_FP=
+\begin{pmatrix}0&-\sqrt5/2\\-\sqrt5/2&0\end{pmatrix},
+\qquad
+Q_F(P(u,v))=-\sqrt5\,uv.
+$$
+
+具体地，两个 $A_F$ 特征向量都是 $Q_F$ 的零向量；交叉配对为
+$-5\phi/[2(\phi^2+1)]=-\sqrt5/2$，因为 $\phi^2+1=\sqrt5\phi$。而 $A_F$ 将 $(u,v)$ 送到 $(\phi u,-v/\phi)$，恰使 $uv$ 变号。这把反等距和增长／收缩放在同一个明确坐标图中解释。
+
+$\Phi$ 与 $A_F$ 都满足 $T^2=T+I$，但前者作用于六维外幂格，后者作用于二维状态空间；特征空间维数和所讨论的度量不同。相同多项式给共同的代数关系，不自行提供两者的等距同构。$Q_F$ 的反等距也不定义 Fisher 信息、通常距离保持或物理耗散率。
+
+若把 $z_{t+1}=A_Fz_t$ 的第一个坐标记为 $x_t$，第二个记为 $h_t$，则
+$x_{t+1}=x_t+h_t,h_{t+1}=x_t$，从而 $x_{t+2}=x_{t+1}+x_t$，且 $(x_t,x_{t+1})$ 恢复 $h_t=x_{t+1}-x_t$。这是已知线性规律下状态与相邻读数之间的坐标关系，与上述不定型守恒有兼容解释，但并不靠单个瞬时标量恢复任意二维状态。
+
+### 131.8 共同载体中的等距提升
+
+上述几何可由一项保真辅助构造联系：**把压缩或消去一侧的量，按已经声明的内积等距提升回同一个实现空间，再在那里比较目标、隐藏分量和干扰。**
+
+具体说，取实有限维内积空间 $\mathcal K,\mathcal H$；若 $U:\mathcal K\to\mathcal H$ 是等距线性嵌入，则
+
+$$
+U^*U=I,\qquad P=UU^*,\qquad
+\mathcal H=\operatorname{im}U\oplus(\operatorname{im}U)^\perp.
+$$
+
+$P$ 自伴且 $P^2=U(U^*U)U^*=P$，所以这是实际的正交投影图。它把边界坐标、原实现以及残差放在共同内积中；所比较的向量来自同一对象，不是分别取得的最优值。
+
+- 对有限正概率 $\nu$ 上的实际像观察 $q:X\to B=q[X]$，令 $U:L^2(B,q_*\nu)\to L^2(X,\nu)$ 为 $Uu=u\circ q$，则按纤维求和给 $\|Uu\|_\nu^2=\|u\|_{q_*\nu}^2$。$U^*$ 是标签上的条件均值，$UU^*=\Pi$；限制到零均值子空间仍成立。第130节 Fisher 两项损失将同一完整有效得分 $f=(I-P_N)s$ 先按 $\operatorname{im}U$、再按可见干扰空间分解。
+- 在第130.10节的单射 $K$ 条件下，对 Schur 消元，$U=K(K^*K)^{-1/2}$ 是隐藏方向的等距参数化，$UU^*=P_K$，所以 $S=F^*(I-UU^*)F$。Gaussian 积分另保留未被投影商记录的体积因子。
+- 对外幂格，$\Psi$ 是将自然格与六维坐标保持在同一度量中的等距识别。Hodge 的来源还包括楔配对与定向：在本节的四维定向空间及其中次外幂上，令 $\mathcal R_g(\beta)(\alpha)=\langle\alpha,\beta\rangle$，令 $\mathcal W_\omega(\beta)(\alpha)$ 是 $\alpha\wedge\beta$ 相对于单位顶次向量 $\omega$ 的系数，则 $*=\mathcal W_\omega^{-1}\mathcal R_g$。这精确说明单有观察关系或内积还不够。星确定后，其 $\pm1$ 特征空间给正交投影 $(I\pm*)/2$；黄金算子只是这两空间上的指定标量作用。
+
+这里统一的是“共同实现、配对、子空间及其运输”的结构，而不是把所有例子强行叫成同一个投影。格需整数子模，Fisher 需概率权重和合法得分，Hodge 需外幂与定向，Gaussian 积分需参考测度；这些额外数据不能由一个无权集合关系凭空恢复。动力学和记忆还需指定演化算子与初值；静态配对及投影不单独决定时间演化或时间箭头。
+
+外幂内积采用 Gram 行列式，Hodge 星依赖指定内积与定向。仓内 `ExteriorSquareCoordinates`、`ExteriorSquareRepresentations`、`ExactDualLatticeFormula`、`FiveModularLatticeSimilarity`、`GoldenMaximalOrderCompletion`、`FibonacciEigen` 与 `GoldenAntiIsometry` 分别提供相应代数接口。
+
+## 131.99 追加锚
+
+## 132. 边界容量、递归历史与相容完成
+
+令任务商 $Q_{\mathcal F}=X/\ker\mathcal F$，观察 $q$ 对任务充分。本节计算这种表示所需的通道容量，并比较有限状态接续与相容精度塔；小规则、完整历史和可调用极限各有不同要求。
+
+### 132.1 容量上界与实际解码是不同保证
+
+#### 132.1.1 有限任务类别需要足够多的实际读数
+
+设任务商 $Q_{\mathcal F}$ 恰有 $N\ge1$ 个类别。如果观察 $q$ 任务充分，第122节的任务因子化判据给出实际读数到任务类别的满射，故
+
+$$
+N\le |q[X]|.
+$$
+
+若一次固定长度记录只有 $b$ 个比特，则 $|q[X]|\le2^b$，因此
+
+$$
+b\ge\lceil\log_2N\rceil.
+$$
+
+若连续 $T$ 次各返回至多 $m$ 个比特，则完整固定长度记录最多 $2^{mT}$ 种，故 $mT\ge\log_2N$。更一般地，若第 $t$ 次使用字母表 $A_t$，则
+
+$$
+N\le|\operatorname{im}(q_1,\ldots,q_T)|
+\le\prod_{t=1}^T|A_t|.
+$$
+
+第一项使用联合实际像；右端只是其上界，不断言任意局部标签都能共同出现。对确定性的自适应协议，每层分支数受同样字母表限制时，决策树叶数仍由该乘积界控制；实验选择须由既有记录与固定协议决定，不能另外携带未计费的目标信息。
+
+容量足够不是某个实际观察充分的证明。即便形式标签集合含 $N$ 个元素，一个恒定观察仍只有一个实际标签。即便实际标签数达到 $N$，也可以分开同一任务类中的多个状态，却仍混淆另外两个任务类。具体地取四个状态、任务类 $\{1,2\}$ 与 $\{3,4\}$，观察类为 $\{1\}$ 与 $\{2,3,4\}$；两者都恰有两类，但观察不能决定任务。
+
+$m$ 个精确实线性坐标在 $T$ 次观测中的秩界是另一个命题：线性记录空间维数至多 $mT$，因此线性单射恢复 $n$ 维实状态要求 $n\le mT$。一个精确实数不是一个比特；若每个实标量被量化为 $b$ 位，才有离散标签数上界 $2^{bmT}$。有限比特不能精确区分无限连续状态集。噪声下的稳定解码还需独立的条件数或最小奇异值控制。
+
+#### 132.1.2 张量切口给出秩界与熵界
+
+取有限张量网络，所有张量空间为有限维复内积空间，其外部物理指标分为 $A,B$ 两侧。选定一个确实把两侧分开的切边集，每条切边的指标维数为正整数 $\chi_e$。把每侧内部张量全部收缩，得到
+
+$$
+|\psi\rangle=
+\sum_{\alpha\in\prod_e\{1,\ldots,\chi_e\}}
+|L_\alpha\rangle_A\otimes|R_\alpha\rangle_B.
+$$
+
+令 $D=\prod_e\chi_e$。在任意正交基中，系数矩阵 $M$ 有分解 $M=LR$，其中中间指标维数为 $D$；等价地，所有列都属于至多 $D$ 个向量 $L_\alpha$ 的张成。因此
+
+$$
+\operatorname{rank}M\le D.
+$$
+
+若 $|\psi\rangle\ne0$，归一化后对 $M$ 作奇异值分解，得到 Schmidt 分解
+
+$$
+|\psi\rangle=\sum_{i=1}^r\sqrt{p_i}|a_i\rangle|b_i\rangle,
+\qquad p_i>0,\quad\sum_ip_i=1,\quad r=\operatorname{rank}M.
+$$
+
+对一侧取偏迹得到本征值为 $p_i$ 的约化密度矩阵，所以纠缠熵为 $S=-\sum_ip_i\log p_i$。对凹函数 $\log$ 应用 Jensen 不等式，
+
+$$
+S=\sum_ip_i\log(1/p_i)
+\le\log\left(\sum_ip_i/p_i\right)=\log r.
+$$
+
+于是
+
+$$
+S\le\log r\le\sum_e\log\chi_e.
+$$
+
+这给出指定网络、切口、纯态和二分割下的必要上界。零张量没有可归一化纯态；混态的一侧熵一般不能直接称为这一二分割的纯态纠缠熵。切边维数也没有在此被识别为物理面积。
+
+#### 132.1.3 解码还需要可逆编码及所需访问权限
+
+在有限维复内积空间中，若给定线性编码 $V:\mathcal H_{\rm log}\to\mathcal H_{\rm phys}$，且 $V^*V=I$，则 $V$ 是等距嵌入，并有 $V^*V\xi=\xi$。这才提供全物理输出上的精确逻辑解码。对非零逻辑空间，固定一个逻辑密度矩阵 $\rho_0$，可把码空间上的逆延拓为通道
+
+$$
+\mathcal D(\rho)=V^*\rho V+
+\operatorname{Tr}((I-VV^*)\rho)\rho_0.
+$$
+
+第一项完全正。把 $\rho_0=\sum_jr_j|e_j\rangle\langle e_j|$ 对角化，并为 $(\operatorname{im}V)^\perp$ 选正交基 $g_k$，第二项的 Kraus 算子可取 $\sqrt{r_j}|e_j\rangle\langle g_k|$，故也完全正。总迹等于 $\operatorname{Tr}(VV^*\rho)+\operatorname{Tr}((I-VV^*)\rho)=\operatorname{Tr}\rho$。对 $\rho=V\sigma V^*$，补充项为零，第一项为 $\sigma$。这验证了完整通道层面的解码。
+
+如果只允许访问某个子系统，还需额外恢复条件。例如
+
+$$
+V|0\rangle=|0\rangle_A|0\rangle_B,\qquad
+V|1\rangle=|0\rangle_A|1\rangle_B
+$$
+
+是等距编码，但 $A$ 的约化态对任意输入都恒为 $|0\rangle\langle0|$，所以只观察 $A$ 不能恢复逻辑比特；$B$ 或全系统的访问能力与之不同。切口秩、熵上界或足够大的边界维数，都不会补回这种被丢弃的区别。
+
+### 132.2 受限历史：小接口组合长词，但不替代整条历史
+
+#### 132.2.1 禁止连续 $k$ 个 $1$ 的有限接口
+
+固定整数 $k\ge1$。令 $\mathcal W_n^{(k)}$ 为长度 $n$ 的二进制词中不含子词 $1^k$ 的集合，$a_n^{(k)}=|\mathcal W_n^{(k)}|$。一个合法前缀对未来合法性的全部相关信息，是其末尾连续 $1$ 的长度
+
+$$
+i\in\{0,\ldots,k-1\}.
+$$
+
+读到 $0$ 时更新到 $0$；读到 $1$ 时，若 $i<k-1$ 则更新到 $i+1$，若 $i=k-1$ 则拒绝。这里使用合法前缀上的 $k$ 状态部分自动机。若要求每个操作都是总函数，应再加入一个拒绝吸收态，并用“尚未拒绝”作为接受任务。
+
+以列表示输入状态、行表示输出状态，定义非负整数矩阵 $A_0,A_1$：
+
+$$
+(A_0)_{j,i}=\mathbf1_{j=0},\qquad
+(A_1)_{j,i}=\mathbf1_{i<k-1,\ j=i+1},\qquad A=A_0+A_1.
+$$
+
+空词矩阵为 $I$，词 $w=w_1\cdots w_n$ 的矩阵为
+
+$$
+A_w=A_{w_n}\cdots A_{w_1}.
+$$
+
+矩阵乘法逐次枚举共享中间状态，因此 $A_w$ 的列给出从对应初态读取整词后的合法终态；非法路径的贡献为零。于是
+
+$$
+a_n^{(k)}=\mathbf1^{\mathsf T}A^ne_0,
+\qquad A_{uv}=A_vA_u.
+$$
+
+第一式由 $A^n=\sum_{|w|=n}A_w$ 的有限分配律得到。第二式表明串接词正是共享末端状态上的关系拼接。
+
+接口状态确实保留了不同未来任务。若 $i<j$，继续输入 $1^{k-j}$，从 $j$ 出发会拒绝，从 $i$ 出发仍合法，因此这两个状态不能在保持所有未来合法性任务的商中合并。小接口压缩的是未来合法性判断所需的信息，不是前缀本身。
+
+#### 132.2.2 Fibonacci 与 $k$ 阶递推
+
+当 $k=2$，
+
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+ a_0^{(2)}=1,\quad a_1^{(2)}=2,
+$$
+
+且 $a_n^{(2)}=a_{n-1}^{(2)}+a_{n-2}^{(2)}$，所以在 $F_0=0,F_1=1$ 的约定下，$a_n^{(2)}=F_{n+2}$。
+
+对一般 $k$，当 $0\le n<k$，所有二进制词均合法，故 $a_n^{(k)}=2^n$；当 $n\ge k$，有
+
+$$
+a_n^{(k)}=a_{n-1}^{(k)}+a_{n-2}^{(k)}+\cdots+a_{n-k}^{(k)}.
+$$
+
+**证明。** 长度至少 $k$ 的合法词必含 $0$。按最后一个 $0$ 后连续 $1$ 的数目 $j\in\{0,\ldots,k-1\}$ 分组，每个词唯一写成 $v01^j$，其中 $v$ 是长度 $n-j-1$ 的任意合法词。附上 $0$ 会重置末尾运行长度，故这样的拼接全部合法。不同 $j$ 的分组不交，求和得到递推。$k=2$ 给出所示 Fibonacci 初值和递推。证毕。
+
+#### 132.2.3 增长率严格增加并趋于二
+
+对 $k\ge2$，函数 $g_k(\lambda)=\sum_{i=1}^k\lambda^{-i}$ 在 $(1,\infty)$ 连续严格下降，且 $g_k(1)=k>1$、$g_k(2)=1-2^{-k}<1$，故有唯一 $\lambda_k\in(1,2)$ 满足
+
+$$
+\sum_{i=1}^k\lambda_k^{-i}=1,
+\qquad
+\lambda_k^k=\lambda_k^{k-1}+\cdots+1.
+$$
+
+置 $\lambda_1=1$。对 $k\ge2$，$g_{k+1}(\lambda_k)>1$，因此 $\lambda_{k+1}>\lambda_k$；$\lambda_2>\lambda_1$ 也成立。由等比和并使用 $\lambda_k\ne1$，
+
+$$
+2-\lambda_k=\lambda_k^{-k}\le\lambda_2^{-k}\longrightarrow0.
+$$
+
+所以 $\lambda_k\uparrow2$。
+
+增长率确实是词数的指数率，而不只是递推方程的形式根。取正向量
+
+$$
+v=(1,\lambda_k^{-1},\ldots,\lambda_k^{-(k-1)})^{\mathsf T}.
+$$
+
+矩阵定义与上述根方程给 $Av=\lambda_kv$。向量 $q=A^{k-1}e_0$ 的每个坐标均严格正，因为每个末态 $j$ 都由长度 $k-1$ 的词 $0^{k-1-j}1^j$ 到达。存在常数 $0<c\le C<\infty$ 使 $cv\le q\le Cv$ 逐坐标成立。$A$ 非负，所以对 $n\ge k-1$，
+
+$$
+c\lambda_k^{n-k+1}v\le A^ne_0\le C\lambda_k^{n-k+1}v.
+$$
+
+对坐标求和、取对数再除以 $n$，得到
+
+$$
+\lim_{n\to\infty}\frac1n\log a_n^{(k)}=\log\lambda_k.
+$$
+
+$k=1$ 时只有全零词，词数恒为一，同一极限为 $0=\log\lambda_1$。
+
+因此，固定长度编码若要恢复任意一条合法历史，需要至少 $\lceil\log_2a_n^{(k)}\rceil$ 位；对固定 $k\ge2$，其每符号渐近下界为 $\log_2\lambda_k>0$。一个固定大小的自动机加一条短规则，可以枚举或检验所有这些词，却没有指定其中究竟是哪一条。相同末态通常对应许多不同前缀，这正是任务商与历史重建的区别。这里的计数递推也没有声明任何热力学过程。
+
+### 132.3 兼容剩余类：另一种局部到整体的极限
+
+#### 132.3.1 $p$ 进整数的兼容接口
+
+固定素数 $p$。令 $R_n=\mathbb Z/p^n\mathbb Z$，$n\ge1$，以及自然约化映射 $\rho_n:R_{n+1}\to R_n$。定义
+
+$$
+\mathbb Z_p=
+\left\{(a_n)_{n\ge1}\in\prod_{n\ge1}R_n:
+\rho_n(a_{n+1})=a_n\text{ 对所有 }n\right\}.
+$$
+
+这是一组对同一个待恢复对象的兼容有限读数，不能任意独立选择各层标签。逐坐标加法与乘法保持兼容性，因为各 $\rho_n$ 都是环同态；于是 $\mathbb Z_p$ 成为交换环，各坐标投影都是环同态。
+
+**命题 132.1（兼容剩余类与数字序列）。** 每个 $p$ 进整数唯一对应数字序列 $d_0,d_1,\ldots\in\{0,\ldots,p-1\}$，满足
+
+$$
+a_n=\sum_{j=0}^{n-1}d_jp^j\pmod{p^n}.
+$$
+
+**证明。** 取每个 $a_n$ 的标准代表元 $r_n\in\{0,\ldots,p^n-1\}$。兼容性使 $r_{n+1}-r_n$ 被 $p^n$ 整除，且
+
+$$
+r_{n+1}=r_n+d_np^n
+$$
+
+对唯一的 $d_n\in\{0,\ldots,p-1\}$ 成立；另取 $d_0=r_1$。归纳得到有限展开，唯一性由各步的唯一商得到。反之，任意这样的数字序列的有限和模 $p^n$ 显然互相兼容。两个构造逐层互逆。证毕。
+
+#### 132.3.2 兼容性产生完整的超度量空间
+
+为统一下标，约定模 $p^0$ 的读数只有一个。对 $x\ne y$ 定义 $v(x,y)$ 为两者仍相同的最大模数层级，即
+
+$$
+v(x,y)=\max\{n\ge0:x\bmod p^n=y\bmod p^n\}.
+$$
+
+若某层不同，之后更细层也不同，所以这个最大值有限；若全部层相同，则按序列定义 $x=y$。约定 $v(x,x)=+\infty$。定义
+
+$$
+d_p(x,y)=p^{-v(x,y)}\quad(x\ne y),\qquad d_p(x,x)=0.
+$$
+
+它是超度量。事实上，若 $x,y$ 到第 $n$ 层相同，且 $y,z$ 到第 $n$ 层相同，则 $x,z$ 到第 $n$ 层相同。因此
+
+$$
+v(x,z)\ge\min\{v(x,y),v(y,z)\},\qquad
+ d_p(x,z)\le\max\{d_p(x,y),d_p(y,z)\}.
+$$
+
+对称性与零距离分离由定义立即成立，超度量不等式还推出通常三角不等式。
+
+**命题 132.2（完备性与整数稠密）。** $(\mathbb Z_p,d_p)$ 完备，普通整数通过全部剩余类组成的序列嵌入其中，且像稠密。
+
+**证明。** 若 $(x^{(m)})$ 为 Cauchy 序列，对每个固定 $n$，充分大的 $m,l$ 满足 $d_p(x^{(m)},x^{(l)})<p^{-n}$，因而第 $n$ 层剩余类相同。定义 $a_n$ 为这一最终稳定值。对相邻两层选共同充分大的序号，由原序列点的兼容性得到 $\rho_n(a_{n+1})=a_n$，所以 $a=(a_n)$ 属于 $\mathbb Z_p$。固定 $n$ 后，充分大的 $m$ 与 $a$ 在模 $p^n$ 下相同，故距离至多 $p^{-n}$，这证明收敛。
+
+整数映射 $z\mapsto(z\bmod p^n)_n$ 保持加法乘法。若整数 $z$ 在每层都是零，则所有 $p^n$ 整除 $z$；非零整数的绝对值不可能大于等于全部 $p^n$，所以 $z=0$，映射单射。给定 $a\in\mathbb Z_p$，令 $r_N$ 为其模 $p^N$ 的标准整数代表元，则 $r_N$ 与 $a$ 在前 $N$ 层相同，所以 $d_p(r_N,a)\le p^{-N}\to0$。因此整数像稠密。证毕。
+
+这个构造也具体说明 $\mathbb Z_p$ 是普通整数在 $p$ 进距离下的完备化：任意整数 Cauchy 序列逐层给出上述极限，每个兼容序列又由整数近似得到；等价 Cauchy 序列有相同的逐层极限。
+
+#### 132.3.3 与受限词的共同结构及不可混同的运算
+
+受限词也可组成逆系统：从 $\mathcal W_{n+1}^{(k)}$ 删除最后一位得到 $\mathcal W_n^{(k)}$。映射满射，因为任意合法词都能追加 $0$。一个兼容的有限前缀族唯一确定一条无限二进制序列，而该序列所有有限前缀合法，当且仅当它不含 $1^k$。证明是逐位取稳定前缀，再检查每个有限位置的禁词条件。
+
+因此两例都使用“较细读数必须约化为较粗读数”的兼容关系。在 $p=2$ 的不受限数字情形，把最先读到的数字解释为最低有效位，还可以把无限二进制数字序列与 $\mathbb Z_2$ 的底层超度量空间对应。但以下结构并不因此相同：
+
+- 词的串接是有序历史的组合；$p$ 进环的加法、乘法通过进位组合数字。
+- 自动机记录末尾运行长度以判断未来禁词；模 $p^n$ 记录最低 $n$ 位以判断算术同余。
+- 无限词上的左移删去第一位；在 $\mathbb Z_p$ 数字坐标中，它是 $(x-d_0(x))/p$，一般不是加法同态。例如 $p=2$ 时移位后的 $1+1=2$ 给 $1$，而两个 $1$ 分别移位后之和为 $0$。
+- 当 $k\ge2$，避免 $1^k$ 的二进制数字子集不对 $2$ 进加法封闭：$2^{k-1}-1$ 与 $2^{k-1}$ 的数字都合法，和 $2^k-1$ 含有 $k$ 个连续 $1$。
+
+最后，任何固定层 $a_N$ 都不决定整个 $p$ 进整数：整数 $r_N$ 与 $r_N+p^N$ 在该层相同而在下一层不同。全兼容接口族可唯一指定极限对象，某个有限接口则保留整条纤维。这与自动机小状态足够判断未来合法性、却不足以恢复任意历史，是两种明确不同而可比较的任务相对现象。
+
+张量割秩上界使用线性因子化及 Schmidt 分解；量子编码的可恢复条件见 F. Pastawski et al., arXiv:1503.06237。有限自动机与 $p$-进逆极限分别提供历史接续及相容精度的标准构造，不由此断言引力面积律。
+
+## 132.99 追加锚
+
+## 133. 共同实现、概率与演化的同步运输
+
+前述各量只有沿同一份实现、观察、参考与操作转换，才具有可比较的不变量。本节把这些交换关系放在同一图中，并给出事件缺陷与动态记忆不能互相代名的反例。
+
+### 133.1 等核表示的规范运输与行为最小化
+
+#### 133.1.1 规范对应与转换的一致性
+
+令同一个来源上的观察为 $q_i:X\to B_i$，实际像记为 $Q_i=q_i[X]$，且所有 $\ker q_i$ 相同。
+
+**命题 133.1（等核运输）。** 存在唯一双射
+
+$$
+h_{ij}:Q_i\to Q_j,\qquad h_{ij}(q_i(x))=q_j(x),
+$$
+
+并满足
+
+$$
+h_{ii}=\mathrm{id}_{Q_i},\qquad h_{ji}=h_{ij}^{-1},\qquad
+h_{jk}\circ h_{ij}=h_{ik}.
+$$
+
+**证明。** 核包含给出良定义；反向包含使同样构造的 $h_{ji}$ 成为逆。任意满足所示等式的映射在实际像每一点都确定，故唯一。恒等式、逆式与三角转换式在每个 $q_i(x)$ 上直接求值均成立；满射性把逐代表元等式提升为函数等式。证毕。
+
+若只有 $\ker q_i\subseteq\ker q_j$，仍有唯一满射 $Q_i\to Q_j$，但不必可逆。例如恒等观察 $q_i(a,b)=(a,b)$ 向 $q_j(a,b)=a$ 的转换遗忘第二位。
+
+#### 133.1.2 任务、操作与几何必须一同运输
+
+若 $f_j$ 能通过共同观察核下降，则
+
+$$
+\bar f_j^{(i)}=\bar f_j^{(j')}\circ h_{ij'}.
+$$
+
+此处 $j$ 是任务指标，$i,j'$ 是表示指标。证明是在 $q_i(x)$ 上把两边都算为 $f_j(x)$。
+
+若共同核对确定性操作 $T_u$ 稳定，则相应商操作满足
+
+$$
+h_{ij}\bar T_u^{(i)}=\bar T_u^{(j)}h_{ij}.
+$$
+
+同样在 $q_i(x)$ 上，两边均为 $q_j(T_ux)$。对满足第124节的精确后继商判据的关系商，得到
+
+$$
+h_{ij}[\bar R_u^{(i)}(b)]
+=\bar R_u^{(j)}(h_{ij}(b)).
+$$
+
+所以等核可保证可运输的结构一致，但不会凭空保证一个原本不稳定的观察核可以承载演化。
+
+给定 $Q_i$ 上的距离 $d_i$，其运输定义为
+
+$$
+d_j(b,c)=d_i(h_{ji}b,h_{ji}c).
+$$
+
+双射性使非负性、对称性、三角不等式和零距离分离逐一继承，所以 $h_{ij}$ 是等距双射。不能改成“两份任意预先指定的距离自动相同”：$q_1(x)=x$、$q_2(x)=2x$ 在实数上等核，但各标签直接使用通常欧氏距离时，第二份距离是第一份的两倍。正确运输后的第二份距离为 $|b-c|/2$。
+
+若几何由有限任务直接定义，令任务空间 $(Y_j,d_j)$ 为度量空间、$w_j>0$，并置
+
+$$
+d_Q(b,c)=\left(\sum_jw_jd_j(\bar f_j(b),\bar f_j(c))^2\right)^{1/2}.
+$$
+
+这是伪距离：每个坐标的三角不等式与欧氏范数三角不等式给出总三角不等式。它是距离，当且仅当下降后的任务联合分离 $Q$。在等核转换下使用同一任务和权重，各项完全相同，因而得到规范等距。无限任务求和需要另给收敛条件，不在本有限式中免费包含。
+
+#### 133.1.3 固定实验语言下的最小化幂等
+
+采用第120节的完整未来行为定理的固定、继续实验闭合的语言，令 $Q=\beta[X]$，使用已经下降的任务和操作。现在对 $Q$ 再做同一种行为构造，记为 $\beta_Q$。对每个 $x\in X$，每个测试 $(w,j)$，有
+
+$$
+\beta_Q(\beta(x))_{w,j}
+=\bar f_j(\bar T_w\beta(x))
+=f_j(T_wx)
+=\beta(x)_{w,j}.
+$$
+
+故在共同的行为数组坐标中，$\beta_Q$ 就是 $Q$ 的恒等嵌入，实际像仍是 $Q$。若第一步使用抽象等价类而非行为数组，第二次最小化与第一次规范同构。对 $Q$ 内不同点，总有原语言中的某个测试区分，因此没有可继续合并的点。
+
+这证明的是相对于同一语言、同一任务和同一允许操作的幂等性。加入新任务、新干预或新组合上下文，可能分开旧商中的点。它也不表示有限过去档案已经等同于全部未来行为：过去记录是否足够，仍由其核是否包含于 $E_\infty$ 判定。
+
+### 133.2 有限关系模型与换名
+
+设 $\Omega,\Omega'$ 为非空有限集，$\mu,\mu'$ 为严格正概率，$q:\Omega\twoheadrightarrow B$、$q':\Omega'\twoheadrightarrow B'$ 为观察。设双射 $s:\Omega\to\Omega'$、$t:B\to B'$ 满足
+$$
+\mu'(sx)=\mu(x),\qquad q's=tq.
+$$
+参考权重及观察关系因而一并运输。定义
+$$
+U:L^2(\Omega,\mu)\to L^2(\Omega',\mu'),
+\qquad (Uf)(sx)=f(x).
+$$
+换指标求和给 $\langle Uf,Ug\rangle_{\mu'}=\langle f,g\rangle_\mu$，所以 $U$ 是保常数的线性等距同构；同时它保持逐点乘积、指标、顺序及任意已定义的逐点标量函数。
+
+设 $P,P'$ 是相应条件期望。对 $b=q(x)$，纤维双射 $q^{-1}(b)\to(q')^{-1}(tb)$ 保持各点质量及纤维总质量。因此
+$$
+(P'Uf)(sx)
+=\frac{\sum_{y:q(y)=b}\mu(y)f(y)}{\sum_{y:q(y)=b}\mu(y)}
+=(UPf)(sx),
+\qquad P'U=UP.
+$$
+换名把可见空间 $V=\operatorname{ran}P$ 等距映到 $V'=\operatorname{ran}P'$，隐藏空间 $H=\ker P$ 等距映到 $H'=\ker P'$。记限制同构为 $U_V,U_H$。
+
+### 133.3 否定、拓扑边界与投影缺陷同步运输
+
+给事件 $E\subseteq\Omega$，取 $E'=sE$。双射满足 $s(E^c)=(sE)^c$。每条纤维同时与 $E,E^c$ 相交，当且仅当其像纤维同时与 $E',(E')^c$ 相交，故
+$$
+\partial_{q'}E'=t(\partial_qE).
+$$
+由纤维并组成的观察拓扑也由 $s$ 双向保持，因此内部、闭包与拓扑前沿分别运输；这是本特定拓扑之间的同胚结论。
+
+令 $Q_E$ 为乘以 $\mathbf1_E$ 的投影，则 $Q_{E'}U=UQ_E$。压缩效应及跨可见隐藏耦合满足
+$$
+\mathsf A=P Q_E|_V,\qquad \mathsf D=(I-P)Q_E|_V,
+$$
+$$
+\mathsf A'=U_V\mathsf A U_V^{-1},
+\qquad \mathsf D'=U_H\mathsf D U_V^{-1}.
+$$
+所以 $\mathsf A-\mathsf A^2=\mathsf D^*\mathsf D$ 的两边按同一个等距同构运输；秩、迹、算子范数和 Hilbert–Schmidt 范数均保持。条件残差也满足
+$$
+\|\mathbf1_{E'}-P'\mathbf1_{E'}\|_{\mu'}^2
+=\|\mathbf1_E-P\mathbf1_E\|_\mu^2.
+$$
+若按各纤维质量定义 $w_{xy}=\mu(x)\mu(y)/\mu(q^{-1}q(x))$（不同纤维为零），则 $w'_{sx,sy}=w_{xy}$，从而割权、Dirichlet 二次型与图总变差的对应数值同样保持。该运输不会把概率加权残差改成未加权矩阵迹；每个量仍保持自己的定义。
+
+### 133.4 动力学、记忆和静态消元同步运输
+
+另给自伴线性算子 $L$，明确要求新表示使用 $L'=ULU^{-1}$。在 $V\oplus H$ 分解中写
+$$
+L=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}.
+$$
+对应块满足
+$$
+A'=U_VAU_V^{-1},\quad B'=U_VBU_H^{-1},\quad C'=U_HCU_H^{-1}.
+$$
+此式由 $P'U=UP$ 以及各块的限制定义直接得到。指数幂级数和共轭给
+$$
+e^{-tL'}U=Ue^{-tL},\qquad
+K'(t)=B'e^{-tC'}(B')^*=U_VK(t)U_V^{-1}.
+$$
+若运输初值 $x'_0=U_Vx_0,h'_0=U_Hh_0$，则初态强迫也满足
+$$
+B'e^{-tC'}h'_0=U_VBe^{-tC}h_0.
+$$
+因此边界记忆方程、其全部解以及初始条件对应，而不只是两个记忆核同谱。
+
+若 $C>0$，则 $C'>0$ 且
+$$
+A'-B'(C')^{-1}(B')^*
+=U_V(A-BC^{-1}B^*)U_V^{-1}.
+$$
+Schur 响应、记忆核积分、响应矩及由矩构造的词内积全部按同一 $U_V$ 运输。词系数 $(v_i)$ 的转换是 $(U_Vv_i)$；将该转换代入矩配对并用等距性，得到配对保持，故还诱导规范有效隐藏商的等距同构。此处 $V$ 是指定的边界内积空间，不能在转换中另换一份无关的参考内积。
+
+### 133.5 概率和正反实验同步运输
+
+取任意概率 $\nu$ 及 $\nu'=s_*\nu$，允许 $\nu$ 有零质量，以 $0\log0=0$ 约定。相对参考 $\mu$ 的密度 $\rho=\nu/\mu$ 满足 $\rho'=U\rho$，故
+$$
+D(\nu'\Vert\mu')=\sum_{x'}\mu'(x')\rho'(x')\log\rho'(x')
+=D(\nu\Vert\mu).
+$$
+又 $q'_*\nu'=t_*q_*\nu$、$q'_*\mu'=t_*q_*\mu$，所以粗相对熵以及两者差值给出的隐藏条件相对熵分别保持。
+
+在任意固定有限时间网格上，以逐坐标双射 $s^{\times}$ 运输完整正向路径律 $\mathbb P$ 和已声明的反向比较律 $\mathbb P^{\rm R}$，则对正向支持上的每条路径，其概率比及概率权重都保持，从而
+$$
+D(s^{\times}_*\mathbb P\Vert s^{\times}_*\mathbb P^{\rm R})
+=D(\mathbb P\Vert\mathbb P^{\rm R}).
+$$
+若存在正向有质量而反向零质量的路径，两边同为 $+\infty$；有限性假设不被偷换。若观察的记录规则也经相容双射运输，则观察路径 KL 保持。另假设 $\mathbb P\ll\mathbb P^{\rm R}$ 时，每个正向有质量的观察纤维也具有反向正质量，两份条件路径律因而规范定义；纤维双射保持各条件概率比，故隐藏条件 KL 项也保持。没有此绝对连续条件时，不能在反向零质量的纤维上无条件指定该隐藏项。若只换正向律而未运输反向实验，上述结论不提供不变性保证。
+
+上述结论的共同前提是：实现、观察、权重、演化和需要比较的实验全部沿同一关系变换运输。对于一般多对一粗观察，$U$ 不再可逆，事件未必下降、动力未必闭合、隐藏量一般非零；相应判据与缺陷须使用前述各定理。由一个保真呈示转向另一个呈示，和删除关系细节，是两种不同的数学操作。
+
+### 133.6 共用分块演算不使不同关系的缺陷相同
+
+取两点均匀概率，$P$ 为常值条件平均，事件为单点，$Q_E=\operatorname{diag}(1,0)$。可见空间一维，压缩效应为 $1/2$，故事件幂等缺陷为 $1/4$。另选演化 $L=I-P$，则 $L$ 与 $P$ 交换，跨可见隐藏的演化块为零，记忆核恒为零。这两项计算同时成立。因此事件乘法的交叉块 $(I-P)Q_EP$ 与动力学的交叉块 $PL(I-P)$ 不能互相代名；前者记录事件的隐藏区别，后者记录演化怎样把隐藏方向送回边界。
+
+同样，顶点 Dirichlet 切分中的坐标保留投影，一般不保持概率总质量；条件纤维投影则保持常数与参考平均。它们都允许分块与 Schur 演算，但概率 KL 链式公式只适用于已声明的概率观察及重建。正交实现同构也不自动保持概率正锥或逐点乘法；上文全部概率不变性使用了来自样本双射的保权映射，而非任意线性等距映射。
+
+## 133.99 追加锚
+
+## 134. 关系表示的探针充分性与三种闭合
+
+最小行为商比较同一模型内的实现；进一步比较观察方法和模型本身，需要保留探针及其变换。这里以交换方块、Yoneda 与受限探针说明哪些关系族足以反映对象，以及“关系的关系”如何获得明确类型。
+
+### 134.1 观察方法之间的比较是一个有类型的交换方块
+
+#### 134.1.1 箭头范畴的定义与复合
+
+固定一个范畴 $\mathcal C$。一个观察方法可表示为箭头 $q:X\to B$；这里 $X$ 是被观察对象，$B$ 是该方法的输出对象。给另一方法 $q':X'\to B'$，一个比较由两条箭头
+
+$$
+\alpha:X\to X',\qquad \beta:B\to B'
+$$
+
+及交换条件
+
+$$
+q'\circ\alpha=\beta\circ q
+\tag{134.1}
+$$
+
+组成。它称为从 $q$ 到 $q'$ 的交换方块，亦即箭头范畴 $\operatorname{Arr}(\mathcal C)$ 的态射。
+
+给依次两个方块 $(\alpha_1,\beta_1):q_0\to q_1$ 与 $(\alpha_2,\beta_2):q_1\to q_2$，定义复合为
+
+$$
+(\alpha_2\circ\alpha_1,\ \beta_2\circ\beta_1).
+$$
+
+它确实交换，因为
+
+$$
+q_2\alpha_2\alpha_1
+=\beta_2q_1\alpha_1
+=\beta_2\beta_1q_0.
+$$
+
+恒等态射为 $(\mathrm{id}_X,\mathrm{id}_B)$。单位律和结合律逐分量由 $\mathcal C$ 的单位律和结合律给出，因此构成一个范畴。这里不要求任何单射、满射或有限性。
+
+**命题 134.1（方块同构）。** 交换方块在 $\operatorname{Arr}(\mathcal C)$ 中可逆，当且仅当其两侧 $\alpha,\beta$ 都在 $\mathcal C$ 中可逆。
+
+**证明。** 若方块有逆，逐分量的复合等于恒等，故两分量各有逆。反之，若两分量可逆，由 (134.1) 左乘 $\beta^{-1}$、右乘 $\alpha^{-1}$ 得
+
+$$
+q\alpha^{-1}=\beta^{-1}q'.
+$$
+
+所以 $(\alpha^{-1},\beta^{-1})$ 是反向交换方块，且逐分量为逆。证毕。
+
+方块只保证声明的观察相容。可逆方块也没有自动携带度量、概率、允许操作或计算成本；若这些属于目标结构，就要把相应交换或保留条件一并声明。
+
+#### 134.1.2 集合上的实际读数像与方向条件
+
+现在取集合与总函数。把观察限制到实际像
+
+$$
+q_0:X\twoheadrightarrow Q=q[X],\qquad
+q'_0:X'\twoheadrightarrow Q'=q'[X'].
+$$
+
+给定 $\alpha:X\to X'$，存在唯一 $\beta_0:Q\to Q'$ 满足
+
+$$
+q'_0\alpha=\beta_0q_0
+\tag{134.2}
+$$
+
+当且仅当
+
+$$
+q(x)=q(y)\quad\Longrightarrow\quad
+q'(\alpha x)=q'(\alpha y).
+\tag{134.3}
+$$
+
+证明是令 $\beta_0(q(x))=q'(\alpha x)$；(134.3) 正好是该定义不依赖代表元的条件，实际像给出存在性和唯一性。反方向由 (134.2) 直接得到。
+
+映射 $\beta_0$ 为单射，当且仅当反向条件也成立：
+
+$$
+q'(\alpha x)=q'(\alpha y)\quad\Longrightarrow\quad q(x)=q(y).
+\tag{134.4}
+$$
+
+证明分别把 $q(x),q(y)$ 代入单射定义即可。若 $\alpha$ 满射，$\beta_0$ 也满射：任意 $q'(x')$ 可取 $x'=\alpha(x)$。反之，$\beta_0$ 满射不要求 $\alpha$ 命中每个状态，只要求命中每个目标读数纤维。
+
+若原来已经给定整个 $B$ 上的 $\beta$，交换方块保证它将 $q[X]$ 映入 $q'[X']$，因此可限制到 $\beta_0$。但方块不约束 $B\setminus q[X]$ 上的取值。实际像上的唯一分解不能被扩报为整个环境陪域上的唯一映射。
+
+### 134.2 操作相容把一个方块扩展为全部未来的相容
+
+#### 134.2.1 共同操作语言上的系统比较
+
+固定操作标签集合 $A$。一个系统由集合 $X$、实际读数满射 $q:X\twoheadrightarrow Q$、总操作 $T_a:X\to X$ 组成。另一系统写为 $(X',Q',q',T'_a)$。比较 $(F,H)$ 的类型和合同是
+
+$$
+F:X\to X',\qquad H:Q\to Q',\qquad
+q'F=Hq,\qquad FT_a=T'_aF\quad(a\in A).
+\tag{134.5}
+$$
+
+这样的比较按分量复合。若 $(G,J)$ 是后一比较，则
+
+$$
+(GF)T_a=G(T'_aF)=T''_a(GF),\qquad
+q''GF=Jq'F=JHq;
+$$
+
+故它们构成固定操作语言下的系统范畴。
+
+有限词 $w=a_1\cdots a_n$ 按执行顺序表示
+
+$$
+T_w=T_{a_n}\cdots T_{a_1},\qquad T_\varepsilon=\mathrm{id}.
+$$
+
+特别地，$T_{av}=T_vT_a$，且 $T_{uv}=T_vT_u$。
+
+**命题 134.2（有限词运输）。** 在 (134.5) 下，对每个有限词 $w$，
+
+$$
+FT_w=T'_wF,\qquad q'T'_wF=HqT_w.
+\tag{134.6}
+$$
+
+**证明。** 空词由恒等式成立。若对 $v$ 成立，则
+
+$$
+FT_{av}=FT_vT_a=T'_vFT_a=T'_vT'_aF=T'_{av}F.
+$$
+
+最后复合 $q'$ 并使用读数方块得到第二式。证毕。
+
+这项正向结论只需要半共轭，不需要 $F,H$ 可逆。
+
+#### 134.2.2 行为关系的保持、反射与商运输
+
+定义完整有限词行为
+
+$$
+\Phi(x)(w)=q(T_wx),\qquad
+\Phi'(x')(w)=q'(T'_wx').
+$$
+
+令 $E_\infty=\ker\Phi$、$E'_\infty=\ker\Phi'$，即两个状态等价当且仅当全部允许有限实验读数都相同。对记录 $b:A^*\to Q$ 定义 $H_*b=H\circ b$。式 (134.6) 等价于
+
+$$
+\Phi'F=H_*\Phi.
+\tag{134.7}
+$$
+
+因此总有关系保持
+
+$$
+E_\infty\subseteq(F\times F)^{-1}[E'_\infty].
+\tag{134.8}
+$$
+
+若 $H$ 单射，则逐词从 $H(\Phi(x)(w))=H(\Phi(y)(w))$ 消去 $H$，得到精确反射
+
+$$
+E_\infty=(F\times F)^{-1}[E'_\infty].
+\tag{134.9}
+$$
+
+此处不要求 $F$ 本身单射。若它合并两个状态，(134.9) 说明它们在原来的全部行为任务下已经等价。若再有 $F$ 满射，则
+
+$$
+E'_\infty=(F\times F)[E_\infty].
+\tag{134.10}
+$$
+
+证明是为任意目标状态对取原像，再用 (134.9)。在 $F,H$ 都双射时，这些条件当然全部满足。
+
+由 (134.8) 可定义
+
+$$
+\bar F:X/E_\infty\to X'/E'_\infty,
+\qquad \bar F([x])=[Fx].
+$$
+
+良定义由关系保持给出；$H$ 单射时，(134.9) 给出 $\bar F$ 单射；$F$ 满射时，$\bar F$ 满射。诱导操作满足
+
+$$
+\bar F([T_ax])=[FT_ax]=[T'_aFx],
+$$
+
+故商上的操作也交换。这个商映射不需要为每个等价类选择代表元算法；它由 $F$ 唯一诱导。依次两个系统比较还满足
+
+$$
+\overline{GF}=\bar G\bar F,\qquad
+\overline{\mathrm{id}}=\mathrm{id},
+$$
+
+因为在每个 $[x]$ 上两边都取 $[GFx]$。这给出系统范畴到行为商系统的函子，而不只是孤立的两个商之间某个未指定的双射。
+
+**反例。** 取 $X=Q=\{0,1\}$、$q=\mathrm{id}$，目标系统只有一个状态和一个标签，所有操作都是恒等，$F,H$ 都是唯一映射。式 (134.5)—(134.8) 成立，但原行为关系是相等关系，两个状态在目标中合并。任意相容方块或半共轭并不自动反映原来的区别。
+
+#### 134.2.3 操作翻译与部分操作的额外义务
+
+若标签通过 $\rho:A\to A'$ 翻译，只知道
+
+$$
+FT_a=T'_{\rho(a)}F,
+$$
+
+则词归纳只保证源词 $w$ 与目标词 $\rho(w)$ 的比较。不能未经证明把目标关系改成由全部 $A'$ 词定义的关系。
+
+例如取 $X=X'=\{a,b,c\}$，当前读数为 $q(a)=q(b)=0$、$q(c)=1$。源系统只允许恒等操作，目标除恒等外还允许 $S(a)=a$、$S(b)=c$、$S(c)=c$。令 $F,H$ 均为恒等；对共享操作的方块和半共轭全部成立，源状态 $a,b$ 行为等价，但目标操作 $S$ 将它们区分。要比较完整目标行为，必须覆盖额外操作，或证明它们不产生新任务区别。
+
+对部分操作 $T_a:D_a\to X$，还需保持准入域。用新的失败态 $\bot$ 把操作总化：定义 $T_a^\bot$ 在 $D_a$ 上等于 $T_a$，在 $X\setminus D_a$ 和 $\bot$ 上均输出 $\bot$；给观察增加与成功标签不相交的失败标签。令 $F^\bot$ 在原状态上等于 $F$，并送 $\bot$ 到 $\bot$。那么
+
+$$
+F^\bot T_a^\bot=(T'_a)^\bot F^\bot
+$$
+
+当且仅当
+
+$$
+x\in D_a\Longleftrightarrow Fx\in D'_a,
+\qquad FT_ax=T'_aFx\quad(x\in D_a).
+$$
+
+证明分成成功、失败及 $\bot$ 三种输入逐项检查即可；若源失败而目标成功，两边分别属于失败态和原目标状态，必不相等。只在双方成功时比较输出，不能保留操作是否合法。
+
+### 134.3 完整 Yoneda：对象由全部相容的探针关系确定
+
+#### 134.3.1 宇宙、局部小性和方向
+
+为避免把“所有对象”当成一个未声明的最大集合，固定宇宙 $\mathcal U\in\mathcal V$。假设 $\mathcal C$ 的对象和全部结构数据在 $\mathcal V$ 中可容纳，每个 $\operatorname{Hom}_{\mathcal C}(X,Y)$ 是 $\mathcal U$ 中的集合。这样的范畴称为在 $\mathcal U$ 中局部小；对象可以比单个 Hom 集所在的宇宙更大。以下的自然变换集合和函子范畴在足够大的 $\mathcal V$ 中解释。若所用对象类还超出该宇宙，就必须再提升宇宙，不能省略此步骤而把任意大乘积称为小集合。
+
+令 $\mathsf{Set}_{\mathcal U}$ 表示 $\mathcal U$ 中的集合与函数。对每个对象 $X$，定义反变探针轮廓
+
+$$
+h_X:\mathcal C^{\mathrm{op}}\to\mathsf{Set}_{\mathcal U},
+\qquad h_X(Z)=\operatorname{Hom}_{\mathcal C}(Z,X).
+$$
+
+探针箭头 $g:W\to Z$ 通过前复合产生
+
+$$
+h_X(g):\operatorname{Hom}(Z,X)\to\operatorname{Hom}(W,X),
+\qquad f\longmapsto f\circ g.
+$$
+
+这套轮廓同时包含各探针映射及它们在探针转换下的相容关系。
+
+#### 134.3.2 Yoneda 引理的完整证明
+
+令 $P:\mathcal C^{\mathrm{op}}\to\mathsf{Set}_{\mathcal U}$ 为任意预层。自然变换 $\eta:h_X\Rightarrow P$ 是一族函数 $\eta_Z:\operatorname{Hom}(Z,X)\to P(Z)$，满足
+
+$$
+\eta_W(f\circ g)=P(g)(\eta_Z(f))
+\quad(g:W\to Z,\ f:Z\to X).
+\tag{134.11}
+$$
+
+**命题 134.3（Yoneda）。** 映射
+
+$$
+\eta\longmapsto\eta_X(\mathrm{id}_X)
+$$
+
+给出双射
+
+$$
+\operatorname{Nat}(h_X,P)\cong P(X).
+$$
+
+**证明。** 给 $a\in P(X)$，定义
+
+$$
+\eta^a_Z(f)=P(f)(a).
+$$
+
+因为 $P$ 反变，$P(fg)=P(g)P(f)$，所以
+
+$$
+\eta^a_W(fg)=P(g)P(f)(a)=P(g)(\eta^a_Z(f)),
+$$
+
+即自然性成立。对恒等箭头求值有 $\eta^a_X(\mathrm{id})=a$。反之，对任意自然变换 $\eta$，在 (134.11) 中取 $Z=X$、$f=\mathrm{id}_X$、$g$ 为任意箭头 $W\to X$，得到
+
+$$
+\eta_W(g)=P(g)(\eta_X(\mathrm{id}_X)).
+$$
+
+故 $\eta$ 完全由该单个值决定，并等于按上式构造的变换。两构造互逆。证毕。
+
+这个对应也兼容参数转换。若 $u:X'\to X$，则把 $\eta$ 与 $h_u:h_{X'}\to h_X$ 复合后，其恒等求值为
+
+$$
+\eta_{X'}(u)=P(u)(\eta_X(\mathrm{id}_X)).
+$$
+
+若 $\theta:P\to P'$ 是自然变换，$(\theta\eta)_X(\mathrm{id})=\theta_X(\eta_X(\mathrm{id}))$。这明确给出 Yoneda 对应的两侧自然性。
+
+#### 134.3.3 全忠实与“精确到同构”
+
+取 $P=h_Y$，命题 134.3 成为
+
+$$
+\operatorname{Nat}(h_X,h_Y)\cong\operatorname{Hom}_{\mathcal C}(X,Y).
+\tag{134.12}
+$$
+
+箭头 $u:X\to Y$ 对应逐探针后复合 $f\mapsto u\circ f$。所以 $X\mapsto h_X$ 是全忠实函子：任意相容轮廓转换来自一个真实箭头，而且该箭头唯一。
+
+若 $\eta:h_X\cong h_Y$ 是自然同构，由 (134.12) 取其与逆变换对应的 $u:X\to Y$、$v:Y\to X$。自然变换复合对应箭头复合，因此 $h_{vu}=\mathrm{id}_{h_X}$、$h_{uv}=\mathrm{id}_{h_Y}$。在 $\mathrm{id}_X$ 和 $\mathrm{id}_Y$ 处求值得 $vu=\mathrm{id}_X$、$uv=\mathrm{id}_Y$。故 $X\cong Y$。
+
+这里“全部相容关系”不只是每个 Hom 集的元素个数，也不是各分量互不相容的双射。例如在集合范畴中取 $X=\{0,1\}$：对除单点探针 $1$ 以外的各 $Z$，令 $\eta_Z$ 为 $\operatorname{Hom}(Z,X)$ 的恒等；在 $Z=1$ 处，令其交换两个点。每个分量都是双射，但这不是自然变换。因为 $\eta_X(\mathrm{id}_X)=\mathrm{id}_X$ 将迫使所有分量由恒等后复合给出，与单点处分量矛盾。真正承重的是自然性。
+
+#### 134.3.4 向外读数使用对偶方向
+
+观察 $q:X\to B$ 是从对象向外的读数，而 $h_X(Z)$ 中的元素是从探针向对象的箭头。这两个方向不能不加说明地合并。
+
+若要使用全部向外读数，定义协变函子
+
+$$
+k_X:\mathcal C\to\mathsf{Set}_{\mathcal U},\qquad
+k_X(Z)=\operatorname{Hom}_{\mathcal C}(X,Z).
+$$
+
+对自然变换 $\theta:k_X\Rightarrow k_Y$，在 $X$ 处求值
+
+$$
+u=\theta_X(\mathrm{id}_X):Y\to X.
+$$
+
+对任意 $f:X\to Z$，自然性给 $\theta_Z(f)=f\circ u$。反之，任意 $u:Y\to X$ 均按此式产生自然变换。于是
+
+$$
+\operatorname{Nat}(k_X,k_Y)\cong\operatorname{Hom}_{\mathcal C}(Y,X).
+$$
+
+因此 $X\mapsto k_X$ 是定义在 $\mathcal C^{\mathrm{op}}$ 上的全忠实表示。一个有限选定的读数族 $(q_j:X\to B_j)$ 并不自动等于这个完整函子；它还没有包含所有目标对象、所有向外箭头及其后复合相容性。
+
+### 134.4 受限探针究竟能确定什么
+
+#### 134.4.1 必须同时给出探针对象与探针转换
+
+令 $\mathcal D$ 为 $\mathcal U$ 小范畴，$i:\mathcal D\to\mathcal C$ 为函子。受限探针轮廓定义为
+
+$$
+N_i(X)(d)=\operatorname{Hom}_{\mathcal C}(i(d),X),
+\qquad
+N_i(X)(a)(f)=f\circ i(a)
+\quad(a:d\to e,\ f:i(e)\to X).
+$$
+
+它是 $\mathcal D^{\mathrm{op}}$ 上的预层。对象间箭头 $u:X\to Y$ 给出自然变换
+
+$$
+N_i(u)_d(f)=u\circ f.
+$$
+
+函子律由复合的单位律和结合律给出，因此
+
+$$
+N_i:\mathcal C\to[\mathcal D^{\mathrm{op}},\mathsf{Set}_{\mathcal U}]
+$$
+
+是一个真正的表示函子。
+
+只列一批探针对象，没有唯一指定要检查的自然性。可以取它们的全子范畴、取只含部分转换的子范畴，或取离散范畴；这些选择一般保留不同的结构。
+
+还要区分 $N_i(X)(d)$ 中的全部数学映射与某次实验真正取得的记录。若只保留子集 $A_X(d)\subseteq\operatorname{Hom}(i(d),X)$，至少须对每个探针转换 $a:d\to e$ 满足
+
+$$
+f\in A_X(e)\quad\Longrightarrow\quad f\circ i(a)\in A_X(d),
+$$
+
+才能形成子预层。若还希望 $X\mapsto A_X$ 成为函子，就须对所允许的对象映射 $u:X\to Y$ 验证 $u\circ f\in A_Y(d)$。即使两种封闭性都成立，也没有自动的全忠实结论；所有 $A_X(d)$ 均为空就是一个完全失去对象信息的例子。
+
+#### 134.4.2 三个不同层级的保证
+
+对任意函子 $N$，下列性质回答不同问题。
+
+- **忠实**：若 $u,v:X\to Y$ 且 $N(u)=N(v)$，则 $u=v$。它检测的是两条已经存在的真实箭头是否相同。
+- **反映同构**：若真实箭头 $u$ 的像 $N(u)$ 是同构，则 $u$ 是同构。它仍然以一条真实箭头已经给定为前提。
+- **全忠实**：每个 $\operatorname{Hom}(X,Y)\to\operatorname{Hom}(N(X),N(Y))$ 都是双射。它还保证每个相容的轮廓转换都可由真实箭头实现。
+
+全忠实蕴含前两项。反映同构的证明为：若 $N(u)$ 有逆，用 fullness 将其逆提升为 $v$，再由 faithfulness 从 $N(vu)=\mathrm{id}$、$N(uv)=\mathrm{id}$ 得到 $vu=\mathrm{id}$、$uv=\mathrm{id}$。
+
+全忠实还保证任意轮廓自然同构 $N(X)\cong N(Y)$ 都可提升为 $X\cong Y$，因为正反两个轮廓箭头均可提升。只有“反映同构”这一个性质，不能直接处理一条尚未证实来自真实箭头的轮廓同构。
+
+#### 134.4.3 相同的单点探针在不同范畴保留不同结构
+
+在 $\mathsf{Set}_{\mathcal U}$ 中，只取单点集合 $1$ 作为探针，以及其唯一自映射。通过在单点处求值，
+
+$$
+\operatorname{Hom}(1,X)\cong X.
+$$
+
+任意两个这样的轮廓之间的函数恰好是一条集合函数 $X\to Y$；探针范畴没有额外自然性条件。因此这个只有一种探针类型的受限表示全忠实。
+
+在拓扑空间范畴中，仍只取单点空间。每个点都定义一条连续映射 $1\to X$，所以该轮廓仍只看底层点集。它忠实，因为连续映射由逐点值决定；但它不反映同构。取相同二点集合的离散拓扑 $X_d$ 和不可分拓扑 $X_i=\{\varnothing,X\}$，恒等底层映射 $X_d\to X_i$ 连续且双射，反向映射不连续：离散目标的单点开集在 $X_i$ 中不是开集。两者的单点探针轮廓相同，却不是同胚。
+
+这对实例准确定位了盲区：单点映射保留全部点，却没有保留拓扑中哪些点集为开集。不能由“已读到所有点”替代“已保留该范畴的全部结构”。
+
+更极端地，在群范畴只取平凡群 $1$ 时，$\operatorname{Hom}(1,G)$ 对每个群都是单点。不同群都给出相同轮廓，连底层元素的区别也没有保留。
+
+#### 134.4.4 忠实且反映同构仍然不等于全忠实
+
+在群范畴取自由一生成元群 $F_1\cong\mathbb Z$ 所成的全子范畴。其自同态由生成元送到其第 $n$ 次幂给出，$n\in\mathbb Z$。因此
+
+$$
+N(G)(F_1)=\operatorname{Hom}(F_1,G)\cong G,
+$$
+
+而探针自映射作用是全部幂运算 $g\mapsto g^n$。轮廓间的自然变换对应函数 $u:G\to H$，满足
+
+$$
+u(g^n)=u(g)^n\quad\text{对所有 }g,n.
+$$
+
+这个函子忠实，因为群同态由各元素上的值确定；它反映同构，因为若某条群同态在轮廓上双射，它就是双射群同态，逆函数由乘法保持式也为群同态。
+
+但它不 full。取加法群 $G=(\mathbb Z/2\mathbb Z)^2$、$H=\mathbb Z/2\mathbb Z$，定义
+
+$$
+u(0)=0,\qquad u(g)=1\quad(g\ne0).
+$$
+
+对偶数 $n$，$ng=0$ 与 $nu(g)=0$；对奇数 $n$，$ng=g$ 与 $nu(g)=u(g)$。故 $u$ 兼容全部整数倍运算，给出自然变换。若 $a,b$ 是两个不同非零元素，则 $a+b$ 仍非零，因此
+
+$$
+u(a+b)=1\ne0=u(a)+u(b).
+$$
+
+所以这条相容轮廓转换不是群同态。单个生成元的幂关系没有约束两个独立元素如何相乘。
+
+#### 134.4.5 增加联合探针可以填补具体盲区
+
+在群范畴中取由 $F_1$ 与自由二生成元群 $F_2$ 组成的全子范畴。现在
+
+$$
+\operatorname{Hom}(F_1,G)\cong G,
+\qquad \operatorname{Hom}(F_2,G)\cong G^2.
+$$
+
+**命题 134.4（两种自由群探针的充分性）。** 这个受限探针函子全忠实。
+
+**证明。** 给自然变换 $\eta:N(G)\to N(H)$，令 $u=\eta_{F_1}:G\to H$。从 $F_1$ 到 $F_2$ 的两条生成元包含映射，在轮廓上分别是 $G^2\to G$ 的两坐标投影。自然性要求
+
+$$
+\eta_{F_2}(g,h)=(u(g),u(h)).
+$$
+
+再取 $F_1\to F_2$ 中把生成元送到两个生成元乘积的映射；它在轮廓上诱导 $G^2\to G$ 的乘法。因此自然性给
+
+$$
+u(gh)=u(g)u(h).
+$$
+
+$F_1$ 中把生成元送到单位的自同态还给 $u(e)=e$，从而 $u$ 是群同态。它通过后复合产生的自然变换在 $F_1$、$F_2$ 两个分量上都等于原变换，所以每个自然变换都被实现。唯一性由 $F_1$ 分量确定，故全忠实。证毕。
+
+这里虽只有两种探针对象，但保留了到 $G$ 的全部单元素与双元素赋值，以及探针间的全部群同态。探针类型数量有限，不等于所需数据量、映射数量或取得这些关系的实验成本有限。
+
+#### 134.4.6 稠密性是一个精确的充分性条件
+
+下面将 $i:\mathcal D\hookrightarrow\mathcal C$ 限制为小全子范畴的包含。固定 $X$，定义探针在 $X$ 中的实例范畴 $\mathcal E_X$：对象为 $(d,f)$，其中 $f:i(d)\to X$；从 $(d,f)$ 到 $(e,g)$ 的箭头是 $a:d\to e$，满足 $g\circ i(a)=f$。
+
+有典范图
+
+$$
+J_X:\mathcal E_X\to\mathcal C,\qquad J_X(d,f)=i(d),
+$$
+
+及指向 $X$ 的典范余锥，其分量就是 $f:i(d)\to X$。由于 $\mathcal D$ 小且各 Hom 集小，$\mathcal E_X$ 也是所选宇宙中的小范畴。
+
+称这些探针稠密，是指对每个 $X$，该典范余锥把 $X$ 表示为 $J_X$ 的余极限。这里说的是这一指定图的普遍性质，不预先假定 $\mathcal C$ 中任意余极限都存在。
+
+**命题 134.5（典范余锥与全忠实）。** 在上述假设下，探针稠密当且仅当 $N_i$ 全忠实。
+
+**证明。** 固定 $X,Y$。一个从 $J_X$ 到 $Y$ 的余锥，是为每个 $f:i(d)\to X$ 给出箭头 $c_{d,f}:i(d)\to Y$，并满足
+
+$$
+g\,i(a)=f\quad\Longrightarrow\quad
+c_{d,f}=c_{e,g}\,i(a).
+\tag{134.13}
+$$
+
+令 $\eta_d(f)=c_{d,f}$，则 (134.13) 恰好是自然变换 $N_i(X)\to N_i(Y)$ 的自然性条件。反过来，每个这样的自然变换也按该式给出一个余锥。因此二者有规范双射。
+
+真实箭头 $u:X\to Y$ 沿典范余锥给出的分量是 $u\circ f$，对应的正是 $N_i(u)$。于是典范余锥在顶点 $X$ 具有余极限普遍性质，当且仅当对每个 $Y$，映射
+
+$$
+\operatorname{Hom}_{\mathcal C}(X,Y)
+\longrightarrow\operatorname{Nat}(N_i(X),N_i(Y))
+$$
+
+是双射。对所有 $X$ 同时成立，恰好是 $N_i$ 全忠实。证毕。
+
+这是范畴论的稠密性：对象由探针实例及它们之间的全部相容关系按典范余极限组装。它不是拓扑中某个点集闭包等于全空间的定义。要连接两种稠密性，必须给出具体范畴和对应证明。
+
+### 134.5 比较的比较需要进一步声明结构
+
+#### 134.5.1 迭代箭头范畴给出交换立体图
+
+$\operatorname{Arr}(\mathcal C)$ 仍是普通一范畴。两条平行方块 $s,t:q\to q'$ 可以相等或不相等，但这个定义没有额外提供一个“从 $s$ 到 $t$ 的变换”类型。
+
+可以再次取 $\operatorname{Arr}(\operatorname{Arr}(\mathcal C))$。具体地，令
+
+$$
+s=(\alpha,\beta):q_0\to q_1,\qquad
+t=(\gamma,\delta):r_0\to r_1.
+$$
+
+从 $s$ 到 $t$ 的态射由两个方块 $u:q_0\to r_0$、$v:q_1\to r_1$ 组成，要求 $t\circ u=v\circ s$。若写 $u=(u_X,u_B)$、$v=(v_X,v_B)$，额外交换条件就是
+
+$$
+\gamma u_X=v_X\alpha,\qquad
+\delta u_B=v_B\beta.
+$$
+
+连同 $s,t,u,v$ 本身的四个交换条件，得到一个六面都交换的立体图。其复合仍由各分量的复合给出。
+
+这并不自动成为固定边界上两个不同方块之间的非平凡二胞。若 $q_0=r_0$、$q_1=r_1$，并要求比较在两端都是恒等方块，则条件直接成为 $t=s$。要允许非平凡的高层变换，就需另选相应的二胞结构。
+
+#### 134.5.2 自然变换提供一个真正的高层比较模型
+
+以范畴为对象、函子为一胞、自然变换为二胞，是一个具体例子。给同源同目标函子 $F,G:\mathcal A\to\mathcal B$，自然变换 $\eta:F\Rightarrow G$ 的分量是
+
+$$
+\eta_x:F(x)\to G(x),
+$$
+
+并要求每个 $f:x\to y$ 满足 $G(f)\eta_x=\eta_yF(f)$。这里的分量不是任意标签，而是目标范畴中的真实箭头。
+
+若 $\theta:G\Rightarrow J$，垂直复合定义为 $(\theta\cdot\eta)_x=\theta_x\eta_x$。其自然性由
+
+$$
+J(f)\theta_x\eta_x
+=\theta_yG(f)\eta_x
+=\theta_y\eta_yF(f)
+$$
+
+给出。恒等自然变换逐点取恒等；单位律和结合律逐点继承。
+
+函子还允许两种 whiskering：对 $K:\mathcal B\to\mathcal E$，令 $(K\eta)_x=K(\eta_x)$；对 $H:\mathcal Z\to\mathcal A$，令 $(\eta H)_z=\eta_{H(z)}$。各自的自然性分别来自函子保持复合及原自然性。
+
+给 $\eta:F\Rightarrow G:\mathcal A\to\mathcal B$、$\theta:H\Rightarrow K:\mathcal B\to\mathcal E$，水平复合为
+
+$$
+(\theta*\eta)_x
+=\theta_{Gx}\,H(\eta_x)
+=K(\eta_x)\,\theta_{Fx}.
+$$
+
+两个公式相等，正是 $\theta$ 对箭头 $\eta_x$ 的自然性。对 $f:x\to y$，
+
+$$
+\begin{aligned}
+KG(f)\,\theta_{Gx}H(\eta_x)
+&=\theta_{Gy}HG(f)H(\eta_x)\\
+&=\theta_{Gy}H(G(f)\eta_x)\\
+&=\theta_{Gy}H(\eta_yF(f)),
+\end{aligned}
+$$
+
+所以它是一条从 $HF$ 到 $KG$ 的自然变换。
+
+垂直与水平复合还满足 interchange。若 $\eta':G\Rightarrow J$、$\theta':K\Rightarrow L$，则逐点有
+
+$$
+\begin{aligned}
+((\theta'*\eta')\cdot(\theta*\eta))_x
+&=\theta'_{Jx}K(\eta'_x)\theta_{Gx}H(\eta_x)\\
+&=\theta'_{Jx}\theta_{Jx}H(\eta'_x)H(\eta_x)\\
+&=((\theta'\cdot\theta)*(\eta'\cdot\eta))_x.
+\end{aligned}
+$$
+
+中间一步又使用 $\theta$ 的自然性。水平结合律也可逐点检查。再给 $\zeta:L\Rightarrow M:\mathcal E\to\mathcal Z$，两种水平组合的分量均为
+
+$$
+(\zeta*(\theta*\eta))_x
+=((\zeta*\theta)*\eta)_x
+=\zeta_{KGx}\,L(\theta_{Gx})\,LH(\eta_x).
+$$
+
+与恒等函子的恒等自然变换作水平复合，分量直接退化为原分量；故水平单位律也严格成立。连同已验证的垂直单位、结合律与 interchange，这给出范畴、函子、自然变换形成的标准二范畴。
+
+若把集合仅视为离散范畴，两个函数所成函子之间有自然变换，当且仅当它们在每个点取相同值，且该变换唯一。因此，非平凡的“函数之间的关系”不能只靠改称自然变换得到；必须为目标提供非离散箭头或另选其他高层结构。
+
+### 134.6 命名、动态与后承是三个不同的闭合问题
+
+#### 134.6.1 命名闭合：加入已经由现有读数决定的任务
+
+固定来源 $X$ 和一个小的带类型读数宇宙 $\Omega$。每个 $\omega\in\Omega$ 有目标集合 $Y_\omega$ 及函数 $r_\omega:X\to Y_\omega$。使用读数集合 $D\subseteq\Omega$ 时，定义共同核
+
+$$
+K_D=\{(x,y):\forall\omega\in D,\ r_\omega(x)=r_\omega(y)\}.
+$$
+
+对任意关系 $R\subseteq X^2$，定义
+
+$$
+\operatorname{Inv}(R)=\{\omega\in\Omega:R\subseteq\ker r_\omega\}.
+$$
+
+二者满足反向 Galois 对应
+
+$$
+D\subseteq\operatorname{Inv}(R)
+\quad\Longleftrightarrow\quad R\subseteq K_D.
+\tag{134.14}
+$$
+
+证明是展开两边，都要求每个 $R$ 相关的状态对在全部 $D$ 读数下相同。
+
+定义命名闭合
+
+$$
+\operatorname{Cl}_{\rm name}(D)=\operatorname{Inv}(K_D).
+$$
+
+**命题 134.6（命名闭合律）。** 此算子广延、单调、幂等，并且
+
+$$
+K_{\operatorname{Cl}_{\rm name}(D)}=K_D.
+\tag{134.15}
+$$
+
+**证明。** $D\subseteq\operatorname{Inv}(K_D)$ 由共同核定义成立。若 $D\subseteq D'$，则 $K_{D'}\subseteq K_D$，故 $\operatorname{Inv}(K_D)\subseteq\operatorname{Inv}(K_{D'})$，给出单调性。广延性先给 $K_{\operatorname{Cl}_{\rm name}(D)}\subseteq K_D$；另一方面，闭合中新加入的每个读数都在 $K_D$ 上恒定，故 $K_D\subseteq K_{\operatorname{Cl}_{\rm name}(D)}$。这证明 (134.15)，再对其应用 $\operatorname{Inv}$ 得到幂等性。证毕。
+
+把联合观察写为 $q_D(x)=(r_\omega(x))_{\omega\in D}$。一个 $\omega$ 属于命名闭合，当且仅当 $r_\omega$ 唯一地通过 $q_D[X]$ 分解。因此它加入的是已有读数所决定的任务，不增加共同核的区分力。读数宇宙 $\Omega$ 必须固定；改变它会改变哪些任务被称为闭合成员。集合意义上的分解不自动给出计算方法、实验权限或代价。
+
+#### 134.6.2 动态闭合：加入所有允许继续实验
+
+固定同一操作族 $T_a:X\to X$。对等价关系 $E$ 定义
+
+$$
+\operatorname{Stab}(E)
+=\bigcap_{w\in A^*}(T_w\times T_w)^{-1}[E].
+\tag{134.16}
+$$
+
+它是等价关系，且包含式由空词给出 $\operatorname{Stab}(E)\subseteq E$。若 $x\operatorname{Stab}(E)y$，对任意 $a,w$ 使用词 $aw$，得到 $T_ax\operatorname{Stab}(E)T_ay$，故它操作稳定。若 $R\subseteq E$ 本来是稳定等价关系，沿词归纳得 $T_wx\,R\,T_wy$，因此 $R\subseteq\operatorname{Stab}(E)$。
+
+所以 $\operatorname{Stab}(E)$ 是 $E$ 内最大的稳定等价关系。它对关系包含单调，又满足 $\operatorname{Stab}(\operatorname{Stab}(E))=\operatorname{Stab}(E)$，因为第一次结果已经稳定。这在关系按包含排序时是一个缩小关系的内算子；按观察细化方向说，才是保留原读数的最小稳定细化。
+
+对单个观察 $q$，
+
+$$
+\operatorname{Dyn}(q)(x)(w)=q(T_wx)
+$$
+
+满足 $\ker\operatorname{Dyn}(q)=\operatorname{Stab}(\ker q)$。它可以严格分开原来同名的状态，与命名闭合保持核不变的作用不同。全体有限词通常仍是无限索引集；定义了完整行为函数，不表示算法已经取得所有坐标，也不提供判定两状态等价的有限停止界。
+
+稳定性本身也不保证保留原任务：恒定观察在任何操作下都稳定，动态闭合后仍恒定，却不能决定一个非恒定任务。若有必须保留的任务族，应先将它们纳入读数要求，或明确证明它们通过现有读数分解。
+
+需要区分两种幂等表述。第一次函数的陪域为 $Q^{A^*}$，第二次为 $(Q^{A^*})^{A^*}$，不能在不同类型之间写原函数字面相等。令 $\Phi=\operatorname{Dyn}(q)$、$\Psi=\operatorname{Dyn}(\Phi)$，则
+
+$$
+\Psi(x)(v)(w)=q(T_wT_vx)=\Phi(x)(vw).
+$$
+
+定义 $J(b)(v)(w)=b(vw)$，以及 $E(c)(w)=c(\varepsilon)(w)$。于是 $\Psi=J\Phi$、$\Phi=E\Psi$；$EJ=\mathrm{id}$ 在全部记录上成立，$JE=\mathrm{id}$ 在 $\Psi[X]$ 上成立。两次闭合具有相同核，并在实际像上规范双射，这才是函数表示层的幂等识别。
+
+若读数宇宙 $\Omega$ 已经对各 $r\mapsto r\circ T_a$ 封闭，则也可在同一个集合格中定义
+
+$$
+\operatorname{Cl}_{\rm dyn}(D)=\{r\circ T_w:r\in D,\ w\in A^*\}.
+$$
+
+这里把 $\Omega$ 视为有类型函数集合，重复表示按同一函数识别。该算子广延、单调；由于 $T_{uv}=T_vT_u$，再取有限词轨道不会产生轨道外的读数，所以在这个固定宇宙上严格幂等。原始函数的类型变化问题与集合格上的这个幂等式并不冲突。
+
+#### 134.6.3 两种观察闭合如何连接，又为何不可随意交换
+
+在上一节固定且对操作封闭的读数宇宙中，
+
+$$
+K_{\operatorname{Cl}_{\rm dyn}(D)}=\operatorname{Stab}(K_D).
+$$
+
+结合 (134.15)，得到
+
+$$
+\operatorname{Cl}_{\rm name}\operatorname{Cl}_{\rm dyn}
+\operatorname{Cl}_{\rm name}(D)
+= \operatorname{Cl}_{\rm name}\operatorname{Cl}_{\rm dyn}(D).
+\tag{134.17}
+$$
+
+证明为：命名闭合先不改变 $K_D$，动态闭合的核只由 $K_D$ 通过 (134.16) 决定，最后命名闭合又只依赖所得核。
+
+更具体地，令
+
+$$
+\widehat{\operatorname{Cl}}(D)
+=\operatorname{Cl}_{\rm name}(\operatorname{Cl}_{\rm dyn}(D)).
+$$
+
+这是同时命名闭合、动态闭合且包含 $D$ 的最小读数族。首先它已命名闭合；其核 $E=\operatorname{Stab}(K_D)$ 稳定，故任意在 $E$ 上恒定的 $r$，其 $r\circ T_a$ 仍在 $E$ 上恒定，说明它也动态闭合。若 $L$ 同时具有两种闭合性且包含 $D$，则它先包含 $\operatorname{Cl}_{\rm dyn}(D)$，再包含其命名闭合，因此包含 $\widehat{\operatorname{Cl}}(D)$。这也证明共同闭合的幂等性。
+
+这个特定相容结构不能被误写为两个算子总能交换。取 $X=\{0,1\}^2$，操作交换两个坐标，$\Omega$ 为全部二值读数，$D=\{a\}$ 为第一坐标。先命名闭合得到 $\{0,1,a,1-a\}$，再取动态轨道得到
+
+$$
+\{0,1,a,1-a,b,1-b\}.
+$$
+
+先取动态轨道得到 $\{a,b\}$，其联合观察区分全部四个状态，故再命名闭合得到全部 $16$ 个二值函数。异或 $a\mathbin{\mathrm{xor}}b$ 属于后一集合，不属于前一集合；其在 $00,01,10,11$ 上的值依次为 $0,1,1,0$，不等于前述六个函数中的任何一个。
+
+#### 134.6.4 后承闭合：加入逻辑系统承认的全部后果
+
+另固定句子集合 $\Sigma$ 和算子 $\operatorname{Cn}:\mathcal P(\Sigma)\to\mathcal P(\Sigma)$，满足 Tarski 三公理：
+
+$$
+\Gamma\subseteq\operatorname{Cn}(\Gamma),\qquad
+\Gamma\subseteq\Delta\Longrightarrow\operatorname{Cn}(\Gamma)\subseteq\operatorname{Cn}(\Delta),
+\qquad
+\operatorname{Cn}(\operatorname{Cn}(\Gamma))=\operatorname{Cn}(\Gamma).
+$$
+
+闭理论是满足 $T=\operatorname{Cn}(T)$ 的句子集。
+
+**命题 134.7（最小闭理论）。** $\operatorname{Cn}(\Gamma)$ 是包含 $\Gamma$ 的最小闭理论，且任意闭理论族的交仍是闭理论。
+
+**证明。** 前一结论的包含性来自广延性，闭合性来自幂等性。若 $\Gamma\subseteq T$ 且 $T$ 闭合，单调性给 $\operatorname{Cn}(\Gamma)\subseteq\operatorname{Cn}(T)=T$。对一族闭理论 $(T_i)$，单调性给 $\operatorname{Cn}(\bigcap_iT_i)\subseteq T_i$ 对每个 $i$ 成立，故包含于交；广延性给反向。空交为 $\Sigma$，亦满足闭合。证毕。
+
+语义后承可由另一个反向 Galois 对应构造。固定在所选更大宇宙内的模型集合 $\mathcal M$ 和满足关系，令
+
+$$
+\operatorname{Mod}(\Gamma)=\{M\in\mathcal M:\forall\varphi\in\Gamma,\ M\models\varphi\},
+$$
+
+$$
+\operatorname{Th}(\mathcal A)=\{\varphi\in\Sigma:\forall M\in\mathcal A,\ M\models\varphi\}.
+$$
+
+定义 $\operatorname{Cn}_{\rm sem}(\Gamma)=\operatorname{Th}(\operatorname{Mod}(\Gamma))$。有 $\Gamma\subseteq\operatorname{Th}(\mathcal A)$ 当且仅当 $\mathcal A\subseteq\operatorname{Mod}(\Gamma)$。与命题 134.6 的证明相同，
+
+$$
+\operatorname{Mod}(\operatorname{Cn}_{\rm sem}(\Gamma))=\operatorname{Mod}(\Gamma),
+$$
+
+从而给出三条闭合律。若没有模型，则 $\operatorname{Th}(\varnothing)=\Sigma$，依然是合法闭合值；闭合不保证一致性。若另给语法证明系统，要把它的可证后承与这里的语义后承认作同一算子，还需要该系统自己的可靠性与完备性定理。
+
+这些公理也没有给出有限证明搜索的停止界、句子成员关系的判定算法或资源消耗上界。逻辑闭合的定义域是句子族，命名闭合的定义域是读数族，动态闭合还依赖允许操作；三个幂等式不是同一个对象上的同一命题。
+
+#### 134.6.5 闭合怎样随表示运输
+
+一般地，若 $\tau:\Sigma\to\Sigma'$ 为句子的双射，可定义运输后的后承
+
+$$
+\operatorname{Cn}'(\Delta)
+=\tau[\operatorname{Cn}(\tau^{-1}[\Delta])].
+$$
+
+双射的像与原像互逆，因此逐项继承广延、单调和幂等，并有 $\tau[\operatorname{Cn}(\Gamma)]=\operatorname{Cn}'(\tau[\Gamma])$。若目标后承已经独立给定，则这个等式必须另证；只给句子标签双射不能保证证明制度被保持。
+
+命名闭合也需要保持读数核的共同结构。若 $F:X\to X'$ 与 $\tau:\Omega\to\Omega'$ 都双射，且对每个 $r\in\Omega$ 有
+
+$$
+(F\times F)[\ker r]=\ker\tau(r),
+$$
+
+则取共同核、再取不变量直接得到
+
+$$
+(F\times F)[K_D]=K'_{\tau[D]},\qquad
+\tau[\operatorname{Cl}_{\rm name}(D)]
+=\operatorname{Cl}'_{\rm name}(\tau[D]).
+$$
+
+第一个等式使用 $F$ 双射以运输任意交；第二个等式逐读数使用所列核对应。动态闭合则还需要 $FT_a=T'_aF$，才能通过所有词得到已证明的行为关系保持与反射。
+
+因此三种运输各有合同：命名要求共同核相容，动态要求允许操作相容，后承要求推理制度相容。只有逐项验证，才能把一种表示下的结论交给另一种表示。
+
+#### 134.6.6 后承翻译的保持、反射与闭理论伴随
+
+对一般句子映射 $\tau:\Sigma\to\Sigma'$，后承保持指
+
+$$
+\tau[\operatorname{Cn}(\Gamma)]
+\subseteq\operatorname{Cn}'(\tau[\Gamma])
+\quad\text{对每个 }\Gamma\subseteq\Sigma.
+$$
+
+它等价于每个目标闭理论的原像仍是源闭理论。证明如下：若保持成立，对闭理论 $T'$ 取 $\Gamma=\tau^{-1}[T']$，得到 $\tau[\operatorname{Cn}(\Gamma)]\subseteq T'$，所以 $\operatorname{Cn}(\Gamma)\subseteq\Gamma$，结合广延性得闭合。反之，给任意 $\Gamma$，取 $T'=\operatorname{Cn}'(\tau[\Gamma])$。原像闭合且包含 $\Gamma$，所以包含 $\operatorname{Cn}(\Gamma)$，这正是保持式。
+
+在保持条件下，闭理论格之间定义
+
+$$
+L(T)=\operatorname{Cn}'(\tau[T]),\qquad
+R(T')=\tau^{-1}[T'].
+$$
+
+两者确实取闭理论值，并满足
+
+$$
+L(T)\subseteq T'
+\quad\Longleftrightarrow\quad
+T\subseteq R(T').
+$$
+
+前一步等价于 $\tau[T]\subseteq T'$，因为 $T'$ 闭合；后一步是像与原像的定义。因此这是一对有明确方向的序伴随。
+
+后承反射是另一项条件：
+
+$$
+\tau^{-1}[\operatorname{Cn}'(\tau[\Gamma])]
+\subseteq\operatorname{Cn}(\Gamma).
+$$
+
+保持给出相反包含，故同时保持与反射当且仅当这两个集合相等。在这种情形，对每个源闭理论 $T$ 有 $R(L(T))=T$，所以 $L$ 是序嵌入；这仍不保证每个目标闭理论都来自源理论。
+
+若 $\sigma:\Sigma'\to\Sigma''$ 也保持后承，则
+
+$$
+\sigma\tau[\operatorname{Cn}(\Gamma)]
+\subseteq\sigma[\operatorname{Cn}'(\tau[\Gamma])]
+\subseteq\operatorname{Cn}''(\sigma\tau[\Gamma]),
+$$
+
+所以复合保持。若两者也反射，则由 $\sigma\tau(\varphi)\in\operatorname{Cn}''(\sigma\tau[\Gamma])$ 先反射到 $\tau(\varphi)\in\operatorname{Cn}'(\tau[\Gamma])$，再反射到 $\varphi\in\operatorname{Cn}(\Gamma)$，故复合反射。恒等翻译逐式满足两条件。这里每个方向都有自己的证明；一个语法翻译的存在不替代这些合同。
+
+### 134.7 数学相容还不等于一个可执行、可计费的工具
+
+#### 134.7.1 概率律与联合来源需要独立运输
+
+设观察方块 (134.5) 的集合带有 $\sigma$ 代数，$F,H,q,q'$ 均可测。给原状态律 $\mu$，还须声明目标状态律是 $\mu'=F_*\mu$。此时对任意目标读数事件 $C$，
+
+$$
+\begin{aligned}
+(q'_*\mu')(C)
+&=\mu(F^{-1}(q'^{-1}(C)))\\
+&=\mu(q^{-1}(H^{-1}(C)))\\
+&=(H_*(q_*\mu))(C).
+\end{aligned}
+$$
+
+故读数律正确运输。若没有 $\mu'=F_*\mu$，即使所有底层映射均为恒等，也可以另选不同概率律，从而得到不同读数统计。因此集合双射不自动是概率保测同构。
+
+若多个端口、历史窗口或随机种子共享来源，需要对整份联合律作同一运输。分别正确的边缘不足以确定相关性，也不足以获得一个对未知参数共同可执行的模拟过程。自适应协议还需保持可读取的历史、过滤族与停止规则；增加访问权限会改变实验问题。
+
+#### 134.7.2 工具串接的实际合同
+
+可以用关系 $R\subseteq X\times Y$ 表示第一工具的允许执行，用 $S\subseteq Y\times Z$ 表示第二工具。给前提集合 $P\subseteq X$、中间保证 $Q\subseteq Y$、最终保证 $W\subseteq Z$，假定
+
+$$
+\forall x\in P,\ \exists y,\ xRy;
+\qquad x\in P,\ xRy\Longrightarrow y\in Q;
+$$
+
+$$
+\forall y\in Q,\ \exists z,\ ySz;
+\qquad y\in Q,\ ySz\Longrightarrow z\in W.
+$$
+
+则复合关系 $S\circ R$ 在 $P$ 上总能执行，且每个实际复合结果属于 $W$。证明为：第一工具给出一个满足 $Q$ 的共同中间值 $y$，再由第二工具取得结果；对任意复合见证 $y$ 逐次应用两份保证即可。不能把第一工具的一个结果与第二工具在另一个不相容输入上的成功拼成同一次执行。
+
+若同一执行的两步成本已定义为 $c_1(x,y)$、$c_2(y,z)$，且总成本按二者之和计费，则统一上界 $c_1\le C_1$、$c_2\le C_2$ 给出 $C_1+C_2$。分别在不同输入或中间见证上取得的最小值，不因此成为同一次复合可达的总成本。编码、译码、准备、验证和调用次数只有被明确纳入成本语义，才参与比较。
+
+这说明箭头、自然变换与闭合提供结构相容的语言；可执行性、共同来源与资源界仍是各自的数学义务。新的探针若恰好切开旧盲区，可能解决新的恢复问题，但必须把取得该探针的能力和代价明列，不能声称原实验接口已因此变强。
+
+范畴论背景为箭头范畴、Yoneda 引理、稠密函子与自然变换；对应 Mathlib `CategoryTheory.Arrow`、`yonedaEquiv`、`Functor.IsDense`。仓内 `EffectiveImageNaturality`、`DefinitionKernelGalois`、`IndexedObservationClosureLaws` 与 `TheoryIsConsequenceFixedPoint` 给出实际像及闭合接口。
+
+## 134.99 追加锚
+
+## 135. 生成来源、极限原语与有限预算的区别
+
+关系成立、语义可识别和有限预算取得是不同义务。本节将已有生成机制及校准结果接到统一接口，并保留第118—119节对时间字典与原语费用的精确区分。
+
+### 135.1 解析生成关系的零／一结论在参数空间判定
+
+设 $\Omega\subseteq\mathbb R^d$ 为非空连接开集，$d\ge1$，潜参数 $U$ 的概率律为 $\nu$，且 $\nu\ll\lambda_d|_\Omega$。给定开集 $Z\subseteq\mathbb R^m$、可测生成器 $G:\Omega\to Z$ 和待验标量关系 $R:Z\to\mathbb R$，要求拉回
+
+$$
+h(u)=R(G(u))
+$$
+
+在 $\Omega$ 上实解析，从而所验事件可测；$G$ 与 $R$ 分别解析是保证该条件的一种充分方式。
+
+**命题 135.1（解析拉回的零／一）。** 在这些假设下，
+
+$$
+\Pr(R(G(U))=0)=
+\begin{cases}
+1,&h\equiv0\text{ 于 }\Omega,\\
+0,&h\not\equiv0\text{ 于 }\Omega.
+\end{cases}
+$$
+
+**证明。** 恒零时结论直接成立。非恒零时，实解析函数的零集具有 $d$ 维 Lebesgue 测度零，再由绝对连续性得到 $\nu(h^{-1}(0))=0$。
+
+为明确这个标准零集结论的承重条件，可以用如下短证明。令 $F$ 为 $h$ 的所有阶偏导都为零的点集。偏导连续使 $F$ 相对闭；解析 Taylor 展开使每个 $F$ 中的点都有 $h$ 恒零的邻域，故该邻域内所有偏导也零，$F$ 相对开。连接性与 $h$ 非恒零因此给 $F=\varnothing$。对任一零点 $x$，有最小的非零偏导阶数 $m\ge1$；于是存在多重指标 $\beta$ 及坐标 $i$，使
+
+$$
+\partial^\beta h(x)=0,\qquad
+\partial_i\partial^\beta h(x)\ne0.
+$$
+
+所以零集包含在可数个集合
+
+$$
+\{x:\partial^\beta h(x)=0,\ \partial_i\partial^\beta h(x)\ne0\}
+$$
+
+的并中。每个这样的集合由隐函数定理局部写为一个坐标方向上的 $C^1$ 图；图的每条对应垂直纤维至多一点，Fubini 给出其 Lebesgue 测度零。欧氏开集的第二可数性允许取可数个局部图覆盖，再取可数并，仍为零测集。证毕。
+
+这是成熟解析零集定理的应用，标准出处为 Mityagin，*The Zero Set of a Real Analytic Function*，[Proposition 0](https://arxiv.org/pdf/1512.07276)。它没有宣称绝对连续性在所有具体模型中都是必要条件；真正需要的是采样律不把质量放在相关的非恒零解析零集上。绝对连续性给出一个对该类关系统一适用的充分条件。
+
+判定对象是 $R\circ G$，不是环境关系单独的零集。例如 $G(u)=(u,2u)$、$R(x,y)=y-2x$，则 $R$ 在平面中非恒零，$R\circ G$ 却恒为零。生成输出落在该直线上的概率是一；环境二维 Lebesgue 零测性不能套到这份由一维参数推前的输出律上。
+
+以下反例说明各项范围不能略去。
+
+1. **域不连接。** 取 $\Omega=(-2,-1)\cup(1,2)$，在左分量令 $h=0$，右分量令 $h=1$，并在两分量各放一半均匀概率。$h$ 在该开集上解析，采样律绝对连续，但零事件概率为 $1/2$。
+2. **只有光滑性。** 在 $(-1,1)$ 上令 $h(x)=0$ 当 $x\le0$，$h(x)=e^{-1/x^2}$ 当 $x>0$。每阶右导数是 $e^{-1/x^2}$ 乘一个 $1/x$ 的多项式，趋于零，所以 $h$ 为 $C^\infty$；它非恒零，均匀采样的零事件概率仍为 $1/2$。
+3. **多变量无原子仍可集中在零集。** 在 $(-1,1)^2$ 上令 $h(x,y)=y$。把概率的一半放在横线 $y=0$ 上的一维均匀律，另一半放在正方形上的二维均匀律。整体无点原子，零事件概率却为 $1/2$。只用横线律时该概率为一，但 $h$ 在二维开域仍非恒零。
+4. **不可数关系族。** 对连续均匀参数 $U\in[0,1]$，每个固定 $t$ 的关系 $U=t$ 概率为零，而“存在 $t\in[0,1]$ 使 $U=t$”概率为一。逐个固定关系的零概率不允许取任意不可数并。
+
+精确零事件也不给近似关系的统一速率。取 $U$ 在 $[-1,1]$ 上均匀、$h_a(u)=au$，其中 $a>0$。每个 $h_a$ 都解析且非恒零，但对 $\epsilon\ge0$，
+
+$$
+\Pr(|h_a(U)|\le\epsilon)=\min\{1,\epsilon/a\}.
+$$
+
+当 $a\le\epsilon$ 时，近似关系以概率一成立。故没有控制幅度、导数或次水平集的定量条件时，零集定理本身不提供有限精度判别预算。
+
+### 135.2 复制混合中的匹配率依赖一份指定联合律
+
+设 $(X,\mathcal F,\mu)$ 为概率空间，$q_L:X\to Q_L$ 为有限可测标签，且有父映射满足 $q_L=r_Lq_{L+1}$。一次成对抽样的机制明确规定为
+
+$$
+J_{\eta,\mu}
+=(1-\eta)\operatorname{diag}_*\mu+\eta\,\mu\otimes\mu,
+\qquad 0\le\eta\le1.
+$$
+
+其中 $1-\eta$ 是复制同一份样本的权重，$\eta$ 是独立重抽的权重。实际观察仅为匹配位
+
+$$
+B_L=\mathbf1_{\{q_L(X_1)=q_L(X_2)\}}.
+$$
+
+记 $p_{L,w}=\mu(q_L=w)$，并定义独立碰撞概率
+
+$$
+C_L=\sum_{w\in Q_L}p_{L,w}^2.
+$$
+
+**命题 135.2（复制与独立碰撞的分解）。** 有
+
+$$
+s_L:=\Pr_{J_{\eta,\mu}}(B_L=1)
+=1-\eta+\eta C_L.
+$$
+
+**证明。** 在对角推前项中，两份标签必相等，匹配事件质量为一。在独立项中，事件是互不相交的 $\{q_L=w\}\times\{q_L=w\}$ 的有限并，其质量为 $\sum_wp_{L,w}^2$。对混合律线性求值即得公式。证毕。
+
+因此，在 $\mu$ 已知且某层 $C_L<1$ 时，精确匹配概率决定
+
+$$
+\eta=\frac{1-s_L}{1-C_L}.
+$$
+
+若 $C_L=1$，该层恒匹配，完全没有这项参数分离能力。即便可识别，这个公式仍是在分布层识别混合权重，不是由一次匹配宣判该次究竟来自复制还是独立重抽。
+
+这里的共同来源是模型中已经声明的生成关系。RRO §56.6 与 §57.13–57.15 已区分“复用同一个输入”与“按同一边缘律重新抽一个输入”：DAG 的重复输入槽读取同一个代表；边缘相同并不保持所有联合关系。本式同样不能从任意联合分布唯一反推一个未声明的历史来源机制。
+
+#### 135.2.1 碰撞极限由完整观察原子决定
+
+令 $q_\infty(x)=(q_L(x))_L$ 取值于有限标签塔的相容逆极限 $Y$，令 $\nu=(q_\infty)_*\mu$。RRO 定义 78.1 保证 $Y$ 是标准 Borel 空间且其对角可测。由于匹配事件随细化递减，有限测度的上连续性给
+
+$$
+C_L\downarrow(\nu\otimes\nu)(\{(y,y):y\in Y\}).
+$$
+
+Tonelli 给出右端为 $\int\nu(\{y\})\,d\nu(y)$。正质量点至多可数：对每个 $n$，质量至少 $1/n$ 的点至多有 $n$ 个；取可数并便包含全部正质量点。因此
+
+$$
+C_L\downarrow A_2:=\sum_{y:\nu(\{y\})>0}\nu(\{y\})^2,
+\qquad
+s_L\longrightarrow1-\eta+\eta A_2.
+$$
+
+这正是 RRO 定理 78.2 已有的碰撞极限；同节胞腔对角算子的有限层纯度满足 $C_L=\operatorname{Tr}(R_L^2)$，但本处不需要重做其 Schatten 范数证明。
+
+若完整观察律 $\nu$ 无原子，则 $\eta=1-\lim_Ls_L$。仅环境 $\mu$ 无点原子不够：在 $[0,1]$ 上使用 Lebesgue 概率，但所有 $q_L$ 恒定，则完整观察律是一个单位原子，$C_L=s_L=1$ 对所有层与所有 $\eta$ 成立。这是 RRO 命题 78.3 的常值观察边界。
+
+### 135.3 未知原子使两种来源机制具有完全相同的匹配迹
+
+取 $X=\{0,1\}^{\mathbb N}$，$q_L$ 为长度 $L$ 前缀，$q_0$ 为唯一空前缀，$\mu$ 为公平独立二进制律。
+
+- **模型 A：** 边缘为 $\mu$，$\eta_A=3/4$；有 $1/4$ 的实际复制。
+- **模型 B：** 边缘为 $\mu'=\tfrac12\delta_{0^\infty}+\tfrac12\mu$，$\eta_B=1$；完全独立重抽。
+
+**命题 135.3（整个无限匹配迹同律）。** 两模型中随机序列 $(B_L)_{L\ge0}$ 的联合律完全相同，但 $\eta_A\ne\eta_B$。
+
+**证明。** 模型 A 的每个前缀质量为 $2^{-L}$，所以
+
+$$
+C_L=2^{-L},\qquad
+s_L^A=\frac14+\frac34\,2^{-L}.
+$$
+
+模型 B 的全零前缀质量为 $1/2+2^{-L-1}$，其余 $2^L-1$ 个前缀各有质量 $2^{-L-1}$，故
+
+$$
+\begin{aligned}
+s_L^B=C'_L
+&=\left(\frac12+2^{-L-1}\right)^2
++(2^L-1)2^{-2L-2}\\
+&=\frac14+\frac34\,2^{-L}=s_L^A.
+\end{aligned}
+$$
+
+还须证明这不是只比较了边缘。前缀相容性给 $B_0=1$ 且 $B_{L+1}\le B_L$，所以一份完整匹配迹唯一由首次失配层
+
+$$
+\tau=\inf\{L\ge1:B_L=0\}\in\{1,2,\ldots\}\cup\{\infty\}
+$$
+
+确定。其分布为
+
+$$
+\Pr(\tau=m)=s_{m-1}-s_m,\qquad
+\Pr(\tau=\infty)=\lim_Ls_L.
+$$
+
+两模型的全部 $s_L$ 相同，因此这个可数取值随机变量同律，进而完整匹配迹同律。证毕。
+
+模型 A 的恒匹配质量 $1/4$ 来自真实复制；模型 B 中两个独立样本同时落在质量 $1/2$ 的原子，概率也为 $1/4$。它们在匹配接口上完全混淆。若额外观察边缘标签，就改变了问题：例如第一样本首位为一的概率，在 A 中为 $1/2$，在 B 中为 $1/4$，所以加入这项读数便可在分布层区分二者。
+
+这个构造使用 RRO 命题 78.3 已有的原子—Bernoulli 混合族。它的关系意义是：映射
+
+$$
+(\eta,\mu)\longmapsto\operatorname{Law}((B_L)_{L\ge0})
+$$
+
+的一条纤维上，目标 $\eta$ 不恒定。依据任务分解准则，$\eta$ 不能通过该接口恢复；继续处理同一份完整匹配数据，也不能把这两个模型分开。
+
+### 135.4 非原子契约修复极限识别，却不给统一有限深度
+
+固定任意有限深度 $D\ge0$。令 $\nu_D$ 的前 $D$ 位确定为零，之后的位独立公平，置
+
+$$
+\mu_D'=\tfrac12\nu_D+\tfrac12\mu,\qquad \eta_D=1.
+$$
+
+$\nu_D$ 无原子，因为对任意单点，其长度 $L>D$ 前缀质量至多为 $2^{-(L-D)}$，令 $L\to\infty$ 即得单点质量零；$\mu_D'$ 因而也无原子。对每个 $L\le D$，$\nu_D$ 与 $\delta_{0^\infty}$ 的前缀标签律相同，因此 $\mu_D'$ 与上一节模型 B 的边缘在这些深度完全相同。
+
+于是模型 A 与 $(\eta_D,\mu_D')$ 的整段有限匹配迹 $(B_0,\ldots,B_D)$ 同律。若实验每次独立重做成对抽样，则任意次数的这种有限迹重复也同律，因为各次记录律的乘积相同。读取顺序、随机后处理或只在 $0,\ldots,D$ 中自适应挑层，都不能从同律记录中产生区别。
+
+但两模型的完整观察律均无原子，且 $\eta_A=3/4\ne1=\eta_D$；它们的无限尺度极限分别为 $1/4$ 和 $0$。差别只在允许深度之外才显现。这证明了两个不同量词：
+
+$$
+\forall\mu\text{（完整观察无原子）},\quad C_L(\mu)\to0,
+$$
+
+却没有一个对该整个模型类共同有效的有限深度。事实上，对每个给定 $D$，$\nu_D$ 在该层只有一个前缀标签，因此
+
+$$
+\sup_{\mu\text{ 无原子}}C_D(\mu)=1.
+$$
+
+若要取得统一精度预算，必须增加一份真正的定量接口，例如已知 $C_L\le\omega(L)\to0$。这时使用精确概率的近似量 $\tilde\eta_L=1-s_L$ 才有
+
+$$
+0\le\eta-\tilde\eta_L=\eta C_L\le\omega(L).
+$$
+
+该式只控制有限深度偏差；估计 $s_L$ 所需的样本、独立重置和读数费用仍须分别计入，不能由无原子性或这个代数式自动得到。
+
+### 135.5 每个传感器都非退化，仍可没有共同有限记录预算
+
+沿用 RRO 定义 109.1 的四态核族、两个方向、共同初态 $X_0=1$ 和逐时条件独立刷新传感器。取二值读数，并设
+
+$$
+E_i(1)=p_i,\qquad
+p_0=p_2=\frac12,\quad
+p_1=\frac12-\varepsilon,\quad
+p_3=\frac12+\varepsilon,
+\qquad0<\varepsilon<\frac12.
+$$
+
+每个固定 $\varepsilon>0$ 都有三个环发射行两两不同，所以现有命题 109.2 的一致性结论适用。取同一个读数函数 $f(0)=1/4,f(1)=3/4$，则
+
+$$
+\theta_1=\frac12-\frac\varepsilon2,\quad
+\theta_2=\frac12,\quad
+\theta_3=\frac12+\frac\varepsilon2,
+$$
+
+$$
+V_f=(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1)
+=\frac{\varepsilon^3}{4}>0.
+$$
+
+因此整个 $\varepsilon>0$ 族还满足同一份部分标定 $(f,b=1)$，落在 RRO §111 的固定相容类中。这些严格不等式没有给出共同的正信号下界。
+
+令 $N=n+1$ 为实际读取的标签数，$P^{\varepsilon}_{0,k,N}$、$P^{\varepsilon}_{1,k,N}$ 为两方向读数律。
+
+**命题 135.4（弱传感器的共同子测度下界）。** 对任意随机化检验 $\varphi:\{0,1\}^N\to[0,1]$，其公平先验风险满足
+
+$$
+R^\varepsilon_{k,N}(\varphi)
+\ge\frac12(1-2\varepsilon)^N
+\ge\frac12-N\varepsilon.
+$$
+
+**证明。** 令 $U$ 为公平 Bernoulli 律。对每个状态 $i$ 和读数 $y$，
+
+$$
+E_i(y)\ge\frac12-\varepsilon=(1-2\varepsilon)U(y).
+$$
+
+给定任意隐藏路径后，逐时独立性因此给出每个读数词上的概率质量下界
+
+$$
+\prod_{t=0}^{N-1}E_{X_t}(y_t)
+\ge(1-2\varepsilon)^N U^{\otimes N}(y).
+$$
+
+对任意方向的隐藏路径律混合，下界仍成立，所以两方向都包含同一个质量为 $(1-2\varepsilon)^N$ 的子测度。将风险的两项积分限制到该子测度，得到
+
+$$
+\begin{aligned}
+R^\varepsilon_{k,N}(\varphi)
+&=\tfrac12\left(\int\varphi\,dP_0^\varepsilon+
+\int(1-\varphi)\,dP_1^\varepsilon\right)\\
+&\ge\tfrac12(1-2\varepsilon)^N
+\int(\varphi+1-\varphi)\,dU^{\otimes N}\\
+&=\tfrac12(1-2\varepsilon)^N.
+\end{aligned}
+$$
+
+Bernoulli 不等式 $(1-2\varepsilon)^N\ge1-2N\varepsilon$ 给出第二个界。该线性界在右端为负时仅为空泛下界，前一乘幂界对整个所列区间仍有效。证毕。
+
+证明没有使用具体检验，也没有要求检验不知道 $\varepsilon$ 或 $k$。即使允许它知道二者，对每个固定有限 $N$、每个固定 $k\ge2$，仍有
+
+$$
+\sup_{0<\varepsilon<1/2}\inf_\varphi R^\varepsilon_{k,N}(\varphi)
+=\frac12.
+$$
+
+下界由 $\varepsilon\downarrow0$ 得到；上界由恒报一个方向的规则给出。任何要求在全部这些非退化传感器上达到风险 $r<1/2$ 的共同有限 $N$ 因而不存在。允许在至多 $N$ 个标签内根据既有记录随机停止，也不能改善这个结论：完整前缀和独立随机种子可以模拟该决策，所以仍属于上述随机化检验类。这里没有增加参数干预、额外标定或其他传感器权限。
+
+这不反驳现有正文：命题 110.2 给固定通道下 $C_E/N$ 的共同最坏参数界；命题 111.2 更给一个不使用通道数值的规则族，但量词明确为
+
+$$
+\exists(\Psi_n)\quad\forall E\in\mathcal C_{f,b}\quad
+\exists C_{E,f}<\infty\quad\forall k,d,n:\quad
+\Pr^E_{d,k}(\Psi_n\ne d)\le\frac{C_{E,f}}{n+1}.
+$$
+
+它先固定共同规则，再对每个固定通道给相应常数，没有对通道类取统一上确界。有限记录下界表明：不能把 $\forall E\,\exists C_{E,f}$ 换成一个对任意弱通道都有效的共同常数或共同有限标签预算。
+
+### 135.6 有限表达、最优值和原语计价是三件事
+
+沿用 RRO §118–119 的实际四态时间字典。固定 $0<\delta\le1/2$，记
+
+$$
+\lambda=1-\frac{4\delta}{3}\in[1/3,1),\qquad
+c=\frac{1-\delta/3}{4}>0,\qquad
+H(z)=z^2+cz+c^2,
+$$
+
+$$
+R=\frac{H(1)}{H(\lambda)},\qquad
+G=1+6R,\qquad
+\pi=(1/4,1/4,1/4,1/4),\qquad
+\mu_{t,d}=e_1K_d^t.
+$$
+
+连续参数区间 $0<\delta\le1/2$ 是第118—119节的分析范围；原实验的可选参数仍为 $\delta=1/k$、整数 $k\ge2$。下面的代数比较不增加任意实数参数的干预权限。
+
+原字典的一份表示是有限系数向量 $a$，满足 $e_0=\sum_{t=0}^La_t\mu_{t,d}$，并按 $\Gamma(a)=\sum_{t=0}^L|a_t|$ 计费。共同表示要求同一组系数适用于两个方向。本节的代价只是有符号系数总量；没有把负系数组合当作物理随机混合，也没有将它定义为样本数或运行时间。
+
+#### 135.6.1 平稳行已有有限表达，新增单位成本原子仍改变优化问题
+
+式 (118.2p) 已给三次多项式
+
+$$
+s_\delta(z)=\frac{(z-\lambda)H(z)}{(1-\lambda)H(1)},\qquad
+e_1s_\delta(K_d)=\pi\quad(d=0,1).
+$$
+
+所以 $\pi$ 已属于时间 $0,1,2,3$ 的共同有符号线性张成。该事实不等于某个有限实际时间行已经等于 $\pi$；§118 同时证明每个有限 $t$ 都有 $\mu_{t,d}\ne\pi$。
+
+这份有限表达的旧字典代价可直接算出。令
+
+$$
+b=\lambda-c>0,\qquad
+\sigma=b+cb+\lambda c^2=1-(1-\lambda)H(1)\in(0,1).
+$$
+
+展开分子得到
+
+$$
+s_\delta(z)=\frac{z^3-bz^2-cbz-\lambda c^2}{1-\sigma},
+\qquad
+\|\operatorname{coeff}(s_\delta)\|_1
+=\frac{1+\sigma}{1-\sigma}>1.
+$$
+
+因此有限可表达并没有把这份表达的代价变成一。新增一个按单位成本计费的 $\pi$ 原子后，式 (118.2e) 给
+
+$$
+e_0=(1+3R)\pi-\frac3{H(\lambda)}e_1H(K_d),
+$$
+
+其新字典代价为 $(1+3R)+3R=G$。§118 的实际对偶列还在新增原子上取值一，因此下界保持，$G$ 是新字典中可达的最小值。
+
+若将 $\pi$ 的三次时间表达代回，上式的高次系数为正，三个低次系数为负；减去 $3H/H(\lambda)$ 只进一步降低低次系数，没有绝对值抵消。因此同一表达按旧时间字典展开后的代价为
+
+$$
+(1+3R)\frac{1+\sigma}{1-\sigma}+3R>G.
+$$
+
+§118 更证明每一份旧字典有限表示的代价都严格大于 $G$。这里改变的是哪些原子可以单独取得和怎样计费；有符号线性张成没有增加。无限等待的数学极限也没有自动提供单位成本的实际准备权限。
+
+#### 135.6.2 §118 特定逼近族的精确整数阈值
+
+式 (118.2b) 的共同表示族以整数 $m\ge3$ 为参数：
+
+$$
+A_m=\frac{H(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^m},\qquad
+B_m=H(1)^{-1}-A_m,\qquad
+p_m(z)=H(z)(A_mz^m+B_m).
+$$
+
+它的最大滞后为 $L=m+2$，三个低次系数严格负，三个高次系数严格正，支撑为 $\{0,1,2,m,m+1,m+2\}$。已有精确差值为
+
+$$
+\Gamma_m-G
+=\frac{2(1+3R)\lambda^m}{1-\lambda^m}.
+$$
+
+置 $A=2(1+3R)=G+1$。对任意 $\epsilon>0$，所有分母都为正，故
+
+$$
+\begin{aligned}
+\Gamma_m-G\le\epsilon
+&\quad\Longleftrightarrow\quad
+\lambda^m\le\frac{\epsilon}{A+\epsilon}\\
+&\quad\Longleftrightarrow\quad
+m\ge\frac{\log(1+A/\epsilon)}{-\log\lambda}.
+\end{aligned}
+$$
+
+最后一步使用 $\log\lambda<0$，除法时不等号反向。因此这一个族达到非严格误差目标的最小允许整数及最大滞后恰为
+
+$$
+m_\epsilon
+=\max\left\{3,\left\lceil
+\frac{\log(1+A/\epsilon)}{-\log\lambda}
+\right\rceil\right\},\qquad
+L_{\rm family}=m_\epsilon+2.
+$$
+
+若要求 $\Gamma_m-G<\epsilon$，整数条件改为
+
+$$
+m_{<\epsilon}
+=\max\left\{3,\left\lfloor
+\frac{\log(1+A/\epsilon)}{-\log\lambda}
+\right\rfloor+1\right\}.
+$$
+
+$\epsilon=0$ 不对应任何有限 $m$。这些都是该特定六点表示族内部的准确阈值；它们并非固定时间窗允许所有表示时的最优阈值。
+
+#### 135.6.3 §119 已给固定时间窗的唯一最优解
+
+对字典时刻 $0,\ldots,L$，命题 119.2 证明两个单方向及共同可行集非空当且仅当 $L\ge3$。若 $j=L\bmod3$、$\ell=L-j$，实际共同轨道为
+
+$$
+r_L=R\lambda^L+c^\ell(1-R\lambda^j),\qquad
+r_0=r_1=r_2=1>r_3>r_4>\cdots>0,
+\qquad r_L\to0.
+$$
+
+每个固定 $L\ge3$ 的三个优化问题具有同一个唯一优化器，其支撑恰为 $\{0,1,2,L\}$，三个低次系数严格负，第 $L$ 个系数严格正。准确最优值为
+
+$$
+\Gamma^*_{\delta,L}=\frac{G+r_L}{1-r_L},\qquad
+\Gamma^*_{\delta,L}-G=\frac{(G+1)r_L}{1-r_L}>0.
+$$
+
+因此，对 $\epsilon>0$，固定窗最优值的准确误差条件是
+
+$$
+\Gamma^*_{\delta,L}-G\le\epsilon
+\quad\Longleftrightarrow\quad
+r_L\le\frac{\epsilon}{G+1+\epsilon},
+$$
+
+最小允许滞后为
+
+$$
+L^*_\epsilon
+=\min\left\{L\in\mathbb Z:\ L\ge3,\quad
+R\lambda^L+c^{L-(L\bmod3)}
+\bigl(1-R\lambda^{L\bmod3}\bigr)
+\le\frac{\epsilon}{G+1+\epsilon}\right\}.
+$$
+
+正性、严格单调性和趋零保证这个整数最小值存在。严格误差目标对应同一集合中的严格不等号；没有把涉及 $L\bmod3$ 的准确阈值替换成上一小节的单几何幂公式。
+
+还可以准确比较两者。对任意 $m\ge3$，§118 的 $p_m$ 在时间 $m,m+1$ 都有严格正系数，而固定 $L=m+2$ 的唯一优化器在这些中间时刻系数为零。两向量不同，由唯一性得到
+
+$$
+\Gamma^*_{\delta,m+2}<\Gamma_m.
+$$
+
+所以 $L^*_\epsilon\le L_{\rm family}$，但不能把后者称为整个时间字典的最小滞后。目标在 $L=3$ 已有有限精确表示；固定每个 $L\ge3$ 的最小值也都可达；允许所有有限 $L$ 后的共同下确界 $G$ 却不由任何有限表示达到。这三句话的量词不同，完全相容。
+
+#### 135.6.4 资源解释还须分清表达、证书与访问
+
+这份例子已经给出三层不同的结果：
+
+- **数学表达：** $\pi$ 与 $e_0$ 都在有限时间字典的有符号张成内；等式表达目标不等于以最佳系数代价表达目标。
+- **证书与算法：** §118–119 的显式系数和实际对偶列分别承担可行性、下界与最优性的证明。由实数公式转为数值算法时，还须说明参数的有效表示、精度和比较权限；对任意实数输入的存在结论本身不规定可执行预算。
+- **访问与计价：** 把 $\pi$ 作为可直接取得的单位成本原子，是额外接口合同。若只能调用旧时间原子，必须计入展开代价；若声称能够实际直接准备 $\pi$，还须给出那项访问机制。
+
+因此，在同一个语义张成中更换工具、已有证书或原语价格可以改变优化与执行预算。哪一项资源改变，须由相应接口声明；不能从表达能力相同推断费用相同，也不能从新字典的单位成本反推旧接口已经能按同价取得该原子。
+
+#### 135.6.5 有限参数插值恢复纯陷阱期望的另一层接口
+
+固定参数的时间准备先恢复从隐藏状态 $0$ 出发、随后仍按 $K_{\delta,d}$ 演化的窗口均值 $Q_d(\delta)$；它本身没有将窗口内的隐藏状态恒定保持为 $0$。要取得纯陷阱均值 $\tau$，还须使用定义 116.1 的有限参数干预接口：固定同一方向 $d$、同一传感器核及其平稳律、同一发射行与窗口 $W:\mathcal A^{r+1}\to[-1,1]$，预选互异整数 $k_0,\ldots,k_r\ge2$，只在合法设置 $\delta_j=1/k_j$ 取得相应的隐藏初态 $1$ 与独立平稳传感器准备。式 (116.2o) 将 $Q_d(\delta)$ 写成恰有 $r$ 个仿射转移因子的有限和，故 $\deg Q_d\le r$；式 (116.2p) 给 $Q_d(0)=\tau$。零点用于代数求值，不要求实际调用 $\delta=0$。
+
+令 $m_{j,t}$ 与 $a_t(\delta_j)$ 为式 (116.1d)、(116.2a) 的实际窗口均值及共同时间运输系数，且
+$$
+\ell_j=\prod_{i\ne j}\frac{-\delta_i}{\delta_j-\delta_i}.
+$$
+有限次数 Lagrange 插值和式 (116.2d) 给出
+$$
+\tau=Q_d(0)=\sum_{j=0}^r\ell_jQ_d(\delta_j)
+=\sum_{j=0}^r\sum_{t=0}^3\ell_j a_t(\delta_j)m_{j,t}.
+$$
+以实际窗口分数替代各均值，所得正是式 (116.2e) 的有符号统计量，期望等于 $\tau$。这里插值针对同一个多项式；跨设置改变方向、传感器、发射或窗口，会失去该共同对象。恢复期望不等于制备对应物理状态，也不等于反演一条实际轨迹。一次统计量不必等于其期望，重叠窗口及不同设置的协方差、准备和调用费用、参数访问权限均须按真实联合实验另行计入；系数绝对和本身不替代这些资源义务。它属于第122.1.2节的标量任务恢复，误差与完整协方差的计算适用第125.7节；合法干预和实际调用则仍受本节及第136节的访问与计价条件约束。
+
+### 135.7 这条桥在关系主线中的作用
+
+以上结论分别落在不同关系层：解析拉回说明某关系由生成模型恒定满足或几乎必然不满足；碰撞反例说明不同生成机制可以处于同一个观察纤维；弱传感器下界说明即使固定模型的极限观察能分离方向，有限预算下的观察律仍可任意接近；时间字典的优化则说明表达能力相同仍可有不同原语费用与达界性质。
+
+因此，增加一条辅助关系需要说明它解决的是哪一个缺口：切开原来合并的机制，保持共同见证，还是给已有分离补一个定量下界。重复旧接口不能修复完全同律；用精确恒零代替近似误差分析，也不能取得有限精度保证。这个区分使生成、观察和资源都能接入同一套任务与接口语言，同时保留各自承重的假设。
+
+## 135.99 追加锚
+
+## 136. 认证工具与有限观察者的可调用关系
+
+观察的增长改变已分离的候选，证书和算法的取得改变可调用能力。以下用固定检验关系与带费用操作图说明两种变化如何并存，同时保持语义与共同来源。
+
+### 136.1 事件档案与认证命题
+
+固定实现空间 $\Omega$ 与一个实验协议。完整实现包括本协议所用的对象、动作结果、传感器随机性和记录来源。读数 $q_n:\Omega\to D_n$ 是第 $n$ 步的实际档案，动作 $a_n=\pi_n(q_n(\omega))$ 只能依赖当前可访问记录。若策略还使用新随机种子，该种子应加入完整协议，动作的可测性则相对于档案及已获种子声明。
+
+事件“设备在此次操作中报告 $y$”由档案直接表达；外界命题 $P$ 是否成立，还取决于协议的测量模型与推理。保留原始事件并修正解释，与把所有旧猜测并为真命题，是不同操作。模型类或参照概率改变时，先前的候选纤维及数值结算属于原模型；新解释应通过明确运输或重建比较。
+
+设语句集合为 $\mathsf{Stmt}$，证书集合为 $\mathsf{Cert}$，固定检验关系 $V\subseteq\mathsf{Stmt}\times\mathsf{Cert}$。对语义合法实现类 $\Gamma$，要求可靠性
+$$
+V(P,c)\Longrightarrow\forall\omega\in\Gamma,\quad \omega\models P.
+$$
+有限时刻真正取得的证书库为 $\mathcal C_n\subseteq\mathsf{Cert}$，并要求保留式扩展 $\mathcal C_n\subseteq\mathcal C_{n+1}$。证书必须绑定其语句、前提及所用规则；换版本而未运输这些内容，不是同一检验关系下的已认证结论。
+
+**命题 136.1（已认证能力的单调性）。** 定义
+$$
+\mathcal T_n=\{P:\exists c\in\mathcal C_n,\ V(P,c)\}.
+$$
+则 $\mathcal T_n\subseteq\mathcal T_{n+1}$，且每个 $\mathcal T_n$ 中的语句都在 $\Gamma$ 上有效。这不要求语义有效语句集合随 $n$ 增大，也不要求证书库对全部逻辑后果封闭。
+
+**证明。** 前者由同一证书在扩展库中仍存在；后者由 $V$ 的可靠性。有效语句集合由 $\Gamma$ 与满足关系确定，并未在定义中依赖 $n$。若 $\mathcal C_n$ 只含一部分证书，它就只认证相应语句，不能由“是逻辑后果”推断该证书已经取得。$\square$
+
+因此语义区分能力与认证能力是不同变量。一个固定程序的结果可由输入与规则唯一决定，却尚未被有限观察者计算或核验。这个状态不能仅靠把答案当作额外随机变量并计算 Shannon 熵来完整刻画。
+
+### 136.2 已证工具的加入与可达关系
+
+取有向图 $G=(V,E)$，顶点是指定问题状态，边是当前允许的一步操作，每条边具有非负费用。有限路径必须首尾匹配，包括费用为零的空路径；费用按边费用相加，记全部这种路径费用的下确界为 $d_G(x,y)\in[0,+\infty]$，无可达路径时取 $+\infty$。
+
+增加一族辅助边 $e:x\to y$。每条辅助边带有原图中从 $x$ 到 $y$ 的一条有限路径 $p_e$，作为其语义正确性的展开证书。辅助边费用也非负，新图记为 $G^+$。
+
+**定理 136.2（宏工具不增加语义可达性，但可改变预算几何）。** $G$ 与 $G^+$ 的可达关系相同。若每条辅助边的费用恰为其展开路径费用，则 $d_{G^+}=d_G$。若允许某些辅助调用费用低于展开费用，则仍有 $d_{G^+}\le d_G$，且不等式可以严格。
+
+**证明。** 原边保留，所以原可达性包含于新可达性。将任意新路径中的辅助边逐一替换为其有限展开，得到原图中的同端点路径，给反向包含。
+
+费用相等时，同一展开还保持总费用，故任意新路径的费用都不低于原路径费用的下确界，$d_G\le d_{G^+}$；原路径也都是新路径，给反向不等式。允许降低辅助费用时，原路径包含性仍给 $d_{G^+}\le d_G$。例如原图只有 $x\to z\to y$ 两条费用一的边，加入经此路径认证但调用费用一的 $x\to y$，则距离由二变为一，而可达关系不变。$\square$
+
+严格改进的例子把低调用费用作为模型数据，没有证明真实装置可以实现该费用。若每条宏边仍必须现场重放全部旧步骤，且按同一费用计数，就属于等费用展开的情形。将一个有限时间字典的极限元素改成可直接调用原语，也必须同样声明其取得与计费方式。
+
+**命题 136.3（准备与复用费用）。** 若某已认证工具的准备费用为 $p\ge0$，每次调用费用为 $c\ge0$，原方案每次费用为 $C\ge0$，且两方案实现相同任务，则复用非负整数 $m$ 次的费用分别为 $p+mc$ 和 $mC$。新方案不更贵当且仅当
+$$
+p\le m(C-c).
+$$
+若 $C>c$，这等价于 $m\ge p/(C-c)$；若 $C=c$，只在 $p=0$ 时不更贵；若 $C<c$ 且 $m>0$，新方案不更贵不可能成立。
+
+**证明。** 按声明费用求和，再移项；各退化情形由右端符号直接判断。$\square$
+
+若费用为非负向量，则逐坐标使用同一不等式；不同资源之间没有预先指定兑换率时，不把时间、存储、样本和验证费用强压成一个标量最优值。
+
+### 136.3 保真辅助线和证明运输
+
+把证明辅助构造看成已证的派生规则：每次使用都有一份仅用原规则的有限展开。对只含有限次派生规则使用的证明，按推导树从叶至根替换展开，可以得到原系统中的同一结论。因此在这一可展开条件下，加入工具没有增加可证语句集合；它改变的是证明的组织方式、已知证书和实际验证协议。
+
+若使用共享子证明的 DAG，展开成树可能重复同一前置。其节省须按真正的验证器计算：验证器是否检查共享节点一次、是否校验引用身份、是否保留前提闭包，均属于证书合同。仅增加一个未经认证的新公理则没有上述展开依据，是另一种逻辑系统变化。
+
+对于理论翻译 $\tau$，先证明它保持可证后承；若还需要反向恢复结论，再证明反射。即使两方向在语义上成立，证书转换的算法、费用和可取得性也应另给。第134节的后承翻译与闭理论伴随提供语义接口，本节的已取得证书库和费用图给有限观察者的调用接口。
+
+### 136.4 单调档案不等同于物理熵产生
+
+在两个比特上定义 $F(x,m)=(x,m\mathbin{\oplus}x)$。由于 $F^2=I$，它是双射。对任意联合律 $p$，变换只是重排四个概率，因此 $H(F_*p)=H(p)$。
+
+若 $M$ 初始恒为零，则输出满足 $M'=X$。初始记录熵为零，之后记录熵为 $H(X)$，关于 $X$ 的互信息同样增加到 $H(X)$；完整联合熵始终为 $H(X)$。这证明新增可读相关性可以由可逆变换产生，不能仅从记录变多推出完整 Shannon 熵增。
+
+以上是逻辑与概率模型中的恒等式。实际写入、稳定维持、读取和擦除的物理费用，需要记录装置、准备条件、环境耦合及反向实验；它们没有由一个比特双射自动决定。可逆计算的经典参考为 C. H. Bennett, “Logical Reversibility of Computation”, IBM Journal of Research and Development 17 (1973), 525–532, DOI 10.1147/rd.176.0525。
+
+## 136.99 追加锚
+
+## 137. 有限边界矩的正实现与未来唯一性
+
+### 137.1 有限矩、共同零关系与 Gram 商
+
+**定义 137.1（有限边界矩与正实现）。** 固定有限维实内积空间 $U$、整数 $r\ge0$ 以及自伴算子
+$$
+M_0,M_1,\ldots,M_{2r+1}:U\to U.
+$$
+不要求这些算子彼此交换。在正交直和 $P_r=U^{r+1}$ 上定义
+$$
+H_r=(M_{i+j})_{0\le i,j\le r},
+\qquad
+S_r=(M_{i+j+1})_{0\le i,j\le r}.
+\tag{137.1}
+$$
+这一前缀的正实现是有限维实内积空间 $E$、线性输入 $J:U\to E$ 和自伴算子 $C\succeq0$，满足
+$$
+M_k=J^*C^kJ\qquad(0\le k\le2r+1).
+\tag{137.2}
+$$
+全部矩均要求精确相等。第126节的输出耦合 $B$ 对应这里的 $J^*$；该节严格正定的演化是此实现类的子类。零维空间允许作为实现空间。
+
+**定理 137.2（有限奇数阶矩的精确正实现）。** 定义137.1的前缀存在正实现，当且仅当
+$$
+\boxed{H_r\succeq0,\qquad S_r\succeq0,\qquad
+\ker H_r\subseteq\ker S_r.}
+\tag{137.3}
+$$
+条件成立时，可以取
+$$
+E=P_r/\ker H_r,\qquad \dim E=\operatorname{rank}H_r,
+\tag{137.4}
+$$
+且此维数在全部正实现中最小。
+
+此精确等号问题的矩阵 Stieltjes 判据见 V. Bolotnikov, “Degenerate Stieltjes Moment Problem and Associated J-Inner Polynomials”, *Zeitschrift für Analysis und ihre Anwendungen* 14(3) (1995), 441–468，[DOI 10.4171/ZAA/633](https://doi.org/10.4171/ZAA/633)，Definition 2.1及Lemma 2.5，445–448页。其复 Hermitian 矩阵表述限制到实对称数据给上述条件；以下直接构造有限实实现。
+
+**证明。** 若有正实现，定义
+$$
+T:P_r\to E,\qquad
+T(v_0,\ldots,v_r)=\sum_{j=0}^rC^jJv_j.
+$$
+自伴性与矩匹配给
+$$
+H_r=T^*T,\qquad S_r=T^*CT.
+$$
+故两个块算子均半正定。又 $\ker(T^*T)=\ker T$，所以 $\ker H_r\subseteq\ker S_r$，并且
+$$
+\operatorname{rank}H_r=\dim\operatorname{ran}T\le\dim E.
+\tag{137.5}
+$$
+
+反过来，假设式(137.3)。在式(137.4)的商上定义
+$$
+\langle[v],[w]\rangle_E=\langle v,H_rw\rangle_{P_r}.
+$$
+半正定算子的零二次型向量恰为其核，因此这是正定内积。核包含及 $S_r$ 的自伴性使
+$$
+([v],[w])\longmapsto\langle v,S_rw\rangle_{P_r}
+$$
+对两个代表元均无关。有限维 Riesz 表示于是唯一给出线性算子 $C:E\to E$，满足
+$$
+\langle[v],C[w]\rangle_E=\langle v,S_rw\rangle_{P_r}.
+\tag{137.6}
+$$
+右端对称且在对角线上非负，所以 $C=C^*\succeq0$。
+
+记 $e_j:U\to E$ 为在第 $j$ 个系数位插入向量后取商的映射，令 $J=e_0$。对 $j<r$、$0\le i\le r$ 及 $u,v\in U$，
+$$
+\langle e_i u,Ce_jv\rangle_E
+=\langle u,M_{i+j+1}v\rangle_U
+=\langle e_i u,e_{j+1}v\rangle_E.
+$$
+所有 $e_i(U)$ 张成 $E$，故
+$$
+Ce_j=e_{j+1}\quad(j<r),\qquad C^jJ=e_j\quad(0\le j\le r).
+\tag{137.7}
+$$
+对 $0\le k\le2r$，选择 $i,j\le r$ 使 $i+j=k$，再用自伴性得
+$$
+\langle u,J^*C^kJv\rangle_U
+=\langle C^iJu,C^jJv\rangle_E
+=\langle u,M_kv\rangle_U.
+$$
+最后一阶由式(137.6)的右下块给出：
+$$
+J^*C^{2r+1}J=e_r^*Ce_r=M_{2r+1}.
+$$
+故全部指定矩匹配。商的维数等于 $\operatorname{rank}H_r$，达到式(137.5)的下界。若 $H_r=0$，核包含迫使 $S_r=0$；全部指定矩为零，上述构造给 $E=0$，论证仍成立。$\square$
+
+**命题 137.3（两个正块与普通平坦不足以保证实现）。** 标量前缀
+$$
+(M_0,M_1,M_2,M_3)=(1,1,1,2)
+$$
+满足 $H_1\succeq0$、$S_1\succeq0$ 及 $\operatorname{rank}H_1=\operatorname{rank}H_0$，但不存在正实现，甚至不存在自伴实现。
+
+**证明。** 此时
+$$
+H_1=\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad
+S_1=\begin{pmatrix}1&1\\1&2\end{pmatrix}.
+$$
+前者半正定且秩一，后者正定，而 $H_0=(1)$。向量 $(-1,1)$ 属于 $\ker H_1$，却不属于 $\ker S_1$。也可直接设 $b=J1$：若存在自伴实现，则
+$$
+\|(C-I)b\|^2=M_2-2M_1+M_0=0,
+$$
+从而 $Cb=b$，迫使 $M_3=\langle b,C^3b\rangle=M_0=1$，与给定数据矛盾。$\square$
+
+### 137.2 最小维数、严格正性与有限谱界
+
+**定理 137.4（有限前缀的最小维数实现唯一）。** 假设式(137.3)，取定理137.2的规范实现 $(E,C,J)$。任一维数为 $\operatorname{rank}H_r$ 的正实现 $(E',C',J')$，都有唯一正交同构 $Q:E\to E'$ 满足
+$$
+QC=C'Q,\qquad QJ=J'.
+\tag{137.8}
+$$
+因而最小维数实现所生成的全部矩
+$$
+\widehat M_k=J^*C^kJ\qquad(k\ge0)
+\tag{137.9}
+$$
+只依赖给定前缀。
+
+**证明。** 令 $T'v=\sum_{j=0}^r(C')^jJ'v_j$。由 $H_r=(T')^*T'$，$\ker T'=\ker H_r$，所以
+$$
+Q[v]=T'v
+$$
+良定义且保内积。其像的维数为 $\operatorname{rank}H_r=\dim E'$，故它满射。对任意 $v,w\in P_r$，
+$$
+\langle Q[v],C'Q[w]\rangle_{E'}
+=\langle v,S_rw\rangle_{P_r}
+=\langle Q[v],QC[w]\rangle_{E'}.
+$$
+$Q$ 满射给 $C'Q=QC$；零次插入给 $QJ=J'$。任何满足式(137.8)的映射都必须将 $C^jJu$ 送到 $(C')^jJ'u$，而这些向量在 $0\le j\le r$ 时已张成 $E$，故 $Q$ 唯一。对式(137.8)取幂并使用正交性，得到全部矩相同。$\square$
+
+**定理 137.5（严格正性与谱区间的有限矩判据）。** 在式(137.3)下，存在严格正定实现，当且仅当
+$$
+\ker S_r=\ker H_r.
+\tag{137.10}
+$$
+此条件也等价于规范实现的 $C$ 严格正定。给定 $0\le a\le b<\infty$，存在满足
+$$
+aI\preceq C\preceq bI
+$$
+的实现，当且仅当
+$$
+\boxed{H_r\succeq0,\qquad aH_r\preceq S_r\preceq bH_r.}
+\tag{137.11}
+$$
+其中 $a=b$ 允许；若 $a=b=0$，可取 $C=0$。
+
+**证明。** 在规范商上，
+$$
+\langle[v],C[v]\rangle_E=\langle v,S_rv\rangle_{P_r}.
+$$
+$S_r\succeq0$ 时右端为零恰当 $v\in\ker S_r$；而 $[v]=0$ 恰当 $v\in\ker H_r$。这证明式(137.10)与规范 $C$ 严格正定的等价。若另有严格正实现，写 $H_r=T^*T$、$S_r=T^*CT$，则后者的零二次型恰当 $Tv=0$，同样得到两核相等。
+
+对有界谱实现，由 $aI\preceq C\preceq bI$ 两侧复合 $T^*$ 与 $T$，得到式(137.11)。反过来，令 $v\in\ker H_r$。半正定算子 $S_r-aH_r$ 满足
+$$
+0\le\langle v,(S_r-aH_r)v\rangle
+\le(b-a)\langle v,H_rv\rangle=0.
+$$
+故 $(S_r-aH_r)v=0$，进而 $S_rv=0$。于是核相容成立，定理137.2适用。式(137.6)再把矩不等式变为
+$$
+a\|[v]\|^2\le\langle[v],C[v]\rangle_E\le b\|[v]\|^2,
+$$
+即所需谱界。若 $a=b$，上述不等式迫使 $C=aI$。$\square$
+
+### 137.3 任意维数竞争实现与未定的未来
+
+**定义 137.6（前缀的未来唯一性与低阶生成空间）。** 在式(137.3)下固定规范实现，令
+$$
+L=\operatorname{span}\{e_j(U):0\le j<r\}\subseteq E.
+\tag{137.12}
+$$
+$r=0$ 时取 $L=0$。当 $r\ge1$ 时，$S_{r-1}$ 表示 $S_r$ 的左上 $r\times r$ 块；$r=0$ 时约定 $\operatorname{rank}S_{-1}=0$。称给定前缀在某实现类内决定全部未来，是指该类中任意两个匹配前缀的实现，其 $J^*C^kJ$ 对全部 $k\ge0$ 都相等。此定义允许不同实现空间具有不同维数。
+
+**引理 137.7（共同前缀的正算子扩张）。** 任意匹配给定前缀的正实现，在一个保持输入的正交识别下都可写为
+$$
+\widetilde E=E\oplus F,\qquad
+\widetilde J=\binom J0,\qquad
+\widetilde C=
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}\succeq0,
+\qquad D|_L=0.
+\tag{137.13}
+$$
+反过来，任意有限维 $F$ 和满足式(137.13)的块算子，都给出同一前缀的正实现。每个这样的扩张还满足
+$$
+D|_{\ker C}=0,\qquad
+\widetilde M_{2r+2}-\widehat M_{2r+2}=(De_r)^*(De_r).
+\tag{137.14}
+$$
+
+**证明。** 对任意竞争实现，映射
+$$
+[v]\longmapsto\sum_{j=0}^r\widetilde C^j\widetilde Jv_j
+$$
+由共同 $H_r$ 保内积，其像是竞争模型的前 $r+1$ 层 Krylov 空间。将该像识别为 $E$，并取正交补 $F$。共同 $S_r$ 给任意 $v,w$ 的演化配对与式(137.6)相同，因此 $\widetilde C$ 压缩到 $E$ 恰为 $C$。输入对应 $e_0$，所以 $\widetilde J=(J,0)$。
+
+对 $j<r$，竞争模型的实际幂向量满足
+$$
+\widetilde C(e_ju,0)=(e_{j+1}u,0).
+$$
+其 $F$ 分量给 $De_j=0$，即 $D|_L=0$。若 $x\in\ker C$，则
+$$
+\langle(x,0),\widetilde C(x,0)\rangle=0.
+$$
+由 $\widetilde C\succeq0$ 得 $\widetilde C(x,0)=0$，特别有 $Dx=0$。
+
+反向，由 $De_j=0$ 对 $j<r$ 成立，归纳得
+$$
+\widetilde C^j\widetilde J=(e_j,0)\qquad(0\le j\le r).
+$$
+对 $k\le2r$ 将 $k$ 写成两个不超过 $r$ 的整数之和，内积给 $\widetilde M_k=M_k$。最后一阶满足
+$$
+\widetilde M_{2r+1}=(e_r,0)^*\widetilde C(e_r,0)=e_r^*Ce_r=M_{2r+1}.
+$$
+又
+$$
+\widetilde C^{r+1}\widetilde J=(Ce_r,De_r),
+\qquad C^{r+1}J=Ce_r.
+$$
+分别取伴随平方，得到式(137.14)。$\square$
+
+**定理 137.8（全部有限正实现的未来唯一判据）。** 给定前缀在所有有限维正实现之间决定全部未来，当且仅当
+$$
+\boxed{E=L+\ker C.}
+\tag{137.15}
+$$
+它又等价于
+$$
+\boxed{\operatorname{rank}S_r=\operatorname{rank}S_{r-1}.}
+\tag{137.16}
+$$
+
+**证明。** 若式(137.15)成立，引理137.7使每个竞争模型的 $D$ 同时消灭 $L$ 与 $\ker C$，故 $D=0$。于是 $E$ 在 $\widetilde C$ 下不变，输入位于 $E$，全部未来矩均等于式(137.9)。
+
+若式(137.15)失败，取非零线性映射 $D:E\to\mathbb R$ 消灭 $L+\ker C$。在 $C$ 的正特征子空间上按特征值取倒数、在其核上取零，定义 $C^\dagger$；同样定义 $C^{1/2}$ 与 $C^{\dagger/2}$。置
+$$
+A=DC^\dagger D^*,\qquad
+\widetilde C=\begin{pmatrix}C&D^*\\D&A\end{pmatrix}.
+$$
+由于 $D$ 消灭 $\ker C$，$DC^{\dagger/2}C^{1/2}=D$，因此
+$$
+\widetilde C=
+\binom{C^{1/2}}{DC^{\dagger/2}}
+\begin{pmatrix}C^{1/2}&C^{\dagger/2}D^*\end{pmatrix}
+\succeq0.
+\tag{137.17}
+$$
+引理137.7表明此扩张保持给定前缀。又 $E=L+e_r(U)$，而 $D\ne0$ 且 $D|_L=0$，故 $De_r\ne0$。式(137.14)于是给出一个不同的第 $2r+2$ 阶矩，全部未来不唯一。式(137.17)也是带核相容条件的广义 Schur 补在本情形中的平方分解；一般块正性判据见前引 Bolotnikov Lemma 2.4，446页。
+
+最后，$S_r$ 是向量族 $C^{1/2}e_j(U)$、$0\le j\le r$ 的 Gram 算子，而 $S_{r-1}$ 对应 $j<r$。所以
+$$
+\operatorname{rank}S_r=\dim C^{1/2}E,\qquad
+\operatorname{rank}S_{r-1}=\dim C^{1/2}L.
+$$
+两个像空间相等当且仅当每个 $x\in E$ 都能写成 $x=l+z$，其中 $l\in L$、$z\in\ker C^{1/2}=\ker C$。这证明式(137.15)与式(137.16)等价，也包含 $r=0$ 的情形。$\square$
+
+**推论 137.9（首个未定矩的全部正方向）。** 令
+$$
+W=(L+\ker C)^\perp,\qquad Q=P_We_r:U\to W.
+$$
+则 $Q$ 满射，
+$$
+\dim W=\operatorname{rank}S_r-\operatorname{rank}S_{r-1},
+\tag{137.18}
+$$
+且所有有限维正竞争实现的首个未定矩差组成的集合恰为
+$$
+\boxed{
+\{\widetilde M_{2r+2}-\widehat M_{2r+2}\}
+=\{Q^*ZQ: Z:W\to W,\ Z=Z^*\succeq0\}.
+}
+\tag{137.19}
+$$
+因此规范第 $2r+2$ 阶矩是全部竞争实现该阶矩的 Loewner 下界。
+
+**证明。** $E=L+e_r(U)$ 且 $P_WL=0$，所以 $Q(U)=W$。维数等式由
+$$
+\dim W
+=\dim E-\dim(L+\ker C)
+=\dim C^{1/2}E-\dim C^{1/2}L
+$$
+和定理137.8证明中的秩公式得到。
+
+对任意竞争实现，引理137.7给 $D=DP_W$。于是令 $Z=(D|_W)^*(D|_W)\succeq0$，式(137.14)便成为 $Q^*ZQ$。反过来，对任意 $Z\succeq0$，取 $F=W$、$D=Z^{1/2}P_W$、$A=DC^\dagger D^*$。式(137.17)仍给正扩张；它满足 $D|_L=0$，并产生所要求的 $Q^*ZQ$。$\square$
+
+**命题 137.10（普通平坦与移位平坦的区别）。** 当 $r\ge1$ 时，
+$$
+\operatorname{rank}H_r=\operatorname{rank}H_{r-1}
+\tag{137.20}
+$$
+蕴含全部未来唯一；若规范 $C\succ0$，则式(137.20)也是必要条件。若只在严格正定实现类中比较，规范 $C\succ0$ 时仍有同一充要条件。允许零特征值时，式(137.20)不再必要。
+
+**证明。** $H_{r-1}$ 是 $e_0,\ldots,e_{r-1}$ 的 Gram 算子，故其秩为 $\dim L$；$H_r$ 的秩为 $\dim E$。式(137.20)因此恰为 $L=E$，由定理137.8推出未来唯一。
+
+若 $C\succ0$，则 $\ker C=0$，定理137.8使未来唯一等价于 $L=E$。若将竞争类也限制为严格正定，$L\ne E$ 时选非零 $D:E\to\mathbb R$ 消灭 $L$，并取
+$$
+A=DC^{-1}D^*+\eta,\qquad\eta>0.
+$$
+对任意 $(x,y)\ne0$，
+$$
+\left\langle(x,y),
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}(x,y)\right\rangle
+=\|C^{1/2}x+C^{-1/2}D^*y\|^2+\eta y^2>0.
+$$
+该严格正扩张仍由式(137.14)改变下一偶矩。
+
+为证明允许零谱时普通平坦不必要，取
+$$
+C=\begin{pmatrix}1&1\\1&1\end{pmatrix},
+\qquad J=\binom10.
+$$
+$C^2=2C$，所以前四矩为 $(1,1,2,4)$。此时
+$$
+H_1=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+S_1=\begin{pmatrix}1&2\\2&4\end{pmatrix},\qquad S_0=(1).
+$$
+$H_1$ 秩二、$H_0$ 秩一；$S_1$ 与 $S_0$ 却同为秩一。定理137.8给所有未来唯一，而式(137.20)不成立。$\square$
+
+### 137.4 谱上界对未来唯一性的约束
+
+**定理 137.11（共同谱上界内的未来唯一性）。** 设 $\Lambda\ge0$ 且
+$$
+H_r\succeq0,\qquad 0\preceq S_r\preceq\Lambda H_r.
+$$
+取定理137.2的规范实现，故 $0\preceq C\preceq\Lambda I$。给定前缀在全部满足 $0\preceq\widetilde C\preceq\Lambda I$ 的有限维实现之间决定全部未来，当且仅当
+$$
+\boxed{E=L+\ker C+\ker(\Lambda I-C).}
+\tag{137.21}
+$$
+
+**证明。** 若 $\Lambda=0$，所有允许演化均为零，全部正阶矩为零；规范 $C=0$ 使式(137.21)也成立。以下设 $\Lambda>0$。对引理137.7的块扩张，正性已给 $D\ker C=0$。另有
+$$
+\Lambda I-\widetilde C
+=\begin{pmatrix}\Lambda I-C&-D^*\\-D&\Lambda I-A\end{pmatrix}
+\succeq0.
+$$
+将同一零二次型论证用于此算子，得到 $D\ker(\Lambda I-C)=0$。若式(137.21)成立，则 $D=0$，全部未来等于规范未来。
+
+反过来，若式(137.21)失败，取非零 $D_0:E\to\mathbb R$ 消灭其右侧子空间。令
+$$
+\alpha=D_0C^\dagger D_0^*\ge0,\qquad
+\beta=D_0(\Lambda I-C)^\dagger D_0^*\ge0,
+$$
+将一维算子认作实数，并选
+$$
+\epsilon^2=\frac{\Lambda}{2(1+\alpha+\beta)},\qquad
+D=\epsilon D_0,\qquad A=\Lambda/2.
+$$
+于是
+$$
+DC^\dagger D^*\le\Lambda/2,\qquad
+D(\Lambda I-C)^\dagger D^*\le\Lambda/2.
+$$
+对任意 $x\in E,y\in\mathbb R$，利用 $D$ 消灭两个端点核，有
+$$
+\begin{aligned}
+\left\langle(x,y),
+\begin{pmatrix}C&D^*\\D&A\end{pmatrix}(x,y)\right\rangle
+&=\|C^{1/2}x+C^{\dagger/2}D^*y\|^2
+ +(A-DC^\dagger D^*)y^2\ge0,\\
+\left\langle(x,y),
+\begin{pmatrix}\Lambda I-C&-D^*\\-D&\Lambda-A\end{pmatrix}(x,y)\right\rangle
+&=\|(\Lambda I-C)^{1/2}x-(\Lambda I-C)^{\dagger/2}D^*y\|^2\\
+&\quad+(\Lambda-A-D(\Lambda I-C)^\dagger D^*)y^2\ge0.
+\end{aligned}
+$$
+故 $0\preceq\widetilde C\preceq\Lambda I$。又 $D|_L=0$，该模型保持全部已知矩；由于 $E=L+e_r(U)$ 及 $D\ne0$，仍有 $De_r\ne0$，式(137.14)给不同的下一矩。$\square$
+
+**命题 137.12（最小实现唯一、未来不唯一与谱上界）。** 前缀
+$$
+(M_0,M_1,M_2,M_3)=(1,2,5,14)
+$$
+具有唯一到正交同构的二维最小正实现，但在严格正定、谱上界为四的有限实现类中不决定全部未来。在谱上界为三的非负实现类中，它决定全部未来。
+
+**证明。** 取
+$$
+C=\begin{pmatrix}2&1\\1&2\end{pmatrix},\quad
+J=\binom10,\qquad
+C_t=\begin{pmatrix}2&1&0\\1&2&t\\0&t&2\end{pmatrix},\quad
+J_t=\begin{pmatrix}1\\0\\0\end{pmatrix},
+\quad t\in\{0,1\}.
+$$
+$C$ 的谱为 $\{1,3\}$。$C_t$ 的特征多项式为
+$$
+\det(\lambda I-C_t)
+=(\lambda-2)\bigl((\lambda-2)^2-(1+t^2)\bigr),
+$$
+故两份 $C_t$ 都满足 $0\prec C_t\prec4I$。并且
+$$
+C_tJ_t=(2,1,0)^T,\qquad C_t^2J_t=(5,4,t)^T.
+$$
+由内积立即得到共同的前四矩与
+$$
+J_t^*C_t^4J_t=41+t^2.
+$$
+$H_1=\left(\begin{smallmatrix}1&2\\2&5\end{smallmatrix}\right)$ 的行列式为一，最小维数为二；定理137.4给该维数类的唯一性。$t=1$ 的三维实现则给不同的第四阶矩。
+
+在二维规范实现中，$L=\mathbb R(1,0)^T$，而
+$$
+\ker(3I-C)=\mathbb R(1,1)^T.
+$$
+二者张成 $E$。定理137.11在 $\Lambda=3$ 时给全部未来唯一。$\square$
+
+### 137.5 偶数平坦数据的较短接口
+
+**定理 137.13（偶数前缀的正平坦实现）。** 设 $r\ge1$，只给自伴数据 $M_0,\ldots,M_{2r}$。若
+$$
+H_r\succeq0,\qquad
+\operatorname{rank}H_r=\operatorname{rank}H_{r-1},\qquad
+S_{r-1}\succeq0,
+\tag{137.22}
+$$
+其中 $S_{r-1}=(M_{i+j+1})_{0\le i,j<r}$，则存在维数为 $\operatorname{rank}H_r$ 的正实现匹配全部已知矩；在全部有限维自伴实现之间，这一偶数前缀已经决定全部未来。
+
+写
+$$
+G=H_{r-1},\qquad
+h=(M_r,\ldots,M_{2r-1})^{\mathsf T}.
+$$
+方程 $GR=h$ 有解，对任意这样的 $R:U\to U^r$，唯一允许的下一矩为
+$$
+M_{2r+1}=R^*S_{r-1}R.
+\tag{137.23}
+$$
+正平坦扩张的标量机制可参见 M. Laurent、B. Mourrain, “A generalized flat extension theorem for moment matrices”, *Archiv der Mathematik* 93 (2009)，[DOI 10.1007/s00013-009-0007-6](https://doi.org/10.1007/s00013-009-0007-6)，以及其 [arXiv:0812.2563v1](https://arxiv.org/abs/0812.2563v1) 的Theorem 1.2与Corollary 1.3；以下证明直接处理矩阵系数与截断移位。
+
+**证明。** 在 $E=P_r/\ker H_r$ 上取 Gram 内积，并仍以 $e_j$ 表示各次插入。由平坦性，次数小于 $r$ 的系数串之类已张成 $E$。用形式多项式表示系数串，对 $\deg p<r$ 定义
+$$
+C[p]=[xp].
+$$
+若 $[p]=0$，则对任意 $\deg q<r$，Hankel 配对给
+$$
+\langle[xp],[q]\rangle_E=\langle[p],[xq]\rangle_E=0.
+$$
+这批 $[q]$ 张成 $E$，故 $[xp]=0$，定义良好。同一等式给自伴性。若 $p$ 的系数向量为 $v\in U^r$，则
+$$
+\langle[p],C[p]\rangle_E=\langle v,S_{r-1}v\rangle\ge0,
+$$
+故 $C\succeq0$。取 $J=e_0$，逐次插入给 $C^jJ=e_j$ 对 $j\le r$ 成立；将 $k\le2r$ 分成两个至多为 $r$ 的指标，Gram 配对便给全部矩匹配。
+
+对任一匹配偶数前缀的自伴实现，其次数小于 $r$ 及次数至多 $r$ 的 Krylov 空间维数分别为 $\operatorname{rank}H_{r-1}$ 和 $\operatorname{rank}H_r$。前者包含于后者，而维数相等，故二者相同。该共同空间包含输入，且在演化下不变。将其按共同 Gram 配对与 $E$ 等距识别后，演化在生成元 $e_j$、$j<r$ 上都满足 $e_j\mapsto e_{j+1}$，所以正好是上述 $C$；全部未来因而相同。
+
+为证明式(137.23)，观察
+$$
+H_r=\begin{pmatrix}G&h\\h^*&M_{2r}\end{pmatrix}\succeq0.
+$$
+若 $v\in\ker G$，则 $(v,0)$ 在此正算子下二次型为零，故 $h^*v=0$。于是 $\operatorname{ran}h\subseteq(\ker G)^\perp=\operatorname{ran}G$，方程 $GR=h$ 可解。对该块矩阵作可逆合同变换得到
+$$
+\begin{pmatrix}I&0\\-R^*&I\end{pmatrix}
+H_r
+\begin{pmatrix}I&-R\\0&I\end{pmatrix}
+=\begin{pmatrix}G&0\\0&M_{2r}-R^*GR\end{pmatrix}.
+$$
+平坦秩迫使右下块为零。因此商中的插入满足 $e_r=e_{<r}R$，其中 $e_{<r}(v_0,\ldots,v_{r-1})=\sum_{j<r}e_jv_j$。于是
+$$
+J^*C^{2r+1}J=e_r^*Ce_r
+=R^*e_{<r}^*Ce_{<r}R
+=R^*S_{r-1}R.
+$$
+左端已由规范实现唯一确定，故右端与解 $R$ 的选择无关。$\square$
+
+### 137.6 精确矩判据的带噪边界
+
+**定义 137.14（标量原子矩与前缀误差）。** 对有限正测度
+$$
+\mu=\sum_{\ell=1}^n w_\ell\delta_{\lambda_\ell},
+\qquad w_\ell>0,\quad\lambda_\ell\ge0,
+$$
+记 $m_k(\mu)=\sum_\ell w_\ell\lambda_\ell^k$。它由 $E=\mathbb R^n$、$C=\operatorname{diag}(\lambda_\ell)$、$J1=(\sqrt{w_\ell})_\ell$ 正实现。两份长度 $N+1$ 的标量矩前缀误差记为
+$$
+d_N(\mu,\nu)=\max_{0\le k\le N}|m_k(\mu)-m_k(\nu)|.
+$$
+
+**命题 137.15（精确相容与最小维数不是连续阈值）。** 不可正实现的 $0,\ldots,3$ 阶前缀可以任意接近可正实现的同阶前缀，同时保持两个块半正定与普通平坦。即使谱始终在 $[1,2]$ 内，正实现的 $0,\ldots,3$ 阶前缀所允许的最小维数也不由前缀误差连续确定。
+
+**证明。** 对任意 $\epsilon>0$，前缀 $(1,1,1,1+\epsilon)$ 的 $H_1$ 仍为命题137.3的秩一矩阵，而
+$$
+S_1=\begin{pmatrix}1&1\\1&1+\epsilon\end{pmatrix}\succ0.
+$$
+其核不相容，所以不可实现；当 $\epsilon\downarrow0$ 时却趋向单点正测度 $\delta_1$ 的前缀。
+
+再令
+$$
+\mu_\delta=(1-\delta)\delta_1+\delta\delta_2,\qquad 0<\delta<1.
+$$
+它的矩为 $m_k=1+\delta(2^k-1)$，任意固定长度的前缀都趋向 $\delta_1$ 的前缀。但
+$$
+\det H_1
+=\det\begin{pmatrix}1&1+\delta\\1+\delta&1+3\delta\end{pmatrix}
+=\delta(1-\delta)>0.
+$$
+因此 $\mu_\delta$ 的 $0,\ldots,3$ 阶前缀之最小实现维数为二，而极限前缀的最小实现维数为一；所有谱始终包含于 $[1,2]$。$\square$
+
+**命题 137.16（无共同谱上界时下一矩无局部控制）。** 对每个固定 $r\ge0$，存在真实正实现的序列，其 $0,\ldots,2r+1$ 阶矩共同趋向一，而第 $2r+2$ 阶矩趋于无穷。当 $r\ge2$ 时，这些序列中的每个 $H_r$ 还满足普通平坦。
+
+**证明。** 对 $R>1$ 取
+$$
+w_R=R^{-(2r+3/2)},\qquad
+\mu_R=(1-w_R)\delta_1+w_R\delta_R.
+$$
+权重严格正。对 $k\le2r+1$，
+$$
+|m_k(\mu_R)-1|=w_R(R^k-1)\le R^{-1/2}\longrightarrow0.
+$$
+另一方面，
+$$
+m_{2r+2}(\mu_R)=1-w_R+R^{1/2}\longrightarrow+\infty.
+$$
+两个不同节点的 Vandermonde 向量线性无关，故当 $r\ge2$ 时 $H_r$ 与 $H_{r-1}$ 的秩都为二。$\square$
+
+**命题 137.17（有界谱与固定秩不足以稳定内部演化）。** 即使限定一维最小正实现且谱在 $[1,2]$ 内，也不存在仅由任意固定长度矩前缀的绝对误差趋零，便迫使两个内部演化算子在正交识别下距离趋零的统一结论。
+
+**证明。** 对 $\delta>0$，两份一维实现取相同输入 $J1=\sqrt\delta$，演化分别为 $C_1=1$、$C_2=2$。两者均最小且满足共同谱界。其矩差为
+$$
+|M_k^{(2)}-M_k^{(1)}|=\delta(2^k-1).
+$$
+对每个固定 $N$，该差在 $0\le k\le N$ 上的最大值趋零；但任一一维正交识别只能乘以 $1$ 或 $-1$，两演化在这种识别下的算子范数差恒为一。与此同时，任一固定 $H_r$ 的唯一非零特征值为
+$$
+\delta\sum_{j=0}^r C_i^{2j},
+$$
+随 $\delta\downarrow0$ 趋零。故共同谱界与固定秩没有提供有效 Gram 方向的统一非退化裕量。$\square$
+
+**命题 137.18（逐个正定不提供统一无限时间控制）。** 对每个固定时间窗，严格正的一维响应可以趋近常值响应，而在全部非负时间上的一致误差不趋零。即使比较双方都严格正定，固定窗口内趋近也不推出无限时间一致趋近或积分趋近。
+
+**证明。** 令输入为 $J=1$，演化为 $C_\epsilon=\epsilon>0$。响应
+$$
+K_\epsilon(t)=e^{-\epsilon t}
+$$
+对任意固定 $0\le T<\infty$ 满足
+$$
+\sup_{0\le t\le T}|K_\epsilon(t)-1|
+\le\epsilon T\longrightarrow0,
+$$
+但
+$$
+\sup_{t\ge0}|K_\epsilon(t)-1|=1,
+\qquad
+\int_0^\infty K_\epsilon(t)\,dt=\epsilon^{-1}.
+$$
+若比较两个严格正演化 $\epsilon$ 与 $2\epsilon$，有限窗口内的响应差仍趋零；令 $u=e^{-\epsilon t}$，则
+$$
+\sup_{t\ge0}|e^{-\epsilon t}-e^{-2\epsilon t}|
+=\sup_{0<u\le1}(u-u^2)=\frac14.
+$$
+两积分之差为 $1/(2\epsilon)$，趋于无穷。这里每个算子都严格正定，但整个实现族没有共同正谱下界。$\square$
+
+## 137.99 追加锚
+
+## 138. 有限辅助关系、延迟坐标与适用语言
+
+### 138.1 辅助表示的五项合同
+
+**定义 138.1（任务相对的有限辅助表示）。** 固定第120节的合法实现、基础读数与允许上下文，包含任务需要的失败标签、共同来源和费用。有限辅助表示是有限个已声明函数组成的映射
+$$
+\Psi:X\to Z,\qquad \Psi(x)=(\psi_1(x),\ldots,\psi_r(x)),\qquad Z=\Psi[X].
+$$
+对每个任务 $f$ 给出恢复映射 $\bar f$ 及等式 $f=\bar f\Psi$；对每个允许操作给出实际像上的更新及等式 $\Psi T_a=\bar T_a\Psi$；对多元拼接另要求相应的合法性与逐孔替换条件。三者构成语义合同。若需要定量结论，再指定误差的范数、传播常数及获取和验证这份表示的资源合同。
+
+第120.2、120.3节的最小性相对于全部已声明实验的共同核；[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) 第3–5节处理其实际语言、几何运输和合法拼接。这里的有限坐标数不定义最短编码、最低实验费或最小误差。若 $\ker\Psi$ 恰等于完整实验核，称它是该任务语言的一份精确有限呈示；它是否可通过有限已取得记录恢复，仍须另给记录到 $\Psi$ 的因子化。
+
+有限非空状态、有限非空动作与有限实际读数像的情形，可引用既有 [ControlledSignatureStabilization](../../../D5/S3/ObserverMemory/Algorithms/ControlledSignatureStabilization.lean) 的 `controlled_signature_algorithm_correctness`：递归签名在有限深度稳定为完整受控行为核。读数以实际像为值域时满射，满足该声明的读数前提。把这个存在性变为有效的分区细化算法，还要求动作可枚举、读数比较可判定及更新可计算；无限状态系统没有从该有限声明取得终止保证。
+
+### 138.2 一个平方辅助量的完整实际像
+
+**命题 138.2（平方坐标与两步记录的最小行为表示）。** 取实参数 $\alpha,\beta,\gamma$，其中 $\gamma\ne0$，在 $X=\mathbb R^2$ 上设
+$$
+T(x,y)=(\alpha x,\beta y+\gamma x^2),\qquad q_0(x,y)=y.
+\tag{138.1}
+$$
+只允许 $T$ 的有限次迭代，并以每次的 $y$ 为读数。令
+$$
+\Psi(x,y)=(y,x^2),\qquad Z=\mathbb R\times[0,\infty),\qquad
+M=\begin{pmatrix}\beta&\gamma\\0&\alpha^2\end{pmatrix}.
+$$
+则 $\Psi[X]=Z$、$MZ\subseteq Z$、$\Psi T=M\Psi$，且
+$$
+\ker\Psi=\bigcap_{n\ge0}\ker(q_0T^n)
+=\ker\bigl(q_0,q_0T\bigr).
+\tag{138.2}
+$$
+所以 $\Psi$ 是该语言的最小动态稳定呈示。两步读数的实际像为
+$$
+D=\{(u,v)\in\mathbb R^2:(v-\beta u)/\gamma\ge0\},
+$$
+并有互逆映射
+$$
+(y,s)\longmapsto(y,\beta y+\gamma s),\qquad
+(u,v)\longmapsto\left(u,\frac{v-\beta u}{\gamma}\right).
+\tag{138.3}
+$$
+
+**证明。** 每个非负 $s$ 都是某个实数的平方，故实际像正是 $Z$。直接代入得到 $\Psi(T(x,y))=M\Psi(x,y)$，而 $\alpha^2s\ge0$ 保证更新保持实际像。若两个实现具有相同 $\Psi$，对 $M$ 的迭代给全部未来 $y$ 相同。反向只需前两次 $y$：第一次确定 $y$，第二次之差为 $\gamma(x^2-x'^2)$，由 $\gamma\ne0$ 得平方相同。于是两种核等式成立。
+
+任一保留当前读数并对 $T$ 闭合的表示，也保留当前和下一步读数，由式（138.3）便恢复 $\Psi$；因此它至少保留这些区别，得到所称最小性。最后两式复合为恒等映射，第二坐标非负恰对应 $D$，证明实际像与互逆关系。证毕。
+
+**命题 138.3（二阶记忆、合法初值与逆放大）。** 命题138.2的全部可见轨道满足
+$$
+y_{t+2}=(\beta+\alpha^2)y_{t+1}-\beta\alpha^2y_t.
+\tag{138.4}
+$$
+反之，满足该递推的实序列来自某个合法初态 $(x_0,y_0)$，当且仅当
+$$
+s_0=(y_1-\beta y_0)/\gamma\ge0.
+\tag{138.5}
+$$
+若两个初始读数各自的绝对误差不超过 $\epsilon\ge0$，则式（138.3）的直接线性解码满足
+$$
+|\widehat s_0-s_0|\le\frac{1+|\beta|}{|\gamma|}\epsilon.
+\tag{138.6}
+$$
+该界作为这份解码器在独立盒约束下的最坏误差可取到；它不声称解码结果必在合法半轴内，也不声称是所有合法恢复器的最优界。
+
+**证明。** 令 $s_t=x_t^2$，则 $s_{t+1}=\alpha^2s_t$、$y_{t+1}=\beta y_t+\gamma s_t$。代入下一步并消去 $s_t$，得到式（138.4）。反向定义 $s_t=(y_{t+1}-\beta y_t)/\gamma$，用二阶式得到 $s_{t+1}=\alpha^2s_t$。若 $s_0\ge0$，选实平方根 $x_0$ 并令 $x_t=\alpha^t x_0$，就有 $x_t^2=s_t$；配上既有 $y_t$ 得原系统轨道。若存在原初态，$s_0=x_0^2$ 必非负，得到充要性。没有要求 $\alpha,\beta$ 非零或互异。
+
+解码误差为 $(e_1-\beta e_0)/\gamma$。三角不等式给式（138.6）；选择 $e_1$ 和 $-\beta e_0$ 同号且分别取允许绝对值端点，可达到上界，$\beta=0$ 时只需 $|e_1|=\epsilon$。当 $\gamma\to0$ 而不为零时，代数逆仍存在，但这个逆的盒误差放大无共同有限上界。证毕。
+
+### 138.3 扩大干预或拼接语言会细化任务商
+
+**命题 138.4（保留平方不保持平移与相对符号）。** 对命题138.2的系统，增加允许干预 $U(x,y)=(x+1,y)$ 后，原表示 $\Psi$ 不再闭合。若两个组件之间新增目标 $x_1x_2$，仅保留各组件的 $(y_i,x_i^2)$ 也不足以恢复该目标。
+
+**证明。** $(1,y)$ 与 $(-1,y)$ 的辅助表示相同，干预后平方分别为四与零，因此不存在 $\bar U$ 使 $\Psi U=\bar U\Psi$。由于 $\gamma\ne0$，随后一次 $T$ 的 $y$ 响应也不同，所以这项细化实际进入扩大后的实验行为。对拼接取 $y_1=y_2=0$，比较 $(x_1,x_2)=(1,1)$ 与 $(-1,1)$；两个局部平方均为一，交叉目标却分别为一与负一。故目标不通过两个平方摘要因子化。两种失败都来自新增语言提出了原任务没有提出的区别，符合命题120.3的核细化方向。证毕。
+
+**命题 138.5（有限坐标不保证有限线性观测闭合）。** 存在一维非线性系统与一个当前读数，不能被包含该读数的任何有限维实线性观测函数空间精确封闭。
+
+**证明。** 在 $X=\mathbb R$ 上取 $T(x)=x^2$、当前读数 $f(x)=x$。若函数空间 $W$ 包含 $f$，且对拉回 $g\mapsto g\circ T$ 不变，则包含每个 $x\mapsto x^{2^n}$。这些函数线性独立：任一有限线性关系是一个在所有实数上恒零、次数互异的多项式，其每个系数必须为零。因此 $W$ 不可能有限维。
+
+这不排除单坐标上的非线性闭合 $x\mapsto x^2$，也不排除受限状态集、近似闭合或不同任务。有限 Koopman 不变子空间的成熟背景见 Brunton、Brunton、Proctor、Kutz，[*Koopman Invariant Subspaces and Finite Linear Representations of Nonlinear Dynamical Systems for Control*](https://arxiv.org/abs/1510.03007)。本命题只使用上述函数线性独立性。证毕。
+
+### 138.4 辅助关系的取得与证书稳定性
+
+**定义 138.6（辅助表示的三种比较）。** 对同一任务与允许语言，表示之间的语义比较采用第120节的因子化与行为核；实际取得的记录之间采用第121节的保留式扩展；资源比较采用第136节的有证书路径与已声明费用。若 $g$ 是实现上的新读数，$q'=(q,g)$ 满足 $\ker q'=\ker q\cap\ker g$；若 $g=h\circ q$，则这个交集等于 $\ker q$。前者允许新增区别，后者可以重组已有区别而不改变候选纤维。
+
+命题138.2中，只知 $y_0$ 时取得 $x_0^2$ 需要新的访问或下一次真实读数；已知 $(x_0,y_0)$ 时计算平方只是重表达。后处理是否便宜、终端解码是否可调用，由 [恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) 第8节的共同来源、合法中心和硬预算合同承担。第136节的已证宏展开说明工具可以保持语义后承而改变费用，不用无资源限制的信息熵替代这个费用问题。
+
+**命题 138.7（单步辅助缺陷的累计界与适用域）。** 在一份已声明、沿所考察轨道始终合法的辅助表示中，令真实与近似辅助量位于同一个实赋范线性空间，每个 $M_a$ 是该空间上的有界线性算子。设真实辅助量为 $s_n=\Psi(x_n)$，近似递推为 $\widehat s_{n+1}=M_{a_n}\widehat s_n$，且沿同一操作序列逐步有
+$$
+\|s_{n+1}-M_{a_n}s_n\|\le\varepsilon,\qquad
+\|M_{a_n}\|\le L,
+\quad \varepsilon,L\ge0.
+$$
+则 $e_n=\|s_n-\widehat s_n\|$ 满足
+$$
+e_n\le L^n e_0+\varepsilon\sum_{j=0}^{n-1}L^j.
+\tag{138.7}
+$$
+这里空和为零、$L^0=1$，因此包含 $L=0$。该界本身不证明后继始终合法，也不保证基于扰动读数选择的另一条自适应操作序列仍相同。
+
+**证明。** 三角不等式给 $e_{n+1}\le Le_n+\varepsilon$，非负 $L$ 保持归纳中的不等式方向，得到式（138.7）。这是上下文几何卷第6节一元缺陷递推的恒定增益特化；多元拼接还须使用该卷的合法混合输入与逐孔增益。若两侧采用不同的动作，当前假设没有约束不同动作之间的差，故本递推不适用。证毕。
+
+**定义 138.8（同一辅助结构的恢复、复合与代价证书）。** 对定义138.1的有限呈示，按需要分别附上：目标恢复等式、操作交织等式、允许上下文的合法拼接条件、误差界以及获取和验证费用。有限矩场景中，第137节先认证存在一个合法内部实现，再区分最小实现与所有未来的唯一性；有限时间字典中，恢复几何卷第9节以对偶接触裕度及接触基的逆控制近最优系数；实际执行场景中，该卷第8节以同一策略的终端纤维和硬预算定义可达到的风险。
+
+这些合同可以共用一份关系呈示，但其前提分别保留。特别地，精确可恢复、后继可复合、噪声可控、最优值取得及预算内可执行，不被定义成同一个性质。第9节逐窗最优值收敛而系数不收敛的例子，给出了不能仅凭代价收敛认定具体辅助实现稳定的明确边界。
+
+## 138.99 追加锚
