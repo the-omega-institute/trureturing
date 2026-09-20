@@ -8,8 +8,9 @@ internal static partial class CleanLanesCommand
     private static LaneRemovalResult RemoveLane(
         string repositoryRoot,
         RegisteredWorktree item,
+        string baseCommit,
         IWorktreeProcessRunner runner,
-        LaneProcessProbe laneProcessProbe)
+        DateTimeOffset now)
     {
         string actualHead;
         try
@@ -40,28 +41,9 @@ internal static partial class CleanLanesCommand
         }
 
         if (!string.Equals(actualHead, item.Head, StringComparison.Ordinal)
-            || !string.Equals(actualBranch, item.Branch, StringComparison.Ordinal))
+            || !string.Equals(actualBranch, item.Branch ?? string.Empty, StringComparison.Ordinal))
         {
             return Refused("unreadable");
-        }
-
-        ProcessOutput finalStatus;
-        try
-        {
-            finalStatus = RunGit(
-                item.Path,
-                ["status", "--porcelain=v1", "-z", "--untracked-files=all"],
-                runner,
-                "could not re-read lane status");
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            return Refused("unreadable");
-        }
-
-        if (finalStatus.StandardOutput.Length != 0)
-        {
-            return Refused("dirty");
         }
 
         RegisteredWorktree? refreshed;
@@ -88,26 +70,16 @@ internal static partial class CleanLanesCommand
 
         if (refreshed.Locked) return Refused("locked");
 
-        LaneProcessProbeOutcome processProbe;
-        try
-        {
-            processProbe = laneProcessProbe(CanonicalPath(item.Path), runner);
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            return Refused("in_use_unknown");
-        }
-
-        if (!processProbe.Success) return Refused("in_use_unknown");
-        if (processProbe.InUse) return Refused("in_use");
+        var reason = ReclaimBlockReason(item, baseCommit, runner, now);
+        if (reason is not null) return Refused(reason);
 
         try
         {
             RunGit(
                 repositoryRoot,
-                ["worktree", "remove", item.Path],
+                ["worktree", "remove", "--force", "--", item.Path],
                 runner,
-                "could not remove merged lane worktree");
+                "could not remove stale worktree");
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -118,14 +90,17 @@ internal static partial class CleanLanesCommand
 
         try
         {
-            DeleteObservedRef(repositoryRoot, item.Branch!, item.Head, runner);
+            if (item.Branch is not null && WorktreeCommand.IsManagedBranch(item.Branch))
+            {
+                DeleteObservedRef(repositoryRoot, item.Branch, item.Head, runner);
+            }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             return new(LaneRemovalOutcome.BranchRefRetained, "branch_ref_retained");
         }
 
-        return new(LaneRemovalOutcome.Removed, "merged_clean");
+        return new(LaneRemovalOutcome.Removed, "stale_behind");
     }
 
     private static LaneRemovalResult Refused(string reason) =>
@@ -139,10 +114,10 @@ internal static partial class CleanLanesCommand
             LaneRemovalOutcome.Refused =>
                 BlockedWorktree(item, result.Reason),
             LaneRemovalOutcome.Removed =>
-                new("merged_worktree", item.Path, item.Branch, item.Head, "removed", result.Reason),
+                new("stale_worktree", item.Path, item.Branch, item.Head, "removed", result.Reason),
             LaneRemovalOutcome.WorktreeRemoveFailed or LaneRemovalOutcome.BranchRefRetained =>
                 new(
-                    "merged_worktree",
+                    "stale_worktree",
                     item.Path,
                     item.Branch,
                     item.Head,
