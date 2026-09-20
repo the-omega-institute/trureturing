@@ -100,6 +100,63 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                             + "vanishes at time zero."))),
                 DescribeRole.Theorem),
             Describe.Remark(
+                DescribeId.Create("autonomous-information-objective-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Observation projection and autonomous state selection"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/giraldi2018projection"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/spantini2017goaloriented")),
+                Blocks(Paragraph(Text(
+                    "Giraldi and coauthors optimize projections of observations under "
+                    + "posterior KL, average KL and mutual-information objectives. Section 14 "
+                    + "of docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md instead "
+                    + "selects whole nonresonant state modes, retaining their exact posterior "
+                    + "marginal and recovering discarded modes from the thermal prior. The "
+                    + "resulting minimum principal-precision log-determinant is a distinct "
+                    + "objective. The declaration named here proves commutator-generated "
+                    + "observable closure only; it does not prove the statistical "
+                    + "selection or approximation claims.")))),
+            Describe.Remark(
+                DescribeId.Create("determinantal-forest-approximation-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Determinantal complexity and conditional forest guarantees"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/ohsaka2024determinant"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/althani2023tridiagonal"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/fampa2025maximumentropy")),
+                Blocks(Paragraph(Text(
+                    "Ohsaka studies determinant maximization hardness, including sparse "
+                    + "arrowhead support. Al-Thani and Lee give exact maximum-entropy "
+                    + "algorithms under special support assumptions; Fampa and Lee review "
+                    + "recent determinantal design. Section 14 supplies a separate minimum "
+                    + "KL reduction and exactly optimizes a pairwise surrogate on a forest. "
+                    + "Its full-objective guarantee is additive and fourth-order under a "
+                    + "normalized weak-coupling condition. The graph belongs to statistical "
+                    + "precision, not necessarily physical interactions. These remarks "
+                    + "acknowledge prior art without adding Lean claims or asserting "
+                    + "that a tree always permits exact determinant optimization.")))),
+            Describe.Remark(
+                DescribeId.Create("rounded-schur-modal-kl-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Rounded precision messages retain an explicit information budget"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/mahalanabis2012subset"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/althani2023tridiagonal")),
+                Blocks(Paragraph(Text(
+                    "Mahalanabis and Stefankovic already use precision-matrix messages and "
+                    + "finite grids for Gaussian subset selection on bounded-treewidth "
+                    + "graphs. Their squared-prediction-error objective and conditioning "
+                    + "dependence are retained as prior-art boundaries. Section 15 of the "
+                    + "unified theory proves a separate additive KL guarantee for whole "
+                    + "modal blocks on a forest: each upward pivot rounding is represented "
+                    + "as a positive semidefinite diagonal increment of the same selected "
+                    + "precision matrix. A finite-state recursion optimizes that rounded "
+                    + "objective. Its runtime depends on a certified spectral margin and "
+                    + "is not claimed to be an unconditional bit-polynomial FPTAS. "
+                    + "Exact rational checks concern finite instances only. The existing "
+                    + "Lean declaration neither proves these algorithmic claims nor "
+                    + "certifies the cited papers; no new Lean handle is introduced.")))),
+            Describe.Remark(
                 DescribeId.Create("statistical-reduction-source-scope"),
                 DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
                 H("Statistical reduction is a separate objective"),
