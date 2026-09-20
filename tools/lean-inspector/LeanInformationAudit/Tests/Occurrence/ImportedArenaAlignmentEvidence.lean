@@ -30,6 +30,12 @@ run_cmd do
 run_cmd do
   discard <| liftTermElabM <| resolveCanonicalArenaNameFromEvidence `QualityPure.inferredUse
 
+/-- error: IE-C003 ArenaSourceUnsupported arena=QualityPure.localImplicitDefaultUse owner=QualityPure.localImplicitDefaultUse -/
+#guard_msgs (error) in
+run_cmd do
+  discard <| liftTermElabM <|
+    resolveCanonicalArenaNameFromEvidence `QualityPure.localImplicitDefaultUse
+
 /-- error: IE-C003 ArenaSourceUnsupported arena=QualityContext.unresolved owner=QualityContext.unresolved -/
 #guard_msgs (error) in
 run_cmd do
@@ -37,6 +43,7 @@ run_cmd do
 
 run_cmd do
   for name in #[`QualityPure.deadDefaultUse, `QualityPure.deadDefaultTailUse,
+      `QualityPure.localImplicitDeadDefaultUse,
       `QualityPure.deadInferredUse, `QualityContext.directAlias,
       `QualityContext.classAlias, `QualityContext.qualifiedClassAlias] do
     unless (← liftTermElabM <| resolveCanonicalArenaNameFromEvidence name) ==

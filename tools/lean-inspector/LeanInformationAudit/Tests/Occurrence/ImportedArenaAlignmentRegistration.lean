@@ -31,7 +31,8 @@ private partial def withoutMetadata (e : Expr) : Expr :=
 -- survive the next import, without storing an accepted registration.
 run_cmd do
   for name in #[`QualityPure.defaultUse, `QualityPure.defaultTailUse,
-      `QualityPure.inferredUse, `QualityContext.unresolved] do
+      `QualityPure.inferredUse, `QualityPure.localImplicitDefaultUse,
+      `QualityContext.unresolved] do
     let .defnInfo info ← getConstInfo name | throwError "expected definition"
     let recovered ← liftTermElabM <| ArenaProvenance.declarationValue info
     unless withoutMetadata recovered == withoutMetadata info.value do
@@ -46,6 +47,7 @@ run_cmd do
 run_cmd do
   for (name, expected) in #[
       (`QualityPure.deadDefaultUse, `ProvenanceProbe.arena),
+      (`QualityPure.localImplicitDeadDefaultUse, `ProvenanceProbe.arena),
       (`QualityPure.deadDefaultTailUse, `ProvenanceProbe.arena),
       (`QualityPure.deadInferredUse, `ProvenanceProbe.arena),
       (`QualityPure.explicitDefaultUse, `QualityPure.explicitDefaultUse),

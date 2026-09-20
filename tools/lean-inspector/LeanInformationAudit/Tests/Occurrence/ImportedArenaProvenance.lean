@@ -20,7 +20,8 @@ run_cmd do
   let localCopyInfo ← getConstInfo `ProvenanceProbe.localFunctionCopy
   unless localAliasInfo.value! == localCopyInfo.value! do
     throwError "the local-function eta counterexample must have identical imported Expr values"
-  for name in #[`ProvenanceProbe.localFunctionAlias, `ProvenanceProbe.localFunctionCopy] do
+  for name in #[`ProvenanceProbe.localFunctionAlias, `ProvenanceProbe.localFunctionCopy,
+      `ProvenanceProbe.localImplicitAlias] do
     let actual ← liftTermElabM <| resolveCanonicalArenaName name
     logInfo m!"local-function provenance: {name}: {actual}"
   for name in #[`ProvenanceProbe.aliasArena, `ProvenanceProbe.copyArena] do

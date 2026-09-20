@@ -97,6 +97,10 @@ private partial def recover (stx : Syntax) (value : Expr) : MetaM Expr := do
     if type.isForall then return reject stx value
     return value
   if stx.isIdent then
+    -- Expected-type implicit lambdas have no source binder. Align the identifier
+    -- under the compiler's binders, still checking inserted arguments in its body.
+    if let .lam _ _ _ bi := value then
+      if !bi.isExplicit then return ← recoverLambdas 1 stx value
     -- Even a bare identifier can elaborate to an application (defaults and
     -- inferred arguments). No source subterm justifies those argument values.
     -- Mark each argument, not the application: only a live argument can fail.

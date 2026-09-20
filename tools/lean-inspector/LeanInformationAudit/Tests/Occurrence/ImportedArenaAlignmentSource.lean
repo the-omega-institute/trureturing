@@ -36,6 +36,13 @@ def deadDefaultCopy (_a : Arena :=
     { State := arena.State, stateFintype := arena.stateFintype,
       stateDecidableEq := arena.stateDecidableEq }) : Arena := arena
 def deadDefaultUse : Arena := deadDefaultCopy
+-- Expected-type lambdas must not hide inserted default arguments from recovery.
+def localImplicitDefaultUse : Arena :=
+  let copy : {_u : Unit} → Arena := defaultCopy
+  copy (_u := ())
+def localImplicitDeadDefaultUse : Arena :=
+  let copy : {_u : Unit} → Arena := deadDefaultCopy
+  copy (_u := ())
 def defaultTail (_u : Unit) (a : Arena :=
     { State := arena.State, stateFintype := arena.stateFintype,
       stateDecidableEq := arena.stateDecidableEq }) : Arena := a
