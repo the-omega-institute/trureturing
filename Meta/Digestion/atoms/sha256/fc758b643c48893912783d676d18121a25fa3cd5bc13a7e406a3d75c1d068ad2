@@ -1,0 +1,7 @@
+**证明。** 式(10.19)是式(10.10)与引理10.6的组合。POVM 是到经典对角态的 CPTP 通道，而对角态的半迹距离正好是总变差距离。若输出分布为 $p,q$，写 $\Delta=p-q$，则 $\sum\Delta=0$、正部分与负部分的总质量均为 $\operatorname{TV}(p,q)$。因此 $0\le\ell\le L$ 给
+$$
+\left|\sum_y\ell(y)(p(y)-q(y))\right|
+\le L\,\operatorname{TV}(p,q).
+$$
+$\square$
+
