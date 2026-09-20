@@ -377,6 +377,21 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("unreadable", ReasonFor(result.Output, lane));
     }
 
+    [Fact]
+    public void TempSnapshotContainingLockedWorktreeIsRetained()
+    {
+        using var fixture = new CleanLanesFixture();
+        var snapshot = fixture.AddGitlessJudgeSnapshot("trureturing-parent-snapshot");
+        var child = fixture.AddNestedWorktree(snapshot);
+        fixture.LockLane(child);
+        var result = fixture.Run("--force");
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(snapshot));
+        Assert.True(Directory.Exists(child));
+        Assert.True(fixture.WorktreeRegistered(child));
+        Assert.Equal("locked", ReasonFor(result.Output, child));
+    }
+
     private sealed partial class CleanLanesFixture : IDisposable
     {
         internal bool BranchExists(string branch)

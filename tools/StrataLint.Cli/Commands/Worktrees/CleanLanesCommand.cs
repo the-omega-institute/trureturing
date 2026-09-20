@@ -332,6 +332,12 @@ internal static partial class CleanLanesCommand
             .Order(StringComparer.Ordinal))
         {
             if (registeredPaths.Contains(path)) continue;
+            if (registeredPaths.Any(registered => IsNestedWorktree(path, registered)))
+            {
+                events.Add(new CleanLaneEvent("temp_judge", path, null, null,
+                    "skipped", "nested_worktree"));
+                continue;
+            }
             if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != 0)
             {
                 events.Add(new CleanLaneEvent(
