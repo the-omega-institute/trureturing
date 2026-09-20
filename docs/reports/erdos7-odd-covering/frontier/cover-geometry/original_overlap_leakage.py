@@ -19,7 +19,8 @@ def main():
     counts = dict(families=0, point_checks=0, strict_leakage_instances=0,
                   slack_checks=0, stage_identity_checks=0,
                   stage_period_points=0, localized_recurrence_checks=0,
-                  prime_collision_checks=0)
+                  prime_collision_checks=0, odd_ideal_checks=0,
+                  odd_localized_recurrence_checks=0)
     p = 5
     old_mods = (3,9)
     current_mods = (5,15,45,25,75,225)
@@ -52,6 +53,15 @@ def main():
                 'Only minimal-class cross-prime overlap pays the loss')
         require(Un >= (1-M)*U-(p*M-1)*v+r,
                 'Internal bucket excess is a favorable correction')
+        odd_M = M/2
+        odd_ell = odd_M*measure(E)-S
+        require(odd_ell >= 0, 'Odd upward ideal omits exactly the factor at 2')
+        require(Un == (1-odd_M)*U-p*odd_M*u+v+r
+                +odd_M*delta+odd_M*z+odd_ell,
+                'Odd-only original-Haar signed slack identity')
+        require(Un >= (1-odd_M)*U-(p*odd_M-1)*u+(v-u)+r,
+                'Odd-only minimal-class cross-prime leakage bound')
+        counts['odd_ideal_checks'] += 1
         counts['strict_leakage_instances'] += int(u > 0)
         counts['families'] += 1
         counts['point_checks'] += Q
@@ -67,6 +77,8 @@ def main():
         localized_events=set()
         lower=F(0)
         prefix_factor=F(1)
+        odd_lower=F(0)
+        odd_prefix_factor=F(1)
         for pp in (3,5,7):
             stage = [(a,d) for a,d in rows
                      if d%pp == 0 and all(d%qq != 0 for qq in (3,5,7) if qq > pp)]
@@ -88,11 +100,20 @@ def main():
                 prefix_factor *= 1-coefficient
                 require(F(Q-len(O|B),Q) >= lower,
                         'Iterated minimal-class budget with rebates')
+                odd_coefficient = coefficient/2
+                odd_lower = ((1-odd_coefficient)*odd_lower
+                             -(pp*odd_coefficient-1)*u+(v-u)+r)
+                odd_prefix_factor *= 1-odd_coefficient
+                require(F(Q-len(O|B),Q) >= odd_lower,
+                        'Odd-only iterated minimal-class budget')
+                require(odd_prefix_factor**2 >= prefix_factor,
+                        'Odd prefix product dominates the full product square root')
                 counts['localized_recurrence_checks'] += 1
+                counts['odd_localized_recurrence_checks'] += 1
             O |= B
             prime_unions.append(B)
             if pp == 3:
-                initial = lower = F(Q-len(O),Q)
+                initial = lower = odd_lower = F(Q-len(O),Q)
         excess = F(sum(max(0,sum(x%d == a for a,d in rows)-1)
                        for x in range(Q)),Q)
         prime_overlap = F(sum(max(0,sum(x in B for B in prime_unions)-1)
@@ -107,6 +128,8 @@ def main():
                 'Localized minimal-class budget is no larger than total excess')
         require(F(Q-len(O),Q) >= initial*prefix_factor-(7*F(5,8)-1)*minimal,
                 'Uniform endpoint coefficient for the minimal-class budget')
+        require(F(Q-len(O),Q) >= initial*odd_prefix_factor-(7*F(5,16)-1)*minimal,
+                'Odd-only uniform endpoint coefficient')
         require(minimal <= 2*F(len(localized_events),Q),
                 'Event union controls a sum with two eligible prime stages')
         counts['stage_identity_checks'] += 1
