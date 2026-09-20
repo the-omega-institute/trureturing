@@ -59,7 +59,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py", true)]
     [InlineData("tools/scripts/preflight.sh", false)]
     [InlineData("tools/scripts/agent/openproblem/TARGET-GATES.md", false)]
-    [InlineData("tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", false)]
     public void RegisteredJudgeChangesKeepDeltaReachableWithOrWithoutNoResourceContent(string judge, bool mixed)
     {
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
@@ -91,6 +90,39 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             Assert.Equal("not-required", plan["stages"]![stage]!["status"]!.GetValue<string>());
         foreach (var field in new[] { "projects", "checks", "steps", "lean_targets" })
             Assert.Empty(plan["execution"]![field]!.AsArray());
+    }
+
+    [Theory]
+    [InlineData("push", false)]
+    [InlineData("push", true)]
+    [InlineData("pr", false)]
+    [InlineData("pr", true)]
+    public void ReviewTemplateChangesRetainAdmissionWithoutEngineering(string mode, bool mixed)
+    {
+        var template = "tools/scripts/agent/openproblem/templates/"
+            + (mixed ? "judgement-form-check-template.md" : "mirror-check-template.md");
+        var plan = Plan(template, mixed ? RegisteredNoResourceContent : "", mode);
+        Assert.Equal(new[] { "delta-judge", "filemap" }, Strings(plan["declared_require"]!));
+        Assert.Empty(plan["execution"]!["tests"]!.AsArray());
+        Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
+        Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
+        Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+        Assert.DoesNotContain("engineering", Strings(plan["cache_layers"]!));
+        Assert.Equal(mixed ? 2 : 1, plan["paths"]!.AsArray().Count);
+        if (mode == "push")
+        {
+            Assert.Equal(new[] { "build", "filemap" }, Strings(plan["resources"]!));
+            Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
+            Assert.Equal(new[] { "current", "judge" }, Strings(plan["cache_layers"]!));
+            Assert.Equal("not-applicable", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
+        }
+        else
+        {
+            Assert.Equal(new[] { "build", "delta-judge", "filemap", "lean", "lean-report" },
+                Strings(plan["resources"]!));
+            Assert.Equal(new[] { "lean-report", "filemap" }, Strings(plan["execution"]!["steps"]!));
+            Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
+        }
     }
 
     [Theory]
