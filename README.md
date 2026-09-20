@@ -1,77 +1,37 @@
 # trureturing
 
-**Fibonacci coordinates. Reusable proofs. An open frontier.**
+**A library for discovering truth.**
 
-[English](#a-coordinate-system-you-can-check) · [中文](#中文) ·
+[Examples](#three-places-to-look) · [First run](#first-run) ·
 [Lean source](D5/) · [Read the book](https://the-omega-institute.github.io/trureturing-mdbook/) ·
-[Contribute](docs/CONTRIBUTING.md) · [Apache-2.0](LICENSE)
+[Contribute](#take-part) · [Apache-2.0](LICENSE)
+
+trureturing pursues truth by turning questions into knowledge others can check
+and build on. The name reflects the project's intent: **true · return · Turing**
+— truth, return, and Turing computation.
+
+Ask a precise question. Use computation and tests to distinguish hypotheses.
+Look for a proof, a counterexample, or the information still missing. Keep the
+checked result with its assumptions, and make the unanswered question explicit.
+People and AI can contribute; what others can reuse is the checked artifact.
 
 > The last line of the ledger is always the first line of the next round.
 
-## A coordinate system you can check
+A proof becomes a premise for further work. A refutation closes off a mistaken
+route. A limit on what observations reveal tells us what to ask or measure next.
+The purpose is to let understanding accumulate without losing its foundations:
+each inquiry starts with what the last one actually established.
 
-What becomes visible when we write numbers in a different coordinate system?
-trureturing is an open research project studying **golden integers, Fibonacci
-weights and Zeckendorf representations**, with proofs in Lean 4.
-
-Start with the weights `1, 2, 3, 5, 8, 13, …`. Every natural number has a unique
-sum of distinct, nonadjacent weights: `42 = 34 + 8`. From this concrete encoding,
-the project studies digit normalization, arithmetic in the golden integers
-ℤ[φ], and connections to words, dynamics and analysis. Here φ is the golden
-ratio, satisfying `φ² = φ + 1`.
-
-The aim is to turn research into results another person can inspect and build
-on. Each proof has a precise statement and explicit dependencies. Admitted
-results are recorded in a frozen ledger; new work extends that foundation.
-The frontier holds the questions still to be settled.
-
-The philosophical motivation is simple: understanding should accumulate without
-losing track of what it rests on. “The ledger” is that working metaphor.
-The mathematical claims live in Lean statements and proofs, under their stated
-assumptions and axiom dependencies.
-
-```mermaid
-flowchart TD
-    accTitle: A growing ledger of proofs
-    accDescr: Established premises support proved results. A dashed edge leads to an open question.
-    A([Definitions and upstream lemmas]) --> B[Proved: reusable result]
-    B --> C[Proved: further result]
-    C -.-> Q{Open: next question}
-    classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
-    classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
-    classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
-    class A foundation
-    class B,C proved
-    class Q frontier
-```
-
-*Schematic, not a dependency report.* Solid arrows show results building on
-established premises. The dashed branch and diamond mark a question, with no
-proof claimed. In words: definitions → proved results → further results and
-new questions. Color is not needed to distinguish the states.
+Today, the library contains Lean 4 proofs, research inputs, experiments and
+tools for checking and recording results. Golden integers, Fibonacci weights
+and Zeckendorf representations are one research thread; the examples below
+also reach into conjecture refutation and the limits of local observations.
+The ambition is to make more of this discovery process automatic. Choosing
+the next fruitful question remains an open part of that ambition.
 
 ## Three places to look
 
-**01 · Decode a number.**
-[WDigits](D5/S0/Conventions/WDigits.lean) gives canonical encoding, decoding and
-uniqueness for natural numbers. It directly reuses **Mathlib's Zeckendorf
-development**. `decode_wdigits` says that summing the selected Fibonacci weights
-recovers the input; `wdigits_unique` identifies any canonical representation
-with that encoding. [Read the explanation](Blueprint/D5/S0/Conventions/WDigits.md).
-
-**02 · Follow what addition leaves behind.**
-Sum φⁱ over a number's occupied Fibonacci indices i, and call that real value
-β(n). Addition has a small, exact discrepancy in these coordinates:
-
-$$\beta(a)+\beta(b)-\beta(a+b)\in\{-1,0,1\}.$$
-
-[`deficit_three_valued`](D5/S1/Deficit/DeficitThreeValued.lean) proves this for
-all natural inputs. Its proof combines an integer certificate with bounds on
-the conjugate coordinate; it is an unbounded theorem about the defined deficit.
-[Definitions](D5/S1/Deficit/DeficitInteger.lean) ·
-[Explanation](Blueprint/D5/S1/Deficit/DeficitThreeValued.md).
-
-**03 · See a formula fail.**
+**01 · Refute a conjecture.**
 For positive n, let a(n) be the greatest integer k with `(1 + 1/n)^k ≤ 2`.
 Greathouse's conjectured formula for OEIS A175406 was
 `a(n) = floor((n + 1/2) log 2)`. At `n = 1121626023352383`, the formula gives
@@ -82,6 +42,36 @@ This refutes the literal universal formula; neither minimality of the witness
 nor priority is claimed. [Problem and sources](Problems/oeis-a175406-log-two-floor-refutation.md) ·
 [Explanation](Blueprint/D5/S0/Certificates/GreathouseLogTwoFloorRefutation.md).
 
+**02 · Find what observations cannot tell you.**
+Can knowing each part of a quantum system determine the whole? The
+[local-marginal theorem](D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.lean)
+constructs two distinct two-qubit states: a pure Bell state and the equal
+classical mixture of `00` and `11`. Both have exactly the same reduced state
+on each qubit. Even these complete local descriptions cannot identify the
+joint state.
+
+For finite factor dimensions `m, n ≥ 1` with `m × n > 1`, the theorem also
+proves that the correlation sector in the Hermitian tensor model is orthogonal
+to the local sectors and has real dimension `(m² − 1)(n² − 1)`. This identifies
+precisely which directions the local description omits.
+[Explanation](Blueprint/D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.md).
+
+**03 · Build a result that holds beyond the examples.**
+Write a natural number as its unique sum of nonadjacent Fibonacci weights
+`1, 2, 3, 5, 8, …`. Replace each occupied weight Fᵢ by φⁱ, where φ is the
+golden ratio, and call the resulting real value β(n). How far does this
+coordinate fail to preserve addition?
+
+$$\beta(a)+\beta(b)-\beta(a+b)\in\lbrace-1,0,1\rbrace.$$
+
+[`deficit_three_valued`](D5/S1/Deficit/DeficitThreeValued.lean) proves this for
+all natural inputs. Its proof combines an integer certificate with bounds on
+the conjugate coordinate. The discrepancy is also the signed count of the two
+lowest repeated-carry rules during digit normalization: a reusable connection
+between an arithmetic algorithm and an exact bound, however large the inputs.
+[Definitions and carry-count theorem](D5/S1/Deficit/DeficitInteger.lean) ·
+[Explanation](Blueprint/D5/S1/Deficit/DeficitThreeValued.md).
+
 ## What is proved, and what is open
 
 [D5/](D5/) contains the formal development. [Theory prose](docs/develop/theory/)
@@ -89,7 +79,31 @@ supplies research input, and [experiments](Evidence/) supply observations within
 their declared scope. Neither prose nor numerical agreement establishes a
 Lean theorem. The C# harness checks repository rules, proof reports and frozen
 state; independent review examines whether statements faithfully express the
-intended mathematics.
+intended mathematics. Admitted proofs are recorded in the
+[frozen ledger](Golden/Frozen/state/), with precise Lean statements and their
+assumptions and axiom dependencies as the formal basis for reuse.
+
+```mermaid
+flowchart TD
+    accTitle: From inquiry to reusable knowledge and the next question
+    accDescr: Ask a question, compute and test hypotheses, check a proof or refutation, and keep a reusable result. A dashed arrow leads to the next open question.
+    Q([Ask a precise question]) --> T[Compute and test hypotheses]
+    T --> P[Check a proof or refutation]
+    P --> R[[Keep a reusable result]]
+    R -.-> N{What remains open?}
+    classDef foundation fill:#edf2f7,stroke:#475569,color:#172033
+    classDef proved fill:#e2f3ec,stroke:#28745b,color:#133f32
+    classDef frontier fill:#fff4d6,stroke:#95651b,color:#553a10,stroke-dasharray:5 4
+    class Q,T foundation
+    class P,R proved
+    class N frontier
+```
+
+*A schematic of inquiry, not runtime behavior or dependency data.* In words:
+question → computation and tests → checked proof or refutation → reusable
+result → next open question. A question can remain unresolved at any stage;
+tests alone do not establish a theorem. The dashed arrow and diamond mark the
+open frontier, so color is not needed to read the distinction.
 
 The [book](https://the-omega-institute.github.io/trureturing-mdbook/) is a
 browsable, searchable projection of [Blueprint/](Blueprint/), published by
@@ -104,8 +118,7 @@ Two explicit boundaries live in [Hearts.lean](D5/X_Frontier/Hearts.lean):
   Defining that proposition supplies no proof of it.
 
 These are open research obligations, not established impossibility results.
-This repository does **not** establish the Riemann hypothesis or claim that
-the universe runs on φ.
+This repository does **not** establish the Riemann hypothesis.
 
 ## First run
 
@@ -125,6 +138,8 @@ cd trureturing
 make lean LEAN_TARGETS=D5.S0.Conventions.WDigits
 ```
 
+The [WDigits module](D5/S0/Conventions/WDigits.lean) directly reuses
+**Mathlib's Zeckendorf development** to encode and decode natural numbers.
 From that same directory, run this temporary example:
 
 ```sh
@@ -147,10 +162,7 @@ indices**, so its weights are `F₉ = 34` and `F₆ = 8`; it is not a list of th
 weights themselves. `#check` displays the general decoding theorem's type.
 Evaluating 42 illustrates the encoding; the theorem covers every natural number.
 
-中文：先安装上述钉版工具，克隆并构建 WDigits，再在仓库根目录运行同一段示例。
-输出 `[9, 6]` 是 Fibonacci 下标，对应权重 `34` 和 `8`，解码结果为 `42`。
-
-For edits, use the [isolated worktree and check workflow](docs/CONTRIBUTING.md).
+[Read the explanation](Blueprint/D5/S0/Conventions/WDigits.md).
 `make help` lists the repository's command entry points.
 
 ## Take part
@@ -159,57 +171,13 @@ Start with one of the examples above. Reproduce it, improve its explanation,
 report a mismatch between prose and a statement, or explore a precise open
 question. Contributions in English and Chinese are welcome.
 
-The [contribution guide](docs/CONTRIBUTING.md) offers routes for readers,
-Lean contributors and tool builders, with setup, checks and pull requests to
-`dev`. [Issues](https://github.com/the-omega-institute/trureturing/issues)
-are a place to bring a concrete question or reproducible problem.
-
-## 中文
-
-**Fibonacci 坐标，可复用的证明，仍然开放的前沿。**
-
-换一套坐标，数的哪些结构会显现出来？trureturing 围绕黄金整数 ℤ[φ]、
-Fibonacci 权重和 Zeckendorf 表示展开研究，并用 Lean 4 写下精确的陈述与证明。
-从 `1, 2, 3, 5, 8, …` 出发，每个自然数都能唯一写成互不相邻的不同权重之和，
-例如 `42 = 34 + 8`。沿着这个编码，可以研究数位归一化、黄金整数算术，
-以及它们与符号序列、动力系统和分析的联系。
-
-我们希望理解能够累积：每条结论说清自己的前提，每份证明可检查、可复用，
-被接纳的结果进入冻结账本，尚未解决的问题留在前沿。上方示意图中的实线连接
-已建立的结果，虚线与菱形表示待解问题。这也是“账本”这个比喻的用意：
-**上一轮账本的最后一行，始终是下一轮的第一行。** 这是研究动机；数学断言
-由 Lean 中的陈述、证明及其假设和公理依赖承担。
-
-可以从三个具体结果开始：
-
-- **编码与解码：** [WDigits](D5/S0/Conventions/WDigits.lean) 直接复用 Mathlib
-  的 Zeckendorf 理论，给出规范编码、解码和唯一性。
-  [阅读说明](Blueprint/D5/S0/Conventions/WDigits.md)。
-- **加法留下多少差额：** 把占用的 Fibonacci 下标读成 φ 的幂，再求和得到 β。
-  对所有自然数 a、b，[三值定理](D5/S1/Deficit/DeficitThreeValued.lean)
-  证明 `β(a) + β(b) − β(a+b)` 只取 −1、0、1。
-  [阅读说明](Blueprint/D5/S1/Deficit/DeficitThreeValued.md)。
-- **一个可检查的反例：** 对满足 `(1 + 1/n)^k ≤ 2` 的最大整数 k，Greathouse
-  的 floor 公式在 `n = 1121626023352383` 给出的值比实际值多 1。
-  [Lean 证明](D5/S0/Certificates/GreathouseLogTwoFloorRefutation.lean)
-  反驳的是这条字面公式的全称断言，不主张反例最小或发现优先权。
-  [问题与来源](Problems/oeis-a175406-log-two-floor-refutation.md)。
-
-边界同样公开：[Hearts.lean](D5/X_Frontier/Hearts.lean) 中 O-5 仍有未完成的
-证明体（`sorry`），O-6 只定义了待证的 Weil 正性命题。两者尚未解决，
-不表示已证明它们不可证。本项目没有证明黎曼假设，也不主张宇宙以 φ 运行。
-理论散文是研究输入，实验只在声明的范围内给出读数；
-[在线书](https://the-omega-institute.github.io/trureturing-mdbook/) 是生成的讲解投影，
-Lean 源码才承担形式结论。
-
-[运行第一个例子](#first-run) · [参与贡献](docs/CONTRIBUTING.md) ·
-[提出问题](https://github.com/the-omega-institute/trureturing/issues) · [许可](LICENSE)
+The [contribution guide](docs/CONTRIBUTING.md) walks you through forks, isolated
+worktrees, checks and pull requests to `dev`.
+[Issues](https://github.com/the-omega-institute/trureturing/issues) are a place
+to bring a concrete question or reproducible problem.
 
 ## License and foundations
 
 Released under [Apache-2.0](LICENSE). Built on
 [Lean](https://lean-lang.org/) and [Mathlib](https://github.com/leanprover-community/mathlib4).
 Classical results and upstream proofs remain credited to their sources.
-
-本项目采用 [Apache-2.0 许可](LICENSE)，建立在 Lean 与 Mathlib 的工作之上。
-已有理论与上游证明归其原始来源。
