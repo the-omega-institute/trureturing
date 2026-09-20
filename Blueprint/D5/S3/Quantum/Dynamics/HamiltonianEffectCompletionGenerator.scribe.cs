@@ -98,7 +98,53 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     Paragraph(Text(
                         "One-by-one complex matrices commute, so the commutator derivative "
                             + "vanishes at time zero."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Remark(
+                DescribeId.Create("statistical-reduction-source-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Statistical reduction is a separate objective"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/spantini2017goaloriented")),
+                Blocks(Paragraph(Text(
+                    "Spantini and coauthors study goal-oriented low-rank Gaussian posterior "
+                    + "approximations with a specified statistical loss. Their posterior-precision "
+                    + "weighted objective is distinct from the energy-coordinate loss and invariant "
+                    + "projection constraint used in Section 13 of "
+                    + "docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md. The Lean declaration "
+                    + "referenced here concerns commutator-generated observable closure only; it "
+                    + "does not prove that section's Bayesian optimum or error bounds.")))),
+            Describe.Remark(
+                DescribeId.Create("symplectic-reduction-source-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Symplectic representation and exact dynamical descent"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/buchfink2022optimal"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/feng2026symplectic")),
+                Blocks(Paragraph(Text(
+                    "Buchfink, Glas and Haasdonk provide prior art for optimal symplectic bases "
+                    + "in energy coordinates under their periodic linear-system assumptions. "
+                    + "Only their institutional abstract and bibliographic record were retrieved "
+                    + "in this research pass. Feng and coauthors' 2026 preprint studies "
+                    + "symplectic-embedding approximation on compact contractible domains. "
+                    + "A structure-preserving representation does not alone establish that a "
+                    + "particular full vector field descends to it. These are contextual sources, "
+                    + "not additional conclusions certified by the existing Lean declaration.")))),
+            Describe.Remark(
+                DescribeId.Create("quantum-sufficiency-source-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("A sufficient quantum family needs a recovery channel"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/koashi2002nondisturbance"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/vanluijk2026sufficiency")),
+                Blocks(Paragraph(Text(
+                    "Koashi and Imoto analyze the information-bearing and redundant factors "
+                    + "of specified quantum-state families. Van Luijk and Wilming distinguish "
+                    + "CPTP-sufficient algebras from structures sufficient only for positive maps. "
+                    + "The unified theory's logical-qubit example uses actual CPTP encoding and "
+                    + "decoding on a restricted invariant family. Closure of a linear span of "
+                    + "effects, by itself, does not establish recovery of arbitrary quantum "
+                    + "states. These literature acknowledgements add no Lean theorem or "
+                    + "machine-verified claim about statistical sufficiency.")))))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {
@@ -155,11 +201,11 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
             Forall, Sp, effect, Sp, InMacro, Sp, matrices, Comma, Sp,
             Derivative(hamiltonian, effect), Sp, Eq, Sp,
             F.Id("i"), Sp, Open, Commutator(hamiltonian, effect), Close);
+        Formula commutator = Call(F.Id("ad"), hamiltonian);
         Formula orbitClause = Seq(
             Exists, Sp, time, Sp, InMacro, Sp, RealNumbers(), Comma, Sp,
             effect, Sp, InMacro, Sp, initial, Comma, Sp,
             observable, Sp, Eq, Sp, Orbit(hamiltonian, effect, time));
-        Formula commutator = Call(F.Id("ad"), hamiltonian);
         Formula spanClause = Seq(
             Call(
                 F.Id("span"),
@@ -182,7 +228,8 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
 
     private static Formula ZeroHamiltonianFormula()
     {
-        Formula n = F.Id("n"), effect = F.Id("E"), time = F.Id("t");
+        Formula hamiltonian = F.Id("H"), effect = F.Id("E"), time = F.Id("t");
+        Formula n = F.Id("n");
         return Disp(Seq(
             Forall, Sp, n, Comma, Sp, Call(F.Id("Fintype"), n), Comma, Sp,
             effect, Sp, InMacro, Sp, Matrices(n), Comma, Sp,
