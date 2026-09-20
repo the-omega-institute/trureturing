@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [An anchored order with at most four earlier neighbours is noncovering: a record-minimum potential pays for arbitrary prime order and gives full Haar density greater than (107/240000)(5/12)^M](../docs/reports/erdos7-odd-covering/problem-details/44-anchored-four-predecessor-orders-via-record-minimum-potential.md)
 - [In arbitrarily many naturally ordered prime coordinates, identical complete AP event laws leave a sharp nonzero interval of half-threshold first-hit costs](../docs/reports/erdos7-odd-covering/problem-details/43-sharp-first-hit-ambiguity-with-identical-complete-event-laws.md)
 - [The complete original-AP event law can agree while first-hit costs differ; a two-level cap-aware LP has exact optimum 97/5775](../docs/reports/erdos7-odd-covering/problem-details/42-two-level-fixed-colors-and-first-hit-moment-obstruction.md)
 - [Natural increasing prime order with at most four smaller neighbours gives full Haar density greater than (3/800)(11/24)^M, including books with three private primes per page](../docs/reports/erdos7-odd-covering/problem-details/41-natural-four-predecessor-orders-are-noncovering.md)
