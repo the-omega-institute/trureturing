@@ -240,4 +240,87 @@ theorem lgs_path_potential {s t : List ℕ} {length weight : ℕ}
   | nil => simp
   | cons step tail ih => have := lgs_move_potential step; omega
 
+/-- Every switch phase can finish, and every legal zero-reward path has the
+same sorted endpoint and exact inversion length when no switch remains. -/
+theorem switch_normalization (s : List ℕ) :
+    ∃ t, LGSPath s t (inv (decode s)) 0 ∧ t.Pairwise (· ≤ ·) ∧ s.Perm t ∧
+      ∀ u length, Path s u length 0 → (∀ p v, ¬Move p .switch u v) →
+        u = t ∧ length = inv (decode s) ∧ rawCounts u = rawCounts s := by
+  classical
+  have no_switch (l : List ℕ) :
+      (∀ p v, ¬Move p .switch l v) ↔ l.Pairwise (· ≤ ·) := by
+    constructor
+    · intro h
+      apply List.isChain_iff_pairwise.mp
+      apply List.isChain_iff_forall_rel_of_append_cons_cons.mpr
+      intro x y P S heq
+      by_contra hn
+      have hm := Move.switch P S x y (by omega)
+      apply h P.length (P ++ [y, x] ++ S)
+      simpa [heq] using hm
+    · intro h p v hm
+      cases hm with
+      | switch P S x y hxy =>
+        have := (List.pairwise_append.mp (List.pairwise_append.mp h).1).2.1
+        simp only [List.pairwise_cons, List.mem_cons, List.not_mem_nil,
+          or_false, forall_eq] at this
+        omega
+  have zero_path {a b : List ℕ} {n w : ℕ} (path : Path a b n w) (hw : w = 0) :
+      a.Perm b ∧ n + inv (decode b) = inv (decode a) := by
+    induction path with
+    | nil => exact ⟨List.Perm.refl _, by simp⟩
+    | @cons p act a b c n w move tail ih =>
+      have hw' : w = 0 := by omega
+      have hr : reward a act = 0 := by omega
+      obtain ⟨perm, eqn⟩ := ih hw'
+      cases move with
+      | switch P S i j hij =>
+        have hm : LGSMove P.length .switch (P ++ [i, j] ++ S) (P ++ [j, i] ++ S) := by
+          refine ⟨Move.switch P S i j hij, ?_⟩
+          intro q b u hb
+          cases b <;> simp [Preferred, priority]
+        have eqn' := lgs_move_potential hm
+        refine ⟨?_, ?_⟩
+        · exact ((List.Perm.swap j i []).append_left P |>.append_right S).trans perm
+        · simp only [reward] at eqn'
+          omega
+      | ones P S | twos P S | split P S i | merge P S i =>
+        simp [reward, rawCounts, Multiset.toFinsupp_apply, List.count_append] at hr <;> omega
+  have finish : ∀ n (l : List ℕ), inv (decode l) = n →
+      ∃ t, LGSPath l t (inv (decode l)) 0 ∧ t.Pairwise (· ≤ ·) ∧ l.Perm t := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro l heq
+      by_cases hs : l.Pairwise (· ≤ ·)
+      · refine ⟨l, ?_, hs, List.Perm.refl _⟩
+        rw [(inversions_zero_iff_sorted l).mpr hs]
+        exact .nil l
+      · have hn := mt (no_switch l).mp hs
+        push Not at hn
+        obtain ⟨p, v, hm⟩ := hn
+        have hg : LGSMove p .switch l v := by
+          refine ⟨hm, ?_⟩
+          intro q b u hb
+          cases b <;> simp [Preferred, priority]
+        have eqn := lgs_move_potential hg
+        simp only [reward, Nat.add_zero] at eqn
+        obtain ⟨t, path, ht, perm⟩ := ih (inv (decode v)) (by omega) v rfl
+        refine ⟨t, ?_, ht, ?_⟩
+        · have hc := LGSPath.cons hg path
+          simpa only [reward, Nat.zero_add, Nat.add_comm, eqn] using hc
+        · cases hm with
+          | switch P S i j hij =>
+            exact ((List.Perm.swap j i []).append_left P |>.append_right S).trans perm
+  obtain ⟨t, path, ht, perm⟩ := finish _ s rfl
+  refine ⟨t, path, ht, perm, ?_⟩
+  intro u length hp hn
+  have hu := (no_switch u).mp hn
+  obtain ⟨pu, eqn⟩ := zero_path hp rfl
+  refine ⟨List.Perm.eq_of_pairwise' hu ht (pu.symm.trans perm), ?_, ?_⟩
+  · rw [(inversions_zero_iff_sorted u).mpr hu] at eqn
+    omega
+  · apply congrArg Multiset.toFinsupp
+    exact Quotient.sound pu.symm
+
 end D5.S1.Digit.Carry.OrderedGame
