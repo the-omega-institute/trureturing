@@ -376,7 +376,15 @@ criterion discussed in [382, section 4](382-prime-star-overlaps-and-no-prime-exc
 [Adenwalla, arXiv:2501.15170v3](https://arxiv.org/html/2501.15170v3)
 provides the first-root packing argument and full-divisor noncoverage;
 [Jia--Li--Liu, arXiv:2504.09579v3](https://arxiv.org/html/2504.09579v3)
-provides the converse full-divisor realization criterion. The proof
-above explicitly supplies the cyclic realization and strict witness
-needed for the graph-local extension. It does not assume that an
-arbitrary divisor ideal can be completed to a full-divisor CD family.
+provides the converse full-divisor realization criterion. Their section 3
+already uses an ordered-support cycle of pair-family residue restrictions
+(v3, PDF pp. 8--9 and p. 11, equation (13)), with support recovered by
+following those restrictions around the cycle. This is a close antecedent
+of the cyclic-support separation used here; reversing the cycle's
+orientation does not remove that relationship. The present proof uses
+the explicit colors and prime-power prefixes in CC5--CC7 and proves the
+local-capacity and positive-survivor claims for the prescribed palette;
+these are not quoted from their full-divisor theorem. No literature
+priority is claimed for the cycle mechanism. Nor does the argument assume
+that an arbitrary divisor ideal can be completed to a full-divisor CD
+family.
