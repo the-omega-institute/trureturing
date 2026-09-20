@@ -13,8 +13,7 @@ def withPrivateSources [Monad m] [MonadEnv m] [MonadFinally m] [MonadLiftT IO m]
   let env ← getEnv
   let mut paths := #["lean-report-inputs.json", "lean-toolchain", "lakefile.toml"]
   for name in env.header.moduleNames.push env.header.mainModule do
-    if #[`D5, `Reg, `LeanInformationAudit, `LeanInformationAuditInterface].any (·.isPrefixOf name) ||
-        name == `Trureturing then
+    if Repository.isModule name then
       let path := TemplateAudit.sourcePath name
       unless paths.contains path do paths := paths.push path
   IO.FS.withTempDir fun directory => do

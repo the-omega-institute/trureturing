@@ -235,7 +235,8 @@ def inspectionRoots (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
     roots := roots ++ #[escapeWitnessBridge, escapeWitnessBridge.str "toTheoremUnit"]
   return roots
 
-/-- Retain the inspected definitions and their repository data/type closure.
+/-- Retain the inspected definitions and their repository data/type closure,
+including Interface records and Reg support at their compiler source owners.
 Proof leaves contribute their types only; upstream data bodies remain pinned
 by the existing native/source checks. -/
 def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
@@ -253,8 +254,7 @@ def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name
     let (type, work) ← eraseProofs info.type remaining
     remaining := remaining - work
     pending := type.getUsedConstants.toList ++ pending
-    if (owner.toString.startsWith "D5." || owner.toString.startsWith "LeanInformationAudit.") &&
-        !(← isProp info.type) then
+    if Repository.isModule owner && !(← isProp info.type) then
       if let some value := info.value? then
         let (value, work) ← eraseProofs value remaining
         remaining := remaining - work
@@ -536,10 +536,6 @@ private structure Snapshot where
   inputs : Array SourceInput
   data : ModuleData
 
-private def repositoryModule (name : Name) : Bool :=
-  #[`D5, `Reg, `LeanInformationAudit, `LeanInformationAuditInterface].any (·.isPrefixOf name) ||
-    name == `Trureturing
-
 private def parseHash (text : String) : Except String UInt64 := do
   unless text.utf8ByteSize == 16 do throw "incomplete_closure:E7.native_trace_hash"
   text.toUTF8.foldlM (init := 0) fun result byte => do
@@ -605,7 +601,7 @@ private def loadedRegion (env : Environment) (path : System.FilePath) : CoreM Co
 
 private def moduleFile (env : Environment) (name : Name) : CoreM System.FilePath := do
   let path ← findOLean name
-  if repositoryModule name then discard <| loadedRegion env path
+  if Repository.isModule name then discard <| loadedRegion env path
   return path
 
 private structure Cache where
@@ -850,7 +846,7 @@ private def verifyImported (env : Environment) (name : Name)
 snapshot around a changed input in an already-loaded Environment. -/
 private partial def collect (env : Environment) (root : Name) (seen : NameSet)
     (names : Array Name) : CoreM (NameSet × Array Name) := do
-  if seen.contains root || !repositoryModule root then return (seen, names)
+  if seen.contains root || !Repository.isModule root then return (seen, names)
   let seen := seen.insert root
   if root == env.header.mainModule then return (seen, names.push root)
   let imports ← do
