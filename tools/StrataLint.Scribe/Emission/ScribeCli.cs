@@ -9,6 +9,7 @@ public static class ScribeCli
     private static readonly ImmutableHashSet<string> EmissionCommands =
         ImmutableHashSet.Create(StringComparer.Ordinal, "emit", "emit-values", "filemap");
 
+    // Advertise the commands implemented by this entry point.
     public static ImmutableArray<string> ImplementedCommands { get; } =
     [
         "describe-report",
