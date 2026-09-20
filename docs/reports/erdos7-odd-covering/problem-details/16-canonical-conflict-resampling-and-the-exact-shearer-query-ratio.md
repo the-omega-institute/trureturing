@@ -114,6 +114,192 @@ Its nonnegativity forces equality. Adding vertices propagates the zero
 to V, contradicting the assumed full-ray condition. Positivity merely at
 t=1 is not sufficient; the entire interval condition is essential.
 
+<a id="conflict-certificates-dominate-the-hls-matching-reduction"></a>
+#### Conflict certificates dominate the HLS matching reduction
+
+For independent canonical assignment events, the conflict criterion above
+already implies every strict-feasibility certificate obtained by the
+He–Li–Sun matching reduction on the shared-variable graph. Its canonical
+query ratios are at least as strong as the corresponding reduced-vector
+ratios. The following finite-polynomial proof compares certificates; it
+does not equate terminal laws of different resampling operations.
+
+For a finite simple graph K and nonnegative vector x, define
+
+    Q^K_U(x) = sum_(I independent in K[U]) (-1)^|I| product_(i in I) x_i.
+
+Write x in S(K) when every induced polynomial is strictly positive.
+The deletion recurrence, with N_K[v] the closed neighborhood, is
+
+    Q^K_U = Q^K_(U minus {v}) - x_v Q^K_(U minus N_K[v]).       (H1)
+
+Whenever all induced polynomials are nonnegative, (H1) gives
+`A subset B => 0 <= Q_B <= Q_A`. A zero on any induced vertex set
+propagates to the full set by the same recurrence. These statements allow
+coordinates equal to zero or one, as needed at a first-zero boundary.
+
+Deleting an edge ij of G, to obtain F, adds exactly the independent sets
+containing both endpoints. For U containing i,j,
+
+    Q^F_U(x) = Q^G_U(x)
+      + x_i x_j Q^G_(U minus (N_G[i] union N_G[j]))(x).        (H2)
+
+Other induced polynomials are unchanged, so S(G) is contained in S(F).
+
+**Endpoint-restoration lemma.** Suppose r in S(G), ij is an edge of G,
+and p agrees with r except `p_i=r_i+epsilon`, `p_j=r_j+epsilon`.
+Assume `epsilon>=0`, all p coordinates are below one, and
+
+    2 epsilon <= r_i r_j.                                    (H3)
+
+Then p in S(G-ij).
+
+To prove this, (H2) starts the line from r to p strictly inside S(F).
+If an induced polynomial first reaches zero at q, every induced
+F-polynomial there is nonnegative, and zero propagation gives Q^F_V(q)=0.
+Write `q_i=r_i+Delta`, `q_j=r_j+Delta`, with `0<Delta<=epsilon`, and
+
+    a = Q^F_(V minus {i,j})(q),
+    b = Q^F_(V minus (N_F[i] union {j}))(q),
+    c = Q^F_(V minus (N_F[j] union {i}))(q),
+    d = Q^F_(V minus (N_F[i] union N_F[j]))(q).
+
+Every set here excludes both endpoints; in particular b and c explicitly
+delete the other endpoint, even though i,j are nonadjacent in F. Thus
+
+    0 = a - q_i b - q_j c + q_i q_j d,
+    Q^G_V(r) = a - r_i b - r_j c = Delta(b+c) - q_i q_j d.
+
+The set defining d is contained in those defining b,c. Vertex-set
+monotonicity therefore gives `0<=b,c<=d`, and hence
+
+    Q^G_V(r) <= (2 Delta-q_i q_j)d
+             <= (2 epsilon-r_i r_j)d <= 0,
+
+contradicting r in S(G). This also handles d=0 and equality in (H3).
+When epsilon=0, (H2) proves the conclusion directly.
+
+Now let M be a matching of the shared-variable graph G. On each matched
+edge ij, let `0<delta_ij<=Omega(B_i intersect B_j)` and set
+
+    epsilon_ij=delta_ij^2/17,
+    r_i=p_i-epsilon_ij, r_j=p_j-epsilon_ij,
+
+leaving unmatched coordinates unchanged. This is the reduction in
+[He, Li and Sun, Theorem 1.6](https://arxiv.org/html/2111.06527v1#S1.Thmtheorem6).
+For `0<p_i<1`, actual intersection probabilities imply
+
+    epsilon_ij <= p_i p_j/17,
+    r_i >= 16p_i/17, r_j >= 16p_j/17,
+    2 epsilon_ij <= 34p_i p_j/289
+                  < 256p_i p_j/289 <= r_i r_j.                (H4)
+
+Apply the lemma once per matched edge, deleting the edge and restoring
+its endpoints. Matching ensures no endpoint is restored twice. Thus
+
+    r in S(G) => p in S(G-M) => p in S(H)                    (H5)
+
+for every subgraph H of G-M. For canonical events, any positive-overlap
+pair agrees on its shared coordinates and is not a conflict edge.
+Their actual conflict graph H is therefore such a subgraph.
+
+**All query ratios.** For x in S(K) and N a subset of V put
+
+    Psi(K,x,N)=Q^K_(V minus N)(x)/Q^K_V(x).
+
+Add one query vertex adjacent exactly to N and give it weight t.
+The induced polynomial on U plus that vertex is
+
+    Q^K_U(x)-t Q^K_(U minus N)(x).                            (H6)
+
+Every denominator is positive. At the first zero as t increases from
+zero, all induced polynomials are nonnegative, so zero propagation
+forces the full polynomial to vanish. Consequently the exact threshold is
+
+    min_(U subset V) Q^K_U(x)/Q^K_(U minus N)(x)
+      = Q^K_V(x)/Q^K_(V minus N)(x)=1/Psi(K,x,N).             (H7)
+
+This threshold lies in (0,1], including N empty. The augmented vector
+is strictly Shearer precisely below it. Apply (H5) to the augmented graph
+with its query vertex unmatched, then delete remaining nonconflict edges
+and query edges. For any `N_H subset N_G`, this proves
+
+    Psi(H,p,N_H) <= Psi(G,r,N_G).                             (H8)
+
+In particular, choose one canonical-coordinate strategy and its terminal
+law nu_can as above. Every canonical query E simultaneously satisfies
+
+    nu_can(E) <= Omega(E) Psi(H,p,N_H(E))
+              <= Omega(E) Psi(G,r,N_G(E)),                    (H9)
+
+where N_H is the conflict neighborhood and N_G the shared-variable
+neighborhood. Nonnegative sums for any one fixed layout obey the same
+comparison. No separate optimizing output law is chosen for each query.
+
+Thus the matching reduction does not extend the available AP existence
+or common-law query certificates in this canonical setting. This is a
+comparison with the conflict graph, not a denial of improvement over
+the ordinary shared-variable Shearer criterion in the cited paper.
+The proof here supplies (H9) using the existing conflict theorem; the
+cited HLS termination theorem alone is not being quoted as a query theorem.
+
+Uniform Haar has independent p-adic digits. Haar conditioned on avoiding
+one normalized prime class per prime still has independent digits: the
+first is uniform on nonzero digits, and later digits are uniform.
+Events of zero probability can be discarded before applying the result.
+An arbitrary pure-power-survivor law on each whole prime block need not
+factor into independent digits, so that source requires a separate
+encoding and operation check. General noncanonical event systems and a
+prescribed full-block algorithm are outside this domination statement.
+
+<a id="exact-canonical-and-block-resampling-comparison"></a>
+#### Exact canonical and block resampling comparison
+
+Use original residues modulo 315, uniformly conditioned on avoiding
+0 modulo 3, 5 and 7. The three bad classes are 1 modulo 9, 15 and 21.
+Choose the smallest true numerical modulus at each step. There are 144
+source states, 42 transient states, and 102 absorbing states.
+
+Canonical resampling uses independent coordinates
+`(first 3 digit, second 3 digit, mod 5, mod 7)` of sizes 2,3,4,6 and
+resamples exactly the digits fixed by the chosen AP. Block resampling
+uses independent mod-9, mod-5 and mod-7 blocks of sizes 6,4,6 and
+resamples every block touched by the AP. They have the same source and
+bad events, but different kernels and terminal laws.
+
+For example, in block coordinates start at (4,1,2), where only the
+15-class holds. Block resampling of that class reaches (1,2,2) with
+probability 1/24, newly causing the 9-class. Canonical resampling of
+the 15-class preserves the second 3 digit, so that transition has
+probability zero. The canonical conflict graph is empty; it is not a
+causality graph for the block algorithm.
+
+The event probabilities are (1/6,1/8,1/12). The shared-variable graph is
+K3. Choose the HLS matching {9,15}, whose actual overlap is 1/24, to
+define r above. Let C5 be 2 modulo 5 and C7 be 2 modulo 7.
+
+| Target | Canonical actual probability | Block actual probability | Conflict bound for canonical law | Reduced shared-graph expression |
+|---|---:|---:|---:|---:|
+| C5 | 39/140 | 5/18 | 2/7 | 7345/24488 |
+| C7 | 409/2310 | 89/504 | 2/11 | 3469/18366 |
+| C5 intersect C7 | 461/9240 | 25/504 | 4/77 | 8161/146928 |
+
+The final column is `Omega(E) Psi(G,r,N_G(E))`; (H9) bounds the
+canonical law by it without invoking a new HLS output theorem. Each
+conflict bound is strictly smaller. These comparisons do not transfer
+the conflict certificate to the block law or identify the two laws.
+All 102 absorbing-state masses differ. Expected resampling counts are
+29/77 for the canonical algorithm and 17/42 for the block algorithm.
+
+The self-contained [exact program](../frontier/cover-geometry/canonical_resampling_law_comparison.py)
+and [data](../frontier/cover-geometry/canonical_resampling_law_comparison.json)
+construct both kernels from the literal AP conditions and solve their
+absorption equations over rational numbers. They check normalization,
+flow equations, all induced Shearer polynomials, the transition witness
+and the displayed queries. This is a finite control of the operation
+boundary and an ordinary proof of certificate domination; neither is
+a new unrestricted odd-covering exclusion or Lean kernel certificate.
+
 <a id="congruence-and-complete-layout-specialization"></a>
 #### Congruence and complete-layout specialization
 

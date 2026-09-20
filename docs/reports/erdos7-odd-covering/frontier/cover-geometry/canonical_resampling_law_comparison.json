@@ -1,0 +1,3835 @@
+{
+  "scope": "Finite original AP layout, not a whole cover or a new AP exclusion. The two algorithms have different terminal laws; no stochastic ordering is asserted.",
+  "certificate_scope": "HLS matching-reduced entries are exact graph-polynomial values. No general HLS output-law theorem is asserted by this experiment.",
+  "source": "Uniform Haar modulo the period, conditioned to avoid the literal prime classes.",
+  "period": 315,
+  "prime_exclusions_residue_modulus": [
+    [
+      0,
+      3
+    ],
+    [
+      0,
+      5
+    ],
+    [
+      0,
+      7
+    ]
+  ],
+  "bad_APs_residue_modulus": [
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      15
+    ],
+    [
+      1,
+      21
+    ]
+  ],
+  "state_count": 144,
+  "transient_count": 42,
+  "absorbing_count": 102,
+  "canonical_assignments": {
+    "9": {
+      "0": 1,
+      "1": 0
+    },
+    "15": {
+      "0": 1,
+      "2": 1
+    },
+    "21": {
+      "0": 1,
+      "3": 1
+    }
+  },
+  "bad_probabilities": {
+    "9": "1/6",
+    "15": "1/8",
+    "21": "1/12"
+  },
+  "pair_intersections": {
+    "9,15": "1/24",
+    "9,21": "1/36",
+    "15,21": "1/48"
+  },
+  "shared_variable_edges": [
+    [
+      9,
+      15
+    ],
+    [
+      9,
+      21
+    ],
+    [
+      15,
+      21
+    ]
+  ],
+  "conflict_edges": [],
+  "matching": [
+    [
+      9,
+      15
+    ]
+  ],
+  "matching_reduced_weights": {
+    "9": "1631/9792",
+    "15": "1223/9792",
+    "21": "1/12"
+  },
+  "all_induced_shearer_polynomials": {
+    "conflict_original": [
+      {
+        "vertices": [],
+        "value": 1
+      },
+      {
+        "vertices": [
+          9
+        ],
+        "value": "5/6"
+      },
+      {
+        "vertices": [
+          15
+        ],
+        "value": "7/8"
+      },
+      {
+        "vertices": [
+          21
+        ],
+        "value": "11/12"
+      },
+      {
+        "vertices": [
+          9,
+          15
+        ],
+        "value": "35/48"
+      },
+      {
+        "vertices": [
+          9,
+          21
+        ],
+        "value": "55/72"
+      },
+      {
+        "vertices": [
+          15,
+          21
+        ],
+        "value": "77/96"
+      },
+      {
+        "vertices": [
+          9,
+          15,
+          21
+        ],
+        "value": "385/576"
+      }
+    ],
+    "shared_matching_reduced": [
+      {
+        "vertices": [],
+        "value": 1
+      },
+      {
+        "vertices": [
+          9
+        ],
+        "value": "8161/9792"
+      },
+      {
+        "vertices": [
+          15
+        ],
+        "value": "8569/9792"
+      },
+      {
+        "vertices": [
+          21
+        ],
+        "value": "11/12"
+      },
+      {
+        "vertices": [
+          9,
+          15
+        ],
+        "value": "3469/4896"
+      },
+      {
+        "vertices": [
+          9,
+          21
+        ],
+        "value": "7345/9792"
+      },
+      {
+        "vertices": [
+          15,
+          21
+        ],
+        "value": "7753/9792"
+      },
+      {
+        "vertices": [
+          9,
+          15,
+          21
+        ],
+        "value": "3061/4896"
+      }
+    ],
+    "shared_original": [
+      {
+        "vertices": [],
+        "value": 1
+      },
+      {
+        "vertices": [
+          9
+        ],
+        "value": "5/6"
+      },
+      {
+        "vertices": [
+          15
+        ],
+        "value": "7/8"
+      },
+      {
+        "vertices": [
+          21
+        ],
+        "value": "11/12"
+      },
+      {
+        "vertices": [
+          9,
+          15
+        ],
+        "value": "17/24"
+      },
+      {
+        "vertices": [
+          9,
+          21
+        ],
+        "value": "3/4"
+      },
+      {
+        "vertices": [
+          15,
+          21
+        ],
+        "value": "19/24"
+      },
+      {
+        "vertices": [
+          9,
+          15,
+          21
+        ],
+        "value": "5/8"
+      }
+    ],
+    "shared_after_matched_edge_deletion_original": [
+      {
+        "vertices": [],
+        "value": 1
+      },
+      {
+        "vertices": [
+          9
+        ],
+        "value": "5/6"
+      },
+      {
+        "vertices": [
+          15
+        ],
+        "value": "7/8"
+      },
+      {
+        "vertices": [
+          21
+        ],
+        "value": "11/12"
+      },
+      {
+        "vertices": [
+          9,
+          15
+        ],
+        "value": "35/48"
+      },
+      {
+        "vertices": [
+          9,
+          21
+        ],
+        "value": "3/4"
+      },
+      {
+        "vertices": [
+          15,
+          21
+        ],
+        "value": "19/24"
+      },
+      {
+        "vertices": [
+          9,
+          15,
+          21
+        ],
+        "value": "31/48"
+      }
+    ]
+  },
+  "canonical_digit": {
+    "coordinate_kind": "canonical_digit",
+    "coordinate_parameters_prime_and_digit_index_or_block_height": [
+      [
+        3,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        7,
+        0
+      ]
+    ],
+    "coordinate_domains": [
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    ],
+    "resampling_scopes": {
+      "9": [
+        0,
+        1
+      ],
+      "15": [
+        0,
+        2
+      ],
+      "21": [
+        0,
+        3
+      ]
+    },
+    "policy": "Resample the smallest currently true numerical AP label.",
+    "expected_resamplings": "29/77",
+    "expected_resamplings_by_label": {
+      "9": "1/5",
+      "15": "4/35",
+      "21": "24/385"
+    },
+    "terminal_mass_classes": {
+      "0": 42,
+      "1/120": 24,
+      "1/105": 12,
+      "4/385": 66
+    },
+    "maximum_one_step_transient_probability": "1/2",
+    "maximum_visit_equation_residual": "0",
+    "maximum_absorption_flow_residual": "0",
+    "normalization_residual": "0"
+  },
+  "full_prime_block": {
+    "coordinate_kind": "full_prime_block",
+    "coordinate_parameters_prime_and_digit_index_or_block_height": [
+      [
+        3,
+        2
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        7,
+        1
+      ]
+    ],
+    "coordinate_domains": [
+      [
+        1,
+        2,
+        4,
+        5,
+        7,
+        8
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    ],
+    "resampling_scopes": {
+      "9": [
+        0
+      ],
+      "15": [
+        0,
+        1
+      ],
+      "21": [
+        0,
+        2
+      ]
+    },
+    "policy": "Resample the smallest currently true numerical AP label.",
+    "expected_resamplings": "17/42",
+    "expected_resamplings_by_label": {
+      "9": "59/252",
+      "15": "1/9",
+      "21": "5/84"
+    },
+    "terminal_mass_classes": {
+      "0": 42,
+      "1/108": 18,
+      "5/504": 84
+    },
+    "maximum_one_step_transient_probability": "1/2",
+    "maximum_visit_equation_residual": "0",
+    "maximum_absorption_flow_residual": "0",
+    "normalization_residual": "0"
+  },
+  "states_with_different_terminal_mass": 102,
+  "queries": [
+    {
+      "name": "C5",
+      "original_congruences_residue_modulus": [
+        [
+          2,
+          5
+        ]
+      ],
+      "source_probability": "1/4",
+      "canonical_digit_output_probability": "39/140",
+      "full_prime_block_output_probability": "5/18",
+      "conflict_certificate": "2/7",
+      "hls_matching_reduced_certificate": "7345/24488",
+      "ordinary_shared_certificate": "3/10",
+      "conflict_ratio": {
+        "query_neighbors": [
+          15
+        ],
+        "numerator": "55/72",
+        "denominator": "385/576",
+        "psi": "8/7",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "7/8",
+          "1",
+          "7/8",
+          "1",
+          "7/8",
+          "7/8"
+        ],
+        "minimum_query_threshold": "7/8"
+      },
+      "hls_matching_reduced_ratio": {
+        "query_neighbors": [
+          15
+        ],
+        "numerator": "7345/9792",
+        "denominator": "3061/4896",
+        "psi": "7345/6122",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "8569/9792",
+          "1",
+          "6938/8161",
+          "1",
+          "7753/8976",
+          "6122/7345"
+        ],
+        "minimum_query_threshold": "6122/7345"
+      },
+      "ordinary_shared_ratio": {
+        "query_neighbors": [
+          15
+        ],
+        "numerator": "3/4",
+        "denominator": "5/8",
+        "psi": "6/5",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "7/8",
+          "1",
+          "17/20",
+          "1",
+          "19/22",
+          "5/6"
+        ],
+        "minimum_query_threshold": "5/6"
+      },
+      "matching_reduced_minus_conflict_certificate": "2439/171416"
+    },
+    {
+      "name": "C7",
+      "original_congruences_residue_modulus": [
+        [
+          2,
+          7
+        ]
+      ],
+      "source_probability": "1/6",
+      "canonical_digit_output_probability": "409/2310",
+      "full_prime_block_output_probability": "89/504",
+      "conflict_certificate": "2/11",
+      "hls_matching_reduced_certificate": "3469/18366",
+      "ordinary_shared_certificate": "17/90",
+      "conflict_ratio": {
+        "query_neighbors": [
+          21
+        ],
+        "numerator": "35/48",
+        "denominator": "385/576",
+        "psi": "12/11",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "1",
+          "11/12",
+          "1",
+          "11/12",
+          "11/12",
+          "11/12"
+        ],
+        "minimum_query_threshold": "11/12"
+      },
+      "hls_matching_reduced_ratio": {
+        "query_neighbors": [
+          21
+        ],
+        "numerator": "3469/4896",
+        "denominator": "3061/4896",
+        "psi": "3469/3061",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "1",
+          "11/12",
+          "1",
+          "7345/8161",
+          "7753/8569",
+          "3061/3469"
+        ],
+        "minimum_query_threshold": "3061/3469"
+      },
+      "ordinary_shared_ratio": {
+        "query_neighbors": [
+          21
+        ],
+        "numerator": "17/24",
+        "denominator": "5/8",
+        "psi": "17/15",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "1",
+          "11/12",
+          "1",
+          "9/10",
+          "19/21",
+          "15/17"
+        ],
+        "minimum_query_threshold": "15/17"
+      },
+      "matching_reduced_minus_conflict_certificate": "1427/202026"
+    },
+    {
+      "name": "C5_intersect_C7",
+      "original_congruences_residue_modulus": [
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "source_probability": "1/24",
+      "canonical_digit_output_probability": "461/9240",
+      "full_prime_block_output_probability": "25/504",
+      "conflict_certificate": "4/77",
+      "hls_matching_reduced_certificate": "8161/146928",
+      "ordinary_shared_certificate": "1/18",
+      "conflict_ratio": {
+        "query_neighbors": [
+          15,
+          21
+        ],
+        "numerator": "5/6",
+        "denominator": "385/576",
+        "psi": "96/77",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "7/8",
+          "11/12",
+          "7/8",
+          "11/12",
+          "77/96",
+          "77/96"
+        ],
+        "minimum_query_threshold": "77/96"
+      },
+      "hls_matching_reduced_ratio": {
+        "query_neighbors": [
+          15,
+          21
+        ],
+        "numerator": "8161/9792",
+        "denominator": "3061/4896",
+        "psi": "8161/6122",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "8569/9792",
+          "11/12",
+          "6938/8161",
+          "7345/8161",
+          "7753/9792",
+          "6122/8161"
+        ],
+        "minimum_query_threshold": "6122/8161"
+      },
+      "ordinary_shared_ratio": {
+        "query_neighbors": [
+          15,
+          21
+        ],
+        "numerator": "5/6",
+        "denominator": "5/8",
+        "psi": "4/3",
+        "all_induced_query_threshold_ratios": [
+          1.0,
+          "1",
+          "7/8",
+          "11/12",
+          "17/20",
+          "9/10",
+          "19/24",
+          "3/4"
+        ],
+        "minimum_query_threshold": "3/4"
+      },
+      "matching_reduced_minus_conflict_certificate": "40685/11313456"
+    }
+  ],
+  "transition_witness": {
+    "source_residue": 121,
+    "target_residue": 37,
+    "source_blocks": [
+      4,
+      1,
+      2
+    ],
+    "target_blocks": [
+      1,
+      2,
+      2
+    ],
+    "source_digits": [
+      1,
+      1,
+      1,
+      2
+    ],
+    "target_digits": [
+      1,
+      0,
+      2,
+      2
+    ],
+    "source_true_labels": [
+      15
+    ],
+    "target_true_labels": [
+      9
+    ],
+    "selected_label": 15,
+    "full_prime_block_transition_probability": "1/24",
+    "canonical_digit_transition_probability": "0",
+    "meaning": "Full-block resampling can newly cause the compatible AP 9 from AP 15; its causality graph cannot be replaced by the empty canonical conflict graph."
+  },
+  "state_data": [
+    {
+      "original_residue": 1,
+      "blocks": [
+        1,
+        1,
+        1
+      ],
+      "digits": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        15,
+        21
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 2,
+      "blocks": [
+        2,
+        2,
+        2
+      ],
+      "digits": [
+        2,
+        0,
+        2,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 4,
+      "blocks": [
+        4,
+        4,
+        4
+      ],
+      "digits": [
+        1,
+        1,
+        4,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 8,
+      "blocks": [
+        8,
+        3,
+        1
+      ],
+      "digits": [
+        2,
+        2,
+        3,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 11,
+      "blocks": [
+        2,
+        1,
+        4
+      ],
+      "digits": [
+        2,
+        0,
+        1,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 13,
+      "blocks": [
+        4,
+        3,
+        6
+      ],
+      "digits": [
+        1,
+        1,
+        3,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 16,
+      "blocks": [
+        7,
+        1,
+        2
+      ],
+      "digits": [
+        1,
+        2,
+        1,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 17,
+      "blocks": [
+        8,
+        2,
+        3
+      ],
+      "digits": [
+        2,
+        2,
+        2,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 19,
+      "blocks": [
+        1,
+        4,
+        5
+      ],
+      "digits": [
+        1,
+        0,
+        4,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 22,
+      "blocks": [
+        4,
+        2,
+        1
+      ],
+      "digits": [
+        1,
+        1,
+        2,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        21
+      ],
+      "selected_label": 21,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "4/385",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 23,
+      "blocks": [
+        5,
+        3,
+        2
+      ],
+      "digits": [
+        2,
+        1,
+        3,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 26,
+      "blocks": [
+        8,
+        1,
+        5
+      ],
+      "digits": [
+        2,
+        2,
+        1,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 29,
+      "blocks": [
+        2,
+        4,
+        1
+      ],
+      "digits": [
+        2,
+        0,
+        4,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 31,
+      "blocks": [
+        4,
+        1,
+        3
+      ],
+      "digits": [
+        1,
+        1,
+        1,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 32,
+      "blocks": [
+        5,
+        2,
+        4
+      ],
+      "digits": [
+        2,
+        1,
+        2,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 34,
+      "blocks": [
+        7,
+        4,
+        6
+      ],
+      "digits": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 37,
+      "blocks": [
+        1,
+        2,
+        2
+      ],
+      "digits": [
+        1,
+        0,
+        2,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 38,
+      "blocks": [
+        2,
+        3,
+        3
+      ],
+      "digits": [
+        2,
+        0,
+        3,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 41,
+      "blocks": [
+        5,
+        1,
+        6
+      ],
+      "digits": [
+        2,
+        1,
+        1,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 43,
+      "blocks": [
+        7,
+        3,
+        1
+      ],
+      "digits": [
+        1,
+        2,
+        3,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        21
+      ],
+      "selected_label": 21,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "4/385",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 44,
+      "blocks": [
+        8,
+        4,
+        2
+      ],
+      "digits": [
+        2,
+        2,
+        4,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 46,
+      "blocks": [
+        1,
+        1,
+        4
+      ],
+      "digits": [
+        1,
+        0,
+        1,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        15
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 47,
+      "blocks": [
+        2,
+        2,
+        5
+      ],
+      "digits": [
+        2,
+        0,
+        2,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 52,
+      "blocks": [
+        7,
+        2,
+        3
+      ],
+      "digits": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 53,
+      "blocks": [
+        8,
+        3,
+        4
+      ],
+      "digits": [
+        2,
+        2,
+        3,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 58,
+      "blocks": [
+        4,
+        3,
+        2
+      ],
+      "digits": [
+        1,
+        1,
+        3,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 59,
+      "blocks": [
+        5,
+        4,
+        3
+      ],
+      "digits": [
+        2,
+        1,
+        4,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 61,
+      "blocks": [
+        7,
+        1,
+        5
+      ],
+      "digits": [
+        1,
+        2,
+        1,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 62,
+      "blocks": [
+        8,
+        2,
+        6
+      ],
+      "digits": [
+        2,
+        2,
+        2,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 64,
+      "blocks": [
+        1,
+        4,
+        1
+      ],
+      "digits": [
+        1,
+        0,
+        4,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        21
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 67,
+      "blocks": [
+        4,
+        2,
+        4
+      ],
+      "digits": [
+        1,
+        1,
+        2,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 68,
+      "blocks": [
+        5,
+        3,
+        5
+      ],
+      "digits": [
+        2,
+        1,
+        3,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 71,
+      "blocks": [
+        8,
+        1,
+        1
+      ],
+      "digits": [
+        2,
+        2,
+        1,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 73,
+      "blocks": [
+        1,
+        3,
+        3
+      ],
+      "digits": [
+        1,
+        0,
+        3,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 74,
+      "blocks": [
+        2,
+        4,
+        4
+      ],
+      "digits": [
+        2,
+        0,
+        4,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 76,
+      "blocks": [
+        4,
+        1,
+        6
+      ],
+      "digits": [
+        1,
+        1,
+        1,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 79,
+      "blocks": [
+        7,
+        4,
+        2
+      ],
+      "digits": [
+        1,
+        2,
+        4,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 82,
+      "blocks": [
+        1,
+        2,
+        5
+      ],
+      "digits": [
+        1,
+        0,
+        2,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 83,
+      "blocks": [
+        2,
+        3,
+        6
+      ],
+      "digits": [
+        2,
+        0,
+        3,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 86,
+      "blocks": [
+        5,
+        1,
+        2
+      ],
+      "digits": [
+        2,
+        1,
+        1,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 88,
+      "blocks": [
+        7,
+        3,
+        4
+      ],
+      "digits": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 89,
+      "blocks": [
+        8,
+        4,
+        5
+      ],
+      "digits": [
+        2,
+        2,
+        4,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 92,
+      "blocks": [
+        2,
+        2,
+        1
+      ],
+      "digits": [
+        2,
+        0,
+        2,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 94,
+      "blocks": [
+        4,
+        4,
+        3
+      ],
+      "digits": [
+        1,
+        1,
+        4,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 97,
+      "blocks": [
+        7,
+        2,
+        6
+      ],
+      "digits": [
+        1,
+        2,
+        2,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 101,
+      "blocks": [
+        2,
+        1,
+        3
+      ],
+      "digits": [
+        2,
+        0,
+        1,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 103,
+      "blocks": [
+        4,
+        3,
+        5
+      ],
+      "digits": [
+        1,
+        1,
+        3,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 104,
+      "blocks": [
+        5,
+        4,
+        6
+      ],
+      "digits": [
+        2,
+        1,
+        4,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 106,
+      "blocks": [
+        7,
+        1,
+        1
+      ],
+      "digits": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15,
+        21
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 107,
+      "blocks": [
+        8,
+        2,
+        2
+      ],
+      "digits": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 109,
+      "blocks": [
+        1,
+        4,
+        4
+      ],
+      "digits": [
+        1,
+        0,
+        4,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 113,
+      "blocks": [
+        5,
+        3,
+        1
+      ],
+      "digits": [
+        2,
+        1,
+        3,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 116,
+      "blocks": [
+        8,
+        1,
+        4
+      ],
+      "digits": [
+        2,
+        2,
+        1,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 118,
+      "blocks": [
+        1,
+        3,
+        6
+      ],
+      "digits": [
+        1,
+        0,
+        3,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 121,
+      "blocks": [
+        4,
+        1,
+        2
+      ],
+      "digits": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 122,
+      "blocks": [
+        5,
+        2,
+        3
+      ],
+      "digits": [
+        2,
+        1,
+        2,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 124,
+      "blocks": [
+        7,
+        4,
+        5
+      ],
+      "digits": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 127,
+      "blocks": [
+        1,
+        2,
+        1
+      ],
+      "digits": [
+        1,
+        0,
+        2,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        21
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 128,
+      "blocks": [
+        2,
+        3,
+        2
+      ],
+      "digits": [
+        2,
+        0,
+        3,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 131,
+      "blocks": [
+        5,
+        1,
+        5
+      ],
+      "digits": [
+        2,
+        1,
+        1,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 134,
+      "blocks": [
+        8,
+        4,
+        1
+      ],
+      "digits": [
+        2,
+        2,
+        4,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 136,
+      "blocks": [
+        1,
+        1,
+        3
+      ],
+      "digits": [
+        1,
+        0,
+        1,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        15
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 137,
+      "blocks": [
+        2,
+        2,
+        4
+      ],
+      "digits": [
+        2,
+        0,
+        2,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 139,
+      "blocks": [
+        4,
+        4,
+        6
+      ],
+      "digits": [
+        1,
+        1,
+        4,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 142,
+      "blocks": [
+        7,
+        2,
+        2
+      ],
+      "digits": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 143,
+      "blocks": [
+        8,
+        3,
+        3
+      ],
+      "digits": [
+        2,
+        2,
+        3,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 146,
+      "blocks": [
+        2,
+        1,
+        6
+      ],
+      "digits": [
+        2,
+        0,
+        1,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 148,
+      "blocks": [
+        4,
+        3,
+        1
+      ],
+      "digits": [
+        1,
+        1,
+        3,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        21
+      ],
+      "selected_label": 21,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "4/385",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 149,
+      "blocks": [
+        5,
+        4,
+        2
+      ],
+      "digits": [
+        2,
+        1,
+        4,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 151,
+      "blocks": [
+        7,
+        1,
+        4
+      ],
+      "digits": [
+        1,
+        2,
+        1,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 152,
+      "blocks": [
+        8,
+        2,
+        5
+      ],
+      "digits": [
+        2,
+        2,
+        2,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 157,
+      "blocks": [
+        4,
+        2,
+        3
+      ],
+      "digits": [
+        1,
+        1,
+        2,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 158,
+      "blocks": [
+        5,
+        3,
+        4
+      ],
+      "digits": [
+        2,
+        1,
+        3,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 163,
+      "blocks": [
+        1,
+        3,
+        2
+      ],
+      "digits": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 164,
+      "blocks": [
+        2,
+        4,
+        3
+      ],
+      "digits": [
+        2,
+        0,
+        4,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 166,
+      "blocks": [
+        4,
+        1,
+        5
+      ],
+      "digits": [
+        1,
+        1,
+        1,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 167,
+      "blocks": [
+        5,
+        2,
+        6
+      ],
+      "digits": [
+        2,
+        1,
+        2,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 169,
+      "blocks": [
+        7,
+        4,
+        1
+      ],
+      "digits": [
+        1,
+        2,
+        4,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        21
+      ],
+      "selected_label": 21,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "4/385",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 172,
+      "blocks": [
+        1,
+        2,
+        4
+      ],
+      "digits": [
+        1,
+        0,
+        2,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 173,
+      "blocks": [
+        2,
+        3,
+        5
+      ],
+      "digits": [
+        2,
+        0,
+        3,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 176,
+      "blocks": [
+        5,
+        1,
+        1
+      ],
+      "digits": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 178,
+      "blocks": [
+        7,
+        3,
+        3
+      ],
+      "digits": [
+        1,
+        2,
+        3,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 179,
+      "blocks": [
+        8,
+        4,
+        4
+      ],
+      "digits": [
+        2,
+        2,
+        4,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 181,
+      "blocks": [
+        1,
+        1,
+        6
+      ],
+      "digits": [
+        1,
+        0,
+        1,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        15
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 184,
+      "blocks": [
+        4,
+        4,
+        2
+      ],
+      "digits": [
+        1,
+        1,
+        4,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 187,
+      "blocks": [
+        7,
+        2,
+        5
+      ],
+      "digits": [
+        1,
+        2,
+        2,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 188,
+      "blocks": [
+        8,
+        3,
+        6
+      ],
+      "digits": [
+        2,
+        2,
+        3,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 191,
+      "blocks": [
+        2,
+        1,
+        2
+      ],
+      "digits": [
+        2,
+        0,
+        1,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 193,
+      "blocks": [
+        4,
+        3,
+        4
+      ],
+      "digits": [
+        1,
+        1,
+        3,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 194,
+      "blocks": [
+        5,
+        4,
+        5
+      ],
+      "digits": [
+        2,
+        1,
+        4,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 197,
+      "blocks": [
+        8,
+        2,
+        1
+      ],
+      "digits": [
+        2,
+        2,
+        2,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 199,
+      "blocks": [
+        1,
+        4,
+        3
+      ],
+      "digits": [
+        1,
+        0,
+        4,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 202,
+      "blocks": [
+        4,
+        2,
+        6
+      ],
+      "digits": [
+        1,
+        1,
+        2,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 206,
+      "blocks": [
+        8,
+        1,
+        3
+      ],
+      "digits": [
+        2,
+        2,
+        1,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 208,
+      "blocks": [
+        1,
+        3,
+        5
+      ],
+      "digits": [
+        1,
+        0,
+        3,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 209,
+      "blocks": [
+        2,
+        4,
+        6
+      ],
+      "digits": [
+        2,
+        0,
+        4,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 211,
+      "blocks": [
+        4,
+        1,
+        1
+      ],
+      "digits": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15,
+        21
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 212,
+      "blocks": [
+        5,
+        2,
+        2
+      ],
+      "digits": [
+        2,
+        1,
+        2,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 214,
+      "blocks": [
+        7,
+        4,
+        4
+      ],
+      "digits": [
+        1,
+        2,
+        4,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 218,
+      "blocks": [
+        2,
+        3,
+        1
+      ],
+      "digits": [
+        2,
+        0,
+        3,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 221,
+      "blocks": [
+        5,
+        1,
+        4
+      ],
+      "digits": [
+        2,
+        1,
+        1,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 223,
+      "blocks": [
+        7,
+        3,
+        6
+      ],
+      "digits": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 226,
+      "blocks": [
+        1,
+        1,
+        2
+      ],
+      "digits": [
+        1,
+        0,
+        1,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        15
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 227,
+      "blocks": [
+        2,
+        2,
+        3
+      ],
+      "digits": [
+        2,
+        0,
+        2,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 229,
+      "blocks": [
+        4,
+        4,
+        5
+      ],
+      "digits": [
+        1,
+        1,
+        4,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 232,
+      "blocks": [
+        7,
+        2,
+        1
+      ],
+      "digits": [
+        1,
+        2,
+        2,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        21
+      ],
+      "selected_label": 21,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "4/385",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 233,
+      "blocks": [
+        8,
+        3,
+        2
+      ],
+      "digits": [
+        2,
+        2,
+        3,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 236,
+      "blocks": [
+        2,
+        1,
+        5
+      ],
+      "digits": [
+        2,
+        0,
+        1,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 239,
+      "blocks": [
+        5,
+        4,
+        1
+      ],
+      "digits": [
+        2,
+        1,
+        4,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 241,
+      "blocks": [
+        7,
+        1,
+        3
+      ],
+      "digits": [
+        1,
+        2,
+        1,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 242,
+      "blocks": [
+        8,
+        2,
+        4
+      ],
+      "digits": [
+        2,
+        2,
+        2,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 244,
+      "blocks": [
+        1,
+        4,
+        6
+      ],
+      "digits": [
+        1,
+        0,
+        4,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 247,
+      "blocks": [
+        4,
+        2,
+        2
+      ],
+      "digits": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 248,
+      "blocks": [
+        5,
+        3,
+        3
+      ],
+      "digits": [
+        2,
+        1,
+        3,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 251,
+      "blocks": [
+        8,
+        1,
+        6
+      ],
+      "digits": [
+        2,
+        2,
+        1,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 253,
+      "blocks": [
+        1,
+        3,
+        1
+      ],
+      "digits": [
+        1,
+        0,
+        3,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        21
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 254,
+      "blocks": [
+        2,
+        4,
+        2
+      ],
+      "digits": [
+        2,
+        0,
+        4,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 256,
+      "blocks": [
+        4,
+        1,
+        4
+      ],
+      "digits": [
+        1,
+        1,
+        1,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 257,
+      "blocks": [
+        5,
+        2,
+        5
+      ],
+      "digits": [
+        2,
+        1,
+        2,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 262,
+      "blocks": [
+        1,
+        2,
+        3
+      ],
+      "digits": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 263,
+      "blocks": [
+        2,
+        3,
+        4
+      ],
+      "digits": [
+        2,
+        0,
+        3,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 268,
+      "blocks": [
+        7,
+        3,
+        2
+      ],
+      "digits": [
+        1,
+        2,
+        3,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 269,
+      "blocks": [
+        8,
+        4,
+        3
+      ],
+      "digits": [
+        2,
+        2,
+        4,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 271,
+      "blocks": [
+        1,
+        1,
+        5
+      ],
+      "digits": [
+        1,
+        0,
+        1,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9,
+        15
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 272,
+      "blocks": [
+        2,
+        2,
+        6
+      ],
+      "digits": [
+        2,
+        0,
+        2,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 274,
+      "blocks": [
+        4,
+        4,
+        1
+      ],
+      "digits": [
+        1,
+        1,
+        4,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        21
+      ],
+      "selected_label": 21,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "4/385",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 277,
+      "blocks": [
+        7,
+        2,
+        4
+      ],
+      "digits": [
+        1,
+        2,
+        2,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 278,
+      "blocks": [
+        8,
+        3,
+        5
+      ],
+      "digits": [
+        2,
+        2,
+        3,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 281,
+      "blocks": [
+        2,
+        1,
+        1
+      ],
+      "digits": [
+        2,
+        0,
+        1,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 283,
+      "blocks": [
+        4,
+        3,
+        3
+      ],
+      "digits": [
+        1,
+        1,
+        3,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 284,
+      "blocks": [
+        5,
+        4,
+        4
+      ],
+      "digits": [
+        2,
+        1,
+        4,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 286,
+      "blocks": [
+        7,
+        1,
+        6
+      ],
+      "digits": [
+        1,
+        2,
+        1,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        15
+      ],
+      "selected_label": 15,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/105",
+      "full_prime_block_expected_visits": "1/108"
+    },
+    {
+      "original_residue": 289,
+      "blocks": [
+        1,
+        4,
+        2
+      ],
+      "digits": [
+        1,
+        0,
+        4,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 292,
+      "blocks": [
+        4,
+        2,
+        5
+      ],
+      "digits": [
+        1,
+        1,
+        2,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 293,
+      "blocks": [
+        5,
+        3,
+        6
+      ],
+      "digits": [
+        2,
+        1,
+        3,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 296,
+      "blocks": [
+        8,
+        1,
+        2
+      ],
+      "digits": [
+        2,
+        2,
+        1,
+        2
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 298,
+      "blocks": [
+        1,
+        3,
+        4
+      ],
+      "digits": [
+        1,
+        0,
+        3,
+        4
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 299,
+      "blocks": [
+        2,
+        4,
+        5
+      ],
+      "digits": [
+        2,
+        0,
+        4,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/120",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 302,
+      "blocks": [
+        5,
+        2,
+        1
+      ],
+      "digits": [
+        2,
+        1,
+        2,
+        1
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 304,
+      "blocks": [
+        7,
+        4,
+        3
+      ],
+      "digits": [
+        1,
+        2,
+        4,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 307,
+      "blocks": [
+        1,
+        2,
+        6
+      ],
+      "digits": [
+        1,
+        0,
+        2,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [
+        9
+      ],
+      "selected_label": 9,
+      "canonical_digit_terminal_mass": "0",
+      "full_prime_block_terminal_mass": "0",
+      "canonical_digit_expected_visits": "1/120",
+      "full_prime_block_expected_visits": "5/504"
+    },
+    {
+      "original_residue": 311,
+      "blocks": [
+        5,
+        1,
+        3
+      ],
+      "digits": [
+        2,
+        1,
+        1,
+        3
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "1/105",
+      "full_prime_block_terminal_mass": "1/108",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 313,
+      "blocks": [
+        7,
+        3,
+        5
+      ],
+      "digits": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    },
+    {
+      "original_residue": 314,
+      "blocks": [
+        8,
+        4,
+        6
+      ],
+      "digits": [
+        2,
+        2,
+        4,
+        6
+      ],
+      "initial_mass": "1/144",
+      "true_labels": [],
+      "selected_label": null,
+      "canonical_digit_terminal_mass": "4/385",
+      "full_prime_block_terminal_mass": "5/504",
+      "canonical_digit_expected_visits": "0",
+      "full_prime_block_expected_visits": "0"
+    }
+  ]
+}
