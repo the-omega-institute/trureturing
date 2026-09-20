@@ -1,0 +1,35 @@
+**定理 11.2（Choi 重建与完全正、迹条件）。** 定义11.1给出全部复线性映射与 $\mathcal L(A'\otimes B)$ 之间的线性双射，逆映射为
+$$
+\Phi(X)=\operatorname{Tr}_{A'}\bigl[(X^{\mathsf T}\otimes I_B)J(\Phi)\bigr].
+\tag{11.3}
+$$
+且
+$$
+\begin{aligned}
+\Phi\text{ 完全正}&\iff J(\Phi)\ge0,\\
+\Phi\text{ 保迹}&\iff \operatorname{Tr}_B J(\Phi)=I_{A'},\\
+\Phi\text{ 完全正且不增迹}
+&\iff J(\Phi)\ge0\ \text{且}\ \operatorname{Tr}_B J(\Phi)\le I_{A'}.
+\end{aligned}
+\tag{11.4}
+$$
+
+**证明。** 因为 $\operatorname{Tr}(X^{\mathsf T}E_{ij})=X_{ij}$，式(11.3)返回 $\sum_{ij}X_{ij}\Phi(E_{ij})$。反过来，任意 $J$ 的 $(i,j)$ 输入块唯一指定 $\Phi(E_{ij})$；矩阵单位是一组复基，因此得到双射。
+
+若 $\Phi$ 完全正，式(11.2)是正算子在正性放大下的像。若 $J(\Phi)\ge0$，取有限谱分解
+$$
+J(\Phi)=\sum_\alpha|v_\alpha\rangle\langle v_\alpha|,
+\qquad v_\alpha=\sum_i|i\rangle\otimes K_\alpha|i\rangle,
+\tag{11.5}
+$$
+其中特征值平方根吸入 $v_\alpha$，$K_\alpha:A\to B$ 由其列确定。逐输入块比较得
+$$
+\Phi(X)=\sum_\alpha K_\alpha X K_\alpha^\dagger.
+\tag{11.6}
+$$
+任意参考上的放大为 $\sum_\alpha(I_R\otimes K_\alpha)X(I_R\otimes K_\alpha)^\dagger$，故保持正性。零 Choi 算子取空和。
+
+$\operatorname{Tr}_BJ(\Phi)$ 的 $(i,j)$ 元为 $\operatorname{Tr}\Phi(E_{ij})$，所以它等于 $I$ 当且仅当 $\Phi$ 在全部矩阵单位、进而全部复矩阵上保迹。对完全正映射，令 $F=\sum_\alpha K_\alpha^\dagger K_\alpha\ge0$。迹循环给 $\operatorname{Tr}\Phi(X)=\operatorname{Tr}(FX)$，且 $\operatorname{Tr}_BJ(\Phi)=F^{\mathsf T}$。对全部 $X\ge0$ 不增迹等价于 $F\le I$：充分性用正算子的迹配对非负，必要性取 $X=|u\rangle\langle u|$。转置保持正序，得到式(11.4)。
+
+这是 Choi—Kraus 定理的有限维形式，见 Watrous，*The Theory of Quantum Information*，2018，[第2章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，式(2.64)—(2.66)、定理2.22与2.26，印刷第78、82—84、87—89页。完整 Kraus 族的通道接口亦见 [FiniteKrausChannel](../../../D5/S3/Quantum/Foundation/FiniteKrausChannel.lean) 的 finite_kraus_quantum_channel。$\square$
+

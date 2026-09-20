@@ -1,0 +1,4 @@
+**证明。** 将[ML伴卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)命题18.3证明中的有限Pinsker不等式$\operatorname{TV}(p,q)\le\sqrt{D(p\Vert q)/2}$应用于$(P,Q_r)$，再代入定理9.5，得到式（9.15）。该Pinsker证明经二元合并与二项KL的二阶导数下界，包含端点和无穷分支；KL无穷时这里只给平凡上界。取$r=P_{C|B}$后，两联合律具有相同$AB$边缘，逐正切片提取权重，得到式（9.16）左侧恰为$\operatorname{TV}(P,P^{\mathrm{glue}})$，故第二式成立。
+
+反例仍取该命题的稀有状态模型：$\Pr(H=1)=\varepsilon\in(0,1)$、$F=H$、$M$恒定时，$\Delta_M=h(\varepsilon)\to0$，而两个历史的真实未来条件律之间TV始终为一。每个先验都有全支持，但正概率下界随$\varepsilon$趋零，故不能推出统一最坏纤维误差。证毕。
+

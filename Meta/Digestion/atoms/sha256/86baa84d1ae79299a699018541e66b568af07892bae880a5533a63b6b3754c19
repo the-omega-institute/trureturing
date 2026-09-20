@@ -1,0 +1,16 @@
+**定义 11.1（有限维载体与 Choi 约定）。** 全部 Hilbert 空间均为非零有限维复空间，$\mathcal L(A)$ 表示 $A$ 上的全部复线性算子。对每个输入空间 $A$ 固定正交归一基 $\{|i\rangle\}_{i=1}^{d_A}$，把输入参考副本 $A'$ 与 $A$ 按此基识别，并记
+$$
+E_{ij}=|i\rangle\langle j|,\qquad
+|\Omega_A\rangle=\sum_{i=1}^{d_A}|i\rangle_{A'}\otimes|i\rangle_A.
+\tag{11.1}
+$$
+对复线性映射 $\Phi:\mathcal L(A)\to\mathcal L(B)$，取输入参考在前、输出在后的未归一化 Choi 算子
+$$
+J(\Phi)
+=(\operatorname{id}_{A'}\otimes\Phi)(|\Omega_A\rangle\langle\Omega_A|)
+=\sum_{i,j}E_{ij}^{A'}\otimes\Phi(E_{ij})
+\in\mathcal L(A'\otimes B).
+\tag{11.2}
+$$
+符号 $\mathsf T$ 表示所选基中的普通转置，$\dagger$ 表示共轭转置；基底运输同时运输转置约定。无歧义时将 $A'$ 简写为 $A$。完全正量化所有有限参考 $R$ 上 $\operatorname{id}_R\otimes\Phi$ 的正性；不增迹指对每个 $X\ge0$ 有 $\operatorname{Tr}\Phi(X)\le\operatorname{Tr}X$。
+

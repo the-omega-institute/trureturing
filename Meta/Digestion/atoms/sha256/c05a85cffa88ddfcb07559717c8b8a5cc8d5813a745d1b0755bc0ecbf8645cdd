@@ -1,0 +1,26 @@
+**命题 11.8（由采样函数逼近静态记忆积分）。** 若共同 $a>0$，则在 $[u,v]$ 上
+$$
+g_0(x)=\frac h{-\log x}
+$$
+连续，且
+$$
+\int_0^\infty K(t)\,dt=J^*g_0(T)J.
+\tag{11.22}
+$$
+其 Lipschitz 常数可取 $1/(hu a^2)$。因此对精确规范压缩，
+$$
+\left\|\int_0^\infty(K(t)-K_r(t))\,dt\right\|
+\le\frac{m(v-u)}{hu a^2\sqrt{2r+1}}.
+\tag{11.23}
+$$
+带噪版本对同一个 $g_0$ 使用定理11.2的幂基噪声项。
+
+对 $C_r$ 作正交谱分解，将 $J_r$ 在各特征空间的分量合并，可写
+$$
+K_r(t)=\sum_{\ell=1}^{s_r}e^{-\lambda_\ell t}W_\ell,
+\qquad W_\ell\succeq0,\quad
+a\le\lambda_\ell\le b,
+\tag{11.24}
+$$
+其中 $s_r\le d_r$，并可取 $W_\ell=J_r^*P_\ell J_r$。这是同一压缩系统的有限模态表达，不是另选独立方向的标量近似。各矩阵权重可同时作用于全部边界方向，因而保持共同实现。
+

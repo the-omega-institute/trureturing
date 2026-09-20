@@ -1,0 +1,7 @@
+**定义 11.16（允许 tester 与过程距离）。** 对共同端口的确定性梳，固定一族实际允许的顺序 tester $\mathfrak T$，每个 tester 包含准备、槽间控制、其活动记忆与终端读出，并给有限经典输出分布 $p_T^R$。定义
+$$
+d_{\mathfrak T}(R,S)=\sup_{T\in\mathfrak T}\operatorname{TV}(p_T^R,p_T^S),
+\tag{11.26}
+$$
+空族取零。tester 的正性、归一化与顺序实现采用 Chiribella等所引版本定义11及定理11，PDF第17页。实际允许族另受本卷共同实验语言、来源与费用合同约束。
+
