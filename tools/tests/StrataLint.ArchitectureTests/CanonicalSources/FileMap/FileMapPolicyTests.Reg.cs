@@ -7,6 +7,20 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed partial class FileMapPolicyTests
 {
+    [Theory]
+    [InlineData("StrataLint.ArchitectureTests")]
+    [InlineData("StrataLint.Tests")]
+    public void RepositoryRegSourcesParticipateInTestInputs(string project)
+    {
+        const string registrationPath = "Meta/engineering-projects.json";
+        using var json = JsonDocument.Parse(File.ReadAllBytes(
+            Path.Combine(RepositoryLayout.FindRoot(), registrationPath)));
+        var registration = json.RootElement.GetProperty("projects").EnumerateArray()
+            .Single(item => item.GetProperty("path").GetString() == $"tools/tests/{project}/{project}.csproj");
+        Assert.Contains(registration.GetProperty("execution_inputs").EnumerateArray(),
+            item => FileMapGlob.Create(item.GetString()!).IsMatch("Reg/Support/X.lean"));
+    }
+
     [Fact]
     public void EmptyRegPackagePassesRepositoryFileMapConformance()
     {
@@ -59,6 +73,7 @@ public sealed partial class FileMapPolicyTests
     [InlineData("SL-020", "Reg/D5/S3/Arith/X.lean", true)]
     [InlineData("SL-003", "Reg/Support/X.lean", false)]
     [InlineData("SL-003", "Reg/lake-manifest.json", false)]
+    [InlineData("filemap", "Reg/Support/X.lean", false)]
     public void RegChangesParticipateInCurrentCheckMaterials(string rule, string path, bool report)
     {
         using var json = JsonDocument.Parse(File.ReadAllBytes(
