@@ -24,11 +24,13 @@ internal static class ProducerInputFixture
         var rows = manifest["projects"]!.AsArray();
         var scopes = new[] { LeanRegistrationPath, ScribeRegistrationPath }.ToDictionary(path => path,
             path => JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!.AsObject(), StringComparer.Ordinal);
-        var selections = scopes.Values.Select(scope =>
+        var selections = scopes.Values.SelectMany(scope =>
         {
             var path = scope["registration"]!.GetValue<string>();
             var inputs = JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!;
-            return (Path: path, Value: inputs["producer_scopes"]![scope["scope"]!.GetValue<string>()]!);
+            var producer = inputs["producer_scopes"]![scope["scope"]!.GetValue<string>()]!;
+            return new[] { producer, inputs["inspector_sources"], inputs["dependency_sources"], inputs["config_inputs"] }
+                .OfType<JsonNode>().Select(selection => (Path: path, Value: selection));
         }).ToArray();
         // Restrict Git's output to declared inputs before the bounded reader sees it.
         var inventoryPatterns = rows.Select(row => row!["path"]!.GetValue<string>())

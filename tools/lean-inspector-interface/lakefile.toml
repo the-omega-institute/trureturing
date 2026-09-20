@@ -1,0 +1,10 @@
+name = "leanInspectorInterface"
+version = "0.1.0"
+defaultTargets = ["LeanInformationAuditInterface"]
+packagesDir = "../../.lake/packages"
+buildDir = "../../.lake/build/lean-inspector/interface"
+
+[[lean_lib]]
+name = "LeanInformationAuditInterface"
+roots = ["LeanInformationAuditInterface"]
+globs = ["LeanInformationAuditInterface.+"]
