@@ -290,6 +290,19 @@ jobs:
       - id: keys
         if: steps.cache_window.outputs.cache_allowed == 'true'
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage engineering
+      - id: prior_engineering
+        if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.engineering_path }}
+          key: ${{ steps.keys.outputs.engineering_key }}
+          restore-keys: ${{ steps.keys.outputs.engineering_restore_prefix }}
+      - name: Restore optional unselected test seeds before export
+        if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
+        env:
+          ENGINEERING_KEY: ${{ steps.prior_engineering.outputs.cache-matched-key }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --engineering-key "$ENGINEERING_KEY"
       - id: snapshot
         if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
         env:

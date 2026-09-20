@@ -1,5 +1,7 @@
 using System.Text.Json.Nodes;
 using System.Text.Json;
+using System.Formats.Tar;
+using System.IO.Compression;
 using StrataLint.TestSupport;
 using Xunit;
 
@@ -8,6 +10,57 @@ namespace StrataLint.EngineeringScope.Tests;
 [Collection("Engineering scope process boundary")]
 public sealed class ResourceExecutionPlanTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void IsolatedCacheExportRetainsUnselectedTestsOnlyFromRestoredSeed(bool restorePrior)
+    {
+        using var fixture = new SelectedTestsFixture(priorSeed: true);
+        using var storage = new CurrentExecutionContractTests.CandidateFixture();
+        var root = fixture.Tree.Root;
+        var priorArchive = Path.Combine(storage.Root, "build/prior-tests.tar");
+        TarFile.CreateFromDirectory(Path.Combine(root, CommonExecutionEvidence.TestSeedPath), priorArchive, includeBaseDirectory: false);
+        Assert.Equal(0, Program.RunCurrentTests(root, (_, _) =>
+            throw new InvalidOperationException("unchanged selected test must reuse its seed"), TextWriter.Null));
+        var build = CommonExecutionEvidence.ValidateBuild(root);
+        CheckEvidenceFixture.Seal(root, "engineering", build, ["selftest-pair"]);
+        fixture.Tree.Write("build/tests.log", "selected project reused\n");
+        CommonExecutionEvidence.SealEngineering(root, build, [new StageStep("tests", 0, 0, "executed", "build/tests.log")]);
+        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var target = Path.Combine(storage.Root, "build/exporter");
+        SharedBuildContractTests.Git(root, "clone", "--quiet", "--no-hardlinks", root, target);
+        foreach (var stage in new[] { "build", "engineering" })
+        {
+            var archive = Path.Combine(storage.Root, "build", stage + ".tgz");
+            Assert.Equal(0, CiTransport.Run(["transport-pack", "--repository", root, "--stage", stage,
+                "--commit", commit, "--run-id", "81", "--run-attempt", "1", "--archive", archive], TextWriter.Null));
+            using var input = new GZipStream(File.OpenRead(archive), CompressionMode.Decompress);
+            TarFile.ExtractToDirectory(input, target, overwriteFiles: true);
+            Assert.Equal(0, CiTransport.Run(["transport-verify", "--repository", target, "--stage", stage,
+                "--commit", commit, "--run-id", "81", "--run-attempt", "1"], TextWriter.Null));
+        }
+        Directory.Delete(root, recursive: true);
+        Directory.CreateDirectory(root);
+        Assert.False(Directory.Exists(Path.Combine(target, CommonExecutionEvidence.TestSeedPath)));
+        var currentTests = CommonExecutionEvidence.ValidateTests(target);
+        Assert.Single(currentTests.Projects);
+        if (restorePrior)
+        {
+            var seed = Path.Combine(target, CommonExecutionEvidence.TestSeedPath);
+            Directory.CreateDirectory(seed);
+            TarFile.ExtractToDirectory(priorArchive, seed, overwriteFiles: true);
+        }
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(target, "engineering", TextWriter.Null));
+        Assert.Equal(currentTests.Projects, CommonExecutionEvidence.ValidateTests(target).Projects);
+        var saved = CommonExecutionEvidence.Read<TestExecutionRecord>(target, CommonExecutionEvidence.TestSeedPath + "/tests.json");
+        Assert.Equal(restorePrior
+                ? new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second }
+                : [CurrentExecutionContractTests.CandidateFixture.First],
+            saved.Projects.Select(project => project.Project));
+        var transported = File.ReadAllText(Path.Combine(target, CommonExecutionEvidence.BundleListPath("engineering-seed"))).Split('\0');
+        Assert.All(saved.Materials, material => Assert.Contains(CommonExecutionEvidence.TestSeedPath + "/" + material.Path, transported));
+    }
+
     [Theory]
     [InlineData(false, false)]
     [InlineData(true, false)]
