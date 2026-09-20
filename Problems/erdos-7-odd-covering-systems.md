@@ -28,12 +28,14 @@ Divisibility is in the integers. Set membership enforces distinct moduli;
 there is no bound on their sizes, exponents, number, or total prime support.
 A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
-17 September 2026. The results below do not settle this unrestricted assertion.
+20 September 2026. The results below do not settle this unrestricted assertion.
 
 The complete results and proofs are organized below. Each link opens the corresponding mathematical section; all original assumptions, bounds and open obligations are retained.
 
 ### Results and proofs
 
+- [Five-prime cores with singly attached trees or specified cactus graphs: all-height noncoverage and exact weighted extension bounds](../docs/reports/erdos7-odd-covering/problem-details/18-five-prime-cores-with-tree-and-cactus-attachments.md)
+- [Two-prime separator kernels: exact gluing, a common-law sufficient criterion, and original-AP probes that recover the joint extension counts](../docs/reports/erdos7-odd-covering/problem-details/17-two-prime-separator-interfaces-and-exact-count-probes.md)
 - [Four-vertex blocks and arbitrary cycle blocks: noncoverage from a common descendant budget, retaining all four-prime labels and heights](../docs/reports/erdos7-odd-covering/problem-details/06c-four-vertex-blocks-and-cycle-breaking-vertices.md#four-vertex-blocks-with-a-common-descendant-budget)
 - [Every original prime graph with at most one cycle per component is noncovering, at arbitrary heights and residues](../docs/reports/erdos7-odd-covering/problem-details/06-block-saturation-and-the-actual-crossing-budget.md#arbitrary-odd-pseudoforests-are-noncovering)
 - [Every original cactus prime graph is noncovering: arbitrarily many cycles joined at articulation primes, with all heights and residues retained](../docs/reports/erdos7-odd-covering/problem-details/06b-arbitrary-odd-cactus-graphs-are-noncovering.md#arbitrary-odd-cactus-graphs-are-noncovering)
