@@ -33,15 +33,11 @@ public sealed class InformationTemplateEvidenceTests
         return DeclaredTemplateReviewTests.Tree(files);
     }
 
-    private static object[] SourceInputs(params object[] inputs) => inputs
-        .OrderBy(input => JsonSerializer.SerializeToElement(input).GetProperty("path").GetString(), StringComparer.Ordinal).ToArray();
-
     private static JsonElement Wire(bool declared = false, bool sidecar = false, int? compatibility = null) =>
         JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
             compatibility_version = compatibility ?? DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
-            inputs = SourceInputs(sidecar ? new[] { Input(PathB, TextB), Input(PathA, TextA) } : new[] { Input(PathA, TextA) }),
             inventory = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             registered = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             records = new[] { new
@@ -53,7 +49,6 @@ public sealed class InformationTemplateEvidenceTests
                 realization_name = Realization,
                 registration_source_path = PathA,
                 statement_identity = Hash("fixture statement A"),
-                content_inputs = new[] { Input(PathA, TextA) },
                 binding_source_path = declared ? sidecar ? PathB : PathA : null,
                 state = declared ? "declared_validated" : "undeclared",
                 diagnostic = declared ? null : MissingDiagnostic,
@@ -103,6 +98,17 @@ public sealed class InformationTemplateEvidenceTests
     [Fact]
     public void complete_producer_loader_accepted() => Assert.Single(RawReport().Files);
 
+    [Fact]
+    public void evidence_without_source_hash_lists_is_accepted()
+    {
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        wire.Remove("inputs");
+        foreach (var record in wire["records"]!.AsArray()) record!.AsObject().Remove("content_inputs");
+        var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA,
+            Snapshot((PathA, TextA + "-- changed after extraction\n")));
+        Assert.Single(evidence.Records);
+    }
+
     [Theory]
     [InlineData("lean-report-inputs.json")]
     [InlineData("lean-toolchain")]
@@ -110,11 +116,8 @@ public sealed class InformationTemplateEvidenceTests
     public void retired_policy_input_is_malformed(string path)
     {
         var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
-        var inputs = wire["inputs"]!.AsArray();
-        foreach (var input in inputs.ToArray())
-            if (DeclaredTemplateReviewTests.PolicyFiles().ContainsKey(input!["path"]!.GetValue<string>()))
-                inputs.Remove(input);
-        inputs.Add(JsonSerializer.SerializeToNode(Input(path, DeclaredTemplateReviewTests.PolicyFiles()[path])));
+        wire["inputs"] = JsonSerializer.SerializeToNode(new[] {
+            Input(path, DeclaredTemplateReviewTests.PolicyFiles()[path]) });
         var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
             JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA))));
         Assert.StartsWith("DTR-Evidence:", error.Message);
@@ -257,14 +260,10 @@ public sealed class InformationTemplateEvidenceTests
         var registrationSource = imported ? "import D5.S0.Carrier.Binding\n" + TextA : TextA;
         var snapshot = Snapshot((PathA, registrationSource), (PathB, bridgeSource));
         var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
-        var inputs = new[] { Input(PathB, bridgeSource), Input(PathA, registrationSource) };
-        wire["inputs"] = JsonSerializer.SerializeToNode(SourceInputs(inputs));
-        wire["records"]![0]!["content_inputs"] = JsonSerializer.SerializeToNode(inputs);
         var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
         var bridge = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(new
         {
             schema_version = 1, compatibility_version = DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
-            inputs = SourceInputs(Input(PathB, bridgeSource)),
             inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
             records = System.Array.Empty<object>(),
         }), PathB, snapshot);
@@ -342,20 +341,18 @@ public sealed class InformationTemplateEvidenceTests
     }
 
     [Fact]
-    public void persisted_changed_input_digest_is_not_revalidated()
+    public void persisted_evidence_does_not_revalidate_source_bytes()
     {
         var evidence = InformationTemplateEvidence.Read(Wire(), PathA,
             Snapshot((PathA, TextA + "-- changed\n")));
-        Assert.Contains(evidence.Inputs, input => input.Path == PathA && input.Sha256 == Hash(TextA));
+        Assert.Single(evidence.Records);
     }
 
     [Fact]
     public void persisted_replay_rejected()
     {
-        // Both source files are present and correctly hashed. The producer
-        // cannot replay A's inline binding merely by adding B to its inputs.
+        // A's inline binding cannot be replayed under B's producer owner.
         var wire = JsonSerializer.SerializeToNode(Wire(declared: true))!.AsObject();
-        wire["inputs"] = JsonSerializer.SerializeToNode(new[] { Input(PathB, TextB), Input(PathA, TextA) });
         var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
             JsonSerializer.SerializeToElement(wire), PathB, Snapshot((PathA, TextA), (PathB, TextB))));
         Assert.Equal("DTR-Evidence: binding owner/diagnostic is missing or wrong", error.Message);

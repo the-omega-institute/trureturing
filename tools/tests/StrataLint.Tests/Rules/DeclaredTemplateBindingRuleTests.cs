@@ -75,7 +75,7 @@ public sealed class DeclaredTemplateBindingRuleTests
         Finding(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false, firstPin: true)), "DTR-Undeclared", AdmissionEffect.Observe);
 
     [Theory]
-    [InlineData("inconsistent-content-input")]
+    [InlineData("retired-content-input")]
     [InlineData("malformed-record")]
     [InlineData("wrong-version")]
     public void delta_invalid_evidence_blocks(string mutation)
@@ -85,7 +85,7 @@ public sealed class DeclaredTemplateBindingRuleTests
         var reports = Report(after, count: 1, declared: true).Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value);
         var evidence = reports[Registration].InformationTemplates!;
         var wire = JsonSerializer.SerializeToNode(evidence)!;
-        if (mutation == "inconsistent-content-input") wire["inputs"]![0]!["sha256"] = new string('0', 64);
+        if (mutation == "retired-content-input") wire["inputs"] = JsonSerializer.SerializeToNode(Array.Empty<object>());
         if (mutation == "malformed-record") wire["records"]![0]!.AsObject().Remove("certificate");
         if (mutation == "wrong-version") wire["compatibility_version"] = 1;
         reports[Registration] = reports[Registration] with

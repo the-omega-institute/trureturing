@@ -395,7 +395,7 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .proj n i b => emit "projection"; wireName n; emit (toString i); child b
 
 /-- The canonical wire includes every retained plan node and proof proposition/erased expansion,
-all slots, identities, semantic version and source references. The hash and byte count are
+all slots, identities, the private frame version tuple and source references. The hash and byte count are
 outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
@@ -504,12 +504,12 @@ private def fileInputBatch (paths : Array String) (readVersion : Bool := false) 
 private def fileHashes (paths : Array String) : IO (Array String) := do
   return (← fileInputBatch paths).1
 
-/-- Bind only the source bytes and the explicit semantic compatibility value. -/
-def readVersionedSourceInputs (paths : Array String) : CoreM (Array SourceInput × Nat) := do
-  let (hashes, version) ← fileInputBatch paths true
+/-- Read the explicit report release version without hashing source files. -/
+def readReportCacheReleaseVersion : CoreM Nat := do
+  let (_, version) ← fileInputBatch #[] true
   let some version := version
     | throwError "DTR-ManifestVersion: missing report_cache_release_semantic_version"
-  return ((paths.zip hashes).map (fun (path, sha256) => { path, sha256 }), version)
+  return version
 
 /-- Hash every supplied current file in order, including repeated paths. The
 fixed native worker avoids interpreting SHA-256 separately for every byte. -/

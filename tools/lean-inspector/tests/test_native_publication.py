@@ -270,7 +270,7 @@ class NativePublicationTests:
             report_sha256=hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
             compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
-            inspector_executable_sha256='b' * 64, input_sources=dict(hashes)) for row in rows}
+            inspector_executable_sha256='b' * 64) for row in rows}
         coordinates = publication.coordinates(self.root)
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             report = Path(directory) / publication.RAW
@@ -304,24 +304,6 @@ class NativePublicationTests:
                         verify()
                 finally:
                     added.unlink()
-                # Non-owner source hashes remain captured provenance. Paths
-                # still need registration, without comparing live file bytes.
-                origins['Fixture']['input_sources']['D5/B.lean'] = '0' * 64
-                publication.write_sidecars(report, coordinates, origins)
-                verify()
-                origins['Fixture']['input_sources']['D5/B.lean'] = hashes['D5/B.lean']
-                publication.write_sidecars(report, coordinates, origins)
-                manifest = self.root / 'lean-report-inputs.json'
-                original = manifest.read_bytes()
-                policy = json.loads(original)
-                policy['dependency_sources']['include'] = [dict(pattern='ClaimSupport.lean', optional=False)]
-                try:
-                    manifest.write_text(json.dumps(policy))
-                    with self.assertRaisesRegex(ValueError, 'unregistered dependency source binding: External.lean'):
-                        verify()
-                finally:
-                    manifest.write_bytes(original)
-
     def test_publication_validates_material_identities_once(self):
         self.build()
         rows, raw, material_bytes = self.report()

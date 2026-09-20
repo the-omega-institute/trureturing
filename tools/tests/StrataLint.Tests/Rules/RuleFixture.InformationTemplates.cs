@@ -10,17 +10,10 @@ internal sealed partial class RuleFixture
     // empty wire inventory as the current producer; explicit evidence is retained.
     private Dictionary<string, LeanFileReport> ReportsWithEmptyTemplateEvidence(RepositorySnapshot snapshot)
     {
-        var inputs = snapshot.Files.Values.Where(file => file.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
-                && file.Path.Value.EndsWith(".lean", StringComparison.Ordinal)
-                || file.Path.Value == "Trureturing.lean")
-            .OrderBy(file => file.Path.Value, StringComparer.Ordinal)
-            .Select(file => new InformationTemplateContentInput(file.Path.Value,
-                InformationTemplateJson.Sha256(file.RawBytes.AsSpan()))).ToImmutableArray();
         var wire = JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
             compatibility_version = DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
-            inputs = inputs.Select(input => new { path = input.Path, sha256 = input.Sha256 }),
             inventory = Array.Empty<object>(), registered = Array.Empty<object>(), records = Array.Empty<object>(),
         });
         return Reports.ToDictionary(pair => pair.Key, pair => pair.Value.InformationTemplates is not null ? pair.Value

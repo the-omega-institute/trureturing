@@ -194,12 +194,9 @@ public sealed class DeclaredTemplateUnregisteredTests
             reports[owner] = reports[owner] with { Declarations = reports[owner].Declarations.Add(new(Theorem + ".unit", "def", "True", [])) };
             reports[Target] = reports[Target] with { Declarations = reports[Target].Declarations.Add(new(Theorem + ".realization", "def", "True", [])) };
         }
-        var inputs = after.Where(p => p.Key == Target || p.Key == Registration)
-            .OrderBy(p => p.Key, StringComparer.Ordinal).Select(p => new { path = p.Key, sha256 = Hash(p.Value) }).ToArray();
         object Record(string producer, bool validated) => new
         {
             key = InformationTemplateJson.KeyJson(key), registration_source_path = owner, statement_identity = Hash(Theorem),
-            content_inputs = inputs.Where(i => i.path == Target || i.path == owner).ToArray(),
             binding_source_path = validated ? producer : null, state = validated ? "declared_validated" : "undeclared",
             diagnostic = validated ? null : $"IE-C050 ClosedTruthReadout key={key.Root}/{key.Catalog}/{key.Theorem} "
                 + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
@@ -221,7 +218,7 @@ public sealed class DeclaredTemplateUnregisteredTests
             if (malformed && path == Registration) records.Add(new { key = new { theorem = "Other.unrelated" }, certificate = "malformed" });
             reports[path] = reports[path] with { InformationTemplates = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = ManifestVersion(after), inputs,
+                schema_version = 1, compatibility_version = ManifestVersion(after),
                 inventory = own ? new[] { InformationTemplateJson.KeyJson(key) } : [],
                 registered = own ? new[] { InformationTemplateJson.KeyJson(key) } : [], records,
             }) };

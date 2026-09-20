@@ -122,13 +122,7 @@ def write_origin(report, name, origin):
 
 def check_origin(origin, row, compatibility):
     materials.require_keys(origin, {'module', 'report_sha256', 'compatibility_sha256',
-        'producer_sources_sha256', 'inspector_executable_sha256', 'input_sources'}, 'module production origin')
-    bindings = origin['input_sources']
-    if (not isinstance(bindings, dict) or bindings.get(row['source_path']) != row['source_sha256'][7:]
-            or any(not isinstance(sha, str) or not HEX.fullmatch(sha) for sha in bindings.values())):
-        raise ValueError('module dependency source binding mismatch')
-    for path in bindings:
-        selection.validate_pattern(path, 'dependency source binding')
+        'producer_sources_sha256', 'inspector_executable_sha256'}, 'module production origin')
     if (origin['module'] != row['module'] or origin['compatibility_sha256'] != compatibility
             or any(not isinstance(origin[k], str) or not HEX.fullmatch(origin[k]) for k in
                    ('report_sha256', 'compatibility_sha256', 'producer_sources_sha256', 'inspector_executable_sha256'))
@@ -251,23 +245,15 @@ class _SourceStructure:
                 raise ValueError('report source binding mismatch')
         validate_template_sources(rows, self.inputs.root, inputs=self.inputs)
 
-    def validate_dependency_sources(self, origins):
-        allowed = set(self.inputs.dependency_sources())
-        for origin in origins.values():
-            for path in origin['input_sources']:
-                if path not in allowed:
-                    raise ValueError('unregistered dependency source binding: ' + path)
-
 
 def validate_sources(rows, repository):
     _SourceStructure(repository).validate_sources(rows)
 
 
 def validate_template_sources(rows, repository, *, inputs=None):
-    """Check source-input structure and the explicit report cache version.
+    """Check evidence structure and the explicit report cache version.
 
-    Lake traces own input freshness. Stored hashes remain producer evidence;
-    acceptance never reopens their repository files to recompute digests.
+    Lake traces own input freshness; evidence contains no raw source hashes.
     """
     manifest = Path(repository) / 'lean-report-inputs.json'
     materials.read_manifest_version(manifest)
@@ -280,20 +266,6 @@ def validate_template_sources(rows, repository, *, inputs=None):
         if evidence is None:
             continue
         materials.validate_template_evidence(evidence, manifest)
-        previous = None
-        for source in evidence['inputs']:
-            materials.require_keys(source, {'path', 'sha256'}, 'declared-template input')
-            path, sha = source['path'], source['sha256']
-            if (not isinstance(path, str) or not path or previous is not None and path <= previous
-                    or not isinstance(sha, str) or not re.fullmatch(r'[0-9a-f]{64}', sha)):
-                raise ValueError('malformed declared-template input binding')
-            previous = path
-            selection.validate_pattern(path, 'declared-template input')
-
-
-def validate_dependency_sources(origins, repository):
-    _SourceStructure(repository).validate_dependency_sources(origins)
-
 
 def verify_inputs(report, repository):
     """Check input membership and origin integrity without source-byte replay."""
@@ -306,7 +278,6 @@ def verify_inputs(report, repository):
     for row in rows:
         check_origin(origins[row['module']], row, compatibility)
     sources.validate_sources(rows)
-    sources.validate_dependency_sources(origins)
 
 
 def _require_bundle_files(report):
@@ -357,7 +328,6 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
     if repository is not None:
         sources = _SourceStructure(repository)
         sources.validate_sources(rows)
-        sources.validate_dependency_sources(origins)
     return rows
 
 

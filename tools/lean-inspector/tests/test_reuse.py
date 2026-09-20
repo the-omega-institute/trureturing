@@ -79,8 +79,7 @@ class ReuseTests(unittest.TestCase):
             report_sha256=hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
             compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
-            inspector_executable_sha256='b' * 64,
-            input_sources={row['source_path']: row['source_sha256'][7:]}) for row in rows}
+            inspector_executable_sha256='b' * 64) for row in rows}
         publication.write_sidecars(self.report, publication.coordinates(self.root), origins)
 
     def receipt(self):

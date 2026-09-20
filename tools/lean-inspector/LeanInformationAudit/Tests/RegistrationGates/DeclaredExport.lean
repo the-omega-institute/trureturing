@@ -27,12 +27,9 @@ run_meta do
     let .ok rows := wire.getObjValAs? (Array Json) "records"
       | throwError "setup: missing record wire"
     unless rows.size == registered.size do throwError "setup: export partition lost a row"
-    let .ok inputs := wire.getObjValAs? (Array Json) "inputs"
-      | throwError "setup: missing inputs"
-    unless !inputs.isEmpty && inputs.all (fun input => match input.getObjValAs? String "path" with
-        | .ok path => path.endsWith ".lean"
-        | .error _ => false) do
-      throwError "[FAIL] module_inputs_exclude_global_configuration"
+    unless (wire.getObjVal? "inputs").toOption.isNone && rows.all
+        (fun row => (row.getObjVal? "content_inputs").toOption.isNone) do
+      throwError "[FAIL] report_omits_untraced_source_hashes"
   logInfo "[PASS] complete_producer_loader_wire"
   IO.FS.createDirAll ".lake/build"
   IO.FS.writeFile ".lake/build/declared-template-evidence.json" ((Json.arr wires).compress ++ "\n")

@@ -60,16 +60,10 @@ public sealed class DeclaredTemplateReviewTests
     private static string Hash(string text) => InformationTemplateJson.Sha256(Encoding.UTF8.GetBytes(text));
     internal static InformationOccurrenceKey Key(int n) => new(Module, Module, TargetModule + ".target" + n,
         Module + ".arena", Module + ".catalog");
-    internal static ImmutableArray<InformationTemplateContentInput> Content(Dictionary<string, string> files) =>
-        [new(Registration, Hash(files[Registration])), new(Target, Hash(files[Target]))];
-
     internal static LeanAxiomReport Report(Dictionary<string, string> files, int count = 2,
-        bool declared = false, string? omit = null, bool indirectJudgePath = false)
+        bool declared = false, bool indirectJudgePath = false)
     {
         var snapshot = Tree(files);
-        var inputs = files.Where(p => p.Key == Registration || p.Key == Target)
-            .Where(p => p.Key != omit).OrderBy(p => p.Key, StringComparer.Ordinal)
-            .Select(p => new { path = p.Key, sha256 = Hash(p.Value) }).ToArray();
         var keys = Enumerable.Range(0, count).Select(Key).ToArray();
         var reports = new Dictionary<string, LeanFileReport>();
         foreach (var path in new[] { Registration, Target })
@@ -77,14 +71,13 @@ public sealed class DeclaredTemplateReviewTests
             var own = path == Registration ? keys : [];
             var wire = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = ManifestVersion(files), inputs,
+                schema_version = 1, compatibility_version = ManifestVersion(files),
                 inventory = own.Select(InformationTemplateJson.KeyJson),
                 registered = own.Select(InformationTemplateJson.KeyJson),
                 records = own.Select(key => new
                 {
                     key = InformationTemplateJson.KeyJson(key), registration_source_path = Registration,
                     statement_identity = Hash(key.Theorem),
-                    content_inputs = Content(files).Select(i => new { path = i.Path, sha256 = i.Sha256 }),
                     binding_source_path = declared ? Registration : null,
                     state = declared ? "declared_validated" : "undeclared",
                     diagnostic = declared ? null : $"IE-C050 ClosedTruthReadout key={key.Root}/{key.Catalog}/{key.Theorem} "
@@ -251,59 +244,19 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void selected_module_accepts_source_inputs_without_configuration()
+    public void selected_module_accepts_evidence_without_source_hash_lists()
     {
         var before = Files();
         var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
-        var report = Report(after, declared: true);
-        var modules = report.Files.ToDictionary(pair => pair.Key.Value, pair =>
-        {
-            var wire = System.Text.Json.Nodes.JsonNode.Parse(pair.Value.InformationTemplates!.Value.GetRawText())!;
-            var inputs = wire["inputs"]!.AsArray();
-            foreach (var input in inputs.ToArray())
-                if (PolicyFiles().ContainsKey(input!["path"]!.GetValue<string>())) inputs.Remove(input);
-            return pair.Value with { InformationTemplates = JsonSerializer.SerializeToElement(wire) };
-        });
-        var diagnostics = Dispatch(Context(before, after, LeanAxiomReport.Create(modules), [Registration]));
-        Assert.DoesNotContain(diagnostics, d => d.Message.Contains("DTR-Evidence", StringComparison.Ordinal));
-        Assert.Contains(diagnostics, d => d.Message.Contains("DTR-Declared", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void selected_module_accepts_input_digests_that_differ_from_snapshot()
-    {
-        var before = Files();
-        var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
-        var modules = Report(after, declared: true).Files.ToDictionary(pair => pair.Key.Value, pair =>
-        {
-            var wire = System.Text.Json.Nodes.JsonNode.Parse(pair.Value.InformationTemplates!.Value.GetRawText())!;
-            foreach (var input in wire["inputs"]!.AsArray()) input!["sha256"] = new string('a', 64);
-            foreach (var record in wire["records"]!.AsArray())
-                foreach (var input in record!["content_inputs"]!.AsArray()) input!["sha256"] = new string('a', 64);
-            return pair.Value with { InformationTemplates = JsonSerializer.SerializeToElement(wire) };
-        });
-        var diagnostics = Dispatch(Context(before, after, LeanAxiomReport.Create(modules), [Registration]));
+        var retained = Report(before, declared: true);
+        var diagnostics = Dispatch(Context(before, after, retained, [Registration]));
         Assert.True(diagnostics.Any(d => d.Message.Contains("DTR-Declared", StringComparison.Ordinal))
             && diagnostics.All(d => !d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)),
-            "[FAIL] selected_module_accepts_input_digests_that_differ_from_snapshot");
-    }
-
-    [Theory]
-    [InlineData(Registration)]
-    [InlineData(Target)]
-    public void required_source_input_omission_rejected(string omitted)
-    {
-        var before = Files();
-        var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
-        var report = Report(after, omit: omitted);
-        var diagnostics = Dispatch(Context(before, after, report, [Registration]));
-        Assert.True(diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Observe
-                && d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)),
-            "[FAIL] required_source_input_omission_rejected: " + omitted);
+            "[FAIL] selected_module_accepts_evidence_without_source_hash_lists");
     }
 
     [Fact]
-    public void actual_inline_proof_helper_input_omission_rejected()
+    public void actual_inline_report_omits_untraced_source_hashes()
     {
         const string prefix = "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/";
         const string registration = prefix + "InlineRealization.lean";
@@ -332,15 +285,10 @@ public sealed class DeclaredTemplateReviewTests
         start += marker.Length;
         var end = output.IndexOf('\n', start);
         var wire = System.Text.Json.Nodes.JsonNode.Parse(output[start..(end < 0 ? output.Length : end)])!;
-        var inputs = wire["inputs"]!.AsArray();
-        Assert.Contains(inputs, input => input!["path"]!.GetValue<string>() == helper);
-
-        var entries = inputs.Select(input =>
-        {
-            var path = input!["path"]!.GetValue<string>();
-            return new RawRepositoryEntry(path,
-                ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))));
-        });
+        Assert.Null(wire["inputs"]);
+        Assert.All(wire["records"]!.AsArray(), record => Assert.Null(record!["content_inputs"]));
+        var entries = new[] { registration, source, helper }.Select(path =>
+            new RawRepositoryEntry(path, ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path)))));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(entries.Append(RawRepositoryEntry.FromText("lean-report-inputs.json",
                 File.ReadAllText(Path.Combine(root, "lean-report-inputs.json"))))))).Snapshot;
@@ -361,18 +309,11 @@ public sealed class DeclaredTemplateReviewTests
         Assert.Null(Record.Exception(() => InformationTemplateEvidence.Collect(
             snapshot, WithWire(wire), selected)));
 
-        var omitted = wire.DeepClone();
-        var omittedInputs = omitted["inputs"]!.AsArray();
-        omittedInputs.RemoveAt(omittedInputs.ToList().FindIndex(input =>
-            input!["path"]!.GetValue<string>() == helper));
-        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(
-            snapshot, WithWire(omitted), selected));
-        Assert.Contains("omitted required producer/source input " + helper, error.Message,
-            StringComparison.Ordinal);
+
     }
 
     [Fact]
-    public void indirect_judge_import_closure_keeps_content_and_drops_judge_inputs()
+    public void indirect_judge_import_closure_keeps_ownership_without_hash_lists()
     {
         var files = Files();
         const string syntax = "tools/lean-inspector/LeanInformationAudit/Syntax.lean";
@@ -397,8 +338,6 @@ public sealed class DeclaredTemplateReviewTests
         Assert.Null(error);
         var evidence = InformationTemplateEvidence.Read(
             report.Files[RepoPath.CreateKnown(Registration)].InformationTemplates!.Value, Registration, Tree(files));
-        Assert.Contains(evidence.Inputs, input => input.Path == Target);
-        Assert.DoesNotContain(evidence.Inputs,
-            input => input.Path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal));
+        Assert.False(evidence.Wire.TryGetProperty("inputs", out _));
     }
 }

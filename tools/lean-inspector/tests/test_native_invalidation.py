@@ -28,6 +28,40 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
+    def test_native_compatibility_preimage(self):
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        for version in [9, 10]:
+            policy['report_cache_release_semantic_version'] = version
+            self.write('lean-report-inputs.json', json.dumps(policy))
+            expected = hashlib.sha256(
+                b'schema=stratalint-lean-report-compatibility\nversion=' +
+                str(version).encode('ascii') + b'\n').hexdigest()
+            self.assertEqual(publication.selection.Selection(self.root).compatibility(), expected)
+
+    def test_imported_comment_warm_report_equals_fresh(self):
+        self.test_native_module_binding_scope()
+        before = self.stamps()
+        compiled = {p: p.read_bytes() for p in
+                    (self.root / '.lake/build/lib/lean/D5').glob('B.*')
+                    if p.suffix in ['.olean', '.private', '.server', '.ir']}
+        self.assertTrue(compiled)
+        source = self.root / 'D5/B.lean'
+        source.write_bytes(source.read_bytes() + b'\n-- imported comment only\n')
+        self.build()
+        self.publish()
+        self.assertEqual({p: p.read_bytes() for p in compiled}, compiled)
+        self.assertEqual({name for name, stamp in self.stamps().items()
+                          if stamp != before[name]}, {'D5.B'})
+        warm = self.report()[1:]
+        for artifact in (native.state(self.root) / 'modules').glob('*.zip*'):
+            artifact.unlink()
+        self.env['LAKE_ARTIFACT_CACHE'] = 'false'
+        self.env['LAKE_RESTORE_ARTIFACTS'] = 'false'
+        self.build()
+        self.publish()
+        self.assertEqual(warm, self.report()[1:],
+                         '[FAIL] imported_comment_warm_report_equals_fresh')
+
     def test_native_old_manifest_key_rejected(self):
         manifest = self.root / 'lean-report-inputs.json'
         policy = json.loads(manifest.read_text())
@@ -45,7 +79,7 @@ class NativeInvalidationTests:
             materials.read_manifest_version(manifest)
 
     def test_native_module_binding_scope(self):
-        # This synthetic driver supplies source-bound empty registration rows;
+        # This synthetic driver supplies empty registration rows;
         # DeclaredExport separately checks the production Lean emitter.
         self.copy('tools/lean-inspector/Inspector.lean')
         self.compiler_seed = None
@@ -59,23 +93,11 @@ abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array 
 namespace LeanInformationAudit
 open Lean
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
-  let env ← getEnv
-  names.mapM fun root => do
-    let mut pending := [root]
-    let mut seen : NameSet := {}
-    let mut paths : Array String := #[]
-    while let name :: rest := pending do
-      pending := rest
-      if seen.contains name then continue
-      seen := seen.insert name
-      unless name == `Fixture || name.toString.startsWith "D5." do continue
-      paths := paths.push (name.toString.replace "." "/" ++ ".lean")
-      if let some index := env.getModuleIdx? name then
-        pending := env.header.moduleData[index.toNat]!.imports.toList.map (·.module) ++ pending
+  names.mapM fun _ => do
     let result ← IO.Process.output { cmd := "python3", args := #["-c",
-      "import hashlib,json,pathlib,sys; print(json.dumps(dict(schema_version=1," ++
+      "import json,pathlib; print(json.dumps(dict(schema_version=1," ++
       "compatibility_version=json.loads(pathlib.Path('lean-report-inputs.json').read_text())['report_cache_release_semantic_version']," ++
-      "inventory=[],registered=[],records=[],inputs=[dict(path=p,sha256=hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()) for p in sorted(sys.argv[1:])])))"] ++ paths }
+      "inventory=[],registered=[],records=[])))"] }
     IO.ofExcept (Json.parse result.stdout)
 ''')
 
@@ -90,7 +112,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         build()
         rows = self.report()[0]
         self.assertEqual(len(rows), 4)
-        self.assertTrue(all(row['information_templates']['inputs'] for row in rows))
+        self.assertTrue(all('inputs' not in row['information_templates'] for row in rows))
         before = self.stamps()
 
         def changed(expected):
@@ -125,9 +147,8 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         for path in ['lake-manifest.json', 'lean-toolchain', 'lean-report-inputs.json']:
             with self.subTest(retired_input=path):
                 evidence = dict(row['information_templates'])
-                evidence['inputs'] = sorted(evidence['inputs'] + [
-                    dict(path=path, sha256=publication.digest(self.root / path))], key=lambda item: item['path'])
-                with self.assertRaisesRegex(ValueError, 'malformed declared-template input',
+                evidence['inputs'] = [dict(path=path, sha256=publication.digest(self.root / path))]
+                with self.assertRaisesRegex(ValueError, 'unexpected fields',
                         msg='[FAIL] retired_policy_binding_is_malformed'):
                     publication.validate_template_sources([dict(row, information_templates=evidence)], self.root)
 
@@ -273,20 +294,21 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
             records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
             self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), len(expected))
             before = after
-            self.publish()  # Includes current-source and cached-origin validation.
+            self.publish()  # Includes structure and cached-origin integrity validation.
             return built
 
-        # Change a transitive judge source, preserving its report semantics.
-        self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n-- compatible judge\n')
+        # A byte-only judge edit leaves the imported compiler artifacts intact.
+        self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n-- comment only\n')
+        changed(set())
+        self.assertEqual(self.report()[1:], original)
+        # A changed compiled judge artifact refreshes exactly its importers.
+        self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 2\n')
         changed({'D5.A', 'Fixture'})
-        for name in before:
-            self.assertEqual('LeanInformationAudit/Support.lean' in origins[name]['input_sources'],
-                             name in {'D5.A', 'Fixture'})
         self.assertEqual(self.report()[1:], original)
         for name in ['D5.B', 'D5.Alone']:
             self.assertEqual(self.origins()[name], origins[name])
         changed(set())
-        self.write('LeanInformationAudit/Registry.lean', driver + '-- compatible driver\n')
+        self.write('LeanInformationAudit/Registry.lean', driver.replace(':= judgeSupport', ':= judgeSupport + 0'))
         changed({'D5.A', 'Fixture'})
         self.assertEqual(self.report()[1:], original)
 
@@ -520,7 +542,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.assertFalse(after, 'mutation must change actual Lean-generated semantic evidence')
         self.assertEqual(stage.returncode, 0, json.dumps(result))
         self.assertEqual(verify.returncode, 0, json.dumps(result))
-    def test_exported_private_dependency_and_missing_binding(self):
+    def test_exported_private_dependency_and_retired_origin(self):
         support = 'module\npublic section\nnoncomputable section\nprivate axiom privateInput : Nat\ndef support : Nat := privateInput\n'
         self.write('Support.lean', support)
         self.write('D5/A.lean', 'import Support\nnoncomputable def value : Nat := support\n')
@@ -539,8 +561,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.build()
         self.assertEqual(self.report()[0][0]['declarations'][0]['axioms'], [])
         self.publish()
-        # Simulate pre-binding row and aggregate sidecars. Never manufacture
-        # evidence for old bytes from the current dependency snapshot.
+        # Retired origin fields are malformed: only the current format is read.
         before = self.stamps()
         expected = self.report()[1:]
         for relative in [*(f'modules/{name}.zip' for name in before), 'report.zip']:
@@ -554,7 +575,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
                         origin = json.loads(data)
                         records = origin['module_origins'].values() if 'module_origins' in origin else [origin]
                         for record in records:
-                            record.pop('input_sources')
+                            record['input_sources'] = {}
                         data = json.dumps(origin).encode()
                     archive.writestr(info, data)
         result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),

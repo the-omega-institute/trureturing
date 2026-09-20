@@ -30,7 +30,7 @@ def manifest_fixture(root, version=9):
 def evidence_fixture(manifest):
     return dict(schema_version=1,
         compatibility_version=json.loads(manifest.read_text())['report_cache_release_semantic_version'],
-        inventory=[], registered=[], records=[], inputs=[])
+        inventory=[], registered=[], records=[])
 
 
 class ManifestVersionTests(unittest.TestCase):
@@ -256,13 +256,12 @@ class PublicationTests(unittest.TestCase):
                 utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
                 rows[name] = [dict(module=name, source_path=source.name,
                     source_sha256='sha256:' + publication.digest(source),
-                    information_templates=dict(evidence_fixture(manifest_fixture(root)),
-                        inputs=[dict(path=policy.name, sha256=publication.digest(policy))]))]
+                    information_templates=evidence_fixture(manifest_fixture(root)))]
                 requests.append(['validate', [str(root), 'module', str(root), name, str(utility), 'fixture.zip']])
             request, result = root / 'request.json', root / 'result.json'
             request.write_text(json.dumps(requests))
             # Isolate the source-binding boundary from ZIP decoding. The batch
-            # loop and each row's real path/hash validator still execute.
+            # loop and each row's path/version validator still execute.
             def validate(kind, owner, name, utility, artifact, **kwargs):
                 native.row_binding(rows[name], owner, name, utility,
                     **{key: value for key, value in kwargs.items() if key == 'template_inputs'})
@@ -308,8 +307,7 @@ class PublicationTests(unittest.TestCase):
             source.write_text('def x := 1\n')
             utility = root / 'utility.json'
             utility.write_text(json.dumps(dict(source_path='X.lean', utilities=[])))
-            evidence = dict(evidence_fixture(manifest_fixture(root)),
-                inputs=[dict(path='Policy.lean', sha256=publication.digest(policy))])
+            evidence = evidence_fixture(manifest_fixture(root))
             rows = [dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
                 imports=[], declarations=[], information_templates=evidence)]
             inputs = publication.selection.Selection(root)
@@ -325,7 +323,7 @@ class PublicationTests(unittest.TestCase):
                 sources='c' * 64, config='d' * 64, input=pair)
             origins = {'X': dict(module='X', report_sha256=publication.digest(report),
                 compatibility_sha256=compatibility, producer_sources_sha256='e' * 64,
-                inspector_executable_sha256='f' * 64, input_sources={'X.lean': publication.digest(source)})}
+                inspector_executable_sha256='f' * 64)}
             publication.write_sidecars(report, coordinates, origins)
             validators = [lambda: native.row_binding(rows, root, 'X', utility),
                           lambda: native.row_binding(rows, root, 'X', utility, template_inputs=inputs),
@@ -429,8 +427,7 @@ class PublicationTests(unittest.TestCase):
                 pair, repository = subprocess.check_output([str(helper), 'coordinates', 'b'*64, 'b'*64, 'c'*64, 'd'*64], text=True).split()
                 coordinates = dict(repository=repository, producer='b'*64, sources='c'*64, config='d'*64, input=pair)
                 origins = {'X': dict(module='X', report_sha256=publication.digest(report),
-                    compatibility_sha256='b'*64, producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64,
-                    input_sources={'X.lean': 'a'*64})}
+                    compatibility_sha256='b'*64, producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64)}
                 publication.write_sidecars(report, coordinates, origins)
                 live = directory / 'live.json'
                 publication.publish(report, live, coordinates, manifest=manifest_fixture(directory))

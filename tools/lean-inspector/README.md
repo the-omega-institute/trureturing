@@ -45,7 +45,7 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draft 上传协议；draft
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
 旧两段或三段哈希的 `lean-cache-v1` 归档都只作为同 mathlib/平台的增量种子，消费时核对
-manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。原生 trace 与完整
+manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。Lake trace 与
 `report_cache_release_semantic_version` 决定还原后的报告复用；验证器只查结构与工件完整性。
 正常 Lean-cache 负责依赖物化和既有构建归档；
 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
@@ -100,13 +100,13 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 | 输入变化 | 失效范围 |
 | --- | --- |
 | `report_cache_release_semantic_version` 增加 | 所有模块报告及汇总。 |
-| 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；源码哈希也独立参与，包含只改注释的编辑。 |
+| 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；模块自身源码逐字节追踪，导入模块只按编译工件追踪，注释不改变编译工件时复用导入者。 |
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 通过 Lake 影响实际编译依赖；整体配置身份只影响聚合。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
 | 固定 Registry 驱动及其传递编译工件变化，语义版本不变 | 仅自身或 utility claim 的编译闭包实际导入该模块的报告失效；其他报告复用，驱动仍须构建成功。 |
 
-`information_templates` 分区携带 occurrence inventory、BindingRecord 和捕获的源码输入，
+`information_templates` 分区携带 occurrence inventory 和 BindingRecord，
 其 `compatibility_version` 等于 manifest 的缓存发布版本；复用验证检查结构，不重算当前源码摘要。
 C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
@@ -114,9 +114,9 @@ binding evidence，不能通过声明模板的严格消费者。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
-由 [native producer](native.py) 检查本地路径均在上述登记范围内，再记录路径到
-SHA-256 的 `input_sources`。每行记录自身源码和未单独出现在报告中的本地依赖；
-其他报告模块的源码由完整报告的成员与源码绑定覆盖，避免逐行重复整份闭包。
+由 [native producer](native.py) 检查本地路径均在上述登记范围内。
+报告行只保留自身的 `source_path`/`source_sha256`；
+导出证据和来源 sidecar 不重复存储导入源码的原始摘要。
 外部包依赖由登记的 Lake manifest pin 约束。
 
 兼容身份与实际产地分别记录。[provenance-v2](publication.py) 的
@@ -126,7 +126,7 @@ SHA-256 的 `input_sources`。每行记录自身源码和未单独出现在报�
 多个真实来源；`mode=cached` 或 `produced` 描述本次发布工作，不把旧报告改称当前
 可执行文件新生成。
 
-导出的 bundle 保留 `module_origins.input_sources`；其路径、摘要格式及自身行的一致性仍受检查。
+导出的 bundle 以 `module_origins.report_sha256` 检查来源记录与报告行的完整性。
 发布和导出报告的 [输入验证](../scripts/report/lean-report-input.sh) 核对来源记录、模块成员与登记路径，
 不重算当前源码、claim 源码或捕获依赖的文件摘要来决定复用。
 inspector 不兼容改动手动 bump `report_cache_release_semantic_version`。
