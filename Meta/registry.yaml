@@ -31,6 +31,8 @@ governance_documents:
   - "Meta/engineering-projects.json"
   - "Meta/judge-seed.json"
   - "Meta/package-materials.json"
+  - "Reg/lakefile.toml"
+  - "Reg/lake-manifest.json"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
 agent_files:
