@@ -77,9 +77,9 @@ subtraction, giving p^e dividing F_(k^r)-1 iff `IsPeriodicPt T r S`.
 The divisor p^0=1 is handled separately. The argument also handles r=0
 internally; the public signature retains the source's positive n,m.
 
-The proposed `proof_shape` is `content`, with the live prime-power
-matrix-return equivalence as the substantive local assertion; independent
-admission review remains required. `admission_basis` is
+The reviewed `proof_shape` is `content`, with the live prime-power
+matrix-return equivalence as the substantive local assertion.
+`admission_basis` is
 `open-problem-resolution`, tied to the exact preregistered external
 conjecture. `utility: none`: this is an unbounded symbolic theorem.
 There is exactly one authored public theorem; all auxiliary assertions are
@@ -109,10 +109,11 @@ recurrence, power shape and determinant, then the pinned Mathlib
 iteration, periodicity and divisibility suppliers. It has no extra
 formal premise, sorry, private axiom, or finite enumeration.
 
-The implementation is published for review in
-[PR #9165](https://github.com/the-omega-institute/trureturing/pull/9165).
-Independent review, canonical Freeze, final required CI, ordinary merge
-and completion audit remain pending. Compilation alone does not establish
+The independently reviewed theorem is canonically frozen, and its
+[emitted exposition](../Blueprint/D5/S1/Recurrence/BalaFibonacciPowerStrongDivisibility.md)
+binds the exact result to this problem with a typed `Proved` claim.
+[PR #9165](https://github.com/the-omega-institute/trureturing/pull/9165)
+still requires final CI, ordinary merge and completion audit before
 delivery completion or resolution credit.
 
 ## Triage
