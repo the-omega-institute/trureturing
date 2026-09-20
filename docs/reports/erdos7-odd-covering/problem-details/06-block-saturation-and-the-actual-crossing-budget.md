@@ -565,6 +565,236 @@ the local energy inequalities. Its scoped build and source-bound report
 have the same standard axiom closure. The CRT embedding, prime-coordinate
 moment bounds, and arithmetic noncoverage consequences remain separate.
 
+<a id="full-fibre-blocking-and-exact-hanging-tree-elimination"></a>
+#### Full-fibre blocking and exact hanging-tree elimination
+
+The original prime-prefix structure gives a quantitative refinement of
+the exact forest messages above. Let D be a finite set of distinct odd
+nonunit moduli, with one arbitrary actual class A_d per modulus. Work at
+the original period Q=lcm D, with full coordinates X_p=Z/p^{h_p}Z and
+their uniform Haar marginals H_p. Join p,q when pq divides an original
+label. No divisor closure or normalization of residues is assumed.
+
+For an edge pq, let E_pq consist of the exponent pairs (a,b) for which
+the original label p^a q^b is present. If V_q is a nonempty feasible
+set of full q-words, write delta_q=H_q(V_q). For a full p-word x let
+C_pq(x) be the union of the actual q-prefixes of exactly those edge
+classes whose p-prefix matches x. The full-fibre blocker is
+
+    B_(q->p)={x in X_p : V_q is contained in C_pq(x)}.
+
+For an integer r>=1 set
+
+    L_pq(r)=sum_((a,b) in E_pq, a<r) q^(-b),
+    T_pq(r)=sum_((a,b) in E_pq, a>=r) p^(-a)q^(-b).
+
+Whenever delta_q>L_pq(r),
+
+    H_p(B_(q->p)) <= T_pq(r)/(delta_q-L_pq(r)).              (PB1)
+
+Indeed, at a blocked p-word the shallow classes cover at most L_pq(r)
+of the q-coordinate. The sum of active deep q-prefix measures must
+therefore be at least delta_q-L_pq(r). Its H_p-expectation is exactly
+T_pq(r), since each actual p^a-prefix has measure p^(-a). Integrating
+this pointwise inequality proves PB1. Merely meeting V_q does not
+satisfy the full-fibre hypothesis.
+
+Distinct numerical labels permit at most one class per exponent pair.
+Consequently
+
+    L_pq(r) <= (r-1)/(q-1),
+    T_pq(r) <= p^(1-r)/((p-1)(q-1)).                         (PB2)
+
+These geometric sums bound the finite original labels; they do not
+introduce new labels or replace their residues. If q>=5 and delta_q>=1/2,
+choose r=(q-1)/2. Then delta_q-L_pq(r)>=1/(q-1), giving
+
+    H_p(B_(q->p)) <= p^((3-q)/2)/(p-1).                     (PB3)
+
+For a leaf q, its feasible set only avoids pure q-powers, so
+delta_q>=1-1/(q-1). The choice r=q-2 instead gives
+`H_p(B_(q->p))<=p^(3-q)/(p-1)`.
+
+Retain a connected set of prime vertices C such that every removed
+component is a tree attached at exactly one retained vertex, every
+removed prime is at least 5, and every label meeting a removed vertex
+is a pure power or an edge label. Root the removed trees toward C.
+For a removed q, its exact descendant-feasible domain is
+
+    V_q=X_q minus (all original pure-q classes
+                    union all B_(r->q) for children r).     (PB4)
+
+Define the same domain at each retained p using only its removed-tree
+children. This recursion is exact: once the parent word is fixed,
+different descendant trees have disjoint coordinates and no class
+joining them. Their avoiding extensions can be chosen simultaneously.
+It is the same existential mechanism as AF3, now retaining a separate
+prefix-depth estimate for the incoming edge.
+
+Induction from the leaves, PB3 and the distinct child primes give
+
+    delta_p >= d_p:=1-1/(p-1)-1/(p-1)^2.                    (PB5)
+
+To see the induction, if every child r has delta_r>=1/2, the lost measure
+is at most `1/(p-1)+(1/(p-1))*sum_r p^((3-r)/2)`. Overcount the distinct
+children by all odd integers at least 5; their sum is at most 1/(p-1).
+Every removed p>=5 therefore has delta_p>=11/16>1/2, closing the induction.
+At a retained p=3 the same calculation gives delta_3>=1/4.
+
+If 3 is retained, its retained neighbors are absent from its child sum.
+Subtracting their terms from that same geometric upper bound gives
+
+    delta_3 >= 1/4 + (1/2) sum_(q in N_C(3)) 3^((3-q)/2).   (PB6)
+
+The exact projection of the global uncovered set onto C is
+
+    (product_(p in C) V_p) minus
+       (all actual mixed classes supported entirely in C). (PB7)
+
+For tree components alone the same induction applies after rooting at
+the least prime. This recovers their noncoverage; that exclusion was
+already supplied by the preceding forest-energy and original-label
+moment bounds. PB1--PB6 provide the additional coordinate-domain estimates
+used below, rather than a claim of a new independent forest exclusion.
+
+<a id="arbitrary-odd-pseudoforests-are-noncovering"></a>
+#### Arbitrary odd pseudoforests are noncovering
+
+**Statement.** If every connected component of the original
+prime-interaction graph has at most one cycle, no choice of the actual
+classes A_d covers all integers. The number of vertices, degrees, all
+finite prime-power heights and all residues are unrestricted. In
+particular, the statement retains three-prime labels on a triangular
+cycle. This is an ordinary mathematical proof, not a Lean-certified
+noncoverage theorem or a literature-priority claim.
+
+Different components use disjoint CRT coordinates, so their avoiding
+assignments combine. Tree components were treated above. For a connected
+component with one cycle, retain the cycle and, if 3 occurs off it, the
+unique path from 3 to the cycle. Call the resulting graph C. All removed
+vertices are at least 5 and form singly attached trees. A label with
+three support primes creates a triangle, so it must lie on the unique
+cycle. Larger supports and mixed labels crossing removed branches are
+impossible. Thus PB4--PB7 apply with every original label accounted for.
+
+On the actual nonempty set V=product V_p use one common probability law
+
+    nu_C=product_(p in C) H_p( . | V_p).                     (UC1)
+
+It is H_C conditioned on the product set V, not the marginal of H_Q
+conditioned on globally surviving the removed classes. Each original
+p^a-prefix has nu_C-marginal at most p^(-a)/delta_p. Put
+`b_p=1/((p-1)delta_p)`. Summing the actual distinct exponent tuples
+and applying the union bound yields
+
+    nu_C(union of mixed core classes)
+      <= sum_(pq edge of C) b_p b_q
+          + 1[cycle is a triangle on r,s,t] b_r b_s b_t.     (UC2)
+
+Both sides use the same actual domains and the same law. The extra
+term bounds all original three-prime labels at every finite height;
+it is not discarded or absorbed into binary labels.
+
+For primes p>=5, PB5 gives
+
+    b_p <= w_p:=(p-1)/((p-1)^2-(p-1)-1),
+    w_5=4/11, w_7=6/29, w_11=10/89, w_13=12/131.
+
+The function w_p decreases for p>=5. A self-contained square budget is
+
+    sum_(p>=5 prime) w_p^2 <1/4.                            (UC3)
+
+For real p>=15, d_p>=181/196. Bound the remaining primes by all odd
+integers 15+2k, k>=0, and use the decreasing function (14+2t)^(-2):
+
+    sum_(k>=0) (14+2k)^(-2)
+      <=1/196+integral_0^infinity (14+2t)^(-2)dt
+       =1/196+1/28.
+
+The four small primes plus this tail give
+
+    sum_(p>=5 prime) w_p^2
+      <= (4/11)^2+(6/29)^2+(10/89)^2+(12/131)^2
+           +(196/181)^2*(1/196+1/28)
+       =110535026441982184/453169967387358001 <1/4.
+
+For any graph on primes at least 5 with maximum degree at most a positive Delta,
+`sum_edges b_p b_q <= (1/2) sum_p degree(p)b_p^2 <Delta/8`.
+This follows from 2xy<=x^2+y^2 and UC3; edge violation events need
+not be independent.
+
+**3 on the cycle.** Now C is precisely that cycle. Let its two neighbors
+of 3 be q<r. The edges away from 3 have maximum degree two and total
+budget less than 1/4. It suffices to bound
+`b_3(b_q+b_r+b_q b_r)<7/10`: this includes the actual triple term
+if the cycle is triangular, and is still an upper bound otherwise.
+PB6 gives the exhaustive cases
+
+| Neighbors | Bound on b_3 | Bound on b_3(b_q+b_r+b_q b_r) |
+|---|---:|---:|
+| q=5, r=7 | 18/17 | 3708/5423 <7/10 |
+| q=5, r>=11 | 6/5 | 276/445 <7/10 |
+| q>=7, r>=11 | 2 | 1768/2581 <7/10 |
+
+For the first row, PB6 gives delta_3>=17/36; the second uses
+delta_3>=5/12 and the third delta_3>=1/4. Monotonicity of w supplies
+the other factors. Thus the complete budget in UC2 is less than
+
+    7/10+1/4=19/20.                                        (UC4)
+
+**3 off the cycle.** Retaining its path makes 3 a degree-one endpoint
+of C. If its neighbor is 5, PB6 bounds its incident edge by 24/55;
+if the neighbor is at least 7, the bound is 12/29<24/55.
+After deleting 3 the remaining core has maximum degree at most three,
+so its edge sum is less than 3/8. Any triangle avoids 3 and its triple
+term is at most w_5^3=64/1331. Consequently
+
+    total budget <24/55+3/8+64/1331
+                  =45757/53240 <19/20.                     (UC5)
+
+No monotonicity of prime labels along the path is assumed.
+
+**3 absent.** The core is a cycle on primes at least 5, giving total
+budget less than `1/4+64/1331<19/20`. The triple term is only needed
+for a triangle; keeping it in the bound is harmless.
+
+In all cases nu_C gives more than 1/20 mass to avoiding every actual
+mixed core class. PB7 supplies simultaneous extensions into the removed
+trees, and CRT gives an original uncovered residue. Componentwise CRT
+then proves the stated pseudoforest noncoverage result.
+
+The 1/20 is a retained-coordinate probability, not a uniform lower bound
+for full original Haar survival. For a connected cyclic component with
+original period Q it implies only the period-dependent bound
+
+    H_Q(global avoidance) > product_(p in C)|V_p|/(20Q)>0,   (UC6)
+
+because every good core tuple has at least one extension. More exactly,
+let W_p(x_p) count the jointly avoiding assignments of all trees attached
+at p, including their original labels meeting p, and set it to zero when
+a pure p-class holds. If G_C is the core
+set avoiding all remaining mixed classes, the full survivor count is
+
+    sum_(x in G_C) product_(p in C) W_p(x_p).                (UC7)
+
+Here `W_p(x_p)>0` precisely on V_p. These nonconstant weights cannot be
+omitted when transporting densities or overlap costs.
+
+A minimum-cardinality distinct odd whole cover, if one exists, therefore
+has a connected prime graph with at least two independent cycles. Indeed,
+if its graph had multiple components, a zero product of their finite
+avoidance probabilities would give a covering proper subfamily. Neither
+this consequence nor UC6 excludes general cores with multiple cycles.
+
+The [exact control program](../frontier/cover-geometry/cyclic_core_extension_controls.py)
+and [data](../frontier/cover-geometry/cyclic_core_extension_controls.json)
+retain literal original labels and residues, the full-coordinate tree
+domains, extension counts, core compatibility and original-Haar counts.
+Their finite examples check the implementation and constants; the
+unbounded graph and height claim follows from PB1--UC7. The existing
+feedback-vertex estimates below retain their stated head and tail-cutoff
+hypotheses and are not being quoted as this all-odd specialization.
+
 <a id="a-bounded-number-of-cycle-breaking-vertices-in-each-component"></a>
 #### A bounded number of cycle-breaking vertices in each component
 
