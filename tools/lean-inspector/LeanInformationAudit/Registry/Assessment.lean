@@ -356,7 +356,8 @@ private def extract (event : TemplateOccurrenceEvent) : CompareM Expr := do
   let info ← getConstInfo name
   let raw ← if info.type.isAppOfArity
       `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 ||
-      info.type.isAppOfArity escapeForwardBridge 3 then
+      info.type.isAppOfArity escapeForwardBridge 3 ||
+      info.type.isAppOfArity escapeWitnessBridge 3 then
     pure info.type.getAppArgs[2]!
   else if isRealizationType info.type then
     match info with
@@ -454,7 +455,8 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
   catch _ => return Json.null
 
 private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
-    (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate := do
+    (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate :=
+  RegistrationGates.withStatementAliasMemo do
   closed descriptor
   let .const name universeArgs := descriptor.getAppFn
     | throwError "unclassified_form:dtr.descriptor_head"
@@ -508,6 +510,14 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
+    if escape.bridgeKind == "witness" then
+      let rawActual := (← getConstInfo event.realizationName).type.getAppArgs[2]!
+      unless ← RegistrationGates.bounded (do
+          let computed ← mkAppM (RegistrationGates.witnessArenaName.str "realization") #[event.arena]
+          if ← isDefEq rawActual computed then return true
+          let readout := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.readout
+          isDefEq (← mkAppM readout #[rawActual]) (← mkAppM readout #[computed])) do
+        throwError "unclassified_form:dtr.witness_readout_tie"
     let .ok (descriptorIdentity, descriptorWork) ← TemplateAudit.rawIdentity event.levelParams descriptor (← get).remaining
       | throwError "incomplete_closure:dtr.descriptor_identity"
     debit descriptorWork
@@ -515,7 +525,11 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       | throwError "incomplete_closure:dtr.actual_identity"
     debit actualWork
     let argumentInputs ← argumentNames.mapM inputIdentity
-    let extractionNames := ((← get).extractionNames.insert event.realizationName).toArray
+    let mut retained := (← get).extractionNames.insert event.realizationName
+    -- Fingerprint the inspected roots here. Their transitive data/type closure
+    -- is retained below without serializing pinned upstream implementations.
+    for name in ← inspectionRoots event do retained := retained.insert name
+    let extractionNames := retained.toArray
     let extractionInputs ← extractionNames.mapM inputIdentity
     let certificate : TemplateBindingCertificate := {
       evidenceRef := "", key := event.key, planIdentity := plan.planIdentity,
@@ -635,6 +649,7 @@ private def retainAssessment (record : BindingRecord) (claim : TemplateBindingCl
   let env ← getEnv
   let .ok plan := selectedPlan env name | return
   let mut names : NameSet := {}
+  for name in ← inspectionDependencies record.occurrence do names := names.insert name
   for value in claim.escapeInput.fromObject.toArray ++ claim.escapeInput.continuation.toArray do
     for name in value.getUsedConstants do names := names.insert name
   if let some residual := record.escape.continuation then

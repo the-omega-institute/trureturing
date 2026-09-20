@@ -1,0 +1,168 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "1/50"
+  },
+  "rho_radius": {
+    "kind": "inline",
+    "value": "1/100000"
+  },
+  "slot_bound": {
+    "kind": "inline",
+    "value": "1/520"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/50",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "299/900",
+      "v0": "151/10000",
+      "v1": "453/29900",
+      "gap": "439/20000",
+      "tbar": "51/23",
+      "Cbar": "302/77",
+      "kbar": "299/148",
+      "budget_increments": [
+        "251/180000",
+        "1/1800",
+        "1/200"
+      ],
+      "c": [
+        "141/200",
+        "1813/4500",
+        "67/250",
+        "67/750"
+      ],
+      "H": [
+        "1773/25000",
+        "5863/56250",
+        "31/450",
+        "20599/900000"
+      ],
+      "positive7": "2131/31500"
+    }
+  },
+  "mass_lower": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "mass_upper": {
+    "kind": "inline",
+    "value": "47503/300000"
+  },
+  "denominator_lower": {
+    "kind": "inline",
+    "value": "10942538295092899804151/141753354746503500000000"
+  },
+  "prior_mass_denominator_lower": {
+    "kind": "inline",
+    "value": "9351753234356824054151/141753354746503500000000"
+  },
+  "denominator_shared_cost": {
+    "path": "content/004-complete_radius/008-denominator_shared_cost.json",
+    "sha256": "da607aabe202d3fd4ae67368e77b096e5d3514aa7b90bef88b4f60f2ef84ec12",
+    "kind": "value"
+  },
+  "denominator_costs": {
+    "path": "content/004-complete_radius/009-denominator_costs.json",
+    "sha256": "2c5593aaf063a29bfc48d95b4bc43a1cc0498b58cff149762450380f153b06ca",
+    "kind": "array"
+  },
+  "H1": {
+    "path": "content/004-complete_radius/010-H1.json",
+    "sha256": "9045ecfda24571a860d04f05323b5fc141f96fb822f65a8427d1bf1074876a4f",
+    "kind": "value"
+  },
+  "H2": {
+    "path": "content/004-complete_radius/011-H2.json",
+    "sha256": "4f96bf12bbdf0cd8ff3de11ed6ba3d5e2669d571b70ff425320edf440707c270",
+    "kind": "value"
+  },
+  "mean_costs": {
+    "path": "content/004-complete_radius/012-mean_costs.json",
+    "sha256": "4208b54586fc1b1ccec800b26c54c1e58bba9419d73bdbb71d5be5d11a8b409a",
+    "kind": "array"
+  },
+  "mean_shared": {
+    "path": "content/004-complete_radius/013-mean_shared.json",
+    "sha256": "2b30676260955fc36b0080d796f5e2a9b4ec4a3f503fb788971e262a6dddeaa8",
+    "kind": "value"
+  },
+  "simple_rows": {
+    "path": "content/004-complete_radius/014-simple_rows.json",
+    "sha256": "af8aaf914b617449407c5f2f8a781ab0f17d739946c8c5d4355fcc5862132e11",
+    "kind": "value"
+  },
+  "quadratic": {
+    "path": "content/004-complete_radius/015-quadratic.json",
+    "sha256": "94dc7cba18b5eef09cc39d8adeb2b3737d154ab45dc22f95612139b2df78791c",
+    "kind": "object"
+  },
+  "heavy": {
+    "path": "content/004-complete_radius/016-heavy.json",
+    "sha256": "135e021f7a9e575b4ad9d247fe79df3961763c5fd504db980ea03b25a5eb3844",
+    "kind": "object"
+  },
+  "square": {
+    "path": "content/004-complete_radius/017-square.json",
+    "sha256": "88b7052d289b5ca3eeace441a851e4749f5e4346a89097947e585f5cadb91b8c",
+    "kind": "value"
+  },
+  "raw81_first": {
+    "path": "content/004-complete_radius/018-raw81_first.json",
+    "sha256": "6aff5266b555558609df6fac3ca94eced5445c3fb876b66da0ace7481bb60b9d",
+    "kind": "value"
+  },
+  "cost_group_sums": {
+    "kind": "inline",
+    "value": {
+      "mean11": "125819698765299772977211923648479551/13150532931523618829488290000000000",
+      "single28": "10877561882411014701076749864902041/8462082060284763420714204000000000",
+      "quadratic10": "236946963661211538644358005317235807207/18359550446517295267658646240000000000",
+      "heavy2": "2236032668329561533528470567856101778236497387/200980553110593984991315563601472217773437500",
+      "raw81_first": "77542019413974982717/63382838538550781250"
+    }
+  },
+  "signed_mass_upper": {
+    "kind": "inline",
+    "value": "-239487086662097082670327/21573978899788328632819200"
+  },
+  "square_payment": {
+    "kind": "inline",
+    "value": "6095196968145207226645611046003/7749697569307480987200000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "29209252479641914282264488661496037083803857636165719/791934124410435229948500263668188256248000000000000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "149990748106336357793499557621385857105126585482689492847/300345099760267858640221803730168614445757220522864000"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "509"
+  },
+  "target_margin": {
+    "kind": "inline",
+    "value": "2884907671639982254373340477269967647763839763448283153/300345099760267858640221803730168614445757220522864000"
+  },
+  "certifies_target": {
+    "kind": "inline",
+    "value": true
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "independent_rational_comparisons": {
+    "kind": "inline",
+    "value": 312
+  }
+}

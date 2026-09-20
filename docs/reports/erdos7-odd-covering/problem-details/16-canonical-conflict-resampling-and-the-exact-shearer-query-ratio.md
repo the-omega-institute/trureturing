@@ -516,7 +516,7 @@ The independent finite lcm exclusion through `11486474` likewise consists
 of an ordinary CRT product-law proof and exact integer enumeration; no
 local Lean formalization or duplicate declaration is claimed.
 
-A [literal actual1575-source obstruction](../profile-notes/28-zero-local-losses-do-not-imply-a-common-maximizing-original-layout.md#zero-local-losses-do-not-imply-a-common-maximizing-original-layout)
+A [literal actual1575-source obstruction](../profile-notes/001-064/28-zero-local-losses-do-not-imply-a-common-maximizing-original-layout.md#zero-local-losses-do-not-imply-a-common-maximizing-original-layout)
 shows that every central-unary star and every two-ended edge can have
 zero separate loss while a common maximizing layout fails. The complete
 triangle on original labels5/21/35 has exact loss9/382, retaining the
@@ -527,7 +527,7 @@ classification nor a uniform numeric gain. Full support propagation
 through the original period label does decide exact saturation; weighted
 near-maximizing tradeoffs still require additional estimates.
 
-A [proved density-domination bridge](../profile-notes/28-zero-local-losses-do-not-imply-a-common-maximizing-original-layout.md#dv-supported-probability-gives-lower-bounds-for-the-actual-ap-killed-law)
+A [proved density-domination bridge](../profile-notes/001-064/28-zero-local-losses-do-not-imply-a-common-maximizing-original-layout.md#dv-supported-probability-gives-lower-bounds-for-the-actual-ap-killed-law)
 now transfers the DV supported probability to this actual AP13 killed
 continuation. Under the substantive restriction that the entire original
 357 part divides315, it proves `nu_* <= (38288250/4021271) nu13`, then
@@ -540,7 +540,7 @@ This uses domination in its proved direction, not substitution of the
 auxiliary moments into actual-law upper bounds. It does not extend to
 arbitrary original357 heights or complete the remaining frontier.
 
-An [all-seven-height extension](../profile-notes/29-a-common-old-block-budget-strengthens-the-actual-mask-certificate.md#a-positive-actual-deficit-with-arbitrary-seven-heights)
+An [all-seven-height extension](../profile-notes/001-064/29-a-common-old-block-budget-strengthens-the-actual-mask-certificate.md#a-positive-actual-deficit-with-arbitrary-seven-heights)
 now removes the seven-height restriction in that bridge: every original
 357 part may divide `45*7^H`, for any finite H. The supported core is
 lifted, all high-seven forbidden and complete test labels are paid, and
@@ -556,7 +556,7 @@ above2,5-exponents above1, the unrestricted299.661 joint bound and the
 later-prime continuation remain open. This is an ordinary proof with
 exact rational verification, not a new Lean result.
 
-A [common old-block budget](../profile-notes/29-a-common-old-block-budget-strengthens-the-actual-mask-certificate.md#a-common-old-block-budget-strengthens-the-actual-mask-certificate)
+A [common old-block budget](../profile-notes/001-064/29-a-common-old-block-budget-strengthens-the-actual-mask-certificate.md#a-common-old-block-budget-strengthens-the-actual-mask-certificate)
 now strengthens the actual MW interface. Each positive-current old block
 obeys the same G(g) square budget, giving a one-price joint integer
 maximum with all current tails retained. If the original modulus19 class
@@ -581,7 +581,7 @@ use the same actual xi and kernels; they do not bound changes to forbidden
 masks, provide the remaining299.661 uniform frontier, or supply an
 independent rebate to add to the stronger OBE profile.
 
-An [actual threshold-deficit certificate](../profile-notes/30-actual-threshold-deficits-and-sharp-row-caps.md#actual-threshold-deficits-and-sharp-row-caps)
+An [actual threshold-deficit certificate](../profile-notes/001-064/30-actual-threshold-deficits-and-sharp-row-caps.md#actual-threshold-deficits-and-sharp-row-caps)
 now retains the joint square observation `G(min(alpha19,7/17))`, the
 assigned loss and explicit nonnegative row-curvature terms. Its general
 all-height bound uses the actual killed17 input and full original old

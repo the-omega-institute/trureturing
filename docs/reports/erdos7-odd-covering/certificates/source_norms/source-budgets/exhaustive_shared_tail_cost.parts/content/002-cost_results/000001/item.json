@@ -1,0 +1,111 @@
+{
+  "height": {
+    "kind": "inline",
+    "value": 5
+  },
+  "cost_index": {
+    "kind": "inline",
+    "value": 1
+  },
+  "cost_tuple": {
+    "kind": "inline",
+    "value": [
+      0,
+      1
+    ]
+  },
+  "g5": {
+    "kind": "inline",
+    "value": "1/45"
+  },
+  "g15": {
+    "kind": "inline",
+    "value": "1/45"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "1545260963683/3575119912875000"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "530644181/3545268750"
+  },
+  "mean_scale": {
+    "kind": "inline",
+    "value": 74446757599348509245504184567134677308750000
+  },
+  "exhaustive_vertices": {
+    "path": "content/002-cost_results/000001/item/008-exhaustive_vertices.json",
+    "sha256": "28329b8832497bd6496d642338ee5464e2f8705a37f65ed9db8dcadd9f6efe55",
+    "kind": "value"
+  },
+  "support_center_from_full_budget": {
+    "kind": "inline",
+    "value": [
+      4,
+      4,
+      4,
+      3
+    ]
+  },
+  "support_candidates": {
+    "path": "content/002-cost_results/000001/item/010-support_candidates.json",
+    "sha256": "1ec4cbd7ed3bd9e0f755b588a5a58094e329d65f99ebb080832987c4ee8afe59",
+    "kind": "array"
+  },
+  "selected_support": {
+    "path": "content/002-cost_results/000001/item/011-selected_support.json",
+    "sha256": "6cb5697fa5abbaad5517337458d05c63c0a38e1c51230d215b626ede21f9f014",
+    "kind": "value"
+  },
+  "complete_shared_budget_upper": {
+    "kind": "inline",
+    "value": "50040424450190247635241689153/31351724467416195405688125000"
+  },
+  "actual_defect126_upper": {
+    "kind": "inline",
+    "value": "233372691189641239605463800647/148849220723720660254361250000"
+  },
+  "budget_relaxation_excess": {
+    "kind": "inline",
+    "value": "461175863268399658683309348041/16323797872701365741228283750000"
+  },
+  "chosen_actual_tail_gap": {
+    "kind": "inline",
+    "value": "1904548253714803/500516787802500000"
+  },
+  "all_omega_relaxation_lower": {
+    "path": "content/002-cost_results/000001/item/016-all_omega_relaxation_lower.json",
+    "sha256": "e2fd50795d251ad0fdd0bcda73ee49d6536a4d0bbfbc55a47b3ec4875720f455",
+    "kind": "value"
+  },
+  "support_optimality_gap": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "maximizing_coordinate": {
+    "kind": "inline",
+    "value": "omega"
+  },
+  "maximizing_witness": {
+    "kind": "inline",
+    "value": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "31848394094275058268539/37307492583435902953125",
+      "reference_payment": "2894398953946177/1024504238163656250",
+      "mean_price_payment": "0"
+    }
+  }
+}

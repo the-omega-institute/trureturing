@@ -1,0 +1,32 @@
+{
+  "dual_key": {
+    "kind": "inline",
+    "value": "4c739c5d54ea110b65763a71fd86c39d7664512c9a64c126a3516767133a316b"
+  },
+  "original_raw_dual_upper": {
+    "kind": "inline",
+    "value": "2896638087245078712119/25423181437500000000000"
+  },
+  "original_face_branch_upper": {
+    "kind": "inline",
+    "value": "37360014652555708409071/228808632937500000000000"
+  },
+  "complete_row_record": {
+    "path": "content/008-domains/000001/item/006-results/000003/item/005-branches/000-nested/003-complete_row_record.json",
+    "sha256": "59415caacf6efa383dac80ab80aebe29fc2df3e0026922bb424e1c6664a7f281",
+    "kind": "value"
+  },
+  "support_choice": {
+    "path": "content/008-domains/000001/item/006-results/000003/item/005-branches/000-nested/004-support_choice.json",
+    "sha256": "3c0b537308a20ed49d6e1ac5d4d192d0d6ae804ee26ebd0c73152c1a6ac0e61d",
+    "kind": "object"
+  },
+  "fixed_controller_row_and_tail_upper": {
+    "kind": "inline",
+    "value": "7880039906017949281383553093/41328330515703000000000000000"
+  },
+  "increment_over_face_branch_upper": {
+    "kind": "inline",
+    "value": "161703517059246715100501827/5904047216529000000000000000"
+  }
+}

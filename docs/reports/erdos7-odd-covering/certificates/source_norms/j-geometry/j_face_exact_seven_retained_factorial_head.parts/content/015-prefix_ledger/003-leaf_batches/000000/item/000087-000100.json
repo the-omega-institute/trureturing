@@ -1,0 +1,353 @@
+[
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      1,
+      1,
+      4
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "839857/1058400",
+      "13127/16800"
+    ],
+    "objective_key": "ded55879dc945bb504554403b8a9fa9bf84f5cffbf68a931f80192727f01fdbf",
+    "constant": "2147303/3780000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      2,
+      0,
+      4
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "836009/1058400",
+      "91409/117600"
+    ],
+    "objective_key": "cee181eb8e08b54987893dbcdfc71da00a400173f6bd7cf4f213bf921d116679",
+    "constant": "4978307/8820000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      2,
+      1,
+      4
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "839857/1058400",
+      "13127/16800"
+    ],
+    "objective_key": "601cd6828f22f3cb7646d91db8da7b5b3438a261ca5cf06cfef6a698c1c42041",
+    "constant": "2147303/3780000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      3,
+      1,
+      4
+    ],
+    "strongest_available_upper": "834439/1058400",
+    "affine_endpoints": [
+      "834439/1058400",
+      "621/800"
+    ],
+    "objective_key": "043b35e63861e59d3bb3b5b0c37f33389c336c40823aa9ac31f7262085376c93",
+    "constant": "2127953/3780000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      4,
+      0,
+      0
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "838457/1058400",
+      "91681/117600"
+    ],
+    "objective_key": "d027c5b91b0c2c7fd12d66c828e73bd4967f5e2cceef552382fba53724a1c5af",
+    "constant": "714101/1260000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      4,
+      0,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "847709/1058400",
+      "30903/39200"
+    ],
+    "objective_key": "c4d591b120d00f01ca665a54560139769b1a1e8e1ef81baaffa6b768f0456900",
+    "constant": "5075807/8820000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      4,
+      1,
+      0
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "838093/1058400",
+      "13099/16800"
+    ],
+    "objective_key": "69be5f1d2c7b56f051a39407a1a2fb2e4bac133f958c254d7ec6a4d875e76258",
+    "constant": "2141003/3780000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      4,
+      1,
+      1
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "120067/151200",
+      "91957/117600"
+    ],
+    "objective_key": "9d8c7e0b2d73ba38a4afb8b6fcf447ec16011cec2d45dac6d37888b7f30b31b1",
+    "constant": "15046421/26460000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      4,
+      1,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "282127/352800",
+      "30879/39200"
+    ],
+    "objective_key": "d1f4c26ef6726bcea8dde21697b6b95d50ffabc40f06afe0417aaddc1b65b856",
+    "constant": "2170603/3780000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      0,
+      4,
+      1,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "24149/30240",
+      "277453/352800"
+    ],
+    "objective_key": "19854e65fc24c51f5bd185560d89ef4fca79f528a28c72320e440f2c0ce87b5c",
+    "constant": "15165071/26460000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      1,
+      4,
+      0,
+      1
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "843137/1058400",
+      "92201/117600"
+    ],
+    "objective_key": "de5dfa30d6b31b79bb9b5af4f6d966371854566234768f85237fb1b943bc9f9c",
+    "constant": "5037707/8820000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      1,
+      4,
+      0,
+      2
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "33875/42336",
+      "277849/352800"
+    ],
+    "objective_key": "b9e0586f180261e91e50f341c32d55087316afa74b2c5f22426c547d44b94a1b",
+    "constant": "1689619/2940000"
+  },
+  {
+    "layout": [
+      1,
+      3,
+      2,
+      1,
+      2,
+      3,
+      2
+    ],
+    "projection": [
+      0,
+      4,
+      1,
+      1,
+      4,
+      0,
+      3
+    ],
+    "strongest_available_upper": "782845887531143161/992250000000000000",
+    "affine_endpoints": [
+      "842333/1058400",
+      "55267/70560"
+    ],
+    "objective_key": "7d9713d2602723a30b8446284079eae7b20bfc7c62f7059125ff1ab84c706855",
+    "constant": "5031007/8820000"
+  }
+]

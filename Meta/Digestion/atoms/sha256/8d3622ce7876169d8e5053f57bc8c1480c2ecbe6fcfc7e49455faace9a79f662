@@ -1,0 +1,26 @@
+**命题 131.9。** $P\in SO(2)$，且
+
+$$
+P^TA_FP=\begin{pmatrix}\phi&0\\0&-1/\phi\end{pmatrix}.
+$$
+
+**证明。** 两列 $(\phi,1)^T,(-1,\phi)^T$ 互相正交，平方长度均为 $\phi^2+1$；归一化后 $P^TP=I$，其行列式为一。$\phi^2=\phi+1$ 和 $\phi-1=1/\phi$ 给
+
+$$
+A_F(\phi,1)^T=\phi(\phi,1)^T,\qquad
+A_F(-1,\phi)^T=-\phi^{-1}(-1,\phi)^T.
+$$
+
+故在这组正交规范基中恰得到所示对角矩阵。证毕。
+
+$P$ 是欧氏坐标旋转，$A_F$ 本身不是：$A_F^TA_F=\begin{pmatrix}2&1\\1&1\end{pmatrix}\ne I$。一个特征方向被放大 $\phi$ 倍，另一个反号并缩小 $1/\phi$ 倍。不能把“能用旋转换到特征坐标”说成“原动力学是旋转”。
+
+定义另一个二次型
+
+$$
+Q_F(x,y)=x^2-xy-y^2
+=\begin{pmatrix}x&y\end{pmatrix}
+K_F\begin{pmatrix}x\\y\end{pmatrix},\qquad
+K_F=\begin{pmatrix}1&-1/2\\-1/2&-1\end{pmatrix}.
+$$
+

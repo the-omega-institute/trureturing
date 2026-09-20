@@ -1,0 +1,241 @@
+[
+  {
+    "name": "hinge8",
+    "threshold": 8,
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "8": "1"
+      },
+      "zero_branch_last_integer": 8,
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "0",
+        "5": "0",
+        "6": "0",
+        "7": "0",
+        "8": "0",
+        "9": "1"
+      },
+      "polynomial_tail": {
+        "entrance": 8,
+        "constant": "-8",
+        "linear": "1",
+        "leading": "0"
+      }
+    },
+    "complete_hinge_upper": "506419673175009517151/6670698300000000000000",
+    "scan": {
+      "coefficients": {
+        "8": "1"
+      },
+      "complete_hinge_upper": "506419673175009517151/6670698300000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 0,
+        "four_projection_branches": 6250000,
+        "four_bounded": 6244876,
+        "prior251_bounded": 0,
+        "six_projection_branches": 51240,
+        "six_affine_bounded": 46927,
+        "prior256_bounded": 0,
+        "joint_dual_branches": 4313,
+        "strict_pair_crossings": 0
+      },
+      "covered_containing_choices": 62500000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "projection21_35_63_105_147_245": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          1,
+          4
+        ],
+        "affine_complete_upper": "1135869493/13341396600",
+        "affine_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "361500938692045985803/4764784500000000000000",
+        "previous251_complete_upper": null,
+        "adopted_complete_upper": "361500938692045985803/4764784500000000000000",
+        "dual_key": "a5ddaaf66796be1fce809ddf09552a32d432e6db9e2fb60c0424c4f72bb712f2",
+        "previous251_dual_key": null,
+        "previous256_complete_upper": null,
+        "previous256_dual_key": null,
+        "complete_tail_constant": "900799/19845000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105_147_245": [
+          1,
+          2,
+          4,
+          1,
+          2,
+          1,
+          2
+        ],
+        "affine_complete_upper": "5471327569/66706983000",
+        "affine_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "506419673175009517151/6670698300000000000000",
+        "previous251_complete_upper": null,
+        "adopted_complete_upper": "506419673175009517151/6670698300000000000000",
+        "dual_key": "23fb1f306b86acc68b89277a40932d1bbc9f05d6badcea91d33070cd00d90781",
+        "previous251_dual_key": null,
+        "previous256_complete_upper": null,
+        "previous256_dual_key": null,
+        "complete_tail_constant": "900799/19845000"
+      },
+      "complete_tail_constant": "900799/19845000",
+      "independent_affine_checks": 19,
+      "maximum_pruned": {
+        "two": "-1",
+        "four": "5064181069/66706983000",
+        "prior251": "-1",
+        "six": "144686923/1905913800",
+        "prior256": "-1"
+      },
+      "new_distinct_duals": 4313,
+      "all_branch_decisions_sha256": "1edfaa2eaa09c5212ec95db19bc1dde73a347d080f4d80bcb4262602834b9dd6"
+    },
+    "distinct_target_duals": 4313
+  },
+  {
+    "name": "hinge7",
+    "threshold": 7,
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "7": "1"
+      },
+      "zero_branch_last_integer": 7,
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "0",
+        "5": "0",
+        "6": "0",
+        "7": "0",
+        "8": "1"
+      },
+      "polynomial_tail": {
+        "entrance": 7,
+        "constant": "-7",
+        "linear": "1",
+        "leading": "0"
+      }
+    },
+    "complete_hinge_upper": "126852372696843984401/1361367000000000000000",
+    "scan": {
+      "coefficients": {
+        "7": "1"
+      },
+      "complete_hinge_upper": "126852372696843984401/1361367000000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 62011,
+        "four_projection_branches": 3149450,
+        "four_bounded": 3149183,
+        "prior251_bounded": 0,
+        "six_projection_branches": 2670,
+        "six_affine_bounded": 2271,
+        "prior256_bounded": 0,
+        "joint_dual_branches": 399,
+        "strict_pair_crossings": 0
+      },
+      "covered_containing_choices": 62500000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "projection21_35_63_105_147_245": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          1,
+          4
+        ],
+        "affine_complete_upper": "957881807/9529569000",
+        "affine_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "126852372696843984401/1361367000000000000000",
+        "previous251_complete_upper": null,
+        "adopted_complete_upper": "126852372696843984401/1361367000000000000000",
+        "dual_key": "445cafb7229902f0645bc0074f2f0aa6d9edfaff934188b4c6997449c1318bb8",
+        "previous251_dual_key": null,
+        "previous256_complete_upper": null,
+        "previous256_dual_key": null,
+        "complete_tail_constant": "900799/19845000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "projection21_35_63_105_147_245": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          1,
+          4
+        ],
+        "affine_complete_upper": "957881807/9529569000",
+        "affine_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "126852372696843984401/1361367000000000000000",
+        "previous251_complete_upper": null,
+        "adopted_complete_upper": "126852372696843984401/1361367000000000000000",
+        "dual_key": "445cafb7229902f0645bc0074f2f0aa6d9edfaff934188b4c6997449c1318bb8",
+        "previous251_dual_key": null,
+        "previous256_complete_upper": null,
+        "previous256_dual_key": null,
+        "complete_tail_constant": "900799/19845000"
+      },
+      "complete_tail_constant": "900799/19845000",
+      "independent_affine_checks": 19,
+      "maximum_pruned": {
+        "two": "295988831/3176523000",
+        "four": "177263579/1905913800",
+        "prior251": "-1",
+        "six": "887763791/9529569000",
+        "prior256": "-1"
+      },
+      "new_distinct_duals": 399,
+      "all_branch_decisions_sha256": "875c524adb1543ffc9c9eec0a44b7e2b6e3ede5cdd239ef73a3ecf0c056e7df6"
+    },
+    "distinct_target_duals": 399
+  }
+]
