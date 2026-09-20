@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Concrete raw greedy continuation, shared-input repairs, and ordered reward erasure.
+Concrete greedy continuation, weighted split promotion and finite cascade exchanges.
 
 A state is one list of natural-number raw W indices. Decode maps each index through successor to the positive paper indices; n zeros thus represent n ones. Multiplicities are obtained through Multiset.toFinsupp. Move records the position of its adjacent window and one of five actions: an inversion switch, combining ones, splitting twos, a general split, or a consecutive merge. No predecessor map is used.
 
@@ -52,9 +52,33 @@ $$RawPath\left(c, e, w\right) \land CanonicalRaw\left(e\right) \land SplitStep\l
 
 *Commentary.*
 
-If combining ones is enabled, every raw path to binary nonadjacent digits can be replaced by one beginning with that split, retaining its endpoint and at least its full reward. The competing path may interleave merges and splits arbitrarily. The proof promotes ones through split steps, repairs a merge consuming a one, and commutes past higher merges. This closes the ones-first promotion branch; highest nonzero splits and least binary merges still require their own proofs.
+If combining ones is enabled, every raw path to binary nonadjacent digits can be replaced by one beginning with that split, retaining its endpoint and at least its full reward. The competing path may interleave merges and splits arbitrarily. The proof promotes ones through split steps, repairs a merge consuming a one, and commutes past higher merges. This closes the ones-first promotion branch. The dependent Optimality module supplies the nonzero-split and least-binary-merge comparisons inside its complete raw terminal bound.
 
-**Theorem 1.5 (Erasure preserves the complete reward).**
+**Theorem 1.5 (Promote the preferred split through the actual initial split phase).**
+
+Lean statement: `D5/S1/Digit/Carry/OrderedGame.split_greedy_terminal_promotion`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Carry/OrderedGame.split_greedy_terminal_promotion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A competing split followed by a complete raw greedy path admits a legal replacement beginning with the currently highest split, with the same terminal endpoint and at least its reward. The proof cuts the actual greedy continuation immediately before its first merge, or at its canonical endpoint. The cut state is binary. Only that complete WeightedSplitPath is passed to split_phase_promotion; the entire remaining raw suffix is preserved. No split-only comparison is applied across merges.
+
+**Theorem 1.6 (Finite high cascade and boundary-independent legal replay).**
+
+Lean statement: `D5/S1/Digit/Carry/OrderedGame.high_cascade`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Carry/OrderedGame.high_cascade` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive raw k, assume holes at k and k+1, at most two tokens at k+2, binary digits above k+2 and at most one zero. A finite greedy split cascade makes the tail at and above k binary and preserves all lower coordinates. Finite support supplies the first zero; induction on its distance proves the coordinate invariant. Every split has unit reward. The same word replays from any state agreeing strictly above k, with the same reward and exact additive endpoint balance. Lower coordinates in the replay are unrestricted; its moves are not asserted to be greedy.
+
+**Theorem 1.7 (Erasure preserves the complete reward).**
 
 $$Path\left(s, t, length, weight\right) \Rightarrow RawPath\left(rawCounts\left(s\right), rawCounts\left(t\right), weight\right)$$
 
@@ -66,7 +90,7 @@ $$Path\left(s, t, length, weight\right) \Rightarrow RawPath\left(rawCounts\left(
 
 Every finite legal ordered path erases to a labelled raw path with exactly the same accumulated reward. Switches preserve multiplicities and contribute zero reward. Each remaining label retains its actual CarryStep and its consumed and produced digits in the same spectator context. Labels are explicit and are not reconstructed from an unlabelled proposition. The theorem neither assumes terminality nor asserts optimality.
 
-**Theorem 1.6 (The path potential bound).**
+**Theorem 1.8 (The path potential bound).**
 
 $$Path\left(s, t, length, weight\right) \Rightarrow length + inv\left(decode\left(t\right)\right) \le inv\left(decode\left(s\right)\right) + weight$$
 
@@ -84,10 +108,12 @@ LGSPath keeps every permitted inversion-switch choice. Its priority restarts aft
 
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.complete_greedy_reward`
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.greedy_attainment`
+- Truth anchor: `D5/S1/Digit/Carry/OrderedGame.high_cascade`
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.ones_terminal_promotion`
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.path_potential`
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.path_raw_erasure`
 - Truth anchor: `D5/S1/Digit/Carry/OrderedGame.shared_input_merge_repair`
+- Truth anchor: `D5/S1/Digit/Carry/OrderedGame.split_greedy_terminal_promotion`
 - Dependency: [D5/S1/Digit/Carry/ListInversions](ListInversions.md)
 - Dependency: [D5/S1/Digit/Carry/SplitStabilization](SplitStabilization.md)
 - Dependency: [D5/S1/Digit/Raw](../Raw.md)
