@@ -6,9 +6,10 @@
    utility: none
    digest: Finite predicate witnesses support universal refutations and reverse bridges. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.Syntax
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -68,7 +69,7 @@ def WitnessArena.check (a : WitnessArena) (w : a.State) : Bool :=
 def counterexampleRealization {State : Type} (check : State → Bool) :
     PrimitiveRealization (cutSignature State Bool) := cutRealization check
 
-register_information_template counterexampleRealization
+
 
 /-- The arena-computed realization supplies the definitional tie for a selected check. -/
 def WitnessArena.realization (a : WitnessArena) : PrimitiveRealization a.signature :=
