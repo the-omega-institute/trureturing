@@ -218,6 +218,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 - **新信息在哪里继续逃逸**:`escape continues (<term>)` 是闭合舞台上具名 `LayerChain` 的 `EscapeResidualWitness` 值、`EscapeResidualEmpty` 证明,或字面 `open`。前两者核对证书声明、类型及链所属舞台,内核检查 membership/empty 证明;判官不求值证书。`open` 仅声明 Gödel 顶层,不伪造证书。
 
 登记可在本模块或精确 sidecar 完成。旧文法仍可解析并保留既有登记状态;选中登记缺任一逃逸槽为 `DTR-Undeclared`,证据不成立为 `DTR-Evidence`,新增公开定理无至少一条完整有效登记为 `DTR-Unregistered`,完整验证为 `DTR-Declared`(含 `escape_from`/`escape_continues`/`bridge_kind`);四者均为 Observe(告警)。这四名封闭。新旧定理只按同路径 base 字节中的同名 `theorem`/`lemma` 判定,只读数据、不执行 base。`private`、internal-detail、`def`、具名 `instance`、`example` 和机器伴随名豁免;源文件显式写出的伴随后缀定理不借后缀豁免。已知边界:匿名命题值 instance 在报告中与 theorem 不可区分,本门不修复该报告限制。
+**声明工程与依赖方向**(τ=0 owner 2026-09-20 裁决):逃逸声明是关于数学的元数据,不与定理混放。D5 包只放数学与内容层的舞台、模板、记录类型,只依赖 Mathlib,不 import 判官,也不 import 声明;判官是两个各有 manifest 的 Lake 包——接口包(声明命令的语法、一条声明的记录形状、作者要用的稳定类型)与实现包(E1–E8、各 gate、评定与证据),实现依赖接口;声明住在第三个包 `Reg`(自有 lakefile 与 manifest),依赖 D5 包与判官包。依赖方向 D5 ← 判官 ← `Reg` 单向。`D5/<路径>.lean` 的定理,其声明写在 `Reg/D5/<同一路径>.lean`;目录根、seal、共享 enroll 是 import 这些叶子的 `Reg` 模块。一条声明的判词就是它所在 `Reg` 模块在所 import 判官下的编译产物,失效只靠 Lake 的 import 追踪:判官改动只重编 import 它的 `Reg` 模块,不重编任何 D5 模块;不设模块名清单、不加缓存、不加登记专用的新鲜度机制。delta 判官仍只判改动、只告警,选择域含改动的 `Reg` 模块,新公开定理按路径到镜像 `Reg` 模块里找声明;`Reg` 模块进报告模块清单,报告的版本号与复用机制不因本架构而改。冻结的 D5 模块可为迁出声明而编辑或搬迁,数学陈述与证明不变,pin 由 canonical writer 重钉。迁移完成前,import 判官的 D5 模块是 SL-001 的 base-owned 债务:新增 D5→判官/`Reg` 的边即拒,候选边集须是基线边集的子集,改动带债模块须严格减债,债务清零后同一规则自动判全树;其后退役 sidecar 命令。owner 原话:「我觉得用户写D5定理, 然后写个类似于元数据的东西, 把逃逸怎么逃逸的登记清楚. 编译的时候, 会load 判官跑一下, 但是判官怎么改不应该引起二次编译什么的.」「单独建一个项目, 这个项目依赖判官跟D5, 在这个项目里面按照同样的目录写逃逸声明? 判官应该也分interface跟implement两个工程, 然后依赖反转一下.」「独立manifest, 不要把定理跟这些混在一起. 而且依赖更干净.本来判官也是独立 manifest 的」「改吧, 彻底改, 冻结的也能改, 又不是区块链.」
 *成熟锚*:显式优于隐式、delta-only 门先立后补账(第 6.2、6.4 条)、允许表判官(第 3.4 条)、不可变冻结与 sidecar 追加(第 1.3、4.7 条)。〔守护:**硬(告警)**·`DeclaredTemplateBindingRule`(SL-031 派发)判选中模块的登记与新增公开定理,四个判词均为 Observe、不阻断准入,效果由变异测试钉住;**软**·模板对登记的忠实性(是否真是该定理的读出)与「新模板而非硬套」由内容评审判;不可 lint 不豁免〕
 
 ## 4. 结构、递归归属、投影与消化
@@ -236,6 +237,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.3 依赖骨骼与叙事真源
 
+包依赖方向为 D5 ← judge ← Reg（箭头指向被依赖者，Reg 亦可依赖 D5）；SL-001 以受保护 base 的 D5→judge/Reg 边集为只缩不换的债务，新增边拒绝，带债模块字节变化须严格减债，债务清零后同门自动判全树。
 **骨骼=依赖偏序**:import 只向下,逻辑严格无环;叙事可有环但不承重。文档/书/论文是图的投影,不得反定结构。叙事 canonical 源为类型化 AST(Scribe):Blueprint/Papers 由 C# 定义发射,md/PDF 是产物;引用按类型在构造期解析 GID,不用已废除的行号位置锚。
 **理论输入仅参考,Lean GID/声明唯一权威**:理论卷章节/定理编号会漂移且不受机器治理,不得反向绑定形式化工件。理论引用只作 provenance,机器验格式不验编号;发射文档的定义/定理号由 Scribe 从形式 AST 的序/依赖位置生成,不抄理论号。
 *成熟锚*:DAG、依赖倒置、承重/装饰分离、formalization-first、文献与结构之别、自动编号。〔守护:**硬+软**·SL-001 守向下 import,Scribe 类型化 GID+评审守真源边界,编号由发射生成〕

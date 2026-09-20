@@ -1,0 +1,281 @@
+{
+  "schema": "erdos7-shared-slot-defect-polytope-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/endpoint-bounds/broad_five_slot_tradeoff.py": "aa930dbc975c4a6a10f25e32f9da195dfc3d8a55089b2b59eea6eb7598a011d1",
+    "certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json": "fef05428a73f6328ac2b1eef6a76440a7d52b31b13ba2adca9be23b2e627659f",
+    "frontier/source-budgets/carrier_mass_residual_bound.py": "b455566fe256dac370d3afb97c6e357d2c75296a2e36f483e6f189fda436141c",
+    "certificates/source_norms/source-budgets/carrier_mass_residual_bound.json": "5ec6d2857f0dfe90bce554944fa29d72413e9bb0c359de77b7daf54ca4ceb32b",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/moments-survival/joint_survival_carriers.py": "4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d",
+    "frontier/cover-geometry/common_deleted_measure_coupling.py": "e0998fbf794788c0d36c912875a0a4726e8a496b3106978731a3dda14d05755a",
+    "certificates/source_norms/cover-geometry/common_deleted_measure_coupling.json": "97e24c96d6fcea0e47f335d0f3ab18680df2d8ce1ecc1a03fbc4f3478a6dff51",
+    "frontier/source-budgets/global_control_faces.py": "3a7adacc726e957b12bc742b43f4a6d9d11c5c3950168a43a0ccb49b0f04b026",
+    "certificates/source_norms/source-budgets/global_control_faces.json": "9450bd7aa5ea8353a0b9b07bf13536aa3fac4fdba73ce0f4558331405a37b36b",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226",
+    "certificates/layout_gap_frontier_certificate.json": "bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02",
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05",
+    "frontier/cover-geometry/verify_ap_schedule.py": "70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655",
+    "frontier/retained-transport/verify_retained_five_tests.py": "80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "74d01a2b1db2d66d6d1ad0ca80a22c4ebfbc650c330138d9533d2d656223cb0a",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2",
+    "frontier/source-budgets/verify_shared_source_deficits.py": "a59d3d620f8abfe814c2c04c0592ebf3eff6805acdc63c28d7ee7544c16b4246",
+    "frontier/moments-survival/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+    "frontier/moments-survival/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7",
+    "certificates/source_norms/moments-survival/survival_hinge_deficit.json": "1545539894d8b6390dad78918d2961ef6292935765886b3742aff61a12143af8",
+    "frontier/moments-survival/verify_survival_hinge_deficit.py": "9e61adfccf2e55992a36ae76ae20adac8aa31e68e35044b6ff1efe35bd48265c",
+    "frontier/moments-survival/absorbed_survival_hinges.py": "03b4d8d9c80470946ce4bfd44cd40a07c241f6c22058952fc59b88c71e1d7e10",
+    "frontier/moments-survival/absorbed_survival_consumer.py": "d47a9e4ccaec3d277899830f92aaaf1e9cc736bb628165aa6547c3521a8f9f53",
+    "certificates/source_norms/moments-survival/absorbed_survival_hinges.json": "244ccad2968a7c9c10fab1dcfc742d8860edce05a0f62dac0fbada6fb7a431a6",
+    "frontier/moments-survival/verify_absorbed_survival_hinges.py": "34c767c38ed8af68ebdcaa30a103501a2748322e0c6d9cb8480f9e53e5745cc2",
+    "frontier/moments-survival/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/moments-survival/full_absorbed_survival_consumer.py": "29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935",
+    "certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json": "af6f87829b34fbb4a34eef2a2041f8912953a4b95b3c88571b00864ac27f4030",
+    "frontier/moments-survival/verify_full_absorbed_survival_hinges.py": "fb2d6b8e99918eec23e1554624050a68782b7da78fa42d46e71017e97ce4d92c",
+    "certificates/source_norms/moments-survival/joint_survival_carriers.json": "9ba4c4a91d99e1fac1f224632663675371151f4cc250f18dd5ba4c774ecde89a",
+    "frontier/moments-survival/verify_joint_survival_carriers.py": "23914aa7e4775000b01fdea1037e2559bc26c0b596104966e53b102a558ed7de",
+    "frontier/source-budgets/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "certificates/source_norms/source-budgets/joint_linear_carriers.json": "4015bb61396aa4369c4960c2728f20abe345d290f63f6c7b7dbdb4c43382c0c1",
+    "frontier/source-budgets/verify_joint_linear_carriers.py": "a6c19378ba3b6588e7ff0fd89862bc78ab5bbff5db6298dc575f058776588c0c",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529",
+    "frontier/source-budgets/verify_full_linear_carrier_frontier.py": "f012753c39ea325be5b648c51c0e1e0739420b55d3749d8a99eea3a36f0a961d",
+    "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json": "3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2",
+    "frontier/source-budgets/source_cost_endpoint_attainment.py": "9c22b67d249f21e86e0292189c7808db023fd9c45090911f7c58bffa6b6d1ea2",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9"
+  },
+  "broad_small_r": {
+    "Delta_upper": "1/18",
+    "r_strict_upper": "1/12000",
+    "G_lower": "397/36000",
+    "four_gap_guards": [
+      "1199/12000",
+      "1997/36000",
+      "397/36000",
+      "1973/162000"
+    ],
+    "wrong_root15_gap_lower": "397/36000"
+  },
+  "shared_deficit_affine_checks": [
+    {
+      "sigma": "0",
+      "root1_deficit_upper": "0",
+      "h1_lower": "1/3",
+      "h0_upper": "1/6",
+      "root_difference_lower": "1/6"
+    },
+    {
+      "sigma": "1/27",
+      "root1_deficit_upper": "1/54",
+      "h1_lower": "161/486",
+      "h0_upper": "41/243",
+      "root_difference_lower": "79/486"
+    },
+    {
+      "sigma": "2/27",
+      "root1_deficit_upper": "1/27",
+      "h1_lower": "80/243",
+      "h0_upper": "83/486",
+      "root_difference_lower": "77/486"
+    },
+    {
+      "sigma": "1/2",
+      "root1_deficit_upper": "1/4",
+      "h1_lower": "11/36",
+      "h0_upper": "7/36",
+      "root_difference_lower": "1/9"
+    }
+  ],
+  "concentrated_rectangle": {
+    "delta": "1/27",
+    "r_upper_inclusive": "1/520",
+    "Delta_upper": "1/36",
+    "root1_total_deficit_upper": "1/54",
+    "h1_lower": "161/486",
+    "eta_first_beta_lower": "53/486",
+    "h0_upper": "41/243",
+    "root_mass_difference_lower": "79/486",
+    "first_label_forcing_margin": "31/180",
+    "four_gap_guards": {
+      "pure5": "51/520",
+      "alpha": "8129/126360",
+      "beta": "2513/126360",
+      "remaining": "4567/227448"
+    },
+    "G_lower": "2513/126360",
+    "best_slot_credit_lower": "51/2600"
+  },
+  "improvement_over103_gap": "1/9477",
+  "global_actual_residual_upper": "11/72",
+  "shared_budget": "G5*q5+G15*q15+omega <= rho-(r+r1)/5; 0<=q5,q15<=1/5; omega>=0.",
+  "concentrated_shared_budget": "Gbar*(q5+q15)+(r-r1)*q15+omega <= rho-(r+r1)/5, Gbar=min(eta_L/5-r,h1*(1/10-Delta)-r-r1)>0.",
+  "conditional_gap_example": {
+    "five_guards": [
+      "99/1000",
+      "197/3000",
+      "191/9000",
+      "191/6000"
+    ],
+    "fifteen_guards": [
+      "397/6000",
+      "197/6000",
+      "391/18000",
+      "97/3000"
+    ],
+    "G5": "191/9000",
+    "G15": "391/18000",
+    "shared_gap": "191/9000"
+  },
+  "polygon_checks": [
+    {
+      "residual": "0",
+      "vertices": [
+        [
+          "0",
+          "0"
+        ]
+      ],
+      "maximum_omega_at_vertices": [
+        "0"
+      ]
+    },
+    {
+      "residual": "191/90000",
+      "vertices": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "191/1955"
+        ],
+        [
+          "1/10",
+          "0"
+        ]
+      ],
+      "maximum_omega_at_vertices": [
+        "191/90000",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "residual": "191/45000",
+      "vertices": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "382/1955"
+        ],
+        [
+          "1/5",
+          "0"
+        ]
+      ],
+      "maximum_omega_at_vertices": [
+        "191/45000",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "residual": "773/90000",
+      "vertices": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/5"
+        ],
+        [
+          "1/5",
+          "0"
+        ],
+        [
+          "1/5",
+          "1/5"
+        ]
+      ],
+      "maximum_omega_at_vertices": [
+        "773/90000",
+        "191/45000",
+        "391/90000",
+        "0"
+      ]
+    },
+    {
+      "residual": "863/90000",
+      "vertices": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1/5"
+        ],
+        [
+          "1/5",
+          "0"
+        ],
+        [
+          "1/5",
+          "1/5"
+        ]
+      ],
+      "maximum_omega_at_vertices": [
+        "863/90000",
+        "59/11250",
+        "481/90000",
+        "1/1000"
+      ]
+    }
+  ],
+  "stronger_Q_caps": {
+    "root1": "eta_l*min(1/5,1/10+Delta+r1/h1)",
+    "root0": "eta_l*min(1/5,3/20+Delta+min(r/h,r1/h1,(r-r1)/h0))"
+  },
+  "outside_branch_counterexample": {
+    "eta": [
+      "1/9",
+      "1/9",
+      "1/9",
+      "1/9",
+      "1/9"
+    ],
+    "Delta": "3/4",
+    "r": "0",
+    "present_cofactor5_seven_depths": [
+      1,
+      2
+    ],
+    "q5": "1/5",
+    "E5": "1/2205",
+    "invalid_global_g0_charge": "397/180000"
+  },
+  "scope": "Ordinary necessary constraints on actual shared source and deletion defects, not a realization theorem for the outer polytope. The stronger concentrated rectangle keeps all103/107 source guards and permits their original inclusive r cutoff. The broad g0 is not asserted outside its branch. No global K improvement, Lean verification or unrestricted Erdos7 resolution is claimed by this interface alone."
+}
