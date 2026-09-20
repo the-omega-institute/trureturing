@@ -79,7 +79,11 @@ internal sealed class CohenConsecutiveCubePrimePairThresholdRefutationDocument
                     + "(1607,1609), (1619,1621), (1667,1669), (1697,1699), and "
                     + "(1721,1723). Thus the printed N(10) = 11 threshold is false.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)),
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "cohen-consecutive-cube-twin-prime-threshold-refutation"),
+                    ResolutionKind.Refuted)),
             Node(
                 "cohen-conjecture-twenty-nine-refuted",
                 "Conjecture 29 is false",
@@ -90,7 +94,11 @@ internal sealed class CohenConsecutiveCubePrimePairThresholdRefutationDocument
                     + "(1999,2003), (2083,2087), and (2137,2141). Thus the printed "
                     + "N(8) = N(9) = N(10) = 12 thresholds are false.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "cohen-consecutive-cube-cousin-prime-threshold-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -99,14 +107,16 @@ internal sealed class CohenConsecutiveCubePrimePairThresholdRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula TwinPairCountFormula() =>
         CountFormula("twinPairCount", 2, consecutive: false);

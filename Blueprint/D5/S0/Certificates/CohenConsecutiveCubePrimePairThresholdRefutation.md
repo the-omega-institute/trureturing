@@ -58,6 +58,10 @@ $$\neg claim28$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/CohenConsecutiveCubePrimePairThresholdRefutation.result28` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cohen-consecutive-cube-twin-prime-threshold-refutation` (refuted) by `D5/S0/Certificates/CohenConsecutiveCubePrimePairThresholdRefutation.result28`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cohen-consecutive-cube-twin-prime-threshold-refutation","declaration_gid":"D5/S0/Certificates/CohenConsecutiveCubePrimePairThresholdRefutation.result28","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Joel E. Cohen (2025). *Conjectures about Primes and Cyclic Numbers*. DOI: [10.48550/arXiv.2508.08335](https://doi.org/10.48550/arXiv.2508.08335). URL: <https://cs.uwaterloo.ca/journals/JIS/VOL28/Cohen/cohen41.pdf>.
@@ -71,6 +75,10 @@ At n = 11 the open interval (1331,1728) contains exactly nine twin-prime pairs: 
 $$\neg claim29$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/CohenConsecutiveCubePrimePairThresholdRefutation.result29` (`✓ std3`). ∎
+
+*Resolves.* `Problems/cohen-consecutive-cube-cousin-prime-threshold-refutation` (refuted) by `D5/S0/Certificates/CohenConsecutiveCubePrimePairThresholdRefutation.result29`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cohen-consecutive-cube-cousin-prime-threshold-refutation","declaration_gid":"D5/S0/Certificates/CohenConsecutiveCubePrimePairThresholdRefutation.result29","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
