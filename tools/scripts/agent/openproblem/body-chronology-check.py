@@ -36,7 +36,11 @@ PATTERNS = [
     (r"\bwas (rewritten|repaired|fixed|corrected|replaced|removed|deleted|added|dispatched|launched)\b", "narrates an action taken"),
     (r"\b(repair|fix|correction)s? (made|landed|applied|below)\b", "narrates a repair"),
     (r"\bround[- ]?\d+ (finding|rejection|review) ", "narrates a review round's content"),
-    (r"\bnow (resolved|fixed|green|corrected|satisfied)\b", "narrates a transition"),
+    # The verb slot is deliberately OPEN. A closed list is exactly what failed: the previous
+    # pattern enumerated five verbs and the author wrote a sixth. This checker is advisory, so a
+    # broad match costs a glance and a narrow one costs a review round.
+    (r"\b(is |are )?now \w+\b", "narrates a transition"),
+    (r"\balready (carried|contained|stated|had|held|said)\b", "contrasts with an earlier state"),
     (r"\bno longer\b|\bused to\b", "narrates a transition"),
     (r"\battempt[- ]?\d+\b", "names an attempt number"),
     (r"\b(first|second|third) (run|pass|attempt) of\b", "names an attempt ordinal"),
@@ -59,6 +63,17 @@ PATTERNS = [
     (r"\b(is|are) (currently )?(in progress|running|pending|under way|underway)\b", "promises a reading instead of stating one"),
     (r"\bwhen (it|they) (complete|completes|finish|finishes)\b", "defers a reading to the future"),
     (r"\b(will be|to be) (recorded|added|dispatched|filled|updated|measured)\b", "defers a reading to the future"),
+    # Chinese prose was entirely unguarded: every pattern above is an English regex, while this
+    # repository's PR bodies are written in both languages. Measured on PR #9037, where two review
+    # seats rejected a Chinese repair-history sentence this checker returned hits=0 on. These match
+    # the narration, not the vocabulary a compliant Chinese body needs: 交付 head, 逐字节相同,
+    # 预登记, seat layout lines and pool-failure disclosures all stay unmatched (fixtures pin that).
+    (r"先前[的之]?\S{0,8}(是错|不对|有误|已删|已改)", "narrates a prior state and its repair"),
+    (r"(已删除|已改写|已撤回|已修正|已更正)而非", "narrates how a repair was carried out"),
+    (r"(原先|原本|此前|先前|早先)\S{0,12}(与现在|不同|改为|换成|已(删|改|撤))", "contrasts with an earlier state"),
+    (r"第\s*[0-9一二三四五六七八九十]+\s*(、|和|与|至|到)?\s*[0-9一二三四五六七八九十]*\s*轮[^。]{0,16}(被拒|拒绝|reject)", "narrates what earlier rounds decided"),
+    (r"不为\S{0,10}重跑(冻结|deposit|emit)", "narrates a repair decision rather than a current property"),
+    (r"本轮[^。]{0,12}已应用", "narrates that findings were applied"),
     # Two measured misses on PR #8698, each caught by a review seat after this checker returned 0.
     # Both describe an edit made to THIS deliverable, which is what 2.10 excludes; the anchoring and
     # search vocabulary that legitimately uses past tense ('was found in the searched scope', 'no
