@@ -5225,3 +5225,185 @@ $$
 令 $b=(v\cdot\nabla)v-\nu\Delta v$，分部积分给 $\langle b,v\rangle=\nu\|\nabla v\|_2^2>0$，因为紧支撑非零 $v$ 不可能梯度恒零，故 $b\ne0$。$a$ 在一附近常值使 $f_n(1,x)=n^3b(nx)$，于是外力范数无共同上界。这是不同 $f_n$ 的尺度族，每个实例一直光滑；不能替换假设26.4供应的同一外力下一条实际奇异轨迹，也没有无外力爆破结论。$\square$
 
 ## 26.99 追加锚
+
+## 27. 正黏性参数族与全部生成模态的初始射流
+
+**定义 27.1（共同开参数域与实际端口）。** 沿用定义25.1的 $2\pi$ 环面、归一化体积、Fourier 符号、实均值零无散度空间，以及（25.102）的无外力准备
+$$
+u_0=\alpha a_0+\beta b_0
+ =(\beta\cos(X_2-X_1),\alpha\cos X_1+\beta\cos(X_2-X_1)).
+\tag{27.101}
+$$
+本节固定已校准的有符号 $\alpha\ne0$。给定任意 $\beta_0\in\mathbb R,\nu_0>0$，取 $B>|\beta_0|$、$0<\underline\nu<\nu_0<\overline\nu<\infty$，令
+$$
+\mathcal V=(-B,B)\times(\underline\nu,\overline\nu),\qquad
+\|v\|_{H^s}^2=\sum_{k\in\mathbb Z^2}(1+|k|^2)^s|\widehat v(k)|^2.
+\tag{27.102}
+$$
+闭包给紧的正黏性界；随后使用的紧参数集均取在此开域内部。$E_\nu(t)=e^{\nu t\Delta}$、$\mathbb P$ 和 $\mathcal B_\nu$ 就是（25.105）、（25.107）的算子，改用 $H^{12}$ 范数，不作频率截断。实际端口仍是引理25.5的 $x=\ell_x(u),y=\ell_y(u)$，并置 $r=1-2x/\alpha,z=-4y/\alpha$；端口方向、相位与幅度校准固定。
+
+**定理 27.2（共同 $H^{12}$ 收缩与黏性光滑性）。** 存在 $T_{12}>0$ 和同一闭球，使每个 $(\beta,\nu)\in\mathcal V$ 的实际解属于 $C([0,T_{12}];H^{12}_\sigma)$，且参数到此 Banach 空间的映射为 $C^\infty$。此解在共同区间上等于定理25.3的 $H^2$ 解。
+
+证明。令 $W(k)=1+|k|^2$。由 $W(p+q)\le2(W(p)+W(q))$ 得
+$W(p+q)^6\le2^{11}(W(p)^6+W(q)^6)$。使用引理25.2的 $\ell^1$ 界和卷积 Young 不等式，先对三角多项式、再以稠密性得
+$$
+\|v\otimes w\|_{H^{12}}\le C_{12}\|v\|_{H^{12}}\|w\|_{H^{12}},
+\qquad C_{12}=2^{14}.
+\tag{27.103}
+$$
+向量／张量仍取原 Euclidean／Frobenius 范数。热散度乘子估计与（25.105）相同，因此在 $X_T=C([0,T];H^{12}_\sigma)$ 上
+$$
+\|\mathcal B_\nu\|_{X_T\times X_T\to X_T}
+ \le2C_{12}\sqrt{T/\underline\nu}=:\Lambda_T.
+\tag{27.104}
+$$
+准备的两组 Fourier 支持不交，故 $\|u_0\|_{H^{12}}^2=2^{11}\alpha^2+3^{12}\beta^2$。可取
+$$
+R_{12}=2\sqrt{2^{11}\alpha^2+3^{12}B^2},\quad
+R_2=2\sqrt{2\alpha^2+9B^2},\quad
+0<T_{12}\le\min\left\{
+\frac{\underline\nu}{64C_{12}^2R_{12}^2},
+\frac{\underline\nu}{16384R_2^2}\right\}.
+\tag{27.105}
+$$
+于是 $\Lambda_{T_{12}}R_{12}\le1/4$。温和映射 $E_\nu(\cdot)u_0-\mathcal B_\nu(u,u)$ 把闭 $R_{12}$ 球映入闭 $3R_{12}/4$ 球，差的系数至多 $1/2$。Bochner 积分的时间连续性由（25.107）证明中的上端 $O(\sqrt\epsilon)$ 分割原样得到，故 Banach 收缩给同一空间、同一时间上的解。
+
+黏性导数不能由固定黏性的收缩自动推出。对张量输入、$s>0$ 和任意整数 $j\ge0$，逐模计算给
+$$
+\partial_\nu^j E_\nu(s)=(s\Delta)^jE_\nu(s),\qquad
+\|\partial_\nu^jE_\nu(s)\mathbb P\operatorname{div}\|_{H^{12}\to H^{12}}
+ \le c_j\nu^{-j-1/2}s^{-1/2},
+$$
+$$
+c_j=\sup_{v\ge0}v^{j+1/2}e^{-v}<\infty,\qquad
+\|\partial_\nu^j\mathcal B_\nu\|
+ \le2C_{12}c_j\sqrt{T_{12}}\,\underline\nu^{-j-1/2}=:M_j.
+\tag{27.106}
+$$
+确实，乘子至多 $\sup_{q\ge0}s^jq^{2j+1}e^{-\nu sq^2}$，换元 $v=\nu sq^2$ 给所列核；$s^{-1/2}$ 可积。更明确地，对黏性线段始终落在 $[\underline\nu,\overline\nu]$ 的增量 $h$，逐模 Taylor 积分式、同一控制核和 Bochner 积分给算子范数余项
+$$
+\left\|\partial_\nu^j\mathcal B_{\nu+h}
+ -\sum_{\ell=0}^N\frac{h^\ell}{\ell!}\partial_\nu^{j+\ell}\mathcal B_\nu\right\|
+ \le\frac{|h|^{N+1}}{(N+1)!}M_{j+N+1}.
+\tag{27.107}
+$$
+这同时证明差商收敛和各阶算子导数连续，不仅是逐模的形式微分。
+
+初始半群项也必须计入。令 $d_j=\sup_{v\ge0}v^je^{-v}$，其中 $d_0=1$；则
+$$
+\sup_{0\le t\le T_{12}}\|(t\Delta)^jE_\nu(t)\|_{H^{12}\to H^{12}}
+ \le d_j\underline\nu^{-j}.
+\tag{27.108}
+$$
+$j>0$ 时取零点值为零，对每个固定 $H^{12}$ 输入，Fourier 控制收敛给其在 $t\downarrow0$ 强收敛至零；$j=0$ 是半群强连续性。因此它们是 $H^{12}\to X_{T_{12}}$ 的有界算子。与（27.107）相同的 Taylor 估计将 $M_{j+N+1}$ 换成 $d_{j+N+1}\underline\nu^{-j-N-1}$，证明 $\nu\mapsto E_\nu(\cdot)$ 在此算子范数中光滑。无需声称在 $t=0$ 对时间为算子范数连续。$u_0$ 对 $\beta$ 线性，故初始项对两参数光滑。
+
+在实际解处，固定点方程对 $u$ 的导数为
+$$
+I+\mathcal A_u,\qquad
+\mathcal A_uv=\mathcal B_\nu(v,u)+\mathcal B_\nu(u,v),\quad
+\|\mathcal A_u\|\le\tfrac12,
+\qquad (I+\mathcal A_u)^{-1}=\sum_{n\ge0}(-\mathcal A_u)^n.
+\tag{27.109}
+$$
+逆范数至多二。Banach 空间隐函数定理给每个内点附近的光滑参数解，收缩唯一性使这些局部解一致，覆盖 $\mathcal V$。最后 $H^{12}\subset H^2$，且该解满足同一温和方程；（27.105）落在既有共同 $H^2$ 时域内，定理25.3不限球半径的 $C_tH^2$ 唯一性给两解相等。$\square$
+
+**定理 27.3（五次时间导数与连续混合导数）。** 对 $0\le j\le5$，上述实际解满足
+$$
+u\in C^j([0,T_{12}];H^{12-2j}_\sigma).
+\tag{27.110}
+$$
+任意有限阶参数导数与所列时间导数共同连续，时间零取右导数；特别，$x,y,r,z$ 对 $(\beta,\nu,t)$ 联合 $C^5$ 至初始边界。
+
+证明。将定理25.4的逐模积分证明用在 $H^{10}$：$\nu\Delta u-\mathbb P\operatorname{div}(u\otimes u)$ 在此空间连续，所以 $u_t$ 等于此实际向量场。归纳微分给
+$$
+\partial_t^{n+1}u=\nu\Delta\partial_t^nu
+ -\sum_{j=0}^n\binom nj\mathbb P\operatorname{div}
+ (\partial_t^ju\otimes\partial_t^{n-j}u),\qquad 0\le n\le4.
+\tag{27.111}
+$$
+在第 $n$ 步，两因子至少在 $H^{12-2n}$，而 $12-2n\ge4$。同一加权卷积证明这些 Sobolev 空间为乘积代数；散度损失一阶、Laplacian 损失两阶，右端连续取值 $H^{10-2n}$。Banach 值微积分及乘积法则完成归纳，末阶仍在 $H^2$。这些表达式是关于 $u$、其空间导数与 $\nu$ 的连续多项式微分算子；定理27.2允许任意有限阶参数微分，且同一 Sobolev 降阶仍有效。也可在各阶积分恒等式中对参数求导，直接识别混合导数并证明其交换。引理25.5的两个有界线性端口将这些恒等式送到实数。因而参数依赖的逆时间以后产生的第五时间导数已有来源；仅有 $C^1$ 参数和 $C^4$ 时间的分开估计不承担这一结论。$\square$
+
+**定理 27.4（全模初始递推与三阶端口射流）。** 令 $\omega=\partial_1u_2-\partial_2u_1$，$k^\perp=(-k_2,k_1)$，$W_n(k)=\partial_t^n\widehat\omega(k,0)$。对非零模态，
+$$
+\widehat u(k)=-i\frac{k^\perp}{|k|^2}\widehat\omega(k),\qquad
+\mathcal C(V,W)_k=-\sum_{p+q=k}\frac{\det(p,q)}{|p|^2}V_pW_q,
+$$
+$$
+W_{n+1}(k)=-\nu|k|^2W_n(k)
+ +\sum_{j=0}^n\binom nj\mathcal C(W_j,W_{n-j})_k.
+\tag{27.112}
+$$
+和中省略 $p=0$ 项，零均值保持。置 $a=(1,0),b=(-1,1),c=(0,1)=a+b,d=(2,-1)=a-b$。初值为 $W_0(a)=i\alpha/2,W_0(b)=-i\beta$，负模态由共轭给出，其余为零。以下两张完整半表亦按共轭补齐，未列模态均为零。
+
+| 27W1 模态 | $W_1$ |
+|---|---|
+| 27.4一阶模态：$a$ | $-i\alpha\nu/2$ |
+| 27.4一阶模态：$b$ | $2i\beta\nu$ |
+| 27.4一阶模态：$c$ | $-\alpha\beta/4$ |
+| 27.4一阶模态：$d$ | $-\alpha\beta/4$ |
+
+| 27W2 模态 | $W_2$ |
+|---|---|
+| 27.4二阶模态：$a$ | $i\alpha(10\nu^2-\beta^2)/20$ |
+| 27.4二阶模态：$b$ | $i\beta(\alpha^2-40\nu^2)/10$ |
+| 27.4二阶模态：$c$ | $\alpha\beta\nu$ |
+| 27.4二阶模态：$d$ | $2\alpha\beta\nu$ |
+| 27.4二阶模态：$(3,-1)$ | $-i\alpha^2\beta/10$ |
+| 27.4二阶模态：$(-1,2)$ | $-i\alpha\beta^2/8$ |
+| 27.4二阶模态：$(3,-2)$ | $3i\alpha\beta^2/40$ |
+
+第三阶使用全部第二阶模态：$W_3=-\nu|k|^2W_2+\mathcal C(W_0,W_2)+2\mathcal C(W_1,W_1)+\mathcal C(W_2,W_0)$。两个实际端口所需的活项如下；第三行在求和时乘二。
+
+| 27W3 活项 | 模态 $a$ | 模态 $c$ |
+|---|---|---|
+| 27.4三阶活项：黏性项 | $i\alpha\nu(\beta^2-10\nu^2)/20$ | $-\alpha\beta\nu^2$ |
+| 27.4三阶活项：$\mathcal C(W_0,W_2)$ | $-3i\alpha\beta^2\nu/2$ | $\alpha\beta(4\alpha^2-7\beta^2-140\nu^2)/80$ |
+| 27.4三阶活项：$\mathcal C(W_1,W_1)$ | $i\alpha\beta^2\nu/10$ | $-\alpha\beta\nu^2/2$ |
+| 27.4三阶活项：$\mathcal C(W_2,W_0)$ | $7i\alpha\beta^2\nu/5$ | $-\alpha\beta(\alpha^2-3\beta^2-20\nu^2)/40$ |
+
+为明确未投弃其它生成模态，$W_3$ 的完整半表采用 $k_2>0$ 或 $k_2=0,k_1>0$ 的代表，另一半仍取共轭。
+
+| 27W3 全模代表 | $W_3$ |
+|---|---|
+| 27.4三阶模态：$(-4,1)$ | $9\alpha^3\beta/200$ |
+| 27.4三阶模态：$(-4,2)$ | $-97\alpha^2\beta^2/650$ |
+| 27.4三阶模态：$(-4,3)$ | $33\alpha\beta^3/1040$ |
+| 27.4三阶模态：$(-3,1)$ | $-2i\alpha^2\beta\nu$ |
+| 27.4三阶模态：$(-3,2)$ | $15i\alpha\beta^2\nu/8$ |
+| 27.4三阶模态：$(-2,1)$ | $\alpha\beta(364\alpha^2+295\beta^2-63700\nu^2)/5200$ |
+| 27.4三阶模态：$(-2,2)$ | $-24\alpha^2\beta^2/65$ |
+| 27.4三阶模态：$(-2,3)$ | $-3\alpha\beta^3/80$ |
+| 27.4三阶模态：$(-1,1)$ | $-2i\beta\nu(3\alpha^2-20\nu^2)/5$ |
+| 27.4三阶模态：$(-1,2)$ | $13i\alpha\beta^2\nu/8$ |
+| 27.4三阶模态：$(0,1)$ | $\alpha\beta(2\alpha^2-\beta^2-260\nu^2)/80$ |
+| 27.4三阶模态：$(0,2)$ | $-\alpha^2\beta^2/10$ |
+| 27.4三阶模态：$(1,0)$ | $i\alpha\nu(3\beta^2-10\nu^2)/20$ |
+| 27.4三阶模态：$(2,0)$ | $3\alpha^2\beta^2/25$ |
+
+原始端口及归一化端口的初始时间导数为
+$$
+\begin{array}{c|cc}
+n&x^{(n)}(0)&y^{(n)}(0)\\\hline
+0&\alpha/2&0\\
+1&-\alpha\nu/2&-\alpha\beta/4\\
+2&\alpha(10\nu^2-\beta^2)/20&\alpha\beta\nu\\
+3&\alpha\nu(3\beta^2-10\nu^2)/20&\alpha\beta(2\alpha^2-\beta^2-260\nu^2)/80
+\end{array}
+\tag{27.113}
+$$
+$$
+\begin{array}{c|cc}
+n&r^{(n)}(0)&z^{(n)}(0)\\\hline
+0&0&0\\
+1&\nu&\beta\\
+2&\beta^2/10-\nu^2&-4\beta\nu\\
+3&\nu^3-3\nu\beta^2/10&\beta(\beta^2+260\nu^2-2\alpha^2)/20
+\end{array}
+\tag{27.114}
+$$
+
+证明。取实际方程的旋度给 $\omega_t+u\cdot\nabla\omega=\nu\Delta\omega$。无散度及零均值使速度由上式的 Biot–Savart 乘子唯一确定。代入 Fourier 乘积并保留有序对 $(p,q)$，对流符号为 $\det(p,q)/|p|^2$，移至右边即给 $\mathcal C$ 的负号。定理27.3保证这里的初始微分是实际 PDE 微分；由乘积法则得到二项式递推。第 $n$ 个导数的支持包含于初始有限支持至多 $n+1$ 项的和，因此每一步是有限且完整的计算，不是 Galerkin 截断。直接代入初始四模得到两张半表，再将其代入第三阶四项得到活项表及完整表；作为多项式数组，零至三阶的非恒零槽数依次为 $4,8,14,28$，退化参数可使槽值消失。端口关系为 $x=\operatorname{Im}\widehat\omega(a)$、$y=\operatorname{Re}\widehat\omega(c)$，取相应实虚部得（27.113），固定比例换元给（27.114）。三阶中的 $\alpha^3\beta$ 项来自生成模态的反馈；初始 Fourier 平面不被假定为不变。
+
+准备场的实际三角表达沿用 [ReversalWaveSynthesis](../../../D5/S3/FluidDynamics/Fourier/ReversalWaveSynthesis.lean) 的 `synthesis_eq_realVelocity`；全 PDE 与端口泛函的来源是本卷第25节，黏性和五次时间正则性由定理27.2—27.3承担。图逆及其混合 Taylor 余项由[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第28节承担，此处仅输出实际联合 $C^5$ 端口与初始时间射流。$\square$
+
+## 27.99 追加锚
