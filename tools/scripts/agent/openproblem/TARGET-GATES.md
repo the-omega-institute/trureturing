@@ -59,6 +59,18 @@ Record the query and the hit/no-hit in the preregistration. A posted, dated, mat
 proof settles the assertion for open-problem-resolution purposes exactly as a paper would (§3.7: do not
 claim as new what is already public); an entry with status `open` is not evidence of openness.
 
+**Follow the URLs a paper's closing section gives, and read the version history of every settling
+preprint.** Alcantarilla et al. arXiv:2602.21840 Conjecture 15 survived an arXiv sweep and Semantic
+Scholar (zero citations) and was already Theorems 1–2 on the authors' page
+`https://math.deweger.net/eulerliars/`, named at the end of the paper; nothing indexes that page. In
+the other direction, Le arXiv:2509.26138 — cited by R52 as settling 22 of Cohen's JIS 25.4.7
+conjectures — carries at `/abs/2509.26138v3` the author's withdrawal ("Proofs in this paper were
+AI-generated and I just found out some of them were incorrect"), so a settlement it was the only
+source for is void; a preprint's `Comments:` field and `[vN] (withdrawn)` line are part of the
+literature check. A withdrawn preprint's *correct* finite observation (Le's `c₃₅ = 91 = c₅c₇` against
+Cohen's Conjecture 59) is still public text and must be disclosed in the preregistration; whether it
+bars open-problem-resolution is for the review seats.
+
 ## 2. Is the object already available? — grep, pinned Mathlib first
 
 Ask what the statement *reduces to*, then search for that object rather than for the
