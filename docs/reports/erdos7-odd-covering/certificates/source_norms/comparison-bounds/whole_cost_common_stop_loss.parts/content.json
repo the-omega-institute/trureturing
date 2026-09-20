@@ -1,0 +1,183 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-whole-cost-common-stop-loss-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "444a807dab3cb868f1b575fd48f0f89a6e2007ea15b7fc395a03665530f77b1d",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "cost_results": {
+    "path": "content/007-cost_results.json",
+    "sha256": "c6719544acf10cc38796a8eedd548ad7008e24747f7259ca7b9604ecf3e36326",
+    "kind": "array"
+  },
+  "joint_layout_checks": {
+    "kind": "inline",
+    "value": 1375000
+  },
+  "all_joint_objectives_sha256": {
+    "kind": "inline",
+    "value": "0ef22517b82c6292dcbd0e888b9e9fa5cfb8af9affee69ccf5b74edde6bed623"
+  },
+  "integer_bridge_scale": {
+    "kind": "inline",
+    "value": 4117715
+  },
+  "integer_objective_scale": {
+    "kind": "inline",
+    "value": 66706983000
+  },
+  "cost_weights": {
+    "path": "content/012-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "direct_cost_upper_bounds": {
+    "path": "content/013-direct_cost_upper_bounds.json",
+    "sha256": "6945cc5e92e5ef4aae26296d699ef678e942ee1904c55fd71d05b26d744a354f",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/014-majorants.json",
+    "sha256": "12fd0cc505cda0268668d9a8196bdcaa074b0b734f5d80bc8f5d1d95f06de668",
+    "kind": "array"
+  },
+  "improved_cost_bounds": {
+    "path": "content/015-improved_cost_bounds.json",
+    "sha256": "6945cc5e92e5ef4aae26296d699ef678e942ee1904c55fd71d05b26d744a354f",
+    "kind": "value"
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "374/75"
+  },
+  "direct_numerator_improvement": {
+    "kind": "inline",
+    "value": "49781836352241400652355581/457409841096473698416984000"
+  },
+  "majorant_propagation_improvement": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "total_numerator_improvement": {
+    "kind": "inline",
+    "value": "49781836352241400652355581/457409841096473698416984000"
+  },
+  "previous_numerator": {
+    "kind": "inline",
+    "value": "8928394385235033599996847474534270323010312604177/252972956902243138190838916958250000000000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "8900862274618738486076077484437084354260312604177/252972956902243138190838916958250000000000000000"
+  },
+  "uniform_hinge_uppers": {
+    "kind": "inline",
+    "value": {
+      "1": "443/900",
+      "2": "3869/10500",
+      "3": "86623/330750",
+      "6": "89710847/680683500",
+      "7": "547475903/4764784500",
+      "8": "388664263/3705943500",
+      "4": "938213/4630500",
+      "5": "1523903/9724050"
+    }
+  },
+  "denominator_coefficients": {
+    "kind": "inline",
+    "value": {
+      "mass": "308186/307461",
+      "linear": "1451/614922",
+      "hinge2": "2400/102487",
+      "hinge3": "50/2541",
+      "hinge4": "1/6",
+      "hinge5": "4/33"
+    }
+  },
+  "full_AP11_tail": {
+    "kind": "inline",
+    "value": {
+      "mass": "5/43923",
+      "first_moment": "17/29282",
+      "integrated_cost_upper": "45451/158122800"
+    }
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "1358432973299/17084377926000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "45999207373210865146487861100656558222373103324321601/98823426011466392651464381291661827125000000000000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "45863942113753007251795118139309083557904353324321601/98823426011466392651464381291661827125000000000000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "348472854465689804566489067/254590731488032830298391412"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary uniform result on both complete actual K-control faces with r=rho=0 and mass53/360. All hinges of one AP cost retain one original test layout; different costs remain independent. Every selected original label uses one combined nonnegative objective, with complete weighted peeled remainders. Preserves all52 costs and the complete101 denominator. No off-face extension, new global K, Lean verification or unrestricted Erdos7 claim."
+  }
+}

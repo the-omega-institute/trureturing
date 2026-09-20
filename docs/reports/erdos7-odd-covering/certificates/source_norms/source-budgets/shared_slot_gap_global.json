@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "4aaf98ae262a469d4a0c0ca9e51efbb053bd49fb17cf3203a546bdf103450b6f",
+  "parts_directory": "shared_slot_gap_global.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "61d8586147122da3c037bad960aa03d82b605ae828f6f6efb8c6c5a54259b241",
+    "kind": "object"
+  }
+}
