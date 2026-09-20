@@ -82,6 +82,23 @@ private def tacticTerm? (stx : Syntax) : MetaM (Option Syntax) := do
     | _ => return none
   return some body.raw
 
+/-- Lean's `Elab.App.findNamedArgDependsOn?` inserts an unsupplied explicit
+argument when a later named binder depends on it. Inspect the original compiled
+telescope, with prior compiled arguments substituted, and only this frame's
+pending names. Default values do not count as type dependencies. -/
+private def namedDependsOnCurrent (type : Expr) (named : List Syntax) : MetaM Bool := do
+  if named.isEmpty || type.isArrow then return false
+  forallTelescopeReducing type fun xs _ => do
+    let some current := xs[0]? | return false
+    let mut pending := named.map (·[1].getId)
+    for x in xs[1:] do
+      let decl ← x.fvarId!.getDecl
+      if pending.contains decl.userName then
+        if ← exprDependsOn decl.type.cleanupAnnotations current.fvarId! then return true
+        -- A repeated binder name cannot make an already matched name dependent.
+        pending := pending.filter (· != decl.userName)
+    return false
+
 /-- Reattach syntax only where its shape agrees with the compiled term. Unsupported
 forms remain a deferred error on that term: a dead argument must not affect ownership.
 No names are resolved from source; the compiler's constants and binders remain intact. -/
@@ -138,14 +155,15 @@ private partial def recover (stx : Syntax) (value : Expr) : MetaM Expr := do
       while index < compiledArgs.size do
         let .forallE name domain body bi ← whnf type | return reject stx value
         let nextNamed := named.find? (·[1].getId == name)
-        -- A frame ends at the first unsupplied ordinary explicit binder (or
-        -- strict implicit binder). Defaults/implicits consumed before that point
-        -- have NO source argument. In particular the next frame's literal must
-        -- never annotate an optParam inserted by this frame.
+        -- An unsupplied ordinary explicit binder ends the frame unless Lean
+        -- inferred it from a pending named binder in this same frame. Inserted
+        -- arguments still have NO source evidence: the next frame's literal
+        -- must never annotate an optParam inserted by this frame.
         if nextNamed.isNone then
           if bi.isExplicit || explicit then
             if args.isEmpty && (explicit ||
-                (!domain.isOptParam && !domain.isAutoParam)) then break
+                (!domain.isOptParam && !domain.isAutoParam)) then
+              unless ← namedDependsOnCurrent type named do break
           else if bi == .strictImplicit && args.isEmpty && named.isEmpty then break
         if frames.size > 1 && names.contains name then
           if namedBinders.contains name then return reject stx value

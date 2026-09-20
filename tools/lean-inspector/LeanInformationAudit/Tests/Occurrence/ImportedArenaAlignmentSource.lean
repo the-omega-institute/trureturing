@@ -144,3 +144,16 @@ def returnsImplicit (_u : Unit) : {a : Arena} → a = arena → Arena := fun {_}
 def groupedExplicit : Arena := (@returnsImplicit ()) rfl
 
 end QualityGrouped
+
+namespace ArchitectureNamed
+
+-- This producer imports no registration syntax or construction hook. Lean
+-- inserts the ordinary explicit a because the same-frame named proof needs it.
+def discard (a : Arena.{0}) (_h : a = ProvenanceProbe.arena) : Arena.{0} :=
+  ProvenanceProbe.arena
+def deadUse : Arena.{0} := discard (_h := rfl)
+def explicitUse : Arena.{0} := discard ProvenanceProbe.arena (_h := rfl)
+def keep (a : Arena.{0}) (_h : a = ProvenanceProbe.arena) : Arena.{0} := a
+def liveUse : Arena.{0} := keep (_h := rfl)
+
+end ArchitectureNamed

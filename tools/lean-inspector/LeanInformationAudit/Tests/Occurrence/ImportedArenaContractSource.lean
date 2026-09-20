@@ -41,6 +41,21 @@ def baselineGroupedAlias : Arena := (QualityGrouped.hold ()) {
   stateDecidableEq := arena.stateDecidableEq }
 def baselineGroupedCopy : Arena := (QualityGrouped.holdCopy ()) arena
 
+-- Separate spellings for each independent contract input route.
+def expectedNamedDead : Arena.{0} := ArchitectureNamed.discard (_h := rfl)
+def expectedNamedExplicit : Arena.{0} := ArchitectureNamed.discard ProvenanceProbe.arena (_h := rfl)
+def expectedNamedLive : Arena.{0} := ArchitectureNamed.keep (_h := rfl)
+def sourceNamedDead : Arena.{0} := ArchitectureNamed.discard (_h := rfl)
+def sourceNamedExplicit : Arena.{0} := ArchitectureNamed.discard ProvenanceProbe.arena (_h := rfl)
+def sourceNamedLive : Arena.{0} := ArchitectureNamed.keep (_h := rfl)
+def baselineNamedDead : Arena.{0} := ArchitectureNamed.discard (_h := rfl)
+def baselineNamedExplicit : Arena.{0} := ArchitectureNamed.discard ProvenanceProbe.arena (_h := rfl)
+def baselineNamedLive : Arena.{0} := ArchitectureNamed.keep (_h := rfl)
+def expectationNamedDead : Arena.{0} := ArchitectureNamed.discard (_h := rfl)
+def expectationNamedExplicit : Arena.{0} :=
+  ArchitectureNamed.discard ProvenanceProbe.arena (_h := rfl)
+def expectationNamedLive : Arena.{0} := ArchitectureNamed.keep (_h := rfl)
+
 def missingEvidence : Arena := arena
 
 def lawArena : PrimitiveLawArena where
