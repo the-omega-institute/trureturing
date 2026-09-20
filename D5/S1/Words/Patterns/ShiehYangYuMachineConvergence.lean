@@ -213,22 +213,6 @@ private theorem r_split_min (X Y : List ℕ) (v : ℕ)
     List.flatten_cons, List.flatten_nil, List.append_nil, List.reverse_cons,
     List.append_assoc]
 
-private theorem append_le_of_length_eq {A B C D : List ℕ}
-    (hlen : A.length = B.length) (hab : A ≤ B) (hcd : C ≤ D) :
-    A ++ C ≤ B ++ D := by
-  rcases lt_or_eq_of_le hab with hab | rfl
-  · have strict_extend {U V : List ℕ} (h : List.Lex (· < ·) U V) :
-        ∀ C D : List ℕ, U.length = V.length →
-          List.Lex (· < ·) (U ++ C) (V ++ D) := by
-      induction h with
-      | nil => intro C D hlen; simp at hlen
-      | rel h => intro C D _; exact .rel h
-      | cons h ih => intro C D hlen; exact .cons (ih C D (Nat.succ.inj hlen))
-    exact le_of_lt (strict_extend hab C D hlen)
-  · rcases lt_or_eq_of_le hcd with hcd | rfl
-    · exact le_of_lt (List.Lex.append_left (· < ·) hcd A)
-    · exact le_rfl
-
 private theorem M_last_max (X A : List ℕ) (v m : ℕ)
     (hXmin : ∀ x ∈ X, v < x) (hAmin : ∀ a ∈ A, v ≤ a) (hvm : v ≤ m)
     (hXmax : ∀ x ∈ X, x < m) (hAmax : ∀ a ∈ A, a ≤ m) :
@@ -309,7 +293,21 @@ private theorem potential_weak (w : List ℕ) (nd : w.Nodup) : Phi w ≤ Phi (M 
     have hlen : (A.reverse ++ [v]).length = (s (A.reverse ++ [v])).reverse.length := by
       simpa only [s, List.length_reverse, List.nil_append] using
         (westRun_perm [] (A.reverse ++ [v])).length_eq.symm
-    have combined := append_le_of_length_eq hlen hleft hright
+    have combined : (A.reverse ++ [v]) ++ Phi X ≤
+        (s (A.reverse ++ [v])).reverse ++ Phi (M X) := by
+      rcases lt_or_eq_of_le hleft with hab | hab
+      · have strict_extend {U V : List ℕ} (h : List.Lex (· < ·) U V) :
+            ∀ C D : List ℕ, U.length = V.length →
+              List.Lex (· < ·) (U ++ C) (V ++ D) := by
+          induction h with
+          | nil => intro C D hlen; simp at hlen
+          | rel h => intro C D _; exact .rel h
+          | cons h ih => intro C D hlen; exact .cons (ih C D (Nat.succ.inj hlen))
+        exact le_of_lt (strict_extend hab (Phi X) (Phi (M X)) hlen)
+      · rw [← hab]
+        rcases lt_or_eq_of_le hright with hcd | hcd
+        · exact le_of_lt (List.Lex.append_left (· < ·) hcd _)
+        · rw [hcd]
     change ((X ++ v :: A) ++ [m]).reverse ≤ (M ((X ++ v :: A) ++ [m])).reverse
     rw [heq]
     simpa only [List.reverse_append, List.reverse_cons, List.reverse_singleton,
