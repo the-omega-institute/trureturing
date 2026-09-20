@@ -158,7 +158,8 @@ make preflight MODE=pr BASE="$base_sha"
 
 PR-mode preflight checks an isolated merge-tree candidate and its delta. It
 does not merge your branch. If you have only the project remote, use
-`origin/dev` in the two Git commands. A targeted build, local preflight and
+`git fetch origin dev`, then `git rev-parse origin/dev` to resolve the base SHA.
+A targeted build, local preflight and
 remote CI are distinct results: report the command and actual exit code, and
 say explicitly which checks you did not run.
 
