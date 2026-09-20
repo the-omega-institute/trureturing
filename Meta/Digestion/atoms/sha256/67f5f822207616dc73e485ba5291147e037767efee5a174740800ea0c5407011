@@ -1,0 +1,16 @@
+**定理 28.5（两个准备场的精确距离）。** 对定义28.1中任意两准备，系数分别为 $(A_{0,1},\mathcal B_1)$ 与 $(A_{0,2},\mathcal B_2)$，归一化环面上的实际两分量场满足
+$$
+\|u_{0,1}-u_{0,2}\|_{L^2}^2
+ =2|A_{0,1}-A_{0,2}|^2+|\mathcal B_1-\mathcal B_2|^2.
+\tag{28.116}
+$$
+
+证明。记 $f_a=\operatorname{Re}(2\Delta A_0e^{ia\cdot X})$、$f_b=\operatorname{Re}(\Delta\mathcal B e^{ib\cdot X})$。对任意非零整数频率 $k$ 及复数 $D$，展开实部并积分 $e^{2ik\cdot X}$ 得
+$\|\operatorname{Re}(De^{ik\cdot X})\|_2^2=|D|^2/2$。$a\ne\pm b$ 又使 $\langle f_a,f_b\rangle=0$。场差为 $(f_b,f_a+f_b)$，所以
+$$
+\|(f_b,f_a+f_b)\|_2^2
+ =\|f_a\|_2^2+2\|f_b\|_2^2
+ =2|\Delta A_0|^2+|\Delta\mathcal B|^2.
+$$
+这是标准 Fourier 正交性在该两分量准备中的直接应用，两个分量内重复的 $b$ 模均已计入。此恒等式只比较初始准备场；后续含不同黏性的轨迹扰动界需要另行估计。$\square$
+
