@@ -5407,3 +5407,156 @@ $$
 准备场的实际三角表达沿用 [ReversalWaveSynthesis](../../../D5/S3/FluidDynamics/Fourier/ReversalWaveSynthesis.lean) 的 `synthesis_eq_realVelocity`；全 PDE 与端口泛函的来源是本卷第25节，黏性和五次时间正则性由定理27.2—27.3承担。图逆及其混合 Taylor 余项由[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)第28节承担，此处仅输出实际联合 $C^5$ 端口与初始时间射流。$\square$
 
 ## 27.99 追加锚
+
+## 28. 平移准备的全流对称性、相干复端口与准备场任务
+
+**定义 28.1（固定空间标架与实际初始参考）。** 沿用定义25.1、27.1的归一化 $2\pi$ 环面、Fourier 符号、分量方向和无外力方程。以 $a_{\rm cal}>0$ 表示独立已知的物理幅度 $|\alpha|$，它不是（25.102）的向量场 $a_0$。取 $\alpha\in\{a_{\rm cal},-a_{\rm cal}\}$、$\beta\in\mathbb R$、$\nu>0$，空间平移 $q\in\mathbb T^2$ 在整条轨迹上固定。置
+$$
+a=(1,0),\qquad b=(-1,1),\qquad c=(0,1)=a+b,
+\qquad \chi_k(q)=e^{ik\cdot q}.
+\tag{28.101}
+$$
+非平移实际解记为 $u_{\alpha,\beta,\nu}$；其准备及平移准备为
+$$
+u_{\alpha,\beta,\nu}(0,X)
+ =(\beta\cos(X_2-X_1),\alpha\cos X_1+\beta\cos(X_2-X_1)),
+\qquad u_0^q(X)=u_{\alpha,\beta,\nu}(0,X+q).
+\tag{28.102}
+$$
+相应实际解记为 $u^q$。两端口是完整相干正交分量构成的复数 Fourier 积分
+$$
+A^q(t)=\widehat{u_2^q}(a,t),\qquad
+C^q(t)=\widehat{u_1^q}(c,t),\qquad
+A_0=A^q(0)=\frac\alpha2\chi_a(q),\quad |A_0|=a_{\rm cal}/2>0.
+\tag{28.103}
+$$
+两端口与初始参考的复校准及共同 Fourier 标架固定；它们是全空间 Fourier 积分，不暗含局部点探测器。使用 $A_0$ 的恢复命题要求这个初始复值已实际取得并保留，知道它的模不等于取得它的相位。允许时钟、同源取得和全部旧记录由[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义33.1另行规定。
+
+**定理 28.2（实际全流的半转对称性与平移字符）。** 在定理27.2的共同局部时间上，未平移实际解满足
+$$
+u(t,X)=-u(t,s_0-X),\qquad s_0=(\pi,0),
+$$
+$$
+\widehat u(k,t)=-e^{-ik\cdot s_0}\widehat u(-k,t)
+ =-(-1)^{k_1}\overline{\widehat u(k,t)}.
+\tag{28.104}
+$$
+因而 $A(t)=x(t)\in\mathbb R$、$C(t)=iy(t)$，其中 $x,y$ 恰为引理25.5的实际实端口。平移解满足
+$$
+u^q(t,X)=u(t,X+q),\qquad
+\widehat{u^q}(k,t)=\chi_k(q)\widehat u(k,t).
+\tag{28.105}
+$$
+使用已获 $A_0$ 定义的归一化量满足精确恒等式
+$$
+R(t)=1-\frac{A^q(t)}{A_0}=1-\frac{2x(t)}\alpha=r(t),\qquad
+Z(t)=\frac{2iC^q(t)}{A_0}=\chi_b(q)z(t),\quad z=-\frac{4y}\alpha.
+\tag{28.106}
+$$
+这些是整个实际共同局部流的等式，包括全部新生成模态，不以有限射流代替轨迹相等。
+
+证明。令 $Y=s_0-X$，$v(t,X)=-u(t,Y)$、$\Pi_v(t,X)=\Pi_u(t,Y)$。对每个分量直接微分得
+$$
+v_t=-u_t(t,Y),\quad \partial_{X_j}v_i=\partial_{Y_j}u_i(t,Y),
+\quad (v\cdot\nabla_X)v=-(u\cdot\nabla_Y)u(t,Y),
+$$
+$$
+\Delta_Xv=-\Delta_Yu(t,Y),\qquad
+\nabla_X\Pi_v=-\nabla_Y\Pi_u(t,Y),\qquad
+\operatorname{div}_Xv=\operatorname{div}_Yu(t,Y)=0.
+\tag{28.107}
+$$
+所以方程各项同乘负号，黏性不变；压力的归一化均值也不变。$\cos(\pi-X_1)=-\cos X_1$，且
+$\cos((-X_2)-(\pi-X_1))=-\cos(X_2-X_1)$，故 $v(0)=u(0)$。此变换保持 $C_tH^2_\sigma$，定理25.3的实际唯一性给 $v=u$；定理25.4的压力与光滑解识别保证这是原方程的对称性。在 Fourier 积分中换元 $Y=s_0-X$ 得（28.104）的第一式，实场的共轭条件给第二式。$a_1=1$ 使 $a$ 系数为实数，$c_1=0$ 使 $c$ 系数为纯虚数，结合（25.115）正好识别为 $x,iy$。同一推导对每个 $k$ 成立，无有限不变 Fourier 支持的前提。
+
+固定平移与空间导数、时间导数、乘积及积分交换，$u(t,X+q),\Pi(t,X+q)$ 满足同一黏性的方程与平移准备。换元 $Y=X+q$ 给（28.105）的字符因子；特别对每个已有 Sobolev 指数 $s$，
+$$
+\|v(\cdot+q)\|_{H^s}^2
+ =\sum_k(1+|k|^2)^s|\chi_k(q)\widehat v(k)|^2
+ =\|v\|_{H^s}^2.
+\tag{28.108}
+$$
+因此定理27.2—27.3的共同时间和范数界保留，实际唯一性识别这条平移解；无需另取随 $q$ 缩短的区间。平移场本身亦满足
+$u^q(t,X)=-u^q(t,s_0-2q-X)$。由 $x(0)=\alpha/2$ 得（28.103），相除时
+$\chi_c(q)/\chi_a(q)=\chi_{c-a}(q)=\chi_b(q)$，而 $2i(iy)/(\alpha/2)=-4y/\alpha$，证明（28.106）。端口的任意独立相位改变不自动是同一空间平移。
+
+Fourier 字符换元与等距性是标准 Fourier 分析；周期 Fourier 正交与 Parseval 的成熟来源见 Stein–Shakarchi, *Fourier Analysis: An Introduction*（Princeton University Press, 2003），第2—3章。原方程局部光滑解的存在、唯一性来源及环面尺度换算已在定理25.4引 Tao 的 *254A, Notes 1: Local well-posedness of the Navier–Stokes equations*，Corollary 40、Proposition 39；本证明使用的是本卷定理25.3所证实际解唯一性。$\square$
+
+**定理 28.3（符号运输与正代表的复射线图）。** 在同一共同时间和黏性下，有全流身份
+$$
+\begin{aligned}
+r_{-\alpha,\beta,\nu}&=r_{\alpha,\beta,\nu},&
+z_{-\alpha,\beta,\nu}&=z_{\alpha,\beta,\nu},\\
+r_{\alpha,-\beta,\nu}&=r_{\alpha,\beta,\nu},&
+z_{\alpha,-\beta,\nu}&=-z_{\alpha,\beta,\nu}.
+\end{aligned}
+\tag{28.109}
+$$
+对 $\beta\ne0$，置
+$$
+\mathcal B=\beta\chi_b(q),\qquad
+m_+=\frac{|\mathcal B|}{\nu}>0,\quad
+k=\frac{a_{\rm cal}^2}{\nu^2},\quad p=(m_+,k),\qquad
+\omega=\frac{\mathcal B}{|\mathcal B|}\in\mathbb S^1.
+\tag{28.110}
+$$
+令 $g_p$ 为上下文卷定理28.2对正代表 $\alpha=a_{\rm cal},\beta=|\mathcal B|$ 给出的真实图。在它的共同初始图区间上，平移复端口图为
+$$
+Z=\mathcal G(R),\qquad \mathcal G(r)=\omega g_p(r).
+\tag{28.111}
+$$
+它继承该卷定理28.2—引理28.4的实变量图正则性及参数余项；在任意固定正紧参数邻域，令 $m_{\min}=\min m_+>0$，可缩小共同 $r_*>0$ 使
+$$
+\partial_rg_p(r)\ge m_{\min}/2,\qquad
+g_p(r)\ge m_{\min}r/2\quad(0\le r\le r_*).
+\tag{28.112}
+$$
+
+证明。平移 $(\pi,\pi)$ 将初态的 $\alpha$ 翻号而保持 $\beta$，且 $a,c$ 字符均为 $-1$。由定理28.2的平移协变与实际唯一性，整条未平移准备解的 $x,y$ 都翻号；归一化的分母 $\alpha$ 同时翻号，所以 $r,z$ 都不变。平移 $(0,\pi)$ 将初态的 $\beta$ 翻号而保持 $\alpha$，$a$ 字符为一、$c$ 字符为负一，故 $x$ 不变、$y$ 翻号，给第二行。两种转换的 $H^{12}$ 半径和时间只依赖幅度平方，因而可用同一共同区间。这还显式补全了上下文卷命题28.6的符号运输在本接口中的用途。
+
+任一符号的准备因此有 $r=r_+$、$z=\operatorname{sign}(\beta)z_+$。定理28.2给 $Z=\chi_b(q)z$，而 $\operatorname{sign}(\beta)\chi_b(q)=\omega$，所以在正代表的初始逆时间上得到（28.111）。共同图域及联合 $C^5$ 是正代表已有的结果；这里不主张平移参数 $q$ 到 $H^{12}$ 值轨迹的联合光滑性。最后 $\partial_rg_p(0)=m_+$，紧性和联合连续性给同一正下界；从 $g_p(0)=0$ 沿实坐标积分给（28.112）。$\square$
+
+**定理 28.4（准备场、四重标签与保留参考的区别）。** 定义28.1的实际准备场恰为
+$$
+u_0^q(X)=\left(
+\operatorname{Re}(\mathcal B e^{ib\cdot X}),\quad
+\operatorname{Re}(2A_0e^{ia\cdot X})+
+\operatorname{Re}(\mathcal B e^{ib\cdot X})\right).
+\tag{28.113}
+$$
+故 $(A_0,\mathcal B,\nu)$ 确定初始场及其共同局部时间上的唯一实际解，任意光滑续解在共同定义域上亦一致。固定 $|\alpha|=a_{\rm cal}$ 且 $\beta\ne0$ 时，同一准备场的标签恰有四个（模环面周期），由
+$$
+T_a(\alpha,\beta,q)=(-\alpha,\beta,q+(\pi,\pi)),\qquad
+T_b(\alpha,\beta,q)=(\alpha,-\beta,q+(0,\pi))
+\tag{28.114}
+$$
+生成。若固定有符号 $\alpha$，则恰剩 $T_b$ 所给两个标签。这是准备场任务的精确冗余，不是任意含准备来源记录的完整观察者的碰撞。
+
+证明。将（28.102）的两个余弦写成实部便得（28.113）。反过来，其 $a$ 模第二分量为 $A_0$，$b$ 模第一分量为 $\mathcal B/2$；不同支持不会混淆，故场相同当且仅当 $A_0,\mathcal B$ 相同。指定黏性后，实际唯一性给所述解；延拓唯一性可在每个共同紧时间段分段重启定理25.3的差估计，不推出新的全局存在性。
+
+$T_a,T_b$ 各保持 $A_0,\mathcal B$，两者交换且平方为环面周期。反之，设另一标签 $(\alpha',\beta',q')$ 有同样两系数。由模相等得 $\alpha'=s_a\alpha,\beta'=s_b\beta$，$s_a,s_b\in\{1,-1\}$，并有
+$$
+\chi_a(q'-q)=s_a,\qquad \chi_b(q'-q)=s_b.
+\tag{28.115}
+$$
+字符映射 $q\mapsto(\chi_a(q),\chi_b(q))$ 在环面上双射：若 $q=(q_1,q_2)$，两字符分别为 $e^{iq_1},e^{i(q_2-q_1)}$，其逆由两角给 $q_1$ 及 $q_2=q_1+(q_2-q_1)$（均模 $2\pi$）。等价地，$a,b$ 构成行列式为一的整数格基。因此两符号唯一决定平移差，正是（28.114）的四种组合。$\alpha\ne0,\beta\ne0$ 使四个标签互异；固定有符号 $\alpha$ 排除两种 $s_a=-1$ 的组合。若准备动作、符号或平移来源已经保留，这些记录可以区分标签，不能由场相同删除它们。
+
+另就只保留归一化历史的缩减接口而言，任意 $s\in\mathbb R$ 的 $q\mapsto q+(s,s)$ 保持 $\chi_b(q)$，同时将 $A^q,C^q,A_0$ 都乘 $e^{is}$，所以 $R,Z$ 的全部读数相同，而 $A_0$ 改变。取 $s\notin2\pi\mathbb Z$ 即改变非零的准备 $a$ 模。由此可见归一化历史本身丢失共同 $a$ 相位；在实际已保留校准 $A_0$ 的完整档案中，这不是同一观察记录。恢复 $\mathcal B,\nu$ 之后仍须连同这个已获参考使用（28.113）。$\alpha$ 符号未给定时，$A_0$ 的相位是实际 $a$ 模的相位，不单独等于 $\chi_a(q)$。$\square$
+
+**定理 28.5（两个准备场的精确距离）。** 对定义28.1中任意两准备，系数分别为 $(A_{0,1},\mathcal B_1)$ 与 $(A_{0,2},\mathcal B_2)$，归一化环面上的实际两分量场满足
+$$
+\|u_{0,1}-u_{0,2}\|_{L^2}^2
+ =2|A_{0,1}-A_{0,2}|^2+|\mathcal B_1-\mathcal B_2|^2.
+\tag{28.116}
+$$
+
+证明。记 $f_a=\operatorname{Re}(2\Delta A_0e^{ia\cdot X})$、$f_b=\operatorname{Re}(\Delta\mathcal B e^{ib\cdot X})$。对任意非零整数频率 $k$ 及复数 $D$，展开实部并积分 $e^{2ik\cdot X}$ 得
+$\|\operatorname{Re}(De^{ik\cdot X})\|_2^2=|D|^2/2$。$a\ne\pm b$ 又使 $\langle f_a,f_b\rangle=0$。场差为 $(f_b,f_a+f_b)$，所以
+$$
+\|(f_b,f_a+f_b)\|_2^2
+ =\|f_a\|_2^2+2\|f_b\|_2^2
+ =2|\Delta A_0|^2+|\Delta\mathcal B|^2.
+$$
+这是标准 Fourier 正交性在该两分量准备中的直接应用，两个分量内重复的 $b$ 模均已计入。此恒等式只比较初始准备场；后续含不同黏性的轨迹扰动界需要另行估计。$\square$
+
+## 28.99 追加锚
