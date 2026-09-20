@@ -125,7 +125,10 @@ dominating_theorem_search: <scope, method, found | not-found-in-searched-scope>
 
 ## Provenance
   skill context
-  carriers and roles: search seat, the orchestrator WITH ITS OWN CARRIER AND MODEL, probe, implementation
+  carriers and roles: search (name the track that surfaced the candidate — the standing ChatGPT-Pro arXiv search
+  rounds or the standing codex-cli journal-corpus rounds; a single-seat search stage is codex-cli under sshx and is
+  not a fallback — writing "codex-cli because a browser seat cannot run in-repository dedupe" read as an undisclosed
+  fallback and was a quality reject, #9066 round 2), the orchestrator WITH ITS OWN CARRIER AND MODEL, probe, implementation
   seat count / carrier count / vendor split — and NO model-family count
   review seat layout, mixing mode and standing, as ONE table of completed rounds:
       | round | head | seat | carrier | decision |

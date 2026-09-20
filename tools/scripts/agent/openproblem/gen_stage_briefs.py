@@ -89,6 +89,8 @@ if nyx:
 The first-published standing table lists the CURRENT round's seats and carriers as a fact: `{nyx} nyxid-oracle /
 ChatGPT Pro, {other} codex-cli, tests codex-cli`, at the delivered head, with a zero tally, `Carried-forward
 approvals: none.` and `Disagreement adjudication: none.` Do not write "not established"; the assignment is this one.
+Do not describe the standing table as empty, and do not say what happens when a round closes: a sentence such as
+"the table above is empty until a round closes" is future tense and was a round-1 architecture reject (#9066).
 
 """
 B=B_head+B_intro+goal+layout+stepsB+env
