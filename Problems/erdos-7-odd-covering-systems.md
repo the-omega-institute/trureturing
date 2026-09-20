@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Literal prime-power residue conflicts bound queries under the actual conditional survivor law, with dependent digits retained](../docs/reports/erdos7-odd-covering/problem-details/24-laminar-prefix-conflicts-under-actual-conditioning.md)
 - [Actual conditional kernels close every five-vertex block and an unbounded large-prime block regime under arbitrary recursive attachments](../docs/reports/erdos7-odd-covering/problem-details/23-conditional-kernels-and-recursive-block-noncoverage.md)
 - [Two shared parent layers give fees for exceptional 3,5,11,13,17 and 3,7,11,13,17 blocks with established block descendants](../docs/reports/erdos7-odd-covering/problem-details/22-two-layer-profiles-for-two-further-five-prime-blocks.md)
 - [A shared first-root profile gives a fee for one exceptional 3,5,7,11,13 block, with arbitrary established block descendants](../docs/reports/erdos7-odd-covering/problem-details/21-coupled-first-root-profiles-and-an-exceptional-five-prime-block.md)
