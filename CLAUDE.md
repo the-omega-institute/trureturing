@@ -319,6 +319,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 **生长自相似,裂由压力。**
 **不预建空壳**;抽象只在第二个实例或已证实的压力出现时才上收(通用证明成立才归 `Metallic/`,跨族定理出现才归 `Moduli/`,桶超限才 split)。目录随首个真实工件出生。
+**数据文件豁免行数检查**:JSON(含 JSONL/NDJSON/JSON5/JSONC)、YAML/YML、TOML、CSV/TSV、XML/TRX、Base64(`.b64`) 均不受 SL-003 文件行数软硬上限约束,扩展名不区分大小写;目录容量仍按既有规则计算。
 *成熟锚*:YAGNI、演化式架构(evolutionary architecture)、比例约束(不把局部事实立成普遍法)。
 〔守护:**半硬**·SL-003 容量阈机器判;「不预建」靠自觉+评审〕
 
