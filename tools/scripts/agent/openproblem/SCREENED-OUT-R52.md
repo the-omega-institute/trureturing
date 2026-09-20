@@ -597,3 +597,9 @@ Question 1.3(3) 指出 `a₁=a₂>0, a₃=a₄>0` 的子情形等价于 **3×3 m
 ①**已有人公布算到某个具体的 `X`**(带出处),我把 `X` 往前推;②**找一个见证**,
 且整条链不出现任何 "sufficiently large"。「化归到有限」「验证面小」「看起来初等」
 一律不算理由;承重论文里出现 `there exists C(α)` 时,**先把 `C(α)` 的量级算出来再决定**。
+
+## C8(2026-09-19):codex 搜题席读 math.CO 2026-01..02 与 cs.DM 2025-07..2026-05——五条正向候选全部排队、六条同文已结算
+
+**C8**(清单 535 篇 + 12 篇 PDF 跟进;5 条候选,全为**正向证明型**,席位独立复算均无反例):Mehiri–Nadji arXiv:2509.12756 Conjecture 2(`α_{2,2k+1} = (k+1)(3k+2)2^{k−1}`,k ≤ 6 核对,0.48)与 Conjecture 3(奇方格 `α_{2k+1,2k+1}` = 大 Schröder 数,k ≤ 3,0.34);Mehiri arXiv:2510.22361 Conjecture 3(奇偶约束四柱汉诺塔 `min{b_n,c_n,d_n} ≥ h⁴_n`,n ≤ 2000 全过、`d_n − h⁴_n` 最小松弛 0,0.40——递推显式,最可能先做);Danai–Ellis–Thanatipanonda arXiv:2602.14325 Conjecture 8.3(二维 transfer 游戏水平周期,参数 ≤ 10 的 3894 组无反例,0.20);Mamede–Santos–Soares arXiv:2601.09395 Conjecture 5.1(单元素交换类数 ∈ {0,1,2,4},S₁₀ 内无 3,0.18)。同文已结算六条(2509.12756 Conj 1 同文 G(4,5) 反驳;2602.19080 证 2-limited broadcast domination 猜想;2602.18632 解 Cho 7.12(1);2602.23122 一证一反;2601.11226 记 Sun 分拆根猜想已证;2601.12427 给最优三元循环码两题反例)不派。
+
+**读数**:正向候选 C5/C7/C8 合计 15 条排队,反驳候选两窗口零条。正向证明型走 `open-problem-resolution(Proved)` 的先例已有(HypercubeInequality 已合;Takemura 猜想 1–2 #8930 在评审),DTR 判词全为 Observe,正向候选不再被登记模板堵住;下一批按 0.48(Mehiri–Nadji Conj 2)与 0.40(Mehiri Conj 3,递推显式)先开。
