@@ -6336,3 +6336,404 @@ $$
 对式（30.33）取 $\Gamma=\lambda^{-1}$。只有另外规定 $\lambda=e^{-\gamma t}$、$\gamma\ge0,t\ge0$，才可写 $\Gamma(t)=e^{\gamma t}$；严格负特征值要求 $\gamma t>0$。式（30.36）是这一指定协议的二阶矩上界，原子范数下界不因此成为一切实验的方差或采样数下界。有符号估计值也不是制备出的有符号物理态。形式记号 $\mathcal D_{-t}$ 在这里仅指该线性逆，不赋予从未来向过去传讯或反向因果推断。
 
 ## 30.99 追加锚
+
+## 31. 全阶合法编码的共同相干记忆、窗口极限与响应运输
+
+本节把同一个禁止长串的关系接口依次用于有限词、相容输出态、可重复使用的活动记忆与指定测量响应。量词始终是：对每个固定有限整数 $k\ge2$，存在一个 $k$ 维记忆与一个固定等距，在所有有限发射长度上共同使用。它没有给无界 $k$ 配置统一有界维数。第30节的实际正域、隐藏消元与有符号恢复保持其原有适用范围；本节不改判既有条目。
+
+来源分工如下。[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)§132.2.1–132.2.3已给后缀自动机、$k$ 阶递推及词增长率；[上下文卷定理9.18](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)已给固定根后缀为零的 Perron 柱律。下称 Q 的[上下文算术量子卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)命题125.1–125.4及§125.5已给 $k=2$ 的完整局部密度、秩、偏迹相容、均匀长词极限、UHF 态／表示边界；命题130.1已给一个固定二维非正交活动记忆、同一等距和受限精确最小容量。本节把这些特定公式接到全 $k$，不把 $k=2$ 共同实现或一般态延拓当作首次结果。Q126.2的支撑事件方法、Q131.1的非选择记忆混合、Q135.1–136.1的内部全加选择分支分别在下文按各自观测对象使用。[上下文卷§36](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)负责完成接口和完整已获观察者，本节只承担一次定量证明。
+
+### 31.1 固定根律与全部有限时域的一个记忆
+
+**定义 31.1（合法词及指定相干准备）。** 固定 $k\in\mathbb N$、$k\ge2$，记 $\mathcal W_n^{(k)}$ 为长度 $n$ 且不含 $1^k$ 的二元词，$\mathcal W_0^{(k)}=\{\varnothing\}$。合法词 $w$ 的后缀连续一数为 $i(w)$，$i(\varnothing)=0$。取主卷§132.2的唯一根 $\lambda=\lambda_k\in(1,2)$，并置
+$$
+\sum_{j=1}^k\lambda^{-j}=1,\qquad
+r_i=\sum_{j=1}^{k-i}\lambda^{-j}\ (0\le i<k),\qquad r_k=0,
+\qquad d_t=r_t-r_{t+1}=\lambda^{t-k}\ (0\le t<k).
+\tag{31.1}
+$$
+直接移项与等比和给
+$$
+r_0=1,\qquad \lambda r_i=1+r_{i+1},\qquad
+r_{k-1}=\lambda^{-1},\qquad
+\sum_{t=0}^{k-1}\lambda^t=\lambda^k,\qquad
+\epsilon:=2-\lambda=\lambda^{-k}>0.
+\tag{31.2}
+$$
+其中递推包括 $i=k-1$。上下文卷定理9.18的根柱律是
+$$
+\mu_k[w]=\begin{cases}\lambda^{-|w|}r_{i(w)},&w\text{ 合法},\\0,&w\text{ 非法}.\end{cases}
+\tag{31.3}
+$$
+该记号指从后缀零开始的柱概率，不声称对位置删除平稳。
+
+取 $M=\mathbb C^k$ 及正交基 $e_0,\ldots,e_{k-1}$，输出 $B=\mathbb C^2$ 取指定计算基 $|0\rangle,|1\rangle$；全输出空间为 $H_n=B^{\otimes n}$、$H_0=\mathbb C$。复 Hilbert 空间、张量接口、正实振幅及相位约定、Born 迹规则均为额外准备结构，不由合法词集合或完成化推出。只在当前任务未访问最终活动记忆时对该记忆取偏迹；已取得档案的保留由上下文卷§36规定。
+
+**定理 31.2（一个全时域等距与单 Kraus 符号仪器）。** 在定义31.1下，令
+$$
+m_i=r_i^{-1/2}\sum_{t=i}^{k-1}\sqrt{d_t}\,e_t,\qquad
+K_0=|m_0\rangle\langle e_{k-1}|,\qquad
+K_1=\sum_{t=0}^{k-2}|e_{t+1}\rangle\langle e_t|,\qquad
+W=|0\rangle\otimes K_0+|1\rangle\otimes K_1.
+\tag{31.4}
+$$
+这些 $m_i$ 为线性独立的单位向量，且
+$$
+\langle m_i,m_j\rangle=\frac{r_{\max(i,j)}}{\sqrt{r_ir_j}},\qquad
+W^*W=I_M,\qquad K_0^*K_0+K_1^*K_1=I_M.
+\tag{31.5}
+$$
+它们的转移为
+$$
+K_0m_i=\frac{m_0}{\sqrt{\lambda r_i}},\qquad
+K_1m_i=\sqrt{\frac{r_{i+1}}{\lambda r_i}}m_{i+1}\ (i<k-1),\qquad K_1m_{k-1}=0.
+\tag{31.6}
+$$
+因此同一个 $W:M\to B\otimes M$ 可在每一步作用于同一个继续保留的记忆；$\mathcal I_a(X)=K_aXK_a^*$ 是每个符号一个 Kraus 算子的合法仪器。
+
+证明。$\sum_{t=i}^{k-1}d_t=r_i$ 望远镜相消，给归一化及式（31.5）的重叠；列向量 $m_i$ 的系数矩阵为三角形，对角元 $\sqrt{d_i/r_i}>0$，所以独立。$K_0^*K_0=|e_{k-1}\rangle\langle e_{k-1}|$，而 $K_1^*K_1=\sum_{t<k-1}|e_t\rangle\langle e_t|$；输出基正交，故 $W^*W$ 恰为其和。$m_i$ 的最后坐标为 $\sqrt{d_{k-1}/r_i}=(\lambda r_i)^{-1/2}$，给零分支。对一分支，把指标 $s=t+1$，利用 $d_{s-1}=d_s/\lambda$，得到
+$$
+K_1m_i=\frac1{\sqrt{\lambda r_i}}\sum_{s=i+1}^{k-1}\sqrt{d_s}\,e_s;
+\tag{31.7}
+$$
+当 $i=k-1$ 和为空，其余即式（31.6）。每一分支完全正，其和保迹，故为仪器。
+
+若以新鲜且与既有联合系统独立的纯空白 $|0\rangle_B$ 实现，则空白子空间的嵌入与 $W$ 具有相同 Gram 矩阵。现有 [GramUnitaryExtension.exists_unitary_mul_eq_of_conjTranspose_mul_eq](../../../D5/S3/Quantum/Algebra/GramUnitaryExtension.lean)及[SequentialRegisterCircuit.rectangular_unitary](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)提供幺正延拓；具体地把两份 $k$ 个正交列各补成 $2k$ 维正交基即可得到同一个 $U_k$，满足 $U_k(|0\rangle\otimes\xi)=W\xi$。本节只验证其所需的特殊等距，不重建一般延拓定理。沿此准备不插入重置、隐藏丢弃环境或未记录反馈。$\square$
+
+非正交记忆与连续幺正生成的方法背景见 Binder–Thompson–Gu，*A practical, unitary simulator for non-Markovian complex processes*，[arXiv:1709.02375](https://arxiv.org/abs/1709.02375)。该方法归属与本节特殊系数的直接验证分开。
+
+当 $k=2$，令 $\alpha=\lambda^{-1}$。本节 $m_0=(\alpha,\sqrt\alpha)$、$m_1=e_1$；Q130.1使用 $m_0^Q=(\sqrt\alpha,\alpha)$、$m_1^Q=e_0$。仅交换记忆基的 $Ue_0=e_1,Ue_1=e_0$ 给
+$$
+Um_i=m_i^Q,\qquad T_{\rm Q130}=(I_B\otimes U)WU^*.
+\tag{31.8}
+$$
+两边对张成 $M$ 的 $m_i^Q$ 有同一转移，故等式成立；输出基没有交换。
+
+**命题 31.3（完整输出矩阵、相容方块与精确秩）。** 从 $\Psi_0=m_0$ 开始，令 $\Psi_{n+1}=(I_{H_n}\otimes W)\Psi_n$。对每个 $n\ge0$，
+$$
+\Psi_n=\sum_{w\in\mathcal W_n^{(k)}}\sqrt{\lambda^{-n}r_{i(w)}}\,|w\rangle\otimes m_{i(w)},\qquad
+\rho_{k,n}:=\operatorname{Tr}_M|\Psi_n\rangle\langle\Psi_n|,
+\tag{31.9}
+$$
+$$
+\rho_{k,n}[u,v]=\begin{cases}\lambda^{-n}r_{\max(i(u),i(v))},&u,v\text{ 合法},\\0,&\text{其余},\end{cases}
+\qquad
+\operatorname{Tr}_{B_{n+1}}\rho_{k,n+1}=\rho_{k,n}.
+\tag{31.10}
+$$
+这些矩阵正且迹为一，$\rho_{k,0}=(1)$。取计算基对角得到式（31.3）；取对角与最后符号边缘化／最后 qubit 偏迹交换。再令
+$$
+S_{n,t}=\sum_{\substack{w\in\mathcal W_n^{(k)}\\i(w)\le t}}|w\rangle,\qquad
+\rho_{k,n}=\lambda^{-n}\sum_{t=0}^{k-1}d_t|S_{n,t}\rangle\langle S_{n,t}|,
+\qquad \operatorname{rank}\rho_{k,n}=\min(k,n+1).
+\tag{31.11}
+$$
+
+证明。归纳中附 $0$ 的振幅把 $\sqrt{\lambda^{-n}r_i}$ 乘以 $1/\sqrt{\lambda r_i}$；附 $1$ 时乘以式（31.6）的系数，非法分支为零。这证明全部 $n$ 的同一纯向量展开。偏迹用式（31.5）内积消去分母，得到式（31.10）。等距保持范数，故为密度。
+
+仍在完整 $2^n$ 维空间核对相容性：若 $u,v$ 合法，置 $s=\max(i(u),i(v))$，共同附零项为 $\lambda^{-n-1}$；若 $s<k-1$，共同附一项为 $\lambda^{-n-1}r_{s+1}$；若 $s=k-1$，该项为零，也等于取 $r_k=0$ 的表达式。两项之和由 $1+r_{s+1}=\lambda r_s$ 化成原矩阵元。任一前缀非法时所有延长都非法，偏迹两项及原项均零。取 $u=v$ 就给经典边缘式，所以对角方块逐元交换，包括空前缀。
+
+最后 $r_{\max(i,j)}=\sum_{t\ge\max(i,j)}d_t$ 给式（31.11）的分解。可达后缀恰为 $0,\ldots,h$，$h=\min(k-1,n)$：后缀 $j$ 可由 $0^{n-j}1^j$ 实现。其不交非空词类向量 $T_j=\sum_{i(w)=j}|w\rangle$ 彼此正交，$S_{n,t}=\sum_{j\le\min(t,h)}T_j$。前 $h+1$ 个累积向量三角可逆，其余重复最后一个。因全部 $d_t>0$，正算子之核等于这些向量的共同正交补，故秩为 $h+1$。整个论证没有把合法词子空间误当成可逐位张量分解的空间。$\square$
+
+### 31.2 两个分别限定模型的精确容量
+
+**定理 31.4（完整相干族的纯顺序容量）。** 比较固定活动记忆维数 $D$ 的纯顺序准备：初态纯，每步为等距 $V_j:K\to B\otimes K$，可随步数变化；新空白纯且独立，旧输出不再受作用，所有纯化系统均计入最终 $K$，没有未计入的环境、随机选择器或其它记忆。若它精确产生式（31.10）的全部输出族，则 $D\ge k$；即使只要求长度 $k-1$ 的该完整密度，仍有此下界。定理31.2达到 $D=k$。
+
+证明。任一这种生成器在 $H_n\otimes K$ 上给纯向量。按 $K$ 的正交基展开为 $\sum_{a=1}^D\xi_a\otimes e_a$，其输出偏迹为 $\sum_a|\xi_a\rangle\langle\xi_a|$，秩至多 $D$。取 $n=k-1$，命题31.3给秩 $k$。这就是主卷§132.1.2已有切口秩论证在本密度上的应用，时间依赖的 $V_j$ 不影响它。$\square$
+
+**定理 31.5（仅符号律的固定单 Kraus 容量）。** 另比较有限维 $K$、固定纯初向量 $v$、同一个二结果仪器 $L_0,L_1$，每个符号恰有一个 Kraus 算子，$\sum_aL_a^*L_a=I$。若对所有有限词 $w$ 有 $\|L_{w_n}\cdots L_{w_1}v\|^2=\mu_k[w]$，则 $\dim K\ge k$。这里仅要求经典词律，不要求相干输出；式（31.4）的仪器也达到此界。
+
+证明。词 $1^k$ 不合法，而 $1^{k-1}$ 概率为 $\lambda^{-(k-1)}r_{k-1}>0$，故
+$$
+L_1^kv=0,\qquad L_1^{k-1}v\ne0.
+\tag{31.12}
+$$
+若 $\sum_{j=0}^{k-1}a_jL_1^jv=0$ 非平凡，取最小的 $j_0$ 使 $a_{j_0}\ne0$，作用 $L_1^{k-1-j_0}$。较小指标系数为零，较大指标的幂至少为 $k$ 而消失，留下 $a_{j_0}L_1^{k-1}v=0$，矛盾。因此这 $k$ 个 Krylov 向量独立。$\square$
+
+这两种下界有不同假设：前者允许随时变化的纯顺序等距并要求全相干密度；后者只看符号但固定单 Kraus 仪器。它们均不声称任意多 Kraus 仪器、未计环境或近似生成也有同一下界。$D$ 只计活动记忆，不等于观察者的历史、外部档案和参考总容量。
+
+### 31.3 一步共同重置控制计数与局部极限
+
+**引理 31.6（同一计数引擎的一步振幅收缩）。** 保持固定 $k$。用行表示当前后缀、列表示后继后缀，定义
+$$
+B_{i0}=1\ (0\le i<k),\qquad B_{i,i+1}=1\ (i<k-1),\qquad
+R_r=\operatorname{diag}(r_i),\qquad
+P=\lambda^{-1}R_r^{-1}BR_r,\qquad h_i=r_i^{-1}.
+\tag{31.13}
+$$
+其余 $B$ 元素为零；这里 $B$ 是主卷§132.2.1列输入计数矩阵的转置。$P$ 作用于列函数，平稳概率写成行向量。置
+$$
+u_m=P^mh,\qquad E_m=(\lambda-1)(1-\lambda^{-1})^m,\qquad
+R=\sum_{t=0}^{k-1}\lambda^t r_{k-1-t},\qquad
+\pi_i=\frac{\lambda^{k-1-i}r_i}{R},\qquad \tau=\frac{\lambda^k}{R}.
+\tag{31.14}
+$$
+对所有整数 $m\ge0$，有
+$$
+1\le u_m(i)\le\lambda,\qquad
+\operatorname{osc}(u_m):=\max_i u_m(i)-\min_i u_m(i)\le E_m,\qquad
+\pi P=\pi,\quad \pi h=\tau,\quad
+\|u_m-\tau\mathbf1\|_\infty\le E_m.
+\tag{31.15}
+$$
+从后缀 $i$ 出发的合法长度 $m$ 续词数 $c_m(i)$ 满足
+$$
+c_m=B^m\mathbf1=\lambda^m R_r u_m,\qquad
+|\mathcal W_m^{(k)}|=c_m(0)=\lambda^m u_m(0).
+\tag{31.16}
+$$
+
+证明。$Br=\lambda r$ 使 $P$ 行随机，且 $P_{i0}=1/(\lambda r_i)\ge1/\lambda$。设 $a=1/\lambda$、$q=1-a\in(0,1/2)$，逐行减去公共质量后得到非负行随机矩阵 $Q$，使
+$$
+P=a\mathbf1e_0^{\mathsf T}+qQ.
+\tag{31.17}
+$$
+对任何实列函数 $g$，$Qg$ 每个坐标都在 $[\min g,\max g]$ 内，而第一项所有坐标相同，故 $\operatorname{osc}(Pg)\le q\operatorname{osc}(g)$。$h$ 的极值为 $1,\lambda$，随机平均保持此区间；迭代得式（31.15）的前两项。这只是所写矩阵的显式共同重置估计，不宣称任何范数上的通用收缩。
+
+$\pi_i>0$ 且重排求和给 $\sum_i\pi_i=1$。对 $j\ge1$ 仅 $i=j-1$ 贡献，故
+$$
+(\pi P)_j=\frac{\lambda^{k-j}r_{j-1}}R\frac{r_j}{\lambda r_{j-1}}=\pi_j,
+\qquad
+(\pi P)_0=\frac1{\lambda R}\sum_{i=0}^{k-1}\lambda^{k-1-i}
+=\frac{\lambda^{k-1}}R=\pi_0.
+\tag{31.18}
+$$
+又 $\pi h=R^{-1}\sum_i\lambda^{k-1-i}=\tau$，所以 $\pi u_m=\tau$。正权平均 $\tau$ 位于 $u_m$ 的最小、最大值间，故每个坐标距 $\tau$ 不超过 $E_m$。特别地 $1<\tau<\lambda$，且 $u_m\to\tau\mathbf1$。这里 $\pi$ 仅用于识别计数极限常数，不把根初态换成平稳态。
+
+空续词给 $c_0=\mathbf1$；附零重置、附一推进的分类给 $c_{m+1}=Bc_m$。相似式 $B=\lambda R_rPR_r^{-1}$ 遂给式（31.16）。全部 $c_m(i)$ 是正整数。此式既复核已有增长指数 $\log\lambda$，也给比仅知道增长率更强的向量归一化。$\square$
+
+**命题 31.7（均匀长词的固定窗口及其显式误差）。** 对任意 $n,m\ge0$，在完整 $H_{n+m}$ 中准备正等振幅纯态
+$$
+|\Omega_{n+m}\rangle=c_{n+m}(0)^{-1/2}\sum_{w\in\mathcal W_{n+m}^{(k)}}|w\rangle,
+\qquad \sigma_{n,m}=\operatorname{Tr}_{\text{末 }m\text{ 位}}|\Omega_{n+m}\rangle\langle\Omega_{n+m}|.
+\tag{31.19}
+$$
+对合法 $u,v\in\mathcal W_n^{(k)}$，$s=\max(i(u),i(v))$，有
+$$
+\sigma_{n,m}[u,v]=\frac{c_m(s)}{c_{n+m}(0)}
+=\lambda^{-n}r_s\frac{u_m(s)}{u_{m+n}(0)},\qquad
+|\sigma_{n,m}[u,v]-\rho_{k,n}[u,v]|\le\lambda^{-n}r_sE_m.
+\tag{31.20}
+$$
+非法行列全零。对完整空间的迹范数，
+$$
+\|\sigma_{n,m}-\rho_{k,n}\|_1\le2^{3n/2}\lambda^{-n}E_m.
+\tag{31.21}
+$$
+因此固定 $k,n$ 时 $m\to\infty$ 给迹范数收敛；$n=0$ 的实际误差恰为零。
+
+证明。偏迹共同尾词 $z$ 的贡献是 $uz,vz$ 同时合法。起始后缀越大，直到第一个附加零之前的约束越严格；该零之后两路径都处于后缀零。因此续词集合随后缀指标嵌套，共同集合正好是从 $s$ 出发的集合，数量为 $c_m(s)$。非法前缀无合法续词，得到第一式。式（31.16）给第二式。又 $u_{m+n}=P^nu_m$，所以分母是 $u_m$ 的某个凸平均，落在其坐标范围内且至少为一。于是
+$$
+\left|\frac{u_m(s)}{u_{m+n}(0)}-1\right|
+\le\operatorname{osc}(u_m)\le E_m.
+\tag{31.22}
+$$
+维数 $d=2^n$，各项绝对值至多 $\lambda^{-n}E_m$，故 Hilbert–Schmidt 范数至多 $d\lambda^{-n}E_m$；对至多 $d$ 个奇异值作 Cauchy–Schwarz，$\|A\|_1\le\sqrt d\|A\|_{\rm HS}$，得式（31.21）。半迹距离取该界的一半并可截到一。$m=0$ 时每个共同续词数为一，仍给原均匀纯态；$n=0$ 时分子分母相同，密度恒为标量一。这些端点无需极限解释。$\square$
+
+Q125.1已经给 $k=2$ 的同类极限。本命题将定理31.2的重复等距族与均匀长词的固定窗口极限相认；两份有限准备历史和实际获取费用并不因此相同。
+
+### 31.4 短窗口近似与全部窗口的非一致性
+
+**定理 31.8（全阶短窗口闭式及常数界）。** 定义 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$、$p_n=|+\rangle\langle+|^{\otimes n}$，并以 $D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$ 记半迹距离。对 $0\le n<k$，
+$$
+f_{k,n}:=\operatorname{Tr}(\rho_{k,n}p_n)
+=2-\frac{2(2/\lambda)^n+\epsilon2^{-n}}{4-\lambda},
+\tag{31.23}
+$$
+$$
+D(\rho_{k,n},p_n)\le\sqrt{1-f_{k,n}}
+\le\sqrt{\frac{2n\lambda^{-k}}3}
+\le\sqrt{\frac{4n2^{-k}}3}.
+\tag{31.24}
+$$
+$n=0$ 时 $f_{k,0}=1$、距离零；$n=1$ 时 $1-f_{k,1}=\epsilon/(2\lambda)$。
+
+证明。因为 $n<k$，全部 $2^n$ 个词合法。记 $C_t=\#\{w:i(w)\le t\}$。对 $t<n$，后缀至少为 $t+1$ 的词恰固定末尾 $t+1$ 个一，故
+$$
+C_t=2^n-2^{n-t-1}\ (0\le t<n),\qquad C_t=2^n\ (t\ge n).
+\tag{31.25}
+$$
+利用式（31.11）、$d_t=\epsilon\lambda^t$ 和 $\sum_{t\ge n}d_t=r_n$，有
+$$
+\begin{aligned}
+f_{k,n}
+&=2^{-n}\lambda^{-n}\left(\sum_{t=0}^{n-1}d_t C_t^2+r_n4^n\right)\\
+&=(2/\lambda)^n\left[1-\epsilon\sum_{t=0}^{n-1}\left((\lambda/2)^t-\tfrac14(\lambda/4)^t\right)\right].
+\end{aligned}
+\tag{31.26}
+$$
+对两项有限几何和求值：$\epsilon/(1-\lambda/2)=2$、$\epsilon/[4(1-\lambda/4)]=\epsilon/(4-\lambda)$。因此括号为 $-1+2(\lambda/2)^n+\epsilon[1-(\lambda/4)^n]/(4-\lambda)$；再乘 $(2/\lambda)^n$，以 $-(4-\lambda)+\epsilon=-2$ 合并，正是式（31.23）。空和也涵盖 $n=0$。
+
+纯参考的标准保真度／迹距离上界给 $D\le\sqrt{1-f}$。设 $a=2/\lambda$，Bernoulli 不等式给
+$$
+1-f_{k,n}=\frac{2(a^n-1)-\epsilon(1-2^{-n})}{4-\lambda}
+\le\frac{n\epsilon a^n}{4-\lambda},
+\qquad
+a^n-1=a^n\bigl[1-(1-\epsilon/2)^n\bigr]\le a^n n\epsilon/2.
+\tag{31.27}
+$$
+为统一控制常数，置 $b=2^{-k}$、$q=2(1-b)>1$。严格 Bernoulli 与 $kb\le1/2$ 给
+$$
+q^k(2-q)=2(1-b)^k>2(1-kb)\ge1.
+\tag{31.28}
+$$
+对 $F(x)=x^k-\sum_{j=0}^{k-1}x^j$ 有 $(q-1)F(q)=1-q^k(2-q)<0$。函数 $\sum_{j=1}^kx^{-j}$ 在 $x>1$ 严格递减，故唯一过零点满足 $q<\lambda$。对 $n\le k-1$，再次使用 Bernoulli 和 $(k-1)b\le1/4$ 得
+$$
+a^n\le(1-b)^{-(k-1)}\le\frac1{1-(k-1)b}\le\frac43,
+\qquad
+\lambda^{-k}<2^{-k}(1-b)^{-k}\le2\,2^{-k}.
+\tag{31.29}
+$$
+连同 $4-\lambda>2$，式（31.27）给 $1-f\le(2/3)n\lambda^{-k}$，进而得到式（31.24）。$n=0$ 单独取实际零值，$n=1$ 代入闭式即可。$\square$
+
+这里所用纯参考界是 Fuchs–van de Graaf 迹距离不等式的纯态特例（C. A. Fuchs、J. van de Graaf，*Cryptographic distinguishability measures for quantum-mechanical states*，IEEE Trans. Inf. Theory 45（1999），1216–1227，[arXiv:quant-ph/9712042](https://arxiv.org/abs/quant-ph/9712042)）；本节不将其另立为新增通用结果。即使取增长窗口 $n=k-1$，式（31.24）也趋于零，而定理31.4在同一窗口要求精确纯顺序记忆维数 $k$。一维记忆产生乘积态 $p_n$ 已是这个窗口的近似实现；这不是近似容量下界。
+
+**命题 31.9（固定窗口、全时域与完成代数的不同极限）。** 对任意 $n\ge0$，
+$$
+D(\rho_{k,n},p_n)\ge1-\frac{|\mathcal W_n^{(k)}|}{2^n}
+\ge1-(1-2^{-k})^{\lfloor n/k\rfloor}.
+\tag{31.30}
+$$
+故每个固定有限 $k$ 有 $\sup_nD(\rho_{k,n},p_n)=1$，而每个固定有限 $n$ 有 $\lim_{k\to\infty}D(\rho_{k,n},p_n)=0$。在完整 qubit UHF 代数 $\mathcal A=\overline{\bigcup_nM_{2^n}(\mathbb C)}$，嵌入为 $A\mapsto A\otimes I_2$，命题31.3的相容态及乘积态分别记为 $\omega_k,\omega_+$。则
+$$
+\tfrac12\|\omega_k-\omega_+\|_{\mathcal A^*}=1\quad(k\ge2),\qquad
+\omega_k\longrightarrow\omega_+\quad\text{弱星}.
+\tag{31.31}
+$$
+完全计算基退相干的族 $\Delta_n(\rho_{k,n})$ 则对固定 $n$ 趋于 $I_{H_n}/2^n$。
+
+证明。令 $P_{k,n}$ 为合法词张成空间的正交投影。由式（31.10），$\operatorname{Tr}(P_{k,n}\rho_{k,n})=1$，而 $\operatorname{Tr}(P_{k,n}p_n)=|\mathcal W_n^{(k)}|/2^n$。Q126.2已有的支撑事件方法应用于这一二结果测量，给第一界。公平独立二元词的每个不交长度 $k$ 块都必须不是 $1^k$，故合法事件包含于 $\lfloor n/k\rfloor$ 个独立块的避免事件，概率至多式（31.30）右项中的幂。未满一块时该下界为零，包括 $n=0$。令 $n\to\infty$ 给距离趋一；固定 $n$ 的另一极限由定理31.8给出。
+
+态延拓直接使用 Q125.2在完整局部代数上的既有构造：命题31.3提供正、归一、偏迹相容这一组输入，因而给唯一范数一态，无需重建 GNS 理论。范数差至多二。为取到其下确界方向，使用局部范数一自伴算子 $A_n=2P_{k,n}-I$，有
+$$
+(\omega_k-\omega_+)(A_n)=2\left(1-|\mathcal W_n^{(k)}|/2^n\right)\longrightarrow2.
+\tag{31.32}
+$$
+单用投影只能给差一，式（31.32）的因子二不可省略。于是得到泛函范数等式。对任意局部 $A\in M_{2^n}$，迹范数上界使两态差值趋零。给一般 $A\in\mathcal A$，选局部 $A'$ 满足 $\|A-A'\|<\delta$；两态范数均一，故差值至多 $2\delta+|(\omega_k-\omega_+)(A')|$，先令 $k\to\infty$ 再令 $\delta\to0$，得弱星收敛。最后退相干是 CPTP，$\Delta_n(p_n)=I/2^n$，其迹距离不增加，所以退相干局部极限如述。$\square$
+
+式（31.31）是完成代数上态泛函的范数，不是无限全局密度矩阵的迹范数。固定窗口近似、固定 $k$ 的全部窗口可区分性、退相干后的经典极限是三个不同结论。
+
+### 31.5 指定全加分支的全时域响应指数
+
+**定理 31.10（同一计数收缩给出的相干响应）。** 在定理31.2的固定根准备中，保留相干输出，并具有跨输出共同校准、可访问的相位参考以定义 $|+\rangle$。对每个 $n\ge0$，测量全部前 $n$ 个输出为加的联合概率满足
+$$
+V=\frac{K_0+K_1}{\sqrt2},\qquad
+(\langle+|^{\otimes n}\otimes I_M)\Psi_n=V^nm_0,\qquad
+f_{k,n}=\|V^nm_0\|^2.
+\tag{31.33}
+$$
+令 $Je_t=e_{k-1-t}$、$A=JBJ$、$D_\lambda=\operatorname{diag}(\lambda^{t/2})$、$v_t=r_{k-1-t}$、$\ell_t=\lambda^t$。则
+$$
+V=\frac{D_\lambda A D_\lambda^{-1}}{\sqrt{2\lambda}},\qquad
+D_\lambda^{-1}m_0=\lambda^{-k/2}\mathbf1,\qquad
+Av=\lambda v,\quad \ell^{\mathsf T}A=\lambda\ell^{\mathsf T},\quad \ell^{\mathsf T}v=R.
+\tag{31.34}
+$$
+对每个固定有限 $k$，
+$$
+(\lambda/2)^{-n/2}V^nm_0\longrightarrow\frac{\lambda^{k/2}D_\lambda v}{R},\qquad
+f_{k,n}\sim C_k(\lambda/2)^n,\qquad
+C_k=\frac{\lambda^k\sum_{t=0}^{k-1}\lambda^t r_{k-1-t}^2}{R^2}>0.
+\tag{31.35}
+$$
+以 $d_{k,n}=D(\rho_{k,n},p_n)$ 记半迹距离，有
+$$
+\frac{f_{k,n}}2\le1-\sqrt{1-f_{k,n}}\le1-d_{k,n}\le f_{k,n},
+\tag{31.36}
+$$
+$$
+-\lim_{n\to\infty}\frac1n\log f_{k,n}
+=-\lim_{n\to\infty}\frac1n\log(1-d_{k,n})
+=\log2-\log\lambda.
+\tag{31.37}
+$$
+这些是指定准备、指定测量、固定 $k$ 的结论。
+
+证明。每次输出加投影收缩 $W$ 为 $V$，沿同一联合纯向量归纳得式（31.33）；这没有把各步相关结果的概率当成独立乘积。$V=(\langle+|\otimes I)W$ 是收缩，$X\mapsto VXV^*$ 为不增迹 CP 分支，不是非选择 CPTP 记忆通道。
+
+反转坐标后 $A$ 的次对角和最后一列全为一，其余为零。次对角经 $D_\lambda$ 共轭乘 $\sqrt\lambda$，除以 $\sqrt{2\lambda}$ 后为 $1/\sqrt2$；最后一列的第 $t$ 项为 $\lambda^{(t-k)/2}/\sqrt2$，正是 $m_0/\sqrt2$。这逐元证明相似式和初向量式。$Av$ 首行是 $1=\lambda r_{k-1}$，其它行使用 $1+r_{k-t}=\lambda r_{k-1-t}$；左特征向量在前 $k-1$ 列用 $\ell_{j+1}=\lambda\ell_j$，最后一列用 $\sum_t\lambda^t=\lambda^k$。这也核对了 $R$，但不另调用一次 Perron 极限定理。
+
+由 $A^n\mathbf1=JB^n\mathbf1$ 与式（31.16），得到精确缩放恒等式
+$$
+(\lambda/2)^{-n/2}V^nm_0
+=\lambda^{-k/2}D_\lambda\operatorname{diag}(v)J u_n.
+\tag{31.38}
+$$
+右端第 $t$ 坐标使用 $u_n(k-1-t)$，矩阵方向因而明确。引理31.6已经给 $u_n\to(\lambda^k/R)\mathbf1$，代入并取范数平方得到式（31.35）。这条极限使用同一计数收缩，没有把 $P$ 认成量子非选择通道。$m_0$ 各坐标为正，$V$ 非负且无零行，故 $V^nm_0$ 各坐标为正，$f_{k,n}>0$，对数合法；正极限系数及 $\lambda/2<1$ 给第一个指数。
+
+纯参考效果 $p_n$ 给 $d_{k,n}\ge1-f_{k,n}$，定理31.8所用的纯参考上界给 $d_{k,n}\le\sqrt{1-f_{k,n}}$。因
+$$
+1-\sqrt{1-f}=\frac{f}{1+\sqrt{1-f}}\ge f/2\quad(0\le f\le1),
+\tag{31.39}
+$$
+得到式（31.36）。$1-d_{k,n}$ 介于 $f_{k,n}/2$ 与 $f_{k,n}$，取负对数除以 $n$，差至多 $(\log2)/n$，给第二个指数。$n=0$ 的 $f=1,d=0$ 与全部有限式相容。$\square$
+
+两个交叉核对有确定含义。首先 $k=2$ 时 $R=\lambda+\lambda^{-1}=\sqrt5$、$\sum_{t=0}^1\lambda^tr_{1-t}^2=\lambda^{-2}+\lambda=2$，故
+$$
+C_2=2\lambda^2/5=(3+\sqrt5)/5.
+\tag{31.40}
+$$
+其次主卷§132.2.3的语言增长熵是 $\log\lambda$，完整二元语言的为 $\log2$，故式（31.37）是每次发射的语言增长熵差。主卷定理20.5、20.7、20.9已严格区分 Zeckendorf 后继的 Sturmian 行程复杂度、行程共轭和位置移位的熵；这里不能把词增长指数替换为任意后继动力学的熵，更不能解释为热力学熵产生或统一物理钟率。
+
+Q135.1已在 $k=2$ 的另一实验得到 $p_g=\alpha(\lambda/2)^g(1+\alpha^{4g+4})$：它保留左右端点、选择中间 $g$ 个输出全加，并额外选择最终记忆的计算基结果零。Q136.1取消最终记忆选择而仍保留两端点。本节事件是整个根前缀全加、最终记忆未读；其全 $k$ 系数 $C_k$ 属于这个事件，$\lambda/2$ 的 $k=2$ 衰减基地已有上述来源。Q131.1考察的是 $\mathcal M(X)=\sum_aK_aXK_a^*$ 的非选择记忆混合，不能以其速率代换 $V$ 的选择概率。式（31.35）没有给 $1-d_{k,n}$ 的精确前因子，也不以未声明的统一余项交换 $k,n$ 两个极限。
+
+相位和记录是可检验的必要区别。完全计算基退相干后，$p_n$ 的每个对角元为 $2^{-n}$，所以
+$$
+\operatorname{Tr}(\Delta_n(\rho_{k,n})p_n)=2^{-n}.
+\tag{31.41}
+$$
+它保留完全相同的计算基词律，却改变响应指数。即使不退相干，只对一位施加相位翻转 $Z$，$\rho_{k,1}$ 的非对角元 $r_1/\lambda=(\lambda-1)/\lambda$ 变号，词概率不变而全加概率从 $1/2+(\lambda-1)/\lambda$ 变成 $1/2-(\lambda-1)/\lambda$。因此相同的经典关系及其概率还不足以决定相干响应。记录重叠与退相干的既有来源是 [EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping](../../../D5/S3/Quantum/EnvironmentRecords.lean)和[量子实在卷定理222.1–222.2](QUANTUM-REALITY.md)；后一卷不是这里缩写 Q 的卷。
+
+### 31.6 连续保律换码与有界公平位的障碍
+
+**命题 31.11（根柱律的域障碍）。** 令 $X_j$ 为禁止 $1^j$ 的单侧无限二元序列空间，取前缀乘积拓扑和式（31.3）的根 Borel 概率 $\mu_j$。对有限 $k,l\ge2$，若存在总定义、连续、确定映射 $F:X_l\to X_k$，且 $F_*\mu_l=\mu_k$，则
+$$
+\lambda_k^{-1}\in\mathbb Q(\lambda_l).
+\tag{31.42}
+$$
+特别地，$k=2,l=3$ 与 $k=3,l=2$ 两个方向均不存在这样的保律映射。
+
+证明。$X_l$ 是紧二元乘积空间中禁止有限模式所定义的闭集。任意开闭集 $E$ 中每一点有包含于 $E$ 的合法前缀柱；紧性取有限子覆盖，再把这些柱细化到同一最大深度 $N$，得到不交同深度柱的有限并。因此 $\mu_l(E)$ 为有限个 $\lambda_l^{-N}r_i^{(l)}$ 之和，属于 $\mathbb Q(\lambda_l)$。目标首位零柱的概率恰为 $1/\lambda_k$，它的连续原像开闭，给必要条件。
+
+二次多项式 $x^2-x-1$ 及三次多项式 $x^3-x^2-x-1$ 均无有理根（整系数首一多项式的有理根只可能为 $\pm1$，直接代入均非零），故分别不可约，根域次数为二与三。若式（31.42）成立，则 $\lambda_k$ 也在源域内，$\mathbb Q(\lambda_k)$ 为 $\mathbb Q(\lambda_l)$ 的子域。域塔公式要求二整除三或三整除二，均不成立。$\square$
+
+这是必要障碍；域包含本身不是连续保律换码的充分条件，本节也未给全部 $k,l$ 的分类。任意输出律相等只说明这些输出任务相等，不恢复原输入同外部记录之间的实际相关。
+
+**命题 31.12（总连续公平位采样与有界位误差）。** 在公平独立位空间 $\{0,1\}^{\mathbb N_0}$ 的乘积概率下，对任何固定有限 $k\ge2$，不存在总连续确定 $F$ 使输出律为 $\mu_k$。若一个总定义确定协议最多读取 $M\ge0$ 个公平位后给出第一输出位，即使允许依读数选择停时，其第一位分布相对目标的 TV 距离至少为
+$$
+\delta_{k,M}:=\min_{0\le j\le2^M}\left|\lambda_k^{-1}-j2^{-M}\right|>0.
+\tag{31.43}
+$$
+此界对第一边缘本身可达到；不声称它是整条词律的最优误差。
+
+证明。公平乘积空间任意开闭集亦为有限同深度柱的并，质量是二进有理数。$\lambda_k$ 是首一多项式 $x^k-x^{k-1}-\cdots-1$ 的根，常数项为负一，有理根定理仅容 $\pm1$，二者均不在 $(1,2)$，所以 $\lambda_k$ 及其倒数无理。首位零事件的连续原像便不可能有质量 $1/\lambda_k$。
+
+对至多 $M$ 次的自适应停止树，把每条短叶补读至深度 $M$，不改其输出，所有叶成为等概率的 $2^M$ 个位串。确定输出零的叶数是某个整数 $j$；两点分布的 TV 恰为零概率之差的绝对值，故有式（31.43）。反之将任意最近整数 $j$ 个深度 $M$ 叶指定为零，其余为一，即达到第一边缘的该界。$M=0$ 也包括在内。$\square$
+
+条件档案不能从这个计数中消失。设 $C$ 是完整已获经典档案且存在实际正则条件核。对档案控制的确定连续映射 $F(c,x)$，只有在几乎每个所讨论的 $c$ 上，真实条件输入律确为所声明 $\mu_l$、条件目标律确为 $\mu_k$，才可逐纤维应用命题31.11。若存在别的条件目标，则应计算该目标柱质量，而不是代入无条件根律。对公平位协议，要数的位必须在给定整份 $C=c$ 后仍为独立公平位；若第一目标零概率为 $p_c$，式（31.43）替换为 $\min_j|p_c-j2^{-M}|$。可用随机档案须作为资源计入，或如此条件化，不能免费插入一个未计数的随机选择器。
+
+这些条件界可在共同 $C$ 边缘下控制保留 $C$ 的联合任务，却不能自动给无条件第一边缘的 TV 下界：例如 $C$ 公平，目标在每个 $c$ 上要求公平位，实际协议不读取新位而输出 $C$。每个条件纤维的 TV 为 $1/2$，无条件输出却恰公平，TV 为零。混合时的正负偏差可以抵消。补齐树要求过程总定义、无条件输出，不能对未记录的成功事件后选择后仍宣称概率为 $j/2^M$；成功、失败和停止记录必须保留。
+
+**命题 31.13（可测的逐前缀采样不提供统一位界）。** 若允许可测映射、可变且无统一上界的读位数，并提供精确阈值的可比较计算，则公平位可产生律 $\mu_k$，每个指定有限输出前缀所需位数几乎必然有限。这不构成命题31.12所禁止的总连续采样器。
+
+证明。公平位给 $U=\sum_{j\ge0}b_j2^{-j-1}$，在 $[0,1]$ 上均匀；二进双表示和端点是零概率例外。把 $[0,1)$ 依合法前缀分成半开区间 $I_w$，其长度为 $\mu_k[w]$；从 $I_w$ 依式（31.3）的两个续词质量分割成 $I_{w0},I_{w1}$，零质量分支省去。柱相容性保证这种嵌套分割可行。对不落在任一有限层端点的 $U$，每层恰有一个包含它的区间，所选前缀相容，确定一个合法无限串，且每个柱的原像测度恰为其长度。可在端点作任意可测合法赋值而不改输出律。
+
+固定输出长度 $n$，该层端点有限。除这些点外，$U$ 在所属区间内部，有限长输入位所给的二进区间最终完全包含于它。于是可停止并返回该前缀。所有有限层的端点并可数，所以对几乎每个输入，每个有限前缀都能如此取得。实现判定要有阈值的精确比较能力；本模型阈值为代数根的有理式，可用收敛隔离区间在严格分离时认证，而不会因此得到统一的运行时或位预算。若存在统一第一位预算，命题31.12立即矛盾；第一分割阈值无理，其两侧逼近也说明总连续性失败。$\square$
+
+添加随机源的随机核与此可测方案都须计入实际资源。它们只可重现所声明输出分布；若原输入与另一个来源共同相关，单独抽取相同输出律并不继承那份相关。
+
+### 31.7 保数值的 Zeckendorf 到二进完成并非连续
+
+**命题 31.14（奇偶子序列阻止保值延拓）。** 取主卷定义20.1的 $G_0=1,G_1=2,G_{j+2}=G_{j+1}+G_j$。在有限支持且无相邻一的二元串上定义整数值 $N(x)=\sum_jG_jx_j$，再自然视为 $\mathbb Z_2$ 元素。该映射不能连续延拓至前缀拓扑下的全部 $X_2$。
+
+证明。递推模二给周期 $1,0,1$，因为连续对 $(G_3,G_4)\equiv(1,0)$ 回到初始对，归纳得 $G_{3m}$ 恒奇。令 $x^{(m)}$ 仅在位置 $3m$ 为一，其余为零。每个 $x^{(m)}$ 合法且有限支持，$x^{(m)}\to0$ 于前缀拓扑，但 $N(x^{(m)})=G_{3m}$ 始终模二为一，不能在 $\mathbb Z_2$ 中趋于零。连续延拓在零串必须等于原有限值零，遂矛盾。$\square$
+
+这里被否定的是带指定 Fibonacci 权重的保数值延拓。普通二元位空间用 $\sum_j2^jx_j$ 到 $\mathbb Z_2$ 的数字同胚是另一映射；换权重、换拓扑与保留原整数值不可混为同一运输任务。
+
+### 31.8 适用边界与后续接口
+
+本节是已有源卷之间的普通数学综合及全 $k$ 特殊模型推导。Perron–Frobenius、Gram／幺正延拓、有限纯态秩与迹距离工具均归既有来源；本文没有主张新 Lean 结果或经文献排重的原创性。保留的三个极限分别是：固定 $k,n$ 的弃尾长度 $m\to\infty$；固定有限 $k$ 的全加窗口 $n\to\infty$；固定窗口或定理31.8明确的增长窗口下 $k\to\infty$。其准备、访问范围及误差合同分别由上下文卷§36接回完整观察者。
+
+这里的有限合法关系、概率赋值、相干 Gram 数据、实验端口和算术数值运输是有明确箭头的不同结构。完成化不指定 Born 规则；递归索引不自动成为物理时间；全时域响应不推导物理波律、统一时钟或熵增律。抽象精确等距不保证某个未指定硬件门集的有限精确综合；符号计算、精确振幅、随机位、相位校准、活动记忆、保留输出及档案各占独立资源坐标。更一般的保律换码分类、带实际参考的近似记忆最优界和具体门集实现仍需额外条件与证明；本节的精确下界及有限窗口上界不替代这些问题。
+
+## 31.99 追加锚
