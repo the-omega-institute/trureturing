@@ -1,72 +1,46 @@
+/- GID: D5/S1/Digit/AyadBouchennaReverseMultipleDivisors
+   generality: G
+   mirror-B: D5/B/S1/Digit/AyadBouchennaReverseMultipleDivisors
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: []
+   utility: none
+   digest: Divisors of B²-1 divide all their reversed multiples, and only they do. -/
+/-
+result:
+  proof_shape: content
+  escape_witness: witness; if n does not divide B^2 - 1, there is a positive
+    multiple m of n whose base-B reverse is not divisible by n.
+  admission_basis: escape-witness
+  Direct frozen dependencies: none (only pinned Mathlib imports).
+Private theorem classifications:
+  sparse_spec: content; induction constructs canonical sparse digit lists and
+    establishes their forward and reverse residues for every list parameter.
+  witness: content; sparse_spec supplies the positive multiple and the reverse
+    residue that contradicts divisibility. It is used in result's forward direction.
+  Direct frozen dependencies: none for both private theorems.
+The coprimality argument is a local have inside witness, not a separate theorem.
+The definitions and all three theorems are unbounded symbolic mathematics;
+none is a bounded enumeration, checker, numeric reduction or certified instance.
+-/
+
 import Mathlib.Data.Nat.Digits.Lemmas
 import Mathlib.Data.ZMod.Basic
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
 
-namespace AyadProbe
+namespace D5.S1.Digit.AyadBouchennaReverseMultipleDivisors
 
 def reverseBase (B m : ℕ) : ℕ := Nat.ofDigits B (Nat.digits B m).reverse
 
 def HasReverseMultipleProperty (B n : ℕ) : Prop :=
   ∀ m : ℕ, 0 < m → n ∣ m → n ∣ reverseBase B m
 
--- c indexes the positive coefficient c+1 of the preregistered construction.
-def sparseWord (T : ℕ) : ℕ → List ℕ
+private def sparseWord (T : ℕ) : ℕ → List ℕ
   | 0 => [1, 1] ++ List.replicate (T - 2) 0 ++ [1]
   | c + 1 => sparseWord T c ++ List.replicate (T - 1) 0 ++ [1]
 
--- This is one substantive component of the intended witness, not a public API proposal.
-theorem property_coprime {B n : ℕ} (hB : 2 ≤ B) (hn : 0 < n)
-    (hp : HasReverseMultipleProperty B n) : Nat.Coprime n B := by
-  have hb : 1 < B := by omega
-  let p := B ^ n
-  have hnp : n < p := lt_of_lt_of_le (Nat.lt_two_pow_self (n := n))
-    (Nat.pow_le_pow_left hB n)
-  let r := n - p % n
-  have hr : r < p := lt_of_le_of_lt (Nat.sub_le _ _) hnp
-  let L := Nat.digitsAppend B n r ++ [1]
-  have hdigits : Nat.digits B (Nat.ofDigits B L) = L := by
-    apply Nat.digits_ofDigits B hb
-    · intro d hd
-      rcases List.mem_append.mp hd with hd | hd
-      · exact Nat.lt_of_mem_digitsAppend hb n d hd
-      · simp only [List.mem_singleton] at hd
-        omega
-    · intro h
-      simp [L]
-  have hvalue : Nat.ofDigits B L = r + p := by
-    change Nat.ofDigits B (Nat.digitsAppend B n r ++ [1]) = r + p
-    rw [Nat.ofDigits_append, Nat.length_digitsAppend hb n hr, Nat.ofDigits_singleton,
-      mul_one]
-    simp [Nat.digitsAppend, Nat.ofDigits_digits, p]
-  have hdiv : n ∣ Nat.ofDigits B L := by
-    rw [hvalue]
-    refine ⟨p / n + 1, ?_⟩
-    have hmod := Nat.mod_add_div p n
-    have hlt := Nat.mod_lt p hn
-    dsimp [r]
-    rw [Nat.mul_add, Nat.mul_one]
-    omega
-  have hpos : 0 < Nat.ofDigits B L := by rw [hvalue]; omega
-  have hreversed := hp _ hpos hdiv
-  have heq : reverseBase B (Nat.ofDigits B L) =
-      1 + B * Nat.ofDigits B (Nat.digitsAppend B n r).reverse := by
-    simp [reverseBase, hdigits, L, List.reverse_append, Nat.ofDigits]
-  rw [heq] at hreversed
-  have hd : n.gcd B ∣ 1 + B * Nat.ofDigits B (Nat.digitsAppend B n r).reverse :=
-    dvd_trans (Nat.gcd_dvd_left n B) hreversed
-  have hdB : n.gcd B ∣ B * Nat.ofDigits B (Nat.digitsAppend B n r).reverse :=
-    dvd_mul_of_dvd_left (Nat.gcd_dvd_right n B) _
-  have hone : n.gcd B ∣ 1 := by
-    exact (Nat.dvd_add_iff_left hdB).mpr hd
-  exact Nat.dvd_one.mp hone
-
--- The list has actual positive coefficient c+1; no bounded numeral is expanded.
-theorem sparse_spec {B T n : ℕ} (hB : 2 ≤ B) (hT : 2 ≤ T)
+private theorem sparse_spec {B T n : ℕ} (hB : 2 ≤ B) (hT : 2 ≤ T)
     (hperiod : (B : ZMod n) ^ T = 1) (c : ℕ) :
     Nat.digits B (Nat.ofDigits B (sparseWord T c)) = sparseWord T c ∧
     0 < Nat.ofDigits B (sparseWord T c) ∧
@@ -150,8 +124,7 @@ theorem sparse_spec {B T n : ℕ} (hB : 2 ≤ B) (hT : 2 ≤ T)
         linear_combination (B : ZMod n) *
           ((Nat.ofDigits B (sparseWord T c).reverse : ℕ) : ZMod n) * hpred + ih.2
 
--- Exact preregistered witness target, with no proof holes.
-theorem witness {B n : ℕ} (hB : 2 ≤ B) (hn : 0 < n)
+private theorem witness {B n : ℕ} (hB : 2 ≤ B) (hn : 0 < n)
     (hbad : ¬ n ∣ B ^ 2 - 1) :
     ∃ m : ℕ, 0 < m ∧ n ∣ m ∧ ¬ n ∣ reverseBase B m := by
   classical
@@ -160,7 +133,49 @@ theorem witness {B n : ℕ} (hB : 2 ≤ B) (hn : 0 < n)
     intro m hm hnm
     by_contra hnr
     exact hnone ⟨m, hm, hnm, hnr⟩
-  have hcop := property_coprime hB hn hp
+  have hcop : Nat.Coprime n B := by
+    have hb : 1 < B := by omega
+    let p := B ^ n
+    have hnp : n < p := lt_of_lt_of_le (Nat.lt_two_pow_self (n := n))
+      (Nat.pow_le_pow_left hB n)
+    let r := n - p % n
+    have hr : r < p := lt_of_le_of_lt (Nat.sub_le _ _) hnp
+    let L := Nat.digitsAppend B n r ++ [1]
+    have hdigits : Nat.digits B (Nat.ofDigits B L) = L := by
+      apply Nat.digits_ofDigits B hb
+      · intro d hd
+        rcases List.mem_append.mp hd with hd | hd
+        · exact Nat.lt_of_mem_digitsAppend hb n d hd
+        · simp only [List.mem_singleton] at hd
+          omega
+      · intro h
+        simp [L]
+    have hvalue : Nat.ofDigits B L = r + p := by
+      change Nat.ofDigits B (Nat.digitsAppend B n r ++ [1]) = r + p
+      rw [Nat.ofDigits_append, Nat.length_digitsAppend hb n hr, Nat.ofDigits_singleton,
+        mul_one]
+      simp [Nat.digitsAppend, Nat.ofDigits_digits, p]
+    have hdiv : n ∣ Nat.ofDigits B L := by
+      rw [hvalue]
+      refine ⟨p / n + 1, ?_⟩
+      have hmod := Nat.mod_add_div p n
+      have hlt := Nat.mod_lt p hn
+      dsimp [r]
+      rw [Nat.mul_add, Nat.mul_one]
+      omega
+    have hpos : 0 < Nat.ofDigits B L := by rw [hvalue]; omega
+    have hreversed := hp _ hpos hdiv
+    have heq : reverseBase B (Nat.ofDigits B L) =
+        1 + B * Nat.ofDigits B (Nat.digitsAppend B n r).reverse := by
+      simp [reverseBase, hdigits, L, List.reverse_append, Nat.ofDigits]
+    rw [heq] at hreversed
+    have hd : n.gcd B ∣ 1 + B * Nat.ofDigits B (Nat.digitsAppend B n r).reverse :=
+      dvd_trans (Nat.gcd_dvd_left n B) hreversed
+    have hdB : n.gcd B ∣ B * Nat.ofDigits B (Nat.digitsAppend B n r).reverse :=
+      dvd_mul_of_dvd_left (Nat.gcd_dvd_right n B) _
+    have hone : n.gcd B ∣ 1 := by
+      exact (Nat.dvd_add_iff_left hdB).mpr hd
+    exact Nat.dvd_one.mp hone
   let : NeZero n := ⟨by omega⟩
   have hbadmod : (B : ZMod n)^2 ≠ 1 := by
     intro heq
@@ -194,7 +209,6 @@ theorem witness {B n : ℕ} (hB : 2 ≤ B) (hn : 0 < n)
   simp only [Nat.cast_add, Nat.cast_one, hc] at hreverse
   linear_combination hreverse
 
--- The exact externally preregistered theorem, with all quantifiers preserved.
 theorem result : ∀ B : ℕ, 2 ≤ B → ∀ n : ℕ, 0 < n →
     (HasReverseMultipleProperty B n ↔ n ∣ B ^ 2 - 1) := by
   intro B hB n hn
@@ -227,9 +241,5 @@ theorem result : ∀ B : ℕ, 2 ≤ B → ∀ n : ℕ, 0 < n →
     have hBB : (B : ZMod n) * B = 1 := by simpa only [pow_two] using hsq
     simpa only [← mul_assoc, hBB, one_mul, mul_zero, reverseBase] using hmul
 
-#print axioms property_coprime
-#print axioms sparse_spec
-#print axioms witness
-#print axioms result
 
-end AyadProbe
+end D5.S1.Digit.AyadBouchennaReverseMultipleDivisors
