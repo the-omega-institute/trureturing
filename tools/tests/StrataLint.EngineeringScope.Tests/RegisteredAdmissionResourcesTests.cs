@@ -101,7 +101,34 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     {
         var template = "tools/scripts/agent/openproblem/templates/"
             + (mixed ? "judgement-form-check-template.md" : "mirror-check-template.md");
-        var plan = Plan(template, mixed ? RegisteredNoResourceContent : "", mode);
+        AssertJudgeDocumentResources(template, mode, mixed);
+    }
+
+    [Theory]
+    [InlineData("CLAUDE.md", "push")]
+    [InlineData("CLAUDE.md", "pr")]
+    [InlineData("docs/develop/spec/golden-ledger-repo-spec.md", "push")]
+    [InlineData("docs/develop/spec/golden-ledger-repo-spec.md", "pr")]
+    public void PolicyDocumentsRetainAdmissionWithoutEngineering(string document, string mode) =>
+        AssertJudgeDocumentResources(document, mode, mixed: false);
+
+    [Theory]
+    [InlineData("CLAUDE.md")]
+    [InlineData("docs/develop/spec/golden-ledger-repo-spec.md")]
+    public void PolicyDocumentsDoNotExpandRegisteredProductionConsumers(string document)
+    {
+        var plan = Plan("tools/StrataLint.Engine/Rules/CapacityRule.cs", document);
+        var tests = Strings(plan["execution"]!["tests"]!);
+        Assert.Equal(9, tests.Length);
+        Assert.Contains("tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj", tests);
+        Assert.DoesNotContain("tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj", tests);
+        Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+        Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
+    }
+
+    private void AssertJudgeDocumentResources(string document, string mode, bool mixed)
+    {
+        var plan = Plan(document, mixed ? RegisteredNoResourceContent : "", mode);
         Assert.Equal(new[] { "delta-judge", "filemap" }, Strings(plan["declared_require"]!));
         Assert.Empty(plan["execution"]!["tests"]!.AsArray());
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
