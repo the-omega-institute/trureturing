@@ -269,8 +269,13 @@ No source hashes, ownership cache, or freshness/release checks are stored. -/
 def declarationValue (info : DefinitionVal) : MetaM Expr := do
   let env ← getEnv
   -- Locally elaborated declarations already carry the hook, including synthetic
-  -- declarations without source ranges used by the bounded resolver tests.
-  if compiledProvenanceComplete env info then return info.value
+  -- declarations without source ranges used by the bounded resolver tests. Retain
+  -- that evidence when acquisition uses it: after an import, an unannotated local
+  -- forwarding value no longer qualifies through the local-declaration branch.
+  if compiledProvenanceComplete env info then
+    if !env.isImportedConst info.name then
+      modifyEnv fun env => sourceEvidence.addEntry env (info.name, info.value)
+    return info.value
   if let some value := (sourceEvidence.getState env).find? info.name then return value
   let some idx := env.getModuleIdxFor? info.name
     | throwError "IE-C003 ArenaSourceUnavailable declaration={info.name} reason=owner"
