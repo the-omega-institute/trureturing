@@ -453,8 +453,9 @@ The condition is additional arithmetic information; numerical distinctness
 alone is not asserted to imply it.
 
 Choose an exposed head containing \(3,5,7,11,13\), adjoining absent keys as
-free coordinates if needed. Require the **head-only original subfamily**
-to admit an order as in Sections 1--5: it starts \(3,5,7\), and each later
+free coordinates of height \(E_q=1\) if needed. Require the **head-only
+original subfamily** to admit an order as in Sections 1--5: it starts
+\(3,5,7\), and each later
 head prime has at most four earlier neighbours in that subfamily's graph.
 Every coordinate \(\mathbb Z/p^{E_p}\mathbb Z\) resolves its maximum
 height across the **entire** original family, including labels ending
@@ -471,8 +472,10 @@ original classes, and
 Choose a fixed cylinder \(G_i=\{x_{q_i}=a_i\pmod{q_i^{h_i}}\}\) on each
 \(q_i\in(3,5,7,11,13)\), with \(1\le h_i\le E_{q_i}\), and put
 \(G=\bigcap_{i=1}^5G_i\). These residues and depths are fixed for the
-whole family. They are not selected afresh in different fibres. The
-full-history depth-one caps from (RM3), (RM8) and (RM11) are respectively
+whole family. They are not selected afresh in different fibres. The events
+\(G_i\) and \(G\) are pulled back by the natural head projection on every
+later prefix space. The full-history depth-one caps from (RM3), (RM8) and
+(RM11) are respectively
 \(2/3,4/15,3/14,5/33,5/33\). Deeper cylinders obey the same upper bounds;
 a free coordinate obeys its smaller Haar cap. Iterated conditioning in
 the actual head order therefore gives
