@@ -839,3 +839,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Complete prime-chain transport and one common prefix law](profile-notes/arithmetic/376-complete-prime-chain-transport-and-joint-prefix-laws.md)
 - [Ternary shadow covers retain distinct labels but lose original prime arity](profile-notes/arithmetic/377-ternary-shadow-covers-and-original-prime-arity.md)
 - [Saturated prime fibres yield joint caps and a mixed-tail dichotomy](profile-notes/arithmetic/378-saturated-prime-fibres-and-mixed-tail-incidence.md)
+- [Root forests and literal residue costs extend the joint covering bounds](profile-notes/arithmetic/379-root-forest-disintegration-and-residue-costs.md)
