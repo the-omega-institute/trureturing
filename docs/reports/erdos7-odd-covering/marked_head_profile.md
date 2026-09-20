@@ -835,3 +835,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Original ancestor complements, lower ladders and prime support](profile-notes/arithmetic/372-height-two-ancestor-complements-and-prime-support.md)
 - [Original binary first ancestors force a joint cutoff-one cylinder](profile-notes/arithmetic/373-binary-first-ancestors-and-cutoff-one.md)
 - [Extremal prime-coordinate projections and a complete-cover descent](profile-notes/arithmetic/374-extremal-prime-projections-and-cardinality-descent.md)
+- [Deep prime-prefix projections and complete tree contraction](profile-notes/arithmetic/375-deep-prime-prefix-projections-and-tree-contraction.md)

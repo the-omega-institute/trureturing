@@ -313,6 +313,143 @@ def contract_small_projection(classes, q, p, *, selected_roots=None,
                        else 'conditional odd-cover class-count descent'))
 
 
+def contract_prefix_tree(classes, q, p, depth, *, child_preferences=None,
+                         allow_even=False, max_period=200000):
+    """Transport a complete good q-ary subtree of old p-adic prefixes.
+
+    child_preferences maps old lowest-first digit tuples to permutations of
+    range(p); the first q recursively good children in that order are used.
+    It may vary independently at every node. Absence of a good subtree is
+    rejected. Full checks are finite and bounded by max_period; the general
+    proof does not impose a prime-height bound. No minimality is certified.
+    """
+    require(prime(q) and prime(p) and 2 < q < p, 'require odd primes q < p')
+    classes = list(classes)
+    require(classes and all(d > 1 for _, d in classes), 'original moduli must be nonunit')
+    classes = [(a % d, d) for a, d in classes]
+    require(len({d for _, d in classes}) == len(classes), 'original moduli must be distinct')
+    require(allow_even or all(d % 2 for _, d in classes), 'even input forbidden')
+    Q = period(classes)
+    require(Q % q == 0 and Q % p == 0, 'q and p must divide the original period')
+    require(Q <= max_period, 'original complete-period finite-check cap exceeded')
+    H = valuation(Q, p)
+    require(isinstance(depth, int) and 1 <= depth <= H, 'depth outside original p-height')
+    require(all(any(bits(classes, z)) for z in range(Q)),
+            'original input does not cover its complete period')
+    original_indices = [i for i, (_, d) in enumerate(classes) if d % q]
+    qfree = [classes[i] for i in original_indices]
+    B = Q // q**valuation(Q, q)
+    M = B // p**H
+    residual = [z for z in range(B) if not any(bits(qfree, z))]
+    bad_prefixes = {z % p**depth for z in residual}
+    good = [None] * (depth + 1)
+    good[depth] = [a not in bad_prefixes for a in range(p**depth)]
+    for j in range(depth - 1, -1, -1):
+        good[j] = [sum(good[j+1][a+d*p**j] for d in range(p)) >= q
+                   for a in range(p**j)]
+    require(good[0][0], 'no complete good q-ary prefix subtree')
+    preferences = {} if child_preferences is None else child_preferences
+    theta = [{0: 0}] + [{} for _ in range(depth)]
+    node_choices = []
+    for j in range(depth):
+        for new, old in theta[j].items():
+            prefix = tuple((old // p**i) % p for i in range(j))
+            shift = (sum((i+1)*d for i, d in enumerate(prefix)) + j) % p
+            default = list(range(shift, p)) + list(range(shift))
+            order = list(preferences.get(prefix, default))
+            require(len(order) == p and set(order) == set(range(p)),
+                    'child preference is not a digit permutation')
+            chosen = [d for d in order if good[j+1][old+d*p**j]][:q]
+            require(len(chosen) == q, 'chosen prefix lacks q good children')
+            node_choices.append(dict(old_prefix=list(prefix), new_prefix_residue=new,
+                                     depth=j, selected_old_children=chosen))
+            for b, d in enumerate(chosen):
+                theta[j+1][new+b*q**j] = old+d*p**j
+    for j in range(depth + 1):
+        require(len(theta[j]) == q**j and len(set(theta[j].values())) == q**j,
+                'prefix map is not injective on its complete domain')
+        if j:
+            require(all(old % p**(j-1) == theta[j-1][new % q**(j-1)]
+                        for new, old in theta[j].items()), 'prefix maps do not commute')
+    require(set(theta[depth].values()).isdisjoint(bad_prefixes),
+            'selected prefix meets the original residual')
+    inverse = [{old: new for new, old in layer.items()} for layer in theta]
+    output, provenance, original_to_output = [], [], {}
+    for i, (a, d) in enumerate(qfree):
+        alpha = valuation(d, p)
+        r = d // p**alpha
+        if alpha == 0:
+            new_a, new_d, role = a, d, 'unchanged q-free p-free original'
+        elif alpha <= depth:
+            prefix = a % p**alpha
+            if prefix not in inverse[alpha]:
+                continue
+            b = inverse[alpha][prefix]
+            new_a = crt(b, q**alpha, a % r, r)
+            new_d, role = q**alpha*r, 'transported lower-or-equal prefix original'
+        else:
+            prefix = a % p**depth
+            if prefix not in inverse[depth]:
+                continue
+            b = inverse[depth][prefix]
+            tail_modulus = p**(alpha-depth)
+            tail_residue = (a-prefix)//p**depth % tail_modulus
+            new_a = crt(b, q**depth, tail_residue, tail_modulus)
+            new_a = crt(new_a, q**depth*tail_modulus, a % r, r)
+            new_d, role = q**depth*tail_modulus*r, 'transported original with complete higher p-tail'
+        original_to_output[i] = len(output)
+        provenance.append(dict(original=original_indices[i], original_p_exponent=alpha,
+                               original_class=[a, d], output_class=[new_a, new_d], role=role))
+        output.append((new_a, new_d))
+    require(output and len({d for _, d in output}) == len(output),
+            'empty output or repeated output modulus')
+    require(all(d > 1 for _, d in output), 'output contains a unit modulus')
+    require(allow_even or all(d % 2 for _, d in output), 'output is not odd')
+    require(len(output) <= len(qfree) < len(classes), 'no strict class-count descent')
+    carrier = q**depth * p**(H-depth) * M
+    require(carrier <= max_period, 'transport complete-period finite-check cap exceeded')
+    out_period = period(output)
+    require(carrier % out_period == 0, 'output period does not divide transport carrier')
+    # Enumerated CRT coordinate lookup is independent of the output residue
+    # construction's crt calculations. All events use the same old point.
+    source_lookup = {(y % p**H, y % M): y for y in range(B)}
+    require(len(source_lookup) == B, 'source CRT coordinates are not unique')
+    images = set()
+    leaf_images = {b: set() for b in range(q**depth)}
+    for z in range(carrier):
+        b = z % q**depth
+        old_p = theta[depth][b] + p**depth * (z % p**(H-depth))
+        old = source_lookup[(old_p, z % M)]
+        actual, observed = bits(qfree, old), bits(output, z)
+        transported = tuple(observed[original_to_output[i]] if i in original_to_output else False
+                            for i in range(len(qfree)))
+        require(actual == transported and any(actual),
+                'selected prefix subtree loses complete original q-free event vector or coverage')
+        images.add(old)
+        leaf_images[b].add(old)
+    selected = set(theta[depth].values())
+    require(images == {y for y in range(B) if y % p**depth in selected}
+            and len(images) == carrier, 'prefix source map is not bijective onto selected full fibres')
+    for b, points in leaf_images.items():
+        require(len(points) == p**(H-depth)*M
+                and all(y % p**depth == theta[depth][b] for y in points),
+                'prefix conditional source fibre mismatch')
+    require(all(any(bits(output, z)) for z in range(out_period)),
+            'output fails complete-period coverage')
+    return dict(original=classes, original_period=Q, original_count=len(classes), q=q, p=p,
+                depth=depth, original_q_height=valuation(Q, q), original_p_height=H,
+                cofactor_period=B, cofactor_residual=residual,
+                residual_p_prefixes=sorted(bad_prefixes),
+                tree_blocker_threshold=(p-q+1)**depth,
+                qfree_original_count=len(qfree), selected_prefix_maps=theta,
+                node_choices=node_choices, output_count=len(output), output=output,
+                output_period=out_period, provenance=provenance, transport_carrier=carrier,
+                original_event_coordinates_checked=carrier*len(qfree),
+                conditional_source_points_checked=carrier,
+                scope=('even control, not a minimum odd cover' if allow_even
+                       else 'conditional odd-cover prefix-tree class-count descent'))
+
+
 def dyadic_fixture(p, t):
     """An actual cover with distinct EVEN cofactors, s=p-t pure p-roots."""
     require(prime(p) and p % 2 and 1 <= t <= p, 'invalid dyadic fixture parameters')
@@ -330,6 +467,128 @@ def expect_rejection(classes, p, q, reason, **kwargs):
         require(reason in str(exc), f'wrong rejection: {exc}')
         return str(exc)
     raise ValueError('invalid fixture unexpectedly admitted')
+
+
+def prefix_tree_controls(original5040):
+    """Actual whole covers exercising variable prefixes and all height cases."""
+    seed = original5040 + [(11, 25), (36, 125), (186, 625), (2, 200), (92, 1000)]
+    preferences = {(): [0, 1, 2, 3, 4], (0,): [0, 1, 3, 2, 4],
+                   (1,): [2, 0, 4, 1, 3], (2,): [0, 3, 1, 2, 4],
+                   (1, 2): [1, 2, 4, 0, 3], (2, 3): [3, 1, 4, 0, 2]}
+    rows = []
+    for depth in (1, 2, 3, 4):
+        item = contract_prefix_tree(seed, 3, 5, depth, child_preferences=preferences,
+                                    allow_even=True, max_period=1000000)
+        live = {r['original_p_exponent'] for r in item['provenance']}
+        choices = {tuple(sorted(r['selected_old_children']))
+                   for r in item['node_choices'] if r['depth'] > 0}
+        if depth in (2, 3):
+            require(any(0 < a < depth for a in live) and depth in live
+                    and any(a > depth for a in live), 'missing live positive-height case')
+            require(len(choices) > 1, 'nonroot child sets do not vary')
+        if depth == 1:
+            legacy = contract_small_projection(seed, 3, 5, selected_roots=[0, 1, 2],
+                                               allow_even=True, max_period=1000000)
+            require(item['output'] == legacy['output'], 'depth-one constructor disagreement')
+        if depth == 4:
+            require(all(d % 5 for _, d in item['output']), 'full-depth transport retained p')
+        row = {key: item[key] for key in
+               ('depth', 'original_count', 'qfree_original_count', 'output_count',
+                'original_period', 'original_p_height', 'output_period', 'transport_carrier',
+                'original_event_coordinates_checked', 'conditional_source_points_checked')}
+        row.update(bad_prefix_count=len(item['residual_p_prefixes']),
+                   tree_blocker_threshold=item['tree_blocker_threshold'],
+                   different_nonroot_child_sets=len(choices),
+                   retained_positive_p_exponents=sorted(live - {0}))
+        rows.append(row)
+    rejections = []
+    bad_inputs = [
+        (seed, 0, dict(allow_even=True, max_period=1000000), 'depth outside'),
+        (seed, 5, dict(allow_even=True, max_period=1000000), 'depth outside'),
+        (seed, 2, dict(max_period=1000000), 'even input forbidden'),
+        (seed, 2, dict(allow_even=True, max_period=1000000,
+                      child_preferences={(): [0, 0, 1, 2, 3]}), 'not a digit permutation'),
+        ([(0, 2), (0, 3), (1, 4), (5, 6), (7, 12), (0, 25)], 2,
+         dict(allow_even=True), 'no complete good q-ary'),
+    ]
+    for bad_seed, depth, options, expected in bad_inputs:
+        try:
+            contract_prefix_tree(bad_seed, 3, 5, depth, **options)
+        except ValueError as exc:
+            require(expected in str(exc), 'wrong prefix-tree rejection: '+str(exc))
+            rejections.append(str(exc))
+        else:
+            raise ValueError('invalid prefix-tree input unexpectedly admitted')
+    return dict(controls=rows, rejections=rejections,
+                event_coordinates_checked=sum(r['original_event_coordinates_checked'] for r in rows),
+                source_points_checked=sum(r['conditional_source_points_checked'] for r in rows),
+                scope='Even controls; no minimum odd cover or whole original Haar transport')
+
+
+def cross_joint_probability_control():
+    """Actual irredundant EVEN whole cover; two separate laws have no common law.
+
+    This checks the projection-to-common-law nonimplication on original APs.
+    It does not certify global cardinality minimality or an odd counterexample.
+    """
+    classes = [
+        (0, 2), (1, 4), (3, 8), (7, 16), (15, 32), (31, 64), (63, 128),
+        (3, 5), (9, 10), (5, 7), (13, 14),
+        (1, 35), (51, 70), (31, 140), (151, 280),
+        (127, 560), (1087, 1120), (2047, 2240), (767, 4480),
+        (0, 3), (895, 1920), (511, 2688), (575, 960), (959, 1344),
+    ]
+    Q = period(classes)
+    require(Q == 13440 and len(classes) == 24, 'cross control size/period')
+    require(len({d for _, d in classes}) == len(classes), 'cross repeated modulus')
+    require(all(d > 1 for _, d in classes) and any(d % 2 == 0 for _, d in classes),
+            'cross control must be explicitly even and nonunit')
+    private = [None]*len(classes)
+    for x in range(Q):
+        vector = bits(classes, x)
+        require(any(vector), 'cross control does not cover its whole period')
+        if sum(vector) == 1:
+            j = vector.index(True)
+            if private[j] is None:
+                private[j] = x
+    require(all(x is not None for x in private), 'cross control is redundant')
+    B = Q//3**valuation(Q, 3)
+    q_free = [(a, d) for a, d in classes if d % 3]
+    residual = [x for x in range(B) if not any(bits(q_free, x))]
+    expected = [255, 511, 1407, 1535, 2815, 3455, 4095]
+    require(B == 4480 and residual == expected, 'cross actual residual changed')
+    graph = {(x % 5, x % 7) for x in residual}
+    cross = {(0, y) for y in range(5)} | {(1, 0), (2, 0)}
+    require(graph == cross and all(x % 128 == 127 for x in residual),
+            'cross joint source was not retained')
+    require(valuation(Q, 5) == valuation(Q, 7) == 1,
+            'cross has only depth-one large-prime coordinates')
+    require(len({x % 5 for x in residual}) == 5-3+1
+            and len({x % 7 for x in residual}) == 7-3+1,
+            'cross does not meet both ternary deep bounds')
+    # Exhibit the two individually valid actual-source laws.
+    individual = {}
+    for p in (5, 7):
+        r0 = p-3+1
+        roots = sorted({x % p for x in residual})
+        witnesses = [next(x for x in residual if x % p == c) for c in roots]
+        require(len(witnesses) == r0, 'cross individual law count')
+        for c in range(p):
+            cylinder_mass = F(sum(x % p == c for x in witnesses), r0)
+            require(cylinder_mass <= F(1, r0), 'cross individual cylinder cap')
+        individual[p] = dict(witnesses=witnesses, equal_atom_mass=str(F(1, r0)))
+    # A common probability would give 1 <= nu(x5=0)+nu(x7=0) <= 8/15.
+    require(all(x % 5 == 0 or x % 7 == 0 for x in residual), 'cross cut support')
+    cut_capacity = F(1, 3)+F(1, 5)
+    require(cut_capacity < 1, 'cross does not separate the law quantifiers')
+    return dict(
+        classes=classes, period=Q, cofactor_period=B, private_witnesses=private,
+        actual_R3=residual, joint_5_7_projection=sorted(graph),
+        prime_heights={5: 1, 7: 1}, projection_sizes={5: 3, 7: 5},
+        individual_supported_laws=individual,
+        common_law_cut_capacity=str(cut_capacity), deficit=str(1-cut_capacity),
+        scope='Actual distinct irredundant even whole cover; no odd or globally minimum claim',
+    )
 
 
 def main():
@@ -435,6 +694,8 @@ def main():
                            for item in contractions]
     print(json.dumps(dict(success=True, fixtures=summary, rejection_count=len(rejections),
                           rejections=rejections,
+                          prefix_tree_contractions=prefix_tree_controls(original5040),
+                          cross_joint_probability=cross_joint_probability_control(),
                           projection_contractions=contraction_summary,
                           contraction_rejections=contraction_rejections,
                           contraction_event_coordinates_checked=sum(
