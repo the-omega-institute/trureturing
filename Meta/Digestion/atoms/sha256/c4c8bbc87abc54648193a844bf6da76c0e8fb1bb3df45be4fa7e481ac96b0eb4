@@ -1,0 +1,25 @@
+**定理 14.7（合法割上的反演与增量）。** 在任意联合律下，
+$$
+P_I=\sum_{\substack{J\in\mathcal J(E)\\J\subseteq I}}K_J,
+\qquad
+K_J=\sum_{R\subseteq\operatorname{Max}(J)}(-1)^{|R|}P_{J\setminus R}.
+\tag{14.13}
+$$
+后式的每个 $J\setminus R$ 都是合法割。对合法 $I\subseteq I'$，
+$$
+P_{I'}-P_I
+=\sum_{\substack{J\in\mathcal J(E)\\J\subseteq I',\ J\nsubseteq I}}K_J.
+\tag{14.14}
+$$
+在假设14.4下，各 $K_J$ 是两两正交的自伴投影，$P_E=\sum_JK_J$；它们与 $Q$ 正交。
+
+**证明。** 因 $I$ 为理想，$S\subseteq I$ 当且仅当 $\downarrow S\subseteq I$。按此下闭包分组式（14.4），得到第一式；相减得到式（14.14）。
+
+从理想中只删除极大元仍为理想：若 $x\in J\setminus R$ 且 $y\le x$，则 $y\in J$；若 $y\in R$，其极大性迫使 $y=x$，与 $x\notin R$ 矛盾。把式（14.4）代入式（14.13）第二式的右侧，某个 $D_S$ 在 $S\subseteq J$ 时的系数为
+$$
+\sum_{R\subseteq\operatorname{Max}(J)\setminus S}(-1)^{|R|},
+$$
+否则为零。该和恰在 $\operatorname{Max}(J)\subseteq S\subseteq J$ 时为 $1$。有限理想的每个元素都在某个极大元之下，故这一条件蕴含 $\downarrow S=J$。反之，若 $\downarrow S=J$，任意极大元 $m$ 必满足 $m\le s$ 对某个 $s\in S\subseteq J$ 成立，极大性给 $s=m$，所以全部极大元属于 $S$。系数恰选出定义14.6中的项，证明所需公式。
+
+在条件乘积假设下，定理14.5的正交投影被分成互不相交的有限组；每组之和仍自伴幂等，不同组乘积为零，且每项都与 $Q$ 正交。第二式是这个序理想格的具体反演公式，其符号只沿被删除的极大元子集使用，不能换成对所有子理想一律赋 $(-1)^{|J|-|I|}$。$\square$
+

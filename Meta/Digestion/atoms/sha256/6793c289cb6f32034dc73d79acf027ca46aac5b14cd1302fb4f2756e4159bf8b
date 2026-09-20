@@ -1,0 +1,7 @@
+**引理 10.6（CPTP 后处理的迹距离收缩）。** 若 $\Lambda:\mathcal L(X)\to\mathcal L(Y)$ 为 CPTP，则对任意 $\rho,\sigma\in\mathcal D(X)$，
+$$
+d_1(\Lambda(\rho),\Lambda(\sigma))\le d_1(\rho,\sigma).
+\tag{10.11}
+$$
+这对任何有限维参考系统 $E$ 上的 $\Lambda\otimes\operatorname{id}_E$ 同样成立。
+

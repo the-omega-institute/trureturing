@@ -1,0 +1,8 @@
+**命题 14.13（记录交互全部为零仍有隐藏目标）。** 取 $\Omega=\{-1,1\}^3$ 上均匀律，坐标 $u,v,z$ 独立，$C$ 常值，事件只记录 $u,v$。对目标 $f=z$，假设14.4成立，但
+$$
+D_Sf=0\quad(S\subseteq\{u,v\}),\qquad
+K_Jf=0\quad(J\in\mathcal J(E)),\qquad
+Qf=f,\quad\|Qf\|_2^2=1.
+\tag{14.24}
+$$
+

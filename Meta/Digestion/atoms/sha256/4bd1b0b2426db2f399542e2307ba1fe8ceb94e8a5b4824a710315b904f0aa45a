@@ -1,0 +1,33 @@
+**定理 10.5（实际可行拟合的有限精度证书）。** 设 $\widehat M\in\mathcal Q_{r,u,v}$，并已取得一个下界 $\ell$，满足
+$$
+\ell\le\inf_{Z\in\mathcal Q_{r,u,v}}\|Y-Z\|_\omega^2,
+\qquad
+\|Y-\widehat M\|_\omega^2-\ell\le\eta,
+\qquad\eta\ge0.
+\tag{10.11}
+$$
+则
+$$
+\|\widehat M-P(Y)\|_\omega\le\sqrt\eta,
+\qquad
+\|\widehat M-M\|_\omega\le\epsilon+\sqrt\eta.
+\tag{10.12}
+$$
+相应每阶算子范数误差满足
+$$
+\|\widehat M_j-M_j\|\le
+\frac{\epsilon+\sqrt\eta}{\sqrt{\omega_j}}
+\quad(0\le j\le N).
+\tag{10.13}
+$$
+若仅知道 $\widehat M$ 合法且 $\|Y-\widehat M\|_\omega\le\epsilon$，则不使用最优性证书也有 $\|\widehat M-M\|_\omega\le2\epsilon$。
+
+可行性、最优值下界及误差是三个分别给定的数学条件。若把此拟合用作第8节的可执行恢复接口，其取得、计算与证书检查费用作为另外的非负资源数据；式（10.7）的存在性不规定这些费用为零。
+
+证明。对任何可行 $Z$ 展开平方，并使用式（10.8），得
+$$
+\|Y-Z\|_\omega^2
+\ge\|Y-P(Y)\|_\omega^2+\|Z-P(Y)\|_\omega^2.
+$$
+取 $Z=\widehat M$，式（10.11）使最后一项不超过 $\eta$。结合式（10.10）与三角不等式得到式（10.12）。由式（10.6）每个非负求和项不超过总和，再用 $\|A\|\le\|A\|_F$ 得式（10.13）。最后一个结论是经过 $Y$ 的三角不等式。证毕。
+

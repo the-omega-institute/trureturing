@@ -603,3 +603,10 @@ Question 1.3(3) 指出 `a₁=a₂>0, a₃=a₄>0` 的子情形等价于 **3×3 m
 **C8**(清单 535 篇 + 12 篇 PDF 跟进;5 条候选,全为**正向证明型**,席位独立复算均无反例):Mehiri–Nadji arXiv:2509.12756 Conjecture 2(`α_{2,2k+1} = (k+1)(3k+2)2^{k−1}`,k ≤ 6 核对,0.48)与 Conjecture 3(奇方格 `α_{2k+1,2k+1}` = 大 Schröder 数,k ≤ 3,0.34);Mehiri arXiv:2510.22361 Conjecture 3(奇偶约束四柱汉诺塔 `min{b_n,c_n,d_n} ≥ h⁴_n`,n ≤ 2000 全过、`d_n − h⁴_n` 最小松弛 0,0.40——递推显式,最可能先做);Danai–Ellis–Thanatipanonda arXiv:2602.14325 Conjecture 8.3(二维 transfer 游戏水平周期,参数 ≤ 10 的 3894 组无反例,0.20);Mamede–Santos–Soares arXiv:2601.09395 Conjecture 5.1(单元素交换类数 ∈ {0,1,2,4},S₁₀ 内无 3,0.18)。同文已结算六条(2509.12756 Conj 1 同文 G(4,5) 反驳;2602.19080 证 2-limited broadcast domination 猜想;2602.18632 解 Cho 7.12(1);2602.23122 一证一反;2601.11226 记 Sun 分拆根猜想已证;2601.12427 给最优三元循环码两题反例)不派。
 
 **读数**:正向候选 C5/C7/C8 合计 15 条排队,反驳候选两窗口零条。正向证明型走 `open-problem-resolution(Proved)` 的先例已有(HypercubeInequality 已合;Takemura 猜想 1–2 #8930 在评审),DTR 判词全为 Observe,正向候选不再被登记模板堵住;下一批按 0.48(Mehiri–Nadji Conj 2)与 0.40(Mehiri Conj 3,递推显式)先开。
+
+## barket(2026-09-20):一条走完全程的 lane 在 round 1 死于 MathDB 上一个月前的同一反例
+
+**barket**(#8688 → PR #8969,arXiv:2607.12026v1 Conjecture 4.4,`Z/5`、`S={1}`、`k=3`):探针、Stage A/B、三 required check 与 delta 全绿,codex architecture 席 approve;GPT PRO quality 席在 MathDB 找到 #376004 的解答 "A minimal counterexample to the central-quotient eigengap conjecture"(Shivam Patel,"Posted 1 month ago",状态 `Counterexample`),与本交付逐项相同且早于预登记(2026-09-18)。orchestrator 亲验该页面(标题、状态、解答第 2 节首句、引用 arXiv:2607.12026v1 与六位作者)。OPR 的「经文献核对仍无证明或反驳」不成立;`result` bind-only,无其他准入依据;PR 关闭不合并,分支 `7676150e4f` 保留。
+
+**读数**:本线此前的文献核对面 = arXiv API + Semantic Scholar 引用 + 仓内 grep + OEIS 条目自身;MathDB 不在其中。对已合入的 takemura/mohan/chauve-v2/barry/crim2/layman-v2 与在飞的 ballantine/elzein 做了 MathDB 定向检索(题面关键词 + 作者),未见对应条目或解答(MathDB 上的 Ballantine–Merca 条目是另两篇论文 2403.11608、2509.01216;2604.17424 的条目状态 open)。判据补入 TARGET-GATES 第 1 节。
+
