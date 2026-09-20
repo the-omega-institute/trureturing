@@ -112,7 +112,7 @@ enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessm
 C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
-`InlineRealization.lean` 编译时要求实际导出的 inline provenance wire 等于它 import 的 `InlineProvenanceWire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪。
+`InlineRealization.lean` 编译时要求实际导出的 inline provenance wire 等于它 import 的 `InlineProvenanceWire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；bump `report_cache_release_semantic_version` 时同步更新其中的 `compatibility_version`。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
