@@ -29,6 +29,8 @@ internal static partial class CommonExecutionEvidence
                 MaterialExcludes = [.. check.MaterialExcludes],
                 PathInventory = [.. check.PathInventory],
                 ReportInputs = check.ReportInputs.Select(input => input with { Materials = [.. input.Materials] }).ToArray(),
+                DeltaScope = check.DeltaScope is not { } scope ? null : new([.. scope.WholeTreeInputs], [.. scope.ActorInputs],
+                    scope.Related.Select(row => new RegisteredFileMapRelatedScope([.. row.Inputs], [.. row.Paths])).ToArray(), [.. scope.InventoryInputs!]),
             }).ToArray();
 
         internal string Hash(string path)

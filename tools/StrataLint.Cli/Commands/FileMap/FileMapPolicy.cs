@@ -1,6 +1,8 @@
+using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
+using StrataLint.EngineeringScope;
 using StrataLint.Scribe;
 using StrataLint.Scribe.Documents;
 
@@ -191,7 +193,7 @@ internal static class FileMapPolicy
         return findings;
     }
 
-    internal static IReadOnlyList<FileMapFinding> InspectRepository(string repositoryRoot)
+    internal static IReadOnlyList<FileMapFinding> InspectRepository(string repositoryRoot, FileMapInspectionScope? scope = null)
     {
         FileMapManifest manifest;
         try
@@ -211,12 +213,17 @@ internal static class FileMapPolicy
         }
 
         var paths = TrackedPaths(repositoryRoot);
+        var selectedPaths = scope?.Paths?.ToHashSet(StringComparer.Ordinal);
+        var selected = selectedPaths is null ? paths : paths.Where(selectedPaths.Contains).ToArray();
+        var selectedManifest = selectedPaths is null ? manifest : new FileMapManifest(manifest.ResidencePolicy,
+            manifest.Entries.Where(entry => selectedPaths.Any(entry.Matches)).ToImmutableArray(), manifest.Resources);
         var trackedModes = TrackedModes(repositoryRoot);
         var dependencyFindings = InspectDependencies(
             manifest,
-            paths.Where(path => path.EndsWith(".lean", StringComparison.Ordinal)
-                || IsMachineDataCandidate(path, manifest)).ToArray(),
-            path => File.ReadAllText(Absolute(repositoryRoot, path)));
+            paths,
+            path => File.ReadAllText(Absolute(repositoryRoot, path)),
+            selected.Where(path => path.EndsWith(".lean", StringComparison.Ordinal)
+                || IsMachineDataCandidate(path, manifest)).ToHashSet(StringComparer.Ordinal));
         var availableVerifiers = AvailableDataVerifiers(manifest,
             DataVerifierImplementations.Values
                 .Where(path => File.Exists(Absolute(repositoryRoot, path)))
@@ -239,19 +246,19 @@ internal static class FileMapPolicy
                 registryAccepted.Policy.GovernanceDocuments.Select(static path => path.Value))
             : [];
 
-        return InspectCoverage(manifest, paths)
-            .Concat(InspectPatternPopulation(manifest, paths))
+        return InspectCoverage(manifest, selected)
+            .Concat(InspectPatternPopulation(selectedManifest, paths))
             .Concat(registryFindings)
             .Concat(projectionRegistrationFindings)
-            .Concat(InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot))
+            .Concat(scope is null || scope.Actors ? InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot) : [])
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
             .Concat(InspectGeneratedInventory(
                 manifest,
                 paths,
-                GeneratedArtifactInventory.Create(DocumentAssembly.Definitions)))
-            .Concat(InspectDeclaredModes(manifest, trackedModes))
-            .Concat(InspectDirectoryKinds(manifest, paths))
+                GeneratedArtifactInventory.Create(DocumentAssembly.Definitions), scope is { Inventory: true } ? null : selectedPaths, scope?.RelatedPatterns))
+            .Concat(InspectDeclaredModes(selectedManifest, trackedModes))
+            .Concat(InspectDirectoryKinds(manifest, selected, paths))
             .Concat(dependencyFindings)
             .Concat(InspectGitIgnore(File.ReadAllLines(Absolute(repositoryRoot, ".gitignore"))))
             .OrderBy(static finding => finding.Path, StringComparer.Ordinal)
@@ -283,7 +290,9 @@ internal static class FileMapPolicy
     internal static IReadOnlyList<FileMapFinding> InspectGeneratedInventory(
         FileMapManifest manifest,
         IEnumerable<string> trackedPaths,
-        IReadOnlyList<GeneratedArtifactIdentity> inventory)
+        IReadOnlyList<GeneratedArtifactIdentity> inventory,
+        IReadOnlySet<string>? selectedPaths = null,
+        string[]? relatedPatterns = null)
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(trackedPaths);
@@ -292,7 +301,10 @@ internal static class FileMapPolicy
         var findings = new List<FileMapFinding>();
         var inventoryPaths = inventory.Select(static artifact => artifact.Path)
             .ToHashSet(StringComparer.Ordinal);
-        foreach (var artifact in inventory.OrderBy(static item => item.Path, StringComparer.Ordinal))
+        var related = (relatedPatterns ?? []).Select(FileMapGlob.Create).ToArray();
+        bool Selected(string path) => selectedPaths is null || selectedPaths.Contains(path) || related.Any(pattern => pattern.IsMatch(path));
+        foreach (var artifact in inventory.Where(item => Selected(item.Path))
+            .OrderBy(static item => item.Path, StringComparer.Ordinal))
         {
             var artifactFindings = new List<FileMapFinding>();
             var matches = manifest.Match(artifact.Path);
@@ -370,7 +382,7 @@ internal static class FileMapPolicy
                 "producer inventory output is absent from tracked repository files"));
         }
 
-        foreach (var path in tracked.Order(StringComparer.Ordinal))
+        foreach (var path in tracked.Where(Selected).Order(StringComparer.Ordinal))
         {
             if (manifest.Match(path) is not [var generated]
                 || generated.Kind is not FileMapKind.Generated)
@@ -608,7 +620,8 @@ internal static class FileMapPolicy
 
     internal static IReadOnlyList<FileMapFinding> InspectDirectoryKinds(
         FileMapManifest manifest,
-        IEnumerable<string> paths)
+        IEnumerable<string> paths,
+        IEnumerable<string>? residencePaths = null)
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(paths);
@@ -671,7 +684,7 @@ internal static class FileMapPolicy
             }
         }
 
-        var violations = ResidenceViolations(manifest, trackedPaths);
+        var violations = ResidenceViolations(manifest, residencePaths ?? trackedPaths);
         if (violations.Count != manifest.ResidencePolicy.KnownViolationCount)
         {
             findings.Add(new FileMapFinding(
@@ -689,8 +702,10 @@ internal static class FileMapPolicy
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(paths);
+        var declarations = manifest.Entries.Where(entry => entry.Kind == FileMapKind.Data && entry.ResidenceViolation).ToArray();
         return paths
             .Where(path => path.StartsWith("tools/", StringComparison.Ordinal))
+            .Where(path => declarations.Any(entry => entry.Matches(path)))
             .Where(path => manifest.Match(path) is
                 [{ Kind: FileMapKind.Data, ResidenceViolation: true }])
             .Order(StringComparer.Ordinal)
@@ -708,17 +723,21 @@ internal static class FileMapPolicy
     internal static IReadOnlyList<FileMapFinding> InspectDependencies(
         FileMapManifest manifest,
         IReadOnlyCollection<string> paths,
-        Func<string, string> readText)
+        Func<string, string> readText,
+        IReadOnlySet<string>? selectedPaths = null)
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(paths);
         ArgumentNullException.ThrowIfNull(readText);
         var findings = new List<FileMapFinding>();
+        var generatedEntries = manifest.Entries.Where(entry => entry.Kind == FileMapKind.Generated).ToArray();
         var generatedPaths = paths
+            .Where(path => generatedEntries.Any(entry => entry.Matches(path)))
             .Where(path => manifest.Match(path) is [{ Kind: FileMapKind.Generated }])
             .Order(StringComparer.Ordinal)
             .ToArray();
-        foreach (var path in paths.Order(StringComparer.Ordinal))
+        var generatedSearch = SearchValues.Create(generatedPaths, StringComparison.Ordinal);
+        foreach (var path in paths.Where(path => selectedPaths is null || selectedPaths.Contains(path)).Order(StringComparer.Ordinal))
         {
             // Preserve the selected-file read/error boundary without retaining all bodies.
             var source = readText(path);
@@ -730,7 +749,8 @@ internal static class FileMapPolicy
 
             if (matches[0].Kind is FileMapKind.Data
                 && !FileMapDocuments.IsPolicyPath(path)
-                && IsMachineDataPath(path))
+                && IsMachineDataPath(path)
+                && source.AsSpan().ContainsAny(generatedSearch))
             {
                 foreach (var generatedPath in generatedPaths.Where(source.Contains))
                 {

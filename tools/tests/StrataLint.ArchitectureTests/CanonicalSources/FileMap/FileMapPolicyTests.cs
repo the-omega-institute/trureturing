@@ -5,7 +5,8 @@ using StrataLint.Scribe;
 
 namespace StrataLint.ArchitectureTests;
 
-public sealed partial class FileMapPolicyTests
+[Collection(nameof(CanonicalFileMapCollection))]
+public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
 {
     [Fact]
     public void LeanReportConfigurationIsAdmittedWithItsRuntimeVerifier()
@@ -22,7 +23,7 @@ public sealed partial class FileMapPolicyTests
         Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
         Assert.Equal("LeanReportSelection", Assert.Single(entry.VerifiedBy));
         Assert.Contains("lean-report", entry.Require);
-        Assert.DoesNotContain(FileMapPolicy.InspectRepository(root), finding =>
+        Assert.DoesNotContain(fixture.Findings, finding =>
             finding.Path == path && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
     }
 
@@ -39,7 +40,7 @@ public sealed partial class FileMapPolicyTests
             Assert.Contains("CommonExecutionEvidence", entry.VerifiedBy);
         });
 
-        var findings = FileMapPolicy.InspectRepository(root);
+        var findings = fixture.Findings;
 
         Assert.DoesNotContain(findings, finding =>
             paths.Contains(finding.Path, StringComparer.Ordinal)
@@ -139,7 +140,7 @@ public sealed partial class FileMapPolicyTests
             inventory,
             artifact => entry.Matches(artifact.Path));
         Assert.DoesNotContain(
-            FileMapPolicy.InspectRepository(root),
+            fixture.Findings,
             finding => finding.Path == pattern);
     }
 
