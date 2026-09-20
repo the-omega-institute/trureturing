@@ -170,7 +170,6 @@ def pathProduct {A X Y : Type} (K : A → X → PMF (Y × X)) (π : Policy A Y)
       (π t (pathView t h.1).2 h.2.1 *
         K h.2.1 (pathView t h.1).1 (h.2.2.1, h.2.2.2))
 
-set_option maxHeartbeats 1200000 in
 -- The joint path law, two execution inductions, and distance calculation share one proof.
 /-- Exact complete-record laws and distances for every action count and horizon at least two. -/
 theorem result (m H : ℕ) (hm : 2 ≤ m) (hH : 2 ≤ H) :
