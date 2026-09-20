@@ -846,3 +846,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Simultaneous root absorption and Hall obstructions](profile-notes/arithmetic/383-simultaneous-root-absorption-and-hall-obstructions.md)
 - [The private-witness profile upper is automatic for odd divisor labels](profile-notes/arithmetic/384-private-witness-profile-upper-is-automatic.md)
 - [Private congruence hulls force crossed numerical moduli](profile-notes/arithmetic/385-private-congruence-hulls-and-crossed-modulus-closure.md)
+- [Pair-root conflicts and original survivor capacity](profile-notes/arithmetic/386-pair-root-conflicts-and-original-survivor-capacity.md)
