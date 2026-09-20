@@ -7,7 +7,7 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> CurrentCapacity(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, file) in context.Current.Files.Where(static pair => !IsCapacityExcluded(pair.Key.Value)))
+        foreach (var (path, file) in context.Current.Files.Where(static pair => !IsArtifactLineCapacityExcluded(pair.Key.Value)))
         {
             var count = CountArtifactLines(file.Text);
             if (count > ArtifactHardLineLimit)
