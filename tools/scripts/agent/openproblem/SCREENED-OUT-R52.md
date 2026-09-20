@@ -73,9 +73,9 @@ computation`,而外部意见称它们已被反驳或已被 claim。去读 claim 
 ### 已结算、不派席(席位读出;带 † 者由 orchestrator 复核过出处)
 
 - Cohen, JIS 28 (2025) Art. 25.4.7:Conj. 65 同文自驳(`m=209, n=389`);Conj. 66 由 Ibarra arXiv:2607.09793 反驳;
-  另 22 条由 Duc Hieu Le arXiv:2509.26138 结算(证 16、驳 6)。
+  Duc Hieu Le arXiv:2509.26138 对另 22 条的「结算」已随该文 2025-11-06 撤稿作废(见下文「R52 修正」)。
 - Greene–Higgins, JIS 28 Art. 25.7.8 Conj. 28:Hajós 群分解定理的特例(Szele 1949);Conj. 27 据称由其推出(未复核)。
-- Fried, JIS 28 Art. 25.4.3(`F(n+2)+2nF(n+1)` 非 Fibonacci 数):Le arXiv:2509.26138 定理 23 / 命题 24。
+- Fried, JIS 28 Art. 25.4.3(`F(n+2)+2nF(n+1)` 非 Fibonacci 数):唯一出处 Le arXiv:2509.26138 定理 23 / 命题 24 已随撤稿作废,回到未结算。
 - Kohen, JIS 29 Art. 26.4.2 Conj. 13:Offutt arXiv:2504.19031 §4.1 已反驳。
 - Benmoussa, JIS 29 Art. 26.3.5 Conj. 2:符号印错;更正形即作者 arXiv:2511.09817v2 定理 4.1。
 - Bosma–Bruin–Fokkink 等, JIS 28 Art. 25.3.8:Conj. 16(Shtrezi arXiv:2606.17447)、Conj. 17(本仓卷宗)。
@@ -610,3 +610,31 @@ Question 1.3(3) 指出 `a₁=a₂>0, a₃=a₄>0` 的子情形等价于 **3×3 m
 
 **读数**:本线此前的文献核对面 = arXiv API + Semantic Scholar 引用 + 仓内 grep + OEIS 条目自身;MathDB 不在其中。对已合入的 takemura/mohan/chauve-v2/barry/crim2/layman-v2 与在飞的 ballantine/elzein 做了 MathDB 定向检索(题面关键词 + 作者),未见对应条目或解答(MathDB 上的 Ballantine–Merca 条目是另两篇论文 2403.11608、2509.01216;2604.17424 的条目状态 open)。判据补入 TARGET-GATES 第 1 节。
 
+## C9/C9b(2026-09-20):codex 搜题席读 math.NT 2025-09..2026-05——853 篇、1 条候选,该候选已在作者网页上被证明
+
+**C9b**(清单 853 篇,PDF 跟进 12 篇;C9 的 brief 误带 C8 窗口,席位弃权,C9b 以核对过的窗口重派):唯一候选 Alcantarilla Sánchez–Cottaar–Lange–de Weger arXiv:2602.21840 Conjecture 15(奇无平方因子合数 `n` 有 `φ(n)/2` 个 Euler liar ⟹ Carmichael 数;有 `φ(n)/4` 个 ⟹ Carmichael 数或 Sophie Germinus 伪素数)。论文结尾给出的作者网页 https://math.deweger.net/eulerliars/ 已把它作为 Theorems 1–2 证明。**不派席**。
+
+**读数**:math.NT 这一窗口的反驳型候选为零;正向候选一条且已结算。**判据补记**:论文结尾章节给出的 URL 要跟进读,作者在网页上追加的定理不进 arXiv 版本、也不进 Semantic Scholar 引用。
+
+## C8 后续(2026-09-20):Mehiri 2510.22361 的「Conjecture 3」实为 Remark 1,且源定义不可按小时级形式化
+
+arXiv:2510.22361v1 全文只有一处 "Conjecture"(参考文献标题)。C8 记为 "Conjecture 3" 的陈述是 **Remark 1**:"Numerical evidence (see Table 1) suggests that min{b_n, c_n, d_n} ≥ h⁴_n for all n ≥ 7. A formal proof … is left as a future research direction."(`n = 6` 时 `c₆ = 15 < h⁴₆ = 17`,阈值 7 是紧的;Table 1 到 `n = 14` 全部成立。)`b_n, c_n, d_n` 的源定义是奇偶约束四柱汉诺塔的最优移动数(组合优化量);Theorem 1 的耦合递推、Prop 2 的高阶递推、Prop 3 的闭式都是论文*证明*的刻画,`h⁴_n` 是 Frame–Stewart 递推(Bousch 2014 证其最优)。按 OPR 定义忠实性判据(闭式/递推替代源定义被拒),字面形式化须建四柱状态图与最短路并重证 Theorem 1——非小时级;按递推定义则是用刻画替代定义。Semantic Scholar 0 引用;MathDB 无本文条目。**不派席**;若按第二档研究线开(状态图 + Theorem 1)再取。
+
+## R68(2026-09-20):GPT PRO 搜题席——Cohen JIS 25.4.7 四条印刷阈值/前缀候选与 Kok 2.4;两条已结算
+
+**候选**(席位读出,orchestrator 复算):Cohen, JIS 28 (2025) Art. 25.4.7 **Conjecture 28**(双素数在 `(n³,(n+1)³)` 内计数的阈值表 `N(10)=11`,实测 `T(11)=9`)与 **Conjecture 29**(表兄弟素数,`N(8)=N(9)=N(10)=12`,实测 `C(12)=7`)→ 预登记 #9016;**Conjecture 10**(`Lp`,OEIS A349997 的印刷定义「每个 `j>k` 的 `[j²,(j+1)²]` 素数数不少于 `[k²,(k+1)²]` 的」下 `p(1)=p(2)=2` 迫使 `2∈Lp`,印刷前缀 `{1,7,11,…}` 略去 2)与 **Conjecture 12**(`Lc` 同形;闭区间 `[1,4]` 含 3 个循环数而作者算的是开区间 `(1,4)` 的 2 个,且 `2∈Lc` 同样被略去)——定义与作者实算的区间开闭、以及「全部尾极小」与「首次达到新极小」两种读法都对不上,**源意图风险高,暂不取**;Kok arXiv:2507.16500 **Conjecture 2.4**(Jaco 图 `J_n` 中 `Δ` 唯一的阶由 A035336 `a(t)=2⌊tφ⌋+t−1, t≥3` 给出;`J₇` 的度列 `[1,2,3,4,4,3,3]` 只有一个 4,而印出的 `t≥3` 序列从 10 起)→ 待预登记。
+
+**已结算(席位读出,orchestrator 未复核出处)**:Bényi–Ćurgus arXiv:2507.14244 Conj. 3.17 由作者 2026-07 后续文(DOI 10.2478/awutm-2026-0006)证明;Mittou arXiv:2509.08844 v3 已反驳其 C8/C10/C13。
+
+**MathDB 读数**:席位的 `/search?q=` 请求返回 Internal Error;orchestrator 以 `cyclic numbers Cohen` / `Panaitopol cyclic` / `twin primes consecutive cubes` 复查,无 Cohen 25.4.7 的条目(#357919 是 Bufalo 等的素数平方区间双素数猜想,另一问题)。
+
+## R52 修正(2026-09-20):Le arXiv:2509.26138 已撤稿,「另 22 条由 Le 结算」作废
+
+R52 写 Cohen 25.4.7「另 22 条由 Duc Hieu Le arXiv:2509.26138 结算(证 16、驳 6)」。**该文 v3(2025-11-06)已由作者撤稿**,撤稿说明原话:"Proofs in this paper were AI-generated and I just found out some of them were incorrect. Therefore, I would like to withdraw it"。v2 仍可读,内容为:「证明」Conj. 3, 6, 9, 14, 17, 20, 32, 36, 37, 41, 42, 47, 52, 54, 56, 60, 61(17 条),「反驳」Conj. 35, 50, 51, 53, 59(5 条)。
+
+**逐条复算 v2 的五条反驳**:
+- Conj. 50 / 51:v2 把 `(22/25)√cₙ·log cₙ` 读成 `√(cₙ log cₙ)`,用 `(7,11)` 当反例;按原式 `(22/25)√7·log 7 ≈ 4.53 > 4`,**不是反例**;`cₙ < 2×10⁵` 内无违反。
+- Conj. 59(`3 ≤ m ≤ n ⟹ c_{mn} < c_m c_n`,例外 `(3,3)` 与 `(5,h), h=5..10` 处反向严格不等式):v2 指出 `c₃₅ = 91 = c₅c₇`(等号,两向严格不等式都不成立),**该观察正确**;另按印刷下标(`c₁ = 1`,论文第 1 节)`m = 3, 4` 整行都反向(`c₁₂ = 29 > 15 = c₃c₄`,…),在 `m < 80, n < 3000, c_{mn} < 4×10⁵` 的枚举内共 3011 对不在例外表内。
+- Conj. 35、53:v2 用渐近论证(正则变化指数、`cₙ = eᵞn(L₃(n)+O(1))`),未复核。
+
+**结论**:那 17 条「已证」与 Fried 25.4.3 回到未结算;Conj. 59 的印刷陈述为假(等号与 `m=3,4` 行),可作反驳靶但须在预登记中披露 v2 的等号观察;Conj. 50/51 未被反驳。R52 的该行按本节读。
