@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:5ae2b67aad85373ad5b222ca2c6a5f35f653862a221a11dfb2e6a179946d8a60
   normalized_sha256: sha256:5ae2b67aad85373ad5b222ca2c6a5f35f653862a221a11dfb2e6a179946d8a60
 cas_ref: sha256:5ae2b67aad85373ad5b222ca2c6a5f35f653862a221a11dfb2e6a179946d8a60
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.result
+    target_statement_id: sha256:a242784383db6225ff37de5a3917b085bbecd1dc4a8222214730d3cc33fd100e
 receipts:
   unresolved_subitems: []
