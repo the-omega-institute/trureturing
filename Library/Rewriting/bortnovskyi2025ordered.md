@@ -56,12 +56,18 @@ existence of a complete LGS run for every positive n.
 exact site balance, a first-overfire least-action bound, and uniqueness of both
 firing counts and endpoint. Its notion of stability means binary multiplicities;
 it permits consecutive occupied indices and therefore is not game terminality.
-This count result does not establish maximal weighted reward.
+The weighted extension proves legal preferred-split promotion through lower
+prefixes, promotion in every complete phase using first-overfire, and
+`greedy_split_optimality`: every complete greedy split phase maximizes full
+reward among complete split phases from the same arbitrary raw start. Ones
+take priority; otherwise the highest duplicate is recomputed after each split.
+This comparison excludes merges and does not yet establish full-game optimality.
 
 The remaining proof candidate uses strict-successor induction on the existing
 carry measure, with greedy continuation cost rather than a global maximum.
-First promote the preferred split using nonnegative split commutators and the
-unique split-phase counts. Then handle the five shared-input merge detours.
+Preferred promotion and greedy comparison for complete split-only phases are
+now proved. The remaining comparison must handle interleaved merges and the
+five shared-input merge detours.
 For singleton inputs, the high block C_a;S_(a+2);...;S_r advances one duplicate
 through a binary tail, fills the preceding holes and has reward one per move.
 A lower preferred split can be extracted across this block. Prefix recognition
@@ -74,7 +80,7 @@ the competing index. Otherwise b≥a+3 and its high cascade commutes with C_a.
 At b=a+3 the lower merge changes c_(b-1), so legal replay must allow that boundary
 change. Each replacement must have a legal common endpoint; its tail need not
 be greedy. Induction applies after a strict first successor, never at the state
-whose optimality is being proved. These weighted exchanges, exact sorted
+whose optimality is being proved. These merge exchanges, exact sorted
 attainment and all-switch completion remain unproved in Lean.
 
 Cusenza et al., *Bounds on Zeckendorf Games*, arXiv:2009.09510v1, Theorem 1.2

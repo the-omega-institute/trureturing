@@ -121,6 +121,16 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
 
 ## Route
 
+The weighted split-only subproblem is now proved in
+`SplitStabilization.split_prefix_promotion`, `split_phase_promotion`, and
+`greedy_split_optimality`. Legal replay preserves the endpoint and does not
+decrease full reward; first-overfire supplies the selected split's occurrence.
+The comparison covers all complete split phases from arbitrary raw digits,
+with ones priority and highest-duplicate priority restarted after every step.
+It does not cover paths containing merges. Full weighted raw-game domination,
+ordered attainment, arbitrary switch completion and complete Conjecture 1.7
+remain unproved.
+
 1. Use one raw ordered `List Nat`, decoded by `Nat.succ`; multiplicities use
    `Multiset.toFinsupp`. `Carry/OrderedGame` defines all five positional moves,
    their full carry rewards, legal paths, relational LGS and `Conjecture17`.
@@ -129,7 +139,8 @@ upper and lower asymptotics and a structural lemma about repetitions under LGS.
    frozen inversion bounds. This is an upper bound, not an attainment theorem.
 3. `Carry/SplitStabilization` proves exact site balance, the first-overfire
    least-action bound, unique complete split counts and endpoint, and existence
-   of complete split phases. Weighted preferred-split promotion remains unproved.
+   of complete split phases. Weighted preferred-split promotion and maximal
+   reward among complete split-only phases are also proved.
 4. Define greedy continuation cost by the existing strict carry measure.
    Prove split-first bounds before the five duplicated-input merge repairs.
    Then extract the preferred move using the singleton-input and binary-tail

@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Carry;
 internal sealed class SplitStabilizationDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite raw split phases stabilize with unique firing counts and endpoint.",
-        H("Least Action for Zeckendorf Split Phases"),
+        "Finite raw split phases stabilize, and greedy split phases maximize full reward.",
+        H("Least Action and Weighted Greedy Zeckendorf Split Phases"),
         Blocks(
             Paragraph(Text("Indices are zero-based. A split consumes two tokens at its index. "
                 + "Its output is one token at 1 for index 0, tokens at 0 and 2 for index 1, "
@@ -43,8 +43,38 @@ internal sealed class SplitStabilizationDocument : IScribeDocumentDefinition
                 "Given a legal prefix, a finite stabilizing split phase exists from the same "
                 + "start. The recursive construction continues at the prefix endpoint. An enabled "
                 + "split is a carry step, so recursion decreases the existing lexicographic "
-                + "carry measure. These conclusions compare firing counts, not weighted "
-                + "rewards; ordered longest-game optimality is not established here."))));
+                + "carry measure. The conclusion asserts existence from the same start; "
+                + "it does not expose an extension witness for the supplied prefix."),
+            Node("split_prefix_promotion", "Legal weighted replay across a prefix",
+                Seq(Call("WeightedSplitPath", "c", "d", "xs", "w"), Sp, Land, Sp,
+                    Call("Enabled", "c", "j"), Sp, Land, Sp,
+                    Call("CrossablePrefix", "xs", "j"), Sp, Rightarrow, Sp,
+                    Call("PromotedLegalReplay", "c", "d", "xs", "j")),
+                "If j is enabled and every prefix index differs from j and is below j, "
+                + "the split at j can move before the prefix without decreasing total reward. "
+                + "Index zero can instead cross every other index. Both orders have a common "
+                + "endpoint after firing j and replaying the prefix; replay is legal but need "
+                + "not be greedy. Rewards include the carry and all subsequent sorting switches."),
+            Node("split_phase_promotion", "Preferred first split in a complete phase",
+                Seq(Call("CompleteWeightedSplitPhase", "c", "d", "w"), Sp, Land, Sp,
+                    Call("EnabledZeroOrHighest", "c", "j"), Sp, Rightarrow, Sp,
+                    Call("PreferredFirstReplay", "c", "d", "j")),
+                "Choose an enabled split j which is zero or has no duplicate above it. "
+                + "The first-overfire bound forces this split to occur in every stabilizing "
+                + "phase. Extracting its first occurrence gives a legal phase with the same "
+                + "endpoint and no smaller reward, beginning with the chosen split."),
+            Node("greedy_split_optimality", "Greedy split phases maximize reward",
+                Seq(Call("GreedySplitPath", "c", "e", "g"), Sp, Land, Sp,
+                    Call("Stable", "e"), Sp, Land, Sp,
+                    Call("WeightedSplitPath", "c", "d", "xs", "w"), Sp, Land, Sp,
+                    Call("Stable", "d"), Sp, Rightarrow, Sp,
+                    new Formula.Relation(F.Id("w"), FormulaRelationOperator.LessThanOrEqual, F.Id("g"))),
+                "For every raw start and every complete greedy split phase, each complete "
+                + "competing split phase has no greater full reward. Greedy priority selects "
+                + "ones first and otherwise the highest duplicate, recomputed after each split. "
+                + "The proof repeatedly promotes the selected first split and inducts on the "
+                + "greedy continuation. Binary endpoints can still admit merges. No comparison "
+                + "with paths containing merges, or complete ordered-game optimality, follows here."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("split-stabilization-" + name.Replace('_', '-')),
