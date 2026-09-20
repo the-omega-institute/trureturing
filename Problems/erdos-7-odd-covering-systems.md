@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [One actual block on the first eight odd primes admits arbitrarily many seven-vertex attachments; extendible core configurations have Haar density greater than 1/1200000](../docs/reports/erdos7-odd-covering/problem-details/35-eight-prime-core-with-seven-vertex-attachments.md)
 - [Fixed prime graphs with blocks of at most seven vertices have a uniform head-density bound and a computable cutoff for unrestricted large-prime tails, including tail classes joining the whole head](../docs/reports/erdos7-odd-covering/problem-details/34-uniform-head-density-from-thick-block-domains.md)
 - [At most seven prime divisors up to 100000, or eight up to 100000000 using the attributed eight-prime density theorem, admit arbitrarily many larger primes without any graph restriction](../docs/reports/erdos7-odd-covering/problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md)
 - [Six specified root-block heads admit arbitrarily many primes above 10000, with arbitrary original heights and supports; all other graph blocks may have up to seven vertices](../docs/reports/erdos7-odd-covering/problem-details/32-conditional-root-measures-and-unrestricted-prime-tails.md)
