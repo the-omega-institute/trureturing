@@ -211,7 +211,7 @@
             "inputs": [
               "Blueprint/**/*.md",
               "Generated/**",
-              "Evidence/D5/values.json"
+              "Evidence/D5/*.json"
             ],
             "paths": [
               "**/*.json",
