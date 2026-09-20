@@ -28,6 +28,22 @@ import native
 from test_native_support import *
 
 class NativeInvalidationTests:
+    def test_native_old_manifest_key_rejected(self):
+        manifest = self.root / 'lean-report-inputs.json'
+        policy = json.loads(manifest.read_text())
+        old_key = 'report_' + 'semantic_version'
+        version = policy.pop(old_key, policy.get('report_cache_release_semantic_version', 1))
+        policy['report_cache_release_semantic_version'] = version
+        manifest.write_text(json.dumps(policy))
+        self.assertEqual(publication.selection.Selection(self.root).data[
+            'report_cache_release_semantic_version'], version)
+        policy[old_key] = policy.pop('report_cache_release_semantic_version')
+        manifest.write_text(json.dumps(policy))
+        with self.assertRaisesRegex(ValueError, 'expected fields', msg='[FAIL] old_manifest_key_rejected'):
+            publication.selection.Selection(self.root)
+        with self.assertRaisesRegex(ValueError, 'DTR-ManifestVersion'):
+            materials.read_manifest_version(manifest)
+
     def test_native_module_binding_scope(self):
         # This synthetic driver supplies source-bound empty registration rows;
         # DeclaredExport separately checks the production Lean emitter.
@@ -58,7 +74,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         pending := env.header.moduleData[index.toNat]!.imports.toList.map (·.module) ++ pending
     let result ← IO.Process.output { cmd := "python3", args := #["-c",
       "import hashlib,json,pathlib,sys; print(json.dumps(dict(schema_version=1," ++
-      "compatibility_version=json.loads(pathlib.Path('lean-report-inputs.json').read_text())['report_semantic_version']," ++
+      "compatibility_version=json.loads(pathlib.Path('lean-report-inputs.json').read_text())['report_cache_release_semantic_version']," ++
       "inventory=[],registered=[],records=[],inputs=[dict(path=p,sha256=hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()) for p in sorted(sys.argv[1:])])))"] ++ paths }
     IO.ofExcept (Json.parse result.stdout)
 ''')
@@ -98,7 +114,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         policy['dependency_sources']['include'].append(dict(pattern='unrelated/**/*.lean', optional=True))
         self.write('lean-report-inputs.json', json.dumps(policy))
         changed(set())
-        policy['report_semantic_version'] += 1
+        policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
         changed(set(before))
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
@@ -274,7 +290,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         changed({'D5.A', 'Fixture'})
         self.assertEqual(self.report()[1:], original)
 
-        policy['report_semantic_version'] += 1
+        policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
         changed(set(before))
         self.assertEqual(self.report()[1:], original)

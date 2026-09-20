@@ -219,12 +219,12 @@ def read_manifest_version(manifest: pathlib.Path) -> int:
         return fields
     try:
         data = json.loads(pathlib.Path(manifest).read_text(encoding="utf-8"), object_pairs_hook=unique_fields)
-        version = data["report_semantic_version"]
+        version = data["report_cache_release_semantic_version"]
         if type(version) is not int or version <= 0:
             raise ValueError("positive integer required")
         return version
     except (OSError, UnicodeError, ValueError, KeyError, TypeError) as error:
-        raise ValueError("DTR-ManifestVersion: lean-report-inputs.json requires a positive integer report_semantic_version") from error
+        raise ValueError("DTR-ManifestVersion: lean-report-inputs.json requires a positive integer report_cache_release_semantic_version") from error
 
 
 def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:
@@ -239,7 +239,7 @@ def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:
                    for field in ("inventory", "registered", "records", "inputs"))):
         raise ValueError("Inspector declared-template evidence is malformed")
     if evidence["compatibility_version"] != version:
-        raise ValueError("DTR-EvidenceVersion: Inspector declared-template evidence compatibility_version differs from report_semantic_version")
+        raise ValueError("DTR-EvidenceVersion: Inspector declared-template evidence compatibility_version differs from report_cache_release_semantic_version")
     for source in evidence["inputs"]:
         require_keys(source, {"path", "sha256"}, "declared-template input")
         path = source["path"]

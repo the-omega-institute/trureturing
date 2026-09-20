@@ -523,7 +523,7 @@ class NativePublicationTests:
         original = self.report()[1:]
         origins = self.origins()
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_semantic_version'] = 2
+        policy['report_cache_release_semantic_version'] = 2
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.run_lake('--no-build', 'build', ':report', success=False)
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
@@ -578,15 +578,15 @@ class NativePublicationTests:
         before = self.stamps()
         original = (self.root / 'lean-report-inputs.json').read_text()
         for value in ['0', '-1', 'true', 'null', '"1"', '1.0', '1e0']:
-            self.write('lean-report-inputs.json', original.replace('"report_semantic_version": 1', '"report_semantic_version": ' + value))
+            self.write('lean-report-inputs.json', original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": ' + value))
             result = self.build(success=False)
-            self.assertIn('report_semantic_version', result.stdout + result.stderr)
+            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
             self.assertEqual(before, self.stamps())
             self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        for invalid in [original.replace('"report_semantic_version": 1, ', ''),
-                        original.replace('"report_semantic_version": 1', '"report_semantic_version": 1, "report_semantic_version": 1')]:
+        for invalid in [original.replace('"report_cache_release_semantic_version": 1, ', ''),
+                        original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": 1, "report_cache_release_semantic_version": 1')]:
             self.write('lean-report-inputs.json', invalid)
             result = self.build(success=False)
-            self.assertIn('report_semantic_version', result.stdout + result.stderr)
+            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
             self.assertEqual(before, self.stamps())
             self.assertEqual((self.root / 'activity.jsonl').read_text(), '')

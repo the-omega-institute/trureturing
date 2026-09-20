@@ -403,7 +403,7 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     emit "DTR-checked-plan-v5"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
-    emit plan.compiler; emit plan.toolchain; emit (toString plan.reportSemanticVersion)
+    emit plan.compiler; emit plan.toolchain
     wireName plan.name; wireName plan.definitionOwner; wireName plan.enrollmentOwner
     emit (toString plan.levelParams.length)
     emit plan.typeIdentity; emit plan.bodyIdentity
@@ -472,7 +472,7 @@ private def fileInputBatch (paths : Array String) (readVersion : Bool := false) 
               "  if read_version:\n" ++
               "   p='lean-report-inputs.json'\n" ++
               "   data=(pathlib.Path(root)/p).read_bytes()\n" ++
-              "   version=json.loads(data.decode('utf-8'),object_pairs_hook=unique)['report_semantic_version']\n" ++
+              "   version=json.loads(data.decode('utf-8'),object_pairs_hook=unique)['report_cache_release_semantic_version']\n" ++
               "   if type(version) is not int or version<=0: raise ValueError('version')\n" ++
               "  for p in paths:\n" ++
               "   hashes.append(hashlib.sha256((pathlib.Path(root)/p).read_bytes()).hexdigest())\n" ++
@@ -486,7 +486,7 @@ private def fileInputBatch (paths : Array String) (readVersion : Bool := false) 
       child.stdin.flush
       let response ← IO.ofExcept <| Json.parse (← child.stdout.getLine)
       if response.getStr? == .ok "DTR-ManifestVersion" then
-        throw <| IO.userError "DTR-ManifestVersion: missing or malformed report_semantic_version"
+        throw <| IO.userError "DTR-ManifestVersion: missing or malformed report_cache_release_semantic_version"
       let (hashes, version) : Array String × Option Nat ← IO.ofExcept <| fromJson? response
       unless hashes.size == paths.size && hashes.all (fun hash => hash.length == 64 &&
           hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f'))) do
@@ -508,7 +508,7 @@ private def fileHashes (paths : Array String) : IO (Array String) := do
 def readVersionedSourceInputs (paths : Array String) : CoreM (Array SourceInput × Nat) := do
   let (hashes, version) ← fileInputBatch paths true
   let some version := version
-    | throwError "DTR-ManifestVersion: missing report_semantic_version"
+    | throwError "DTR-ManifestVersion: missing report_cache_release_semantic_version"
   return ((paths.zip hashes).map (fun (path, sha256) => { path, sha256 }), version)
 
 /-- Hash every supplied current file in order, including repeated paths. The
@@ -925,7 +925,7 @@ def validate (roots : Array Name) : CoreM Unit := do
 end NativeCoherence
 
 def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) :
-    CoreM (Array SourceInput × Nat) := do
+    CoreM (Array SourceInput) := do
   let policyOwners := #[`LeanInformationAudit.RegistryTypes, `LeanInformationAudit.Registry,
     `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]
     |>.filter (fun name => (env.getModuleIdx? name).isSome)
@@ -935,7 +935,7 @@ def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) :
     if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit.Tests." then
       let path := sourcePath dep.owner
       unless paths.contains path do paths := paths.push path
-  readVersionedSourceInputs (paths.qsort (· < ·))
+  readSourceInputs (paths.qsort (· < ·))
 
 /-- Compare retained bytes; never refresh a stale plan by wrapping old olean
 contents with hashes from the current source tree. -/

@@ -29,7 +29,7 @@ class ReuseTests(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name)
         paths = lambda *values: dict(include=[dict(pattern=v, optional=False) for v in values], exclude=[])
-        self.policy = dict(schema_version=1, report_semantic_version=1,
+        self.policy = dict(schema_version=1, report_cache_release_semantic_version=1,
             report_modules=paths('D5/**/*.lean'), inspector_sources=paths('Inspector.lean'),
             dependency_sources=paths('Audit.lean'), config_inputs=paths('lean-toolchain', 'lakefile.toml'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json',
@@ -200,7 +200,7 @@ class ReuseTests(unittest.TestCase):
                                  '[FAIL] producer_program_change_keeps_receipt')
                 source.write_bytes(original)
                 source.chmod(mode)
-        self.policy['report_semantic_version'] += 1
+        self.policy['report_cache_release_semantic_version'] += 1
         self.write_policy()
         result = api.probe(self.root, self.report, self.lake)
         self.assertTrue(result['needs_lake'] and result['reason'] == 'seed-rejected',

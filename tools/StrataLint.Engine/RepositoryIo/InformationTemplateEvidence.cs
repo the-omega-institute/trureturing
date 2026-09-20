@@ -65,7 +65,7 @@ internal static class InformationTemplateEvidence
 
     private static string ManifestVersion(RepositorySnapshot snapshot)
     {
-        const string error = "DTR-ManifestVersion: lean-report-inputs.json requires a positive integer report_semantic_version";
+        const string error = "DTR-ManifestVersion: lean-report-inputs.json requires a positive integer report_cache_release_semantic_version";
         if (!snapshot.Files.TryGetValue(RepoPath.CreateKnown("lean-report-inputs.json"), out var manifest))
             throw new FormatException(error);
         try
@@ -73,8 +73,8 @@ internal static class InformationTemplateEvidence
             using var document = JsonDocument.Parse(manifest.RawBytes.AsMemory());
             var root = document.RootElement;
             if (root.ValueKind != JsonValueKind.Object
-                || root.EnumerateObject().Count(p => p.Name == "report_semantic_version") != 1
-                || !root.TryGetProperty("report_semantic_version", out var value)
+                || root.EnumerateObject().Count(p => p.Name == "report_cache_release_semantic_version") != 1
+                || !root.TryGetProperty("report_cache_release_semantic_version", out var value)
                 || value.ValueKind != JsonValueKind.Number)
                 throw new FormatException(error);
             var version = value.GetRawText();
@@ -100,7 +100,7 @@ internal static class InformationTemplateEvidence
             "records", "registered", "inputs");
         InformationTemplateJson.Version(value);
         if (value.GetProperty("compatibility_version").GetRawText() != ManifestVersion(snapshot))
-            throw new FormatException("DTR-EvidenceVersion: compatibility_version differs from report_semantic_version");
+            throw new FormatException("DTR-EvidenceVersion: compatibility_version differs from report_cache_release_semantic_version");
         var inputs = ReadInputs(value.GetProperty("inputs"), snapshot);
         if (!inputs.Any(input => input.Path == sourcePath))
             throw new FormatException("DTR-Evidence: producer source is not bound");

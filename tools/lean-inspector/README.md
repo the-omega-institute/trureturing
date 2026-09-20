@@ -64,7 +64,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 每次 `make lean-report` 都要求当前项目默认目标和 inspector 编译的有效成功证据。
 正常入口先校验可选 `.reuse.json`：报告语义版本号、登记的 Lean 源与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
 一致，并且报告五件套通过完整私有校验时，复用该调用而无需下载 Lean 重缓存。缺失、损坏
-或不匹配时进入原生 Lake 增量；生产程序（C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。[当前默认目标](../../lakefile.toml)为 `Trureturing` 和
+或不匹配时进入原生 Lake 增量；生产程序（C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。[当前默认目标](../../lakefile.toml)为 `Trureturing` 和
 `LeanInformationAudit`。默认目标及 audit 的构建义务独立于模块报告失效；只影响这些
 构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
 提取会合批以共享加载工作，失效选择仍由 Lake 决定。输出
@@ -84,10 +84,10 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 共同给出允许捕获的本地 Lean 源码范围；它是登记清单，不是另一套失效规划器。
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
-清单中的单一正整数 `report_semantic_version` 是开发者维护的报告语义兼容版本，
+清单中的单一正整数 `report_cache_release_semantic_version` 是开发者维护的报告语义兼容版本，
 其值以清单为准，与清单格式的 `schema_version` 分开。
 
-兼容的生成器重构、性能优化保持 `report_semantic_version` 不变：在报告输入、配置及
+兼容的生成器重构、性能优化保持 `report_cache_release_semantic_version` 不变：在报告输入、配置及
 版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告，
 但当前 inspector 仍须编译成功。改变报告含义或接受语义时必须增加此版本，例如改变
 声明选择、statement identity 计算或 utility 证据含义；即使 JSON schema 完全相同
@@ -99,7 +99,7 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 
 | 输入变化 | 失效范围 |
 | --- | --- |
-| `report_semantic_version` 增加 | 所有模块报告及汇总。 |
+| `report_cache_release_semantic_version` 增加 | 所有模块报告及汇总。 |
 | 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；源码哈希也独立参与，包含只改注释的编辑。 |
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 各模块报告的共同依赖，包括 toolchain、依赖 pin 和 Lake 配置。 |

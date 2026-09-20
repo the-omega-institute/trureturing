@@ -751,10 +751,10 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
     | throwError "incomplete_closure:E7.type_identity"
   let .ok (bodyIdentity, bodyBytes) ← rawIdentity info.levelParams info.value (state.remaining - typeBytes)
     | throwError "incomplete_closure:E7.body_identity"
-  let (inputs, reportSemanticVersion) ← sourceInputs env state.dependencies
+  let inputs ← sourceInputs env state.dependencies
   let data : TemplatePlanData := {
     compiler := Lean.versionString, toolchain := Lean.versionString,
-    reportSemanticVersion, sourceInputs := inputs,
+    sourceInputs := inputs,
     name, definitionOwner := owner, enrollmentOwner := env.header.mainModule,
     levelParams := info.levelParams, slots, constructorTypes := constructors,
     typeIdentity, bodyIdentity, planIdentity := "", dependencies := state.dependencies,

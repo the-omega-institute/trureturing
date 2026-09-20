@@ -20,7 +20,7 @@ public sealed class DeclaredTemplateReviewTests
         ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
         ["lake-manifest.json"] = "{\"packages\":[]}",
         ["lean-report-inputs.json"] = """
-            {"schema_version":1,"report_semantic_version":9,
+            {"schema_version":1,"report_cache_release_semantic_version":9,
              "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},
@@ -31,7 +31,7 @@ public sealed class DeclaredTemplateReviewTests
     internal static int ManifestVersion(Dictionary<string, string> files)
     {
         using var manifest = JsonDocument.Parse(files["lean-report-inputs.json"]);
-        return manifest.RootElement.GetProperty("report_semantic_version").GetInt32();
+        return manifest.RootElement.GetProperty("report_cache_release_semantic_version").GetInt32();
     }
 
     internal static Dictionary<string, string> Files()
@@ -206,12 +206,12 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void bumped_manifest_rejects_seven()
+    public void current_manifest_rejects_immediate_predecessor_eight()
     {
         var manifest = PolicyFiles()["lean-report-inputs.json"];
-        var error = ReadChangedManifest(manifest, 7);
+        var error = ReadChangedManifest(manifest, 8);
         Assert.True(error is FormatException && error.Message.Contains("DTR-EvidenceVersion", StringComparison.Ordinal),
-            "[FAIL] bumped_manifest_rejects_seven: " + error?.Message);
+            "[FAIL] current_manifest_rejects_immediate_predecessor_eight: " + error?.Message);
     }
 
     [Theory]
@@ -219,15 +219,15 @@ public sealed class DeclaredTemplateReviewTests
     [InlineData("{}")]
     [InlineData("{")]
     [InlineData("[]")]
-    [InlineData("{\"report_semantic_version\":null}")]
-    [InlineData("{\"report_semantic_version\":\"8\"}")]
-    [InlineData("{\"report_semantic_version\":true}")]
-    [InlineData("{\"report_semantic_version\":0}")]
-    [InlineData("{\"report_semantic_version\":-1}")]
-    [InlineData("{\"report_semantic_version\":6.5}")]
+    [InlineData("{\"report_cache_release_semantic_version\":null}")]
+    [InlineData("{\"report_cache_release_semantic_version\":\"8\"}")]
+    [InlineData("{\"report_cache_release_semantic_version\":true}")]
+    [InlineData("{\"report_cache_release_semantic_version\":0}")]
+    [InlineData("{\"report_cache_release_semantic_version\":-1}")]
+    [InlineData("{\"report_cache_release_semantic_version\":6.5}")]
     public void invalid_manifest_version_rejected(string? manifest)
     {
-        var error = ReadChangedManifest(manifest, 7);
+        var error = ReadChangedManifest(manifest, 8);
         Assert.True(error is FormatException && error.Message.Contains("DTR-ManifestVersion", StringComparison.Ordinal),
             "[FAIL] invalid_manifest_version_rejected: " + error?.Message);
     }
@@ -235,7 +235,7 @@ public sealed class DeclaredTemplateReviewTests
     [Theory]
     [InlineData(5)]
     [InlineData(7)]
-    public void mismatched_report_semantic_version_rejects_binding_evidence(int version)
+    public void mismatched_report_cache_release_semantic_version_rejects_binding_evidence(int version)
     {
         var files = Files();
         var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
@@ -247,7 +247,7 @@ public sealed class DeclaredTemplateReviewTests
         var error = Record.Exception(() => InformationTemplateEvidence.Collect(snapshot,
             RawLeanReportArtifact.Read(changed.AsSpan(), snapshot), [RepoPath.CreateKnown(Registration)]));
         Assert.True(error is FormatException && error.Message.Contains("DTR-Evidence", StringComparison.Ordinal),
-            "[FAIL] mismatched_report_semantic_version_rejects_binding_evidence: " + version);
+            "[FAIL] mismatched_report_cache_release_semantic_version_rejects_binding_evidence: " + version);
     }
 
     [Fact]

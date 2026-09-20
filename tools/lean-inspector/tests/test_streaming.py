@@ -20,7 +20,7 @@ def manifest_fixture(root, version=9):
     path = root / 'lean-report-inputs.json'
     if not path.exists():
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        path.write_text(json.dumps(dict(schema_version=1, report_semantic_version=version,
+        path.write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=version,
             report_modules=paths(), inspector_sources=paths(), config_inputs=paths(),
             producer_scopes={'lean-report': paths('lean-report-inputs.json',
                 'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -29,7 +29,7 @@ def manifest_fixture(root, version=9):
 
 def evidence_fixture(manifest):
     return dict(schema_version=1,
-        compatibility_version=json.loads(manifest.read_text())['report_semantic_version'],
+        compatibility_version=json.loads(manifest.read_text())['report_cache_release_semantic_version'],
         inventory=[], registered=[], records=[], inputs=[])
 
 
@@ -81,10 +81,10 @@ class ManifestVersionTests(unittest.TestCase):
                         materials.validate_template_evidence(evidence, manifest)
 
     def test_missing_or_malformed_manifest_version_rejected(self):
-        for text in [None, '{}', '{', '[]', '{"report_semantic_version":null}',
-                     '{"report_semantic_version":"8"}', '{"report_semantic_version":true}',
-                     '{"report_semantic_version":0}', '{"report_semantic_version":-1}',
-                     '{"report_semantic_version":6.5}']:
+        for text in [None, '{}', '{', '[]', '{"report_cache_release_semantic_version":null}',
+                     '{"report_cache_release_semantic_version":"8"}', '{"report_cache_release_semantic_version":true}',
+                     '{"report_cache_release_semantic_version":0}', '{"report_cache_release_semantic_version":-1}',
+                     '{"report_cache_release_semantic_version":6.5}']:
             with self.subTest(manifest=text), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 manifest = manifest_fixture(root)
@@ -241,7 +241,7 @@ class PublicationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4,
                 report_modules=paths('X*.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -298,7 +298,7 @@ class PublicationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -386,7 +386,7 @@ class PublicationTests(unittest.TestCase):
             claim = root / 'Claim.lean'
             claim.write_text('def claim : Prop := False\n')
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -502,7 +502,7 @@ class EntryPointTests(unittest.TestCase):
             (root / loader).parent.mkdir(parents=True)
             (root / loader).write_text(Path(native.selection.__file__).read_text())
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                 report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json', loader), 'scribe-content': paths()})))
             binary = root / 'candidate producer.dll'
@@ -555,7 +555,7 @@ class EntryPointTests(unittest.TestCase):
                     write(name, (repository / name).read_text())
                 write('Trureturing.lean', 'def x : Nat := 1\n')
                 paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-                write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_semantic_version=1,
+                write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
                     report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                     producer_scopes={'lean-report': paths('lean-report-inputs.json',
                         'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))

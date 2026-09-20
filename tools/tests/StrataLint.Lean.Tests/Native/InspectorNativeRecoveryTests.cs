@@ -27,6 +27,10 @@ public sealed class InspectorNativeRecoveryTests(InspectorCompilerFixture compil
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 
     [Fact]
+    public void OldManifestKeyRejected() =>
+        InspectorNativeTestRunner.Run(compiler, "test_native.NativeTests.test_native_old_manifest_key_rejected");
+
+    [Fact]
     public void ModuleBindingScope() =>
         InspectorNativeTestRunner.Run(compiler, "test_native.NativeTests.test_native_module_binding_scope");
 }

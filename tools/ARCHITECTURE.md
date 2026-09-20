@@ -37,7 +37,7 @@ production round before downstream use. Cache seeds are optional inputs to those
 validators and producers; cache hits do not issue a passing verdict. PR runs do
 not publish cache snapshots.
 
-Report compatibility is the explicit `report_semantic_version` in the registered
+Report compatibility is the explicit `report_cache_release_semantic_version` in the registered
 `lean-report-inputs.json`. Native Lake facets own report reuse and always require
 the default Lean/audit targets and current inspector build. Registered configuration
 bytes, module and utility-claim inputs, captured source hashes, and complete

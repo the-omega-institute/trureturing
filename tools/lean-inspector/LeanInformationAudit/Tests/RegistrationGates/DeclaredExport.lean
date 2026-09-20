@@ -29,7 +29,7 @@ run_meta do
     unless rows.size == registered.size do throwError "setup: export partition lost a row"
     let .ok inputs := wire.getObjValAs? (Array Json) "inputs"
       | throwError "setup: missing inputs"
-    unless inputs.all (fun input => match input.getObjValAs? String "path" with
+    unless !inputs.isEmpty && inputs.all (fun input => match input.getObjValAs? String "path" with
         | .ok path => path.endsWith ".lean"
         | .error _ => false) do
       throwError "[FAIL] module_inputs_exclude_global_configuration"
@@ -41,17 +41,19 @@ run_meta do
     let original ← IO.FS.readFile manifestPath
     let .ok manifest := Json.parse original | throwError "setup: invalid manifest"
     let .ok fields := manifest.getObj? | throwError "setup: manifest is not an object"
-    let .ok version := manifest.getObjValAs? Nat "report_semantic_version"
+    let .ok version := manifest.getObjValAs? Nat "report_cache_release_semantic_version"
       | throwError "setup: missing semantic version"
     IO.FS.writeFile manifestPath ((Json.mkObj (fields.toList.map fun (key, value) =>
-      (key, if key == "report_semantic_version" then toJson (version + 1) else value))).compress)
+      (key, if key == "report_cache_release_semantic_version" then toJson (version + 1) else value))).compress)
     let bumped ← reportJson modules
-    let accepted := bumped.all fun wire => wire.getObjValAs? Nat "compatibility_version" == .ok (version + 1)
+    let accepted := bumped.size == wires.size && !bumped.isEmpty && (bumped.zip wires).all fun (wire, prior) =>
+      wire.getObjValAs? Nat "compatibility_version" == .ok (version + 1) &&
+      (wire.getObjVal? "records").map Json.compress == (prior.getObjVal? "records").map Json.compress
     (if accepted then logInfo else logError)
       m!"[{if accepted then "PASS" else "FAIL"}] manifest_only_bump_emits_next_version"
-    for (label, text) in #[("missing", "{}"), ("string", "{\"report_semantic_version\":\"8\"}"),
-        ("zero", "{\"report_semantic_version\":0}"), ("negative", "{\"report_semantic_version\":-1}"),
-        ("boolean", "{\"report_semantic_version\":true}"), ("fraction", "{\"report_semantic_version\":6.5}"),
+    for (label, text) in #[("missing", "{}"), ("string", "{\"report_cache_release_semantic_version\":\"8\"}"),
+        ("zero", "{\"report_cache_release_semantic_version\":0}"), ("negative", "{\"report_cache_release_semantic_version\":-1}"),
+        ("boolean", "{\"report_cache_release_semantic_version\":true}"), ("fraction", "{\"report_cache_release_semantic_version\":6.5}"),
         ("json", "{"), ("absent", "")] do
       if label == "absent" then IO.FS.removeFile manifestPath else IO.FS.writeFile manifestPath text
       let rejected ← try

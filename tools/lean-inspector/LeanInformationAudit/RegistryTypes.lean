@@ -273,7 +273,6 @@ structure TemplatePlanData where
   compatibilityVersion : Nat := 8
   compiler : String
   toolchain : String
-  reportSemanticVersion : Nat
   sourceInputs : Array SourceInput
   name : Name
   definitionOwner : Name
@@ -527,9 +526,6 @@ private def payload : M TemplatePlanData := do
   for version in #[1, 1, 1, 8] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
-  let versionToken ← token
-  let some reportSemanticVersion := versionToken.toNat? | fail
-  unless reportSemanticVersion > 0 && toString reportSemanticVersion == versionToken do fail
   let templateName ← name
   let definitionOwner ← name
   let enrollmentOwner ← name
@@ -564,7 +560,7 @@ private def payload : M TemplatePlanData := do
   let typePlan ← plan
   let bodyPlan ← plan
   return {
-    compiler, toolchain, reportSemanticVersion, sourceInputs, name := templateName,
+    compiler, toolchain, sourceInputs, name := templateName,
     definitionOwner, enrollmentOwner, levelParams, slots, typeIdentity, bodyIdentity,
     dependencies, constructorTypes, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
 

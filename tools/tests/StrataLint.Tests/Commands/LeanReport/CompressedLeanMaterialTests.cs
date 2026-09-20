@@ -39,7 +39,7 @@ public sealed class CompressedLeanMaterialTests
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
             manifest = root / "lean-report-inputs.json"
-            manifest.write_text(json.dumps({"report_semantic_version": 1}))
+            manifest.write_text(json.dumps({"report_cache_release_semantic_version": 1}))
             compressed = root / ('compressed.json.materials' if mode == 'overlap' else 'compressed')
             framed = b''.join(str(len(v)).encode() + b'\n' + v for v in values) + b'done\n'
             if mode == 'truncated':
