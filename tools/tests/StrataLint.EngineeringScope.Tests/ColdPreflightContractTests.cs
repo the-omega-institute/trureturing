@@ -149,7 +149,7 @@ public sealed class ColdPreflightContractTests
                 Assert.DoesNotContain("filemap", events);
                 return;
             }
-            Assert.Single(events, s => s == CommonExecutionEvidence.CliPath + " filemap-conform");
+            Assert.Single(events, s => s == CommonExecutionEvidence.CliPath + " filemap-conform --scope " + CommonExecutionEvidence.FileMapScopePath);
             Assert.Equal("completed", Read(root, "current-result.json")["status"]!.ToString());
             Assert.Equal(0, Read(root, "current-result.json")["exit"]!.GetValue<int>());
             var current = Read(root, "current.json");
@@ -236,7 +236,7 @@ public sealed class ColdPreflightContractTests
             """);
         fixture.Write("tools/Foo/packages.lock.json", "{\"version\":1,\"dependencies\":{\"net10.0\":{}}}\n");
         fixture.Write("tools/Foo/Program.cs", """
-            if (args.Length != 1 || args[0] != "filemap-conform") return 91;
+            if (args.Length != 3 || args[0] != "filemap-conform" || args[1] != "--scope" || !System.IO.File.Exists(args[2])) return 91;
             System.IO.File.AppendAllText("build/launched", "dotnet filemap-conform\n");
             System.Console.WriteLine("fixture filemap check reached");
             return 0;

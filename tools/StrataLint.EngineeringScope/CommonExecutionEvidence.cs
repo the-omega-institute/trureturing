@@ -17,7 +17,9 @@ internal sealed record StageStep(string Name, int RawExit, int Exit, string Stat
 internal sealed record CommonStageRecord(int Version, string Candidate, string Round, StageStep[] Steps, ExecutionMaterial[] Materials, ResourcePlanBinding? Selection = null, string[]? Projects = null);
 internal sealed record RegisteredCheckReport(string Producer, string Consumer, string Artifact, string[] Materials);
 internal sealed record RegisteredCommonCheck(string Id, string[] ProgramProjects, string[] Materials,
-    string[] MaterialExcludes, string[] PathInventory, RegisteredCheckReport[] ReportInputs);
+    string[] MaterialExcludes, string[] PathInventory, RegisteredCheckReport[] ReportInputs,
+    [property: System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    RegisteredFileMapScope? DeltaScope = null);
 internal sealed record CommonCheckManifest(string Schema, RegisteredCommonCheck[] Checks);
 
 internal static partial class CommonExecutionEvidence
@@ -37,6 +39,7 @@ internal static partial class CommonExecutionEvidence
     internal const string EngineeringPath = RootPath + "/engineering.json";
     internal const string CurrentPath = RootPath + "/current.json";
     internal const string ScribeMarkdownPaths = RootPath + "/scribe-markdown.paths";
+    internal const string FileMapScopePath = RootPath + "/filemap-scope.json";
     internal const string CheckManifestPath = "Meta/ci-checks.json";
     internal const string ReportPath = ".lake/build/stratalint/raw-lean-report.json";
     internal static readonly string[] ReportPaths = [ReportPath, ReportPath + ".sha256", ReportPath + ".input.attestation",
@@ -145,6 +148,11 @@ internal static partial class CommonExecutionEvidence
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         foreach (var check in manifest.Checks)
         {
+            if (check.DeltaScope is not null)
+            {
+                if (check.Id != "filemap") throw new InvalidDataException("unexpected filemap delta scope: " + check.Id);
+                FileMapInspectionScope.Validate(check.DeltaScope);
+            }
             if (check.ProgramProjects is null || check.Materials is null || check.MaterialExcludes is null
                 || check.PathInventory is null || check.ReportInputs is null || check.ProgramProjects.Length == 0)
                 throw new InvalidDataException($"missing common check registration fields: {check.Id}");
@@ -327,6 +335,14 @@ internal static partial class CommonExecutionEvidence
         var build = ValidateBuild(root, candidate, null, validation);
         var engineering = ValidateEngineering(root, build, validation, out var tests, out _, baseProjects);
         return (ValidateCurrent(root, build, validation, out _), engineering, build, tests);
+    }
+
+    internal static void ValidateExecutionPlan(string root, CommonStageRecord build, ResourceExecutionPlan? expected, string stage)
+    {
+        var actual = CurrentPlan(root, build);
+        if ((actual is null) != (expected is null)
+            || actual is not null && !JsonElement.DeepEquals(actual.Document, expected!.Document))
+            throw new InvalidDataException(stage + " requires the same resource plan as build");
     }
 
     private static void ValidateRecord(string root, CommonStageRecord record, string candidate, string round, ValidationScope? validation = null)

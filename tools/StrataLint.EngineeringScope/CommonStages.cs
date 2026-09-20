@@ -228,6 +228,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         ClearEvidence("current");
         File.Delete(Path.Combine(root, CommonExecutionEvidence.ScribeMarkdownPaths));
         var build = CommonExecutionEvidence.ValidateBuild(root);
+        CommonExecutionEvidence.ValidateExecutionPlan(root, build, resourcePlan, "current");
         var obligations = resourcePlan?.CurrentSteps ?? CommonExecutionEvidence.CurrentSteps;
         var ids = resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray()
             ?? CommonExecutionEvidence.CheckIds("current", CommonExecutionEvidence.ReadCheckManifest(CommonExecutionEvidence.Snapshot(root)));
@@ -265,7 +266,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 var checks = CommonExecutionEvidence.BeginChecks(root, "current", build, output, ids);
                 checks.Run("filemap", () =>
                 {
-                    var result = Capture("dotnet", [CommonExecutionEvidence.CliPath, "filemap-conform"]);
+                    CommonExecutionEvidence.Write(root, CommonExecutionEvidence.FileMapScopePath,
+                        checks.FileMapScope ?? throw new InvalidDataException("missing filemap inspection scope"));
+                    var result = Capture("dotnet", [CommonExecutionEvidence.CliPath, "filemap-conform", "--scope", CommonExecutionEvidence.FileMapScopePath]);
                     return new([new("filemap", result.Exit, result.Text)]);
                 });
                 _ = checks.Seal();

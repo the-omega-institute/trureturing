@@ -11,6 +11,54 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper testOutput)
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentRejectsDifferentBuildPlanBeforeLaunchingProducers(bool plannedBuild)
+    {
+        using var fixture = new ResourceFixture(["filemap"]);
+        fixture.Processes(bindPlan: plannedBuild);
+        using var output = new StringWriter();
+        Assert.Equal(2, fixture.Run("current", output, planned: !plannedBuild));
+        Assert.Contains("current requires the same resource plan as build", output.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "build/launched")));
+    }
+
+    [Fact]
+    public void ScopedFileMapChecksCannotBeSealedAsUnplannedFullCurrent()
+    {
+        using var fixture = new ResourceFixture(["filemap"]);
+        fixture.Processes(bindPlan: true);
+        fixture.Report();
+        var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
+        CheckEvidenceFixture.Seal(fixture.Root, "current", build);
+        fixture.Write("build/ci/full.log", "complete fixture operations");
+        var steps = CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/full.log")).ToArray();
+        var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.SealCurrent(fixture.Root, build, steps));
+        Assert.Equal("current requires the same resource plan as build", error.Message);
+        Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+    }
+
+    [Fact]
+    public void FileMapScopeReachesTheProcessAndCannotSupplyWholeTreeSeedEvidence()
+    {
+        using var fixture = new ResourceFixture(["filemap"]);
+        fixture.Processes(bindPlan: true);
+        using var output = new StringWriter();
+        Assert.True(fixture.Run("current", output) == 0, output.ToString());
+        var scope = FileMapInspectionScope.Read(Path.Combine(fixture.Root, CommonExecutionEvidence.FileMapScopePath));
+        Assert.Equal(new[] { "fixtures/selected.txt" }, scope.Paths);
+        Assert.False(scope.Actors);
+        using var imported = new StringWriter();
+        Assert.Equal(0, CommonExecutionEvidence.CheckSeedCommand(["check-seed-import", "--repository", fixture.Root, "--stage", "current"], imported));
+        Assert.Contains("COMMON_CHECK_SEED_IMPORTED stage=current units=0", imported.ToString(), StringComparison.Ordinal);
+        using var warm = new StringWriter();
+        Assert.True(fixture.Run("current", warm) == 0, warm.ToString());
+        Assert.Single(File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
+        Assert.Equal("reused", Assert.Single(CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root,
+            CommonExecutionEvidence.ChecksPath("current")).Units).Status);
+    }
+
+    [Theory]
     [InlineData("build")]
     [InlineData("engineering")]
     [InlineData("current")]
@@ -186,7 +234,7 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
     public void CompleteCurrentRouteSealsAllOriginalObligations()
     {
         using var fixture = new ResourceFixture(["lean-report"]);
-        fixture.Processes();
+        fixture.Processes(bindPlan: false);
         fixture.CompleteCheckBoundary();
         using var output = new StringWriter();
         Assert.True(fixture.Run("current", output, planned: false) == 0, output.ToString());
@@ -440,6 +488,11 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
                 new EngineeringProjectFixture(Foo, "Foo", "test-support", false, ["tools/Foo/Program.cs"]),
                 new EngineeringProjectFixture(Bar, "Bar", "test-support", false, ["tools/Bar/Program.cs"])));
             Write(CommonExecutionEvidence.CheckManifestPath, CommonCheckRegistrationFixture.Manifest(Foo));
+            var scopeManifest = JsonNode.Parse(File.ReadAllText(Path.Combine(Root, CommonExecutionEvidence.CheckManifestPath)))!;
+            scopeManifest["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "filemap")!["delta_scope"] = JsonNode.Parse("""
+                {"whole_tree_inputs":["Meta/FILEMAP.toml"],"actor_inputs":["tools/**/*.cs"],"inventory_inputs":["Blueprint/**"],"related":[]}
+                """);
+            Write(CommonExecutionEvidence.CheckManifestPath, scopeManifest.ToJsonString());
         }
         internal void CommitPlan()
         {
@@ -543,16 +596,18 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
             Executable("build/bin/dotnet", "printf 'dotnet check-current\n' >> build/launched\ncp build/produced-checks.json build/ci/current-checks.json\n");
         }
         internal void FilemapFailure() => Executable("build/bin/dotnet", "printf 'dotnet filemap-conform\n' >> build/launched\nexit 1\n");
-        internal void Processes(bool prepareReport = true)
+        internal void Processes(bool prepareReport = true, bool bindPlan = true)
         {
-            Executable("build/bin/dotnet", "printf 'dotnet filemap-conform\n' >> build/launched\n[[ \"$*\" == *filemap-conform ]]\n");
+            Executable("build/bin/dotnet", "printf 'dotnet filemap-conform\n' >> build/launched\n[[ \"$*\" == *'filemap-conform --scope build/ci/filemap-scope.json' ]]\n");
             Executable("build/bin/make", "printf 'make %s\n' \"$*\" >> build/launched\n");
             processPath = Path.Combine(Root, "build/bin") + Path.PathSeparator + processPath;
             foreach (var binary in new[] { CommonExecutionEvidence.CliPath, CommonExecutionEvidence.LeanProducerPath }) Write(binary, "fixture binary");
             Write("build/ci/log", "fixture build");
+            var plan = bindPlan ? ResourceExecutionPlan.Load(Root, Plan, Changes) : null;
             CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root),
                 [CommonExecutionEvidence.CliPath, CommonExecutionEvidence.LeanProducerPath],
-                CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/log")).ToArray());
+                CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/log")).ToArray(),
+                plan?.Projects, plan?.Retain(Root));
             if (prepareReport && required.Any(id => id is "lean-report" or "scribe" or "current" or "lean-inspector-build")) Report();
         }
         internal void Report() => CiTransportTests.Report(fixture.Root);
