@@ -1,0 +1,95 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-triple-second-depth-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "adbaf2a0f62229d2b606b8eff2b74cefe14a9ad075034cfc83499dfc27c22315",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "complete_mean_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "model": {
+    "path": "content/006-model.json",
+    "sha256": "4cb2e34a17ce79a187ca6e5d19ae80fa59baa5a6c3d9a6549472434cc19ec012",
+    "kind": "object"
+  },
+  "retained_positive7_labels": {
+    "kind": "inline",
+    "value": [
+      21,
+      35,
+      63,
+      105,
+      147,
+      245
+    ]
+  },
+  "removed_assigned_tail_caps": {
+    "kind": "inline",
+    "value": [
+      "3/980",
+      "3/1225"
+    ]
+  },
+  "complete_positive7_tail": {
+    "kind": "inline",
+    "value": "37/1225"
+  },
+  "results": {
+    "path": "content/010-results.json",
+    "sha256": "7209b0d602741b0124156da51a695fa79a0fec2bb05121ccc2a86cb5f072206f",
+    "kind": "value"
+  },
+  "encoded_rational_duals": {
+    "path": "content/011-encoded_rational_duals.json",
+    "sha256": "973358a210c4d2a39cd0a6d45948fd00dba3560640fe0786030854e41d47ca5e",
+    "kind": "value-zlib-base85"
+  },
+  "distinct_dual_count": {
+    "kind": "inline",
+    "value": 134
+  },
+  "rational_column_checks": {
+    "kind": "inline",
+    "value": 875154
+  },
+  "previous251_duals_used": {
+    "path": "content/014-previous251_duals_used.json",
+    "sha256": "f9e49d484bb392fae468cbfd573ea9b9e080403c52b117cfc511b3eb0cabe6e2",
+    "kind": "value"
+  },
+  "previous256_duals_used": {
+    "path": "content/015-previous256_duals_used.json",
+    "sha256": "df6fe594c5560463ce2e3abae9fd184bc1747571354817dfb1aa607b0056231c",
+    "kind": "value"
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 187500000
+  },
+  "total_independent_affine_checks": {
+    "kind": "inline",
+    "value": 57
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Three complete original AP13/heavy0/heavy16 comparisons on both entire actual saturated J faces. All62500000 original containing choices per target, all common late coordinates, 6531-variable actual-source model with seven independent135/125/225 membership states and their complement, all independent147/245 projections and every exponent tail are included. Only the general arbitrary-residue two-depth bridge is reused from204; no K source caps are imported. No actual-source attainment, off-face extension, complete52-cost/global comparison, Lean verification or unrestricted Erdos7 resolution is asserted."
+  }
+}
