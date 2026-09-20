@@ -39,11 +39,14 @@ internal static partial class CommonExecutionEvidence
         var fileMapScope = ids.Contains("filemap") ? FileMapInspectionScope.Select(
             registrations.Single(check => check.Id == "filemap").DeltaScope, changedPaths,
             snapshot.Files.Keys.Select(path => path.Value).ToArray()) : null;
+        var markdown = registrations.Single(check => check.Id == "scribe-markdown");
+        var markdownScope = ids.Contains("scribe-markdown") ? MarkdownInspectionScope.Select(markdown.MarkdownScope, changedPaths,
+            snapshot.Files.Keys.Select(path => path.Value).ToArray(), markdown.PathInventory) : null;
         var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids, executionEnvironment: environment,
             validation: validation, changedPaths: changedPaths);
         ValidateStartedBuild(root, build, Candidate(root, snapshot), validation);
         File.Delete(Path.Combine(root, ChecksPath(stage)));
-        return new(root, stage, build, validation, registrations, inputs, environment, output, ids, fileMapScope);
+        return new(root, stage, build, validation, registrations, inputs, environment, output, ids, fileMapScope, markdownScope);
     }
 
     // This is the existing common owner, split by responsibility. Only a validated
@@ -64,10 +67,11 @@ internal static partial class CommonExecutionEvidence
         private readonly string invocation;
         internal string[] Ids { get; }
         internal FileMapInspectionScope? FileMapScope { get; }
+        internal MarkdownInspectionScope? MarkdownScope { get; }
         internal IReadOnlyCollection<CheckUnitResult> Completed => completed.Values;
         internal CheckExecution(string root, string stage, CommonStageRecord build, ValidationScope validation,
             IReadOnlyList<RegisteredCommonCheck> registrations, IReadOnlyDictionary<string, string> inputs, string environment, TextWriter output, string[] ids,
-            FileMapInspectionScope? fileMapScope)
+            FileMapInspectionScope? fileMapScope, MarkdownInspectionScope? markdownScope)
         {
             this.root = root; this.stage = stage; this.build = build; snapshot = validation.Snapshot;
             registration = validation.Fresh();
@@ -75,6 +79,7 @@ internal static partial class CommonExecutionEvidence
             this.registrations = registrations; this.inputs = inputs; this.environment = environment;
             Ids = ids;
             FileMapScope = fileMapScope;
+            MarkdownScope = markdownScope;
             invocation = $"{RootPath}/check-material/{build.Candidate}/{build.Round}/{Guid.NewGuid():N}";
             reused = ImportCheckSeed(root, stage, registration, inputs, output);
         }

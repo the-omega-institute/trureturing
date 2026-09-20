@@ -39,9 +39,8 @@ internal sealed partial class ProductionCliEnvironment
         if (checks.Ids.Contains("scribe-describe")) checks.Run("scribe-describe", () => Scribe("scribe-describe", ["describe-report", "--check"], capability: true));
         if (checks.Ids.Contains("scribe-markdown")) checks.Run("scribe-markdown", () =>
         {
-            var declaration = validation.CheckManifest().Single(check => check.Id == "scribe-markdown");
-            var paths = EngineeringProjectRegistry.ExpandInputs(snapshot.Files.Keys.Select(path => path.Value), declaration.PathInventory, [], declaration.Id);
-            File.WriteAllText(Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths), string.Join("\0", paths) + "\0");
+            var scope = checks.MarkdownScope ?? throw new InvalidDataException("missing scribe-markdown inspection scope");
+            File.WriteAllText(Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths), string.Join("\0", scope.Paths) + "\0");
             return Scribe("scribe-markdown", ["markdown-check", "--report", CommonExecutionEvidence.ReportPath,
                 "--paths-from", Path.Combine(repositoryRoot, CommonExecutionEvidence.ScribeMarkdownPaths)]);
         });

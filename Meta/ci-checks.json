@@ -179,6 +179,34 @@
     },
     {
       "id": "scribe-markdown",
+      "markdown_scope": {
+        "whole_tree_inputs": [
+          "Meta/ci-checks.json",
+          "Meta/engineering-projects.json",
+          "Meta/ReportProducers/**",
+          "Meta/ReportConsumers/**",
+          "Meta/registry.yaml",
+          "Meta/domains.yaml",
+          "global.json",
+          "Directory.Build.props",
+          "Directory.Packages.props",
+          ".editorconfig",
+          "lean-toolchain",
+          "lakefile.toml",
+          "lake-manifest.json",
+          "tools/Architecture/**",
+          "tools/StrataLint.Scribe/**",
+          "tools/StrataLint.Scribe.Documents/**",
+          "tools/StrataLint.Engine/**",
+          "tools/Trureturing.Truth/**",
+          "tools/StrataLint.Cli/**",
+          "tools/StrataLint.EngineeringScope/**"
+        ],
+        "changed_inputs": [
+          "Blueprint/**/*.md",
+          "Blueprint/**/*.scribe.cs"
+        ]
+      },
       "program_projects": ["tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"],
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Blueprint/**/*.md", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Meta/registry.yaml", "Meta/domains.yaml", "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js"],
       "material_excludes": [],

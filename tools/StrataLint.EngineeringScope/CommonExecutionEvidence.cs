@@ -19,7 +19,9 @@ internal sealed record RegisteredCheckReport(string Producer, string Consumer, s
 internal sealed record RegisteredCommonCheck(string Id, string[] ProgramProjects, string[] Materials,
     string[] MaterialExcludes, string[] PathInventory, RegisteredCheckReport[] ReportInputs,
     [property: System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
-    RegisteredFileMapScope? DeltaScope = null);
+    RegisteredFileMapScope? DeltaScope = null,
+    [property: System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    RegisteredMarkdownScope? MarkdownScope = null);
 internal sealed record CommonCheckManifest(string Schema, RegisteredCommonCheck[] Checks);
 
 internal static partial class CommonExecutionEvidence
@@ -152,6 +154,11 @@ internal static partial class CommonExecutionEvidence
             {
                 if (check.Id != "filemap") throw new InvalidDataException("unexpected filemap delta scope: " + check.Id);
                 FileMapInspectionScope.Validate(check.DeltaScope);
+            }
+            if (check.MarkdownScope is not null)
+            {
+                if (check.Id != "scribe-markdown") throw new InvalidDataException("unexpected scribe-markdown path scope: " + check.Id);
+                MarkdownInspectionScope.Validate(check.MarkdownScope);
             }
             if (check.ProgramProjects is null || check.Materials is null || check.MaterialExcludes is null
                 || check.PathInventory is null || check.ReportInputs is null || check.ProgramProjects.Length == 0)

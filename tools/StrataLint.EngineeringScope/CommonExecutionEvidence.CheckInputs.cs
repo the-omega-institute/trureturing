@@ -140,6 +140,9 @@ internal static partial class CommonExecutionEvidence
             if (check.Id == "filemap" && changedPaths is not null)
                 result[check.Id] = Digest(new { input = result[check.Id], contract = "filemap-delta-v1",
                     paths = changedPaths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal) });
+            if (check.Id == "scribe-markdown")
+                result[check.Id] = Digest(new { input = result[check.Id], contract = "scribe-markdown-scope-v1",
+                    scope = MarkdownInspectionScope.Select(check.MarkdownScope, changedPaths, paths, check.PathInventory) });
             void Add(string path)
             {
                 if (!projects.TryGetValue(path, out var project)) throw new InvalidDataException($"check {check.Id} references unregistered project: {path}");

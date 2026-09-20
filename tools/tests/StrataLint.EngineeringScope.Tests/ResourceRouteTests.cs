@@ -8,7 +8,7 @@ using Xunit;
 namespace StrataLint.EngineeringScope.Tests;
 
 [Collection("Engineering scope process boundary")]
-public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper testOutput)
+public sealed partial class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper testOutput)
 {
     [Theory]
     [InlineData(false)]
@@ -491,6 +491,11 @@ public sealed class ResourceRouteTests(Xunit.Abstractions.ITestOutputHelper test
             var scopeManifest = JsonNode.Parse(File.ReadAllText(Path.Combine(Root, CommonExecutionEvidence.CheckManifestPath)))!;
             scopeManifest["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "filemap")!["delta_scope"] = JsonNode.Parse("""
                 {"whole_tree_inputs":["Meta/FILEMAP.toml"],"actor_inputs":["tools/**/*.cs"],"inventory_inputs":["Blueprint/**"],"related":[]}
+                """);
+            var markdown = scopeManifest["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "scribe-markdown")!;
+            markdown["path_inventory"] = new JsonArray("Blueprint/**/*.md");
+            markdown["markdown_scope"] = JsonNode.Parse("""
+                {"whole_tree_inputs":["tools/Renderer/**"],"changed_inputs":["Blueprint/**/*.md","Blueprint/**/*.scribe.cs"]}
                 """);
             Write(CommonExecutionEvidence.CheckManifestPath, scopeManifest.ToJsonString());
         }
