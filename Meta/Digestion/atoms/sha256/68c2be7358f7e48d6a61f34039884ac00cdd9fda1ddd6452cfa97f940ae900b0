@@ -1,0 +1,11 @@
+**定理 122.16。** $\mathcal S$ 非减，且
+$$
+\mathcal S(s)\longrightarrow\sum_bp_bh(a_b).
+$$
+对所有 $s\ge0$，有精确 Jensen 缺陷式
+$$
+\sum_bp_bh(a_b)-\mathcal S(s)
+=\sum_x\mu_x d_{\mathrm{Ber}}(u_s(x)\Vert a_{q(x)}),
+$$
+其中 $d_{\mathrm{Ber}}(r\Vert a)=r\log(r/a)+(1-r)\log((1-r)/(1-a))$；当 $a=0$ 或 $1$ 时，该纤维的 $u_s$ 同为该端点，整条纤维贡献约定为零。
+

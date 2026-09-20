@@ -1,0 +1,23 @@
+### 125.2 时间记录与目标线性关系的充分性
+
+设有限维实状态空间 $X$、输出空间 $U$，已知线性演化 $A:X\to X$ 与读出 $O:X\to U$。无外部输入时 $z_t=A^tz_0$，$y_t=Oz_t$。长度 $T\ge0$ 的记录映射为
+$$
+\mathcal O_T:X\to U^T,
+\qquad\mathcal O_Tz=(Oz,OAz,\ldots,OA^{T-1}z).
+$$
+对任务线性映射 $F:X\to Y$，存在定义在实际像上的线性恢复映射 $D:\operatorname{ran}\mathcal O_T\to Y$ 满足 $F=D\mathcal O_T$，当且仅当
+$$
+\ker\mathcal O_T\subseteq\ker F.
+$$
+必要性由复合直接得到。充分性时规定 $D(\mathcal O_Tz)=Fz$；同一记录的两个代表之差在 $\ker\mathcal O_T$，故该定义良好，线性且在实际像上唯一。这是目标因子化在边界历史关系中的具体实例。
+
+取 $F=I_X$，得完整状态可恢复当且仅当 $\ker\mathcal O_T=0$，即 $\operatorname{rank}\mathcal O_T=\dim X$。令
+$$
+\mathcal N=\bigcap_{t\ge0}\ker(OA^t).
+$$
+它是 $A$ 不变子空间：$v\in\mathcal N$ 时 $OA^tAv=OA^{t+1}v=0$。因此 $A$ 和 $O$ 下降到商 $X/\mathcal N$；全部未来记录恰区分这个商。若 $n=\dim X$，Cayley–Hamilton 将每个 $A^t$（$t\ge n$）表示为 $I,A,\ldots,A^{n-1}$ 的线性组合，故 $\ker\mathcal O_n=\mathcal N$；零维时两者均为零。
+
+有已知输入 $u_t$ 时，先从读数中减去已知受迫项 $\sum_{j=0}^{t-1}OA^{t-1-j}Ju_j$，剩余为 $OA^tz_0$，再用同一恢复判据。若输入或耦合未知，不能使用这份已知项消去。
+
+这也给出演化相容性：记录恢复的不只是任意标签，而是允许在完整未来商上继续更新的状态关系。对 $T<n$，有限记录的核未必是 $A$ 不变的，因而不能自动把它当作自治状态商。
+

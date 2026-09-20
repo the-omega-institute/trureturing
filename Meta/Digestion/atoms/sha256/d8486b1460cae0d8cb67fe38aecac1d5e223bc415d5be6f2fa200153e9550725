@@ -1,0 +1,35 @@
+**定理 122.5。** 设 $X$ 有限非空，约束指标集有限，每个 $v_i:X\to[0,\infty)$ 满足 $v_i(x)=0\iff x\in A_i$，权重 $\lambda_i>0$。定义
+$$
+E(x)=\sum_i\lambda_i v_i(x),\qquad E_*:=\min_xE(x),
+\qquad M=\{x:E(x)=E_*\}.
+$$
+则 $E_*=0$ 当且仅当存在共同实现。取严格正先验 $\mu_x$、$\sum_x\mu_x=1$，并令
+$$
+\rho_\beta(x)=\frac{\mu_x e^{-\beta E(x)}}{Z_\beta},
+\qquad Z_\beta=\sum_x\mu_xe^{-\beta E(x)},\qquad\beta\ge0.
+$$
+有逐点极限
+$$
+\rho_\beta(x)\longrightarrow\frac{\mu_x1_M(x)}{\mu(M)}
+\quad(\beta\to\infty).
+$$
+若 $M\ne X$，令 $\Delta=\min_{x\notin M}(E(x)-E_*)>0$，则
+$$
+\rho_\beta(X\setminus M)
+\le\frac{1-\mu(M)}{\mu(M)}e^{-\beta\Delta}.
+$$
+
+**证明。** 有限和中的项非负且权重严格正，故 $E(x)=0$ 当且仅当全部 $v_i(x)=0$。最小值可达，得到第一结论。把 Gibbs 式分子分母同时乘以 $e^{\beta E_*}$，最小点的指数因子恒为一，其余严格趋零，给出极限。分母至少为 $\mu(M)$，非最小点的分子和至多为 $(1-\mu(M))e^{-\beta\Delta}$，即得尾界。若 $M=X$，所有 Gibbs 律已经等于 $\mu$，不需要定义空集上的最小间隙。证毕。
+
+对任意概率 $\nu$，还有精确的自由能恒等式
+$$
+\beta\mathbb E_\nu E+D(\nu\Vert\mu)
+=D(\nu\Vert\rho_\beta)-\log Z_\beta.
+$$
+**证明。** 代入 $\log\rho_\beta=\log\mu-\beta E-\log Z_\beta$ 并求和即可；严格正先验确保所有分母正。KL 非负及其等号条件表明左侧由 $\rho_\beta$ 唯一最小化。另由有限求和微分得
+$$
+\frac{d}{d\beta}\mathbb E_{\rho_\beta}E
+=-\operatorname{Var}_{\rho_\beta}(E)\le0.
+$$
+这些公式没有把不相容变成相容。$E_*>0$ 时，低温选择最小违约的折中实现；它仍违反至少一条原约束。$E_*=0$ 时才集中到真实共同解。非均匀先验下，不将此能量下降另称为 Shannon 熵的普遍单调性。
+

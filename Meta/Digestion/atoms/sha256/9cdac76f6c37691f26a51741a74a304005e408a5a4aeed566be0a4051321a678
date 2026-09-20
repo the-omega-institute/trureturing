@@ -1,0 +1,10 @@
+**定理 128.7。** 后验仍为正态，精度与自然参数改为
+$$
+J_n=J_0+\mathbf H_n^T\mathbf R_n^{-1}\mathbf H_n,\qquad
+\eta_n=J_0m_0+\mathbf H_n^T\mathbf R_n^{-1}\mathbf y_n.
+$$
+固定噪声联合律和读取安排下，
+$$
+I(Z;\mathbf Y_n)=\frac12\log\frac{\det J_n}{\det J_0}.
+$$
+

@@ -16,7 +16,7 @@ import publication
 import native
 
 
-def manifest_fixture(root, version=6):
+def manifest_fixture(root, version=8):
     path = root / 'lean-report-inputs.json'
     if not path.exists():
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
@@ -34,22 +34,22 @@ def evidence_fixture(manifest):
 
 
 class ManifestVersionTests(unittest.TestCase):
-    def test_manifest_only_bump_accepts_seven_and_rejects_six(self):
+    def test_manifest_only_bump_accepts_eight_and_rejects_seven(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            manifest = manifest_fixture(root, 7)
+            manifest = manifest_fixture(root, 8)
             evidence = evidence_fixture(manifest)
-            self.assertEqual(evidence['compatibility_version'], 7)
+            self.assertEqual(evidence['compatibility_version'], 8)
             try:
                 materials.validate_template_evidence(evidence, manifest)
             except Exception as error:
-                self.fail('[FAIL] manifest_only_bump_accepts_seven: ' + str(error))
+                self.fail('[FAIL] manifest_only_bump_accepts_eight: ' + str(error))
             with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion'):
-                materials.validate_template_evidence(dict(evidence, compatibility_version=6), manifest)
+                materials.validate_template_evidence(dict(evidence, compatibility_version=7), manifest)
 
     def test_absent_evidence_version_uses_named_diagnostic(self):
         with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 7)
+            manifest = manifest_fixture(Path(directory), 8)
             evidence = evidence_fixture(manifest)
             del evidence['compatibility_version']
             with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
@@ -58,8 +58,8 @@ class ManifestVersionTests(unittest.TestCase):
 
     def test_malformed_evidence_version_uses_named_diagnostic(self):
         with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 7)
-            for version in [None, True, '7', 0, -1, 7.0, 7.5]:
+            manifest = manifest_fixture(Path(directory), 8)
+            for version in [None, True, '8', 0, -1, 8.0, 8.5]:
                 with self.subTest(version=version):
                     evidence = dict(evidence_fixture(manifest), compatibility_version=version)
                     with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
@@ -68,7 +68,7 @@ class ManifestVersionTests(unittest.TestCase):
 
     def test_unrelated_malformed_evidence_keeps_structural_diagnostic(self):
         with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 7)
+            manifest = manifest_fixture(Path(directory), 8)
             valid = evidence_fixture(manifest)
             missing_inventory = dict(valid)
             del missing_inventory['inventory']
@@ -82,7 +82,7 @@ class ManifestVersionTests(unittest.TestCase):
 
     def test_missing_or_malformed_manifest_version_rejected(self):
         for text in [None, '{}', '{', '[]', '{"report_semantic_version":null}',
-                     '{"report_semantic_version":"7"}', '{"report_semantic_version":true}',
+                     '{"report_semantic_version":"8"}', '{"report_semantic_version":true}',
                      '{"report_semantic_version":0}', '{"report_semantic_version":-1}',
                      '{"report_semantic_version":6.5}']:
             with self.subTest(manifest=text), tempfile.TemporaryDirectory() as directory:
@@ -100,7 +100,7 @@ class ManifestVersionTests(unittest.TestCase):
     def test_compact_cli_uses_explicit_manifest(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            manifest = manifest_fixture(root, 7)
+            manifest = manifest_fixture(root, 8)
             spool = root / 'spool'
             spool.mkdir()
             source, output = root / 'spool.json', root / 'report.json'
@@ -111,8 +111,8 @@ class ManifestVersionTests(unittest.TestCase):
                 str(spool), str(output), str(manifest)], cwd=spool, capture_output=True)
             self.assertEqual(result.returncode, 0, '[FAIL] compact_explicit_manifest: ' + result.stderr.decode())
             rows = publication.validate_rows(output, publication.member(output, '.materials.zip'), manifest=manifest)
-            self.assertEqual(rows[0]['information_templates']['compatibility_version'], 7)
-            row['information_templates']['compatibility_version'] = 6
+            self.assertEqual(rows[0]['information_templates']['compatibility_version'], 8)
+            row['information_templates']['compatibility_version'] = 7
             source.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[row])))
             result = subprocess.run([sys.executable, materials.__file__, 'compact', str(source),
                 str(spool), str(output), str(manifest)], cwd=spool, capture_output=True)

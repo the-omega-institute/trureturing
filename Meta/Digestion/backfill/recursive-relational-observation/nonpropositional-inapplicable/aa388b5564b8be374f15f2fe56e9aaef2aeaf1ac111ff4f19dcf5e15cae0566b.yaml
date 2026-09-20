@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa388b5564b8be374f15f2fe56e9aaef2aeaf1ac111ff4f19dcf5e15cae0566b
+  normalized_sha256: sha256:aa388b5564b8be374f15f2fe56e9aaef2aeaf1ac111ff4f19dcf5e15cae0566b
+cas_ref: sha256:aa388b5564b8be374f15f2fe56e9aaef2aeaf1ac111ff4f19dcf5e15cae0566b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Necessity-only sentence, read with definition 113.1 and the preceding complete (a)/(b) quantifiers. The fixed ternary six-state construction, common margin and all-length common-rule lower bound close by pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d: List.foldr_hom, List.foldr_fixed', List.prod_ofFn, finite-sum and ordered-field normalization give the full main/reference word laws and common submeasure; Real.exp_lt_one_iff, Real.one_sub_le_exp_neg, Real.log_le_log, Real.log_mul, Real.log_pow, Real.log_exp, Real.tendsto_log_atTop, tendsto_natCast_atTop_atTop, tendsto_inv_atTop_zero and le_of_tendsto give the superlogarithmic budget implication. The rule remains arbitrary and common, s and each six-state model are fixed before n,k, and n=0,m=0 are included. All binding; no usable frozen project GID for this complete clause, so upstream-only settlement under CLAUDE 3.2 and spec 11.21, with zero new Lean. Sufficiency, equivalence and parent remain open."
+    previous_atom_id: 57da631f2df58112aceaa268508aa26cd75edabda0f22628f7fcf8b373a163d1
+    next_atom_id: 81b4d4d2812d00e6ad2a17877fccebade937448cc721a2dfe3ade61735f35a9d

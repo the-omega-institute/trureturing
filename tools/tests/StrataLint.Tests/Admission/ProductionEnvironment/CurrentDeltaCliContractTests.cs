@@ -697,6 +697,15 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         Assert.Contains(diagnostic, console.Output + console.Error, StringComparison.Ordinal);
         if (scenario == "template-unchanged")
             Assert.DoesNotContain("DTR-", console.Output + console.Error, StringComparison.Ordinal);
+        if (scenario is "template-changed-undeclared" or "template-missing-evidence")
+        {
+            // The registration judge only observes; the exit 1 here comes from
+            // UTILITY-MISSING on the same fixture module, never from a DTR finding.
+            var effects = System.Text.RegularExpressions.Regex.Matches(console.Output,
+                "\"AdmissionEffect\":(\\d+),\"Path\":\"[^\"]*\",\"Message\":\"DTR-");
+            Assert.True(effects.Count > 0 && effects.All(m => m.Groups[1].Value == ((int)AdmissionEffect.Observe).ToString()),
+                "[FAIL] dtr_findings_observe_only: " + console.Output);
+        }
         if (scenario is "valid" or "reused")
         {
             Assert.All(hashes, row => Assert.Equal(1, row.Value));

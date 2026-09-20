@@ -1,0 +1,134 @@
+[
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      4,
+      0,
+      4
+    ],
+    "affine_upper": "108589/567000",
+    "strongest_available_old_upper": "108589/567000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 196,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "108589/567000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      4,
+      1,
+      2
+    ],
+    "affine_upper": "108589/567000",
+    "strongest_available_old_upper": "108589/567000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 197,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "108589/567000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      4,
+      1,
+      3
+    ],
+    "affine_upper": "759313/3969000",
+    "strongest_available_old_upper": "759313/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 198,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "759313/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      4,
+      1,
+      4
+    ],
+    "affine_upper": "763363/3969000",
+    "strongest_available_old_upper": "763363/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 199,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "763363/3969000"
+  }
+]

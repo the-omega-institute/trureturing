@@ -1,0 +1,75 @@
+{
+  "hinge_coefficients": {
+    "4": "1"
+  },
+  "previous_upper": "146657771428951189/793800000000000000",
+  "hinge_upper": "63562525007112781/347287500000000000",
+  "denominator_gain": "3201333296284609/11113200000000000000",
+  "scan": {
+    "pruning_credit": "whole-hinge-deletion",
+    "coefficients": {
+      "4": "1"
+    },
+    "selected_prefix_lengths": {
+      "4": 5
+    },
+    "complete_hinge_upper": "63562525007112781/347287500000000000",
+    "counts": {
+      "two": 125000,
+      "two_bounded": 124938,
+      "four": 3100,
+      "four_bounded": 2963,
+      "six": 1370,
+      "six_bounded": 576,
+      "joint": 795,
+      "prefix_available": 0,
+      "prefix_bounded": 0
+    },
+    "unique_dual_certificates": 1588,
+    "covered_containing_choices": 62500000,
+    "source_capacity_lp_count": 129473,
+    "maximum_pruned_uppers": {
+      "two": "121039/661500",
+      "four": "8069/44100",
+      "six": "40339/220500",
+      "prefix": "-1"
+    },
+    "maximizing_witness": {
+      "layout": [
+        1,
+        3,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projections21_35_63_105_147_245": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "two_projection_upper": "303091/1543500",
+      "four_projection_upper": "295741/1543500",
+      "six_projection_upper": "295741/1543500",
+      "joint_raw_upper": "5049225000790309/38587500000000000",
+      "complete_tail_constant": "5177/99225",
+      "prior_prefix_upper": null,
+      "mean_credit_outside_lp": "0",
+      "whole_hinge_deletion_credit_in_pruning": "0",
+      "joint_complete_upper": "63562525007112781/347287500000000000",
+      "accepted_upper": "63562525007112781/347287500000000000",
+      "dual_key": "8d8868efa30c3c996243dae6177b09ff08edd2c11072c40482e80334c4419f1f",
+      "nested_disjoint_dual_keys": {
+        "nested": "c5b089f0fe800776645f04d5eed73ee1a94b1b903c05b7b30fd4e7e4b96172ec",
+        "disjoint": "224d4b625cb33653fad33e9b67ffb2765335e49932dd272559c513254537d5a4"
+      }
+    },
+    "branch_decisions_sha256": "eef0f1982b2853c42691bb7196d6169b2831a5f0fe30ceee3b8b546ad7e4e4b5",
+    "branch_rule": "max(nested,disjoint), each a complete rational dual upper"
+  }
+}

@@ -1,0 +1,4 @@
+**证明。** $D\subseteq\operatorname{Inv}(K_D)$ 由共同核定义成立。若 $D\subseteq D'$，则 $K_{D'}\subseteq K_D$，故 $\operatorname{Inv}(K_D)\subseteq\operatorname{Inv}(K_{D'})$，给出单调性。广延性先给 $K_{\operatorname{Cl}_{\rm name}(D)}\subseteq K_D$；另一方面，闭合中新加入的每个读数都在 $K_D$ 上恒定，故 $K_D\subseteq K_{\operatorname{Cl}_{\rm name}(D)}$。这证明 (134.15)，再对其应用 $\operatorname{Inv}$ 得到幂等性。证毕。
+
+把联合观察写为 $q_D(x)=(r_\omega(x))_{\omega\in D}$。一个 $\omega$ 属于命名闭合，当且仅当 $r_\omega$ 唯一地通过 $q_D[X]$ 分解。因此它加入的是已有读数所决定的任务，不增加共同核的区分力。读数宇宙 $\Omega$ 必须固定；改变它会改变哪些任务被称为闭合成员。集合意义上的分解不自动给出计算方法、实验权限或代价。
+

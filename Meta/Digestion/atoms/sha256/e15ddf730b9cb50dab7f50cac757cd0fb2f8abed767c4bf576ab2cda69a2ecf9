@@ -1,0 +1,40 @@
+#### 132.2.3 增长率严格增加并趋于二
+
+对 $k\ge2$，函数 $g_k(\lambda)=\sum_{i=1}^k\lambda^{-i}$ 在 $(1,\infty)$ 连续严格下降，且 $g_k(1)=k>1$、$g_k(2)=1-2^{-k}<1$，故有唯一 $\lambda_k\in(1,2)$ 满足
+
+$$
+\sum_{i=1}^k\lambda_k^{-i}=1,
+\qquad
+\lambda_k^k=\lambda_k^{k-1}+\cdots+1.
+$$
+
+置 $\lambda_1=1$。对 $k\ge2$，$g_{k+1}(\lambda_k)>1$，因此 $\lambda_{k+1}>\lambda_k$；$\lambda_2>\lambda_1$ 也成立。由等比和并使用 $\lambda_k\ne1$，
+
+$$
+2-\lambda_k=\lambda_k^{-k}\le\lambda_2^{-k}\longrightarrow0.
+$$
+
+所以 $\lambda_k\uparrow2$。
+
+增长率确实是词数的指数率，而不只是递推方程的形式根。取正向量
+
+$$
+v=(1,\lambda_k^{-1},\ldots,\lambda_k^{-(k-1)})^{\mathsf T}.
+$$
+
+矩阵定义与上述根方程给 $Av=\lambda_kv$。向量 $q=A^{k-1}e_0$ 的每个坐标均严格正，因为每个末态 $j$ 都由长度 $k-1$ 的词 $0^{k-1-j}1^j$ 到达。存在常数 $0<c\le C<\infty$ 使 $cv\le q\le Cv$ 逐坐标成立。$A$ 非负，所以对 $n\ge k-1$，
+
+$$
+c\lambda_k^{n-k+1}v\le A^ne_0\le C\lambda_k^{n-k+1}v.
+$$
+
+对坐标求和、取对数再除以 $n$，得到
+
+$$
+\lim_{n\to\infty}\frac1n\log a_n^{(k)}=\log\lambda_k.
+$$
+
+$k=1$ 时只有全零词，词数恒为一，同一极限为 $0=\log\lambda_1$。
+
+因此，固定长度编码若要恢复任意一条合法历史，需要至少 $\lceil\log_2a_n^{(k)}\rceil$ 位；对固定 $k\ge2$，其每符号渐近下界为 $\log_2\lambda_k>0$。一个固定大小的自动机加一条短规则，可以枚举或检验所有这些词，却没有指定其中究竟是哪一条。相同末态通常对应许多不同前缀，这正是任务商与历史重建的区别。这里的计数递推也没有声明任何热力学过程。
+

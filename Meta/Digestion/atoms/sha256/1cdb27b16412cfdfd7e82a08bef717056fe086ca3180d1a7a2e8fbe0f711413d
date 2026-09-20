@@ -1,0 +1,29 @@
+#### 134.6.5 闭合怎样随表示运输
+
+一般地，若 $\tau:\Sigma\to\Sigma'$ 为句子的双射，可定义运输后的后承
+
+$$
+\operatorname{Cn}'(\Delta)
+=\tau[\operatorname{Cn}(\tau^{-1}[\Delta])].
+$$
+
+双射的像与原像互逆，因此逐项继承广延、单调和幂等，并有 $\tau[\operatorname{Cn}(\Gamma)]=\operatorname{Cn}'(\tau[\Gamma])$。若目标后承已经独立给定，则这个等式必须另证；只给句子标签双射不能保证证明制度被保持。
+
+命名闭合也需要保持读数核的共同结构。若 $F:X\to X'$ 与 $\tau:\Omega\to\Omega'$ 都双射，且对每个 $r\in\Omega$ 有
+
+$$
+(F\times F)[\ker r]=\ker\tau(r),
+$$
+
+则取共同核、再取不变量直接得到
+
+$$
+(F\times F)[K_D]=K'_{\tau[D]},\qquad
+\tau[\operatorname{Cl}_{\rm name}(D)]
+=\operatorname{Cl}'_{\rm name}(\tau[D]).
+$$
+
+第一个等式使用 $F$ 双射以运输任意交；第二个等式逐读数使用所列核对应。动态闭合则还需要 $FT_a=T'_aF$，才能通过所有词得到已证明的行为关系保持与反射。
+
+因此三种运输各有合同：命名要求共同核相容，动态要求允许操作相容，后承要求推理制度相容。只有逐项验证，才能把一种表示下的结论交给另一种表示。
+
