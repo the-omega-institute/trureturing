@@ -1,0 +1,1 @@
+| [SemiconjugacyComposition](../../../D5/S3/Observer/MetricGeometry/SemiconjugacyComposition.lean)，semiconjugacy_defect_composition；[MetricEntourageComposition](../../../D5/S3/Observer/MetricGeometryLaws/MetricEntourageComposition.lean)，metric_entourage_comp_subset | 两次近似运输的缺陷和式、正容差复合半径相加。 

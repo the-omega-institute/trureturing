@@ -1,0 +1,42 @@
+**定义 11.1（等步正谱响应）。** 设 $U,E$ 为有限维实内积空间，$J:U\to E$，并给共同谱合同
+$$
+C=C^*,\qquad aI\preceq C\preceq bI,
+\qquad 0\le a\le b<\infty.
+$$
+固定已知采样间隔 $h>0$，记
+$$
+T=e^{-hC},\qquad u=e^{-hb},\qquad v=e^{-ha},
+\qquad 0<u\le v\le1.
+\tag{11.1}
+$$
+边界响应及等步记录为
+$$
+K(t)=J^*e^{-tC}J=J^*T^{t/h}J,\qquad
+M_j=K(jh)=J^*T^jJ.
+\tag{11.2}
+$$
+采样数据 $M_j$ 由式（11.2）的同一响应在指定时间取得；高阶导数不包含在这份数据中，其观测和取得费用另给。谱上下界、采样单位及矩阵条目误差作为实验和模型的共同给定条件。每个候选模型单独具有正谱，并不蕴含候选族具有同一个 $a,b$。
+
+固定 $r\ge0$、$N=2r+1$。对合法的 $M_0,\ldots,M_N$，直接使用主卷定理137.2和137.5得到规范实现 $(E_r,T_r,J_r)$。令
+$$
+d_r=\operatorname{rank}(M_{i+j})_{0\le i,j\le r},\qquad
+C_r=-h^{-1}\log T_r,\qquad
+K_r(t)=J_r^*e^{-tC_r}J_r.
+\tag{11.3}
+$$
+因 $uI\preceq T_r\preceq vI$，谱对数良定义且 $aI\preceq C_r\preceq bI$。该规范模型满足
+$$
+\dim E_r=d_r\le(r+1)\dim U,\qquad
+K_r(jh)=M_j\quad(0\le j\le N).
+\tag{11.4}
+$$
+主卷引理137.7还将 $E_r$ 与原实现的
+$$
+\mathcal K_r=\operatorname{span}\{T^jJ\xi:0\le j\le r,\ \xi\in U\}
+$$
+等距识别，$T_r$ 是 $T$ 在该子空间上的正交压缩，$J_r$ 是原输入的对应表示。这里压缩的是采样算子 $e^{-hC}$；一般不能把 $-h^{-1}\log T_r$ 改写成 $C$ 的正交压缩。规范实现及正交识别由上述主卷§137的结果保证。
+
+零维 $E_r$ 允许：此时 $M_0=0$，对应响应恒零。若 $u=v$，全部候选 $T=uI$，响应已经为 $u^{t/h}M_0$，不需要下文的非退化区间逼近。以下涉及区间多项式时取 $u<v$。
+
+矩阵函数及 Krylov 表示使用 Higham、Lin，[*Matrix Functions: A Short Course*](https://eprints.maths.manchester.ac.uk/2067/1/covered/MIMS_ep2013_42.pdf)，§3.1.6、5.1、7.1的成熟结构。原内部坐标不列入式（11.4）的已知数据；重建算法的运算费用须另给，不由状态维数界单独确定。
+
