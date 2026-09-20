@@ -3,9 +3,9 @@ import LeanInformationAuditInterface.RootContract
 namespace Reg.Support
 open LeanInformationAudit
 
-/-- Immutable AC-019 expectation baseline, copied from the eleven occurrence rows
-of source snapshot 6a48d8d7061636c6b33ba77fb5954d7dc9da8a7d. SnapshotEnumerator
-never writes this historical baseline; new contributors belong to FixedSnapshot. -/
+/-- The eleven independent AC-019 mathematical expectations from source snapshot
+6a48d8d7061636c6b33ba77fb5954d7dc9da8a7d. Only contributor addresses are translated
+to their Reg leaves; SnapshotEnumerator never supplies these expected rows. -/
 def frozenInformationRootBaseline : Array SnapshotOccurrence :=
   #[{ objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena,
                      theoremName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application,
