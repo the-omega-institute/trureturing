@@ -24,6 +24,21 @@ run_cmd do
       throwError "[FAIL] grouped contract native evidence {name}: {diagnostic}"
   logInfo "[PASS] Q3 contract inputs retain dual rejection after native import"
 
+run_cmd do
+  for name in #[``expectedNamedDead, ``expectedNamedExplicit,
+      ``sourceNamedDead, ``sourceNamedExplicit, ``baselineNamedDead, ``baselineNamedExplicit] do
+    unless (← liftTermElabM <| resolveCanonicalArenaNameFromEvidence name) ==
+        `ProvenanceProbe.arena do
+      throwError "[FAIL] named contract native positive owner: {name}"
+  for name in #[``expectedNamedLive, ``sourceNamedLive, ``baselineNamedLive] do
+    let diagnostic ← liftTermElabM do
+      try return s!"accepted owner={← resolveCanonicalArenaNameFromEvidence name}"
+      catch ex => ex.toMessageData.toString
+    unless diagnostic == s!"IE-C003 ArenaSourceUnsupported arena={name} owner={name}" do
+      throwError "[FAIL] named contract native live input: {diagnostic}"
+  logInfo "[PASS] ARCH-Q3-001 independent contract native evidence \
+    preserves positive/negative semantics"
+
 /-- error: IE-C003 ArenaSourceUnavailable declaration=ImportedContractProbe.missingEvidence reason=provenance -/
 #guard_msgs (error) in
 run_cmd do

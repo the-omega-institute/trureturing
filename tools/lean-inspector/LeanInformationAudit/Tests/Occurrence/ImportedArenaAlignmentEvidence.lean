@@ -72,3 +72,25 @@ run_cmd do
     unless (← liftTermElabM <| resolveCanonicalArenaNameFromEvidence name) == expected do
       throwError "[FAIL] grouped native positive: {name}"
   logInfo "[PASS] Q3 dual evidence-only rejection/no insertion; grouped positives preserved"
+
+run_cmd do
+  for name in #[`ArchitectureNamed.deadUse, `ArchitectureNamed.explicitUse] do
+    unless (← liftTermElabM <| resolveCanonicalArenaNameFromEvidence name) ==
+        `ProvenanceProbe.arena do
+      throwError "[FAIL] named dependency native evidence: {name}"
+  let name := `ArchitectureNamed.liveUse
+  let diagnostic ← liftTermElabM do
+    try return s!"accepted owner={← resolveCanonicalArenaNameFromEvidence name}"
+    catch ex => ex.toMessageData.toString
+  unless diagnostic == s!"IE-C003 ArenaSourceUnsupported arena={name} owner={name}" do
+    throwError "[FAIL] named live native evidence: {diagnostic}"
+  unless (InformationRegistry.find? (← getEnv) `ArchitectureNamedRegistration.liveFact).isNone do
+    throwError "[FAIL] named rejected registration survived native import"
+  for name in #[`ArchitectureNamedRegistration.deadFact,
+      `ArchitectureNamedRegistration.explicitFact] do
+    let some entry := InformationRegistry.find? (← getEnv) name
+      | throwError "[FAIL] missing named native registration: {name}"
+    unless entry.canonicalObjectArenaName == `ProvenanceProbe.arena do
+      throwError "[FAIL] named native registration owner: {name}"
+  logInfo "[PASS] ARCH-Q3-001 native evidence dead/explicit owner=ProvenanceProbe.arena; \
+    live rejected"
