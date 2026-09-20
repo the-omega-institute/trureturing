@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Check a lane PR body's review standing before dispatching the next round.
 
-usage: standing-check.py PR [--round N | --closed] [--body FILE] [--selftest]
+usage: standing-check.py PR [--round N | --closed] [--carriers SEAT=CARRIER,...] [--body FILE] [--selftest]
 
 Pass --round N with the round you are about to dispatch. Without it the table's own highest round
 is taken as the last completed one, which cannot detect a round that ran and was never written down.
@@ -20,6 +20,11 @@ Checks, all mechanical:
   6. `tests` is never nyxid-oracle, in any round or in the next-round layout;
   7. the nyxid-oracle seat differs between consecutive rounds, and between the last table round and
      the next-round layout.
+  8. with --carriers, the assignment you are about to dispatch equals the one the layout line
+     records. The layout line IS the recorded draw and the sshx contract forbids redrawing it,
+     but the body cannot catch a dispatch that diverged from it: writing the round's rows
+     replaces the layout line, so the two records never coexist. State the dispatch here and
+     they are compared at the one moment both exist.
 
 Exit 0 clean, 1 findings, 2 bad usage. Findings print one per line as `STANDING <CODE> <detail>`.
 
@@ -27,6 +32,8 @@ Case history this guards (each a real blocking finding, each costing a full revi
   #8422 round 3: table held round 1 only, prose still named round 2 as the open round (3 seats).
   #8422 round 4 and #8407 round 3: same omission, one round later.
   #8358: three tallies out of round order, no next-round layout line at all.
+  #8698 rounds 5 and 6: the recorded layout and the seats actually launched disagreed; each cost
+     a full review round, and the second one was found by the very seat it misattributed.
 """
 import re
 import subprocess
@@ -48,7 +55,65 @@ def nyxid_of(rows_for_round):
     return None
 
 
-def check(body, next_round=None, closed=False):
+def carrier_family(name):
+    """The carrier token a display string names: 'nyxid-oracle / ChatGPT Pro' -> 'nyxid-oracle'."""
+    return name.split("/")[0].strip().lower()
+
+
+# `is` must be a whole word here: with `\s*` the optional "is" eats the first two letters of a
+# carrier named "isolated-token-subagent" and the parse yields "olated-token-subagent" (live #8698).
+SEAT_ASSIGN = r"\b{seat}\b[`\s]*(?:seat\s*)?(?:is\s+)?[:=]?\s*([A-Za-z][\w-]*)"
+
+
+def layout_seats(text):
+    """seat -> carrier token as the layout line ASSIGNS it (first mention wins).
+
+    Only the first match per seat is an assignment. These lines routinely end with the true
+    sentence "`tests` is never nyxid-oracle"; reading every match would turn that into a claim.
+    """
+    out = {}
+    for seat in SEATS:
+        m = re.search(SEAT_ASSIGN.format(seat=seat), text, re.I)
+        if m:
+            out[seat] = m.group(1).lower()
+    return out
+
+
+def layout_findings(text, rnd, carriers):
+    """Compare the recorded draw against the assignment about to be dispatched.
+
+    The layout line IS the recorded draw: the sshx contract fixes it before the round's first
+    seat launches and forbids redrawing it. Nothing in the body can detect a dispatch that
+    diverged from it, because the layout line is replaced once the round's rows are written --
+    the two records never coexist. So the dispatcher states its assignment here, at the one
+    moment both exist. #8698 rounds 5 and 6 each cost a full review round to this divergence.
+    """
+    if carriers is None:
+        return []
+    findings = []
+    assigned = layout_seats(text)
+    for seat in SEATS:
+        want, got = assigned.get(seat), carriers.get(seat)
+        if want is None:
+            findings.append(
+                f"STANDING LAYOUT-INCOMPLETE round {rnd} layout assigns no carrier to {seat}"
+            )
+            continue
+        if got is None:
+            findings.append(
+                f"STANDING LAYOUT-INCOMPLETE round {rnd} dispatch names no carrier for {seat}, "
+                f"which the layout assigns to {want}"
+            )
+            continue
+        if carrier_family(got) != want:
+            findings.append(
+                f"STANDING LAYOUT-MISMATCH round {rnd} layout assigns {seat} to {want} but the "
+                f"dispatch states {carrier_family(got)}; the recorded draw is final"
+            )
+    return findings
+
+
+def check(body, next_round=None, closed=False, carriers=None):
     findings = []
     rounds = {}
     for line in body.splitlines():
@@ -74,10 +139,11 @@ def check(body, next_round=None, closed=False):
                     f"STANDING LAYOUT-ROUND layout names round {max(nums)} but no round has completed"
                 )
             text = dict((int(n), t) for n, t in layouts)[max(nums)]
-            for m in re.finditer(r"\btests\b[`\s]*(?:seat\s*)?(?:is\s*)?[:=]?\s*([A-Za-z][\w-]*)", text, re.I):
+            for m in re.finditer(SEAT_ASSIGN.format(seat="tests"), text, re.I):
                 if m.group(1).lower().startswith("nyxid"):
                     findings.append("STANDING TESTS-NYXID round 1 layout assigns tests to nyxid-oracle")
                     break
+            findings.extend(layout_findings(text, max(nums), carriers))
             return findings
         findings.append("STANDING NO-TABLE no completed-round rows found")
         return findings
@@ -146,6 +212,7 @@ def check(body, next_round=None, closed=False):
             if m.group(1).lower().startswith("nyxid"):
                 findings.append(f"STANDING TESTS-NYXID round {nxt} layout assigns tests to nyxid-oracle")
                 break
+        findings.extend(layout_findings(text, nxt, carriers))
         prev = nyxid_of(rounds.get(max(rounds), []))
         m = re.search(r"(architecture|quality)\s+nyxid", text, re.I)
         if m is None:
@@ -240,14 +307,45 @@ Round 1 seat layout at `aaa`: quality nyxid-oracle / ChatGPT Pro, architecture c
     cases.append(("first publication, tests nyxid", first_pub.replace("tests codex-cli;", "tests nyxid-oracle / ChatGPT Pro;"), ["TESTS-NYXID"]))
     cases.append(("first publication, no layout line at all", first_pub.replace("Round 1 seat layout at `aaa`: quality nyxid-oracle / ChatGPT Pro, architecture codex-cli, tests codex-cli;", "Seats:"), ["NO-TABLE"]))
     cases.append(("first publication, --closed", (first_pub, None, True), ["NO-TABLE"]))
+
+    # --carriers states what is ABOUT TO BE DISPATCHED. The layout line is the recorded draw; the
+    # sshx contract fixes it before the round's first seat launches, so the two must agree. #8698
+    # rounds 5 and 6 each burned a full review round on exactly this divergence: the body recorded
+    # one seat->carrier assignment and a different one was launched, and nothing compared them.
+    cases.append(("dispatch matches the recorded layout",
+                  (GOOD, 3, False, {"quality": "nyxid-oracle", "architecture": "codex-cli", "tests": "codex-cli"}), []))
+    cases.append(("dispatch swaps two seats against the layout",
+                  (GOOD, 3, False, {"quality": "isolated-token-subagent", "architecture": "nyxid-oracle", "tests": "codex-cli"}),
+                  ["LAYOUT-MISMATCH"]))
+    cases.append(("#8698 round 6: layout said architecture codex, subagent ran it",
+                  (GOOD, 3, False, {"architecture": "isolated-token-subagent", "quality": "nyxid-oracle", "tests": "codex-cli"}),
+                  ["LAYOUT-MISMATCH"]))
+    cases.append(("dispatch names no carrier for a seat the layout assigns",
+                  (GOOD, 3, False, {"quality": "nyxid-oracle", "tests": "codex-cli"}), ["LAYOUT-INCOMPLETE"]))
+    cases.append(("carrier family compared, not the full display string",
+                  (GOOD, 3, False, {"quality": "nyxid-oracle / ChatGPT Pro", "architecture": "codex-cli / OpenAI",
+                                    "tests": "codex-cli / OpenAI"}), []))
+    cases.append(("no --carriers leaves the layout uncompared", (GOOD, 3, False, None), []))
+    # A carrier whose name begins with "is" must not have those two letters eaten by the optional
+    # "is" in the assignment pattern. Found by running the live #8698 body, where the layout reads
+    # "quality isolated-token-subagent" and the parse returned "olated-token-subagent".
+    is_carrier = GOOD.replace("quality nyxid-oracle / ChatGPT Pro, architecture codex-cli",
+                              "architecture isolated-token-subagent / Anthropic Claude, quality nyxid-oracle / ChatGPT Pro")
+    cases.append(("carrier name starting with 'is' is not truncated",
+                  (is_carrier, 3, False, {"architecture": "isolated-token-subagent", "quality": "nyxid-oracle",
+                                          "tests": "codex-cli"}), []))
+    cases.append(("'tests is nyxid-oracle' still reads as an assignment",
+                  GOOD.replace("tests codex-cli.", "tests is nyxid-oracle / ChatGPT Pro."), ["TESTS-NYXID"]))
     for name, body, want in cases:
-        nxt, cl = None, False
+        nxt, cl, car = None, False, None
         if isinstance(body, tuple):
-            if len(body) == 3:
+            if len(body) == 4:
+                body, nxt, cl, car = body
+            elif len(body) == 3:
                 body, nxt, cl = body
             else:
                 body, nxt = body
-        got = check(body, nxt, cl)
+        got = check(body, nxt, cl, car)
         codes = [f.split()[1] for f in got]
         if want:
             ok = all(w in codes for w in want)
@@ -285,11 +383,24 @@ def main(argv):
     next_round = None
     if "--round" in argv:
         next_round = int(argv[argv.index("--round") + 1])
+    carriers = None
+    if "--carriers" in argv:
+        carriers = {}
+        for part in argv[argv.index("--carriers") + 1].split(","):
+            if "=" not in part:
+                print(f"standing-check: --carriers wants SEAT=CARRIER, got {part!r}", file=sys.stderr)
+                return 2
+            seat, _, carrier = part.partition("=")
+            seat = seat.strip().lower()
+            if seat not in SEATS:
+                print(f"standing-check: --carriers names {seat!r}, not one of {SEATS}", file=sys.stderr)
+                return 2
+            carriers[seat] = carrier.strip()
     closed = "--closed" in argv
     if closed and next_round is not None:
         print("standing-check: --round and --closed are mutually exclusive", file=sys.stderr)
         return 2
-    findings = check(body, next_round, closed)
+    findings = check(body, next_round, closed, carriers)
     for f in findings:
         print(f)
     print(f"STANDING_CHECK findings={len(findings)}")
