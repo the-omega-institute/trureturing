@@ -49,8 +49,10 @@ internal static partial class CleanLanesCommand
         RegisteredWorktree? refreshed;
         try
         {
-            refreshed = ReadWorktrees(repositoryRoot, runner, resolveGitDirectories: false)
-                .SingleOrDefault(candidate => string.Equals(
+            var inventory = ReadWorktrees(repositoryRoot, runner, resolveGitDirectories: false);
+            if (inventory.Any(candidate => IsNestedWorktree(item.Path, candidate.Path)))
+                return Refused("nested_worktree");
+            refreshed = inventory.SingleOrDefault(candidate => string.Equals(
                     candidate.Path,
                     item.Path,
                     StringComparison.Ordinal));

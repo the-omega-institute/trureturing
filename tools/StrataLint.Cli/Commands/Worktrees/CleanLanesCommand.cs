@@ -180,7 +180,8 @@ internal static partial class CleanLanesCommand
         IWorktreeProcessRunner runner,
         DateTimeOffset now)
     {
-        foreach (var item in inventory)
+        var remainingPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
+        foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
             if (string.Equals(item.Path, repositoryRoot, StringComparison.Ordinal)
                 || string.Equals(item.GitDirectory, currentGitDirectory, StringComparison.Ordinal))
@@ -219,6 +220,12 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
+            if (remainingPaths.Any(path => IsNestedWorktree(item.Path, path)))
+            {
+                events.Add(BlockedWorktree(item, "nested_worktree"));
+                continue;
+            }
+
             var reason = ReclaimBlockReason(item, baseCommit, runner, now);
             if (reason is not null)
             {
@@ -228,12 +235,9 @@ internal static partial class CleanLanesCommand
 
             if (force)
             {
-                events.Add(RemovalEvent(item, RemoveLane(
-                    repositoryRoot,
-                    item,
-                    baseCommit,
-                    runner,
-                    now)));
+                var removal = RemoveLane(repositoryRoot, item, baseCommit, runner, now);
+                events.Add(RemovalEvent(item, removal));
+                if (removal.Outcome == LaneRemovalOutcome.Removed) remainingPaths.Remove(item.Path);
                 continue;
             }
 
@@ -244,6 +248,7 @@ internal static partial class CleanLanesCommand
                 item.Head,
                 "would_remove",
                 "stale_behind"));
+            remainingPaths.Remove(item.Path);
         }
     }
 
@@ -308,6 +313,7 @@ internal static partial class CleanLanesCommand
         ICollection<CleanLaneEvent> events,
         IWorktreeProcessRunner runner)
     {
+        var registeredPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
         var registeredByGitDirectory = inventory
             .Where(static item => item.GitDirectory is not null)
             .ToDictionary(
@@ -316,6 +322,7 @@ internal static partial class CleanLanesCommand
                 StringComparer.Ordinal);
         foreach (var path in tempRoots
             .Where(Directory.Exists)
+            .Select(ResolveDirectoryPath)
             .SelectMany(static root => Directory.EnumerateDirectories(
                 root,
                 "trureturing-*",
@@ -324,6 +331,7 @@ internal static partial class CleanLanesCommand
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal))
         {
+            if (registeredPaths.Contains(path)) continue;
             if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != 0)
             {
                 events.Add(new CleanLaneEvent(
@@ -483,6 +491,18 @@ internal static partial class CleanLanesCommand
         return result.ExitCode == 0
             ? Decode(result.StandardOutput).Trim()
             : null;
+    }
+
+    private static bool IsNestedWorktree(string parent, string candidate) =>
+        candidate.StartsWith(Path.TrimEndingDirectorySeparator(parent) + Path.DirectorySeparatorChar,
+            StringComparison.Ordinal);
+
+    private static string ResolveDirectoryPath(string path)
+    {
+        var directory = new DirectoryInfo(path);
+        if (directory.Parent is null) return directory.FullName;
+        var physical = new DirectoryInfo(Path.Combine(ResolveDirectoryPath(directory.Parent.FullName), directory.Name));
+        return physical.ResolveLinkTarget(returnFinalTarget: true)?.FullName ?? physical.FullName;
     }
 
     private static bool HasGitMarker(string path) =>

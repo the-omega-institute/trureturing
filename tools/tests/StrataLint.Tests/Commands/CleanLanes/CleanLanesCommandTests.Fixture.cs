@@ -212,6 +212,13 @@ public sealed partial class CleanLanesCommandTests
             return Git(path, "rev-parse", "--show-toplevel").Trim();
         }
 
+        internal string AddNestedWorktree(string parent)
+        {
+            var path = Path.Combine(parent, "nested");
+            Git(repository.Path, "worktree", "add", "--detach", path, "dev");
+            return Git(path, "rev-parse", "--show-toplevel").Trim();
+        }
+
         internal string AddForeignTempDirectory(string name)
         {
             var path = Path.Combine(temp.Path, name);

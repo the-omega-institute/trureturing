@@ -342,6 +342,39 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("main_worktree", ReasonFor(result.Output, fixture.RepositoryRoot));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void NestedWorktreesAreProtectedOrRemovedBeforeTheirParent(bool childEligible)
+    {
+        using var fixture = new CleanLanesFixture();
+        var parent = fixture.AddLandedLane("harness/parent");
+        var child = fixture.AddNestedWorktree(parent);
+        if (childEligible) fixture.AdvanceBase(300);
+        var preview = fixture.Run("--lanes-only");
+        Assert.True(preview.Success, preview.Error);
+        Assert.Equal(childEligible ? 2 : 0, ReadSummary(preview.Output).GetProperty("removable_count").GetInt32());
+        var result = fixture.Run("--force", "--lanes-only");
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(!childEligible, Directory.Exists(parent));
+        Assert.Equal(!childEligible, Directory.Exists(child));
+        if (!childEligible) Assert.Equal("nested_worktree", ReasonFor(result.Output, parent));
+    }
+
+    [Fact]
+    public void TempSweepCannotDeleteRegisteredTreeWithMissingGitMarker()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string name = "trureturing-unreadable-registered";
+        var lane = fixture.AddDetachedJudge(name);
+        fixture.AddGitlessJudgeSnapshot(name);
+        File.Delete(Path.Combine(lane, ".git"));
+        var result = fixture.Run("--force");
+        Assert.True(result.Success, result.Error);
+        Assert.True(Directory.Exists(lane));
+        Assert.Equal("unreadable", ReasonFor(result.Output, lane));
+    }
+
     private sealed partial class CleanLanesFixture : IDisposable
     {
         internal bool BranchExists(string branch)
