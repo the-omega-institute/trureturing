@@ -633,10 +633,365 @@ claim for the stated summaries even within actual arithmetic outputs;
 it does not rule out useful quantitative bounds that retain additional
 original-label or cover-completion information.
 
+## 8. A balanced prefix class has one all-height extra-loss budget
+
+The next estimate uses original numerical-label uniqueness beyond a
+conditional density cap. Its source class is restricted: a complete Latin
+grid of disjoint old prefixes, one forbidden current prefix per active
+cell, and full product two-coordinate marginals. Positive thresholds may
+depend on the complete old history. In fact, the fixed-leaf policy
+obstruction below shows why that dependence is essential in this class.
+The estimate supplies a single budget for the additional first-hit loss
+over any fixed continuation; it does not bound the reference continuation
+loss or close unrestricted Erdős #7.
+
+### The actual source and its fixed-prefix optimum
+
+Let \(r<s<p\) be odd primes. On complete prime-power coordinates, retain
+the pure exclusions \(0\pmod r,0\pmod s,0\pmod p\), and let
+\(\nu_r,\nu_s,\nu_p\) be their uniform pure-survivor bases. Choose
+pairwise disjoint \(r\)-prefixes \(C_i\) of depths \(e_i\ge1\), and
+pairwise disjoint \(s\)-prefixes \(D_j\) of depths \(f_j\ge1\), for
+\(1\le i,j\le n\), all contained in the respective pure survivors.
+Their masses are
+\[
+ s_i=\frac{r^{1-e_i}}{r-1},\qquad
+ t_j=\frac{s^{1-f_j}}{s-1}.
+\]
+Let \(J_1,\ldots,J_n\) be a prefix partition of the *entire*
+pure-survivor \(p\)-coordinate, with depths \(a_\ell\ge1\) and masses
+\(v_\ell=p^{1-a_\ell}/(p-1)\). Choose a Latin square \(L\) of order
+\(n\). The head consists exactly of the three pure classes and one
+mixed original class per cell, with conditions
+\[
+ C_i\times D_j\times J_{L_{ij}},\qquad
+ m_{ij}=r^{e_i}s^{f_j}p^{a_{L_{ij}}}.
+ \tag{FA24}
+\]
+Require all these numerical moduli to be distinct. No mixed old
+\(r,s\) class is added. Thus the incoming old law is
+\(\nu_r\otimes\nu_s\), and the actual forbidden union on
+\(C_i\times D_j\) is exactly \(J_{L_{ij}}\); elsewhere it is empty.
+
+Use (FA12) with positive history-dependent thresholds, and assume
+\[
+ K_p\le(1+\zeta)\nu_p,\quad \zeta>0,\qquad
+ \mu_{r,p}=\nu_r\otimes\nu_p,\quad
+ \mu_{s,p}=\nu_s\otimes\nu_p,
+ \quad \mu=(\nu_r\otimes\nu_s)K_p.
+ \tag{FA25}
+\]
+These are full-coordinate marginals, including every declared digit.
+For a cell whose forbidden prefix has mass \(v\), put
+\(u=\min(v,\delta)/(1-\min(v,\delta))\). Its actual density is
+\(1+u\) off the prefix and \(1-(1-v)u/v\) on it. Hence
+\(0<u\le\min\{\zeta,v/(1-v)\}\).
+
+Let \(b_{ij}=\int_{C_i\times D_j}u\,d(\nu_r\otimes\nu_s)\).
+For a fixed \(x\in C_i\), preservation of the full \((r,p)\)
+marginal means that the total increase over the \(s\)-coordinate
+equals the subtraction on each \(J_\ell\). Each leaf occurs in
+exactly one cell of that row. Integrating in \(x\) gives
+\(b_{ij}=v_{L_{ij}}\tau_i\). The other marginal gives
+\(b_{ij}=v_{L_{ij}}\kappa_j\). All cells are present and every
+\(v_\ell>0\), so \(\tau_i=\kappa_j=\tau\) for one common positive
+number, and
+\[
+ b_{ij}=\tau v_{L_{ij}},\qquad
+ \tau\le T_*:=\min_{i,j}s_it_j
+       \min\left\{\frac{\zeta}{v_{L_{ij}}},
+                    \frac1{1-v_{L_{ij}}}\right\}.
+ \tag{FA26}
+\]
+
+Let \(R\) be the actual head avoiding set, and define two measures on
+that same set:
+\(\eta=\mathbf1_R\mu\) and
+\(\sigma=\mathbf1_R(\nu_r\otimes\nu_s\otimes\nu_p)\).
+The latter is an unnormalized reference measure, not a freshly
+conditioned product process. The good-set density formula implies
+\(\eta-\sigma\ge0\), and
+\[
+ (\eta-\sigma)(1)
+ =\sum_{i,j}(1-v_{L_{ij}})b_{ij}
+ =n\left(1-\sum_\ell v_\ell^2\right)\tau
+ \le n\left(1-\sum_\ell v_\ell^2\right)T_*.
+ \tag{FA27}
+\]
+For these fixed prefixes and Latin incidences this upper bound is
+attained: take \(u_{ij}=T_*v_{L_{ij}}/(s_it_j)\), constant on each
+cell, and \(\delta_{ij}=u_{ij}/(1+u_{ij})\). The definition of
+\(T_*\) gives \(0<\delta_{ij}\le v_{L_{ij}}<1\), so these are
+actual clipped rows. The Latin row and column sums verify (FA25)
+pointwise on the old coordinate, not only after taking its prefix label.
+On inactive old cells any positive threshold below one is allowed.
+
+### Numerical uniqueness supplies an all-height bound
+
+Let \(M_r\) be the largest multiplicity of one depth among the
+\(e_i\), and \(M_s\) the corresponding multiplicity among the
+\(f_j\). The \(M_rM_s\) cells formed by such two depth groups
+have the same old numerical cofactor. By (FA24), all their current
+depths must differ. If \(d\) is the number of different current depths,
+then \(M_rM_s\le d\).
+
+The complete prefix partition is a full \(p\)-ary forest rooted at
+the \(p-1\) surviving first digits. With \(I\) internal nodes, it has
+\(n=(p-1)(I+1)\) leaves, and its maximum leaf depth is at most
+\(I+1\). Consequently, writing \(E=\max_i e_i\) and
+\(F=\max_j f_j\),
+\[
+ M_rM_s\le d\le\frac n{p-1},\qquad
+ E\ge\frac n{M_r},\quad F\ge\frac n{M_s},\qquad
+ EF\ge n(p-1).
+ \tag{FA28}
+\]
+The leaf-count step uses completeness of the current partition;
+it is not asserted for an arbitrary list of prefixes.
+
+Summing (FA26) along a row or column and using disjointness gives
+\(\tau\le\zeta\min\{\min_i s_i,\min_j t_j\}\).
+Put \(k=\lceil\sqrt{n(p-1)}\rceil\). Equation (FA28) implies
+\(\max(E,F)\ge k\), and \(r<s\) gives
+\(\tau\le\zeta r^{1-k}/(r-1)\).
+Since \(n\ge p-1\ge6\), we have \(k\ge p-1\) and
+\(n\le k^2/(p-1)\). The sequence \(k^2r^{-k}\) decreases in
+this range. Dropping the factor \(1-\sum v_\ell^2\) in (FA27)
+therefore gives the height-independent estimate
+\[
+ 0\le(\eta-\sigma)(1)
+ \le\zeta\frac r{r-1}(p-1)r^{-(p-1)}.
+ \tag{FA29}
+\]
+The uniform constant in (FA29) is not claimed optimal.
+
+For any fixed continuation by actual original classes and prescribed
+history-dependent kernels, let \(L(\rho)\) be total future first-hit
+mass from \(\rho\). Use exactly the same future kernels for both
+measures, including when \(\sigma\) is unnormalized. The probability
+of a future first hit, conditional on the complete head state, lies in
+\([0,1]\). Positivity of \(\eta-\sigma\) gives
+\[
+ 0\le L(\eta)-L(\sigma)
+ \le(\eta-\sigma)(1)
+ \le\zeta\frac r{r-1}(p-1)r^{-(p-1)}.
+ \tag{FA30}
+\]
+This uses the existing same-killed-law continuation mechanism in
+[profile 334](../profile-notes/321-384/334-same-chain-overlap-and-future-risk-certificates.md).
+Its new input is (FA28), derived from actual numerical labels and the
+prefix forest. There is one budget for all later events together;
+neither small \(L(\sigma)\) nor a net global gain is supplied by (FA30).
+
+### A fixed current-leaf policy is impossible in this class
+
+Suppose instead that the positive threshold on an active cell depends
+only on its current leaf \(\ell=L_{ij}\). Then \(u=u_\ell>0\)
+is constant on that cell, and (FA26) becomes
+\(s_it_ju_{L_{ij}}=\tau v_{L_{ij}}\). Multiply over all columns
+of row \(i\):
+\[
+ s_i^n\prod_jt_j
+ =\tau^n\prod_{\ell=1}^n\frac{v_\ell}{u_\ell}.
+ \tag{FA31}
+\]
+The right-hand side is independent of \(i\). Thus all \(s_i\),
+and hence all \(e_i\), are equal. The column argument makes all
+\(f_j\) equal. Each current leaf occurs \(n\) times in the Latin
+square, so its numerical modulus in (FA24) is repeated \(n>1\)
+times, a contradiction. This includes every single fixed positive
+\(\delta_p\). It is an impossibility for the stated Latin source
+class, not for all clipped arithmetic sources or for fixed-threshold
+methods in general.
+
+### A sharp source-restricted fee and overlapping future events
+
+Take \((r,s,p)=(3,5,7)\), \(n=6\), and \(\zeta=1/35\).
+For \(1\le i,j\le6\), use the original class with modulus
+\(7\cdot3^i5^j\) and literal conditions
+\[
+ x_3\equiv\frac{3^{i-1}+1}{2}\pmod{3^i},\qquad
+ x_5\equiv\frac{5^{j-1}+1}{2}\pmod{5^j},\qquad
+ x_7\equiv1+((i+j-2)\bmod6)\pmod7.
+ \tag{FA32}
+\]
+Together with the three pure classes these are 39 distinct odd moduli.
+The old prefix lists are disjoint: the difference between the depth
+\(i\) and depth \(j>i\) residues has valuation exactly \(i-1\).
+The complete head carrier is \(3^6\times5^6\times7\).
+Set
+\[
+ \epsilon=\zeta s_6t_6=\frac1{212625000},\qquad
+ u_{ij}=\frac\epsilon{s_it_j},\qquad
+ \delta_{ij}=\frac{u_{ij}}{1+u_{ij}}.
+ \tag{FA33}
+\]
+Then \(T_*=6\epsilon\), every full pair marginal is product, and
+the exact head surplus is \(30\epsilon=1/7087500\), attaining
+(FA27). The looser all-height bound (FA29) is \(1/2835\).
+
+Append the three literal classes \(22\pmod{33}\),
+\(1\pmod{55}\), \(24\pmod{77}\), with \(\delta_{11}=2/11\).
+Their three different eleven-colors make
+\(\beta_{11}=\mathbf1_{C_1D_1\{x_7=3\}}/9\).
+This trigger avoids the head's forbidden seven-color 1 on that cell.
+Every source satisfying (FA25) on these fixed head prefixes therefore has
+\[
+ \eta(\beta_{11})\le\frac1{432}+\frac\epsilon{54}
+ =\frac{13289063}{5740875000},
+ \tag{FA34}
+\]
+and (FA33) attains equality. This is strictly below the cap-only value
+\(1/420\), achieved by the density
+\(1+\zeta h_3h_5h_7\), where \(h_3\) is 1 on \(C_1\) and
+\(-1\) elsewhere, \(h_5\) is 1 on \(D_1\) and \(-1/3\)
+elsewhere, and \(h_7=\mathbf1_{\{3\}}-\mathbf1_{\{4\}}\).
+This comparison density has the same full product pair marginals and
+row cap but is not claimed reachable by the head's clipping operations.
+The exact improvement is \(54241/820125000\).
+
+A separate continuation of the same head has overlapping triggers.
+Write \(A=\{x_3=1\pmod9\}\), \(A_2=\{x_3=4\pmod{27}\}\),
+\(B=\{x_5=1\pmod{25}\}\), \(B_2=\{x_5=6\pmod{125}\}\),
+and \(C=\{x_7=3\}\). All lie in their stated \(C_1,D_1\)
+prefixes. At eleven use old conditions \(A,A_2,B,C\), with current
+colors \(0,0,1,2\); at thirteen use \(A,B,B_2,C\), with colors
+\(0,1,1,2\). Each old condition and its stated current color defines
+one original CRT class. All 47 head-plus-continuation moduli are distinct.
+For thresholds \(2/11,2/13\), the triggers are
+\(G_1=(A\cup A_2)BC\), \(G_2=A(B\cup B_2)C\), with fees
+\(\beta_{11}=\mathbf1_{G_1}/9\),
+\(\beta_{13}=\mathbf1_{G_2}/11\). Their actual head-good masses are
+\[
+ \eta(G_1)=\frac1{540}+\frac{2\epsilon}{135},\quad
+ \eta(G_2)=\frac1{600}+\frac\epsilon{75},\quad
+ \eta(G_1\cap G_2)=\frac1{720}+\frac\epsilon{90}.
+ \tag{FA35}
+\]
+The thirteen-step does not depend on the eleven-coordinate. Thus
+the same-chain first-hit calculation gives
+\[
+ L_{11,13}(\eta)
+ =\frac{\eta(G_1)}9+\frac{\eta(G_2)}{11}
+   -\frac{\eta(G_1\cap G_2)}{99}
+ =\frac{4877086121}{14208665625000}.
+ \tag{FA36}
+\]
+The generic overlap formula is already available in profile 334; the
+literal classes and common-law masses are the inputs verified here.
+Integer 2 avoids this whole family. No covering counterexample is claimed.
+
+The [exact producer](../frontier/cover-geometry/balanced_prefix_budget.py)
+and [output](../frontier/cover-geometry/balanced_prefix_budget.json) check
+the literal congruences, actual rows, complete pair marginals, both
+continuations and the cap comparator using rational arithmetic. A
+disjoint radix-cell partition carries the exact mass of every complete
+coordinate point; 3072 constant-test cells suffice for the sharp head and
+the displayed future tests. It is not full-period point enumeration.
+The producer also verifies a 147-label head with 12 prefixes per old
+coordinate, five depth-one and seven depth-two current leaves, and
+\(\zeta=1/100\). On \(3^{12}\times5^{12}\times7^2\), its head
+surplus is \(1/16018066406250\). The all-height justification is
+(FA28)--(FA29), not this additional finite experiment.
+
+```sh
+python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/balanced_prefix_budget.py --output /tmp/balanced-prefix-budget.json
+```
+
+All checks remain active under \(-O\). Arbitrary forbidden unions,
+nonproduct pair marginals, extra head classes, and an accounting bound
+for the reference future loss remain outside (FA29). In particular, the
+\(1/2835\) allowance cannot be inserted into a different fixed full-Haar
+policy's deficit as a proved gain.
+
+### At current height one, fixed thresholds have a quantitative defect
+
+A different bound drops both pair-product assumptions and the density
+cap in (FA25). Retain (FA24), the pure-product incoming old law and the
+complete Latin grid, but require every current leaf to have depth one,
+so \(n=p-1\) and \(v_\ell=1/n\). Use one fixed
+\(0<\delta_p<1\) across all old histories. Write
+\[
+ S=\sum_i s_i,\quad T=\sum_jt_j,\qquad
+ u=\frac{\min(1/n,\delta_p)}{1-\min(1/n,\delta_p)},\qquad
+ h=(\eta-\sigma)(1)=\frac{n-1}{n}uST.
+\]
+In a fixed active old row, the Latin square permutes the current
+colors, and its current-coordinate density after integrating out the
+other old coordinate is \(1+uT-nut_j\). Off the active old prefixes
+it is one. Therefore, with
+\(\operatorname{TV}(a,b)=\tfrac12\sum|a-b|\), direct integration gives
+\[
+ \begin{aligned}
+ \operatorname{TV}(\mu_{r,p},\nu_r\otimes\nu_p)
+   &=uST\operatorname{TV}((t_j/T)_j,\operatorname{Unif}_n),\\
+ \operatorname{TV}(\mu_{s,p},\nu_s\otimes\nu_p)
+   &=uST\operatorname{TV}((s_i/S)_i,\operatorname{Unif}_n).
+ \end{aligned}
+ \tag{FA37}
+\]
+Here both marginals are allowed to differ from their product bases.
+
+Numerical uniqueness now forces the \(e_i\) to be pairwise distinct:
+two equal depths in any fixed column would give the same numerical
+modulus, whatever the current colors. Similarly all \(f_j\) are
+distinct. If \(d_1<\cdots<d_n\) are positive integer depths and
+\(w_i=q^{-d_i}\), then for \(1\le k<n\),
+\[
+ \sum_{i\le k}w_i\ge w_k\sum_{j=0}^{k-1}q^j,\qquad
+ \sum_{i>k}w_i\le w_k\sum_{j=1}^{n-k}q^{-j}.
+\]
+Thus the normalized first \(k\) weights sum to at least
+\((1-q^{-k})/(1-q^{-n})\). Define the positive constant
+\[
+ \kappa(q,n)=\max_{0\le k\le n}
+ \left\{\frac{1-q^{-k}}{1-q^{-n}}-\frac{k}{n}\right\}.
+\]
+Total variation from the uniform distribution is the maximum such
+prefix excess for decreasing weights. Equations (FA37) therefore imply
+\[
+ \begin{aligned}
+ \operatorname{TV}(\mu_{r,p},\nu_r\otimes\nu_p)
+   &\ge\frac n{n-1}\kappa(s,n)h,\\
+ \operatorname{TV}(\mu_{s,p},\nu_s\otimes\nu_p)
+   &\ge\frac n{n-1}\kappa(r,n)h.
+ \end{aligned}
+ \tag{FA38}
+\]
+The two constants are sharp: consecutive depths in both coordinates
+give exactly the normalized geometric weights, and the disjoint prefix
+construction in (FA32), with the corresponding odd primes, realizes
+those depths and distinct original moduli for any \(n=p-1\).
+
+For \((r,s,p)=(3,5,7)\), the two factors are
+\(2474/3255\) and \(304/455\). The same-kernel positivity argument
+used for (FA30) yields, for any fixed actual continuation,
+\[
+ 0\le L(\eta)-L(\sigma)\le h
+ \le\min\left\{
+  \frac{3255}{2474}\operatorname{TV}(\mu_{3,7},\nu_3\otimes\nu_7),
+  \frac{455}{304}\operatorname{TV}(\mu_{5,7},\nu_5\otimes\nu_7)
+ \right\}.
+ \tag{FA39}
+\]
+Consequently near-product marginals force small additional loss in this
+fixed-threshold class. This is a bound from measured marginal errors,
+not a claim that those errors are small in an unrestricted family.
+It allows arbitrary old heights, but still requires one current digit,
+a complete Latin grid and the stated product incoming law.
+
+The exact producer reuses the same 39 original head labels with fixed
+thresholds \(1/96\) and \(1/5\), explicitly dropping (FA25).
+The head surpluses are respectively \(19747/9618750\) and
+\(19747/506250\); both full-coordinate marginal-TV ratios equal
+the sharp constants in (FA38). It does not reuse the balanced source's
+probability law for these different policies.
+
 The zero-mean product perturbation, finite conditional-kernel construction
 and convexity argument are standard methods. The elementary prime-choice
 input is Bertrand's postulate; the repository's pinned Mathlib records it
 as `Nat.exists_prime_lt_and_le_two_mul` in
 [`Mathlib/NumberTheory/Bertrand.lean`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Bertrand.lean#L222).
-The sharp interval in Sections 1--5 and the reachable pair in Section 7
-are repository-derived; no literature-priority assertion is made.
+The sharp interval in Sections 1--5, reachable pair in Section 7 and
+source-restricted budget in Section 8 are repository-derived;
+no literature-priority assertion is made.
