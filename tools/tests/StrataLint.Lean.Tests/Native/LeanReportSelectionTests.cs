@@ -125,6 +125,7 @@ public sealed class LeanReportSelectionTests
     [Theory]
     [InlineData("registration_failures")]
     [InlineData("glob_semantics")]
+    [InlineData("reg_module_name")]
     [InlineData("source_and_policy_identity")]
     [InlineData("source_traversal_io")]
     public void RegisteredSelectionContract(string scenario)
