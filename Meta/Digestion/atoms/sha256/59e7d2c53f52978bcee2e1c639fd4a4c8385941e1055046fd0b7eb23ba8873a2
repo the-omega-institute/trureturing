@@ -1,0 +1,30 @@
+**定理 23.2（绝对余项与校准误差）。** 设 $I\subseteq[-B_0,B_0]$ 非空，$B_0\ge0$，$0<a\le|\alpha|$，$\tau>0$。对每个 $\beta\in I$，同一实际演化给出 $y_\beta\in C^2([0,\tau];\mathbb R)$，满足
+$$
+y_\beta(0)=0,\qquad y_\beta'(0)=-\alpha\beta/4,
+\qquad |y_\beta''(s)|\le M\quad(0\le s\le\tau),
+\tag{23.101}
+$$
+其中 $M\ge0$ 与参数无关。若在已知内部时刻 $0<t\le\tau$ 实际取得的增量 $\Delta y_{\rm obs}$ 满足 $|\Delta y_{\rm obs}-(y_\beta(t)-y_\beta(0))|\le\eta$，则
+$$
+\widetilde\beta=-\frac{4\Delta y_{\rm obs}}{\alpha t},\qquad
+|\widetilde\beta-\beta|\le\frac{2Mt}{a}+\frac{4\eta}{at}.
+\tag{23.102}
+$$
+若分母使用 $\widehat\alpha$，且 $|\widehat\alpha-\alpha|\le\delta<a$，相应估计满足
+$$
+|\widetilde\beta-\beta|
+\le\frac{2Mt+4\eta/t+B_0\delta}{a-\delta}.
+\tag{23.103}
+$$
+
+证明。微积分基本定理两次积分给
+$$
+y_\beta(t)=-\frac{\alpha\beta t}{4}
+ +\int_0^t(t-s)y_\beta''(s)\,ds,
+\qquad
+\left|\int_0^t(t-s)y_\beta''(s)\,ds\right|\le Mt^2/2.
+$$
+代入估计器并取三角界即得（23.102）。使用 $\widehat\alpha$ 时，将差写为 $((\alpha-\widehat\alpha)\beta-4\rho/t-4e/t)/\widehat\alpha$，其中 $|\rho|\le Mt^2/2$、$|e|\le\eta$，再用 $|\widehat\alpha|\ge a-\delta$ 得（23.103）。这只是在固定真实模型下对标量估计器的校准误差界，不证明未知 $\alpha$ 下的联合参数／时间识别。
+
+两个端点误差各至多 $\epsilon$ 时，取 $\eta=2\epsilon$；若准备已精确认证初始横向系数为零而只读末端，可取 $\eta=\epsilon$。这些三角界在同一个联合误差事件上成立，无需独立噪声。初始可见系数实部误差 $\epsilon_\alpha$ 给 $\delta=2\epsilon_\alpha$，仍须验证正分母裕量。$\square$
+
