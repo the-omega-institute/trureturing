@@ -845,3 +845,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Prime-star overlaps force excess on the original no-prime region](profile-notes/arithmetic/382-prime-star-overlaps-and-no-prime-excess.md)
 - [Simultaneous root absorption and Hall obstructions](profile-notes/arithmetic/383-simultaneous-root-absorption-and-hall-obstructions.md)
 - [The private-witness profile upper is automatic for odd divisor labels](profile-notes/arithmetic/384-private-witness-profile-upper-is-automatic.md)
+- [Private congruence hulls force crossed numerical moduli](profile-notes/arithmetic/385-private-congruence-hulls-and-crossed-modulus-closure.md)
