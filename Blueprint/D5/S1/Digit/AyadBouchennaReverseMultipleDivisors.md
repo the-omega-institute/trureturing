@@ -38,6 +38,10 @@ $$\forall B \in \mathbb{N},\; (2 \le B) \Rightarrow (\forall n \in \mathbb{N},\;
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/AyadBouchennaReverseMultipleDivisors.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ayad-bouchenna-base-b-reverse-multiple-divisors` (proved) by `D5/S1/Digit/AyadBouchennaReverseMultipleDivisors.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ayad-bouchenna-base-b-reverse-multiple-divisors","declaration_gid":"D5/S1/Digit/AyadBouchennaReverseMultipleDivisors.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mohamed Ayad; Rachid Bouchenna (2025). *Which Integer Divides the Reverse of Any of Its Multiples?*. DOI: [10.5281/zenodo.15283699](https://doi.org/10.5281/zenodo.15283699). URL: <https://math.colgate.edu/~integers/z37/z37.pdf>.

@@ -57,13 +57,17 @@ internal sealed class AyadBouchennaReverseMultipleDivisorsDocument : IScribeDocu
                         + "0, 1, T, …, (c+1)T. "
                         + "Their forward and reversed residues force B² = 1 modulo n. "
                         + "The vertical bars in the statement denote divisibility; B² − 1 is natural "
-                        + "subtraction, agreeing with integer subtraction under B ≥ 2.")))))));
+                        + "subtraction, agreeing with integer subtraction under B ≥ 2."))),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ayad-bouchenna-base-b-reverse-multiple-divisors"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        AssessedProvenance provenance, DescribeRole role, BlockSequence prose) =>
+        AssessedProvenance provenance, DescribeRole role, BlockSequence prose,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("ayad-reverse-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, prose, role);
+            provenance, prose, role, claim);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
