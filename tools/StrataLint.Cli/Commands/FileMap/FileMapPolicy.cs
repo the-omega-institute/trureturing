@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
@@ -735,6 +736,7 @@ internal static class FileMapPolicy
             .Where(path => manifest.Match(path) is [{ Kind: FileMapKind.Generated }])
             .Order(StringComparer.Ordinal)
             .ToArray();
+        var generatedSearch = SearchValues.Create(generatedPaths, StringComparison.Ordinal);
         foreach (var path in paths.Where(path => selectedPaths is null || selectedPaths.Contains(path)).Order(StringComparer.Ordinal))
         {
             // Preserve the selected-file read/error boundary without retaining all bodies.
@@ -747,7 +749,8 @@ internal static class FileMapPolicy
 
             if (matches[0].Kind is FileMapKind.Data
                 && !FileMapDocuments.IsPolicyPath(path)
-                && IsMachineDataPath(path))
+                && IsMachineDataPath(path)
+                && source.AsSpan().ContainsAny(generatedSearch))
             {
                 foreach (var generatedPath in generatedPaths.Where(source.Contains))
                 {
