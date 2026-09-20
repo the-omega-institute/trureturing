@@ -8,7 +8,11 @@ prime-covered region has exact coefficients determined by the numerical
 moduli and the full prime-power heights. However, that numerical upper
 bound holds for every set of distinct odd divisor labels, whether or not
 the labels admit an irredundant realization. It therefore excludes no
-such numerical profile.
+such numerical profile. Restricting instead to the prime-free region
+still gives a uniform bound below \(5/8\). Even on the actual product
+of all pure-power survivors, the conditional expectation of the same
+integrand stays below \(80/81\);
+these restrictions cannot turn its upper bound of one into an exclusion.
 
 The domination proof below enlarges prefix supports to all digit
 subsets and integrates an explicit nonnegative polynomial identity.
@@ -290,13 +294,135 @@ the profile level. Omitting \(G_F^0\), the all-subset sum is
 because \(u_i\le1-2u_i\). Thus neither retaining prime labels nor
 removing the localization supplies a numerical-profile exclusion.
 
-## 6. What remains usable
+## 6. Prime-free and pure-power-survivor integrations are automatic
+
+Let \(Z=U^c\) and \(\mu_Z=H(\cdot\mid Z)\). For each composite label
+choose any reference point \(w_d\in A_d\cap Z\); privacy is unnecessary
+for the bounds below. Write \(\Delta_d(x)\) as in PW1. Under \(\mu_Z\),
+the first \(p\)-digit has \(p-1\) values and higher digits have \(p\), so
+
+\[
+ \widehat u_{(p,1)}=\frac1{p-1},\qquad
+ \widehat u_{(p,j)}=\frac1p\ (j>1),\qquad
+ \widehat G_d(z)=\prod_{i\notin F_d}[\widehat u_i+(1-\widehat u_i)z],
+ \qquad V_d=\sum_{j\ge0}\frac{[z^j]\widehat G_d(z)}
+                                      {\binom{r_d+j}{r_d}}.
+\]
+
+The fixed first digits are nonzero, and \(\mu_Z(A_d)=1/\varphi(d)\).
+Thus the exact integrated expression is
+
+\[
+ \mathbb E_{\mu_Z}\sum_{d\text{ composite}}
+ \frac{\mathbf1_{A_d}(x)}{\binom{r_d+|\Delta_d(x)|}{r_d}}
+ =\sum_d\frac{V_d}{\varphi(d)}<\frac58.\tag{PW8}
+\]
+
+To prove the strict bound, for every nonempty digit subset \(F\) define
+\(\widehat q_F\) by the same coefficient formula, multiplied by
+\(\prod_{i\in F}\widehat u_i\). An actual prefix gives
+\(\widehat q_{F_d}=V_d/\varphi(d)\). For \(r=|F|\), the beta integral is
+
+\[
+ \widehat q_F=r\int_0^1t^{r-1}
+    \prod_{i\in F}\widehat u_i
+    \prod_{i\notin F}[1-(1-\widehat u_i)t]\,dt.\tag{PW9}
+\]
+
+Each term is nonnegative and coordinatewise nondecreasing in the
+parameters. Distinct composite labels have distinct prefix supports of
+size at least two. Enlarge to all subsets of size at least two. There is
+at most one parameter above \(1/3\), namely the first \(3\)-digit with
+value \(1/2\). Raising the parameters to
+\((1/2,1/3,\ldots,1/3)\), with \(k=L-1\) latter coordinates, can only
+increase the sum. Put the first \(3\)-digit first when present; otherwise
+any coordinate can be distinguished. A carrier with no digits has no
+composite terms.
+
+Put \(a=1-t/3\), \(b=1-2t/3\). For \(k\ge1\), subtracting singleton
+terms from the all-subset beta expansion gives
+
+\[
+ T_k=\int_0^1\left[
+ \frac{a^k-b^k}{2}
+ +\frac k3\bigl(a^{k-1}-(1-t/2)b^{k-1}\bigr)\right]dt
+ =\frac12+\frac9{8(k+1)}
+ -\frac{k+2}{k+1}\left(\frac23\right)^k
+ +\frac{2k+3}{8(k+1)}3^{-k}.\tag{PW10}
+\]
+
+The final formula also gives \(T_0=0\). Exactly,
+
+\[
+ 8(k+1)3^k(5/8-T_k)
+ =8(k+2)2^k-(8-k)3^k-(2k+3)>0.\tag{PW11}
+\]
+
+For \(k\ge8\) positivity is immediate; for \(k=0,\ldots,7\) the
+right side is respectively \(5,22,67,176,433,1050,2623,7012\).
+This proves PW8 for every distinct composite odd divisor palette,
+without any residue realization or private-point assumption on the
+numerical coefficients. The added nonprefix supports are only a
+nonnegative envelope, not an asserted simultaneous family of classes.
+
+Let \(D_{\rm orig}\) denote all original nonunit modulus labels, including
+the prime labels. Take exactly the complement of their pure-power classes,
+\(S=\bigcap_{p,a:\,p^a\in D_{\rm orig}}A_{p^a}^c\), and put \(X=H(S)\).
+This is a product over prime coordinates; no additional conditioning
+is included.
+Under the original distinct-label assumptions, a coordinate's removed
+mass is at most \(\sum_{a\ge1}p^{-a}=1/(p-1)\). Independence of prime
+coordinates gives \(X>0\); together with \(S\subseteq Z\), it gives
+
+\[
+ \frac{P_0}{X}\le\prod_{p\in\Lambda}
+   \frac{(p-1)^2}{p(p-2)}\le\frac{128}{81}.\tag{PW12}
+\]
+
+For an elementary rational bound, include all odd-integer factors
+\(1+a_j\), where \(a_j=(4j^2-1)^{-1}\). The first two factors multiply
+to \(64/45\); telescoping gives \(\sum_{j\ge3}a_j=1/10\). Every finite
+tail product is at most \((1-\sum a_j)^{-1}\le10/9\), using
+\(1+a_j\le(1-a_j)^{-1}\) and
+\(\prod(1-a_j)\ge1-\sum a_j\). This proves PW12.
+
+Take any reference points \(w_d\in A_d\cap S\) for the original mixed
+labels, which involve at least two distinct primes. Labels with empty
+intersection can be omitted; they contribute zero. Every pure-power
+label has empty intersection with \(S\). Nonnegativity, PW8, and PW12 yield
+
+\[
+ \mathbb E_{H(\cdot\mid S)}\sum_{d\text{ mixed}}
+ \frac{\mathbf1_{A_d}(x)}{\binom{r_d+|\Delta_d(x)|}{r_d}}
+ \le\frac{P_0}{X}\sum_{d\text{ mixed}}\frac{V_d}{\varphi(d)}
+ <\frac{128}{81}\frac58=\frac{80}{81}<1.\tag{PW13}
+\]
+
+The actual \(S\)-integral can still depend on the residues. For an exact
+finite check, take \(Q=3^2 5^2\) and the pure classes \(0\bmod3\),
+\(1\bmod9\), \(0\bmod5\), \(1\bmod25\). Then \(|Z|=120\) and \(|S|=95\).
+With one mixed class \(2\bmod15\) and reference \(w_{15}=2\), its
+integrals on \(Z,S\) are \(13/360,13/285\); the conditioning comparison
+in PW13 is equality. Changing that class to \(1\bmod15\) and taking
+\(w_{15}=16\) leaves its \(Z\)-integral \(13/360\), while its
+\(S\)-integral is \(17/570<13/285\). These numbers follow by summing
+the displayed integrand over the 225 literal residues. They confirm
+the stated domination without identifying the two conditional laws.
+
+Both integrations of PW1 therefore obey its upper bound automatically,
+including the actual pure-power-survivor integration with all original
+digits retained. These bounds do not concern arbitrary weights, other
+localizations, or joint constraints retaining the private witnesses.
+
+## 7. What remains usable
 
 PW1 still constrains an actual joint incidence pattern together with
-its private witnesses. The obstruction here concerns the particular
-original-Haar integration whose coefficients reduce to PW3. Testing
-those coefficients, or their coarser inverse-binomial weights, against
-\(1-P_0\) cannot eliminate any distinct odd divisor profile.
+its private witnesses. The obstruction covers the original-Haar
+coefficients PW3, the prime-free coefficients PW8, and the actual
+pure-power-survivor integration PW13 with the same original-digit
+integrand. None supplies a profile exclusion through its stated upper
+bound. The survivor argument retains the literal pure-power exclusions;
+it does not replace their conditional digit law by a product law.
 
 A useful further application would have to retain additional joint
 information, change the localization or weights with a proved bound,
