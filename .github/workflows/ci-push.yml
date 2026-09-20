@@ -404,7 +404,7 @@ jobs:
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
-          path: ${{ steps.keys.outputs.dependency_path }}
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
@@ -412,7 +412,7 @@ jobs:
         continue-on-error: true
         uses: actions/cache/restore@v4
         with:
-          path: ${{ steps.keys.outputs.project_path }}
+          path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional Lean build evidence
@@ -465,7 +465,7 @@ jobs:
         timeout-minutes: ${{ fromJSON(steps.snapshot_project.outputs.save_timeout_minutes || '1') }}
         uses: actions/cache/save@v4
         with:
-          path: ${{ steps.keys.outputs.project_path }}
+          path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
       - id: snapshot_dependency
         if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.dependency_key != '' && steps.report_resources.outputs.needs_lake == 'true'
@@ -478,7 +478,7 @@ jobs:
         timeout-minutes: ${{ fromJSON(steps.snapshot_dependency.outputs.save_timeout_minutes || '1') }}
         uses: actions/cache/save@v4
         with:
-          path: ${{ steps.keys.outputs.dependency_path }}
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
           key: ${{ steps.keys.outputs.dependency_key }}
       - id: save_elan
         if: env.STRATALINT_CACHE_WRITES == 'true' && steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.elan.outputs.cache-hit != 'true'

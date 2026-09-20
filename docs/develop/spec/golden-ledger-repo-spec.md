@@ -439,7 +439,7 @@ delta 消费资源计划时,build 与 current 必须绑定同一份 canonical PR
 
 正常生产 `lean-cache-v1-*` 与 `lean-cache-v2-*` 快照按同一新到旧顺序选择,不按格式设优先层。旧 `manifest.txt` 仅作已归属缓存数据过渡读取:核对 published Release、固定 producer commit、成功的 schedule/dev 生产 run、完整资产及摘要;其缺失的 mathlib 字段从该不可变 producer commit 的 `lake-manifest.json` 数据读取,复用当前结构解析器并校验 blob 身份,与显式 OS/arch 合成唯一分区。来源 SHA 只绑定缓存供给,不参与兼容选择,不进入 current 的语义 baseline,不执行旧代码。旧 manifest 未记 attempt 时不得从最新 rerun 伪造原产出 attempt。新格式不增加来源查询;旧 build-relative 归档在共用验证/安装入口映射到 build,在目标文件系统完整暂存后 rename,不另建手动转换/发布路径。该读取只恢复增量种子,不产报告或判词;Lean 与报告仍执行各自增量入口。
 
-可选缓存制作与保存共用早于 job 上限的截止时间,按真实 run/attempt/job 起始时间绑定;元数据不可用或时间不足则跳过缓存,不撤销已完成的业务判词。检查证据先保存,随后项目与依赖层。dependency/project 由 Actions 原生运输已登记的 `.lake/packages` / `.lake/build`,不另复制整个目录或建立逐文件哈希清单;运输格式版本只隔离布局,不增加兼容分区。接受恢复须同时取得成功的 Actions outcome 与同分区 matched key;恢复失败清理本次该层的残留,不删除整个 `.lake`,随后进入正常生产。检查证据与判官材料仍校验字节、mode 和身份。缓存时限不改变检查时限,外部取消仍保留取消语义。
+可选缓存制作与保存共用早于 job 上限的截止时间,按真实 run/attempt/job 起始时间绑定;元数据不可用或时间不足则跳过缓存,不撤销已完成的业务判词。检查证据先保存,随后项目与依赖层。dependency/project 由 Actions 原生运输 FILEMAP 登记的 `Meta/ci-cache-paths.json` 路径白名单,范围分别限于 `.lake/packages` / `.lake/build`;project 保留编译产物、trace、Inspector 和报告材料,不运输逐模块的临时 `ir/**/*.setup.json`。restore/save 使用同一登记,缺层、重复、越界或缺登记明确失败;不另复制整个目录或建立逐文件哈希清单。Actions 的路径布局版本只隔离运输布局,不增加兼容分区;新布局首次无 Actions 种子时照常尝试同 mathlib 分区 Release,以后使用新成功快照。接受恢复须同时取得成功的 Actions outcome 与同分区 matched key;恢复失败清理本次该层的残留,不删除整个 `.lake`,随后进入正常生产。检查证据与判官材料仍校验字节、mode 和身份。缓存时限不改变检查时限,外部取消仍保留取消语义。
 
 工程证据缓存由 push 的独立可选 `engineering_cache` job 保存,避免完整工程检查耗尽其保存窗口。该 job 消费同一候选、本轮 build 与 engineering artifact,先经现役 transport 验证身份、轮次、材料及成功证据,再导出 seed;不重建或重跑检查,不恢复 Lean/依赖缓存。截止时间绑定保存 job 自身,不得借用或延长 engineering 检查的窗口;保存失败只影响后续增量起点,不改变 required checks。PR 不执行此保存 job。
 

@@ -218,7 +218,10 @@ public sealed partial class ResourceAdapterTests
         map = string.Join('\n', map.Split('\n').Select(line => line.Contains("id = \"lean\"", StringComparison.Ordinal)
             ? line.Replace("cache_layers = [], cache_activation = {}", "cache_layers = [\"dependency\", \"elan\", \"project\"], cache_activation = {dependency = \"stage-start\", elan = \"stage-start\", project = \"stage-start\"}", StringComparison.Ordinal)
             : line));
+        map += "\n[[files]]\npattern = \"Meta/ci-cache-paths.json\"\nrequire = []\nkind = \"data\"\nadmission_plane = \"judge\"\n"
+            + "produced_by = \"none\"\nconsumed_by = [\"test\"]\nverified_by = [\"test\"]\nartifact_id = \"none\"\nruntime_disposition = \"committed-source\"\n";
         fixture.Write("Meta/FILEMAP.toml", map);
+        fixture.Write("Meta/ci-cache-paths.json", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/ci-cache-paths.json")));
         fixture.CommitPlan();
         var environment = EnvironmentFor(fixture);
         environment["CANDIDATE_SHA"] = fixture.Commit;

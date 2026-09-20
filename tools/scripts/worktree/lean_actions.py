@@ -25,6 +25,68 @@ EXECUTION_LAYERS = ("engineering", "current")
 ALL_LAYERS = (*LAYERS, "judge", *EXECUTION_LAYERS, "elan")
 
 
+class CachePathRegistrationError(ValueError):
+    pass
+
+
+def native_archive_paths(root, layers):
+    """Actions receives only the explicitly registered native archive paths."""
+    selected = set(layers) & set(LAYERS)
+    if not selected:
+        return {}
+    manifest = "Meta/ci-cache-paths.json"
+
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate field: " + key)
+            result[key] = value
+        return result
+
+    try:
+        import tomllib
+        filemap = tomllib.loads((root / "Meta/FILEMAP.toml").read_text())
+        rows = [row for row in filemap.get("files", []) if row.get("pattern") == manifest]
+        if len(rows) != 1:
+            raise ValueError("manifest must have one literal FILEMAP entry")
+        registration = json.loads((root / manifest).read_text(), object_pairs_hook=unique_object)
+        if (not isinstance(registration, dict) or set(registration) != {"schema_version", "layers"}
+                or type(registration["schema_version"]) is not int or registration["schema_version"] != 1
+                or not isinstance(registration["layers"], dict)
+                or not set(registration["layers"]).issubset(LAYERS)):
+            raise ValueError("invalid schema or layer")
+        result = {}
+        roots = {"dependency": ".lake/packages", "project": ".lake/build"}
+        for layer in sorted(selected):
+            paths = registration["layers"].get(layer)
+            if not isinstance(paths, list) or not paths:
+                raise ValueError("missing paths for " + layer)
+            for path in paths:
+                if (not isinstance(path, str) or not re.fullmatch(r"[A-Za-z0-9_./*\-]+", path)
+                        or any(part in ("", ".", "..") for part in path.split("/"))
+                        or not (path == roots[layer] or path.startswith(roots[layer] + "/"))):
+                    raise ValueError("invalid path for " + layer + ": " + repr(path))
+            if len(set(paths)) != len(paths):
+                raise ValueError("duplicate paths for " + layer)
+            result[layer] = sorted(paths)
+        return result
+    except (OSError, ValueError, TypeError, AttributeError) as error:
+        raise CachePathRegistrationError(f"cache path registration {manifest}: {error}") from error
+
+
+def output_archive_paths(layer, paths):
+    key = layer + "_archive_path"
+    value = "\n".join(paths)
+    delimiter = "STRATALINT_" + hashlib.sha256(value.encode()).hexdigest()
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as stream:
+            stream.write(f"{key}<<{delimiter}\n{value}\n{delimiter}\n")
+    # Keep diagnostic stdout line-oriented; the Actions command file carries
+    # the actual multiline value consumed by both restore and save.
+    print(key + "=" + json.dumps(paths, separators=(",", ":")))
+
+
 def actions_keys(root: pathlib.Path) -> dict:
     """Build Actions snapshot keys and enforce the write policy.
 
@@ -849,6 +911,7 @@ def main():
             print("CI_INPUT_FAILED " + str(error), file=sys.stderr)
             return 2
     try:
+        archive_paths = native_archive_paths(args.repository, args.layers) if args.command == "keys" else {}
         registry = validate_judge_registration(args.repository, args.layers) if args.command != "keys" else None
         keys = actions_keys(args.repository)
         if args.snapshot_directory:
@@ -865,6 +928,8 @@ def main():
                 toolchain = hashlib.sha256((args.repository / "lean-toolchain").read_bytes()).hexdigest()
                 values["elan_key"] = f"elan-v1-{system}-{arch}-{toolchain}"
             output(values)
+            for layer, paths in archive_paths.items():
+                output_archive_paths(layer, paths)
         elif args.command == "restore":
             restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers, registry,
                     outcomes={layer: getattr(args, layer + "_outcome") for layer in LAYERS})
@@ -876,7 +941,7 @@ def main():
             snapshot(args.repository, keys, args.layers, registry, deadline=deadline,
                      current=current, seed_manifest=args.seed_manifest)
         return 0
-    except ProjectRegistrationError as error:
+    except (ProjectRegistrationError, CachePathRegistrationError) as error:
         print(str(error), file=sys.stderr)
         return 2
     except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
