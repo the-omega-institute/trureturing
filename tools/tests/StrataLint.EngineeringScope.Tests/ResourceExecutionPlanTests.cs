@@ -368,6 +368,7 @@ public sealed class ResourceExecutionPlanTests
     private sealed class SelectedTestsFixture : IDisposable
     {
         internal CurrentExecutionContractTests.CandidateFixture Tree { get; } = new();
+        private readonly CiFixtureEnvironment environment;
 
         internal SelectedTestsFixture(bool compiledTestDependency = false, bool priorSeed = false, bool testsRequired = true, bool selectDependency = false)
         {
@@ -441,15 +442,24 @@ public sealed class ResourceExecutionPlanTests
                     @new = new { path = "Meta/ci-resources.json", mode = entry[0], oid = entry[2] } } } }));
             Run("python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", Tree.Root,
                 "--commit", commit, "--changes", "build/changes.json", "--output", "build/plan.json"]);
-            var plan = ResourceExecutionPlan.Load(Tree.Root, "build/plan.json", "build/changes.json")!;
-            var build = Tree.Build();
-            var tests = CommonExecutionEvidence.Read<BuiltTestProject[]>(Tree.Root, CommonBuildOutputs.TestsPath)
-                .Where(project => plan.TestProjects.Contains(project.Project)).ToArray();
-            CommonExecutionEvidence.Write(Tree.Root, CommonBuildOutputs.TestsPath, tests);
-            var selection = plan.Retain(Tree.Root);
-            CommonExecutionEvidence.SealBuild(Tree.Root, build.Candidate,
-                build.Materials.Select(material => material.Path).Concat([selection.Plan, selection.Changes]),
-                build.Steps, plan.Projects, selection);
+            environment = new CiFixtureEnvironment();
+            try
+            {
+                var plan = ResourceExecutionPlan.Load(Tree.Root, "build/plan.json", "build/changes.json")!;
+                var build = Tree.Build();
+                var tests = CommonExecutionEvidence.Read<BuiltTestProject[]>(Tree.Root, CommonBuildOutputs.TestsPath)
+                    .Where(project => plan.TestProjects.Contains(project.Project)).ToArray();
+                CommonExecutionEvidence.Write(Tree.Root, CommonBuildOutputs.TestsPath, tests);
+                var selection = plan.Retain(Tree.Root);
+                CommonExecutionEvidence.SealBuild(Tree.Root, build.Candidate,
+                    build.Materials.Select(material => material.Path).Concat([selection.Plan, selection.Changes]),
+                    build.Steps, plan.Projects, selection);
+            }
+            catch
+            {
+                Dispose();
+                throw;
+            }
         }
 
         private string Run(string command, string[] arguments)
@@ -459,7 +469,11 @@ public sealed class ResourceExecutionPlanTests
             return result.Text.Trim();
         }
 
-        public void Dispose() => Tree.Dispose();
+        public void Dispose()
+        {
+            try { Tree.Dispose(); }
+            finally { environment.Dispose(); }
+        }
     }
 
     [Fact]
