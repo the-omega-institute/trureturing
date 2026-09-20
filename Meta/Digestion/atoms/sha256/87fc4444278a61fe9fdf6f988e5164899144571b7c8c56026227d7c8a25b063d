@@ -1,0 +1,22 @@
+**命题 12.9（缺陷的合法运输与多层接口）。** 式（12.10）给
+$$
+\mathcal E'\mathcal T_j'-\overline{\mathcal T}_j'\mathcal E'
+=G(\mathcal E\mathcal T_j-\overline{\mathcal T}_j\mathcal E)F^{-1},
+\qquad
+\mathcal S'\mathcal E'-\mathcal Q'=H(\mathcal S\mathcal E-\mathcal Q)F^{-1}.
+\tag{12.11}
+$$
+所以 $\kappa,\varepsilon_j$ 保持不变。一般可逆线性变换仅给代数共轭恒等式，不保证通道合法性或范数保持。
+
+若另外有第二层编码 $\mathcal E_2:B\to C$、解码 $\mathcal R_2:C\to B$ 和操作 $\widetilde{\mathcal T}_j$，令
+$$
+\kappa_2=d_\diamond(\mathcal R_2\mathcal E_2,\operatorname{id}_B),\qquad
+\eta_j=d_\diamond(\mathcal E_2\overline{\mathcal T}_j,
+\widetilde{\mathcal T}_j\mathcal E_2).
+$$
+复合编码 $\mathcal E_2\mathcal E$、解码 $\mathcal S\mathcal R_2$ 对同一目标 $\mathcal Q$ 的恢复缺陷至多 $\kappa+\kappa_2$，每步交织缺陷至多 $\varepsilon_j+\eta_j$。因此整段实验误差至多
+$$
+\min\{1,\kappa+\kappa_2+\textstyle\sum_j(\varepsilon_j+\eta_j)\}.
+\tag{12.12}
+$$
+

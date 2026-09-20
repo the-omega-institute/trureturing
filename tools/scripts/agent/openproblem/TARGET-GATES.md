@@ -40,6 +40,25 @@ conjectures formalized in Lean from that same corpus and reports 147 resolved. O
 carry comments like A211417's, recording that a conjecture "was proved by an autonomous AI
 agent, see the Lean file", and A237271's, linking a Lean 4 proof dated August 2026.
 
+**Check MathDB (`https://mathdb.com`) before any arXiv/OEIS candidate enters the pipeline.** It is a
+community database of ~87,000 open problems with posted solutions and status labels (`open`, `claimed
+solved`, `solved`, `Counterexample`). The barket lane (#8688 → PR #8969, closed 2026-09-20) refuted
+arXiv:2607.12026 Conjecture 4.4 at `Z/5, S = {1}`, passed probe, Stage A/B and CI, and died in round 1 on
+
+    https://mathdb.com/p/376004/central-quotient-eigengap-conjecture-for-nilpotent-cayley-gr
+
+where the same counterexample had been posted a month earlier (solution "A minimal counterexample to
+the central-quotient eigengap conjecture", status `Counterexample`). arXiv, Semantic Scholar and the
+repository grep had all been clean. Query the site's search by the paper's distinctive title words and
+by the authors (its search is fuzzy — arXiv ids and OEIS A-numbers return junk; open the `/p/<id>/…`
+pages whose titles match and read the status label and the solution text):
+
+    curl -s "https://mathdb.com/search?q=central-quotient%20eigengap" | grep -o '/p/[0-9]*/[a-z0-9-]*' | sort -u
+
+Record the query and the hit/no-hit in the preregistration. A posted, dated, matching counterexample or
+proof settles the assertion for open-problem-resolution purposes exactly as a paper would (§3.7: do not
+claim as new what is already public); an entry with status `open` is not evidence of openness.
+
 ## 2. Is the object already available? — grep, pinned Mathlib first
 
 Ask what the statement *reduces to*, then search for that object rather than for the

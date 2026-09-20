@@ -1,0 +1,25 @@
+**定理 13.2（核与初态的共同有限实现）。** 给自伴矩阵前缀 $M_0,\ldots,M_{2r+1}$ 和向量前缀 $z_0,\ldots,z_r$。存在一个有限维实内积空间 $E$ 及同一组 $T,J,h_0$，满足
+$$
+uI\preceq T\preceq vI,\qquad
+M_j=J^*T^jJ\ (0\le j\le2r+1),\qquad
+z_j=J^*T^jh_0\ (0\le j\le r),
+$$
+$$
+\|J\|^2\le m_*,\qquad \|h_0\|\le E_*,
+$$
+当且仅当
+$$
+\boxed{
+H\succeq0,\qquad uH\preceq S\preceq vH,\qquad
+\begin{pmatrix}H&z\\z^*&E_*^2\end{pmatrix}\succeq0,
+\qquad M_0\preceq m_*I.
+}
+\tag{13.3}
+$$
+可取 $\dim E=\operatorname{rank}H$，且此实现的初态能量为
+$$
+e_{\min}=z^*H^\dagger z.
+\tag{13.4}
+$$
+在 $m_*,E_*$ 固定时，式（13.3）定义前缀空间中的非空闭凸紧集，记为 $\mathcal C_r$。
+
