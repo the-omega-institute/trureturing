@@ -170,6 +170,50 @@ public sealed partial class CurrentExecutionContractTests
         Assert.Equal(1, exit);
     }
 
+    [Theory]
+    [InlineData("passed")]
+    [InlineData("failed")]
+    [InlineData("exception")]
+    public async Task ConcurrentProjectsOverlapAndJoinBeforeEvidenceIsAccepted(string outcome)
+    {
+        using var fixture = new CandidateFixture();
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var starts = 0;
+        using var release = new ManualResetEventSlim();
+        var calls = new System.Collections.Concurrent.ConcurrentBag<string>();
+        using var output = new StringWriter();
+        var work = Task.Run(() => Program.RunCurrentTests(fixture.Root, (project, results) =>
+        {
+            calls.Add(project);
+            if (Interlocked.Increment(ref starts) == 2) entered.SetResult();
+            // This deadline only releases a broken scheduler; elapsed time is not the assertion.
+            if (!release.Wait(TimeSpan.FromSeconds(30))) throw new TimeoutException("concurrent runner hang guard");
+            if (project == CandidateFixture.First && outcome == "exception") throw new IOException("fixture execution error");
+            var failed = project == CandidateFixture.First && outcome == "failed";
+            fixture.WriteTrx(results, failed ? "Failed" : "Passed");
+            return failed ? 1 : 0;
+        }, output, maxConcurrentProjects: 2));
+        var exit = -1;
+        try
+        {
+            await entered.Task.WaitAsync(TimeSpan.FromSeconds(20));
+            Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.TestsPath)));
+        }
+        finally
+        {
+            release.Set();
+            exit = await work.WaitAsync(TimeSpan.FromSeconds(30));
+        }
+        Assert.Equal(outcome == "passed" ? 0 : 1, exit);
+        Assert.Equal(new[] { CandidateFixture.First, CandidateFixture.Second }, calls.Order(StringComparer.Ordinal));
+        var record = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath);
+        Assert.Equal(new[] { CandidateFixture.First, CandidateFixture.Second }, record.Projects.Select(project => project.Project));
+        Assert.Equal(2, record.Projects.Select(project => project.Results).Distinct().Count());
+        Assert.All(record.Projects, project => Assert.Equal("executed", project.Status));
+        if (outcome == "passed") CommonExecutionEvidence.ValidateTests(fixture.Root);
+        else Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
+    }
+
     internal sealed class CandidateFixture : IDisposable
     {
         internal const string First = "tools/tests/First/First.csproj";
