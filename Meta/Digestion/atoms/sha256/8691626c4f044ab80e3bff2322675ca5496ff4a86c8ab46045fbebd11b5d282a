@@ -1,0 +1,21 @@
+#### 124.9.3 相同轨迹集合仍可能丢失分支相容性
+
+取标签动作 $a,b,c$，所有状态的当前任务值相同。关系仅含
+
+$$
+x\xrightarrow a p,\quad x\xrightarrow a q,\quad
+y\xrightarrow a r,\quad
+p\xrightarrow b t,\quad q\xrightarrow c t,\quad
+r\xrightarrow b t,\quad r\xrightarrow c t.
+$$
+
+$x$、$y$ 可执行的有限动作词都恰为 $\{\varepsilon,a,ab,ac\}$，但它们不能属于同一个分支稳定等价类。若 $xEy$，则 $y$ 的后继 $r$ 必须与 $x$ 的某个后继 $p$ 或 $q$ 等价；$p$ 缺少 $c$ 后继，$q$ 缺少 $b$ 后继，均与稳定性矛盾。
+
+区别由一个分支上下文直接检出：
+
+$$
+\langle a\rangle\bigl(\langle b\rangle\top\ \land\ \langle c\rangle\top\bigr).
+$$
+
+它要求同一个 $a$ 后继同时允许 $b$ 与 $c$，在 $y$ 为真、在 $x$ 为假。把两个分别可达的后续实验当作可在同一中间状态上联合实现，会恰好漏掉这个区别。
+

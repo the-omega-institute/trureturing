@@ -1,0 +1,5 @@
+**命题 124.7（完整补全的因子化）。** 对摘要 $\beta:A\to B$，存在唯一 $\bar D:\beta[A]\to\mathcal P(C)$ 满足 $D=\bar D\beta$，当且仅当
+$$
+\beta(a)=\beta(a')\Longrightarrow D(a)=D(a').
+$$
+

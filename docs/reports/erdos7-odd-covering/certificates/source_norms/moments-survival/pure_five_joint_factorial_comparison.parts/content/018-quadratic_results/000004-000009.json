@@ -1,0 +1,794 @@
+[
+  {
+    "index": 45,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        2,
+        0
+      ]
+    ],
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "131938/1090089",
+        "2": "134042/1090089",
+        "3": "248/2541",
+        "4": "248/2541",
+        "5": "0"
+      },
+      "factorial_tail_coefficient": "248/2541",
+      "polynomial_tail": {
+        "leading": "124/2541",
+        "constant": "-80846/1090089",
+        "entrance": 4
+      },
+      "negative_hinge_coefficients": {},
+      "finite_transition_values": {
+        "1": "0",
+        "2": "131938/1090089",
+        "3": "397918/1090089",
+        "4": "770290/1090089",
+        "5": "1249054/1090089",
+        "6": "262030/155727",
+        "7": "2525758/1090089",
+        "8": "474814/155727"
+      }
+    },
+    "previous_cost_bound": "579333736109/2523828557250",
+    "status": "enumerate",
+    "scaling": {
+      "factor": "2/1090089",
+      "primitive_hinges": {
+        "1": 65969,
+        "2": 67021,
+        "3": 53196,
+        "4": 53196
+      },
+      "primitive_factorial": 53196
+    },
+    "mean_factor": 1,
+    "uniform_cost_upper": "579060042689/2523828557250",
+    "maximizing_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "scaled_primitive_mean_part": 21201504793021056,
+      "scaled_primitive_factorial_head_part": 2155412316657600,
+      "scaled_mean_correction_before_internal_factor": 99420803945610,
+      "joint_factorial_head": {
+        "old_head": "413/2700",
+        "old_pure_five_cross": "2/225",
+        "pure_five_pre_max_rows": [
+          "0",
+          "0",
+          "8/45",
+          "0",
+          "0"
+        ],
+        "whole_row_candidates": [
+          "0",
+          "1/600",
+          "23/1800",
+          "1/200",
+          "7/2400"
+        ],
+        "whole_row_upper": "23/1800",
+        "conditioned_upper": "23/1800",
+        "retained_G_cross": "1/225",
+        "conditional_H_cap": "4/45",
+        "joint_pair_candidates": [
+          "0",
+          "1/600",
+          "1/120",
+          "1/200",
+          "7/2400"
+        ],
+        "joint_pair_upper": "1/120",
+        "replacement_difference": "-1/900",
+        "adopted_difference": "-1/900",
+        "head_upper": "41/270"
+      },
+      "scaled_head_lp": 68701521566006,
+      "scaled_selected_increments": [
+        109443258489852,
+        147198889918080,
+        25234095414528
+      ],
+      "head_dual": [
+        {
+          "gamma": 525109017097,
+          "alpha": [
+            0,
+            0,
+            1595906332020,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 11634715499050
+        },
+        {
+          "gamma": 820122825921,
+          "alpha": [
+            163851291737,
+            163851291737,
+            2560840017869,
+            163851291737,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 47384323004900
+        },
+        {
+          "gamma": 63235050564,
+          "alpha": [
+            0,
+            0,
+            407545658366,
+            0,
+            0,
+            0,
+            0,
+            407545658366,
+            0,
+            0,
+            0,
+            0,
+            407545658366,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 9682483062056
+        }
+      ]
+    },
+    "maximizer_count": 1,
+    "accepted_cost_upper": "579060042689/2523828557250",
+    "weighted_direct_gain": "73501/823284000"
+  },
+  {
+    "index": 46,
+    "tag": [
+      "s",
+      "81"
+    ],
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "0",
+        "5": "-2",
+        "6": "-2",
+        "7": "-2",
+        "8": "-2",
+        "9": "17"
+      },
+      "factorial_tail_coefficient": "2",
+      "polynomial_tail": {
+        "leading": "1",
+        "constant": "-81",
+        "entrance": 9
+      },
+      "negative_hinge_coefficients": {
+        "5": "-2",
+        "6": "-2",
+        "7": "-2",
+        "8": "-2"
+      },
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "0",
+        "5": "0",
+        "6": "0",
+        "7": "0",
+        "8": "0",
+        "9": "0",
+        "10": "19",
+        "11": "40",
+        "12": "63"
+      }
+    },
+    "previous_cost_bound": "646314683124386207/393988118343750000",
+    "status": "negative-hinge-obstruction",
+    "accepted_cost_upper": "646314683124386207/393988118343750000",
+    "weighted_direct_gain": "0"
+  },
+  {
+    "index": 47,
+    "tag": [
+      "s",
+      "81/4"
+    ],
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "19/4",
+        "5": "17/4"
+      },
+      "factorial_tail_coefficient": "2",
+      "polynomial_tail": {
+        "leading": "1",
+        "constant": "-81/4",
+        "entrance": 5
+      },
+      "negative_hinge_coefficients": {},
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "0",
+        "5": "19/4",
+        "6": "63/4",
+        "7": "115/4",
+        "8": "175/4"
+      }
+    },
+    "previous_cost_bound": "1344356641/405168750",
+    "status": "enumerate",
+    "scaling": {
+      "factor": "1/4",
+      "primitive_hinges": {
+        "4": 19,
+        "5": 17
+      },
+      "primitive_factorial": 8
+    },
+    "mean_factor": 1,
+    "uniform_cost_upper": "1295279761/388962000",
+    "maximizing_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "scaled_primitive_mean_part": 1724598651944,
+      "scaled_primitive_factorial_head_part": 324146524800,
+      "scaled_mean_correction_before_internal_factor": 0,
+      "joint_factorial_head": {
+        "old_head": "413/2700",
+        "old_pure_five_cross": "2/225",
+        "pure_five_pre_max_rows": [
+          "0",
+          "0",
+          "8/45",
+          "0",
+          "0"
+        ],
+        "whole_row_candidates": [
+          "0",
+          "1/600",
+          "23/1800",
+          "1/200",
+          "7/2400"
+        ],
+        "whole_row_upper": "23/1800",
+        "conditioned_upper": "23/1800",
+        "retained_G_cross": "1/225",
+        "conditional_H_cap": "4/45",
+        "joint_pair_candidates": [
+          "0",
+          "1/600",
+          "1/120",
+          "1/200",
+          "7/2400"
+        ],
+        "joint_pair_upper": "1/120",
+        "replacement_difference": "-1/900",
+        "adopted_difference": "-1/900",
+        "head_upper": "41/270"
+      },
+      "scaled_head_lp": 2812551980,
+      "scaled_selected_increments": [
+        13965205212,
+        36967668780,
+        13875052464,
+        9940164010
+      ],
+      "head_dual": [
+        {
+          "gamma": 2521050,
+          "alpha": [
+            0,
+            0,
+            65950668,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 289013172
+        },
+        {
+          "gamma": 17647350,
+          "alpha": [
+            0,
+            0,
+            244004026,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 2481452708
+        },
+        {
+          "gamma": 51450,
+          "alpha": [
+            0,
+            0,
+            2469600,
+            0,
+            0,
+            0,
+            0,
+            2469600,
+            0,
+            0,
+            0,
+            0,
+            2469600,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 42086100
+        }
+      ]
+    },
+    "maximizer_count": 1,
+    "accepted_cost_upper": "1344356641/405168750",
+    "weighted_direct_gain": "0"
+  },
+  {
+    "index": 48,
+    "tag": [
+      "s",
+      "9"
+    ],
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "0",
+        "2": "0",
+        "3": "7",
+        "4": "2",
+        "5": "0"
+      },
+      "factorial_tail_coefficient": "2",
+      "polynomial_tail": {
+        "leading": "1",
+        "constant": "-9",
+        "entrance": 3
+      },
+      "negative_hinge_coefficients": {},
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "7",
+        "5": "16",
+        "6": "27",
+        "7": "40",
+        "8": "55"
+      }
+    },
+    "previous_cost_bound": "7289003/1852200",
+    "status": "enumerate",
+    "scaling": {
+      "factor": "1",
+      "primitive_hinges": {
+        "3": 7,
+        "4": 2
+      },
+      "primitive_factorial": 2
+    },
+    "mean_factor": 1,
+    "uniform_cost_upper": "7284887/1852200",
+    "maximizing_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "scaled_primitive_mean_part": 592048568160,
+      "scaled_primitive_factorial_head_part": 81036631200,
+      "scaled_mean_correction_before_internal_factor": 0,
+      "joint_factorial_head": {
+        "old_head": "413/2700",
+        "old_pure_five_cross": "2/225",
+        "pure_five_pre_max_rows": [
+          "0",
+          "0",
+          "8/45",
+          "0",
+          "0"
+        ],
+        "whole_row_candidates": [
+          "0",
+          "1/600",
+          "23/1800",
+          "1/200",
+          "7/2400"
+        ],
+        "whole_row_upper": "23/1800",
+        "conditioned_upper": "23/1800",
+        "retained_G_cross": "1/225",
+        "conditional_H_cap": "4/45",
+        "joint_pair_candidates": [
+          "0",
+          "1/600",
+          "1/120",
+          "1/200",
+          "7/2400"
+        ],
+        "joint_pair_upper": "1/120",
+        "replacement_difference": "-1/900",
+        "adopted_difference": "-1/900",
+        "head_upper": "41/270"
+      },
+      "scaled_head_lp": 1423480870,
+      "scaled_selected_increments": [
+        4383601740,
+        13733167770,
+        948721536
+      ],
+      "head_dual": [
+        {
+          "gamma": 6000099,
+          "alpha": [
+            0,
+            0,
+            42941885,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 231768530
+        },
+        {
+          "gamma": 12353145,
+          "alpha": [
+            0,
+            0,
+            90119134,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 1091547422
+        },
+        {
+          "gamma": 122451,
+          "alpha": [
+            0,
+            0,
+            5877648,
+            0,
+            0,
+            0,
+            0,
+            5877648,
+            0,
+            0,
+            0,
+            0,
+            5877648,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 100164918
+        }
+      ]
+    },
+    "maximizer_count": 1,
+    "accepted_cost_upper": "7284887/1852200",
+    "weighted_direct_gain": "577711/1535208675"
+  },
+  {
+    "index": 49,
+    "tag": [
+      "s",
+      "81/16"
+    ],
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "0",
+        "2": "63/16",
+        "3": "49/16",
+        "4": "2",
+        "5": "0"
+      },
+      "factorial_tail_coefficient": "2",
+      "polynomial_tail": {
+        "leading": "1",
+        "constant": "-81/16",
+        "entrance": 3
+      },
+      "negative_hinge_coefficients": {},
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "63/16",
+        "4": "175/16",
+        "5": "319/16",
+        "6": "495/16",
+        "7": "703/16",
+        "8": "943/16"
+      }
+    },
+    "previous_cost_bound": "39800437/9261000",
+    "status": "enumerate",
+    "scaling": {
+      "factor": "1/16",
+      "primitive_hinges": {
+        "2": 63,
+        "3": 49,
+        "4": 32
+      },
+      "primitive_factorial": 32
+    },
+    "mean_factor": 1,
+    "uniform_cost_upper": "39779857/9261000",
+    "maximizing_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "scaled_primitive_mean_part": 11019599789184,
+      "scaled_primitive_factorial_head_part": 1296586099200,
+      "scaled_mean_correction_before_internal_factor": 0,
+      "joint_factorial_head": {
+        "old_head": "413/2700",
+        "old_pure_five_cross": "2/225",
+        "pure_five_pre_max_rows": [
+          "0",
+          "0",
+          "8/45",
+          "0",
+          "0"
+        ],
+        "whole_row_candidates": [
+          "0",
+          "1/600",
+          "23/1800",
+          "1/200",
+          "7/2400"
+        ],
+        "whole_row_upper": "23/1800",
+        "conditioned_upper": "23/1800",
+        "retained_G_cross": "1/225",
+        "conditional_H_cap": "4/45",
+        "joint_pair_candidates": [
+          "0",
+          "1/600",
+          "1/120",
+          "1/200",
+          "7/2400"
+        ],
+        "joint_pair_upper": "1/120",
+        "replacement_difference": "-1/900",
+        "adopted_difference": "-1/900",
+        "head_upper": "41/270"
+      },
+      "scaled_head_lp": 30818650156,
+      "scaled_selected_increments": [
+        93618485856,
+        112067731440,
+        15179544576
+      ],
+      "head_dual": [
+        {
+          "gamma": 140472906,
+          "alpha": [
+            0,
+            0,
+            902014883,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 5012788592
+        },
+        {
+          "gamma": 353299947,
+          "alpha": [
+            51883209,
+            51883209,
+            1493789353,
+            51883209,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 23275678160
+        },
+        {
+          "gamma": 8312262,
+          "alpha": [
+            0,
+            0,
+            132160644,
+            0,
+            0,
+            0,
+            0,
+            132160644,
+            0,
+            0,
+            0,
+            0,
+            132160644,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 2530183404
+        }
+      ]
+    },
+    "maximizer_count": 1,
+    "accepted_cost_upper": "39779857/9261000",
+    "weighted_direct_gain": "1290220336/1975813564725"
+  }
+]

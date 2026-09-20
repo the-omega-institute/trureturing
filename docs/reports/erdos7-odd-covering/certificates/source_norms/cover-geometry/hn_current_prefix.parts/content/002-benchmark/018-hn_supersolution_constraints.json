@@ -1,0 +1,23 @@
+{
+  "length": 146,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 133,
+      "part": {
+        "path": "content/002-benchmark/018-hn_supersolution_constraints/000000-000133.json",
+        "sha256": "b3e2b32c6a3b30426d50bd7e89807ea2e3af3cb5df3ac91b4d458d6f4feff2c1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 133,
+      "stop": 146,
+      "part": {
+        "path": "content/002-benchmark/018-hn_supersolution_constraints/000133-000146.json",
+        "sha256": "140be9b92f93bb470f52441d952327d6f2633a664e0a945d75c59d9dd3f986dc",
+        "kind": "value"
+      }
+    }
+  ]
+}

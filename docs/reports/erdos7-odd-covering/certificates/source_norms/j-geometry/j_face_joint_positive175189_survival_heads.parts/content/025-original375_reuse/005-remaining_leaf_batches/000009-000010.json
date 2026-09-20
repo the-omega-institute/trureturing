@@ -1,0 +1,532 @@
+[
+  [
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        3,
+        0,
+        4
+      ],
+      "affine_upper": "783883/3969000",
+      "strongest_available_old_upper": "5365957003898630491/27783000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 954,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "5365957003898630491/27783000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        3,
+        1,
+        0
+      ],
+      "affine_upper": "780643/3969000",
+      "strongest_available_old_upper": "213731080158109907/1111320000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 955,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "213731080158109907/1111320000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        3,
+        1,
+        1
+      ],
+      "affine_upper": "780643/3969000",
+      "strongest_available_old_upper": "213731080158109907/1111320000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 956,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "213731080158109907/1111320000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        3,
+        1,
+        2
+      ],
+      "affine_upper": "783883/3969000",
+      "strongest_available_old_upper": "1788652334123185201/9261000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 957,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "1788652334123185201/9261000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        3,
+        1,
+        3
+      ],
+      "affine_upper": "783073/3969000",
+      "strongest_available_old_upper": "5360287004057031713/27783000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 958,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "5360287004057031713/27783000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        3,
+        1,
+        4
+      ],
+      "affine_upper": "787123/3969000",
+      "strongest_available_old_upper": "359242466797450919/1852200000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 959,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": "1789352340037641271/9261000000000000000",
+      "checked375_dual_key": "24facef03a53a69350334cda2bfe7a01524d4d5f22b521f10dd7d30be52a63d7",
+      "strongest_available_upper": "1789352340037641271/9261000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        0,
+        0
+      ],
+      "affine_upper": "781723/3969000",
+      "strongest_available_old_upper": "5350837001954243351/27783000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 960,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "5350837001954243351/27783000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        0,
+        1
+      ],
+      "affine_upper": "5475301/27783000",
+      "strongest_available_old_upper": "764868143109668653/3969000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 961,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "764868143109668653/3969000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        0,
+        2
+      ],
+      "affine_upper": "784963/3969000",
+      "strongest_available_old_upper": "767645286038926109/3969000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 962,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "767645286038926109/3969000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        0,
+        3
+      ],
+      "affine_upper": "5474491/27783000",
+      "strongest_available_old_upper": "764770943175814321/3969000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 963,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "764770943175814321/3969000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        0,
+        4
+      ],
+      "affine_upper": "784963/3969000",
+      "strongest_available_old_upper": "5373517002208723757/27783000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 964,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "5373517002208723757/27783000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        0
+      ],
+      "affine_upper": "781723/3969000",
+      "strongest_available_old_upper": "5350837001923139351/27783000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 965,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "5350837001923139351/27783000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        1
+      ],
+      "affine_upper": "781723/3969000",
+      "strongest_available_old_upper": "5350837001923139351/27783000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 966,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "5350837001923139351/27783000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        2
+      ],
+      "affine_upper": "784963/3969000",
+      "strongest_available_old_upper": "39803829641777273/205800000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 967,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "39803829641777273/205800000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        3
+      ],
+      "affine_upper": "784153/3969000",
+      "strongest_available_old_upper": "5367847001817901043/27783000000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 968,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": null,
+      "checked375_dual_key": null,
+      "strongest_available_upper": "5367847001817901043/27783000000000000000"
+    },
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "projection": [
+        1,
+        4,
+        4,
+        1,
+        4,
+        1,
+        4
+      ],
+      "projection441_735": [
+        4,
+        1,
+        4
+      ],
+      "affine_upper": "788203/3969000",
+      "strongest_available_old_upper": "71949293357559869/370440000000000000",
+      "maximizing_late_coordinate": "1",
+      "original_prefix_leaf_index": 969,
+      "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+      "checked375_branch_upper": "767945288466086119/3969000000000000000",
+      "checked375_dual_key": "63abc426371526e1df87536a431b1000c6ff107b18dc82b553db10bb62747a98",
+      "strongest_available_upper": "767945288466086119/3969000000000000000"
+    }
+  ]
+]

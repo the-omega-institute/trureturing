@@ -128,7 +128,7 @@ public sealed class UtilityAdmissionObservationTests
         Assert.Contains(RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId,
             DeclaredTemplateUnregisteredTests.Build()).Diagnostics,
             diagnostic => diagnostic.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
-                && diagnostic.AdmissionEffect == AdmissionEffect.Block);
+                && diagnostic.AdmissionEffect == AdmissionEffect.Observe);
     }
 
     [Fact]

@@ -1,0 +1,23 @@
+{
+  "length": 45,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 31,
+      "part": {
+        "path": "content/016-residual_leaf_batches/000004/item/000000-000031.json",
+        "sha256": "98399699b7455f6c9d4cf75d81734bb0a488a9bc87084a30a03e4c4ec0290db1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 31,
+      "stop": 45,
+      "part": {
+        "path": "content/016-residual_leaf_batches/000004/item/000031-000045.json",
+        "sha256": "ce02af616e16a0aaab9718c1de711d325d368682ff576bbe33426d93f030dd77",
+        "kind": "value"
+      }
+    }
+  ]
+}
