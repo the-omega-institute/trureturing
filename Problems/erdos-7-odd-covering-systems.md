@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Every prime-interaction graph with blocks of at most seven vertices is noncovering, with arbitrary total prime count, original heights, and residues](../docs/reports/erdos7-odd-covering/problem-details/31-seven-vertex-block-noncoverage-with-actual-prime-measures.md)
 - [Every prime-interaction graph with blocks of at most six vertices is noncovering: transported six-prime prefix measures pay all actual attachments, with arbitrary total prime count and heights](../docs/reports/erdos7-odd-covering/problem-details/30-six-prime-prefix-measures-close-all-six-vertex-blocks.md)
 - [Actual conditioned heads admit explicitly bounded sparse prime tails of arbitrary finite size, retaining every mixed support](../docs/reports/erdos7-odd-covering/problem-details/27-sparse-tail-extensions-of-conditioned-heads.md)
 - [Literal modulus 5 or 15 absence, or agreement of their residues modulo 5, pays every remaining six-vertex block under the actual pure-class invariant](../docs/reports/erdos7-odd-covering/problem-details/26-literal-pure-classes-and-six-vertex-residue-branches.md)
