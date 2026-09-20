@@ -275,8 +275,9 @@ def validate_sources(rows, repository):
 
 
 def validate_template_sources(rows, repository, *, inputs=None):
-    """Reject stale binding inputs before native reuse or final publication.
+    """Validate source closure bytes and semantic compatibility before reuse.
 
+    Global configuration belongs to the aggregate, never these source inputs.
     Their paths are emitted by the checked driver. This checks byte binding;
     the strict C# consumer still checks the complete evidence semantics.
     """

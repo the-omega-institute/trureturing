@@ -33,8 +33,7 @@ public sealed class InformationTemplateEvidenceTests
         return DeclaredTemplateReviewTests.Tree(files);
     }
 
-    private static object[] WithPolicy(params object[] inputs) => inputs.Concat(
-        DeclaredTemplateReviewTests.PolicyFiles().Select(p => Input(p.Key, p.Value)))
+    private static object[] SourceInputs(params object[] inputs) => inputs
         .OrderBy(input => JsonSerializer.SerializeToElement(input).GetProperty("path").GetString(), StringComparer.Ordinal).ToArray();
 
     private static JsonElement Wire(bool declared = false, bool sidecar = false, int? compatibility = null) =>
@@ -42,7 +41,7 @@ public sealed class InformationTemplateEvidenceTests
         {
             schema_version = 1,
             compatibility_version = compatibility ?? DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
-            inputs = WithPolicy(sidecar ? new[] { Input(PathB, TextB), Input(PathA, TextA) } : new[] { Input(PathA, TextA) }),
+            inputs = SourceInputs(sidecar ? new[] { Input(PathB, TextB), Input(PathA, TextA) } : new[] { Input(PathA, TextA) }),
             inventory = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             registered = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             records = new[] { new
@@ -103,6 +102,24 @@ public sealed class InformationTemplateEvidenceTests
 
     [Fact]
     public void complete_producer_loader_accepted() => Assert.Single(RawReport().Files);
+
+    [Theory]
+    [InlineData("lean-report-inputs.json")]
+    [InlineData("lean-toolchain")]
+    [InlineData("lake-manifest.json")]
+    public void retired_policy_input_is_malformed(string path)
+    {
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        var inputs = wire["inputs"]!.AsArray();
+        foreach (var input in inputs.ToArray())
+            if (DeclaredTemplateReviewTests.PolicyFiles().ContainsKey(input!["path"]!.GetValue<string>()))
+                inputs.Remove(input);
+        inputs.Add(JsonSerializer.SerializeToNode(Input(path, DeclaredTemplateReviewTests.PolicyFiles()[path])));
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA))));
+        Assert.StartsWith("DTR-Evidence:", error.Message);
+    }
+
 
     [Theory]
     [InlineData("legacy", true)]
@@ -241,13 +258,13 @@ public sealed class InformationTemplateEvidenceTests
         var snapshot = Snapshot((PathA, registrationSource), (PathB, bridgeSource));
         var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
         var inputs = new[] { Input(PathB, bridgeSource), Input(PathA, registrationSource) };
-        wire["inputs"] = JsonSerializer.SerializeToNode(WithPolicy(inputs));
+        wire["inputs"] = JsonSerializer.SerializeToNode(SourceInputs(inputs));
         wire["records"]![0]!["content_inputs"] = JsonSerializer.SerializeToNode(inputs);
         var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
         var bridge = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(new
         {
             schema_version = 1, compatibility_version = DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
-            inputs = WithPolicy(Input(PathB, bridgeSource)),
+            inputs = SourceInputs(Input(PathB, bridgeSource)),
             inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
             records = System.Array.Empty<object>(),
         }), PathB, snapshot);

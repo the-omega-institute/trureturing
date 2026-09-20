@@ -395,7 +395,7 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .proj n i b => emit "projection"; wireName n; emit (toString i); child b
 
 /-- The canonical wire includes every retained plan node and proof proposition/erased expansion,
-all slots, identities, policy and source references. The hash and byte count are
+all slots, identities, semantic version and source references. The hash and byte count are
 outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
@@ -403,7 +403,7 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     emit "DTR-checked-plan-v5"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
-    emit plan.compiler; emit plan.toolchain; emit plan.policyIdentity
+    emit plan.compiler; emit plan.toolchain; emit (toString plan.reportSemanticVersion)
     wireName plan.name; wireName plan.definitionOwner; wireName plan.enrollmentOwner
     emit (toString plan.levelParams.length)
     emit plan.typeIdentity; emit plan.bodyIdentity
@@ -437,11 +437,6 @@ def sourcePath (name : Name) : String :=
   (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
     name.toString.replace "." "/" ++ ".lean"
 
--- Judge implementation bytes do not identify binding semantics; the manual
--- report_semantic_version does. Retain configuration and toolchain inputs.
-def policyPaths : Array String := #[
-  "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json"]
-
 private abbrev HashWorker := IO.Process.Child {
   stdin := .piped, stdout := .piped, stderr := .null }
 
@@ -450,9 +445,10 @@ private initialize hashWorker : Std.Mutex (Option HashWorker) ← Std.Mutex.new 
 /-- Reuse only the fixed worker process, never a file digest. Requests carry the
 caller's current directory because isolated source fixtures may change it. The
 mutex keeps each request/response together; any failure retires the stream. -/
-private def fileInputBatch (paths : Array String) : IO (Array String × Option Nat) := do
-  if paths.isEmpty then return (#[], none)
-  let request := Json.arr #[toJson (← IO.currentDir).toString, toJson paths]
+private def fileInputBatch (paths : Array String) (readVersion : Bool := false) :
+    IO (Array String × Option Nat) := do
+  if paths.isEmpty && !readVersion then return (#[], none)
+  let request := Json.arr #[toJson (← IO.currentDir).toString, toJson paths, toJson readVersion]
   hashWorker.atomically do
     try
       let child ← match ← get with
@@ -471,14 +467,15 @@ private def fileInputBatch (paths : Array String) : IO (Array String × Option N
               "for line in sys.stdin.buffer:\n" ++
               " p=None\n" ++
               " try:\n" ++
-              "  root,paths=json.loads(line)\n" ++
+              "  root,paths,read_version=json.loads(line)\n" ++
               "  hashes=[]; version=None\n" ++
-              "  for p in paths:\n" ++
+              "  if read_version:\n" ++
+              "   p='lean-report-inputs.json'\n" ++
               "   data=(pathlib.Path(root)/p).read_bytes()\n" ++
-              "   hashes.append(hashlib.sha256(data).hexdigest())\n" ++
-              "   if p=='lean-report-inputs.json':\n" ++
-              "    version=json.loads(data.decode('utf-8'),object_pairs_hook=unique)['report_semantic_version']\n" ++
-              "    if type(version) is not int or version<=0: raise ValueError('version')\n" ++
+              "   version=json.loads(data.decode('utf-8'),object_pairs_hook=unique)['report_semantic_version']\n" ++
+              "   if type(version) is not int or version<=0: raise ValueError('version')\n" ++
+              "  for p in paths:\n" ++
+              "   hashes.append(hashlib.sha256((pathlib.Path(root)/p).read_bytes()).hexdigest())\n" ++
               "  result=[hashes,version]\n" ++
               " except Exception:\n" ++
               "  result='DTR-ManifestVersion' if p=='lean-report-inputs.json' else None\n" ++
@@ -507,11 +504,11 @@ private def fileInputBatch (paths : Array String) : IO (Array String × Option N
 private def fileHashes (paths : Array String) : IO (Array String) := do
   return (← fileInputBatch paths).1
 
-/-- The version and manifest digest come from the same captured policy bytes. -/
+/-- Bind only the source bytes and the explicit semantic compatibility value. -/
 def readVersionedSourceInputs (paths : Array String) : CoreM (Array SourceInput × Nat) := do
-  let (hashes, version) ← fileInputBatch paths
+  let (hashes, version) ← fileInputBatch paths true
   let some version := version
-    | throwError "DTR-ManifestVersion: missing report_semantic_version policy input"
+    | throwError "DTR-ManifestVersion: missing report_semantic_version"
   return ((paths.zip hashes).map (fun (path, sha256) => { path, sha256 }), version)
 
 /-- Hash every supplied current file in order, including repeated paths. The
@@ -927,20 +924,18 @@ def validate (roots : Array Name) : CoreM Unit := do
 
 end NativeCoherence
 
-def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) : CoreM (Array SourceInput) := do
+def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) :
+    CoreM (Array SourceInput × Nat) := do
   let policyOwners := #[`LeanInformationAudit.RegistryTypes, `LeanInformationAudit.Registry,
     `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]
     |>.filter (fun name => (env.getModuleIdx? name).isSome)
   NativeCoherence.validate (#[env.header.mainModule] ++ policyOwners ++ dependencies.map (·.owner))
-  let mut paths := policyPaths.push (sourcePath env.header.mainModule)
+  let mut paths := #[sourcePath env.header.mainModule]
   for dep in dependencies do
     if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit.Tests." then
       let path := sourcePath dep.owner
       unless paths.contains path do paths := paths.push path
-  readSourceInputs (paths.qsort (· < ·))
-
-def sourceIdentity (inputs : Array SourceInput) : String :=
-  Sha256.hex (Json.arr (inputs.map fun input => Json.arr #[Json.str input.path, Json.str input.sha256])).compress.toUTF8
+  readVersionedSourceInputs (paths.qsort (· < ·))
 
 /-- Compare retained bytes; never refresh a stale plan by wrapping old olean
 contents with hashes from the current source tree. -/

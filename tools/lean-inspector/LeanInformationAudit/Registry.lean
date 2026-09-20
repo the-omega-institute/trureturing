@@ -288,7 +288,7 @@ private def moduleSourceInputs (env : Environment) (root : Name) :
     CoreM (Array TemplateAudit.SourceInput × Nat) := do
   let mut seen : NameSet := {}
   let mut pending := [root]
-  let mut paths := TemplateAudit.policyPaths
+  let mut paths : Array String := #[]
   while let name :: rest := pending do
     pending := rest
     if seen.contains name then continue

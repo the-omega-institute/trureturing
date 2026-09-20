@@ -194,7 +194,7 @@ public sealed class DeclaredTemplateUnregisteredTests
             reports[owner] = reports[owner] with { Declarations = reports[owner].Declarations.Add(new(Theorem + ".unit", "def", "True", [])) };
             reports[Target] = reports[Target] with { Declarations = reports[Target].Declarations.Add(new(Theorem + ".realization", "def", "True", [])) };
         }
-        var inputs = after.Where(p => p.Key == Target || p.Key == Registration || PolicyFiles().ContainsKey(p.Key))
+        var inputs = after.Where(p => p.Key == Target || p.Key == Registration)
             .OrderBy(p => p.Key, StringComparer.Ordinal).Select(p => new { path = p.Key, sha256 = Hash(p.Value) }).ToArray();
         object Record(string producer, bool validated) => new
         {

@@ -20,7 +20,7 @@ public sealed class DeclaredTemplateReviewTests
         ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
         ["lake-manifest.json"] = "{\"packages\":[]}",
         ["lean-report-inputs.json"] = """
-            {"schema_version":1,"report_semantic_version":8,
+            {"schema_version":1,"report_semantic_version":9,
              "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},
@@ -67,8 +67,7 @@ public sealed class DeclaredTemplateReviewTests
         bool declared = false, string? omit = null, bool indirectJudgePath = false)
     {
         var snapshot = Tree(files);
-        var inputs = files.Where(p => p.Key == Registration || p.Key == Target
-                || PolicyFiles().ContainsKey(p.Key))
+        var inputs = files.Where(p => p.Key == Registration || p.Key == Target)
             .Where(p => p.Key != omit).OrderBy(p => p.Key, StringComparer.Ordinal)
             .Select(p => new { path = p.Key, sha256 = Hash(p.Value) }).ToArray();
         var keys = Enumerable.Range(0, count).Select(Key).ToArray();
@@ -149,7 +148,7 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Fact]
-    public void manifest_only_bump_accepts_eight()
+    public void manifest_only_bump_accepts_nine()
     {
         var files = Files();
         var error = Record.Exception(() =>
@@ -157,7 +156,7 @@ public sealed class DeclaredTemplateReviewTests
             var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
             Assert.Equal(2, RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)).Files.Count);
         });
-        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_eight: " + error?.Message);
+        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_nine: " + error?.Message);
     }
 
     private static Exception? ReadChangedManifest(string? manifest, int compatibility)
@@ -170,10 +169,6 @@ public sealed class DeclaredTemplateReviewTests
         {
             var evidence = module!["information_templates"]!;
             evidence["compatibility_version"] = compatibility;
-            // Keep source binding current so only version validation can reject.
-            foreach (var input in evidence["inputs"]!.AsArray())
-                if (manifest is not null && input!["path"]!.GetValue<string>() == "lean-report-inputs.json")
-                    input["sha256"] = Hash(manifest);
         }
         var bytes = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
         var snapshot = Tree(files);
@@ -255,20 +250,37 @@ public sealed class DeclaredTemplateReviewTests
             "[FAIL] mismatched_report_semantic_version_rejects_binding_evidence: " + version);
     }
 
+    [Fact]
+    public void selected_module_accepts_source_inputs_without_configuration()
+    {
+        var before = Files();
+        var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
+        var report = Report(after, declared: true);
+        var modules = report.Files.ToDictionary(pair => pair.Key.Value, pair =>
+        {
+            var wire = System.Text.Json.Nodes.JsonNode.Parse(pair.Value.InformationTemplates!.Value.GetRawText())!;
+            var inputs = wire["inputs"]!.AsArray();
+            foreach (var input in inputs.ToArray())
+                if (PolicyFiles().ContainsKey(input!["path"]!.GetValue<string>())) inputs.Remove(input);
+            return pair.Value with { InformationTemplates = JsonSerializer.SerializeToElement(wire) };
+        });
+        var diagnostics = Dispatch(Context(before, after, LeanAxiomReport.Create(modules), [Registration]));
+        Assert.DoesNotContain(diagnostics, d => d.Message.Contains("DTR-Evidence", StringComparison.Ordinal));
+        Assert.Contains(diagnostics, d => d.Message.Contains("DTR-Declared", StringComparison.Ordinal));
+    }
+
     [Theory]
-    [InlineData("lean-report-inputs.json")]
-    [InlineData("lean-toolchain")]
-    [InlineData("lake-manifest.json")]
-    public void required_configuration_input_omission_rejected(string omitted)
+    [InlineData(Registration)]
+    [InlineData(Target)]
+    public void required_source_input_omission_rejected(string omitted)
     {
         var before = Files();
         var after = new Dictionary<string, string>(before) { [Registration] = before[Registration] + "-- changed\n" };
         var report = Report(after, omit: omitted);
         var diagnostics = Dispatch(Context(before, after, report, [Registration]));
         Assert.True(diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Observe
-                && d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)
-                && d.Message.Contains(omitted, StringComparison.Ordinal)),
-            "[FAIL] required_configuration_input_omission_rejected: " + omitted);
+                && d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)),
+            "[FAIL] required_source_input_omission_rejected: " + omitted);
     }
 
     [Fact]
@@ -311,7 +323,8 @@ public sealed class DeclaredTemplateReviewTests
                 ImmutableArray.CreateRange(File.ReadAllBytes(Path.Combine(root, path))));
         });
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-            RawRepositorySnapshot.Create(entries))).Snapshot;
+            RawRepositorySnapshot.Create(entries.Append(RawRepositoryEntry.FromText("lean-report-inputs.json",
+                File.ReadAllText(Path.Combine(root, "lean-report-inputs.json"))))))).Snapshot;
         var declarations = wire["records"]!.AsArray().SelectMany(record => new[]
         {
             new LeanDeclaration(record!["unit_name"]!.GetValue<string>(), "def", "True", []),

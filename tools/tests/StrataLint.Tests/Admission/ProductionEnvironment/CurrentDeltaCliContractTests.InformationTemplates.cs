@@ -19,8 +19,7 @@ public sealed partial class CurrentDeltaCliContractTests
         IReadOnlyDictionary<string, LeanFileReport> reports, bool missingEvidence)
     {
         var inputs = snapshot.Files.Keys.Select(path => path.Value)
-            .Where(path => path.StartsWith("D5/", StringComparison.Ordinal) && path.EndsWith(".lean", StringComparison.Ordinal)
-                || path is "lean-report-inputs.json" or "lean-toolchain" or "lake-manifest.json")
+            .Where(path => path.StartsWith("D5/", StringComparison.Ordinal) && path.EndsWith(".lean", StringComparison.Ordinal))
             .Order(StringComparer.Ordinal).Select(path => TemplateInput(snapshot, path)).ToArray();
         return LeanAxiomReport.Create(reports.ToDictionary(pair => pair.Key, pair =>
         {
@@ -28,7 +27,7 @@ public sealed partial class CurrentDeltaCliContractTests
             var own = pair.Key == RuleFixture.RingPath ? new[] { TemplateOccurrence } : [];
             var wire = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = 8,
+                schema_version = 1, compatibility_version = 9,
                 inputs = inputs.Select(input => new { path = input.Path, sha256 = input.Sha256 }),
                 inventory = own.Select(InformationTemplateJson.KeyJson),
                 registered = own.Select(InformationTemplateJson.KeyJson),
