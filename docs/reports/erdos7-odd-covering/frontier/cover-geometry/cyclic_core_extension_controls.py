@@ -809,7 +809,7 @@ def main():
         'tree_elimination_and_unicyclic_core': unicyclic,
     }
     output = Path(__file__).resolve().with_suffix('.json')
-    output.write_text(json.dumps(serializable(payload), indent=2)+'\n', encoding='utf-8')
+    output.write_text(json.dumps(serializable(payload), separators=(',', ':'))+'\n', encoding='utf-8')
     print(json.dumps({'sharp_blocker': '1/81', 'peeling_uncovered': '20790/75075 = 18/65',
                       'large_labels': len(large['original_labels']), 'large_S': large['S_display'],
                       'large_B3': large['B3_display'], 'large_gap': large['gap_display'],
