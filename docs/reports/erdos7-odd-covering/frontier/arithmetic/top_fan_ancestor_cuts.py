@@ -324,6 +324,91 @@ def binary_conditions(result, g, A, Q):
                             verified_small_palette_conditions=small)
 
 
+def binary_frame_insertion(result, g, A, Q):
+    q, H, B = result['q'], result['H'], result['cofactor_period']
+    frame_last = q * 2 ** (q-2)
+    if frame_last not in A:
+        result['binary_frame_insertion'] = dict(applicable=False,
+            reason='requires H>=2 and the original class of modulus q*2^(q-2)')
+        return
+    R = g['R']
+    primes = sorted(p for p in factors(B) if p != 2 and q*p in A)
+    check(bool(primes), 'the original top fan has no odd ancestor prime')
+    skeleton = {q * 2 ** j for j in range(q-1)}
+    binary_cofactors = {2 ** j for j in range(1, q-1)}
+    free_roots = set(range(q)) - {A[d] % q for d in skeleton}
+    check(len(free_roots) == 1, 'the binary first-ancestor frame does not leave one root')
+    root = next(iter(free_roots))
+    check(all(A[d] % q == root for d in A if d % q == 0 and d not in skeleton),
+          'nonskeleton originals do not share the remaining root')
+    cylinders = []
+    for p in primes:
+        power = p ** height(B, p)
+        residue = A[q*p] % p
+        check(all(A[d] % p != residue for d in A if d % q and d % p == 0),
+              'a q-free original masks the prime-ancestor residue')
+        lifts = list(range(residue, power, p))
+        pure_survivors = [u for u in range(power) if
+            all(u % (p ** e) != A[p ** e] for e in range(1, height(B, p)+1))]
+        pure_count = power - (power-1) // (p-1)
+        check(len(pure_survivors) == pure_count and set(lifts).issubset(pure_survivors),
+              'pure-prime survivor count or ancestor-cylinder containment failed')
+        other = B // power
+        for x in sorted(R):
+            for u in lifts:
+                z = u + power * (((x-u) * pow(power, -1, other)) % other)
+                check(z in R and z % p == residue,
+                      'insertion of a complete prime-power coordinate leaves the actual source')
+                COUNTS['binary_frame_coordinate_insertions'] += 1
+        cylinders.append(dict(prime=p, full_power=power, ancestor_residue=residue,
+                              allowed_full_coordinate_count=len(lifts),
+                              pure_ladder_survivor_count=pure_count))
+    complement = B // prod(row['full_power'] for row in cylinders)
+    projection = sorted({x % complement for x in R})
+    residual = [x for x in range(complement) if all(x % d != a for d, a in A.items()
+                if d % q and complement % d == 0)]
+    check(projection == residual, 'complementary projection differs from its original residual cover')
+    joint = sorted(x for x in range(B) if x % complement in projection and
+                   all(x % p == A[q*p] % p for p in primes))
+    check(bool(joint) and set(joint).issubset(R), 'the joint ancestor cylinder is empty or leaves the source')
+    expected_count = len(projection) * prod(row['allowed_full_coordinate_count'] for row in cylinders)
+    check(len(joint) == expected_count, 'joint-cylinder count does not retain all original high digits')
+    cutoffs = dict(result['cofactor_cutoffs'])
+    for x in joint:
+        compatible = []
+        for d in A:
+            e = height(d, q)
+            m = d // q ** e
+            if e and m > 1 and x % m == A[d] % m:
+                compatible.append((e, m))
+                check(m in binary_cofactors or (e == 1 and m in primes),
+                      'a joint ancestor point retains a nonbinary column beyond its prime ancestor')
+        check(cutoffs[x] == 1, 'joint ancestor insertion does not reach cutoff one')
+        check(all(e == 1 for e, m in compatible if m not in binary_cofactors),
+              'a nonbinary column remains above height one')
+        check({m for e, m in compatible if e == 1} == binary_cofactors | set(primes),
+              'the joint shallow graph differs from the forced frame and prime star')
+    gain_bound = (q ** (H-1)-1) * len(joint)
+    check(result['source_gain_count'] >= gain_bound,
+          'cutoff-one cylinder gain exceeds the original-source gain')
+    pure_capacity = len(projection) * prod(row['pure_ladder_survivor_count'] for row in cylinders)
+    check(len(R) <= pure_capacity, 'original source exceeds its pure-ladder survivor product')
+    relative_bound = Fraction(q ** (H-1)-1, q ** (H-1)) * Fraction(len(joint), pure_capacity)
+    check(Fraction(result['source_gain_count'], result['prime_private_count']) >= relative_bound,
+          'relative gain loses the original prime-private normalization')
+    result['binary_frame_insertion'] = dict(applicable=True, original_frame_moduli=sorted(skeleton),
+        ancestor_primes=primes,
+        full_coordinate_cylinders=cylinders, complementary_period=complement,
+        actual_complementary_projection=projection, joint_cofactors=joint,
+        joint_count=len(joint), cutoff_on_joint=1, source_gain_count_bound=gain_bound,
+        source_gain_mass_bound=ratio(Fraction(gain_bound, Q)),
+        pure_ladder_cofactor_capacity=pure_capacity,
+        source_gain_relative_to_prime_private_mass_bound=ratio(relative_bound),
+        shallow_maximum_matching_counts=dict(total=q-1,
+            prime_parents=1 if q == 2 else 2, composite_parents=max(q-3, 0),
+            composite_excess_above_forced_colors=0))
+
+
 def verify(data, max_period=None):
     A, Q, hits, private = original_family(data, max_period)
     reports = []
@@ -333,6 +418,7 @@ def verify(data, max_period=None):
             top_fan(result, geometry, A, Q, hits, private)
             ancestor_cuts(result, geometry, A, private)
             binary_conditions(result, geometry, A, Q)
+            binary_frame_insertion(result, geometry, A, Q)
         else:
             result['high_height'] = dict(applicable=False, reason='H=1: the pure top equals the prime and a first ancestor can equal its top class')
         reports.append(result)
