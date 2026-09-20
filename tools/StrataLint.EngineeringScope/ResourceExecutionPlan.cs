@@ -11,6 +11,7 @@ internal sealed class ResourceExecutionPlan
     internal JsonElement Document { get; }
     internal string Commit => Document.GetProperty("candidate").GetProperty("commit").GetString()!;
     internal string[] Projects => Strings(Document.GetProperty("execution").GetProperty("projects"));
+    internal string[] TestProjects => Strings(Document.GetProperty("execution").GetProperty("tests"));
     internal string[] CheckUnits => Strings(Document.GetProperty("execution").GetProperty("checks"));
     internal string[] CurrentSteps => Strings(Document.GetProperty("execution").GetProperty("steps"));
     internal string[] LeanBuildTargets => Strings(Document.GetProperty("execution").GetProperty("lean_targets"));

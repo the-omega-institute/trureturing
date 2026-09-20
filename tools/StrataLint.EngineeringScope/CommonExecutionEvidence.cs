@@ -282,14 +282,17 @@ internal static partial class CommonExecutionEvidence
 
     private static void SealEngineering(string root, CommonStageRecord build, StageStep[] steps, ValidationScope validation)
     {
-        RequirePassed(steps, EngineeringSteps);
+        var plan = CurrentPlan(root, build);
+        var requiresTests = plan is null || plan.TestProjects.Length != 0;
+        RequirePassed(steps, requiresTests ? EngineeringSteps : []);
         var candidate = Candidate(root, validation.Snapshot);
         ValidateStartedBuild(root, build, candidate, validation);
-        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, validation.Snapshot, validation: validation);
-        if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
-        var checks = ValidateChecks(root, "engineering", build, null, validation);
+        var tests = requiresTests ? ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), candidate, validation.Snapshot, validation: validation) : null;
+        if (tests is not null && tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
+        var checks = ValidateChecks(root, "engineering", build, EngineeringCheckSelection(root, build), validation);
         var record = new CommonStageRecord(2, candidate, build.Round, steps,
-            Materials(root, new[] { BuildPath, TestsPath, ChecksPath("engineering") }.Concat(checks.Units.SelectMany(unit => unit.Materials).Select(material => material.Path)).Concat(tests.Materials.Select(material => material.Path))
+            Materials(root, new[] { BuildPath, ChecksPath("engineering") }.Concat(tests is null ? [] : new[] { TestsPath })
+                .Concat(checks.Units.SelectMany(unit => unit.Materials).Select(material => material.Path)).Concat(tests?.Materials.Select(material => material.Path) ?? [])
                 .Concat(steps.Select(step => step.Log))));
         Write(root, EngineeringPath, record);
         // The consumer already has the shared build (directly, or in current's
@@ -300,7 +303,7 @@ internal static partial class CommonExecutionEvidence
 
     internal static CommonStageRecord ValidateEngineering(string root) => ValidateEngineering(root, out _, out _);
 
-    internal static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord tests, out CommonCheckRecord checks)
+    internal static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord? tests, out CommonCheckRecord checks)
     {
         var candidate = Candidate(root, out var snapshot);
         var validation = new ValidationScope(snapshot);
@@ -308,33 +311,73 @@ internal static partial class CommonExecutionEvidence
     }
 
     private static CommonStageRecord ValidateEngineering(string root, CommonStageRecord build,
-        ValidationScope validation, out TestExecutionRecord tests, out CommonCheckRecord checks, IEnumerable<string>? baseProjects = null)
+        ValidationScope validation, out TestExecutionRecord? tests, out CommonCheckRecord checks, IEnumerable<string>? baseProjects = null)
     {
-        tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), build.Candidate, validation.Snapshot, baseProjects, validation);
-        if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
+        var plan = CurrentPlan(root, build);
+        var requiresTests = plan is null || plan.TestProjects.Length != 0;
+        ValidateBaseTestProjects(validation.Snapshot, baseProjects);
+        tests = requiresTests ? ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), build.Candidate, validation.Snapshot, baseProjects, validation) : null;
+        if (tests is not null && tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
         var record = Read<CommonStageRecord>(root, EngineeringPath);
         ValidateRecord(root, record, build.Candidate, build.Round, validation);
-        RequirePassed(record.Steps, EngineeringSteps);
-        checks = ValidateChecks(root, "engineering", build, null, validation);
+        RequirePassed(record.Steps, requiresTests ? EngineeringSteps : []);
+        checks = ValidateChecks(root, "engineering", build, EngineeringCheckSelection(root, build), validation);
         if (!record.Materials.Any(material => material.Path == ChecksPath("engineering")))
             throw new InvalidDataException("engineering has no bound common check evidence");
-        if (!record.Materials.Any(material => material.Path == TestsPath)
+        if (record.Materials.Any(material => material.Path == TestsPath) != requiresTests
             || !record.Materials.Any(material => material.Path == BuildPath))
             throw new InvalidDataException("engineering has no bound test or build evidence");
         return record;
     }
 
-    internal static (CommonStageRecord Current, CommonStageRecord Engineering, CommonStageRecord Build, TestExecutionRecord Tests) ValidateCommon(
-        string root, IEnumerable<string>? baseProjects = null) =>
-        ValidateCommon(root, ValidationScope.Create(root), baseProjects);
+    private static string[] EngineeringCheckSelection(string root, CommonStageRecord build) =>
+        CurrentPlan(root, build)?.CheckUnits.Intersect(EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray()
+        ?? EngineeringCheckIds;
 
-    internal static (CommonStageRecord Current, CommonStageRecord Engineering, CommonStageRecord Build, TestExecutionRecord Tests) ValidateCommon(
-        string root, ValidationScope validation, IEnumerable<string>? baseProjects = null)
+    internal static (CommonStageRecord Current, CommonStageRecord? Engineering, CommonStageRecord Build, TestExecutionRecord? Tests) ValidateCommon(
+        string root, IEnumerable<string>? baseProjects = null, string? protectedBase = null) =>
+        ValidateCommon(root, ValidationScope.Create(root), baseProjects, protectedBase);
+
+    internal static (CommonStageRecord Current, CommonStageRecord? Engineering, CommonStageRecord Build, TestExecutionRecord? Tests) ValidateCommon(
+        string root, ValidationScope validation, IEnumerable<string>? baseProjects = null, string? protectedBase = null)
     {
         var candidate = Candidate(root, validation.Snapshot);
         var build = ValidateBuild(root, candidate, null, validation);
-        var engineering = ValidateEngineering(root, build, validation, out var tests, out _, baseProjects);
-        return (ValidateCurrent(root, build, validation, out _), engineering, build, tests);
+        ValidateBaseTestProjects(validation.Snapshot, baseProjects);
+        var plan = CurrentPlan(root, build);
+        if (protectedBase is not null) RequireDeltaPlan(plan, protectedBase, null);
+        TestExecutionRecord? tests = null;
+        var engineering = plan is null || plan.StageRequired("engineering")
+            ? ValidateEngineering(root, build, validation, out tests, out _, baseProjects) : null;
+        var current = ValidateCurrent(root, build, validation, out _);
+        if (protectedBase is not null)
+        {
+            var currentPlan = CurrentPlan(root, current);
+            if ((plan is null) != (currentPlan is null)
+                || plan is not null && !JsonElement.DeepEquals(plan.Document, currentPlan!.Document))
+                throw new InvalidDataException("delta requires the same resource plan for build and current");
+        }
+        return (current, engineering, build, tests);
+    }
+
+    internal static void ValidateDeltaPlan(string root, CommonStageRecord build, string protectedBase, ResourceExecutionPlan? expected) =>
+        RequireDeltaPlan(CurrentPlan(root, build), protectedBase, expected);
+
+    internal static void ValidateEngineeringPlan(string root, CommonStageRecord build, ResourceExecutionPlan? expected)
+    {
+        var actual = CurrentPlan(root, build);
+        if ((actual is null) != (expected is null)
+            || actual is not null && !JsonElement.DeepEquals(actual.Document, expected!.Document))
+            throw new InvalidDataException("engineering requires the same resource plan as build");
+    }
+
+    private static void RequireDeltaPlan(ResourceExecutionPlan? plan, string protectedBase, ResourceExecutionPlan? expected)
+    {
+        if (plan is null && expected is null) return; // Explicit complete entrypoints have no resource selection.
+        if (plan is null || plan.Document.GetProperty("mode").GetString() != "pr"
+            || plan.Document.GetProperty("base").GetString() != protectedBase
+            || expected is not null && !JsonElement.DeepEquals(plan.Document, expected.Document))
+            throw new InvalidDataException("delta requires a matching PR resource plan for its protected base");
     }
 
     internal static void ValidateExecutionPlan(string root, CommonStageRecord build, ResourceExecutionPlan? expected, string stage)
