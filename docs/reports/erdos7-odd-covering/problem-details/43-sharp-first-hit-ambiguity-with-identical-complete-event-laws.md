@@ -1968,3 +1968,220 @@ cells and `6` effective rectangles, and each color has total mass `8`.
 This example belongs to the general rectangle theorem; no claim is made
 that it is a distinct-prime-prefix arithmetic source or is reachable
 through a prescribed clipping history.
+
+## 12. A quantitative rectangular certificate for actual pair-balance defects
+
+This is an ordinary finite-dimensional mathematical derivation, without a
+Lean certification or literature-priority claim. Its auxiliary matrices do
+not replace the actual arithmetic source, preparation, or clipped law.
+
+### 12.1. Finite geometric data
+
+Let X and Y be finite nonempty sets and let c range over n >= 1 colors.
+Each color has N_c original rectangles R_i x S_i; their union is U_c.
+Let L = sum_c N_c and let
+
+    K = max_{(x,y) in X x Y} #{c : (x,y) in U_c}.
+
+This maximum is over the full geometric carrier, including points having
+zero actual probability. Rectangles may overlap within and between colors.
+No distinctness of shapes, arithmetic assumptions, or full-support source
+is needed for the matrix result.
+
+Let W >= 0 be any finite common weight on X x Y. Put
+
+    M_c = W 1_{U_c},  H = sum_c M_c,  T = sum_{x,y} H(x,y).
+
+Assume T > 0. Let r_c,s_c be the row and column sums of M_c. Define
+
+    m = T/n,  a = H_X/T,  b = H_Y/T,
+    e_X = (1/2) sum_c ||r_c - m a||_1,
+    e_Y = (1/2) sum_c ||s_c - m b||_1.
+
+Thus a,b are probability vectors. Individual colors may have zero mass;
+their total masses need not equal m. The conclusion is
+
+\[
+ e_X+e_Y\ge T\left(1-\frac{\sqrt{KL}}n\right)_+.
+ \tag{FA79}
+\]
+
+Here t_+ = max(t,0). T > 0 forces K,L > 0. When T = 0, all weights vanish
+on all color supports and the defect is zero; no nontrivial count follows.
+
+### 12.2. Trimming without increasing any geometric support
+
+For one color write t_c = sum M_c and
+
+    D_Xc = ||r_c - m a||_1,  D_Yc = ||s_c - m b||_1.
+
+Scale each row of M_c down, if necessary, until its sum is at most m a(x).
+The removed mass is exactly
+
+    E_Xc = sum_x (r_c(x)-m a(x))_+
+         = (D_Xc + t_c - m)/2.
+
+Next scale columns down until their sums are at most m b(y). The columns
+after row trimming are bounded by the original s_c, so this removes at
+most
+
+    E_Yc = sum_y (s_c(y)-m b(y))_+
+         = (D_Yc + t_c - m)/2.
+
+Call the resulting nonnegative matrix M'_c. Row bounds remain valid after
+column trimming. Its mass satisfies
+
+\[
+ \sum M'_c\ge t_c-E_{Xc}-E_{Yc}
+ =m-\frac{D_{Xc}+D_{Yc}}2.
+ \tag{FA80}
+\]
+
+The right side can be negative; the lower bound is still valid. Summing
+over all colors gives
+
+\[
+ \sum_c\sum M'_c\ge T-e_X-e_Y.
+ \tag{FA81}
+\]
+
+All trimming occurs within the original support; it is a proof operation,
+not an asserted implementation of a physical clipping stage.
+
+### 12.3. Rectangular replacement preserving the trimmed marginals
+
+For each color distribute every entry of M'_c among the original rectangles
+of that color containing the entry, for example equally. This produces
+nonnegative matrices F_i, each supported on its own R_i x S_i, with
+sum_{i of color c} F_i = M'_c. A zero F_i is discarded.
+
+For a remaining F_i with positive mass t_i and row and column sums f_i,g_i,
+replace it by
+
+    Q_i(x,y) = f_i(x) g_i(y) / t_i.
+
+This matrix has rank one, the same two marginals as F_i, and support inside
+the same original rectangle. Let B_c = sum_{i of color c} Q_i. Then B_c
+has the same mass and marginals as M'_c, rank at most N_c, and support
+inside U_c. The replacement may fill a zero-probability point; this is why
+K must count full geometric support rather than only points where W > 0.
+
+### 12.4. One common normalization and the norm bound
+
+Delete the zero entries of a and b when forming inverse diagonal matrices;
+the corresponding rows and columns of every B_c are zero. Equivalently,
+extend all normalized matrices by zero on those coordinates. Set
+
+    A_c = D_a^(-1/2) B_c D_b^(-1/2).
+
+For any vectors f,g, weighted Cauchy--Schwarz and the marginal caps give
+
+    |f^T A_c g|
+      <= [sum_x (B_c)_X(x) f(x)^2/a(x)]^(1/2)
+         [sum_y (B_c)_Y(y) g(y)^2/b(y)]^(1/2)
+      <= m ||f||_2 ||g||_2.
+
+Consequently ||A_c||_op <= m, rank A_c <= N_c, and
+
+\[
+ \|A_c\|_{\mathrm{HS}}^2\le m^2N_c.
+ \tag{FA82}
+\]
+
+At each entry, at most K different colors are nonzero. Entrywise
+Cauchy--Schwarz and (FA82) imply
+
+\[
+ \left\|\sum_c A_c\right\|_{\mathrm{HS}}^2
+ \le K\sum_c\|A_c\|_{\mathrm{HS}}^2
+ \le Km^2L.
+ \tag{FA83}
+\]
+
+The vectors sqrt(a),sqrt(b) have Euclidean norm one and
+
+    sqrt(a)^T (sum_c A_c) sqrt(b) = sum_c sum B_c
+                                  >= T-e_X-e_Y.
+
+Its left side is at most ||sum_c A_c||_op, hence at most its Hilbert--Schmidt
+norm. Therefore T-e_X-e_Y <= (T/n) sqrt(KL), proving (FA79).
+
+### 12.5. Exact-balance and weighted consequences
+
+If e_X=e_Y=0 and T>0, then L >= ceil(n^2/K). This proof permits holes in W
+and in the actual incoming source. It counts geometric color overlap.
+
+There is also a stronger exact-balance profile inequality. Every color
+then has mass m>0 and the same normalized marginals a,b. Apply the same
+rectangle replacement without trimming and divide A_c by m to get matrices
+C_c with operator norm at most one, rank at most N_c, and
+
+    C_c sqrt(b) = sqrt(a).
+
+For any nonnegative numbers v_c, the same entrywise estimate gives
+
+\[
+ \left(\sum_c v_c\right)^2\le K\sum_c v_c^2N_c.
+ \tag{FA84}
+\]
+
+Every N_c is positive. Taking v_c=1/N_c yields
+
+\[
+ \sum_c\frac1{N_c}\le K.
+ \tag{FA85}
+\]
+
+Cauchy--Schwarz, n^2 <= (sum_c N_c)(sum_c 1/N_c), recovers the label-count
+bound. Applying the argument to any nonempty subset of colors gives the
+corresponding bound with that subset's own geometric overlap. These are
+necessary conditions, not claims that arbitrary count profiles occur.
+
+### 12.6. Connection to the actual height-one clipped law
+
+Let rho be any incoming probability on X x Y, possibly correlated and
+with holes, and let the fresh current color be independent uniform on n
+colors. For the original color unions U_c put k=sum_c 1_{U_c}. Given any
+history-dependent delta(x,y) in (0,1), set
+
+    u = min(k/n,delta)/(1-min(k/n,delta)),  w=u/k   if k>0,
+    u=w=0                                                  if k=0.
+
+The actual normalized clipped law is
+
+    mu(x,y,c) = rho(x,y)/n [1+u(x,y)-n w(x,y)1_{U_c}(x,y)].
+
+Choose W=rho w above. Then H=rho u, T=E_rho[u], and direct summation gives
+
+    mu_XC(x,c) - rho_X(x)/n = H_X(x)/n - r_c(x),
+    mu_YC(y,c) - rho_Y(y)/n = H_Y(y)/n - s_c(y).
+
+Hence e_X and e_Y are exactly the total-variation distances
+
+    e_X = TV(mu_XC, rho_X x uniform_n),
+    e_Y = TV(mu_YC, rho_Y x uniform_n).
+
+Equation (FA79) therefore controls the actual pair defects on the same
+incoming source and same clipping operation:
+
+\[
+ \operatorname{TV}(\mu_{XC},\rho_X\otimes\operatorname{Unif}_n)
+ +\operatorname{TV}(\mu_{YC},\rho_Y\otimes\operatorname{Unif}_n)
+ \ge\mathbb E_\rho[u]\left(1-\frac{\sqrt{KL}}n\right)_+.
+ \tag{FA86}
+\]
+
+The mass T is a specified clipping-activity weight. It is not asserted to
+be first-hit loss, uncovered mass, or a new total-loss budget. The bound is
+nonzero only when KL<n^2 and T>0. Arbitrarily many original labels can make
+the right side zero. Thus (FA86) does not settle an unrestricted odd covering,
+does not give a future-loss saving, and does not erase tail obligations.
+On a fixed finite carrier, thresholds tending uniformly to zero also make
+T tend to zero. Consequently this is not a positive defect bound uniform
+over every allowed threshold.
+
+For K=1, exact pair balance requires n^2 labels. The earlier Section 8
+Latin construction attains n^2 in the height-one, history-dependent
+threshold class. In particular n=6 requires and admits 36 mixed labels
+(plus the three separate pure labels in that arithmetic construction).
+This is not an attainment statement for constant thresholds.
