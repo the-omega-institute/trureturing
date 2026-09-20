@@ -99,10 +99,10 @@ public sealed class DeclaredTemplateDeltaLoadTests
     }
 
     [Fact]
-    public void selected_stale_evidence_blocks()
+    public void selected_retired_content_input_field_blocks()
     {
         using var fixture = new WireFixture();
-        fixture.Evidence(A)["inputs"]![0]!["sha256"] = new string('0', 64);
+        fixture.Evidence(A)["inputs"] = new JsonArray();
         AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Observe);
     }
 
@@ -253,8 +253,6 @@ public sealed class DeclaredTemplateDeltaLoadTests
         {
             key = Key(owner), registration_source_path = owner,
             statement_identity = new string('a', 64),
-            content_inputs = new[] { new { path = owner,
-                sha256 = InformationTemplateJson.Sha256(context.Current.Files[RepoPath.CreateKnown(owner)].RawBytes.AsSpan()) } },
             binding_source_path = producer, state = "declared_validated", diagnostic = (string?)null,
             escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
             escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
