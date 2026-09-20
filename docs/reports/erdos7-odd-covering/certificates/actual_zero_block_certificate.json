@@ -1,8 +1,8 @@
 {
   "schema": "actual-ap13-zero-block-boundary-v1",
   "source_sha256": {
-    "certificates/shared_square_continuation_certificate.json": "5368499e7747e43960ee05073ef7563bfa2a0cfc90a1c32a749ab388cc946099",
-    "certificates/shared_cell_square_certificate.json": "df746d03d242d44a1cfe85d6ee6d283b3495af155320e970140f69912479fe0d"
+    "certificates/shared_square_continuation_certificate.json": "a6c71f4c41d87171956ba67343e571f3dae1bc510b5143544dd9f89b6d31f6a4",
+    "certificates/shared_cell_square_certificate.json": "5018f24fd0766b33591eeedf4889cd6c7e8881ef7223f1fe63092e192c373a3b"
   },
   "source_observation_checks": [
     {

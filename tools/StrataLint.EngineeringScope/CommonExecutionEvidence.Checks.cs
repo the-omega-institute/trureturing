@@ -174,13 +174,27 @@ internal static partial class CommonExecutionEvidence
                 actual.DeferredRules, actual.ExecutedRules, actual.SkippedRules));
         }
 
-        internal CommonCheckRecord Seal()
+        internal CommonCheckRecord Seal() => Seal(null);
+
+        internal void SealEngineering(StageStep[] steps)
+        {
+            if (stage != "engineering") throw new InvalidDataException("engineering seal requires engineering checks");
+            // All callbacks have finished. These consecutive seals observe one
+            // fresh source snapshot; writing the check receipt starts a new
+            // material-hash scope before that receipt is validated and bound.
+            var validation = ValidationScope.Create(root);
+            _ = Seal(validation);
+            CommonExecutionEvidence.SealEngineering(root, build, steps, validation.Fresh());
+        }
+
+        private CommonCheckRecord Seal(ValidationScope? validation)
         {
             var record = new CommonCheckRecord(2, stage, build.Candidate, build.Round,
                 Ids.Select(id => completed.TryGetValue(id, out var unit) ? unit
                     : throw new InvalidDataException("required common unit did not run: " + id)).ToArray());
-            ValidateStartedBuild(root, build, Candidate(root));
-            ValidateCheckRecord(root, record, snapshot, inputs, build.Candidate, build.Round, Ids, registration.Fresh());
+            ValidateStartedBuild(root, build, validation is null ? Candidate(root) : Candidate(root, validation.Snapshot), validation);
+            ValidateCheckRecord(root, record, validation?.Snapshot ?? snapshot, inputs, build.Candidate, build.Round, Ids,
+                validation ?? registration.Fresh());
             Write(root, ChecksPath(stage), record);
             return record;
         }
