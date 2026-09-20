@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/DebskiBarrycadeOmittedElementRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/debski-barrycade-omitted-element-refutation` (refuted) by `D5/S3/ArithSums/DebskiBarrycadeOmittedElementRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"debski-barrycade-omitted-element-refutation","declaration_gid":"D5/S3/ArithSums/DebskiBarrycadeOmittedElementRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

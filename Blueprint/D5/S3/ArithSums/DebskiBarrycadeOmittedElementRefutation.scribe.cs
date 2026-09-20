@@ -37,7 +37,10 @@ internal sealed class DebskiBarrycadeOmittedElementRefutationDocument
                 "The repository proves that rho_3 = (4, 3, 1, 5, 6, ...) omits 2 and starts "
                     + "with 4. Its least omitted positive integer is therefore 2, so the relation "
                     + "would require 4 = 3 and fails at i = 3.", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo()))));
+                AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("debski-barrycade-omitted-element-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string name,
@@ -45,11 +48,12 @@ internal sealed class DebskiBarrycadeOmittedElementRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("debski-barrycade-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title),
         StatementSource.FromAuthor(formula), provenance,
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula PartialSumsFormula()
     {
