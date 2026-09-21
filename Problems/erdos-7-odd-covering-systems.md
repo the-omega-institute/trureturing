@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Joint exponent frontier D9 extends the fixed 154-class noncoverage law; a cylinder-cover dual sharply bounds a literal 105 family](../docs/reports/erdos7-odd-covering/problem-details/56-exponent-frontiers-and-cylinder-cover-certificates.md)
 - [Adaptive read-once head orders retain conditional comparison and strictly improve a family of period 315; the joint atom-cap obstruction persists](../docs/reports/erdos7-odd-covering/problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md)
 - [Depth-profile laws prove noncoverage for the literal 154-class head, arbitrary sixth-power smooth head additions and unrestricted original tails](../docs/reports/erdos7-odd-covering/problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md)
 - [Exact optimization of full-prefix capped head laws, arbitrary fixed head order, and complete counterexamples to the universal 9/20 threshold](../docs/reports/erdos7-odd-covering/problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md#full-history-capped-laws-and-exact-global-optimization)
