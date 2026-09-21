@@ -125,7 +125,10 @@ internal sealed class GreatestCutEnumerationDocument : IScribeDocumentDefinition
                 + "larger cut of the assembled permutation. Equality of two assemblies forces "
                 + "equality of their greatest split positions; only after identifying these "
                 + "dependent indices does fixed-cut uniqueness identify the factors. "
-                + "The descent law gives the weight and the resulting literal equivalence "
+                + "Inside this proof, the ordinary descent sum is normalized by splitting "
+                + "adjacent positions into left interior, boundary, and right interior. "
+                + "The boundary contributes one exactly for skew sum, including when "
+                + "either factor is a singleton. This gives the weight; the literal equivalence "
                 + "reindexes the finite sums. The coefficient identities follow from polynomial "
                 + "multiplication and the shift by X. In particular the skew constant coefficient "
                 + "is zero; its remaining coefficients use r+1, without truncated subtraction."),

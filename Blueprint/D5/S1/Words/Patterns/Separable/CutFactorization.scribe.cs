@@ -10,13 +10,14 @@ internal sealed class CutFactorizationDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/fu2019two");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual direct and skew fixed-cut factors preserve classical avoidance and ordinary descents.",
+        "Actual direct and skew fixed-cut factorization, with ordinary descent definitions.",
         H("Actual fixed-cut factorization"),
         Blocks(
             Paragraph(Text(
                 "These are source-attested supporting contracts for the classical separable "
-                + "permutation decomposition in Proposition 2.1 and the descent correspondence "
-                + "in Theorem 2.3 of the cited source. They do not resolve Conjecture 5.2. "
+                + "permutation decomposition in Proposition 2.1 of the cited source. "
+                + "The descent definitions support the enumeration proof corresponding to "
+                + "Theorem 2.3. These contracts do not resolve Conjecture 5.2. "
                 + "All permutations are bijections of Fin(n); Contains uses increasing position "
                 + "embeddings and exact relative value comparisons. In the formulas, "
                 + "Perm(n) means Equiv.Perm(Fin(n)); Bool has the values false and true; "
@@ -127,25 +128,13 @@ internal sealed class CutFactorizationDocument : IScribeDocumentDefinition
                     Call("descentAt", F.Id("p"), F.Id("i")))),
                 "The sum runs over every position in Fin(n). Thus descents counts "
                 + "ordinary adjacent descents; in particular a singleton has zero descents."),
-            Node("descents_block_sum", "The exact boundary weight", DescribeRole.Theorem,
-                Disp(Seq(Forall, Sp, F.Id("m"), Comma, F.Id("k"), InMacro,
-                    Mathbb, Grp(F.Id("N")), Comma,
-                    Open, D(0), Lt, F.Id("m"), Land, D(0), Lt, F.Id("k"), Close,
-                    Rightarrow, Forall, Sp, F.Id("e"), InMacro, Sp, F.Id("Bool"), Comma,
-                    Forall, Sp, F.Id("a"), InMacro, Call("Perm", F.Id("m")), Comma,
-                    Forall, Sp, F.Id("b"), InMacro, Call("Perm", F.Id("k")), Comma,
-                    Call("descents", Call("blockSum", F.Id("e"), F.Id("a"), F.Id("b"))),
-                    Eq, Call("descents", F.Id("a")), Plus, Call("descents", F.Id("b")), Plus,
-                    Call("ite", F.Id("e"), D(1), D(0)))),
-                "For arbitrary positive m,k and factors a,b, the number of descents "
-                + "is des(a)+des(b)+boundary(e), where boundary(false)=0 and "
-                + "boundary(true)=1. The proof partitions adjacent positions into left "
-                + "interior, boundary, and right interior. It applies when either "
-                + "factor is a singleton and when the factor lengths differ."),
             Paragraph(Text(
-                "The greatest-cut choice, its right-factor sign condition, weighted "
-                + "enumeration, generating-function equations, and real-rootedness "
-                + "remain separate obligations. The actual blockSum constructor is "
+                "GreatestCutEnumeration proves the greatest-cut choice, its right-factor "
+                + "sign condition, and weighted enumeration. The ordinary descent "
+                + "normalization is an internal step of that proof: direct sums add "
+                + "descents and skew sums add one boundary descent. Generating-function "
+                + "equations and real-rootedness remain separate obligations. "
+                + "The actual blockSum constructor is "
                 + "also used in the fixed-bottom A398542 minimum decomposition. "
                 + "This support unit carries no open-problem resolution claim.")))));
 

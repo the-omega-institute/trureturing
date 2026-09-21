@@ -16,7 +16,7 @@ internal sealed class A398542MinimumRecurrenceDocument : IScribeDocumentDefiniti
                 + "of A398542FixedBottom. Both children always retain the same whole "
                 + "bottom b, and their upper values are restandardized. Empty children "
                 + "and repeated gaps are allowed. This is the actual-object recurrence "
-                + "used to prove the fixed-bottom conjecture preregistered in issue #9332.")),
+                + "used to prove the fixed-bottom conjecture.")),
             Node("IntervalActual", "Actual permutations with restricted gaps",
                 "For b in Perm(m) and l,h,k in N, IntervalActual(b,l,h,k) is the "
                 + "subtype of Actual(b,k) whose every upper gap, extracted from the "

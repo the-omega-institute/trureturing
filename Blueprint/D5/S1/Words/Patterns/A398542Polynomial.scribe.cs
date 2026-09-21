@@ -15,7 +15,7 @@ internal sealed class A398542PolynomialDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text(
                 "The target is the exact fixed-bottom conjecture in OEIS A398542 "
-                + "revision 18, August 30, 2026, preregistered in issue #9332. "
+                + "revision 18, August 30, 2026. "
                 + "Perm(m) denotes permutations of Fin(m), translated to the source's "
                 + "1,...,m by adding one. Avoid132(b) means not Contains(pattern132,b). "
                 + "Every series below is a formal series over Q; no analytic "
@@ -43,9 +43,7 @@ internal sealed class A398542PolynomialDocument : IScribeDocumentDefinition
                 + "F(l,g)*F(g,min(h,dead(b,g)-1)). In addition, for every g<=m, "
                 + "F(g,g)=catalanQ. The equation comes from the actual cardinal "
                 + "convolution; strong coefficient induction identifies the "
-                + "singleton solution. proof_shape: content; admission_basis: "
-                + "escape-witness. The live witness is the uniform singleton "
-                + "coefficient identification from the actual recurrence.", DescribeRole.Theorem),
+                + "singleton solution uniformly from the actual recurrence.", DescribeRole.Theorem),
             Node("guarded_polynomial", "The guarded inverse-power polynomial",
                 "For every m, b in Perm(m) avoiding 132, and natural l<h<=m "
                 + "satisfying h<dead(b,l), there exists A in Q[X] with "
@@ -54,9 +52,7 @@ internal sealed class A398542PolynomialDocument : IScribeDocumentDefinition
                 + "centralSeries. A uniform induction on the interval width "
                 + "separates both endpoint terms, uses smaller guarded children, "
                 + "and treats singleton right children by the Catalan identity. "
-                + "The guard is strict and no monotonicity of dead is used. "
-                + "proof_shape: content; admission_basis: escape-witness. "
-                + "The live witness is this constructed finite inverse-power span.",
+                + "The guard is strict and no monotonicity of dead is used.",
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The entire fixed-bottom conjecture"), StatementSource.FromAuthor(ResultFormula()),
@@ -82,9 +78,7 @@ internal sealed class A398542PolynomialDocument : IScribeDocumentDefinition
                     + "guard follows from dead(b,0)=m+2. It uses the pinned "
                     + "binomial-series and Pochhammer identities directly to "
                     + "extract odd and even powers, including all nonzero "
-                    + "denominator obligations. proof_shape: content; "
-                    + "admission_basis: open-problem-resolution, preregistration "
-                    + "#9332. This settles the quoted fixed-bottom assertion "
+                    + "denominator obligations. This settles the quoted fixed-bottom assertion "
                     + "alone. It does not enumerate unrestricted 1324 avoiders, "
                     + "compute the full L-gridding generating function, or settle "
                     + "A398446. Worldwide priority remains unclaimed."))), DescribeRole.Theorem))));
@@ -100,18 +94,18 @@ internal sealed class A398542PolynomialDocument : IScribeDocumentDefinition
 
     private static Formula ResultFormula() => Disp(Seq(
         Forall, Sp, F.Id("m"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
-        D(1), Le, F.Id("m"), Rightarrow, Sp,
+        D(1), Le, Sp, F.Id("m"), Rightarrow, Sp,
         Forall, Sp, F.Id("b"), InMacro, Call("Perm", F.Id("m")), Comma, Sp,
         Call("Avoid132", F.Id("b")), Rightarrow, Sp,
         Exists, Sp, F.Id("p"), Comma, F.Id("q"), InMacro,
         Mathbb, Grp(F.Id("Q")), OpenBracket, F.Id("X"), CloseBracket, Comma, Sp,
-        Call("natDegree", F.Id("p")), Le, F.Id("m"), Minus, D(1), Land, Sp,
-        Call("natDegree", F.Id("q")), Le, F.Id("m"), Minus, D(2), Land, Sp,
-        Open, F.Id("m"), Eq, D(1), Rightarrow, F.Id("q"), Eq, D(0), Close, Land, Sp,
+        Call("natDegree", F.Id("p")), Le, Sp, F.Id("m"), Minus, D(1), Land, Sp,
+        Call("natDegree", F.Id("q")), Le, Sp, F.Id("m"), Minus, D(2), Land, Sp,
+        Open, F.Id("m"), Eq, D(1), Rightarrow, Sp, F.Id("q"), Eq, D(0), Close, Land, Sp,
         Forall, Sp, F.Id("k"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
         Call("d", F.Id("b"), F.Id("k")), Eq,
         Call("p", F.Id("k")), Cdot,
         new Formula.Apply(Seq(Operatorname, Grp(F.Id("Nat"), Dot, F.Id("choose"))),
-            [Seq(D(2), Cdot, F.Id("k")), F.Id("k")]), Plus,
+            [Seq(D(2), Cdot, Sp, F.Id("k")), F.Id("k")]), Plus,
         Call("q", F.Id("k")), Cdot, D(4), Caret, Grp(F.Id("k"))));
 }

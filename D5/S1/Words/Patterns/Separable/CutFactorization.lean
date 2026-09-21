@@ -247,70 +247,9 @@ def descentAt {n : ℕ} (π : Equiv.Perm (Fin n)) (i : Fin n) : ℕ :=
 /-- Number of ordinary adjacent descents. -/
 def descents {n : ℕ} (π : Equiv.Perm (Fin n)) : ℕ := ∑ i, descentAt π i
 
-/-- Direct sums add descents; skew sums have exactly one additional boundary descent. -/
-theorem descents_block_sum {m k : ℕ} (hm : 0 < m) (hk : 0 < k)
-    (skew : Bool) (α : Equiv.Perm (Fin m)) (β : Equiv.Perm (Fin k)) :
-    descents (blockSum skew α β) = descents α + descents β + if skew then 1 else 0 := by
-  have leftval (i : Fin m) :
-      (blockSum skew α β (Fin.castAdd k i)).val =
-        (if skew then k else 0) + (α i).val := by
-    cases skew <;> simp [blockSum, Equiv.sumCongr, Equiv.sumComm, Nat.add_comm]
-  have rightval (i : Fin k) :
-      (blockSum skew α β (Fin.natAdd m i)).val =
-        (if skew then 0 else m) + (β i).val := by
-    cases skew <;> simp [blockSum, Equiv.sumCongr, Equiv.sumComm]
-  have hleft (i : Fin m) :
-      descentAt (blockSum skew α β) (Fin.castAdd k i) =
-        descentAt α i + if i.val + 1 = m then (if skew then 1 else 0) else 0 := by
-    have hg : i.val + 1 < m + k := by omega
-    by_cases hi : i.val + 1 < m
-    · have he : (⟨i.val + 1, hg⟩ : Fin (m + k)) =
-          Fin.castAdd k ⟨i.val + 1, hi⟩ := rfl
-      simp only [descentAt, Fin.val_castAdd, dif_pos hg, dif_pos hi]
-      simp only [he]
-      simp only [Fin.lt_def, leftval, Nat.add_lt_add_iff_left]
-      simp [show i.val + 1 ≠ m by omega]
-    · have hib : i.val + 1 = m := by omega
-      have he : (⟨i.val + 1, hg⟩ : Fin (m + k)) =
-          Fin.natAdd m ⟨0, hk⟩ := Fin.ext (by simp; omega)
-      simp only [descentAt, Fin.val_castAdd, dif_pos hg, dif_neg hi, if_pos hib,
-        Nat.zero_add]
-      simp only [he]
-      simp only [Fin.lt_def, leftval, rightval]
-      cases skew <;> simp only [Bool.false_eq_true, ↓reduceIte, Nat.zero_add]
-      · rw [if_neg (by have := (α i).isLt; omega)]
-      · rw [if_pos (by have := (β ⟨0, hk⟩).isLt; omega)]
-  have hright (i : Fin k) :
-      descentAt (blockSum skew α β) (Fin.natAdd m i) = descentAt β i := by
-    by_cases hi : i.val + 1 < k
-    · have hg : m + i.val + 1 < m + k := by omega
-      have he : (⟨m + i.val + 1, hg⟩ : Fin (m + k)) =
-          Fin.natAdd m ⟨i.val + 1, hi⟩ := Fin.ext (by simp; omega)
-      simp only [descentAt, Fin.val_natAdd, dif_pos hg, dif_pos hi]
-      simp only [he]
-      simp only [Fin.lt_def, rightval, Nat.add_lt_add_iff_left]
-    · have hg : ¬m + i.val + 1 < m + k := by omega
-      simp only [descentAt, Fin.val_natAdd, dif_neg hg, dif_neg hi]
-  have boundary : (∑ i : Fin m, if i.val + 1 = m then (if skew then 1 else 0) else 0) =
-      (if skew then 1 else 0) := by
-    let last : Fin m := ⟨m - 1, by omega⟩
-    have hp (i : Fin m) : i.val + 1 = m ↔ i = last := by
-      simp only [Fin.ext_iff]
-      dsimp [last]
-      omega
-    simp_rw [hp]
-    simp
-  unfold descents
-  rw [Fin.sum_univ_add]
-  simp_rw [hleft, hright]
-  rw [Finset.sum_add_distrib, boundary]
-  omega
-
 #check avoids_block_sum_iff
 #check fixed_cut_factorization
-#check descents_block_sum
 #print axioms avoids_block_sum_iff
 #print axioms fixed_cut_factorization
-#print axioms descents_block_sum
 
 end D5.S1.Words.Patterns.Separable.CutFactorization
