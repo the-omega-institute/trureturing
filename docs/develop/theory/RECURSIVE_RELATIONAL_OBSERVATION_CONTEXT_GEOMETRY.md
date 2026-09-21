@@ -9947,3 +9947,1568 @@ Mathlib 使用 `lake-manifest.json` 钉定的 `db584cd6d46c92f209a44c0f1c829460d
 本节把上述既有来源的适用关系与完整积分推导连接起来，供应者与例子的作用范围仅限所列数学条件；它们不扩大本节结论。其未解决范围包括实际源谱地板、真实共同支撑和精度的实验认证，变化接口的运输，带噪精确饱和、隐藏态恢复、完整档案上的 minimax 不可识别、置信概率和样本预算；这些都未由所列条件定理消除。未知非线性钟、无参考准备原点、未取得事件、无限时间精确时钟或物理时空身份也不由本节推出。
 
 ## 44.99 追加锚
+
+## 45. 固定量子装置的来源判据、完成距离与有符号档案恢复
+
+同一固定装置的完整第一层联合读数可以强制唯一线性来源候选，但它是否为正的归一密度、是否属于合法来源类，以及是否生成指定全部后续层，是必须履行的不同条件。本节把这些判据、任意目标的完成距离和同一相干档案的有符号恢复代价接在同一个观察者与实验合同上，分别处理精确见证、闭包逼近、达到的最小距离和实际估计。
+
+### 45.1 固定装置、完整观察者与相容完成
+
+令 $M=B=\mathbb C^2$，固定各自计算基、相位及装置
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad \alpha+\alpha^2=1,
+$$
+$$
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,
+\qquad m_1=|0\rangle,
+\qquad T|j\rangle=|j\rangle\otimes m_j.
+$$
+这里 Q 指[量子上下文卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)，恢复卷指[边界恢复与原子代价几何](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)。装置及全输入等距由 Q130.1、Q131.1和本卷定义41.1供应：两基像的范数为一，输出基标签使它们正交，所以 $T^*T=I_M$。记
+$$
+H_n=B^{\otimes n},\quad H_0=\mathbb C,\quad
+T_0=I_M,\quad T_{n+1}=(I_{H_n}\otimes T)T_n,
+$$
+$$
+\Gamma_n(X)=\operatorname{Tr}_M(T_nXT_n^*),
+\qquad\Gamma_0(X)=\operatorname{Tr}X.
+$$
+输出寄存器依次编号 $1,2,\ldots$，这是对 Q130 零下标词的索引平移。所有张量积依次排列为外部参考、已发出输出、活动记忆。
+
+固定参考空间 $J$，$1\le\dim J<\infty$，并固定来源类
+$$
+\Theta\subseteq\mathcal D(J\otimes M),
+$$
+它在精确来源问题中可以为空、非闭、非紧或非凸；距离下确界、极小值与一致收敛分别在对应小节明列所需条件。合法准备、已取得的联合记录、参考关系及其他约束共同决定这一个 $\Theta$；不能在不同深度换来源类。一个 $\theta\in\Theta$ 承担整条输出历史。先在整个输入算子空间定义线性通道
+$$
+q_n(X)=(\operatorname{id}_J\otimes\Gamma_n)(X)
+\quad\bigl(X\in\mathcal L(J\otimes M)\bigr),
+\qquad q_0(X)=\operatorname{Tr}_M X,
+$$
+再将它限制到来源密度 $\theta\in\Theta$。
+任意初态在 $J,M$ 之间可以纠缠，不预设独立根态。每一步必须使用与当时全部系统独立的纯空白 $|0\rangle\langle0|$ 及同一个 Q130 幺正装置，已发出端口不再参与生成；生成中不以反馈、重置或其它介入改变装置、空白准备或活动记忆。Q130 的基像恒等式在整个输入空间上成立，因而可张量上 $I_J$。有限维等距及偏迹给每个 $q_n$ 连续、CPTP，并且
+$$
+\operatorname{Tr}_{B_{n+1}}q_{n+1}(\theta)=q_n(\theta).
+$$
+
+一个待检目标是固定的相容密度族
+$$
+\xi_n\in\mathcal D(J\otimes H_n),\qquad
+\operatorname{Tr}_{B_{n+1}}\xi_{n+1}=\xi_n\quad(n\ge0).
+$$
+它可以在装置的来源像以外。相容只保证这些有限密度属于同一个输出态，不保证该固定装置能产生它。所有层必须来自这一个目标；不能每次优化后换成不同的目标延拓。半迹距离统一记为
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+$$
+
+用 $C_{\rm archive}$ 表示完整已获观察者档案。$J$ 只承载本有限量子模型明确表示的已保留参考与记录，不自动穷尽整个 $C_{\rm archive}$。来源类须保留实际准备、来源身份、装置和校准、旧内外记录、已知联合关系、时间戳、各局部钟读数及其共同约束、合法动作及顺序、失败、停止和误差合同。这些合同沿用本卷定义36.4、定义41.1与假设41.5；动作的合法先后不推出统计独立。当某项结论另外要求来源类非空且紧时，这两项是实质前提：例如一个非空紧允许参数集经过连续的实际联合准备映射，才由连续像保证这两点；严格不等式、精确秩条件或成功概率趋零的后选择未必给闭类。一个纯数学来源见证不自动授权实际准备；紧性也不供应操作成本。更大经典档案若需逐纤维讨论，必须另有同一实际联合 cq 模型、保留的共同档案律及可测正则条件核；本节不由有限 $J$ 推出任意无限量子参考结论。
+
+**相容完成与紧来源像。**
+
+置
+$$
+\mathcal A_n^J=\mathcal L(J\otimes H_n),\qquad
+\iota_n(A)=A\otimes I_B,
+\qquad
+\mathcal A^J=\overline{\bigcup_n\mathcal A_n^J}^{\|\cdot\|}.
+$$
+有限左因子 $J$ 始终保留。每个嵌入为等距幺星同态，$\mathcal A^J$ 是 $\mathcal L(J)$ 与单侧 qubit UHF 代数的空间张量积。本卷定理41.4的式（41.34）、（41.40）—（41.42）已经在这座固定左因子塔上给出态延拓和局部／完成范数的证明，沿用 Q125.2与恢复卷命题31.9的方法。以下只核对该证明用于任意相容目标所需的前提；延拓与范数比较本身不使用目标具有实际来源见证，也不使用恢复尾界。
+
+在局部代数上定义
+$$
+\xi(A)=\operatorname{Tr}(\xi_n A),\qquad
+\omega_\theta(A)=\operatorname{Tr}(q_n(\theta)A)
+\quad(A\in\mathcal A_n^J).
+$$
+偏迹相容使定义与所选层无关。局部正元取值非负，单位取值为一，且绝对值不超过 $\|A\|$。因此两者唯一连续延拓到 $\mathcal A^J$。若 $B_k$ 为局部元素且 $B_k\to B$，则 $B_k^*B_k\to B^*B$，在这些平方上取极限给延拓的正性；每个正元是其正平方根的平方。故延拓确实为态。以后同一个符号 $\xi$ 也表示这个完成态。
+
+对完成态定义
+$$
+\mathsf d_\infty(\xi,\zeta)
+=\frac12\|\xi-\zeta\|_{(\mathcal A^J)^*}.
+$$
+这是泛函范数的一半所定义的度量，不是在另行选择的无限 Hilbert 表示中断言存在全局迹类密度。Q125.4 的表示边界仍保留。
+
+对任意两个相容态族，有限维迹／算子范数对偶及局部稠密性给
+$$
+\boxed{
+\mathsf d_\infty(\xi,\zeta)
+=\sup_{n\ge0}D(\xi_n,\zeta_n).
+}
+\tag{45.1}
+$$
+为核对从实际来源对到任意相容态对的适用条件，记 $\ell=\xi-\zeta$。在有限层，密度差是自伴矩阵 $X_n=\xi_n-\zeta_n$；由迹范数对偶，
+$$
+\|\ell|_{\mathcal A_n^J}\|=\|X_n\|_1=2D(\xi_n,\zeta_n).
+$$
+上界是 $|\operatorname{Tr}(X_nA)|\le\|X_n\|_1\|A\|$，等号可由 $X_n$ 的谱符号算子取得，零特征空间任取范数不超过一的值。所以整个泛函范数不小于这些限制范数的上确界。
+
+反向，取完成代数中 $\|A\|\le1$，用局部 $B_k\to A$ 逼近，并置
+$$
+C_k=\frac{B_k}{\max(1,\|B_k\|)}.
+$$
+每个 $C_k$ 为局部单位球元素；由 $\|B_k\|\to\|A\|\le1$ 得 $C_k\to A$。因而
+$$
+|\ell(A)|=\lim_k|\ell(C_k)|
+\le\sup_n\|\ell|_{\mathcal A_n^J}\|.
+$$
+对完成单位球取上确界得到另一方向，证明（45.1）。这里直接使用本卷定理41.4已有的局部单位球证明及恢复卷31.9的方法，保留因子二；上述检查说明证明所需的是相容密度和局部稠密性，不能只将其原陈述的实际来源量词改名。
+
+有限维通道收缩还给
+$$
+D(q_n(\theta),q_n(\theta'))\le D(\theta,\theta').
+$$
+因此由（45.1），
+$$
+\boxed{
+\mathsf d_\infty(\omega_\theta,\omega_{\theta'})
+\le D(\theta,\theta').
+}
+\tag{45.2}
+$$
+上面的收缩推导不要求单射，也不使用恢复尾界。在本装置的实际来源对上，本卷式（41.35）还直接给出更精确的既有结论
+$$
+\boxed{\mathsf d_\infty(\omega_\theta,\omega_\vartheta)
+=D(\theta,\vartheta)
+\quad\bigl(\theta,\vartheta\in\mathcal D(J\otimes M)\bigr).}
+\tag{45.3}
+$$
+这是实际来源像上的等距性，不把任意相容目标断言为来源输出。来源像记为
+$$
+\mathcal S_\Theta=\{\omega_\theta:\theta\in\Theta\}
+$$
+若 $\Theta$ 非空紧，则 $\mathcal S_\Theta$ 在完成距离中非空紧，特别地闭。这里由连续像即可得到紧性，式（45.3）还给精确等距识别；输出字母表有限本身不供应来源类的非空性或紧性。
+
+全篇使用 $D=\|\rho-\sigma\|_1/2$、根保真度 $F(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1$，以及完整 diamond 范数；半 diamond 距离另写为完整范数的一半。完整联合密度是数学输入律，或须另有误差合同的层析数据，不是一份单次测量结果。参数逆的矩阵读数、合法来源身份、可执行状态恢复及重复实验中的估计是不同任务。
+
+档案恢复原子的类型固定为 $\mathcal L(H_n)\to\mathcal L(M)$，只作用于已发出且仍相干的档案，不读取惰性 $J$ 或最终活动记忆。若终端目标涉及 $J$，还须实际允许同一个联合测试；这不扩大解码器的访问类型。生成期反馈、独立空白、相干档案与额外记录均按上述完整合同判定，不能删除已记录的混合标签来改变来源问题。
+
+### 45.2 一步线性逆与完整联合正像
+
+本卷式（41.45）及 Q131.1供应一步全算子通道；恢复卷定义30.11、定理30.12供应一般相位阻尼逆。下面核对这个既有逆用于本装置、完整复算子和有限参考的条件。
+
+首先以一般已知参数 $0<c\le1$ 写
+
+$$
+\mathcal D_c(X)=
+\begin{pmatrix}X_{00}&cX_{01}\\cX_{10}&X_{11}\end{pmatrix}.
+$$
+
+本装置有 $\Gamma_1=\mathcal D_c$，其中 $c=\sqrt\alpha$。令
+
+$$
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+a=\frac{1+c}{2c},\qquad b=\frac{1-c}{2c},
+$$
+$$
+L_c=a\,\operatorname{id}-b\,\operatorname{Ad}_Z,
+\qquad\operatorname{Ad}_Z(X)=ZXZ.
+$$
+
+因为 $a-b=1$、$a+b=c^{-1}$，$L_c$ 保持对角元并将非对角元除以 $c$。逐矩阵单位比较给
+
+$$
+L_c\mathcal D_c=\mathcal D_c L_c=\operatorname{id}_{\mathcal L(\mathbb C^2)}.
+\tag{45.4}
+$$
+
+这是全部复算子上的等式，因而也可张量任意有限参考恒等映射。不仅是对角概率或某一个来源上的等式。
+
+对全部 $Y\in\mathcal L(J\otimes\mathbb C^2)$，恒等与酉共轭保持迹范数，三角不等式给
+
+$$
+\|(\operatorname{id}_J\otimes L_c)(Y)\|_1
+\le(a+b)\|Y\|_1=c^{-1}\|Y\|_1.
+\tag{45.5}
+$$
+
+记 $\rho_\pm=|\pm\rangle\langle\pm|$。$L_c(\rho_+)$ 的矩阵为
+
+$$
+\frac12\begin{pmatrix}1&c^{-1}\\c^{-1}&1\end{pmatrix},
+$$
+
+特征值为 $(1\pm c^{-1})/2$，迹范数恰为 $c^{-1}$。它是计算线性算子范数的合法测试，不是声称 $\rho_+$ 已属于阻尼后的实际像。结合所有有限参考上的上界，得到完整范数
+
+$$
+\boxed{\|L_c\|_\diamond=c^{-1}.}
+\tag{45.6}
+$$
+
+即使只比较真实像中的态对，该放大常数也不能改小：
+
+$$
+D(\mathcal D_c\rho_+,\mathcal D_c\rho_-)=c,
+\qquad D(\rho_+,\rho_-)=1.
+\tag{45.7}
+$$
+
+共同张量任意独立密度 $\tau_J$ 不改变这些迹范数。因此在任意固定有限参考类型中都可实现相同尖锐比值；若要实际开展这一尖锐性实验，仍需允许对应的共同相位准备。
+
+这些公式直接应用恢复卷定义30.11、定理30.12 的逆表示。$c=1$ 为恒等；$c=0$ 丢失非对角方向而没有线性逆，不在结论范围内。
+
+**含奇异块的联合像。** 以下对固定装置取 $c=\sqrt\alpha$，以 $L_c$ 作用于第一层。
+
+给定 $\xi_1\in\mathcal D(J\otimes B)$，按 qubit 基将 $J\otimes B$ 识别为 $J\oplus J$。本小节的 $B_{01}$ 表示交叉块，与输出空间 $B$ 区分：
+
+$$
+\xi_1=
+\begin{pmatrix}A&B_{01}\\B_{01}^*&D\end{pmatrix},
+\qquad
+\theta_{\rm cand}=(\operatorname{id}_J\otimes L_c)(\xi_1)
+=\begin{pmatrix}A&B_{01}/c\\B_{01}^*/c&D\end{pmatrix}.
+\tag{45.8}
+$$
+
+由 $\xi_1$ 为密度，$A,D\succeq0$、$\operatorname{Tr}(A+D)=1$。候选自动自伴、迹一，且其 $J$ 边缘仍为 $A+D$。由（45.4）与唯一性，
+
+$$
+\boxed{
+\xi_1\in q_1[\mathcal D(J\otimes M)]
+\iff\theta_{\rm cand}\succeq0.
+}
+\tag{45.9}
+$$
+
+令 $A^\dagger$ 为有限维 Moore–Penrose 逆：若 $A=\sum_{a>0}aP_a$ 是正特征值的谱分解，则 $A^\dagger=\sum_{a>0}a^{-1}P_a$，在 $\ker A$ 上为零；$AA^\dagger=\sum_{a>0}P_a$ 是 $\operatorname{ran}A$ 的正交投影，$A^{\dagger/2}=(A^\dagger)^{1/2}$。无需假设 $A$ 可逆，（45.9）的正性等价于
+
+$$
+\boxed{
+(I-AA^\dagger)B_{01}=0,
+\qquad D-c^{-2}B_{01}^*A^\dagger B_{01}\succeq0.
+}
+\tag{45.10}
+$$
+
+所用方法已有明确归属：恢复卷定理13.2、式（13.5）使用实空间中标量下块的奇异 Schur 补；定理15.4、式（15.10）—（15.11）处理有限实矩形块及奇异余量的收缩因子化；Q13.3的证明使用复矩阵中两对角块相同的情形，Q 第13.8节注明其一般方法来源。这里需要的是任意有限参考下、两个正对角块可不同且可奇异的复矩阵判据，不能将上述受限陈述只改名后直接使用。该一般因子化见 Watrous 的 Lemma 3.18，以及其完全有界范数论文 §2.1、Lemma 2；Moslehian、Kian、Xu 的 Theorem 5.11也给正算子块的收缩表述。[^rro_signedsource_blocks] 以下保留本像检验的范围条件、合同变换及正性证明，不另建一般块矩阵理论。
+
+若候选正，对 $u\in\ker A$ 及任意 $v$，在向量 $(u,tv)$ 上的二次型是一个常数项为零的二次多项式。对任意小的正负实 $t$，并在需要时将 $u$ 乘相位，都要求非负，迫使 $u^*B_{01}v=0$。所以 $\operatorname{ran}B_{01}\subseteq\operatorname{ran}A$，即第一个条件。在此条件下有
+
+$$
+\theta_{\rm cand}=
+\begin{pmatrix}I&0\\B_{01}^*A^\dagger/c&I\end{pmatrix}
+\begin{pmatrix}A&0\\0&D-c^{-2}B_{01}^*A^\dagger B_{01}\end{pmatrix}
+\begin{pmatrix}I&A^\dagger B_{01}/c\\0&I\end{pmatrix}.
+\tag{45.11}
+$$
+
+两侧三角矩阵可逆且互为伴随，故候选正性等价于中间矩阵正性。这同时证明必要性与充分性，包括 $A=0$ 时必须 $B_{01}=0$ 的端点。
+
+另一等价表达为
+
+$$
+B_{01}=cA^{1/2}KD^{1/2}
+\quad\text{存在算子 }K\text{ 满足 }\|K\|\le1.
+\tag{45.12}
+$$
+
+为从（45.10）得到它，置 $F=B_{01}/c$、$U=A^{\dagger/2}F$。有 $U^*U\preceq D$，从而 $U$ 消去 $\ker D$。取 $K=UD^{\dagger/2}$，则 $K^*K\preceq\operatorname{supp}D\preceq I$，且 $A^{1/2}KD^{1/2}=F$。反向若（45.12）成立，则
+
+$$
+\theta_{\rm cand}=
+\begin{pmatrix}A^{1/2}&0\\0&D^{1/2}\end{pmatrix}
+\begin{pmatrix}I&K\\K^*&I\end{pmatrix}
+\begin{pmatrix}A^{1/2}&0\\0&D^{1/2}\end{pmatrix}\succeq0;
+$$
+
+中间矩阵正性由 $I-K^*K\succeq0$ 的普通 Schur 分解得到。
+
+当 $J=\mathbb C$ 时，（45.10）等价于 $|B_{01}|^2\le c^2AD$；用 Bloch 向量就是恢复卷式（30.35）的实际椭球
+
+$$
+\frac{r_x^2+r_y^2}{c^2}+r_z^2\le1.
+$$
+
+具体地，标量情形 $A=(1+r_z)/2$、$D=(1-r_z)/2$、$B_{01}=(r_x-\mathrm i r_y)/2$，故 $|B_{01}|^2\le c^2AD$ 恰为所写椭球条件；逆候选的特征值是 $\bigl(1\pm\sqrt{(r_x^2+r_y^2)/c^2+r_z^2}\bigr)/2$。边界等号时候选秩一；$A=0$ 时条件迫使 $B_{01}=0,D=1$，所以极点也包含在内。
+
+这些是完整联合态的条件。参考边缘和输出边缘各自合法，不足以推出联合候选正。例如 $J=\mathbb C^2$ 时取第一层目标
+$$
+\xi_1=|\Phi_+\rangle\langle\Phi_+|,
+\qquad |\Phi_+\rangle=(|00\rangle+|11\rangle)/\sqrt2.
+$$
+它的两边缘均为 $I/2$。逆候选只在 $\operatorname{span}\{|00\rangle,|11\rangle\}$ 上非零，该块为 $\frac12\left(\begin{smallmatrix}1&c^{-1}\\c^{-1}&1\end{smallmatrix}\right)$，故当 $c<1$ 时有负特征值 $(1-c^{-1})/2$。这直接排除以分开边缘代替联合正性。正性只给数学状态成员资格，额外的已获档案、控制、实际准备、来源与费用限制仍须逐项检验。
+
+### 45.3 精确共同来源、零下确界与闭包边界
+
+固定任意子集 $\Theta\subseteq\mathcal D(J\otimes M)$，可非闭、非紧、非凸。它必须是同一实验合同下的合法来源联合态类。给定相容密度族
+
+$$
+\xi_n\in\mathcal D(J\otimes H_n),\qquad
+\operatorname{Tr}_{B_{n+1}}\xi_{n+1}=\xi_n,
+\quad n\ge0.
+\tag{45.13}
+$$
+
+实际通道也满足同一前缀关系；本卷式（41.40）由固定等距直接证明这一点。第一层强制唯一候选 $\theta_{\rm cand}=(\operatorname{id}_J\otimes L_c)(\xi_1)$，即（45.8）；这里 $c=\sqrt\alpha$。于是
+
+$$
+\boxed{
+\exists\theta\in\Theta\ \forall n\ge0,\ q_n(\theta)=\xi_n
+\iff
+\theta_{\rm cand}\in\Theta\ \land\ \forall n\ge1,\ q_n(\theta_{\rm cand})=\xi_n.
+}
+\tag{45.14}
+$$
+
+证明：左侧的第一层等式经一步逆给 $\theta=\theta_{\rm cand}$。右侧直接给共同见证；第零层由第一层取偏迹和目标相容性得到。
+
+进一步，
+
+$$
+\boxed{
+\bigl[\forall n\ge1\ \exists\theta_n\in\Theta:
+q_n(\theta_n)=\xi_n\bigr]
+\iff
+\bigl[\exists\theta\in\Theta\ \forall n\ge0:
+q_n(\theta)=\xi_n\bigr].
+}
+\tag{45.15}
+$$
+
+证明：将每份第 $n$ 层等式偏迹到第一层，得到 $q_1(\theta_n)=\xi_1$。$q_1$ 在全部算子上单射，所以每份见证都是 $\theta_{\rm cand}$。第一层的一份见证已经保证 $\theta_{\rm cand}\in\Theta$；任意一层的见证保证该层由它实现。这里不取子列、不用闭集交性质，也不需要紧性。反向使用同一个来源即可。若 $\Theta=\varnothing$，第 $1$ 层没有见证，（45.14）的两侧都为假；（45.15）的逐层条件及共同来源条件也都为假。因此这些精确存在等价式明确覆盖空来源类，不对空类宣称最小值。
+
+在此装置中，精确逐层见证由第一层单射性强制成为共同见证，证明不需要紧性。第45.4节对任意目标的距离优化另以非空紧来源类作为充分条件；这既不把它添加到（45.15），也不声称每个特殊模型的达到性或共同半径结论都以紧性为逻辑必要条件。
+
+唯一线性候选首先是一个自伴、迹一算子；只有确有合法来源时，它才是固定模型中唯一的来源密度。这不意味着微观世界或准备程序也唯一。不同合法程序可能产生同一联合密度；被模型之外的来源记录区分的程序不得因此合并。第一层也不供应对任意相容目标的有限深度完备证书：后续层仍可能偏离 $q_n(\theta_{\rm cand})$，必须有逐层验证或另一个覆盖全部层的实际结构证明。
+
+**零下确界与闭包候选。**
+
+现在令 $\Theta\ne\varnothing$，仍不假设闭或紧；以下下确界均在这个非空类上取值。以同一相容目标定义
+
+$$
+e_n=\inf_{\theta\in\Theta}D(q_n(\theta),\xi_n),\qquad n\ge1,
+$$
+
+闭包取有限维来源空间的迹范数拓扑。则
+
+$$
+\boxed{
+\forall n\ge1,\ e_n=0
+\iff
+\theta_{\rm cand}\in\overline\Theta
+\ \land\ \forall n\ge1,\ q_n(\theta_{\rm cand})=\xi_n.
+}
+\tag{45.16}
+$$
+
+证明：固定 $n$，取 $\theta_k\in\Theta$ 使该层距离趋零。逆在第一层上的等式、（45.5）及对自伴差的偏迹收缩给
+
+$$
+\frac12\|\theta_k-\theta_{\rm cand}\|_1
+\le c^{-1}D(q_1(\theta_k),\xi_1)
+\le c^{-1}D(q_n(\theta_k),\xi_n)\longrightarrow0.
+\tag{45.17}
+$$
+
+即使尚未知道候选正，左侧的自伴差迹范数仍良定；取 $n=1$ 的逼近序列就证明候选是密度极限并属于 $\overline\Theta$。对任意固定 $n$，相同估计与通道连续性给 $q_n(\theta_{\rm cand})=\xi_n$。反向用 $\Theta$ 中趋于候选的序列及通道收缩，即得每层下确界为零。这个证明直接利用有界线性逆，不使用来源类的紧性。
+
+明确反例取 $J=\mathbb C$，声明允许的来源类为
+
+$$
+\Theta=\{\theta\in\mathcal D_2:
+\langle0|\theta|0\rangle>0\},
+\qquad \theta_{\rm cand}=|1\rangle\langle1|,
+\qquad \xi_n=\Gamma_n(\theta_{\rm cand}).
+\tag{45.18}
+$$
+
+这是密度空间中的相对开、非闭类，候选不在其中。对 $0<\varepsilon<1$，
+
+$$
+\theta_\varepsilon
+=\varepsilon|0\rangle\langle0|
+ +(1-\varepsilon)|1\rangle\langle1|\in\Theta,
+\qquad D(\theta_\varepsilon,\theta_{\rm cand})=\varepsilon.
+$$
+
+每层通道收缩给 $D(q_n(\theta_\varepsilon),\xi_n)\le\varepsilon$，故所有 $e_n=0$。若任何 $n\ge1$ 层有精确合法见证，偏迹到第一层和单射性便迫使该见证等于 $\theta_{\rm cand}$，矛盾。所以没有精确第一层见证，也没有共同合法来源。
+
+本卷式（41.35）还给这两份实际来源的完成态距离等于来源距离，即
+
+$$
+\tfrac12\|\omega_{\theta_\varepsilon}-\omega_{\theta_{\rm cand}}\|
+=\varepsilon.
+$$
+
+因此完成距离的下确界也为零而不达到。该用法只应用已有的实际来源对完成范数等式；没有断言任意相容目标自动属于实际来源像。可以共同张量固定参考态得到带参考的同类反例，但一般任务中的已知联合参考关系仍须保留。
+
+空来源类的精确判据已由（45.14）—（45.15）处理；这里不为它定义实数值的 $e_n$ 或声称极小值。若另采用扩展实数距离约定，应取 $\inf\varnothing=+\infty$，不能把它当作零下确界情形。
+
+### 45.4 紧来源类上的任意目标距离与共同半径
+
+**非空紧来源类下的任意目标优化。** 本小节额外假设 $\Theta\ne\varnothing$ 且在来源迹范数中紧；不要求凸。此前精确见证与闭包结论不依赖这一新增假设。
+
+本卷定理39.3的共同半径方法在此需要的是同一个紧量子来源类及其闭约束纤维。以下逐项核对这些条件，直接使用既有紧局部实现声明。
+
+固定任意相容目标 $\xi$，它可以完全没有正的来源候选。记号 $\theta_{\rm cand}$ 始终只指第一层逆强制的算子；下文 $\theta_{\rm opt}$ 指优化所得的允许来源，两者不作等同。例如相容的全加乘积目标第一层为 $\rho_+$，其 $\theta_{\rm cand}$ 有负特征值 $(1-\alpha^{-1/2})/2$，已由本卷式（41.45）排除；对任何非空紧 $\Theta$，下述最近来源仍然存在。令
+$$
+f_n(\theta)=D(\xi_n,q_n(\theta)),\qquad
+f(\theta)=\mathsf d_\infty(\xi,\omega_\theta)=\sup_n f_n(\theta).
+$$
+每个 $f_n$ 连续，且由于目标和来源的偏迹相容性，
+$$
+0\le f_n(\theta)\le f_{n+1}(\theta)\le1.
+$$
+紧性使有限最小值
+$$
+e_n(\xi)=\min_{\theta\in\Theta}f_n(\theta)
+$$
+存在并达到；这里的下确界已经达到，因而与第45.3节 $n\ge1$ 的 $e_n$ 记号一致；现在也包括 $n=0$。同一 $\Theta$ 上逐点单调性给 $e_n\le e_{n+1}$。
+
+完成距离也达到，而且
+$$
+\boxed{
+E(\xi):=\min_{\theta\in\Theta}f(\theta)
+=\sup_{n\ge0}e_n(\xi),\qquad e_n(\xi)\uparrow E(\xi).
+}
+\tag{45.19}
+$$
+不能仅凭形式上的单调性交换 $\min$ 与 $\sup$；所需共同来源由以下紧子水平集证明供应。
+
+置 $r=\sup_ne_n\in[0,1]$，在同一个来源空间中定义
+$$
+K_n(r)=\{\theta\in\Theta:f_n(\theta)\le r\}.
+$$
+各 $K_n(r)$ 是闭紧集；有限最小值达到且 $e_n\le r$，所以非空。$f_n\le f_{n+1}$ 给
+$$
+K_{n+1}(r)\subseteq K_n(r).
+$$
+任意非空有限组集合的交等于其中最高层的集合，故非空；空组的交为非空来源类 $\Theta$。紧性于是给同一个 $\theta_{\rm opt}\in\bigcap_nK_n(r)$。由（45.1），
+$$
+f(\theta_{\rm opt})\le r.
+$$
+反向，对任意 $\theta\in\Theta$ 和任意 $n$，
+$$
+f(\theta)\ge f_n(\theta)\ge e_n,
+$$
+从而 $f(\theta)\ge r$。因此 $f(\theta_{\rm opt})=r$，同时证明（45.19）和完成最小值的达到性。各层独立选择的最优输入不必相同；证明没有把它们当成同一历史。
+
+上述紧步骤直接由 [CompactLocalRealization](../../../D5/S3/Observer/Completion/CompactLocalRealization.lean) 的 `D5.S3.Observer.Completion.CompactLocalRealization.compact_local_realization` 实例化，准确代入为
+$$
+X=\Theta,\quad\mathrm{Context}=\mathbb N,\quad\mathrm{Record}=\mathbb R,
+$$
+$$
+\mathrm{beta}(n,\theta)=\max\{f_n(\theta)-r,0\},
+\qquad\mathrm{target}(n)=0.
+$$
+在 $\Theta$ 的子空间拓扑上有紧空间结构；$\mathrm{beta}(n,\cdot)$ 连续，其目标纤维恰为 $K_n(r)$，因而闭。有限上下文集合非空时取最大层，在该层取满足 $f_n\le r$ 的来源，即同时满足全部有限约束；上下文为空时使用 $\Theta\ne\varnothing$。定理输出恰是 $\theta_{\rm opt}$。该既有声明不要求记录类型 `Record` 带拓扑；这里的实数拓扑只用于核对所写纤维闭性。使用共同实数记录，也避免把不同层矩阵塞入一个未声明的固定矩阵类型。
+
+同一证明对任何固定 $r\ge0$ 给
+$$
+\boxed{
+E(\xi)\le r
+\Longleftrightarrow\forall n,\ e_n(\xi)\le r
+\Longleftrightarrow\exists\theta\in\Theta\ \forall n,\ f_n(\theta)\le r.
+}
+\tag{45.20}
+$$
+正向可投影完成最小值的见证；反向按同一共同半径构造。$r>1$ 时也成立，但此时条件自动满足。
+
+**严格阈值与精确成员身份。**
+
+由（45.19）或（45.20），对任何固定 $r\ge0$，
+$$
+\boxed{E(\xi)>r\Longleftrightarrow\exists n,\ e_n(\xi)>r.}
+\tag{45.21}
+$$
+若 $E>r$ 而所有 $e_n\le r$，则（45.20）矛盾；反向由 $e_n\le E$。所以完成距离严格越过阈值，必在某个有限窗口已严格越过同一阈值。
+
+完成最小值达到还给
+$$
+\boxed{
+\xi\in\mathcal S_\Theta
+\Longleftrightarrow E(\xi)=0
+\Longleftrightarrow\forall n,\ e_n(\xi)=0.
+}
+\tag{45.22}
+$$
+若 $E=0$，达到它的 $\theta_{\rm opt}$ 满足两个完成态范数差为零，故 $\xi=\omega_{\theta_{\rm opt}}$。因此非来源目标不仅在某层不能精确实现，而且有某层严格正的有限距离间隙：
+$$
+\boxed{\xi\notin\mathcal S_\Theta\Longleftrightarrow\exists n,\ e_n(\xi)>0.}
+\tag{45.23}
+$$
+这是一条有限分离存在性结论。要把 $e_n>r$ 变成实际证书，必须能取得该层目标与装置读数、控制其误差，并认证整个来源类上的优化下界；数值优化器的一次输出或一份可行拟合不是这个下界。一般实数数据和抽象紧集不自动供应算法或可计算期限。
+
+另一方面，单层 $e_n\le r$ 只给有限层候选，不能认证 $E\le r$；有限层 $e_n=0$ 也不能认证目标属于来源像。存在一份已证明精确产生全部目标的合法来源，当然给成员证书，但那是全目标关系及合法准备的额外证据。没有这种关系或尾证书时，成员身份和恰达阈值情形不由有限前缀自动终止。
+
+**非凸来源类与共同观测量。** 上述“有限分离”指目标到整个来源像的严格正距离。$\Theta$ 不要求凸，所以这个结论不自动供应一个仿射观测量，在同一方向上将目标与所有来源严格分开。具体地，取平凡 $J$、$\rho_\pm=|\pm\rangle\langle\pm|$、$\Theta=\{\rho_+,\rho_-\}$，目标为 $\xi=\omega_{I_M/2}$。本卷式（41.45）给
+$$
+q_1(\rho_\pm)=\frac12
+\begin{pmatrix}1&\pm\sqrt\alpha\\\pm\sqrt\alpha&1\end{pmatrix},
+\qquad \xi_1=I_B/2,
+\qquad e_1(\xi)=\frac{\sqrt\alpha}{2}>0.
+$$
+但线性性使 $\xi=(\omega_{\rho_+}+\omega_{\rho_-})/2$；任意自伴观测量的目标期望都是两个来源期望的平均，不能同时严格大于二者或同时严格小于二者。这个例子的来源类须由允许准备合同供应。第45.6节将另外构造一个确实对全部来源有效的共同投影；其存在由该例的支撑关系证明。
+
+以上将非空紧性用作任意目标达到性及共同半径论证的充分条件。精确来源见证另有（45.14）—（45.15）的较强适用范围；非闭类的零下确界则只能按（45.16）判断闭包。不能由某个特殊类恰好达到最小值，反推该类必须紧，也不能以第一层线性候选取代最近来源优化。
+
+### 45.5 固定目标与范数紧目标族的一致收敛
+
+继续采用第45.4节的非空紧来源类 $\Theta$，并保留同一个目标及同一个来源合同。
+
+对任意 $\theta,\theta'\in\Theta$，三角不等式和通道收缩给
+$$
+|f_n(\theta)-f_n(\theta')|
+\le D(q_n(\theta),q_n(\theta'))
+\le D(\theta,\theta').
+$$
+取上确界后仍有
+$$
+|f(\theta)-f(\theta')|\le D(\theta,\theta').
+$$
+故所有 $f_n$ 与 $f$ 都在来源距离上 $1$-Lipschitz；特别地，$f$ 连续。对于每个固定目标 $\xi$，
+$$
+\boxed{
+\forall\varepsilon>0\ \exists N_{\xi,\varepsilon}\;
+\forall n\ge N_{\xi,\varepsilon}\ \forall\theta\in\Theta,
+\quad0\le f(\theta)-f_n(\theta)<\varepsilon.
+}
+\tag{45.24}
+$$
+有限网证明不需要另设一般极限定理。取 $\Theta$ 的有限 $\varepsilon/4$-网 $\theta_1,\ldots,\theta_s$。每个网点上 $f_n(\theta_i)\uparrow f(\theta_i)$，所以存在共同 $N$ 使全部网点缺口小于 $\varepsilon/2$。任意 $\theta$ 选择距离小于 $\varepsilon/4$ 的网点，由两次 Lipschitz 估计，
+$$
+f(\theta)-f_n(\theta)
+\le2D(\theta,\theta_i)+f(\theta_i)-f_n(\theta_i)
+<\varepsilon.
+$$
+单调性保证所有 $n\ge N$ 同时成立，证明（45.24）。也可将其识别为紧空间上连续单调收敛的 Dini 机制，但这里已完整给出所需有限网证明。
+
+由此得到具体的候选输入保证。若 $n\ge N_{\xi,\varepsilon}$，且某个实际允许候选满足
+$$
+f_n(\widehat\theta_n)\le e_n(\xi)+\eta,\qquad\eta\ge0,
+$$
+则
+$$
+\boxed{
+f(\widehat\theta_n)<e_n(\xi)+\eta+\varepsilon
+\le E(\xi)+\eta+\varepsilon.
+}
+\tag{45.25}
+$$
+这是同一个候选初态 $\widehat\theta_n$ 产生整条历史后的保证，不是逐层选择多个来源再拼接。
+
+（45.24）的 $N_{\xi,\varepsilon}$ 依赖固定目标及来源类。有限网中各点的收敛深度没有显式求出，不能将这个存在量冒称可取得速率或停止条件。仅从当前有限数据看见小缺口或平台，仍不能知道已超过该深度。
+
+**非空完成范数紧目标族。**
+
+固定同一个 $\Theta$。对任意相容目标 $\xi,\zeta$，有限层三角不等式给
+$$
+|e_n(\xi)-e_n(\zeta)|
+\le D(\xi_n,\zeta_n)
+\le\mathsf d_\infty(\xi,\zeta).
+$$
+例如，对所有 $\theta$ 有 $D(\xi_n,q_n\theta)\le D(\xi_n,\zeta_n)+D(\zeta_n,q_n\theta)$；取下确界，再交换 $\xi,\zeta$ 即得。完成距离到固定集合 $\mathcal S_\Theta$ 同样满足
+$$
+|E(\xi)-E(\zeta)|\le\mathsf d_\infty(\xi,\zeta).
+$$
+因此 $e_n$ 与 $E$ 都对目标完成距离 $1$-Lipschitz。
+
+若目标族 $\Xi\ne\varnothing$ 在 $\mathsf d_\infty$ 下紧，则
+$$
+\boxed{
+\sup_{\xi\in\Xi}\bigl(E(\xi)-e_n(\xi)\bigr)\longrightarrow0.
+}
+\tag{45.26}
+$$
+证明。取 $\Xi$ 的有限 $\varepsilon/4$-网 $\xi_1,\ldots,\xi_s$。由（45.19），各网点缺口趋零，选共同 $N$ 使网点缺口都小于 $\varepsilon/2$。任意目标与近网点之间，两次 Lipschitz 估计给
+$$
+E(\xi)-e_n(\xi)
+\le2\mathsf d_\infty(\xi,\xi_i)+E(\xi_i)-e_n(\xi_i)
+<\varepsilon\qquad(n\ge N).
+$$
+这证明额外目标紧性下的一致收敛，但未提供有效有限网或网点收敛期限，故仍不是自动可计算的尾速率。
+
+这里要求的是完成泛函范数所给的紧性。即使来源类固定且紧，所有相容目标的集合也不因而完成范数紧。第45.6节给一个已经弱星紧、但仍完全没有一致尾收敛的明确目标族。
+
+范数紧性是此处一致收敛的充分条件，不声称每一个一致收敛的目标族都必须范数紧。这两项有限网论证是既有紧性／Dini机制在所声明来源检验中的应用。
+
+### 45.6 延迟相邻 11 与有限前缀的检测边界
+
+沿用第45.4节的非空紧来源类；下面的算子支撑证明本身对全部输入算子成立。
+
+Q130的全输入基像与 Q131的算子通道供应下面的支撑计算；Q126.2与恢复卷31.9供应支撑事件的距离方法。本卷命题39.12已有延迟前缀障碍的经典图景，这里核对固定量子装置及任意联合来源上的精确距离一反例。
+
+**支撑约束覆盖全部未知联合初态。**
+
+定义输出分支算子
+$$
+K_j=(\langle j|\otimes I_M)T=|m_j\rangle\langle j|.
+$$
+Q130 的基像给
+$$
+K_1=|0\rangle\langle1|,\qquad K_1^2=0.
+$$
+对词 $w=(w_1,\ldots,w_n)$，空词的算子乘积约定为 $I_M$，等距的顺序递推给
+$$
+(\langle w|\otimes I_M)T_n=K_{w_n}\cdots K_{w_1}.
+$$
+若 $w$ 包含相邻 $11$，右端包含相邻因子 $K_1K_1=0$，所以整个分支算子为零。令 $P_n^{\rm legal}$ 投影到不含相邻 $11$ 的词张成空间，$P_0^{\rm legal}=I_{H_0}$，则
+$$
+((I_{H_n}-P_n^{\rm legal})\otimes I_M)T_n=0.
+$$
+张量上 $I_J$ 后仍成立。令 $V_n=I_J\otimes T_n$、$Q_n=I_J\otimes P_n^{\rm legal}$，则 $(Q_n\otimes I_M)V_n=V_n$，取伴随也得对应右乘恒等式。因此对**每一个输入算子** $X\in\mathcal L(J\otimes M)$，无须正性或自伴性，都有
+$$
+V_nXV_n^*=(Q_n\otimes I_M)V_nXV_n^*(Q_n\otimes I_M).
+$$
+取活动记忆的偏迹并将 $Q_n$ 提出，得到
+$$
+\boxed{
+q_n(X)=(I_J\otimes P_n^{\rm legal})q_n(X)(I_J\otimes P_n^{\rm legal})
+\quad\forall X\in\mathcal L(J\otimes M).
+}
+$$
+将上式限制到密度，便覆盖任意混合、相干、纠缠初态及任意有限 $J$，不局限于 Q130 的指定根态 $P_0$。它依赖同一固定等距及无改变生成规则的介入；允许重置或反馈后，不能继续无条件使用。
+
+**固定一个目标，同时定义全部深度。**
+
+固定 $\theta_0\in\Theta$。对每个预先固定的 $N\ge0$，一次定义完整目标族
+$$
+\xi_n^{(N)}=
+\begin{cases}
+q_n(\theta_0),&0\le n\le N,\\
+q_N(\theta_0)\otimes|1\rangle\langle1|,&n=N+1,\\
+q_N(\theta_0)\otimes|11\rangle\langle11|
+\otimes|0^{n-N-2}\rangle\langle0^{n-N-2}|,&n\ge N+2.
+\end{cases}
+$$
+$N=0$ 时前因子为 $q_0(\theta_0)=\operatorname{Tr}_M\theta_0$。所有因子正且归一；从深度 $N+1$ 到 $N$、从 $N+2$ 到 $N+1$，迹掉最后一个纯位分别返回前一层；从 $N+3$ 开始，迹掉最后一个纯零位也返回前一层。较早层用 $q_n$ 的相容性。因此这是一份同一目标的相容密度族，由第45.1节给完成态 $\xi^{(N)}$。
+
+目标保留完整的 $J,H_N$ 联合前缀，并在其后接两个确定 $1$，再接零尾。对固定 $N$ 没有在检查不同深度时更换目标。它是完整输出代数上的合法态，但不是这个固定生成器的合法输出。
+
+在第 $N+2$ 层取局部投影
+$$
+\Pi_N=I_{J\otimes H_N}\otimes|11\rangle\langle11|.
+$$
+有
+$$
+\operatorname{Tr}(\Pi_N\xi_{N+2}^{(N)})=1,
+\qquad
+\operatorname{Tr}(\Pi_Nq_{N+2}(\theta))=0
+\quad\forall\theta\in\Theta.
+$$
+有限维效应变分界 $|\operatorname{Tr}(P(\rho-\sigma))|\le D(\rho,\sigma)$ 给距离至少一；态的迹距离至多一，故恰为一。更深层沿用同一局部投影并张量恒等，得到
+$$
+\boxed{
+D(\xi_n^{(N)},q_n(\theta))=1
+\quad(n\ge N+2,\ \theta\in\Theta).
+}
+\tag{45.27}
+$$
+完成层也可不借交换极限而直接认证：$2\Pi_N-I$ 为范数一的局部自伴算子，在两态上的期望相差二；两态泛函范数都为一，故差的范数恰为二。于是
+$$
+\boxed{
+\mathsf d_\infty(\xi^{(N)},\omega_\theta)=1
+\quad\forall\theta\in\Theta.
+}
+\tag{45.28}
+$$
+另一方面，在 $n\le N$ 时来源 $\theta_0$ 精确实现目标。因此
+$$
+\boxed{
+e_n(\xi^{(N)})=0\ (n\le N),\qquad
+e_n(\xi^{(N)})=1\ (n\ge N+2),\qquad
+E(\xi^{(N)})=1.
+}
+\tag{45.29}
+$$
+不需要断言第 $N+1$ 层的最优距离是多少；可能更早发现额外约束，所证明的是任意给定前缀长度 $N$ 仍能完全匹配，而第 $N+2$ 层一定严格分离。
+
+**没有全部相容目标共用的检测期限或消失尾界。**
+
+固定有限 $n$，取任意 $N\ge n$，则（45.29）给 $E-e_n=1$。由于所有这些距离都在 $[0,1]$，
+$$
+\boxed{
+\sup_{\xi\text{ 相容目标}}\bigl(E(\xi)-e_n(\xi)\bigr)=1
+\quad\text{对每个有限 }n.
+}
+\tag{45.30}
+$$
+即使固定 $\Theta=\{\theta_0\}$ 这个紧单点来源类，反例仍成立。只读取统一有限前缀的规则，不能同时正确判定实际目标 $\omega_{\theta_0}$ 和具有相同此前缀的 $\xi^{(N)}$ 是否属于来源像。这里排除的是无额外承诺的统一有限前缀期限，不是计算理论不可判定命题；已给目标整体生成公式或另有尾部证书，属于不同访问条件。
+
+这不与第45.4节冲突：每个固定的 $\xi^{(N)}$ 都在有限 $N+2$ 层被排除，不能对全部 $N$ 共用一个期限。
+
+**弱星紧目标族仍失败，完成范数紧性才是第45.5节的前提。**
+
+令
+$$
+\Xi_{\rm w}=\{\omega_{\theta_0}\}\cup\{\xi^{(N)}:N\ge0\}.
+$$
+对任意固定局部 $A\in\mathcal A_m^J$，只要 $N\ge m$，就有 $\xi^{(N)}(A)=\omega_{\theta_0}(A)$。对一般 $A\in\mathcal A^J$，取局部 $A'$ 满足 $\|A-A'\|<\varepsilon$，两态范数均为一，故足够大 $N$ 时
+$$
+|\xi^{(N)}(A)-\omega_{\theta_0}(A)|\le2\varepsilon.
+$$
+于是 $\xi^{(N)}\to\omega_{\theta_0}$ 弱星。“一个收敛序列及其极限”的集合紧：任意开覆盖中覆盖极限的开集覆盖所有充分晚的项，其余有限项各取一个覆盖集即可。因此 $\Xi_{\rm w}$ 弱星紧。
+
+然而（45.29）给
+$$
+\sup_{\xi\in\Xi_{\rm w}}(E(\xi)-e_n(\xi))=1
+\quad\text{对每个有限 }n.
+$$
+它并非完成距离紧。取偶数下标子序列；若 $M>N$ 且二者为偶数，则 $M\ge N+2$，较晚目标 $\xi^{(M)}$ 的前 $N+2$ 位仍等于实际 $q_{N+2}(\theta_0)$，而 $\xi^{(N)}$ 的同一窗口在 $\Pi_N$ 上概率为一。故
+$$
+\mathsf d_\infty(\xi^{(N)},\xi^{(M)})=1.
+$$
+无限个两两距离一的点不可能有有限小半径网，所以不全有界，更不紧。弱星紧性没有供应第45.5节需要的完成范数有限网。
+
+### 45.7 实际来源定量尾与全档案有符号恢复成本
+
+**实际来源承诺下的定量尾。** 本卷定理41.2、41.4已经针对同一装置及同一个有限参考证明：对任意 $\theta_0,\theta\in\mathcal D(J\otimes M)$，
+$$
+0\le D(\theta_0,\theta)-D(q_n(\theta_0),q_n(\theta))
+\le\epsilon_n\qquad(n\ge1),
+\qquad
+\mathsf d_\infty(\omega_{\theta_0},\omega_\theta)=D(\theta_0,\theta).
+\tag{45.31}
+$$
+其中 $\epsilon_n=1-c_n$ 是式（41.8）的完整 diamond 恢复误差，$c_n$ 是式（41.6）的条件记忆根保真度；两份来源分别恢复的半迹误差为 $\kappa_n=\epsilon_n/2$，二者相加才给（45.31）的 $\epsilon_n$。这些常数及共同解码器归定理41.2，式（41.33）、（41.35）供应这里的距离结论，不在此重新构造。其显式速率
+$$
+0<\epsilon_n\le\frac{\alpha^{4n-6}}4
+\qquad(n\ge3)
+$$
+仍保留原起点。$n=0$ 只进入前缀相容、$q_0$ 与完成上确界，不为它定义恢复误差。
+
+以下距离极小化应用仍假设 $\Theta$ 非空且紧。若整份目标已被认证为 $\xi=\omega_{\theta_0}$，即使 $\theta_0\notin\Theta$，式（41.35）、（41.37）直接给
+$$
+\boxed{
+E(\xi)=\min_{\theta\in\Theta}D(\theta_0,\theta),
+\qquad 0\le E(\xi)-e_n(\xi)\le\epsilon_n\quad(n\ge1).
+}
+\tag{45.32}
+$$
+具体的代入检查是：在同一个 $\Theta$ 上逐点应用（45.31），对 $e_n$ 的一个极小点 $\theta_{{\rm opt},n}$ 有
+$$
+E(\xi)\le D(\theta_0,\theta_{{\rm opt},n})
+\le e_n(\xi)+\epsilon_n,
+$$
+而逐点收缩给 $e_n\le E$。对 $n\ge1$、$\eta\ge0$，一个实际取得且满足 $f_n(\widehat\theta_n)\le e_n+\eta$ 的允许来源，同样由式（41.38）得 $f(\widehat\theta_n)\le e_n+\eta+\epsilon_n$。这是既有实际来源定理的直接应用。
+
+任意相容目标不自动具有供共同解码器回接的初态见证。第45.6节的 $\xi^{(N)}$ 不属于固定装置的来源像，不能代入（45.31）。第45.4节仍给 $e_n\uparrow E$，第45.5节给固定目标的来源一致近似，以及额外非空范数紧目标族上的一致收敛；这些结论都不继承一个对所有相容目标通用的 $\epsilon_n$。式（45.30）直接排除这种转移。任意目标的共同半径、有限网及延迟反例证明使用相容性、距离和明列的紧性条件；它们不从实际来源承诺继承一个任意目标尾界。
+
+**全发射长度的有符号左逆及单位原子成本。** 以下是全来源算子空间上的共同恢复任务，与上段受限来源类 $\Theta$ 的距离极小化相互独立；不以该类的非空或紧性作为左逆前提。
+
+本卷定理41.2、式（41.7）与（41.17）对每个整数 $n\ge1$ 供应一份仅依赖装置与 $n$、且对所有输入共同使用的解码器
+
+$$
+\mathcal D_n:\mathcal L(H_n)\longrightarrow\mathcal L(M)
+\quad\text{为 CPTP},
+$$
+$$
+\mathcal D_n\Gamma_n=\mathcal D_{c_n}
+\quad\text{在全部来源算子上成立},
+\qquad 0<c_n<1,
+\qquad c_1=\sqrt\alpha,
+\qquad c_n\longrightarrow1.
+\tag{45.33}
+$$
+
+其构造仅在相干档案上作受控极分解酉再丢弃，不读取 $J$ 或最终活动 $M$。本卷式（41.17）拥有这个具体通道，不在这里重造。
+
+为固定可计算参数，直接沿用本卷式（41.5）—（41.6）的条件记忆公式：
+$$
+\lambda=-\alpha^2,\quad
+\pi_0=(1+\alpha^2)^{-1},\quad
+\pi_1=\alpha^2(1+\alpha^2)^{-1},
+$$
+$$
+a_n=\pi_1(1-\lambda^{n-1}),\qquad
+b_n=\pi_1+\pi_0\lambda^{n-1},
+$$
+$$
+c_n^2=1-\alpha^2
+\left[\sqrt{a_n(1-b_n)}-\sqrt{b_n(1-a_n)}\right]^2
+\qquad(n\ge1).
+$$
+这些条件态及 $c_n$ 的证明归本卷定理41.2；这里不另建恢复器或根保真度计算。该节同时证明
+
+$$
+D(\Gamma_n\rho_+,\Gamma_n\rho_-)=c_n,
+\qquad
+\epsilon_n=1-c_n
+=\min_{\mathcal E\ {\rm CPTP}}
+\|\mathcal E\Gamma_n-\operatorname{id}_M\|_\diamond.
+\tag{45.34}
+$$
+
+竞争通道类型均为 $\mathcal L(H_n)\to\mathcal L(M)$。定义同一类型、全 CPTP 单位价格字典的有限实系数代价
+
+$$
+\gamma_n=
+\inf\left\{
+\sum_{i=1}^m|a_i|:\quad
+\begin{array}{l}
+m\in\mathbb N,\ a_i\in\mathbb R,\\
+\mathcal E_i:\mathcal L(H_n)\to\mathcal L(M)\ {\rm CPTP},\\
+\displaystyle\sum_{i=1}^m a_i\mathcal E_i\Gamma_n
+=\operatorname{id}_M
+\end{array}
+\right\}.
+\tag{45.35}
+$$
+
+等式要求全部来源算子；等价地可先在 Hermitian 实空间说明，再由复线性延拓。它自动保留任意有限惰性参考。原子是档案到来源类型的通道，不能误写成仅作用在来源 qubit 上的同型通道字典。
+
+直接把恢复卷定理30.12的逆取 $\lambda=c_n$，与既有 $\mathcal D_n$ 复合，即 $\mathcal S_n=L_{c_n}\circ\mathcal D_n$，得到
+
+$$
+\mathcal S_n=
+a_{+,n}\mathcal D_n+
+a_{-,n}\operatorname{Ad}_Z\circ\mathcal D_n,
+\qquad
+a_{\pm,n}=\frac{1\pm c_n^{-1}}2.
+\tag{45.36}
+$$
+
+这两个原子都为所需类型的 CPTP。由（45.33）与恢复卷的逆恒等式，$\mathcal S_n\Gamma_n=\operatorname{id}_M$，系数绝对值和为 $c_n^{-1}$。
+
+恢复卷定理30.12的原字典是 qubit 到 qubit；这里的原子输入为整个 $H_n$，一般竞争者未必经 $\mathcal D_n$ 分解，故其成本下界仍须按此输入类型履行。为证明整个档案字典不能更便宜，对任意（45.35）的表示取 $\Delta=\rho_+-\rho_-$。同一档案差由（45.34）满足 $\|\Gamma_n(\Delta)\|_1=2c_n$。每个竞争通道对自伴差的迹范数收缩，所以
+
+$$
+2=\|\Delta\|_1
+\le\sum_i|a_i|\,
+\|\mathcal E_i\Gamma_n(\Delta)\|_1
+\le2c_n\sum_i|a_i|.
+\tag{45.37}
+$$
+
+因此极小值达到且
+
+$$
+\boxed{
+\gamma_n=\frac1{c_n}=\frac1{1-\epsilon_n}.
+}
+\tag{45.38}
+$$
+
+对任意迹一来源输入取（45.35）的迹，得到 $\sum_i a_i=1$。若正、负系数质量为 $P_a,N_a$，则 $P_a-N_a=1$；在最优表示中 $P_a+N_a=\gamma_n$。所以每份最优表示均有
+
+$$
+\boxed{N_a=\frac{\gamma_n-1}{2}.}
+\tag{45.39}
+$$
+
+不要求或宣称分解唯一。若受限可执行类包含（45.36）的两个通道，也达到这个值；否则全 CPTP 下界仍成立，但受限字典的可行性、代价和实现成本须重新检验。
+
+作为同一计算的稳定性表达，
+
+$$
+\|\mathcal S_n\|_\diamond=c_n^{-1}.
+\tag{45.40}
+$$
+
+上界来自两 CPTP 通道的完整 diamond 范数均为一；下界用迹范数归一化档案差 $\Gamma_n(\Delta)/(2c_n)$，其经 $\mathcal S_n$ 的像迹范数为 $1/c_n$。同一个归一化档案差也给任意线性精确左逆的 diamond 范数下界 $1/c_n$。因此真实来源对在任意有限参考下满足
+
+$$
+D(\theta,\vartheta)
+\le c_n^{-1}D(q_n(\theta),q_n(\vartheta)),
+\tag{45.41}
+$$
+
+且共同独立参考下的 $\pm$ 对达到等号。$n>1$ 时 $\mathcal S_n$ 是来源像上的左逆，不是整个高维档案算子空间上的双侧逆；任意档案目标经它所得候选正，也不能省去真实像一致性的检查。
+
+由实际档案的前缀关系，对同一 $\rho_\pm$ 态对取偏迹并用收缩，式（45.34）给 $c_n\le c_{n+1}$，所以 $\gamma_n$ 不增。活动记忆的谱率 $-\alpha^2$ 可交替，不能据此推断档案代价交替。设 $\phi=(1+\sqrt5)/2=\alpha^{-1}$，则
+
+$$
+\gamma_1=\sqrt\phi,
+\qquad\gamma_n>1\text{ 对每个有限 }n,
+\qquad\gamma_n\longrightarrow1,
+\qquad
+\gamma_n-1=\frac{\epsilon_n}{1-\epsilon_n}.
+\tag{45.42}
+$$
+
+本卷式（41.9）对 $n\ge3$ 的 $\epsilon_n\le\alpha^{4n-6}/4$ 可直接运输为
+
+$$
+0<\gamma_n-1
+\le\frac{\alpha^{4n-6}}{4-\alpha^{4n-6}}.
+\tag{45.43}
+$$
+
+这一步只是同一正分母上的单调代换，不是新的一般尾定理。单位原子价格不计算发射长度、档案相干存储、受控酉综合、校准或终端测量的真实成本。
+
+所有有限 $n\ge1$ 的 $q_n$ 已因可偏迹到单射 $q_1$ 而单射。因此增长档案在这里改善的是逆的条件数、所需正负权重和最优物理恢复误差；不能写成“一步没有来源识别性，长记录才有”。这里的识别性以完整联合密度读数为对象，不以单个物理样本提供完整矩阵为前提。
+
+这份单位价格逆成本属于已有有符号通道实现理论的具体装置应用。Jiang、Wang、Wang 的相位阻尼参数 $p$ 对应 $c=1-2p$，其 $2^{\nu}=1/c$ 是系数绝对值总量，$\nu$ 为它的二进制对数；在本装置取 $p=(1-c_n)/2=\kappa_n=\epsilon_n/2$，不能将文献的 $p$ 误作完整 diamond 误差。[^rro_signedsource_cost] 该文献的 qubit 逆成本与恢复卷30.12供应上式的两原子构造；（45.37）另外承担所有 $H_n\to M$ 竞争通道的下界。
+
+### 45.8 正概率调用、独立试验与实际取得边界
+
+恢复卷命题30.13供应一般抽样协议，本卷约定35.5供应带参考的实际输入、效果和访问条件。这里将（45.36）的两个实际可调用原子代入。
+
+假设实验能按声明合同取得相同来源 $\theta$ 的新准备及其第 $n$ 层相干档案，能执行这两个原子，并能读取所需自伴终端可观测量 $O=O^*$，$\|O\|_\infty\le1$。若目标是联合关系，$O$ 必须是允许的同一联合参考测试；解码操作本身仍仅作用于档案。
+
+用非负概率
+
+$$
+p_{+,n}=\frac{|a_{+,n}|}{\gamma_n}
+=\frac{1+c_n}{2},\qquad
+p_{-,n}=\frac{|a_{-,n}|}{\gamma_n}
+=\frac{1-c_n}{2}
+\tag{45.44}
+$$
+
+分别调用 $\mathcal D_n$ 与 $\operatorname{Ad}_Z\circ\mathcal D_n$。它们之和为一。分支抽样须独立于该次已准备的联合输入，或由实际条件合同保证各分支具有所声明的同一输入律。设实际测量结果 $Y\in[-1,1]$，条件期望等于指定同一输入和效果的原子预测。记录
+
+$$
+Z_{\rm est}=\begin{cases}
+\gamma_nY,&+\text{ 分支},\\
+-\gamma_nY,&-\text{ 分支}.
+\end{cases}
+\tag{45.45}
+$$
+
+全期望和（45.36）给
+
+$$
+\mathbb E Z_{\rm est}
+=\operatorname{Tr}\!\left[
+O(\operatorname{id}_J\otimes\mathcal S_n)q_n(\theta)
+\right]
+=\operatorname{Tr}(O\theta),
+\qquad
+\mathbb E Z_{\rm est}^2\le\gamma_n^2.
+\tag{45.46}
+$$
+
+这里输出端 qubit 与来源 $M$ 按固定基识别。若另有 $N$ 次完整试验的独立重复合同，包含新的相同联合准备、相干档案生成、分支随机化及终端测量，并保持同一目标与完整已获档案条件，则
+
+$$
+\operatorname{Var}(\overline Z_N)\le\frac{\gamma_n^2}{N}.
+\tag{45.47}
+$$
+
+这是因为每次的方差 $\operatorname{Var}(Z_{{\rm est},j})=\mathbb E Z_{{\rm est},j}^2-(\mathbb E Z_{{\rm est},j})^2\le\gamma_n^2$，独立性使不同试验的协方差为零，对均值求方差即得（45.47）。
+
+完整独立性若只在某份保留档案条件下成立，上式先是相应的条件方差界；要无条件使用，还须核对共同准备、条件均值及额外随机性。一般地，
+$$
+\operatorname{Var}(\overline Z_N)
+=\frac1{N^2}\left(
+\sum_{j=1}^N\operatorname{Var}(Z_{{\rm est},j})
++2\sum_{i<j}\operatorname{Cov}(Z_{{\rm est},i},Z_{{\rm est},j})
+\right).
+$$
+共同漂移、相关校准误差、复用同一量子系统或其它跨次关联不能被单次二阶矩界删除。该上界属于指定协议，不是任何估计器的最优方差或普遍样本下界，也不把旧样本重新读取当成新实验。
+
+有符号估计没有制备负概率状态。一步逆在实际正像上得到合法来源密度，但 $c<1$ 时 $L_c(\rho_+)$ 有负特征值，所以 $L_c$ 不是全域正映射，更不是 CPTP。即使只要求某个 CPTP 映射在整个实际像上恢复，它也会将距离 $c$ 的输出态对变成距离一，违反收缩。对任意有限 $n$，同样由（45.34）的 $c_n<1$ 排除完整未知来源类的精确 CPTP 恢复。
+
+必须保留下列任务区别：
+
+* **已知完整矩阵律的反演**：由读数矩阵计算唯一候选、检查 PSD 与来源约束，再检验全部输出关系。
+* **重复实验中的目标估计**：用实际允许的原子与终端测试，有符号后处理恢复期望；须计准备、样本、相关性及误差。
+* **一个未知物理样本的状态恢复**：要求实际 CPTP 操作，受上述收缩和本卷定理41.2 的最优正误差限制。
+
+同样，已知且与不可访问参考无额外纠缠要求的单例来源，可由允许的常值准备通道以成本一处理，对角子任务也可成本一；它们的量词不同于（45.35）的全来源共同算子恒等式。若单例为与不可访问参考纠缠的联合态，局部常值准备不能自动恢复该联合态，本卷命题41.6 已明确这一限制。对独立可准备的已知单例 $\tau_M$，上述档案原子具体为 $Y\mapsto\operatorname{Tr}(Y)\tau_M$；对计算基对角来源及其经典量子联合扩展 $\sum_j A_j\otimes|j\rangle\langle j|$，原子取先迹掉第 $2,\ldots,n$ 个输出、再对首输出作计算基去相干（$n=1$ 时无额外输出可迹掉）。第一层保持这两个对角块，故该 CPTP 原子精确恢复所述子任务。两类均有系数一的表示；任一可行表示在一个迹一输入上取迹又给 $\sum_i a_i=1$，从而质量至少一，证明其单位价格最优值确为一。
+
+未知 $c$、改变原子价格、改变可调用字典、生成期间反馈、已经破坏相干的档案，均须重新指定任务。
+
+上述正概率调用、带符号输出和 $\gamma_n^2$ 二阶矩机制也见 Temme、Bravyi、Gambetta 的概率误差抵消构造。[^rro_signedsource_sampling] 它给这里指定协议的可执行估计方式，不替代实际输入与参考合同，也不把（45.38）的最小表示成本提升成任意估计器的最优样本复杂度。
+
+**实际来源检验的取得条件。** 这些结果用于同一固定装置、同一完整档案约束的来源类：有限目标矩阵给完成来源距离的单调下界，一个经过认证的严格有限下界能排除指定误差半径内的全部合法来源。对于非空紧来源类，数学最优来源存在，且每个固定非来源目标在某有限窗口严格分离；它不保证从当前数据有效计算该窗口。本卷命题39.13的证书边界在这里继续保留：可行拟合给 $e_n$ 的上界，排除整个来源类需要 $e_n$ 的已认证下界；数值优化器的一个输出不自动具有后者。存在一份已经证明精确产生全部目标的合法来源，可提供成员证书，但有限前缀精确匹配本身不提供它。恰达阈值也不自动有限停止。
+
+相容目标可以是设计要求或待核验的候选输出规律。第45.6节接出的非法尾是完整输出代数中的比较态，不是已经由固定装置取得的事件，更不能通过改写旧档案伪造合法生成史。若整份已获档案规定了未来机制关系，违反它们恰是要检测的来源失败；不能删除这些关系，只留匹配的矩阵边缘来宣称世界相容。本卷命题41.6已经给出第一层可排除的非来源目标；这里增加的是任意相容目标的紧来源距离，以及保留任意长完整联合前缀后才显露的最大距离障碍，不把来源非满射本身重列为新结论。
+
+所有来源候选共同解释第45.1节的 $C_{\rm archive}$，以及已保留的参考联合关系。固定分开边缘不自动保留联合态。数学态的可表达性不等于合法准备的可取得性；非空紧类与极小值存在不给优化算法、受限控制门集、读数精度、样本数、等待时间或存储预算。一般非凸类的正距离和共同观测量之间的区别按第45.4节保留；第45.6节的 $\Pi_N$ 才是经直接证明的共同支撑见证。
+
+完成范数允许全部局部有界可观测量作为数学比较，实际可访问的测试族可以更小。$\Pi_N$ 仅需要两个指定输出端口的联合计算基事件，但读取它们仍须合法，并保留失败、来源身份、误差与顺序。若输出已经被不可逆测量，完整相干态检验及此前的相干恢复任务会改变；不能继续把原相干资源当作仍可访问。若允许生成中反馈、重置、复用已发出端口、改变装置或空白准备，来源像会改变，须按新合同重建约束，不能继续无条件沿用 $K_1^2=0$ 的旧生成器结论。
+
+深度 $n$ 计数已发出的寄存器及所比较的前缀，不自动等于物理经过时间、半衰期或熵产生率。较大经典档案与无限量子参考的差别、纯数学见证与实际取得的差别，均按第45.1节及假设41.5保留。本文所用完成化、紧性、迹范数对偶和有限网机制保持既有归属；这里只给固定装置的目标来源检验、完成距离、有符号档案恢复及其估计协议的具体应用与反例。
+
+[^rro_signedsource_blocks]: John Watrous，*The Theory of Quantum Information*，2018，[作者全文](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Lemma 3.18，印刷页144—145：正半定复矩阵对角块允许奇异，正块矩阵等价于收缩因子化。另见 Watrous，[*Simpler semidefinite programs for completely bounded norms*](https://arxiv.org/html/1207.5726v2)，§2.1，Lemma 2；M. S. Moslehian、M. Kian、Q. Xu，[*Positivity of 2×2 block matrices of operators*](https://arxiv.org/html/1904.08680v1)，Theorem 5.11。这里的伪逆范围条件、合同变换与收缩因子化已逐项给出；正定内部块的 Schur 最小化声明不能替代奇异情形。
+
+[^rro_signedsource_cost]: Jiaqing Jiang、Kun Wang、Xin Wang，[*Physical Implementability of Linear Maps and Its Application in Error Mitigation*](https://arxiv.org/html/2012.10959v2)，Theorem 3、Lemma 15及§4.1；*Quantum* **5**, 600（2021），[doi:10.22331/q-2021-12-07-600](https://doi.org/10.22331/q-2021-12-07-600)。其相位阻尼 $F_p=(1-p)\operatorname{id}+p\operatorname{Ad}_Z$、$0\le p<1/2$ 的逆满足 $2^{\nu(F_p^{-1})}=1/(1-2p)$；原子类型和任务仍须按第45.7节核对。
+
+[^rro_signedsource_sampling]: Kristan Temme、Sergey Bravyi、Jay M. Gambetta，[*Error mitigation for short-depth quantum circuits*](https://arxiv.org/html/1612.02058v3)，式（9）—（10）的有符号重采样；*Physical Review Letters* **119**, 180509（2017），[doi:10.1103/PhysRevLett.119.180509](https://doi.org/10.1103/PhysRevLett.119.180509)。其特定电路与噪声条件不自动成为本装置的准备、参考访问或全竞争字典下界。
+
+## 45.99 追加锚
+
+## 46. 递归数组的幅度、数值恢复模量与统一量程条件数
+
+本节接续第43节的同一递归体／边关系，在固定有限深度和通常数值范数下证明幅度极值、精确内外误差模量及恢复条件数。第43.2—43.5节供应多项式恢复、有限依赖和离散前缀几何；下文的数值完成使用另一种明确指定的拓扑。全部表示仍保留同源的完整已获档案，数值误差合同不增加合法获取能力。
+
+### 46.1 同一个递归体／边映射，改用幅度度量
+
+固定整数 $M\ge0$，记
+$$
+\Delta_M=\{(n,k)\in\mathbb N^2:n+k\le M\}.
+$$
+Context 定理43.2已经给出有理边界 $a=(a_0,\ldots,a_M)$ 的唯一递归三角 $\mathcal E_M(a)$，由整系数多项式构造，并与首列提取 $\beta_M$ 互逆。本节研究这些**同一坐标多项式**在通常数值扰动下的大小与敏感性；不重复取得已有自然数组的存在唯一性。
+
+为避免覆盖 Context 式（43.10）中表示低阶余项的 $P_{n,k}$，用直立符号
+$$
+\mathsf P_{n,k}(a)=\mathcal E_M(a)(n,k)
+\qquad(n+k\le M)
+$$
+表示整个坐标多项式。旧式（43.10）对应 $\mathsf P_{n,k}=a_{n+k}+P_{n,k}$，两者不是同一个多项式。有限依赖说明 $\mathsf P_{n,k}$ 只用 $a_0,\ldots,a_{n+k}$，与所选更大 $M$ 无关。其列递推为
+$$
+\mathsf P_{n,0}=a_n,\qquad
+\mathsf P_{n,k+1}
+=\mathsf P_{n+1,k}-\sum_{j=0}^{k}\mathsf P_{n,j}a_{k-j}.
+\tag{46.1}
+$$
+所有等式都是有限多项式恒等式，故同样定义实边界上的 $\mathcal E_M$。在实数上继续用（46.1）列归纳，或者直接评价同一整系数恒等式，得到相同的递归约束及两逆恒等式。这里的实数评价不赋予形式变量任何解析值。
+
+对 $A\ge0$，令
+$$
+K_M(A)=[-A,A]^{M+1},\qquad
+I_M(A)=\mathcal E_M(K_M(A)).
+\tag{46.2}
+$$
+边界和三角都采用通常坐标上确界范数：
+$$
+\|a-b\|_\infty=\max_{0\le i\le M}|a_i-b_i|,
+\qquad
+\|T-S\|_\infty=\max_{n+k\le M}|T(n,k)-S(n,k)|.
+$$
+这是固定有限维空间的数值距离，不是 Context43 的“首个不相等下标”超度量。来源可为有理点，也可为同一多项式的实扩张；对应范围将在每个达到性结论中说明。不加顶行全一、正性、概率或独立性假设。
+
+### 46.2 非负系数列递推与一个共同的最坏边界
+
+在同一组变量 $x_i$ 上定义
+$$
+Q_{n,k}(x)=-\mathsf P_{n,k}(-x).
+$$
+将（46.1）中的每个边界变量替换为 $-x_i$，逐项计算符号，得
+$$
+\boxed{
+Q_{n,0}=x_n,\qquad
+Q_{n,k+1}=Q_{n+1,k}+\sum_{j=0}^{k}Q_{n,j}x_{k-j}.
+}
+\tag{46.3}
+$$
+因此列归纳证明：每个 $Q_{n,k}$ 都是系数非负的整系数多项式，没有常数项，次数至多 $k+1$。归纳允许 $n=0$ 以及不同因子指向同一个变量的情形；相同单项式合并只会增加非负系数，不产生符号抵消。反过来，$\mathsf P_{n,k}$ 的每个非零、总次数为 $d$ 的系数具有符号 $(-1)^{d-1}$。
+
+这个符号结论也与 Context 式（43.7）的有限系数公式一致。这里对边界取任意无限延伸，并令 $F(z)=1+z\sum_{i\ge0}a_i z^i$；每个待用系数只依赖所需有限前缀。形式展开
+$$
+F^{-(j+1)}
+=\sum_{\ell\ge0}(-1)^\ell\binom{j+\ell}{\ell}(F-1)^\ell
+$$
+中，$F-1$ 的每项对边界变量为一次；再乘外侧 $a_{n+j}$ 后总次数为 $\ell+1$，符号正好为 $(-1)^\ell$。对一个固定形式次数只有有限项贡献。合并重复变量不会改变总次数，因此没有不同符号混入同一单项式。主证明仍是无需形式展开的正列递推（46.3）。
+
+将全部相关变量同时取 $A\ge0$。由（46.3）归纳，$Q_{n,k}(A,\ldots,A)$ 与 $n$ 无关，记为 $u_k(A)$；它满足
+$$
+\boxed{
+u_0(A)=A,\qquad
+u_{k+1}(A)=u_k(A)+A\sum_{j=0}^{k}u_j(A).
+}
+\tag{46.4}
+$$
+这同时证明每个 $u_k$ 的系数非负，且 $u_{k+1}-u_k$ 系数非负。对 $A>0$，所有 $u_k(A)>0$，并且它们随 $k$ 严格增加。
+
+对任意 $a\in K_M(A)$，非负系数给
+$$
+|\mathsf P_{n,k}(a)|
+\le Q_{n,k}(|a_0|,\ldots,|a_{n+k}|)
+\le Q_{n,k}(A,\ldots,A)=u_k(A).
+\tag{46.5}
+$$
+而**同一个**边界 $a^-=-A\mathbf1$ 对全部坐标同时给出
+$$
+\boxed{
+\mathsf P_{n,k}(a^-)=-u_k(A),\qquad
+\max_{a\in K_M(A)}|\mathsf P_{n,k}(a)|=u_k(A),\qquad
+\max_{a\in K_M(A)}\|\mathcal E_M(a)\|_\infty=u_M(A).
+}
+\tag{46.6}
+$$
+最后一个等号由 $k\le M$ 及坐标 $(0,M)$ 取得。这里没有把分别达到的最优值拼成一个不存在的共同实现：所有等号都来自这一个实际边界及其唯一递归三角。若实际来源类另有约束排除了这个边界，式（46.5）仍是上界，式（46.6）的达到性不能自动转移。
+
+### 46.3 幅度多项式的公式与成熟归属
+
+令形式级数 $U_A(z)=\sum_{k\ge0}u_k(A)z^k$。在（46.4）上乘 $z^{k+1}$ 求和；每个系数只含有限项，得到
+$$
+U_A-A=zU_A+\frac{Az}{1-z}U_A.
+$$
+因此
+$$
+\boxed{
+U_A(z)=\frac{A(1-z)}{1-(A+2)z+z^2}
+=\frac{A}{1-z}\sum_{\ell\ge0}
+\left(\frac{Az}{(1-z)^2}\right)^\ell.
+}
+\tag{46.7}
+$$
+后一几何级数的公比有零常数项，故形式恒等式良定。取 $z^k$ 系数：第 $\ell$ 项为 $A^{\ell+1}z^\ell(1-z)^{-(2\ell+1)}$，只需 $0\le\ell\le k$，从而
+$$
+\boxed{
+u_k(A)=\sum_{\ell=0}^{k}\binom{k+\ell}{2\ell}A^{\ell+1}.
+}
+\tag{46.8}
+$$
+特别地，各次数 $1,\ldots,k+1$ 的系数均严格正。$Q_{n,k}$ 的总次数为 $d$ 的系数总量，等于（46.8）中 $A^d$ 的系数 $\binom{k+d-1}{2d-2}$，与 $n$ 无关。
+
+将（46.7）乘分母后逐系数比较，给
+$$
+\boxed{
+u_0=A,\qquad u_1=A(A+1),\qquad
+u_{k+2}=(A+2)u_{k+1}-u_k.
+}
+\tag{46.9}
+$$
+该二阶递推的减号不与（46.4）的非负系数构造矛盾；（46.4）负责系数正性，（46.9）是同一族的简短标量递推。
+
+**Morgan–Voyce 与当前 Chebyshev 约定。** Swamy 原文第73页式（7）的小写 $b_n$ 族满足 $b_0(x)=1$、$b_1(x)=x+1$、$b_n(x)=(x+2)b_{n-1}(x)-b_{n-2}(x)$。[^rroctx46_arrayamp_swamy] 初值与（46.9）完全一致，因此多项式恒等式为
+$$
+\boxed{u_k(A)=A b_k(A).}
+\tag{46.10}
+$$
+Swamy 印刷第79页式（40）还给出这一族的系数公式，其中
+$$
+\binom{n+j}{n-j}=\binom{n+j}{2j},
+\qquad
+b_n(x)=\sum_{j=0}^{n}\binom{n+j}{n-j}x^j
+=\sum_{j=0}^{n}\binom{n+j}{2j}x^j.
+$$
+这与（46.8）在 $u_k(A)=A b_k(A)$ 下逐项对应；前面的形式生成函数取系数证明完整保留。Swamy 印刷第80页式（42b）给出的是较早的缩放 Chebyshev 表示，其归一化与下文 DLMF 当前约定须分别核对，不能直接将旧符号视为当前 $V/W$ 记号。
+
+这个标量多项式族已有成熟归属；它自身不提供当前非线性边界恢复映射的最优幅度、Lipschitz 或有限噪声结论，那些结论由本节的共同非负系数结构证明。
+
+按 DLMF 当前第三类 Chebyshev 记号，$V_0(x)=1$、$V_1(x)=2x-1$；这一点必须明确，因为 DLMF 在版本1.0.28（2020年9月15日）更正时交换了旧版的 $V,W$ 约定。[^rroctx46_arrayamp_dlmf] 令 $U_{-1}=0$，以相同的二阶递推及初值核对，得
+$$
+\boxed{
+u_k(A)=A V_k(1+A/2)
+=A\bigl(U_k(1+A/2)-U_{k-1}(1+A/2)\bigr).
+}
+\tag{46.11}
+$$
+DLMF18.12.10 给的是 $U_k$ 的生成式，不是直接给 $V_k$ 的生成式：在其形式恒等式上乘 $1-z$，才得到 $U_k-U_{k-1}$ 的生成式及（46.7）。同样，Context 第43.8节已归属的固定重建核 Riordan 系数法保持原作用域；随边界变化的整份恢复映射不能被当成固定线性核来求敏感性。本节不引入额外未核对的 Riordan 或条件数文献作为证明前提。
+
+**闭式。** 对 $A>0$，置
+$$
+s(A)=\sqrt{A^2+4A},\qquad
+\lambda(A)=\frac{A+2+s(A)}2>1.
+$$
+有 $\lambda+\lambda^{-1}=A+2$、$\lambda-\lambda^{-1}=s$。二阶递推（46.9）的两个根为 $\lambda,\lambda^{-1}$。直接代入两个初值并应用递推唯一性，得到
+$$
+\boxed{
+u_k(A)=A\,\frac{\lambda^{k+1}+\lambda^{-k}}{\lambda+1}.
+}
+\tag{46.12}
+$$
+例如 $k=0$ 时为 $A$；$k=1$ 时 $(\lambda^2+\lambda^{-1})/(\lambda+1)=\lambda+\lambda^{-1}-1=A+1$。DLMF18.5.3的当前 $V_k$ 表达也给同一闭式，但本式已经由初值和递推验证。
+
+（46.7）首先是形式系数恒等式，无解析收敛要求。若对固定 $A>0$ 将 $z$ 赋复数值，分母为 $(1-\lambda z)(1-\lambda^{-1}z)$，最近的极点为 $\lambda^{-1}$，而分子在该点不为零。因此该展开的解析收敛圆为 $|z|<\lambda^{-1}$；不能从正交区间 $[-1,1]$ 的默认条件直接移用其它半径。这里的 Chebyshev 参数为 $1+A/2>1$。$A=0$ 时 $u_k(0)=0$，整份 $U_0$ 为零，另按零多项式处理。
+
+在 $A=1$ 时，令 $\phi=(1+\sqrt5)/2$，则 $\lambda=\phi^2$，且（46.9）的初值为 $1,2$、递推系数为 $3$，故 $u_k(1)=F_{2k+1}$，其中 $F_0=0,F_1=1$：Fibonacci 后继关系直接给 $F_{m+4}=3F_{m+2}-F_m$，所以奇数子列与（46.9）具有相同初值和递推。这只识别一个已有标量递推；达到幅度界的全负边界不是 Context43 中由顶行全一选出的自然源。
+
+### 46.4 精确的立方体全局 Lipschitz 常数及逆向常数
+
+先固定 $A>0$。记
+$$
+\boxed{
+L_k(A)=u'_k(A)
+=\sum_{\ell=0}^{k}(\ell+1)\binom{k+\ell}{2\ell}A^\ell.
+}
+\tag{46.13}
+$$
+
+**导数序列的形式生成函数。** 在评价实参数之前，将 $A$ 视为不定元，在 $\mathbb R[A][[z]]$ 中逐系数定义 $\partial_A$。（46.8）保证每个系数 $u_k(A)$ 都是多项式；每个 $z$ 系数的乘积只包含有限次卷积，故逐系数求导满足乘积法则。令
+$$
+D=1-(A+2)z+z^2.
+$$
+它的常数系数为一，因此存在唯一形式逆 $D^{-1}$，且该逆的每个系数仍属于 $\mathbb R[A]$。对 $DD^{-1}=1$ 使用乘积法则，结合 $\partial_A D=-z$，得到
+$$
+-zD^{-1}+D\,\partial_A(D^{-1})=0,
+\qquad
+\partial_A(D^{-1})=zD^{-2}.
+$$
+于是由（46.7）逐系数计算
+$$
+\partial_A U_A
+=(1-z)D^{-1}+A(1-z)zD^{-2}
+=\frac{(1-z)(D+Az)}{D^2},
+\qquad
+D+Az=1-2z+z^2=(1-z)^2.
+$$
+因此
+$$
+\boxed{
+\sum_{k\ge0}u'_k(A)z^k
+=\frac{(1-z)^3}{[1-(A+2)z+z^2]^2}.
+}
+\tag{46.13a}
+$$
+这是多项式系数环中的形式恒等式，对每个实 $A$ 的逐系数评价仍成立；证明不交换解析极限、无穷和或积分，也不需要解析收敛假设。$A=0$ 时导数序列各项为一，与下文单点域最小 Lipschitz 常数为零的区别仍保留。
+
+在 $[-A,A]^{n+k+1}$ 内，由 $\mathsf P(a)=-Q(-a)$ 及 $Q$ 系数非负，对每个变量有
+$$
+|\partial_i\mathsf P_{n,k}(a)|
+\le\partial_i Q_{n,k}(|a|)
+\le\partial_i Q_{n,k}(A,\ldots,A).
+$$
+沿全对角方向求导，得
+$$
+\sum_{i=0}^{n+k}|\partial_i\mathsf P_{n,k}(a)|
+\le\sum_i\partial_i Q_{n,k}(A,\ldots,A)
+=u'_k(A)=L_k(A).
+\tag{46.14}
+$$
+重复变量已经包含在偏导数的重数中。该行导数的 $\ell^\infty$ 输入到标量输出范数正是偏导绝对值之和。
+
+对立方体内任意 $a,b$，线段 $a+t(b-a)$ 留在同一凸立方体内。沿线段积分梯度并用（46.14），给
+$$
+|\mathsf P_{n,k}(a)-\mathsf P_{n,k}(b)|
+\le L_k(A)\|a-b\|_\infty.
+\tag{46.15}
+$$
+这一步在实立方体证明，再限制到有理点；不需要声称有理点本身对实参数线段闭合。
+
+证明常数不能缩小，使用同一对共同边界
+$$
+a=-A\mathbf1,\qquad b=-(A-h)\mathbf1,
+\qquad 0<h\le A.
+$$
+由（46.6），其输入距离为 $h$，输出坐标差为 $u_k(A)-u_k(A-h)$。所以
+$$
+\frac{|\mathsf P_{n,k}(a)-\mathsf P_{n,k}(b)|}{\|a-b\|_\infty}
+=\frac{u_k(A)-u_k(A-h)}h
+\longrightarrow u'_k(A)
+\quad(h\downarrow0).
+\tag{46.16}
+$$
+结合上下界，$L_k(A)$ 恰为该坐标映射在完整立方体上的最小非负 Lipschitz 常数。
+
+从（46.4）求导可见
+$$
+L_{k+1}-L_k=\sum_{j=0}^{k}u_j+A\sum_{j=0}^{k}L_j
+$$
+系数非负；因此 $k\le M$ 时 $L_k(A)\le L_M(A)$。对全三角取坐标最大值，再用（46.16）的 $(0,M)$ 坐标给最优下界，得到
+$$
+\boxed{
+\|a-b\|_\infty
+\le\|\mathcal E_M(a)-\mathcal E_M(b)\|_\infty
+\le L_M(A)\|a-b\|_\infty,
+\qquad a,b\in K_M(A).
+}
+\tag{46.17}
+$$
+右边的最小常数为 $L_M(A)$。左边因为边界坐标就是三角坐标的一部分，故首列提取在像 $I_M(A)$ 上为 $1$-Lipschitz。
+
+其逆向常数 $1$ 同样最优。比较零边界与 $t e_M$，其中 $0<|t|\le A$。Context 式（43.10）的反对角首项或（46.1）表明：前 $M$ 个反对角层均为零，最后一层 $n+k=M$ 全为 $t$。所以两边界距离和两三角距离都等于 $|t|$。此例对 $M=0$ 仍成立。
+
+**端点与达到方式。** 对 $A>0$，$k=0$ 的坐标是 $a_n$，故最优常数为 $1$，有不同输入对达到；$M=0$ 的全三角就是恒等映射，正逆最优常数均为 $1$。对 $A=0$，边界域和三角像各为零单点，最小非负正逆 Lipschitz 常数均为 $0$。多项式导数 $u'_k(0)=1$ 不是该单点域的最优常数，它描述放开域后在原点附近的变化。
+
+对 $A>0$、$k\ge1$，$L_k(A)$ 是割线比值的上确界，没有不同输入对达到它；全三角在 $M\ge1$ 时同样如此。这个严格性将在下一节用精确有限误差模量证明，不能只从一族角点割线不取等号便推出所有输入对不取等号。
+
+### 46.5 两个输入都留在幅度立方体时的精确模量
+
+本小节假设 $A>0$，且 $0\le h\le A$。两份输入都必须留在同一个 $K_M(A)$。先给控制每个单项式所需的完整乘积引理。
+
+**乘积引理。** 对任意 $d\ge1$，若 $r_i,s_i\in[-A,A]$ 且 $|r_i-s_i|\le h$，则
+$$
+\boxed{
+\left|\prod_{i=1}^{d}r_i-\prod_{i=1}^{d}s_i\right|
+\le A^d-(A-h)^d.
+}
+\tag{46.18}
+$$
+证明。$h=0$ 时两列逐项相同。一般地先考虑两个非零乘积异号。至少有一对因子 $r_j,s_j$ 异号，因此 $|r_j|+|s_j|=|r_j-s_j|\le h$。余下因子绝对值至多 $A$，故
+$$
+\left|\prod r_i-\prod s_i\right|
+=\left|\prod r_i\right|+\left|\prod s_i\right|
+\le hA^{d-1}
+\le A^d-(A-h)^d.
+$$
+最后一步由
+$$
+A^d-(A-h)^d
+=h\sum_{j=0}^{d-1}A^{d-1-j}(A-h)^j
+\ge hA^{d-1}
+$$
+得到，且 $d=1$ 时成立。
+
+其余情况两个乘积同号或至少一个为零。置 $p_i=|r_i|,q_i=|s_i|$，交换两列后可令 $\prod p_i\ge\prod q_i$。绝对值的反三角不等式给 $|p_i-q_i|\le h$，所以 $q_i\ge(p_i-h)_+$。于是
+$$
+\left|\prod r_i-\prod s_i\right|
+=\prod p_i-\prod q_i
+\le\prod p_i-\prod(p_i-h)_+.
+$$
+右侧在 $[0,A]^d$ 上逐坐标不减。为完整核对，固定其余坐标，置
+$$
+P=\prod_{i\ne j}p_i,\qquad Q=\prod_{i\ne j}(p_i-h)_+,
+\qquad 0\le Q\le P.
+$$
+该坐标为 $t$ 时的函数是 $tP-(t-h)_+Q$；在 $t\le h$ 时斜率为 $P$，在 $t\ge h$ 时斜率为 $P-Q$，两段均非负且在接点连续。因此最大值在全部 $p_i=A$ 时取得，等于 $A^d-(A-h)^d$。两种情形穷尽，证明引理。空的其余乘积取一，故 $d=1$ 的证明亦完整。$\square$
+
+定义单坐标和全三角的同立方体模量
+$$
+\omega_{n,k,A}(h)
+=\sup_{\substack{a,b\in[-A,A]^{n+k+1}\\\|a-b\|_\infty\le h}}
+|\mathsf P_{n,k}(a)-\mathsf P_{n,k}(b)|,
+$$
+$$
+\omega_{M,A}(h)
+=\sup_{\substack{a,b\in K_M(A)\\\|a-b\|_\infty\le h}}
+\|\mathcal E_M(a)-\mathcal E_M(b)\|_\infty.
+$$
+则有精确公式
+$$
+\boxed{
+\omega_{n,k,A}(h)=u_k(A)-u_k(A-h),\qquad
+\omega_{M,A}(h)=u_M(A)-u_M(A-h),
+\quad 0\le h\le A.
+}
+\tag{46.19}
+$$
+证明。对 $\mathsf P_{n,k}$ 的每个次数 $d$ 单项式应用（46.18）。同一变量可以在乘积中重复出现：引理对每个出现的因子成立，没有要求这些因子是独立变量，更没有概率独立性。总次数为 $d$ 的系数绝对值之和正是 $u_k$ 的 $A^d$ 系数。逐单项式三角不等式于是给上界 $u_k(A)-u_k(A-h)$。
+
+在同一共同角点对 $a=-A\mathbf1,b=-(A-h)\mathbf1$ 上，每个坐标的两个值分别是 $-u_k(A),-u_k(A-h)$，故上界达到。由于 $u_M-u_k$ 系数非负，且 $A\ge A-h\ge0$，有
+$$
+u_k(A)-u_k(A-h)\le u_M(A)-u_M(A-h)
+\qquad(k\le M).
+$$
+取坐标 $(0,M)$ 即得全三角公式；同一输入对使各坐标各自的界同时达到。$h=0$ 时模量为零。$h=A$ 的角点内侧为零边界，公式仍精确。本结果未给出 $A<h\le2A$ 的全部模量，不能无条件把（46.19）外推到那里。
+
+**最优 Lipschitz 常数没有非平凡有限割线达到。** 对 $k\ge1$，由（46.8）的 $A^2$ 项严格正，$u''_k(t)>0$ 对所有 $t\ge0$ 成立。因此对每个 $0<h\le A$，
+$$
+u_k(A)-u_k(A-h)=\int_{A-h}^A u'_k(t)\,dt<h u'_k(A).
+\tag{46.20}
+$$
+任取立方体内不同的 $a,b$，其距离 $d=\|a-b\|_\infty$ 满足 $0<d\le2A$。以中点把线段分为两半，每半的距离 $d/2\le A$。对两半应用（46.19）和（46.20），再用三角不等式，得到
+$$
+|\mathsf P_{n,k}(a)-\mathsf P_{n,k}(b)|
+<dL_k(A).
+$$
+对全三角直接用 $u_M$ 的模量重复该证明，得 $M\ge1$ 时任意不同输入对均严格小于 $dL_M(A)$。因此（46.16）给的是逼近最优值的割线序列，而非一份非零距离最优对。线性端点 $k=0$、$M=0$ 不受这个严格凸性结论约束。
+
+### 46.6 真值在立方体内、近似值允许越界时的精确噪声包络
+
+本节的域不同于上一节。固定 $A\ge0$、$\eta\ge0$；只要求真实边界 $a\in K_M(A)$，近似输入为 $a+e$，其中 $\|e\|_\infty\le\eta$。近似点不必仍在 $K_M(A)$，但多项式 $\mathcal E_M$ 在全部实边界上仍然有定义。
+
+对一个次数 $d\ge1$ 的单项式，将重复变量也当作其 $d$ 个出现位置，记该位置的输入因子与误差为 $a_{i_j},e_{i_j}$。有限乘积展开给
+$$
+\prod_{j=1}^d(a_{i_j}+e_{i_j})-\prod_{j=1}^d a_{i_j}
+=\sum_{\varnothing\ne S\subseteq\{1,\ldots,d\}}
+\left(\prod_{j\in S}e_{i_j}\right)
+\left(\prod_{j\notin S}a_{i_j}\right).
+\tag{46.21}
+$$
+这里只删掉无扰动的空集项。即使不同出现位置是同一个变量，展开仍是逐因子分配律；它不使用不同误差之间的独立性。取绝对值并逐项用幅度界，有
+$$
+\left|\prod_{j=1}^d(a_{i_j}+e_{i_j})-\prod_{j=1}^d a_{i_j}\right|
+\le\sum_{s=1}^d\binom ds\eta^sA^{d-s}
+=(A+\eta)^d-A^d.
+$$
+对 $A=0$，指数零的空乘积按一解释，也直接由有限乘积恒等式成立。
+
+再按多项式次数的绝对系数总量求和，得到
+$$
+\boxed{
+\sup_{\substack{\|a\|_\infty\le A\\\|e\|_\infty\le\eta}}
+|\mathsf P_{n,k}(a+e)-\mathsf P_{n,k}(a)|
+=u_k(A+\eta)-u_k(A),
+}
+\tag{46.22}
+$$
+以及全三角的精确公式
+$$
+\boxed{
+\sup_{\substack{a\in K_M(A)\\\|e\|_\infty\le\eta}}
+\|\mathcal E_M(a+e)-\mathcal E_M(a)\|_\infty
+=u_M(A+\eta)-u_M(A).
+}
+\tag{46.23}
+$$
+上下界匹配的证明仍使用同一对共同输入：真实边界 $a=-A\mathbf1$，误差 $e=-\eta\mathbf1$，故近似边界为 $-(A+\eta)\mathbf1$。这使每个坐标的差等于对应的负幅度之差；系数非负及 $k\le M$ 使全三角最大值出现在 $(0,M)$。没有将不同坐标的扰动分别优化后拼接。
+
+当 $\eta=0$ 时两个端点相同，（46.22）—（46.23）均为零。
+
+在 $A>0$ 的固定小误差极限中，内侧模量与外侧包络除以误差后都趋于 $L_k(A)$ 或 $L_M(A)$，但它们在有限误差下不同。对 $k\ge1$，严格凸性还给 $u_k(A+\eta)-u_k(A)>L_k(A)\eta$（$\eta>0$）；因此用原立方体的线性常数控制可能越界的近似点，会漏掉高阶项。可用的简单线性上界是 $L_k(A+\eta)\eta$，它由对 $[A,A+\eta]$ 积分得到，但精确式（46.22）更细。
+
+$A=0$ 时，同立方体任务的两端都是零，模量为零；本节却允许近似点离开零单点，故其噪声包络为 $u_k(\eta)$ 或 $u_M(\eta)$。这两个结论对应不同的输入域，没有矛盾。
+
+### 46.7 有理端点、上确界与固定维数的实完成
+
+记 $K_M^{\mathbb Q}(A)=K_M(A)\cap\mathbb Q^{M+1}$，$A$ 可以是实数。实域证明限制到这些点，给全部已述上界。
+
+有理有限误差任务要求**比较的两个端点都为有理边界**。同立方体任务的允许对精确为
+$$
+a,b\in K_M^{\mathbb Q}(A),
+\qquad \|a-b\|_\infty\le h,
+\qquad 0\le h\le A.
+$$
+越界任务的允许对精确为
+$$
+a,\widehat a\in\mathbb Q^{M+1},
+\qquad a\in K_M^{\mathbb Q}(A),
+\qquad \|\widehat a-a\|_\infty\le\eta,
+\qquad A,\eta\ge0.
+$$
+这里 $\widehat a$ 允许在原立方体之外；等价地，可写 $\widehat a=a+e$，并同时要求 $a,e\in\mathbb Q^{M+1}$。不能只要求真实端点有理而把近似端点留在未声明的实域。对于单坐标 $\mathsf P_{n,k}$，以上所有端点的维数改为 $n+k+1$，幅度域相应使用 $K_{n+k}^{\mathbb Q}(A)$。参数 $A,h,\eta$ 均允许为实数；下文的内向有理逼近证明这些明确有理端点域具有与实端点域相同的上确界。
+
+若 $A>0$ 为有理数，全负角点属于有理域，故（46.6）的幅度最大值及全三角最大值仍达到；在（46.16）中取有理 $h\downarrow0$，得到同样的最小 Lipschitz 常数。逆常数 $1$ 的见证可取任意合法非零有理 $t$。若 $A>0$ 为无理数，则取有理半径 $r\uparrow A$：角点 $-r\mathbf1$ 给幅度趋向 $u_k(A)$；再在每个半径 $r$ 内取有理内向小扰动，割线比趋近 $u'_k(r)$，最后使 $r\uparrow A$。因此有理域的幅度上确界和最小 Lipschitz 常数仍分别为 $u_k(A)$、$L_k(A)$，全三角同理。对任意实半径 $A>0$ 均可选有理 $0<|t|\le A$，故逆向常数仍由 $t e_M$ 见证为一。
+
+但对无理 $A$，任何一份有理边界均有 $r=\max_i|a_i|<A$。由 $u_k$ 严格递增，$|\mathsf P_{n,k}(a)|\le u_k(r)<u_k(A)$。所以幅度上确界不达到。不能把不存在的无理角点当成实际有理来源。线性端点的 Lipschitz 常数仍可由普通有理输入对达到；非线性坐标／全三角仍按第46.5节仅有割线上确界。
+
+两种有限误差公式在有理点上也保留相同**上确界**。内侧可取有理 $r_j\uparrow A$ 和有理 $0\le h_j\le\min(h,r_j)$、$h_j\to h$，使用共同角点 $-r_j\mathbf1,-(r_j-h_j)\mathbf1$；$h=0$ 单独取零差。外侧取有理 $r_j\uparrow A$、有理 $\eta_j\uparrow\eta$，使用 $-r_j\mathbf1,-(r_j+\eta_j)\mathbf1$；$A=0$ 时直接用真实零输入。多项式连续性给精确实值上确界。若相应 $A,h$ 或 $A,\eta$ 都是有理数，所写极值对属于有理域，故达到；其它参数情形只使用已证上确界，不无条件宣称同一极值对可取得。
+
+在**固定 $M$、通常数值范数**下，有
+$$
+\boxed{
+\overline{K_M^{\mathbb Q}(A)}^{\|\cdot\|_\infty}=K_M(A),\qquad
+\overline{\mathcal E_M(K_M^{\mathbb Q}(A))}^{\|\cdot\|_\infty}=I_M(A).
+}
+\tag{46.24}
+$$
+证明。有限维有理点在实立方体中稠密，包括用内向有理逼近端点；实立方体闭且完备。（46.17）的上界保证 $\mathcal E_M$ 一致连续，其实多项式评价给唯一连续延拓。每个实点用有理点逼近，像也逼近；反向，$I_M(A)$ 是紧实立方体的连续像，因而闭。首列提取的 $1$-Lipschitz 性保留逆向延拓。这给两个有理度量空间的实际完成；$A=0$ 为单点完成。
+
+这种完成允许一份有限坐标中的有理数沿通常绝对值逼近实数。Context43 的离散前缀完成则要求每个固定坐标最终**严格相同**，其完整系数仍是有理数。两者使用不同拓扑、不同 Cauchy 条件和不同补入对象。一个新增数值误差界没有推翻旧前缀等距，也没有把它改解释为数值等距。
+
+### 46.8 固定幅度下的深度增长及其非一致边界
+
+以下固定 $A>0$，让整数 $M\to\infty$。令
+$$
+C_+(A)=\frac{A\lambda}{\lambda+1},\qquad
+C_-(A)=\frac{A}{\lambda+1}.
+$$
+由（46.12），$u_M=C_+\lambda^M+C_-\lambda^{-M}$。从 $\lambda+\lambda^{-1}=A+2$ 求导，得到
+$$
+\frac{d\log\lambda}{dA}=\frac1{s(A)}.
+$$
+因此精确导数为
+$$
+\boxed{
+L_M(A)
+=\left(C'_++\frac{MC_+}{s}\right)\lambda^M
++\left(C'_- -\frac{MC_-}{s}\right)\lambda^{-M}.
+}
+\tag{46.25}
+$$
+固定 $A>0$ 时，$s,\lambda,C_\pm,C'_\pm$ 均为有限常数，$s>0,\lambda>1,C_+>0$。将（46.25）除以 $(MC_+/s)\lambda^M$，第一括号给 $1+O_A(1/M)$，另一项为指数衰减乘有界的 $M$ 比值，故
+$$
+\boxed{
+u_M(A)\sim\frac{A\lambda}{\lambda+1}\lambda^M,\qquad
+L_M(A)\sim
+\frac{A\lambda}{(\lambda+1)\sqrt{A^2+4A}}\,M\lambda^M.
+}
+\tag{46.26}
+$$
+上述导数主项的相对误差为 $O_A(M^{-1})$；对足够大的 $M$，它的绝对值小于 $1/2$。由 $\log_2(1+t)=O(t)$，对正值取二进制对数，得
+$$
+\boxed{
+\log_2 L_M(A)
+=M\log_2\lambda+\log_2 M
++\log_2\!\frac{A\lambda}{(\lambda+1)\sqrt{A^2+4A}}
++O_A(M^{-1}).
+}
+\tag{46.27}
+$$
+这里的常数与误差记号依赖固定的 $A$；不是 $A\downarrow0$ 时的一致渐近。明确地，对每个固定 $M\ge1$，多项式（46.13）给 $L_M(A)\to1$；而（46.26）的主项因 $s\sim2\sqrt A$、$\lambda\to1$，在 $A\downarrow0$ 时趋于零。故不能让这个大 $M$ 比值近似对所有任意小的正 $A$ 同时有效。$A=0$ 的单点域常数为零，又与多项式导数极限是不同问题。
+
+对每个固定 $A>0$，$L_M(A)$ 随深度无界增长。更直接地，完整负边界 $a_i=-A$ 是一个有界输入序列，但其体坐标绝对值为 $u_k(A)$，随 $k$ 指数增长。因而不能把同一全层重建直接声称为“有界序列到有界无限数组”的 $\ell^\infty$ 映射，也没有与 $M$ 无关的这个通常上确界范数 Lipschitz 常数。全层逐坐标代数恢复仍然成立；两项结论谈的是不同的函数空间要求。
+
+### 46.9 统一量程归一后的条件数
+
+对 $A>0$ 定义
+$$
+\boxed{\kappa_M(A)=\frac{A u'_M(A)}{u_M(A)}.}
+\tag{46.28}
+$$
+它是将输入按统一量程 $A$ 归一、输出按整个三角的统一幅度上界 $u_M(A)$ 归一后所得映射的最小全局 Lipschitz 常数。具体映射为 $x\mapsto\mathcal E_M(Ax)/u_M(A)$，定义域是 $[-1,1]^{M+1}$；变量与输出的两次线性缩放把（46.17）的最优常数恰变为（46.28）。
+
+将（46.8）按次数写成 $u_M(A)=\sum_{d=1}^{M+1}c_{M,d}A^d$，其中
+$$
+c_{M,d}=\binom{M+d-1}{2d-2}>0,
+\qquad
+w_d(A)=\frac{c_{M,d}A^d}{u_M(A)}.
+$$
+这些是正权重且 $\sum_d w_d=1$，所以
+$$
+\boxed{
+\kappa_M(A)=\sum_{d=1}^{M+1}d w_d(A),
+\qquad1\le\kappa_M(A)\le M+1.
+}
+\tag{46.29}
+$$
+$M=0$ 时恰为一；$M\ge1$、有限 $A>0$ 时各次数权重都正，故严格位于 $1$ 与 $M+1$ 之间。固定 $M$ 时，$A\downarrow0$ 由一次项主导，$\kappa_M\to1$；$A\to\infty$ 由最高次项主导，$\kappa_M\to M+1$。
+
+固定 $A>0$、$M\to\infty$ 时，将（46.26）的两个等价式相除，得
+$$
+\boxed{
+\kappa_M(A)\sim\frac{A}{\sqrt{A^2+4A}} M.
+}
+\tag{46.30}
+$$
+也可以直接对闭式（46.12）求对数导数得到以下精确式，无需增加一个独立问题：
+$$
+\boxed{
+\kappa_M(A)
+=1+\frac{A}{s}\left(
+M+\frac1{\lambda+1}
+-\frac{2M+1}{\lambda^{2M+1}+1}
+\right).
+}
+\tag{46.31}
+$$
+证明。对分子 $\lambda^{M+1}+\lambda^{-M}$ 求对数导数，得到
+$$
+\frac1s\,
+\frac{(M+1)\lambda^{M+1}-M\lambda^{-M}}
+{\lambda^{M+1}+\lambda^{-M}}
+=\frac1s\left(M+1-\frac{2M+1}{\lambda^{2M+1}+1}\right).
+$$
+对分母 $\lambda+1$ 的对数导数为 $\lambda/[s(\lambda+1)]$；加上外因子 $A$ 的对数导数并乘 $A$，便得（46.31）。$M=0$ 时括号为零，仍与恒等映射一致。
+
+这里的归一化是**固定域的统一输入／输出量程**。它不是用某个实际输入的 $\|a\|$ 与实际输出的 $\|\mathcal E_M(a)\|$ 定义的点态相对条件数，也不消除输出可能为零、相消或特别小的问题。不能把（46.29）的线性深度界当成每一个实际输出都有同样相对精度保证。
+
+### 46.10 有限误差预算与“额外位数”的准确含义
+
+若真实边界和近似边界均在 $K_M(A)$、$A>0$，输入误差至多 $\delta$，且多项式输出按精确实数／有理数算术评价，则（46.17）给输出误差至多 $L_M(A)\delta$。因此对输入绝对误差 $2^{-q}$ 和目标输出误差 $2^{-p}$，以下整数预算充分：
+$$
+\boxed{q\ge p+\lceil\log_2 L_M(A)\rceil.}
+\tag{46.32}
+$$
+这是统一的**线性充分预算**。它的线性放大因子在小误差极限中尖锐，但不能称为每个固定非零容差下必要且充分的额外位数。
+
+当 $0\le\delta\le A$ 时，允许输入对明确为 $a,b\in K_M(A)$ 且 $\|a-b\|_\infty\le\delta$。这个完整同立方体任务的准确必要充分条件是
+$$
+\boxed{
+\text{对全部允许输入对保证输出误差}\le\varepsilon
+\quad\Longleftrightarrow\quad
+u_M(A)-u_M(A-\delta)\le\varepsilon.
+}
+\tag{46.33}
+$$
+这是（46.19）的上确界定义；有理点即使没有极值对，具有相同上确界，故同样得到统一误差条件。越界任务则由（46.23）给对应的条件 $u_M(A+\delta)-u_M(A)\le\varepsilon$，不能混用内侧模量。
+
+明确反例取 $A=1,M=1$。坐标 $\mathsf P_{0,1}=a_1-a_0^2$，$u_1(A)=A+A^2$、$L_1(1)=3$，而
+$$
+\omega_{1,1}(\delta)=u_1(1)-u_1(1-\delta)
+=3\delta-\delta^2\qquad(0\le\delta\le1).
+$$
+在 $\delta=1/2$ 时，最坏全三角误差是 $5/4$，由 $(-1,-1)$ 与 $(-1/2,-1/2)$ 达到。因此输入误差 $1/2$ 已经统一保证容差 $5/4$，尽管 $\delta\le\varepsilon/L_1$ 会要求 $\delta\le5/12$。这反驳线性预算对任意有限容差的必要性，不反驳最优 Lipschitz 常数。
+
+结合（46.27），固定 $A>0$ 时线性充分预算中的额外位数按 $M\log_2\lambda+\log_2 M+O_A(1)$ 增长。这不等于算法总位复杂度、最优读取或采样次数，也不保证某一浮点多项式评价程序达到该误差；舍入、溢出、中间量、截断与运算成本都需要独立的算法合同。这里没有新增相应算法结论。
+
+上述结论控制数值重建误差。若下游任务再取阈值、符号或分类等不连续决定，小数值误差本身不保证决定不变；还须由该任务自己的裕度或连续性条件，将数值误差界传递到所需输出。本节在此仅限定适用范围，不新增下游决策定理。
+
+### 46.11 保留整个观察者及实际来源的适用范围
+
+令 $\Omega$ 为实际共同来源域，$c:\Omega\to\mathcal C$ 保留全部已获内部／外部信息与记录、来源／参考／版本身份、已获联合关系与相关性、准备和校准、相关相位／单位／增益数据、可访问记忆、局部钟及其已知关系、允许动作及其顺序、结果／失败／停止信息，以及共同误差与资源合同。给辅助坐标命名不授予未获信息的访问权。令 $a:\Omega\to K_M(A)$ 为该来源的边界读数。比较的始终是
+$$
+\omega\longmapsto(c(\omega),a(\omega)),\qquad
+\omega\longmapsto(c(\omega),\mathcal E_M(a(\omega))).
+\tag{46.34}
+$$
+在对应实际像上，$\mathrm{id}_{\mathcal C}\times\mathcal E_M$ 与 $\mathrm{id}_{\mathcal C}\times\beta_M$ 互逆，字面保留同一 $c$。不假设 $c$ 和 $a$ 独立，不把其像扩成未经证明的笛卡儿积，也不把边界本身等同于完整观察者。 具体地，在边界像上的复合把 $(c(\omega),a(\omega))$ 送回自身，因为 $\beta_M\mathcal E_M a(\omega)=a(\omega)$；在体像上的反向复合也由 $\mathcal E_M\beta_M\mathcal E_M a(\omega)=\mathcal E_M a(\omega)$ 送回自身。因此每一步都落在对应实际像中。
+
+若 $\mathcal C$ 另有指定度量并给乘积用最大度量，则对 $A>0$，提升后的正向映射有上界 $\max(1,L_M)=L_M$，逆向有上界 $1$。这是分别对记录差和工作数据差取最大值得到的：若 $d_c=d_{\mathcal C}(c,c')$、$d_a=\|a-a'\|_\infty$、$d_T=\|\mathcal E_M(a)-\mathcal E_M(a')\|_\infty$，则 $\max(d_c,d_a)\le\max(d_c,d_T)\le L_M(A)\max(d_c,d_a)$，其中 $L_M(A)\ge1$。完整乘积且记录域非空时，可固定同一个 $c$ 使用角点割线或逆向见证，故标量最优常数保留；但受限实际像可能排除这些共同来源对，不能自动报告同样的最优下界。
+
+例如固定 $M\ge1$、$A>0$ 和一个记录 $c_0$，实际边界只取 $a=t e_M$（$|t|\le A$）。由末反对角见证的同一递推，前 $M$ 层全零、最后一层全为 $t$；任意两个参数的边界差和体差均为 $|t-s|$。所以这个受限实际像上的正逆最优常数均为一，小于完整立方体的正向常数 $L_M(A)>1$。这给出了排除共同角点后最优下界不能移植的具体来源。
+
+$A=0$ 时，单独的边界与三角都是单点，正逆最优常数为零。若完整记录 $c$ 仍可在两个正距离值之间变化，提升映射保留这些记录，便可具有最优常数一；若实际像也只剩一个零距离类，则最优常数为零。记录的恒等传递与数值工作空间的退化须分别计量。
+
+若主张观察不可分辨，每个候选都必须解释同一份完整已获档案，且共同候选族须包含实际实现。数值距离也可以比较已经声明的实际点及其不同记录 $c,c'$，但其记录差必须计入最大乘积度量；不得删去该差来制造不可分辨性。
+
+确定性噪声界可以比较同一真实边界与其误差记录，也可以比较两份已声明共同约束下的允许来源。它们不要求误差坐标独立；共享噪声、共同校准或重复因子不会破坏逐项确定性不等式。但数学上的角点来源和最坏扰动不证明实验能够制备、测量或合法取得它们。若要作概率或 minimax 结论，仍须对同一完整档案及联合误差事件另给实际模型。
+
+逆映射只在递归像上恢复体。以 $M=1$ 为例，任意给出的三角数据
+$$
+T(0,0)=0,\qquad T(1,0)=0,\qquad T(0,1)=1
+$$
+违反后继关系。提取其边界得到零，重建后整个三角为零，并不返回原数据。因此不能把像上 $1$-Lipschitz 的首列提取说成任意带噪体数据的双侧逆。近似边界的多项式评价虽仍给一个递归三角，也不使它自动属于原始合法来源类。
+
+本节建立的是既有递归体／边关系在**幅度受限、固定有限深度、通常数值范数**下的最优放大及误差模量。它与精确前缀几何并存，不能据此前向推广为全部无限有界数组映射、任意原来源的达到性、无限深度统一精度、物理时空／频率定律、算法舍入稳定性、原创优先权或新增 Lean 形式认证。
+
+[^rroctx46_arrayamp_swamy]: M. N. S. Swamy, “Properties of the Polynomials Defined by Morgan-Voyce,” *The Fibonacci Quarterly* 4(1) (1966), pp.73–81，[原始扫描](https://www.fq.math.ca/Scanned/4-1/swamy.pdf)。本文使用的印刷页码与公式锚为：第73页式（7）的 $b_0=1,b_1=x+1$ 与二阶递推；第79页式（40）的系数公式，其中 $\binom{n+k}{n-k}=\binom{n+k}{2k}$；第80页式（42b）的较早缩放 Chebyshev 表示。后者的旧归一化不替代 DLMF 当前 $V/W$ 约定。归属只承担这个成熟多项式族，不承担本文特定非线性重建的最优噪声结论。
+
+[^rroctx46_arrayamp_dlmf]: NIST DLMF [18.5.3](https://dlmf.nist.gov/18.5#E3) 的当前第三类 $V_n$ 约定；该处注明版本1.0.28（2020年9月15日）的 $V/W$ 对调更正。[18.12.10](https://dlmf.nist.gov/18.12#E10) 为第二类 $U_n$ 的生成式，乘 $1-z$ 才得到这里的 $V_n=U_n-U_{n-1}$。本文先按多项式／形式系数恒等式迁移；当 $A>0$ 时的解析半径另由（46.7）的极点明确给出。
+
+## 46.99 追加锚
