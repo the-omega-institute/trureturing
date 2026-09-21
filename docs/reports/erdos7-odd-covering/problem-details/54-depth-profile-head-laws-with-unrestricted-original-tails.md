@@ -294,7 +294,7 @@ and [independent result](../certificates/source_norms/source-budgets/depth_profi
 retain the exact fractions. The
 [head producer](../frontier/source-budgets/depth_cap_bellman.py) reads the
 [actual profile input](../frontier/source-budgets/depth_profile_head_input.json)
-and obtains the labels only from Chapter 04b's canonical producer. All
+and obtains the labels only from Chapter 04c's canonical producer. All
 programs expose `--write` and `--check`; arithmetic checks remain active with
 Python `-O`. The LP discovery verifier additionally uses NumPy and SciPy.
 
