@@ -114,7 +114,7 @@ $$\forall m,k\in\mathbb{N},(0<m\land0<k)\Rightarrow\forall e\in Bool,\forall a\i
 
 For arbitrary positive m,k and factors a,b, the number of descents is des(a)+des(b)+boundary(e), where boundary(false)=0 and boundary(true)=1. The proof partitions adjacent positions into left interior, boundary, and right interior. It applies when either factor is a singleton and when the factor lengths differ.
 
-The greatest-cut choice, its right-factor sign condition, weighted enumeration, generating-function equations, and real-rootedness remain separate obligations. No FirstFreeze or open-problem resolution claim is made by this support unit.
+The greatest-cut choice, its right-factor sign condition, weighted enumeration, generating-function equations, and real-rootedness remain separate obligations. The actual blockSum constructor is also used in the fixed-bottom A398542 minimum decomposition. This support unit carries no open-problem resolution claim.
 
 ## References
 
