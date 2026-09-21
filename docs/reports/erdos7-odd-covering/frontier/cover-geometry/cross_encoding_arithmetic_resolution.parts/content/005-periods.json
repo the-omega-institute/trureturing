@@ -1,0 +1,162 @@
+[
+  {
+    "L": 3,
+    "cap": 100000,
+    "k": 2,
+    "period": 8,
+    "status": "exact",
+    "unminimized_product_bound": 48
+  },
+  {
+    "L": 5,
+    "cap": 100000,
+    "k": 2,
+    "period": 20,
+    "status": "exact",
+    "unminimized_product_bound": 200
+  },
+  {
+    "L": 9,
+    "cap": 100000,
+    "k": 2,
+    "period": 24,
+    "status": "exact",
+    "unminimized_product_bound": 432
+  },
+  {
+    "L": 15,
+    "cap": 100000,
+    "k": 2,
+    "period": 40,
+    "status": "exact",
+    "unminimized_product_bound": 1200
+  },
+  {
+    "L": 27,
+    "cap": 100000,
+    "k": 2,
+    "period": 72,
+    "status": "exact",
+    "unminimized_product_bound": 3888
+  },
+  {
+    "L": 3,
+    "cap": 100000,
+    "k": 3,
+    "period": 13,
+    "status": "exact",
+    "unminimized_product_bound": 117
+  },
+  {
+    "L": 5,
+    "cap": 100000,
+    "k": 3,
+    "period": 31,
+    "status": "exact",
+    "unminimized_product_bound": 465
+  },
+  {
+    "L": 9,
+    "cap": 100000,
+    "k": 3,
+    "period": 39,
+    "status": "exact",
+    "unminimized_product_bound": 1053
+  },
+  {
+    "L": 15,
+    "cap": 100000,
+    "k": 3,
+    "period": 403,
+    "status": "exact",
+    "unminimized_product_bound": 18135
+  },
+  {
+    "L": 27,
+    "cap": 100000,
+    "k": 3,
+    "period": 117,
+    "status": "exact",
+    "unminimized_product_bound": 9477
+  },
+  {
+    "L": 3,
+    "cap": 100000,
+    "k": 4,
+    "period": 26,
+    "status": "exact",
+    "unminimized_product_bound": 312
+  },
+  {
+    "L": 5,
+    "cap": 100000,
+    "k": 4,
+    "period": 312,
+    "status": "exact",
+    "unminimized_product_bound": 6240
+  },
+  {
+    "L": 9,
+    "cap": 100000,
+    "k": 4,
+    "period": 78,
+    "status": "exact",
+    "unminimized_product_bound": 2808
+  },
+  {
+    "L": 15,
+    "cap": 100000,
+    "k": 4,
+    "period": 312,
+    "status": "exact",
+    "unminimized_product_bound": 18720
+  },
+  {
+    "L": 27,
+    "cap": 100000,
+    "k": 4,
+    "period": 234,
+    "status": "exact",
+    "unminimized_product_bound": 25272
+  },
+  {
+    "L": 3,
+    "cap": 100000,
+    "k": 5,
+    "period": 104,
+    "status": "exact",
+    "unminimized_product_bound": 1560
+  },
+  {
+    "L": 5,
+    "cap": 100000,
+    "k": 5,
+    "period": 781,
+    "status": "exact",
+    "unminimized_product_bound": 19525
+  },
+  {
+    "L": 9,
+    "cap": 100000,
+    "k": 5,
+    "period": 312,
+    "status": "exact",
+    "unminimized_product_bound": 14040
+  },
+  {
+    "L": 15,
+    "cap": 100000,
+    "k": 5,
+    "period": 81224,
+    "status": "exact",
+    "unminimized_product_bound": 6091800
+  },
+  {
+    "L": 27,
+    "cap": 100000,
+    "k": 5,
+    "period": 936,
+    "status": "exact",
+    "unminimized_product_bound": 126360
+  }
+]

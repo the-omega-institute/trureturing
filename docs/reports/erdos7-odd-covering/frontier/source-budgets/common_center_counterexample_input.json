@@ -1,0 +1,31 @@
+{
+  "schema": "common-center-counterexample-input-v1",
+  "modulus": 15,
+  "class_moduli": [
+    3,
+    5,
+    15
+  ],
+  "weights": [
+    0,
+    0,
+    0,
+    2,
+    0,
+    1,
+    2,
+    0,
+    0,
+    2,
+    3,
+    0,
+    2,
+    0,
+    0
+  ],
+  "uniform_shifts": [
+    0,
+    1
+  ],
+  "scope": "Arbitrary finite measures and their probability normalizations; no actual64 or capped-law realization claim."
+}

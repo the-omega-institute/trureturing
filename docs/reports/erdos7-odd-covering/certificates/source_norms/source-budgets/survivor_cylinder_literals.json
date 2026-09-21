@@ -1,0 +1,294 @@
+{
+  "schema": "literal-actual-survivor-cylinder8-v1",
+  "status": "PASS",
+  "scope": "Exact all-residue queries for the locked actual positive64 policy, then actual allowed-first terminal rows. No optimization, relaxed history query or Bellman values are used.",
+  "query_moduli": [
+    1,
+    3,
+    5,
+    7,
+    9,
+    15,
+    21,
+    35
+  ],
+  "head_survival": "4329541852802656000039602950310055297686631/6959735993111191545137695312500000000000000",
+  "records": [
+    {
+      "modulus": 1,
+      "all_residue_masses": [
+        "4329541852802656000039602950310055297686631/6959735993111191545137695312500000000000000"
+      ],
+      "max_exact": "4329541852802656000039602950310055297686631/6959735993111191545137695312500000000000000",
+      "max_decimal": 0.6220842079481284,
+      "maximizing_residues": [
+        0
+      ],
+      "relaxed_upper": "4329541852802656000039602950310055297686631/6959735993111191545137695312500000000000000",
+      "relaxed_gap_exact": "0",
+      "relaxed_gap_decimal": 0.0,
+      "upper_valid": true
+    },
+    {
+      "modulus": 3,
+      "all_residue_masses": [
+        "0",
+        "391426670331115763924266181271178043/1174044533250875766723632812500000000",
+        "5158860242232948144725254847710572509/17870266172077655273437500000000000000"
+      ],
+      "max_exact": "391426670331115763924266181271178043/1174044533250875766723632812500000000",
+      "max_decimal": 0.33340018989507425,
+      "maximizing_residues": [
+        1
+      ],
+      "relaxed_upper": "391426670331115763924266181271178043/1174044533250875766723632812500000000",
+      "relaxed_gap_exact": "0",
+      "relaxed_gap_decimal": 0.0,
+      "upper_valid": true
+    },
+    {
+      "modulus": 5,
+      "all_residue_masses": [
+        "0",
+        "250264894940165192990512573459888307051/1225089947740044278320312500000000000000",
+        "1251306680598850857821978919868005367/8869295263299594169921875000000000000",
+        "594095645690617416436995150564457/3220575442000808203125000000000000",
+        "62730376426467870668940591/680007332571875000000000000"
+      ],
+      "max_exact": "250264894940165192990512573459888307051/1225089947740044278320312500000000000000",
+      "max_decimal": 0.20428287359784109,
+      "maximizing_residues": [
+        1
+      ],
+      "relaxed_upper": "1593324549424985914584449102837799389273/5814315783718622844726562500000000000000",
+      "relaxed_gap_exact": "511004860533294398293140680285495154319/7326037887485464784355468750000000000000",
+      "relaxed_gap_decimal": 0.06975187248297018,
+      "upper_valid": true
+    },
+    {
+      "modulus": 7,
+      "all_residue_masses": [
+        "4315044824874823866352886903/60268078446798750000000000000",
+        "45047980352945051629913635744586767897/477577437254593532226562500000000000000",
+        "0",
+        "344290290494490303383556908443/3013403922339937500000000000000",
+        "21227826967244074641793464137941447/234457892177658837187500000000000000",
+        "452761665149049984598614365830320197/3370617845633984257812500000000000000",
+        "352693798492498280411058673843/3013403922339937500000000000000"
+      ],
+      "max_exact": "452761665149049984598614365830320197/3370617845633984257812500000000000000",
+      "max_decimal": 0.13432601555098259,
+      "maximizing_residues": [
+        5
+      ],
+      "relaxed_upper": "4077348409629623666576904110364307/24483906869011992187500000000000000",
+      "relaxed_gap_exact": "125253806819186392500160884649807/3889174437269981835937500000000000",
+      "relaxed_gap_decimal": 0.03220575699019268,
+      "upper_valid": true
+    },
+    {
+      "modulus": 9,
+      "all_residue_masses": [
+        "0",
+        "2429730389411475076670838661896827/21468242893730299734375000000000000",
+        "229603052677006492224728450768116313/2030712065008824462890625000000000000",
+        "0",
+        "0",
+        "2165211613200186030555421865003707/20358015689311523437500000000000000",
+        "0",
+        "179861418894035283943533698746918481/816726631826696185546875000000000000",
+        "8251537497387784770173967785672633/119135107813851035156250000000000000"
+      ],
+      "max_exact": "179861418894035283943533698746918481/816726631826696185546875000000000000",
+      "max_decimal": 0.22022230191239883,
+      "maximizing_residues": [
+        7
+      ],
+      "relaxed_upper": "179861418894035283943533698746918481/816726631826696185546875000000000000",
+      "relaxed_gap_exact": "0",
+      "relaxed_gap_decimal": 0.0,
+      "upper_valid": true
+    },
+    {
+      "modulus": 15,
+      "all_residue_masses": [
+        "0",
+        "486333654904843735215180029987574371/4900359790960177113281250000000000000",
+        "4971753561395984127396389856321/49764038351650390625000000000000",
+        "0",
+        "62730376426467870668940591/680007332571875000000000000",
+        "0",
+        "0",
+        "239087370613374006381998392763/5806412610998097656250000000000",
+        "8371689345723598789736655839759/99973517046588281250000000000000",
+        "0",
+        "0",
+        "281461098783559298382333786017211/2679602065088867187500000000000000",
+        "0",
+        "79679072714864925893801760073177/791018529614233593750000000000000",
+        "0"
+      ],
+      "max_exact": "281461098783559298382333786017211/2679602065088867187500000000000000",
+      "max_decimal": 0.10503839448796097,
+      "maximizing_residues": [
+        11
+      ],
+      "relaxed_upper": "15057654785596346992441977299783429/104504480538465820312500000000000000",
+      "relaxed_gap_exact": "2914765666455381682522114032223/74646057527475585937500000000000",
+      "relaxed_gap_decimal": 0.0390478179692547,
+      "upper_valid": true
+    },
+    {
+      "modulus": 21,
+      "all_residue_masses": [
+        "0",
+        "6046625031300079654522522094336179/238788718627296766113281250000000000",
+        "0",
+        "0",
+        "177987219723775272621838866451/4039243555476937500000000000000",
+        "78858164157070340227177960927741/1045044805384658203125000000000000",
+        "0",
+        "4315044824874823866352886903/60268078446798750000000000000",
+        "713197790169127888001138172915671/10335607965342773437500000000000000",
+        "0",
+        "21159998016728888112954201631/301340392233993750000000000000",
+        "1384217327029667040454627430741/29783776953462758789062500000000",
+        "0",
+        "3816754928115369915293726903/60268078446798750000000000000",
+        "0",
+        "0",
+        "0",
+        "1078783010790255465479795871/24499218880812500000000000000",
+        "0",
+        "261649845742126304069305119804017/4444770785451407812500000000000000",
+        "1315902862493738086555872591/24499218880812500000000000000"
+      ],
+      "max_exact": "78858164157070340227177960927741/1045044805384658203125000000000000",
+      "max_decimal": 0.07545912266225215,
+      "maximizing_residues": [
+        5
+      ],
+      "relaxed_upper": "18897247557107532283504421187159/199056153406601562500000000000000",
+      "relaxed_gap_exact": "10019635947197146713216123227/514483596497062500000000000000",
+      "relaxed_gap_decimal": 0.019475131987525582,
+      "upper_valid": true
+    },
+    {
+      "modulus": 35,
+      "all_residue_masses": [
+        "0",
+        "491311973671422705405758343661174039/20764236402373631835937500000000000000",
+        "0",
+        "2011545005315776535654889/48998437761625000000000000",
+        "100648166489562168629991/7305221629915000000000000",
+        "0",
+        "157454566738961539539642558343/3013403922339937500000000000000",
+        "1036844356737/114841210000000",
+        "210820941206305106462241862589/7234925575739941406250000000000",
+        "0",
+        "0",
+        "8518744992446232287864207293747/316407411845693437500000000000000",
+        "678433615795316246184548162633/13572010459541015625000000000000",
+        "2211102766147048233356197/48998437761625000000000000",
+        "151633609687572173/7680005918750000000",
+        "0",
+        "0",
+        "5300199469047/574206050000000",
+        "25690930090150436269900323251/1717640235733764375000000000000",
+        "147318795060521354952007/9354247209037500000000000",
+        "0",
+        "12195937966109236859825629/563253069596250000000000000",
+        "42104772540376472069014572791/1109355254946791015625000000000",
+        "0",
+        "151633609687572173/7680005918750000000",
+        "0",
+        "368887965753411213378815029336173/10371131832719951562500000000000000",
+        "0",
+        "51870702002058224759201/2449921888081250000000000",
+        "4175455633975404650468533/1169280901129687500000000000",
+        "0",
+        "133268618056121485579521234943/3013403922339937500000000000000",
+        "768643430509983397266344632103/22035516182110792968750000000000",
+        "424715451617416184162294113/12862089912426562500000000000",
+        "151021769338872173/7680005918750000000"
+      ],
+      "max_exact": "157454566738961539539642558343/3013403922339937500000000000000",
+      "max_decimal": 0.05225139768740214,
+      "maximizing_residues": [
+        6
+      ],
+      "relaxed_upper": "590801516208161865295607556036721/8161302289670664062500000000000000",
+      "relaxed_gap_exact": "61635774233802885890903360196661/3060488358626499023437500000000000",
+      "relaxed_gap_decimal": 0.020139195779024004,
+      "upper_valid": true
+    }
+  ],
+  "counts": {
+    "terminal_coordinate_rows": 33046,
+    "terminal_actual_leaves": 1614170,
+    "reconstructed_core_rows": 975,
+    "core_actual_leaves": 306857,
+    "state_row_updates": 625056,
+    "fixed_residue_queries": 96
+  },
+  "DP_recomputations": 0,
+  "tail_recomputations": 0,
+  "completed_moduli": 8,
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/adaptive_phase_io.py": "befaad88f3e9e7303920faf30e4f6ae8e14a8f79b8e167ada5d3afa51f3324c3",
+    "problem-details/65-independent-survivor-marginal-ceiling-at-the-fixed-cutoff.md": "f5f10241d37584c6e3ed1a18afe1f841c8e01bc9ae9724c40a66c3518bb22ba7",
+    "frontier/source-budgets/uniform_phase_capacity_input.json": "ea227d216660f496ecb3a2c89dbc145605f0ad83c94e5996a7ee76d746ea712b",
+    "problem-details/64-adaptive-core-policy-and-continuous-stoploss-optima.md": "d2943d486fef7ad840618224feb0e36c8bf7535c224c787b5e6c52ea7eb368bc",
+    "problem-details/63-squared-load-stoploss-continuation.md": "6442cbb565031be4080d769df5596e764bb2daf8ca3d99165542a6ecebe89959",
+    "problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md": "70c1c2eafee2d18ac9b8a29944adca71e7ca7237f4356dc6ecb9f1b5391998e8",
+    "certificates/source_norms/source-budgets/adaptive_core7_policy.json": "3deab009882d42eebf01d219fe1996909e6f6a615096c34fa8d844b0ef44f67c",
+    "frontier/source-budgets/adaptive_core7.py": "c27bc55cd3a01b91db67498a6f75002f370b52c0f7c27f69c4ceadfa1de4b14d",
+    "certificates/source_norms/source-budgets/survivor_cylinder_queries.json": "f20a175c6464bce30a1f0da216cc883d833fc5f4baae99cfa3a5f949a59500f3",
+    "frontier/source-budgets/survivor_cylinder_queries.py": "7116a15e20c65f39441ded3a223421508505eb46a5c63feb0f4450f2fc5098f0",
+    "problem-details/62-expanded-stopping-cutoffs-for-the-seven-phase-head.md": "633979bf1b24edb0d198b279e3a0fe62ca79a6e3ddd47f520ef70b465d22c41b",
+    "certificates/source_norms/source-budgets/square_stoploss_curve.json": "178a82a7095b412807ae0819778cad240a69734077edb51563bcf9a05c4ccee2",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+    "certificates/source_norms/source-budgets/expanded_stop_budget.json": "b9173d97aa758402716c5341d15e42ff00db255131d0350fa93603d35742ebc8",
+    "problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md": "1a946aea6c102017f2f19e66d34b605b6dda338bb62efc104123ce7b2dafc409",
+    "problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md": "dc243704b9e01b5719f6becf97ea93a6c5c25fb0a254e0b7a8fd8aab29b0a370",
+    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+    "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
+    "certificates/source_norms/source-budgets/expanded_stop_head.json": "4718305d922f6ad708b64bfb38a823bed29e986492cbab910c539314cfdce70b",
+    "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+    "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+    "frontier/source-budgets/expanded_stop_head.py": "0afac1bf5c0c94ef8ce4cadfe47c1616e23ec53f5e8d6094296f31243cd89230",
+    "certificates/source_norms/source-budgets/balanced_profile_tail_budget.json": "43ee684630214cc0bc5b94ea05528f4f7fda023d3071e890224d4e7dce21164a",
+    "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+    "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+    "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+    "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+    "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+    "frontier/source-budgets/balanced_profile_head.py": "daa64daeff8c6a7dc474a965b59473929f1b63fec48e3ef2465b399eb1945dc5",
+    "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+    "certificates/source_norms/source-budgets/balanced_profile_head.json": "13ef27bd3ea3472257faf3ec3394949f7f2fad28fca1998c7ffd201f6ff53914",
+    "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+    "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+    "verify_finite_continuation.py": "c0a4fa266d5e114b77303d195b2f88fe570ee09ae2b34b2b0889e0585c2f9390",
+    "certificates/source_norms/source-budgets/balanced_profile_head_verification.json": "22c110d6b64544bcf143afefcd8cab0236fa520228f814b5b634efebb49ac650",
+    "frontier/source-budgets/verify_balanced_profile_head.py": "9f81ef4a32e3818e27c84f027807bcda7cca9e4beb02d755eba0694342031307",
+    "frontier/source-budgets/balanced_profile_tail_budget.py": "e29ce190d3cc7a4ce5126f5d35fe60ac17745016b80b89bbb7cc01c8a47a0dd3",
+    "certificates/source_norms/source-budgets/balanced_profile_exponent_frontier.json": "b04a0f5add4e1162792118973f52ed3e90a96cecfe6c9d741a6f43ec662200e3",
+    "frontier/source-budgets/head_exponent_downset.py": "0eac881f5ec12c423ee7eff34240706abe67c68af2c5e4054335776446301323",
+    "problem-details/56-exponent-frontiers-and-cylinder-cover-certificates.md": "c8b67933791bd6eeb3925159b9b3219d3492703cd340ee720e0bc9d07dd8bee5",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/CappedGainRearrangement.lean": "ff003bc80d91f1e0026af3c22c5d2ff3a4ab92f733b968c3321e6de521826ab6",
+    "certificates/source_norms/source-budgets/balanced_profile_tail_verification.json": "efe77669ceabee38d5c5b94af03856a894c99f42e6792ef95a61a4fe2b8253a7",
+    "frontier/source-budgets/verify_balanced_profile_tail_budget.py": "47c879983216081dc6cda36e0625b2b4e2f3c9527b519d6bd65fe991701e27eb",
+    "frontier/source-budgets/balanced_profile_exponent_frontier.py": "a021e27be38f53566fa69fba1bbed554efc07007d30b2988ab01ef0f8565ca9b",
+    "certificates/source_norms/source-budgets/expanded_stop_budget_verification.json": "18f0c791d7221d15c47bae7955647a8f4f0633c0ba701601517666caadce4310",
+    "frontier/source-budgets/expanded_stop_budget.py": "9cf1130ab61454a4b1f8e3ed35cd00a96a67f05f02b0fb13d5526eafeb0dab6e",
+    "certificates/source_norms/source-budgets/balanced_profile_exponent_frontier_verification.json": "ad45da720ca091a917f71c95dd14aec4bbb10391c74ba7326bb503ba800b9730",
+    "frontier/source-budgets/verify_balanced_profile_exponent_frontier.py": "e3b4b6b907ea5f973ec7c08a45e1aa7fe3ec1400a9cc1cc1ed84535a724aa5f5",
+    "frontier/source-budgets/verify_expanded_stop_budget.py": "6f8225c854a204c4b4038ed06e1db90596bab103577925183d2d2fc4bb07ce58",
+    "frontier/source-budgets/square_stoploss_curve.py": "4789953ee494f35347e38c384884f3117d80385041a0fda8cde2893e9e85e9fc",
+    "certificates/source_norms/source-budgets/adaptive_core7.json": "cf97059a91968d90ac92f8ff5aaee2ccb211a5dd114a81326533a4f77cc7087d"
+  },
+  "producer_sha256": "b3286dc55069f88d1b258f0ce46ac12a8e44d020b9d85a612c9a79d22794a407"
+}
