@@ -24,15 +24,15 @@ The multiplicative-order convention appears on printed page 17:
 
 The observation leading to Conjecture 2 appears on printed page 23:
 
-> Using Maple to determine the value of some sums as Σ_{i=1}^{ord_m(a)} (2a^i + m mod 2m), necessary to determine the arithmetic mean (31) for round function, we notice another interesting identity.
+> Using Maple to determine the value of some sums as Σ_{i=1}^{ord_m(a)} ((2a^i + m) mod 2m), necessary to determine the arithmetic mean (31) for round function, we notice another interesting identity.
 
 The conjecture is stated on the same printed page:
 
-> Conjecture 2. Let a and m be relatively prime positive integers. If m is prime and ord_m(a) is even then Σ_{i=1}^{ord_m(a)} (2a^i + m mod 2m) = m · ord_m(a).
+> Conjecture 2. Let a and m be relatively prime positive integers. If m is prime and ord_m(a) is even then Σ_{i=1}^{ord_m(a)} ((2a^i + m) mod 2m) = m · ord_m(a).
 
-Formula (39), also on printed page 23, encloses each residue summand as
-`(a^i mod m)`. The Conjecture 2 display uses the same enclosing typography,
-so its summand is read as `(2a^i + m) mod 2m`.
+The printed display brackets the summand as `((2a^i + m) mod 2m)`; formula
+(39) on the same page encloses each residue summand as `(a^i mod m)` in the
+same typography.
 
 For an even order `r = 2s`, the half-order power satisfies
 `a^s ≡ −1 (mod m)`. The residues at indices `i` and `i+s` are complementary

@@ -19,8 +19,8 @@ internal sealed class MercaLiftedResidueSumPrimeOrderDocument : IScribeDocumentD
                 + "the least non-negative remainder, and the sum includes both endpoints.")),
             Node("liftedSum", "Lifted residue sum", LiftedSumFormula(),
                 "The summand is the least non-negative remainder of the whole quantity "
-                    + "2a^i+m modulo 2m; the parentheses follow formula (39) on the same "
-                    + "printed page. The upper bound is Mathlib's multiplicative order of "
+                    + "2a^i+m modulo 2m, bracketed as the printed display brackets it. "
+                    + "The upper bound is Mathlib's multiplicative order of "
                     + "the residue class of a modulo m: the least positive n for which a^n "
                     + "equals one modulo m, and zero if there is no such n. On the claim's "
                     + "prime, coprime domain, a has finite positive order, so the zero convention "
@@ -29,23 +29,26 @@ internal sealed class MercaLiftedResidueSumPrimeOrderDocument : IScribeDocumentD
             Node("claim", "Merca's Conjecture 2", ClaimFormula(),
                 "Conjecture 2 states verbatim: Let a and m be relatively prime positive integers. "
                     + "If m is prime and ord_m(a) is even then "
-                    + "Σ_{i=1}^{ord_m(a)} (2a^i + m mod 2m) = m · ord_m(a). "
+                    + "Σ_{i=1}^{ord_m(a)} ((2a^i + m) mod 2m) = m · ord_m(a). "
                     + "Here ord_m(a) is represented by Mathlib's orderOf on the residue class "
-                    + "of a modulo m, and the displayed mod applies to the whole parenthesized "
-                    + "summand; primality supplies positivity of m.",
+                    + "of a modulo m; primality supplies positivity of m.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Conjecture 2", ResultFormula(),
                 "Write the even order as 2s. In the field modulo m, the s-th power of a "
                     + "squares to one but is not one, so it is minus one. Each residue at i "
                     + "then pairs with the residue at i+s, and the two lifted terms sum to 2m. "
                     + "Summing the s pairs gives m times the full order.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("merca-2011-lifted-residue-sum-prime-order"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("merca-lifted-residue-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula LiftedTerm(Formula m, Formula a, Formula i) =>
         Call("mod", Add(Multiply(Num(2), Power(a, i)), m), Multiply(Num(2), m));

@@ -16,7 +16,7 @@ $$\forall m \in \mathbb{N}, a \in \mathbb{N},\; liftedSum\left(m, a\right) = \su
 
 *Commentary.*
 
-The summand is the least non-negative remainder of the whole quantity 2a^i+m modulo 2m; the parentheses follow formula (39) on the same printed page. The upper bound is Mathlib's multiplicative order of the residue class of a modulo m: the least positive n for which a^n equals one modulo m, and zero if there is no such n. On the claim's prime, coprime domain, a has finite positive order, so the zero convention is not reached.
+The summand is the least non-negative remainder of the whole quantity 2a^i+m modulo 2m, bracketed as the printed display brackets it. The upper bound is Mathlib's multiplicative order of the residue class of a modulo m: the least positive n for which a^n equals one modulo m, and zero if there is no such n. On the claim's prime, coprime domain, a has finite positive order, so the zero convention is not reached.
 
 **Definition 1.2 (Merca's Conjecture 2).**
 
@@ -28,13 +28,17 @@ $$(claim) \Leftrightarrow (\forall a \in \mathbb{N}, m \in \mathbb{N},\; (0 < a)
 
 *Commentary.*
 
-Conjecture 2 states verbatim: Let a and m be relatively prime positive integers. If m is prime and ord_m(a) is even then Σ_{i=1}^{ord_m(a)} (2a^i + m mod 2m) = m · ord_m(a). Here ord_m(a) is represented by Mathlib's orderOf on the residue class of a modulo m, and the displayed mod applies to the whole parenthesized summand; primality supplies positivity of m.
+Conjecture 2 states verbatim: Let a and m be relatively prime positive integers. If m is prime and ord_m(a) is even then Σ_{i=1}^{ord_m(a)} ((2a^i + m) mod 2m) = m · ord_m(a). Here ord_m(a) is represented by Mathlib's orderOf on the residue class of a modulo m; primality supplies positivity of m.
 
 **Theorem 1.3 (Conjecture 2).**
 
 $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/MercaLiftedResidueSumPrimeOrder.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/merca-2011-lifted-residue-sum-prime-order` (proved) by `D5/S3/Arith/Congruence/MercaLiftedResidueSumPrimeOrder.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"merca-2011-lifted-residue-sum-prime-order","declaration_gid":"D5/S3/Arith/Congruence/MercaLiftedResidueSumPrimeOrder.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 

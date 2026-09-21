@@ -6,8 +6,8 @@
    utility: none
    digest: Merca's prime-modulus lifted residue sum follows from half-order pairing. -/
 
-/- proof_shape: result: content
-   escape_witness: (W) half-order −1 and pair sum 2m (have-chain inside result)
+/- proof_shape: result: bind-only
+   escape_witness: none
    admission_basis: open-problem-resolution (issue #9204)
    Direct frozen dependencies: none (pinned Mathlib only) -/
 
