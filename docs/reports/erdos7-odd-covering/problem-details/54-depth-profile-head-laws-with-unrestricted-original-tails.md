@@ -2,7 +2,7 @@
 
 The original unrestricted distinct odd-modulus covering problem remains open.
 This result fixes the 154 original head congruences in
-[the literal table in Chapter 04b](04b-arbitrary-star-head-residues-with-unrestricted-tails.md) and allows arbitrary additional distinct odd
+[the literal table in Chapter 04c](04c-full-history-capped-laws-and-exact-global-optimization.md#7-a-complete-survivor-count-obstruction-defeats-every-fixed-order) and allows arbitrary additional distinct odd
 moduli whose largest prime factor exceeds 73. Neither their prime support nor
 their exponents, including exponents in their small-prime cofactors, are
 bounded. Under the conditional comparison and BBMST continuation inputs used
@@ -294,7 +294,7 @@ and [independent result](../certificates/source_norms/source-budgets/depth_profi
 retain the exact fractions. The
 [head producer](../frontier/source-budgets/depth_cap_bellman.py) reads the
 [actual profile input](../frontier/source-budgets/depth_profile_head_input.json)
-and obtains the labels only from Chapter 04b's canonical producer. All
+and obtains the labels only from Chapter 04c's canonical producer. All
 programs expose `--write` and `--check`; arithmetic checks remain active with
 Python `-O`. The LP discovery verifier additionally uses NumPy and SciPy.
 

@@ -147,8 +147,9 @@
   "states": 45029,
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "4aa3391affb81fc982b96fbe592309dba952073dda3a0be11c5cae32cbdb7961",
-    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "aa9959f0d19609356fa10e82549d5f842b2cd6c202e30eff2f9777c3931592c7",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+    "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
     "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
     "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
     "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
@@ -156,7 +157,7 @@
     "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
     "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
     "frontier/source-budgets/depth_profile_head_input.json": "3c0f4a5def0872b6c25cc2076f3e563f5983332ef94bdf5d0f96a2a3a11915a2",
-    "frontier/source-budgets/capped_head_bellman.py": "c0467cc43d3f0ef7948b045fc00ccb0f9b525f0a070a80d6738e59a860659958"
+    "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3"
   },
-  "producer_sha256": "4198f0cbc28f65443fdeb99bc9b87523f3d2b8e10fe01ae819c43b5a467699f9"
+  "producer_sha256": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14"
 }
