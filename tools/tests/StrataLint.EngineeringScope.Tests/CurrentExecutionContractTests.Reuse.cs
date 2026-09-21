@@ -40,6 +40,9 @@ public sealed partial class CurrentExecutionContractTests
             (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: true),
             (Path: "Meta/ci-cache-paths.json", Invalidates: project is "StrataLint.Cache.Tests"
                 or "StrataLint.EngineeringScope.Tests" or "StrataLint.ScriptTests"),
+            (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project != "StrataLint.ScriptTests"),
+            (Path: "tools/lean-inspector/native_image.c", Invalidates: project != "StrataLint.ScriptTests"),
+            (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project != "StrataLint.ScriptTests"),
         };
         foreach (var change in changes) fixture.Write(change.Path, "original fixture material\n");
         fixture.Track();
