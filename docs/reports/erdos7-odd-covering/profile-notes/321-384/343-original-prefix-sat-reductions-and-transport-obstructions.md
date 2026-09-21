@@ -178,3 +178,94 @@
 末个等号使用素数倒数和发散：删去素数2不改变发散，而 \(\log(1-t)\le-t\) 将乘积上界压至0。所用发散定理已有钉版 Mathlib 声明 `Nat.Primes.not_summable_one_div`（[SumPrimeReciprocals.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/SumPrimeReciprocals.lean#L119)；该文件采用 Erdős 的经典证明）。此处是既有结果的普通应用，不新增 Lean 声明。
 
 这个例子同时满足有限非空与分支相容，却排除了“必有整数实现”和“极限质量必为正”两个结论。只让奇素数支撑增长不能重建全部奇数进坐标，还需要各素数幂高度无界；任何仅含奇模数的系统也不会在全部整数模数中共尾。上述无限族不反驳有限奇互异覆盖问题；对一个固定有限族，第7节的整数代表与正测度等价仍然成立。
+
+## 10. Odd prime-power slices can have no computable surviving thread
+
+This is an ordinary computability construction for an infinite congruence family. It does not provide a finite odd-distinct covering system or prove that none exists. It uses one fixed Haar probability law throughout.
+
+### Construction and exact restrictions
+
+Fix an effective enumeration (phi_e)_(e>=0) of all partial computable functions N -> N, with a uniform finite-step simulation. A3-adic point x is called computable when there is a total algorithm which, on input n>=1, returns its canonical residue x_n in{0,...,3^n-1}. Define its output at input0 to be0, so that this name is a total function on N and occurs in the fixed enumeration.
+
+For each index e, if phi_e(e+1) halts with output a_e, include
+
+    C_e = {x in Z_3 : x = a_e mod3^(e+1)}.
+
+An output outside the canonical residue range is simply reduced modulo3^(e+1). If the computation does not halt, no cylinder with that label is included. There is at most one cylinder of each numerical modulus3^(e+1). All included moduli are odd and greater than1. Each included residue is fixed by one actual halting output; it is never selected again depending on a target point.
+
+The cylinder inventory is computably enumerable by dovetailing. It is not asserted that the height-indexed question "does C_e occur?" is decidable. This distinction is essential.
+
+Let mu be normalized Haar measure on Z_3 and put
+
+    E = Z_3 minus union_(e : phi_e(e+1) halts) C_e.
+
+Countable subadditivity gives
+
+    mu(union C_e) <= sum_(e>=0)3^(-(e+1)) = 1/2,
+    mu(E) >= 1/2.
+
+Every cylinder is clopen, so E is closed, nonempty and has positive Haar mass.
+
+### Every computable point is excluded
+
+Suppose x were a computable point of E. Its total residue algorithm is some phi_e in the fixed enumeration. Thus phi_e(e+1) halts and outputs x_(e+1). The corresponding C_e is included and contains x, contradicting x in E.
+
+Consequently E has no computable3-adic point. In particular it contains no embedded ordinary integer, since the residues of a fixed integer modulo3^n are computable, including for negative integers. The associated infinite congruence classes therefore cover every ordinary integer, while their union covers at most half of Z_3.
+
+Every finite subfamily fails to cover: its total cylinder mass is strictly less than1/2, so it has an uncovered residue at its finite LCM, hence an uncovered ordinary integer. This is fully compatible with the finite Erdős7 problem.
+
+There are infinitely many included labels. For example, the enumeration contains total residue algorithms for infinitely many distinct ordinary integers, requiring infinitely many program indices. If a total enumerated sequence of the included classes is desired, output each newly halted index once in dovetail order. Searching for its i-th output terminates for every i. This gives a computable listing with pairwise distinct numerical moduli, without making membership at a prescribed height decidable or ordering the list by height.
+
+### A uniformly decidable finite-resolution tower
+
+For n>=0 take X_n=Z/3^nZ (X_0 a singleton). Let D_n consist of indices e<n whose computations phi_e(e+1) halt within n simulation steps, with their observed outputs a_e. Define
+
+    H_n={r mod3^n : for every e in D_n, r != a_e mod3^(e+1)}.
+
+H_n can be computed exactly by finite simulation and enumeration of3^n residues. Each previously seen computation remains seen, so D_n is contained in D_(n+1). Reduction modulo3^n maps H_(n+1) into H_n. At a fixed stage no private point, residue choice or probability law is reselected.
+
+Each excluded class for e<n contains3^(n-e-1) residues. The union bound therefore gives
+
+    |H_n| >= 3^n - sum_(e=0)^(n-1)3^(n-e-1)
+           = (3^n+1)/2.
+
+In particular every level is nonempty. Moreover
+
+    |H_(n+1)| >= (3^(n+1)+1)/2 > 3^n >= |H_n|.
+
+Thus even the number of remaining distinguishable states increases strictly at every step. The ambient arithmetic capacity grows exactly bylog3. These are cardinality/capacity assertions, not a claim of an independent Shannon information increment under every source law.
+
+Lift H_n to the clopen subset K_n={x in Z_3 : x mod3^n in H_n}. Then K_(n+1) is contained in K_n. An included index e is tested at every sufficiently large stage n, so
+
+    intersection_n K_n = E,
+    inverse_limit_n H_n is canonically identified with E.
+
+The finite inverse system is uniformly computable and every level is nonempty, but it has no computable compatible thread: such a thread would return all canonical residues of a computable point of E.
+
+### Why compactness gives existence but no effective selector
+
+If a uniformly computable system of explicitly finite nonempty sets has computable SURJECTIVE bonding maps, one can compute a compatible thread. Choose an element of H_0, then enumerate H_(n+1) until finding a preimage of the current element. Surjectivity makes every finite search terminate. No oracle is needed.
+
+Therefore not all bonding maps of the constructed tower can be surjective. Some currently surviving cells have no immediate surviving extension; more generally determining which cells extend forever is not supplied by their decidable finite-stage membership. The positive measure and strict cardinality growth do not repair this selector problem.
+
+There is a sharper comparison using the same numerical moduli. Suppose an algorithm decides, for each height h>=1, whether there is a forbidden class of modulus3^h and returns its final phase when present. Let S_n impose all those final constraints of height at most n. Every r in S_n has three lifts to modulus3^(n+1); earlier constraints hold on all three, and the single possible new class at height n+1 deletes at most one. Thus S_(n+1) -> S_n is surjective, with at least two children per surviving cell. Choosing the least permitted child gives a computable survivor. Our negative construction cannot supply this decidable final-height inventory. The computable order of discovering cylinders does not supply a computable certificate that no further low-height cylinder will appear.
+
+### Consequence for the expression-capacity question
+
+Oddness and distinctness alone do not prevent a noncomputable surviving thread problem in effective infinite prime-resolution systems. One prime,3, already suffices for the construction. It uses a c.e. event stream whose schedule may reveal a low-height constraint arbitrarily late; a computable rule assigning a final residue to every height in advance is a stronger interface not supplied here.
+
+This establishes no reduction of the halting problem to coverage of a supplied finite family: the latter remains decidable by checking one LCM period. It establishes neither formal independence nor a positive or negative answer to Erdős7. Any proposed transfer to that conjecture must preserve its finite quantifier and supply a new argument controlling arbitrary finite architectures.
+
+## 11. The finite-extinction index problem has an exact conditional classification
+
+Specify a uniform effective stream interface: a program may emit pairs(a,m); keep a pair only when m>1 is odd and no previously retained pair has that numerical modulus. Ignore invalid or repeated-modulus events and reduce phases modulo m. Each finite simulation stage yields a computable finite family. Streams may have finitely many or infinitely many retained events.
+
+Let FC be the set of program indices whose retained stream covers all integers at some finite stage. Membership in FC is computably enumerable: simulate stages and check each finite family on its actual LCM. The empty family is not a cover. In fact
+
+    FC is nonempty iff a finite distinct odd covering system exists.
+
+The forward implication takes the finite covering prefix. The reverse implication uses a program outputting that finite family.
+
+There are precisely two possibilities for this specified index problem. If the finite odd-cover conjecture is true (no such cover exists), FC is empty. If a finite cover C exists, FC is Sigma^0_1-complete under many-one reductions: given a machine M and input w, effectively produce a stream program which simulates M(w), emits nothing until it halts, and then emits the fixed list C. Its retained family covers at a finite stage exactly when M(w) halts. This compilation is total computable. The existence of C gives the conditional existence of the reduction; no algorithm for obtaining C from the unresolved conjecture is asserted.
+
+Thus proving HALT-hardness of THIS odd-distinct finite-extinction index problem would already imply the positive answer to Erdős7. It cannot be imported from arbitrary survivor towers without discharging precisely that missing arithmetic premise. In contrast, the no-computable-branch construction above works unconditionally for an infinite family and settles neither side of finite Erdős7.
