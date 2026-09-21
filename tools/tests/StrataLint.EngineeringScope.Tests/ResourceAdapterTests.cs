@@ -190,10 +190,10 @@ public sealed partial class ResourceAdapterTests
             with patch.object(sys, 'argv', ['lean_actions.py', 'prepare-report', '--repository', str(root), '--stage', 'current']), \
                     patch.object(ci_plan, 'validate_plan', return_value=plan), \
                     patch.object(ci_plan, 'stage_requirements', return_value=requirements), \
-                    patch.object(lean_actions.shutil, 'which', return_value='/fixture/lake'), \
+                    patch.object(lean_actions.shutil, 'which', return_value=None), \
                     patch.object(lean_actions, 'report_seed', return_value=report) as probe:
                 code = lean_actions.main()
-                probe.assert_called_once_with(root, pathlib.Path('/fixture/lake'))
+                probe.assert_called_once_with(root)
             raise SystemExit(code)
             """, TestRepositoryLayout.FindRoot(), compileInspector ? "true" : "false", seedAvailable ? "true" : "false"],
             environment, TestBudgets.WorkflowProcessHangGuard);

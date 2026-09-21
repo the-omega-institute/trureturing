@@ -768,7 +768,7 @@ def restore(root, keys, matched, layers=LAYERS, registry=None, *, outcomes=None)
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if project_seeded else "0"}, "GITHUB_ENV")
 
 
-def report_seed(root, lake):
+def report_seed(root):
     """Ask the normal producer whether a transported full report can be reused.
 
     The seed manifest declares the report paths; this adapter neither infers
@@ -812,7 +812,7 @@ def report_seed(root, lake):
     for relative in sorted(reports):
         report = seed / relative
         result = subprocess.run([sys.executable, str(root / "tools/lean-inspector/reuse.py"), "probe",
-            "--repository", str(root), "--report", str(report), "--lake", str(lake)],
+            "--repository", str(root), "--report", str(report)],
             cwd=root, check=True, capture_output=True, text=True)
         outcome = json.loads(result.stdout)
         if type(outcome.get("needs_lake")) is not bool:
@@ -899,10 +899,7 @@ def main():
                 restore(args.repository, actions_keys(args.repository), {"current": args.current_key}, ["current"])
             source = None
             if "lean-report" in plan["execution"]["steps"]:
-                lake = shutil.which("lake")
-                if not lake:
-                    raise ValueError("the registered Lean toolchain is unavailable")
-                source = report_seed(args.repository, pathlib.Path(lake))
+                source = report_seed(args.repository)
             output({"needs_lake": bool("lake" in requirements["tools"]
                 and (source is None or plan["execution"]["lean_targets"]))})
             output({"STRATALINT_LEAN_REPORT_REUSE": source or ""}, "GITHUB_ENV")

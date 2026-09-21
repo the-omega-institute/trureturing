@@ -1,10 +1,186 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
 
 public sealed class LeanReportSelectionTests
 {
+    [Theory]
+    [InlineData("probe", "none", false)]
+    [InlineData("reuse", "none", false)]
+    [InlineData("probe", "source", true)]
+    [InlineData("probe", "toolchain", true)]
+    [InlineData("probe", "environment", true)]
+    [InlineData("reuse", "material", true)]
+    [InlineData("probe", "old-receipt", true)]
+    public void ReportReuseChecksDeclaredInputsWithoutInstalledToolchain(string operation, string change, bool needsLake)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3", ["-B", "-c", """
+            import json, os, pathlib, sys
+            root, operation, change = sys.argv[1:]
+            sys.path.insert(0, str(pathlib.Path(root) / 'tools/lean-inspector/tests'))
+            from test_reuse import ReuseTests
+            fixture = ReuseTests()
+            fixture.setUp()
+            try:
+                api = fixture.receipt()
+                fixture.lake.unlink()
+                fixture.lake.with_name('lean').unlink()
+                if change == 'source': fixture.write('D5/A.lean', 'def changed := 2\n')
+                if change == 'toolchain': fixture.write('lean-toolchain', 'changed-toolchain\n')
+                if change == 'environment': os.environ['LEAN_OPTS'] = '-DmaxRecDepth=100'
+                if change == 'material': pathlib.Path(str(fixture.report) + '.materials.zip').write_bytes(b'corrupt')
+                if change == 'old-receipt':
+                    receipt = pathlib.Path(str(fixture.report) + '.reuse.json')
+                    record = json.loads(receipt.read_text())
+                    record['schema'] = 'stratalint-lean-report-reuse-v1'
+                    receipt.write_text(json.dumps(record))
+                if operation == 'probe': outcome = api.probe(fixture.root, fixture.report)
+                else: outcome = api.reuse(fixture.root, fixture.report, fixture.output)
+                outcome['published'] = fixture.output.exists()
+                print(json.dumps(outcome))
+            finally:
+                fixture.doCleanups()
+            """, root, operation, change], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        var text = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.True(result.ExitCode == 0, text + Encoding.UTF8.GetString(result.StandardError));
+        using var outcome = JsonDocument.Parse(text);
+        Assert.Equal(needsLake, outcome.RootElement.GetProperty("needs_lake").GetBoolean());
+        Assert.Equal(operation == "reuse" && !needsLake, outcome.RootElement.GetProperty("published").GetBoolean());
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("different-path")]
+    [InlineData("unregistered")]
+    [InlineData("excluded")]
+    public void ExecutionToolchainMustBeAnExplicitRequiredInput(string defect)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3", ["-B", "-c", """
+            import pathlib, sys
+            sys.path.insert(0, str(pathlib.Path(sys.argv[1]) / 'tools/lean-inspector/tests'))
+            from test_reuse import ReuseTests
+            import publication
+            fixture = ReuseTests()
+            fixture.setUp()
+            try:
+                defect = sys.argv[2]
+                if defect == 'missing': del fixture.policy['report_execution']['toolchain']
+                if defect == 'different-path': fixture.policy['report_execution']['toolchain'] = 'unregistered/pin'
+                if defect == 'unregistered': fixture.policy['config_inputs']['include'] = []
+                if defect == 'excluded': fixture.policy['config_inputs']['exclude'] = ['lean-toolchain']
+                fixture.write_policy()
+                try: publication.selection.Selection(fixture.root).validate('lean-report')
+                except ValueError as error:
+                    print(error)
+                    raise SystemExit(4)
+            finally:
+                fixture.doCleanups()
+            """, root, defect], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        Assert.Equal(4, result.ExitCode);
+        Assert.Contains("lean-report-inputs.json", Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReportEntryReusesValidatedReportWithoutInstalledToolchain()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3", ["-B", "-c", """
+            import pathlib, sys
+            sys.path.insert(0, str(pathlib.Path(sys.argv[1]) / 'tools/lean-inspector/tests'))
+            from test_reuse import ReuseTests
+            fixture = ReuseTests()
+            fixture.setUp()
+            original = fixture.receipt
+            def prepare():
+                api = original()
+                fixture.lake.unlink()
+                fixture.lake.with_name('lean').unlink()
+                return api
+            fixture.receipt = prepare
+            try:
+                result, calls = fixture.entry_with_program_build([])
+                print(result.stdout, end='')
+                print(result.stderr, end='', file=sys.stderr)
+                if calls: print('UNEXPECTED_BUILD ' + repr(calls))
+                raise SystemExit(result.returncode)
+            finally:
+                fixture.doCleanups()
+            """, root], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        var text = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.True(result.ExitCode == 0, text + Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0", text, StringComparison.Ordinal);
+        Assert.DoesNotContain("UNEXPECTED_BUILD", text, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DamagedReportAfterResourceProbeStillObtainsToolchainAndRunsNormalBuild()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3", ["-B", "-c", """
+            import json, os, pathlib, shutil, subprocess, sys, zipfile
+            sys.path.insert(0, str(pathlib.Path(sys.argv[1]) / 'tools/lean-inspector/tests'))
+            from test_reuse import ReuseTests
+            import publication, reuse
+            fixture = ReuseTests()
+            fixture.setUp()
+            try:
+                first, calls = fixture.entry_with_program_build([], build_exit=37)
+                if first.returncode: raise RuntimeError(first.stdout + first.stderr)
+                probe = reuse.probe(fixture.root, fixture.report)
+                archive = publication.member(fixture.report, '.materials.zip')
+                with zipfile.ZipFile(archive, 'w') as output: output.writestr('unreferenced', b'bad material')
+                receipt = publication.member(fixture.report, '.reuse.json')
+                record = json.loads(receipt.read_text())
+                record['bundle']['.materials.zip'] = publication.digest(archive)
+                receipt.write_text(json.dumps(record))
+                shutil.rmtree(fixture.root / '.lake')
+                installed = fixture.root / 'installed'
+                installed.mkdir()
+                fixture.lake.rename(installed / 'lake')
+                fixture.lake.with_name('lean').unlink()
+                executables = fixture.root / 'exec'
+                executables.mkdir()
+                (executables / 'python3').symlink_to(sys.executable)
+                fixture.write('tools/scripts/workflow/install-lean-toolchain.sh',
+                    '#!/bin/bash\nset -euo pipefail\nprintf "toolchain\\n" >> build-calls\n'
+                    + 'test "$1" -ef "' + str(fixture.root / 'lean-toolchain') + '"\n'
+                    + 'test "$2" = --github-path\nprintf "%s\\n" "' + str(installed) + '" > "$3"\n')
+                installer = fixture.root / 'tools/scripts/workflow/install-lean-toolchain.sh'
+                installer.chmod(0o755)
+                environment = dict(os.environ, PATH=str(executables) + ':/usr/bin:/bin',
+                    STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_BUILD_TARGETS='[]',
+                    STRATALINT_LEAN_REPORT_REUSE=str(fixture.report),
+                    STRATALINT_LEAN_PRODUCER_DLL=str(fixture.root / 'producer.dll'))
+                environment.pop('LAKE_BIN', None)
+                second = subprocess.run(['/bin/bash', str(fixture.root / 'tools/lean-inspector/inspect.sh'),
+                    '--repository', str(fixture.root), '--output', str(fixture.output)],
+                    env=environment, text=True, capture_output=True, cwd=fixture.root)
+                path = fixture.root / 'build-calls'
+                print(json.dumps(dict(probe=probe, exit=second.returncode, stdout=second.stdout,
+                    stderr=second.stderr, calls=path.read_text().splitlines() if path.exists() else [])))
+            finally:
+                fixture.doCleanups()
+            """, root], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        var text = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.True(result.ExitCode == 0, text + Encoding.UTF8.GetString(result.StandardError));
+        using var outcome = JsonDocument.Parse(text);
+        Assert.False(outcome.RootElement.GetProperty("probe").GetProperty("needs_lake").GetBoolean());
+        Assert.True(outcome.RootElement.GetProperty("exit").GetInt32() == 37, text);
+        var calls = outcome.RootElement.GetProperty("calls").EnumerateArray().Select(item => item.GetString()).ToArray();
+        Assert.Equal(3, calls.Length);
+        Assert.Equal("toolchain", calls[0]);
+        Assert.Equal("ensure", calls[1]);
+        Assert.EndsWith(" build :report", calls[2]);
+    }
+
     public static IEnumerable<object[]> InspectorPhaseCases()
     {
         foreach (var buildProducer in new[] { false, true })

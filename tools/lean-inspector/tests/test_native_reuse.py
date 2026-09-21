@@ -79,7 +79,7 @@ class NativeReuseTests:
         def probe(phase='report-probe'):
             started = time.monotonic()
             result = self.guarded_command([sys.executable, '-B', str(self.root / 'tools/lean-inspector/reuse.py'),
-                'probe', '--repository', str(self.root), '--report', str(seed), '--lake', self.lake], env=self.env)
+                'probe', '--repository', str(self.root), '--report', str(seed)], env=self.env)
             self.record_result(phase, dict(elapsed_seconds=time.monotonic() - started,
                 exit_code=result.returncode, output=result.stdout, phases=[], work=[], lake_built_lines=0))
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

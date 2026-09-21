@@ -290,20 +290,20 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
                 fixture.lake = root / 'bin/lake'
                 if operation in ('prepare', 'renew'):
                     if operation == 'renew':
-                        assert reuse.probe(root, fixture.report, fixture.lake)['needs_lake'], 'previous semantic version must miss'
+                        assert reuse.probe(root, fixture.report)['needs_lake'], 'previous semantic version must miss'
                     fixture.receipt()
                 elif operation in ('probe', 'probe-miss'):
                     sys.path.insert(0, str(repository / 'tools/scripts/worktree'))
                     import lean_actions
-                    selected = lean_actions.report_seed(root, fixture.lake)
+                    selected = lean_actions.report_seed(root)
                     if operation == 'probe-miss':
                         assert selected is None, 'damaged producer must return to normal production'
                         sys.exit(0)
                     expected = root / 'build/ci/current-check-seed' / relative
                     assert selected == str(expected), 'must select accepted independent producer: ' + str(selected)
-                    assert not reuse.probe(root, pathlib.Path(selected), fixture.lake)['needs_lake']
+                    assert not reuse.probe(root, pathlib.Path(selected))['needs_lake']
                     output = root / 'build/reused-report' / publication.RAW
-                    assert not reuse.reuse(root, pathlib.Path(selected), output, fixture.lake)['needs_lake']
+                    assert not reuse.reuse(root, pathlib.Path(selected), output)['needs_lake']
                     assert output.read_bytes() == expected.read_bytes()
                 else:
                     raise AssertionError(operation)
