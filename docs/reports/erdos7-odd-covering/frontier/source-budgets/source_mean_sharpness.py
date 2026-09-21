@@ -21,6 +21,8 @@ SOURCES = (CONSUMER, 'certificate_io.py', 'verify_joint_frontier.py',
            'profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md',
            'frontier/source-budgets/source_full_square.py',
            'frontier/source-budgets/verify_source_full_square.py',
+           'profile-notes/321-384/339b-the-actual-near-j-source-and-the-unit-refund.md',
+           'profile-notes/321-384/339c-the-square-allocation-and-the-reweighted-source.md',
            'certificates/source_norms/source-budgets/source_full_square_flow.json',
            *(f'certificates/source_norms/source-budgets/source_full_square_r{r}_flow.json' for r in (0,3,4)))
 
