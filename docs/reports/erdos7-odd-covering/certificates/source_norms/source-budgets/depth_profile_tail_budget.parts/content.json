@@ -1,0 +1,126 @@
+{
+  "status": {
+    "kind": "inline",
+    "value": "CERTIFIED_STRICT_PASS"
+  },
+  "B": {
+    "kind": "inline",
+    "value": 16384
+  },
+  "global_prime_index": {
+    "kind": "inline",
+    "value": 1900
+  },
+  "tail_stages": {
+    "kind": "inline",
+    "value": 1879
+  },
+  "epsilon_exact": {
+    "kind": "inline",
+    "value": "850282109320449012581343404003218456990123/2126237451649555718697975632038158000000000"
+  },
+  "C_upper": {
+    "kind": "inline",
+    "value": "467101552960255339/1000000000000000000"
+  },
+  "J_upper": {
+    "kind": "inline",
+    "value": "559058126433247751329/62500000000000000"
+  },
+  "T_lower": {
+    "kind": "inline",
+    "value": "12818890433263260948933682908188610571/156250000000000000000000000000000"
+  },
+  "consumer_score_upper": {
+    "kind": "inline",
+    "value": "1477894498743256369308644490964514631108526396742981381865498975020382945207968973256439/1514204039066373606512026125385972985872519005838236104939237048564901000000000000000000"
+  },
+  "consumer_score_float": {
+    "kind": "inline",
+    "value": 0.9760207083151721
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "141393263350671702437046077597010894416060164387219/1063118725824777859348987816019079000000000000000000"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "9508600883108756482215462407931246685949435921150083075/141393263350671702437046077597010894416060164387219"
+  },
+  "profiles": {
+    "path": "content/012-profiles.json",
+    "sha256": "db1db2fc0b9d5ce25ae7c784bad2e32149bdfd6e7cdbfe920817cad9899d42ef",
+    "kind": "value"
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "geometric_lift": {
+    "kind": "inline",
+    "value": true
+  },
+  "stages": {
+    "path": "content/015-stages.json",
+    "sha256": "dbefcef47063c65cafbb9d53643074acf0dfba8e3c3a0b88e38a46af557b6a87",
+    "kind": "array"
+  },
+  "step_digest": {
+    "kind": "inline",
+    "value": "566ff352928d4cda3e5e6712c93065920391720d9fa5840f4f2a8c3c62d1705b"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "4aa3391affb81fc982b96fbe592309dba952073dda3a0be11c5cae32cbdb7961",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "aa9959f0d19609356fa10e82549d5f842b2cd6c202e30eff2f9777c3931592c7",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+      "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+      "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+      "frontier/source-budgets/depth_profile_head_input.json": "3c0f4a5def0872b6c25cc2076f3e563f5983332ef94bdf5d0f96a2a3a11915a2",
+      "frontier/source-budgets/capped_head_bellman.py": "c0467cc43d3f0ef7948b045fc00ccb0f9b525f0a070a80d6738e59a860659958",
+      "frontier/source-budgets/depth_cap_bellman.py": "4198f0cbc28f65443fdeb99bc9b87523f3d2b8e10fe01ae819c43b5a467699f9",
+      "certificates/source_norms/source-budgets/depth_cap_bellman.json": "54450ec5f16d8b81e703cbba1d77381702e96a4523fdc4b835d3152e0e964501",
+      "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+      "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+      "verify_finite_continuation.py": "c0a4fa266d5e114b77303d195b2f88fe570ee09ae2b34b2b0889e0585c2f9390"
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Fixed original 154-label head. Uniform extra head digits allow arbitrary finite exponents in every original tail cofactor; tail support and tail-prime exponents are unrestricted. Ordinary conditional comparison and BBMST continuation remain analytic inputs. No universal head-profile existence assertion. Extra distinct 73-smooth head labels are also allowed when each contains a prime sixth power; their separate cutoff charge and surviving-mass bounds are included."
+  },
+  "schema": {
+    "kind": "inline",
+    "value": "depth-profile-tail-budget-v1"
+  },
+  "short_T_lower": {
+    "kind": "inline",
+    "value": "326059/4"
+  },
+  "short_consumer_score_upper": {
+    "kind": "inline",
+    "value": "112855677875458768744658421656207338288797194181556030793/115545058716265981643344740784033601115000000000000000000"
+  },
+  "high_head_cutoff": {
+    "kind": "inline",
+    "value": {
+      "cutoff": 5,
+      "union_loss_upper": "603551415174862439456790669256297460945483648909720649388918579585945523114689834199517980739229749536244101635770004705467882231566411707117614283/34642218907334211653467029614031629055765412102158698342378545182765907465274597931533112187851668889505647975497887465794773446809354240000000000000",
+      "survival_lower": "12511918548430545580045262643570269314604654873482271738052885573461222766111023164095085688271281991949101557510168445618168744269754535847992317545977/108256934085419411417084467543848840799266912819245932319932953696143460828983118536040975587036465279705149923430898330608667021279232000000000000000000",
+      "consumer_score_upper": "11697036937580500688638326778866222304127026139601136908170856275709896197245720476604603769948473199158149683208578715380127238848298569903074658583688275419/11765904881073808729865825355003211262268324419759744154191913072465352040198030238089613431677058228924754219428087185062202975207733329920000000000000000000",
+      "Gamma_upper": "968254954875697784400370640972227892006696080729233575643653856732706326259616204351662639811572711428279624020420651040896818377386903538321125704447135225/12511918548430545580045262643570269314604654873482271738052885573461222766111023164095085688271281991949101557510168445618168744269754535847992317545977",
+      "simple_survival_lower": "9/80",
+      "simple_Gamma_upper": "719929/9",
+      "simple_threshold_margin": "54815/36"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "4bc5af1d74d2eb72f12d8181e65d3ededc2370a4f1c22c452d0bc83d0a66045c"
+  }
+}
