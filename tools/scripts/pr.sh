@@ -22,7 +22,7 @@ PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID
     object(oid:$head) { ... on Commit { oid statusCheckRollup { contexts(first:100) {
       nodes { __typename
         ... on CheckRun { databaseId name status conclusion
-          checkSuite { databaseId app { id } branch { id } commit { oid }
+          checkSuite { databaseId app { id } branch { id name repository { databaseId nameWithOwner } } commit { oid }
             workflowRun { databaseId event runNumber runAttempt workflow { id databaseId }
               file { path repositoryName run { databaseId } } } } }
         ... on StatusContext { id context state commit { oid } }
@@ -160,7 +160,7 @@ parse_snapshot() {
     select(all($items[]; check_name as $name | if ($required | index($name)) != null then enum_ok else true end)) |
     [$items[] | select(.__typename == "CheckRun" and .checkSuite.workflowRun != null)] as $runs |
     select(all($runs | group_by(.checkSuite.workflowRun.databaseId)[];
-      map(.checkSuite | [.databaseId, .app.id, .branch.id, .workflowRun]) | unique | length == 1)) |
+      map(.checkSuite | [.databaseId, .app.id, .branch, .workflowRun]) | unique | length == 1)) |
     select(all($runs | group_by([.checkSuite.workflowRun.workflow.id, .checkSuite.workflowRun.runNumber])[];
       map(.checkSuite.workflowRun.databaseId) | unique | length == 1)) |
     # A snapshot for a different PR head is stale. Its execution ordering is
@@ -184,7 +184,7 @@ parse_snapshot() {
       {unavailable:"ambiguous-pr-origin", runs:[$runs |
         group_by(.checkSuite.workflowRun.databaseId)[] |
         select(.[0].checkSuite.workflowRun.databaseId as $id | $needed | index($id)) |
-        {run:.[0].checkSuite.workflowRun, suite:.[0].checkSuite.databaseId,
+        {run:.[0].checkSuite.workflowRun, suite:.[0].checkSuite.databaseId, branch:.[0].checkSuite.branch,
          repository_id:$repository.databaseId, repository:$repository.nameWithOwner,
          checks:map({id:.databaseId, name:.name})}]}
 
@@ -360,7 +360,10 @@ origin_for_run() {
   local run_id attempt workflow_path metadata jobs all_jobs='[]' total=-1 page count
   jq -e --arg repo "$PR_REPO" '
     def id: type == "number" and . > 0 and floor == .;
+    def nonempty_string: type == "string" and length > 0;
     (.repository_id | id) and .repository == $repo and (.suite | id) and
+    (.branch.name | nonempty_string) and (.branch.repository.databaseId | id) and
+    (.branch.repository.nameWithOwner | nonempty_string) and
     (.run.databaseId | id) and .run.runAttempt == 1 and .run.event == "pull_request" and
     (.run.workflow.databaseId | id) and .run.file.run.databaseId == .run.databaseId and
     .run.file.repositoryName == $repo and
@@ -419,6 +422,8 @@ origin_metadata_matches() {
     fromjson | select(type == "object") |
     .id == $expected.run.databaseId and .run_attempt == $expected.run.runAttempt and
     .run_number == $expected.run.runNumber and .head_sha == $head and
+    .head_branch == $expected.branch.name and .head_repository.id == $expected.branch.repository.databaseId and
+    .head_repository.full_name == $expected.branch.repository.nameWithOwner and
     .event == $expected.run.event and .workflow_id == $expected.run.workflow.databaseId and
     .check_suite_id == $expected.suite and .repository.id == $expected.repository_id and
     .repository.full_name == $expected.repository and .path == $expected.run.file.path' \

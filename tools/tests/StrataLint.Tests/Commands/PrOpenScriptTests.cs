@@ -645,7 +645,9 @@ public sealed partial class PrOpenScriptTests
         string app = "MDM6QXBwMTUzNjg=", string workflow = "W_kwDOTUuVMM4VGb-f",
         string eventName = "pull_request", string branch = "lane/governance/sl003-erdos7-339-split-0921") =>
         new { __typename = "CheckRun", databaseId = checkId, name, status, conclusion,
-            checkSuite = new { databaseId = runId + 1000, app = new { id = app }, branch = new { id = "ref-" + branch }, commit = new { oid = head },
+            checkSuite = new { databaseId = runId + 1000, app = new { id = app },
+                branch = new { id = "ref-" + branch, name = branch, repository = new { databaseId = 501, nameWithOwner = "source/fork" } },
+                commit = new { oid = head },
                 workflowRun = new { databaseId = runId, runNumber, runAttempt, @event = eventName,
                     workflow = new { id = workflow, databaseId = 301 },
                     file = new { path = ".github/workflows/root.yml", repositoryName = "owner/repo", run = new { databaseId = runId } } } } };

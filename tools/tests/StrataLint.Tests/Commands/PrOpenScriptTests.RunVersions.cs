@@ -332,6 +332,46 @@ public sealed partial class PrOpenScriptTests
     }
 
     [Theory]
+    [InlineData(false, "head-branch")]
+    [InlineData(true, "head-branch")]
+    [InlineData(false, "head-repository-id")]
+    [InlineData(true, "head-repository-id")]
+    [InlineData(false, "head-repository-name")]
+    [InlineData(true, "head-repository-name")]
+    public void PrWatchRejectsMismatchedSourceIdentityAtBothMetadataEndpoints(bool currentEndpoint, string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var old = Check("engineering", "COMPLETED", "FAILURE");
+        var current = Check("engineering", "COMPLETED", "SUCCESS", checkId: 102, runId: 202, runNumber: 2);
+        AddOrigin(fixture, [old], 42);
+        AddOrigin(fixture, [current], 42);
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", old, current)));
+        var metadata = JsonSerializer.SerializeToNode(new
+        {
+            id = 202, run_attempt = 1, run_number = 2, head_sha = HeadSha,
+            head_branch = JsonSerializer.SerializeToNode(current)!["checkSuite"]!["branch"]!["name"]!.GetValue<string>(),
+            head_repository = new { id = 501, full_name = "source/fork" },
+            @event = "pull_request", workflow_id = 301, check_suite_id = 1202,
+            repository = new { id = 401, full_name = "owner/repo" }, path = ".github/workflows/root.yml",
+        })!;
+        switch (defect)
+        {
+            case "head-branch": metadata["head_branch"] = "evil-source-branch"; break;
+            case "head-repository-id": metadata["head_repository"]!["id"] = 999; break;
+            case "head-repository-name": metadata["head_repository"]!["full_name"] = "evil/repo"; break;
+        }
+        var endpoint = "repos/owner/repo/actions/runs/202" + (currentEndpoint ? "" : "/attempts/1");
+        fixture.ApiResponse(endpoint, metadata.ToJsonString());
+
+        var result = fixture.RunWatch42();
+
+        Assert.True(result.ExitCode == 69, $"watcher_exit={result.ExitCode}\n" + Text(result.StandardOutput) + Text(result.StandardError));
+        Assert.Contains(fixture.Invocations, invocation => invocation.Contains("api " + endpoint + "|", StringComparison.Ordinal));
+        Assert.DoesNotContain("outcome=green", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Contains("reason=ambiguous-pr-origin", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(false, "contradictory-first")]
     [InlineData(true, "contradictory-first")]
     [InlineData(false, "contradictory-last")]
@@ -355,6 +395,8 @@ public sealed partial class PrOpenScriptTests
         var metadata = JsonSerializer.SerializeToNode(new
         {
             id = 202, run_attempt = 1, run_number = 2, head_sha = HeadSha,
+            head_branch = JsonSerializer.SerializeToNode(current)!["checkSuite"]!["branch"]!["name"]!.GetValue<string>(),
+            head_repository = new { id = 501, full_name = "source/fork" },
             @event = "pull_request", workflow_id = 301, check_suite_id = 1202,
             repository = new { id = 401, full_name = "owner/repo" }, path = ".github/workflows/root.yml",
         })!;
@@ -541,12 +583,16 @@ public sealed partial class PrOpenScriptTests
     {
         var nodes = checks.Select(x => JsonSerializer.SerializeToNode(x)!).ToArray();
         var run = nodes[0]["checkSuite"]!["workflowRun"]!;
+        var branch = nodes[0]["checkSuite"]!["branch"]!;
         var runId = run["databaseId"]!.GetValue<long>();
         var head = nodes[0]["checkSuite"]!["commit"]!["oid"]!.GetValue<string>();
         var metadata = JsonSerializer.SerializeToNode(new
         {
             id = runId, run_attempt = 1, run_number = run["runNumber"]!.GetValue<int>(),
             head_sha = head, @event = "pull_request", workflow_id = 301,
+            head_branch = branch["name"]!.GetValue<string>(),
+            head_repository = new { id = branch["repository"]!["databaseId"]!.GetValue<int>(),
+                full_name = branch["repository"]!["nameWithOwner"]!.GetValue<string>() },
             check_suite_id = runId + 1000, repository = new { id = 401, full_name = "owner/repo" },
             path = ".github/workflows/root.yml",
         })!;
