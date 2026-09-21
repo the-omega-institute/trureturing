@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Exactly enclose Filaseta–Kalogirou arXiv:2407.15280v1 equation (24).
 
-The fixed N is evaluated at Delta=1/12 and, for all-odd nonunit original
-moduli, at Delta=1/2. The latter is a linear substitution in the same
-analytic expression, with no parameter optimization.
+The original fixed N is evaluated at Delta=1/12 and, for all-odd nonunit
+original moduli, at Delta=1/2. A separate N=1000000000 calculation uses
+the odd-only prefix coefficient M_p/2, its square-root comparison with
+the full prefix product, and removal of the q=2 fourth-moment factor 150
+from the published tail proof.
 
 The source Lemmas 1–2 and prime bound (23) are external inputs. Their
 large finite prime products are not reproduced here. The source page-24
@@ -176,6 +178,68 @@ def encode(x):
             'upper_decimal_display_only': decimal(x.hi)}
 
 
+def odd_only_prefix_reserve():
+    """Enclose the odd-only prefix reserve using source Lemmas 1 and 2.
+
+    The lower prefix bound decreases with p, as does the tail upper bound
+    once log(p)>16/3. Thus they use the upper and lower prime bounds,
+    respectively. The coefficient 46 follows from half of the cited
+    full Euler product <94, minus one; it is valid at this smaller N.
+    """
+    N = 1000000000
+    source_product_N = 1532030200000000000000
+    require(10**9 <= N <= source_product_N,
+            'Odd-only N satisfies both published source ranges')
+    ln_N = log_interval(N)
+    ln_ln_N = log_interval(ln_N)
+    prime_lower = N * (ln_N + ln_ln_N - F(3, 2))
+    prime_upper = N * (ln_N + ln_ln_N - F(1, 2))
+    log_lower = log_interval(prime_lower)
+    log_upper = log_interval(prime_upper)
+    require(log_lower.lo > F(16, 3), 'Tail envelope is decreasing')
+    a, b = F('0.8913191'), F('1.7826381')
+    require(b - a / log_lower.lo**2 > 0,
+            'Prefix envelope is decreasing')
+    prefix = F(1, 2) * exp_interval(
+        (log_interval(F('3.84636486599'))
+         - b * log_upper - a / log_upper) / 2)
+    # FK (6)--(9) on odd cofactors omits the q=2=p_1 factor. With delta_1=0
+    # that factor is exactly 150; its removal propagates through (18)--(21)
+    # and the positive tail summation. This is a proof input, not an
+    # inference obtained by dividing the conclusion of Lemma 1 alone.
+    factor_two = 1 + F(15*2**3 + 5*2**2 + 5*2 - 1, (2-1)**4)
+    require(factor_two == 150, 'Omitted even-prime fourth-moment factor')
+    tail = F('0.657743') * log_lower**16 / (factor_two * prime_lower**3)
+    reserve = prefix - tail
+    overlap_lower = reserve.lo / 46
+    union_lower = overlap_lower / (N - 3)
+    require(reserve.lo > 0, 'Odd-only prefix reserve exceeds the odd-only tail')
+    require(overlap_lower > F(1, 10**11),
+            'Minimal-bucket overlap is strictly greater than 1e-11')
+    require(union_lower > F(1, 10**20),
+            'Union of these original overlaps has mass greater than 1e-20')
+    require(prime_upper.hi < 25 * 10**9,
+            'Every prime in the localized overlap lies below 25000000000')
+    return {
+        'N': N,
+        'source_product_N': source_product_N,
+        'omitted_fourth_moment_factor': str(factor_two),
+        'prime_lower': encode(prime_lower),
+        'prime_upper': encode(prime_upper),
+        'prefix_reserve_lower_envelope': encode(prefix),
+        'tail_upper_envelope': encode(tail),
+        'reserve_minus_tail': encode(reserve),
+        'overlap_coefficient_strict_upper': 46,
+        'minimal_bucket_overlap_strict_lower': str(overlap_lower),
+        'minimal_bucket_overlap_lower_decimal_display_only': decimal(overlap_lower),
+        'minimal_bucket_overlap_exceeds_10_to_minus_11': True,
+        'original_overlap_union_strict_lower': str(union_lower),
+        'original_overlap_union_lower_decimal_display_only': decimal(union_lower),
+        'original_overlap_union_exceeds_10_to_minus_20': True,
+        'localized_prime_strict_upper': 25 * 10**9,
+    }
+
+
 def main():
     N = 1532030200000000000000
     require(N == F('1.5320302') * 10 ** 21 and N >= 10 ** 9, "Failed exact check: N == F('1.5320302') * 10 ** 21 and N >= 10 ** 9")
@@ -216,7 +280,7 @@ def main():
     require(source_margin / 93 > F(5, 10 ** 52), 'Failed exact check: source_margin / 93 > F(5, 10 ** 52)')
 
     report = {
-        'scope': 'Exact rational validation of FK v1 equation (24) and arithmetic bridges, conditional on source Lemmas 1–2, equation (23), and the page-24 Euler-product bound <94. The generalized leakage recurrence and source prime products are not checked here.',
+        'scope': 'Exact rational validation of FK v1 equation (24), the odd-only prefix/tail comparison, and arithmetic bridges. Conditional on source Lemmas 1–2, the odd restriction of the fourth-moment proof (6)–(21), equation (23), and the page-24 Euler-product bound <94. The leakage recurrences and source prime products are not checked here.',
         'N': N,
         'distortion_delta': str(delta),
         'dyadic_bits': BITS,
@@ -243,6 +307,7 @@ def main():
         'conditional_odd_Hcov_strict_lower_bound': str(odd_Hcov_lower),
         'conditional_odd_Hcov_lower_decimal_display_only': decimal(odd_Hcov_lower),
         'conditional_odd_Hcov_exceeds_2_times_10_to_minus_43': True,
+        'odd_only_prefix': odd_only_prefix_reserve(),
     }
     print(json.dumps(report, indent=2))
 

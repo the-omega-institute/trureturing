@@ -6288,3 +6288,269 @@ $$
 后续仍需研究的接口包括：具体可用门集下的精确／近似准备及计价；在保留真实档案与量子参考时，允许干预族的误差与最低资源；超出 $k=2,3$ 域次数反例后的保律运输充分条件。它们保持原任务和完成判据，不被本节有限模型的证明替代。本次是既有研究网络的一段源卷进展；全部结论为所写假设下的普通数学推导，不宣称新增形式核验、完整物理统一或持续计划完成。
 
 ## 36.99 追加锚
+
+## 37. 有限循环的合法边界、联合来源与世界实现
+
+### 37.1 完整档案上的同一实际律与局部运输
+
+**定义 37.1（有限循环的完整观察合同）。** 沿用定义35.1的完整档案可行族，以 $H$ 固定全部已获的内部／外部记录、来源及其关系、参考、各局部钟与联合顺序、校准及误差证书、准备、允许操作和已经取得的费用信息。声明一个非空的世界—概率律可行关系及其中的实际律 $\rho$；可行关系同时约束记录解释、来源相关、策略和干预。定义36.4中档案、活动记忆和外部参考的区别继续适用：当前循环、成对表或解码律只是该观察者使用的任务视图。本节是经典有限模型，不附加式（36.6）的编码专用纯根准备；量子参考仍需原来的联合态合同，不能替不相容实验填入共同经典值。
+
+给合法世界集 $W_H$ 和标签映射 $\lambda$，实际标签律为 $P=\lambda_*\rho$。仅有 $W_H$ 与 $\lambda$ 不规定允许哪些概率律。也可直接声明一个实际标签律 $P$，把其世界提升留作额外前提；分别供应的边缘表相容不证明已经存在这一个 $P$。以下所有比较均固定同一 $H$ 和一份声明实验。
+
+令 $n\ge3$，各 $B_i$ 有限非空，$h_i:B_i\to B_{i+1}$ 为双射，指标模 $n$。给节点概率 $\mu_i$，要求包括闭合边在内的 $(h_i)_*\mu_i=\mu_{i+1}$，并要求同一实际联合律的 $X_i$ 边缘为 $\mu_i$。定义
+$$
+U_0=\mathrm{id},\quad U_j=h_{j-1}\cdots h_0,\quad
+B=B_0,\quad \mu=\mu_0,\quad g=h_{n-1}\cdots h_0,
+\quad Y_j=U_j^{-1}X_j.
+\tag{37.1}
+$$
+于是 $g_*\mu=\mu$，每个 $Y_j$ 的边缘均为 $\mu$。内部理想关系为 $Y_{i+1}=Y_i$，闭合关系为 $Y_0=gY_{n-1}$；闭合成对表始终按 $(Y_{n-1},Y_0)$ 排列。坐标变换是原子的双射重标，保持 TV；坐标含义和来源是接口的一部分。下文仍以 $P$ 表示运输后的同一联合律。
+
+对已声明 $S\subseteq B^n$，置
+$$
+\mathcal C_S=\{P\in\operatorname{Prob}(B^n):P(S)=1,
+\ (Y_j)_*P=\mu\text{ 对每个 }j\},\qquad
+\mathcal C_{B^n}\text{ 为无限制支撑类}.
+\tag{37.2}
+$$
+这是仅限制支撑及节点边缘的比较类。更强的概率准入类可以非凸；任何应用都须有实际成员，且须准入所用的具体构造。逐标签有合法元组并不保证某个联合律被准入。
+
+换锚点到节点 $j$ 时，闭路置换变为 $U_jgU_j^{-1}$，节点律变为 $(U_j)_*\mu$，所以轨道质量及移动质量不变；锚只是参考选择。[主卷命题133.1](RECURSIVE_RELATIONAL_OBSERVATION.md)在同一来源、相等观察核及完整实际像上给规范双射和余循环律，那种闭路的 holonomy 为恒等。本节非平凡 $g$ 描述另行提出的局部兼容关系或声明操作，不反驳该供应结果。编码重置矩阵不必可逆，不能充当这里的 $h_i$。本节“割”只表示省去一条循环边，与第13节的因果序理想割不同。
+
+### 37.2 所有相位合法的割与精确预算
+
+**定理 37.2（合法总误差面）。** 使用[恢复卷定理32.3](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)的完整分类、固定对角 $D(x)$ 和单割元组 $T^k(x)$。对正质量移动轨道 $O$，令
+$$
+L_{O,k}=\{x\in O:T^k(x)\in S\},\qquad
+K_O=\{k:L_{O,k}=O\},\qquad w_O=\mu(O).
+\tag{37.3}
+$$
+$\mathcal C_S$ 含总误差为 $a=\mu(\{x:gx\ne x\})$ 的律，当且仅当每个正质量固定点的 $D(x)$ 合法，且每个正质量移动轨道满足 $K_O\ne\varnothing$。此时全部这类律组成
+$$
+\mathcal F_S=\prod_O\Delta(K_O),\qquad
+\dim\mathcal F_S=\sum_O(|K_O|-1).
+\tag{37.4}
+$$
+没有移动轨道时乘积是一点；零质量轨道不附加条件。对更强准入类，式（37.4）只是容纳其最优律的支撑面，还须取交集并检查成员资格。
+
+证明。恢复卷定理32.3说明每一正轨道的割列质量在所有相位上相同；若该列正，就在 $O$ 的每个 $x$ 使用 $T^k(x)$，故必须 $k\in K_O$。固定点的质量不能移动到其他标签，故对应对角必须合法。反过来，每轨道任选 $K_O$ 上的概率，配以必需的固定对角质量，即得合法且边缘精确的最优律。移动元组的 $(x,k)$ 唯一，因而这些概率坐标无额外识别；各因子的维数相加。$\square$
+
+**定理 37.3（最优面上的加权 Hall 预算）。** 假设定理37.2的面非空，给有限 $\varepsilon_k\ge0$。在 $\mathcal F_S$ 中存在每边误差不超过 $\varepsilon_k$ 的律，当且仅当对任意正质量移动轨道子集 $A$ 有
+$$
+w(A):=\sum_{O\in A}w_O\le\sum_{k\in N(A)}\varepsilon_k,
+\qquad N(A)=\bigcup_{O\in A}K_O.
+\tag{37.5}
+$$
+等价的分配是 $z_{O,k}\ge0$、$k\notin K_O$ 时为零，且
+$$
+\sum_kz_{O,k}=w_O,\qquad \sum_Oz_{O,k}\le\varepsilon_k.
+\tag{37.6}
+$$
+若 $a>0$，面内最小最大边误差为
+$$
+\min_{P\in\mathcal F_S}\max_k\delta_k(P)
+=\max_{\varnothing\ne A}\frac{w(A)}{|N(A)|}.
+\tag{37.7}
+$$
+分母均正；$a=0$ 时值为零。
+
+证明。恢复卷的误差投影为 $\delta_k=\sum_Oz_{O,k}$。将 $A$ 的行求和即得必要性。充分性用有限网络：源到 $O$ 的容量 $w_O$，每条允许的 $O\to k$ 容量 $C=a+\sum_k\varepsilon_k+1$，$k$ 到汇的容量 $\varepsilon_k$。实容量可行流集合非空、闭且有界，因此流值取得最大值。若最大值 $v<a$，其残量网络没有正容量的源汇路径，否则沿该有限路径加其最小正残量即提高流值。令 $A,J$ 分别为源可达的轨道和割节点。每条中间弧流量至多 $a<C$，所以 $N(A)\subseteq J$。从可达集到不可达集的弧饱和，反向跨割弧流量为零；对可达节点守恒求和，得到
+$$
+v=w(\text{全部轨道}\setminus A)+\sum_{k\in J}\varepsilon_k<a.
+$$
+这给 $w(A)>\sum_{k\in J}\varepsilon_k\ge\sum_{k\in N(A)}\varepsilon_k$，违背（37.5）。故有满值 $a$ 的流，饱和各轨道供给而给出（37.6），再用定理37.2构造律。令所有容量 $\varepsilon_k=t$，Hall 条件恰为 $t\ge w(A)/|N(A)|$，得到（37.7）。$\square$
+
+这是 Ford–Fulkerson 的成熟流机制在本有限分配中的应用[^rroctx37_flow]。证明只用实流的紧性和最大流的残量割，不声称任意无理容量的逐次增广会终止。[RationalSTCutCertificate.lean](../../../D5/S0/Certificates/RationalSTCutCertificate.lean)负责已供应有理流／割证书的会计、弱对偶与可靠检查，不供应此实容量存在性或一个流生成器。
+
+**命题 37.4（超额预算不能只查最优面）。** 若 $\sum_k\varepsilon_k=a$，任一满足预算的 $P\in\mathcal C_S$ 由恢复卷定理32.1被迫属于 $\mathcal F_S$，故 Hall 亦是全类的判据。若预算总和大于 $a$，这个结论不成立。
+
+证明及反例。取 $n=3$、$B=\mathbb Z/3\mathbb Z$、$g(x)=x+1$、均匀 $\mu$，仅允许
+$$
+T^0(x)=(x,x-1,x-1),\qquad U(x)=(x,x,x+1).
+\tag{37.8}
+$$
+仅割 $0$ 的全部相位合法。两族各自的均匀律都保留所有节点边缘，误差分别为 $(1,0,0)$ 与 $(0,1,1)$；其半混合误差为 $(1/2,1/2,1/2)$。对应预算的面内 Hall 要求 $1\le1/2$，不成立，但这份总误差 $3/2>a=1$ 的实际律满足预算。第一项由 $a\le\sum_k\delta_k\le\sum_k\varepsilon_k=a$ 直接得出。$\square$
+
+### 37.3 更强概率准入的障碍与固定多面体替代
+
+**命题 37.5（凸性、逐点合法与共同割仍不足）。** 恢复卷定理32.7、定义32.10和定理32.14的输出属于 $\mathcal C_S$；它们不因逐元组合法或准入类凸而自动属于更强类。即使全部共同割混合已准入，依轨道修复仍可能不被准入。
+
+证明及反例。二元翻转三角形中让全部元组合法，却只准入独立均匀乘积律构成的凸单点类。它的三边误差都是 $1/2$，所以预算 $(1/3,1/3,1/3)$ 不可行，尽管预算和等于 $a=1$。这里缺失的是割律的准入。
+
+再取 $n=3$、$g=(01)(23)$、均匀 $\mu$，令 $\mathcal F_c=\operatorname{conv}\{P^0,P^1,P^2\}$，$J$ 为独立均匀乘积。令 $Q_*$ 在轨道 $\{0,1\}$ 选割 $0$，在轨道 $\{2,3\}$ 选割 $1$。对共同割混合 $Q_\pi$，重叠质量为 $(\pi_0+\pi_1)/2$，故 $\operatorname{TV}(Q_*,Q_\pi)\ge1/2$。置
+$$
+\varepsilon=1/100,\quad P_\varepsilon=(1-\varepsilon)Q_*+\varepsilon J,
+\qquad \mathcal A_\varepsilon=\operatorname{conv}(\mathcal F_c\cup\{P_\varepsilon\}).
+\tag{37.9}
+$$
+所有成员节点边缘相同。$Q_*$ 的误差是 $(1/2,1/2,0)$，$J$ 的误差是 $(3/4,3/4,3/4)$，所以 $P_\varepsilon$ 的误差及剩余量为
+$$
+(201/400,201/400,3/400),\qquad R(P_\varepsilon)=1/80.
+\tag{37.10}
+$$
+$R$ 在这同一固定节点类上非负且仿射，故 $\mathcal A_\varepsilon$ 的零面恰为 $\mathcal F_c$。三角不等式与 $\operatorname{TV}(P_\varepsilon,Q_*)\le\varepsilon$ 给
+$$
+\operatorname{dist}_{\rm TV}(P_\varepsilon,\mathcal F_c)\ge49/100.
+\tag{37.11}
+$$
+无限制支撑时 $M_{\max}=1/2$，恢复卷（32.18）的界为 $2R=1/40$；可见其构造不能直接作为此更强类的成员。$\square$
+
+**命题 37.6（一个固定紧凸类没有线性剩余量界）。** 在命题37.5的四标签模型中，令
+$$
+B_t=(1-t-t^2)P^0+tQ_*+t^2J\quad(0\le t\le1/2),\qquad
+\mathcal A=\operatorname{conv}\bigl(\mathcal F_c\cup\{B_t:0\le t\le1/2\}\bigr).
+\tag{37.12}
+$$
+$\mathcal A$ 是固定紧凸概率类，零剩余面为 $\mathcal F_c$，但不存在有限 $L$ 使所有 $P\in\mathcal A$ 满足 $\operatorname{dist}_{\rm TV}(P,\mathcal F_c)\le LR(P)$。
+
+证明。系数非负且和为一，生成集合紧；有限维空间中紧集的凸包仍紧。具体可由仿射依赖消元把任意凸组合缩到环境维数加一项，从而凸包是紧的“点组乘单纯形”连续像。$R(B_t)=5t^2/4$，非负仿射性及有限凸分解说明零剩余只使用 $\mathcal F_c$ 与 $B_0=P^0$，故零面如述。
+
+定义 $f$ 在第一轨道锚的割 $0$ 元组上为 $+1$，在第二轨道锚的割 $0$ 元组上为 $-1$，其余为零。则 $|f|\le1$，在 $\mathcal F_c$ 与 $J$ 上的期望均为零，在 $Q_*$ 上的期望为 $1/2$。于是 $\mathbb E_{B_t}f=t/2$；对任意 $Q\in\mathcal F_c$，有限和三角不等式给 $|\mathbb E_{B_t}f-\mathbb E_Qf|\le2\operatorname{TV}(B_t,Q)$，从而
+$$
+\operatorname{dist}_{\rm TV}(B_t,\mathcal F_c)\ge t/4,\qquad
+\frac{\operatorname{dist}_{\rm TV}(B_t,\mathcal F_c)}{R(B_t)}\ge\frac1{5t}\quad(t>0).
+\tag{37.13}
+$$
+令 $t\downarrow0$ 即得。$\square$
+
+在一个固定紧类上，若连续非负剩余量有非空零集，则剩余量趋零仍蕴含到零集的距离趋零。否则有距离统一大于某个正数的序列；紧性给收敛子列，连续性使极限落在零集，与距离下界矛盾。这一定性命题与恢复卷命题32.9的变字母集族相容。
+
+**定理 37.7（固定概率多面体的顶点间隙界）。** 令 $\mathcal D$ 是一个固定非空概率多面体，$R$ 为其上非负仿射函数，且 $\mathcal F=\{\rho\in\mathcal D:R(\rho)=0\}\ne\varnothing$。全部来源和记录约束须包含在 $\mathcal D$ 中；应用于循环时也固定节点律以保证剩余量非负。若所有顶点剩余量为零，则 $\mathcal F=\mathcal D$；否则定义最小正顶点剩余量 $\gamma>0$，有
+$$
+\operatorname{dist}_{\rm TV}(\rho,\mathcal F)\le\min\{1,R(\rho)/\gamma\}.
+\tag{37.14}
+$$
+证明。写 $\rho=\sum_v\alpha_vv$，令 $\eta=\sum_{R(v)>0}\alpha_v$，则 $R(\rho)\ge\gamma\eta$。选任一 $f\in\mathcal F$，令
+$$
+\rho_* =\sum_{R(v)=0}\alpha_vv+\eta f\in\mathcal F.
+$$
+有限和的三角不等式给 $\operatorname{TV}(\rho,\rho_*)\le\sum_{R(v)>0}\alpha_v\operatorname{TV}(v,f)\le\eta$，即得。$\square$
+
+这个明确顶点证明处于 Hoffman 型多面体误差界的成熟背景[^rroctx37_hoffman]，只给某个被准入最优律的存在性，不是指定解码输出 $Q$ 的提升。计算 $\gamma$、顶点分解及见证另需资源，换多面体不能保留同一常数。仿射性不可省：在 $\rho_t=(1-t,t)$ 上取非线性剩余量 $t^2$，零集为 $\{\rho_0\}$、正顶点间隙为一，但距离 $t>t^2$（$0<t<1$）。非负性则防止顶点剩余量相互抵消。空零面及额外非线性准入不属该定理。
+
+### 37.4 标签纤维的抵消与指定目标的世界提升
+
+**命题 37.8（同一纤维内不可见的质量抵消）。** 固定有限 $W=W_H,Z$、实际概率 $\rho$、$\lambda:W\to Z$ 及 $P=\lambda_*\rho$。给一个指定目标标签概率 $Q$，对任一满足 $\lambda_*\rho'=Q$ 的候选世界律置
+$$
+A_z=\sum_{\lambda w=z}(\rho'(w)-\rho(w))_+,\qquad
+B_z=\sum_{\lambda w=z}(\rho(w)-\rho'(w))_+.
+\tag{37.15}
+$$
+则
+$$
+\operatorname{TV}(\rho,\rho')-\operatorname{TV}(P,Q)
+=\sum_z\min(A_z,B_z).
+\tag{37.16}
+$$
+等 TV 的条件是亏损纤维只减质量，盈余纤维只加质量，总量不变的纤维逐点不变。
+
+证明。$A_z-B_z=Q(z)-P(z)$，世界及标签 TV 分别为 $\tfrac12\sum_z(A_z+B_z)$、$\tfrac12\sum_z|A_z-B_z|$；用 $a+b-|a-b|=2\min(a,b)$ 得（37.16）。一般的等 TV 无符号混合判据由 [D5/S3/TotalVariation/Equality/DataProcessingEquality.lean](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean) 的 `total_variation_channel_eq_iff_no_sign_mixing` 供应：在这里取确定核 $\mathbf1_{\lambda w=z}$。它要求每个纤维的差只取一种符号；结合纤维总差即得所述三种情况。$\square$
+
+（37.16）计量的是标签遗忘后隐藏的世界改变量，不是物理耗散公式；此处复用一般等号定理，不另立一套通用 TV 等号理论。
+
+**命题 37.9（无额外律限制时的等距离提升）。** 若允许 $W$ 上任意概率律，则 $Q$ 可提升当且仅当每个 $Q(z)>0$ 的纤维 $W_z$ 非空；满足时可选 $\rho'$ 使 $\operatorname{TV}(\rho,\rho')=\operatorname{TV}(P,Q)$。
+
+证明。必要性由推前定义。对 $P(z)>0$，在纤维内设 $\rho'(w)=Q(z)\rho(w)/P(z)$；对 $P(z)=0<Q(z)$，选择 $W_z$ 上任意概率并赋总量 $Q(z)$；对 $P(z)=Q(z)=0$ 直接置零，不选择条件坐标或见证。各纤维改变量同号，命题37.8给等距离。$\square$
+
+正旧质量且正目标质量的纤维保留旧条件分布；这是主卷定义67.7、定理67.8的正质量纤维分解在指定标签任务上的应用。它可能改变外部来源。若 $Q=P$，唯一距离零的提升为 $\rho$ 本身。
+
+### 37.5 保留联合来源的满流判据
+
+**定理 37.10（指定标签的来源保留等距离提升）。** 在命题37.8下另给有限 $U$、$\sigma:W\to U$ 及 $\nu=\sigma_*\rho$，准入全部且仅有满足此来源边缘的 $W$ 上概率律。若多个来源或参考须共同保留，$\sigma$ 编码其联合记录，或施加等价的完整联合约束；分别保留各来源边缘不足以保留其联合律。定义
+$$
+D=\{z:P(z)>Q(z)\},\quad A=\{z:Q(z)>P(z)\},\quad
+\tau=\operatorname{TV}(P,Q),\quad
+ d_z^-=P(z)-Q(z)\ (z\in D),\quad d_z^+=Q(z)-P(z)\ (z\in A),
+$$
+$$
+r_{z,u}=\rho(\lambda=z,\sigma=u),\qquad
+W_{z,u}=\{w:\lambda w=z,\sigma w=u\}.
+\tag{37.17}
+$$
+用互相区别的节点层构造网络：源 $s$ 到 $z\in D$ 容量 $d_z^-$；$z\in D$ 到 $u$ 容量 $r_{z,u}$；若 $W_{z',u}\ne\varnothing$，则 $u$ 到 $z'\in A$ 容量 $\tau$，否则无弧；$z'\in A$ 到汇容量 $d_{z'}^+$。则存在来源保留且满足
+$$
+\lambda_*\rho'=Q,\qquad \sigma_*\rho'=\nu,\qquad
+\operatorname{TV}(\rho,\rho')=\tau
+\tag{37.18}
+$$
+的律，当且仅当此网络有值为 $\tau$ 的流。$\tau=0$ 使用零流并返回 $\rho$。
+
+证明。必要性使用命题37.8的既有等号判据：仅亏损标签可移除，仅盈余标签可加入，标签总量不变的纤维不能作中转储库。聚合每个亏损单元的移除量为 $f_{z,u}\le r_{z,u}$，每个合法盈余单元的加入量为 $h_{u,z'}$。标签总量给出饱和供需 $d^-,d^+$；来源边缘保留给出 $\sum_zf_{z,u}=\sum_{z'}h_{u,z'}$，即中间层守恒。总流量为 $\tau$，故接收弧容量 $\tau$ 足够，构成满流。
+
+反之，满流的总值等于全部供给及需求之和，故每条源出弧与汇入弧饱和。在 $r_{z,u}>0$ 的移除单元，逐世界移除 $f_{z,u}\rho(w)/r_{z,u}$，容量保证不致负值；$r_{z,u}=0$ 时流量为零，不作除法。每个有正接收流的单元选一个合法世界加入 $h_{u,z'}$，或在该单元内分布它。守恒保留 $\nu$，供需饱和给 $Q$，移除与加入的标签不交，故世界总移除／加入量各为 $\tau$，世界 TV 正好为 $\tau$。$\square$
+
+初始质量零但非空的接收单元可以接收；旧移除质量零的单元容量就是零。$\nu(u)=0$ 的来源没有移除供给，不能得到新质量。任何必需而空的标签纤维同时阻止满流和一切提升。$\tau=0$ 不需新见证。保留 $\sigma$ 的联合律仍不自动保留来源—标签条件机制。若另加概率、策略、机制或资源限制，此流条件对等 TV 仍必要，但充分性还需准入刚才的具体构造。
+
+来源保留且标签为 $Q$ 的目标提升集若非空，是紧多面体；连续 TV 在其上取得最小值。因此满流失败时，要么根本不可提升，要么最小世界 TV 严格大于 $\tau$，不能把两者混同。
+
+**命题 37.11（四世界上的放大与不可行分离）。** 取按所写顺序排列的
+$$
+W=\{(u_0,A),(u_0,B),(u_1,B),(u_1,C)\},\qquad
+\rho=(1/2,0,1/2,0),\qquad \nu=(1/2,1/2).
+\tag{37.19}
+$$
+若 $Q(B)=Q(C)=1/2$，标签 TV 为 $1/2$，等距离网络的最大流为零，却有唯一来源提升 $(0,1/2,0,1/2)$，世界 TV 为 $1$。
+
+证明。唯一亏损标签 $A$ 只能供给 $u_0$，唯一盈余标签 $C$ 只能接收 $u_1$，故没有源汇通路。目标 $A$ 质量为零迫使 $u_0$ 的全部 $1/2$ 转到 $B$，目标 $C$ 质量 $1/2$ 又迫使 $u_1$ 全部转到 $C$，给唯一提升。标签 $B$ 内加减各 $1/2$，所以（37.16）的额外抵消正是 $1/2$。$\square$
+
+同一载体上 $Q=P$ 成本为零；$Q$ 集中在 $B$ 时满流及等 TV 成本均为 $1/2$；$Q$ 集中在 $A$ 则因 $u_1$ 无 $A$ 世界而不可行，其等距离流也为零。相同的失败流值可对应放大或不可行。
+
+若恢复卷给某个指定 $Q$ 的 $\operatorname{TV}(P,Q)\le E_{\rm label}$，命题37.9的无限制纤维提升或定理37.10的来源满流证书，就把同一误差界原值运输到世界 TV。来源网络需要真实 $r_{z,u}$ 及合法接收单元的证书，成对标签表一般不识别它们。此网络是概率重分配证书，不是因果转移图、可执行干预或改写已获历史的许可；有限观察也不自动取得这些容量。
+
+### 37.6 记录选择器、后续实验与固定尺度
+
+**命题 37.12（真实割选择器的档案条件化）。** 真实选择器 $K$ 是已获记录，须保留于 $H'=(H,K)$。在固定 $H$ 下令其核为 $\kappa(k\mid x,H)$，其中固定锚上的取值也必须明确；对
+$$
+p_k=\sum_x\mu(x)\kappa(k\mid x,H)>0
+$$
+有
+$$
+P(X_0=x\mid H,K=k)=\frac{\mu(x)\kappa(k\mid x,H)}{p_k}.
+\tag{37.20}
+$$
+若核在每个移动轨道内恒定，条件相位仍为轨道均匀，但轨道质量变成 $w_O\kappa_{O,k}/p_k$。在每个正概率选择器值下都保留原 $\mu$，当且仅当对所有正 $\mu$ 支撑上的 $x$ 有 $\kappa(k\mid x,H)=p_k$，即给定 $H$ 后 $K$ 与 $X_0$ 独立。
+
+证明。（37.20）是同一联合律的 Bayes 公式。轨道内 $\mu(x)=w_O/\ell_O$，代入常数核并求和得新轨道质量。若条件律等于原律，对正 $\mu(x)$ 消去该因子即得核恒为 $p_k$；反向直接代入。$p_k=0$ 时非负求和迫使正 $\mu$ 支撑上该核为零，不作条件除法。$\square$
+
+固定锚上实际记录的割是额外档案，不是标签面中增加的重数坐标。决策时可否访问锚或轨道信息、是否有随机源、准备和费用，均需合法执行合同；忘掉 $K$ 不能证明完整观察者得到保留。
+
+同一个共同非负行随机核若合法且因子化通过标签接口，既有 `total_variation_channel_le` 将标签误差运输到它的输出；具体供应为 [D5/S3/TotalVariation/DataProcessing.lean](../../../D5/S3/TotalVariation/DataProcessing.lean)。双方使用不同策略，或实验读取未恢复的参考相关时，不能使用该结论。认证世界提升后可对共同合法世界核作相同运输。操作顺序合法与随机独立不同，保留来源的联合边缘也弱于保留全部来源—标签机制。
+
+每个定理固定 $n,\mu,g,S$ 和接口。系数不显含 $n$ 不消去取得 $n$ 张表、累积误差、认证 $K_O$ 全部相位和控制轨道长度的成本。若精确表已按单元索引且合法集已供应，检测提取至多需 $n$ 乘正质量移动标签数次单元查询，归一化处理 $\sum_O|K_O|$ 项；读入稠密表可需 $n|B|^2$ 项。认证全部合法割可需 $n$ 乘移动标签数次关于长度 $n$ 元组的支撑查询。这里计数的是在这些输入访问前提下的操作次数，不是位复杂度、样本界、支撑可判程序或世界准备成本。截在 $1$ 的界可能没有区分力。
+
+不同尺度各有有限最优律不提供相容选择。即使常值塔的限制映射全为恒等，二元翻转循环交替选择 $P^0,P^1$ 也都是总误差最优而不相容。已有第36.1–36.3节区分词限制、概率边缘化和量子偏迹箭头，也区分完成对象与原来源实现；活动记忆随实际历史演化，不是一个静态逆系统坐标。完成应用须额外声明限制映射、相容律、共同来源／记录和拓扑，并逐项满足既有延拓或实现定理的假设。有限字母表上的概率单纯形通常无限，不能直接套有限集合线程存在性。完成标签律可能还需回到原世界的来源提升，也不提供有限时间访问；恢复卷命题32.9限制的是随轨道增大的统一稳定性。
+
+恢复卷定理31.2–31.5已经给全 $k$、全有限历史的共同记忆及两个分别限定模型的精确容量，不把这些已得结果列为未证。任意仪器、近似记忆、反馈、真实参考的更广任务、跨尺度原来源实现和物理识别仍需各自条件。本节的有限循环修复不能替代它们，也不从关系名称推出物理时空、波／频率、半衰期、量子不确定性、局部钟或 PDE 定律。
+
+### 37.7 理想经验模型、供应归属与适用边界
+
+**命题 37.13（理想循环的 contextual fraction 与实际联合律不同）。** 本节规定的理想边经验模型由各 $M_i$ 组成；它的非上下文分数为 $1-a$、上下文分数为 $a$。实际 $P$ 的成对边缘经验模型已有 $P$ 作全局延拓，因此上下文分数为零，即使 $a>0$ 也如此。
+
+证明。采用被每个经验边缘逐点支配的全局子概率定义非上下文质量。理想图外质量为零，故受支配全局子概率只能支撑于全部关系成立的元组，即固定点对角；其每个固定点质量至多 $\mu(x)$，总质量至多 $\mu(\operatorname{Fix}g)=1-a$，固定对角子概率达到此值。实际模型中 $P$ 本身是质量一的全局延拓，故非上下文分数为一。$\square$
+
+上述理想模型身份是 Katende 定理3.3的循环特例[^rroctx37_katende]：该文在有限连通简单图、反向边取逆置换且根律对 holonomy 群 $H_{\rm hol}$ 不变时，给 $\mathrm{NCF}=p(\operatorname{Fix}H_{\rm hol})$。这里该群由 $g$ 生成。contextual fraction 及受支配子概率框架归于 Abramsky、Barbosa、Mansfield[^rroctx37_cf]，不作为新的框架。它不分类修复律、合法性、源提升或解码。两个仅共一个顶点的二元翻转挫折三角形，取共同公平锚，理想模型的 $\mathrm{CF}=1$；然而每份全局赋值在每个三角形至少失败一条边，故总期望失败至少 $2$，各三角形各指定一割并由共同公平锚生成即可达到。由此不能把单循环的修复目标直接等同于一般图的 contextual fraction。
+
+本节和恢复卷第32节连接已有接口，其供应范围如下；各普通有限推导的假设与证明已在对应命题中给出，不把源码引用视为本节新增的 Lean 核验。
+
+| 本节供应定位 | 已有结论及本节使用边界 |
+| --- | --- |
+| 37·主卷纤维与共同律 | [主卷67.7–67.8、77.1](RECURSIVE_RELATIONAL_OBSERVATION.md)分别给正质量纤维条件分解，以及严格正共同固定律／闭路势的另一模型；这里的固定节点轨道割面有自己的分类，不能把全部闭路共同律联系宣称为新内容。 |
+| 37·主卷拼接与规范运输 | 主卷124.5、124.14–124.17给运行交集、条件乘积与逐行拼接；最大熵拼接不必恢复原来源。主卷133.1的单源等核规范运输具有恒等闭路，本节非平凡局部关系不反驳它。 |
+| 37·档案与误差使用 | 本卷5.3–5.5、13.1–13.13、34.1–34.3、定义35.1及36.4保留边缘／联合来源、完整记录、顺序、共同可行纤维及合法误差运输的区别；第36.1–36.3节负责限制箭头与原实现边界。 |
+| 37·TV 既有基础 | [Metric.lean](../../../D5/S3/TotalVariation/Metric.lean)、[Convexity.lean](../../../D5/S3/TotalVariation/Convexity.lean)、[DataProcessing.lean](../../../D5/S3/TotalVariation/DataProcessing.lean)分别供应度量／事件、联合凸性和共同随机核收缩；[Equality/DataProcessingEquality.lean](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean)拥有命题37.8调用的一般无符号混合等号判据。 |
+| 37·局部关系与树拼接 | [D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean](../../../D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean)给局部集合关系兼容而无整体状态的障碍；[RunningIntersectionRecords.lean](../../../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)给完整分隔一致的树延拓。两者不替代循环概率准入和 TV 修复。 |
+| 37·有限因果耦合 | [FiniteCouplingPushforwardLift.lean](../../../D5/S3/ConceptDynamics/CausalMoments/FiniteCouplingPushforwardLift.lean)给有理指定粗耦合的双载体边缘保留提升；[BooleanOutcomeMarginalTransport.lean](../../../D5/S3/ConceptDynamics/CausalMoments/BooleanOutcomeMarginalTransport.lean)给在耦合中保留旧分布的有理 Boolean 边缘修正；[CompleteMediatorCutSharpBounds.lean](../../../D5/S3/ConceptDynamics/CausalMoments/CompleteMediatorCutSharpBounds.lean)给指定共同中介下的 Boolean MaxCut／三角形尖锐界。它们各有指定对象，不是任意联合来源提升或合法循环支撑定理。 |
+| 37·证书与其他恢复 | [RationalSTCutCertificate.lean](../../../D5/S0/Certificates/RationalSTCutCertificate.lean)检查所给有理流割证书；恢复卷10.2–10.4是正时间／矩与加权 Hilbert 投影；[量子时空卷§100](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)是指定三 qutrit 编码。均不提供这里的一般成对标签解码。 |
+| 37·已有完成接口 | [InverseLimitCompletion.lean](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean)、[StableObservationInverseLimit.lean](../../../D5/S3/ConceptDynamics/RefinementGeometry/StableObservationInverseLimit.lean)负责已声明相容限制、分离／完备及稳定观察线程；[CompactLocalRealization.lean](../../../D5/S3/Observer/Completion/CompactLocalRealization.lean)需紧性与闭纤维；[FiniteCofilteredLimit.lean](../../../D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.lean)需有限对象，不能以有限字母代替有限概率律空间。这里只引用适用边界，不证明新完成结论。 |
+
+有限观察、柱延拓、相容完成和原来源实现的既有区别还见主卷3.4–3.6、4.2、5.2、5.4、33.1、39.12–39.13、78.1、124.9–124.10，以及本卷9.8、24.12–24.15；它们各按原假设使用。这里的有限综合不据此取得原创性结论，也不提供新的跨尺度来源完成定理。它所连接的是提出的局部运输、同一联合标签律、合法修复、可取得边界与有来源约束的世界实现。
+
+[^rroctx37_katende]: Ronald Katende, *Contextual Fraction on Permutation Gain Graphs: Exact Algorithms, Query Lower Bounds, and Dynamic Maintenance*, arXiv:2607.16037v1, [Theorem 3.3](https://arxiv.org/html/2607.16037v1#S3.Thmtheorem3)。引用限于所写置换增益图、holonomy 不变根律的理想经验模型。
+
+[^rroctx37_cf]: Samson Abramsky, Rui Soares Barbosa, Shane Mansfield, *The contextual fraction as a measure of contextuality*, [arXiv:1705.07918](https://arxiv.org/abs/1705.07918)。成熟的上下文分数与受支配非上下文子概率框架。
+
+[^rroctx37_flow]: L. R. Ford, Jr. and D. R. Fulkerson, *Maximal Flow Through a Network*, Canadian Journal of Mathematics **8** (1956), 399–404, [doi:10.4153/CJM-1956-045-5](https://doi.org/10.4153/CJM-1956-045-5)。无理容量增广的终止边界见 Spencer Backman and Tony Huynh, *Transfinite Ford-Fulkerson on a Finite Network*, [arXiv:1504.04363](https://arxiv.org/abs/1504.04363)；定理37.3只用紧最大值及残量割。
+
+[^rroctx37_hoffman]: Alan J. Hoffman, *On approximate solutions of systems of linear inequalities*, Journal of Research of the National Bureau of Standards **49** (1952), 263–265, [doi:10.6028/jres.049.027](https://doi.org/10.6028/jres.049.027)；Javier Peña, Juan C. Vera, Luis F. Zuluaga, *New characterizations of Hoffman constants for systems of linear constraints*, [arXiv:1905.02894](https://arxiv.org/abs/1905.02894)。仅作多面体误差界背景；（37.14）的有限顶点证明在本节完整给出，不归托未指明的论文定理。
+
+## 37.99 追加锚
