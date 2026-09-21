@@ -27,7 +27,6 @@ run_cmd LeanInformationAudit.RootCatalogs.declare {
   companionPrefix := some `Reg.Catalogs.MapInjectiveRegistrations }
 
 set_option maxRecDepth 100000 in
-set_option maxHeartbeats 2000000 in
 #seal_information_theory
 
 
