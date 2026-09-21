@@ -737,9 +737,12 @@
       "execution_inputs": [
         "Golden/Projection/**",
         "tools/tests/StrataLint.Scribe.Tests/Fixtures/**",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
         "D5/**",
         "Blueprint/**",
         "Library/**",
+        "Meta/FILEMAP.toml",
+        "Meta/FILEMAP.*.toml",
         "Meta/domains.yaml",
         "Meta/registry.yaml",
         "tools/scripts/katex/**",
