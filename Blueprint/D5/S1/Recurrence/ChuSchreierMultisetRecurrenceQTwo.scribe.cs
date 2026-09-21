@@ -50,11 +50,15 @@ internal sealed class ChuSchreierMultisetRecurrenceQTwoDocument
                     + "Removing the first part gives the composition recurrence with shifts "
                     + "2, 3, and 4; applying it to the four adjacent counting terms gives "
                     + "the stated recurrence.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chu-2026-schreier-multiset-recurrence-q-two"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) =>
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
@@ -62,7 +66,8 @@ internal sealed class ChuSchreierMultisetRecurrenceQTwoDocument
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula GroundFormula()
     {

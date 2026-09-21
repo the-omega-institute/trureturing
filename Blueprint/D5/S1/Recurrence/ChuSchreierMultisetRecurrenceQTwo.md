@@ -58,6 +58,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/ChuSchreierMultisetRecurrenceQTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chu-2026-schreier-multiset-recurrence-q-two` (proved) by `D5/S1/Recurrence/ChuSchreierMultisetRecurrenceQTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chu-2026-schreier-multiset-recurrence-q-two","declaration_gid":"D5/S1/Recurrence/ChuSchreierMultisetRecurrenceQTwo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hùng Việt Chu; Yubo Geng; Julian King; Steven J. Miller; Garrett Tresch; Zachary Louis Vasseur (2026). *Linear Recurrences from Counting Schreier-Type Multisets*. DOI: [10.5281/zenodo.19949535](https://doi.org/10.5281/zenodo.19949535). URL: <https://math.colgate.edu/~integers/aa53/aa53.pdf>.
