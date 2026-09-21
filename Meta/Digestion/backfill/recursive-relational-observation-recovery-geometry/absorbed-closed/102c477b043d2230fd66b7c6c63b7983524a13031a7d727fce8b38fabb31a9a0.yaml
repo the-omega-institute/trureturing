@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:102c477b043d2230fd66b7c6c63b7983524a13031a7d727fce8b38fabb31a9a0
+  normalized_sha256: sha256:102c477b043d2230fd66b7c6c63b7983524a13031a7d727fce8b38fabb31a9a0
+cas_ref: sha256:102c477b043d2230fd66b7c6c63b7983524a13031a7d727fce8b38fabb31a9a0
+coverage_gids:
+  - gid: D5/S3/FluidDynamics/Fourier/WeightedTensorConvolution.weighted_tensor_convolution
+    target_statement_id: sha256:838ad1f42caabf58e6e8994a858695df2ea53e669caedf8ddd931fb6d26f2ebb
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - bc22a02dee5af203031ed0ef1f853602ec559cd3ac5ebc1f4eb743258262b3a4
+    - 21831e9a5c1bc2c95c7d9eb0803afee51669a24d9cb776435652b181d02d759c
+    - 166dcb1407c9066851bb710dde1cb93597afc45f54d7afd8ca6a4ec1bd06917d
+    - 0764fc009bc61f674be8caa99c425489b9efd81468352e2792f7c252ce43fd8f
+    - f9c3b666b576d00cca65aa87e38ce3e633cddc83be5253c1ded1730ff221e68c
+    - 42ab1c00178fb3a5e64f1c5293da645960cae83877a42045322ece8687a3cda3

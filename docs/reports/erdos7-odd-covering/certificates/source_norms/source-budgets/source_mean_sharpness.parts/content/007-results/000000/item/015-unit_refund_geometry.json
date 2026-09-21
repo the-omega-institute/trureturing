@@ -1,0 +1,106 @@
+{
+  "clean_cylinders": [
+    [
+      5,
+      1,
+      4
+    ],
+    [
+      5,
+      2,
+      20
+    ],
+    [
+      7,
+      1,
+      4
+    ],
+    [
+      7,
+      1,
+      5
+    ]
+  ],
+  "pure3_survivors": 14,
+  "pure3_test_union_cap": 13,
+  "clipping_threshold": "3/10",
+  "active_mixed_fraction_charge": [
+    [
+      0,
+      "1/11",
+      "0"
+    ],
+    [
+      1,
+      "2/11",
+      "0"
+    ],
+    [
+      2,
+      "3/11",
+      "0"
+    ],
+    [
+      4,
+      "5/11",
+      "17/77"
+    ]
+  ],
+  "unweighted_charge": "119/493394",
+  "reweighted_charge_by_cell": [
+    "119/406772",
+    "595/2237246",
+    "238/1118623",
+    "238/1118623",
+    "238/1118623"
+  ],
+  "sample_a": 0,
+  "sample_added_originals": [
+    {
+      "modulus": 11,
+      "residue": 10,
+      "current_digit": 10
+    },
+    {
+      "modulus": 297,
+      "residue": 0,
+      "current_digit": 0
+    },
+    {
+      "modulus": 2079,
+      "residue": 1377,
+      "current_digit": 2
+    },
+    {
+      "modulus": 7425,
+      "residue": 4995,
+      "current_digit": 1
+    },
+    {
+      "modulus": 51975,
+      "residue": 46170,
+      "current_digit": 3
+    }
+  ],
+  "extended_label_count": 29,
+  "witness_scope": "Sample a checks extension geometry only. The ordinary proof supplies an uncomputed maximizing layout and a hole that may depend on the source weights.",
+  "complete_next11": {
+    "clean_root": 9,
+    "clean_root_caps": [
+      "1/10",
+      "1/9",
+      "1/8",
+      "10/77"
+    ],
+    "pair_moments": {
+      "5": "232/125",
+      "7": "76/49"
+    },
+    "square_coefficient": "13/10",
+    "fibre_square_upper": "987392/112135",
+    "reweighted_fibre_square_upper": "5430656/508465",
+    "additive_error_upper": "4866432/6167425",
+    "reweighted_additive_error_upper": "2433216/2542325"
+  },
+  "fixed_depth": null
+}
