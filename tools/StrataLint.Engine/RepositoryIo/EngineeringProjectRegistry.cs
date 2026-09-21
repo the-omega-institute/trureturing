@@ -271,7 +271,7 @@ internal sealed class EngineeringProjectRegistry
             && !exclude.Any(pattern => pattern.IsMatch(path))).Order(StringComparer.Ordinal).ToArray();
     }
 
-    private static void ValidateMaterials(string[]? includes, string[]? excludes, string project)
+    internal static void ValidateMaterials(string[]? includes, string[]? excludes, string project)
     {
         foreach (var patterns in new[] { includes, excludes })
         {

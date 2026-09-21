@@ -103,8 +103,8 @@ public sealed class RuleEngineCapacityTests
     public void Sl003DoesNotTreatTheSingleSourceDigestionLedgerAsASplittableModule()
     {
         var fixture = new RuleFixture();
-        // domains, registry and engineering-projects are the three counted Meta files.
-        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 3; index++)
+        // domains, registry, engineering-projects and ci-checks are the four counted Meta files.
+        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 4; index++)
         {
             var path = $"Meta/Capacity{index:00}.txt";
             fixture.Files[path] = "fixture\n";
