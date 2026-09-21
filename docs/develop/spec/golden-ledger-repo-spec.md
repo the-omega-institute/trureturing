@@ -404,7 +404,7 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 共享程序入口拥有输入/报告验证、退出归一与摘要,包括早退出口;YAML 与 preflight 只编排并传递结果。摘要区分 `executed`、经校验的 `reused`、`not-required`、未执行与失败,列明候选身份、检查/测试结果和产物位置,保留原始失败原因。raw `0` 为成功,`1` 为候选检查失败或 merge 冲突,`2` 为输入/基础设施失败,`3` 只表示 SL-022 保护面变更标注。只有其它必需义务全部通过时才可将标注归一为阶段成功;标注不豁免任何检查,也不触发第二次 Lean/current。make 只承诺成功/配方失败,不得把其折叠后的 `2` 当作原始失败分类。缓存状态、缺失证据或未知结果都不是通过判词。
 
-**Workflow 与消费者。** `ci-push.yml` 承载 `push` 到 `dev` 与 `workflow_call`,运行 engineering/current;实际集成分支按 CLAUDE.md §8.12 使用等价检查义务与执行环境。原生 push 校验固定事件端点;PR 调用必须显式传入固定候选 SHA,空值、非法值或与 checkout 不符即失败,不得回退调用事件 SHA。PR 公共 jobs 检出同一候选且缓存只读。`ci-pr.yml` 只承载 `pull_request`,目标保持 `dev` 与 `integration-**`,只申请 `contents: read`、`actions: read`,不传入额外 secrets;每轮一次解析 merge 候选 M 及第一父 B,将固定身份传给公共流程与 delta。各检查 job 固定检出 M,不重新解析可变 merge ref;不可用即失败。delta 依赖公共阶段成功及产物交接,不再运行 engineering/current。
+**Workflow 与消费者。** `ci-push.yml` 承载 `push` 到 `dev` 与 `workflow_call`,运行 engineering/current;实际集成分支按 CLAUDE.md §8.12 使用等价检查义务与执行环境。原生 push 校验固定事件端点;PR 调用必须显式传入固定候选 SHA,空值、非法值或与 checkout 不符即失败,不得回退调用事件 SHA。PR 公共 jobs 检出同一候选,允许在对应产出成功后向自身 `refs/pull/<number>/merge` 写入隔离缓存;该快照仅供同一 PR 后续运行恢复,不能供 dev、integration 或其它 PR 恢复。`ci-pr.yml` 只承载 `pull_request`,目标保持 `dev` 与 `integration-**`,只申请 `contents: read`、`actions: read`,不传入额外 secrets;每轮一次解析 merge 候选 M 及第一父 B,将固定身份传给公共流程与 delta。各检查 job 固定检出 M,不重新解析可变 merge ref;不可用即失败。delta 依赖公共阶段成功及产物交接,不再运行 engineering/current。
 
 最终 PR checks 为 `push / engineering`、`push / current`、`delta`;dev push checks 为 `engineering`、`current`。以新 workflow 的真实 integration run 核对 GitHub 实际名称后同步 required set,保持 `strict=false`,不以 ancestry、追平门或 admin bypass 代替。YAML 只含事件、权限、runner、checkout、依赖、cache/artifact 运输及共享入口调用;缓存地址、JSON 校验、测试选择与判词/摘要逻辑属于共享程序。job 状态运输只带消费方需要的结果与身份,大计划和完整路径不重复嵌入其它上下文。
 
@@ -414,7 +414,7 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 `truth-release-select --input FILE` 的既有 JSON 输入新增 `source_ref`（缺省 `refs/heads/dev`）；它仅限定 push run 的真实 `head_branch`，不自行宣称分支受保护。成功选择输出保留 `source_ref/source_commit/run_id/run_attempt/artifact_id/artifact_name/required_checks`。验证入口与发布共用 collect、selector、restore 及候选 transport verifier，要求同 run/attempt/head 的 engineering/current 成功、完整材料和实际需要的 Lean report；无合格证据以退出码 2 失败，不重产报告。成功验证输出 `source_verified=true,publish_ready=false` 及上述真实来源身份、`source_tree`，止于验证，不调用 assembly、不使用 `--commit-on-protected-dev true`、不产出或发布 truth 资产。`prepare` 仍默认选择受保护 dev 的最近 40 个提交中的合格来源；显式 `--source-commit` 只验证该 dev SHA，禁止替换为其它提交，非 dev 来源不得进入 prepare。
 
-**缓存与增量报告。** 结构化读取 `lake-manifest.json` 中 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共用该逻辑分区,二进制另按 OS/arch 隔离;tag、请求的 ref、完整配置/源码指纹与 commit SHA 均不得筛选兼容种子,`elan` 安装缓存独立。Actions 以 run ID/attempt 区分不可覆盖的快照实例,后缀不参与兼容判定。PR 只 restore,dev push 仅在对应产出成功后 save,并发 run 不覆盖彼此快照。判官构建、测试与检查证据按登记材料接受并增量复用,缓存运输状态不代替其验证。
+**缓存与增量报告。** 结构化读取 `lake-manifest.json` 中 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共用该逻辑分区,二进制另按 OS/arch 隔离;tag、请求的 ref、完整配置/源码指纹与 commit SHA 均不得筛选兼容种子,`elan` 安装缓存独立。Actions 以 run ID/attempt 区分不可覆盖的快照实例,后缀不参与兼容判定。PR 可恢复 GitHub 允许访问的缓存,并仅向自身 merge ref 保存成功产出;dev 与 integration-* 的 push 仅在对应产出成功后保存本分支快照。各 ref 的可见范围遵守 GitHub 缓存隔离,并发 run 不覆盖彼此快照。判官构建、测试与检查证据按登记材料接受并增量复用,缓存运输状态不代替其验证。
 
 **集成发布验证。** `ci-publication-verify.yml` 仅由 `integration-ci-*-tests` 原生 push 的发布程序、配置和 workflow 路径触发,独立于 required CI;普通内容与 no-resource 文档不增加发布作业。路径过滤只选择该验证事件,不代替 required CI 的完整 FILEMAP 规划。cache 作业使用生产对应 runner 和时限,仅为隔离测试发布申请 contents-write,以 actions-read 查询真实运行身份。truth 作业当前按用户要求临时停用,不申请离线 runner,停用不计为验证成功；恢复后仍使用生产对应 runner/时限与只读权限,调用上述显式来源验证入口;源 push 尚未成功时须拒绝,在同 SHA 的 required push 成功后原生 rerun 验证,不得改写事件或借其它提交通过。
 
@@ -428,7 +428,7 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 可选缓存制作与保存共用早于 job 上限的截止时间,按真实 run/attempt/job 起始时间绑定;元数据不可用或时间不足则跳过缓存,不撤销已完成的业务判词。检查证据先保存,随后项目与依赖层。dependency/project 由 Actions 原生运输已登记的 `.lake/packages` / `.lake/build`,不另复制整个目录或建立逐文件哈希清单;运输格式版本只隔离布局,不增加兼容分区。接受恢复须同时取得成功的 Actions outcome 与同分区 matched key;恢复失败清理本次该层的残留,不删除整个 `.lake`,随后进入正常生产。检查证据与判官材料仍校验字节、mode 和身份。缓存时限不改变检查时限,外部取消仍保留取消语义。
 
-工程证据缓存由 push 的独立可选 `engineering_cache` job 保存,避免完整工程检查耗尽其保存窗口。该 job 消费同一候选、本轮 build 与 engineering artifact,先经现役 transport 验证身份、轮次、材料及成功证据,再导出 seed;不重建或重跑检查,不恢复 Lean/依赖缓存。截止时间绑定保存 job 自身,不得借用或延长 engineering 检查的窗口;保存失败只影响后续增量起点,不改变 required checks。PR 不执行此保存 job。
+工程证据缓存由允许写缓存的 push 或 PR 的独立可选 `engineering_cache` job 保存,避免完整工程检查耗尽其保存窗口。该 job 消费同一候选、本轮 build 与 engineering artifact,先经现役 transport 验证身份、轮次、材料及成功证据,再导出 seed;不重建或重跑检查,不恢复 Lean/依赖缓存。截止时间绑定保存 job 自身,不得借用或延长 engineering 检查的窗口;保存失败只影响后续增量起点,不改变 required checks。PR 保存 job 同时消费本轮固定计划与完整变更范围,只写本 PR 的隔离缓存,不增加 secrets 或 GitHub API 写权限。
 
 FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，键集合须与 `cache_layers` 完全一致，候选现役阶段仅为 `stage-start`。候选执行登记的缺项、额外项、未知工具/缓存/阶段由 C# loader 与轻量 planner 同样拒绝；无工作仍须验证完整登记。历史 FILEMAP 只提供删除与重命名旧端的登记和 `require`；其工具、缓存及 activation 值按规范名称读取为数据，不套候选执行能力词表或 activation 调度一致性。历史字段、排序、资源与前置引用、闭包、路径及 activation 键集合仍须合法，不执行历史代码或激活历史资源。旧端 `require` 必须由候选资源显式承接，缺失即失败；兼容名称仅通过候选 FILEMAP 的既有 `prerequisites` 和执行 manifest 登记，不猜路径或退回全套。资源兼容名称不替代 delta 的 base 测试项目及原 TRX 约束。
 
@@ -442,7 +442,7 @@ current 小型种子以独立的显式 `producer-report.json` 登记已验收的
 
 current 对原生报告的五个发布材料、可选 `.reuse.json` 完整调用证据及本轮成功步骤作候选/run/attempt 绑定。Actions 的 dependency/project 保存只有在本轮接受的 current 证据证明所选 `lean` 或 `lean-report` 步骤成功后才获授权；逐项检查这些报告和执行证据的材料哈希与身份，不读取已退役的报告准备收据，也不把 Lean 重编数量当作构建义务是否执行。成功授权在共用 bounded worker 内完成，不复制、扫描或哈希 dependency/project 全目录；失败或超出剩余窗口仅跳过可选保存，不能改变已经验证的业务结果。通用显式运输接口保留自身生产成功契约。current 的普通 artifact 与可选 seed 可共用同一次已验证的执行记录；seed 消费仍须核对本轮候选、run/attempt 和完整材料，可选导出失败不撤销普通 artifact 的成功。
 
-project 层在本轮正常 Lean/report 生产成功后保存新的增量产物,不以旧报告的 attestation 相同为由永久保留旧 olean 集合。dependency 可用随种子运输的小型输入记录决定是否保留本轮成功恢复的种子：只比较显式登记的依赖配置、工具链及执行环境,相同则省略重复上传,缺失或变化则保存。此记录只决定可选保存,不参与远端分区或种子兼容筛选,不证明目录完整或当前检查成功;正常 Lake/report 执行与严格报告校验仍为必需。PR 只读及无资源不运输的边界不变。
+project 层在本轮正常 Lean/report 生产成功后保存新的增量产物,不以旧报告的 attestation 相同为由永久保留旧 olean 集合。dependency 可用随种子运输的小型输入记录决定是否保留本轮成功恢复的种子：只比较显式登记的依赖配置、工具链及执行环境,相同则省略重复上传,缺失或变化则保存。此记录只决定可选保存,不参与远端分区或种子兼容筛选,不证明目录完整或当前检查成功;正常 Lake/report 执行与严格报告校验仍为必需。PR 隔离缓存范围及无资源不运输的边界不变。
 
 **验收矩阵。** 程序行为先测后改,不新增 workflow 文本形状测试。至少覆盖下列放行与阻断边界,以实际义务、判词与材料验证,不只比较退出码:
 
