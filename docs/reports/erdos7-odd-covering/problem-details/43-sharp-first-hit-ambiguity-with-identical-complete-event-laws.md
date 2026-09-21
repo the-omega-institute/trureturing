@@ -995,3 +995,5 @@ as `Nat.exists_prime_lt_and_le_two_mul` in
 The sharp interval in Sections 1--5, reachable pair in Section 7 and
 source-restricted budget in Section 8 are repository-derived;
 no literature-priority assertion is made.
+
+[Continue with sections 9–10](45-stationary-pair-label-bounds.md) · [Sections 11–13](46-rectangular-overlap-and-all-height-budgets.md)

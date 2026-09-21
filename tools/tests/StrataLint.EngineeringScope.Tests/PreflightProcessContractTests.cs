@@ -6,6 +6,49 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed class PreflightProcessContractTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrDiagnosticArchivePreservesDistinctLongPathsWithSharedSuffix(bool withManifest)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var suffix = new string('a', 64) + "/" + new string('b', 32) + "/"
+            + new string('c', 32) + "/filemap/0.log";
+        var first = "build/ci/check-material/" + suffix;
+        var second = "build/ci/current-check-seed/" + first;
+        var manifest = withManifest
+            ? "printf 'runtime/with space.log\\0" + first + "\\0' > build/ci/current-paths.nul"
+            : "";
+        fixture.Write(".gitignore", "build/\nruntime/\n");
+        fixture.Write("tools/scripts/ci-stage.sh", $$"""
+            #!/bin/bash
+            if [[ "$1" == current ]]; then
+              mkdir -p '{{Path.GetDirectoryName(first)}}' '{{Path.GetDirectoryName(second)}}' runtime
+              printf 'original\n' > '{{first}}'
+              printf 'seed\n' > '{{second}}'
+              printf 'runtime\n' > 'runtime/with space.log'
+              {{manifest}}
+            fi
+            """);
+        fixture.Commit();
+        var result = fixture.Preflight("pr", fixture.Git("rev-parse", "HEAD").Trim());
+        Assert.True(result.Exit == 0, result.Text);
+        var archive = result.Text.Split('\n').Single(line => line.StartsWith("PREFLIGHT_ARTIFACT bundle=", StringComparison.Ordinal))
+            ["PREFLIGHT_ARTIFACT bundle=".Length..];
+        var destination = Path.Combine(fixture.Root, "build/retained");
+        Directory.CreateDirectory(destination);
+        using (var gzip = new System.IO.Compression.GZipStream(File.OpenRead(archive), System.IO.Compression.CompressionMode.Decompress))
+            System.Formats.Tar.TarFile.ExtractToDirectory(gzip, destination, overwriteFiles: false);
+        Assert.Equal("original\n", File.ReadAllText(Path.Combine(destination, first)));
+        Assert.Equal("seed\n", File.ReadAllText(Path.Combine(destination, second)));
+        Assert.Equal(2, Directory.GetFiles(destination, "0.log", SearchOption.AllDirectories).Length);
+        if (withManifest)
+            Assert.Equal("runtime\n", File.ReadAllText(Path.Combine(destination, "runtime/with space.log")));
+        else
+            Assert.False(Directory.Exists(Path.Combine(destination, "runtime")));
+    }
+
     [Fact]
     public void FailedCurrentDiagnosticsSurvivePrCandidateCleanupWithoutSuccessfulEvidence()
     {

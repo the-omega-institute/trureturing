@@ -6336,3 +6336,850 @@ $$
 对式（30.33）取 $\Gamma=\lambda^{-1}$。只有另外规定 $\lambda=e^{-\gamma t}$、$\gamma\ge0,t\ge0$，才可写 $\Gamma(t)=e^{\gamma t}$；严格负特征值要求 $\gamma t>0$。式（30.36）是这一指定协议的二阶矩上界，原子范数下界不因此成为一切实验的方差或采样数下界。有符号估计值也不是制备出的有符号物理态。形式记号 $\mathcal D_{-t}$ 在这里仅指该线性逆，不赋予从未来向过去传讯或反向因果推断。
 
 ## 30.99 追加锚
+
+## 31. 全阶合法编码的共同相干记忆、窗口极限与响应运输
+
+本节把同一个禁止长串的关系接口依次用于有限词、相容输出态、可重复使用的活动记忆与指定测量响应。量词始终是：对每个固定有限整数 $k\ge2$，存在一个 $k$ 维记忆与一个固定等距，在所有有限发射长度上共同使用。它没有给无界 $k$ 配置统一有界维数。第30节的实际正域、隐藏消元与有符号恢复保持其原有适用范围；本节不改判既有条目。
+
+来源分工如下。[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)§132.2.1–132.2.3已给后缀自动机、$k$ 阶递推及词增长率；[上下文卷定理9.18](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)已给固定根后缀为零的 Perron 柱律。下称 Q 的[上下文算术量子卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)命题125.1–125.4及§125.5已给 $k=2$ 的完整局部密度、秩、偏迹相容、均匀长词极限、UHF 态／表示边界；命题130.1已给一个固定二维非正交活动记忆、同一等距和受限精确最小容量。本节把这些特定公式接到全 $k$，不把 $k=2$ 共同实现或一般态延拓当作首次结果。Q126.2的支撑事件方法、Q131.1的非选择记忆混合、Q135.1–136.1的内部全加选择分支分别在下文按各自观测对象使用。[上下文卷§36](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)负责完成接口和完整已获观察者，本节只承担一次定量证明。
+
+### 31.1 固定根律与全部有限时域的一个记忆
+
+**定义 31.1（合法词及指定相干准备）。** 固定 $k\in\mathbb N$、$k\ge2$，记 $\mathcal W_n^{(k)}$ 为长度 $n$ 且不含 $1^k$ 的二元词，$\mathcal W_0^{(k)}=\{\varnothing\}$。合法词 $w$ 的后缀连续一数为 $i(w)$，$i(\varnothing)=0$。取主卷§132.2的唯一根 $\lambda=\lambda_k\in(1,2)$，并置
+$$
+\sum_{j=1}^k\lambda^{-j}=1,\qquad
+r_i=\sum_{j=1}^{k-i}\lambda^{-j}\ (0\le i<k),\qquad r_k=0,
+\qquad d_t=r_t-r_{t+1}=\lambda^{t-k}\ (0\le t<k).
+\tag{31.1}
+$$
+直接移项与等比和给
+$$
+r_0=1,\qquad \lambda r_i=1+r_{i+1},\qquad
+r_{k-1}=\lambda^{-1},\qquad
+\sum_{t=0}^{k-1}\lambda^t=\lambda^k,\qquad
+\epsilon:=2-\lambda=\lambda^{-k}>0.
+\tag{31.2}
+$$
+其中递推包括 $i=k-1$。上下文卷定理9.18的根柱律是
+$$
+\mu_k[w]=\begin{cases}\lambda^{-|w|}r_{i(w)},&w\text{ 合法},\\0,&w\text{ 非法}.\end{cases}
+\tag{31.3}
+$$
+该记号指从后缀零开始的柱概率，不声称对位置删除平稳。
+
+取 $M=\mathbb C^k$ 及正交基 $e_0,\ldots,e_{k-1}$，输出 $B=\mathbb C^2$ 取指定计算基 $|0\rangle,|1\rangle$；全输出空间为 $H_n=B^{\otimes n}$、$H_0=\mathbb C$。复 Hilbert 空间、张量接口、正实振幅及相位约定、Born 迹规则均为额外准备结构，不由合法词集合或完成化推出。只在当前任务未访问最终活动记忆时对该记忆取偏迹；已取得档案的保留由上下文卷§36规定。
+
+**定理 31.2（一个全时域等距与单 Kraus 符号仪器）。** 在定义31.1下，令
+$$
+m_i=r_i^{-1/2}\sum_{t=i}^{k-1}\sqrt{d_t}\,e_t,\qquad
+K_0=|m_0\rangle\langle e_{k-1}|,\qquad
+K_1=\sum_{t=0}^{k-2}|e_{t+1}\rangle\langle e_t|,\qquad
+W=|0\rangle\otimes K_0+|1\rangle\otimes K_1.
+\tag{31.4}
+$$
+这些 $m_i$ 为线性独立的单位向量，且
+$$
+\langle m_i,m_j\rangle=\frac{r_{\max(i,j)}}{\sqrt{r_ir_j}},\qquad
+W^*W=I_M,\qquad K_0^*K_0+K_1^*K_1=I_M.
+\tag{31.5}
+$$
+它们的转移为
+$$
+K_0m_i=\frac{m_0}{\sqrt{\lambda r_i}},\qquad
+K_1m_i=\sqrt{\frac{r_{i+1}}{\lambda r_i}}m_{i+1}\ (i<k-1),\qquad K_1m_{k-1}=0.
+\tag{31.6}
+$$
+因此同一个 $W:M\to B\otimes M$ 可在每一步作用于同一个继续保留的记忆；$\mathcal I_a(X)=K_aXK_a^*$ 是每个符号一个 Kraus 算子的合法仪器。
+
+证明。$\sum_{t=i}^{k-1}d_t=r_i$ 望远镜相消，给归一化及式（31.5）的重叠；列向量 $m_i$ 的系数矩阵为三角形，对角元 $\sqrt{d_i/r_i}>0$，所以独立。$K_0^*K_0=|e_{k-1}\rangle\langle e_{k-1}|$，而 $K_1^*K_1=\sum_{t<k-1}|e_t\rangle\langle e_t|$；输出基正交，故 $W^*W$ 恰为其和。$m_i$ 的最后坐标为 $\sqrt{d_{k-1}/r_i}=(\lambda r_i)^{-1/2}$，给零分支。对一分支，把指标 $s=t+1$，利用 $d_{s-1}=d_s/\lambda$，得到
+$$
+K_1m_i=\frac1{\sqrt{\lambda r_i}}\sum_{s=i+1}^{k-1}\sqrt{d_s}\,e_s;
+\tag{31.7}
+$$
+当 $i=k-1$ 和为空，其余即式（31.6）。每一分支完全正，其和保迹，故为仪器。
+
+若以新鲜且与既有联合系统独立的纯空白 $|0\rangle_B$ 实现，则空白子空间的嵌入与 $W$ 具有相同 Gram 矩阵。现有 [GramUnitaryExtension.exists_unitary_mul_eq_of_conjTranspose_mul_eq](../../../D5/S3/Quantum/Algebra/GramUnitaryExtension.lean)及[SequentialRegisterCircuit.rectangular_unitary](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)提供幺正延拓；具体地把两份 $k$ 个正交列各补成 $2k$ 维正交基即可得到同一个 $U_k$，满足 $U_k(|0\rangle\otimes\xi)=W\xi$。本节只验证其所需的特殊等距，不重建一般延拓定理。沿此准备不插入重置、隐藏丢弃环境或未记录反馈。$\square$
+
+非正交记忆与连续幺正生成的方法背景见 Binder–Thompson–Gu，*A practical, unitary simulator for non-Markovian complex processes*，[arXiv:1709.02375](https://arxiv.org/abs/1709.02375)。该方法归属与本节特殊系数的直接验证分开。
+
+当 $k=2$，令 $\alpha=\lambda^{-1}$。本节 $m_0=(\alpha,\sqrt\alpha)$、$m_1=e_1$；Q130.1使用 $m_0^Q=(\sqrt\alpha,\alpha)$、$m_1^Q=e_0$。仅交换记忆基的 $Ue_0=e_1,Ue_1=e_0$ 给
+$$
+Um_i=m_i^Q,\qquad T_{\rm Q130}=(I_B\otimes U)WU^*.
+\tag{31.8}
+$$
+两边对张成 $M$ 的 $m_i^Q$ 有同一转移，故等式成立；输出基没有交换。
+
+**命题 31.3（完整输出矩阵、相容方块与精确秩）。** 从 $\Psi_0=m_0$ 开始，令 $\Psi_{n+1}=(I_{H_n}\otimes W)\Psi_n$。对每个 $n\ge0$，
+$$
+\Psi_n=\sum_{w\in\mathcal W_n^{(k)}}\sqrt{\lambda^{-n}r_{i(w)}}\,|w\rangle\otimes m_{i(w)},\qquad
+\rho_{k,n}:=\operatorname{Tr}_M|\Psi_n\rangle\langle\Psi_n|,
+\tag{31.9}
+$$
+$$
+\rho_{k,n}[u,v]=\begin{cases}\lambda^{-n}r_{\max(i(u),i(v))},&u,v\text{ 合法},\\0,&\text{其余},\end{cases}
+\qquad
+\operatorname{Tr}_{B_{n+1}}\rho_{k,n+1}=\rho_{k,n}.
+\tag{31.10}
+$$
+这些矩阵正且迹为一，$\rho_{k,0}=(1)$。取计算基对角得到式（31.3）；取对角与最后符号边缘化／最后 qubit 偏迹交换。再令
+$$
+S_{n,t}=\sum_{\substack{w\in\mathcal W_n^{(k)}\\i(w)\le t}}|w\rangle,\qquad
+\rho_{k,n}=\lambda^{-n}\sum_{t=0}^{k-1}d_t|S_{n,t}\rangle\langle S_{n,t}|,
+\qquad \operatorname{rank}\rho_{k,n}=\min(k,n+1).
+\tag{31.11}
+$$
+
+证明。归纳中附 $0$ 的振幅把 $\sqrt{\lambda^{-n}r_i}$ 乘以 $1/\sqrt{\lambda r_i}$；附 $1$ 时乘以式（31.6）的系数，非法分支为零。这证明全部 $n$ 的同一纯向量展开。偏迹用式（31.5）内积消去分母，得到式（31.10）。等距保持范数，故为密度。
+
+仍在完整 $2^n$ 维空间核对相容性：若 $u,v$ 合法，置 $s=\max(i(u),i(v))$，共同附零项为 $\lambda^{-n-1}$；若 $s<k-1$，共同附一项为 $\lambda^{-n-1}r_{s+1}$；若 $s=k-1$，该项为零，也等于取 $r_k=0$ 的表达式。两项之和由 $1+r_{s+1}=\lambda r_s$ 化成原矩阵元。任一前缀非法时所有延长都非法，偏迹两项及原项均零。取 $u=v$ 就给经典边缘式，所以对角方块逐元交换，包括空前缀。
+
+最后 $r_{\max(i,j)}=\sum_{t\ge\max(i,j)}d_t$ 给式（31.11）的分解。可达后缀恰为 $0,\ldots,h$，$h=\min(k-1,n)$：后缀 $j$ 可由 $0^{n-j}1^j$ 实现。其不交非空词类向量 $T_j=\sum_{i(w)=j}|w\rangle$ 彼此正交，$S_{n,t}=\sum_{j\le\min(t,h)}T_j$。前 $h+1$ 个累积向量三角可逆，其余重复最后一个。因全部 $d_t>0$，正算子之核等于这些向量的共同正交补，故秩为 $h+1$。整个论证没有把合法词子空间误当成可逐位张量分解的空间。$\square$
+
+### 31.2 两个分别限定模型的精确容量
+
+**定理 31.4（完整相干族的纯顺序容量）。** 比较固定活动记忆维数 $D$ 的纯顺序准备：初态纯，每步为等距 $V_j:K\to B\otimes K$，可随步数变化；新空白纯且独立，旧输出不再受作用，所有纯化系统均计入最终 $K$，没有未计入的环境、随机选择器或其它记忆。若它精确产生式（31.10）的全部输出族，则 $D\ge k$；即使只要求长度 $k-1$ 的该完整密度，仍有此下界。定理31.2达到 $D=k$。
+
+证明。任一这种生成器在 $H_n\otimes K$ 上给纯向量。按 $K$ 的正交基展开为 $\sum_{a=1}^D\xi_a\otimes e_a$，其输出偏迹为 $\sum_a|\xi_a\rangle\langle\xi_a|$，秩至多 $D$。取 $n=k-1$，命题31.3给秩 $k$。这就是主卷§132.1.2已有切口秩论证在本密度上的应用，时间依赖的 $V_j$ 不影响它。$\square$
+
+**定理 31.5（仅符号律的固定单 Kraus 容量）。** 另比较有限维 $K$、固定纯初向量 $v$、同一个二结果仪器 $L_0,L_1$，每个符号恰有一个 Kraus 算子，$\sum_aL_a^*L_a=I$。若对所有有限词 $w$ 有 $\|L_{w_n}\cdots L_{w_1}v\|^2=\mu_k[w]$，则 $\dim K\ge k$。这里仅要求经典词律，不要求相干输出；式（31.4）的仪器也达到此界。
+
+证明。词 $1^k$ 不合法，而 $1^{k-1}$ 概率为 $\lambda^{-(k-1)}r_{k-1}>0$，故
+$$
+L_1^kv=0,\qquad L_1^{k-1}v\ne0.
+\tag{31.12}
+$$
+若 $\sum_{j=0}^{k-1}a_jL_1^jv=0$ 非平凡，取最小的 $j_0$ 使 $a_{j_0}\ne0$，作用 $L_1^{k-1-j_0}$。较小指标系数为零，较大指标的幂至少为 $k$ 而消失，留下 $a_{j_0}L_1^{k-1}v=0$，矛盾。因此这 $k$ 个 Krylov 向量独立。$\square$
+
+这两种下界有不同假设：前者允许随时变化的纯顺序等距并要求全相干密度；后者只看符号但固定单 Kraus 仪器。它们均不声称任意多 Kraus 仪器、未计环境或近似生成也有同一下界。$D$ 只计活动记忆，不等于观察者的历史、外部档案和参考总容量。
+
+### 31.3 一步共同重置控制计数与局部极限
+
+**引理 31.6（同一计数引擎的一步振幅收缩）。** 保持固定 $k$。用行表示当前后缀、列表示后继后缀，定义
+$$
+B_{i0}=1\ (0\le i<k),\qquad B_{i,i+1}=1\ (i<k-1),\qquad
+R_r=\operatorname{diag}(r_i),\qquad
+P=\lambda^{-1}R_r^{-1}BR_r,\qquad h_i=r_i^{-1}.
+\tag{31.13}
+$$
+其余 $B$ 元素为零；这里 $B$ 是主卷§132.2.1列输入计数矩阵的转置。$P$ 作用于列函数，平稳概率写成行向量。置
+$$
+u_m=P^mh,\qquad E_m=(\lambda-1)(1-\lambda^{-1})^m,\qquad
+R=\sum_{t=0}^{k-1}\lambda^t r_{k-1-t},\qquad
+\pi_i=\frac{\lambda^{k-1-i}r_i}{R},\qquad \tau=\frac{\lambda^k}{R}.
+\tag{31.14}
+$$
+对所有整数 $m\ge0$，有
+$$
+1\le u_m(i)\le\lambda,\qquad
+\operatorname{osc}(u_m):=\max_i u_m(i)-\min_i u_m(i)\le E_m,\qquad
+\pi P=\pi,\quad \pi h=\tau,\quad
+\|u_m-\tau\mathbf1\|_\infty\le E_m.
+\tag{31.15}
+$$
+从后缀 $i$ 出发的合法长度 $m$ 续词数 $c_m(i)$ 满足
+$$
+c_m=B^m\mathbf1=\lambda^m R_r u_m,\qquad
+|\mathcal W_m^{(k)}|=c_m(0)=\lambda^m u_m(0).
+\tag{31.16}
+$$
+
+证明。$Br=\lambda r$ 使 $P$ 行随机，且 $P_{i0}=1/(\lambda r_i)\ge1/\lambda$。设 $a=1/\lambda$、$q=1-a\in(0,1/2)$，逐行减去公共质量后得到非负行随机矩阵 $Q$，使
+$$
+P=a\mathbf1e_0^{\mathsf T}+qQ.
+\tag{31.17}
+$$
+对任何实列函数 $g$，$Qg$ 每个坐标都在 $[\min g,\max g]$ 内，而第一项所有坐标相同，故 $\operatorname{osc}(Pg)\le q\operatorname{osc}(g)$。$h$ 的极值为 $1,\lambda$，随机平均保持此区间；迭代得式（31.15）的前两项。这只是所写矩阵的显式共同重置估计，不宣称任何范数上的通用收缩。
+
+$\pi_i>0$ 且重排求和给 $\sum_i\pi_i=1$。对 $j\ge1$ 仅 $i=j-1$ 贡献，故
+$$
+(\pi P)_j=\frac{\lambda^{k-j}r_{j-1}}R\frac{r_j}{\lambda r_{j-1}}=\pi_j,
+\qquad
+(\pi P)_0=\frac1{\lambda R}\sum_{i=0}^{k-1}\lambda^{k-1-i}
+=\frac{\lambda^{k-1}}R=\pi_0.
+\tag{31.18}
+$$
+又 $\pi h=R^{-1}\sum_i\lambda^{k-1-i}=\tau$，所以 $\pi u_m=\tau$。正权平均 $\tau$ 位于 $u_m$ 的最小、最大值间，故每个坐标距 $\tau$ 不超过 $E_m$。特别地 $1<\tau<\lambda$，且 $u_m\to\tau\mathbf1$。这里 $\pi$ 仅用于识别计数极限常数，不把根初态换成平稳态。
+
+空续词给 $c_0=\mathbf1$；附零重置、附一推进的分类给 $c_{m+1}=Bc_m$。相似式 $B=\lambda R_rPR_r^{-1}$ 遂给式（31.16）。全部 $c_m(i)$ 是正整数。此式既复核已有增长指数 $\log\lambda$，也给比仅知道增长率更强的向量归一化。$\square$
+
+**命题 31.7（均匀长词的固定窗口及其显式误差）。** 对任意 $n,m\ge0$，在完整 $H_{n+m}$ 中准备正等振幅纯态
+$$
+|\Omega_{n+m}\rangle=c_{n+m}(0)^{-1/2}\sum_{w\in\mathcal W_{n+m}^{(k)}}|w\rangle,
+\qquad \sigma_{n,m}=\operatorname{Tr}_{\text{末 }m\text{ 位}}|\Omega_{n+m}\rangle\langle\Omega_{n+m}|.
+\tag{31.19}
+$$
+对合法 $u,v\in\mathcal W_n^{(k)}$，$s=\max(i(u),i(v))$，有
+$$
+\sigma_{n,m}[u,v]=\frac{c_m(s)}{c_{n+m}(0)}
+=\lambda^{-n}r_s\frac{u_m(s)}{u_{m+n}(0)},\qquad
+|\sigma_{n,m}[u,v]-\rho_{k,n}[u,v]|\le\lambda^{-n}r_sE_m.
+\tag{31.20}
+$$
+非法行列全零。对完整空间的迹范数，
+$$
+\|\sigma_{n,m}-\rho_{k,n}\|_1\le2^{3n/2}\lambda^{-n}E_m.
+\tag{31.21}
+$$
+因此固定 $k,n$ 时 $m\to\infty$ 给迹范数收敛；$n=0$ 的实际误差恰为零。
+
+证明。偏迹共同尾词 $z$ 的贡献是 $uz,vz$ 同时合法。起始后缀越大，直到第一个附加零之前的约束越严格；该零之后两路径都处于后缀零。因此续词集合随后缀指标嵌套，共同集合正好是从 $s$ 出发的集合，数量为 $c_m(s)$。非法前缀无合法续词，得到第一式。式（31.16）给第二式。又 $u_{m+n}=P^nu_m$，所以分母是 $u_m$ 的某个凸平均，落在其坐标范围内且至少为一。于是
+$$
+\left|\frac{u_m(s)}{u_{m+n}(0)}-1\right|
+\le\operatorname{osc}(u_m)\le E_m.
+\tag{31.22}
+$$
+维数 $d=2^n$，各项绝对值至多 $\lambda^{-n}E_m$，故 Hilbert–Schmidt 范数至多 $d\lambda^{-n}E_m$；对至多 $d$ 个奇异值作 Cauchy–Schwarz，$\|A\|_1\le\sqrt d\|A\|_{\rm HS}$，得式（31.21）。半迹距离取该界的一半并可截到一。$m=0$ 时每个共同续词数为一，仍给原均匀纯态；$n=0$ 时分子分母相同，密度恒为标量一。这些端点无需极限解释。$\square$
+
+Q125.1已经给 $k=2$ 的同类极限。本命题将定理31.2的重复等距族与均匀长词的固定窗口极限相认；两份有限准备历史和实际获取费用并不因此相同。
+
+### 31.4 短窗口近似与全部窗口的非一致性
+
+**定理 31.8（全阶短窗口闭式及常数界）。** 定义 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$、$p_n=|+\rangle\langle+|^{\otimes n}$，并以 $D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$ 记半迹距离。对 $0\le n<k$，
+$$
+f_{k,n}:=\operatorname{Tr}(\rho_{k,n}p_n)
+=2-\frac{2(2/\lambda)^n+\epsilon2^{-n}}{4-\lambda},
+\tag{31.23}
+$$
+$$
+D(\rho_{k,n},p_n)\le\sqrt{1-f_{k,n}}
+\le\sqrt{\frac{2n\lambda^{-k}}3}
+\le\sqrt{\frac{4n2^{-k}}3}.
+\tag{31.24}
+$$
+$n=0$ 时 $f_{k,0}=1$、距离零；$n=1$ 时 $1-f_{k,1}=\epsilon/(2\lambda)$。
+
+证明。因为 $n<k$，全部 $2^n$ 个词合法。记 $C_t=\#\{w:i(w)\le t\}$。对 $t<n$，后缀至少为 $t+1$ 的词恰固定末尾 $t+1$ 个一，故
+$$
+C_t=2^n-2^{n-t-1}\ (0\le t<n),\qquad C_t=2^n\ (t\ge n).
+\tag{31.25}
+$$
+利用式（31.11）、$d_t=\epsilon\lambda^t$ 和 $\sum_{t\ge n}d_t=r_n$，有
+$$
+\begin{aligned}
+f_{k,n}
+&=2^{-n}\lambda^{-n}\left(\sum_{t=0}^{n-1}d_t C_t^2+r_n4^n\right)\\
+&=(2/\lambda)^n\left[1-\epsilon\sum_{t=0}^{n-1}\left((\lambda/2)^t-\tfrac14(\lambda/4)^t\right)\right].
+\end{aligned}
+\tag{31.26}
+$$
+对两项有限几何和求值：$\epsilon/(1-\lambda/2)=2$、$\epsilon/[4(1-\lambda/4)]=\epsilon/(4-\lambda)$。因此括号为 $-1+2(\lambda/2)^n+\epsilon[1-(\lambda/4)^n]/(4-\lambda)$；再乘 $(2/\lambda)^n$，以 $-(4-\lambda)+\epsilon=-2$ 合并，正是式（31.23）。空和也涵盖 $n=0$。
+
+纯参考的标准保真度／迹距离上界给 $D\le\sqrt{1-f}$。设 $a=2/\lambda$，Bernoulli 不等式给
+$$
+1-f_{k,n}=\frac{2(a^n-1)-\epsilon(1-2^{-n})}{4-\lambda}
+\le\frac{n\epsilon a^n}{4-\lambda},
+\qquad
+a^n-1=a^n\bigl[1-(1-\epsilon/2)^n\bigr]\le a^n n\epsilon/2.
+\tag{31.27}
+$$
+为统一控制常数，置 $b=2^{-k}$、$q=2(1-b)>1$。严格 Bernoulli 与 $kb\le1/2$ 给
+$$
+q^k(2-q)=2(1-b)^k>2(1-kb)\ge1.
+\tag{31.28}
+$$
+对 $F(x)=x^k-\sum_{j=0}^{k-1}x^j$ 有 $(q-1)F(q)=1-q^k(2-q)<0$。函数 $\sum_{j=1}^kx^{-j}$ 在 $x>1$ 严格递减，故唯一过零点满足 $q<\lambda$。对 $n\le k-1$，再次使用 Bernoulli 和 $(k-1)b\le1/4$ 得
+$$
+a^n\le(1-b)^{-(k-1)}\le\frac1{1-(k-1)b}\le\frac43,
+\qquad
+\lambda^{-k}<2^{-k}(1-b)^{-k}\le2\,2^{-k}.
+\tag{31.29}
+$$
+连同 $4-\lambda>2$，式（31.27）给 $1-f\le(2/3)n\lambda^{-k}$，进而得到式（31.24）。$n=0$ 单独取实际零值，$n=1$ 代入闭式即可。$\square$
+
+这里所用纯参考界是 Fuchs–van de Graaf 迹距离不等式的纯态特例（C. A. Fuchs、J. van de Graaf，*Cryptographic distinguishability measures for quantum-mechanical states*，IEEE Trans. Inf. Theory 45（1999），1216–1227，[arXiv:quant-ph/9712042](https://arxiv.org/abs/quant-ph/9712042)）；本节不将其另立为新增通用结果。即使取增长窗口 $n=k-1$，式（31.24）也趋于零，而定理31.4在同一窗口要求精确纯顺序记忆维数 $k$。一维记忆产生乘积态 $p_n$ 已是这个窗口的近似实现；这不是近似容量下界。
+
+**命题 31.9（固定窗口、全时域与完成代数的不同极限）。** 对任意 $n\ge0$，
+$$
+D(\rho_{k,n},p_n)\ge1-\frac{|\mathcal W_n^{(k)}|}{2^n}
+\ge1-(1-2^{-k})^{\lfloor n/k\rfloor}.
+\tag{31.30}
+$$
+故每个固定有限 $k$ 有 $\sup_nD(\rho_{k,n},p_n)=1$，而每个固定有限 $n$ 有 $\lim_{k\to\infty}D(\rho_{k,n},p_n)=0$。在完整 qubit UHF 代数 $\mathcal A=\overline{\bigcup_nM_{2^n}(\mathbb C)}$，嵌入为 $A\mapsto A\otimes I_2$，命题31.3的相容态及乘积态分别记为 $\omega_k,\omega_+$。则
+$$
+\tfrac12\|\omega_k-\omega_+\|_{\mathcal A^*}=1\quad(k\ge2),\qquad
+\omega_k\longrightarrow\omega_+\quad\text{弱星}.
+\tag{31.31}
+$$
+完全计算基退相干的族 $\Delta_n(\rho_{k,n})$ 则对固定 $n$ 趋于 $I_{H_n}/2^n$。
+
+证明。令 $P_{k,n}$ 为合法词张成空间的正交投影。由式（31.10），$\operatorname{Tr}(P_{k,n}\rho_{k,n})=1$，而 $\operatorname{Tr}(P_{k,n}p_n)=|\mathcal W_n^{(k)}|/2^n$。Q126.2已有的支撑事件方法应用于这一二结果测量，给第一界。公平独立二元词的每个不交长度 $k$ 块都必须不是 $1^k$，故合法事件包含于 $\lfloor n/k\rfloor$ 个独立块的避免事件，概率至多式（31.30）右项中的幂。未满一块时该下界为零，包括 $n=0$。令 $n\to\infty$ 给距离趋一；固定 $n$ 的另一极限由定理31.8给出。
+
+态延拓直接使用 Q125.2在完整局部代数上的既有构造：命题31.3提供正、归一、偏迹相容这一组输入，因而给唯一范数一态，无需重建 GNS 理论。范数差至多二。为取到其下确界方向，使用局部范数一自伴算子 $A_n=2P_{k,n}-I$，有
+$$
+(\omega_k-\omega_+)(A_n)=2\left(1-|\mathcal W_n^{(k)}|/2^n\right)\longrightarrow2.
+\tag{31.32}
+$$
+单用投影只能给差一，式（31.32）的因子二不可省略。于是得到泛函范数等式。对任意局部 $A\in M_{2^n}$，迹范数上界使两态差值趋零。给一般 $A\in\mathcal A$，选局部 $A'$ 满足 $\|A-A'\|<\delta$；两态范数均一，故差值至多 $2\delta+|(\omega_k-\omega_+)(A')|$，先令 $k\to\infty$ 再令 $\delta\to0$，得弱星收敛。最后退相干是 CPTP，$\Delta_n(p_n)=I/2^n$，其迹距离不增加，所以退相干局部极限如述。$\square$
+
+式（31.31）是完成代数上态泛函的范数，不是无限全局密度矩阵的迹范数。固定窗口近似、固定 $k$ 的全部窗口可区分性、退相干后的经典极限是三个不同结论。
+
+### 31.5 指定全加分支的全时域响应指数
+
+**定理 31.10（同一计数收缩给出的相干响应）。** 在定理31.2的固定根准备中，保留相干输出，并具有跨输出共同校准、可访问的相位参考以定义 $|+\rangle$。对每个 $n\ge0$，测量全部前 $n$ 个输出为加的联合概率满足
+$$
+V=\frac{K_0+K_1}{\sqrt2},\qquad
+(\langle+|^{\otimes n}\otimes I_M)\Psi_n=V^nm_0,\qquad
+f_{k,n}=\|V^nm_0\|^2.
+\tag{31.33}
+$$
+令 $Je_t=e_{k-1-t}$、$A=JBJ$、$D_\lambda=\operatorname{diag}(\lambda^{t/2})$、$v_t=r_{k-1-t}$、$\ell_t=\lambda^t$。则
+$$
+V=\frac{D_\lambda A D_\lambda^{-1}}{\sqrt{2\lambda}},\qquad
+D_\lambda^{-1}m_0=\lambda^{-k/2}\mathbf1,\qquad
+Av=\lambda v,\quad \ell^{\mathsf T}A=\lambda\ell^{\mathsf T},\quad \ell^{\mathsf T}v=R.
+\tag{31.34}
+$$
+对每个固定有限 $k$，
+$$
+(\lambda/2)^{-n/2}V^nm_0\longrightarrow\frac{\lambda^{k/2}D_\lambda v}{R},\qquad
+f_{k,n}\sim C_k(\lambda/2)^n,\qquad
+C_k=\frac{\lambda^k\sum_{t=0}^{k-1}\lambda^t r_{k-1-t}^2}{R^2}>0.
+\tag{31.35}
+$$
+以 $d_{k,n}=D(\rho_{k,n},p_n)$ 记半迹距离，有
+$$
+\frac{f_{k,n}}2\le1-\sqrt{1-f_{k,n}}\le1-d_{k,n}\le f_{k,n},
+\tag{31.36}
+$$
+$$
+-\lim_{n\to\infty}\frac1n\log f_{k,n}
+=-\lim_{n\to\infty}\frac1n\log(1-d_{k,n})
+=\log2-\log\lambda.
+\tag{31.37}
+$$
+这些是指定准备、指定测量、固定 $k$ 的结论。
+
+证明。每次输出加投影收缩 $W$ 为 $V$，沿同一联合纯向量归纳得式（31.33）；这没有把各步相关结果的概率当成独立乘积。$V=(\langle+|\otimes I)W$ 是收缩，$X\mapsto VXV^*$ 为不增迹 CP 分支，不是非选择 CPTP 记忆通道。
+
+反转坐标后 $A$ 的次对角和最后一列全为一，其余为零。次对角经 $D_\lambda$ 共轭乘 $\sqrt\lambda$，除以 $\sqrt{2\lambda}$ 后为 $1/\sqrt2$；最后一列的第 $t$ 项为 $\lambda^{(t-k)/2}/\sqrt2$，正是 $m_0/\sqrt2$。这逐元证明相似式和初向量式。$Av$ 首行是 $1=\lambda r_{k-1}$，其它行使用 $1+r_{k-t}=\lambda r_{k-1-t}$；左特征向量在前 $k-1$ 列用 $\ell_{j+1}=\lambda\ell_j$，最后一列用 $\sum_t\lambda^t=\lambda^k$。这也核对了 $R$，但不另调用一次 Perron 极限定理。
+
+由 $A^n\mathbf1=JB^n\mathbf1$ 与式（31.16），得到精确缩放恒等式
+$$
+(\lambda/2)^{-n/2}V^nm_0
+=\lambda^{-k/2}D_\lambda\operatorname{diag}(v)J u_n.
+\tag{31.38}
+$$
+右端第 $t$ 坐标使用 $u_n(k-1-t)$，矩阵方向因而明确。引理31.6已经给 $u_n\to(\lambda^k/R)\mathbf1$，代入并取范数平方得到式（31.35）。这条极限使用同一计数收缩，没有把 $P$ 认成量子非选择通道。$m_0$ 各坐标为正，$V$ 非负且无零行，故 $V^nm_0$ 各坐标为正，$f_{k,n}>0$，对数合法；正极限系数及 $\lambda/2<1$ 给第一个指数。
+
+纯参考效果 $p_n$ 给 $d_{k,n}\ge1-f_{k,n}$，定理31.8所用的纯参考上界给 $d_{k,n}\le\sqrt{1-f_{k,n}}$。因
+$$
+1-\sqrt{1-f}=\frac{f}{1+\sqrt{1-f}}\ge f/2\quad(0\le f\le1),
+\tag{31.39}
+$$
+得到式（31.36）。$1-d_{k,n}$ 介于 $f_{k,n}/2$ 与 $f_{k,n}$，取负对数除以 $n$，差至多 $(\log2)/n$，给第二个指数。$n=0$ 的 $f=1,d=0$ 与全部有限式相容。$\square$
+
+两个交叉核对有确定含义。首先 $k=2$ 时 $R=\lambda+\lambda^{-1}=\sqrt5$、$\sum_{t=0}^1\lambda^tr_{1-t}^2=\lambda^{-2}+\lambda=2$，故
+$$
+C_2=2\lambda^2/5=(3+\sqrt5)/5.
+\tag{31.40}
+$$
+其次主卷§132.2.3的语言增长熵是 $\log\lambda$，完整二元语言的为 $\log2$，故式（31.37）是每次发射的语言增长熵差。主卷定理20.5、20.7、20.9已严格区分 Zeckendorf 后继的 Sturmian 行程复杂度、行程共轭和位置移位的熵；这里不能把词增长指数替换为任意后继动力学的熵，更不能解释为热力学熵产生或统一物理钟率。
+
+Q135.1已在 $k=2$ 的另一实验得到 $p_g=\alpha(\lambda/2)^g(1+\alpha^{4g+4})$：它保留左右端点、选择中间 $g$ 个输出全加，并额外选择最终记忆的计算基结果零。Q136.1取消最终记忆选择而仍保留两端点。本节事件是整个根前缀全加、最终记忆未读；其全 $k$ 系数 $C_k$ 属于这个事件，$\lambda/2$ 的 $k=2$ 衰减基地已有上述来源。Q131.1考察的是 $\mathcal M(X)=\sum_aK_aXK_a^*$ 的非选择记忆混合，不能以其速率代换 $V$ 的选择概率。式（31.35）没有给 $1-d_{k,n}$ 的精确前因子，也不以未声明的统一余项交换 $k,n$ 两个极限。
+
+相位和记录是可检验的必要区别。完全计算基退相干后，$p_n$ 的每个对角元为 $2^{-n}$，所以
+$$
+\operatorname{Tr}(\Delta_n(\rho_{k,n})p_n)=2^{-n}.
+\tag{31.41}
+$$
+它保留完全相同的计算基词律，却改变响应指数。即使不退相干，只对一位施加相位翻转 $Z$，$\rho_{k,1}$ 的非对角元 $r_1/\lambda=(\lambda-1)/\lambda$ 变号，词概率不变而全加概率从 $1/2+(\lambda-1)/\lambda$ 变成 $1/2-(\lambda-1)/\lambda$。因此相同的经典关系及其概率还不足以决定相干响应。记录重叠与退相干的既有来源是 [EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping](../../../D5/S3/Quantum/EnvironmentRecords.lean)和[量子实在卷定理222.1–222.2](QUANTUM-REALITY.md)；后一卷不是这里缩写 Q 的卷。
+
+### 31.6 连续保律换码与有界公平位的障碍
+
+**命题 31.11（根柱律的域障碍）。** 令 $X_j$ 为禁止 $1^j$ 的单侧无限二元序列空间，取前缀乘积拓扑和式（31.3）的根 Borel 概率 $\mu_j$。对有限 $k,l\ge2$，若存在总定义、连续、确定映射 $F:X_l\to X_k$，且 $F_*\mu_l=\mu_k$，则
+$$
+\lambda_k^{-1}\in\mathbb Q(\lambda_l).
+\tag{31.42}
+$$
+特别地，$k=2,l=3$ 与 $k=3,l=2$ 两个方向均不存在这样的保律映射。
+
+证明。$X_l$ 是紧二元乘积空间中禁止有限模式所定义的闭集。任意开闭集 $E$ 中每一点有包含于 $E$ 的合法前缀柱；紧性取有限子覆盖，再把这些柱细化到同一最大深度 $N$，得到不交同深度柱的有限并。因此 $\mu_l(E)$ 为有限个 $\lambda_l^{-N}r_i^{(l)}$ 之和，属于 $\mathbb Q(\lambda_l)$。目标首位零柱的概率恰为 $1/\lambda_k$，它的连续原像开闭，给必要条件。
+
+二次多项式 $x^2-x-1$ 及三次多项式 $x^3-x^2-x-1$ 均无有理根（整系数首一多项式的有理根只可能为 $\pm1$，直接代入均非零），故分别不可约，根域次数为二与三。若式（31.42）成立，则 $\lambda_k$ 也在源域内，$\mathbb Q(\lambda_k)$ 为 $\mathbb Q(\lambda_l)$ 的子域。域塔公式要求二整除三或三整除二，均不成立。$\square$
+
+这是必要障碍；域包含本身不是连续保律换码的充分条件，本节也未给全部 $k,l$ 的分类。任意输出律相等只说明这些输出任务相等，不恢复原输入同外部记录之间的实际相关。
+
+**命题 31.12（总连续公平位采样与有界位误差）。** 在公平独立位空间 $\{0,1\}^{\mathbb N_0}$ 的乘积概率下，对任何固定有限 $k\ge2$，不存在总连续确定 $F$ 使输出律为 $\mu_k$。若一个总定义确定协议最多读取 $M\ge0$ 个公平位后给出第一输出位，即使允许依读数选择停时，其第一位分布相对目标的 TV 距离至少为
+$$
+\delta_{k,M}:=\min_{0\le j\le2^M}\left|\lambda_k^{-1}-j2^{-M}\right|>0.
+\tag{31.43}
+$$
+此界对第一边缘本身可达到；不声称它是整条词律的最优误差。
+
+证明。公平乘积空间任意开闭集亦为有限同深度柱的并，质量是二进有理数。$\lambda_k$ 是首一多项式 $x^k-x^{k-1}-\cdots-1$ 的根，常数项为负一，有理根定理仅容 $\pm1$，二者均不在 $(1,2)$，所以 $\lambda_k$ 及其倒数无理。首位零事件的连续原像便不可能有质量 $1/\lambda_k$。
+
+对至多 $M$ 次的自适应停止树，把每条短叶补读至深度 $M$，不改其输出，所有叶成为等概率的 $2^M$ 个位串。确定输出零的叶数是某个整数 $j$；两点分布的 TV 恰为零概率之差的绝对值，故有式（31.43）。反之将任意最近整数 $j$ 个深度 $M$ 叶指定为零，其余为一，即达到第一边缘的该界。$M=0$ 也包括在内。$\square$
+
+条件档案不能从这个计数中消失。设 $C$ 是完整已获经典档案且存在实际正则条件核。对档案控制的确定连续映射 $F(c,x)$，只有在几乎每个所讨论的 $c$ 上，真实条件输入律确为所声明 $\mu_l$、条件目标律确为 $\mu_k$，才可逐纤维应用命题31.11。若存在别的条件目标，则应计算该目标柱质量，而不是代入无条件根律。对公平位协议，要数的位必须在给定整份 $C=c$ 后仍为独立公平位；若第一目标零概率为 $p_c$，式（31.43）替换为 $\min_j|p_c-j2^{-M}|$。可用随机档案须作为资源计入，或如此条件化，不能免费插入一个未计数的随机选择器。
+
+这些条件界可在共同 $C$ 边缘下控制保留 $C$ 的联合任务，却不能自动给无条件第一边缘的 TV 下界：例如 $C$ 公平，目标在每个 $c$ 上要求公平位，实际协议不读取新位而输出 $C$。每个条件纤维的 TV 为 $1/2$，无条件输出却恰公平，TV 为零。混合时的正负偏差可以抵消。补齐树要求过程总定义、无条件输出，不能对未记录的成功事件后选择后仍宣称概率为 $j/2^M$；成功、失败和停止记录必须保留。
+
+**命题 31.13（可测的逐前缀采样不提供统一位界）。** 若允许可测映射、可变且无统一上界的读位数，并提供精确阈值的可比较计算，则公平位可产生律 $\mu_k$，每个指定有限输出前缀所需位数几乎必然有限。这不构成命题31.12所禁止的总连续采样器。
+
+证明。公平位给 $U=\sum_{j\ge0}b_j2^{-j-1}$，在 $[0,1]$ 上均匀；二进双表示和端点是零概率例外。把 $[0,1)$ 依合法前缀分成半开区间 $I_w$，其长度为 $\mu_k[w]$；从 $I_w$ 依式（31.3）的两个续词质量分割成 $I_{w0},I_{w1}$，零质量分支省去。柱相容性保证这种嵌套分割可行。对不落在任一有限层端点的 $U$，每层恰有一个包含它的区间，所选前缀相容，确定一个合法无限串，且每个柱的原像测度恰为其长度。可在端点作任意可测合法赋值而不改输出律。
+
+固定输出长度 $n$，该层端点有限。除这些点外，$U$ 在所属区间内部，有限长输入位所给的二进区间最终完全包含于它。于是可停止并返回该前缀。所有有限层的端点并可数，所以对几乎每个输入，每个有限前缀都能如此取得。实现判定要有阈值的精确比较能力；本模型阈值为代数根的有理式，可用收敛隔离区间在严格分离时认证，而不会因此得到统一的运行时或位预算。若存在统一第一位预算，命题31.12立即矛盾；第一分割阈值无理，其两侧逼近也说明总连续性失败。$\square$
+
+添加随机源的随机核与此可测方案都须计入实际资源。它们只可重现所声明输出分布；若原输入与另一个来源共同相关，单独抽取相同输出律并不继承那份相关。
+
+### 31.7 保数值的 Zeckendorf 到二进完成并非连续
+
+**命题 31.14（奇偶子序列阻止保值延拓）。** 取主卷定义20.1的 $G_0=1,G_1=2,G_{j+2}=G_{j+1}+G_j$。在有限支持且无相邻一的二元串上定义整数值 $N(x)=\sum_jG_jx_j$，再自然视为 $\mathbb Z_2$ 元素。该映射不能连续延拓至前缀拓扑下的全部 $X_2$。
+
+证明。递推模二给周期 $1,0,1$，因为连续对 $(G_3,G_4)\equiv(1,0)$ 回到初始对，归纳得 $G_{3m}$ 恒奇。令 $x^{(m)}$ 仅在位置 $3m$ 为一，其余为零。每个 $x^{(m)}$ 合法且有限支持，$x^{(m)}\to0$ 于前缀拓扑，但 $N(x^{(m)})=G_{3m}$ 始终模二为一，不能在 $\mathbb Z_2$ 中趋于零。连续延拓在零串必须等于原有限值零，遂矛盾。$\square$
+
+这里被否定的是带指定 Fibonacci 权重的保数值延拓。普通二元位空间用 $\sum_j2^jx_j$ 到 $\mathbb Z_2$ 的数字同胚是另一映射；换权重、换拓扑与保留原整数值不可混为同一运输任务。
+
+### 31.8 适用边界与后续接口
+
+本节是已有源卷之间的普通数学综合及全 $k$ 特殊模型推导。Perron–Frobenius、Gram／幺正延拓、有限纯态秩与迹距离工具均归既有来源；本文没有主张新 Lean 结果或经文献排重的原创性。保留的三个极限分别是：固定 $k,n$ 的弃尾长度 $m\to\infty$；固定有限 $k$ 的全加窗口 $n\to\infty$；固定窗口或定理31.8明确的增长窗口下 $k\to\infty$。其准备、访问范围及误差合同分别由上下文卷§36接回完整观察者。
+
+这里的有限合法关系、概率赋值、相干 Gram 数据、实验端口和算术数值运输是有明确箭头的不同结构。完成化不指定 Born 规则；递归索引不自动成为物理时间；全时域响应不推导物理波律、统一时钟或熵增律。抽象精确等距不保证某个未指定硬件门集的有限精确综合；符号计算、精确振幅、随机位、相位校准、活动记忆、保留输出及档案各占独立资源坐标。更一般的保律换码分类、带实际参考的近似记忆最优界和具体门集实现仍需额外条件与证明；本节的精确下界及有限窗口上界不替代这些问题。
+
+## 31.99 追加锚
+
+## 32. 有限循环的尖锐误差、合法修复与成对解码
+
+### 32.1 同一联合律的图误差与闭路障碍
+
+本节使用[上下文卷定义37.1](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)的同一完整档案、实际联合律、有限非空字母集、$n\ge3$、双射运输及精确节点边缘。固定该处的归一坐标 $Y_j\in B$、$g_*\mu=\mu$；内部边为相等关系，闭合边为 $Y_0=gY_{n-1}$。所有概率均针对同一 $P$。有限 TV 取 $\operatorname{TV}(p,q)=\tfrac12\sum_x|p(x)-q(x)|$。
+
+**定理 32.1（图 TV 的事件等式与总误差障碍）。** 原坐标中第 $i$ 边的成对边缘为 $t_i$，理想图耦合为 $M_i(x,y)=\mu_i(x)\mathbf1_{y=h_ix}$。记 $N$ 为一份循环样本中失败边数，$F=\mathbf1_{gY_0\ne Y_0}$，则
+$$
+\delta_i:=\operatorname{TV}(t_i,M_i)=P(\text{第 }i\text{ 边失败}),\qquad
+a:=\mathbb EF=\mu(\{x:gx\ne x\}),
+\quad R:=\sum_i\delta_i-a=\mathbb E(N-F)\ge0.
+\tag{32.1}
+$$
+证明。每个图原子满足 $t_i(x,h_ix)\le\mu_i(x)$，所以图上的差全为亏损，亏损之和等于图外总质量。TV 的两个半项相等，得到事件等式；这里只需要第一边缘准确。若 $N=0$，顺次传播全部关系得 $gY_0=Y_0$，故逐样本 $N\ge F$，取期望即可。所有节点的精确边缘仍是后续重构的前提；第一边缘有误的测量表不能套用这个图 TV 等式。$\square$
+
+**定理 32.2（单割构造、全部非负预算与极小极大值）。** 对 $k=0,\ldots,n-1$ 定义
+$$
+T^k(x)_j=\begin{cases}x,&j\le k,\\g^{-1}x,&j>k,\end{cases}
+\qquad P^k=(T^k)_*\mu.
+\tag{32.2}
+$$
+$P^k$ 的全部节点边缘为 $\mu$，其误差向量为 $ae_k$；对 $\pi\in\Delta_{n-1}$，$\sum_k\pi_kP^k$ 的误差为 $a\pi$。因此在无限制支撑类中，对任意有限 $\varepsilon_i\ge0$，存在 $\delta_i\le\varepsilon_i$ 的律当且仅当 $\sum_i\varepsilon_i\ge a$，且
+$$
+\min_P\max_i\delta_i=\frac an.
+\tag{32.3}
+$$
+证明。$g$ 不变性保证（32.2）的每个坐标边缘准确；除割边外的关系成立，而割边恰在 $gx\ne x$ 时失败。失败事件的概率对混合线性，从而得误差向量；这里没有使用 TV 对一般混合线性的错误断言。必要性来自（32.1）。若 $a>0$ 且预算和至少 $a$，取 $\pi_i=\varepsilon_i/\sum_j\varepsilon_j$ 即可。若 $a=0$，取固定点对角律，不作除法。均匀割达到 $a/n$，下界由总和给出。$\square$
+
+全零预算可行恰当 $a=0$；单个零预算得到零割质量。更强准入类只有实际准入这些割律及所用混合，才继承达到性；所有割律准入加凸性足够，但逐元组可提升加凸性不够，见上下文卷命题37.5。
+
+### 32.2 全部零剩余面与极小极大切片
+
+**定理 32.3（轨道割核的完整分类）。** $R=0$ 当且仅当 $N=F$ 几乎处处。对固定点写 $D(x)=(x,\ldots,x)$。对每个正质量非平凡 $g$ 轨道 $O$，写 $\ell_O=|O|$、$w_O=\mu(O)$。全部 $R=0$ 且节点边缘为 $\mu$ 的律恰为
+$$
+P(D(x))=\mu(x)\quad(gx=x),\qquad
+P(T^k(x))=\mu(x)\pi_{O,k}\quad(x\in O),\qquad
+\pi_O\in\Delta_{n-1}.
+\tag{32.4}
+$$
+其余元组质量为零。零质量轨道不设坐标，固定点的重复割表示只算一个对角原子。若正移动轨道数为 $r$，整面为 $r$ 个 $\Delta_{n-1}$ 的乘积，维数 $r(n-1)$，顶点数 $n^r$；$r=0$ 时为一点。
+
+证明。非负整数 $N-F$ 的期望为零恰当它几乎处处为零。固定锚的样本必须无失败，故为 $D(x)$；移动锚恰有一条失败边 $k$，沿其余边传播唯一得到 $T^k(x)$。移动点的 $(x,k)$ 表示互异。写 $p_{x,k}=P(T^k(x))$，边缘等式为
+$$
+\sum_kp_{x,k}=\mu(x),\qquad
+\sum_{k\ge j}p_{x,k}+\sum_{k<j}p_{gx,k}=\mu(x).
+\tag{32.5}
+$$
+相减表明 $A_j(x)=\sum_{k<j}p_{x,k}$ 对 $g$ 不变。相邻 $j$ 之差使列 $0,\ldots,n-2$ 不变，最后一列由锚行和及 $\mu$ 的不变性也不变。轨道上 $\mu(x)=w_O/\ell_O>0$，因而得到（32.4）。反向将轨道常数列代入（32.5），所有边缘成立。单纯形坐标独立且参数化单射，给维数与顶点数。$\square$
+
+**命题 32.4（误差投影与最小最大误差的运输切片）。** 在（32.4）上，
+$$
+\delta_k=\sum_Ow_O\pi_{O,k}.
+\tag{32.6}
+$$
+共同割核实现所有非负、总和为 $a$ 的误差向量，却不一定实现全部面内律。$a>0$ 时，全部达到（32.3）的律恰对应
+$$
+z_{O,k}\ge0,\qquad \sum_kz_{O,k}=w_O,\qquad
+\sum_Oz_{O,k}=a/n.
+\tag{32.7}
+$$
+在全部轨道—割关联都允许且 $r\ge1$ 时，该切片维数为 $(r-1)(n-1)$。$a=0$ 时最小最大误差律为唯一固定对角律。
+
+证明。（32.6）对互斥单割事件求和。取各轨道相同的 $\pi$ 即得任意上述误差向量。若最大误差为 $a/n$，总和下界迫使总和为 $a$，并迫使每项均为 $a/n$，所以适用定理32.3及（32.7）。行列和方程中，一组行关系与列关系的线性组合恒零要求每个单元的系数 $u_O+v_k=0$；全部关联允许时只有一个整体冗余，秩为 $r+n-1$。点 $z_{O,k}=w_O/n$ 严格正，故维数为 $rn-(r+n-1)$。受限合法运输面的维数不能直接沿用这个数。$\square$
+
+三个例子区分支撑、边缘与误差投影。二元翻转三角形中，在 $011$ 与 $110$ 各放质量 $1/2$，分别是锚 $0$ 的割 $0$ 与锚 $1$ 的割 $1$；每个样本都仅一条失败边，中间节点却恒为 $1$，故零剩余的元组支撑本身不保证精确边缘。取 $g=(01)(23)$、均匀 $\mu$、$n=3$，两轨道分别用 $(2/3,1/3,0)$ 与 $(0,1/3,2/3)$，误差都合成为 $(1/3,1/3,1/3)$，但不是共同割混合。再取 $g$ 固定 $0$、交换 $1,2$，$\mu=(1/2,1/4,1/4)$，则 $a=1/2$；唯一最小最大误差律在 $000$ 放 $1/2$，在 $111,112,122,211,221,222$ 各放 $1/12$，每边误差 $1/6$。正固定扇区不能吸收规定的移动质量。换锚通过上下文卷（37.1）的共轭并循环重标边，运输整个分类，保持 $a$ 与轨道质量。
+
+### 32.3 坏元组的守恒差分与两个梯度界
+
+**引理 32.5（坏质量与跨轨道差分）。** 以下假设上下文卷定理37.2的合法面 $\mathcal F_S$ 非空，实际 $P\in\mathcal C_S$。令 $E$ 为固定对角及移动单割元组的集合，定义
+$$
+\beta=P(E^c),\quad \beta_F=P(E^c,F=0),\quad
+\beta_N=P(E^c,F=1),\quad
+\beta_O=P(E^c,Y_0\in O),\quad b_j(x)=P(E^c,Y_j=x).
+\tag{32.8}
+$$
+移动轨道上的 $p_{x,k}=P(T^k(x))$ 满足
+$$
+R\ge2\beta_F+\beta_N\ge\beta,\qquad
+\sum_{k\ge j}p_{x,k}+\sum_{k<j}p_{gx,k}=\mu(x)-b_j(x),
+\tag{32.9}
+$$
+$$
+p_{gx,k}-p_{x,k}=b_k(x)-b_{k+1}(x)\quad(k<n-1),\qquad
+p_{gx,n-1}-p_{x,n-1}=b_{n-1}(x)-b_0(gx).
+\tag{32.10}
+$$
+若 $gx=x$，则 $b_j(x)=\mu(x)-P(D(x))$ 与 $j$ 无关。对任一轨道，包括固定轨道，都有 $\sum_{x\in O}b_j(x)=P(E^c,Y_0\in O)$。对移动轨道置
+$$
+G_{O,k}=\sum_{x\in O}|p_{gx,k}-p_{x,k}|,\quad
+G_O=\sum_kG_{O,k}.
+$$
+则同时成立
+$$
+G_O\le2n\beta_O,\qquad
+\sum_OG_O\le2\mathbb E[N\mathbf1_{E^c}]=2(R+\beta_N).
+\tag{32.11}
+$$
+
+证明。固定锚不可能仅有一条失败边：其余边传播且 $gx=x$ 会迫使缺边也成立。坏移动样本若只有一条失败边就属于 $E$，故也至少两条失败边；分别减去 $F$ 得第一不等式。精确边缘减去坏子边缘得到（32.9）；相邻节点式相减得内部差分，再用锚行和相减得闭合差分。所有好元组留在一个轨道，且每个节点的完整轨道质量相等，因此各坏子边缘在该轨道上的总质量同为 $\beta_O$，即使个别坏样本跨轨道。对（32.10）每列用两个同质量非负向量的 $\ell^1$ 差至多 $2\beta_O$，给第一个梯度界。
+
+更强的总界使用实际坏成对耦合。任意有限子概率 $\nu$ 有
+$$
+\|\nu_X-\nu_Z\|_1\le2\nu(X\ne Z),
+\tag{32.12}
+$$
+因为逐样本 $\|\mathbf1_X-\mathbf1_Z\|_1=2\mathbf1_{X\ne Z}$，积分并用三角不等式即可。将 $P$ 限制到 $E^c$，内部用 $(Y_k,Y_{k+1})$，闭合用 $(Y_{n-1},g^{-1}Y_0)$；闭合的第二边缘恰为 $b_0(gx)$。固定点差分及零质量坐标均零。求和得（32.11）左式，而 $\mathbb E[N\mathbf1_E]=a-\beta_N$ 给右式。证明没有要求坏元组保持轨道。$\square$
+
+### 32.4 尖锐循环常数与同一个合法修复
+
+**引理 32.6（循环平均和局部合法支撑的尖锐常数）。** 在长度 $\ell\ge2$ 的轨道 $O$ 上置
+$$
+c_{\rm cyc}(O)=\frac{\lfloor\ell^2/4\rfloor}{\ell}.
+$$
+对任意实函数 $f$，以及任意非负、支撑于真子集 $L\subsetneq O$ 的函数 $u$，分别有
+$$
+\sum_{x\in O}|f(x)-\overline f|
+\le c_{\rm cyc}(O)\sum_{x\in O}|f(gx)-f(x)|,
+\qquad
+\sum_{x\in O}u(x)\le\frac{r_L}{2}\sum_{x\in O}|u(gx)-u(x)|,
+\tag{32.13}
+$$
+其中 $\overline f=\ell^{-1}\sum_Of$，$r_L$ 是 $L$ 的最长连续循环段长度，空集时为零。两个常数均尖锐。
+
+证明。$f-\overline f=\ell^{-1}\sum_{r=0}^{\ell-1}(f-f\circ g^r)$。每一平移差沿较短循环路径望远镜展开，$\ell^1$ 范数至多 $\min(r,\ell-r)$ 倍的相邻变差；这些路径长度之和为 $\lfloor\ell^2/4\rfloor$，得第一界。令 $f$ 为连续 $m=\lfloor\ell/2\rfloor$ 个相位的示性函数，其偏差为 $2m(\ell-m)/\ell$，变差为 $2$，达到常数。第二界对每个正水平集成立：它的每个连通段至多长 $r_L$，并有两条边界，所以大小至多 $r_L/2$ 倍边界数。对 $u$ 的有限个正水平增量求和，得到质量与变差的对应公式。最长段上的常数平台达到等号；$L=\varnothing$ 时 $u=0$。$\square$
+
+**定理 32.7（保留全部界的一个合法修复）。** 对上下文卷（37.3）的 $L_{O,k},K_O$，在 $k\notin K_O$ 时记最长合法段为 $r_{O,k}$，并置
+$$
+M_O=\max\{c_{\rm cyc}(O),\ \max_{k\notin K_O}r_{O,k}\},
+\qquad M_{\max}=\max_OM_O.
+\tag{32.14}
+$$
+内层空最大值取零，无移动轨道时也约定 $M_{\max}=0$。有 $M_O\le\ell_O-1$；全部割合法时 $M_O=c_{\rm cyc}(O)$。定义
+$$
+\overline p_{O,k}=\frac1{\ell_O}\sum_{x\in O}p_{x,k},\quad
+m_O=\sum_{k\notin K_O,x\in O}p_{x,k},\quad m=\sum_Om_O,
+$$
+$$
+V_{\rm dev}=\sum_{O,k\in K_O,x\in O}|p_{x,k}-\overline p_{O,k}|,
+\qquad A(P)=\beta+m+\tfrac12V_{\rm dev}.
+\tag{32.15}
+$$
+每个正移动轨道声明一个 $K_O$ 上的默认概率 $\theta_O$。定义同一个律
+$$
+Q_{\rm good}(T^k(x))=
+\begin{cases}
+\overline p_{O,k}+(\beta_O+m_O)\theta_{O,k}/\ell_O,&k\in K_O,\\
+0,&k\notin K_O,
+\end{cases}
+\qquad Q_{\rm good}(D(x))=\mu(x).
+\tag{32.16}
+$$
+其余质量为零，则 $Q_{\rm good}\in\mathcal F_S$，且
+$$
+\operatorname{TV}(P,Q_{\rm good})\le A(P)
+\le\beta+\frac12\sum_O\left[
+ c_{\rm cyc}(O)\sum_{k\in K_O}G_{O,k}
+ +\sum_{k\notin K_O}r_{O,k}G_{O,k}\right]
+\le\beta+\frac12\sum_OM_OG_O.
+\tag{32.17}
+$$
+因此这同一个输出同时满足
+$$
+\operatorname{TV}(P,Q_{\rm good})
+\le\min\{1,\ \beta+n\sum_OM_O\beta_O,
+\beta+M_{\max}(R+\beta_N)\}
+\le\min\{1,(1+2M_{\max})R\}.
+\tag{32.18}
+$$
+较早的支撑界 $\operatorname{TV}(P,Q_{\rm good})\le\min\{1,\beta+n\sum_O(\ell_O-1)\beta_O\}$ 仍为同一输出的推论。加权变差界（32.17）也保留，不以较松系数替代。
+
+证明。保留平均行的总质量是 $\mu(x)-(\beta_O+m_O)/\ell_O$，填补后恢复 $\mu(x)$，各列非负且轨道恒定。定理32.3给全部边缘，$k\in K_O$ 及固定对角的合法性给支撑。比较 $P,Q_{\rm good}$ 的 $\ell^1$：坏元组贡献 $\beta$，删去的好列贡献 $m$，固定点亏损贡献 $\beta_F$，平均操作至多贡献 $V_{\rm dev}$，填补贡献 $\beta_N+m$。半和即 $A(P)$。因 $P(S)=1$，部分合法列在非法相位为零；对保留列用（32.13）的平均界，对删去列用支撑界，即得（32.17）。分别代入（32.11）的两界，再用 $\beta,\beta_N\le R$ 得（32.18）。$\square$
+
+若所有正质量点都固定，输出为已知对角律，且精确地 $\operatorname{TV}(P,Q_{\rm good})=\beta\le R/2$；无需任何移动轨道归一化。无限制支撑时用 $M_O=c_{\rm cyc}(O)$，但不宣称聚合系数 $1+2\max_Oc_{\rm cyc}(O)$ 最优。
+
+### 32.5 到整个合法面的精确距离与尖锐轨道族
+
+**定理 32.8（全好元组质量给出的精确距离）。** 继续定理32.7的前提，在正移动轨道 $O$ 上写 $\alpha_O=\mu(x)=w_O/\ell_O$。对任意 $Q\in\mathcal F_S$，令 $c_{O,k}$ 为其每相位质量，即 $c_{O,k}\ge0$、$k\notin K_O$ 时为零、$\sum_kc_{O,k}=\alpha_O$。则
+$$
+\operatorname{TV}(P,Q)=\beta+\sum_O\sum_{x\in O,k}(p_{x,k}-c_{O,k})_+,
+\tag{32.19}
+$$
+$$
+\operatorname{dist}_{\rm TV}(P,\mathcal F_S)
+=\beta+\sum_O\min_{\substack{c_k\ge0,\ c_k=0\ (k\notin K_O)\\\sum_kc_k=\alpha_O}}
+ \sum_{x\in O,k}(p_{x,k}-c_k)_+.
+\tag{32.20}
+$$
+每个最小值均取得。
+
+证明。轨道上的好质量满足 $\sum_{x,k}(c_{O,k}-p_{x,k})=\beta_O$，故其绝对差总和为 $\beta_O+2\sum_{x,k}(p_{x,k}-c_{O,k})_+$。再加坏质量 $\beta$ 及固定亏损 $\beta_F$，除以二，并用 $\sum_O\beta_O=\beta_N$，得（32.19）。各轨道单纯形紧且非空，目标连续，独立取最小值得（32.20）。$\square$
+
+这是整个合法总误差面的距离。另加最小最大误差条件、硬预算或来源约束会耦合轨道，未必还能分开优化。公式使用全部好元组质量；它不说成对表决定最近点，也不说下节的解码器是最近点。
+
+**命题 32.9（连续混合中的尖锐轨道条件数）。** 取 $n=3$、$B=\mathbb Z/\ell\mathbb Z$、$\ell\ge3$、$g(x)=x+1$ 和均匀 $\mu$。置
+$$
+m_\ell=\lfloor(\ell-1)/2\rfloor,\quad
+b_\ell=\ell-1-m_\ell=\lfloor\ell/2\rfloor.
+$$
+令 $Z_\ell$ 在 $T^0(x)$（$1\le x\le m_\ell$）、$T^1(x)$（$m_\ell<x\le\ell-1$）以及 $(0,m_\ell,\ell-1)$ 各放质量 $1/\ell$。令 $Q_2=P^2$，并令
+$$
+P_t=(1-t)Q_2+tZ_\ell\quad(0<t\le1),\qquad
+S=\operatorname{supp}Z_\ell\cup\operatorname{supp}Q_2.
+\tag{32.21}
+$$
+即使 $t=1$，声明支撑 $S$ 仍保留 $Q_2$。则所有节点边缘精确，$\beta=\beta_N=R=t/\ell$，唯一合法最优律为 $Q_2$，且
+$$
+\operatorname{dist}_{\rm TV}(P_t,\mathcal F_S)=t.
+\tag{32.22}
+$$
+奇数 $\ell=2q+1$ 时 $M_{\max}=q$，从而（32.18）的系数在此达到等号：$t=(1+2M_{\max})R$。在无限制支撑面上则精确为
+$$
+\operatorname{dist}_{\rm TV}(P_t,\mathcal F_{B^3})
+=\lceil\ell/2\rceil R.
+\tag{32.23}
+$$
+
+证明。$Z_\ell$ 的锚列列举每个相位一次；第二列由前两族列举除 $m_\ell$ 外的所有相位，第三列列举除 $\ell-1$ 外的所有相位，异常元组补齐二者。异常元组两个内部边失败而闭合有效，其余元组各一条失败边，给所述 $R,\beta$。只有割 $2$ 全相位合法，故面为 $\{Q_2\}$。两组分支撑互不相交，给距离 $t$。奇数长度时两条部分列的最长段都为 $q$，$c_{\rm cyc}=q(q+1)/(2q+1)<q$。同时 $G_{O,0}=G_{O,1}=2t/\ell$、$G_{O,2}=0$，故（32.11）的总梯度界也尖锐。
+
+无限制时，任一最优律每相位质量为 $c_0,c_1,c_2\ge0$、总和 $1/\ell$。与 $P_t$ 的重叠恰为
+$$
+m_\ell\min(t/\ell,c_0)+b_\ell\min(t/\ell,c_1)
++\ell\min((1-t)/\ell,c_2).
+\tag{32.24}
+$$
+把尚未饱和的第三项优先填到 $(1-t)/\ell$ 不减重叠：它的斜率 $\ell$ 不小于另两项。剩下 $t/\ell$ 分给斜率较大的 $b_\ell$ 项，最大重叠为 $1-t+b_\ell t/\ell$。这对任意实 $t$ 的连续分配成立，包括 $t=1$ 时第三段长零；用概率 TV 等于一减重叠即得（32.23）。$\square$
+
+当 $t=1$，唯一保留割的检测计数为零，但其唯一合法默认仍输出 $Q_2$。固定 $t=1$ 让 $\ell$ 增大时，$R\to0$，无限制距离趋于 $1/2$，合法距离恒为 $1$。这里模型和字母集随 $\ell$ 改变，说明一致稳定性需要轨道条件数，不否定一个固定紧类上的定性趋近。恢复卷命题31.9是另一个特定的非一致时域例子，不供应此轨道长度障碍的证明。
+
+### 32.6 成对检测、归一化与剩余观察纤维
+
+**定义 32.10（只使用成对表的合法解码器）。** 保留定理32.7的模型、合法 $K_O$ 及默认 $\theta_O$。对移动 $x$ 定义
+$$
+c_{x,k}=P(Y_k=x,Y_{k+1}=g^{-1}x)\quad(k<n-1),\qquad
+c_{x,n-1}=P(Y_{n-1}=x,Y_0=x).
+\tag{32.25}
+$$
+每个检测原子都是实际失败；在 $E$ 中它恰检测 $T^k(x)$，故 $c_{x,k}=p_{x,k}+z_{x,k}$，其中 $z\ge0$ 来自坏元组。只保留 $k\in K_O$，并写
+$$
+C_{O,k}=\sum_{x\in O}c_{x,k},\quad
+U_{O,k}=\sum_{x\in O}p_{x,k},\quad
+Z_O=C_O-U_O,\quad s_O=\sum_kC_{O,k},\quad D_O=\sum_kZ_{O,k},
+\quad b_O=\beta_O+m_O.
+\tag{32.26}
+$$
+$C_O$ 是计数向量，与循环常数 $c_{\rm cyc}(O)$ 不同。它们满足
+$$
+U_O,Z_O\ge0,\quad \sum_kU_{O,k}=w_O-b_O,\quad
+s_O=w_O-b_O+D_O,\quad 0\le b_O\le w_O,\quad D_O\le|K_O|\beta_O.
+\tag{32.27}
+$$
+最后一界逐检测事件使用 $P(E^c,Y_k\in O)=\beta_O$（闭合以 $Y_{n-1}$ 为源），只是粗界。
+
+对总量 $s$ 的非负向量 $c$，定义带同一默认的
+$$
+\mathcal N_w(c)=\begin{cases}wc/s,&s>0,\\w\theta,&s=0.
+\end{cases}
+\qquad q_O=\mathcal N_{w_O}(C_O).
+\tag{32.28}
+$$
+令 $Q(T^k(x))=q_{O,k}/\ell_O$（$k\in K_O$），固定点质量为 $\mu(x)$，其余为零，忽略零质量轨道。这给 $Q\in\mathcal F_S$：列非负、轨道恒定、总量正确且所用原子合法，直接使用定理32.3。输入只有完整成对表、$\mu,g$、已认证的 $K_O$ 与默认，不需要隐藏的 $p,\beta$。
+
+**引理 32.11（含零总量的归一化与检测超额）。** 对（32.28）所有 $s\ge0$，
+$$
+\|\mathcal N_w(c)-c\|_1=|w-s|.
+\tag{32.29}
+$$
+当 $c=U+Z$、$\sum U=w-b$、$\sum Z=D$、$U,Z\ge0$ 时，
+$$
+\|\mathcal N_w(U+Z)-U\|_1
+\le |w-s|+D=b+2(s-w)_+.
+\tag{32.30}
+$$
+若 $s\le w$，左边恰为 $b$；若 $s>w$，还可改进为
+$$
+\|\mathcal N_w(U+Z)-U\|_1
+\le b+2(s-w)(w-b)/s.
+\tag{32.31}
+$$
+对真实成对表定义 $E_{\rm pair}=\sum_O(s_O-w_O)_+$，则
+$$
+E_{\rm pair}\le R.
+\tag{32.32}
+$$
+
+证明。正总量时（32.29）只是共同倍数，零总量时 $c=0$、默认质量为 $w$，也成立。三角不等式得（32.30）。$s\le w$ 时归一化后的每项至少 $U$，差总量为 $b$；包括 $s=0$ 时 $U=Z=0,b=w$。$s>w$ 时负部至多 $(1-w/s)U$，而差的总和为 $b$，由绝对值等于总和加两倍负部得（32.31），此处 $s>0$ 才除法。
+
+对任意正移动轨道的并 $A$，令 $L_A$ 计数源节点在 $A$ 内的保留检测事件。逐样本有
+$$
+L_A-\mathbf1_{Y_0\in A}\le N-F.
+\tag{32.33}
+$$
+固定锚时由 $L_A\le N$；锚在 $A$ 时减去一即得。移动锚在 $A$ 外时，若有内部失败，第一条内部失败以前节点仍等于锚，故它的源在 $A$ 外，至少一条失败未计；若无内部失败，唯一闭合失败的源仍在 $A$ 外，同样未计。取期望得到 $\sum_{O\subseteq A}(s_O-w_O)\le R$；选取恰好超额为正的轨道，得（32.32）。$\square$
+
+**定理 32.12（同一成对解码输出的误差与纤维直径）。** 定义32.10的同一个 $Q$ 同时满足
+$$
+\begin{aligned}
+\operatorname{TV}(P,Q)\le\min\{1,&\ A(P)+E_{\rm pair},\\
+&\beta+n\sum_OM_O\beta_O+E_{\rm pair},\\
+&\beta+M_{\max}(R+\beta_N)+E_{\rm pair}\}\\
+\le\min\{1,&\ (1+2M_{\max})R+E_{\rm pair}\}\\
+\le\min\{1,&\ (2+2M_{\max})R\}.
+\end{aligned}
+\tag{32.34}
+$$
+原有统一形式也对这个 $Q$ 成立：
+$$
+\operatorname{TV}(P,Q)\le\min\{1,(1+nM_{\max})R+E_{\rm pair}\}
+\le\min\{1,(2+nM_{\max})R\}.
+\tag{32.35}
+$$
+若 $P,P'$ 具有相同全部成对表及相同模型、合法集和默认，则共享 $Q,R,E_{\rm pair}$，并有
+$$
+\operatorname{TV}(P,P')\le\min\{1,2[(1+2M_{\max})R+E_{\rm pair}]\}
+\le\min\{1,(4+4M_{\max})R\}.
+\tag{32.36}
+$$
+同一纤维也保留界 $\min\{1,2[(1+nM_{\max})R+E_{\rm pair}]\}\le\min\{1,2(2+nM_{\max})R\}$。
+
+证明。将每条保留列先平均，再与 $q_{O,k}/\ell_O$ 比较；相位扩展保持聚合向量的 $\ell^1$ 距离。（32.30）给该步至多 $b_O+2(s_O-w_O)_+$。连同坏质量、删列、固定亏损及 $V_{\rm dev}$，按定理32.7相同会计得 $A(P)+E_{\rm pair}$。使用（32.17）–（32.18）及（32.32）得（32.34）；轨道界用 $\sum_O\beta_O\le R$ 得（32.35）。两份律经同一 $Q$ 用三角不等式即得直径界。亦可相加两份各自更强的轨道分辨界；其潜在 $\beta_O$ 不一定相同，不能把一份的坏质量代入另一份。$\square$
+
+当 $R=0$，必有 $Q=P$。每个移动割质量由其完整检测原子直接识别，固定质量已知；失败事件互斥、并集质量为 $a$，割核在同一轨道上与相位无关。标量 $\delta_i$ 仍不能恢复全部轨道核，见命题32.4后的例子。全固定情形下 $\operatorname{TV}(P,Q)=\beta\le R/2$，同成对表纤维直径至多 $\min(1,R)$。这些是联合标签律的识别，不识别完整世界、来源纤维或实际取得顺序。
+
+### 32.7 确定性含噪归一化与同一真律误差
+
+**引理 32.13（归一化的对称比较及零总量）。** 固定同一默认 $\theta$，对非负计数向量 $c,c'$，总量 $s,s'$，令 $e=\|c-c'\|_1$。则
+$$
+\tfrac12\|\mathcal N_w(c)-\mathcal N_w(c')\|_1
+\le\min\{w,we/\max(s,s')\}\quad(\max(s,s')>0),
+\tag{32.37}
+$$
+两总量均零时距离为零。还总有
+$$
+\tfrac12\|\mathcal N_w(c)-\mathcal N_w(c')\|_1
+\le e+(w-s)_+.
+\tag{32.38}
+$$
+单元素合法割集上的实际输出差恒为零。
+
+证明。两总量正时，插入共同缩放 $c'/s$ 并用 $|s-s'|\le e$，归一化概率的 TV $d$ 至多 $e/s$；互换两者又至多 $e/s'$，且 $d\le1$，得（32.37）。仅一方零时 $e=\max(s,s')$，界退化为 $w$，对任意声明默认均有效；两方零时使用相同默认，差为零。对（32.38），$s>0$ 时 $sd\le e$ 且 $d\le1$ 给 $wd\le e+(w-s)_+$；另一总量为零时仍有 $sd\le s=e$。$s=0$ 则直接用距离至多 $w$。$\square$
+
+**定理 32.14（任意非负同单位计数的真律证书）。** 固定 $\mu,g,S,K_O$、坐标含义、来源合同及默认。给同一 $K_O$ 上、同一概率质量单位的任意非负测量计数 $\widetilde C_O$，令
+$$
+\eta_O=\|\widetilde C_O-C_O\|_1,\quad \eta=\sum_O\eta_O,
+\quad \widetilde s_O=\sum_k\widetilde C_{O,k},\quad
+\widetilde E_{\rm pair}=\sum_O(\widetilde s_O-w_O)_+.
+\tag{32.39}
+$$
+按（32.28）归一化并扩展到相位，得同一个输出 $\widetilde Q\in\mathcal F_S$，无须测量表本身互相兼容。它满足
+$$
+\operatorname{TV}(Q,\widetilde Q)
+\le\min\{1,\eta+\sum_O(w_O-s_O)_+\}
+\le\min\{1,\eta+A(P)\},
+\tag{32.40}
+$$
+并有直接对真实 $P$ 的更强界
+$$
+\begin{aligned}
+\operatorname{TV}(P,\widetilde Q)\le\min\{1,&\ A(P)+E_{\rm pair}+\eta,\\
+&\beta+n\sum_OM_O\beta_O+E_{\rm pair}+\eta,\\
+&\beta+M_{\max}(R+\beta_N)+E_{\rm pair}+\eta\}\\
+\le\min\{1,&\ (1+2M_{\max})R+E_{\rm pair}+\eta,
+(2+2M_{\max})R+\eta\}.
+\end{aligned}
+\tag{32.41}
+$$
+同一输出还满足原来的两种统一界 $(1+nM_{\max})R+E_{\rm pair}+\eta$ 与 $(2+nM_{\max})R+\eta$，均可再与 $1$ 取最小值。$R=0$ 时误差至多 $\min(1,\eta)$。
+
+证明。非负轨道常数列总量为 $w_O$，故由定理32.3及合法集定义得成员资格。逐轨道用（32.38）得（32.40）的第一界，且 $(w_O-s_O)_+\le b_O$、$\sum_Ob_O=\beta_N+m\le A(P)$。这个输出间比较含真实缺陷项，并非全域纯噪声连续性。
+
+直接比较无需串联（32.40）。使用（32.29）、$C_O=U_O+Z_O$ 和 $|\widetilde s_O-s_O|\le\eta_O$，有
+$$
+\begin{aligned}
+\|\mathcal N_{w_O}(\widetilde C_O)-U_O\|_1
+&\le|w_O-\widetilde s_O|+\|\widetilde C_O-U_O\|_1\\
+&\le|w_O-s_O|+D_O+2\eta_O\\
+&=b_O+2(s_O-w_O)_++2\eta_O.
+\end{aligned}
+\tag{32.42}
+$$
+此式包括真实总量零、测量总量零及两者均零。将它代入定理32.12的完整好／坏／删列／固定点会计即得（32.41）；其余界由（32.11）、（32.17）及 $E_{\rm pair}\le R$ 得到。所有界作用于同一个 $\widetilde Q$，所以可取最小值。$\square$
+
+### 32.8 概率成对表的可读证书与计数专用证书
+
+**定理 32.15（成对概率噪声的三倍尾项）。** 假设每个测量表 $\widetilde t_i$ 非负、归一化，且对同一真实 $P$ 同时有已认证的 $\operatorname{TV}(\widetilde t_i,t_i)\le e_i$，$e_i\ge0$。它们可以有错误边缘，也可以彼此不兼容。令 $E_{\rm noise}=\sum_ie_i$，按（32.25）从这些表取保留计数。定义 $\widetilde\delta_i$ 为测量表在理想图外的事件概率，闭合表保持规定顺序，并置
+$$
+\widetilde R=\sum_i\widetilde\delta_i-a,\qquad
+R_{\rm up}=\max\{0,\widetilde R+E_{\rm noise}\}.
+\tag{32.43}
+$$
+则
+$$
+\eta\le2E_{\rm noise},\qquad
+|\widetilde R-R|\le E_{\rm noise},\qquad R\le R_{\rm up},\qquad
+|\widetilde E_{\rm pair}-E_{\rm pair}|\le E_{\rm noise}.
+\tag{32.44}
+$$
+定理32.14的同一输出满足
+$$
+\operatorname{TV}(P,\widetilde Q)\le\min\{1,
+(1+2M_{\max})R_{\rm up}+\widetilde E_{\rm pair}+3E_{\rm noise},
+(2+2M_{\max})R_{\rm up}+2E_{\rm noise}\}.
+\tag{32.45}
+$$
+如另有更好的认证 $\overline\eta\ge\eta$，第一尾项可换成 $E_{\rm noise}+\overline\eta$，第二尾项可换成 $\overline\eta$。不主张这些聚合噪声系数最优。
+
+证明。每边保留检测原子互不相交；其聚合计数的 $\ell^1$ 差至多完整表的 $\ell^1$ 差 $2e_i$，求和得第一式。把质量从一个保留轨道单元移到另一个，会改变两个计数坐标，因此一般需要因子二。图外是固定事件，每边事件概率差至多 $e_i$，得剩余量界。
+
+对任意正移动轨道的并 $A$，令 $D_{i,A}$ 为第 $i$ 边源在 $A$ 的保留检测事件。有限正部和可写为
+$$
+E_{\rm pair}=\max_A\left[\sum_it_i(D_{i,A})-\mu(A)\right],\qquad
+\widetilde E_{\rm pair}=\max_A\left[\sum_i\widetilde t_i(D_{i,A})-\mu(A)\right].
+\tag{32.46}
+$$
+包含空并；轨道权重和事件固定不变。每个括号变动至多 $E_{\rm noise}$，故最大值差也至多该数，这比任意计数的 $|\widetilde E_{\rm pair}-E_{\rm pair}|\le\eta$ 更强。将这些界代入（32.41）即得（32.45）。$\square$
+
+在有效前提下，未截断的 $\widetilde R+E_{\rm noise}$ 已经非负；若严格认证出它为负，说明证书或模型不一致，截断不能修复证据。不能以测量表到理想图律的 TV 替代 $\widetilde\delta_i$：例如二元均匀对角理想律与全部质量在 $(0,0)$ 的测量表，图外概率为零而 TV 为 $1/2$，其第一边缘不同。
+
+**推论 32.16（只有计数时须另供剩余量上界）。** 若仅有非负同单位计数、认证 $\overline\eta\ge\eta$ 及独立认证的 $R_{\rm up}\ge R$，则同一 $\widetilde Q$ 满足
+$$
+\operatorname{TV}(P,\widetilde Q)\le\min\{1,
+(1+2M_{\max})R_{\rm up}+\widetilde E_{\rm pair}+2\overline\eta,
+(2+2M_{\max})R_{\rm up}+\overline\eta\}.
+\tag{32.47}
+$$
+证明。对任意计数，用正部的 Lipschitz 性给 $|\widetilde E_{\rm pair}-E_{\rm pair}|\le\eta$，代入（32.41）。$\square$
+
+（32.45）与（32.47）也分别保留以 $1+nM_{\max},2+nM_{\max}$ 替换两系数的原版本，它们由同一输出的轨道分辨界导出。将 $\overline\eta=2E_{\rm noise}$ 代入一般计数证书只给四倍噪声尾项；概率表的固定事件证明才给（32.45）的三倍尾项。检测计数漏掉某些图失败，不能独自认证 $R_{\rm up}$。
+
+全部正质量点固定时，$\widetilde Q$ 为已知对角律，误差精确为 $\beta\le\min(1,R_{\rm up}/2)$，无需计数噪声尾项。若表证书在置信度至少 $1-\alpha$ 的共同事件上成立，这些确定性结论就在同一事件上成立；个别失败概率可用并集界合并，不要求独立。这里不生成置信证书、样本复杂度、位复杂度或精确零判定；$\widetilde R=0$ 而误差正不能断言 $R=0$。有符号计数，或 $\mu,g,S,K_O$、坐标解释、默认本身错误，需要各自的修正分析。没有最小正轨道质量假设，也不删小轨道，但不声称小轨道上的条件割核一致准确。
+
+### 32.9 相容零计数反例与适用范围
+
+**命题 32.17（相容表仍有零总量归一化跳变）。** 取 $n=3$，$g$ 固定 $0$ 并循环 $1\to2\to3\to1$，$\mu(0)=1-w$、移动点质量各 $w/3$，$0<w\le1$，允许全部割。令 $P$ 在 $000$ 放 $1-w$，在 $(x,gx,g^2x)$（$x=1,2,3$）各放 $w/3$。则 $R=\beta=w$，全部检测计数为零。声明默认割 $0$，并令测量表来自实际兼容律 $(1-\varepsilon)P+\varepsilon P^1$，其中 $0<\varepsilon\le1$，$P^1$ 也含同一固定质量。则其计数为 $(0,w\varepsilon,0)$，三张表的精确 TV 误差为 $(w\varepsilon,w\varepsilon,0)$，解码始终选割 $1$，故
+$$
+\operatorname{TV}(Q,\widetilde Q)=w,\qquad \eta=w\varepsilon\longrightarrow0.
+\tag{32.48}
+$$
+
+证明。每个移动样本两条内部边失败、闭合有效；内部检测要求后继 $g^{-1}x$，实际却为 $gx$，闭合检测要求两节点相同，也不成立。割 $1$ 的检测恰有该列总质量 $w$。它与 $P$ 的第一、第二成对移动支撑不交，而闭合表相同，故表误差及计数如上。两个解码律在移动扇区使用不同割，支撑不交，差为 $w$。$\square$
+
+反向以正割 $1$ 律为真实输入、以零计数表为测量，也检验测量总量零的分支。若两份零输入采用不同默认，零噪声也能产生不同输出，故共享默认不可删除。小轨道计数 $we_0,we_1$ 的 $\ell^1$ 差为 $2w$，条件割核 TV 为 $1$，完整律贡献则为 $w$。这些例子界定了质量加权、相对真实缺陷的稳定性，并不违背（32.41）。
+
+本节的有限证明使用既有 [Metric.lean](../../../D5/S3/TotalVariation/Metric.lean) 的三角不等式、概率上界和等总量事件公式，[Convexity.lean](../../../D5/S3/TotalVariation/Convexity.lean) 的联合凸性，以及 [DataProcessing.lean](../../../D5/S3/TotalVariation/DataProcessing.lean) 的共同随机核收缩背景；图误差身份已在定理32.1单独核对准确边缘，非线性归一化不被冒称为固定随机通道。恢复卷第10.2–10.4节的正时间／矩前缀实现与加权 Frobenius 投影有不同对象，不能替代此 TV 面及解码证明。完整观察者、较强概率准入、所选目标的世界／联合来源提升及后续合法使用分别见上下文卷第37节；以上普通数学证明的范围不自动成为所引 Lean 供应的形式核验范围。
+
+## 32.99 追加锚
