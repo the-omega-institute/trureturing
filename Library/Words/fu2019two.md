@@ -58,8 +58,12 @@ singletons in either factor. The greatest-cut decomposition below establishes
 its right-factor convention separately.
 
 This is a formal proof of a known classical bridge, not a newly solved
-open problem. It is supporting draft work for repository issue #9208;
-there is no standalone FirstFreeze or typed open-problem resolution claim.
+open problem. It supplies the classical decomposition for repository issue
+#9208. The actual `blockSum` constructor is also used by
+`A398542MinimumRecurrence.joinUpper` for the forced value blocks of the
+upper-minimum decomposition. ProperCut and CutFactorization belong to that
+module's project import closure; their admission is supporting content,
+with no typed open-problem resolution claim of their own.
 Conjecture 5.2's full real-rootedness assertion remains unresolved here.
 
 `GreatestCutEnumeration.result` gives an equivalence between actual avoiders

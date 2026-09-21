@@ -145,8 +145,9 @@ internal sealed class CutFactorizationDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "The greatest-cut choice, its right-factor sign condition, weighted "
                 + "enumeration, generating-function equations, and real-rootedness "
-                + "remain separate obligations. No FirstFreeze or open-problem "
-                + "resolution claim is made by this support unit.")))));
+                + "remain separate obligations. The actual blockSum constructor is "
+                + "also used in the fixed-bottom A398542 minimum decomposition. "
+                + "This support unit carries no open-problem resolution claim.")))));
 
     private static DocumentBlock Node(
         string name, string title, DescribeRole role, Formula formula, string prose) =>
