@@ -53,7 +53,11 @@ internal sealed class MercaResidueSumEvenOrderRefutationDocument
                     + "The residues are 2, 4, 8, and 1, with sum 15. The conjecture's right "
                     + "side is 15 * 4 / 2 = 30, so the universal claim is false.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "merca-2011-residue-sum-even-order-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,

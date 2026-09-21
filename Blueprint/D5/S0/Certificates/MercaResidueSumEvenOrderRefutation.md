@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/MercaResidueSumEvenOrderRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/merca-2011-residue-sum-even-order-refutation` (refuted) by `D5/S0/Certificates/MercaResidueSumEvenOrderRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"merca-2011-residue-sum-even-order-refutation","declaration_gid":"D5/S0/Certificates/MercaResidueSumEvenOrderRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mircea Merca (2011). *Inequalities and Identities Involving Sums of Integer Functions*. URL: <https://cs.uwaterloo.ca/journals/JIS/VOL14/Merca/merca3.pdf>.
