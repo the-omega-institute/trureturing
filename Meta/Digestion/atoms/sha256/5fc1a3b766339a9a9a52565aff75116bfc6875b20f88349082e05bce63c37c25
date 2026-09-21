@@ -1,0 +1,54 @@
+**定理 31.8（全阶短窗口闭式及常数界）。** 定义 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$、$p_n=|+\rangle\langle+|^{\otimes n}$，并以 $D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$ 记半迹距离。对 $0\le n<k$，
+$$
+f_{k,n}:=\operatorname{Tr}(\rho_{k,n}p_n)
+=2-\frac{2(2/\lambda)^n+\epsilon2^{-n}}{4-\lambda},
+\tag{31.23}
+$$
+$$
+D(\rho_{k,n},p_n)\le\sqrt{1-f_{k,n}}
+\le\sqrt{\frac{2n\lambda^{-k}}3}
+\le\sqrt{\frac{4n2^{-k}}3}.
+\tag{31.24}
+$$
+$n=0$ 时 $f_{k,0}=1$、距离零；$n=1$ 时 $1-f_{k,1}=\epsilon/(2\lambda)$。
+
+证明。因为 $n<k$，全部 $2^n$ 个词合法。记 $C_t=\#\{w:i(w)\le t\}$。对 $t<n$，后缀至少为 $t+1$ 的词恰固定末尾 $t+1$ 个一，故
+$$
+C_t=2^n-2^{n-t-1}\ (0\le t<n),\qquad C_t=2^n\ (t\ge n).
+\tag{31.25}
+$$
+利用式（31.11）、$d_t=\epsilon\lambda^t$ 和 $\sum_{t\ge n}d_t=r_n$，有
+$$
+\begin{aligned}
+f_{k,n}
+&=2^{-n}\lambda^{-n}\left(\sum_{t=0}^{n-1}d_t C_t^2+r_n4^n\right)\\
+&=(2/\lambda)^n\left[1-\epsilon\sum_{t=0}^{n-1}\left((\lambda/2)^t-\tfrac14(\lambda/4)^t\right)\right].
+\end{aligned}
+\tag{31.26}
+$$
+对两项有限几何和求值：$\epsilon/(1-\lambda/2)=2$、$\epsilon/[4(1-\lambda/4)]=\epsilon/(4-\lambda)$。因此括号为 $-1+2(\lambda/2)^n+\epsilon[1-(\lambda/4)^n]/(4-\lambda)$；再乘 $(2/\lambda)^n$，以 $-(4-\lambda)+\epsilon=-2$ 合并，正是式（31.23）。空和也涵盖 $n=0$。
+
+纯参考的标准保真度／迹距离上界给 $D\le\sqrt{1-f}$。设 $a=2/\lambda$，Bernoulli 不等式给
+$$
+1-f_{k,n}=\frac{2(a^n-1)-\epsilon(1-2^{-n})}{4-\lambda}
+\le\frac{n\epsilon a^n}{4-\lambda},
+\qquad
+a^n-1=a^n\bigl[1-(1-\epsilon/2)^n\bigr]\le a^n n\epsilon/2.
+\tag{31.27}
+$$
+为统一控制常数，置 $b=2^{-k}$、$q=2(1-b)>1$。严格 Bernoulli 与 $kb\le1/2$ 给
+$$
+q^k(2-q)=2(1-b)^k>2(1-kb)\ge1.
+\tag{31.28}
+$$
+对 $F(x)=x^k-\sum_{j=0}^{k-1}x^j$ 有 $(q-1)F(q)=1-q^k(2-q)<0$。函数 $\sum_{j=1}^kx^{-j}$ 在 $x>1$ 严格递减，故唯一过零点满足 $q<\lambda$。对 $n\le k-1$，再次使用 Bernoulli 和 $(k-1)b\le1/4$ 得
+$$
+a^n\le(1-b)^{-(k-1)}\le\frac1{1-(k-1)b}\le\frac43,
+\qquad
+\lambda^{-k}<2^{-k}(1-b)^{-k}\le2\,2^{-k}.
+\tag{31.29}
+$$
+连同 $4-\lambda>2$，式（31.27）给 $1-f\le(2/3)n\lambda^{-k}$，进而得到式（31.24）。$n=0$ 单独取实际零值，$n=1$ 代入闭式即可。$\square$
+
+这里所用纯参考界是 Fuchs–van de Graaf 迹距离不等式的纯态特例（C. A. Fuchs、J. van de Graaf，*Cryptographic distinguishability measures for quantum-mechanical states*，IEEE Trans. Inf. Theory 45（1999），1216–1227，[arXiv:quant-ph/9712042](https://arxiv.org/abs/quant-ph/9712042)）；本节不将其另立为新增通用结果。即使取增长窗口 $n=k-1$，式（31.24）也趋于零，而定理31.4在同一窗口要求精确纯顺序记忆维数 $k$。一维记忆产生乘积态 $p_n$ 已是这个窗口的近似实现；这不是近似容量下界。
+

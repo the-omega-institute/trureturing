@@ -1,0 +1,69 @@
+**定理 31.10（同一计数收缩给出的相干响应）。** 在定理31.2的固定根准备中，保留相干输出，并具有跨输出共同校准、可访问的相位参考以定义 $|+\rangle$。对每个 $n\ge0$，测量全部前 $n$ 个输出为加的联合概率满足
+$$
+V=\frac{K_0+K_1}{\sqrt2},\qquad
+(\langle+|^{\otimes n}\otimes I_M)\Psi_n=V^nm_0,\qquad
+f_{k,n}=\|V^nm_0\|^2.
+\tag{31.33}
+$$
+令 $Je_t=e_{k-1-t}$、$A=JBJ$、$D_\lambda=\operatorname{diag}(\lambda^{t/2})$、$v_t=r_{k-1-t}$、$\ell_t=\lambda^t$。则
+$$
+V=\frac{D_\lambda A D_\lambda^{-1}}{\sqrt{2\lambda}},\qquad
+D_\lambda^{-1}m_0=\lambda^{-k/2}\mathbf1,\qquad
+Av=\lambda v,\quad \ell^{\mathsf T}A=\lambda\ell^{\mathsf T},\quad \ell^{\mathsf T}v=R.
+\tag{31.34}
+$$
+对每个固定有限 $k$，
+$$
+(\lambda/2)^{-n/2}V^nm_0\longrightarrow\frac{\lambda^{k/2}D_\lambda v}{R},\qquad
+f_{k,n}\sim C_k(\lambda/2)^n,\qquad
+C_k=\frac{\lambda^k\sum_{t=0}^{k-1}\lambda^t r_{k-1-t}^2}{R^2}>0.
+\tag{31.35}
+$$
+以 $d_{k,n}=D(\rho_{k,n},p_n)$ 记半迹距离，有
+$$
+\frac{f_{k,n}}2\le1-\sqrt{1-f_{k,n}}\le1-d_{k,n}\le f_{k,n},
+\tag{31.36}
+$$
+$$
+-\lim_{n\to\infty}\frac1n\log f_{k,n}
+=-\lim_{n\to\infty}\frac1n\log(1-d_{k,n})
+=\log2-\log\lambda.
+\tag{31.37}
+$$
+这些是指定准备、指定测量、固定 $k$ 的结论。
+
+证明。每次输出加投影收缩 $W$ 为 $V$，沿同一联合纯向量归纳得式（31.33）；这没有把各步相关结果的概率当成独立乘积。$V=(\langle+|\otimes I)W$ 是收缩，$X\mapsto VXV^*$ 为不增迹 CP 分支，不是非选择 CPTP 记忆通道。
+
+反转坐标后 $A$ 的次对角和最后一列全为一，其余为零。次对角经 $D_\lambda$ 共轭乘 $\sqrt\lambda$，除以 $\sqrt{2\lambda}$ 后为 $1/\sqrt2$；最后一列的第 $t$ 项为 $\lambda^{(t-k)/2}/\sqrt2$，正是 $m_0/\sqrt2$。这逐元证明相似式和初向量式。$Av$ 首行是 $1=\lambda r_{k-1}$，其它行使用 $1+r_{k-t}=\lambda r_{k-1-t}$；左特征向量在前 $k-1$ 列用 $\ell_{j+1}=\lambda\ell_j$，最后一列用 $\sum_t\lambda^t=\lambda^k$。这也核对了 $R$，但不另调用一次 Perron 极限定理。
+
+由 $A^n\mathbf1=JB^n\mathbf1$ 与式（31.16），得到精确缩放恒等式
+$$
+(\lambda/2)^{-n/2}V^nm_0
+=\lambda^{-k/2}D_\lambda\operatorname{diag}(v)J u_n.
+\tag{31.38}
+$$
+右端第 $t$ 坐标使用 $u_n(k-1-t)$，矩阵方向因而明确。引理31.6已经给 $u_n\to(\lambda^k/R)\mathbf1$，代入并取范数平方得到式（31.35）。这条极限使用同一计数收缩，没有把 $P$ 认成量子非选择通道。$m_0$ 各坐标为正，$V$ 非负且无零行，故 $V^nm_0$ 各坐标为正，$f_{k,n}>0$，对数合法；正极限系数及 $\lambda/2<1$ 给第一个指数。
+
+纯参考效果 $p_n$ 给 $d_{k,n}\ge1-f_{k,n}$，定理31.8所用的纯参考上界给 $d_{k,n}\le\sqrt{1-f_{k,n}}$。因
+$$
+1-\sqrt{1-f}=\frac{f}{1+\sqrt{1-f}}\ge f/2\quad(0\le f\le1),
+\tag{31.39}
+$$
+得到式（31.36）。$1-d_{k,n}$ 介于 $f_{k,n}/2$ 与 $f_{k,n}$，取负对数除以 $n$，差至多 $(\log2)/n$，给第二个指数。$n=0$ 的 $f=1,d=0$ 与全部有限式相容。$\square$
+
+两个交叉核对有确定含义。首先 $k=2$ 时 $R=\lambda+\lambda^{-1}=\sqrt5$、$\sum_{t=0}^1\lambda^tr_{1-t}^2=\lambda^{-2}+\lambda=2$，故
+$$
+C_2=2\lambda^2/5=(3+\sqrt5)/5.
+\tag{31.40}
+$$
+其次主卷§132.2.3的语言增长熵是 $\log\lambda$，完整二元语言的为 $\log2$，故式（31.37）是每次发射的语言增长熵差。主卷定理20.5、20.7、20.9已严格区分 Zeckendorf 后继的 Sturmian 行程复杂度、行程共轭和位置移位的熵；这里不能把词增长指数替换为任意后继动力学的熵，更不能解释为热力学熵产生或统一物理钟率。
+
+Q135.1已在 $k=2$ 的另一实验得到 $p_g=\alpha(\lambda/2)^g(1+\alpha^{4g+4})$：它保留左右端点、选择中间 $g$ 个输出全加，并额外选择最终记忆的计算基结果零。Q136.1取消最终记忆选择而仍保留两端点。本节事件是整个根前缀全加、最终记忆未读；其全 $k$ 系数 $C_k$ 属于这个事件，$\lambda/2$ 的 $k=2$ 衰减基地已有上述来源。Q131.1考察的是 $\mathcal M(X)=\sum_aK_aXK_a^*$ 的非选择记忆混合，不能以其速率代换 $V$ 的选择概率。式（31.35）没有给 $1-d_{k,n}$ 的精确前因子，也不以未声明的统一余项交换 $k,n$ 两个极限。
+
+相位和记录是可检验的必要区别。完全计算基退相干后，$p_n$ 的每个对角元为 $2^{-n}$，所以
+$$
+\operatorname{Tr}(\Delta_n(\rho_{k,n})p_n)=2^{-n}.
+\tag{31.41}
+$$
+它保留完全相同的计算基词律，却改变响应指数。即使不退相干，只对一位施加相位翻转 $Z$，$\rho_{k,1}$ 的非对角元 $r_1/\lambda=(\lambda-1)/\lambda$ 变号，词概率不变而全加概率从 $1/2+(\lambda-1)/\lambda$ 变成 $1/2-(\lambda-1)/\lambda$。因此相同的经典关系及其概率还不足以决定相干响应。记录重叠与退相干的既有来源是 [EnvironmentRecords.trace_environment_controlled_record_eq_phase_damping](../../../D5/S3/Quantum/EnvironmentRecords.lean)和[量子实在卷定理222.1–222.2](QUANTUM-REALITY.md)；后一卷不是这里缩写 Q 的卷。
+

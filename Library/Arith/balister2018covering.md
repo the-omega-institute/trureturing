@@ -5,7 +5,7 @@ year: 2018
 title: "On the Erdős Covering Problem: the density of the uncovered set"
 doi: 10.48550/arXiv.1811.03547
 url: https://arxiv.org/abs/1811.03547
-claim: "The paper develops distortion estimates for uncovered density and proves Schinzel's conjecture that some pair of moduli in every covering system is related by divisibility."
+claim: "The paper develops distortion estimates for uncovered density, proves Schinzel's divisibility-pair conjecture, and constructs near-covers with reciprocal sum below one."
 strata_touched:
   - D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity
 license: citation-only
@@ -41,3 +41,21 @@ proving noncoverage in that scope. This labelled extension is an ordinary
 deduction, not a literal statement of the paper's distinct-modulus
 Theorem 7.1. The rational program checks the finite endpoint; it does not
 machine-verify the measure argument or replace the analytic tail proof.
+
+Theorem 10.1 of the [primary v1](https://arxiv.org/pdf/1811.03547v1),
+printed pp. 25--27 (statement p. 25, proof pp. 26--27), constructs, for
+every M>0 and epsilon>0, a finite distinct-modulus family with all
+moduli at least M, reciprocal sum below one, and uncovered density less
+than epsilon. Its proof supplies the stronger prime-support property:
+every constituent prime is at least M. It chooses disjoint sets P_j of
+such primes and moduli p Q_(j-1), where Q_(j-1) is the product of all
+earlier prime sets. Thus the moduli are squarefree; the final removal of
+classes preserves distinctness and the prime restriction.
+
+Taking M above any prescribed cutoff greater than2 gives actual distinct
+odd near-covers supported entirely on larger primes. This specialization
+uses the construction, not an inference from large numerical moduli.
+[Report 347, Section 8](../../docs/reports/erdos7-odd-covering/profile-notes/321-384/347-original-overlap-leakage-gives-a-uniform-reciprocal-gap.md#8-retaining-a-large-prime-near-cover-forces-internal-completion-cost)
+combines it with an original-Haar overlap bound to constrain any
+hypothetical completion retaining every seed class. That completion
+constraint is a joint application, not a theorem stated in this paper.
