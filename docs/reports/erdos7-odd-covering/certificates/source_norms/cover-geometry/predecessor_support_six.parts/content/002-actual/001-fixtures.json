@@ -1,0 +1,50 @@
+{
+  "length": 7,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000000-000001.json",
+        "sha256": "4cc6a770cbba7616d35b450e8775ac5836b31bb85b9b89e7c8b56dc6e1888f0f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000001-000002.json",
+        "sha256": "5b4d98a37b12b08999bc1600d2f59113acbf7d45d097de6f28f86f9f14f3ffa8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000002-000003.json",
+        "sha256": "6891cb676f6045b80aec19e1d1178ff0d8bffd7ce5a78fa9d7acd77b75b8bc72",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 5,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000003-000005.json",
+        "sha256": "e7a77a992dac017e7b1b7cb4f99da4f09be5e8492d3afc450633da4b815619d5",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 7,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000005-000007.json",
+        "sha256": "ee0fb5c887d7fb0f56d0d899e47454c5ec3f9023dd5dd64522e9da502d7a6d09",
+        "kind": "value"
+      }
+    }
+  ]
+}
