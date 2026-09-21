@@ -257,6 +257,11 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
         for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
             self.copy('tools/scripts/worktree/' + name)
+        self.copy('tools/scripts/workflow/ci_plan.py')
+        self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
+            resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[],
+                            lean_targets=['Audit', 'leanInspector/reportInspector'])])))
+        self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
         self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_SHA='a' * 40,
             GITHUB_RUN_ID='4242', GITHUB_RUN_ATTEMPT='1', GITHUB_EVENT_NAME='schedule',
             GITHUB_REF='refs/heads/dev', STRATALINT_ACTIONS_CACHE_SEEDED='',
@@ -391,7 +396,7 @@ else:
             else:
                 self.assertEqual(expected[suffix], actual)
         releases = {p.name for p in (self.root / 'releases').iterdir()}
-        # Even an already published run cannot bypass ordinary default builds.
+        # Even an already published run cannot bypass registered program builds.
         self.write('Audit.lean', 'this is not valid Lean\n')
         failed = self.release_run('publish', success=False)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report', failed.stderr)

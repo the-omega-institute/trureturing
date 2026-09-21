@@ -27,7 +27,9 @@ class CacheFixture:
         (self.root / "lakefile.toml").write_text('name = "fixture"\n')
         (self.root / "Meta").mkdir()
         (self.root / "Meta/FILEMAP.toml").write_text(
-            'resources = [{id = "lean", materials = ["lake-manifest.json", "lean-toolchain", "lakefile.toml"]}]\n')
+            'resources = [{id = "lean", materials = ["lake-manifest.json", "lean-toolchain", "lakefile.toml"]}]\n'
+            'files = [{pattern = "Meta/ci-cache-paths.json"}]\n')
+        (self.root / "Meta/ci-cache-paths.json").write_bytes((REPO / "Meta/ci-cache-paths.json").read_bytes())
         (self.root / "lean-report-inputs.json").write_text(json.dumps({
             "report_execution": {"environment": ["LEAN_OPTS", "ELAN_TOOLCHAIN"]}}))
 
