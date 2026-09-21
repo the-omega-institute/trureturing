@@ -1,6 +1,6 @@
 name = "reg"
 version = "0.1.0"
-defaultTargets = ["Reg"]
+defaultTargets = ["Reg", "LeanInformationAuditRegTests"]
 packagesDir = "../.lake/packages"
 buildDir = "../.lake/build/reg"
 
@@ -27,3 +27,16 @@ name = "Reg"
 srcDir = ".."
 roots = ["Reg"]
 globs = ["Reg.+"]
+
+[[lean_lib]]
+name = "LeanInformationAuditRegTests"
+srcDir = "../tools/lean-inspector"
+roots = ["LeanInformationAuditRegTests"]
+globs = ["LeanInformationAuditRegTests.+"]
+
+# Full production analysis is explicit and never belongs to the default test glob.
+[[lean_lib]]
+name = "LeanInformationAuditRegAnalysis"
+srcDir = "../tools/lean-inspector"
+roots = ["LeanInformationAuditRegAnalysis"]
+globs = ["LeanInformationAuditRegAnalysis.+"]
