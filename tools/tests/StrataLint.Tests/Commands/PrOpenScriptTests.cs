@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class PrOpenScriptTests
+public sealed partial class PrOpenScriptTests
 {
     private const string DeadlineBehaviorTimeoutSeconds = "30";
     private const string HeadSha = "2222222222222222222222222222222222222222";
@@ -65,6 +65,15 @@ public sealed class PrOpenScriptTests
     [InlineData("missing-status-id")]
     [InlineData("partial-errors")]
     [InlineData("truncated-contexts")]
+    [InlineData("missing-app")]
+    [InlineData("empty-app-id")]
+    [InlineData("missing-workflow")]
+    [InlineData("missing-run-number")]
+    [InlineData("invalid-run-number")]
+    [InlineData("invalid-run-attempt")]
+    [InlineData("missing-event")]
+    [InlineData("missing-branch")]
+    [InlineData("missing-branch-id")]
     public void PrWatchCannotDecideFromIncompleteIdentityOrResponse(string defect)
     {
         using var fixture = new PrScriptFixture();
@@ -82,6 +91,15 @@ public sealed class PrOpenScriptTests
             case "missing-status-id": contexts["nodes"]![1]!.AsObject().Remove("id"); break;
             case "partial-errors": snapshot["errors"] = JsonNode.Parse("""[{"message":"partial failure"}]"""); break;
             case "truncated-contexts": contexts["pageInfo"]!["hasNextPage"] = true; break;
+            case "missing-app": check["checkSuite"]!.AsObject().Remove("app"); break;
+            case "empty-app-id": check["checkSuite"]!["app"]!["id"] = ""; break;
+            case "missing-workflow": check["checkSuite"]!["workflowRun"]!.AsObject().Remove("workflow"); break;
+            case "missing-run-number": check["checkSuite"]!["workflowRun"]!.AsObject().Remove("runNumber"); break;
+            case "invalid-run-number": check["checkSuite"]!["workflowRun"]!["runNumber"] = "2"; break;
+            case "invalid-run-attempt": check["checkSuite"]!["workflowRun"]!["runAttempt"] = 0; break;
+            case "missing-event": check["checkSuite"]!["workflowRun"]!.AsObject().Remove("event"); break;
+            case "missing-branch": check["checkSuite"]!.AsObject().Remove("branch"); break;
+            case "missing-branch-id": check["checkSuite"]!["branch"]!.AsObject().Remove("id"); break;
         }
         fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
 
@@ -622,9 +640,15 @@ public sealed class PrOpenScriptTests
         @protected = true,
         protection = new { required_status_checks = new { contexts = names, checks = names.Select(context => new { context }) } },
     });
-    private static object Check(string name, string status, string? conclusion, string head = HeadSha) =>
-        new { __typename = "CheckRun", databaseId = 101, name, status, conclusion,
-            checkSuite = new { commit = new { oid = head }, workflowRun = new { databaseId = 201 } } };
+    private static object Check(string name, string status, string? conclusion, string head = HeadSha,
+        long checkId = 101, long runId = 201, int runNumber = 1, int runAttempt = 1,
+        string app = "MDM6QXBwMTUzNjg=", string workflow = "W_kwDOTUuVMM4VGb-f",
+        string eventName = "pull_request", string branch = "lane/governance/sl003-erdos7-339-split-0921") =>
+        new { __typename = "CheckRun", databaseId = checkId, name, status, conclusion,
+            checkSuite = new { databaseId = runId + 1000, app = new { id = app }, branch = new { id = "ref-" + branch }, commit = new { oid = head },
+                workflowRun = new { databaseId = runId, runNumber, runAttempt, @event = eventName,
+                    workflow = new { id = workflow, databaseId = 301 },
+                    file = new { path = ".github/workflows/root.yml", repositoryName = "owner/repo", run = new { databaseId = runId } } } } };
     private static object Context(string context, string state, string head = HeadSha) =>
         new { __typename = "StatusContext", id = "status-101", context, state, commit = new { oid = head } };
     private static string BoundSnapshot(string prHead, string commitHead, params object[] items) =>
@@ -634,6 +658,7 @@ public sealed class PrOpenScriptTests
         {
             data = new { repository = new
             {
+                databaseId = 401, nameWithOwner = "owner/repo",
                 pullRequest = new { state, headRefOid = prHead },
                 @object = new { oid = commitHead, statusCheckRollup = new
                 {
@@ -695,7 +720,10 @@ public sealed class PrOpenScriptTests
             var result = RunWatch("--pr", "42", "--head-sha", HeadSha, "--interval-seconds", "1", "--timeout-seconds", DeadlineBehaviorTimeoutSeconds);
             var errors = Text(result.StandardError);
             var events = File.ReadAllLines(responseEvents);
-            Assert.Contains("PR_WATCH_PROGRESS pr=42 state=", errors, StringComparison.Ordinal);
+            if (result.ExitCode == 69)
+                Assert.Contains("PR_WATCH_PROGRESS pr=42 step=snapshot unavailable_attempts=", errors, StringComparison.Ordinal);
+            else
+                Assert.Contains("PR_WATCH_PROGRESS pr=42 state=", errors, StringComparison.Ordinal);
             Assert.Contains("snapshot:1:returned", events);
             if (delayedSnapshot)
             {
@@ -728,6 +756,10 @@ public sealed class PrOpenScriptTests
             delayedSnapshot = values.Any(value => value.DelaySeconds > 0);
             WriteResponses("snapshot", values);
         }
+        internal void FailOriginEnumeration() => WriteExecutable(Path.Combine(bin, "jq"), FailOriginEnumerationJq);
+        internal void ApiResponse(string endpoint, byte[] bytes) =>
+            File.WriteAllBytes(Path.Combine(responses, "api." + endpoint.Replace('/', '_').Replace('?', '_').Replace('&', '_')), bytes);
+        internal void ApiResponse(string endpoint, string json) => ApiResponse(endpoint, Encoding.UTF8.GetBytes(json));
         public void Dispose() => temporary.Dispose();
         private ProcessOutput Run(string[] arguments)
         {
@@ -799,6 +831,11 @@ public sealed class PrOpenScriptTests
                 printf '%s\n' 'https://github.com/owner/repo/pull/42'
                 ;;
               *" pr merge "*) [[ "$PR_TEST_FAIL_STEP" != merge ]] || exit 42 ;;
+              *" api repos/"*"/actions/runs/"*)
+                key="${2//\//_}"; key="${key//\?/_}"; key="${key//&/_}"
+                [[ -f "$PR_TEST_RESPONSES/api.$key" ]] || exit 51
+                cat "$PR_TEST_RESPONSES/api.$key"
+                ;;
               *" api repos/"*) respond required ;;
               *" api graphql "*)
                 case " $* " in
@@ -865,6 +902,14 @@ public sealed class PrOpenScriptTests
             set -euo pipefail
             [[ "${PR_TEST_APP_FAIL:-0}" != 1 ]] || exit 44
             printf '%s\n' 'app-token'
+            """;
+        private const string FailOriginEnumerationJq = """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            if [[ "${1:-}" == "-c" && "${2:-}" == ".runs[]" ]]; then
+              exit 19
+            fi
+            exec /usr/bin/jq "$@"
             """;
     }
 }
