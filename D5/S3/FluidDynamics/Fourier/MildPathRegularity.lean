@@ -139,252 +139,6 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
     exact (hpart (-(1/2)) (by norm_num)).add (hpart (-(3/4)) (by norm_num))
   let TV := EuclideanSpace ℂ (Fin 2 × Fin 2)
   let G := lp (fun _ : K => TV) 2
-  let d : H → K → V := fun x k => (weight k)⁻¹ • x k
-  have hdenergy (x : H) :
-      Summable (fun k : K => weight k ^ 2 * ‖d x k‖ ^ 2) ∧
-      Real.sqrt (∑' k : K, weight k ^ 2 * ‖d x k‖ ^ 2) = ‖x‖ := by
-    have he (k : K) : weight k ^ 2 * ‖d x k‖ ^ 2 = ‖x k‖ ^ 2 := by
-      have hw : 0 < weight k := by rw [hweight]; exact hW k
-      dsimp [d]
-      rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hw)]
-      field_simp [hw.ne']
-    simp_rw [he]
-    refine ⟨?_, ?_⟩
-    · simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
-        (lp.hasSum_norm (by norm_num : 0 < (2 : ℝ≥0∞).toReal) x).summable
-    · have hn : ‖x‖ ^ 2 = ∑' k : K, ‖x k‖ ^ 2 := by
-        simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
-          lp.norm_rpow_eq_tsum (by norm_num : 0 < (2 : ℝ≥0∞).toReal) x
-      rw [← hn, Real.sqrt_sq (norm_nonneg _)]
-  have hp (x y : H) := weighted_tensor_convolution (d x) (d y)
-    (hdenergy x).1 (hdenergy y).1
-  let Q (x y : H) : G := ⟨fun k => weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d y) k,
-    memℓp_gen (by
-      simpa only [norm_smul, Real.norm_eq_abs, mul_pow, sq_abs,
-        ENNReal.toReal_ofNat, Real.rpow_two] using (hp x y).2.1)⟩
-  have hQnorm (x y : H) : ‖Q x y‖ ≤ 16 * ‖x‖ * ‖y‖ := by
-    have hn : ‖Q x y‖ ^ 2 =
-        ∑' k : K, weight k ^ 2 * ‖D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d y) k‖ ^ 2 := by
-      simpa only [Q, norm_smul, Real.norm_eq_abs, mul_pow, sq_abs,
-        ENNReal.toReal_ofNat, Real.rpow_two] using
-        lp.norm_rpow_eq_tsum (by norm_num : 0 < (2 : ℝ≥0∞).toReal) (Q x y)
-    have heq : ‖Q x y‖ = Real.sqrt
-        (∑' k : K, weight k ^ 2 * ‖D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d y) k‖ ^ 2) := by
-      rw [← hn, Real.sqrt_sq (norm_nonneg _)]
-    rw [heq]
-    have hb := (hp x y).2.2
-    rw [(hdenergy x).2, (hdenergy y).2] at hb
-    exact hb
-  have hdadd (x y : H) (k : K) : d (x+y) k = d x k + d y k := by
-    simp [d, smul_add]
-  have hdsmul (c : ℝ) (x : H) (k : K) : d (c • x) k = c • d x k := by
-    change (weight k)⁻¹ • (c • x k) = c • ((weight k)⁻¹ • x k)
-    exact smul_comm _ _ _
-  have hol (x y z : V) : outer (x+y) z = outer x z + outer y z := by
-    ext ij
-    change (x ij.1 + y ij.1) * z ij.2 = x ij.1 * z ij.2 + y ij.1 * z ij.2
-    ring
-  have hor (x y z : V) : outer x (y+z) = outer x y + outer x z := by
-    ext ij
-    change x ij.1 * (y ij.2 + z ij.2) = x ij.1 * y ij.2 + x ij.1 * z ij.2
-    ring
-  have hosl (c : ℝ) (x y : V) : outer (c • x) y = c • outer x y := by
-    ext ij
-    change ((c:ℂ) * x ij.1) * y ij.2 = (c:ℂ) * (x ij.1 * y ij.2)
-    ring
-  have hosr (c : ℝ) (x y : V) : outer x (c • y) = c • outer x y := by
-    ext ij
-    change x ij.1 * ((c:ℂ) * y ij.2) = (c:ℂ) * (x ij.1 * y ij.2)
-    ring
-  have hQal (x y z : H) : Q (x+y) z = Q x z + Q y z := by
-    apply lp.ext
-    funext k
-    change weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d (x+y)) (d z) k =
-      weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d z) k + weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d y) (d z) k
-    rw [← smul_add]
-    congr 1
-    simp only [D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution, hdadd, hol]
-    exact ((hp x z).1 k).of_norm.tsum_add ((hp y z).1 k).of_norm
-  have hQar (x y z : H) : Q x (y+z) = Q x y + Q x z := by
-    apply lp.ext
-    funext k
-    change weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d (y+z)) k =
-      weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d y) k + weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d z) k
-    rw [← smul_add]
-    congr 1
-    simp only [D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution, hdadd, hor]
-    exact ((hp x y).1 k).of_norm.tsum_add ((hp x z).1 k).of_norm
-  have hQsl (c : ℝ) (x y : H) : Q (c • x) y = c • Q x y := by
-    apply lp.ext
-    funext k
-    change weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d (c • x)) (d y) k =
-      c • (weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d y) k)
-    simp only [D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution, hdsmul, hosl, tsum_const_smul'', smul_comm (weight k) c]
-  have hQsr (c : ℝ) (x y : H) : Q x (c • y) = c • Q x y := by
-    apply lp.ext
-    funext k
-    change weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d (c • y)) k =
-      c • (weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d x) (d y) k)
-    simp only [D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution, hdsmul, hosr, tsum_const_smul'', smul_comm (weight k) c]
-  let QL : H →ₗ[ℝ] H →ₗ[ℝ] G := LinearMap.mk₂ ℝ Q hQal hQsl hQar
-    (fun c x y => hQsr c x y)
-  let QB : H →L[ℝ] H →L[ℝ] G := QL.mkContinuous₂ 16 hQnorm
-  let q : ℝ → G := fun t => QB (x₂ t) (x₂ t)
-  have hqcont : ContinuousOn q (Icc 0 τ) :=
-    (QB.continuous.comp_continuousOn hx).clm_apply hx
-  have hqcoeff (t : ℝ) (k : K) : q t k = (1+ρ k) • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (a t) (a t) k := by
-    change weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d (x₂ t)) (d (x₂ t)) k = _
-    simp only [d, hweight, a]
-  have hcontract (k : K) (Z : TV) :
-      ‖(WithLp.toLp 2 (fun i : Fin 2 => ∑ j : Fin 2, κ k j * Z (j,i)) : V)‖ ≤
-        Real.sqrt (ρ k) * ‖Z‖ := by
-    let row := fun i : Fin 2 =>
-      (WithLp.toLp 2 (fun j : Fin 2 => Z (j,i)) : V)
-    have hrow (i) : ‖∑ j : Fin 2, κ k j * Z (j,i)‖ ≤ ‖κ k‖ * ‖row i‖ := by
-      simpa [V, TV, PiLp.inner_apply, κ, row, mul_comm] using
-        norm_inner_le_norm (𝕜 := ℂ) (κ k) (row i)
-    have hk : ‖κ k‖ ^ 2 = ρ k := by
-      simp [V, EuclideanSpace.norm_sq_eq, κ, ρ, Complex.norm_intCast, sq_abs, Fin.sum_univ_two]
-    have hrows : ∑ i : Fin 2, ‖row i‖ ^ 2 = ‖Z‖ ^ 2 := by
-      simp only [V, TV, EuclideanSpace.norm_sq_eq, row, PiLp.toLp_apply, Fintype.sum_prod_type]
-      exact Finset.sum_comm
-    apply (sq_le_sq₀ (norm_nonneg _) (mul_nonneg (Real.sqrt_nonneg _) (norm_nonneg _))).mp
-    rw [mul_pow, Real.sq_sqrt (hρ k)]
-    calc
-      _ = ∑ i : Fin 2, ‖∑ j : Fin 2, κ k j * Z (j,i)‖ ^ 2 :=
-        EuclideanSpace.norm_sq_eq _
-      _ ≤ ∑ i : Fin 2, (‖κ k‖ * ‖row i‖) ^ 2 :=
-        Finset.sum_le_sum (fun i _ => pow_le_pow_left₀ (norm_nonneg _) (hrow i) 2)
-      _ = _ := by simp only [mul_pow, ← Finset.mul_sum, hk, hrows]
-  let Dlin (k : K) : TV →ₗ[ℂ] V :=
-    { toFun := fun Z => WithLp.toLp 2 (fun i : Fin 2 => ∑ j : Fin 2, κ k j * Z (j,i))
-      map_add' := by
-        intro Z W
-        ext i
-        change (∑ j : Fin 2, κ k j * (Z (j,i) + W (j,i))) =
-          (∑ j : Fin 2, κ k j * Z (j,i)) + ∑ j : Fin 2, κ k j * W (j,i)
-        simp [mul_add, Finset.sum_add_distrib]
-      map_smul' := by
-        intro z Z
-        ext i
-        change (∑ j : Fin 2, κ k j * (z * Z (j,i))) =
-          z * ∑ j : Fin 2, κ k j * Z (j,i)
-        simp [← Finset.mul_sum, mul_left_comm] }
-  let DC (k : K) : TV →L[ℂ] V := (Dlin k).mkContinuous (Real.sqrt (ρ k)) (hcontract k)
-  let DCp (k : K) : TV →L[ℂ] V := Complex.I • (P k).comp (DC k)
-  have hDC (k : K) (Z : TV) : ‖DCp k Z‖ ≤ Real.sqrt (ρ k) * ‖Z‖ := by
-    change ‖Complex.I • P k (DC k Z)‖ ≤ _
-    rw [norm_smul, Complex.norm_I, one_mul]
-    exact ((ℂ ∙ κ k)ᗮ.norm_starProjection_apply_le _).trans (hcontract k Z)
-  let RK (r : ℝ) (k : K) : TV →L[ℂ] V :=
-    ((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) • DCp k
-  have hRK (r : ℝ) (hr : 0 < r) (k : K) : ‖RK r k‖ ≤ c r := by
-    apply ContinuousLinearMap.opNorm_le_bound _ (hc0 r hr.le)
-    intro Z
-    change ‖(((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) : ℝ) • DCp k Z‖ ≤ _
-    rw [norm_smul, Real.norm_eq_abs, abs_of_pos (mul_pos
-      (Real.rpow_pos_of_pos (hW k) _) (Real.exp_pos _))]
-    calc
-      _ ≤ ((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) * (Real.sqrt (ρ k) * ‖Z‖) :=
-        mul_le_mul_of_nonneg_left (hDC k Z) (by positivity)
-      _ ≤ c r * ‖Z‖ := by
-        nlinarith [mul_le_mul_of_nonneg_right (hMultiplier r hr k) (norm_nonneg Z)]
-  let R : ℝ → G →L[ℂ] H := fun r => if hr : 0 < r then
-    lp.mapCLM 2 (RK r) (hc0 r hr.le) (hRK r hr) else 0
-  have hRcoeff (r : ℝ) (hr : 0 < r) (Z : G) (k : K) :
-      R r Z k = ((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) • DCp k (Z k) := by
-    simp only [R, dif_pos hr]
-    rfl
-  have hRbound (r : ℝ) (hr : 0 < r) (Z : G) : ‖R r Z‖ ≤ c r * ‖Z‖ := by
-    apply (R r).le_of_opNorm_le
-    simp only [R, dif_pos hr]
-    exact lp.norm_mapCLM_le 2 (RK r) (hc0 r hr.le) (hRK r hr)
-  have hDConvolution (t : ℝ) (k : K) :
-      DCp k (D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (a t) (a t) k) =
-        N (a t) (a t) k := by
-    have hs := ((weighted_tensor_convolution (a t) (a t)
-      (henergy t).1 (henergy t).1).1 k).of_norm
-    have hterm (l : K) : DC k (outer (a t l) (a t (k-l))) =
-        (∑ j : Fin 2, κ k j * a t l j) • a t (k-l) := by
-      ext i
-      change (∑ j : Fin 2, κ k j * (a t l j * a t (k-l) i)) =
-        (∑ j : Fin 2, κ k j * a t l j) * a t (k-l) i
-      simp only [Fin.sum_univ_two]
-      ring
-    have he := ((DC k).hasSum hs.hasSum).tsum_eq.symm
-    change Complex.I • P k (DC k _) = Complex.I • P k _
-    congr 2
-    simpa only [D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution, Function.comp_def, hterm] using he
-  let qC : C(Icc (0:ℝ) τ, G) := ⟨fun t => q t,
-    continuousOn_iff_continuous_domRestrict.mp hqcont⟩
-  let qe : ℝ → G := fun t => qC (projIcc 0 τ hτ.le t)
-  have hqe : Continuous qe := qC.continuous.comp continuous_projIcc
-  have hqeEq (t : ℝ) (ht : t ∈ Icc 0 τ) : qe t = q t := by
-    dsimp [qe]
-    rw [projIcc_of_mem _ ht]
-    rfl
-  let σ : ℕ → ℝ := fun n => 1 + (n:ℝ)/4
-  have hInitial (n : ℕ) : Memℓp (fun k : K => (1+ρ k)^(σ n) • a 0 k) 2 := by
-    apply memℓp_gen
-    have hdom (k : K) : ‖(1+ρ k)^(σ n) • a 0 k‖^2 ≤ ‖w (n+2) k • a 0 k‖^2 := by
-      apply pow_le_pow_left₀ (norm_nonneg _) _ 2
-      simp only [w, norm_smul, Real.norm_eq_abs,
-        abs_of_pos (Real.rpow_pos_of_pos (hW k) _)]
-      apply mul_le_mul_of_nonneg_right _ (norm_nonneg _)
-      apply Real.rpow_le_rpow_of_exponent_le (by linarith [hρ k])
-      dsimp [σ]
-      push_cast
-      nlinarith [Nat.cast_nonneg (α:=ℝ) n]
-    have hs := (hinit (n+2)).of_nonneg_of_le (fun k => sq_nonneg _) hdom
-    simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using hs
-  let z : ℕ → H := fun n => ⟨fun k => (1+ρ k)^(σ n) • a 0 k, hInitial n⟩
-  have hHeat (z₀ : H) : ∃ E : ℝ → H,
-      Continuous E ∧ ∀ t ∈ Icc 0 τ, ∀ k,
-        E t k = Real.exp (-ν*t*ρ k) • z₀ k := by
-    let e : ℝ → K → ℝ := fun t k => Real.exp (-ν * max 0 t * ρ k)
-    have he (t : ℝ) (k : K) : 0 < e t k ∧ e t k ≤ 1 := by
-      refine ⟨Real.exp_pos _, Real.exp_le_one_iff.mpr ?_⟩
-      have hm : 0 ≤ max 0 t := le_max_left _ _
-      nlinarith [mul_nonneg (mul_nonneg hν.le hm) (hρ k)]
-    have hnorm (t : ℝ) (k : K) : ‖e t k • z₀ k‖ ≤ ‖z₀ k‖ := by
-      rw [norm_smul, Real.norm_eq_abs, abs_of_pos (he t k).1]
-      exact mul_le_of_le_one_left (norm_nonneg _) (he t k).2
-    let E : ℝ → H := fun t => ⟨fun k => e t k • z₀ k, (lp.memℓp z₀).mono' (hnorm t)⟩
-    have hEc (k : K) : Continuous (fun t => E t k) := by
-      change Continuous (fun t : ℝ => Real.exp (-ν * max 0 t * ρ k) • z₀ k)
-      fun_prop
-    have hcont : Continuous E := by
-      apply continuous_iff_continuousAt.mpr
-      intro t₀
-      apply tendsto_iff_norm_sub_tendsto_zero.mpr
-      have hs : Summable (fun k : K => 4 * ‖z₀ k‖^2) := by
-        have hz : Summable (fun k : K => ‖z₀ k‖^2) := by
-          simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
-            (lp.hasSum_norm (by norm_num : 0 < (2:ℝ≥0∞).toReal) z₀).summable
-        exact hz.mul_left 4
-      have hl (k : K) : Tendsto (fun t => ‖E t k - E t₀ k‖^2) (𝓝 t₀) (𝓝 (0:ℝ)) := by
-        convert (((hEc k).sub (continuous_const : Continuous (fun _ : ℝ => E t₀ k))).norm.pow 2).tendsto t₀ using 1 <;> simp <;> rfl
-      have hb (t : ℝ) (k : K) : ‖‖E t k - E t₀ k‖^2‖ ≤ 4 * ‖z₀ k‖^2 := by
-        rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
-        have h : ‖E t k - E t₀ k‖ ≤ 2 * ‖z₀ k‖ := by
-          calc
-            _ ≤ ‖E t k‖ + ‖E t₀ k‖ := norm_sub_le _ _
-            _ ≤ ‖z₀ k‖ + ‖z₀ k‖ := add_le_add (hnorm t k) (hnorm t₀ k)
-            _ = _ := by ring
-        nlinarith [sq_nonneg ‖E t k - E t₀ k‖, norm_nonneg (z₀ k), norm_nonneg (E t k - E t₀ k)]
-      have hh := tendsto_tsum_of_dominated_convergence hs hl (Filter.Eventually.of_forall hb)
-      have heq (t : ℝ) : Real.sqrt (∑' k : K, ‖E t k - E t₀ k‖^2) = ‖E t - E t₀‖ := by
-        have hp : ‖E t - E t₀‖^2 = ∑' k : K, ‖E t k - E t₀ k‖^2 := by
-          simpa only [H, ENNReal.toReal_ofNat, Real.rpow_two, lp.coeFn_sub, Pi.sub_apply] using
-            lp.norm_rpow_eq_tsum (by norm_num : 0 < (2:ℝ≥0∞).toReal) (E t - E t₀)
-        rw [← hp, Real.sqrt_sq (norm_nonneg _)]
-      have hh' := Real.continuous_sqrt.continuousAt.tendsto.comp hh
-      simpa only [Function.comp_def, tsum_zero, Real.sqrt_zero, heq] using hh'
-    refine ⟨E, hcont, ?_⟩
-    intro t ht k
-    change Real.exp (-ν * max 0 t * ρ k) • z₀ k = _
-    rw [max_eq_right ht.1]
-  choose E hEc hEf using fun n => hHeat (z n)
   have hProduct (α : ℝ) (hα : 0 ≤ α) (aa bb : K → V)
       (haa : Summable (fun k => (weight k * weight k^α)^2 * ‖aa k‖^2))
       (hbb : Summable (fun k => (weight k * weight k^α)^2 * ‖bb k‖^2)) :
@@ -669,6 +423,166 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
     refine ⟨QB, ?_, hQnorm⟩
     intro x y k
     rfl
+  -- Exponent zero supplies the same base tensor path used in the scalar equation.
+  obtain ⟨QB, hQBcoeff, _⟩ := hGeneralQB 0 (le_refl 0)
+  let q : ℝ → G := fun t => QB (x₂ t) (x₂ t)
+  have hqcont : ContinuousOn q (Icc 0 τ) :=
+    (QB.continuous.comp_continuousOn hx).clm_apply hx
+  have hqcoeff (t : ℝ) (k : K) : q t k = (1+ρ k) • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (a t) (a t) k := by
+    change QB (x₂ t) (x₂ t) k = _
+    rw [hQBcoeff]
+    simp only [Real.rpow_zero, mul_one, hweight, a]
+    rfl
+  have hcontract (k : K) (Z : TV) :
+      ‖(WithLp.toLp 2 (fun i : Fin 2 => ∑ j : Fin 2, κ k j * Z (j,i)) : V)‖ ≤
+        Real.sqrt (ρ k) * ‖Z‖ := by
+    let row := fun i : Fin 2 =>
+      (WithLp.toLp 2 (fun j : Fin 2 => Z (j,i)) : V)
+    have hrow (i) : ‖∑ j : Fin 2, κ k j * Z (j,i)‖ ≤ ‖κ k‖ * ‖row i‖ := by
+      simpa [V, TV, PiLp.inner_apply, κ, row, mul_comm] using
+        norm_inner_le_norm (𝕜 := ℂ) (κ k) (row i)
+    have hk : ‖κ k‖ ^ 2 = ρ k := by
+      simp [V, EuclideanSpace.norm_sq_eq, κ, ρ, Complex.norm_intCast, sq_abs, Fin.sum_univ_two]
+    have hrows : ∑ i : Fin 2, ‖row i‖ ^ 2 = ‖Z‖ ^ 2 := by
+      simp only [V, TV, EuclideanSpace.norm_sq_eq, row, PiLp.toLp_apply, Fintype.sum_prod_type]
+      exact Finset.sum_comm
+    apply (sq_le_sq₀ (norm_nonneg _) (mul_nonneg (Real.sqrt_nonneg _) (norm_nonneg _))).mp
+    rw [mul_pow, Real.sq_sqrt (hρ k)]
+    calc
+      _ = ∑ i : Fin 2, ‖∑ j : Fin 2, κ k j * Z (j,i)‖ ^ 2 :=
+        EuclideanSpace.norm_sq_eq _
+      _ ≤ ∑ i : Fin 2, (‖κ k‖ * ‖row i‖) ^ 2 :=
+        Finset.sum_le_sum (fun i _ => pow_le_pow_left₀ (norm_nonneg _) (hrow i) 2)
+      _ = _ := by simp only [mul_pow, ← Finset.mul_sum, hk, hrows]
+  let Dlin (k : K) : TV →ₗ[ℂ] V :=
+    { toFun := fun Z => WithLp.toLp 2 (fun i : Fin 2 => ∑ j : Fin 2, κ k j * Z (j,i))
+      map_add' := by
+        intro Z W
+        ext i
+        change (∑ j : Fin 2, κ k j * (Z (j,i) + W (j,i))) =
+          (∑ j : Fin 2, κ k j * Z (j,i)) + ∑ j : Fin 2, κ k j * W (j,i)
+        simp [mul_add, Finset.sum_add_distrib]
+      map_smul' := by
+        intro z Z
+        ext i
+        change (∑ j : Fin 2, κ k j * (z * Z (j,i))) =
+          z * ∑ j : Fin 2, κ k j * Z (j,i)
+        simp [← Finset.mul_sum, mul_left_comm] }
+  let DC (k : K) : TV →L[ℂ] V := (Dlin k).mkContinuous (Real.sqrt (ρ k)) (hcontract k)
+  let DCp (k : K) : TV →L[ℂ] V := Complex.I • (P k).comp (DC k)
+  have hDC (k : K) (Z : TV) : ‖DCp k Z‖ ≤ Real.sqrt (ρ k) * ‖Z‖ := by
+    change ‖Complex.I • P k (DC k Z)‖ ≤ _
+    rw [norm_smul, Complex.norm_I, one_mul]
+    exact ((ℂ ∙ κ k)ᗮ.norm_starProjection_apply_le _).trans (hcontract k Z)
+  let RK (r : ℝ) (k : K) : TV →L[ℂ] V :=
+    ((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) • DCp k
+  have hRK (r : ℝ) (hr : 0 < r) (k : K) : ‖RK r k‖ ≤ c r := by
+    apply ContinuousLinearMap.opNorm_le_bound _ (hc0 r hr.le)
+    intro Z
+    change ‖(((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) : ℝ) • DCp k Z‖ ≤ _
+    rw [norm_smul, Real.norm_eq_abs, abs_of_pos (mul_pos
+      (Real.rpow_pos_of_pos (hW k) _) (Real.exp_pos _))]
+    calc
+      _ ≤ ((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) * (Real.sqrt (ρ k) * ‖Z‖) :=
+        mul_le_mul_of_nonneg_left (hDC k Z) (by positivity)
+      _ ≤ c r * ‖Z‖ := by
+        nlinarith [mul_le_mul_of_nonneg_right (hMultiplier r hr k) (norm_nonneg Z)]
+  let R : ℝ → G →L[ℂ] H := fun r => if hr : 0 < r then
+    lp.mapCLM 2 (RK r) (hc0 r hr.le) (hRK r hr) else 0
+  have hRcoeff (r : ℝ) (hr : 0 < r) (Z : G) (k : K) :
+      R r Z k = ((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) • DCp k (Z k) := by
+    simp only [R, dif_pos hr]
+    rfl
+  have hRbound (r : ℝ) (hr : 0 < r) (Z : G) : ‖R r Z‖ ≤ c r * ‖Z‖ := by
+    apply (R r).le_of_opNorm_le
+    simp only [R, dif_pos hr]
+    exact lp.norm_mapCLM_le 2 (RK r) (hc0 r hr.le) (hRK r hr)
+  have hDConvolution (t : ℝ) (k : K) :
+      DCp k (D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (a t) (a t) k) =
+        N (a t) (a t) k := by
+    have hs := ((weighted_tensor_convolution (a t) (a t)
+      (henergy t).1 (henergy t).1).1 k).of_norm
+    have hterm (l : K) : DC k (outer (a t l) (a t (k-l))) =
+        (∑ j : Fin 2, κ k j * a t l j) • a t (k-l) := by
+      ext i
+      change (∑ j : Fin 2, κ k j * (a t l j * a t (k-l) i)) =
+        (∑ j : Fin 2, κ k j * a t l j) * a t (k-l) i
+      simp only [Fin.sum_univ_two]
+      ring
+    have he := ((DC k).hasSum hs.hasSum).tsum_eq.symm
+    change Complex.I • P k (DC k _) = Complex.I • P k _
+    congr 2
+    simpa only [D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution, Function.comp_def, hterm] using he
+  let qC : C(Icc (0:ℝ) τ, G) := ⟨fun t => q t,
+    continuousOn_iff_continuous_domRestrict.mp hqcont⟩
+  let qe : ℝ → G := fun t => qC (projIcc 0 τ hτ.le t)
+  have hqe : Continuous qe := qC.continuous.comp continuous_projIcc
+  have hqeEq (t : ℝ) (ht : t ∈ Icc 0 τ) : qe t = q t := by
+    dsimp [qe]
+    rw [projIcc_of_mem _ ht]
+    rfl
+  let σ : ℕ → ℝ := fun n => 1 + (n:ℝ)/4
+  have hInitial (n : ℕ) : Memℓp (fun k : K => (1+ρ k)^(σ n) • a 0 k) 2 := by
+    apply memℓp_gen
+    have hdom (k : K) : ‖(1+ρ k)^(σ n) • a 0 k‖^2 ≤ ‖w (n+2) k • a 0 k‖^2 := by
+      apply pow_le_pow_left₀ (norm_nonneg _) _ 2
+      simp only [w, norm_smul, Real.norm_eq_abs,
+        abs_of_pos (Real.rpow_pos_of_pos (hW k) _)]
+      apply mul_le_mul_of_nonneg_right _ (norm_nonneg _)
+      apply Real.rpow_le_rpow_of_exponent_le (by linarith [hρ k])
+      dsimp [σ]
+      push_cast
+      nlinarith [Nat.cast_nonneg (α:=ℝ) n]
+    have hs := (hinit (n+2)).of_nonneg_of_le (fun k => sq_nonneg _) hdom
+    simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using hs
+  let z : ℕ → H := fun n => ⟨fun k => (1+ρ k)^(σ n) • a 0 k, hInitial n⟩
+  have hHeat (z₀ : H) : ∃ E : ℝ → H,
+      Continuous E ∧ ∀ t ∈ Icc 0 τ, ∀ k,
+        E t k = Real.exp (-ν*t*ρ k) • z₀ k := by
+    let e : ℝ → K → ℝ := fun t k => Real.exp (-ν * max 0 t * ρ k)
+    have he (t : ℝ) (k : K) : 0 < e t k ∧ e t k ≤ 1 := by
+      refine ⟨Real.exp_pos _, Real.exp_le_one_iff.mpr ?_⟩
+      have hm : 0 ≤ max 0 t := le_max_left _ _
+      nlinarith [mul_nonneg (mul_nonneg hν.le hm) (hρ k)]
+    have hnorm (t : ℝ) (k : K) : ‖e t k • z₀ k‖ ≤ ‖z₀ k‖ := by
+      rw [norm_smul, Real.norm_eq_abs, abs_of_pos (he t k).1]
+      exact mul_le_of_le_one_left (norm_nonneg _) (he t k).2
+    let E : ℝ → H := fun t => ⟨fun k => e t k • z₀ k, (lp.memℓp z₀).mono' (hnorm t)⟩
+    have hEc (k : K) : Continuous (fun t => E t k) := by
+      change Continuous (fun t : ℝ => Real.exp (-ν * max 0 t * ρ k) • z₀ k)
+      fun_prop
+    have hcont : Continuous E := by
+      apply continuous_iff_continuousAt.mpr
+      intro t₀
+      apply tendsto_iff_norm_sub_tendsto_zero.mpr
+      have hs : Summable (fun k : K => 4 * ‖z₀ k‖^2) := by
+        have hz : Summable (fun k : K => ‖z₀ k‖^2) := by
+          simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
+            (lp.hasSum_norm (by norm_num : 0 < (2:ℝ≥0∞).toReal) z₀).summable
+        exact hz.mul_left 4
+      have hl (k : K) : Tendsto (fun t => ‖E t k - E t₀ k‖^2) (𝓝 t₀) (𝓝 (0:ℝ)) := by
+        convert (((hEc k).sub (continuous_const : Continuous (fun _ : ℝ => E t₀ k))).norm.pow 2).tendsto t₀ using 1 <;> simp <;> rfl
+      have hb (t : ℝ) (k : K) : ‖‖E t k - E t₀ k‖^2‖ ≤ 4 * ‖z₀ k‖^2 := by
+        rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
+        have h : ‖E t k - E t₀ k‖ ≤ 2 * ‖z₀ k‖ := by
+          calc
+            _ ≤ ‖E t k‖ + ‖E t₀ k‖ := norm_sub_le _ _
+            _ ≤ ‖z₀ k‖ + ‖z₀ k‖ := add_le_add (hnorm t k) (hnorm t₀ k)
+            _ = _ := by ring
+        nlinarith [sq_nonneg ‖E t k - E t₀ k‖, norm_nonneg (z₀ k), norm_nonneg (E t k - E t₀ k)]
+      have hh := tendsto_tsum_of_dominated_convergence hs hl (Filter.Eventually.of_forall hb)
+      have heq (t : ℝ) : Real.sqrt (∑' k : K, ‖E t k - E t₀ k‖^2) = ‖E t - E t₀‖ := by
+        have hp : ‖E t - E t₀‖^2 = ∑' k : K, ‖E t k - E t₀ k‖^2 := by
+          simpa only [H, ENNReal.toReal_ofNat, Real.rpow_two, lp.coeFn_sub, Pi.sub_apply] using
+            lp.norm_rpow_eq_tsum (by norm_num : 0 < (2:ℝ≥0∞).toReal) (E t - E t₀)
+        rw [← hp, Real.sqrt_sq (norm_nonneg _)]
+      have hh' := Real.continuous_sqrt.continuousAt.tendsto.comp hh
+      simpa only [Function.comp_def, tsum_zero, Real.sqrt_zero, heq] using hh'
+    refine ⟨E, hcont, ?_⟩
+    intro t ht k
+    change Real.exp (-ν * max 0 t * ρ k) • z₀ k = _
+    rw [max_eq_right ht.1]
+  choose E hEc hEf using fun n => hHeat (z n)
   have hDuhamel (s : ℝ) (q : ℝ → G) (Cq : ℝ) (hCq : 0 ≤ Cq)
       (hqcont : ContinuousOn q (Icc 0 τ))
       (hqbound : ∀ t ∈ Icc 0 τ, ‖q t‖ ≤ Cq)
@@ -936,15 +850,15 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
     rw [(DCp k).map_smul_of_tower, smul_smul, hwshift, ← mul_assoc,
       inv_mul_cancel₀ (hW k).ne', one_mul]
     congr 1
-    have hdx : Summable (fun l => weight l^2 * ‖dec (m+2) x l‖^2) := by
-      have hs : Summable (fun l => (weight l * weight l^((m:ℝ)/2))^2 * ‖dec (m+2) x l‖^2) := by
+    have hdx (z : H) : Summable (fun l => weight l^2 * ‖dec (m+2) z l‖^2) := by
+      have hs : Summable (fun l => (weight l * weight l^((m:ℝ)/2))^2 * ‖dec (m+2) z l‖^2) := by
         simp only [hwm]
-        have he (l : K) : w (m+2) l^2 * ‖dec (m+2) x l‖^2 = ‖x l‖^2 := by
+        have he (l : K) : w (m+2) l^2 * ‖dec (m+2) z l‖^2 = ‖z l‖^2 := by
           dsimp [dec]
           rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr (hwp _ _))]
           field_simp [(hwp (m+2) l).ne']
         simp only [he]
-        simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using (lp.hasSum_norm (by norm_num) x).summable
+        simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using (lp.hasSum_norm (by norm_num) z).summable
       apply hs.of_nonneg_of_le (fun l => by positivity)
       intro l
       apply mul_le_mul_of_nonneg_right _ (sq_nonneg _)
@@ -952,25 +866,7 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
       have hp1 : 1 ≤ weight l^((m:ℝ)/2) := Real.one_le_rpow hw1 (by positivity)
       exact pow_le_pow_left₀ (by linarith : 0 ≤ weight l)
         (le_mul_of_one_le_right (by linarith) hp1) 2
-    have hdy : Summable (fun l => weight l^2 * ‖dec (m+2) y l‖^2) := by
-      have hds : ∀ z : H, Summable (fun l => weight l^2 * ‖dec (m+2) z l‖^2) := by
-        intro z
-        have hwm0 (l : K) : weight l ≤ w (m+2) l := by
-          rw [hweight, hwshift]
-          exact le_mul_of_one_le_right (hW l).le
-            (Real.one_le_rpow (by linarith [hρ l]) (by positivity))
-        have hs : Summable (fun l : K => ‖z l‖^2) := by
-          simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using (lp.hasSum_norm (by norm_num) z).summable
-        apply hs.of_nonneg_of_le (fun l => by positivity)
-        intro l
-        have he : w (m+2) l^2 * ‖dec (m+2) z l‖^2 = ‖z l‖^2 := by
-          dsimp [dec]
-          rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr (hwp _ _))]
-          field_simp [(hwp (m+2) l).ne']
-        rw [← he]
-        exact mul_le_mul_of_nonneg_right (pow_le_pow_left₀ (by rw [hweight]; exact (hW l).le) (hwm0 l) 2) (sq_nonneg _)
-      exact hds y
-    have hs := ((weighted_tensor_convolution _ _ hdx hdy).1 k).of_norm
+    have hs := ((weighted_tensor_convolution _ _ (hdx x) (hdx y)).1 k).of_norm
     have hterm (l : K) : DC k (outer (dec (m+2) x l) (dec (m+2) y (k-l))) =
         (∑ j : Fin 2, κ k j * dec (m+2) x l j) • dec (m+2) y (k-l) := by
       ext i
