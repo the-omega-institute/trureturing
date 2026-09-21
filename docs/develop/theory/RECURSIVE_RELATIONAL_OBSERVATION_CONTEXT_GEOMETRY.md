@@ -9112,3 +9112,838 @@ $$
 [^rroctx43_riordan]: Tian-Xiao He and Yuanziyi Zhang, *Centralizers of the Riordan Group*, [arXiv:2105.07262v1](https://arxiv.org/abs/2105.07262v1), 15 May 2021，Introduction，第1—2页的系数定义、基本作用及 Bell 子群。经典历史文献为 L. W. Shapiro, S. Getu, W.-J. Woan and L. C. Woodson, *The Riordan group*, *Discrete Applied Mathematics* **34** (1991), 229–239, DOI [10.1016/0166-218X(91)90088-E](https://doi.org/10.1016/0166-218X(91)90088-E)。本节依据上述版本化引言及（43.37）的有理有限系数证明，不把经典全文或其余 Riordan 定理当作已核对的应用前提。
 
 ## 43.99 追加锚
+
+## 44. 实际历史压缩的二阶响应与校准短区间时钟
+
+本节把同一个正伴随来源的内部演化、延迟历史、边界压缩和相对时钟连成一个有限维接口。先在有限实或复 Hilbert 空间证明压缩响应的二阶缺陷界，再把它精确代入本卷第40节的实际有限实历史。误差控制依赖共同实现、实际支撑、谱裕量、校准和已获关系，不能由表示名称推得物理定律。结论属于既有数学机制在该接口上的普通综合，这里的结论只在所列数学假设下成立，不判断形式系统或文献新颖性。
+
+### 44.1 同一实际来源、移位历史与解析模型
+
+**定义 44.1（解析模型与实际消费者的类型）。** 下列未加下标的范数均为相应有限维 Hilbert 空间间的算子范数；Frobenius 范数明确记为 $\|\cdot\|_F$。解析模型允许实或复数，$*$ 始终使用给定内积的伴随，复数时含共轭。
+
+设 $h>0$，$C=C^*>0$ 作用于有限维空间 $R$，$F:R\to E$ 是余等距映射，即 $FF^*=I_E$。置
+$$
+P=F^*F,\qquad S=e^{-hC},\qquad aI_R\le S\le bI_R,
+\qquad 0<a\le b<1,
+$$
+$$
+A=FSF^*,\qquad
+\Delta=FS^2F^*-A^2=FS(I-P)SF^*.
+$$
+令
+$$
+Q=I-P,\quad \delta=\|\Delta\|,\quad
+\ell=\|QSF^*\|=\sqrt\delta.
+$$
+**引理 44.2（残差平方和交换子）。** 由 $S=S^*$，
+$$
+\|[P,S]\|=\|QSP\|=\ell,\qquad
+ aI_E\le A\le bI_E.
+$$
+证明。$FF^*=I_E$ 使 $P=P^*=P^2$，$F^*$ 等距到 $\operatorname{ran}P$；插入 $P+Q=I_R$ 给残差恒等式。这里 $\Delta=(QSF^*)^*(QSF^*)$；交换子的范数等式由相对于 $P\oplus Q$ 的自伴分块形式得到。
+进一步，令 $T=QSP:\operatorname{ran}P\to\operatorname{ran}Q$，交换子分块为 $\begin{pmatrix}0&T^*\\-T&0\end{pmatrix}$，其伴随乘自身为 $\operatorname{diag}(T^*T,TT^*)$，故范数为 $\|T\|$。$F^*$ 对 $\operatorname{ran}P$ 的满等距性给 $\|T\|=\|QSF^*\|$，残差平方再给 $\ell^2=\delta$。证毕。
+
+把 $R$ 具体取为以下 $\mathcal R$。要将解析模型解释为本卷第40节的实际历史，须完整保留其定义40.1的合同：$C_{\rm archive}$ 包含全部已获内部／外部记录、来源与参考身份、版本与关联、实际准备、输入／输出内积与单位、增益、设备身份、相位与校准、局部时钟及已知关系、局部标签、可访问记忆、动作、守卫及失败、联合顺序和允许的联合误差事件；与档案及先验相容的共同世界族非空并含实际世界。以下每个候选世界都须同时解释整份档案，矩阵统计量仅是任务视图。
+
+在每个这样的世界中，源核为
+$$
+K(t)=Be^{-tC}B^*,\qquad C=C^*>0,
+$$
+且输入是指定内积下的实际伴随 $B^*$。有效循环空间为
+$$
+\mathcal R=\operatorname{span}\{C^jB^*u:j\ge0,\ u\in U\},
+\qquad C_{\mathcal R}=C|_{\mathcal R}.
+$$
+共同加性延迟 $h$ 必须实际成立。令
+$$
+V_k=\operatorname{span}\{e^{-jhC}B^*u:0\le j\le k\},\qquad
+B_kx=(Be^{-ihC}x)_{i=0}^k,
+$$
+$$
+\mathsf H_k(s)=\bigl(K(s+(i+j)h)\bigr)_{0\le i,j\le k},
+\qquad E_k=\operatorname{ran}B_k.
+$$
+Context40 引理40.2供应
+$$
+\mathsf H_k(s)=B_ke^{-sC}B_k^*,\qquad
+\operatorname{ran}\mathsf H_k(s)=E_k\quad(s\ge0).
+$$
+要求 $E_k\ne0$，并且全部白化、对数、迹与行列式只在这个实际共同支撑上计算。记
+$$
+D=B_k|_{\mathcal R}:\mathcal R\longrightarrow E_k,\qquad
+D_{(t_0)}=De^{-t_0C_{\mathcal R}/2},
+$$
+$$
+M_{(t_0)}=\mathsf H_k(t_0)|_{E_k}=D_{(t_0)}D_{(t_0)}^*,
+\qquad
+F_{(t_0)}=M_{(t_0)}^{-1/2}D_{(t_0)}.
+$$
+实际基准 $t_0$ 可未知，但必须有限且非负。$M_{(t_0)}$ 是白化基准矩阵；本节的 $A$ 是白化后的一步响应，二者不是同一个矩阵。本卷第40节的基准符号 $a$ 在此替换为 $t_0$，其 $A_a$ 替换为 $M_{(t_0)}$，其 $F_a$ 替换为 $F_{(t_0)}$；第40节历史阶数 $r$ 替换为 $k$。
+
+$D_{(t_0)}$ 满射到 $E_k$，故 $M_{(t_0)}>0$ 且 $F_{(t_0)}F_{(t_0)}^*=I$。对任意满射 $J$，$J^*(JJ^*)^{-1}J$ 自伴幂等，像为 $\operatorname{ran}J^*$；这里 $\operatorname{ran}D^*=V_k$，所以投影的像恰为 $e^{-t_0C_{\mathcal R}/2}V_k$。指数的相乘及与 $C_{\mathcal R}$ 交换给
+$$\mathsf H_k(t_0+t)|_{E_k}=D_{(t_0)}e^{-tC_{\mathcal R}}D_{(t_0)}^*.$$
+固定这份实际基准及历史接口，定义
+$$
+W(t)=M_{(t_0)}^{-1/2}
+\bigl(\mathsf H_k(t_0+t)|_{E_k}\bigr)M_{(t_0)}^{-1/2}
+=F_{(t_0)}e^{-tC_{\mathcal R}}F_{(t_0)}^*.
+$$
+Context40 命题40.6供应
+$$
+F_{(t_0)}F_{(t_0)}^*=I_{E_k},\qquad
+P_{(t_0)}=F_{(t_0)}^*F_{(t_0)}
+=P_{e^{-t_0C_{\mathcal R}/2}V_k}.
+$$
+投影一般不是未经基准移位的 $P_{V_k}$。于是一般模型的精确代入为
+$$
+F=F_{(t_0)},\qquad S=e^{-hC_{\mathcal R}},\qquad
+A=W(h),\qquad\Delta=W(2h)-W(h)^2.
+$$
+这里另行要求用于定量估计的实际有效谱界 $aI\preceq S\preceq bI$；正定性逐模型成立，不自动供应模型族共用的裕量。仅凭压缩矩阵 $A$ 的谱下界，不能将其冒充整个有效 $S$ 的谱下界。
+
+以下设 $m=\dim E_k>0$（一般模型为 $m=\dim E>0$），定义
+$$
+\mathcal T=\operatorname{tr}(-\log A),\qquad
+\tau=\mathcal T/m,\qquad\beta=-\log b>0,
+$$
+$$
+R(r)=\frac{\operatorname{tr}(-\log W(rh))}{\mathcal T}.
+$$
+由 $aI\preceq A\preceq bI<I$，有 $\mathcal T\ge m\beta>0$、$\tau\ge\beta$。$\tau$ 是同一实际基准上的平均对数衰减量；未饱和时，它可以依赖 $t_0$，不能借用饱和情形的基准不变性。零维支撑给 $0/0$，不属于本比值定理。
+
+这里明确取有限维实内积空间 $H,U$，输入是实际准备的伴随 $B^*$；解析引理允许复数不改变此实际来源合同。合法操作顺序与概率独立是不同条件，任何独立性主张须条件于完整 $C_{\rm archive}$ 检验。历史阶数为 $k$，经过时间指数为 $r=t/h$；它们均不同于源核 $K$、基准年龄 $t_0$、谱下界 $a$ 和后文的误差系数 $K_{\rm err}$。
+
+### 44.2 离散两次跨越与固定阶数尖锐性
+
+**定理 44.3（离散压缩响应）。** 交换子展开给
+$$
+[P,S^k]=\sum_{j=0}^{k-1}S^j[P,S]S^{k-1-j},
+\qquad
+\|QS^kF^*\|\le k b^{k-1}\ell\quad(k\ge1).
+$$
+交换子求和由 $[P,XY]=[P,X]Y+X[P,Y]$ 归纳成立；又 $Q[P,S^k]F^*=-QS^kF^*$，从而每项范数至多 $b^{k-1}\ell$。置 $E_n=FS^nF^*-A^n$。由 $FF^*=I_E$ 及 $A=FSF^*$，端点 $E_0=E_1=0$。对 $n\ge2$ 插入 $P+Q$，得到
+$$
+E_n=AE_{n-1}+FSQ\,S^{n-1}F^*,\qquad E_1=0.
+$$
+因此
+$$
+\|E_n\|\le b\|E_{n-1}\|+(n-1)b^{n-2}\delta,
+$$
+归纳中 $E_1=0$，而 $b\binom{n-1}{2}b^{n-3}\delta+(n-1)b^{n-2}\delta=\binom n2 b^{n-2}\delta$，故得到
+$$
+\boxed{\|FS^nF^*-A^n\|
+\le {n\choose2}b^{n-2}\delta,\qquad n\ge2.}
+$$
+两次跨越观察子空间产生 $\ell^2=\delta$；普通单侧交织界只有 $O(\sqrt\delta)$。
+
+该系数对每个固定整数 $n\ge2$，在 $\varepsilon\downarrow0$ 时渐近锐；不声称对随 $\varepsilon$ 增长的 $n$ 有一致相对锐性。固定 $0<a<b<1$，取
+$$
+S_\varepsilon=
+\begin{pmatrix}b-\varepsilon&\varepsilon\\
+\varepsilon&b-\varepsilon\end{pmatrix},
+\quad F=(1,0),\quad
+0<2\varepsilon<b-a.
+$$
+其谱为 $b,b-2\varepsilon$，且 $A=b-\varepsilon,\ \delta=\varepsilon^2$。于是
+$$
+FS_\varepsilon^nF^*-A^n
+=\frac{b^n+(b-2\varepsilon)^n}{2}-(b-\varepsilon)^n
+={n\choose2}b^{n-2}\varepsilon^2+O(\varepsilon^3).
+$$
+$n=2$ 为精确等号；$C_\varepsilon=-h^{-1}\log S_\varepsilon>0$ 满足原模型。
+
+### 44.3 一个正 resolvent 引擎与三种对数缺陷
+
+**定理 44.4（正二阶余项）。**
+
+令
+$$
+S_0=PSP+QSQ,\quad V=S-S_0,\quad
+R_u=(S+uI_R)^{-1},\quad R_u^0=(S_0+uI_R)^{-1}
+\quad(u\ge0).
+$$
+两条逆差恒等式 $R_u-R_u^0=-R_u^0VR_u=-R_uVR_u^0$ 相互代入，得到二阶 resolvent 恒等式
+$$
+R_u-R_u^0
+=-R_u^0VR_u^0+R_u^0VR_uVR_u^0.
+$$
+定义 $D(u)=FR_uF^*-(A+uI_E)^{-1}$。
+压缩到 $P$ 后首项消失；余项半正定，而且
+$$
+0\le FR_uF^*-(A+uI_E)^{-1},\qquad
+\|FR_uF^*-(A+uI_E)^{-1}\|
+\le\frac{\delta}{(a+u)^3}.
+$$
+更具体地，余项为
+$$
+(A+uI_E)^{-1}FSQ\,R_u\,QSF^*(A+uI_E)^{-1},
+$$
+其半正定性及范数界直接来自 $R_u\succeq0$、$\|R_u\|\le(a+u)^{-1}$ 和 $\|FSQ\|=\sqrt\delta$。
+$FSQ:R\to E$ 与 $QSF^*:E\to R$ 互为伴随；两边的 $(A+uI_E)^{-1}$ 自伴。故该式为 $X^*R_uX$，其中 $X=QSF^*(A+uI_E)^{-1}$，正性不要求这些因子交换。$S_0\succeq aI$ 是两个角各自的下界，因此所有逆存在，三个逆因子共同给 $(a+u)^{-3}$。这一个 $D(u)$ 将同时供应对数及两段分数幂。
+
+**推论 44.5（生成元、非对角块和矩形交织）。** 定义
+$$G=-h^{-1}\log A,\qquad C_c=FCF^*,\qquad c_0=-\log b/h>0.$$
+有限谱演算给 $C,C_c,G\succeq c_0I$。对任意正定 $X$，
+$$\log X=\int_0^\infty\left((1+u)^{-1}I-(X+uI)^{-1}\right)du.$$
+该积分在零端有界，远端为 $O(u^{-2})$；它来自每个正标量的初等积分并在有限谱上逐项相加。于是同一截断积分中常数项消去，给
+$$C_c-G=h^{-1}\int_0^\infty D(u)\,du\succeq0,$$
+$$\boxed{\|C_c-G\|\le\frac{\delta}{2ha^2},\qquad0\preceq C_c-G.}$$
+这里使用 $\int_0^\infty(a+u)^{-3}du=1/(2a^2)$。又 $[P,R_u]=-R_u[P,S]R_u$，故
+$$[P,\log S]=\int_0^\infty R_u[P,S]R_u\,du.$$
+由自伴分块 $\|[P,C]\|=\|QCP\|$ 及 $\int_0^\infty(a+u)^{-2}du=1/a$，得到
+$$\boxed{\|QCP\|\le\frac{\sqrt\delta}{ha}.}$$
+这些是算子积分估计，单独引用标量对数 Lipschitz 性不构成该证明。
+
+单侧对数交织另有安全备选界。精确矩形 resolvent 恒等式为
+$$
+\boxed{
+F(S+uI_R)^{-1}-(A+uI_E)^{-1}F
+=-(A+uI_E)^{-1}FSQ(S+uI_R)^{-1}.
+}
+$$
+这是因为 $FS-AF=FSQ$。对数积分表示给
+$$
+F\log S-(\log A)F
+=\int_0^\infty
+(A+uI_E)^{-1}FSQ(S+uI_R)^{-1}\,du.
+$$
+由 $\int_0^\infty(a+u)^{-2}du=a^{-1}$ 得
+$$
+\|FC-GF\|\le\frac{\sqrt\delta}{ha}.
+$$
+对 $e^{-(t-s)G}Fe^{-sC}$ 求导，导数为 $e^{-(t-s)G}(GF-FC)e^{-sC}$。积分后右接 $F^*$；两个半群分别以 $c_0$ 衰减，所以得到
+$$
+\|Fe^{-tC}F^*-e^{-tG}\|
+\le \frac{t}{ha}b^{t/h}\sqrt\delta.
+$$
+
+### 44.4 连续响应的两次 Duhamel 与全时间控制
+
+**定理 44.6（全时间响应）。** 令 $L=\|QCP\|$。有限维乘积法则给
+$$[P,e^{-sC}]=-\int_0^s e^{-(s-v)C}[P,C]e^{-vC}\,dv.$$
+左右接 $Q,F^*$，用 $Q[P,e^{-sC}]F^*=-Qe^{-sC}F^*$，得到
+$$
+\|Qe^{-sC}F^*\|\le s e^{-c_0s}L.
+$$
+对 $e^{-(t-s)C_c}Fe^{-sC}F^*$ 求导，使用 $C_cF=FCP$，导数恰为 $-e^{-(t-s)C_c}FCQe^{-sC}F^*$。积分得
+$$
+Fe^{-tC}F^*-e^{-tC_c}
+=-\int_0^t e^{-(t-s)C_c}FCQe^{-sC}F^*\,ds,
+$$
+故
+$$
+\|Fe^{-tC}F^*-e^{-tC_c}\|
+\le \tfrac12t^2e^{-c_0t}L^2.
+$$
+同时，对 $e^{-(t-s)C_c}e^{-sG}$ 求导，导数为 $e^{-(t-s)C_c}(C_c-G)e^{-sG}$，积分和两边的 $c_0$ 衰减给
+$$
+\|e^{-tC_c}-e^{-tG}\|
+\le te^{-c_0t}\|C_c-G\|.
+$$
+合并得到
+$$
+\boxed{
+\|Fe^{-tC}F^*-e^{-tG}\|
+\le
+\frac{\delta\,b^{t/h}}{2a^2}
+\left(\frac{t^2}{h^2}+\frac th\right),\qquad t\ge0.
+}
+$$
+这是连续时间可用界，不宣称其常数最优；整数时刻应使用上面的更锐离散界。特别地，$t=0$ 时两响应均为 $I_E$，而 $t=h$ 时
+$$
+Fe^{-hC}F^*=A=e^{-hG},
+$$
+故误差精确为零。上面的三角估计没有保留 $t=h$ 处的抵消。另一方面，
+$$
+\left.\frac{d}{dt}\left(Fe^{-tC}F^*-e^{-tG}\right)\right|_{t=0}
+=G-C_c
+$$
+一般非零，所以不能把该连续响应误差普遍替换成固定模型下的 $O(t^2\delta)$ 小时间界。
+
+若模型族共用 $a>0$ 和 $b<1$，置 $\beta=-\log b>0$，则还有统一全时间界
+$$
+\boxed{
+\sup_{t\ge0}\|Fe^{-tC}F^*-e^{-tG}\|
+\le\frac{\delta}{2a^2}
+\left(\frac{4}{e^2\beta^2}+\frac{1}{e\beta}\right).
+}
+$$
+证明。令 $x=t/h\ge0$，则 $b^{t/h}=e^{-\beta x}$。分别使用
+$$
+\sup_{x\ge0}x^2e^{-\beta x}=\frac4{e^2\beta^2},
+\qquad
+\sup_{x\ge0}xe^{-\beta x}=\frac1{e\beta},
+$$
+再以上确界的次可加性应用于前式即可。这个常数不宣称最优；共同谱界固定时，它给出随 $\delta\to0$ 的全时间一致压缩响应收敛，不提供隐藏态或物理时钟恢复。
+例如 $F=(1,0)$、$S=\begin{pmatrix}s&\varepsilon\\\varepsilon&s\end{pmatrix}$，$0<\varepsilon<\min(s,1-s)$，有
+$$C_c-G=-\frac1{2h}\log(1-\varepsilon^2/s^2)>0.$$
+因此固定此模型、$t\downarrow0$ 时误差含非零线性项，明确排除 $O(t^2\delta)$。对每个整数时刻，定理44.3的界仍可更精细。
+
+
+### 44.5 两段谱分数幂、显式 Beta 常数与端点
+
+**定理 44.7（分数幂正差及其范数）。** 本节首先只要求有限维实或复 Hilbert 空间、$FF^*=I_E$、$S=S^*\succeq aI_R$，其中共同谱下界 $a>0$。仍令
+$$
+A=FSF^*,\qquad \Delta=FS^2F^*-A^2\succeq0,
+\qquad \delta=\|\Delta\|.
+$$
+不需要 $b<1$、预先给定 $h$ 或 $S=e^{-hC}$，也不要求 $S$ 与 $P=F^*F$ 交换。共同正谱下界用于控制负指数因子 $a^{r-2}$；有限维保证谱有界。
+
+对 $0<r<1$，有
+$$
+\boxed{
+0\preceq A^r-FS^rF^*,\qquad
+\|A^r-FS^rF^*\|
+\le \frac{r(1-r)}2a^{r-2}\delta.
+}
+$$
+对 $1<r<2$，有
+$$
+\boxed{
+0\preceq FS^rF^*-A^r,\qquad
+\|FS^rF^*-A^r\|
+\le \frac{r(r-1)}2a^{r-2}\delta.
+}
+$$
+这里分别给出半正定方向及算子范数控制，不将范数估计改写成缺陷矩阵受同一常数乘以 $\Delta$ 控制的 Loewner 序断言。
+
+证明。先给两段标量表示及共同截断。
+
+沿用定理44.4的精确二阶 resolvent 恒等式，令
+$$
+D(u)=F(S+uI_R)^{-1}F^*-(A+uI_E)^{-1},\qquad u\ge0.
+$$
+则
+$$
+D(u)\succeq0,\qquad
+\|D(u)\|\le\frac{\delta}{(a+u)^3}.
+$$
+对 $0<r<1$，标量公式及有限维谱演算给出
+$$
+x^r=\frac{\sin(\pi r)}\pi
+\int_0^\infty u^{r-1}\frac{x}{x+u}\,du.
+$$
+标量式由 $u=xv$ 给 $x^r\int_0^\infty v^{r-1}/(1+v)dv$，后者为 $B(r,1-r)=\pi/\sin\pi r$；端点收敛由 $0<r<1$ 保证。使用 $x/(x+u)=1-u/(x+u)$ 及 $FF^*=I_E$，在相同截断积分中相减，再取极限，得到
+$$
+A^r-FS^rF^*
+=\frac{\sin(\pi r)}\pi
+\int_0^\infty u^rD(u)\,du\succeq0.
+$$
+不能将这一步写成分别计算发散的常数项积分。
+
+对 $1<r<2$，使用另一段标量表示
+$$
+x^r=\frac{\sin(\pi(r-1))}\pi
+\int_0^\infty u^{r-2}\frac{x^2}{x+u}\,du.
+$$
+此式用 $u=xv$ 化为 $x^r B(r-1,2-r)$，正弦归一化来自同一反射公式。由 $x^2/(x+u)=x-u+u^2/(x+u)$，压缩前后的仿射项在相同截断处精确抵消，因此
+$$
+FS^rF^*-A^r
+=\frac{\sin(\pi(r-1))}\pi
+\int_0^\infty u^rD(u)\,du\succeq0.
+$$
+两段积分的系数均为正，故正性来自同一份 $D(u)$。
+
+归一化、收敛与端点如下。
+
+令 $u=av$，再令 $z=v/(1+v)$，则
+$$\int_0^\infty\frac{u^r}{(a+u)^3}du
+=a^{r-2}\int_0^1 z^r(1-z)^{1-r}dz.$$
+共同的范数积分为
+$$
+\begin{aligned}
+\int_0^\infty\frac{u^r}{(a+u)^3}\,du
+&=a^{r-2}B(r+1,2-r)\\
+&=\frac{a^{r-2}}2\Gamma(r+1)\Gamma(2-r).
+\end{aligned}
+$$
+其零点附近为 $O(u^r)$，无穷远为 $O(u^{r-3})$，故上述两段均可积。在 $0<r<1$，$\Gamma(r+1)\Gamma(2-r)=r(1-r)\pi/\sin(\pi r)$；在 $1<r<2$，写 $p=r-1$，该乘积为 $r(r-1)\pi/\sin(\pi(r-1))$。这里逐次使用 $\Gamma(z+1)=z\Gamma(z)$ 与 $\Gamma(p)\Gamma(1-p)=\pi/\sin\pi p$。乘以各自正弦系数并除以二，恰好得到
+$$
+\frac{r|r-1|}{2}a^{r-2}.
+$$
+端点单独计算，不将 $r=2$ 代入已发散的积分：
+$$
+FS^0F^*-A^0=0,\qquad
+FSF^*-A=0,\qquad
+FS^2F^*-A^2=\Delta.
+$$
+所以统一范数界为
+$$
+\boxed{
+\|FS^rF^*-A^r\|
+\le\frac{r|r-1|}{2}a^{r-2}\delta,
+\qquad 0\le r\le2.
+}
+$$
+此处不将分数幂序方向或此系数外推到 $r>2$；定理44.3的整数范数界仍独立成立。
+
+**命题 44.8（下谱端点的固定指数尖锐性）。**
+
+固定 $a<b$，取靠近下谱端点的二维模型
+$$
+S_\varepsilon=
+\begin{pmatrix}
+a+\varepsilon&\varepsilon\\
+\varepsilon&a+\varepsilon
+\end{pmatrix},\qquad
+F=(1,0),\qquad 0<2\varepsilon<b-a.
+$$
+其谱为 $a,a+2\varepsilon$，并且
+$$
+A=a+\varepsilon,\qquad \delta=\varepsilon^2.
+$$
+对每个固定 $r\in(0,1)\cup(1,2)$，Taylor 展开给出
+$$
+\begin{aligned}
+FS_\varepsilon^rF^*-A^r
+&=\frac{a^r+(a+2\varepsilon)^r}{2}-(a+\varepsilon)^r\\
+&=\frac{r(r-1)}2a^{r-2}\varepsilon^2+O(\varepsilon^3).
+\end{aligned}
+$$
+因此绝对缺陷与所给上界之比趋于 $1$，任何严格较小的统一系数都不能覆盖该固定 $r$ 下的全部模型。$r=2$ 为精确等号，$r=0,1$ 两边均为零；不声称 $r$ 同时趋于端点时的一致相对尖锐性。若另有 $S\preceq bI_R$ 且 $a=b$，则 $S=aI_R$、$\delta=0$，没有非平凡尖锐性问题。
+
+若还要求原模型中的 $b<1$，同一例子的
+$$
+C_\varepsilon=-h^{-1}\log S_\varepsilon>0
+$$
+满足原契约。定理44.3整数界的尖锐性使用上谱端点 $b$，本节因 $r<2$ 而使用下谱端点 $a$，二者不混用。
+
+**推论 44.9（保留单步抵消的短时间响应）。**
+
+回到 $S=e^{-hC}$、$G=-h^{-1}\log A$，令 $r=t/h$。谱演算给出
+$$
+FS^rF^*=Fe^{-tC}F^*,\qquad A^r=e^{-tG}.
+$$
+从而
+$$
+\boxed{
+\|Fe^{-tC}F^*-e^{-tG}\|
+\le\frac{\delta}{2}\frac th
+\left|\frac th-1\right|a^{t/h-2},
+\qquad 0\le t\le2h.
+}
+$$
+并且具有随区间切换的 Loewner 序：
+$$
+Fe^{-tC}F^*\preceq e^{-tG}\quad(0\le t\le h),
+$$
+$$
+e^{-tG}\preceq Fe^{-tC}F^*\quad(h\le t\le2h).
+$$
+在 $t=0,h$ 两响应相等；在 $t=2h$，响应差等于 $\Delta$，范数恰为 $\delta$。这保留定理44.6的全时间三角估计未体现的 $t=h$ 精确抵消，仍只是一条 $[0,2h]$ 上的加强界，不替代定理44.6的全时间结论。对每个固定 $t/h\in(0,1)\cup(1,2)$，命题44.8给出对应的渐近尖锐性。
+
+还可核对小时间衔接：将本节估计除以 $t=rh$ 后令 $r\downarrow0$，利用
+$$
+\left.\frac{d}{dt}\bigl(Fe^{-tC}F^*-e^{-tG}\bigr)\right|_{t=0}
+=G-C_c,
+$$
+恢复 $\|C_c-G\|\le\delta/(2ha^2)$。线性小时间项与单步时刻的精确抵消可以同时成立。
+
+这里的连续参数由严格正算子的谱函数 $S^{t/h}$ 产生，并以正谱下界和积分估计控制误差；它不是形式幂级数按系数或理想过滤得到的完成化。两者的对象、收敛条件、拓扑和可操作含义不同，不凭共有的“幂”字样建立互换关系。
+
+### 44.6 有限矩形 Jensen 的归属与算子序反例
+
+分数幂的序方向属于成熟算子 Jensen 机制。对 $P=F^*F$ 令 $U_0=2P-I_R$，则 $U_0$ 自伴酉，$S_0=(S+U_0SU_0)/2$。Hansen–Pedersen，[*Jensen's Operator Inequality*](https://arxiv.org/abs/math/0204049v1)，Theorem 2.1(ii)，在正谱区间上以 $I_R/\sqrt2,U_0/\sqrt2$ 作 unital operator combination，给算子凸 $f$ 的
+$$f(S_0)\preceq(f(S)+U_0f(S)U_0)/2.$$
+$S_0$ 分块对角，函数演算的 $P$ 角是 $f(S_0|_{\operatorname{ran}P})$。$F$ 在该角上为等距同构、$FS_0F^*=A$，所以取角得到 $f(A)\preceq Ff(S)F^*$；凹函数方向反转。这里不向区间外补零，故不用 $f(0)$。该文 Corollary 2.3 的 contractive 版本另有零点属于区间及 $f(0)\le0$ 的假设；无限空间等距表述不能未经桥接便当作有限矩形 $F$ 的直接特例。上节的积分已经独立证明两段幂序及其定量常数。
+
+Balakrishnan，[*Fractional powers of closed operators and the semigroups generated by them*](https://msp.org/pjm/1960/10-2/pjm-v10-n2-p03-s.pdf)，*Pacific J. Math.* 10(2) (1960), 419–437，[DOI 10.2140/pjm.1960.10.419](https://doi.org/10.2140/pjm.1960.10.419)，印刷页420式(2.1)、(2.3)给成熟 resolvent-power 构造。将其生成元变量取为 $-S$，则 $\|\lambda(\lambda I+S)^{-1}\|\le1$，有限维定义域为全空间。式(2.1)成为 $0<r<1$ 的表示，递推并乘以 $S$ 给 $1<r<2$；不移入该文更一般 Banach 生成元结论。显式常数所用 Euler Beta 积分、Gamma 递推与反射分别见 NIST DLMF [5.12.1](https://dlmf.nist.gov/5.12.E1)、[5.5.1](https://dlmf.nist.gov/5.5.E1)、[5.5.3](https://dlmf.nist.gov/5.5.E3)。
+
+**命题 44.10（同一个三维来源中的两种算子序障碍）。** 取 $F=(I_2\ 0)$，
+$$S=\begin{pmatrix}1/2&1/10&1/10\\1/10&1/2&0\\1/10&0&1/2\end{pmatrix},\qquad
+A=\begin{pmatrix}1/2&1/10\\1/10&1/2\end{pmatrix},\qquad
+v=\binom{1/10}{0},\quad d=1/2.$$
+$S$ 的特征多项式为 $(\lambda-1/2)((\lambda-1/2)^2-1/50)$，谱是 $1/2,1/2\pm\sqrt2/10$，故为严格正收缩。分块乘法给 $\Delta=vv^*=\operatorname{diag}(1/100,0)$。对 $e_2\in\ker\Delta$ 和每个 $u\ge0$，
+$$((A+uI)^{-1}e_2)_1=-\frac{1/10}{(u+1/2)^2-1/100}\ne0.$$
+因此定理44.4的因子分解给
+$$\langle e_2,D(u)e_2\rangle
+=\langle e_3,(S+uI)^{-1}e_3\rangle
+ |v^*(A+uI)^{-1}e_2|^2>0.$$
+两段幂积分权重分别严格为正且可积，故每个固定 $r\in(0,1)\cup(1,2)$ 的正差在 $e_2$ 上严格正。$e_2^*\Delta e_2=0$，所以不存在有限标量 $c$ 使该差在 Loewner 序中不超过 $c\Delta$；标量范数界不受影响。
+
+同一矩阵的三次幂角直接计算为
+$$FS^3F^*-A^3=A\Delta+\Delta A+d\Delta
+=\begin{pmatrix}3/200&1/1000\\1/1000&0\end{pmatrix},$$
+其行列式为 $-1/1000000<0$。实对称二阶矩阵的特征值乘积负，故此差不定，证明 $r=3$ 已不保留上述正序；定理44.3的整数范数估计仍成立。证毕。
+
+### 44.7 固定实际基准上的迹时钟与倍时诊断
+
+**定理 44.11（维数消去的短区间比值界）。**
+
+对 $0\le r\le2$，
+$$
+\boxed{
+|R(r)-r|
+\le\frac{r|r-1|}{2a^2\tau}\delta
+\le\frac{r|r-1|}{2a^2(-\log b)}\delta.
+}
+$$
+第一个界保留实际已校准的 $\tau$，比只使用 $-\log b$ 更精细。
+
+证明。先对任意正定 $X,Y\succeq uI$、$u>0$，使用对数的 resolvent 积分及逆矩阵差恒等式：
+$$
+\begin{aligned}
+\|\log X-\log Y\|
+&\le\int_0^\infty
+\|(Y+vI)^{-1}-(X+vI)^{-1}\|\,dv\\
+&\le\|X-Y\|\int_0^\infty(u+v)^{-2}\,dv
+=\frac{\|X-Y\|}{u}.
+\end{aligned}
+$$
+这是算子范数估计，不只引用标量对数的 Lipschitz 常数。对每个 $r\ge0$，谱演算及余等距性给
+$$
+W(rh)=FS^rF^*\succeq a^rI,\qquad A^r\succeq a^rI.
+$$
+由于 $\log(A^r)=r\log A$，
+$$
+\begin{aligned}
+|R(r)-r|
+&=\frac{|\operatorname{tr}(\log W(rh)-\log A^r)|}{\mathcal T}\\
+&\le\frac{m}{\mathcal T a^r}\|FS^rF^*-A^r\|\\
+&\le\frac{r|r-1|}{2a^2\tau}\delta.
+\end{aligned}
+$$
+最后一步使用第44.5节分数幂界，$a^r$ 与其 $a^{r-2}$ 相消；再以 $\tau\ge-\log b$ 得第二个界。维数通过 $\mathcal T=m\tau$ 精确消去。端点 $r=0,1,2$ 使用第44.5节的直接端点结论，不从发散积分取值。
+
+符号由同一分数幂序及对数算子单调性给出：
+$$
+\boxed{
+R(r)\ge r\quad(0<r<1),\qquad
+R(r)\le r\quad(1<r\le2),
+\qquad R(0)=0,\ R(1)=1.
+}
+$$
+具体地，$FS^rF^*\preceq A^r$ 时 $-\log(FS^rF^*)\succeq-r\log A$；另一段反向。所有比较都固定同一个 $F_{(t_0)}$，不将不同基准或不同历史阶数的响应混入一次估计。
+
+**推论 44.12（整数时间比值）。**
+
+对每个整数 $n\ge2$，定理44.3的离散界给
+$$
+\boxed{
+|R(n)-n|
+\le\binom n2\frac{b^{n-2}}{a^n\tau}\delta
+\le\binom n2\frac{b^{n-2}}{a^n(-\log b)}\delta.
+}
+$$
+证明。$W(nh)$ 与 $A^n$ 都不小于 $a^nI$，故按第44.7节先取对数差、再取迹并除以 $\mathcal T$：
+$$
+|R(n)-n|
+\le\frac{\|FS^nF^*-A^n\|}{a^n\tau}
+\le\binom n2\frac{b^{n-2}}{a^n\tau}\delta.
+$$
+$n=0,1$ 精确成立。此处只延伸整数范数估计，不将第44.5节的 $r\le2$ 算子序声明外推到 $n>2$；也不把可能随 $n$ 增大的右端当作无时间范围的精确相对钟恢复。
+
+**命题 44.13（精确倍时差及其饱和前提）。**
+
+令 $W(2h)=A^2+\Delta$。有精确恒等式
+$$
+\boxed{
+2-R(2)
+=\frac{\log\det(I+A^{-1}\Delta A^{-1})}{\mathcal T}.
+}
+$$
+证明。因
+$$
+A^2+\Delta=A(I+A^{-1}\Delta A^{-1})A,
+$$
+取行列式并用正定矩阵的 $\operatorname{tr}\log X=\log\det X$ 即得。合同增量 $A^{-1}\Delta A^{-1}$ 半正定，因此
+$$
+2-R(2)\ge0,\qquad R(2)=2\Longleftrightarrow\Delta=0.
+$$
+这就是 Context40 推论40.7的谱行列式机制在归一读数上的表达，不另宣称发现了该等号判据。
+
+还有严格范围
+$$
+\boxed{0\le2-R(2)<1.}
+$$
+因为 $0<S<I$ 给 $S-S^2\succ0$；$F^*$ 单射，故 $A-W(2h)=F(S-S^2)F^*\succ0$。正定行列式严格单调于是给 $\operatorname{tr}(-\log W(2h))>\operatorname{tr}(-\log A)$，即 $R(2)>1$。结合 $R(2)\le2$ 得结论。
+
+**一般余等距模型。** $\Delta=( (I-P)SF^*)^*((I-P)SF^*)$，所以 $\Delta=0$ 等价于 $\operatorname{Im}F^*$ 在自伴 $S$ 下约化。此时 $W(t)=A^{t/h}$，对全部 $t\ge0$ 有精确 $R(t/h)=t/h$。但一般模型允许未耦合隐藏直和，所以这不推出任意给定隐藏空间已被全部观察。
+
+**Context40 的实际生成历史。** 此处不能停留在上一段较弱结论，更不能用它否定已发表的实际饱和定理。在定义40.1、引理40.2与命题40.6的完整前提下，工作空间已经取有效循环 $\mathcal R$，且
+$$
+\operatorname{Im}F_{(t_0)}^*=e^{-t_0C_{\mathcal R}/2}V_k
+\supseteq e^{-t_0C_{\mathcal R}/2}B^*U.
+$$
+若 $\Delta=0$，约化性和唯一正对数使它在 $C_{\mathcal R}$ 下不变；这批移位输入的全部循环跨度为
+$$
+\operatorname{span}_{j\ge0}
+C_{\mathcal R}^{j}e^{-t_0C_{\mathcal R}/2}B^*U
+=e^{-t_0C_{\mathcal R}/2}\mathcal R=\mathcal R.
+$$
+最后使用有限基准指数的可逆性。故命题40.6已经供应
+$$
+\boxed{
+\Delta=0\Longleftrightarrow V_k=\mathcal R
+\Longleftrightarrow
+\operatorname{rank}\mathsf H_{k+1}(t_0)
+=\operatorname{rank}\mathsf H_k(t_0).
+}
+$$
+结合前式，实际模型中 $R(2)=2$ 当且仅当该历史真正饱和；未饱和时 $R(2)<2$，与推论40.7完全一致。有效空间以外原本不可见的直和仍不参加这条饱和断言。把精确零改为很小的正数，只能得到本节有裕量条件的数值误差界，不保留精确秩或饱和结论。
+
+**命题 44.14（二维时钟和通用系数尖锐性）。**
+
+固定 $s\in(0,1)$，取
+$$
+S_\varepsilon=
+\begin{pmatrix}s&\varepsilon\\\varepsilon&s\end{pmatrix},
+\qquad F=(1,0),\qquad
+0<\varepsilon<\min(s,1-s).
+$$
+则
+$$
+A=s,\qquad\delta=\varepsilon^2,\qquad
+W(rh)=\frac{(s-\varepsilon)^r+(s+\varepsilon)^r}{2},
+\qquad\tau=-\log s.
+$$
+对于每个固定 $r\in(0,1)\cup(1,2]$，对称 Taylor 展开给
+$$
+W(rh)=s^r+\frac{r(r-1)}2s^{r-2}\varepsilon^2+O(\varepsilon^4),
+$$
+从而
+$$
+\boxed{
+R(r)-r
+=-\frac{r(r-1)}{2s^2(-\log s)}\varepsilon^2
++O(\varepsilon^4).
+}
+$$
+选取该模型的紧谱界 $a_\varepsilon=s-\varepsilon$、$b_\varepsilon=s+\varepsilon$，实际绝对误差与第44.7节两个上界之比均趋于 $1$。因此在允许任意合法谱界的通用公式中，前系数不能统一缩小。这里谱区间随 $\varepsilon$ 收紧；不宣称对每一组预先固定且分离的 $a<b$，粗常数 $1/(a^2(-\log b))$ 都最优，也不声称随 $r$ 变化的一致相对尖锐性。$r=0,1$ 两边恒为零。
+
+取 $s=1/2,\varepsilon=1/20$，谱为 $9/20,11/20$，有
+$$
+\delta=\frac1{400},\qquad
+2-R(2)=\frac{\log(101/100)}{\log2}\approx0.0143553.
+$$
+由共同谱界得到的上界为
+$$
+\frac{1/400}{(9/20)^2(-\log(11/20))}\approx0.0206506.
+$$
+这些是精确模型的代数读数及其数值显示，不是实际实验精度声明。
+
+这组模型也满足实际历史合同的数学来源部分：取 $H=\mathbb R^2$、$U=\mathbb R$、$B=(1,0)$、$C=-h^{-1}\log S_\varepsilon>0$、$t_0=0$、$k=0$，则 $M_{(0)}=BB^*=1$、$F_{(0)}=B$。因 $\varepsilon\ne0$，$B^*$ 与 $S_\varepsilon B^*$ 线性无关，有效循环空间为二维，而阶零历史为一维，确实未饱和。合法实际取得仍需第44.11节的实验条件；给出数学来源不等于已取得该档案。
+
+### 44.8 每一项独立裕量与耦合边界
+
+**命题 44.15（弱耦合不提供秩阈值）。** 上述锐性模型中，每个 $\varepsilon>0$ 的 $F^*$-循环空间均为二维，极限为一维，而 $\delta\to0$。证明。在定理44.3的族中，$e_1,S_\varepsilon e_1$ 的行列式为 $\varepsilon\ne0$；当 $\varepsilon=0$ 则跨度为一。精确 $\delta=0$ 等价于 $P$ 约化 $S$；只有另有循环最小性时，才能推出观察空间等于整个相关内部空间。没有该条件，还能添加任意不耦合的隐藏直和。
+
+**命题 44.16（缩放源的归一化与生成元缺口）。** 缺少共同正谱下界 $a>0$，绝对缺陷不能控制以下两项。 固定 $h>0$，取
+$$
+S_\varepsilon=\varepsilon\operatorname{diag}(1,2),
+\quad F=2^{-1/2}(1,1),\quad0<\varepsilon<1/2.
+$$
+则
+$$
+A=3\varepsilon/2,\quad \delta=\varepsilon^2/4\to0,
+\quad \frac{\Delta}{A^2}=\frac19,
+\quad C_c-G=\frac{\log(9/8)}{2h}>0.
+$$
+每个实例仍有严格正谱下界，但随 $\varepsilon\downarrow0$ 不存在适用于整个模型族的共同 $a>0$。这是对上述两个具体目标的反例，不泛称排除了所有“归一化时钟”定义。
+
+**命题 44.17（全时间一致性需要共同衰减）。** 缺少共同严格衰减界 $b<1$，不能由绝对缺陷趋零推出全时间一致收敛。 固定 $h>0$，取
+$S_\varepsilon=\operatorname{diag}(e^{-\varepsilon},e^{-2\varepsilon})$，同一 $F$。虽然 $\delta\to0$，在 $t/h=1/\varepsilon$ 时，
+$$
+Fe^{-tC}F^*\to\tfrac12(e^{-1}+e^{-2}),
+\qquad e^{-tG}\to e^{-3/2},
+$$
+二者差不趋零。每个实例都有 $b_\varepsilon=e^{-\varepsilon}<1$，但模型族没有共同 $b<1$，等价地没有共同的正生成元下界 $-h^{-1}\log b$。
+在命题44.16中，$FS^2F^*=5\varepsilon^2/2$，减去 $A^2=9\varepsilon^2/4$ 得残差；$C_c=-h^{-1}(\log\varepsilon+\tfrac12\log2)$，$G=-h^{-1}\log(3\varepsilon/2)$，相减即得显示的常数。命题44.17中 $\delta=(e^{-\varepsilon}-e^{-2\varepsilon})^2/4\to0$，而 $\log((e^{-\varepsilon}+e^{-2\varepsilon})/2)=-3\varepsilon/2+O(\varepsilon^2)$，所以 $A^{1/\varepsilon}\to e^{-3/2}$。严格凸的标量指数使 $\tfrac12(e^{-1}+e^{-2})>e^{-3/2}$；这证明非零极限误差。
+
+以下命题44.18和44.19的两个反例都取固定 $F=(1,0)$、$0<\varepsilon<1/4$，且 $\delta=\varepsilon/4\to0$。
+
+**命题 44.18（源谱下界与大分母不能互换）。** 取
+$$
+S_\varepsilon=
+\begin{pmatrix}
+\varepsilon&\sqrt\varepsilon/2\\
+\sqrt\varepsilon/2&1/2
+\end{pmatrix}.
+$$
+矩阵对角元正、行列式为 $\varepsilon/4>0$，故 $S_\varepsilon>0$。而 $\frac34I-S_\varepsilon$ 的对角元正、行列式为 $3/16-\varepsilon/2>0$，故有共同上谱界 $S_\varepsilon<\frac34I$。另一方面 $\lambda_{\min}(S_\varepsilon)\le\langle e_0,S_\varepsilon e_0\rangle=\varepsilon$，不存在共同正的下谱界。
+
+直接计算
+$$
+A=\varepsilon,\qquad W(2h)=\varepsilon^2+\varepsilon/4,
+\qquad\mathcal T=\log(1/\varepsilon),
+$$
+$$
+R(2)
+=1+\frac{\log(1/(\varepsilon+1/4))}{\log(1/\varepsilon)}
+\longrightarrow1.
+$$
+所以即使共同 $b<1$ 保留、校准分母还趋于无穷，$\delta\to0$ 也不保证钟偏差消失；倍时短缺趋于其可能范围的上端 $1$。
+
+**命题 44.19（固定源谱下界不控制归一分母）。** 取
+$$
+S_\varepsilon=
+\begin{pmatrix}
+1-\varepsilon&\sqrt\varepsilon/2\\
+\sqrt\varepsilon/2&1/2
+\end{pmatrix}.
+$$
+$S_\varepsilon-\frac14I$ 的对角元正、行列式为 $3/16-\varepsilon/2>0$；$I-S_\varepsilon$ 的对角元正、行列式为 $\varepsilon/4>0$。所以
+$$
+\frac14I<S_\varepsilon<I.
+$$
+共同正谱下界保留，但由 $\lambda_{\max}(S_\varepsilon)\ge1-\varepsilon$，不存在共同 $b<1$。此时
+$$
+A=1-\varepsilon,\quad
+W(2h)=(1-\varepsilon)^2+\varepsilon/4
+=1-\tfrac74\varepsilon+\varepsilon^2,
+$$
+$$
+\mathcal T=\tau=-\log(1-\varepsilon)\longrightarrow0,
+\qquad
+R(2)\longrightarrow\frac74.
+$$
+这里 $-\log W(2h)=\tfrac74\varepsilon+O(\varepsilon^2)$、$\mathcal T=\varepsilon+O(\varepsilon^2)$，故极限明确。小残差仍留下 $1/4$ 的归一倍时偏差。
+
+这两个模型都可按第44.7节的二维模型取 $B=F,t_0=0,k=0,C=-h^{-1}\log S_\varepsilon$，得到非零耦合、二维有效循环空间中的实际未饱和来源。因此反例不依赖附加不可见直和，也不与 Context40 的精确饱和判据冲突。
+
+准确边界是：共同 $b<1$ 可以由实际 $\tau$ 的共同正下界替代，但在不另加任何分母控制时没有该统一稳定保证；正谱下界也不能仅由小 $\delta$ 推出。这是允许来源族中的统一估计反例，不是已经构造了两个完整档案相同的世界。若 $C_{\rm archive}$ 中还有区分这些来源的外部记录或时间戳，必须保留；完整观察者的 minimax 不可识别结论需要另证共同档案与联合误差相容性。
+
+**命题 44.20（固定压缩地板仍不认证真实源地板）。** 对 $F=(1,0)$ 和 $0<\varepsilon<1/4$，取
+$$S_\varepsilon=\begin{pmatrix}1/2&\varepsilon\\\varepsilon&3\varepsilon^2\end{pmatrix}.$$
+对角元正且 $\det S_\varepsilon=\varepsilon^2/2>0$；$3I/4-S_\varepsilon$ 的对角元正、行列式为 $3/16-7\varepsilon^2/4>0$。二阶 Sylvester 判据给 $0<S_\varepsilon<3I/4$。但 $A=1/2$ 固定、$\delta=\varepsilon^2$，且 Rayleigh 商给 $\lambda_{\min}(S_\varepsilon)\le3\varepsilon^2\to0$。$e_1,S_\varepsilon e_1$ 的行列式为 $\varepsilon$，非零耦合产生二维循环空间。以 $B=F,t_0=0,k=0,C=-h^{-1}\log S_\varepsilon$ 实现它，不需附加不可见块。故测得 $A$ 的固定正地板和小残差不能替代独立的有效 $S$ 下界。证毕。
+
+### 44.9 同支撑、同联合事件上的测量证书
+
+**命题 44.21（真实残差及正锚分母的确定性包络）。** 在已知实际非零支撑 $E$、$m=\dim E$ 上，令 $A=W(h)$、$W_2=W(2h)$。假设同支撑 Hermitian 估计在一个声明的联合误差事件上同时满足
+$$\|\widetilde A-A\|\le e_1,\qquad\|\widetilde W_2-W_2\|\le e_2.$$
+置
+$$\widetilde\Delta=\widetilde W_2-\widetilde A^2,\quad
+\widetilde\delta=\|\widetilde\Delta\|,\quad
+q_\Delta=e_2+(2b+e_1)e_1.$$
+则
+$$\boxed{\max\{0,\widetilde\delta-q_\Delta\}\le\delta
+\le\overline\delta:=\widetilde\delta+q_\Delta.}$$
+证明。无交换性假设也有
+$$A^2-\widetilde A^2=A(A-\widetilde A)+(A-\widetilde A)\widetilde A.$$
+$\|A\|\le b$、$\|\widetilde A\|\le b+e_1$，故平方差范数至多 $(2b+e_1)e_1$。加 $W_2$ 的误差给 $\|\Delta-\widetilde\Delta\|\le q_\Delta$，再用范数反三角不等式及 $\delta\ge0$。不要求 $\widetilde\Delta$ 半正定。任何独立认证的 $\|A\|$ 上界可替换 $b$；实际正收缩允许安全值 $1$。它是依赖矩阵误差证书的真实残差上下界，不认证支撑或带噪饱和。
+
+若 $\widetilde A>0$ 且有实际 Frobenius 对数误差
+$$\|\log A-\log\widetilde A\|_F\le D_1,\qquad
+\widetilde\tau=\operatorname{tr}(-\log\widetilde A)/m,$$
+则 $|\operatorname{tr}X|=|\langle I,X\rangle_F|\le\sqrt m\|X\|_F$ 给
+$$|\tau-\widetilde\tau|\le D_1/\sqrt m.$$
+要求一个真实正下界 $\underline\tau>0$，例如正数 $\widetilde\tau-D_1/\sqrt m$；若独立认证共同 $b<1$，也可取
+$$\underline\tau=\max\{-\log b,\widetilde\tau-D_1/\sqrt m\}>0.$$
+计算测量比值还须另有 $\widetilde\tau>0$。配合独立实际有效源证书 $S\succeq\underline aI>0$，定义
+$$\boxed{K_{\rm err}=\frac{\overline\delta}{2\underline a^2\underline\tau}.}$$
+它控制定理44.11的真实系数 $\delta/(2\underline a^2\tau)$。$K_{\rm err}$ 不是源核 $K$ 或历史阶数 $k$。若无法取得这些正裕量，结论仍是未履行前提的条件结论，数值阈值不能补上证书。所有复用的基准误差属于同一联合事件，未假设独立。证毕。
+
+**定理 44.22（允许零事件与高于单位估计的直接比值界）。** 独立声明真实 $r=t/h\in[0,2]$，令 $W=W(t)$、$\widetilde W$ 为同一实际支撑上的正估计。给实际误差
+$$\|\log W-\log\widetilde W\|_F\le D_e,\qquad
+\|\log A-\log\widetilde A\|_F\le D_1,$$
+且 $\widetilde\tau>0$、$\tau\ge\underline\tau>0$。定义
+$$N=\operatorname{tr}(-\log W),\quad
+\widetilde N=\operatorname{tr}(-\log\widetilde W),\quad
+q=\widetilde N/(m\widetilde\tau).$$
+则
+$$\boxed{|R(r)-q|\le\eta:=\frac{D_e+|q|D_1}{\sqrt m\,\underline\tau}.}$$
+证明。直接相减而不预设事件的上谱界，
+$$R(r)-q=\frac{N-\widetilde N}{m\tau}
+ +\frac{\widetilde N(\widetilde\tau-\tau)}{m\tau\widetilde\tau}.$$
+分别用 $|N-\widetilde N|\le\sqrt m D_e$ 和命题44.21的锚迹误差即得。若正的 $\widetilde W$ 有谱值大于一，$q$ 可以为负，故保留 $|q|$，证明仍成立。
+
+实际正下界可以提供对数误差的一个有效选择。若 $W,\widetilde W\succeq u_eI>0$，逆差恒等式给
+$$(\widetilde W+vI)^{-1}-(W+vI)^{-1}
+=(\widetilde W+vI)^{-1}(W-\widetilde W)(W+vI)^{-1}.$$
+用 $\|XYZ\|_F\le\|X\|\|Y\|_F\|Z\|$ 和对数积分，得到
+$$\|\log W-\log\widetilde W\|_F
+\le\|W-\widetilde W\|_F\int_0^\infty(u_e+v)^{-2}dv
+=\|W-\widetilde W\|_F/u_e.$$
+因此可选 $D_e=\|W-\widetilde W\|_F/u_e$；并非要求任一预先给定的误差上界 $D_e$ 反而小于这个值。锚矩阵有自己的正下界时同理供应 $D_1$。
+
+$r=0$ 时 $W=I$，故上述证明覆盖零事件。若零事件块恰复用同一个实测基准及相同白化，则数学上 $\widetilde W=\widetilde M^{-1/2}\widetilde M\widetilde M^{-1/2}=I$、$q=0$；独立重复测量不继承该等式，数值计算的舍入若存在也须纳入误差。证毕。
+
+本卷定理40.8仍是正事件统计量的一条供应途径，其实际假设包括同一非零支撑、基准 Gram 裕量和事件／锚共同的严格上界 $v<1$。零事件 $W=I$ 不满足后者，$r\downarrow0$ 时也没有共同严格事件上界。该供应的命名常数 $d_P=\delta_0/\gamma$ 不因实际支撑投影差为零而被改写为零。本节从已经合法给定的白化矩阵误差或对数误差出发；若改用原始白化误差，须履行定理40.8相应步骤的实际假设。不据此宣布新的原始数据、支撑、置信概率或样本保证。
+
+### 44.10 严格单调、分支保持与有限事件区间
+
+**定理 44.23（带测量误差的事件集合）。** 在同一实际 $F,S$ 下，对 $0\le r<s$，每个源特征值 $\lambda\in(0,1)$ 满足 $\lambda^r-\lambda^s>0$。故 $S^r-S^s\succ0$；$F^*$ 单射使 $W(rh)-W(sh)\succ0$。若 $X\succ Y\succ0$，$Y^{-1/2}XY^{-1/2}\succ I$ 的特征值全大于一，因而 $\det X>\det Y$。应用于这两个响应得到 $R(r)<R(s)$。所以 $R(0)=0,R(1)=1$ 和 $1<R(2)\le2$ 区分锚点两侧；单独的分数幂符号不足以得此严格分支信息。
+
+使用命题44.21的 $K_{\rm err}$ 和定理44.22的 $q,\eta$，令
+$$L=\max(0,q-\eta),\qquad U=\min(2,q+\eta).$$
+若 $L>U$，测量与证书不能同时满足所声明合同。否则真实 $r$ 属于 $I_-\cup I_0\cup I_+$，其中空区间删除，且
+$$I_-=
+\begin{cases}
+[\max(0,L-K_{\rm err}/4),\min(1,U)]\cap[0,1),&L<1,\\
+\varnothing,&L\ge1,
+\end{cases}$$
+$$I_0=\begin{cases}\{1\},&L\le1\le U,\\\varnothing,&\text{否则},\end{cases}$$
+$$I_+=
+\begin{cases}
+[\max(1,L),\min(2,U+2K_{\rm err})]\cap(1,2],&U>1,\\
+\varnothing,&U\le1.
+\end{cases}$$
+证明。真实 $R(r)\in[0,2]\cap[q-\eta,q+\eta]=[L,U]$。在 $0\le r<1$，定理44.11给 $0\le R-r\le K_{\rm err}r(1-r)\le K_{\rm err}/4$，所以 $R-K_{\rm err}/4\le r\le R$；并且严格单调迫使 $R<1$，故必须 $L<1$。在 $1<r\le2$，$0\le r-R\le K_{\rm err}r(r-1)\le2K_{\rm err}$，于是 $R\le r\le R+2K_{\rm err}$，且 $R>1$ 迫使 $U>1$。与真实区间和对应严格分支相交恰给上述两项，$r=1$ 时 $R=1$ 给中项。
+
+因此 $q+\eta<1$ 排除 $r\ge1$，$q-\eta>1$ 排除 $r\le1$。等号只给对应非严格侧，跨越一时保留并集。未反演可能非单调的二次包络，公式对每个 $K_{\rm err}\ge0$ 都有效。把集合乘以实际已校准的 $h$ 即包围 $t$；三角不等式及 $\max_{[0,2]}r|r-1|=2$ 还给
+$$\boxed{|hq-t|\le h\eta+2hK_{\rm err}.}$$
+源谱下界、固定真实支撑、$h$ 的校准和事件范围仍是独立前提，比值不能认证自己的范围或产生未观测事件。证毕。
+
+### 44.11 实际取得、时间校准和完整观察者
+
+**推论 44.24（同一接口的取得与时间误差）。** 若 $h$ 已有数值校准，并且事件的实际经过间隔已知属于 $0\le t\le2h$，定义
+$$
+\widehat t
+=h\,\frac{\operatorname{tr}(-\log W(t))}{\operatorname{tr}(-\log W(h))}.
+$$
+则
+$$
+\boxed{
+|\widehat t-t|
+\le\frac{h\delta}{2a^2\tau}
+\frac th\left|\frac th-1\right|
+\le\frac{h\delta}{a^2\tau}.
+}
+$$
+最后一步用 $\max_{0\le r\le2}r|r-1|=2$。若只有可重复的延迟单位而没有绝对校准，得到的是 $t/h$ 的误差界，不自动得到绝对物理单位。若已有共同有效谱下界证书 $a\ge\underline a>0$、真实校准量下界 $\tau\ge\underline\tau>0$ 与真实缺陷上界 $\delta\le\overline\delta$，可把统一界写成 $h\overline\delta/(\underline a^2\underline\tau)$；这些证书的实际取得仍是独立义务。
+
+$W(t)$ 在此是实际事件块的白化响应；定义式中的未知 $t$ 描述该事件的真实间隔，并不要求先知道 $t$ 才能从已取得矩阵计算比值。然而，$[0,2h]$ 的范围条件和 $h$ 的实际加性校准不能由这个比值反向无条件认证。超过此区间、未知尾部、任意未知非线性钟函数或任意准备原点，不由本估计自动恢复。
+
+Context40 命题40.17的矩阵取得计数保持不变。对阶 $k$，基准、一步和倍时三块
+$$
+\mathsf H_k(t_0),\quad\mathsf H_k(t_0+h),\quad\mathsf H_k(t_0+2h)
+$$
+需要实际前缀 $K(t_0+jh)$、$0\le j\le2k+2$，即 $2k+3$ 个不同时间的响应矩阵；它与下一 Gram 块的诊断没有取得优势。一般事件块 $\mathsf H_k(t_0+t)$ 还要求从该实际事件起至 $t_0+t+2kh$ 的 $2k+1$ 个响应矩阵，除非它们已经合法取得。分数幂公式不能将没有取得的非整数时刻响应直接当作已知数据。
+
+取得的必须是同一实际核 $Be^{-tC}B^*$：指定输入方向、伴随准备、输出内积、来源与参考、共同年龄、增益和延迟一致。未知自由轨迹 $Be^{-tC}x_0$ 不自动供应这个完整核；重复准备、测量扰动及定时等价按 Context40 假设40.18另证。相同局部数字标签不保证真实加性延迟，$F_{(t_0)}$ 这个证明因子也不授权新的实际准备。
+
+本节的误差是同一实际模型中压缩响应相对于幂半群的偏差，不是测量误差。$\delta$ 使用真实 $W(2h)-W(h)^2$ 或其已认证上界；真实 $\tau$ 可由精确基准及锚数据计算，而经验估计仍需真实正下界。不得把带噪矩阵的近零残差、拟合的一致性或阈值秩当成精确饱和。需要叠加数据误差时，Context40 定理40.8只在其同一实际支撑、Gram、对数及锚裕量条件下供应统计量稳定性；第40.6节要求所有重复条目保留同一个联合误差事件，不擅自宣布独立。支撑变化、置信概率和样本预算不由本节供应。
+
+完整档案 $C_{\rm archive}$ 始终保留。固定 $t_0,k$ 的矩阵比值只是一个任务读数，不是整个观察者的新定义；档案扩展导致接口或历史阶数改变时，要另证跨接口运输。存储、输入方向、矩阵与标量读取、重复准备、等待、来源和校准认证、数值精度及计算成本仍分别计账。
+
+### 44.12 固定供应者与推导的归属边界
+
+本节项目引用均可在不可变提交 `a492391be5b09240e6be894c3e742a75a945feb1` 下按以下路径和声明编号定位；编号是主地址，行号只说明该快照的位置。表中的“恢复卷”是 [RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)，“主卷”是 [RECURSIVE_RELATIONAL_OBSERVATION.md](RECURSIVE_RELATIONAL_OBSERVATION.md)。这些供应各保留原有证明归属。
+
+| 44.12供应 | 实际使用和不迁移的结论 |
+|---|---|
+| 44.12a `D5/S3/Observer/Approximation/IntertwiningDefectPropagation.lean`，`intertwining_defect_telescope`、`uniform_norm_intertwining_defect_le` | 一般交织展开及 $nb^{n-1}\sqrt\delta$ 单侧算子范数界；没有直接供应本节两次跨越的二次泄漏。 |
+| 44.12b 本卷定义40.1、引理40.2，7183、7211；定理40.3、40.4，7240、7258 | 完整已获档案、实际有限实正伴随来源、Gram 因子化、共同支撑、有效循环空间和真实饱和后精确相对间隔；不以拟合存在认证来源。 |
+| 44.12c 本卷命题40.6、推论40.7，7326、7375 | 移位投影、倍时残差平方、实际生成历史的零缺陷当且仅当饱和、严格迹对数诊断。一般余等距与实际循环模型的等号前提不同。 |
+| 44.12d 恢复卷定理13.4，2340，式(13.10)及2370起证明 | 残差平方的精确代入：该供应历史阶数零，隐藏空间 $\mathcal R$，边界 $E_k$，$J=V=F_{(t_0)}^*$，Gram 为 $I$；不移入初态 minimax 或新准备许可。 |
+| 44.12e 主卷定理137.13，52697、尤其52732任一实际实现证明 | 在阶数一、三个实际矩 $I,A,W(2h)$ 上，Schur 合同与真实平坦给不变性；抽象可行数组不是实际延迟历史。 |
+| 44.12f 恢复卷命题10.6，1545 | 正自伴采样算子的唯一实自伴对数，及有限压缩前缀不等于整个算子的边界；用有效循环跨度接回饱和。 |
+| 44.12g 主卷定理128.5在第128.4节的证明，48674、48691 | 半正定增量行列式为 $\prod_i(1+\lambda_i)$、等于一恰当增量零；不移入 Gaussian、熵或互信息解释。 |
+| 44.12h 恢复卷11.1—11.4，1590起 | 既有 Krylov／多项式响应逼近及共同谱下的全时间保证；本节是指定压缩 $A=FSF^*$ 的残差消费者。 |
+| 44.12i 恢复卷式(12.7)、定理12.3，1965起、2003及2048起对数步骤 | 双特征基函数差、生成元、Duhamel 与长期扰动；原界为 Frobenius 范数。本节算子范数对数界由 resolvent 另证。 |
+| 44.12j 恢复卷定理12.4，2074 | 额外真实 Gram／投影裕量下的秩与正交对齐，不能由 $\delta$ 小替代。 |
+| 44.12k 主卷命题137.15、137.17、137.18，52765、52802、52814 | 精确秩不连续、弱输入不足和无共同衰减的全时间障碍；本节反例各针对所显示的目标。 |
+| 44.12l 本卷定理12.6，1441 | 连续交织 Duhamel 方法的量子通道／diamond 范数版本，不是本节算子范数结论。 |
+| 44.12m 本卷定理40.8，7401；命题40.17、假设40.18、约定40.19，7653起 | 共同支撑及指定 Gram、对数和锚裕量下的正事件统计、实际矩阵计数、来源校准、共享联合误差与费用。本节直接比值证明另覆盖零事件。 |
+| 44.12n 恢复卷第29节，5564起 | 给定初始化和速度条件下的静态 Schur 补轨迹比较；其生成元不是 $G=-h^{-1}\log(FSF^*)$。 |
+| 44.12o [PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md](PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md)，PM6、PM7，2999、3030 | 形式级数响应／记忆反演和有限前缀运输；对象、拓扑及收敛条件不同，不供应谱分数幂。 |
+
+`D5/S3/Observer/BlockStructure/UniformResolventRemainder.lean` 的 `inverse_control_of_lower_bound` 对有限指标实对称 $M\succeq cI,c>0$ 给可逆及真实 Euclidean 算子范数 $\|M^{-1}\|\le c^{-1}$；它不直接覆盖复压缩。`perturbed_lower_bound`、`inverse_bounds` 要求 $M\succeq2I$、实对称 $E$、$\|E\|\le1$，给 $M+E\succeq I$ 和两逆范数界。`remainder_bound` 在这些条件下给
+$$\|M^{-1}EM^{-1}E(M+E)^{-1}\|\le\|E\|^2/4.$$
+该五因子估计不包含余等距压缩、首阶消去、压缩余项正性或 Beta 常数。
+
+Mathlib 使用 `lake-manifest.json` 钉定的 `db584cd6d46c92f209a44c0f1c829460d327499d`。路径 `Mathlib/Analysis/SpecialFunctions/ContinuousFunctionalCalculus/Rpow/IntegralRepresentation.lean` 的 `CFC.exists_measure_nnrpow_eq_integral_cfcₙ_rpowIntegrand₀₁`（481）与 `CFC.exists_measure_nnrpow_eq_integral_cfcₙ_rpowIntegrand₁₂`（525），分别在 $0<p<1$ 和 $1<p<2$ 的相应完备有序实非幺连续函数演算接口中，存在量化一个测度并给表示及可积性。公开陈述不直接给本节的正弦归一化，其内部由正标量积分的倒数构造常数。`Order.lean` 的 `CFC.concaveOn_rpow`（150）对 $p\in[0,1]$ 给有序 star-ordered C* 代数上凸组合的算子凹性，仍需有限矩形压缩桥和函数演算运输；该版本未提供 $(1,2)$ 段算子凸性声明，积分表示不冒充该声明。实 CFC 标量域也不自动解决具体实／复矩阵接口的全部实例条件。
+
+本节把上述既有来源的适用关系与完整积分推导连接起来，供应者与例子的作用范围仅限所列数学条件；它们不扩大本节结论。其未解决范围包括实际源谱地板、真实共同支撑和精度的实验认证，变化接口的运输，带噪精确饱和、隐藏态恢复、完整档案上的 minimax 不可识别、置信概率和样本预算；这些都未由所列条件定理消除。未知非线性钟、无参考准备原点、未取得事件、无限时间精确时钟或物理时空身份也不由本节推出。
+
+## 44.99 追加锚
