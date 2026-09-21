@@ -2,6 +2,7 @@
   "schema_version": 1,
   "report_cache_release_semantic_version": 9,
   "report_execution": {
+    "toolchain": "lean-toolchain",
     "tools": ["lake", "lean"],
     "platform": ["system", "machine"],
     "environment": ["LEAN_PATH", "LEAN_SRC_PATH", "LEAN_SYSROOT", "ELAN_TOOLCHAIN", "LEAN_OPTS"]

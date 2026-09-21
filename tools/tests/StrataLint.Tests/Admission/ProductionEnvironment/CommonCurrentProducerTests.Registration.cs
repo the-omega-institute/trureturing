@@ -29,7 +29,14 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
 
         Assert.Equal(malformed ? 1 : 0, result.Exit);
         Assert.Contains($"markdown: judged=2 formula(s)=2 red={(malformed ? 1 : 0)}", result.Log, StringComparison.Ordinal);
-        if (malformed) Assert.Contains("Double subscript", result.Log, StringComparison.Ordinal);
+        if (malformed)
+        {
+            Assert.Contains("Double subscript", result.Log, StringComparison.Ordinal);
+            Assert.Contains("Double subscript", result.Error, StringComparison.Ordinal);
+            Assert.DoesNotContain("INFRASTRUCTURE_FAILURE", result.Error, StringComparison.Ordinal);
+            Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.ChecksPath("current"))));
+            Assert.ThrowsAny<IOException>(() => CommonExecutionEvidence.ExportCheckSeed(fixture.Root, "current", TextWriter.Null));
+        }
     }
 
     [Fact]
@@ -229,7 +236,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             return (CommonExecutionEvidence.ValidateChecks(Root, "current", build,
                 ["filemap", "scribe-describe", "scribe-markdown", "scribe-projections"]), error);
         }
-        internal (int Exit, string Log) RunMarkdown()
+        internal (int Exit, string Log, string Error) RunMarkdown()
         {
             Git("add", ".");
             Write("build/ci/fixture.log", "fixture build");
@@ -240,7 +247,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             var log = Assert.Single(Directory.GetFiles(Path.Combine(Root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories));
             var text = File.ReadAllText(log);
             output.WriteLine($"exit={result.ExitCode}\n{text}{Encoding.UTF8.GetString(result.StandardError)}");
-            return (result.ExitCode, text);
+            return (result.ExitCode, text, Encoding.UTF8.GetString(result.StandardError));
         }
         internal void Seed(CommonCheckRecord record)
         {
@@ -293,7 +300,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
                                 args.Length > 2 ? args[2..] : ["filemap", "scribe-describe", "scribe-markdown", "scribe-projections"]);
                             Console.Write(result.Output); Console.Error.Write(result.Error); return result.ExitCode;
                         }
-                        catch (InvalidDataException exception) { Console.Error.WriteLine(exception.Message); return 1; }
+                        catch (Exception exception) { Console.Error.WriteLine("INFRASTRUCTURE_FAILURE " + exception.Message); return 2; }
                     }
                 }
             }

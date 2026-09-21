@@ -28,5 +28,5 @@ run_cmd do
         counts.catalog.arenaName `ArenaBinding
       pure ({ counts, projection, analysis, layerChains := layers : AnalysisCatalogRecord },
         root.str "__system_catalog_irredundant") : ProjectionM _).run #[]
-  for declaration in declarations do liftCoreM <| addDecl declaration
+  setEnv (← liftCoreM <| stageDeclarations (← getEnv) declarations)
   let _ ← liftTermElabM <| serializeAnalysisArtifact root #[record] system
