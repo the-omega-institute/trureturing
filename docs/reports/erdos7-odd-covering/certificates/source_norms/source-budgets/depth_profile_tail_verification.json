@@ -2,11 +2,11 @@
   "scope": "Independent exact directed audit of this fixed154 head with uniform extra digits; arbitrary finite head exponents in original tail cofactors are covered by the geometric auxiliary domination.",
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "4aa3391affb81fc982b96fbe592309dba952073dda3a0be11c5cae32cbdb7961",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "fa0d5aeec7361c9f1578fcc80958d1aa8d8937e26ac5d968a822155317e2d012",
     "frontier/source-budgets/depth_profile_head_input.json": "3c0f4a5def0872b6c25cc2076f3e563f5983332ef94bdf5d0f96a2a3a11915a2",
-    "frontier/source-budgets/depth_profile_tail_budget.py": "4bc5af1d74d2eb72f12d8181e65d3ededc2370a4f1c22c452d0bc83d0a66045c",
-    "certificates/source_norms/source-budgets/depth_cap_bellman.json": "54450ec5f16d8b81e703cbba1d77381702e96a4523fdc4b835d3152e0e964501",
-    "certificates/source_norms/source-budgets/depth_profile_tail_budget.json": "04d9e8911bf7bdd74c3af20f6d930362d73764c1bde4ae24614d3fdd1d56f108"
+    "frontier/source-budgets/depth_profile_tail_budget.py": "5b453462c8a85e5c01892fa70f5b3146789e630633586ecc249c6466cf4baf7a",
+    "certificates/source_norms/source-budgets/depth_cap_bellman.json": "672901ed5e6f8f43d93ee34221d058594fcbb4159b4a1bc4e5b461addb305f42",
+    "certificates/source_norms/source-budgets/depth_profile_tail_budget.json": "72a719a09c8175511f1f541565c32df4948749a599dea27cbaec45d7102c6efe"
   },
   "verifier_sha256": "59048aa8bb390f03013d526ae18920b6a10948e41f9508aa114f020510a3c70a",
   "finite_head_atomic_laws_checked": 20,
