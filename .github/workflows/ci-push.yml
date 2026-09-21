@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.CANDIDATE_SHA }}
-          fetch-depth: 2
+          fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 1 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
       - uses: actions/download-artifact@v4
@@ -149,7 +149,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.CANDIDATE_SHA }}
-          fetch-depth: 2
+          fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 1 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
       - uses: actions/download-artifact@v4
@@ -261,7 +261,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.CANDIDATE_SHA }}
-          fetch-depth: 2
+          fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 1 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
       - id: cache_window
@@ -345,7 +345,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.CANDIDATE_SHA }}
-          fetch-depth: 2
+          fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 1 }}
           persist-credentials: false
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
       - uses: actions/download-artifact@v4

@@ -180,7 +180,7 @@ runtime_disposition = "committed-source"
                 result = invoke("resolve", "--head", head)
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 outputs = dict(line.split("=", 1) for line in (root / "outputs").read_text().splitlines())
-                self.assertEqual({"candidate_sha": merge, "base_sha": base}, outputs)
+                self.assertEqual({"candidate_sha": merge, "base_sha": base, "work_required": "false"}, outputs)
                 self.assertEqual("", git("remote").stdout.strip())
                 self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
                 self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
@@ -360,6 +360,74 @@ runtime_disposition = "committed-source"
             result = self.run_tool(CI, "checkout", "--commit", commit, env=dict(self.env,
                 CI_WORKFLOW_INPUTS=json.dumps(inputs)))
             self.assertEqual(0, result.returncode, result.stderr)
+
+    def test_native_checkout_fetches_only_fixed_before_from_shallow_clone(self):
+        """Checkout preparation acquires a non-adjacent event endpoint once."""
+        source = self.root / "push-source"
+        target = self.root / "push-target"
+        source.mkdir()
+
+        def git(directory, *args, check=True):
+            result = subprocess.run(["git", "-C", str(directory), *args],
+                                    check=check, capture_output=True, text=True)
+            return result.stdout.strip()
+
+        git(source, "init", "-q")
+        git(source, "config", "user.name", "Fixture")
+        git(source, "config", "user.email", "fixture@example.invalid")
+        (source / "tracked.txt").write_text("before\n")
+        git(source, "add", "tracked.txt")
+        git(source, "commit", "-qm", "before")
+        before = git(source, "rev-parse", "HEAD")
+        (source / "tracked.txt").write_text("middle\n")
+        git(source, "commit", "-qam", "middle")
+        (source / "tracked.txt").write_text("after\n")
+        git(source, "commit", "-qam", "after")
+        after = git(source, "rev-parse", "HEAD")
+
+        subprocess.run(["git", "-c", "protocol.file.allow=always", "clone", "-q", "--no-tags",
+                        "--depth=1", f"file://{source}", str(target)], check=True,
+                       capture_output=True, text=True)
+        git(target, "checkout", "-q", "--detach", after)
+        event = self.root / "push-event.json"
+        event.write_text(json.dumps({"before": before, "after": after}))
+        environment = dict(self.env, GITHUB_EVENT_PATH=str(event),
+                           GITHUB_OUTPUT=str(self.root / "push-outputs"), CI_WORKFLOW_INPUTS="")
+
+        def invoke(*arguments):
+            return subprocess.run([sys.executable, str(CI), *arguments, "--repository", str(target)],
+                                  env=environment, capture_output=True, text=True)
+
+        result = invoke("checkout", "--commit", after)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual("", git(target, "remote"))
+        self.assertEqual("commit", git(target, "cat-file", "-t", before))
+        self.assertEqual("true", git(target, "rev-parse", "--is-shallow-repository"))
+        self.assertEqual("1", git(target, "rev-list", "--count", "HEAD"))
+
+        sys.path.insert(0, str(REPO / "tools/scripts/workflow"))
+        planner = importlib.import_module("ci_plan")
+        scope = planner.push_paths(target, after, before, after)
+        self.assertEqual("event-range", scope["origin"]["kind"])
+        self.assertEqual(["tracked.txt"], [row["new"]["path"] for row in scope["changes"]])
+
+        mismatch = self.root / "push-mismatch.json"
+        mismatch.write_text(json.dumps({"before": before, "after": before}))
+        mismatch_environment = dict(environment, GITHUB_EVENT_PATH=str(mismatch))
+        failed = subprocess.run([sys.executable, str(CI), "checkout", "--commit", after,
+                                 "--repository", str(target)], env=mismatch_environment,
+                                capture_output=True, text=True)
+        self.assertEqual(2, failed.returncode)
+        self.assertIn("push event after does not match checked-out candidate", failed.stderr)
+
+        missing = self.root / "push-missing.json"
+        missing.write_text(json.dumps({"after": after}))
+        missing_environment = dict(environment, GITHUB_EVENT_PATH=str(missing))
+        failed = subprocess.run([sys.executable, str(CI), "checkout", "--commit", after,
+                                 "--repository", str(target)], env=missing_environment,
+                                capture_output=True, text=True)
+        self.assertEqual(2, failed.returncode)
+        self.assertIn("push event endpoint must be a 40-hex object identity", failed.stderr)
 
     def seed(self):
         (self.root / ".lake/build/lib").mkdir(parents=True)
