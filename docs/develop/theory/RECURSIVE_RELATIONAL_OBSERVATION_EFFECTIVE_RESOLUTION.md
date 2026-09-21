@@ -1567,7 +1567,7 @@ $$
 
 $$
 L_0=1,\qquad L_n=\operatorname{lcm}(m_1,\ldots,m_n),\qquad
-H_n=\{h\in\mathbb Z/L_n\mathbb Z:\ 
+H_n=\{h\in\mathbb Z/L_n\mathbb Z:\;
  h\not\equiv a_i\pmod{m_i}\ (1\le i\le n)\}.
 \tag{TM.467}
 $$
