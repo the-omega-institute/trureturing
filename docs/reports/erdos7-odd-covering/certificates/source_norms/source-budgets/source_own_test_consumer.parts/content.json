@@ -75,7 +75,7 @@
   },
   "reweighted_full_haar_chain": {
     "path": "content/008-reweighted_full_haar_chain.json",
-    "sha256": "f700ddab306bd91ce63f287c25482ff104b7417924b33b18fa73b50f1c2d9930",
+    "sha256": "bd535986cecac99529e9c675798d41b6a5fcadd14f23d5293c2cdbd9d1e3c28f",
     "kind": "object"
   },
   "schema": {
@@ -89,7 +89,7 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "74dcca946d95e6946d8762a87b0c6a7494943043c1040ba27bff2da507b54e80",
+      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "e78281e166b31d18734fd617c695476e252bb1d2ddee1434740d331cca106408",
       "profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md": "fdc8db8e2751dd88d137fd28a00be09674e0cebc402a00609a0e57297cdc01f0",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
@@ -101,19 +101,19 @@
       "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "96d49d247d1c4a74822711cfa062d165696884eb9f493eb4959c3816054de685",
       "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "95766e51dc23a35756d3899a69b491e9dc573a77481119f07fd7d6f2b6fa8470",
       "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "ff5183667b74b2d7d297a8aa686b200d696e439b3a469395a4fe69c60c80845d",
-      "frontier/source-budgets/source_mean_sharpness.py": "3e38bf29b30b653c76df444e00bcff72051771b6eb3aa38675ad7e3c1f271d49"
+      "frontier/source-budgets/source_mean_sharpness.py": "94dc458c34a7782f3966394c3d51d023490f3561cb9092437e6a46e9f62c13d2"
     }
   },
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "06421dbd2f5cc25b791375315023e8dfbc4313e738adcfb44e9b0a3b5b4ad1e1",
-      "byte_count": 49217
+      "sha256": "3d77656ef2b90f338a1f34d3d85797ec7f9eda603251ac5f55d0327f6cd8905b",
+      "byte_count": 73369
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "7de19e0e36fb3e2bdad51654d0de04605c3bb6ae690c894a9a3a40785c68d4f1"
+    "value": "7be89ec1c53aa201d80ebeaffb563bbaf9bb02990546bf297f51bd22950c5d40"
   },
   "source_weights": {
     "kind": "inline",

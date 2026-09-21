@@ -109,5 +109,20 @@
   "limit_gap": {
     "kind": "inline",
     "value": "206267076472636594/698388571240919384765625"
+  },
+  "pair_envelope_gaps": {
+    "path": "content/007-results/000001/item/014-pair_envelope_gaps.json",
+    "sha256": "1bd834ce9223327c0d553c4c350e4bf8d23282f481be77716a370666fd896fa8",
+    "kind": "value"
+  },
+  "unit_refund_geometry": {
+    "path": "content/007-results/000001/item/015-unit_refund_geometry.json",
+    "sha256": "21b16e855b290d341f3964f5a9132065584907f78ddd176ab9ea9abc2de45653",
+    "kind": "value"
+  },
+  "six_label_geometry": {
+    "path": "content/007-results/000001/item/016-six_label_geometry.json",
+    "sha256": "81361c7e67cceee1aa7a04e5c2ee3446a015b55d916237041bcde8281f14f828",
+    "kind": "value"
   }
 }
