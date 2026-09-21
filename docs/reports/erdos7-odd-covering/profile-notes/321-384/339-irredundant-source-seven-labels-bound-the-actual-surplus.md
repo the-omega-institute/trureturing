@@ -536,3 +536,214 @@ From the repository root, replay with
 The producer pins its inputs, ordinary proof and own bytes. These finite
 exact checks do not machine-prove the ordinary source domination or
 unbounded exponent arguments. No new Lean result is asserted.
+
+## The complete source mean has the sharp near-J limit38/63
+
+For the actual-source interface above, the best uniform complete nonunit mean tends to38/63 as the qJ neighborhood shrinks to1. The upper bound applies to arbitrary finite own tests; a new sequence of finite irredundant sources and one finite complete test on each supplies the matching lower limit. This is an ordinary asymptotic sharpness theorem.
+
+### Uniform upper bound with any number of forced layers
+
+Let one actual finite distinct-odd original family have no original AP contained in another, an original numerical modulus7, and its own effective9 source with qJ>=1-delta. Retain exactly report339's unnormalized mu, Lambda, normalized pure7 law nu7, and complete original357 own tests L, whose unit is1. For integer K>=5 assume
+
+    0<=delta<=1/4000, delta<6/7^K.
+
+The carrier concentration forces all original3*7^e and9*7^e, e<=K, to have the same old root A and cell B subset A. Replace5 byK in339's disjointness argument. The same pure7 normalization and complete remainder x<=1/42 give
+
+    mu35<=w_K Lambda,
+    w_K=1-a_K1_A-b1_B,
+    a_K=(6-7^(1-K))/35, b=6/35.
+
+Every remaining original7 height is retained. The K selected layers only prove a lower deletion bound; this is not a depth truncation of the original family or own tests.
+
+At each of the existing nine whole-face vertices, the weighted35 complete nonunit cap in339(IR14) is
+
+    Cw_K=17/36-a_K/12-b/36
+         =571/1260+7^(1-K)/420.
+
+To check the max terms: R(wn)=1/8, max(wn)=1/18, max(wd)=(3/4)(1-a_K), sum(w eta)=1/2-a_K/6-b/9, R(w eta)=1/3, max(w eta)=1/9 and max(w)=1. Beta and late may occupy the same or different root1 cells; at least one of the three cells is free of both, attaining the displayed unweighted maximum. The root0 candidates are no larger for K>=5. More explicitly, write x=7^(1-K) in[0,7^-4]. Each candidate difference from the displayed dominant value is affine in x. At x=0 and x=7^-4 the inequalities hold for all nine vertices, so affine interpolation proves them throughout this interval. The root1 root sum, a cell free of both beta and late, and the root0 availability supply the claimed attaining candidates.
+
+Apply the same nonnegative WF comparison to this weighted cap, and the unchanged positive7 cap(s+C)/5 from339. On the same actual source,
+
+    integral(L-1)dmu
+      <=(1+7delta)[571/1260+7^(1-K)/420]+3/20+13delta/40.  (U)
+
+Consequently, for sequences of such families with delta->0 and any own tests, limsup integral(L-1)dmu<=38/63. All periods remain finite but may grow. When delta>0, choose K to be the largest integer with delta<6/7^K; for sufficiently small delta it is at least5 and tends to infinity. If delta=0, the same bound holds for every K and one lets K tend to infinity. No finite family with qJ exactly1 is required for the limiting assertion.
+
+### One actual family and one complete test attain the limiting constant
+
+The new family F_N has the same numerical modulus inventory as the earlier benchmark, with the following different residues. For each N>=3 let primes be3,5,7, all original exponents bounded byN. Specify actual CRT residues as follows; unspecified coordinates are absent from that modulus.
+
+* Pure3^a: residue2 for a=1,6 for a=2,3^(a-1) for a>=3.
+* Pure5^b: residue5^(b-1).
+* Original3*5^b: old3 residue1, old5 residue2*5^(b-1).
+* Original9*5^b: old3 residue1, old5 residue3*5^(b-1).
+* Original3^a*5^b, a>=3: old3 residue7+3^(a-1), old5 residue3*5^(b-1).
+* Pure7: residue6. Pure7^e, e>=2: residue1+7^(e-1).
+* P1, original3*7: old3 residue0, old7 residue1. P_e, original3*7^e,e>=2: old3 residue0, old7 residue2+7^(e-1).
+* Q1, original9*7: old3 residue3, old7 residue2. Q_e, original9*7^e,e>=2: old3 residue3, old7 residue3*7^(e-1).
+
+There are N^2+5N original moduli, all distinct and odd. The coordinates(4,4,4) avoid all originals, so these are explicit noncovers. Noncoverage does not detract from their role as actual sources attaining the uniform mean limit.
+
+Actual irredundancy can be verified uniformly: use seven coordinate4 for every raw35 label, and five coordinate4 for every pure3 or seven-ending label. The mixed35 rectangles are mutually disjoint and miss every pure3/pure5 AP, by their first-exit3/5 patterns. A pure3 label is private at its own residue with five4/seven4; a pure5 label is private at three4, its own residue, seven4. Each mixed35 label is private at its own two residues/seven4. A pure7 label is private at three4/five4 and its own seven residue. P_e is private at three0/five4/its own seven residue; Q_e at three3/five4/its own seven residue. The original7 pure classes are mutually disjoint. Deeper P_e lie in Q1's seven cylinder but their private three coordinate0 avoids Q1's old cell; deeper pure7 lie in P1's seven cylinder but their private three coordinate4 avoids P1's old root. These are actual private integers by finite CRT, not just numerical noncontainment.
+
+Put
+
+    t=sum_(a=3..N)3^-a, q=sum_(b=1..N)5^-b,
+    r=sum_(e=1..N)7^-e, z=1-q, u=1-r,
+    a=1/(7u), wA=1-a, wB=1-2a.
+
+For the five surviving mod9 cells(0,3,1,4,7), the actual pure3 masses are
+
+    eta=(1/9-t,1/9,1/9,1/9,1/9),
+
+Here n_j denotes the literal residue j modulo9, with nB denoting residue3. The raw35 masses are
+
+    n0=z(1/9-t), nB=z/9,
+    n1=(1-3q)/9, n4=(1-2q)/9,
+    n7=(1-2q)/9-tq.
+
+In particular s=sum n=5/9-t-q and R=n1+n4+n7=1/3-7q/9-tq. This has alpha concentrated at root1, beta at cell1 and late at cell7, with late mass tq. Its actual source concentration is
+
+    qJ=(18t)^2(4q)^4(1-7^-N) ->1.
+
+The pure7 deeper tail has width r-1/7 and lies within P1. The P_e,e>=2, are disjoint and lie within Q1. The Q_e are mutually disjoint and all miss P1. Thus the mixed7 union deletes exactly width1/7 from A minus B after pure7 removal and exactly2/7 from B. Therefore on the actual normalized pure7 source,
+
+    mu35=wA Lambda|_(A minus B)+wB Lambda|_B+Lambda|_(A complement).
+
+There is also an entirely untouched seven root4. The latter identity is about the old35 marginal; no domination of the full joint source by this marginal weight is asserted.
+
+Choose a single complete own test L_N on divisors3^i5^j7^k,0<=i,j,k<=N, as follows.
+
+For k=0: at j=0 use three residue1 when i=1,4 when i=2,18 when i>=3. At every j>=1 use five residue4, and use three residue1 if i=1,4 if i>=2 (no three condition if i=0). Include the unit exactly once.
+
+For k>=1 always use seven residue4; use the same raw35 tests except at i=2,j=0, where use three residue3. Each divisor chooses one fixed own-test residue; the test APs are auxiliary observations and are not claimed to belong to the original forbidden family.
+
+The five cylinder4 misses every original pure5 and mixed35 condition. Three cylinder18 at depth>=3 misses all original pure3 and mixed35 conditions, lies in A minus B, and has Haar mass3^-i. Three cylinder4 at depth>=2 is free of all pure3 conditions and lies outside A. These facts give the exact finite k=0 nonunit mean
+
+    V0_N=R+n4+wA*z*t
+            +q*[wA(1/9-t)+wB/9+1/3+1/3+1/9+t].       (L0)
+
+The raw35 test used when k>=1 has exact nonunit mean
+
+    C_N=R+z/9+z*t+q.
+
+Seven root4 is entirely free, so the full positive7 mean of this same complete test is exactly
+
+    Vplus_N=(r/u)(s+C_N).                               (L+)
+
+Thus integral(L_N-1)dmu=V0_N+Vplus_N. As N->infinity,
+
+    t->1/18, q->1/4, r->1/6, u->5/6,
+    wA->29/35, wB->23/35,
+    V0_N->571/1260, C_N->1/2, s->1/4,
+    Vplus_N->3/20,
+    integral(L_N-1)dmu->38/63.                          (L)
+
+Together(U) and(L) prove the sharp limiting uniform complete nonunit mean for this near-J, original7, noncontained source interface. The test remains finite at each N. The theorem says that no uniform mean constant strictly below38/63 can hold throughout sufficiently small positive qJ neighborhoods. It does not claim a finite extremizer, sharpness of nonlinear hinge costs, sharpness at fixed delta=1/4000, or a contradiction to an odd covering family. Any further continuation argument needing a smaller limiting scalar must strengthen the source hypotheses or use information beyond this uniform complete mean.
+
+### Exact finite verification
+
+The [sharpness producer](../../frontier/source-budgets/source_mean_sharpness.py)
+and its [canonical certificate](../../certificates/source_norms/source-budgets/source_mean_sharpness.json)
+retain the original CRT classes and a private integer for every class,
+the actual old35 and seven partitions, every selected old35 test
+integral, all finite positive7 test cylinders, and the exact comparison
+with(L0)--(L+). The certificate also retains the eighteen endpoint
+vertices that verify the affine max comparisons in(U). No search or
+finite optimizer claim is part of this result.
+
+| N | Original classes | Private membership checks | Finite complete nonunit mean |
+| --- | ---: | ---: | ---: |
+| 3 | 24 | 576 | 0.5974545454545454... |
+| 12 | 204 | 41616 | 0.6031743078274497... |
+| 24 | 696 | 484416 | 0.6031746031740468... |
+
+The N=3 check verifies the same exact construction outside the small-delta
+guard. At N=12 the actual parameters satisfy
+`delta=0.0000338863445098...` and `rho=0.0642857815054542...`;
+this new finite source is also inside(IR7). These finite checks support
+the explicit formulas; the uniform upper and the limit are established
+by the preceding arbitrary-K and arbitrary-N arguments.
+
+From the repository root, replay with
+
+    python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/source-budgets/source_mean_sharpness.py --check
+
+The exact fractions in the certificate govern the displayed decimals.
+The source family and test are finite for each N, and the test contains
+exactly one class for each divisor of105^N, including its unit once.
+The theorem concerns the asymptotic uniform complete mean; fixed-delta
+optimality, nonlinear hinge sharpness and unrestricted Erdős#7 remain
+unresolved. No new Lean result is asserted.
+
+## The direct square allocation cannot continue through the scalar recurrence
+
+This is a numerical consumption of the existing source/operator and killed-unit interfaces, not a new generic transfer theorem. It concerns the same fixed(3,4)full-Haar head as339. All original powers and independent own-test residues remain.
+
+Let phi(v)=v^2-1. In339(IR10)--(IR12), replace h_t by phi. The zero7 centered comparison is(6/5)phi, so the modified cell costs are kappa_l phi, kappa_l=6/5-zeta_l. For these costs42(A2) has q_(n,l)=n f_l, bar f_l=f_l/4, complete ternary-depth increment kappa_l(b_l+1)/9, and positive5 coefficients7/8 and5/8. Hence its exact modified zero7 contribution is
+
+    P=max_b[sum_l eta_l*kappa_l*(b_l^2-1)+max_l kappa_l*(b_l+1)/9],
+    F=max_b[sum_l kappa_l*(n_l+eta_l/4)*(b_l^2-1)
+                +max_l kappa_l*(d_l+1/4)*(b_l+1)/9]
+           +(7/8)sum_l eta_l*kappa_l+(5/8)P.
+
+All sums converge as polynomial times geometric tails. Retain the unchanged explicit positive7 complement. On each of the nine containing source vertices the resulting centered-square cost is304687/57624, versus the old263/48. The same positive WF transport gives
+
+    integral(L^2-1)dmu <= M2=1220880809/230496000.
+
+The two head square factors are51/35 and67/48, with product J2=1139/560. Let z be the actual unnormalized through13 survivor mass and E(S)=eS-D as339. Before head killing the full square integral is at most J2(M2+S). Every complete test is at least1 on the actual head-deleted set of mass S-z. Subtract that unit square before the sole normalization, giving the allocated upper
+
+    Gamma13<=1+[J2*M2+(J2-1)S]/z
+            <=g(S):=1+[J2*M2+(J2-1)S]/(eS-D).
+
+This is decreasing in S on E(S)>0. From339(IR2),(IR8) and s<=1/4+delta0/2,
+
+    S<=1/4+delta0/2-a(1/8-delta0/12)-b(1/12-delta0/9)
+      =123557689/576240000=:Smax,
+    g(S)>=g(Smax)=334490138381673633/3923164203788188>85.
+
+The lower bound here is on the allocated upper-bound formula g, NOT on actual Gamma13. Replacing g by a smaller valid bound would be a different method.
+
+Combine the [unit refund in327](327-actual-two-prime-survival-needs-a-masked-moment.md)
+with the [arbitrary-head transfer](../../problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md).
+Without an additional masked deficit, this scalar procedure assigns
+
+    R_p(F,d)=F[d(1+a_p-d)-b_p]/[d(1-d)-b_p F],
+    a_p=(3p-1)/(p-1)^2, b_p=1/[4(p-1)^2], 0<d<1,
+
+with strictly positive denominator. To derive it, start from a normalized
+old-survivor law with Gamma<=F. The full kernel gives
+`G=(1+a_p/(1-d))*F`; its actual deleted mass ell is at most
+`q=b_p*F/[d(1-d)]`. Every complete test has unit at least1, so conditioning
+on actual survivors gives at most `(G-ell)/(1-ell)`. Since G>=1, this
+ratio increases with ell, and replacing ell by q in both places gives
+R_p when q<1. The same actual deleted mass is thus used in numerator and
+denominator before its bound is inserted. For fixed d this is increasing in F on its legal domain: writing v=d(1-d),u=v+a_p d-b_p, the difference at F2>=F1 is
+
+    u*v*(F2-F1)/[(v-b_pF2)(v-b_pF1)]>=0.
+
+Here u>0 because v>b_pF2>=b_p. If F2 is legal then every1<=F1<=F2 is legal, so the comparison also holds when thresholds are selected adaptively from previous scalar bounds.
+
+For any proposed input f and output lower k>f, the inequality R_p(f,d)>k follows on every legal d if
+
+    (k-f)d^2+(f-k+a_p f)d+b_p f(k-1)>0.
+
+Three exact all-real quadratic certificates are:
+
+| p | f | k | 4AC-B^2 |
+|---|---:|---:|---:|
+|17|85|171|625111/16384|
+|19|171|480|8981/324|
+|23|480|1000|4544192000/14641|
+
+Each leading coefficient A=k-f and each displayed slack is positive, proving positivity without a numerical threshold grid. Thus every choice of legal later clipping parameters from this allocated seed has scalar bound above1000 after23, if it has not already lost its positive denominator. At29, legality requires F<(29-1)^2=784 since d(1-d)<=1/4. It therefore cannot continue.
+
+This rejects the direct weighted square allocation followed by this scalar majorant, even with its unit refund and arbitrary later thresholds. It says nothing negative about actual surviving mass, improved nonlinear or masked estimates, another initial law, another head, or the unrestricted odd-covering problem. In particular it does not invalidate339's positive through37 hinge certificate, which carries a richer state.
+
+The [sharpness and scalar-boundary producer](../../frontier/source-budgets/source_mean_sharpness.py)
+replays the quadratic source operator, its unchanged complement, the
+complete head multiplier and all three completed-square identities.
+Their exact data share the [same canonical certificate](../../certificates/source_norms/source-budgets/source_mean_sharpness.json)
+as the limiting-mean theorem above. The common report and one producer
+retain the mathematical results and exact checks without a separate
+search transcript.

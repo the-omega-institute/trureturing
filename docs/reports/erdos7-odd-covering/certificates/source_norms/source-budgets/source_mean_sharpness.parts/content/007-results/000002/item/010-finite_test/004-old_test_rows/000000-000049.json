@@ -1,0 +1,786 @@
+[
+  {
+    "old_exponents": [
+      0,
+      0
+    ],
+    "zero7_residues": [
+      0,
+      0
+    ],
+    "positive7_old_residues": [
+      0,
+      0
+    ],
+    "zero7_mass": "63990078248748388606207674856947155940293368072/298620365158675909762951395965158939361572265625",
+    "positive7_raw35_mass": "4208528049036860536610802089/16834112196028232574462890625"
+  },
+  {
+    "old_exponents": [
+      0,
+      1
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/8350030613776633353482573946015",
+    "positive7_raw35_mass": "141214768241/1412147682405"
+  },
+  {
+    "old_exponents": [
+      0,
+      2
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/41750153068883166767412869730075",
+    "positive7_raw35_mass": "141214768241/7060738412025"
+  },
+  {
+    "old_exponents": [
+      0,
+      3
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/208750765344415833837064348650375",
+    "positive7_raw35_mass": "141214768241/35303692060125"
+  },
+  {
+    "old_exponents": [
+      0,
+      4
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/1043753826722079169185321743251875",
+    "positive7_raw35_mass": "141214768241/176518460300625"
+  },
+  {
+    "old_exponents": [
+      0,
+      5
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/5218769133610395845926608716259375",
+    "positive7_raw35_mass": "141214768241/882592301503125"
+  },
+  {
+    "old_exponents": [
+      0,
+      6
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/26093845668051979229633043581296875",
+    "positive7_raw35_mass": "141214768241/4412961507515625"
+  },
+  {
+    "old_exponents": [
+      0,
+      7
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/130469228340259896148165217906484375",
+    "positive7_raw35_mass": "141214768241/22064807537578125"
+  },
+  {
+    "old_exponents": [
+      0,
+      8
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/652346141701299480740826089532421875",
+    "positive7_raw35_mass": "141214768241/110324037687890625"
+  },
+  {
+    "old_exponents": [
+      0,
+      9
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/3261730708506497403704130447662109375",
+    "positive7_raw35_mass": "141214768241/551620188439453125"
+  },
+  {
+    "old_exponents": [
+      0,
+      10
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/16308653542532487018520652238310546875",
+    "positive7_raw35_mass": "141214768241/2758100942197265625"
+  },
+  {
+    "old_exponents": [
+      0,
+      11
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/81543267712662435092603261191552734375",
+    "positive7_raw35_mass": "141214768241/13790504710986328125"
+  },
+  {
+    "old_exponents": [
+      0,
+      12
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/407716338563312175463016305957763671875",
+    "positive7_raw35_mass": "141214768241/68952523554931640625"
+  },
+  {
+    "old_exponents": [
+      0,
+      13
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/2038581692816560877315081529788818359375",
+    "positive7_raw35_mass": "141214768241/344762617774658203125"
+  },
+  {
+    "old_exponents": [
+      0,
+      14
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/10192908464082804386575407648944091796875",
+    "positive7_raw35_mass": "141214768241/1723813088873291015625"
+  },
+  {
+    "old_exponents": [
+      0,
+      15
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/50964542320414021932877038244720458984375",
+    "positive7_raw35_mass": "141214768241/8619065444366455078125"
+  },
+  {
+    "old_exponents": [
+      0,
+      16
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/254822711602070109664385191223602294921875",
+    "positive7_raw35_mass": "141214768241/43095327221832275390625"
+  },
+  {
+    "old_exponents": [
+      0,
+      17
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/1274113558010350548321925956118011474609375",
+    "positive7_raw35_mass": "141214768241/215476636109161376953125"
+  },
+  {
+    "old_exponents": [
+      0,
+      18
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/6370567790051752741609629780590057373046875",
+    "positive7_raw35_mass": "141214768241/1077383180545806884765625"
+  },
+  {
+    "old_exponents": [
+      0,
+      19
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/31852838950258763708048148902950286865234375",
+    "positive7_raw35_mass": "141214768241/5386915902729034423828125"
+  },
+  {
+    "old_exponents": [
+      0,
+      20
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/159264194751293818540240744514751434326171875",
+    "positive7_raw35_mass": "141214768241/26934579513645172119140625"
+  },
+  {
+    "old_exponents": [
+      0,
+      21
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/796320973756469092701203722573757171630859375",
+    "positive7_raw35_mass": "141214768241/134672897568225860595703125"
+  },
+  {
+    "old_exponents": [
+      0,
+      22
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/3981604868782345463506018612868785858154296875",
+    "positive7_raw35_mass": "141214768241/673364487841129302978515625"
+  },
+  {
+    "old_exponents": [
+      0,
+      23
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/19908024343911727317530093064343929290771484375",
+    "positive7_raw35_mass": "141214768241/3366822439205646514892578125"
+  },
+  {
+    "old_exponents": [
+      0,
+      24
+    ],
+    "zero7_residues": [
+      0,
+      4
+    ],
+    "positive7_old_residues": [
+      0,
+      4
+    ],
+    "zero7_mass": "755478960296526022859280813976/99540121719558636587650465321719646453857421875",
+    "positive7_raw35_mass": "141214768241/16834112196028232574462890625"
+  },
+  {
+    "old_exponents": [
+      1,
+      0
+    ],
+    "zero7_residues": [
+      1,
+      0
+    ],
+    "positive7_old_residues": [
+      1,
+      0
+    ],
+    "zero7_mass": "233807113834553301249363547/1870456910669803619384765625",
+    "positive7_raw35_mass": "233807113834553301249363547/1870456910669803619384765625"
+  },
+  {
+    "old_exponents": [
+      1,
+      1
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/15",
+    "positive7_raw35_mass": "1/15"
+  },
+  {
+    "old_exponents": [
+      1,
+      2
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/75",
+    "positive7_raw35_mass": "1/75"
+  },
+  {
+    "old_exponents": [
+      1,
+      3
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/375",
+    "positive7_raw35_mass": "1/375"
+  },
+  {
+    "old_exponents": [
+      1,
+      4
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/1875",
+    "positive7_raw35_mass": "1/1875"
+  },
+  {
+    "old_exponents": [
+      1,
+      5
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/9375",
+    "positive7_raw35_mass": "1/9375"
+  },
+  {
+    "old_exponents": [
+      1,
+      6
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/46875",
+    "positive7_raw35_mass": "1/46875"
+  },
+  {
+    "old_exponents": [
+      1,
+      7
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/234375",
+    "positive7_raw35_mass": "1/234375"
+  },
+  {
+    "old_exponents": [
+      1,
+      8
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/1171875",
+    "positive7_raw35_mass": "1/1171875"
+  },
+  {
+    "old_exponents": [
+      1,
+      9
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/5859375",
+    "positive7_raw35_mass": "1/5859375"
+  },
+  {
+    "old_exponents": [
+      1,
+      10
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/29296875",
+    "positive7_raw35_mass": "1/29296875"
+  },
+  {
+    "old_exponents": [
+      1,
+      11
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/146484375",
+    "positive7_raw35_mass": "1/146484375"
+  },
+  {
+    "old_exponents": [
+      1,
+      12
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/732421875",
+    "positive7_raw35_mass": "1/732421875"
+  },
+  {
+    "old_exponents": [
+      1,
+      13
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/3662109375",
+    "positive7_raw35_mass": "1/3662109375"
+  },
+  {
+    "old_exponents": [
+      1,
+      14
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/18310546875",
+    "positive7_raw35_mass": "1/18310546875"
+  },
+  {
+    "old_exponents": [
+      1,
+      15
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/91552734375",
+    "positive7_raw35_mass": "1/91552734375"
+  },
+  {
+    "old_exponents": [
+      1,
+      16
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/457763671875",
+    "positive7_raw35_mass": "1/457763671875"
+  },
+  {
+    "old_exponents": [
+      1,
+      17
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/2288818359375",
+    "positive7_raw35_mass": "1/2288818359375"
+  },
+  {
+    "old_exponents": [
+      1,
+      18
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/11444091796875",
+    "positive7_raw35_mass": "1/11444091796875"
+  },
+  {
+    "old_exponents": [
+      1,
+      19
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/57220458984375",
+    "positive7_raw35_mass": "1/57220458984375"
+  },
+  {
+    "old_exponents": [
+      1,
+      20
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/286102294921875",
+    "positive7_raw35_mass": "1/286102294921875"
+  },
+  {
+    "old_exponents": [
+      1,
+      21
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/1430511474609375",
+    "positive7_raw35_mass": "1/1430511474609375"
+  },
+  {
+    "old_exponents": [
+      1,
+      22
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/7152557373046875",
+    "positive7_raw35_mass": "1/7152557373046875"
+  },
+  {
+    "old_exponents": [
+      1,
+      23
+    ],
+    "zero7_residues": [
+      1,
+      4
+    ],
+    "positive7_old_residues": [
+      1,
+      4
+    ],
+    "zero7_mass": "1/35762786865234375",
+    "positive7_raw35_mass": "1/35762786865234375"
+  }
+]

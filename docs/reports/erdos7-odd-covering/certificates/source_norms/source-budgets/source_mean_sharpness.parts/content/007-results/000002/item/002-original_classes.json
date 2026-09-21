@@ -1,0 +1,122 @@
+{
+  "length": 696,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 57,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000000-000057.json",
+        "sha256": "04800a8fe2fcb8eeea95a84aa09c7dce2b6821899dd82fd10fb1f0ec3f194856",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 57,
+      "stop": 114,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000057-000114.json",
+        "sha256": "880d29b471d03777c1276a9c93a08325bd5c45219e22e134f6a669728ea5c75e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 114,
+      "stop": 171,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000114-000171.json",
+        "sha256": "71580a1225e647326ee99499dcb9b503f5b72a67e10e48e24243f30f578ffec8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 171,
+      "stop": 228,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000171-000228.json",
+        "sha256": "bfb3338dbd4ab4ba992d22dee74f99f3f4726d91e48d5d94ab966a6ddc788f3f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 228,
+      "stop": 285,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000228-000285.json",
+        "sha256": "0f0649a15f56cb216dd2d4e62fe84a979585bfdab30152990e242ca037d82089",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 285,
+      "stop": 342,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000285-000342.json",
+        "sha256": "1d954fcd0c969ca2f687cb1e1c624ef074ffbdfc5841ed9dd53546fbb33a254a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 342,
+      "stop": 399,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000342-000399.json",
+        "sha256": "588a14b38c2b5aa710a68ec092264a3167e4a109295fb5d2d860df2c1c53c6d9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 399,
+      "stop": 456,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000399-000456.json",
+        "sha256": "8ff6af1fcd5a666b585ccb0b94f7e08f53cf06a73d7030e8675b43f7df395566",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 456,
+      "stop": 513,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000456-000513.json",
+        "sha256": "3cb092c23be31eeb4526200d26c9cbab015df719eeac13ece5d5196ce7419362",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 513,
+      "stop": 570,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000513-000570.json",
+        "sha256": "793b57c84cc2f7e16da108126c1fc6e34ca3709099454f456c98ff53eef85fcc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 570,
+      "stop": 627,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000570-000627.json",
+        "sha256": "0289ba1bb97806c86ca0d28e51068c1aed1500dc8316de68568500f1785a8d7e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 627,
+      "stop": 684,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000627-000684.json",
+        "sha256": "ee47a78f35a64ab0e593ba26ebbc8ec7926da70e96a3eb2c52b436d8ba2cc54b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 684,
+      "stop": 696,
+      "part": {
+        "path": "content/007-results/000002/item/002-original_classes/000684-000696.json",
+        "sha256": "7b12a8a2f67efbac14123f84401901207e806f25e7d4149690a37a1ec9476661",
+        "kind": "value"
+      }
+    }
+  ]
+}

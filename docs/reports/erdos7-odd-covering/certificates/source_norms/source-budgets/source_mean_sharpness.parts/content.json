@@ -1,0 +1,53 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "source-mean-sharpness-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Finite actual irredundant noncover sources and one finite complete own test for each height. The ordinary proof establishes the general K-layer upper and sharp limiting uniform mean38/63. No finite-delta optimizer, nonlinear-hinge sharpness, or unrestricted covering conclusion."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "09e397f3dd41909d102e6a981eec9e3db9bc7365feb170b0cfe93f31637310a2",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
+      "profile-notes/321-384/327-actual-two-prime-survival-needs-a-masked-moment.md": "6f4f1ebf49e84ddf4ed886a5330aca588e4a876269240a50e3d5a9575c7b3c7c",
+      "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
+      "frontier/source-budgets/irredundant_whole_j_finite_source.py": "a4de254b6473ae9930614ef006b114161beff96fda2ca605e62cc358e8233501",
+      "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62"
+    }
+  },
+  "ordinary_proof": {
+    "kind": "inline",
+    "value": {
+      "sha256": "081511adeb1f9742aae52b2fc729dd62eef876cf7d4d79f81cfd902bb447530c",
+      "byte_count": 38187
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "3e38bf29b30b653c76df444e00bcff72051771b6eb3aa38675ad7e3c1f271d49"
+  },
+  "affine_dominance_endpoints": {
+    "path": "content/005-affine_dominance_endpoints.json",
+    "sha256": "fa576496af0e29d1db4458cac32067c5b3a6a6068d8b47e98581b2438a4c546a",
+    "kind": "value"
+  },
+  "sharp_mean": {
+    "kind": "inline",
+    "value": "38/63"
+  },
+  "results": {
+    "path": "content/007-results.json",
+    "sha256": "0ec4d3559ed623d3aa1d15dae40b561bed5933cf0a5fa7d97f45c448f1b9e8b5",
+    "kind": "array"
+  },
+  "direct_square_scalar_boundary": {
+    "path": "content/008-direct_square_scalar_boundary.json",
+    "sha256": "90a46c34e70b62d859d98c2439e6583940b5059b17c72a69c2d746032dfc8f42",
+    "kind": "value"
+  }
+}
