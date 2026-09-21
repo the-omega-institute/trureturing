@@ -44,13 +44,14 @@ varying a or l is not asserted.
 
 The question is registered in
 https://github.com/the-omega-institute/trureturing/issues/9357 and the
-candidate implementation is associated with
+formal implementation is associated with
 https://github.com/the-omega-institute/trureturing/pull/9399.
 The frozen Bernoulli Pinsker inequality
 D5/S3/TotalVariation/Pinsker.binary_pinsker supplies exponential control
 away from a central slope. It does not by itself identify the maximum's
-Gaussian prefactor. It is the frozen motivation reference; the seven
-binomial modules are not used as already-frozen premises of this dossier.
+Gaussian prefactor. It is the motivation reference frozen at protected
+base 635de30f53cb34c16eddd4166d8874564a4f0f18. The seven binomial modules
+are new admissions relative to that base, not historical frozen premises.
 
 ## Gap
 
@@ -60,7 +61,7 @@ and l=1 is exact. D5/L/Analytic/ouimet2020precise supplies local Gaussian
 estimates and the l=2,3 normalizations. These inputs do not alone evaluate
 the maximum of the truncated ratio.
 
-The remaining analytic distinction is between a fixed comparison index,
+The analytic distinction is between a fixed comparison index,
 the location of every actual maximizer, and a sharp upper estimate along
 those maximizers. A limit r(m)/m=a/(1+2a) alone does not control the
 Gaussian penalty at the scale needed for the exact prefactor. A floor
@@ -70,7 +71,7 @@ geometric endpoint factor must be evaluated along the same sequences.
 
 The source credits earlier maximum results for l=a=1 and l=1 with positive
 integer a, and proves l=2,a=1 itself. They are not new resolved cases in
-this dossier. The sole candidate resolution is the full clause (d).
+this dossier. The only resolution claimed here is the full clause (d).
 
 ## Route
 
@@ -120,21 +121,23 @@ and all 10 pages of D5/L/Analytic/luca2012some. The latter's Lemma 3.1,
 pages 6–7, restates an unweighted complete binomial-product theorem;
 it is not cited as an arbitrary-weight maximum result.
 
-The seven Lean sources are the mathematical candidate; their authored
-Scribe mirrors state the respective claims and supplier boundaries.
-This dossier carries no typed Proved claim. Canonical admission and
-Freeze, independent mathematical review, required CI, ordinary merge and
-an independent completion audit are outside the evidence asserted here.
-Neither the support modules nor this metadata preparation confer
-completed-delivery or KPI credit.
+The seven Lean modules have been canonically admitted and frozen in
+dependency order. Their authored Scribe mirrors state the respective
+claims and supplier boundaries. The final theorem's Scribe node carries
+OpenProblemResolutionClaim with ResolutionKind.Proved, binding this
+dossier to maximum_asymptotic and the full clause (d). The canonical
+Freeze events and state pins carry the admission identities.
+
+Local formal admission does not assert required CI, ordinary merge or
+an independent completion audit. These remain delivery obligations;
+no completed-delivery or KPI credit is asserted here.
 
 ## Triage
 
 First-tier external named conjecture published in 2026, fixed by #9357.
-The endpoint's proposed admission basis is open-problem-resolution for
-the complete clause (d). Per-declaration admission and source-fidelity
-assessments remain obligations of the independent mathematical review;
-this metadata dossier does not grant them. The classical denominator
+The endpoint's admission basis is open-problem-resolution for
+the complete clause (d). The typed binding applies only to that endpoint;
+this dossier is not a mathematical proof. The classical denominator
 and local-limit ingredients are literature suppliers, not new discoveries
 or additional open-problem resolutions. The target concerns an unbounded
 analytic limit, not a finite-instance or support-only completion count.
@@ -151,5 +154,4 @@ The exact-peak and shape conjectures (a)–(c), uniformity in changing
 parameters, and a count of multiple new resolved special cases are
 excluded interpretations. A simplified prefix denominator, natural
 subtraction in the l=1 exponent, or localization alone would not establish
-the registered endpoint. Independent acceptance and canonical Freeze of
-these seven modules are not asserted by this dossier.
+the registered endpoint. The typed Proved claim covers clause (d) alone.
