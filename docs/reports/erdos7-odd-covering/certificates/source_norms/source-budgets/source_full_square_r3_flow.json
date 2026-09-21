@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "68f8744e3aaaae26634f918ed7c6482338c1a65034ea0e06174d8635ff4405a6",
+  "parts_directory": "source_full_square_r3_flow.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "5eed7517b2b87dc7605fdfabfca50f34d88e099b134b3b87023c0b9dffb8dcdb",
+    "kind": "value-zlib-base85"
+  }
+}
