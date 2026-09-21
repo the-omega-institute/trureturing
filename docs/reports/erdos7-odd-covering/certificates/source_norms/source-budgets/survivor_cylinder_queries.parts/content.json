@@ -1,0 +1,105 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "full-survivor-cylinder-relaxed-policy-query-v1"
+  },
+  "status": {
+    "kind": "inline",
+    "value": "complete"
+  },
+  "stop_reason": {
+    "kind": "inline",
+    "value": null
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Same full H and actual Chapter64 law; history-dependent residue choices relax each fixed cylinder; this is an upper bound on each survivor marginal maximum, not its exact maximum. Uncompleted queries receive zero deficit credit."
+  },
+  "limits": {
+    "kind": "inline",
+    "value": {
+      "wall_seconds": 120,
+      "nontrivial_query_states": 2000000
+    }
+  },
+  "preparation": {
+    "kind": "inline",
+    "value": {
+      "core_rows": 6511,
+      "terminal_masks": 2542,
+      "actual_core_leaves": 1886217,
+      "positive_actual_leaves": 1423235,
+      "positive_group_edges": 18796
+    }
+  },
+  "head_survival": {
+    "kind": "inline",
+    "value": "4329541852802656000039602950310055297686631/6959735993111191545137695312500000000000000"
+  },
+  "query_moduli": {
+    "kind": "inline",
+    "value": 4660
+  },
+  "completed_queries": {
+    "kind": "inline",
+    "value": 4660
+  },
+  "query_states": {
+    "kind": "inline",
+    "value": 1749338
+  },
+  "cached_states": {
+    "kind": "inline",
+    "value": 1749338
+  },
+  "calls": {
+    "kind": "inline",
+    "value": 5102063
+  },
+  "bin_terms": {
+    "kind": "inline",
+    "value": 29172312
+  },
+  "delta_lower": {
+    "kind": "inline",
+    "value": "4721409227962983715156146407022642708305664836319697/361340793092341676034117718505859375000000000000000"
+  },
+  "delta_lower_decimal": {
+    "kind": "inline",
+    "value": 13.066360948503299
+  },
+  "remaining_potential": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "remaining_potential_decimal": {
+    "kind": "inline",
+    "value": 0.0
+  },
+  "method_ceiling_if_remaining_masses_zero": {
+    "kind": "inline",
+    "value": "4721409227962983715156146407022642708305664836319697/361340793092341676034117718505859375000000000000000"
+  },
+  "method_ceiling_decimal": {
+    "kind": "inline",
+    "value": 13.066360948503299
+  },
+  "absolute_E154_capacity": {
+    "kind": "inline",
+    "value": "6458297496600106842896636970779543/117511066971515006354565000000000"
+  },
+  "records": {
+    "path": "content/020-records.json",
+    "sha256": "442cd4013dba23945e081d235bd798f8ac02c79b471a02d311f62683d3259f3c",
+    "kind": "array"
+  },
+  "source_sha256": {
+    "path": "content/021-source_sha256.json",
+    "sha256": "11c8de5e30e694e3e2279eb49b975c14f873b30e018cb424ce2013de222e8330",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "7116a15e20c65f39441ded3a223421508505eb46a5c63feb0f4450f2fc5098f0"
+  }
+}

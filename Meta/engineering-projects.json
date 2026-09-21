@@ -33,7 +33,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/StrataLint.Engine/StrataLint.Engine.csproj",
@@ -63,7 +64,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -94,7 +96,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/StrataLint.Lean/StrataLint.Lean.csproj",
@@ -124,7 +127,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
@@ -155,7 +159,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
@@ -186,7 +191,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
@@ -216,7 +222,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
@@ -242,7 +249,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/scripts/report/JudgeSeedTask.csproj",
@@ -268,7 +276,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
@@ -296,7 +305,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/tests/CompileFailProof/CompileFailProof.csproj",
@@ -326,7 +336,8 @@
       ],
       "execution_inputs": null,
       "execution_excludes": null,
-      "execution_environment": null
+      "execution_environment": null,
+      "execution_filemap_paths": null
     },
     {
       "path": "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
@@ -365,7 +376,8 @@
       "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
@@ -436,7 +448,8 @@
       ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
@@ -495,7 +508,8 @@
       ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
@@ -535,7 +549,8 @@
       "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
@@ -590,7 +605,8 @@
       ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
@@ -654,7 +670,8 @@
       "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
@@ -689,7 +706,8 @@
       "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
@@ -726,9 +744,12 @@
       "execution_inputs": [
         "Golden/Projection/**",
         "tools/tests/StrataLint.Scribe.Tests/Fixtures/**",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
         "D5/**",
         "Blueprint/**",
         "Library/**",
+        "Meta/FILEMAP.toml",
+        "Meta/FILEMAP.*.toml",
         "Meta/domains.yaml",
         "Meta/registry.yaml",
         "tools/scripts/katex/**",
@@ -737,6 +758,24 @@
       "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": [
+        "README.md",
+        "tools/lean-inspector/README.md",
+        "docs/develop/theory/input.md",
+        "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
+        "docs/develop/spec/trureturing_engineering_optimization_v1.md",
+        "docs/reports/a110037-0910/BoundaryProbe.lean",
+        "docs/reports/prime-slab-corner-order-0909.json",
+        "Library/Notes/input.md",
+        "Problems/input.md",
+        "Blueprint/D5/Result.md",
+        "D5/ledger.md",
+        "CLAUDE.md",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
+        "Meta/Digestion/atoms/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       ]
     },
     {
@@ -789,7 +828,8 @@
       ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
@@ -860,7 +900,8 @@
       ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     },
     {
       "path": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
@@ -895,7 +936,8 @@
       "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
-      ]
+      ],
+      "execution_filemap_paths": []
     }
   ],
   "historical_projects": [],
