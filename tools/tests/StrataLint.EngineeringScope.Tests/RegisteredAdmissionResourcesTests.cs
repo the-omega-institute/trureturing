@@ -121,6 +121,63 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [Theory]
     [InlineData("push")]
     [InlineData("pr")]
+    public void InspectorSourceRunsOnlyRegisteredConsumers(string mode)
+    {
+        var plan = Plan("tools/lean-inspector/Inspector.lean", "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+            "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+            "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+        AssertInspectorSourceObligations(plan, mode);
+    }
+
+    [Theory]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/NameWire.lean", "push")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/NameWire.lean", "pr")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "push")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "pr")]
+    public void AuditLeanSourcesRunOnlyRegisteredConsumers(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+        AssertInspectorSourceObligations(plan, mode);
+    }
+
+    private static void AssertInspectorSourceObligations(JsonNode plan, string mode)
+    {
+        var resources = Strings(plan["resources"]!);
+        foreach (var required in new[] { "current", "filemap", "lean-inspector-build", "lean-report", "scribe" })
+        {
+            Assert.Contains(required, Strings(plan["declared_require"]!));
+            Assert.Contains(required, resources);
+        }
+        Assert.Contains("delta", Strings(plan["declared_require"]!));
+        Assert.Equal(mode == "pr", resources.Contains("delta"));
+        Assert.DoesNotContain("engineering", resources);
+        Assert.DoesNotContain("engineering-guards", resources);
+        Assert.Equal(CommonCheckRegistrationFixture.Ids
+            .Where(id => !CommonExecutionEvidence.EngineeringCheckIds.Contains(id)).Order(StringComparer.Ordinal),
+            Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector" },
+            Strings(plan["execution"]!["lean_targets"]!));
+        Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
+            Strings(plan["execution"]!["steps"]!));
+        foreach (var stage in new[] { "build", "engineering", "current" })
+            Assert.Equal("required", plan["stages"]![stage]!["status"]!.GetValue<string>());
+        Assert.Equal(mode == "pr" ? "required" : "not-applicable",
+            plan["stages"]!["delta"]!["status"]!.GetValue<string>());
+    }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
     public void CachePathChangesRunOnlyRegisteredCacheConsumers(string mode)
     {
         var plan = Plan("Meta/ci-cache-paths.json", "", mode);
