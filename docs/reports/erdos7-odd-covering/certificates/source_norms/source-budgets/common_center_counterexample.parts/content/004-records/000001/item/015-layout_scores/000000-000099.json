@@ -1,0 +1,794 @@
+[
+  {
+    "residues": [
+      0,
+      0,
+      0
+    ],
+    "value": 96
+  },
+  {
+    "residues": [
+      0,
+      0,
+      1
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      0,
+      2
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      0,
+      3
+    ],
+    "value": 104
+  },
+  {
+    "residues": [
+      0,
+      0,
+      4
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      0,
+      5
+    ],
+    "value": 99
+  },
+  {
+    "residues": [
+      0,
+      0,
+      6
+    ],
+    "value": 104
+  },
+  {
+    "residues": [
+      0,
+      0,
+      7
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      0,
+      8
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      0,
+      9
+    ],
+    "value": 104
+  },
+  {
+    "residues": [
+      0,
+      0,
+      10
+    ],
+    "value": 109
+  },
+  {
+    "residues": [
+      0,
+      0,
+      11
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      0,
+      12
+    ],
+    "value": 104
+  },
+  {
+    "residues": [
+      0,
+      0,
+      13
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      0,
+      14
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      1,
+      0
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      1,
+      1
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      1,
+      2
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      1,
+      3
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      1,
+      4
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      1,
+      5
+    ],
+    "value": 93
+  },
+  {
+    "residues": [
+      0,
+      1,
+      6
+    ],
+    "value": 108
+  },
+  {
+    "residues": [
+      0,
+      1,
+      7
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      1,
+      8
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      1,
+      9
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      1,
+      10
+    ],
+    "value": 99
+  },
+  {
+    "residues": [
+      0,
+      1,
+      11
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      1,
+      12
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      1,
+      13
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      1,
+      14
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      2,
+      0
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      2,
+      1
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      2,
+      2
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      2,
+      3
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      2,
+      4
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      2,
+      5
+    ],
+    "value": 93
+  },
+  {
+    "residues": [
+      0,
+      2,
+      6
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      2,
+      7
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      2,
+      8
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      2,
+      9
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      2,
+      10
+    ],
+    "value": 99
+  },
+  {
+    "residues": [
+      0,
+      2,
+      11
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      2,
+      12
+    ],
+    "value": 108
+  },
+  {
+    "residues": [
+      0,
+      2,
+      13
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      2,
+      14
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      3,
+      0
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      3,
+      1
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      3,
+      2
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      3,
+      3
+    ],
+    "value": 108
+  },
+  {
+    "residues": [
+      0,
+      3,
+      4
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      3,
+      5
+    ],
+    "value": 93
+  },
+  {
+    "residues": [
+      0,
+      3,
+      6
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      3,
+      7
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      3,
+      8
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      3,
+      9
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      3,
+      10
+    ],
+    "value": 99
+  },
+  {
+    "residues": [
+      0,
+      3,
+      11
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      3,
+      12
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      3,
+      13
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      3,
+      14
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      4,
+      0
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      4,
+      1
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      4,
+      2
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      4,
+      3
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      4,
+      4
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      0,
+      4,
+      5
+    ],
+    "value": 93
+  },
+  {
+    "residues": [
+      0,
+      4,
+      6
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      4,
+      7
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      4,
+      8
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      4,
+      9
+    ],
+    "value": 108
+  },
+  {
+    "residues": [
+      0,
+      4,
+      10
+    ],
+    "value": 99
+  },
+  {
+    "residues": [
+      0,
+      4,
+      11
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      4,
+      12
+    ],
+    "value": 102
+  },
+  {
+    "residues": [
+      0,
+      4,
+      13
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      0,
+      4,
+      14
+    ],
+    "value": 92
+  },
+  {
+    "residues": [
+      1,
+      0,
+      0
+    ],
+    "value": 85
+  },
+  {
+    "residues": [
+      1,
+      0,
+      1
+    ],
+    "value": 85
+  },
+  {
+    "residues": [
+      1,
+      0,
+      2
+    ],
+    "value": 83
+  },
+  {
+    "residues": [
+      1,
+      0,
+      3
+    ],
+    "value": 89
+  },
+  {
+    "residues": [
+      1,
+      0,
+      4
+    ],
+    "value": 85
+  },
+  {
+    "residues": [
+      1,
+      0,
+      5
+    ],
+    "value": 90
+  },
+  {
+    "residues": [
+      1,
+      0,
+      6
+    ],
+    "value": 89
+  },
+  {
+    "residues": [
+      1,
+      0,
+      7
+    ],
+    "value": 85
+  },
+  {
+    "residues": [
+      1,
+      0,
+      8
+    ],
+    "value": 83
+  },
+  {
+    "residues": [
+      1,
+      0,
+      9
+    ],
+    "value": 89
+  },
+  {
+    "residues": [
+      1,
+      0,
+      10
+    ],
+    "value": 108
+  },
+  {
+    "residues": [
+      1,
+      0,
+      11
+    ],
+    "value": 83
+  },
+  {
+    "residues": [
+      1,
+      0,
+      12
+    ],
+    "value": 89
+  },
+  {
+    "residues": [
+      1,
+      0,
+      13
+    ],
+    "value": 85
+  },
+  {
+    "residues": [
+      1,
+      0,
+      14
+    ],
+    "value": 83
+  },
+  {
+    "residues": [
+      1,
+      1,
+      0
+    ],
+    "value": 71
+  },
+  {
+    "residues": [
+      1,
+      1,
+      1
+    ],
+    "value": 75
+  },
+  {
+    "residues": [
+      1,
+      1,
+      2
+    ],
+    "value": 71
+  },
+  {
+    "residues": [
+      1,
+      1,
+      3
+    ],
+    "value": 77
+  },
+  {
+    "residues": [
+      1,
+      1,
+      4
+    ],
+    "value": 73
+  },
+  {
+    "residues": [
+      1,
+      1,
+      5
+    ],
+    "value": 74
+  },
+  {
+    "residues": [
+      1,
+      1,
+      6
+    ],
+    "value": 83
+  },
+  {
+    "residues": [
+      1,
+      1,
+      7
+    ],
+    "value": 73
+  },
+  {
+    "residues": [
+      1,
+      1,
+      8
+    ],
+    "value": 71
+  }
+]
