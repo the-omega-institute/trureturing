@@ -5,6 +5,7 @@ from fractions import Fraction as F
 from hashlib import sha256
 import importlib.util
 from itertools import product
+from math import lcm
 import json
 from pathlib import Path
 import sys
@@ -210,6 +211,182 @@ def pair_envelope_gaps(n, w, u):
                     raw_gap=weighted_gap,normalized_gap=weighted_gap/sum(weighted)))
 
 
+def source_mod63(n, u):
+    """Actual joint marginal, in literal residue order modulo63."""
+    cells = (0,3,1,4,7)
+    full = ((0,3,4,5),(3,4,5),(0,2,3,4,5),(0,2,3,4,5),(0,2,3,4,5))
+    partial = (2,0,1,1,1)
+    masses = [F(0)]*63
+    for j,cell in enumerate(cells):
+        for x in range(cell,63,9):
+            if x % 7 in full[j]:
+                masses[x] = n[j]/(7*u)
+            elif x % 7 == partial[j]:
+                masses[x] = n[j]*(u-F(5,7))/u
+    return tuple(masses)
+
+
+def six_label_square(masses):
+    """Exact all-layout search; optimize only the last singleton indicator."""
+    labels = (1,3,7,9,21,63)
+    denominator = lcm(*(mass.denominator for mass in masses))
+    integer_mass = tuple(int(mass*denominator) for mass in masses)
+    require(all(F(v,denominator) == m for v,m in zip(integer_mass,masses)),
+            'Exact common integer measure for the six-label search')
+    caps = {d:max(sum(integer_mass[x] for x in range(63) if x % d == a)
+                  for a in range(d)) for d in labels}
+    envelope = sum(caps[lcm(d,e)] for d,e in product(labels,repeat=2))
+    indicators = {d:tuple(tuple(int(x % d == a) for x in range(63)) for a in range(d))
+                  for d in labels[1:-1]}
+    best, maximizers, count = -1, [], 0
+    for residues in product(*(range(d) for d in labels[1:-1])):
+        load = tuple(1+sum(indicators[d][a][x] for d,a in zip(labels[1:-1],residues))
+                     for x in range(63))
+        old = sum(m*v*v for m,v in zip(integer_mass,load))
+        last = tuple(m*(2*v+1) for m,v in zip(integer_mass,load))
+        value = old+max(last)
+        if value >= best:
+            if value > best:
+                best,maximizers = value,[]
+            maximizers.extend((0,*residues,x) for x,gain in enumerate(last) if gain == max(last))
+        count += 63
+    require(count == 250047, 'All3*7*9*21*63 original residue choices retained')
+    for witness in maximizers:
+        direct = sum(m*sum(x % d == a for d,a in zip(labels,witness))**2
+                     for x,m in enumerate(integer_mass))
+        require(direct == best, 'Each retained maximizer has its direct pointwise square')
+    return dict(labels=labels,full_layouts=count,caps={d:F(v,denominator) for d,v in caps.items()},
+                envelope=F(envelope,denominator),maximum=F(best,denominator),
+                raw_gap=F(envelope-best,denominator),normalized_gap=F(envelope-best,sum(integer_mass)),
+                normalized_maximum=F(best,sum(integer_mass)),maximizers=maximizers)
+
+
+def joint_square_geometry(n, u):
+    masses = source_mod63(n,u)
+    weights = {0:F(11,8),3:F(5,4),1:F(1),4:F(1),7:F(1)}
+    results = {law:six_label_square(tuple(m*(weights.get(x % 9,F(1)) if law == 'reweighted' else 1)
+                                              for x,m in enumerate(masses)))
+               for law in ('unweighted','reweighted')}
+    R = sum(n[2:])
+    A0r = F(11,8)*(1-1/(7*u))*n[0]+F(5,4)*(1-2/(7*u))*n[1]
+    expected_gaps = ((9*(max(n[0]+n[1],R)-R)+15*(n[1]-n[3]))/(7*u),3*(R-A0r))
+    for (law,row),expected in zip(results.items(),expected_gaps):
+        cell = 4 if law == 'unweighted' else 3
+        centers = [x for x in range(63) if x % 9 == cell and x % 7 in (3,4,5)]
+        require(set(row['maximizers']) == {tuple(x % d for d in row['labels']) for x in centers},
+                'Exactly the three fixed centered optimizers on the stated source box')
+        require(row['raw_gap'] == expected, 'Exact same-source six-label gap formula')
+    return dict(mod63_masses=masses,clusters=results)
+
+
+def joint_square_box():
+    bounds = (((1-F(1,3**10))/18,F(1,18)),
+              ((1-F(1,5**12))/4,F(1,4)),(F(5,6),(5+F(1,7**12))/6))
+    rows = []
+    for t,q,u in product(*bounds):
+        z = 1-q
+        n = (z*(F(1,9)-t),z/9,(1-3*q)/9,(1-2*q)/9,(1-2*q)/9-t*q)
+        result = joint_square_geometry(n,u)
+        rows.append(dict(parameters=(t,q,u),clusters={law:{key:row[key] for key in
+                            ('caps','maximum','raw_gap','maximizers')} for law,row in result['clusters'].items()}))
+    limit = joint_square_geometry((F(1,24),F(1,12),F(1,36),F(1,18),F(1,24)),F(5,6))['clusters']
+    require((limit['unweighted']['normalized_gap'],limit['reweighted']['normalized_gap'])
+            == (F(1,3),F(183,1619)), 'Exact limits of the actual six-label cluster gaps')
+    return dict(parameter_order=('t','q','u'),bounds=bounds,vertices=rows,limiting_clusters=limit)
+
+
+def unit_refund_geometry(src, family, N, u, S, weighted_mass):
+    """Check source/extension geometry without claiming to compute the maximizing hole."""
+    clean = ((1,5,1,4),(1,5,2,20),(2,7,1,4),(2,7,1,5))
+    for coordinate,prime,depth,residue in clean:
+        require(all(not c['exponents'][coordinate] or
+                    (c['coordinate_residues'][coordinate]-residue) % prime**min(depth,c['exponents'][coordinate])
+                    for c in family), 'The whole required cylinder misses every source original using that coordinate')
+    require(all(not (c['exponents'][1] and c['exponents'][2]) for c in family),
+            'Actual source has no original involving both5 and7')
+    pure = [c for c in family if c['exponents'][0] and not any(c['exponents'][1:])]
+    require(len(pure) == N and all((c['residue']-d['residue']) % min(c['modulus'],d['modulus'])
+                                  for i,c in enumerate(pure) for d in pure[i+1:]),
+            'All original pure3 cylinders are pairwise disjoint')
+    test_union_cap = sum(3**(N-depth) for depth in range(1,N+1))
+    survivors = 3**N-test_union_cap
+    require(survivors-test_union_cap == 1, 'A pure3 survivor remains outside every pure3 test union')
+    table = [(m,F(1+m,11),max(F(0),F(1+m,11)-F(3,10))/F(7,10)) for m in (0,1,2,4)]
+    require(tuple(row[2] for row in table) == (F(0),F(0),F(0),F(17,77)), 'Exact actual full-Haar11 clipping table')
+    def extension(h,a):
+        old_point = src.crt_class((N,N,N),(a,20,5))['residue']
+        require(all(old_point % c['modulus'] != c['residue'] for c in family), 'The extension private point survives every source original')
+        added = [dict(modulus=11,residue=10,current_digit=10)]
+        for i,j in product((0,1),repeat=2):
+            old = src.crt_class((h,2*i,j),(a,20 if i else 0,5 if j else 0))
+            digit = i+2*j
+            residue = old['residue']+old['modulus']*((digit-old['residue'])*pow(old['modulus'],-1,11) % 11)
+            added.append(dict(modulus=11*old['modulus'],residue=residue,current_digit=digit))
+        require(len({c['modulus'] for c in family+added}) == len(family)+5,
+                'Five new odd original numerical moduli are distinct from the source')
+        for row in added:
+            point = src.crt_class((N,N,N),(4,4,4))['residue'] if row['current_digit'] == 10 else old_point
+            point += 105**N*((row['current_digit']-point)*pow(105**N,-1,11) % 11)
+            require([c for c in family+added if point % c['modulus'] == c['residue']] == [row],
+                    'Each new original has a literal private integer')
+        require(all(c['current_digit'] != 9 for c in added), 'All old private integers lift safely with11 digit9')
+        return added
+    # a=0 checks only CRT and source geometry. The maximizing-layout hole is
+    # established by the ordinary existence proof and is not computed here.
+    sample_a = 0
+    added = extension(N,sample_a)
+    charge_numerator = F(17,77*175*3**N)/u
+    pair_moments = {p:1+sum(F(2*j+1,p**j) for j in range(1,N+1)) for p in (5,7)}
+    fibre_square_numerator = F((N+1)**2,3**N)*pair_moments[5]*pair_moments[7]/u
+    W = fibre_square_numerator/S
+    Wr = F(11,8)*fibre_square_numerator/weighted_mass
+    clean11_caps = tuple(1/(11*(1-min(alpha,F(3,10)))) for _,alpha,_ in table)
+    require(clean11_caps == (F(1,10),F(1,9),F(1,8),F(10,77)), 'Exact clean11 root caps in the actual extension')
+    require(3*(max(clean11_caps)-F(1,10)) == F(69,770)
+            and pair_moments[5] < F(15,8) and pair_moments[7] < F(14,9),
+            'Complete next11 error coefficient and finite pair-moment bounds')
+    fixed = None
+    if N >= 4:
+        holes = ((2,1,F(1)),(3,12,F(5,4)),(4,54,F(11,8)))
+        for h,a,_ in holes:
+            require(all((a-c['coordinate_residues'][0]) % 3**min(h,c['exponents'][0])
+                        for c in pure), 'Each fixed-depth hole avoids every original pure3 cylinder')
+            require(all((a-path) % 3**min(h,depth)
+                        for depth in range(3,N+1) for path in (3,4,18)),
+                    'Each fixed-depth hole misses every canonical deep test path')
+        choices = []
+        for depth1,depth2 in product((0,1),(0,3,4)):
+            missed = tuple(i for i,(h,a,_) in enumerate(holes)
+                           if (a-depth1) % 3 and (a-depth2) % 9)
+            require(bool(missed), 'The two shallow pure3 tests leave a fixed-depth hole')
+            choices.append(dict(shallow_residues=(depth1,depth2),missed_holes=missed))
+        hole_rows = [dict(depth=h,residue=a,weight=weight,added_originals=extension(h,a),
+                         unweighted_charge=F(17,77*175*3**h)/u/S,
+                         reweighted_charge=F(17,77*175*3**h)*weight/u/weighted_mass)
+                     for h,a,weight in holes]
+        floor = F(17,77*175*81)
+        require(u*S <= 1 and u*weighted_mass <= F(11,8), 'Haar bounds for the two fixed source laws')
+        require(min(row['unweighted_charge'] for row in hole_rows) >= floor
+                and min(row['reweighted_charge'] for row in hole_rows) >= floor,
+                'Positive uniform fixed-depth charge floors')
+        fixed = dict(holes=hole_rows,shallow_choices=choices,
+                     unweighted_charge_floor=floor,reweighted_charge_floor=floor,
+                     unweighted_lower_limit=F(68,779625),
+                     scope='The ordinary ternary-compression proof selects one of these holes for each of the two fixed laws. The maximizing layout and selected hole are not computed. This stronger variant does not cover arbitrary three-coordinate reweighting or prove decay of the complete next11 error.')
+    return dict(clean_cylinders=tuple((prime,depth,residue) for _,prime,depth,residue in clean),
+                pure3_survivors=survivors,pure3_test_union_cap=test_union_cap,
+                clipping_threshold=F(3,10),active_mixed_fraction_charge=table,
+                unweighted_charge=charge_numerator/S,
+                reweighted_charge_by_cell=tuple(weight*charge_numerator/weighted_mass
+                                                for weight in (F(11,8),F(5,4),F(1),F(1),F(1))),
+                sample_a=sample_a,sample_added_originals=added,extended_label_count=len(family)+5,
+                witness_scope='Sample a checks extension geometry only. The ordinary proof supplies an uncomputed maximizing layout and a hole that may depend on the source weights.',
+                complete_next11=dict(clean_root=9,clean_root_caps=clean11_caps,pair_moments=pair_moments,
+                    square_coefficient=F(13,10),fibre_square_upper=W,reweighted_fibre_square_upper=Wr,
+                    additive_error_upper=F(69,770)*W,reweighted_additive_error_upper=F(69,770)*Wr),
+                fixed_depth=fixed)
+
+
 def calculate_family(src, joint, N):
     family, private, hole = original_source(src,N)
     n,eta,z,partition = src.raw35_masses(family,N)
@@ -220,6 +397,7 @@ def calculate_family(src, joint, N):
     targets = {(c['exponents'][2],c['coordinate_residues'][2]) for c in family if c['exponents'][2]}
     seven = src.prefix_partition(7,N,targets)
     good = deleted_A = deleted_B = 0
+    row_seven_counts = [[0]*7 for _ in range(5)]
     for x,m,_ in seven:
         hit = [any(c['exponents'][0] == a and c['exponents'][2]
                    and x % 7**c['exponents'][2] == c['coordinate_residues'][2] for c in family)
@@ -228,11 +406,18 @@ def calculate_family(src, joint, N):
             good += m
             deleted_A += m*hit[1]
             deleted_B += m*(hit[1] or hit[2])
+            for j in range(5):
+                if not (j == 0 and hit[1] or j == 1 and (hit[1] or hit[2])):
+                    row_seven_counts[j][x % 7] += m
     u = F(good,7**N)
     require(u == 1-r and F(deleted_A,7**N) == F(1,7) and F(deleted_B,7**N) == F(2,7),
             'Actual pure7 law and exact original A/B deletion')
     d = 1/(7*u)
     w = (1-d,1-2*d,F(1),F(1),F(1))
+    marginal = source_mod63(n,u)
+    for j,cell in enumerate((0,3,1,4,7)):
+        require(all(marginal[x] == n[j]*F(row_seven_counts[j][x % 7],7**N)/u
+                    for x in range(cell,63,9)), 'Every mod63 mass follows the actual seven-prefix partition')
     s = sum(n)
     S = s-d*(n[0]+2*n[1])
     par = ((9*t,F(0),F(0),F(0),F(0)), (F(0),q), (F(0),F(0),q,F(0),F(0)),
@@ -253,6 +438,9 @@ def calculate_family(src, joint, N):
     pair_gaps = pair_envelope_gaps(n,w,u)
     require((pair_gaps['reweighted']['raw_gap'] == 0) == (N == 3),
             'Weighted five-term gap is zero at height3 and positive at every checked larger height')
+    weighted_mass = sum(m*weight for m,weight in zip(n,(F(11,8)*w[0],F(5,4)*w[1],F(1),F(1),F(1))))
+    refund = unit_refund_geometry(src,family,N,u,S,weighted_mass)
+    joint_geometry = joint_square_geometry(n,u) if N >= 12 else None
     upper = None
     if delta <= F(1,4000):
         K = 5
@@ -269,7 +457,8 @@ def calculate_family(src, joint, N):
                 z=z,s=s,S=S,S0=S0,qJ=qJ,delta=delta,rho=rho), finite_test=direct,
                 closed_formula=dict(zero7=V0,positive7=Vplus,total=V0+Vplus,raw35_nonunit=C),
                 forced_layer_upper=upper, limit_gap=F(38,63)-V0-Vplus,
-                pair_envelope_gaps=pair_gaps)
+                pair_envelope_gaps=pair_gaps,unit_refund_geometry=refund,
+                six_label_geometry=joint_geometry)
 
 
 
@@ -349,6 +538,7 @@ def calculate(base, proof, heights):
     square_boundary = scalar_boundary(base,io,joint)
     endpoint_rows = upper_endpoints(joint)
     results = [calculate_family(src,joint,N) for N in heights]
+    box = joint_square_box()
     limits = pair_envelope_gaps((F(1,24),F(1,12),F(1,36),F(1,18),F(1,24)),
                                (F(29,35),F(23,35),F(1),F(1),F(1)),F(5,6))
     gap_limits = {law:{key:limits[law][key] for key in ('raw_gap','normalized_gap')}
@@ -357,12 +547,13 @@ def calculate(base, proof, heights):
             == (F(1,420),F(1,90),F(13,504),F(520,4857)), 'Exact five-term gap limits')
     proof_bytes = io.read_artifact_bytes(proof)
     return io,encode(dict(schema='source-mean-sharpness-v1',
-        scope='Finite actual irredundant noncover sources and one finite complete own test for each height. The ordinary proof establishes the general K-layer upper and sharp limiting uniform mean38/63. No finite-delta optimizer, nonlinear-hinge sharpness, or unrestricted covering conclusion.',
+        scope='Actual irredundant noncover sources, sharp limiting mean38/63, exact six-label square clusters, and an actual first-hit unit-refund obstruction with a complete next11 bound. The full source Gamma and its maximizing residue table are not computed; no unrestricted covering conclusion.',
         source_sha256={p:sha256(io.read_artifact_bytes(base/p)).hexdigest() for p in SOURCES},
         ordinary_proof=dict(sha256=sha256(proof_bytes).hexdigest(),byte_count=len(proof_bytes)),
         producer_sha256=sha256(Path(__file__).read_bytes()).hexdigest(),
         affine_dominance_endpoints=endpoint_rows, sharp_mean=F(38,63), results=results,
-        direct_square_scalar_boundary=square_boundary,pair_envelope_gap_limits=gap_limits))
+        direct_square_scalar_boundary=square_boundary,pair_envelope_gap_limits=gap_limits,
+        joint_square_box=box))
 
 
 def main():
@@ -383,7 +574,7 @@ def main():
     else:
         require(result == json.loads(io.read_artifact_bytes(certificate),object_pairs_hook=io._unique),
                 'Complete exact sharpness certificate replay')
-    print('PASS affine dominance at18 endpoint vertices; complete actual finite test integrals; same-source pair gaps; all-threshold scalar boundary')
+    print('PASS affine dominance at18 endpoint vertices; complete finite integrals; pair gaps; all16 six-label box cases; actual unit-refund geometry; scalar boundary')
     for row in result['results']:
         print('N',row['height'],'originals',row['original_label_count'],
               'private checks',row['private_membership_checks'],'finite mean',row['finite_test']['total'])
