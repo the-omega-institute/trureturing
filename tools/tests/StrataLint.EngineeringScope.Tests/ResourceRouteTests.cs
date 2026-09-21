@@ -310,6 +310,7 @@ public sealed partial class ResourceRouteTests(Xunit.Abstractions.ITestOutputHel
     {
         using var fixture = new ResourceFixture(["lean-report"]);
         var produced = CiTransportTests.ProduceReport(fixture.Root);
+        testOutput.WriteLine(produced.Text);
         Assert.True(produced.Exit == 0, produced.Text);
         fixture.CommitPlan();
         fixture.Processes(prepareReport: false);
