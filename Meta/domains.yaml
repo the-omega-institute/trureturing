@@ -1,3 +1,4 @@
+# CI resource probe: domain metadata input changes without changing parsed domains.
 domains:
   Analytic:
     stratum: S3
