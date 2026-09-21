@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Globally injective terminal phases reduce core-first optimization; a seven-phase family defeats the fixed balanced-profile budget for every adaptive order while retaining an uncovered integer and154 private class witnesses.](../docs/reports/erdos7-odd-covering/problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md)
 - [An adaptive five-prime initial block recovers fixed-phase noncoverage where all 120 fixed block orders fail the same budget; a cylinder dual excludes scheduling-only recovery of the fixed D7 allowance](../docs/reports/erdos7-odd-covering/problem-details/58-adaptive-initial-block-recovery-and-all-schedule-budget-obstruction.md)
 - [A balanced depth profile enlarges the fixed 154-class noncoverage result to the degree-seven exponent frontier with unrestricted original tails](../docs/reports/erdos7-odd-covering/problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md)
 - [Joint exponent frontier D9 extends the fixed 154-class noncoverage law; a cylinder-cover dual sharply bounds a literal 105 family](../docs/reports/erdos7-odd-covering/problem-details/56-exponent-frontiers-and-cylinder-cover-certificates.md)
