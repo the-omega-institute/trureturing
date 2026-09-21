@@ -1,0 +1,40 @@
+**定理 31.2（一个全时域等距与单 Kraus 符号仪器）。** 在定义31.1下，令
+$$
+m_i=r_i^{-1/2}\sum_{t=i}^{k-1}\sqrt{d_t}\,e_t,\qquad
+K_0=|m_0\rangle\langle e_{k-1}|,\qquad
+K_1=\sum_{t=0}^{k-2}|e_{t+1}\rangle\langle e_t|,\qquad
+W=|0\rangle\otimes K_0+|1\rangle\otimes K_1.
+\tag{31.4}
+$$
+这些 $m_i$ 为线性独立的单位向量，且
+$$
+\langle m_i,m_j\rangle=\frac{r_{\max(i,j)}}{\sqrt{r_ir_j}},\qquad
+W^*W=I_M,\qquad K_0^*K_0+K_1^*K_1=I_M.
+\tag{31.5}
+$$
+它们的转移为
+$$
+K_0m_i=\frac{m_0}{\sqrt{\lambda r_i}},\qquad
+K_1m_i=\sqrt{\frac{r_{i+1}}{\lambda r_i}}m_{i+1}\ (i<k-1),\qquad K_1m_{k-1}=0.
+\tag{31.6}
+$$
+因此同一个 $W:M\to B\otimes M$ 可在每一步作用于同一个继续保留的记忆；$\mathcal I_a(X)=K_aXK_a^*$ 是每个符号一个 Kraus 算子的合法仪器。
+
+证明。$\sum_{t=i}^{k-1}d_t=r_i$ 望远镜相消，给归一化及式（31.5）的重叠；列向量 $m_i$ 的系数矩阵为三角形，对角元 $\sqrt{d_i/r_i}>0$，所以独立。$K_0^*K_0=|e_{k-1}\rangle\langle e_{k-1}|$，而 $K_1^*K_1=\sum_{t<k-1}|e_t\rangle\langle e_t|$；输出基正交，故 $W^*W$ 恰为其和。$m_i$ 的最后坐标为 $\sqrt{d_{k-1}/r_i}=(\lambda r_i)^{-1/2}$，给零分支。对一分支，把指标 $s=t+1$，利用 $d_{s-1}=d_s/\lambda$，得到
+$$
+K_1m_i=\frac1{\sqrt{\lambda r_i}}\sum_{s=i+1}^{k-1}\sqrt{d_s}\,e_s;
+\tag{31.7}
+$$
+当 $i=k-1$ 和为空，其余即式（31.6）。每一分支完全正，其和保迹，故为仪器。
+
+若以新鲜且与既有联合系统独立的纯空白 $|0\rangle_B$ 实现，则空白子空间的嵌入与 $W$ 具有相同 Gram 矩阵。现有 [GramUnitaryExtension.exists_unitary_mul_eq_of_conjTranspose_mul_eq](../../../D5/S3/Quantum/Algebra/GramUnitaryExtension.lean)及[SequentialRegisterCircuit.rectangular_unitary](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)提供幺正延拓；具体地把两份 $k$ 个正交列各补成 $2k$ 维正交基即可得到同一个 $U_k$，满足 $U_k(|0\rangle\otimes\xi)=W\xi$。本节只验证其所需的特殊等距，不重建一般延拓定理。沿此准备不插入重置、隐藏丢弃环境或未记录反馈。$\square$
+
+非正交记忆与连续幺正生成的方法背景见 Binder–Thompson–Gu，*A practical, unitary simulator for non-Markovian complex processes*，[arXiv:1709.02375](https://arxiv.org/abs/1709.02375)。该方法归属与本节特殊系数的直接验证分开。
+
+当 $k=2$，令 $\alpha=\lambda^{-1}$。本节 $m_0=(\alpha,\sqrt\alpha)$、$m_1=e_1$；Q130.1使用 $m_0^Q=(\sqrt\alpha,\alpha)$、$m_1^Q=e_0$。仅交换记忆基的 $Ue_0=e_1,Ue_1=e_0$ 给
+$$
+Um_i=m_i^Q,\qquad T_{\rm Q130}=(I_B\otimes U)WU^*.
+\tag{31.8}
+$$
+两边对张成 $M$ 的 $m_i^Q$ 有同一转移，故等式成立；输出基没有交换。
+
