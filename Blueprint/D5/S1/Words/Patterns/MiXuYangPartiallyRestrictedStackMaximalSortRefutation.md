@@ -108,6 +108,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/MiXuYangPartiallyRestrictedStackMaximalSortRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mi-xu-yang-2025-partially-restricted-stack-maximal-sort-refutation` (refuted) by `D5/S1/Words/Patterns/MiXuYangPartiallyRestrictedStackMaximalSortRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mi-xu-yang-2025-partially-restricted-stack-maximal-sort-refutation","declaration_gid":"D5/S1/Words/Patterns/MiXuYangPartiallyRestrictedStackMaximalSortRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jared Mi; Jeffrey Xu; Jason Yang (2025). *Partially Restricted Stacks as Functions*. DOI: [10.54550/ECA2025V5S3R22](https://doi.org/10.54550/ECA2025V5S3R22). URL: <https://ecajournal.haifa.ac.il/Volume2025/ECA2025_S2A22.pdf>.

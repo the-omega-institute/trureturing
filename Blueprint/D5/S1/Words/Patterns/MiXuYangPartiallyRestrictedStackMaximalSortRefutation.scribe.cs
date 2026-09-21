@@ -73,7 +73,11 @@ internal sealed class MiXuYangPartiallyRestrictedStackMaximalSortRefutationDocum
                 "At n=3, t sends 132 to 321 and s sends 321 to 123. Thus 132 takes exactly one "
                     + "sort, which equals 2*3-5, but it cannot begin with 2 and so cannot have the "
                     + "form 2 sigma 1 3. This refutes the only-if direction.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "mi-xu-yang-2025-partially-restricted-stack-maximal-sort-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -82,14 +86,16 @@ internal sealed class MiXuYangPartiallyRestrictedStackMaximalSortRefutationDocum
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("mi-xu-yang-" + id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula ContainsFormula()
     {
