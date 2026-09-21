@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7d027a03602896d219e60d07388c04621438e07f8c8215766d43a694d9dd2137
+  normalized_sha256: sha256:7d027a03602896d219e60d07388c04621438e07f8c8215766d43a694d9dd2137
+cas_ref: sha256:7d027a03602896d219e60d07388c04621438e07f8c8215766d43a694d9dd2137
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure upstream strong heat endpoint continuity: lp.hasSum_norm/norm_rpow_eq_tsum and tendsto_tsum_of_dominated_convergence, with bound (2*d_j*nu^(-j))^2*||x_k||^2 for every fixed input, give continuity at0. The exact multiplier has value id at j=0 and zero at j>0. The fixed real solenoidal restriction preserves those identities. No operator-time norm continuity is used and no project GID contributes. Mathlib db584 closes the clause.'
+    previous_atom_id: 270e4bd8b2fc1b75b98d0132656742cb3d579a51c5514bc726b90af9e22c1154
+    next_atom_id: 5104007a0ec141b11177aa6b756ba4e9e2d85aca619ce188cd1dbea02725fc9c

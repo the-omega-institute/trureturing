@@ -25,7 +25,8 @@
     "kind": "inline",
     "value": {
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "aa9959f0d19609356fa10e82549d5f842b2cd6c202e30eff2f9777c3931592c7",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+      "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
       "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
       "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
       "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
@@ -35,6 +36,6 @@
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "c0467cc43d3f0ef7948b045fc00ccb0f9b525f0a070a80d6738e59a860659958"
+    "value": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3"
   }
 }
