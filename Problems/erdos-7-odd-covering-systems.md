@@ -34,6 +34,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [At most two cycles per original incidence component gives noncoverage at arbitrary ranks and heights, full Haar density and unrestricted large-prime continuation](../docs/reports/erdos7-odd-covering/problem-details/51-incidence-bicyclic-components-with-arbitrary-original-heights.md)
+- [At most five distinct mixed supports per prime gives noncoverage at arbitrary ranks and heights, with full Haar density from actual conditional avoidance ratios](../docs/reports/erdos7-odd-covering/problem-details/50-prime-support-incidence-at-most-five.md)
 - [Arbitrary-rank prime-support incidence pseudoforests are noncovering, with height-independent full Haar density and unrestricted large-prime continuation](../docs/reports/erdos7-odd-covering/problem-details/49-incidence-pseudoforests-with-arbitrary-original-heights.md)
 - [Prime-support incidence forests admit simultaneous original-label extensions, a full Haar density bound and an unchanged-source attachment budget](../docs/reports/erdos7-odd-covering/problem-details/48-incidence-forests-with-arbitrary-original-heights.md)
 - [An anchored order with at most four earlier neighbours is noncovering: a record-minimum potential pays for arbitrary prime order and gives full Haar density greater than (107/240000)(5/12)^M](../docs/reports/erdos7-odd-covering/problem-details/44-anchored-four-predecessor-orders-via-record-minimum-potential.md)
