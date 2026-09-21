@@ -14,11 +14,28 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("tools/scripts/worktree/lean_cache_release.py", true)]
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", true)]
     public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string path, bool invalidates)
+        => AssertRegisteredFixtureInputOwnership("StrataLint.Cache.Tests", path, invalidates);
+
+    [Theory]
+    [InlineData("Reg/lakefile.toml", true)]
+    [InlineData("Reg/lake-manifest.json", true)]
+    [InlineData("tools/lean-inspector/tests/packages/reg.py", true)]
+    [InlineData("tools/lean-inspector/tests/test_native_support.py", true)]
+    [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", true)]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean", true)]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Registry/Repository.lean", true)]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Syntax.lean", true)]
+    [InlineData("Reg/D5/Fixture.lean", false)]
+    [InlineData("tools/lean-inspector/tests/packages/README.md", false)]
+    public void RegisteredLeanFixtureInputsInvalidateConsumedMaterialsOnly(string path, bool invalidates)
+        => AssertRegisteredFixtureInputOwnership("StrataLint.Lean.Tests", path, invalidates);
+
+    private static void AssertRegisteredFixtureInputOwnership(string project, string path, bool invalidates)
     {
         using var fixture = new CandidateFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
-            == "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj")!;
+            == $"tools/tests/{project}/{project}.csproj")!;
         EditRegistration(fixture, rows =>
         {
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
@@ -44,9 +61,13 @@ public sealed partial class CurrentExecutionContractTests
 
         var calls = Execute(fixture);
         Assert.True(calls.SequenceEqual(invalidates ? new[] { CandidateFixture.First } : []),
-            $"[FAIL] cache_fixture_input_isolation: {path}: invalidates={invalidates}; executed={string.Join(',', calls)}");
+            $"[FAIL] registered_fixture_input_isolation: {project}: {path}: invalidates={invalidates}; executed={string.Join(',', calls)}");
         var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
-        if (invalidates) Assert.NotEqual(prior.InputFingerprint, accepted.InputFingerprint);
+        if (invalidates)
+        {
+            Assert.NotEqual(prior.InputFingerprint, accepted.InputFingerprint);
+            Assert.Equal("executed", accepted.Status);
+        }
         else Assert.Equal(prior with { Status = "reused" }, accepted);
     }
 }
