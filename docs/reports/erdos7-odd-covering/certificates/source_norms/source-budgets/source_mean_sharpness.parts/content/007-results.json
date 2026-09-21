@@ -6,7 +6,7 @@
       "stop": 1,
       "part": {
         "path": "content/007-results/000000/single.json",
-        "sha256": "d73ce6056ceae308f10a0ab963fb866a6db7520e3ff7f9bebf47b8c97b03e80e",
+        "sha256": "201c60fe461bfd4d047389b9e99198e5ebb7e490c8409fa44314b0a349b3d276",
         "kind": "singleton"
       }
     },
@@ -15,7 +15,7 @@
       "stop": 2,
       "part": {
         "path": "content/007-results/000001/single.json",
-        "sha256": "12bd2b0d9bfa93e98e033571632fcb5fc246b98049364bdced9e9861c15882af",
+        "sha256": "f9bb814530a7fbb6e4ed25ae5c1d32fbe654c28772c7333329eac088809256c0",
         "kind": "singleton"
       }
     },
@@ -24,7 +24,7 @@
       "stop": 3,
       "part": {
         "path": "content/007-results/000002/single.json",
-        "sha256": "c7290ad9a1c0d295f3a138c3d6abb29fae622f9fdf3b734bcbe4a24054b854b4",
+        "sha256": "fb69db7fb85dc134c86d332d356af8c3ed3039d6e7398d5ae61834f0178e63ef",
         "kind": "singleton"
       }
     }

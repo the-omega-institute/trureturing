@@ -10,12 +10,12 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/source_mean_sharpness.json": "404007dc7793d6b046e1433ad6560685d11815ca1c242241cf0f775dfa7dd044",
+      "certificates/source_norms/source-budgets/source_mean_sharpness.json": "3fe85edbdcb978d4aa0d87dfe67c64bc047d2027cd3819980383ffb1f0fb7f02",
       "frontier/source-budgets/nonunit_tail_floors.json": "ef2ff992fd12c6b7c850e8d8313d68663b58cf51d25648d65dbd00b2cd1a0797",
       "frontier/source-budgets/nonunit_persistent_floors.json": "b5cdfaef1663646f691434b77babcaac8d81c46b93a802e3e18a8dc0f7451c69",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
-      "profile-notes/321-384/339-irredundant-source-seven-labels-bound-the-actual-surplus.md": "64084648d47e86edcbcc42bd52f1a7fd4a7e4e3663453b85ccf05db37027bd28"
+      "profile-notes/321-384/339-irredundant-source-seven-labels-bound-the-actual-surplus.md": "3d77656ef2b90f338a1f34d3d85797ec7f9eda603251ac5f55d0327f6cd8905b"
     }
   },
   "ordinary_proof": {
