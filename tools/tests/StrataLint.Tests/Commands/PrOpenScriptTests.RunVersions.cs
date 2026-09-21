@@ -332,6 +332,57 @@ public sealed partial class PrOpenScriptTests
     }
 
     [Theory]
+    [InlineData(false, "contradictory-first")]
+    [InlineData(true, "contradictory-first")]
+    [InlineData(false, "contradictory-last")]
+    [InlineData(true, "contradictory-last")]
+    [InlineData(false, "duplicate-matching")]
+    [InlineData(true, "duplicate-matching")]
+    [InlineData(false, "incomplete-trailing")]
+    [InlineData(true, "incomplete-trailing")]
+    [InlineData(false, "empty")]
+    [InlineData(true, "empty")]
+    [InlineData(false, "array")]
+    [InlineData(true, "array")]
+    public void PrWatchRequiresExactlyOneCompleteOriginMetadataObject(bool currentEndpoint, string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var old = Check("engineering", "COMPLETED", "CANCELLED");
+        var current = Check("engineering", "COMPLETED", "SUCCESS", checkId: 102, runId: 202, runNumber: 2);
+        AddOrigin(fixture, [old], 42);
+        AddOrigin(fixture, [current], 42);
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", old, current)));
+        var metadata = JsonSerializer.SerializeToNode(new
+        {
+            id = 202, run_attempt = 1, run_number = 2, head_sha = HeadSha,
+            @event = "pull_request", workflow_id = 301, check_suite_id = 1202,
+            repository = new { id = 401, full_name = "owner/repo" }, path = ".github/workflows/root.yml",
+        })!;
+        var matching = metadata.ToJsonString();
+        metadata["run_attempt"] = 2;
+        var contradictory = metadata.ToJsonString();
+        var response = defect switch
+        {
+            "contradictory-first" => contradictory + "\n" + matching,
+            "contradictory-last" => matching + "\n" + contradictory,
+            "duplicate-matching" => matching + "\n" + matching,
+            "incomplete-trailing" => matching + "\n{",
+            "empty" => "",
+            "array" => "[" + matching + "]",
+            _ => throw new ArgumentOutOfRangeException(nameof(defect)),
+        };
+        var endpoint = "repos/owner/repo/actions/runs/202" + (currentEndpoint ? "" : "/attempts/1");
+        fixture.ApiResponse(endpoint, response);
+
+        var result = fixture.RunWatch42();
+
+        Assert.True(result.ExitCode == 69, $"watcher_exit={result.ExitCode}\n" + Text(result.StandardOutput) + Text(result.StandardError));
+        Assert.Contains(fixture.Invocations, invocation => invocation.Contains("api " + endpoint + "|", StringComparison.Ordinal));
+        Assert.DoesNotContain("outcome=green", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Contains("reason=ambiguous-pr-origin", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(42, 43, 0)]
     [InlineData(43, 42, 69)]
     public void PrWatchUsesFirstRootRatherThanNestedLeaf(int rootPr, int leafPr, int exit)

@@ -414,7 +414,9 @@ origin_for_run() {
   printf '%s\n' "$identity"
 }
 origin_metadata_matches() {
-  jq -e --argjson expected "$2" --arg head "$3" '
+  # Parse the entire response once; jq -e on a stream only checks its last result.
+  jq -Rse --argjson expected "$2" --arg head "$3" '
+    fromjson | select(type == "object") |
     .id == $expected.run.databaseId and .run_attempt == $expected.run.runAttempt and
     .run_number == $expected.run.runNumber and .head_sha == $head and
     .event == $expected.run.event and .workflow_id == $expected.run.workflow.databaseId and
