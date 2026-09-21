@@ -1,0 +1,56 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "balanced-four-phase-fixed-first-five-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Exact fixed-order head optima for all120 permutations of the first5 primes, remaining coordinates numerical; same globally fixed four-modified154 original labels and named profiles. Every value is reproducible and separately checked by the actual-leaf integer-cap verifier. No claim about all20! fixed orders."
+  },
+  "input": {
+    "kind": "inline",
+    "value": "frontier/source-budgets/adaptive_phase_head_input.json"
+  },
+  "records": {
+    "path": "content/003-records.json",
+    "sha256": "4dc41c32e1e5310cefe73b38e7532713caa087652235f3406a16f4cd11fe013e",
+    "kind": "array"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/source-budgets/adaptive_phase_io.py": "befaad88f3e9e7303920faf30e4f6ae8e14a8f79b8e167ada5d3afa51f3324c3",
+      "problem-details/58-adaptive-initial-block-recovery-and-all-schedule-budget-obstruction.md": "2aac02eaaaf2dda17068b37c2b5e8964bc609b0db30ba238bc54f5d2da5d66f5",
+      "problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md": "70c1c2eafee2d18ac9b8a29944adca71e7ca7237f4356dc6ecb9f1b5391998e8",
+      "problem-details/56-exponent-frontiers-and-cylinder-cover-certificates.md": "c8b67933791bd6eeb3925159b9b3219d3492703cd340ee720e0bc9d07dd8bee5",
+      "problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md": "dc243704b9e01b5719f6becf97ea93a6c5c25fb0a254e0b7a8fd8aab29b0a370",
+      "frontier/source-budgets/adaptive_phase_head_input.json": "1253b904f3f22348b304e5f45ea8478a4fd5df9885ca55ec70ef858bace35660",
+      "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+      "certificates/source_norms/source-budgets/balanced_profile_tail_budget.json": "43ee684630214cc0bc5b94ea05528f4f7fda023d3071e890224d4e7dce21164a",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+      "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+      "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+      "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+      "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+      "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+      "frontier/source-budgets/balanced_profile_head.py": "daa64daeff8c6a7dc474a965b59473929f1b63fec48e3ef2465b399eb1945dc5",
+      "certificates/source_norms/source-budgets/balanced_profile_head.json": "13ef27bd3ea3472257faf3ec3394949f7f2fad28fca1998c7ffd201f6ff53914",
+      "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+      "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+      "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+      "verify_finite_continuation.py": "c0a4fa266d5e114b77303d195b2f88fe570ee09ae2b34b2b0889e0585c2f9390",
+      "certificates/source_norms/source-budgets/balanced_profile_head_verification.json": "22c110d6b64544bcf143afefcd8cab0236fa520228f814b5b634efebb49ac650",
+      "frontier/source-budgets/verify_balanced_profile_head.py": "9f81ef4a32e3818e27c84f027807bcda7cca9e4beb02d755eba0694342031307",
+      "frontier/source-budgets/balanced_profile_tail_budget.py": "e29ce190d3cc7a4ce5126f5d35fe60ac17745016b80b89bbb7cc01c8a47a0dd3"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "430ec415c4e3bc94c1923a00335e9a87d2bf699d162759034727c9d27a5ecd3f"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "independent-expanded-stop-upward-divisor-audit-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Same literal seven-phase head and balanced caps, fixed numerical head order, full uniform high digits, exact same-law tail charges and complete-layout moments. The D7 extension includes only distinct73-smooth added moduli outside D7."
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "retained_states": {
+    "kind": "inline",
+    "value": 26214
+  },
+  "snapshots": {
+    "path": "content/004-snapshots.json",
+    "sha256": "9d35cc12e133c59a3686d546839e0a402f88f5c6172c4edfc11402b3068f6b38",
+    "kind": "value"
+  },
+  "stages": {
+    "path": "content/005-stages.json",
+    "sha256": "c3253041939654c67b17366a5887501717092992f99872fb7c22f2450ca220ba",
+    "kind": "array"
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "head_updates": 20,
+      "tail_updates": 6521,
+      "mass_divisor_terms": 1771008455,
+      "charge_mass_terms": 80913331,
+      "stage_comparisons": 6521
+    }
+  },
+  "simple_bounds": {
+    "kind": "inline",
+    "value": {
+      "epsilon_strict_upper": "381/1000",
+      "E7_strict_upper": "1/25",
+      "B32768": {
+        "C_strict_upper": "527/1000",
+        "J_strict_upper": "13906",
+        "T_strict_lower": "185000",
+        "survival_strict_lower": "23/250",
+        "Gamma_strict_upper": "3476273/23"
+      },
+      "B65536_D7": {
+        "C_strict_upper": "53/100",
+        "J_strict_upper": "19189",
+        "T_strict_lower": "414000",
+        "survival_strict_lower": "49/1000",
+        "Gamma_strict_upper": "19188049/49"
+      }
+    }
+  },
+  "source_sha256": {
+    "path": "content/008-source_sha256.json",
+    "sha256": "ef325e582cb4ed2fef5c1ef2e8f2d7f15186efb57b12035190b16eb2f523b7ff",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "6f8225c854a204c4b4038ed06e1db90596bab103577925183d2d2fc4bb07ce58"
+  }
+}
