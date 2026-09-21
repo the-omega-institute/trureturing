@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Enlarging the stop certifies the attained seven-phase head atB32768, and its full outside-D7 smooth extension atB65536, with every directed stage independently reproduced.](../docs/reports/erdos7-odd-covering/problem-details/62-expanded-stopping-cutoffs-for-the-seven-phase-head.md)
 - [Coordinatewise retention transports the exact auxiliary budget lower bound; combined with the fixed positive cylinder polynomial it excludes a full relative1/50000 box of all finite head-depth caps.](../docs/reports/erdos7-odd-covering/problem-details/61-coordinate-retention-and-profile-neighborhood-obstruction.md)
 - [A fixed positive cylinder cover yields a38-term multiaffine survivor bound at new caps on all20 head coordinates, with every coefficient independently reproduced.](../docs/reports/erdos7-odd-covering/problem-details/60-positive-cylinder-covers-across-head-profiles.md)
 - [Globally injective terminal phases reduce core-first optimization; a seven-phase family defeats the fixed balanced-profile budget for every adaptive order while retaining an uncovered integer and154 private class witnesses.](../docs/reports/erdos7-odd-covering/problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md)
