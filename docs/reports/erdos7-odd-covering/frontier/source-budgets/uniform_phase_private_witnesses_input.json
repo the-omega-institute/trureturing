@@ -1,0 +1,779 @@
+{
+  "scope": "Actual original seven-phase154 family; finite positive witness search, not assumed full-cover extremality.",
+  "window": 300000,
+  "private_witnesses": [
+    {
+      "modulus": 3,
+      "residue": 0,
+      "witness": 24
+    },
+    {
+      "modulus": 5,
+      "residue": 0,
+      "witness": 160
+    },
+    {
+      "modulus": 7,
+      "residue": 2,
+      "witness": 16
+    },
+    {
+      "modulus": 9,
+      "residue": 4,
+      "witness": 4
+    },
+    {
+      "modulus": 11,
+      "residue": 7,
+      "witness": 73
+    },
+    {
+      "modulus": 13,
+      "residue": 2,
+      "witness": 262
+    },
+    {
+      "modulus": 15,
+      "residue": 14,
+      "witness": 89
+    },
+    {
+      "modulus": 17,
+      "residue": 6,
+      "witness": 448
+    },
+    {
+      "modulus": 19,
+      "residue": 1,
+      "witness": 286
+    },
+    {
+      "modulus": 21,
+      "residue": 14,
+      "witness": 56
+    },
+    {
+      "modulus": 23,
+      "residue": 6,
+      "witness": 259
+    },
+    {
+      "modulus": 25,
+      "residue": 13,
+      "witness": 38
+    },
+    {
+      "modulus": 27,
+      "residue": 10,
+      "witness": 199
+    },
+    {
+      "modulus": 29,
+      "residue": 17,
+      "witness": 133
+    },
+    {
+      "modulus": 31,
+      "residue": 23,
+      "witness": 178
+    },
+    {
+      "modulus": 33,
+      "residue": 20,
+      "witness": 1571
+    },
+    {
+      "modulus": 35,
+      "residue": 27,
+      "witness": 377
+    },
+    {
+      "modulus": 37,
+      "residue": 20,
+      "witness": 316
+    },
+    {
+      "modulus": 39,
+      "residue": 14,
+      "witness": 677
+    },
+    {
+      "modulus": 41,
+      "residue": 20,
+      "witness": 61
+    },
+    {
+      "modulus": 43,
+      "residue": 17,
+      "witness": 146
+    },
+    {
+      "modulus": 45,
+      "residue": 26,
+      "witness": 71
+    },
+    {
+      "modulus": 47,
+      "residue": 12,
+      "witness": 1751
+    },
+    {
+      "modulus": 49,
+      "residue": 43,
+      "witness": 484
+    },
+    {
+      "modulus": 51,
+      "residue": 35,
+      "witness": 1973
+    },
+    {
+      "modulus": 53,
+      "residue": 25,
+      "witness": 608
+    },
+    {
+      "modulus": 55,
+      "residue": 28,
+      "witness": 83
+    },
+    {
+      "modulus": 57,
+      "residue": 5,
+      "witness": 1772
+    },
+    {
+      "modulus": 59,
+      "residue": 20,
+      "witness": 433
+    },
+    {
+      "modulus": 61,
+      "residue": 60,
+      "witness": 3232
+    },
+    {
+      "modulus": 63,
+      "residue": 32,
+      "witness": 4316
+    },
+    {
+      "modulus": 65,
+      "residue": 33,
+      "witness": 943
+    },
+    {
+      "modulus": 67,
+      "residue": 19,
+      "witness": 19
+    },
+    {
+      "modulus": 69,
+      "residue": 35,
+      "witness": 1622
+    },
+    {
+      "modulus": 71,
+      "residue": 10,
+      "witness": 2708
+    },
+    {
+      "modulus": 73,
+      "residue": 37,
+      "witness": 4271
+    },
+    {
+      "modulus": 75,
+      "residue": 53,
+      "witness": 503
+    },
+    {
+      "modulus": 77,
+      "residue": 67,
+      "witness": 298
+    },
+    {
+      "modulus": 81,
+      "residue": 46,
+      "witness": 208
+    },
+    {
+      "modulus": 85,
+      "residue": 17,
+      "witness": 1037
+    },
+    {
+      "modulus": 87,
+      "residue": 50,
+      "witness": 572
+    },
+    {
+      "modulus": 91,
+      "residue": 12,
+      "witness": 2014
+    },
+    {
+      "modulus": 93,
+      "residue": 8,
+      "witness": 101
+    },
+    {
+      "modulus": 95,
+      "residue": 76,
+      "witness": 1216
+    },
+    {
+      "modulus": 99,
+      "residue": 70,
+      "witness": 169
+    },
+    {
+      "modulus": 105,
+      "residue": 17,
+      "witness": 122
+    },
+    {
+      "modulus": 111,
+      "residue": 8,
+      "witness": 2672
+    },
+    {
+      "modulus": 115,
+      "residue": 21,
+      "witness": 136
+    },
+    {
+      "modulus": 117,
+      "residue": 1,
+      "witness": 2458
+    },
+    {
+      "modulus": 119,
+      "residue": 39,
+      "witness": 7774
+    },
+    {
+      "modulus": 121,
+      "residue": 41,
+      "witness": 2824
+    },
+    {
+      "modulus": 123,
+      "residue": 59,
+      "witness": 4241
+    },
+    {
+      "modulus": 125,
+      "residue": 26,
+      "witness": 151
+    },
+    {
+      "modulus": 129,
+      "residue": 118,
+      "witness": 1924
+    },
+    {
+      "modulus": 133,
+      "residue": 68,
+      "witness": 866
+    },
+    {
+      "modulus": 135,
+      "residue": 109,
+      "witness": 109
+    },
+    {
+      "modulus": 141,
+      "residue": 14,
+      "witness": 3398
+    },
+    {
+      "modulus": 143,
+      "residue": 47,
+      "witness": 47
+    },
+    {
+      "modulus": 145,
+      "residue": 142,
+      "witness": 2752
+    },
+    {
+      "modulus": 147,
+      "residue": 68,
+      "witness": 1391
+    },
+    {
+      "modulus": 153,
+      "residue": 97,
+      "witness": 556
+    },
+    {
+      "modulus": 155,
+      "residue": 78,
+      "witness": 6433
+    },
+    {
+      "modulus": 159,
+      "residue": 35,
+      "witness": 671
+    },
+    {
+      "modulus": 161,
+      "residue": 36,
+      "witness": 5027
+    },
+    {
+      "modulus": 165,
+      "residue": 143,
+      "witness": 2948
+    },
+    {
+      "modulus": 169,
+      "residue": 135,
+      "witness": 3346
+    },
+    {
+      "modulus": 171,
+      "residue": 25,
+      "witness": 1051
+    },
+    {
+      "modulus": 175,
+      "residue": 66,
+      "witness": 241
+    },
+    {
+      "modulus": 177,
+      "residue": 59,
+      "witness": 5723
+    },
+    {
+      "modulus": 183,
+      "residue": 55,
+      "witness": 1153
+    },
+    {
+      "modulus": 185,
+      "residue": 111,
+      "witness": 2701
+    },
+    {
+      "modulus": 187,
+      "residue": 50,
+      "witness": 1546
+    },
+    {
+      "modulus": 189,
+      "residue": 29,
+      "witness": 407
+    },
+    {
+      "modulus": 195,
+      "residue": 143,
+      "witness": 923
+    },
+    {
+      "modulus": 201,
+      "residue": 155,
+      "witness": 356
+    },
+    {
+      "modulus": 203,
+      "residue": 15,
+      "witness": 11383
+    },
+    {
+      "modulus": 205,
+      "residue": 32,
+      "witness": 6182
+    },
+    {
+      "modulus": 207,
+      "residue": 43,
+      "witness": 1078
+    },
+    {
+      "modulus": 209,
+      "residue": 90,
+      "witness": 1762
+    },
+    {
+      "modulus": 213,
+      "residue": 187,
+      "witness": 2104
+    },
+    {
+      "modulus": 215,
+      "residue": 91,
+      "witness": 2671
+    },
+    {
+      "modulus": 217,
+      "residue": 207,
+      "witness": 641
+    },
+    {
+      "modulus": 219,
+      "residue": 215,
+      "witness": 1748
+    },
+    {
+      "modulus": 221,
+      "residue": 123,
+      "witness": 4543
+    },
+    {
+      "modulus": 225,
+      "residue": 11,
+      "witness": 2936
+    },
+    {
+      "modulus": 231,
+      "residue": 32,
+      "witness": 956
+    },
+    {
+      "modulus": 235,
+      "residue": 132,
+      "witness": 2717
+    },
+    {
+      "modulus": 243,
+      "residue": 100,
+      "witness": 2044
+    },
+    {
+      "modulus": 245,
+      "residue": 197,
+      "witness": 2402
+    },
+    {
+      "modulus": 247,
+      "residue": 127,
+      "witness": 1609
+    },
+    {
+      "modulus": 253,
+      "residue": 201,
+      "witness": 10321
+    },
+    {
+      "modulus": 255,
+      "residue": 8,
+      "witness": 13523
+    },
+    {
+      "modulus": 259,
+      "residue": 138,
+      "witness": 2987
+    },
+    {
+      "modulus": 261,
+      "residue": 124,
+      "witness": 124
+    },
+    {
+      "modulus": 265,
+      "residue": 6,
+      "witness": 6896
+    },
+    {
+      "modulus": 273,
+      "residue": 173,
+      "witness": 446
+    },
+    {
+      "modulus": 275,
+      "residue": 206,
+      "witness": 3506
+    },
+    {
+      "modulus": 279,
+      "residue": 25,
+      "witness": 3094
+    },
+    {
+      "modulus": 285,
+      "residue": 158,
+      "witness": 7283
+    },
+    {
+      "modulus": 287,
+      "residue": 200,
+      "witness": 6514
+    },
+    {
+      "modulus": 289,
+      "residue": 251,
+      "witness": 4586
+    },
+    {
+      "modulus": 295,
+      "residue": 183,
+      "witness": 11098
+    },
+    {
+      "modulus": 297,
+      "residue": 181,
+      "witness": 181
+    },
+    {
+      "modulus": 299,
+      "residue": 70,
+      "witness": 668
+    },
+    {
+      "modulus": 301,
+      "residue": 11,
+      "witness": 5128
+    },
+    {
+      "modulus": 305,
+      "residue": 196,
+      "witness": 4771
+    },
+    {
+      "modulus": 315,
+      "residue": 52,
+      "witness": 682
+    },
+    {
+      "modulus": 319,
+      "residue": 303,
+      "witness": 11149
+    },
+    {
+      "modulus": 323,
+      "residue": 150,
+      "witness": 4672
+    },
+    {
+      "modulus": 325,
+      "residue": 206,
+      "witness": 2806
+    },
+    {
+      "modulus": 329,
+      "residue": 57,
+      "witness": 26377
+    },
+    {
+      "modulus": 333,
+      "residue": 250,
+      "witness": 1249
+    },
+    {
+      "modulus": 335,
+      "residue": 277,
+      "witness": 30427
+    },
+    {
+      "modulus": 341,
+      "residue": 170,
+      "witness": 1193
+    },
+    {
+      "modulus": 343,
+      "residue": 78,
+      "witness": 9682
+    },
+    {
+      "modulus": 345,
+      "residue": 41,
+      "witness": 7976
+    },
+    {
+      "modulus": 351,
+      "residue": 154,
+      "witness": 3664
+    },
+    {
+      "modulus": 355,
+      "residue": 117,
+      "witness": 8992
+    },
+    {
+      "modulus": 357,
+      "residue": 26,
+      "witness": 2882
+    },
+    {
+      "modulus": 361,
+      "residue": 170,
+      "witness": 3058
+    },
+    {
+      "modulus": 363,
+      "residue": 2,
+      "witness": 11618
+    },
+    {
+      "modulus": 365,
+      "residue": 3,
+      "witness": 2923
+    },
+    {
+      "modulus": 369,
+      "residue": 367,
+      "witness": 8854
+    },
+    {
+      "modulus": 371,
+      "residue": 64,
+      "witness": 4516
+    },
+    {
+      "modulus": 375,
+      "residue": 308,
+      "witness": 1058
+    },
+    {
+      "modulus": 377,
+      "residue": 354,
+      "witness": 8648
+    },
+    {
+      "modulus": 385,
+      "residue": 277,
+      "witness": 3742
+    },
+    {
+      "modulus": 387,
+      "residue": 352,
+      "witness": 1126
+    },
+    {
+      "modulus": 391,
+      "residue": 333,
+      "witness": 1897
+    },
+    {
+      "modulus": 399,
+      "residue": 257,
+      "witness": 257
+    },
+    {
+      "modulus": 403,
+      "residue": 188,
+      "witness": 1397
+    },
+    {
+      "modulus": 405,
+      "residue": 154,
+      "witness": 559
+    },
+    {
+      "modulus": 407,
+      "residue": 104,
+      "witness": 17198
+    },
+    {
+      "modulus": 413,
+      "residue": 284,
+      "witness": 1936
+    },
+    {
+      "modulus": 423,
+      "residue": 7,
+      "witness": 5506
+    },
+    {
+      "modulus": 425,
+      "residue": 368,
+      "witness": 2918
+    },
+    {
+      "modulus": 427,
+      "residue": 166,
+      "witness": 593
+    },
+    {
+      "modulus": 429,
+      "residue": 245,
+      "witness": 5393
+    },
+    {
+      "modulus": 435,
+      "residue": 161,
+      "witness": 5816
+    },
+    {
+      "modulus": 437,
+      "residue": 45,
+      "witness": 12718
+    },
+    {
+      "modulus": 441,
+      "residue": 232,
+      "witness": 1114
+    },
+    {
+      "modulus": 451,
+      "residue": 258,
+      "witness": 29573
+    },
+    {
+      "modulus": 455,
+      "residue": 318,
+      "witness": 2593
+    },
+    {
+      "modulus": 459,
+      "residue": 190,
+      "witness": 5698
+    },
+    {
+      "modulus": 465,
+      "residue": 398,
+      "witness": 2258
+    },
+    {
+      "modulus": 469,
+      "residue": 243,
+      "witness": 11968
+    },
+    {
+      "modulus": 473,
+      "residue": 96,
+      "witness": 42193
+    },
+    {
+      "modulus": 475,
+      "residue": 161,
+      "witness": 16786
+    },
+    {
+      "modulus": 477,
+      "residue": 226,
+      "witness": 6427
+    },
+    {
+      "modulus": 481,
+      "residue": 235,
+      "witness": 3121
+    },
+    {
+      "modulus": 483,
+      "residue": 53,
+      "witness": 25652
+    },
+    {
+      "modulus": 493,
+      "residue": 126,
+      "witness": 31678
+    },
+    {
+      "modulus": 495,
+      "residue": 394,
+      "witness": 889
+    },
+    {
+      "modulus": 497,
+      "residue": 197,
+      "witness": 15604
+    }
+  ],
+  "found": 154,
+  "unresolved_moduli": [],
+  "comparable_containments": []
+}

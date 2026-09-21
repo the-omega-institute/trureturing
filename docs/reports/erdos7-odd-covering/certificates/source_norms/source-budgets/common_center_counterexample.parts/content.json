@@ -1,0 +1,57 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "common-center-counterexample-v1"
+  },
+  "status": {
+    "kind": "inline",
+    "value": "PASS"
+  },
+  "modulus": {
+    "kind": "inline",
+    "value": 15
+  },
+  "class_moduli": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      15
+    ]
+  },
+  "records": {
+    "path": "content/004-records.json",
+    "sha256": "7aae76bc27a2491b487f4eeff4db678eb9112d2f682801e8b95b0472f08022f3",
+    "kind": "array"
+  },
+  "row_column_cases": {
+    "path": "content/005-row_column_cases.json",
+    "sha256": "b3d28e761beb4f047e03aaa3d32fee5fb1472d529f7c877d4413c8d0244517ef",
+    "kind": "value"
+  },
+  "uniform_shift_min": {
+    "kind": "inline",
+    "value": 44
+  },
+  "uniform_shift_max": {
+    "kind": "inline",
+    "value": 48
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Arbitrary finite measures and their probability normalizations; no actual64 or capped-law realization claim."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/source-budgets/adaptive_phase_io.py": "befaad88f3e9e7303920faf30e4f6ae8e14a8f79b8e167ada5d3afa51f3324c3",
+      "problem-details/66-shared-phase-triangles-and-common-center-obstruction.md": "a62dbb183f2ecc8e93410e9d7a2c9cc061236e54a69fc0ba9f877e38b188e224",
+      "frontier/source-budgets/common_center_counterexample_input.json": "cc720708cf12db5d3e8af855c0c779249648bef73b603b751a322b308a94cd59"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "a95ffa01532e13cd5d515092079ffbcf7ef53971ae3b7f8e71f07530c6a18bfe"
+  }
+}

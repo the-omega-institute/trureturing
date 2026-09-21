@@ -1,0 +1,241 @@
+{
+  "schema": "independent-seven-phase-global-cylinder-obstruction-v1",
+  "scope": "Same154 numerical moduli and balanced profile, seven globally fixed phase edits. All-schedule global cylinder-cap obstruction only to the fixed baseline C/J/T certificate; not coverage. Clean mathematical source has no inherited computed epsilon field. Every original class has an independently checked private integer witness.",
+  "changes": [
+    {
+      "modulus": 25,
+      "original": 21,
+      "new": 13
+    },
+    {
+      "modulus": 39,
+      "original": 22,
+      "new": 14
+    },
+    {
+      "modulus": 45,
+      "original": 43,
+      "new": 26
+    },
+    {
+      "modulus": 55,
+      "original": 11,
+      "new": 28
+    },
+    {
+      "modulus": 63,
+      "original": 7,
+      "new": 32
+    },
+    {
+      "modulus": 189,
+      "original": 28,
+      "new": 29
+    },
+    {
+      "modulus": 225,
+      "original": 79,
+      "new": 11
+    }
+  ],
+  "private_witness_verification": {
+    "verified": 154,
+    "pairwise_checks": 23716,
+    "window": 300000,
+    "maximum_witness": 42193,
+    "nontrivial_divisor_checks": 584,
+    "odd_prime_support": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73
+    ]
+  },
+  "uncovered_integer": 34,
+  "profiles": [
+    [
+      "1",
+      "729/1100",
+      "243/1100",
+      "81/1100",
+      "27/1100",
+      "9/1100"
+    ],
+    [
+      "1",
+      "7/18",
+      "7/90",
+      "7/450"
+    ],
+    [
+      "1",
+      "49/229",
+      "7/229",
+      "1/229"
+    ],
+    [
+      "1",
+      "1243/9700",
+      "113/9700"
+    ],
+    [
+      "1",
+      "481/4700",
+      "37/4700"
+    ],
+    [
+      "1",
+      "17/220",
+      "1/220"
+    ],
+    [
+      "1",
+      "2147/32100",
+      "113/32100"
+    ],
+    [
+      "1",
+      "9/175"
+    ],
+    [
+      "1",
+      "53/1350"
+    ],
+    [
+      "1",
+      "53/1450"
+    ],
+    [
+      "1",
+      "53/1750"
+    ],
+    [
+      "1",
+      "53/1950"
+    ],
+    [
+      "1",
+      "53/2050"
+    ],
+    [
+      "1",
+      "17/750"
+    ],
+    [
+      "1",
+      "1/50"
+    ],
+    [
+      "1",
+      "17/950"
+    ],
+    [
+      "1",
+      "51/2950"
+    ],
+    [
+      "1",
+      "51/3250"
+    ],
+    [
+      "1",
+      "17/1150"
+    ],
+    [
+      "1",
+      "51/3550"
+    ]
+  ],
+  "records": [
+    {
+      "terminal_product": false,
+      "survival_upper": "196871989458222983522295761697/306240236010156250000000000000",
+      "bad_lower": "109368246551933266477704238303/306240236010156250000000000000",
+      "bad_lower_decimal": 0.35713219130456175,
+      "states": 44975,
+      "counts": {
+        "actual_leaf_evaluations": 3376330,
+        "terminal_states": 0,
+        "terminal_incidence_checks": 0,
+        "whole_prefix": 9362,
+        "children": 7482,
+        "already_forbidden": 28130,
+        "no_live_labels": 1
+      }
+    },
+    {
+      "terminal_product": true,
+      "survival_upper": "696181396681816852739454137354543/1086338369123261718750000000000000",
+      "bad_lower": "390156972441444866010545862645457/1086338369123261718750000000000000",
+      "bad_lower_decimal": 0.3591486626366003,
+      "states": 35558,
+      "counts": {
+        "actual_leaf_evaluations": 3191384,
+        "terminal_states": 5232,
+        "terminal_incidence_checks": 397632,
+        "whole_prefix": 5687,
+        "children": 4019,
+        "already_forbidden": 20620,
+        "no_live_labels": 0
+      }
+    }
+  ],
+  "C_upper": "130197276585546949/250000000000000000",
+  "J_upper": "617212231457700477699/62500000000000000",
+  "T_lower": "326059/4",
+  "eta": "29187881279576281900621/81513750000000000000000",
+  "baseline_score_lower": "189113081175577219987900984117892393347/188909897037058719843750000000000000000",
+  "baseline_score_lower_decimal": 1.0010755611098483,
+  "strict_margin": "203184138518500144150984117892393347/188909897037058719843750000000000000000",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/adaptive_phase_io.py": "befaad88f3e9e7303920faf30e4f6ae8e14a8f79b8e167ada5d3afa51f3324c3",
+    "problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md": "1a946aea6c102017f2f19e66d34b605b6dda338bb62efc104123ce7b2dafc409",
+    "frontier/source-budgets/uniform_phase_capacity_input.json": "ea227d216660f496ecb3a2c89dbc145605f0ad83c94e5996a7ee76d746ea712b",
+    "frontier/source-budgets/uniform_phase_private_witnesses_input.json": "984cc949bc2ee28241be008c9506d82afbd1b410de50ba41286c3e82040fae93",
+    "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+    "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+    "frontier/source-budgets/uniform_phase_capacity.py": "7108c17a504ff7ee68faccd223964682ff0e21d86297f2b85fa2ed285dbdb32f",
+    "frontier/source-budgets/verify_balanced_profile_tail_budget.py": "47c879983216081dc6cda36e0625b2b4e2f3c9527b519d6bd65fe991701e27eb",
+    "certificates/source_norms/source-budgets/balanced_profile_tail_verification.json": "efe77669ceabee38d5c5b94af03856a894c99f42e6792ef95a61a4fe2b8253a7",
+    "problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md": "dc243704b9e01b5719f6becf97ea93a6c5c25fb0a254e0b7a8fd8aab29b0a370",
+    "certificates/source_norms/source-budgets/balanced_profile_head_verification.json": "22c110d6b64544bcf143afefcd8cab0236fa520228f814b5b634efebb49ac650",
+    "frontier/source-budgets/balanced_profile_head.py": "daa64daeff8c6a7dc474a965b59473929f1b63fec48e3ef2465b399eb1945dc5",
+    "certificates/source_norms/source-budgets/balanced_profile_head.json": "13ef27bd3ea3472257faf3ec3394949f7f2fad28fca1998c7ffd201f6ff53914",
+    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+    "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+    "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+    "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+    "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+    "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+    "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+    "frontier/source-budgets/verify_balanced_profile_head.py": "9f81ef4a32e3818e27c84f027807bcda7cca9e4beb02d755eba0694342031307",
+    "certificates/source_norms/source-budgets/balanced_profile_tail_budget.json": "43ee684630214cc0bc5b94ea05528f4f7fda023d3071e890224d4e7dce21164a",
+    "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+    "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+    "verify_finite_continuation.py": "c0a4fa266d5e114b77303d195b2f88fe570ee09ae2b34b2b0889e0585c2f9390",
+    "frontier/source-budgets/balanced_profile_tail_budget.py": "e29ce190d3cc7a4ce5126f5d35fe60ac17745016b80b89bbb7cc01c8a47a0dd3",
+    "certificates/source_norms/source-budgets/uniform_phase_capacity.json": "23870ef8d682d5e0a4d1e4c96323532c844d0549be99359cf74412c5ae306b3e",
+    "problem-details/58-adaptive-initial-block-recovery-and-all-schedule-budget-obstruction.md": "2aac02eaaaf2dda17068b37c2b5e8964bc609b0db30ba238bc54f5d2da5d66f5"
+  },
+  "producer_sha256": "0cc4a4aba3b25212ee82b767c3fb8efa4c22b8aa73225fd9a9447b969cdc5441"
+}
