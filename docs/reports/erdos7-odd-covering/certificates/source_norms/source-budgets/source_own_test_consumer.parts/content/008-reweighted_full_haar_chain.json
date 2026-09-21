@@ -90,7 +90,7 @@
       "capacity_B": "9204767/168070000",
       "capacity_root1": "2401/19200",
       "error_derivative": "-26257337/24202080",
-      "formula": "T >= (11/8)*(3/20+rho-(263/360)*delta0) - capacity_B/8 - 3*capacity_root1/8"
+      "expression": "T >= (11/8)*(3/20+rho-(263/360)*delta0) - capacity_B/8 - 3*capacity_root1/8"
     }
   },
   "head": {
