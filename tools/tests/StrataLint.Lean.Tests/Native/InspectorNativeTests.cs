@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
@@ -30,11 +31,19 @@ internal static class InspectorNativeTestRunner
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
+        var clock = TimeProvider.System;
+        Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "start", suite, utc = clock.GetUtcNow() }));
+        var prepared = clock.GetTimestamp();
         string[] environment = suite.StartsWith("test_native.", StringComparison.Ordinal)
             ? [$"STRATALINT_NATIVE_COMPILER_SEED={compiler.Path}"] : [];
+        Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "compiler-ready", suite,
+            utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(prepared).TotalMilliseconds }));
+        var executed = clock.GetTimestamp();
         var result = TestProcessRunner.Run("env",
             [.. environment, "python3", "-B", "-m", "unittest", suite, "-v"],
             Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+        Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "child-exit", suite,
+            utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(executed).TotalMilliseconds, raw_exit = result.ExitCode }));
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
     }
