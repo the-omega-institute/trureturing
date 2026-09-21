@@ -13,13 +13,16 @@ internal sealed class BinomialUniformMaximumDocument : IScribeDocumentDefinition
                 "D5/S3/AnalyticClosure/BinomialUniformMaximum.uniform_upper"),
             H("Uniform upper bound without a mode assumption"),
             StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(),
+            AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Analytic/ouimet2020precise")),
             Blocks(Paragraph(Text(
                 "For every real parameter p strictly between zero and one and every "
                 + "positive epsilon, all sufficiently large n satisfy "
                 + "binomialMass(p,n,k) sqrt(2 pi n p (1-p)) <= 1+epsilon "
                 + "at every k from zero through n. The proof combines the "
                 + "existing relative local Gaussian approximation with its scaled "
-                + "tail estimate. It assumes no formula for the maximizing index."))),
+                + "tail estimate. These are classical local-limit ingredients; "
+                + "the exact uniform formulation is derived in this module. "
+                + "It assumes no formula for the maximizing index and does not "
+                + "itself assert the powered-ratio maximum asymptotic."))),
             DescribeRole.Theorem))));
 }

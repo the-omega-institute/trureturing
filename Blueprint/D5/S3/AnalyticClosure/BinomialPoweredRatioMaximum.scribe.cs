@@ -4,6 +4,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.AnalyticClosure;
 
 internal sealed class BinomialPoweredRatioMaximumDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Analytic/byun2026unimodality");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite maximum of the actual powered-sum ratio has its exact asymptotic constant.",
         H("Maximum of the Powered Binomial Ratio"),
@@ -14,7 +17,7 @@ internal sealed class BinomialPoweredRatioMaximumDocument : IScribeDocumentDefin
                     "D5/S3/AnalyticClosure/BinomialPoweredRatioMaximum.maximumValue"),
                 H("Finite maximum including both endpoints"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "The maximum is taken over every natural r from zero through m "
                     + "of poweredRatio, whose denominator is the powered binomial sum. "
@@ -26,7 +29,9 @@ internal sealed class BinomialPoweredRatioMaximumDocument : IScribeDocumentDefin
                     "D5/S3/AnalyticClosure/BinomialPoweredRatioMaximum.maximum_asymptotic"),
                 H("Exact maximum asymptotic for every positive natural power"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Source,
+                    LibraryNoteRef.Create("D5/L/Analytic/abel2013binomial"),
+                    LibraryNoteRef.Create("D5/L/Analytic/ouimet2020precise")),
                 Blocks(
                     Paragraph(Text(
                         "For every fixed positive real a and positive natural l, the "
@@ -36,14 +41,21 @@ internal sealed class BinomialPoweredRatioMaximumDocument : IScribeDocumentDefin
                         + "((1+2a)/(1+a))^((m+1/2)l). "
                         + "The real exponent (l-2)/2 includes l=1 without "
                         + "natural-number subtraction. The expression is the target "
-                        + "specified in equation (1.4), Conjecture 1.1(d), of "
-                        + "Byun–Poznanovic, arXiv:2604.14639v1.")),
+                        + "specified in Conjecture 1.1(d) for the sequence "
+                        + "(1.4) of the source.")),
                     Paragraph(Text(
                         "The proof uses a floor comparison, localization of actual "
                         + "ratio maximizers, the moving-endpoint geometric factor, "
                         + "normalization of the powered denominator along both "
                         + "sequences, and a uniform sharp binomial bound. Finite "
                         + "maximum existence is proved internally and ties are allowed. "
-                        + "No exact-peak, uniqueness, or unimodality premise is used."))),
+                        + "No exact-peak, uniqueness, or unimodality premise is used. "
+                        + "The complete weighted denominator normalization is a "
+                        + "classical literature result; it is not claimed as a "
+                        + "new discovery. Clauses (a)-(c) of the source conjecture "
+                        + "are outside this theorem. The source and eligibility "
+                        + "boundaries are recorded in "
+                        + "Problems/glasby-paseman-powered-ratio-maximum.md; "
+                        + "no typed resolution claim is made here."))),
                 DescribeRole.Theorem))));
 }
