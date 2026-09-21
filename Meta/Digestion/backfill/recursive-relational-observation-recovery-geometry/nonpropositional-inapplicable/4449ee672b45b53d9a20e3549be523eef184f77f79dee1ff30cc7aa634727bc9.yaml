@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4449ee672b45b53d9a20e3549be523eef184f77f79dee1ff30cc7aa634727bc9
+  normalized_sha256: sha256:4449ee672b45b53d9a20e3549be523eef184f77f79dee1ff30cc7aa634727bc9
+cas_ref: sha256:4449ee672b45b53d9a20e3549be523eef184f77f79dee1ff30cc7aa634727bc9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure upstream exact A Taylor estimate: taylor_mean_remainder_lagrange_iteratedDeriv with iteratedDeriv_exp_const_mul supplies coefficients h^ell/ell! and the remainder |h|^(N+1)/(N+1)!*d_(j+N+1)*a^(-j-N-1) on the entire signed viscosity segment in[a,b]. ContinuousLinearMap.opNorm_le_bound and ContinuousMap.norm_le give the path-operator norm version. The quadratic remainder and hasDerivAt_iff_isLittleO_nhds_zero give actual derivatives; ContinuousMultilinearMap.smulRightL/mkPiAlgebraFin and HasFTaylorSeriesUpToOn.contDiffOn give smoothness. No project GID contributes. Mathlib db584 closes the clause.'
+    previous_atom_id: 5104007a0ec141b11177aa6b756ba4e9e2d85aca619ce188cd1dbea02725fc9c
+    next_atom_id: c3bc9ac6fd8b2e0c7bcab1f7aa8b01b1f32737963bc6b7d76628a6b26392255e

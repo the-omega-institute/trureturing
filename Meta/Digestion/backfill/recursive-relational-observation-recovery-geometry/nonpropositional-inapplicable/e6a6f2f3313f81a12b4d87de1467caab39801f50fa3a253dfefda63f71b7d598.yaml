@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6a6f2f3313f81a12b4d87de1467caab39801f50fa3a253dfefda63f71b7d598
+  normalized_sha256: sha256:e6a6f2f3313f81a12b4d87de1467caab39801f50fa3a253dfefda63f71b7d598
+cas_ref: sha256:e6a6f2f3313f81a12b4d87de1467caab39801f50fa3a253dfefda63f71b7d598
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure upstream exact actual K_j bound: K_j(nu,s) has multiplier (-s*rho)^j exp(-nu*s*rho) times the orthogonal Leray projection and tensor divergence. norm_inner_le_norm, Submodule norm_starProjection bounds, lp.mapCLM/norm_mapCLM_le, Real.pow_div_factorial_le_exp, le_csSup/csSup_le and v=nu*s*rho normalization give c_j*nu^(-j-1/2)*s^(-1/2) for all j>=0,nu,s>0 and all frequencies. Taylor suppliers and hasDerivAt_iff_isLittleO_nhds_zero identify the actual viscosity derivatives. These estimates do not use the quantitative WTC theorem; its weight definition is coordinate notation only. No usable project GID; pinned Mathlib db584 closes this clause.'
+    previous_atom_id: fadcfc29a195f9d25893e8707a689a5163ba52454dfb19a4dc3a0fa8587c28c3
+    next_atom_id: f6daeb6714a690f168e514c82c84e88fa8a75f5afff7c196314058da4930cf9c

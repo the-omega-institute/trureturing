@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c3bc9ac6fd8b2e0c7bcab1f7aa8b01b1f32737963bc6b7d76628a6b26392255e
+  normalized_sha256: sha256:c3bc9ac6fd8b2e0c7bcab1f7aa8b01b1f32737963bc6b7d76628a6b26392255e
+cas_ref: sha256:c3bc9ac6fd8b2e0c7bcab1f7aa8b01b1f32737963bc6b7d76628a6b26392255e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Scope clarification, with no positive mathematical assertion to cover: the proof claims viscosity smoothness in path-operator norm and fixed-input strong time continuity, and does not assert operator-norm time continuity at t=0. Settle this boundary sentence as nonpropositional under the current contract; it is not counted as a new proved result.'
+    previous_atom_id: 4449ee672b45b53d9a20e3549be523eef184f77f79dee1ff30cc7aa634727bc9
+    next_atom_id: c2372a5b67384a78585e6c34691816eb3d8627b5b98d0ce72b5a65b33b52bb7b
