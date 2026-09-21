@@ -48,11 +48,14 @@ internal static class DeclaredTemplateBindingRule
         var emitted = new HashSet<InformationOccurrenceKey>();
         foreach (var path in InformationTemplateSelection.ChangedProducers(context))
         {
-            // During expansion, D5 registrations use the same owner/occurrence
-            // reader as Reg. They are assessed without supplying mirror coverage.
-            Assess(path, () => InformationTemplateEvidence.Collect(context.Current, context.Lean.Report, [path]));
-            if (InformationTemplateSelection.IsRegSource(path)
-                || !context.Lean.Report.Files.TryGetValue(path, out var module)) continue;
+            if (InformationTemplateSelection.IsRegSource(path))
+            {
+                Assess(path, () => InformationTemplateEvidence.Collect(context.Current, context.Lean.Report, [path]));
+                continue;
+            }
+            // D5 supplies mathematical declarations only. Its registration payload
+            // is never an evidence source; new public theorems use their Reg mirror.
+            if (!context.Lean.Report.Files.TryGetValue(path, out var module)) continue;
             var currentNames = LeanDeclarationSourceNames.Read(context.Current.Files[path].Text);
             var baseNames = context.Baseline.Files.TryGetValue(path, out var baseline)
                 ? LeanDeclarationSourceNames.Read(baseline.Text) : ImmutableDictionary<string, string>.Empty;
@@ -67,7 +70,7 @@ internal static class DeclaredTemplateBindingRule
                 var validated = false;
                 foreach (var owner in mirrors.OrderBy(owner => owner.Value, StringComparer.Ordinal))
                     validated |= Assess(owner, () => InformationTemplateTheoremSelection.Collect(
-                        context.Current, context.Lean.Report, path, owner, names, mirrors))
+                        context.Current, context.Lean.Report, path, owner, names))
                         .Any(occurrence => occurrence.HasFourSlots && occurrence.Key.Theorem == theorem);
                 if (!validated)
                     findings.Add(new(path.Value, "DTR-Unregistered " + InformationTemplateEvidence.ModuleForSource(path.Value)

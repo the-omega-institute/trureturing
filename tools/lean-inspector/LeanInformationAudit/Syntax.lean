@@ -100,7 +100,6 @@ private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
     (registrationModule statementIdentityOverride : String) : CommandElabM Unit := do
   let theoremName <- resolveTheorem theoremId
   let objectArenaName <- resolveArena arenaId
-  liftTermElabM RootCatalogs.acquireSeededProvenance
   -- Source evidence is acquired by the declaration command, before IO-free sealing.
   discard <| liftTermElabM <| resolveCanonicalArenaName objectArenaName
   let env <- getEnv
@@ -696,18 +695,5 @@ private def elabNativeReadout : CommandElab := fun stx => do
 private def elabNativeOccurrenceReadout : CommandElab := fun stx =>
   withReadout ⟨stx[1]⟩ ⟨stx[3]⟩ (some ⟨stx[5]⟩) ⟨stx[11]⟩ true stx[17] stx[18]
     (lowerReadout stx ``informationTheoremOccurrenceCmd 8 17)
-
-@[command_elab declareInformationTemplateBindingCmd]
-private def elabBindingSidecar : CommandElab := fun stx => registrationTransaction do
-  let lawArena ← resolveArena ⟨stx[3]⟩
-  let explicitObject := stx[4].getNumArgs != 0
-  let objectArena ← if explicitObject then resolveArena ⟨stx[4][1]⟩ else pure lawArena
-  let arena ← liftTermElabM <| resolveCanonicalArenaName objectArena
-  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[8]⟩
-  if (← get).messages.hasErrors then return
-  let theoremName ← resolveTheorem ⟨stx[1]⟩
-  let catalogId := if explicitObject then some (catalogIdFrom ⟨stx[4][3]⟩) else none
-  TemplateBinding.declareSidecar theoremName arena catalogId descriptor diagnostic
-    (← elaborateEscapeInput stx[10] stx[11])
 
 end LeanInformationAudit

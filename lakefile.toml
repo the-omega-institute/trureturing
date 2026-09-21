@@ -1,7 +1,7 @@
 name = "trureturing"
 version = "0.1.0"
 keywords = ["mathematics", "formalization"]
-defaultTargets = ["Trureturing", "LeanInformationAudit"]
+defaultTargets = ["Trureturing"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -14,27 +14,7 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.33.0"
 
-[[require]]
-name = "leanInspector"
-path = "tools/lean-inspector"
-
-[[require]]
-name = "leanInspectorInterface"
-path = "tools/lean-inspector-interface"
-
 [[lean_lib]]
 name = "Trureturing"
 roots = ["Trureturing", "D5"]
 globs = ["Trureturing", "D5.+"]
-
-[[lean_lib]]
-name = "LeanInformationAudit"
-srcDir = "tools/lean-inspector"
-roots = ["LeanInformationAudit"]
-globs = ["LeanInformationAudit.+"]
-
-[[lean_lib]]
-name = "LeanInformationAuditAnalysis"
-srcDir = "tools/lean-inspector"
-roots = ["LeanInformationAuditAnalysis"]
-globs = ["LeanInformationAuditAnalysis.+"]

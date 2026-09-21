@@ -30,11 +30,6 @@ internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sour
     private readonly ImmutableHashSet<string> modules = sources
         .Select(InformationTemplateEvidence.ModuleForSource).ToImmutableHashSet(StringComparer.Ordinal);
 
-    internal bool HasRecords(JsonElement value) =>
-        value.ValueKind == JsonValueKind.Object
-        && value.TryGetProperty("records", out var records) && records.ValueKind == JsonValueKind.Array
-        && records.EnumerateArray().Any(record => IncludesRecord(record, ownerSelected: false));
-
     internal JsonElement Project(JsonElement value, string producer)
     {
         if (value.ValueKind != JsonValueKind.Object) return value;
@@ -48,7 +43,7 @@ internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sour
                 writer.WritePropertyName(property.Name);
                 if (property.Name is "inventory" or "registered" && !ownerSelected)
                 {
-                    // These are the sidecar producer's own registrations.
+                    // Only the selected registration owner's inventory is in scope.
                     writer.WriteStartArray();
                     writer.WriteEndArray();
                 }

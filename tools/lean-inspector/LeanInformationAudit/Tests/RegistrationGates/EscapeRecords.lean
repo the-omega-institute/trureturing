@@ -128,11 +128,7 @@ elab "observe_escape_record_routes" : command => do
     ("escape_occurrence_route", #["register_information_theorem statement in arena " ++
       "object_arena objectArena catalog complete " ++ descriptor ++
       "primitives reads.toPrimitiveBundle realization forward " ++
-      "variation lawVariation sensitivity slotSensitivity " ++ slots]),
-    ("escape_sidecar_route", #["register_information_theorem statement in arena " ++
-      "primitives reads.toPrimitiveBundle realization legacy " ++
-      "variation lawVariation sensitivity slotSensitivity",
-      "declare_information_template_binding statement in arena " ++ descriptor ++ slots])]
+      "variation lawVariation sensitivity slotSensitivity " ++ slots])]
   for (label, commands) in cases do
     let saved ← get
     modify fun state => { state with messages := {} }

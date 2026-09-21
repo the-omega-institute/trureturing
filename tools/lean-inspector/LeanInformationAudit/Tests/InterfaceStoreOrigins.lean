@@ -1,36 +1,36 @@
-import LeanInformationAudit.Tests.RegistrationGates.DeclaredSidecar
+import LeanInformationAudit.Tests.RegistrationGates.DeclaredRegistration
 import LeanInformationAudit.Census.Stream
 
 open Lean LeanInformationAudit LeanInformationAudit.TemplateBinding Lean.Elab.Command
 
--- Existing independently compiled source and sidecar exercise the raw olean reader.
+-- Existing independently compiled source and registration exercise the raw olean reader.
 run_cmd do
   let env ← getEnv
-  let source := `LeanInformationAudit.Tests.RegistrationGates.DeclaredSidecarSource
-  let sidecar := `LeanInformationAudit.Tests.RegistrationGates.DeclaredSidecar
-  let theoremName := `LeanInformationAudit.Tests.DeclaredSidecarSource.original
-  for owner in #[source, sidecar] do
+  let source := `LeanInformationAudit.Tests.RegistrationGates.DeclaredSource
+  let producer := `LeanInformationAudit.Tests.RegistrationGates.DeclaredRegistration
+  let theoremName := `LeanInformationAudit.Tests.DeclaredSource.original
+  for owner in #[source, producer] do
     let some index := env.getModuleIdx? owner
       | throwError "[FAIL] existing_origin_fixture_missing"
     let rows := CensusStream.registryRecords owner.toString env.header.moduleData[index.toNat]!
     let bindings ← ofExcept <| rows.getObjValAs? (Array Json) "bindings"
     let matching := bindings.filter fun row =>
       (row.getObjVal? "key").toOption == some (nameJson theoremName)
-    unless matching.size == 1 do throwError "[FAIL] native_binding_origin_count"
-    unless (matching[0]!.getObjValAs? String "module").toOption == some owner.toString do
+    unless matching.size == (if owner == source then 0 else 2) do throwError "[FAIL] native_binding_origin_count"
+    unless matching.all (fun row =>
+        (row.getObjValAs? String "module").toOption == some owner.toString) do
       throwError "[FAIL] native_binding_origin_label"
   logInfo "[PASS] native_binding_origin_count native_binding_origin_label"
 
 run_cmd do
   let env ← getEnv
-  let source := `LeanInformationAudit.Tests.RegistrationGates.DeclaredSidecarSource
-  let sidecar := `LeanInformationAudit.Tests.RegistrationGates.DeclaredSidecar
-  unless (ownedRecords env).map (·.1) == #[source, sidecar] do
+  let producer := `LeanInformationAudit.Tests.RegistrationGates.DeclaredRegistration
+  unless (ownedRecords env).map (·.1) == #[producer] do
     throwError "[FAIL] binding_record_producer_order"
   let joined ← ofExcept <| cachedJoinedRecords env
-  unless joined.size == 1 && joined[0]!.bindingOwner == some sidecar &&
+  unless joined.size == 1 && joined[0]!.bindingOwner == some producer &&
       (joined[0]!.result matches .declaredValidated _) do
-    throwError "[FAIL] cached_sidecar_join"
+    throwError "[FAIL] cached_producer_join"
   let some (name, _) := env.constants.toList.find? (fun (name, _) =>
       privateToUserName name == `LeanInformationAudit.TemplateBinding.bindingRecords)
     | throwError "[FAIL] missing_binding_record_store"
@@ -49,7 +49,7 @@ run_cmd do
     | .error "incomplete_closure:dtr.cached_record_owner" => pure ()
     | _ => throwError "[FAIL] cached_imported_owner_diagnostic"
   finally setEnv env
-  logInfo "[PASS] binding_record_producer_order cached_sidecar_join \
+  logInfo "[PASS] binding_record_producer_order cached_producer_join \
     binding_record_store_owner cached_imported_owner_rejected"
 
 private def rejectCachedRecord (change : TSyntax `term) (diagnostic : String) :

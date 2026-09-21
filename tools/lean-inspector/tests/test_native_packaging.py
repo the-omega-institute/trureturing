@@ -71,7 +71,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @fixture/LeanInformationAudit.Registry'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'mapped.spool.json'
@@ -118,7 +118,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @fixture/LeanInformationAudit.Registry'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'driver.spool.json'
