@@ -5,12 +5,12 @@
   },
   "scope": {
     "kind": "inline",
-    "value": "Actual irredundant noncover sources, sharp limiting mean38/63, exact six-label square clusters, an actual first-hit unit-refund obstruction with a complete next11 bound, and both exact complete F12 squares attained by centered4 under the plain and fixed weighted laws. Other heights remain unresolved; no unrestricted covering conclusion."
+    "value": "Actual irredundant noncover sources, sharp limiting mean38/63, exact six-label square clusters, an actual first-hit unit-refund obstruction with a complete next11 bound, both complete F12 squares, and the exact plain-source complete square for every N>=12, attained by centered4. The compressed plain layouts and site/pair LP have a unique optimum, and the exact values tend to1829/72. The weighted all-height maximum, arbitrary-source bound and later-prime closure remain unresolved; no unrestricted covering conclusion."
   },
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "18e4440e038b19054e218fddd77203a15d60eb0055f7a8209433773214d42304",
+      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "7b2244148493fb1c1ad5886f095b47dca473fec5cfa92dcebc27363c747450fd",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
       "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
@@ -20,8 +20,10 @@
       "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
       "frontier/source-budgets/source_full_square.py": "b5184ed67f1e16c2a24fd6d0cf9d6d7df660d8184d4b49b6613fa5ba77b5ad28",
       "frontier/source-budgets/verify_source_full_square.py": "b2976e570ec633abc6ce8d8868b954474d5d44fd717addf1e99d9cc2db9580fd",
-      "profile-notes/321-384/339b-the-actual-near-j-source-and-the-unit-refund.md": "ee0c2db355277b930805eea4f473d92e8a13a880e63f4bf89b2d7b4071ee8e7e",
+      "frontier/source-budgets/source_plain_schur.py": "c8b0296253c1b759693e5a78a2891437fdc63c3e0452a2a6276033d222c75834",
+      "profile-notes/321-384/339b-the-actual-near-j-source-and-the-unit-refund.md": "7d3edf00b14b5417147f5b2e19a275051ca00bb1d5c4cea5a6f78432f2d2fd08",
       "profile-notes/321-384/339c-the-square-allocation-and-the-reweighted-source.md": "a9e0d552636453ce771577ea541c05c006eae6b7374a2094c9eb411421e95c78",
+      "profile-notes/321-384/339d-the-complete-plain-source-square-at-every-height.md": "a3a92f840bfe8ba2c5b864b74bb5ac83b35d02ffcce8a71f10294891bc7c99f7",
       "certificates/source_norms/source-budgets/source_full_square_flow.json": "0ae8f7fae42bfc73613a9944104015daa173a6c1334fe74a3781ac695176b8ac",
       "certificates/source_norms/source-budgets/source_full_square_r0_flow.json": "35a74c7f09244f20b1694f84290aa498aab5427fa94708549da1d19de2eecf83",
       "certificates/source_norms/source-budgets/source_full_square_r3_flow.json": "68f8744e3aaaae26634f918ed7c6482338c1a65034ea0e06174d8635ff4405a6",
@@ -37,7 +39,7 @@
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "1588cc3de1857ab3db712ccc75163ae0ec306e3e5c05de6488cc4e17eeba871f"
+    "value": "217de85f073481624effa05bcccc504b35c3285b96aa9be199a66d949d9853dc"
   },
   "affine_dominance_endpoints": {
     "path": "content/005-affine_dominance_endpoints.json",
@@ -79,6 +81,11 @@
   "complete_source_squares": {
     "path": "content/011-complete_source_squares.json",
     "sha256": "37a3e422d4099d2adb46969ba1f5d2198611de2bcecb5a37e6aaf4db05d0b188",
+    "kind": "value"
+  },
+  "plain_uniform_source_square": {
+    "path": "content/012-plain_uniform_source_square.json",
+    "sha256": "4cd2fd112dea5846bd1244fd64d02a2d9bfa1d0bd6fb1c0351a82741a7debbd5",
     "kind": "value"
   }
 }
