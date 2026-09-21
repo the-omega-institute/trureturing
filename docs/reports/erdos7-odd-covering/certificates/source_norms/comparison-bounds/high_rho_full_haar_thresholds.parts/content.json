@@ -15,7 +15,7 @@
       "certificates/source_norms/j-geometry/j_whole_face_high_rho_finite_guard.json": "192881db2a35f97ab9d786b2ec18f2c07064ffe83158e6b14a40daee29373a19",
       "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
       "frontier/j-geometry/j_whole_face_high_rho_finite_guard.py": "72e4a5d9621a46bc446e3e98ed5b85b621426a72842e73926c3cce164d2f2dea",
-      "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "c0ce9c9fddf8f095fb8ee01d623825cf6a13d52936b0eab913800682a31afd7d",
+      "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "95766e51dc23a35756d3899a69b491e9dc573a77481119f07fd7d6f2b6fa8470",
       "profile-notes/321-384/331-complete-physical-hinges-continue-finite-sources-through43.md": "2bd45308ba5e7e9ee95a04d93eb193710fde7de7495897cd21a2e555fa4d779f",
       "frontier/moments-survival/high_rho_physical_hinge_prime_scan.py": "547fed8f12e70dccdd4b3fd9222ede06e992e7946a3e85b59e6e8b93b46c6f8c",
       "profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md": "fdc8db8e2751dd88d137fd28a00be09674e0cebc402a00609a0e57297cdc01f0",
@@ -27,7 +27,7 @@
     "kind": "inline",
     "value": {
       "sha256": "012e7c1958dc61aab61583e5c026d587b40f35a4ec04896afd39da3f30a5b1d6",
-      "byte_count": 7166
+      "byte_count": 7229
     }
   },
   "producer_sha256": {
