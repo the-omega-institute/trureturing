@@ -6,6 +6,7 @@
    utility: none
    digest: The unique A392095 array equals the shifted natural coefficients of A088713. -/
 
+import D5.S1.Recurrence.Residue.QuotientThetaCompositionModFour
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -130,38 +131,6 @@ theorem result :
       rw [ha.2]
       push_cast
       rfl
-  -- Lower coefficients control products, reciprocals and substitution.
-  have hpow : ∀ i n (U V : PowerSeries ℚ),
-      (∀ k, k ≤ n → coeff k U = coeff k V) → coeff n (U ^ i) = coeff n (V ^ i) := by
-    intro i
-    induction i with
-    | zero => intros; rfl
-    | succ i ih =>
-      intro n U V h
-      rw [pow_succ, pow_succ, coeff_mul, coeff_mul]
-      apply Finset.sum_congr rfl
-      rintro ⟨a,b⟩ hab
-      have hab' := Finset.mem_antidiagonal.mp hab
-      rw [h b (by omega), ih a U V (fun k hk => h k (by omega))]
-  have hinv : ∀ n (U V : PowerSeries ℚ),
-      (∀ k, k ≤ n → coeff k U = coeff k V) →
-      coeff n (invOfUnit U 1) = coeff n (invOfUnit V 1) := by
-    intro n
-    induction n using Nat.strong_induction_on with
-    | h n ih =>
-      intro U V h
-      rw [coeff_invOfUnit, coeff_invOfUnit]
-      by_cases hn : n = 0
-      · simp [hn]
-      · rw [if_neg hn, if_neg hn]
-        congr 1
-        apply Finset.sum_congr rfl
-        rintro ⟨a,b⟩ hab
-        have hab' := Finset.mem_antidiagonal.mp hab
-        by_cases hb : b < n
-        · rw [if_pos hb, if_pos hb, h a (by omega),
-            ih b hb U V (fun k hk => h k (by omega))]
-        · rw [if_neg hb, if_neg hb]
   have hsubst : ∀ (U V : PowerSeries ℚ) n,
       coeff n (U.subst (X * V)) =
       ∑ i ∈ range (n + 1), coeff i U * coeff (n - i) (V ^ i) := by
@@ -187,28 +156,6 @@ theorem result :
     simp only [Nat.sub_self, coeff_zero_eq_constantCoeff, map_pow,
       constantCoeff_invOfUnit, inv_one, Units.val_one, one_pow, mul_one]
     exact add_comm _ _
-  have htri : ∀ (U V : PowerSeries ℚ) n,
-      (∀ k, k < n → coeff k U = coeff k V) →
-      coeff n (phi U) - coeff n (phi V) = coeff n U - coeff n V := by
-    intro U V n h
-    rw [hphi, hphi]
-    have hs : (∑ i ∈ range n, coeff i U * coeff (n-i) ((invOfUnit U 1)^i)) =
-        ∑ i ∈ range n, coeff i V * coeff (n-i) ((invOfUnit V 1)^i) := by
-      apply Finset.sum_congr rfl
-      intro i hi
-      have hin : i < n := mem_range.mp hi
-      rw [h i (mem_range.mp hi)]
-      by_cases hi0 : i = 0
-      · subst i
-        rfl
-      · congr 1
-        apply hpow i (n-i)
-        intro k hk
-        apply hinv k
-        intro j hj
-        exact h j (by omega)
-    rw [hs]
-    ring
   have hgeo : invOfUnit (1 - X : PowerSeries ℚ) 1 = PowerSeries.mk 1 := by
     have h1 := invOfUnit_mul (1-X : PowerSeries ℚ) 1 (by simp)
     have h2 := mk_one_mul_one_sub_eq_one ℚ
@@ -232,9 +179,17 @@ theorem result :
       | succ n =>
         let P : PowerSeries ℚ := PowerSeries.mk fun k =>
           if k < n+1 then sourceCoeff k else 0
-        have h := htri sourceSeries P (n+1) (by
-          intro k hk
-          simp only [sourceSeries, P, coeff_mk, if_pos hk])
+        have h := D5.S1.Recurrence.Residue.QuotientThetaCompositionModFour.quotient_triangular
+          (f := sourceSeries) (g := P) (d := n+1)
+          (by rw [sourceSeries, constantCoeff_mk, sourceCoeff, dif_pos rfl])
+          (by
+            change (if 0 < n+1 then sourceCoeff 0 else 0) = 1
+            rw [if_pos (by omega), sourceCoeff, dif_pos rfl])
+          (by
+            intro k hk
+            simp only [sourceSeries, P, coeff_mk, if_pos hk]) (le_refl (n+1))
+        change coeff (n+1) (phi sourceSeries) - coeff (n+1) (phi P) =
+          coeff (n+1) sourceSeries - coeff (n+1) P at h
         have hp : coeff (n+1) P = 0 := by simp [P]
         have hq : coeff (n+1) sourceSeries = 1 - coeff (n+1) (phi P) := by
           rw [sourceSeries, coeff_mk]
@@ -248,7 +203,10 @@ theorem result :
     ext n
     induction n using Nat.strong_induction_on with
     | h n ih =>
-      have ht := htri F sourceSeries n ih
+      have ht := D5.S1.Recurrence.Residue.QuotientThetaCompositionModFour.quotient_triangular
+        hF.1 hsource.1 ih (le_refl n)
+      change coeff n (phi F) - coeff n (phi sourceSeries) =
+        coeff n F - coeff n sourceSeries at ht
       have he : phi F = phi sourceSeries := hF.2.trans hsource.2.symm
       rw [he, sub_self] at ht
       exact sub_eq_zero.mp ht.symm

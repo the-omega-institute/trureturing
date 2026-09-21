@@ -4,7 +4,11 @@
 
 The antidiagonal natural array and the normalized rational source series are uniquely determined, and their first-column coefficients agree after a one-step shift.
 
-The array is the total natural function array from the A392095 recurrence: its zeroth row is one and each successor row uses the shifted entry and the finite sum over j from zero through k. The source is the normalized rational power series specified independently by F(x/F(x))=(1-x)^(-1). All coefficients are indexed from zero. The theorem result includes both uniqueness statements, the natural source sequence, and the shifted first-column identity.
+Mikhail Kurkov's A392095 defines the total natural function array: its zeroth row is one and each successor row uses the shifted entry and the finite sum over j from zero through k. The source is the normalized rational power series specified independently by Paul D. Hanna's A088713 equation F(x/F(x))=(1-x)^(-1). All coefficients are indexed from zero. The theorem result includes both uniqueness statements, the natural source sequence, and the shifted first-column identity. In the formulas, subst(F,U) means F(U), invOfUnit(F,1) is the multiplicative inverse of a constant-one series, and castQ embeds a natural number into the rationals. For b from N to N, B(b) denotes mk(m maps to castQ(b(m))). The construction and existence and uniqueness proofs are repository-derived; the recurrence, source equation and shifted-column assertion are the cited source statements.
+
+$$
+\begin{aligned}\operatorname{IsArray}\left(T\right) \iff (\forall k: \mathbb{N}, T\left(0, k\right) = 1) \land (\forall n: \mathbb{N}, \forall k: \mathbb{N}, T\left(n + 1, k\right) = T\left(n, k + 1\right) + \sum_{j = 0}^{k} (T\left(n, j\right) \cdot T\left(k - j, 0\right)))\\\operatorname{IsSource}\left(F\right) \iff (\operatorname{constantCoeff}\left(F\right) = 1) \land (\operatorname{subst}\left(F, X \cdot \operatorname{invOfUnit}\left(F, 1\right)\right) = \operatorname{invOfUnit}\left(1 - X, 1\right))\end{aligned}
+$$
 
 **Remark 1.1 (The antidiagonal array).**
 
@@ -12,7 +16,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.array`
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.array` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Mikhail Kurkov (2025). *OEIS A392095, antidiagonal array and the shifted A088713 column*. URL: <https://oeis.org/A392095>.
 
 *Commentary.*
 
@@ -24,7 +28,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.IsArra
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.IsArray` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Mikhail Kurkov (2025). *OEIS A392095, antidiagonal array and the shifted A088713 column*. URL: <https://oeis.org/A392095>.
 
 *Commentary.*
 
@@ -36,7 +40,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.IsSour
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.IsSource` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Paul D. Hanna (2003). *OEIS A088713, A(x/A(x)) = 1/(1-x)*. URL: <https://oeis.org/A088713>.
 
 *Commentary.*
 
@@ -80,15 +84,19 @@ sourceSeries is the power series whose coefficient at m is sourceCoeff(m).
 
 **Theorem 1.7 (The complete array-source result).**
 
-$$result$$
+$$(\operatorname{IsArray}\left(\operatorname{array}\right)) \land ((\forall T: \mathbb{N}\to\mathbb{N}\to\mathbb{N}, (\operatorname{IsArray}\left(T\right)) \implies (T = \operatorname{array})) \land ((\operatorname{IsSource}\left(\operatorname{sourceSeries}\right)) \land ((\forall F: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{IsSource}\left(F\right)) \implies (F = \operatorname{sourceSeries})) \land (\exists b: \mathbb{N}\to\mathbb{N}, (\operatorname{IsSource}\left(\operatorname{B}\left(b\right)\right)) \land ((\forall c: \mathbb{N}\to\mathbb{N}, (\operatorname{IsSource}\left(\operatorname{B}\left(c\right)\right)) \implies (c = b)) \land ((\operatorname{b}\left(0\right) = 1) \land ((\forall m: \mathbb{N}, \operatorname{coeff}\left(m, \operatorname{sourceSeries}\right) = \operatorname{castQ}\left(\operatorname{b}\left(m\right)\right)) \land (\forall n: \mathbb{N}, \operatorname{array}\left(n, 0\right) = \operatorname{b}\left(n + 1\right)))))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.result` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Resolves.* `Problems/oeis-a392095-antidiagonal-source-series` (proved) by `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a392095-antidiagonal-source-series","declaration_gid":"D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.result","resolution_kind":"proved"} -->
+
+*Citation.* Mikhail Kurkov (2025). *OEIS A392095, antidiagonal array and the shifted A088713 column*. URL: <https://oeis.org/A392095>.
 
 *Commentary.*
 
-The result proves IsArray(array), uniqueness of every IsArray witness, IsSource(sourceSeries), uniqueness of every normalized source, existence and uniqueness of a natural source sequence, its zero coefficient, coefficient agreement with sourceSeries, and array(n,0)=b(n+1) for every natural n.
+The result proves IsArray(array), uniqueness of every IsArray witness, IsSource(sourceSeries), uniqueness of every normalized source, existence and uniqueness of a natural source sequence, its zero coefficient, coefficient agreement with sourceSeries, and array(n,0)=b(n+1) for every natural n. Finite telescoping of the row recurrence identifies the column series after multiplication by X and addition of one. The remainder vanishes at each fixed degree, and source uniqueness gives the coefficient identity.
 
 ## References
 
@@ -99,3 +107,4 @@ The result proves IsArray(array), uniqueness of every IsArray witness, IsSource(
 - Truth anchor: `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.result`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.sourceCoeff`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.sourceSeries`
+- Dependency: [D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour](../Residue/QuotientThetaCompositionModFour.md)
