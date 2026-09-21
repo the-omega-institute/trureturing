@@ -1,0 +1,7 @@
+若用直接压缩 $A$，其刚度 $K_A=R^{\mathsf T}LR$ 满足
+$$
+(K_A)_{ab}=-\sum_{i\in q^{-1}(a),\ j\in q^{-1}(b)}w_{ij}\quad(a\ne b),\qquad
+(G_A)_{ab}=\frac{\sum_{i\in q^{-1}(a),\ j\in q^{-1}(b)}w_{ij}}{n_b}.
+\tag{30.5}
+$$
+这是对 $L_{ij}=-w_{ij}$ 的胞腔求和，因此 $G_A=-K_AD^{-1}$ 始终合法。

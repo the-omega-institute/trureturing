@@ -676,6 +676,144 @@ The theorem concerns the asymptotic uniform complete mean; fixed-delta
 optimality, nonlinear hinge sharpness and unrestricted Erdős#7 remain
 unresolved. No new Lean result is asserted.
 
+## The actual near-J sources cannot attain their entrywise square envelopes
+
+The same finite family F_N also supplies a strict loss between its actual
+square maximum and the sum of independently maximized pair masses. This
+is a concrete application of[28's saturation criterion(LCZ4)](../001-064/28-zero-local-losses-do-not-imply-a-common-maximizing-original-layout.md#5-exact-saturation-and-why-this-is-not-a-counterexample-to-full-arc-consistency)
+inside the source family above. F12 satisfies the current near-J guard;
+F3, although used below to check the formulas, is outside that guard.
+No uniform loss for all sources in the guard is asserted.
+
+Put Q_N=105^N. For a finite positive measure m on this actual period, set
+
+    c_m(d)=max_b m(x=b mod d),
+    E_N(m)=sum_(d,e|Q_N)c_m(lcm(d,e)),
+    Gamma_Q_N(m)=max_layout integral L^2 dm.
+
+Every test retains one independent residue at every divisor, including
+its unit. CRT bounds each ordered square term by the displayed cap.
+The five terms(1,d),(d,1),(d,d),(d,e),(e,d), for d|e and 1<d<e,
+share the same d-residue. If
+
+    A_j=m(x=j mod d),
+    B_j=max_(b=j mod d)m(x=b mod e),
+
+their total is at most max_j(3A_j+2B_j). Consequently the same-law
+entrywise envelope has the valid local correction
+
+    kappa=3max A+2max B-max_j(3A_j+2B_j),
+    Gamma_Q_N(m)<=E_N(m)-kappa.                         (PG1)
+
+This retains near-maximal choices as well as maximizers. Every other
+ordered-term loss is nonnegative. The correction includes the diagonal
+term(d,d) exactly once; no factor is borrowed from another estimate.
+
+### The original actual source has incompatible mod9 and mod63 maxima
+
+Retain t,q,u,z,a and the raw35 masses n of the F_N construction. Subscripts
+in this paragraph are literal residues modulo9; n3 is the earlier nB.
+The actual unnormalized mod9 masses are
+
+    alpha=((1-a)n0,(1-2a)n3,n1,n4,n7), S=sum alpha.
+
+For each surviving cell j, the exact largest mod63 subcylinder is
+
+    beta_j=max_(b=j mod9)mu(x=b mod63)=n_j/(7u).         (PG2)
+
+The upper follows from mu<=Lambda tensor Haar7/u. The same seven root4
+misses every original seven restriction and attains this cap in every
+cell. Thus PG2 concerns the full joint actual source, not a product
+substitution for its old marginal.
+
+For every N>=3,
+
+    1/27<=t<1/18, 31/125<=q<1/4, 1/6<a<6/35.
+
+The unique maxima of alpha and beta are respectively at cells4 and3.
+Indeed n3 exceeds all other raw masses, alpha4-alpha3=[2a(1-q)-q]/9>0,
+alpha0<=94/2025<1/18<alpha4, and alpha1,alpha7<alpha4.
+For gamma_j=3alpha_j+2beta_j, its unique maximum is at3: the other
+root1 cells are dominated by4, while
+
+    gamma3-gamma0=z[(3-a)t-a/3]>0,
+    gamma3-gamma4=[q(21u+8)-6]/(63u)>0.
+
+The first bracket is at least1/21 on the containing box. The second
+numerator is greater than81/250, using u>5/6. Applying PG1 with d=9,e=63
+therefore gives
+
+    kappa_N=3(alpha4-alpha3)>0,
+    Gamma_Q_N(mu/S)<=(E_N(mu)-kappa_N)/S.               (PG3)
+
+At N=12 the exact values are
+
+    kappa12=20114411648143778/8448051270263671875,
+    kappa12/S12=593867946705620973561/53448309681763197033148
+              =0.0111110706819649... .
+
+As N tends to infinity, kappa_N tends to1/420 and S to3/14, so the
+normalized gap tends to1/90. The mean-sharpness construction above does
+not supply a layout saturating this square envelope.
+
+### The fixed reweighted source has a different shared-label conflict
+
+Use precisely RW1's cell weights r=(11/8,5/4,1,1,1), and put
+m=mu_r=r*mu, T=mu_r(1). Write v_j=r_j*alpha_j. In PG1 now take d=3,e=9:
+
+    A0=v0+v3, A1=v1+v4+v7, A2=0,
+    B0=max(v0,v3), B1=max(v1,v4,v7), B2=0.
+
+Here B0=v3 and B1=v4 for all N>=3. The root0 comparison follows from
+
+    (v3-v0)/z=-(1+9a)/72+11(1-a)t/8>=13/1890>0;
+
+the root1 comparison is inherited from alpha. Set
+
+    DeltaA=A1-A0
+      =1/3-7q/9-z(21-31a)/72+t[11(1-a)z/8-q],
+    DeltaB=B0-B1=5(1-2a)z/36-(1-2q)/9.
+
+For N>=4 use t>=4/81. On the containing box, DeltaA increases with t
+and a and decreases with q. For example, its three derivatives obey
+`partial_t>=677/1120`, `partial_a>=17/64`, `partial_q<=-241/432`.
+Thus DeltaA>=DeltaA(4/81,1/4,1/6)=7/1728>0. DeltaB increases with q
+and decreases with a, giving DeltaB>=199/15750>0 at q=31/125,a=6/35.
+Both maxima are therefore unique and lie at different roots. PG1 yields
+
+    kappa_r,N=min(3DeltaA,2DeltaB)>0 for N>=4,
+    Gamma_Q_N(mu_r/T)<=(E_N(mu_r)-kappa_r,N)/T.          (PG4)
+
+At N=3 both individual maxima lie in root0 and this cluster's gap is
+exactly zero. No claim of a common cluster-maximizing root for all N
+is needed. At N=12, the second branch of PG4 is the smaller one and
+
+    kappa_r,12=435812164190143141/16896102540527343750,
+    kappa_r,12/T12=25734272483263762332909/240369043020445468666057
+                 =0.1070615090857388... .
+
+In the limit, DeltaA tends to61/6720 and DeltaB to13/1008. Hence
+kappa_r,N tends to13/504, T to1619/6720, and the normalized gap to520/4857.
+These are the actual cell weights and the same forbidden sets as RW1;
+the mod9/mod63 maximizer argument for mu was not transferred to mu_r.
+
+The existing sharpness producer records the cell masses, cluster
+maximizers and exact gaps at its verification heights, as well as these
+limits. It reuses the source reconstruction and private-witness checks
+above. The arbitrary-N claims follow from the displayed box arguments,
+not from a finite scan. No full layout enumeration or value of true
+Gamma is supplied. For tests at a larger complete height H>=N, the same
+five terms retain this loss only after E_N is replaced by the matching
+larger-height envelope E_H on the Haar lift of the same actual source.
+
+PG3 and PG4 are counterexamples to saturation of these entrywise
+envelopes on the current actual sources. RW5/RW10 and the assigned
+square bounds use different WF/A2/Jensen expressions; no comparison
+identifying those expressions with E_N has been proved here. The gaps
+cannot simply be subtracted from the through41 bounds, M2, or a scalar
+recurrence floor. True square optimization and a uniform useful gain
+through the later physical kernels remain unresolved.
+
 ## The direct square allocation cannot continue through the scalar recurrence
 
 This is a numerical consumption of the existing source/operator and killed-unit interfaces, not a new generic transfer theorem. It concerns the same fixed(3,4)full-Haar head as339. All original powers and independent own-test residues remain.
