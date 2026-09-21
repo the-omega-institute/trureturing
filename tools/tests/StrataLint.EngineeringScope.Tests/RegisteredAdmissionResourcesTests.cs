@@ -12,6 +12,45 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
+    [InlineData("tools/lean-inspector/tests/test_native_support.py", "push")]
+    [InlineData("tools/lean-inspector/tests/test_native_support.py", "pr")]
+    [InlineData("tools/lean-inspector/tests/test_reuse.py", "push")]
+    [InlineData("tools/lean-inspector/tests/test_reuse.py", "pr")]
+    public void InspectorTestFixturesRunRegisteredTestConsumersWithoutCurrentTruthChecks(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+            "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+            "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+        Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
+        Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
+            Strings(plan["execution"]!["steps"]!));
+        Assert.Equal(mode == "push" ? "not-applicable" : "required",
+            plan["stages"]!["delta"]!["status"]!.GetValue<string>());
+        foreach (var unrelated in new[] { "engineering", "current", "scribe", "lean-inspector-build" })
+            Assert.DoesNotContain(unrelated, Strings(plan["resources"]!));
+    }
+
+    [Theory]
+    [InlineData("tools/lean-inspector/native.py", "push")]
+    [InlineData("tools/lean-inspector/native.py", "pr")]
+    [InlineData("tools/lean-inspector/Census/native.py", "push")]
+    [InlineData("tools/lean-inspector/Census/native.py", "pr")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/MutationMatrix.py", "push")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/MutationMatrix.py", "pr")]
+    public void OtherInspectorPythonProgramsKeepRegisteredCurrentChecks(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Contains("current", Strings(plan["resources"]!));
+        Assert.Contains("engineering", Strings(plan["resources"]!));
+        Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
+            Strings(plan["execution"]!["steps"]!));
+    }
+
+    [Theory]
     [InlineData("push")]
     [InlineData("pr")]
     public void CachePathChangesRunOnlyRegisteredCacheConsumers(string mode)
