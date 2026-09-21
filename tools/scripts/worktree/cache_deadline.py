@@ -61,14 +61,20 @@ def identity(stage, env):
         raise ValueError("cache writes disabled")
     repository = env.get("GITHUB_REPOSITORY", "")
     commit = env.get("CANDIDATE_SHA", "")
+    # Reusable PR jobs are named by their caller; the jobs API identifies
+    # the PR head, while GITHUB_SHA and produced material identify the merge.
+    job_name = "push / " + job if pr_writer else job
+    head = env.get("PR_HEAD_SHA", "") if pr_writer else commit
     run, attempt = env.get("GITHUB_RUN_ID", ""), env.get("GITHUB_RUN_ATTEMPT", "")
     if (not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository)
             or not re.fullmatch(r"[0-9a-f]{40}", commit) or commit == "0" * 40
             or commit != env.get("GITHUB_SHA")
+            or not re.fullmatch(r"[0-9a-f]{40}", head) or head == "0" * 40
             or not all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run, attempt))):
         raise ValueError("cache run identity mismatch")
     return {"stage": stage, "job": job, "repository": repository, "run_id": run, "run_attempt": attempt,
-            "candidate": commit, "runner_name": env.get("RUNNER_NAME", "")}
+            "candidate": commit, "head": head, "job_name": job_name,
+            "runner_name": env.get("RUNNER_NAME", "")}
 
 
 def state_path(root, stage):
@@ -102,14 +108,14 @@ def begin(root, stage, job_timeout_minutes, *, env=None, fetch_jobs=None, now=No
                 or response["total_count"] != len(response["jobs"])
                 or not all(isinstance(job, dict) for job in response["jobs"])):
             raise ValueError("incomplete cache job metadata")
-        matching = [job for job in response["jobs"] if job.get("name") == expected["job"]]
+        matching = [job for job in response["jobs"] if job.get("name") == expected["job_name"]]
         if len(matching) != 1:
             raise ValueError("cache job is absent or ambiguous")
         job = matching[0]
         if (type(job.get("id")) is not int or job["id"] < 1
                 or type(job.get("run_id")) is not int or job["run_id"] != int(expected["run_id"])
                 or type(job.get("run_attempt")) is not int or job["run_attempt"] != int(expected["run_attempt"])
-                or job.get("head_sha") != expected["candidate"] or job.get("status") != "in_progress"
+                or job.get("head_sha") != expected["head"] or job.get("status") != "in_progress"
                 or expected["runner_name"] and job.get("runner_name") != expected["runner_name"]):
             raise ValueError("cache job metadata identity mismatch")
         started = job.get("started_at")

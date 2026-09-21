@@ -80,14 +80,30 @@ class CacheDeadlineCases:
                 self.assertGreater(first.save_timeout_minutes(), 0)
                 env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/42/merge",
                            GITHUB_SHA="b" * 40, CANDIDATE_SHA="b" * 40,
-                           PR_HEAD_SHA="b" * 40, STRATALINT_CACHE_WRITES="true")
-                jobs["jobs"][0].update(head_sha="b" * 40)
+                           PR_HEAD_SHA="c" * 40, STRATALINT_CACHE_WRITES="true")
+                jobs["jobs"][0].update(name="push / " + job, head_sha="c" * 40)
                 calls.clear()
                 allowed = owner.begin(self.root, stage, 60, env=env, fetch_jobs=fetch,
                                       now=lambda: epoch, monotonic=lambda: clock[0])
                 self.assertEqual("available", allowed.reason)
                 self.assertEqual({"save_allowed": True, "save_timeout_minutes": 12}, owner.save_outputs(allowed))
                 self.assertEqual(1, len(calls))
+                loaded = owner.load_deadline(self.root, stage, env=env, monotonic=lambda: clock[0])
+                self.assertEqual("available", loaded.reason)
+                for key, value in (("name", job), ("head_sha", "b" * 40), ("run_attempt", 1)):
+                    with self.subTest(field=key):
+                        original = jobs["jobs"][0][key]
+                        jobs["jobs"][0][key] = value
+                        denied = owner.begin(self.root, stage, 60, env=env, fetch_jobs=fetch,
+                                             now=lambda: epoch, monotonic=lambda: clock[0])
+                        self.assertEqual(0, denied.save_timeout_minutes())
+                        jobs["jobs"][0][key] = original
+                for head in ("", "malformed", "0" * 40):
+                    calls.clear()
+                    denied = owner.begin(self.root, stage, 60, env={**env, "PR_HEAD_SHA": head}, fetch_jobs=fetch,
+                                         now=lambda: epoch, monotonic=lambda: clock[0])
+                    self.assertEqual(0, denied.save_timeout_minutes())
+                    self.assertEqual([], calls)
 
     def test_cache_deadline_rejects_non_merge_pull_request_refs(self):
         owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
