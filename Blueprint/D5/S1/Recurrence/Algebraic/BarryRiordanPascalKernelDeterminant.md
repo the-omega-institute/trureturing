@@ -72,6 +72,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/BarryRiordanPascalKernelDeterminant.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barry-2013-riordan-pascal-kernel-determinant` (proved) by `D5/S1/Recurrence/Algebraic/BarryRiordanPascalKernelDeterminant.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barry-2013-riordan-pascal-kernel-determinant","declaration_gid":"D5/S1/Recurrence/Algebraic/BarryRiordanPascalKernelDeterminant.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Barry (2013). *A Note on a Family of Generalized Pascal Matrices Defined by Riordan Arrays*. URL: <https://cs.uwaterloo.ca/journals/JIS/VOL16/Barry2/barry231.pdf>.

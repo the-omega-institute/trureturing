@@ -94,7 +94,10 @@ internal sealed class BarryRiordanPascalKernelDeterminantDocument
                     + "together with invariance under transpose gives determinant one for "
                     + "the kernel matrix.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("barry-2013-riordan-pascal-kernel-determinant"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string id,
@@ -103,14 +106,16 @@ internal sealed class BarryRiordanPascalKernelDeterminantDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            claim);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
