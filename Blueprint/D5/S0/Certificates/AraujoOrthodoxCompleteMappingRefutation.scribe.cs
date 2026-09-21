@@ -73,7 +73,11 @@ internal sealed class AraujoOrthodoxCompleteMappingRefutationDocument
                     + "checks all 3125 maps from the carrier to itself and finds no complete "
                     + "mapping. The semigroup has no absorbing zero.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "araujo-2026-orthodox-idempotent-ordering-complete-mapping-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -82,14 +86,16 @@ internal sealed class AraujoOrthodoxCompleteMappingRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula OrthodoxFormula()
     {

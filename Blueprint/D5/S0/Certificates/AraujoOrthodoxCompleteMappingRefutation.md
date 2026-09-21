@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/AraujoOrthodoxCompleteMappingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/araujo-2026-orthodox-idempotent-ordering-complete-mapping-refutation` (refuted) by `D5/S0/Certificates/AraujoOrthodoxCompleteMappingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"araujo-2026-orthodox-idempotent-ordering-complete-mapping-refutation","declaration_gid":"D5/S0/Certificates/AraujoOrthodoxCompleteMappingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* João Araújo; Wolfram Bentz; Peter J. Cameron; Kevin Hendrey; Michael Kinyon (2026). *Complete Mappings of Semigroups*. DOI: [10.48550/arXiv.2608.25092](https://doi.org/10.48550/arXiv.2608.25092). URL: <https://arxiv.org/abs/2608.25092>.
