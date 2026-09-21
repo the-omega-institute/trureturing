@@ -850,3 +850,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Private congruence hulls force crossed numerical moduli](profile-notes/arithmetic/385-private-congruence-hulls-and-crossed-modulus-closure.md)
 - [Pair-root conflicts and original survivor capacity](profile-notes/arithmetic/386-pair-root-conflicts-and-original-survivor-capacity.md)
 - [Cyclic CRT witnesses and local prime-capacity noncoverage](profile-notes/arithmetic/387-cyclic-crt-prime-capacity-and-forced-crowded-stars.md)
+- [A saturated 36-point chain blocker admits no full-history capped law and separates the finite-depth stop-loss comparison](profile-notes/arithmetic/388-saturated-chain-blockers-do-not-supply-conditional-caps.md)
