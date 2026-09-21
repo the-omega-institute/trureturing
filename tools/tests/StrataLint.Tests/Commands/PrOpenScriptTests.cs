@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class PrOpenScriptTests
+public sealed partial class PrOpenScriptTests
 {
     private const string DeadlineBehaviorTimeoutSeconds = "30";
     private const string HeadSha = "2222222222222222222222222222222222222222";
@@ -65,6 +65,15 @@ public sealed class PrOpenScriptTests
     [InlineData("missing-status-id")]
     [InlineData("partial-errors")]
     [InlineData("truncated-contexts")]
+    [InlineData("missing-app")]
+    [InlineData("empty-app-id")]
+    [InlineData("missing-workflow")]
+    [InlineData("missing-run-number")]
+    [InlineData("invalid-run-number")]
+    [InlineData("invalid-run-attempt")]
+    [InlineData("missing-event")]
+    [InlineData("missing-branch")]
+    [InlineData("missing-branch-id")]
     public void PrWatchCannotDecideFromIncompleteIdentityOrResponse(string defect)
     {
         using var fixture = new PrScriptFixture();
@@ -82,6 +91,15 @@ public sealed class PrOpenScriptTests
             case "missing-status-id": contexts["nodes"]![1]!.AsObject().Remove("id"); break;
             case "partial-errors": snapshot["errors"] = JsonNode.Parse("""[{"message":"partial failure"}]"""); break;
             case "truncated-contexts": contexts["pageInfo"]!["hasNextPage"] = true; break;
+            case "missing-app": check["checkSuite"]!.AsObject().Remove("app"); break;
+            case "empty-app-id": check["checkSuite"]!["app"]!["id"] = ""; break;
+            case "missing-workflow": check["checkSuite"]!["workflowRun"]!.AsObject().Remove("workflow"); break;
+            case "missing-run-number": check["checkSuite"]!["workflowRun"]!.AsObject().Remove("runNumber"); break;
+            case "invalid-run-number": check["checkSuite"]!["workflowRun"]!["runNumber"] = "2"; break;
+            case "invalid-run-attempt": check["checkSuite"]!["workflowRun"]!["runAttempt"] = 0; break;
+            case "missing-event": check["checkSuite"]!["workflowRun"]!.AsObject().Remove("event"); break;
+            case "missing-branch": check["checkSuite"]!.AsObject().Remove("branch"); break;
+            case "missing-branch-id": check["checkSuite"]!["branch"]!.AsObject().Remove("id"); break;
         }
         fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
 
@@ -622,9 +640,13 @@ public sealed class PrOpenScriptTests
         @protected = true,
         protection = new { required_status_checks = new { contexts = names, checks = names.Select(context => new { context }) } },
     });
-    private static object Check(string name, string status, string? conclusion, string head = HeadSha) =>
-        new { __typename = "CheckRun", databaseId = 101, name, status, conclusion,
-            checkSuite = new { commit = new { oid = head }, workflowRun = new { databaseId = 201 } } };
+    private static object Check(string name, string status, string? conclusion, string head = HeadSha,
+        long checkId = 101, long runId = 201, int runNumber = 1, int runAttempt = 1,
+        string app = "MDM6QXBwMTUzNjg=", string workflow = "W_kwDOTUuVMM4VGb-f",
+        string eventName = "pull_request", string branch = "lane/governance/sl003-erdos7-339-split-0921") =>
+        new { __typename = "CheckRun", databaseId = checkId, name, status, conclusion,
+            checkSuite = new { app = new { id = app }, branch = new { id = "ref-" + branch }, commit = new { oid = head },
+                workflowRun = new { databaseId = runId, runNumber, runAttempt, @event = eventName, workflow = new { id = workflow } } } };
     private static object Context(string context, string state, string head = HeadSha) =>
         new { __typename = "StatusContext", id = "status-101", context, state, commit = new { oid = head } };
     private static string BoundSnapshot(string prHead, string commitHead, params object[] items) =>

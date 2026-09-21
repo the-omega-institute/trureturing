@@ -19,7 +19,8 @@ PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID
     object(oid:$head) { ... on Commit { oid statusCheckRollup { contexts(first:100) {
       nodes { __typename
         ... on CheckRun { databaseId name status conclusion
-          checkSuite { commit { oid } workflowRun { databaseId } } }
+          checkSuite { app { id } branch { id } commit { oid }
+            workflowRun { databaseId event runNumber runAttempt workflow { id } } } }
         ... on StatusContext { id context state commit { oid } }
       }
       pageInfo { hasNextPage }
@@ -74,12 +75,18 @@ parse_snapshot() {
     def member($xs): . as $value | $xs | index($value) != null;
     def sha: type == "string" and test("^[0-9a-f]{40}$");
     def database_id: type == "number" and . > 0 and floor == .;
+    def nonempty_string: type == "string" and length > 0;
     def check_name: if .__typename == "CheckRun" then .name elif .__typename == "StatusContext" then .context else null end;
     def shape_ok: type == "object" and (if .__typename == "CheckRun" then
       (.name | type == "string" and length > 0) and (.status | type == "string") and has("conclusion") and
       (.conclusion == null or (.conclusion | type == "string")) and (.databaseId | database_id) and
       (.checkSuite | type == "object" and has("workflowRun")) and (.checkSuite.commit.oid == $head) and
-      (.checkSuite.workflowRun == null or (.checkSuite.workflowRun.databaseId | database_id))
+      (.checkSuite.workflowRun == null or
+        ((.checkSuite.app.id | nonempty_string) and (.checkSuite | has("branch")) and
+         (.checkSuite.branch == null or (.checkSuite.branch.id | nonempty_string)) and
+         (.checkSuite.workflowRun | type == "object" and (.databaseId | database_id) and
+           (.workflow.id | nonempty_string) and (.event | nonempty_string) and
+           (.runNumber | database_id) and (.runAttempt | database_id))))
       elif .__typename == "StatusContext" then
       (.context | type == "string" and length > 0) and (.state | type == "string") and
       (.id | type == "string" and length > 0) and (.commit.oid == $head) else false end);
@@ -92,8 +99,18 @@ parse_snapshot() {
       elif (.state | member(["FAILURE","ERROR"])) then "red"
       elif (.state | member(["PENDING","EXPECTED"])) then "pending" else "terminal" end;
     def check_state: if .__typename == "CheckRun" then .conclusion else .state end;
+    # Ref node IDs distinguish repositories as well as branch names. A deleted
+    # ref, external check or status has no comparable workflow execution origin.
+    def origin: if .__typename == "CheckRun" then
+      if .checkSuite.workflowRun != null and .checkSuite.branch != null then
+        [.checkSuite.app.id, .checkSuite.workflowRun.workflow.id,
+         .checkSuite.workflowRun.event, .checkSuite.branch.id]
+      else ["check", .databaseId] end else ["status", .id] end;
     def evidence: {check:check_name, check_id:(.databaseId // .id),
       run_id:(.checkSuite.workflowRun.databaseId // null),
+      app_id:.checkSuite.app.id, workflow_id:.checkSuite.workflowRun.workflow.id,
+      event:.checkSuite.workflowRun.event, branch_id:.checkSuite.branch.id,
+      run_number:.checkSuite.workflowRun.runNumber, run_attempt:.checkSuite.workflowRun.runAttempt,
       commit:(.checkSuite.commit.oid // .commit.oid), status:(.status // .state), conclusion:check_state};
     fromjson |
     select(type == "object" and (.errors == null or .errors == [])) |
@@ -109,15 +126,36 @@ parse_snapshot() {
     (.object.statusCheckRollup.contexts.nodes // []) as $items |
     select(all($items[]; shape_ok)) |
     select(all($items[]; check_name as $name | if ($required | index($name)) != null then enum_ok else true end)) |
+    [$items[] | select(.__typename == "CheckRun" and .checkSuite.workflowRun != null)] as $runs |
+    select(all($runs | group_by(.checkSuite.workflowRun.databaseId)[];
+      map(.checkSuite | [.app.id, .branch.id, .workflowRun]) | unique | length == 1)) |
+    select(all($runs | group_by([.checkSuite.workflowRun.workflow.id, .checkSuite.workflowRun.runNumber])[];
+      map(.checkSuite.workflowRun.databaseId) | unique | length == 1)) |
+    # runNumber orders new executions, not reruns. WorkflowRun.runAttempt is
+    # shared by its jobs; it cannot identify an individual check job attempt.
+    # Multiple runs with a reattempt have no unambiguous ordering here.
+    select(all($runs | group_by(origin)[];
+      all(.[]; .checkSuite.workflowRun.runAttempt == 1) or
+      (map(.checkSuite.workflowRun.databaseId) | unique | length == 1))) |
     if $pr.headRefOid != $head then {state:$pr.state, stale:true, observed_head:$pr.headRefOid}
     else
-    [$required[] as $name | [$items[] | select(check_name == $name)] as $found |
-      if ($found | length) == 0 then {kind:"missing"}
-      elif any($found[]; phase == "red") then ($found | map(select(phase == "red")) | first | {kind:"red",check:check_name,state:check_state})
+    ($items | group_by(origin) | map(. as $group |
+      if .[0].__typename == "CheckRun" and .[0].checkSuite.workflowRun != null and .[0].checkSuite.branch != null then
+        (map(.checkSuite.workflowRun.runNumber) | max) as $latest |
+        {all:$group, current:map(select(.checkSuite.workflowRun.runNumber == $latest))}
+      else {all:$group, current:$group} end)) as $groups |
+    [$groups[].current[]] as $current |
+    [$required[] as $name |
+      [$groups[] | select(any(.all[]; check_name == $name)) |
+        [.current[] | select(check_name == $name)]] as $by_origin |
+      ($by_origin | add // []) as $found |
+      if any($found[]; phase == "red") then ($found | map(select(phase == "red")) | first | {kind:"red",check:check_name,state:check_state})
+      elif ($by_origin | length) == 0 or any($by_origin[]; length == 0) then {kind:"missing"}
       elif any($found[]; phase == "pending") then {kind:"pending"} else {kind:"terminal"} end] as $checks |
     {state:$pr.state, stale:false, red:($checks | map(select(.kind == "red")) | first // null),
      pending:($checks | map(select(.kind == "pending")) | length), missing:($checks | map(select(.kind == "missing")) | length),
-     evidence:[$items[] | check_name as $name | select(($required | index($name)) != null) | evidence]} end
+     evidence:[$items[] | check_name as $name | select(($required | index($name)) != null) |
+       . as $item | evidence + {superseded:($current | index($item) == null)}]} end
   '
 }
 pr_watch_main() {
