@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3f871b14407c992792c18f9087d492c29322cd1dd13258a47ac30da025f3564e
+  normalized_sha256: sha256:3f871b14407c992792c18f9087d492c29322cd1dd13258a47ac30da025f3564e
+cas_ref: sha256:3f871b14407c992792c18f9087d492c29322cd1dd13258a47ac30da025f3564e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only and domain-qualification settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, no usable project GID. LinearMap.isSymmetricProjection_iff_eq_coe_starProjection_range and indicator normalization identify ker P with R^T x=0, hence zero sum within every cell. This orthogonal elimination is not the selected-vertex principal-block domain. The connected four-vertex path specialization, using Matrix.inv_eq_left_inv and rank-one PSD suppliers, has actual Schur K_BC=1/6>0 and refutes blanket transfer of the principal-block sign conclusion. Degenerate coincidences are not excluded or claimed impossible.
+    previous_atom_id: 76adf20de36a3b1e2d7634c56e3956618afbd8dd3f569742885e22b83e209fd4
+    next_atom_id: e7109cedd001f373fc0c51fc1e484fde7e6ea26b240734af4c072ee18b57234a
