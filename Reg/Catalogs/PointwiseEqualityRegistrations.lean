@@ -20,8 +20,6 @@ run_cmd LeanInformationAudit.RootCatalogs.declare {
       registrationModuleName := `Reg.D5.S3.StatisticalMechanics.HardCore.SquareGridCoordinates }]
   companionPrefix := some `Reg.Catalogs.PointwiseEqualityRegistrations }
 
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 2000000 in
 #seal_information_theory
 
 
