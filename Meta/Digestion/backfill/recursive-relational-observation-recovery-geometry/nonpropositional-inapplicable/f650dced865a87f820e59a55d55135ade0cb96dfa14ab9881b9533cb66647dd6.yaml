@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f650dced865a87f820e59a55d55135ade0cb96dfa14ab9881b9533cb66647dd6
+  normalized_sha256: sha256:f650dced865a87f820e59a55d55135ade0cb96dfa14ab9881b9533cb66647dd6
+cas_ref: sha256:f650dced865a87f820e59a55d55135ade0cb96dfa14ab9881b9533cb66647dd6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d; no usable project GID for this complete clause. Inherit the exact original32.6 cycle and function hypotheses. The first inequality holds for every real function and every cycle length at least2. dist_le_range_sum_dist on forward and backward cyclic paths, Finset.abs_sum_le_sum_abs, Equiv.sum_comp and finite-sum normalization give the averaged shorter-path bound. Finset.sum_range_add, sum_range_reflect and sum_range_id_mul_two, with even/odd quotient normalization, give the exact floor(length squared/4) coefficient. The native arbitrary-orbit result uses Equiv.Perm.IsCycleOn.exists_pow_eq/pow_apply_eq_pow_apply, subtypePerm_apply_pow_of_mem and Equiv.ofBijective for exact successor conjugacy; Equiv.sum_comp and Finset.image_image preserve blocks, longest length, mass, deviation and variation.
+    previous_atom_id: 4f6d6c447efefebccf7d44c7098d1e896bab55fc8bd8339828c28d3e9bbe54f7
+    next_atom_id: 280d553ed820449a0d4c917a868d3d26fcdb3efd7c253b6e3c516ec33118657f
