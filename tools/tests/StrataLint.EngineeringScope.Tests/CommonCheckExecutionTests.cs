@@ -7,6 +7,34 @@ namespace StrataLint.EngineeringScope.Tests;
 [Collection("Engineering scope process boundary")]
 public sealed partial class CommonCheckExecutionTests
 {
+    [Theory]
+    [InlineData(1, 1)]
+    [InlineData(2, 2)]
+    [InlineData(3, 2)]
+    [InlineData(7, 2)]
+    public void CurrentCheckFailureRetainsRawExitAndDiagnosticWithoutSuccessfulEvidence(int rawExit, int normalizedExit)
+    {
+        using var fixture = new Fixture();
+        var root = fixture.Tree.Root;
+        var build = fixture.Tree.Build();
+        var checks = CommonExecutionEvidence.BeginChecks(root, "current", build, TextWriter.Null, ["filemap"]);
+        const string diagnostic = "FILEMAP-UNREGISTERED unregistered/input.json";
+
+        var error = Assert.Throws<CommonCheckFailure>(() => checks.Run("filemap", () => new([new("filemap", rawExit, diagnostic)])));
+
+        Assert.Equal(rawExit, error.Operation.RawExit);
+        Assert.Equal(normalizedExit, error.Operation.Exit);
+        Assert.Equal("failed", error.Operation.Status);
+        Assert.Contains("raw_exit=" + rawExit, error.Message, StringComparison.Ordinal);
+        Assert.Contains(diagnostic, error.Message, StringComparison.Ordinal);
+        var log = Assert.Single(Directory.GetFiles(Path.Combine(root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories));
+        Assert.Equal(diagnostic, File.ReadAllText(log));
+        Assert.Empty(checks.Completed);
+        Assert.Throws<InvalidDataException>(() => checks.Seal());
+        Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.ChecksPath("current"))));
+        Assert.ThrowsAny<IOException>(() => CommonExecutionEvidence.ExportCheckSeed(root, "current", TextWriter.Null));
+    }
+
     [Fact]
     public void ChangedFileMapBodyOutsideOldMaterialsInvalidatesOnlyItsScopedEvidence()
     {

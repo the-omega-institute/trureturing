@@ -30,6 +30,28 @@ def oid(value):
     return value
 
 
+def prepare_push_inputs(root, commit):
+    # Bootstrap only the event's fixed data before removing remote access.
+    # The planner itself stays offline and still validates the complete range.
+    import ci_plan
+    if not ci_plan.native_push():
+        return
+    before, after = ci_plan.push_endpoints()
+    if after != commit:
+        raise ValueError("push event after does not match the fixed candidate")
+    if before == ci_plan.ZERO_OID:
+        return
+    try:
+        ci_plan.commit_tree(root, before)
+    except subprocess.CalledProcessError:
+        try:
+            run(root, "git", "--no-replace-objects", "-c", "protocol.version=2", "fetch",
+                "--no-tags", "--depth=1", "origin", before)
+            ci_plan.commit_tree(root, before)
+        except (ValueError, subprocess.SubprocessError) as error:
+            raise ValueError(f"PUSH_BEFORE_UNAVAILABLE: fixed event.before {before} could not be obtained") from error
+
+
 def checkout(root, commit):
     # A reusable workflow receives an immutable candidate explicitly.  An
     # empty or mismatched input must fail closed; never silently substitute the
@@ -40,6 +62,7 @@ def checkout(root, commit):
         raise ValueError("reusable workflow candidate_sha must match checkout")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
+    prepare_push_inputs(root, commit)
     for remote in run(root, "git", "remote").splitlines():
         run(root, "git", "remote", "remove", remote)
     for ref in run(root, "git", "for-each-ref", "--format=%(refname)", "refs/remotes/").splitlines():
