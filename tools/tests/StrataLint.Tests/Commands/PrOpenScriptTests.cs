@@ -12,6 +12,173 @@ public sealed class PrOpenScriptTests
     private const string OldHeadSha = "1111111111111111111111111111111111111111";
 
     [Theory]
+    [InlineData("CANCELLED", "COMPLETED", "SUCCESS", 0)]
+    [InlineData("FAILURE", "COMPLETED", "SUCCESS", 0)]
+    [InlineData("SUCCESS", "COMPLETED", "FAILURE", 1)]
+    [InlineData("SUCCESS", "COMPLETED", "CANCELLED", 1)]
+    [InlineData("SUCCESS", "IN_PROGRESS", null, 124)]
+    [InlineData("FAILURE", "QUEUED", null, 124)]
+    public void PrWatchUsesLatestWorkflowExecutionRegardlessOfConclusion(
+        string oldConclusion, string status, string? conclusion, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        // Reverse response and database-ID order: workflow runNumber selects the execution.
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", status, conclusion, runId: 200, runNumber: 2),
+            Check("engineering", "COMPLETED", oldConclusion))));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.DoesNotContain("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains("\"run_id\":200", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("COMPLETED", "SUCCESS")]
+    [InlineData("IN_PROGRESS", null)]
+    public void PrWatchCannotReuseOldGreenBeforeNewRequiredJobsRegister(string status, string? conclusion)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "SUCCESS"),
+            Check("resolve", status, conclusion, runId: 202, runNumber: 2))));
+
+        var result = fixture.RunWatch42WithDeadline();
+
+        Assert.Equal(124, result.ExitCode);
+        Assert.Contains("pending=0 missing=1", Text(result.StandardOutput), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("COMPLETED", "SUCCESS", 0)]
+    [InlineData("COMPLETED", "FAILURE", 1)]
+    [InlineData("COMPLETED", "CANCELLED", 1)]
+    [InlineData("IN_PROGRESS", null, 124)]
+    public void PrWatchRetainsIndependentWorkflowObligations(string status, string? conclusion, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required("engineering", "security")));
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "FAILURE"),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2),
+            Check("security", status, conclusion, runId: 100, runNumber: 1, workflow: "workflow-other"))));
+
+        Assert.Equal(exitCode, (exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42()).ExitCode);
+    }
+
+    [Fact]
+    public void PrWatchCannotFillMissingProducerWithAnotherProducersSameNameGreen()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "SUCCESS"),
+            Check("resolve", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 100, workflow: "workflow-other"))));
+
+        Assert.Equal(124, fixture.RunWatch42WithDeadline().ExitCode);
+    }
+
+    [Theory]
+    [InlineData("workflow", "COMPLETED", "FAILURE", 1)]
+    [InlineData("external", "COMPLETED", "CANCELLED", 1)]
+    [InlineData("external", "IN_PROGRESS", null, 124)]
+    [InlineData("status", "COMPLETED", "FAILURE", 1)]
+    [InlineData("status", "IN_PROGRESS", "PENDING", 124)]
+    public void PrWatchRetainsOtherProducersWithTheSameRequiredName(
+        string producer, string status, string? conclusion, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        var other = producer == "status" ? Context("engineering", conclusion!) :
+            Check("engineering", status, conclusion, runId: 100,
+                workflow: producer == "external" ? null : "workflow-other");
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", other,
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2))));
+
+        Assert.Equal(exitCode, (exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42()).ExitCode);
+    }
+
+    [Theory]
+    [InlineData("CANCELLED", "COMPLETED", "SUCCESS", 0)]
+    [InlineData("SUCCESS", "COMPLETED", "FAILURE", 1)]
+    [InlineData("SUCCESS", "COMPLETED", "CANCELLED", 1)]
+    [InlineData("FAILURE", "IN_PROGRESS", null, 124)]
+    public void PrWatchUsesGithubLatestCheckWithinApplicableRun(
+        string oldConclusion, string status, string? conclusion, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", status, conclusion, checkId: 100),
+            Check("engineering", "COMPLETED", oldConclusion, checkId: 200, latest: false))));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.DoesNotContain("\"check_id\":200", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("workflow-missing")]
+    [InlineData("workflow-null")]
+    [InlineData("workflow-empty")]
+    [InlineData("workflow-numeric")]
+    [InlineData("run-number-missing")]
+    [InlineData("run-number-string")]
+    [InlineData("run-number-zero")]
+    [InlineData("run-producer-conflict")]
+    [InlineData("run-number-conflict")]
+    [InlineData("run-id-conflict")]
+    [InlineData("check-id-conflict")]
+    [InlineData("latest-missing")]
+    [InlineData("latest-truncated")]
+    [InlineData("latest-invalid-id")]
+    [InlineData("latest-unknown-id")]
+    [InlineData("latest-conflict")]
+    [InlineData("latest-duplicate-name")]
+    public void PrWatchRejectsUnverifiableWorkflowSelection(string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var snapshot = JsonNode.Parse(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"),
+            Check("resolve", "COMPLETED", "SUCCESS")))!;
+        var nodes = snapshot["data"]!["repository"]!["object"]!["statusCheckRollup"]!["contexts"]!["nodes"]!;
+        var suite = nodes[1]!["checkSuite"]!;
+        var run = suite["workflowRun"]!;
+        switch (defect)
+        {
+            case "workflow-missing": run.AsObject().Remove("workflow"); break;
+            case "workflow-null": run["workflow"] = null; break;
+            case "workflow-empty": run["workflow"]!["id"] = ""; break;
+            case "workflow-numeric": run["workflow"]!["id"] = 301; break;
+            case "run-number-missing": run.AsObject().Remove("runNumber"); break;
+            case "run-number-string": run["runNumber"] = "1"; break;
+            case "run-number-zero": run["runNumber"] = 0; break;
+            case "run-producer-conflict": run["workflow"]!["id"] = "other"; break;
+            case "run-number-conflict": run["runNumber"] = 2; break;
+            case "run-id-conflict": run["databaseId"] = 202; break;
+            case "check-id-conflict":
+                nodes[1]!["databaseId"] = 101;
+                nodes[1]!["name"] = "engineering";
+                run["databaseId"] = 202;
+                run["runNumber"] = 2;
+                foreach (var node in nodes.AsArray())
+                    node!["checkSuite"]!["checkRuns"]!["nodes"] = JsonNode.Parse("""[{"databaseId":101}]""");
+                break;
+            case "latest-missing": suite.AsObject().Remove("checkRuns"); break;
+            case "latest-truncated": suite["checkRuns"]!["pageInfo"]!["hasNextPage"] = true; break;
+            case "latest-invalid-id": suite["checkRuns"]!["nodes"]![0]!["databaseId"] = "101"; break;
+            case "latest-unknown-id": suite["checkRuns"]!["nodes"]![0]!["databaseId"] = 999; break;
+            case "latest-conflict": suite["checkRuns"]!["nodes"]!.AsArray().RemoveAt(0); break;
+            case "latest-duplicate-name": nodes[1]!["name"] = "engineering"; break;
+        }
+        fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("SUCCESS", "FAILURE", 1)]
     [InlineData("FAILURE", "SUCCESS", 0)]
     public void PrWatchWaitsForExpectedHeadBeforeDeciding(string oldConclusion, string conclusion, int exitCode)
@@ -97,10 +264,7 @@ public sealed class PrOpenScriptTests
         using var fixture = new PrScriptFixture();
         fixture.RequiredResponses(Ok(Required("engineering", "external", "status")));
         var snapshot = JsonNode.Parse(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"),
-            Check("external", "COMPLETED", "SUCCESS"), Context("status", "SUCCESS")))!;
-        var external = snapshot["data"]!["repository"]!["object"]!["statusCheckRollup"]!["contexts"]!["nodes"]![1]!;
-        external["databaseId"] = 102;
-        external["checkSuite"]!["workflowRun"] = null;
+            Check("external", "COMPLETED", "SUCCESS", workflow: null), Context("status", "SUCCESS")))!;
         fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
 
         var result = fixture.RunWatch42();
@@ -622,25 +786,47 @@ public sealed class PrOpenScriptTests
         @protected = true,
         protection = new { required_status_checks = new { contexts = names, checks = names.Select(context => new { context }) } },
     });
-    private static object Check(string name, string status, string? conclusion, string head = HeadSha) =>
-        new { __typename = "CheckRun", databaseId = 101, name, status, conclusion,
-            checkSuite = new { commit = new { oid = head }, workflowRun = new { databaseId = 201 } } };
+    private static object Check(string name, string status, string? conclusion, string head = HeadSha,
+        int checkId = 0, int runId = 201, int runNumber = 1, string? workflow = "workflow-301", bool latest = true) =>
+        new { __typename = "CheckRun", databaseId = checkId, name, status, conclusion,
+            checkSuite = new { commit = new { oid = head },
+                workflowRun = workflow == null ? null : new { databaseId = runId, runNumber, workflow = new { id = workflow } },
+                checkRuns = new { nodes = latest ? new[] { new { databaseId = checkId } } : [],
+                    pageInfo = new { hasNextPage = false } } } };
     private static object Context(string context, string state, string head = HeadSha) =>
         new { __typename = "StatusContext", id = "status-101", context, state, commit = new { oid = head } };
     private static string BoundSnapshot(string prHead, string commitHead, params object[] items) =>
         Snapshot("OPEN", prHead, commitHead, items);
-    private static string Snapshot(string state, string prHead, string commitHead, params object[] items) =>
-        JsonSerializer.Serialize(new
+    private static string Snapshot(string state, string prHead, string commitHead, params object[] items)
+    {
+        var nodes = JsonSerializer.SerializeToNode(items)!.AsArray();
+        for (var i = 0; i < nodes.Count; i++)
+        {
+            var node = nodes[i]!;
+            if (node["__typename"]!.GetValue<string>() != "CheckRun") continue;
+            if (node["databaseId"]!.GetValue<int>() == 0) node["databaseId"] = 101 + i;
+            foreach (var latest in node["checkSuite"]!["checkRuns"]!["nodes"]!.AsArray())
+                latest!["databaseId"] = node["databaseId"]!.DeepClone();
+        }
+        foreach (var run in nodes.Where(node => node!["checkSuite"]?["workflowRun"] != null)
+                     .GroupBy(node => node!["checkSuite"]!["workflowRun"]!["databaseId"]!.GetValue<int>()))
+        {
+            var latest = new JsonArray(run.SelectMany(node => node!["checkSuite"]!["checkRuns"]!["nodes"]!.AsArray())
+                .Select(node => node!.DeepClone()).ToArray());
+            foreach (var node in run) node!["checkSuite"]!["checkRuns"]!["nodes"] = latest.DeepClone();
+        }
+        return JsonSerializer.Serialize(new
         {
             data = new { repository = new
             {
                 pullRequest = new { state, headRefOid = prHead },
                 @object = new { oid = commitHead, statusCheckRollup = new
                 {
-                    contexts = new { nodes = items, pageInfo = new { hasNextPage = false } },
+                    contexts = new { nodes, pageInfo = new { hasNextPage = false } },
                 } },
             } },
         });
+    }
     private static string Snapshot(string state, params object[] items) =>
         Snapshot(state, HeadSha, HeadSha, items);
     private static FakeResponse Ok(string output) => new(0, output, 0);

@@ -19,7 +19,10 @@ PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID
     object(oid:$head) { ... on Commit { oid statusCheckRollup { contexts(first:100) {
       nodes { __typename
         ... on CheckRun { databaseId name status conclusion
-          checkSuite { commit { oid } workflowRun { databaseId } } }
+          checkSuite { commit { oid } workflowRun { databaseId runNumber workflow { id } }
+            checkRuns(first:100,filterBy:{checkType:LATEST}) {
+              nodes { databaseId } pageInfo { hasNextPage }
+            } } }
         ... on StatusContext { id context state commit { oid } }
       }
       pageInfo { hasNextPage }
@@ -73,13 +76,21 @@ parse_snapshot() {
   jq -Rsec --argjson required "$1" --arg head "$2" '
     def member($xs): . as $value | $xs | index($value) != null;
     def sha: type == "string" and test("^[0-9a-f]{40}$");
-    def database_id: type == "number" and . > 0 and floor == .;
+    def database_id: type == "number" and . > 0 and . <= 9007199254740991 and floor == .;
     def check_name: if .__typename == "CheckRun" then .name elif .__typename == "StatusContext" then .context else null end;
+    def producer: .checkSuite.workflowRun.workflow.id // null;
+    def latest_ids: .checkSuite.checkRuns.nodes | map(.databaseId) | sort;
+    def latest_check: .databaseId as $id | latest_ids | index($id) != null;
     def shape_ok: type == "object" and (if .__typename == "CheckRun" then
       (.name | type == "string" and length > 0) and (.status | type == "string") and has("conclusion") and
       (.conclusion == null or (.conclusion | type == "string")) and (.databaseId | database_id) and
       (.checkSuite | type == "object" and has("workflowRun")) and (.checkSuite.commit.oid == $head) and
-      (.checkSuite.workflowRun == null or (.checkSuite.workflowRun.databaseId | database_id))
+      (.checkSuite.workflowRun == null or
+        ((.checkSuite.workflowRun.databaseId | database_id) and
+         (.checkSuite.workflowRun.runNumber | database_id) and
+         (.checkSuite.workflowRun.workflow.id | type == "string" and length > 0) and
+         (.checkSuite.checkRuns.nodes | type == "array" and length > 0 and all(.[]; .databaseId | database_id)) and
+         .checkSuite.checkRuns.pageInfo.hasNextPage == false))
       elif .__typename == "StatusContext" then
       (.context | type == "string" and length > 0) and (.state | type == "string") and
       (.id | type == "string" and length > 0) and (.commit.oid == $head) else false end);
@@ -94,6 +105,7 @@ parse_snapshot() {
     def check_state: if .__typename == "CheckRun" then .conclusion else .state end;
     def evidence: {check:check_name, check_id:(.databaseId // .id),
       run_id:(.checkSuite.workflowRun.databaseId // null),
+      workflow_id:producer, run_number:(.checkSuite.workflowRun.runNumber // null),
       commit:(.checkSuite.commit.oid // .commit.oid), status:(.status // .state), conclusion:check_state};
     fromjson |
     select(type == "object" and (.errors == null or .errors == [])) |
@@ -108,16 +120,37 @@ parse_snapshot() {
          .object.statusCheckRollup.contexts.pageInfo.hasNextPage == false))) |
     (.object.statusCheckRollup.contexts.nodes // []) as $items |
     select(all($items[]; shape_ok)) |
+    select([$items[] | select(.__typename == "CheckRun") | .databaseId] |
+      length == (unique | length)) |
     select(all($items[]; check_name as $name | if ($required | index($name)) != null then enum_ok else true end)) |
+    [$items[] | select(producer != null)] as $actions |
+    # Repeated run metadata must agree, and every LATEST ID must resolve in this complete snapshot.
+    select($actions | group_by(.checkSuite.workflowRun.databaseId) | all(.[];
+      (.[0] | latest_ids) as $latest | map(.databaseId) as $observed |
+      (map(.checkSuite.workflowRun) | unique | length) == 1 and
+      (map(latest_ids) | unique | length) == 1 and
+      ($latest | length) == ($latest | unique | length) and
+      all($latest[]; member($observed)) and
+      (map(select(latest_check)) | group_by(.name) | all(.[]; length == 1)))) |
+    select($actions | group_by([producer, .checkSuite.workflowRun.runNumber]) |
+      all(.[]; (map(.checkSuite.workflowRun.databaseId) | unique | length) == 1)) |
+    # Include early, non-required jobs when selecting the latest execution for each workflow.
+    ($actions | group_by(producer) | map({key:(.[0] | producer),
+      value:(map(.checkSuite.workflowRun.runNumber) | max)}) | from_entries) as $latest_runs |
     if $pr.headRefOid != $head then {state:$pr.state, stale:true, observed_head:$pr.headRefOid}
     else
-    [$required[] as $name | [$items[] | select(check_name == $name)] as $found |
-      if ($found | length) == 0 then {kind:"missing"}
+    [$required[] as $name | [$items[] | select(check_name == $name)] | group_by(producer) |
+      # Keep each observed producer obligation, even if its latest run has no matching job yet.
+      (if length == 0 then [] else .[] end) |
+      map(select(producer == null or
+        (.checkSuite.workflowRun.runNumber == $latest_runs[producer] and latest_check))) as $found |
+      (if ($found | length) == 0 then {kind:"missing"}
       elif any($found[]; phase == "red") then ($found | map(select(phase == "red")) | first | {kind:"red",check:check_name,state:check_state})
-      elif any($found[]; phase == "pending") then {kind:"pending"} else {kind:"terminal"} end] as $checks |
+      elif any($found[]; phase == "pending") then {kind:"pending"} else {kind:"terminal"} end) +
+      {evidence:($found | map(evidence))}] as $checks |
     {state:$pr.state, stale:false, red:($checks | map(select(.kind == "red")) | first // null),
      pending:($checks | map(select(.kind == "pending")) | length), missing:($checks | map(select(.kind == "missing")) | length),
-     evidence:[$items[] | check_name as $name | select(($required | index($name)) != null) | evidence]} end
+     evidence:[$checks[].evidence[]]} end
   '
 }
 pr_watch_main() {
