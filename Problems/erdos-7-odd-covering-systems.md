@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Adaptive read-once head orders retain conditional comparison and strictly improve a family of period 315; the joint atom-cap obstruction persists](../docs/reports/erdos7-odd-covering/problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md)
 - [Depth-profile laws prove noncoverage for the literal 154-class head, arbitrary sixth-power smooth head additions and unrestricted original tails](../docs/reports/erdos7-odd-covering/problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md)
 - [Exact optimization of full-prefix capped head laws, arbitrary fixed head order, and complete counterexamples to the universal 9/20 threshold](../docs/reports/erdos7-odd-covering/problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md#full-history-capped-laws-and-exact-global-optimization)
 - [Shared small-prime budgets prove noncoverage through six or seven predecessor supports, with full Haar density and two exact limits of the complete support-Shearer envelope](../docs/reports/erdos7-odd-covering/problem-details/53-shared-small-prime-budgets-for-six-or-seven-predecessor-supports.md)
