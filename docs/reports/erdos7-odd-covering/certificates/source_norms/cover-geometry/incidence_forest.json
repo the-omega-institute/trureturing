@@ -1,0 +1,68 @@
+{
+  "result": "PASS",
+  "scope": "Finite original-family controls for the ordinary general proof.",
+  "cases": [
+    {
+      "name": "deep_edge_with_nonempty_exception",
+      "period": 675,
+      "labels": 9,
+      "supports": 1,
+      "roots": [
+        3
+      ],
+      "max_support": 2,
+      "domain_sizes": {
+        "3": 15,
+        "5": 19
+      },
+      "exception_sizes": {
+        "(3, 5)": 3
+      },
+      "survivors": 297,
+      "survival": "11/25",
+      "generated_points": 255,
+      "joint_probability": "1",
+      "maximum_density": "45/14",
+      "density_bound": 64,
+      "same_old_source": {
+        "actual_failure": "1/2",
+        "original_deep_fee": "32/25"
+      }
+    },
+    {
+      "name": "rank_four_support_with_child_edge",
+      "period": 45045,
+      "labels": 8,
+      "supports": 2,
+      "roots": [
+        3
+      ],
+      "max_support": 4,
+      "domain_sizes": {
+        "3": 6,
+        "5": 4,
+        "7": 6,
+        "11": 10,
+        "13": 12
+      },
+      "exception_sizes": {
+        "(11, 13)": 0,
+        "(3, 5, 7, 11)": 0
+      },
+      "survivors": 17100,
+      "survival": "380/1001",
+      "generated_points": 17100,
+      "joint_probability": "1",
+      "maximum_density": "1365/478",
+      "density_bound": 184320,
+      "same_old_source": null
+    }
+  ],
+  "schema": "incidence-forest-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/48-incidence-forests-with-arbitrary-original-heights.md": "38158e0d64ca8449b127d4fe0636eddeafaff4304408f9a073820021f599f9c4",
+    "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9"
+  },
+  "producer_sha256": "ee8b752b6a1b4b712c3e0f23ddaa6d75d811f33bdbaacfa8912f263a236b9ecf"
+}
