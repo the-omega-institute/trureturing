@@ -1,0 +1,1 @@
+每收到报告 $\beta$，先计算两个新编号 $j'=T^a_\beta(j)$、$i'=T^b_\beta(i)$。若 $c+1<T_{ab}$，进入 $\operatorname{Warm}(a,j',b,i',c+1)$ 并输出更新后的 $y^a_{j'}$；若 $c+1=T_{ab}$，进入 $\operatorname{Ready}(b,i')$，丢弃旧动态编号并输出更新后的 $y^b_{i'}$。

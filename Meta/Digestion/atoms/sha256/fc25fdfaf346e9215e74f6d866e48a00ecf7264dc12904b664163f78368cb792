@@ -1,0 +1,8 @@
+**定理 20.8（固定正参数与正紧集上的证书收敛）。**
+
+固定θ*∈(0,∞)³。设一列记录(y^(k),ε^(k))都满足(20.162)，且max_n ε_n^(k)→0；平方根、log及有限精度运算的外包误差也趋零。则(20.163)–(20.169)的检查从某一阶段起全部通过，且
+$$
+\operatorname{diam}A_k+\operatorname{diam}C_k+
+\operatorname{diam}R_k\longrightarrow0.
+\tag{20.173}
+$$

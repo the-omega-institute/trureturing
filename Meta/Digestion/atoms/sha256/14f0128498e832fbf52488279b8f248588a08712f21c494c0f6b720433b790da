@@ -1,0 +1,16 @@
+**Proof.** Given such a sequence and finite $F$, there is an $N$ with $F\subseteq F_N$. The tail $d_n$, $n\ge N$, belongs to $D\cap C_F$ and converges to zero, proving the closure condition.
+
+Conversely, apply the closure condition to $F_n$ and choose
+$$
+d_n\in D\cap C_{F_n}\cap B_V(0,1/n).
+$$
+These choices have all the required properties.
+
+For the failure of mere accumulation, take $V=\mathbb R$, the single constraint $x>0$, and
+$$
+D=\{-1/n:n\in\mathbb N_{>0}\}.
+$$
+Then $0\in\overline D$, but $D\cap C_{\{1\}}=\varnothing$, so no actual strict witness exists.
+
+The criterion in Theorem 41.11 concerns diagonal feasibility; by itself it does not assert approximation to a specified polynomial curve. $\square$
+

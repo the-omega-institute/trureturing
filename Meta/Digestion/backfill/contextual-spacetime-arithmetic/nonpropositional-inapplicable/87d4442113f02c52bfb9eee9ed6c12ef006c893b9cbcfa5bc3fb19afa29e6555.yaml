@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:87d4442113f02c52bfb9eee9ed6c12ef006c893b9cbcfa5bc3fb19afa29e6555
+  normalized_sha256: sha256:87d4442113f02c52bfb9eee9ed6c12ef006c893b9cbcfa5bc3fb19afa29e6555
+cas_ref: sha256:87d4442113f02c52bfb9eee9ed6c12ef006c893b9cbcfa5bc3fb19afa29e6555
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “以下每条依次列出初稿、中间稿、合入稿编号；公式标签辨认同一内容”指定编号表的阅读顺序，不重述九项结果的命题本体，也无定义内推论，故无需形式证明。
+    previous_atom_id: ef1fe1556967b1af089b43f8e84cb9ebe63521efb322952e6cfc944ffc32c1af
+    next_atom_id: 485e19f9cb6397193aa0e4dbd0ba5636b09069dad5ed4a8da9672ef0786d2c01

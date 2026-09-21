@@ -1046,6 +1046,542 @@ y_n=B+\frac{B-A}{2}[\cosh(D_\eta/n)-1]<Y.
 
 [15-D] Lin Lin and Yu Tong. *Heisenberg-Limited Ground-State Energy Estimation for Early Fault-Tolerant Quantum Computers*. PRX Quantum 3, 010318, 2022. DOI: 10.1103/PRXQuantum.3.010318. https://doi.org/10.1103/PRXQuantum.3.010318 . 其相干量子查询模型与式 (15.11) 的被动含绝对噪声 Laplace 观察模型不同，二者不共享本文下界的查询前提。
 
+## 16. 固定模态数、遗漏质量与谱底识别的阶数
+
+### 16.1 定义：单侧稀疏矩比较
+
+设 $d\geq1$，$x_i\in[0,1]$、$u_i\geq0$（$1\leq i\leq d$），并令 $\rho$ 为 $[0,1]$ 上总质量不超过 $\tau$ 的有限正测度。设 $\nu$ 为支撑于 $(-\infty,b]$ 的有限正测度，且本节所用矩有限。定义
+
+\[
+\mu=\sum_{i=1}^d u_i\delta_{x_i}+\rho,\qquad
+m_k(\sigma)=\int t^k\,\sigma(dt).
+\]
+
+假设 $b\geq0$，存在指标 $i_*$ 使 $x_*>b$、$u_{i_*}\geq\eta>0$，其中 $x_*=x_{i_*}$；并且
+
+\[
+|m_k(\mu)-m_k(\nu)|\leq\varepsilon\quad(0\leq k\leq2d-1),\qquad\varepsilon\geq0.
+\tag{16.1}
+\]
+
+节点可以重合，权重可以为零，不要求概率归一化。$\rho$ 是遗漏的正质量，不要求它只位于高能或低能一侧。
+
+### 16.2 定理：选择性消去与独立的尾误差代价
+
+令 $S=\{i:x_i\leq b\}$、$s=|S|$，则
+
+\[
+\eta(x_*-b)^{2s+1}\leq2^{2s+1}\varepsilon+\tau,
+\qquad
+\boxed{\eta(x_*-b)^{2d-1}\leq2^{2d-1}\varepsilon+\tau.}
+\tag{16.2}
+\]
+
+**证明。** 构造
+
+\[
+q(t)=(t-b)\prod_{i\in S}(t-x_i)^2,\qquad D=2s+1\leq2d-1.
+\]
+
+在保留节点中，$x_i\leq b$ 时 $q(x_i)=0$，$x_i>b$ 时 $q(x_i)\geq0$；在比较测度的支撑上 $q\leq0$。所有根都不大于 $b$，故 $q(x_*)\geq(x_*-b)^D$。由于 $0\leq b<x_*\leq1$，所有根与 $[0,1]$ 内的点的距离都不超过一，故 $\sup_{[0,1]}|q|\leq1$。因此
+
+\[
+\eta(x_*-b)^D\leq\int q\,d(\mu-\nu)+\tau.
+\tag{16.3}
+\]
+
+若线性泛函 $F$ 对次数至 $D$ 的单项式满足 $|F(t^k)|\leq\varepsilon$，每乘一个根 $a\in[0,1]$ 的线性因子，就有
+
+\[
+|F((t-a)t^k)|\leq |F(t^{k+1})|+a|F(t^k)|\leq2\varepsilon.
+\]
+
+对实际因子列表归纳，得 $|F(q)|\leq2^D\varepsilon$。把 $F(f)=\int f\,d(\mu-\nu)$ 代入式 (16.3) 即得第一式。最后由 $0<x_*-b\leq1$、$D\leq2d-1$ 得第二式。根的选择避免了让 $x_*$ 与同侧邻近节点之间的距离进入分母；只有位于比较阈值以下的保留节点被消去。多项式主次化和支撑控制的方法背景见 [16-A, §3, Lemma 15]，无分离稀疏矩恢复的算法背景见 [16-B]。
+
+**推论。** 当 $\rho=0$ 时，$x_*-b\leq2(\varepsilon/\eta)^{1/(2d-1)}$。当 $\rho\neq0$ 时，式 (16.2) 明确区分观察误差 $\varepsilon$ 与遗漏质量 $\tau$；有限观察本身不提供 $\tau$ 的独立上界。
+
+### 16.3 定义：被动 Laplace 观察的两个模型类
+
+固定 $0\leq E_-<E_+<\infty$、$0<\eta<1$。令 $\mathcal M_d$ 为 $[E_-,E_+]$ 上至多有 $d$ 个原子的概率测度，要求其最小支撑点 $g(\sigma)$ 的质量至少为 $\eta$。令 $\mathcal M_{\rm fin}=\bigcup_{j\geq1}\mathcal M_j$，并定义
+
+\[
+C_\sigma(t)=\int e^{-tE}\,\sigma(dE),\quad t\geq0,
+\qquad
+\mathcal R_d(\varepsilon)=\inf_{\widehat g}\sup_{\sigma\in\mathcal M_d}\sup_{\|Y-C_\sigma\|_\infty\leq\varepsilon}
+|\widehat g(Y)-g(\sigma)|.
+\tag{16.4}
+\]
+
+估计函数可读取所有非负时间的被动观测，没有相干量子查询或直接矩阵访问。另定义只有一侧具有模态数约束的可辨识直径
+
+\[
+\Omega_d(\varepsilon)=\sup\{|g(\mu)-g(\nu)|:\mu\in\mathcal M_d,\ \nu\in\mathcal M_{\rm fin},\ \|C_\mu-C_\nu\|_\infty\leq\varepsilon\}.
+\tag{16.5}
+\]
+
+这里上确界同时遍历稀疏侧的全部位置和权重，允许接近碰撞；它不等同于固定一个已分离矩阵后的局部误差。
+
+### 16.4 定理：固定模态数的全时间尖锐幂指数
+
+对每个固定 $d\geq1$，存在正数 $c_d,C_d,\varepsilon_d$，只依赖 $d,E_-,E_+,\eta$，使
+
+\[
+\boxed{c_d\varepsilon^{1/(2d-1)}\leq\mathcal R_d(\varepsilon)
+\leq C_d\varepsilon^{1/(2d-1)}}\qquad(0<\varepsilon<\varepsilon_d).
+\tag{16.6}
+\]
+
+**上界证明。** 取 $h=1/E_+$，推送 $x=e^{-hE}$，使所有节点属于 $[e^{-1},1]$。同一数据的两个相容模型在次数 $0,\ldots,2d-1$ 的矩差至多为 $2\varepsilon$。把具有较小最低能量、即较大最大 $x$ 的模型作为式 (16.2) 的稀疏侧，零权重补足 $d$ 个槽位。其最大节点权重至少为 $\eta$，得到节点差不超过 $2(2\varepsilon/\eta)^{1/(2d-1)}$。又有
+
+\[
+|g(\mu)-g(\nu)|=h^{-1}|\log x_{\max,\mu}-\log x_{\max,\nu}|
+\leq eE_+|x_{\max,\mu}-x_{\max,\nu}|.
+\]
+
+取相容谱底集合上下确界的中点为估计；空相容集任取 $E_-$。其最坏误差不超过上述直径的一半。这只是估计函数存在性；所用信息可缩至 $2d$ 个等间距时刻。
+
+**下界构造。** 记 $T_n$ 为满足 $T_n(\cos\theta)=\cos(n\theta)$ 的第一类 Chebyshev 多项式。先设 $d\geq2$，令 $n=2d-2$、$A_\eta=\operatorname{arcosh}(2/\eta-1)>0$、
+
+\[
+x_j=\tfrac12(1+\cos(j\pi/n)),\quad j=0,\ldots,n,
+\qquad y=\tfrac12(1+\cosh(A_\eta/n))>1.
+\]
+
+令 $\ell_j$ 为这些节点的 Lagrange 基，$c_j=\ell_j(y)$。乘积公式给 $\operatorname{sign}(c_j)=(-1)^j$。由于 $\sum c_j=1$，以及节点上的 $T_n(2x_j-1)=(-1)^j$，插值恒等式给
+
+\[
+P:=\sum_{j\ {\rm even}}c_j=\frac{1+T_n(2y-1)}2=\frac1\eta.
+\]
+
+因此
+
+\[
+\alpha=P^{-1}\delta_y+P^{-1}\sum_{j\ {\rm odd}}(-c_j)\delta_{x_j},\qquad
+\beta=P^{-1}\sum_{j\ {\rm even}}c_j\delta_{x_j}
+\tag{16.7}
+\]
+
+是两个各有 $d$ 个正原子的概率测度，匹配次数 $0,\ldots,2d-2$ 的矩。$\alpha$ 在 $y$ 上的质量为 $\eta$；$\beta$ 在最大节点 $1$ 上的质量为 $c_0/P>\eta$，因为 $c_0=\prod_{j\ne0}(y-x_j)/(1-x_j)>1$。这一步控制两个模型的端点权重，超出了仅有交错支撑矩匹配的存在陈述 [16-A, Lemma 30]。
+
+反射坐标 $\xi=y-x$ 后，两种分布支撑于 $[0,W]$，$W=y$，最小点分别为 $0$ 与 $\Delta=y-1>0$，前 $2d-1$ 个矩仍相同。取固定 $E_0\in(E_-,E_+)$ 且 $E_0>0$，将能量设为 $E=E_0+s\xi$，其中 $sW\leq E_+-E_0$。记 $q=2d-1$。对任意 $t\geq0$，在 $\xi=0$ 展开到 $q-1$ 阶，Taylor 余项的绝对值不超过 $(stW)^q/q!$。匹配的多项式部分积分相消，故
+
+\[
+|C_\alpha(t)-C_\beta(t)|\leq2e^{-E_0t}\frac{(stW)^q}{q!}
+\leq2\left(\frac{sW}{E_0}\right)^q.
+\tag{16.8}
+\]
+
+末步由 $e^{E_0t}\geq(E_0t)^q/q!$ 得出，对全部时间同时成立。取 $s=(E_0/W)\varepsilon^{1/q}$；对充分小的 $\varepsilon$ 能量仍在固定区间内。两条曲线之差至多为 $2\varepsilon$，而谱底差为 $s\Delta$。中点观测同时相容，任何估计在至少一侧的误差不小于 $s\Delta/2$，得下界。
+
+$d=1$ 时用 $\delta_{E_0}$ 与 $\delta_{E_0+s}$，并用 $e^{-E_0t}(1-e^{-st})\leq st e^{-E_0t}\leq s/E_0$。经典矩比较中的 $1/(2d-1)$ 指数已见 [16-A, Proposition 1]；这里给出的是固定最低态权重和全部时间绝对误差下的端点构造及上下界。
+
+### 16.5 定理：多允许一个隐藏模态的代价
+
+对每个固定 $d\geq1$，式 (16.5) 的直径满足
+
+\[
+\boxed{\Omega_d(\varepsilon)=\Theta_{d,E_-,E_+,\eta}(\varepsilon^{1/(2d)})}
+\qquad(\varepsilon\downarrow0).
+\tag{16.9}
+\]
+
+下界只需令竞争模型属于 $\mathcal M_{d+1}$，不需要任意大的模式数。
+
+**上界证明。** 仍取 $x=e^{-E/E_+}$。如果稀疏侧的最大节点更大，则式 (16.2) 给出更强的 $1/(2d-1)$ 阶，从而对 $\varepsilon/\eta\leq1$ 也给出 $1/(2d)$ 阶。如果竞争侧的最大节点 $y_*$ 大于稀疏侧的最大节点 $b$，构造
+
+\[
+Q(t)=\prod_{i=1}^d(t-x_i)^2.
+\]
+
+零权重槽位可补在 $b$。这个多项式在稀疏测度上积分为零，在竞争测度上非负，且 $Q(y_*)\geq(y_*-b)^{2d}$。因子归纳给其系数预算不超过 $2^{2d}$，所以
+
+\[
+\eta(y_*-b)^{2d}\leq\int Q\,d\nu\leq2^{2d}\varepsilon.
+\]
+
+再次应用对数的 Lipschitz 界，得到所需上界。平方消去的思想与 [16-A, Proposition 2 and Lemma 15] 一致。
+
+**下界证明。** 在式 (16.7) 的构造中改取 $n=2d-1$。奇偶计数给 $\alpha$ 有 $d+1$ 个原子、$\beta$ 有 $d$ 个原子，二者矩匹配至次数 $2d-1$，端点权重仍都至少为 $\eta$。在反射、能量平移与缩放后，式 (16.8) 改为 $q=2d$，得到全时间曲线差不超过 $\varepsilon$ 而端点差为 $c\varepsilon^{1/(2d)}$。例如取 $s=(E_0/W)(\varepsilon/2)^{1/(2d)}$ 即可。这对 $d=1$ 也有效。由于 $\beta\in\mathcal M_d$、$\alpha\in\mathcal M_{d+1}$，得到式 (16.9)。
+
+**推论。** 仅在 $\mathcal M_d$ 内有效的误差保证，不能在允许未排除的额外模式时直接声称同样精度。若一个区间估计必须对全部 $\mathcal M_{\rm fin}$ 及噪声半径 $\varepsilon/2$ 保持覆盖，则上述两条曲线的中点迫使它在某个 $d$ 模态真实模型上具有至少 $c\varepsilon^{1/(2d)}$ 的区间长度。该量词允许真实模型随精度变化，不否定额外分离条件下的点态适应性。
+
+### 16.6 定理：同时保留维数依赖的下界
+
+存在仅依赖 $E_-,E_+,\eta$ 的常数 $c>0$，使对所有整数 $d\geq1$ 及 $0<\varepsilon<1$，有
+
+\[
+\mathcal R_d(\varepsilon)\geq c\max_{1\leq m\leq d}\frac{\varepsilon^{1/(2m-1)}}{m^2}.
+\tag{16.10}
+\]
+
+**证明。** 固定 $E_0\in(E_-,E_+)$、$\kappa=\tfrac12\min\{E_0,E_+-E_0\}>0$。对任意 $m\geq2$，在式 (16.7) 取 $n=2m-2$。此时 $W=y\leq W_\eta=(1+\cosh A_\eta)/2$，并且
+
+\[
+\Delta=y-1\geq\frac{A_\eta^2}{4n^2}\geq\frac{A_\eta^2}{16m^2}.
+\]
+
+取 $s=\kappa\varepsilon^{1/(2m-1)}/W_\eta$，则所有能量位于固定区间内，式 (16.8) 右侧不超过 $2\varepsilon$。谱底间距至少为 $\kappa A_\eta^2\varepsilon^{1/(2m-1)}/(16W_\eta m^2)$。中点论证及 $\mathcal M_m\subseteq\mathcal M_d$ 给出每个 $m\leq d$ 的下界。$m=1$ 由上述 Dirac 构造给出；减小常数使其也成立，然后取最大值。
+
+**推论。** 当 $0<\varepsilon\leq e^{-1}$ 且 $d\geq\lceil\log(1/\varepsilon)\rceil$ 时，$\mathcal R_d(\varepsilon)\geq c'/\log^2(1/\varepsilon)$，其中 $c'>0$ 仍只依赖固定能量区间及 $\eta$。
+
+**证明。** 在式 (16.10) 取 $m=\lceil L\rceil$、$L=\log(1/\varepsilon)\geq1$。有 $m\leq2L$、$2m-1\geq L$，所以 $\varepsilon^{1/(2m-1)}\geq e^{-1}$。代入即得 $c'=c/(4e)$。这个全时间下界只使用实 Taylor 余项及正测度构造。
+
+### 16.7 问题：维数与精度的统一过渡
+
+在定义 (16.4) 的同一模型和固定 $E_-,E_+,\eta$ 下，是否存在与 $d$ 无关的常数 $C$ 和 $\varepsilon_0>0$，使
+
+\[
+\mathcal R_d(\varepsilon)\leq C\max_{1\leq m\leq d}\frac{\varepsilon^{1/(2m-1)}}{m^2}
+\qquad(d\geq1,\ 0<\varepsilon<\varepsilon_0)?
+\tag{16.11}
+\]
+
+式 (16.10) 已给出对应下界；固定 $d$ 的定理 (16.6) 没有给出这个统一上界。问题 (16.11) 明确区分固定维数常数与联合渐近，不将其作为已证命题或已发表具名猜想。另一项问题是，在只保证一个质量至少为 $1-\tau$ 的 $d$ 模态部分且要求目标最低态被该部分保留的模型中，求 $d,\varepsilon,\tau$ 的联合最优可辨识直径。
+
+### 16.8 引用
+
+[16-A] Yihong Wu and Pengkun Yang. *Optimal estimation of Gaussian mixtures via denoised method of moments*. Annals of Statistics 48(4), 1981–2007, 2020. DOI: 10.1214/19-AOS1873. https://arxiv.org/abs/1807.07237 . Proposition 1、Proposition 2、Lemma 15 和 Lemma 30 分别提供两侧稀疏与单侧稀疏矩比较、支撑多项式及交错正测度构造的成熟背景；本节不把这些方法或经典幂指数归为新发现。
+
+[16-B] Zhiyuan Fan and Jian Li. *Efficient Algorithms for Sparse Moment Problems without Separation*. COLT 2023, PMLR 195:3510–3565. https://proceedings.mlr.press/v195/fan23b.html . 分离无关的稀疏矩算法与误差分析。
+### 16.9 推论：有限支撑情形的一致次数界
+
+设 $d\geq1$、$m,\ell\geq0$，并给定三个有限原子族
+
+\[
+x_i\in[0,1],\ u_i\geq0\quad(1\leq i\leq d),\qquad
+z_j\in[0,1],\ a_j\geq0\quad(1\leq j\leq m),
+\]
+
+\[
+y_r\leq b,\ v_r\geq0\quad(1\leq r\leq\ell).
+\]
+
+假设 $b\geq0$，存在指标 $i_*$ 使 $x_*=x_{i_*}>b$、$u_{i_*}\geq\eta>0$，并且
+
+\[
+\sum_{j=1}^{m}a_j\leq\tau,\qquad \varepsilon\geq0,
+\]
+
+以及对每个整数 $0\leq k\leq2d-1$ 都有
+
+\[
+\left|
+\sum_{i=1}^{d}u_i x_i^k+
+\sum_{j=1}^{m}a_j z_j^k-
+\sum_{r=1}^{\ell}v_r y_r^k
+\right|\leq\varepsilon.
+\tag{16.12}
+\]
+
+这里空原子族的和取零。则
+
+\[
+\boxed{
+\eta(x_*-b)^{2d-1}\leq2^{2d-1}\varepsilon+\tau.
+}
+\tag{16.13}
+\]
+
+**证明。** 令 $S=\{i:x_i\leq b\}$、$s=|S|$，并置
+
+\[
+q(t)=(t-b)\prod_{i\in S}(t-x_i)^2,
+\qquad D=2s+1.
+\]
+
+由于 $i_*\notin S$，有 $D\leq2d-1$。多项式 $q$ 的全部 $D$ 个线性因子的根都属于 $[0,b]\subseteq[0,1]$。对保留族，若 $i\in S$，则 $q(x_i)=0$；若 $i\notin S$，则 $q(x_i)\geq0$。对比较族有 $y_r\leq b$，故 $q(y_r)\leq0$。再令 $\delta=x_*-b$，则 $0<\delta\leq1$，并且
+
+\[
+q(x_*)=(x_*-b)\prod_{i\in S}(x_*-x_i)^2\geq\delta^D.
+\]
+
+另一方面，对每个 $z_j\in[0,1]$，每个线性因子的绝对值都不超过一，所以 $|q(z_j)|\leq1$。定义有限和线性泛函
+
+\[
+L(f)=\sum_{i=1}^{d}u_i f(x_i)+
+\sum_{j=1}^{m}a_j f(z_j)-
+\sum_{r=1}^{\ell}v_r f(y_r).
+\]
+
+利用上述符号、$u_{i_*}\geq\eta$ 以及 $\sum_j a_j\leq\tau$，得到
+
+\[
+\eta\delta^D\leq L(q)+\tau\leq |L(q)|+\tau.
+\tag{16.14}
+\]
+
+现将 $q$ 的因子按次序写成 $\prod_{h=1}^{D}(t-c_h)$，其中 $0\leq c_h\leq1$。式 (16.12) 即 $|L(t^k)|\leq\varepsilon$。逐个乘入因子，并使用
+
+\[
+|L((t-c_h)p)|\leq |L(tp)|+c_h|L(p)|,
+\]
+
+作归纳可得：只要 $j+k\leq2d-1$，前 $j$ 个因子的乘积再乘 $t^k$ 后，其 $L$ 值的绝对值不超过 $2^j\varepsilon$。取 $j=D$、$k=0$，便有
+
+\[
+|L(q)|\leq2^D\varepsilon.
+\]
+
+代入式 (16.14)，再用 $0<\delta\leq1$、$D\leq2d-1$ 与 $\varepsilon\geq0$，即得
+
+\[
+\eta\delta^{2d-1}\leq\eta\delta^D
+\leq2^D\varepsilon+\tau
+\leq2^{2d-1}\varepsilon+\tau.
+\]
+
+
+## 17. 有限观察窗口的谱底恢复与时间精度过渡
+
+### 17.1 定义：固定最低态权重的被动观察模型
+
+固定 $0\leq E_-<E_+<\infty$ 及 $0<\eta<1$。令 $\mathcal M$ 为支撑于 $[E_-,E_+]$ 的 Borel 概率测度 $\mu$，要求
+\[
+g(\mu)=\min\operatorname{supp}\mu,\qquad \mu(\{g(\mu)\})\geq\eta.
+\]
+令 $\mathcal M_d$ 为其中至多有 $d$ 个原子的子类。对 $T>0$，定义
+\[
+C_\mu(t)=\int e^{-tE}\,\mu(dE),\quad 0\leq t\leq T,
+\]
+以及统一绝对噪声下的确定性 minimax 误差
+\[
+\mathcal R_T(\varepsilon)=\inf_{\widehat g}\sup_{\mu\in\mathcal M}
+\sup_{\|Y-C_\mu\|_{L^\infty[0,T]}\leq\varepsilon}
+|\widehat g(Y)-g(\mu)|.
+\tag{17.1}
+\]
+这里范数取逐点上确界，$Y$ 可为任意实值函数；估计函数不限计算复杂度。将 $\mathcal M$ 换成 $\mathcal M_d$ 得到 $\mathcal R_{d,T}$。没有对低能原子之外的支撑间距作假设。
+
+### 17.2 定理：从原始矩构造的端点证书
+
+设 $0\leq a<b$，$\mu,\nu$ 为概率测度，分别支撑于 $[a,\infty)$ 与 $[a,b]$，所用矩绝对可积。假设 $x_*\geq b$、$\mu(\{x_*\})\geq\eta>0$，且
+\[
+\left|\int x^k\,d\mu-\int x^k\,d\nu\right|\leq\delta,
+\quad 0\leq k\leq n,
+\qquad \delta\geq0.
+\]
+记
+\[
+Q=2\frac{2+a+b}{b-a}+1.
+\]
+则
+\[
+\boxed{2\eta n^2(x_*-b)\leq(b-a)\bigl[2(1-\eta)+\delta Q^n\bigr].}
+\tag{17.2}
+\]
+
+**证明。** 使用第一类 Chebyshev 多项式 $T_0=1,T_1=z,T_{k+2}=2zT_{k+1}-T_k$。对 $z\geq1$，共同归纳两个不变量
+\[
+T_k(z)\geq1+k^2(z-1),\qquad
+T_{k+1}(z)-T_k(z)\geq(2k+1)(z-1).
+\tag{17.3}
+\]
+第一式在下一阶由当前两式相加得到。第二式的递推使用
+\[
+T_{k+2}-T_{k+1}=(T_{k+1}-T_k)+2(z-1)T_{k+1}
+\]
+及 $T_{k+1}(z)\geq1$。基例 $k=0$ 直接成立。
+
+对实线性泛函 $F$，若 $|F(x^j)|\leq\delta$ 对 $j\leq n$ 成立，令 $S=|\alpha|+|\beta|$，则
+\[
+|F(T_n(\alpha x+\beta))|\leq\delta(2S+1)^n.
+\tag{17.4}
+\]
+证明对次数作强归纳：泛函 $F_A(f)=F((\alpha x+\beta)f)$ 在下一阶可用的原始矩预算为 $S\delta$。递推项因此不超过
+\[
+2S\delta(2S+1)^{n-1}+\delta(2S+1)^{n-2}
+\leq\delta(2S+1)^n.
+\]
+次数零、一分别由常数矩和一次矩直接处理。
+
+现在取
+\[
+A(x)=\frac{2x-a-b}{b-a},\qquad p_n(x)=\frac{1+T_n(A(x))}{2}.
+\]
+在 $[a,b]$ 上有 $0\leq p_n\leq1$；在 $[b,\infty)$ 上有 $p_n\geq1$。由式 (17.3)，
+\[
+p_n(x_*)\geq1+\frac{n^2(x_*-b)}{b-a}.
+\]
+对 $F(f)=\int f\,d\mu-\int f\,d\nu$ 应用式 (17.4)。两测度的总质量均为一，故 $F(1)=0$，而 $S=(2+a+b)/(b-a)$。于是
+\[
+\eta p_n(x_*)\leq\int p_n\,d\mu
+\leq\int p_n\,d\nu+\frac{\delta Q^n}{2}
+\leq1+\frac{\delta Q^n}{2}.
+\]
+整理得到式 (17.2)。这也证明了一般测度版本；有限原子情形的积分就是实际加权幂和。
+
+### 17.3 定理：可直接选择采样时刻的非渐近界
+
+取整数 $n\geq1$、$T>0$，记
+\[
+U=E_+T,\quad u=\min\{1,U/n\},\quad h=u/E_+,
+\quad K_n=64\max\{1,n/U\}.
+\]
+若 $\mu,\nu\in\mathcal M$ 在时刻 $0,h,\ldots,nh\subseteq[0,T]$ 上满足
+\[
+|C_\mu(kh)-C_\nu(kh)|\leq2\varepsilon\quad(0\leq k\leq n),
+\qquad \varepsilon K_n^n\leq1,
+\]
+则
+\[
+\boxed{|g(\mu)-g(\nu)|\leq\frac{3eE_+}{\eta n^2}.}
+\tag{17.5}
+\]
+
+**证明。** 推送 $x=e^{-hE}$，令 $a=e^{-u}$、$a_0=(3a-1)/2$。由于 $0<u\leq1$ 和 $e<3$，有 $0<a_0<a$。两测度的变换支撑均在 $[a,1]$。设其最大支撑点为 $y>b$，并将端点为 $y$ 的一侧作为式 (17.2) 的第一测度。比较区间选 $[a_0,b]$。它满足
+\[
+b-a_0\geq(1-a)/2,\qquad b-a_0\leq3(1-a)/2.
+\]
+对应的放大常数满足
+\[
+Q\leq\frac{16}{1-a}+1\leq\frac{17}{1-a}
+\leq\frac{17e}{u}\leq K_n,
+\]
+其中 $1-e^{-u}\geq u/e$。原始矩正好是 $C(kh)$，在式 (17.2) 中使用 $\delta=2\varepsilon$，得到
+\[
+y-b\leq\frac{(b-a_0)(1-\eta+\varepsilon Q^n)}{\eta n^2}
+\leq\frac{3(1-a)}{\eta n^2}.
+\]
+最后 $b\geq a\geq e^{-1}$、$1-a\leq u$，所以
+\[
+|g(\mu)-g(\nu)|=h^{-1}\log(y/b)
+\leq\frac{y-b}{ha}\leq\frac{3eE_+}{\eta n^2}.
+\]
+端点相同的情形显然成立。这个结果不使用未采样时间的读数。
+
+### 17.4 定理：具有固定端点权重的正测度下界构造
+
+固定
+\[
+E_0=(E_-+E_+)/2>0,\qquad
+\kappa=\min\{(E_+-E_0)/2,E_0/(4e)\}>0,
+\]
+并记 $A_\eta=\operatorname{arcosh}(2/\eta-1)>0$、$W_\eta=1/\eta$。
+对每个奇数 $q\geq3$，存在两个各有 $(q+1)/2$ 个正原子的测度 $\mu_q,\nu_q\in\mathcal M$，使
+\[
+|g(\mu_q)-g(\nu_q)|\geq\frac{\kappa A_\eta^2}{4W_\eta q^2},
+\tag{17.6}
+\]
+并且对每个 $T>0$，
+\[
+\boxed{\sup_{0\leq t\leq T}|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2\left[\frac14\min\{1,E_+T/q\}\right]^q.}
+\tag{17.7}
+\]
+
+**证明。** 令 $n=q-1$ 为偶数，取
+\[
+x_j=\frac{1+\cos(j\pi/n)}2\quad(0\leq j\leq n),\qquad
+Y=\frac{1+\cosh(A_\eta/n)}2>1.
+\]
+设 $\ell_j$ 为节点的 Lagrange 基，$c_j=\ell_j(Y)$。乘积表达式给出 $\operatorname{sign}(c_j)=(-1)^j$；插值常数和 $T_n(2x-1)$ 分别给
+\[
+\sum_jc_j=1,\qquad
+P:=\sum_{j\ \mathrm{even}}c_j
+=\frac{1+T_n(2Y-1)}2=\frac1\eta.
+\]
+因此
+\[
+\alpha=P^{-1}\delta_Y+P^{-1}\sum_{j\ \mathrm{odd}}(-c_j)\delta_{x_j},\qquad
+\beta=P^{-1}\sum_{j\ \mathrm{even}}c_j\delta_{x_j}
+\]
+为概率测度，匹配次数 $0,\ldots,q-1$ 的矩。二者分别在最大支撑点 $Y$ 与 $1$ 上具有质量 $\eta$ 与 $c_0/P>\eta$；后者由
+\[
+c_0=\prod_{j=1}^n\frac{Y-x_j}{1-x_j}>1
+\]
+得到。通过 $\xi=(Y-x)/Y$ 将支撑送入 $[0,1]$，最小点分别为零与 $(Y-1)/Y$。由于 $Y\leq W_\eta$ 和 $\cosh v-1\geq v^2/2$，二者端点间距至少为 $A_\eta^2/(4W_\eta q^2)$。
+
+再推送到能量 $E=E_0+\kappa\xi$，得到所需模型和式 (17.6)。矩匹配在仿射变换下保持。对 $e^{-\kappa t\xi}$ 在 $\xi=0$ 处展开至 $q-1$ 阶，实 Taylor 余项在 $[0,1]$ 上不超过 $(\kappa t)^q/q!$。两测度的多项式项相消、总质量均为一，故
+\[
+|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2e^{-E_0t}\frac{(\kappa t)^q}{q!}.
+\]
+分别使用 $e^{E_0t}\geq(E_0t)^q/q!$ 以及 $q!\geq(q/e)^q$，得到
+\[
+\sup_{0\leq t\leq T}|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2\min\{(\kappa/E_0)^q,(e\kappa T/q)^q\}.
+\]
+由 $\kappa/E_0\leq1/4$、$e\kappa/E_+\leq1/4$ 得式 (17.7)。这一估计控制整个连续时间窗口。
+
+### 17.5 定理：观察时长与噪声精度的统一匹配阶
+
+存在仅依赖 $E_-,E_+,\eta$ 的正数 $c,C,L_0$，使对所有 $L=\log(1/\varepsilon)\geq L_0$ 和所有 $T\geq1/E_+$，有
+\[
+\boxed{
+c\left[\frac{\log(e+L/(E_+T))}{L}\right]^2
+\leq\mathcal R_T(\varepsilon)
+\leq C\left[\frac{\log(e+L/(E_+T))}{L}\right]^2.
+}
+\tag{17.8}
+\]
+这些常数与 $T$ 无关。即使把模型类限制为任意有限原子数的并集，同一个匹配阶仍成立。
+
+**上界证明。** 写 $U=E_+T\geq1$、$A=\log(e+L/U)\geq1$，取
+\[
+c_0=\frac1{4(1+\log64)},\qquad n=\lfloor c_0L/A\rfloor.
+\]
+由于 $A\leq\log(e+L)$，可选择与 $T$ 无关的 $L_0$，保证 $n\geq c_0L/(2A)\geq1$。又因 $n\leq L$，
+\[
+\log K_n\leq\log64+A\leq(1+\log64)A,
+\qquad n\log K_n\leq L/4.
+\]
+因此 $\varepsilon K_n^n\leq e^{-3L/4}\leq1$。对给定数据 $Y$，考虑所有在第 17.3 节所选采样网格上与 $Y$ 相差不超过 $\varepsilon$ 的模型。任意两个相容模型之间的矩差至多为 $2\varepsilon$，其谱底距离由式 (17.5) 控制。取相容谱底集合上下确界的中点；若该集合为空，任取 $E_-$。真模型总在相容集中，所以统一误差不超过 $C A^2/L^2$。
+
+**下界证明。** 令 $q$ 为不小于 $8L/A$ 的最小奇数。增大 $L_0$ 后有 $3\leq q\leq10L/A$。式 (17.7) 的右端不超过 $2\varepsilon$。为核对这一点，写 $r=L/U$。当 $r<1$ 时，$A<2$，故 $q\log4\geq4L$。当 $r\geq1$ 时，初等不等式
+\[
+\log(e+r)\leq2\sqrt r,\qquad \sqrt{e+r}\leq2\sqrt r
+\]
+给 $A\sqrt{e+r}\leq4r$，从而
+\[
+4q/U\geq32r/A\geq8\sqrt{e+r},\qquad
+q\log(4\max\{1,q/U\})\geq qA/2\geq4L.
+\]
+两种情形下曲线距离都至多为 $2e^{-4L}\leq2\varepsilon$。两条曲线的中点同时是二者的合法观测，任意估计在至少一侧的误差不小于谱底间距的一半。式 (17.6) 和 $q\leq10L/A$ 因而给出下界。
+
+### 17.6 推论：固定窗口的代价与足够长的窗口
+
+对任意固定 $T>0$，有
+\[
+\mathcal R_T(\varepsilon)
+=\Theta_{T,E_-,E_+,\eta}\left(
+\frac{\log\log(1/\varepsilon)}{\log(1/\varepsilon)}\right)^2.
+\tag{17.9}
+\]
+当 $T\geq1/E_+$ 时，这是式 (17.8) 的直接渐近结论。对固定的更小正 $T$，同一证明中 $A\sim\log L$ 以及 $L/A\to\infty$ 仍成立，允许起始阈值依赖于该 $T$，得到相同结论。
+
+若窗口 $T=T(\varepsilon)\geq1/E_+$ 可随精度增长，则在常数因子意义下达到全时间的 $\log^{-2}(1/\varepsilon)$ 阶，当且仅当 $E_+T(\varepsilon)$ 至少为 $\log(1/\varepsilon)$ 的一个固定正常数倍。更精确地，若 $E_+T/L\to0$，式 (17.8) 的下界与 $L^{-2}$ 的比值趋于无穷；若 $E_+T\geq c_1L$，$c_1>0$，则式 (17.8) 给出匹配的 $L^{-2}$ 阶。
+
+### 17.7 定理与问题：同时限制模态数时的联合下界
+
+存在仅依赖 $E_-,E_+,\eta$ 的 $c>0$，使对 $d\geq1$、$0<\varepsilon<1$、$U=E_+T\geq1$，有
+\[
+\boxed{\mathcal R_{d,T}(\varepsilon)\geq
+c\max_{1\leq m\leq d}\frac1{m^2}
+\min\left\{1,\varepsilon^{1/(2m-1)}\max\{1,(2m-1)/U\}\right\}.}
+\tag{17.10}
+\]
+
+**证明。** 对 $m\geq2$，在第 17.4 节的构造中取 $q=2m-1$，并将能量缩放系数 $\kappa$ 换成 $\kappa v$，其中
+\[
+M=\max\{1,q/U\},\qquad v=\min\{1,\varepsilon^{1/q}M\}.
+\]
+端点间距至少为 $c_2v/m^2$，而整个窗口的曲线差不超过
+\[
+2\left[\frac v4\min\{1,U/q\}\right]^q
+=2(v/(4M))^q\leq2\varepsilon.
+\]
+中点论证给出对应风险下界。$m=1$ 用 $\delta_{E_0}$ 与 $\delta_{E_0+\kappa\varepsilon}$，因为 $U\geq1$ 时该项的 $v=\varepsilon$；由 $e^{-E_0t}(1-e^{-\kappa\varepsilon t})\leq\kappa\varepsilon/E_0$ 得相同结论。最后使用 $\mathcal M_m\subseteq\mathcal M_d$ 并对 $m$ 取最大值。
+
+**问题。** 在同一模型类中，式 (17.10) 是否有一个常数与 $d,T$ 无关的匹配上界？式 (17.8) 已处理不限制模态数的情形，但不自动给出固定或缓慢增长的 $d$ 下的这个统一上界。还需区分：已知确切模态数、只知道模态上限、允许未排除的额外模式，以及允许正残余质量的模型。
+
+### 17.8 引用
+
+[17-A] NourElHouda Bourguiba and Abderrazek Karoui. *Weighted finite Laplace transform operator: spectral analysis and quality of approximation by its eigenfunctions*. Integral Transforms and Special Functions 29(9), 679–698, 2018. DOI: 10.1080/10652469.2018.1489804. https://arxiv.org/abs/1804.05207 . 有限 Laplace 算子的超指数谱衰减背景；其加权 $L^2$ 算子问题与这里固定端点原子权重的恢复风险不同。
+
+[17-B] Cameron Musco, Christopher Musco, Lucas Rosenblatt and Apoorv Vikram Singh. *Sharper Bounds for Chebyshev Moment Matching, with Applications*. arXiv:2408.12385v3, 18 May 2026. https://arxiv.org/abs/2408.12385v3 . 含噪 Chebyshev 矩的 Wasserstein 恢复背景；本节的支撑端点泛函及有限时间观察条件单独定义。
+
+[17-C] Zhiyuan Fan and Jian Li. *Efficient Algorithms for Sparse Moment Problems without Separation*. COLT 2023, PMLR 195:3510–3565. https://proceedings.mlr.press/v195/fan23b.html . 无分离条件的稀疏矩恢复背景。
+
 ## 18. 含噪矩极值的精确转折点与取等刚性
 
 ### 18.1 定义：初始线性上界的有效区间
@@ -1206,7 +1742,7 @@ w=\tfrac8{15}+\tfrac{16}{15}\varepsilon,\quad
 
 若允许部分 $p_k=0$，定义紧凸集合
 \[
-\mathcal D_p=\{d\in\mathbb R^N:d_0=0,\ |d_k|\leq1,\ 
+\mathcal D_p=\{d\in\mathbb R^N:d_0=0,\ |d_k|\leq1,\
  d_k=\operatorname{sign}(p_k)\text{ whenever }p_k\neq0,\ 1\leq k<N\}.
 \]
 对 $d\in\mathcal D_p$ 定义 $r_i(d)=\sum_kd_k[\ell_i]_k$、$A_i(d)=Pr_i(d)/c_i-L$。则 $w_\varepsilon=(1+\varepsilon L)/P$ 可行，当且仅当存在 $d\in\mathcal D_p$ 满足

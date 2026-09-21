@@ -1,0 +1,5 @@
+因此 $C\succeq0$、$C_{xx}=1$；对 $B$ 取部分迹得到第 8.3 条的 Schur 通道
+
+$$
+M_C(\rho)=C\odot\rho.
+$$

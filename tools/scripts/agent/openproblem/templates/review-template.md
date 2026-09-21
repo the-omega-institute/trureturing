@@ -25,6 +25,56 @@ __GOAL_ARTIFACT__
 ## Seat-specific bias
 __BIAS__
 
+## Two contract readings that have each cost a review round — settle them from the source text, not from intuition
+
+**"One builder commit."** `skills/codex-formalize/SKILL.md` Step 7 introduces it as: *"Before pushing,
+inspect the complete **deposit-and-cover** delta and create one builder-owned commit"*, and the Step 7
+postcondition ("the complete intended delta is in one explicit builder commit") is that sentence's
+postcondition. Its scope is the **door output** — the Freeze event, the state pin, the coverage moves, the
+Problems dossier and any mirror the door regenerated — not the whole lane. `CLAUDE.md` §6.1 separately
+requires committing and pushing each logical unit as it compiles, so a lane necessarily has earlier
+content commits; reading Step 7 as "one commit for the entire lane" makes the two requirements
+unsatisfiable together. The landed precedent is uniform: e.g. `0fea3f42a3` ("evidence: freeze the A091915
+resolution", PR #8110, MERGED) is a freeze-only commit touching two Blueprint files plus the accepted
+event, the state pin and the Problems dossier. Judge whether the **deposit-and-cover delta** is in one
+commit; do not require the Lean module to be in it.
+
+**Carrier composition and its fallback.** The GoalArtifact's composition line states the intended mix, and
+`CLAUDE.md` §5.11 states the fallback that governs when a carrier is unavailable: the stage reopens the
+assignment on the highest-priority eligible untried carrier and only abstains when none remains. A stage
+whose `nyxid-oracle` pools all fail therefore runs all-codex-cli **legitimately**; §5.2 then requires the
+provenance record to disclose the carrier failure and the resulting layout change and to state that the
+judging surface is a single model family and not a diversity claim. A record that makes that disclosure is
+compliant. Treat as a finding only the opposite case: an all-codex stage presented as the designed
+composition with no fallback evidence.
+
+## The PR body is part of the delivery — judge it under CLAUDE.md §2.10 and §5.2
+
+§2.10 forbids 「思考转录、实施日记、评审对话、命令流水、回执副本和重复快照」 in a pull request body and says it
+overrides this file's other retention requirements. Apply it sentence by sentence, with this test: delete the
+sentence — can a reader still tell what the CURRENT state is? If yes, it was narrating the past and should not be
+there; if no, it belongs, possibly rewritten as a statement of current state. The four shapes that have actually
+occurred: a `Post-Body Correction` section; quoted review dialogue; `initial` / `staged` / `attempt N` rows in a
+doors table (an intermediate retry is not a result — every row must be a final reading); and pending-tense
+sentences such as 「to be dispatched」 or 「will be added after review」.
+
+Do NOT over-apply it. §2.10 keeps 「结论、必要读数、验证状态及未解决的问题」. An unresolved local gate written as an
+open boundary with its readings is required, not a violation. A structural constraint that a failed step once
+revealed — for example that a resolution claim must be emitted after the freeze — belongs in the body stated as a
+current property of the door; only the chronology has to go.
+
+§5.2 independently requires the CURRENT review layout to be disclosed: which seats, at which head, with which
+carriers, the approve/reject/abstain tally, which approvals are carried forward from an earlier round and why, and
+how any disagreement was adjudicated. A body that says only 「three codex-cli seats」 with no round-specific
+standing is a §5.2 omission. Carrier fallback under §5.11 (an unavailable pool) is compliance when disclosed, not
+a finding.
+
+The standing table lists EVERY completed round at every head (`tools/scripts/agent/openproblem/standing-check.py`
+rule 1; a table holding only the latest round was the #8422 round-3 blocking finding). Those rows are the §5.2 tally and
+carry-forward disclosure, not process history: the §2.10 deletion test does not apply to them, and asking the lane to
+delete closed-round rows is not a finding (#9066 round 3, #9099 round 2 each spent a round on it). What §2.10 removes
+from the standing section is narration — what a seat said, what was fixed and when — not the rows and tallies.
+
 ## Verdict set and blocking rule
 `approve` / `comment` / `reject`. A `reject` must cite the exact file:line, the GoalArtifact term violated, the evidence in the work, the failure class (mistake / omission / uncertainty within the trust boundary). Advisory items go under `comment` findings and do not block.
 

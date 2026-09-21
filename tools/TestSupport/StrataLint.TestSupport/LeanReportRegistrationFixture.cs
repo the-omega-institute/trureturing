@@ -219,7 +219,7 @@ public static class LeanReportRegistrationFixture
               }
             ]
           },
-          "report_semantic_version": 1,
+          "report_cache_release_semantic_version": 1,
           "schema_version": 1
         }
         """;

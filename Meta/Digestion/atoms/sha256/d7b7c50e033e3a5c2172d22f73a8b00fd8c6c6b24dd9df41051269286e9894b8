@@ -1,0 +1,19 @@
+**Proof.** For each $z\in C$, continuity gives a basic ambient product cylinder $W_z$ containing $z$ such that
+$$
+f(C\cap W_z)\subseteq B_d(f(z),\varepsilon/2).
+$$
+The cylinder $W_z$ depends on finitely many coordinates, say $I_z$. Compactness of $C$ supplies $z_1,\ldots,z_r$ with
+$$
+C\subseteq W_{z_1}\cup\cdots\cup W_{z_r}.
+$$
+Put $I_\varepsilon=\bigcup_{a=1}^r I_{z_a}$. If $u,v\in C$ agree there, choose $a$ with $u\in W_{z_a}$. Membership in that cylinder depends only on $I_{z_a}$, so $v\in W_{z_a}$ as well. The triangle inequality gives
+$$
+d(f(u),f(v))
+\le d(f(u),f(z_a))+d(f(z_a),f(v))<\varepsilon.
+$$
+This proves (39.14) with one finite set working for every pair in $C$. It does not use or define $f$ outside $C$.
+
+Take $I_f=\bigcup_{r\ge1}I_{2^{-r}}$. Equality on $I_f$ makes the output distance smaller than $2^{-r}$ for every $r$, hence zero. Thus $\bar f(\pi_{I_f}(u))=f(u)$ is well defined and unique.
+
+The projection $\pi_{I_f}|_C$ is a continuous surjection onto its image. Every closed subset of $C$ is compact, and its image is compact and therefore closed in the Hausdorff space $\pi_{I_f}(C)$. The projection is consequently a closed quotient map. Since its composite with $\bar f$ is the continuous map $f$, the quotient property proves continuity of $\bar f$. Empty $I_f$, which can occur for a constant map, gives the same argument with a one-point image. $\square$
+

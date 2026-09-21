@@ -1,0 +1,326 @@
+[
+  {
+    "index": 402,
+    "factors": [
+      1,
+      2,
+      3,
+      3,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 404,
+    "factors": [
+      1,
+      2,
+      3,
+      4,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 406,
+    "factors": [
+      1,
+      2,
+      3,
+      5,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 414,
+    "factors": [
+      1,
+      2,
+      4,
+      3,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 416,
+    "factors": [
+      1,
+      2,
+      4,
+      4,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 418,
+    "factors": [
+      1,
+      2,
+      4,
+      5,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 426,
+    "factors": [
+      1,
+      2,
+      5,
+      3,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 428,
+    "factors": [
+      1,
+      2,
+      5,
+      4,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 430,
+    "factors": [
+      1,
+      2,
+      5,
+      5,
+      0
+    ],
+    "carrier": [
+      0,
+      1
+    ],
+    "carrier_index": 8,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 618,
+    "factors": [
+      2,
+      2,
+      3,
+      3,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 620,
+    "factors": [
+      2,
+      2,
+      3,
+      4,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 622,
+    "factors": [
+      2,
+      2,
+      3,
+      5,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 630,
+    "factors": [
+      2,
+      2,
+      4,
+      3,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 632,
+    "factors": [
+      2,
+      2,
+      4,
+      4,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 634,
+    "factors": [
+      2,
+      2,
+      4,
+      5,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 642,
+    "factors": [
+      2,
+      2,
+      5,
+      3,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 644,
+    "factors": [
+      2,
+      2,
+      5,
+      4,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  },
+  {
+    "index": 646,
+    "factors": [
+      2,
+      2,
+      5,
+      5,
+      0
+    ],
+    "carrier": [
+      0,
+      0
+    ],
+    "carrier_index": 7,
+    "raw_mass": "1/4",
+    "D": "3/20",
+    "D_c": "3/20"
+  }
+]

@@ -1,0 +1,562 @@
+[
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      4
+    ],
+    "affine_upper": "780643/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      1,
+      0
+    ],
+    "affine_upper": "777403/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      1,
+      1
+    ],
+    "affine_upper": "777403/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      1,
+      2
+    ],
+    "affine_upper": "780643/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      1,
+      3
+    ],
+    "affine_upper": "779833/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      3,
+      1,
+      4
+    ],
+    "affine_upper": "783883/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      0,
+      0
+    ],
+    "affine_upper": "778483/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      0,
+      1
+    ],
+    "affine_upper": "5452621/27783000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      0,
+      2
+    ],
+    "affine_upper": "781723/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      0,
+      3
+    ],
+    "affine_upper": "5451811/27783000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      0,
+      4
+    ],
+    "affine_upper": "781723/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      1,
+      0
+    ],
+    "affine_upper": "778483/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      1,
+      1
+    ],
+    "affine_upper": "778483/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      1,
+      2
+    ],
+    "affine_upper": "781723/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      1,
+      3
+    ],
+    "affine_upper": "15937/81000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "projection441_735": [
+      4,
+      1,
+      4
+    ],
+    "affine_upper": "784963/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      4
+    ],
+    "projection441_735": [
+      1,
+      1,
+      4
+    ],
+    "affine_upper": "787663/3969000",
+    "strongest_available_old_upper": "599167044872817233/3087000000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      4
+    ],
+    "projection441_735": [
+      2,
+      1,
+      4
+    ],
+    "affine_upper": "786043/3969000",
+    "strongest_available_old_upper": "1793692334545193617/9261000000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      4
+    ],
+    "projection441_735": [
+      3,
+      1,
+      4
+    ],
+    "affine_upper": "787123/3969000",
+    "strongest_available_old_upper": "359242466797450919/1852200000000000000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      4
+    ],
+    "projection441_735": [
+      4,
+      1,
+      4
+    ],
+    "affine_upper": "788203/3969000",
+    "strongest_available_old_upper": "71949293357559869/370440000000000000",
+    "maximizing_late_coordinate": "1"
+  }
+]

@@ -1,0 +1,42 @@
+证明。ML 引理41.3的混合恒等式中
+$$
+A(v)=(1-r)((1-v)^2+Kv^2)+r(K+1)v(1-v)\ge(1-r)/2.
+$$
+分母两个因子均不超过 $K$，故保留该较强下界给
+$$
+U(M(v))-M(U(v))\ge\frac{rk(1-r)}{2K^2},\qquad
+M(L(v))-L(M(v))\ge\frac{rk(1-r)}{2K^2}.
+$$
+第二式只在连续映射层使用 $L(v)=1-U(1-v)$ 与 $M(1-v)=1-M(v)$。现在任取报告 $\beta$，令 $v=B_\beta(q_j)$、$z=M(v)$、$t=T_\beta(j)$。由ML 定义41.2的实际舍入规则，含端点与同距情形，
+$$
+|q_t-z|\le\frac{\eta}{2m}\le\frac{rk}{4K^3},\qquad
+K|q_t-z|\le\frac{rk}{4K^2}.
+$$
+分别对这个报告使用 $B_\beta U=UB_\beta$、$B_\beta L=LB_\beta$ 及 $U,L$ 的 $K$-Lipschitz 性，得到
+$$
+F_\beta(U(q_j))\le U(q_t)-\frac{rk(1-r)}{2K^2}+\frac{rk}{4K^2}
+=U(q_t)-\mu_{\rm env},
+$$
+$$
+F_\beta(L(q_j))\ge L(q_t)+\frac{rk(1-r)}{2K^2}-\frac{rk}{4K^2}
+=L(q_t)+\mu_{\rm env}.
+$$
+此处没有假设两个已舍入后继互为反射。
+
+还须处理 $J$ 的截断。$B_1(q)\le B_0(q)$ 且二者递增，所以在 $q\in J$、$\beta\in\{0,1\}$ 上的最小值为
+$$
+B_1(r)=\frac{pr}{1-p-dr},
+$$
+最大值为 $B_0(1-r)=1-B_1(r)$。分母为正，因而
+$$
+r+\mu_{\rm edge}\le F_\beta(q)\le1-r-\mu_{\rm edge}.
+$$
+对 $q\in I_j\subseteq[L(q_j),U(q_j)]\cap J$，以上两组上下界及单调性给
+$$
+F_\beta(q)\ge\max\{L(q_t)+\mu_{\rm env},r+\mu_{\rm edge}\}\ge\ell_t+\mu,
+$$
+$$
+F_\beta(q)\le\min\{U(q_t)-\mu_{\rm env},1-r-\mu_{\rm edge}\}\le u_t-\mu.
+$$
+$r,k,\eta>0$，故 $\mu>0$。证毕。
+

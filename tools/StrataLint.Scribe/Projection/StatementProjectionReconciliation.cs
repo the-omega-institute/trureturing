@@ -7,17 +7,18 @@ public static class StatementProjectionReconciliation
 {
     private const string FixtureRoot = "Golden/Projection/";
 
-    internal static bool IsAffectedBy(RawChangeSet? changes)
+    internal static bool IsAffectedBy(RepositorySnapshot snapshot, RawChangeSet? changes)
     {
         if (changes is null)
         {
             return true;
         }
 
-        return changes.Paths.Any(static path =>
+        var implementation = ReportProducerScope.RegisteredInputs(snapshot, ProducerRegistration, changes);
+        return changes.Paths.Any(path =>
             path.Value.StartsWith(FixtureRoot, StringComparison.Ordinal)
                 && path.Value.EndsWith(".json", StringComparison.Ordinal)
-            || IsImplementationInput(path.Value));
+            || implementation.Contains(path.Value));
     }
 
     public static void Verify(string repositoryRoot, DeclarationCatalog catalog)
@@ -64,21 +65,5 @@ public static class StatementProjectionReconciliation
         return findings.ToImmutable();
     }
 
-    private static bool IsImplementationInput(string path)
-    {
-        if ((path.StartsWith("tools/StrataLint.Scribe/", StringComparison.Ordinal)
-                || path.StartsWith("tools/StrataLint.Engine/", StringComparison.Ordinal))
-            && (path.EndsWith(".cs", StringComparison.Ordinal)
-                || path.EndsWith(".csproj", StringComparison.Ordinal)
-                || path.EndsWith("/packages.lock.json", StringComparison.Ordinal)))
-        {
-            return true;
-        }
-
-        var fileName = path[(path.LastIndexOf('/') + 1)..];
-        return fileName == "global.json"
-            || fileName.StartsWith("Directory.Build.", StringComparison.Ordinal)
-            || fileName.StartsWith("Directory.Packages.", StringComparison.Ordinal)
-            || fileName.Equals("NuGet.Config", StringComparison.OrdinalIgnoreCase);
-    }
+    private const string ProducerRegistration = "Meta/ReportProducers/scribe-content.json";
 }

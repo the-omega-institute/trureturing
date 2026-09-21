@@ -1,0 +1,231 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-fixed-cost-frontier-v2"
+  },
+  "source_G357": {
+    "kind": "inline",
+    "value": "765767/21465"
+  },
+  "bound": {
+    "kind": "inline",
+    "value": "8734942982720765439105436604602413448183379/19866883931462419217748041163036838905600"
+  },
+  "linear_joint_bound": {
+    "kind": "inline",
+    "value": "4384639291527583263791309219261526466458877/9933441965731209608874020581518419452800"
+  },
+  "floor_bound": {
+    "kind": "inline",
+    "value": "401036447272518196227558019141230049564607/903040178702837237170365507410765404800"
+  },
+  "comparison_bound_same_source": {
+    "kind": "inline",
+    "value": "405160558934792762657900543938490087303057/903040178702837237170365507410765404800"
+  },
+  "floor_gain": {
+    "kind": "inline",
+    "value": "911425089778566205244839297/199571093934432460984048448"
+  },
+  "additional_same_event_gain": {
+    "kind": "inline",
+    "value": "26467955912089892518380551718467/9824435919430757581207490986032"
+  },
+  "quadratic_gain": {
+    "kind": "inline",
+    "value": "105279254578692105625/60915513657415203072"
+  },
+  "C0": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "comparison_DCOEF16": {
+    "kind": "inline",
+    "value": "2902859034091/123253730028"
+  },
+  "H": {
+    "kind": "inline",
+    "value": {
+      "floor": "9416223180699075095311127857547526559/59529655747891603170671384610000000",
+      "joint": "34223534699968380911680651169693124683/218275404408935878292461743570000000"
+    }
+  },
+  "H16": {
+    "kind": "inline",
+    "value": "15289185796003513/215694027549000"
+  },
+  "continuous_coefficients": {
+    "kind": "inline",
+    "value": {
+      "floor": "62973062655738457923430060002723010685863912580681/260504995745167623969574865219461219928760000000",
+      "linear_joint": "689014904250995655844577602862363635678631513952091/2865554953196843863665323517414073419216360000000",
+      "joint": "1144878307082119880245569550076944010833595647050557/5731109906393687727330647034828146838432720000000"
+    }
+  },
+  "vertex_count": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "layout_count": {
+    "kind": "inline",
+    "value": 10
+  },
+  "norm_direction_count": {
+    "kind": "inline",
+    "value": 46
+  },
+  "linear_direction_count": {
+    "kind": "inline",
+    "value": 41
+  },
+  "quadratic_direction_count": {
+    "kind": "inline",
+    "value": 5
+  },
+  "direct_norm_margin_checks": {
+    "kind": "inline",
+    "value": 1127520
+  },
+  "minimum_s_minus_x_over5": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "Gamma13": {
+    "kind": "inline",
+    "value": "74165888355209854559/475902450448556274"
+  },
+  "T13_81": {
+    "kind": "inline",
+    "value": "120936974732058762228421006729484351/1221820521001849487003452539372000"
+  },
+  "frontier_unequal": {
+    "kind": "inline",
+    "value": "371135356434663094618888458619576813/1221820521001849487003452539372000"
+  },
+  "frontier_box20": {
+    "kind": "inline",
+    "value": "92863970069349768200090633833646971969/305455130250462371750863134843000000"
+  },
+  "maximizers": {
+    "kind": "inline",
+    "value": {
+      "floor": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "linear_joint": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "joint": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ]
+    }
+  },
+  "costs": {
+    "kind": "inline",
+    "value": [
+      {
+        "name": "R17",
+        "cutoff": 8,
+        "expectation": "1722539282930645/96044681253631968",
+        "outside_active_mass": "171067685029/307835516838564",
+        "tail_coefficient": "5303098235899/189437241131424",
+        "H": {
+          "floor": "1387117187833547686131400495757339/17866043141624130603442792500000",
+          "joint": "2755418814341140488181989317339053/35732086283248261206885585000000"
+        },
+        "finite_tuple_count": 16
+      },
+      {
+        "name": "R19",
+        "cutoff": 8,
+        "expectation": "55864706853527261/3961843101712318680",
+        "outside_active_mass": "171067685029/307835516838564",
+        "tail_coefficient": "5303098235899/236796551414280",
+        "H": {
+          "floor": "6171734313982630167622403933424287/99481376584043454496442821875000",
+          "joint": "4450394806669868106223937154383087987/72223479400015547964417488681250000"
+        },
+        "finite_tuple_count": 16
+      },
+      {
+        "name": "R5",
+        "cutoff": 5,
+        "expectation": "6851783/1368528876",
+        "outside_active_mass": "491495/105271452",
+        "tail_coefficient": "491495/105271452",
+        "H": {
+          "floor": "902426731066436207/342079188506055000",
+          "joint": "14341713286552889297/5541682853798091000"
+        },
+        "finite_tuple_count": 8
+      }
+    ]
+  },
+  "quadratic_cost": {
+    "kind": "inline",
+    "value": {
+      "name": "H16",
+      "threshold": 16,
+      "expectation": "2739361/28710396",
+      "outside_active_first_moment": "158957/1104246",
+      "tail_coefficient": "158957/1104246",
+      "finite_tuple_count": 5,
+      "cofactor_count": 6,
+      "selected_deep_coefficient": "40/729",
+      "complete_deep_tail_coefficient": "1/1458"
+    }
+  },
+  "norm_checks": {
+    "path": "content/028-norm_checks.json",
+    "sha256": "7a4f816fdb59a442cb782e0d3a8681adc2a0c8de36817cec94e65e5ae4f017fb",
+    "kind": "array"
+  },
+  "quadratic_norm_checks": {
+    "path": "content/029-quadratic_norm_checks.json",
+    "sha256": "ce28bf999bc1921b3a526f033b127f56a75af08ea0d5c3ed3a01fd0acb77e34f",
+    "kind": "value"
+  },
+  "other_eight_branches": {
+    "path": "content/030-other_eight_branches.json",
+    "sha256": "35d821619f24040e07b6b5f82272d2b09a31fdd1d4b0a63482981d09243508e2",
+    "kind": "value"
+  },
+  "rows": {
+    "path": "content/031-rows.json",
+    "sha256": "c1a567b87e5a53710d4354558dc42578d3feb5e450c1d60f55cd5b4d8c561961",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Exact arithmetic for the ordinary actual-probability proof; five cofactors for linear costs, six for quadratic costs, all original labels and tails. Gamma13 and T13_81 are inherited unchanged. No Lean or unrestricted resolution claim."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "certificates/joint_frontier_certificate.json": "abee2fd2a2038029cf74c59615501463a4b289d5e071d2c17de2ede6288d6ce8",
+      "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "certificates/fixed_cost_norms.json": "dc4f440a5718bbf9c2ded831b6cb10c687e18df972270ab7b5f521430b225797",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b"
+    }
+  },
+  "verifier_sha256": {
+    "kind": "inline",
+    "value": "1f45076fb116ab7313696abdb09ac27c18a25bdedd576de338a574163cd30c35"
+  }
+}

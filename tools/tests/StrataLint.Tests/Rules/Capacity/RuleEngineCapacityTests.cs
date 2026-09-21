@@ -2,12 +2,77 @@ using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
 public sealed class RuleEngineCapacityTests
 {
     private const int L = RepositoryRules.DirectoryFileLimit;
+
+    [Theory]
+    [InlineData("measurements.json")]
+    [InlineData("Results/sample.JSON")]
+    [InlineData("Results/sample.jsonl")]
+    [InlineData("Results/sample.ndjson")]
+    [InlineData("Results/sample.json5")]
+    [InlineData("Results/sample.jsonc")]
+    [InlineData("Results/sample.yaml")]
+    [InlineData("Results/sample.yml")]
+    [InlineData("Results/sample.toml")]
+    [InlineData("Results/sample.csv")]
+    [InlineData("Results/sample.tsv")]
+    [InlineData("Results/sample.xml")]
+    [InlineData("Results/sample.jsonl.xz.b64")]
+    [InlineData("Results/sample.trx")]
+    public void Sl003ExemptsDataFilesFromSoftAndHardLineLimits(string path)
+    {
+        foreach (var lines in new[] { 801, 1001 })
+        {
+            var fixture = new RuleFixture();
+            fixture.Files[path] = string.Concat(Enumerable.Repeat("data\n", lines));
+            fixture.Changes.Add(path);
+
+            Assert.Empty(RuleCatalog.Default.EvaluateSingle(
+                RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        }
+    }
+
+    [Theory]
+    [InlineData("Results/sample.json.cs")]
+    [InlineData("Results/sample.json.lean")]
+    [InlineData("Results/sample.json.md")]
+    [InlineData("Results/sample.json.py")]
+    [InlineData("Results/data.json/source")]
+    public void Sl003StillBoundsSourceAndProseWithDataNames(string path)
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[path] = string.Concat(Enumerable.Repeat("line\n", 1001));
+        fixture.Changes.Add(path);
+
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal(path, finding.Path);
+        Assert.Equal("artifact exceeds 1000 lines", finding.Message);
+    }
+
+    [Fact]
+    public void Sl003StillCountsDataFilesForDirectoryAdmission()
+    {
+        var fixture = new RuleFixture();
+        for (var index = 0; index <= L; index++)
+        {
+            var path = $"Results/sample{index}.json";
+            fixture.Files[path] = string.Concat(Enumerable.Repeat("data\n", 1001));
+            fixture.Changes.Add(path);
+        }
+
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal("Results", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+        Assert.Contains($"directory contains {L + 1} files", finding.Message, StringComparison.Ordinal);
+    }
 
     [Fact]
     public void Sl003CapacityHardBlocksPastTheHardLimitAndSoftWarnsPastTheSoftLimit()
@@ -38,7 +103,8 @@ public sealed class RuleEngineCapacityTests
     public void Sl003DoesNotTreatTheSingleSourceDigestionLedgerAsASplittableModule()
     {
         var fixture = new RuleFixture();
-        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 2; index++)
+        // domains, registry and engineering-projects are the three counted Meta files.
+        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 3; index++)
         {
             var path = $"Meta/Capacity{index:00}.txt";
             fixture.Files[path] = "fixture\n";
@@ -398,7 +464,7 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003DoesNotBlockUntouchedBucketBeyondRepositoryTolerance()
+    public void Sl003CurrentBlocksUntouchedBucketBeyondRepositoryTolerance()
     {
         var count = RepositoryRules.DirectoryToleranceLimit + 1;
         var fixture = OverfullBucket(baselineCount: count, currentCount: count);
@@ -406,7 +472,7 @@ public sealed class RuleEngineCapacityTests
             RuleId.CreateKnown(3),
             fixture.Build()).Diagnostics;
 
-        Assert.DoesNotContain(diagnostics, diagnostic =>
+        Assert.Contains(diagnostics, diagnostic =>
             diagnostic.Path == OverfullBucketPath
             && diagnostic.AdmissionEffect == AdmissionEffect.Block);
     }
@@ -447,114 +513,6 @@ public sealed class RuleEngineCapacityTests
             && diagnostic.AdmissionEffect == AdmissionEffect.Block);
     }
 
-    [Fact]
-    public void Sl003DoesNotChargeCandidateForUnknownDebtAlreadyPresentAtItsBaseline()
-    {
-        var methods = UnknownMethodNames(281);
-        var fixture = UnknownDebtFixture(
-            current: [("Synthetic.Tests", methods)],
-            baseline: [("Synthetic.Tests", methods)]);
-
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(3),
-            fixture.Build()).Diagnostics;
-
-        AssertNoBlockingUnknownDebt(diagnostics);
-    }
-
-    [Fact]
-    public void Sl003BlocksAndNamesTheUnknownMethodIntroducedByTheCandidate()
-    {
-        var baselineMethods = UnknownMethodNames(280);
-        var currentMethods = baselineMethods.Append("Debt280").ToArray();
-        var fixture = UnknownDebtFixture(
-            current: [("Synthetic.Tests", currentMethods)],
-            baseline: [("Synthetic.Tests", baselineMethods)]);
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
-            static item => item.Message.Contains("unknown test method", StringComparison.Ordinal));
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(
-            "SL-003 tools/tests/Synthetic.Tests/DebtTests.cs: conservative unknown test method "
-            + "introduced after protected baseline: tools/tests/Synthetic.Tests::DebtTests.Debt280",
-            diagnostic.Render());
-    }
-
-    [Fact]
-    public void Sl003ToleratesTheUnionOfTwoIndividuallyCompliantUnknownDebtSets()
-    {
-        var firstMethods = UnknownMethodNames(280);
-        var secondMethods = UnknownMethodNames(281).Skip(1).ToArray();
-        var unionMethods = firstMethods.Union(secondMethods, StringComparer.Ordinal).ToArray();
-        var first = UnknownDebtFixture(
-            current: [("Synthetic.Tests", firstMethods)],
-            baseline: [("Synthetic.Tests", firstMethods)]);
-        var second = UnknownDebtFixture(
-            current: [("Synthetic.Tests", secondMethods)],
-            baseline: [("Synthetic.Tests", secondMethods)]);
-        var union = UnknownDebtFixture(
-            current: [("Synthetic.Tests", unionMethods)],
-            baseline: [("Synthetic.Tests", unionMethods)]);
-
-        AssertNoBlockingUnknownDebt(RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(3), first.Build()).Diagnostics);
-        AssertNoBlockingUnknownDebt(RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(3), second.Build()).Diagnostics);
-        Assert.Equal(281, unionMethods.Length);
-        AssertNoBlockingUnknownDebt(RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(3), union.Build()).Diagnostics);
-    }
-
-    [Fact]
-    public void Sl003RejectsRepositoryUnknownDebtPastTheToleranceBand()
-    {
-        var methods = UnknownMethodNames(282);
-        var fixture = UnknownDebtFixture(
-            current: [("Synthetic.Tests", methods)],
-            baseline: [("Synthetic.Tests", methods)]);
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
-            static item => item.Message.Contains("repository tolerance", StringComparison.Ordinal)
-                && item.Message.Contains("unknown test methods", StringComparison.Ordinal));
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("282", diagnostic.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void Sl003TreatsAnUnknownMethodRenameAsNewDebt()
-    {
-        var fixture = UnknownDebtFixture(
-            current: [("Synthetic.Tests", ["RenamedDebt"])],
-            baseline: [("Synthetic.Tests", ["OriginalDebt"])]);
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
-            static item => item.Message.Contains("unknown test method", StringComparison.Ordinal));
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("DebtTests.RenamedDebt", diagnostic.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void Sl003TreatsAnUnknownMethodMoveAcrossProjectPartitionsAsNewDebt()
-    {
-        var fixture = UnknownDebtFixture(
-            current: [("Beta.Tests", ["MovedDebt"])],
-            baseline: [("Alpha.Tests", ["MovedDebt"])]);
-
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
-            static item => item.Message.Contains("unknown test method", StringComparison.Ordinal));
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains("tools/tests/Beta.Tests", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("DebtTests.MovedDebt", diagnostic.Message, StringComparison.Ordinal);
-    }
-
     private const string OverfullBucketPath = "Blueprint/D5/S0/Overfull";
 
     private const string OverfullExcludedPath = $"{OverfullBucketPath}/Projection.md";
@@ -586,50 +544,6 @@ public sealed class RuleEngineCapacityTests
         RepositoryRules.CapacityPathsByDirectory(snapshot.Files.Keys)
             .GetValueOrDefault(OverfullBucketPath)?.Count ?? 0;
 
-    private static RuleFixture UnknownDebtFixture(
-        IReadOnlyList<(string Partition, IReadOnlyList<string> Methods)> current,
-        IReadOnlyList<(string Partition, IReadOnlyList<string> Methods)> baseline)
-    {
-        var fixture = new RuleFixture();
-        foreach (var (partition, methods) in current)
-        {
-            AddUnknownDebtPartition(fixture.Files, partition, methods);
-        }
-
-        foreach (var (partition, methods) in baseline)
-        {
-            AddUnknownDebtPartition(fixture.Baseline, partition, methods);
-        }
-
-        fixture.Changes.Clear();
-        fixture.Changes.Add($"tools/tests/{current[0].Partition}/DebtTests.cs");
-        return fixture;
-    }
-
-    private static void AddUnknownDebtPartition(
-        IDictionary<string, string> files,
-        string partition,
-        IReadOnlyList<string> methods)
-    {
-        var root = $"tools/tests/{partition}";
-        files[$"{root}/{partition}.csproj"] =
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup>"
-            + "<PackageReference Include=\"xunit\" Version=\"2.9.3\" /></ItemGroup></Project>\n";
-        files[$"{root}/DebtTests.cs"] = "using Xunit;\nclass DebtTests\n{\n"
-            + string.Join('\n', methods.Select(static method =>
-                $"[Fact] public void {method}() {{ var path = GetPath(); File.ReadAllText(path); }}"))
-            + "\n}\n";
-    }
-
-    private static string[] UnknownMethodNames(int count) => Enumerable.Range(0, count)
-        .Select(static index => $"Debt{index:000}")
-        .ToArray();
-
-    private static void AssertNoBlockingUnknownDebt(ImmutableArray<Diagnostic> diagnostics) =>
-        Assert.DoesNotContain(diagnostics, static item =>
-            item.AdmissionEffect == AdmissionEffect.Block
-            && item.Message.Contains("unknown test method", StringComparison.Ordinal));
-
     private static LeanFileReport EmptyLeanReport() =>
         new(ImmutableArray<string>.Empty, ImmutableArray<LeanDeclaration>.Empty);
 
@@ -659,29 +573,54 @@ public sealed class RuleEngineCapacityTests
             + $"{RepositoryRules.DirectoryToleranceLimit}; split per CLAUDE.md 8)",
             diagnostic.Message);
     }
-    // 2026-08-15 实测的连坐:dev 上 DigestionLedgerAligner.cs 因两个 PR 的**并集**达到 823 行
-    // (各自树内是 799 与 639,都没越线,各自 admit 都是对的)。此后每一个 PR 的准入都判红,
-    // 包括 #1890/#1891/#1896/#1897 这些从未碰过该文件的——全仓锁死约一小时。
-    //
-    // 阻断该落在把它推过线的那个候选身上,不该落在无辜候选身上。判据取自分叉点:本次改动
-    // 有没有让它变长。这与目录轴既有的做法同构(带内候选只有引入了分叉点上不存在的路径才阻断,
-    // 见 RepositoryRules.Structure.cs 的 DirectoryToleranceLimit 注释与 2026-08-13 判例)。
-    //
-    // 检测不降级:超线仍然出 finding,只是无辜者那条是 Observe;全仓检测由 push
-    // 侧的 capacity-audit 承担。
     [Fact]
-    public void Sl003DoesNotBlockACandidateThatDidNotGrowAnAlreadyOversizeArtifact()
+    public void Sl003CurrentBlocksAnAlreadyOversizeArtifact()
     {
         var fixture = new RuleFixture();
-        var oversize = fixture.Files[RuleFixture.RingPath]
-            + string.Concat(Enumerable.Repeat("-- pad\n", RepositoryRules.ArtifactHardLineLimit + 1));
+        var prefix = fixture.Files[RuleFixture.RingPath];
+        Assert.EndsWith("\n", prefix, StringComparison.Ordinal);
+        var oversize = prefix + string.Concat(Enumerable.Repeat("-- pad\n",
+            1001 - prefix.Count(character => character == '\n')));
         fixture.Files[RuleFixture.RingPath] = oversize;
         fixture.Baseline[RuleFixture.RingPath] = oversize;
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
-        Assert.Contains("did not grow it", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal("artifact exceeds 1000 lines", diagnostic.Message);
+    }
+
+    [Theory]
+    [InlineData(800, null)]
+    [InlineData(801, AdmissionEffect.Observe)]
+    [InlineData(1000, AdmissionEffect.Observe)]
+    [InlineData(1001, AdmissionEffect.Block)]
+    public void Sl003LineCapacityUsesThePublishedSoftAndHardBoundaries(
+        int lines, AdmissionEffect? expectedEffect)
+    {
+        // Pin both sides of the 800/1000 policy independently of the rule constants.
+        var fixture = new RuleFixture();
+        var prefix = fixture.Files[RuleFixture.RingPath];
+        Assert.EndsWith("\n", prefix, StringComparison.Ordinal);
+        fixture.Files[RuleFixture.RingPath] = prefix + string.Concat(Enumerable.Repeat("-- pad\n",
+            lines - prefix.Count(character => character == '\n')));
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), fixture.Build()).Diagnostics;
+
+        if (expectedEffect is null)
+        {
+            Assert.Empty(diagnostics);
+            return;
+        }
+
+        var diagnostic = Assert.Single(diagnostics);
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Equal(expectedEffect.Value, diagnostic.AdmissionEffect);
+        Assert.Equal(expectedEffect == AdmissionEffect.Block
+            ? "artifact exceeds 1000 lines"
+            : $"artifact spans {lines} lines (soft limit 800, hard limit 1000)", diagnostic.Message);
     }
 
     [Fact]

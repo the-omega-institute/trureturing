@@ -1,0 +1,39 @@
+**推论 89.3（有限保持链的源可见增量）。** 给定 $n\ge0$ 和有限链
+$$
+F_0\xrightarrow{\tau_1}F_1
+\xrightarrow{\tau_2}\cdots
+\xrightarrow{\tau_n}F_n,
+$$
+其中每个 $F_k$ 带闭包 $C_k$，且每一步满足
+$$
+C_{k-1}\le K_{\tau_k}\qquad(1\le k\le n).
+$$
+令 $f_0=\operatorname{id}_{F_0}$、$f_k=\tau_k\circ f_{k-1}$，并对任意 $\Gamma\subseteq F_0$ 定义
+$$
+H_k(\Gamma)=f_k^{-1}[C_k(f_k[\Gamma])],
+\qquad H_0(\Gamma)=C_0(\Gamma).
+$$
+则
+$$
+H_0(\Gamma)\subseteq H_1(\Gamma)\subseteq\cdots\subseteq H_n(\Gamma).
+$$
+令
+$$
+\begin{aligned}
+D_k(\Gamma)
+&=H_k(\Gamma)\setminus H_{k-1}(\Gamma)\\
+&=f_{k-1}^{-1}
+ \left[
+ K_{\tau_k}(f_{k-1}[\Gamma])
+ \setminus C_{k-1}(f_{k-1}[\Gamma])
+ \right].
+\end{aligned}
+$$
+那么
+$$
+H_n(\Gamma)\setminus C_0(\Gamma)
+=\bigsqcup_{k=1}^{n}D_k(\Gamma).
+\tag{89.3}
+$$
+最终复合 $f_n$ 对全部源前提保守，当且仅当对每个 $\Gamma\subseteq F_0$ 与 $1\le k\le n$ 均有 $D_k(\Gamma)=\varnothing$；此时每个前缀 $f_k$ 都相对于初始语言 $F_0$ 保守。
+

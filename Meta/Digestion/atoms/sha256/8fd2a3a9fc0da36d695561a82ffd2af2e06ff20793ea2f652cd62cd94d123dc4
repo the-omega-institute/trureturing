@@ -1,0 +1,5 @@
+**定义 443.6（素数扩张的同号重叠）。** 对平方自由 $R>1$ 和 $p\nmid R$ 的素数，令
+$$
+H_{R,p}(u)=\min(|B_R(u)|,|B_R(u/p)|)\mathbf1_{\{B_R(u)B_R(u/p)>0\}},
+\qquad J_{R,p}=\int_1^\infty H_{R,p}(u)\,\frac{du}{u^2}.
+$$

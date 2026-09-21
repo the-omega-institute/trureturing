@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eea4df0b97477e55bd450e0020b2cd87486539bf073c9b614c2786c64327101a
+  normalized_sha256: sha256:eea4df0b97477e55bd450e0020b2cd87486539bf073c9b614c2786c64327101a
+cas_ref: sha256:eea4df0b97477e55bd450e0020b2cd87486539bf073c9b614c2786c64327101a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶指定环境张量分解和条件相互作用 Hamiltonian，退相干系数及乘积分解已拆出，本叶仅是模型定义。
+    previous_atom_id: e85561a3584ff6368a9e457489b71924b6e29301df6a35b3167afb0f0fff5c9f
+    next_atom_id: a64922f260557f3c3d458cba5b156d55633cd16f346a41532be0d894858370f2

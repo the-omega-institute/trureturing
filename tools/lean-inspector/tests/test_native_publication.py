@@ -28,6 +28,125 @@ import native
 from test_native_support import *
 
 class NativePublicationTests:
+    def test_native_module_validation_uses_lake_trace(self):
+        self.build()
+        state = native.state(self.root)
+        artifact = state / 'modules/Fixture.zip'
+        trace = Path(str(artifact) + '.trace')
+        trace_bytes = trace.read_bytes()
+        utility = state / 'inputs/Fixture.json'
+        template_inputs = publication.selection.Selection(self.root)
+        paths = [self.root / p for p in ['Fixture.lean', 'External.lean', 'ClaimSupport.lean']]
+        originals = [p.read_bytes() for p in paths]
+        digest = publication.digest
+        def artifact_digest(path):
+            self.assertNotEqual(Path(path).suffix, '.lean',
+                '[FAIL] native_validation_does_not_hash_repository_sources')
+            return digest(path)
+        for damage in ['changed', 'deleted']:
+            with self.subTest(damage=damage):
+                try:
+                    for path, original in zip(paths, originals):
+                        if damage == 'changed':
+                            path.write_bytes(original + b'\n-- modified after extraction\n')
+                        else:
+                            path.unlink()
+                    # Deliberately force the retained trace precondition. Normal
+                    # Lake would invalidate these sources before this validator.
+                    trace.write_bytes(trace_bytes)
+                    with patch.object(publication, 'digest', side_effect=artifact_digest):
+                        native.validate('module', self.root, 'Fixture', utility, artifact, template_inputs=template_inputs)
+                    self.assertEqual(trace.read_bytes(), trace_bytes)
+                finally:
+                    for path, original in zip(paths, originals):
+                        path.write_bytes(original)
+
+    def test_native_module_integrity_rejections(self):
+        self.build()
+        state = native.state(self.root)
+        artifact = state / 'modules/D5.Alone.zip'
+        utility = state / 'inputs/D5.Alone.json'
+        with zipfile.ZipFile(artifact) as archive:
+            original = {entry.filename: archive.read(entry) for entry in archive.infolist()}
+        candidate = self.root / 'corrupt-module.zip'
+        for damage in ['report_sha256', 'missing_member', 'noncanonical_json']:
+            with self.subTest(damage=damage):
+                entries = dict(original)
+                if damage == 'report_sha256':
+                    key = publication.RAW + '.provenance.json'
+                    origin = json.loads(entries[key])
+                    origin['report_sha256'] = '0' * 64
+                    entries[key] = materials.canonical_json(origin)
+                elif damage == 'missing_member':
+                    del entries[publication.RAW + '.materials.zip']
+                else:
+                    entries[publication.RAW] = json.dumps(json.loads(entries[publication.RAW]), indent=2).encode()
+                with zipfile.ZipFile(candidate, 'w') as archive:
+                    for name, data in entries.items():
+                        archive.writestr(name, data)
+                with self.assertRaises(ValueError, msg='[FAIL] native_module_integrity_' + damage):
+                    native.validate('module', self.root, 'D5.Alone', utility, candidate)
+
+    def test_aggregation_validates_each_row_once_and_preserves_rejection_statuses(self):
+        self.build()
+        state = native.state(self.root)
+        config = publication.read_json((state / 'inputs.json').read_bytes())
+        artifacts = [str(state / 'modules' / (name + '.zip')) for name in config['modules']]
+        requests = [['validate', [str(self.root), 'module', str(self.root), name,
+            str(state / 'inputs' / (name + '.json')), artifact]]
+            for name, artifact in zip(config['modules'], artifacts)]
+        output, request, result = (self.root / name for name in ['aggregate.zip', 'requests.json', 'statuses.json'])
+        requests.append(['aggregate', [str(self.root), str(output), *artifacts]])
+        # Lake's FilePath.join preserves the root package's /./ component.
+        # These must take the same complete shared validation boundary.
+        requests = [[kind, [arg.replace(str(self.root) + '/', str(self.root) + '/./')
+            if arg.startswith(str(self.root) + '/') else
+            str(self.root) + '/.' if arg == str(self.root) else arg for arg in args]]
+            for kind, args in requests]
+        request.write_text(json.dumps(requests))
+        with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations:
+            native.batch(request, result)
+            self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
+            self.assertEqual(validations.call_count, len(artifacts), '[FAIL] aggregate_row_validated_once')
+        self.assertEqual(output.read_bytes(), (state / 'report.zip').read_bytes())
+        original = output.read_bytes()
+        alone_index = config['modules'].index('D5.Alone')
+        artifact = Path(artifacts[alone_index])
+        good_artifact = artifact.read_bytes()
+        source = self.root / 'D5/Alone.lean'
+        good_source = source.read_bytes()
+        for damage in ['artifact', 'source']:
+            with self.subTest(damage=damage):
+                if damage == 'artifact':
+                    artifact.unlink()  # Never write through Lake's cache hard link.
+                    artifact.write_bytes(b'not a ZIP')
+                else:
+                    source.write_bytes(good_source + b'\n-- changed after prior validation\n')
+                try:
+                    native.batch(request, result)
+                    expected = [0] * len(requests)
+                    if damage == 'artifact':
+                        expected[alone_index] = expected[-1] = 1
+                    self.assertEqual(json.loads(result.read_text()), expected,
+                                     '[FAIL] aggregate_exact_row_rejection')
+                    self.assertEqual(output.read_bytes(), original)
+                finally:
+                    artifact.unlink()
+                    artifact.write_bytes(good_artifact)
+                    source.write_bytes(good_source)
+        driver = self.root / 'LeanInformationAudit/Registry.lean'
+        good_driver = driver.read_bytes()
+        driver.write_bytes(good_driver + b'\n-- changed shared driver\n')
+        try:
+            native.batch(request, result)
+            self.assertEqual(json.loads(result.read_text()), [0] * len(requests),
+                             '[FAIL] aggregate_compatible_judge_reuse')
+            self.assertEqual(output.read_bytes(), original)
+        finally:
+            driver.write_bytes(good_driver)
+        native.batch(request, result)
+        self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
+
     def test_coordinates_use_private_temporary_memo_and_clean_up_failures(self):
         temporary = self.root / 'coordinate temporary files'
         temporary.mkdir()
@@ -94,6 +213,7 @@ class NativePublicationTests:
             self.assertEqual(before, (memo.read_bytes(), memo.stat().st_ino, memo.stat().st_mtime_ns))
 
     def test_input_verification_is_read_only(self):
+        self.check_source_validation_does_not_rehash()
         self.build()
         self.publish()
         helper_root = self.root / 'tools'
@@ -130,13 +250,60 @@ class NativePublicationTests:
                 result = subprocess.run(['bash', str(helper_root / 'scripts/report/lean-report-input.sh'),
                     'verify', '--repository', str(self.root), '--report', str(report)],
                     cwd=working_directory, env=environment, text=True, capture_output=True, timeout=120)
-                if damage == 'none':
+                if damage in ['none', 'stale-dependency']:
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                 else:
                     self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
-                    if damage == 'stale-dependency':
-                        self.assertIn('stale dependency', result.stderr)
                 self.assertEqual(before, snapshot(), result.stdout + result.stderr)
+
+    def check_source_validation_does_not_rehash(self):
+        # A pure source fixture also runs directly without compiling Lean.
+        inputs = publication.selection.Selection(self.root)
+        hashes = {path: publication.digest(inputs.safe_file(path))
+                  for path in inputs.dependency_sources()}
+        rows = [dict(module=name, source_path=path, source_sha256='sha256:' + hashes[path],
+                     imports=[], declarations=[])
+                for name, path in sorted(inputs.modules().items())]
+        rows[0]['utility_refutation'] = dict(claim_gid='claim', claim_source_path='External.lean',
+            claim_source_sha256='sha256:' + hashes['External.lean'], result_gid='result', is_closed_negation=True)
+        origins = {row['module']: dict(module=row['module'],
+            report_sha256=hashlib.sha256(materials.canonical_json(
+                dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
+            compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
+            inspector_executable_sha256='b' * 64) for row in rows}
+        coordinates = publication.coordinates(self.root)
+        with tempfile.TemporaryDirectory(dir=self.root) as directory:
+            report = Path(directory) / publication.RAW
+            report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
+            with zipfile.ZipFile(publication.member(report, '.materials.zip'), 'w'):
+                pass
+            publication.write_sidecars(report, coordinates, origins)
+            for verify in [lambda: publication.validate_bundle(report, coordinates, self.root),
+                           lambda: publication.verify_inputs(report, self.root)]:
+                with patch.object(publication.selection, 'Selection', wraps=publication.selection.Selection) as selected, \
+                        patch.object(publication, 'digest', wraps=publication.digest) as digests:
+                    verify()
+                    self.assertEqual(selected.call_count, 1)
+                    source_reads = [str(Path(call.args[0]).relative_to(self.root.resolve()))
+                                    for call in digests.call_args_list if Path(call.args[0]).suffix == '.lean']
+                    self.assertEqual(source_reads, [], '[FAIL] publication_does_not_hash_repository_sources')
+                for path in ['D5/B.lean', 'External.lean', 'ClaimSupport.lean']:
+                    with self.subTest(path=path):
+                        source = self.root / path
+                        original, stamp = source.read_bytes(), source.stat()
+                        try:
+                            source.write_bytes(original.replace(b'def ', b'DEF ', 1))
+                            os.utime(source, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
+                            verify()
+                        finally:
+                            source.write_bytes(original)
+                added = self.root / 'D5/New.lean'
+                try:
+                    added.write_text('def added : Nat := 0\n')
+                    with self.assertRaisesRegex(ValueError, 'report source membership'):
+                        verify()
+                finally:
+                    added.unlink()
     def test_publication_validates_material_identities_once(self):
         self.build()
         rows, raw, material_bytes = self.report()
@@ -169,7 +336,7 @@ class NativePublicationTests:
         artifact = self.root / '.lake/build/lean-inspector/report.zip'
         with zipfile.ZipFile(artifact) as archive:
             original = [(info, archive.read(info)) for info in archive.infolist()]
-        for damage in ['sha256', 'mode', 'provenance', 'identity', 'source']:
+        for damage in ['sha256', 'mode', 'provenance', 'identity']:
             with self.subTest(damage=damage):
                 entries = []
                 for info, data in original:
@@ -187,45 +354,15 @@ class NativePublicationTests:
                                 changed.writestr(entry, b'corrupt material' if index == 0 else materials_zip.read(entry))
                         data = output.getvalue()
                     entries.append((info, data))
-                if damage == 'source':
-                    # Keep every sidecar and origin consistent with the forged
-                    # report, so only the current source check can reject it.
-                    payloads = {info.filename: data for info, data in entries}
-                    value = json.loads(payloads[publication.RAW])
-                    row = value['modules'][0]
-                    row['source_sha256'] = 'sha256:' + '0' * 64
-                    raw = materials.canonical_json(value)
-                    sha = hashlib.sha256(raw).hexdigest()
-                    provenance = json.loads(payloads[publication.RAW + '.provenance.json'])
-                    provenance['report_sha256'] = sha
-                    provenance['module_origins'][row['module']]['report_sha256'] = hashlib.sha256(
-                        materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest()
-                    provenance['module_origins'][row['module']]['input_sources'][row['source_path']] = '0' * 64
-                    payloads[publication.RAW] = raw
-                    payloads[publication.RAW + '.provenance.json'] = json.dumps(provenance).encode()
-                    payloads[publication.RAW + '.sha256'] = f'{sha}  {publication.RAW}\n'.encode()
-                    attestation = payloads[publication.RAW + '.input.attestation'].decode().splitlines()
-                    attestation[-1] = 'report_sha256=' + sha
-                    payloads[publication.RAW + '.input.attestation'] = ('\n'.join(attestation) + '\n').encode()
-                    entries = [(info, payloads[info.filename]) for info, _ in entries]
                 artifact.unlink()
                 with zipfile.ZipFile(artifact, 'w') as archive:
                     for info, data in entries: archive.writestr(info, data)
-                if damage == 'source':
-                    with tempfile.TemporaryDirectory(dir=self.root) as directory:
-                        report = publication.unpack(artifact, directory)
-                        expected = publication.coordinates(self.root)
-                        publication.validate_bundle(report, expected)  # Includes all material and origin checks.
-                        with self.assertRaisesRegex(ValueError, '^report source binding mismatch$'):
-                            publication.validate_bundle(report, expected, self.root)
                 for activity in ['', '{"kind":"extract","count":1}\n']:
                     self.write('activity.jsonl', activity)
                     result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
                         'publish', str(self.root), str(destination)], env=self.env,
                         text=True, capture_output=True, timeout=120)
                     self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
-                    if damage == 'source':
-                        self.assertIn('lean-inspector-native: report source binding mismatch\n', result.stderr)
                     self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
                                              for suffix in publication.SUFFIXES})
     def test_publication_snapshot_integrity_and_replace_failure(self):
@@ -276,6 +413,32 @@ class NativePublicationTests:
                     self.assertTrue(failed)
                     self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
                                              for suffix in publication.SUFFIXES})
+    def test_native_compiler_seed_is_private(self):
+        self.assertFalse((self.root / '.lake').exists())
+        if self.compiler_seed is None:
+            stage = self.root / 'compiler-stage'
+            stage_compiler(stage)
+            self.compiler_seed = str(stage)
+        stage = Path(self.compiler_seed)
+        before = {path.name: (publication.digest(path), path.stat().st_mode)
+                  for path in stage.iterdir()}
+        self.run_lake('env', 'true')
+        # Unstage admits only compiler artifacts; each fixture still creates
+        # its own producer build, reports, utility inputs, and ensure stamp.
+        self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
+        for name in before:
+            if name == 'outputs.jsonl':
+                continue
+            donor = stage / name
+            private = self.root / '.lake/artifact-cache/artifacts' / name
+            self.assertEqual(publication.digest(private), before[name][0])
+            self.assertFalse(os.path.samestat(donor.stat(), private.stat()))
+            self.assertEqual(donor.stat().st_mode & 0o222, 0)
+            private.unlink()
+            private.write_bytes(b'fixture-private damage')
+        self.assertEqual(before, {path.name: (publication.digest(path), path.stat().st_mode)
+                                  for path in stage.iterdir()})
+
     def test_native_producer_inputs(self):
         self.build()
         before = self.stamps()
@@ -301,7 +464,7 @@ class NativePublicationTests:
                                   ('tools/lean-inspector/native.py', '#'),
                                   ('tools/lean-inspector/lakefile.lean', '--'),
                                   ('tools/scripts/report/lean-report-input.sh', '#'),
-                                  ('tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs', '//')]:
+                                  ('tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs', '//')]:
             with self.subTest(producer=producer):
                 calls = (self.root / 'utility-calls').read_text().splitlines()
                 implementation = (self.root / producer).read_text()
@@ -366,7 +529,7 @@ class NativePublicationTests:
         original = self.report()[1:]
         origins = self.origins()
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_semantic_version'] = 2
+        policy['report_cache_release_semantic_version'] = 2
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.run_lake('--no-build', 'build', ':report', success=False)
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
@@ -380,23 +543,56 @@ class NativePublicationTests:
         self.build()
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         before = self.stamps()
+        origins = self.origins()
+        oleans = {str(path.relative_to(self.root)): (path.stat().st_mtime_ns, publication.digest(path))
+                  for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')}
+        inputs = publication.coordinates(self.root)
         self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n# config bytes\n')
+        current = publication.coordinates(self.root)
+        self.assertNotEqual(inputs['config'], current['config'])
+        with self.assertRaisesRegex(ValueError, 'stale input/provenance'):
+            publication.validate_bundle(self.root / 'public.json', current, self.root)
+        self.run_lake('--no-build', 'build', ':report', success=False)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(before, self.stamps())
+        built = self.build()
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        result = dict(extracted=sum(r['count'] for r in records if r['kind'] == 'extract'),
+            aggregated=sum(r['count'] for r in records if r['kind'] == 'aggregate'),
+            compiled_modules=[name for name in [*before, 'Audit', 'External', 'ClaimSupport', 'Cache']
+                              if f'Built {name} (' in built.stdout + built.stderr],
+            unchanged_rows=before == self.stamps(), unchanged_origins=origins == self.origins(),
+            unchanged_oleans=oleans == {str(path.relative_to(self.root)):
+                (path.stat().st_mtime_ns, publication.digest(path))
+                for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')})
+        self.record_result('config-metadata', result)
+        self.assertEqual(result['extracted'], 0)
+        self.assertEqual(result['aggregated'], 1)
+        self.assertEqual(result['compiled_modules'], [])
+        self.assertTrue(result['unchanged_rows'])
+        self.assertTrue(result['unchanged_origins'])
+        self.assertTrue(result['unchanged_oleans'])
+        self.assertEqual(original, self.report()[1:])
+        self.publish()
+        published = publication.read_json(publication.member(self.root / 'public.json', '.provenance.json').read_bytes())
+        self.assertEqual(published['lean_config_sha256'], current['config'])
         self.build()
-        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(before, self.stamps())
     def test_native_invalid_semantic_versions(self):
         self.build()
         before = self.stamps()
         original = (self.root / 'lean-report-inputs.json').read_text()
         for value in ['0', '-1', 'true', 'null', '"1"', '1.0', '1e0']:
-            self.write('lean-report-inputs.json', original.replace('"report_semantic_version": 1', '"report_semantic_version": ' + value))
+            self.write('lean-report-inputs.json', original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": ' + value))
             result = self.build(success=False)
-            self.assertIn('report_semantic_version', result.stdout + result.stderr)
+            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
             self.assertEqual(before, self.stamps())
             self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        for invalid in [original.replace('"report_semantic_version": 1, ', ''),
-                        original.replace('"report_semantic_version": 1', '"report_semantic_version": 1, "report_semantic_version": 1')]:
+        for invalid in [original.replace('"report_cache_release_semantic_version": 1, ', ''),
+                        original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": 1, "report_cache_release_semantic_version": 1')]:
             self.write('lean-report-inputs.json', invalid)
             result = self.build(success=False)
-            self.assertIn('report_semantic_version', result.stdout + result.stderr)
+            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
             self.assertEqual(before, self.stamps())
             self.assertEqual((self.root / 'activity.jsonl').read_text(), '')

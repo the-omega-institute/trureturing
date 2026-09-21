@@ -1,0 +1,2 @@
+$d=0$ 时 $V_E$ 只有空向量，空集的上下确界在这个序域中也都是该向量，而 $\operatorname{Min}_E\varnothing=\varnothing$。
+

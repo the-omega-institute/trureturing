@@ -1,0 +1,19 @@
+**命题 2.3（递归闭合与有限深度）。** 令
+$$
+o_s(x,y)=\sup_{f:X_s\to Y_f}\rho_f(fx,fy),
+$$
+并在所有类型上的非负扩展值二元函数族 $p$ 上定义
+$$
+(\mathcal Tp)_s(x,y)=
+\max\left\{o_s(x,y),
+\sup_{h:s\to t}\frac{p_t(hx,hy)}{L_h}\right\}.
+\tag{2.3}
+$$
+记 $D^{[N]}$ 为式(2.1)中只取长度至多 $N$ 的路径所得距离。则
+$$
+D^{[0]}=o,\qquad D^{[N+1]}=\mathcal T D^{[N]},
+\qquad D=\sup_{N\ge0}D^{[N]},\qquad D=\mathcal TD.
+\tag{2.4}
+$$
+而且 $D$ 是所有满足 $\mathcal Tp\le p$ 的非负扩展值函数族中逐点最小者，故也是 $\mathcal T$ 的最小不动点。
+

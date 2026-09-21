@@ -1,0 +1,18 @@
+**theorem 39.5 (Compact-subspace coordinate dependence and continuous factorization).** Let $C$ be a nonempty compact subspace of a product $\prod_{i\in I}X_i$ of Hausdorff spaces. Let $f:C\to M$ be continuous, where $d$ is a metric inducing the topology of $M$. For every $\varepsilon>0$ there is a finite $I_\varepsilon\subseteq I$ such that
+$$
+\forall u,v\in C:\quad
+u|_{I_\varepsilon}=v|_{I_\varepsilon}
+\ \Longrightarrow\ d(f(u),f(v))<\varepsilon.
+\tag{39.14}
+$$
+There is therefore an at most countable $I_f\subseteq I$ and a unique continuous map
+$$
+\bar f:\pi_{I_f}(C)\longrightarrow M
+$$
+such that
+$$
+f=\bar f\circ(\pi_{I_f}|_C).
+\tag{39.15}
+$$
+The factor is asserted on the actual projected image, not on the whole product $\prod_{i\in I_f}X_i$. Coordinate dependence has the meaning of Karlova–Mykhaylyuk, *On $\alpha$-embedded subsets of products*, arXiv:1411.3173v1, Definition 3.1; the compact-subspace assertion here has the following direct proof.
+

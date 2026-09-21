@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b09b419eceb888870d5efea121284c2b0206616173edd1d8a23f2250c8978d63
+  normalized_sha256: sha256:b09b419eceb888870d5efea121284c2b0206616173edd1d8a23f2250c8978d63
+cas_ref: sha256:b09b419eceb888870d5efea121284c2b0206616173edd1d8a23f2250c8978d63
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fintype.card_finset_len 给固定大小标记集的数目，有限常数求和与非零二项式分母消去给每词总副本权等于原权，不要求各词原权均匀，仓内无冻结 GID。
+    previous_atom_id: 1bd3c802b23d40959af24779ea1990f268657073b645ecf0c0ccbaba13563168
+    next_atom_id: 68ea7bef38526ac9a8a8d251ffd17a60eab35f34f882c1df37ea6be3815d5142

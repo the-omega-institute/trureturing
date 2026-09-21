@@ -1,0 +1,26 @@
+**定义 25.5（完整观察者与共同实现交集）。** 完整观察者明确写为
+$$
+H=(C,\mathcal A,d_{\rm raw}).
+\tag{25.113}
+$$
+$C$ 包含所有已取得的内部／外部旧记录及其关系；$\mathcal A$ 是带来源索引的合法取得历史，保留每次动作、端口、外部标签、校准及共同轨迹证书；$d_{\rm raw}$ 是当前实际原始对，不能由预测值代写。
+
+固定模型和校准后，令 $\Omega$ 为完整实现集合。每个 $\omega\in\Omega$ 同时包含一个来源身份、参数 $\beta(\omega)$、同一准备生成的整条实际轨迹、一个共同钟 $h_\omega$，以及解释全部旧记录所需的辅助变量、误差和关系。每条旧记录 $c_i\in C$ 有其声明的约束 $\mathcal R_i(\omega,c_i)$；关系可包括跨端口、跨时刻和跨来源的已获信息，不能逐条另选实现。令 $\operatorname{Hist}(\omega,\mathcal A)$ 断言该一份实现确实支持所记合法取得及同时无扰动／等价轨迹条件。当前外部时刻 $\theta_*$ 的内部时刻为 $t(\omega)=h_\omega(\theta_*)$。将原始对按固定校准换为 $(r_{\rm obs},z_{\rm obs})$，其共同误差事件记为 $\mathcal E_H$。定义
+$$
+\begin{aligned}
+\mathfrak F_H=\{\omega\in\Omega:\;&\operatorname{Hist}(\omega,\mathcal A),\quad
+ \mathcal R_i(\omega,c_i)\ \text{对全部旧记录成立},\\
+ & (\beta(\omega),t(\omega))\in W,\quad \omega\in\mathcal E_H,\\
+ &|r(\beta(\omega),t(\omega))-r_{\rm obs}|\le\epsilon_r,\\
+ &|z(\beta(\omega),t(\omega))-z_{\rm obs}|\le\epsilon_z\},
+\end{aligned}
+\tag{25.114}
+$$
+并令 $K_H=\{(\beta(\omega),t(\omega)):\omega\in\mathfrak F_H\}$。如果原始实际误差为 $|x_{\rm obs}-x|\le\epsilon_x$、$|y_{\rm obs}-y|\le\epsilon_y$，且 $r=1-2x/\alpha,z=-4y/\alpha$，则在同一个联合误差事件上使用
+$$
+\epsilon_r=2\epsilon_x/|\alpha|,\qquad
+\epsilon_z=4\epsilon_y/|\alpha|.
+\tag{25.115}
+$$
+此处 $\alpha$ 已知固定，不将含噪幅度代入当作新的联合识别证明。$\mathcal E_H$ 可以施加更强的相关误差约束，无独立噪声前提。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:872dda328c9a819071a1f55aa7d66ba8307fe2eb46f0af161057225ce2bdd16b
+  normalized_sha256: sha256:872dda328c9a819071a1f55aa7d66ba8307fe2eb46f0af161057225ce2bdd16b
+cas_ref: sha256:872dda328c9a819071a1f55aa7d66ba8307fe2eb46f0af161057225ce2bdd16b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fintype.sum_pow 与 fourier_add 展开有序素数元组，fourierCoeff.sum 和 fourierCoeff_fourier 按整数频率正交性计数，fourierCoeff_eq_intervalIntegral 在周期一和起点零给原零一区间积分，fourier_coe_apply 给原指数函数；Nat.mem_primesLE 与 Nat.le_floor_iff' 同时覆盖任意实阈值及空素数集，仓内无冻结 GID。
+    previous_atom_id: 3367f1a129cce38dd28a29cff10ddfe1b62fe7590ca55fca7d3ecad41237c806
+    next_atom_id: 59de07c1e7c7c66d06216520f7420c3f4a00049f38ea6a61234c4b75ab3a7be5

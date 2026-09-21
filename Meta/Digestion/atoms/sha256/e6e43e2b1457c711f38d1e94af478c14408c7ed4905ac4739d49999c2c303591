@@ -1,0 +1,41 @@
+**定理 99.2（固定隐藏维数的精确反序截止）。** 在定义 99.1 下，
+$$
+\left[\forall w\in A^*,\ |w|\le2d-1\Longrightarrow p(w)=p(w^R)\right]
+\iff
+\left[\forall w\in A^*,\ p(w)=p(w^R)\right].
+\tag{99.2a}
+$$
+因此，若只知整数上界 $d\le D$，比较所有长度不超过 $2D-1$ 的词仍是充分判据。空词比较自动成立；非空词长 $m=n+1$ 对应 $n$ 次隐藏转移，所以式 (99.2a) 的观察窗截止是 $n\le2d-2$。
+
+这是固定模型下有限多个精确等式的判据；有限样本中的经验词频相等或接近相等，不等于这些模型概率的精确等式。若 $K$ 与 $\pi$ 的坐标都是有理数，枚举这些词并作精确有理矩阵运算给出有效判定；对任意实坐标只断言上述等式判据。此界不附带最优性或表示最小性的结论。
+
+**证明。** 对非空词，直接对隐藏路径求和并使用 $K\mathbf1=\mathbf1$，得到
+$$
+\begin{aligned}
+p(w)
+&=\pi D_{a_0}\left(\prod_{j=1}^{m-1}K D_{a_j}\right)\mathbf1\\
+&=\pi M_{a_0}\cdots M_{a_{m-1}}\mathbf1.
+\end{aligned}
+$$
+空词也满足该式，因为 $\pi I_d\mathbf1=1$。将反序词的标量概率转置，有
+$$
+\begin{aligned}
+p(w^R)
+&=\pi M_{a_{m-1}}\cdots M_{a_0}\mathbf1\\
+&=\mathbf1^{\mathsf T}M_{a_0}^{\mathsf T}\cdots
+M_{a_{m-1}}^{\mathsf T}\pi^{\mathsf T}.
+\end{aligned}
+\tag{99.2b}
+$$
+这给出同一字母表上两份各 $d$ 维的实线性表示：
+$$
+(\pi,(M_a)_{a\in A},\mathbf1),
+\qquad
+(\mathbf1^{\mathsf T},(M_a^{\mathsf T})_{a\in A},\pi^{\mathsf T}).
+$$
+这里交换了左右端点并转置每个字母矩阵；没有对 $\pi_i$ 作除法。上述表示与转置等式本身不使用平稳性，因而零概率坐标不妨碍它们成立。
+
+直接应用加权自动机的有限等价判据：两份维数为 $d_1,d_2$ 的线性表示若不等价，则存在长度至多 $d_1+d_2-1$ 的区别词。[^rro99-kiefer] 取 $d_1=d_2=d$，若式 (99.2a) 左侧成立，就不存在这种区别词，故两份表示对全部词相等。反向蕴含直接成立。用 $D\ge d$ 扩大检查范围仍包含该充分范围；有理矩阵与有理端点的有限次乘加及等号比较可精确执行，给出所述有理数据判定。证毕。
+
+[^rro99-kiefer]: Stefan Kiefer，[*Notes on Equivalence and Minimization of Weighted Automata*, arXiv:2009.01217v1](https://arxiv.org/pdf/2009.01217v1)，Theorem 2.3，PDF 第 4 页；任意域及有理算法输入的约定见 §1，PDF 第 1 页。该条直接提供两份有限维加权自动机的区别词长度界；式 (99.2b) 是本节将正向输出词律与其反序放入该定理的参数适配。
+

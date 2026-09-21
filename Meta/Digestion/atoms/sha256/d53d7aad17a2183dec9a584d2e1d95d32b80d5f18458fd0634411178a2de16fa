@@ -1,0 +1,6 @@
+**Definition 22.8 (Regularity and ordered selections).** A map into a topological space $Y$ is of Baire class one here precisely when it is a pointwise limit of continuous maps with values in that same $Y$. A Borel map has Borel inverse images of open sets. A map is Baire-property measurable when every such inverse image differs from an open set by a meagre set. These latter two uses of Baire are not identified. A map is universally measurable when its open-set inverse images are measurable for the completion of every Borel probability measure on its domain. Define
+$$
+e:K\longrightarrow[0,1],\qquad e(x)=\sum_{j\geq0}\frac{2x_j}{3^{j+1}}.
+$$
+The lexicographic order on $K$ compares the first differing digit, with zero smaller than one. Write $A_{\min}(\xi)$ and $A_{\max}(\xi)$ for the least and greatest members of $\Gamma(\xi)$ in this order. Their existence and their target-valued approximation are proved next. The distinction between Borel class one and same-target Baire class one is also explicit in [V. V. Srivatsa, *Baire class 1 selectors for upper semicontinuous set-valued maps*, Transactions of the American Mathematical Society 337 (1993), 609–624, Remark 2.2 and Corollaries 2.2–2.3, p. 620](https://scispace.com/pdf/baire-class-1-selectors-for-upper-semicontinuous-set-valued-290347w76e.pdf).
+

@@ -1,0 +1,26 @@
+**命题 82.2（纤维 Jensen 缺陷、严格零集与两种特例）。** 在定义与假设 82.1 下，各 $m_i\in K$，且
+$$
+\boxed{
+\mathcal J_\Phi(d;q,r)
+=\sum_i p_i\left[
+    \sum_{r(j)=i}\frac{q_j}{p_i}\Phi(u_j)-\Phi(m_i)
+  \right]\ge0.
+}
+$$
+若 $\Phi$ 在 $K$ 上严格凸，则
+$$
+\begin{aligned}
+\mathcal J_\Phi(d;q,r)=0
+&\ \Longleftrightarrow\
+  \forall j,k\ \bigl(r(j)=r(k)\Rightarrow u_j=u_k\bigr)\\
+&\ \Longleftrightarrow\ u=\Pi u
+\ \Longleftrightarrow\ d=Ed.
+\end{aligned}
+$$
+对任意 $\alpha,\beta\in\mathbb R$，有
+$$
+\mathcal J_{\Phi+\alpha\,\mathrm{id}+\beta}(d;q,r)
+=\mathcal J_\Phi(d;q,r).
+$$
+因此不要求 $\Phi(1)=0$。若只有凸性而没有严格凸性，上述零集刻画不由该假设保证；仿射生成函数的缺陷对每个 $d$ 都为零。各严格凸生成函数共享这里的恢复零集，但本命题不规定它们的共同数值尺度，也不要求不同生成函数在每个输入上给出不同数值。
+

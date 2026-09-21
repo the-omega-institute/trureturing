@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a41689637e2042ee7b69b8b1e2cba042323402b62c9173d8fb6a5e9891aa255f
+  normalized_sha256: sha256:a41689637e2042ee7b69b8b1e2cba042323402b62c9173d8fb6a5e9891aa255f
+cas_ref: sha256:a41689637e2042ee7b69b8b1e2cba042323402b62c9173d8fb6a5e9891aa255f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此处说“本次 fix pass 3 在合并 dev、完成重编号并删除旧摄入清单后”运行命令，随后列出固定摄入基线及检查点读数。它没有将命令成功转化为数学定理，也没有定义暗含断言，故按工程结果说明处理，不声称本轮已复跑历史操作。
+    previous_atom_id: 1422ef240b7066eb0914d524ef135f1fd93ce2746f256d853b13fd9481ab049b
+    next_atom_id: 0bf2c7cb8a9b2b4be336118b98a4f2963bc276150dad20e8aa94b3da1f021e40

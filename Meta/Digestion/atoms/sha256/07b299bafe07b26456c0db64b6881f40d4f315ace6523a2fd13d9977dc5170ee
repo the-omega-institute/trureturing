@@ -1,0 +1,22 @@
+**theorem 63.10（有限时域的精确指派递推与多项式状态压缩）。** 设
+$$
+S(B,I),\qquad I=\{C_1,\ldots,C_k\}.
+$$
+若这些孩子全为叶，并按
+$$
+m(C_1)\ge\cdots\ge m(C_k)
+$$
+编号，则 $k=1$ 时
+$$
+Q(B,I;t)=m(C_1)
+$$
+对所有 $t\ge0$；而 $k\ge2$ 时
+$$
+Q(B,I;t)=
+\begin{cases}
+\displaystyle\sum_{j=1}^{t}m(C_j),&0\le t<k-1,\\
+\displaystyle\sum_{j=1}^{k}m(C_j),&t\ge k-1.
+\end{cases}
+$$
+其中 $t=0$ 时空和为零。
+

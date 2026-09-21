@@ -1,0 +1,16 @@
+**定理 29.6（矩阵能量坐标的全时间证书）。** 在定义29.1下，再假设 $S\succeq a_0I_U$、$a_0>0$。用 $C$ 的谱平方根定义
+$$
+G=BC^{-1/2}:H\to U,\qquad G^*=C^{-1/2}B^*:U\to H,
+\qquad w=C^{1/2}h+G^*x\in H,
+$$
+$$
+\Gamma=C+G^*G:H\to H,\qquad
+w_0=C^{1/2}r_0,\qquad N_0=\|(x_0,h_0)\|.
+\tag{29.11}
+$$
+取任何已认证的 $\gamma_0>0$ 使 $\Gamma\succeq\gamma_0I_H$；总可用 $\gamma_0=c_0$。则精确方程为
+$$
+\dot x=-Sx-Gw,\qquad
+\dot w=-\Gamma w-G^*Sx,
+\tag{29.12}
+$$

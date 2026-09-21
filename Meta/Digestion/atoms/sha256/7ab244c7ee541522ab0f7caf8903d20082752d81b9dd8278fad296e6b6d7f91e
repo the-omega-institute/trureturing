@@ -1,0 +1,8 @@
+### 130.4 概率关系与有效几何的运输
+
+设 $\sigma:\mathcal X\to\mathcal X'$、$\tau:\mathcal B\to\mathcal B'$ 为双射，$r'\sigma=\tau r$，$p'_{\sigma(i)}=p_i$。定义
+
+$$
+(Uf)(\sigma(i))=f(i).
+$$
+

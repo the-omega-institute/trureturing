@@ -1,0 +1,4 @@
+For such a word $p$, let $C_p=q_L^{-1}(\{p\})$ and
+$$
+S_p=\sum_{j<L}(-1)^{j+1}\alpha^{j+2}p_j.
+$$

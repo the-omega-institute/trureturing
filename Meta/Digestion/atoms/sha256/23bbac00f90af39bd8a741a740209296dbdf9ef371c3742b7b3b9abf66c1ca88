@@ -1,0 +1,25 @@
+**theorem 34.2 (Exact powers and an n-independent total-variation bound).** For every probability $\mu$, every admissible $t$, and every $n\ge1$,
+$$
+\Phi_t\mu_t^{(n)}=(\nu^{(n)},g^{(n)}),\qquad
+\mu_t^{(n)}=L_t\nu^{(n)}+\sum_{k\ge n}\frac{g^{(n)}_k}{d'_k}v_k,
+$$
+$$
+\mu_t^{(n)}(K)=1,\qquad
+\|g^{(n)}\|_1\le\|g\|_1^n\le1,
+$$
+$$
+\|D_{t,n}\|_{\mathrm{TV}}
+=2\sum_{k\ge n}\frac{|g^{(n)}_k|}{|d'_k|}
+\le\frac{2\|g\|_1^n}{1-\rho_t^n}.
+$$
+Moreover,
+$$
+\boxed{\ \|\mu_t^{(n)}\|_{\mathrm{TV}}\le C_t\quad(n\ge1).\ }
+$$
+In fact, for arbitrary signed $\eta_1,\ldots,\eta_n\in M(K)$,
+$$
+\|\eta_1\star_t\cdots\star_t\eta_n\|_{\mathrm{TV}}
+\le C_t\prod_{j=1}^n\|\eta_j\|_{\mathrm{TV}}.
+$$
+For $n=1$ the product means the single measure. No zero-fold product is specified.
+

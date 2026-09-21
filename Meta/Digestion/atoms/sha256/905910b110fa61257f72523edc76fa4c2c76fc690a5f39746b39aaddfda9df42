@@ -1,0 +1,50 @@
+**定义 98.3（有噪声六环及其二元观察）。** 取 $S=\mathbb Z/6\mathbb Z$，按 $0,1,\ldots,5$ 标记状态。固定
+$$
+p,q>0,\qquad p+q=1,
+$$
+令行核 $K$ 满足
+$$
+K(i,i+1)=p,\qquad K(i,i-1)=q,
+$$
+其余项为零，状态下标按模 $6$ 计算。取初始律 $\pi_i=1/6$，并定义确定性标签
+$$
+\bigl(r(0),r(1),r(2),r(3),r(4),r(5)\bigr)=(0,0,1,0,1,1).
+$$
+对 $n\ge0$，细路径律为
+$$
+P_n(x_0,\ldots,x_n)
+=\frac16\prod_{t=0}^{n-1}K(x_t,x_{t+1}),
+$$
+其正支撑记为 $\Omega_n$，反序映射为
+$$
+\Theta_n(x_0,\ldots,x_n)=(x_n,\ldots,x_0).
+$$
+对 $m=n+1\ge1$，令 $L_m$ 为标签路径 $(r(x_0),\ldots,r(x_n))$ 在 $P_n$ 下的推前律，仍写 $L_w=L_m(w)$、$L_m^R(w)=L_m(w^R)$。记实际正词集
+$$
+W_m=\{w\in\mathcal A^m:L_w>0\}.
+$$
+下述证明说明 $W_m$ 在反序下不变，因而正反词律在同一有限集合 $W_m$ 上严格为正。其有限 KL 记为
+$$
+D_m=D(L_m\Vert L_m^R)
+=\sum_{w\in W_m}L_w\log\frac{L_w}{L_{w^R}},
+\tag{98.3}
+$$
+其中对数取自然底数，不对正支撑以外的词取对数。
+
+另定义单时刻标签律与单步标签边流
+$$
+\bar\pi_a=\sum_{r(i)=a}\pi_i,\qquad
+\bar Q_{ab}=\sum_{\substack{r(i)=a\\r(j)=b}}\pi_iK(i,j),
+\qquad a,b\in\{0,1\},
+$$
+以及由它们确定的行核
+$$
+\widehat K_{ab}=\frac{\bar Q_{ab}}{\bar\pi_a}.
+$$
+两个标签纤维均非空，故分母为正。由初态 $\bar\pi$ 和核 $\widehat K$ 定义新的 Markov 词律
+$$
+\widehat L_m(a_1\cdots a_m)
+=\bar\pi_{a_1}\prod_{t=1}^{m-1}\widehat K_{a_ta_{t+1}}.
+$$
+这是由单边流构成的一步 Markov 化；是否等于实际观察词律 $L_m$ 是另一个命题。
+

@@ -237,6 +237,7 @@ def execute(options):
         io_phase("hash", "receipt_hashing")
         sources = {canonical(source): source for source in candidates["source_inputs"]}
         write(directory / "emission.json", {"head_sha": head, "report_sha256": request["report_sha256"],
+            "information_template_bindings": candidates["binding_evidence"],
             "source_inputs": [sources[key] for key in sorted(sources)], "theorem_count": len(all_keys),
             "requested_keys": len(all_keys), "input_kind": "synthetic_fixture" if options.fixture_truth_export else "production",
             "query_verification": "lean_streaming_query"})

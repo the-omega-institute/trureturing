@@ -1,0 +1,19 @@
+**theorem 36.12 (Quadratic mixing time at every fixed accuracy).** For every $L\ge1$, $0<p<1$, and $0<\varepsilon<1$,
+$$
+\frac{G_L^2}{16384p(1-p)}
+<\tau_{L,p}(\varepsilon)
+\le\left\lceil\frac{4096G_L^2}{\varepsilon^2p(1-p)}\right\rceil
+\le\left(4096\varepsilon^{-2}+1\right)\frac{G_L^2}{p(1-p)}.
+$$
+In particular,
+$$
+\frac{G_L^2}{16384p(1-p)}
+<\tau_{L,p}(1/4)
+\le65537\frac{G_L^2}{p(1-p)}.
+$$
+More explicitly, whenever
+$$
+np(1-p)\le\frac{G_L^2}{16384},
+$$
+one has both $e_{L,p}(n)>1$ and $D_{L,p}(n,Z(0))>1/4$.
+

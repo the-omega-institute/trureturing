@@ -1,0 +1,6 @@
+**定理 31.9（原测度弱星连续乘法观察的完全分类）。** 定义
+$$
+\mathcal F_n(\mu)=\int_K\exp(2\pi i nH(x))\,d\mu(x),\qquad n\in\mathbb Z.
+$$
+这里 $\exp(2\pi i n[\theta])=\exp(2\pi i n\theta)$。$\Delta(A_t)$ 中对 $\tau_K$ 连续的元素恰为 $\{\mathcal F_n:n\in\mathbb Z\}$，且整数参数唯一。特别，没有非零剩余字符对 $\tau_K$ 连续。连续函数分解所用的逼近定理是复 Stone–Weierstrass 定理。[^rro31-sw]
+

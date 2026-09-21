@@ -1,0 +1,9 @@
+The circle boundaries of these images are exactly
+$$
+B_0^{\mathrm{pos}}=\varnothing,\qquad
+B_L^{\mathrm{pos}}
+=\bigcup_p\partial_{\mathbb T}H[C_p]
+=\{e_1,\ldots,e_{G_L}\}\quad(L\ge1).
+$$
+These are boundaries in the circle, not boundaries of the clopen sets $C_p$ in $K$.
+

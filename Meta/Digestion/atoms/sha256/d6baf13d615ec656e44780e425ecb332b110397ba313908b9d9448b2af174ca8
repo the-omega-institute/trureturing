@@ -1,0 +1,13 @@
+**theorem 44.5 (Full Euclidean-success closure with cofinal witnesses).** Let
+$$
+\mathscr D=
+\{(Z(a),Z(b),Z(q),Z(r)):
+a,b,q,r\in\mathbb N_0,\ b\ge1,\ a=bq+r,\ 0\le r<b\}.
+$$
+Then $\overline{\mathscr D}=K^4$. More strongly, for every $(x_a,x_b,x_q,x_r)\in K^4$ there are actual Euclidean divisions $(a_k,b_k,q_k,r_k)$ such that
+$$
+\min(a_k,b_k,q_k,r_k)\ge k,\qquad
+a_k=b_kq_k+r_k,\qquad 0\le r_k<b_k,
+$$
+and their four encodings converge respectively to $x_a,x_b,x_q,x_r$. The closure of the successful input domain is $K^2$.
+

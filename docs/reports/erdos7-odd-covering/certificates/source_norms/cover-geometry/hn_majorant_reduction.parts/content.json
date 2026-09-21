@@ -1,0 +1,155 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "hn-conditional-majorant-v1"
+  },
+  "head": {
+    "kind": "inline",
+    "value": {
+      "certificate_sha256": "ff0fa74758c51a04fe577f8ff1dc1813679475f8ece18fa7e5423d7fee3e2a91",
+      "source_program_sha256": "a4de254b6473ae9930614ef006b114161beff96fda2ca605e62cc358e8233501",
+      "original_count": 204,
+      "period": "1795856326022129150390625",
+      "mass": {
+        "raw35": "32436706675829/129746337890625",
+        "pure7": "11534406001/13841287201",
+        "old_root0": "16218383811206/129746337890625",
+        "old_cell1": "183105469/2197265625",
+        "carrier": "27030578650187/129746337890625",
+        "mixed7_deletion": "831417782843170223792/19953959178311982421875",
+        "S": "311781810421121012465429/1496546938373398681640625",
+        "S0": "1539313156075932100397623/10262036148697880859375000",
+        "rho": "6904717564205065968990287769374257/118366491336019765320358037109375000",
+        "qJ": "48372925099189405605283846925264530700238848/48374564336342018577852286398410797119140625",
+        "delta": "1639237152612972568439473146266418901777/48374564336342018577852286398410797119140625",
+        "same_delta_339_upper": "19864010031712150417941671378460121500005788953437/285722429270030679049341415520757436752319335937500"
+      },
+      "replay": "Exact existing producer output equals canonical 339 artifact"
+    }
+  },
+  "current_prime": {
+    "kind": "inline",
+    "value": 11
+  },
+  "current_height": {
+    "kind": "inline",
+    "value": 12
+  },
+  "prefix_depth": {
+    "kind": "inline",
+    "value": 11
+  },
+  "prefix": {
+    "kind": "inline",
+    "value": 0
+  },
+  "future_count": {
+    "kind": "inline",
+    "value": 21
+  },
+  "original_count": {
+    "kind": "inline",
+    "value": 226
+  },
+  "period": {
+    "kind": "inline",
+    "value": "1245592786356491112669210766499267578125"
+  },
+  "original_classes": {
+    "path": "content/009-original_classes.json",
+    "sha256": "d56284999139041724052e6bf52f04867332cda3bc893ed3553594fe9917c22f",
+    "kind": "array"
+  },
+  "uncovered_integer": {
+    "kind": "inline",
+    "value": "690564187983690775039516151561523437502"
+  },
+  "private_witness_modular_checks": {
+    "kind": "inline",
+    "value": 51076
+  },
+  "ordered_containment_checks": {
+    "kind": "inline",
+    "value": 50850
+  },
+  "original_containments": {
+    "kind": "inline",
+    "value": []
+  },
+  "residual_classes": {
+    "path": "content/014-residual_classes.json",
+    "sha256": "f53070effce58062578fafcf0b08ba22ca3e1e69f824471887cef1649cb933a1",
+    "kind": "value"
+  },
+  "conflict_shearer": {
+    "kind": "inline",
+    "value": {
+      "vertices": 21,
+      "literal_crt_pair_checks": 210,
+      "edges": 201,
+      "induced_types": 240,
+      "minimum_induced_polynomial": "113/2873",
+      "exact_future_hole": "1/13",
+      "conditional_current_leaf_cap": "1/11",
+      "residual_period_checks": 2431,
+      "scope": "Conditional original Haar law; no universal feasibility claim"
+    }
+  },
+  "grouped_residues": {
+    "kind": "inline",
+    "value": {
+      "13": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "221": [
+        0,
+        39,
+        52,
+        91,
+        104,
+        143,
+        156,
+        195,
+        208
+      ]
+    }
+  },
+  "exact_union_checks": {
+    "kind": "inline",
+    "value": 2431
+  },
+  "conditional_hn_infeasibility": {
+    "kind": "inline",
+    "value": {
+      "reason": "Necessary lower and strict upper bounds on xi_17 are inconsistent",
+      "xi_13_lower": "12",
+      "xi_17_lower": "9/8",
+      "xi_17_strict_upper": "8/9",
+      "lower_minus_upper": "17/72"
+    }
+  },
+  "global_future_majorant": {
+    "path": "content/019-global_future_majorant.json",
+    "sha256": "60ac0a89d0b7f4f9c581a567a1f6b3fcf9f1d8169365648df60e8f6d9c003c0c",
+    "kind": "value"
+  },
+  "measure_scope": {
+    "kind": "inline",
+    "value": "All new moduli end at 11,13,or17 and have no 3/5/7 factor. The actual head labels, full 3/5/7 heights, head source, and every same-chain measure before prime11 are unchanged. No equality of distinct physical/source laws is asserted."
+  },
+  "conclusion_scope": {
+    "kind": "inline",
+    "value": "Presentation-dependent HN false negative and its certified repair on an actual irredundant noncover. No unrestricted uniform budget or whole-cover counterexample."
+  }
+}

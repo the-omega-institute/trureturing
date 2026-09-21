@@ -1,0 +1,37 @@
+**命题 159.1（低于静态地板的前缀平衡块状态下界，repo-derived）。** 沿用命题153.1、156.1、158.1的二元时间齐次无控制仪器、初态 $I_2/2$ 及观察者记号。固定
+$$
+0<p<\frac12,\qquad d=1-2p,\qquad
+\Delta=\frac d2,\qquad \kappa=\frac{1-p}{p},\qquad
+\lambda=\log\kappa,\qquad
+h(x)=p+\frac d{1+e^{-x}}.
+$$
+旧隐藏位先发射报告，再按 $P(r)$ 翻转；每个报告、旧位、新位三元组对应一个独立秩一 Kraus 项。观察者仍为 $\mathcal O=(S,s_0,T_0,T_1,t)$：$S$ 非空有限，更新 $T_0,T_1:S\to S$ 与读出 $t:S\to[0,1]$ 确定且固定，全部可读的演化记忆均计入 $S$。允许依赖 $p,r,\varepsilon$ 的任意精确实数静态表，同一张表须对包括空词和任意稀有历史在内的全部有限报告词满足
+$$
+\mathcal E_r(\mathcal O)
+=\sup_{w\in\{0,1\}^{*}}|t(s_{\mathcal O}(w))-f_r(w)|\le\varepsilon,
+\qquad f_r(w)=h(x_w^{(r)}).
+$$
+$N_{\min}^{(r)}(\varepsilon)$ 为可行观察者的最小有限状态数，不存在时取 $\infty$。函数的复合迭代一律写为 $F^{\circ n}$，其中 $F^{\circ0}=\operatorname{id}$；词的幂仍表示重复拼接。
+
+固定 $0<\varepsilon<\Delta$，选择固定正整数 $a,b$，使
+$$
+L_{ab}=h(b\lambda)-h\!\left(-\frac{a\lambda}{2}\right)>2\varepsilon.
+$$
+这样的选择存在。对正整数 $j$ 记 $D_j=\kappa^j-\kappa^{-j}$，并置
+$$
+\begin{aligned}
+D_{ab}&=D_{a+b}=\kappa^{a+b}-\kappa^{-(a+b)},&
+C_{ab}&=d\,aD_{ab},\\
+M&=L_{ab}-2\varepsilon>0,&
+K_{ab}&=\frac d4(2bD_b+aD_a)>0,\\
+c&=\frac{M}{2C_{ab}}>0,&
+r_0&=\min\!\left\{\frac14,\frac{M}{2K_{ab}}\right\}\in(0,1/2).
+\end{aligned}
+$$
+则
+$$
+\forall r\in(0,r_0),\qquad
+N_{\min}^{(r)}(\varepsilon)\ge\frac c r.
+$$
+所用历史为 $0^b(0^a1^a)^n$。这里 $p,\varepsilon,a,b$ 先于 $r_0$ 和观察者固定；常数不依赖观察者。命题157.1的显式有限见证与词长界、命题158.1在 $0<\varepsilon<\Delta/2$ 上的陈述各保留原适用范围。
+

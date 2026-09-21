@@ -1,0 +1,47 @@
+，对最后完整块同理。因此，取
+$$
+A=\max\{1,(2G\overline L)^4,(1+16B/15)(2G)^4\},
+\quad C_{\rm trap}=2A/3,
+$$
+并用 $\sum_{h\ge1}h^{-4}<2$，对首次入陷阱时刻条件求和，得到
+$$
+\varepsilon_d(N,\delta)
+\le A/N^4+C_{\rm trap}\delta.
+\tag{112.2h}
+$$
+该式覆盖没有完整块的情形，不假设错误事件与陷阱时刻独立。
+
+当 $j\ge j_0$ 且 $\delta T_j\ge1$ 时，一对相邻块中第二块的隐藏起点在环上的条件概率大于 $1/2$；给定该起点及全部传感器历史，其正确声明概率至少 $1/4$。逐对条件化，整阶段完全无声明的概率至多 $(7/8)^{32}<1/4$。令 $e_j$ 为读完 $S_j$ 个读数后的错误率，则
+$$
+e_{j+1}\le e_j/4+B/L_j^4.
+\tag{112.2i}
+$$
+其中阶段错向事件按 $B$ 个块取并集，没有使用块独立性。
+
+置
+$$
+U=16A/B^4+2C_{\rm trap},\qquad
+D=\max\{\overline L,U,4B\}.
+$$
+对 $j<j_0$，直接用 $e_j\le1\le\overline L/L_j$。对 $j\ge j_0$ 且 $\delta T_j<1$，(112.2g)–(112.2h) 及 $\delta<1/L_j$ 给 $e_j\le U/L_j$；$j=0$ 用 $e_0\le1$。令 $j_*$ 为首个同时满足 $j\ge j_0$、$\delta T_j\ge1$ 的阶段。若 $j_*=j_0$，用 $D\ge\overline L=L_{j_*}$ 起步；否则前一阶段给 $\delta<2/L_{j_*}$，再用 (112.2h) 得 $e_{j_*}\le U/L_{j_*}$。随后由 (112.2i)、$L_{j+1}=2L_j$ 与 $D\ge4B$ 归纳得到全部 $j$ 的
+$$
+e_j\le D/L_j.
+$$
+最后，取 $S_j\le N<S_{j+1}$。若 $j\ge j_0$，不完整阶段增加的错误概率至多 $B/L_j^4$，故 $\varepsilon_d(N,\delta)\le(D+B)/L_j$；若 $j<j_0$，直接以概率 $1$ 和 $D\ge\overline L$ 得到同一界，没有把大尺度尾界用于早期阶段。由 $N<GL_j$，
+$$
+\varepsilon_d(N,\delta)\le\frac{G(D+B)}N.
+$$
+取 $C_{T,E,W,r,b}=G(D+B)$ 证明 (112.2a)。所有模型相关量均仅用于证明常数的有限性。
+
+对下界，独立传感器和相同发射使 $Y_0,\ldots,Y_n$ 成为完整隐藏路径 $X_0,\ldots,X_n$ 的同一个随机后处理：给定隐藏路径后，先按共同律生成 $Z$，再按共同发射生成读数，所得条件核不依赖方向。第 105 节的共同隐藏路径 $(1,0,\ldots,0)$ 在两方向都有质量 $\delta(1-\delta)^{n-1}/3$，推前仍给共同子测度。因此任意可见规则的公平均误差至少为 $\delta(1-\delta)^{n-1}/6$。取 $k=2n$ 并用 Bernoulli 不等式，得到 $1/(24n)$，证明 (112.2b)。
+
+最后核对 (112.2c)。忽略传感器项时，三个环 Bernoulli 参数的 Vandermonde 为 $1/32$，由式 (109.2l) 得有向 $c$ 在全区间至少为 $\kappa_0$。$T_\varepsilon$ 对均匀律可逆，故纯陷阱的平稳观察过程可逆；$W$ 对窗口反序变号，纯陷阱均值精确为零。将真实发射与忽略传感器的 Bernoulli $p_x$ 逐时耦合，每时刻的不一致概率为 $\alpha$，四窗的差异概率至多 $4\alpha$，分数均值变化至多 $8\alpha$，有向 $c$ 的变化至多 $32\alpha/3=\kappa_0/6$。因此 $\gamma\ge5\kappa_0/6$。纯陷阱下 $\mathbb E[Y_t\mid Z_t]=1/2+\alpha Z_t$，传感器满足 $\mathbb E[Z_0Z_1]=\varepsilon$，条件发射独立遂给 $\operatorname{Cov}(Y_0,Y_1)=\alpha^2\varepsilon\ne0$。当 $\varepsilon=-1$ 时传感器为周期二的确定交换；其非周期子族的非平凡特征值为 $\varepsilon$，故 $\varepsilon\uparrow1$ 时不存在共同混合速度。证毕。
+
+条件 (112.1a) 仍是模型的实质限制。独立不可逆传感器可能产生自己的时间箭头，所以反序反对称分数的非零均值本身不推出该条件。这里不包括传感器随 $k$ 变化、与隐藏链耦合演化或给定 $(X,Z)$ 后仍有额外发射记忆的情形，也不提供未知模型是否满足签名条件的认证算法。
+
+[^rro112-poisson]: Jeffrey J. Hunter, [*Generalized inverses of Markovian kernels in terms of properties of the Markov chain*](https://arxiv.org/pdf/1209.3533v1) (2012), §2，给出有限 Markov 基本矩阵 $[I-P+\Pi]^{-1}$ 与群逆 $[I-P+\Pi]^{-1}-\Pi$。这里对产品核显式分离传感器中心化、环内零和与陷阱慢模，并估计各部分；有限维 Poisson 方程及广义逆方法不作新颖性主张。
+
+[^rro112-azuma]: Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967。使用每项绝对值至多 $b$ 的 $\ell$ 项鞅差和下尾 $\exp[-z^2/(2\ell b^2)]$，窗口残差按模 $r+1$ 分组。
+
+[^rro112-last]: [已发布 RRO](https://github.com/the-omega-institute/trureturing/blob/0b2398a77f9df4804156fc869afd24b772bf91a6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 第 110 节 的首次入陷阱条件化与阶段收缩，以及同一快照第 111 节的分析用起用尺度。这里的传感器具有状态，局部块、纯环与跨越界由产品链重新建立；阈值采用 $\sqrt L\log(eL)$，使任意固定未知势范数产生的尾界最终快于每个指定幂。
+

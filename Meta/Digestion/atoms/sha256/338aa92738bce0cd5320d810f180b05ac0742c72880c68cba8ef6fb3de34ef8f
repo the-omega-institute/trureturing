@@ -1,0 +1,10 @@
+**定理 19.11（删除连续最低位观察后，紧算术实现仍可存在）。** 令 $X=\mathbb T$，定义
+$$
+j(n)=[n\phi],\qquad M(s,t)=s+t.
+$$
+则 $X$ 紧 Hausdorff，$j$ 单射，$M$ 联合连续，且
+$$
+M(j(n),j(m))=j(n+m).
+$$
+但是不存在连续函数 $q:\mathbb T\to\mathbb R$ 满足 $q(j(n))=f(n)$。
+

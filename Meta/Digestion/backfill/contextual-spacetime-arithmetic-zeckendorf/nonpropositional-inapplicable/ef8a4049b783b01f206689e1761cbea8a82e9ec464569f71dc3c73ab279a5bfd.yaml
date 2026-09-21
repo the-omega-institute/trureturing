@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ef8a4049b783b01f206689e1761cbea8a82e9ec464569f71dc3c73ab279a5bfd
+  normalized_sha256: sha256:ef8a4049b783b01f206689e1761cbea8a82e9ec464569f71dc3c73ab279a5bfd
+cas_ref: sha256:ef8a4049b783b01f206689e1761cbea8a82e9ec464569f71dc3c73ab279a5bfd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出定义 427.1（预测九·严格有界后继与标记观察）所用的载体、符号或任务假设，并规定相应函数、域与约定；这些内容是定义及适用条件，没有需要证明的独立命题，故由现有结算写入器处理。
+    previous_atom_id: bff77c2e65a7364bf9a01ed5ae96b9726d8d7a307297816c01fdb60833beda8b
+    next_atom_id: 01546baf699cb58636bb15b21738117f16d1e1feea896d96511e867bc6e0f79e

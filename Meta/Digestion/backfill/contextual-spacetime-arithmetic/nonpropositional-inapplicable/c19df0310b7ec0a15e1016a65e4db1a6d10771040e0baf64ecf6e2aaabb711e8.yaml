@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c19df0310b7ec0a15e1016a65e4db1a6d10771040e0baf64ecf6e2aaabb711e8
+  normalized_sha256: sha256:c19df0310b7ec0a15e1016a65e4db1a6d10771040e0baf64ecf6e2aaabb711e8
+cas_ref: sha256:c19df0310b7ec0a15e1016a65e4db1a6d10771040e0baf64ecf6e2aaabb711e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “初稿 §§27–29 对应合入稿 §§38–40”修正重整句的节号区间，仅为地址映射；没有数学命题，也不存在用定义隐藏推论。
+    previous_atom_id: b96372ea21a5a5fb3cc095d581e3723968f1f9cf77927da53d1419c72dc3e9f4
+    next_atom_id: d5d8ec140c2319634629f28202a4077327c8ae00704630ab412d8d907f7aa179

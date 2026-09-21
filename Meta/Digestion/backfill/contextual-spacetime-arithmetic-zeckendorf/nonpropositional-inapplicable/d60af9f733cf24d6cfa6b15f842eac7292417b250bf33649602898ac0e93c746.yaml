@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d60af9f733cf24d6cfa6b15f842eac7292417b250bf33649602898ac0e93c746
+  normalized_sha256: sha256:d60af9f733cf24d6cfa6b15f842eac7292417b250bf33649602898ac0e93c746
+cas_ref: sha256:d60af9f733cf24d6cfa6b15f842eac7292417b250bf33649602898ac0e93c746
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nat.find_eq_iff 与 Fibonacci 递推核对原最小窗口长度，按三个配置的素数标签及容量列表得到费用式所用的十三、二十四、四、七、六、七、十系数；List.map_cons 和 List.sum_cons 展开有限项，共同操作、观察及相同附加费用相消后，用 mul_add、add_mul 和 sub_eq_add_neg 的环归一化得到两个所列差式，仓内无冻结 GID。
+    previous_atom_id: ae69d5923fad4f7696b19de1ca27cfc797ca346329ca8dda85fee0e6622f5bec
+    next_atom_id: 81c15b67b3bd02561eee4f16775986066ef50f0ff4389865ae15eef1b07a2c95

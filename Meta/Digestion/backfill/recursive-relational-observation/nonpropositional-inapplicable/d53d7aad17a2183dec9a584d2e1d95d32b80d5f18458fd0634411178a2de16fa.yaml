@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d53d7aad17a2183dec9a584d2e1d95d32b80d5f18458fd0634411178a2de16fa
+  normalized_sha256: sha256:d53d7aad17a2183dec9a584d2e1d95d32b80d5f18458fd0634411178a2de16fa
+cas_ref: sha256:d53d7aad17a2183dec9a584d2e1d95d32b80d5f18458fd0634411178a2de16fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只固定各类可测性、同靶 Baire 一级及字典序选择记号，选择的存在与逼近明确留给后文，属于定义和来源说明。
+    previous_atom_id: 6b4184eb072bec31c3cdf2f29fcc3a391ee89879856eb119fba85d494592c1e6
+    next_atom_id: 54fec951be95c856ca1ad8fb0c1e65beaca3266f9c2620aae61b751a20cc837d

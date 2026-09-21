@@ -1,0 +1,18 @@
+**定理 46.3（共同见证量词及严格包含）。** 总有
+$$
+A_\alpha\subseteq C_\alpha\subseteq B_\alpha.
+$$
+两处包含都可能严格。其量词分别为
+$$
+a\in A_\alpha\iff\exists\mathbf n\in\mathbb N_0^d\ \bigl(q_\alpha^d(\mathbf n)=a\ \land\ \forall j,\ \mathbf n\in S_j\bigr),
+$$
+$$
+a\in C_\alpha\iff\forall j\ \exists\mathbf n_j\in\mathbb N_0^d\ \bigl(q_\alpha^d(\mathbf n_j)=a\ \land\ \mathbf n_j\in S_j\bigr).
+$$
+若进一步只保留输出变量 $\mathbf y$，隐藏变量记为 $\mathbf z$，且 $p$ 是有限元组的输出投影，则令
+$$
+A_\alpha^{\rm out}=p(A_\alpha),\quad B_\alpha^{\rm out}=p(B_\alpha),\quad
+C_\alpha^{\rm out}=\bigcap_j p(q_\alpha^d[S_j]).
+$$
+此时还有 $A_\alpha^{\rm out}\subseteq p(C_\alpha)\subseteq B_\alpha^{\rm out}\cap C_\alpha^{\rm out}$，但 $B_\alpha^{\rm out}$ 与 $C_\alpha^{\rm out}$ 一般互不包含。
+

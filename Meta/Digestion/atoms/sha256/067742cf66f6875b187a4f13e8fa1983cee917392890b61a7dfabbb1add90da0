@@ -1,0 +1,33 @@
+**命题 10.8（共同 CPTP 上下文不放大通道误差）。** 对任意 CPTP 通道 $\Gamma:W\to X$、$\Lambda:Y\to Z$，
+$$
+d_\diamond(\Lambda\circ\Phi\circ\Gamma,\,
+           \Lambda\circ\Psi\circ\Gamma)
+\le d_\diamond(\Phi,\Psi).
+\tag{10.13}
+$$
+对任意有限维旁观系统 $M$，
+$$
+d_\diamond(\Phi\otimes\operatorname{id}_M,\,
+           \Psi\otimes\operatorname{id}_M)
+=d_\diamond(\Phi,\Psi).
+\tag{10.14}
+$$
+更一般地，若共同接线由 CPTP 映射
+$$
+\Gamma:W\to X\otimes M,\qquad
+\Lambda:Y\otimes M\to Z
+$$
+给出，则
+$$
+d_\diamond\!\left(
+\Lambda\circ(\Phi\otimes\operatorname{id}_M)\circ\Gamma,\,
+\Lambda\circ(\Psi\otimes\operatorname{id}_M)\circ\Gamma
+\right)
+\le d_\diamond(\Phi,\Psi).
+\tag{10.15}
+$$
+
+这是 Watrous 上引书 Proposition 3.48 与参考稳定性的应用，也是量子上下文卷第72节历史抬升误差界的单槽条件。前后处理必须在两个被比较对象间共用；若更换控制器或遗漏会参与后续操作的寄存器，就改变了式(10.15)的比较对象。
+
+**证明。** 固定任意参考 $E$ 和联合输入 $\eta_{WE}$。$\Gamma\otimes\operatorname{id}_E$ 的输出仍是合法密度算子，因此中间通道差由式(10.12)控制；再用引理10.6处理 $\Lambda\otimes\operatorname{id}_E$，最后取上确界，得到式(10.13)。在式(10.14)左端，将 $M\otimes E$ 整体视为 $\Phi,\Psi$ 的参考，得“$\le$”；在右端任意测试输入上额外张量一个固定的 $M$ 态，迹范数因 $\|\tau_M\|_1=1$ 而不变，得“$\ge$”。式(10.15)由式(10.13)、(10.14)接续得到。$\square$
+

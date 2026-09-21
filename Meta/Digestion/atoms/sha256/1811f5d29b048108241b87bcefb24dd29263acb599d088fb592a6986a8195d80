@@ -1,0 +1,20 @@
+**definition 28.6 (The original-circle measure algebra and the residual algebra).** On $M(\mathbb T)$ use the ordinary signed measure convolution
+$$
+(\nu*_{\mathbb T}\xi)(B)
+=\int_{\mathbb T}\int_{\mathbb T}\mathbf1_B(\theta+\eta)\,d\xi(\eta)\,d\nu(\theta).
+$$
+This is convolution of Borel measures on the original compact circle. It is not convolution on $\ell^1(\mathbb T_{\mathrm d})$. The usual measure-algebra convention is recalled in [Matthew Daws, *Characterising weakly almost periodic functionals on the measure algebra*, §2](https://arxiv.org/html/0904.0436v2).
+
+Let
+$$
+\mathcal S=\ell^1(\mathbb N_{>0}),\qquad
+\mathcal C=M(\mathbb T)\oplus_1\mathcal S,
+$$
+with standard sequence vectors $e_m$ and
+$$
+(g*_+h)_k=\sum_{\substack{m,n\ge1\\m+n=k}}g_mh_n,
+$$
+$$
+(\nu,g)\diamond(\xi,h)=(\nu*_{\mathbb T}\xi,g*_+h),\qquad
+\|(\nu,g)\|_\oplus=\|\nu\|_{\mathrm{TV}}+\|g\|_1.
+$$

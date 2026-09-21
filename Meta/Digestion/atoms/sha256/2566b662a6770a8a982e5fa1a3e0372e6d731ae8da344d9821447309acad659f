@@ -1,0 +1,8 @@
+**定义 14.1（不访问记录的写入后恢复误差）。** 固定有限整数 $d\ge2$，系统空间为 $\mathcal H_S=\mathbb C^d$，标签为 $x\in\{0,\ldots,d-1\}$。不可访问记录空间 $\mathcal H_B$ 非零且有限维，条件记录 $e_x\in\mathcal H_B$ 均为单位向量。写入等距映射和相关矩阵为
+
+$$
+W|x\rangle=|x\rangle|e_x\rangle,
+\qquad
+C_{xy}=\langle e_y,e_x\rangle.
+$$
+

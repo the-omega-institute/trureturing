@@ -1,0 +1,56 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "1/27"
+  },
+  "r_upper_inclusive": {
+    "kind": "inline",
+    "value": "1/520"
+  },
+  "chi_upper": {
+    "kind": "inline",
+    "value": "1/108"
+  },
+  "four_gap_guards": {
+    "kind": "inline",
+    "value": [
+      "51/520",
+      "535/8424",
+      "2513/126360",
+      "7499/379080"
+    ]
+  },
+  "G_lower": {
+    "kind": "inline",
+    "value": "7499/379080"
+  },
+  "uniform_source_credit": {
+    "kind": "inline",
+    "value": "7499/1968300"
+  },
+  "cost_rows": {
+    "path": "content/011-uniform_at103_bounded/006-cost_rows.json",
+    "sha256": "54570717c002d34feaa04d67fb05df60db3adc698763a4e387683766d2c80053",
+    "kind": "array"
+  },
+  "weighted_g_sum": {
+    "kind": "inline",
+    "value": "69608943653892413134461547/5444110598519662467689491200"
+  },
+  "weighted_P_sum": {
+    "kind": "inline",
+    "value": "109551964095183879665858054186721147909725319227549306364130819064462560939842778448023/1015138709281021578560529504395803910111820914499510028873029402303061037667851250000"
+  },
+  "weighted_Q_sum": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "root0_zero_penalty_count": {
+    "kind": "inline",
+    "value": 38
+  },
+  "comparison": {
+    "kind": "inline",
+    "value": "d_i>=m_i_old+[g_i-P_i*(rho-r/5)]_+; no separate chi or source-escape charge."
+  }
+}

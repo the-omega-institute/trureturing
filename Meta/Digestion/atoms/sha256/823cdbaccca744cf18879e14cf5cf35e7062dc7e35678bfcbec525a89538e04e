@@ -1,0 +1,19 @@
+### theorem 5.1: 有限阶段关系的闭包只保存可逼近的共同像
+
+设 \(I\) 为有限集合，\(X_i\) 为载体；对每个 \(i\) 给定有限观察塔
+\(q_{i,n}:X_i\twoheadrightarrow Q_{i,n}\)，其阶段映射满足
+\(q_{i,n}=p_{i,n}q_{i,n+1}\)。令
+\(K_i=\varprojlim_n Q_{i,n}\)，\(\iota_i(x)=(q_{i,n}(x))_n\)。对任意关系
+\(R\subseteq\prod_{i\in I}X_i\)，令
+
+\[
+R_n=\{(q_{i,n}(x_i))_{i\in I}:(x_i)_{i\in I}\in R\}.
+\]
+
+则在 \(\prod_iK_i\) 的柱拓扑中
+
+\[
+\overline{\bigl(\prod_i\iota_i\bigr)[R]}
+=\bigcap_{n\ge0}\pi_n^{-1}(R_n).
+\]
+

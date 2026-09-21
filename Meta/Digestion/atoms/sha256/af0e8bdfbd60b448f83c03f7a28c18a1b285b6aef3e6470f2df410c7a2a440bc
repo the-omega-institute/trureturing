@@ -1,0 +1,12 @@
+**Theorem RP11.** The least positive period of the sequence
+$k\mapsto B_{\ell,k}\pmod{5^r}$, from k=0 onward, is
+
+$$
+\boxed{
+T_\ell(1)=1,\qquad
+T_\ell(r)=2\cdot5^{\max(0,r-1-s_\ell)}\quad(r\ge2).
+}\tag{RP11}
+$$
+
+There is no smaller eventual period either.
+

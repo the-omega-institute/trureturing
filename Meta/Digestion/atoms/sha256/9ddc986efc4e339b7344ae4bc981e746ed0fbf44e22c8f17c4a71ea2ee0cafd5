@@ -1,0 +1,5 @@
+For every integer $M\ge1$,
+$$
+\mathscr D(\rho)
+\le\frac6{M+1}+\frac4\pi\sum_{k=1}^M\frac{|\widehat\rho(k)|}{k}.
+$$

@@ -1,0 +1,168 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "irredundant-whole-j-finite-source-v1"
+  },
+  "height": {
+    "kind": "inline",
+    "value": 12
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Actual finite effective9 source; every original class has a verified private integer, so every class is necessary to its forbidden union. Reuses329 actual witness. This finite family does not cover the integers. No Lean or test-extremality assertion."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "profile-notes/257-320/311-imperfect-j-source-alignment-forces-a-sharp-sector-surplus.md": "cb1d7434b43a9e8d6091ff691cd022d479f9c898c7c5678a81e546d34659662f",
+      "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
+      "certificates/source_norms/j-geometry/j_whole_face_high_rho_finite_guard.json": "192881db2a35f97ab9d786b2ec18f2c07064ffe83158e6b14a40daee29373a19"
+    }
+  },
+  "ordinary_proof": {
+    "kind": "inline",
+    "value": {
+      "sha256": "081511adeb1f9742aae52b2fc729dd62eef876cf7d4d79f81cfd902bb447530c",
+      "byte_count": 38187
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "a4de254b6473ae9930614ef006b114161beff96fda2ca605e62cc358e8233501"
+  },
+  "original_forbidden_classes": {
+    "path": "content/006-original_forbidden_classes.json",
+    "sha256": "0e2ba32c91f5380d245989f4b9039b2fbf81f8c6b3bc5b69300901a6fdababfd",
+    "kind": "array"
+  },
+  "original_label_count": {
+    "kind": "inline",
+    "value": 204
+  },
+  "ordered_distinct_pairs": {
+    "kind": "inline",
+    "value": 41412
+  },
+  "original_containments": {
+    "kind": "inline",
+    "value": []
+  },
+  "private_integer_witnesses": {
+    "path": "content/010-private_integer_witnesses.json",
+    "sha256": "fd7fc256e4129d117705166dcf00f025203d1882f22c1582ccbbb85c528d1238",
+    "kind": "array"
+  },
+  "private_witness_verification": {
+    "path": "content/011-private_witness_verification.json",
+    "sha256": "77fdcce7508e02f138c6c0365688e13798805477827929a8af73c689100dbe49",
+    "kind": "value"
+  },
+  "uncovered_integer": {
+    "kind": "inline",
+    "value": 440451607125643310546877
+  },
+  "uncovered_coordinate_witness": {
+    "kind": "inline",
+    "value": [
+      3,
+      2,
+      3
+    ]
+  },
+  "original_seven_cylinders": {
+    "path": "content/014-original_seven_cylinders.json",
+    "sha256": "13f41a104ef96e97c2db4a73e1ff8efa571c34a178c4ed19d8ea9a121af966ed",
+    "kind": "value"
+  },
+  "seven_cylinders_pairwise_disjoint": {
+    "kind": "inline",
+    "value": true
+  },
+  "raw35_compressed_verification": {
+    "kind": "inline",
+    "value": {
+      "three_leaves": 51,
+      "five_leaves": 49,
+      "weighted_cells": 2499,
+      "raw35_period": 129746337890625
+    }
+  },
+  "raw_parameters": {
+    "kind": "inline",
+    "value": [
+      [
+        "29524/59049",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "61035156/244140625"
+      ],
+      [
+        "0",
+        "0",
+        "1/5",
+        "12207031/244140625",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "1/135",
+        "0",
+        "93435329041/14416259765625"
+      ],
+      "183105469/244140625"
+    ]
+  },
+  "raw35_cell_masses": {
+    "kind": "inline",
+    "value": [
+      "216247558889/5189853515625",
+      "183105469/2197265625",
+      "170898439/6591796875",
+      "36621094/732421875",
+      "707467994552/14416259765625"
+    ]
+  },
+  "pure3_cell_masses": {
+    "kind": "inline",
+    "value": [
+      "29525/531441",
+      "1/9",
+      "1/9",
+      "1/9",
+      "1/9"
+    ]
+  },
+  "pure5_mass": {
+    "kind": "inline",
+    "value": "183105469/244140625"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": {
+      "raw35": "32436706675829/129746337890625",
+      "pure7": "11534406001/13841287201",
+      "old_root0": "16218383811206/129746337890625",
+      "old_cell1": "183105469/2197265625",
+      "carrier": "27030578650187/129746337890625",
+      "mixed7_deletion": "831417782843170223792/19953959178311982421875",
+      "S": "311781810421121012465429/1496546938373398681640625",
+      "S0": "1539313156075932100397623/10262036148697880859375000",
+      "rho": "6904717564205065968990287769374257/118366491336019765320358037109375000",
+      "qJ": "48372925099189405605283846925264530700238848/48374564336342018577852286398410797119140625",
+      "delta": "1639237152612972568439473146266418901777/48374564336342018577852286398410797119140625",
+      "same_delta_339_upper": "19864010031712150417941671378460121500005788953437/285722429270030679049341415520757436752319335937500"
+    }
+  },
+  "finite_inventory": {
+    "kind": "inline",
+    "value": "All physical exponents are at most N. Every original label of this family is listed; absent mixed cofactors are not added. S0 retains the established complete cap tails and the empty-carrier weight7^-N."
+  }
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:04f2651a589e73feac0a0570cb19e6704c127cfaec5dec9ce68d02ef34775a15
+  normalized_sha256: sha256:04f2651a589e73feac0a0570cb19e6704c127cfaec5dec9ce68d02ef34775a15
+cas_ref: sha256:04f2651a589e73feac0a0570cb19e6704c127cfaec5dec9ce68d02ef34775a15
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 用 AddCircle.measurePreserving_equivIoc 将圆周半开弧拉回长度至多一的实区间，再由 Real.volume_Ioc 求长度；端点零测度同时给左闭右开版本，包含空弧、整周及跨越固定原点的弧，仓内无冻结 GID。
+    previous_atom_id: b82bdda26be622b6b64f273cf4b7f668797e2d28aa2830e68a91e3d8a0a9476e
+    next_atom_id: 7856e27bd85f62498c472754be9ea7c0e4fd3bf75c261186ec4c6ef22239f6ca

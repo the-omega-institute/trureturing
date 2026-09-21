@@ -1,0 +1,23 @@
+**theorem 40.3 (Endpoint atoms and coherent endpoint conventions).** Let $\pi^-_{N,\theta}$ instead use the cells $(s_i,s_{i+1}]$ on the circle, with the same labels and masses. Define
+$$
+B_{N,\theta,p}(n,x)
+ =\sum_{j=0}^n b_{n,p}(j)
+   \mathbf1_{\{t_0,\ldots,t_{N-1}\}}(x+j\theta).
+$$
+Then
+$$
+B_{N,\theta,p}(n,x)\le\min\{1,NM_{n,p}\},
+$$
+$$
+\|(\pi_{N,\theta})_\#P_p^n\delta_x
+   -(\pi^-_{N,\theta})_\#P_p^n\delta_x\|_1
+ \le2B_{N,\theta,p}(n,x).
+$$
+The absolute difference of the corresponding pointwise errors has the same upper bound. Their worst-start errors are equal, although their pointwise probability vectors need not be equal.
+
+For every $x\notin\mathcal G_\theta$, the boundary term is zero simultaneously for all $N\ge2$, $n\ge0$, and $p\in[0,1]$.
+
+**Proof.** Couple the two observations using the same random integer $J$. Their labels can differ only at a cut. Changing a single label changes its point-mass vector by norm at most two, which proves the vector bound; the reverse triangle inequality proves the error bound. Irrationality makes the phases $x+j\theta$ distinct for distinct integers $j$, so at most $N$ indices can hit the cut set.
+
+For fixed $n,p$, the probability vector for the right-closed convention at $x$ is the left-hand limit of the left-closed probability vector at $x$. Conversely, the left-closed vector is a right-hand limit of the right-closed vectors. Norm continuity and taking suprema give equality of the two worst-start errors. Finally, if $x+j\theta=[k\theta]$ for any integers $j,k$, then $x=[(k-j)\theta]\in\mathcal G_\theta$. This single implication proves the simultaneous assertion, without parameter-dependent null sets. $\square$
+

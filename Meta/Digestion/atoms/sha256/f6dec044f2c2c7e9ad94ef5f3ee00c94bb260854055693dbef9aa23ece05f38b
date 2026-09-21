@@ -1,0 +1,6 @@
+**theorem 52.6 (支撑结合律与一个总和的实际见证).** 对任意有限列 $A_1,\ldots,A_n\in I$，任意括号化的超和都等于
+$$
+\left\{\rho\left(\sum_{i=1}^n x_i\right):x_i\in R,\ \rho(x_i)=A_i\text{ 对所有 }i\right\}.
+$$
+$n=0$ 时两边均为 $\{0_I\}$。特别地，$\boxplus$ 满足支撑结合律。这个等式的输出只指定总和的观察值，并不同时指定若干相交子和的观察值。商超环中的有限和机制亦见 [Connes–Consani，命题2.5，式(10)](https://arxiv.org/html/1001.4260v2)。
+

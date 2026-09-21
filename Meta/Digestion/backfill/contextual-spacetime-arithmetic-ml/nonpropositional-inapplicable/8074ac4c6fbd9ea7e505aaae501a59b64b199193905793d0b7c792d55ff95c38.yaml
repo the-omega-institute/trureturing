@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8074ac4c6fbd9ea7e505aaae501a59b64b199193905793d0b7c792d55ff95c38
+  normalized_sha256: sha256:8074ac4c6fbd9ea7e505aaae501a59b64b199193905793d0b7c792d55ff95c38
+cas_ref: sha256:8074ac4c6fbd9ea7e505aaae501a59b64b199193905793d0b7c792d55ff95c38
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子叶只给出对象、取值域及公式的定义或建模约定，命题性后续内容已在拆分边界之外，本叶没有待证命题，使用现有结算器处理。
+    previous_atom_id: 0996f60783538b027da5a5c1fc29e9919ec2fba130839b16f903385657e8d6e3
+    next_atom_id: 1b270b851c660e79712bc332e6fc58eb05d45f329df341d25f6b22ca1fd16904

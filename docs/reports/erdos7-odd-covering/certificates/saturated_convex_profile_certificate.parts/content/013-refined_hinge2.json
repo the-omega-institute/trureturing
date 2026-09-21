@@ -1,0 +1,30 @@
+{
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      12,
+      8
+    ]
+  },
+  "observations": {
+    "path": "content/013-refined_hinge2/001-observations.json",
+    "sha256": "fcacdcfedb945949af20b07d5f8366811b51d09db83b50de31fe959fe3e0e59f",
+    "kind": "array"
+  },
+  "finite_correction": {
+    "kind": "inline",
+    "value": "6120380099638521626/38923898253275390625"
+  },
+  "geometric_remainder": {
+    "kind": "inline",
+    "value": "51864510522317/311391186026203125000"
+  },
+  "lambda_upper": {
+    "kind": "inline",
+    "value": "5845044790753296227/3690562204755000000"
+  },
+  "nu_upper": {
+    "kind": "inline",
+    "value": "11690089581506592454/3964266656997890625"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "f357ec1b9318ea9892c635a2820a20cd1527fc6d5a5566d1709ab38aca3d8812": {
+    "path": "content/009-rational_dual_certificates/000-f357ec1b9318ea9892c635a2820a20cd1527fc6d5a5566d1709ab38aca3d8812.json",
+    "sha256": "8f7d048eb0846632af505bd5f73d793a8c50f6c79178f6c1da65719589c7ecae",
+    "kind": "value"
+  },
+  "625f193022a18c0e10c62a07da37b4ffb9d1bde7fb5969386ec20f64d0b16088": {
+    "path": "content/009-rational_dual_certificates/001-625f193022a18c0e10c62a07da37b4ffb9d1bde7fb5969386ec20f64d0b16088.json",
+    "sha256": "1a5a10ab3e206f59d4f53f0ca7adc5acd53a4b03a9b39e59b5cb3486c8d200a7",
+    "kind": "value"
+  },
+  "4bb389fa763a77d0ffaabb9014ea0b0345f6f5adcf55e0727034902e79978a9c": {
+    "path": "content/009-rational_dual_certificates/002-4bb389fa763a77d0ffaabb9014ea0b0345f6f5adcf55e0727034902e79978a9c.json",
+    "sha256": "73cae995020a4b7fa111e45122d30453781dba7a19568baee7a7720a051c2b43",
+    "kind": "value"
+  },
+  "f37d7b39c54f57d59965ed512382493d441d6681abb4e65161ebc3083e4694a1": {
+    "path": "content/009-rational_dual_certificates/003-f37d7b39c54f57d59965ed512382493d441d6681abb4e65161ebc3083e4694a1.json",
+    "sha256": "826236469ebc4cc04e91e7923bfcea8cad71ee77ae00562d49db267b202c1b27",
+    "kind": "value"
+  },
+  "ef940688fb7caf81932bc9493ba0d62e706801e13ac1e595461d6b3e36867412": {
+    "path": "content/009-rational_dual_certificates/004-ef940688fb7caf81932bc9493ba0d62e706801e13ac1e595461d6b3e36867412.json",
+    "sha256": "0f167d48c2d7c3afb1329684edb5f90bf787039f0271748e81b25340ba4ea534",
+    "kind": "value"
+  },
+  "43a1a7fac8cde32af953b7d3e27cb3c7363bfd0e694e1a4e26d84fbe383d25ea": {
+    "path": "content/009-rational_dual_certificates/005-43a1a7fac8cde32af953b7d3e27cb3c7363bfd0e694e1a4e26d84fbe383d25ea.json",
+    "sha256": "267d0dc364f0a8280aef216e79fa1680eeb2d2318968d520989f24fe723fefdd",
+    "kind": "value"
+  },
+  "b308d8df7c598f79334f61c6e4599fa5784e972c2431c97a5b2bb3ace4b3bbcc": {
+    "path": "content/009-rational_dual_certificates/006-b308d8df7c598f79334f61c6e4599fa5784e972c2431c97a5b2bb3ace4b3bbcc.json",
+    "sha256": "5e2dd936ea1a1c7fb1aa9d8f14e9b8646412013c016605a53305ed688179dd47",
+    "kind": "value"
+  },
+  "3a32c7c4d8e6f1ce7d395c43cc1c10d7c4b7ee4b66439688024d837136e7efd1": {
+    "path": "content/009-rational_dual_certificates/007-3a32c7c4d8e6f1ce7d395c43cc1c10d7c4b7ee4b66439688024d837136e7efd1.json",
+    "sha256": "e379dc27a7379398c0887ec14d8f5f1da6345f72f41ff093f51f85ad6b9c473c",
+    "kind": "value"
+  },
+  "95683ebdc7a97d7b5c5b7db493b38b8c60f83a177615748ace739c980da5a193": {
+    "path": "content/009-rational_dual_certificates/008-95683ebdc7a97d7b5c5b7db493b38b8c60f83a177615748ace739c980da5a193.json",
+    "sha256": "598cba0dad0f504c24da87e1a8f75ca72092a8b05115a40442bb6bbb2e53c930",
+    "kind": "value"
+  },
+  "aed8aa5f2ccbfbd626d7d705929b7f6b62f76e0d6e449f5d6b8aa134ca6544ba": {
+    "path": "content/009-rational_dual_certificates/009-aed8aa5f2ccbfbd626d7d705929b7f6b62f76e0d6e449f5d6b8aa134ca6544ba.json",
+    "sha256": "d8840baeecc074a276b02c010c475272807d346c9910631a7aa77248daab8f7b",
+    "kind": "value"
+  },
+  "7e8ba2b17c3968312f73db67810891a1c07a3b2a7b20369f7ef0b4407b349fa9": {
+    "path": "content/009-rational_dual_certificates/010-7e8ba2b17c3968312f73db67810891a1c07a3b2a7b20369f7ef0b4407b349fa9.json",
+    "sha256": "88d660a0319a8c1899866a619b0f0c796e35660e8380ed1fa480b86567b6d647",
+    "kind": "value"
+  },
+  "b047893af87fa614c2580ab5211e94deae33e983a6caf86a5024e5aa32ea405c": {
+    "path": "content/009-rational_dual_certificates/011-b047893af87fa614c2580ab5211e94deae33e983a6caf86a5024e5aa32ea405c.json",
+    "sha256": "92d1044da503312b3a3f23b87fd50e7f696f835ed998a92008d19dabad158e52",
+    "kind": "value"
+  }
+}
