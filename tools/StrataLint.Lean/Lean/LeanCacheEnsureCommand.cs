@@ -324,7 +324,7 @@ internal static partial class LeanCacheEnsureCommand
                         root,
                         projectWarmth,
                         stateProbe,
-                        out cacheState);
+                        out cacheState, writerGuard);
                 }
 
                 if (stamp.State == LeanCacheStampState.Mismatch)
@@ -390,7 +390,7 @@ internal static partial class LeanCacheEnsureCommand
                                                 root,
                                                 new OleanWarmthInspection(OleanWarmth.Warm, null),
                                                 stateProbe,
-                                                out cacheState);
+                                                out cacheState, writerGuard);
                                         }
                                     }
                                 }
@@ -426,7 +426,7 @@ internal static partial class LeanCacheEnsureCommand
                             root,
                             projectWarmth,
                             stateProbe,
-                            out cacheState);
+                            out cacheState, writerGuard);
                     }
                     catch (LeanCacheProvisionException exception)
                     {
@@ -449,7 +449,7 @@ internal static partial class LeanCacheEnsureCommand
                                 root,
                                 projectWarmth,
                                 stateProbe,
-                                out cacheState);
+                                out cacheState, writerGuard);
                         }
                         return FailureReceipt(
                             "failed",
@@ -588,7 +588,7 @@ internal static partial class LeanCacheEnsureCommand
                     root,
                     finalProjectWarmth,
                     stateProbe,
-                    out cacheState);
+                    out cacheState, writerGuard);
             }
             catch (LeanCacheProvisionException exception)
             {
@@ -611,7 +611,7 @@ internal static partial class LeanCacheEnsureCommand
                         root,
                         projectWarmth,
                         stateProbe,
-                        out cacheState);
+                        out cacheState, writerGuard);
                 }
                 return FailureReceipt(
                     "failed",
@@ -659,8 +659,11 @@ internal static partial class LeanCacheEnsureCommand
         string root,
         OleanWarmthInspection projectWarmth,
         ILeanCacheStateProbe stateProbe,
-        out CacheState? cacheState)
+        out CacheState? cacheState,
+        LeanCacheWriterGuard writerGuard)
     {
+        if (RetireRootJudgeOutputs(root, writerGuard))
+            projectWarmth = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake")));
         cacheState = new CacheState(
             stateProbe.ProbeOleans(MathlibOleanRoot(Path.Combine(root, ".lake"))),
             projectWarmth);

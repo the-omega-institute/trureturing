@@ -278,7 +278,7 @@ public sealed class DeclaredTemplateOwnerMirrorTests
             var module = InformationTemplateEvidence.ModuleForSource(path);
             var template = Report(Files(), count: 1, declared: declared).Files[RepoPath.CreateKnown(Registration)];
             var wire = JsonNode.Parse(template.InformationTemplates!.Value.GetRawText().Replace(
-                Registration, path, StringComparison.Ordinal).Replace("D5.S0.Carrier.Registration", module, StringComparison.Ordinal)
+                Registration, path, StringComparison.Ordinal).Replace("Reg.D5.S0.Carrier.Registration", module, StringComparison.Ordinal)
                 .Replace("D5.S0.Carrier.Target.target0", theorem, StringComparison.Ordinal))!;
             Reports[path] = Reports[path] with
             {

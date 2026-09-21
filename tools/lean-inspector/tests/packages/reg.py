@@ -27,6 +27,10 @@ class NativeRegTests:
         manifest['packages'][1] = git
         self.write('lake-manifest.json', json.dumps(manifest))
         self.copy('Reg/lakefile.toml')
+        # Empty downstream libraries still have their declared source roots.
+        # Lake's submodule glob requires directories, not dummy Lean modules.
+        for library in ('LeanInformationAuditRegTests', 'LeanInformationAuditRegAnalysis'):
+            (self.root / 'tools/lean-inspector' / library).mkdir()
         reg = json.loads((ROOT / 'Reg/lake-manifest.json').read_text())
         reg['packages'] = [p for p in reg['packages'] if p['type'] == 'path'] + [dict(git, inherited=True)]
         self.write('Reg/lake-manifest.json', json.dumps(reg))
@@ -62,6 +66,11 @@ class NativeRegTests:
         self.make_lean('Reg.Support.Entry')  # Selected targets remain selected.
         self.make_lean(success=False)  # The default root audit remains required.
         self.write('Audit.lean', 'def audit : Nat := 1\n')
+        downstream = 'tools/lean-inspector/LeanInformationAuditRegTests/Required.lean'
+        self.write(downstream, 'invalid downstream default\n')
+        self.make_lean('Reg.Support.Entry')
+        self.make_lean(success=False)
+        self.write(downstream, 'def requiredCheck : Bool := true\n')
         self.write('Reg/Support/Entry.lean', 'this must fail\n')
         self.make_lean(success=False)
 

@@ -49,7 +49,7 @@ def joinClaims (events : Array (Name × TemplateOccurrenceEvent))
     indexed := indexed.insert event.key event
   let mut selected : Std.HashMap TemplateOccurrenceKey TemplateBindingClaim := {}
   for (producer, claim) in claims do
-    unless producer == claim.owner do throw "incomplete_closure:dtr.claim_owner"
+    unless producer == claim.owner && claim.owner == claim.key.registrationModule do throw "incomplete_closure:dtr.claim_owner"
     unless indexed.contains claim.key do throw "unclassified_form:dtr.dangling_claim"
     if selected.contains claim.key then throw "unclassified_form:dtr.duplicate_claim"
     if let some event := indexed[claim.key]? then
@@ -139,26 +139,6 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
   if record.result matches .undeclared then logWarning (missingDeclarationDiagnostic event.key)
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
-/-- Claims join by their exact occurrence identity before authoritative assessment.
-An overlay retains the original registration owner and cannot replace an inline claim. -/
-def declareSidecar (theoremName arena : Name) (catalog : Option Name)
-    (descriptor : Option Expr) (resolutionDiagnostic : Option String)
-    (escapeInput : EscapeRecordInput := {}) : Elab.Command.CommandElabM Unit := do
-  let env ← getEnv
-  let matching := (inventory env).filter fun event => event.key.theoremName == theoremName &&
-    event.key.objectArena == arena && (catalog.isNone || catalog == some event.key.catalog)
-  unless matching.size == 1 do throwError "unclassified_form:dtr.sidecar_occurrence"
-  let event := matching[0]!
-  if (claims env).any (·.key == event.key) then
-    throwError "unclassified_form:dtr.duplicate_claim"
-  let (descriptor, resolutionDiagnostic) ← eraseDescriptor descriptor resolutionDiagnostic
-  let claim : TemplateBindingClaim := {
-    key := event.key, arena := event.arena, descriptor, resolutionDiagnostic, escapeInput,
-    owner := env.header.mainModule }
-  let record ← Elab.Command.liftTermElabM <| assess event (some claim)
-  modifyEnv fun current => addRecord (addClaim current claim) record
-  if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
-
 /-- A realization provider may be imported by its registration source. The
 complete report environment can contain other, unrelated owners as well. -/
 private def ownerReachable (env : Environment) (root owner : Name) : Bool := Id.run do
@@ -202,14 +182,14 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
       ownerReachable env event.key.registrationModule realizationOwner do
     throwError "incomplete_closure:dtr.event_unit_owner"
 
-/-- Snapshot for the complete imported join. Original provisional records are
-retained only for transport to the C# join; selected contains one final result. -/
+/-- Snapshot for the complete imported join. Original producer records retain
+the command inventory; selected contains one authoritative result per occurrence. -/
 structure JoinedRecords where
   selected : Array BindingRecord
   originals : Array BindingRecord
 
 /-- Shared final assessment after the full imported claim set has been joined.
-Callers must establish complete governed sidecar inputs before claiming coverage. -/
+Callers must establish complete governed registration inputs before claiming coverage. -/
 def assessJoined : MetaM (Array BindingRecord) := do
   let env ← getEnv
   let joined ← match joinClaims (ownedEvents env) (ownedClaims env) with
@@ -306,18 +286,12 @@ def recordJson (record : BindingRecord) : MetaM Json := do
     ("binding_source_path", record.bindingOwner.map (toJson ∘ sourcePath) |>.getD Json.null),
     ("state", toJson state), ("diagnostic", diagnostic), ("certificate", certificate)]
 
-/-- Records are partitioned by their actual producing module. An original
-undeclared row and a sidecar overlay remain distinguishable until the final join. -/
+/-- Each record is exported only by its registration owner. -/
 private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
     (registered : Array TemplateOccurrenceKey) : MetaM Json := do
   let env ← getEnv
-  let originals := snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
-  let overlays := snapshot.selected.filter fun row => row.bindingOwner == some moduleName &&
-    row.occurrence.key.registrationModule != moduleName
-  let rows ← (originals ++ overlays).mapM fun row => do
-    let some selected := snapshot.selected.find? (·.occurrence.key == row.occurrence.key)
-      | throwError "incomplete_closure:dtr.final_record"
-    recordJson (if selected.bindingOwner == some moduleName then selected else row)
+  let rows ← (snapshot.selected.filter
+    (·.occurrence.key.registrationModule == moduleName)).mapM recordJson
   let version ← TemplateAudit.readReportCacheReleaseVersion
   return Json.mkObj [
     ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson version),
