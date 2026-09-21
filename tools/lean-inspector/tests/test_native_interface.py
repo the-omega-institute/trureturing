@@ -9,6 +9,80 @@ from test_native_support import ROOT, publication
 
 
 class NativeInterfaceTests:
+    def test_output_audit_follows_compiler_package_owners(self):
+        package, env = self.interface_package()
+        for relative in ('Projection/OutputOnlyAudit.lean', 'Registry/Repository.lean'):
+            source = ROOT / 'tools/lean-inspector/LeanInformationAudit' / relative
+            target = package / 'LeanInformationAudit' / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, target)
+        # Illegal capabilities exist only in disposable fixtures. Names deliberately
+        # disagree with owners, including a foreign package impersonating the judge.
+        owners = [('LeanInformationAuditInterface', 'OutsideJudgeNamespace'),
+                  ('LeanInformationAudit', 'ImplProbe'), ('Reg', 'RegProbe'),
+                  ('D5', 'ContentProbe'), ('LeanInformationAuditForeign', 'LeanInformationAudit.Impostor')]
+        for owner, namespace in owners:
+            target = package / owner / 'OwnerProbe.lean'
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(f'''import Lean
+open Lean Elab Command
+namespace {namespace}
+def read : CommandElabM Unit := do
+  let _ ← liftIO <| IO.FS.readFile "never-executed"
+def reference : CommandElabM Unit := do
+  let _ ← getRef
+def loader : CommandElabM Unit := do
+  let _ ← liftIO <| Lean.findOLean `Lean
+def mutate : CommandElabM Unit := do setEnv (← getEnv)
+def clean : CommandElabM Unit := pure ()
+end {namespace}
+''')
+        probe = package / 'LeanInformationAudit/OwnerConsumer.lean'
+        imports = ''.join(f'import {owner}.OwnerProbe\n' for owner, _ in owners)
+        declarations, checks = [], []
+        for index, (owner, namespace) in enumerate(owners):
+            for action, capability in [('read', 'IO.FS.readFile'),
+                                       ('reference', 'Lean.MonadRef.getRef'),
+                                       ('loader', 'Lean.findOLean'), ('mutate', 'Lean.setEnv'),
+                                       ('clean', None)]:
+                stem = f'probe{index}_{action}'
+                declarations.append(f'''def {stem}Publication : CommandElabM Unit := {namespace}.{action}
+def {stem}Seal : CommandElab := terminalSealCommand {stem}Publication
+def {stem}StageBody (_ : Name) : CommandElabM Unit := {namespace}.{action}
+def {stem}Stage : CommandElab := terminalInformationAnalysisStageCommand {stem}StageBody
+def {stem}ExportBody (_ : Name) (_ : List ArtifactKind) : CommandElabM AnalysisExportPlan := do
+  {namespace}.{action}
+  return {{ artifacts := [] }}
+def {stem}Export : CommandElab := terminalInformationAnalysisExportCommand {stem}ExportBody
+''')
+                for mode, audit in [('Seal', 'auditSealOutputOnly'),
+                                    ('Stage', 'auditInformationAnalysisStage'),
+                                    ('Export', 'auditInformationAnalysisExport')]:
+                    reject = index < 2 and capability is not None and (action != 'mutate' or mode == 'Export')
+                    expected = f'"field=capability:{capability}"' if reject else '""'
+                    checks.append(f'  check "{owner}_{action}_{mode}" ({audit} env ``{stem}{mode} env.header.mainModule) {expected}\n')
+        probe.write_text(imports + '''import LeanInformationAudit.Projection.OutputOnlyAudit
+open Lean Elab Command LeanInformationAudit
+''' + ''.join(declarations) + '''
+run_cmd do
+  let env ← getEnv
+  let check (label : String) (actual : Except String Unit) (expected : String) : CommandElabM Unit := do
+    let ok := match actual with
+      | .ok () => expected.isEmpty
+      | .error message => !expected.isEmpty && (message.splitOn expected).length == 2
+    unless ok do throwError "[FAIL] {label}: {repr actual}"
+''' + ''.join(f'''  unless (env.getModuleIdxFor? ``{namespace}.read).map (env.allImportedModuleNames[·.toNat]!) ==
+      some `{owner}.OwnerProbe do throwError "[FAIL] compiler_owner_{owner}"
+''' for owner, namespace in owners) + ''.join(checks) +
+                         '  logInfo "[PASS] compiler_owner_audits cases=75"\n')
+        with (package / 'lakefile.toml').open('a') as config:
+            for owner, _ in owners[1:]:
+                config.write(f'\n[[lean_lib]]\nname = "{owner}"\nglobs = ["{owner}.+"]\n')
+        result = self.guarded_command([self.lake, 'build', 'LeanInformationAudit.OwnerConsumer'],
+                                      cwd=package, env=env)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('[PASS] compiler_owner_audits cases=75', result.stdout)
+
     def test_interface_registered_build_inputs(self):
         selection = publication.selection.Selection(ROOT)
         package = ROOT / 'tools/lean-inspector-interface'

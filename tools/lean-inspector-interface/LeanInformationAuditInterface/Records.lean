@@ -60,6 +60,44 @@ structure TemplateBindingClaim where
   owner : Name
   deriving Inhabited
 
+namespace TemplateAudit
+
+structure DependencyIdentity where
+  name : Name
+  owner : Name
+  typeIdentity : String
+  bodyIdentity : String
+  deriving Inhabited
+
+end TemplateAudit
+
+structure TemplateBindingCertificate where
+  evidenceRef : String
+  key : TemplateOccurrenceKey
+  planIdentity : String
+  descriptorIdentity : String
+  actualIdentity : String
+  argumentInputs : Array TemplateAudit.DependencyIdentity
+  extractionInputs : Array TemplateAudit.DependencyIdentity
+  escape : EscapeRecordEvidence := {}
+  deriving Inhabited
+
+inductive TemplateBindingResult where
+  | undeclared
+  | declaredUnresolved (diagnostic : String)
+  | declaredValidated (certificate : TemplateBindingCertificate)
+  deriving Inhabited
+
+structure BindingRecord where
+  schemaVersion : Nat := 1
+  compatibilityVersion : Nat := 7
+  occurrence : TemplateOccurrenceEvent
+  descriptor : Option Expr
+  bindingOwner : Option Name
+  result : TemplateBindingResult
+  escape : EscapeRecordEvidence := {}
+  deriving Inhabited
+
 inductive CatalogKind where
   | canonicalMaximal
   | analysisView

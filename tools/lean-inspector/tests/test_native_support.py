@@ -25,7 +25,6 @@ import materials
 import native
 
 
-
 class NativeTestSupport:
     @classmethod
     def setUpClass(cls):
@@ -60,6 +59,7 @@ defaultFacets = ["static"]
 [[lean_exe]]
 name = "cache"
 root = "Cache"
+supportInterpreter = true
 ''')
         # No external dependencies need downloading. Let the actual ensure
         # owner invoke this fixture cache provider before the first raw Lake

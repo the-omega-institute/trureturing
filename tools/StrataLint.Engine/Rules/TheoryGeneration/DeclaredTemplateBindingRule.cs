@@ -40,59 +40,76 @@ internal static class DeclaredTemplateBindingRule
     // τ=0 owner ruling (2026-09-20): every DTR finding is an observation. The
     // obligation collects registration state as warnings and never blocks admission.
     internal static bool IsAffectedBy(DeltaRuleContext context) =>
-        RepositoryRules.ChangedOrFirstPinD5Modules(context).Any();
+        InformationTemplateSelection.ChangedProducers(context).Any();
 
     internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var path in RepositoryRules.ChangedOrFirstPinD5Modules(context))
+        var emitted = new HashSet<InformationOccurrenceKey>();
+        foreach (var path in InformationTemplateSelection.ChangedProducers(context))
+        {
+            // During expansion, D5 registrations use the same owner/occurrence
+            // reader as Reg. They are assessed without supplying mirror coverage.
+            Assess(path, () => InformationTemplateEvidence.Collect(context.Current, context.Lean.Report, [path]));
+            if (InformationTemplateSelection.IsRegSource(path)
+                || !context.Lean.Report.Files.TryGetValue(path, out var module)) continue;
+            var currentNames = LeanDeclarationSourceNames.Read(context.Current.Files[path].Text);
+            var baseNames = context.Baseline.Files.TryGetValue(path, out var baseline)
+                ? LeanDeclarationSourceNames.Read(baseline.Text) : ImmutableDictionary<string, string>.Empty;
+            var newTheorems = module.Declarations
+                .Where(declaration => IsPublicTheorem(declaration, currentNames)
+                    && !(baseNames.TryGetValue(declaration.Name, out var kind) && kind is "theorem" or "lemma"))
+                .Select(declaration => declaration.Name).Distinct().Order(StringComparer.Ordinal);
+            foreach (var theorem in newTheorems)
+            {
+                var names = ImmutableHashSet.Create(StringComparer.Ordinal, theorem);
+                var mirrors = InformationTemplateTheoremSelection.OwnerMirrors(context.Current, context.Lean.Report, path, names);
+                var validated = false;
+                foreach (var owner in mirrors.OrderBy(owner => owner.Value, StringComparer.Ordinal))
+                    validated |= Assess(owner, () => InformationTemplateTheoremSelection.Collect(
+                        context.Current, context.Lean.Report, path, owner, names, mirrors))
+                        .Any(occurrence => occurrence.HasFourSlots && occurrence.Key.Theorem == theorem);
+                if (!validated)
+                    findings.Add(new(path.Value, "DTR-Unregistered " + InformationTemplateEvidence.ModuleForSource(path.Value)
+                        + "/" + theorem, AdmissionEffect.Observe));
+            }
+        }
+        return findings.ToImmutable();
+
+        ImmutableArray<InformationTemplateOccurrence> Assess(RepoPath path, Func<InformationTemplateUniverse> collect)
         {
             try
             {
-                var universe = InformationTemplateEvidence.Collect(context.Current, context.Lean.Report, [path]);
-                var currentNames = LeanDeclarationSourceNames.Read(context.Current.Files[path].Text);
-                var baseNames = context.Baseline.Files.TryGetValue(path, out var baseline)
-                    ? LeanDeclarationSourceNames.Read(baseline.Text) : ImmutableDictionary<string, string>.Empty;
-                var newTheorems = context.Lean.Report.Files[path].Declarations
-                    .Where(declaration => IsPublicTheorem(declaration, currentNames)
-                        && !(baseNames.TryGetValue(declaration.Name, out var kind) && kind is "theorem" or "lemma"))
-                    .Select(declaration => declaration.Name).ToImmutableHashSet(StringComparer.Ordinal);
-                var occurrences = universe.Occurrences;
-                if (!newTheorems.IsEmpty)
-                    occurrences = occurrences.SetItems(InformationTemplateTheoremSelection.Collect(
-                        context.Current, context.Lean.Report, newTheorems).Occurrences);
-                foreach (var occurrence in occurrences.Values.OrderBy(
-                    occurrence => InformationTemplateJson.KeyJson(occurrence.Key).GetRawText(), StringComparer.Ordinal))
-                {
-                    var key = InformationTemplateJson.KeyJson(occurrence.Key).GetRawText();
-                    findings.Add(occurrence.State switch
-                    {
-                        _ when occurrence.EscapeFrom is null || occurrence.EscapeContinues is null => new(path.Value,
-                            "DTR-Undeclared " + key, AdmissionEffect.Observe),
-                        InformationTemplateBindingState.Undeclared => new(path.Value,
-                            "DTR-Undeclared " + key, AdmissionEffect.Observe),
-                        InformationTemplateBindingState.DeclaredValidated when occurrence.EvidenceRef is not null =>
-                            new(path.Value, "DTR-Declared " + key
-                                + " escape_from=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeFrom)
-                                + " escape_continues=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeContinues)
-                                + " bridge_kind=" + occurrence.BridgeKind, AdmissionEffect.Observe),
-                        _ => new(path.Value, "DTR-Evidence " + (occurrence.Diagnostic
-                            ?? "selected occurrence lacks a source-bound certificate"), AdmissionEffect.Observe),
-                    });
-                }
-                var validated = occurrences.Values
-                    .Where(occurrence => occurrence.HasFourSlots)
-                    .Select(occurrence => occurrence.Key.Theorem).ToHashSet(StringComparer.Ordinal);
-                foreach (var theorem in newTheorems.Where(name => !validated.Contains(name)).Order(StringComparer.Ordinal))
-                    findings.Add(new(path.Value, "DTR-Unregistered " + InformationTemplateEvidence.ModuleForSource(path.Value)
-                        + "/" + theorem, AdmissionEffect.Observe));
+                var occurrences = collect().Occurrences.Values.OrderBy(
+                    occurrence => InformationTemplateJson.KeyJson(occurrence.Key).GetRawText(), StringComparer.Ordinal).ToImmutableArray();
+                foreach (var occurrence in occurrences.Where(occurrence => emitted.Add(occurrence.Key)))
+                    findings.Add(Finding(path, occurrence));
+                return occurrences;
             }
             catch (Exception error) when (error is FormatException or IOException or InvalidOperationException or ArgumentException)
             {
                 findings.Add(new(path.Value, "DTR-Evidence " + error.Message, AdmissionEffect.Observe));
+                return [];
             }
         }
-        return findings.ToImmutable();
+    }
+
+    private static RuleFinding Finding(RepoPath path, InformationTemplateOccurrence occurrence)
+    {
+        var key = InformationTemplateJson.KeyJson(occurrence.Key).GetRawText();
+        return occurrence.State switch
+        {
+            _ when occurrence.EscapeFrom is null || occurrence.EscapeContinues is null => new(path.Value,
+                "DTR-Undeclared " + key, AdmissionEffect.Observe),
+            InformationTemplateBindingState.Undeclared => new(path.Value, "DTR-Undeclared " + key, AdmissionEffect.Observe),
+            InformationTemplateBindingState.DeclaredValidated when occurrence.EvidenceRef is not null =>
+                new(path.Value, "DTR-Declared " + key
+                    + " escape_from=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeFrom)
+                    + " escape_continues=" + System.Text.Json.JsonSerializer.Serialize(occurrence.EscapeContinues)
+                    + " bridge_kind=" + occurrence.BridgeKind, AdmissionEffect.Observe),
+            _ => new(path.Value, "DTR-Evidence " + (occurrence.Diagnostic
+                ?? "selected occurrence lacks a source-bound certificate"), AdmissionEffect.Observe),
+        };
     }
 
     private static bool IsPublicTheorem(LeanDeclaration declaration, ImmutableDictionary<string, string> sourceNames)

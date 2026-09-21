@@ -1,30 +1,34 @@
 using System.Collections.Immutable;
-using System.Text.Json;
 
 namespace StrataLint.Engine;
 
 internal static class InformationTemplateTheoremSelection
 {
-    // Only routing keys are inspected here. The existing strict collector checks
-    // the selected occurrences, including foreign registrations and sidecars.
-    internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report,
-        ImmutableHashSet<string> theorems)
+    internal static ImmutableHashSet<RepoPath> OwnerMirrors(RepositorySnapshot snapshot, LeanAxiomReport report,
+        RepoPath source, ImmutableHashSet<string> theorems)
     {
-        var owners = ImmutableHashSet.CreateBuilder<RepoPath>();
-        foreach (var (path, module) in report.Files)
-        {
-            if (module.InformationTemplates is not { ValueKind: JsonValueKind.Object } payload) continue;
-            if (payload.TryGetProperty("inventory", out var inventory) && inventory.ValueKind == JsonValueKind.Array
-                && inventory.EnumerateArray().Any(key => InformationTemplateSelection.IncludesTheorem(key, theorems)))
-                owners.Add(path);
-            if (!payload.TryGetProperty("records", out var records) || records.ValueKind != JsonValueKind.Array) continue;
-            foreach (var record in records.EnumerateArray().Where(record => InformationTemplateSelection.HasTheorem(record, theorems)))
-            {
-                if (record.TryGetProperty("registration_source_path", out var owner) && owner.ValueKind == JsonValueKind.String
-                    && RepoPath.TryCreate(owner.GetString()!, out var source)) owners.Add(source);
-                else throw new FormatException("DTR-Evidence: selected theorem binding lacks its registration owner");
-            }
-        }
-        return InformationTemplateEvidence.Collect(snapshot, report, owners, theorems);
+        var mirror = RepoPath.CreateKnown("Reg/" + source.Value);
+        if (!snapshot.Files.ContainsKey(mirror)) return [];
+        // The source path is authoritative, including when the theorem's namespace
+        // differs from its module. Only imports of this exact mirror reach variants.
+        return LeanImportClosure.RepositoryPaths(report, mirror)
+            .Where(path => InformationTemplateSelection.IsRegSource(path) && snapshot.Files.ContainsKey(path)
+                && (path == mirror || report.Files.TryGetValue(path, out var module)
+                    && module.InformationTemplates is { } payload
+                    && InformationTemplateSelection.HasTheorems(payload, theorems)))
+            .ToImmutableHashSet();
+    }
+
+    internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report,
+        RepoPath source, RepoPath owner, ImmutableHashSet<string> theorems, IEnumerable<RepoPath> mirrors)
+    {
+        var universe = InformationTemplateEvidence.Collect(snapshot, report, [owner], theorems, mirrors);
+        var imports = LeanImportClosure.RepositoryPaths(report, owner);
+        foreach (var occurrence in universe.Occurrences.Values)
+            if (!imports.Contains(source) || imports.Sum(path => report.Files.TryGetValue(path, out var module)
+                ? module.Declarations.Count(declaration => declaration.Name == occurrence.Key.Theorem
+                    && declaration.Kind == "theorem") : 0) != 1)
+                throw new FormatException("DTR-Evidence: registration does not import the unique theorem source owner");
+        return universe;
     }
 }

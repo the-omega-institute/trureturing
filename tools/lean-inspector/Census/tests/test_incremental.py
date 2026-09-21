@@ -6,6 +6,18 @@ import unittest
 
 
 class IncrementalTests(unittest.TestCase):
+    def test_extraction_digest_follows_imported_interface_records(self):
+        from extraction import source_digest
+        from unittest.mock import patch
+        repository = pathlib.Path("/synthetic-repository")
+        changed = repository / "tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean"
+        def contents(path):
+            return b"changed" if path == changed else b"source"
+        with patch.object(pathlib.Path, "read_bytes", return_value=b"source"):
+            before = source_digest(repository)
+        with patch.object(pathlib.Path, "read_bytes", contents):
+            self.assertNotEqual(before, source_digest(repository))
+
     def test_stale_extraction_cache_reextracts_changed_olean_only(self):
         from incremental import extraction_plan, save_extraction
         with tempfile.TemporaryDirectory() as folder:
