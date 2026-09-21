@@ -5,31 +5,37 @@
   },
   "scope": {
     "kind": "inline",
-    "value": "Actual irredundant noncover sources, sharp limiting mean38/63, exact six-label square clusters, and an actual first-hit unit-refund obstruction with a complete next11 bound. The full source Gamma and its maximizing residue table are not computed; no unrestricted covering conclusion."
+    "value": "Actual irredundant noncover sources, sharp limiting mean38/63, exact six-label square clusters, an actual first-hit unit-refund obstruction with a complete next11 bound, and both exact complete F12 squares attained by centered4 under the plain and fixed weighted laws. Other heights remain unresolved; no unrestricted covering conclusion."
   },
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "87d248819a1bea6bc76cd3c12724ee1dc88d42f0a8f10305279e4a5fecd719c8",
+      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "15be934680144c49f60bd727af734880d986f251dba4d79915eadb23ba113563",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
       "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
       "profile-notes/321-384/327-actual-two-prime-survival-needs-a-masked-moment.md": "6f4f1ebf49e84ddf4ed886a5330aca588e4a876269240a50e3d5a9575c7b3c7c",
       "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
       "frontier/source-budgets/irredundant_whole_j_finite_source.py": "a4de254b6473ae9930614ef006b114161beff96fda2ca605e62cc358e8233501",
-      "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62"
+      "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
+      "frontier/source-budgets/source_full_square.py": "b5184ed67f1e16c2a24fd6d0cf9d6d7df660d8184d4b49b6613fa5ba77b5ad28",
+      "frontier/source-budgets/verify_source_full_square.py": "b2976e570ec633abc6ce8d8868b954474d5d44fd717addf1e99d9cc2db9580fd",
+      "certificates/source_norms/source-budgets/source_full_square_flow.json": "0ae8f7fae42bfc73613a9944104015daa173a6c1334fe74a3781ac695176b8ac",
+      "certificates/source_norms/source-budgets/source_full_square_r0_flow.json": "35a74c7f09244f20b1694f84290aa498aab5427fa94708549da1d19de2eecf83",
+      "certificates/source_norms/source-budgets/source_full_square_r3_flow.json": "68f8744e3aaaae26634f918ed7c6482338c1a65034ea0e06174d8635ff4405a6",
+      "certificates/source_norms/source-budgets/source_full_square_r4_flow.json": "3c8137de4d0b8212861f79a4dd26488ac5b6d809c8e1341b0bfd479146ba77c1"
     }
   },
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "3d77656ef2b90f338a1f34d3d85797ec7f9eda603251ac5f55d0327f6cd8905b",
-      "byte_count": 73369
+      "sha256": "bcdefeadb49bd68ffa86f5aaed7dafeb06611357744cb6e8de4ede51a8359496",
+      "byte_count": 84468
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "94dc458c34a7782f3966394c3d51d023490f3561cb9092437e6a46e9f62c13d2"
+    "value": "d00ef1fb97a94b3d824fd9e3cb75b6c853b36c8be49bfd28e13604df0fc1d1ee"
   },
   "affine_dominance_endpoints": {
     "path": "content/005-affine_dominance_endpoints.json",
@@ -67,5 +73,10 @@
     "path": "content/010-joint_square_box.json",
     "sha256": "07d0ccd2cf1053c357a6c18e8de41c468faaa3d05e0eff434957ec6fb98cadf8",
     "kind": "object"
+  },
+  "complete_source_squares": {
+    "path": "content/011-complete_source_squares.json",
+    "sha256": "37a3e422d4099d2adb46969ba1f5d2198611de2bcecb5a37e6aaf4db05d0b188",
+    "kind": "value"
   }
 }
