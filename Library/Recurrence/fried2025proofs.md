@@ -8,6 +8,7 @@ url: https://cs.uwaterloo.ca/journals/JIS/VOL28/Fried/fried15.pdf
 claim: "The end of Section 6 conjectures that for every n in N the number F(n+2) + 2nF(n+1) is not a Fibonacci number."
 strata_touched:
   - D5/S3/Arith/FriedFibonacciShiftNonFibonacci
+  - D5/S3/Arith/GreedyFibonacciAverageClosedForm
 license: citation-only
 triage: anchor
 ---
