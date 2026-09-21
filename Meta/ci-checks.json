@@ -227,6 +227,7 @@
         ],
         "related": [
           {
+            "trigger": "removed",
             "inputs": [
               "Blueprint/**/*.md",
               "Generated/**",
