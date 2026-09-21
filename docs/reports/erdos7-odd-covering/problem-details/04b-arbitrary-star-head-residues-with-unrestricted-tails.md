@@ -297,3 +297,215 @@ It binds this proof, the US supplier, the arithmetic API and the two
 literature entries. Reproduce it with
 
     python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/source-budgets/star_head_perturbation.py --check
+
+## Automorphic reference laws and exact coordinate responses
+
+This is ordinary finite mathematics, not a Lean result or a resolution of
+unrestricted Erdős #7. It uses the arbitrary-head continuation criterion proved above. Original numerical moduli and residues remain the
+actual data; optimization moves only the reference law.
+
+### 1. The full rooted-tree orbit has an exact one-coordinate recurrence
+
+Identify Z/p^H Z with the leaves of the depth-H rooted p-ary tree, with
+least significant digits read first. A rooted-tree automorphism permutes
+children independently at every node. It preserves Haar measure and maps
+every depth-e congruence cylinder to another depth-e cylinder.
+
+The canonical C_H is the union, over e=1,...,H, of the cylinders
+2p^(e-1)-1 mod p^e. The canonical D_H is the complement of those cylinders
+and p^(e-1)-1 mod p^e. C_H is used at p=3; D_H is used at p>=5.
+At every node C selects one complete child and continues into a different
+child; D discards two complete children, retains p-3 complete children,
+and continues into the one remaining child. At height zero C is empty and
+D is the singleton leaf. These rules characterize the entire two orbits:
+an automorphism gives such choices, and conversely every such choice is
+implemented by a permutation of the node's children and the recursively
+chosen automorphism in the continuation child. Permutations in complete
+or discarded children may be arbitrary.
+
+Consequently every C_H shape has c_H=(p^H-1)/(p-1) leaves, and every D_H
+shape has d_H=((p-3)p^H+2)/(p-1) leaves. These sizes are independent of
+the chosen automorphism. They agree with the finite Haar densities above.
+
+Give the actual leaves arbitrary rational costs f. For a node v let W(v)
+be the sum of costs on all leaves below it. Write its children as v_j.
+Let C(v),D(v) be the minimum sums over the respective orbit shapes rooted
+there. At a leaf x, C(x)=0 and D(x)=f(x). At every nonleaf,
+
+    C(v) = min_b [ C(v_b) + min_(a!=b) W(v_a) ],
+
+    D(v) = min_b [ D(v_b) + sum_(j!=b) W(v_j)
+                            - max_(a<c; a,c!=b)(W(v_a)+W(v_c)) ].
+
+The orbit characterization proves both directions of these equalities:
+each permissible shape has exactly one of these costs, and each minimizing
+choice can be realized by a genuine tree automorphism. No independence of
+the costs and no positivity assumption is needed. Keep the chosen children
+and recursive witnesses to recover an optimal shape. The two smallest and
+three largest child totals suffice to evaluate the inner extrema for all b.
+Thus the arithmetic work is linear in the finite tree size when these
+small extrema are maintained during one scan per node. This is an
+arithmetic-operation count, not a bit-complexity or sublinear-input claim.
+
+For a fixed product reference law in all other coordinates, take
+f_i(x_i)=sum_(x_-i in selected product) 1_A(x_i,x_-i), where A is the SAME
+actual head forbidden union. All other coordinates are uniform on their
+selected shapes. The normalization denominator is the fixed product of
+all shape sizes. Therefore this recurrence is the exact best response for
+coordinate i. The implementation constructs A from the original distinct
+numerical moduli and verifies its count by a separate integer CRT scan.
+It never optimizes against separately replaced marginal constraints.
+
+For a finite head, cycle through coordinates and accept only strict
+improvements. Every accepted move decreases the nonnegative integer
+covered-leaf count. Hence the procedure terminates at a coordinatewise
+minimum. Its final value is a FEASIBLE upper bound on the global minimum;
+coordinatewise optimality is not a global lower-bound certificate.
+
+### 2. An actual trap for strict updates of at most two coordinates
+
+Use the seven original residue classes
+
+    0 mod3, 0 mod5, 0 mod7, 11 mod15,
+    16 mod21, 18 mod35, 29 mod105.
+
+Their moduli are odd, greater than one, pairwise distinct, and divide105.
+Use height one at3,5,7. Admissible reference supports are one ternary
+digit, three of the five digits, and five of the seven digits. There are
+3*C(5,2)*C(7,2)=630 complete product shapes.
+
+Consider the uniform law on
+
+    {2} x {2,3,4} x {2,3,4,5,6}.
+
+Only the class18 mod35 meets this product, at the coordinate tuple(2,3,4),
+whose actual CRT integer is53. The forbidden mass is1/15. Every change of
+AT MOST TWO coordinates has forbidden mass at least1/15. Such a change
+keeps at least one coordinate fixed, so the following three cases prove
+the assertion.
+
+* Keep the ternary digit2. Any zero-loss candidate must omit quinary0
+  because of0 mod5 and quinary1 because of11 mod15, forcing {2,3,4}.
+  It must also omit seven-digit0. Of the six remaining seven-digits it
+  selects five, but18 mod35 requires omitting4 and29 mod105 requires
+  omitting1. Both cannot be omitted, so a hit remains.
+* Keep the quinary set {2,3,4}. Ternary0 makes all points forbidden.
+  Ternary2 is covered by the preceding case. At ternary1, a zero-loss
+  seven-set would have to omit0 by the pure class,2 by16 mod21, and4
+  by18 mod35. A five-subset of seven digits cannot omit all three.
+* Keep the seven-set {2,3,4,5,6}. Ternary0 makes every point forbidden;
+  ternary1 has at least three hits from16 mod21 at seven-digit2. With
+  ternary2, zero loss again forces quinary {2,3,4}, retaining the hit
+  from18 mod35.
+
+All covered counts are integers, so the absence of a zero-loss move gives
+the lower bound1/15. The displayed starting law attains it in each case.
+Exhaustive original-label evaluation gives the sharper finite counts:
+
+| Fixed coordinate | Product shapes checked | Minimum covered count | Minimizers |
+|---|---:|---:|---:|
+| Ternary {2} | 210 | 1 | 2 |
+| Quinary {2,3,4} | 63 | 1 | 3 |
+| Seven-coordinate {2,3,4,5,6} | 30 | 1 | 1 |
+
+But the reference law on
+
+    {1} x {1,2,4} x {1,3,4,5,6}
+
+has forbidden mass zero: it avoids the pure zero classes, the two classes
+whose ternary digit is2, the21-class whose seven-digit is2, and the35-class
+whose quinary digit is3. Hence the global minimum is exactly zero.
+Thus optimality against every strict update of at most two coordinates
+does not certify joint optimality on actual legal congruence families.
+Tied moves can escape: changing the ternary and seven-coordinates to
+
+    {1} x {2,3,4} x {1,3,4,5,6}
+
+keeps covered count one, now at the actual integer88. Changing only the
+quinary set to {1,2,4} then reaches the zero-loss law above. The example
+does not obstruct algorithms that permit this tied move. It is neither a
+covering counterexample nor a refutation of the9/20 reference-law wish;
+both1/15 and0 are below9/20.
+
+With deterministic coordinate order3,5,7 and strict-only updates, the
+canonical reference law starts at covered count4 and terminates at this
+one-hit coordinatewise minimum. The exhaustive630-shape comparison
+independently supplies the unique zero-hit global witness.
+
+### 3. The existing unrestricted-tail consumer transports to this orbit
+
+Use exactly the preceding finite head and height conditions: head primes
+are odd and at most73, with3 padded, and H_p resolves every exponent in
+the ENTIRE original family, including later cofactors. Choose any product
+g of rooted coordinate-tree automorphisms, and use g_*nu_b as reference.
+If its actual head forbidden mass is at most9/20, the original family
+does not cover, with completely unrestricted tail primes above73.
+
+To prove this, take the CRT bijection g^-1 on the full finite period,
+extended by identity on the tail coordinates. Each original class modulo
+d is carried to exactly one residue class modulo the SAME d, since each
+head prime-power cylinder is mapped to one cylinder of the same depth.
+Numerical distinctness, all heights, all supports, and covering status are
+preserved. The inverse image of the actual head union has nu_b-mass equal
+to the original union's g_*nu_b-mass. Apply the existing common9/20
+criterion to this one transformed family and transport a surviving point
+back. The transformed residues are all obtained from this ONE bijection;
+no separately optimized prefix law or artificial projected-label
+distinctness is introduced. The continuation criterion imposes no residue restriction on
+tail classes, so their transformed residues remain in its scope.
+
+Equivalently, same-depth cylinder caps and Haar densities are unchanged
+by g. The pure-survivor capped tail kernels and the common-source moment
+proof then have the same initial comparison constants. This transport is
+a reuse of the existing consumer, not a new continuation constant.
+
+The recurrence supplies an exact finite search primitive for a given
+head. The 78-label counterexample below also rules out a universal
+qualifying g: every product tree-orbit law obeys the numerical-order
+full-prefix caps, so the proved lower bound for that larger class applies
+to all such products. A failed coordinate descent alone remains
+insufficient to certify this obstruction.
+
+### 4. Relation to the5040 optimization
+
+The existing frozen theorem [golden_resource_unique_optimum](../../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean) uses the separable objective
+
+    log(sigma(n)/n) - (1/25)log n
+      = sum_p [ log(sum_(e=0..a_p)p^-e) - a_p log(p)/25 ].
+
+Strict marginal-price crossings independently determine exponents
+(4,2,1,1) at2,3,5,7. Separability allows coordinate optimality to certify
+the whole integer optimum. The actual head-loss objective above is
+multilinear in the coordinate laws and contains genuine cross-coordinate
+congruence events. The explicit seven-label example disproves that same
+local-to-global inference for this layout problem. Marginal optimization
+remains useful as an algorithmic step, but a global certificate requires
+additional interaction control. This is a precise comparison of the
+objectives, not a claimed reduction of odd covering to Robin's criterion.
+
+### Exact finite checks
+
+The exact program compares its tree recurrence with independent orbit
+enumeration on C(3,2), C(3,3), D(5,1), D(5,2), D(7,2): respectively
+18,108,10,300,2205 shapes and512,80,32,80,24 score tables. The two smallest
+cases cover every binary leaf-cost table; the other tables include signed
+integer costs. Its actual example uses all630 product shapes and original
+integer congruence predicates.
+
+The [reference_tree_optimizer.py](../frontier/source-budgets/reference_tree_optimizer.py)
+program retains the exact response routine and witness recovery, independent
+small-orbit enumeration, genuine original congruence tensor construction,
+coordinate descent and a reproducible search for coordinate traps. These
+functions form a usable finite research tool. Its canonical regression
+output retains the proved orbit sizes, exact comparisons, original labels
+and both local/global witnesses.
+The [complete exact output](../certificates/source_norms/source-budgets/reference_tree_optimizer.json)
+is reproduced from the repository root by
+
+```sh
+python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/source-budgets/reference_tree_optimizer.py --check
+```
+
+## Continued in 04c
+
+The section "Full-history capped laws and exact global optimization" continues in [04c](04c-full-history-capped-laws-and-exact-global-optimization.md); it was moved unchanged so that this report stays under the 1000-line file limit (SL-003).

@@ -1,0 +1,98 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "strict-correlation-gap-189"
+  },
+  "exact_label_lcm": {
+    "kind": "inline",
+    "value": 189
+  },
+  "primes": {
+    "kind": "inline",
+    "value": [
+      3,
+      7
+    ]
+  },
+  "heights": {
+    "kind": "inline",
+    "value": [
+      3,
+      1
+    ]
+  },
+  "original_labels": {
+    "kind": "inline",
+    "value": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        27,
+        4
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        63,
+        2
+      ],
+      [
+        189,
+        59
+      ]
+    ]
+  },
+  "original_period": {
+    "kind": "inline",
+    "value": 189
+  },
+  "cardinalities": {
+    "kind": "inline",
+    "value": [
+      13,
+      5
+    ]
+  },
+  "numerator": {
+    "kind": "inline",
+    "value": 0
+  },
+  "denominator": {
+    "kind": "inline",
+    "value": 65
+  },
+  "minimum_bad_mass": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "meets_nine_twentieths": {
+    "kind": "inline",
+    "value": true
+  },
+  "states": {
+    "kind": "inline",
+    "value": 13
+  },
+  "policy_states": {
+    "path": "content/001-fixture_results/000006/item/012-policy_states.json",
+    "sha256": "411c9f515446af3b7c2c84774275d678a202429b1ab2775d277df43ced8e6a75",
+    "kind": "value"
+  },
+  "comparison": {
+    "path": "content/001-fixture_results/000006/item/013-comparison.json",
+    "sha256": "95124789b4019fc8a6bc9965225e0a2f5a674f71891d958f4bded6fc03d2a022",
+    "kind": "value"
+  }
+}

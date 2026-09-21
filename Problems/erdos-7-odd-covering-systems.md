@@ -34,6 +34,10 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Depth-profile laws prove noncoverage for the literal 154-class head, arbitrary sixth-power smooth head additions and unrestricted original tails](../docs/reports/erdos7-odd-covering/problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md)
+- [Exact optimization of full-prefix capped head laws, arbitrary fixed head order, and complete counterexamples to the universal 9/20 threshold](../docs/reports/erdos7-odd-covering/problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md#full-history-capped-laws-and-exact-global-optimization)
+- [Shared small-prime budgets prove noncoverage through six or seven predecessor supports, with full Haar density and two exact limits of the complete support-Shearer envelope](../docs/reports/erdos7-odd-covering/problem-details/53-shared-small-prime-budgets-for-six-or-seven-predecessor-supports.md)
+- [Two exact predecessor supports in arbitrary order, or four in numerical order, give noncoverage with full Haar density; a large-prime inventory may grow as p to the one-quarter](../docs/reports/erdos7-odd-covering/problem-details/52-two-or-four-exact-predecessor-supports.md)
 - [At most two cycles per original incidence component gives noncoverage at arbitrary ranks and heights, full Haar density and unrestricted large-prime continuation](../docs/reports/erdos7-odd-covering/problem-details/51-incidence-bicyclic-components-with-arbitrary-original-heights.md)
 - [At most five distinct mixed supports per prime gives noncoverage at arbitrary ranks and heights, with full Haar density from actual conditional avoidance ratios](../docs/reports/erdos7-odd-covering/problem-details/50-prime-support-incidence-at-most-five.md)
 - [Arbitrary-rank prime-support incidence pseudoforests are noncovering, with height-independent full Haar density and unrestricted large-prime continuation](../docs/reports/erdos7-odd-covering/problem-details/49-incidence-pseudoforests-with-arbitrary-original-heights.md)

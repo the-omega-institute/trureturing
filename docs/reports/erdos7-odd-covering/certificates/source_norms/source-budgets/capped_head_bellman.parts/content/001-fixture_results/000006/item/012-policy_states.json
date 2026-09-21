@@ -1,0 +1,111 @@
+[
+  {
+    "axis": 0,
+    "active": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "numerator": 0,
+    "denominator": 65,
+    "selected": [
+      {
+        "active": [
+          3
+        ],
+        "multiplicity": 5,
+        "taken": 5,
+        "child_numerator": 0
+      },
+      {
+        "active": [
+          3,
+          4
+        ],
+        "multiplicity": 5,
+        "taken": 5,
+        "child_numerator": 0
+      },
+      {
+        "active": [
+          3,
+          5
+        ],
+        "multiplicity": 3,
+        "taken": 3,
+        "child_numerator": 0
+      }
+    ]
+  },
+  {
+    "axis": 1,
+    "active": [
+      3
+    ],
+    "numerator": 0,
+    "denominator": 5,
+    "selected": [
+      {
+        "active": [],
+        "multiplicity": 6,
+        "taken": 5,
+        "child_numerator": 0
+      }
+    ]
+  },
+  {
+    "axis": 1,
+    "active": [
+      3,
+      4
+    ],
+    "numerator": 0,
+    "denominator": 5,
+    "selected": [
+      {
+        "active": [],
+        "multiplicity": 5,
+        "taken": 5,
+        "child_numerator": 0
+      }
+    ]
+  },
+  {
+    "axis": 1,
+    "active": [
+      3,
+      5
+    ],
+    "numerator": 0,
+    "denominator": 5,
+    "selected": [
+      {
+        "active": [],
+        "multiplicity": 5,
+        "taken": 5,
+        "child_numerator": 0
+      }
+    ]
+  },
+  {
+    "axis": 1,
+    "active": [
+      3,
+      6
+    ],
+    "numerator": 0,
+    "denominator": 5,
+    "selected": [
+      {
+        "active": [],
+        "multiplicity": 5,
+        "taken": 5,
+        "child_numerator": 0
+      }
+    ]
+  }
+]

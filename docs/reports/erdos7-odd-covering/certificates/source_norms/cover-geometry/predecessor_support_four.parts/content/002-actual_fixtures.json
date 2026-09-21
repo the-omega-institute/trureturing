@@ -1,0 +1,23 @@
+{
+  "length": 5,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/002-actual_fixtures/000000-000002.json",
+        "sha256": "5577cd06dddeeb241c75140d6a6fb3905a2f041b30679efffb1546c35097f608",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 5,
+      "part": {
+        "path": "content/002-actual_fixtures/000002-000005.json",
+        "sha256": "1629484a5fdb7542f1d3d8bcda7072ddd3fef4fc47641ac766f06384a80d2cc4",
+        "kind": "value"
+      }
+    }
+  ]
+}
