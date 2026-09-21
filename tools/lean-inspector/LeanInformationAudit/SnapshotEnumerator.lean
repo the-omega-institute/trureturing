@@ -1,5 +1,5 @@
 import LeanInformationAudit.Registry
-import LeanInformationAudit.SnapshotTypes
+import LeanInformationAuditInterface.RootContract
 
 open Lean LeanInformationAudit
 
@@ -56,7 +56,7 @@ unsafe def main (args : List String) : IO Unit := do
     occurrences
   }
   IO.FS.writeFile outputPath <|
-    "import LeanInformationAudit.SnapshotTypes\n\n" ++
+    "import LeanInformationAuditInterface.RootContract\n\n" ++
     "namespace LeanInformationAudit\n\n" ++
     "-- Produced by SnapshotEnumerator from the identified source snapshot.\n" ++
     "def fixedInformationSourceSnapshot : InformationSourceSnapshot :=\n" ++

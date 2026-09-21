@@ -12,7 +12,7 @@ def build(repository, program, env=None):
     repository = pathlib.Path(repository)
     source = repository / "tools/lean-inspector/Census" / program
     # Lean, not a copied import parser, supplies the complete dependency closure.
-    project = repository / ".lake/build/lib/lean"
+    project = repository.resolve() / ".lake/build"
     custom, seen, pending = [], set(), [source]
     while pending:
         current = pending.pop()
@@ -21,12 +21,16 @@ def build(repository, program, env=None):
         seen.add(current)
         dependencies = subprocess.check_output(["lean", "--deps", str(current)],
                                                cwd=repository, env=env, text=True).splitlines()
-        for name in dependencies:
+        sources = subprocess.check_output(["lean", "--src-deps", str(current)],
+                                          cwd=repository, env=env, text=True).splitlines()
+        if len(dependencies) != len(sources):
+            raise ValueError("Lean dependency source/artifact count mismatch")
+        for name, source_name in zip(dependencies, sources):
             path = pathlib.Path(name).resolve()
             if path.is_relative_to(project):
-                relative = path.relative_to(project)
-                custom.append(repository / ".lake/build/ir" / relative.with_suffix(".c"))
-                pending.append(repository / "tools/lean-inspector" / relative.with_suffix(".lean"))
+                owner, relative = str(path).rsplit("/lib/lean/", 1)
+                custom.append(pathlib.Path(owner) / "ir" / pathlib.Path(relative).with_suffix(".c"))
+                pending.append(pathlib.Path(source_name).resolve())
     inputs = [source, *sorted(set(custom))]
     address = digest([(str(p.relative_to(repository)), hashlib.sha256(p.read_bytes()).hexdigest()) for p in inputs]
                      + [("toolchain", (repository / "lean-toolchain").read_text())])

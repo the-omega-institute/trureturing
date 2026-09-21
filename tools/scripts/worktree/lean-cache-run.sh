@@ -29,4 +29,21 @@ else
 fi
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
+if [[ "$1" == --build ]]; then
+  shift
+  root_targets=() reg_targets=()
+  for target in "$@"; do
+    case "$target" in
+      Reg|Reg.*|Reg:*|+Reg.*|@reg|@reg/*|@reg:*) reg_targets+=("$target") ;;
+      *) root_targets+=("$target") ;;
+    esac
+  done
+  if [[ $# == 0 || ${#root_targets[@]} != 0 ]]; then
+    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake build ${root_targets[@]+"${root_targets[@]}"}
+  fi
+  if [[ ${#reg_targets[@]} != 0 || ( $# == 0 && -f "$ROOT/Reg/lakefile.toml" ) ]]; then
+    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/Reg" build ${reg_targets[@]+"${reg_targets[@]}"}
+  fi
+  exit 0
+fi
 exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- "$@"

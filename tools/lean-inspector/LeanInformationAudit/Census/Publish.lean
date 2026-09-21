@@ -54,7 +54,7 @@ def elaborateFinalSource (input : String) (fileName : String) (root : Name)
   let finalSearchPath : SearchPath := [← getLibDir (← getBuildDir), certificateDirectory]
   -- The invoking Lean process already has the warm toolchain and LEAN_PATH.
   -- Its child needs only the compiler, not a second Lake environment startup.
-  let repository ← IO.currentDir
+  let repository ← Repository.root
   let mut inputDirectory := source
   for _ in root.components do inputDirectory := inputDirectory.parent.get!
   let result ← IO.Process.output {

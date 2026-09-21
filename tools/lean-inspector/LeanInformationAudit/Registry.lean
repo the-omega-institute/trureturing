@@ -4,9 +4,6 @@ import LeanInformationAuditInterface.Store
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
 
-private initialize bindingRecords : SimplePersistentEnvExtension BindingRecord (Array BindingRecord) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
-
 structure ResolvedDeclaration where
   theoremName : Name
   arena : Name
@@ -40,8 +37,6 @@ def withDeclaration (declaration : ResolvedDeclaration)
   try action
   finally modifyEnv (pendingDeclaration.setState · previous)
 
-def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
-
 /-- Pure join validation grants no insertion or certification capability.
 Both publication and authoritative assessment consume this same relation. -/
 def joinClaims (events : Array (Name × TemplateOccurrenceEvent))
@@ -69,11 +64,9 @@ the full join through `assessJoined` before admission can consume its evidence. 
 def cachedJoinedRecords (env : Environment) : Except String (Array BindingRecord) := do
   let joined ← joinClaims (ownedEvents env) (ownedClaims env)
   let retained := records env
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for record in bindingRecords.getModuleEntries env index do
-      unless record.bindingOwner.getD record.occurrence.key.registrationModule == owner do
-        throw "incomplete_closure:dtr.cached_record_owner"
+  for (owner, record) in importedRecords env do
+    unless record.bindingOwner.getD record.occurrence.key.registrationModule == owner do
+      throw "incomplete_closure:dtr.cached_record_owner"
   joined.mapM fun (event, claim) => do
     let owner := claim.map (·.owner)
     let candidates := retained.filter fun record =>
@@ -114,7 +107,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
     | .ok (identity, _) => identity
     | .error _ => ""
   let path := sourcePath entry.registrationModuleName
-  let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile path)) catch _ => pure ""
+  let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile (← Repository.source path))) catch _ => pure ""
   -- An occurrence can name a separate finite object arena. Witness checks use
   -- the original law arena, which retains the quantifier domain and predicate.
   let bridgeType := (← getConstInfo entry.realizationName).type
@@ -141,7 +134,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
         key := event.key, arena := event.arena, descriptor := declaration.descriptor,
         resolutionDiagnostic := declaration.diagnostic, escapeInput := declaration.escapeInput, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
   let record ← Elab.Command.liftTermElabM <| assess event claim
-  modifyEnv fun current => bindingRecords.addEntry (addOccurrence current event) record
+  modifyEnv fun current => addRecord (addOccurrence current event) record
   if let some claim := claim then modifyEnv (addClaim · claim)
   if record.result matches .undeclared then logWarning (missingDeclarationDiagnostic event.key)
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
@@ -163,7 +156,7 @@ def declareSidecar (theoremName arena : Name) (catalog : Option Name)
     key := event.key, arena := event.arena, descriptor, resolutionDiagnostic, escapeInput,
     owner := env.header.mainModule }
   let record ← Elab.Command.liftTermElabM <| assess event (some claim)
-  modifyEnv fun current => bindingRecords.addEntry (addClaim current claim) record
+  modifyEnv fun current => addRecord (addClaim current claim) record
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
 /-- A realization provider may be imported by its registration source. The
@@ -251,11 +244,11 @@ private def certificateJson (certificate : TemplateBindingCertificate) : Json :=
   ("extraction_inputs", Json.arr (certificate.extractionInputs.map dependencyJson))]
 
 private def isRepositoryModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
+  #[`D5, `Reg, `LeanInformationAudit, `LeanInformationAuditInterface].any (·.isPrefixOf name) ||
     name == `Trureturing
 
 private def isRecordedModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit.Tests." ||
+  #[`D5, `Reg, `LeanInformationAudit.Tests].any (·.isPrefixOf name) ||
     name == `Trureturing
 
 private def moduleSourceInputs (env : Environment) (root : Name) :

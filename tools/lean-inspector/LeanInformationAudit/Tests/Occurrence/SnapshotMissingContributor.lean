@@ -1,19 +1,35 @@
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Occurrence.RootCatalog.Snapshot
 
 open Lean Lean.Elab.Command LeanInformationAudit
+open LeanInformationAudit.Tests.Occurrence.RootCatalog
 
 namespace LeanInformationAudit.Tests.SnapshotMissingContributor
 
-set_option linter.style.longLine false
-
--- The production contributor InformationRoot is deliberately not imported.
-/-- error: IE-C028 AnalysisCertificateMismatch root=D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot catalog=registry-snapshot component=member-set expected=["D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena/D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application","D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena/D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary","D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena/D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause","D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena/D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power","D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena/D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification","D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena/D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective","D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena/D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points","D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena/D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual","D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena/D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state","D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena/D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention","D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena/D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design","D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena/D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual","D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena/D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention"] actual=[] -/
-#guard_msgs (error) in
+-- Import expectations and pure premises, but neither native contributor.
 run_cmd do
   let original ← getEnv
   try
-    setEnv (original.setMainModule designatedInformationRootId)
+    modifyEnv (·.setMainModule designatedRoot)
+    RootCatalogs.declare designatedContract
+    unless (InformationRegistry.entries (← getEnv)).isEmpty do
+      throwError "missing-contributor control imported registrations"
+    let expected := sourceRows.map (fun row =>
+      row.objectArenaName.toString ++ "/" ++ row.theoremName.toString) |>.qsort (· < ·)
+    unless expected.size == 3 do throwError "missing-contributor control lost expectations"
+    let savedMessages := (← get).messages
+    modify fun state => { state with messages := {} }
     elabCommand (← `(command| #seal_information_theory))
+    let errors := (← get).messages.toArray.filter (·.severity == .error)
+    modify fun state => { state with messages := savedMessages }
+    unless errors.size == 1 do throwError "missing-contributor control needs one seal error"
+    let message ← errors[0]!.data.toString
+    let wanted := s!"IE-C028 AnalysisCertificateMismatch root={designatedRoot} " ++
+      "catalog=registry-snapshot component=member-set " ++
+      s!"expected={(toJson expected).compress} actual=[]"
+    unless message == wanted do throwError "missing-contributor control: {message}"
+    unless (SealRecords.forRoot (← getEnv) designatedRoot).isEmpty do
+      throwError "missing-contributor failure published seal records"
+    logInfo "supplied root rejects both missing contributors with exact member-set payload"
   finally
     setEnv original
 

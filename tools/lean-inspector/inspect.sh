@@ -120,7 +120,9 @@ run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure
 open_logs
 # The package facet demands all ordinary defaults/audits and owns module work.
 # The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report
+workspace=()
+[[ ! -f "$REPOSITORY/Reg/lakefile.toml" ]] || workspace=(-d "$REPOSITORY/Reg")
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
   --report "$OUTPUT" --lake "$LAKE" --snapshot "$LOG_DIR/entry-inputs.json"

@@ -32,7 +32,7 @@ warm-donor:
 	@/bin/bash tools/scripts/worktree/warm-donor.sh
 
 lean:
-	@/bin/bash tools/scripts/worktree/lean-cache-run.sh lake build $(LEAN_TARGETS)
+	@/bin/bash tools/scripts/worktree/lean-cache-run.sh --build $(LEAN_TARGETS)
 
 lean-report:
 	@/bin/bash tools/scripts/report/lean-report.sh
