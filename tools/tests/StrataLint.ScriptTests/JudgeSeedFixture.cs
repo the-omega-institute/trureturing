@@ -71,7 +71,7 @@ internal sealed class JudgeSeedFixture : IDisposable
         test_partition = (string?)null,
         root_namespace = assembly, namespace_exclude = Array.Empty<string>(), global_namespace_exceptions = Array.Empty<string>(),
         build_inputs = Array.Empty<string>(), execution_inputs = (string[]?)null,
-        execution_excludes = (string[]?)null, execution_environment = (string[]?)null,
+        execution_excludes = (string[]?)null, execution_environment = (string[]?)null, execution_filemap_paths = (string[]?)null,
     };
 
     internal void NativePushCandidate()

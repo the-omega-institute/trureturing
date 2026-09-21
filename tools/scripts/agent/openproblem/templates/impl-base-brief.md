@@ -136,6 +136,10 @@ dominating_theorem_search: <scope, method, found | not-found-in-searched-scope>
 
 ## Provenance
   skill context
+  session ID (CLAUDE.md §5.2): the orchestrator's host session id with its resume command (Claude Code:
+  `CLAUDE_CODE_SESSION_ID`, `claude --resume <id>`) and the implementation seat's own codex rollout UUID
+  (`~/.codex/sessions/<date>/rollout-<time>-<UUID>.jsonl`, `codex resume <UUID>`) — one line under the skill-context line;
+  a recovery pointer only, no transcript or log content
   carriers and roles: search (name the track that surfaced the candidate — the standing ChatGPT-Pro arXiv search
   rounds or the standing codex-cli journal-corpus rounds; a single-seat search stage is codex-cli under sshx and is
   not a fallback — writing "codex-cli because a browser seat cannot run in-repository dedupe" read as an undisclosed

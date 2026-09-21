@@ -1,0 +1,119 @@
+{
+  "weights": {
+    "kind": "inline",
+    "value": [
+      0,
+      0,
+      0,
+      2,
+      0,
+      1,
+      2,
+      0,
+      0,
+      2,
+      3,
+      0,
+      2,
+      0,
+      0
+    ]
+  },
+  "total_weight": {
+    "kind": "inline",
+    "value": 12
+  },
+  "support_size": {
+    "kind": "inline",
+    "value": 6
+  },
+  "full_layout_count": {
+    "kind": "inline",
+    "value": 225
+  },
+  "common_center_count": {
+    "kind": "inline",
+    "value": 15
+  },
+  "unrestricted_max": {
+    "kind": "inline",
+    "value": 63
+  },
+  "common_center_max": {
+    "kind": "inline",
+    "value": 60
+  },
+  "gap": {
+    "kind": "inline",
+    "value": 3
+  },
+  "unrestricted_argmax": {
+    "kind": "inline",
+    "value": [
+      [
+        0,
+        0,
+        10
+      ]
+    ]
+  },
+  "common_center_argmax": {
+    "kind": "inline",
+    "value": [
+      3,
+      6,
+      9,
+      10,
+      12
+    ]
+  },
+  "normalized_unrestricted_max": {
+    "kind": "inline",
+    "value": "21/4"
+  },
+  "normalized_common_center_max": {
+    "kind": "inline",
+    "value": "5"
+  },
+  "normalized_gap": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "selected_terms_max": {
+    "kind": "inline",
+    "value": 51
+  },
+  "selected_terms_common_center_max": {
+    "kind": "inline",
+    "value": 48
+  },
+  "layout_scores": {
+    "path": "content/004-records/000000/item/015-layout_scores.json",
+    "sha256": "5a1c19f3d38fd7fdd2282175eed09da2b3798f3b9e22c56f4f1c7060828d39a7",
+    "kind": "array"
+  },
+  "common_center_scores": {
+    "kind": "inline",
+    "value": [
+      48,
+      27,
+      21,
+      60,
+      27,
+      36,
+      60,
+      27,
+      21,
+      60,
+      60,
+      21,
+      60,
+      27,
+      21
+    ]
+  },
+  "uniform_shift": {
+    "kind": "inline",
+    "value": 0
+  }
+}
