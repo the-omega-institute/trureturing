@@ -99,8 +99,9 @@ parse_snapshot() {
       elif (.state | member(["FAILURE","ERROR"])) then "red"
       elif (.state | member(["PENDING","EXPECTED"])) then "pending" else "terminal" end;
     def check_state: if .__typename == "CheckRun" then .conclusion else .state end;
-    # Ref node IDs distinguish repositories as well as branch names. A deleted
-    # ref, external check or status has no comparable workflow execution origin.
+    # Ref node IDs distinguish repositories as well as branch names, but not
+    # PRs sharing a source ref. Such PR runs need the ambiguity guard below.
+    # A deleted ref, external check or status has no comparable workflow origin.
     def origin: if .__typename == "CheckRun" then
       if .checkSuite.workflowRun != null and .checkSuite.branch != null then
         [.checkSuite.app.id, .checkSuite.workflowRun.workflow.id,
@@ -138,6 +139,13 @@ parse_snapshot() {
       all(.[]; .checkSuite.workflowRun.runAttempt == 1) or
       (map(.checkSuite.workflowRun.databaseId) | unique | length == 1))) |
     if $pr.headRefOid != $head then {state:$pr.state, stale:true, observed_head:$pr.headRefOid}
+    # WorkflowRun exposes no historical PR trigger identity. Neither current
+    # matchingPullRequests nor a reusable workflow reference establishes it.
+    # A later run from another PR/base must never erase an earlier failure.
+    elif any($runs | group_by(origin)[];
+      (.[0].checkSuite.workflowRun.event | startswith("pull_request")) and
+      (map(.checkSuite.workflowRun.databaseId) | unique | length > 1)) then
+      {unavailable:"ambiguous-pr-origin"}
     else
     ($items | group_by(origin) | map(. as $group |
       if .[0].__typename == "CheckRun" and .[0].checkSuite.workflowRun != null and .[0].checkSuite.branch != null then
@@ -215,7 +223,8 @@ pr_watch_main() {
         -f owner="${PR_REPO%%/*}" -f repo="${PR_REPO#*/}" -F pr="$number" -f head="$head_sha" \
         && [[ -n "$BOUNDED_OUTPUT" ]] \
         && parsed="$(printf '%s' "$BOUNDED_OUTPUT" | parse_snapshot "$required" "$head_sha" 2>/dev/null)" \
-        && [[ -n "$parsed" ]]; then
+        && [[ -n "$parsed" ]] \
+        && [[ "$(jq -r '.unavailable // empty' <<<"$parsed")" == "" ]]; then
       failures=0; seen_snapshot=1
       if [[ "$(jq -r '.stale' <<<"$parsed")" == true ]]; then
         receipt "PR_WATCH_PROGRESS pr=$number state=stale expected_head=$head_sha observed_head=$(jq -r '.observed_head' <<<"$parsed")"
@@ -231,6 +240,9 @@ pr_watch_main() {
         receipt "PR_WATCH_PROGRESS pr=$number state=$state pending=$pending missing=$missing"
       fi
     else
+      if [[ -n "$parsed" && "$(jq -r '.unavailable // empty' <<<"$parsed")" == ambiguous-pr-origin ]]; then
+        receipt "PR_WATCH_PROGRESS pr=$number step=snapshot reason=ambiguous-pr-origin"
+      fi
       parsed=""; failures=$((failures + 1))
       receipt "PR_WATCH_PROGRESS pr=$number step=snapshot unavailable_attempts=$failures"
       if (( failures >= PR_WATCH_MAX_FAILURES )); then watch_result "$number" "$head_sha" "outcome=query-unavailable step=snapshot attempts=$failures"; return 69; fi
