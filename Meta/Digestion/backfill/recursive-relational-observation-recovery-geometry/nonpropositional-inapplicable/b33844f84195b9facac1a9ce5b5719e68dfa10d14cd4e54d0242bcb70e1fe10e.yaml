@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b33844f84195b9facac1a9ce5b5719e68dfa10d14cd4e54d0242bcb70e1fe10e
+  normalized_sha256: sha256:b33844f84195b9facac1a9ce5b5719e68dfa10d14cd4e54d0242bcb70e1fe10e
+cas_ref: sha256:b33844f84195b9facac1a9ce5b5719e68dfa10d14cd4e54d0242bcb70e1fe10e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "Pure upstream scalar-kernel relation: for all j>=0,nu,s>0,q>=0, substitute v=nu*s*q^2 in s^j*q^(2*j+1)*exp(-nu*s*q^2). Real.rpow_mul, Real.rpow_add_of_nonneg, Real.rpow_natCast and le_csSup/csSup_le give the exact continuous supremum c_j*nu^(-j-1/2)*s^(-1/2). intervalIntegral.intervalIntegrable_rpow' with exponent -1/2 and intervalIntegral.integral_rpow provide integrability and mass2*sqrt(T). No claim of attainment on the integer lattice; no project GID contributes. Mathlib db584 plus scalar normalization closes the clause."
+    previous_atom_id: f6daeb6714a690f168e514c82c84e88fa8a75f5afff7c196314058da4930cf9c
+    next_atom_id: 1187288d061a7c93d6584cd7602a289fefb91f2229671f3f6071068c9d6b84af

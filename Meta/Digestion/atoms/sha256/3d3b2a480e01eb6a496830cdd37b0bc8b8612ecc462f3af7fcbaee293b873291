@@ -1,0 +1,18 @@
+**推论 31.4（纯同步及必要三次精度的协议范围）。** 在定理31.3的完整见证条件下，取 $\epsilon=0$ 直接得纯同步下界
+$$
+\text{最坏绝对 }k\text{ 误差}\ge
+\min\left\{d_0,\frac{5\tau}{2\eta^3}\right\}.
+\tag{31.124}
+$$
+若要求最坏绝对 $k$ 误差至多 $\Delta<d_0$，则在该级允许见证的实验中必须有
+$$
+\frac{5\epsilon}{|m|}+\frac{5\tau}{2}\le\Delta\eta^3;
+\qquad \epsilon=0\ \Longrightarrow\ \tau\le\frac25\Delta\eta^3.
+\tag{31.125}
+$$
+
+证明。$\epsilon=0$ 使 $d_n=0,d_s=d$，是同一构造的特例，无需另一个下界证明。所需损失上限迫使 $d\le\Delta$；因 $\Delta<d_0$，这只能由 $E+S\le\Delta$ 达成，代入即得。若一族缩窗实验每一级都容许这些完整见证，且要求其最坏误差趋零，则必要有 $\epsilon/\eta^3\to0$ 及 $\tau/\eta^3\to0$（此处 $m,d_0$ 固定）。只有 $O(\eta^3)$ 的允许定时误差可以隐藏固定正参数差；定理31.1在相同 $U$、共同域及完整非空条件下给相应三次尺度的充分界，所以量级相配，数值常数不宣称最优。
+
+下界即使给予精确 $m$、完整局部流及一、二阶初始登记仍成立，但不能用于取得了共享标记、精确共同顺序或其它排除见证的协议。任意反馈实验也不自动属于这个固定记录器实验。[SharpChallengeInstrument](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/SharpChallengeInstrument.lean) 的 `result` 在其有限概率仪器中区别固定动作词和因果反馈的记录距离；它只强化这里必须声明协议的边界，不供应本 PDE 的定时下界或随机噪声定律。本节的噪声证书、联合允许性和取得资源均不可由该模块替代。$\square$
+
+

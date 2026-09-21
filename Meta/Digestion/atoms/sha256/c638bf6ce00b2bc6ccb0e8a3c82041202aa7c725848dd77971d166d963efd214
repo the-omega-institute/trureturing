@@ -1,0 +1,23 @@
+**命题 33.16（非闭附加类使有限可满足而无共同律）。** 在恒等限制的二元翻转三循环塔中，取全支撑、均匀节点边缘，以 $D_0,D_2$ 表示两个均匀割律。附加候选类
+$$
+K_l=\{(1-t)D_0+tD_2:0<t\le1/(l+1)\}
+\tag{33.30}
+$$
+逐层非空、嵌套且全为零剩余律，但没有相容线程。
+
+证明。两个割支撑不交，参数 $t$ 唯一。恒等限制迫使各层使用同一个 $t$，而所有上界同时成立迫使 $t=0$，被定义排除。每个 $K_l$ 缺少极限点 $D_0$，故非闭且非紧；任意有限组却可取足够小的正 $t$。$\square$
+
+额外来源、机制或档案约束若要沿用引理33.3，须证明新类非空紧、映射保持，并另证其完成语义恰为所需的完整联合约束。支撑准入塔的（33.24）并未证明附加来源约束下的最优化结论。有限停止的另一障碍见上下文卷命题38.9；原来源稠密而不能承载完成概率的障碍见该卷命题38.2。
+
+本节把既有有限割面与成熟紧致／测度延拓结合为一个具体概率塔结论。主卷定理46.4–46.5分别供应有限解拼接与原自然来源障碍，定义91.1、定理91.2区分实际像、观察商完成和隐藏纤维；它们不预先给（33.24）。恢复卷第3.2–3.4节以及第9.3节的联合合法状态、值收敛与实现收敛区别仍保留。
+
+相关形式接口按自身量词使用：[InverseLimitCompletion.lean](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean) 的 `stateThread_bijective_iff_complete_and_separates` 把显式线程完备性与分离性刻画为状态映射双射，不供应 Borel 延拓；[StableObservationInverseLimit.lean](../../../D5/S3/ConceptDynamics/RefinementGeometry/StableObservationInverseLimit.lean) 的 `stable_observation_inverse_limit_laws` 供应细化核、商限制及相容线程，不赋概率；[CompactLocalRealization.lean](../../../D5/S3/Observer/Completion/CompactLocalRealization.lean) 的 `compact_local_realization` 要求紧环境、闭纤维和同时有限可实现性，需另给具体实例；[FiniteCofilteredLimit.lean](../../../D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.lean) 的 `finite_cofiltered_limit_nonempty` 要求各对象有限，不直接适用于本节通常无限的 $F_l$。
+
+[ProjectivePrimalConvergence.lean](../../../D5/S3/Weil/Budget/ProjectivePrimalConvergence.lean) 的 `projective_primal_convergence` 属于指定紧圆矩／预算层级，并假定完整可行集非空；[ProjectiveStrongDuality.lean](../../../D5/S3/Observer/Budget/ProjectiveStrongDuality.lean) 的 `projective_strong_duality` 明确把原始值收敛作为前提。因此这里的完成可行性及（33.24）由上述普通证明承担，不能把既有特殊收敛定理或一个收敛假设作为本节结论的替身。
+
+[^rrorec33_stacks]: The Stacks Project, [Lemma 5.14.6, tag 0A2R](https://stacks.math.columbia.edu/tag/0A2R)：非空拟紧 Hausdorff 空间的余滤连续图具有非空极限。引理33.3给其在可数紧概率多面体塔上的直接有限交证明。
+
+[^rrorec33_fremlin]: D. H. Fremlin, *Measure Theory*, [418Q, Chapter 41, PDF 第116页](https://www1.essex.ac.uk/maths/people/fremlin/chap41.pdf#page=116)：Radon 概率空间序列及 inverse-measure-preserving、almost continuous 连接函数在相容线程空间上给唯一 Radon 概率。本节有限离散空间、连续连接函数及相容概率满足其条件，结论取 Borel 限制；完全测度的约定不扩大本节事件合同。
+
+[^rrorec33_caratheodory]: 有限 Carathéodory 扩张定理；可见 Scott Sheffield, [18.175 Lecture 2, PDF 第28页](https://math.mit.edu/~sheffield/2016175/Lecture2.pdf#page=28)。定理33.4先验证柱代数上的有限预测度，再用唯一扩张至生成 $\sigma$ 代数的结论。
+

@@ -1,0 +1,623 @@
+{
+  "schema": "fixed-survivor-positive-cylinder-polynomial-v1",
+  "scope": "The same actual seven-phase survivor cover on all20 named full-height coordinates. Its positive multiaffine polynomial bounds survivor mass at new deterministic full-history atom caps for any adaptive sampling order. It does not exclude every profile or reuse old continuation budgets at changed profiles.",
+  "terms": [
+    {
+      "coordinate_mask": 1,
+      "primes": [
+        3
+      ],
+      "coefficient": "41"
+    },
+    {
+      "coordinate_mask": 7,
+      "primes": [
+        3,
+        5,
+        7
+      ],
+      "coefficient": "193113"
+    },
+    {
+      "coordinate_mask": 15,
+      "primes": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "coefficient": "5483178"
+    },
+    {
+      "coordinate_mask": 31,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13
+      ],
+      "coefficient": "786903165"
+    },
+    {
+      "coordinate_mask": 63,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17
+      ],
+      "coefficient": "75813227208"
+    },
+    {
+      "coordinate_mask": 255,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "coefficient": "34805580850215"
+    },
+    {
+      "coordinate_mask": 511,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29
+      ],
+      "coefficient": "446452795718181"
+    },
+    {
+      "coordinate_mask": 639,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        31
+      ],
+      "coefficient": "544601826394605"
+    },
+    {
+      "coordinate_mask": 767,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        31
+      ],
+      "coefficient": "703738983880422"
+    },
+    {
+      "coordinate_mask": 895,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        29,
+        31
+      ],
+      "coefficient": "153482304011400"
+    },
+    {
+      "coordinate_mask": 1023,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31
+      ],
+      "coefficient": "985268657297925"
+    },
+    {
+      "coordinate_mask": 1279,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        37
+      ],
+      "coefficient": "13320682245607968"
+    },
+    {
+      "coordinate_mask": 1535,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        37
+      ],
+      "coefficient": "128696309521428726"
+    },
+    {
+      "coordinate_mask": 1663,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        31,
+        37
+      ],
+      "coefficient": "2136640024709190"
+    },
+    {
+      "coordinate_mask": 1791,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        31,
+        37
+      ],
+      "coefficient": "7076598639394284"
+    },
+    {
+      "coordinate_mask": 1919,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        29,
+        31,
+        37
+      ],
+      "coefficient": "658143314829000"
+    },
+    {
+      "coordinate_mask": 2047,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31,
+        37
+      ],
+      "coefficient": "12735852820891200"
+    },
+    {
+      "coordinate_mask": 8447,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        47
+      ],
+      "coefficient": "147628926799200"
+    },
+    {
+      "coordinate_mask": 8831,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        31,
+        47
+      ],
+      "coefficient": "2478878602611840"
+    },
+    {
+      "coordinate_mask": 8959,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        31,
+        47
+      ],
+      "coefficient": "31744140760997280"
+    },
+    {
+      "coordinate_mask": 9087,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        29,
+        31,
+        47
+      ],
+      "coefficient": "18176740633846080"
+    },
+    {
+      "coordinate_mask": 9215,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31,
+        47
+      ],
+      "coefficient": "90266957230301280"
+    },
+    {
+      "coordinate_mask": 25087,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        47,
+        53
+      ],
+      "coefficient": "1487202905076065100"
+    },
+    {
+      "coordinate_mask": 33407,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        31,
+        59
+      ],
+      "coefficient": "12095667688374270"
+    },
+    {
+      "coordinate_mask": 33535,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        31,
+        59
+      ],
+      "coefficient": "130184144559342720"
+    },
+    {
+      "coordinate_mask": 33663,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        29,
+        31,
+        59
+      ],
+      "coefficient": "3400257572712000"
+    },
+    {
+      "coordinate_mask": 33791,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31,
+        59
+      ],
+      "coefficient": "22865928444859500"
+    },
+    {
+      "coordinate_mask": 139391,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        47,
+        67
+      ],
+      "coefficient": "92500723181512800"
+    },
+    {
+      "coordinate_mask": 139519,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        47,
+        67
+      ],
+      "coefficient": "96901981426819800"
+    },
+    {
+      "coordinate_mask": 139647,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        29,
+        47,
+        67
+      ],
+      "coefficient": "957082086318619800"
+    },
+    {
+      "coordinate_mask": 139775,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        47,
+        67
+      ],
+      "coefficient": "457792963164167400"
+    },
+    {
+      "coordinate_mask": 140415,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        37,
+        47,
+        67
+      ],
+      "coefficient": "426526668005545800"
+    },
+    {
+      "coordinate_mask": 140543,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        37,
+        47,
+        67
+      ],
+      "coefficient": "203796476064442800"
+    },
+    {
+      "coordinate_mask": 140671,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        29,
+        37,
+        47,
+        67
+      ],
+      "coefficient": "2626839105562009800"
+    },
+    {
+      "coordinate_mask": 140799,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        37,
+        47,
+        67
+      ],
+      "coefficient": "328254213585375000"
+    },
+    {
+      "coordinate_mask": 140927,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        31,
+        37,
+        47,
+        67
+      ],
+      "coefficient": "1567359836562920400"
+    },
+    {
+      "coordinate_mask": 141055,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        31,
+        37,
+        47,
+        67
+      ],
+      "coefficient": "184347566349546600"
+    },
+    {
+      "coordinate_mask": 141183,
+      "primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        29,
+        31,
+        37,
+        47,
+        67
+      ],
+      "coefficient": "3625672357567260000"
+    }
+  ],
+  "term_count": 38,
+  "expanded_cylinders": "12533129880604949291",
+  "balanced_value": "696181396681816852739454137354543/1086338369123261718750000000000000",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/adaptive_phase_io.py": "befaad88f3e9e7303920faf30e4f6ae8e14a8f79b8e167ada5d3afa51f3324c3",
+    "problem-details/60-positive-cylinder-covers-across-head-profiles.md": "61e99293808253d8c0ac9000cf8f1da45317b1ddcdd6be26077d842cef32d288",
+    "problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md": "1a946aea6c102017f2f19e66d34b605b6dda338bb62efc104123ce7b2dafc409",
+    "frontier/source-budgets/uniform_phase_capacity_input.json": "ea227d216660f496ecb3a2c89dbc145605f0ad83c94e5996a7ee76d746ea712b",
+    "frontier/source-budgets/uniform_phase_capacity.py": "7108c17a504ff7ee68faccd223964682ff0e21d86297f2b85fa2ed285dbdb32f",
+    "certificates/source_norms/source-budgets/uniform_phase_capacity.json": "23870ef8d682d5e0a4d1e4c96323532c844d0549be99359cf74412c5ae306b3e",
+    "problem-details/58-adaptive-initial-block-recovery-and-all-schedule-budget-obstruction.md": "2aac02eaaaf2dda17068b37c2b5e8964bc609b0db30ba238bc54f5d2da5d66f5",
+    "frontier/source-budgets/uniform_phase_private_witnesses_input.json": "984cc949bc2ee28241be008c9506d82afbd1b410de50ba41286c3e82040fae93",
+    "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+    "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+    "frontier/source-budgets/verify_balanced_profile_tail_budget.py": "47c879983216081dc6cda36e0625b2b4e2f3c9527b519d6bd65fe991701e27eb",
+    "certificates/source_norms/source-budgets/balanced_profile_tail_verification.json": "efe77669ceabee38d5c5b94af03856a894c99f42e6792ef95a61a4fe2b8253a7",
+    "problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md": "dc243704b9e01b5719f6becf97ea93a6c5c25fb0a254e0b7a8fd8aab29b0a370",
+    "certificates/source_norms/source-budgets/balanced_profile_head_verification.json": "22c110d6b64544bcf143afefcd8cab0236fa520228f814b5b634efebb49ac650",
+    "frontier/source-budgets/balanced_profile_head.py": "daa64daeff8c6a7dc474a965b59473929f1b63fec48e3ef2465b399eb1945dc5",
+    "certificates/source_norms/source-budgets/balanced_profile_head.json": "13ef27bd3ea3472257faf3ec3394949f7f2fad28fca1998c7ffd201f6ff53914",
+    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+    "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+    "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+    "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+    "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+    "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+    "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+    "frontier/source-budgets/verify_balanced_profile_head.py": "9f81ef4a32e3818e27c84f027807bcda7cca9e4beb02d755eba0694342031307",
+    "certificates/source_norms/source-budgets/balanced_profile_tail_budget.json": "43ee684630214cc0bc5b94ea05528f4f7fda023d3071e890224d4e7dce21164a",
+    "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+    "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+    "verify_finite_continuation.py": "c0a4fa266d5e114b77303d195b2f88fe570ee09ae2b34b2b0889e0585c2f9390",
+    "frontier/source-budgets/balanced_profile_tail_budget.py": "e29ce190d3cc7a4ce5126f5d35fe60ac17745016b80b89bbb7cc01c8a47a0dd3"
+  },
+  "producer_sha256": "feed97713b97c5297b4434f57e856a93a4bdabc954e775b1dd57d6ee43406cfb"
+}

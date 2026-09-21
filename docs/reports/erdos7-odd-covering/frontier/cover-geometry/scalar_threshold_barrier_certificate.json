@@ -1,0 +1,155 @@
+{
+  "schema": "scalar-threshold-barrier-certificate-v1",
+  "scope": "Exact fixed-order independent-run additive-hinge model on all integer grid points. The real-parameter reduction is an ordinary analytic proof in Chapter 40, not a Lean certificate.",
+  "model": {
+    "prime_order": [
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "independent_runs": true,
+    "deterministic_thresholds": true,
+    "root_positive_depth_tail": "Pr(K_0 >= a) = 2/3**a for integer a >= 1",
+    "threshold_domain": "0 <= t_i < p_i-2",
+    "child_positive_depth_tail": "Pr(K_i >= a) = min(1,(p_i-1)/((p_i-2-t_i)*p_i**a)) for integer a >= 1",
+    "objective": "sum_i E[(prod_(0 <= j < i)(1+K_j)-1-t_i)_+]/(p_i-2-t_i)"
+  },
+  "model_input_encoding": "UTF-8 JSON, sort_keys=True, separators=(comma,colon), followed by one LF",
+  "model_input_sha256": "ca3cc2d12a092c9986de004c625be38a3872da939cfdc2459492992d66b76128",
+  "producer_sha256": "faec7c1bb25aaa8f344e5661285f49de75ccd38e3abdebe9e31493e9e9443022",
+  "external_input_files": [],
+  "integer_threshold_ranges": [
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  ],
+  "retained_positive_product_states": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "full_mean_retained_exactly": true,
+  "grid_points": 378675,
+  "grid_points_strictly_above_one": 378675,
+  "minimum": "38015512875791085444068380947478658842921999427/37918700535989642067334158824877050925450000000",
+  "minimizer": [
+    0,
+    1,
+    3,
+    5,
+    7,
+    9
+  ],
+  "minimum_stage_costs": [
+    "1/3",
+    "41/180",
+    "5043901/41674500",
+    "15311441336297/131044944318750",
+    "254627753915755986045892231/2659278071347311162498750000",
+    "4088368614198931111426708693934181526961118587/37918700535989642067334158824877050925450000000"
+  ],
+  "runner_up": "41889130937052343408811707617568867646869/41780315863536803711730356582620009687500",
+  "runner_up_schedule": [
+    0,
+    1,
+    3,
+    5,
+    7,
+    8
+  ],
+  "runner_up_stage_costs": [
+    "1/3",
+    "41/180",
+    "5043901/41674500",
+    "15311441336297/131044944318750",
+    "254627753915755986045892231/2659278071347311162498750000",
+    "18027475172114199694591872544916370940237/167121263454147214846921426330480038750000"
+  ],
+  "strict_excess_over_one": "96812339801443376734222122601607917471999427/37918700535989642067334158824877050925450000000",
+  "method": "Exact Fractions; successive hinge differences; source-oriented low-product convolution; no rounding or high-product tail truncation."
+}

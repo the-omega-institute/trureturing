@@ -1,0 +1,49 @@
+**定理 32.7（保留全部界的一个合法修复）。** 对上下文卷（37.3）的 $L_{O,k},K_O$，在 $k\notin K_O$ 时记最长合法段为 $r_{O,k}$，并置
+$$
+M_O=\max\{c_{\rm cyc}(O),\ \max_{k\notin K_O}r_{O,k}\},
+\qquad M_{\max}=\max_OM_O.
+\tag{32.14}
+$$
+内层空最大值取零，无移动轨道时也约定 $M_{\max}=0$。有 $M_O\le\ell_O-1$；全部割合法时 $M_O=c_{\rm cyc}(O)$。定义
+$$
+\overline p_{O,k}=\frac1{\ell_O}\sum_{x\in O}p_{x,k},\quad
+m_O=\sum_{k\notin K_O,x\in O}p_{x,k},\quad m=\sum_Om_O,
+$$
+$$
+V_{\rm dev}=\sum_{O,k\in K_O,x\in O}|p_{x,k}-\overline p_{O,k}|,
+\qquad A(P)=\beta+m+\tfrac12V_{\rm dev}.
+\tag{32.15}
+$$
+每个正移动轨道声明一个 $K_O$ 上的默认概率 $\theta_O$。定义同一个律
+$$
+Q_{\rm good}(T^k(x))=
+\begin{cases}
+\overline p_{O,k}+(\beta_O+m_O)\theta_{O,k}/\ell_O,&k\in K_O,\\
+0,&k\notin K_O,
+\end{cases}
+\qquad Q_{\rm good}(D(x))=\mu(x).
+\tag{32.16}
+$$
+其余质量为零，则 $Q_{\rm good}\in\mathcal F_S$，且
+$$
+\operatorname{TV}(P,Q_{\rm good})\le A(P)
+\le\beta+\frac12\sum_O\left[
+ c_{\rm cyc}(O)\sum_{k\in K_O}G_{O,k}
+ +\sum_{k\notin K_O}r_{O,k}G_{O,k}\right]
+\le\beta+\frac12\sum_OM_OG_O.
+\tag{32.17}
+$$
+因此这同一个输出同时满足
+$$
+\operatorname{TV}(P,Q_{\rm good})
+\le\min\{1,\ \beta+n\sum_OM_O\beta_O,
+\beta+M_{\max}(R+\beta_N)\}
+\le\min\{1,(1+2M_{\max})R\}.
+\tag{32.18}
+$$
+较早的支撑界 $\operatorname{TV}(P,Q_{\rm good})\le\min\{1,\beta+n\sum_O(\ell_O-1)\beta_O\}$ 仍为同一输出的推论。加权变差界（32.17）也保留，不以较松系数替代。
+
+证明。保留平均行的总质量是 $\mu(x)-(\beta_O+m_O)/\ell_O$，填补后恢复 $\mu(x)$，各列非负且轨道恒定。定理32.3给全部边缘，$k\in K_O$ 及固定对角的合法性给支撑。比较 $P,Q_{\rm good}$ 的 $\ell^1$：坏元组贡献 $\beta$，删去的好列贡献 $m$，固定点亏损贡献 $\beta_F$，平均操作至多贡献 $V_{\rm dev}$，填补贡献 $\beta_N+m$。半和即 $A(P)$。因 $P(S)=1$，部分合法列在非法相位为零；对保留列用（32.13）的平均界，对删去列用支撑界，即得（32.17）。分别代入（32.11）的两界，再用 $\beta,\beta_N\le R$ 得（32.18）。$\square$
+
+若所有正质量点都固定，输出为已知对角律，且精确地 $\operatorname{TV}(P,Q_{\rm good})=\beta\le R/2$；无需任何移动轨道归一化。无限制支撑时用 $M_O=c_{\rm cyc}(O)$，但不宣称聚合系数 $1+2\max_Oc_{\rm cyc}(O)$ 最优。
+

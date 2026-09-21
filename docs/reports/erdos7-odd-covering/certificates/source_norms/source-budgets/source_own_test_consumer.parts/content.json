@@ -1,0 +1,141 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "1/4000"
+  },
+  "mean_new": {
+    "kind": "inline",
+    "value": "2923852811/4840416000"
+  },
+  "weighted_source_mean": {
+    "kind": "inline",
+    "value": {
+      "weighted35_vertices": [
+        "685487/1512630",
+        "685487/1512630",
+        "685487/1512630",
+        "685487/1512630",
+        "685487/1512630",
+        "685487/1512630",
+        "685487/1512630",
+        "685487/1512630",
+        "685487/1512630"
+      ],
+      "weighted35_star": "685487/1512630",
+      "positive7_face_cap": "3/20",
+      "positive7_delta_coefficient": "13/40",
+      "pure5_only_mean": "257533861/403368000"
+    }
+  },
+  "schedules": {
+    "path": "content/003-schedules.json",
+    "sha256": "a91cf55284e7af68ce455491d7e3252a1f718712fc763cb252bfde64f2f557ae",
+    "kind": "value"
+  },
+  "fixed_schedule": {
+    "path": "content/004-fixed_schedule.json",
+    "sha256": "234d1b2418e332174b35a9ec9ac71255310a1ccdf34683e18a020ec708b27fdb",
+    "kind": "value"
+  },
+  "full_haar_head_chain": {
+    "path": "content/005-full_haar_head_chain.json",
+    "sha256": "caa3386e43f1cd93afc22324e82d7d3c7c023d1775593970c9fa6cc1549c33c2",
+    "kind": "value"
+  },
+  "joint_denominator": {
+    "kind": "inline",
+    "value": {
+      "old": "3900862402251313/51770842200000000",
+      "new": "18905277286609631/253677126780000000",
+      "saving": "2089484844218027/2536771267800000000",
+      "coefficients": {
+        "1": "240/102487",
+        "2": "2400/102487",
+        "3": "50/2541",
+        "5": "4/33",
+        "4": "1/6"
+      },
+      "new_face_nonlinear_vertices": [
+        "1347822466013/18119794770000",
+        "1347822466013/18119794770000",
+        "1347822466013/18119794770000",
+        "1347822466013/18119794770000",
+        "1347822466013/18119794770000",
+        "1347822466013/18119794770000",
+        "1347822466013/18119794770000",
+        "1347822466013/18119794770000",
+        "1347822466013/18119794770000"
+      ]
+    }
+  },
+  "source_hinge_costs": {
+    "path": "content/007-source_hinge_costs.json",
+    "sha256": "803ca6a08b994462faf0ad5e4901c8785606d9358625b683a39ecf85c42f71a2",
+    "kind": "object"
+  },
+  "reweighted_full_haar_chain": {
+    "path": "content/008-reweighted_full_haar_chain.json",
+    "sha256": "bd535986cecac99529e9c675798d41b6a5fcadd14f23d5293c2cdbd9d1e3c28f",
+    "kind": "object"
+  },
+  "schema": {
+    "kind": "inline",
+    "value": "source-own-test-consumer-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary finite-source comparison under effective9, qJ>=1-delta, delta<=1/4000, original noncontainment, and an original modulus-7 class. The main full-Haar head chain certifies through37 under rho>=7/125, with an actual finite noncover source satisfying this guard. Three supported13 reference chains remain as comparisons. A fixed mod9 reweighting certifies through41 under rho>=3/50, while every fixed nonnegative five-cell reweighting fails by131 within the stated assigned square/fixed-head/scalar procedure. Each chain retains complete product tails and its own original tests. No Lean, optimality, extremal-cover witness, or unrestricted noncoverage claim."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "ff4ee2e18ff55ff1dc782bc38da997586eee0690b2f9f3f5684506a8241fb88a",
+      "profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md": "fdc8db8e2751dd88d137fd28a00be09674e0cebc402a00609a0e57297cdc01f0",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "profile-notes/001-064/31-one-original-zero-five-layout-across-both-actual-measures.md": "f3190a7c8656a2e20dbf1172517caa2fdc1c9cc6366cd87d1a51c8bde9ccf629",
+      "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
+      "profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md": "c805f6d68eb80b890fb0cd3a340c4e2e13eb5e8b1493e8fa8b771a585161be62",
+      "profile-notes/321-384/331-complete-physical-hinges-continue-finite-sources-through43.md": "2bd45308ba5e7e9ee95a04d93eb193710fde7de7495897cd21a2e555fa4d779f",
+      "profile-notes/321-384/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "012e7c1958dc61aab61583e5c026d587b40f35a4ec04896afd39da3f30a5b1d6",
+      "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "96d49d247d1c4a74822711cfa062d165696884eb9f493eb4959c3816054de685",
+      "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "95766e51dc23a35756d3899a69b491e9dc573a77481119f07fd7d6f2b6fa8470",
+      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "ff5183667b74b2d7d297a8aa686b200d696e439b3a469395a4fe69c60c80845d",
+      "frontier/source-budgets/source_mean_sharpness.py": "4da14b44c9821073a0f1ea2bdc8b5ab0fbafc3bc589f979f3b14daa9fff946af",
+      "profile-notes/321-384/339c-the-square-allocation-and-the-reweighted-source.md": "a9e0d552636453ce771577ea541c05c006eae6b7374a2094c9eb411421e95c78"
+    }
+  },
+  "ordinary_proof": {
+    "kind": "inline",
+    "value": {
+      "sha256": "7d978556bb90cdc3d7167d5703f527d48e077c982c7aa11da4e66c8704d16cab",
+      "byte_count": 33514
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "b39aa14506062e6d616163ccbe01ed0561ecaefcb538f76a7547501b2098a99d"
+  },
+  "source_weights": {
+    "kind": "inline",
+    "value": [
+      "2881/16807",
+      "28811/84035",
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  "vertex_count": {
+    "kind": "inline",
+    "value": 9
+  },
+  "pure7_rho_upper": {
+    "kind": "inline",
+    "value": "14832829/230496000"
+  },
+  "denominator_mass_coefficient": {
+    "kind": "inline",
+    "value": "614921/614922"
+  }
+}

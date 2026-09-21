@@ -1,0 +1,34 @@
+**定理 32.15（成对概率噪声的三倍尾项）。** 假设每个测量表 $\widetilde t_i$ 非负、归一化，且对同一真实 $P$ 同时有已认证的 $\operatorname{TV}(\widetilde t_i,t_i)\le e_i$，$e_i\ge0$。它们可以有错误边缘，也可以彼此不兼容。令 $E_{\rm noise}=\sum_ie_i$，按（32.25）从这些表取保留计数。定义 $\widetilde\delta_i$ 为测量表在理想图外的事件概率，闭合表保持规定顺序，并置
+$$
+\widetilde R=\sum_i\widetilde\delta_i-a,\qquad
+R_{\rm up}=\max\{0,\widetilde R+E_{\rm noise}\}.
+\tag{32.43}
+$$
+则
+$$
+\eta\le2E_{\rm noise},\qquad
+|\widetilde R-R|\le E_{\rm noise},\qquad R\le R_{\rm up},\qquad
+|\widetilde E_{\rm pair}-E_{\rm pair}|\le E_{\rm noise}.
+\tag{32.44}
+$$
+定理32.14的同一输出满足
+$$
+\operatorname{TV}(P,\widetilde Q)\le\min\{1,
+(1+2M_{\max})R_{\rm up}+\widetilde E_{\rm pair}+3E_{\rm noise},
+(2+2M_{\max})R_{\rm up}+2E_{\rm noise}\}.
+\tag{32.45}
+$$
+如另有更好的认证 $\overline\eta\ge\eta$，第一尾项可换成 $E_{\rm noise}+\overline\eta$，第二尾项可换成 $\overline\eta$。不主张这些聚合噪声系数最优。
+
+证明。每边保留检测原子互不相交；其聚合计数的 $\ell^1$ 差至多完整表的 $\ell^1$ 差 $2e_i$，求和得第一式。把质量从一个保留轨道单元移到另一个，会改变两个计数坐标，因此一般需要因子二。图外是固定事件，每边事件概率差至多 $e_i$，得剩余量界。
+
+对任意正移动轨道的并 $A$，令 $D_{i,A}$ 为第 $i$ 边源在 $A$ 的保留检测事件。有限正部和可写为
+$$
+E_{\rm pair}=\max_A\left[\sum_it_i(D_{i,A})-\mu(A)\right],\qquad
+\widetilde E_{\rm pair}=\max_A\left[\sum_i\widetilde t_i(D_{i,A})-\mu(A)\right].
+\tag{32.46}
+$$
+包含空并；轨道权重和事件固定不变。每个括号变动至多 $E_{\rm noise}$，故最大值差也至多该数，这比任意计数的 $|\widetilde E_{\rm pair}-E_{\rm pair}|\le\eta$ 更强。将这些界代入（32.41）即得（32.45）。$\square$
+
+在有效前提下，未截断的 $\widetilde R+E_{\rm noise}$ 已经非负；若严格认证出它为负，说明证书或模型不一致，截断不能修复证据。不能以测量表到理想图律的 TV 替代 $\widetilde\delta_i$：例如二元均匀对角理想律与全部质量在 $(0,0)$ 的测量表，图外概率为零而 TV 为 $1/2$，其第一边缘不同。
+

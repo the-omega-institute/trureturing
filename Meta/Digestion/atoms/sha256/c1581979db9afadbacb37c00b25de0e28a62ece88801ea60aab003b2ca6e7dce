@@ -1,0 +1,33 @@
+**引理 25.5（两个端口的共同二次泛函）。** 对任意实 $\phi\in L^\infty(\mathbb T^2)$、$\|\phi\|_\infty\le1$，在实 Banach 空间 $L^2(\mathbb T^2;\mathbb R^2)$ 上定义
+$$
+Q_\phi(u)=\int u_1u_2\phi\,d\mu.
+$$
+它为 $C^2$ 连续二次泛函，且
+$$
+DQ_\phi(u)h=\int(h_1u_2+u_1h_2)\phi\,d\mu,
+\quad D^2Q_\phi(h,k)=\int(h_1k_2+k_1h_2)\phi\,d\mu,
+$$
+$$
+|Q_\phi(u)|\le\tfrac12\|u\|_2^2,\quad
+|DQ_\phi(u)h|\le\|u\|_2\|h\|_2,\quad
+|D^2Q_\phi(h,k)|\le\|h\|_2\|k\|_2.
+\tag{25.114}
+$$
+特别，固定符号的读出
+$$
+\ell_x(u)=\operatorname{Re}\widehat u_2(1,0)=\int u_2\cos X_1\,d\mu,
+\quad
+\ell_y(u)=\operatorname{Im}\widehat u_1(0,1)=-\int u_1\sin X_2\,d\mu
+\tag{25.115}
+$$
+范数均至多一，实际响应 $x=\ell_x(u)$、$y=\ell_y(u)$ 满足
+$$
+x'=-\nu x-Q_{\sin X_1}(u),\qquad
+y'=-\nu y-Q_{\cos X_2}(u).
+\tag{25.116}
+$$
+
+证明。坐标交换是 $\mathbb R^2$ 的等距映射，故逐点 $|h_1u_2+h_2u_1|\le|h||u|$，积分 Cauchy–Schwarz 给所有导数界。恒等式 $Q_\phi(u+h)-Q_\phi(u)-DQ_\phi(u)h=Q_\phi(h)$ 给 Fréchet 可微性，导数差仍是上述连续双线性式，给 $C^2$ 性及二阶导数。线性端口界由 Cauchy–Schwarz。
+
+在频率 $(1,0)$，Leray 留下第二分量；在 $(0,1)$，留下第一分量。对流写成散度，对 $x$ 端口有 $-\int\partial_1(u_1u_2)\cos X_1=-\int u_1u_2\sin X_1$，其另一散度项积分为零。对 $y$ 端口的负正弦，有 $\int\partial_2(u_1u_2)\sin X_2=-\int u_1u_2\cos X_2$，另一项亦为零。黏性在两频率均为 $-\nu$，得（25.116）；这些等式包括实际场的全部相互作用。$\square$
+

@@ -1,0 +1,135 @@
+{
+  "plain": {
+    "N": 12,
+    "h": 12,
+    "weighted": false,
+    "free_labels": 2028,
+    "pair_blocks": 2055378,
+    "original_directed_edges": 4111200,
+    "sparse_nonzero_flows": 31364,
+    "canonical_cylinders": 6084,
+    "partition_leaves": [
+      107,
+      93,
+      271
+    ],
+    "checked_vertices": 2030,
+    "denominator": "160344929045289591099444",
+    "cylinder_scale": "320689858090579182198888",
+    "required": "209626201609934585576758",
+    "verified_flow": "209626201609934585576758",
+    "max_gain_upper": "0",
+    "complete_centered4_value": "2036574313467845778288943/80172464522644795549722",
+    "flow_sha256": "0ae8f7fae42bfc73613a9944104015daa173a6c1334fe74a3781ac695176b8ac",
+    "complete_actual_gamma": "2036574313467845778288943/80172464522644795549722",
+    "scope": "Exact complete plain-source maximum, attained by centered4. Ordinary compression and integer-flow proof; no new Lean theorem."
+  },
+  "weighted": {
+    "N": 12,
+    "h": 12,
+    "weighted": true,
+    "branches": [
+      {
+        "N": 12,
+        "h": 12,
+        "weighted": true,
+        "free_labels": 2027,
+        "pair_blocks": 2053351,
+        "original_directed_edges": 4108729,
+        "sparse_nonzero_flows": 391109,
+        "canonical_cylinders": 6084,
+        "partition_leaves": [
+          107,
+          93,
+          271
+        ],
+        "checked_vertices": 2029,
+        "denominator": "1442214258122672811996342",
+        "cylinder_scale": "2884428516245345623992684",
+        "required": "8268399910443825376757680",
+        "verified_flow": "5722807862543137122349880",
+        "max_gain_upper": "636398011975172063601950/721107129061336405998171",
+        "complete_centered4_value": "16622960794401007994531582/721107129061336405998171",
+        "flow_sha256": "35a74c7f09244f20b1694f84290aa498aab5427fa94708549da1d19de2eecf83",
+        "fixed_label": [
+          2,
+          0,
+          0
+        ],
+        "fixed_residue": 0,
+        "baseline_shift": "-2632882159500260859261119/1442214258122672811996342",
+        "branch_upper": "10628611817750699752335315/480738086040890937332114",
+        "upper_minus_center": "-1360086135549916732057219/1442214258122672811996342",
+        "scope": "One fixed pure9 test branch on the same complete weighted source law. All three canonical branches are required for a global maximum."
+      },
+      {
+        "N": 12,
+        "h": 12,
+        "weighted": true,
+        "free_labels": 2027,
+        "pair_blocks": 2053351,
+        "original_directed_edges": 4108729,
+        "sparse_nonzero_flows": 238026,
+        "canonical_cylinders": 6084,
+        "partition_leaves": [
+          107,
+          93,
+          271
+        ],
+        "checked_vertices": 2029,
+        "denominator": "1442214258122672811996342",
+        "cylinder_scale": "2884428516245345623992684",
+        "required": "8113878669275986955974626",
+        "verified_flow": "4873558424257566449707946",
+        "max_gain_upper": "810080061254605126566670/721107129061336405998171",
+        "complete_centered4_value": "16622960794401007994531582/721107129061336405998171",
+        "flow_sha256": "68f8744e3aaaae26634f918ed7c6482338c1a65034ea0e06174d8635ff4405a6",
+        "fixed_label": [
+          2,
+          0,
+          0
+        ],
+        "fixed_residue": 3,
+        "baseline_shift": "-2022703704229796690549819/1442214258122672811996342",
+        "branch_upper": "32843378007081429551646685/1442214258122672811996342",
+        "upper_minus_center": "-134181193906862145805493/480738086040890937332114",
+        "scope": "One fixed pure9 test branch on the same complete weighted source law. All three canonical branches are required for a global maximum."
+      },
+      {
+        "N": 12,
+        "h": 12,
+        "weighted": true,
+        "free_labels": 2027,
+        "pair_blocks": 2053351,
+        "original_directed_edges": 4108729,
+        "sparse_nonzero_flows": 461363,
+        "canonical_cylinders": 6084,
+        "partition_leaves": [
+          107,
+          93,
+          271
+        ],
+        "checked_vertices": 2029,
+        "denominator": "1442214258122672811996342",
+        "cylinder_scale": "2884428516245345623992684",
+        "required": "4250337641076669357482784",
+        "verified_flow": "4250337641076669357482784",
+        "max_gain_upper": "0",
+        "complete_centered4_value": "16622960794401007994531582/721107129061336405998171",
+        "flow_sha256": "3c8137de4d0b8212861f79a4dd26488ac5b6d809c8e1341b0bfd479146ba77c1",
+        "fixed_label": [
+          2,
+          0,
+          0
+        ],
+        "fixed_residue": 4,
+        "baseline_shift": "0",
+        "branch_upper": "16622960794401007994531582/721107129061336405998171",
+        "upper_minus_center": "0",
+        "scope": "One fixed pure9 test branch on the same complete weighted source law. All three canonical branches are required for a global maximum."
+      }
+    ],
+    "complete_actual_gamma": "16622960794401007994531582/721107129061336405998171",
+    "scope": "Exact complete weighted F12 maximum, attained by centered4, from all three pure9 test branches. No probability conditioning, other-height or unrestricted covering conclusion."
+  }
+}

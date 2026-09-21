@@ -28,6 +28,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ## Results and proofs
 
+- [A fixed plain F_N source retains its exact centered-square maximum at arbitrary higher test heights, with the full coherent optimizer family and fixed-source supremum](profile-notes/321-384/339f-fixed-plain-source-at-arbitrary-test-heights.md)
 - <a id="survivor-reduction"></a>[Survivor reduction](profile-notes/001-064/01-survivor-reduction.md#survivor-reduction)
 - <a id="finite-profile-bound"></a>[Finite profile bound](profile-notes/001-064/01-survivor-reduction.md#finite-profile-bound)
 - <a id="elementary-proof-and-a-sharper-comparison-law"></a>[Elementary proof and a sharper comparison law](profile-notes/001-064/01-survivor-reduction.md#elementary-proof-and-a-sharper-comparison-law)

@@ -1,0 +1,23 @@
+**定义 29.1（一个完整实现集合上的两份记录）。** 继续定义25.5、第27节的完整观察者语义，现在令 $\Omega$ 中的每份实现 $\omega$ 同时包含来源身份、固定已校准 $\alpha$、参数 $p(\omega)=(m,k)$、由同一准备生成的实际轨迹 $u_p$、一个允许的连续严格递增钟 $\theta_\omega$，以及解释全部旧记录、误差和关系的辅助量。完整已获信息写为 $H=(C,\mathcal A,D_1,D_2)$：$C$ 保留全部先前内部／外部记录及关系，$\mathcal A$ 保留合法动作、端口、校准、分支和共同轨迹证书，$D_j=(s_j,\widetilde r_j,\widetilde z_j)$ 是两份有序实际同时记录，$s_1<s_2$ 是保留的外部时间戳。对已声明局部先验 $U$ 和第28节初始图域，令 $t_j(\omega)=\theta_\omega(s_j)$、$r_j(\omega)=r_{p(\omega)}(t_j(\omega))$，定义
+$$
+\begin{aligned}
+\mathfrak F_H=\{\omega\in\Omega:\;&p(\omega)\in U,\quad
+\operatorname{Hist}(\omega,\mathcal A),\quad
+\mathcal R_i(\omega,c_i)\ \text{对全部 }c_i\in C,\\
+&\omega\in\mathcal E_H,\quad
+0<t_1(\omega)<t_2(\omega)\le T_g,\quad
+0<r_1(\omega)<r_2(\omega)\le r_*,\\
+&|r_j(\omega)-\widetilde r_j|\le\epsilon_r,\quad
+|g_{p(\omega)}(r_j(\omega))-\widetilde z_j|\le\epsilon_z\quad(j=1,2)\},\\
+\mathcal K_H&=\{p(\omega):\omega\in\mathfrak F_H\}.
+\end{aligned}
+\tag{29.101}
+$$
+$\mathcal E_H$ 是一份联合误差事件，可施加相关性和其它旧限制，不预设独立噪声。旧钟校准、同源关系或额外传感器均仍在 $\mathcal R_i$ 内；不能为两份记录或各条旧约束另选互不相容的实现。若测量由原始 $x,y$ 换算，则在同一联合事件上严格使用
+$$
+\epsilon_r=\frac{2\epsilon_x}{|\alpha|},\qquad
+\epsilon_z=\frac{4\epsilon_y}{|\alpha|}.
+\tag{29.102}
+$$
+这里 $\alpha$ 固定且已校准。精确事件是误差为零且 $r_j=j\eta$ 的特例；两记录和校准初点均仍附于完整档案。模型预测不替代实际取得，重开缓存第一记录不产生第二记录。
+

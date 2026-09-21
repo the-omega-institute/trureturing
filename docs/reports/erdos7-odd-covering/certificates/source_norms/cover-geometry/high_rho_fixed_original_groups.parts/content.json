@@ -12,8 +12,8 @@
     "value": {
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
-      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "573cff9d649494d0c512789d2dae3c15da68edab9672f5184df5f9476918e517",
-      "certificates/source_norms/cover-geometry/high_rho_original_ap_blocks.json": "ab39c57ee567535b9ea31ec577ebd2a96686bbfe8f5fd1c7660ce85560e66d7e",
+      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "ff5183667b74b2d7d297a8aa686b200d696e439b3a469395a4fe69c60c80845d",
+      "certificates/source_norms/cover-geometry/high_rho_original_ap_blocks.json": "2ac73ff430251e4a96b8616445910cdf5cb3e3bc98bc547d687b15142808e3c7",
       "profile-notes/321-384/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "012e7c1958dc61aab61583e5c026d587b40f35a4ec04896afd39da3f30a5b1d6",
       "frontier/comparison-bounds/high_rho_full_haar_thresholds.py": "877ce197e1634d5814f33166761602a3b4a12c0dd1cb3c9e31709be8e3d956e2",
       "profile-notes/321-384/335-original-ap-blocks-sharpen-the-fixed-full-haar-account.md": "a11040c942c5f5bdd6cdd184b6e1212c7a82a904683d0d11498f782621928cb5",
@@ -26,7 +26,7 @@
     "kind": "inline",
     "value": {
       "sha256": "b7fc74cfa683979080a7f3cb44bdff16f5b123f16ee0c6a2b9311b062e432461",
-      "byte_count": 9057
+      "byte_count": 9111
     }
   },
   "producer_sha256": {

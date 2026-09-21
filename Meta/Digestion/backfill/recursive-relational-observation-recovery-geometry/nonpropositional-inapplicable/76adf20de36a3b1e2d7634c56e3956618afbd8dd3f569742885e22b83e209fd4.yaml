@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:76adf20de36a3b1e2d7634c56e3956618afbd8dd3f569742885e22b83e209fd4
+  normalized_sha256: sha256:76adf20de36a3b1e2d7634c56e3956618afbd8dd3f569742885e22b83e209fd4
+cas_ref: sha256:76adf20de36a3b1e2d7634c56e3956618afbd8dd3f569742885e22b83e209fd4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, no usable project GID. Independence means that PSD and conservation do not imply the off-diagonal sign condition. On the connected unit path3-1-2-4 with partition{1,2}|{3}|{4}, finite rational matrix normalization gives the actual Schur K with rows(2,-1,-1),(-1,5/6,1/6),(-1,1/6,5/6). Matrix.posSemidef_vecMulVec_self_star, Matrix.PosSemidef.smul and Matrix.PosSemidef.add give PSD, while K1=0 and K_BC=1/6>0 are normalization. This is an actual graph-domain counterexample, not a claim of mutual logical independence in every direction.
+    previous_atom_id: c22d817db59bdd6584fa9924f73265f669235b230e81de5fbcf32c875f489a85
+    next_atom_id: 3f871b14407c992792c18f9087d492c29322cd1dd13258a47ac30da025f3564e

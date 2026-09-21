@@ -1,0 +1,41 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "Exact finite original-head optimum for each supplied fixed order. Literal original families refute the universal 9/20 fixed-cap wish in numerical order and, by survivor cardinality, for all fixed orders and all laws retaining the same joint atom cap."
+  },
+  "fixture_results": {
+    "path": "content/001-fixture_results.json",
+    "sha256": "cd82a42e394e8c406b0d61d3cc18844e6222e2257781189f38bf2e99383d00f8",
+    "kind": "array"
+  },
+  "dense_checks": {
+    "path": "content/002-dense_checks.json",
+    "sha256": "0e98411723b196b7559223a9d20f8a8474858ffb57a0f639cf044ef6f0c202fe",
+    "kind": "value"
+  },
+  "period_field_meaning": {
+    "kind": "inline",
+    "value": "original_period is the ambient head coordinate product; exact_label_lcm is the lcm of the supplied original numerical moduli."
+  },
+  "schema": {
+    "kind": "inline",
+    "value": "capped-head-bellman-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+      "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+      "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3"
+  }
+}
