@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [A fixed positive cylinder cover yields a38-term multiaffine survivor bound at new caps on all20 head coordinates, with every coefficient independently reproduced.](../docs/reports/erdos7-odd-covering/problem-details/60-positive-cylinder-covers-across-head-profiles.md)
 - [Globally injective terminal phases reduce core-first optimization; a seven-phase family defeats the fixed balanced-profile budget for every adaptive order while retaining an uncovered integer and154 private class witnesses.](../docs/reports/erdos7-odd-covering/problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md)
 - [An adaptive five-prime initial block recovers fixed-phase noncoverage where all 120 fixed block orders fail the same budget; a cylinder dual excludes scheduling-only recovery of the fixed D7 allowance](../docs/reports/erdos7-odd-covering/problem-details/58-adaptive-initial-block-recovery-and-all-schedule-budget-obstruction.md)
 - [A balanced depth profile enlarges the fixed 154-class noncoverage result to the degree-seven exponent frontier with unrestricted original tails](../docs/reports/erdos7-odd-covering/problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md)
