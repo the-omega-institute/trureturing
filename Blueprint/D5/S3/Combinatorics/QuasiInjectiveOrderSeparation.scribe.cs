@@ -10,7 +10,7 @@ internal sealed class QuasiInjectiveOrderSeparationDocument
     private const string Prefix =
         "D5/S3/Combinatorics/QuasiInjectiveOrderSeparation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/pongsriiam2021quasi");
+        LibraryNoteRef.Create("D5/L/Combinatorics/pongsriiam2021quasi");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every order has a function that is quasi-injective just below it and fails at it.",
