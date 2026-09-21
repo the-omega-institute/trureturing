@@ -1,0 +1,9 @@
+**引理 32.6（循环平均和局部合法支撑的尖锐常数）。** 在长度 $\ell\ge2$ 的轨道 $O$ 上置
+$$
+c_{\rm cyc}(O)=\frac{\lfloor\ell^2/4\rfloor}{\ell}.
+$$
+对任意实函数 $f$，以及任意非负、支撑于真子集 $L\subsetneq O$ 的函数 $u$，分别有
+$$
+\sum_{x\in O}|f(x)-\overline f|
+\le c_{\rm cyc}(O)\sum_{x\in O}|f(gx)-f(x)|,
+\qquad

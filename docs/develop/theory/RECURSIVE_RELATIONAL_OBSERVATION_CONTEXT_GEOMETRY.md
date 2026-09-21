@@ -8166,3 +8166,537 @@ Q 第145—149节仍是固定纯根来源下未知左滤波、条件报告及有
 [^rroctx41_background]: Dennis Kretschmann、Dirk Schlingemann、Reinhard F. Werner，*The Information-Disturbance Tradeoff and the Continuity of Stinespring's Representation*，[arXiv:quant-ph/0605009](https://arxiv.org/abs/quant-ph/0605009)，Theorem 3为一般信息—扰动背景，采用 Heisenberg 通道及完全有界范数的约定；本节的精确最优值不依赖该定理的估计常数。
 
 ## 41.99 追加锚
+
+## 42. 被动相干接收、完整联合来源与已获词记录的熵
+
+本节把同一关系的两种保存任务接起来：相干发射档案可由固定四维接收器逐步保存其全部来源关联；一旦计算基词已被实际取得，精确保留那一次记录则有随词长增长的零误差容量。两者使用同一个装置，却有不同的访问、准备和输出资源合同。[量子上下文卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)以下记为 Q，[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)以下记为恢复卷。Q130—131和恢复卷31供应共同生成器，Q125供应固定根相干态与柱律，本卷第41节供应固定档案的来源恢复。本节是这些供应及成熟相干接收、容量和熵机制的普通数学应用，不重建一般顺序压缩定理，不主张文献新颖性或新增 Lean 认证。
+
+### 42.1 同一装置上的联合任务与纯根任务
+
+**定义 42.1（被动接收的准备与访问合同）。** 固定
+$$
+\begin{gathered}
+\alpha=(\sqrt5-1)/2,\qquad \phi=\alpha^{-1},\qquad
+0<\alpha<1,\qquad \alpha+\alpha^2=1,\qquad B=M=\mathbb C^2,\\
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,
+\qquad P_j^{\rm mem}=|m_j\rangle\langle m_j|\in\mathcal L(M),\\
+T:M\to B\otimes M,\qquad T|j\rangle=|j\rangle\otimes m_j,\\
+H_n=B^{\otimes n},\quad H_0=\mathbb C,\quad T_0=I_M,\quad
+T_{n+1}=(I_{H_n}\otimes T)T_n,\\
+E(X)=\operatorname{Tr}_B(TXT^*)=X_{00}P_0^{\rm mem}+X_{11}P_1^{\rm mem},\qquad
+\Gamma_n(X)=\operatorname{Tr}_M(T_nXT_n^*).
+\end{gathered}
+\tag{42.1}
+$$
+输出在前、活动记忆在后。上标 $\mathrm{mem}$ 明确区分记忆准备投影与后文 $H_n$ 上的支撑投影 $P_n$；它们不能互换。Q命题130.1和本卷（41.2）给固定空白酉
+$$
+R_{\rm rot}=\begin{pmatrix}\sqrt\alpha&-\alpha\\\alpha&\sqrt\alpha\end{pmatrix},\qquad
+W=(|0\rangle\langle0|\otimes R_{\rm rot}+|1\rangle\langle1|\otimes I_M)
+\operatorname{SWAP},\qquad W(|0\rangle\otimes\psi)=T\psi.
+\tag{42.2}
+$$
+每个新空白均是与当时整个联合系统独立的纯态 $|0\rangle$。整个运行使用同一个 $W$，保留同一个活动 $M$，不插入重选来源、复位或生成器反馈。
+
+联合任务以任意固定有限维参考 $J$ 及一次合法准备 $\theta\in\mathcal D(J\otimes M)$ 开始，保存
+$$
+\Omega_n(\theta)=(I_J\otimes T_n)\theta(I_J\otimes T_n^*)
+\in\mathcal D(J\otimes H_n\otimes M).
+\tag{42.3}
+$$
+这里声明的全输入类包含所有这样的密度，并允许实际准备一个 $JM$ Bell 对。接收器只访问已发出系统和它自己的、起初独立的寄存器 $K$，不访问 $J$ 或活动 $M$。若改用受限物理来源类，存在性可限制到该类；四维必要性则须先核对该类是否实际允许下文的 Bell 见证，不能从抽象全输入类移入一项非法准备。
+
+接收酉序列只依赖已知装置、基、相位及发射计数 $n$，不依赖未知输入或接收测量结果。同一序列适用于每个事先指定的有限终端时域。由旧档案外生选定有限时域时，保留选择标签，逐实际条件来源核对相同的空白独立性和生成合同；无界经典标签另需正则条件 cq 表示。接收测量决定的任意在线停止、向 $M$ 反馈以及无限终端解码不在此合同内。
+
+熵应用另固定初态为 $P_0^{\rm mem}$，不是 $|0\rangle\langle0|$，也不是平稳混合态。若有限联合态的 $M$ 边缘纯且等于 $P_0^{\rm mem}$，则它必为 $\theta_J\otimes P_0^{\rm mem}$：令 $P=I_J\otimes P_0^{\rm mem}$，由正性和 $\operatorname{Tr}((I-P)\theta)=0$ 得 $(I-P)\theta^{1/2}=0$，故 $\theta=P\theta P$；记忆支撑一维给出分解。这是第41.5节的同一准备事实。保留更大的旧经典档案时使用定义36.4的实际条件纯根准备，而非只凭边缘相同替换来源。全文使用自然对数；$n$ 只计发射，不是物理持续时间。
+
+### 42.2 实际联合支撑与四列 Gram 的精确秩
+
+**命题 42.2（所有来源块的共同档案支撑）。** 令
+$$
+T_n|i\rangle=\sum_{a=0}^1v^n_{i,a}\otimes|a\rangle,
+\qquad v^n_{i,a}=(I_{H_n}\otimes\langle a|)T_n|i\rangle,
+\qquad S_n=\operatorname{span}\{v^n_{i,a}:i,a\in\{0,1\}\}.
+\tag{42.4}
+$$
+$\Omega_n(\theta)$ 支撑在 $J\otimes S_n\otimes M$。内积第一变量共轭线性时，以 $(0,0),(0,1),(1,0),(1,1)$ 排序的 Gram 矩阵满足
+$$
+G_n[(i,a),(j,b)]=\langle v^n_{i,a},v^n_{j,b}\rangle
+=[E^n(|j\rangle\langle i|)]_{b,a},
+\qquad \operatorname{rank}G_n=\dim S_n.
+\tag{42.5}
+$$
+特别地，
+$$
+\dim S_n=1,2,3,4,4,\ldots\quad(n=0,1,2,3,4,\ldots),
+\qquad S_2=\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}.
+\tag{42.6}
+$$
+这些是已知来源族在 $H_n$ 中的支撑，不是整个 $H_n$ 的维数。
+
+证明。写 $\theta=\sum_{i,j}\theta^J_{ij}\otimes|i\rangle\langle j|$，直接展开
+$$
+\Omega_n(\theta)=\sum_{i,j,a,b}\theta^J_{ij}\otimes
+|v^n_{i,a}\rangle\langle v^n_{j,b}|\otimes|a\rangle\langle b|.
+\tag{42.7}
+$$
+每一个参考／来源非对角块也在声明支撑内。对 $T_n|j\rangle\langle i|T_n^*$ 取档案偏迹，得到
+$$
+E^n(|j\rangle\langle i|)
+=\sum_{b,a}\langle v^n_{i,a},v^n_{j,b}\rangle|b\rangle\langle a|,
+\tag{42.8}
+$$
+即（42.5）。若 $V_n$ 为这四列组成的映射，则 $G_n=V_n^*V_n$，两者核相同，给秩等式。这里复用 Q定理3.1的 Gram 因子化论证，保留各列的实际范数；列可能为零或非单位向量，不能原样套用其单位对角陈述。
+
+$n=0$ 时 $v^0_{i,a}=\delta_{ai}\in\mathbb C$，因此
+$$
+G_0=uu^*,\qquad u=(1,0,0,1)^{\mathsf T},\qquad \operatorname{rank}G_0=1.
+\tag{42.9}
+$$
+从 $n\ge1$ 才有 $E^n(|0\rangle\langle1|)=E^n(|1\rangle\langle0|)=0$。沿用定理41.2的条件记忆权重，置
+$$
+\begin{gathered}
+\tau(u)=(1-u)P_0^{\rm mem}+uP_1^{\rm mem},\qquad
+\lambda=-\alpha^2,\quad \pi_1=\frac{\alpha^2}{1+\alpha^2},\quad
+\pi_0=\frac1{1+\alpha^2},\\
+a_n=\pi_1(1-\lambda^{n-1}),\qquad b_n=\pi_1+\pi_0\lambda^{n-1},\\
+G_n=\tau(a_n)^{\mathsf T}\oplus\tau(b_n)^{\mathsf T}\quad(n\ge1).
+\end{gathered}
+\tag{42.10}
+$$
+转置来自（42.5）的 $b,a$ 次序，即使本装置的所选基中矩阵为实，也不得省去这一类型关系。该分块式不用于 $G_0$。
+
+第一步权重是 $(a_1,b_1)=(0,1)$。由 $\tau(u)_{11}=\alpha^2(1-u)$ 得
+$$
+E(\tau(u))=\tau(\alpha^2(1-u)),\qquad
+\operatorname{Tr}\tau(u)=1,\qquad \det\tau(u)=\alpha^2u(1-u).
+\tag{42.11}
+$$
+仿射递推的不动点为 $\pi_1$，偏差每步乘 $\lambda$，解出（42.10）。实际前三组权重为 $(0,1)$、$(\alpha^2,0)$、$(\alpha^3,\alpha^2)$。端点 $0,1$ 给秩一，内部权重给正行列式与秩二，而 $0<u<1$ 蕴含 $0<\alpha^2(1-u)<1$。于是两块的秩依次为 $(1,1),(2,1),(2,2)$，以后均为 $(2,2)$，加上（42.9）即得全 $n$ 秩序列。
+
+也可直接看第二步的四列：
+$$
+\begin{aligned}
+v^2_{0,0}&=\alpha|00\rangle+\alpha|01\rangle,&
+v^2_{0,1}&=\alpha\sqrt\alpha|00\rangle,\\
+v^2_{1,0}&=\sqrt\alpha|10\rangle,&
+v^2_{1,1}&=\alpha|10\rangle.
+\end{aligned}
+\tag{42.12}
+$$
+它们张成所列 $S_2$；前三列在行 $00,01,10$ 的子式为 $-\alpha^3\ne0$，所以不是仅凭数值阈值判断秩。最后，源非对角单位在记忆通道中消失不表示其从联合态或档案消失：
+$$
+\Gamma_1(|0\rangle\langle1|)=\langle m_1,m_0\rangle|0\rangle\langle1|
+=\sqrt\alpha\,|0\rangle\langle1|.
+\tag{42.13}
+$$
+$\square$
+
+### 42.3 一个对所有有限终端适用的被动接收器
+
+**命题 42.3（四维持续接收与八维门构造）。** 取 $K=\mathbb C^4$。存在已知装置决定的线性映射 $F_n:H_n\to K$，在 $S_n$ 上等距、在 $S_n^\perp$ 上为零，以及 $K\otimes B$ 上的酉 $U_n$，满足
+$$
+U_n[(F_n\otimes I_B)s]=F_{n+1}s\otimes|0\rangle
+\qquad(s\in S_{n+1}\subseteq S_n\otimes B).
+\tag{42.14}
+$$
+初始接收态为 $F_0(1)$。在定义42.1的实际无干预来源族上，依次接收每个发出 qubit 后，完整联合态为
+$$
+\widehat\Omega_n=(I_J\otimes F_n\otimes I_M)\Omega_n
+                         (I_J\otimes F_n^*\otimes I_M).
+\tag{42.15}
+$$
+每次消耗的 $B$ 在丢弃前已是与整个其余系统乘积的纯空白，包含与 $J$ 和活动 $M$ 的关系；不留下输入相关信息。
+
+证明。对（42.4）的活动记忆施加同一个 $T$，逐坐标有
+$$
+v^{n+1}_{i,a}=\sum_{b=0}^1(m_b)_a\,v^n_{i,b}\otimes|b\rangle.
+\tag{42.16}
+$$
+所以 $S_{n+1}\subseteq S_n\otimes B$，且两侧指定映射在该子空间上都等距，有限等距延拓可给（42.14）。为明确给出不需构造 $2^n$ 阶矩阵的门，令
+$$
+w^n_{i,a}=\sqrt{G_n}\,e_{i,a}\in\mathbb C^4,\qquad
+F_nv^n_{i,a}=w^n_{i,a}.
+\tag{42.17}
+$$
+对任意四列系数 $z$，原像与目标的范数平方同为 $z^*G_nz$，故两列映射有相同核，指定映射良定并保持所有内积，包括相关列和零列。再在正交补上置零，即得所需 $F_n$。
+
+构造 $K\otimes B$ 中四个输入、输出列：
+$$
+x_{i,a}=\sum_b(m_b)_a\,w^n_{i,b}\otimes|b\rangle,
+\qquad y_{i,a}=w^{n+1}_{i,a}\otimes|0\rangle.
+\tag{42.18}
+$$
+它们都是 $8\times4$ 矩阵的列。正交输出基使
+$$
+\begin{aligned}
+\langle x_{i,a},x_{j,c}\rangle
+&=\sum_b\overline{(m_b)_a}(m_b)_c\,
+      G_n[(i,b),(j,b)]\\
+&=\sum_b\overline{(m_b)_a}(m_b)_c
+      [E^n(|j\rangle\langle i|)]_{b,b}\\
+&=[E^{n+1}(|j\rangle\langle i|)]_{c,a}
+ =G_{n+1}[(i,a),(j,c)]
+ =\langle y_{i,a},y_{j,c}\rangle.
+\end{aligned}
+\tag{42.19}
+$$
+记列矩阵为 $X_n,Y_n$，则 $X_n^*X_n=Y_n^*Y_n$。直接使用既有 [GramUnitaryExtension.exists_unitary_mul_eq_of_conjTranspose_mul_eq](../../../D5/S3/Quantum/Algebra/GramUnitaryExtension.lean)，以其 $B=Y_n,A=X_n$，得到 $Y_n=U_nX_n$。该声明允许任意有限矩形复矩阵，无满秩假设；因此初期秩亏也被覆盖。[SequentialRegisterCircuit.exists_unitary_agree](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)及同文件的 `rectangular_unitary` 是相应等距／填充寄存器供应，不另立通用包装。实际门规格只需（42.10）的 $4\times4$ 正平方根和八维正交补完成；$n=0$ 使用（42.9）。
+
+酉共轭后偏迹
+$$
+\mathcal A_n:\mathcal L(K\otimes B)\to\mathcal L(K),\qquad
+\mathcal A_n(Y)=\operatorname{Tr}_B(U_nYU_n^*)
+\tag{42.20}
+$$
+在整个输入空间上 CPTP。在 $J\otimes K\otimes B\otimes M$ 的因子次序中，（42.14）逐列作用于实际来源展开，给出的向量恰为（42.15）下一步的 $J,K,M$ 向量插入空白 $|0\rangle_B$；在密度层面就是张量积 $\widehat\Omega_{n+1}\otimes|0\rangle\langle0|_B$，按上述固定次序置换因子。混态及所有参考块由线性性给出。因此先保留再丢弃这个 $B$ 不损失任何联合关系。由 $F_0(1)$ 起归纳即得（42.15）。生成器作用于活动 $M$ 与新空白，接收器作用于 $K$ 与已经发出的 $B$；不交因子的张量线性作用可交换，即使态纠缠也成立。这是操作交换，不是概率独立。
+
+这一归纳的域是实际像族 $\operatorname{Ad}_{T_n}(\theta)$。不能把仅有支撑 $J\otimes S_n\otimes M$ 当成任意下一步的来源闭合。例如 $|1\rangle_{B_1}\otimes|1\rangle_M\in S_1\otimes M$，但
+$$
+(I_B\otimes T)(|1\rangle\otimes|1\rangle)
+=|11\rangle\otimes|0\rangle\notin S_2\otimes M.
+\tag{42.21}
+$$
+静态支持态可逆性仍可成立，因果接续却需要实际联合像。
+
+同一门序列不依赖未来终端 $N$：对 $n\le N$，后续 $T_{N-n}$ 是每个前缀切口另一侧的等距，保持前缀约化态与支撑；（42.16）和 $G_n$ 本身也未使用 $N$。这正是 Blume-Kohout、Croke、Zwolak 的相干逐步收卷机制在来源子空间 $T_N(\mathbb C^2)$ 上的应用，把 $J$ 和终端活动 $M$ 放在未处理／参考一侧。[^rroctx42_bcz] 所需的是每个前缀秩受控与相干访问，不是仅有最终小维数；该文的高纠缠前缀例子排除了后一推断。$\square$
+
+**命题 42.4（真实可达的干预失效）。** 同一装置从合法纯源 $|0\rangle$ 开始，第一步为 $|0\rangle\otimes m_0$。翻转已发出位后继续原生成器，实际得到
+$$
+(I_B\otimes T)(X\otimes I_M)T|0\rangle
+=\sqrt\alpha\,|10\rangle\otimes m_0
+ +\alpha|11\rangle\otimes m_1,
+\qquad X=|0\rangle\langle1|+|1\rangle\langle0|.
+\tag{42.22}
+$$
+非法前缀 $11$ 的概率为 $\alpha^2$。因为 $S_1=H_1$，这个逻辑翻转可在编码像 $F_1S_1$ 上实施并延拓为 $K$ 上的酉，但其继续历史已不属于命题42.3的被动来源族。或者，对第一位作 $X$ 基测量并在概率 $1/2$ 的加分支条件化，此时第一位为 $|+\rangle$、记忆仍为 $m_0$，下一步 $11$ 的条件概率为 $\alpha^2/2$；不条件化的该分支质量为 $\alpha^2/4$。这些数值直接由 $Tm_0$ 的两个正交输出分支计算。
+
+另在 $n=2$，对第一旧位翻转会把 $|01\rangle\in S_2$ 送到非法 $|11\rangle$。即使某个中间测量保持当时支撑，它也会改变原联合源态。命题36.6可把无反馈输出实验的完整分支移到一个固定终端计算，却不证明干预后的历史仍在此被动 $S_n$ 链内，也不供给真实早期访问期限或任意接收结果驱动停止。$\square$
+
+### 42.4 全域通道延拓与原权限内的终端运输
+
+**命题 42.5（支撑逆与完整终端接口）。** 保持 $F_n:H_n\to K$ 在补空间为零，定义
+$$
+P_n=F_n^*F_n\in\mathcal L(H_n),\qquad Q_n=F_nF_n^*\in\mathcal L(K).
+\tag{42.23}
+$$
+它们分别投影到 $S_n$ 与 $F_nS_n$。任取密度 $\omega_n\in\mathcal D(K)$ 及支撑在 $S_n$ 的密度 $\xi_n$，令
+$$
+\begin{aligned}
+\mathcal C_n(X)&=F_nXF_n^*+\operatorname{Tr}((I_{H_n}-P_n)X)\omega_n,
+&&X\in\mathcal L(H_n),\\
+\mathcal B_n(Y)&=F_n^*YF_n+\operatorname{Tr}((I_K-Q_n)Y)\xi_n,
+&&Y\in\mathcal L(K).
+\end{aligned}
+\tag{42.24}
+$$
+两者在整个声明载体上 CPTP，且
+$$
+\mathcal B_n\mathcal C_n(X)=X\qquad(X=P_nXP_n).
+\tag{42.25}
+$$
+这是全支撑算子恒等式，不限于密度或来源边缘；与任意有限参考恒等张量后仍成立，特别可保留 $J$ 和实际活动 $M$。
+
+证明。对任一补投影 $R$，取其像的正交基 $(e_l)$，并把所准备密度写成 $\sum_jt_j|u_j\rangle\langle u_j|$。映射 $X\mapsto\operatorname{Tr}(RX)\sum_jt_j|u_j\rangle\langle u_j|$ 的 Kraus 算子为
+$$
+K_{jl}=\sqrt{t_j}|u_j\rangle\langle e_l|,\qquad
+\sum_{j,l}K_{jl}^*K_{jl}=R.
+\tag{42.26}
+$$
+对 $\mathcal C_n$ 加入主 Kraus $F_n$，平方和为 $P_n+(I-P_n)=I_{H_n}$；对 $\mathcal B_n$ 加入 $F_n^*$，平方和为 $Q_n+(I-Q_n)=I_K$。这同时证明全域 CP 与 TP，包括补支撑分支。若 $X=P_nXP_n$，第一补项为零，$F_nXF_n^*$ 支撑在 $Q_n$，第二补项也为零，复合恰为 $P_nXP_n=X$。参考版本按其矩阵单位展开即可，不增加独立性前提。命题42.3的顺序接收在实际来源族上与 $\mathcal C_n$ 一致；它在任意不受此合同约束的 $H_n$ 输入上的行为不必等于这个方便的静态补空间延拓。$\square$
+
+**推论 42.6（合法解码类、仪器和 POVM 的运输）。** 任何原来合法的完整终端通道或仪器 $\Lambda$，可在 $\operatorname{id}_J\otimes\mathcal B_n\otimes\operatorname{id}_M$ 后使用同一个 $\Lambda$。在（42.3）的实际族上，每个仪器分支的次归一化联合态、概率、失败和保留记录完全相同。若 $\Lambda$ 原本只访问档案，就仍只访问档案；若原本可读 $J$ 或活动 $M$，也只保留原有权限。接收器本身未得到这些权限。
+
+具体地，任意原档案解码器 $\mathcal D:\mathcal L(H_n)\to\mathcal L(O)$ 对应 $\widehat{\mathcal D}=\mathcal D\mathcal B_n$；反向，任意接收解码器 $\widehat{\mathcal D}:\mathcal L(K)\to\mathcal L(O)$ 对应 $\widehat{\mathcal D}\mathcal C_n$。由于
+$$
+\mathcal B_n\mathcal C_n\Gamma_n=\Gamma_n
+\quad\hbox{在全部源算子上成立},
+\tag{42.27}
+$$
+两个无限制 CPTP 解码类可实现的来源到 $O$ 通道集合相同。故对这些通道的任意相同范数目标，最优值相等。对 $n\ge1$、$O=M$，精确接入定理41.2：
+$$
+\begin{gathered}
+c_n=\|\sqrt{\tau(a_n)}\sqrt{\tau(b_n)}\|_1,\qquad
+c_n^2=1-\alpha^2
+ [\sqrt{a_n(1-b_n)}-\sqrt{b_n(1-a_n)}]^2,\\
+\inf_{\widehat{\mathcal D}\ {\rm CPTP}}
+ \|\widehat{\mathcal D}\mathcal C_n\Gamma_n-\operatorname{id}_M\|_\diamond
+=\inf_{\mathcal D\ {\rm CPTP}}
+ \|\mathcal D\Gamma_n-\operatorname{id}_M\|_\diamond
+=1-c_n.
+\end{gathered}
+\tag{42.28}
+$$
+这里是根保真度和完整 diamond 范数；半 diamond 最优误差仍是 $(1-c_n)/2$。达到值的通道为已有 $\mathcal D_n\mathcal B_n$，其中 $\mathcal D_n$ 正是（41.17）的受控极分解解码器，本节不重证其最优恢复定理。受限硬件类仅在实际允许这两方向的所需复合时继承集合等价；抽象 CPTP 存在性不保证硬件封闭性。
+
+对原档案 POVM $(E_y)$，伴随运输为
+$$
+\widehat E_y=\mathcal B_n^*(E_y)
+=F_nE_yF_n^*+\operatorname{Tr}(\xi_nE_y)(I_K-Q_n),
+\qquad \sum_y\widehat E_y=I_K.
+\tag{42.29}
+$$
+证明。联合逆（42.25）之后接同一仪器的每个 CP 分支，便得完整分支恒等；两方向复合给（42.27）及可实现集合等价。最后对（42.24）逐项作迹配对得到（42.29），正性逐项成立，归一化用 $\sum_yE_y=I_{H_n}$、$\operatorname{Tr}\xi_n=1$。仅用 $F_nE_yF_n^*$ 则总和为 $Q_n$，初期 $\dim S_n<4$ 时并非环境空间上的 POVM。必须运输完整仪器或整个联合 POVM，不能由此声称独立端口代数均被保留。$\square$
+
+**命题 42.7（合法词空间不是源支撑）。** 在三位合法词空间中
+$$
+\psi=(|000\rangle-|010\rangle)/\sqrt2
+\tag{42.30}
+$$
+与 $S_3$ 正交。因而任何由（42.24）的 $\mathcal B_3$ 输出的密度 $\zeta$ 都满足
+$D(|\psi\rangle\langle\psi|,\zeta)=1$，特别包括 $\zeta=\mathcal B_3\mathcal C_3(|\psi\rangle\langle\psi|)$；这里 $D=\tfrac12\|\cdot\|_1$。
+
+证明。$W_3=\{000,001,010,100,101\}$ 张成的合法词空间维数为五，而命题42.2给 $\dim S_3=4$。更具体地，
+$$
+\begin{aligned}
+T_3|0\rangle
+ &=\alpha|000\rangle m_0+\alpha\sqrt\alpha|001\rangle m_1
+      +\alpha|010\rangle m_0,\\
+T_3|1\rangle
+ &=\sqrt\alpha|100\rangle m_0+\alpha|101\rangle m_1.
+\end{aligned}
+\tag{42.31}
+$$
+前一行的 $000,010$ 记忆列完全相同，后一行二者均为零，故 $\psi$ 正交于四列。$\mathcal B_3$ 的两项都支撑在 $S_3$，所以与 $|\psi\rangle$ 支撑正交；两密度之差在不交支撑上正负分块，迹范数为二。这里排除的是把任意合法编码态当作可接收的实际相干来源态。$\square$
+
+### 42.5 Bell 联合见证的尖锐容量与端口代数
+
+**命题 42.8（普遍联合任务的最小接收维数）。** 在定义42.1确实允许 Bell 准备的来源类中，经档案一侧 CPTP 编码与恢复而精确保留原来的 $J,H_n,M$ 联合态，所需有效寄存器维数至少是
+$$
+d_n=\dim S_n=1,2,3,4,4,\ldots.
+\tag{42.32}
+$$
+在各固定时域取 $S_n$ 的等距编码可达到这个维数；命题42.3以单一 $K=\mathbb C^4$ 的序列实现所有时域，从 $n\ge3$ 起四维尖锐。
+
+证明。实际准备 $|\Phi\rangle_{JM}=(|00\rangle+|11\rangle)/\sqrt2$，使用相同独立空白和同一 $T$。仅为写 Schmidt 分解，把档案放到左侧，演化纯向量为
+$$
+|\Psi_n\rangle=\frac1{\sqrt2}\sum_{i,a}v^n_{i,a}\otimes|i\rangle_J\otimes|a\rangle_M,
+\qquad \operatorname{Tr}_{JM}|\Psi_n\rangle\langle\Psi_n|
+=\Gamma_n(I_M/2)=\frac12\sum_{i,a}|v^n_{i,a}\rangle\langle v^n_{i,a}|.
+\tag{42.33}
+$$
+正项之和的核是四列共同正交补，故其支撑恰为 $S_n$。因此 Schmidt 分解为
+$|\Psi_n\rangle=\sum_{r=1}^{d_n}\sqrt{s_r}|e_r\rangle|f_r\rangle$，所有 $s_r>0$，$e_r$ 张成 $S_n$，$f_r$ 位于实际 $JM$。
+
+设编码 $\mathcal C$ 与恢复 $\mathcal B$ 经过 $k$ 维寄存器，且
+$(\mathcal L\otimes\operatorname{id}_{JM})(|\Psi_n\rangle\langle\Psi_n|)=|\Psi_n\rangle\langle\Psi_n|$，$\mathcal L=\mathcal B\mathcal C$。用 $\langle f_r|$、$|f_s\rangle$ 夹取参考／记忆块得
+$$
+\sqrt{s_rs_s}\,\mathcal L(|e_r\rangle\langle e_s|)
+=\sqrt{s_rs_s}\,|e_r\rangle\langle e_s|.
+\tag{42.34}
+$$
+非零系数强迫 $\mathcal L$ 固定每个支撑矩阵单位，不仅是一个对角混合态。于是 $r\ne s$ 时，迹距离收缩给
+$$
+1=D(|e_r\rangle\langle e_r|,|e_s\rangle\langle e_s|)
+\le D(\mathcal C(|e_r\rangle\langle e_r|),
+       \mathcal C(|e_s\rangle\langle e_s|))\le1.
+\tag{42.35}
+$$
+距离一的密度具有正交支撑：达到距离的二元 Helstrom 效应对一态概率一、对另一态概率零，正性使其分别位于该效应的本征值一、零子空间。故编码密度的 $d_n$ 个非零支撑两两正交，$k\ge d_n$。等价地可用 Q定理7.5的零错误容量结论。这些基态测试是单个合法 Bell 联合约束的代数后果，不需要另假设每个 $e_r$ 都是可单独准备的源态。任何额外携带输入相关信息的接收系统，也须计入编码资源，不能藏在 $K$ 之外。$\square$
+
+这个下界只属于所声明的普遍联合任务。仅恢复来源 qubit、固定已知纯根、复现输出边缘或准备一个已知混态，都不是它的替代假设。Q125.1及恢复卷31.3已给固定 $P_0^{\rm mem}$ 根的档案在 $n\ge1$ 恰为秩二，下文也由记忆行列式核对；它不能见证此处普遍任务的四维必要性。
+
+**命题 42.9（压缩不保留两个独立尖锐端口）。** 在 $n=2$ 写
+$$
+P=P_2=|00\rangle\langle00|+|01\rangle\langle01|+|10\rangle\langle10|,
+\qquad A=P(X\otimes I)P,\qquad B'=P(I\otimes X)P.
+\tag{42.36}
+$$
+虽然未压缩的两个 Pauli 算子对易，但
+$$
+[A,B']|01\rangle=|10\rangle.
+\tag{42.37}
+$$
+证明。$B'|01\rangle=|00\rangle$，$A|00\rangle=|10\rangle$，而 $A|01\rangle=0$，所以按 $[A,B']=AB'-B'A$ 得所列等式。$F_2$ 在 $S_2$ 等距，故 $F_2AF_2^*$、$F_2B'F_2^*$ 的交换子在 $F_2|01\rangle$ 上仍非零。这是压缩不保持乘法的具体实例，接续 Q125.2的压缩反例和 Q定理7.5的独立片段访问边界。
+
+仍可把原来两个 Pauli 的整个联合 POVM
+$$
+E_{st}=\tfrac14(I+sX)\otimes(I+tX),\qquad s,t\in\{-1,1\},
+\tag{42.38}
+$$
+按（42.29）运输成 $K$ 上正且总和为 $I_K$ 的联合 POVM。其边缘一般为非尖锐效应，在 $Q_2$ 子空间上的一阶矩就是上面的非对易压缩算子。非对易的非尖锐边缘不意味着不联合可测；这里已有明确联合 POVM。若需恢复原来的有限张量端口，可实施 $\mathcal B_2$，但输出空间、空白、路由和门须另计。这不提供同时独立端口或无损连续解码副本。$\square$
+
+### 42.6 实际纯根的词律与两个有限熵
+
+**命题 42.10（同一个固定根的完整词熵）。** 现在只用定义42.1的纯根合同。记 $\Xi_n=T_nm_0$、$\rho_n=\Gamma_n(P_0^{\rm mem})$，$W_n$ 为无相邻 $11$ 的长度 $n$ 二元词，$\ell(w)$ 为非空词末位。则对 $n\ge1$，
+$$
+\Xi_n=\sum_{w\in W_n}\alpha^{(n+\ell(w))/2}|w\rangle\otimes m_{\ell(w)},
+\qquad p_n(w)=\Pr(Y_1\cdots Y_n=w)
+=\begin{cases}\alpha^{n+\ell(w)},&w\in W_n,\\0,&w\notin W_n.\end{cases}
+\tag{42.39}
+$$
+$Y$ 是整份实际计算基记录。以 $q_0=0$ 作为初始根权重、$q_n=\Pr(Y_n=1)$（$n\ge1$），有
+$$
+q_{n+1}=\alpha^2(1-q_n),\qquad q_n=\pi_1(1-\lambda^n),\qquad
+H(Y_1,\ldots,Y_n)=(n+q_n)\log\phi.
+\tag{42.40}
+$$
+$n=0$ 只有一个空词，熵为零；不为空词另造一个末位随机变量。
+
+证明。Q130.1的两个源恒等式为
+$Tm_0=\sqrt\alpha|0\rangle m_0+\alpha|1\rangle m_1$、$Tm_1=|0\rangle m_0$。第一步给系数 $\sqrt\alpha,\alpha$。若末位为零，原系数 $\alpha^{n/2}$ 分别乘 $\sqrt\alpha,\alpha$，恰为下一步末位零、一所需的 $\alpha^{(n+1)/2},\alpha^{(n+2)/2}$；若末位为一，原系数 $\alpha^{(n+1)/2}$ 只延长零，仍是所需系数。每个合法延长出现一次，附一到一之后的振幅为零。归纳给（42.39），记忆向量单位范数给实际 Born 概率。这保留 Q125.3和Q130.1对固定左根律的所有权。
+
+因此转移矩阵为
+$$
+P_{\rm word}=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},
+\qquad \Pr(Y_1=0,1)=(\alpha,\alpha^2).
+\tag{42.41}
+$$
+它是虚拟左邻位固定为零后的根律，不是初始分布 $(\pi_0,\pi_1)$ 的平稳 Parry 律。由第二列读出 $q_{n+1}=\alpha^2(1-q_n)$，解出（42.40）；例如 $q_1=\alpha^2$、$q_2=\alpha^3\ne q_1$。对每个合法词，$-\log p_n(w)=(n+\ell(w))\log\phi$，取期望就得词熵。无反馈的旧输出计算基获取可依命题36.6移到终端计算，保留相同完整记录律与分支权重；这不删除真实已获记录，也不让早期可用结果凭空出现。$\square$
+
+**命题 42.11（相干档案与活动记忆的共同谱）。** 同一纯 $\Xi_n$ 的记忆边缘为
+$$
+\sigma_n=E^n(P_0^{\rm mem})=\tau(q_n),\qquad
+\nu_\pm(u)=\frac{1\pm\sqrt{1-4\alpha^2u(1-u)}}2,
+\tag{42.42}
+$$
+且
+$$
+S(\rho_n)=S(\sigma_n)=h_2(\nu_-(q_n))\le\log2,
+\qquad h_2(t)=-t\log t-(1-t)\log(1-t).
+\tag{42.43}
+$$
+端点采用 $0\log0=0$。$n\ge1$ 时 $\rho_n$ 恰为秩二，$n=0$ 时 $\rho_0=(1)$、$\sigma_0=P_0^{\rm mem}$ 均纯。
+
+证明。根权重从零开始，与（42.11）同一递推给记忆公式；迹一和行列式 $\alpha^2u(1-u)$ 给二次特征根（42.42）。有限纯二分态的互补边缘共享全部非零谱，故用既有 [InputInformationBalance.pure_complementary_entropy](../../../D5/S3/Quantum/Information/InputInformationBalance.lean) 的机制得到熵等式，二元谱熵至多 $\log2$。对 $n\ge1$，$q_n\in(0,1)$，行列式正，两个特征值都正，因而两边非零谱恰有两项。这里评价的是 Q125.1的实际根密度，而非把它换成 $\Gamma_n(|0\rangle\langle0|)$ 或 $\Gamma_n(\tau(\pi_1))$。$\square$
+
+### 42.7 相干差、保留活动记忆的条件熵与显式余项
+
+**命题 42.12（实际 cq 记录的条件熵）。** 在每个固定 $H_n$ 上令 $\Delta_n$ 为计算基完全去相位，定义与通道 $\mathcal C_n$ 不同的标量
+$$
+\chi_n=D_{\rm rel}(\rho_n\|\Delta_n\rho_n)
+=H(Y)-S(\tau(q_n))\ge0.
+\tag{42.44}
+$$
+$D_{\rm rel}$ 是量子相对熵，不是半迹距离。实际测量后保留活动记忆的状态为
+$$
+\xi_{YM}=\sum_{w\in W_n}p_n(w)|w\rangle\langle w|\otimes P_{\ell(w)}^{\rm mem},
+\qquad \xi_M=\tau(q_n),
+\tag{42.45}
+$$
+其中 $n=0$ 单独取空记录与 $P_0^{\rm mem}$。于是
+$$
+S(\xi_{YM})=H(Y),\qquad H(Y\mid M)_\xi=\chi_n,\qquad
+I(Y:M)_\xi=S(\tau(q_n))\le\log2.
+\tag{42.46}
+$$
+
+证明。$\Delta_n\rho_n=\sum_wp_n(w)|w\rangle\langle w|$，且每个合法词的 $p_n(w)>0$。$\rho_n$ 支撑在合法词张成空间，后者恰是 $\Delta_n\rho_n$ 的支撑，所以相对熵的支撑包含条件成立。在该支撑上对角对数给
+$$
+\operatorname{Tr}(\rho_n\log(\Delta_n\rho_n))
+=\sum_wp_n(w)\log p_n(w).
+\tag{42.47}
+$$
+代入相对熵定义和（42.43）即得（42.44）；非负性是有限维相对熵非负性／pinching 恒等式的既有结论。对应 Q89.1—89.4及 [EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity](../../../D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.lean) 时，固定一个 $H_n$，在该载体取酉 $I$、从 $\rho_n$ 到 $\Delta_n\rho_n$ 的一步，随后保持去相位态即可；不把不同 $n$ 的增长载体当成其一个固定载体上的时间迭代。相对熵相干量的标准表达也见 Baumgratz–Cramer–Plenio 的式（8）。[^rroctx42_coherence]
+
+对（42.39）作实际计算基测量，词 $w$ 的条件记忆正是纯态 $P_{\ell(w)}^{\rm mem}$，故得（42.45）。不同词的经典块彼此正交，各块只有一个非零本征值 $p_n(w)$，所以联合熵为 $H(Y)$；偏迹后的记忆为 $(1-q_n)P_0^{\rm mem}+q_nP_1^{\rm mem}$。按条件熵及互信息定义相减即得（42.46）。这里真正保留了活动 $M$，没有替换它；$\langle m_0,m_1\rangle=\sqrt\alpha>0$，两个记忆标签不能作为完美可读的末位旗标。$\square$
+
+**命题 42.13（熵率与全 $n$ 有限量的定量尾）。** 有
+$$
+n\log\phi-\log2\le\chi_n\le(n+1)\log\phi,
+\qquad
+\lim_{n\to\infty}\frac{H(Y_1,\ldots,Y_n)}n
+=\lim_{n\to\infty}\frac{H(Y_1,\ldots,Y_n\mid M)}n=\log\phi.
+\tag{42.48}
+$$
+更精确地，置 $s(u)=h_2(\nu_-(u))$、$s_*=s(\pi_1)$ 和
+$$
+I_\alpha=[\alpha^3,\alpha^2]\subset(0,1),\qquad
+L=\max_{u\in I_\alpha}|s'(u)|<\infty.
+\tag{42.49}
+$$
+对每个 $n\ge1$，
+$$
+\left|\chi_n-[n\log\phi+\pi_1\log\phi-s_*]\right|
+\le\pi_1(\log\phi+L)\alpha^{2n}.
+\tag{42.50}
+$$
+所以余项为 $O(\alpha^{2n})$，但这里只对有限时域的数列作渐近陈述，不给一个假定无限密度矩阵赋熵。
+
+证明。用 $0\le q_n\le1$、$0\le s(q_n)\le\log2$ 与（42.40）、（42.44）立即得界和速率。$q_1=\alpha^2$、$q_2=\alpha^3$；递推把区间 $I_\alpha$ 映到自身，因为下端像为 $\alpha^2(1-\alpha^3)\le\alpha^2$，上端像为 $\alpha^2(1-\alpha^2)=\alpha^3$。$\pi_1$ 也在此区间：$\pi_1<\alpha^2$，而 $\pi_1>\alpha^3$ 等价于 $\alpha+\alpha^3<1$，由 $\alpha^3<\alpha^2$ 得到。于是所有 $n\ge1$ 都可使用同一个紧内部区间。
+
+在此区间 $\alpha^2u(1-u)>0$，且 $1-4\alpha^2u(1-u)\ge1-\alpha^2=\alpha>0$，故 $\nu_-(u)\in(0,1/2)$，$s$ 为 $C^1$，其导数最大值有限。由
+$$
+q_n-\pi_1=-\pi_1\lambda^n,\qquad
+\chi_n-[n\log\phi+\pi_1\log\phi-s_*]
+=(q_n-\pi_1)\log\phi-[s(q_n)-s(\pi_1)]
+\tag{42.51}
+$$
+和中值定理得（42.50）。若需不用极值符号的保守常数，写
+$r(u)=\sqrt{1-4\alpha^2u(1-u)}$，则
+$\nu_-'(u)=\alpha^2(1-2u)/r(u)$；在 $I_\alpha$ 上有
+$|\nu_-'|\le\alpha^{3/2}$、$\nu_-\ge\alpha^2u(1-u)\ge\alpha^6$，所以
+$|s'|=|\nu_-'\log((1-\nu_-)/\nu_-)|\le6\alpha^{3/2}\log\phi$。
+$n=0$ 时 $\chi_0=0$，不把它强塞入（42.49）的区间。$\square$
+
+在同一纯根准备下，旧有限 $J$ 与新生成 $YM$ 因初始分解和局部作用而保持乘积，故 $H(Y\mid JM)=H(Y\mid M)=\chi_n$。较大旧经典档案须具有定义36.4所述标准 Borel 值空间、实际可测正则条件密度核及逐纤维相同准备；相同公式才可在该核上逐纤维使用。这不是关于任意无限量子参考的紧性结论。更不能把（42.48）称为相对于整个最终观察者的正条件熵：那个观察者一旦已含实际取得的 $Y$，就有 $H(Y\mid Y,\text{其它记录})=0$。旧精确副本 $Y$ 作为解码侧信息，也会把合同改成 $H(Y\mid M,Y)=0$。
+
+### 42.8 测量扩张、原样本身份与已获记录容量
+
+**命题 42.14（相干复制不产生全局熵）。** 在固定时域把空白记录 $A$ 相干写入为
+$|w\rangle_H|0\rangle_A\mapsto|w\rangle_H|w\rangle_A$。纯根的完整态变成
+$$
+|\Upsilon_n\rangle_{HAM}
+=\sum_{w\in W_n}\sqrt{p_n(w)}\,|w\rangle_H|w\rangle_A m_{\ell(w)},
+\qquad S(HAM)=0.
+\tag{42.52}
+$$
+$n=0$ 使用空词和 $m_0$。对 $H$ 偏迹得到（42.45）的 $AM$ 版本，故 $S(A)=H(Y)$。若在复制之前已对 $M$ 偏迹，则复制后的 $HA$ 联合态熵为 $S(\rho_n)$，并非必为零。
+
+证明。不同 $w$ 的复制基像正交，故复制是等距并保持纯向量范数；可用有限空白酉延拓实现。偏迹 $H$ 消去不同词交叉项，留下所写纯条件记忆的 cq 块。若输入为混合 $\rho_n$，等距保持其非零谱，故联合熵为 $S(\rho_n)$。这是 Q89及 [CoherentCopyCorrelationTax.vonNeumannEntropy_coherentCopyState](../../../D5/S3/Quantum/Information/CoherentCopyCorrelationTax.lean) 的直接应用；同文件 `coherent_copy_correlation_tax` 还把复制系统的互信息分解为记录熵加相干差，未将它认作热力学成本。这里 $\chi_n$ 量化约化访问所失去的相干，不是总熵的产生。$\square$
+
+**命题 42.15（保留同一次已获词的零错误容量）。** 若 $Y$ 已实际取得，要求没有可访问解码侧信息的存储器日后精确读出同一个来源索引词，则其量子存储维数至少为
+$$
+N_n=|W_n|=F_{n+2},\qquad F_0=0,\quad F_1=1;
+\tag{42.53}
+$$
+固定长度经典存储至少为 $\lceil\log_2F_{n+2}\rceil$ 位。
+
+证明。每个合法词在（42.39）下都有正概率。若编码词 $w$ 为密度 $\zeta_w$，精确读出的 POVM $(M_w)$ 必须对每个词有 $\operatorname{Tr}(M_w\zeta_w)=1$ 且对其它标签概率零；即使只先要求实际平均零错误，所有正权重也强迫逐标签零错误。正性使不同标签密度落在读出效应的正交确定性子空间中，所以这些密度有互相正交的非零支撑；Q定理7.5的 $\beta=0$ 容量也直接给维数至少 $N_n$。计数的初值是 $N_0=1,N_1=2$；$n\ge2$ 时，以零结尾的词有 $N_{n-1}$ 个，以一结尾的词前一位须为零，有 $N_{n-2}$ 个，故 $N_n=N_{n-1}+N_{n-2}=F_{n+2}$。经典 $b$ 位至多有 $2^b$ 个状态，给上取整位数下界。该结论是零错误支撑／基数结论，不等于 Shannon 熵，不覆盖侧信息辅助或可变长编码。$\square$
+
+实际不可逆计算基测量后的档案为 $\Delta_n\rho_n$，对所有 $W_n$ 具有正对角支撑。其支撑是整个合法词空间：$n\ge3$ 时已超过四维，尤其 $n=3$ 的维数是五，而不是 $S_3$。若把原结果保留为不可访问参考，要求档案一侧恢复与它的对角复制关联，夹取每个正概率参考标签就强迫逐词恢复；四维相干接收定理不涵盖此已测档案任务。
+
+相干资源失去也有一位例子。令 $|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$，则
+$$
+\Gamma_1(|\pm\rangle\langle\pm|)
+=\tfrac12\begin{pmatrix}1&\pm\sqrt\alpha\\\pm\sqrt\alpha&1\end{pmatrix}.
+\tag{42.54}
+$$
+两态计算对角完全相同，相干相位不同；只拿到不可逆去相位后的档案不能同时恢复它们。取得测量环境的相干访问会改变操作合同，不能从原来的经典记录推断。
+
+四维 $K$ 允许具有多于四个结果的 POVM；执行它新产生的实际结果寄存器是额外资源，不能据此断言这些标签此前已作为可区分态储存在 $K$。另抽一份同边缘的独立 $Y'$ 也不保存原样本。令保留参考中的原词为 $R$，正确复制的联合律为 $p_n(w)\mathbf1_{v=w}$，独立重抽则为 $p_n(w)p_n(v)$，直接分开对角与非对角项得
+$$
+\operatorname{TV}(\text{原词的对角复制},\text{独立乘积})
+=\tfrac12\left[\sum_wp_n(w)(1-p_n(w))+
+                 \sum_{w\ne v}p_n(w)p_n(v)\right]
+=1-\sum_wp_n(w)^2>0\quad(n\ge1).
+\tag{42.55}
+$$
+严格性因至少两个合法词具有正概率。由此必须保留实际样本身份及其原关系；仅同边缘律不够。这里没有单次擦除成本、热、功或物理熵产生等式，这些量需要额外能量、温度、环境与允许操作合同。
+
+### 42.9 共同关系接口的资源、供应与边界
+
+**约定 42.16（分开计量的实现资源）。** 四维只计两次发射之间的持续接收 $K$；每步交互为八维 $K\otimes B$。活动生成记忆 $M$、外部参考 $J$、既有经典档案、控制器／计数器、时序安排、校准的 $n$ 依赖门描述、门综合与精度、路由、终端结果寄存器及重新展开的输出端口／空白分别计量。通常计数到 $n$ 的经典计数器需要增长的存储；外部预排时序也有实际描述和时钟成本。本证明给每一步理想有限矩阵，未给有界总经典控制内存、常数总观察者容量或常数运行时间。
+
+终端 $\mathcal B_n$ 可以需要 $n$ 个输出空白、$O(n)$ 个输出端口以及实际展开门。只有在相应硬件允许时，可直接实现运输后的 POVM 来避免显式物化所有端口；许多可能结果仍需要实际保留结果的空间。源 qubit 的生成容量二、普遍接收容量四以及已获词容量 $F_{n+2}$ 是三个不同资源任务，不相互抵消。
+
+完整观察者始终按定义36.4保留一切已获设备／来源／版本身份、内外记录及关系、相位与校准约定、局部钟读数和已知钟关系、时间顺序、动作守卫、结果与失败。本节只换相干发射子系统的表示，未删除这些背景和联合约束。第39节所要求的共同实际来源在（42.3）中表现为同一个 $\theta$ 产生全部前缀；第40节的相对钟必须由实际历史和其饱和合同取得，本节的发射数不能替代它。离散前缀、完成态和体／边表示的联系仍受第36、39节及 Q125的分离、共同实现、拓扑与获取条件约束；逐个有限终端能恢复不等于已经取得一个无限终端解码器。
+
+对任意有限量子 $J$，支撑逆恒等式统一成立。若旧经典档案 $C$ 无界，一个明确扩展是：$C$ 取标准 Borel 值，保留其实际概率 $\mu$ 和可测正则条件密度核 $c\mapsto\theta_{JM\mid c}$，每个纤维采用相同装置，或有明确可测的校准坐标识别；独立空白和生成合同逐纤维成立。于是（42.25）在实际 cq 核上逐纤维成立，保留 $C$ 再积分即可。外生有限时域标签也须如此保留，不能在后选择后丢失选择律。这里不声称任意无限量子参考、某个固定表示中的无限密度矩阵、normal 性或共同无限解码器。
+
+精确代数构造不是任意有限门字母表的精确综合、实验室可行性、泄漏／门噪声鲁棒性或真实早期截止的证明。在线干预、接收结果反馈和改变停止规则要重新证明可达来源族；静态逆不能替代该义务。空间、边界、记忆和发射顺序在这里通过同一有限关系接口连接，不由名称推出物理波、时空密度、全波本体或普遍时空定律。
+
+**约定 42.17（供应的准确归属）。** Q定理3.1提供保留范数的 Gram 因子化方法，本节不用其单位对角条件冒充任意列；`GramUnitaryExtension` 的矩形等 Gram 声明直接供应（42.19）的八维酉，`SequentialRegisterCircuit` 供应有限等距延拓与空白寄存器实现。Q定理7.5供应完美区分容量及独立片段访问警示；Q定理13.3供应受控极分解和联合预测约束，本卷定理41.2已专门构造固定档案解码器，本节仅复合（42.24）。Q89及上述互补熵、相干复制、pinching 的 Lean 声明分别供应熵机制，它们的有限载体和纯度条件保持原样，本节普通计算不等于编译了这些特殊化。
+
+Q命题125.1—125.4拥有固定根相干密度、秩二、相容局部态、固定左根非平稳词律和指定无限表示限制；Q130.1、131.1拥有确切的 $T$、独立空白酉、纯联合展开、持续记忆关联和 $E$ 的根混合递推。恢复卷定义31.1、定理31.2、命题31.3拥有全 $k$ 的对应结构；在 $k=2$，其（31.8）仅交换记忆基，输出次序不交换。该卷第31.2节的最小生成容量与本节接收容量不同。Context定义36.4、命题36.5—36.6拥有完整档案、真实条件准备、追加记录和固定生成的参考安全终端推迟；推迟不授予提前行动能力。Q98、Q104及 [CoherentHistorySchmidt](../../../D5/S3/Quantum/Entanglement/CoherentHistorySchmidt.lean) 的占据多重集切口秩结论保留其占据扇区假设，不能直接代替本装置的四列 Gram 或 Bell 联合容量论证。
+
+外部相干收卷方法归 Blume-Kohout–Croke–Zwolak，尤其其保留参考关联和将消耗位清空的 Section II。Schön等人的有限开边界 MPS／顺序等距方法提供相邻背景；其纯发射态刻画要求最终辅助系统解耦，本节档案通常混合且活动 $M$ 仍相关，不能由生成 bond 维数二推出接收维数二。[^rroctx42_schon] Koashi–Imoto 的固定态族分解区分经典、量子与冗余部分；保留族边缘而丢弃冗余混合因子不自动保留真实纯化，其 VIII.E 的 iid 渐近压缩也不是这里相关顺序来源的精确容量依据。[^rroctx42_ki]
+
+[^rroctx42_bcz]: Robin Blume-Kohout, Sarah Croke and Michael Zwolak, *Ideal state discrimination with an O(1)-qubit quantum computer*, [arXiv:1201.6625v1](https://arxiv.org/pdf/1201.6625v1), Section II：以参考纯化已知矩阵乘积子空间，把每个前缀 Schmidt 支撑相干转移到接收器并留下空白位；前缀纠缠和相干访问条件不能只以最终子空间小来替代。
+
+[^rroctx42_schon]: C. Schön, E. Solano, F. Verstraete, J. I. Cirac and M. M. Wolf, *Sequential generation of entangled multi-qubit states*, [arXiv:quant-ph/0501096v1](https://arxiv.org/pdf/quant-ph/0501096v1), *Physical Review Letters* **95**, 110503 (2005)：有限顺序等距与 MPS、受控辅助维数；纯输出态刻画的最终辅助解耦条件须单独保留。
+
+[^rroctx42_ki]: Masato Koashi and Nobuyuki Imoto, *What is Possible Without Disturbing Partially Known Quantum States?*, [arXiv:quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2)：固定态族的不扰动结构及经典／量子／冗余区分；VIII.E 讨论渐近忠实独立来源压缩，不供应本节的精确实际纯化保持任务。
+
+[^rroctx42_coherence]: T. Baumgratz, M. Cramer and M. B. Plenio, *Quantifying Coherence*, [arXiv:1311.0275](https://arxiv.org/abs/1311.0275), equation (8)：相对熵相干量为 $S(\Delta\rho)-S(\rho)$。本节同时沿用 Q89的访问边界，不将该差值解释为未经建模的热或功。
+
+## 42.99 追加锚

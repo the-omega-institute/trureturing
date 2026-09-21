@@ -1,6 +1,6 @@
 # The actual near-J source and the unit refund
 
-This note continues `339-irredundant-source-seven-labels-bound-the-actual-surplus.md`. The original note was split so that each file stays inside the per-file line budget; no text was changed.
+This note continues [339](339-irredundant-source-seven-labels-bound-the-actual-surplus.md), retaining its actual source family and source laws.
 
 ## The actual near-J sources cannot attain their entrywise square envelopes
 
@@ -127,8 +127,9 @@ The existing sharpness producer records the cell masses, cluster
 maximizers and exact gaps at its verification heights, as well as these
 limits. It reuses the source reconstruction and private-witness checks
 above. The arbitrary-N claims follow from the displayed box arguments,
-not from a finite scan. No full layout enumeration or value of true
-Gamma is supplied. For tests at a larger complete height H>=N, the same
+not from a finite scan. This cluster calculation supplies no complete
+Gamma value; (FS1) and (FS7) below separately close both F12 maxima.
+For tests at a larger complete height H>=N, the same
 five terms retain this loss only after E_N is replaced by the matching
 larger-height envelope E_H on the Haar lift of the same actual source.
 
@@ -137,8 +138,9 @@ envelopes on the current actual sources. RW5/RW10 and the assigned
 square bounds use different WF/A2/Jensen expressions; no comparison
 identifying those expressions with E_N has been proved here. The gaps
 cannot simply be subtracted from the through41 bounds, M2, or a scalar
-recurrence floor. True square optimization and a uniform useful gain
-through the later physical kernels remain unresolved.
+recurrence floor. The weighted all-height maximum and a uniform useful
+gain through later physical kernels remain unresolved;339d establishes
+the plain F_N maxima for every N>=12.
 
 ### An exact six-label cluster retains all joint choices
 
@@ -286,8 +288,8 @@ those tests; at N=12 the exact comparison is 265721>265720. On
 the source survives completely, while every nonunit test of L* is false:
 positive 5 and positive 7 tests miss their respective coordinate, and the
 remaining tests are the pure 3 ones just excluded. Therefore L*=1 on C_a.
-No optimizing 3-residue table or particular maximizing-layout hole a has
-been computed. Existence follows from finite maximization and this count.
+For general N, existence follows from finite maximization and this count.
+At N=12, (FS1) below identifies the complete centered4 layout as a maximum.
 
 ### Five actual next 11 labels charge precisely that cylinder
 
@@ -499,7 +501,234 @@ complete future family, or jointly optimizing all new blocks.
 The existing producer checks the three clean cylinders, all six shallow
 test choices, actual private integers for all three inventories, the
 kernel table and exact charge floors at its applicable verification
-heights. These finite checks support the ordinary compression proof;
-they do not compute Gamma or its selected maximizing hole.
+heights. These geometric conclusions do not require computing Gamma;
+the complete F12 maxima are established below.
 
-The remaining sections continue in `339c-the-square-allocation-and-the-reweighted-source.md`.
+## Both complete F12 squares have an exact centered maximizer
+
+For the actual204-class F12 constructed in339, let Q=105^12 and let
+nu=mu/S be its normalized surviving law. Each complete layout has one
+arbitrary residue at every divisor d of Q, including the unit. Then
+
+    Gamma_Q(nu)=max_layout integral L^2 dnu
+      =2036574313467845778288943/80172464522644795549722
+      =25.402416223497948... .                         (FS1)
+
+A maximizing layout puts every test at the residue of4 modulo its own
+modulus. This optimizes all2197 labels and their complete square on the
+actual source. The fixed weighted law has the same maximizing layout,
+with its separate exact value in(FS7). The period and original inventory
+are both fixed at N=12. These results do not establish another height,
+a statement about every source, or an unrestricted covering conclusion.
+
+### Actual cylinder masses and the common compression
+
+Apply the simultaneous clean5/7 compression in(UR2), followed by the
+common three-prefix map above. A maximum is retained, and every positive
+five or seven test follows its nested4 path. The remaining three choices
+are0/1 at depth1,0/3/4 at depth2, and18/3/4 at depths at least3.
+These transformations are performed once per original test label, so all
+pair intersections still belong to one legal layout.
+
+Here is the actual mass formula used by the certificate. In the row order
+(0,3,1,4,7), put
+
+    eta=(1/9-t,1/9,1/9,1/9,1/9),
+    n=((1-q)(1/9-t),(1-q)/9,(1-3q)/9,
+       (1-2q)/9,(1-2q)/9-tq),
+    sigma=(u-1/7,u-2/7,u,u,u), Z=sum sigma_j*n_j=uS.
+
+Write m(a,r,b,e) for the nu-mass of the test with three residue r at
+depth a and clean residues4 at depths b,e. An exponent0 imposes no
+condition. For a<=2, let v_j be n_j if b=0 and eta_j if b>0, restricted
+to rows congruent to r modulo3^a. For a>=3, only row r modulo9 contributes:
+its pure value is3^-a, and its raw35 value is(1-q)3^-a on paths3/18 or
+(1-2q)3^-a on path4. Use the raw35 value when b=0 and the pure value
+when b>0. Then exactly
+
+    m(a,r,b,e)=[sum_j v_j*(sigma_j if e=0 else1)]
+                 /[Z*5^b*7^e].                       (FS2)
+
+The clean positive7 cylinders avoid every original seven restriction;
+positive5 cylinders avoid every original five restriction. This proves
+the two cases in(FS2), with all original exclusions through depth12
+retained. The normalized pair mass is zero for incompatible three
+prefixes. Otherwise it is(FS2) at the coordinatewise maximum exponents
+and the deeper three prefix. These are actual intersections, not their
+separate cap maxima.
+
+The retained[exact source API](../../frontier/source-budgets/source_full_square.py)
+implements these masses. The[flow verifier](../../frontier/source-budgets/verify_source_full_square.py)
+independently partitions each coordinate by the literal original APs and
+all queried tests before comparing the6084 canonical cylinder masses.
+It checks the three-prefix intersection rule and both nested-coordinate
+rules against those partition masks. The complete centered layout is
+integrated a second time from these original-membership counts.
+
+### A two-choice upper comparison preserves the common root assignment
+
+The169 labels with a=0 are fixed. At each of the2028 remaining labels i,
+call the unique root1 choice g_i good, and the one or two root0 choices
+bad. Good/bad intersections are zero because their three residues differ
+modulo3. For a choice r at i, let u_i(r) be its diagonal mass plus twice
+the sum of its intersections with every fixed label. For i<j define
+
+    a_i=max_(r bad at i)u_i(r)-u_i(g_i),
+    G_ij=2*m(i,g_i;j,g_j),
+    B_ij=2*max_(r bad at i,s bad at j)m(i,r;j,s).
+
+All G_ij and B_ij are nonnegative. For an actual layout, put s_i=1
+exactly when label i uses a bad choice. Its square gain above the all-good
+centered layout is at most
+
+    F(s)=sum_i a_i*s_i
+      +sum_(i<j)[-G_ij*(s_i+s_j)+(G_ij+B_ij)*s_i*s_j]. (FS3)
+
+Both good gives pair gain0, a mixed pair gives-G_ij, and both bad gives
+at most B_ij-G_ij. Each s_i is shared by every occurrence of its label.
+Only the remaining choices within the bad root are maximized separately;
+this is an upper comparison and asserts no simultaneous attainment of
+those maxima.
+
+Set b_ij=G_ij+B_ij and d_i=2a_i+sum_(j!=i)(B_ij-G_ij). For binary s,
+
+    2F(s)=sum_i d_i*s_i-sum_(i<j)b_ij*abs(s_i-s_j).     (FS4)
+
+Choose a positive integer D making every D*d_i and D*b_ij integral.
+Join source to i with capacity D*d_i when d_i>0, join i to sink with
+capacity-D*d_i when d_i<0, and put one edge of capacity D*b_ij in each
+direction between i and j. Let R=sum_(d_i>0)D*d_i. The cut whose source
+side contains exactly the indices with s_i=1 has capacity
+
+    R-2D*F(s).                                        (FS5)
+
+Any nonnegative capacity-feasible flow conserved at every other vertex,
+with source-to-sink value v, implies F(s)<=(R-v)/(2D) for every layout.
+Thus a feasible flow with v=R proves all gains nonpositive. The actual
+all-good layout attains gain0, closing the maximum. No claim that a flow
+search algorithm found a maximum is needed.
+
+### Exact complete certificate and its scope
+
+The retained[sparse integer flow](../../certificates/source_norms/source-budgets/source_full_square_flow.json)
+has
+
+    D=160344929045289591099444,
+    R=v=209626201609934585576758.
+
+The verifier reconstructs all2055378 unordered free-label pairs and all
+4111200 positive directed capacities. It checks all31364 saved nonzero
+flows against their actual capacities and conservation at all2030
+vertices. Omitted flow entries are zero; duplicate, unknown and malformed
+entries are rejected. It checks that v equals the full sum of positive
+source capacities. Some cylinder masses require scale2D internally; each
+final graph capacity is checked to divide exactly back to scaleD.
+
+For the centered layout, the number of ordered exponent pairs with
+maximum a is2a+1. Consequently its complete square is exactly
+
+    sum_(a,b,e=0..12)(2a+1)(2b+1)(2e+1)
+                         *m(a,4 modulo3^a,b,e),       (FS6)
+
+which gives(FS1). There is no omitted-label or omitted-pair tail in this
+certificate. The existing `source_mean_sharpness.py --check` replay now
+includes this source and flow verification and records its exact result
+in the existing sharpness certificate. The flow checker can also be run
+directly with `python3 -I -S -O` and uses only the standard library.
+This is an ordinary mathematical proof with exact finite verification;
+no new Lean declaration or frozen theorem is asserted.
+
+### Three pure9 test branches close the fixed weighted law
+
+For the same actual F12 and the fixed row weights
+r=(11/8,5/4,1,1,1), let nu_r=r*mu/T. Its complete maximum is
+
+    Gamma_Q(nu_r)
+      =16622960794401007994531582/721107129061336405998171
+      =23.051998967253425... .                         (FS7)
+
+The complete centered4 layout again attains this value. The source API
+uses(FS2) with each row multiplied by r_j and Z replaced by uT. Its
+normalization and all6084 cylinders are checked against the same literal
+original APs, with the declared row weights. Both the source inventory
+and all2197 test labels, including the unit once, remain complete.
+
+After the proved simultaneous compression, the pure9 test has exactly
+three possible residues0,3,4. Fix this one test in turn to c=0,3,4.
+This divides layouts into three exhaustive branches; it does not
+condition the source probability law on a residue event. Every integral
+in all three branches uses the identical nu_r. Let a=(2,0,0) be this
+test label, and write I_c for its indicator at residue c.
+
+The169 labels of three-exponent0 and the fixed pure9 test now form the
+170 fixed labels. The other2027 labels retain their good/bad root choices.
+Their branch unary is exactly
+
+    u_i^c(r)=u_i(r)+2*m(i,r;a,c).                      (FS8)
+
+Thus the anchor's intersections are retained. For the branch reference
+layout put L_c=L_4+I_c-I_4, where L_4 is the complete centered load, and
+let C_r=integral L_4^2 dnu_r. Its exact baseline shift is
+
+    Delta_c=integral[2L_4*(I_c-I_4)+(I_c-I_4)^2]dnu_r. (FS9)
+
+The verifier sums the first term over all original test labels and the
+second as m(I_c)+m(I_4)-2m(I_c intersect I_4). This retains the fixed test's
+diagonal and every interaction, including its interactions with the
+other fixed labels.
+
+Use the graph of(FS3)--(FS5) on the remaining free labels, with unaries
+(FS8). If its source capacity is R_c and a feasible flow has value v_c,
+every actual layout in branch c has square at most
+
+    U_c=C_r+Delta_c+(R_c-v_c)/(2D).                   (FS10)
+
+The fixed test changes unaries and the reference constant, while mixed
+good/bad free pairs still have zero mass. This remains an upper bound
+when the residual choices within the bad root are optimized separately
+for each pair. Neither their joint attainability nor equality of U_c
+with the branch optimum is required.
+
+The exact certificates for
+[c=0](../../certificates/source_norms/source-budgets/source_full_square_r0_flow.json),
+[c=3](../../certificates/source_norms/source-budgets/source_full_square_r3_flow.json), and
+[c=4](../../certificates/source_norms/source-budgets/source_full_square_r4_flow.json)
+all use D=1442214258122672811996342. They give
+
+| Fixed pure9 test residue c | Exact U_c-C_r | U_c, decimal approximation |
+| --- | --- | --- |
+|0|-1360086135549916732057219/1442214258122672811996342|22.10894482124856|
+|3|-134181193906862145805493/480738086040890937332114|22.77288400257087|
+|4|0|23.051998967253425|
+
+In branch4, Delta_4=0 and the feasible flow saturates every source edge:
+
+    R_4=v_4=4250337641076669357482784.                 (FS11)
+
+The other two branch upper bounds are strictly below C_r. Every canonical
+layout therefore has square at most C_r, and the legal complete centered4
+layout attains C_r. The simultaneous compression proves(FS7) over all
+original layouts. This does not claim uniqueness of a maximizing layout
+or a restriction on the pure9 residue before compression.
+
+For each branch the verifier reconstructs all2053351 free-label pair
+blocks and4108729 positive directed capacities. It checks391109,238026,
+and461363 nonzero flow entries, respectively, and conservation at all2029
+vertices. All source integrals, baseline shifts and graph calculations
+are exact. The weighted witnesses use the existing lossless compressed
+certificate format; its reader restores and verifies every original flow
+triple before the same independent capacity checks run. The source law
+is never replaced by a relaxed marginal or a separately normalized row.
+
+The existing sharpness producer now verifies all four flow certificates
+and records both exact maxima. A standalone complete replay is
+
+    python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/source-budgets/verify_source_full_square.py --all
+
+These two source values remove an optimization gap for the specified
+finite family. They do not supply a uniform maximum over all admissible
+sources or prove that the later-prime survival inequalities close.
+
+The [square allocation and reweighted-source results](339c-the-square-allocation-and-the-reweighted-source.md) continue in339c.
+
+The [complete plain-source square at every height N≥12](339d-the-complete-plain-source-square-at-every-height.md) extends the ordinary-law conclusion to the whole actual source family, with compressed-layout and pair-marginal LP uniqueness.

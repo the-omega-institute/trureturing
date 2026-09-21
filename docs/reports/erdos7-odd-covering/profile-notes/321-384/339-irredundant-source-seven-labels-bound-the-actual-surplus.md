@@ -676,4 +676,4 @@ The theorem concerns the asymptotic uniform complete mean; fixed-delta
 optimality, nonlinear hinge sharpness and unrestricted Erdős#7 remain
 unresolved. No new Lean result is asserted.
 
-The remaining sections continue in `339b-the-actual-near-j-source-and-the-unit-refund.md`.
+The [actual-source geometry and complete F12 square maxima](339b-the-actual-near-j-source-and-the-unit-refund.md) continue in339b; the [square allocation and reweighted source](339c-the-square-allocation-and-the-reweighted-source.md) continue in339c.
