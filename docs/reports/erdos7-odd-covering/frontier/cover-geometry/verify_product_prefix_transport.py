@@ -212,12 +212,11 @@ def main():
         (3, 5), (3, 7), (2, 1),
         (((0, 2, 4),), ((1, 1, 2),),
          ((0, 1, 1), (1, 1, 3)), ((0, 1, 2),))))
-    # A later-coordinate profile used by the existing six-prime interface.
+    # Dual missing-(3,5) anchor interface.
     profiles.append(check_profile(
-        (3, 5, 7), (3, 5, 11), (1, 1, 1),
-        (((0, 1, 1),), ((1, 1, 2),), ((2, 1, 3),),
-         ((0, 1, 1), (1, 1, 2)), ((1, 1, 2), (2, 1, 3)),
-         ((0, 1, 1), (2, 1, 4)))))
+        (3, 5), (7, 11), (2, 1),
+        (((0, 2, 8),), ((1, 1, 2),),
+         ((0, 1, 1), (1, 1, 3)), ((0, 1, 4),))))
     print({"status": "PASS", "profiles": profiles,
            "scope": "Finite product pullback, event-vector, and averaged-cap identities; source survival, root orientation, gluing, later-prime monotonicity, and unrestricted Erdos--Selfridge #7 remain open."})
 

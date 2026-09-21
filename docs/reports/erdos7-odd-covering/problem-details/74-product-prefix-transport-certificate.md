@@ -7,7 +7,7 @@ Haar averaging had to be upgraded to the mixed original-cylinder events used
 by one common transported submeasure. The standard-library checker
 [`verify_product_prefix_transport.py`](../frontier/cover-geometry/verify_product_prefix_transport.py)
 discharges that finite lemma for the three interfaces used by the current
-source rows.
+source rows, including the dual missing-((3,5)) anchor map.
 
 Let (p_i\le q_i) be odd primes and let (h_i) be finite heights. For each
 coordinate choose an arbitrary digit-shift table
@@ -41,8 +41,8 @@ python3 -I docs/reports/erdos7-odd-covering/frontier/cover-geometry/verify_produ
 ```
 
 The three profiles pass with source/target state counts \((45,175)\),
-\((45,63)\), and \((105,165)\); the atom-preimage counts are (45,45,105).
-The run checks 97,069 mixed-cylinder instances and 28,035 event-vector
+\((45,63)\), and \((45,539)\); the atom-preimage counts are (45,45,45).
+The run checks 417,851 mixed-cylinder instances and 34,965 event-vector
 instances. The result is finite-height transport evidence only. It does
 not prove the source survival rows, root orientation, attachment budgets,
 block-tree gluing, later-prime monotonicity, or unrestricted
