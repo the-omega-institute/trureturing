@@ -684,3 +684,5 @@ end LeanInformationAudit.InspectorProducer
 
 unsafe def main (args : List String) : IO Unit :=
   LeanInformationAudit.InspectorProducer.main args
+
+#check ci_inspector_negative_0922_missing
