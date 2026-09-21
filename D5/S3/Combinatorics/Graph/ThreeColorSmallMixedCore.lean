@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/ThreeColorSmallMixedCore
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/ThreeColorSmallMixed.small_mixed_graph_potential; instance=D5/S3/Combinatorics/Graph/ThreeColorSmallMixedCore.small_population_bound
    digest: Bounded small-mixed reciprocal lower bound consumed by the actual finite graph theorem. -/
 
 import D5.S3.Combinatorics.Graph.ThreeColorIncidence
@@ -107,36 +107,17 @@ open SmallCertificate Lean.Grind.CommRing
 /- The certificate uses the same polynomial normal form as `Expr.toPoly_k`.
    Its multiplication still calls `Poly.mul`, whose merge and monomial operations
    are not the kernel-oriented variants. These private operations use the existing
-   `_k` variants throughout; the equalities below certify the identical normal form. -/
+   `_k` variants throughout; local proof steps below certify the identical normal form. -/
 private noncomputable def fastMul (p q : Poly) : Poly :=
   Poly.rec (motive := fun _ => Poly → Poly)
     (fun k acc => acc.combine_k (q.mulConst_k k))
     (fun k m _ ih acc => ih (acc.combine_k (q.mulMon_k k m))) p (.num 0)
-
-private theorem fastMul_eq (p q : Poly) : fastMul p q = p.mul q := by
-  have go (p acc : Poly) :
-      Poly.rec (fun k acc => acc.combine_k (q.mulConst_k k))
-        (fun k m _ ih acc => ih (acc.combine_k (q.mulMon_k k m))) p acc =
-          Poly.mul.go q p acc := by
-    induction p generalizing acc with
-    | num k => simp only [Poly.mul.go, Poly.combine_k_eq_combine,
-        Poly.mulConst_k_eq_mulConst]
-    | add k m p ih =>
-      change _ = Poly.mul.go q p (acc.combine (q.mulMon k m))
-      rw [ih, Poly.combine_k_eq_combine, Poly.mulMon_k_eq_mulMon]
-  exact go p (.num 0)
 
 private noncomputable def fastPow (p : Poly) (n : Nat) : Poly :=
   match n with
   | 0 => .num 1
   | 1 => p
   | n+1 => fastMul p (fastPow p n)
-
-private theorem fastPow_eq (p : Poly) (n : Nat) : fastPow p n = p.pow n := by
-  induction n using Nat.twoStepInduction with
-  | zero => rfl
-  | one => rfl
-  | more n _ ih => simp only [fastPow, Poly.pow, fastMul_eq, ih]
 
 private noncomputable def fastPoly : Expr → Poly
   | .num k => .num k
@@ -154,17 +135,6 @@ private noncomputable def fastPoly : Expr → Poly
       | .natCast n => .num (n^k)
       | .var x => .ofMon (.mult {x, k} .unit)
       | _ => fastPow (fastPoly a) k
-
-private theorem fastPoly_eq (e : Expr) : fastPoly e = e.toPoly := by
-  induction e with
-  | num k | intCast k | natCast k | var x => rfl
-  | neg a ih => simp only [fastPoly, Expr.toPoly, Poly.mulConst_k_eq_mulConst, ih]
-  | add a b iha ihb | sub a b iha ihb =>
-    simp only [fastPoly, Expr.toPoly, Poly.combine_k_eq_combine,
-      Poly.mulConst_k_eq_mulConst, iha, ihb]
-  | mul a b iha ihb => simp only [fastPoly, Expr.toPoly, fastMul_eq, iha, ihb]
-  | pow a k ih =>
-    cases a <;> simp only [fastPoly, Expr.toPoly, fastPow_eq] at ih ⊢ <;> first | rfl | rw [ih]
 
 
 set_option maxHeartbeats 0 in
@@ -468,6 +438,36 @@ theorem small_population_bound (m : Fin 3 → Nat) (x : Fin 3 → Fin 3 → Nat)
     push_cast
     ring_nf at hh ⊢
     linarith only [hh]
+
+  have fastMul_eq (p q : Poly) : fastMul p q = p.mul q := by
+    have go (p acc : Poly) :
+        Poly.rec (fun k acc => acc.combine_k (q.mulConst_k k))
+          (fun k m _ ih acc => ih (acc.combine_k (q.mulMon_k k m))) p acc =
+            Poly.mul.go q p acc := by
+      induction p generalizing acc with
+      | num k => simp only [Poly.mul.go, Poly.combine_k_eq_combine,
+          Poly.mulConst_k_eq_mulConst]
+      | add k m p ih =>
+        change _ = Poly.mul.go q p (acc.combine (q.mulMon k m))
+        rw [ih, Poly.combine_k_eq_combine, Poly.mulMon_k_eq_mulMon]
+    exact go p (.num 0)
+
+  have fastPow_eq (p : Poly) (n : Nat) : fastPow p n = p.pow n := by
+    induction n using Nat.twoStepInduction with
+    | zero => rfl
+    | one => rfl
+    | more n _ ih => simp only [fastPow, Poly.pow, fastMul_eq, ih]
+
+  have fastPoly_eq (e : Expr) : fastPoly e = e.toPoly := by
+    induction e with
+    | num k | intCast k | natCast k | var x => rfl
+    | neg a ih => simp only [fastPoly, Expr.toPoly, Poly.mulConst_k_eq_mulConst, ih]
+    | add a b iha ihb | sub a b iha ihb =>
+      simp only [fastPoly, Expr.toPoly, Poly.combine_k_eq_combine,
+        Poly.mulConst_k_eq_mulConst, iha, ihb]
+    | mul a b iha ihb => simp only [fastPoly, Expr.toPoly, fastMul_eq, iha, ihb]
+    | pow a k ih =>
+      cases a <;> simp only [fastPoly, Expr.toPoly, fastPow_eq] at ih ⊢ <;> first | rfl | rw [ih]
 
   have region_checked (a b c : Nat) (hab : a ≤ b) (hbc : b ≤ c)
       (hlo : 2 ≤ a+b+c) (hs : a+b+c ≤ 5) (p q r : Choice) (hp : p ∈ choices a b)
