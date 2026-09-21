@@ -422,19 +422,24 @@ runtime_disposition = "committed-source"
         self.assertEqual("producer\n", (self.root / "calls").read_text())
         self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=0", result.stdout)
 
-    def test_pull_request_cannot_publish_snapshot(self):
+    def test_pull_request_publishes_only_own_snapshot(self):
         (self.root / ".lake/build").mkdir(parents=True)
         (self.root / ".lake/build/output").write_text("project")
         self.dependency_files()
-        for event, ref in (("pull_request", "refs/pull/42/merge"), ("pull_request_target", "refs/heads/dev")):
+        for event, ref, allowed in (("pull_request", "refs/pull/42/merge", True),
+                                    ("pull_request_target", "refs/heads/dev", False)):
             with self.subTest(event=event):
                 shutil.rmtree(self.root / "build/lean-cache", ignore_errors=True)
                 result = self.run_tool(CACHE, "snapshot", env=dict(self.env, GITHUB_EVENT_NAME=event,
                     GITHUB_REF=ref, GITHUB_SHA="a" * 40, CANDIDATE_SHA="a" * 40, STRATALINT_CACHE_WRITES="true"))
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 for layer in ("dependency", "project"):
-                    self.assertIn(layer + "_ready=false", result.stdout)
-                    self.assertFalse((self.root / "build/lean-cache" / layer / "manifest.json").exists())
+                    self.assertIn(layer + "_ready=" + str(allowed).lower(), result.stdout)
+                    # dependency/project snapshots publish their registered
+                    # directories directly; only judge/execution layers have
+                    # a manifest under build/lean-cache.
+                    target = self.root / (".lake/packages" if layer == "dependency" else ".lake/build")
+                    self.assertTrue(target.is_dir())
 
     def test_pull_request_restores_seed_with_writes_disabled(self):
         _, key = self.seed()
