@@ -1,30 +1,33 @@
 {
   "schema": {
     "kind": "inline",
-    "value": "nonunit-bias-tail-obstruction-v1"
+    "value": "nonunit-bias-tail-obstruction-v2"
   },
   "scope": {
     "kind": "inline",
-    "value": "One actual irredundant 212-label noncover in the339 source guard. Every probability on its actual through37 survivors fails the declared complete-tail entry formula for every clipping schedule at all nine primes41..73. Allocated expressions only; no claim of actual future losses, a verified sufficient tail theorem, or obstruction to finite-height/missing-label-aware methods."
+    "value": "One actual irredundant 212-label noncover in the339 source guard. Every probability on its actual through37 survivors fails the declared complete-tail entry formula for every clipping schedule at all nine primes41..73. Two subsequent routes are separately bounded: one conditioning at73 then unrefunded full-tail T6 stops by38851; persistent nonunit full-tail allocation from41 has nonpositive budget by63997. Allocated expressions only; no actual survival or moment lower bounds and no exclusion of another law, new joint estimates or finite-height/missing-label-aware methods."
   },
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/source_mean_sharpness.json": "359e58de8cea8972d193d15d512179623824c98f8ca76ac094c3659b033e8448",
+      "certificates/source_norms/source-budgets/source_mean_sharpness.json": "f6178a59904625424099fa3993b7e517802c3c29817e1d6873371f969fca25c9",
+      "frontier/source-budgets/nonunit_tail_floors.json": "ef2ff992fd12c6b7c850e8d8313d68663b58cf51d25648d65dbd00b2cd1a0797",
+      "frontier/source-budgets/nonunit_persistent_floors.json": "b5cdfaef1663646f691434b77babcaac8d81c46b93a802e3e18a8dc0f7451c69",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
       "profile-notes/321-384/339-irredundant-source-seven-labels-bound-the-actual-surplus.md": "06421dbd2f5cc25b791375315023e8dfbc4313e738adcfb44e9b0a3b5b4ad1e1"
     }
   },
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "791b28b8ff14d2c3bdd17cf5980bf5bb0971c09428eba1ade7ee94fea38c1091",
-      "byte_count": 20248
+      "sha256": "e432441add72f7f443eb5e18feca4246a155a4864efc356fbe7af8fa3fcb4f85",
+      "byte_count": 32636
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "1e11185a066420ca86bc9e7c6f93782e5c62f97be9eebf0994fea1f32060336d"
+    "value": "503444774aeb4135df1be98a049ffdf199472016b8be523e369c5a33f4fc6dfb"
   },
   "actual_family": {
     "path": "content/005-actual_family.json",
@@ -68,5 +71,54 @@
     "path": "content/009-all_thresholds.json",
     "sha256": "eb06f946ce18c047f7c5368f441796f5ffdcff1b3af047b9ddd9ef262f6466cd",
     "kind": "value"
+  },
+  "later_unrefunded_tail": {
+    "kind": "inline",
+    "value": {
+      "input": "frontier/source-budgets/nonunit_tail_floors.json",
+      "seed_prime": 73,
+      "seed_strict_floor": "7129/50",
+      "verified_quadratic_rows": 4071,
+      "first_prime": 79,
+      "last_certified_prime": 38839,
+      "reconstructed_rows_sha256": "eb622bb596077bc8486697c67dac096f1494177ef431851c9892190b3bf2762d",
+      "minimum_discriminant_margin": "191246824552613/176610062500000000",
+      "minimum_margin_prime": 83,
+      "failure_prime": 38851,
+      "carried_strict_floor": "72250282416701/10000",
+      "strict_capacity": "1509322500",
+      "floor_exceeds_capacity_by": "57157057416701/10000",
+      "scope": "For each actual source law, positivity of the same nonunit affine coefficients transfers the surrogate seed to its assigned ratio. Condition once at73 with that assigned bound, then use unrefunded full-tail T6 at every prime. Every legal adaptive 0<delta<1 schedule stops by38851. This is not an actual moment or survivor-mass lower bound; further nonunit corrections, sharper actual-law bounds, another law or recurrence, and finite-inventory pricing are not excluded."
+    }
+  },
+  "persistent_nonunit_tail": {
+    "kind": "inline",
+    "value": {
+      "input": "frontier/source-budgets/nonunit_persistent_floors.json",
+      "floor_scale": 10000,
+      "product_grid": 1000000000000,
+      "initial": {
+        "X_upper_grid": 4445567391506,
+        "Y_lower_grid": 54993354682449,
+        "F_lower_grid": 549933
+      },
+      "verified_rows": 6400,
+      "first_prime": 41,
+      "last_certified_prime": 63977,
+      "reconstructed_rows_sha256": "24f83adaeeb48ad2b6310ee1ae08b6c307955841f301901a5cdb0880070216b9",
+      "minimum_discriminant_margin": "1301149143233751800563813/1858775388266776200000000000",
+      "minimum_margin_prime": 41,
+      "endpoint": {
+        "prime": 63997,
+        "X_upper_grid": 13110119135145,
+        "Y_lower_grid": 1402282168887675,
+        "q_lower": "275412386123477/280456433777535",
+        "F_lower": "113510695089907/10000",
+        "qF_lower": "31262251385245731485718446639/2804564337775350000",
+        "strict_capacity": 4095360025,
+        "gap": "19776550708779965665334696639/2804564337775350000"
+      },
+      "scope": "Same initial actual-source law, same thresholds for actual-law and surrogate allocated payments, persistent nonunit correction and full exponent tails at every prime. Positive nonunit coefficients give actual-law allocated budget no larger than the surrogate. Every adaptive clipping schedule has nonpositive allocated budget by63997. This does not bound actual survival from above or exclude another law, joint estimates, finite heights or absent-label-aware prices."
+    }
   }
 }

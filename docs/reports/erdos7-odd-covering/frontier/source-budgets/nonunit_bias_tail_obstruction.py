@@ -6,14 +6,17 @@ from hashlib import sha256
 import importlib.util
 from itertools import combinations, product
 import json
-from math import gcd, lcm, prod
+from math import gcd, isqrt, lcm, prod
 from pathlib import Path
 import sys
 sys.dont_write_bytecode = True
 PROOF = 'profile-notes/321-384/346-old-cylinder-tree-gluing-and-source-corrections.md'
 CERTIFICATE = 'certificates/source_norms/source-budgets/nonunit_bias_tail_obstruction.json'
 SOURCE = 'certificates/source_norms/source-budgets/source_mean_sharpness.json'
-SOURCES = (SOURCE, 'certificate_io.py',
+FLOORS = 'frontier/source-budgets/nonunit_tail_floors.json'
+PERSISTENT_FLOORS = 'frontier/source-budgets/nonunit_persistent_floors.json'
+SOURCES = (SOURCE, FLOORS, PERSISTENT_FLOORS, 'certificate_io.py',
+           'problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md',
            'profile-notes/321-384/339-irredundant-source-seven-labels-bound-the-actual-surplus.md')
 EXTRA = (11, 13, 17, 19, 23, 29, 31, 37)
 FUTURE = (41, 43, 47, 53, 59, 61, 67, 71, 73)
@@ -56,6 +59,100 @@ def schedule_coefficients(clips):
         V *= v
     require(L3 >= L1 > 0, 'Nonunit affine coefficients have the correct sign')
     return dict(U=U, V=V, L0=L0, L1=L1, L3=L3)
+
+
+def prime(n):
+    return n >= 2 and all(n % d for d in range(2, isqrt(n)+1))
+
+
+def floor_input(io, base, path, schema):
+    fixed = json.loads(io.read_artifact_bytes(base/path), object_pairs_hook=io._unique)
+    require(set(fixed) == {'schema', 'scale', 'output_floor_units'}
+            and fixed['schema'] == schema
+            and type(fixed['scale']) is int and fixed['scale'] == 10000,
+            'Declared fixed floor input format')
+    units = fixed['output_floor_units']
+    require(isinstance(units, list) and all(type(n) is int and n > 0 for n in units),
+            'Positive exact grid integers')
+    return fixed['scale'], units
+
+
+def later_tail(io, base, initial_floor):
+    """Verify fixed rational floors, never generate or optimize them."""
+    scale, units = floor_input(io, base, FLOORS, 'nonunit-unrefunded-tail-floor-input-v1')
+    endpoint = 38851
+    primes = [p for p in range(FUTURE[-1]+1, endpoint) if prime(p)]
+    require(prime(endpoint) and len(primes) == len(units) == 4071
+            and primes[0] == 79 and primes[-1] == 38839
+            and initial_floor == F(7129, 50), 'Every consecutive prime and inherited seed')
+    f, minimum, minimum_prime, digest = initial_floor, None, None, sha256()
+    for p, n in zip(primes, units):
+        k = F(n, scale)
+        a, b = F(3*p-1, (p-1)**2), F(1, 4*(p-1)**2)
+        qa, qb, qc = k-f, f*(1+a)-k, k*b*f
+        gap = 4*qa*qc-qb*qb
+        require(k > f >= 1 and gap > 0
+                and qc == qb*qb/(4*qa)+gap/(4*qa), 'Every later all-real quadratic is positive')
+        digest.update((json.dumps(encode((p, f, k, qa, qb, qc, gap)), separators=(',', ':'))+'\n').encode())
+        if minimum is None or gap < minimum:
+            minimum, minimum_prime = gap, p
+        f = k
+    capacity = F((endpoint-1)**2)
+    require(f > capacity, 'Carried floor exceeds every legal next-denominator capacity')
+    return dict(input=FLOORS, seed_prime=73, seed_strict_floor=initial_floor,
+        verified_quadratic_rows=len(primes), first_prime=primes[0], last_certified_prime=primes[-1],
+        reconstructed_rows_sha256=digest.hexdigest(), minimum_discriminant_margin=minimum,
+        minimum_margin_prime=minimum_prime, failure_prime=endpoint,
+        carried_strict_floor=f, strict_capacity=capacity, floor_exceeds_capacity_by=f-capacity,
+        scope='For each actual source law, positivity of the same nonunit affine coefficients transfers the surrogate seed to its assigned ratio. Condition once at73 with that assigned bound, then use unrefunded full-tail T6 at every prime. Every legal adaptive 0<delta<1 schedule stops by38851. This is not an actual moment or survivor-mass lower bound; further nonunit corrections, sharper actual-law bounds, another law or recurrence, and finite-inventory pricing are not excluded.')
+
+
+def persistent_tail(io, base, A, B):
+    """Keep the nonunit correction, with rigorous directed product bounds."""
+    scale, units = floor_input(io, base, PERSISTENT_FLOORS, 'nonunit-persistent-tail-floor-input-v1')
+    grid, endpoint = 10**12, 63997
+    require(A > F(3, 4) and B > 2*A, 'Same-source hypotheses for historical-control monotonicity')
+    def ceiling(value):
+        return -(-value.numerator//value.denominator)
+    def flooring(value):
+        return value.numerator//value.denominator
+    X, Y, f = ceiling(grid*A), flooring(grid*B), F(flooring(scale*B), scale)
+    require(F(X-1, grid) < A <= F(X, grid) and F(Y, grid) <= B < F(Y+1, grid)
+            and 0 < f < B, 'Initial directed product bounds and strict scalar floor')
+    initial = dict(X_upper_grid=X, Y_lower_grid=Y, F_lower_grid=int(scale*f))
+    primes = [p for p in range(FUTURE[0], endpoint) if prime(p)]
+    require(prime(endpoint) and len(primes) == len(units) == 6400
+            and primes[0] == 41 and primes[-1] == 63977, 'Complete persistent-correction prime sequence')
+    minimum, minimum_prime, digest = None, None, sha256()
+    for p, n in zip(primes, units):
+        require(Y > 0 and 2*X-grid > 0, 'Directed ratio denominator and numerator signs')
+        q, k = 1-F(2*X-grid, Y), F(n, scale)
+        require(0 < q < 1, 'Conservative positive nonunit ratio')
+        a, b, c = F(3*p-1, (p-2)*(p-1)), F(1, 4*(p-2)**2), F(1, p-2)
+        require(A > a/(2*(a-c)), 'Sufficient monotonicity in every historical control')
+        qa, qb, qc = k-f, f*(1+a)-k, k*b*q*f
+        gap = 4*qa*qc-qb*qb
+        require(k > f > 0 and gap > 0 and qc == qb*qb/(4*qa)+gap/(4*qa),
+                'Persistent full-tail all-real quadratic positivity')
+        xnext, ynext = F(X*(p-1), p-2), F(Y*(p*p+1), (p-2)*(p-1))
+        newX, newY = ceiling(xnext), flooring(ynext)
+        require(newX-1 < xnext <= newX and newY <= ynext < newY+1,
+                'Outward product rounding at each prime')
+        digest.update((json.dumps(encode((p, X, Y, q, f, k, qa, qb, qc, gap, newX, newY)),
+                                  separators=(',', ':'))+'\n').encode())
+        if minimum is None or gap < minimum:
+            minimum, minimum_prime = gap, p
+        X, Y, f = newX, newY, k
+    require(Y > 0 and 2*X-grid > 0, 'Endpoint directed signs')
+    q, capacity = 1-F(2*X-grid, Y), (endpoint-2)**2
+    require(0 < q < 1 and q*f > capacity, 'No threshold can keep the next surrogate budget positive')
+    return dict(input=PERSISTENT_FLOORS, floor_scale=scale, product_grid=grid,
+        initial=initial, verified_rows=len(primes), first_prime=primes[0], last_certified_prime=primes[-1],
+        reconstructed_rows_sha256=digest.hexdigest(), minimum_discriminant_margin=minimum,
+        minimum_margin_prime=minimum_prime,
+        endpoint=dict(prime=endpoint, X_upper_grid=X, Y_lower_grid=Y, q_lower=q,
+            F_lower=f, qF_lower=q*f, strict_capacity=capacity, gap=q*f-capacity),
+        scope='Same initial actual-source law, same thresholds for actual-law and surrogate allocated payments, persistent nonunit correction and full exponent tails at every prime. Positive nonunit coefficients give actual-law allocated budget no larger than the surrogate. Every adaptive clipping schedule has nonpositive allocated budget by63997. This does not bound actual survival from above or exclude another law, joint estimates, finite heights or absent-label-aware prices.')
 
 
 def calculate(base, proof):
@@ -173,8 +270,8 @@ def calculate(base, proof):
         carried = k
     require(carried == F(7129, 50) and carried-target == F(3703, 1000) > 0, 'Final entry obstruction')
     raw_proof = io.read_artifact_bytes(proof)
-    result = dict(schema='nonunit-bias-tail-obstruction-v1',
-        scope='One actual irredundant 212-label noncover in the339 source guard. Every probability on its actual through37 survivors fails the declared complete-tail entry formula for every clipping schedule at all nine primes41..73. Allocated expressions only; no claim of actual future losses, a verified sufficient tail theorem, or obstruction to finite-height/missing-label-aware methods.',
+    result = dict(schema='nonunit-bias-tail-obstruction-v2',
+        scope='One actual irredundant 212-label noncover in the339 source guard. Every probability on its actual through37 survivors fails the declared complete-tail entry formula for every clipping schedule at all nine primes41..73. Two subsequent routes are separately bounded: one conditioning at73 then unrefunded full-tail T6 stops by38851; persistent nonunit full-tail allocation from41 has nonpositive budget by63997. Allocated expressions only; no actual survival or moment lower bounds and no exclusion of another law, new joint estimates or finite-height/missing-label-aware methods.',
         source_sha256={p: sha256(io.read_artifact_bytes(base/p)).hexdigest() for p in SOURCES},
         ordinary_proof=dict(sha256=sha256(raw_proof).hexdigest(), byte_count=len(raw_proof)),
         producer_sha256=sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -192,7 +289,9 @@ def calculate(base, proof):
         all_thresholds=dict(target=target, fraction=q, initial_floor=54, rows=rows,
             final_strict_floor=carried, final_gap=carried-target,
             negative_unit_example=dict(clips=(F(1,10000),)+(F(1,4),)*8, coefficient=unit_coefficient),
-            scope='Use nonunit coefficient positivity and the exact unit. If allocated final mass is nonpositive the gate fails immediately; otherwise each earlier allocated mass and every relaxed denominator is positive, so the nine barriers apply.'))
+            scope='Use nonunit coefficient positivity and the exact unit. If allocated final mass is nonpositive the gate fails immediately; otherwise each earlier allocated mass and every relaxed denominator is positive, so the nine barriers apply.'),
+        later_unrefunded_tail=later_tail(io, base, carried),
+        persistent_nonunit_tail=persistent_tail(io, base, A, B))
     return io, encode(result)
 
 
@@ -213,6 +312,8 @@ def main():
         require(result == json.loads(io.read_artifact_bytes(path), object_pairs_hook=io._unique), 'Complete exact certificate replay')
     print('PASS actual212-label CRT augmentation; 198 pure-pair and24 rectangle checks; 16 complete small-prefix counts; all9 scalar barriers')
     print('Fixed target gap positive; all-threshold assigned ratio >7129/50 >138877/1000')
+    print('PASS 4071 exact later T6 barriers; every legal schedule stops by38851')
+    print('PASS 6400 persistent nonunit barriers with directed products; allocated budget fails by63997')
 
 
 if __name__ == '__main__':
