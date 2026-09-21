@@ -460,7 +460,7 @@ def calculate(base, proof):
     chain_r['mean_upper'] = str(mean_r)
     chain_r['source_mass_lower'] = {'capacity_B': str(cap_B), 'capacity_root1': str(cap_R),
                                    'error_derivative': str(mass_slope),
-                                   'formula': 'T >= (11/8)*(3/20+rho-(263/360)*delta0) - capacity_B/8 - 3*capacity_root1/8'}
+                                   'expression': 'T >= (11/8)*(3/20+rho-(263/360)*delta0) - capacity_B/8 - 3*capacity_root1/8'}
     chain_r['head'] = dict(main_chain['head'], head13_nonlinear_vertices=[str(v) for v in weighted_head13],
                            joint_nonlinear_vertices=[str(v) for v in weighted_head], denominator_constant=str(D_r))
     guard_T, guard_E = mass_r(F(3, 50)), head_e * mass_r(F(3, 50)) - D_r
