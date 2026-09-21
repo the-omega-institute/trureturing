@@ -267,6 +267,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 10
+      - uses: actions/download-artifact@v4
+        if: steps.cache_window.outputs.cache_allowed == 'true' && inputs.plan_artifact_id != ''
+        with:
+          artifact-ids: ${{ inputs.plan_artifact_id }}
+          path: build/ci
+          merge-multiple: true
       - name: Validate plan for engineering cache
         if: steps.cache_window.outputs.cache_allowed == 'true'
         run: python3 tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --stage engineering
