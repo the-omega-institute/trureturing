@@ -26,7 +26,7 @@ public sealed class LeanCacheInputScriptTests
     [InlineData("Contracts.test_corruption_and_transfer_miss_reach_production_under_set_e")]
     [InlineData("Contracts.test_foreign_partition_is_a_miss_and_snapshot_save_failure_is_nonfatal")]
     [InlineData("Contracts.test_missing_restored_directory_cannot_stop_normal_production")]
-    [InlineData("Contracts.test_pull_request_cannot_publish_snapshot")]
+    [InlineData("Contracts.test_pull_request_publishes_only_own_snapshot")]
     [InlineData("Contracts.test_pull_request_restores_seed_with_writes_disabled")]
     [InlineData("Contracts.test_transport_delegates_to_common_owner_without_a_package_cache")]
     [InlineData("LegacyCallerTests.test_gate_preserves_checks_and_annotation_with_candidate_runtime")]
