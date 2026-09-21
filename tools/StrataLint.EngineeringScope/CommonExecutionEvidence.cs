@@ -42,7 +42,7 @@ internal static partial class CommonExecutionEvidence
     internal const string CurrentPath = RootPath + "/current.json";
     internal const string ScribeMarkdownPaths = RootPath + "/scribe-markdown.paths";
     internal const string FileMapScopePath = RootPath + "/filemap-scope.json";
-    internal const string CheckManifestPath = "Meta/ci-checks.json";
+    internal const string CheckManifestPath = RegisteredCheckMaterials.ManifestPath;
     internal const string ReportPath = ".lake/build/stratalint/raw-lean-report.json";
     internal static readonly string[] ReportPaths = [ReportPath, ReportPath + ".sha256", ReportPath + ".input.attestation",
         ReportPath + ".provenance.json", ReportPath + ".materials.zip"];
