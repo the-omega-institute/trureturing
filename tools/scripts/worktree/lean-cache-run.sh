@@ -31,15 +31,19 @@ donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
 if [[ "$1" == --build ]]; then
   shift
-  root_targets=() reg_targets=()
+  root_targets=() impl_targets=() reg_targets=()
   for target in "$@"; do
     case "$target" in
-      Reg|Reg.*|Reg:*|+Reg.*|@reg|@reg/*|@reg:*) reg_targets+=("$target") ;;
+      Reg|Reg.*|Reg:*|+Reg.*|@reg|@reg/*|@reg:*|LeanInformationAuditRegTests*|LeanInformationAuditRegAnalysis*|+LeanInformationAuditReg*) reg_targets+=("$target") ;;
+      LeanInformationAudit*|+LeanInformationAudit*|leanInspector/*|leanInspectorInterface/*|@leanInspector|@leanInspector/*|@leanInspector:*|@leanInspectorInterface|@leanInspectorInterface/*|@leanInspectorInterface:*) impl_targets+=("$target") ;;
       *) root_targets+=("$target") ;;
     esac
   done
   if [[ $# == 0 || ${#root_targets[@]} != 0 ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake build ${root_targets[@]+"${root_targets[@]}"}
+  fi
+  if [[ $# == 0 || ${#impl_targets[@]} != 0 ]]; then
+    "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/tools/lean-inspector" build ${impl_targets[@]+"${impl_targets[@]}"}
   fi
   if [[ ${#reg_targets[@]} != 0 || ( $# == 0 && -f "$ROOT/Reg/lakefile.toml" ) ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/Reg" build ${reg_targets[@]+"${reg_targets[@]}"}

@@ -87,6 +87,19 @@ supportInterpreter = true
             target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
         for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
+        # The native-report fixtures supply their own tiny driver at the root.
+        # Keep the production facets verbatim with a fixture package header;
+        # the real D5/Interface/Impl/Reg graph is tested on the full repository.
+        lakefile = self.root / 'tools/lean-inspector/lakefile.lean'
+        source = lakefile.read_text()
+        lakefile.write_text(source[:source.index('package leanInspector where')]
+            + 'package leanInspector where\n'
+            + '  buildDir := "../../.lake/build/lean-inspector/producer"\n\n'
+            + source[source.index('target nativeImage'):].replace(
+                'lean_exe reportInspector where', '@[default_target]\nlean_exe reportInspector where'))
+        self.write('tools/lean-inspector/lake-manifest.json', json.dumps(dict(
+            version='1.2.0', packagesDir='.lake/packages', packages=[],
+            name='leanInspector', lakeDir='.lake', fixedToolchain=False)))
         # These native-facet fixtures test statement extraction and publication,
         # with no D5 registration library. Use the explicit statement-only API;
         # their reports cannot satisfy the declared-template admission reader.

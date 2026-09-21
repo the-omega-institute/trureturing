@@ -41,7 +41,7 @@ if [[ $scope == all || $scope == generic ]]; then
   targets+=(LeanInformationAuditAnalysis)
   for fixture in CausalProjection BoundedClosure; do
     sources+=("$script_directory/$fixture.lean")
-    traces+=(".lake/build/lib/lean/LeanInformationAuditAnalysis/$fixture.trace")
+    traces+=(".lake/build/lean-inspector/producer/lib/lean/LeanInformationAuditAnalysis/$fixture.trace")
   done
 fi
 if [[ $scope == all || $scope == production ]]; then

@@ -216,7 +216,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         def build():
             self.write('activity.jsonl', '')
             result = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=LeanInformationAudit.Registry :report'], cwd=self.root,
+                'LEAN_TARGETS=@fixture/LeanInformationAudit.Registry :report'], cwd=self.root,
                 env=self.env, capture_output=True, text=True, timeout=120)
             self.assertEqual(result.returncode, 0, '[FAIL] module_binding_scope\n' + result.stdout + result.stderr)
             return result.stdout + result.stderr

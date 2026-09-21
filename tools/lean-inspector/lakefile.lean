@@ -6,7 +6,20 @@ open Lake DSL System
 open Lean (Json)
 
 package leanInspector where
+  packagesDir := "../../.lake/packages"
   buildDir := "../../.lake/build/lean-inspector/producer"
+  leanOptions := #[⟨`pp.unicode.fun, true⟩, ⟨`relaxedAutoImplicit, false⟩,
+    ⟨`weak.linter.mathlibStandardSet, true⟩, ⟨`maxSynthPendingDepth, 3⟩]
+
+require trureturing from "../.."
+require leanInspectorInterface from "../lean-inspector-interface"
+
+@[default_target]
+lean_lib LeanInformationAudit where
+  globs := #[.submodules `LeanInformationAudit]
+
+lean_lib LeanInformationAuditAnalysis where
+  globs := #[.submodules `LeanInformationAuditAnalysis]
 
 target nativeImage pkg : FilePath := do
   buildLeanO (pkg.buildDir / "c" / "native_image.o")
@@ -297,7 +310,7 @@ package_facet report (owner : Package) : FilePath := withCurrPackage owner do
   -- Demand ordinary defaults independently of row traces. Audit/default-only
   -- changes still fail the invocation without invalidating unrelated rows.
   let mut defaults := #[]
-  for name in (if pkg.baseName == `reg then #[`trureturing, `reg] else #[pkg.baseName]) do
+  for name in (if pkg.baseName == `reg then #[`trureturing, `leanInspector, `reg] else #[pkg.baseName]) do
     match ← (parseTargetSpec (← getWorkspace) s!"@{name}").toBaseIO with
     | .ok specs => defaults := defaults ++ specs
     | .error err => error err.toString

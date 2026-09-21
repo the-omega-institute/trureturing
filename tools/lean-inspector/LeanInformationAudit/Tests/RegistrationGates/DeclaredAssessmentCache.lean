@@ -1,4 +1,4 @@
-import LeanInformationAudit.Tests.RegistrationGates.DeclaredSidecar
+import LeanInformationAudit.Tests.RegistrationGates.DeclaredRegistration
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
 import LeanInformationAudit.Tests.SourceIsolation
 
@@ -11,8 +11,8 @@ private def observe (name : String) (ok : Bool) : MetaM Unit :=
 run_meta withPrivateSources do
   let initial ← getEnv
   let rows ← assessJoined
-  let #[record] := rows | throwError "setup: exactly one sidecar occurrence required"
-  let .declaredValidated _ := record.result | throwError "setup: sidecar is not validated"
+  let #[record] := rows | throwError "setup: exactly one registration occurrence required"
+  let .declaredValidated _ := record.result | throwError "setup: registration is not validated"
   let some descriptor := record.descriptor | throwError "setup: descriptor absent"
   let some owner := record.bindingOwner | throwError "setup: binding owner absent"
   let .ok plan := selectedPlan (← getEnv) descriptor.getAppFn.constName!

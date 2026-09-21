@@ -71,8 +71,8 @@ public sealed class DeclaredTemplateBindingRuleTests
         Finding(DeclaredTemplateBindingRule.Evaluate(Delta(missing: true)), "DTR-Evidence", AdmissionEffect.Observe);
 
     [Fact]
-    public void first_pin_selects_registration() =>
-        Finding(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false, firstPin: true)), "DTR-Undeclared", AdmissionEffect.Observe);
+    public void d5_pin_does_not_select_unchanged_registrations() =>
+        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Delta(changed: false, firstPin: true)));
 
     [Theory]
     [InlineData("retired-content-input")]

@@ -12,8 +12,8 @@ namespace StrataLint.Tests;
 // RuleFixture supplies repository-backed policy through its normal read contracts.
 public sealed class DeclaredTemplateDeltaLoadTests
 {
-    private const string A = RuleFixture.RingPath;
-    private const string B = RuleFixture.ValuesBindingPath;
+    private const string A = "Reg/" + RuleFixture.RingPath;
+    private const string B = "Reg/" + RuleFixture.ValuesBindingPath;
     private const string Pin = "Golden/Frozen/state/D5/S0/Carrier/Ring.lean.json";
 
     [Fact]
@@ -53,17 +53,17 @@ public sealed class DeclaredTemplateDeltaLoadTests
     }
 
     [Fact]
-    public void mixed_sidecar_validates_only_selected_registration_records()
+    public void unchanged_foreign_claim_cannot_override_selected_registration()
     {
         using var fixture = new WireFixture();
         fixture.SetUndeclared(A);
         fixture.Evidence(B)["records"]!.AsArray().Add(fixture.Record(A, B));
         fixture.Evidence(B)["records"]![0]!["state"] = "invalid";
-        AssertFinding(fixture, "DTR-Declared", AdmissionEffect.Observe);
+        AssertFinding(fixture, "DTR-Undeclared", AdmissionEffect.Observe);
     }
 
     [Fact]
-    public void selected_producer_skips_sidecar_record_for_unchanged_owner()
+    public void selected_producer_skips_record_for_unchanged_owner()
     {
         using var fixture = new WireFixture();
         var foreign = fixture.Record(B, A);
@@ -73,21 +73,22 @@ public sealed class DeclaredTemplateDeltaLoadTests
     }
 
     [Fact]
-    public void selected_sidecar_malformed_record_blocks()
+    public void unchanged_foreign_malformed_claim_is_not_read()
     {
         using var fixture = new WireFixture();
         fixture.SetUndeclared(A);
         var selected = fixture.Record(A, B);
         selected["certificate"] = "malformed";
         fixture.Evidence(B)["records"]!.AsArray().Add(selected);
-        AssertFinding(fixture, "DTR-Evidence", AdmissionEffect.Observe);
+        AssertFinding(fixture, "DTR-Undeclared", AdmissionEffect.Observe);
     }
 
     [Fact]
-    public void first_pin_reads_unchanged_source_evidence()
+    public void first_pin_does_not_read_unchanged_registration_evidence()
     {
         using var fixture = new WireFixture("first-pin");
-        AssertFinding(fixture, "DTR-Declared", AdmissionEffect.Observe);
+        fixture.Module(A)["information_templates"] = "malformed";
+        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(fixture.Load("first-pin")));
     }
 
     [Fact]
@@ -178,7 +179,10 @@ public sealed class DeclaredTemplateDeltaLoadTests
         internal WireFixture(string delta = "changed")
         {
             var fixture = new RuleFixture();
-            fixture.Files[A] = UtilityAdmissionTestSupport.WithUtility(fixture.Files[A], "none");
+            fixture.Files[A] = "-- registration A\n";
+            fixture.Files[B] = fixture.Baseline[B] = "-- registration B\n";
+            fixture.Reports[A] = new([], []);
+            fixture.Reports[B] = new([], []);
             fixture.Baseline[A] = fixture.Files[A];
             var changes = RawChangeSet.Create([A]);
             switch (delta)
@@ -189,7 +193,7 @@ public sealed class DeclaredTemplateDeltaLoadTests
                     break;
                 case "rename":
                 case "copy":
-                    const string old = "D5/S0/Carrier/Old.lean";
+                    const string old = "Reg/D5/S0/Carrier/Old.lean";
                     fixture.Baseline[old] = fixture.Baseline[A];
                     fixture.Baseline.Remove(A);
                     if (delta == "copy")

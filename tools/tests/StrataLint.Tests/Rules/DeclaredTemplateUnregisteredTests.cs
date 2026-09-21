@@ -19,17 +19,9 @@ public sealed class DeclaredTemplateUnregisteredTests
     public void new_public_theorem_without_registration_blocks() => Observes(Build());
 
     [Fact]
-    public void existing_inline_registration_is_assessed_but_requires_mirror_for_new_theorem()
+    public void d5_payload_is_not_assessed_and_requires_mirror_for_new_theorem()
     {
-        Declared(Build(binding: "inline"));
         Observes(Build(binding: "inline"));
-    }
-
-    [Fact]
-    public void existing_sidecar_is_assessed_but_requires_mirror_for_new_theorem()
-    {
-        Declared(Build(binding: "sidecar"));
-        Observes(Build(binding: "sidecar"));
     }
 
     [Fact]
@@ -40,6 +32,10 @@ public sealed class DeclaredTemplateUnregisteredTests
     [InlineData("lemma")]
     public void same_name_in_base_is_not_new(string keyword) =>
         Empty(Build(baseline: Source.Replace("theorem", keyword, StringComparison.Ordinal)));
+
+    [Fact]
+    public void private_theorem_becoming_public_requires_registration() => Observes(Build(
+        baseline: Source.Replace("theorem", "private theorem", StringComparison.Ordinal)));
 
     [Fact]
     public void new_private_theorem_is_exempt() => Empty(Build(
@@ -171,14 +167,6 @@ public sealed class DeclaredTemplateUnregisteredTests
     private static void Observes(DeltaRuleContext context, string theorem = Theorem, [CallerMemberName] string name = "") =>
         Assert.True(Findings(context).Any(f => f.Message == "DTR-Unregistered D5.S0.Carrier.Target/" + theorem
             && f.Effect == AdmissionEffect.Observe), "[FAIL] " + name);
-    private static void Declared(DeltaRuleContext context, [CallerMemberName] string name = "")
-    {
-        var findings = Findings(context);
-        Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Declared ", StringComparison.Ordinal)
-            && f.Effect == AdmissionEffect.Observe) && findings.All(f => f.Effect == AdmissionEffect.Observe),
-            "[FAIL] " + name + ": " + string.Join("; ", findings.Select(f => f.Message)));
-    }
-
     internal static DeltaRuleContext Build(string? baseline = null, string source = Source, string binding = "none",
         bool selected = true, bool added = false, bool firstPin = false, bool renamed = false, bool malformed = false,
         LeanDeclaration[]? declarations = null)
@@ -235,7 +223,6 @@ public sealed class DeclaredTemplateUnregisteredTests
             var own = registered && owner == path;
             var records = new List<object>();
             if (own) records.Add(Record(path, binding is "inline" or "foreign" or "mirror"));
-            if (binding == "sidecar" && path == Registration) records.Add(Record(path, true));
             if (malformed && path == Registration) records.Add(new { key = new { theorem = "Other.unrelated" }, certificate = "malformed" });
             reports[path] = reports[path] with { InformationTemplates = JsonSerializer.SerializeToElement(new
             {

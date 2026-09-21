@@ -164,8 +164,7 @@ internal static class InformationTemplateEvidence
         LeanImportClosure.ModuleName(RepoPath.CreateKnown(path));
 
     internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report,
-        IEnumerable<RepoPath> sources, ImmutableHashSet<string>? theorems = null,
-        IEnumerable<RepoPath>? bindingSources = null)
+        IEnumerable<RepoPath> sources, ImmutableHashSet<string>? theorems = null)
     {
         var governed = sources.Select(path => path.Value).ToImmutableHashSet(StringComparer.Ordinal);
         var selection = new InformationTemplateSelection(governed, theorems);
@@ -183,21 +182,6 @@ internal static class InformationTemplateEvidence
             foreach (var key in evidence.Registered)
                 if (!registered.Add(key)) throw new FormatException("DTR-Evidence: duplicate retained registration");
             foreach (var occurrence in evidence.Records.Where(record => governed.Contains(record.RegistrationSourcePath)))
-            {
-                if (!claims.TryGetValue(occurrence.Key, out var list)) claims.Add(occurrence.Key, list = []);
-                list.Add(occurrence);
-            }
-        }
-        // Existing D5 sidecars are routed by registration owner. Mirror callers
-        // restrict this same join to the exact mirror's declared import closure.
-        foreach (var path in (bindingSources ?? report.Files.Keys).OrderBy(path => path.Value, StringComparer.Ordinal))
-        {
-            if (!report.Files.TryGetValue(path, out var module)) continue;
-            if (governed.Contains(path.Value) || module.InformationTemplates is not { } payload
-                || !selection.HasRecords(payload)) continue;
-            if (module.Error is not null) throw new FormatException("DTR-Evidence: invalid binding producer " + path.Value);
-            foreach (var occurrence in Read(selection.Project(payload, path.Value), path.Value, snapshot).Records
-                .Where(record => governed.Contains(record.RegistrationSourcePath)))
             {
                 if (!claims.TryGetValue(occurrence.Key, out var list)) claims.Add(occurrence.Key, list = []);
                 list.Add(occurrence);
@@ -223,12 +207,12 @@ internal static class InformationTemplateEvidence
                     declaration => declaration.Name == original.RealizationName)) != 1)
                 throw new FormatException("DTR-Evidence: retained unit/realization owner is missing or ambiguous");
             var declared = records.Where(record => record.State != InformationTemplateBindingState.Undeclared).ToArray();
-            if (declared.Length > 1) throw new FormatException("DTR-Evidence: duplicate/contradictory inline or sidecar claim");
+            if (declared.Length > 1) throw new FormatException("DTR-Evidence: duplicate/contradictory declaration claim");
             var selected = declared.SingleOrDefault() ?? original;
             if (selected.StatementIdentity != original.StatementIdentity
                 || selected.RegistrationSourcePath != original.RegistrationSourcePath
                 || selected.UnitName != original.UnitName || selected.RealizationName != original.RealizationName)
-                throw new FormatException("DTR-Evidence: sidecar retargets the occurrence");
+                throw new FormatException("DTR-Evidence: declaration retargets the occurrence");
             joined.Add(key, selected);
         }
         // Inventory is the exact join of compiler registration keys, command
