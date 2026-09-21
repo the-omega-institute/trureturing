@@ -70,6 +70,13 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 exit = 0;
             }
         }
+        catch (CommonCheckFailure exception)
+        {
+            steps.Add(exception.Operation);
+            exit = exception.Operation.Exit;
+            failure = exception.Message;
+            output.WriteLine(exception.Message);
+        }
         catch (InvalidDataException exception) when (steps.LastOrDefault() is { Status: "failed" } failed)
         { exit = failed.Exit; failure = exception.Message; }
         catch (StageFailure exception) { exit = exception.Exit; failure = exception.Message; }

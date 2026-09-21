@@ -6,6 +6,11 @@ namespace StrataLint.EngineeringScope;
 
 internal sealed record CheckOperation(string Name, int RawExit, string Output);
 internal sealed record CheckWork(CheckOperation[] Operations, string? Data = null);
+internal sealed class CommonCheckFailure(StageStep operation, string diagnostic)
+    : Exception($"COMMON_CHECK_FAILED {operation.Name}: raw_exit={operation.RawExit}; log={operation.Log}\n{diagnostic}")
+{
+    internal StageStep Operation { get; } = operation;
+}
 internal sealed record CheckUnitResult(string Id, string InputFingerprint, string Status, string Result,
     string ExecutionCandidate, string ExecutionRound, string ExecutionEnvironment, StageStep[] Operations,
     string? Data, string? Report, ExecutionMaterial[] Materials);
@@ -123,8 +128,12 @@ internal static partial class CommonExecutionEvidence
                 var path = directory + "/" + index + ".log";
                 Directory.CreateDirectory(Path.Combine(root, directory));
                 File.WriteAllText(Path.Combine(root, path), operation.Output);
-                return new StageStep(operation.Name, operation.RawExit, 0, "executed", path);
+                var exit = stage == "current" ? CommonStages.Normalize(operation.RawExit) : 0;
+                return new StageStep(operation.Name, operation.RawExit, exit, exit == 0 ? "executed" : "failed", path);
             }).ToArray();
+            for (var index = 0; index < operations.Length; index++)
+                if (operations[index].Exit != 0)
+                    throw new CommonCheckFailure(operations[index], work.Operations[index].Output);
             string? data = null;
             if (work.Data is not null)
             {
@@ -177,7 +186,7 @@ internal static partial class CommonExecutionEvidence
                         return new([new(id, diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe) ? 1 : 0, PredicateJson(id, diagnostics))]);
                     });
                 }
-                catch (InvalidDataException) when (diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe)) { failed.Add(id); }
+                catch (CommonCheckFailure) when (diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe)) { failed.Add(id); }
             }
             var diagnosticsCombined = PredicateDiagnostics(root, completed.Values).AddRange(actual.Diagnostics.Where(d => failed.Contains(d.RuleId.Value)
                 || d.RuleId.Value == "SL-000" && failed.Contains("SL-015")));
