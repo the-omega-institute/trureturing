@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Two exact eight-prime cores omitting 7 admit arbitrary seven-vertex attachments under the inherited Chapter 31 and ordinary-source premises; extendible core Haar density exceeds 1/2200000](../docs/reports/erdos7-odd-covering/problem-details/69-eight-prime-cores-omitting-seven.md)
 - [An eight-prime core {3,5,7,13,17,19,23,29} omitting 11 admits arbitrary seven-vertex attachments under the inherited Chapter 31 and ordinary-source premises; extendible core Haar density exceeds 1/2200000](../docs/reports/erdos7-odd-covering/problem-details/68-eight-prime-core-omitting-eleven.md)
 - [Complete shared-root query tables, an exact binary flow/cut certificate and rational first9-prefix charges strengthen the unchanged actual-law credit to16.8681002893431; a feasible relaxed assignment bounds the remaining room in this refinement.](../docs/reports/erdos7-odd-covering/problem-details/67-shared-root-prefix-bounds-for-the-actual-survivor-law.md)
 - [An exact shared-phase triangle correction sharpens the unchanged actual-law credit; uniform layout averaging caps the complete seven-prime triangle replacement, and finite positive measures refute a universal common-CRT-center restriction.](../docs/reports/erdos7-odd-covering/problem-details/66-shared-phase-triangles-and-common-center-obstruction.md)
