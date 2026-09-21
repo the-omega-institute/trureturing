@@ -538,10 +538,14 @@ public sealed partial class CiTransportTests
                 return rows
             fixture.owned_processes = observed_processes
             run_command = fixture.guarded_command
+            def observed_output(stream, text):
+                print('NATIVE_HANDOFF_OUTPUT ' + json.dumps(dict(stream=stream, text=text)),
+                    file=sys.stderr, flush=True)
             def observed_command(args, **options):
+                if pathlib.Path(args[0]).name == 'lake' and 'build' in args:
+                    args = [args[0], '--verbose', *args[1:]]
                 print('NATIVE_HANDOFF_COMMAND ' + json.dumps(list(args)), file=sys.stderr, flush=True)
-                result = run_command(args, **options)
-                print(result.stdout + result.stderr, file=sys.stderr, flush=True)
+                result = run_command(args, observe_output=observed_output, **options)
                 print('NATIVE_HANDOFF_COMMAND_EXIT ' + str(result.returncode), file=sys.stderr, flush=True)
                 return result
             fixture.guarded_command = observed_command
