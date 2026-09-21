@@ -24,7 +24,8 @@ MAIN_SCHEDULE = ((17, 6), (19, 8), (23, 9), (29, 12), (31, 16), (37, 20))
 SOURCE_WITNESS = 'certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json'
 SOURCES = (SOURCE_WITNESS, 'profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md', 'certificate_io.py', 'verify_joint_frontier.py', 'profile-notes/001-064/31-one-original-zero-five-layout-across-both-actual-measures.md', 'profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md', 'profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md', 'profile-notes/321-384/331-complete-physical-hinges-continue-finite-sources-through43.md', 'profile-notes/321-384/333-variable-full-haar-thresholds-retain-more-survivor-mass.md', 'certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json', 'certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json', 'certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json')
 
-SOURCES += ('frontier/source-budgets/source_mean_sharpness.py',)
+SOURCES += ('frontier/source-budgets/source_mean_sharpness.py',
+            'profile-notes/321-384/339c-the-square-allocation-and-the-reweighted-source.md')
 
 def require(ok, message):
     if not ok:

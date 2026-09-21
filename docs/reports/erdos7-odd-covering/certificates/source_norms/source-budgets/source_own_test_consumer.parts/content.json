@@ -89,7 +89,7 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "e78281e166b31d18734fd617c695476e252bb1d2ddee1434740d331cca106408",
+      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "ff4ee2e18ff55ff1dc782bc38da997586eee0690b2f9f3f5684506a8241fb88a",
       "profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md": "fdc8db8e2751dd88d137fd28a00be09674e0cebc402a00609a0e57297cdc01f0",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
@@ -101,19 +101,20 @@
       "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "96d49d247d1c4a74822711cfa062d165696884eb9f493eb4959c3816054de685",
       "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "95766e51dc23a35756d3899a69b491e9dc573a77481119f07fd7d6f2b6fa8470",
       "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "ff5183667b74b2d7d297a8aa686b200d696e439b3a469395a4fe69c60c80845d",
-      "frontier/source-budgets/source_mean_sharpness.py": "94dc458c34a7782f3966394c3d51d023490f3561cb9092437e6a46e9f62c13d2"
+      "frontier/source-budgets/source_mean_sharpness.py": "1588cc3de1857ab3db712ccc75163ae0ec306e3e5c05de6488cc4e17eeba871f",
+      "profile-notes/321-384/339c-the-square-allocation-and-the-reweighted-source.md": "a9e0d552636453ce771577ea541c05c006eae6b7374a2094c9eb411421e95c78"
     }
   },
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "3d77656ef2b90f338a1f34d3d85797ec7f9eda603251ac5f55d0327f6cd8905b",
-      "byte_count": 73369
+      "sha256": "7d978556bb90cdc3d7167d5703f527d48e077c982c7aa11da4e66c8704d16cab",
+      "byte_count": 33514
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "7be89ec1c53aa201d80ebeaffb563bbaf9bb02990546bf297f51bd22950c5d40"
+    "value": "b39aa14506062e6d616163ccbe01ed0561ecaefcb538f76a7547501b2098a99d"
   },
   "source_weights": {
     "kind": "inline",
