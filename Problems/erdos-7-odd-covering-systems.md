@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [An attained full-history adaptive order among core7 coordinates lowers the exact seven-phase154 bad mass; its complete positive policy is reconstructed on actual leaves, and the three retained stop-loss thresholds are unique real-threshold minima of their fixed directed upper envelopes.](../docs/reports/erdos7-odd-covering/problem-details/64-adaptive-core-policy-and-continuous-stoploss-optima.md)
 - [A common squared-load stop-loss threshold strengthens same-law conditioning for every complete divisor layout; all1362 exact square-threshold bounds are independently reproduced from the complete verified product tables.](../docs/reports/erdos7-odd-covering/problem-details/63-squared-load-stoploss-continuation.md)
 - [Enlarging the stop certifies the attained seven-phase head atB32768, and its full outside-D7 smooth extension atB65536, with every directed stage independently reproduced.](../docs/reports/erdos7-odd-covering/problem-details/62-expanded-stopping-cutoffs-for-the-seven-phase-head.md)
 - [Coordinatewise retention transports the exact auxiliary budget lower bound; combined with the fixed positive cylinder polynomial it excludes a full relative1/50000 box of all finite head-depth caps.](../docs/reports/erdos7-odd-covering/problem-details/61-coordinate-retention-and-profile-neighborhood-obstruction.md)
