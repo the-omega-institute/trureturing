@@ -53,7 +53,7 @@ public sealed partial class ResourceAdapterTests
         if (scenario is "unavailable" or "mismatched-after")
         {
             Assert.Equal(2, result.Exit);
-            Assert.Contains(scenario == "unavailable" ? "PUSH_BEFORE_UNAVAILABLE" : "push event after does not match", result.Text, StringComparison.Ordinal);
+            Assert.Contains(scenario == "unavailable" ? "PUSH_BEFORE_FETCH_FAILED" : "push event after does not match", result.Text, StringComparison.Ordinal);
             Assert.False(File.Exists(Path.Combine(root, "build/ci/plan.json")));
             return;
         }

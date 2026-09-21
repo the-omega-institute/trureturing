@@ -22,6 +22,7 @@ public sealed class LeanCacheInputScriptTests
     [InlineData("Contracts.test_parentless_checkout_needs_no_base_or_remote")]
     [InlineData("Contracts.test_reusable_input_cannot_fall_back_to_event_sha_when_empty")]
     [InlineData("Contracts.test_native_checkout_accepts_empty_actions_input_context")]
+    [InlineData("Contracts.test_native_checkout_fetches_only_fixed_before_from_shallow_clone")]
     [InlineData("Contracts.test_valid_actions_seed_still_enters_production_and_signals_release_skip")]
     [InlineData("Contracts.test_corruption_and_transfer_miss_reach_production_under_set_e")]
     [InlineData("Contracts.test_foreign_partition_is_a_miss_and_snapshot_save_failure_is_nonfatal")]

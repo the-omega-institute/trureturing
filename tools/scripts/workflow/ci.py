@@ -30,28 +30,6 @@ def oid(value):
     return value
 
 
-def prepare_push_inputs(root, commit):
-    # Bootstrap only the event's fixed data before removing remote access.
-    # The planner itself stays offline and still validates the complete range.
-    import ci_plan
-    if not ci_plan.native_push():
-        return
-    before, after = ci_plan.push_endpoints()
-    if after != commit:
-        raise ValueError("push event after does not match the fixed candidate")
-    if before == ci_plan.ZERO_OID:
-        return
-    try:
-        ci_plan.commit_tree(root, before)
-    except subprocess.CalledProcessError:
-        try:
-            run(root, "git", "--no-replace-objects", "-c", "protocol.version=2", "fetch",
-                "--no-tags", "--depth=1", "origin", before)
-            ci_plan.commit_tree(root, before)
-        except (ValueError, subprocess.SubprocessError) as error:
-            raise ValueError(f"PUSH_BEFORE_UNAVAILABLE: fixed event.before {before} could not be obtained") from error
-
-
 def checkout(root, commit):
     # A reusable workflow receives an immutable candidate explicitly.  An
     # empty or mismatched input must fail closed; never silently substitute the
@@ -62,7 +40,7 @@ def checkout(root, commit):
         raise ValueError("reusable workflow candidate_sha must match checkout")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
-    prepare_push_inputs(root, commit)
+    prepare_native_push_range(root, commit)
     for remote in run(root, "git", "remote").splitlines():
         run(root, "git", "remote", "remove", remote)
     for ref in run(root, "git", "for-each-ref", "--format=%(refname)", "refs/remotes/").splitlines():
@@ -71,6 +49,58 @@ def checkout(root, commit):
     print("CI_WORKFLOW_IDENTITY " + json.dumps({name.lower(): os.environ.get("GITHUB_" + name, "")
           for name in ("WORKFLOW_REF", "WORKFLOW_SHA", "EVENT_NAME", "JOB", "RUN_ID", "RUN_ATTEMPT", "SHA")}, sort_keys=True))
     print("CI_CACHE_WRITES enabled=" + os.environ.get("STRATALINT_CACHE_WRITES", "false"))
+
+
+def prepare_native_push_range(root, commit):
+    """Acquire the one event endpoint the offline push planner may need.
+
+    Native push checkouts are intentionally shallow.  The event's before commit
+    is the complete immutable range endpoint, so fetch that object (and its
+    tree) before checkout strips every remote.  Planning remains offline after
+    this preparation boundary and still fails closed when the endpoint cannot
+    be acquired.
+    """
+    import ci_plan
+
+    if not ci_plan.native_push():
+        return
+    # Keep the lightweight checkout contract usable in local/native fixtures
+    # that intentionally omit the Actions event.  stage-input remains the
+    # fail-closed boundary for a real native push with no event payload.
+    if not os.environ.get("GITHUB_EVENT_PATH"):
+        return
+    before, after = ci_plan.push_endpoints()
+    if after != commit:
+        raise ValueError("push event after does not match checked-out candidate")
+    if before == ci_plan.ZERO_OID:
+        return
+
+    def available():
+        for suffix in ("^{commit}", "^{tree}"):
+            try:
+                ci_plan.git(root, "cat-file", "-e", before + suffix)
+            except subprocess.CalledProcessError:
+                return False
+        return True
+
+    if not available():
+        try:
+            subprocess.run(
+                ["git", "fetch", "--no-tags", "--depth=1", "origin", before],
+                cwd=root,
+                check=True,
+                capture_output=True,
+                text=True,
+                env={**os.environ, "GIT_NO_LAZY_FETCH": "1", "GIT_TERMINAL_PROMPT": "0"},
+            )
+        except subprocess.CalledProcessError as error:
+            detail = (error.stderr or error.stdout or "").strip()
+            raise ValueError(
+                f"PUSH_BEFORE_FETCH_FAILED: event.before {before} could not be acquired"
+                + (f": {detail}" if detail else "")
+            ) from error
+    if not available():
+        raise ValueError(f"PUSH_BEFORE_UNAVAILABLE: event.before {before} is not an available commit")
 
 
 def resolve(root, head):
