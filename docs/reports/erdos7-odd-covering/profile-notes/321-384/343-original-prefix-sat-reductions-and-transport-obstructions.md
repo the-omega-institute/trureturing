@@ -269,3 +269,124 @@ The forward implication takes the finite covering prefix. The reverse implicatio
 There are precisely two possibilities for this specified index problem. If the finite odd-cover conjecture is true (no such cover exists), FC is empty. If a finite cover C exists, FC is Sigma^0_1-complete under many-one reductions: given a machine M and input w, effectively produce a stream program which simulates M(w), emits nothing until it halts, and then emits the fixed list C. Its retained family covers at a finite stage exactly when M(w) halts. This compilation is total computable. The existence of C gives the conditional existence of the reduction; no algorithm for obtaining C from the unresolved conjecture is asserted.
 
 Thus proving HALT-hardness of THIS odd-distinct finite-extinction index problem would already imply the positive answer to Erdős7. It cannot be imported from arbitrary survivor towers without discharging precisely that missing arithmetic premise. In contrast, the no-computable-branch construction above works unconditionally for an infinite family and settles neither side of finite Erdős7.
+
+## 12. Exact counting is hard even when a survivor is explicitly known
+
+For a finite binary-encoded list M of pairwise distinct odd integers greater than one, put L=lcm(M), with L=1 for the empty list, and define
+
+    Z(M)=|{r in {0,...,L-1}: for every m in M, r is not 0 modulo m}|.
+
+Every nonempty such input has the explicit surviving residue 1. For the empty list its sole residue 0 survives. Nevertheless exact evaluation of Z is #P-complete under polynomial-time Turing reductions, using the standard #P-completeness of counting all independent vertex sets of an explicitly presented simple graph. The reduction below from that counting problem uses a single Z query followed by polynomial-time arithmetic (a metric reduction). No claim of parsimonious reduction, undecidability, or a resolution of Erdős 7 is made.
+
+The standard hardness premise is stated explicitly by Galanis, Ge, Stefankovic, Vigoda and Yang, *Improved Inapproximability Results for Counting Independent Sets in the Hard-Core Model*, [arXiv:1105.5131v3](https://arxiv.org/pdf/1105.5131v3), page 2, first paragraph. Page 1 defines the partition function and its specialization at activity one as the number of all independent sets; page 27, reference [15], attributes exact #P-completeness to Valiant, *The complexity of enumeration and reliability problems*, SIAM Journal on Computing 8(3), 410--421 (1979). The inspected source here is Galanis et al.; the original 1979 paper was not inspected. The cited passage does not specify a parsimonious or metric reduction, so only the standard polynomial-time Turing completeness conclusion is used. No approximation result from that paper is transferred to the arithmetic problem.
+
+### The arithmetic construction
+
+Let G be a simple graph on the explicit vertex set {0,...,n-1}. The graph input is an adjacency matrix or an explicit vertex-and-edge list, so its length is at least n; a succinct encoding of exponentially many isolated vertices is not the input model. Set
+
+    Q=3^(n+1) product_(j=1)^n (2j-1),
+    b_i=2+Q(2i+1) for 0<=i<n,
+    B=product_(i=0)^(n-1) b_i.
+
+Empty products are one. Q is odd, Q>2^n, and every odd prime at most n divides Q. All b_i are odd and exceed one, with b_i=2 modulo Q.
+
+The b_i are pairwise coprime. Otherwise a common prime divisor p of b_i and b_j is odd. It cannot divide Q because b_i=2 modulo every divisor of Q. Subtracting gives p|2Q(i-j), hence p|i-j. Thus p<=|i-j|<=n-1, which forces p|Q, a contradiction.
+
+For every edge {i,j}, include exactly the class
+
+    0 modulo m_ij, where m_ij=b_i*b_j.
+
+These are pairwise distinct numerical moduli. Indeed, because the blocks are pairwise coprime and nontrivial, divisibility by b_i identifies whether i is an endpoint of an edge product. Equality of two products therefore implies equality of their unordered endpoint sets. Every modulus is odd and greater than one. No primality test, prime search, or factorization of the blocks is used.
+
+The numerical moduli are also pairwise incomparable under divisibility. Every included class has a private integer: choose the CRT coordinates zero exactly at the two endpoints of its edge and one at all other vertices. That tuple belongs to its designated class and to no other edge class. Thus the reduction already uses families irredundant with respect to their covered union; they are not minimally covering families, because they do not cover.
+
+Let M_G be this list and L its actual LCM. Because the blocks are pairwise coprime,
+
+    L=product_(i incident to an edge) b_i,
+
+so L divides B. The empty graph gives L=1. We query the count in the actual LCM period, not in an artificially enlarged period.
+
+### Recover the independent-set count
+
+By CRT, a residue modulo B is a tuple x_i modulo b_i. It avoids the forbidden class for {i,j} exactly when x_i and x_j are not both zero. Consequently its zero-coordinate set
+
+    S={i:x_i=0}
+
+is an independent set of G. For a fixed independent set S, there are exactly product_(i not in S)(b_i-1) such tuples, since every nonzero coordinate can be chosen independently. Let Z_B denote the survivor count in the B period. Then
+
+    Z_B=sum_(S independent in G) product_(i not in S)(b_i-1).
+
+All original forbidden classes have period dividing L. Each residue modulo L has B/L lifts modulo B, preserving all memberships, so
+
+    Z_B=(B/L)Z(M_G).
+
+Because b_i-1=1 modulo Q, every independent set contributes one modulo Q. Since the number of independent sets is at most 2^n<Q, reduction modulo Q loses no information about that count:
+
+    #IS(G)=((B/L)Z(M_G)) mod Q.                    (1)
+
+This includes isolated vertices without deleting or identifying them. Their factors b_i-1 or 1 contribute two choices modulo Q, just as the isolated vertex contributes two choices to an independent set.
+
+### Binary size and the complexity classification
+
+For n>=2, log Q=O(n log n), log b_i=O(n log n), and log B=O(n^2 log n). There are at most n(n-1)/2 edge moduli, each with O(n log n) bits. The finitely many smaller n are covered by the same formulas. Computing Q, the b_i, the edge products, B, L, B/L, and the postprocessing in (1) uses polynomially many bit operations with standard integer algorithms. The Z output has at most O(n^2 log n) bits on constructed instances. Therefore (1) is a polynomial-time single-query metric reduction from #IS to Z.
+
+For membership in #P on arbitrary binary list inputs, first check oddness, the lower bound two, and pairwise distinctness in polynomial time; define the total counting function to be zero on invalid lists. Compute L by repeated gcd/lcm. Its bit length is at most the sum of the input modulus bit lengths. Nondeterministically choose a binary word of length ceiling(log_2 L), reject values at least L, and check every congruence. Exactly one accepting branch represents each surviving residue. For L=1 use a zero-bit choice. Thus Z belongs to #P. Combined with the standard hardness of #IS, the single-query transfer proves #P-completeness under polynomial-time Turing reductions; it does not strengthen the reduction type of the cited #IS premise.
+
+### What the result separates
+
+All target phases are zero. The integer 1 is visibly uncovered, so the reduction does not encode a difficult emptiness decision, much less an odd distinct cover. It encodes an exact global count in the multiplicities of the CRT fibres, under the original uniform law: the escape mass is Z(M_G)/L. Exact rational escape-mass evaluation is at least as hard as Z, since L is computable and recovers the integer count.
+
+A finite automaton for a supplied L still gives a terminating method. This does not provide a polynomial-time algorithm in the binary input length: a modulus or its LCM may have exponentially many residue states. The result concerns exact counting; it supplies no approximation-hardness conclusion and no unproved separation such as FP != #P. It also does not require, or prove, self-simulation or Gödel independence.
+
+The [companion program](../../frontier/cover-geometry/zero_phase_counting_reduction.py) constructs these exact numerical inputs and recovers #IS from a supplied exact survivor count. Its optional finite check compares numerical-modulus inclusion-exclusion with a separate graph independent-set enumeration, including isolated vertices and the empty family. Finite checks validate the implementation only; the proof above carries the unbounded graph and arithmetic quantifiers. No new Lean proof or historical originality is claimed.
+
+The program takes `--graph <input.json>` with an explicit `vertices=[0,...,n-1]` list and an `edges` list. Adding `--survivor-count <integer>` applies the recovery formula to a supplied exact count. Run `python3 -B -I -S -O zero_phase_counting_reduction.py --check` for the finite diagnostic; the retained [check result](../../frontier/cover-geometry/zero_phase_counting_reduction.json) contains 9,904 active checks across all 1,100 labeled simple graphs through five vertices and 59,810 inclusion–exclusion terms. These checks verify the implementation, while the ordinary proof supplies the unbounded statement.
+
+## 13. Exact cylinder extendibility with one forbidden class per prime-power height
+
+Fix an odd prime p. For each integer h>=1, either no class is included or one final class C_h=a_h mod p^h is included in Z_p. The included classes may be given by a computably enumerable event stream; there is at most one included class at each height. Set E=Z_p minus the union of all included C_h, with normalized Haar probability mu. All assertions below concern this same final inventory and this same measure.
+
+For a cylinder D=b mod p^d, d>=0, the following criterion is exact:
+
+    E intersects D if and only if
+    no included C_h with h<=d contains D.
+
+The forward implication is immediate. For the reverse implication, two p-adic cylinders which intersect are nested. Thus, if no included ancestor or equal-height class contains D, every forbidden class meeting D has height h>d and lies inside D. Countable subadditivity yields
+
+    mu(E intersect D) >= p^(-d) - sum_(h>d) p^(-h)
+                      = ((p-2)/(p-1)) p^(-d) > 0.
+
+This conditional bound is sharp. Take the canonical representative 0<=b<p^d and include, for every h>d, the class
+
+    b+p^(h-1) mod p^h.
+
+Its additional low-to-high digits relative to D are 0^(h-d-1)1. These classes are pairwise disjoint and all lie in D, so their measures sum to p^(-d)/(p-1). Other heights may be left absent.
+
+### A decidable final-height interface
+
+Suppose a total algorithm, on input h>=1, returns either "absent" or the final phase a_h. Then whether E meets D is decidable by inspecting only heights 1,...,d. This finite decision procedure does not need to inspect descendants.
+
+Let S_n be the residues modulo p^n avoiding the final classes of heights at most n. Each r in S_n has p lifts modulo p^(n+1). All old constraints hold on every lift, and the one possible class at height n+1 removes at most one lift. Therefore S_(n+1)->S_n is surjective with at least p-1 children over each r. Starting with S_0 and repeatedly choosing the least permitted lift computes a point of E.
+
+The conclusion is existence of a computable survivor, not computability of all survivors. Conversely, decidability of cylinder survival need not decide the raw inventory: arbitrary undecidable choices of redundant descendants inside an already excluded ancestor do not change E.
+
+### An event-only interface
+
+For a computably enumerable inventory, emptiness of E intersect D has a finite witness: an event including a class of height h<=d containing D. Thus cylinder emptiness is uniformly Sigma^0_1 and cylinder survival is uniformly Pi^0_1. "No such class has yet appeared" is not a final absence certificate.
+
+The Pi^0_1 upper bound is sharp, even for one fixed inventory and a computable family of queried cylinders. Let A be any Pi^0_1 subset of N, so N minus A is computably enumerable. Define
+
+    D_n=p^n mod p^(n+1),  n>=0.
+
+The D_n are pairwise disjoint: if m<n, every element of D_n is 0 modulo p^(m+1), whereas every element of D_m is p^m modulo p^(m+1). Enumerate D_n as a forbidden class exactly when n is enumerated into N minus A, suppressing repeated events. There is at most one class at each height. For the resulting fixed E,
+
+    E intersect D_n = D_n  if n is in A,
+    E intersect D_n = empty  if n is not in A.
+
+Hence n->D_n is a many-one reduction from A to cylinder survival. Taking A to be a Pi^0_1-complete set gives a single inventory whose cylinder-survival problem is Pi^0_1-complete. This is a worst-case classification; inventories with decidable survival also exist. Even with the query D=0 mod p fixed, varying the stream gives a nonhalting reduction by emitting D exactly when a supplied machine halts.
+
+In the fixed-inventory construction, 0 belongs to E and is computable. Hard cylinder-survival queries therefore do not by themselves imply that E has no computable point. The separate diagonal construction excluding every computable p-adic name requires its own argument.
+
+### Scope and existing ingredients
+
+These are ordinary mathematical statements about infinite one-prime inventories. They do not decide whether a finite distinct odd covering system exists and are not new Lean declarations. The rooted p-ary-tree representation and geometric one-class-per-height mass are already used in the repository's [arbitrary-star rooted-tree analysis](../../problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md), in the rooted-tree orbit section. The final-height greedy selector is also present in the existing odd-prime effective-escape result. The exact cylinder criterion adds the finite ancestor witness and the fixed-inventory Pi^0_1 classification to those ingredients; no research-priority claim is made.
