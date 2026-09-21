@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [A balanced depth profile enlarges the fixed 154-class noncoverage result to the degree-seven exponent frontier with unrestricted original tails](../docs/reports/erdos7-odd-covering/problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md)
 - [Joint exponent frontier D9 extends the fixed 154-class noncoverage law; a cylinder-cover dual sharply bounds a literal 105 family](../docs/reports/erdos7-odd-covering/problem-details/56-exponent-frontiers-and-cylinder-cover-certificates.md)
 - [Adaptive read-once head orders retain conditional comparison and strictly improve a family of period 315; the joint atom-cap obstruction persists](../docs/reports/erdos7-odd-covering/problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md)
 - [Depth-profile laws prove noncoverage for the literal 154-class head, arbitrary sixth-power smooth head additions and unrestricted original tails](../docs/reports/erdos7-odd-covering/problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md)
