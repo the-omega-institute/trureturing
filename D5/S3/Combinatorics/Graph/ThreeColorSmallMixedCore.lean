@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Graph/ThreeColorSmallMixedCore
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DoubleCounting]
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/ThreeColorSmallMixed.small_mixed_graph_potential; instance=D5/S3/Combinatorics/Graph/ThreeColorSmallMixedCore.small_population_bound
    digest: Bounded small-mixed reciprocal lower bound consumed by the actual finite graph theorem. -/
 
 import D5.S3.Combinatorics.Graph.ThreeColorIncidence
