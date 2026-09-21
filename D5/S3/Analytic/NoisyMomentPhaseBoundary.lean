@@ -4,7 +4,7 @@
    mirror-E: none(waiver:exact-symbolic-noise-phase)
    anchors: []
    utility: none
-   digest: Saturation of a noisy moment optimum forces its entire probability pair and gives the exact first support-transition threshold. -/
+   digest: Saturation forces the noisy-moment probability pair and its exact first support transition. -/
 
 import D5.S3.Analytic.GoldenTomography.FinitePronyHankelReconstruction
 import Mathlib.LinearAlgebra.Lagrange
