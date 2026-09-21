@@ -112,6 +112,7 @@ internal sealed partial class RuleFixture
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             ["Meta/ci-checks.json"] = """
                 {"schema":"ci-check-input-registration-v2","checks":[
+                  {"id":"SL-003","materials":["**"],"material_excludes":[]},
                   {"id":"SL-015","materials":["**/*.json"],"material_excludes":[]}
                 ]}
                 """ + "\n",
