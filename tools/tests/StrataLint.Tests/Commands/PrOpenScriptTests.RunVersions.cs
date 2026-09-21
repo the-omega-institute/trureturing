@@ -120,8 +120,7 @@ public sealed partial class PrOpenScriptTests
             Check("engineering", "COMPLETED", "CANCELLED", runAttempt: 2),
             Check("engineering", "COMPLETED", "SUCCESS", checkId: 102, runId: 202, runNumber: 2))));
 
-        var result = fixture.RunWatch("--pr", "42", "--head-sha", HeadSha,
-            "--interval-seconds", "1", "--timeout-seconds", "2");
+        var result = fixture.RunWatch42WithDeadline();
 
         Assert.Equal(124, result.ExitCode);
         Assert.Contains("state=stale", Text(result.StandardError), StringComparison.Ordinal);
