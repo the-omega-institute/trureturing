@@ -1,0 +1,190 @@
+{
+  "scope": "Exact single-coordinate minima; joint descent only yields a feasible-law upper bound, not the global optimum or an unrestricted theorem.",
+  "verification": [
+    {
+      "prime": 3,
+      "height": 2,
+      "kind": "C",
+      "shapes": 18,
+      "score_tables": 512
+    },
+    {
+      "prime": 3,
+      "height": 3,
+      "kind": "C",
+      "shapes": 108,
+      "score_tables": 80
+    },
+    {
+      "prime": 5,
+      "height": 1,
+      "kind": "D",
+      "shapes": 10,
+      "score_tables": 32
+    },
+    {
+      "prime": 5,
+      "height": 2,
+      "kind": "D",
+      "shapes": 300,
+      "score_tables": 80
+    },
+    {
+      "prime": 7,
+      "height": 2,
+      "kind": "D",
+      "shapes": 2205,
+      "score_tables": 24
+    }
+  ],
+  "actual_local_global_separation": {
+    "original_labels": [
+      [
+        3,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        15,
+        11
+      ],
+      [
+        21,
+        16
+      ],
+      [
+        35,
+        18
+      ],
+      [
+        105,
+        29
+      ]
+    ],
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      1,
+      1,
+      1
+    ],
+    "local_shape": [
+      [
+        2
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    ],
+    "global_shape": [
+      [
+        1
+      ],
+      [
+        1,
+        2,
+        4
+      ],
+      [
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    ],
+    "local_mass": "1/15",
+    "global_mass": "0",
+    "coordinate_minimum_counts": [
+      1,
+      1,
+      1
+    ],
+    "denominator": 15,
+    "full_product_shapes": 630
+  },
+  "strict_two_coordinate_trap": {
+    "denominator": 15,
+    "unchanged_coordinate_blocks": [
+      {
+        "fixed_prime": 3,
+        "product_shapes": 210,
+        "minimum_count": 1,
+        "minimizing_shapes": 2
+      },
+      {
+        "fixed_prime": 5,
+        "product_shapes": 63,
+        "minimum_count": 1,
+        "minimizing_shapes": 3
+      },
+      {
+        "fixed_prime": 7,
+        "product_shapes": 30,
+        "minimum_count": 1,
+        "minimizing_shapes": 1
+      }
+    ],
+    "all_updates_of_at_most_two_coordinates_have_count_at_least": 1,
+    "global_zero_shapes": 1,
+    "local_hit_integers": [
+      53
+    ],
+    "tied_escape_shape": [
+      [
+        1
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    ],
+    "tied_escape_hit_integers": [
+      88
+    ],
+    "tied_then_strict_counts": [
+      1,
+      1,
+      0
+    ],
+    "tied_changed_primes": [
+      3,
+      7
+    ],
+    "final_strict_changed_prime": 5
+  },
+  "schema": "reference-tree-optimizer-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "aa9959f0d19609356fa10e82549d5f842b2cd6c202e30eff2f9777c3931592c7",
+    "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9"
+  },
+  "producer_sha256": "a3b5612804f41d595ab158f2d41192341f7e38d63b3078afcd71ce78e4fc6431"
+}

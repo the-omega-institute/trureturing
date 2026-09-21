@@ -1,0 +1,410 @@
+[
+  {
+    "primes": [
+      3,
+      5
+    ],
+    "heights": [
+      2,
+      2
+    ],
+    "trial": 0,
+    "period": 225,
+    "states": 12,
+    "partition_queries": 6,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 52
+  },
+  {
+    "primes": [
+      3,
+      5
+    ],
+    "heights": [
+      2,
+      2
+    ],
+    "trial": 1,
+    "period": 225,
+    "states": 15,
+    "partition_queries": 7,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 52
+  },
+  {
+    "primes": [
+      3,
+      5
+    ],
+    "heights": [
+      2,
+      2
+    ],
+    "trial": 2,
+    "period": 225,
+    "states": 12,
+    "partition_queries": 7,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 52
+  },
+  {
+    "primes": [
+      3,
+      5
+    ],
+    "heights": [
+      2,
+      2
+    ],
+    "trial": 3,
+    "period": 225,
+    "states": 10,
+    "partition_queries": 6,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 52
+  },
+  {
+    "primes": [
+      3,
+      5
+    ],
+    "heights": [
+      2,
+      2
+    ],
+    "trial": 4,
+    "period": 225,
+    "states": 14,
+    "partition_queries": 7,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 52
+  },
+  {
+    "primes": [
+      3,
+      5
+    ],
+    "heights": [
+      2,
+      2
+    ],
+    "trial": 5,
+    "period": 225,
+    "states": 6,
+    "partition_queries": 3,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 52
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      1,
+      1
+    ],
+    "trial": 0,
+    "period": 315,
+    "states": 28,
+    "partition_queries": 30,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 60
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      1,
+      1
+    ],
+    "trial": 1,
+    "period": 315,
+    "states": 15,
+    "partition_queries": 25,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 60
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      1,
+      1
+    ],
+    "trial": 2,
+    "period": 315,
+    "states": 18,
+    "partition_queries": 26,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 60
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      1,
+      1
+    ],
+    "trial": 3,
+    "period": 315,
+    "states": 26,
+    "partition_queries": 27,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 60
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      1,
+      1
+    ],
+    "trial": 4,
+    "period": 315,
+    "states": 20,
+    "partition_queries": 27,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 60
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      1,
+      1
+    ],
+    "trial": 5,
+    "period": 315,
+    "states": 10,
+    "partition_queries": 14,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 60
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      2,
+      1
+    ],
+    "trial": 0,
+    "period": 1575,
+    "states": 27,
+    "partition_queries": 34,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 260
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      2,
+      1
+    ],
+    "trial": 1,
+    "period": 1575,
+    "states": 32,
+    "partition_queries": 45,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 260
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      2,
+      1
+    ],
+    "trial": 2,
+    "period": 1575,
+    "states": 33,
+    "partition_queries": 42,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 260
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      2,
+      1
+    ],
+    "trial": 3,
+    "period": 1575,
+    "states": 35,
+    "partition_queries": 47,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 260
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      2,
+      1
+    ],
+    "trial": 4,
+    "period": 1575,
+    "states": 44,
+    "partition_queries": 49,
+    "minimum_bad_mass": "1/20",
+    "selected_leaves": 260
+  },
+  {
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      2,
+      1
+    ],
+    "trial": 5,
+    "period": 1575,
+    "states": 24,
+    "partition_queries": 20,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 260
+  },
+  {
+    "primes": [
+      3,
+      7
+    ],
+    "heights": [
+      3,
+      1
+    ],
+    "trial": 0,
+    "period": 189,
+    "states": 10,
+    "partition_queries": 7,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 65
+  },
+  {
+    "primes": [
+      3,
+      7
+    ],
+    "heights": [
+      3,
+      1
+    ],
+    "trial": 1,
+    "period": 189,
+    "states": 12,
+    "partition_queries": 8,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 65
+  },
+  {
+    "primes": [
+      3,
+      7
+    ],
+    "heights": [
+      3,
+      1
+    ],
+    "trial": 2,
+    "period": 189,
+    "states": 12,
+    "partition_queries": 8,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 65
+  },
+  {
+    "primes": [
+      3,
+      7
+    ],
+    "heights": [
+      3,
+      1
+    ],
+    "trial": 3,
+    "period": 189,
+    "states": 12,
+    "partition_queries": 8,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 65
+  },
+  {
+    "primes": [
+      3,
+      7
+    ],
+    "heights": [
+      3,
+      1
+    ],
+    "trial": 4,
+    "period": 189,
+    "states": 12,
+    "partition_queries": 8,
+    "minimum_bad_mass": "2/65",
+    "selected_leaves": 65
+  },
+  {
+    "primes": [
+      3,
+      7
+    ],
+    "heights": [
+      3,
+      1
+    ],
+    "trial": 5,
+    "period": 189,
+    "states": 6,
+    "partition_queries": 6,
+    "minimum_bad_mass": "0",
+    "selected_leaves": 65
+  }
+]
