@@ -155,7 +155,8 @@ theorem exact_noise_phase_classification
     intro k hk
     by_cases h : k = 0
     · subst k; simp [d]
-    · simp [h]
+    · right
+      rw [Polynomial.coeff_one, if_neg h]
   have hDp : D p = L := by
     change (∑ k ∈ range N, d k * p.coeff k) = _
     apply sum_congr rfl
