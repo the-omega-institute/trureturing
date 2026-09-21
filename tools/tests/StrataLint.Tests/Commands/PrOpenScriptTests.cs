@@ -753,6 +753,7 @@ public sealed partial class PrOpenScriptTests
             delayedSnapshot = values.Any(value => value.DelaySeconds > 0);
             WriteResponses("snapshot", values);
         }
+        internal void FailOriginEnumeration() => WriteExecutable(Path.Combine(bin, "jq"), FailOriginEnumerationJq);
         internal void ApiResponse(string endpoint, byte[] bytes) =>
             File.WriteAllBytes(Path.Combine(responses, "api." + endpoint.Replace('/', '_').Replace('?', '_').Replace('&', '_')), bytes);
         internal void ApiResponse(string endpoint, string json) => ApiResponse(endpoint, Encoding.UTF8.GetBytes(json));
@@ -898,6 +899,14 @@ public sealed partial class PrOpenScriptTests
             set -euo pipefail
             [[ "${PR_TEST_APP_FAIL:-0}" != 1 ]] || exit 44
             printf '%s\n' 'app-token'
+            """;
+        private const string FailOriginEnumerationJq = """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            if [[ "${1:-}" == "-c" && "${2:-}" == ".runs[]" ]]; then
+              exit 19
+            fi
+            exec /usr/bin/jq "$@"
             """;
     }
 }

@@ -44,6 +44,39 @@ public sealed partial class PrOpenScriptTests
     }
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrWatchRejectsCrossPrOriginsWhenOriginEnumerationFailsBeforeAnyRow(bool reverse)
+    {
+        using var fixture = new PrScriptFixture();
+        var older = JsonSerializer.SerializeToNode(Check("engineering", "COMPLETED", "FAILURE"))!;
+        var newer = JsonSerializer.SerializeToNode(Check("engineering", "COMPLETED", "SUCCESS",
+            checkId: 102, runId: 202, runNumber: 2))!;
+        var matches = JsonSerializer.SerializeToNode(new
+        {
+            nodes = new[]
+            {
+                new { number = 42, baseRefName = "dev", headRefOid = HeadSha },
+                new { number = 43, baseRefName = "integration-x", headRefOid = HeadSha },
+            },
+            pageInfo = new { hasNextPage = false },
+        });
+        older["checkSuite"]!["matchingPullRequests"] = matches!.DeepClone();
+        newer["checkSuite"]!["matchingPullRequests"] = matches.DeepClone();
+        AddOrigin(fixture, [older], 42);
+        AddOrigin(fixture, [newer], 43);
+        fixture.FailOriginEnumeration();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", reverse ? [newer, older] : [older, newer])));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("outcome=green", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Contains("reason=ambiguous-pr-origin", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain(fixture.Invocations, invocation => invocation.Contains("/attempts/", StringComparison.Ordinal));
+    }
+
+    [Theory]
     [InlineData("pull_request")]
     [InlineData("pull_request_target")]
     [InlineData("pull_request_review")]
@@ -77,6 +110,22 @@ public sealed partial class PrOpenScriptTests
         Assert.Contains("state=stale", Text(result.StandardError), StringComparison.Ordinal);
         Assert.DoesNotContain("reason=ambiguous-pr-origin", Text(result.StandardError), StringComparison.Ordinal);
         Assert.Equal(2, fixture.Invocations.Count(IsSnapshotInvocation));
+    }
+
+    [Fact]
+    public void PrWatchWaitsForStaleHeadBeforeRejectingRerunOrdering()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", OldHeadSha, HeadSha,
+            Check("engineering", "COMPLETED", "CANCELLED", runAttempt: 2),
+            Check("engineering", "COMPLETED", "SUCCESS", checkId: 102, runId: 202, runNumber: 2))));
+
+        var result = fixture.RunWatch("--pr", "42", "--head-sha", HeadSha,
+            "--interval-seconds", "1", "--timeout-seconds", "2");
+
+        Assert.Equal(124, result.ExitCode);
+        Assert.Contains("state=stale", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("reason=ambiguous-pr-origin", Text(result.StandardError), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -334,6 +383,22 @@ public sealed partial class PrOpenScriptTests
         Assert.DoesNotContain("outcome=green", Text(result.StandardOutput), StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void PrWatchRejectsNulTruncatedOriginalArchiveName()
+    {
+        using var fixture = new PrScriptFixture();
+        var old = Check("engineering", "COMPLETED", "CANCELLED");
+        var current = Check("engineering", "COMPLETED", "SUCCESS", checkId: 102, runId: 202, runNumber: 2);
+        AddOrigin(fixture, [old], 42);
+        AddOrigin(fixture, [current], 42, defect: "nul-name");
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", old, current)));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("outcome=green", Text(result.StandardOutput), StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("FAILURE", 1)]
     [InlineData(null, 124)]
@@ -388,6 +453,22 @@ public sealed partial class PrOpenScriptTests
     private static string SystemRecord(params string[] messages) => string.Join("\n",
         messages.Select(x => "2026-09-21T04:45:47.6680000Z " + x)) + "\n";
 
+    private static byte[] NulArchiveName(byte[] archive)
+    {
+        var bytes = (byte[])archive.Clone();
+        var original = Encoding.UTF8.GetBytes("engineering/system.txtXa");
+        var replacement = Encoding.UTF8.GetBytes("engineering/system.txt\0a");
+        var matches = 0;
+        for (var offset = 0; offset <= bytes.Length - original.Length; offset++)
+        {
+            if (!bytes.AsSpan(offset, original.Length).SequenceEqual(original)) continue;
+            replacement.CopyTo(bytes.AsSpan(offset, replacement.Length));
+            matches++;
+        }
+        Assert.Equal(2, matches);
+        return bytes;
+    }
+
     private static void AddOrigin(PrScriptFixture fixture, object[] checks, int pr,
         (string Name, string Text)[]? entries = null, string defect = "")
     {
@@ -426,7 +507,7 @@ public sealed partial class PrOpenScriptTests
         fixture.ApiResponse(endpoint, metadata.ToJsonString());
         fixture.ApiResponse(endpoint + "/attempts/1/jobs?per_page=100&page=1",
             JsonSerializer.Serialize(new { total_count = jobs.Count + (defect == "partial-jobs" ? 1 : 0), jobs }));
-        entries ??= [(nodes[0]["name"]!.GetValue<string>().Replace('/', '_') + "/system.txt",
+        entries ??= [((defect == "nul-name" ? "engineering/system.txtXa" : nodes[0]["name"]!.GetValue<string>().Replace('/', '_') + "/system.txt"),
             SystemRecord($"Job defined at: owner/repo/.github/workflows/root.yml@refs/pull/{pr}/merge"))];
         using var stream = new MemoryStream();
         using (var zip = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: true))
@@ -435,6 +516,9 @@ public sealed partial class PrOpenScriptTests
                 using var writer = new StreamWriter(zip.CreateEntry(name).Open(), new UTF8Encoding(false));
                 writer.Write(text);
             }
-        fixture.ApiResponse(endpoint + "/attempts/1/logs", defect == "nonzip" ? Encoding.UTF8.GetBytes("not a zip") : stream.ToArray());
+        var archive = stream.ToArray();
+        if (defect == "nul-name")
+            archive = NulArchiveName(archive);
+        fixture.ApiResponse(endpoint + "/attempts/1/logs", defect == "nonzip" ? Encoding.UTF8.GetBytes("not a zip") : archive);
     }
 }

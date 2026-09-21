@@ -163,6 +163,10 @@ parse_snapshot() {
       map(.checkSuite | [.databaseId, .app.id, .branch.id, .workflowRun]) | unique | length == 1)) |
     select(all($runs | group_by([.checkSuite.workflowRun.workflow.id, .checkSuite.workflowRun.runNumber])[];
       map(.checkSuite.workflowRun.databaseId) | unique | length == 1)) |
+    # A snapshot for a different PR head is stale. Its execution ordering is
+    # irrelevant because no result for the watched head can be certified.
+    if $pr.headRefOid != $head then {state:$pr.state, stale:true, observed_head:$pr.headRefOid}
+    else
     # runNumber orders new executions, not reruns. WorkflowRun.runAttempt is
     # shared by its jobs; it cannot identify an individual check job attempt.
     # Multiple runs with a reattempt have no unambiguous ordering here.
@@ -176,8 +180,7 @@ parse_snapshot() {
         (map(.checkSuite.workflowRun.databaseId) | unique | length > 1)) | .[]] |
       unique_by(.checkSuite.workflowRun.databaseId) |
       map(.checkSuite.workflowRun.databaseId)) as $needed |
-    if $pr.headRefOid != $head then {state:$pr.state, stale:true, observed_head:$pr.headRefOid}
-    elif ($needed - $certified | length > 0) then
+    if ($needed - $certified | length > 0) then
       {unavailable:"ambiguous-pr-origin", runs:[$runs |
         group_by(.checkSuite.workflowRun.databaseId)[] |
         select(.[0].checkSuite.workflowRun.databaseId as $id | $needed | index($id)) |
@@ -203,6 +206,7 @@ parse_snapshot() {
      pending:($checks | map(select(.kind == "pending")) | length), missing:($checks | map(select(.kind == "missing")) | length),
      evidence:[$items[] | check_name as $name | select(($required | index($name)) != null) |
        . as $item | evidence + {superseded:($current | index($item) == null)}]} end
+    end
   '
 }
 origin_archive_identity() {
@@ -257,7 +261,10 @@ try:
             invalid()
         names = set()
         for info in infos:
-            name = info.filename
+            original_name = info.orig_filename
+            if original_name != info.filename:
+                invalid()
+            name = original_name
             parts = name.rstrip("/").split("/")
             mode = (info.external_attr >> 16) & 0o170000
             if (not name or "\\" in name or name.startswith("/") or
@@ -417,12 +424,20 @@ origin_metadata_matches() {
 }
 certify_snapshot_origins() {
   local parsed="$1" watched_pr="$2" watched_head="$3" deadline="$4"
-  local expected="$PR_REPO|$watched_pr" identity run
+  local expected="$PR_REPO|$watched_pr" identity run runs_file
+  runs_file="$(mktemp "${TMPDIR:-/tmp}/pr-origin-runs.XXXXXX")" || return 1
+  if ! jq -c '.runs[]' <<<"$parsed" >"$runs_file" || [[ ! -s "$runs_file" ]]; then
+    rm -f "$runs_file"
+    return 1
+  fi
   while IFS= read -r run; do
-    [[ -n "$run" ]] || return 1
-    identity="$(origin_for_run "$run" "$watched_head" "$deadline")" || return 1
-    [[ "$identity" == "$expected" ]] || return 1
-  done < <(jq -c '.runs[]' <<<"$parsed")
+    if [[ -z "$run" ]] || ! identity="$(origin_for_run "$run" "$watched_head" "$deadline")" ||
+        [[ "$identity" != "$expected" ]]; then
+      rm -f "$runs_file"
+      return 1
+    fi
+  done <"$runs_file"
+  rm -f "$runs_file"
   jq -c '[.runs[].run.databaseId]' <<<"$parsed"
 }
 pr_watch_main() {
