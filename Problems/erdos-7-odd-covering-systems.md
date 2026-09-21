@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Coordinatewise retention transports the exact auxiliary budget lower bound; combined with the fixed positive cylinder polynomial it excludes a full relative1/50000 box of all finite head-depth caps.](../docs/reports/erdos7-odd-covering/problem-details/61-coordinate-retention-and-profile-neighborhood-obstruction.md)
 - [A fixed positive cylinder cover yields a38-term multiaffine survivor bound at new caps on all20 head coordinates, with every coefficient independently reproduced.](../docs/reports/erdos7-odd-covering/problem-details/60-positive-cylinder-covers-across-head-profiles.md)
 - [Globally injective terminal phases reduce core-first optimization; a seven-phase family defeats the fixed balanced-profile budget for every adaptive order while retaining an uncovered integer and154 private class witnesses.](../docs/reports/erdos7-odd-covering/problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md)
 - [An adaptive five-prime initial block recovers fixed-phase noncoverage where all 120 fixed block orders fail the same budget; a cylinder dual excludes scheduling-only recovery of the fixed D7 allowance](../docs/reports/erdos7-odd-covering/problem-details/58-adaptive-initial-block-recovery-and-all-schedule-budget-obstruction.md)
