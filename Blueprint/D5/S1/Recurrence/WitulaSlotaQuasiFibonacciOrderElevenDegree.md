@@ -96,6 +96,10 @@ $$\forall n \in \mathbb{N},\; (5 \le n) \Rightarrow ((\operatorname{deg}\left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/WitulaSlotaQuasiFibonacciOrderElevenDegree.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/witula-slota-2007-quasi-fibonacci-order-eleven-degree` (proved) by `D5/S1/Recurrence/WitulaSlotaQuasiFibonacciOrderElevenDegree.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"witula-slota-2007-quasi-fibonacci-order-eleven-degree","declaration_gid":"D5/S1/Recurrence/WitulaSlotaQuasiFibonacciOrderElevenDegree.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Roman Wituła; Damian Słota (2007). *Quasi-Fibonacci Numbers of Order 11*. URL: <https://cs.uwaterloo.ca/journals/JIS/VOL10/Slota2/slota99.pdf>.

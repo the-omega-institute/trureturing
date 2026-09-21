@@ -71,7 +71,11 @@ internal sealed class WitulaSlotaQuasiFibonacciOrderElevenDegreeDocument
                     + "Consequently every degree-n coefficient is nonzero for n at least five, "
                     + "and the upper degree bounds are equalities.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "witula-slota-2007-quasi-fibonacci-order-eleven-degree"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string declaration,
@@ -79,14 +83,16 @@ internal sealed class WitulaSlotaQuasiFibonacciOrderElevenDegreeDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("witula-slota-" + declaration.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
