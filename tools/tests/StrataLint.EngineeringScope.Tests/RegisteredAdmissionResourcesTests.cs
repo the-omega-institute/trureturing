@@ -113,7 +113,8 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    // Use an existing D5 owner address to exercise registered semantic-input requirements.
+    [InlineData("D5/S0/Carrier/Ring.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs")]
     [InlineData("Meta/registry.yaml")]
