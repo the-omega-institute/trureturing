@@ -27,10 +27,12 @@ class NativeRegTests:
         manifest['packages'][1] = git
         self.write('lake-manifest.json', json.dumps(manifest))
         self.copy('Reg/lakefile.toml')
-        # Empty downstream libraries still have their declared source roots.
-        # Lake's submodule glob requires directories, not dummy Lean modules.
-        for library in ('LeanInformationAuditRegTests', 'LeanInformationAuditRegAnalysis'):
-            (self.root / 'tools/lean-inspector' / library).mkdir()
+        # Supply tiny sources for both libraries in the real copied package
+        # configuration, including its required default test target.
+        self.write('tools/lean-inspector/LeanInformationAuditRegTests/Required.lean',
+                   'def requiredCheck : Bool := true\n')
+        self.write('tools/lean-inspector/LeanInformationAuditRegAnalysis/Explicit.lean',
+                   'def explicitAnalysis : Bool := true\n')
         reg = json.loads((ROOT / 'Reg/lake-manifest.json').read_text())
         reg['packages'] = [p for p in reg['packages'] if p['type'] == 'path'] + [dict(git, inherited=True)]
         self.write('Reg/lake-manifest.json', json.dumps(reg))
@@ -57,6 +59,8 @@ class NativeRegTests:
         self.run_lake('build', 'Fixture')  # The new Git pin needs its own warm compiler baseline.
         self.make_lean()
         self.assertFalse((self.root / '.lake/build/reg/lib/lean/Reg').exists())
+        self.assertTrue((self.root / '.lake/build/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').is_file())
+        self.assertFalse((self.root / '.lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis').exists())
         self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
                    'def registrationValue := value\n')
         self.make_lean('Reg.Support.Entry', 'D5.Alone')
@@ -67,10 +71,12 @@ class NativeRegTests:
         self.make_lean(success=False)  # The default root audit remains required.
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         downstream = 'tools/lean-inspector/LeanInformationAuditRegTests/Required.lean'
-        self.write(downstream, 'invalid downstream default\n')
+        self.write(downstream, 'def requiredCheck : Bool := missingRequiredCheck\n')
         self.make_lean('Reg.Support.Entry')
-        self.make_lean(success=False)
+        failed = self.make_lean(success=False)
+        self.assertIn('missingRequiredCheck', failed.stdout + failed.stderr)
         self.write(downstream, 'def requiredCheck : Bool := true\n')
+        self.make_lean()
         self.write('Reg/Support/Entry.lean', 'this must fail\n')
         self.make_lean(success=False)
 
@@ -119,6 +125,11 @@ class NativeRegTests:
             self.assertEqual((donor / leaf).read_text(), original)
             self.write('Audit.lean', 'invalid root audit\n')
             self.build_reg_report(success=False)
+            self.write('Audit.lean', 'def audit : Nat := 1\n')
+            self.write('tools/lean-inspector/LeanInformationAuditRegTests/Required.lean',
+                       'def requiredCheck : Bool := missingRequiredCheck\n')
+            failed = self.build_reg_report(success=False)
+            self.assertIn('missingRequiredCheck', failed.stdout + failed.stderr)
         finally:
             self.root, self.env = donor, original_env
 
