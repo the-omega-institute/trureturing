@@ -10,7 +10,7 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "4f102f3274024be7ebf424645daaa2eb3e2a10da0c163a5d6cc9c302c4755b88",
+      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "7330097fdab99792a60d7287519146ba0d5957353e74ad70fc993cd6f3aac88b",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
       "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
@@ -23,13 +23,13 @@
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "06421dbd2f5cc25b791375315023e8dfbc4313e738adcfb44e9b0a3b5b4ad1e1",
-      "byte_count": 49217
+      "sha256": "64084648d47e86edcbcc42bd52f1a7fd4a7e4e3663453b85ccf05db37027bd28",
+      "byte_count": 55302
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "3e38bf29b30b653c76df444e00bcff72051771b6eb3aa38675ad7e3c1f271d49"
+    "value": "9a551cc6fb5851e47f85c9b561fe8f9f23ba65ecf32716d2f0e6c3800d84d27f"
   },
   "affine_dominance_endpoints": {
     "path": "content/005-affine_dominance_endpoints.json",
@@ -42,12 +42,25 @@
   },
   "results": {
     "path": "content/007-results.json",
-    "sha256": "0ec4d3559ed623d3aa1d15dae40b561bed5933cf0a5fa7d97f45c448f1b9e8b5",
+    "sha256": "a2daf1539c20af5cded8ff5bbc81368447268e1c330777a3ef4d9ee45b400798",
     "kind": "array"
   },
   "direct_square_scalar_boundary": {
     "path": "content/008-direct_square_scalar_boundary.json",
     "sha256": "90a46c34e70b62d859d98c2439e6583940b5059b17c72a69c2d746032dfc8f42",
     "kind": "value"
+  },
+  "pair_envelope_gap_limits": {
+    "kind": "inline",
+    "value": {
+      "unweighted": {
+        "raw_gap": "1/420",
+        "normalized_gap": "1/90"
+      },
+      "reweighted": {
+        "raw_gap": "13/504",
+        "normalized_gap": "520/4857"
+      }
+    }
   }
 }
