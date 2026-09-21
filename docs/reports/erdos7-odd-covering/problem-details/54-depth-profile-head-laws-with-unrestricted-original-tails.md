@@ -2,7 +2,7 @@
 
 The original unrestricted distinct odd-modulus covering problem remains open.
 This result fixes the 154 original head congruences in
-[the literal table in Chapter 04c](04c-full-history-capped-laws-and-exact-global-optimization.md) and allows arbitrary additional distinct odd
+[the literal table in Chapter 04c](04c-full-history-capped-laws-and-exact-global-optimization.md#7-a-complete-survivor-count-obstruction-defeats-every-fixed-order) and allows arbitrary additional distinct odd
 moduli whose largest prime factor exceeds 73. Neither their prime support nor
 their exponents, including exponents in their small-prime cofactors, are
 bounded. Under the conditional comparison and BBMST continuation inputs used
