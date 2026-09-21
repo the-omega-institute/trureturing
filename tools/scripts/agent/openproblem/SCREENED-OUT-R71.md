@@ -131,3 +131,72 @@ arXiv:2211.13675)全文亦不含,且其 "perfect restricted `s`-basis" 允许**�
 
 按第 3.1 条与第 3.6 条①,已有文献结论**不独立首次冻结**,故本条只留判据,不产生 Lean 节点;
 结算记录在 issue #9255。
+
+## R73 — 期刊开放问题列表这条矿脉的收益率与三道筛(2026-09-21)
+
+把 *Journal of Integer Sequences* 卷 24–28 与 *INTEGERS* 卷 24 整卷拉下来逐篇筛,共 **595 篇**,
+记录实测收益率与最终收敛下来的筛法,供后续换卷时直接复用。
+
+### 三道筛,按精度递增
+
+1. **结构关键词**:对 `(Conjecture|Problem|Question) \d+[.:]` 后 5 行匹配
+   `factoriz|tiling|cover|packing|matching|basis|subgroup|abelian group|permutation|lattice|code|design|
+   Latin square|hypergraph|colouring|clique|sumset|zero-sum|Sidon|difference set`。
+   JIS 卷 24–28 的 351 篇出 6 篇、INTEGERS 卷 24 的 122 篇出 3 篇。
+2. **自报验证范围**:同样的编号头,邻近 ±8 行出现
+   `verified|checked|confirmed|computer search|numerical evidence|tested`。595 篇出 19 条,精度明显更高——
+   本轮真正可动的两个靶都是它挑出来的。
+3. **存在性/构造性措辞**(最准):邻近 6 行出现
+   `does there exist|is there a|are there (infinitely many|any)|can we always|can one always|
+   determine (if|whether)|construct a|must (there|every|any)`。595 篇出 57 条。
+
+### 实测收益率
+
+JIS 卷 24–28 约 350 篇只产出 **2 个**真正可动的靶(Tenner 等的 Problem 48、Greene 的 Conjecture 28),
+两个都已结算。其余命中按下列形状淘汰:
+
+- **研究纲领形**:Insko(JIS 26)Open Problem 36/37「能否推广到超图」「是否存在某种联系」——无可结算断言。
+- **无界性型 / 带 ≈ 的渐近型**:Lamont(JIS 24)「persistence 无界」、Sheydvasser(JIS 24)
+  `λ₂ ≈ 2.44344296778` —— 不是有限可判也不是可构造的断言。
+- **第二/三档计算前沿**:Dalton–Trifonov,*Extreme Covering Systems*,
+  **J. Integer Seq. 25 (2022), Art. 22.9.1** 的 Problem 1–5(distinct covering systems)。
+  Problem 1/3 问最小模为 5 时最大模 ≥ 108、模的最小公倍数 ≥ 1440,作者自述只推到 84 且
+  「the result is too weak and the proof too long, to be included in this paper」;
+  Problem 4 等价于 squarefree 情形最小模问题的完整解;Problem 5 求 `c = lim c(n)`,
+  已知 `4 ≤ c ≤ 616000`(Harrington 的三个不交覆盖系给下界,Balister 等的 616000 给上界),
+  作者只有「基于若干假设的启发式」说 `c` 是 4 或 5。三条都不是小时级靶,记判据不开线。
+- **最优下界型(真但要整篇论文)**:INTEGERS 24 (2024) #A81 重述 Bhanja 等的 Conjecture 1/2——
+  `k ≥ 4` 个正整数的受限带符号和集满足 `|h^∧_± A| ≥ 2hk − h² + 1`,`3 ≤ h ≤ k − 1`,
+  等号仅在 `A = d·{1,3,…,2k−1}`。`h = 3` 与 `h = 4` 已证,`h ≥ 5` 开放。
+  **反例路线已被穷举否定**:先用论文自报的极值集校准实现(`3 ≤ h ≤ k − 1`、`k ≤ 8` 全部恰好取到界),
+  再对第一个开放情形 `k = 6, h = 5` 穷举 `[1,16]` 的全部六元子集、以及 `k = 7` 的 `h = 5, 6` 穷举 `[1,13]`:
+  **零违例,且取等号的集合恰好只有 `{1,3,…,2k−1}` 的倍数**。猜想是真的,要的是证明。
+
+### 判据一:印刷式先对自家表格
+
+INTEGERS 24 (2024) #A104(Buck–Elder–Figueroa–Harris–Harry–Simpson,*Flattened Stirling Permutations*)
+的两条猜想,**印刷式都与同文的数据表矛盾**:
+
+- **Conjecture 1**(`|flat₃(Q_n)|` 的闭式,作者自述 computationally verified for `1 ≤ n ≤ 12`):
+  印刷式在 `n = 5` 给 **64**,而同文 Table 1 给 **70**;`n = 6…10` 给 324/1336/4920/16920/55700,
+  表为 374/1596/6012/20994/69842。差值恰等于式中第二个二重和,把该项系数也取 2 后 `n = 4…10` 七值全合。
+- **Conjecture 2**(`|flat(Q_n^m)|` 的 Dobinski 型闭式,验到 `n ≤ 7, m ≤ 5`):
+  印刷式在 `m = 2, n = 1` 给 **2**,Table 2 给 **1**;整体差一位下标,指数改成 `n − 1` 后
+  `m = 2…5`、`n = 1…7` 的 28 个值全合。
+
+**所以派任何力气之前,先把猜想式代进作者自己的数据表。** 改正后的 Conjecture 2 等价于
+`|flat(Q_n^m)| = D_{m,m−1}(n−1)`(r-Dowling 数,`r = m − 1`),对应 OEIS `A007405`(`m = 2`,EGF
+`exp(x + (e^{2x}−1)/2)`)、`A355164`(`m = 3`)、`A355167`(`m = 4`);`m = 2` 是该文已证的 Theorem 2,
+`m ≥ 3` 开放。独立枚举器(先按 Table 2 的 28 个值校准)把数据推到 `m = 2,3` 的 `n = 9` 与 `m = 4,5` 的 `n = 8`,
+新值 239355 / 2465478 / 1120768 / 3790625 全部与 r-Dowling 数相符。该文 Theorem 4 走的是 type B 集合分拆,
+把 2 直接换成 m 只得 `exp(x + (e^{mx}−1)/m)`,与数据要的 `exp((m−1)x + (e^{mx}−1)/m)` 不符,
+故推广不平凡:正确对象是零块元素各带 `m − 1` 种颜色的 Dowling 结构,要证需另造双射。
+
+### 判据二:交付面决定选靶,不只是数学难度
+
+第 3.3 条禁普通正向有限实例准入,`certified-instance` 与 `bounded-enumeration` 只可走经验证的 `refutes`。
+于是**「是否存在某一个对象」这类单见证存在性问题,即使搜到见证也进不了门**——
+例如 Dimitrov(JIS 28)Question 7 问是否存在一对 `(m, n)` 使 `σ₂(m) = σ₂(n) = m² + n²`。
+**可交付的只有两种形状**:对无穷多参数成立的 `∀…∃…`(交付为一般定理,用途报 `none`),或反驳。
+本轮两个结算都落在这两种形状里:Tenner 等的 Problem 48 是前者,CLSW 的问题 12 是后者。
+选靶时这一条要排在数学难度之前判。
