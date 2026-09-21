@@ -127,6 +127,23 @@ public sealed partial class PrOpenScriptTests
         Assert.DoesNotContain("reason=ambiguous-pr-origin", Text(result.StandardError), StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void PrWatchRejectsMissingSuiteIdentityBeforeWaitingForStaleHead()
+    {
+        using var fixture = new PrScriptFixture();
+        var older = JsonSerializer.SerializeToNode(Check("engineering", "COMPLETED", "CANCELLED", runAttempt: 2))!;
+        older["checkSuite"]!["databaseId"] = null;
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", OldHeadSha, HeadSha,
+            older,
+            Check("engineering", "COMPLETED", "SUCCESS", checkId: 102, runId: 202, runNumber: 2))));
+
+        var result = fixture.RunWatch42WithDeadline();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.Contains("outcome=query-unavailable step=snapshot", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.DoesNotContain("state=stale", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]

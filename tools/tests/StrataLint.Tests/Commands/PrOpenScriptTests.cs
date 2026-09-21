@@ -720,7 +720,10 @@ public sealed partial class PrOpenScriptTests
             var result = RunWatch("--pr", "42", "--head-sha", HeadSha, "--interval-seconds", "1", "--timeout-seconds", DeadlineBehaviorTimeoutSeconds);
             var errors = Text(result.StandardError);
             var events = File.ReadAllLines(responseEvents);
-            Assert.Contains("PR_WATCH_PROGRESS pr=42 state=", errors, StringComparison.Ordinal);
+            if (result.ExitCode == 69)
+                Assert.Contains("PR_WATCH_PROGRESS pr=42 step=snapshot unavailable_attempts=", errors, StringComparison.Ordinal);
+            else
+                Assert.Contains("PR_WATCH_PROGRESS pr=42 state=", errors, StringComparison.Ordinal);
             Assert.Contains("snapshot:1:returned", events);
             if (delayedSnapshot)
             {

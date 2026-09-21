@@ -111,7 +111,7 @@ parse_snapshot() {
     def shape_ok: type == "object" and (if .__typename == "CheckRun" then
       (.name | type == "string" and length > 0) and (.status | type == "string") and has("conclusion") and
       (.conclusion == null or (.conclusion | type == "string")) and (.databaseId | database_id) and
-      (.checkSuite | type == "object" and has("workflowRun")) and (.checkSuite.commit.oid == $head) and
+      (.checkSuite | type == "object" and (.databaseId | database_id) and has("workflowRun")) and (.checkSuite.commit.oid == $head) and
       (.checkSuite.workflowRun == null or
         ((.checkSuite.app.id | nonempty_string) and (.checkSuite | has("branch")) and
          (.checkSuite.branch == null or (.checkSuite.branch.id | nonempty_string)) and
