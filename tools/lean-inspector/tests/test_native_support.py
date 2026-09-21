@@ -1,4 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
+import codecs
 import hashlib
 import io
 import json
@@ -234,7 +235,8 @@ root = "Cache"
             raise
         self.temporary.cleanup()
 
-    def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120):
+    def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
+                        observe_output=None):
         if timeout != 120 or not text or not capture_output:
             raise ValueError('native fixture commands require the 120s guard and text capture')
         temporary = self.root / 'tmp'
@@ -244,6 +246,19 @@ root = "Cache"
         started = self.command_clock()
         # Files keep output draining independent of descendant pipe lifetimes.
         with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+            streams = dict(stdout=stdout, stderr=stderr) if observe_output is not None else {}
+            offsets = dict.fromkeys(streams, 0)
+            decoders = {name: codecs.getincrementaldecoder('utf-8')('replace') for name in streams}
+            def observe_pending(*, final=False):
+                for name, stream in streams.items():
+                    # A seek/read would move the file offset shared with the
+                    # child and could overwrite output that has not been read.
+                    data = os.pread(stream.fileno(), os.fstat(stream.fileno()).st_size - offsets[name],
+                                    offsets[name])
+                    offsets[name] += len(data)
+                    value = decoders[name].decode(data, final=final)
+                    if value:
+                        observe_output(name, value)
             process = subprocess.Popen(args, cwd=cwd or self.root, env=environment,
                 stdout=stdout, stderr=stderr, start_new_session=True)
             command = (process, {})
@@ -253,6 +268,7 @@ root = "Cache"
             try:
                 while True:
                     self.owned_processes(command)
+                    observe_pending()
                     if self.command_clock() - started >= timeout:
                         stdout.seek(0); stderr.seek(0)
                         out, err = stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace')
@@ -264,6 +280,7 @@ root = "Cache"
             finally:
                 self.join_command(command)
                 self._commands.remove(command)
+                observe_pending(final=True)
                 if getattr(self, 'last_command_diagnostic', {}).get('command') == list(args):
                     print('NATIVE_COMMAND_CLEANUP ' + json.dumps(dict(
                         pid=process.pid, owned_live_processes=0, direct_child_exit=process.returncode)),
