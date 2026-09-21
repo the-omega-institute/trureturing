@@ -109,5 +109,10 @@
   "limit_gap": {
     "kind": "inline",
     "value": "206267076472636594/698388571240919384765625"
+  },
+  "pair_envelope_gaps": {
+    "path": "content/007-results/000001/item/014-pair_envelope_gaps.json",
+    "sha256": "1bd834ce9223327c0d553c4c350e4bf8d23282f481be77716a370666fd896fa8",
+    "kind": "value"
   }
 }

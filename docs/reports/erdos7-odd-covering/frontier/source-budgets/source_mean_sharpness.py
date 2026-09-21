@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replay sharp near-J means and the direct square/scalar continuation boundary."""
+"""Replay sharp near-J means, actual pair gaps, and the square/scalar boundary."""
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -176,6 +176,40 @@ def upper_endpoints(joint):
     return rows
 
 
+def pair_envelope_gaps(n, w, u):
+    """Five original square terms on each of the same two actual source laws."""
+    cells = (0,3,1,4,7)
+    alpha = tuple(mass*weight for mass,weight in zip(n,w))
+    beta = tuple(mass/(7*u) for mass in n)
+    maxima = lambda values: tuple(i for i,value in enumerate(values) if value == max(values))
+    combined = tuple(3*x+2*y for x,y in zip(alpha,beta))
+    require((maxima(alpha),maxima(beta),maxima(combined)) == ((3,),(1,),(1,)),
+            'Actual mod9, mod63, and shared-label cluster maxima')
+    gap = 3*max(alpha)+2*max(beta)-max(combined)
+    require(gap == 3*(alpha[3]-alpha[1]) > 0, 'Strict same-source five-term gap')
+    weights = (F(11,8),F(5,4),F(1),F(1),F(1))
+    weighted = tuple(mass*weight for mass,weight in zip(alpha,weights))
+    A = (sum(weighted[:2]),sum(weighted[2:]),F(0))
+    B = (max(weighted[:2]),max(weighted[2:]),F(0))
+    require(maxima(weighted[:2]) == (1,) and maxima(weighted[2:]) == (1,)
+            and maxima(B) == (0,), 'Weighted mod9 maxima in each mod3 root')
+    weighted_combined = tuple(3*x+2*y for x,y in zip(A,B))
+    weighted_gap = 3*max(A)+2*max(B)-max(weighted_combined)
+    deltaA,deltaB = A[1]-A[0],B[0]-B[1]
+    require(weighted_gap == (min(3*deltaA,2*deltaB) if deltaA > 0 else 0),
+            'Shared mod3 choice retains both weighted tradeoffs')
+    return dict(unweighted=dict(mod9_masses=alpha,mod63_fibre_caps=beta,
+                    maximizing_cells=dict(mod9=cells[maxima(alpha)[0]],
+                        mod63_projection=cells[maxima(beta)[0]],
+                        five_term_cluster=cells[maxima(combined)[0]]),
+                    raw_gap=gap,normalized_gap=gap/sum(alpha)),
+                reweighted=dict(cell_weights=weights,mod3_masses=A,mod9_fibre_caps=B,
+                    maximizing_roots=dict(mod3=maxima(A),mod9_projection=maxima(B),
+                        five_term_cluster=maxima(weighted_combined)),
+                    root_mass_difference=deltaA,cell_cap_difference=deltaB,
+                    raw_gap=weighted_gap,normalized_gap=weighted_gap/sum(weighted)))
+
+
 def calculate_family(src, joint, N):
     family, private, hole = original_source(src,N)
     n,eta,z,partition = src.raw35_masses(family,N)
@@ -216,6 +250,9 @@ def calculate_family(src, joint, N):
     Vplus = r*(s+C)/u
     require(direct['zero7'] == V0 and direct['positive7_raw35_mean'] == s+C
             and direct['positive7'] == Vplus, 'Every finite test integrates to the claimed joint formula')
+    pair_gaps = pair_envelope_gaps(n,w,u)
+    require((pair_gaps['reweighted']['raw_gap'] == 0) == (N == 3),
+            'Weighted five-term gap is zero at height3 and positive at every checked larger height')
     upper = None
     if delta <= F(1,4000):
         K = 5
@@ -231,7 +268,8 @@ def calculate_family(src, joint, N):
                 seven_partition_leaves=len(seven), source=dict(t=t,q=q,r=r,u7=u,d=d,w=w,n=n,eta=eta,
                 z=z,s=s,S=S,S0=S0,qJ=qJ,delta=delta,rho=rho), finite_test=direct,
                 closed_formula=dict(zero7=V0,positive7=Vplus,total=V0+Vplus,raw35_nonunit=C),
-                forced_layer_upper=upper, limit_gap=F(38,63)-V0-Vplus)
+                forced_layer_upper=upper, limit_gap=F(38,63)-V0-Vplus,
+                pair_envelope_gaps=pair_gaps)
 
 
 
@@ -311,6 +349,12 @@ def calculate(base, proof, heights):
     square_boundary = scalar_boundary(base,io,joint)
     endpoint_rows = upper_endpoints(joint)
     results = [calculate_family(src,joint,N) for N in heights]
+    limits = pair_envelope_gaps((F(1,24),F(1,12),F(1,36),F(1,18),F(1,24)),
+                               (F(29,35),F(23,35),F(1),F(1),F(1)),F(5,6))
+    gap_limits = {law:{key:limits[law][key] for key in ('raw_gap','normalized_gap')}
+                  for law in ('unweighted','reweighted')}
+    require(tuple(gap_limits[law][key] for law in gap_limits for key in gap_limits[law])
+            == (F(1,420),F(1,90),F(13,504),F(520,4857)), 'Exact five-term gap limits')
     proof_bytes = io.read_artifact_bytes(proof)
     return io,encode(dict(schema='source-mean-sharpness-v1',
         scope='Finite actual irredundant noncover sources and one finite complete own test for each height. The ordinary proof establishes the general K-layer upper and sharp limiting uniform mean38/63. No finite-delta optimizer, nonlinear-hinge sharpness, or unrestricted covering conclusion.',
@@ -318,7 +362,7 @@ def calculate(base, proof, heights):
         ordinary_proof=dict(sha256=sha256(proof_bytes).hexdigest(),byte_count=len(proof_bytes)),
         producer_sha256=sha256(Path(__file__).read_bytes()).hexdigest(),
         affine_dominance_endpoints=endpoint_rows, sharp_mean=F(38,63), results=results,
-        direct_square_scalar_boundary=square_boundary))
+        direct_square_scalar_boundary=square_boundary,pair_envelope_gap_limits=gap_limits))
 
 
 def main():
@@ -339,7 +383,7 @@ def main():
     else:
         require(result == json.loads(io.read_artifact_bytes(certificate),object_pairs_hook=io._unique),
                 'Complete exact sharpness certificate replay')
-    print('PASS affine dominance at18 endpoint vertices; complete actual finite test integrals; all-threshold scalar boundary')
+    print('PASS affine dominance at18 endpoint vertices; complete actual finite test integrals; same-source pair gaps; all-threshold scalar boundary')
     for row in result['results']:
         print('N',row['height'],'originals',row['original_label_count'],
               'private checks',row['private_membership_checks'],'finite mean',row['finite_test']['total'])
