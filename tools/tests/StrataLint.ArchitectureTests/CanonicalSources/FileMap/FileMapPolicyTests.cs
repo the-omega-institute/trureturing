@@ -8,10 +8,11 @@ namespace StrataLint.ArchitectureTests;
 [Collection(nameof(CanonicalFileMapCollection))]
 public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
 {
-    [Fact]
-    public void LeanReportConfigurationIsAdmittedWithItsRuntimeVerifier()
+    [Theory]
+    [InlineData("lean-report-inputs.json", "LeanReportSelection", "lean-report")]
+    [InlineData("Meta/ci-cache-paths.json", "NativeArchivePaths", "test-cache")]
+    public void RuntimeManifestIsAdmittedWithItsRuntimeVerifier(string path, string verifier, string resource)
     {
-        const string path = "lean-report-inputs.json";
         var root = RepositoryLayout.FindRoot();
         var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
             File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
@@ -21,10 +22,11 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
         var entry = Assert.Single(manifest.Match(path));
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
-        Assert.Equal("LeanReportSelection", Assert.Single(entry.VerifiedBy));
-        Assert.Contains("lean-report", entry.Require);
+        Assert.Equal(verifier, Assert.Single(entry.VerifiedBy));
+        Assert.Contains(resource, entry.Require);
         Assert.DoesNotContain(fixture.Findings, finding =>
-            finding.Path == path && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+            finding.Path == path && finding.Code is "FILEMAP-ACTOR-DANGLING"
+                or "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
     }
 
     [Fact]

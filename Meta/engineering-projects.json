@@ -413,6 +413,7 @@
         "Meta/ReportConsumers/scribe-content.json",
         "Meta/ReportProducers/lean-report.json",
         "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-cache-paths.json",
         "Meta/ci-checks.json",
         "Meta/ci-resources.json",
         "Meta/domains.yaml",
@@ -466,6 +467,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
+        "Meta/ci-cache-paths.json",
         "tools/**",
         "Meta/Digestion/atomizers.toml",
         "Meta/FILEMAP.toml",
@@ -567,7 +569,17 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
+        "Meta/ci-cache-paths.json",
         "tools/scripts/**",
+        "tools/lean-inspector/Inspector.lean",
+        "tools/lean-inspector/inspect.sh",
+        "tools/lean-inspector/lakefile.lean",
+        "tools/lean-inspector/materials.py",
+        "tools/lean-inspector/native.py",
+        "tools/lean-inspector/native_image.c",
+        "tools/lean-inspector/publication.py",
+        "tools/lean-inspector/reuse.py",
+        "tools/lean-inspector/tests/*.py",
         "tools/Architecture/**",
         "tools/**/*.csproj",
         "tools/**/*.json",
@@ -636,6 +648,7 @@
         "tools/lean-inspector/lake-manifest.json",
         "tools/lean-inspector/materials.py",
         "tools/lean-inspector/native.py",
+        "tools/lean-inspector/native_image.c",
         "tools/lean-inspector/publication.py",
         "tools/lean-inspector/reuse.py",
         "tools/lean-inspector/tests/*.py",
@@ -769,6 +782,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
+        "Meta/ci-cache-paths.json",
         "tools/scripts/**",
         "tools/Makefile",
         "Makefile",

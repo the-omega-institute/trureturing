@@ -12,6 +12,25 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void CachePathChangesRunOnlyRegisteredCacheConsumers(string mode)
+    {
+        var plan = Plan("Meta/ci-cache-paths.json", "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+            "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+        Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
+        Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
+            Strings(plan["execution"]!["steps"]!));
+        Assert.Equal(mode == "push" ? "not-applicable" : "required",
+            plan["stages"]!["delta"]!["status"]!.GetValue<string>());
+        Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+    }
+
+    [Theory]
     [InlineData("tools/lean-inspector/Inspector.lean", "push")]
     [InlineData("tools/lean-inspector/Inspector.lean", "pr")]
     [InlineData("tools/lean-inspector/native_image.c", "push")]
