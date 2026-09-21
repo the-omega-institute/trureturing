@@ -5,12 +5,12 @@
   },
   "scope": {
     "kind": "inline",
-    "value": "Finite actual irredundant noncover sources and one finite complete own test for each height. The ordinary proof establishes the general K-layer upper and sharp limiting uniform mean38/63. No finite-delta optimizer, nonlinear-hinge sharpness, or unrestricted covering conclusion."
+    "value": "Actual irredundant noncover sources, sharp limiting mean38/63, exact six-label square clusters, and an actual first-hit unit-refund obstruction with a complete next11 bound. The full source Gamma and its maximizing residue table are not computed; no unrestricted covering conclusion."
   },
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "01a3273d21866df5bc70d045ad2ae41ab1e1d11289d7843dedc393e0acdeb8b1",
+      "certificates/source_norms/source-budgets/source_own_test_consumer.json": "87d248819a1bea6bc76cd3c12724ee1dc88d42f0a8f10305279e4a5fecd719c8",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
       "profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md": "5fc4cb982389c4c6f9bf781334691c2aa430f8aa5e4ccdf2f845637e49712fbe",
@@ -23,13 +23,13 @@
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "06421dbd2f5cc25b791375315023e8dfbc4313e738adcfb44e9b0a3b5b4ad1e1",
-      "byte_count": 49217
+      "sha256": "3d77656ef2b90f338a1f34d3d85797ec7f9eda603251ac5f55d0327f6cd8905b",
+      "byte_count": 73369
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "3e38bf29b30b653c76df444e00bcff72051771b6eb3aa38675ad7e3c1f271d49"
+    "value": "94dc458c34a7782f3966394c3d51d023490f3561cb9092437e6a46e9f62c13d2"
   },
   "affine_dominance_endpoints": {
     "path": "content/005-affine_dominance_endpoints.json",
@@ -42,12 +42,30 @@
   },
   "results": {
     "path": "content/007-results.json",
-    "sha256": "0ec4d3559ed623d3aa1d15dae40b561bed5933cf0a5fa7d97f45c448f1b9e8b5",
+    "sha256": "bced5975de603b58105fdb69cdb298835ec274436d5778227b5908b511729ee0",
     "kind": "array"
   },
   "direct_square_scalar_boundary": {
     "path": "content/008-direct_square_scalar_boundary.json",
     "sha256": "90a46c34e70b62d859d98c2439e6583940b5059b17c72a69c2d746032dfc8f42",
     "kind": "value"
+  },
+  "pair_envelope_gap_limits": {
+    "kind": "inline",
+    "value": {
+      "unweighted": {
+        "raw_gap": "1/420",
+        "normalized_gap": "1/90"
+      },
+      "reweighted": {
+        "raw_gap": "13/504",
+        "normalized_gap": "520/4857"
+      }
+    }
+  },
+  "joint_square_box": {
+    "path": "content/010-joint_square_box.json",
+    "sha256": "07d0ccd2cf1053c357a6c18e8de41c468faaa3d05e0eff434957ec6fb98cadf8",
+    "kind": "object"
   }
 }

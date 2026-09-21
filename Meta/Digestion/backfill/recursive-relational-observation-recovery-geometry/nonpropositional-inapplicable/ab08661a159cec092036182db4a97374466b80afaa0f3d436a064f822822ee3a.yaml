@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ab08661a159cec092036182db4a97374466b80afaa0f3d436a064f822822ee3a
+  normalized_sha256: sha256:ab08661a159cec092036182db4a97374466b80afaa0f3d436a064f822822ee3a
+cas_ref: sha256:ab08661a159cec092036182db4a97374466b80afaa0f3d436a064f822822ee3a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, no usable project GID for this complete leaf. This leaf defines the preparation bounds and scalars R,tau,MF,DF,J,M. Real.sq_sqrt, Real.sqrt_pos and nonnegative-square normalization give the positivity and exact displayed identities under the inherited nu>0 and Aalpha>0 hypotheses, including B0=0. The scalar M is distinct from the bilinear operator used later. These definitions assert no later regularity or derivative estimate.
+    previous_atom_id: 8b0bd2013afcff0b1e3bfe80ae417a3c71a2ee489a9336ce1ee44e8f6aa6d684
+    next_atom_id: adbca0af1fcbedc1a439e2f034cc485209e087155041caa919389c5d6b2d9155
