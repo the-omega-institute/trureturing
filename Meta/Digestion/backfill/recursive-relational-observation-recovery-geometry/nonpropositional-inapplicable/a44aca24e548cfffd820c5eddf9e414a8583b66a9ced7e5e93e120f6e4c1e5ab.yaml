@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a44aca24e548cfffd820c5eddf9e414a8583b66a9ced7e5e93e120f6e4c1e5ab
+  normalized_sha256: sha256:a44aca24e548cfffd820c5eddf9e414a8583b66a9ced7e5e93e120f6e4c1e5ab
+cas_ref: sha256:a44aca24e548cfffd820c5eddf9e414a8583b66a9ced7e5e93e120f6e4c1e5ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d; no usable project GID for this complete clause. Inherit the exact original32.6 cycle and function hypotheses. For each positive level set inside a proper support, first-exit minimality from Nat.find supplies the map to exit edges, additive cancellation supplies fiber injection into1 through the longest block length, and finite-cardinality suppliers give the boundary bound. lintegral_indicator, Real.volume_Ioc, lintegral_finsetSum, lintegral_mono_ae and max_sub_min_eq_abs give exact mass and directed variation identities for arbitrary nonnegative real values. This is the integrated form of the source finite positive-level-increment identity; all premises are discharged. The native arbitrary-orbit result uses Equiv.Perm.IsCycleOn.exists_pow_eq/pow_apply_eq_pow_apply, subtypePerm_apply_pow_of_mem and Equiv.ofBijective for exact successor conjugacy; Equiv.sum_comp and Finset.image_image preserve blocks, longest length, mass, deviation and variation.
+    previous_atom_id: 25136343b1d8b1eda2acc1f3bd002106ddaa2308f9a8576b26d5673514acc330
+    next_atom_id: 69d0910b9d0bc769496faa844f58274aba621063086fbc50fad4216e64ca04cf

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:280d553ed820449a0d4c917a868d3d26fcdb3efd7c253b6e3c516ec33118657f
+  normalized_sha256: sha256:280d553ed820449a0d4c917a868d3d26fcdb3efd7c253b6e3c516ec33118657f
+cas_ref: sha256:280d553ed820449a0d4c917a868d3d26fcdb3efd7c253b6e3c516ec33118657f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d; no usable project GID for this complete clause. Inherit the exact original32.6 cycle and function hypotheses. The second inequality holds for every proper support, including disconnected and empty support. Nat.find_spec/find_min give the first exit along the successor orbit; Finset.card_le_card_of_injOn and card_le_mul_card_image_of_maps_to bound each exit fiber by the longest supported block. Cardinal difference and successor-bijection identities count twice the exit edges. Interval indicators and lintegral_finsetSum/lintegral_mono_ae integrate the resulting level-set bound. Both optimality clauses are supplied by the later platform children in this same source chain; empty-support optimality means the least nonnegative coefficient. The native arbitrary-orbit result uses Equiv.Perm.IsCycleOn.exists_pow_eq/pow_apply_eq_pow_apply, subtypePerm_apply_pow_of_mem and Equiv.ofBijective for exact successor conjugacy; Equiv.sum_comp and Finset.image_image preserve blocks, longest length, mass, deviation and variation.
+    previous_atom_id: f650dced865a87f820e59a55d55135ade0cb96dfa14ab9881b9533cb66647dd6
+    next_atom_id: 20d0183b402f8291a5e14bab52b7ae67aa3e2940972f0e7884e3ab762da812c7
