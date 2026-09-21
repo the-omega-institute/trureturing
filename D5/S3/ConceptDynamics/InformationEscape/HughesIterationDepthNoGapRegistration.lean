@@ -8,7 +8,7 @@
 
 import D5.S1.Words.HughesIterationDepthNoGap
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.RegistrationWitnesses
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import LeanInformationAudit.Syntax
 
 set_option autoImplicit false
