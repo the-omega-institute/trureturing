@@ -75,7 +75,7 @@
   },
   "reweighted_full_haar_chain": {
     "path": "content/008-reweighted_full_haar_chain.json",
-    "sha256": "f700ddab306bd91ce63f287c25482ff104b7417924b33b18fa73b50f1c2d9930",
+    "sha256": "bd535986cecac99529e9c675798d41b6a5fcadd14f23d5293c2cdbd9d1e3c28f",
     "kind": "object"
   },
   "schema": {
@@ -113,7 +113,7 @@
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "7de19e0e36fb3e2bdad51654d0de04605c3bb6ae690c894a9a3a40785c68d4f1"
+    "value": "7be89ec1c53aa201d80ebeaffb563bbaf9bb02990546bf297f51bd22950c5d40"
   },
   "source_weights": {
     "kind": "inline",
