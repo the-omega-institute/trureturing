@@ -591,3 +591,135 @@ may still have arbitrary moduli. Its intersection need not carry the
 whole aggregate overlap lower bound. It gives another necessary
 condition for a hypothetical cover, not a contradiction to every such
 cover or a resolution of Erdős #7.
+
+## 8. Retaining a large-prime near-cover forces internal completion cost
+
+The localized bound (11) has a joint application with the actual
+near-cover construction of Balister--Bollobás--Morris--Sahasrabudhe--Tiba.
+Arbitrarily small uncovered density does not permit completion at
+vanishing added reciprocal cost while retaining every original class.
+Moreover, the required overlap belongs internally to the added
+low-prime classes, and its location relative to the retained seed is
+determined exactly by CRT independence.
+
+Fix
+\[
+N=10^9,\qquad P=25\cdot10^9,\qquad Q>P.
+\]
+For every \(\varepsilon>0\), there is a finite original family
+\(\mathcal A\) with distinct odd squarefree moduli greater than one,
+all of whose prime factors exceed \(Q\), such that
+\[
+S_{\mathcal A}:=\sum_{A\in\mathcal A}\frac1{m_A}<1,
+\qquad 0<\eta:=1-\mu(U_{\mathcal A})<\varepsilon,
+\qquad U_{\mathcal A}:=\bigcup_{A\in\mathcal A}A.
+\tag{20}
+\]
+Here \(\mu\) initially denotes the full-period Haar probability; these
+densities are unchanged on any enlarged common CRT period.
+
+The supplier is [BBMST, arXiv:1811.03547v1, Theorem 10.1 and its proof,
+printed pp. 25--27](../../../../../Library/Arith/balister2018covering.md).
+The theorem's numerical lower bound on moduli alone would not give the
+prime restriction in (20). Its proof chooses disjoint prime sets
+\(P_j\), with every selected prime at least an arbitrarily prescribed
+\(M\), and moduli \(pQ_{j-1}\), where \(Q_{j-1}\) is the product of
+the earlier prime sets. These moduli are distinct and squarefree. The
+final step only removes classes to obtain reciprocal sum below one.
+Choose \(M>Q\) and apply the construction with tolerance
+\(\min(\varepsilon/2,1/2)\). Thus \(\eta<1\), so
+\(1-\eta>0\). The hole is strictly positive because
+\(\mu(U_{\mathcal A})\le S_{\mathcal A}<1\).
+
+Suppose a finite family \(\mathcal D\), without changing or deleting any
+original class of \(\mathcal A\), makes
+\(\mathcal C=\mathcal A\cup\mathcal D\) a full cover with distinct odd
+moduli greater than one. The added classes may have arbitrary prime
+support and heights. From now on every measure is the same uniform
+Haar probability on
+\[
+\Omega=\mathbb Z/L\mathbb Z,\qquad
+L=\operatorname{lcm}\{m_C:C\in\mathcal C\}.
+\]
+Define
+\[
+\mathcal D_{<N}:=
+ \{D\in\mathcal D:\operatorname{LP}(m_D)<p_N\},
+\qquad
+E_{<N}:=\sum_{D\in\mathcal D_{<N}}\frac1{m_D}
+              -\mu(U_{\mathcal D_{<N}}).
+\]
+Every seed modulus has all prime factors above \(Q>p_N\). Thus the
+entire early prefix of \(\mathcal C\) is exactly
+\(\mathcal D_{<N}\), including its original division-minimal classes
+and earlier-bucket unions. For its buckets put
+\(r_p=S_p-\mu(B_p)\ge0\) and \(v_p=\mu(B_p\cap O_p)\).
+Section 2's exact telescoping identity and \(u_p\le v_p\) give
+\[
+\boxed{E_{<N}=\sum_{p<p_N}(r_p+v_p)
+       \ge T^{\rm odd}_{<N}(\mathcal C)>10^{-11}.}
+\tag{21}
+\]
+In particular the compulsory excess cannot consist only of intersections
+between seed classes and added classes: the added early family already
+has this internal excess on its own.
+
+Write \(F_p=B_{\min,p}\cap O_p\) and
+\(G=G^{\rm odd}_{<N}(\mathcal C)\). These events depend only on prime
+coordinates below \(p_N\), whereas \(U_{\mathcal A}\) depends only on
+coordinates above \(Q\). They are independent under the same complete
+CRT Haar probability. Consequently
+\[
+\begin{aligned}
+\mu(G\cap U_{\mathcal A})
+  &=(1-\eta)\mu(G)>(1-\eta)10^{-20},\\
+\sum_{i=3}^{N-1}\mu(F_{p_i}\cap U_{\mathcal A})
+  &=(1-\eta)T^{\rm odd}_{<N}>(1-\eta)10^{-11}.
+\end{aligned}
+\tag{22}
+\]
+The actual early multiplicity
+\(L_{<N}(x)=\sum_{D\in\mathcal D_{<N}}\mathbf1_D(x)\) has the same
+coordinate support. Thus its internal excess itself satisfies
+\[
+\int_{U_{\mathcal A}}(L_{<N}-1)_+\,d\mu
+    =(1-\eta)E_{<N}>(1-\eta)10^{-11}.
+\tag{23}
+\]
+An exact proportion \(1-\eta\) of this compulsory early excess lies
+where the retained seed already covers. This is not its mass under a
+chronological killed law: at the original \(p\)-stage, \(F_p\) still
+has zero mass under every law supported on \(O_p^c\).
+
+For all added classes let
+\(L_{\mathcal D}(x)=\sum_{D\in\mathcal D}\mathbf1_D(x)\) and write
+\(E(\mathcal D)=\int(L_{\mathcal D}-1)_+\,d\mu\).
+Pointwise \(L_{\mathcal D}\ge L_{<N}\), so
+\(E(\mathcal D)\ge E_{<N}\). Whole coverage also requires
+\(U_{\mathcal A}^c\subseteq U_{\mathcal D}\). Therefore
+\[
+\boxed{S_{\mathcal D}:=\sum_{D\in\mathcal D}\frac1{m_D}
+       =\mu(U_{\mathcal D})+E(\mathcal D)
+       \ge\eta+E_{<N}>\eta+10^{-11}.}
+\tag{24}
+\]
+Section 7 additionally supplies two intersecting added originals with
+different largest prime factors below \(P\) and numerical moduli at
+most \(P^{69}<10^{718}\). Neither can be a seed class, since every
+prime factor of a seed modulus exceeds \(Q>P\). This bounds one added
+pair, not the whole completion.
+
+There is consequently no universally valid principle that completes
+every such seed, retaining all its originals, with added reciprocal cost
+bounded by a function \(f(\eta)\to0\) as \(\eta\downarrow0\).
+For any proposed function, choose the tolerance in (20) small enough
+that its cost bound is below \(10^{-11}\), contradicting (24).
+No existence of a distinct odd completion is asserted.
+
+The qualitative obstruction to vanishing completion cost already follows
+from the published FK positive excess gap together with BBMST's
+construction. Equations (21)--(23) apply this report's stronger localized
+bound to identify the ownership and location of the compulsory overlap.
+This is a joint application of existing results, not a new general gap
+theorem, a conflicting upper bound, or a resolution of Erdős #7. No new
+Lean result is asserted.
