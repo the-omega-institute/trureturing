@@ -1,0 +1,185 @@
+{
+  "schema": "depth-profile-head-verification-v1",
+  "scope": "Independent full-local-leaf laminar-cap Bellman evaluation for the canonical fixed 154-label head and supplied depth profile. Exact original-label payoff and normalized feasible conditional allocations; tail-budget verification is separate.",
+  "original_label_count": 154,
+  "original_label_source": "frontier/source-budgets/capped_head_bellman.py",
+  "original_labels_sha256": "e3edc39efeaf303f6dffa9ed94c1765428ab7e2bf05d09ce1910480842399d2d",
+  "normalized_original_labels_sha256": "ae00ed2c19a8e06b4ccdcdd186a70d85e8f2aafaa1b0043c63e1d3780e877f42",
+  "prime_order": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41,
+    43,
+    47,
+    53,
+    59,
+    61,
+    67,
+    71,
+    73
+  ],
+  "heights": [
+    5,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "original_period": 93334171363271157468761359267761115875,
+  "profiles": [
+    [
+      "1",
+      "283/440",
+      "27/121",
+      "9/121",
+      "3/121",
+      "1/110"
+    ],
+    [
+      "1",
+      "163/504",
+      "11/126",
+      "11/630"
+    ],
+    [
+      "1",
+      "49/229",
+      "7/229",
+      "1/229"
+    ],
+    [
+      "1",
+      "121/970",
+      "121/9700"
+    ],
+    [
+      "1",
+      "143/1410",
+      "11/1410"
+    ],
+    [
+      "1",
+      "17/230",
+      "1/230"
+    ],
+    [
+      "1",
+      "19/321",
+      "11/3210"
+    ],
+    [
+      "1",
+      "11/210"
+    ],
+    [
+      "1",
+      "11/270"
+    ],
+    [
+      "1",
+      "11/290"
+    ],
+    [
+      "1",
+      "1/35"
+    ],
+    [
+      "1",
+      "1/39"
+    ],
+    [
+      "1",
+      "1/41"
+    ],
+    [
+      "1",
+      "1/45"
+    ],
+    [
+      "1",
+      "1/51"
+    ],
+    [
+      "1",
+      "1/57"
+    ],
+    [
+      "1",
+      "1/59"
+    ],
+    [
+      "1",
+      "1/65"
+    ],
+    [
+      "1",
+      "1/69"
+    ],
+    [
+      "1",
+      "1/71"
+    ]
+  ],
+  "epsilon_exact": "850282109320449012581343404003218456990123/2126237451649555718697975632038158000000000",
+  "candidate_epsilon_exact": "850282109320449012581343404003218456990123/2126237451649555718697975632038158000000000",
+  "states": 45029,
+  "nonterminal_rows": 16652,
+  "actual_coordinate_leaf_evaluations": 3363080,
+  "positive_selected_leaf_allocations": 2785110,
+  "exact_ancestor_capacity_subtractions_checked": 8203324,
+  "row_capacity_denominator_units": [
+    4840,
+    2520,
+    229,
+    9700,
+    1410,
+    230,
+    3210,
+    210,
+    270,
+    290,
+    35,
+    39,
+    41,
+    45,
+    51,
+    57,
+    59,
+    65,
+    69,
+    71
+  ],
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "4aa3391affb81fc982b96fbe592309dba952073dda3a0be11c5cae32cbdb7961",
+    "frontier/source-budgets/depth_profile_head_input.json": "3c0f4a5def0872b6c25cc2076f3e563f5983332ef94bdf5d0f96a2a3a11915a2",
+    "frontier/source-budgets/capped_head_bellman.py": "c0467cc43d3f0ef7948b045fc00ccb0f9b525f0a070a80d6738e59a860659958",
+    "frontier/source-budgets/depth_cap_bellman.py": "4198f0cbc28f65443fdeb99bc9b87523f3d2b8e10fe01ae819c43b5a467699f9",
+    "certificates/source_norms/source-budgets/depth_cap_bellman.json": "54450ec5f16d8b81e703cbba1d77381702e96a4523fdc4b835d3152e0e964501"
+  },
+  "producer_sha256": "c09f02fc2b13c9fc549aa79ee5f289a213e2952acaf01f2372129afda4117270"
+}
