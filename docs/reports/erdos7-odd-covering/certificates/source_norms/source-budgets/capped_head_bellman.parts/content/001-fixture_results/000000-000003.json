@@ -1,0 +1,744 @@
+[
+  {
+    "name": "product-local-trap",
+    "exact_label_lcm": 105,
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      1,
+      1,
+      1
+    ],
+    "original_labels": [
+      [
+        3,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        15,
+        11
+      ],
+      [
+        21,
+        16
+      ],
+      [
+        35,
+        18
+      ],
+      [
+        105,
+        29
+      ]
+    ],
+    "original_period": 105,
+    "cardinalities": [
+      1,
+      3,
+      5
+    ],
+    "numerator": 0,
+    "denominator": 15,
+    "minimum_bad_mass": "0",
+    "meets_nine_twentieths": true,
+    "states": 17,
+    "policy_states": [
+      {
+        "axis": 0,
+        "active": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 15,
+        "selected": [
+          {
+            "active": [
+              1,
+              2,
+              3,
+              5,
+              6
+            ],
+            "multiplicity": 1,
+            "taken": 1,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 1,
+        "active": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 15,
+        "selected": [
+          {
+            "active": [
+              2
+            ],
+            "multiplicity": 1,
+            "taken": 1,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2,
+              5
+            ],
+            "multiplicity": 1,
+            "taken": 1,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2,
+              6
+            ],
+            "multiplicity": 1,
+            "taken": 1,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 1,
+        "active": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "numerator": 0,
+        "denominator": 15,
+        "selected": [
+          {
+            "active": [
+              2,
+              4
+            ],
+            "multiplicity": 3,
+            "taken": 3,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2
+        ],
+        "numerator": 0,
+        "denominator": 5,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 6,
+            "taken": 5,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          4
+        ],
+        "numerator": 0,
+        "denominator": 5,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 5,
+            "taken": 5,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          4,
+          5
+        ],
+        "numerator": 1,
+        "denominator": 5,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 4,
+            "taken": 4,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2
+            ],
+            "multiplicity": 1,
+            "taken": 1,
+            "child_numerator": 1
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          5
+        ],
+        "numerator": 0,
+        "denominator": 5,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 5,
+            "taken": 5,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 5,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 5,
+            "taken": 5,
+            "child_numerator": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "full-height-padding-2",
+    "exact_label_lcm": 105,
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      2,
+      2,
+      2
+    ],
+    "original_labels": [
+      [
+        3,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        15,
+        11
+      ],
+      [
+        21,
+        16
+      ],
+      [
+        35,
+        18
+      ],
+      [
+        105,
+        29
+      ]
+    ],
+    "original_period": 11025,
+    "cardinalities": [
+      4,
+      13,
+      33
+    ],
+    "numerator": 0,
+    "denominator": 1716,
+    "minimum_bad_mass": "0",
+    "meets_nine_twentieths": true,
+    "states": 17,
+    "policy_states": [
+      {
+        "axis": 0,
+        "active": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 1716,
+        "selected": [
+          {
+            "active": [
+              1,
+              2,
+              3,
+              5,
+              6
+            ],
+            "multiplicity": 3,
+            "taken": 3,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              1,
+              2,
+              4,
+              5
+            ],
+            "multiplicity": 3,
+            "taken": 1,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 1,
+        "active": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 429,
+        "selected": [
+          {
+            "active": [
+              2
+            ],
+            "multiplicity": 5,
+            "taken": 5,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2,
+              5
+            ],
+            "multiplicity": 5,
+            "taken": 5,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2,
+              6
+            ],
+            "multiplicity": 5,
+            "taken": 3,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 1,
+        "active": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "numerator": 0,
+        "denominator": 429,
+        "selected": [
+          {
+            "active": [
+              2,
+              4
+            ],
+            "multiplicity": 15,
+            "taken": 13,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2
+        ],
+        "numerator": 0,
+        "denominator": 33,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 42,
+            "taken": 33,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          4
+        ],
+        "numerator": 0,
+        "denominator": 33,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 35,
+            "taken": 33,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          4,
+          5
+        ],
+        "numerator": 5,
+        "denominator": 33,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 28,
+            "taken": 28,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2
+            ],
+            "multiplicity": 7,
+            "taken": 5,
+            "child_numerator": 1
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          5
+        ],
+        "numerator": 0,
+        "denominator": 33,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 35,
+            "taken": 33,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 33,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 35,
+            "taken": 33,
+            "child_numerator": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "full-height-padding-3",
+    "exact_label_lcm": 105,
+    "primes": [
+      3,
+      5,
+      7
+    ],
+    "heights": [
+      3,
+      3,
+      3
+    ],
+    "original_labels": [
+      [
+        3,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        15,
+        11
+      ],
+      [
+        21,
+        16
+      ],
+      [
+        35,
+        18
+      ],
+      [
+        105,
+        29
+      ]
+    ],
+    "original_period": 1157625,
+    "cardinalities": [
+      13,
+      63,
+      229
+    ],
+    "numerator": 0,
+    "denominator": 187551,
+    "minimum_bad_mass": "0",
+    "meets_nine_twentieths": true,
+    "states": 17,
+    "policy_states": [
+      {
+        "axis": 0,
+        "active": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 187551,
+        "selected": [
+          {
+            "active": [
+              1,
+              2,
+              3,
+              5,
+              6
+            ],
+            "multiplicity": 9,
+            "taken": 9,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              1,
+              2,
+              4,
+              5
+            ],
+            "multiplicity": 9,
+            "taken": 4,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 1,
+        "active": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 14427,
+        "selected": [
+          {
+            "active": [
+              2
+            ],
+            "multiplicity": 25,
+            "taken": 25,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2,
+              5
+            ],
+            "multiplicity": 25,
+            "taken": 25,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2,
+              6
+            ],
+            "multiplicity": 25,
+            "taken": 13,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 1,
+        "active": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "numerator": 0,
+        "denominator": 14427,
+        "selected": [
+          {
+            "active": [
+              2,
+              4
+            ],
+            "multiplicity": 75,
+            "taken": 63,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2
+        ],
+        "numerator": 0,
+        "denominator": 229,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 294,
+            "taken": 229,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          4
+        ],
+        "numerator": 0,
+        "denominator": 229,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 245,
+            "taken": 229,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          4,
+          5
+        ],
+        "numerator": 33,
+        "denominator": 229,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 196,
+            "taken": 196,
+            "child_numerator": 0
+          },
+          {
+            "active": [
+              2
+            ],
+            "multiplicity": 49,
+            "taken": 33,
+            "child_numerator": 1
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          5
+        ],
+        "numerator": 0,
+        "denominator": 229,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 245,
+            "taken": 229,
+            "child_numerator": 0
+          }
+        ]
+      },
+      {
+        "axis": 2,
+        "active": [
+          2,
+          6
+        ],
+        "numerator": 0,
+        "denominator": 229,
+        "selected": [
+          {
+            "active": [],
+            "multiplicity": 245,
+            "taken": 229,
+            "child_numerator": 0
+          }
+        ]
+      }
+    ]
+  }
+]
