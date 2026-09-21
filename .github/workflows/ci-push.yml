@@ -34,12 +34,13 @@ on:
 
 permissions:
   contents: read
-  actions: write
+  actions: read
 
 env:
   CI_WORKFLOW_INPUTS: ${{ contains(toJSON(inputs), '"candidate_sha":') && format('{{"candidate_sha":{0}}}', toJSON(inputs.candidate_sha)) || '{}' }}
   CANDIDATE_SHA: ${{ inputs.candidate_sha || github.sha }}
-  STRATALINT_CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '') || (github.event_name == 'pull_request' && startsWith(github.ref, 'refs/pull/')) }}
+  PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+  STRATALINT_CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '') || (github.event_name == 'pull_request' && github.ref == format('refs/pull/{0}/merge', github.event.pull_request.number)) }}
   CI_CHANGES_PATH: build/ci/changes.json
   CI_PLAN_PATH: build/ci/plan.json
 
@@ -252,7 +253,7 @@ jobs:
   engineering_cache:
     name: engineering_cache
     needs: [build, engineering]
-    if: (github.event_name == 'push' || github.event_name == 'pull_request') && needs.engineering.result == 'success' && needs.engineering.outputs.artifact_id != ''
+    if: ((github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-')) && inputs.candidate_sha == '') || (github.event_name == 'pull_request' && github.ref == format('refs/pull/{0}/merge', github.event.pull_request.number))) && needs.engineering.result == 'success' && needs.engineering.outputs.artifact_id != ''
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     continue-on-error: true

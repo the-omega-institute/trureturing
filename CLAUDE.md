@@ -727,7 +727,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
 
 ### 9.5 head/base 与远端状态独立性
 
-- **PR 事件与权限。** 编译、测试和候选判官使用 `pull_request`,目标为 `dev` 与 `integration-**`,申请 `contents: read`、`actions: write`,不传入额外 secrets。缓存写入只允许候选自身的 `refs/pull/<number>/merge` 隔离范围;该快照可供同一 PR 的后续运行恢复,不能被 dev、integration 或其它 PR 恢复。push 仍只允许 `dev` 与 `integration-*` 分支写入。入口一次解析并核对候选合并 M 及第一父 B,所有下游固定使用该身份;合并冲突无可检查的 M,不得冒领成功。`pull_request_target` 不作为候选 CI 入口;需要写权限的 PR 元数据自动化与候选执行分离,发布走独立的受信任入口。候选也能修改 workflow,不提供 base 侧 workflow 文本保证;残余由现有分区、保护面标注、评审与 dev push 检测接住,不重建 base 判官。
+- **PR 事件与权限。** 编译、测试和候选判官使用 `pull_request`,目标为 `dev` 与 `integration-**`,申请 `contents: read`、`actions: read`,不传入额外 secrets。缓存写入只允许候选自身的 `refs/pull/<number>/merge` 隔离范围;该快照可供同一 PR 的后续运行恢复,不能被 dev、integration 或其它 PR 恢复。push 仍只允许 `dev` 与 `integration-*` 分支写入。入口一次解析并核对候选合并 M 及第一父 B,所有下游固定使用该身份;合并冲突无可检查的 M,不得冒领成功。`pull_request_target` 不作为候选 CI 入口;需要写权限的 PR 元数据自动化与候选执行分离,发布走独立的受信任入口。候选也能修改 workflow,不提供 base 侧 workflow 文本保证;残余由现有分区、保护面标注、评审与 dev push 检测接住,不重建 base 判官。
 
 - **语义检查与轻量规划分工。** CI 的语义 `current` 只检查已检出的最终候选树(push 为 `H`,PR 为 `M`);PR 的 `delta` 由 `M` 自带的候选判官以 `B=M^1` 为数据基线检查 `B→M`。`HEAD^1` 在此只表示 PR 合并提交的第一父,不能代替 push 的完整范围。
 - **push 规划绑定完整事件端点。** `P=event.before`、`H=event.after` 是固定输入 OID,须核对 `H=已检出的 HEAD`;`P` 只供规划读数据,不扩大 `current` 的语义输入。规划比较完整 `P→H` 端点树差异,覆盖多提交 push、删除和重命名两端,不得用 GitHub 路径过滤清单代替完整范围。`P` 不必为 `H` 的祖先,无 ancestry/strict 要求。harness 可在检查前取得明确钉住的缺失对象;普通范围的对象取得失败、范围无效或不完整须显式失败,不得当作空/无工作或退回全套检查。
