@@ -7,7 +7,7 @@ from test_native_support import ROOT, publication
 
 
 class NativeRegTests:
-    def reg_package(self):
+    def reg_mathlib(self):
         # A tiny local Git dependency exercises the same shared-manifest gate as
         # production, without downloading a second Mathlib or weakening admission.
         mathlib = self.root / 'fixture-mathlib'
@@ -26,6 +26,11 @@ class NativeRegTests:
                    scope='', inherited=False)
         manifest['packages'][1] = git
         self.write('lake-manifest.json', json.dumps(manifest))
+        return git
+
+    def reg_package(self, git=None):
+        if git is None:
+            git = self.reg_mathlib()
         self.copy('Reg/lakefile.toml')
         # Supply tiny sources for both libraries in the real copied package
         # configuration, including its required default test target.
@@ -53,10 +58,14 @@ class NativeRegTests:
         return result
 
     def test_reg_empty_and_nonempty_build_routing(self):
+        # Keep the dependency pin stable across the root-only and Reg cases.
+        # A pin transition would discard the private compiler artifacts even
+        # though this test changes package routing, not dependency versions.
+        git = self.reg_mathlib()
         self.run_lake('build', 'Fixture')
         self.make_lean()  # Ordinary root-only workspaces remain supported.
-        self.reg_package()
-        self.run_lake('build', 'Fixture')  # The new Git pin needs its own warm compiler baseline.
+        self.reg_package(git)
+        self.run_lake('build', 'Fixture')
         self.make_lean()
         self.assertFalse((self.root / '.lake/build/reg/lib/lean/Reg').exists())
         self.assertTrue((self.root / '.lake/build/reg/lib/lean/LeanInformationAuditRegTests/Required.olean').is_file())
