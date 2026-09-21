@@ -1581,7 +1581,6 @@ M=\max\{1,q/U\},\qquad v=\min\{1,\varepsilon^{1/q}M\}.
 [17-B] Cameron Musco, Christopher Musco, Lucas Rosenblatt and Apoorv Vikram Singh. *Sharper Bounds for Chebyshev Moment Matching, with Applications*. arXiv:2408.12385v3, 18 May 2026. https://arxiv.org/abs/2408.12385v3 . 含噪 Chebyshev 矩的 Wasserstein 恢复背景；本节的支撑端点泛函及有限时间观察条件单独定义。
 
 [17-C] Zhiyuan Fan and Jian Li. *Efficient Algorithms for Sparse Moment Problems without Separation*. COLT 2023, PMLR 195:3510–3565. https://proceedings.mlr.press/v195/fan23b.html . 无分离条件的稀疏矩恢复背景。
-
 ## 18. 含噪矩极值的精确转折点与取等刚性
 
 ### 18.1 定义：初始线性上界的有效区间
