@@ -1,0 +1,62 @@
+**定理 33.6（单位相位、物理参数及准备场的可行直径）。** 在定理33.5的全部同一候选域条件下，设共同正导数界为 $g'_p\ge m_{\min}/2$，定义
+$$
+h=\frac{m_{\min}}2(r_{{\rm obs},1}-e_r)
+ \ge\frac{5m_{\min}\eta}{16}>0,\qquad
+D_\omega=\min\{2,2e_Z/h\}.
+\tag{33.122}
+$$
+任意两个完整可行世界 $w,w'$ 的单位复相位满足
+$|\omega(w)-\omega(w')|\le D_\omega$，即使 $W_1=0$ 也成立。若另有 $e_Z<h$ 且完整可行集非空，则 $W_1\ne0$，点估计 $W_1/|W_1|$ 对每个可行单位相位的误差至多 $2e_Z/h$。
+
+在同一闭凸 $U$ 上置
+$$
+k_{\min}=\min_Uk>0,\qquad M_m=\max_Um_+,\qquad
+N=\frac{a_{\rm cal}}{\sqrt{k_{\min}}},\qquad
+C_\nu=\frac{a_{\rm cal}}{2k_{\min}^{3/2}},
+$$
+$$
+B_{\max}=NM_m,\qquad C_B=\sqrt{N^2+(M_mC_\nu)^2},\qquad
+D_B=\min\{2B_{\max},C_BD_p+B_{\max}D_\omega\}.
+\tag{33.123}
+$$
+则任意两个完整可行世界满足
+$$
+|\nu(w)-\nu(w')|\le C_\nu D_p,\qquad
+|\mathcal B(w)-\mathcal B(w')|\le D_B,
+$$
+$$
+\|u_{0,w}-u_{0,w'}\|_{L^2}
+ \le\sqrt{8e_0^2+D_B^2}.
+\tag{33.124}
+$$
+这些是完整可行集的任务直径，不是尚未证明的后续流误差界。
+
+证明。写两世界的第一真实复响应为 $Z=\varrho\omega$、$Z'=\varrho'\omega'$。由真实位置下界及恢复卷（28.112）的正图估计，$\varrho,\varrho'\ge h$。单位复数的内积展开给精确恒等式
+$$
+|\varrho\omega-\varrho'\omega'|^2
+ =(\varrho-\varrho')^2+\varrho\varrho'|\omega-\omega'|^2.
+\tag{33.125}
+$$
+确实左侧等于 $\varrho^2+(\varrho')^2-2\varrho\varrho'\operatorname{Re}(\omega\overline{\omega'})$，而 $|\omega-\omega'|^2=2-2\operatorname{Re}(\omega\overline{\omega'})$。两个真实响应处于同一以 $W_1$ 为中心的 $e_Z$ 球，故距离至多 $2e_Z$。舍去非负径向平方并用 $\varrho\varrho'\ge h^2$ 得相位差至多 $2e_Z/h$，单位圆直径给上限二；没有除以 $W_1$。若 $e_Z<h$，任一完整候选给 $|W_1|\ge|Z|-e_Z\ge h-e_Z>0$，再用（33.111）的归一化三角证明得点估计误差。
+
+物理黏性和径向幅度函数为 $\nu(p)=a_{\rm cal}k^{-1/2}$、$b(p)=|\mathcal B|=a_{\rm cal}m_+k^{-1/2}$。其梯度是
+$$
+\nabla\nu=\left(0,-\frac{a_{\rm cal}}{2k^{3/2}}\right),\qquad
+\nabla b=\left(\frac{a_{\rm cal}}{\sqrt k},
+ -\frac{a_{\rm cal}m_+}{2k^{3/2}}\right),
+\tag{33.126}
+$$
+范数分别至多 $C_\nu,C_B$。在连接 $p,p'$ 的整条 $U$ 内线段上积分，给
+$|\nu(p)-\nu(p')|\le C_\nu D_p$、$|b(p)-b(p')|\le C_BD_p$。再由
+$$
+|b\omega-b'\omega'|
+ \le|b-b'|+b'|\omega-\omega'|
+ \le C_BD_p+B_{\max}D_\omega,
+$$
+以及两幅度各至多 $B_{\max}$，得到 $D_B$。参考本身的误差不能省略：两份真实 $A_0$ 均在同一 $A_0^{\rm obs}$ 的 $e_0$ 球内，故 $|A_0(w)-A_0(w')|\le2e_0$。将此界与 $D_B$ 代入恢复卷定理28.5的精确两分量正交恒等式
+$$
+\|u_{0,w}-u_{0,w'}\|_2^2
+ =2|A_0(w)-A_0(w')|^2+|\mathcal B(w)-\mathcal B(w')|^2
+$$
+即得（33.124）。即使径向参数精确，已获参考的不确定性仍贡献准备场误差。选一个点作为恢复场还须实际完整世界见证；在空可行集上不生成场，也不由单位相位点估计自动构造联合可行参数。$\square$
+

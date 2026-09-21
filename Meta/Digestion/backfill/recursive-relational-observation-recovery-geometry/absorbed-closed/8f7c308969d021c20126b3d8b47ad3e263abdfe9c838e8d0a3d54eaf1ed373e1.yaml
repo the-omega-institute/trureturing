@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8f7c308969d021c20126b3d8b47ad3e263abdfe9c838e8d0a3d54eaf1ed373e1
+  normalized_sha256: sha256:8f7c308969d021c20126b3d8b47ad3e263abdfe9c838e8d0a3d54eaf1ed373e1
+cas_ref: sha256:8f7c308969d021c20126b3d8b47ad3e263abdfe9c838e8d0a3d54eaf1ed373e1
+coverage_gids:
+  - gid: D5/S3/Observer/BlockStructure/UniformResolventRemainder.inverse_control_of_lower_bound
+    target_statement_id: sha256:b8e09b551dfe3a331e1cf4d68b29f88742ee7175838b7e7dfb768180e81ae0ce
+receipts:
+  unresolved_subitems: []

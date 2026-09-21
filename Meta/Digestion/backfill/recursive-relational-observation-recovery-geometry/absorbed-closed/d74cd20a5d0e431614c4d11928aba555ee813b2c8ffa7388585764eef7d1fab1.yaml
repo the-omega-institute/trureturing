@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d74cd20a5d0e431614c4d11928aba555ee813b2c8ffa7388585764eef7d1fab1
+  normalized_sha256: sha256:d74cd20a5d0e431614c4d11928aba555ee813b2c8ffa7388585764eef7d1fab1
+cas_ref: sha256:d74cd20a5d0e431614c4d11928aba555ee813b2c8ffa7388585764eef7d1fab1
+coverage_gids:
+  - gid: D5/S3/Observer/BlockStructure/UniformResolventRemainder.inverse_control_of_lower_bound
+    target_statement_id: sha256:b8e09b551dfe3a331e1cf4d68b29f88742ee7175838b7e7dfb768180e81ae0ce
+  - gid: D5/S3/Weil/ZetaLinear/ExactStickyReduction.exact_sticky_reduction
+    target_statement_id: sha256:2aa18f7c41e8824177fc3ff8c12414a78a0add89e6a1af4ad1cf671999db7a51
+receipts:
+  unresolved_subitems: []

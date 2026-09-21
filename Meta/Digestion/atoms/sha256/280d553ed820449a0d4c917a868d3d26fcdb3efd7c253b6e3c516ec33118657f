@@ -1,0 +1,5 @@
+\sum_{x\in O}u(x)\le\frac{r_L}{2}\sum_{x\in O}|u(gx)-u(x)|,
+\tag{32.13}
+$$
+其中 $\overline f=\ell^{-1}\sum_Of$，$r_L$ 是 $L$ 的最长连续循环段长度，空集时为零。两个常数均尖锐。
+

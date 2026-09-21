@@ -6,6 +6,49 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed class PreflightProcessContractTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrDiagnosticArchivePreservesDistinctLongPathsWithSharedSuffix(bool withManifest)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var suffix = new string('a', 64) + "/" + new string('b', 32) + "/"
+            + new string('c', 32) + "/filemap/0.log";
+        var first = "build/ci/check-material/" + suffix;
+        var second = "build/ci/current-check-seed/" + first;
+        var manifest = withManifest
+            ? "printf 'runtime/with space.log\\0" + first + "\\0' > build/ci/current-paths.nul"
+            : "";
+        fixture.Write(".gitignore", "build/\nruntime/\n");
+        fixture.Write("tools/scripts/ci-stage.sh", $$"""
+            #!/bin/bash
+            if [[ "$1" == current ]]; then
+              mkdir -p '{{Path.GetDirectoryName(first)}}' '{{Path.GetDirectoryName(second)}}' runtime
+              printf 'original\n' > '{{first}}'
+              printf 'seed\n' > '{{second}}'
+              printf 'runtime\n' > 'runtime/with space.log'
+              {{manifest}}
+            fi
+            """);
+        fixture.Commit();
+        var result = fixture.Preflight("pr", fixture.Git("rev-parse", "HEAD").Trim());
+        Assert.True(result.Exit == 0, result.Text);
+        var archive = result.Text.Split('\n').Single(line => line.StartsWith("PREFLIGHT_ARTIFACT bundle=", StringComparison.Ordinal))
+            ["PREFLIGHT_ARTIFACT bundle=".Length..];
+        var destination = Path.Combine(fixture.Root, "build/retained");
+        Directory.CreateDirectory(destination);
+        using (var gzip = new System.IO.Compression.GZipStream(File.OpenRead(archive), System.IO.Compression.CompressionMode.Decompress))
+            System.Formats.Tar.TarFile.ExtractToDirectory(gzip, destination, overwriteFiles: false);
+        Assert.Equal("original\n", File.ReadAllText(Path.Combine(destination, first)));
+        Assert.Equal("seed\n", File.ReadAllText(Path.Combine(destination, second)));
+        Assert.Equal(2, Directory.GetFiles(destination, "0.log", SearchOption.AllDirectories).Length);
+        if (withManifest)
+            Assert.Equal("runtime\n", File.ReadAllText(Path.Combine(destination, "runtime/with space.log")));
+        else
+            Assert.False(Directory.Exists(Path.Combine(destination, "runtime")));
+    }
+
     [Fact]
     public void FailedCurrentDiagnosticsSurvivePrCandidateCleanupWithoutSuccessfulEvidence()
     {
@@ -47,15 +90,13 @@ public sealed class PreflightProcessContractTests
         Assert.DoesNotContain(CommonExecutionEvidence.ReportPath, entries.Keys);
     }
 
-    [Theory]
-    [InlineData("")]
-    [InlineData("push")]
-    public void DefaultPushRunsCommonStagesOnceWithoutParentOrRemote(string mode)
+    [Fact]
+    public void FullRunsCommonStagesOnceWithoutParentOrRemote()
     {
         using var fixture = new Fixture(File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
         var source = fixture.SourceState();
-        var result = fixture.Preflight(mode, "");
+        var result = fixture.Preflight("full", "", viaMake: true);
         Assert.Equal(0, result.Exit);
         Assert.Equal(new[] { "engineering", "current" }, fixture.Calls());
         Assert.All(fixture.Observations(), observation =>
@@ -76,14 +117,14 @@ public sealed class PreflightProcessContractTests
     [InlineData("unstaged")]
     [InlineData("staged")]
     [InlineData("untracked")]
-    public void DirtyPushRunsCurrentWorktreeWithoutRequiringBase(string dirty)
+    public void DirtyPushRunsCurrentWorktreeWithExplicitBase(string dirty)
     {
         using var fixture = new Fixture(File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
         fixture.MakeDirty(dirty);
         var source = fixture.SourceState();
         Assert.NotEmpty(source.Status);
-        var result = fixture.Preflight("push", "not-an-immutable-base");
+        var result = fixture.Preflight("push", source.Head);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Equal(new[] { "engineering", "current" }, fixture.Calls());
         Assert.All(fixture.Observations(), observation =>
@@ -224,14 +265,163 @@ public sealed class PreflightProcessContractTests
     {
         using var fixture = new Fixture(File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
-        Assert.Equal(expected, fixture.Preflight("push", "", raw).Exit);
+        Assert.Equal(expected, fixture.Preflight("full", "", raw).Exit);
         Assert.Equal(new[] { "engineering" }, fixture.Calls());
+    }
+
+    [Theory]
+    [InlineData(null, "")]
+    [InlineData("", "")]
+    [InlineData("unknown", "")]
+    [InlineData("push full", "")]
+    [InlineData("fast", "extra")]
+    public void MissingInvalidOrPositionalModeFailsBeforeAnyChildWork(string? mode, string argument)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        fixture.RejectChildWork();
+        var result = fixture.Preflight(mode, "", arguments: argument.Length == 0 ? [] : [argument]);
+        Assert.Equal(2, result.Exit);
+        Assert.Contains("Choose an explicit local preflight mode", result.Text, StringComparison.Ordinal);
+        foreach (var choice in new[] { "fast", "push", "pr", "full" })
+            Assert.Contains("MODE=" + choice, result.Text, StringComparison.Ordinal);
+        Assert.Empty(fixture.Calls());
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/ci")));
+    }
+
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(1, 2)]
+    [InlineData(19, 2)]
+    public void FastThroughMakeDelegatesOnlyQuickChecksAndPropagatesFailure(int raw, int expected)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var result = fixture.Preflight("fast", "", raw.ToString(), viaMake: true);
+        Assert.True(result.Exit == expected, result.Text);
+        Assert.Equal(new[] { "check-fast" }, fixture.Calls());
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/ci")));
+        if (raw != 0) Assert.Contains("Error " + raw, result.Text, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("HEAD")]
+    [InlineData("0000000000000000000000000000000000000000")]
+    [InlineData("1111111111111111111111111111111111111111")]
+    [InlineData("TREE")]
+    [InlineData("BLOB")]
+    public void PushRejectsMissingSymbolicUnavailableOrNoncommitBase(string basis)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        if (basis == "TREE") basis = fixture.Git("rev-parse", "HEAD^{tree}").Trim();
+        if (basis == "BLOB") basis = fixture.Git("rev-parse", "HEAD:tracked").Trim();
+        var result = fixture.Preflight("push", basis);
+        Assert.Equal(2, result.Exit);
+        Assert.Empty(fixture.Calls());
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/ci")));
+    }
+
+    [Theory]
+    [InlineData("fast", "BASE", "HEAD")]
+    [InlineData("full", "BASE", "HEAD")]
+    [InlineData("fast", "CI_PUSH_BEFORE", "HEAD")]
+    [InlineData("full", "CI_PUSH_AFTER", "HEAD")]
+    [InlineData("full", "CI_PUSH_BEFORE", "HEAD")]
+    [InlineData("push", "CI_PUSH_BEFORE", "HEAD")]
+    [InlineData("push", "CI_PUSH_AFTER", "HEAD")]
+    [InlineData("push", "CANDIDATE_SHA", "stale")]
+    [InlineData("pr", "CANDIDATE_SHA", "stale")]
+    [InlineData("full", "CANDIDATE_SHA", "stale")]
+    [InlineData("push", "GITHUB_EVENT_NAME", "push")]
+    [InlineData("pr", "GITHUB_EVENT_NAME", "push")]
+    [InlineData("full", "GITHUB_EVENT_NAME", "push")]
+    [InlineData("push", "CI_WORKFLOW_INPUTS", "candidate")]
+    [InlineData("pr", "CI_WORKFLOW_INPUTS", "candidate")]
+    [InlineData("full", "CI_WORKFLOW_INPUTS", "candidate")]
+    [InlineData("full", "CI_WORKFLOW_INPUTS", "malformed")]
+    public void LocalModesRejectScopeOrCandidateOverridesBeforePlanning(string mode, string name, string value)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var head = fixture.Git("rev-parse", "HEAD").Trim();
+        value = value == "HEAD" ? head : value == "candidate" ? "{\"candidate_sha\":\"" + head + "\"}" : value;
+        var result = fixture.Preflight(mode, mode is "push" or "pr" ? head : "",
+            extra: new() { [name] = value });
+        Assert.True(result.Exit == 2, result.Text);
+        Assert.Empty(fixture.Calls());
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/ci")));
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void PushAcceptsOnlyCorroboratingCompleteEnvironmentRange(bool matching)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var basis = fixture.Git("rev-parse", "HEAD").Trim();
+        fixture.Write("tracked", "committed"); fixture.Commit();
+        var head = fixture.Git("rev-parse", "HEAD").Trim();
+        var result = fixture.Preflight("push", basis.ToUpperInvariant(), viaMake: true,
+            extra: new() { ["CI_PUSH_BEFORE"] = matching ? basis : head, ["CI_PUSH_AFTER"] = head, ["CANDIDATE_SHA"] = head });
+        Assert.True(result.Exit == (matching ? 0 : 2), result.Text);
+        if (matching)
+        {
+            Assert.Equal(new[] { "engineering", "current" }, fixture.Calls());
+            Assert.Equal(basis, fixture.Selection("current").GetProperty("origin").GetProperty("before").GetString());
+        }
+        else Assert.Empty(fixture.Calls());
+    }
+
+    [Fact]
+    public void PushAllowsDivergentBaseAndNestedMakeScopeFromSubdirectory()
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var (basis, _, _) = fixture.Diverge();
+        var result = fixture.Preflight(null, "", viaMake: true,
+            extra: new() { ["MAKEFLAGS"] = " -- MODE=push BASE=" + basis });
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Equal(new[] { "engineering", "current" }, fixture.Calls());
+        Assert.Equal(basis, fixture.Selection("current").GetProperty("origin").GetProperty("before").GetString());
+    }
+
+    [Theory]
+    [InlineData(null, "")]
+    [InlineData("fast", "MODE=")]
+    [InlineData("fast", "MODE=unknown")]
+    public void MissingOrInvalidModeThroughMakeCannotFallBack(string? inheritedMode, string argument)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var result = fixture.Preflight(inheritedMode, "", viaMake: true,
+            arguments: argument.Length == 0 ? [] : [argument]);
+        Assert.Equal(2, result.Exit);
+        Assert.Contains("Choose an explicit local preflight mode", result.Text, StringComparison.Ordinal);
+        Assert.Empty(fixture.Calls());
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/ci")));
+    }
+
+    [Theory]
+    [InlineData("push", "")]
+    [InlineData("full", "")]
+    public void EnvironmentRangeCannotSupplyMissingPushBaseOrNarrowFull(string mode, string basis)
+    {
+        using var fixture = new Fixture(File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/preflight.sh")));
+        var head = fixture.Git("rev-parse", "HEAD").Trim();
+        var result = fixture.Preflight(mode, basis, extra: new() { ["CI_PUSH_BEFORE"] = head, ["CI_PUSH_AFTER"] = head });
+        Assert.Equal(2, result.Exit);
+        Assert.Empty(fixture.Calls());
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/ci")));
     }
 
     private sealed class Fixture : IDisposable
     {
         private readonly string scratch = TemporaryFileSystem.Directory.CreateTempSubdirectory("preflight-contract-").FullName;
-        internal string Root => Path.Combine(scratch, "repository");
+        internal string Root => Path.Combine(scratch, "repository with spaces");
         private string CallsPath => Path.Combine(scratch, "calls");
         private string GitCallsPath => Path.Combine(scratch, "git-calls");
         private string ObservationsPath => Path.Combine(scratch, "observations");
@@ -241,6 +431,8 @@ public sealed class PreflightProcessContractTests
         {
             TemporaryFileSystem.Directory.CreateDirectory(Root);
             Write("tools/scripts/preflight.sh", preflightScript);
+            Write("Makefile", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile")));
+            Write("tools/Makefile", "check-fast:\n\t@printf 'check-fast\\n' >> \"$$CONTRACT_CALLS\"; exit \"$$CONTRACT_EXIT\"\n");
             foreach (var path in new[] { "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py" })
                 Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
             Write(".gitignore", "build/\n");
@@ -276,6 +468,7 @@ public sealed class PreflightProcessContractTests
                 printf '%s\n' "$1" >> "$CONTRACT_CALLS"
                 observation="$CONTRACT_OBSERVATIONS/$1"
                 mkdir -p "$observation"
+                test "$CANDIDATE_SHA" = "$(git rev-parse HEAD)"
                 git rev-parse HEAD > "$observation/commit"
                 git rev-parse 'HEAD^{tree}' > "$observation/tree"
                 git show -s --format=%P HEAD > "$observation/parents"
@@ -340,6 +533,19 @@ public sealed class PreflightProcessContractTests
             TemporaryFileSystem.File.WriteAllText(full, text);
         }
         internal void Commit() { Git("add", "."); Git("commit", "-qm", "fixture"); }
+        internal void RejectChildWork()
+        {
+            gitBin = Path.Combine(scratch, "reject-bin");
+            Directory.CreateDirectory(gitBin);
+            foreach (var tool in new[] { "git", "python3", "make" })
+            {
+                var path = Path.Combine(gitBin, tool);
+                File.WriteAllText(path, "#!/bin/bash\nprintf 'unexpected-child\\n' >> \"$CONTRACT_CALLS\"\nexit 95\n");
+                if (!OperatingSystem.IsWindows())
+                    File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+            }
+            realGit = "unused";
+        }
         internal void FailStatus(int exit)
         {
             realGit = Run("/bin/bash", ["-c", "command -v git"]).Text.Trim();
@@ -367,9 +573,10 @@ public sealed class PreflightProcessContractTests
             Assert.True(result.Exit == 0, result.Text);
             return result.Text;
         }
-        internal (int Exit, string Text, string Error) Preflight(string mode, string basis, string raw = "0")
+        internal (int Exit, string Text, string Error) Preflight(string? mode, string basis, string raw = "0",
+            bool viaMake = false, Dictionary<string, string>? extra = null, string[]? arguments = null)
         {
-            var environment = new Dictionary<string, string> { ["MODE"] = mode, ["BASE"] = basis, ["CONTRACT_CALLS"] = CallsPath,
+            var environment = new Dictionary<string, string> { ["MODE"] = mode ?? "", ["BASE"] = basis, ["CONTRACT_CALLS"] = CallsPath,
                 ["CONTRACT_OBSERVATIONS"] = ObservationsPath, ["CONTRACT_EXIT"] = raw };
             if (gitBin is not null)
             {
@@ -377,16 +584,22 @@ public sealed class PreflightProcessContractTests
                 environment["CONTRACT_REAL_GIT"] = realGit!;
                 environment["CONTRACT_GIT_CALLS"] = GitCallsPath;
             }
-            return Run("/bin/bash", ["tools/scripts/preflight.sh"], environment);
+            foreach (var pair in extra ?? []) environment[pair.Key] = pair.Value;
+            if (mode is null) environment.Remove("MODE");
+            return viaMake
+                ? Run("make", ["--no-print-directory", "-C", Root, "preflight", .. arguments ?? []], environment, Path.Combine(Root, "tools"))
+                : Run("/bin/bash", ["tools/scripts/preflight.sh", .. arguments ?? []], environment);
         }
         internal string[] Calls() => TemporaryFileSystem.File.Exists(CallsPath) ? TemporaryFileSystem.File.ReadAllText(CallsPath).Split('\n', StringSplitOptions.RemoveEmptyEntries) : [];
         internal string[] GitCalls() => TemporaryFileSystem.File.Exists(GitCallsPath) ? TemporaryFileSystem.File.ReadAllText(GitCallsPath).Split('\n', StringSplitOptions.RemoveEmptyEntries) : [];
-        private (int Exit, string Text, string Error) Run(string executable, string[] args, Dictionary<string, string>? environment = null)
+        private (int Exit, string Text, string Error) Run(string executable, string[] args, Dictionary<string, string>? environment = null, string? workingDirectory = null)
         {
-            var start = new ProcessStartInfo(executable) { WorkingDirectory = Root, RedirectStandardOutput = true, RedirectStandardError = true };
+            var start = new ProcessStartInfo(executable) { WorkingDirectory = workingDirectory ?? Root, RedirectStandardOutput = true, RedirectStandardError = true };
             foreach (var arg in args) start.ArgumentList.Add(arg);
             // Synthetic repositories must not inherit the caller workflow's
             // fixed-candidate contract. Tests opt into an event explicitly.
+            foreach (var name in new[] { "MODE", "BASE", "MAKEFLAGS", "MAKELEVEL", "CI_PUSH_BEFORE", "CI_PUSH_AFTER" })
+                start.Environment.Remove(name);
             start.Environment["GITHUB_EVENT_NAME"] = "";
             start.Environment["CANDIDATE_SHA"] = "";
             start.Environment["CI_WORKFLOW_INPUTS"] = "null";

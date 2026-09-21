@@ -1,0 +1,912 @@
+{
+  "schema": "readonce-cylinder-cover-v1",
+  "scope": "Independent exact finite CRT/full-history calculation and sharp cylinder-cover weak dual. Full-atom caps alone admit a perfectly avoiding law; one ternary marginal cap already restores the exact bad-mass lower bound, so this is not evidence of a deeper conditional-only gap.",
+  "primes": [
+    3,
+    5,
+    7
+  ],
+  "keep": [
+    2,
+    3,
+    5
+  ],
+  "labels": [
+    [
+      3,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      21,
+      1
+    ],
+    [
+      35,
+      2
+    ],
+    [
+      105,
+      52
+    ]
+  ],
+  "period": 105,
+  "actual_CRT_points_checked": 105,
+  "actual_survivors": [
+    4,
+    8,
+    11,
+    13,
+    17,
+    19,
+    23,
+    26,
+    29,
+    32,
+    34,
+    38,
+    41,
+    44,
+    47,
+    53,
+    58,
+    59,
+    62,
+    67,
+    68,
+    71,
+    73,
+    74,
+    79,
+    82,
+    83,
+    86,
+    88,
+    89,
+    92,
+    94,
+    97,
+    101,
+    103,
+    104
+  ],
+  "ternary_survivor_fibers": {
+    "0": [],
+    "1": [
+      4,
+      13,
+      19,
+      34,
+      58,
+      67,
+      73,
+      79,
+      82,
+      88,
+      94,
+      97,
+      103
+    ],
+    "2": [
+      8,
+      11,
+      17,
+      23,
+      26,
+      29,
+      32,
+      38,
+      41,
+      44,
+      47,
+      53,
+      59,
+      62,
+      68,
+      71,
+      74,
+      83,
+      86,
+      89,
+      92,
+      101,
+      104
+    ]
+  },
+  "uniform_survivor_law": {
+    "support_count": 36,
+    "each_atom_mass": "1/36",
+    "allowed_full_atom_cap": "1/30",
+    "bad_mass": "0",
+    "coordinate_marginals": [
+      {
+        "prime": 3,
+        "probabilities": [
+          "0",
+          "13/36",
+          "23/36"
+        ],
+        "allowed_marginal_cap": "1/2",
+        "violating_residues": [
+          2
+        ]
+      },
+      {
+        "prime": 5,
+        "probabilities": [
+          "0",
+          "1/6",
+          "2/9",
+          "11/36",
+          "11/36"
+        ],
+        "allowed_marginal_cap": "1/3",
+        "violating_residues": []
+      },
+      {
+        "prime": 7,
+        "probabilities": [
+          "0",
+          "1/9",
+          "5/36",
+          "1/6",
+          "7/36",
+          "7/36",
+          "7/36"
+        ],
+        "allowed_marginal_cap": "1/5",
+        "violating_residues": []
+      }
+    ]
+  },
+  "fixed_order_results": [
+    {
+      "order": [
+        3,
+        5,
+        7
+      ],
+      "bad_mass": "1/15",
+      "actual_history_states": 124,
+      "first_coordinate_costs": [
+        "1",
+        "2/15",
+        "0"
+      ]
+    },
+    {
+      "order": [
+        3,
+        7,
+        5
+      ],
+      "bad_mass": "1/15",
+      "actual_history_states": 130,
+      "first_coordinate_costs": [
+        "1",
+        "2/15",
+        "0"
+      ]
+    },
+    {
+      "order": [
+        5,
+        3,
+        7
+      ],
+      "bad_mass": "1/15",
+      "actual_history_states": 126,
+      "first_coordinate_costs": [
+        "1",
+        "1/2",
+        "1/5",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "order": [
+        5,
+        7,
+        3
+      ],
+      "bad_mass": "1/15",
+      "actual_history_states": 146,
+      "first_coordinate_costs": [
+        "1",
+        "1/2",
+        "1/5",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "order": [
+        7,
+        3,
+        5
+      ],
+      "bad_mass": "1/15",
+      "actual_history_states": 134,
+      "first_coordinate_costs": [
+        "1",
+        "1/2",
+        "1/6",
+        "1/6",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "order": [
+        7,
+        5,
+        3
+      ],
+      "bad_mass": "1/15",
+      "actual_history_states": 148,
+      "first_coordinate_costs": [
+        "1",
+        "1/2",
+        "1/6",
+        "1/6",
+        "0",
+        "0",
+        "0"
+      ]
+    }
+  ],
+  "adaptive_bad_mass": "1/15",
+  "adaptive_actual_history_states": 192,
+  "adaptive_root_costs": [
+    {
+      "first_prime": 3,
+      "costs": [
+        "1",
+        "2/15",
+        "0"
+      ],
+      "row_minimum": "1/15"
+    },
+    {
+      "first_prime": 5,
+      "costs": [
+        "1",
+        "1/2",
+        "1/5",
+        "0",
+        "0"
+      ],
+      "row_minimum": "1/15"
+    },
+    {
+      "first_prime": 7,
+      "costs": [
+        "1",
+        "1/2",
+        "1/6",
+        "1/6",
+        "0",
+        "0",
+        "0"
+      ],
+      "row_minimum": "1/15"
+    }
+  ],
+  "optimal_readonce_law": {
+    "support": [
+      {
+        "coordinates": [
+          1,
+          2,
+          0
+        ],
+        "CRT_residue": 7,
+        "mass": "1/30",
+        "bad": true
+      },
+      {
+        "coordinates": [
+          1,
+          2,
+          1
+        ],
+        "CRT_residue": 22,
+        "mass": "1/30",
+        "bad": true
+      },
+      {
+        "coordinates": [
+          1,
+          2,
+          4
+        ],
+        "CRT_residue": 67,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          2,
+          5
+        ],
+        "CRT_residue": 82,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          2,
+          6
+        ],
+        "CRT_residue": 97,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          3,
+          2
+        ],
+        "CRT_residue": 58,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          3,
+          3
+        ],
+        "CRT_residue": 73,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          3,
+          4
+        ],
+        "CRT_residue": 88,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          3,
+          5
+        ],
+        "CRT_residue": 103,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          3,
+          6
+        ],
+        "CRT_residue": 13,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          4,
+          2
+        ],
+        "CRT_residue": 79,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          4,
+          3
+        ],
+        "CRT_residue": 94,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          4,
+          4
+        ],
+        "CRT_residue": 4,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          4,
+          5
+        ],
+        "CRT_residue": 19,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          1,
+          4,
+          6
+        ],
+        "CRT_residue": 34,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          1,
+          1
+        ],
+        "CRT_residue": 71,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          1,
+          2
+        ],
+        "CRT_residue": 86,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          1,
+          3
+        ],
+        "CRT_residue": 101,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          1,
+          4
+        ],
+        "CRT_residue": 11,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          1,
+          5
+        ],
+        "CRT_residue": 26,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          2,
+          1
+        ],
+        "CRT_residue": 92,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          2,
+          3
+        ],
+        "CRT_residue": 17,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          2,
+          4
+        ],
+        "CRT_residue": 32,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          2,
+          5
+        ],
+        "CRT_residue": 47,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          2,
+          6
+        ],
+        "CRT_residue": 62,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          3,
+          1
+        ],
+        "CRT_residue": 8,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          3,
+          2
+        ],
+        "CRT_residue": 23,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          3,
+          3
+        ],
+        "CRT_residue": 38,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          3,
+          4
+        ],
+        "CRT_residue": 53,
+        "mass": "1/30",
+        "bad": false
+      },
+      {
+        "coordinates": [
+          2,
+          3,
+          5
+        ],
+        "CRT_residue": 68,
+        "mass": "1/30",
+        "bad": false
+      }
+    ],
+    "full_transcript_rows": [
+      {
+        "transcript": [],
+        "transcript_probability": "1",
+        "next_prime": 3,
+        "row": [
+          "0",
+          "1/2",
+          "1/2"
+        ]
+      },
+      {
+        "transcript": [
+          [
+            3,
+            2
+          ]
+        ],
+        "transcript_probability": "1/2",
+        "next_prime": 5,
+        "row": [
+          "0",
+          "1/3",
+          "1/3",
+          "1/3",
+          "0"
+        ]
+      },
+      {
+        "transcript": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            1
+          ]
+        ],
+        "transcript_probability": "1/6",
+        "next_prime": 7,
+        "row": [
+          "0",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5",
+          "0"
+        ]
+      },
+      {
+        "transcript": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "transcript_probability": "1/6",
+        "next_prime": 7,
+        "row": [
+          "0",
+          "1/5",
+          "0",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5"
+        ]
+      },
+      {
+        "transcript": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "transcript_probability": "1/6",
+        "next_prime": 7,
+        "row": [
+          "0",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5",
+          "0"
+        ]
+      },
+      {
+        "transcript": [
+          [
+            3,
+            1
+          ]
+        ],
+        "transcript_probability": "1/2",
+        "next_prime": 5,
+        "row": [
+          "0",
+          "0",
+          "1/3",
+          "1/3",
+          "1/3"
+        ]
+      },
+      {
+        "transcript": [
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ]
+        ],
+        "transcript_probability": "1/6",
+        "next_prime": 7,
+        "row": [
+          "0",
+          "0",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5"
+        ]
+      },
+      {
+        "transcript": [
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            4
+          ]
+        ],
+        "transcript_probability": "1/6",
+        "next_prime": 7,
+        "row": [
+          "0",
+          "0",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5",
+          "1/5"
+        ]
+      },
+      {
+        "transcript": [
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "transcript_probability": "1/6",
+        "next_prime": 7,
+        "row": [
+          "1/5",
+          "1/5",
+          "0",
+          "0",
+          "1/5",
+          "1/5",
+          "1/5"
+        ]
+      }
+    ],
+    "actual_conditional_caps_checked": 55
+  },
+  "simple_attaining_policy": {
+    "order": [
+      3,
+      5,
+      7
+    ],
+    "first_values": [
+      1,
+      2
+    ],
+    "five_values_given_three": {
+      "1": [
+        2,
+        3,
+        4
+      ],
+      "2": [
+        1,
+        3,
+        4
+      ]
+    },
+    "seven_values_given_three": {
+      "1": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "2": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "each_full_atom_mass": "1/30",
+    "bad_CRT_residues": [
+      37,
+      52
+    ],
+    "CRT_support": [
+      4,
+      8,
+      11,
+      13,
+      19,
+      23,
+      26,
+      29,
+      34,
+      37,
+      38,
+      44,
+      52,
+      53,
+      58,
+      59,
+      67,
+      68,
+      71,
+      73,
+      74,
+      79,
+      82,
+      86,
+      88,
+      89,
+      94,
+      97,
+      101,
+      103
+    ]
+  },
+  "dual": {
+    "full_atoms": [
+      4,
+      13,
+      19,
+      34,
+      58,
+      67,
+      73,
+      79,
+      82,
+      88,
+      94,
+      97,
+      103
+    ],
+    "each_full_atom_price": "1/30",
+    "additional_cylinder": {
+      "modulus": 3,
+      "residue": 2,
+      "price": "1/2"
+    },
+    "pointwise_cover_checked_on_all": 105,
+    "survival_upper": "14/15",
+    "bad_mass_lower": "1/15",
+    "sharp_on_optimal_readonce_law": true
+  },
+  "producer_sha256": "9b3204a95a0f67fd53741794b9dc605cf13899b53530d90d5f56fceaa7cad0f1",
+  "original_label_source": "frontier/source-budgets/readonce_cylinder_cover_input105.json",
+  "original_labels_sha256": "3d7aae99c0b8ee232c5a299fb5907caab5cad42637199a97ac4cebfde6126f2a",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/56-exponent-frontiers-and-cylinder-cover-certificates.md": "c8b67933791bd6eeb3925159b9b3219d3492703cd340ee720e0bc9d07dd8bee5",
+    "problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md": "70c1c2eafee2d18ac9b8a29944adca71e7ca7237f4356dc6ecb9f1b5391998e8",
+    "frontier/source-budgets/readonce_cylinder_cover_input105.json": "d6b820b5073782aef395284a558eea9074fd336a0d876823b8cd5d1a1178dde3",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+    "../../../D5/S3/Arith/Congruence/ConditionalComparison/CappedGainRearrangement.lean": "ff003bc80d91f1e0026af3c22c5d2ff3a4ab92f733b968c3321e6de521826ab6",
+    "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6"
+  }
+}

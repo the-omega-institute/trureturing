@@ -1,0 +1,17 @@
+**约定 35.3（有限计算、可行性与实际效果）。** 若计算输出 $\widetilde b_0$ 已认证质量一，且
+$$
+\|\widetilde b_0-\widehat b_0\|_{\nu,\infty,I_T}\le\varepsilon_{{\rm eval},\nu},\qquad
+\widetilde z(t)\in\Delta_m,\qquad
+\|\widetilde z-\mathcal Q\widetilde b_0\|_{\nu,\infty,I_T}\le\varepsilon_{{\rm rep},\nu},
+\tag{35.9}
+$$
+则在 $\nu=1$、两种修复的情况下，或在 $\nu=D^{-1}$、$\mathcal Q=\Pi_D$ 的情况下，式（35.6）或式（35.7）的范数半径替换为
+$$
+A_\nu^T=B_\nu^T+\varepsilon_{{\rm eval},\nu}+\varepsilon_{{\rm rep},\nu}.
+\tag{35.10}
+$$
+这是先在式（35.4）插入 $\widetilde b_0$、再应用相对真值的修复界、最后加入实际修复残差的同一三角界。没有要求两份有符号预测的修复结果互相收缩。质量一若因浮点误差尚未认证，须先给恢复质量一的实际操作及其误差，再进入式（35.9）；不能把带质量缺口的向量直接放入仅适用于质量一的阈值和尖锐界。
+
+对实际概率效果 $0\le f_i\le1$，恢复卷式（30.20）给修复概率和真值的效果差至多 $\min\{1,A_1^T/2\}$；使用加权证书时为 $\min\{1,\sqrt{N_v}A_{D^{-1}}^T/2\}$。若最后输出的标量 $\widetilde v(t)$ 还满足
+$|\widetilde v(t)-f^{\mathsf T}\widetilde z(t)|\le\varepsilon_{\rm dec}(t)$，则再加这一实际解码误差。投影残差小不自动证明 $\widetilde z\in\Delta_m$，一份可行数值也不自动证明可行族非空或真实世界成员资格。所有这些数值证书须可由声明权限实际取得；存在一个上确界不提供求解算法、准备手段或无条件外部截止。
+

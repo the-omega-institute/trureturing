@@ -59,6 +59,34 @@ Record the query and the hit/no-hit in the preregistration. A posted, dated, mat
 proof settles the assertion for open-problem-resolution purposes exactly as a paper would (§3.7: do not
 claim as new what is already public); an entry with status `open` is not evidence of openness.
 
+**For an Erdős question, search erdosproblems.com by the original paper's reference tag and by the statement's
+own words, and read the `google-deepmind/formal-conjectures` file for the problem number.** The 1979 one-divisor
+unimodality question was landed here on 2026-09-12 as a first refutation after a search that concluded "the problem
+has no erdosproblems.com number"; it is problem 692 there, marked DISPROVED (LEAN) since Cambie, arXiv:2501.10333
+(January 2025), with `FormalConjectures/ErdosProblems/692.lean` carrying `@[category research solved]` and the same
+reference. Query the site for the tag (`Er79e`) and for `unimodular`/`δ_1`, not only for a title phrase; a `research
+solved` annotation in formal-conjectures is evidence of settlement even though `research open` is not evidence of openness.
+
+**Record the source year in the preregistration and classify the tier by the question's character, not by the
+year alone.** CLAUDE.md §3.6 lists 2024–2026 paper questions, OEIS comments and unstarred Kourovka problems as
+examples of the first tier and defines it as open because unlooked-at rather than hard. Lanes with earlier sources
+have been admitted on that reading: Crux Problem 2623 (2001, #8460), Schmerl–Trotter 1993 / Belkhechine–Boudabbous
+2010 (#8599), Kreh 2015, Detlefs 2014, Erdős 1985 and 1989. A review seat reading the year range as a bound
+rejected a 2022 source at #9066 round 3; the preregistration issue must state the year and the reason the question
+is first-tier so the seat can check that reading against the issue rather than infer it.
+
+**Follow the URLs a paper's closing section gives, and read the version history of every settling
+preprint.** Alcantarilla et al. arXiv:2602.21840 Conjecture 15 survived an arXiv sweep and Semantic
+Scholar (zero citations) and was already Theorems 1–2 on the authors' page
+`https://math.deweger.net/eulerliars/`, named at the end of the paper; nothing indexes that page. In
+the other direction, Le arXiv:2509.26138 — cited by R52 as settling 22 of Cohen's JIS 25.4.7
+conjectures — carries at `/abs/2509.26138v3` the author's withdrawal ("Proofs in this paper were
+AI-generated and I just found out some of them were incorrect"), so a settlement it was the only
+source for is void; a preprint's `Comments:` field and `[vN] (withdrawn)` line are part of the
+literature check. A withdrawn preprint's *correct* finite observation (Le's `c₃₅ = 91 = c₅c₇` against
+Cohen's Conjecture 59) is still public text and must be disclosed in the preregistration; whether it
+bars open-problem-resolution is for the review seats.
+
 ## 2. Is the object already available? — grep, pinned Mathlib first
 
 Ask what the statement *reduces to*, then search for that object rather than for the

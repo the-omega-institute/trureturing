@@ -1,0 +1,54 @@
+{
+  "old_source_certificate": {
+    "kind": "inline",
+    "value": "certificates/source_norms/source-budgets/source_mean_sharpness.json"
+  },
+  "old_height": {
+    "kind": "inline",
+    "value": 12
+  },
+  "old_labels": {
+    "kind": "inline",
+    "value": 204
+  },
+  "old_private_membership_checks_consumed": {
+    "kind": "inline",
+    "value": 41616
+  },
+  "old_private_checks_rerun": {
+    "kind": "inline",
+    "value": false
+  },
+  "added_labels": {
+    "path": "content/005-actual_family/005-added_labels.json",
+    "sha256": "00289f45c6d12ebfab63c655b0cdaea9d540d43b068b3f432785be234e5209fd",
+    "kind": "value"
+  },
+  "original_label_count": {
+    "kind": "inline",
+    "value": 212
+  },
+  "period": {
+    "kind": "inline",
+    "value": 63459902491200923515498364501953125
+  },
+  "old_private_CRT_lifts": {
+    "path": "content/005-actual_family/008-old_private_CRT_lifts.json",
+    "sha256": "534d87c7b835eaa23249630ce43c8f84a2272fa7b8593aef5ae79ffe5d1dddf0",
+    "kind": "array"
+  },
+  "uncovered_integer": {
+    "kind": "inline",
+    "value": 35836336746746636794835710693359379
+  },
+  "unchanged357_source": {
+    "kind": "inline",
+    "value": {
+      "S": "106896619363526394066296/498848979457799560546875",
+      "S0": "1539313156075932100397623/10262036148697880859375000",
+      "qJ": "48372925099189405605283846925264530700238848/48374564336342018577852286398410797119140625",
+      "delta": "1639237152612972568439473146266418901777/48374564336342018577852286398410797119140625",
+      "rho": "7609282399594604502342354273135737/118366491336019765320358037109375000"
+    }
+  }
+}

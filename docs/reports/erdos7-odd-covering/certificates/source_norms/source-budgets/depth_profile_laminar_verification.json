@@ -1,0 +1,916 @@
+{
+  "status": "PASS",
+  "random_seed": 20260921,
+  "generic_row_lp_cases": 168,
+  "all_lp_comparisons_have_exact_rational_primal_dual_certificates": true,
+  "ancestry_counterexample": {
+    "clustered": "2/3",
+    "dispersed": "0"
+  },
+  "actual_policy_cases": 24,
+  "actual_support_points": 659,
+  "actual_full_prefix_depth_checks": 203,
+  "independent_full_CRT_lp_rows": 224,
+  "flat_profile_regressions": [
+    {
+      "labels": 78,
+      "minimum_bad_mass": "875843233809638/1938999971129067",
+      "states": 2481
+    },
+    {
+      "labels": 154,
+      "minimum_bad_mass": "32168427073346590016479490658986501/58471529920362782264194329881049345",
+      "states": 45029
+    }
+  ],
+  "small_cases": [
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        2,
+        1
+      ],
+      "labels": [
+        [
+          15,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          45,
+          23
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "11/12",
+          "119/288"
+        ],
+        [
+          "1",
+          "3/5"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 8
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          15,
+          12
+        ],
+        [
+          5,
+          1
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "7/10"
+        ],
+        [
+          "1",
+          "7/12",
+          "49/288"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 15
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          15,
+          3
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          75,
+          8
+        ],
+        [
+          25,
+          20
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "1",
+          "7/10",
+          "41/200"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 10
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        2,
+        1
+      ],
+      "labels": [
+        [
+          3,
+          1
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "2/5",
+          "2/5"
+        ],
+        [
+          "1",
+          "1/3"
+        ]
+      ],
+      "optimum": "1/3",
+      "support_points": 75
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          5,
+          0
+        ],
+        [
+          25,
+          7
+        ],
+        [
+          15,
+          10
+        ],
+        [
+          75,
+          69
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "5/12"
+        ],
+        [
+          "1",
+          "1/5",
+          "9/50"
+        ]
+      ],
+      "optimum": "1/3",
+      "support_points": 66
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          9,
+          6
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "9/10"
+        ],
+        [
+          "1",
+          "11/12",
+          "37/72"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 25
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        2,
+        1
+      ],
+      "labels": [
+        [
+          5,
+          4
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "1",
+          "1/5"
+        ]
+      ],
+      "optimum": "1/5",
+      "support_points": 15
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          45,
+          27
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "4/5"
+        ],
+        [
+          "1",
+          "7/12",
+          "83/288"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 18
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          25,
+          15
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          15,
+          13
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "5/12"
+        ],
+        [
+          "1",
+          "9/10",
+          "47/100"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 30
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        2,
+        1
+      ],
+      "labels": [
+        [
+          15,
+          3
+        ],
+        [
+          25,
+          22
+        ],
+        [
+          75,
+          26
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "3/10",
+          "47/200"
+        ],
+        [
+          "1",
+          "5/12"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 42
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          25,
+          24
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          15,
+          14
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "2/3"
+        ],
+        [
+          "1",
+          "7/10",
+          "41/200"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 20
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          3,
+          0
+        ],
+        [
+          15,
+          13
+        ],
+        [
+          45,
+          34
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "2/5"
+        ],
+        [
+          "1",
+          "11/12",
+          "11/12"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 18
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        2,
+        1
+      ],
+      "labels": [
+        [
+          9,
+          6
+        ],
+        [
+          45,
+          34
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "5/12",
+          "49/144"
+        ],
+        [
+          "1",
+          "3/5"
+        ]
+      ],
+      "optimum": "1/6",
+      "support_points": 30
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          15,
+          8
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          45,
+          7
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "9/10"
+        ],
+        [
+          "1",
+          "7/12",
+          "25/72"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 10
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          3,
+          1
+        ],
+        [
+          75,
+          54
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "3/4"
+        ],
+        [
+          "1",
+          "3/10",
+          "81/400"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 45
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        2,
+        1
+      ],
+      "labels": [
+        [
+          25,
+          5
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "2/5",
+          "2/5"
+        ],
+        [
+          "1",
+          "2/3"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 22
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          75,
+          62
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "1/2"
+        ],
+        [
+          "1",
+          "1/2",
+          "31/200"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 20
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          45,
+          24
+        ],
+        [
+          9,
+          0
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "2/5"
+        ],
+        [
+          "1",
+          "1",
+          "2/3"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 6
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        2,
+        1
+      ],
+      "labels": [
+        [
+          45,
+          35
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "3/4",
+          "55/288"
+        ],
+        [
+          "1",
+          "4/5"
+        ]
+      ],
+      "optimum": "13/288",
+      "support_points": 25
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          3,
+          0
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "2/5"
+        ],
+        [
+          "1",
+          "1/3",
+          "2/9"
+        ]
+      ],
+      "optimum": "1/3",
+      "support_points": 45
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          15,
+          12
+        ],
+        [
+          75,
+          45
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          25,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "5/12"
+        ],
+        [
+          "1",
+          "3/5",
+          "39/100"
+        ]
+      ],
+      "optimum": "1/6",
+      "support_points": 45
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        2,
+        1
+      ],
+      "labels": [
+        [
+          15,
+          12
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "7/10",
+          "23/80"
+        ],
+        [
+          "1",
+          "1/2"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 20
+    },
+    {
+      "primes": [
+        3,
+        5
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          5,
+          0
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "1/3"
+        ],
+        [
+          "1",
+          "1",
+          "16/25"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 15
+    },
+    {
+      "primes": [
+        5,
+        3
+      ],
+      "heights": [
+        1,
+        2
+      ],
+      "labels": [
+        [
+          45,
+          23
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          15,
+          4
+        ]
+      ],
+      "profiles": [
+        [
+          "1",
+          "3/10"
+        ],
+        [
+          "1",
+          "1/3",
+          "1/3"
+        ]
+      ],
+      "optimum": "0",
+      "support_points": 34
+    }
+  ],
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+    "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+    "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+    "certificates/source_norms/source-budgets/capped_head_bellman.json": "725e2d7fb1c8abf2a41734a1e74c1ad787ed4294b18c661cace971023f22731f"
+  },
+  "producer_sha256": "689e84562499229d176dc5d78243fb1dd6b722bddca95ba2c543032b977071ad"
+}

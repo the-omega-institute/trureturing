@@ -1,0 +1,14 @@
+**命题 23.2（当前模态与指定未来响应的闭合）。** 有
+
+$$
+\Psi(T_t x)=\operatorname{diag}(e^{s_1t},\ldots,e^{s_Nt})\Psi(x),
+\qquad y(T_t x)=\sum_j e^{s_jt}\chi_j(x).
+\tag{23.102}
+$$
+
+所以 Ψ 相等的两个状态具有相同的全部 y 未来。若存在 h>0 使 m_j=e^{s_jh} 互异，则相同的前 N 个 h 间隔 y 读数也强制 Ψ 相等。因此该有限窗口、Ψ 和全部 y 未来在 X 上具有同一个观察核。
+
+**证明。** 前式逐坐标就是(23.101)，求和给后式。窗口是 VΨ，其中 V_{nj}=m_j^n、0≤n<N。节点互异，直接应用已有 Vandermonde 窗口单射性，即`FiniteCrystalTimeFrequencyBridge.first_crystal_time_window_injective` 的复数实例。全部未来包含该窗口，所以三个核相等。此论证恢复的是指定模态任务商；除非另证 Ψ 对 X 单射，不恢复全部微观状态。□
+
+复数 s_j 互异不保证采样节点 m_j 互异。纯衰减实率互异在任意 h>0 下给互异节点；含相位时还须排除相差 2πik/h 的率。
+

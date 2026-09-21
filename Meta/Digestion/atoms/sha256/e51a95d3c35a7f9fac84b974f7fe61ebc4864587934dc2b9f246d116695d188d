@@ -1,0 +1,37 @@
+**定理 25.4（实际时间导数、压力与光滑延拓）。** 定理25.3的解属于 $C^1([0,\tau];L^2)$，在零点使用右导数，且
+$$
+u_t=F(u),\quad
+F(u)=\nu\Delta u-\mathbb P((u\cdot\nabla)u):H^2_\sigma\to L^2_\sigma.
+\tag{25.110}
+$$
+在半径 $R$ 球中有
+$$
+\|F(u)\|_2\le M_F,\qquad
+\|F(u)-F(v)\|_2\le D_F\|u-v\|_{H^2}.
+\tag{25.111}
+$$
+零均值压力使（25.102）在 $L^2$ 中成立；该解实际上在闭区间 $[0,\tau]$ 上光滑。
+
+证明。$\|\nabla u\|_2,\|\Delta u\|_2\le\|u\|_{H^2}$，与（25.104）合用得第一界。将对流差写成 $((u-v)\cdot\nabla)u+(v\cdot\nabla)(u-v)$ 给第二界及 $F$ 连续性。因此 $f(t)=F(u(t))$ 连续取值于 $L^2$。对每个单独 Fourier 模，（25.109）是有连续强迫项的常微分方程变常数公式，给
+$$
+\widehat u(t,k)=\widehat u_0(k)+\int_0^t\widehat f(s,k)\,ds.
+$$
+Fourier 系数是 $L^2$ 上有界线性泛函，可以穿过 Bochner 积分；完备 Fourier 基遂给 $u(t)=u_0+\int_0^tF(u(s))ds$ 这一 $L^2$ 等式。Banach 值微积分基本定理证明（25.110）。这里没有对无限级数逐项作二次时间微分，也没有假定 $F$ 映入 $H^2$。
+
+取
+$$
+\widehat p(0)=0,\qquad
+\widehat p(k)=-\frac{\sum_{i,j}k_ik_j\widehat{u_iu_j}(k)}{|k|^2}\quad(k\ne0).
+\tag{25.112}
+$$
+乘积估计保证该实周期压力有意义；其梯度为 $-(I-\mathbb P)\operatorname{div}(u\otimes u)$。又因无散度，$\operatorname{div}(u\otimes u)=(u\cdot\nabla)u$，从而投影方程恰还原为原方程。零空间均值去除了压力的任意时间函数。
+
+光滑性使用 Tao, *254A, Notes 1: Local well-posedness of the Navier–Stokes equations*（2018-09-16）[原文](https://terrytao.wordpress.com/2018/09/16/254a-notes-1-local-well-posedness-of-the-navier-stokes-equations/)的 Corollary 40 及 Proposition 39：光滑周期无散度初态有唯一最大光滑解，有限最大寿命迫使速度 $L^\infty$ 范数无界。其局部光滑解满足（25.109），故由已证 $C_tH^2$ 唯一性与本解一致。如果该寿命不超过 $\tau$，（25.104）及共同半径将给全程 $\|u(t)\|_\infty\le4R$，矛盾；故光滑解存在到 $\tau$ 并超过它。
+
+该原文使用单位环面。令 $c=2\pi$，正确的同时间换元为 $v(t,z)=u(t,cz)/c$、$q(t,z)=p(t,cz)/c^2$，满足
+$$
+v_t+(v\cdot\nabla_z)v=(\nu/c^2)\Delta_zv-\nabla_zq.
+\tag{25.113}
+$$
+时间导数、对流与压力梯度各为原式的 $1/c$ 倍，$\Delta_zv=c\Delta_Xu$，故黏性须变为 $\nu/c^2$。此可逆换元保留寿命与有界性。原文 Theorem 37 的温和解类还要求 $L^2_tH^{s+1}_x$；这里所用 $C_tH^2$ 唯一性已直接证明，不将不同函数类混同。原文 Exercise 43 的定性依赖也不替代（25.106）的明确常数。$\square$
+

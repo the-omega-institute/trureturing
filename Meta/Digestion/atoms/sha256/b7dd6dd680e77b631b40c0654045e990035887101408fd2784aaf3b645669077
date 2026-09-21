@@ -1,0 +1,65 @@
+**约定 35.2（已有轨迹证书在质量空间的实例化）。** 对定义35.1的每个固定 $\theta$，使用恢复卷第29节一份满足全部前提的证书
+$$
+\|x_\theta(t)-X_\theta(t)\|_2\le E^{(2)}_\theta(t)\qquad(t\in I_T).
+$$
+图的正隙按该卷命题29.9仅用于共同守恒分量之外；准备失配、速度或能量坐标参数均来自同一个 $\theta$。恢复卷命题30.9运输为两种可用质量证书
+$$
+E^{(D^{-1})}_\theta(t)=E^{(2)}_\theta(t),\qquad
+E^{(1)}_\theta(t)=\sqrt{N_v}\,E^{(2)}_\theta(t),\qquad
+\|b_\theta(t)-\widehat b_\theta(t)\|_\nu\le E^{(\nu)}_\theta(t),
+\tag{35.3}
+$$
+其中 $\nu=1$ 或 $D^{-1}$。也可使用一份直接取得、更紧而满足相同适用前提的 $\ell_1$ 证书。
+
+固定一条仅由合法可访问 $C_{\rm acq}$ 计算的质量一预测路径 $\widehat b_0:I_T\to\mathbb R^m$。命题34.2在上述质量范数中的实例化首先给修复前的界
+$$
+\|b_\theta(t)-\widehat b_0(t)\|_\nu
+\le E^{(\nu)}_\theta(t)+\|\widehat b_\theta(t)-\widehat b_0(t)\|_\nu.
+\tag{35.4}
+$$
+右侧第二项是围绕所选预测的模型散布，不因第一项小而删除。以同一可行关系和同一视界定义
+$$
+B_\nu^T
+=\sup_{\theta\in\mathcal F(C_{\rm acq})}\sup_{t\in I_T}
+\left[E^{(\nu)}_\theta(t)+\|\widehat b_\theta(t)-\widehat b_0(t)\|_\nu\right],
+$$
+$$
+E_\nu^T=\sup_{\theta\in\mathcal F(C_{\rm acq})}\sup_{t\in I_T}E^{(\nu)}_\theta(t),\qquad
+M_\nu^T=\sup_{\theta\in\mathcal F(C_{\rm acq})}\|\widehat b_\theta-\widehat b_0\|_{\nu,\infty,I_T},\qquad
+B_\nu^T\le E_\nu^T+M_\nu^T.
+\tag{35.5}
+$$
+声称有限半径时，须取得这些表达式中实际使用的有限共同上界。最后一步是上界放宽，不声称误差极值与模型散布极值能在同一个世界同时达到。模型和可见初态由完整档案确定且 $\widehat b_0=\widehat b_\theta$ 时，模型散布为零；仍需履行预测的计算与访问合同。
+
+对 $\mathcal Q\in\{\mathcal R_+,\Pi_D\}$，恢复卷命题30.7–30.8对每个固定真值 $b_\theta(t)\in\Delta_m$ 给
+$$
+\|b_\theta(t)-\mathcal Q\widehat b_0(t)\|_1
+\le\|b_\theta(t)-\widehat b_0(t)\|_1.
+$$
+因此式（35.4）–（35.5）直接成为整条修复预测的界
+$$
+\sup_{\theta\in\mathcal F(C_{\rm acq})}\|b_\theta-\mathcal Q\widehat b_0\|_{1,\infty,I_T}
+\le B_1^T,\qquad
+\sup_{\theta,t}\operatorname{TV}\bigl(b_\theta(t),\mathcal Q\widehat b_0(t)\bigr)
+\le\min\{1,B_1^T/2\}.
+\tag{35.6}
+$$
+这里保留原来的 $\ell_1$ 半径，没有 $2B_1^T$ 的修复损失，也没有使用任意两份有符号输入之间的 $\ell_1$ 非扩张。若选 $\Pi_D$，该卷命题30.8–30.9还给
+$$
+\sup_{\theta\in\mathcal F(C_{\rm acq})}\|b_\theta-\Pi_D\widehat b_0\|_{D^{-1},\infty,I_T}
+\le B_{D^{-1}}^T,\qquad
+\sup_{\theta,t}\operatorname{TV}(b_\theta(t),\Pi_D\widehat b_0(t))
+\le\min\{1,\sqrt{N_v}B_{D^{-1}}^T/2\}.
+\tag{35.7}
+$$
+这要求一份公共 $D$；$\mathcal R_+$ 不继承加权 Hilbert 非扩张。式（35.6）–（35.7）的证明内容分别由既有命题34.2的三角界和恢复卷的修复／度量定理承担，不另作动力学估计。
+
+同世界整路径的逻辑仍是
+$$
+\{b_\theta:\theta\in\mathcal F(C_{\rm acq})\}
+\subseteq\bigcup_{\theta\in\mathcal F(C_{\rm acq})}
+\{y:\forall t\in I_T, \|y(t)-\widehat b_\theta(t)\|_\nu\le E^{(\nu)}_\theta(t)\}.
+\tag{35.8}
+$$
+右侧先固定一个世界再控制所有时间；不能将它改成任意逐时选择的候选边缘乘积。对一条已经合法定义的 $\widehat b_0$ 逐时修复可给统一路径误差，即使修复映射不满足半群律；这种函数误差也不等于两个随机过程的联合路径律距离。
+
