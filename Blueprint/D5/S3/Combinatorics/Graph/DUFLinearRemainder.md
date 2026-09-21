@@ -115,3 +115,5 @@ The result allows empty H, an empty remainder, isolated vertices, and unbounded 
 - Truth anchor: `D5/S3/Combinatorics/Graph/DUFLinearRemainder.support_compensation`
 - Truth anchor: `D5/S3/Combinatorics/Graph/DUFLinearRemainder.twoStepPairs`
 - Dependency: [D5/S3/Combinatorics/Graph/DUFComponents](DUFComponents.md)
+
+$$u_{n}_{i}$$
