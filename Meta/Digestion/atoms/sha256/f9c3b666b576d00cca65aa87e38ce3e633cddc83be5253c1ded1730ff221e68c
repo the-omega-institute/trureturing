@@ -1,0 +1,6 @@
+Cauchy–Schwarz 得 Fourier 绝对和界及一致收敛，从而给 $L^\infty$ 界。$W(p+q)\le2(W(p)+W(q))$，卷积三角界与离散 Young 不等式给
+$$
+\|v\otimes w\|_{H^2}
+\le2\bigl(\|W\widehat v\|_{\ell^2}\|\widehat w\|_{\ell^1}
+ +\|\widehat v\|_{\ell^1}\|W\widehat w\|_{\ell^2}\bigr),
+$$
