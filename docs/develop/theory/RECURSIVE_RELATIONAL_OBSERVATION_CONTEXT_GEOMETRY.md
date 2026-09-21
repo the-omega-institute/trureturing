@@ -8700,3 +8700,415 @@ Q命题125.1—125.4拥有固定根相干密度、秩二、相容局部态、固
 [^rroctx42_coherence]: T. Baumgratz, M. Cramer and M. B. Plenio, *Quantifying Coherence*, [arXiv:1311.0275](https://arxiv.org/abs/1311.0275), equation (8)：相对熵相干量为 $S(\Delta\rho)-S(\rho)$。本节同时沿用 Q89的访问边界，不将该差值解释为未经建模的热或功。
 
 ## 42.99 追加锚
+
+## 43. 递归有理数组的体、边界与形式完成：有限任务及来源起点的相容恢复
+
+本节把离散层与完成对象的体／边关系落实在一个明确的递归族上：边界为一列有理数，体为满足后继关系的三角数组，完成表示为常数项一的形式幂级数。三者的恢复须同时保留限制映射、首差尺度和已经取得的全部观察者记录。顶行全一的自然数组另有既有形式结果；这里的变动有理族不预设顶行、正性、概率或物理时间。
+
+### 43.1 既有自然源的归属与本节的有理域
+
+本节的形式供应固定在 `1fae30cf331dd943f49e44f88c9ee0feb3829770`。[AntidiagonalArraySourceSeries 的 `result`](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/D5/S1/Recurrence/Algebraic/AntidiagonalArraySourceSeries.lean#L78) 给出自然数组的存在唯一性、归一化有理源级数的存在唯一性、其自然系数序列的存在唯一性，以及包括 $n=0$ 在内的首列恒等式 $T(n,0)=[X^{n+1}]F$。其 `IsArray` 除后继关系外还要求整条第零行等于一；`IsSource` 要求 $F(0)=1$ 及 $F(X/F(X))=(1-X)^{-1}$。`sourceCoeff` 先从源方程独立构造系数，再由证明接上数组；不能把任意有理边界都称为该唯一源。
+
+该证明中的局部 `hrow`（第117行）建立行级数关系，`hrowrec`、`htel`、`hbridge`（第222、228、241行）给出从第零行展开及逐系数余项消失的机制；这些是证明内部事实，不是可另行调用的公开定理名。第275—293行用源方程与唯一性识别 $1+X$ 乘首列级数。另一个供应 [QuotientThetaCompositionModFour 的 `quotient_triangular`](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/D5/S1/Recurrence/Residue/QuotientThetaCompositionModFour.lean#L72) 要求两级数常数项均为一、在次数 $d$ 以下相同，并断言在次数不超过 $d$ 时，商代入后的系数差等于原系数差；它直接用于上述源构造与唯一性，但自身不识别这个数组。
+
+自然对象及方程的来源分别归 Mikhail Kurkov 的 A392095 与 Paul D. Hanna 的 A088713。[^rroctx43_oeis] 本节的任意有理边界、有限多项式逆、离散前缀完成及具体任务应用属于仓内推导（`repo-derived`）；固定核的 Riordan 系数方法属于成熟方法（`literature-attested`），归属见第43.8节。这里不作原创优先权或新的形式化声明。
+
+### 43.2 有限约束体与无除法的边界恢复
+
+**定义 43.1（有限有理体与首列边界）。** 对整数 $M\ge0$ 令 $\Delta_M=\{(n,k)\in\mathbb N^2:n+k\le M\}$。令 $\mathcal A_M$ 为所有 $T:\Delta_M\to\mathbb Q$ 中恰满足以下后继关系的数组：
+$$
+T(n+1,k)=T(n,k+1)+\sum_{j=0}^{k}T(n,j)T(k-j,0)
+\qquad(n+k<M).
+\tag{43.1}
+$$
+这里不加第零行条件，也不加正性条件。$M=0$ 没有方程；严格不等式使每个出现的坐标均在 $\Delta_M$，不使用负上界或自然数截断减法来描述方程域。定义
+$$
+\beta_M:\mathcal A_M\longrightarrow\mathbb Q^{M+1},\qquad
+\beta_M(T)=(T(0,0),T(1,0),\ldots,T(M,0)).
+\tag{43.2}
+$$
+
+**定理 43.2（有限多项式互逆）。** 每个 $a=(a_0,\ldots,a_M)\in\mathbb Q^{M+1}$ 恰有一个扩张 $\mathcal E_M(a)\in\mathcal A_M$，且 $\mathcal E_M$ 的每个坐标都是 $a$ 的整系数多项式。边界提取与扩张是互逆的有理多项式映射，无任何边界非零假设。
+
+证明。先放置第零列 $T(n,0)=a_n$。已构造第零至第 $k$ 列时，对 $n+k+1\le M$ 置
+$$
+\boxed{T(n,k+1)=T(n+1,k)-\sum_{j=0}^{k}T(n,j)a_{k-j}.}
+\tag{43.3}
+$$
+右侧全部坐标都在此前已构造的列中，包括 $T(n+1,k)$；所用边界下标也未越界。故这是有限的加、减、乘构造，没有除法。重新移项即得（43.1），首列按定义等于 $a$。反过来，任何具有该首列且满足（43.1）的数组都必须服从（43.3）；列归纳遂给逐坐标唯一性。同一列归纳表明每个输出坐标都是整系数多项式。$\beta_M$ 为坐标投影，因此两映射均为多项式，且
+$$
+\beta_M\mathcal E_M=\mathrm{id}_{\mathbb Q^{M+1}},\qquad
+\mathcal E_M\beta_M=\mathrm{id}_{\mathcal A_M}.
+\tag{43.4}
+$$
+第一式由指定首列得，第二式由唯一性得。$\square$
+
+$\Delta_M$ 虽显示 $(M+1)(M+2)/2$ 个坐标，却恰有 $M+1$ 个自由有理参数。后继方程共 $M(M+1)/2$ 条，在列次序中每条解出一个非边界坐标；自由度结论来自已构造的多项式逆，不能仅凭方程数相减。一个有理参数的精度可以任意大，故该计数不是位数或 Shannon 信息量。
+
+### 43.3 一个形式级数对任意行的精确恢复
+
+**定义 43.3（归一化形式表示）。** 给任意 $a=(a_i)_{i\ge0}\in\mathbb Q^{\mathbb N}$，在 $\mathbb Q[[X]]$ 中令
+$$
+F(X)=1+X\sum_{i\ge0}a_iX^i,\qquad
+Y=XF^{-1},\qquad C_n(X)=\sum_{j\ge0}a_{n+j}X^j.
+\tag{43.5}
+$$
+条件 $F(0)=1$ 指常数系数，使 $F$ 为形式乘法单位；$Y(0)=0$ 保证无限外级数的形式代入逐系数良定。记 $\mathcal A_\infty$ 为所有在 $\mathbb N^2$ 上、对每个 $n,k\ge0$ 满足（43.1）所示后继等式的有理数组，不加顶行条件。
+
+**定理 43.4（任意起始行的有限展开与系数公式）。** 对每个上述 $a$，其唯一无限扩张 $T\in\mathcal A_\infty$ 的行级数 $R_n(X)=\sum_{k\ge0}T(n,k)X^k$ 为
+$$
+\boxed{R_n(X)=F(X)^{-1}C_n\!\left(X/F(X)\right).}
+\tag{43.6}
+$$
+等价地，每个 $n,k\ge0$ 有有限和
+$$
+\boxed{T(n,k)=\sum_{j=0}^{k}a_{n+j}[X^{k-j}]F(X)^{-(j+1)}.}
+\tag{43.7}
+$$
+任意给定的递归数组也满足同一公式，其推导不需要解析极限。
+
+证明。先用（43.6）定义行。由 $C_n(Y)=a_n+YC_{n+1}(Y)$ 及 $Y=XF^{-1}$ 得
+$$
+FR_n=a_n+XR_{n+1},\qquad R_n(0)=a_n.
+\tag{43.8}
+$$
+用（43.5）展开左侧并取 $X^{k+1}$ 系数，得到 $T(n,k+1)+\sum_{j=0}^kT(n,j)a_{k-j}=T(n+1,k)$，正是（43.1）。每个有限三角上的定理43.2给全数组唯一性。再把（43.6）写成 $\sum_{j\ge0}a_{n+j}X^jF^{-(j+1)}$；$j>k$ 时第 $k$ 次系数为零，得到（43.7）。
+
+也可从任意已给递归数组出发。其每一行的乘法系数正好给（43.8），故 $R_n=F^{-1}a_n+YR_{n+1}$。对任意 $N\ge0$，有限迭代给
+$$
+R_n=F^{-1}\sum_{j=0}^{N-1}a_{n+j}Y^j+Y^NR_{n+N}.
+\tag{43.9}
+$$
+$N=0$ 的和为空，等式是 $R_n=R_n$。若等式对 $N$ 成立，在其末行代入一步关系，添上 $F^{-1}a_{n+N}Y^N$，余项成为 $Y^{N+1}R_{n+N+1}$，即得下一步。因此（43.9）对所有 $n,N$ 成立。余项为 $X^NF^{-N}R_{n+N}$，明确被 $X^N$ 整除；固定系数次数 $k$ 后取 $N=k+1$，余项该系数严格等于零，再次得到（43.7）及（43.6）。这是任意起始行的有限系数证明；第43.1节形式供应在第零行使用了这一机制。没有把 $X$ 赋实数或复数值。$\square$
+
+**引理 43.5（有限依赖与反对角首项）。** $T(n,k)$ 仅依赖 $a_0,\ldots,a_{n+k}$，且有整系数多项式 $P_{n,k}$ 使
+$$
+T(n,k)=a_{n+k}+P_{n,k}(a_0,\ldots,a_{n+k-1}),\qquad
+P_{n,0}=0,
+\tag{43.10}
+$$
+其中 $P_{0,0}=0$ 是无变量零多项式。因而 $F\bmod X^{M+2}$ 足以恢复整个 $\Delta_M$。
+
+证明。写 $F=\sum_{i\ge0}f_iX^i$、$F^{-1}=\sum_{d\ge0}b_dX^d$，则
+$$
+f_0=b_0=1,\qquad b_d=-\sum_{i=1}^{d}f_i b_{d-i}\quad(d\ge1).
+\tag{43.11}
+$$
+故 $b_d$ 是 $f_1,\ldots,f_d$ 的整系数多项式；负整数幂 $F^{-p}$ 的第 $d$ 次系数由这些 $b_i$ 的有限卷积给出，也只依赖 $F$ 至第 $d$ 次。在（43.7）的第 $j$ 项中，逆幂系数最多用到 $a_0,\ldots,a_{k-j-1}$，外面的乘子为 $a_{n+j}$；当 $k-j=0$ 时前一变量表为空。因此全部下标不超过 $n+k$。$j=k$ 的项恰为 $a_{n+k}$，其余项的所有下标严格较小，得到（43.10）。
+
+给有限边界时，可直接在（43.7）中使用多项式 $F_M=1+X\sum_{i=0}^M a_iX^i$ 及其形式逆。对 $n+k\le M$，任何无限延伸给的相关系数相同；所得三角独立于延伸选择，并由定理43.2等于 $\mathcal E_M(a)$。$\square$
+
+### 43.4 限制方块、共同实现与首差几何
+
+**命题 43.6（限制及每层唯一的新参数）。** 对 $M\ge1$，令 $\pi_M:\mathbb Q^{M+1}\to\mathbb Q^M$ 删除最后边界坐标，$\rho_M:\mathcal A_M\to\mathcal A_{M-1}$ 限制到较小三角。则
+$$
+\rho_M\mathcal E_M=\mathcal E_{M-1}\pi_M,\qquad
+\beta_{M-1}\rho_M=\pi_M\beta_M.
+\tag{43.12}
+$$
+两种限制均为满射；固定较小三角后，扩张恰由一个新有理参数 $a_M$ 决定。
+
+证明。限制后的每条关系仍是原三角的关系，且首列为缩短后的边界。定理43.2的唯一性给第一式，坐标提取给第二式。任意较短边界均可添任意有理末项，扩张其边界即给一个原三角，所以满射不是方程计数的推断。反过来，任何扩张的旧边界已固定，故只剩末项可选。（43.10）将新反对角线 $n+k=M$ 上的每个坐标都写成 $a_M$ 加旧边界多项式；显示的 $M+1$ 个新坐标并非 $M+1$ 个独立选择。$\square$
+
+**定理 43.7（全有理来源的相容族共同实现与分离）。** 每个相容有限边界族都有唯一完整有理序列实现；每个相容三角族都有唯一 $\mathcal A_\infty$ 中的数组实现。有限逆映射在全层诱导互逆的 $\beta_\infty(T)=(T(n,0))_{n\ge0}$ 与 $\mathcal E_\infty:\mathbb Q^{\mathbb N}\to\mathcal A_\infty$，后者由（43.6）或（43.7）给出。
+
+证明。若 $u^{(M)}\in\mathbb Q^{M+1}$ 且 $\pi_Mu^{(M)}=u^{(M-1)}$，定义
+$$
+a_i=u^{(i)}_i.
+\tag{43.13}
+$$
+反复应用相容性得 $u^{(M)}_i=a_i$（$i\le M$），所以这是共同实现。任何共同实现的第 $i$ 项必须如此，故唯一。
+
+若 $U_M\in\mathcal A_M$ 且 $\rho_MU_M=U_{M-1}$，定义
+$$
+T(n,k)=U_{n+k}(n,k).
+\tag{43.14}
+$$
+反复限制表明对每个 $L\ge n+k$，该值亦等于 $U_L(n,k)$。检验位置 $(n,k)$ 的后继关系时，取同一个有限阶段 $L=n+k+1$。其中包含 $T(n+1,k)$、$T(n,k+1)$，也包含每个 $T(n,j)$ 和 $T(k-j,0)$；这些坐标全与 $U_L$ 一致，而 $U_L$ 满足该关系，故 $T$ 满足无限关系。每个坐标都在某个有限三角中，因而共同实现唯一。其边界为 $a_i=U_i(i,0)$；定理43.2识别 $U_M=\mathcal E_M(a_0,\ldots,a_M)$。
+
+反过来，每个序列及每个无限数组显然产生相容限制族，（43.12）使两个有限逆在限制下交换。因此全层逆确实保留全部同源坐标，且分离完整序列与数组。这里明确构造了源状态，没有从有限满射直接跳到共同实现，也没有调用有限字母表紧性。一个有限边界仍只决定有限三角，后来边界项在全有理来源中可以自由选取。$\square$
+
+**命题 43.8（首个反对角层及级数的一位尺度偏移）。** 对不等序列 $a,b$ 及其数组 $T=\mathcal E_\infty(a),S=\mathcal E_\infty(b)$，置
+$$
+m=\min\{i:a_i\ne b_i\},\quad d_\partial(a,b)=2^{-m},\qquad
+m_\Delta=\min\{n+k:T(n,k)\ne S(n,k)\},\quad
+ d_\Delta(T,S)=2^{-m_\Delta};
+\tag{43.15}
+$$
+相等对象的距离为零。这两个函数是超度量，且
+$$
+m_\Delta=m,\qquad
+T(n,k)-S(n,k)=a_m-b_m\quad(n+k=m),\qquad
+\boxed{d_\Delta(T,S)=d_\partial(a,b).}
+\tag{43.16}
+$$
+若 $F,G$ 为相应归一化级数，令相等时 $d_X=0$，否则 $d_X(F,G)=2^{-\operatorname{ord}_X(F-G)}$，则
+$$
+\operatorname{ord}_X(F-G)=m+1,\qquad
+\boxed{d_X(F,G)=\tfrac12d_\partial(a,b)=\tfrac12d_\Delta(T,S).}
+\tag{43.17}
+$$
+
+证明。任意不等序列有最小差异下标；任意不等数组的不同坐标总次数集合也有最小值。非负性、对称性及零距离分离随定义成立。如果两个相邻对象对各自在某个前缀或三角内相等，则首尾两对象也在那里相等；取两次首差次数的较小者，得首尾距离不超过另外两个距离的最大值，即超度量不等式。相同论证适用于级数次数。
+
+在次数 $m$ 以前，引理43.5使两个数组完全相同；坐标 $(m,0)$ 已经不同，故 $m_\Delta=m$。对该反对角线的任意 $(n,k)$，式（43.10）的较早多项式两边相同，相减即得同一增量 $a_m-b_m$。最后，$F,G$ 的常数系数均固定为一，$a_m-b_m$ 出现在 $X^{m+1}$，给（43.17）。$\square$
+
+这仅是已指定过滤超度量的等距性，不是系数值的欧氏几何。级数度量须乘二，或删去固定常数项后重新编号，才与边界等距；不能省略该偏移。若再选定唯一的自然源，则所得域为单点，不含上述变动族的非平凡成对几何。
+
+### 43.5 离散有理系数的实际完成及非紧性
+
+本节给每个系数的 $\mathbb Q$ 配置**离散的精确相等拓扑**。前缀超度量产生相应乘积拓扑：固定有限初始前缀即为基本柱邻域，任意有限坐标约束可由足够长的初始前缀细化。这里不使用有理数通常绝对值的完备性；事实上该通常度量的有理数域并不完备。无限字母表 $\mathbb Q$ 也不满足先前有限字母表模型的紧性前提。
+
+**定理 43.9（坐标稳定所给的度量完备性）。** $(\mathbb Q^{\mathbb N},d_\partial)$、$(\mathcal A_\infty,d_\Delta)$ 以及常数项一的形式级数空间配以 $d_X$ 都完备。
+
+证明。设 $(a^{(r)})_{r\ge0}$ 是边界的 Cauchy 序列。对每个整数 $L\ge0$ 可选 $N_L$，使
+$$
+r,s\ge N_L\quad\Longrightarrow\quad
+ d_\partial(a^{(r)},a^{(s)})<2^{-L}.
+\tag{43.18}
+$$
+若首次差异下标不超过 $L$，距离便至少为 $2^{-L}$。因此上述严格不等式意味着第零至第 $L$ 项在这之后逐项精确相同。把第 $i$ 项最终稳定的有理数定义为 $a_i$；不同有限窗口的重叠处给同一最终值，故定义相容。对每个 $r\ge N_L$，$a^{(r)}$ 与 $a$ 的前 $L+1$ 项相同，因此
+$$
+d_\partial(a^{(r)},a)\le 2^{-(L+1)}.
+\tag{43.19}
+$$
+随 $L$ 任意增大即得收敛。若还有另一极限且在第 $i$ 项与 $a$ 不同，对两种收敛都取距离小于 $2^{-i}$ 的足够后项，会强迫该项同时等于两个不同值，矛盾。于是极限唯一。定理43.7给全部数组与全部常数项一级数的对应；（43.16）的等距及（43.17）的常数比例分别运输 Cauchy 性、极限与唯一性，得到其余两个完备性结论。$\square$
+
+**命题 43.10（稠密有限表示与坐标逆极限）。** 有限支持有理边界在全边界空间稠密，其度量完成为 $\mathbb Q^{\mathbb N}$。常数项一的多项式相应完成为常数项一的形式级数；由有限支持边界重建的数组在 $\mathcal A_\infty$ 稠密，但这些数组本身未必有限支持。各表示与系数逆极限的坐标实现相容。
+
+证明。把 $a_0,\ldots,a_M$ 保留，后来系数设为零，得到 $a^{[M]}$。则
+$$
+d_\partial(a^{[M]},a)\le2^{-(M+1)},\qquad
+F_{a^{[M]}}=1+\sum_{i=0}^Ma_iX^{i+1}.
+\tag{43.20}
+$$
+这给稠密性；定理43.9及固定的包含映射给其度量完成。（43.17）给多项式的对应完成及一位次数偏移，（43.16）给数组的稠密性。截断的是边界，不能把重建后的整个数组也当成有限支持。例如边界 $(1,0,0,\ldots)$ 有 $F=1+X$、$C_0=1$，故 $R_0=(1+X)^{-1}=\sum_{k\ge0}(-1)^kX^k$，第零行已无限非零。
+
+另给纯坐标实现：对相容的剩余类族 $v_N\in\mathbb Q[X]/(X^N)$，用任意 $N>i$ 的唯一次数小于 $N$ 的代表多项式读取第 $i$ 项。两个这样的阶段可提升到较大阶段比较，相容性使读数相同。全部读数定义唯一形式级数，其模 $X^N$ 的剩余类就是 $v_N$。反过来，任何形式级数给出相容剩余类，故
+$$
+\mathbb Q[[X]]\cong\varprojlim_N\mathbb Q[X]/(X^N).
+\tag{43.21}
+$$
+$N=0$ 是平凡剩余类；常数项一的子空间在 $N=1$ 固定该常数。$N=M+2$ 恰保留固定常数及 $a_0,\ldots,a_M$。截断系数即限制剩余类，因而该构造与（43.13）的边界线程和（43.14）的三角线程保持同一限制关系。$\square$
+
+**命题 43.11（非紧性与原来源遗漏的完成点）。** 全有理边界空间完备但不紧。若原来源只取有限支持边界，则每个有限前缀都能由原来源实现，却有完整相容线程没有原来源代表。
+
+证明。对各 $q\in\mathbb Q$ 置
+$$
+a^{(q)}=(q,0,0,\ldots),\qquad
+ d_\partial(a^{(q)},a^{(q')})=1\quad(q\ne q').
+\tag{43.22}
+$$
+由超度量不等式，半径严格小于一的球至多包含其中一点。因有无限多个有理数，有限多个这种球不能覆盖该集合，所以空间不全有界。若空间紧，所有半径 $1/2$ 开球构成的开覆盖应有有限子覆盖，与前句矛盾，因此不紧。
+
+有限支持来源通过补零实现每个有限前缀，但全一边界 $(1,1,1,\ldots)$ 不最终为零，因而没有该来源代表。其所有前缀相容，定理43.7给它在完整来源 $\mathbb Q^{\mathbb N}$ 中的唯一实现及递归数组，命题43.10又把它作为完成点。可实现的有限层、一个相容全线程、原来源实现和来源完成点是四个不同断言；本节对完整来源证明的共同实现不能自动转授给任意真子集。$\square$
+
+### 43.6 一个保留全部档案的有限任务消费者及来源重编号
+
+**定义 43.12（同源的两种有限读出）。** 对 $a\in\mathbb Q^{\mathbb N}$ 令
+$$
+p_M(a)=(a_0,\ldots,a_M),\qquad
+q_M(a)=\mathcal E_M(p_M(a)),\qquad
+\ker p_M=\ker q_M.
+\tag{43.23}
+$$
+核相等由（43.4）得。全有理来源上的两个实际像分别为 $\mathbb Q^{M+1}$ 和 $\mathcal A_M$，因为每个有限边界能补零。这正核对[主卷命题133.1](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#L50708)同来源、等核、实际像上的规范运输前提。
+
+令 $\mathcal C$ 为完整已获档案的集合，包含已获内外记录、来源及版本身份、已获关系、参考、校准、失败、停止信息、合法历史、局部钟读数及其已知共同约束。数学工作边界只替换任务端口的表示，$c\in\mathcal C$ 始终逐字保留。
+
+**定理 43.13（双向任务、精确深度与有界自适应记录）。** 任给集合 $Z$ 和确定性任务 $h:\mathcal C\times\mathcal A_M\to Z$，同一个映射 $\mathrm{id}_{\mathcal C}\times\mathcal E_M$ 运输该域上的所有任务。反方向使用 $\mathrm{id}_{\mathcal C}\times\beta_M$。单个坐标 $(n,k)$ 的一致初始前缀最大下标 $n+k$ 充分且尖锐；整个 $\Delta_M$ 的一致初始前缀最大下标 $M$ 充分且尖锐。在共同深度界 $M$ 下，使用同一初始档案及确定性控制器的有界自适应查询，包括根据已得答案决定停止的规则，产生相同记录。
+
+证明。定义 $h_\partial(c,v)=h(c,\mathcal E_M(v))$，则对每个有效 $T$ 有
+$$
+h_\partial(c,\beta_M(T))=h(c,\mathcal E_M\beta_M(T))=h(c,T).
+\tag{43.24}
+$$
+反之，任意 $g:\mathcal C\times\mathbb Q^{M+1}\to Z$ 可定义 $g_B(c,T)=g(c,\beta_M(T))$，再由 $\beta_M\mathcal E_M=\mathrm{id}$ 得 $g_B(c,\mathcal E_M(v))=g(c,v)$。这里不是对未知输入逐次另选解码器，而是两条固定互逆映射。
+
+引理43.5给坐标任务的深度。若保持全部更早边界不变，只改变 $a_{n+k}$，式（43.10）使该坐标改变同样数值，所以不能在全有理族上一致使用更短的初始前缀。$n+k=0$ 时此断言指空前缀不能确定 $a_0$。该尖锐性不意味着每个坐标都需要所有更早的单项。三角上所有查询都由 $p_M$ 支持，而边界查询 $T(M,0)=a_M$ 已排除更小的统一深度。
+
+明确的细胞读数为
+$$
+T(1,1)=a_2-a_0a_1,\qquad
+T(0,2)=a_2-3a_0a_1+a_0^3.
+\tag{43.25}
+$$
+第一式由（43.3）得。第二式在（43.7）中使用 $[X^2]F^{-1}=a_0^2-a_1$、$[X]F^{-2}=-2a_0$ 及 $[X^0]F^{-3}=1$，相加即得。特别地，$(a_0,a_1,a_2)=(1/2,-1/3,2/5)$ 给 $T(0,2)=2/5+1/2+1/8=41/40$。
+
+对自适应查询作实际答案归纳：首步两边的初始档案和控制器相同；若此前查询、答案及停止信息相同，确定性控制器就选择同一下一任务或同一停止决定。下一任务在边界侧取上述运输，式（43.24）给相同答案，添入的记录也相同。对每个至多预定步数的阶段归纳，得到完整 transcript 与停止决定相同；若允许无预定步数的运行，该归纳也只断言每个实际有限前缀相同，并不证明运行终止。本定理的有界结论不含随机独立性或任意干预。$\square$
+
+若指定实际来源 $\Omega$，以 $c:\Omega\to\mathcal C$ 记录完整已获观察者，以 $a:\Omega\to\mathbb Q^{\mathbb N}$ 给数学读出，只比较同一 $\omega$ 的
+$$
+\omega\longmapsto(c(\omega),p_M(a(\omega))),\qquad
+\omega\longmapsto(c(\omega),q_M(a(\omega))).
+\tag{43.26}
+$$
+（43.4）使上述固定运输在这两个**对应实际像**上仍为双射，逆也保持 $c$。即使 $c$ 与 $a$ 有约束或共同来源关系，也没有独立性前提；更不能由 $a$ 一项便声称分离 $\Omega$。已知递推、有效域、编号、已供应的精确有理数及控制器是数学输入，不证明这些值已被合法测量、准备、取得或以可负担精度提供。
+
+**命题 43.14（重建式来源移位及其有类型深度复合）。** 对 $r\ge0$ 定义来源重编号及全数组上的相应操作
+$$
+(\sigma^ra)_i=a_{i+r},\qquad
+U_r=\mathcal E_\infty\circ\sigma^r\circ\beta_\infty.
+\tag{43.27}
+$$
+有限实现为
+$$
+S_{M,r}:\mathcal A_{M+r}\longrightarrow\mathcal A_M,\qquad
+S_{M,r}(T)=\mathcal E_M(T(r,0),\ldots,T(M+r,0)).
+\tag{43.28}
+$$
+它满足有类型输入／输出方块及尖锐初始前缀深度
+$$
+q_M\circ\sigma^r=S_{M,r}\circ q_{M+r},\qquad
+m_r(M)=M+r.
+\tag{43.29}
+$$
+对 $M\ge1$，限制方块为
+$$
+\rho_M\circ S_{M,r}=S_{M-1,r}\circ\rho_{M+r}
+:\mathcal A_{M+r}\longrightarrow\mathcal A_{M-1}.
+\tag{43.30}
+$$
+对 $M,r,s\ge0$，正确的复合类型为
+$$
+\boxed{S_{M,r}\circ S_{M+r,s}=S_{M,r+s}
+:\mathcal A_{M+r+s}\longrightarrow\mathcal A_M,}\qquad
+m_s(m_r(M))=M+r+s.
+\tag{43.31}
+$$
+全层有 $U_rU_s=U_{r+s}$；$r=0$ 时各相应映射为恒等。
+
+证明。$q_{M+r}(a)$ 的首列正是 $a_0,\ldots,a_{M+r}$，提取从 $r$ 到 $M+r$ 的子块并重建，得到 $q_M(\sigma^ra)$，所以（43.29）两路径相同。实际用到的是子块 $a_r,\ldots,a_{M+r}$，初始前缀约定下的最大下标却是 $M+r$。输出边界坐标 $(M,0)$ 为 $a_{M+r}$，只改这一项的两个输入在任何更短初始前缀上相同，输出不同，证明尖锐性；若 $M+r=0$，更短输入为空。由（43.12），（43.30）两路径都提取 $a_r,\ldots,a_{M+r-1}$ 并施以 $\mathcal E_{M-1}$。
+
+为验（43.31），任取输入三角，其边界记为 $a_0,\ldots,a_{M+r+s}$。第一步 $S_{M+r,s}$ 重建的边界为 $a_s,\ldots,a_{M+r+s}$；再提取这个新边界的第 $r$ 至第 $M+r$ 项，得到 $a_{r+s},\ldots,a_{M+r+s}$。施以 $\mathcal E_M$ 即右侧，所以同时给深度复合。全层以 $\beta_\infty\mathcal E_\infty=\mathrm{id}$ 消去中间逆对，再用 $\sigma^r\sigma^s=\sigma^{r+s}$ 得半群律。$S_{M,0}=\mathcal E_M\beta_M=\mathrm{id}_{\mathcal A_M}$，全层同理。$\square$
+
+这正实现[接口36.3](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#L6185)的输入深度／输出深度合同；这里给出了显式深度，未借连续性推断统一深度。工作操作是 $(c,T)\mapsto(c,S_{M,r}T)$，其输入深度须已供应。已记录在 $c$ 中的较早系数、关系及来源身份保持不变；更多系数须经明确获取合同才进入实际观察者。代数重编号不取得未来值，也不宣称物理演化。
+
+重建一般不同于原数组的行平移。若边界始于 $(1,2,3)$，正确移位的新边界始于 $(2,3)$，所以
+$$
+U_1(T)(0,1)=3-2^2=-1,\qquad T(1,1)=3-1\cdot2=1.
+\tag{43.32}
+$$
+证明是（43.3）的直接计算：移位后卷积由新边界驱动，故必须重建；只改行号一般不满足运输后的递归关系。此反例同时区分本节的来源起点变化与删去最后一层的限制映射。
+
+**命题 43.15（连续任务没有普遍的统一有限深度）。** 定义
+$$
+\ell(q)=\begin{cases}q,&q\in\mathbb Z_{\ge0},\\0,&\text{其它},\end{cases}
+\qquad H(a)=a_{\ell(a_0)}.
+\tag{43.33}
+$$
+第一种情形的 $q$ 作为自然数下标使用。$H:\mathbb Q^{\mathbb N}\to\mathbb Q$ 在离散系数前缀拓扑中局部常值，但不存在对全部输入有效的有限初始前缀深度。
+
+证明。固定 $a$，令 $L=\ell(a_0)$；在固定前缀至 $L$ 的邻域内，第零项不变，所选下标不变，该下标的值也不变，所以 $H$ 局部常值，因而连续到离散 $\mathbb Q$。反之，对任意 $M\ge0$，取两序列的第零项均为 $M+1$，在下标至 $M$ 的整个前缀相同，而第 $M+1$ 项一个为零、一个为一。它们的 $H$ 值不同，故 $H$ 不能通过 $p_M$ 因子化。$\square$
+
+有限字母表紧空间中可从局部常值柱覆盖取有限子覆盖，再取最大深度；命题43.11已排除本有理空间的紧性，不能移用那一步。命题43.15限制的是一般连续任务的推断，不否定（43.29）—（43.31）已明确证明的 $S_{M,r}$ 深度与复合。
+
+### 43.7 顶行约束选回既有自然对象
+
+**命题 43.16（顶行与源方程的等价及有限逐项选择）。** 在定义43.3的完整有理族中，顶行全一恰等价于既有归一化源方程；在 $\Delta_M$ 中，仅要求 $T(0,k)=1$（$0\le k\le M$）就逐项唯一选定边界和三角。
+
+证明。由（43.5）、（43.6）直接得到
+$$
+F(Y)=1+YC_0(Y)=1+XR_0(X).
+\tag{43.34}
+$$
+$\mathbb Q[[X]]$ 中乘 $X$ 是单射，而 $1+X(1-X)^{-1}=(1-X)^{-1}$，故
+$$
+\boxed{T(0,k)=1\ (\forall k)\quad\Longleftrightarrow\quad
+R_0=(1-X)^{-1}\quad\Longleftrightarrow\quad
+F(X/F(X))=(1-X)^{-1}.}
+\tag{43.35}
+$$
+反向可从（43.34）两侧减一，得到 $XR_0=X(1-X)^{-1}$，再消去 $X$；未除以非单位 $Y$。
+
+有限情况下，（43.10）在 $n=0$ 给第 $k$ 条方程 $a_k+P_{0,k}(a_0,\ldots,a_{k-1})=1$。从 $k=0$ 开始，每一步恰选一个有理数；定理43.2再给其唯一三角。既有 `AntidiagonalArraySourceSeries.result` 的自然数组限制到 $\Delta_M$ 满足这些条件，因此就是该选择，所有选中体坐标和边界项均为自然数。$\square$
+
+无限处的存在、唯一性、自然系数及首列识别由第43.1节的现有形式供应承担，不重立一个一般形式化结果。前面的（43.6）—（43.7）联系的是任意有理边界与**满足指定后继关系**的数组，既不是任意数组与任意级数的等价，也不是单凭 $F(0)=1$ 就得顶行全一。该附加源方程把变动有理族选成一个对象，没有概率或物理定律含义。
+
+### 43.8 固定重建核的 Riordan 方法归属
+
+**命题 43.17（固定 $F$ 的下三角系数作用）。** 固定边界 $a$ 因而固定 $F$，定义
+$$
+D_{k,j}=[X^k]\bigl(F^{-1}(XF^{-1})^j\bigr)
+=\begin{cases}[X^{k-j}]F^{-(j+1)},&j\le k,\\0,&j>k.\end{cases}
+\qquad D_{k,k}=1.
+\tag{43.36}
+$$
+这是形式对 $(g,h)=(F^{-1},XF^{-1})$ 的 proper Riordan 系数矩阵，属于 Bell 形式 $(g,Xg)$。其对任意形式级数的作用在每个坐标都是有限和；取输入 $C_n$ 即（43.7）。
+
+证明。更一般地，对 $g,h,H\in\mathbb Q[[X]]$，若 $h(0)=0$（零级数也允许），则每个 $h^j$ 被 $X^j$ 整除，因此
+$$
+[X^k]\bigl(g(X)H(h(X))\bigr)
+=\sum_{j=0}^{k}[X^k]\bigl(g(X)h(X)^j\bigr)[Z^j]H(Z).
+\tag{43.37}
+$$
+高于 $k$ 的项贡献为零，所以这是有限系数恒等式。在本节中 $g(0)=1$，$h=XF^{-1}$ 的一次系数为一、阶恰为一，满足 proper 核的非退化条件。分离 $X^j$ 得（43.36）；对角元为 $F^{-(k+1)}$ 的常数项一。令 $H=C_n$，其第 $j$ 项为 $a_{n+j}$，便得所需重建公式。证明只用有理系数逆和有限卷积。$\square$
+
+Tian-Xiao He 与 Yuanziyi Zhang 的 *Centralizers of the Riordan Group*，arXiv:2105.07262v1（2021年5月15日），引言给出 $D_{k,j}=[X^k]g(X)h(X)^j$、作用 $(g,h)H=gH(h)$ 及 Bell 子群的这些定义。[^rroctx43_riordan] 其表述采用实或复系数；（43.37）直接给出本应用所需的有理有限系数证明。成熟方法归属限于这项系数机制，不是对当前递归或 OEIS 识别结论的外部定理引用。
+
+只有固定 $F$ 的重建核 $D$ 是上述下三角矩阵。递归数组 $T$ 一般不是下三角 Riordan 矩阵：例如 $T(0,1)=a_1-a_0^2$ 可以非零。（43.7）的输入还是依赖 $n$ 的尾序列 $a_{n+j}$；让 $a$ 变化时 $F$ 和 $D$ 也随之变化。因此整个边界到体的映射是多项式且一般非线性的，不能把它说成一个固定线性 Riordan 变换。此处不引入其它 Riordan 恒等式或未经给出条件的成熟结论。
+
+### 43.9 正性、形式语义及操作资源的边界
+
+**命题 43.18（自由有理对应不能自动加强的结论）。** 以下反例分别界定正性、有限信息、归一化及数值稳定性的范围。
+
+证明。先取 $M=1$ 和自然边界 $(a_0,a_1)=(1,0)$。由（43.3）得
+$$
+T(0,1)=a_1-a_0^2=-1.
+\tag{43.38}
+$$
+所以自然边界也未必给非负体；既有形式供应的正性来自特选顶行数组，不能仅从单位常数或形式可逆推出。
+
+其次，对任何 $M\ge0$，零边界与唯一非零项为 $a_{M+1}=1$ 的边界在 $\Delta_M$ 上重建相同，到下一反对角层便不同，见引理43.5和命题43.8。这说明一个有限前缀没有确定自由完成对象。
+
+零边界还给 $F=1$，所以 $F(X/F)=1\ne(1-X)^{-1}$；归一化自身不提供源方程。若放弃可逆的常数项，形式逆可能不存在，例如 $F=X$，其任何倍数常数项都为零，不可能等于一。若把非零常数的级数代入任意无限外级数，也未必逐系数有定义，例如 $H(Z)=\sum_{j\ge0}Z^j$ 代入 $Z=1$ 令常数系数成为无限多个一的和，而有理形式系数环没有这项操作。本节的 $F(0)=1$ 和 $Y(0)=0$ 明确避开这些障碍。
+
+最后，把 $a_0=0$ 换成任意非零有理数，无论普通绝对值多小，前缀距离都是一；它没有测量系数大小。即使 $M=1$，固定 $a_1$ 而把 $a_0$ 从 $u$ 改为 $u+\delta$，也有
+$$
+T_{u+\delta}(0,1)-T_u(0,1)=-2u\delta-\delta^2.
+\tag{43.39}
+$$
+取 $\delta=1$ 并让有理 $u$ 无界，输出差与输入欧氏距离之比无界。因此精确前缀等距不给全域欧氏 Lipschitz 常数；数值稳定性需要另选度量及幅度域界。$\square$
+
+（43.9）的余项在任一固定次数经过有限步后为零，（43.21）的完成则存储全部相容系数。这些是形式语义，不断言实／复解析收敛或非零收敛半径，不给概率归一化、TV 尾界、噪声估计、量子实现或物理钟。完成是所声明的拓扑和包含映射的结果，不是自动赋予一项概率律。
+
+第零列边界与三角体只是组合坐标；其等价没有把 $n$ 指定为物理时间，也没有把数组体指定为空间区域。操作上取得精确有理值仍需来源及合法历史合同。算法虽只做有理加减乘，固定 $M$ 时分子、分母及中间数的位长仍可无界；$M+1$ 个自由参数不给位复杂度、样本复杂度、最优运行时间或抗噪性。确定性任务运输没有隐含概率独立；合法操作次序与概率独立也不同。若另引随机来源，独立性须针对保留的完整档案条件化后验证，不能由本节代数恢复替代。
+
+完整有理域与顶行全一的自然域不能混用：后者由既有定理选成单点，前者才承载首差几何、非紧性和任意边界任务。第40—42节各自的相对钟、量子档案及接收资源条件没有因本节的形式完成而被免除。
+
+### 43.10 离散全层与完成体／边实际等价的内容
+
+**推论 43.19（同一递归关系的相容表示链）。** 对声明的完整有理来源，有以下每箭头都带逆或坐标共同实现的表示链：
+$$
+\boxed{
+\text{有理边界序列}
+\ \longleftrightarrow\ \text{无限约束数组}
+\ \longleftrightarrow\ \text{相容的全部有限三角}
+\ \longleftrightarrow\ \text{常数项一的形式级数}.}
+\tag{43.40}
+$$
+相容的全部有限边界通过 $\beta_M,\mathcal E_M$ 给同一个全层对象。有限深度上的恢复是多项式互逆；全部深度上的边界和体首差等距，级数带（43.17）的一位归一化偏移。有限支持表示稠密，完成增添相容无限选择。该链的有限任务与来源重编号保持第43.6节规定的完整档案和获取义务。
+
+证明。定理43.2给有限逆；定理43.4给级数到行及边界到无限数组的公式；从归一化级数读取 $[X^{i+1}]F$ 给回边界，反向由（43.5）重建同一级数。定理43.7及命题43.10的坐标构造给全相容族与形式剩余类的共同实现。（43.12）使限制交换，命题43.8给尺度，定理43.9和命题43.10给实际完成，定理43.13及命题43.14给档案任务和操作的对应。$\square$
+
+这是一项带明确递归、来源、分离和拓扑条件的体／边应用。保留全部相容有限层可以保存整个对象，一条轨道的最终标量极限却不保证如此：例如序列 $x_n=0$ 与 $y_n=1/(n+1)$ 的通常实数极限同为零，而完整记录不同。命题43.11也表明，原来源可以遗漏完成点。因此离散步骤和完成对象在本模型中具有精确的共同关系表示，不意味着任意有限数据、任意标量极限与任意原来源可以互相恢复。坐标起点并不给出物理底层，重编号也不丢弃已获过去或取得未知未来。
+
+### 43.11 供应接口的精确适配与文献边界
+
+**约定 43.20（既有供应的作用域）。** 本节的特选自然数组和源恒等式保留第43.1节 `AntidiagonalArraySourceSeries.result` 的归属，以及同快照的 [Problems 卷宗](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/Problems/oeis-a392095-antidiagonal-source-series.md)、Library 引文与对应 Blueprint。引用锚是确切公开定理和不可变源码，不声称重新生成了声明的 statement hash；证明内部的局部名字仍只用来说明证明机制。
+
+[InverseLimitCompletion 的 `stateThread_bijective_iff_complete_and_separates`](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean) 给 Type 层的通用判据。对本节取状态 $\mathbb Q^{\mathbb N}$、第 $M$ 层坐标 $\mathcal A_M$、读出 $q_M$，该模块从 level $M+1$ 到 level $M$ 的 `restrict M` 对应这里 $\rho_{M+1}$。命题43.6给相容性；若全部 $q_M(a)=q_M(b)$，提取第 $i$ 层的 $(i,0)$ 即得 $a_i=b_i$，这是分离性；定理43.7给每个线程的实际共同序列。模块的 `ThreadComplete` 是 `stateThread` 的满射性，不是度量完备性；后者由定理43.9另行证明，未从 Type 判据导入拓扑、紧性、概率或取得能力。
+
+[LocalGlobalAtlasExactness 的 `local_global_atlas_exactness`](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.lean) 是分离及像条件的另一既有表述，不是这里待重证的新一般定理。[CompletionIsomorphismCriterion](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.lean) 与 [StableObservationInverseLimit](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/D5/S3/ConceptDynamics/RefinementGeometry/StableObservationInverseLimit.lean) 保留各自域及前提，不能仅因都使用完成一词便移入本族。
+
+主卷命题133.1拥有等核实际像的规范运输；（43.23）和（43.26）核对前提，（43.24）提供其保留档案的具体消费者，没有另建一个等核通用框架。[Context 接口36.3](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#L6185)拥有换精度合同，（43.29）—（43.31）为本消费者证明输入深度、输出深度及复合。其紧有限字母表上的连续性结论不能覆盖离散有理字母表，命题43.15给明确边界。
+
+[Context 命题38.5](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#L6610)区分有限读数、全相容族、原来源实现与完成。它的有限坐标及概率前提不转移到有理族；本节直接以稳定坐标、共同实现和非紧性证明所需有理结论。第36.4、38.4节的完整记录区别落实为 $\mathrm{id}_{\mathcal C}\times\mathcal E_M$ 及保留 $c$ 的移位操作，未将工作边界等同于全部观察者。
+
+邻近的 `PerrierPeriodicGeneratingFunctions` 属于另一有限维线性递推，不直接实例化到这里随边界变化的非线性族；不同具名三角、一般 Gram 结构或概率完成也不是（43.3）、（43.7）的精确所有者。本节的扩大有理应用及其普通证明不构成新增 Lean 声明、kernel 检验或定理准入结论。
+
+[^rroctx43_oeis]: Mikhail Kurkov，OEIS A392095，数组后继关系与首列 A088713 偏移识别；Paul D. Hanna，OEIS A088713，源方程 $F(X/F(X))=(1-X)^{-1}$。固定 OEIS 导出为 `892a05dd4941ae76caee5906ea33ceedf3389b1d`：[A392095](https://github.com/oeis/oeisdata/blob/892a05dd4941ae76caee5906ea33ceedf3389b1d/seq/A392/A392095.seq)、[A088713](https://github.com/oeis/oeisdata/blob/892a05dd4941ae76caee5906ea33ceedf3389b1d/seq/A088/A088713.seq)。相应仓内引文为 [kurkov2025a392095](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/Library/Recurrence/kurkov2025a392095.md) 及 [hanna2003a088713](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/Library/Recurrence/hanna2003a088713.md)，保留其 OEIS Foundation [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 归属。上述固定源不代表实时条目新鲜性或全球优先权。
+
+[^rroctx43_riordan]: Tian-Xiao He and Yuanziyi Zhang, *Centralizers of the Riordan Group*, [arXiv:2105.07262v1](https://arxiv.org/abs/2105.07262v1), 15 May 2021，Introduction，第1—2页的系数定义、基本作用及 Bell 子群。经典历史文献为 L. W. Shapiro, S. Getu, W.-J. Woan and L. C. Woodson, *The Riordan group*, *Discrete Applied Mathematics* **34** (1991), 229–239, DOI [10.1016/0166-218X(91)90088-E](https://doi.org/10.1016/0166-218X(91)90088-E)。本节依据上述版本化引言及（43.37）的有理有限系数证明，不把经典全文或其余 Riordan 定理当作已核对的应用前提。
+
+## 43.99 追加锚

@@ -101,7 +101,7 @@
       "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "96d49d247d1c4a74822711cfa062d165696884eb9f493eb4959c3816054de685",
       "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "95766e51dc23a35756d3899a69b491e9dc573a77481119f07fd7d6f2b6fa8470",
       "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "ff5183667b74b2d7d297a8aa686b200d696e439b3a469395a4fe69c60c80845d",
-      "frontier/source-budgets/source_mean_sharpness.py": "1588cc3de1857ab3db712ccc75163ae0ec306e3e5c05de6488cc4e17eeba871f",
+      "frontier/source-budgets/source_mean_sharpness.py": "217de85f073481624effa05bcccc504b35c3285b96aa9be199a66d949d9853dc",
       "profile-notes/321-384/339c-the-square-allocation-and-the-reweighted-source.md": "a9e0d552636453ce771577ea541c05c006eae6b7374a2094c9eb411421e95c78"
     }
   },
