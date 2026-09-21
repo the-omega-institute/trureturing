@@ -1,0 +1,25 @@
+### 18.1 定义：初始线性上界的有效区间
+
+沿用第 15.1 节的不同实节点 $x_1,\ldots,x_N$、离节点点 $y$、Lagrange 基 $\ell_i$、系数 $c_i=\ell_i(y)$、集合 $J=\{i:c_i>0\}$，以及
+\[
+p=\sum_{i\in J}\ell_i,\quad P=p(y)\geq1,\quad
+L=\sum_{k=1}^{N-1}|p_k|,\quad d_0=0,\quad
+ d_k=\begin{cases}1,&p_k\geq0,\\-1,&p_k<0,\end{cases}
+\quad r_i=\sum_{k=0}^{N-1}d_k[\ell_i]_k.
+\]
+定义转折斜率、初始仿射值及候选有符号权重
+\[
+A_i=\frac{Pr_i}{c_i}-L,\qquad
+w_\varepsilon=\frac{1+\varepsilon L}{P},\qquad
+b_i(\varepsilon)=w_\varepsilon c_i-\varepsilon r_i
+=\frac{c_i}{P}(1-\varepsilon A_i).
+\tag{18.1}
+\]
+所有分母均非零。对 $\varepsilon\geq0$，称 $(w,u,v)$ 可行，是指 $w,u_i,v_i\geq0$、$w+\sum_i u_i=\sum_i v_i=1$，以及
+\[
+|e_k|\leq\varepsilon\quad(0\leq k<N),\qquad
+e_k=wy^k+\sum_i u_ix_i^k-\sum_i v_ix_i^k.
+\tag{18.2}
+\]
+这是两个实际概率测度的原始矩误差。两边归一化使 $e_0=0$。记最大可行外部质量为 $W(\varepsilon)$。有限维可行集闭且有界，且取 $w=0,u=v$ 可知它非空，所以最大值存在。
+

@@ -1,0 +1,11 @@
+**证明。** 式 (18.4) 中每个非负项均不超过 $\Delta$。在 $|e_k|\leq\varepsilon$ 下，系数项恰好等于 $|p_k|\,|e_k-\varepsilon d_k|$，得到式 (18.8)。对 $\ell_i$ 展开实际误差并用三角不等式，得
+\[
+|(v_i-u_i)-b_i(w,\varepsilon)|\leq\Delta B_i.
+\]
+若 $p(x_i)=1$，则 $u_i\leq\Delta$；否则 $v_i\leq\Delta$。故 $\min\{u_i,v_i\}\leq\Delta$。使用
+\[
+u_i=\max\{-(v_i-u_i),0\}+\min\{u_i,v_i\},\quad
+v_i=\max\{v_i-u_i,0\}+\min\{u_i,v_i\}
+\]
+及实正部分函数的 1-Lipschitz 性得到式 (18.9)。该估计把最优值差额变成实际权重误差；其条件数包含 $1/|p_k|$，因此不能无条件跨越系数趋零的情形。
+

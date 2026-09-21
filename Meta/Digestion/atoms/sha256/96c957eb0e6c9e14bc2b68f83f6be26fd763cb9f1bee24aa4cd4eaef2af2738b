@@ -1,0 +1,7 @@
+**充分性证明。** 条件 $\varepsilon A_i\leq1$ 保证 $b_i$ 与 $c_i$ 同号或为零。取式 (18.3) 的正负部分，使用 Lagrange 恒等式得到
+\[
+\sum_i c_i=1,\quad\sum_i r_i=0,\quad
+\sum_{i\in J}c_i=P,\quad\sum_{i\in J}r_i=L.
+\]
+于是 $\sum_i v_i=w_\varepsilon P-\varepsilon L=1$，而 $\sum_i(v_i-u_i)=w_\varepsilon$，所以另一侧也归一化。对每个 $k<N$，插值给出 $\sum_i c_ix_i^k=y^k$ 和 $\sum_i r_ix_i^k=d_k$，故实际误差就是 $\varepsilon d_k$。这证明可行性，包括边界零权重。$N=1$ 时条件为空，结论退化为唯一的 $w=1,u=0,v=1$。
+

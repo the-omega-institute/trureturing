@@ -1,0 +1,13 @@
+### 18.2 定理：取等的必要充分条件与唯一权重
+
+假设 $p_k\neq0$ 对全部 $1\leq k<N$ 成立。对任意 $\varepsilon\geq0$，一组权重 $(w_\varepsilon,u,v)$ 可行，当且仅当
+\[
+\boxed{
+\varepsilon A_i\leq1\quad(1\leq i\leq N),\qquad
+u_i=\max\{-b_i(\varepsilon),0\},\qquad
+v_i=\max\{b_i(\varepsilon),0\}.
+}
+\tag{18.3}
+\]
+因此，达到初始仿射上界的概率对唯一；转折点处出现零权重仍允许取等。此处的非零条件是对指定多项式的非恒定系数而言，不等同于一般线性规划的非退化性。
+
