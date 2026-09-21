@@ -5,9 +5,10 @@ year: 2019
 title: "On two unimodal descent polynomials"
 doi: 10.48550/arXiv.1507.05184
 url: https://arxiv.org/abs/1507.05184v2
-claim: "Proposition 2.1 records the classical direct/skew decomposition of actual 2413/3142 avoiders; Conjecture 5.2 separately asks for real-rootedness of their descent polynomials."
+claim: "Proposition 2.1 records the classical direct/skew decomposition of actual 2413/3142 avoiders; Theorem 2.3 relates descents to skew nodes; Conjecture 5.2 separately asks for real-rootedness of their descent polynomials."
 strata_touched:
   - D5/S1/Words/Patterns/Separable/ProperCut
+  - D5/S1/Words/Patterns/Separable/CutFactorization
 license: citation-only
 triage: anchor
 ---
@@ -36,15 +37,35 @@ order-embedding definition of classical pattern containment. The graph
 proof is implemented internally; the cograph characterization is not an
 assumption.
 
+The fixed-cut support in `CutFactorization` makes both block sums actual
+permutations, using `finSumFinEquiv` without reversing either factor.
+`avoids_block_sum_iff` proves literal 2413/3142 avoidance if and only if
+both factors avoid them, for every pair of natural lengths and both
+orientations. For positive lengths, `fixed_cut_factorization` proves
+that an oriented cut is equivalent to a unique pair of actual avoiding
+factors with exact reconstruction. Its inverse uses the ranks obtained
+from `Tuple.sort`. These are the fixed-cut ingredients of the classical
+decomposition in Proposition 2.1 and the greatest-cut construction in the
+proof of Theorem 2.3; the fixed-cut theorem does not select a greatest cut.
+
+For arbitrary positive factor lengths, `descents_block_sum` proves that
+ordinary adjacent descents add under direct sum and gain exactly one
+under skew sum. This is the local descent correspondence used in
+Theorem 2.3. A singleton factor has zero descents. The theorem allows
+singletons in either factor; the later greatest-cut decomposition must
+separately establish its right-factor convention.
+
 This is a formal proof of a known classical bridge, not a newly solved
 open problem. It is supporting draft work for repository issue #9208;
 there is no standalone FirstFreeze or typed open-problem resolution claim.
 Conjecture 5.2's full real-rootedness assertion remains unresolved here.
 
 Theorem 2.3 chooses the greatest valid cut for its di-sk-tree construction.
-The existence proof in this module does not select that greatest cut.
-Standardization, the actual-avoider/tree bijection, descent preservation,
-and the ensuing generating-function and real-rootedness arguments remain
-separate obligations. For the increasing permutation 123, a least-cut
+The proper-cut existence theorem does not select that greatest cut.
+The fixed-cut inverse and its local descent law do not yet supply the
+greatest-cut uniqueness and right-child sign condition, the
+actual-avoider/tree bijection, weighted enumeration, or the ensuing
+generating-function and real-rootedness arguments. For the increasing
+permutation 123, a least-cut
 choice would not by itself enforce the right-child sign condition of
 Definition 2.2.
