@@ -1,5 +1,6 @@
 import Lean
 
+-- Integration probe: audit source changes retain their registered compilation obligation.
 namespace LeanInformationAudit
 
 open Lean
