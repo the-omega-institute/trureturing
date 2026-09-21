@@ -1,0 +1,2 @@
+光滑性使用 Tao, *254A, Notes 1: Local well-posedness of the Navier–Stokes equations*（2018-09-16）[原文](https://terrytao.wordpress.com/2018/09/16/254a-notes-1-local-well-posedness-of-the-navier-stokes-equations/)的 Corollary 40 及 Proposition 39：光滑周期无散度初态有唯一最大光滑解，有限最大寿命迫使速度 $L^\infty$ 范数无界。其局部光滑解满足（25.109），故由已证 $C_tH^2$ 唯一性与本解一致。如果该寿命不超过 $\tau$，（25.104）及共同半径将给全程 $\|u(t)\|_\infty\le4R$，矛盾；故光滑解存在到 $\tau$ 并超过它。
+
