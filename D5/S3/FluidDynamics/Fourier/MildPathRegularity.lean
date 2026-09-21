@@ -64,11 +64,6 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
   have hρ (k : K) : 0 ≤ ρ k := by dsimp [ρ]; positivity
   have hW (k : K) : 0 < 1 + ρ k := by positivity
   have hweight (k : K) : weight k = 1 + ρ k := by dsimp [weight, ρ]; ring
-  obtain ⟨M₀, hM₀⟩ := isCompact_Icc.exists_bound_of_continuousOn hx
-  let M : ℝ := max M₀ 0
-  have hM : 0 ≤ M := le_max_right _ _
-  have hbudget : ∀ t ∈ Icc 0 τ, ‖x₂ t‖ ≤ M :=
-    fun t ht => (hM₀ t ht).trans (le_max_left _ _)
   have henergy (t : ℝ) :
       Summable (fun k : K => weight k ^ 2 * ‖a t k‖ ^ 2) ∧
       Real.sqrt (∑' k : K, weight k ^ 2 * ‖a t k‖ ^ 2) = ‖x₂ t‖ := by
@@ -84,27 +79,6 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
         simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
           lp.norm_rpow_eq_tsum (by norm_num : 0 < (2 : ℝ≥0∞).toReal) (x₂ t)
       rw [← hn, Real.sqrt_sq (norm_nonneg _)]
-  have hTensor : ∀ t ∈ Icc 0 τ,
-      (∀ k, Summable (fun p => ‖outer (a t p) (a t (k-p))‖)) ∧
-      Summable (fun k => weight k ^ 2 * ‖convolution (a t) (a t) k‖ ^ 2) ∧
-      Real.sqrt (∑' k, weight k ^ 2 * ‖convolution (a t) (a t) k‖ ^ 2) ≤
-        16 * M ^ 2 := by
-    intro t ht
-    obtain ⟨hs, hw, hn⟩ := weighted_tensor_convolution (a t) (a t)
-      (henergy t).1 (henergy t).1
-    refine ⟨hs, hw, ?_⟩
-    rw [(henergy t).2] at hn
-    calc
-      _ ≤ 16 * ‖x₂ t‖ * ‖x₂ t‖ := hn
-      _ = 16 * ‖x₂ t‖ ^ 2 := by ring
-      _ ≤ 16 * M ^ 2 := mul_le_mul_of_nonneg_left
-        (pow_le_pow_left₀ (norm_nonneg _) (hbudget t ht) 2) (by norm_num)
-  have hkernel : ∀ t ∈ Icc 0 τ,
-      IntervalIntegrable (fun s : ℝ => (t - s) ^ (-(3 / 4 : ℝ))) volume 0 t := by
-    intro t ht
-    have hi := intervalIntegral.intervalIntegrable_rpow'
-      (a := 0) (b := t) (by norm_num : (-1 : ℝ) < -(3 / 4 : ℝ))
-    simpa using (hi.comp_sub_left t).symm
   have hGaussian (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1)
       (r : ℝ) (hr : 0 < r) (k : K) :
       (ρ k) ^ p * Real.exp (-ν * r * ρ k) ≤ (ν * r) ^ (-p) := by
@@ -261,13 +235,6 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
   have hqcoeff (t : ℝ) (k : K) : q t k = (1+ρ k) • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (a t) (a t) k := by
     change weight k • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (d (x₂ t)) (d (x₂ t)) k = _
     simp only [d, hweight, a]
-  have hqbound : ∀ t ∈ Icc 0 τ, ‖q t‖ ≤ 16 * M ^ 2 := by
-    intro t ht
-    calc
-      _ ≤ 16 * ‖x₂ t‖ * ‖x₂ t‖ := hQnorm _ _
-      _ ≤ 16 * M ^ 2 := by
-        have hsq := pow_le_pow_left₀ (norm_nonneg _) (hbudget t ht) 2
-        nlinarith
   have hcontract (k : K) (Z : TV) :
       ‖(WithLp.toLp 2 (fun i : Fin 2 => ∑ j : Fin 2, κ k j * Z (j,i)) : V)‖ ≤
         Real.sqrt (ρ k) * ‖Z‖ := by
@@ -348,130 +315,14 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
     change Complex.I • P k (DC k _) = Complex.I • P k _
     congr 2
     simpa only [D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution, Function.comp_def, hterm] using he
-  have hRliteral (r : ℝ) (hr : 0 < r) (t : ℝ) (k : K) :
-      R r (q t) k = (1+ρ k)^(5/4:ℝ) •
-        (Real.exp (-ν*r*ρ k) • N (a t) (a t) k) := by
-    rw [hRcoeff r hr, hqcoeff]
-    rw [show DCp k ((1+ρ k) • D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (a t) (a t) k) =
-      (1+ρ k) • DCp k (D5.S3.FluidDynamics.Fourier.WeightedTensorConvolution.convolution (a t) (a t) k)
-      from (DCp k).map_smul_of_tower (1+ρ k) _, hDConvolution, smul_smul, smul_smul]
-    congr 1
-    have hw := Real.rpow_add (hW k) (1/4:ℝ) 1
-    norm_num at hw
-    rw [hw]
-    ring
   let qC : C(Icc (0:ℝ) τ, G) := ⟨fun t => q t,
     continuousOn_iff_continuous_domRestrict.mp hqcont⟩
   let qe : ℝ → G := fun t => qC (projIcc 0 τ hτ.le t)
   have hqe : Continuous qe := qC.continuous.comp continuous_projIcc
-  have hqeB (t : ℝ) : ‖qe t‖ ≤ 16 * M ^ 2 := hqbound _ (projIcc 0 τ hτ.le t).property
   have hqeEq (t : ℝ) (ht : t ∈ Icc 0 τ) : qe t = q t := by
     dsimp [qe]
     rw [projIcc_of_mem _ ht]
     rfl
-  have hRm (t : ℝ) : StronglyMeasurable (fun r => R r (qe (t-r))) := by
-    let g : ℝ → H := fun r => R r (qe (t-r))
-    have hgk (k : K) : StronglyMeasurable (fun r => g r k) := by
-      let v : ℝ → V := fun r =>
-        ((1+ρ k)^(1/4:ℝ) * Real.exp (-ν*r*ρ k)) • DCp k (qe (t-r) k)
-      have hv : Continuous v := by
-        have he : Continuous (fun r : ℝ => qe (t-r) k) :=
-          (lp.evalCLM ℝ (fun _ : K => TV) 2 k).continuous.comp
-            (hqe.comp (continuous_const.sub continuous_id))
-        exact (continuous_const.mul (Real.continuous_exp.comp (by fun_prop))).smul
-          ((DCp k).continuous.comp he)
-      convert hv.stronglyMeasurable.indicator (measurableSet_Ioi (a := (0:ℝ))) using 1
-      funext r
-      by_cases hr : 0 < r
-      · simpa only [Set.indicator, mem_Ioi, hr, ite_true, v, g] using hRcoeff r hr (qe (t-r)) k
-      · simp [g, R, hr, Set.indicator_of_notMem hr]
-    have hf (s : Finset K) : StronglyMeasurable
-        (fun r => ∑ k ∈ s, lp.single (E := fun _ : K => V) 2 k (g r k)) := by
-      apply Finset.stronglyMeasurable_fun_sum
-      intro k hk
-      exact (lp.singleContinuousLinearMap ℝ (fun _ : K => V) 2 k).continuous.comp_stronglyMeasurable
-        (hgk k)
-    exact stronglyMeasurable_of_tendsto (atTop : Filter (Finset K)) hf
-      (tendsto_pi_nhds.mpr (fun r => lp.hasSum_single (by norm_num) (g r)))
-  let F : ℝ → ℝ → H := fun t r =>
-    (Iic t).indicator (fun r => R r (qe (t-r))) r
-  have hFm (t : ℝ) : AEStronglyMeasurable (F t) (volume.restrict (Ioc 0 τ)) :=
-    ((hRm t).indicator measurableSet_Iic).aestronglyMeasurable
-  have hFB (t r : ℝ) (hr : r ∈ Ioc 0 τ) : ‖F t r‖ ≤ c r * (16 * M ^ 2) := by
-    dsimp [F]
-    by_cases hrt : r ≤ t
-    · simp only [Set.indicator, mem_Iic, hrt, ite_true]
-      exact (hRbound r hr.1 _).trans (mul_le_mul_of_nonneg_left (hqeB _) (hc0 r hr.1.le))
-    · simp only [Set.indicator, mem_Iic, hrt, ite_false, norm_zero]
-      exact mul_nonneg (hc0 r hr.1.le) (by positivity)
-  have hcI : IntegrableOn c (Ioc 0 τ) volume :=
-    (intervalIntegrable_iff_integrableOn_Ioc_of_le hτ.le).mp hcInt
-  have hFI (t : ℝ) : Integrable (F t) (volume.restrict (Ioc 0 τ)) := by
-    apply (hcI.mul_const (16 * M ^ 2)).mono' (hFm t)
-    filter_upwards [ae_restrict_mem measurableSet_Ioc] with r hr
-    exact hFB t r hr
-  have hFt (t r : ℝ) (hr : r ≠ t) : ContinuousAt (fun s => F s r) t := by
-    have hc : Continuous (fun s : ℝ => R r (qe (s-r))) :=
-      (R r).continuous.comp (hqe.comp (continuous_id.sub continuous_const))
-    rcases lt_or_gt_of_ne hr with hrt | htr
-    · apply hc.continuousAt.congr_of_eventuallyEq
-      filter_upwards [Ioi_mem_nhds hrt] with s hs
-      have hs' : r ≤ s := le_of_lt hs
-      simp only [F, Set.indicator, mem_Iic, hs', ite_true]
-    · apply (continuousAt_const (y := (0:H))).congr_of_eventuallyEq
-      filter_upwards [Iio_mem_nhds htr] with s hs
-      have hs' : ¬ r ≤ s := not_le.mpr hs
-      simp only [F, Set.indicator, mem_Iic, hs', ite_false]
-  let D : ℝ → H := fun t => ∫ r in Ioc 0 τ, F t r
-  have hDcont : Continuous D := by
-    apply continuous_iff_continuousAt.mpr
-    intro t
-    apply continuousAt_of_dominated
-      (Filter.Eventually.of_forall hFm)
-      (Filter.Eventually.of_forall fun s => ?_) (hcI.mul_const (16*M^2))
-    · have hn : ∀ᵐ r : ℝ ∂volume.restrict (Ioc 0 τ), r ≠ t :=
-        ae_restrict_of_ae (by simp [ae_iff, measure_singleton])
-      filter_upwards [hn] with r hr
-      exact hFt t r hr
-    · filter_upwards [ae_restrict_mem measurableSet_Ioc] with r hr
-      exact hFB s r hr
-  have hD0 : D 0 = 0 := by
-    apply integral_eq_zero_of_ae
-    filter_upwards [ae_restrict_mem measurableSet_Ioc] with r hr
-    simp only [F, Set.indicator, mem_Iic, not_le.mpr hr.1, ite_false, Pi.zero_apply]
-  have hDcoord (t : ℝ) (ht : t ∈ Icc 0 τ) (k : K) :
-      D t k = (1+ρ k)^(5/4:ℝ) •
-        (∫ s in (0:ℝ)..t, Real.exp (-ν*(t-s)*ρ k) • N (a s) (a s) k) := by
-    have hEv := (lp.evalCLM ℝ (fun _ : K => V) 2 k).integral_comp_comm (hFI t)
-    change (lp.evalCLM ℝ (fun _ : K => V) 2 k) (∫ r in Ioc 0 τ, F t r) = _
-    rw [← hEv]
-    let g : ℝ → V := fun r => (1+ρ k)^(5/4:ℝ) •
-      (Real.exp (-ν*r*ρ k) • N (a (t-r)) (a (t-r)) k)
-    calc
-      _ = ∫ r in Ioc 0 τ, (Iic t).indicator g r := by
-        apply setIntegral_congr_fun measurableSet_Ioc
-        intro r hr
-        by_cases hrt : r ≤ t
-        · have htr : t-r ∈ Icc 0 τ := ⟨sub_nonneg.mpr hrt,
-            (sub_le_self t hr.1.le).trans ht.2⟩
-          change ((Iic t).indicator (fun r => R r (qe (t-r))) r) k = _
-          simp only [Set.indicator, mem_Iic, hrt, ite_true]
-          rw [hqeEq _ htr]
-          exact hRliteral r hr.1 (t-r) k
-        · change ((Iic t).indicator (fun r => R r (qe (t-r))) r) k = _
-          simp only [Set.indicator, mem_Iic, hrt, ite_false]
-          rfl
-      _ = ∫ r in (0:ℝ)..t, g r := by
-        rw [← intervalIntegral.integral_of_le hτ.le]
-        exact intervalIntegral.integral_indicator ht
-      _ = (1+ρ k)^(5/4:ℝ) •
-          (∫ r in (0:ℝ)..t, Real.exp (-ν*r*ρ k) • N (a (t-r)) (a (t-r)) k) := by
-        exact intervalIntegral.integral_smul _ _
-      _ = _ := by
-        congr 1
-        have hs := intervalIntegral.integral_comp_sub_left
-          (fun s : ℝ => Real.exp (-ν*(t-s)*ρ k) • N (a s) (a s) k) (a:=0) (b:=t) t
-        simpa only [sub_sub_cancel, sub_self, sub_zero] using hs
   let σ : ℕ → ℝ := fun n => 1 + (n:ℝ)/4
   have hInitial (n : ℕ) : Memℓp (fun k : K => (1+ρ k)^(σ n) • a 0 k) 2 := by
     apply memℓp_gen
@@ -534,24 +385,6 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
     change Real.exp (-ν * max 0 t * ρ k) • z₀ k = _
     rw [max_eq_right ht.1]
   choose E hEc hEf using fun n => hHeat (z n)
-  have hDuniform (t : ℝ) : ‖D t‖ ≤ (∫ r in Ioc 0 τ, c r) * (16*M^2) := by
-    calc
-      _ ≤ ∫ r in Ioc 0 τ, ‖F t r‖ := norm_integral_le_integral_norm _
-      _ ≤ ∫ r in Ioc 0 τ, c r * (16*M^2) :=
-        integral_mono_ae (hFI t).norm (hcI.mul_const _) (by
-          filter_upwards [ae_restrict_mem measurableSet_Ioc] with r hr
-          exact hFB t r hr)
-      _ = _ := integral_mul_const _ _
-  have hFirstGain : ∃ v : ℝ → H, ContinuousOn v (Icc 0 τ) ∧
-      ∀ t ∈ Icc 0 τ, ∀ k, v t k = (1+ρ k)^(5/4:ℝ) • a t k := by
-    refine ⟨fun t => E 1 t - D t, ((hEc 1).sub hDcont).continuousOn, ?_⟩
-    intro t ht k
-    change E 1 t k - D t k = _
-    rw [hEf 1 t ht, hDcoord t ht]
-    change Real.exp (-ν*t*ρ k) • ((1+ρ k)^(σ 1) • a 0 k) - _ = _
-    have hσ : σ 1 = (5/4:ℝ) := by norm_num [σ]
-    rw [hσ, smul_comm (Real.exp (-ν*t*ρ k)) ((1+ρ k)^(5/4:ℝ)), ← smul_sub,
-      ← (hmild t ht k).2]
   have hProduct (α : ℝ) (hα : 0 ≤ α) (aa bb : K → V)
       (haa : Summable (fun k => (weight k * weight k^α)^2 * ‖aa k‖^2))
       (hbb : Summable (fun k => (weight k * weight k^α)^2 * ‖bb k‖^2)) :
@@ -929,10 +762,6 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
         exact hFt t r hr
       · filter_upwards [ae_restrict_mem measurableSet_Ioc] with r hr
         exact hFB s r hr
-    have hD0 : D 0 = 0 := by
-      apply integral_eq_zero_of_ae
-      filter_upwards [ae_restrict_mem measurableSet_Ioc] with r hr
-      simp only [F, Set.indicator, mem_Iic, not_le.mpr hr.1, ite_false, Pi.zero_apply]
     have hDcoord (t : ℝ) (ht : t ∈ Icc 0 τ) (k : K) :
         D t k = (1+ρ k)^(s+1/4) •
           (∫ s in (0:ℝ)..t, Real.exp (-ν*(t-s)*ρ k) • N (a s) (a s) k) := by
@@ -967,13 +796,6 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
             (fun s : ℝ => Real.exp (-ν*(t-s)*ρ k) • N (a s) (a s) k) (a:=0) (b:=t) t
           simpa only [sub_sub_cancel, sub_self, sub_zero] using hs
     exact ⟨D, hDcont.continuousOn, hDcoord⟩
-  have hFractionalDuhamel : ∃ D : ℝ → H,
-      ContinuousOn D (Icc 0 τ) ∧
-      (∀ t ∈ Icc 0 τ, ∀ k,
-        D t k = (1 + ρ k) ^ (5 / 4 : ℝ) •
-          (∫ s in (0 : ℝ)..t,
-            Real.exp (-ν * (t-s) * ρ k) • N (a s) (a s) k)) := by
-    exact ⟨D, hDcont.continuousOn, hDcoord⟩
   have hAllFractional : ∀ n : ℕ, ∃ v : ℝ → H,
       ContinuousOn v (Icc 0 τ) ∧
       ∀ t ∈ Icc 0 τ, ∀ k, v t k = (1+ρ k)^(σ n) • a t k := by
@@ -988,7 +810,6 @@ theorem all_grade_regularity_of_mild_path : (∀ (ν τ : ℝ), 0 < ν → 0 < �
       obtain ⟨v, hv, hvc⟩ := ih
       obtain ⟨Bn₀, hBn₀⟩ := isCompact_Icc.exists_bound_of_continuousOn hv
       let Bn : ℝ := max Bn₀ 0
-      have hBn : 0 ≤ Bn := le_max_right _ _
       have hbudget_n : ∀ t ∈ Icc 0 τ, ‖v t‖ ≤ Bn :=
         fun t ht => (hBn₀ t ht).trans (le_max_left _ _)
       have hα : 0 ≤ (n:ℝ)/4 := by positivity
