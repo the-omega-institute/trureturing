@@ -395,6 +395,12 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         result = environment.CheckCurrent(Arguments());
         Assert.Equal(1, result.ExitCode);
         Assert.Contains("SL-012", result.Output, StringComparison.Ordinal);
+        if (selected)
+        {
+            using var rejected = JsonDocument.Parse(result.Output[result.Output.IndexOf("{\"executed\"", StringComparison.Ordinal)..]);
+            Assert.Equal(new[] { "SL-012" }, rejected.RootElement.GetProperty("executed").EnumerateArray().Select(value => value.GetString()));
+            Assert.False(File.Exists(Path.Combine(temporary.Path, CommonExecutionEvidence.ChecksPath("current"))));
+        }
 
         string[] Arguments()
         {

@@ -186,7 +186,7 @@ internal static partial class CommonExecutionEvidence
                         return new([new(id, diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe) ? 1 : 0, PredicateJson(id, diagnostics))]);
                     });
                 }
-                catch (InvalidDataException) when (diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe)) { failed.Add(id); }
+                catch (CommonCheckFailure) when (diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe)) { failed.Add(id); }
             }
             var diagnosticsCombined = PredicateDiagnostics(root, completed.Values).AddRange(actual.Diagnostics.Where(d => failed.Contains(d.RuleId.Value)
                 || d.RuleId.Value == "SL-000" && failed.Contains("SL-015")));

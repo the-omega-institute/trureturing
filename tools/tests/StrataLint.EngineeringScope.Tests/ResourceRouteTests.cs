@@ -265,9 +265,13 @@ public sealed partial class ResourceRouteTests(Xunit.Abstractions.ITestOutputHel
         if (failure) fixture.FilemapFailure();
         output.GetStringBuilder().Clear();
         var exit = fixture.Run("current", output);
-        Assert.Equal(failure ? 2 : 0, exit);
+        Assert.Equal(failure ? 1 : 0, exit);
         Assert.Equal(2, File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")).Length);
-        if (failure) Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+        if (failure)
+        {
+            Assert.Contains("COMMON_CHECK_FAILED filemap", output.ToString(), StringComparison.Ordinal);
+            Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
+        }
         else
         {
             var rerun = Assert.Single(CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current")).Units);
