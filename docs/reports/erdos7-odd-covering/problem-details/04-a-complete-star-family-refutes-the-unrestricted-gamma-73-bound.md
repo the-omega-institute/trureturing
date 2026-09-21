@@ -620,3 +620,10 @@ relations under its small-perturbation hypothesis. The normalization,
 arithmetic head integration and tail conclusion remain ordinary proofs;
 the zero-perturbation extension to smaller axes below is also an ordinary
 Laplacian argument.
+
+The [star-head perturbation theorem](04b-arbitrary-star-head-residues-with-unrestricted-tails.md)
+pays an actual reference-head bad mass up to9/20 once and retains arbitrary
+tail primes above73. In two separate sufficient classes it permits
+arbitrary residues at every head modulus divisible by27, or at every
+head modulus with at least four distinct prime factors, with the other
+head residues canonical. These two free-label sets are not combined.
