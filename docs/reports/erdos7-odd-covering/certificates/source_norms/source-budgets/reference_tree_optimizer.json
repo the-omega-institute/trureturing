@@ -183,7 +183,7 @@
   "schema": "reference-tree-optimizer-v1",
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "aa9959f0d19609356fa10e82549d5f842b2cd6c202e30eff2f9777c3931592c7",
+    "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
     "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9"
   },
   "producer_sha256": "a3b5612804f41d595ab158f2d41192341f7e38d63b3078afcd71ce78e4fc6431"
