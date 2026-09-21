@@ -645,8 +645,10 @@ public sealed partial class PrOpenScriptTests
         string app = "MDM6QXBwMTUzNjg=", string workflow = "W_kwDOTUuVMM4VGb-f",
         string eventName = "pull_request", string branch = "lane/governance/sl003-erdos7-339-split-0921") =>
         new { __typename = "CheckRun", databaseId = checkId, name, status, conclusion,
-            checkSuite = new { app = new { id = app }, branch = new { id = "ref-" + branch }, commit = new { oid = head },
-                workflowRun = new { databaseId = runId, runNumber, runAttempt, @event = eventName, workflow = new { id = workflow } } } };
+            checkSuite = new { databaseId = runId + 1000, app = new { id = app }, branch = new { id = "ref-" + branch }, commit = new { oid = head },
+                workflowRun = new { databaseId = runId, runNumber, runAttempt, @event = eventName,
+                    workflow = new { id = workflow, databaseId = 301 },
+                    file = new { path = ".github/workflows/root.yml", repositoryName = "owner/repo", run = new { databaseId = runId } } } } };
     private static object Context(string context, string state, string head = HeadSha) =>
         new { __typename = "StatusContext", id = "status-101", context, state, commit = new { oid = head } };
     private static string BoundSnapshot(string prHead, string commitHead, params object[] items) =>
@@ -656,6 +658,7 @@ public sealed partial class PrOpenScriptTests
         {
             data = new { repository = new
             {
+                databaseId = 401, nameWithOwner = "owner/repo",
                 pullRequest = new { state, headRefOid = prHead },
                 @object = new { oid = commitHead, statusCheckRollup = new
                 {
@@ -750,6 +753,9 @@ public sealed partial class PrOpenScriptTests
             delayedSnapshot = values.Any(value => value.DelaySeconds > 0);
             WriteResponses("snapshot", values);
         }
+        internal void ApiResponse(string endpoint, byte[] bytes) =>
+            File.WriteAllBytes(Path.Combine(responses, "api." + endpoint.Replace('/', '_').Replace('?', '_').Replace('&', '_')), bytes);
+        internal void ApiResponse(string endpoint, string json) => ApiResponse(endpoint, Encoding.UTF8.GetBytes(json));
         public void Dispose() => temporary.Dispose();
         private ProcessOutput Run(string[] arguments)
         {
@@ -821,6 +827,11 @@ public sealed partial class PrOpenScriptTests
                 printf '%s\n' 'https://github.com/owner/repo/pull/42'
                 ;;
               *" pr merge "*) [[ "$PR_TEST_FAIL_STEP" != merge ]] || exit 42 ;;
+              *" api repos/"*"/actions/runs/"*)
+                key="${2//\//_}"; key="${key//\?/_}"; key="${key//&/_}"
+                [[ -f "$PR_TEST_RESPONSES/api.$key" ]] || exit 51
+                cat "$PR_TEST_RESPONSES/api.$key"
+                ;;
               *" api repos/"*) respond required ;;
               *" api graphql "*)
                 case " $* " in

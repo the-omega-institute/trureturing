@@ -6,6 +6,8 @@ PR_OPEN_TIMEOUT_SECONDS="${PR_OPEN_TIMEOUT_SECONDS:-60}"
 PR_WATCH_INTERVAL_SECONDS="${PR_WATCH_INTERVAL_SECONDS:-10}"
 PR_WATCH_TIMEOUT_SECONDS="${PR_WATCH_TIMEOUT_SECONDS:-4200}"
 PR_WATCH_MAX_FAILURES=3
+PR_WATCH_MAX_ORIGIN_PAGES=100
+PR_WATCH_MAX_LOG_BYTES=67108864
 BOUNDED_OUTPUT=""
 receipt() { printf '%s\n' "$*" >&2; }
 watch_result() { printf 'PR_WATCH_RESULT pr=%s %s head_sha=%s\n' "$1" "$3" "$2"; }
@@ -15,12 +17,14 @@ usage_open() { receipt "usage: pr.sh open --head HEAD --message-file FILE [--aut
 usage_watch() { receipt "usage: pr.sh watch --pr NUMBER --head-sha SHA [--timeout-seconds S] [--interval-seconds S]"; }
 PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID!) {
   repository(owner:$owner,name:$repo) {
+    databaseId nameWithOwner
     pullRequest(number:$pr) { state headRefOid }
     object(oid:$head) { ... on Commit { oid statusCheckRollup { contexts(first:100) {
       nodes { __typename
         ... on CheckRun { databaseId name status conclusion
-          checkSuite { app { id } branch { id } commit { oid }
-            workflowRun { databaseId event runNumber runAttempt workflow { id } } } }
+          checkSuite { databaseId app { id } branch { id } commit { oid }
+            workflowRun { databaseId event runNumber runAttempt workflow { id databaseId }
+              file { path repositoryName run { databaseId } } } } }
         ... on StatusContext { id context state commit { oid } }
       }
       pageInfo { hasNextPage }
@@ -52,9 +56,36 @@ run_bounded_capture() {
   receipt "COMMAND_FINISHED deadline_kind=api step=$step timeout_seconds=$timeout_seconds result=$result deadline_at=$deadline exit_code=$rc"
   return "$rc"
 }
+run_bounded_file() {
+  local step="$1" timeout_seconds="$2" output_path="$3"; shift 3
+  local started deadline output errors pid watcher rc=0 result=success
+  started="$(date +%s)"; deadline=$((started + timeout_seconds))
+  errors="$(mktemp "${TMPDIR:-/tmp}/pr-command-err.XXXXXX")"
+  receipt "COMMAND_STARTED deadline_kind=api step=$step timeout_seconds=$timeout_seconds deadline_at=$deadline"
+  "$@" >"$output_path" 2>"$errors" & pid=$!
+  (
+    sleep "$timeout_seconds"
+    kill -TERM "$pid" 2>/dev/null || exit 0
+    sleep 1
+    kill -KILL "$pid" 2>/dev/null || true
+  ) >/dev/null 2>&1 & watcher=$!
+  if wait "$pid"; then rc=0; else rc=$?; fi
+  kill "$watcher" 2>/dev/null || true; wait "$watcher" 2>/dev/null || true
+  if [[ "$rc" -eq 143 || "$rc" -eq 137 ]]; then rc=124; result=timeout
+  elif [[ "$rc" -ne 0 ]]; then result=exit
+  fi
+  if [[ "$rc" -ne 0 && -s "$errors" ]]; then head -c 4096 "$errors" >&2; fi
+  rm -f "$errors"
+  receipt "COMMAND_FINISHED deadline_kind=api step=$step timeout_seconds=$timeout_seconds result=$result deadline_at=$deadline exit_code=$rc"
+  return "$rc"
+}
 gh_local() {
   local step="$1" timeout_seconds="$2"; shift 2
   run_bounded_capture "$step" "$timeout_seconds" env -u GH_TOKEN LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+}
+gh_local_file() {
+  local step="$1" timeout_seconds="$2" output_path="$3"; shift 3
+  run_bounded_file "$step" "$timeout_seconds" "$output_path" env -u GH_TOKEN LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
 }
 gh_create() {
   local token="" CREATE_TOKEN=local
@@ -71,7 +102,7 @@ gh_create() {
   fi
 }
 parse_snapshot() {
-  jq -Rsec --argjson required "$1" --arg head "$2" '
+  jq -Rsec --argjson required "$1" --arg head "$2" --argjson certified "${3:-[]}" '
     def member($xs): . as $value | $xs | index($value) != null;
     def sha: type == "string" and test("^[0-9a-f]{40}$");
     def database_id: type == "number" and . > 0 and floor == .;
@@ -118,7 +149,7 @@ parse_snapshot() {
     .data.repository |
     select(type == "object" and (.pullRequest | type == "object") and
       (.pullRequest.state | member(["OPEN","MERGED","CLOSED"])) and (.pullRequest.headRefOid | sha)) |
-    .pullRequest as $pr |
+    . as $repository | .pullRequest as $pr |
     select((.object | type == "object") and .object.oid == $head and
       (.object | has("statusCheckRollup")) and
       (.object.statusCheckRollup == null or
@@ -129,7 +160,7 @@ parse_snapshot() {
     select(all($items[]; check_name as $name | if ($required | index($name)) != null then enum_ok else true end)) |
     [$items[] | select(.__typename == "CheckRun" and .checkSuite.workflowRun != null)] as $runs |
     select(all($runs | group_by(.checkSuite.workflowRun.databaseId)[];
-      map(.checkSuite | [.app.id, .branch.id, .workflowRun]) | unique | length == 1)) |
+      map(.checkSuite | [.databaseId, .app.id, .branch.id, .workflowRun]) | unique | length == 1)) |
     select(all($runs | group_by([.checkSuite.workflowRun.workflow.id, .checkSuite.workflowRun.runNumber])[];
       map(.checkSuite.workflowRun.databaseId) | unique | length == 1)) |
     # runNumber orders new executions, not reruns. WorkflowRun.runAttempt is
@@ -138,14 +169,22 @@ parse_snapshot() {
     select(all($runs | group_by(origin)[];
       all(.[]; .checkSuite.workflowRun.runAttempt == 1) or
       (map(.checkSuite.workflowRun.databaseId) | unique | length == 1))) |
+    # Only exact attempt system records can authorize PR-run supersession.
+    # Current PR associations and reusable leaf refs are not trigger identity.
+    ([$runs | group_by(origin)[] |
+      select((.[0].checkSuite.workflowRun.event | startswith("pull_request")) and
+        (map(.checkSuite.workflowRun.databaseId) | unique | length > 1)) | .[]] |
+      unique_by(.checkSuite.workflowRun.databaseId) |
+      map(.checkSuite.workflowRun.databaseId)) as $needed |
     if $pr.headRefOid != $head then {state:$pr.state, stale:true, observed_head:$pr.headRefOid}
-    # WorkflowRun exposes no historical PR trigger identity. Neither current
-    # matchingPullRequests nor a reusable workflow reference establishes it.
-    # A later run from another PR/base must never erase an earlier failure.
-    elif any($runs | group_by(origin)[];
-      (.[0].checkSuite.workflowRun.event | startswith("pull_request")) and
-      (map(.checkSuite.workflowRun.databaseId) | unique | length > 1)) then
-      {unavailable:"ambiguous-pr-origin"}
+    elif ($needed - $certified | length > 0) then
+      {unavailable:"ambiguous-pr-origin", runs:[$runs |
+        group_by(.checkSuite.workflowRun.databaseId)[] |
+        select(.[0].checkSuite.workflowRun.databaseId as $id | $needed | index($id)) |
+        {run:.[0].checkSuite.workflowRun, suite:.[0].checkSuite.databaseId,
+         repository_id:$repository.databaseId, repository:$repository.nameWithOwner,
+         checks:map({id:.databaseId, name:.name})}]}
+
     else
     ($items | group_by(origin) | map(. as $group |
       if .[0].__typename == "CheckRun" and .[0].checkSuite.workflowRun != null and .[0].checkSuite.branch != null then
@@ -165,6 +204,226 @@ parse_snapshot() {
      evidence:[$items[] | check_name as $name | select(($required | index($name)) != null) |
        . as $item | evidence + {superseded:($current | index($item) == null)}]} end
   '
+}
+origin_archive_identity() {
+  local archive="$1" jobs_file="$2" expected_repo="$3" expected_path="$4"
+  python3 - "$archive" "$jobs_file" "$expected_repo" "$expected_path" <<'PY'
+import json
+import re
+import sys
+import zipfile
+
+archive, jobs_file, expected_repo, expected_path = sys.argv[1:]
+
+def invalid():
+    raise SystemExit(1)
+
+try:
+    jobs_payload = json.load(open(jobs_file, encoding="utf-8"))
+    jobs = jobs_payload["jobs"]
+    if not isinstance(jobs, list) or not jobs:
+        invalid()
+    by_dir = {}
+    seen_job_ids = set()
+    seen_job_names = set()
+    for job in jobs:
+        if not isinstance(job, dict):
+            invalid()
+        job_id = job.get("id")
+        name = job.get("name")
+        if not isinstance(job_id, int) or job_id <= 0 or not isinstance(name, str) or not name:
+            invalid()
+        if job_id in seen_job_ids or name in seen_job_names:
+            invalid()
+        seen_job_ids.add(job_id)
+        seen_job_names.add(name)
+        # Only the observed slash substitution is supported; no guessed sanitization.
+        if not re.fullmatch(r"[A-Za-z0-9_. ()/,-]+", name):
+            invalid()
+        encoded = name.replace("/", "_")
+        by_dir.setdefault(encoded, []).append(name)
+
+    # Observed GitHub preparation grammar, not a versioned vendor schema.
+    # Unknown identity/chain syntax fails closed. Step stdout is never parsed.
+    timestamp = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+Z (.*)$")
+    reference = r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/\.github/workflows/[^/@\s]+\.ya?ml@[^\s]+"
+    direct_re = re.compile(r"Job defined at: (" + reference + r")")
+    chain_re = re.compile(r"(" + reference + r") \([0-9a-f]{40}\)")
+    roots = []
+    system_jobs = set()
+    with zipfile.ZipFile(archive) as zf:
+        infos = zf.infolist()
+        if len(infos) > 20000 or sum(i.file_size for i in infos) > 67108864:
+            invalid()
+        names = set()
+        for info in infos:
+            name = info.filename
+            parts = name.rstrip("/").split("/")
+            mode = (info.external_attr >> 16) & 0o170000
+            if (not name or "\\" in name or name.startswith("/") or
+                any(ord(c) < 32 for c in name) or
+                any(part in ("", ".", "..") for part in parts) or
+                mode not in (0, 0o100000, 0o040000) or info.flag_bits & 1):
+                invalid()
+            if name.rstrip("/") in names:
+                invalid()
+            names.add(name.rstrip("/"))
+        for info in infos:
+            name = info.filename
+            if info.is_dir() or not name.endswith("/system.txt"):
+                continue
+            if len(name.split("/")) != 2 or info.file_size > 1048576:
+                invalid()
+            parent = name[:-len("/system.txt")]
+            candidates = by_dir.get(parent, [])
+            if len(candidates) != 1:
+                invalid()
+            job_name = candidates[0]
+            if job_name in system_jobs:
+                invalid()
+            system_jobs.add(job_name)
+            lines = []
+            for line in zf.read(info).decode("utf-8").splitlines():
+                match = timestamp.fullmatch(line)
+                if not match:
+                    invalid()
+                lines.append(match[1])
+            direct = [direct_re.fullmatch(line) for line in lines if "Job defined at" in line]
+            if len(direct) != 1 or direct[0] is None:
+                invalid()
+            leaf = direct[0][1]
+            markers = [i for i, line in enumerate(lines) if "Reusable workflow chain" in line]
+            if markers:
+                if len(markers) != 1 or lines[markers[0]] != "Reusable workflow chain:":
+                    invalid()
+                i = markers[0] + 1
+                root_match = chain_re.fullmatch(lines[i]) if i < len(lines) else None
+                if root_match is None:
+                    invalid()
+                root = root_match[1]
+                chain = [root]
+                i += 1
+                while i < len(lines) and lines[i].startswith("-> "):
+                    match = chain_re.fullmatch(lines[i][3:])
+                    if match is None:
+                        invalid()
+                    chain.append(match[1])
+                    i += 1
+                if len(chain) < 2 or chain[-1] != leaf:
+                    invalid()
+                consumed = set(range(markers[0] + 1, i))
+                if any(("@" in line or line.startswith("->")) and
+                       j not in consumed and not line.startswith("Job defined at: ")
+                       for j, line in enumerate(lines)):
+                    invalid()
+            else:
+                root = leaf
+                if any(line.startswith("->") or chain_re.fullmatch(line) for line in lines):
+                    invalid()
+            roots.append(root)
+    if not roots or len(set(roots)) != 1:
+        invalid()
+    root_target, root_ref = roots[0].split("@", 1)
+    target_parts = root_target.split("/", 2)
+    if len(target_parts) != 3 or target_parts[0] + "/" + target_parts[1] != expected_repo:
+        invalid()
+    if target_parts[2] != expected_path:
+        invalid()
+    match = re.fullmatch(r"refs/pull/([1-9][0-9]*)/merge", root_ref)
+    if match is None:
+        invalid()
+    pull_number = match[1]
+    print(expected_repo + "|" + pull_number)
+except (OSError, KeyError, TypeError, ValueError, UnicodeError, zipfile.BadZipFile,
+        zipfile.LargeZipFile):
+    invalid()
+PY
+}
+# Every origin API call shares the watch deadline, including pagination/download.
+origin_api() {
+  local step="$1" deadline="$2"; shift 2
+  local remaining timeout
+  remaining=$((deadline - $(date +%s)))
+  (( remaining > 0 )) || return 1
+  timeout=$((remaining < PR_OPEN_TIMEOUT_SECONDS ? remaining : PR_OPEN_TIMEOUT_SECONDS))
+  gh_local "$step" "$timeout" api "$@"
+}
+origin_for_run() {
+  local expected="$1" watched_head="$2" deadline="$3"
+  local run_id attempt workflow_path metadata jobs all_jobs='[]' total=-1 page count
+  jq -e --arg repo "$PR_REPO" '
+    def id: type == "number" and . > 0 and floor == .;
+    (.repository_id | id) and .repository == $repo and (.suite | id) and
+    (.run.databaseId | id) and .run.runAttempt == 1 and .run.event == "pull_request" and
+    (.run.workflow.databaseId | id) and .run.file.run.databaseId == .run.databaseId and
+    .run.file.repositoryName == $repo and
+    (.run.file.path | type == "string" and test("^\\.github/workflows/[^/@]+\\.ya?ml$"))' \
+    <<<"$expected" >/dev/null 2>&1 || return 1
+  run_id="$(jq -r '.run.databaseId' <<<"$expected")"
+  attempt="$(jq -r '.run.runAttempt' <<<"$expected")"
+  workflow_path="$(jq -r '.run.file.path' <<<"$expected")"
+  origin_api origin-attempt "$deadline" "repos/$PR_REPO/actions/runs/$run_id/attempts/$attempt" || return 1
+  metadata="$BOUNDED_OUTPUT"
+  origin_metadata_matches "$metadata" "$expected" "$watched_head" || return 1
+  for ((page=1; page<=PR_WATCH_MAX_ORIGIN_PAGES; page++)); do
+    origin_api origin-jobs "$deadline" "repos/$PR_REPO/actions/runs/$run_id/attempts/$attempt/jobs?per_page=100&page=$page" || return 1
+    jobs="$BOUNDED_OUTPUT"
+    jq -e --argjson id "$run_id" --argjson attempt "$attempt" --arg head "$watched_head" '
+      (.total_count | type == "number" and floor == . and . > 0) and
+      (.jobs | type == "array" and length > 0 and length <= 100) and
+      all(.jobs[]; (.id | type == "number" and floor == . and . > 0) and
+        (.name | type == "string" and length > 0) and .run_id == $id and
+        .run_attempt == $attempt and .head_sha == $head)' <<<"$jobs" >/dev/null 2>&1 || return 1
+    if (( total == -1 )); then total="$(jq -r '.total_count' <<<"$jobs")"; fi
+    [[ "$total" == "$(jq -r '.total_count' <<<"$jobs")" ]] || return 1
+    all_jobs="$(jq -nc --argjson old "$all_jobs" --argjson page "$jobs" '$old + $page.jobs')" || return 1
+    count="$(jq 'length' <<<"$all_jobs")"
+    (( count <= total )) || return 1
+    (( count != total )) || break
+  done
+  (( page <= PR_WATCH_MAX_ORIGIN_PAGES )) || return 1
+  jq -e --argjson expected "$expected" '
+    . as $jobs | all($expected.checks[]; . as $check |
+      [$jobs[] | select(.id == $check.id and .name == $check.name)] | length == 1)' \
+    <<<"$all_jobs" >/dev/null 2>&1 || return 1
+  local directory archive identity remaining timeout
+  directory="$(mktemp -d "${TMPDIR:-/tmp}/pr-origin.XXXXXX")" || return 1
+  archive="$directory/logs.zip"
+  jq -nc --argjson jobs "$all_jobs" '{jobs:$jobs}' >"$directory/jobs.json"
+  remaining=$((deadline - $(date +%s)))
+  timeout=$((remaining < PR_OPEN_TIMEOUT_SECONDS ? remaining : PR_OPEN_TIMEOUT_SECONDS))
+  if (( remaining <= 0 )) || ! gh_local_file origin-logs "$timeout" "$archive" api \
+      "repos/$PR_REPO/actions/runs/$run_id/attempts/$attempt/logs"; then
+    rm -rf "$directory"; return 1
+  fi
+  if (( $(wc -c <"$archive") > PR_WATCH_MAX_LOG_BYTES )) ||
+      ! identity="$(origin_archive_identity "$archive" "$directory/jobs.json" "$PR_REPO" "$workflow_path")"; then
+    rm -rf "$directory"; return 1
+  fi
+  rm -rf "$directory"
+  # Reject an attempt change during collection; an attempt URL alone pins old data.
+  origin_api origin-current "$deadline" "repos/$PR_REPO/actions/runs/$run_id" || return 1
+  origin_metadata_matches "$BOUNDED_OUTPUT" "$expected" "$watched_head" || return 1
+  printf '%s\n' "$identity"
+}
+origin_metadata_matches() {
+  jq -e --argjson expected "$2" --arg head "$3" '
+    .id == $expected.run.databaseId and .run_attempt == $expected.run.runAttempt and
+    .run_number == $expected.run.runNumber and .head_sha == $head and
+    .event == $expected.run.event and .workflow_id == $expected.run.workflow.databaseId and
+    .check_suite_id == $expected.suite and .repository.id == $expected.repository_id and
+    .repository.full_name == $expected.repository and .path == $expected.run.file.path' \
+    <<<"$1" >/dev/null 2>&1
+}
+certify_snapshot_origins() {
+  local parsed="$1" watched_pr="$2" watched_head="$3" deadline="$4"
+  local expected="$PR_REPO|$watched_pr" identity run
+  while IFS= read -r run; do
+    [[ -n "$run" ]] || return 1
+    identity="$(origin_for_run "$run" "$watched_head" "$deadline")" || return 1
+    [[ "$identity" == "$expected" ]] || return 1
+  done < <(jq -c '.runs[]' <<<"$parsed")
+  jq -c '[.runs[].run.databaseId]' <<<"$parsed"
 }
 pr_watch_main() {
   local number="" head_sha="" timeout_seconds="$PR_WATCH_TIMEOUT_SECONDS" interval_seconds="$PR_WATCH_INTERVAL_SECONDS"
@@ -219,12 +478,22 @@ pr_watch_main() {
       watch_result "$number" "$head_sha" "outcome=timeout pending=$pending missing=$missing"; return 124
     fi
     call_timeout=$((remaining < PR_OPEN_TIMEOUT_SECONDS ? remaining : PR_OPEN_TIMEOUT_SECONDS))
+    local snapshot="" certified="[]"
+    parsed=""
     if gh_local snapshot "$call_timeout" api graphql -f query="$PR_SNAPSHOT_QUERY" \
-        -f owner="${PR_REPO%%/*}" -f repo="${PR_REPO#*/}" -F pr="$number" -f head="$head_sha" \
-        && [[ -n "$BOUNDED_OUTPUT" ]] \
-        && parsed="$(printf '%s' "$BOUNDED_OUTPUT" | parse_snapshot "$required" "$head_sha" 2>/dev/null)" \
-        && [[ -n "$parsed" ]] \
-        && [[ "$(jq -r '.unavailable // empty' <<<"$parsed")" == "" ]]; then
+        -f owner="${PR_REPO%%/*}" -f repo="${PR_REPO#*/}" -F pr="$number" -f head="$head_sha"; then
+      snapshot="$BOUNDED_OUTPUT"
+      parsed="$(printf '%s' "$snapshot" | parse_snapshot "$required" "$head_sha" 2>/dev/null)" || parsed=""
+      if [[ -n "$parsed" && "$(jq -r '.unavailable // empty' <<<"$parsed")" == ambiguous-pr-origin ]]; then
+        if certified="$(certify_snapshot_origins "$parsed" "$number" "$head_sha" "$deadline")"; then
+          parsed="$(printf '%s' "$snapshot" | parse_snapshot "$required" "$head_sha" "$certified" 2>/dev/null)" || parsed=""
+        else
+          receipt "PR_WATCH_PROGRESS pr=$number step=snapshot reason=ambiguous-pr-origin"
+          parsed=""
+        fi
+      fi
+    fi
+    if [[ -n "$parsed" && "$(jq -r '.unavailable // empty' <<<"$parsed")" == "" ]]; then
       failures=0; seen_snapshot=1
       if [[ "$(jq -r '.stale' <<<"$parsed")" == true ]]; then
         receipt "PR_WATCH_PROGRESS pr=$number state=stale expected_head=$head_sha observed_head=$(jq -r '.observed_head' <<<"$parsed")"
@@ -240,9 +509,6 @@ pr_watch_main() {
         receipt "PR_WATCH_PROGRESS pr=$number state=$state pending=$pending missing=$missing"
       fi
     else
-      if [[ -n "$parsed" && "$(jq -r '.unavailable // empty' <<<"$parsed")" == ambiguous-pr-origin ]]; then
-        receipt "PR_WATCH_PROGRESS pr=$number step=snapshot reason=ambiguous-pr-origin"
-      fi
       parsed=""; failures=$((failures + 1))
       receipt "PR_WATCH_PROGRESS pr=$number step=snapshot unavailable_attempts=$failures"
       if (( failures >= PR_WATCH_MAX_FAILURES )); then watch_result "$number" "$head_sha" "outcome=query-unavailable step=snapshot attempts=$failures"; return 69; fi
