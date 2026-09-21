@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # merge-gate.sh — refuse to merge into dev while an implementation seat is running its doors.
+# CI resource probe: only this registered agent script input changes.
 #
 # WHY THIS EXISTS (case: twice, 2026-09-16 and 2026-09-17). Merging a PR moves `origin/dev`.
 # An implementation seat that is between `make lean` and `make deposit*` resolves `BASE=origin/dev`
