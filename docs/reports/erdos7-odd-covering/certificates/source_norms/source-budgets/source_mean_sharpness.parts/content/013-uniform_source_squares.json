@@ -1,0 +1,131 @@
+{
+  "scope": "Both specified actual F_N laws, every N>=4: complete centered4 maximum and uniqueness after source-preserving compression. No weighted pair-LP, pre-compression uniqueness, arbitrary-source, later-prime or unrestricted covering conclusion.",
+  "transport": {
+    "transport_types": 11,
+    "active_transport_coefficients": 65,
+    "allowance_subtypes": 35,
+    "coefficients": [
+      {
+        "anchor": "A",
+        "coefficient_checks": 6256,
+        "zero_coefficients": 0,
+        "least_positive": "561/40000",
+        "least_constant": "9001/640000"
+      },
+      {
+        "anchor": "B",
+        "coefficient_checks": 6256,
+        "zero_coefficients": 0,
+        "least_positive": "47039/3360000",
+        "least_constant": "47039/3360000"
+      },
+      {
+        "anchor": "C",
+        "coefficient_checks": 1192,
+        "zero_coefficients": 0,
+        "least_positive": "561/40000",
+        "least_constant": "1691/120000"
+      }
+    ],
+    "allowances": [
+      {
+        "anchor": "A",
+        "allowance_total": "5965019/25200000",
+        "anchor_loss_lower": "350909/1037232",
+        "strict_gap": "2634720449/25930800000"
+      },
+      {
+        "anchor": "B",
+        "allowance_total": "58975639/226800000",
+        "anchor_loss_lower": "282449/1037232",
+        "strict_gap": "955030823/77792400000"
+      }
+    ]
+  },
+  "actual_source_graph": [
+    {
+      "N": 4,
+      "variable_vertices": 99,
+      "fixed_zero_depth_labels": 25,
+      "complete_labels": 125,
+      "checked_vertices": 99,
+      "source_residual_equalities": 495,
+      "full_edge_comparisons": 9702,
+      "least_C_actual_margin": "1353792971/92610000000",
+      "anchor_losses": [
+        "164590039/486202500",
+        "132496019/486202500"
+      ]
+    },
+    {
+      "N": 12,
+      "variable_vertices": 2027,
+      "fixed_zero_depth_labels": 169,
+      "complete_labels": 2197,
+      "checked_vertices": 45,
+      "source_residual_equalities": 225,
+      "full_edge_comparisons": 91170,
+      "least_C_actual_margin": "806997017787271005085901/57011311937210449218750000",
+      "anchor_losses": [
+        "53732288969393078760431/146600516409969726562500",
+        "2022703704229796690549819/7183425304088516601562500"
+      ]
+    }
+  ],
+  "centered_values": {
+    "finite": [
+      {
+        "N": 4,
+        "weighted": false,
+        "value": "133739369/5572762"
+      },
+      {
+        "N": 4,
+        "weighted": true,
+        "value": "1093339564/50273411"
+      },
+      {
+        "N": 5,
+        "weighted": false,
+        "value": "11447620871/459797322"
+      },
+      {
+        "N": 5,
+        "weighted": true,
+        "value": "233724404395/10349693712"
+      },
+      {
+        "N": 12,
+        "weighted": false,
+        "value": "2036574313467845778288943/80172464522644795549722"
+      },
+      {
+        "N": 12,
+        "weighted": true,
+        "value": "16622960794401007994531582/721107129061336405998171"
+      },
+      {
+        "N": 24,
+        "weighted": false,
+        "value": "1828716454870908884078061103973706637506656447162/71988838029841937181983634214065550432830039081"
+      },
+      {
+        "N": 24,
+        "weighted": true,
+        "value": "29852749065924385548311412755912102858109907600349/1294999208560232267665943740174206150878232853311"
+      }
+    ],
+    "limits": [
+      {
+        "weighted": false,
+        "value": "1829/72",
+        "normalization": "5/28"
+      },
+      {
+        "weighted": true,
+        "value": "671791/29142",
+        "normalization": "1619/8064"
+      }
+    ]
+  }
+}

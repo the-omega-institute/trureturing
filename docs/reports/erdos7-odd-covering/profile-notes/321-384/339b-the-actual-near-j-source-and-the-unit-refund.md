@@ -138,9 +138,10 @@ envelopes on the current actual sources. RW5/RW10 and the assigned
 square bounds use different WF/A2/Jensen expressions; no comparison
 identifying those expressions with E_N has been proved here. The gaps
 cannot simply be subtracted from the through41 bounds, M2, or a scalar
-recurrence floor. The weighted all-height maximum and a uniform useful
-gain through later physical kernels remain unresolved;339d establishes
-the plain F_N maxima for every N>=12.
+recurrence floor. A uniform useful gain through later physical kernels
+remains unresolved. The source-family maxima for both laws at every
+N>=4 are established in339e;339d also supplies the plain pair-LP
+conclusion for N>=12.
 
 ### An exact six-label cluster retains all joint choices
 
@@ -732,3 +733,5 @@ sources or prove that the later-prime survival inequalities close.
 The [square allocation and reweighted-source results](339c-the-square-allocation-and-the-reweighted-source.md) continue in339c.
 
 The [complete plain-source square at every height N≥12](339d-the-complete-plain-source-square-at-every-height.md) extends the ordinary-law conclusion to the whole actual source family, with compressed-layout and pair-marginal LP uniqueness.
+
+The [uniform transport certificate](339e-uniform-transport-for-both-actual-source-squares.md) establishes both actual-layout maxima and compressed uniqueness for every N>=4.
