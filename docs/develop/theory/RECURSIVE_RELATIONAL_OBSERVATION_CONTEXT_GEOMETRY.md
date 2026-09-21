@@ -6715,3 +6715,970 @@ $U$ 的粗投影为 $(y,1-y,y)$，模二下 $g^{-1}=g$，它满足全部三个�
 这一体边对应具体连接的是有限联合关系、全尺度相容边界、完成概率及一个共同半径中的恢复见证。比较对象若是整个来源与完整观察者，就必须把全部已获记录、来源关系和历史同时保留在相应联合模型中；用任务摘要替换它们会改变问题。命题38.2–38.4给出的来源承载、固定准备及记录身份障碍，均不因拓扑完成而消失。
 
 ## 38.99 追加锚
+
+## 39. 保留共同来源的完成化、最优世界总变差与抵消缺口
+
+### 39.1 同一世界、标签与联合来源的可数塔
+
+**定义 39.1（声明来源的完成化合同）。** 对每个 $l\in\mathbb N_0$，给有限非空离散空间 $W_l,Z_l,U_l$，以及处处定义的连接映射
+$$
+\alpha_l:W_{l+1}\to W_l,\qquad
+\beta_l:Z_{l+1}\to Z_l,\qquad
+\gamma_l:U_{l+1}\to U_l.
+$$
+不要求任何连接映射满射。标签读出 $\lambda_l:W_l\to Z_l$、来源读出 $\sigma_l:W_l\to U_l$ 满足
+$$
+\lambda_l\alpha_l=\beta_l\lambda_{l+1},\qquad
+\sigma_l\alpha_l=\gamma_l\sigma_{l+1}.
+\tag{39.1}
+$$
+写 $W_\infty=\varprojlim(W_l,\alpha_l)$，并同样定义 $Z_\infty,U_\infty$；均取紧可度量逆极限拓扑及其 Borel $\sigma$ 代数。坐标记为 $\pi_l^W,\pi_l^Z,\pi_l^U$。交换式逐坐标诱导连续读出 $\lambda_\infty:W_\infty\to Z_\infty$、$\sigma_\infty:W_\infty\to U_\infty$。
+
+固定一个实际 Borel 概率 $\rho_\infty$，只用它的投影 $\rho_l=(\pi_l^W)_*\rho_\infty$，并定义
+$$
+P_l=(\lambda_l)_*\rho_l,\quad \nu_l=(\sigma_l)_*\rho_l,\qquad
+P_\infty=(\lambda_\infty)_*\rho_\infty,\quad
+\nu_\infty=(\sigma_\infty)_*\rho_\infty.
+\tag{39.2}
+$$
+$U_l$ 是该层所声明全部来源条目的联合取值空间，$\nu_l$ 是它们的联合律；分别列出来源边缘会定义一个较弱的问题。各层实际律来自这同一个实际对象，不能独立拟合后只保留若干相同边缘。
+
+给定相容目标概率 $(\beta_l)_*Q_{l+1}=Q_l$；其唯一完成 Borel 律 $Q_\infty$ 由定理39.3构造。给合法世界集合 $A_l\subseteq W_l$，满足
+$$
+\alpha_l(A_{l+1})\subseteq A_l,\qquad
+A_\infty=\bigcap_{l\ge0}(\pi_l^W)^{-1}(A_l).
+\tag{39.3}
+$$
+有限及完成准入类规定为全部且仅有
+$$
+\begin{aligned}
+\mathcal L_l=\{\theta_l\in\operatorname{Prob}(W_l):\;&
+(\lambda_l)_*\theta_l=Q_l,\quad
+(\sigma_l)_*\theta_l=\nu_l,\quad\theta_l(A_l)=1\},\\
+\mathcal L_\infty=\{\theta\in\operatorname{Prob}_{\rm Borel}(W_\infty):\;&
+(\lambda_\infty)_*\theta=Q_\infty,\quad
+(\sigma_\infty)_*\theta=\nu_\infty,\quad\theta(A_\infty)=1\}.
+\end{aligned}
+\tag{39.4}
+$$
+假设对每个 $l$ 都有 $\mathcal L_l\ne\varnothing$。这是来源、目标和支撑的同时可行性，不由各边缘分别可行推出。概率允许任意实数质量及零质量；例子的严格正性不是一般前提。若改为要求所有候选逐点严格正，闭性和最小值达到性可能丢失。
+
+实际合法性 $\rho_\infty(A_\infty)=1$ 不属于下述距离定理的必要假设。将实际律作为可行候选或合法供给律时，须另加相应合法性及目标条件。额外的档案、参考、准备、机制或原来源限制，须以自己的非空紧有限类、投影保持及准确完成语义接入；称 $U$ 为联合来源不证明全部已获关系已被纳入。任意 $W_l$ 不是字面上的循环元组字母表 $B_l^n$；本节不假设循环置换、割支撑或循环剩余量。
+
+**命题 39.2（已获标签的来源因子化障碍）。** 若某层 $\lambda_l=f_l\sigma_l$，则有限可行性强制 $Q_l=P_l$。若另有 $\rho_l(A_l)=1$，实际律即为可行候选，最小世界距离为零。在完成层，若有可测 $f_\infty:U_\infty\to Z_\infty$ 使 $\lambda_\infty=f_\infty\sigma_\infty$，同样强制 $Q_\infty=P_\infty$；再加实际合法性才得到零最小距离。
+
+证明。对任一有限可行 $\theta_l$，
+$$
+Q_l=(\lambda_l)_*\theta_l=(f_l)_*(\sigma_l)_*\theta_l
+=(f_l)_*\nu_l=(\lambda_l)_*\rho_l=P_l.
+\tag{39.5}
+$$
+加上实际合法性后，$\rho_l$ 满足（39.4）的全部条件，且到自身距离为零。完成情形使用同一推前等式及可行类非空性，证明相同。$\square$
+
+因此已经由保留档案确定的标签不能在声称保留该档案时改成不同目标。非平凡修复只能针对尚未固定的任务变量、完整记录合同中仍有的不确定性，或另有等价及取得条件的新表示。实际合法性本身不使任意目标的费用为零；也不授权改写已经取得的事件及其来源。
+
+### 39.2 非满射延拓与同一半径中的最优世界律
+
+**定理 39.3（声明来源下的达到最小值与有限上确界）。** 在定义39.1下，每个有限最小值及完成最小值都存在且达到。采用有限概率的 $\operatorname{TV}(p,q)=\frac12\sum_w|p(w)-q(w)|$、Borel 概率的 $\operatorname{TV}(p,q)=\sup_E|p(E)-q(E)|$，记
+$$
+d_l=\min_{\theta_l\in\mathcal L_l}\operatorname{TV}(\rho_l,\theta_l),\qquad
+d_\infty=\min_{\theta\in\mathcal L_\infty}\operatorname{TV}(\rho_\infty,\theta).
+\tag{39.6}
+$$
+则
+$$
+\boxed{\mathcal L_\infty\ne\varnothing,\qquad
+ d_l\uparrow d_\infty=\sup_{l\ge0}d_l.}
+\tag{39.7}
+$$
+对任意固定 $c\ge0$，所有有限层各有距离不超过 $c$ 的可行律，当且仅当有一个完成可行律的距离不超过 $c$。
+
+证明分为以下四个应用检查。紧选择、弱拓扑识别、柱事件逼近及共同半径方法分别使用[恢复卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)引理33.3、定理33.6、33.9、33.11及推论33.12的相应证明步骤；世界、来源及非满射载体条件在这里逐项履行。
+
+#### 39.2.1 有限类的紧性与投影保持
+
+$\mathcal L_l$ 是有限概率单纯形与标签、来源仿射等式及 $A_l$ 外坐标为零条件的交，故为紧凸多面体，且由假设非空。对任一 $\theta_{l+1}\in\mathcal L_{l+1}$，
+$$
+\begin{aligned}
+(\lambda_l)_*(\alpha_l)_*\theta_{l+1}
+ &=(\beta_l)_*(\lambda_{l+1})_*\theta_{l+1}
+   =(\beta_l)_*Q_{l+1}=Q_l,\\
+(\sigma_l)_*(\alpha_l)_*\theta_{l+1}
+ &=(\gamma_l)_*(\sigma_{l+1})_*\theta_{l+1}
+   =(\gamma_l)_*\nu_{l+1}=\nu_l.
+\end{aligned}
+\tag{39.8}
+$$
+最后一个来源等式使用实际律的相容性。由（39.3），该推前在 $A_l$ 上质量为一，所以
+$$
+(\alpha_l)_*\mathcal L_{l+1}\subseteq\mathcal L_l.
+\tag{39.9}
+$$
+这些限制映射连续仿射，不必满射。恢复卷引理33.3适用于这组非空紧 Hausdorff 空间，给一个相容候选族；它是 Stacks 0A2R 的可数链情形。[^rroctx39_stacks] 此结论不保证任意预定有限候选可延伸。概率多面体通常有无限多个点，不能以“字母表有限”为由把要求对象载体有限的线程定理直接用于它们。
+
+#### 39.2.2 Fremlin 418Q 的非满射概率延拓检查
+
+对选出的相容族 $\theta_l$，每个 $(W_l,\mathcal P(W_l),\theta_l)$ 配有限离散拓扑，是完全、局部确定、Hausdorff、局部有限且对紧集内正则的 Radon 概率空间。$\alpha_l$ 连续，故 almost continuous；并且对任意 $E\subseteq W_l$，
+$$
+\theta_{l+1}(\alpha_l^{-1}E)=\theta_l(E).
+\tag{39.10}
+$$
+这是 inverse-measure-preserving 条件。Fremlin 418Q 对这样的序列给实际线程空间上的唯一相容 Radon 概率。[^rroctx39_fremlin] 按其411H的完全 Radon 约定，取所得概率的 Borel 限制作为本节的 $\theta$；有限坐标开闭柱生成 $W_\infty$ 的 Borel $\sigma$ 代数，故指定柱概率唯一确定这个 Borel 限制。对 $(Z_l,Q_l,\beta_l)$ 逐项作同一检查，构造 $Q_\infty$。来源完成律已由实际推前 $\nu_\infty$ 给定。
+
+这里没有满射假设，也没有把恢复卷定理33.4依赖投影满射的柱预测度证明删去前提后套用。使用的是418Q，不是不加限定的418O；结论也不扩张至任意额外指定的可测事件域。
+
+零质量点解释了非满射时的空柱。令 $\alpha_{l:m}=\alpha_l\cdots\alpha_{m-1}$，$\alpha_{l:l}=\mathrm{id}$。对固定 $l$，每个相容概率族在 $\alpha_{l:m}(W_m)$ 上质量为一。这些有限集合随 $m\ge l$ 递减，其交恰为可延伸的 $l$ 层坐标：一方向由线程投影成立；另一方向，对交中一点，任意有限组线程方程及指定坐标可用足够高层的一个提升满足，恢复卷引理33.3所用的紧乘积有限交论证遂给完整线程。因此不能延伸的点必有零相容质量，空柱不造成概率冲突，不必删掉零质量载体点。
+
+#### 39.2.3 完成可行类的精确识别
+
+上述延拓的标签推前满足
+$$
+(\pi_l^Z)_*(\lambda_\infty)_*\theta
+=(\lambda_l)_*(\pi_l^W)_*\theta=Q_l.
+\tag{39.11}
+$$
+柱唯一性给 $(\lambda_\infty)_*\theta=Q_\infty$。来源推前同理等于 $\nu_\infty$；每个合法柱质量一，可数交仍质量一，故 $\theta(A_\infty)=1$。这证明延拓在 $\mathcal L_\infty$ 中。
+
+反向，任意 $\theta\in\mathcal L_\infty$ 的坐标投影保持两个读出等式，且 $A_\infty\subseteq(\pi_l^W)^{-1}A_l$，故属于每个 $\mathcal L_l$。于是得到精确仿射双射
+$$
+\mathcal L_\infty\cong
+\varprojlim\bigl(\mathcal L_l,(\alpha_l)_*\bigr).
+\tag{39.12}
+$$
+它在概率弱拓扑下为同胚：坐标开闭柱的指示函数连续，给正向连续；恢复卷定理33.6以共同有限柱分割一致逼近连续函数的论证给逆向连续。该论证只在非空柱分块选函数值，不要求坐标满射。右侧是紧乘积的闭子集，因此 $\mathcal L_\infty$ 弱紧。也可直接看出 $A_\infty$ 闭、固定连续推前条件弱闭。完整相容族确定唯一概率，不等于最优族唯一、原世界唯一或 TV 弱连续。
+
+#### 39.2.4 柱 TV、单调距离与共同半径
+
+实际逆极限上的开闭柱仍构成生成 Borel 事件的代数，有限组柱总能在同一较高层表达。对有限测度 $\rho_\infty+\theta$，恢复卷定理33.9的生成代数事件逼近论证因此适用，给
+$$
+\operatorname{TV}(\rho_\infty,\theta)
+=\sup_l\operatorname{TV}\bigl(\rho_l,(\pi_l^W)_*\theta\bigr).
+\tag{39.13}
+$$
+原先满射条件用于柱内容赋值，不用于此 Borel 逼近步骤。式（39.13）亦适用于共同的 $(\rho_\infty+\theta)$-完成事件域；任意未声明的更大事件域不在内。右侧是弱连续有限目标的上确界，故完成 TV 弱下半连续，一般不弱连续。
+
+有限 TV 连续，有限最小值达到。对任意细层可行律，用（39.9）、实际相容性及有限确定通道收缩，得
+$$
+d_l\le\operatorname{TV}(\rho_l,(\alpha_l)_*\theta_{l+1})
+\le\operatorname{TV}(\rho_{l+1},\theta_{l+1}).
+\tag{39.14}
+$$
+所以 $d_l\le d_{l+1}$。所用有限收缩由 `total_variation_channel_le` 供应，确定核为 $\mathbf1_{\alpha_l(w)=v}$，非负且每行和一。置 $c=\sup_l d_l\in[0,1]$，定义共同半径集
+$$
+\mathcal G_l(c)=\{\theta_l\in\mathcal L_l:
+          \operatorname{TV}(\rho_l,\theta_l)\le c\}.
+\tag{39.15}
+$$
+各集非空紧，且由（39.14）映入前层。再次应用紧选择及39.2.2的延拓检查，得到同一个 $\theta^*\in\mathcal L_\infty$。式（39.13）给其距离不超过 $c$。任意完成可行律投影于每个有限类，距离又至少每个 $d_l$，故至少 $c$。这证明（39.7）和达到性。
+
+对任意共同半径 $c\ge0$，若每个 $\mathcal G_l(c)$ 非空，同一论证给半径内的完成律；反向由投影收缩。这并不声称按各自最小半径独立选出的有限 argmin 相容，也不是不附条件地交换 $\sup$ 与 $\min$。$\square$
+
+**命题 39.4（非满射与零质量载体的边界）。** 取所有 $W_l=\{0,1\}$、$\alpha_l\equiv0$，标签及来源均为单点，$A_l=W_l$，实际律为唯一线程 $(0,0,\ldots)$ 的点质量。则各有限可行类为整个二点概率单纯形，而其连接映射恒为 $\delta_0$，不满射；完成可行类仅有上述实际点律，所有最近距离为零。
+
+证明。每个线程的每个坐标都被下一坐标映到零，故线程空间仅有全零点。有限目标和来源条件只要求总质量一，所以有限类确为整个单纯形。相容族必须在每层等于 $\delta_0$；载体点 $1$ 的柱为空且相容质量零。实际律在所有层可行，到自身距离零。全部非空、紧性、读出交换和支撑保持条件均满足。$\square$
+
+### 39.3 标签距离、额外费用及全尺度量词
+
+**命题 39.5（两个单调极限的差）。** 在定义39.1下，置
+$$
+\tau_l=\operatorname{TV}(P_l,Q_l),\qquad
+\tau_\infty=\operatorname{TV}(P_\infty,Q_\infty),\qquad
+g_l=d_l-\tau_l,\quad g_\infty=d_\infty-\tau_\infty.
+\tag{39.16}
+$$
+则 $\tau_l\uparrow\tau_\infty$，且
+$$
+0\le\tau_l\le d_l\le1,\qquad
+0\le\tau_\infty\le d_\infty\le1,\qquad
+\boxed{g_\infty=\lim_l g_l=\sup_l d_l-\sup_l\tau_l.}
+\tag{39.17}
+$$
+差 $g_l$ 一般既不递增也不递减，不能以 $\sup_l g_l$ 代替其极限。若 $\tau_\infty>0$，则 $\tau_l$ 最终正且 $d_l/\tau_l\to d_\infty/\tau_\infty$，但没有一般的比值上确界公式。
+
+证明。在标签逆极限上应用39.2.4的柱 TV 检查及投影收缩，得 $\tau_l$ 的单调收敛。对每个可行律经 $\lambda_l$ 或 $\lambda_\infty$ 推前，TV 收缩给标签下界；概率 TV 至多一。定理39.3使两个单调数列都收敛，相减即得（39.17），正分母的比值结论由商的极限法则得到。命题39.9–39.11给出差的两个变化方向及比值上确界失败的具体实现。$\square$
+
+若 $\tau_\infty=0$，各层标签距离也为零，比值没有定义，加法费用仍有意义。此时 $Q_\infty=P_\infty$；只有另加实际合法性，$\rho_\infty$ 才属于 $\mathcal L_\infty$ 并给 $d_\infty=0$，所得 $0/0$ 仍未定义。合法性不能遗漏：取恒等世界塔 $W_l=\{0,1\}$，单点标签、单点来源，实际律 $\delta_0$，合法集 $A_l=\{1\}$，目标为唯一标签律。每层及完成层唯一合法候选为 $\delta_1$，所以 $\tau_l=\tau_\infty=0$，$d_l=d_\infty=1$。这直接由不交点质量的 TV 为一证明；定理39.3容许该比较律，要求实际合法供给的流解释则不容许。
+
+**命题 39.6（完成等距离的共同半径判据）。** 下列条件等价：
+$$
+\begin{aligned}
+d_\infty=\tau_\infty
+&\iff \exists\theta\in\mathcal L_\infty:
+     \operatorname{TV}(\rho_\infty,\theta)=\tau_\infty\\
+&\iff \forall l,\ d_l\le\tau_\infty\\
+&\iff \forall l,\ \mathcal G_l(\tau_\infty)\ne\varnothing\\
+&\iff \lim_l g_l=0.
+\end{aligned}
+\tag{39.18}
+$$
+此外，对每个 $\epsilon\ge0$，
+$$
+\begin{aligned}
+g_\infty\le\epsilon
+&\iff \forall l,\ d_l\le\tau_\infty+\epsilon\\
+&\iff \forall\eta>0\ \exists N\ \forall l\ge N,\
+               d_l\le\tau_l+\epsilon+\eta.
+\end{aligned}
+\tag{39.19}
+$$
+
+证明。（39.18）的第一步使用最小值达到及标签收缩下界；第二步使用 $d_\infty=\sup_l d_l$；第三步使用有限最小值达到；最后一步使用（39.17）。式（39.19）的第一步仍由上确界公式。若 $g_\infty\le\epsilon$，收敛保证对任意 $\eta>0$ 最终有 $g_l\le\epsilon+\eta$；反向，把每个这样的最终不等式取极限，再令 $\eta\downarrow0$，得 $g_\infty\le\epsilon$。$\square$
+
+式（39.18）在每一层使用同一个半径 $\tau_\infty$，不是各自的 $\tau_l$。若所有层，或只在一个无界共尾层集上，有 $d_l=\tau_l$，则收敛的 $g_l$ 有零子序列，完成等距离成立；命题39.9证明全层有限等距离并非必要。有限等距离候选集合也未必被投影保持。这些是全尺度断言，不能当作有限停止程序。
+
+若某一层 $\tau_l=\tau_\infty$，且完成等距离成立，则
+$$
+\tau_l\le d_l\le d_\infty=\tau_\infty=\tau_l,
+\tag{39.20}
+$$
+该层必等距离。特别地，若所有标签限制对这一个实际／目标概率对都保 TV，则 $\tau_l$ 全相等，逐层等距离与完成等距离等价；这是额外的无抵消条件，不是定义39.1的默认性质。
+
+### 39.4 有限符号约束与合法来源流的准确适用域
+
+**命题 39.7（有限等距离的线性可行条件）。** 固定一层，令未知有符号质量 $h:W_l\to\mathbb R$，并置 $e(z)=Q_l(z)-P_l(z)$。则 $d_l=\tau_l$ 当且仅当以下条件同时可满足：
+$$
+\begin{cases}
+h(w)\ge0,&e(\lambda_l(w))>0,\\
+h(w)\le0,&e(\lambda_l(w))<0,\\
+h(w)=0,&e(\lambda_l(w))=0,
+\end{cases}
+\tag{39.21}
+$$
+$$
+\sum_{\lambda_l(w)=z}h(w)=e(z),\qquad
+\sum_{\sigma_l(w)=u}h(w)=0,\qquad
+\rho_l(w)+h(w)\ge0,
+\tag{39.22}
+$$
+$$
+\rho_l(w)+h(w)=0\quad(w\notin A_l).
+\tag{39.23}
+$$
+这些条件保留零质量世界及中性标签纤维，且不要求实际律合法。
+
+证明。若 $d_l=\tau_l$，取达到者 $\theta_l$，设 $h=\theta_l-\rho_l$。用既有 `total_variation_channel_eq_iff_no_sign_mixing`，取有限确定核 $K(w,z)=\mathbf1_{\lambda_l(w)=z}$，其每项非负、每行和一。定理说明 TV 等号恰要求每个标签纤维不混合正负差。结合纤维总差为 $e(z)$，正总差只能逐点非负，负总差只能逐点非正，零总差则逐点零，正是（39.21）；（39.22）–（39.23）由准入条件得到。这也正是命题37.8及（37.15）–（37.16）的确定读出情形，不另证明一般等号机制。
+
+反向，设这些式子成立，定义 $\theta_l=\rho_l+h$。它非负、合法，标签平衡给 $Q_l$，对全部标签求和给总质量一；来源平衡给 $\nu_l$。于是它可行，（39.21）经同一个既有等号定理给世界 TV 为 $\tau_l$。结合标签下界，便有 $d_l=\tau_l$。$\square$
+
+在实际合法的情形 $\rho_l(A_l)=1$，精确匹配定理37.10的方法是把它的世界载体取为 $W'=A_l$，实际律取 $\rho_l|_{A_l}$，标签、来源映射均限制到 $A_l$；候选在 $W_l\setminus A_l$ 置零。这不改变任何实际或候选距离、标签边缘或来源边缘，并使该定理“载体上全部且仅有指定来源边缘的概率律”前提成立。
+
+具体地，亏损标签集为 $D=\{z:e(z)<0\}$，盈余标签集为 $R=\{z:e(z)>0\}$。在亏损世界置 $r_w=-h(w)$，在盈余世界置 $t_v=h(v)$。则 $0\le r_w\le\rho_l(w)$、$t_v\ge0$，只允许合法世界接收；合法零实际质量世界也可接收。标签移除和加入总量分别为 $-e(z)$、$e(z)$，中性标签逐点不变。每个联合来源值 $u$ 内的总移除与总加入相等。
+
+定理37.10的（37.17）在这里取
+$$
+r_{z,u}=\sum_{\substack{w\in A_l\\\lambda_l(w)=z,\ \sigma_l(w)=u}}\rho_l(w),\qquad
+W'_{z,u}=A_l\cap\lambda_l^{-1}\{z\}\cap\sigma_l^{-1}\{u\}.
+\tag{39.24}
+$$
+其网络容量依次为源到亏损标签的 $-e(z)$、亏损标签到来源的 $r_{z,u}$、来源到盈余标签的 $\tau_l$（仅当 $W'_{z,u}\ne\varnothing$ 有此弧）、盈余标签到汇的 $e(z)$。达到值 $\tau_l$ 的满流与（39.21）–（39.23）等价。其证明中的来源内分配可在本符号下写为：对共同来源的亏损世界 $w$ 和合法盈余世界 $v$，若该来源总移除为 $M_u>0$，取 $F_{wv}=r_wt_v/M_u$；若 $M_u=0$，全取零。来源平衡给行和 $r_w$、列和 $t_v$。反向由这类流的行列和恢复 $h$。零来源供给没有除法；初始零质量的非空合法接收格仍可接收。一般有限耦合提升不替代这些支撑、容量及来源条件。
+
+这个流判据判断的是 $d_l=\tau_l$，不是较弱的全局条件 $d_l\le\tau_\infty$。细标签能够分开粗标签内互相抵消的变化，所以细层等距离候选投到粗层后可有严格世界／标签缺口。
+
+若实际律不合法，须保留命题39.7的有符号形式，不能原样套用上述载体限制。式（39.23）强制非法世界 $h(w)=-\rho_l(w)$。若此处实际质量正，等距离就要求它属于亏损标签并移除全部质量，即 $r_w=\rho_l(w)$；非法中性或盈余世界有正实际质量时，等距离不可能。非法零质量世界仍为零、不能接收。这些结论直接由（39.21）和（39.23）得出；它们不把非法实际律当成合法供给律。
+
+### 39.5 同一四世界实现中的两种相反细化
+
+**定义 39.8（四世界共同数据）。** 世界按 $(w_{a0},w_{a1},w_{b1},w_{b2})$ 排列；实际律 $\rho$ 及指定候选 $\bar\theta$、共同来源、两种标签读出规定如下。表39.1的所有世界均合法；世界集合仅有这四个来源／标签关联，不是整个 $U\times Z$。
+
+| 表39.1世界 | 联合来源 | 粗标签 | 分裂标签 | 实际 $\rho$ | 候选 $\bar\theta$ |
+|---|---|---|---|---:|---:|
+| 39.1a $w_{a0}$ | $a$ | $0$ | $0$ | $3/8$ | $1/4$ |
+| 39.1b $w_{a1}$ | $a$ | $1$ | $1_a$ | $1/8$ | $1/4$ |
+| 39.1c $w_{b1}$ | $b$ | $1$ | $1_b$ | $3/8$ | $1/4$ |
+| 39.1d $w_{b2}$ | $b$ | $2$ | $2$ | $1/8$ | $1/4$ |
+
+目标标签律在各层均取 $\bar\theta$ 的读出推前，实际标签及来源律均取同一 $\rho$ 的推前。世界连接映射在以下各塔中恒为恒等，所以 $W_\infty$ 典范识别为这同一个四世界集合；上述两律同时给出一个实际完成律和一个相容可行完成律。所有显示的质量严格正。
+
+**命题 39.9（分裂标签使有限正缺口消失）。** 第0层取粗标签 $\{0,1,2\}$，第1层起取分裂标签 $\{0,1_a,1_b,2\}$；$\beta_0$ 合并 $1_a,1_b$ 为 $1$，其余标签不变，以后恒等。所有层的来源均为 $\{a,b\}$，来源连接恒等。则
+$$
+\begin{aligned}
+P_0&=(3/8,1/2,1/8),&Q_0&=(1/4,1/2,1/4),\\
+d_0&=1/4,&\tau_0&=1/8,&g_0&=1/8,\\
+d_l&=1/4,&\tau_l&=1/4,&g_l&=0\quad(l\ge1),\\
+d_\infty&=\tau_\infty=1/4,&g_\infty&=0.
+\end{aligned}
+\tag{39.25}
+$$
+
+证明。两层读出交换逐世界成立，来源实际及候选质量都是 $(1/2,1/2)$。粗层端点标签 $0,2$ 各只有一个世界，所以可行候选必须在 $w_{a0},w_{b2}$ 各放 $1/4$。来源质量各为 $1/2$ 又迫使另外两个世界各为 $1/4$；故 $\mathcal L_0=\{\bar\theta\}$。四个差依次为
+$$
+\bar\theta-\rho=(-1/8,+1/8,-1/8,+1/8),\qquad
+Q_0-P_0=(-1/8,0,+1/8).
+\tag{39.26}
+$$
+世界 TV 为 $1/4$，粗标签 TV 为 $1/8$。粗标签1内的两项差 $+1/8,-1/8$ 抵消，总差零却没有逐点不变，违反（39.21）的中性条件，故不存在粗层等 TV 流。
+
+细层标签读出单射，目标强制候选仍为 $\bar\theta$，此时标签没有抵消，TV 与世界 TV 均为 $1/4$。其后恒等，定理39.3和命题39.5给完成数值。$\square$
+
+可行类连接是两个单点间的双射，现象不来自可行映射不满射。这里 $g_\infty=0<\sup_l g_l=1/8$；粗层比值为2、完成比值为1，故比值的上确界也不是完成比值。它同时证明完成等距离不要求所有有限层等距离，细层等距离候选的粗投影可不等距离。
+
+**命题 39.10（细化来源使零缺口变正）。** 保持定义39.8的世界、实际律、粗标签及目标 $(1/4,1/2,1/4)$。第0层来源为单点，第1层起来源读出为 $a/b$，$\gamma_0$ 把两者送到单点，其余连接恒等。则
+$$
+(d_0,\tau_0,g_0)=(1/8,1/8,0),\qquad
+(d_l,\tau_l,g_l)=(1/4,1/8,1/8)\quad(l\ge1),
+\tag{39.27}
+$$
+完成值为 $(d_\infty,\tau_\infty,g_\infty)=(1/4,1/8,1/8)$。
+
+证明。所有读出交换仍成立。粗层的整个可行类可写成
+$$
+\theta(x)=(1/4,x,1/2-x,1/4),\qquad 0\le x\le1/2.
+\tag{39.28}
+$$
+它与实际律的四项差为 $(-1/8,x-1/8,1/8-x,+1/8)$，故
+$$
+\operatorname{TV}(\rho,\theta(x))=1/8+|x-1/8|.
+\tag{39.29}
+$$
+因此唯一粗层最优候选
+$$
+\theta^{(0)}=(1/4,1/8,3/8,1/4)
+\tag{39.30}
+$$
+达到标签下界 $1/8$；中间两个世界不变，符合中性纤维条件。它的细来源质量却为 $(3/8,5/8)$，不等于实际 $(1/2,1/2)$。第1层来源保留强制 $x=1/4$，即唯一候选 $\bar\theta$，由（39.29）得距离 $1/4$。标签一直粗，距离一直 $1/8$；恒等续接给完成值。$\square$
+
+**命题 39.11（共同三层塔的缺口先升后降）。** 在同一四世界上，先细化来源、再分裂标签，形成表39.2的塔；世界律始终为定义39.8的同一 $\rho$，目标始终为同一 $\bar\theta$ 的标签推前。
+
+| 表39.2层 | 来源视图 | 标签视图 | $d_l$ | $\tau_l$ | $g_l$ |
+|---|---|---|---:|---:|---:|
+| 39.2a 第0层 | 单点 | 粗标签 | $1/8$ | $1/8$ | $0$ |
+| 39.2b 第1层 | $a/b$ | 粗标签 | $1/4$ | $1/8$ | $1/8$ |
+| 39.2c 第2层及以后 | $a/b$ | 分裂标签 | $1/4$ | $1/4$ | $0$ |
+
+这是一座满足定义39.1全部条件的塔，而 $g_l$ 为 $0,1/8,0,0,\ldots$，故没有任一方向的一般单调性。
+
+证明。世界连接恒等；$\gamma_0$ 合并来源、以后恒等；$\beta_0$ 恒等、$\beta_1$ 合并分裂标签、以后恒等。逐世界读出平方交换，全支撑向下保持。第0层可行类是（39.28），第1层及以后为 $\{\bar\theta\}$，故非空紧并被投影保持；其中 $\bar\theta$ 是一份共同可行线程。两种距离分别由命题39.10的前两层、命题39.9的细层给出。完成来源与标签都是最终视图，实际及候选均没有换律。$\square$
+
+这些层是同一个完成来源合同的不同有限表示。若 $a/b$ 记录已经取得，单点来源问题只是一种数学松弛，其较便宜的 $\theta^{(0)}$ 不是完整观察者的合法修复。细化不能授权删除已获记录；第0层的数值下界与第1层的实际约束属于不同的有限可行问题。
+
+**命题 39.12（延迟细化的共同有限前缀）。** 对任意 $N\ge0$，可以有两座塔在全部 $l\le N$ 的载体、读出、实际律、目标、来源律、合法支撑及前缀内部连接完全相同，完成额外费用却分别为 $1/8$ 和零。也可以令共同前缀的所有费用缺口为零，而两种完成费用分别为零和 $1/8$。
+
+证明。第一对塔把命题39.9的粗层重复至 $N$。一座永远保持粗标签，完成类为 $\{\bar\theta\}$，距离为 $d_\infty=1/4,\tau_\infty=1/8$；另一座在 $N+1$ 才分裂标签，随后恒等，完成距离都为 $1/4$，故缺口零。第二对塔把命题39.10的单点来源阶段重复至 $N$。一座永远保持单点来源，完成最优候选为 $\theta^{(0)}$、缺口零；另一座在 $N+1$ 才显露 $a/b$，随后恒等，完成候选被迫为 $\bar\theta$、缺口 $1/8$。四座塔均使用同一四世界实际律、全合法支撑，目标为 $\bar\theta$ 的相应标签推前；没有在层间替换分布。
+
+更一般，把命题39.11的来源显露延迟到任意 $M>N$、标签分裂延迟到任意 $L>M$，中间都以恒等映射填充，便得同一共同塔上任意延迟的 $0\to1/8\to0$。交换、相容及可行保持由未填充的三个阶段逐段继承。$\square$
+
+因此单凭任意已检查的有限前缀，没有对所有这些续接都正确的完成等号判断：正缺口平台和零缺口平台都能接到另一种完成答案。这是有限前缀的不可区分性结论，不是计算理论的不可判定定理；它不排除带额外尾部证书的程序。
+
+### 39.6 两种真实尾界与严格有限证书
+
+**命题 39.13（标签尾、世界尾及有向区间）。** 假设某应用另外供应对这一实际塔成立的已认证非负界
+$$
+0\le\tau_\infty-\tau_l\le a_l,\qquad
+0\le d_\infty-d_l\le b_l.
+\tag{39.31}
+$$
+则
+$$
+\boxed{\max\{0,g_l-a_l\}\le g_\infty\le g_l+b_l.}
+\tag{39.32}
+$$
+若还给有限值的严格包围 $d_l\in[d_l^-,d_l^+]$、$\tau_l\in[\tau_l^-,\tau_l^+]$，则
+$$
+\boxed{\max\{0,d_l^- -\tau_l^+ -a_l\}\le g_\infty
+       \le d_l^+ -\tau_l^- +b_l.}
+\tag{39.33}
+$$
+
+证明。恒等式
+$$
+g_\infty=g_l+(d_\infty-d_l)-(\tau_\infty-\tau_l)
+\tag{39.34}
+$$
+中，世界尾增加差、标签尾减少差。分别使用（39.31）两端并结合 $g_\infty\ge0$，得（39.32）。把 $g_l=d_l-\tau_l$ 的下界取为 $d_l^- -\tau_l^+$，上界取为 $d_l^+ -\tau_l^-$，得到（39.33）。因此 $g_l>a_l$ 认证严格正完成费用，$g_l+b_l\le\epsilon$ 认证费用至多 $\epsilon$；严格包围的正下端或不超过 $\epsilon$ 的上端给对应结论。$\square$
+
+命题39.9在第0层有 $(g_0,a_0,b_0)=(1/8,1/8,0)$，实际 $g_\infty=0$ 达到下端；命题39.10有 $(g_0,a_0,b_0)=(0,0,1/8)$，实际 $g_\infty=1/8$ 达到上端。两个尾方向都不能省略。命题39.11中，第0层的真实两尾均为 $1/8$，第1层标签尾为 $1/8$、世界尾为零，第2层起均零；这些数值由已知完整恒等续接证明，不能从暂时观察到的平台推得。
+
+式（39.31）要求实际极限的独立证书，不是给未知余项取名。定理39.3的抽象收敛、一个有限最优律或已经经过的计算时间均不供应这些界，本节没有新估计来建立它们。若另外有未来逐步增量的可求和上界 $A_j,B_j$，满足 $\tau_{j+1}-\tau_j\le A_j$、$d_{j+1}-d_j\le B_j$，则对 $j\ge l$ 望远镜求和并取极限可取 $a_l=\sum_{j\ge l}A_j$、$b_l=\sum_{j\ge l}B_j$；这仍以这些上界已证为前提。若已证明整座塔从某层起结构恒等，两尾从该层起为零；有限次观察到恒等不证明全尾恒等。
+
+有理且可取得的有限数据允许用精确可行候选和匹配的优化下界证书认证 $d_l$，用精确算术认证 $\tau_l$。四世界例中的（39.29）及唯一性约束就是这样的解析证书；仅印出数值优化器的小数不是严格包围。任意实数输入不自动提供可计算的数据或判定程序。
+
+若额外尾界可有效趋零，且有限包围宽度也可有效趋零，则（39.33）的两端趋于 $g_\infty$：例如 $0\le d_l-d_l^-\le d_l^+-d_l^-\to0$，标签同理，连同（39.17）即可。于是严格正的 $g_\infty$ 最终给正下端；当 $g_\infty<\epsilon$ 有严格裕量时，最终给上端小于 $\epsilon$。这不保证 $g_\infty=0$ 或恰达阈值时有限终止。要保证这些边界情况的精确停止，还需零上界证书或合适的附加承诺；两极限误差会计本身不产生停止算法。
+
+### 39.7 完整观察者与一个见证的共同合法延续
+
+**定义 39.14（完整已获档案与声明来源的区别）。** 继续采用定义13.1、命题13.2、定义13.3、定理13.4、约定15.1及第35.1–35.3节的档案语义：保留全部已获内部及外部记录、来源身份与版本、相关性和已经取得的来源—标签关系、参考、准备与校准、控制器、可访问记忆、动作及其守卫、失败、时钟和合法联合取得顺序。有限任务标签只是这个观察者的一个视图。原先第13节的记录商以有限共同世界为域；这里另外给出定义39.1的共同可测实现，不从该有限定理无条件推出任意观察者都有可数有限塔表示。
+
+式（39.4）精确保留 $\sigma_\infty$ 中已声明条目的联合律 $\nu_\infty$ 和所写支撑约束。这强于分别保留来源边缘，却不自动保留未列入的来源—标签、参考—世界及历史耦合。命题5.3和命题38.4已经分别给出相同边缘而共同输出不同、相同标签与档案边缘而联合差为一的反例。已获且相关的关系必须放进联合合同或额外准入条件，再验证39.2的非空、紧性、投影保持及精确完成语义；不能用来源边缘替代整个观察者。
+
+同分布也不等于实际记录样本逐项同一。若在 $C=c$ 下分析，实际／候选共同模型须使用同一整份证据、来源和相应准入条件；适用的条件概率版本及支持条件仍需给定。合法操作顺序不等于概率独立；任何独立性主张都须相对于完整 $C$ 验证。命题39.2的因子化障碍仍约束被保留档案已经固定的标签。
+
+**命题 39.15（先选一个最优律，再比较全部共同核）。** 固定定义39.1的一份合同。从定理39.3选择一个最优 $\theta^*\in\mathcal L_\infty$。对声明实验族中的每个 $E$，另外给到完整实验记录空间 $\mathcal T_E$ 的可测归一概率核
+$$
+K_E:W_\infty\rightsquigarrow\mathcal T_E.
+\tag{39.35}
+$$
+双方输入均须处于此核的共同合法定义域，双方使用完全相同的 $K_E$。过程语义须保留相关来源、参考、控制、记忆和档案依赖，动作守卫、失败、允许随机化、可访问历史及取得次序，并明确实际输出律为 $\rho_\infty K_E$、候选输出律为 $\theta^*K_E$。则量词为
+$$
+\exists\theta^*\in\mathcal L_\infty:\quad
+\operatorname{TV}(\rho_\infty,\theta^*)=d_\infty,\qquad
+\forall E,\quad
+\operatorname{TV}(\rho_\infty K_E,\theta^*K_E)\le d_\infty.
+\tag{39.36}
+$$
+若完成等距离成立，右端为 $\tau_\infty$。若联合输出同时保留世界与该次记录，其 TV 恰为输入 TV。
+
+证明。有限情况使用命题9.16及既有 `total_variation_channel_le`；一般可测核使用命题38.6的（38.5）–（38.6）。具体地，对任一记录事件 $H$，$f(w)=K_E(w,H)$ 可测且在 $[0,1]$ 中，层蛋糕公式给
+$$
+\left|\int f\,d(\rho_\infty-\theta^*)\right|
+=\left|\int_0^1\bigl(\rho_\infty\{f>t\}-\theta^*\{f>t\}\bigr)\,dt\right|
+\le\operatorname{TV}(\rho_\infty,\theta^*).
+\tag{39.37}
+$$
+对 $H$ 取上确界得结论，证明没有改变已选的 $\theta^*$，因而对每个给定共同合法核都成立。保留世界的联合核为 $w\mapsto\delta_w\otimes K_E(w,\cdot)$；共同核收缩给一个方向，投影回世界给反方向，遂为等号。$\square$
+
+式（39.36）不允许每次实验或每个时刻重新选最优世界律，也不从一族分别的输出不等式推出各个不同实验的任意联合耦合。它未提供随输入／目标合同变化的可测最优选择规则，或对所有合同共用的准备算法。静态重加权不供应这里作为前提的过程合同。
+
+自适应实验必须由同一合法历史依赖策略生成，并确实表示为此共同核；若从有限核构造过程，还需它们的投影相容性及准确合法路径律语义。[机器学习卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)定理17.3的联合输出—后继核因子化与命题17.7的分开边缘反例承担相关过程边界。只知道 $\lambda_\infty$ 不使所有后续实验都可从标签执行；标签接口复用须另给核的合法因子化或运输、或已证充分接口。命题39.7针对一个概率对的 TV 等号并不是这个操作充分性定理。
+
+共同核前提不能撤掉：单点输入上的两律相同、TV 为零，恒输出0的核和另一个恒输出1的核却给 TV 为一。这是直接的不交点律计算，不能用（39.36）比较已替换的机制。稀有事件后选择及两方分别重新归一化也不是一个共同归一核；统一条件结论仍需完整联合档案和明确的支撑事件概率下界。
+
+**命题 39.16（原来源实现所需的附加等式）。** 另给可测原域 $(X,\Sigma_X)$ 和可测读出 $j:X\to W_\infty$。最优律的原来源实现要求有概率 $m$ 满足
+$$
+j_*m=\theta^*,
+\tag{39.38}
+$$
+并满足独立规定的原来源、档案及机制限制。若 $m_0,j$ 都已固定，式（39.38）成为必须另证的 $j_*m_0=\theta^*$；完成律存在本身不改变这个固定推前。若允许选择原概率，且有 Borel 集 $B\subseteq j(X)$、$\theta^*(B)=1$ 及可测截面 $s:B\to X$、$js=\mathrm{id}_B$，则 $m=s_*(\theta^*|_B)$ 供应概率提升；额外限制仍须逐项满足。
+
+证明。固定准备与读出时推前由定义唯一确定。对给定截面，$\theta^*|_B$ 总质量一，且 $j_*s_*(\theta^*|_B)$ 对每个 Borel 事件 $H$ 的值为 $\theta^*(B\cap H)=\theta^*(H)$，所以满足（39.38）。构造只证明推前关系，未证明它等于另一个独立固定准备。$\square$
+
+[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)定理46.4–46.5、定义91.1及定理91.2区分紧拼接、指定有限延伸、完成空间与实际像；本卷命题38.2–38.3分别保留可数稠密来源无法承载完成律、目标可达仍不保固定准备的障碍。逐点可达、稠密性或集合论截面不是可测概率提升；其他提升路线需要自己的随机化、析取、合法性与取得前提。命题39.16没有自动保留独立指定的样本身份。
+
+完成最优律是一份静态准入重加权，不供应合法准备协议、已经取得的未来样本、高效解码器、唯一原世界或存储／运行时间界。分辨率层号不充当物理时钟；经典 Borel 律及共同核 TV 也不供应量子外部参考保证。这些解释各需额外操作、因果、可测或物理假设。
+
+### 39.8 数学供应与应用范围
+
+**约定 39.17（本节的证明归属）。** 本节把既有紧选择、概率延拓和有限通道结果应用于声明联合来源的完成问题，四世界计算及双尾会计为 `repo-derived` 普通数学推导。Stacks 与 Fremlin 所用结论为 `literature-attested`；不主张一般逆极限或数据处理理论的新颖性，不把这些普通应用声明为新增形式化结果。表39.3列明供应对象及不能替代的前提。
+
+| 表39.3项 | 供应对象 | 在本节的精确用途与边界 |
+|---|---|---|
+| 39.3a 紧选择 | 恢复卷引理33.3，主卷定理46.4；Stacks 0A2R | 非空紧空间及连续连接给相容选择，不需满射；不是任意指定有限候选的延伸算法。 |
+| 39.3b 完成概率 | 恢复卷定理33.4；Fremlin 418Q、411H | 本节以39.2.2逐项核对非满射有限 Radon 序列，取 Borel 限制；不直接套用前者的满射柱内容证明。 |
+| 39.3c 完成几何 | 恢复卷定理33.6、33.9、33.11及推论33.12，式（33.15）、（33.19）–（33.20）、（33.23）–（33.26） | 复用有限柱连续函数逼近、Borel 事件逼近和共同半径证明；来源、目标、支撑的相容保持由（39.8）–（39.12）承担。 |
+| 39.3d 有限收缩 | [DataProcessing.lean](../../../D5/S3/TotalVariation/DataProcessing.lean)，`total_variation_channel_le` | 有限实函数与非负行随机通道；供应确定投影及有限共同后处理收缩，不建立来源可行性或概率完成。 |
+| 39.3e 有限等号 | [DataProcessingEquality.lean](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean)，`total_variation_channel_eq_iff_no_sign_mixing`；命题37.8 | 在确定核上的符号同向条件给（39.21）；没有新的通用等号机制。 |
+| 39.3f 来源流 | 定理37.10及（37.17）–（37.18） | 实际合法时以 $A_l$ 为世界载体，逐项匹配亏损容量、合法接收关联及共同来源平衡；非法实际支撑使用（39.21）–（39.23），不原样引用合法供给构造。 |
+| 39.3g 有限耦合 | [FiniteCouplingPushforwardLift.lean](../../../D5/S3/ConceptDynamics/CausalMoments/FiniteCouplingPushforwardLift.lean)，`liftCoarseCoupling_marginals`、`liftCoarseCoupling_expectation` | 有理有限析取保持两个原边缘及配对读数，处理零纤维；不自动保留任意合法支撑、档案耦合或固定机制。 |
+| 39.3h 状态线程 | [InverseLimitCompletion.lean](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean)，`stateThread_bijective_iff_complete_and_separates`；主卷定义91.1、定理91.2 | 类型层完备性与分离性、实际像与纤维提升；不提供独立指定原域上的概率提升。 |
+| 39.3i 档案与延续 | 命题5.3、9.16、定义13.1–定理13.4、约定15.1、第35.1–35.3节、命题38.4及38.6 | 共同来源、完整已获记录、合法联合仪器及同核延续；固定来源边缘不能替代已获关联，预测、准备与过程接口分别有条件。 |
+| 39.3j 联合过程 | 机器学习卷定理17.3、命题17.7 | 联合输出—后继核合同及后续记录反例，不是概率完成定理。 |
+| 39.3k 有限载体边界 | [FiniteCofilteredLimit.lean](../../../D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.lean)，`finite_cofiltered_limit_nonempty` | 明确要求对象载体有限，不能直接用于无限点的实概率多面体。 |
+| 39.3l 有限事件边界 | [Metric.lean](../../../D5/S3/TotalVariation/Metric.lean)，`total_variation_eq_sup_event_gap` | 等质量有限函数的事件差公式，不是无限 Borel 柱 TV。 |
+| 39.3m 特定层级边界 | [ProjectivePrimalConvergence.lean](../../../D5/S3/Weil/Budget/ProjectivePrimalConvergence.lean)，`projective_primal_convergence` | 特定圆周矩／预算层级且假设全可行类非空，不能替代本节的应用检查。 |
+| 39.3n 已假设收敛边界 | [ProjectiveStrongDuality.lean](../../../D5/S3/Observer/Budget/ProjectiveStrongDuality.lean)，`projective_strong_duality` | 明确以 `projectiveConverges` 为前提，不能用来消除尚未证明的原始收敛义务。 |
+
+本节的完成距离、有限抵消及后续共同核结论均附着于同一个实际律和声明的联合来源合同。双尾界、原来源提升及合法准备分别仍是额外假设；受限供应关系不构成文献优先权证明。
+
+[^rroctx39_stacks]: The Stacks Project, [Lemma 5.14.6, tag 0A2R](https://stacks.math.columbia.edu/tag/0A2R)：余滤图中每个空间非空、拟紧、Hausdorff，映射连续，则逆极限非空；无满射条件。本节用于紧概率多面体及共同半径子集，不提供可测最优选择算法。
+
+[^rroctx39_fremlin]: D. H. Fremlin, *Measure Theory*, [418Q，Chapter 41，PDF 第116页](https://www1.essex.ac.uk/maths/people/fremlin/chap41.pdf#page=116)：Radon 概率空间序列及 inverse-measure-preserving、almost continuous 连接函数，在实际线程空间上给唯一相容 Radon 概率。该书[411H，PDF 第5页](https://www1.essex.ac.uk/maths/people/fremlin/chap41.pdf#page=5)的 Radon 空间要求完全、局部确定、Hausdorff、局部有限及紧集内正则。有限离散幂集概率满足全部条件，包括零质量及非满射连接；本节只使用所得概率的 Borel 限制及柱生成的 Borel 唯一性。
+
+## 39.99 追加锚
+
+## 40. 实际延迟历史的饱和证书与未知基准上的相对间隔
+
+本节把有限历史的 Gram 几何接到实际经过时间的恢复：瞬时端口可以不单射，足够的同源延迟关系可给单射的有效接口；其饱和须由真实嵌套历史认证。[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)第126节、第137节与[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)第10、12、13、15、21节供应有效空间、平坦性、正对数、残差与误差机制。以下是这些结果在有限历史相对钟任务中的 `repo-derived` 普通数学应用，不主张新的通用实现理论或物理时间定律。本节不以先前有限循环及完成化结论为前提。
+
+### 40.1 完整观察者与实际延迟响应
+
+**定义 40.1（保留全部档案的正伴随来源合同）。** 以 $C_{\rm acq}$ 表示完整已获档案，保留全部内部／外部记录和已取得的关系；以 $\mathcal F(C_{\rm acq})$ 表示满足整份档案、声明先验和合法取得历史的共同世界族。要求它非空并含实际世界。每个世界必须同时解释所有已获矩阵、实际准备、来源及参考身份、版本与关联、输入／输出内积与单位、增益、局部标签、可访问记忆、控制与动作、守卫及失败、联合顺序、误差和允许的联合误差事件。未测量的参数在同一个世界里受这些关系共同约束。使用本节的矩阵统计量只是从该观察者取一个任务视图，不删除其他已获信息；空可行族也不是恢复证书。合法操作顺序不等于概率独立；若另外主张独立，须相对于完整 $C_{\rm acq}$ 验证。本合同复用本卷第30—36节的完整世界、保留参考、联合误差、顺序与合法取得语义，不搬用那些节的 PDE、量子或编码前提。
+
+对族中所比较的每个世界，固定有限维实内积空间 $H,U$、边界内积与
+$$
+B:H\longrightarrow U,\qquad C=C^*>0,\qquad
+K(t)=Be^{-tC}B^*\quad(t\ge0).
+\tag{40.1}
+$$
+输入为实际伴随 $B^*$，输出为 $B$；所有伴随使用指定内积。主卷第126.1节给
+$$
+\mathcal R=\operatorname{span}\{C^jB^*u:j\ge0,\ u\in U\},\qquad
+ d=\dim\mathcal R,\qquad C_{\mathcal R}=C|_{\mathcal R}.
+\tag{40.2}
+$$
+$\mathcal R$ 与 $\mathcal R^\perp$ 约化 $C$，$B\mathcal R^\perp=0$，且 $K$ 仅依赖 $C_{\mathcal R}$ 和 $B|_{\mathcal R}$。允许隐藏空间另有完全不可见的块；这些块不参加以下迹与维数。
+
+取一个实际共同加性延迟 $h>0$，令 $T=e^{-hC}$。对整数 $r\ge0$，在系数空间 $U^{r+1}$ 使用正交直和内积，定义
+$$
+\begin{aligned}
+V_r&=\operatorname{span}\{T^jB^*u:0\le j\le r,\ u\in U\},\\
+B_r:H&\longrightarrow U^{r+1},\qquad
+B_rx=(BT^ix)_{i=0}^r,\\
+\mathsf H_r(s)&=\bigl(K(s+(i+j)h)\bigr)_{0\le i,j\le r}\quad(s\ge0).
+\end{aligned}
+\tag{40.3}
+$$
+所谓未知基准 $a\ge0$ 是未知响应年龄，不是给传感器增加一个未解释的加性偏置。实际来源、共同延迟及所有条目的准备与校准由此合同承担；仅有数值相等或一份可行拟合不能建立这些事实。
+
+**引理 40.2（实际 Gram 因子化、共同支撑与采样可达空间）。** 在定义40.1下，对每个有限 $s\ge0$，
+$$
+\boxed{\mathsf H_r(s)=B_r e^{-sC}B_r^*.}
+\tag{40.4}
+$$
+因此
+$$
+\begin{aligned}
+\ker\mathsf H_r(s)&=\ker B_r^*,\\
+\operatorname{ran}\mathsf H_r(s)&=\operatorname{ran}B_r=:E_r,\\
+\operatorname{rank}\mathsf H_r(s)&=\operatorname{rank}B_r=\dim V_r.
+\end{aligned}
+\tag{40.5}
+$$
+同时有
+$$
+\operatorname{span}_{j\ge0}T^jB^*U
+=\operatorname{span}_{j\ge0}C^jB^*U=\mathcal R.
+\tag{40.6}
+$$
+
+证明。$B_r^*(u_0,\ldots,u_r)=\sum_{j=0}^rT^jB^*u_j$，故（40.4）的 $(i,j)$ 块为 $BT^ie^{-sC}T^jB^*=K(s+(i+j)h)$；这里使用自伴性及同一 $C$ 的函数相互交换。对任意系数向量 $v$，其二次型为 $\|e^{-sC/2}B_r^*v\|^2$。有限 $s$ 时指数可逆，因而核正是 $\ker B_r^*$；自伴算子的像等于核的正交补，得共同支撑与秩，且 $\operatorname{ran}B_r^*=V_r$。
+
+在 $C$ 的有限实谱上，$c\mapsto e^{-hc}$ 单射。有限谱插值给多项式 $p,q$，使 $T=p(C)$、$C=q(T)$。两方向逐次代入生成跨度，得到（40.6）。这也是恢复卷第10.1—10.2节采样正算子的使用域；谱插值只识别数学子空间，不授权免费实施任意多项式实验动作。$\square$
+
+共同支撑在未饱和时也自动成立；它本身不使压缩与指数或对数交换。
+
+### 40.2 真正饱和后的相对间隔
+
+**定理 40.3（实际相邻秩平台同时认证两个阶数）。** 固定任意实际年龄 $a\ge0$，其数值不必已知。若 $\operatorname{rank}\mathsf H_r(a)=d$，则 $V_r=\mathcal R$，等价于 $B_r|_{\mathcal R}$ 单射。对 $r\ge1$，
+$$
+\operatorname{rank}\mathsf H_r(a)=\operatorname{rank}\mathsf H_{r-1}(a)
+\quad\Longrightarrow\quad V_{r-1}=V_r=\mathcal R.
+\tag{40.7}
+$$
+特别地，对所选任意 $r\ge0$，
+$$
+\boxed{V_r=\mathcal R\ \Longleftrightarrow\
+\operatorname{rank}\mathsf H_{r+1}(a)=\operatorname{rank}\mathsf H_r(a).}
+\tag{40.8}
+$$
+当 $d\ge1$ 时，$r\ge d-1$ 是充分视界；若可见互异谱率数为 $q\ge1$，$r\ge q-1$ 也是充分视界。这些上界是数学条件，不自动是实验者已知的维数或率数。
+
+证明。由（40.5），秩为 $d$ 恰使 $V_r\subseteq\mathcal R$ 具有全维数；又 $\ker(B_r|_{\mathcal R})=\mathcal R\cap V_r^\perp$。相邻秩相等使嵌套子空间 $V_{r-1}\subseteq V_r$ 相等，而 $TV_{r-1}\subseteq V_r$。这个 $T$-不变空间包含 $B^*U$，所以由（40.6）等于 $\mathcal R$。反向，饱和后再加一个延迟不扩张空间，给（40.8）。这是主卷第126.4节及命题137.10、定理137.13的真实 Krylov 平坦机制在 $T$ 上的应用。第126.4节以 $m$ 个向量层计数，这里为 $m=r+1$；未饱和的链每次至少增长一维，给 $r\ge d-1$。对 $q$ 个可见谱值，谱投影在 $T|_{\mathcal R}$ 上均可用次数至多 $q-1$ 的插值多项式表示，因此这 $q$ 层已经生成 $\mathcal R$，给第二视界。$\square$
+
+不同偏移但同一阶数的 $\mathsf H_r(s),\mathsf H_r(t)$ 秩总相等，不能替代相邻嵌套阶数的平台。这里每个块的实际实现由（40.4）供应。对抽象数组，主卷定理137.2—137.5的移位零关系以及定理137.13的偶数正平坦条件仍须核验；命题137.3的前缀 $(1,1,1,2)$ 已有两个正块和普通秩平台，却违反移位核包含，没有自伴实现。不能从它的秩反推一个实际来源。
+
+**定理 40.4（未知基准白化的实际间隔定理）。** 假设 $V_r=\mathcal R$、$d>0$。固定任意实际基准 $a\ge0$，定义以下均使用支撑上的映射：
+$$
+\begin{aligned}
+D&=B_r|_{\mathcal R}:\mathcal R\longrightarrow E_r,&
+D_a&=De^{-aC_{\mathcal R}/2},\\
+A_a&=\mathsf H_r(a)|_{E_r}=D_aD_a^*,&
+F_a&=A_a^{-1/2}D_a:\mathcal R\longrightarrow E_r.
+\end{aligned}
+\tag{40.9}
+$$
+则 $F_a$ 为正交同构。对实际经过间隔 $s\ge0$，定义
+$$
+\begin{aligned}
+W_{r,a}(s)&=A_a^{-1/2}
+ \bigl(\mathsf H_r(a+s)|_{E_r}\bigr)A_a^{-1/2},\\
+G_{r,a}&=F_aC_{\mathcal R}F_a^*>0,\qquad
+L_{r,a}(s)=-\log W_{r,a}(s).
+\end{aligned}
+\tag{40.10}
+$$
+有
+$$
+\boxed{W_{r,a}(s)=F_ae^{-sC_{\mathcal R}}F_a^*
+=e^{-sG_{r,a}},\qquad L_{r,a}(s)=sG_{r,a}.}
+\tag{40.11}
+$$
+从而对 $s\ge0,t>0$，
+$$
+\boxed{
+\frac{\operatorname{tr}L_{r,a}(s)}{\operatorname{tr}L_{r,a}(t)}=\frac{s}{t},\qquad
+\frac{\operatorname{tr}L_{r,a}(s)}{\operatorname{tr}L_{r,a}(h)}=\frac{s}{h}.}
+\tag{40.12}
+$$
+
+证明。$D$ 在 $\mathcal R$ 上单射且像为 $E_r$，故为同维双射；$e^{-aC_{\mathcal R}/2}$ 可逆，$D_a$ 亦双射。于是 $A_a\succ0$ 且 $F_aF_a^*=I_{E_r}$。两空间维数均为 $d$，余等距升级为正交同构，给 $F_a^*F_a=I_{\mathcal R}$。由（40.4）及指数相乘，$\mathsf H_r(a+s)|_{E_r}=D_ae^{-sC_{\mathcal R}}D_a^*$。代入白化并用正交函数演算得到（40.11），其中正定实对数的唯一性由恢复卷命题10.6承担。迹满足 $\operatorname{tr}G_{r,a}=\operatorname{tr}C_{\mathcal R}>0$，所以（40.12）的分母非零，约去共同斜率即得结论。$\square$
+
+$F_a$ 不必已知，它只承担证明；共同支撑和白化矩阵来自声明的精确数据。若 $h$ 有数值校准，$G_{r,a}=-h^{-1}\log W_{r,a}(h)$ 给数据正交坐标中的生成元；若仅给可重复延迟单位，仍得到 $hG_{r,a}=-\log W_{r,a}(h)$。坐标标架可随 $a$ 改变，但迹斜率不变。若在整个 $U^{r+1}$ 上表达白化，可用 $\mathsf H_r(a)^{\dagger/2}$，随后必须限制到 $E_r$；环境空间的零块没有对数。这里不要求原始 $B$ 单射，单射性由实际延迟接口供应。
+
+若 $B=0$，则 $d=0$、全部响应为零；零有效空间虽已饱和，迹比仍为 $0/0$，不提供钟。完全不可见的附加隐藏块不会进入 $G_{r,a}$ 或其迹。
+
+**推论 40.5（固定支撑行列式与有符号间隔）。** 在定理40.4下，$\det_{E_r}\mathsf H_r(t)$ 指限制到同一个 $E_r$ 后的行列式，也就是环境半正定矩阵非零特征值的乘积 $\operatorname{pdet}\mathsf H_r(t)$。令 $\kappa=\operatorname{tr}C_{\mathcal R}>0$。则
+$$
+\det_{E_r}\mathsf H_r(t)
+=\det_{E_r}\mathsf H_r(0)e^{-t\kappa}\quad(t\ge0),
+\tag{40.13}
+$$
+以及对任意实际年龄 $a,b\ge0$，
+$$
+\log\operatorname{pdet}\mathsf H_r(a)
+-\log\operatorname{pdet}\mathsf H_r(b)=(b-a)\kappa.
+\tag{40.14}
+$$
+实际取得 $\mathsf H_r(a),\mathsf H_r(a+h),\mathsf H_r(b)$ 时，
+$$
+\boxed{
+\frac{\log\operatorname{pdet}\mathsf H_r(a)-\log\operatorname{pdet}\mathsf H_r(b)}
+{\log\operatorname{pdet}\mathsf H_r(a)-\log\operatorname{pdet}\mathsf H_r(a+h)}
+=\frac{b-a}{h}.}
+\tag{40.15}
+$$
+分母也可换成任何另外实际取得的同源、同接口 $c,c+h$ 对的对数行列式差，其中 $c\ge0$ 不必已知。所有行列式必须使用同一历史阶数、支撑和边界内积。
+
+证明。在（40.11）中以零年龄作为数学基准取行列式，得 $\det W_{r,0}(t)=e^{-t\kappa}$，而白化两侧的行列式为 $\det_{E_r}\mathsf H_r(t)/\det_{E_r}\mathsf H_r(0)$，证明（40.13）。在任意两个非负年龄相减得（40.14）；任意 $c,c+h$ 对的差恒为 $h\kappa>0$，得（40.15）。零年龄在这里仅用于证明恒等式，操作公式没有要求已经观察它，也不要求逐个重建谱率或原始 $B$。$\square$
+
+$b<a$ 时右端为负，仍是两个非负实际年龄之间的有符号差，未使用负年龄实验。定理40.4的未知基准白化给相同的正向间隔结果；任意基准不是准备原点。要恢复距实际准备的年龄仍须对应原点参考；要恢复绝对物理单位仍须校准。对任意 $c_0>0$，$C\mapsto c_0C$、所有年龄和延迟 $t\mapsto t/c_0$ 保持响应样本，且保持间隔比。这是恢复卷命题15.9—15.10已有的尺度规范自由。
+
+### 40.3 倍时与迹对数诊断的既有供应应用
+
+**命题 40.6（基准移位投影与一个正间隔的饱和判据）。** 仍在定义40.1的实际模型中，取任意 $r\ge0$、$E_r\ne0$ 和实际 $a\ge0$，暂不假设饱和。按（40.9）定义 $D,D_a,A_a,F_a$，按（40.10）定义 $W_{r,a}$。此时 $F_a$ 一般只是余等距，且
+$$
+F_aF_a^*=I_{E_r},\qquad
+P_a:=F_a^*F_a=P_{V_r^{(a)}},\qquad
+V_r^{(a)}:=e^{-aC_{\mathcal R}/2}V_r.
+\tag{40.16}
+$$
+对任意一个实际正间隔 $s>0$，置 $S=e^{-sC_{\mathcal R}}$，有
+$$
+\boxed{\Delta_{a,s}:=W_{r,a}(2s)-W_{r,a}(s)^2
+=F_aS(I-P_a)SF_a^*\succeq0,}
+\tag{40.17}
+$$
+并且
+$$
+\boxed{
+\Delta_{a,s}=0\ \Longleftrightarrow\ V_r=\mathcal R
+\ \Longleftrightarrow\
+\operatorname{rank}\mathsf H_{r+1}(a)=\operatorname{rank}\mathsf H_r(a).}
+\tag{40.18}
+$$
+
+证明。$D_a$ 满射到 $E_r$，故 $A_a$ 正定并有 $F_aF_a^*=I$。$F_a^*F_a$ 自伴且幂等，像为 $\operatorname{ran}D_a^*=e^{-aC_{\mathcal R}/2}V_r$，证明（40.16）。尤其投影通常不是到未经移位的 $V_r$。白化因子化仍给 $W_{r,a}(s)=F_aSF_a^*$、$W_{r,a}(2s)=F_aS^2F_a^*$。
+
+式（40.17）直接取自恢复卷定理13.4的式（13.10）及其残差平方证明。精确代入为：该供应的历史阶数取零，与此处 $r$ 无关；隐藏空间取 $\mathcal R$、边界取 $E_r$，$J=V=F_a^*$，Gram 矩阵 $H=J^*J=I_{E_r}$。其 $K'(s)=W_{r,a}(s)$、$B_s=W_{r,a}(s)$、$Q_s=\Delta_{a,s}$，残差平方正是 $F_aS(I-P_a)SF_a^*$。仅使用这条代数恒等式和正性，不移入该供应的初态 minimax 结论或授权新的准备。
+
+为判定等号，将主卷定理137.13的阶数取一，取真实 $S$、输入 $F_a^*$ 的三个矩
+$$
+M_0=I_{E_r},\quad M_1=W_{r,a}(s),\quad M_2=W_{r,a}(2s),\qquad
+\widehat H_1=\begin{pmatrix}I&W_{r,a}(s)\\W_{r,a}(s)&W_{r,a}(2s)\end{pmatrix},
+\quad\widehat H_0=I.
+\tag{40.19}
+$$
+$M_1$ 正定，因为 $S>0$ 且 $F_a^*$ 单射，故该供应的移位块正性成立。以 $W=W_{r,a}(s)$ 作供应证明中的 Schur 合同变换，有
+$$
+\begin{pmatrix}I&0\\-W&I\end{pmatrix}
+\widehat H_1
+\begin{pmatrix}I&-W\\0&I\end{pmatrix}
+=\begin{pmatrix}I&0\\0&\Delta_{a,s}\end{pmatrix}.
+\tag{40.20}
+$$
+因此 $\Delta_{a,s}=0$ 等价于 $\operatorname{rank}\widehat H_1=\operatorname{rank}\widehat H_0$。主卷定理137.13针对任一实际实现的证明于是给 $S$-不变性：$\operatorname{ran}F_a^*=V_r^{(a)}$ 在 $S$ 下不变。自伴性使它约化 $S$；恢复卷命题10.6的唯一正对数 $C_{\mathcal R}=-s^{-1}\log S$ 及有限谱函数演算又使它在 $C_{\mathcal R}$ 下不变。它包含 $e^{-aC_{\mathcal R}/2}B^*U$，而这批移位输入的全部 $C_{\mathcal R}$-生成空间为
+$$
+\operatorname{span}_{j\ge0} C_{\mathcal R}^j e^{-aC_{\mathcal R}/2}B^*U
+=e^{-aC_{\mathcal R}/2}\mathcal R=\mathcal R.
+\tag{40.21}
+$$
+最后一步使用指数在有限有效空间上可逆。故 $V_r^{(a)}=\mathcal R$，也就 $V_r=\mathcal R$。反向饱和给 $P_a=I_{\mathcal R}$，使残差为零；最后一个等价由定理40.3承担。$\square$
+
+**推论 40.7（迹对数的严格倍时诊断）。** 在命题40.6的实际模型下，不预设 $L_{r,a}(s)=-\log W_{r,a}(s)$ 线性。对每个 $s>0$，
+$$
+\boxed{\operatorname{tr}L_{r,a}(2s)\le2\operatorname{tr}L_{r,a}(s),
+\quad\text{等号当且仅当 }V_r=\mathcal R.}
+\tag{40.22}
+$$
+故未饱和时，对每个实际基准 $a\ge0$ 和每个 $s>0$ 都严格不等。
+
+证明。$W=W_{r,a}(s)>0$、$W_{r,a}(2s)>0$，且 $W_{r,a}(2s)=W^2+\Delta_{a,s}$。由于 $W$ 是 $W^2$ 的正平方根，
+$$
+\frac{\det W_{r,a}(2s)}{\det(W^2)}
+=\det\bigl(I+W^{-1}\Delta_{a,s}W^{-1}\bigr)\ge1.
+\tag{40.23}
+$$
+右端增量是半正定合同。这里应用主卷定理128.5在第128.4节的证明所用的谱行列式机制：$X\succeq0$ 时 $\det(I+X)=\prod_i(1+\lambda_i)\ge1$，等号恰为 $X=0$。不使用其 Gaussian 假设或互信息解释；第128.5节的 Fibonacci 例也不是此证明地址。再用正定矩阵的 $\operatorname{tr}(-\log X)=-\log\det X$，得到（40.22）；等号由（40.18）判定。$\square$
+
+$s=0$ 时白化为 $I$、恒有等号，不能作为证书；零响应同样不给钟。可选 $s=h$，但 $\mathsf H_r(a),\mathsf H_r(a+h),\mathsf H_r(a+2h)$ 与下一 Gram 块都需截至 $a+(2r+2)h$ 的实际前缀，没有取得优势，也没有产生抗噪秩估计。$s,2s$ 必须是实际半群间隔；若实际时间为 $t=f(\tau)$，标签等差不保证
+$$
+f(\tau+2\eta)-f(\tau)
+=2\bigl(f(\tau+\eta)-f(\tau)\bigr).
+\tag{40.24}
+$$
+选择 $s=h$ 仍须履行同一个实际延迟合同。
+
+### 40.4 实际共同支撑上的定量稳定性
+
+**定理 40.8（继承白化与对数界的正间隔统计量）。** 固定历史阶数 $r$ 和共同系数内积。比较两组三元矩阵 $(A,H_e,H_*)$、$(A',H'_e,H'_*)$，其所有矩阵在环境系数空间中都有完全相同的非零支撑 $E$，$m=\dim E>0$；以下矩阵运算均限制在 $E$。实际响应情形写作 $A=\mathsf H_r(a)$、$H_j=\mathsf H_r(a+s_j)$，$j=e,*$ 分别为事件和锚，第二个模型用加撇记号；本定理先只要求矩阵数据条件
+$$
+\begin{gathered}
+\operatorname{spec}(A),\operatorname{spec}(A')\subseteq[\gamma,R_0],\qquad 0<\gamma\le R_0,\\
+uA\preceq H_j\preceq vA,\qquad
+uA'\preceq H'_j\preceq vA',\qquad 0<u\le v<1\quad(j=e,*).
+\end{gathered}
+\tag{40.25}
+$$
+定义同一几何中的 Frobenius 数据差和白化对数
+$$
+\begin{gathered}
+\delta_0=\|A-A'\|_F,\qquad \delta_j=\|H_j-H'_j\|_F,\\
+W_j=A^{-1/2}H_jA^{-1/2},\qquad L_j=-\log W_j,\\
+W'_j=A'^{-1/2}H'_jA'^{-1/2},\qquad L'_j=-\log W'_j,\\
+d_j=\frac{\delta_j}{\gamma}
+ +\frac{2v\sqrt{R_0}}{\gamma^{3/2}}\delta_0,\qquad
+D_j=\frac{d_j}{u},\qquad
+\alpha=-\log v>0,\quad\beta=-\log u.
+\end{gathered}
+\tag{40.26}
+$$
+则 $\|W_j-W'_j\|_F\le d_j$、$\|L_j-L'_j\|_F\le D_j$，且
+$$
+\boxed{
+\left|\frac{\operatorname{tr}L_e}{\operatorname{tr}L_*}
+-\frac{\operatorname{tr}L'_e}{\operatorname{tr}L'_*}\right|
+\le\frac{D_e}{\sqrt m\,\alpha}
+ +\frac{\beta D_*}{\sqrt m\,\alpha^2}.}
+\tag{40.27}
+$$
+
+证明。应用恢复卷定理12.2的代数白化估计，不应用其中另外的矩实现断言。为明确常数，置 $Z=A^{-1/2}$、$Z'=A'^{-1/2}$。该证明的双特征基差商界给
+$$
+\|Z-Z'\|_F\le\frac{\delta_0}{\gamma^{3/2}},\qquad
+\|Z\|_{\rm op},\|Z'\|_{\rm op}\le\gamma^{-1/2},\qquad
+\|H_jZ\|_{\rm op},\|Z'H'_j\|_{\rm op}\le v\sqrt{R_0}.
+\tag{40.28}
+$$
+最后一界使用 $H_j=A^{1/2}W_jA^{1/2}$、$\|W_j\|_{\rm op}\le v$，加撇同理。把差写成
+$$
+W_j-W'_j=(Z-Z')H_jZ+Z'(H_j-H'_j)Z+Z'H'_j(Z-Z'),
+\tag{40.29}
+$$
+逐项应用 $\|XYZ\|_F\le\|X\|_{\rm op}\|Y\|_F\|Z\|_{\rm op}$，得到 $d_j$。
+
+两个白化算子的谱都在 $[u,v]$。恢复卷式（12.7）的双特征基矩阵函数界与定理12.3证明中尚未放宽的对数步骤给
+$$
+\|L_j-L'_j\|_F
+\le\frac{1}{u}\|W_j-W'_j\|_F\le D_j,
+\tag{40.30}
+$$
+因为 $\log$ 在 $[u,v]$ 上的差商至多 $1/u$。这里比较无量纲对数，未除以延迟，因此没有 $h^{-1}$。在环境空间写供应证明时，两个实际支撑投影 $P,P'$ 相同，实际 $\|P-P'\|_F=0$；但供应定义的上界 $d_P=\delta_0/\gamma$ 仍可严格为正，不能把这个有名字的常数改写为零。直接在共同支撑上用（40.30），正是保留实际零投影差的未放宽步骤。此处引用的是恢复卷方程（12.7），不是关于未知初态的命题12.7。
+
+谱映射给 $\alpha I\preceq L_j,L'_j\preceq\beta I$。记 $N=\operatorname{tr}L_e$、$Q=\operatorname{tr}L_*$，加撇同理，则
+$$
+Q,Q'\ge m\alpha,\qquad 0<N,N'\le m\beta,\qquad
+|\operatorname{tr}(L_j-L'_j)|\le\sqrt m\,D_j.
+\tag{40.31}
+$$
+最后一式是 $\langle I,L_j-L'_j\rangle_F$ 的 Cauchy–Schwarz 界，$\|I\|_F=\sqrt m$。故
+$$
+\left|\frac NQ-\frac{N'}{Q'}\right|
+\le\frac{|N-N'|}{Q}+\frac{N'|Q-Q'|}{QQ'}
+\le\frac{D_e}{\sqrt m\,\alpha}
++\frac{\beta D_*}{\sqrt m\,\alpha^2},
+\tag{40.32}
+$$
+证明所述常数。$\square$
+
+式（40.27）首先保证矩阵统计量。只有比较的两个完整世界都另行满足实际共同响应、饱和与合法时间顺序合同，才能由定理40.4分别把它解释为 $s_e/s_*$ 与 $s'_e/s'_*$ 的差；一份拟合的存在不认证实际来源。这里 $v<1$、$u>0$ 及正锚保证的是正事件／锚间隔的稳定界，推论40.5的精确有符号恒等式不自动给负间隔的带噪推广。两个统计量内事件与锚共享基准误差 $\delta_0$；所有重复条目使用同一个联合误差事件，未要求误差独立。逐模型严格正定也不供应统一的 $\gamma,u,\alpha$，弱模态、迟时或弱锚均可使这些裕量退化。
+
+### 40.5 八个必要实例与失效边界
+
+**命题 40.9（共同支撑不足，增加历史后恢复精确间隔）。** 取 $h=1$、$H=\mathbb R^2$、$U=\mathbb R$，
+$$
+T=\operatorname{diag}(1/2,1/4),\qquad
+C=\operatorname{diag}(\log2,\log4),\qquad
+B=2^{-1/2}(1,1).
+\tag{40.33}
+$$
+有效维数为二。基准 $a=0$、$r=0$ 时，$\mathsf H_0(0)=1$，记 $W_0=W_{0,0}$，则
+$$
+W_0(s)=K(s)=\tfrac12(2^{-s}+4^{-s}),\qquad
+K(2s)-K(s)^2=\tfrac14(2^{-s}-4^{-s})^2>0\quad(s>0).
+\tag{40.34}
+$$
+特别地，
+$$
+\frac{-\log K(2)}{-\log K(1)}
+=\frac{\log(32/5)}{\log(8/3)}\approx1.8925801659\ne2.
+\tag{40.35}
+$$
+而 $r=1$ 时
+$$
+\mathsf H_1(0)=\begin{pmatrix}1&3/8\\3/8&5/32\end{pmatrix},\qquad
+\det\mathsf H_1(0)=1/64,\qquad
+\det\mathsf H_1(k)=\frac{8^{-k}}{64}\quad(k=0,1,2,\ldots).
+\tag{40.36}
+$$
+
+证明。$B^*$ 与 $TB^*$ 线性无关，故有效维数二。把两个标量指数相加后展开平方得到（40.34），再取对数给严格次倍增及（40.35）。一般地，二原子权重 $w_1,w_2$、节点 $x,y$ 的阶一块在年龄 $t$ 的行列式为 $w_1w_2(xy)^t(x-y)^2$；这由 $(w_1x^t+w_2y^t)(w_1x^{t+2}+w_2y^{t+2})-(w_1x^{t+1}+w_2y^{t+1})^2$ 直接展开得到。代入 $w_1=w_2=1/2,x=1/2,y=1/4$ 得（40.36）。因此 $r=0,1,2$ 的嵌套真实秩依次为 $1,2,2$；最后的相邻平台正确认证包括较小 $r=1$ 在内的饱和。所有标量响应支撑始终相同且正定，未饱和时失去的正是对数线性。$\square$
+
+**命题 40.10（非零基准必须移位投影）。** 同一来源取 $a=2,r=0$。则
+$$
+V_0^{(2)}=\operatorname{span}(2,1),\qquad
+F_2=\frac1{\sqrt5}(2,1),\qquad
+P_2=\begin{pmatrix}4/5&2/5\\2/5&1/5\end{pmatrix},
+\tag{40.37}
+$$
+以及
+$$
+W_{0,2}(1)=9/20,\qquad W_{0,2}(2)=17/80,\qquad
+\Delta_{2,1}=1/100.
+\tag{40.38}
+$$
+
+证明。$e^{-aC/2}=T$，所以 $D_2=BT=(1/2,1/4)/\sqrt2$，$A_2=K(2)=5/32$，归一化给（40.37）。又 $K(3)=9/128$、$K(4)=17/512$，分别除以 $K(2)$ 得（40.38）的两个白化值，其差为 $17/80-(9/20)^2=1/100$。用（40.37）的 $P_2$ 代入（40.17）给同一值；若误用未移位的 $P_{V_0}=\tfrac12\left(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\right)$，则 $F_2T(I-P_{V_0})TF_2^*=9/160\ne1/100$，明确检测出错误投影。阶一饱和时（40.36）给从年龄2到5的比为3，从年龄5到2的比为 $-3$；二者端点年龄均非负、基准均非零，也都无需已获零年龄样本。$\square$
+
+**命题 40.11（任意有限阶的一步移位仍可藏更大实际空间）。** 对长度为 $m\ge1$、顶点 $0,\ldots,m-1$ 的路径，令 $A_m$ 为邻接矩阵，取
+$$
+T_m=\tfrac12I+\tfrac18A_m,\qquad
+B_m=e_0^*,\qquad C_m=-h^{-1}\log T_m.
+\tag{40.39}
+$$
+其采样谱位于 $[1/4,3/4]$，$C_m>0$，有效维数为 $m$。对任意 $r\ge0$，模型 $m=r+1$ 和 $m=r+2$ 满足
+$$
+\begin{aligned}
+e_0^*T_{r+1}^ke_0&=e_0^*T_{r+2}^ke_0 &&(0\le k\le2r+1),\\
+e_0^*T_{r+2}^{2r+2}e_0-e_0^*T_{r+1}^{2r+2}e_0&=8^{-2r-2}>0.
+\end{aligned}
+\tag{40.40}
+$$
+故两实际模型的 $\mathsf H_r(0),\mathsf H_r(h)$ 完全相同，秩均为 $r+1$，却只有小模型在阶 $r$ 饱和。
+
+证明。恢复卷命题13.8的路径二次型界 $|\langle x,A_mx\rangle|\le2\|x\|^2$ 给所述谱区间；正对数因而合法且生成元严格正。$T_m^je_0$ 在 $e_j$ 上的首达系数为 $(1/8)^j$，在更远坐标为零，$0\le j<m$ 的这些向量呈非零对角的三角形，线性无关并张成全空间。
+
+矩 $e_0^*T_m^ke_0$ 是带等待权 $1/2$ 和边权 $1/8$ 的长度 $k$ 闭路权重之和。大模型相较小模型新增最远顶点 $r+1$；从0访问它并返回至少需 $2r+2$ 条边。因此到 $2r+1$ 为止闭路完全相同。恰在 $2r+2$ 步，新增闭路只有一直向外再一直返回的一条，不能夹等待，权重为 $8^{-2r-2}$。这也覆盖 $r=0$。两块所需最高阶分别为 $2r$ 和 $2r+1$，故数据相等；前 $r+1$ 个 Krylov 向量独立给块秩，证明结论。$\square$
+
+这里把恢复卷命题13.8的路径／Krylov机制用于两个响应来源，而非变化未知初态；它是主卷第137.7—137.12条与恢复卷命题12.6竞争扩张障碍的实例，不是另立一般障碍定理。对每个固定 $r$，共同有限块本身有正 Gram 下界，仍不能从该块与一次移位得知实际未来已闭合；统一于所有 $r$ 的条件数界并未主张。
+
+**命题 40.12（小谱权不供应精确平台）。** 固定 $0<x<y<1$、$0<\epsilon<1$，令
+$$
+M_j=(1-\epsilon)x^j+\epsilon y^j.
+\tag{40.41}
+$$
+它有实际二维正生成元实现 $T=\operatorname{diag}(x,y)$、$B=(\sqrt{1-\epsilon},\sqrt\epsilon)$、$C=-h^{-1}\log T$，并且
+$$
+\det\mathsf H_1(0)=\epsilon(1-\epsilon)(x-y)^2>0.
+\tag{40.42}
+$$
+当 $\epsilon\downarrow0$ 时，每个固定有限前缀趋于秩一来源 $x^j$，真实秩却始终为 $\operatorname{rank}\mathsf H_0=1$、$\operatorname{rank}\mathsf H_1=2$。
+
+证明。两个节点不同且两权重为正，给二维可达性；命题40.9证明中的二原子展开给行列式。每个固定 $j$ 的误差为 $\epsilon(y^j-x^j)$，有限多个同时趋零。$\square$
+
+主卷命题137.15与恢复卷命题12.6已经拥有这种弱方向秩不连续边界。固定的正数阈值可把真实弱特征值删去，报告两个块都秩一；秩一拟合即使精确平坦，也不认证附近真实来源平坦。式（40.17）的残差小或式（40.22）接近等号同样不证明精确饱和；定量近饱和需要另给下界和估计。
+
+**命题 40.13（小残差的钟偏差与真实秩二的数据不稳定）。** 对 $0<\epsilon<1/2$ 取 $h=1$，
+$$
+C_\epsilon=\operatorname{diag}(\epsilon^2,1),\qquad
+B_\epsilon=(\sqrt{1-\epsilon},\sqrt\epsilon),\qquad
+K_\epsilon(t)=(1-\epsilon)e^{-\epsilon^2t}+\epsilon e^{-t}.
+\tag{40.43}
+$$
+同一实际来源有效维数为二，标量一步 Schur 残差为
+$$
+K_\epsilon(2)-K_\epsilon(1)^2
+=\epsilon(1-\epsilon)(e^{-\epsilon^2}-e^{-1})^2>0,
+\tag{40.44}
+$$
+且趋于零。但错误地把阶零压缩当作饱和钟时，
+$$
+-\log K_\epsilon(t)=\epsilon(1-e^{-t})+O_t(\epsilon^2)\quad(t>0\text{ 固定}),\qquad
+\lim_{\epsilon\downarrow0}
+\frac{-\log K_\epsilon(2)}{-\log K_\epsilon(1)}
+=1+e^{-1}\ne2.
+\tag{40.45}
+$$
+即使保留真实秩二，使用同一来源、同一 $\mathsf H_1(0),\mathsf H_1(1)$，两个事件块 $\mathsf H_1(2)$ 和 $\mathsf H_1(3)$ 的 Frobenius 差仍为 $O(\epsilon)$，而精确归一年龄分别为2与3。
+
+证明。两个率不同且两权正，给维数二与（40.44）的二原子展开。对固定 $t$，$e^{-\epsilon^2t}=1-\epsilon^2t+O_t(\epsilon^4)$，故
+$$
+K_\epsilon(t)=1-\epsilon(1-e^{-t})-\epsilon^2t+O_t(\epsilon^3).
+\tag{40.46}
+$$
+再用 $-\log(1-z)=z+O(z^2)$ 得（40.45）的展开。由于 $1-e^{-1}>0$，两个展开之比趋于 $(1-e^{-2})/(1-e^{-1})=1+e^{-1}$。因此把趋零残差当作精确闭合可保留阶一量级的钟偏差。
+
+对每个 $t\ge0$，
+$$
+0<K_\epsilon(t)-K_\epsilon(t+1)
+\le(1-\epsilon)(1-e^{-\epsilon^2})+\epsilon(1-e^{-1})
+\le\epsilon^2+\epsilon(1-e^{-1}).
+\tag{40.47}
+$$
+两个阶一事件块的四个条目分别使用 $t=2,3,3,4$，故
+$$
+\|\mathsf H_1(2)-\mathsf H_1(3)\|_F
+\le2\bigl(\epsilon^2+\epsilon(1-e^{-1})\bigr)=O(\epsilon).
+\tag{40.48}
+$$
+阶一接口确已饱和；更直接地，二原子行列式给
+$$
+\det\mathsf H_1(t)
+=\epsilon(1-\epsilon)(e^{-\epsilon^2}-e^{-1})^2
+ e^{-(\epsilon^2+1)t}.
+\tag{40.49}
+$$
+所以（40.15）的锚对固定为0与1时，目标2与3的比恰为2与3。基准块行列式趋零而迹趋2，最小 Gram 特征值趋零，故没有共同正的 Gram 下界。$\square$
+
+这说明在未限制来源族上不能断言响应数据统计量的统一连续模；它并非两个完整已获档案相同的例子。若旧档案含能区分这两个事件的外部时间戳，必须保留。要提升成完整观察者的 minimax 碰撞，还须构造同时解释同一整份实际记录、合法历史和联合误差的两个允许世界；本例未提出这种额外结论。
+
+**命题 40.14（独立的弱锚障碍）。** 一维来源 $B=1,C=\epsilon>0,h=1$ 精确饱和，$A=K(0)=1$ 有固定 Gram 下界，但
+$$
+K(2)-K(3)=e^{-2\epsilon}(1-e^{-\epsilon})=O(\epsilon),\qquad
+\frac{-\log K(2)}{-\log K(1)}=2,\quad
+\frac{-\log K(3)}{-\log K(1)}=3.
+\tag{40.50}
+$$
+
+证明。$K(t)=e^{-\epsilon t}$，所以每个非空历史块秩一，相邻阶数精确平坦。$1-e^{-\epsilon}\le\epsilon$ 给数据差界，取对数给两比值；锚分母为 $\epsilon\to0$。$\square$
+
+此例将锚条件与秩／支撑退化分开：即使真实支撑不变、基准 Gram 间隔不退化，没有锚对数下界仍无该来源族上的统一比值稳定性。在定理40.8中，对这个类不能保持统一 $v<1$ 或 $\alpha>0$。
+
+**命题 40.15（数值不能认证来源、校准或响应类型）。** 以下是恢复卷引理15.8、命题15.9—15.10、命题12.7与本卷命题22.2所保留的不同障碍。
+
+取两个不同来源 $C_A=1,C_B=2,B_A=B_B=1$，两只本地钟都等于同一个真实时间。两读数为 $e^{-\tau}$、$e^{-2\sigma}$，沿 $\sigma=\tau/2$ 数值完全匹配，真实钟却同速。未知增益又满足
+$$
+k e^{-t}=e^{-(t-\log k)}\qquad(k>0),
+\tag{40.51}
+$$
+所以未校准或改变增益可与年龄混淆；矩阵条目间来源、增益与内积一致是实质条件。
+
+任意给定的自由轨迹 $Be^{-tC}x_0$ 并不自动供应完整核 $Be^{-tC}B^*$。例如一维 $B=C=1$ 时 $x_0=1$ 与 $x_0=-1$ 具有相同核，输出分别为 $e^{-t}$ 与 $-e^{-t}$；把这些轨迹堆成 Hankel 阵并不消去初态。实际核取得须有合法的基准／脉冲或其他已校准协议，完整矩阵还须覆盖声明的输入方向。证明分别是指数代入与线性系统解式
+$$
+y(t)=Be^{-tC}x_0+\int_0^tBe^{-(t-v)C}B^*f(v)\,dv,
+\tag{40.52}
+$$
+其中核仅确定积分项；这正是恢复卷命题12.7的分离。
+
+未参考的准备原点仍不能从任意未知基准恢复，绝对单位受推论40.5的尺度变换约束；不同来源或准备不能逐条拼接。非线性标签的相同初始速率也不足以支持等距延迟：例如 $f(\tau)=\tau+\tau^2$ 在零点导数为1，但 $f(2\eta)-f(0)=2\eta+4\eta^2\ne2\eta+2\eta^2=2(f(\eta)-f(0))$。恢复卷命题15.10还证明这种重标一般不保持固定生成元。本卷命题22.2给更强的完整标记曲线歧义：$e^{-\phi(s)}=\tfrac12(e^{-s}+e^{-2s})$，其中 $\phi(s)=-\log[\tfrac12(e^{-s}+e^{-2s})]$、$1<\phi'(s)\le3/2$；实际一率与二率来源在共同有界钟率合同内仍可有相同完整标记流。这不满足此处已认证的同一个加性半群延迟合同，不能拿曲线数值补足该合同。$\square$
+
+**命题 40.16（抽象对数射线可行性不认证实际延迟块）。** 对一个非零有限内积空间 $E$，给 $A>0$ 及含指定锚 $*$ 的非空正定事件矩阵族 $(H_e)$，要求 $L_e=-\log(A^{-1/2}H_eA^{-1/2})>0$。在这个抽象矩阵数据类内，全部 $L_e$ 是一条正射线上的正倍数，当且仅当它们可写成同一个正生成元的单射响应 $A=DD^*$、$H_e=De^{-s_eG}D^*$，其中 $D:E\to E$ 可逆、$G>0$、$s_e>0$。由单射实现推出射线条件，使用定理40.4的正交白化论证；由射线条件构造实现，选锚 $L_*$、写 $L_e=c_eL_*$，取 $G=L_*$、$D=A^{1/2}$、$s_e=c_e$（锚为1），直接代入即可。这只证明该抽象类有实现，不认证实际来源、年龄或延迟重叠。对于阶 $r$ 的块数据，记 $W(s)=A^{-1/2}H(s)A^{-1/2}$（限制到 $E$），在环境 $U^{r+1}$ 中将 $A^{1/2}$ 延拓为支撑外零，令 $E_i:U\to U^{r+1}$ 插入第 $i$ 个系数块、$F_i=A^{1/2}E_i:U\to E$、$T_E=W(h)$；要把这份规范单射响应解释成真实延迟结构，必须另外满足
+$$
+F_i=T_E^iF_0\quad(0\le i\le r),\qquad
+W(s_e)=T_E^{s_e/h},\qquad
+H(s_e)[i,j]=F_0^*T_E^{i+j+s_e/h}F_0,
+\tag{40.53}
+$$
+以及共同来源与重叠合同；最后一式由前两式及 $H(s_e)[i,j]=F_i^*W(s_e)F_j$ 推出。反例取 $U=\mathbb R,r=1,A=I_2,H(h)=\eta I_2$、$0<\eta<1$：$L(h)=(-\log\eta)I_2>0$ 完全满足抽象射线条件，却把同一个声称的 $K(h)$ 赋值为 $A[0,1]=0$ 和 $H(h)[0,0]=\eta$，矛盾；亦有 $F_1=e_1\ne\eta e_0=T_EF_0$。这条重叠反证足以阻止把数据可行性提升为实际历史，不另建实现理论；本卷命题22.2的完整曲线歧义仍是更强的既有边界。定理40.4的 $D_a$ 也只是证明因子，不是已获授权的新实际准备。$\square$
+
+### 40.6 实际取得、联合误差与适用边界
+
+**命题 40.17（响应矩阵计数及较小接口）。** 固定定义40.1的来源与延迟合同。一个阶 $r$ 块 $\mathsf H_r(b)$ 由 $K(b),K(b+h),\ldots,K(b+2rh)$ 共 $2r+1$ 个不同时间的响应矩阵构成；其 $(r+1)^2$ 个块条目包含重复。表40.1给足够的响应矩阵数，不是最少标量读取或准备次数。
+
+| 表40.1项 | 共同基准所需时间范围 | 不同响应矩阵数及作用 |
+|---|---|---|
+| 40.1a 一个阶 $r$ 块 | $b,b+h,\ldots,b+2rh$ | $2r+1$；目标块若未取得，需实际获取这段响应。 |
+| 40.1b 基准及一步锚 | $a,a+h,\ldots,a+(2r+1)h$ | $2r+2$；构成 $\mathsf H_r(a),\mathsf H_r(a+h)$。 |
+| 40.1c 下一 Gram 或 $s=h$ 倍时 | $a,a+h,\ldots,a+(2r+2)h$ | $2r+3$；分别构成 $\mathsf H_{r+1}(a)$ 或三块 $\mathsf H_r(a),\mathsf H_r(a+h),\mathsf H_r(a+2h)$，两诊断无取得差别。 |
+| 40.1d 已见相邻平台，$r\ge1$ | $a,a+h,\ldots,a+2rh$ | $2r+1$；$\mathsf H_r(a),\mathsf H_{r-1}(a)$ 秩相等时认证较小阶 $r-1$，其一步锚已在此范围。 |
+| 40.1e 平台后较小目标 | $b,b+h,\ldots,b+(2r-2)h$ | $2r-1$，除非这些同源实际读数已经取得；之后所有行列式均用同一个较小阶 $r-1$。 |
+
+证明。块指标和 $i+j$ 逐个覆盖整数 $0,\ldots,2r$，一次和两次移位分别多一个、两个末端时间，给前三行。较小阶的一步锚最多用到 $a+(2r-1)h$，包含在认证较大阶平台所需的范围内；其新目标块有 $2(r-1)+1=2r-1$ 个时间。平台确认证较小接口由定理40.3承担。$\square$
+
+**假设 40.18（矩阵取得与同一个联合误差事件）。** 这些响应矩阵必须来自实际输入 $B^*u$ 及校准输出 $B$，并具有共同年龄、来源、耦合、内积、单位和增益。完整矩阵列要求声明的输入方向与输出读数。可以通过重复准备取得，前提是已认证共同来源、起点、耦合、增益、可重复性和定时等价；发生测量扰动时，还需等价响应实验的理由。未知当前年龄不妨碍从当前事件开始使用已知后续延迟，却既不供应这些延迟，也不认证原始读数是核实验。异步数字时间戳本身不足以断言真实时间为 $a+(i+j)h$。恢复卷引理15.8、命题15.9—15.10、定理21.2、命题21.3及21.6处理共同源钟与有限谱接入；其中21.7明确是假设合同，不是自动证书。
+
+设在一个允许的联合事件上，每个实际响应矩阵及其比较值满足 $\|K(t)-\widetilde K(t)\|_F\le\epsilon$，取值覆盖全部用到的实际时间。重复出现的原始读数仍是同一个随机量，不另造独立误差。恢复卷推论12.5于是直接给
+$$
+\|\mathsf H_r(b)-\widetilde{\mathsf H}_r(b)\|_F^2
+=\sum_{i,j=0}^r\|K(b+(i+j)h)-\widetilde K(b+(i+j)h)\|_F^2
+\le(r+1)^2\epsilon^2.
+\tag{40.54}
+$$
+因此块误差至多 $(r+1)\epsilon$，同一基准的共享误差继续进入定理40.8的两个 $d_j$。若真实块与一份已选合法拟合各自对同一原始块有误差界，则按恢复卷推论12.5先作三角相加；拟合一侧的谱间隔不能替代真实一侧的谱间隔。式（40.54）只在指定联合事件上作确定性会计，不供应该事件概率，也不要求噪声独立。
+
+取得费用分别计输入方向、矩阵与标量读数、重复准备、等待、来源／校准认证、存储、数值精度和计算；表40.1不把任何项设为零。精确期望、精确秩和真实谱间隔是这里的数学输入，经验有限样本要认证它们仍需实验专属证明。
+
+**约定 40.19（供应归属与尚未涵盖的任务）。** 本节的主链依次使用主卷第126.1—126.5节的有效／不可见分解、Gram 配对、Krylov增长与正交识别；第137.2—137.5、137.7—137.13条的实际／抽象实现条件、竞争扩张和精确平坦；主卷定理128.5在第128.4节证明中的半正定行列式等号机制。恢复卷第10.1—10.2节与命题10.6供应采样正性和唯一自伴对数；定理12.2、方程（12.7）、定理12.3未放宽的对数步骤供应矩阵误差，推论12.5供应共享块会计，命题12.6—12.7分别保留真实维数与未知初始化边界；定理13.4的方程（13.10）及其证明只供应残差平方，命题13.8供应路径可见性机制。主卷第137.15—137.18条已有的弱方向及统一性限制继续有效。这里的延迟消费者和具体解析例是普通数学应用，既有证明与文献归属保持原处，不把它们宣称为新的通用定理、新 Lean 结果或已做完的外部新颖性审查。
+
+恢复卷第15.8—15.10、21.2—21.3、21.6条与假设21.7只在各自共同来源、原点、增益、尺度和实际谱取得前提下接入；本卷命题22.2以及第30—36节的完整档案、保留参考、联合误差、顺序和合法取得纪律继续限制解释。有限任务恢复不替代整个观察者，也不把单一任务的数学闭合提升为任意后续实验的接口等价。
+
+本节没有建立带噪支撑／饱和认证、定量近饱和估计、变化支撑上的间隔稳定性、有符号间隔的噪声推广、置信界或最优取得复杂度。它也不识别任意未知钟函数、未观测事件、无参考来源纪元、绝对物理单位或不可见方向，不保证扩大干预语言后的恢复。迟时的 Gram 与对数下界、锚分母下界和实际数据误差仍需另证。空间、时间、边界与记忆之间可恢复的关系在这里限于同一有限正伴随来源和已声明合法历史；这些结论不构成整个持续关系统一问题的完成。
+
+## 40.99 追加锚

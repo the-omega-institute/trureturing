@@ -1,0 +1,27 @@
+**定理 37.3（最优面上的加权 Hall 预算）。** 假设定理37.2的面非空，给有限 $\varepsilon_k\ge0$。在 $\mathcal F_S$ 中存在每边误差不超过 $\varepsilon_k$ 的律，当且仅当对任意正质量移动轨道子集 $A$ 有
+$$
+w(A):=\sum_{O\in A}w_O\le\sum_{k\in N(A)}\varepsilon_k,
+\qquad N(A)=\bigcup_{O\in A}K_O.
+\tag{37.5}
+$$
+等价的分配是 $z_{O,k}\ge0$、$k\notin K_O$ 时为零，且
+$$
+\sum_kz_{O,k}=w_O,\qquad \sum_Oz_{O,k}\le\varepsilon_k.
+\tag{37.6}
+$$
+若 $a>0$，面内最小最大边误差为
+$$
+\min_{P\in\mathcal F_S}\max_k\delta_k(P)
+=\max_{\varnothing\ne A}\frac{w(A)}{|N(A)|}.
+\tag{37.7}
+$$
+分母均正；$a=0$ 时值为零。
+
+证明。恢复卷的误差投影为 $\delta_k=\sum_Oz_{O,k}$。将 $A$ 的行求和即得必要性。充分性用有限网络：源到 $O$ 的容量 $w_O$，每条允许的 $O\to k$ 容量 $C=a+\sum_k\varepsilon_k+1$，$k$ 到汇的容量 $\varepsilon_k$。实容量可行流集合非空、闭且有界，因此流值取得最大值。若最大值 $v<a$，其残量网络没有正容量的源汇路径，否则沿该有限路径加其最小正残量即提高流值。令 $A,J$ 分别为源可达的轨道和割节点。每条中间弧流量至多 $a<C$，所以 $N(A)\subseteq J$。从可达集到不可达集的弧饱和，反向跨割弧流量为零；对可达节点守恒求和，得到
+$$
+v=w(\text{全部轨道}\setminus A)+\sum_{k\in J}\varepsilon_k<a.
+$$
+这给 $w(A)>\sum_{k\in J}\varepsilon_k\ge\sum_{k\in N(A)}\varepsilon_k$，违背（37.5）。故有满值 $a$ 的流，饱和各轨道供给而给出（37.6），再用定理37.2构造律。令所有容量 $\varepsilon_k=t$，Hall 条件恰为 $t\ge w(A)/|N(A)|$，得到（37.7）。$\square$
+
+这是 Ford–Fulkerson 的成熟流机制在本有限分配中的应用[^rroctx37_flow]。证明只用实流的紧性和最大流的残量割，不声称任意无理容量的逐次增广会终止。[RationalSTCutCertificate.lean](../../../D5/S0/Certificates/RationalSTCutCertificate.lean)负责已供应有理流／割证书的会计、弱对偶与可靠检查，不供应此实容量存在性或一个流生成器。
+

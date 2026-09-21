@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replay original source cell costs and four complete through-37 consumers.
+"""Replay source cell costs, four through37 consumers, and a reweighted through41 law.
 
 Exact rational comparison arithmetic only. The ordinary proof supplies the
 actual-source domination, convexity, and unrestricted exponent tails.
@@ -23,6 +23,8 @@ FULL_HAAR_HEAD = ((11, 3), (13, 4))
 MAIN_SCHEDULE = ((17, 6), (19, 8), (23, 9), (29, 12), (31, 16), (37, 20))
 SOURCE_WITNESS = 'certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json'
 SOURCES = (SOURCE_WITNESS, 'profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md', 'certificate_io.py', 'verify_joint_frontier.py', 'profile-notes/001-064/31-one-original-zero-five-layout-across-both-actual-measures.md', 'profile-notes/001-064/42-whole-hinge-absorption-sharpens-actual-survival.md', 'profile-notes/321-384/329-a-finite-whole-j-neighborhood-covers-high-surplus.md', 'profile-notes/321-384/331-complete-physical-hinges-continue-finite-sources-through43.md', 'profile-notes/321-384/333-variable-full-haar-thresholds-retain-more-survivor-mass.md', 'certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json', 'certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json', 'certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json')
+
+SOURCES += ('frontier/source-budgets/source_mean_sharpness.py',)
 
 def require(ok, message):
     if not ok:
@@ -98,14 +100,15 @@ def calculate(base, proof):
 
     class WeightedCost:
 
-        def __init__(self, t, w):
-            self.t = F(t)
-            self.w = w
-            self.tag = ('seven_block', (('h', self.t), 0))
-            self.cut = max(2, src.ceilq(self.t))
-            _, _, intercept, _ = src.zero5_cost_metadata(self.tag)
-            self.slopes = tuple((1 - u for u in w))
-            self.intercepts = tuple((intercept + u * self.t for u in w))
+        def __init__(self, t, w, r=(F(1),) * 5, tag=None):
+            self.t, self.w, self.r = F(t), w, r
+            self.tag = tag or ('seven_block', (('h', self.t), 0))
+            degree, slope, intercept, cutoff = src.zero5_cost_metadata(self.tag)
+            require(degree == 1 and len(r) == len(w) == 5 and min(r) > 0,
+                    'Positive cell weights and complete eventual affine cost')
+            self.cut = max(2, cutoff)
+            self.slopes = tuple(r[l] * (slope - w[l]) for l in range(5))
+            self.intercepts = tuple(r[l] * (intercept + w[l] * self.t) for l in range(5))
             self.tail0, self.tail1 = (4 * x for x in src.geom(5, self.cut)[:2])
             for l in range(5):
                 require(w[l] <= F(29, 35), 'Exact comparison: w[l] <= F(29, 35)')
@@ -117,7 +120,7 @@ def calculate(base, proof):
 
         @lru_cache(None)
         def g(self, l, v):
-            return src.zero5_cost(self.tag, v) - self.w[l] * max(F(v) - self.t, F(0))
+            return self.r[l] * (src.zero5_cost(self.tag, v) - self.w[l] * max(F(v) - self.t, F(0)))
 
         @lru_cache(None)
         def q(self, n, l, v):
@@ -243,12 +246,17 @@ def calculate(base, proof):
             rows.append({'prime': row['prime'], 'threshold': str(t), 'old_finite_nonlinear': str(max(oldv)), 'new_finite_nonlinear': str(max(newv)), 'finite_nonlinear_saving': str(scale * (max(oldv) - max(newv))), 'new_C': str(Cnew), 'numerator_A': str(A), 'numerator_B': str(B), 'new_rho_critical': str(crit), 'remaining_to_rhomax': str(crit - rhomax), 'mass_lowers': masses, 'old_vertex_payments': [str(v) for v in oldv], 'new_vertex_payments': [str(v) for v in newv]})
         out['schedules'][str(number)] = rows
     require(ec == F(614921, 614922), 'Same supported13 denominator mass coefficient')
-    def physical_chain(prefix, schedule, ec, Djoint):
+    def physical_chain(prefix, schedule, ec, Djoint, cost=None, mean=None, lower=None,
+                       benchmark_rho=F(7, 120), mass_cases=None):
+        cost = cost or (lambda t: rawgain(t)[2])
+        mean = newM if mean is None else mean
+        lower = lower or (lambda rho: F(3, 20) + rho - F(263, 360) * delta)
+        mass_cases = mass_cases or [('benchmark', benchmark_rho), ('simple_guard', F(7, 125)),
+                                    ('pure7_rho_upper', rhomax), ('source329_lower', F(1, 40))]
         fixed_rows = []
         post = ()
         fs = ks = cs = benchmark_charge = F(0)
-        benchmark_rho = F(7, 120)
-        benchmark_S = F(3, 20) + benchmark_rho - F(263, 360) * delta
+        benchmark_S = lower(benchmark_rho)
         benchmark_E = ec * benchmark_S - Djoint
         require(benchmark_E > 0, 'Positive benchmark supported13 denominator')
         for prime, threshold in schedule:
@@ -269,9 +277,9 @@ def calculate(base, proof):
             f = pf - t * pm
             c = tf - t * tm
             require(c >= f >= 0, 'Post13-only floor before the sole supported13 conditioning')
-            vertex_payments = [sum(probability * count * rawgain(t / count)[2][i]
+            vertex_payments = [sum(probability * count * cost(t / count)[i]
                                    for count, probability in atoms.items()) for i in range(9)]
-            Cnew = scale * max(vertex_payments) + tf * newM
+            Cnew = scale * max(vertex_payments) + tf * mean
             require(Cnew >= 0 and ec * Cnew + (c - f) * Djoint > 0,
                     'Nonnegative centered numerator and decreasing hinge upper in actual S')
             hinge = f + (Cnew + (c - f) * benchmark_S) / benchmark_E
@@ -284,11 +292,11 @@ def calculate(base, proof):
             B = (1 - fs) * Djoint + cs
             require(A > 0 and ec * B - A * Djoint > 0,
                     'Prescribed chain cumulative mass lower increases with actual S')
-            crit = B / A - F(3, 20) + F(263, 360) * delta
+            crit = (B / A - lower(F(0))) / (lower(F(1)) - lower(F(0)))
             require(ec * (B / A) - Djoint > 0, 'Positive denominator at the strict source threshold')
             masses = {}
-            for label, rho in [('benchmark', benchmark_rho), ('simple_guard', F(7, 125)), ('pure7_rho_upper', rhomax), ('source329_lower', F(1, 40))]:
-                S = F(3, 20) + rho - F(263, 360) * delta
+            for label, rho in mass_cases:
+                S = lower(rho)
                 require(ec * S - Djoint > 0, 'Positive prescribed-chain source denominator')
                 masses[label] = str((A * S - B) / (ec * S - Djoint))
             require(F(masses['benchmark']) == 1 - benchmark_charge,
@@ -404,8 +412,137 @@ def calculate(base, proof):
     require(len(reference_costs) == 70 and reference_costs <= required_costs and fixed_costs <= required_costs,
             'Complete new chain hinge inventory retains all70 reference costs')
     require(Djoint == F(18905277286609631, 253677126780000000), 'Exact common supported13 denominator')
+    # One fixed reweighting of the same actual source; all positive7 blocks
+    # and their constants/tails are weighted, not just the zero7 saving.
+    r = (F(11, 8), F(5, 4), F(1), F(1), F(1))
+    zero = (F(0),) * 5
+    @lru_cache(None)
+    def weighted_hinges(t, cell_weights=r):
+        t = F(t)
+        require(t >= 1, 'Centered reweighted source threshold')
+        _, a, b, cutoff = src.zero5_cost_metadata(('h', t))
+        tails = tuple(F(36, 5) * v for v in src.geom(7, cutoff))
+        expectation = sum(src.zero7_probability(n) * max(F(n) - t, F(0))
+                          for n in range(1, cutoff)) + a * tails[1] + b * tails[0]
+        first = WeightedCost(t, weights, cell_weights)
+        remaining = [WeightedCost(t, zero, cell_weights, ('seven_block', (('h', t), e)))
+                     for e in range(1, cutoff - 1)]
+        tail = WeightedCost(F(1), zero, cell_weights, ('h', F(1)))
+        coefficient = a * (tails[1] - (cutoff - 1) * tails[0])
+        require(coefficient >= 0, 'Complete nonnegative original7 block tail')
+        return tuple(expectation * sum(v * n for v, n in zip(cell_weights, dat[1]))
+                     + first.operator(dat) + sum(op.operator(dat) for op in remaining)
+                     + coefficient * tail.operator(dat) for dat in vertices)
+    for t in required_costs:
+        require(weighted_hinges(t, (F(1),) * 5) == rawgain(t)[2],
+                'General cell-weight implementation preserves every inherited hinge')
+    mean_r = scale * max(weighted_hinges(F(1)))
+    cap_B = (1 - weights[1]) * (F(1, 12) + delta / 36)
+    cap_R = F(1, 8) + 5 * delta / 24
+    def mass_r(rho):
+        return r[0] * (F(3, 20) + rho - F(263, 360) * delta) \
+            - (r[0] - r[1]) * cap_B - (r[0] - 1) * cap_R
+    mass_slope = -r[0] * F(263, 360) - (r[0] - r[1]) * (1 - weights[1]) / 36 \
+        - (r[0] - 1) * F(5, 24)
+    require(mass_slope < 0, 'Weighted mass lower decreases with the source error budget')
+    weighted_head13 = [sum(probability * count * weighted_hinges(t13 / count)[i]
+                          for count, probability in head_atoms.items()) for i in range(9)]
+    weighted_head = [k11 * weighted_hinges(t11)[i] + k13 * weighted_head13[i] for i in range(9)]
+    D_r = scale * max(weighted_head) + k13 * head_tf * mean_r
+    schedule_r = MAIN_SCHEDULE + ((41, 23),)
+    chain_r = physical_chain(head_caps, schedule_r, head_e, D_r, weighted_hinges, mean_r,
+                             mass_r, F(9, 140), [('benchmark', F(9, 140)), ('simple_guard', F(3, 50))])
+    chain_r['benchmark_T_lower'] = chain_r.pop('benchmark_S_lower')
+    chain_r['weights'] = [str(v) for v in r]
+    chain_r['source_hinge_costs'] = {str(t): [str(v) for v in weighted_hinges(t)] for t in sorted(
+        {F(1), t11} | {t13 / n for n in head_atoms} |
+        {F(threshold, n) for _, threshold in schedule_r for n in range(1, threshold)})}
+    chain_r['mean_upper'] = str(mean_r)
+    chain_r['source_mass_lower'] = {'capacity_B': str(cap_B), 'capacity_root1': str(cap_R),
+                                   'error_derivative': str(mass_slope),
+                                   'expression': 'T >= (11/8)*(3/20+rho-(263/360)*delta0) - capacity_B/8 - 3*capacity_root1/8'}
+    chain_r['head'] = dict(main_chain['head'], head13_nonlinear_vertices=[str(v) for v in weighted_head13],
+                           joint_nonlinear_vertices=[str(v) for v in weighted_head], denominator_constant=str(D_r))
+    guard_T, guard_E = mass_r(F(3, 50)), head_e * mass_r(F(3, 50)) - D_r
+    final_r = chain_r['rows'][-1]
+    require(mean_r == F(129284945411, 193616640000)
+            and D_r == F(8070958205846453, 90196311744000000)
+            and guard_T == F(22726567063, 96808320000)
+            and guard_E == F(26206200489324719, 180392623488000000)
+            and F(final_r['mass_lowers']['simple_guard']) > F(1, 125),
+            'The same reweighted actual law has through41 mass greater than1/125')
+    chain_r['simple_guard'] = {'rho_lower': '3/50', 'delta_upper': str(delta), 'T_lower': str(guard_T),
+                               'E_lower': str(guard_E), 'mass41_lower': final_r['mass_lowers']['simple_guard'],
+                               'certified_mass_floor': '1/125'}
+    # Reuse the finite original construction, never its consumer-dependent
+    # output certificate: that would introduce a data dependency cycle.
+    sharp = load('own_test_sharp_family', base / 'frontier/source-budgets/source_mean_sharpness.py')
+    finite = load('own_test_finite_source', base / 'frontier/source-budgets/irredundant_whole_j_finite_source.py')
+    example = sharp.calculate_family(finite, src, 12)
+    data_r = example['source']
+    actual_cells = tuple(n * w for n, w in zip(data_r['n'], data_r['w']))
+    actual_T = sum(v * m for v, m in zip(r, actual_cells))
+    actual_E = head_e * actual_T - D_r
+    actual_bound = (F(final_r['numerator_A']) * actual_T - F(final_r['numerator_B'])) / actual_E
+    require(data_r['rho'] >= F(3, 50) and data_r['delta'] <= delta
+            and actual_T >= mass_r(data_r['rho']) and actual_E > 0
+            and actual_bound >= F(final_r['mass_lowers']['simple_guard'])
+            and any(c['modulus'] == 7 for c in example['original_classes']),
+            'Actual irredundant F12 supplies a nonempty reweighted through41 source domain')
+    chain_r['actual_finite_source'] = {'construction': 'source_mean_sharpness.original_source', 'height': 12,
+        'original_label_count': example['original_label_count'],
+        'private_membership_checks': example['private_membership_checks'],
+        'original_classes_sha256': sha256(json.dumps(example['original_classes'], sort_keys=True).encode()).hexdigest(),
+        'mass': {k: str(data_r[k]) for k in ('S', 'S0', 'rho', 'qJ', 'delta')},
+        'post7_cell_masses': [str(v) for v in actual_cells], 'T': str(actual_T),
+        'E_lower': str(actual_E), 'mass41_lower': str(actual_bound),
+        'scope': 'The actual finite noncover F12 meets the source guard; no extension to a covering family is claimed.'}
+    chain_r['scope'] = 'Fixed positive mod9 reweighting of the same actual source, fixed full-Haar kernels, and one head normalization. Masses are relative to the reweighted supported13 probability. Through41 only; no optimality, through43, or unrestricted noncoverage conclusion.'
+    # A coefficient proof covers every fixed nonnegative five-cell weight;
+    # the fixed rational barriers cover every legal later scalar threshold.
+    baseline_average = tuple(sum(F(b[l] ** 2 - 1, len(src.BASES)) for b in src.BASES)
+                             for l in range(5))
+    require(baseline_average == (F(23, 10),) * 5
+            and F(23, 40) + F(7, 8) + F(5, 8) * F(23, 10) == F(231, 80)
+            and F(23, 10) + F(231, 80) * F(4, 3) == F(123, 20),
+            'Average-baseline lower coefficients for every nonnegative cell cost')
+    for _, n, eta, _, _ in vertices:
+        require(all(n[l] <= F(3, 4) * eta[l] for l in range(5)),
+                'Uniform containing-face mass/pure-mass inequality')
+    ratio_floor = F(2, 3) + (F(7, 15) + F(6, 5)) * F(123, 20)
+    require(ratio_floor == F(131, 12) and ratio_floor > F(123, 20),
+            'Every cell coefficient dominates (131/12) times its retained weight')
+    J2 = src.moment(head_caps, 2)
+    seed = 1 + (J2 * ratio_floor + J2 - 1) / head_e
+    require(seed == F(216789167, 8944200) and seed > 24, 'All-cell assigned head bound')
+    barriers = ((17, 24, 34), (19, 34, 48), (23, 48, 65), (29, 65, 83), (31, 83, 106),
+                (37, 106, 131), (41, 131, 160), (43, 160, 197), (47, 197, 241),
+                (53, 241, 291), (59, 291, 347), (61, 347, 417), (67, 417, 498),
+                (71, 498, 596), (73, 596, 724), (79, 724, 879), (83, 879, 1079),
+                (89, 1079, 1333), (97, 1333, 1649), (101, 1649, 2086), (103, 2086, 2756),
+                (107, 2756, 3851), (109, 3851, 6062), (113, 6062, 12354), (127, 12354, 58341))
+    primes = [p for p in range(17, 132) if all(p % d for d in range(2, p))]
+    require([p for p, _, _ in barriers] + [131] == primes, 'Every intervening prime is retained')
+    rows, carried = [], 24
+    for p, f, k in barriers:
+        ap, bp = F(3 * p - 1, (p - 1) ** 2), F(1, 4 * (p - 1) ** 2)
+        A, B, C = F(k - f), F(f - k) + ap * f, bp * f * (k - 1)
+        gap = 4 * A * C - B * B
+        require(f == carried and 1 <= f < (p - 1) ** 2 and A > 0 and gap > 0
+                and A * (B / (2 * A)) ** 2 + gap / (4 * A) == C,
+                'Complete exact all-threshold quadratic barrier')
+        rows.append({'prime': p, 'input_floor': f, 'output_strict_floor': k,
+                     'quadratic': [str(v) for v in (A, B, C)], 'four_AC_minus_B_squared': str(gap)})
+        carried = k
+    require(carried == 58341 > (131 - 1) ** 2, 'Positive scalar denominator impossible at131')
+    chain_r['all_cell_square_scalar_boundary'] = {
+        'baseline_average': [str(v) for v in baseline_average], 'source_ratio_floor': str(ratio_floor),
+        'head_square_multiplier': str(J2), 'assigned_head_floor': str(seed), 'scalar_quadratics': rows,
+        'next_prime': 131, 'carried_floor': carried, 'strict_legal_input_cap': (131 - 1) ** 2,
+        'scope': 'Every fixed nonnegative five-cell reweighting with T>0, the current WF/A2 square allocation and fixed(3,4) head. The assigned upper-bound procedure fails by131 for every legal scalar clipping schedule. This is not a lower bound on actual Gamma or a failure of actual survival or the complete-hinge chain.'}
+    out['reweighted_full_haar_chain'] = chain_r
     proof_bytes = io.read_artifact_bytes(proof)
-    out.update(schema='source-own-test-consumer-v1', scope='Ordinary finite-source comparison under effective9, qJ>=1-delta, delta<=1/4000, original noncontainment, and an original modulus-7 class. The main full-Haar head chain certifies through37 under rho>=7/125, with an actual finite noncover source satisfying this guard. Three supported13 reference chains remain as comparisons. Each chain retains complete product tails and its own original tests. No Lean, optimality, extremal-cover witness, or unrestricted noncoverage claim.', source_sha256={p: sha256(io.read_artifact_bytes(base / p)).hexdigest() for p in SOURCES}, ordinary_proof={'sha256': sha256(proof_bytes).hexdigest(), 'byte_count': len(proof_bytes)}, producer_sha256=sha256(io.read_artifact_bytes(Path(__file__))).hexdigest(), source_weights=[str(w) for w in weights], vertex_count=len(vertices), pure7_rho_upper=str(rhomax), denominator_mass_coefficient=str(ec))
+    out.update(schema='source-own-test-consumer-v1', scope='Ordinary finite-source comparison under effective9, qJ>=1-delta, delta<=1/4000, original noncontainment, and an original modulus-7 class. The main full-Haar head chain certifies through37 under rho>=7/125, with an actual finite noncover source satisfying this guard. Three supported13 reference chains remain as comparisons. A fixed mod9 reweighting certifies through41 under rho>=3/50, while every fixed nonnegative five-cell reweighting fails by131 within the stated assigned square/fixed-head/scalar procedure. Each chain retains complete product tails and its own original tests. No Lean, optimality, extremal-cover witness, or unrestricted noncoverage claim.', source_sha256={p: sha256(io.read_artifact_bytes(base / p)).hexdigest() for p in SOURCES}, ordinary_proof={'sha256': sha256(proof_bytes).hexdigest(), 'byte_count': len(proof_bytes)}, producer_sha256=sha256(io.read_artifact_bytes(Path(__file__))).hexdigest(), source_weights=[str(w) for w in weights], vertex_count=len(vertices), pure7_rho_upper=str(rhomax), denominator_mass_coefficient=str(ec))
     return (io, out)
 
 def main():
@@ -432,6 +569,9 @@ def main():
         print('full-Haar head', main['head']['schedule'], 'later schedule', main['schedule'],
               'through37 simple-guard mass', Decimal(guard_mass.numerator) / Decimal(guard_mass.denominator),
               'benchmark mass', Decimal(benchmark_mass.numerator) / Decimal(benchmark_mass.denominator))
+        weighted = result['reweighted_full_haar_chain']
+        wm = F(weighted['simple_guard']['mass41_lower'])
+        print('reweighted through41 guard rho>=3/50 mass', Decimal(wm.numerator) / Decimal(wm.denominator))
         rho = F(result['fixed_schedule']['strict_source_threshold'])
         print('supported13 fixed reference', result['fixed_schedule']['schedule'], 'through37 strict rho threshold',
               rho, Decimal(rho.numerator) / Decimal(rho.denominator))

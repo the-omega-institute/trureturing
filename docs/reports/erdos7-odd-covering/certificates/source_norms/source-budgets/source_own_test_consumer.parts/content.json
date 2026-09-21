@@ -73,18 +73,23 @@
     "sha256": "803ca6a08b994462faf0ad5e4901c8785606d9358625b683a39ecf85c42f71a2",
     "kind": "object"
   },
+  "reweighted_full_haar_chain": {
+    "path": "content/008-reweighted_full_haar_chain.json",
+    "sha256": "bd535986cecac99529e9c675798d41b6a5fcadd14f23d5293c2cdbd9d1e3c28f",
+    "kind": "object"
+  },
   "schema": {
     "kind": "inline",
     "value": "source-own-test-consumer-v1"
   },
   "scope": {
     "kind": "inline",
-    "value": "Ordinary finite-source comparison under effective9, qJ>=1-delta, delta<=1/4000, original noncontainment, and an original modulus-7 class. The main full-Haar head chain certifies through37 under rho>=7/125, with an actual finite noncover source satisfying this guard. Three supported13 reference chains remain as comparisons. Each chain retains complete product tails and its own original tests. No Lean, optimality, extremal-cover witness, or unrestricted noncoverage claim."
+    "value": "Ordinary finite-source comparison under effective9, qJ>=1-delta, delta<=1/4000, original noncontainment, and an original modulus-7 class. The main full-Haar head chain certifies through37 under rho>=7/125, with an actual finite noncover source satisfying this guard. Three supported13 reference chains remain as comparisons. A fixed mod9 reweighting certifies through41 under rho>=3/50, while every fixed nonnegative five-cell reweighting fails by131 within the stated assigned square/fixed-head/scalar procedure. Each chain retains complete product tails and its own original tests. No Lean, optimality, extremal-cover witness, or unrestricted noncoverage claim."
   },
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "77c769e2ef8b64c7c482758874fd260235bf048797ed504762d2a821e09f2d35",
+      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "74dcca946d95e6946d8762a87b0c6a7494943043c1040ba27bff2da507b54e80",
       "profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md": "fdc8db8e2751dd88d137fd28a00be09674e0cebc402a00609a0e57297cdc01f0",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
@@ -95,19 +100,20 @@
       "profile-notes/321-384/333-variable-full-haar-thresholds-retain-more-survivor-mass.md": "012e7c1958dc61aab61583e5c026d587b40f35a4ec04896afd39da3f30a5b1d6",
       "certificates/source_norms/j-geometry/j_aligned_complete_moment_comparison.json": "96d49d247d1c4a74822711cfa062d165696884eb9f493eb4959c3816054de685",
       "certificates/source_norms/moments-survival/high_rho_physical_hinge_prime_scan.json": "95766e51dc23a35756d3899a69b491e9dc573a77481119f07fd7d6f2b6fa8470",
-      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "ff5183667b74b2d7d297a8aa686b200d696e439b3a469395a4fe69c60c80845d"
+      "certificates/source_norms/comparison-bounds/high_rho_full_haar_thresholds.json": "ff5183667b74b2d7d297a8aa686b200d696e439b3a469395a4fe69c60c80845d",
+      "frontier/source-budgets/source_mean_sharpness.py": "3e38bf29b30b653c76df444e00bcff72051771b6eb3aa38675ad7e3c1f271d49"
     }
   },
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "3a80872a2fcaa97f0a52da26a258c517faf03c7ddeaed6a7647c76a08eb0a1fb",
-      "byte_count": 23345
+      "sha256": "06421dbd2f5cc25b791375315023e8dfbc4313e738adcfb44e9b0a3b5b4ad1e1",
+      "byte_count": 49217
     }
   },
   "producer_sha256": {
     "kind": "inline",
-    "value": "6a74b48d3a2e2ab9910d75f5c3d7f9d2a17b4e7a6d8571ab53b02ae07f3c84d9"
+    "value": "7be89ec1c53aa201d80ebeaffb563bbaf9bb02990546bf297f51bd22950c5d40"
   },
   "source_weights": {
     "kind": "inline",

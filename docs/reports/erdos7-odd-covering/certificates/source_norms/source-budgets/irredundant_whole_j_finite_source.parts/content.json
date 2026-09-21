@@ -24,8 +24,8 @@
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "3a80872a2fcaa97f0a52da26a258c517faf03c7ddeaed6a7647c76a08eb0a1fb",
-      "byte_count": 23345
+      "sha256": "06421dbd2f5cc25b791375315023e8dfbc4313e738adcfb44e9b0a3b5b4ad1e1",
+      "byte_count": 49217
     }
   },
   "producer_sha256": {

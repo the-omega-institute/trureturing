@@ -1,0 +1,19 @@
+**定理 33.5（实际相容模型的剩余量极限）。** 对一个相容、合法支撑且节点边缘精确的族 $P_l$，令 $P_\infty$ 为定理33.4的延拓。则
+$$
+\delta_{i,l}\uparrow\delta_{i,\infty},\qquad a_l\uparrow a_\infty,\qquad
+R_\infty(P_\infty)=\lim_{l\to\infty}R_l(P_l).
+\tag{33.13}
+$$
+若此极限为零，则每个 $P_l\in F_l$。反之，所有 $P_l\in F_l$ 时 $P_\infty\in F_\infty$。
+
+证明。把第 $i$ 边的有限失败事件拉回 $X_\infty$，记为 $A_{i,l}$，把移动锚事件记为 $D_l$。细层相等必保持粗层相等，闭合边同时使用半共轭，故 $A_{i,l}\subseteq A_{i,l+1}$、$D_l\subseteq D_{l+1}$。有限坐标分离线程，因而
+$$
+A_{i,\infty}=\bigcup_lA_{i,l},\qquad D_\infty=\bigcup_lD_l.
+\tag{33.14}
+$$
+概率从下连续给两个递增极限；$n$ 固定且有限，有限求和再相减给（33.13）。这不说明差 $R_l$ 递增。
+
+若极限零，完成剩余量零。命题33.2对 $B_\infty,g_\infty$ 仍适用，所以 $P_\infty(E_\infty)=1$，其中 $E_\infty=\bigcup_{k<n}T_\infty^k(B_\infty)$。每个割像紧，有限并闭；对投影使用（33.9），有 $\pi_l^n(E_\infty)\subseteq E_l$。故每个有限律支撑于 $E_l$，配合已有的支撑及边缘条件，得到 $P_l\in F_l$。反向由（33.13）及定理33.4的支撑、边缘结论。$\square$
+
+零极限迫使每层零的方向依赖等号支撑运输，不能仅从两个递增数列之差得出。这里比较的是同一塔上的实际相容族；定理32.9中随轨道长度改变的模型没有提供这一共同模型前提。
+

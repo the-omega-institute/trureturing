@@ -1,0 +1,800 @@
+[
+  {
+    "exponents": [
+      8,
+      7,
+      0
+    ],
+    "modulus": 512578125,
+    "residue": 441531250,
+    "coordinate_residues": [
+      2194,
+      46875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      8,
+      8,
+      0
+    ],
+    "modulus": 2562890625,
+    "residue": 1671718750,
+    "coordinate_residues": [
+      2194,
+      234375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      8,
+      9,
+      0
+    ],
+    "modulus": 12814453125,
+    "residue": 133984375,
+    "coordinate_residues": [
+      2194,
+      1171875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      8,
+      10,
+      0
+    ],
+    "modulus": 64072265625,
+    "residue": 5259765625,
+    "coordinate_residues": [
+      2194,
+      5859375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      8,
+      11,
+      0
+    ],
+    "modulus": 320361328125,
+    "residue": 30888671875,
+    "coordinate_residues": [
+      2194,
+      29296875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      8,
+      12,
+      0
+    ],
+    "modulus": 1601806640625,
+    "residue": 479394531250,
+    "coordinate_residues": [
+      2194,
+      146484375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      1,
+      0
+    ],
+    "modulus": 98415,
+    "residue": 6568,
+    "coordinate_residues": [
+      6568,
+      3,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      2,
+      0
+    ],
+    "modulus": 492075,
+    "residue": 183715,
+    "coordinate_residues": [
+      6568,
+      15,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      3,
+      0
+    ],
+    "modulus": 2460375,
+    "residue": 1069450,
+    "coordinate_residues": [
+      6568,
+      75,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      4,
+      0
+    ],
+    "modulus": 12301875,
+    "residue": 7958500,
+    "coordinate_residues": [
+      6568,
+      375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      5,
+      0
+    ],
+    "modulus": 61509375,
+    "residue": 30101875,
+    "coordinate_residues": [
+      6568,
+      1875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      6,
+      0
+    ],
+    "modulus": 307546875,
+    "residue": 263837500,
+    "coordinate_residues": [
+      6568,
+      9375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      7,
+      0
+    ],
+    "modulus": 1537734375,
+    "residue": 1124968750,
+    "coordinate_residues": [
+      6568,
+      46875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      8,
+      0
+    ],
+    "modulus": 7688671875,
+    "residue": 817421875,
+    "coordinate_residues": [
+      6568,
+      234375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      9,
+      0
+    ],
+    "modulus": 38443359375,
+    "residue": 30034375000,
+    "coordinate_residues": [
+      6568,
+      1171875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      10,
+      0
+    ],
+    "modulus": 192216796875,
+    "residue": 176119140625,
+    "coordinate_residues": [
+      6568,
+      5859375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      11,
+      0
+    ],
+    "modulus": 961083984375,
+    "residue": 137675781250,
+    "coordinate_residues": [
+      6568,
+      29296875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      9,
+      12,
+      0
+    ],
+    "modulus": 4805419921875,
+    "residue": 4750878906250,
+    "coordinate_residues": [
+      6568,
+      146484375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      1,
+      0
+    ],
+    "modulus": 295245,
+    "residue": 137788,
+    "coordinate_residues": [
+      19690,
+      3,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      2,
+      0
+    ],
+    "modulus": 1476225,
+    "residue": 19690,
+    "coordinate_residues": [
+      19690,
+      15,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      3,
+      0
+    ],
+    "modulus": 7381125,
+    "residue": 6810325,
+    "coordinate_residues": [
+      19690,
+      75,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      4,
+      0
+    ],
+    "modulus": 36905625,
+    "residue": 3857875,
+    "coordinate_residues": [
+      19690,
+      375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      5,
+      0
+    ],
+    "modulus": 184528125,
+    "residue": 173623750,
+    "coordinate_residues": [
+      19690,
+      1875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      6,
+      0
+    ],
+    "modulus": 922640625,
+    "residue": 468868750,
+    "coordinate_residues": [
+      19690,
+      9375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      7,
+      0
+    ],
+    "modulus": 4613203125,
+    "residue": 99812500,
+    "coordinate_residues": [
+      19690,
+      46875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      8,
+      0
+    ],
+    "modulus": 23066015625,
+    "residue": 21320546875,
+    "coordinate_residues": [
+      19690,
+      234375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      9,
+      0
+    ],
+    "modulus": 115330078125,
+    "residue": 81292187500,
+    "coordinate_residues": [
+      19690,
+      1171875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      10,
+      0
+    ],
+    "modulus": 576650390625,
+    "residue": 496480468750,
+    "coordinate_residues": [
+      19690,
+      5859375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      11,
+      0
+    ],
+    "modulus": 2883251953125,
+    "residue": 1419121093750,
+    "coordinate_residues": [
+      19690,
+      29296875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      10,
+      12,
+      0
+    ],
+    "modulus": 14416259765625,
+    "residue": 3149072265625,
+    "coordinate_residues": [
+      19690,
+      146484375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      1,
+      0
+    ],
+    "modulus": 885735,
+    "residue": 236203,
+    "coordinate_residues": [
+      59056,
+      3,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      2,
+      0
+    ],
+    "modulus": 4428675,
+    "residue": 3956290,
+    "coordinate_residues": [
+      59056,
+      15,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      3,
+      0
+    ],
+    "modulus": 22143375,
+    "residue": 9270700,
+    "coordinate_residues": [
+      59056,
+      75,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      4,
+      0
+    ],
+    "modulus": 110716875,
+    "residue": 102272875,
+    "coordinate_residues": [
+      59056,
+      375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      5,
+      0
+    ],
+    "modulus": 553584375,
+    "residue": 235133125,
+    "coordinate_residues": [
+      59056,
+      1875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      6,
+      0
+    ],
+    "modulus": 2767921875,
+    "residue": 2006603125,
+    "coordinate_residues": [
+      59056,
+      9375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      7,
+      0
+    ],
+    "modulus": 13839609375,
+    "residue": 10863953125,
+    "coordinate_residues": [
+      59056,
+      46875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      8,
+      0
+    ],
+    "modulus": 69198046875,
+    "residue": 13631875000,
+    "coordinate_residues": [
+      59056,
+      234375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      9,
+      0
+    ],
+    "modulus": 345990234375,
+    "residue": 235065625000,
+    "coordinate_residues": [
+      59056,
+      1171875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      10,
+      0
+    ],
+    "modulus": 1729951171875,
+    "residue": 304263671875,
+    "coordinate_residues": [
+      59056,
+      5859375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      11,
+      0
+    ],
+    "modulus": 8649755859375,
+    "residue": 2380205078125,
+    "coordinate_residues": [
+      59056,
+      29296875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      11,
+      12,
+      0
+    ],
+    "modulus": 43248779296875,
+    "residue": 12759912109375,
+    "coordinate_residues": [
+      59056,
+      146484375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      1,
+      0
+    ],
+    "modulus": 2657205,
+    "residue": 2302918,
+    "coordinate_residues": [
+      177154,
+      3,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      2,
+      0
+    ],
+    "modulus": 13286025,
+    "residue": 11337415,
+    "coordinate_residues": [
+      177154,
+      15,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      3,
+      0
+    ],
+    "modulus": 66430125,
+    "residue": 16651825,
+    "coordinate_residues": [
+      177154,
+      75,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      4,
+      0
+    ],
+    "modulus": 332150625,
+    "residue": 176084125,
+    "coordinate_residues": [
+      177154,
+      375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      5,
+      0
+    ],
+    "modulus": 1660753125,
+    "residue": 973245625,
+    "coordinate_residues": [
+      177154,
+      1875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      6,
+      0
+    ],
+    "modulus": 8303765625,
+    "residue": 6619806250,
+    "coordinate_residues": [
+      177154,
+      9375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      7,
+      0
+    ],
+    "modulus": 41518828125,
+    "residue": 1637546875,
+    "coordinate_residues": [
+      177154,
+      46875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      8,
+      0
+    ],
+    "modulus": 207594140625,
+    "residue": 59763906250,
+    "coordinate_residues": [
+      177154,
+      234375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      9,
+      0
+    ],
+    "modulus": 1037970703125,
+    "residue": 350395703125,
+    "coordinate_residues": [
+      177154,
+      1171875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      10,
+      0
+    ],
+    "modulus": 5189853515625,
+    "residue": 4917466796875,
+    "coordinate_residues": [
+      177154,
+      5859375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      11,
+      0
+    ],
+    "modulus": 25949267578125,
+    "residue": 22562968750000,
+    "coordinate_residues": [
+      177154,
+      29296875,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      12,
+      12,
+      0
+    ],
+    "modulus": 129746337890625,
+    "residue": 84841210937500,
+    "coordinate_residues": [
+      177154,
+      146484375,
+      0
+    ]
+  },
+  {
+    "exponents": [
+      0,
+      0,
+      1
+    ],
+    "modulus": 7,
+    "residue": 6,
+    "coordinate_residues": [
+      0,
+      0,
+      6
+    ]
+  },
+  {
+    "exponents": [
+      1,
+      0,
+      1
+    ],
+    "modulus": 21,
+    "residue": 15,
+    "coordinate_residues": [
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "exponents": [
+      2,
+      0,
+      1
+    ],
+    "modulus": 63,
+    "residue": 30,
+    "coordinate_residues": [
+      3,
+      0,
+      2
+    ]
+  }
+]
