@@ -64,6 +64,7 @@ internal static class FileMapPolicy
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
+            ["NativeArchivePaths"] = "tools/scripts/worktree/lean_actions.py",
             ["PackageMaterialRegistry"] = "tools/StrataLint.EngineeringScope/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,

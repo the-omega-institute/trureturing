@@ -112,7 +112,7 @@ public sealed class RegisteredCachePathTests
             Directory.CreateDirectory(Path.Combine(Root, "Meta"));
             File.WriteAllText(Path.Combine(Root, "lake-manifest.json"), "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"" + new string('a', 40) + "\"}]}");
             File.WriteAllText(Path.Combine(Root, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
-            File.WriteAllText(Path.Combine(Root, "Meta/FILEMAP.toml"), "files = [{pattern = \"Meta/ci-cache-paths.json\", consumed_by = [\"lean-actions\"]}]\n");
+            File.WriteAllText(Path.Combine(Root, "Meta/FILEMAP.toml"), "files = [{pattern = \"Meta/ci-cache-paths.json\", consumed_by = [\"automation\"]}]\n");
         }
         internal void Manifest(string[] paths) => Raw(JsonSerializer.Serialize(new
         {
