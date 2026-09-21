@@ -20,7 +20,8 @@ public sealed class FileMapResourceParityTests
             "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json" })
             Assert.NotEmpty(Assert.Single(map.Match(path)).Require);
         var filemap = Assert.Single(map.Resources, resource => resource.Id == "filemap");
-        Assert.Equal(["current"], filemap.CacheLayers.ToArray());
+        Assert.Empty(filemap.CacheLayers);
+        Assert.Empty(filemap.CacheActivation);
         Assert.Equal(["build"], filemap.Prerequisites.ToArray());
         Assert.Equal(["judge"], Assert.Single(map.Resources, resource => resource.Id == "build").CacheLayers.ToArray());
         Assert.Equal(["elan", "engineering"], Assert.Single(map.Resources, resource => resource.Id == "engineering").CacheLayers.ToArray());
@@ -28,7 +29,8 @@ public sealed class FileMapResourceParityTests
         Assert.Equal(["dependency", "elan", "project"], lean.CacheLayers.ToArray());
         Assert.All(lean.CacheActivation.Values, activation => Assert.Equal("stage-start", activation));
         var report = Assert.Single(map.Resources, resource => resource.Id == "lean-report");
-        Assert.Empty(report.CacheLayers);
+        Assert.Equal(["current"], report.CacheLayers.ToArray());
+        Assert.Equal(KeyValuePair.Create("current", "stage-start"), Assert.Single(report.CacheActivation));
         Assert.Equal(["lean"], report.Prerequisites.ToArray());
         Assert.DoesNotContain("lake", filemap.Tools);
     }

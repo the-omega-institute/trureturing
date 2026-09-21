@@ -16,7 +16,7 @@ PROJECT_MANIFEST = "Meta/engineering-projects.json"
 PROJECT_FIELDS = {"path", "assembly", "role", "ci", "include", "exclude", "references",
                   "owner", "owned_test_assembly", "test_partition",
                   "root_namespace", "namespace_exclude", "global_namespace_exceptions",
-                  "build_inputs", "execution_inputs", "execution_excludes", "execution_environment"}
+                  "build_inputs", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths"}
 TEST_ROLES = {"owned-test", "cross-cutting-test"}
 
 
@@ -43,10 +43,15 @@ def registered_path(value, *, pattern=False):
 
 
 def source_glob(value):
-    # Same declared glob language as FileMapGlob: *, ** and optional **/.
     registered_path(value, pattern=True)
     if not value.endswith(".cs"):
         raise ValueError(f"invalid registered source pattern: {value}")
+    return registered_glob(value)
+
+
+def registered_glob(value):
+    # Same declared glob language as FileMapGlob: *, ** and optional **/.
+    registered_path(value, pattern=True)
     expression = re.escape(value).replace(r"\*\*/", "(?:.*/)?").replace(r"\*\*", ".*").replace(r"\*", "[^/]*")
     return re.compile(expression + r"\Z")
 
@@ -113,7 +118,7 @@ def project_registry(root):
                     else:
                         source_glob(value)
             # Execution declarations are validated but never enter compile_projection.
-            for field in ("build_inputs", "execution_inputs", "execution_excludes", "execution_environment"):
+            for field in ("build_inputs", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths"):
                 values = row[field]
                 if field != "build_inputs" and role not in TEST_ROLES:
                     if values is not None:
@@ -126,7 +131,11 @@ def project_registry(root):
                         if not re.fullmatch(r"[A-Z_][A-Z0-9_]*", value):
                             raise ValueError(f"invalid registered execution environment: {path}: {value}")
                     else:
-                        registered_path(value, pattern=True)
+                        registered_path(value, pattern=field != "execution_filemap_paths")
+            if row["execution_filemap_paths"] and (
+                    not any(registered_glob(pattern).fullmatch("Meta/FILEMAP.toml") for pattern in row["execution_inputs"])
+                    or any(registered_glob(pattern).fullmatch("Meta/FILEMAP.toml") for pattern in row["execution_excludes"])):
+                raise ValueError(f"execution_filemap_paths require FILEMAP runtime input: {path}")
             namespace = row["root_namespace"]
             if not isinstance(namespace, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*", namespace):
                 raise ValueError(f"invalid registered root_namespace: {path}")

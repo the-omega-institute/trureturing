@@ -60,6 +60,42 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
+    [InlineData("tools/lean-inspector/tests/test_reuse.py")]
+    [InlineData("tools/scripts/agent/openproblem/erdos617.py")]
+    public void FileMapOnlyPushPlansKeepBuildAndTestCachesWithoutCurrentOrLeanCaches(string input)
+    {
+        var plan = Plan(input, "", "push");
+        var resources = Strings(plan["resources"]!);
+        var caches = Strings(plan["cache_layers"]!);
+
+        Assert.Contains("build", resources);
+        Assert.Contains("filemap", resources);
+        Assert.DoesNotContain("current", resources);
+        Assert.DoesNotContain("lean", resources);
+        Assert.DoesNotContain("lean-report", resources);
+        Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
+        Assert.DoesNotContain("current", caches);
+        Assert.DoesNotContain("dependency", caches);
+        Assert.DoesNotContain("project", caches);
+        Assert.Contains("judge", caches);
+        Assert.Contains("engineering", caches);
+        Assert.Contains("elan", caches);
+    }
+
+    [Fact]
+    public void DeltaJudgeReportPlanRetainsCurrentReportSeedThroughLeanReport()
+    {
+        var plan = Plan("docs/develop/spec/golden-ledger-repo-spec.md", "", "pr");
+        var resources = Strings(plan["resources"]!);
+        var caches = Strings(plan["cache_layers"]!);
+
+        Assert.Equal(new[] { "build", "delta-judge", "filemap", "lean", "lean-report" }, resources);
+        Assert.Equal(new[] { "lean-report", "filemap" }, Strings(plan["execution"]!["steps"]!));
+        Assert.DoesNotContain("current", resources);
+        Assert.Contains("current", caches);
+    }
+
+    [Theory]
     [InlineData("tools/scripts/preflight.sh", "push")]
     [InlineData("tools/scripts/preflight.sh", "pr")]
     [InlineData("tools/scripts/lib/admission-base-lib.sh", "push")]
@@ -323,7 +359,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         {
             Assert.Equal(new[] { "build", "filemap" }, Strings(plan["resources"]!));
             Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
-            Assert.Equal(new[] { "current", "judge" }, Strings(plan["cache_layers"]!));
+            Assert.Equal(new[] { "judge" }, Strings(plan["cache_layers"]!));
             Assert.Equal("not-applicable", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         }
         else
