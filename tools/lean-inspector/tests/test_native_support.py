@@ -78,7 +78,7 @@ root = "Cache"
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
         self.write('D5/B.lean', 'module\npublic section\nnamespace D5\nprivate def secret : Nat := 1\ndef hidden : Nat := secret\n')
-        self.write('D5/Alone.lean', 'def alone : String := "λ😀𐀀"\nopaque concealed : Nat := 7\n')
+        self.write('D5/Alone.lean', 'def alone : String := "λ😀𐀀中"\nopaque concealed : Nat := 7\n')
         self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
