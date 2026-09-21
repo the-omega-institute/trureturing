@@ -1,0 +1,758 @@
+[
+  {
+    "L": 45,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        16,
+        45
+      ]
+    ],
+    "k": 2,
+    "layered_state_widths": [
+      1,
+      2,
+      3,
+      5,
+      8,
+      13,
+      21,
+      34,
+      55
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 1,
+      "3": 2,
+      "4": 3,
+      "5": 5,
+      "6": 8,
+      "7": 13,
+      "8": 11
+    },
+    "max_code_length": 8,
+    "mean_code_length": "91/15",
+    "padded_legal_words": 55,
+    "padded_length": 8,
+    "padded_survivor_words": 20,
+    "survivor_sha256": "3266fa6e51634298db9dcc11e0d69847017117b78326a4e6c5d97f3d73fb2996",
+    "survivors": 16,
+    "uniform_survivor_mass": "16/45"
+  },
+  {
+    "L": 45,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        16,
+        45
+      ]
+    ],
+    "k": 3,
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      7,
+      13,
+      24,
+      44,
+      81
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 6,
+      "5": 11,
+      "6": 20,
+      "7": 1
+    },
+    "max_code_length": 7,
+    "mean_code_length": "44/9",
+    "padded_legal_words": 81,
+    "padded_length": 7,
+    "padded_survivor_words": 30,
+    "survivor_sha256": "3266fa6e51634298db9dcc11e0d69847017117b78326a4e6c5d97f3d73fb2996",
+    "survivors": 16,
+    "uniform_survivor_mass": "16/45"
+  },
+  {
+    "L": 45,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        16,
+        45
+      ]
+    ],
+    "k": 4,
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      8,
+      15,
+      29,
+      56
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 7,
+      "5": 14,
+      "6": 16
+    },
+    "max_code_length": 6,
+    "mean_code_length": "211/45",
+    "padded_legal_words": 56,
+    "padded_length": 6,
+    "padded_survivor_words": 21,
+    "survivor_sha256": "3266fa6e51634298db9dcc11e0d69847017117b78326a4e6c5d97f3d73fb2996",
+    "survivors": 16,
+    "uniform_survivor_mass": "16/45"
+  },
+  {
+    "L": 45,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        16,
+        45
+      ]
+    ],
+    "k": 5,
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      31,
+      61
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 8,
+      "5": 15,
+      "6": 14
+    },
+    "max_code_length": 6,
+    "mean_code_length": "208/45",
+    "padded_legal_words": 61,
+    "padded_length": 6,
+    "padded_survivor_words": 22,
+    "survivor_sha256": "3266fa6e51634298db9dcc11e0d69847017117b78326a4e6c5d97f3d73fb2996",
+    "survivors": 16,
+    "uniform_survivor_mass": "16/45"
+  },
+  {
+    "L": 45,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        16,
+        45
+      ]
+    ],
+    "k": "binary",
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      45
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 8,
+      "5": 16,
+      "6": 13
+    },
+    "max_code_length": 6,
+    "mean_code_length": "23/5",
+    "padded_legal_words": 64,
+    "padded_length": 6,
+    "padded_survivor_words": 23,
+    "survivor_sha256": "3266fa6e51634298db9dcc11e0d69847017117b78326a4e6c5d97f3d73fb2996",
+    "survivors": 16,
+    "uniform_survivor_mass": "16/45"
+  },
+  {
+    "L": 105,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        8,
+        21
+      ],
+      [
+        12,
+        35
+      ],
+      [
+        36,
+        105
+      ]
+    ],
+    "k": 2,
+    "layered_state_widths": [
+      1,
+      2,
+      3,
+      5,
+      8,
+      13,
+      21,
+      34,
+      55,
+      89,
+      144
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "10": 16,
+      "2": 1,
+      "3": 2,
+      "4": 3,
+      "5": 5,
+      "6": 8,
+      "7": 13,
+      "8": 21,
+      "9": 34
+    },
+    "max_code_length": 10,
+    "mean_code_length": "39/5",
+    "padded_legal_words": 144,
+    "padded_length": 10,
+    "padded_survivor_words": 56,
+    "survivor_sha256": "3bfb2c0b8654a3515bf1415a6775711c0c141095dc00b3ebbac09358ac4e3b49",
+    "survivors": 42,
+    "uniform_survivor_mass": "2/5"
+  },
+  {
+    "L": 105,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        8,
+        21
+      ],
+      [
+        12,
+        35
+      ],
+      [
+        36,
+        105
+      ]
+    ],
+    "k": 3,
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      7,
+      13,
+      24,
+      44,
+      81,
+      149
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 6,
+      "5": 11,
+      "6": 20,
+      "7": 37,
+      "8": 24
+    },
+    "max_code_length": 8,
+    "mean_code_length": "664/105",
+    "padded_legal_words": 149,
+    "padded_length": 8,
+    "padded_survivor_words": 59,
+    "survivor_sha256": "3bfb2c0b8654a3515bf1415a6775711c0c141095dc00b3ebbac09358ac4e3b49",
+    "survivors": 42,
+    "uniform_survivor_mass": "2/5"
+  },
+  {
+    "L": 105,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        8,
+        21
+      ],
+      [
+        12,
+        35
+      ],
+      [
+        36,
+        105
+      ]
+    ],
+    "k": 4,
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      8,
+      15,
+      29,
+      56,
+      108
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 7,
+      "5": 14,
+      "6": 27,
+      "7": 49
+    },
+    "max_code_length": 7,
+    "mean_code_length": "124/21",
+    "padded_legal_words": 108,
+    "padded_length": 7,
+    "padded_survivor_words": 44,
+    "survivor_sha256": "3bfb2c0b8654a3515bf1415a6775711c0c141095dc00b3ebbac09358ac4e3b49",
+    "survivors": 42,
+    "uniform_survivor_mass": "2/5"
+  },
+  {
+    "L": 105,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        8,
+        21
+      ],
+      [
+        12,
+        35
+      ],
+      [
+        36,
+        105
+      ]
+    ],
+    "k": 5,
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      31,
+      61,
+      120
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 8,
+      "5": 15,
+      "6": 30,
+      "7": 44
+    },
+    "max_code_length": 7,
+    "mean_code_length": "204/35",
+    "padded_legal_words": 120,
+    "padded_length": 7,
+    "padded_survivor_words": 47,
+    "survivor_sha256": "3bfb2c0b8654a3515bf1415a6775711c0c141095dc00b3ebbac09358ac4e3b49",
+    "survivors": 42,
+    "uniform_survivor_mass": "2/5"
+  },
+  {
+    "L": 105,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        8,
+        21
+      ],
+      [
+        12,
+        35
+      ],
+      [
+        36,
+        105
+      ]
+    ],
+    "k": "binary",
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      105
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 8,
+      "5": 16,
+      "6": 32,
+      "7": 41
+    },
+    "max_code_length": 7,
+    "mean_code_length": "608/105",
+    "padded_legal_words": 128,
+    "padded_length": 7,
+    "padded_survivor_words": 51,
+    "survivor_sha256": "3bfb2c0b8654a3515bf1415a6775711c0c141095dc00b3ebbac09358ac4e3b49",
+    "survivors": 42,
+    "uniform_survivor_mass": "2/5"
+  },
+  {
+    "L": 315,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        8,
+        21
+      ],
+      [
+        12,
+        35
+      ],
+      [
+        16,
+        45
+      ],
+      [
+        22,
+        63
+      ],
+      [
+        36,
+        105
+      ],
+      [
+        106,
+        315
+      ]
+    ],
+    "k": 2,
+    "layered_state_widths": [
+      1,
+      2,
+      3,
+      5,
+      8,
+      13,
+      21,
+      34,
+      55,
+      89,
+      144,
+      233,
+      377
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "10": 55,
+      "11": 89,
+      "12": 82,
+      "2": 1,
+      "3": 2,
+      "4": 3,
+      "5": 5,
+      "6": 8,
+      "7": 13,
+      "8": 21,
+      "9": 34
+    },
+    "max_code_length": 12,
+    "mean_code_length": "3172/315",
+    "padded_legal_words": 377,
+    "padded_length": 12,
+    "padded_survivor_words": 114,
+    "survivor_sha256": "132a3f99f6551fa9d4cc4665e7fa1951a4e519e6cb04b6752e376c5c73592dc0",
+    "survivors": 96,
+    "uniform_survivor_mass": "32/105"
+  },
+  {
+    "L": 315,
+    "family": [
+      [
+        2,
+        3
+      ],
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        7
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        6,
+        15
+      ],
+      [
+        8,
+        21
+      ],
+      [
+        12,
+        35
+      ],
+      [
+        16,
+        45
+      ],
+      [
+        22,
+        63
+      ],
+      [
+        36,
+        105
+      ],
+      [
+        106,
+        315
+      ]
+    ],
+    "k": 3,
+    "layered_state_widths": [
+      1,
+      2,
+      4,
+      7,
+      13,
+      24,
+      44,
+      81,
+      149,
+      274,
+      504
+    ],
+    "length_counts": {
+      "0": 1,
+      "1": 1,
+      "10": 41,
+      "2": 2,
+      "3": 3,
+      "4": 6,
+      "5": 11,
+      "6": 20,
+      "7": 37,
+      "8": 68,
+      "9": 125
+    },
+    "max_code_length": 10,
+    "mean_code_length": "2551/315",
+    "padded_legal_words": 504,
+    "padded_length": 10,
+    "padded_survivor_words": 152,
+    "survivor_sha256": "132a3f99f6551fa9d4cc4665e7fa1951a4e519e6cb04b6752e376c5c73592dc0",
+    "survivors": 96,
+    "uniform_survivor_mass": "32/105"
+  }
+]
