@@ -603,7 +603,7 @@
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
     "problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md": "70c1c2eafee2d18ac9b8a29944adca71e7ca7237f4356dc6ecb9f1b5391998e8",
-    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "fa0d5aeec7361c9f1578fcc80958d1aa8d8937e26ac5d968a822155317e2d012",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
     "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
     "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
     "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",

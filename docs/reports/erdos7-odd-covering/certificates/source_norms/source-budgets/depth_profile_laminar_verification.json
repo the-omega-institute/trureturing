@@ -907,7 +907,7 @@
   ],
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "fa0d5aeec7361c9f1578fcc80958d1aa8d8937e26ac5d968a822155317e2d012",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
     "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
     "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
     "certificates/source_norms/source-budgets/capped_head_bellman.json": "725e2d7fb1c8abf2a41734a1e74c1ad787ed4294b18c661cace971023f22731f"

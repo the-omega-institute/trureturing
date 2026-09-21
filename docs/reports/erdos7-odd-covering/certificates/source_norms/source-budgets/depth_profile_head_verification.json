@@ -175,11 +175,11 @@
   ],
   "source_sha256": {
     "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
-    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "fa0d5aeec7361c9f1578fcc80958d1aa8d8937e26ac5d968a822155317e2d012",
+    "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
     "frontier/source-budgets/depth_profile_head_input.json": "3c0f4a5def0872b6c25cc2076f3e563f5983332ef94bdf5d0f96a2a3a11915a2",
     "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
     "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
-    "certificates/source_norms/source-budgets/depth_cap_bellman.json": "672901ed5e6f8f43d93ee34221d058594fcbb4159b4a1bc4e5b461addb305f42"
+    "certificates/source_norms/source-budgets/depth_cap_bellman.json": "a76cc23ad878ee173014fad6af5adb5232034bec4d6478d29ee4d7ca8823654d"
   },
   "producer_sha256": "c09f02fc2b13c9fc549aa79ee5f289a213e2952acaf01f2372129afda4117270"
 }
