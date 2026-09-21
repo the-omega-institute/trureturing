@@ -17,7 +17,7 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic
 import Mathlib.Tactic.Ring
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.RegistrationWitnesses
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import LeanInformationAudit.Syntax
 import LeanInformationAudit.SealCommand
 

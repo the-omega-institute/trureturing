@@ -65,3 +65,4 @@ Let p be the greatest prime factor of n, d=n/p, and k=p-1-floor(2p/d), where the
 - Truth anchor: `D5/S3/ArithUnits/CenteredReducedResidueProgressions.GreatestPrimeFactor`
 - Truth anchor: `D5/S3/ArithUnits/CenteredReducedResidueProgressions.result`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates](../ConceptDynamics/InformationEscape/RegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../ConceptDynamics/RegistrationWitnesses.md)
