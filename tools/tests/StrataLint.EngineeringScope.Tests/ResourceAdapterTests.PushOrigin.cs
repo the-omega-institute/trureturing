@@ -542,7 +542,7 @@ public sealed partial class ResourceAdapterTests
         fixture.CommitPlan();
         var environment = EnvironmentFor(fixture);
         environment["MODE"] = "push";
-        environment["BASE"] = "";
+        environment["BASE"] = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
         environment["GITHUB_EVENT_NAME"] = "";
         environment["CI_PLAN_PATH"] = "";
         environment["CI_CHANGES_PATH"] = "";

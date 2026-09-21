@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:25136343b1d8b1eda2acc1f3bd002106ddaa2308f9a8576b26d5673514acc330
+  normalized_sha256: sha256:25136343b1d8b1eda2acc1f3bd002106ddaa2308f9a8576b26d5673514acc330
+cas_ref: sha256:25136343b1d8b1eda2acc1f3bd002106ddaa2308f9a8576b26d5673514acc330
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d; no usable project GID for this complete clause. Inherit the exact original32.6 cycle and function hypotheses. The half-cycle indicator has directed variation2 and deviation2*m*(length-m)/length for every length at least2, including odd lengths and length2. ZMod.val_natCast/val_add, card_image_of_injOn, Finset.sum_ite and sum_ite_eq give the interval cardinality and two boundary edges. Substituting m=length/2 gives equality and rules out every smaller coefficient. The native arbitrary-orbit result uses Equiv.Perm.IsCycleOn.exists_pow_eq/pow_apply_eq_pow_apply, subtypePerm_apply_pow_of_mem and Equiv.ofBijective for exact successor conjugacy; Equiv.sum_comp and Finset.image_image preserve blocks, longest length, mass, deviation and variation.
+    previous_atom_id: 20d0183b402f8291a5e14bab52b7ae67aa3e2940972f0e7884e3ab762da812c7
+    next_atom_id: a44aca24e548cfffd820c5eddf9e414a8583b66a9ced7e5e93e120f6e4c1e5ab

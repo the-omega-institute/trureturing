@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1928227894d080f89641ba6250335e82a702f56476a799f35ae3cc8adaf02d3a
+  normalized_sha256: sha256:1928227894d080f89641ba6250335e82a702f56476a799f35ae3cc8adaf02d3a
+cas_ref: sha256:1928227894d080f89641ba6250335e82a702f56476a799f35ae3cc8adaf02d3a
+coverage_gids:
+  - gid: D5/S3/Observer/Residuals/FiniteRealizationCertificate.finite_realization_certificate
+    target_statement_id: sha256:1374ee82e9b1f9e77fe634272e661e09bde95e7e066bedf39afdb81127f483c8
+receipts:
+  unresolved_subitems: []

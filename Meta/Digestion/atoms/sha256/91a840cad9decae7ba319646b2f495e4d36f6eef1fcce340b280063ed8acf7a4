@@ -1,0 +1,18 @@
+**命题 37.8（同一纤维内不可见的质量抵消）。** 固定有限 $W=W_H,Z$、实际概率 $\rho$、$\lambda:W\to Z$ 及 $P=\lambda_*\rho$。给一个指定目标标签概率 $Q$，对任一满足 $\lambda_*\rho'=Q$ 的候选世界律置
+$$
+A_z=\sum_{\lambda w=z}(\rho'(w)-\rho(w))_+,\qquad
+B_z=\sum_{\lambda w=z}(\rho(w)-\rho'(w))_+.
+\tag{37.15}
+$$
+则
+$$
+\operatorname{TV}(\rho,\rho')-\operatorname{TV}(P,Q)
+=\sum_z\min(A_z,B_z).
+\tag{37.16}
+$$
+等 TV 的条件是亏损纤维只减质量，盈余纤维只加质量，总量不变的纤维逐点不变。
+
+证明。$A_z-B_z=Q(z)-P(z)$，世界及标签 TV 分别为 $\tfrac12\sum_z(A_z+B_z)$、$\tfrac12\sum_z|A_z-B_z|$；用 $a+b-|a-b|=2\min(a,b)$ 得（37.16）。一般的等 TV 无符号混合判据由 [D5/S3/TotalVariation/Equality/DataProcessingEquality.lean](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean) 的 `total_variation_channel_eq_iff_no_sign_mixing` 供应：在这里取确定核 $\mathbf1_{\lambda w=z}$。它要求每个纤维的差只取一种符号；结合纤维总差即得所述三种情况。$\square$
+
+（37.16）计量的是标签遗忘后隐藏的世界改变量，不是物理耗散公式；此处复用一般等号定理，不另立一套通用 TV 等号理论。
+

@@ -1,0 +1,4 @@
+**证明。** 取实对数给−log A=cσlog p，除以正cσ并取指数得到(23.111)；这等价于 `PrimeZeckendorfTemporalization.first_excited_heat_multiplier_injective` 的正热坐标单射性。碰撞直接由σ_q log q=σ_p log p得到。对于复读数，进一步取 $t_q=t_p\log p/\log q$ 即保证完整 $M$ 也相同；固定已知t时，不可仅凭幅度碰撞断言复读数相同。□
+
+(23.111)以数据确属所声明素数模态类为前提；任意带噪A代入后得到的正实数不能自动取整为认证素数。精确单射也不提供整个无界素数集合上的统一绝对误差间隔，因为A_p(σ)随p→∞趋零。
+

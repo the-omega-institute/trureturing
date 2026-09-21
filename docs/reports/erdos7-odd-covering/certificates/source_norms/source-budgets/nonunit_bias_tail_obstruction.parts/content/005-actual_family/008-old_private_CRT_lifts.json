@@ -1,0 +1,23 @@
+{
+  "length": 204,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 159,
+      "part": {
+        "path": "content/005-actual_family/008-old_private_CRT_lifts/000000-000159.json",
+        "sha256": "bc9d5c190cc51615a08518a124d8a784601c0e853d6daf172dc668fea5f4aa57",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 159,
+      "stop": 204,
+      "part": {
+        "path": "content/005-actual_family/008-old_private_CRT_lifts/000159-000204.json",
+        "sha256": "b57d3a3f11169f02cfc0b75f42b50545eebeb0f635b3c1b77ae9cac1950c9861",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "unweighted": {
+    "mod9_masses": [
+      "7426/160875",
+      "8836/160875",
+      "32/1125",
+      "7/125",
+      "158/3375"
+    ],
+    "mod63_fibre_caps": [
+      "4606/482625",
+      "2303/160875",
+      "784/160875",
+      "343/35750",
+      "3871/482625"
+    ],
+    "maximizing_cells": {
+      "mod9": 4,
+      "mod63_projection": 3,
+      "five_term_cluster": 3
+    },
+    "raw_gap": "173/53625",
+    "normalized_gap": "1557/112135"
+  },
+  "reweighted": {
+    "cell_weights": [
+      "11/8",
+      "5/4",
+      "1",
+      "1",
+      "1"
+    ],
+    "mod3_masses": [
+      "9447/71500",
+      "443/3375",
+      "0"
+    ],
+    "mod9_fibre_caps": [
+      "2209/32175",
+      "7/125",
+      "0"
+    ],
+    "maximizing_roots": {
+      "mod3": [
+        0
+      ],
+      "mod9_projection": [
+        0
+      ],
+      "five_term_cluster": [
+        0
+      ]
+    },
+    "root_mass_difference": "-1673/1930500",
+    "cell_cap_difference": "2036/160875",
+    "raw_gap": "0",
+    "normalized_gap": "0"
+  }
+}

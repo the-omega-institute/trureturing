@@ -28,7 +28,8 @@ public sealed class PlaybookWorkflowScriptTests
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
                 "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:digest-status --base synthetic-base",
-                "make:preflight",
+                "git:rev-parse --verify synthetic-base^{commit}",
+                $"make:preflight MODE=push BASE={SyntheticBaseSha}",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
             ],
@@ -197,7 +198,7 @@ public sealed class PlaybookWorkflowScriptTests
                   exit 97
                 fi
                 printf 'git:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
-                if [[ $subcommand == rev-parse && "${arguments[index+1]:-}" == HEAD^1 ]]; then
+                if [[ $subcommand == rev-parse && ( "${arguments[index+1]:-}" == HEAD^1 || "${arguments[index+1]:-}" == --verify && "${arguments[index+2]:-}" == 'synthetic-base^{commit}' ) ]]; then
                   printf '%s\n' '{{SyntheticBaseSha}}'
                 fi
                 """);

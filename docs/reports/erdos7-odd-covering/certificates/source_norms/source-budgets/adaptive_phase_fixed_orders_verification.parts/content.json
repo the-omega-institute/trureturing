@@ -1,0 +1,92 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "adaptive-phase-fixed-orders-verification-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "All120 permutations of the first5 named primes with the remaining15 in numerical order. Exact globally fixed weak-hit phases and balanced profile. No claim over all20! fixed orders."
+  },
+  "count": {
+    "kind": "inline",
+    "value": 120
+  },
+  "records": {
+    "path": "content/003-records.json",
+    "sha256": "0b0342b9b7ffd8581de51ddf1050a3eb9cc338418afedb98ed2a6805834c79ee",
+    "kind": "array"
+  },
+  "best": {
+    "kind": "inline",
+    "value": {
+      "prime_order": [
+        3,
+        5,
+        7,
+        13,
+        11,
+        17,
+        19,
+        23,
+        29,
+        31,
+        37,
+        41,
+        43,
+        47,
+        53,
+        59,
+        61,
+        67,
+        71,
+        73
+      ],
+      "epsilon_exact": "37672347347524656292537987560647626711914203/104396039896667873177065429687500000000000000",
+      "epsilon_decimal": 0.36085992710847153,
+      "baseline_score_exact": "9102322967642077803496867988243255984094090481819/9077026876935478236999484980468750000000000000000",
+      "baseline_score_decimal": 1.0027868255817196
+    }
+  },
+  "adaptive5_epsilon_exact": {
+    "kind": "inline",
+    "value": "37345911496927629364677605591855192391271703/104396039896667873177065429687500000000000000"
+  },
+  "adaptive5_baseline_score_exact": {
+    "kind": "inline",
+    "value": "9073940023304367506173263496820691404782866391819/9077026876935478236999484980468750000000000000000"
+  },
+  "adaptive5_strict_gain": {
+    "kind": "inline",
+    "value": "51386989468245088998092399652488677/16433851223403049693359375000000000000"
+  },
+  "adaptive5_strict_gain_decimal": {
+    "kind": "inline",
+    "value": 0.0031268987877330983
+  },
+  "flat_profile_identity_verified": {
+    "kind": "inline",
+    "value": true
+  },
+  "aggregate_unique_value_states": {
+    "kind": "inline",
+    "value": 122280
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "row_evaluations": 40783,
+      "actual_leaf_groupings": 7855144,
+      "distinct_cost_groups": 350911,
+      "positive_group_allocations": 218919
+    }
+  },
+  "source_sha256": {
+    "path": "content/012-source_sha256.json",
+    "sha256": "86bda4d3b13e1854d3a145ad29811453ce042ac660cd10865a70c8215bc9ed1e",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "75122e58cba20423aab4707f4bf3afbdf8fa01c12f30166bf9b58f6670ace7d2"
+  }
+}

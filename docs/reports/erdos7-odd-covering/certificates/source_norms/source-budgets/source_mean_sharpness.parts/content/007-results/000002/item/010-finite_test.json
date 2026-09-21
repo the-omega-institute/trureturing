@@ -1,0 +1,40 @@
+{
+  "zero7": {
+    "kind": "inline",
+    "value": "1804362206405587115045222785202072686380034268/3981604868782345463506018612868785858154296875"
+  },
+  "positive7": {
+    "kind": "inline",
+    "value": "119448146063611341501349276331278597227285152/796320973756469092701203722573757171630859375"
+  },
+  "total": {
+    "kind": "inline",
+    "value": "800534312241214607517323055619488557505486676/1327201622927448487835339537622928619384765625"
+  },
+  "positive7_raw35_mean": {
+    "kind": "inline",
+    "value": "280568536600801681392186661/374091382133960723876953125"
+  },
+  "old_test_rows": {
+    "path": "content/007-results/000002/item/010-finite_test/004-old_test_rows.json",
+    "sha256": "2fc46800472e2d6dd626e3b38c2144aa6230986c67a392d941c6f51ad5367191",
+    "kind": "array"
+  },
+  "positive7_test_cylinders": {
+    "path": "content/007-results/000002/item/010-finite_test/005-positive7_test_cylinders.json",
+    "sha256": "d984f84d36fe5d69268db599805644dda04c144b0a1330d1b4c5fa3795c01c4f",
+    "kind": "value"
+  },
+  "complete_nonunit_test_count": {
+    "kind": "inline",
+    "value": 15624
+  },
+  "old_partition": {
+    "kind": "inline",
+    "value": {
+      "three_leaves": 183,
+      "five_leaves": 189,
+      "survivor_leaf_pairs": 23169
+    }
+  }
+}

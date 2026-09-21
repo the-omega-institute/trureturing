@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:50bc6176a392f9104e8a4fe8a5fa21d88a2ae300afd20617cde704a6baccf3e9
+  normalized_sha256: sha256:50bc6176a392f9104e8a4fe8a5fa21d88a2ae300afd20617cde704a6baccf3e9
+cas_ref: sha256:50bc6176a392f9104e8a4fe8a5fa21d88a2ae300afd20617cde704a6baccf3e9
+coverage_gids:
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyAnnihilatorUniqueness.recurrence_window_identifies_annihilator
+    target_statement_id: sha256:806d99e2a39ceb1bad6c688780e1d1b7e3e6cc2861e1d32b7a1a0693b4d792db
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.first_prony_moments_injective
+    target_statement_id: sha256:588744013d133fce03fe8a73f398cf809d59b9f21511f4827aba31c6f6c9c400
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.prony_hankel_factorization
+    target_statement_id: sha256:2cc8aa8a92bca57ed313fe453004774d40f3e294c8c30ab1f041b9d2c9495b09
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.prony_moment_linear_recurrence
+    target_statement_id: sha256:38c2624c288c655e162bd0bc614ff14ef2b3b9acefd23989be4b0b780848afe6
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyNodeIdentification.recurrence_window_identifies_node_roots
+    target_statement_id: sha256:fed7eed9dd01efe5798178e5e18f4acebc983a7ad2bd44a84bc553ffc4927dab
+receipts:
+  unresolved_subitems: []

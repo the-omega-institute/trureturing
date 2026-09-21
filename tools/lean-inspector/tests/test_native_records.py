@@ -59,7 +59,9 @@ unsafe def main : IO Unit := do
   check "local_claim_origin" ((ownedClaims localEnv).back?.map (·.1) == some `Reader)
 ''')
         with (package / 'lakefile.toml').open('a') as config:
-            config.write('\n[[lean_lib]]\nname = "Writer"\n[[lean_exe]]\nname = "reader"\nroot = "Reader"\n')
+            # The reader loads Writer's initializers through the interpreter; on Linux that needs exported symbols.
+            config.write('\n[[lean_lib]]\nname = "Writer"\n[[lean_exe]]\nname = "reader"\nroot = "Reader"\n'
+                         'supportInterpreter = true\n')
         result = self.guarded_command([self.lake, 'build', 'Writer', 'reader'], cwd=package, env=env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         print('INTERFACE_STORE_BUILD compile_errors=0 exit_code=0', flush=True)

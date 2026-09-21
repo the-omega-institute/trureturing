@@ -100,6 +100,7 @@ public sealed partial class ResourceAdapterTests
         if (change == "staged") SharedBuildContractTests.Git(fixture.Root, "add", "docs/note.md");
         var state = LocalState(fixture);
         var environment = LocalEnvironment(fixture, required: false);
+        environment["BASE"] = fixture.Commit;
         environment["CI_PUSH_BEFORE"] = fixture.Commit;
         environment["CI_PUSH_AFTER"] = fixture.Commit;
         var result = LocalPreflight(fixture, environment);
@@ -250,21 +251,74 @@ public sealed partial class ResourceAdapterTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void DefaultLocalScopeChecksUnverifiedCommittedCodeEvenWithDirtyDocs(bool dirtyDocs)
+    public void FullScopeChecksUnverifiedCommittedCodeEvenWithDirtyDocs(bool dirtyDocs)
     {
         using var fixture = LocalFixture();
         fixture.Write("fixtures/selected.txt", "unverified committed code\n");
         fixture.CommitPlan();
         if (dirtyDocs) fixture.Write("docs/note.md", "dirty documentation\n");
         var state = LocalState(fixture);
-        var result = LocalPreflight(fixture, LocalEnvironment(fixture, required: true));
+        var environment = LocalEnvironment(fixture, required: true);
+        environment["MODE"] = "full";
+        environment["BASE"] = "";
+        var result = LocalPreflight(fixture, environment);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Equal(state, LocalState(fixture));
+        Assert.Equal("local-current-input", PushSelection(fixture)["origin"]!["kind"]!.ToString());
         Assert.Contains("fixtures/selected.txt", Strings(PushSelection(fixture)["paths"]!, "path"));
         Assert.Equal(new[] { "filemap" }, Strings(PushSelection(fixture)["execution"]!["steps"]!));
         Assert.Equal(new[] { "dotnet filemap-conform" }, File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
         Assert.Equal("completed", Summary(fixture, "current")["status"]!.ToString());
-        RetainLocal(fixture, "default-unverified-code-" + dirtyDocs, result);
+        RetainLocal(fixture, "full-unverified-code-" + dirtyDocs, result);
+    }
+
+    [Fact]
+    public void PushUsesCompleteMulticommitAndDirtyDeltaWhileFullIncludesUnchangedResources()
+    {
+        using var fixture = LocalFixture();
+        fixture.Write("fixtures/unchanged.txt", "unchanged required input\n");
+        fixture.Write("fixtures/deleted.txt", "deleted later\n");
+        fixture.CommitPlan();
+        var baseline = fixture.Commit;
+        fixture.Write("fixtures/selected.txt", "first commit needs filemap\n");
+        fixture.CommitPlan();
+        DocCommit(fixture);
+        fixture.Write("fixtures/staged.txt", "staged input\n");
+        SharedBuildContractTests.Git(fixture.Root, "add", "fixtures/staged.txt");
+        fixture.Write("fixtures/selected.txt", "unstaged final bytes\n");
+        fixture.Write("fixtures/untracked.txt", "untracked input\n");
+        File.Delete(Path.Combine(fixture.Root, "fixtures/deleted.txt"));
+        var state = LocalState(fixture);
+        var environment = LocalEnvironment(fixture, required: true);
+        environment["BASE"] = baseline;
+        var push = LocalPreflight(fixture, environment);
+        Assert.True(push.Exit == 0, push.Text);
+        Assert.Equal(state, LocalState(fixture));
+        var plan = PushSelection(fixture);
+        Assert.Equal("local-range", plan["origin"]!["kind"]!.ToString());
+        Assert.Equal(baseline, plan["origin"]!["before"]!.ToString());
+        Assert.Equal(new[] { "docs/note.md", "fixtures/deleted.txt", "fixtures/selected.txt", "fixtures/staged.txt", "fixtures/untracked.txt" },
+            Strings(plan["paths"]!, "path").Order(StringComparer.Ordinal));
+        Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
+        Assert.Equal("completed", Summary(fixture, "current")["status"]!.ToString());
+        RetainLocal(fixture, "multicommit-complete-delta", push);
+
+        environment["MODE"] = "full";
+        environment["BASE"] = "";
+        var full = LocalPreflight(fixture, environment);
+        Assert.True(full.Exit == 0, full.Text);
+        Assert.Equal(state, LocalState(fixture));
+        plan = PushSelection(fixture);
+        Assert.Equal("local-current-input", plan["origin"]!["kind"]!.ToString());
+        // Whole-input planning also retains removed dirty endpoints for ownership.
+        Assert.Equal(SharedBuildContractTests.Git(fixture.Root, "ls-files", "--cached", "--others", "--exclude-standard", "-z")
+            .Split('\0', StringSplitOptions.RemoveEmptyEntries)
+            .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal), Strings(plan["paths"]!, "path").Order(StringComparer.Ordinal));
+        Assert.Contains("fixtures/unchanged.txt", Strings(plan["paths"]!, "path"));
+        Assert.Contains(PushScope(fixture)["changes"]!.AsArray(), row =>
+            row!["status"]!.ToString() == "D" && row["old"]!["path"]!.ToString() == "fixtures/deleted.txt");
+        Assert.Equal("completed", Summary(fixture, "current")["status"]!.ToString());
+        RetainLocal(fixture, "full-after-range", full);
     }
 
     private static ResourceRouteTests.ResourceFixture LocalFixture()
@@ -301,7 +355,9 @@ public sealed partial class ResourceAdapterTests
     {
         var environment = required ? ColdPreflightContractTests.EnvironmentFor(fixture) : EnvironmentFor(fixture);
         environment["MODE"] = "push";
-        environment["BASE"] = "not-an-immutable-base";
+        environment["BASE"] = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        environment["CI_PUSH_BEFORE"] = "";
+        environment["CI_PUSH_AFTER"] = "";
         environment["CANDIDATE_SHA"] = "";
         environment["GITHUB_EVENT_NAME"] = "";
         environment["CI_PLAN_PATH"] = "";
