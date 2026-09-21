@@ -12,6 +12,74 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
+    [InlineData("Meta/domains.yaml", "push")]
+    [InlineData("Meta/domains.yaml", "pr")]
+    [InlineData("Meta/registry.yaml", "push")]
+    [InlineData("Meta/registry.yaml", "pr")]
+    public void RegistryDataRunsRegisteredConsumersAndRetainsCurrentTruthChecks(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+            "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(mode == "pr", Strings(plan["resources"]!).Contains("current"));
+        Assert.Contains("scribe", Strings(plan["resources"]!));
+        Assert.Equal(mode == "push" ? new[] { "lean-report", "scribe", "filemap" }
+            : ["lean-report", "scribe", "filemap", "check-current"], Strings(plan["execution"]!["steps"]!));
+        Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+    }
+
+    [Theory]
+    [InlineData("tools/scripts/agent/merge-gate.sh", "push")]
+    [InlineData("tools/scripts/agent/merge-gate.sh", "pr")]
+    [InlineData("tools/scripts/agent/openproblem/erdos617.py", "push")]
+    [InlineData("tools/scripts/agent/openproblem/erdos617.py", "pr")]
+    [InlineData("tools/scripts/agent/openproblem/standing-check.py", "push")]
+    [InlineData("tools/scripts/agent/openproblem/standing-check.py", "pr")]
+    public void AgentScriptsRunRegisteredConsumersWithoutCurrentTruthChecks(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+            "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+        Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
+        Assert.Equal(mode == "push" ? new[] { "filemap" } : ["SL-003", "SL-015", "SL-019", "filemap"],
+            Strings(plan["execution"]!["checks"]!));
+        Assert.Equal(mode == "push" ? new[] { "filemap" }
+            : ["lean-report", "filemap", "check-current"], Strings(plan["execution"]!["steps"]!));
+        Assert.Equal(mode == "push" ? "not-applicable" : "required",
+            plan["stages"]!["delta"]!["status"]!.GetValue<string>());
+        foreach (var unrelated in new[] { "engineering", "current", "scribe", "lean-inspector-build" })
+            Assert.DoesNotContain(unrelated, Strings(plan["resources"]!));
+    }
+
+    [Theory]
+    [InlineData("tools/scripts/preflight.sh", "push")]
+    [InlineData("tools/scripts/preflight.sh", "pr")]
+    [InlineData("tools/scripts/lib/admission-base-lib.sh", "push")]
+    [InlineData("tools/scripts/lib/admission-base-lib.sh", "pr")]
+    [InlineData("tools/scripts/report/lean-report-selection.py", "push")]
+    [InlineData("tools/scripts/report/lean-report-selection.py", "pr")]
+    [InlineData("tools/scripts/workflow/ci_plan.py", "push")]
+    [InlineData("tools/scripts/workflow/ci_plan.py", "pr")]
+    [InlineData("tools/scripts/worktree/lean_cache.py", "push")]
+    [InlineData("tools/scripts/worktree/lean_cache.py", "pr")]
+    public void CommonBuildAndWorkflowProgramsRetainTheirRegisteredChecks(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Contains("engineering", Strings(plan["resources"]!));
+        Assert.Equal(10, plan["execution"]!["tests"]!.AsArray().Count);
+        Assert.Equal(mode == "push" ? new[] { "lean-report", "scribe", "filemap" }
+            : ["lean-report", "scribe", "filemap", "check-current"], Strings(plan["execution"]!["steps"]!));
+    }
+
+    [Theory]
     [InlineData("tools/lean-inspector/tests/test_native_support.py", "push")]
     [InlineData("tools/lean-inspector/tests/test_native_support.py", "pr")]
     [InlineData("tools/lean-inspector/tests/test_reuse.py", "push")]
@@ -268,10 +336,10 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     public void TheoryDocumentsDoNotRemoveOtherInputsRequirements(string input)
     {
         var plan = Plan(input, "docs/develop/theory/admission-resource-probe.md");
-        Assert.Equal(input is "Meta/registry.yaml" or "Meta/ci-checks.json", Strings(plan["resources"]!).Contains("engineering"));
+        Assert.Equal(input is "Meta/ci-checks.json", Strings(plan["resources"]!).Contains("engineering"));
         Assert.Contains("current", Strings(plan["resources"]!));
         Assert.Contains("delta", Strings(plan["resources"]!));
-        Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => input is "Meta/registry.yaml" or "Meta/ci-checks.json"
+        Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => input is "Meta/ci-checks.json"
                 || !CommonExecutionEvidence.EngineeringCheckIds.Contains(id)).Order(StringComparer.Ordinal),
             Strings(plan["execution"]!["checks"]!));
     }
@@ -287,7 +355,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.Contains("current", Strings(plan["resources"]!));
         Assert.Contains("delta", Strings(plan["resources"]!));
         Assert.Contains("scribe", Strings(plan["resources"]!));
-        Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => input is "Meta/registry.yaml" or "Meta/ci-checks.json"
+        Assert.Equal(CommonCheckRegistrationFixture.Ids.Where(id => input is "Meta/ci-checks.json"
             || !CommonExecutionEvidence.EngineeringCheckIds.Contains(id)).Order(StringComparer.Ordinal), Strings(plan["execution"]!["checks"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
     }
