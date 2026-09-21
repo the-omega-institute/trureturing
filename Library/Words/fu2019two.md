@@ -14,13 +14,19 @@ triage: anchor
 
 # Classical separable permutations
 
-The source is https://arxiv.org/abs/1507.05184v2, version dated 5 February
-2019. The year above identifies that revision; the initial submission was
+## Locator
+
+The source DOI is 10.48550/arXiv.1507.05184 and the URL is
+https://arxiv.org/abs/1507.05184v2, version dated 2019-02-05.
+The year above identifies that revision; the initial submission was
 18 July 2015, and the journal reference is *Discrete Mathematics* 341
 (2018), 2616–2626. Proposition 2.1 calls the characterization folkloric and cites
 Sergey Kitaev, *Patterns in permutations and words* (2011), page 57.
-The book page was not independently available. The arXiv paper's full
+The book page was not independently available and remains uninspected.
+The arXiv paper's full
 Proposition 2.1, Definition 2.2, and Theorem 2.3 were checked directly.
+
+## Supporting result
 
 The source class consists of actual classical 2413/3142 avoiders. The
 supporting Lean theorem proves that every such permutation of length at
