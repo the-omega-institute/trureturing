@@ -73,3 +73,4 @@ The law of the arena's computed realization refutes the universal predicate. Giv
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CounterexampleRecord.counterexampleRealization`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates](RegistrationTemplates.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/TheoremUnit](TheoremUnit.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

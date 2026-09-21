@@ -8,7 +8,7 @@ open Lean LeanInformationAudit
 def rootId : Name := `Reg.Catalogs.SharedInformationRoot
 
 def causalOccurrences : Array SnapshotOccurrence :=
-  fixedInformationSourceSnapshot.occurrences.filter fun row =>
+  Reg.Support.fixedInformationSourceSnapshot.occurrences.filter fun row =>
     row.objectArenaName ==
       `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena
 
