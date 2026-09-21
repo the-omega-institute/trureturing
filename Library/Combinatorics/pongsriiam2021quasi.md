@@ -8,6 +8,7 @@ url: https://cs.uwaterloo.ca/journals/JIS/VOL24/Pongsriiam/pong23.pdf
 claim: "Question 17 asks whether, for each m at least two, some function is quasi-injective of order m-1 but not of order m."
 strata_touched:
   - D5/S3/Combinatorics/QuasiInjectiveOrderSeparation
+  - D5/S3/Combinatorics/QuasiInjectiveCompositionRefutation
 license: citation-only
 triage: anchor
 ---
