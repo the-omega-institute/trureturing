@@ -92,3 +92,32 @@ equality admit a characterization is also open. Among the 57002 sequences over
 `{1,2,3}` of length at most ten that contain a 1 and do not end in 1, 18369
 disagree with `S^(e) G` within 120 appended terms; the remaining 38633 agree
 over that range, which leaves the infinite equality undecided for them.
+
+## Triage
+
+`theorem`; Tier 1 named external open question, preregistered in issue 9218
+before write-up. The admission basis is `open-problem-resolution`; the
+conservative classification is `proof_shape: bind-only` with
+`escape_witness: none`. The computational use is a `certified-instance` with a
+typed `refutes` edge from `result` to `claim`.
+
+## ASSUMED-UNVERIFIED
+
+The literature screen is bounded: the journal article, the Chaffin-Sloane
+preprint arXiv:0912.2382v5, Sloane's retrospective arXiv:2301.03149v2, both
+arXiv versions and the journal version of van de Pol's growth-rate work, the
+OEIS entries A090822, A093369, A094004, A216955 and A217209 with the OEIS
+curling-number index, and citing papers including arXiv:2608.15670v1 were
+opened; citation-index result pages were not reachable, so no worldwide
+priority claim is made.
+
+Among the 57002 sequences over `{1,2,3}` of length at most ten that contain a 1
+and do not end in 1, the 38633 that agree with `S^(e) G` over 120 appended terms
+are surviving candidates only; finite agreement does not establish the infinite
+equality for them.
+
+The weaker reading, whether the continuation has a suffix equal to a suffix of
+`G`, is not settled here. For `S = 1 2`, computing 24000 terms of both sequences
+gives an aligned common run that ends in a disagreement at every pair of offsets
+below 6000, the longest being 1740 terms; that excludes a shared tail only
+within the searched offsets and range.
