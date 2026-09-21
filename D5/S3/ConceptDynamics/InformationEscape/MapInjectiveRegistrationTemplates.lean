@@ -9,7 +9,7 @@
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S0.History.HistoryCarrier
 import D5.S3.ConceptDynamics.RegistrationWitnesses
-import LeanInformationAudit.Syntax
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -24,8 +24,7 @@ abbrev mapInjectiveSignature (X Y : Type) [DecidableEq Y] := cutSignature X Y
 def mapInjectiveRealization {X Y : Type} [DecidableEq Y] (f : X → Y) :
     PrimitiveRealization (mapInjectiveSignature X Y) := cutRealization f
 
-register_information_template mapInjectiveRealization constructors 1
-  [D5.S0.History.Marker, D5.S0.History.Opcode]
+
 
 def mapInjectiveArena (A : Arena) (Y : Type) [DecidableEq Y] : PrimitiveLawArena where
   toArena := A

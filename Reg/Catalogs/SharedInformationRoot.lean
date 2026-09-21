@@ -1,4 +1,4 @@
-import D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
+import Reg.Catalogs.UnifiedCausalRegistration
 import Reg.Catalogs.InformationRoot
 import Reg.Support.SharedInformationRootContract
 import LeanInformationAudit.SealCommand

@@ -72,3 +72,4 @@ The homogeneous pointwise sensitivity theorem uses an inhabited state and the di
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/IffRegistrationTemplates.iffSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/IffRegistrationTemplates.iff_sensitivity`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates](PointwiseRegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

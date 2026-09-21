@@ -6,11 +6,12 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/ExistentialWitnessRegistrations.captured_lawSensitive; instance=D5/S3/ConceptDynamics/InformationEscape/ExistentialWitnessRegistrations.capturedRealization
    digest: Two frozen existential statements share one witness template without theorem-based simplification. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import D5.S0.Diagonal.Lawvere.QualitativeEscape
 import D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability
-import LeanInformationAudit.SealCommand
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -69,17 +70,12 @@ theorem captured_lawSensitive : capturedArena.Law capturedRealization ∧
     fun ⟨_, h⟩ => Bool.false_ne_true h⟩
 theorem captured_slotSensitive : FiniteSlotSensitivity capturedArena :=
   existentialWitness_sensitivity _ (id, fun _ _ => true)
-register_information_theorem exists_captured_listing_of_fixedPoint in capturedArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Unit → Unit → Bool)) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedReadout w) true))
-  primitives capturedRealization.toPrimitiveBundle realization captured_bridge
-  variation captured_lawSensitive sensitivity captured_slotSensitive
-example : exists_captured_listing_of_fixedPoint.__information_unit.Statement =
-    (∃ (f : Bool → Bool) (g : Unit → Unit → Bool), ¬ IsEscaped f g) := rfl
+
+
 #print axioms captured_bridge
 #print axioms captured_lawSensitive
 #print axioms captured_slotSensitive
-expect_information_occurrence exists_captured_listing_of_fixedPoint in capturedArena
-  from "D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations"
+
 end CapturedListing
 
 section MutualRecognition
@@ -166,36 +162,17 @@ theorem recognition_lawSensitive : recognitionArena.Law recognitionRealization �
     fun ⟨_, h⟩ => Bool.false_ne_true h⟩
 theorem recognition_slotSensitive : FiniteSlotSensitivity recognitionArena :=
   existentialWitness_sensitivity _ (id, id, false, false)
-register_information_theorem mutual_recognition_does_not_require_equal_concepts in recognitionArena
-  readout via (@D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessRealization ((Bool → Bool) × (Bool → Bool) × Bool × Bool) (fun w => D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w = true) (fun w => instDecidableEqBool (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionReadout w) true))
-  primitives recognitionRealization.toPrimitiveBundle realization recognition_bridge
-  variation recognition_lawSensitive sensitivity recognition_slotSensitive
-example : mutual_recognition_does_not_require_equal_concepts.__information_unit.Statement =
-    (∃ (C₁ C₂ : Bool → Bool) (b₁ b₂ : Bool),
-      C₁ ≠ C₂ ∧ MutuallyRecognized Set.univ C₁ C₂ (b₁, b₂)) := rfl
+
+
 #print axioms recognition_bridge
 #print axioms recognition_lawSensitive
 #print axioms recognition_slotSensitive
-expect_information_occurrence mutual_recognition_does_not_require_equal_concepts in recognitionArena
-  from "D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations"
+
 end MutualRecognition
 
 /- The 64-state recognition seal exceeds the default reduction-depth limit. -/
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 2000000 in
-#seal_information_theory
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  for entry in InformationRegistry.entries env do
-    if entry.registrationModuleName == env.header.mainModule then
-      let info ← getConstInfo (RegistrationGates.diagnosticName entry.unitName env.header.mainModule)
-      let some (.lit (.strVal diagnostic)) := info.value?
-        | throwError "registration diagnostic is not a literal"
-      if diagnostic.isEmpty then
-        logInfo m!"REGISTRATION_WITNESSES_CHECKED {entry.theoremName} support=[readout[0]]"
-      else
-        logWarning diagnostic
+
+
 
 end D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations
