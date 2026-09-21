@@ -1,0 +1,36 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "independent-squared-load-stoploss-direct-sum-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "One deterministic squared-load threshold for every complete fixed divisor layout under the same actual law. Residues need not share a CRT center. Only minima over the retained square thresholds are claimed; head mass is the attained fixed-numerical-order value."
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "threshold_count": {
+    "kind": "inline",
+    "value": 1362
+  },
+  "direct_mass_summands": {
+    "kind": "inline",
+    "value": 340752
+  },
+  "records": {
+    "path": "content/005-records.json",
+    "sha256": "18857205606c19be73608b80d67c727989e3fc4be48c765f32b0985366cdd28c",
+    "kind": "array"
+  },
+  "source_sha256": {
+    "path": "content/006-source_sha256.json",
+    "sha256": "eaac2ef29e17aa2d7d7797f76fb6762ee11f71e5b8abc382616ef15dd5fbcf89",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "547ea668816d0df61d36f9d2aa0b60c97ff160d304d3f7748b3b4123fa59664d"
+  }
+}
