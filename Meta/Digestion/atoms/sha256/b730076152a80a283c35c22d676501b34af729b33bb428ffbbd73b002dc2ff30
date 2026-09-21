@@ -1,0 +1,9 @@
+**定理 32.1（图 TV 的事件等式与总误差障碍）。** 原坐标中第 $i$ 边的成对边缘为 $t_i$，理想图耦合为 $M_i(x,y)=\mu_i(x)\mathbf1_{y=h_ix}$。记 $N$ 为一份循环样本中失败边数，$F=\mathbf1_{gY_0\ne Y_0}$，则
+$$
+\delta_i:=\operatorname{TV}(t_i,M_i)=P(\text{第 }i\text{ 边失败}),\qquad
+a:=\mathbb EF=\mu(\{x:gx\ne x\}),
+\quad R:=\sum_i\delta_i-a=\mathbb E(N-F)\ge0.
+\tag{32.1}
+$$
+证明。每个图原子满足 $t_i(x,h_ix)\le\mu_i(x)$，所以图上的差全为亏损，亏损之和等于图外总质量。TV 的两个半项相等，得到事件等式；这里只需要第一边缘准确。若 $N=0$，顺次传播全部关系得 $gY_0=Y_0$，故逐样本 $N\ge F$，取期望即可。所有节点的精确边缘仍是后续重构的前提；第一边缘有误的测量表不能套用这个图 TV 等式。$\square$
+
