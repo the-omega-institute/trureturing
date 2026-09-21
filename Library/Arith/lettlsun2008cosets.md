@@ -25,8 +25,8 @@ cosets of an abelian group satisfies `k >= m + f(n)`, where
 the integers this applies to every original modulus. The paper attributes
 the integer, m=1 case to Znám (1975); it is not a new covering-system bound.
 
-Theorem 2.1 gives more information. At an integer a covered exactly m
-times, let N_a be the least common multiple of the moduli covering a.
+Theorem 2.1 gives more information. In an m-cover, at an integer a with
+multiplicity exactly m, let N_a be the least common multiple of the moduli covering a.
 Let I(p) contain precisely those other original labels s for which the
 prime-to-p part of n_s divides a_s-a, but n_s itself does not. Then
 `sum_(s in I(p)) p^(-(v_p(n_s)-v_p(a_s-a)-1)) >= v_p(N_a)(p-1)`.
