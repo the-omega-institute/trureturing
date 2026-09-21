@@ -1,0 +1,34 @@
+# Regularity of a mild Fourier path
+
+## Abstract
+
+Every spatial grade of the same mild Fourier path satisfies the strong equation on the original closed interval.
+
+**Theorem 1.1 (All spatial grades on the closed time interval).**
+
+Lean statement: `D5/S3/FluidDynamics/Fourier/MildPathRegularity.all_grade_regularity_of_mild_path`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Fourier/MildPathRegularity.all_grade_regularity_of_mild_path` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Fix positive real numbers nu and tau. Frequencies range over the full two-dimensional integer lattice, with the Fourier convention of a torus of period two pi in each coordinate. Each coefficient lies in the two-dimensional complex Euclidean space V, and H is the space of square-summable V-valued sequences. For a frequency k, rho is the sum of the squares of its two integer coordinates, kappa is the corresponding vector in V, and P is the orthogonal projection onto the orthogonal complement of the complex span of kappa. At each natural grade m, the weight w is the real power of the quantity one plus rho with exponent m divided by two. The map dec at grade m divides each coefficient by this weight.
+
+The bilinear coefficient expression N at k is the imaginary unit times P applied to the sum over every lattice frequency l of the following vector: the sum over the two coordinates j of kappa at k in coordinate j times the first input coefficient at l in coordinate j, multiplied by the second input coefficient at k minus l. Fix a path x2 from the real line into H and define a at time t and frequency k by dividing x2 at t and k by one plus rho at k. Assume x2 is continuous on the closed interval from zero to tau. At every time in this interval, assume a has zero constant coefficient, its coefficient at negative k is the complex conjugate of its coefficient at k in each coordinate, and the sum of kappa times a over the two coordinates is zero at every k. At time zero, assume that the squared norms of w times a are summable over the lattice for every natural grade.
+
+For every time t in the same closed interval and every frequency k, assume Lebesgue interval integrability from zero to t of the vector obtained by multiplying N of a at s with itself by the exponential whose exponent is minus nu times the difference between t and s times rho at k. Assume also the coefficientwise mild identity: a at t and k equals the exponential of minus nu times t times rho at k multiplied by a at zero and k, minus that interval integral. The coefficient expression, viscosity and time interval in this identity are the ones fixed above.
+
+There exist paths U at every natural grade, continuous real-linear operators L from H to H, and continuous real-bilinear operators B from H and H to H, indexed by the same grades. For every t in the closed interval, U at grade m has coefficient w at grade m times the original a at t, and each such path is continuous on the whole interval. For every input x and frequency k, L at grade m has coefficient w at grade m times minus nu times rho times dec at grade m plus two applied to x. For every pair x and y, B at grade m has coefficient w at grade m times N applied to their decodings at grade m plus two.
+
+For every grade m and every time in the closed interval, the derivative of U at grade m within that interval is L applied to U at grade m plus two, minus B applied to two copies of that same higher-grade value. This is the strong equation in H for the original coefficient path at every grade. The derivative is taken within the full closed interval: at zero it is the derivative from the right, and at tau it is the derivative from the left. The assertion includes both endpoints with the original values of nu and tau.
+
+The argument raises the real exponent of one plus rho in increments of one quarter, starting at exponent one. The weighted tensor convolution estimate controls the quadratic term at each exponent. Contraction with kappa and the heat multiplier give an operator bound by the sum of the powers minus one half and minus three quarters of nu times the positive time difference. Both powers are integrable at zero. Extending the continuous tensor path by projection onto the closed time interval and integrating over a fixed interval makes dominated convergence applicable to the singular Volterra term. Coordinate evaluation identifies this integral with the literal mild term. The all-grade summability at the initial time gives continuous heat paths at every required exponent, including time zero. Induction therefore yields continuous weighted versions of the same a at exponents one plus n divided by four for all natural n, throughout the unchanged interval.
+
+A bounded coefficientwise division by one plus rho converts these fractional paths to every natural grade. The Laplacian multiplier and the weighted tensor convolution define L and B with a loss of two grades. Their evaluation along the continuous paths gives a continuous H-valued right-hand side. The scalar variation-of-constants formula at each frequency identifies the original path with the integral of this right-hand side; coordinate evaluation then gives equality in H. The fundamental theorem of calculus and restriction to the closed interval yield the stated derivative, including the two endpoint derivatives.
+
+## References
+
+- Truth anchor: `D5/S3/FluidDynamics/Fourier/MildPathRegularity.all_grade_regularity_of_mild_path`
+- Dependency: [D5/S3/FluidDynamics/Fourier/WeightedTensorConvolution](WeightedTensorConvolution.md)
