@@ -30,7 +30,7 @@ internal static partial class CommonExecutionEvidence
                 PathInventory = [.. check.PathInventory],
                 ReportInputs = check.ReportInputs.Select(input => input with { Materials = [.. input.Materials] }).ToArray(),
                 DeltaScope = check.DeltaScope is not { } scope ? null : new([.. scope.WholeTreeInputs], [.. scope.ActorInputs],
-                    scope.Related.Select(row => new RegisteredFileMapRelatedScope([.. row.Inputs], [.. row.Paths])).ToArray(), [.. scope.InventoryInputs!]),
+                    scope.Related.Select(row => row with { Inputs = [.. row.Inputs], Paths = [.. row.Paths] }).ToArray(), [.. scope.InventoryInputs!]),
                 MarkdownScope = check.MarkdownScope is not { } markdown ? null : new([.. markdown.WholeTreeInputs], [.. markdown.ChangedInputs]),
             }).ToArray();
 
