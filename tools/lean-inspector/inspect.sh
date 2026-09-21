@@ -25,14 +25,10 @@ REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
 [[ "$OUTPUT" == /* ]] || OUTPUT="$REPOSITORY/$OUTPUT"
 [[ -n "$LOG_DIR" ]] || LOG_DIR="${OUTPUT}.logs"
 [[ "$LOG_DIR" == /* ]] || LOG_DIR="$REPOSITORY/$LOG_DIR"
-LAKE="${LAKE_BIN:-$(command -v lake || true)}"
-[[ -n "$LAKE" && "$LAKE" == /* && -x "$LAKE" ]] \
-  || { echo 'inspect.sh: an absolute executable lake path is required (LAKE_BIN)' >&2; exit 2; }
-
 # This entry owns supervision as well as production, including direct callers.
 if [[ "${STRATALINT_INSPECTOR_SUPERVISED:-0}" != 1 ]]; then
   exec "$SCRIPT_DIR/../scripts/report/report-supervisor.sh" --role lean-producer --lean-slot -- \
-    env STRATALINT_INSPECTOR_SUPERVISED=1 LAKE_BIN="$LAKE" \
+    env STRATALINT_INSPECTOR_SUPERVISED=1 \
     "$SCRIPT_DIR/inspect.sh" --repository "$REPOSITORY" --output "$OUTPUT" --log-dir "$LOG_DIR"
 fi
 source "$SCRIPT_DIR/../scripts/lib/resource-observation-lib.sh"
@@ -106,7 +102,23 @@ PY
   while IFS= read -r target; do BUILD_TARGETS+=("$target"); done < "$STARTUP_LOG_DIR/build-targets"
 fi
 # Provision before reuse publication creates .lake, preserving cold donor seeding.
+require_lake() {
+  LAKE="${LAKE_BIN:-$(command -v lake || true)}"
+  if [[ -z "$LAKE" ]]; then
+    # A seed can fail publication after resource planning. Obtain the normal
+    # toolchain only when actual compilation is required, including that miss.
+    run_phase toolchain "$REPOSITORY/tools/scripts/workflow/install-lean-toolchain.sh" \
+      "$REPOSITORY/lean-toolchain" --github-path "$STARTUP_LOG_DIR/toolchain-path"
+    local toolchain_directory
+    IFS= read -r toolchain_directory < "$STARTUP_LOG_DIR/toolchain-path"
+    LAKE="$toolchain_directory/lake"
+  fi
+  [[ -n "$LAKE" && "$LAKE" == /* && -x "$LAKE" ]] \
+    || { echo 'inspect.sh: an absolute executable lake path is required (LAKE_BIN)' >&2; return 2; }
+  export LAKE_BIN="$LAKE"
+}
 if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
+  require_lake
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 fi
 open_logs() {
@@ -121,7 +133,7 @@ open_logs() {
 reuse_report() {
   local status=0
   python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
-    --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" --lake "$LAKE" || status=$?
+    --report "${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}" --output "$OUTPUT" || status=$?
   printf '%s\n' "$status" > "$STARTUP_LOG_DIR/reuse.status"
   # An optional seed miss is normal. Parser/registration failures still block.
   if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
@@ -140,8 +152,9 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   exit 0
 fi
 cat "$LOG_DIR/reuse.stdout.log"
+require_lake
 run_phase capture python3 -B "$SCRIPT_DIR/reuse.py" capture --repository "$REPOSITORY" \
-  --lake "$LAKE" --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
+  --snapshot "$STARTUP_LOG_DIR/entry-inputs.json"
 # A failed new default/report run must not leave an apparent successful seal.
 rm -f -- "${OUTPUT}.reuse.json"
 if [[ -z "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
@@ -158,5 +171,5 @@ run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" 
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
-  --report "$OUTPUT" --lake "$LAKE" --snapshot "$LOG_DIR/entry-inputs.json"
+  --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
 cat "$LOG_DIR/publish.stdout.log"
