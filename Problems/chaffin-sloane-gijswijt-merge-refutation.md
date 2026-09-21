@@ -68,7 +68,7 @@ different eighth term of Gijswijt's sequence would invalidate the witness. The
 first eleven terms of `G` are `1 1 2 1 1 2 2 2 3 1 1`; its first 4 occurs at term
 220, which the source states independently.
 
-## Scope
+## Evidence
 
 The weaker reading, whether the continuation of a starting sequence containing a
 1 has a suffix equal to a suffix of `G`, is a different statement and is not
