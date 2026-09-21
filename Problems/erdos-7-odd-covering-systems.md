@@ -34,6 +34,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 ### Results and proofs
 
+- [Two exact predecessor supports in arbitrary order, or four in numerical order, give noncoverage with full Haar density; a large-prime inventory may grow as p to the one-quarter](../docs/reports/erdos7-odd-covering/problem-details/52-two-or-four-exact-predecessor-supports.md)
 - [At most two cycles per original incidence component gives noncoverage at arbitrary ranks and heights, full Haar density and unrestricted large-prime continuation](../docs/reports/erdos7-odd-covering/problem-details/51-incidence-bicyclic-components-with-arbitrary-original-heights.md)
 - [At most five distinct mixed supports per prime gives noncoverage at arbitrary ranks and heights, with full Haar density from actual conditional avoidance ratios](../docs/reports/erdos7-odd-covering/problem-details/50-prime-support-incidence-at-most-five.md)
 - [Arbitrary-rank prime-support incidence pseudoforests are noncovering, with height-independent full Haar density and unrestricted large-prime continuation](../docs/reports/erdos7-odd-covering/problem-details/49-incidence-pseudoforests-with-arbitrary-original-heights.md)

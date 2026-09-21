@@ -1,0 +1,978 @@
+{
+  "schema": "predecessor-support-two-v1",
+  "scalars": {
+    "rows": [
+      {
+        "r": 5,
+        "K": "20/3",
+        "pairs": 465,
+        "maximum": "20/3",
+        "maximizers": [
+          [
+            [
+              3
+            ],
+            [
+              3,
+              5
+            ]
+          ]
+        ]
+      },
+      {
+        "r": 7,
+        "K": "14/3",
+        "pairs": 465,
+        "maximum": "14/3",
+        "maximizers": [
+          [
+            [
+              3
+            ],
+            [
+              3,
+              7
+            ]
+          ]
+        ]
+      },
+      {
+        "r": 11,
+        "K": "154/45",
+        "pairs": 465,
+        "maximum": "154/45",
+        "maximizers": [
+          [
+            [
+              3
+            ],
+            [
+              3,
+              11
+            ]
+          ]
+        ]
+      }
+    ],
+    "prime_square_envelope": "719/3600",
+    "fees": {
+      "five_before_seven": "1573/1620",
+      "seven_before_five": "13223/13500",
+      "five_absent": "319/540"
+    },
+    "reserve": "277/13500"
+  },
+  "actual_fixtures": [
+    {
+      "name": "7 before 5; exact supports {3} and {7}; killed fibre",
+      "primes": [
+        3,
+        7,
+        5
+      ],
+      "heights": {
+        "3": 4,
+        "7": 2,
+        "5": 2
+      },
+      "original_labels": [
+        {
+          "e": {
+            "3": 1
+          },
+          "r": {
+            "3": 0
+          },
+          "d": 3,
+          "a": 0
+        },
+        {
+          "e": {
+            "7": 1
+          },
+          "r": {
+            "7": 0
+          },
+          "d": 7,
+          "a": 0
+        },
+        {
+          "e": {
+            "5": 1
+          },
+          "r": {
+            "5": 0
+          },
+          "d": 5,
+          "a": 0
+        },
+        {
+          "e": {
+            "3": 1,
+            "5": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 1
+          },
+          "d": 15,
+          "a": 1
+        },
+        {
+          "e": {
+            "3": 2,
+            "5": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 2
+          },
+          "d": 45,
+          "a": 37
+        },
+        {
+          "e": {
+            "3": 3,
+            "5": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 3
+          },
+          "d": 135,
+          "a": 28
+        },
+        {
+          "e": {
+            "3": 4,
+            "5": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 4
+          },
+          "d": 405,
+          "a": 244
+        },
+        {
+          "e": {
+            "3": 1,
+            "7": 1
+          },
+          "r": {
+            "3": 1,
+            "7": 2
+          },
+          "d": 21,
+          "a": 16
+        },
+        {
+          "e": {
+            "7": 1,
+            "5": 1
+          },
+          "r": {
+            "7": 1,
+            "5": 3
+          },
+          "d": 35,
+          "a": 8
+        },
+        {
+          "e": {
+            "7": 2,
+            "5": 2
+          },
+          "r": {
+            "7": 8,
+            "5": 8
+          },
+          "d": 1225,
+          "a": 8
+        }
+      ],
+      "period": 99225,
+      "compressed_carrier": 100,
+      "positive_law_cells": 67,
+      "mixed_patterns": {
+        "7": [
+          [
+            3
+          ]
+        ],
+        "5": [
+          [
+            3
+          ],
+          [
+            7
+          ]
+        ]
+      },
+      "stages": [
+        {
+          "p": 3,
+          "labels": 0,
+          "alpha_square": "0",
+          "bad_mass": "0",
+          "envelope": "0",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 7,
+          "labels": 1,
+          "alpha_square": "1/72",
+          "bad_mass": "0",
+          "envelope": "2/25",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 5,
+          "labels": 6,
+          "alpha_square": "973/8640",
+          "bad_mass": "13/270",
+          "envelope": "10/27",
+          "killed_fibres": 3,
+          "overhalf_fibres": 8
+        }
+      ],
+      "pair_cylinder_checks": 55,
+      "survivor_mass": "257/270",
+      "haar_survivor": "937/2835",
+      "actual_survivor_count": 32795,
+      "max_density": "21/4",
+      "theorem_density_cap": "64/5"
+    },
+    {
+      "name": "5 before 7; one ternary support with shared coordinate",
+      "primes": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "heights": {
+        "3": 2,
+        "5": 2,
+        "7": 2,
+        "11": 2
+      },
+      "original_labels": [
+        {
+          "e": {
+            "3": 1
+          },
+          "r": {
+            "3": 0
+          },
+          "d": 3,
+          "a": 0
+        },
+        {
+          "e": {
+            "5": 1
+          },
+          "r": {
+            "5": 0
+          },
+          "d": 5,
+          "a": 0
+        },
+        {
+          "e": {
+            "7": 1
+          },
+          "r": {
+            "7": 0
+          },
+          "d": 7,
+          "a": 0
+        },
+        {
+          "e": {
+            "11": 1
+          },
+          "r": {
+            "11": 0
+          },
+          "d": 11,
+          "a": 0
+        },
+        {
+          "e": {
+            "3": 1,
+            "5": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 1
+          },
+          "d": 15,
+          "a": 1
+        },
+        {
+          "e": {
+            "3": 2,
+            "5": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 2
+          },
+          "d": 45,
+          "a": 37
+        },
+        {
+          "e": {
+            "3": 1,
+            "7": 1
+          },
+          "r": {
+            "3": 1,
+            "7": 1
+          },
+          "d": 21,
+          "a": 1
+        },
+        {
+          "e": {
+            "5": 1,
+            "7": 1
+          },
+          "r": {
+            "5": 1,
+            "7": 2
+          },
+          "d": 35,
+          "a": 16
+        },
+        {
+          "e": {
+            "5": 2,
+            "7": 2
+          },
+          "r": {
+            "5": 6,
+            "7": 9
+          },
+          "d": 1225,
+          "a": 156
+        },
+        {
+          "e": {
+            "3": 1,
+            "5": 1,
+            "11": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 1,
+            "11": 1
+          },
+          "d": 165,
+          "a": 1
+        },
+        {
+          "e": {
+            "5": 1,
+            "7": 1,
+            "11": 1
+          },
+          "r": {
+            "5": 1,
+            "7": 1,
+            "11": 2
+          },
+          "d": 385,
+          "a": 211
+        },
+        {
+          "e": {
+            "5": 2,
+            "7": 1,
+            "11": 2
+          },
+          "r": {
+            "5": 6,
+            "7": 1,
+            "11": 13
+          },
+          "d": 21175,
+          "a": 981
+        }
+      ],
+      "period": 1334025,
+      "compressed_carrier": 192,
+      "positive_law_cells": 80,
+      "mixed_patterns": {
+        "5": [
+          [
+            3
+          ]
+        ],
+        "7": [
+          [
+            3
+          ],
+          [
+            5
+          ]
+        ],
+        "11": [
+          [
+            3,
+            5
+          ],
+          [
+            5,
+            7
+          ]
+        ]
+      },
+      "stages": [
+        {
+          "p": 3,
+          "labels": 0,
+          "alpha_square": "0",
+          "bad_mass": "0",
+          "envelope": "0",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 5,
+          "labels": 2,
+          "alpha_square": "1/16",
+          "bad_mass": "0",
+          "envelope": "2/9",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 7,
+          "labels": 3,
+          "alpha_square": "5/288",
+          "bad_mass": "0",
+          "envelope": "13/75",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 11,
+          "labels": 3,
+          "alpha_square": "1/4000",
+          "bad_mass": "0",
+          "envelope": "10/243",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        }
+      ],
+      "pair_cylinder_checks": 78,
+      "survivor_mass": "1",
+      "haar_survivor": "1087/3465",
+      "actual_survivor_count": 418495,
+      "max_density": "231/40",
+      "theorem_density_cap": "256/9"
+    },
+    {
+      "name": "5 absent with two exact predecessor supports",
+      "primes": [
+        3,
+        7,
+        11
+      ],
+      "heights": {
+        "3": 1,
+        "7": 2,
+        "11": 2
+      },
+      "original_labels": [
+        {
+          "e": {
+            "3": 1
+          },
+          "r": {
+            "3": 0
+          },
+          "d": 3,
+          "a": 0
+        },
+        {
+          "e": {
+            "7": 1
+          },
+          "r": {
+            "7": 0
+          },
+          "d": 7,
+          "a": 0
+        },
+        {
+          "e": {
+            "11": 1
+          },
+          "r": {
+            "11": 0
+          },
+          "d": 11,
+          "a": 0
+        },
+        {
+          "e": {
+            "3": 1,
+            "7": 1
+          },
+          "r": {
+            "3": 1,
+            "7": 1
+          },
+          "d": 21,
+          "a": 1
+        },
+        {
+          "e": {
+            "3": 1,
+            "11": 1
+          },
+          "r": {
+            "3": 1,
+            "11": 1
+          },
+          "d": 33,
+          "a": 1
+        },
+        {
+          "e": {
+            "7": 1,
+            "11": 1
+          },
+          "r": {
+            "7": 1,
+            "11": 2
+          },
+          "d": 77,
+          "a": 57
+        },
+        {
+          "e": {
+            "7": 2,
+            "11": 2
+          },
+          "r": {
+            "7": 8,
+            "11": 13
+          },
+          "d": 5929,
+          "a": 4369
+        }
+      ],
+      "period": 17787,
+      "compressed_carrier": 24,
+      "positive_law_cells": 11,
+      "mixed_patterns": {
+        "7": [
+          [
+            3
+          ]
+        ],
+        "11": [
+          [
+            3
+          ],
+          [
+            7
+          ]
+        ]
+      },
+      "stages": [
+        {
+          "p": 3,
+          "labels": 0,
+          "alpha_square": "0",
+          "bad_mass": "0",
+          "envelope": "0",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 7,
+          "labels": 1,
+          "alpha_square": "1/72",
+          "bad_mass": "0",
+          "envelope": "2/25",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 11,
+          "labels": 3,
+          "alpha_square": "7/1200",
+          "bad_mass": "0",
+          "envelope": "10/243",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        }
+      ],
+      "pair_cylinder_checks": 28,
+      "survivor_mass": "1",
+      "haar_survivor": "104/231",
+      "actual_survivor_count": 8008,
+      "max_density": "77/30",
+      "theorem_density_cap": "32/3"
+    },
+    {
+      "name": "3 absent with nonnumerical order and shared supports",
+      "primes": [
+        7,
+        5,
+        11,
+        13
+      ],
+      "heights": {
+        "7": 1,
+        "5": 1,
+        "11": 1,
+        "13": 1
+      },
+      "original_labels": [
+        {
+          "e": {
+            "7": 1
+          },
+          "r": {
+            "7": 0
+          },
+          "d": 7,
+          "a": 0
+        },
+        {
+          "e": {
+            "5": 1
+          },
+          "r": {
+            "5": 0
+          },
+          "d": 5,
+          "a": 0
+        },
+        {
+          "e": {
+            "11": 1
+          },
+          "r": {
+            "11": 0
+          },
+          "d": 11,
+          "a": 0
+        },
+        {
+          "e": {
+            "13": 1
+          },
+          "r": {
+            "13": 0
+          },
+          "d": 13,
+          "a": 0
+        },
+        {
+          "e": {
+            "7": 1,
+            "5": 1
+          },
+          "r": {
+            "7": 1,
+            "5": 1
+          },
+          "d": 35,
+          "a": 1
+        },
+        {
+          "e": {
+            "7": 1,
+            "11": 1
+          },
+          "r": {
+            "7": 1,
+            "11": 1
+          },
+          "d": 77,
+          "a": 1
+        },
+        {
+          "e": {
+            "5": 1,
+            "11": 1
+          },
+          "r": {
+            "5": 1,
+            "11": 2
+          },
+          "d": 55,
+          "a": 46
+        },
+        {
+          "e": {
+            "5": 1,
+            "7": 1,
+            "13": 1
+          },
+          "r": {
+            "5": 1,
+            "7": 1,
+            "13": 1
+          },
+          "d": 455,
+          "a": 1
+        },
+        {
+          "e": {
+            "7": 1,
+            "11": 1,
+            "13": 1
+          },
+          "r": {
+            "7": 1,
+            "11": 1,
+            "13": 2
+          },
+          "d": 1001,
+          "a": 925
+        }
+      ],
+      "period": 5005,
+      "compressed_carrier": 36,
+      "positive_law_cells": 21,
+      "mixed_patterns": {
+        "5": [
+          [
+            7
+          ]
+        ],
+        "11": [
+          [
+            5
+          ],
+          [
+            7
+          ]
+        ],
+        "13": [
+          [
+            5,
+            7
+          ],
+          [
+            7,
+            11
+          ]
+        ]
+      },
+      "stages": [
+        {
+          "p": 7,
+          "labels": 0,
+          "alpha_square": "0",
+          "bad_mass": "0",
+          "envelope": "0",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 5,
+          "labels": 1,
+          "alpha_square": "1/96",
+          "bad_mass": "0",
+          "envelope": "4/135",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 11,
+          "labels": 2,
+          "alpha_square": "3/800",
+          "bad_mass": "0",
+          "envelope": "23/1215",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 13,
+          "labels": 2,
+          "alpha_square": "0",
+          "bad_mass": "0",
+          "envelope": "844/245025",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        }
+      ],
+      "pair_cylinder_checks": 45,
+      "survivor_mass": "1",
+      "haar_survivor": "2664/5005",
+      "actual_survivor_count": 2664,
+      "max_density": "5005/1944",
+      "theorem_density_cap": "512/33"
+    },
+    {
+      "name": "7 absent; both exact supports contain 3",
+      "primes": [
+        3,
+        5,
+        11
+      ],
+      "heights": {
+        "3": 2,
+        "5": 2,
+        "11": 1
+      },
+      "original_labels": [
+        {
+          "e": {
+            "3": 1
+          },
+          "r": {
+            "3": 0
+          },
+          "d": 3,
+          "a": 0
+        },
+        {
+          "e": {
+            "5": 1
+          },
+          "r": {
+            "5": 0
+          },
+          "d": 5,
+          "a": 0
+        },
+        {
+          "e": {
+            "11": 1
+          },
+          "r": {
+            "11": 0
+          },
+          "d": 11,
+          "a": 0
+        },
+        {
+          "e": {
+            "3": 1,
+            "5": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 1
+          },
+          "d": 15,
+          "a": 1
+        },
+        {
+          "e": {
+            "3": 1,
+            "11": 1
+          },
+          "r": {
+            "3": 1,
+            "11": 1
+          },
+          "d": 33,
+          "a": 1
+        },
+        {
+          "e": {
+            "3": 1,
+            "5": 1,
+            "11": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 1,
+            "11": 2
+          },
+          "d": 165,
+          "a": 46
+        },
+        {
+          "e": {
+            "3": 2,
+            "5": 2,
+            "11": 1
+          },
+          "r": {
+            "3": 1,
+            "5": 6,
+            "11": 3
+          },
+          "d": 2475,
+          "a": 1081
+        }
+      ],
+      "period": 2475,
+      "compressed_carrier": 36,
+      "positive_law_cells": 18,
+      "mixed_patterns": {
+        "5": [
+          [
+            3
+          ]
+        ],
+        "11": [
+          [
+            3
+          ],
+          [
+            3,
+            5
+          ]
+        ]
+      },
+      "stages": [
+        {
+          "p": 3,
+          "labels": 0,
+          "alpha_square": "0",
+          "bad_mass": "0",
+          "envelope": "0",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 5,
+          "labels": 1,
+          "alpha_square": "1/32",
+          "bad_mass": "0",
+          "envelope": "2/9",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        },
+        {
+          "p": 11,
+          "labels": 3,
+          "alpha_square": "1/200",
+          "bad_mass": "0",
+          "envelope": "20/243",
+          "killed_fibres": 0,
+          "overhalf_fibres": 0
+        }
+      ],
+      "pair_cylinder_checks": 28,
+      "survivor_mass": "1",
+      "haar_survivor": "67/165",
+      "actual_survivor_count": 1005,
+      "max_density": "55/18",
+      "theorem_density_cap": "320/27"
+    }
+  ],
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "problem-details/52-two-or-four-exact-predecessor-supports.md": "6ce31e69b18775949e577f4068c5a63da94ad6f62bb8b59c763b85d376c418ee",
+    "problem-details/07-ordered-local-kernels-unbounded-feedback-sets-and-treewidth.md": "1101e53b540deee5175611a11b0e0bf93883482fb80d2477c3730072bcf1735b",
+    "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
+    "problem-details/41-natural-four-predecessor-orders-are-noncovering.md": "8b16471115e24d67336b49c725eb1086b97df960052bf138871fe330b296ffd4"
+  },
+  "producer_sha256": "c7c87e4486f5155987bc365cb06bb0729200ee9019372d63fe0d9a9dcb7ee49c"
+}
