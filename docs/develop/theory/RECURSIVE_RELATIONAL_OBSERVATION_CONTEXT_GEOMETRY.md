@@ -11512,3 +11512,1627 @@ $$
 [^rroctx46_arrayamp_dlmf]: NIST DLMF [18.5.3](https://dlmf.nist.gov/18.5#E3) 的当前第三类 $V_n$ 约定；该处注明版本1.0.28（2020年9月15日）的 $V/W$ 对调更正。[18.12.10](https://dlmf.nist.gov/18.12#E10) 为第二类 $U_n$ 的生成式，乘 $1-z$ 才得到这里的 $V_n=U_n-U_{n-1}$。本文先按多项式／形式系数恒等式迁移；当 $A>0$ 时的解析半径另由（46.7）的极点明确给出。
 
 ## 46.99 追加锚
+
+## 47. 同一递归关系的加权完成、解析半径与标签几何
+
+本节接续第43节的递归体／边关系和第46节的有限幅度结果。同一递归系数决定指定加权拓扑下的恢复稳定性、完成与解析球；另行选择标签及正权以后，同一生成函数给出归一化、矩与信息几何。全部结论保留共同来源、完整已获记录、范数及有限取得条件。
+
+离散片段与完整数组是相容关系的不同呈现；完成化仍须声明哪一种误差趋于零。不同一致结构的完成、正项求和和真实观察概率各有独立条件。本节给出普通数学证明，不据此推出物理定律或新的 Lean 认证。
+
+### 47.1 定义、实际递归像与有限供应
+
+固定实数 $A>0$、$0<\rho<1$，令
+$$
+K_A=[-A,A]^{\mathbb N}.
+$$
+每个 $a\in K_A$ 的数组 $\mathcal E(a)$ 由同一列递推定义：
+$$
+T(n,0)=a_n,\qquad
+T(n,k+1)=T(n+1,k)-\sum_{j=0}^{k}T(n,j)a_{k-j}.
+\tag{47.1}
+$$
+对 $k$ 归纳，右端只使用已经构造的列。每个坐标是 $a_0,\ldots,a_{n+k}$ 的整系数多项式，且没有常数项。因此每份实边界唯一给出一个满足 (47.1) 的实际全层数组，所有有限三角彼此相容。反向由第一列
+$$
+\beta(T)_n=T(n,0)
+$$
+提取边界。只有在对应递归像上，$\beta$ 与 $\mathcal E$ 互逆。
+
+使用第46.2—46.5节中已经建立的以下结果：共同负角点及幅度为（46.6），系数与根为（46.8）、（46.11）—（46.12），坐标 Lipschitz 性为（46.14）—（46.17），同立方体模量为（46.19）。对每个 $n,k\ge0$，
+$$
+|\mathcal E(a)(n,k)|\le u_k(A),\qquad
+\mathcal E(-A\mathbf1)(n,k)=-u_k(A),
+\tag{47.2}
+$$
+其中
+$$
+u_k(A)=\sum_{d=1}^{k+1}\binom{k+d-1}{2d-2}A^d
+=\frac{A}{\lambda+1}\bigl(\lambda^{k+1}+\lambda^{-k}\bigr),
+$$
+$$
+s=\sqrt{A^2+4A},\qquad \lambda=\lambda(A)=\frac{A+2+s}2>1,\qquad
+L_k(A)=u'_k(A).
+\tag{47.3}
+$$
+由 \(\lambda\) 的定义，它与 \(\lambda^{-1}\) 是
+\(x^2-(A+2)x+1=0\) 的两个正根，故
+\(\lambda+\lambda^{-1}=A+2\)、\(\lambda-\lambda^{-1}=s\)。
+
+同一有限依赖坐标的最优 Lipschitz 常数为 $L_k(A)$。对 $0\le h\le A$，
+$$
+|\mathcal E(a)(n,k)-\mathcal E(b)(n,k)|
+\le u_k(A)-u_k(A-h)
+\quad\text{若 }\|a-b\|_\infty\le h.
+\tag{47.4}
+$$
+共同角点对 $a=-A\mathbf1,\ b=-(A-h)\mathbf1$ 同时使所有坐标达到 (47.4)。这些是同一组无限序列的有限限制，不是分别为不同坐标选择不相容的见证。$h=A$ 时约定 $u_k(0)=0$，与多项式公式一致。
+
+定义加权数组空间及其范数：
+$$
+\mathcal B_\rho=
+\left\{T:\mathbb N^2\to\mathbb R:
+\|T\|_\rho:=\sup_{n,k\ge0}\rho^{n+k}|T(n,k)|<\infty\right\}.
+\tag{47.5}
+$$
+逐坐标乘以 $\rho^{n+k}$ 将它线性等距映到通常的 $\ell^\infty(\mathbb N^2)$，因此 $\mathcal B_\rho$ 是 Banach 空间。以下“映射有界”指整个 $K_A$ 的像在这个范数下统一有界，不把非线性 $\mathcal E$ 称为线性算子。
+
+记
+$$
+q=\rho\lambda(A).
+$$
+当 $\mathcal E(K_A)\subseteq\mathcal B_\rho$ 时，记实际像为
+$$
+\mathcal I_{A,\rho}=\mathcal E(K_A).
+$$
+不把 $\mathcal I_{A,\rho}$ 与任意加权有界数组空间混同。
+
+### 47.2 有界映射的精确阈值
+
+**命题 47.1（精确有界阈值）。** 全层映射 $\mathcal E:K_A\to\mathcal B_\rho$ 取值良定且统一有界，当且仅当 $q\le1$。在这一范围内，
+$$
+\max_{a\in K_A}\|\mathcal E(a)\|_\rho=A.
+\tag{47.6}
+$$
+
+证明。由 (47.2) 及 $\rho^n\le1$，
+$$
+\sup_{a\in K_A}\|\mathcal E(a)\|_\rho
+=\sup_{k\ge0}\rho^k u_k(A),
+$$
+等号由同一个全负边界在 $n=0$ 的全部坐标给出。由 (47.3)，
+$$
+\rho^ku_k(A)
+=\frac{A}{\lambda+1}
+\left[\lambda q^k+\left(\frac{\rho}{\lambda}\right)^k\right].
+\tag{47.7}
+$$
+若 $q\le1$，两个幂都至多一，故右端至多 $A$；$k=0$ 时恰为 $A$。若 $q>1$，第一项随 $k$ 无界增长，全负边界的数组不属于 $\mathcal B_\rho$。证毕。
+
+同一幅度恒等式也说明：若只把输出读法改为列权重
+\(\sup_{n,k}\rho^k|T(n,k)|\)，完整自由边界族的幅度阈值仍是 \(q\le1\)，且最优幅度仍为 \(A\)。这只是另一指定范数下的幅度结论；其对行指标的尾部、紧性或完成条件不从下文的反对角权重结果自动继承。以下全部数组拓扑继续使用 (47.5)。
+
+### 47.3 次临界的最优 Lipschitz 常数与统一尾界
+
+**命题 47.2（最优全层 Lipschitz 常数）。** 当 $q<1$ 时，$\mathcal E$ 从输入通常上确界距离到输出加权范数的最优全局 Lipschitz 常数为
+$$
+C_\rho(A)=\sup_{k\ge0}\rho^kL_k(A)<\infty.
+\tag{47.8}
+$$
+这个上确界在某个有限 $k$ 处取得，并且 $C_\rho(A)\ge1$。
+
+证明。由 $u_k$ 的正系数及次数至多 $k+1$，
+$$
+L_k(A)\le\frac{k+1}{A}u_k(A)\le(k+1)\lambda^k.
+$$
+最后一步来自 (47.3)：
+$$
+u_k(A)
+=A\lambda^k\,\frac{\lambda+\lambda^{-2k}}{\lambda+1}
+\le A\lambda^k.
+\tag{47.9}
+$$
+所以 $0\le\rho^kL_k(A)\le(k+1)q^k\to0$。$L_0(A)=1$，故此正序列的上确界有限，且可在一个有限初始段内取到最大值。
+
+逐坐标使用有限 Lipschitz 界，再取所有 $n,k$ 的上确界，得到
+$$
+\|\mathcal E(a)-\mathcal E(b)\|_\rho
+\le C_\rho(A)\|a-b\|_\infty.
+\tag{47.10}
+$$
+为证最优性，固定任意 $k$，比较共同角点 $-A\mathbf1$ 与 $-(A-h)\mathbf1$，其中 $0<h\le A$。其输入距离是 $h$，第 $(0,k)$ 个坐标的加权割线比为
+$$
+\rho^k\frac{u_k(A)-u_k(A-h)}h
+\longrightarrow\rho^kL_k(A)\quad(h\downarrow0).
+$$
+任何全局 Lipschitz 常数均须大于等于每个这样的极限，因此不能小于 (47.8)。有限索引取得 $C_\rho(A)$ 不等于有不同输入对取得最优割线比。证毕。
+
+**精确统一尾界。** 更一般地，只要 $q\le1$，对每个整数 $N\ge0$，
+$$
+\sup_{a\in K_A}\sup_{n+k\ge N}\rho^{n+k}|\mathcal E(a)(n,k)|
+=\rho^Nu_N(A)\le A q^N.
+\tag{47.11}
+$$
+证明。$u_k(A)$ 关于 $k$ 增加，这可由 (47.3) 的正系数逐项比较得到。因此在反对角层 $n+k=m$ 上，
+$$
+\rho^{n+k}|\mathcal E(a)(n,k)|\le\rho^m u_k(A)\le\rho^m u_m(A).
+$$
+共同全负边界在 $(n,k)=(0,m)$ 取得这个层上界。又由 (47.7)，$\rho^m u_m(A)$ 是两个非负几何项之和，其底数分别为 $q\le1$ 和 $\rho/\lambda<1$，所以关于 $m$ 不增。所有 $m\ge N$ 的最大值就在 $m=N$，并由同一个全负边界的 $(0,N)$ 坐标取得。最后由 (47.9) 得 $\rho^Nu_N(A)\le Aq^N$。证毕。
+
+因此 (47.11) 的右侧也是每份输入的统一尾界。次临界时它趋于零；临界时它趋于第47.5节的正常数 $c_A$，不能把临界尾部当成统一消失的尾部。
+
+### 47.4 全层精确有限误差模与共同见证
+
+在 $q\le1$ 时定义
+$$
+\omega_{\rho,A}(h)=
+\sup_{\substack{a,b\in K_A\\\|a-b\|_\infty\le h}}
+\|\mathcal E(a)-\mathcal E(b)\|_\rho,
+\qquad 0\le h\le A.
+$$
+
+**命题 47.3（精确全层有限误差模）。**
+$$
+\boxed{
+\omega_{\rho,A}(h)=
+\sup_{k\ge0}\rho^k\bigl(u_k(A)-u_k(A-h)\bigr).
+}
+\tag{47.12}
+$$
+同一个角点对 $-A\mathbf1,\ -(A-h)\mathbf1$ 取得这一范数模量。
+
+证明。对每对允许输入逐坐标应用 (47.4)，并用 $\rho^n\le1$，得到右侧上界。该共同角点对在每个坐标上给出 $u_k(A)-u_k(A-h)$ 的绝对差，所以其实际范数距离恰好是右侧。这一证明不需要为各坐标分别拼接见证，也不需要交换极限和上确界。即使索引上确界不在有限 $k$ 取得，固定输入对仍取得作为上确界定义的范数距离。
+
+$h=0$ 时两边为零；$h=A$ 时第二个角点是零边界，右侧由 (47.6) 等于 $A$。证毕。
+
+在次临界情形，(47.10) 给 $\omega_{\rho,A}(h)\le C_\rho(A)h$。固定 $k$ 再令 $h\downarrow0$，并取 $k$ 的上确界，可得
+$$
+\lim_{h\downarrow0}\frac{\omega_{\rho,A}(h)}h=C_\rho(A).
+$$
+这里没有把同立方体模量改成允许近似点越界的外向噪声包络。
+
+### 47.5 临界点：有界但在全负边界不连续
+
+令 $q=1$，即 $\rho=1/\lambda(A)$，并记
+$$
+c_A=\frac{A\lambda(A)}{\lambda(A)+1}>0,\qquad
+b_A=\frac{A}{\lambda(A)+1}.
+$$
+由 (47.7)，
+$$
+\rho^ku_k(A)=c_A+b_A\lambda^{-2k}.
+\tag{47.13}
+$$
+
+因此，对全负边界的实际数组作有限反对角坐标截断时，尾部范数由 (47.11) 精确给出，并趋于 \(c_A\)，不会趋零。这说明环境数组中的有限坐标截断在临界范数下不能逼近该对象；它不等同于“有限支撑边界生成的实际无限数组”。第47.9节将证明：在完整自由来源类中，后者的闭包恰为具有消失加权尾的实际像，任意实际数组到该闭包的距离等于其剩余尾幅度；这个全负数组的距离特别为 \(c_A\)。
+对每个固定 $0<h<A$，$\lambda(A-h)<\lambda(A)$，所以
+$$
+\rho^ku_k(A-h)\longrightarrow0.
+$$
+当 $h=A$ 时此项恒为零，结论仍成立。故
+$$
+\lim_{k\to\infty}
+\rho^k\bigl(u_k(A)-u_k(A-h)\bigr)=c_A
+\qquad(0<h\le A).
+\tag{47.14}
+$$
+共同角点对因此满足
+$$
+\|(-A\mathbf1)-(-(A-h)\mathbf1)\|_\infty=h,\qquad
+\|\mathcal E(-A\mathbf1)-\mathcal E(-(A-h)\mathbf1)\|_\rho
+=\omega_{\rho,A}(h)\ge c_A.
+\tag{47.15}
+$$
+令 $h\downarrow0$，得到 $\mathcal E$ 在全负边界处不连续。因此临界情形没有全局 Lipschitz 常数。
+
+事实上，整个允许区间上的临界模量都有闭式：
+$$
+\omega_{\rho,A}(0)=0,\qquad
+\omega_{\rho,A}(h)=\max\{h,c_A\}\quad(0<h\le A),
+\qquad
+\lim_{h\downarrow0}\omega_{\rho,A}(h)=c_A.
+\tag{47.16}
+$$
+证明。令 $B=A-h\in[0,A)$。$u_k$ 的一次项为 $B$，其余系数非负，故 $u_k(B)\ge B$，包括 $B=0$。由于 $0<\rho<1$，
+$$
+\rho^k u_k(B)\ge B\rho^k\ge B\rho^{2k}.
+$$
+结合 (47.13)、$\rho=\lambda^{-1}$ 及 $b_A-B=h-c_A$，
+$$
+\rho^k\bigl(u_k(A)-u_k(B)\bigr)
+\le c_A+(h-c_A)\rho^{2k}
+\le\max\{h,c_A\}.
+$$
+深度零的差值恰为 $h$；(47.14) 的深度极限给下界 $c_A$。取上确界即证精确式，并得到零处的跳跃。$0<h<c_A$ 时，共同角点对取得范数距离 $c_A$，但其任何有限深度坐标都没有取得该距离（其他行还多一个不超过一的因子 $\rho^n$）；$h\ge c_A$ 时，深度零已经取得模量。证毕。
+
+结合第47.2、47.3节，整个 $K_A$ 到 $\mathcal B_\rho$ 的全局 Lipschitz 映射存在，当且仅当 $q<1$。临界结论只证明特定全负边界的不连续性，不声称每个输入处都不连续。
+
+**临界实际像闭、有界、完备，但不紧。** 闭性实际上对所有 $q\le1$ 都成立。设 $T_r=\mathcal E(a^{(r)})$ 在 $\mathcal B_\rho$ 范数中收敛到 $T$。每个坐标的评价都是连续泛函，第一列极限 $a_n=T(n,0)$ 仍在闭区间 $[-A,A]$ 内。每个递归坐标只使用有限前缀的多项式，故
+$$
+T(n,k)=\lim_r\mathcal E(a^{(r)})(n,k)
+=\mathcal E(a)(n,k).
+$$
+因此 $T\in\mathcal I_{A,\rho}$，实际像闭；(47.6) 给有界性，$\mathcal B_\rho$ 的完备性给实际像完备。
+
+现在取临界情形及 $h_m=A/(m+2)$，令 $T_m=\mathcal E(-(A-h_m)\mathbf1)$。每个固定坐标都趋于 $\mathcal E(-A\mathbf1)$ 的相应坐标，但 (47.15) 保证两者范数距离至少为 $c_A$。若 $T_m$ 有范数收敛子列，其极限的全部坐标必须等于 $\mathcal E(-A\mathbf1)$，与这个距离下界矛盾。故该有界序列没有收敛子列，临界实际像不紧。以上结论仍然只针对完整 $K_A$ 的实际像。
+
+### 47.6 乘积拓扑、加权范数拓扑及逆映射
+
+每个输入实坐标均使用通常绝对值拓扑。因为每个输出坐标只依赖有限输入坐标且是多项式，$\mathcal E$ 在输入乘积拓扑到输出乘积拓扑之间连续。第一列提取是坐标投影，故两者在实际递归像上互为乘积拓扑同胚。这一结论不依赖全层加权有界性。
+
+在 $q<1$ 时，输入乘积收敛进一步推出输出加权范数收敛。事实上，若 $a^{(r)}\to a$ 逐坐标，则对给定 $\varepsilon>0$，先由 (47.11) 选 $N$ 使 $2Aq^N<\varepsilon/2$。有限头部 $n+k<N$ 的多项式读数最终全部相差小于对应的 $\varepsilon/2$ 加权阈值；剩余尾部的差由 $2Aq^N$ 控制。于是
+$$
+\|\mathcal E(a^{(r)})-\mathcal E(a)\|_\rho\longrightarrow0.
+\tag{47.17}
+$$
+具体地，固定 $a$ 和输出误差 $\varepsilon$，先如上选择 $N$。对每个 $n+k<N$，坐标多项式的连续性给一个含 $a$ 的输入乘积开邻域，使加权坐标差小于 $\varepsilon/2$；有限多个这样的邻域之交仍是乘积开邻域。在该邻域内有限头部差小于 $\varepsilon/2$，共同尾部差小于 $\varepsilon/2$，故输出范数差小于 $\varepsilon$。这证明乘积到范数的连续性，而不只给序列陈述。
+
+反方向，在所有 $q\le1$ 的情形，只要两个数组属于 $\mathcal I_{A,\rho}$，其第一列满足
+$$
+\sup_{n\ge0}\rho^n|a_n-b_n|
+\le\|\mathcal E(a)-\mathcal E(b)\|_\rho.
+\tag{47.18}
+$$
+因而逆映射到加权输入范数
+$$
+\|a\|_{\partial,\rho}:=\sup_n\rho^n|a_n|
+$$
+是 $1$-Lipschitz，并且逆映射到输入乘积拓扑连续：固定 $n$ 时，坐标差至多为 $\rho^{-n}$ 倍输出范数差。
+
+常数一最优。取 $0<\alpha\le A$ 且 $\rho\alpha<1$，比较 $\alpha e_0$ 与零。由 (47.1)，所有 $n>0$ 的行全零，而
+$$
+\mathcal E(\alpha e_0)(0,k)=\alpha(-\alpha)^k.
+$$
+因此加权输出范数和加权输入范数均为 $\alpha$，取得等号。
+
+但逆映射到通常输入上确界范数，在次临界和临界情形都不连续。统一取 $\alpha=A/2$，令
+$$
+a^{(N)}=\alpha e_N,\qquad q_\alpha=\rho\lambda(\alpha)<1.
+$$
+严格不等式由 $\lambda(\alpha)<\lambda(A)$ 及 $q\le1$ 给出。若 $n+k<N$，有限依赖和零常数项使 $\mathcal E(a^{(N)})(n,k)=0$。对其余坐标使用半径 $\alpha$ 的 (47.11)，得到
+$$
+\|\mathcal E(a^{(N)})\|_\rho\le\alpha q_\alpha^N\longrightarrow0,
+\qquad
+\|a^{(N)}\|_\infty=\alpha.
+\tag{47.19}
+$$
+所以普通上确界逆连续性在零数组处失败。此见证不与临界全负边界的正向不连续性混同。
+
+### 47.7 次临界的紧像与完整数值完成
+
+本节全部假设 $q<1$。定义拉回输出距离
+$$
+d_\rho(a,b)=\|\mathcal E(a)-\mathcal E(b)\|_\rho.
+\tag{47.20}
+$$
+它是有限值的真正度量：范数给三角不等式；若距离为零，第一列相同，故 $a=b$。由第47.6节，它在 $K_A$ 上诱导通常实坐标的乘积拓扑。
+
+**紧性与完备性。** 每个区间 $[-A,A]$ 紧。给定 $K_A$ 中任意序列，对第零坐标取收敛子列，再依次对每个坐标取子列；对角子列在每个固定坐标收敛于某个仍在 $[-A,A]$ 中的值。全部极限给 $a\in K_A$，由 (47.17)，相应数组在加权范数中收敛到 $\mathcal E(a)$。因此 $\mathcal I_{A,\rho}$ 是度量空间中的序列紧集，从而紧且完备。
+
+也可直接验证拉回度量的完备性。若 $a^{(r)}$ 是 $d_\rho$-Cauchy，则 (47.18) 使每个固定实坐标成为 Cauchy 序列，其极限 $a_n$ 仍在闭区间 $[-A,A]$。由 (47.17)，整个数组收敛于 $\mathcal E(a)$。所以 $(K_A,d_\rho)$ 完备，$\mathcal E$ 是它到 $\mathcal I_{A,\rho}$ 的等距双射。特别地，紧像是 $\mathcal B_\rho$ 中的闭子集。
+
+令有限支撑边界类为
+$$
+\mathcal F_A^{\mathbb R}
+=\{a\in K_A:\exists N,\ \forall i\ge N,\ a_i=0\},
+$$
+$$
+\mathcal F_A^{\mathbb Q}
+=\{a\in\mathcal F_A^{\mathbb R}:\forall i,\ a_i\in\mathbb Q\}.
+\tag{47.21}
+$$
+它们的实际数组像分别记为
+$$
+\mathcal J_{A,\rho}^{\mathbb R}=\mathcal E(\mathcal F_A^{\mathbb R}),
+\qquad
+\mathcal J_{A,\rho}^{\mathbb Q}=\mathcal E(\mathcal F_A^{\mathbb Q}).
+$$
+这里是“有限支撑边界所生成的实际无限数组”，不是把有限三角的外部数组坐标补零。后者一般不满足 (47.1)。例如 $\alpha e_0$ 的第零行在所有 $k$ 上均非零。
+
+**实有限支撑稠密性。** 给定 $a\in K_A$，令 $a^{<N}$ 保留下标 $i<N$ 的坐标，之后全部设零。它逐坐标趋于 $a$，所以在乘积拓扑中稠密。更直接地，有限依赖使两数组在 $n+k<N$ 时完全相同，由 (47.11) 得
+$$
+d_\rho(a^{<N},a)\le2Aq^N\longrightarrow0.
+\tag{47.22}
+$$
+因此实有限支撑边界在 $d_\rho$ 中稠密，其实际数组在 $\mathcal I_{A,\rho}$ 中稠密。
+
+**有理有限支撑稠密性，包括无理幅度端点。** 对每个 $N\ge1$ 和每个 $i<N$，选
+$$
+r_i^{(N)}\in\mathbb Q\cap[-A,A],
+\qquad |r_i^{(N)}-a_i|<1/N,
+$$
+并令 $r_i^{(N)}=0$ 对 $i\ge N$。这样的选择始终存在：对任何 $a_i\in[-A,A]$，其半径 $1/N$ 的邻域与 $(-A,A)$ 的交集包含非空开区间，因此含有有理数。这个论证不要求 $A$ 有理，且在端点 $\pm A$ 处使用内向逼近。
+
+由构造 $r^{(N)}\in\mathcal F_A^{\mathbb Q}$，它逐坐标趋于 $a$。此外，$r^{(N)}$ 与 $a^{<N}$ 都在原立方体内、尾部同为零，所以
+$$
+\|r^{(N)}-a^{<N}\|_\infty<1/N.
+$$
+由 (47.10)、(47.22) 及三角不等式，
+$$
+d_\rho(r^{(N)},a)
+\le \frac{C_\rho(A)}N+2Aq^N\longrightarrow0.
+\tag{47.23}
+$$
+这同时证明有理有限支撑边界的乘积稠密性和拉回输出度量稠密性；其数组坐标也均为有理数，因为每个坐标是整系数多项式。
+
+**完成的识别。** 由已证稠密性、实际包含映射及完备性，规范度量完成满足
+$$
+\boxed{
+\widehat{(\mathcal F_A^{\mathbb R},d_\rho)}
+\cong (K_A,d_\rho)
+\cong
+\widehat{(\mathcal F_A^{\mathbb Q},d_\rho)}.
+}
+\tag{47.24}
+$$
+在数组侧，
+$$
+\boxed{
+\widehat{(\mathcal J_{A,\rho}^{\mathbb R},\|\cdot-\cdot\|_\rho)}
+\cong\mathcal I_{A,\rho}
+\cong
+\widehat{(\mathcal J_{A,\rho}^{\mathbb Q},\|\cdot-\cdot\|_\rho)}.
+}
+\tag{47.25}
+$$
+这些是等距同构，分别延续已有的包含映射和 $\mathcal E$。为了明确不存在额外完成点：任意源侧 Cauchy 序列由上面的坐标论证给唯一 $a\in K_A$；任意数组侧 Cauchy 序列在完备的闭像中给唯一 $\mathcal E(a)$。反过来，每个这样的点都由 (47.22) 或 (47.23) 的允许有限支撑来源逼近。因此既无遗漏，也没有把不满足递归关系的任意加权数组补入。
+
+此处的源侧完成使用的是 $d_\rho$，不是通常输入上确界距离。第47.6节已经给出两者不能以连续逆混用的具体序列。本节不将次临界的有限支撑稠密及紧像结论直接推广到临界点。
+
+### 47.8 与 Context43 精确前缀完成的区别
+
+Context43 给每个有理坐标使用离散的精确相等拓扑，其前缀超度量为
+$$
+d_{\mathrm{pref}}(a,b)=2^{-\min\{i:a_i\ne b_i\}}
+$$
+（相同时为零）。成为 Cauchy 序列，要求每个固定有限前缀最终逐项精确相同。因此最终稳定的每个坐标仍是有理数；有限支撑有理边界完成为全部有理序列，而不会仅因数值逼近引入无理系数。
+
+若也把来源限制在当前幅度区间内，同一论证将有限支撑有理边界在这个离散前缀度量下完成为
+$$
+(\mathbb Q\cap[-A,A])^{\mathbb N},
+$$
+因为每个稳定坐标仍属于该集合，且有理序列的有限截断给稠密性。
+
+本节 (47.24) 则使用通常数值误差构造的 $d_\rho$，允许固定坐标中的有理值收敛到实数。例如选择无理数 $\xi\in(-A,A)$ 及互异有理数 $r_m\in\mathbb Q\cap[-A,A]$、$r_m\to\xi$，令 $a^{(m)}=r_me_0$。由 (47.10)，该序列在 $d_\rho$ 下是 Cauchy，极限为 $\xi e_0$；但任意两项在第零坐标不同，故前缀距离恒为一，在 $d_{\mathrm{pref}}$ 下不是 Cauchy。
+
+因此，同一类有限有理表示可以在不同度量下有不同完成。新结论没有修改原来的前缀等距、形式级数语义或有理共同来源结论，也没有把形式变量自动赋予解析数值。
+
+还可精确识别第三种完成。对同一 $\mathcal F_A^{\mathbb Q}$ 改用通常输入上确界距离，则
+$$
+\widehat{(\mathcal F_A^{\mathbb Q},\|\cdot-\cdot\|_\infty)}
+\cong c_0(\mathbb R)\cap K_A,
+$$
+其中 $c_0(\mathbb R)$ 是趋于零的实序列空间，右侧使用通常上确界距离。
+
+证明一方向。若有限支撑边界 $a^{(r)}$ 在上确界范数中收敛到 $a$，则每个 $|a_n|\le A$。给定 $\varepsilon>0$，先取某个 $r$ 使 $\|a-a^{(r)}\|_\infty<\varepsilon$，再取该有限支撑的末端 $N$；对所有 $n\ge N$，有 $|a_n|<\varepsilon$，所以 $a_n\to0$。为同时证明完备性，设一般的 $a^{(r)}\in c_0(\mathbb R)\cap K_A$ 在 $\ell^\infty$ 中收敛到 $a$：先取 $\|a-a^{(r)}\|_\infty<\varepsilon/2$，再取该 $a^{(r)}$ 的尾部小于 $\varepsilon/2$，便得 $a$ 的尾部小于 $\varepsilon$；坐标极限仍在 $[-A,A]$。因此 $c_0(\mathbb R)\cap K_A$ 是 $\ell^\infty(\mathbb R)$ 中的闭集，因而完备。
+
+反方向，给定 $a\in c_0(\mathbb R)\cap K_A$ 和 $\varepsilon>0$，选 $N$ 使 $n\ge N$ 时 $|a_n|<\varepsilon/2$。对前 $N$ 个实坐标分别用 $\mathbb Q\cap[-A,A]$ 中的数逼近到误差小于 $\varepsilon/2$，之后补零。所得允许有理有限支撑边界与 $a$ 的上确界距离小于 $\varepsilon$。端点逼近仍用第47.7节的内向有理选择，故不要求 $A$ 有理。稠密性与完备性给该完成。实有限支撑边界在同一范数下也有相同完成。
+
+三种结论作用于同一个允许有理有限支撑集合，区别在所声明的距离：
+
+| 来源距离 | 完成对象 | 固定坐标的极限规则 |
+| --- | --- | --- |
+| 离散精确前缀 $d_{\mathrm{pref}}$ | $(\mathbb Q\cap[-A,A])^{\mathbb N}$ | 最终精确相同，保留有理坐标 |
+| 次临界拉回输出距离 $d_\rho$ | $K_A$，等距对应完整紧数组像 | 允许实数极限及非零无限尾部 |
+| 通常上确界距离 | $c_0(\mathbb R)\cap K_A$ | 允许实数极限，但尾部须统一趋零 |
+
+### 47.9 临界有限来源的消失尾、正距离与完成
+
+本节固定 \(A>0\) 和临界 \(\rho=1/\lambda(A)\)，沿用第47.7节的有限支撑边界
+\(\mathcal F_A^{\mathbb R},\mathcal F_A^{\mathbb Q}\) 及其实际数组像
+\(\mathcal J_{A,\rho}^{\mathbb R},\mathcal J_{A,\rho}^{\mathbb Q}\)，以及完整像
+\(\mathcal I_{A,\rho}\)。有限支撑修饰边界，数组仍满足全部递归关系，不能替换为补零的有限三角。
+
+记同一个全负来源及其数组为
+\[
+a^\star=-A\mathbf1,\qquad T^\star=\mathcal E(a^\star).
+\]
+(47.2)、(47.13) 给
+\(T^\star(n,k)=-u_k(A)\)、
+\(\rho^ku_k(A)=c_A+b_A\rho^{2k}\)，其中
+\(c_A=A\lambda/(\lambda+1)>0\)、\(b_A=A/(\lambda+1)\)。
+(47.11) 的完整自由来源统一尾界不趋零；下面先证明每个固定有限支撑类具有另外的消失尾界。
+
+#### 47.9.1 固定有限支撑的消失尾
+
+定义
+$$
+\mathcal B_{\rho,0}
+=\left\{T\in\mathcal B_\rho:
+\lim_{L\to\infty}
+\sup_{n+k\ge L}\rho^{n+k}|T(n,k)|=0\right\}.
+\tag{47.26}
+$$
+这是加权坐标下的 $c_0(\mathbb N^2)$；有限三角穷尽全部有限坐标集。
+
+**命题 47.4（固定有限支撑的统一消失尾）。** $\mathcal E(\mathcal F_A^{\mathbb R})\subseteq\mathcal B_{\rho,0}$。对固定支撑上界 $M$，尾收敛对所有满足 $b_i=0\ (i\ge M)$ 的 $b\in K_A$ 一致。
+
+证明。取 $M\ge1$ 使上述支撑条件成立；零边界也允许这样选。第43.3节定理43.4及式（43.6）—（43.9）的有限系数证明只用单位常数项、加减乘及有限卷积，所以在实系数与复系数上仍成立。置
+$$
+F_b(z)=1+z\sum_{i=0}^{M-1}b_i z^i,\qquad
+C_{n,b}(w)=\sum_{j=0}^{M-1-n}b_{n+j}w^j\quad(n<M).
+$$
+实际第 $n$ 行的形式级数是以下有理函数在零点的 Taylor 级数：
+$$
+R_{n,b}(z)
+=\frac1{F_b(z)}C_{n,b}\!\left(\frac z{F_b(z)}\right)
+=\sum_{j=0}^{M-1-n}\frac{b_{n+j}z^j}{F_b(z)^{j+1}}
+\quad(n<M),
+\qquad
+R_{n,b}=0\quad(n\ge M).
+\tag{47.27}
+$$
+后一结论亦可由 (47.1) 对列归纳验证。$C_{n,b}$ 为多项式，没有额外的无限复合级数收敛要求。
+
+由 $A>0$ 得
+$$
+\lambda-(1+A)=\frac{\sqrt{A^2+4A}-A}{2}>0,
+\qquad \rho<\frac1{1+A}<1.
+$$
+固定
+$$
+\rho<r<\frac1{1+A},\qquad
+\delta_r=1-\frac{Ar}{1-r}>0.
+\tag{47.28}
+$$
+对 $|z|\le r$，
+$$
+|F_b(z)-1|
+\le A\sum_{i=0}^{M-1}|z|^{i+1}
+\le\frac{Ar}{1-r}=1-\delta_r.
+$$
+故 $|F_b(z)|\ge\delta_r$；特别地，$F_b$ 在
+$|z|<1/(1+A)$ 无零点，(47.27) 在包含闭圆盘 $|z|\le r$ 的开集上解析。
+
+在 $|z|=r$ 上，非零行具有共同上界
+$$
+|R_{n,b}(z)|
+\le K_{M,r}:=\frac A{\delta_r}
+\sum_{j=0}^{M-1}\left(\frac r{\delta_r}\right)^j.
+$$
+常数可依赖 $M,A,r$，不依赖 $b,n,k$。Cauchy 系数估计给
+$|\mathcal E(b)(n,k)|\le K_{M,r}r^{-k}$ 对 $n<M$ 成立。
+当 $L\ge M-1$、$n+k\ge L$ 且 $n<M$ 时，
+$k\ge L-M+1$，所以
+$$
+\sup_{\substack{b\in K_A\\b_i=0\ (i\ge M)}}
+\sup_{n+k\ge L}\rho^{n+k}|\mathcal E(b)(n,k)|
+\le K_{M,r}\left(\frac\rho r\right)^{L-M+1}
+\longrightarrow0.
+\tag{47.29}
+$$
+这是对固定 $M$ 的一致尾界，不对全部有限支撑长度一致。$\square$
+
+$\mathcal B_{\rho,0}$ 是闭的：若 $T_j\to T$ 为范数收敛，先使
+$\|T_j-T\|_\rho<\varepsilon/2$，再使该 $T_j$ 的尾小于
+$\varepsilon/2$，就使 $T$ 的尾小于 $\varepsilon$。因此
+$$
+\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}
+\subseteq\mathcal B_{\rho,0}.
+\tag{47.30}
+$$
+
+#### 47.9.2 到有限来源像及其闭包的精确距离
+
+**命题 47.5（全负角点到有限来源像的距离）。**
+$$
+\operatorname{dist}_\rho(T^\star,\mathcal J_{A,\rho}^{\mathbb R})
+=\operatorname{dist}_\rho
+\left(T^\star,\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}\right)
+=c_A.
+\tag{47.31}
+$$
+
+证明下界。任取 $S\in\mathcal B_{\rho,0}$，沿第零行有
+$\rho^kS(0,k)\to0$，因而 (47.2)–(47.13) 给
+$$
+\rho^k\bigl(T^\star(0,k)-S(0,k)\bigr)\longrightarrow-c_A.
+$$
+故 $\|T^\star-S\|_\rho\ge c_A$；命题47.4和 (47.30) 同时给两个下界。
+
+证明上界。对 $N\ge0$ 定义同一个全负边界的实际前缀截断
+$$
+a^{\star,<N}_i=
+\begin{cases}-A,&i<N,\\0,&i\ge N,\end{cases}
+\qquad T_N=\mathcal E(a^{\star,<N}).
+\tag{47.32}
+$$
+有限依赖给 $T_N(n,k)=T^\star(n,k)$ 对 $n+k<N$ 成立。
+第46.2节式（46.3）的 $Q_{n,k}(x)=-\mathcal E(-x)(n,k)$ 具有非负系数，且
+$0\le-a^{\star,<N}_i\le A$，因此
+$$
+0\le Q_{n,k}(-a^{\star,<N})\le Q_{n,k}(A\mathbf1)=u_k(A).
+$$
+两数组的差满足单份幅度界，而不是一般三角不等式的两倍界：
+$$
+|T^\star(n,k)-T_N(n,k)|
+=u_k(A)-Q_{n,k}(-a^{\star,<N})\le u_k(A).
+$$
+头部差为零，尾部使用 (47.11)，得到
+$$
+c_A\le\|T^\star-T_N\|_\rho
+\le\rho^Nu_N(A)=c_A+b_A\rho^{2N}.
+\tag{47.33}
+$$
+令 $N\to\infty$ 即得 (47.31)。$\square$
+
+这些截断逐坐标收敛到 $T^\star$，范数距离却趋于 $c_A>0$。
+它们不是范数 Cauchy 序列：否则 Banach 完备性给范数极限，坐标连续性迫使其等于 $T^\star$，与 (47.33) 矛盾。
+
+**闭包中的角点最近距离取得且不唯一。** 任取 \(0<h\le c_A\)，令
+\(B=A-h\)。因为 \(c_A<A\)，有 \(B\ge A-c_A=b_A>0\)，且 \(B<A\)，所以
+\(q_B=\rho\lambda(B)<1\)。常值边界 \(-B\mathbf1\) 的有限前缀属于
+\(\mathcal F_A^{\mathbb R}\)，由 (47.22) 在半径 \(B\) 的版本，其数组以误差
+\(2Bq_B^M\to0\) 逼近 \(\mathcal E(-B\mathbf1)\)。
+故这个实际数组属于 \(\overline{\mathcal J_{A,\rho}^{\mathbb R}}\)。
+同一角点对的精确临界模量 (47.16) 又给
+\[
+\|T^\star-\mathcal E(-B\mathbf1)\|_\rho
+=\max\{h,c_A\}=c_A.
+\]
+不同的 \(h\) 给不同首列，因而给无穷多个闭包中的最近点。
+这些常值边界都具有无限支撑；有限支撑来源的距离达到性与任意实际数组的一般最近闭包点存在性，均不在本单元中断言或证明。显式前缀序列的 (47.33) 仍只给距离逼近率。
+
+#### 47.9.3 分次缩放与精确剩余尾距离
+
+对任意环境数组 \(T\in\mathcal B_\rho\)，记
+\[
+\tau_N(T)=\sup_{n+k\ge N}\rho^{n+k}|T(n,k)|,
+\qquad
+L_\rho(T)=\lim_{N\to\infty}\tau_N(T).
+\tag{47.34}
+\]
+\(\tau_N(T)\) 非负、不增且有界，故此极限存在且有限；
+\(L_\rho(T)=0\) 当且仅当 \(T\in\mathcal B_{\rho,0}\)。
+这里是尾幅度，不是概率或热力学熵。
+
+对数学缩放参数 \(\tau\ge0\)，定义
+\[
+(\mathsf D_\tau a)_i=e^{-(i+1)\tau}a_i,\qquad
+(\mathsf U_\tau T)(n,k)=e^{-(n+k+1)\tau}T(n,k).
+\tag{47.35}
+\]
+**分次相容恒等式。**
+\[
+\boxed{\mathcal E(\mathsf D_\tau a)=\mathsf U_\tau\mathcal E(a).}
+\tag{47.36}
+\]
+证明按列归纳。首列由定义成立。若此前各列成立，(47.1) 中移位项
+\(T(n+1,k)\) 的缩放因子是 \(e^{-(n+k+2)\tau}\)；每个乘积项的指数之和为
+\[
+(n+j+1)+(k-j+1)=n+k+2.
+\]
+所以所有项有同一因子，下一列也成立。每个递推和有限，证明不交换无穷运算。该恒等式在每个有限窗口与完整实际数组上同时成立。
+
+当 \(\tau>0\) 时，
+\(\mathsf D_\tau a\in K_{A_\tau}\)，其中
+\(A_\tau=e^{-\tau}A<A\)，而在本节固定的临界 \(\rho\) 下
+\[
+q_\tau=\rho\lambda(A_\tau)<\rho\lambda(A)=1.
+\]
+对固定 \(\tau>0\)，取有限前缀
+\(b^{\tau,M}=(\mathsf D_\tau a)^{<M}\in\mathcal F_A^{\mathbb R}\)。
+已证次临界截断界 (47.22) 应用于半径 \(A_\tau\)，给
+\[
+\|\mathsf U_\tau T-\mathcal E(b^{\tau,M})\|_\rho
+\le2A_\tau q_\tau^M\longrightarrow0
+\quad(M\to\infty),\qquad T=\mathcal E(a).
+\tag{47.37}
+\]
+因此对每个实际 \(T\in\mathcal I_{A,\rho}\) 及每个 \(\tau>0\)，
+\(\mathsf U_\tau T\in\overline{\mathcal J_{A,\rho}^{\mathbb R}}\)。
+这一步的有限来源确实来自同一缩放后的边界，不是任意环境坐标截断。
+
+现在在全部环境空间中证明精确尾距离极限。对任意
+\(S\in\mathcal B_{\rho,0}\)，三角不等式给
+\[
+\tau_N(T)\le\|T-S\|_\rho+\tau_N(S).
+\]
+令 \(N\to\infty\)，得 \(L_\rho(T)\le\|T-S\|_\rho\)。
+另一方面，对任意 \(\tau>0\)，
+\[
+\tau_N(\mathsf U_\tau T)
+\le e^{-(N+1)\tau}\|T\|_\rho\longrightarrow0,
+\]
+故 \(\mathsf U_\tau T\in\mathcal B_{\rho,0}\)，已有下界适用。
+固定 \(N\ge1\)，按 \(n+k<N\) 与 \(n+k\ge N\) 分开，得到
+\[
+L_\rho(T)\le\|T-\mathsf U_\tau T\|_\rho
+\le
+\max\{(1-e^{-N\tau})\|T\|_\rho,\ \tau_N(T)\}.
+\tag{47.38}
+\]
+头部用 \(n+k+1\le N\)，尾部用 \(0\le1-e^{-(n+k+1)\tau}\le1\)。
+先令 \(\tau\downarrow0\)，再令 \(N\to\infty\)，上下界相合，故
+\[
+\boxed{
+\lim_{\tau\downarrow0}\|T-\mathsf U_\tau T\|_\rho=L_\rho(T)
+\quad(T\in\mathcal B_\rho).
+}
+\tag{47.39}
+\]
+
+对实际 \(T\in\mathcal I_{A,\rho}\)，(47.30) 的有限来源闭包包含于
+\(\mathcal B_{\rho,0}\)，所以到它的距离至少为 \(L_\rho(T)\)。
+(47.37) 则把每个 \(\mathsf U_\tau T\) 放入该闭包；(47.39) 给反向距离上界。
+一个集合与其闭包到固定点的距离相等，因为范数连续且闭包点可用原集合逼近。
+由此
+\[
+\boxed{
+\operatorname{dist}_\rho(T,\mathcal J_{A,\rho}^{\mathbb R})
+=
+\operatorname{dist}_\rho
+(T,\overline{\mathcal J_{A,\rho}^{\mathbb R}})
+=L_\rho(T)
+\quad(T\in\mathcal I_{A,\rho}).
+}
+\tag{47.40}
+\]
+例如可取 \(\tau_m=1/m\)，再对每个 \(m\) 选有限 \(M_m\) 使 (47.37) 右侧小于 \(1/m\)；
+所得实际有限来源数组到 \(T\) 的误差趋于 \(L_\rho(T)\)。
+这给任意实际数组的距离下确界逼近构造，一般最近点存在性不在本单元中断言或证明；前文全负角点的闭包达到性由其特定常值边界见证单独证明。
+
+这些缩放满足
+\(\mathsf U_0=I\)、\(\mathsf U_{\tau+\sigma}=\mathsf U_\tau\mathsf U_\sigma\)；
+从坐标因子直接得其环境算子范数为 \(e^{-\tau}\)，由仅在 \((0,0)\) 非零的数组取得。
+(47.39) 说明零点强连续的向量恰好是 \(\mathcal B_{\rho,0}\)；
+在这个不变闭子空间上，它们构成强连续半群。
+确切地，对其中的固定 \(T\) 及 \(\tau\ge\sigma\)，
+\[
+\|\mathsf U_\tau T-\mathsf U_\sigma T\|_\rho
+\le e^{-\sigma}\|\mathsf U_{\tau-\sigma}T-T\|_\rho,
+\]
+所以零点的连续性给所有参数处的连续性。
+在整个 \(\mathcal B_\rho\) 上不声称逐向量强连续，例如
+\(L_\rho(T^\star)=c_A>0\)。
+这里的参数只记分次缩放，不作物理时间、动力学生成元或相位解释。
+
+(47.40) 的上界与等式属于完整自由来源类。若改用受限实际联合来源 \((c,a)\)，
+须另证缩放及所用有限逼近仍在允许的共同记录纤维中；
+保留同一个档案符号不能替代这项可行性。
+对任意目标子类若其数组确实属于 \(\mathcal B_{\rho,0}\)，距离下界
+\(L_\rho(T)\le\|T-S\|_\rho\) 仍可逐对象使用，但不自动取得该子类上的等号。
+
+**同档案受限来源的反例。** 固定同一个常值档案 $c_0$，令实际边界来源仅为
+\[
+\Gamma=\{0,-B\mathbf1\},\qquad 0<B<A,\qquad \rho=1/\lambda(A),
+\]
+其中 $a$ 为包含映射。这个来源中唯一有限支撑边界是零。对 $T=\mathcal E(-B\mathbf1)$，严格不等式 $\rho\lambda(B)<1$ 及（47.11）给 $L_\rho(T)=0$，而（47.6）在半径 $B$ 的版本给
+\[
+\operatorname{dist}_\rho(T,\mathcal E(\Gamma\cap\mathcal F_A^{\mathbb R}))
+=\|T-0\|_\rho=B>0.
+\]
+受限有限来源像 $\{0\}$ 本身闭，故到其闭包距离亦为 $B$。分次缩放的非零边界及其非空有限前缀不属于这个同档案纤维，正是（47.37）的可行性在此失败。环境尾下界仍成立，完整自由来源的等号却不能转授。这里直接应用已证结果，没有增加一般受限来源闭包定理。
+
+#### 47.9.4 临界有限来源的完成及有理闭包
+
+沿用 (47.20) 的拉回公式，在临界 \(\mathcal F_A^{\mathbb R}\) 上定义 \(d_\rho\)。临界有界性保证距离有限，首列恢复保证距离为零当且仅当边界相同；因此它仍是真距离，\(\mathcal E\) 是到
+\(\mathcal J_{A,\rho}^{\mathbb R}\) 的等距双射。Banach 空间中该像的闭包完备，而像按闭包定义在其中稠密，所以
+$$
+\widehat{(\mathcal F_A^{\mathbb R},d_\rho)}
+\cong\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}.
+\tag{47.41}
+$$
+第47.5节已经以首列极限与有限坐标多项式连续性完整证明
+\(\mathcal I_{A,\rho}\) 是闭的。有限来源像的闭包因此留在实际像中；
+(47.40) 又说明实际数组到这个闭包距离为零，当且仅当它的尾幅度为零。
+因为闭包是闭集，这给出完整自由来源类的精确刻画：
+$$
+\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}
+=\mathcal I_{A,\rho}\cap\mathcal B_{\rho,0}
+\subsetneq\mathcal I_{A,\rho},
+\qquad T^\star\notin\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}.
+\tag{47.42}
+$$
+严格性由 (47.13)、(47.31) 给出。因此，对实际数组还有等价判据
+\[
+T\in\overline{\mathcal J_{A,\rho}^{\mathbb R}}
+\quad\Longleftrightarrow\quad L_\rho(T)=0
+\quad\Longleftrightarrow\quad
+\|\mathsf U_\tau T-T\|_\rho\longrightarrow0
+\quad(\tau\downarrow0).
+\]
+这刻画的是完整 \(K_A\) 下的临界有限来源闭包，不推广为任意受限来源的闭包结论。
+
+这不与 Context43 的精确前缀完成冲突。若给实系数采用逐字相等的前缀距离，同一组截断是 Cauchy，而 (47.33) 证明它们在临界数值距离中不是 Cauchy；当 \(A\) 有理时，这组截断也就在 Context43 的有理来源类内。当 \(A\) 无理时，不把含 \(-A\) 的截断称为有理来源。合法无限来源不必属于每一种有限来源完成。
+
+**有理有限来源的补充。** 对第47.7节已定义的有理有限来源类
+\(\mathcal F_A^{\mathbb Q}\)，
+固定 $M$ 时，$\mathcal E:[-A,A]^M\to\mathcal B_\rho$ 连续：由 (47.29) 先同时控制任意两份输入的远尾，再对有限头部使用坐标多项式连续性。每个有限实边界可在同一个支撑范围内逐坐标作内向有理逼近，包括 $A$ 无理时的端点，故
+$$
+\overline{\mathcal E(\mathcal F_A^{\mathbb Q})}^{\,\|\cdot\|_\rho}
+=\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}.
+\tag{47.43}
+$$
+有理有限来源的拉回度量完成也等于 (47.41) 的右侧。由相同闭包，
+(47.40) 对有理有限来源的距离同样等于 \(L_\rho(T)\)，特别地到 \(T^\star\) 的距离为 \(c_A\)。这是数值闭包结论；不声称当 $A$ 无理时，有限有理来源能逐字复制含精确读数 $-A$ 的访问记录。
+
+### 47.10 保留整个观察者与实际来源
+
+令 $\Gamma$ 为实际共同来源集合，
+$$
+c:\Gamma\to\mathcal C,\qquad a:\Gamma\to K_A.
+$$
+$c$ 保留全部已取得内部／外部信息与记录、来源／参考／版本身份、联合关系与相关性、准备与校准、已获相位／单位／增益数据、可访问记忆、局部钟及已知关系、合法动作及顺序、结果／失败／停止信息，以及共同误差与资源合同。给辅助坐标命名不授予尚未取得的信息。比较的完整读数始终是
+$$
+Q_\partial(\omega)=(c(\omega),a(\omega)),\qquad
+Q_{\mathrm{body}}(\omega)=(c(\omega),\mathcal E(a(\omega))).
+\tag{47.44}
+$$
+在这两个读数的对应实际像上，
+$$
+(c,a)\longmapsto(c,\mathcal E(a)),\qquad
+(c,T)\longmapsto(c,\beta(T))
+$$
+互为双侧逆，并字面保留同一个 $c$。证明只需第一列互逆；没有把 $c$ 与 $a$ 当作独立变量，也没有把实际像扩成未经证明的 $\mathcal C\times K_A$。
+
+若 $\mathcal C$ 另有指定度量、两边使用最大乘积距离，那么次临界正向映射从通常输入上确界版本到数组加权版本有常数上界 $\max(1,C_\rho(A))=C_\rho(A)$；逆向到加权输入版本有常数上界一。记录的恒等传递没有改变这些上界。最优下界只有在相应共同记录纤维中仍有本文所用见证对时才能保留。
+
+本文尖锐幅度、最优放大、模量取得和临界不连续性是在完整自由实边界类 $K_A$ 上证明的。实际来源若另受顶行条件、正性、参数耦合、动作可达性或其他限制，可能排除全负角点、内向角点族或移动单点族；此时统一上界仍可限制使用，最优性和不连续性须重新检查实际见证。数学上存在的角点不证明设备能够准备或读出它。
+
+数值完成也不能自动扩充实际来源。更精确地，在次临界条件下，对任意边界子集 $S\subseteq K_A$，从第47.6、47.7节的同胚可得
+$$
+\overline{\mathcal E(S)}^{\,\|\cdot-\cdot\|_\rho}
+=\mathcal E\!\left(\overline S^{\,\mathrm{product}}\right).
+\tag{47.45}
+$$
+左侧闭包没有离开闭像 $\mathcal I_{A,\rho}$。右侧是实际数学闭包，不断言新增边界由某个原有 $\omega\in\Gamma$ 实现。对完整 $(c,a)$ 读数，还须保留 $c$ 与 $a$ 的联合可行关系；没有给 $\mathcal C$ 另设拓扑时，本节也不主张整个观察者的紧性或完成化。
+
+即使给记录配置了度量并把 $c$ 固定为一个常值，受限实际来源也不自动闭、完备或紧。例如令 $\Gamma=\mathcal F_A^{\mathbb R}$，$a$ 为包含映射。每个允许的有限实前缀都能通过补零在该来源中实现，但常值边界 $(A/2)\mathbf1$ 不属于来源。它的有限截断是实际来源中的 $d_\rho$-Cauchy 序列，由 (47.22) 收敛到被遗漏的常值边界及其数组。因此，对应实际联合像不是闭集，也不完备或紧；携带同一个 $c$ 没有补入这个来源所没有的极限。第47.7节的紧性和完成识别属于完整 $K_A$ 及其完整像，不能自动转授给这种受限实际来源。
+
+逆映射仅在递归像上是双侧逆。对任意带噪、可能违反 (47.1) 的数组提取第一列，再重建，不保证回到原数组；本节不把这一操作当成未经证明的投影或最优去噪器。
+
+### 47.11 有限记录的临界下界与次临界取得合同
+
+本节把已经保留的完整观察者条件落实到明确的取得接口。第一部分固定临界
+\(\rho=1/\lambda(A)\)，使用第47.9节的 \(a^\star,T^\star,a^{\star,<N},T_N\)；
+第二部分才重新声明次临界权重。两部分使用同一递归关系，访问假设及误差结论分别列明。
+
+#### 47.11.1 临界：相同完整有限记录的二来源下界
+
+允许来源为全部 $K_A$；证明只需
+$S_\star=\{a^\star\}\cup\{a^{\star,<N}:N\ge0\}$。
+这是实际实边界及其由 (47.1) 生成的共同数组。若应用的合法来源排除这些见证，下界不自动转移。
+
+协议为确定性自适应协议，接口如下：
+
+1. 固定 $A,\rho$、算法及初始完整档案 $c$。所比较来源共享同一个 $c$，其中没有预先区分这些来源的支撑标签、代码身份或证书。
+2. 查询仅为边界系数 $a_i$ 或实际数组坐标 $\mathcal E(a)(n,k)$，返回精确实值。下标可由此前完整记录自适应选择，没有预定共同查询深度要求。
+3. 查询选择、计算、保存、停止及可见动作/费用/版本/来源元数据由共享初始档案及此前记录决定；坐标查询在所有来源上均有定义。原始读数与动作记录全部保留。
+4. 不另供全局尾范数、有限/无限支撑判定、来源程序身份、来源相关时钟或其它全局 oracle；没有随机种子或随机观测。若“输出后”继续访问来源，这些访问仍须计入协议，不能藏进一个已经完成的估计。
+
+精确实值查询是明确的理想接口，不宣称现实设备能以有限成本取得任意实数。下界在这个强接口下成立；这里不另推随机或物理成本结论。
+
+**命题 47.6（完整有限记录的二来源下界）。** 若协议在 $a^\star$ 上经有限次查询终止，输出
+$\widehat T\in\mathcal B_\rho$，则存在有限前缀来源
+$a^{\star,<N}$，使协议具有完全相同的整份有限记录、动作顺序、停止与输出，并且
+$$
+\max\left\{
+\|\widehat T-T^\star\|_\rho,\qquad
+\|\widehat T-T_N\|_\rho
+\right\}\ge c_A/2.
+\tag{47.46}
+$$
+
+证明。取在 $a^\star$ 上已结束的有限执行路径。边界查询 $a_i$ 的依赖下标至多 $i$；数组查询 $(n,k)$ 的依赖下标至多 $n+k$。取 $N$ 严格大于这条路径中全部查询的这些有限上界；若无查询，可取 $N=0$。
+
+在 $a^{\star,<N}$ 上重放：初始记录相同；若此前记录相同，确定性使下一动作相同；若查询，依赖前缀相同使返回值相同，声明的元数据也相同；若停止，则同一步停止且输出相同。对路径长度归纳，得到整份记录相等，不只是摘要相等。无需假设初始记录与边界随机独立；只使用两个合法来源共享该完整记录的明确条件。
+
+三角不等式与 (47.33) 给
+$$
+c_A\le\|T^\star-T_N\|_\rho
+\le\|T^\star-\widehat T\|_\rho+\|\widehat T-T_N\|_\rho,
+$$
+即得 (47.46)。$\square$
+
+因此任何在 $a^\star$ 上有限停止的这类协议，都不能对全部 $S_\star$ 保证统一误差严格小于 $c_A/2$。这允许任意有限查询深度、完整追加记忆和确定性后处理；额外计算不能分开相同记录。
+
+这是二实现最坏误差下界，不是 $a^\star$ 的点态误差下界：恒输出 $T^\star$ 的协议在该点误差为零，但在有限前缀来源上至少误差 $c_A$。若另要求输出落在 $\overline{\mathcal J_{A,\rho}^{\mathbb R}}$，(47.31) 才给在 $a^\star$ 上误差至少 $c_A$；它依赖额外输出限制。
+
+不声称 $c_A/2$ 的最优性或存在达到它的统一算法。引入非局部读取或来源相关合法性的一般干预不属于此接口，须另核共同记录见证。若来源只允许有理有限边界而 $A$ 无理，精确读数 $-A$ 无法由这些有限来源复制，不能直接使用本文的精确记录对；(47.43) 的范数稠密不替代记录相等。
+
+#### 47.11.2 次临界：实际有限读取的充分合同
+
+本部分重新取 $0<\rho<1/\lambda(A)$，沿用
+$$
+q=\rho\lambda(A)<1,\qquad
+C_\rho(A)=\sup_{k\ge0}\rho^ku_k'(A)<\infty.
+$$
+由于 $u_0'(A)=1$，有 $C_\rho(A)\ge1$。来源仍为完整 $K_A$。这是（47.8）已证的稳定范围，区别于本节前一部分的临界权重。
+
+选择整数 $N\ge0$ 和误差容限 $\eta\ge0$。接口实际返回前 $N$ 个系数读数
+$y_0,\ldots,y_{N-1}$，并在同一份实际误差合同或同一个联合事件下满足
+$$
+|y_i-a_i|\le\eta\qquad(0\le i<N).
+\tag{47.47}
+$$
+不要求读数或误差独立，不把分别的概率承诺当作未经证明的同时事件。令工作副本与分析中的真实前缀分别为
+$$
+\widetilde a_i=
+\begin{cases}\operatorname{clip}_{[-A,A]}(y_i),&i<N,\\0,&i\ge N,\end{cases}
+\qquad
+z_i=\begin{cases}a_i,&i<N,\\0,&i\ge N.\end{cases}
+$$
+原始读数、来源、动作、精度及执行记录保留在档案中；裁剪只改变工作副本。$z$ 用于分析，算法无需取得这个未知精确前缀。
+
+由于 $a_i\in[-A,A]$，裁剪不增加相对它的误差，故
+$\|z-\widetilde a\|_\infty\le\eta$。既有前缀尾界与同立方体 Lipschitz 界给
+$$
+\begin{aligned}
+\|\mathcal E(a)-\mathcal E(\widetilde a)\|_\rho
+&\le\|\mathcal E(a)-\mathcal E(z)\|_\rho
+ +\|\mathcal E(z)-\mathcal E(\widetilde a)\|_\rho\\
+&\le2Aq^N+C_\rho(A)\eta.
+\end{aligned}
+\tag{47.48}
+$$
+重建的是有限支撑边界的实际完整递归像，不是把输出数组的未读三角补零。
+
+给定 $\varepsilon>0$，选择
+$$
+N\in\mathbb N,\quad2Aq^N\le\varepsilon/2,\qquad
+0\le\eta\le\frac{\varepsilon}{2C_\rho(A)}.
+\tag{47.49}
+$$
+$0<q<1$ 保证有限 $N$ 存在。若条件在 $N=0$ 已成立，允许空读取，此时 $\widetilde a=z=0$、读数误差项实际为零。在 (47.47) 的同一条件下，重建误差至多 $\varepsilon$。
+
+这是充分误差合同，不保证设备能取得所需 $\eta$，不提供采样数、置信度、位复杂度或运行成本。无限目标可由有限数据与递归/有理行公式描述并按坐标求值；这不表示已逐项输出无限多个数。该方法不称最优，亦未与临界下界组成已经闭合的最优算法理论。
+
+这里的次临界上界是 (47.8)、(47.22) 的直接应用，不另计为新数学定理。它与临界二来源下界一起说明指定接口的稳定性变化，但没有给出全局最优查询算法，也没有把有限数学描述等同于有限成本取得全部实值。
+
+### 47.12 阈值的读法与资源范围
+
+写 $\rho=2^{-\sigma}$，其中 $\sigma>0$，则
+$$
+\sigma_c(A)=\log_2\lambda(A),\qquad
+\begin{cases}
+\sigma\ge \sigma_c(A) & \text{统一有界},\\
+\sigma>\sigma_c(A) & \text{全局 Lipschitz、紧像及本文的数值完成结论},\\
+\sigma=\sigma_c(A) & \text{全负边界处出现 (47.16) 的正模量跳跃}.
+\end{cases}
+\tag{47.50}
+$$
+在 $A=1$ 时，既有第46节已经识别 $\lambda(1)=\phi^2$，所以
+$$
+\sigma_c(1)=2\log_2\phi.
+$$
+这称为指定增长与指定折扣范数之间的正则性阈值，不称作 Hausdorff 维数、物理时间或物理空间的定律。
+
+全层数组在数学上由全部边界坐标共同定义，每个固定坐标仍只有有限依赖。次临界尾界能支持有限窗口的误差控制，但不使观察者免费获得未知的全部边界，不提供对任意非可计算实数的有限数字访问，也不免除读数精度、算术舍入、执行时间与校准成本。上述几何结论尚未指定概率模型；下文另行声明标签赋权。该赋权不自动给出实际采样下界、量子实现或物理信息容量结论。
+
+### 47.13 同一齐次展开的解析球与紧尺度嵌入
+
+本节固定 $0<\rho<1$。只在本节把输入和输出标量扩为复数，令 $X=\ell^\infty(\mathbb N;\mathbb C)$，令 $Y_\rho=\mathcal B_\rho(\mathbb C)$ 使用 (47.5) 的绝对值范数。列递推 (47.1) 的整系数多项式在复数上同样逐坐标有意义。实数立方体上的前述结论及来源限制不变。
+
+**连续齐次多项式与收敛球。** 写
+$$
+\mathcal E(a)(n,k)=\sum_{d=1}^{k+1}H_d(a)(n,k),
+$$
+其中 $H_d(a)(n,k)$ 是该坐标多项式的总次数 $d$ 部分，$d>k+1$ 时定义为零。第46.2—46.3节式（46.3）、（46.8）的非负 $Q_{n,k}(x)=-\mathcal E(-x)(n,k)$ 分解说明：这个次数的系数绝对值总和正是
+$$
+c_{k,d}=\binom{k+d-1}{2d-2}\quad(k\ge d-1).
+$$
+故
+$$
+\begin{aligned}
+\|H_d(a)\|_\rho
+&\le \|a\|_\infty^d\sup_{k\ge d-1}\rho^kc_{k,d}\\
+&\le \|a\|_\infty^d\sum_{k\ge d-1}\rho^k
+             \binom{k+d-1}{2d-2}\\
+&=\|a\|_\infty^d\,
+  \frac{\rho^{d-1}}{(1-\rho)^{2d-1}}.
+\end{aligned}
+\tag{47.51}
+$$
+最后一步令 \(k=d-1+j\)。把 \(2d-1\) 份几何级数相乘，指数和为 \(j\) 的非负整数元组数为
+\(\binom{j+2d-2}{2d-2}\)，从而
+\[
+\sum_{j\ge0}\binom{j+2d-2}{2d-2}\rho^j=(1-\rho)^{-(2d-1)}.
+\]
+每份几何级数在 \(0<\rho<1\) 收敛，非负项的有限乘积展开和重排合法。这完整证明 (47.51) 最后一项的系数求和恒等式；后面的概率归一化将直接复用它。
+
+还须说明这确实是 Banach 空间值的连续齐次多项式，而不只是逐坐标的形式表达。对每个坐标的每个次数 $d$ 单项式，把重复出现的输入下标排成一个长度 $d$ 的列表。将第 $r$ 个因子放入第 $r$ 个独立输入，有限求和得到坐标上的 $d$-线性形式。对全部坐标同时使用这个规则，(47.51) 的同一系数界给出
+$$
+\|\widetilde B_d(a^{(1)},\ldots,a^{(d)})\|_\rho
+\le m_d\prod_{r=1}^d\|a^{(r)}\|_\infty,\qquad
+m_d=\frac{\rho^{d-1}}{(1-\rho)^{2d-1}}.
+$$
+因此这些坐标确实定义一个取值于 $Y_\rho$ 的连续 $d$-线性映射。对输入置换取平均得到对称映射 $B_d$，上界不变，且其对角值为 $H_d(a)=B_d(a,\ldots,a)$。
+
+定义
+$$
+A_{\mathrm{crit}}=\frac{(1-\rho)^2}{\rho}.
+$$
+对每个 $0<r<A_{\mathrm{crit}}$，
+$$
+\sum_{d\ge1}m_dr^d
+=\frac{r}{1-\rho}\,
+  \frac1{1-r/A_{\mathrm{crit}}}<\infty.
+\tag{47.52}
+$$
+于是 $\sum_{d\ge1}H_d$ 在每个闭子球 $\|a\|_\infty\le r$ 上一致范数收敛。连续对称多线性表达还给
+$$
+\|DH_d(a)\|\le d\,m_dr^{d-1}
+ \quad(\|a\|_\infty\le r).
+$$
+右侧对 $d$ 的级数也收敛。更明确地，连续对称多线性表达给
+\[
+DH_d(a)h=dB_d(h,a,\ldots,a),\qquad
+\|D^2H_d(a)\|\le d(d-1)m_d R^{d-2}\quad(d\ge2,\ \|a\|_\infty\le R).
+\]
+$H_1$ 的二阶导数为零。对 $\|a\|_\infty+\|h\|_\infty\le R<A_{\mathrm{crit}}$，线段 $a+th$（$0\le t\le1$）留在这个子球。每项沿线段的二阶积分余项及范数三角不等式给
+\[
+\left\|\mathcal E(a+h)-\mathcal E(a)-\sum_{d\ge1}DH_d(a)h\right\|_\rho
+\le\frac{\|h\|_\infty^2}{2}
+\sum_{d\ge2}d(d-1)m_dR^{d-2}.
+\]
+右边的级数是（47.52）的二阶导数，等于
+\[
+\frac{2}{(1-\rho)A_{\mathrm{crit}}}
+(1-R/A_{\mathrm{crit}})^{-3}<\infty.
+\]
+逐项二阶余项先对有限和成立，再用局部一致收敛及可求和的上界取极限。因此该误差为 $O(\|h\|_\infty^2)$，且
+$D\mathcal E(a)=\sum_{d\ge1}DH_d(a)$ 为连续复线性映射。导数级数在每个闭子球一致收敛，故导数连续。这直接给出复 Fréchet 全纯性及显式余项
+\[
+\boxed{
+\|\mathcal E(a+h)-\mathcal E(a)-D\mathcal E(a)h\|_\rho
+\le\frac{\|h\|_\infty^2}{2}
+\sum_{d\ge2}d(d-1)m_dR^{d-2}.}
+\]
+
+每个固定坐标仅有 $d\le k+1$ 的有限项，所以该 Banach 值和逐坐标恰等于原递归映射。由此
+$$
+\mathcal E:\{a\in X:\|a\|_\infty<A_{\mathrm{crit}}\}
+\longrightarrow Y_\rho
+$$
+是全纯映射。
+
+$\lambda+\lambda^{-1}=A+2$，所以 $\rho\lambda(A)=1$ 等价于 $A=A_{\mathrm{crit}}$。这个原点球不能扩大：若 $R>A_{\mathrm{crit}}$，选 $A_{\mathrm{crit}}<r<R$，则 $a=-r\mathbf1$ 属于半径 $R$ 的开球，但第47.2节已经证明其递归数组不属于 $Y_\rho$。这排除了同一递归映射在更大整个原点球上取 $Y_\rho$ 值；不声称排除所有其他形状的解析延拓域，也不声称临界球面上的一致解析延拓。
+
+**临界齐次截断不在该范数下收敛。** 取 \(A=A_{\mathrm{crit}}\)、
+\(a=-A\mathbf1\)，并记
+\[
+S_D(a)=\sum_{d=1}^{D}H_d(a),\qquad D\ge1.
+\]
+每个有限和都是已构造的 \(Y_\rho\) 元素。因为总次数 \(d\) 的系数具有同一符号，而输入全部为 \(-A\)，对第零行有
+\[
+H_d(a)(0,k)=-c_{k,d}A^d\quad(k\ge d-1),
+\]
+较小 \(k\) 时该次数项为零。对每个固定 \(d\)，
+\(c_{k,d}=\binom{k+d-1}{2d-2}\) 关于 \(k\) 至多按 \(2d-2\) 次多项式增长，而 \(0<\rho<1\)。所以
+\(\rho^k H_d(a)(0,k)\to0\)，进而
+\(\rho^k S_D(a)(0,k)\to0\)。
+另一方面，由 (47.13)，
+\(\rho^k\mathcal E(a)(0,k)\to-c_A\)。因此对每个固定有限 \(D\)，
+\[
+\boxed{\|\mathcal E(a)-S_D(a)\|_\rho\ge c_A>0.}
+\tag{47.53}
+\]
+这里用的是同一个临界实际数组，没有把不同次数的见证拼在一起。它说明逐坐标有限多项式等式仍然成立、完整数组仍然有界，却不足以保证齐次级数在该 Banach 范数中收敛。这与 (47.16) 的径向不连续性相容；并未排除其他形状的解析域，也没有把齐次截断当作合法制备动作。
+
+**紧尺度嵌入。** 若 $0<\rho<\eta<1$，则自然包含 $J:Y_\eta\to Y_\rho$ 的范数为一。令 $P_NT$ 保留 $n+k<N$ 的有限个数组坐标，其余置零。它在环境数组空间中是有限秩算子，并且
+$$
+\|(J-P_N)T\|_\rho
+\le\left(\frac{\rho}{\eta}\right)^N\|T\|_\eta.
+\tag{47.54}
+$$
+这个算子范数界可由只在 $(0,N)$ 非零的环境数组取得。右侧随 $N$ 趋零，故 $J$ 是有限秩算子的算子范数极限，从而为紧算子。这里的数组截断用于环境空间证明，不声称它保留递归关系或是实际合法操作。
+
+此嵌入也解释次临界紧性：当 $\rho\lambda(A)<1$，可选 $\rho<\eta<1/\lambda(A)<1$。完整递归像在 $Y_\eta$ 中由 $A$ 统一控制，经紧嵌入在 $Y_\rho$ 中相对紧；第47.5节的闭性使它紧。这与第47.7节的直接证明一致。
+
+**不使用卷积代数假设。** 加权上确界序列空间本身不对同权重卷积封闭。取
+$$
+x_k=y_k=\rho^{-k}.
+$$
+两序列的加权范数均为一，但
+$$
+(x*y)_k=\sum_{j=0}^kx_jy_{k-j}=(k+1)\rho^{-k},
+$$
+其加权范数无穷。把序列嵌入数组的第零行即可看到相同障碍。因此上述全纯构造依靠明确的连续多线性系数界，不把 $Y_\rho$ 当成未经证明的卷积 Banach 代数。所有解析结论都是成熟幂级数与 Banach 空间方法在本递归上的应用，不赋予物理或原创性含义。
+
+### 47.14 正标签总和与精确归一化区域
+
+概率部分仍取正实 \(A>0\)、\(0<\rho<1\)，使用前文同一
+\(u_k,c_{k,d},\lambda,s,A_{\mathrm{crit}}\)。为避免与随机次数混淆，将分母记为
+\[
+\Delta=1-(A+2)\rho+\rho^2
+=(1-\lambda\rho)(1-\rho/\lambda).
+\tag{47.55}
+\]
+下面显式选择一份标签赋权；只有正项总权有限时才定义概率。它不预设实际观察者、世界或传感器遵循这份分布。
+
+定义可数标签集
+\[
+\mathcal L=
+\{(k,d,j):k\ge0,\ 1\le d\le k+1,\ 1\le j\le c_{k,d}\}.
+\]
+标签权重为
+\[
+w_{A,\rho}(k,d,j)=\rho^k A^d.
+\tag{47.56}
+\]
+记 \(Z(A,\rho)=\sum_{(k,d,j)\in\mathcal L}w_{A,\rho}(k,d,j)
+=\sum_{k\ge0}\rho^ku_k(A)\)，此时允许其值为 \(+\infty\)。
+\(j\) 是明确选择的系数重数标签；不声称它天然对应外界样本、不同世界或某一传感器结果。
+
+解析节已经在 (47.51) 中完整证明
+\[
+m_d=\sum_{k=d-1}^{\infty}\rho^kc_{k,d}
+=\frac{\rho^{d-1}}{(1-\rho)^{2d-1}}.
+\]
+此处直接使用同一系数和，不另设一份生成结构。
+
+引入无量纲权重比
+\[
+t=\frac{A}{A_{\mathrm{crit}}}=\frac{A\rho}{(1-\rho)^2}>0.
+\tag{47.57}
+\]
+这里的 \(t\) 是参数比，不是时间变量。所有权重非负，故 Tonelli 求和在允许 \(+\infty\) 的意义下成立。由（47.51），
+\[
+\begin{aligned}
+Z
+&=\sum_{(k,d,j)\in\mathcal L}\rho^k A^d
+=\sum_{d\ge1}A^d\sum_{k\ge d-1}c_{k,d}\rho^k\\
+&=\sum_{d\ge1}m_dA^d
+=\frac{A}{1-\rho}\sum_{d\ge1}t^{d-1}.
+\end{aligned}
+\tag{47.58}
+\]
+
+这给出准确连接
+\(\sum_d m_dA^d=Z(A,\rho)\)：解析节的齐次项范数求和上界，恰好是这份正标签计数的总权。\(m_d\) 是系数求和的精确值，并被用于上界 \(\|H_d\|\)；此处不声称它总等于齐次多项式的最小范数常数。
+因此 \(Z\) 有限当且仅当 \(t<1\)。由于
+\(\Delta=(1-\rho)^2-A\rho\) 且 \(1-\rho/\lambda>0\)，这等价于 \(\rho\lambda<1\)。在且仅在此严格内部，
+\[
+\boxed{
+Z(A,\rho)=\frac{A}{(1-\rho)(1-t)}
+=\frac{A(1-\rho)}{\Delta},
+\qquad
+p_{A,\rho}(k,d,j)=\frac{\rho^k A^d}{Z}.
+}
+\tag{47.59}
+\]
+\(Z>0\)，全部 \(p\) 非负且总和一，从而确实定义概率律。这个 \(Z\) 正是原幅度生成函数在 \(z=\rho\) 的收敛评价，无需引入另一生成对象。
+
+临界点 \(\rho\lambda=1\) 时 \(t=1\)，（47.58）和（47.13）都证明 \(Z=+\infty\)。因此临界有界幅度不能用于归一化此正标签律。超临界 \(1/\lambda<\rho<1\) 时正项总和仍发散；此时有理函数 \(A(1-\rho)/\Delta\) 为负，其代数延拓绝不是正项级数之和，更不是概率归一化常数。
+
+### 47.15 条件次数、深度边缘与同一函数的第二种分解
+
+设随机变量 \(K,\mathsf D,J\) 为标签的三个坐标。直接在固定 \(k\) 的有限标签集求和，得到
+\[
+\boxed{
+\Pr(K=k)=\frac{\rho^k u_k(A)}{Z},
+\qquad
+\Pr(\mathsf D=d,J=j\mid K=k)=\frac{A^d}{u_k(A)}.
+}
+\tag{47.60}
+\]
+条件律与 \(\rho\) 无关，恰好是有限幅度多项式显式归一化的次数—重数族。若只保留次数，
+\[
+\Pr(\mathsf D=d\mid K=k)=\frac{c_{k,d}A^d}{u_k(A)}.
+\]
+因此
+\[
+\mathbb E[\mathsf D\mid K=k]
+=\frac{A u'_k(A)}{u_k(A)}=\kappa_k(A).
+\tag{47.61}
+\]
+这是已有有限深度统一量程条件数在这个特定统计族中的均值解释，不把任意条件数认作概率。\(k=0\) 时唯一标签为 \((0,1,1)\)，条件次数为一。
+
+反过来按固定次数求和，（47.51）—（47.59）给出
+\[
+\boxed{\Pr(\mathsf D=d)=(1-t)t^{d-1},\qquad d\ge1.}
+\tag{47.62}
+\]
+即 \(\mathsf D-1\) 是参数比为 \(t\) 的几何分布。给定 \(\mathsf D=d\)，令 \(M_d=K-d+1\ge0\)。代入归一化因子后
+\[
+\boxed{
+\Pr(M_d=m\mid\mathsf D=d)
+=\binom{m+2d-2}{2d-2}(1-\rho)^{2d-1}\rho^m.
+}
+\tag{47.63}
+\]
+这是明确形状参数 \(2d-1\) 的负二项分布；（47.51）已经直接验证其总和一，无需先假定原数组具有任何随机独立性。
+
+其概率生成函数为
+\[
+\mathbb E[z^{M_d}\mid\mathsf D=d]
+=\left(\frac{1-\rho}{1-\rho z}\right)^{2d-1}.
+\]
+写 $r_d=2d-1$、$G_d(z)=((1-\rho)/(1-\rho z))^{r_d}$。该级数在 $|z|<1/\rho$ 收敛，故包含 $z=1$ 的邻域，并可逐项微分。
+$G'_d(1)=r_d\rho/(1-\rho)$、$G''_d(1)=r_d(r_d+1)\rho^2/(1-\rho)^2$；
+由 $\mathbb E[M_d^2]=G''_d(1)+G'_d(1)$ 减去 $(G'_d(1))^2$，得到
+\[
+\mathbb E[M_d\mid\mathsf D=d]
+=\frac{(2d-1)\rho}{1-\rho},
+\qquad
+\operatorname{Var}(M_d\mid\mathsf D=d)
+=\frac{(2d-1)\rho}{(1-\rho)^2}.
+\tag{47.64}
+\]
+所以
+\[
+\boxed{
+\mathbb E[K\mid\mathsf D]
+=\frac{1+\rho}{1-\rho}\mathsf D-\frac1{1-\rho}.
+}
+\tag{47.65}
+\]
+这两个相反方向的条件化来自同一个 \(Z\)：固定深度得到有限次数族，固定次数得到明确的深度分布。
+
+### 47.16 无穷微分的严格内部依据
+
+令自然参数
+\[
+\theta=\log A,\qquad \eta=\log\rho,
+\qquad
+\psi(\theta,\eta)=\log Z(e^\theta,e^\eta).
+\]
+这里 $\eta$ 是对数参数，与第47.13节紧嵌入中的权重记号不同。其定义域是开集
+\[
+\mathcal O=
+\{(\theta,\eta):\eta<0,\ e^\eta\lambda(e^\theta)<1\}.
+\tag{47.66}
+\]
+不能把以下光滑结论直接延伸到临界曲线。
+
+固定任一内部参数。由连续性可选择一个闭参数小邻域，使其中
+\[
+0<A_-\le A\le A_+,\qquad
+0<\rho_-\le\rho\le\rho_+<1,\qquad
+q_+=\rho_+\lambda(A_+)<1.
+\]
+\(\lambda(A)\) 随 \(A>0\) 增加；也可直接从其明确公式选择上述上端点。由（47.3），
+\[
+u_k(A_+)\le A_+\lambda(A_+)^k.
+\]
+对任意固定非负整数 \(r,\ell\)，逐标签权重的自然参数导数是
+\(d^r k^\ell e^{d\theta+k\eta}\)。使用 \(d\le k+1\)，按同一 \(k\) 汇总得到统一控制
+\[
+\begin{aligned}
+\sum_{d=1}^{k+1}\sum_{j=1}^{c_{k,d}}
+d^r k^\ell A^d\rho^k
+&\le(k+1)^{r+\ell}\rho_+^k u_k(A_+)\\
+&\le A_+(k+1)^{r+\ell}q_+^k.
+\end{aligned}
+\tag{47.67}
+\]
+右端关于 \(k\) 可求和，且不依赖小邻域内参数。这给所有固定阶偏导级数的局部一致绝对收敛，因而可逐项微分。\(Z\ge A_->0\)，对数与商的微分也合法。特别地，全部次数／深度的有限阶矩均有限。
+
+这一估计同时承担交换无穷求和、参数求导和期望的义务。无需从一个形式级数恒等式未经说明地直接推出解析微分；临界处也没有共同的 \(q_+<1\)。
+
+### 47.17 均值、协方差与二参数信息矩阵
+
+由（47.67）许可的逐项微分，
+\[
+\nabla\psi=(\mathbb E[\mathsf D],\mathbb E[K]).
+\]
+直接对（47.59）求导得
+\[
+\boxed{
+\mathbb E[\mathsf D]
+=1+\frac{A\rho}{\Delta}
+=\frac{(1-\rho)^2}{\Delta}
+=\frac1{1-t}.
+}
+\tag{47.68}
+\]
+固定 \(A\) 对 \(\rho\) 求导，并用（47.55）分解分母，得
+\[
+\boxed{
+\mathbb E[K]
+=-\frac{\rho}{1-\rho}
++\frac{\lambda\rho}{1-\lambda\rho}
++\frac{\rho/\lambda}{1-\rho/\lambda}.
+}
+\tag{47.69}
+\]
+（47.62）的几何级数求导独立给出
+\[
+\operatorname{Var}(\mathsf D)=\frac{t}{(1-t)^2}.
+\]
+再对（47.65）取期望，得到等价且全正的均值表示
+\[
+\boxed{
+\mathbb E[K]
+=\frac{\rho+t}{(1-\rho)(1-t)},
+\qquad
+\frac{\mathbb E[\mathsf D]}{\mathbb E[K]}
+=\frac{1-\rho}{\rho+t}.
+}
+\tag{47.70}
+\]
+严格内部 \(A,\rho>0\) 时 \(\mathbb E[K]>0\)，比值合法。
+
+为证明 Hessian 恒等式，不只引用抽象模型名称。逐标签有
+\[
+\partial_\theta p=(d-\mathbb E[\mathsf D])p,
+\qquad
+\partial_\eta p=(k-\mathbb E[K])p.
+\]
+（47.67）保证相应一阶／二阶矩可逐项求导，于是
+\[
+\boxed{
+\nabla^2\psi=
+\begin{pmatrix}
+\operatorname{Var}(\mathsf D)&\operatorname{Cov}(\mathsf D,K)\\
+\operatorname{Cov}(\mathsf D,K)&\operatorname{Var}(K)
+\end{pmatrix}.
+}
+\tag{47.71}
+\]
+同时，对数概率的两分量导数为
+\((d-\mathbb E[\mathsf D],\,k-\mathbb E[K])\)，其二阶期望正好为（47.71）。因此这确实是**此选定二参数标签族、自然参数坐标下**的 Fisher 信息矩阵；更换参数需按 Jacobian 运输，不能把矩阵条目当作不依赖坐标的数值。
+
+明确微分给
+\[
+\boxed{
+\operatorname{Var}(\mathsf D)
+=\frac{A\rho(1-\rho)^2}{\Delta^2},
+\qquad
+\operatorname{Cov}(\mathsf D,K)
+=\frac{A\rho(1-\rho^2)}{\Delta^2},
+}
+\tag{47.72}
+\]
+\[
+\boxed{
+\operatorname{Var}(K)
+=-\frac{\rho}{(1-\rho)^2}
++\frac{\lambda\rho}{(1-\lambda\rho)^2}
++\frac{\rho/\lambda}{(1-\rho/\lambda)^2}.
+}
+\tag{47.73}
+\]
+条件分解给独立检查：
+\[
+\boxed{
+\operatorname{Cov}(\mathsf D,K)
+=\frac{1+\rho}{1-\rho}\operatorname{Var}(\mathsf D),
+}
+\tag{47.74}
+\]
+因为对 \(K\) 的条件残差与 \(\mathsf D\) 正交；具体地
+\(\mathbb E[\mathsf D K]
+=\mathbb E[\mathsf D\,\mathbb E(K\mid\mathsf D)]\)，再用（47.65）并减去均值乘积即可。全方差恒等式同样给
+\[
+\operatorname{Var}(K)
+=\frac{\rho(2\mathbb E[\mathsf D]-1)}{(1-\rho)^2}
++\left(\frac{1+\rho}{1-\rho}\right)^2
+\operatorname{Var}(\mathsf D),
+\]
+与（47.73）一致；所有项由二阶矩有限性合法。
+
+Fisher 矩阵在严格内部正定。若某实线性组合
+\(a\mathsf D+bK\) 的方差为零，它在所有正概率标签上必须相同。三点
+\((K,\mathsf D)=(0,1),(1,1),(1,2)\)
+均具有正概率；比较前两点给 \(b=0\)，再比较后两点给 \(a=0\)。故非零参数方向的方差严格正。这个论证只支持本二参数族内部的可区分性，不推出外部观察者的统计可识别性。
+
+### 47.18 临界平均斜率回接有限深度条件数
+
+固定 \(A>0\)，让 \(\rho\uparrow1/\lambda\)，则 \(t\uparrow1\)。由（47.70）直接得到
+\[
+\boxed{
+\lim_{\rho\uparrow1/\lambda}
+\frac{\mathbb E[\mathsf D]}{\mathbb E[K]}
+=\frac{1-1/\lambda}{1+1/\lambda}
+=\frac{\lambda-1}{\lambda+1}
+=\frac{A}{\sqrt{A^2+4A}}.
+}
+\tag{47.75}
+\]
+最后一步用
+\(A=(\lambda-1)^2/\lambda\) 与
+\(s=(\lambda^2-1)/\lambda\)。
+
+此极限不是临界点的概率期望：临界点没有这份归一化律。它只比较严格内部的一族有限期望。等价地，令 \(\delta_{\mathrm c}=1-\lambda\rho\downarrow0\)，从（47.68）—（47.69）得
+\[
+\mathbb E[K]=\delta_{\mathrm c}^{-1}+O_A(1),
+\qquad
+\mathbb E[\mathsf D]=\frac{A}{s}\delta_{\mathrm c}^{-1}+O_A(1).
+\]
+两者分别发散，但其比值有上述极限。
+
+第46.9节式（46.28）—（46.31）给
+\[
+\frac{\kappa_k(A)}{k}\longrightarrow\frac{A}{s}
+\quad(k\to\infty,\ A>0\text{固定}).
+\]
+结合（47.61），同一系数族因此具有两种相容而不同的读法：固定大深度时，条件次数均值的每层增长率趋于 \(A/s\)；将全部深度按 \(\rho\) 混合、并从严格内部接近可归一化边界时，总次数均值与总深度均值之比趋于同一值。这里证明的是“均值之比”，不是未经说明的 \(\mathbb E[\mathsf D/K]\)；后者还有 \(K=0\) 的定义问题。
+
+### 47.19 同一临界尺度：最坏放大与平均深度
+
+本节固定 \(A>0\)，从次临界侧令
+\(\rho\uparrow1/\lambda(A)\)。所有幅度导数都是对 \(A\) 求导；所有渐近中的 \(A\) 保持固定。使用前面已经证明的最优常数
+\[
+C_\rho(A)=\sup_{k\ge0}\rho^ku'_k(A),
+\qquad
+q=\rho\lambda,\qquad
+\epsilon=-\log q>0.
+\]
+则有
+\[
+\boxed{
+\lim_{\rho\uparrow1/\lambda}\epsilon C_\rho(A)
+=\frac{c_A}{e s},
+\qquad
+\lim_{\rho\uparrow1/\lambda}
+\frac{C_\rho(A)}{\mathbb E_{A,\rho}[K]}
+=\frac{c_A}{e s},
+\quad
+c_A=\frac{A\lambda}{\lambda+1},\quad s=\sqrt{A^2+4A}.
+}
+\tag{47.76}
+\]
+第二个极限的期望只属于前面显式归一化的标签律，临界点自身没有该概率律。
+
+**一致有界余项。** 由 (47.3)、(47.13) 中同一闭式，
+\[
+u_k(A)=c_A\lambda^k+b_A\lambda^{-k},
+\qquad b_A=\frac{A}{\lambda+1}.
+\]
+对 \(\lambda+\lambda^{-1}=A+2\) 求导，得
+\(\lambda'/\lambda=1/(\lambda-\lambda^{-1})=1/s\)。因此
+\[
+\boxed{
+\rho^ku'_k(A)
+=q^k\left(c'_A+\frac{c_A}{s}k\right)
++\left(\frac{\rho}{\lambda}\right)^k
+\left(b'_A-\frac{b_A}{s}k\right).
+}
+\tag{47.77}
+\]
+这里
+\[
+c'_A=\frac{\lambda}{\lambda+1}
++\frac{A\lambda}{s(\lambda+1)^2},
+\qquad
+b'_A=\frac1{\lambda+1}
+-\frac{A\lambda}{s(\lambda+1)^2},
+\]
+均是固定 \(A>0\) 的有限常数。令 \(\beta=\lambda^{-2}<1\)。因
+\(\rho/\lambda=q\beta\le\beta\)，从 (47.77) 抽出主项
+\((c_A/s)kq^k\) 后，余项 \(R_k(\rho)\) 满足
+\[
+\begin{aligned}
+|R_k(\rho)|
+&\le |c'_A|+|b'_A|+\frac{b_A}{s}k\beta^k\\
+&\le M_A:=
+|c'_A|+|b'_A|
++\frac{b_A}{s}\frac{\beta}{(1-\beta)^2}<\infty.
+\end{aligned}
+\tag{47.78}
+\]
+最后使用非负几何导数级数
+\(\sum_{k\ge0}k\beta^k=\beta/(1-\beta)^2\)。
+这个上界同时对所有 \(k\ge0\) 和所有 \(0<\rho<1/\lambda\) 成立；没有把仅逐 \(k\) 有效的余项误用于上确界。
+
+记
+\[
+S(\epsilon)=\sup_{k\in\mathbb N} k e^{-\epsilon k}.
+\]
+(47.78) 对每个 \(k\) 的上下两侧估计给
+\[
+\boxed{
+\left|C_\rho(A)-\frac{c_A}{s}S(\epsilon)\right|
+\le M_A.
+}
+\tag{47.79}
+\]
+这是同一索引集合上的一致有界扰动下的上确界估计，不需要假定两个上确界由相同整数 \(k\) 取得。
+
+**整数极大值的极限。** 连续函数 \(x e^{-\epsilon x}\) 在 \(x\ge0\) 上的最大值由求导得到，为 \(1/(e\epsilon)\)。所以
+\(\epsilon S(\epsilon)\le1/e\)。
+对 \(0<\epsilon<1\)，取
+\(k_\epsilon=\lfloor1/\epsilon\rfloor\)，则
+\(\epsilon k_\epsilon\to1\)，从而
+\[
+\epsilon S(\epsilon)
+\ge \epsilon k_\epsilon e^{-\epsilon k_\epsilon}
+\longrightarrow e^{-1}.
+\]
+合并上下界，
+\[
+\boxed{\epsilon S(\epsilon)\longrightarrow 1/e.}
+\tag{47.80}
+\]
+将 (47.79) 乘以 \(\epsilon\)，有
+\(\epsilon M_A\to0\)，即得 (47.76) 的第一个极限。
+
+**与平均深度的同尺度比较。** 从 (47.69) 写成
+\[
+\mathbb E[K]
+=\frac{q}{1-q}
+-\frac{\rho}{1-\rho}
++\frac{\rho/\lambda}{1-\rho/\lambda}.
+\]
+固定 \(A\) 时，后两项在 \(\rho\uparrow1/\lambda\) 的邻域有界，因为
+\(1/\lambda<1\) 且 \(1/\lambda^2<1\)。又 \(q=e^{-\epsilon}\)，所以
+\[
+\epsilon\frac{q}{1-q}
+=\frac{\epsilon}{e^\epsilon-1}\longrightarrow1.
+\]
+最后一个极限也可由
+\(e^\epsilon-1=\int_0^\epsilon e^x\,dx\)
+直接夹逼：
+\(e^{-\epsilon}\le\epsilon/(e^\epsilon-1)\le1\)。
+因此
+\[
+\boxed{\epsilon\,\mathbb E_{A,\rho}[K]\longrightarrow1.}
+\tag{47.81}
+\]
+均值在严格内部为正；(47.76) 的第二个极限于是由
+\[
+\frac{C_\rho(A)}{\mathbb E[K]}
+=\frac{\epsilon C_\rho(A)}{\epsilon\mathbb E[K]}
+\]
+直接得到。至此全部极限由一致估计和整数极值证明，不依赖数值拟合。
+
+这个等式比较确定性最坏放大常数与指定标签律的平均深度；它不把最坏放大改解释为实际平均噪声，也不把所选标签律认作观察者的真实来源概率或物理时间。常数与余项依赖固定 \(A>0\)，没有宣称 \(A\downarrow0\) 时的一致结论。
+
+### 47.20 标签 Shannon 熵及粗分组的区别
+
+在严格内部，所有标签概率严格正，且
+\[
+-\log p(K,\mathsf D,J)
+=\log Z-\mathsf D\log A-K\log\rho.
+\]
+右侧绝对值至多
+\[
+|\log Z|+|\log A|\mathsf D+|\log\rho|K,
+\]
+其期望由前面的矩界有限。因此熵级数收敛，可以逐项求和，得到以自然对数计量的
+\[
+\boxed{
+H(K,\mathsf D,J)
+=\log Z-\log A\,\mathbb E[\mathsf D]
+-\log\rho\,\mathbb E[K]<\infty.
+}
+\tag{47.82}
+\]
+该式的非负性也来自其原定义 \(\sum p(-\log p)\)，不能把某个负的代数延拓解释为熵。
+
+若把重数标签 \(j\) 丢掉，概率变为
+\[
+\Pr(K=k,\mathsf D=d)=\frac{c_{k,d}\rho^kA^d}{Z}.
+\]
+给定 \(k,d\)，\(J\) 在 \(c_{k,d}\) 个标签上均匀，故
+\[
+H(K,\mathsf D,J)
+=H(K,\mathsf D)+\mathbb E[\log c_{K,\mathsf D}].
+\tag{47.83}
+\]
+该修正项有限：\(c_{k,d}\le2^{k+d-1}\le 2^{2k}\)，从而
+\(\mathbb E[\log c_{K,\mathsf D}]\le2\log2\,\mathbb E[K]\)。
+所以细标签与按次数合并的对象有不同熵；不能在合并以后沿用细标签公式而忽略重数。这也说明所选计数与赋权属于概率定义的一部分。
+
+（47.82）是组合标签法则的 Shannon 熵，不是世界的不确定性、传感器读数熵、热力学熵或物理时间箭头。若要把它运输到实际观测，必须额外提供共同来源、实际抽样／加权规则、标签与事件的映射，以及该映射保留的关系。现有数组恢复或一个可归一化公式没有自行提供这些条件。
+
+### 47.21 端点与退化不能省略
+
+**\(\rho=0,\ A>0\)。** 把它作为非负权重的独立端点，取 \(\rho^0=1\)，则只有 \(k=0,d=1,j=1\) 有权重，\(Z=A\)。分布退化为单点，\(\mathbb E[K]=0,\mathbb E[\mathsf D]=1,H=0\)。自然参数 \(\eta=\log\rho\) 不再是有限值，严格内部正定 Fisher 结论不在此端点直接适用；均值比也因分母零而未定义。
+
+**\(A=0,\ 0<\rho<1\)。** 所有原标签权重为零，\(Z=0\)，不能归一化为本节原定义的概率律。可是 \(A\downarrow0\) 的概率族有不同意义的极限：
+\[
+\Pr(K=k,\mathsf D=1,J=1)\longrightarrow(1-\rho)\rho^k,
+\]
+其它固定标签的概率趋零。证明：\(u_k(A)/A\to1\)，且
+\(Z/A=(1-\rho)/[(1-\rho)^2-A\rho]\to1/(1-\rho)\)。
+极限点概率总和一。为证明总变差收敛，给定 $\varepsilon>0$，选有限标签集 $F$ 使极限律 $p_0(F^c)<\varepsilon$。有限集上的逐点收敛使充分小的 $A>0$ 满足 $\sum_{\ell\in F}|p_A(\ell)-p_0(\ell)|<\varepsilon$，因此 $p_A(F^c)<2\varepsilon$。从而整个标签集的绝对差之和小于 $\varepsilon+2\varepsilon+\varepsilon=4\varepsilon$，按总变差为该和的一半的约定即得收敛。极限是次数固定为一、深度几何分布，均值分别为
+\(1,\rho/(1-\rho)\)。这是重标后的极限律，不是把零总权强行相除所得的 \(A=0\) 原律。
+
+**临界与超临界。** \(\rho=1/\lambda\) 只有有界幅度，没有有限 \(Z\)；\(\rho>1/\lambda\) 两者均失去相应有限性。\(\rho=1\) 在 \(A>0\) 下同样不可能归一化。所有无限微分、有限矩和熵结论都只在严格内部；不能从固定 \(A\) 的边界极限推出任意 \(A\downarrow0,\rho\uparrow1\) 联合极限的一致结论。
+
+**有限条件族。** 每个固定 \(k\) 的次数—重数条件族仅需 \(A>0\)，自身没有全深度归一化阈值。全深度混合额外引入 \(\rho\) 和正项可求和条件；不能把全深度失败误报为某个有限深度条件概率不存在。
+
+### 47.22 可核对的同模型临界反例与有限证据
+
+取 \(A=1/2\)，则 \(\lambda=2\)。临界 \(\rho=1/2\) 下
+\[
+\rho^k u_k(A)=\frac13+\frac16\,4^{-k}\le\frac12,
+\]
+但
+\[
+\sum_{k=0}^N\rho^k u_k(A)
+=\frac{N+1}{3}+\frac29(1-4^{-(N+1)})
+\longrightarrow+\infty.
+\tag{47.84}
+\]
+这给同一个明确对象上的反例：加权上确界有界不推出这份正标签总权可归一化。
+
+在内部 \(A=1/2,\rho=1/4\)，各式给精确值
+\[
+Z=\frac67,\quad
+\mathbb E[\mathsf D]=\frac97,\quad
+\mathbb E[K]=\frac{17}{21},
+\]
+\[
+\operatorname{Var}(\mathsf D)=\frac{18}{49},\quad
+\operatorname{Cov}(\mathsf D,K)=\frac{30}{49},\quad
+\operatorname{Var}(K)=\frac{758}{441}.
+\tag{47.85}
+\]
+这个有理点的 Fisher 行列式为
+\[
+\frac{18}{49}\frac{758}{441}-\left(\frac{30}{49}\right)^2
+=\frac{88}{343}>0.
+\]
+按重数 $c_{k,d}$ 汇总 $k=0,\ldots,40$ 的精确有理权重，对
+$1,\mathsf D,K,\mathsf D^2,\mathsf DK,K^2$ 得到六个未归一化截断和。
+它们均不超过相应全和，误差均小于 $10^{-8}$。一个共同的非负剩余项上界是
+\[
+Aq^m\left[
+\frac{(m+1)^2}{1-q}
++\frac{2(m+1)q}{(1-q)^2}
++\frac{q(1+q)}{(1-q)^3}
+\right],\qquad m=41,
+\]
+本例恰为 $1851/2199023255552$。理由是 $\mathsf D\le k+1$、$K=k\le k+1$，且（47.9）给 $\rho^ku_k(A)\le Aq^k$；每种剩余和至多为
+$A\sum_{k\ge m}(k+1)^2q^k$。令 $k=m+j$ 并展开平方，利用几何级数的零、一、二次矩
+$1/(1-q)$、$q/(1-q)^2$、$q(1+q)/(1-q)^3$，即得上述界。
+矩归一化使用完整 $Z=6/7$，不使用截断总权。若相应归一化原始矩的区间为 $[\ell_f,u_f]$，则方差区间为
+$[\ell_{X^2}-u_X^2,u_{X^2}-\ell_X^2]$，协方差区间为
+$[\ell_{XY}-u_Xu_Y,u_{XY}-\ell_X\ell_Y]$；这里各原始矩非负。
+这保留相减和乘积的误差，不能把截断方差直接当作单向界。
+临界例的 $k=0,\ldots,8$ 加权幅度与（47.84）相符，其 $N=0,1,4,8$ 部分和分别为
+$1/2,7/8,967/512,422343/131072$。这些有限精确值只佐证公式与下标；无穷归一化、交换次序、所有阶矩、正定性和临界结论由前文普通证明承担。
+
+最坏放大与平均深度的有限数值例取
+\(A\in\{1/2,1,4\}\)、\(\epsilon\in\{10^{-1},10^{-2},10^{-3}\}\)，
+令 \(q=e^{-\epsilon},\rho=q/\lambda\)，用 (47.77) 在
+\(0\le k<N\)、\(N=40/\epsilon\) 的整数范围评价。所有遗漏整数 \(k\ge N\) 的值由
+\[
+\rho^ku'_k(A)\le(k+1)e^{-\epsilon k}
+\le(N+1)e^{-40}<1
+\]
+控制：函数在这个范围递减；这三档下 \(N\le40000\)，且
+\(e^{40}>2^{40}>40001\)。而 \(k=0\) 的值恰为一，所以真正最大值位于这个有限范围。该尾界是解析的；以下数值采用60位和100位十进制精度的公式评价，二者差小于 $10^{-48}$，显示值取九位小数；有限高精度值不作为区间认证。最接近临界的一档给：
+
+| \(A\) | \(\epsilon\) | \(\epsilon C_\rho\)（近似） | \(C_\rho/\mathbb E[K]\)（近似） | \(c_A/(es)\)（近似） |
+| ---: | ---: | ---: | ---: | ---: |
+| \(1/2\) | \(10^{-3}\) | 0.082023940 | 0.082119612 | 0.081750987 |
+| \(1\) | \(10^{-3}\) | 0.119347754 | 0.119460803 | 0.119048288 |
+| \(4\) | \(10^{-3}\) | 0.222381654 | 0.222532192 | 0.222034884 |
+
+这九个有限案例仅佐证公式、方向与数量级，所有渐近仍由 (47.78)–(47.81) 的普通证明承担。
+
+### 47.23 同一关系的不同完成、放大与赋权
+
+这一连接只使用一份生成函数：
+\[
+\boxed{
+\sum_k u_k(A)z^k
+=\frac{A(1-z)}{1-(A+2)z+z^2}.
+}
+\]
+它的系数来自递归体／边幅度；增长根 \(\lambda\) 给加权幅度的有界阈值；把 \(z=\rho\) 并显式赋予计数标签正权后，同一函数成为归一化常数；它的对数导数给次数、深度、协方差与这个特定统计族的 Fisher 几何。临界斜率与有限深度 \(\kappa_k/k\) 通过已证明的相等极限回接。
+
+统一成立于这些具体关系和转换。有限上确界、绝对可求和、某个完备空间的成员身份、概率归一化和实际可观测性是不同条件；临界反例把它们的边界保留下来。
+
+
+在次临界范围，离散有限来源与完整数组可通过包含、取极限和体／边互逆相容地连接，但三种来源距离的完成对象仍不同：精确前缀保留有理坐标，通常上确界只补成趋零实序列，拉回输出度量补成整个有界实立方体。它们共同保留有限递归关系，未因此变成相同的一致结构。
+
+本节进一步给出一个具体的共同临界尺度：齐次展开的正求和上界就是 \(Z\)，其次数权重是几何的；确定性最坏放大 \(C_\rho\) 与所选法则的平均深度以同一 \(1/\epsilon\) 级别发散。临界的有界数组、消失尾失败、解析截断失败和归一化失败在同一模型里相互对应，但每项仍有自己的定义和证明。完成中的一个合法极限也不自动成为原实际来源可以有限取得的对象；完整记录与共同实现条件继续按第47.10节保留。
+
+
+Morgan–Voyce／Chebyshev 生成函数的成熟归属继承自第46.3节；几何／负二项分布、对数配分函数的协方差恒等式和 Shannon 链式分解属于标准方法。这里的内容是对同一已定系数族的普通综合推导，不宣称新的普遍统计框架、文献原创优先权、Lean 核验或实际传感器模型。全部结论限于所声明的递归族、参数域、度量、标签律和合法来源。
+
+### 47.24 精确来源、归属与本单元边界
+
+本节的有限输入归第46节：式（46.1）的递推及有限多项式依赖、式（46.3）的非负系数分解、式（46.6）的共同全负角点、式（46.8）、（46.11）—（46.12）的系数与两根闭式、式（46.14）—（46.17）的坐标 Lipschitz 性、式（46.19）的同立方体精确模量、式（46.28）—（46.31）的统一量程条件数，以及式（46.34）的完整观察者实际像运输。它们共同保留有限深度、同一输入域及共同见证条件。[第46节的不可变正文](https://github.com/the-omega-institute/trureturing/blob/bb03a0b32070a52ae10b180158ad1e4092698f99/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#L10922)提供这些普通证明；本节据此推导全层结论。
+
+[Context43 的不可变正文](https://github.com/the-omega-institute/trureturing/blob/419ffbbb196cb45f824532f8f2c16c12e3268286/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#L8704)中，第43.2—43.4节拥有有限多项式、限制相容与第一列互逆；定理43.4的式（43.6）—（43.9）拥有实际行有限系数公式，引理43.5拥有有限依赖；第43.5节拥有离散有理坐标的精确前缀完成；第43.6及43.11节区分全部已获档案、实际来源和完成对象。第47.9节只将同一有限代数证明运输到实／复系数，再在明确的有限支撑、无零点圆盘与 Cauchy 系数估计条件下给解析尾界，未把形式级数自动当成无条件解析函数。
+
+标量族的成熟归属与记号如下：
+
+- M. N. S. Swamy, “Properties of the Polynomials Defined by Morgan-Voyce,” *The Fibonacci Quarterly* 4(1) (1966), pp.73–81，[原文](https://www.fq.math.ca/Scanned/4-1/swamy.pdf)。印刷第73页式（7）的小写 $b_k$ 满足 $b_0=1,b_1=x+1$ 及 $b_{k+2}=(x+2)b_{k+1}-b_k$，本节 $u_k(A)=A b_k(A)$；印刷第79页式（40）给相同二项式系数。第80页式（42b）为旧缩放 Chebyshev 表示，不能替代当前 $V/W$ 约定。
+- NIST DLMF [18.5.3](https://dlmf.nist.gov/18.5#E3) 的当前第三类记号为 $V_0=1,V_1=2x-1$；该处注明版本1.0.28（2020年9月15日）交换旧 $V/W$ 标签的更正。取 $U_{-1}=0$，有 $u_k(A)=A V_k(1+A/2)=A[U_k(1+A/2)-U_{k-1}(1+A/2)]$。
+- DLMF [18.12.10](https://dlmf.nist.gov/18.12#E10) 给第二类 $U_k$ 的生成式；乘 $(1-z)$ 才得到 $U_k-U_{k-1}$。本模型的解析半径由实际极点证明，不从默认正交区间移植。
+
+Cauchy 系数估计、Banach 齐次幂级数与紧嵌入、几何／负二项分布、对数配分函数的协方差 Hessian 及 Shannon 链式法则均为标准方法。成熟标量族的归属不代替本递归映射的最优性、临界来源闭包或取得条件证明；本节的综合推导不主张文献原创优先权或穷尽文献搜索。
+
+邻近形式结果 [CanonicalDiscountedFutureGeometry](https://github.com/the-omega-institute/trureturing/blob/a492391be5b09240e6be894c3e742a75a945feb1/D5/S3/Observer/MetricGeometryLaws/CanonicalDiscountedFutureGeometry.lean) 的公开定理 `canonical_discounted_future_geometry` 处理全读出距离有界时的折扣预测伪度量与更新 Lipschitz 性；[DiscountedPrimeTimeUltrametric](https://github.com/the-omega-institute/trureturing/blob/a492391be5b09240e6be894c3e742a75a945feb1/D5/S3/Observer/PrimeTimeGeometry/DiscountedPrimeTimeUltrametric.lean) 的 `discounted_prime_time_distance_strong_triangle` 处理有限坐标族上的加权离散相等差异及强三角律。两者不供应本节依赖幅度增长根 $\lambda(A)$ 的数值阈值，其假设不能替代本节证明。第43.1节拥有的 `AntidiagonalArraySourceSeries` 特选自然数组，也不能替代任意实边界族上的全层论证。本节没有新的 Lean 形式认证。
+
+临界有限来源的精确闭包、剩余尾距离、实／有理来源的同一闭包及分次缩放强连续向量刻画见第47.9节；声明查询接口的完整记录下界及次临界充分取得合同见第47.11节。距离等式针对完整自由来源类，任意受限联合来源的完成须另保留同档案纤维可行性，不能由环境尾幅度独自决定。全负角点在闭包中的最近点已由常值边界见证取得且不唯一；有限支撑距离达到性、任意实际数组的一般最近点存在性、随机查询下界与达到下界的最优算法，均不在本单元中断言或证明。无理幅度的有理范数逼近不提供逐字相同的精确读数，数学来源存在性也不认定设备已能制备、读取或认证该来源。
+
+解析球、指定标签归一化与信息矩阵保留各自参数及概率范围；标签统计不是实际来源律，也不导出物理时间、动力学生成元、热力学熵增或普遍信息本体。离散层、数值完成及观察表示的关系在这些已证接口下相容，原有完整研究问题仍超出本单元的结论。
+
+## 47.99 追加锚
