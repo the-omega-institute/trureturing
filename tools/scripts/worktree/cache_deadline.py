@@ -56,7 +56,8 @@ def identity(stage, env):
         raise ValueError("cache job identity mismatch")
     event, ref = env.get("GITHUB_EVENT_NAME"), env.get("GITHUB_REF", "")
     push_writer = event == "push" and (ref == "refs/heads/dev" or ref.startswith("refs/heads/integration-"))
-    if not push_writer or env.get("STRATALINT_CACHE_WRITES") != "true":
+    pr_writer = event == "pull_request" and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref) is not None
+    if not (push_writer or pr_writer) or env.get("STRATALINT_CACHE_WRITES") != "true":
         raise ValueError("cache writes disabled")
     repository = env.get("GITHUB_REPOSITORY", "")
     commit = env.get("CANDIDATE_SHA", "")

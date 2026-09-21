@@ -446,8 +446,17 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         Assert.Contains("outside the selected partition", foreign.Text, StringComparison.Ordinal);
         Assert.False(Directory.Exists(Path.Combine(target, CommonExecutionEvidence.CheckSeedPath("engineering"))));
 
-        var pullRequest = new Dictionary<string, string>(environment) { ["GITHUB_EVENT_NAME"] = "pull_request" };
-        AssertReceipt(Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], pullRequest), "save-disabled");
+        var pullRequest = new Dictionary<string, string>(environment) {
+            ["GITHUB_EVENT_NAME"] = "pull_request", ["GITHUB_REF"] = "refs/pull/42/merge"
+        };
+        var pullSnapshot = Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], pullRequest);
+        AssertReceipt(pullSnapshot, "snapshot");
+        Assert.Contains("engineering_ready=true", pullSnapshot.Text, StringComparison.Ordinal);
+        Assert.Equal(before, Inventory(cached));
+        var invalidPullRequest = new Dictionary<string, string>(environment) {
+            ["GITHUB_EVENT_NAME"] = "pull_request", ["GITHUB_REF"] = "refs/pull/42/head"
+        };
+        AssertReceipt(Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], invalidPullRequest), "save-disabled");
         Assert.Equal(before, Inventory(cached));
         var malformed = new Dictionary<string, string>(environment) { ["CANDIDATE_SHA"] = "malformed-supplied-candidate" };
         var invalid = Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], malformed);
