@@ -1,0 +1,8 @@
+取
+$$
+\widehat p(0)=0,\qquad
+\widehat p(k)=-\frac{\sum_{i,j}k_ik_j\widehat{u_iu_j}(k)}{|k|^2}\quad(k\ne0).
+\tag{25.112}
+$$
+乘积估计保证该实周期压力有意义；其梯度为 $-(I-\mathbb P)\operatorname{div}(u\otimes u)$。又因无散度，$\operatorname{div}(u\otimes u)=(u\cdot\nabla)u$，从而投影方程恰还原为原方程。零空间均值去除了压力的任意时间函数。
+
