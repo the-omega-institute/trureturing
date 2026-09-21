@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace StrataLint.EngineeringScope;
 
-internal sealed record RegisteredFileMapRelatedScope(string[] Inputs, string[] Paths);
+internal sealed record RegisteredFileMapRelatedScope(string[] Inputs, string[] Paths, string? Trigger = null);
 internal sealed record RegisteredFileMapScope(string[] WholeTreeInputs, string[] ActorInputs, RegisteredFileMapRelatedScope[] Related,
     string[]? InventoryInputs = null);
 
@@ -39,7 +39,11 @@ internal sealed record FileMapInspectionScope(string[]? Paths, bool Actors, stri
         Validate(registration);
         if (Matches(registration.WholeTreeInputs, changes)) return new(null, true);
         var selected = changes.ToHashSet(StringComparer.Ordinal);
-        var relatedPatterns = registration.Related.Where(row => Matches(row.Inputs, changes))
+        // The validated endpoint list retains deletions and old rename paths;
+        // those alone are absent from the candidate's complete path inventory.
+        var currentPaths = inventory.ToHashSet(StringComparer.Ordinal);
+        var removed = changes.Where(path => !currentPaths.Contains(path)).ToArray();
+        var relatedPatterns = registration.Related.Where(row => Matches(row.Inputs, row.Trigger == "removed" ? removed : changes))
             .SelectMany(row => row.Paths).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
         if (relatedPatterns.Length != 0)
         {
@@ -55,6 +59,8 @@ internal sealed record FileMapInspectionScope(string[]? Paths, bool Actors, stri
         if (registration.WholeTreeInputs is null || registration.ActorInputs is null || registration.InventoryInputs is null || registration.Related is null
             || registration.Related.Any(row => row is null || row.Inputs is null || row.Paths is null))
             throw new InvalidDataException("invalid filemap delta scope registration");
+        if (registration.Related.Any(row => row.Trigger is not ("changed" or "removed")))
+            throw new InvalidDataException("invalid filemap related trigger: expected changed or removed");
         foreach (var patterns in new[] { registration.WholeTreeInputs, registration.ActorInputs, registration.InventoryInputs }
             .Concat(registration.Related.SelectMany(row => new[] { row.Inputs, row.Paths })))
         {
