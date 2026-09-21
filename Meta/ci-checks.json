@@ -183,24 +183,15 @@
         "whole_tree_inputs": [
           "Meta/ci-checks.json",
           "Meta/engineering-projects.json",
-          "Meta/ReportProducers/**",
-          "Meta/ReportConsumers/**",
           "Meta/registry.yaml",
           "Meta/domains.yaml",
           "global.json",
           "Directory.Build.props",
+          "Directory.Build.targets",
           "Directory.Packages.props",
-          ".editorconfig",
-          "lean-toolchain",
-          "lakefile.toml",
-          "lake-manifest.json",
-          "tools/Architecture/**",
           "tools/StrataLint.Scribe/**",
           "tools/StrataLint.Scribe.Documents/**",
-          "tools/StrataLint.Engine/**",
-          "tools/Trureturing.Truth/**",
-          "tools/StrataLint.Cli/**",
-          "tools/StrataLint.EngineeringScope/**"
+          "tools/StrataLint.EngineeringScope/MarkdownInspectionScope.cs"
         ],
         "changed_inputs": [
           "Blueprint/**/*.md",
