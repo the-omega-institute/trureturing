@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replay near-J means, complete F12 squares, and the uniform plain-source square."""
+"""Replay near-J means, complete F12 squares, and both uniform actual-source squares."""
 import argparse
 from fractions import Fraction as F
 from hashlib import sha256
@@ -22,9 +22,11 @@ SOURCES = (CONSUMER, 'certificate_io.py', 'verify_joint_frontier.py',
            'frontier/source-budgets/source_full_square.py',
            'frontier/source-budgets/verify_source_full_square.py',
            'frontier/source-budgets/source_plain_schur.py',
+           'frontier/source-budgets/source_uniform_cut.py',
            'profile-notes/321-384/339b-the-actual-near-j-source-and-the-unit-refund.md',
            'profile-notes/321-384/339c-the-square-allocation-and-the-reweighted-source.md',
            'profile-notes/321-384/339d-the-complete-plain-source-square-at-every-height.md',
+           'profile-notes/321-384/339e-uniform-transport-for-both-actual-source-squares.md',
            'certificates/source_norms/source-budgets/source_full_square_flow.json',
            *(f'certificates/source_norms/source-budgets/source_full_square_r{r}_flow.json' for r in (0,3,4)))
 
@@ -554,6 +556,8 @@ def calculate(base, proof, heights):
     plain = module('sharpness_plain_schur',base/'frontier/source-budgets/source_plain_schur.py')
     source_api = module('sharpness_source_api',base/'frontier/source-budgets/source_full_square.py')
     plain_uniform = plain.verify_all(source_api.CompressedSource)
+    uniform_cut = module('sharpness_uniform_cut',base/'frontier/source-budgets/source_uniform_cut.py')
+    uniform_squares = uniform_cut.verify_all(source_api.CompressedSource)
     box = joint_square_box()
     limits = pair_envelope_gaps((F(1,24),F(1,12),F(1,36),F(1,18),F(1,24)),
                                (F(29,35),F(23,35),F(1),F(1),F(1)),F(5,6))
@@ -563,14 +567,14 @@ def calculate(base, proof, heights):
             == (F(1,420),F(1,90),F(13,504),F(520,4857)), 'Exact five-term gap limits')
     proof_bytes = io.read_artifact_bytes(proof)
     return io,encode(dict(schema='source-mean-sharpness-v1',
-        scope='Actual irredundant noncover sources, sharp limiting mean38/63, exact six-label square clusters, an actual first-hit unit-refund obstruction with a complete next11 bound, both complete F12 squares, and the exact plain-source complete square for every N>=12, attained by centered4. The compressed plain layouts and site/pair LP have a unique optimum, and the exact values tend to1829/72. The weighted all-height maximum, arbitrary-source bound and later-prime closure remain unresolved; no unrestricted covering conclusion.',
+        scope='Actual irredundant noncover sources, sharp limiting mean38/63, exact six-label square clusters, an actual first-hit unit-refund obstruction with a complete next11 bound, and both complete source-square maxima for every N>=4, attained by centered4 and unique after compression. Their exact values tend to1829/72 plain and671791/29142 weighted. The plain site/pair LP is exact for N>=12 by the separate Schur certificate; no weighted LP claim. Arbitrary-source bounds and later-prime closure remain unresolved; no unrestricted covering conclusion.',
         source_sha256={p:sha256(io.read_artifact_bytes(base/p)).hexdigest() for p in SOURCES},
         ordinary_proof=dict(sha256=sha256(proof_bytes).hexdigest(),byte_count=len(proof_bytes)),
         producer_sha256=sha256(Path(__file__).read_bytes()).hexdigest(),
         affine_dominance_endpoints=endpoint_rows, sharp_mean=F(38,63), results=results,
         direct_square_scalar_boundary=square_boundary,pair_envelope_gap_limits=gap_limits,
         joint_square_box=box,complete_source_squares=full_square,
-        plain_uniform_source_square=plain_uniform))
+        plain_uniform_source_square=plain_uniform,uniform_source_squares=uniform_squares))
 
 
 def main():
@@ -591,7 +595,7 @@ def main():
     else:
         require(result == json.loads(io.read_artifact_bytes(certificate),object_pairs_hook=io._unique),
                 'Complete exact sharpness certificate replay')
-    print('PASS affine dominance at18 endpoint vertices; complete finite integrals; pair gaps; all16 six-label box cases; actual unit-refund geometry; scalar boundary; both complete F12 squares; uniform plain-source Schur grid, tails, and values')
+    print('PASS affine dominance at18 endpoint vertices; complete finite integrals; pair gaps; all16 six-label box cases; actual unit-refund geometry; scalar boundary; both complete F12 squares; plain-source Schur certificate; both uniform source-square transports and values')
     for row in result['results']:
         print('N',row['height'],'originals',row['original_label_count'],
               'private checks',row['private_membership_checks'],'finite mean',row['finite_test']['total'])
