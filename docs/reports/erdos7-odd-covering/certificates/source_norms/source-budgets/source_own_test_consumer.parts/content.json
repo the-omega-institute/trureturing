@@ -84,7 +84,7 @@
   "source_sha256": {
     "kind": "inline",
     "value": {
-      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "77c769e2ef8b64c7c482758874fd260235bf048797ed504762d2a821e09f2d35",
+      "certificates/source_norms/source-budgets/irredundant_whole_j_finite_source.json": "ff0fa74758c51a04fe577f8ff1dc1813679475f8ece18fa7e5423d7fee3e2a91",
       "profile-notes/001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md": "fdc8db8e2751dd88d137fd28a00be09674e0cebc402a00609a0e57297cdc01f0",
       "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
       "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
@@ -101,8 +101,8 @@
   "ordinary_proof": {
     "kind": "inline",
     "value": {
-      "sha256": "3a80872a2fcaa97f0a52da26a258c517faf03c7ddeaed6a7647c76a08eb0a1fb",
-      "byte_count": 23345
+      "sha256": "081511adeb1f9742aae52b2fc729dd62eef876cf7d4d79f81cfd902bb447530c",
+      "byte_count": 38187
     }
   },
   "producer_sha256": {
