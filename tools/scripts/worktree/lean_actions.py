@@ -39,7 +39,12 @@ def actions_keys(root: pathlib.Path) -> dict:
         raise ValueError("snapshot keys require GITHUB_RUN_ID and GITHUB_RUN_ATTEMPT")
     event, ref = os.environ.get("GITHUB_EVENT_NAME"), os.environ.get("GITHUB_REF", "")
     push_writer = event == "push" and (ref == "refs/heads/dev" or ref.startswith("refs/heads/integration-"))
-    writer_allowed = push_writer and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+    # A pull_request run may publish only to GitHub's own merge-ref scope.
+    # Actions keeps that scope private to reruns of this PR; it is never a
+    # donor for dev, integration, or another PR.  Do not accept arbitrary refs
+    # here: the ref shape is the isolation boundary.
+    pr_writer = event == "pull_request" and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref) is not None
+    writer_allowed = (push_writer or pr_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
     result = {"mathlib_revision": revision, "os": system, "arch": machine,
               "partition": partition_path(root),
               "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
