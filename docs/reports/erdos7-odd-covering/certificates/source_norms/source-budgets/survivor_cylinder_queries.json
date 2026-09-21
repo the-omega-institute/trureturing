@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "f20a175c6464bce30a1f0da216cc883d833fc5f4baae99cfa3a5f949a59500f3",
+  "parts_directory": "survivor_cylinder_queries.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "0d66a7ce344266334e0eb172eca2c131a55980ffa1bd714e630723063eb3ddde",
+    "kind": "object"
+  }
+}
