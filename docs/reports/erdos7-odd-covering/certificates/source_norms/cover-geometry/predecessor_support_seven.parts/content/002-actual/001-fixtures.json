@@ -1,0 +1,77 @@
+{
+  "length": 8,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000000-000001.json",
+        "sha256": "26f3553c71b22fbe6f669c8b53d0b4e73d85958f98cce29fdf7e467c735c5e82",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000001-000002.json",
+        "sha256": "3b2704d7b64c9151a43d690701659a65bf4afa6cb58ecebfbf123b3bd69350f9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000002-000003.json",
+        "sha256": "d175f7234fcfc54567c14f9bc0991a7cceda5c7586b543a6ea8bbca81d56ddb7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000003-000004.json",
+        "sha256": "3065ec4365de54ad6e2c7774b271f290205053de5424d414d15a1cd6e29f917d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000004-000005.json",
+        "sha256": "882b6ee3f85febd52ed344f3f497058b11ed1df42d45a12cff23effcc038dfb3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000005-000006.json",
+        "sha256": "f10eedafa53b4c59c6f5ec76e55260b920359598f3f6a4514dba3ba50ae06e27",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000006-000007.json",
+        "sha256": "c35fe2e93d6e0f8504ab6ef02bcfdb50ecb48e360f284d05cb67bfe434bb3940",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/002-actual/001-fixtures/000007-000008.json",
+        "sha256": "caef7ce9258c77223230043fbca6ed65a051870941b720725f027b4079535b5e",
+        "kind": "value"
+      }
+    }
+  ]
+}
