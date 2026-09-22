@@ -838,7 +838,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Original binary first ancestors force a joint cutoff-one cylinder](profile-notes/arithmetic/373-binary-first-ancestors-and-cutoff-one.md)
 - [Extremal prime-coordinate projections and a complete-cover descent](profile-notes/arithmetic/374-extremal-prime-projections-and-cardinality-descent.md)
 - [Deep prime-prefix projections and complete tree contraction](profile-notes/arithmetic/375-deep-prime-prefix-projections-and-tree-contraction.md)
-- [Complete prime-chain transport and one common prefix law](profile-notes/arithmetic/376-complete-prime-chain-transport-and-joint-prefix-laws.md)
+- [Complete prime-chain transport and one common prefix law; affine mixing of six pair laws strengthens joint row-prefix caps, but those fixed mixtures can still have root cost 22/5](profile-notes/arithmetic/376-complete-prime-chain-transport-and-joint-prefix-laws.md)
 - [Ternary shadow covers retain distinct labels but lose original prime arity](profile-notes/arithmetic/377-ternary-shadow-covers-and-original-prime-arity.md)
 - [Saturated prime fibres yield joint caps and a mixed-tail dichotomy](profile-notes/arithmetic/378-saturated-prime-fibres-and-mixed-tail-incidence.md)
 - [Root forests and literal residue costs extend the joint covering bounds](profile-notes/arithmetic/379-root-forest-disintegration-and-residue-costs.md)
@@ -859,3 +859,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Standalone tree blocking fails in unavoidable joint prefix fibres, while one law on the full source still has second moment at most 335/54](profile-notes/arithmetic/394-standalone-tree-blocking-need-not-pass-to-joint-prefix-fibres.md)
 - [The root second-moment bound of four requires only the three-by-five rectangle condition; a ten-type classification removes the standalone column-count premise](profile-notes/arithmetic/395-root-rectangle-blockers-need-no-standalone-projection-condition.md)
 - [A designated five-ary row and three pairwise ternary trees give one full-layout law at each depth K at least 2, with an analytic all-depth bound below the finite comparison](profile-notes/arithmetic/396-a-heavy-row-controls-all-seven-adic-depths.md)
+- [Five-ary trees in every three-row union give a stationary common law with the full finite-depth comparison and uniform bound 51/10, without a pairwise ternary premise](profile-notes/arithmetic/397-stationary-row-mixtures-control-all-seven-adic-depths.md)
