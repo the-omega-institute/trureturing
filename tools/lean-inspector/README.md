@@ -19,9 +19,10 @@ ensure、原生 Lake 报告构建和发布。
 [CI](../../.github/workflows/ci-push.yml) 与本地 `make current` 共用入口，
 经 `make lean-report` 调用同一个 `inspect.sh`。工程阶段已验证的候选 Lean DLL
 通过 `STRATALINT_LEAN_PRODUCER_DLL` 传入，独立调用才构建 utility 输入工具。
-[Release](../../.github/workflows/truth-release-publish.yml) 选择指定 dev 源码的成功
-push engineering/current 及其报告工件，经共同交接入口校验候选、轮次和完整材料后使用。
+下游 Pages 发布只消费上游成功 CI 的报告工件，校验候选、轮次和完整材料后使用。
 缺少该源码的合格报告工件时不能发布，不在消费者中重产报告。
+上游独立 truth release 发布 workflow 及其 Mac 验证作业已退役；
+可复用的 truth/export、来源验证与 bundle 验证工具继续保留。
 
 输出采用 `stratalint-raw-lean-report-v2`，同一文件名后附
 `.sha256`、`.input.attestation`、`.provenance.json`、`.materials.zip`。
