@@ -78,10 +78,21 @@ parse_snapshot() {
     def sha: type == "string" and test("^[0-9a-f]{40}$");
     def database_id: type == "number" and . > 0 and . <= 9007199254740991 and floor == .;
     def pr_event: . == "pull_request" or . == "pull_request_target";
+    def native_run: .path == ".github/workflows/ci-pr.yml";
+    # This repository calls exactly this reusable workflow at its PR merge commit.
+    # GitHub retains that ref after merge even when pull_requests becomes empty.
+    def native_pr:
+      select(native_run and .event == "pull_request") |
+      .referenced_workflows | select(type == "array" and length == 1) | .[0] |
+      select(type == "object" and (.sha | sha and length == 40) and
+        .path == ($repo + "/.github/workflows/ci-push.yml@" + .sha)) |
+      .ref | select(type == "string") | capture("\\Arefs/pull/(?<number>[1-9][0-9]*)/merge\\z") |
+      .number | tonumber | select(database_id);
+    def associated_prs: if native_run then [native_pr] else [.pull_requests[].number] end;
     def run_metadata: .checkSuite.workflowRun.databaseId as $id | $runs[] | select(.id == $id);
     def check_name: if .__typename == "CheckRun" then .name elif .__typename == "StatusContext" then .context else null end;
     def producer: .checkSuite.workflowRun.workflow.id // null;
-    def applicable: producer == null or (run_metadata | (.event | pr_event) and any(.pull_requests[]; .number == $number));
+    def applicable: producer == null or (run_metadata | (.event | pr_event) and (associated_prs | index($number) != null));
     def latest_ids: .checkSuite.checkRuns.nodes | map(.databaseId) | sort;
     def latest_check: .databaseId as $id | latest_ids | index($id) != null;
     def shape_ok: type == "object" and (if .__typename == "CheckRun" then
@@ -112,7 +123,9 @@ parse_snapshot() {
       commit:(.checkSuite.commit.oid // .commit.oid), status:(.status // .state), conclusion:check_state} +
       (if producer == null then {membership:"commit-context"}
        else {membership:"workflow-run", event:(run_metadata | .event),
-         pull_requests:(run_metadata | [.pull_requests[].number])} end);
+         pull_requests:(run_metadata | [.pull_requests[].number])} +
+         (if (run_metadata | native_run) then {referenced_workflow:(run_metadata | .referenced_workflows[0])}
+          else {} end) end);
     fromjson |
     select(type == "object" and (.errors == null or .errors == [])) |
     .data.repository |
@@ -151,7 +164,9 @@ parse_snapshot() {
       (.repository.id | database_id) and .repository.full_name == $repo and
       (.event | type == "string" and length > 0) and
       (.pull_requests | type == "array") and
-      (if (.event | pr_event) then (.pull_requests | length > 0) else true end) and
+      (if native_run then associated_prs as $prs |
+        ($prs | length) == 1 and all(.pull_requests[]; .number == $prs[0])
+       elif (.event | pr_event) then (.pull_requests | length > 0) else true end) and
       (.repository.id as $repository_id | all(.pull_requests[];
         type == "object" and (.id | database_id) and (.number | database_id) and
         .url == ("https://api.github.com/repos/" + $repo + "/pulls/" + (.number | tostring)) and
@@ -191,8 +206,8 @@ read_snapshot() {
     remaining=$((deadline - $(date +%s)))
     (( remaining > 0 )) || return 1
     call_timeout=$((remaining < PR_OPEN_TIMEOUT_SECONDS ? remaining : PR_OPEN_TIMEOUT_SECONDS))
-    # The single-run REST resource supplies event membership, unlike commit rollups
-    # or matching-open-PR associations. Consume pagination; extra resource pages fail closed.
+    # Read explicit associations and the retained native merge ref from the run itself.
+    # Consume pagination; extra resource pages fail closed.
     gh_local run-membership "$call_timeout" api --paginate --slurp "repos/$PR_REPO/actions/runs/$run_id" || return 1
     metadata="$(printf '%s' "$BOUNDED_OUTPUT" | jq -Rsec '
       fromjson | select(type == "array" and length == 1 and (.[0] | type == "object")) | .[0]

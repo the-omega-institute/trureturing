@@ -12,6 +12,185 @@ public sealed class PrOpenScriptTests
     private const string OldHeadSha = "1111111111111111111111111111111111111111";
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrWatchRetainedNativeRefIdentifiesMergedPrAndRetiresCancelledRun(bool explicitAssociation)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("MERGED",
+            Check("engineering", "COMPLETED", "CANCELLED"),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2),
+            Check("engineering", "COMPLETED", "FAILURE", runId: 203, runNumber: 3, pr: 99))));
+        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, 42, explicitAssociation)).ToJsonString()));
+        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 42, explicitAssociation)).ToJsonString()));
+        fixture.RunResponses(203, Ok(new JsonArray(NativeRunMetadata(203, 3, 99, explicitAssociation)).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains("refs/pull/42/merge", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":203", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("pending", 124)]
+    [InlineData("missing", 124)]
+    [InlineData("absent", 124)]
+    [InlineData("failed", 1)]
+    [InlineData("green", 0)]
+    public void PrWatchRetainedNativeRefScopesSameHeadBeforeLatestSelection(string ownState, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        var other = Check("engineering", "COMPLETED", ownState == "green" ? "FAILURE" : "SUCCESS",
+            runId: 202, runNumber: 2, pr: 99);
+        fixture.SnapshotResponses(Ok(Snapshot("MERGED", ownState == "absent" ? [other] :
+            [Check(ownState == "missing" ? "resolve" : "engineering",
+                ownState == "pending" ? "IN_PROGRESS" : "COMPLETED",
+                ownState == "pending" ? null : ownState == "failed" ? "FAILURE" : "SUCCESS"), other])));
+        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, 42)).ToJsonString()));
+        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 99)).ToJsonString()));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.DoesNotContain("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        if (ownState is "absent" or "missing")
+            Assert.Contains("missing=1", Text(result.StandardOutput), StringComparison.Ordinal);
+        else
+            Assert.Contains("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("workflow", 1)]
+    [InlineData("missing-workflow", 124)]
+    [InlineData("external", 1)]
+    [InlineData("status", 1)]
+    public void PrWatchRetainedNativeRefPreservesOtherProducerObligations(string producer, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        var other = producer == "status" ? Context("engineering", "FAILURE") :
+            Check("engineering", "COMPLETED", producer == "missing-workflow" ? "SUCCESS" : "FAILURE",
+                runId: 100, workflow: producer == "external" ? null : "workflow-other");
+        var checks = new List<object> { other,
+            Check("engineering", "COMPLETED", "CANCELLED"),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2) };
+        if (producer == "missing-workflow")
+            checks.Add(Check("resolve", "IN_PROGRESS", null, runId: 101, runNumber: 2, workflow: "workflow-other"));
+        fixture.SnapshotResponses(Ok(Snapshot("MERGED", checks.ToArray())));
+        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, 42)).ToJsonString()));
+        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 42)).ToJsonString()));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.Contains("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("refs-missing")]
+    [InlineData("refs-null")]
+    [InlineData("refs-empty")]
+    [InlineData("refs-object")]
+    [InlineData("entry-null")]
+    [InlineData("duplicate")]
+    [InlineData("ambiguous")]
+    [InlineData("ref-missing")]
+    [InlineData("ref-type")]
+    [InlineData("head-ref")]
+    [InlineData("branch-ref")]
+    [InlineData("zero-pr")]
+    [InlineData("leading-zero-pr")]
+    [InlineData("unsafe-pr")]
+    [InlineData("trailing-ref")]
+    [InlineData("sha-missing")]
+    [InlineData("sha-invalid")]
+    [InlineData("sha-mismatch")]
+    [InlineData("path-repository")]
+    [InlineData("path-workflow")]
+    [InlineData("path-ref")]
+    [InlineData("native-path")]
+    [InlineData("native-event")]
+    [InlineData("native-repository")]
+    [InlineData("explicit-conflict")]
+    [InlineData("explicit-extra")]
+    [InlineData("explicit-head")]
+    [InlineData("explicit-with-invalid-ref")]
+    [InlineData("members-null")]
+    [InlineData("truncated-contexts")]
+    [InlineData("truncated-latest")]
+    public void PrWatchRejectsUnverifiableRetainedNativeRef(string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var snapshot = JsonNode.Parse(Snapshot("MERGED", Check("engineering", "COMPLETED", "SUCCESS")))!;
+        var contexts = snapshot["data"]!["repository"]!["object"]!["statusCheckRollup"]!["contexts"]!;
+        if (defect == "truncated-contexts") contexts["pageInfo"]!["hasNextPage"] = true;
+        if (defect == "truncated-latest")
+            contexts["nodes"]![0]!["checkSuite"]!["checkRuns"]!["pageInfo"]!["hasNextPage"] = true;
+        fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
+        var run = NativeRunMetadata(201, 1, 42, defect.StartsWith("explicit", StringComparison.Ordinal));
+        var refs = run["referenced_workflows"]!.AsArray();
+        var reference = refs[0]!;
+        switch (defect)
+        {
+            case "refs-missing": run.Remove("referenced_workflows"); break;
+            case "refs-null": run["referenced_workflows"] = null; break;
+            case "refs-empty": refs.Clear(); break;
+            case "refs-object": run["referenced_workflows"] = new JsonObject(); break;
+            case "entry-null": refs[0] = null; break;
+            case "duplicate": refs.Add(reference.DeepClone()); break;
+            case "ambiguous":
+                refs.Add(reference.DeepClone());
+                refs[1]!["ref"] = "refs/pull/99/merge";
+                break;
+            case "ref-missing": reference.AsObject().Remove("ref"); break;
+            case "ref-type": reference["ref"] = 42; break;
+            case "head-ref": reference["ref"] = "refs/pull/42/head"; break;
+            case "branch-ref": reference["ref"] = "refs/heads/42/merge"; break;
+            case "zero-pr": reference["ref"] = "refs/pull/0/merge"; break;
+            case "leading-zero-pr": reference["ref"] = "refs/pull/042/merge"; break;
+            case "unsafe-pr": reference["ref"] = "refs/pull/9007199254740992/merge"; break;
+            case "trailing-ref": reference["ref"] = "refs/pull/42/merge\n"; break;
+            case "sha-missing": reference.AsObject().Remove("sha"); break;
+            case "sha-invalid": reference["sha"] = new string('z', 40); break;
+            case "sha-mismatch": reference["sha"] = HeadSha; break;
+            case "path-repository": reference["path"] = $"other/repo/.github/workflows/ci-push.yml@{OldHeadSha}"; break;
+            case "path-workflow": reference["path"] = $"owner/repo/.github/workflows/other.yml@{OldHeadSha}"; break;
+            case "path-ref": reference["path"] = "owner/repo/.github/workflows/ci-push.yml@refs/pull/42/merge"; break;
+            case "native-path": run["path"] = ".github/workflows/other.yml"; break;
+            case "native-event": run["event"] = "pull_request_target"; break;
+            case "native-repository": run["repository"]!["full_name"] = "other/repo"; break;
+            case "explicit-conflict": reference["ref"] = "refs/pull/99/merge"; break;
+            case "explicit-extra":
+                run["pull_requests"]!.AsArray().Add(RunMetadata(201, 1, HeadSha, 99, "pull_request")["pull_requests"]![0]!.DeepClone());
+                break;
+            case "explicit-head": run["pull_requests"]![0]!["head"]!["sha"] = OldHeadSha; break;
+            case "explicit-with-invalid-ref": reference["ref"] = "refs/pull/42/head"; break;
+            case "members-null": run["pull_requests"] = null; break;
+        }
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PrWatchOtherWorkflowUsesExplicitAssociationEvenWithUnrelatedReusableRef()
+    {
+        using var fixture = new PrScriptFixture();
+        var run = NativeRunMetadata(201, 1, 99);
+        run["path"] = ".github/workflows/other.yml";
+        run["pull_requests"] = RunMetadata(201, 1, HeadSha, 42, "pull_request")["pull_requests"]!.DeepClone();
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        Assert.Equal(0, fixture.RunWatch42().ExitCode);
+    }
+
+    [Theory]
     [InlineData("pending", 124)]
     [InlineData("missing", 124)]
     [InlineData("failed", 1)]
@@ -987,6 +1166,20 @@ public sealed class PrOpenScriptTests
                 url = $"https://api.github.com/repos/owner/repo/pulls/{pr}",
                 head = new { sha = head }, @base = new { repo = new { id = 1 } } } },
         })!.AsObject();
+    private static JsonObject NativeRunMetadata(int runId, int runNumber, int pr, bool explicitAssociation = false)
+    {
+        var run = RunMetadata(runId, runNumber, HeadSha, pr, "pull_request");
+        run["path"] = ".github/workflows/ci-pr.yml";
+        if (!explicitAssociation) run["pull_requests"] = new JsonArray();
+        // The merge commit differs from the PR head; the reusable path binds its exact SHA.
+        run["referenced_workflows"] = new JsonArray(new JsonObject
+        {
+            ["path"] = $"owner/repo/.github/workflows/ci-push.yml@{OldHeadSha}",
+            ["ref"] = $"refs/pull/{pr}/merge",
+            ["sha"] = OldHeadSha,
+        });
+        return run;
+    }
     private static FakeResponse Ok(string output) => new(0, output, 0);
     private static FakeResponse Fail(int exitCode = 51, int delaySeconds = 0) => new(exitCode, "", delaySeconds);
     private sealed record FakeResponse(int ExitCode, string Output, int DelaySeconds);
