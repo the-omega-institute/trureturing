@@ -144,7 +144,7 @@ has no absorbing zero.
 | --- | --- | --- | --- |
 | bind-only | none | none | open-problem-resolution |
 
-This is a preregistered second-tier external named problem under issue #9377,
+This is a preregistered first-tier external named problem under issue #9377,
 resolved as `Refuted`. Its computational use is a `certified-instance` with a
 typed `refutes` edge from `result` to `claim`. There is no atom and no digestion
 coverage edge.
