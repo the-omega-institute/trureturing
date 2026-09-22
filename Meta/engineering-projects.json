@@ -2374,14 +2374,12 @@
         ".github/scripts/harness-gate.sh",
         "Directory.Build.props",
         "Directory.Packages.props",
-        "Evidence/D5/values.json",
         "Meta/Digestion/atomizers.toml",
         "Meta/FILEMAP.docs.reports.toml",
         "Meta/FILEMAP.toml",
         "Meta/ReportConsumers/scribe-content.json",
         "Meta/ReportProducers/scribe-content.json",
         "Meta/ci-checks.json",
-        "Meta/registry.yaml",
         "global.json",
         "lean-report-inputs.json",
         "tools/Architecture/BannedSymbols.Determinism.txt",
@@ -2404,7 +2402,30 @@
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ],
-      "execution_filemap_paths": []
+      "execution_filemap_paths": [
+        "Blueprint/D5/S0/Carrier/Ring.md",
+        "Blueprint/D5/S0/Carrier/Ring.scribe.cs",
+        "D5/S0/Carrier/BackfillTarget.lean",
+        "D5/S0/Carrier/Ring.lean",
+        "D5/S0/Carrier/ValuesBinding.lean",
+        "Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+        "Library/queries.yaml",
+        "Meta/Digestion/atoms/sha256/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+        "Meta/Digestion/backfill/fixture-source/partial-open/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881.yaml",
+        "Meta/Digestion/backfill/fixture-source/source.toml",
+        "Meta/Values/bindings.toml",
+        "Meta/domains.yaml",
+        "Meta/registry.yaml",
+        "README.md",
+        "docs/GOVERNANCE.md",
+        "docs/reports/ratchet/0.json",
+        "tools/StrataLint.Cli/probe.cs",
+        "tools/scripts/ci-stage.sh",
+        "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+        "tools/tests/CompileFailProof/CompileFailProof.csproj",
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj"
+      ]
     }
   ],
   "historical_projects": [],
