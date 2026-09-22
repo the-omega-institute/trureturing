@@ -77,6 +77,19 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
+      "stratalint.buildruntime": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.ExecutionEvidence": "[1.0.0, )"
+        }
+      },
+      "stratalint.ciartifacts": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.ExecutionEvidence": "[1.0.0, )"
+        }
+      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -92,18 +105,37 @@
       "stratalint.engineeringscope": {
         "type": "Project",
         "dependencies": {
+          "StrataLint.BuildRuntime": "[1.0.0, )",
+          "StrataLint.CiArtifacts": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.ExecutionEvidence": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
           "StrataLint.Lean": "[1.0.0, )",
-          "StrataLint.ReleaseSelection": "[1.0.0, )"
+          "StrataLint.ReleaseSelection": "[1.0.0, )",
+          "StrataLint.ResourcePlanning": "[1.0.0, )"
+        }
+      },
+      "stratalint.executionevidence": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.ResourcePlanning": "[1.0.0, )"
         }
       },
       "stratalint.executiontestsupport": {
         "type": "Project",
         "dependencies": {
-          "StrataLint.EngineeringScope": "[1.0.0, )",
+          "StrataLint.ExecutionEvidence": "[1.0.0, )",
           "StrataLint.RegistrationTestSupport": "[1.0.0, )",
           "StrataLint.TestSupport": "[1.0.0, )",
           "xunit": "[2.9.3, )"
+        }
+      },
+      "stratalint.inspectionscope": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )"
         }
       },
       "stratalint.lean": {
@@ -123,6 +155,9 @@
         "dependencies": {
           "Trureturing.Truth": "[0.1.0, )"
         }
+      },
+      "stratalint.resourceplanning": {
+        "type": "Project"
       },
       "stratalint.testsupport": {
         "type": "Project",

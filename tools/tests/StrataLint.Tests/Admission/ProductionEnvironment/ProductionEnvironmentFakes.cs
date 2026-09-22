@@ -86,17 +86,6 @@ internal sealed class FakeRepositoryGateway(
                 ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes))));
 }
 
-internal sealed class FakeLeanReportSource(LeanAxiomReport? report) : ILeanReportSource
-{
-    internal int CallCount { get; private set; }
-
-    public LeanAxiomReport Load(RepositorySnapshot snapshot)
-    {
-        CallCount++;
-        return report ?? throw new InvalidOperationException("Lean report source should not be called");
-    }
-}
-
 internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verification)
     : IScribeEmissionVerifier
 {

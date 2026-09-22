@@ -1,3 +1,4 @@
+using static StrataLint.TestSupport.InformationTemplateFixture;
 using System.Collections.Immutable;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -8,10 +9,6 @@ namespace StrataLint.Tests;
 
 public sealed class DeclaredTemplateEscapeRecordTests
 {
-    internal static object FromSlot => new { name = "Bool", type_identity = new string('a', 64), object_identity = new string('b', 64) };
-    internal static object OpenSlot => new { kind = "open", declaration_name = (string?)null,
-        statement_identity = (string?)null, chain_name = (string?)null };
-
     internal static DeltaRuleContext Slots(DeltaRuleContext context, string mode)
     {
         var reports = context.Lean.Report.Files.ToDictionary(p => p.Key.Value, p => p.Value);

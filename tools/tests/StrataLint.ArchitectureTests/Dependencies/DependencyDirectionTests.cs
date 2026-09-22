@@ -31,8 +31,10 @@ public sealed class DependencyDirectionTests
         Assert.Equal(
             [
                 "StrataLint.Engine",
-                "StrataLint.EngineeringScope",
+                "StrataLint.ExecutionEvidence",
+                "StrataLint.InspectionScope",
                 "StrataLint.Lean",
+                "StrataLint.ResourcePlanning",
                 "StrataLint.Scribe",
                 "StrataLint.Scribe.Documents",
                 "Tomlyn",
@@ -60,22 +62,12 @@ public sealed class DependencyDirectionTests
     [Fact]
     public void FunctionalTestsReferenceOnlyCliEngineAndScribe()
     {
-        // 此处曾另有一条产物层(IL)断言,钉 `["StrataLint", "StrataLint.Engine",
-        // "StrataLint.Scribe", "StrataLint.TestSupport"]`。**已删,且没有丢失可达的检测**:
-        // 该项目直接声明的只有 Cli 与 TestSupport,而 Cli 的引用集由
-        // CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet 钉死,
-        // 故传递可达的 StrataLint* 集合**恰好等于**原 IL 断言钉住的那个集合 ——
-        // 再钉一遍不增加信息(第〇节:f 与真源都已被守,投影必然对)。
-        // 要让第四个 StrataLint* 程序集变得可达,必须改 Cli 的引用集(已钉)
-        // 或给本项目加一条直接声明(拓扑判官判 extra-production-reference)。
-        // 删它的收益:该测试方法的唯一 unknown 成因是反射,去掉后它在**原身份上**变 known,
-        // 全仓 unknown 债 −1(搬迁会被 SL-003 判新增,原地去反射不会 —— 见 #5419 与撤回的 #5440)。
+        // The owned CLI tests use their owner and explicit shared fixtures.
         Assert.Equal(
-            // Engine 经 Cli 传递可得,故这条直接引用是多余的 extra-production-reference 存量债;
-            // 本 PR 顺手还掉它(拓扑棘轮要求碰债务面即严格减债)。程序集级引用集不变。
             [
                 "../../StrataLint.Cli/StrataLint.Cli.csproj",
                 "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+                "../../TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
                 "../../TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
                 "../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
                 "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
@@ -98,17 +90,7 @@ public sealed class DependencyDirectionTests
         // `Engine` 在**编译期**即不可达,用了就编译不过(事前不可能 > 事后检测,第 20 条)。
         // 这也去掉了该断言唯一需要的那条 test→test ProjectReference。
         Assert.Equal(
-            [
-                "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
-                "../../TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
-                "../../TestSupport/StrataLint.NativeReportTestSupport/StrataLint.NativeReportTestSupport.csproj",
-                "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
-                "../../TestSupport/StrataLint.ReleaseTestSupport/StrataLint.ReleaseTestSupport.csproj",
-                "../../TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
-                "../../TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
-                "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
-                "../../TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj",
-            ],
+            ["../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"],
             ProjectReferences(XDocument.Load(Path.Combine(
                 RepositoryLayout.FindRoot(),
                 "tools",
@@ -150,6 +132,8 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.Cli/StrataLint.Cli.csproj",
                 "../../StrataLint.Engine/StrataLint.Engine.csproj",
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                "../../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+                "../../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
                 "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
                 "../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",

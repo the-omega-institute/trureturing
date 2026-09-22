@@ -254,8 +254,8 @@ public sealed class DeclaredTemplateDeltaLoadTests
             key = Key(owner), registration_source_path = owner,
             statement_identity = new string('a', 64),
             binding_source_path = producer, state = "declared_validated", diagnostic = (string?)null,
-            escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
-            escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
+            escape_from = InformationTemplateFixture.FromSlot,
+            escape_continues = InformationTemplateFixture.OpenSlot, bridge_kind = "legacy",
             unit_name = ModuleName(owner) + ".unit", realization_name = ModuleName(owner) + ".realization",
             certificate = new
             {

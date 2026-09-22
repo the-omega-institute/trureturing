@@ -113,7 +113,7 @@ public sealed class ReleasePreparationTests
                 ["GITHUB_REPOSITORY"] = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "",
                 ["GITHUB_RUN_ID"] = "99", ["GITHUB_RUN_ATTEMPT"] = "1", ["GITHUB_OUTPUT"] = Path.Combine(area, "outputs") },
             TestBudgets.WorkflowProcessHangGuard);
-        Capture(first.Root, "release-" + scenario, result);
+        TransportFixture.Capture(first.Root, "release-" + scenario, result);
         Assert.True(result.Exit == exit, result.Text);
         Assert.DoesNotContain("ASSEMBLY_ATTEMPT " + Path.Combine(area, "candidate-18-1"), result.Text, StringComparison.Ordinal);
         if (exit == 0)

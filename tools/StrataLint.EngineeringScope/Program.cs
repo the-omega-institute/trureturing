@@ -11,6 +11,9 @@ internal static class Program
 
     public static int Main(string[] arguments) => Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
 
+    internal static int Run(IReadOnlyList<string> arguments, TextWriter output, TextWriter error)
+        => Run(arguments, TestResultEvidence.Load, output, error);
+
     internal static int Run(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> evidenceLoader, TextWriter output, TextWriter error)
     {
         try

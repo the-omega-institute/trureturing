@@ -21,6 +21,19 @@
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0"
         }
       },
+      "stratalint.buildruntime": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.ExecutionEvidence": "[1.0.0, )"
+        }
+      },
+      "stratalint.ciartifacts": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.ExecutionEvidence": "[1.0.0, )"
+        }
+      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -31,6 +44,20 @@
           "Tomlyn": "[2.10.1, )",
           "Trureturing.Truth": "[0.1.0, )",
           "YamlDotNet": "[16.3.0, )"
+        }
+      },
+      "stratalint.executionevidence": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.ResourcePlanning": "[1.0.0, )"
+        }
+      },
+      "stratalint.inspectionscope": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )"
         }
       },
       "stratalint.lean": {
@@ -44,6 +71,9 @@
         "dependencies": {
           "Trureturing.Truth": "[0.1.0, )"
         }
+      },
+      "stratalint.resourceplanning": {
+        "type": "Project"
       },
       "trureturing.truth": {
         "type": "Project"
