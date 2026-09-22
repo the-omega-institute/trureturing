@@ -29,10 +29,11 @@ Indeed,
     2t_4-C             = 76609/1892052 > 0,
 
 and `2t_K` increases with `K`. This is an ordinary proof with exact
-rational certificates, not Lean certification. The argument here
-does not settle the height-two finite comparison. The height-zero
-and height-one comparisons are separate low-height arguments, not
-outputs of the certificates below.
+rational certificates, not Lean certification. The height-two finite
+comparison is supplied by [report 429](429-phase-conflict-cap-flow-closes-the-height-two-bound.md),
+using shared root-and-leaf cap flows. The height-zero and height-one
+source comparisons are separate low-height arguments, not outputs of
+the certificates below.
 
 ## 1. Fixed actual components and the finite game
 
@@ -287,6 +288,101 @@ Both modes verify the same exact results. The formal scope remains
 an ordinary all-height analytic argument plus a complete rational
 case split. Neither the finite enumeration alone nor the existence
 of a numerical optimizer is used as an all-height proof.
+
+## 7. The height-two fixed-component target admits no strict improvement
+
+There is an actual set of seven fixed component laws whose game value
+is exactly `46/9`. Consequently a statement giving a strict improvement
+below `2t_2` for every legal choice of seven fixed components is false.
+This establishes sharpness. The matching non-strict height-two upper
+bound for all component choices is proved separately in report 429.
+
+Work on the complete carrier `{1,2,3,4} times Z/49`, and put
+
+    T_b={a+7d: 0<=a,d<b}, b in {3,5}.
+
+The full law has mass `1/25` at each of the 25 points
+
+    (ell(a),a+7d), 0<=a,d<5,
+    ell(0)=1, ell(1)=2, ell(2)=3, ell(3)=ell(4)=1.
+
+For `r<s`, the pair law `eta_rs` has mass `1/9` at each of
+
+    (ell_rs(a),a+7d), 0<=a,d<3,
+    ell_rs(a)=s  if s<=3 and a=s-1,
+              r  otherwise.                                (JC16)
+
+These are uniform laws on labelled complete five-ary and ternary
+trees, respectively. Every whole prefix, summed over its rows,
+satisfies the required cap. Each law belongs to its indicated row
+pair; a pair law need not give both rows positive mass.
+
+Let `theta` give weight `1/3` to each of the three complete layouts
+centred at `(row,y)=(1,0),(2,1),(3,2)`. In original-divisor order
+`1,5,7,35,49,245`, their literal phases are
+
+    (0,1,0,21,0,196),
+    (0,2,1,22,1,197),
+    (0,3,2,23,2,198).                                      (JC17)
+
+All these layouts are permitted by the independent-phase game.
+Their use as a dual witness imposes no alignment restriction on that
+game. Direct evaluation on the seven actual laws gives
+
+| Component | Its expectation of the whole-layout mixture |
+| --- | ---: |
+| Full law | `26/5` |
+| `eta_12, eta_13, eta_23` | `20/3` each |
+| `eta_14, eta_24, eta_34` | `46/9` each |
+
+For example, the full law's three layout prices are `6,24/5,24/5`.
+An active-row pair has prices `83/9,74/9,23/9`, in the order of its
+first row, second row, and remaining active row. A pair containing
+row four has prices `92/9,23/9,23/9`, with the first price at its
+active row. These give the displayed averages.
+
+For every convex choice of weights on these seven fixed laws, its
+average price under the same `theta` is therefore at least `46/9`.
+Its maximum over all original layouts is at least this average.
+This proves the game lower bound without a relaxation or a claim
+about unattained component prices.
+
+For the matching upper bound, take
+
+    nu=(eta_14+eta_24+eta_34)/3
+      =Unif({1,2,3}) times Unif(T_3).                        (JC18)
+
+Every depth-`j` pure prefix has `nu`-mass at most `3^-j`; every
+specified row-prefix has mass at most `3^-j/3`. For arbitrary
+independent original phases, the ordered-label expansion JC4--JC5
+therefore gives
+
+    E_nu f_L
+      <= sum_(j=0)^2 [(2j+1)+(6j+3)/3]3^-j
+       = 2 sum_(j=0)^2 (2j+1)3^-j
+       = 46/9.                                             (JC19)
+
+Incompatible phases only remove intersection terms. Combining the
+lower bound with JC18--JC19 proves that the specified seven-component
+game has exact value `46/9`. It does not refute the non-strict target,
+the architecture with component choices free, or the source problem.
+
+The standard-library checker
+[`fixed_cap_mixture_boundary.py`](../../frontier/cover-geometry/fixed_cap_mixture_boundary.py)
+constructs these seven small laws directly. Its reusable input path
+accepts seven actual rational laws and a whole-layout distribution,
+checks support, normalization, all whole-prefix caps, every original
+phase, and every component expectation, and returns their common
+game lower bound. An optional explicit component mixture certifies
+the analytic upper bound when its actual probability has the
+three-row product form used in JC19. The built-in instance verifies
+the matching lower and upper values above; no optimizer or phase
+enumeration is used.
+
+```sh
+python3 docs/reports/erdos7-odd-covering/frontier/cover-geometry/fixed_cap_mixture_boundary.py --compact
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fixed_cap_mixture_boundary.py --compact
+```
 
 The source comparison retains five-height one and arbitrary seven-height.
 It does not bound the additional load and cross terms from deeper powers

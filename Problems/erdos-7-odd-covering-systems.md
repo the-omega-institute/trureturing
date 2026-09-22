@@ -28,13 +28,15 @@ Divisibility is in the integers. Set membership enforces distinct moduli;
 there is no bound on their sizes, exponents, number, or total prime support.
 A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
-22 September 2026. The results below do not settle this unrestricted assertion.
+23 September 2026. The results below do not settle this unrestricted assertion.
 
 The complete results and proofs are organized below. Each link opens the corresponding mathematical section; all original assumptions, bounds and open obligations are retained.
 
 ### Results and proofs
 
-- [At five-height one, every source with the full five-ary projection tree and all six pairwise ternary trees admits one probability satisfying the complete independent-layout second-moment target at every seven-height K at least three; freely weighting any seven fixed cap components gives a universal bound 407237/70076 below six, while K=2 and the higher-five-height transport remain open](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/427-shared-row-cap-mixtures-break-the-six-barrier.md)
+- [A sharp height-two cap-flow bound of 46/9 closes the remaining finite-height case: at five-height one, every source on four allowed rows with the full five-ary projection tree and all six pairwise ternary trees admits one probability meeting the complete independent-layout target at every seven-height](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/429-phase-conflict-cap-flow-closes-the-height-two-bound.md)
+- [At five-height one, freely weighting any seven fixed full-five and pair-ternary cap laws gives a universal bound 407237/70076 below six and the finite target at every seven-height K at least three; a literal height-two fixed-component game has exact value 46/9](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/427-shared-row-cap-mixtures-break-the-six-barrier.md)
+- [At five- and seven-heights three, legal fixed cap components can defeat every mixture of their weights even though the source has a good law; two actual laws with identical complete coordinate marginals have exact joint moments 328/27 and 5776/729](../docs/reports/erdos7-odd-covering/profile-notes/arithmetic/428-fixed-cap-components-do-not-transport-across-five-adic-depth.md)
 - [Two exact eight-prime cores omitting 7 admit arbitrary seven-vertex attachments under the inherited Chapter 31 and ordinary-source premises; extendible core Haar density exceeds 1/2200000](../docs/reports/erdos7-odd-covering/problem-details/69-eight-prime-cores-omitting-seven.md)
 - [An eight-prime core {3,5,7,13,17,19,23,29} omitting 11 admits arbitrary seven-vertex attachments under the inherited Chapter 31 and ordinary-source premises; extendible core Haar density exceeds 1/2200000](../docs/reports/erdos7-odd-covering/problem-details/68-eight-prime-core-omitting-eleven.md)
 - [Complete shared-root query tables, an exact binary flow/cut certificate and rational first9-prefix charges strengthen the unchanged actual-law credit to16.8681002893431; a feasible relaxed assignment bounds the remaining room in this refinement.](../docs/reports/erdos7-odd-covering/problem-details/67-shared-root-prefix-bounds-for-the-actual-survivor-law.md)

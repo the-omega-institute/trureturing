@@ -12,8 +12,11 @@ constructive source certificate whenever the proposed bound is exceeded.
 The same source class has sharp minimum cardinality `5^K+2` at every
 7-height `K`, proved by a complementary-pair induction and attained by
 a type-C construction. This determines the exact tree-rank maximum in
-the affine simplex of layout mixtures constructed in section 8, while
-the full layout-mixture bound remains unresolved.
+the affine simplex of layout mixtures constructed in section 8. The
+general finite-height comparison for this four-row source class is
+established by [report 427](427-shared-row-cap-mixtures-break-the-six-barrier.md)
+and [report 429](429-phase-conflict-cap-flow-closes-the-height-two-bound.md),
+together with the separate root comparison.
 
 The order statistic cannot be averaged over layouts. Already at height
 one, 28 actual layouts each have tree rank one, while their uniform
@@ -23,9 +26,10 @@ coincidences, arise from one layout mixture. Local overlap bounds alone
 are insufficient.
 
 These are finite minimax and transport deductions and exact research
-programs, not Lean-certified theorems. They neither establish the general
-comparison `Gamma_(1,K)<=2t_K` nor produce an odd covering. Unrestricted
-Erdős #7 remains open.
+programs, not Lean-certified theorems. The later common-law bounds settle
+`Gamma_(1,K)<=2t_K` on this source class; they do not supply the joint
+transport through arbitrary five-adic heights and prime supports.
+Unrestricted Erdős #7 remains open.
 
 ## 1. Source class and the original finite game
 
