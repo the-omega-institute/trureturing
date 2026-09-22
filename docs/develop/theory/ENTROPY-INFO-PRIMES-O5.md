@@ -32,7 +32,7 @@
 | 短区间 Poisson | Gallagher 1976,依 Hardy–Littlewood | 条件级【训】 |
 | 独立性汇率 | Mertens e^{−γ};Maier 1985 短区间失效;Granville 修正 | 定理级【训】 |
 | RH ⟺ 硬币 | Littlewood 1912:RH ⟺ M(x)=O(x^{1/2+ε});Denjoy 1931 读法;Littlewood 1914 Ω 兜底 | 定理级+读法级【训】 |
-| 零点对数气体 | Montgomery 1973 对关联;GUE = Coulomb 对数气体 β=2 Gibbs 測度(Dyson);素数近最大熵 vs 零点亚泊松刚性,显式公式为 Fourier 桥 | 定理/数值级;并置为读法【训】 |
+| 零点对数气体 | Montgomery 1973 对关联;GUE = Coulomb 对数气体 β=2 Gibbs 测度(Dyson);素数近最大熵 vs 零点亚泊松刚性,显式公式为 Fourier 桥 | 定理/数值级;并置为读法【训】 |
 | 热流形变 | de Bruijn 1950–Newman 1976 常数 Λ;RH ⟺ Λ≤0;Rodgers–Tao 2018/2020:Λ≥0;Polymath15:Λ≤0.22 | 定理级【训】 |
 | Sarnak 熵分界 | μ ⟂ 一切零拓扑熵系统(猜想);Matomäki–Radziwiłł、Tao 对数二点等进展 | open【训】 |
 
@@ -85,7 +85,7 @@
 
 ### 定义 10.1：显式可恢复量子记录
 
-取有限非零逻辑空间$L=\mathbb C^d$和物理空间$H=\mathbb C^n$。给定有限非空指标集上的矩阵$S_j:L\to H$，满足
+取有限非零逻辑空间$L=\mathbb C^d$和物理空间$H=\mathbb C^n$。给定有限非空指标集$I_{\mathrm{syn}}$上的矩阵$S_j:L\to H$，满足
 
 $$
 S_j^\dagger S_k=\delta_{jk}I_d.
@@ -121,7 +121,7 @@ $$
 
 因此完整输出熵的严格增加，不能单独证明逻辑信息已不可恢复。本定理给本卷§4的信息搬移叙述一个有限、带明确访问权限的实现；它不把任意环境耦合都判成可恢复。
 
-**证明。** 定义$J:L\otimes\mathbb C^{|J|}\to H$为$J(v\otimes|j\rangle)=S_jv$。正交关系给出$J^\dagger J=I$和$JJ^\dagger=P$，故$\mathcal E_\sigma(\rho)=J(\rho\otimes\sigma)J^\dagger$为CPTP。$\mathcal D$第一项的Kraus为$S_j^\dagger$，其Kraus平方和为$P$；第二项是正效果$I-P$后制备$\tau_0$，补足保迹条件。矩阵乘法给出
+**证明。** 定义$J:L\otimes\mathbb C^{|I_{\mathrm{syn}}|}\to H$为$J(v\otimes|j\rangle)=S_jv$。正交关系给出$J^\dagger J=I$和$JJ^\dagger=P$，故$\mathcal E_\sigma(\rho)=J(\rho\otimes\sigma)J^\dagger$为CPTP。$\mathcal D$第一项的Kraus为$S_j^\dagger$，其Kraus平方和为$P$；第二项是正效果$I-P$后制备$\tau_0$，补足保迹条件。矩阵乘法给出
 
 $$
 \sum_iS_i^\dagger\mathcal E_\sigma(\rho)S_i
