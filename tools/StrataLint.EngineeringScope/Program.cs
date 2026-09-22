@@ -177,7 +177,7 @@ internal static class Program
 
     internal static IReadOnlyList<string> BuildTestArguments(string projectPath, string resultsDirectory) =>
         new[] { "test", projectPath, "--configuration", "Release", "--verbosity", "minimal", "--no-restore", "--no-build" }
-            .Concat(["--logger", "trx;LogFilePrefix=engineering", "--results-directory", resultsDirectory]).ToArray();
+            .Concat(["--logger", "console;verbosity=normal", "--logger", "trx;LogFilePrefix=engineering", "--results-directory", resultsDirectory]).ToArray();
 
     private static int VerifyTrx(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> load, TextWriter output)
     {
