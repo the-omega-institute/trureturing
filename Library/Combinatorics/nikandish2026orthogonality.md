@@ -14,12 +14,18 @@ triage: anchor
 
 # Nikandish's subspace orthogonality graph
 
-## Source and exact problem
+## Verified locator
+
+DOI: 10.48550/arXiv.2609.22769
+
+URL: https://arxiv.org/abs/2609.22769v1
 
 The primary source is arXiv:2609.22769v1, submitted 19 September 2026.
 Its abstract and HTML were retrieved on 22 September 2026. The abstract
 exposes v1 and a CC BY 4.0 license. This note contains citation, a short
 quotation, and a mathematical mapping, rather than a reproduction of the paper.
+
+## Exact problem
 
 Definition 2.3 uses every subspace of `V_n = F_2^n` as a vertex, with
 orthogonality for the standard dot form `B_n(u,w) = sum_i u_i w_i`.
