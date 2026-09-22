@@ -232,7 +232,7 @@ theorem two_moment_support_hole_sharp
     have hcoef : 0 < 1 - 2 * t + t ^ 2 := by
       rw [show 1 - 2 * t + t ^ 2 = (1 - t) ^ 2 by ring]
       positivity
-    apply (mul_le_mul_right hcoef).mp
+    apply (mul_le_mul_iff_of_pos_right hcoef).mp
     linarith [hc_contact]
   have hh_upper (w : ℝ) (hw : w ∈ twoMomentMassSet a b ε (Ioo l r)) : w ≤ wh := by
     have h := budget (Ioo l r) w hw (l + r) (l * r) ((b - l) * (b - r)) (by linarith)
@@ -260,7 +260,7 @@ theorem two_moment_support_hole_sharp
     have hcoef : 0 < 1 - (l + r) + l * r := by
       rw [show 1 - (l + r) + l * r = (1 - l) * (1 - r) by ring]
       exact mul_pos hl1 hr1
-    apply (mul_le_mul_right hcoef).mp
+    apply (mul_le_mul_iff_of_pos_right hcoef).mp
     linarith [hh_contact]
   refine ⟨⟨hc_mass, hc_upper⟩, ⟨hh_mass, hh_upper⟩, ?_⟩
   dsimp [wc, wh, c, ε]
