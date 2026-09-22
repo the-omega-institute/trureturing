@@ -252,3 +252,141 @@ theorems concern acyclic event-interaction graphs, not this union of
 prime-prefix trees. Finite LP duality and averaging are standard tools;
 no literature-priority claim is made. The general construction and
 source integration were independently reviewed before these controls.
+
+## 7. Complete-layout second-moment corollaries
+
+The same-law caps also give uniform second-moment bounds. Fix literal
+heights `H,K>=1` and a source `R` in `Z/5^H x Z/7^K` meeting every
+product of a complete ternary 5-tree and a complete five-ary 7-tree.
+Assume at least one first-5 root is absent. No missing first-7 root
+or standalone 7-projection condition is needed in this section.
+
+For a supported probability `nu`, let `Gamma_{H,K}(nu)` be the maximum
+of `E_nu[(sum_(d|5^H7^K) 1_(x=a_d mod d))^2]` over independently chosen
+residues at every divisor, including the constant divisor-one term.
+The tree arguments of sections 1--3 use only the stated product-tree
+property, so they apply to this abstract source without an assertion
+that it is realized by an actual cover.
+
+Put `u_a=2a+1`. If one law bounds every cylinder at depths `(A,B)` by
+`M(A,B)`, then its complete-layout moment satisfies
+
+\[
+ \Gamma_{H,K}(\nu)\le
+ \sum_{A=0}^H\sum_{B=0}^K u_Au_B M(A,B).
+ \tag{RF12}
+\]
+
+Indeed, two chosen divisor classes intersect either trivially or in
+one class at their LCM. There are `u_A` ordered pairs of 5-exponents
+with maximum `A`, and `u_B` corresponding pairs of 7-exponents. The
+same fixed law bounds all these intersections, including incompatible
+layout choices; no product of unconditional marginal probabilities is
+used.
+
+The first-5 projection has either three or four roots. RF6, including
+its saturated case, supplies one law with
+
+\[
+ M_\theta(A,B)=
+ \begin{cases}
+ 3^{-B},&A=0,\\
+ \theta\,3^{-\max(A-1,B)},&A\ge1,
+ \end{cases}
+ \qquad
+ \theta=\begin{cases}1/3,&\text{three first-5 roots},\\
+                     1/2,&\text{four first-5 roots}.
+       \end{cases}
+ \tag{RF13}
+\]
+
+In particular the exact finite upper expression is
+
+\[
+ B_{H,K}(\theta)=\sum_{B=0}^K u_B3^{-B}
+ +\theta\sum_{A=1}^H\sum_{B=0}^K u_Au_B3^{-\max(A-1,B)}.
+ \tag{RF14}
+\]
+
+The infinite sums evaluate to
+
+\[
+ \sum_{B\ge0}u_B3^{-B}=3,\qquad
+ \sum_{C,B\ge0}(2C+3)(2B+1)3^{-\max(C,B)}=\frac{93}{2}.
+ \tag{RF15}
+\]
+
+For example, grouping by `m=max(C,B)` gives
+`sum_(C,B>=0) u_Cu_B 3^(-max(C,B))=30` and
+`sum_(C,B>=0) u_B 3^(-max(C,B))=33/4`; their combination is the
+second sum in RF15. Thus, with a single law for all layout phases,
+
+\[
+ \Gamma_{H,K}(\nu)\le B_{H,K}(\theta)
+ \le3+\frac{93}{2}\theta
+ =\begin{cases}37/2,&\theta=1/3,\\105/4,&\theta=1/2.
+   \end{cases}
+ \tag{RF16}
+\]
+
+Consequently every source under this section's hypotheses admits
+`Gamma<=105/4`, uniformly in both heights. The law is chosen for the
+fixed source; this does not assert one probability realizing unrelated
+sources at all heights. The separate law of report 376 gives the
+weaker ceiling 30 from `M(A,B)=3^(-max(A,B))`. Its caps must not be
+combined pointwise with RF13 as if they belonged to the forest law.
+
+There is also a precise saturation interpolation. If, for some
+`1<=k<=H`, the first-5 projection modulo `5^k` has exactly `3^k`
+points, report 378's SF6 constructs one law with
+
+\[
+ M_k(A,B)=3^{-\min(A,k)-\max((A-k)_+,B)},\qquad
+ C_{H,K}(k)=\sum_{A=0}^H\sum_{B=0}^K u_Au_B M_k(A,B),
+ \qquad \Gamma_{H,K}(\nu)\le C_{H,K}(k).
+ \tag{RF17}
+\]
+
+The product factor comes from isolating actual saturated prefixes and
+mixing the supported fibre laws. Extending the nonnegative sums to
+infinity gives
+
+\[
+ \sup_{H\ge k,\ K\ge1} C_{H,K}(k)
+ =9+\frac{15k/2+21}{3^k}.
+ \tag{RF18}
+\]
+
+To verify the expression, the part `A<=k` is
+`3(3-(k+2)/3^k)`. After writing `A=k+C`, the remaining double sum,
+before multiplication by `3^(-k)`, is
+`sum_(C>=1,B>=0)(2C+2k+1)(2B+1)3^(-max(C,B))=27+21k/2`.
+Adding the two terms proves RF18. At `k=0`, the same formula denotes
+the unsaturated report-376 bound rather than an extra hypothesis.
+
+| Saturated depth `k` | Infinite upper expression |
+| --- | ---: |
+| 0 | `30` |
+| 1 | `37/2` |
+| 2 | `13` |
+| 3 | `191/18` |
+| 4 | `260/27` |
+
+When `k=H`, no first-coordinate tail remains unsaturated. RF17 becomes
+`M_H(A,B)=3^(-A-B)` throughout the finite exponent rectangle, and hence
+
+\[
+ \Gamma_{H,K}(\nu)\le
+ \left(1+\sum_{A=1}^H(2A+1)3^{-A}\right)
+ \left(1+\sum_{B=1}^K(2B+1)3^{-B}\right).
+ \tag{RF19}
+\]
+
+This is a direct corollary of the existing cylinder caps and the LCM
+expansion, not a new conditional-law theorem. Full-depth saturation is
+an additional sufficient condition, not a consequence asserted for all
+product-tree blockers or minimum odd covers. Three roots at depth one
+only give `k=1`; their deeper fibres may remain unsaturated. The
+unresolved finite comparison therefore includes such three-root sources
+as well as four-root sources. No bound with limiting constant 9 for
+arbitrary unsaturated sources follows from RF16 or RF18.
