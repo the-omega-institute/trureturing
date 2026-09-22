@@ -86,8 +86,10 @@ public sealed class LeanReportSelectionTests
         Assert.Contains("lean-report-inputs.json", Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void ReportEntryReusesValidatedReportWithoutInstalledToolchain()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ReportEntryReusesValidatedReportWithoutInstalledToolchain(bool existingOutput)
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
@@ -105,14 +107,15 @@ public sealed class LeanReportSelectionTests
                 return api
             fixture.receipt = prepare
             try:
-                result, calls = fixture.entry_with_program_build([])
+                result, calls = fixture.entry_with_program_build([], seed='valid',
+                    existing_output=sys.argv[2] == 'True')
                 print(result.stdout, end='')
                 print(result.stderr, end='', file=sys.stderr)
                 if calls: print('UNEXPECTED_BUILD ' + repr(calls))
                 raise SystemExit(result.returncode)
             finally:
                 fixture.doCleanups()
-            """, root], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+            """, root, existingOutput.ToString()], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         var text = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.True(result.ExitCode == 0, text + Encoding.UTF8.GetString(result.StandardError));
         Assert.Contains("LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0", text, StringComparison.Ordinal);
