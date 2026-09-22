@@ -1,0 +1,18 @@
+### GP3.3 实际 WSS 深度等于该层中的素因子重数
+
+记
+
+$$
+\epsilon_p=\left(\frac5p\right),\qquad
+N_p=p-\epsilon_p,\qquad
+s_p=v_p(F_{N_p}).
+$$
+
+使用标准 Fibonacci 出现秩定理和估值定理：$\alpha(p)\mid N_p$，且对 $p\ne2,5$，在 $p\mid F_d$ 时
+
+$$
+v_p(F_{dk})=v_p(F_d)+v_p(k).
+$$
+
+这里的初始估值不预设为一。
+

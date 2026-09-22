@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:68947de2e39df88db7cebc4bda526ed44ace6597e8bc5e3f956a188d5387e706
+  normalized_sha256: sha256:68947de2e39df88db7cebc4bda526ed44ace6597e8bc5e3f956a188d5387e706
+cas_ref: sha256:68947de2e39df88db7cebc4bda526ed44ace6597e8bc5e3f956a188d5387e706
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 钉版字符模分离定理对任意非零群元素给出到有理模整数群的非零字符，覆盖源句的全部群与元素量词。仓内无冻结 GID。
+    previous_atom_id: d9b413e4bc9ce65666a0fcd647e2302ed3d15b74abcdeafd7bec15350c93b5be
+    next_atom_id: 0d1bd6cc3b664ec37532380584f315b6226c09218f625473c7a49d4d21c1a8cc

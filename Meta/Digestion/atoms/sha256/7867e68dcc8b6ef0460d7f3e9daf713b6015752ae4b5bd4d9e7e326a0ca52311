@@ -1,0 +1,17 @@
+**Proof for odd n.** The case n=1 gives a(1)=1. For n>1, if a(n) is prime, U.7 gives
+
+\[
+1\ge 2\Omega(n)-v_5(n)
+=v_5(n)+2\sum_{q\ne5}v_q(n).
+\]
+
+Every term on the right is nonnegative. Therefore no prime other than five divides n, and `v_5(n)<=1`. As n>1, necessarily n=5.
+
+Conversely,
+
+\[
+F_4=3,\qquad F_{25}=75025=5^2\cdot3001.
+\]
+
+The number 3001 is prime: trial division by the primes through sqrt(3001)<55, namely 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53, gives no divisor. Hence a(2)=3 and a(5)=3001 are prime. This completes both directions of U.8.
+

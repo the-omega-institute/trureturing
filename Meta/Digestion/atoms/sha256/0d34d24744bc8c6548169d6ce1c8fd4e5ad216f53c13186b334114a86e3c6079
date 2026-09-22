@@ -1,0 +1,22 @@
+**The previously blind coefficient.** At n=91, the earlier exact block is
+R_91=741469*159607993 and E_91=13. Here H(91)=0 and
+
+$$
+\lambda_3(13)=\lambda_3(741469)=\lambda_3(159607993)=2.
+$$
+
+Consequently its actual depths obey
+
+$$
+2h_{741469}+2h_{159607993}\equiv1\pmod3.
+\tag{S5}
+$$
+
+Equation RP3 gives
+4h_(741469)=4 modulo five, because lambda_5(159607993)=0.
+Thus the additional modulo-nine coordinate detects a change of the latter
+exponent from one to three. It does not eliminate coordinated changes of
+several exponents. The full modulo-five residue, which is more informative
+than its quadratic character, can also distinguish some such changes;
+These facts do not imply that 5040 is a minimal necessary modulus.
+

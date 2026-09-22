@@ -1,0 +1,46 @@
+**Proof.** The finite value map $p\mapsto\sum_{j<L}G_jp_j$ is a bijection onto the integers from zero to $G_L-1$. At lengths zero and one this is immediate. For $L\ge2$, splitting according to the highest digit gives the disjoint value ranges
+$$
+[0,G_{L-1}-1]\cap\mathbb Z,\qquad
+[G_{L-1},G_{L-1}+G_{L-2}-1]\cap\mathbb Z.
+$$
+In the second range the preceding digit is forced to zero. Induction proves both exhaustiveness and uniqueness, hence the count.
+
+The interval formula is the exact cylinder formula of §372.3. Every positive-depth interval has positive length less than one. Distinct length-$L$ prefixes, completed by a forced zero when necessary, give incomparable block prefixes. The intersection classification of §372.3 therefore makes their interval interiors disjoint. They cover $I$, so they form consecutive intervals without gaps.
+
+For completeness, enumerate their endpoints using the full fibers of §372.2 rather than merely counting intervals. A finite block word $w$ acts on real phases by
+$$
+A_w(s)=S_w+r^d s.
+$$
+The internal double fiber at $A_w(c)$ consists of $w0v$ and $w10v$. The recurrence and its initial values give
+$$
+\eta_j=\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2},
+\qquad r^d c=-\eta_{d+1}.
+$$
+Consequently,
+$$
+[A_w(c)]=[\phi(N_w-G_{d+1})]=e_{G_{d+1}-N_w}.
+$$
+The empty block word gives $d=0$ and $m=2$. For $d\ge1$, block words of digit length $d$ are exactly admissible words ending in zero. Removing this final zero and applying the finite value bijection shows that their values run once through
+$$
+0,\ldots,G_{d-1}-1.
+$$
+Their indices $m$ thus run once through
+$$
+G_d+1,\ldots,G_{d+1}.
+$$
+These disjoint successive ranges exhaust the integers at least three. The cited full-fiber classification has no other nonsingleton fibers beyond these internal pairs and the seam.
+
+An internal endpoint is precisely a phase whose two lifts belong to different cylinders: adjacent positive intervals meet there, whereas their interiors do not overlap. The two sequences $w0v,w10v$ first differ at digit $d$. Thus their prefixes of length $L$ differ exactly when $d<L$. The displayed index ranges show that the internal fibers separated at depth $L\ge1$ have exactly the indices $2,\ldots,G_L$. The remaining circle identification joins $a$ and $b$, whose unique real preimages are $u$ and $v$; they differ already at digit zero. Its index is $m=1$. Irrationality of $\phi$ makes all the $e_m$ distinct. This proves the stated cut set. At depth zero the image is the whole circle, which has empty boundary.
+
+Before application of $A_w$, the $10$ branch has real image $[a,c]$, while the $0$ branch has image $[c,b]$. The affine map $A_w$ preserves orientation for even $d$ and reverses it for odd $d$, giving the two oriented formulas. At the seam, approaching through $b$ gives $v$, and leaving through $a$ gives $u$.
+
+No other cylinder image can contain an interior point of $I_p$: its positive length would force an overlap of interval interiors. Hence the entire fiber above every point of $J_p$ belongs to $C_p$. Natural phases avoid $E$, since $[n\phi]=[-m\phi]$ would make $(n+m)\phi$ an integer. Therefore
+$$
+C_p\cap Z(\mathbb N)=\{Z(n):H(Z(n))\in J_p\}.
+$$
+The left-hand side is dense in $C_p$, because $C_p$ is open and closed and $Z(\mathbb N)$ is dense. This proves the closure formula.
+
+It also proves the asserted side interpretation. Choose a depth that separates the two points above $e_m$. Sufficiently close phases on either side belong to the corresponding adjacent cylinder. A convergent subsequence of their natural lifts has phase $e_m$ and lies in that cylinder, so it can have only the indicated one of the two limits. Compactness then gives convergence of the whole sequence. Such approaching natural phases exist because the continuous surjection $H$ takes the dense core to a dense subset of the circle. The same argument at the seam uses its two adjacent cylinders. This establishes the endpoint conventions on all of $K$. $\square$
+
+Attached reference: the cylinder and double-fiber inputs are precisely §§372.2–372.4 of the Zeckendorf volume. ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+

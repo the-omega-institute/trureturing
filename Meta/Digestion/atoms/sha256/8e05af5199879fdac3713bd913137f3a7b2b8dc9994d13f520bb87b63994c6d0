@@ -1,0 +1,13 @@
+同一个子族的原始概率读出仍然单射：
+
+$$
+\Bigl[
+\forall i\in S,
+\quad
+\operatorname{Tr}(\rho F_i)
+=\operatorname{Tr}(\sigma F_i)
+\Bigr]
+\Longrightarrow
+\rho=\sigma.
+$$
+

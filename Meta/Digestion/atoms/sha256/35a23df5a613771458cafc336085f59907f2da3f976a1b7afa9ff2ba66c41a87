@@ -1,0 +1,3 @@
+
+
+证明。两个系统均只有一个状态、一个动作及相同确定当前输出。精确系统每步独立输出 $\operatorname{Bernoulli}(\varepsilon)$，摘要系统始终输出零，二者状态永不改变，$q$ 是单点之间的映射。联合核 TV 恰为 $\varepsilon$，两个系统的状态边缘核的 Dobrushin 收缩系数 $\sup_{z,z'}\operatorname{TV}(K(z,\cdot),K(z',\cdot))$ 均为零，终端状态误差也始终为零。

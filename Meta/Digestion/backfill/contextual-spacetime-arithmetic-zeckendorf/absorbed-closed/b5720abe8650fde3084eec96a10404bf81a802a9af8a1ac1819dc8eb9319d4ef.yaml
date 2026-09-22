@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b5720abe8650fde3084eec96a10404bf81a802a9af8a1ac1819dc8eb9319d4ef
+  normalized_sha256: sha256:b5720abe8650fde3084eec96a10404bf81a802a9af8a1ac1819dc8eb9319d4ef
+cas_ref: sha256:b5720abe8650fde3084eec96a10404bf81a802a9af8a1ac1819dc8eb9319d4ef
+coverage_gids:
+  - gid: D5/S3/Estimation/ErrorExponents/FiniteSuiteOptimalErrorIdentity.empty_outcome_normalization_is_impossible
+    target_statement_id: sha256:afbf1da6c819e828f1664828231ff5e340e8e8c7986fc039532bafa626d5745b
+receipts:
+  unresolved_subitems: []

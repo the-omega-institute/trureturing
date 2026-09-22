@@ -1,0 +1,30 @@
+**Proof.** If such a nonzero combination existed, a strict solution for its finite support would give
+$$
+0=\left\langle\sum_i\lambda_i a_i,v\right\rangle
+=\sum_i\lambda_i\ell_i(v)>0,
+$$
+a contradiction. Normalization by $\sum_i\lambda_i$ identifies these forbidden combinations with membership of zero in the convex hull.
+
+Conversely, suppose $0\notin\operatorname{conv}A$, and let $F$ be nonempty and finite. The compact convex set
+$$
+K_F=\operatorname{conv}\{a_i:i\in F\}
+$$
+has a point $b$ of minimum norm, with $\|b\|>0$. For $a\in K_F$ and $0\le s\le1$, minimality gives
+$$
+0\le\|b+s(a-b)\|^2-\|b\|^2
+=2s\langle b,a-b\rangle+s^2\|a-b\|^2.
+$$
+Divide by $s>0$ and let $s\downarrow0$. Then
+$$
+\langle b,a\rangle\ge\|b\|^2>0.
+$$
+In particular, $\ell_i(b)>0$ for all $i\in F$. The empty subsystem needs no argument.
+
+The core existence theorem is already contained in classical lexicographic separation. Martínez-Legaz's 1983 separation theorem, reproduced in [MLVP12, Theorem 2.7, p. 488], separates a convex set $C\subseteq\mathbb R^m$ from an exterior point $b$ by an orthogonal matrix $Q$ satisfying $Qx<_{\mathrm{lex}}Qb$ for every $x\in C$. For $m>0$, apply it under an orthonormal identification $W\cong\mathbb R^m$ to $C=\operatorname{conv}A$ and $b=0$. The negatives of the rows of $Q$ give an orthonormal witness of length $m$. Thus both the finite rank bound and orthonormality are consequences of that published theorem; Theorem 41.2 supplies a direct specialized proof.
+
+The semispace formulation is older: Moore [M73, Theorems 2.1 and 2.3, pp. 660–661; §3, p. 663] records Klee's structural results and finite-dimensional lexicographic separation of disjoint convex sets. A directly related matrix-consistency formulation appears in Vicente-Pérez and Rodríguez [VR26, §4.1, equation (5)]: at lexicographic length equal to the ambient dimension, their convex-hull criterion reduces to exclusion of zero from the ordinary convex hull, using the hull identity in their §3.1.
+
+Mathematical citations for the separation statements in this proof: ([M73](https://msp.org/pjm/1973/44-2/pjm-v44-n2-p24-s.pdf) C. Edward Moore, “Concrete semispaces and lexicographic separation of convex sets,” *Pacific Journal of Mathematics* 44(2) (1973), 659–670.) ([MLVP12](https://journalofconvexanalysis.com/articles/jca19026/jca19026.pdf) Juan Enrique Martínez-Legaz and José Vicente-Pérez, “Lexicographical Representation of Convex Sets,” *Journal of Convex Analysis* 19(2) (2012), 485–496. Theorem 2.7 reproduces the separation theorem from Martínez-Legaz, “Exact quasiconvex conjugation,” *Z. Oper. Res., Ser. A* 27 (1983), 257–266.) ([VR26](https://link.springer.com/article/10.1007/s11750-026-00719-4) José Vicente-Pérez and Margarita M. L. Rodríguez, “Analyzing lexicographical linear inequality systems via convex hulls,” *TOP* (2026), DOI: 10.1007/s11750-026-00719-4.)
+
+The convex hull here consists of finite combinations. Replacing it by its closure would impose a stronger condition, not an equivalent formulation. $\square$
+

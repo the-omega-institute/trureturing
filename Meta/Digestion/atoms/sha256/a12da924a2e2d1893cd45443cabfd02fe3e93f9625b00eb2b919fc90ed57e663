@@ -1,0 +1,20 @@
+**Definition 20.3 (Mechanical words and future coding).** For a real intercept $\rho$, define the lower and upper mechanical words of slope $\beta$ by
+$$
+M^{\mathrm{lo}}_\rho(n)
+=\lfloor\rho+(n+1)\beta\rfloor-\lfloor\rho+n\beta\rfloor,
+$$
+$$
+M^{\mathrm{up}}_\rho(n)
+=\lceil\rho+(n+1)\beta\rceil-\lceil\rho+n\beta\rceil
+\qquad(n\ge0).
+$$
+An integer change in $\rho$ changes neither word. The lower convention assigns digit one to $[1-\beta,1)$; the upper convention assigns it to $(1-\beta,1]$, with the circle point zero represented by one in the latter interval. Define
+$$
+\Phi(x)=(f(T^n x))_{n\ge0},
+\qquad
+S((y_n)_{n\ge0})=(y_{n+1})_{n\ge0}.
+$$
+Here $S$ is the ordinary one-sided shift on binary itineraries.
+
+Attached reference: Berstel, *Sturmian and Episturmian Words* (2007), §3.1, pp. 30–31, gives these lower/upper conventions and their rotation interpretation. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+

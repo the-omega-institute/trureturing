@@ -1,0 +1,25 @@
+**定理 23.7（所有分裂相位共享一个符号）。** 对任意可容许结合核，存在唯一 $s\in\{-1,+1\}$，使
+$$
+\pi_{E_m}=\delta_{z_{E_m}^{s}}\qquad(m\ge1).
+$$
+
+**证明。** 定理23.6允许唯一写作 $\pi_{E_m}=\delta_{z_{E_m}^{\sigma_m}}$，其中 $\sigma_m\in\{-1,+1\}$。固定任意 $m,n\ge1$，取 $v_n=z_{E_n}^{\sigma_m}$。定理23.5和同号强制支撑共同给出
+$$
+\pi_{E_{m+n}}
+=\pi_{E_m}*\delta_{v_n}
+=P_{z_{E_m}^{\sigma_m},z_{E_n}^{\sigma_m}}
+=\delta_{z_{E_{m+n}}^{\sigma_m}}.
+$$
+再取 $v_m=z_{E_m}^{\sigma_n}$，在另一个有序位置使用平均恒等式：
+$$
+\pi_{E_{m+n}}
+=\delta_{v_m}*\pi_{E_n}
+=P_{z_{E_m}^{\sigma_n},z_{E_n}^{\sigma_n}}
+=\delta_{z_{E_{m+n}}^{\sigma_n}}.
+$$
+输出纤维的两个标记互异，故
+$$
+\sigma_m=\sigma_{m+n}=\sigma_n.
+$$
+由于 $m,n$ 任意，所有符号相同。以 $\pi_{E_1}$ 确定的符号为 $s$，同时得到存在性和唯一性。证毕。
+

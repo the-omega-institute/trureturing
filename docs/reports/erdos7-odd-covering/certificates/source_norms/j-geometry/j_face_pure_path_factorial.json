@@ -1,0 +1,521 @@
+{
+  "schema": "erdos7-j-face-pure-path-factorial-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/j-geometry/j_face_shared_square_factorial.py": "19f35e9bcac13999e3912fd5d5a2d43ddcef667e5913d4b6d8ec4c171c911e44",
+    "certificates/source_norms/j-geometry/j_face_shared_square_factorial.json": "1db541160baeed8896d715a0250856ef98cfc7c0968d3ec2d18ea0efeb3dc2ce",
+    "profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md": "c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8",
+    "profile-notes/129-192/168-the-first-five-support-lowers-the-complete-factorial-bound.md": "0c7e79652183732b5eab5e298cd160b39fdcc46c6d963147aa735ce31eb24018",
+    "profile-notes/129-192/174-the-pure-three-factorial-tail-retains-its-original-head.md": "fff6c7ba85a3edd9c1cfd0419daef23bc006820c5d8614fb5db147fc33676cc2",
+    "frontier/j-geometry/j_face_coupled_seven_heads.py": "78b6846a4eaa01ed568eb96e8c49dca67d0a19df094bc1e28ba5214100dc70a0",
+    "certificates/source_norms/j-geometry/j_face_coupled_seven_heads.json": "ecdd57e17e466435943a0fff4d63da9841e72ef2631651d5ecc451dcac586449",
+    "frontier/moments-survival/complete_off_face_factorial_tail.py": "6f09199dd8379336bbc84e4245c3ea95a0499939cf72a2c41b9ef7b658049498",
+    "profile-notes/065-128/128-the-complete-factorial-tail-retains-its-head-off-the-face.md": "79ae5ce60d7121afdc3fe0eaa3a87abecf21709d15e7627c2425dd7bdb4926cc",
+    "profile-notes/193-256/199-one-six-label-head-controls-the-square-and-both-complete-crosses.md": "8088d1d4709a746b9bdf6f558bdc4ef3bf54a816220556019b241447764ccccf",
+    "profile-notes/193-256/219-one-late-source-split-controls-complete-saturated-j-heads.md": "d0f78950c8ca3040b2a90c5b5d470655cd53e68f39b54d531f793915490ff73d",
+    "frontier/j-geometry/j_face_alignment.py": "05074f0937efcb2cccc1a172e0717b89656f976d3e50543d31a27e7591b927ab",
+    "certificates/source_norms/j-geometry/j_face_alignment.json": "75433cab317fb492b5e8a9b36bc9b8d8671f5bcfe450cc7a2e37efe5378108d5",
+    "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3",
+    "profile-notes/193-256/201-two-more-seven-labels-and-selected-intersections-control-both-heavy-costs.md": "bfe4561a41e7d35ce0a9e1410bcdd92e3f732b2cfb7c86bc798ab4cd7cc0ab10",
+    "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226",
+    "certificates/layout_gap_frontier_certificate.json": "bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02",
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05",
+    "frontier/cover-geometry/verify_ap_schedule.py": "70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655",
+    "frontier/retained-transport/verify_retained_five_tests.py": "80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "74d01a2b1db2d66d6d1ad0ca80a22c4ebfbc650c330138d9533d2d656223cb0a",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2"
+  },
+  "geometry": {
+    "source_mass": "1/4",
+    "survivor_mass": "3/20",
+    "root_group_budgets": [
+      "1/24",
+      "1/12",
+      "1/8"
+    ],
+    "late_split_interval": [
+      "1/135",
+      "1/90"
+    ],
+    "canonical_beta_late_cells": [
+      2,
+      3,
+      4
+    ],
+    "endpoint_source_tables": [
+      {
+        "theta": "1/135",
+        "absolute_caps": [
+          [
+            "0",
+            "1/90",
+            "1/90",
+            "1/120",
+            "1/90"
+          ],
+          [
+            "0",
+            "1/45",
+            "1/45",
+            "1/60",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "2/135",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/54",
+            "1/90",
+            "1/45"
+          ]
+        ]
+      },
+      {
+        "theta": "1/90",
+        "absolute_caps": [
+          [
+            "0",
+            "1/90",
+            "1/90",
+            "1/120",
+            "1/90"
+          ],
+          [
+            "0",
+            "1/45",
+            "1/45",
+            "1/60",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/90",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/45",
+            "1/90",
+            "1/45"
+          ]
+        ]
+      }
+    ],
+    "normalized_deep_ternary_coefficients": [
+      [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      [
+        "0",
+        "1/5",
+        "1/5",
+        "3/20",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "1/10",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "1/5",
+        "1/10",
+        "1/5"
+      ],
+      [
+        "0",
+        "0",
+        "1/5",
+        "1/10",
+        "1/5"
+      ]
+    ],
+    "absolute_descendant_five_coefficients": [
+      [
+        "0",
+        "1/18",
+        "1/18",
+        "1/18",
+        "1/18"
+      ],
+      [
+        "0",
+        "1/9",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "0",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "1/9",
+        "1/9",
+        "1/9"
+      ],
+      [
+        "0",
+        "0",
+        "1/9",
+        "1/9",
+        "1/9"
+      ]
+    ],
+    "retained_survivor_density": [
+      [
+        "4/5",
+        "4/5",
+        "4/5",
+        "4/5",
+        "3/5"
+      ],
+      [
+        "3/5",
+        "3/5",
+        "3/5",
+        "3/5",
+        "2/5"
+      ],
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "3/5"
+      ],
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "3/5"
+      ],
+      [
+        "1",
+        "1",
+        "1",
+        "1",
+        "3/5"
+      ]
+    ],
+    "root1_cap_surplus": "1/120",
+    "root1_positive_support": [
+      13,
+      14,
+      17,
+      18,
+      19,
+      22,
+      23,
+      24
+    ],
+    "complete_zero7_categories_after_head": [
+      "11/360",
+      "13/600",
+      "1/60",
+      "1/180",
+      "1/72"
+    ],
+    "selected_caps": [
+      "13/750",
+      "11/540",
+      "1/75",
+      "11/1620"
+    ],
+    "complete_zero7_remainders": [
+      "53/600",
+      "71/1000",
+      "1367/27000",
+      "1007/27000",
+      "2471/81000"
+    ],
+    "complete_raw_cofactor_caps": [
+      "1/8",
+      "1/12",
+      "1/24",
+      "1/10",
+      "1/40",
+      "1/15",
+      "1/60",
+      "1/45",
+      "1/180",
+      "1/72"
+    ],
+    "positive7_two_projection_remainder": "43/700",
+    "positive7_four_projection_remainder": "1/28",
+    "deep3_deletion_slot_marginal": [
+      "0",
+      "1/450",
+      "1/450",
+      "1/600",
+      "1/450"
+    ],
+    "deep5_deletion_cell_marginal": [
+      "1/1800",
+      "1/900",
+      "1/450",
+      "1/450",
+      "1/450"
+    ],
+    "mixed_intersection_caps": [
+      "1/675",
+      "1/2025"
+    ],
+    "transported_layout_permutations": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        0,
+        1,
+        2,
+        4,
+        3
+      ],
+      [
+        0,
+        1,
+        3,
+        2,
+        4
+      ],
+      [
+        0,
+        1,
+        3,
+        4,
+        2
+      ],
+      [
+        0,
+        1,
+        4,
+        2,
+        3
+      ],
+      [
+        0,
+        1,
+        4,
+        3,
+        2
+      ],
+      [
+        1,
+        0,
+        2,
+        3,
+        4
+      ]
+    ]
+  },
+  "survivor_mass": "3/20",
+  "complete_mean_upper": "16/25",
+  "pure3_cell_density_caps": [
+    "11/20",
+    "2/5",
+    "1/5",
+    "2/5",
+    "2/5"
+  ],
+  "pure5_slot_density_caps": [
+    "0",
+    "1/10",
+    "29/90",
+    "13/30",
+    "4/15"
+  ],
+  "replaced_pure3_pair_charge": "11/720",
+  "replaced_pure5_pair_charge": "13/2400",
+  "complete_tail_partition": {
+    "surviving_pure_coefficients": [
+      "11/20",
+      "13/30",
+      "1/3",
+      "1/9"
+    ],
+    "raw_cofactor_coefficients": [
+      "1/4",
+      "1/8",
+      "1/12",
+      "3/4",
+      "1/2",
+      "1/3",
+      "1/9"
+    ],
+    "raw_old_linear_cap": "3/4",
+    "raw_old_square_cap": "57/16",
+    "weighted_old_pure_before_halving": {
+      "pure3": "11/360",
+      "pure5": "13/1200",
+      "root5": "7/120",
+      "cell5": "13/360"
+    },
+    "weighted_old_mixed_before_halving": "17/120",
+    "old_old_distinct": "111/800",
+    "old_positive7": "121/720",
+    "positive7_positive7_distinct": "2/5",
+    "distinct_tail_pairs": "5089/7200",
+    "old_diagonal": "53/600",
+    "positive7_diagonal": "3/20",
+    "complete_ordered_tail_square": "5947/3600",
+    "independent_lcm_prefix_counts": 64
+  },
+  "original_head_count": 12500,
+  "endpoint_record_count": 25000,
+  "all_head_components_sha256": "8c8dea89b365d730a548715226d6c0b03d71f0186aa1f39957a57d8b107e29d6",
+  "pure3_change_histogram": {
+    "-1/150": 38,
+    "-1/180": 38,
+    "-1/240": 416,
+    "-7/720": 2,
+    "0": 12006
+  },
+  "pure5_change_histogram": {
+    "-1/240": 2,
+    "-1/300": 40,
+    "-1/450": 40,
+    "-1/480": 167,
+    "-1/600": 40,
+    "-1/720": 168,
+    "-17/3600": 2,
+    "0": 12041
+  },
+  "old_complete_factorial_upper": "6353/7200",
+  "complete_factorial_upper": "6313/7200",
+  "complete_improvement": "1/180",
+  "combined_head_maximum": "17/100",
+  "maximizing_witnesses": [
+    {
+      "layout": [
+        1,
+        4,
+        2,
+        1,
+        2,
+        4,
+        2
+      ],
+      "parts": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "pure3_cross_coefficients": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "2/5"
+        ],
+        "pure3_joint_block": "1/30",
+        "pure3_change": "-1/240",
+        "pure5_cross_coefficients": [
+          "0",
+          "0",
+          "2/9",
+          "0",
+          "0"
+        ],
+        "pure5_row_block": "109/7200",
+        "pure5_conditioned_block": "109/7200",
+        "pure5_joint_block": "109/7200",
+        "pure5_change": "-1/720",
+        "endpoint_records": [
+          {
+            "theta": "1/135",
+            "factorial_head": "1/54",
+            "complete_old_cross": "1/12",
+            "complete_positive7_cross": "11/180",
+            "old_combined_head": "22/135",
+            "new_combined_head": "17/108"
+          },
+          {
+            "theta": "1/90",
+            "factorial_head": "1/45",
+            "complete_old_cross": "1/12",
+            "complete_positive7_cross": "7/100",
+            "old_combined_head": "79/450",
+            "new_combined_head": "17/100"
+          }
+        ]
+      },
+      "endpoint": {
+        "theta": "1/90",
+        "factorial_head": "1/45",
+        "complete_old_cross": "1/12",
+        "complete_positive7_cross": "7/100",
+        "old_combined_head": "79/450",
+        "new_combined_head": "17/100"
+      }
+    }
+  ],
+  "scope": "Both whole actual saturated J faces, independent original labels, common late parameter and complete infinite exponent tails. Bellman bounds control changing prime-path cells, not only nested tests. The square and all52-cost consumer are separate. No source attainment, off-face, Lean or unrestricted Erdos7 resolution."
+}

@@ -1,0 +1,7 @@
+**Theorem IP1.** For every positive integer $M$ coprime to five,
+
+$$
+\chi(M)=(-1)^{c(M)},\qquad
+c(M)=\#\{p\mid M:p\text{ prime},\ \chi(p)=-1,\ v_p(M)\text{ odd}\}.
+$$
+

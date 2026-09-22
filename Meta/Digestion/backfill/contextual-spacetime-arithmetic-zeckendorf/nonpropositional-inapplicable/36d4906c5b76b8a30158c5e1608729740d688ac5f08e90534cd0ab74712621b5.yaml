@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36d4906c5b76b8a30158c5e1608729740d688ac5f08e90534cd0ab74712621b5
+  normalized_sha256: sha256:36d4906c5b76b8a30158c5e1608729740d688ac5f08e90534cd0ab74712621b5
+cas_ref: sha256:36d4906c5b76b8a30158c5e1608729740d688ac5f08e90534cd0ab74712621b5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只规定数字和相位的拉回拓扑、距离记号及一致结构的用语，没有提出这些函数满足度量公理的独立断言，因此无须证明。
+    previous_atom_id: 742e97551f1ab30ca88bfc106697c538bfcbe0e2e7ac31d6ebe3911efcb6c431
+    next_atom_id: 3df9f7fcb4f8e7c3463c760de37befdd67303a5d0db860856614a0ce49f627c1

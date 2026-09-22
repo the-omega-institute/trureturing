@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f6ee957b19d189a56f3a0d8ded5c1afdcae18e5d5003e63fdb38c7dc597b5d0d
+  normalized_sha256: sha256:f6ee957b19d189a56f3a0d8ded5c1afdcae18e5d5003e63fdb38c7dc597b5d0d
+cas_ref: sha256:f6ee957b19d189a56f3a0d8ded5c1afdcae18e5d5003e63fdb38c7dc597b5d0d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 阶段代表的相容性是目标图的极限投影方程，直接应用 Mathlib 的 limit.w_apply；本仓同内容定理未在该模块 Scribe 中注册声明引用，仓内无冻结 GID。
+    previous_atom_id: 668c2eb289e60685595e2bae149a79e5d4cbb8602203e8304e1dcff9bd10e85f
+    next_atom_id: 11f49d409ad5d965e9b9f9724d3f22c969d57817afe3b2eac250c11ee5322dda

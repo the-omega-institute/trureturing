@@ -1,0 +1,15 @@
+**定义 55.2 二色交叉数组、阈值与分支需求。** 设 $A,B$ 是不交的有限集。交叉数组 $b:A\times B\to\overline{\mathbb N}_0$ 可实现，是指存在同一个 $(z_w)_{w\in A\sqcup B}\in\mathbb Z_p^{A\sqcup B}$，满足
+$$
+b_{uv}=v_p(z_u-z_v)\qquad(u\in A,\ v\in B).
+$$
+同色差值不指定。对 $t\in\mathbb N_0$，令 $G_t(b)$ 为顶点集 $A\sqcup B$ 上以 $b_{uv}\ge t$ 为边的二部图。称包含边的连通分量为混合分量。对 $G_t(b)$ 的混合分量 $H$，在诱导图 $G_{t+1}(b)[V(H)]$ 中记混合分量数为 $c_t(H)$，并以 $\epsilon_A(H,t)$、$\epsilon_B(H,t)$ 分别表示是否存在相应颜色的孤立点，存在时取 $1$，否则取 $0$。定义
+$$
+D_t(H)=c_t(H)+\epsilon_A(H,t)+\epsilon_B(H,t).
+$$
+矩形条件 $\mathrm R$ 指每个二行二列子阵的四个标签中，最小值至少出现两次。对 $t\in\mathbb N_0$，模式 $\mathrm F_{p,t}$ 指存在两色各 $p$ 个不同顶点 $u_1,\ldots,u_p$ 和 $v_1,\ldots,v_p$，使
+$$
+b_{u_i v_i}>t\quad(1\le i<p),\qquad
+b_{u_i v_j}=t\quad\text{其余所有 }(i,j).
+$$
+这里 $>t$ 包括 $\infty$，而第二式包括 $b_{u_pv_p}=t$。
+

@@ -1,0 +1,23 @@
+**命题 72.10（一个等权二分的四个读数）。** 取 $I$ 为单点，$J=\{0,1\}$，$r$ 为常值映射，$q_0=q_1=1/2$、$p=1$。则
+$$
+U_r=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},\qquad
+\sigma_r=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+\rho_q=\frac12I_2,
+$$
+$$
+\operatorname{Tr}\Gamma_r(\rho_q)=\tfrac12,\qquad
+\mathcal C_r(\rho_q)=[1],\qquad
+D(\sigma_r\Vert\rho_q)=\ln2,\qquad
+D(\rho_q\Vert\sigma_r)=+\infty.
+$$
+
+证明。代入 $U_r$ 与两态的条目公式即得矩阵。压缩给出一维矩阵 $[1/2]$，经典标签通道则将两个对角质量相加为一。$S(\sigma_r)=0$、$S(\rho_q)=\ln2$，由定理 72.6 得正向值；命题 72.9 的核向量可取 $f_0-f_1$，给出反向无穷值。两态的细基测量分布同为 $(1/2,1/2)$，其经典 KL 值仍为零。故压缩迹缺口 $1/2$、经典总质量一、正向相干相对熵 $\ln2$ 与反向无穷值是不同读数。证毕。
+
+### 72.90 数学来源与形式化边界
+
+有限 Kraus 判据与等距熵不变性属于成熟结果（`literature-attested`）：Watrous，*The Theory of Quantum Information*，[作者原件](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Corollary 2.27，印刷第 89 页／PDF 第 97 页式 (2.129)，给出矩形 Kraus 族的完整性与通道作用；Proposition 5.19，印刷第 268 页／PDF 第 276 页式 (5.93)，给出有限维等距映射下的熵不变，包括奇异正算子。Baumgratz–Cramer–Plenio，*Quantifying Coherence*，[arXiv:1311.0275v3](https://arxiv.org/pdf/1311.0275v3)，第 3 页式 (8) 及其前一显示式，给出相对于固定基的 $D(\rho\Vert\Delta\rho)=S(\Delta\rho)-S(\rho)$。换用自然对数时，两侧统一换算。本节在同一有限细化上识别这些现成结果的参数、支撑及运输方向；不作新颖性或穷尽文献的主张。
+
+以下源码引用固定于提交 `6dcc8b24cb208a3a0e06a657b3bf8111e5f70801`，只承担各行所列数学输入。
+
+| 第 72 节的现成输入 | 精确声明与代入范围 |
+| --- | --- |

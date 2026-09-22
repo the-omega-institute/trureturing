@@ -1,0 +1,101 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "independent-terminal-phase-reduction-verification-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Two fixed numerical-order diagnostics, each with literal and globally injected labels. Actual-leaf integer-cap row minimization independently verifies all eight values; no adaptive-core optimum or uniform arbitrary-core bound claimed."
+  },
+  "prime_order": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73
+    ]
+  },
+  "heights": {
+    "kind": "inline",
+    "value": [
+      5,
+      3,
+      3,
+      2,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "profiles": {
+    "path": "content/004-profiles.json",
+    "sha256": "c3185507ccfe81e653b25c8228475c5519579a1b4e34586974d39cf0b0f4c66a",
+    "kind": "value"
+  },
+  "ancestor_cap_checks": {
+    "kind": "inline",
+    "value": 32
+  },
+  "core_only_labels": {
+    "kind": "inline",
+    "value": 78
+  },
+  "leaf_labels": {
+    "kind": "inline",
+    "value": 76
+  },
+  "records": {
+    "path": "content/008-records.json",
+    "sha256": "fe8723600c430f5d610899d285d3fe9af556238c025ab90f13556c7514dc54e6",
+    "kind": "array"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/source-budgets/adaptive_phase_io.py": "befaad88f3e9e7303920faf30e4f6ae8e14a8f79b8e167ada5d3afa51f3324c3",
+      "problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md": "1a946aea6c102017f2f19e66d34b605b6dda338bb62efc104123ce7b2dafc409",
+      "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+      "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+      "frontier/source-budgets/adaptive_phase_head_input.json": "1253b904f3f22348b304e5f45ea8478a4fd5df9885ca55ec70ef858bace35660",
+      "certificates/source_norms/source-budgets/terminal_phase_reduction.json": "8269bfbe7f01eee10a1832b87ad0def7875ddedb302846fa5d45a4f5c26e44f1",
+      "problem-details/58-adaptive-initial-block-recovery-and-all-schedule-budget-obstruction.md": "2aac02eaaaf2dda17068b37c2b5e8964bc609b0db30ba238bc54f5d2da5d66f5",
+      "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+      "frontier/source-budgets/terminal_phase_reduction.py": "6896f7e99c6778e28c9f0e7745e34ac2b88040334592365e5107ec5beeec9877"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "6c9457ee84c34dab8a65b7cabcf3f9fcae9650d5663e537198ccc6056539cd22"
+  }
+}

@@ -1,0 +1,5 @@
+**定义 443.1（截断有符号核）。** 对 $N\in\mathbb N$ 定义 $M(N)=\sum_{1\le n\le N}\mu(n)$，空和 $M(0)=0$。对平方自由正整数 $Q$ 和实数 $u\ge0$ 定义
+$$
+B_Q(u)=\sum_{\substack{a\mid Q\\a\le u}}\mu(a).
+$$
+约数均为正整数，截断上端包含。

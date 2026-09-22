@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b230272831bb182fbd9b98bcd62f695fd3c9e0878fb039a59638be0b3359a72
+  normalized_sha256: sha256:6b230272831bb182fbd9b98bcd62f695fd3c9e0878fb039a59638be0b3359a72
+cas_ref: sha256:6b230272831bb182fbd9b98bcd62f695fd3c9e0878fb039a59638be0b3359a72
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对实际纤维逐项使用 Finset.sum_const 和 Fintype.card_ne_zero，非空有限纤维的基数可约去，再以 Finset.sum_congr 对任意有限目标集求和；分母及有理值域均与原句相同，仓内无冻结 GID。
+    previous_atom_id: 8689e9583164203d0e4e526c0f9157adf5b1a2e0014c349b68dc5fb0b9e6883e
+    next_atom_id: 2608eff66f1bb05074c385f23c595694917e8bd0f8cd5ee191f46e18ec7e32e9

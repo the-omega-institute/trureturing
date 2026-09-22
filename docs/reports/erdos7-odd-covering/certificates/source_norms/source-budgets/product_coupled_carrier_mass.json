@@ -1,0 +1,130 @@
+{
+  "schema": "erdos7-product-coupled-carrier-mass-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/carrier_mass_residual_bound.py": "b455566fe256dac370d3afb97c6e357d2c75296a2e36f483e6f189fda436141c",
+    "certificates/source_norms/source-budgets/carrier_mass_residual_bound.json": "5ec6d2857f0dfe90bce554944fa29d72413e9bb0c359de77b7daf54ca4ceb32b"
+  },
+  "face_mass": "53/360",
+  "sigma_limit": "3/61",
+  "S0_sigma_coefficient": "61/360",
+  "E_rho_coefficient": "1",
+  "factor_order": [
+    "alpha",
+    "z",
+    "beta",
+    "deficit",
+    "late",
+    "carrier"
+  ],
+  "source_norm_coefficients": [
+    "1/6",
+    "5/36",
+    "1/18",
+    "1/9",
+    "1/36",
+    "0"
+  ],
+  "cap_loss_coefficients": [
+    "1/360",
+    "0",
+    "1/360",
+    "1/180",
+    "0",
+    "0"
+  ],
+  "carrier_loss_coefficients": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "2/45"
+  ],
+  "scaled_combined_coefficients": [
+    "61",
+    "50",
+    "21",
+    "42",
+    "10",
+    "16"
+  ],
+  "factorization_coefficients": [
+    3,
+    -3,
+    -61,
+    61
+  ],
+  "examples": [
+    {
+      "sigma": "0",
+      "S0_upper": "53/360",
+      "old_S0_upper": "53/360",
+      "loss_checks": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/10000",
+      "S0_upper": "176687/1200000",
+      "old_S0_upper": "2651/18000",
+      "loss_checks": [
+        "3/10000",
+        "119939/533320000",
+        "59939/399980000",
+        "119817/1599880000",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/27",
+      "S0_upper": "373/2430",
+      "old_S0_upper": "1631/9720",
+      "loss_checks": [
+        "1/9",
+        "263/3852",
+        "101/2862",
+        "47/3780",
+        "0"
+      ]
+    },
+    {
+      "sigma": "21/500",
+      "S0_upper": "27781/180000",
+      "old_S0_upper": "307/1800",
+      "loss_checks": [
+        "63/500",
+        "297297/3958000",
+        "36099/979000",
+        "45297/3874000",
+        "0"
+      ]
+    },
+    {
+      "sigma": "3/61",
+      "S0_upper": "7/45",
+      "old_S0_upper": "3833/21960",
+      "loss_checks": [
+        "9/61",
+        "81/964",
+        "9/238",
+        "9/940",
+        "0"
+      ]
+    }
+  ],
+  "scalar_nonextension": {
+    "sigma": "1/18",
+    "alpha_loss": "1/20",
+    "deficit_loss": "1/171",
+    "carrier_loss": "1/171",
+    "other_losses": "0",
+    "scaled_excess": "1/3420",
+    "scope": "Product-envelope counterexample only, not an actual-source configuration."
+  },
+  "scope": "Ordinary continuum theorem E<=S0+rho<=53/360+(61/360)*sigma+rho on0<=sigma<=3/61, using106 original source mass and carrier distribution with both coupled K product constraints. All complete original source terms retained. No source independence assumption, altered residual, global K assertion, Lean verification or unrestricted Erdos7 conclusion."
+}

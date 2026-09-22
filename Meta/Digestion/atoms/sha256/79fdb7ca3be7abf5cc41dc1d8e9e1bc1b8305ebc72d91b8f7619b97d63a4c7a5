@@ -1,0 +1,6 @@
+**Theorem.** For all natural a,b and all k>=3,
+
+$$
+\boxed{F_k\mid F_aF_b\quad\Longleftrightarrow\quad k\mid a\ \lor\ k\mid b.}\tag{FDS3}
+$$
+

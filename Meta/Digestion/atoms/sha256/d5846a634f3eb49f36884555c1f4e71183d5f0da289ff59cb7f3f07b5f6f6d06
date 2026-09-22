@@ -1,0 +1,8 @@
+**Theorem.** Let K>=1 and assume x^2=-1 modulo K has a solution. Then
+
+$$
+A_K=\{m\ge0:K\mid m^2+1,\ D_F(m^2+1)=D_F(K)\}
+$$
+
+has a positive natural density.
+

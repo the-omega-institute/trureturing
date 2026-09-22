@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:317f6918afcf95cfcf14c232008e6fab8fed6638b3f4edc74f02c2637d13786f
+  normalized_sha256: sha256:317f6918afcf95cfcf14c232008e6fab8fed6638b3f4edc74f02c2637d13786f
+cas_ref: sha256:317f6918afcf95cfcf14c232008e6fab8fed6638b3f4edc74f02c2637d13786f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 同一个世界函数减去自身恒为零，探针对任意世界类型和整数函数逐点应用 sub_self；没有独立世界取值，仓内无冻结 GID 可用。
+    previous_atom_id: d21894feff2d20e79d1ccca8e80bb442ae49628666501618e5392137d1e04eb7
+    next_atom_id: d653aa43237d8b4027c603bdae92fcd4b7f03f23a106fce834a1e33e7fca5b68

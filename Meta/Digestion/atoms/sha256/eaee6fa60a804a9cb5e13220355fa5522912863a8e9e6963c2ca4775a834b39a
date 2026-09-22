@@ -1,0 +1,27 @@
+**命题 44.13（精确倍时差及其饱和前提）。**
+
+令 $W(2h)=A^2+\Delta$。有精确恒等式
+$$
+\boxed{
+2-R(2)
+=\frac{\log\det(I+A^{-1}\Delta A^{-1})}{\mathcal T}.
+}
+$$
+证明。因
+$$
+A^2+\Delta=A(I+A^{-1}\Delta A^{-1})A,
+$$
+取行列式并用正定矩阵的 $\operatorname{tr}\log X=\log\det X$ 即得。合同增量 $A^{-1}\Delta A^{-1}$ 半正定，因此
+$$
+2-R(2)\ge0,\qquad R(2)=2\Longleftrightarrow\Delta=0.
+$$
+这就是 Context40 推论40.7的谱行列式机制在归一读数上的表达，不另宣称发现了该等号判据。
+
+还有严格范围
+$$
+\boxed{0\le2-R(2)<1.}
+$$
+因为 $0<S<I$ 给 $S-S^2\succ0$；$F^*$ 单射，故 $A-W(2h)=F(S-S^2)F^*\succ0$。正定行列式严格单调于是给 $\operatorname{tr}(-\log W(2h))>\operatorname{tr}(-\log A)$，即 $R(2)>1$。结合 $R(2)\le2$ 得结论。
+
+**一般余等距模型。** $\Delta=( (I-P)SF^*)^*((I-P)SF^*)$，所以 $\Delta=0$ 等价于 $\operatorname{Im}F^*$ 在自伴 $S$ 下约化。此时 $W(t)=A^{t/h}$，对全部 $t\ge0$ 有精确 $R(t/h)=t/h$。但一般模型允许未耦合隐藏直和，所以这不推出任意给定隐藏空间已被全部观察。
+

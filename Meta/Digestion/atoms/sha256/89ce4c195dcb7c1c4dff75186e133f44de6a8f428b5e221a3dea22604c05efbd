@@ -1,0 +1,12 @@
+**定理 122.14。** 若 $0\le f\le1$，令 $A_t=\{x:f_x>t\}$，则
+$$
+f_x=\int_0^1 1_{A_t}(x)\,dt,
+$$
+$$
+|f_x-f_y|=\int_0^1|1_{A_t}(x)-1_{A_t}(y)|\,dt,
+$$
+$$
+\operatorname{TV}_q(f)=\int_0^1\operatorname{Cut}_q(A_t)\,dt.
+$$
+任意有限实值 $f$ 可把后两式的积分改为全实轴；第一式则可写成 $f_x=m+\int_m^M1_{\{f_x>t\}}dt$，其中 $m=\min f$、$M=\max f$。
+

@@ -1,0 +1,20 @@
+**Proof.** Theorem 25.12 and the integrated positivity theorem 28.7 show inductively that each $\eta_n$ is a probability. Phase compatibility at each step proves the stated phase identity without requiring a common multiplication parameter.
+
+Put $\xi=H_\#\eta_0$. For a trigonometric polynomial $P=\sum_k a_k\chi_k$,
+$$
+\left|\int P\,d(\xi*_{\mathbb T}\nu^{(n)}-\lambda)\right|
+\le\sum_{k\ne0}|a_k|\,|\widehat\nu(k)|^n,
+$$
+because $|\widehat\xi(k)|\le1$. Under the ordinary criterion this tends to zero independently of $\xi$. Uniform approximation by trigonometric polynomials therefore proves uniform convergence on every fixed continuous circle function. For the averages the same proof replaces $\widehat\nu(k)^n$ by $A_N(\widehat\nu(k))$.
+
+To transfer this uniformity to $K$, fix a cylinder $C_p$. Its probabilities lie between the phase probabilities of $J_p$ and $\overline{J_p}$. Given $\varepsilon>0$, choose continuous circle functions $a,b$ with
+$$
+a\le\mathbf1_{J_p}\le\mathbf1_{\overline{J_p}}\le b,\qquad
+\int(b-a)\,d\lambda<\varepsilon.
+$$
+Such functions are obtained by linearly smoothing the two endpoints inside arbitrarily short arcs. Uniform phase convergence on $a,b$ then implies uniform convergence of $\eta_n(C_p)$ to $\lambda(J_p)$. The same argument applies to the positive averages. There are finitely many cylinders at a fixed depth. Approximating $f$ by a function constant on these cylinders, with error at most $\omega_L(f)$, proves the displayed uniform assertion.
+
+For necessity take $\eta_0=\delta_{Z(0)}$. Its phase is $\delta_0$, so the phases of the resulting laws are exactly $\nu^{(n)}$, independently of all endpoint choices. The circle necessities in Theorem 34.7 apply. Conversely, starting at $\mathfrak m$ gives the constant sequence $\mathfrak m$ for every step probability: its coordinate is $(\lambda,0)$, and $\lambda*_{\mathbb T}\nu=\lambda$. Thus necessity must not be claimed for each particular starting law.
+
+The classical fixed-readout uniformity on the circle is consistent with Kawada–Ito Theorem 9; the cylinder squeeze is the additional full-carrier argument here.[^rro34-uniform] The operator-norm obstruction in Theorem 34.9 shows why the quantifier on the readout cannot be strengthened to its entire unit ball. $\square$
+

@@ -1,0 +1,2 @@
+**Theorem.** Suppose a is a residue in S(q). If rho(q) does not divide a, every positive m congruent to a modulo P has a prime divisor p of F_m with p congruent to one modulo q. If rho(q)|a and h_q=1, at least a fraction (q-1)/q of that progression, measured by its progression parameter, necessarily has such a prime divisor. If rho(q)|a and h_q>=2, then a belongs to S(q) without requiring any such other-prime witness.
+

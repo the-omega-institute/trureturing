@@ -1,0 +1,12 @@
+**Proof.** The homomorphism $\mathbb Z[\phi]\to\mathbb F_5$ with
+$\phi\mapsto3$ also sends $\psi=1-\phi$ to $3$. Homogeneity gives the
+congruence. For $n>2$, $\varphi_{\rm E}(n)$ is even, so its power of three
+has quadratic character one. Finally $\Phi_n(1)=\ell$ for a prime power
+$n=\ell^a$, and equals one otherwise. One proof of the latter identity
+uses $n=\prod_{d\mid n,d>1}\Phi_d(1)$, obtained by evaluating
+$(X^n-1)/(X-1)$ at one. Strong induction assigns one factor $\ell$ to
+each prime-power divisor and forces every remaining value to one.
+
+IP7 concerns the cyclotomic block. Its prime factors need not all be new
+at index $n$. That distinction is essential in the next two sections.
+

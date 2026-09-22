@@ -1,0 +1,98 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 0
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "0",
+      "rho": "0",
+      "rbar": "0",
+      "h1min": "1/3",
+      "v0": "0",
+      "v1": "0",
+      "gap": "1/45",
+      "tbar": "2",
+      "Cbar": "15/4",
+      "kbar": "2",
+      "budget_increments": [
+        "0",
+        "0",
+        "0"
+      ],
+      "c": [
+        "7/10",
+        "2/5",
+        "4/15",
+        "4/45"
+      ],
+      "H": [
+        "1/20",
+        "1/10",
+        "1/15",
+        "1/45"
+      ],
+      "positive7": "779/12600"
+    }
+  },
+  "barrier": {
+    "kind": "inline",
+    "value": "630053335920064561120723361434337/15632787748921114278012443437500"
+  },
+  "raw_zero_prices": {
+    "path": "content/003-radii/000000/item/002-results/000000/item/003-raw_zero_prices.json",
+    "sha256": "1a1ac4a5a8cf46a4ae690055ad4a0e80baa6a475a6d3c5c0658cffb57acb73bf",
+    "kind": "value"
+  },
+  "raw_complete_prices": {
+    "path": "content/003-radii/000000/item/002-results/000000/item/004-raw_complete_prices.json",
+    "sha256": "4e5d2de1e432691e77453fd9774f8d26dba51239f7112e2f6d637dbd01fe4e9f",
+    "kind": "value"
+  },
+  "common_price": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "non_H_cap_growth": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "non_H_budget_growth": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "non_H_marker_price_per_max_derivative": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "H_marker_price_per_max_derivative": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "branches": {
+    "path": "content/003-radii/000000/item/002-results/000000/item/010-branches.json",
+    "sha256": "2b39e1d9581750da9a4a4d4359aecd74a80b94562314046c0dd3022dc61cb672",
+    "kind": "array"
+  },
+  "uniform_margin_error": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "629565743886600521090236480234337/106184973388898134718575087500000"
+  },
+  "uniform_upper": {
+    "kind": "inline",
+    "value": "629565743886600521090236480234337/106184973388898134718575087500000"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "1"
+  }
+}

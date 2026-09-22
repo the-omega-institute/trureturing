@@ -1,0 +1,7 @@
+**Proof.** Fermat's theorem makes the integer quotient well-defined.
+Replacing x by x+25t changes x^4 by a multiple of 25. Expanding
+$(1+5A)(1+5B)$ proves additivity. The kernel follows by checking the
+four roots of $X^4=1$ modulo 25: each nonzero residue modulo five has a
+unique lift, since its derivative $4X^3$ is a unit. More explicitly,
+$\lambda_5(x+5t)-\lambda_5(x)=4x^3t\pmod5$, a bijection as t varies.
+

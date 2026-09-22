@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:12b8fdcbca162f5aa57c9e25cc2f4b3527d210485eef6a1c59171fb11a26a17d
+  normalized_sha256: sha256:12b8fdcbca162f5aa57c9e25cc2f4b3527d210485eef6a1c59171fb11a26a17d
+cas_ref: sha256:12b8fdcbca162f5aa57c9e25cc2f4b3527d210485eef6a1c59171fb11a26a17d
+coverage_gids:
+  - gid: D5/S1/Depth/GoldenHurwitzBound.golden_hurwitz_bound
+    target_statement_id: sha256:a982663a06856268f59db877cde7130b5e4c1680c150e2a63098e4e9c9d4a8e7
+receipts:
+  unresolved_subitems: []

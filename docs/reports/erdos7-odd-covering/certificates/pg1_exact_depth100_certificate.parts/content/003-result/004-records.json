@@ -1,0 +1,50 @@
+{
+  "length": 10,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/003-result/004-records/000000-000002.json",
+        "sha256": "12584ffddc1cd4a86715aa33bacf99b30af3e1163e797bb60d59d54528de0737",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 4,
+      "part": {
+        "path": "content/003-result/004-records/000002-000004.json",
+        "sha256": "441d28d97cba560f47b77b0cba6cbf281aea16fb01d232d0db6fde43180f6487",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 6,
+      "part": {
+        "path": "content/003-result/004-records/000004-000006.json",
+        "sha256": "591bffc1aef9cc21d923e5ff34be529f429a6759fcbb47313ce52e3e75424bbc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 8,
+      "part": {
+        "path": "content/003-result/004-records/000006-000008.json",
+        "sha256": "dd6f4f1cd6ff809f3026637ede0c3d93859a9df2fc4e9e94928c9605fb1f72ba",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 10,
+      "part": {
+        "path": "content/003-result/004-records/000008-000010.json",
+        "sha256": "e431a3792e30c653847b3e7b9b5ab98ed64abd0f3e7a6e282c7261f42266a1dc",
+        "kind": "value"
+      }
+    }
+  ]
+}

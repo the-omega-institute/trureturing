@@ -1,0 +1,39 @@
+**theorem 39.13 (Countable finite-observation towers cannot recover the completion).** Every inverse limit over a countable index set of finite discrete spaces is compact metrizable. Consequently no such inverse limit is homeomorphic to $\mathscr E$.
+
+For a countable collection of actual finite tests $F_0,F_1,\ldots$, put
+$$
+G_r=\bigcup_{i\le r}F_i,\qquad S=\bigcup_{r\ge0}G_r.
+$$
+The canonical map
+$$
+\mathscr E\longrightarrow\varprojlim_r A_{G_r}
+\tag{39.37}
+$$
+is a continuous surjection but is not injective, even if $e$ is appended to its record. Its quotient can equivalently be represented as the compact image $\pi_S(\iota(\mathscr E))\subseteq\{0,1\}^S$.
+
+**Proof.** Enumerate the factors of a countable product as $B_0,B_1,\ldots$, padding a finite list with singleton factors when necessary. Its product topology is induced by
+$$
+d(a,b)=\sum_{r\ge0}2^{-(r+1)}\mathbf 1_{a_r\ne b_r}.
+$$
+The product is compact because the factors are compact. Every bonding compatibility condition is closed, since the factors are Hausdorff and the maps between finite discrete spaces are continuous. The inverse limit is therefore a closed compact metrizable subspace of this product. The empty inverse limit, when it occurs, is also compact metrizable. Equation (39.24) excludes a homeomorphism with $\mathscr E$.
+
+For the specified tower, take a compatible point $(a_r)_r$ and define
+$$
+C_r=\{p\in\mathscr E:Q_{G_r}(p)=a_r\}.
+$$
+By (39.33), each $C_r$ is nonempty; it is closed by continuity. Compatibility makes the sets decreasing. Compactness gives a point in their intersection, proving surjectivity of (39.37). The coordinate maps give its continuity.
+
+A compatible tower record determines a binary assignment on $S$, and equality on $S$ determines all tower records. The preceding compactness argument shows that every such compatible assignment is attained by some $p\in\mathscr E$. Restriction therefore identifies the tower limit with the stated projected compact image; the identification is a homeomorphism by the compact-Hausdorff argument.
+
+The set
+$$
+D_S=\{b\in K:\exists j\ (b,j)\in S\}
+$$
+is countable. Choose
+$$
+\theta\notin E\cup U(D_S),
+$$
+which is possible by (39.13). The two distinct selectors at this phase have equal $e$ and agree at every input in $D_S$, hence on every digit of $S$ and every record of the tower. Thus (39.37) remains noninjective after adjoining $e$.
+
+The same obstruction applies to a countable tower of arbitrary continuous finite-valued readouts: Theorem 39.6 replaces each readout by finitely many digit tests, and their total union is countable. Countable density of the iterates, or sequential approximation of each operator as in Theorem 37.4, is not a countable separating family of continuous finite observations and does not contradict the result. $\square$
+

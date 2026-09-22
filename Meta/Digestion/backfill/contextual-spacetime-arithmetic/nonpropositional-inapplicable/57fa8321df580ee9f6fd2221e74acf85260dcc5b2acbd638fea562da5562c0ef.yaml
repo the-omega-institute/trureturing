@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:57fa8321df580ee9f6fd2221e74acf85260dcc5b2acbd638fea562da5562c0ef
+  normalized_sha256: sha256:57fa8321df580ee9f6fd2221e74acf85260dcc5b2acbd638fea562da5562c0ef
+cas_ref: sha256:57fa8321df580ee9f6fd2221e74acf85260dcc5b2acbd638fea562da5562c0ef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “34.3 无延迟辅助乘法及两个扭曲恒等式”读作“38.3”只指定被引用的章节，两个恒等式仍由其正文承担；此处不另生数学命题或定义偷带。
+    previous_atom_id: f5da5ae6478fa678577db669c770728ce623fa5e76d6e095108db9eb8b7d3246
+    next_atom_id: 5e5f94a6122d854e9e9d227db253ef116e53db0569a3b1a8041e8fdc0d139775

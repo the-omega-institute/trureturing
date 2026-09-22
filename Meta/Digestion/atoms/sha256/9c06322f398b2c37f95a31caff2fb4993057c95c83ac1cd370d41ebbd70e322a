@@ -1,0 +1,14 @@
+对每个 $i$，从每个非空纤维选一个代表 $r_u$，置
+
+$$
+\bar\kappa_i(u)=p_i(\,\cdot\mid r_u).
+$$
+
+若 $\bar\kappa_i$ 在同一实区间上有 $L_i$-刻度 Lipschitz 延拓，定义代表黄金预测器
+
+$$
+\widehat p_i(\,\cdot\mid r)
+=
+\bar\kappa_i\!\left(\gamma_Z(N(r))\right).
+$$
+

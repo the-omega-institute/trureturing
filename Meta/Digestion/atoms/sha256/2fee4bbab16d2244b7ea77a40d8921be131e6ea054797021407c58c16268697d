@@ -1,0 +1,25 @@
+**theorem 22.6 (The same exact continuity locus for every point selection).** Every point selection satisfies
+$$
+\overline{\operatorname{graph}(A)}=\Gamma,
+\qquad
+\operatorname{Cont}(A)=G.
+$$
+Every $D_n$ is closed and nowhere dense, and
+$$
+D=\bigcup_{n\geq1}D_n,\qquad
+G=\bigcap_{n\geq1}(X\setminus D_n).
+$$
+Thus $D$ is meagre $F_\sigma$ and $G$ is dense $G_\delta$. Its exact phase-and-sign description is
+$$
+D=\Theta^{-1}(E)\setminus
+\bigl((K_{+1}\times K_{+1})\cup(K_{-1}\times K_{-1})\bigr).
+$$
+
+**Proof 22.6.** Every selection graph is contained in the closed set $\Gamma$. By Theorem 22.3 it contains every actual finite addition triple, whose closure is $\Gamma$. This proves the graph equality. More precisely, for every $z\in\Gamma(\xi)$, Theorem 22.4 gives input pairs $\xi_j\in X_{\mathrm{fin}}$ tending to $\xi$ whose actual sums tend to $z$. At these inputs the selection is forced to be that actual sum. Conversely, any limit of selection outputs along inputs tending to $\xi$ belongs to $\Gamma(\xi)$ by closedness. Thus the output limits along approaching inputs are exactly the full fiber.
+
+If $\Gamma(\xi)=\{z\}$, upper semicontinuity applied to the ball of radius $\varepsilon$ about $z$ gives a neighborhood on which all permissible outputs, and hence the values of $A$, lie in that ball. Since $A(\xi)=z$, this is continuity at $\xi$. If the fiber contains distinct $z_0,z_1$, use the preceding joint approximation separately for these two outputs. This gives two sequences of actual natural input pairs converging to the same $\xi$, along which $A$ tends respectively to $z_0$ and $z_1$. Continuity at $\xi$ would make both limits equal to $A(\xi)$, which is impossible. This proves the exact locus without any regularity assumption on $A$.
+
+Suppose $\xi_j\in D_n$ and $\xi_j\to\xi$. Compactness of the fibers makes their diameters attained, so choose $z_j,w_j\in\Gamma(\xi_j)$ with $d_K(z_j,w_j)\geq1/n$. A subsequence of $(z_j,w_j)$ converges in compact $K^2$, say to $(z,w)$. Closedness gives $z,w\in\Gamma(\xi)$, and continuity of the metric gives $d_K(z,w)\geq1/n$. Hence $D_n$ is closed. It is disjoint from the dense set $X_{\mathrm{fin}}$, so it has empty interior and is nowhere dense. A fiber has two points exactly when its diameter is positive, which is equivalent to membership in some $D_n$. This proves the displayed countable union and intersection. The set $G$ contains $X_{\mathrm{fin}}$, so it is dense.
+
+The final formula is exactly the case distinction of Assumption 22.2: an exceptional sum phase gives two outputs unless both inputs carry the same forced sign. In particular, exceptional sum phase alone is not a sufficient criterion for discontinuity.
+

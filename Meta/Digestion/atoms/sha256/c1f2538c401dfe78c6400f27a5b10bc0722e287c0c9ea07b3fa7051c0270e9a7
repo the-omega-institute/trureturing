@@ -1,0 +1,15 @@
+**定理 19.7（加法图闭包的一个精确二点纤维与选择障碍）。** 定义闭关系
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}\subseteq K^3,
+$$
+以及其输出纤维
+$$
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+每个 $\Gamma(x,y)$ 均为非空紧集，并有
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\},\qquad
+\Gamma(u,o)=\{u,v\}.
+$$
+不存在分别连续的选择 $s:K\times K\to K$ 满足 $s(x,y)\in\Gamma(x,y)$。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9130745c2ac49fcbd56d8045142554dbc82a21f4a4d6d7200af5f6fede30a471
+  normalized_sha256: sha256:9130745c2ac49fcbd56d8045142554dbc82a21f4a4d6d7200af5f6fede30a471
+cas_ref: sha256:9130745c2ac49fcbd56d8045142554dbc82a21f4a4d6d7200af5f6fede30a471
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条规定单位化、字符、谱与两种弱星拓扑的含义，区分形式单位与原代数点质量，属于定义和约定材料。
+    previous_atom_id: c259bf2b726326e98642ef408e40c3b7e4659ca7357afbbe64c42160bcf9e5e4
+    next_atom_id: 1219cd7ef42d954cc6931dacb47414aa7e974527761b23938816303cbc70633a

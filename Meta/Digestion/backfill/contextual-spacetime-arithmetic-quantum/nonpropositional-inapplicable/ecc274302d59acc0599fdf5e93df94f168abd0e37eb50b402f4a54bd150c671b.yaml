@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ecc274302d59acc0599fdf5e93df94f168abd0e37eb50b402f4a54bd150c671b
+  normalized_sha256: sha256:ecc274302d59acc0599fdf5e93df94f168abd0e37eb50b402f4a54bd150c671b
+cas_ref: sha256:ecc274302d59acc0599fdf5e93df94f168abd0e37eb50b402f4a54bd150c671b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子仅扩大两步任务的控制类并定义对应最优值，记录不可再访问等条件属于任务假设。
+    previous_atom_id: 563734c20decb2327e057f21a907a23bb1b4685b785512732765254fe63035b9
+    next_atom_id: 2b70bb3fec9b5f7e30f35b910175cb278a2e05731deeabfba80353ed620a5170

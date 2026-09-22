@@ -1,0 +1,17 @@
+**Proposition.** Fix an inert
+integer $q$, so $\chi(q)=-1$. On the integer-state carrier take
+$\operatorname{step}(M)=qM$, readout $\chi(M)$, and visible flip
+$z\mapsto-z$. Multiplicativity proves
+$\chi(\operatorname{step}(M))=-\chi(M)$, and the flip is involutive.
+Therefore
+
+$$
+\chi(q^{2j}M)=\chi(M),\qquad
+\chi(q^{2j+1}M)=-\chi(M).
+$$
+
+When $q\ge2$ and $M>0$, $q^2M>M$, even though its character has returned.
+Thus this gives an explicit arithmetic odd/even readout. Equality of that readout does not recover the exponent
+or the original integer, and no identification with Zeckendorf digit
+parity is being assumed.
+

@@ -1,0 +1,24 @@
+**定理 31.14（经典 Wiener–Pitt–Šreĭder 现象的准确传递）。** 存在正圆周概率测度 $\beta$，使
+$$
+\widehat\beta(n):=\int_{\mathbb T}e^{2\pi i n\theta}\,d\beta(\theta)\in[-1,1]\quad(n\in\mathbb Z),\qquad \sigma_{\mathcal M}(\beta)=\overline{\mathbb D}.
+$$
+此存在性采用经典 Šreĭder 测度定理，准确出处为 Nikolski §3.1.1，印刷页1962。[^rro31-wp] 对任一这样的 $\beta$，令
+$$
+a_\beta=L_t\beta\in A_t,\qquad b_\beta=1^{\#}+a_\beta-(1+i/2)e\in A_t^{\#}.
+$$
+则
+$$
+\sigma_{A_t}(a_\beta)=\overline{\mathbb D},\qquad \mathcal F_n(a_\beta)=\widehat\beta(n)\in\mathbb R,\qquad \mathcal E_z(a_\beta)=0,
+$$
+$$
+\sigma_{A_t^{\#}}(b_\beta)=(\overline{\mathbb D}-i/2)\cup\{1\}.
+$$
+特别 $b_\beta$ 不可逆，尽管其全部普通单位化读数满足
+$$
+\left|1+\mathcal F_n\bigl(a_\beta-(1+i/2)e\bigr)\right|=|\widehat\beta(n)-i/2|\ge\frac12,
+$$
+$$
+\mathcal E_z^{\#}(b_\beta)=1\qquad(z\in\overline{\mathbb D}).
+$$
+整数 Fourier 字符在 $\Delta(\mathcal M)$ 中不稠密；把它们连同全部剩余字符使用，也仍不穷尽 $A_t$ 的完整字符谱。
+

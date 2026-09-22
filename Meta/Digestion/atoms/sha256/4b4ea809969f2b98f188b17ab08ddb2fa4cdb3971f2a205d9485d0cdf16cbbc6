@@ -1,0 +1,11 @@
+
+
+给定实数容差 $\eta>0$，称整数 $m\ge2$ 可用，当且仅当同时有 $c_{\mathcal P(m)}\le\eta$ 和 $\alpha_{\mathcal P(m)}\le\eta$。第 443.12 条使此共同条件恰等价于 $c_{\mathcal P(m)}\le\eta$。定义最小可用截止及最短可用输出为
+$$
+m_*(\eta)=\min\{m\in\mathbb Z:m\ge2,\ c_{\mathcal P(m)}\le\eta\},
+$$
+$$
+S_*(\eta)=\min\{|T|:m\ge2\text{ 可用},\ T\in\mathfrak T_m\}.
+$$
+由 (488.2a) 可用截止存在，因此这两个最小值存在。$S_*$ 的定义没有假定最短输出必在 $m_*$ 取得。
+

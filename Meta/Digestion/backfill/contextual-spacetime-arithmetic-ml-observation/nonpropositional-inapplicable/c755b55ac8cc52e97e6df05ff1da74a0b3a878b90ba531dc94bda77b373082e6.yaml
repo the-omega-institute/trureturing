@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c755b55ac8cc52e97e6df05ff1da74a0b3a878b90ba531dc94bda77b373082e6
+  normalized_sha256: sha256:c755b55ac8cc52e97e6df05ff1da74a0b3a878b90ba531dc94bda77b373082e6
+cas_ref: sha256:c755b55ac8cc52e97e6df05ff1da74a0b3a878b90ba531dc94bda77b373082e6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “Ready 中没有请求的报告照常更新”及“无报告时不递增计数器、不作交接”只补齐协议的输入分支；没有把报告数换成时间界，也没有承诺完成性。
+    previous_atom_id: 7e7d881451d9bba875a30f4cdd1839662ae84fddefc6b617c579952489e1a26a
+    next_atom_id: c7f692b29e134aa47c8a535a25936a4b5a127ab18009b2df7350b45332ec2ac3

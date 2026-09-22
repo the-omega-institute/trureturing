@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8880e2ea3f8b476f1142853dff61b5837f9f8943ccdbbd2967f2b48ed1cb389
+  normalized_sha256: sha256:c8880e2ea3f8b476f1142853dff61b5837f9f8943ccdbbd2967f2b48ed1cb389
+cas_ref: sha256:c8880e2ea3f8b476f1142853dff61b5837f9f8943ccdbbd2967f2b48ed1cb389
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只在固定素数标签与容量参数上定义有限配置集和素数乘积读数，没有给出单射性或纤维结论。
+    previous_atom_id: ec194eaac3e234331ea3b557e08ad971bbd6b0b4cabd024ef1ffa1d6cb28c3f9
+    next_atom_id: 402d4c3067cf0060e4c8e12f26b043fe072c0efd9e5499b369927ac4b4564117

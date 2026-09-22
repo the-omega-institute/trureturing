@@ -1,0 +1,50 @@
+{
+  "length": 9,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/008-complete_heads/005-quadratic_costs/000000-000002.json",
+        "sha256": "aa0d8be5a6e34a2aebde64ca066ced1bdce11c34cec9bf8d8dcf7f1b3801535b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 4,
+      "part": {
+        "path": "content/008-complete_heads/005-quadratic_costs/000002-000004.json",
+        "sha256": "2e7072e8a4f9b8f43ad55277934657dde2f1015d941be960a79361003b46f12c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 6,
+      "part": {
+        "path": "content/008-complete_heads/005-quadratic_costs/000004-000006.json",
+        "sha256": "e815b8445f9a791c7e073dbd0a136b6ec9a058d2f0d13a3f10e040f356959f0e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 8,
+      "part": {
+        "path": "content/008-complete_heads/005-quadratic_costs/000006-000008.json",
+        "sha256": "7eb8bde2c5d146ecf2e44c9589e4f3e20a1acb4e2aa0cf99bb9704194051c5d0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/008-complete_heads/005-quadratic_costs/000008-000009.json",
+        "sha256": "f20d8cf027c41fd878d9525b842dd0b4f86baf17497acad42fd2c606fb65c0f1",
+        "kind": "value"
+      }
+    }
+  ]
+}

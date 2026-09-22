@@ -1,0 +1,8 @@
+**定理。** 存在 $c>0$，使全部充分大的 $X$ 满足
+
+$$
+|\mathcal A_X|\ge c\frac{X}{(\log X)^4}.\tag{EMWS4}
+$$
+
+对每个 $k\in\mathcal A_X$，四个线性因子各自至多包含八个素因子。
+

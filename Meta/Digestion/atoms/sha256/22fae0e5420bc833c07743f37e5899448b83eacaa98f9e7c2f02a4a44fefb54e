@@ -1,0 +1,6 @@
+**theorem 32.19 (Failure of Borel invariance for every actual parameter).** For every allowed $t$, condition $(\mathrm I_B^{(t)})$ is false. More precisely, there is a single Borel set $D_0\subseteq\mathbb T$, a bounded Borel test
+$$
+f=\mathbf1_{D_0}\circ H,
+$$
+and a single probability charge $q$ concentrated on the actual natural core $Z(\mathbb N)$, independent of $t$, such that $\mathscr R_qf$ is not Borel on $K$. This failure occurs although $k_f$ is jointly Borel and every actual row is finite with uniformly bounded variation.
+

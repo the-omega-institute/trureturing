@@ -1,0 +1,4 @@
+**证明。** 仍记 $s_1=2a-b,s_2=2b-a-z,s_3=2u-v$。当每坐标改变至多 $\varepsilon$ 时，三余量分别至少为
+$$
+s_1-3\varepsilon,\qquad s_2-4\varepsilon,\qquad s_3-3\varepsilon.
+$$

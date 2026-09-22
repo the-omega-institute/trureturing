@@ -1,0 +1,38 @@
+### EMWS.3 无条件的关联计数不等式
+
+**定义。** 对正整数 $r$，令 $r_{\rm odd}=r/2^{v_2(r)}$。令 $\mathcal R_8(X)$ 为满足下列条件的不同秩 $r\in\mathcal R_1$ 的集合：
+
+$$
+r\le60X+2,\quad r\text{ 平方自由},\quad\gcd(r,60)\le2,\quad
+1\le\omega(r_{\rm odd})\le8,
+$$
+
+且 $r_{\rm odd}$ 的每个素因子均不小于 $y=X^{4/35}$。记
+
+$$
+R_8(X)=|\mathcal R_8(X)|,\qquad
+T_X=\#\{k\in\mathcal A_X:60k\in\mathcal T\}.
+$$
+
+**定理。** 对全部充分大的 $X$，
+
+$$
+\boxed{
+T_X+\frac{8X}{y}R_8(X)
+\ge |\mathcal A_X|
+\ge c\frac{X}{(\log X)^4}.
+}\tag{EMWS6}
+$$
+
+**证明。** 取 $k\in\mathcal A_X$ 且 $60k\notin\mathcal T$。EMW-C3 给出某个 $s\in\{-2,-1,1,2\}$，使 $F_{60k+s}$ 具有简单素因子 $p$。由于素数二、三、五的出现秩分别为三、四、五，而 $60k+s$ 均不被这些秩整除，所以 $p\notin\{2,3,5\}$。EMW-B3 给出 $q_p\ne0$ 及 $r=\rho(p)\mid60k+s$。
+
+四个指标为 $60k-1,60k+1,2(30k-1),2(30k+1)$。因此 $r$ 平方自由，$\gcd(r,60)\le2$，且其奇部整除一个平方自由的线性因子。秩至少为三，故奇部大于一；EMWS.2 给出其素因子数至多八，且每个素因子均至少为 $y$。故 $r\in\mathcal R_8(X)$，并有 $r\ge y$。
+
+固定一个这样的 $r$，令 $g=\gcd(r,60)$。若 $g=1$，至多四个模 $r$ 的类能满足 $r\mid60k+s$；若 $g=2$，只有两个模 $r/2$ 的类。因而在 $1\le k\le X$ 中，一个秩至多对应
+
+$$
+\frac{4X}{r}+4\le\frac{8X}{y}
+$$
+
+个指标，其中使用 $r\ge y$ 与 $y\le X$。对每个 $k$ 选择一个见证秩，再按不同秩合并计数，得到 $|\mathcal A_X|-T_X\le(8X/y)R_8(X)$。EMWS4 给出第二个不等式。证明未假设不同秩的剩余类独立或互不重叠。
+

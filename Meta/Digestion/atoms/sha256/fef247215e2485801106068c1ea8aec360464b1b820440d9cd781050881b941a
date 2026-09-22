@@ -1,0 +1,8 @@
+**Proof.** A realization implies K|m^2+1 and hence root solvability.
+Every Fibonacci divisor of K then belongs to D, while each element of D
+already divides K, giving equality. Conversely apply QR.4 to K when
+D_F(K)=D. This gives the stronger positive-density subset that also
+satisfies K|m^2+1. The full realizing set has a natural density by the
+same finite-period truncation and QR4 tail argument, so that density is
+positive. Both criteria are finite statements for the given D.
+

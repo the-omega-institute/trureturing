@@ -1,0 +1,17 @@
+**定理 72.2（加权等距包含、条件平均与复合消去）。** 在定义与假设 72.1 下，$U_r^*U_r=I_{\mathcal H_c}$。对任意 $g:J\to\mathbb C$，有
+$$
+U_r^*\operatorname{diag}(g)U_r
+=\operatorname{diag}_i\left(\sum_{r(j)=i}\frac{q_j}{p_i}g_j\right).
+$$
+特别地，$g=h\circ r$ 时右侧为 $\operatorname{diag}(h)$。再设 $K$ 为有限非空集合，$s:K\to J$，$u_k>0$，且 $q_j=\sum_{s(k)=j}u_k$。按相同定义构造 $U_s:\mathbb C^J\to\mathbb C^K$ 及 $U_{r\circ s}:\mathbb C^I\to\mathbb C^K$，则
+$$
+U_sU_r=U_{r\circ s},\qquad U_{\mathrm{id}}=I.
+$$
+
+证明。不同父纤维不交，而每列的平方范数为 $\sum_{r(j)=i}q_j/p_i=1$，故列向量正交归一。分区表示中，$\mathbf1_{D_i}=\sum_{r(j)=i}\mathbf1_{C_j}$ 恰给出所列系数，所以 $U_r$ 表示实际的子空间包含。压缩对角算子的 $(i,i')$ 元在 $i\ne i'$ 时为零，在 $i=i'$ 时为所列条件平均；代入 $g_j=h_i$ 即恢复粗观察量。复合的第 $(k,i)$ 元只有中间标签 $j=s(k)$ 能贡献，在 $r(s(k))=i$ 时其值为
+$$
+\sqrt{\frac{u_k}{q_{s(k)}}}\sqrt{\frac{q_{s(k)}}{p_i}}
+=\sqrt{\frac{u_k}{p_i}},
+$$
+否则为零。正权重保证约去的分母非零。恒等细化的每条纤维只有自身一个标签，系数为一。证毕。
+

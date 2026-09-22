@@ -1,0 +1,2 @@
+**Proof.** For each prime power p^e exactly dividing K, the right side asserts min(e,v_p(A))+min(e,v_p(B))>=e. This is equivalent to v_p(A)+v_p(B)>=e. If A or B is zero, both divisibility statements hold, so those cases require no valuation at zero.
+

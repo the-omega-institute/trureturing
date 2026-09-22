@@ -1,0 +1,16 @@
+**定理 12.7（时间标记与费用测度的一致运输）。** 对定理12.6的时变过程，令 $t=f(\tau)$ 是区间上的 $C^1$ 严格递增换元，$f'(\tau)>0$。运输后的传播子为
+$$
+\mathcal T^f(\tau_1,\tau_0)
+=\mathcal T(f(\tau_1),f(\tau_0)),
+$$
+边界传播子同理；相应生成元为 $\mathcal L^f(\tau)=f'(\tau)\mathcal L(f(\tau))$ 与 $\overline{\mathcal L}^f(\tau)=f'(\tau)\overline{\mathcal L}(f(\tau))$。于是
+$$
+\mathcal K^f(\tau)=f'(\tau)\mathcal K(f(\tau)),\qquad
+\delta^f(\tau)=f'(\tau)\delta(f(\tau)),
+\qquad
+\int_{\tau_0}^{\tau_1}\delta^f(\tau)d\tau
+=\int_{f(\tau_0)}^{f(\tau_1)}\delta(t)dt.
+\tag{12.9}
+$$
+若某一非负费用坐标的累积量按 $\int c(t)dt+\sum_j b_j$ 定义，连续费率运输为 $c^f(\tau)=f'(\tau)c(f(\tau))$；时刻 $t_j$ 的点操作费用 $b_j$ 移至 $\tau_j=f^{-1}(t_j)$，其数值不变。相同区间的累计费用和累计缺陷均不变。这里每次实际记录的时刻 $t_j$ 仅重新标为 $f^{-1}(t_j)$，读数、条件化和控制协议保持同一物理实现；若改成在新钟上重新等步采样，通常改变了原物理样点，不能直接使用这条重参数化结论。
+

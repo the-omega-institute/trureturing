@@ -1,0 +1,57 @@
+**命题 18.3（零相位作用、纤维饱和与单值选择的区别）。** 对任意 $x,y\in K$，
+$$
+C(x)=H^{-1}(\{H(x)\}),\qquad C(C(x))=C(x),
+$$
+并且
+$$
+\Lambda(x,y)
+=C(\Gamma(x,y))
+=\Gamma(C(x),y)
+=\Gamma(x,C(y))
+=\Gamma(C(x),C(y)).
+$$
+原关系并不已经饱和：
+$$
+\Gamma(u,u)=\{0v\},\qquad
+\Lambda(u,u)=\{0v,10v\},\qquad
+\Gamma\subsetneq\Lambda.
+$$
+存在全域单值选择 $A:K^2\to K$，但不存在联合连续的这种选择。[^rro18_fibers][^rro18_phase]
+
+**证明。** 由于 $\mathcal S(0_K)=\Sigma$，假设18.1在分裂相位处给出全部两个输出，在非分裂相位处给出唯一输出。因此 $C(x)$ 恰为 $H(x)$ 的整个纤维。该纤维非空，且其中每个 $w$ 都满足 $C(w)=C(x)$，所以
+$$
+C(C(x))=\bigcup_{w\in C(x)}C(w)=C(x).
+$$
+对任意集合 $A\subseteq K$ 再取并，也得到 $C(C(A))=C(A)$，包括空集情形。
+
+固定 $x,y$，令 $\theta=H(x)+H(y)$。每个 $w\in\Gamma(x,y)$ 都满足 $C(w)=H^{-1}(\{\theta\})$，而 $\Gamma(x,y)$ 非空，故
+$$
+C(\Gamma(x,y))=H^{-1}(\{\theta\})=\Lambda(x,y).
+$$
+命题18.2的结合律给出
+$$
+\Gamma(C(x),y)
+=\Gamma(\Gamma(0_K,x),y)
+=\Gamma(0_K,\Gamma(x,y))
+=C(\Gamma(x,y)).
+$$
+交换性同样给出 $\Gamma(x,C(y))=\Lambda(x,y)$。最后，对每个 $y'\in C(y)$，有 $H(y')=H(y)$，于是
+$$
+\Gamma(C(x),C(y))
+=\bigcup_{y'\in C(y)}\Gamma(C(x),y')
+=\bigcup_{y'\in C(y)}\Lambda(x,y')
+=\Lambda(x,y).
+$$
+最后一个并取在非空集合上，且每项是同一纤维。
+
+由 $H(u)=E_1$、$\mathcal S(u)=\{+1\}$、$E_1+E_1=E_2$，分类给出 $\Gamma(u,u)=\{z_{E_2}^{+1}\}=\{0v\}$。但 $E_2$ 的整个纤维是 $\{0v,10v\}$，且这两个字不同。因此严格包含成立，不能把 $\Gamma$ 本身替换为饱和关系。
+
+逐点单值选择可以明确规定：输出相位不在 $E$ 时取唯一输出；输出相位在 $E$ 且正号被允许时取正号输出，否则取负号输出。分类保证每个输入对都恰落入一个这样的规定，且选中的点属于 $\Gamma(x,y)$。
+
+假设存在联合连续的单值选择 $A$。自然相位不属于 $E$，因为 $[n\phi]=[-m\phi]$、$n\ge0,m\ge1$ 将迫使 $(n+m)\phi\in\mathbb Z$。因此分类与 $H(Z(n))=[n\phi]$ 给出
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\},\qquad
+A(Z(n),Z(m))=Z(n+m).
+$$
+$A$ 的图在 $K^3$ 中闭：它是连续映射 $(x,y,z)\mapsto(A(x,y),z)$ 下的闭对角线的原像。这个闭图包含全部自然加法三元组，所以也包含其闭包 $\Gamma$。但 $\Gamma$ 同时包含 $(0_K,u,u)$ 和 $(0_K,u,v)$，与函数在输入 $(0_K,u)$ 处只能有一个值矛盾。这证明连续选择不存在；逐点选择的存在既不提供这种连续性，也没有断言该选择满足结合律或单位律。证毕。
+

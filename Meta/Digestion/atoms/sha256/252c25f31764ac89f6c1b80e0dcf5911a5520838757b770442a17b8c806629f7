@@ -1,0 +1,26 @@
+`FiniteStabilityClassBound` 定义最小相邻稳定深度
+
+$$
+ d=\min\left\{m:R_m=R_{m+1}\right\}.
+$$
+
+它证明
+
+$$
+\boxed{
+R_d=R_{d+1}=R_\infty.
+}
+$$
+
+并且对任意满足
+
+$$
+R_n=R_{n+1}
+$$
+
+的 $$n$$，都有
+
+$$
+ d\le n.
+$$
+

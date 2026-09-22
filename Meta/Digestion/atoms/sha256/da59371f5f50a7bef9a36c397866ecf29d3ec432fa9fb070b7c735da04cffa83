@@ -1,0 +1,330 @@
+**命题 150.1（固定报告仪器的两个尖锐统一消纠缠时域）。** 沿用命题 145.1—149.1 的制备与命题 148.1 的同记忆连续协议，置
+$$
+a=\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt a,\qquad a+a^2=1,\qquad
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\qquad E_0=\operatorname{diag}(1,0).
+$$
+各 qubit 取固定正交标准基，$\dagger$ 为共轭转置，$\mathsf T$ 为普通转置，$\operatorname{outer}(v)=vv^\dagger$，且
+$$
+\operatorname{vec}(C)=\sum_{i,j=0}^1C_{ij}|i\rangle_L|j\rangle_R,\qquad
+Q(C)=\operatorname{outer}(\operatorname{vec}(C))
++a\operatorname{outer}(\operatorname{vec}(CE_0)).
+$$
+原始记忆从 $m_0=s|0\rangle+a|1\rangle$ 出发，以 $m_1=|0\rangle$、
+$T|j\rangle=|j\rangle_{\rm out}\otimes m_j$ 先发出 $L,R_0$，随后只在 $L$ 上施加一个固定的复成功 Kraus 算子 $F$，$F^\dagger F\le I_2$。保留共同成功事件，记
+$$
+C_0=s^3J,\qquad C=FC_0,\qquad
+\chi(C)=\operatorname{vec}(C)\otimes|0\rangle_M
++s\operatorname{vec}(CE_0)\otimes|1\rangle_M,\qquad
+q_F=\operatorname{Tr}Q(C).
+$$
+这里 $\chi(C)$ 是成功后的实际联合向量，允许所有复 $F$，包括奇异与零矩阵；端点始终使用完整的 $\mathbb C^2\otimes\mathbb C^2$，不限制在原来的无 $11$ 支撑内。每一个制备各自固定同一个 $F$，不对不同 $F$ 作隐藏混合。
+
+固定非空有限报告集 $Y$ 及同一个列随机矩阵 $W:Y\leftarrow\{0,1\}$。每一步只在仍与端点相关的原始活动记忆上应用 $T$，发出 $R_k$，再在退役的 $R_{k-1}$ 上测量
+$$
+|\eta_b\rangle=\frac{|0\rangle+(-1)^b|1\rangle}{\sqrt2}.
+$$
+给定原始结果 $b_k$，按 $W(\cdot\mid b_k)$ 使用新的独立经典随机性产生 $y_k$。这些随机抽取给定原始记录后相互独立，并独立于其余系统和制备设置。全过程不反馈、不重置记忆、不插入后续端点干预；全部报告 $h=(y_1,\ldots,y_m)$ 始终保存在右侧。令
+$$
+c_y=W(y\mid0)+W(y\mid1),\qquad
+d_y=W(y\mid0)-W(y\mid1),\qquad d_y^2\le a c_y^2\quad(y\in Y).
+$$
+取命题 147.1、148.1 的固定右端点仪器
+$$
+\phi_y=\begin{cases}c_y\psi_{d_y/c_y},&c_y>0,\\0,&c_y=0,\end{cases}
+\qquad
+\psi_\nu\begin{pmatrix}x&u\\v&w\end{pmatrix}
+=\frac12\begin{pmatrix}
+a x+w+\nu(u+v)&a^2x+\nu a v\\
+a^2x+\nu a u&a^2x
+\end{pmatrix},
+\qquad x,u,v,w\in\mathbb C.
+$$
+对 $m\ge0$ 定义
+$$
+\Psi_h^W=\phi_{y_m}\circ\cdots\circ\phi_{y_1},\qquad
+R_h^W(C)=(\operatorname{Id}_L\otimes\Psi_h^W)(Q(C)),
+$$
+$$
+\mathcal J_W^{(m)}(X)=\sum_{h\in Y^m}\Psi_h^W(X)\otimes|h\rangle\langle h|,
+\qquad
+\rho_F^{W,m}=\frac1{q_F}\sum_{h\in Y^m}R_h^W(C)\otimes|h\rangle\langle h|
+\quad(q_F>0).
+$$
+空历史的复合为恒等映射。右输出次序取 $R_m,\mathbb C^{Y^m}$；共同成功旗标亦在右侧，其固定纯态因子不影响下列分割。$\mathcal J_W^{(m)}$ 是从一个右 qubit 到右 qubit 与全部报告历史的完全正保迹通道。
+
+可分性采用命题 132.1、141.1、149.1 的有限凸乘积密度和定义。对未归一化正算子，则使用有限正乘积和 $\sum_k A_k\otimes B_k$，$A_k,B_k\ge0$；零算子允许为空和。称右通道为 EB，是指对每个有限维辅助空间 $A$ 和每个 $A\otimes R_0$ 上的密度 $\sigma$，其输出在 $A\mid(R_m\otimes\mathbb C^{Y^m})$ 上可分。这不是要求 $\operatorname{Id}_L\otimes\mathcal J_W^{(m)}$ 相对于另一个外部参考也是 EB。
+
+在这些假设下，对每个这样的 $W$，每个固定允许的 $F\ne0$ 及每条正概率实际报告历史，$m\ge4$ 时条件密度 $R_h^W(C)/\operatorname{Tr}R_h^W(C)$ 在 $L\mid R_m$ 上可分，且保留全部历史的 $\rho_F^{W,m}$ 在 $L\mid(R_m\otimes\mathbb C^{Y^m})$ 上可分。对任意有限辅助输入，整个右通道 $\mathcal J_W^{(m)}$ 在 $m\ge5$ 时为 EB。
+
+这两个统一界均由
+$$
+B_s(t\mid b)=\frac{1+(-1)^{t+b}s}{2},\qquad t,b\in\{0,1\}
+$$
+取到：对 $W=B_s$，命题中的“对全部固定允许 $F$ 的每条正概率实际历史均可分”成立当且仅当 $m\ge4$，而 $\mathcal J_{B_s}^{(m)}$ 为 EB 当且仅当 $m\ge5$。这里的阈值是对实际族的全称性质及对任意参考输入的通道性质的阈值，不是每个 $F$ 或每个 $W$ 各自必须达到的时间。非零秩一 $F$ 的端点态从制备时已经是乘积态；两列相同的无信息 $W$ 在一步即为 EB。
+
+若 $F=0$，所有实际块为零，不存在成功条件密度。若 $F\ne0$，$\operatorname{Tr}R_h^W(C)>0$ 恰当所用每一行 $W(y_k\mid\cdot)$ 非零；零行所涉历史没有条件密度。$m$ 计延长次数，全部 $m$ 个报告仍可访问，保留历史的寄存器随 $m$ 增长。
+
+证明。先将既有一步结论与连续过程的对象对齐。命题 145.1、146.1 的字面制备给出 $T^\dagger T=I_2$、$\chi(FC_0)$ 及
+$$
+q_F=\|C\|_F^2+a\|CE_0\|_F^2,\qquad 0\le q_F\le1,\qquad
+q_F>0\ \Longleftrightarrow\ C\ne0\ \Longleftrightarrow\ F\ne0.
+$$
+两个正交记忆列的范数均计入此式。命题 148.1 在同一个 $T$ 下对任意复 $C$ 逐系数证明：下一次发出后，以退役端点的未归一化 bra $\langle0|+(-1)^b\langle1|$ 收缩，所得向量为 $s\chi(CZ^bJ)$；归一化 bra 则给 $(s/\sqrt2)\chi(CZ^bJ)$。故较早的结果在系数矩阵的右乘积中位于较晚因子的左侧。该命题的兼容联合提升归纳适用于这里完全相同的固定制备、固定 $W$ 与无反馈协议，因而实际块恰为
+$$
+R_h^W(C)=\left(\frac a2\right)^m
+\sum_{\mathbf b\in\{0,1\}^m}
+\left[\prod_{k=1}^m W(y_k\mid b_k)\right]
+Q(CZ^{b_1}J\cdots Z^{b_m}J)
+=(\operatorname{Id}_L\otimes\Psi_h^W)(Q(C)).
+$$
+这使用实际相关联合态在每个历史处的同一提升，而不只是一步边缘态相等。每个 $Z^bJ$ 可逆，故非零 $C$ 的每条原始历史权重严格为正；非负有限和遂给出所述非零行判据。其迹是成功与报告历史的联合概率，除以 $q_F$ 才是成功条件下的报告概率。求和中没有先归一化原始态。
+
+这里复线性映射的矩阵元方向与命题 145.1—148.1 一致：右乘 $Z^bJ$ 对应右 Hilbert 因子的 $JZ^b$。若记 $\mathcal L_0(X)=X+aE_0XE_0$，其代数逆是 $\mathcal L_0^{-1}(X)=X-a^2E_0XE_0$，则那些命题的一步匹配亦写为
+$$
+\phi_y=\frac a2\sum_bW(y\mid b)\,
+\mathcal L_0\circ\operatorname{Ad}_{JZ^b}\circ\mathcal L_0^{-1}.
+$$
+该逆只用于代数表示。命题 146.1、147.1 的逐行 CP 结论在 $d_y^2\le ac_y^2$ 下直接给出各 $\phi_y$ 完全正，包括边界与零行，其效应为 $(c_yI_2+d_yX_{\rm P})/2$，其中 $X_{\rm P}=\begin{pmatrix}0&1\\1&0\end{pmatrix}$。由 $\sum_yc_y=2$、$\sum_yd_y=0$，这些效应之和为 $I_2$，所以各分支迹不增且和保迹。复合仍完全正且迹不增；在有限历史和中依次对最后一个报告求和，得 $\mathcal J_W^{(m)}$ 保迹。添加正交旗标保持完全正性。这一保迹论证不要求不同时间的报告概率独立。
+
+先取 $W=B_s$，简记 $\psi_t=\psi_{(-1)^ts}$、
+$\Psi_h=\psi_{t_m}\circ\cdots\circ\psi_{t_1}$，并定义两个不同的未归一化算子
+$$
+D_h=(\operatorname{Id}\otimes\Psi_h)(Q(I_2)),\qquad
+H_h=(\operatorname{Id}\otimes\Psi_h)
+\bigl(\operatorname{outer}(|00\rangle+|11\rangle)\bigr).
+$$
+$D_h$ 属于实际制备公式的代数族，$H_h$ 是参考因子在前的 Choi 算子；这里没有在相同长度把两者等同。命题 149.1 的复左合同恒等式在每个历史处同样成立，因为所有后续映射只作用于右因子：
+$$
+R_h^{B_s}(C)=(C\otimes I_2)D_h(C^\dagger\otimes I_2).
+$$
+特别地，所有 $D_h\ge0$，既可由实际正分支和得出，也可由完全正映射作用于 $Q(I_2)\ge0$ 得出。
+
+长度相差一步的精确关系如下。令 $e_t=(-1)^t$，
+$$
+L_t=\frac1{\sqrt2}\begin{pmatrix}a&a\\e_ts&0\end{pmatrix},
+\qquad \det L_t=-\frac{e_tas}{2}\ne0.
+$$
+直接将 $\psi_t$ 作用于四个右矩阵单位，得到
+$$
+H_t=\frac12\begin{pmatrix}
+a&a^2&e_ts&0\\
+a^2&a^2&e_tsa&0\\
+e_ts&e_tsa&1&0\\
+0&0&0&0
+\end{pmatrix}
+=(L_t\otimes I_2)Q(I_2)(L_t^\dagger\otimes I_2).
+$$
+第二个等式亦由将 $L_t$ 代入 $Q$ 的两个外积直接相乘得到。后续映射与左合同可交换，故对每条有限后缀 $h$，
+$$
+H_{(t,h)}=(L_t\otimes I_2)D_h(L_t^\dagger\otimes I_2).
+$$
+左合同保持有限正乘积和；$L_t$ 可逆，其逆合同也保持此锥，所以它在两个方向保持可分性。按
+$$
+\operatorname{PT}_R(|ij\rangle\langle kl|)=|il\rangle\langle kj|
+$$
+定义右偏转置，左合同与其交换。可逆合同保持 Hermitian 二次型的正、负、零惯性，因此上述关系也在两个方向保持 PPT 与 NPT。
+
+在使用行列式之前，证明正算子在此维数下的一个性质：若 $X\ge0$ 作用于完整的 $\mathbb C^2\otimes\mathbb C^2$，则 $X^{\operatorname{PT}_R}$ 至多有一个负特征值。事实上，任取一个二维复子空间，按向量化将它的两个独立向量识别为独立的二阶复矩阵 $A,B$。齐次二次多项式
+$$
+p(z,w)=\det(zA+wB)
+$$
+有一个非零的复齐次零点：若它恒为零，取 $(z,w)=(1,0)$；若不恒为零且 $p(1,0)=0$，仍取此点；其余情形 $p(z,1)$ 是首项系数非零的二次复多项式，故存在根。矩阵 $zA+wB$ 因 $A,B$ 独立且 $(z,w)\ne(0,0)$ 而非零，又因行列式为零而秩一，于是对应非零乘积向量 $u\otimes v$。若 $X^{\operatorname{PT}_R}$ 有至少两个负特征值，其负谱子空间中有这样的二维子空间和乘积向量，然而逐坐标有
+$$
+\langle u\otimes v,X^{\operatorname{PT}_R}(u\otimes v)\rangle
+=\langle u\otimes\overline v,X(u\otimes\overline v)\rangle\ge0,
+$$
+与该非零向量位于负谱子空间矛盾。这证明至多一个负特征值。于是当 $\det(X^{\operatorname{PT}_R})>0$ 时，四个特征值均非零，而恰有一个负值会令行列式为负，所以它们全正。此推理以 $X\ge0$ 和完整复二 qubit 维数为前提，不是任意 Hermitian 矩阵的正行列式判据。
+
+现在给出四步的有限代数证书。置 $M_h=2^{|h|}D_h$，则
+$$
+M_\varnothing=Q(I_2)=
+\begin{pmatrix}
+1+a&0&0&1\\
+0&0&0&0\\
+0&0&0&0\\
+1&0&0&1
+\end{pmatrix}.
+$$
+向历史右端追加一位 $t$ 时，对 $M_h$ 的每个二阶块施加同一替换
+$$
+\begin{pmatrix}x&u\\v&w\end{pmatrix}
+\longmapsto
+\begin{pmatrix}
+a x+w+e_ts(u+v)&a^2x+e_tsa v\\
+a^2x+e_tsa u&a^2x
+\end{pmatrix}.
+$$
+此即 $2\psi_t$ 的块规则。对每个二阶块取普通转置得到 $M_h^{\operatorname{PT}_R}$，记
+$\delta_h=\det(M_h^{\operatorname{PT}_R})$。定义六个数
+$$
+\begin{aligned}
+\mathsf A_\pm&=2a^{19}\bigl(225+177a\ \pm s(15+663a)\bigr),\\
+\mathsf B_\pm&=2a^{22}\bigl(-19+231a\ \pm s(105+67a)\bigr),\\
+\mathsf C_\pm&=2a^{24}\bigl(81+4a\ \pm s(17-24a)\bigr).
+\end{aligned}
+$$
+从 $M_\varnothing$ 依上述规则相继替换四次，按行列式的排列展开式求和，并用 $a^2=1-a$、$s^2=a$ 归约，得到完整的首位为零的八历史表：
+$$
+\begin{array}{c|c}
+h&\delta_h\\ \hline
+0000&\mathsf A_+\\
+0001&\mathsf B_+\\
+0010&\mathsf C_+\\
+0011&\mathsf B_-\\
+0100&\mathsf B_+\\
+0101&\mathsf C_-\\
+0110&\mathsf B_-\\
+0111&\mathsf A_-
+\end{array}
+$$
+这张表的每一项仅含所列块替换和四阶行列式的有限展开。其余八条无需另列，因为
+$$
+\psi_{-\nu}=\psi_\nu\circ\operatorname{Ad}_Z,\qquad
+(I_2\otimes Z)Q(I_2)(I_2\otimes Z)
+=(Z\otimes I_2)Q(I_2)(Z\otimes I_2).
+$$
+后续右映射与左 $Z$ 合同可交换，故翻转历史首位将 $D_h$ 变为
+$(Z\otimes I_2)D_h(Z\otimes I_2)$，而不改变其偏转置行列式。表因而覆盖全部十六条长度四历史。
+
+六个数的符号可由有理界直接证明。函数 $r^2+r-1$ 在正半轴严格递增，在 $8/13$ 与 $34/55$ 处的值分别为 $-1/169$ 与 $1/3025$，故
+$$
+\frac8{13}<a<\frac{34}{55}.
+$$
+对三组括号分别取
+$$
+(x,y)=(225+177a,15+663a),\quad
+(-19+231a,105+67a),\quad
+(81+4a,17-24a).
+$$
+三者均有 $x>0$；第二组可直接用 $a>8/13$，其余显然。各自平方差为
+$$
+\begin{aligned}
+(225+177a)^2-a(15+663a)^2
+&=501633-811152a>\frac{10647}{55}>0,\\
+(-19+231a)^2-a(105+67a)^2
+&=44141-68072a>\frac{113307}{55}>0,\\
+(81+4a)^2-a(17-24a)^2
+&=7969-1625a>\frac{76609}{11}>0.
+\end{aligned}
+$$
+每一行的严格下界均由 $a<34/55$ 代入得到。因此 $x>|sy|$，$x+sy$ 与 $x-sy$ 全部严格为正，六个 $\mathsf A_\pm,\mathsf B_\pm,\mathsf C_\pm$ 均正。所有 $D_h\ge0$，故刚证的负特征值数目性质说明全部十六个长度四的 $D_h$ 都有正定右偏转置。由可逆左合同，全部三十二个长度五的 $H_{(t,h)}$ 也有正定右偏转置。这些行列式全为严格正值，此证书不需处理任何零行列式情形。
+
+从 PPT 到可分性使用命题 141.1 所引的二维结论：M. Horodecki、P. Horodecki、R. Horodecki，*Separability of Mixed States: Necessary and Sufficient Conditions*，[arXiv:quant-ph/9605038v2，定理 3，PDF 第 8 页](https://arxiv.org/pdf/quant-ph/9605038v2)，Physics Letters A 223，1–8（1996）。它断言完整 $\mathbb C^2\otimes\mathbb C^2$ 上的密度可分当且仅当其偏转置为正。这里 $D_h,H_h$ 为正算子，所论块的偏转置正定，故它们非零且迹严格为正；先除以各自的迹即可适用该定理。
+
+所引文第 3 页以有限凸乘积和的迹范数闭包定义可分态；命题 141.1 已证明这与本卷定义一致，其有限维理由也适用于这里。具体地，乘积密度集合 $\mathcal P$ 紧，位于迹一 Hermitian 四阶矩阵的十五维实仿射空间中。任一含多于十六个正权重的有限和 $\sum_i p_iR_i$，由仿射相关性可取不全为零的实数 $c_i$，满足 $\sum_i c_i=0$、$\sum_i c_iR_i=0$。取
+$$
+\lambda=\min_{c_i>0}\frac{p_i}{c_i},\qquad p_i'=p_i-\lambda c_i,
+$$
+保持权重非负、和为一及所表示的态，并至少消去一项。重复即把项数降至十六项。因此 $\operatorname{conv}(\mathcal P)$ 是紧集 $\Delta_{15}\times\mathcal P^{16}$ 在有限和连续映射下的像，故在迹范数中闭。这说明 PPT 充分性给出真正的有限凸乘积分解；乘回严格正迹后，得到每个所论 $D_h,H_h$ 的有限正乘积和。反之，正矩阵的转置仍正，故任意有限正乘积和的右偏转置为正。
+
+四步实际族的结论现在由左合同直接传递。对任意复 $C$，包括奇异 $C$，将 $D_h$ 的有限正乘积和逐项以 $C$ 左合同，仍是有限正乘积和；在正迹分支归一化，即得实际条件态的可分性。保留全部历史也可分：这正是命题 149.1 的有限正交旗标论证，对每个分支的右因子附加 $|h\rangle\langle h|$，并用权重 $\operatorname{Tr}R_h(C)/q_F$ 合并各有限分解即可。反向的逐旗标压缩也保持有限正乘积和。
+
+为把五步 Choi 结论用于所有有限辅助输入，现明确给出分支重建。对任一复线性右分支 $\Psi_h$，按参考在前的次序有
+$$
+H_h=\sum_{i,j=0}^1|i\rangle\langle j|\otimes
+\Psi_h(|i\rangle\langle j|).
+$$
+若 $H_h=\sum_{k=1}^N A_k\otimes B_k$、$A_k,B_k\ge0$，比较参考矩阵单位的系数，并对任意 $X=\sum_{ij}X_{ij}|i\rangle\langle j|$ 线性重建，得
+$$
+\Psi_h(X)=\sum_k\left(\sum_{i,j}(A_k)_{ij}X_{ij}\right)B_k
+=\sum_k\operatorname{Tr}(A_k^{\mathsf T}X)B_k.
+$$
+$A_k^{\mathsf T}\ge0$。对任意有限辅助 $A$ 与密度 $\sigma\ge0$，令
+$f_k(X)=\operatorname{Tr}(A_k^{\mathsf T}X)$、
+$S_k=(\operatorname{Id}_A\otimes f_k)(\sigma)$。任取 $u\in A$，输入压缩
+$$
+\sigma_u=(\langle u|\otimes I_2)\sigma(|u\rangle\otimes I_2)\ge0
+$$
+给
+$$
+\langle u,S_ku\rangle
+=\operatorname{Tr}(A_k^{\mathsf T}\sigma_u)\ge0.
+$$
+最后的不等式可由 $A_k^{\mathsf T}$ 的有限正谱分解逐项得到。因此 $S_k\ge0$，并有
+$$
+(\operatorname{Id}_A\otimes\Psi_h)(\sigma)=\sum_k S_k\otimes B_k.
+$$
+这是每个有限辅助空间上的有限正乘积和。它不要求分支保迹，因而同样证明迹不增分支的纠缠破坏性质；输出迹为正时再归一化，零输出无条件密度。反之，若分支对所有辅助输入有此性质，将它作用于归一化最大纠缠密度
+$\operatorname{outer}(|00\rangle+|11\rangle)/2$，就得到可分的未归一化输出 $H_h/2$，所以 $H_h$ 必可分。
+
+有限正交旗标通道为 EB 当且仅当每个分支具有刚才的性质。必要性来自在右侧压缩到指定旗标，充分性来自把各分支的 $B_k$ 换成 $B_k\otimes|h\rangle\langle h|$ 并合并有限和；通道保迹使总输出为密度。这也说明即使报告完整保留，全部长度五的 Choi 块可分仍足以得到 $\mathcal J_{B_s}^{(5)}$ 对每个有限辅助输入为 EB。
+
+为证明两个界的尖锐性，对同一块规则只迭代三次，得到
+$$
+\delta_{011}=2a^{16}\bigl(15-a-s(4+24a)\bigr).
+$$
+这里 $15-a>0$、$4+24a>0$，而
+$$
+(15-a)^2-a(4+24a)^2
+=610-1007a<-\frac{126}{13}<0
+$$
+由 $a>8/13$ 得出。所以 $\delta_{011}<0$，$D_{011}^{\operatorname{PT}_R}$ 不是正半定，$D_{011}$ 为 NPT。负行列式本身已排除正半定性，不需要把任意正行列式当成充分条件。可逆左合同还给
+$$
+H_{0011}=(L_0\otimes I_2)D_{011}(L_0^\dagger\otimes I_2),\qquad
+\det\bigl((2^4H_{0011})^{\operatorname{PT}_R}\bigr)=a^6\delta_{011}<0.
+$$
+因此四步的 $0011$ Choi 分支为 NPT；对最大纠缠参考输入，它是一个正迹输出，故逐旗标压缩排除 $\mathcal J_{B_s}^{(4)}$ 为 EB。这一参考输入用于全参考域的否定，不把它认作实际制备输入。
+
+实际族的尖锐性由命题 149.1 的同一个固定物理滤波给出：
+$$
+F_*=\frac14J^{-1}=\frac14\begin{pmatrix}0&1\\1&-1\end{pmatrix},\qquad
+\|F_*\|_{\rm op}^2\le\|F_*\|_F^2=\frac3{16}<1,\qquad
+F_*C_0=\frac{s^3}{4}I_2.
+$$
+故 $F_*^\dagger F_*\le I_2$，它可逆，且
+$$
+R_h^{B_s}(F_*C_0)=\frac{a^3}{16}D_h,\qquad
+q_{F_*}=\frac{a^3}{16}(2+a)=\frac a{16}>0.
+$$
+同一三步块展开取迹得实际 $011$ 事件的联合及条件概率
+$$
+\Pr(\mathrm{success},011)
+=\frac{a^3}{128}(5a-4s+2sa),\qquad
+\Pr(011\mid\mathrm{success})
+=\frac{a^2}{8}(5a-4s+2sa).
+$$
+二者严格为正：$F_*\ne0$ 且 $B_s$ 的每个元素均正，实际原始历史和的每项具有严格正迹与严格正系数。其归一化条件态因 $\delta_{011}<0$ 而 NPT。因此三步实际族的全称可分性不成立，所用是同一个允许的 $F_*$ 与真实正概率事件。
+
+超过上述时域以后，无需再逐长度展开矩阵。任一后续步骤只以完全正分支作用右端点，并把新的经典旗标附在右因子上；它把每个有限正乘积和送为有限正乘积和。所以四步后的全部实际分支与旗标态持续可分，五步后的全参考通道持续为 EB。反过来，同一 $F_*$ 的正概率 NPT 历史 $011$ 的任意较早前缀也必须纠缠：若某前缀可分，后续指定右侧 CP 分支不能产生该 NPT 输出。前缀概率为正，由它至少包含这个正概率后继事件即知。这排除实际全称性质在 $m=0,1,2,3$ 成立。类似地，若某个 $m\le4$ 的完整历史通道已为 EB，在右侧继续到四步仍为 EB，与 $H_{0011}$ 矛盾。因而得到所述两个当且仅当阈值。实际族四步全可分与右通道四步非 EB 的同时成立，恰由它们不同的输入量词解释。
+
+最后转回任意允许的有限 $W$。命题 147.1 的最大报告分解在这里给
+$$
+V(y\mid t)=\frac{c_y+(-1)^t d_y/s}{2}\ge0,\qquad
+\sum_yV(y\mid t)=1,\qquad
+W(y\mid b)=\sum_{t=0}^1V(y\mid t)B_s(t\mid b).
+$$
+其非负性来自 $|d_y|\le sc_y$，列和来自 $\sum_yc_y=2$、$\sum_yd_y=0$；零行仍给零行。对每条完整原始历史 $\mathbf b$，有限分配律给出
+$$
+\prod_{k=1}^mW(y_k\mid b_k)
+=\sum_{\mathbf t\in\{0,1\}^m}
+\prod_{k=1}^m\bigl[V(y_k\mid t_k)B_s(t_k\mid b_k)\bigr].
+$$
+将它代入已经证明的实际未归一化历史和，保持量子端点不动，得到
+$$
+R_{\mathbf y}^{W}(C)
+=\sum_{\mathbf t\in\{0,1\}^m}
+\left[\prod_{k=1}^mV(y_k\mid t_k)\right]R_{\mathbf t}^{B_s}(C).
+$$
+这是带全部 Born 权重的相关历史恒等式，不将历史概率替换为边缘概率的乘积。在全复算子空间，命题 147.1 的 $\phi_y=\sum_tV(y\mid t)\psi_t$ 经有限次分配也给
+$$
+\Psi_{\mathbf y}^{W}
+=\sum_{\mathbf t\in\{0,1\}^m}
+\left[\prod_{k=1}^mV(y_k\mid t_k)\right]\Psi_{\mathbf t}.
+$$
+故完整 $W$ 通道由完整 $B_s$ 通道对每一历史旗标独立施加 $V$ 得到，始终保留全部处理后的 $m$ 个报告。有限正和及右侧局部经典处理保持有限正乘积和，从而传递实际四步和全参考五步的两个上界。$B_s$ 本身已在允许域内，并给上述反例，故这两个统一界不可降低。
+
+阈值并不逐个约束每个滤波或每个报告矩阵。若非零 $F$ 秩一，则 $C=\ell v^{\mathsf T}$，从定义直接有
+$$
+Q(C)=\operatorname{outer}(\ell)\otimes
+\bigl(\operatorname{outer}(v)+a\operatorname{outer}(E_0v)\bigr),
+$$
+所有后继分支仍有相同的左正因子，正迹时为乘积密度。若 $W$ 两列相同，写 $W(y\mid0)=W(y\mid1)=p_y$，则命题 149.1 的单步分解给
+$$
+\phi_y=p_y\mathcal T,\qquad
+\mathcal T=2\psi_{\nu=0},\qquad
+\mathcal T\begin{pmatrix}x&u\\v&w\end{pmatrix}
+=x\begin{pmatrix}a&a^2\\a^2&a^2\end{pmatrix}+wE_0.
+$$
+这是测量计算基后制备两个密度的右通道；其对任意有限辅助输入的正对角块分解已由命题 149.1 给出，附加报告密度仍在右侧，故一步即为 EB。整个论证只消除所声明左／右分割的纠缠。若另取外部参考与不动的 $L$ 纠缠，并让 $R_0$ 独立，则 $\operatorname{Id}_L\otimes\mathcal J_W^{(m)}$ 保留该参考与 $L$ 的纠缠，说明右通道的 EB 性不等于含不动 $L$ 的扩大通道相对于该外部参考的 EB 性。证毕。
+

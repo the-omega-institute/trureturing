@@ -1,0 +1,7 @@
+**定理，四维下界筛的应用。** 令 $a=4/35$。存在 $c_0>0$，使全部充分大的整数 $X$ 满足
+
+$$
+\#\{1\le k\le X:t\mid Q(k),\ t\text{ 素数}\Longrightarrow t\ge X^a\}
+\ge c_0\frac{X}{(\log X)^4}.\tag{EMWS2}
+$$
+

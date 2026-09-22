@@ -1,0 +1,12 @@
+**Theorem RP9.** For every k>=0 and t>=1,
+
+$$
+\boxed{
+v_5(B_{\ell,k+t}-B_{\ell,k})
+ =1+v_5(\ell^{2t}-1).
+}\tag{RP9}
+$$
+
+Valuations of negative integers, if any, mean valuations of their
+absolute values. All differences here are nonzero.
+

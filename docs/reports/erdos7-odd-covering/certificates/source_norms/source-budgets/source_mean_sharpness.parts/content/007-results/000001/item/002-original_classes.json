@@ -1,0 +1,41 @@
+{
+  "length": 204,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 57,
+      "part": {
+        "path": "content/007-results/000001/item/002-original_classes/000000-000057.json",
+        "sha256": "215bc13ce711de6c60ba86a4990415828473bc58caa00d172439ce804812a8f6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 57,
+      "stop": 114,
+      "part": {
+        "path": "content/007-results/000001/item/002-original_classes/000057-000114.json",
+        "sha256": "c5d7f0510a89ba9141b7596f270830ff4c7333e489d531fdd268eee361420fef",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 114,
+      "stop": 171,
+      "part": {
+        "path": "content/007-results/000001/item/002-original_classes/000114-000171.json",
+        "sha256": "0357fabc57d0bcf24e1e404b732159f5f3082276fbbd1a32886c9e67cc47bc0f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 171,
+      "stop": 204,
+      "part": {
+        "path": "content/007-results/000001/item/002-original_classes/000171-000204.json",
+        "sha256": "c13bef0388ed5005872b09536bca923034abef145997ec98c30e0514ac9a0cae",
+        "kind": "value"
+      }
+    }
+  ]
+}

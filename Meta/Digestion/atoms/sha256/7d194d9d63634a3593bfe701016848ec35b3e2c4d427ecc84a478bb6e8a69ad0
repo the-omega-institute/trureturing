@@ -1,0 +1,34 @@
+**Definition 22.1 (Digit space and the joint closed graph).** Work in ZFC, with zero included in $\mathbb N$. Put
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1},\quad r=-\alpha.
+$$
+Let $K$ consist of the infinite binary sequences $x$ satisfying $x_jx_{j+1}=0$, written from low to high digits. Let $Z(n)$ denote the legal Zeckendorf expansion of $n$, padded with zeros, and set
+$$
+d_K(x,y)=\sum_{j\geq0}2^{-j-1}|x_j-y_j|,\qquad
+X=K^2,\qquad
+d_X((x,y),(x',y'))=\max\{d_K(x,x'),d_K(y,y')\}.
+$$
+For a finite legal digit word $p$ of length $L$, let $C_p$ be its cylinder in $K$ and put
+$$
+S_p=\sum_{j<L}(-1)^{j+1}\alpha^{j+2}p_j.
+$$
+The empty word defines $C_{\varnothing}=K$. Define
+$$
+F(x)=\sum_{j\geq0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)]\in\mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+I=[-\alpha,\alpha^2],\quad
+\gamma(n)=[n\phi],\quad
+E=\{[-m\phi]:m\geq1\},\quad
+0_K=Z(0),\quad u=(10)^\infty,\quad v=(01)^\infty.
+$$
+Concatenations such as $0v$ and $10v$ retain this digit order. The relation and its input fibers are
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},
+\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+Write $X_{\mathrm{fin}}=Z[\mathbb N]^2$ and $\Theta(x,y)=H(x)+H(y)$. All references to $\Gamma$ concern this joint graph, not merely the equation $H(z)=\Theta(x,y)$.
+

@@ -1,0 +1,22 @@
+**theorem 27.6 (Uniformly bounded nonzero coboundary representatives).** Define
+$$
+d'_m=\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+For every positive $m,n$,
+$$
+1-\rho_t\le|d'_m|\le1+\rho_t,\qquad
+c_{m,n}=\frac{d'_m d'_n}{d'_{m+n}}.
+$$
+In particular every $d'_m$ is nonzero, and the finite vectors
+$$
+u_m=\frac{v_m}{d'_m}
+$$
+satisfy
+$$
+u_m*_t u_n=u_{m+n}.
+$$
+

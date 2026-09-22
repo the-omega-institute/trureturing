@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:10c941f37c2fc4ec7ff04b32e8b81ed1a4580d65b43ad2a1e1ed0c267634ab98
+  normalized_sha256: sha256:10c941f37c2fc4ec7ff04b32e8b81ed1a4580d65b43ad2a1e1ed0c267634ab98
+cas_ref: sha256:10c941f37c2fc4ec7ff04b32e8b81ed1a4580d65b43ad2a1e1ed0c267634ab98
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Finset.le_sup 给每轴容量上界，两端截断相等和状态上下界逐坐标经自然数线性归一化推出当前估值相等，再由 funext 与 Subtype.ext 得单射；仓内无冻结 GID，已有 D5 仅用于实际状态与守卫定义。
+    previous_atom_id: 4f4e183e83640f09b7f14124b8d0c0ed4b82962ab0a9029ea58648cb005655a8
+    next_atom_id: 6c18c88faa144183391ca145e7a39fa309504aa72634f6e29d47ba09ff9e193e

@@ -1,0 +1,5 @@
+**Proof.** Their respective differences from epsilon have unequal
+valuations h_p+k+t and h_p+k. The difference of two nonzero integers of
+unequal p-valuations has the smaller valuation, by factoring out that
+power and reducing the remaining factor modulo p.
+

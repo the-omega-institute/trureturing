@@ -1,0 +1,18 @@
+### 定理 57.4（预测充分 summary 的唯一因子化和维数下界）
+
+令 $S$ 是当前状态的线性 summary，并假设
+
+$$
+S(x)=S(y)
+\Longrightarrow
+\langle x,H^nE_i\rangle
+=
+\langle y,H^nE_i\rangle
+$$
+
+对所有 $n,i$ 成立。则存在唯一线性映射 $L$，使
+
+$$
+P_{\infty}=L\circ S_{\rm range},
+$$
+

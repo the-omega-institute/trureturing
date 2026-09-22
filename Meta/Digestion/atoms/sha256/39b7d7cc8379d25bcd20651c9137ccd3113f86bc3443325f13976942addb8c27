@@ -1,0 +1,27 @@
+**假设 25.1（精确纤维与精确闭图）。** 本节采用下述显式前提。$H$ 满射，并且
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad x_m^+\ne x_m^-,
+$$
+$$
+H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N).
+$$
+特别 $k_0=0_K$。[^rro25-phase] 定义
+$$
+\mathcal S(x)=
+\begin{cases}
+\{+1\},&x=x_m^+\text{，某个 }m\ge1,\\
+\{-1\},&x=x_m^-\text{，某个 }m\ge1,\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+对 $\sigma=H(x)+H(y)$，要求准确等式
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_\sigma\},&\sigma\notin E,\\
+\{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&\sigma=E_r.
+\end{cases}
+$$
+其中 $x_r^{+1}=x_r^+$、$x_r^{-1}=x_r^-$。这是定理16.4的完整输入纤维公式，而不是仅有 $H(w)=H(x)+H(y)$ 的相位条件。[^rro25-graph]
+

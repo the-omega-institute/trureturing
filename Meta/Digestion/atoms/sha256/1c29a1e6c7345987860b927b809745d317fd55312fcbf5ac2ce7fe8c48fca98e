@@ -1,0 +1,23 @@
+### 17.7 定理与问题：同时限制模态数时的联合下界
+
+存在仅依赖 $E_-,E_+,\eta$ 的 $c>0$，使对 $d\geq1$、$0<\varepsilon<1$、$U=E_+T\geq1$，有
+\[
+\boxed{\mathcal R_{d,T}(\varepsilon)\geq
+c\max_{1\leq m\leq d}\frac1{m^2}
+\min\left\{1,\varepsilon^{1/(2m-1)}\max\{1,(2m-1)/U\}\right\}.}
+\tag{17.10}
+\]
+
+**证明。** 对 $m\geq2$，在第 17.4 节的构造中取 $q=2m-1$，并将能量缩放系数 $\kappa$ 换成 $\kappa v$，其中
+\[
+M=\max\{1,q/U\},\qquad v=\min\{1,\varepsilon^{1/q}M\}.
+\]
+端点间距至少为 $c_2v/m^2$，而整个窗口的曲线差不超过
+\[
+2\left[\frac v4\min\{1,U/q\}\right]^q
+=2(v/(4M))^q\leq2\varepsilon.
+\]
+中点论证给出对应风险下界。$m=1$ 用 $\delta_{E_0}$ 与 $\delta_{E_0+\kappa\varepsilon}$，因为 $U\geq1$ 时该项的 $v=\varepsilon$；由 $e^{-E_0t}(1-e^{-\kappa\varepsilon t})\leq\kappa\varepsilon/E_0$ 得相同结论。最后使用 $\mathcal M_m\subseteq\mathcal M_d$ 并对 $m$ 取最大值。
+
+**问题。** 在同一模型类中，式 (17.10) 是否有一个常数与 $d,T$ 无关的匹配上界？式 (17.8) 已处理不限制模态数的情形，但不自动给出固定或缓慢增长的 $d$ 下的这个统一上界。还需区分：已知确切模态数、只知道模态上限、允许未排除的额外模式，以及允许正残余质量的模型。
+

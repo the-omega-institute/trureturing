@@ -1,0 +1,14 @@
+**命题 14.3（合法观察塔的正交增量）。** 对嵌套合法割
+$\varnothing=I_0\subseteq I_1\subseteq\cdots\subseteq I_m$，令 $\Delta_k=P_{I_k}-P_{I_{k-1}}$。即使读数相依，各 $\Delta_k$ 仍是两两正交的自伴投影，与 $P_C$ 正交，且
+$$
+\Delta_k=\sum_{\substack{S\subseteq I_k\\S\nsubseteq I_{k-1}}}D_S,
+\qquad
+f=P_Cf+\sum_{k=1}^m\Delta_kf+(\operatorname{Id}-P_{I_m})f.
+\tag{14.5}
+$$
+对任意合法割 $I\subseteq J$，
+$$
+\mathscr R_I(f)-\mathscr R_J(f)=\|(P_J-P_I)f\|_2^2\ge0.
+\tag{14.6}
+$$
+

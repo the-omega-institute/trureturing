@@ -1,0 +1,206 @@
+**命题 147.1（有限报告的逐行完全正判据、唯一随机分解与饱和恢复）。** 沿用命题 145.1、146.1 的全部复左收缩制备族和向量化约定。具体地，各二维空间取正交标准基，$\dagger$ 表示共轭转置，$\mathsf T$ 表示普通转置，$\operatorname{outer}(v)=vv^\dagger$，并置
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+\alpha+\alpha^2=1,\qquad 0<s<1,
+$$
+$$
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\qquad E_0=\operatorname{diag}(1,0),\qquad C_0=s^3J,
+\qquad \operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1C_{ij}|i\rangle_L|j\rangle_R.
+$$
+从纯初始记忆 $m_0=s|0\rangle+\alpha|1\rangle$ 出发，以 $m_1=|0\rangle$、$T|j\rangle=|j\rangle_{\rm out}\otimes m_j$ 恰好发出 $L,R$，随后在 $L$ 上施加任意单 Kraus 成功分支 $F\in M_2(\mathbb C)$，$F^\dagger F\le I_2$。包括奇异 $F$ 与 $F=0$，不对成功分支归一化；保留共同成功旗标，而不向后续端点仪器提供 $F$。这是命题 145.1 明定的扩大的制备族，不由命题 138.1、139.1 的有限内部记录策略推出。记 $C=FC_0$，端点仪器只取得约化输入
+$$
+Q(C)=\operatorname{outer}(\operatorname{vec}_{LR}(C))
++\alpha\operatorname{outer}(\operatorname{vec}_{LR}(CE_0)).
+$$
+比较协议则保留该制备的同一个原始相关记忆，用 $T$ 再发出一次 $R'$，在旧 $R$ 上测量固定基
+$$
+|\eta_b\rangle=\frac{|0\rangle+(-1)^b|1\rangle}{\sqrt2},\qquad b\in\{0,1\},
+$$
+再对最终记忆取偏迹，实际尖锐分支为命题 146.1 的
+$$
+Q_b(C)=\frac\alpha2 Q(CZ^bJ),
+$$
+其中输出向量化在 $L,R'$ 上。所有步骤无反馈；端点仪器不能访问原始记忆及其副本。
+
+任取非空有限集合 $Y$ 和列随机矩阵 $W:Y\leftarrow\{0,1\}$，即 $W(y\mid b)\ge0$、$\sum_yW(y\mid b)=1$。在实际尖锐记录完成后，给定 $b$ 按 $W(\cdot\mid b)$ 独立于其余系统及制备设置抽取报告，只保留 $y$ 与量子输出 $L,R'$，不保留 $b$、处理随机性或已丢弃记忆的可访问副本。定义
+$$
+R_y(C)=\sum_{b=0}^1W(y\mid b)Q_b(C),\qquad
+c_y=W(y\mid0)+W(y\mid1),\qquad d_y=W(y\mid0)-W(y\mid1).
+$$
+称 $W$ 对此制备族可由端点仪器复现，是指存在一个不依赖 $F$ 的仪器 $(\mathcal J_y)_{y\in Y}$：每个 $\mathcal J_y:M_4(\mathbb C)\to M_4(\mathbb C)$ 复线性且完全正，$\sum_y\mathcal J_y$ 保迹，并且
+$$
+\mathcal J_y(Q(FC_0))=R_y(FC_0)
+\qquad(F^\dagger F\le I_2,\ y\in Y).
+$$
+这里按标准基识别输入 $L,R$ 与输出 $L,R'$。要求是每个未归一化分支相等，等价于完整报告与量子输出的联合算子 $\sum_y|y\rangle\langle y|\otimes R_y(C)$ 相等。每个上述 $W$ 都能处理原实验已完成的记录；本定义限制的是只从约化端点输入复现这个联合算子，不是对经典处理本身的物理许可分类。
+
+令
+$$
+B_s(t\mid b)=\frac{1+(-1)^{t+b}s}{2},\qquad t,b\in\{0,1\}.
+$$
+则以下三项等价：$W$ 可由端点仪器复现；对每个 $y$ 有 $d_y^2\le\alpha c_y^2$；存在列随机矩阵 $V:Y\leftarrow\{0,1\}$ 使 $W=VB_s$。该随机因子唯一，且
+$$
+V(y\mid t)=\frac{c_y+(-1)^t d_y/s}{2}.
+$$
+不论 $W$ 是否满足完全正判据，制备族上的分支匹配都迫使唯一的全空间复线性延拓。以命题 146.1 的
+$$
+\psi_\nu\!\begin{pmatrix}x&u\\v&w\end{pmatrix}
+=\frac12\begin{pmatrix}
+\alpha x+w+\nu(u+v)&\alpha^2x+\nu\alpha v\\
+\alpha^2x+\nu\alpha u&\alpha^2x
+\end{pmatrix}
+\qquad(x,u,v,w\in\mathbb C)
+$$
+表示，该延拓恰为
+$$
+\widehat{\mathcal J}_y=
+\begin{cases}
+c_y(\operatorname{Id}_L\otimes\psi_{d_y/c_y}),&c_y>0,\\
+0,&c_y=0.
+\end{cases}
+$$
+对于具有相同二元输入的报告矩阵，定义 $A\preceq B$ 表示 $A=SB$，其中 $S$ 为列随机的输出处理矩阵；互相满足此关系称为随机后处理等价。$B_s$ 是全部可由端点仪器复现的有限报告在此关系下的最大元，最大性按随机后处理等价理解，不要求字面报告字母表唯一。
+
+进一步，对每个可由端点仪器复现的 $W$，两条件列的总变差满足
+$$
+\operatorname{TV}(W(\cdot\mid0),W(\cdot\mid1))
+:=\frac12\sum_{y\in Y}|d_y|\le s.
+$$
+等号成立当且仅当每个非零行满足 $|d_y|=sc_y$，也当且仅当 $W$ 与 $B_s$ 随机后处理等价。等号时，按 $d_y$ 的正负作确定性分组即恢复 $B_s$，零行可任意分组；所恢复的是这个极端带噪报告，不是原始尖锐记录 $b$。总变差比较的是 $W$ 的条件列，不假定实际尖锐 Born 先验均匀，也不表示量子迹距离。仅有此总变差上界不足以推出端点复现：例如
+$$
+W_* =\begin{pmatrix}1/10&0\\9/10&1\end{pmatrix}
+$$
+的总变差为 $1/10<s$，却不满足逐行判据。结论只涉及所声明制备族的一次延长和这个报告与量子输出联合算子，不要求恢复与已丢弃记忆、不可访问制备标签或任意未来干预的关联，亦不附加熵、容量、最小记忆、多步闭合或普适经典性结论。
+
+证明。命题 145.1、146.1 从命题 130.1 的字面生成器及命题 137.1 的空内部记录得到
+$$
+\chi_F=\operatorname{vec}_{LR}(C)|0\rangle_M
++s\operatorname{vec}_{LR}(CE_0)|1\rangle_M.
+$$
+继续使用同一个相关记忆时，固定 $b$ 的最终记忆两列系数矩阵是 $D_b=(s/\sqrt2)CZ^bJ$ 与 $sD_bE_0$，故其偏迹正是上述 $Q_b(C)$；这两个记忆列始终保持原振幅。写 $C=(r,t)$，引用命题 146.1 已由这些列证明的 Born 权重等式，得
+$$
+q(C):=\operatorname{Tr}Q(C)=(1+\alpha)\|r\|^2+\|t\|^2,
+\qquad h(C)=\operatorname{Re}(r^\dagger t),
+$$
+$$
+q_b(C):=\operatorname{Tr}Q_b(C)
+=\frac{\|r+(-1)^bt\|^2+\alpha\|r\|^2}{2}
+=\frac{q(C)}2+(-1)^bh(C),\qquad q_0(C)+q_1(C)=q(C).
+$$
+收缩条件给 $0\le q(C)\le1$，$C_0$ 可逆给 $q(C)=0$ 当且仅当 $F=0$；若 $F\ne0$，上式两个平方范数不可能同时为零，故两个 $q_b(C)$ 都严格为正。经典处理的条件独立性因此给
+$$
+p_y(C):=\operatorname{Tr}R_y(C)=\frac{c_yq(C)}2+d_yh(C),\qquad
+\sum_yp_y(C)=q(C).
+$$
+当 $F\ne0$ 时，$p_y(C)=0$ 恰当该报告行全零。对 $p_y(C)>0$，成功条件下的报告概率为 $p_y(C)/q(C)$，报告态为
+$$
+\frac{R_y(C)}{p_y(C)}
+=\sum_{b=0}^1\frac{W(y\mid b)q_b(C)}{p_y(C)}\,
+\frac{Q_b(C)}{q_b(C)}.
+$$
+故归一化尖锐态的混合权重含有实际 Born 权重，不能直接以原始 $W(y\mid b)$ 代替。当 $F=0$ 时所有分支及概率为零，不定义任何条件态；零行亦不定义报告态。
+
+现直接使用命题 145.1、146.1 对同一个全部复收缩族证明的张成性和唯一尖锐延拓。其适用性依赖于 $C_0$ 可逆、任意复 $D$ 可正缩放为 $FC_0$，以及可逆线性算子
+$$
+\mathcal L(A)=A+\alpha PAP,\qquad
+\mathcal L^{-1}(A)=A-\alpha^2PAP,\qquad P=I_L\otimes E_0
+$$
+把四维秩一外积的 Hermitian 实张成族送到兼容输入的张成族。因此兼容等式确定整个 $M_4(\mathbb C)$ 上的复线性映射，不只确定兼容的正算子。该族包括全部复 $F$，无需任何 $F^{-1}$；固定原始有限记录集本身没有在这里承担张成性。由前述命题，尖锐分支的延拓是 $\operatorname{Id}_L\otimes\psi_{(-1)^b}$；其中右乘 $Z^bJ$ 对应右 Hilbert 因子的 $(Z^bJ)^{\mathsf T}=JZ^b$，所以独立复矩阵元 $u,v$ 的方向正是陈述中的方向。
+
+将这两个尖锐延拓按一行 $W$ 线性相加，利用 $\psi_\nu$ 对实参数 $\nu$ 的仿射性，若 $c_y>0$ 就得
+$$
+\sum_bW(y\mid b)(\operatorname{Id}_L\otimes\psi_{(-1)^b})
+=c_y(\operatorname{Id}_L\otimes\psi_{\nu_y}),\qquad \nu_y=d_y/c_y.
+$$
+它已匹配该行的所有实际未归一化分支，张成性保证唯一。若 $c_y=0$，非负性迫使整行及 $d_y$ 为零，张成性迫使延拓为零，无需定义 $\nu_y$。
+
+命题 146.1 已对相互独立的复矩阵元证明 $\psi_\nu$ 完全正当且仅当 $\nu^2\le\alpha$，并在此闭区间给出 $K_j(\nu)$ 的 Kraus 分解，包括 $\nu=\pm s$ 时 $K_2=0$ 的边界。对 $c_y>0$，若全端点映射 $\widehat{\mathcal J}_y$ 完全正，将它依次与 $A\mapsto E_0\otimes A$、对 $L$ 的偏迹复合并除以 $c_y$，便得到完全正的 $\psi_{\nu_y}$。故 $d_y^2\le\alpha c_y^2$ 必要。反之，该不等式使
+$$
+\sqrt{c_y}\,I_L\otimes K_j(\nu_y)\qquad(j=1,2,3)
+$$
+给出所需分支的 Kraus 算子，零行取零映射。命题 146.1 的效应恒等式给
+$$
+\mathsf E_y=I_L\otimes\frac{c_yI_2+d_yX_{\rm P}}2,\qquad
+X_{\rm P}=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+列随机性给 $\sum_yc_y=2$、$\sum_yd_y=0$，故 $\sum_y\mathsf E_y=I_4$。这些完全正分支之和保迹，组成同一个与 $F$ 无关的仪器。这证明端点复现与逐行不等式的等价，包含全部零行和阈值边界。
+
+为求随机因子，写
+$$
+B_s=\frac12\begin{pmatrix}1+s&1-s\\1-s&1+s\end{pmatrix},\qquad
+\det B_s=s>0.
+$$
+若 $W=VB_s$，逐行比较和与差，必有
+$$
+V(y\mid0)+V(y\mid1)=c_y,\qquad
+s\bigl(V(y\mid0)-V(y\mid1)\bigr)=d_y.
+$$
+解这两个等式即得唯一的所列 $V$。由于 $s>0$，其非负性恰等价于 $|d_y|\le sc_y$，也就是逐行完全正判据；两个列和分别为
+$$
+\sum_yV(y\mid t)=\frac{\sum_yc_y+(-1)^t\sum_yd_y/s}{2}=1.
+$$
+反过来，在该判据下这样定义 $V$，它列随机，且直接相乘给
+$$
+(VB_s)(y\mid b)=\frac{c_y+(-1)^bd_y}{2}=W(y\mid b).
+$$
+零行给出 $V$ 的零行，乘积方向为从 $b$ 经 $B_s$ 到 $t$ 再经 $V$ 到 $y$。
+
+这一分解也在量子输出上实现所要求的等式。先做 $B_s$ 对应的边界仪器
+$$
+\mathcal I_t=\operatorname{Id}_L\otimes\psi_{(-1)^ts},\qquad t=0,1,
+$$
+再以 $V(y\mid t)$ 处理其报告并丢弃 $t$。它的第 $y$ 个分支在整个 $M_4(\mathbb C)$ 上满足
+$$
+\sum_tV(y\mid t)\mathcal I_t=\widehat{\mathcal J}_y,
+$$
+因为两系数的和为 $c_y$、乘上 $s$ 的差为 $d_y$；零行情形两边同为零。因此复现的是每个量子分支以及完整联合算子，非仅报告概率。$B_s$ 本身满足判据，而每个可复现 $W$ 都有 $W\preceq B_s$，所以它是所述最大元；同一等价类可有分裂后的更多标签，不是唯一字母表。另由 $d_y=s(V(y\mid0)-V(y\mid1))$ 可见
+$$
+\operatorname{TV}(W(\cdot\mid0),W(\cdot\mid1))
+=s\operatorname{TV}(V(\cdot\mid0),V(\cdot\mid1)).
+$$
+$V$ 的两列总变差可以达到 $1$，例如 $W=B_s$ 时 $V=I_2$；上界 $s$ 针对的是 $W$。
+
+最后逐行求和得到
+$$
+\frac12\sum_y|d_y|\le\frac s2\sum_yc_y=s,\qquad
+s-\operatorname{TV}(W(\cdot\mid0),W(\cdot\mid1))
+=\frac12\sum_y(sc_y-|d_y|).
+$$
+右边为有限个非负数的和，故等号恰当每个亏量为零。零行自动满足，非零行则有 $d_y=\pm sc_y\ne0$。将正号行放入 $Y_+$、负号行放入 $Y_-$，零行任意分入两者，记 $C_\pm=\sum_{y\in Y_\pm}c_y$。饱和及列和给
+$$
+C_++C_-=2,\qquad sC_+-sC_-=\sum_yd_y=0,
+\qquad C_+=C_-=1.
+$$
+于是
+$$
+\sum_{y\in Y_+}W(y\mid b)=\frac{1+(-1)^bs}{2},\qquad
+\sum_{y\in Y_-}W(y\mid b)=\frac{1-(-1)^bs}{2}.
+$$
+定义确定性列随机矩阵 $U$，在 $Y_+$ 上输出 $0$、在 $Y_-$ 上输出 $1$，便有 $UW=B_s$。同一分组还给 $\sum_{y\in Y_+}\widehat{\mathcal J}_y=\mathcal I_0$、$\sum_{y\in Y_-}\widehat{\mathcal J}_y=\mathcal I_1$，故极端报告的对应量子分支亦被恢复。
+
+反之，任意列随机 $U$ 都满足有限和三角不等式
+$$
+\sum_t\left|\sum_yU(t\mid y)d_y\right|
+\le\sum_{t,y}U(t\mid y)|d_y|=\sum_y|d_y|.
+$$
+若 $UW=B_s$，便有 $s=\operatorname{TV}(B_s(\cdot\mid0),B_s(\cdot\mid1))\le\operatorname{TV}(W(\cdot\mid0),W(\cdot\mid1))\le s$，所以必须饱和。结合总有的 $W=VB_s$，即得饱和与随机后处理等价的双向结论。全论证对任意非空有限 $Y$ 逐行成立，不需要字母表大小的上界。
+
+为区分逐行判据与总体总变差，$W_*$ 的两行有
+$$
+(c_0,d_0)=(1/10,1/10),\qquad
+(c_1,d_1)=(19/10,-1/10),\qquad
+(\nu_0,\nu_1)=(1,-1/19).
+$$
+第一行违反 $\nu_0^2\le\alpha$，第二行满足该式，而 $\sum_yc_y\nu_y=0$ 且总变差仅为 $1/10$。由 $\alpha^2+\alpha=1$ 和 $0<\alpha<1$ 可得 $\alpha>1/2$，故 $1/10<s$ 及 $1/19^2<\alpha$。对每个非零 $F$，第一行的实际概率为 $q_0(C)/10>0$，不能作为不可能事件略去。
+
+事实上，对任意列随机 $W$，即使违反完全正判据，也有 $|d_y|\le c_y$，故上述 $\mathsf E_y$ 的两个右因子特征值为 $(c_y\pm d_y)/2=W(y\mid0),W(y\mid1)\ge0$，且 $\sum_y\mathsf E_y=I_4$。从 $\psi_\nu$ 的迹式得到 $\operatorname{Tr}\widehat{\mathcal J}_y(A)=\operatorname{Tr}(\mathsf E_yA)$；对任意固定输出密度 $\tau$，映射 $A\mapsto\operatorname{Tr}(\mathsf E_yA)\tau$ 组成一个可实现这些概率的仪器。其完全正性可直接看出：若 $\mathsf E_y=\sum_j e_j|u_j\rangle\langle u_j|$、$\tau=\sum_k t_k|v_k\rangle\langle v_k|$ 为谱分解，则 $\sqrt{e_jt_k}|v_k\rangle\langle u_j|$ 是 Kraus 算子。但这不保证输出为所需的 $R_y(C)$。
+
+此外，对所有 $W$，强制延拓的非选择和总为
+$$
+\sum_y\widehat{\mathcal J}_y
+=\operatorname{Id}_L\otimes(2\psi_0)
+=\operatorname{Id}_L\otimes\mathcal T,
+$$
+其中 $\mathcal T$ 是命题 146.1 已证明的完全正保迹通道。因而有效 POVM 和有效非选择和各自都不足以保证指定分支完全正；$W_*$ 与尖锐恒等报告 $W=I_2$ 都体现这个区别。命题 146.1 的负 Choi 二次型排除的是兼容族所迫使的全空间完全正延拓，实际 $Q_b(C)$ 与 $R_y(C)$ 始终是正算子，并无实际分支产生负态的结论。证毕。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4eaec36532119bc0f8823807f5d1ee79a2143906e3be97485074428d8149af66
+  normalized_sha256: sha256:4eaec36532119bc0f8823807f5d1ee79a2143906e3be97485074428d8149af66
+cas_ref: sha256:4eaec36532119bc0f8823807f5d1ee79a2143906e3be97485074428d8149af66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 采用原原子末句明确限定的交换、非零、完备及单位范数为一条件，Mathlib 字符空间的保单位性质和谱成员存在字符的等价式直接给出显示等式，仓内无冻结 GID。
+    previous_atom_id: a3fbc4d5dc0688ff239a865b7064e5de94c6b5b42c872c1fc390c39bfbf290a3
+    next_atom_id: 5784e02654c5821206c6eadb6fcc6df3dbc9ecf35adaeaf7e89e55b11afe98ba

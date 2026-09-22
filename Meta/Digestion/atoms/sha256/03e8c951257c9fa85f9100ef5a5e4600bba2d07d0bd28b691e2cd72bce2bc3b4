@@ -1,0 +1,6 @@
+**Theorem.** For every m>=1 and every odd t>1,
+
+\[
+\boxed{s(m)\mid s(mt^2),\qquad s(m)\ne s(mt^2).}\tag{U.4}
+\]
+

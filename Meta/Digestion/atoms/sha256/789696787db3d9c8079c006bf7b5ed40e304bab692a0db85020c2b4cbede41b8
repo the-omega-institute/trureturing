@@ -1,0 +1,24 @@
+**证明。** 固定 $x,y,z$。每个 $u\in\operatorname{supp}Q_{x,y}$ 都有 $H(u)=H(x)+H(y)$，所以
+$$
+\sum_u Q_{x,y}(u)Q_{u,z}
+=\sum_u Q_{x,y}(u)\eta_{H(x)+H(y)+H(z)}
+=\eta_{H(x)+H(y)+H(z)}.
+$$
+对右括号作同样的有限求和，得到同一分布，因此结合。取
+$$
+\eta_\theta=
+\begin{cases}
+\frac12\delta_{z_\theta^{+1}}+\frac12\delta_{z_\theta^{-1}},
+&\theta\in E,\\
+\delta_{k_\theta},&\theta\notin E
+\end{cases}
+$$
+即得非 Dirac 实例。但是对 $x=y=z_{E_m}^{+1}$，
+$$
+Q_{x,y}=\frac12\delta_{z_{E_{2m}}^{+1}}
++\frac12\delta_{z_{E_{2m}}^{-1}},
+\qquad
+\Gamma(x,y)=\{z_{E_{2m}}^{+1}\}.
+$$
+它给被精确关系排除的负标记赋予正质量，故不满足假设23.1的支撑契约，也不是定理23.9的反例。证毕。
+

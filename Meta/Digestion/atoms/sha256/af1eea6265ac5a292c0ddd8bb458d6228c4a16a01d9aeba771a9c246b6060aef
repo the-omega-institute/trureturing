@@ -1,0 +1,32 @@
+**definition 54.14（全素数乘积输入与有限支撑呈现）.** 令
+$$
+R=\prod_p\mathbb Z_p,\qquad R^\times=\prod_p\mathbb Z_p^\times.
+$$
+对同一有限顶点集 $V=[n]$，其中 $n\ge0$，全局输入是在每个素数 $p$ 给出完整阵列
+$$
+a^{(p)}_{ij}\in\mathbb N_0\cup\{\infty\}.
+$$
+全局实现是
+$$
+X_i=(x_{i,p})_p\in R^\times
+$$
+满足对所有 $p$ 与 $i<j$，
+$$
+v_p(x_{i,p}+x_{j,p})=a^{(p)}_{ij}.
+$$
+这里 $R$ 直接定义为坐标乘积，因此其单位群是逐坐标单位的乘积；若把 $R$ 识别为有限整数 $\widehat{\mathbb Z}$，则 axiom 54.1 所引 Longhi–Mu–Saettone Theorem 3.6 与式 (36) 给出
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p,\qquad
+\widehat{\mathbb Z}^{\times}=\prod_p\mathbb Z_p^\times.
+$$
+
+称输入具有规范有限支撑呈现，如果显式给出有限素数集 $S$，并且对 $p\notin S$ 规定统一默认阵列
+$$
+a^{(p)}_{ij}=v_p(2)
+$$
+对所有 $i<j$。该默认阵列由
+$$
+x_{i,p}=1
+$$
+对所有顶点实现；当 $n=0$ 时此规定真空成立。
+

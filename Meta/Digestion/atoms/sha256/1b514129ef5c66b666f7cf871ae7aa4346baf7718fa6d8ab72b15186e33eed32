@@ -1,0 +1,24 @@
+### 128.1 同一潜在状态与完整联合模型
+
+令 $Z\in\mathbb R^d$，$d\ge1$，先验为
+$$
+Z\sim N(m_0,\Sigma_0),\qquad \Sigma_0\succ0.
+$$
+给定已知矩阵 $A$ 与确定性读取矩阵 $C_t$，定义
+$$
+H_t=C_tA^t,\qquad Y_t=H_tZ+\epsilon_t,\qquad
+\epsilon_t\sim N(0,R_t),\quad R_t\succ0.
+$$
+所有噪声相互独立并与 $Z$ 独立；$A,C_t,R_t$ 和读取安排预先固定且已知。各次输出维数可以不同。$A^tZ$ 来自同一初态；本节没有额外过程噪声。
+
+用 $n$ 表示已读取 $t=0,\ldots,n-1$ 共 $n$ 次，历史为 $\mathcal Y_n=(Y_0,\ldots,Y_{n-1})$。令
+$$
+J_0=\Sigma_0^{-1},\qquad
+J_n=J_0+\sum_{t<n}H_t^TR_t^{-1}H_t,\qquad
+\eta_n=J_0m_0+\sum_{t<n}H_t^TR_t^{-1}y_t,
+$$
+$$
+\Sigma_n=J_n^{-1},\qquad m_n=\Sigma_n\eta_n.
+$$
+实空间的转置就是伴随。每项精度增量半正定，故 $J_n\succ0$，逆始终存在。$n=0$ 时空和返回先验。
+

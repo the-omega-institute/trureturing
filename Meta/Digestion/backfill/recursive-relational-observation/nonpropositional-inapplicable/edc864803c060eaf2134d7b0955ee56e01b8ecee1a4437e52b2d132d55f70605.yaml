@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:edc864803c060eaf2134d7b0955ee56e01b8ecee1a4437e52b2d132d55f70605
+  normalized_sha256: sha256:edc864803c060eaf2134d7b0955ee56e01b8ecee1a4437e52b2d132d55f70605
+cas_ref: sha256:edc864803c060eaf2134d7b0955ee56e01b8ecee1a4437e52b2d132d55f70605
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Let”与“standing carrier hypotheses”在此仅指定圆上的归一化 Haar 测度记号并给章节引用，没有声称本叶构造了载体上的 Haar 提升；该记号与引用未夹带新命题，故无需证明。
+    previous_atom_id: 4d596a24f161df341bcadab0e3079c5c44c3e8010d650cbf99ae99fec57fac96
+    next_atom_id: 64a32dde0eb15249809d21e64bef8d4ef6d55607951e5b2b7016d34c9520b4bf

@@ -1,0 +1,8 @@
+**命题 135.4（弱传感器的共同子测度下界）。** 对任意随机化检验 $\varphi:\{0,1\}^N\to[0,1]$，其公平先验风险满足
+
+$$
+R^\varepsilon_{k,N}(\varphi)
+\ge\frac12(1-2\varepsilon)^N
+\ge\frac12-N\varepsilon.
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00e0a90d9f6ddca9fa115355edcb2ca4277a73bf94465d678ef68fe74d352835
+  normalized_sha256: sha256:00e0a90d9f6ddca9fa115355edcb2ca4277a73bf94465d678ef68fe74d352835
+cas_ref: sha256:00e0a90d9f6ddca9fa115355edcb2ca4277a73bf94465d678ef68fe74d352835
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出定义 430.1（预测十二·外部图与语义图）所用的载体、符号或任务假设，并规定相应函数、域与约定；这些内容是定义及适用条件，没有需要证明的独立命题，故由现有结算写入器处理。
+    previous_atom_id: 82910ac2524c219716cd8cfc15b8cfc1ae2def1380c77b360cb61f71e11c910a
+    next_atom_id: c8c498c40d191cd70b20bd967a144c888f4dc217a5891e8bf8ddfc9a4c49a393

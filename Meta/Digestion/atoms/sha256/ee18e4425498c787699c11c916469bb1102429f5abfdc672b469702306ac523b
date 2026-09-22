@@ -1,0 +1,24 @@
+**theorem 35.4 (Sharp ball constants and explicit exceptional-point spectra).** Put
+$$
+\mathscr R(y,r):=\frac{\eta(\overline B_\rho(y,r))}{h_1(r)}.
+$$
+For every $y\in X_\beta$ and $0<r\le1$,
+$$
+\alpha^2\le\mathscr R(y,r)\le A_+.
+$$
+Both constants are sharp when all these radii are allowed. At small scales the sharper exact uniform limits are
+$$
+\lim_{\varepsilon\downarrow0}\inf_{\substack{y\in X_\beta\\0<r\le\varepsilon}}\mathscr R(y,r)=A_-,
+\qquad
+\lim_{\varepsilon\downarrow0}\sup_{\substack{y\in X_\beta\\0<r\le\varepsilon}}\mathscr R(y,r)=A_+.
+$$
+The exceptional points $w$ and $1w$ give the more precise witnesses
+$$
+\liminf_{r\downarrow0}\mathscr R(w,r)=A_0,\qquad
+\limsup_{r\downarrow0}\mathscr R(w,r)=A_+,
+$$
+$$
+\liminf_{r\downarrow0}\mathscr R(1w,r)=A_-,\qquad
+\limsup_{r\downarrow0}\mathscr R(1w,r)=A_0.
+$$
+

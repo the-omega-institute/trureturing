@@ -1,0 +1,35 @@
+**Proof 22.14.** Swapping the first two coordinates preserves the set of actual finite addition triples. The swap is a homeomorphism, so it preserves its closure. Hence $\Gamma(x,y)=\Gamma(y,x)$. Taking the least or greatest element of the same fiber proves commutativity of both canonical selections. Their constant-weight mixture of Dirac probabilities is commutative as well.
+
+Put $p_2=0v$ and $q_2=10v$. Assumption 22.2, including its specified labels, gives
+$$
+\Gamma(0_K,u)=\Gamma(0_K,v)=\{u,v\},\qquad
+\Gamma(u,u)=\{p_2\},\qquad\Gamma(v,v)=\{q_2\},
+$$
+$$
+\Gamma(0_K,p_2)=\Gamma(0_K,q_2)=\{p_2,q_2\}.
+$$
+Indeed, $H(0_K)=0\notin E$, so its sign set permits both signs; the other phases in the last display are $[-2\phi]\in E$. The same-sign rule gives the two diagonal singleton fibers. In lexicographic order $v<u$ and $p_2<q_2$, as their first digits show. Consequently
+$$
+A_{\min}(0_K,u)=v\ne u,\qquad A_{\max}(0_K,v)=u\ne v,
+$$
+so the proposed identity fails. Furthermore,
+$$
+A_{\min}(A_{\min}(0_K,v),v)=q_2\ne p_2
+=A_{\min}(0_K,A_{\min}(v,v)),
+$$
+$$
+A_{\max}(A_{\max}(0_K,u),u)=p_2\ne q_2
+=A_{\max}(0_K,A_{\max}(u,u)).
+$$
+These are explicit failures of associativity for the two named selections. For the probability kernels,
+$$
+P_\lambda(0_K,u)=P_\lambda(0_K,v)=(1-\lambda)\delta_v+\lambda\delta_u.
+$$
+The identity requirement at $u$ would force $\lambda=1$, whereas the one at $v$ would force $\lambda=0$. Thus no constant weight gives the Dirac identity law.
+
+For a noncommutative Baire-one example, change $A_{\min}$ only at $\xi_*=(0_K,u)$, assigning $u$ there, and denote the result by $A_*$. It remains a selection. At the transposed input $(u,0_K)$ it still equals $v$, so it is not commutative. For the nested clopen cells $C_n(\xi_*)$ used in Theorem 22.9, define a map equal to the constant $u$ on that cell and equal to $a_n$ outside it. Each such map is continuous into $K$. At $\xi_*$ it converges to $u$. At any other input it eventually equals $a_n$, because the cells shrink to the singleton $\{\xi_*\}$. Its limit there is $A_{\min}$. These maps prove that $A_*$ is Baire one.
+
+To separate commutativity from the other regularities, take disjoint nonempty clopen cylinders $U,V\subset K$ and obtain the Cantor set $M\subset U\times V$ from Theorem 22.7. Its transpose $\tau M\subset V\times U$ is disjoint from $M$. Make either construction $A_R$ or $A_B$ from Theorem 22.10 on $M$, make the identical choices at transposed points in $\tau M$, and retain $A_{\min}$ elsewhere. Symmetry of the relation makes this a commutative selection. In the $R$ case it is Borel, since both modified sets are closed with countable distinguished subsets, but its restriction to $M$ retains the proof of failure of Baire class one. In the $B$ case its restriction to $M$ retains the failure of completed measurability for the probability supported there. Thus commutativity supplies neither missing regularity. The natural input fibers remain singleton fibers in all cases, so none of the modifications can change natural addition. Their continuity loci follow from Theorem 22.6.
+
+These counterexamples establish the stated nonimplications, not a classification of associative selections. In particular, the existence or nonexistence of other associative selections, and any separately defined associativity law for composed probability kernels, are not asserted here. The exact continuity obstruction, the descriptive loci, and the constructions in Theorems 22.6–22.13 require no such law.
+

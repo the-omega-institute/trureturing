@@ -1,0 +1,56 @@
+### 47.5 临界点：有界但在全负边界不连续
+
+令 $q=1$，即 $\rho=1/\lambda(A)$，并记
+$$
+c_A=\frac{A\lambda(A)}{\lambda(A)+1}>0,\qquad
+b_A=\frac{A}{\lambda(A)+1}.
+$$
+由 (47.7)，
+$$
+\rho^ku_k(A)=c_A+b_A\lambda^{-2k}.
+\tag{47.13}
+$$
+
+因此，对全负边界的实际数组作有限反对角坐标截断时，尾部范数由 (47.11) 精确给出，并趋于 \(c_A\)，不会趋零。这说明环境数组中的有限坐标截断在临界范数下不能逼近该对象；它不等同于“有限支撑边界生成的实际无限数组”。第47.9节将证明：在完整自由来源类中，后者的闭包恰为具有消失加权尾的实际像，任意实际数组到该闭包的距离等于其剩余尾幅度；这个全负数组的距离特别为 \(c_A\)。
+对每个固定 $0<h<A$，$\lambda(A-h)<\lambda(A)$，所以
+$$
+\rho^ku_k(A-h)\longrightarrow0.
+$$
+当 $h=A$ 时此项恒为零，结论仍成立。故
+$$
+\lim_{k\to\infty}
+\rho^k\bigl(u_k(A)-u_k(A-h)\bigr)=c_A
+\qquad(0<h\le A).
+\tag{47.14}
+$$
+共同角点对因此满足
+$$
+\|(-A\mathbf1)-(-(A-h)\mathbf1)\|_\infty=h,\qquad
+\|\mathcal E(-A\mathbf1)-\mathcal E(-(A-h)\mathbf1)\|_\rho
+=\omega_{\rho,A}(h)\ge c_A.
+\tag{47.15}
+$$
+令 $h\downarrow0$，得到 $\mathcal E$ 在全负边界处不连续。因此临界情形没有全局 Lipschitz 常数。
+
+事实上，整个允许区间上的临界模量都有闭式：
+$$
+\omega_{\rho,A}(0)=0,\qquad
+\omega_{\rho,A}(h)=\max\{h,c_A\}\quad(0<h\le A),
+\qquad
+\lim_{h\downarrow0}\omega_{\rho,A}(h)=c_A.
+\tag{47.16}
+$$
+证明。令 $B=A-h\in[0,A)$。$u_k$ 的一次项为 $B$，其余系数非负，故 $u_k(B)\ge B$，包括 $B=0$。由于 $0<\rho<1$，
+$$
+\rho^k u_k(B)\ge B\rho^k\ge B\rho^{2k}.
+$$
+结合 (47.13)、$\rho=\lambda^{-1}$ 及 $b_A-B=h-c_A$，
+$$
+\rho^k\bigl(u_k(A)-u_k(B)\bigr)
+\le c_A+(h-c_A)\rho^{2k}
+\le\max\{h,c_A\}.
+$$
+深度零的差值恰为 $h$；(47.14) 的深度极限给下界 $c_A$。取上确界即证精确式，并得到零处的跳跃。$0<h<c_A$ 时，共同角点对取得范数距离 $c_A$，但其任何有限深度坐标都没有取得该距离（其他行还多一个不超过一的因子 $\rho^n$）；$h\ge c_A$ 时，深度零已经取得模量。证毕。
+
+结合第47.2、47.3节，整个 $K_A$ 到 $\mathcal B_\rho$ 的全局 Lipschitz 映射存在，当且仅当 $q<1$。临界结论只证明特定全负边界的不连续性，不声称每个输入处都不连续。
+

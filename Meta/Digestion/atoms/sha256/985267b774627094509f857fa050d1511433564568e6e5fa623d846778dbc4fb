@@ -1,0 +1,10 @@
+### FD.1 剩余像与单调性
+
+对素数 p 和整数 k>=1，定义
+
+\[
+S_k(p)=\{F_n\bmod p^k:n\ge0\},\qquad
+D_k(p)=|S_k(p)|/p^k,\qquad
+\delta(p)=\lim_{k\to\infty}D_k(p).
+\]
+

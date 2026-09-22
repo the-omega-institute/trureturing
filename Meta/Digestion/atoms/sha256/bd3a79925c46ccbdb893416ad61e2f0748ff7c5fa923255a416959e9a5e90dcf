@@ -1,0 +1,30 @@
+**命题 31.7（均匀长词的固定窗口及其显式误差）。** 对任意 $n,m\ge0$，在完整 $H_{n+m}$ 中准备正等振幅纯态
+$$
+|\Omega_{n+m}\rangle=c_{n+m}(0)^{-1/2}\sum_{w\in\mathcal W_{n+m}^{(k)}}|w\rangle,
+\qquad \sigma_{n,m}=\operatorname{Tr}_{\text{末 }m\text{ 位}}|\Omega_{n+m}\rangle\langle\Omega_{n+m}|.
+\tag{31.19}
+$$
+对合法 $u,v\in\mathcal W_n^{(k)}$，$s=\max(i(u),i(v))$，有
+$$
+\sigma_{n,m}[u,v]=\frac{c_m(s)}{c_{n+m}(0)}
+=\lambda^{-n}r_s\frac{u_m(s)}{u_{m+n}(0)},\qquad
+|\sigma_{n,m}[u,v]-\rho_{k,n}[u,v]|\le\lambda^{-n}r_sE_m.
+\tag{31.20}
+$$
+非法行列全零。对完整空间的迹范数，
+$$
+\|\sigma_{n,m}-\rho_{k,n}\|_1\le2^{3n/2}\lambda^{-n}E_m.
+\tag{31.21}
+$$
+因此固定 $k,n$ 时 $m\to\infty$ 给迹范数收敛；$n=0$ 的实际误差恰为零。
+
+证明。偏迹共同尾词 $z$ 的贡献是 $uz,vz$ 同时合法。起始后缀越大，直到第一个附加零之前的约束越严格；该零之后两路径都处于后缀零。因此续词集合随后缀指标嵌套，共同集合正好是从 $s$ 出发的集合，数量为 $c_m(s)$。非法前缀无合法续词，得到第一式。式（31.16）给第二式。又 $u_{m+n}=P^nu_m$，所以分母是 $u_m$ 的某个凸平均，落在其坐标范围内且至少为一。于是
+$$
+\left|\frac{u_m(s)}{u_{m+n}(0)}-1\right|
+\le\operatorname{osc}(u_m)\le E_m.
+\tag{31.22}
+$$
+维数 $d=2^n$，各项绝对值至多 $\lambda^{-n}E_m$，故 Hilbert–Schmidt 范数至多 $d\lambda^{-n}E_m$；对至多 $d$ 个奇异值作 Cauchy–Schwarz，$\|A\|_1\le\sqrt d\|A\|_{\rm HS}$，得式（31.21）。半迹距离取该界的一半并可截到一。$m=0$ 时每个共同续词数为一，仍给原均匀纯态；$n=0$ 时分子分母相同，密度恒为标量一。这些端点无需极限解释。$\square$
+
+Q125.1已经给 $k=2$ 的同类极限。本命题将定理31.2的重复等距族与均匀长词的固定窗口极限相认；两份有限准备历史和实际获取费用并不因此相同。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c725bce2b6333cd4bf50d65d25dbe6785a906897be490a35b40f92775f91e181
+  normalized_sha256: sha256:c725bce2b6333cd4bf50d65d25dbe6785a906897be490a35b40f92775f91e181
+cas_ref: sha256:c725bce2b6333cd4bf50d65d25dbe6785a906897be490a35b40f92775f91e181
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该叶是整系数多元多项式的交换环恒等式，由 add_mul、mul_sub、sub_mul 和 pow_two 的环规范化闭合，平方项及其负号均保留；仓内无冻结 GID。
+    previous_atom_id: 9e1ba15ec044a231084c8682aca5158c23cffbdd7ff56d586fda3b10dc30c263
+    next_atom_id: 084b803f3014e2b171ae88e9fecb1a86f6eaaa3eeccfe9a1ecac6940b8863ab7

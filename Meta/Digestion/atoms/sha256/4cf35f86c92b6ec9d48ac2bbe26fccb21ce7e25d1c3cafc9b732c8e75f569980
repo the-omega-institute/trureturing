@@ -1,0 +1,25 @@
+**定理 25.6（全部乘法自由度及同号强制方程）。** 对任意结合核，以定理25.4的切片唯一写成
+$$
+\pi_{E_m}=p_m\delta_{x_m^+}+(1-p_m)\delta_{x_m^-}.
+$$
+存在唯一实数 $c_{m,n}$，使其全部乘法在定理25.5的基上满足
+$$
+\pi_\theta*\pi_\rho=\pi_{\theta+\rho},\qquad
+\pi_\theta*v_m=v_m*\pi_\theta=0_A,\qquad
+v_m*v_n=c_{m,n}v_{m+n}.
+$$
+对所有正整数 $m,n,\ell$，有
+$$
+(1-p_m)(1-p_n)c_{m,n}=1-p_{m+n},\qquad
+p_mp_nc_{m,n}=-p_{m+n},
+$$
+$$
+(1-p_m-p_n)c_{m,n}=1,\qquad
+c_{m,n}=\frac1{1-p_m-p_n}\ne0,
+$$
+$$
+p_{m+n}=\frac{p_mp_n}{p_m+p_n-1},\qquad
+c_{m,n}c_{m+n,\ell}=c_{n,\ell}c_{m,n+\ell}.
+$$
+特别 $p_m+p_n\ne1$、$p_m\ne1/2$，而且乘法必定交换。
+

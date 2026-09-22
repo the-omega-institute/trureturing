@@ -1,0 +1,11 @@
+**Lemma RP7.** For every odd positive n and every a>=0,
+
+$$
+\frac{F_{(2a+1)n}}{F_n}=P_a(5F_n^2),\qquad
+P_a(0)=(-1)^a(2a+1),
+$$
+
+$$
+24P'_a(0)=(-1)^{a+1}(2a+1)((2a+1)^2-1).         \tag{RP7}
+$$
+

@@ -1,0 +1,84 @@
+**证明。** 当 $m>0$ 且 $B\xi>0$，有限最小值
+$$
+\mu=\min_\ell(B\xi)_\ell
+$$
+严格为正，故 $B(\xi/\mu)\ge\mathbf1$。反向显然。当 $m=0$，这两种可行性均为空约束，而系数和为一的空向量不存在。因此该边界完全符合断言。
+
+为在 $m>0$ 时应用非负变量版本的 Farkas 择一定理，必须先处理原变量不受符号限制这一点。写
+$$
+\xi=p-q,\qquad p,q\ge0.
+$$
+每个实向量都有这种分解，例如逐坐标取正负部分。于是
+$$
+\exists\xi\in\mathbb R^d,\quad B\xi\ge\mathbf1
+\quad\Longleftrightarrow\quad
+\exists p,q\in\mathbb R^d,\quad p,q\ge0,\quad
+\begin{pmatrix}-B&B\end{pmatrix}
+\binom pq\le-\mathbf1.
+$$
+对
+$$
+C=\begin{pmatrix}-B&B\end{pmatrix},\qquad b=-\mathbf1
+$$
+应用所引不等式 Farkas 定理。它的另一个且互斥的分支是
+$$
+\lambda\ge0,\qquad C^{\mathsf T}\lambda\ge0,\qquad
+b\cdot\lambda<0.
+$$
+两个列块分别要求 $-B^{\mathsf T}\lambda\ge0$ 与 $B^{\mathsf T}\lambda\ge0$，合起来恰为 $B^{\mathsf T}\lambda=0$；最后一个条件恰为 $\sum_\ell\lambda_\ell>0$。除以这个正和，便得到归一化证书。这一应用也允许 $d=0$，因为其非负原变量集合可以为空。
+
+两分支不能同时成立还可直接核对：若 $B\xi>0$ 且 $\lambda\ge0,\lambda\ne0$，则
+$$
+0=(B^{\mathsf T}\lambda)\cdot\xi
+=\sum_\ell\lambda_\ell(B\xi)_\ell>0,
+$$
+矛盾。最后一步使用至少一个权重严格为正。正和归一化及反向去掉归一化，证明两种证书表述等价。
+
+以下证明有理性与支撑界，不从证书健全性推出存在性。设 $B$ 的各行为 $b_\ell\in\mathbb Q^d$，并且实归一化证书存在。有限的行集合保证所有证书支撑中存在包含极小者。任取这样的支撑 $S$，并取其归一化系数 $\lambda_\ell>0$，$\ell\in S$。考虑有理增广列
+$$
+\widetilde b_\ell=\binom{b_\ell^{\mathsf T}}1\in\mathbb Q^{d+1}.
+$$
+这些列在实数域上线性无关。否则，存在不全为零的实数 $h_\ell$，满足
+$$
+\sum_{\ell\in S}h_\ell b_\ell=0,\qquad
+\sum_{\ell\in S}h_\ell=0.
+$$
+因此 $h$ 同时具有正分量与负分量。置
+$$
+t=\min_{h_\ell>0}\frac{\lambda_\ell}{h_\ell}>0,\qquad
+\lambda'_\ell=\lambda_\ell-th_\ell\quad(\ell\in S),
+$$
+并在 $S$ 外补零。对于正的 $h_\ell$，这些新系数非负且至少一个为零；对于非正的 $h_\ell$，新系数仍为正。两条等式保证系数和仍为一且仍有
+$$
+\sum_\ell\lambda'_\ell b_\ell=0.
+$$
+这给出支撑严格包含于 $S$ 的证书，矛盾。
+
+故增广列满列秩。它们位于
+$$
+\operatorname{span}_{\mathbb R}\{b_1,\ldots,b_m\}\times\mathbb R
+$$
+中，所以 $|S|\le\operatorname{rank}_{\mathbb R}(B)+1$。这已经证明所需界。
+
+令 $s=|S|$。从这些线性无关的增广列中选出一个非零的 $s$ 阶子式，即选取 $s$ 个坐标行得到可逆的有理方阵 $M$。归一化证书的等式为
+$$
+\sum_{\ell\in S}\lambda_\ell\widetilde b_\ell
+=\binom{0_d}1.
+$$
+限制到所选坐标行，得到 $M\lambda_S=q$，其中 $q$ 为有理向量。于是
+$$
+\lambda_S=M^{-1}q
+=\frac{\operatorname{adj}(M)q}{\det M}\in\mathbb Q^s.
+$$
+这是原实证书的同一个向量，不是可能破坏严格正性的近似。增广列线性无关也保证归一化解唯一。取所有分母的一个正公倍数即可得到非负整数证书，且不改变其支撑。
+
+再设整数矩阵 $B$ 的严格系统在实数上可行。若 $m=0$，取 $z=0$。若 $m>0$，在一个实可行点附近，有限多个严格线性不等式共同保留正余量；具体可用定理38.2中的行范数估计得到一个仍全可行的开盒。逐坐标有理数稠密，故盒内有 $q\in\mathbb Q^d$，满足 $Bq>0$。清除 $q$ 的分母，得到 $z\in\mathbb Z^d$ 且 $Bz>0$。由于 $Bz$ 的每个分量都是整数，它们均不小于一。反向由 $\mathbb Z^d\subseteq\mathbb R^d$ 立即成立。
+
+最后，对整数证书 $c$，将有理不等式系统写为 $(-B)\xi\le-\mathbf1$，则
+$$
+c_\ell\ge0,\qquad
+\sum_\ell c_\ell(-B_{\ell i})=0,\qquad
+\sum_\ell c_\ell(-1)=-\sum_\ell c_\ell<0.
+$$
+这正是所引有理反证条件；同一个加权求和论证也排除实数解。结合定理38.2即得联合闭图的证书判据。若相位恒等式不成立，不归属已经由相位排除，不要求另有符号证书。证毕。
+

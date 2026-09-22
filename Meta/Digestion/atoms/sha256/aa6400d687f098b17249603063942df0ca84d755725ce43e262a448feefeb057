@@ -1,0 +1,60 @@
+**命题 158.1（低于半静态地板时的逆混合率下界，repo-derived）。** 固定 $0<p<1/2$，记
+$$
+d=1-2p,\qquad \Delta=\frac d2,\qquad
+\kappa=\frac{1-p}{p}>1,\qquad \lambda=\log\kappa>0.
+$$
+沿用命题153.1、156.1、157.1的二元时间齐次无控制协议：旧隐藏位 $i$ 先发射报告 $b$，然后翻转为新隐藏位 $j$，其中
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,\qquad
+P_{ji}(r)=\begin{cases}1-r,&j=i,\\r,&j\ne i.\end{cases}
+$$
+这里 $0<r<1/2$，每个 $b,i,j\in\{0,1\}$ 对应一个单独的秩一 Kraus 算子，仪器为
+$$
+K_{bji}^{(r)}=\sqrt{c_{bi}P_{ji}(r)}\,|j\rangle\langle i|,
+\qquad
+\phi_b^{(r)}(X)=\sum_{i,j=0}^1K_{bji}^{(r)}X(K_{bji}^{(r)})^\dagger
+\quad(X\in M_2(\mathbb C)).
+$$
+初态固定为 $I_2/2$。对时间顺序词 $w$，定义
+$$
+v_\varnothing^{(r)}=\binom{1/2}{1/2},\qquad
+v_{wb}^{(r)}=P(r)\operatorname{diag}(c_{b0},c_{b1})v_w^{(r)},
+\qquad Z_w^{(r)}=\mathbf1^{\mathsf T}v_w^{(r)},
+$$
+$$
+q_w^{(r)}=\frac{(v_w^{(r)})_1}{Z_w^{(r)}},\qquad
+x_w^{(r)}=\log\frac{q_w^{(r)}}{1-q_w^{(r)}},\qquad
+h(x)=p+\frac d{1+e^{-x}}=\frac12+\Delta\tanh\frac x2.
+$$
+下一零报告的条件概率为 $f_r(w)=h(x_w^{(r)})$。
+
+观察者为 $\mathcal O=(S,s_0,T_0,T_1,t)$，其中 $S$ 非空有限，$s_0\in S$、确定性全函数 $T_b:S\to S$ 和静态读出 $t:S\to[0,1]$ 固定，且
+$$
+s_{\mathcal O}(\varnothing)=s_0,\qquad
+s_{\mathcal O}(wb)=T_b(s_{\mathcal O}(w)),\qquad
+\mathcal E_r(\mathcal O)=\sup_{w\in\{0,1\}^{*}}
+|t(s_{\mathcal O}(w))-f_r(w)|.
+$$
+全部可读的演化记忆均计入 $S$，包括任何可读时钟、档案和随机种子状态；不允许从 $S$ 之外读取演化信息。这里的更新与读出是确定性的，不另取随机观察者类别。每组 $p,r,\varepsilon$ 可分别选择观察者及含任意精确实数的固定表，但每张表必须同时满足包括空词及任意稀有历史在内的全部有限词误差要求。定义 $N_{\min}^{(r)}(\varepsilon)$ 为满足 $\mathcal E_r(\mathcal O)\le\varepsilon$ 的最小有限状态数；不存在这样的有限观察者时取 $\infty$。
+
+固定
+$$
+0<\varepsilon<\frac\Delta2,
+$$
+再选一个固定整数 $a\ge1$，使
+$$
+g_a=\Delta\tanh\frac{a\lambda}{4}>2\varepsilon.
+$$
+由于 $\tanh(a\lambda/4)\to1$，这样的 $a$ 存在。置
+$$
+D_a=\kappa^a-\kappa^{-a}>0,\qquad
+C_a=d\,aD_a>0,\qquad
+c=\frac{g_a-2\varepsilon}{2C_a}>0.
+$$
+则存在 $r_0\in(0,1/2)$，使
+$$
+\forall r\in(0,r_0),\qquad
+N_{\min}^{(r)}(\varepsilon)\ge\frac c r.
+$$
+这里先固定 $p,\varepsilon,a$，再选择 $r_0$；$c,r_0$ 不依赖观察者。此结论在较窄精度区间内加强命题157.1的必要下界，不改变该命题在 $0<\varepsilon<\Delta$ 上的结论。
+

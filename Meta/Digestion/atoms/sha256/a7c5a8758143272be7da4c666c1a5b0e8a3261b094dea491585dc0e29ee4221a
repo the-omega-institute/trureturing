@@ -1,0 +1,2 @@
+**Proof.** Otherwise alpha(q)>1 would divide d and also q-1 or q+1 by U.3. Every prime divisor of either even integer q-1 or q+1 is less than q. Taking a prime divisor of alpha(q) contradicts the hypothesis on d. The case d=1 is also immediate from F_1=1.
+

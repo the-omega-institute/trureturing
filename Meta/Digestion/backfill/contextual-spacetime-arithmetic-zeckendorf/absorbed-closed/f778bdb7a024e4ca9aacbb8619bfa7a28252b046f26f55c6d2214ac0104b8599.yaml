@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f778bdb7a024e4ca9aacbb8619bfa7a28252b046f26f55c6d2214ac0104b8599
+  normalized_sha256: sha256:f778bdb7a024e4ca9aacbb8619bfa7a28252b046f26f55c6d2214ac0104b8599
+cas_ref: sha256:f778bdb7a024e4ca9aacbb8619bfa7a28252b046f26f55c6d2214ac0104b8599
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/LegalDigitCoveringNumber.least_covering_number
+    target_statement_id: sha256:9c7f5c6613895a642e649c71fcfcd56e0437178e06089de73360a34ed3367fb2
+receipts:
+  unresolved_subitems: []

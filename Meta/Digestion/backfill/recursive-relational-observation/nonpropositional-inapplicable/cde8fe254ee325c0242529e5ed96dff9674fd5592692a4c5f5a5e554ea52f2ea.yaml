@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cde8fe254ee325c0242529e5ed96dff9674fd5592692a4c5f5a5e554ea52f2ea
+  normalized_sha256: sha256:cde8fe254ee325c0242529e5ed96dff9674fd5592692a4c5f5a5e554ea52f2ea
+cas_ref: sha256:cde8fe254ee325c0242529e5ed96dff9674fd5592692a4c5f5a5e554ea52f2ea
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Define the center associated with continuity of fixed left multiplication”仅以左乘连续性定义拓扑中心；后句确认约定方向，并不声称它等于有限迭代集，定义未夹带中心分类命题，故本叶无需证明。
+    previous_atom_id: 90b6825c3cceda3837ce9dd7bf974984f8d80739b2082b0b456264be5280480f
+    next_atom_id: a503563ada081946c2628c0a98e26977f16c95a0329b0e8964733cc9f34c88a0

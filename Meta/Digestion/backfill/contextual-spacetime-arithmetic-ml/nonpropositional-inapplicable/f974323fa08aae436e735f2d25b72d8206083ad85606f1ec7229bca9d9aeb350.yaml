@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f974323fa08aae436e735f2d25b72d8206083ad85606f1ec7229bca9d9aeb350
+  normalized_sha256: sha256:f974323fa08aae436e735f2d25b72d8206083ad85606f1ec7229bca9d9aeb350
+cas_ref: sha256:f974323fa08aae436e735f2d25b72d8206083ad85606f1ec7229bca9d9aeb350
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “所有参数都静止”在本子叶以步长为零为前提；该结论显式提出，探针把零步长更新归一化为恒等映射并用 Function.IsFixedPt.iterate 推及任意次数，没有在定义中预置静止性，仓内无冻结 GID。
+    previous_atom_id: 42efbc9c7cf4fe900eba73fecc95841dc8034e7bc8e52b04120cbe72ac8f9a39
+    next_atom_id: b1beb09a74514c2350b21480b6195b7898cee34e05be419fdf35999ce9e60e08

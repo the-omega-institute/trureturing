@@ -1,0 +1,9 @@
+**推论 474.9（充分增长域与可计算的整数截止）。** 对任意整数序列 $m_N\ge2$，置 $Q_N=\mathcal P(m_N)$、$k_N=\pi(m_N)$、$b_N=1+\lceil\log_2Q_N\rceil$、$\ell_N=1+\lceil\log_2(N+1)\rceil$。以下条件足以同时给出系数、两种归一化证书及累计重叠的上述极限，并使完整表生成核对为 $o(N)$：
+$$
+m_N\to\infty,\qquad
+\frac{(2^{k_N}+2)e^{2\sqrt{k_N}}}{\sqrt N}\to0,\qquad
+2^{k_N}k_Nb_N^2+m_N^3=o(N).
+\tag{474.9a}
+$$
+若另有 $4^{k_N}(\ell_N+b_N)^2=o(N)$，(474.8g) 的准确 $U$ 求值也为 $o(N)$。固定 $0<\theta<1/2$ 的 $m_N=\lfloor\theta\log_2N\rfloor$ 在充分大 $N$ 满足这些条件；有限个未达二的截止可取二。
+

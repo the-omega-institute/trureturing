@@ -1,0 +1,4 @@
+For $m\ge2$, there is a unique finite word $w$ made of the blocks $0$ and $10$ such that, with digit length $d=|w|$ and $N_w=\sum_{j<d}G_jw_j$,
+$$
+m=G_{d+1}-N_w.
+$$

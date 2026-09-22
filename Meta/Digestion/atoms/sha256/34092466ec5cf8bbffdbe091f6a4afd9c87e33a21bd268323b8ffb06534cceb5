@@ -1,0 +1,12 @@
+**证明。** 对任意 $g\in C(K)$，$\langle\delta_x,g\rangle=g(x)$，故 $x\mapsto\delta_x$ 从 $K$ 到弱星测度空间连续。若 $L_\mu^{(t)}$ 弱星连续，则
+$$
+x\longmapsto\langle L_\mu^{(t)}\delta_x,f\rangle=\mathcal T_\mu^{(t)}f(x)
+$$
+是连续映射的复合，得到必要性。
+
+反之，假定每个实际函数 $\mathcal T_\mu^{(t)}f$ 连续。积分线性及定理29.2的界表明它们组成所述有界线性算子。对任意 $\nu\in M(K)$，直接有符号积分给
+$$
+\langle L_\mu^{(t)}\nu,f\rangle=\int_K\mathcal T_\mu^{(t)}f(x)\,d\nu(x)=\langle\nu,\mathcal T_\mu^{(t)}f\rangle.
+$$
+因此它正是前伴随。若任意网 $\nu_i\to\nu$ 弱星收敛，对每个固定 $f\in C(K)$，右边按弱星收敛定义趋于 $\langle\nu,\mathcal T_\mu^{(t)}f\rangle$，所以 $L_\mu^{(t)}\nu_i\to L_\mu^{(t)}\nu$ 弱星收敛。这里不对输入网另加范数有界假设。判据约束全部连续测试在全部 $K$ 上的连续性，不是只检查若干输入处的点行连续性。证毕。
+

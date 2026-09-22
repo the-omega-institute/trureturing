@@ -1,0 +1,65 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "pg1-fixed-reference-maxplus-price-obstruction-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "lower bound on the best termwise max-plus majorant at K=33; neither a moment lower bound nor an obstruction to optimizing K"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23"
+    }
+  },
+  "reference": {
+    "kind": "inline",
+    "value": 33
+  },
+  "low_test_witnesses": {
+    "path": "content/004-low_test_witnesses.json",
+    "sha256": "c474e2d3b58b4cb24c698fad2a9d88eed9ad152cb996c56b243ffdfa96fcbc94",
+    "kind": "array"
+  },
+  "group_witnesses": {
+    "path": "content/005-group_witnesses.json",
+    "sha256": "70188e7c3c2f02ec13a14a424915f84e7a0b544a4069f4bce783105e22729ec9",
+    "kind": "array"
+  },
+  "model_dimensions": {
+    "kind": "inline",
+    "value": {
+      "B_witnesses": 34,
+      "group_witnesses": 60,
+      "variables": 15617,
+      "inequalities": 15677
+    }
+  },
+  "dual_denominator": {
+    "kind": "inline",
+    "value": 1000000000
+  },
+  "dual_sparse": {
+    "path": "content/008-dual_sparse.json",
+    "sha256": "f079313de6c9aa43c16fa8b2a013285b3f6bf0da8d451666fa5cd239f5fdda67",
+    "kind": "array"
+  },
+  "dual_base": {
+    "kind": "inline",
+    "value": -1664667262276415916406
+  },
+  "positive_residual": {
+    "kind": "inline",
+    "value": 163278942142298181200
+  },
+  "price_family_lower": {
+    "kind": "inline",
+    "value": "824892275704058867603/24000000168000000000"
+  },
+  "functional_target_to_improve_head": {
+    "kind": "inline",
+    "value": "460223929211132040332029/13783840971486886125000"
+  }
+}

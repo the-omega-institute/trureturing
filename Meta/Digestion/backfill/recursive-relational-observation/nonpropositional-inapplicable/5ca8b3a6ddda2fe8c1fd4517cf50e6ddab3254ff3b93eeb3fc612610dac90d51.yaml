@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5ca8b3a6ddda2fe8c1fd4517cf50e6ddab3254ff3b93eeb3fc612610dac90d51
+  normalized_sha256: sha256:5ca8b3a6ddda2fe8c1fd4517cf50e6ddab3254ff3b93eeb3fc612610dac90d51
+cas_ref: sha256:5ca8b3a6ddda2fe8c1fd4517cf50e6ddab3254ff3b93eeb3fc612610dac90d51
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 连续映射把闭集的原像变成闭集，将闭集取为本条给定的关系像，原像就是所定义的饱和化；直接应用 IsClosed.preimage，仓内无冻结 GID。
+    previous_atom_id: b2f11a4cb9ec1c52813595d95d0b716ffafcde29c628955816e763245ce9284d
+    next_atom_id: fd3e3df187fd0cf9bc2c653db29e48a90719f71f84e40b64c21014f445be043c

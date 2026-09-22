@@ -1,0 +1,228 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-pure-path-square-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "cc685fbcf90c3a61545078e183e1c03280b63f952b4abc7931b9b415736f4417",
+    "kind": "value"
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "complete_mean_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "5509/1200"
+  },
+  "previous_complete_square_upper": {
+    "kind": "inline",
+    "value": "5539/1200"
+  },
+  "complete_square_improvement": {
+    "kind": "inline",
+    "value": "1/40"
+  },
+  "complete_factorial_upper": {
+    "kind": "inline",
+    "value": "6313/7200"
+  },
+  "controller_layout": {
+    "kind": "inline",
+    "value": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ]
+  },
+  "controller_head_values": {
+    "kind": "inline",
+    "value": [
+      1,
+      1,
+      2,
+      1,
+      1,
+      1,
+      1,
+      2,
+      1,
+      1,
+      2,
+      2,
+      4,
+      2,
+      2,
+      2,
+      2,
+      4,
+      2,
+      2,
+      3,
+      3,
+      6,
+      3,
+      3
+    ]
+  },
+  "exact_retained_head_dual": {
+    "path": "content/011-exact_retained_head_dual.json",
+    "sha256": "ef5de7b2716026073807d1ffa4847f7c9d145c0e6e4f067f2987dbd0da91cd25",
+    "kind": "value"
+  },
+  "joint_source_model": {
+    "path": "content/012-joint_source_model.json",
+    "sha256": "060908fc716dc81909855b4bd39211e992a7e92f430fdbffb2dedd536449ec2b",
+    "kind": "value"
+  },
+  "pure3_cell_density_caps": {
+    "kind": "inline",
+    "value": [
+      "11/20",
+      "2/5",
+      "1/5",
+      "2/5",
+      "2/5"
+    ]
+  },
+  "pure5_slot_density_caps": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "1/10",
+      "29/90",
+      "13/30",
+      "4/15"
+    ]
+  },
+  "pure3_square_block": {
+    "path": "content/015-pure3_square_block.json",
+    "sha256": "450776b070a13fccaeb1b1c87a4d9d6045750d5beaa94f09658188abb08a55ef",
+    "kind": "value"
+  },
+  "pure5_square_block": {
+    "path": "content/016-pure5_square_block.json",
+    "sha256": "dca2a4bc1af929f29097c935d532f30a967e2d81bfa0902c80b3ffd4d4a5a4bc",
+    "kind": "value"
+  },
+  "complete_original_tail_partition": {
+    "kind": "inline",
+    "value": {
+      "surviving_pure_coefficients": [
+        "11/20",
+        "13/30",
+        "1/3",
+        "1/9"
+      ],
+      "raw_cofactor_coefficients": [
+        "1/4",
+        "1/8",
+        "1/12",
+        "3/4",
+        "1/2",
+        "1/3",
+        "1/9"
+      ],
+      "raw_old_linear_cap": "3/4",
+      "raw_old_square_cap": "57/16",
+      "weighted_old_pure_before_halving": {
+        "pure3": "11/360",
+        "pure5": "13/1200",
+        "root5": "7/120",
+        "cell5": "13/360"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "old_old_distinct": "111/800",
+      "old_positive7": "121/720",
+      "positive7_positive7_distinct": "2/5",
+      "distinct_tail_pairs": "5089/7200",
+      "old_diagonal": "53/600",
+      "positive7_diagonal": "3/20",
+      "complete_ordered_tail_square": "5947/3600",
+      "independent_lcm_prefix_counts": 64
+    }
+  },
+  "unchanged_twice_other_old_cross": {
+    "kind": "inline",
+    "value": "31/90"
+  },
+  "unchanged_old_diagonal": {
+    "kind": "inline",
+    "value": "13/360"
+  },
+  "unchanged_ordered_distinct_pairs": {
+    "kind": "inline",
+    "value": "247/180"
+  },
+  "unchanged_positive7_diagonal": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "complete_remaining_tail_square": {
+    "kind": "inline",
+    "value": "187/120"
+  },
+  "controller_endpoint_records": {
+    "kind": "inline",
+    "value": [
+      {
+        "theta": "1/135",
+        "old_complete_cross_tail": "33973/10800",
+        "unchanged_twice_positive7_cross": "437/540",
+        "new_complete_upper": "49261/10800"
+      },
+      {
+        "theta": "1/90",
+        "old_complete_cross_tail": "11431/3600",
+        "unchanged_twice_positive7_cross": "151/180",
+        "new_complete_upper": "5509/1200"
+      }
+    ]
+  },
+  "controller_complete_upper": {
+    "kind": "inline",
+    "value": "5509/1200"
+  },
+  "original_head_count": {
+    "kind": "inline",
+    "value": 12500
+  },
+  "recomputed_controller_count": {
+    "kind": "inline",
+    "value": 1
+  },
+  "inherited_other_complete_head_count": {
+    "kind": "inline",
+    "value": 12499
+  },
+  "other_head_maximum": {
+    "kind": "inline",
+    "value": "16439/3600"
+  },
+  "other_head_gap_to_new_upper": {
+    "kind": "inline",
+    "value": "11/450"
+  },
+  "inherited245_all_head_components_sha256": {
+    "kind": "inline",
+    "value": "f397e264482dfd07c9b6b30f15e64f919a5c54fe244b4486ad6493b98e453611"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Both entire actual saturated J faces and the common full late interval. One original controller retains its exact245 joint2593/1800 survivor head; two disjoint complete2BR+R^2 blocks use248 original prime-path caps and include diagonals once. All other mixed, root/cell-five and positive-seven terms remain. The pinned245 all-layout theorem supplies the other12499 layouts without rerunning its scan. Factorial6313/7200 is directly inherited from248. No actual attainment, off-face or full52-cost comparison, Lean verification or unrestricted Erdos7 result."
+  }
+}

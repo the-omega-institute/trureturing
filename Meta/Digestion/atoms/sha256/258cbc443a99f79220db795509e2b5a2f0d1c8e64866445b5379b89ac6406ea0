@@ -1,0 +1,22 @@
+**定理 25.5（所有实切片系数下的实际基）。** 任取实数序列 $(p_m)_{m\ge1}$，定义
+$$
+\pi_{E_m}=p_m\delta_{x_m^+}+(1-p_m)\delta_{x_m^-},\qquad
+\pi_\theta=\delta_{k_\theta}\quad(\theta\notin E),\qquad
+v_m=\delta_{x_m^+}-\delta_{x_m^-}.
+$$
+不论该序列是否来自结合核，集合
+$$
+\{\pi_\theta:\theta\in\mathbb T\}\ \cup\ \{v_m:m\ge1\}
+$$
+都是 $A$ 的代数基。准确地，
+$$
+\delta_{x_m^+}=\pi_{E_m}+(1-p_m)v_m,\qquad
+\delta_{x_m^-}=\pi_{E_m}-p_m v_m.
+$$
+若
+$$
+V=\operatorname{span}_{\mathbb R}\{\pi_\theta:\theta\in\mathbb T\},\qquad
+J=\operatorname{span}_{\mathbb R}\{v_m:m\ge1\},
+$$
+则 $A=V\oplus J$、$\ker H_\#=J$，且 $H_\#|_V$ 是到 $\mathbb R[\mathbb T]$ 的线性同构。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:013b25de1555438df1968bb0e6c8df2f345a23a8fe1a31f047bce3817b6e4a5d
+  normalized_sha256: sha256:013b25de1555438df1968bb0e6c8df2f345a23a8fe1a31f047bce3817b6e4a5d
+cas_ref: sha256:013b25de1555438df1968bb0e6c8df2f345a23a8fe1a31f047bce3817b6e4a5d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 正整数非零时，有理代表先除以该整数再作整数倍恢复原代表，取商后得到源句的可除性恒等式。仓内无冻结 GID。
+    previous_atom_id: 20f6003bdf0b3583b34bf0af6060f91b1472ba397888941cc9e4ba322b4c65e2
+    next_atom_id: d9b413e4bc9ce65666a0fcd647e2302ed3d15b74abcdeafd7bec15350c93b5be

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7ca27790eb5cd3c03fe651c00816f0585d855b9c22acbfeaf7528c4b6ea75404
+  normalized_sha256: sha256:7ca27790eb5cd3c03fe651c00816f0585d855b9c22acbfeaf7528c4b6ea75404
+cas_ref: sha256:7ca27790eb5cd3c03fe651c00816f0585d855b9c22acbfeaf7528c4b6ea75404
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: abs_le 的左侧不等式和原费用严格正、epsilon 小于一共同给出扰动后的费用严格正，探针逐个任意费用槽量化；仓内无冻结 GID。
+    previous_atom_id: 73746b42605e5d047db4fe920b7829354cb766cf675b5afedae7ef30ff6234b6
+    next_atom_id: f2d892a2dd6e249e4588f518b60acf272bb1e29a178e03e21810b23c942f9d14

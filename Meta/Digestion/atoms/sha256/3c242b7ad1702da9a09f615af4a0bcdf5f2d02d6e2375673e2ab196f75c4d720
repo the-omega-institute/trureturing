@@ -1,0 +1,24 @@
+**定理 19.8（固定素数乘法上的同一障碍）。** 固定素数 $p$，令
+$$
+P_p=\{p^n:n\in\mathbb N\},\qquad f_p(p^n)=f(n).
+$$
+不存在紧空间 $X$、集合映射 $\iota:P_p\to X$ 及分别连续映射 $B:X\times X\to\{0,1\}$，使
+$$
+B(\iota(r),\iota(s))=f_p(rs)\qquad(r,s\in P_p).
+$$
+特别地，不存在同时具有连续读数 $d:X\to\{0,1\}$ 和分别连续乘法 $\mu:X\times X\to X$ 的紧实现，使
+$$
+d(\iota(p^n))=f(n),\qquad
+\mu(\iota(p^n),\iota(p^m))=\iota(p^{n+m}).
+$$
+
+**证明。** 素数幂的指数唯一，故 $f_p$ 定义良好。令 $j(n)=\iota(p^n)$。恒等式
+$$
+p^np^m=p^{n+m}
+$$
+将第一项假设变为 $B(j(n),j(m))=f(n+m)$，与定理 19.4 矛盾。第二项中的 $B=d\circ\mu$ 分别连续，并满足同一等式。其显式三角见证为
+$$
+f_p\bigl(p^{a_k}p^{b_l}\bigr)=1\quad\Longleftrightarrow\quad k<l.
+$$
+指数零对应乘法单位 $p^0=1$，其读数为 $f(0)=0$，不需排除该情形。证毕。
+

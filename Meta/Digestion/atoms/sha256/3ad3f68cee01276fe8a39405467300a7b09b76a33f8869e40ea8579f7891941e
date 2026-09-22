@@ -1,0 +1,13 @@
+**Theorem.** Let q>5 and p=kq+1 be primes, k>=4, and suppose r=rho(p) divides pi(q). Then
+
+$$
+\begin{array}{c|c}
+(\epsilon_p,\epsilon_q)&\text{necessary index divisibility}\\
+(1,1)\text{ or }(1,-1)&r\mid k\\
+(-1,1)&r\mid k+2\\
+(-1,-1)&r\mid2(k-2).
+\end{array}\tag{GAW1}
+$$
+
+Consequently p divides at least one of F_k,F_(k+2),F_(2(k-2)).
+

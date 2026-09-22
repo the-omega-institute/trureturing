@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:21750c2863b526e96c45fd196b53a934fe2de7099ab06b2f4b68846108026211
+  normalized_sha256: sha256:21750c2863b526e96c45fd196b53a934fe2de7099ab06b2f4b68846108026211
+cas_ref: sha256:21750c2863b526e96c45fd196b53a934fe2de7099ab06b2f4b68846108026211
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 紧集在连续映射下的像紧，直接应用 IsCompact.image，不要求源空间或目标空间为 Hausdorff；仓内无冻结 GID。
+    previous_atom_id: 445217f67f739e1602bb5ff93311fb6a63cb23bb5e34e28e4527e94f949a86da
+    next_atom_id: 883d254dd909ef053e02bddf7879c13bffbd5eabe81cee0b381fdc346fef5a16

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5c4d675b21328f915a74aca36bd5e8f2bf5266d5a53b2bdbefa0baf77df6bbb
+  normalized_sha256: sha256:a5c4d675b21328f915a74aca36bd5e8f2bf5266d5a53b2bdbefa0baf77df6bbb
+cas_ref: sha256:a5c4d675b21328f915a74aca36bd5e8f2bf5266d5a53b2bdbefa0baf77df6bbb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段以“代数自同态扭曲的成熟背景见”介绍 Yau 的版本、页码和定理前提，末句“定理的前提是自同态，不要求可逆”仍是所引文本的范围说明；它未声称本稿平移已满足这些条件，无定义偷带结论，无需新数学证明。
+    previous_atom_id: 19b3d4cc833f69ef64b192b19e31a1f77a5191aebe72c120f51096ad97913013
+    next_atom_id: 3e99be5941127b2c361afb893c93cd90619b4aefd53001f9ebff1e4d6b6cde87

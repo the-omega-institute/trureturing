@@ -1,0 +1,15 @@
+**Definition 37.10 (Projected composition and common witnesses).** For $x\in K$, retain the sign set of §18:
+$$
+\mathcal S(x)=
+\begin{cases}
+\Sigma,&H(x)\notin E,\\
+\{s\},&x=x_m^s.
+\end{cases}
+$$
+Define
+$$
+\mathcal R_{\mathrm{op}}(x,y)
+=\{e(pq):p,q\in\mathscr E,\ e(p)=x,\ e(q)=y\}.
+$$
+Write $x\star y=\mathcal R_{\mathrm{op}}(x,y)$, and extend this notation to subsets by taking unions over their elements. This is a relation, not a quotient binary function.
+

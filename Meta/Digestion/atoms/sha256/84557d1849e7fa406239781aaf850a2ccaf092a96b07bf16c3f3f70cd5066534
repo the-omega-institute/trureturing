@@ -1,0 +1,15 @@
+**定理 31.6（解析 Wiener 代数及其零常数项理想）。** 对 $h\in\mathcal S_0$ 定义
+$$
+\mathscr G_h(z)=\sum_{m\ge0}h_mz^m\qquad(z\in\overline{\mathbb D}).
+$$
+该级数在闭圆盘上一致绝对收敛，在开圆盘内全纯，并将序列卷积变为函数逐点乘法。由系数绝对和赋范所得的函数代数是经典解析 Wiener 代数。[^rro31-wiener]
+
+$\mathcal S_0$ 的全部字符恰为
+$$
+\operatorname{ev}_z(h)=\mathscr G_h(z),\qquad z\in\overline{\mathbb D},
+$$
+而 $\mathcal S_+$ 的全部非零字符恰为这些求值在 $0<|z|\le1$ 时的限制。其在 $\mathcal S_+$ 上的范数准确为 $|z|$；$z=0$ 的限制是零泛函。并且
+$$
+\sigma_{\mathcal S_0}(h)=\mathscr G_h(\overline{\mathbb D}).
+$$
+

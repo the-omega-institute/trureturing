@@ -1,0 +1,5 @@
+第一余量在独立扰动盒内的准确最小值为
+$$
+2a-b-\varepsilon(2a+b),
+$$
+由 $a'=(1-\varepsilon)a,b'=(1+\varepsilon)b$ 达到。

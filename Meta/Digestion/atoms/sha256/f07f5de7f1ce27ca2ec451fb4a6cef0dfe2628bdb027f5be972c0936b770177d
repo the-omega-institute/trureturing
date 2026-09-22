@@ -1,0 +1,6 @@
+给每条词预先固定的有限实费用观察 $J(\gamma)$，标记副本取同一费用。若 $J$ 表示总费，就包含全部初态、实际带身份边、终态、转换及档案收费。在这个实际有限粗链像上，对 $\beta>0$ 定义
+$$
+Z(c)=\sum_{Q_{n,k}(\gamma,I)=c}\widetilde w(\gamma,I)e^{-\beta J(\gamma)},\qquad
+F(c)=-\beta^{-1}\log Z(c),\qquad
+F^{\rm cond}(c)=F(c)+\beta^{-1}\log p(c).
+$$

@@ -1,0 +1,17 @@
+**theorem 35.5 (Local gauge invariance and the exact branch overlap).** Let $U_i=\{y\in X_\beta:y_0=i\}$ for $i=0,1$. For every subset $A\subseteq U_i$,
+$$
+\mathcal H^{h_1}_\rho(SA)=\mathcal H^{h_1}_\rho(A).
+$$
+Moreover,
+$$
+S(U_0)\cup S(U_1)=X_\beta,\qquad S(U_0)\cap S(U_1)=\{w\}.
+$$
+Consequently $\mathcal H^{h_1}_\rho$ is $S$-invariant. If
+$$
+c_0:=\mathcal H^{h_1}_\rho(X_\beta),
+$$
+then, as Borel measures,
+$$
+\mathcal H^{h_1}_\rho=c_0\eta,\qquad A_+^{-1}\le c_0\le1.
+$$
+

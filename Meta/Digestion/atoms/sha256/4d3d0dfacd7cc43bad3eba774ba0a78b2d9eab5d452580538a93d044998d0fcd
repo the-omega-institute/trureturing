@@ -1,0 +1,37 @@
+### 6.1 第 3.6 与 5.1 条：闭像、关系代表与环境满射
+
+沿用定理 3.4 的全部假设和记号，令
+
+$$
+K=\prod_{i\in I}K_i,\qquad
+\widehat R=\bigcap_{n\ge 0}\pi_n^{-1}(R_n).
+$$
+
+有限阶段像恢复的集合恰为
+
+$$
+\widehat R=\overline{\eta[R]}\subseteq K.
+$$
+
+若 $\eta[R]$ 在 $K$ 中闭，则 $\widehat R=\eta[R]$，因而已经有
+
+$$
+\forall z\in\widehat R\ \exists x\in R,\qquad \eta(x)=z.
+$$
+
+这里每个完成关系点有一个原始关系代表，直接来自像集的定义，不须再加独立的实现性假设。反之，若上述存在量词成立，则 $\widehat R\subseteq\eta[R]$；结合定理 3.4 即得 $\eta[R]=\widehat R$，所以像闭。在闭像条件下，每个完成关系点的代表唯一，当且仅当 $\eta|_R$ 单射，即
+
+$$
+\forall x,y\in R,\qquad \eta(x)=\eta(y)\Longrightarrow x=y.
+$$
+
+因此，有限层条件确定的是 $K$ 中的关系像；与原始关系 $R$ 一一识别还需上述单射条件。对指定原输入 $x$，$\eta(x)\in\widehat R$ 在闭像时保证存在 $x^{\prime}\in R$ 与它观察相同，却不保证 $x\in R$；后者可由 $R$ 对 $\eta$ 的纤维饱和保证。不能把位于不同载体中的 $\eta[R]$ 与 $R$ 直接写成相等。
+
+“整个环境空间的每一点都有原始载体代表”是另一个量词：
+
+$$
+\forall z\in K\ \exists x\in\prod_{i\in I}X_i,\qquad \eta(x)=z.
+$$
+
+这要求 $\eta$ 对整个 $K$ 满射。若进一步要求这些代表都取自 $R$，则要求 $\eta[R]=K$。这两种对整个环境空间的实现要求均不由 $\eta[R]$ 闭推出。第 3.6 与 5.1 条中“必须另加实现性”的措辞仅可用于这种扩大了对象范围的要求；对 $\widehat R$ 内的代表存在性，闭像已经充分。
+

@@ -1,0 +1,14 @@
+**theorem 32.17 (A free-ultrafilter membership function is not Borel).** For a free ultrafilter $\mathcal U$ on $\mathbb N$, the subset
+$$
+\mathscr U=\{\omega\in\{0,1\}^{\mathbb N}:\{n:\omega_n=1\}\in\mathcal U\}
+$$
+of Cantor space is not Borel. In fact it does not have the Baire property.
+
+**Proof.** Membership in a free ultrafilter is unchanged by adding or removing finitely many integers. Indeed, the complement of a finite set belongs to the ultrafilter; intersecting with it removes any finite set without changing membership, and the converse follows by upward closure. Hence $\mathscr U$ is invariant under flipping any finite set of coordinates.
+
+We first prove the relevant zero-one statement for the Baire property. A set $A$ has the Baire property when it differs from an open set by a meager set. If such an $A$ is nonmeager, it is comeager in some nonempty basic cylinder: choose a cylinder inside the nonempty open set witnessing the Baire property. Suppose also that $A$ is invariant under finite coordinate flips. Flipping its initial coordinates maps that cylinder to each cylinder of the same length and preserves $A$. Therefore $A$ is comeager in each of those finitely many cylinders, and hence in all Cantor space. Thus every finite-flip-invariant set with the Baire property is either meager or comeager.
+
+For completeness, Cantor space is a Baire space. Given countably many dense open sets and a nonempty cylinder, choose successively longer nonempty cylinders contained in the successive open sets and in the preceding cylinder. Require the lengths to tend to infinity. Cylinders are closed, and their unique common sequence lies in the starting cylinder and all the open sets. This proves the Baire assertion and rules out a nonempty open set being meager. The sets with the Baire property form a sigma-algebra containing the open sets: complements and countable unions preserve equality modulo meager sets, and a closed set differs from its interior by its nowhere dense boundary. Consequently every Borel set has the Baire property.
+
+The homeomorphism $c(\omega)_n=1-\omega_n$ takes $\mathscr U$ exactly onto its complement, because an ultrafilter contains exactly one of an index set and its complement. If $\mathscr U$ were meager, its complement would be meager as well, contradicting the Baire property of the whole space. If it were comeager, its complement would also be comeager; two such disjoint sets cannot exist in a nonempty Baire space. The zero-one statement excludes every possibility for a Baire-property $\mathscr U$. In particular $\mathscr U$ is not Borel. QED.
+

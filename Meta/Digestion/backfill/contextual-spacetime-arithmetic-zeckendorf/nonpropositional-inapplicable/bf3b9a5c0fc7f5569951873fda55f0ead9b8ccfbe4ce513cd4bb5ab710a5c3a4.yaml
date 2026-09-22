@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bf3b9a5c0fc7f5569951873fda55f0ead9b8ccfbe4ce513cd4bb5ab710a5c3a4
+  normalized_sha256: sha256:bf3b9a5c0fc7f5569951873fda55f0ead9b8ccfbe4ce513cd4bb5ab710a5c3a4
+cas_ref: sha256:bf3b9a5c0fc7f5569951873fda55f0ead9b8ccfbe4ce513cd4bb5ab710a5c3a4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段定义全前缀最大值或实际实数 Mertens 幂界接口及其量词范围，属于定义和假设记号；最大值的数值下界与分析假设的成立不由本条结算。
+    previous_atom_id: 6c5d69ac97e54d88ed47303698e44198f389fb9ad8a6af653fc030bb1f127a4f
+    next_atom_id: 2cc44c2075e6b42326a1bd0e91ac3b953a3251af7f526add74a9c2ca8486952f

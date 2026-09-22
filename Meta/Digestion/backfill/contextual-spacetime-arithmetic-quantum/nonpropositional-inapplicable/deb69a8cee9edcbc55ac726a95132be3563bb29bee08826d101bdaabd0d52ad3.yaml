@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:deb69a8cee9edcbc55ac726a95132be3563bb29bee08826d101bdaabd0d52ad3
+  normalized_sha256: sha256:deb69a8cee9edcbc55ac726a95132be3563bb29bee08826d101bdaabd0d52ad3
+cas_ref: sha256:deb69a8cee9edcbc55ac726a95132be3563bb29bee08826d101bdaabd0d52ad3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子提出有限实验族下历史区分的问题并限定每个协议分别给出分布，属于章节导言，没有独立待证结论。
+    previous_atom_id: a5172c8551e07873640479a2122585c1cce1ae1ad50f33fc09c5ae439ba194bb
+    next_atom_id: cbfb8704f1c9e70e76b8f8f71a7552d9bd7f7dcaca034bfa83e13797a510f659

@@ -1,0 +1,14 @@
+### PBC.1. Complete powerful classification on five-smooth indices
+
+**Definition.** A positive integer is powerful when every prime divisor occurs with exponent at least two. In particular one is powerful. Let E={1,2,6,12}. A positive integer is five-smooth when all of its prime divisors belong to {2,3,5}.
+
+**Theorem.** For every positive five-smooth integer m,
+
+$$
+\boxed{F_m\text{ powerful}\quad\Longleftrightarrow\quad m\in E.}\tag{PBC1}
+$$
+
+**Proof.** Write m=2^a3^b5^c. If c=1, the classical identity v_5(F_m)=v_5(m) gives a simple prime divisor five. If c>=2, use F_25=5^2*3001. The integer 3001 is prime: no integer from two through 54 divides it, while sqrt(3001)<55. Since 3001 does not divide m, the valuation formula U.1 gives v_3001(F_m)=v_3001(F_25)+v_3001(m/25)=1. Thus powerfulness forces c=0.
+
+If b>=2, the identity F_9=2*17 and 17 not dividing m give v_17(F_m)=1. Thus b<=1. If a>=3, the identity F_8=3*7 and seven not dividing m give v_7(F_m)=1. Thus a<=2. The remaining indices are 1,2,3,4,6,12. The values F_3=2 and F_4=3 are not powerful, whereas F_1=F_2=1, F_6=8 and F_12=144 are powerful. This proves both directions. The valuation formula used here is Lengyel's theorem, as stated in Medina and Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, Theorem 1.4, https://arxiv.org/abs/0910.2907 .
+

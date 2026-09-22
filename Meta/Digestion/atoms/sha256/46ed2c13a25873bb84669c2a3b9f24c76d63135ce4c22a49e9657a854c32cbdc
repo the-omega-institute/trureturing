@@ -1,0 +1,6 @@
+由于 $\mathcal D_g$ 是恒等通道与完全退极化通道 $\sigma\mapsto\operatorname{tr}(\sigma)I_S/2$ 按权重 $1-2g,2g$ 的混合，它是 CPTP 映射。它满足任意系统幺正 $U$ 下的协变性
+
+$$
+\mathcal D_g(U\sigma U^\dagger)
+=U\mathcal D_g(\sigma)U^\dagger.
+$$

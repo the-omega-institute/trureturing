@@ -1,0 +1,9 @@
+**theorem 26.5 (Finite Hausdorff observations and the required scalar coordinates).** Let $Y$ be Hausdorff and $q:K\to Y$ continuous with finite image $D=q(K)$. Let $(\psi_\lambda:D\to\mathbb F)_{\lambda\in\Lambda}$ jointly separate points of $D$, meaning that distinct points have different values for at least one coordinate. Then
+$$
+\bigl(\psi_\lambda(q(Z(n)))\bigr)_{n\ge0}
+\text{ is WAP for every }\lambda
+\quad\Longleftrightarrow\quad
+q\text{ is constant}.
+$$
+The same equivalence holds with AP in place of WAP. A single injective real-valued labelling of $D$ suffices.
+

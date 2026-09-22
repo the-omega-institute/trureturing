@@ -1,0 +1,8 @@
+**命题 11.14（相同局部态与记录访问的区别）。** 取 qubit $S,M$，令
+$$
+|\pm\rangle=\frac{|0\rangle\pm|1\rangle}{\sqrt2},\qquad
+|\Phi_\pm\rangle=\frac{|00\rangle\pm|11\rangle}{\sqrt2}.
+\tag{11.22}
+$$
+两联合纯态正交，双方局部态均为 $I_2/2$。未来若仅操作 $S$ 及独立于 $SM$、且制备不依赖符号的辅助系统，$M$ 始终不回流，则全部这类仪器历史统计相同。若允许控制 $SM$ 上的耦合 $U|i,j\rangle=|i,j\mathbin{\mathrm{XOR}}i\rangle$，则逆耦合后测量 $S$ 的 $X$ 基能完全区分两态。若实际测量 $M$ 的计算基并只保存经典结果及 $S$，两个输出反而相同。
+

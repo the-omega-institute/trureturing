@@ -1,0 +1,6 @@
+**定义 19.9（弱殆周期函数与半拓扑紧化）。** 令 $E=\ell^\infty(\mathbb N;\mathbb C)$，赋予上确界范数，$E^*$ 为其连续线性对偶。对 $g\in E$ 定义
+$$
+(R_tg)(s)=g(s+t),\qquad \mathcal O(g)=\{R_tg:t\in\mathbb N\}.
+$$
+称 $g$ 为弱殆周期函数，若 $\mathcal O(g)$ 在弱拓扑 $\sigma(E,E^*)$ 中的闭包紧。紧 Hausdorff 半拓扑半群是具有结合运算、且该运算分别连续的紧 Hausdorff 空间。其作为 $(\mathbb N,+)$ 的半拓扑紧化时，另带一个具有稠密像的半群同态 $\eta:\mathbb N\to S$；不要求 $\eta$ 单射。弱殆周期的平移轨道定义见 Grothendieck 的命题 7；半拓扑紧化的通常范围见 Akbari Tootkaboni 的定理 2.2。([webusers.imj-prg.fr](https://webusers.imj-prg.fr/~leila.schneps/grothendieckcircle/AG/AG-6.pdf)) M. Akbari Tootkaboni, *Filters and the weakly almost periodic compactification of a semitopological semigroup*, [arXiv:1302.3204v1](https://arxiv.org/pdf/1302.3204v1), p. 1（半拓扑半群定义）及 p. 3（弱殆周期定义、定理 2.1–2.2）。
+

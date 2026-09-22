@@ -1,0 +1,8 @@
+**Theorem.** For every positive n coprime to six,
+
+$$
+\boxed{F_n^2\equiv4-3\eta(n)\pmod9,
+\qquad \lambda_3(F_n)=1-\eta(n)\pmod3.}
+\tag{S2}
+$$
+

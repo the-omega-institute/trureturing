@@ -1,0 +1,9 @@
+**Theorem.** The branch is determined by p modulo four:
+
+\[
+\begin{array}{ll}
+p\equiv1\pmod4:&p\mid F_h,\ p\nmid L_h,\ v_p(F_h)=s_p;\\
+p\equiv3\pmod4:&p\mid L_h,\ p\nmid F_h,\ v_p(L_h)=s_p.
+\end{array}\tag{U.12}
+\]
+

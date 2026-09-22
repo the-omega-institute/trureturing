@@ -1,0 +1,16 @@
+**Proof.** At every odd prime power there are at most two roots: a root
+is a unit and the derivative 2x is a unit, so each root modulo the prime
+lifts uniquely. At two there is one root modulo two and none modulo four
+or higher powers. CRT proves the first bound. For primes at least17,
+2<=q^(1/4). There are just six primes below17, so their possible factors
+of two contribute at most64; the larger primes' product is at most d.
+
+Fibonacci induction gives F_j>=(3/2)^(j-2) for j>=2. Since
+(3/2)^3>(4/3)^4, it follows that F_j^(-3/4)<=(3/4)^(j-2).
+Thus, for every integer J>=3,
+
+$$
+\sum_{j>J}\frac{R(F_j)}{F_j}
+\le256(3/4)^{J-1}=:T_J.                            \tag{QR3}
+$$
+

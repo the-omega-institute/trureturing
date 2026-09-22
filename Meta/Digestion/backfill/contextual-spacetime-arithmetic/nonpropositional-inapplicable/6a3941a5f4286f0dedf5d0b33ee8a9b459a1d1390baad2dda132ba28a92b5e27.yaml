@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a3941a5f4286f0dedf5d0b33ee8a9b459a1d1390baad2dda132ba28a92b5e27
+  normalized_sha256: sha256:6a3941a5f4286f0dedf5d0b33ee8a9b459a1d1390baad2dda132ba28a92b5e27
+cas_ref: sha256:6a3941a5f4286f0dedf5d0b33ee8a9b459a1d1390baad2dda132ba28a92b5e27
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “若另有非空局部关系及每条边的投影一致”只引入下一子句使用的附加前提，所列等式是被要求的条件，不宣称任意关系自动一致；本定义段没有偷带延伸结论，延伸命题保留在相邻子项，由冻结的局部行延伸定理另行核对。
+    previous_atom_id: fd79cbab3cddf4a07e54afc23068d3e42fd9bee4a26595519bfd630a55864619
+    next_atom_id: 3f9f30c4641e4036df29e3e0260fcf3e0f93daf9664e1aa39dd42db916163e88

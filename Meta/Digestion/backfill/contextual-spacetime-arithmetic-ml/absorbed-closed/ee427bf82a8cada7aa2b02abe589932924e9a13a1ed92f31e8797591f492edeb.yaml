@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ee427bf82a8cada7aa2b02abe589932924e9a13a1ed92f31e8797591f492edeb
+  normalized_sha256: sha256:ee427bf82a8cada7aa2b02abe589932924e9a13a1ed92f31e8797591f492edeb
+cas_ref: sha256:ee427bf82a8cada7aa2b02abe589932924e9a13a1ed92f31e8797591f492edeb
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/RefinementFactorization/InjectiveInterfaceTargetFactorization.injective_interface_factors_every_target
+    target_statement_id: sha256:26fe25d4a47a5c8ce9ee14bf47db6bb72a3b1fde1f6b73eda75b153e14c5add3
+receipts:
+  unresolved_subitems: []

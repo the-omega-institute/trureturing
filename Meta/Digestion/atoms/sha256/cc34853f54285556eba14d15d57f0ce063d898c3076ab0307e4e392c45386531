@@ -1,0 +1,48 @@
+### S5040.5 Primitive-block abundancy and the Robin boundary
+
+**Theorem.** For every odd n>3 with 5 not dividing n and R_n>1,
+
+$$
+\boxed{1<\frac{\sigma(R_n)}{R_n}
+<\exp\!\left(\frac{\log\phi}{2\log(2n-1)}\right).}
+\tag{S10}
+$$
+
+Thus along such indices tending to infinity the abundancy tends to one,
+independently of whether any initial depth is greater than one.
+
+**Proof.** Every prime p with r(p)=n satisfies n dividing p-chi(p).
+Since n is odd and p-chi(p) is even, p>=2n-1. These primes also satisfy
+p=1 modulo four. Let w be the number of distinct prime factors of R_n.
+Then (2n-1)^w<=R_n<=F_n<phi^(n-1), the latter bound following by ordinary
+Fibonacci recurrence induction. Prime-power divisor sums give
+
+$$
+\begin{aligned}
+\log\frac{\sigma(R_n)}{R_n}
+&<\sum_{p\mid R_n}-\log(1-1/p)\\
+&<\sum_{p\mid R_n}\frac1{p-1}\\
+&\le\frac{w}{2n-2}
+\le\frac{\log R_n}{(2n-2)\log(2n-1)}
+<\frac{\log\phi}{2\log(2n-1)}.
+\end{aligned}
+$$
+
+The elementary inequality log(1+x)<x for x>0 gives the second step.
+No h_p=1 assumption occurs. Exponentiate to obtain S10. If R_n=1,
+its abundancy is one directly, so the convergence statement also holds
+when those indices are included.
+
+Theorem2 of Choie, Lichiardopol, Moree and Sole, *On Robin's criterion
+for the Riemann Hypothesis*, Journal de Theorie des Nombres de Bordeaux
+19 (2007),357-372, states that every odd positive integer except1,3,5,9
+satisfies Robin's strict inequality. Every nontrivial R_n here is odd
+and at least13, so it satisfies that inequality unconditionally. Thus
+applying Robin's inequality to these unmodified primitive blocks cannot
+separate their WSS and non-WSS depths. Multiplying by5040 creates a
+different integer and would require a new, proved arithmetic implication.
+
+The statements S2-S10 neither establish a WSS prime nor exclude an
+unbounded WSS prime class.
+
+

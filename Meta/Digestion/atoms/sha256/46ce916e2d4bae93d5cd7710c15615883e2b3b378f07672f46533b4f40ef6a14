@@ -1,0 +1,6 @@
+**theorem 48.6 (The precise boundary-ring decision input).** Finite existential conjunctions of polynomial equalities with integer coefficients are uniformly decidable over $R=\widehat{\mathbb Z}$. More precisely, for each such ring sentence $\Psi$,
+$$
+R\models\Psi\quad\Longleftrightarrow\quad\text{for every }m>1,\ \mathbb Z/m\mathbb Z\models\Psi.
+$$
+The parameter-free first-order theory of the internal ring $B$, with its own zero $e$ and unit $\tau(1)$, is also decidable. This includes internally interpreted inequations, but does not add arbitrary named profinite parameters.
+

@@ -1,0 +1,8 @@
+**定理 447.3（每个 epsilon 与根 limsup 的精确等价）。** 以下条件等价：
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon>0\ \forall N\ge1,
+\quad |M(N)|\le C_\varepsilon N^{1/2+\varepsilon};
+$$
+$$
+\limsup_{L\to\infty}A_L^{1/L}\le\sqrt\varphi.
+$$

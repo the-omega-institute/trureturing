@@ -1,0 +1,6 @@
+**定义 444.1（原平衡载体中的 Möbius 档案）。** 对 $N\in\mathbb N$，取全部两两不同的遗传有限出现标识 $e_n^+,e_n^-$（$1\le n\le N$），令
+$$
+E_N=\Omega_N=\{e_n^+,e_n^-:1\le n\le N\},\quad
+t(e_n^\pm)=n,\quad x(e_n^\pm)=(0,0,0),\quad
+\sigma(e_n^\pm)=\pm1,\quad\rho(e_n^\pm)=\operatorname{leaf}(n).
+$$

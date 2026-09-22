@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c72933938e65f1cb8c04fdba5620c2acb1401c09c3feb67457e35b5c5bf703b6
+  normalized_sha256: sha256:c72933938e65f1cb8c04fdba5620c2acb1401c09c3feb67457e35b5c5bf703b6
+cas_ref: sha256:c72933938e65f1cb8c04fdba5620c2acb1401c09c3feb67457e35b5c5bf703b6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义有限相位质量行集合及逐点限制映射，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: dcc1e85a4640dcde1db7d28adb742fae8261f3ab0d2a2bf04cb8c311be20914f
+    next_atom_id: cc3d9eb9ff255e1824f1fd83a9e34ab993281ee491dbe046cae75d2a122c5d7b

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da54f19b3031e53277cfe2c3bb534da226255d5f5c506ce90f5d3d866b016091
+  normalized_sha256: sha256:da54f19b3031e53277cfe2c3bb534da226255d5f5c506ce90f5d3d866b016091
+cas_ref: sha256:da54f19b3031e53277cfe2c3bb534da226255d5f5c506ce90f5d3d866b016091
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段沿用原编码并规定有效域、成员像、语义成员和打包记号，属于既定解释的定义约定；双逆命题另由独立子句承担。
+    previous_atom_id: 4312ba2fdaaaecd3438310da6e01da3fca6443dae89c927033673a65a8f4bb03
+    next_atom_id: 73bc55c93b6c490585fec3dca8c0835c9a34db8d0290e8454292503ed31b65d1

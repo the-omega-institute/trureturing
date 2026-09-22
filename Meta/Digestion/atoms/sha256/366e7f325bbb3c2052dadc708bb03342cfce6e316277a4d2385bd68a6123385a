@@ -1,0 +1,32 @@
+**theorem 28.14 (The global joint weak-star obstruction remains).** No globally jointly continuous product
+$$
+M(K)\times M(K)\longrightarrow M(K)
+$$
+for the topology $\sigma(M(K),C(K))$ on each measure space can agree with the prescribed point rows. In particular, neither the integrated product nor any sheared extension can have this global joint weak-star continuity. This concerns weak-star continuity, not total variation boundedness or the Banach weak topology.
+
+**Proof.** The Dirac map from the original compact $K$ into $M(K)$ is weak-star continuous, because
+$$
+\int_K f\,d\delta_x=f(x)\qquad(f\in C(K)).
+$$
+This standard observation is [Tausk, Proposition 4.1 and its proof](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf). A globally jointly weak-star continuous product agreeing on Diracs would therefore make
+$$
+(x,y)\longmapsto P^{(t)}_{x,y}
+$$
+continuous on $K^2$.
+
+The exact graph hypothesis gives
+$$
+\Gamma(0_K,x_1^+)=\{x_1^+,x_1^-\}.
+$$
+For each sign $s\in\{+,-\}$, membership of $(0_K,x_1^+,x_1^s)$ in the closure defining $\Gamma$ supplies a sequence of genuine natural-number input pairs with
+$$
+Z(a_j^s)\longrightarrow0_K,\qquad
+Z(b_j^s)\longrightarrow x_1^+,\qquad
+Z(a_j^s+b_j^s)\longrightarrow x_1^s.
+$$
+These are simultaneous approximations of the input pair and its actual finite sum. Finite-core consistency gives
+$$
+P^{(t)}_{Z(a_j^s),Z(b_j^s)}=\delta_{Z(a_j^s+b_j^s)}.
+$$
+Consequently the two output sequences have weak-star limits $\delta_{x_1^+}$ and $\delta_{x_1^-}$. They are distinct: a digit coordinate at which the two points differ is a continuous function separating the limits. Interleaving the input sequences still gives convergence to $(0_K,x_1^+)$, but the corresponding continuous-test integrals have two different subsequential limits. The point-row map is therefore discontinuous there, independently of the parameter and independently of whether its value at that pair is itself a Dirac measure. This contradicts the proposed global joint continuity. QED.
+

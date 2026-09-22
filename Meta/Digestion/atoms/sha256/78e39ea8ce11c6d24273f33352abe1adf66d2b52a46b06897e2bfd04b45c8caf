@@ -1,0 +1,9 @@
+**Lemma IP2.** For every $n\ge1$,
+
+$$
+F_n\equiv n3^{n-1}\pmod5.
+$$
+
+In particular, for every odd $n$, $\chi(F_n)=\chi(n)$, including zero
+character at multiples of five.
+

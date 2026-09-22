@@ -1,0 +1,66 @@
+**theorem 50.6（环境零、内部环零与 $t=\infty$ 边界公式）。** 当 $D=1$ 或 $2$ 时，有限 $t$ 的系统有最大层 $(t,D)$，故
+$$
+K_{t,D}\cong Q_{t,D}.
+$$
+当 $t=0$ 时，环境自然数零 $j(0)$ 已与相同模 $D$ 的正尾元素合并；当 $t\ge1$ 时，$j(0)$ 是孤立点，与尾部剩余类 $0\bmod D$ 不同。
+
+当 $t=\infty,D=1$ 时，$K_{\infty,1}$ 可写为
+$$
+\mathbb N_0\sqcup\{\omega\},
+$$
+其中每个自然数点孤立，$\omega$ 是阈值趋于无穷的唯一边界点。lcm 延拓满足
+$$
+L(0,x)=0,
+$$
+$$
+L(n,\omega)=L(\omega,n)=\omega\quad(n\ge1),
+$$
+以及
+$$
+L(\omega,\omega)=\omega.
+$$
+这里将该唯一边界点的“内部环”记号局部绑定为
+$$
+R_1:=\mathbb Z/1\mathbb Z=\{\bar 0\}.
+$$
+通过唯一双射 $\bar 0\mapsto\omega$，把边界单点集 $\{\omega\}$ 与 $R_1$ 识别；因此 $\omega$ 是这个单元素环的唯一元素，在该内部环中同时有
+$$
+0_{R_1}=1_{R_1}=\omega.
+$$
+这个内部环的零元兼单位元只是边界剩余对象，不是环境自然数零；事实上 $\omega\ne j(0)$，后者在 $t=\infty$ 时是孤立点。
+
+当 $t=\infty,D=2$ 时，记边界点
+$$
+\omega_r=\lim_{k\to\infty}j(2k+r),
+\qquad r\in\{0,1\},
+$$
+其中极限可等价理解为：所有有限阈值之后固定剩余 $r\bmod2$ 的相容线程。则
+$$
+K_{\infty,2}
+=
+j(\mathbb N_0)\sqcup\{\omega_0,\omega_1\}
+$$
+作为集合，且 $j(\mathbb N_0)$ 中每点孤立。lcm 延拓满足
+$$
+L(0,x)=0
+$$
+对所有 $x$ 成立；对 $n\ge1$，
+$$
+L(j(n),\omega_r)
+=
+L(\omega_r,j(n))
+=
+\omega_{\epsilon(n)r},
+$$
+其中 $\epsilon(n)=1$ 当且仅当 $n$ 为奇数；并且
+$$
+L(\omega_r,\omega_s)=\omega_{rs}.
+$$
+特别地，$\omega_0$ 是边界中的模 $2$ 环零，而 $j(0)$ 是孤立环境零；二者不同，并满足
+$$
+L(j(0),\omega_1)=j(0),
+\qquad
+L(\omega_0,\omega_1)=\omega_0.
+$$
+所以“内部环零”与“环境零”不可混同。
+

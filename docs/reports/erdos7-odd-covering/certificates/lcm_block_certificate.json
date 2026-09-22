@@ -1,0 +1,150 @@
+{
+  "schema": "erdos7-lcm-block-v1",
+  "prime_support": [
+    3,
+    5,
+    7,
+    11
+  ],
+  "old_support": [
+    3,
+    5
+  ],
+  "outside_support": [
+    7,
+    11
+  ],
+  "analytical_inputs": {
+    "R_3_5": "15/7",
+    "R_3_5_7": "1649/360",
+    "Gamma_3_5": "57/4"
+  },
+  "survival_factors": {
+    "7": "4/7",
+    "11": "1591/3240"
+  },
+  "pointwise_domination_factor": "5670/1591",
+  "ordinary_profile": {
+    "1": "1",
+    "3": "17010/1591",
+    "5": "9360/1591",
+    "7": "1344/361",
+    "11": "3600/1591",
+    "3*5": "22680/1591",
+    "3*7": "20412/1591",
+    "3*11": "18900/1591",
+    "5*7": "13608/1591",
+    "5*11": "10400/1591",
+    "7*11": "7560/1591",
+    "3*5*7": "27216/1591",
+    "3*5*11": "25200/1591",
+    "3*7*11": "22680/1591",
+    "5*7*11": "15120/1591",
+    "3*5*7*11": "30240/1591"
+  },
+  "first_ternary_profile": {
+    "3": "14580/1591",
+    "3*5": "21600/1591",
+    "3*7": "17496/1591",
+    "3*11": "16200/1591",
+    "3*5*7": "27216/1591",
+    "3*5*11": "24000/1591",
+    "3*7*11": "19440/1591",
+    "3*5*7*11": "30240/1591"
+  },
+  "full_profile_cutoffs": {
+    "3": 2,
+    "5": 1,
+    "7": 0,
+    "11": 0
+  },
+  "full_profile_R": "5275731/574351",
+  "full_profile_K": "187719326/1723053",
+  "support_modes": [
+    {
+      "outside_support": [],
+      "profile_coefficient": "67971/1591",
+      "transport_coefficient": "161595/3182",
+      "infinite_weight": "1",
+      "selected": "profile",
+      "selected_contribution": "67971/1591",
+      "old_coordinate_cutoffs": {
+        "3": 2,
+        "5": 1
+      }
+    },
+    {
+      "outside_support": [
+        7
+      ],
+      "profile_coefficient": "37315227/574351",
+      "transport_coefficient": "96957/1591",
+      "infinite_weight": "5/9",
+      "selected": "transport",
+      "selected_contribution": "53865/1591",
+      "old_coordinate_cutoffs": {
+        "3": 1,
+        "5": 0
+      }
+    },
+    {
+      "outside_support": [
+        11
+      ],
+      "profile_coefficient": "85450/1591",
+      "transport_coefficient": "89775/1591",
+      "infinite_weight": "8/25",
+      "selected": "profile",
+      "selected_contribution": "27344/1591",
+      "old_coordinate_cutoffs": {
+        "3": 1,
+        "5": 0
+      }
+    },
+    {
+      "outside_support": [
+        7,
+        11
+      ],
+      "profile_coefficient": "115830/1591",
+      "transport_coefficient": "107730/1591",
+      "infinite_weight": "8/45",
+      "selected": "transport",
+      "selected_contribution": "19152/1591",
+      "old_coordinate_cutoffs": {
+        "3": 1,
+        "5": 0
+      }
+    }
+  ],
+  "head_bound": "168332/1591",
+  "head_improvement": "5415770/1723053",
+  "bridge": [
+    {
+      "prime": 67,
+      "delta": "1/4",
+      "input": "168332/1591",
+      "a": "50/1089",
+      "denominator": "5029465/5197797",
+      "output": "583607044/5029465"
+    },
+    {
+      "prime": 71,
+      "delta": "53/200",
+      "input": "583607044/5029465",
+      "a": "53/1225",
+      "denominator": "372336564907/384008705787",
+      "output": "235912059003164/1861682824535"
+    },
+    {
+      "prime": 73,
+      "delta": "27/100",
+      "input": "235912059003164/1861682824535",
+      "a": "109/2592",
+      "denominator": "230403367852020953/237775619695869828",
+      "output": "159332999398235438706/1152016839260104765"
+    }
+  ],
+  "prime_73_upper_threshold": "138877/1000",
+  "prime_73_threshold_margin": "131128637538026148581/230403367852020953000"
+}

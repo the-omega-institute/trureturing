@@ -1,0 +1,6 @@
+**定理 403.1。** 对任意集合 $X,Y$，第 378.4 条的乘积比较
+$$
+\chi_{X,Y}:X^*\times Y^*\longrightarrow(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\langle c,d\rangle_Z
+$$
+是双射，

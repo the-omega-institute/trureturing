@@ -1,0 +1,206 @@
+[
+  {
+    "shape": "root1_same_other_column",
+    "old_survivors": 17,
+    "test_layouts": 4760,
+    "distinct_histograms": 170,
+    "old_cylinder_maxima_in_modulus_order": [
+      12,
+      5,
+      4,
+      3,
+      1
+    ],
+    "survivor_count_range_inclusive": [
+      77,
+      102
+    ],
+    "ordered_histogram_pair_count_cases": 751400,
+    "integer_hinge_cases": 9768200,
+    "profile": [
+      "37/11",
+      "26/11",
+      "15/11",
+      "61/77",
+      "32/77",
+      "3/11",
+      "10/77",
+      "1/11",
+      "4/77",
+      "3/77",
+      "2/77",
+      "1/77",
+      "0"
+    ]
+  },
+  {
+    "shape": "root1_other_same_column",
+    "old_survivors": 17,
+    "test_layouts": 4760,
+    "distinct_histograms": 135,
+    "old_cylinder_maxima_in_modulus_order": [
+      11,
+      5,
+      4,
+      3,
+      1
+    ],
+    "survivor_count_range_inclusive": [
+      78,
+      102
+    ],
+    "ordered_histogram_pair_count_cases": 455625,
+    "integer_hinge_cases": 5923125,
+    "profile": [
+      "259/78",
+      "181/78",
+      "103/78",
+      "10/13",
+      "16/39",
+      "7/26",
+      "5/39",
+      "7/78",
+      "2/39",
+      "1/26",
+      "1/39",
+      "1/78",
+      "0"
+    ]
+  },
+  {
+    "shape": "root1_other_other_column",
+    "old_survivors": 17,
+    "test_layouts": 4760,
+    "distinct_histograms": 179,
+    "old_cylinder_maxima_in_modulus_order": [
+      11,
+      5,
+      4,
+      3,
+      1
+    ],
+    "survivor_count_range_inclusive": [
+      78,
+      102
+    ],
+    "ordered_histogram_pair_count_cases": 801025,
+    "integer_hinge_cases": 10413325,
+    "profile": [
+      "259/78",
+      "181/78",
+      "103/78",
+      "10/13",
+      "16/39",
+      "7/26",
+      "5/39",
+      "7/78",
+      "2/39",
+      "1/26",
+      "1/39",
+      "1/78",
+      "0"
+    ]
+  },
+  {
+    "shape": "root2_same_other_column",
+    "old_survivors": 16,
+    "test_layouts": 4480,
+    "distinct_histograms": 139,
+    "old_cylinder_maxima_in_modulus_order": [
+      8,
+      5,
+      4,
+      3,
+      1
+    ],
+    "survivor_count_range_inclusive": [
+      75,
+      96
+    ],
+    "ordered_histogram_pair_count_cases": 425062,
+    "integer_hinge_cases": 5525806,
+    "profile": [
+      "238/75",
+      "163/75",
+      "92/75",
+      "11/15",
+      "2/5",
+      "4/15",
+      "2/15",
+      "7/75",
+      "4/75",
+      "1/25",
+      "2/75",
+      "1/75",
+      "0"
+    ]
+  },
+  {
+    "shape": "root2_other_same_column",
+    "old_survivors": 16,
+    "test_layouts": 4480,
+    "distinct_histograms": 131,
+    "old_cylinder_maxima_in_modulus_order": [
+      9,
+      5,
+      4,
+      3,
+      1
+    ],
+    "survivor_count_range_inclusive": [
+      74,
+      96
+    ],
+    "ordered_histogram_pair_count_cases": 394703,
+    "integer_hinge_cases": 5131139,
+    "profile": [
+      "119/37",
+      "82/37",
+      "93/74",
+      "28/37",
+      "15/37",
+      "10/37",
+      "5/37",
+      "7/74",
+      "2/37",
+      "3/74",
+      "1/37",
+      "1/74",
+      "0"
+    ]
+  },
+  {
+    "shape": "root2_other_other_column",
+    "old_survivors": 16,
+    "test_layouts": 4480,
+    "distinct_histograms": 162,
+    "old_cylinder_maxima_in_modulus_order": [
+      9,
+      5,
+      4,
+      3,
+      1
+    ],
+    "survivor_count_range_inclusive": [
+      74,
+      96
+    ],
+    "ordered_histogram_pair_count_cases": 603612,
+    "integer_hinge_cases": 7846956,
+    "profile": [
+      "119/37",
+      "82/37",
+      "93/74",
+      "28/37",
+      "15/37",
+      "10/37",
+      "5/37",
+      "7/74",
+      "2/37",
+      "3/74",
+      "1/37",
+      "1/74",
+      "0"
+    ]
+  }
+]

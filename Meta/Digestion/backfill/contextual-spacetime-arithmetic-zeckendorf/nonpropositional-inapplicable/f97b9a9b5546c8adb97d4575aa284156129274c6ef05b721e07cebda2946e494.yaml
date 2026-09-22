@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f97b9a9b5546c8adb97d4575aa284156129274c6ef05b721e07cebda2946e494
+  normalized_sha256: sha256:f97b9a9b5546c8adb97d4575aa284156129274c6ef05b721e07cebda2946e494
+cas_ref: sha256:f97b9a9b5546c8adb97d4575aa284156129274c6ef05b721e07cebda2946e494
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 单个黄金坐标只通过有限离散因子的坐标投影取值，因此在完整乘积上连续；限制到有限支撑子空间仍连续，且该限制逐点等于源句黄金坐标。仓内无冻结 GID。
+    previous_atom_id: d37f8839b7b037ba97dd3a09346462f797302dd7ac79ed6a08573af368d2ee90
+    next_atom_id: 5f1e7530df5431cc00e019dd3e70184dcb3e87958e8650e589f67fbe12562f1b

@@ -1,0 +1,32 @@
+### LFO.2. Compatibility survives non-perfect-power and finite-support constraints
+
+**Theorem.** Suppose [a]_M belongs to C(M). Given any integer B>=1, the class contains infinitely many positive powerful integers N which are not perfect powers and have no prime divisor p<=B with p not dividing M. At two distinct auxiliary primes r,s>B not dividing M, their exponents may be fixed to be exactly two and three, respectively.
+
+**Proof.** Use the D and unit u from LFO1. Infinitude of primes supplies distinct r,s>B outside the prime support of M. Let R be the product of primes p<=B with p not dividing M. The moduli M,R,r^2,s^2 are pairwise coprime. The Chinese remainder theorem gives positive x,y with
+
+$$
+\begin{array}{c|cccc}
+ &\bmod M&\bmod R&\bmod r^2&\bmod s^2\\
+x&u^{-1}&1&r&1\\
+y&u&1&1&s
+\end{array}
+$$
+
+and N=Dx^2y^3 is powerful, congruent to a modulo M, and divisible by none of the stated small primes. Since r,s do not divide D, its exponents at r,s are exactly two and three. A perfect-power exponent would divide both, which is impossible. Replace x by x+jL for j>=0, where L=MRr^2s^2, to obtain infinitely many distinct examples with all conditions unchanged. Congruences modulo one are vacuous. The elementary construction does not use a theorem on primes in arithmetic progressions.
+
+**Corollary.** Imposing the additional requirement that a powerful integer is not a perfect power does not change its image modulo any positive M.
+
+**Proof.** The preceding theorem gives the reverse inclusion; the other inclusion is immediate. In the constructed examples the collective gcd of the prime exponents is one because exponents two and three occur.
+
+**Proposition.** For fixed compatible a,M,B, there are constants C,T_0>0 such that every real T>=T_0 has one of these examples in [T,T+C sqrt(T)].
+
+**Proof.** Keep D,y,L and the residue of x from the preceding proof. Put A=Dy^3. Select the first positive x_j=x+jL with x_j>=sqrt(T/A). For sufficiently large T this choice has x_j<sqrt(T/A)+L. Thus
+
+$$
+T\le Ax_j^2<T+2L\sqrt{AT}+AL^2.
+$$
+
+For T>=1 the last two terms are bounded by C sqrt(T), with C=2L sqrt(A)+AL^2. All congruence and exponent conditions remain unchanged. The constants depend on the fixed residue data; no estimate uniform in a growing modulus is asserted.
+
+Squarefull numbers in arithmetic progressions have an extensive classical literature, including M. Munsch, I. E. Shparlinski and K. H. Yau, *Smooth squarefree and squarefull integers in arithmetic progressions*, Mathematika 66 (2020), 56-70, DOI 10.1112/mtk.12012, https://arxiv.org/abs/1810.02573 . The claims here use the explicit elementary construction rather than an unproved distribution assumption.
+

@@ -1,0 +1,26 @@
+**定理 14.3（联合置信盒中的合法修复）。** 对 $\nu_\ell\ge0$，假设实际返回的拟合 $\widehat\theta$ 同时具有第13节的共同合法性证书与逐坐标残差证书
+$$
+\widehat\theta\in\mathcal C_r,\qquad
+|\widehat\theta_\ell-\bar X_\ell|\le\rho_\ell+\nu_\ell.
+\tag{14.8}
+$$
+在同一个事件 $\mathcal E_n$ 上，
+$$
+|\widehat\theta_\ell-\theta_\ell|\le2\rho_\ell+\nu_\ell.
+\tag{14.9}
+$$
+因此
+$$
+\begin{aligned}
+\|\widehat M_j-M_j\|_{\rm op}
+&\le\|\widehat M_j-M_j\|_F
+\le\left(\sum_{\ell\in I^M_j}(2\rho_\ell+\nu_\ell)^2\right)^{1/2}
+=:\Delta^M_j,\\
+\|\widehat z_j-z_j\|
+&\le\left(\sum_{\ell\in I^z_j}(2\rho_\ell+\nu_\ell)^2\right)^{1/2}
+=:\Delta^z_j,
+\end{aligned}
+\tag{14.10}
+$$
+其中 $I^M_j,I^z_j$ 分别为对应块的坐标集。在 $\mathcal E_n$ 上，取 $\nu=0$ 的置信盒与 $\mathcal C_r$ 的交非空。
+

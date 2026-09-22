@@ -1,0 +1,32 @@
+**定理 19.5（任意紧标签及保留读数的紧历史扩张）。** 设 $A$ 为任意紧标签空间，$t:\mathbb N\to A$ 为任意集合映射，并令
+$$
+j(n)=(Z(n),t(n)).
+$$
+对任何包含 $j[\mathbb N]$ 的闭子空间 $X\subseteq K\times A$，定义连续读数
+$$
+r=d_0\circ\operatorname{pr}_K:X\to\{0,1\}.
+$$
+不存在分别连续的 $\mu:X\times X\to X$ 使
+$$
+r(\mu(j(n),j(m)))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这包括整个 $K\times A$ 以及 $j[\mathbb N]$ 的闭包，也包括要求 $\mu(j(n),j(m))=j(n+m)$ 的更强情形。
+
+又设 $\widetilde X$ 为紧 Hausdorff 空间，$\pi:\widetilde X\to K$ 为连续满射。任取满足
+$$
+\pi(\widetilde j(n))=Z(n)
+$$
+的提升 $\widetilde j:\mathbb N\to\widetilde X$。不存在分别连续的 $\widetilde\mu:\widetilde X\times\widetilde X\to\widetilde X$，使得对全部 $n,m\in\mathbb N$ 有
+$$
+d_0\bigl(\pi(\widetilde\mu(\widetilde j(n),\widetilde j(m)))\bigr)=f(n+m).
+$$
+因而，仅要求
+$$
+\pi(\widetilde\mu(\widetilde j(n),\widetilde j(m)))=Z(n+m)
+$$
+而允许输出历史在该数字纤维内任意变化，也不能避开障碍。
+
+**证明。** 违反无相邻一条件的数字向量构成开柱集的并，所以 $K$ 是紧 Hausdorff 乘积 $\{0,1\}^{\mathbb N}$ 的闭子空间。坐标观察 $d_0$ 连续。故 $K\times A$ 紧，闭子空间 $X$ 紧，且所定义的 $r$ 连续。将 $q=r$ 代入定理 19.4，即得标签空间上的结论。
+
+历史扩张上，$d_0\circ\pi$ 同样连续。满射性在 ZFC 中保证可以选择所述提升，而定理 19.4 对每一种这样的选择均适用。证明不要求 $\pi$ 有连续截面，也不要求 $\widetilde\mu$ 结合、交换、有单位或可逆。证毕。
+

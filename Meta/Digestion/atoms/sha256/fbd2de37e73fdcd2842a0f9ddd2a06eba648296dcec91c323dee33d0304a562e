@@ -1,0 +1,15 @@
+并且对任意 $N$ 有望远镜求和：
+
+$$
+\boxed{
+S(\rho_N)-S(\rho_0)
+=
+\sum_{k=0}^{N-1}
+D\!\left(
+U\rho_kU^\dagger
+\middle\|
+\operatorname{basisPinchingState}(U\rho_kU^\dagger)
+\right).
+}
+$$
+

@@ -1,0 +1,21 @@
+**证明，必要性。** $m=2$ 时 $\rho(m)=1$，故可设 $m>2$。由 JP3，$\rho(m)$ 为偶数。于是若 $\rho(m)=m$，可写
+
+$$
+m=2^a3^b v,\qquad a\ge1,\qquad \gcd(v,6)=1.
+$$
+
+由 JP4 与 Euler 定理，
+
+$$
+\begin{aligned}
+2^a3^b v
+&=\rho(m)\\
+&\le\varphi(3^{b+1}v)\\
+&=2\cdot3^b\varphi(v)\\
+&\le2\cdot3^b v\\
+&\le2^a3^b v.
+\end{aligned}
+$$
+
+每一步必须取等号。由于 $v\ge1$，最后一步迫使 $a=1$。又因 $\varphi(v)=v$ 只在正整数 $v=1$ 成立，故 $v=1$。排除 $m=2$ 后，得到 $b\ge1$。
+

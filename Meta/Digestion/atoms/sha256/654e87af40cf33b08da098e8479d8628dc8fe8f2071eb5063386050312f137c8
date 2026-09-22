@@ -1,0 +1,23 @@
+**theorem 54.16（完整局部程序的等价形式）.** 对任意固定素数 $p$、任意 $n\ge0$ 与任意有限完整阵列 $a$，以下条件等价：
+
+1. 存在同一个
+$$
+x\in(\mathbb Z_p^\times)^V
+$$
+实现全部精确有限估值与全部精确零和；
+2. $G_\infty$ 二分且 theorem 54.4 的模 $p^N$ 条件有解，其中
+$$
+N=
+\begin{cases}
+1,&E_f=\varnothing,\\
+1+\max_{e\in E_f}a_e,&E_f\ne\varnothing;
+\end{cases}
+$$
+3. theorem 54.8 的显式整数 $C_p(a)$ 为正。
+
+此外，在这些条件成立时，全部无穷约束由 theorem 54.2 的自由单位参数严格维持；若 $E_f\ne\varnothing$，全部有限约束只需要指数
+$$
+N=1+\max_{e\in E_f}a_e,
+$$
+而若 $E_f=\varnothing$ 则固定 $N=1$。不存在额外的无限提升相容条件。
+

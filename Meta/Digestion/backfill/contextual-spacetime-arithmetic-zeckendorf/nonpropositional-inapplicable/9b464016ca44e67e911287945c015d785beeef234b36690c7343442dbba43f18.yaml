@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b464016ca44e67e911287945c015d785beeef234b36690c7343442dbba43f18
+  normalized_sha256: sha256:9b464016ca44e67e911287945c015d785beeef234b36690c7343442dbba43f18
+cas_ref: sha256:9b464016ca44e67e911287945c015d785beeef234b36690c7343442dbba43f18
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅列举关联代数、黄金观察、增长词与有限推前的来源和适用域，没有新增数学命题。
+    previous_atom_id: 0c5cf01f6e810c598257cf410d41edef19791b4adba98ae57ccfce98664863ff
+    next_atom_id: 5283e7a217949587a218d69a8e8f9acf7e3c8b671a57dfb696e01e68e0d7b6dd

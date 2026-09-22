@@ -1,0 +1,6 @@
+**定理 RS6。** 映射 F_h(T)=T(I-hT)² 在 C_L 上为 Frobenius 非扩张，当且仅当
+
+$$\boxed{0\le hL\le4/3.}\tag{RS.10}$$
+
+在该范围内，它还保持 C_L，并有 0≼F_h(T)≼T。
+

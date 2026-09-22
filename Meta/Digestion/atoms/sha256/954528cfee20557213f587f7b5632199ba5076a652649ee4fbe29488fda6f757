@@ -1,0 +1,29 @@
+### PBC.3. All largest-prime power layers preserve exceptional depth
+
+**Theorem.** Let m>1 have largest prime factor ell>=7, and put a=v_ell(m). For 1<=j<=a define the positive integer
+
+$$
+C_j=\frac{F_{\ell^j}}{F_{\ell^{j-1}}}.
+$$
+
+Then C_j>1, the C_j are pairwise coprime, C_j is not a square, and every prime p dividing C_j satisfies
+
+$$
+\rho(p)=\ell^j,\qquad p>\ell,\qquad
+v_p(C_j)=h_p=v_p(F_m).\tag{PBC3}
+$$
+
+If F_m is powerful, every C_j is powerful, and there exist a distinct primes p_1,...,p_a such that
+
+$$
+\boxed{\rho(p_j)=\ell^j,\qquad h_{p_j}\ge3\text{ is odd},\qquad q_{p_j}=0.}\tag{PBC4}
+$$
+
+**Proof.** Fibonacci divisibility and strict growth give integral C_j>1. Every prime p dividing F_(ell^j) is different from two and five, whose ranks are three and five. Its rank divides ell^j and is greater than one, hence equals ell^i for some 1<=i<=j. The rank bound rho(p)|p-(5/p) implies p>rho(p): otherwise p=rho(p)-1 would be even and greater than two. In particular p>ell and p does not divide m. The valuation formula shows that v_p(F_(ell^j))=h_p and that this also equals v_p(F_m).
+
+For j>=2, every old prime divisor of F_(ell^(j-1)) is different from ell. Multiplying its zero index by ell therefore leaves its valuation unchanged. It cannot divide C_j. Thus gcd(C_j,F_(ell^(j-1)))=1, which also proves pairwise coprimality of all layers. Any prime in C_j must have rank ell^j, and the asserted valuation equalities follow. The j=1 case has previous factor F_1=1.
+
+If C_j were square, the distinct positive odd indices ell^(j-1) and ell^j would give Fibonacci numbers in the same square class. The classical square-class theorem excludes this. The theorem is stated by P. Ribenboim in *FFF: (Favorite Fibonacci Flowers)*, Fibonacci Quarterly 43(1) (2005), section 3.4, https://www.fq.math.ca/Papers1/43-1/paper43-1-1.pdf ; its only nonsingleton positive-index classes are {1,2,12} and {3,6}.
+
+Finally, powerful F_m and PBC3 force every exponent in C_j to be at least two. Since C_j is not square, some exponent is odd and at least three. Choose one such prime p_j for each layer. Distinct ranks, or pairwise coprimality, ensure these primes are distinct. No exceptional prime is supplied without the powerfulness antecedent.
+

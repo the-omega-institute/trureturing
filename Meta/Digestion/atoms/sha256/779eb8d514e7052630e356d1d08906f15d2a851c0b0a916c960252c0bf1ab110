@@ -1,0 +1,17 @@
+**推论 45.6（最优新报告界的对数阶；repo-derived）。** 在定义45.1的固定模型与固定旧摘要下，对所有正有理数 $0<\varepsilon\le1/16$，
+$$
+L_\varepsilon\le T_\varepsilon\le U_\varepsilon,
+\qquad
+T_\varepsilon=\Theta\!\left(\log\frac1\varepsilon\right)
+\quad(\varepsilon\downarrow0,\ \varepsilon\in\mathbb Q).
+$$
+
+证明。两侧界分别是定理45.4与45.5。充分小的正 $\varepsilon$ 满足
+$$
+L_\varepsilon\ge
+\frac{\log(1/\varepsilon)-\log506}{\log6},\qquad
+U_\varepsilon\le
+\frac{\log(1/\varepsilon)+\log(3/2)}{\log2}+1,
+$$
+故存在与 $\varepsilon$ 无关的正上下常数。这个阶比较优化的是全旧历史、全续词的最坏新报告数，允许任意有限的新计算与工作记忆；它不给最优常数，亦不给其他资源坐标的最优性。捕获构造满足更强的后续区间成员要求，仍达到同一阶。证毕。
+

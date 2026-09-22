@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ccb7526d6a7c43378b6267979fe22c66c22e4759d1765528d725c26fd48a9d71
+  normalized_sha256: sha256:ccb7526d6a7c43378b6267979fe22c66c22e4759d1765528d725c26fd48a9d71
+cas_ref: sha256:ccb7526d6a7c43378b6267979fe22c66c22e4759d1765528d725c26fd48a9d71
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶规定原带标历史任务、访问集合、最大终点素数及最小公倍数的记号，没有断言下一条的访问闭包公式。
+    previous_atom_id: 062e317aa6e04ce95a2eb6d37be9774090048aec300b8ac20da96f9c119507b1
+    next_atom_id: 14d29d8d509f1639af56393fa9eeee7a8fe9be3f7c7a09abacdb5d31b744b313

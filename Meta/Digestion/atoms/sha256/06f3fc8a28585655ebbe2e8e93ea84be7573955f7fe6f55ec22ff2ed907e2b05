@@ -1,0 +1,5 @@
+**定理 440.5。** 对任意集合 $X,Y$，
+$$
+\chi:X^*\times Y^*\to(X\times Y)^*,\quad\chi(c,d)=\langle c,d\rangle_Z
+$$
+是双射，逆在 $(X\times Y)^*$ 上为 $\operatorname{Enc}(\langle x,y\rangle)\mapsto\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle$。

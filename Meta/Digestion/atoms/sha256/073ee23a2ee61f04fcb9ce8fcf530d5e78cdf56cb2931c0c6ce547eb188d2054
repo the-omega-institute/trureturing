@@ -1,0 +1,16 @@
+### proposition 5.3: 局部读数的联合像由重叠同余决定
+
+对 \(m,n\in\mathbb N\)，令
+
+\[
+\rho_{m,n}:\mathbb Z\to\mathbb Z/m\mathbb Z\times\mathbb Z/n\mathbb Z,\qquad
+\rho_{m,n}(x)=(x\bmod m,x\bmod n).
+\]
+
+则
+
+\[
+\operatorname{im}\rho_{m,n}
+=\{(a,b):a\bmod\gcd(m,n)=b\bmod\gcd(m,n)\}.
+\]
+

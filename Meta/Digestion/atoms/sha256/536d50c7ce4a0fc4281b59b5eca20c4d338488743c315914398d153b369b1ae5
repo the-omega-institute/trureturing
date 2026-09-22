@@ -1,0 +1,11 @@
+**定理。** 写 $m=2^a u$，其中 $u$ 为正奇数。若 $m>2$ 且 $t>0$，则
+
+$$
+\boxed{
+\bigl(\exists N:\operatorname{TailPeriod}(m,N,t)\bigr)
+\iff 3u\mid 2^t-1.
+}\tag{JP3}
+$$
+
+右侧成立时，$\operatorname{TailPeriod}(m,a,t)$ 成立。
+

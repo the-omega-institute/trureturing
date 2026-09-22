@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c456730456f88b4e37cd59fcb9f200d7c443f28f920dd3ff3eef12936cd75823
+  normalized_sha256: sha256:c456730456f88b4e37cd59fcb9f200d7c443f28f920dd3ff3eef12936cd75823
+cas_ref: sha256:c456730456f88b4e37cd59fcb9f200d7c443f28f920dd3ff3eef12936cd75823
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将非负扩展总和嵌入扩展实数后与实参数比较，任意负参数都不可能等于该总和，故完整乘积上的负水平为空；比较保留负数而不把它截为零。仓内无冻结 GID。
+    previous_atom_id: a36ec9809c1c2a81bd1da82f738a3eb57da7b259f079b9a9758715762f1d101f
+    next_atom_id: ec24f80a29965052729cdb7180a44865194591344f850eab9c717a517871718d

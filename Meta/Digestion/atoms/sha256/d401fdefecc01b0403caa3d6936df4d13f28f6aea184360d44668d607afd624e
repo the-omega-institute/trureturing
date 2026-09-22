@@ -1,0 +1,25 @@
+### GAW.1. The exact arithmetic objects and linear reduction
+
+**Definition.** Let F_0=0,F_1=1,F_(n+2)=F_(n+1)+F_n. For a prime p, let rho(p) be its least positive Fibonacci zero index. Let pi(q) be the least positive t for which Q^t=I modulo q, where Q=((1,1),(1,0)); this is the Pisano period. For primes q>5 put epsilon_q=(5/q), N_q=q-epsilon_q, h_q=v_q(F_rho(q)) and q_q=F_(N_q)/q modulo q. An aligned prime witness for q is a prime p congruent to one modulo q with rho(p)|pi(q).
+
+**Lemma.** For a prime q other than two and five, pi(q)|q-1 when epsilon_q=1, and pi(q)|2(q+1) when epsilon_q=-1. In particular q does not divide pi(q).
+
+**Proof.** Over the quadratic splitting field, Q has distinct eigenvalues alpha,beta with alpha*beta=-1. In the split case both lie in F_q^*, so their orders divide q-1. In the inert case Frobenius interchanges them, giving alpha^(q+1)=beta^(q+1)=-1 and Q^(q+1)=-I. Hence Q^(2(q+1))=I. These prove the period bounds and coprimality. The same golden Frobenius argument gives rho(p)|p-epsilon_p. These are the classical prime-period and apparition bounds of Wall and Carmichael, not additional exceptional-prime assumptions.
+
+**Theorem.** Let q>5 and p=kq+1 be primes, k>=4, and suppose r=rho(p) divides pi(q). Then
+
+$$
+\begin{array}{c|c}
+(\epsilon_p,\epsilon_q)&\text{necessary index divisibility}\\
+(1,1)\text{ or }(1,-1)&r\mid k\\
+(-1,1)&r\mid k+2\\
+(-1,-1)&r\mid2(k-2).
+\end{array}\tag{GAW1}
+$$
+
+Consequently p divides at least one of F_k,F_(k+2),F_(2(k-2)).
+
+**Proof.** If epsilon_p=1, then r|p-1=kq and gcd(r,q)=1 by the period lemma, so r|k. If epsilon_p=-1 and epsilon_q=1, subtract k(q-1) from kq+2 to obtain r|k+2. If both signs are negative, subtract 2(kq+2) from k*2(q+1) to obtain r|2(k-2). The apparition divisibility criterion and Fibonacci divisibility finish the proof. Odd k are already impossible because p would be even and greater than two.
+
+The all-k question is OQ2 in A. Goel, *Sophie Germain Primes and the Totient of Fibonacci Numbers*, arXiv:2604.17847v3, Section 10, https://arxiv.org/html/2604.17847v3 . Its Theorem 4.2 gives a deterministic multiplier range through 31 and non-exhaustive factor-table evidence through 100. GAW1 uses the signed prime-period bounds to replace the quadratic candidate index k^2-4 by linear indices. The ramified q=5 exception is excluded in that version of the source as well.
+

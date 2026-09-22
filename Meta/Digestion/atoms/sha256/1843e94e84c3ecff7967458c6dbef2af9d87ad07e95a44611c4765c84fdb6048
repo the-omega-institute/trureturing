@@ -1,0 +1,13 @@
+**Theorem.** For every even n>=2,
+
+$$
+\boxed{D_F(L_n^2+1)=D_F(F_n^2+1)\cup\{5\},}\tag{FDS8}
+$$
+
+$$
+\boxed{|D_F(L_n^2+1)|=
+\tau(n-1)+\tau(n+1)-1+\mathbf1_{5\nmid(n^2-1)}.}\tag{FDS9}
+$$
+
+At n=0 the count is two.
+

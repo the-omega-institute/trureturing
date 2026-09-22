@@ -1,0 +1,56 @@
+**theorem 51.2.1 (影子连续性、单位商拓扑与主理想格运算).** 映射 $\sigma$ 连续，且
+$$
+\sigma(j(n))=n,\qquad \sigma(\tau(x))=x.
+$$
+映射 $\rho$ 是连续满射及商映射，并诱导同胚
+$$
+R/R^\times\cong\mathcal I\cong\operatorname{Prin}(R).
+$$
+第一个商是单位乘法作用的轨道空间，不是环理想商。第二个识别由 $e\mapsto J(e)$ 给出。对所有 $x,y\in R$，有
+$$
+xR=\prod_p x_p\mathbb Z_p=J(\rho(x)),
+$$
+$$
+xR+yR=J\bigl((\min\{v_p(x_p),v_p(y_p)\})_p\bigr),
+$$
+$$
+xR\cap yR=J\bigl((\max\{v_p(x_p),v_p(y_p)\})_p\bigr).
+$$
+特别地，和与交仍为主理想，包含任意零分量。映射 $\min,\max:E^2\to E$ 连续。以后可通过上述同胚把一个主理想与其赋值向量视为同一参数。
+
+单位轨道双射的既有结果是 Longhi–Mu–Saettone Proposition 4.3；主理想识别见紧随其后的 Remark 4.4，均在印页 26（[Longhi–Mu–Saettone，v3，第 26 页](https://arxiv.org/pdf/2202.13478v3#page=26)）。商拓扑与一点紧化赋值乘积拓扑的一致性是该文 Lemma 4.5，印页 27（[Longhi–Mu–Saettone，v3，第 27 页](https://arxiv.org/pdf/2202.13478v3#page=27)）。这些结果的对象是整个 $R$，并未排除零坐标；它们本身不是关于 $C$ 的共同自然见证定理。
+
+**证明。** $\sigma$ 的每个模 $m$ 坐标都是连续投影 $\pi_{0,m}$；逆极限拓扑遂给出 $\sigma$ 连续。两项取值公式逐坐标成立。
+
+一个 $R$ 中的元素可逆，当且仅当其每个 $p$ 分量都在 $\mathbb Z_p$ 中可逆：逆元在必要时投影得到，在充分时由各分量逆元组成。因此
+$$
+R^\times=\prod_p\mathbb Z_p^\times.
+$$
+$R$ 并非域：令 $\varepsilon_2=1$、$\varepsilon_p=0$ 对 $p\ne2$，则 $\varepsilon$ 与 $1-\varepsilon$ 均非零，却有 $\varepsilon(1-\varepsilon)=0$。
+
+若 $c=xr$，逐坐标有 $c_p\in x_p\mathbb Z_p$。反之，若每个 $c_p\in x_p\mathbb Z_p$，在 $x_p\ne0$ 时取 $r_p=c_p/x_p\in\mathbb Z_p$，在 $x_p=0$ 时必有 $c_p=0$，取 $r_p=0$；于是 $(r_p)_p\in R$ 且 $c=xr$。这证明 $xR=\prod_p x_p\mathbb Z_p$。每个非零 $x_p$ 可写成 $p^{v_p(x_p)}u_p$，其中 $u_p$ 为单位；零分量生成零理想。因此该乘积等于 $J(\rho(x))$。
+
+对任意 $e\in\mathcal I$，取元素 $c(e)$，其 $p$ 分量在 $e_p<\infty$ 时为 $p^{e_p}$，在 $e_p=\infty$ 时为 $0$。则 $\rho(c(e))=e$ 且 $J(e)=c(e)R$，证明满射以及所有 $J(e)$ 都为主理想。不同指数在对应 $\mathbb Z_p$ 中给出不同理想，故 $e\mapsto J(e)$ 单射。
+
+若 $\rho(x)=\rho(y)$，在 $y_p\ne0$ 的分量有 $x_p/y_p\in\mathbb Z_p^\times$；在 $y_p=0$ 的分量，同一赋值强迫 $x_p=0$，可任取单位，例如 $1$。这些单位组成 $u\in R^\times$，且 $x=uy$。反向地，单位乘法不改变任何赋值。故 $\rho$ 的纤维恰为单位轨道，也恰为 $x\mapsto xR$ 的纤维。
+
+对有限 $r$，有
+$$
+v_p^{-1}(\{r\})=p^r\mathbb Z_p\setminus p^{r+1}\mathbb Z_p,
+\qquad v_p^{-1}(T_r)=p^r\mathbb Z_p.
+$$
+这些集合开闭，故 $v_p:\mathbb Z_p\to E$ 连续，包括在 $0$ 处。乘积拓扑给出 $\rho$ 连续。$R$ 紧致而 $\mathcal I$ Hausdorff，故连续满射 $\rho$ 为闭映射，从而为商映射。结合已证纤维刻画，得到两个指定商空间与 $\mathcal I$ 的同胚。
+
+逐坐标的交显然满足
+$$
+\left(\prod_p x_p\mathbb Z_p\right)\cap\left(\prod_p y_p\mathbb Z_p\right)=\prod_p(x_p\mathbb Z_p\cap y_p\mathbb Z_p).
+$$
+和的对应公式也成立：对右侧一个元素，在每个分量中，把它写成 $x_pr_p+y_ps_p$，再将 $(r_p)_p,(s_p)_p$ 拼成 $R$ 中元素，即得全局表示。局部理想 $p^a\mathbb Z_p$ 与 $p^b\mathbb Z_p$ 线性嵌套，其和取较小指数，其交取较大指数；该论证包含 $a=\infty$ 或 $b=\infty$。由 $J$ 的主理想表示，得到所述和与交公式。
+
+最后，$T_r$ 在 $E$ 中开闭，并且
+$$
+\min^{-1}(T_r)=T_r\times T_r,
+\qquad \max^{-1}(T_r)=(T_r\times E)\cup(E\times T_r).
+$$
+两者均开闭。有限单点 $\{r\}$ 等于 $T_r\setminus T_{r+1}$，故其逆像也开闭。有限单点与各 $T_r$ 构成拓扑基，证明 $\min$、$\max$ 连续。证毕。
+

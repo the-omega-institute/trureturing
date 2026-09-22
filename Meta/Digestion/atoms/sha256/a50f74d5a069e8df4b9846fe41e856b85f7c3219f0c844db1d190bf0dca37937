@@ -1,0 +1,8 @@
+**Definition.** For a positive integer N, retain the distinct-value divisor set D_F(N) from FDS.1 and put
+
+$$
+\sigma_F(N)=\sum_{d\in D_F(N)}d.
+$$
+
+The value one is counted once. Let \(\mathcal F_+=\{F_n:n\ge2\}\).
+

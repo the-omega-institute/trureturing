@@ -1,0 +1,25 @@
+**theorem 35.3 (Arbitrary-set mass control and preliminary measure bounds).** Define the actual-diameter cylinder density by
+$$
+\mathcal D(p):=\frac{\eta(D_p)}{h_1(\operatorname{diam}_\rho D_p)}
+=\alpha^L\bigl(G_{L+1}-N_p-1\bigr),\qquad L=|p|.
+$$
+Then $\mathcal D(\varnothing)=1$, and for every $L\ge1$,
+$$
+\alpha^LG_L\le\mathcal D(p)\le\alpha^L(G_{L+1}-1)<A_+.
+$$
+In particular $1\le\mathcal D(p)<A_+$ for every block word. At each positive depth the lower and upper displayed bounds are attained: the upper one by $p=0^L$, and the lower one by the unique block word with $N_p=G_{L-1}-1$.
+
+For every arbitrary subset $A\subseteq X_\beta$,
+$$
+\eta^*(A)\le A_+h_1(\operatorname{diam}_\rho A).
+$$
+Consequently, at every $\delta>0$,
+$$
+\frac{\eta^*(A)}{A_+}\le\mathcal H^{h_1}_{\rho,\delta}(A)
+\le\eta^*(A).
+$$
+The limiting outer measure is a finite Borel measure, and
+$$
+0<\frac1{A_+}\le\mathcal H^{h_1}_\rho(X_\beta)\le1.
+$$
+

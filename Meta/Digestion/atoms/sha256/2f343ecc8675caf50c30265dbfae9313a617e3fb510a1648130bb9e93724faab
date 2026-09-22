@@ -1,0 +1,62 @@
+**theorem 41.6 (Sharp depth and sharp polynomial degree).** In $\mathbb R^d$, $d\ge2$, consider
+$$
+x_1>0,\qquad
+x_{j+1}-nx_j>0
+\quad(1\le j<d,\ n\in\mathbb N_{>0}).
+$$
+Every finite subsystem has an integer solution, but the complete strict real system has no solution. Its effective input rank is $d$. The curve
+$$
+\gamma_j(t)=t^{d-j+1}\qquad(1\le j\le d)
+$$
+is eventually feasible. Every polynomial curve tending to zero and eventually feasible has degree at least $d$, and every lexicographic witness has at least $d$ levels. Both lower bounds are attained.
+
+**Proof.** For a finite subsystem, choose an integer $N\ge1$ at least as large as every index $n$ occurring in it, and set
+$$
+x_j=(N+1)^{j-1}.
+$$
+Then $x_1=1$ and
+$$
+x_{j+1}-nx_j=(N+1-n)x_j>0
+$$
+for every selected row. A solution of the complete real system would satisfy $x_1>0$ and $x_2/x_1>n$ for every positive integer $n$, contradicting the Archimedean property of $\mathbb R$.
+
+For the displayed curve,
+$$
+\gamma_{j+1}(t)-n\gamma_j(t)
+=t^{d-j}(1-nt)>0\qquad(0<t<1/n),
+$$
+and $\gamma_1(t)=t^d>0$. Its coefficient list is
+$$
+e_d,e_{d-1},\ldots,e_1,
+$$
+which is orthonormal. The forms $x_1$ and $x_{j+1}-x_j$, $1\le j<d$, already span the full dual space, so the effective rank is $d$.
+
+Now let $\beta=(\beta_1,\ldots,\beta_d)$ be any eventually feasible polynomial curve tending to zero. The constraint $\beta_1>0$ and the finitely many rows with $n=1$ imply that every $\beta_j$ is eventually positive. Each is therefore nonzero, and
+$$
+\beta_j(t)=a_jt^{k_j}+O(t^{k_j+1}),
+\qquad a_j>0,\quad k_j\in\mathbb N_{>0}.
+$$
+For every fixed positive integer $n$,
+$$
+\frac{\beta_{j+1}(t)}{\beta_j(t)}>n
+$$
+eventually. Consequently this ratio tends to $+\infty$. But
+$$
+\frac{\beta_{j+1}(t)}{\beta_j(t)}
+=\frac{a_{j+1}}{a_j}t^{k_{j+1}-k_j}(1+o(1)),
+$$
+so necessarily $k_{j+1}<k_j$. Hence
+$$
+k_1>k_2>\cdots>k_d\ge1,\qquad k_1\ge d.
+$$
+The degree of $\beta$ is at least the degree of $\beta_1$, which is at least $k_1$, proving the polynomial lower bound. A lexicographic witness of length $r$ would produce an eventually feasible polynomial of degree at most $r$, so $r\ge d$ as well. The displayed curve attains both bounds.
+
+For $d=1$, the stated family reduces to $x_1>0$. It has a strict real solution, and its minimum depth and polynomial degree are both one, attained by $\gamma(t)=t$. More generally, every nonempty finitely feasible family of rank one has a strict real solution by Theorem 41.2.
+
+For $d\ge2$, no common positivity interval exists in the example: at every fixed $t>0$, some integer $n\ge1/t$ makes $1-nt\le0$. Its dual convex hull also illustrates the closure distinction:
+$$
+\frac{n}{n+1}e_1+\frac1{n+1}(e_2-ne_1)
+=\frac{e_2}{n+1}\longrightarrow0,
+$$
+although zero is not in the convex hull itself. Even depth one does not imply a uniform positive margin: the forms $\ell_n(x)=x/n$ are all positive at $x>0$, but $\inf_n\ell_n(x)=0$. $\square$
+

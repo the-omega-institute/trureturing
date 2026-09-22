@@ -1,0 +1,15 @@
+**命题 15.7（圆周平方覆盖的精确对应）。** 将 $S^1$ 视为复平面的单位圆，令
+$$
+p:S^1\longrightarrow S^1,
+\qquad p(z)=z^2.
+$$
+映射
+$$
+h:\mathbb{RP}^1\longrightarrow S^1,
+\qquad h([z])=z^2
+$$
+是同胚，且 $p=h\circ q_1$。因此 $p$ 的集合标签数为二，不存在连续离散纤维分离标签，不存在连续全局截面，而连续欧氏辅助坐标数恰为二。一个达到上界的读数为
+$$
+r(z)=(\operatorname{Re}z,\operatorname{Im}z).
+$$
+

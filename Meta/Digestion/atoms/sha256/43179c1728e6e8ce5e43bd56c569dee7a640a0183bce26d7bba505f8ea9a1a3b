@@ -1,0 +1,18 @@
+## 附录 EMW：Fibonacci 平方中心与非 WSS 秩支持
+
+**定义。** 正整数称为强力数，当且仅当每个素数因子均以至少二次幂出现。令 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$。对素数 $p\ne2,5$，定义
+
+$$
+\rho(p)=\min\{n\ge1:p\mid F_n\},\qquad
+q_p=\frac{F_{p-(5/p)}}p\pmod p.
+$$
+
+对 $60\mid M$，定义不同秩组成的集合
+
+$$
+\mathcal R_1=\{\rho(p):p\ne2,5\text{ 为素数},\ q_p\ne0\},\qquad
+\mathcal R_1(M)=\{r\in\mathcal R_1:\gcd(r,M)\le2\}.
+$$
+
+同一秩只计一次。令 EMW 表示不存在连续三个正强力数的命题。
+

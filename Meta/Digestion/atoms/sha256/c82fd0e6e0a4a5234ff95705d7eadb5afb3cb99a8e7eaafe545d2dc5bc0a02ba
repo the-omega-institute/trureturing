@@ -1,0 +1,25 @@
+**Proof 22.13.** Both selected atoms belong to the fiber, so the support condition holds. They coincide exactly on $G$ and differ on $D$, proving the support assertion for interior weights. With the continuous $K$-valued approximants of Theorem 22.9, define
+$$
+P_{\lambda,n}(\xi)=(1-\lambda)\delta_{a_n(\xi)}+\lambda\delta_{b_n(\xi)}.
+$$
+For each continuous $f$, its integral against this measure is
+$$
+(1-\lambda)f(a_n(\xi))+\lambda f(b_n(\xi)),
+$$
+a continuous function of $\xi$. Hence $P_{\lambda,n}$ is weakly continuous. Pointwise convergence of $a_n,b_n$ gives convergence of every test integral to the corresponding integral against $P_\lambda$. This is precisely a same-target weak Baire-one approximation. Support inside the input fiber is required of the limit, not of these continuous approximating maps.
+
+The map $(z,w)\mapsto(1-\lambda)\delta_z+\lambda\delta_w$ is weakly continuous by the same test calculation. The pair $(A_{\min},A_{\max})$ is Borel into $K^2$: a countable base of product cylinders reduces inverse images of open sets to countable unions of intersections of Borel sets. Composition proves weak-topology Borelness of $P_\lambda$. Moreover, for every Borel $B\subseteq K$,
+$$
+P_\lambda(\xi)(B)=(1-\lambda)\mathbf1_B(A_{\min}(\xi))+
+\lambda\mathbf1_B(A_{\max}(\xi))
+$$
+is Borel, proving the probability-kernel assertion itself.
+
+Use the Borel non-Baire-one selection $A_R$ of Theorem 22.10. Its Dirac assignment is a Borel probability kernel and a weakly Borel map. Suppose it were the pointwise weak limit of continuous maps $Q_n:X\to\mathcal P(K)$. On the same Cantor set $M$, the continuous real functions
+$$
+g_n(\xi)=\int_K z_j\,dQ_n(\xi)
+$$
+would tend to $\mathbf1_R$. The eventual $1/4$ bound in Proof 22.10 would again make $M\setminus R$ relatively $F_\sigma$, which was proved impossible. Thus this kernel is not weakly Baire one. For the non-completed-measurable selection $A_B$ there, the same digit moment of $\delta_{A_B}$ restricts on $M$ to $\mathbf1_B$. Its inverse image of $(1/2,\infty)$, intersected with $M$, is $B$. Hence this admissible assignment is not measurable for the completion of the probability $\nu$ constructed there, and in particular is not weakly Borel.
+
+Finally let $P$ be any admissible assignment. Outside $D$ it equals $\delta_{A_{\min}}$. For a weakly open set $O\subseteq\mathcal P(K)$, the set $\{z:\delta_z\in O\}$ is open in $K$, since the Dirac map is weakly continuous. Its inverse image under $A_{\min}$ is $F_\sigma$ by Theorem 22.9. The inverse image $P^{-1}(O)$ differs from that set only inside $D$, so the same meagre-error argument as in Proof 22.10 gives the Baire property. Thus probability-valued continuity and descriptive regularity have the asserted distinct meanings and boundaries.
+

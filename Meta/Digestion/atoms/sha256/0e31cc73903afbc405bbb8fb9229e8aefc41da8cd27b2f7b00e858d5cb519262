@@ -1,0 +1,6 @@
+**Corollary.** For every k>=0 and t>=1,
+
+$$
+\boxed{v_p(B_{p,k+t}-B_{p,k})=h_p+k.}                    \tag{NP4}
+$$
+

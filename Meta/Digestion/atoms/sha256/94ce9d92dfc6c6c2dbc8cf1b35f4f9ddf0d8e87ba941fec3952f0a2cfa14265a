@@ -1,0 +1,31 @@
+**定义 32.10（只使用成对表的合法解码器）。** 保留定理32.7的模型、合法 $K_O$ 及默认 $\theta_O$。对移动 $x$ 定义
+$$
+c_{x,k}=P(Y_k=x,Y_{k+1}=g^{-1}x)\quad(k<n-1),\qquad
+c_{x,n-1}=P(Y_{n-1}=x,Y_0=x).
+\tag{32.25}
+$$
+每个检测原子都是实际失败；在 $E$ 中它恰检测 $T^k(x)$，故 $c_{x,k}=p_{x,k}+z_{x,k}$，其中 $z\ge0$ 来自坏元组。只保留 $k\in K_O$，并写
+$$
+C_{O,k}=\sum_{x\in O}c_{x,k},\quad
+U_{O,k}=\sum_{x\in O}p_{x,k},\quad
+Z_O=C_O-U_O,\quad s_O=\sum_kC_{O,k},\quad D_O=\sum_kZ_{O,k},
+\quad b_O=\beta_O+m_O.
+\tag{32.26}
+$$
+$C_O$ 是计数向量，与循环常数 $c_{\rm cyc}(O)$ 不同。它们满足
+$$
+U_O,Z_O\ge0,\quad \sum_kU_{O,k}=w_O-b_O,\quad
+s_O=w_O-b_O+D_O,\quad 0\le b_O\le w_O,\quad D_O\le|K_O|\beta_O.
+\tag{32.27}
+$$
+最后一界逐检测事件使用 $P(E^c,Y_k\in O)=\beta_O$（闭合以 $Y_{n-1}$ 为源），只是粗界。
+
+对总量 $s$ 的非负向量 $c$，定义带同一默认的
+$$
+\mathcal N_w(c)=\begin{cases}wc/s,&s>0,\\w\theta,&s=0.
+\end{cases}
+\qquad q_O=\mathcal N_{w_O}(C_O).
+\tag{32.28}
+$$
+令 $Q(T^k(x))=q_{O,k}/\ell_O$（$k\in K_O$），固定点质量为 $\mu(x)$，其余为零，忽略零质量轨道。这给 $Q\in\mathcal F_S$：列非负、轨道恒定、总量正确且所用原子合法，直接使用定理32.3。输入只有完整成对表、$\mu,g$、已认证的 $K_O$ 与默认，不需要隐藏的 $p,\beta$。
+

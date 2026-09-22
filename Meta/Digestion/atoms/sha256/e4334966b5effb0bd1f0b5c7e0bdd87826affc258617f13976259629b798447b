@@ -1,0 +1,4 @@
+We use the established facts that $K$ is compact metrizable, $Z(\mathbb N)$ is dense, $H$ is a continuous surjection, and
+$$
+T Z(n)=Z(n+1),\qquad H(Tx)=H(x)+\delta.
+$$

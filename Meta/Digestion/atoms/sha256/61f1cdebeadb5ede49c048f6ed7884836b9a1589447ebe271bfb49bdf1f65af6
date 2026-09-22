@@ -1,0 +1,117 @@
+### S5040.2 A modulo-nine identity and its primitive-block consequence
+
+Define the integer-valued character
+
+$$
+\eta(n)=\begin{cases}
+1,&n\equiv1,11\pmod{12},\\
+-1,&n\equiv5,7\pmod{12},\\
+0,&\gcd(n,6)>1.
+\end{cases}
+$$
+
+It is multiplicative: on the units modulo twelve the classes 1,11 form the
+kernel of an index-two character, and multiplying a nonunit leaves a nonunit.
+For integers x coprime to three define
+
+$$
+\lambda_3(x)=\frac{x^2-1}{3}\pmod3.
+$$
+
+The division takes place in the integers. The residue depends only on x
+modulo nine, and expansion of (xy)^2-1 gives
+
+$$
+\lambda_3(xy)=\lambda_3(x)+\lambda_3(y),\qquad
+\lambda_3(x^h)=h\lambda_3(x).
+\tag{S1}
+$$
+
+**Theorem.** For every positive n coprime to six,
+
+$$
+\boxed{F_n^2\equiv4-3\eta(n)\pmod9,
+\qquad \lambda_3(F_n)=1-\eta(n)\pmod3.}
+\tag{S2}
+$$
+
+**Proof.** The pair recurrence of Appendix U.1 gives (F_24,F_25)=(0,1) modulo
+nine, hence F_(n+24)=F_n for every n by recurrence induction. The square
+values at the eight unit classes modulo twenty-four are one at classes
+1,11,13,23 and seven at classes 5,7,17,19. These are exactly 4-3*eta(n).
+All values are units at three. Dividing the square congruence minus one
+by three in the integers gives the second statement. Thus the finite
+calculation proves a universal congruence after the period reduction.
+
+For n>3 with gcd(n,30)=1, retain the actual primitive block
+R_n=C_n/E_n from IP9. All Fibonacci terms F_d with d dividing n are units
+at three. Let mu be the Moebius function, and set
+
+$$
+H(n)=(\mu*\eta)(n)=\sum_{d\mid n}\mu(n/d)\eta(d).
+$$
+
+**Theorem.** The actual initial depths satisfy
+
+$$
+\boxed{\sum_{r(p)=n}h_p\lambda_3(p)
+\equiv-H(n)-\lambda_3(E_n)\pmod3.}
+\tag{S3}
+$$
+
+Moreover,
+
+$$
+H(n)=\prod_{q^a\parallel n}\eta(q)^{a-1}(\eta(q)-1).
+\tag{S4}
+$$
+
+**Proof.** Apply the homomorphism S1 to the exact Moebius product for C_n.
+For a reciprocal, its value is the negative of the original value; equivalently
+one can work in the units modulo nine. Equation S2 and sum_(d|n)mu(n/d)=0
+for n>1 give lambda_3(C_n)=-H(n). Subtract the contribution of the actual
+old factor E_n, then apply R_n=product_(r(p)=n)p^h_p. Finally mu and eta
+are multiplicative, and their convolution at q^a is eta(q)^a-eta(q)^(a-1).
+
+If some prime q dividing n is 1 or 11 modulo twelve, H(n)=0. If every
+prime dividing n is 5 or 7 modulo twelve, then
+
+$$
+\lambda_3(C_n)\equiv(-1)^{\Omega(n)-\omega(n)+1}\pmod3.
+$$
+
+The sum in S3 includes split primes as well as inert primes. A nonzero
+right-hand side forces a nonzero weighted contribution, but does not
+force that contributor to be inert or to have depth greater than one.
+
+**Proposition S11.** At $n=91$, the exact primitive block has the
+modulo-three coefficients and depth congruences stated below.
+
+**The previously blind coefficient.** At n=91, the earlier exact block is
+R_91=741469*159607993 and E_91=13. Here H(91)=0 and
+
+$$
+\lambda_3(13)=\lambda_3(741469)=\lambda_3(159607993)=2.
+$$
+
+Consequently its actual depths obey
+
+$$
+2h_{741469}+2h_{159607993}\equiv1\pmod3.
+\tag{S5}
+$$
+
+Equation RP3 gives
+4h_(741469)=4 modulo five, because lambda_5(159607993)=0.
+Thus the additional modulo-nine coordinate detects a change of the latter
+exponent from one to three. It does not eliminate coordinated changes of
+several exponents. The full modulo-five residue, which is more informative
+than its quadratic character, can also distinguish some such changes;
+These facts do not imply that 5040 is a minimal necessary modulus.
+
+**Proof.** Reduce the three displayed prime factors modulo nine in the
+definition of $\lambda_3$ to obtain the three coefficients. Since
+$91=7\cdot13$, formula S4 gives $H(91)=0$; S3 then yields S5 after removing
+$E_{91}=13$. Direct reduction modulo five gives
+$\lambda_5(159607993)=0$, and RP3 gives the remaining congruence.
+

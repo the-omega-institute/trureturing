@@ -1,0 +1,797 @@
+[
+  {
+    "original_index": 0,
+    "old_integer": 1599959533949577636718754,
+    "lifted_integer": 9913999305144742169915987792968754
+  },
+  {
+    "original_index": 1,
+    "old_integer": 195896792072551513671879,
+    "lifted_integer": 61758674188348531419755433593750004
+  },
+  {
+    "original_index": 2,
+    "old_integer": 1387670143192443359375004,
+    "lifted_integer": 5452326613949988083887471191406254
+  },
+  {
+    "original_index": 3,
+    "old_integer": 1354884945823277832031254,
+    "lifted_integer": 48373656114764269161669883789062504
+  },
+  {
+    "original_index": 4,
+    "old_integer": 1256529353715781250000004,
+    "lifted_integer": 50217839634805265364020392578125004
+  },
+  {
+    "original_index": 5,
+    "old_integer": 961462577393291503906254,
+    "lifted_integer": 55750390194928253971071918945312504
+  },
+  {
+    "original_index": 6,
+    "old_integer": 76262248425822265625004,
+    "lifted_integer": 8888139384096296276728133544921879
+  },
+  {
+    "original_index": 7,
+    "old_integer": 1012373913567672851562504,
+    "lifted_integer": 58681094425203193740191870849609379
+  },
+  {
+    "original_index": 8,
+    "old_integer": 228996256948966308593754,
+    "lifted_integer": 17680252074921115584087989257812504
+  },
+  {
+    "original_index": 9,
+    "old_integer": 1470575939137104980468754,
+    "lifted_integer": 21597530006476728146773073486328129
+  },
+  {
+    "original_index": 10,
+    "old_integer": 1603602333657262695312504,
+    "lifted_integer": 33349363801143565834828326171875004
+  },
+  {
+    "original_index": 11,
+    "old_integer": 206825191195606689453129,
+    "lifted_integer": 5144962693943155383495719726562504
+  },
+  {
+    "original_index": 12,
+    "old_integer": 1321354821376929931640626,
+    "lifted_integer": 10143420079817119929899041259765626
+  },
+  {
+    "original_index": 13,
+    "old_integer": 1355404718896485839843755,
+    "lifted_integer": 23247341471989501244648479003906255
+  },
+  {
+    "original_index": 14,
+    "old_integer": 1525654206494265380859400,
+    "lifted_integer": 25307045941650484302897303222656275
+  },
+  {
+    "original_index": 15,
+    "old_integer": 581045318461033935547000,
+    "lifted_integer": 35605568289955399594141424316406375
+  },
+  {
+    "original_index": 16,
+    "old_integer": 1245569856361264160156875,
+    "lifted_integer": 23638277540279052534863665283203750
+  },
+  {
+    "original_index": 17,
+    "old_integer": 976479893818156982425000,
+    "lifted_integer": 27261726283098240753973234619143750
+  },
+  {
+    "original_index": 18,
+    "old_integer": 1426886407124750244156250,
+    "lifted_integer": 45378969997194181849521081298843750
+  },
+  {
+    "original_index": 19,
+    "old_integer": 87206321613458252031250,
+    "lifted_integer": 9045383585272040296263585693437500
+  },
+  {
+    "original_index": 20,
+    "old_integer": 572231198145514892968750,
+    "lifted_integer": 17757158999264103076471201172265625
+  },
+  {
+    "original_index": 21,
+    "old_integer": 1201499254783668947265625,
+    "lifted_integer": 61316036069224416977509278566406250
+  },
+  {
+    "original_index": 22,
+    "old_integer": 756126885930180917968750,
+    "lifted_integer": 25270811454222292420706207529296875
+  },
+  {
+    "original_index": 23,
+    "old_integer": 325121367684869921875000,
+    "lifted_integer": 35424395852814440183185945849609375
+  },
+  {
+    "original_index": 24,
+    "old_integer": 1484986189153523925781252,
+    "lifted_integer": 53860772379458527715579771972656252
+  },
+  {
+    "original_index": 25,
+    "old_integer": 1553085984192635742187510,
+    "lifted_integer": 16608712672602366829580282958984385
+  },
+  {
+    "original_index": 26,
+    "old_integer": 97728633366065673828175,
+    "lifted_integer": 20728121611924332946077931396484425
+  },
+  {
+    "original_index": 27,
+    "old_integer": 4367183321731933594000,
+    "lifted_integer": 41325166308534163528566173583984625
+  },
+  {
+    "original_index": 28,
+    "old_integer": 1333416259122192382813750,
+    "lifted_integer": 17390584809181469410010655517579375
+  },
+  {
+    "original_index": 29,
+    "old_integer": 795236334035978027350000,
+    "lifted_integer": 24637482294819845848229794189459375
+  },
+  {
+    "original_index": 30,
+    "old_integer": 1696049360649164550812500,
+    "lifted_integer": 60871969723011728039325487548859375
+  },
+  {
+    "original_index": 31,
+    "old_integer": 812545515648709716953125,
+    "lifted_integer": 51664699390368368448308860840000000
+  },
+  {
+    "original_index": 32,
+    "old_integer": 1782595268712822998828125,
+    "lifted_integer": 5628347727151570493225727295703125
+  },
+  {
+    "original_index": 33,
+    "old_integer": 1245275055967001957031250,
+    "lifted_integer": 29286199375871274779803517582031250
+  },
+  {
+    "original_index": 34,
+    "old_integer": 354530318260025898437500,
+    "lifted_integer": 20655652637067949181695740009765625
+  },
+  {
+    "original_index": 35,
+    "old_integer": 1288375607791533056640625,
+    "lifted_integer": 40962821434252244706655216650390625
+  },
+  {
+    "original_index": 36,
+    "old_integer": 1044534582027880615234378,
+    "lifted_integer": 41271777104701392165392540283203128
+  },
+  {
+    "original_index": 37,
+    "old_integer": 1146684274586548339843765,
+    "lifted_integer": 17123638790017612594142489013671890
+  },
+  {
+    "original_index": 38,
+    "old_integer": 1657432737379886962890700,
+    "lifted_integer": 23302752199000561768888961669921950
+  },
+  {
+    "original_index": 39,
+    "old_integer": 619462399302321777344125,
+    "lifted_integer": 54198319243915307642621324951172250
+  },
+  {
+    "original_index": 40,
+    "old_integer": 817179686980883300783125,
+    "lifted_integer": 18296446994886266464788047851564375
+  },
+  {
+    "original_index": 41,
+    "old_integer": 9909799351561767587500,
+    "lifted_integer": 29166793223343831122116755859384375
+  },
+  {
+    "original_index": 42,
+    "old_integer": 1361129339271341552781250,
+    "lifted_integer": 20058621874430730893261931396531250
+  },
+  {
+    "original_index": 43,
+    "old_integer": 933801734781723877187500,
+    "lifted_integer": 37977667621066153264486173584218750
+  },
+  {
+    "original_index": 44,
+    "old_integer": 593020038355764649609375,
+    "lifted_integer": 653091371841418089610655518750000
+  },
+  {
+    "original_index": 45,
+    "old_integer": 684967882248097662109375,
+    "lifted_integer": 4409917599320512761728158697265625
+  },
+  {
+    "original_index": 46,
+    "old_integer": 1144707101709762724609375,
+    "lifted_integer": 23194048736715986122315674589843750
+  },
+  {
+    "original_index": 47,
+    "old_integer": 1647546872995958886718750,
+    "lifted_integer": 53654801932492429409754889550781250
+  },
+  {
+    "original_index": 48,
+    "old_integer": 1615832359560952392578128,
+    "lifted_integer": 13579649197512369548046186279296878
+  },
+  {
+    "original_index": 49,
+    "old_integer": 1717982052119620117187515,
+    "lifted_integer": 52891413374029513492294499511718765
+  },
+  {
+    "original_index": 50,
+    "old_integer": 432874188890829589843825,
+    "lifted_integer": 59070526783012462667040972167968825
+  },
+  {
+    "original_index": 51,
+    "old_integer": 1190760176835393554687875,
+    "lifted_integer": 26506191336726285025274970947266000
+  },
+  {
+    "original_index": 52,
+    "old_integer": 1388477464513955078126875,
+    "lifted_integer": 54064221578898167362940058349611250
+  },
+  {
+    "original_index": 53,
+    "old_integer": 581207576884633544931250,
+    "lifted_integer": 1474665316154808504770401855478125
+  },
+  {
+    "original_index": 54,
+    "old_integer": 136570790782284179734375,
+    "lifted_integer": 55826396458442631791413941894578125
+  },
+  {
+    "original_index": 55,
+    "old_integer": 1505099512314795654531250,
+    "lifted_integer": 10285539713877130647139819580312500
+  },
+  {
+    "original_index": 56,
+    "old_integer": 1164317815888836426953125,
+    "lifted_integer": 36420865955853318987762666016796875
+  },
+  {
+    "original_index": 57,
+    "old_integer": 1256265659781169439453125,
+    "lifted_integer": 40177692183332413659880169195312500
+  },
+  {
+    "original_index": 58,
+    "old_integer": 1716004879242834501953125,
+    "lifted_integer": 58961823320727887020467685087890625
+  },
+  {
+    "original_index": 59,
+    "old_integer": 422988324506901513671875,
+    "lifted_integer": 25962674025303406792408535546875000
+  },
+  {
+    "original_index": 60,
+    "old_integer": 1583047162191786865234378,
+    "lifted_integer": 56500978698326650625828598876953128
+  },
+  {
+    "original_index": 61,
+    "old_integer": 1685196854750454589843765,
+    "lifted_integer": 32352840383642871054578547607421890
+  },
+  {
+    "original_index": 62,
+    "old_integer": 400088991521664062500075,
+    "lifted_integer": 38531953792625820229325020263671950
+  },
+  {
+    "original_index": 63,
+    "old_integer": 1157974979466228027344125,
+    "lifted_integer": 5967618346339642587559019042969125
+  },
+  {
+    "original_index": 64,
+    "old_integer": 1355692267144789550783125,
+    "lifted_integer": 33525648588511524925224106445314375
+  },
+  {
+    "original_index": 65,
+    "old_integer": 548422379515468017587500,
+    "lifted_integer": 44395994816969089582552814453134375
+  },
+  {
+    "original_index": 66,
+    "old_integer": 103785593413118652390625,
+    "lifted_integer": 35287823468055989353697989990281250
+  },
+  {
+    "original_index": 67,
+    "old_integer": 1472314314945630127187500,
+    "lifted_integer": 53206869214691411724922232177968750
+  },
+  {
+    "original_index": 68,
+    "old_integer": 1131532618519670899609375,
+    "lifted_integer": 15882292965466676550046714112500000
+  },
+  {
+    "original_index": 69,
+    "old_integer": 1223480462412003912109375,
+    "lifted_integer": 19639119192945771222164217291015625
+  },
+  {
+    "original_index": 70,
+    "old_integer": 1683219681873668974609375,
+    "lifted_integer": 38423250330341244582751733183593750
+  },
+  {
+    "original_index": 71,
+    "old_integer": 390203127137735986328125,
+    "lifted_integer": 5424101034916764354692583642578125
+  },
+  {
+    "original_index": 72,
+    "old_integer": 1484691570084290283203128,
+    "lifted_integer": 58345162218367646828179107666015628
+  },
+  {
+    "original_index": 73,
+    "old_integer": 1586841262642958007812515,
+    "lifted_integer": 34197023903683867256929056396484390
+  },
+  {
+    "original_index": 74,
+    "old_integer": 301733399414167480468825,
+    "lifted_integer": 40376137312666816431675529052734450
+  },
+  {
+    "original_index": 75,
+    "old_integer": 1059619387358731445312875,
+    "lifted_integer": 7811801866380638789909527832031625
+  },
+  {
+    "original_index": 76,
+    "old_integer": 1257336675037292968751875,
+    "lifted_integer": 35369832108552521127574615234376875
+  },
+  {
+    "original_index": 77,
+    "old_integer": 450066787407971435556250,
+    "lifted_integer": 46240178337010085784903323242196875
+  },
+  {
+    "original_index": 78,
+    "old_integer": 5430001305622070359375,
+    "lifted_integer": 37132006988096985556048498779343750
+  },
+  {
+    "original_index": 79,
+    "old_integer": 1373958722838133545156250,
+    "lifted_integer": 55051052734732407927272740967031250
+  },
+  {
+    "original_index": 80,
+    "old_integer": 1033177026412174317578125,
+    "lifted_integer": 17726476485507672752397222901562500
+  },
+  {
+    "original_index": 81,
+    "old_integer": 1125124870304507330078125,
+    "lifted_integer": 21483302712986767424514726080078125
+  },
+  {
+    "original_index": 82,
+    "old_integer": 1584864089766172392578125,
+    "lifted_integer": 40267433850382240785102241972656250
+  },
+  {
+    "original_index": 83,
+    "old_integer": 291847535030239404296875,
+    "lifted_integer": 7268284554957760557043092431640625
+  },
+  {
+    "original_index": 84,
+    "old_integer": 1189624793761800537109378,
+    "lifted_integer": 417810287289711919732269531250003
+  },
+  {
+    "original_index": 85,
+    "old_integer": 1291774486320468261718765,
+    "lifted_integer": 39729574463806855863980582763671890
+  },
+  {
+    "original_index": 86,
+    "old_integer": 6666623091677734375075,
+    "lifted_integer": 45908687872789805038727055419921950
+  },
+  {
+    "original_index": 87,
+    "old_integer": 764552611036241699219125,
+    "lifted_integer": 13344352426503627396961054199219125
+  },
+  {
+    "original_index": 88,
+    "old_integer": 962269898714803222658125,
+    "lifted_integer": 40902382668675509734626141601564375
+  },
+  {
+    "original_index": 89,
+    "old_integer": 155000011085481689462500,
+    "lifted_integer": 51772728897133074391954849609384375
+  },
+  {
+    "original_index": 90,
+    "old_integer": 1506219551005261474656250,
+    "lifted_integer": 42664557548219974163100025146531250
+  },
+  {
+    "original_index": 91,
+    "old_integer": 1078891946515643799062500,
+    "lifted_integer": 60583603294855396534324267334218750
+  },
+  {
+    "original_index": 92,
+    "old_integer": 738110250089684571484375,
+    "lifted_integer": 23259027045630661359448749268750000
+  },
+  {
+    "original_index": 93,
+    "old_integer": 830058093982017583984375,
+    "lifted_integer": 27015853273109756031566252447265625
+  },
+  {
+    "original_index": 94,
+    "old_integer": 1289797313443682646484375,
+    "lifted_integer": 45799984410505229392153768339843750
+  },
+  {
+    "original_index": 95,
+    "old_integer": 1792637084729878808593750,
+    "lifted_integer": 12800835115080749164094618798828125
+  },
+  {
+    "original_index": 96,
+    "old_integer": 304424464794331298828128,
+    "lifted_integer": 17015461967658677740886848632812503
+  },
+  {
+    "original_index": 97,
+    "old_integer": 406574157352999023437515,
+    "lifted_integer": 56327226144175821685135161865234390
+  },
+  {
+    "original_index": 98,
+    "old_integer": 917322620146337646484450,
+    "lifted_integer": 62506339553158770859881634521484450
+  },
+  {
+    "original_index": 99,
+    "old_integer": 1675208608090901611328500,
+    "lifted_integer": 29942004106872593218115633300781625
+  },
+  {
+    "original_index": 100,
+    "old_integer": 77069569747333984376875,
+    "lifted_integer": 57500034349044475555780720703126875
+  },
+  {
+    "original_index": 101,
+    "old_integer": 1065656008140141601571875,
+    "lifted_integer": 4910478086301116697611064208993750
+  },
+  {
+    "original_index": 102,
+    "old_integer": 621019222037792236375000,
+    "lifted_integer": 59262209228588939984254604248093750
+  },
+  {
+    "original_index": 103,
+    "old_integer": 193691617548174560781250,
+    "lifted_integer": 13721352484023438839980481933828125
+  },
+  {
+    "original_index": 104,
+    "old_integer": 1648766247144344483593750,
+    "lifted_integer": 39856678725999627180603328370312500
+  },
+  {
+    "original_index": 105,
+    "old_integer": 1740714091036677496093750,
+    "lifted_integer": 43613504953478721852720831548828125
+  },
+  {
+    "original_index": 106,
+    "old_integer": 404596984476213408203125,
+    "lifted_integer": 62397636090874195213308347441406250
+  },
+  {
+    "original_index": 107,
+    "old_integer": 907436755762409570312500,
+    "lifted_integer": 29398486795449714985249197900390625
+  },
+  {
+    "original_index": 108,
+    "old_integer": 1240536129936181884765628,
+    "lifted_integer": 3348514517564651688852221435546878
+  },
+  {
+    "original_index": 109,
+    "old_integer": 1342685822494849609375015,
+    "lifted_integer": 42660278694081795633100534667968765
+  },
+  {
+    "original_index": 110,
+    "old_integer": 57577959266059082031325,
+    "lifted_integer": 48839392103064744807847007324218825
+  },
+  {
+    "original_index": 111,
+    "old_integer": 815463947210623046875375,
+    "lifted_integer": 16275056656778567166081006103516000
+  },
+  {
+    "original_index": 112,
+    "old_integer": 1013181234889184570314375,
+    "lifted_integer": 43833086898950449503746093505861250
+  },
+  {
+    "original_index": 113,
+    "old_integer": 205911347259863037118750,
+    "lifted_integer": 54703433127408014161074801513681250
+  },
+  {
+    "original_index": 114,
+    "old_integer": 1557130887179642822312500,
+    "lifted_integer": 45595261778494913932219977050828125
+  },
+  {
+    "original_index": 115,
+    "old_integer": 1129803282690025146718750,
+    "lifted_integer": 54405033929412787945854736562500
+  },
+  {
+    "original_index": 116,
+    "old_integer": 789021586264065919140625,
+    "lifted_integer": 26189731275905601128568701173046875
+  },
+  {
+    "original_index": 117,
+    "old_integer": 880969430156398931640625,
+    "lifted_integer": 29946557503384695800686204351562500
+  },
+  {
+    "original_index": 118,
+    "old_integer": 1340708649618063994140625,
+    "lifted_integer": 48730688640780169161273720244140625
+  },
+  {
+    "original_index": 119,
+    "old_integer": 47692094882131005859375,
+    "lifted_integer": 15731539345355688933214570703125000
+  },
+  {
+    "original_index": 120,
+    "old_integer": 457158473317475341796878,
+    "lifted_integer": 25807574658483497048246704345703128
+  },
+  {
+    "original_index": 121,
+    "old_integer": 559308165876143066406265,
+    "lifted_integer": 1659436343799717476996653076171890
+  },
+  {
+    "original_index": 122,
+    "old_integer": 1070056628669481689453200,
+    "lifted_integer": 7838549752782666651743125732421950
+  },
+  {
+    "original_index": 123,
+    "old_integer": 32086290591916503906625,
+    "lifted_integer": 38734116797697412525475489013672250
+  },
+  {
+    "original_index": 124,
+    "old_integer": 229803578270478027345625,
+    "lifted_integer": 2832244548668371347642211914064375
+  },
+  {
+    "original_index": 125,
+    "old_integer": 1218390016663285644540625,
+    "lifted_integer": 13702590777125936004970919921884375
+  },
+  {
+    "original_index": 126,
+    "old_integer": 773753230560936279343750,
+    "lifted_integer": 4594419428212835776116095459031250
+  },
+  {
+    "original_index": 127,
+    "old_integer": 346425626071318603750000,
+    "lifted_integer": 22513465174848258147340337646718750
+  },
+  {
+    "original_index": 128,
+    "old_integer": 5643929645359376171875,
+    "lifted_integer": 48648791416824446487963184083203125
+  },
+  {
+    "original_index": 129,
+    "old_integer": 97591773537692388671875,
+    "lifted_integer": 52405617644303541160080687261718750
+  },
+  {
+    "original_index": 130,
+    "old_integer": 557330992999357451171875,
+    "lifted_integer": 7729846290498091005169838652343750
+  },
+  {
+    "original_index": 131,
+    "old_integer": 1060170764285553613281250,
+    "lifted_integer": 38190599486274534292609053613281250
+  },
+  {
+    "original_index": 132,
+    "old_integer": 1698738155505614013671878,
+    "lifted_integer": 29724852590039109610931788574218753
+  },
+  {
+    "original_index": 133,
+    "old_integer": 5031522042152587890640,
+    "lifted_integer": 5576714275355330039681737304687515
+  },
+  {
+    "original_index": 134,
+    "old_integer": 515779984835491210937575,
+    "lifted_integer": 11755827684338279214428209960937575
+  },
+  {
+    "original_index": 135,
+    "old_integer": 1273665972780055175781625,
+    "lifted_integer": 42651394729253025088160573242187875
+  },
+  {
+    "original_index": 136,
+    "old_integer": 1471383260458616699220625,
+    "lifted_integer": 6749522480223983910327296142580000
+  },
+  {
+    "original_index": 137,
+    "old_integer": 664113372829295166025000,
+    "lifted_integer": 17619868708681548567656004150400000
+  },
+  {
+    "original_index": 138,
+    "old_integer": 219476586726945800828125,
+    "lifted_integer": 8511697359768448338801179687546875
+  },
+  {
+    "original_index": 139,
+    "old_integer": 1588005308259457275625000,
+    "lifted_integer": 26430743106403870710025421875234375
+  },
+  {
+    "original_index": 140,
+    "old_integer": 1247223611833498048046875,
+    "lifted_integer": 52566069348380059050648268311718750
+  },
+  {
+    "original_index": 141,
+    "old_integer": 1339171455725831060546875,
+    "lifted_integer": 56322895575859153722765771490234375
+  },
+  {
+    "original_index": 142,
+    "old_integer": 3054349165366972656250,
+    "lifted_integer": 11647124222053703567854922880859375
+  },
+  {
+    "original_index": 143,
+    "old_integer": 505894120451563134765625,
+    "lifted_integer": 42107877417830146855294137841796875
+  },
+  {
+    "original_index": 144,
+    "old_integer": 35908224003642578125003,
+    "lifted_integer": 41476686384705947298987041259765628
+  },
+  {
+    "original_index": 145,
+    "old_integer": 138057916562310302734390,
+    "lifted_integer": 17328548070022167727736989990234390
+  },
+  {
+    "original_index": 146,
+    "old_integer": 648806379355648925781325,
+    "lifted_integer": 23507661479005116902483462646484450
+  },
+  {
+    "original_index": 147,
+    "old_integer": 1406692367300212890625375,
+    "lifted_integer": 54403228523919862776215825927734750
+  },
+  {
+    "original_index": 148,
+    "old_integer": 1604409654978774414064375,
+    "lifted_integer": 18501356274890821598382548828126875
+  },
+  {
+    "original_index": 149,
+    "old_integer": 797139767349452880868750,
+    "lifted_integer": 29371702503348386255711256835946875
+  },
+  {
+    "original_index": 150,
+    "old_integer": 352502981247103515671875,
+    "lifted_integer": 20263531154435286026856432373093750
+  },
+  {
+    "original_index": 151,
+    "old_integer": 1721031702779614990468750,
+    "lifted_integer": 38182576901070708398080674560781250
+  },
+  {
+    "original_index": 152,
+    "old_integer": 1380250006353655762890625,
+    "lifted_integer": 858000651845973223205156495312500
+  },
+  {
+    "original_index": 153,
+    "old_integer": 1472197850245988775390625,
+    "lifted_integer": 4614826879325067895322659673828125
+  },
+  {
+    "original_index": 154,
+    "old_integer": 136080743685524687500000,
+    "lifted_integer": 23398958016720541255910175566406250
+  },
+  {
+    "original_index": 155,
+    "old_integer": 638920514971720849609375,
+    "lifted_integer": 53859711212496984543349390527343750
+  },
+  {
+    "original_index": 156,
+    "old_integer": 434987407564115722656253,
+    "lifted_integer": 13272285277505536847654434814453128
+  },
+  {
+    "original_index": 157,
+    "old_integer": 537137100122783447265640,
+    "lifted_integer": 52584049454022680791902748046875015
+  },
+  {
+    "original_index": 158,
+    "old_integer": 1047885562916122070312575,
+    "lifted_integer": 58763162863005629966649220703125075
+  }
+]

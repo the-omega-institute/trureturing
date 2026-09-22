@@ -1,0 +1,11 @@
+### 16.2 定理：选择性消去与独立的尾误差代价
+
+令 $S=\{i:x_i\leq b\}$、$s=|S|$，则
+
+\[
+\eta(x_*-b)^{2s+1}\leq2^{2s+1}\varepsilon+\tau,
+\qquad
+\boxed{\eta(x_*-b)^{2d-1}\leq2^{2d-1}\varepsilon+\tau.}
+\tag{16.2}
+\]
+

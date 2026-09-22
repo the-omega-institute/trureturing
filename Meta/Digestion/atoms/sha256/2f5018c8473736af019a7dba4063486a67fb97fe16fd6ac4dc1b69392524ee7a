@@ -1,0 +1,41 @@
+**定理 31.4（单位化的实际直积模型）。** $A_t$ 没有左单位或右单位。$A_t^{\#}$ 是单位范数为一的交换复 Banach 代数，并且
+$$
+\Theta_t:A_t^{\#}\longrightarrow\mathcal M\times\mathcal S_0,\qquad \Theta_t(\lambda,\mu)=(\nu+\lambda\delta_0,\lambda e_0+g),\quad (\nu,g)=\Phi_t\mu,
+$$
+是有界有界逆的单位复代数同构。这里 $\delta_0$ 是原圆周上的零点质量。目标直积采用范数
+$$
+\|(\xi,h)\|_{\max}=\max\{\|\xi\|_{\mathrm{TV}},\|h\|_1\}.
+$$
+其逆为
+$$
+\Theta_t^{-1}(\xi,h)=\left(h_0,\Psi_t(\xi-h_0\delta_0,h-h_0e_0)\right),
+$$
+其中第二个序列参数取其正指标部分，并且
+$$
+\|\Theta_t a\|_{\max}\le\|a\|_{\#},\qquad \|\Theta_t^{-1}(\xi,h)\|_{\#}\le3\|(\xi,h)\|_{\max}.
+$$
+
+**证明。** 因为 $\Phi_tu_1=(0,e_1)$，而任意两个正指标序列的卷积在第一坐标均为零，所以任意 $a\in A_t$ 都不满足 $a\star_tu_1=u_1$，也不满足 $u_1\star_ta=u_1$。这排除两侧单位。
+
+单位化范数的完备性由直和完备性得到；次乘法性由
+$$
+|\lambda\kappa|+N_t(\lambda\eta+\kappa\mu+\mu\star_t\eta)\le(|\lambda|+N_t(\mu))(|\kappa|+N_t(\eta))
+$$
+得到。乘法公式直接给出单位 $1^{\#}$，其范数为一。
+
+把两个输入的 $\Theta_t$ 像相乘，其第一坐标为
+$$
+\nu*\xi+\lambda\xi+\kappa\nu+\lambda\kappa\delta_0,
+$$
+第二坐标为
+$$
+g*h+\lambda h+\kappa g+\lambda\kappa e_0.
+$$
+这正是单位化乘积的像。所列逆公式逐坐标恢复输入，因而证明双射及乘法相容；单位被送至 $(\delta_0,e_0)$。
+
+正向范数界来自三角不等式。逆向计算使用 $\|h-h_0e_0\|_1=\|h\|_1-|h_0|$，得到
+$$
+\|\Theta_t^{-1}(\xi,h)\|_{\#}=|h_0|+\|\xi-h_0\delta_0\|_{\mathrm{TV}}+\|h-h_0e_0\|_1\le\|\xi\|_{\mathrm{TV}}+\|h\|_1+|h_0|.
+$$
+于是得到常数三。目标两个因子分别具有范数为一的单位，最大范数使其直积单位也具有范数一。证毕。
+

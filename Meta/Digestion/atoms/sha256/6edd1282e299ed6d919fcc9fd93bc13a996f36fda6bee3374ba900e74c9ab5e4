@@ -1,0 +1,17 @@
+**定理 29.2（直接有符号积分恒等式与结合交换律）。** 对任意有界 Borel 实函数 $f$，定义
+$$
+P_{t,f}(a,x)=\int_K f(z)\,dP_t(a,x)(z).
+$$
+该函数联合 Borel 可测，并且
+$$
+|P_{t,f}(a,x)|\le C_t\|f\|_\infty,
+$$
+$$
+\langle\mu\star_t\nu,f\rangle=\int_K\int_K P_{t,f}(a,x)\,d\mu(a)\,d\nu(x).
+$$
+这些积分可交换顺序。运算满足
+$$
+\|\mu\star_t\nu\|_{\mathrm{TV}}\le C_t\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}},\qquad (\mu\star_t\nu)(K)=\mu(K)\nu(K),
+$$
+且在全部 $M(K)$ 上结合、交换。
+

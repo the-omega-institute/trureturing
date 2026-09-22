@@ -1,0 +1,6 @@
+等价地，除单点商 $R_{0,1}$ 外，充要条件为
+$$
+t\ge1,\qquad
+\forall\,\ell^e\parallel p,\quad
+e\le t\ \land\ \ell-1\mid p.
+$$

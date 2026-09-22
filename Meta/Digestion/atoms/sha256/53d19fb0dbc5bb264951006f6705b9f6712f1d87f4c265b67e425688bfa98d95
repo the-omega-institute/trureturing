@@ -1,0 +1,71 @@
+### IP.4 Exact removal of the old prime
+
+Use the classical Fibonacci valuation theorem for $p\ne2,5$:
+
+$$
+v_p(F_m)=
+\begin{cases}
+h_p+v_p(m),&r(p)\mid m,\\
+0,&r(p)\nmid m.
+\end{cases}
+$$
+
+The rank bound ensures $p\nmid r(p)$. This formula retains arbitrary
+$h_p\ge1$ and does not assume WSS primes are absent.
+
+**Theorem IP8.** For every odd $n>3$ with $5\nmid n$ and each prime
+$p\ne2,5$,
+
+$$
+v_p(\mathcal C_n)=
+\begin{cases}
+h_p,&n=r(p),\\
+1,&n=r(p)p^j\text{ for some }j\ge1,\\
+0,&\text{otherwise}.
+\end{cases}                                      \tag{IP8}
+$$
+
+**Proof.** For each positive $m$, write the valuation formula as
+
+$$
+v_p(F_m)=h_p\,1_{r(p)\mid m}
++\sum_{j\ge1}1_{r(p)p^j\mid m}.
+$$
+
+Only finitely many summands occur for a fixed $m$. Apply divisor Moebius
+inversion to IP6. The transform of $1_{a\mid m}$ is $1_{n=a}$, since
+$\sum_{d\mid n,\ a\mid d}\mu(n/d)$ is zero unless $n=a$. This gives
+$h_p1_{n=r(p)}+\sum_{j\ge1}1_{n=r(p)p^j}$ and proves IP8. At prime two,
+for odd $m$ the valuation is $1_{3\mid m}$, so its cyclotomic valuation
+is zero for our $n>3$. At prime five it is zero because $5\nmid n$.
+
+**Theorem IP9.** The block $\mathcal C_n$ contains at most one prime
+whose rank is less than $n$. If present, that prime $q$ is the largest
+prime factor of $n$, its exponent in $\mathcal C_n$ is exactly one, and
+$n=r(q)q^j$ for some $j\ge1$.
+
+**Proof.** IP8 supplies the shape and exponent. Since $n$ is odd, $r(q)$
+is odd and greater than one. It divides the even number $q-\chi(q)$,
+so $r(q)\le(q+1)/2<q$. All prime factors of $r(q)$ are therefore less
+than $q$, proving that $q$ is the largest prime factor of $n$. The
+largest prime factor is unique.
+
+Let $P=P(n)$ be that largest prime factor, let
+$t=n/P^{v_P(n)}$, and define
+
+$$
+E_n=\begin{cases}P,&t=r(P),\\1,&t\ne r(P),\end{cases}
+\qquad
+\mathcal R_n=\mathcal C_n/E_n.
+$$
+
+IP8-IP9 prove the exact identity
+
+$$
+\boxed{\mathcal R_n=\prod_{r(p)=n}p^{h_p}.}       \tag{IP9}
+$$
+
+The product is over prime values. It is finite because all such primes
+divide $F_n$. This is a genuinely primitive block; its prime
+multiplicities are exactly the initial WSS depths.
+

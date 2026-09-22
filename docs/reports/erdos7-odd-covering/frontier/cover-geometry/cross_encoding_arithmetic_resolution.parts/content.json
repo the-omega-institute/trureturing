@@ -1,0 +1,80 @@
+{
+  "active_checks": {
+    "kind": "inline",
+    "value": 255288
+  },
+  "adversarial_controls": {
+    "kind": "inline",
+    "value": {
+      "all_k_lsb_prefix_escape": {
+        "covered_class": [
+          0,
+          3
+        ],
+        "extension": [
+          0,
+          1
+        ],
+        "prefix": [
+          0
+        ],
+        "values": [
+          0,
+          2
+        ]
+      },
+      "covered_prefix_can_escape": [
+        1,
+        3
+      ],
+      "phase_free_next_mod3": [
+        1,
+        2
+      ],
+      "zeckendorf_forced_zero_values": [
+        4,
+        3
+      ]
+    }
+  },
+  "arithmetic_transport_checks": {
+    "kind": "inline",
+    "value": 9300
+  },
+  "certificate_io_sha256": {
+    "kind": "inline",
+    "value": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b"
+  },
+  "controls": {
+    "path": "content/004-controls.json",
+    "sha256": "2a2f30a723bf964bf2d759c333ddaa918709bf2c9fbfb60e49b3b3b81020d859",
+    "kind": "value"
+  },
+  "periods": {
+    "path": "content/005-periods.json",
+    "sha256": "4214d4a0fdff22a6c2ad424f6831305cf33842a9728f491b0cef8943aa832df7",
+    "kind": "value"
+  },
+  "prefix_witnesses": {
+    "path": "content/006-prefix_witnesses.json",
+    "sha256": "0e13201201b27a8b60926b3be93c32b6fe733c936bbb56088778f9292372a703",
+    "kind": "value"
+  },
+  "rows": {
+    "path": "content/007-rows.json",
+    "sha256": "79849995148591591bbe52b375b7eb6c12673fb4ee5d6fc1085a2bd65aed7627",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "bounded diagnostic, not an unrestricted noncoverage proof"
+  },
+  "source_path": {
+    "kind": "inline",
+    "value": "frontier/cover-geometry/cross_encoding_arithmetic_resolution.py"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": "8e95218c98045a10c9268d8ee02a849aa283d7a0575c1a0da6398335c535d0da"
+  }
+}

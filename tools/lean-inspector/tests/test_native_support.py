@@ -1,4 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
+import codecs
 import hashlib
 import io
 import json
@@ -33,7 +34,7 @@ class NativeTestSupport:
             ['elan', 'which', 'lake'], cwd=ROOT, text=True).strip()
         cls.dotnet = shutil.which('dotnet')
         cls.cli = Path(os.environ.get('STRATALINT_NATIVE_DOTNET_CLI',
-            ROOT / 'tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll'))
+            ROOT / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'))
         if not cls.dotnet or not cls.cli.is_file():
             raise RuntimeError('native fixtures require make -C tools dotnet first')
     def setUp(self):
@@ -46,6 +47,9 @@ defaultTargets = ["Fixture", "Audit"]
 [[require]]
 name = "leanInspector"
 path = "tools/lean-inspector"
+[[require]]
+name = "mathlib"
+path = "fixture-mathlib"
 [[lean_lib]]
 name = "Fixture"
 roots = ["Fixture", "D5"]
@@ -61,11 +65,15 @@ root = "Cache"
         # No external dependencies need downloading. Let the actual ensure
         # owner invoke this fixture cache provider before the first raw Lake
         # build; only that owner creates the stamp and admits donor seeding.
+        self.write('fixture-mathlib/lakefile.toml', 'name = "mathlib"\n')
+        self.write('fixture-mathlib/lake-manifest.json', '{"version":"1.2.0","packages":[]}\n')
         self.write('Cache.lean', 'def main : IO Unit := pure ()\n')
         self.write('lake-manifest.json', json.dumps(dict(version='1.2.0',
             packagesDir='.lake/packages', packages=[dict(type='path', scope='',
                 name='leanInspector', manifestFile='lake-manifest.json', inherited=False,
-                dir='tools/lean-inspector', configFile='lakefile.lean')],
+                dir='tools/lean-inspector', configFile='lakefile.lean'),
+                dict(type='path', scope='', name='mathlib', manifestFile='lake-manifest.json', inherited=False,
+                    dir='fixture-mathlib', configFile='lakefile.toml', rev='0123456789abcdef0123456789abcdef01234567')],
             name='fixture', lakeDir='.lake', fixedToolchain=False)))
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
@@ -74,21 +82,35 @@ root = "Cache"
         self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
+        self.write('LeanInformationAudit/Registry.lean', 'def fixtureDriver : Nat := 1\n')
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
-        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'inspect.sh']:
+            target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
+        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
+        # These native-facet fixtures test statement extraction and publication,
+        # with no D5 registration library. Use the explicit statement-only API;
+        # their reports cannot satisfy the declared-template admission reader.
+        inspector = self.root / 'tools/lean-inspector/Inspector.lean'
+        source = inspector.read_text()
+        entry = '  let statementOnly := args.head? == some "--statements-only"'
+        if source.count(entry) != 1:
+            raise RuntimeError('statement fixture inspector entry is missing')
+        inspector.write_text(source.replace(entry,
+            '  let args := "--statements-only" :: args\n' + entry))
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
-                     'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain', 'Makefile',
+                     'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
+                     'tools/scripts/worktree/cache_material.py', 'tools/scripts/worktree/cache_deadline.py',
+                     'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
                      'tools/scripts/lib/resource-observation-lib.sh',
-                     'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs']:
+                     'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs']:
             self.copy(name)
         self.write('bin/dotnet', '#!/usr/bin/env python3\nimport os, sys\nfrom pathlib import Path\n'
             + f'dotnet, cli = {self.dotnet!r}, {str(self.cli)!r}\n'
-            + 'if "worktree" in sys.argv:\n'
-            + '    os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index("worktree"):]])\n'
+            + 'operation = next((word for word in sys.argv if word in ("ensure-cache", "with-cache-writer", "with-cache-reader")), None)\n'
+            + 'if operation: os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index(operation):]])\n'
             + 'if sys.argv[1] == "build": raise SystemExit(0)  # utility input is fixture data\n'
             + 'if sys.argv[-1] != "lean-utility-input": raise SystemExit("unexpected fixture dotnet command")\n'
             + 'with Path("utility-calls").open("a") as out: out.write("call\\n")\n'
@@ -96,22 +118,24 @@ root = "Cache"
         (self.root / 'bin/dotnet').chmod(0o755)
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        policy = dict(schema_version=1, report_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
+        policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
-            dependency_sources=paths('External.lean', 'ClaimSupport.lean'),
+            dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/Registry.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
-                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
-                'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs'),
+                'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'], LAKE_BIN=self.lake,
+            STRATALINT_LEAN_BUILD_TARGETS='[]',
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / '.lake/input-memo'),
             STRATALINT_INSPECTOR_ACTIVITY=str(self.root / 'activity.jsonl'))
-        # A fresh synthetic Git repository bounds donor discovery to this
-        # fixture. No host checkout or shared donor participates.
+        self.compiler_seed = self.env.pop('STRATALINT_NATIVE_COMPILER_SEED', None)
+        # A fresh synthetic Git repository bounds ensure donor discovery to
+        # this fixture. The compiler stage is restored separately after ensure.
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
     command_clock = staticmethod(time.monotonic)
 
@@ -211,7 +235,8 @@ root = "Cache"
             raise
         self.temporary.cleanup()
 
-    def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120):
+    def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
+                        observe_output=None):
         if timeout != 120 or not text or not capture_output:
             raise ValueError('native fixture commands require the 120s guard and text capture')
         temporary = self.root / 'tmp'
@@ -221,6 +246,19 @@ root = "Cache"
         started = self.command_clock()
         # Files keep output draining independent of descendant pipe lifetimes.
         with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+            streams = dict(stdout=stdout, stderr=stderr) if observe_output is not None else {}
+            offsets = dict.fromkeys(streams, 0)
+            decoders = {name: codecs.getincrementaldecoder('utf-8')('replace') for name in streams}
+            def observe_pending(*, final=False):
+                for name, stream in streams.items():
+                    # A seek/read would move the file offset shared with the
+                    # child and could overwrite output that has not been read.
+                    data = os.pread(stream.fileno(), os.fstat(stream.fileno()).st_size - offsets[name],
+                                    offsets[name])
+                    offsets[name] += len(data)
+                    value = decoders[name].decode(data, final=final)
+                    if value:
+                        observe_output(name, value)
             process = subprocess.Popen(args, cwd=cwd or self.root, env=environment,
                 stdout=stdout, stderr=stderr, start_new_session=True)
             command = (process, {})
@@ -230,6 +268,7 @@ root = "Cache"
             try:
                 while True:
                     self.owned_processes(command)
+                    observe_pending()
                     if self.command_clock() - started >= timeout:
                         stdout.seek(0); stderr.seek(0)
                         out, err = stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace')
@@ -241,6 +280,7 @@ root = "Cache"
             finally:
                 self.join_command(command)
                 self._commands.remove(command)
+                observe_pending(final=True)
                 if getattr(self, 'last_command_diagnostic', {}).get('command') == list(args):
                     print('NATIVE_COMMAND_CLEANUP ' + json.dumps(dict(
                         pid=process.pid, owned_live_processes=0, direct_child_exit=process.returncode)),
@@ -270,21 +310,29 @@ root = "Cache"
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
     def run_lake(self, *args, success=True):
         self.ensure()
+        if self.compiler_seed is not None:
+            # The collection owns this read-only stage. Lake copies only its
+            # registered producer outputs into this fixture's private cache;
+            # current input traces still decide whether any artifact is usable.
+            restored = self.guarded_command([self.lake, 'cache', 'unstage', self.compiler_seed, 'leanInspector'],
+                cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
+            self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
+            self.compiler_seed = None
         result = self.guarded_command([self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         elif success is False:
             self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
         return result
-    def build(self, success=True):
+    def build(self, success=True, *, targets=()):
         self.write('activity.jsonl', '')
-        return self.run_lake('build', ':report', success=success)
+        return self.run_lake('build', ':report', *targets, success=success)
     def stamps(self):
         return {p.stem: (p.stat().st_mtime_ns, publication.digest(p)) for p in (self.root / '.lake/build/lean-inspector/modules').glob('*.zip')}
     def report(self):
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             report = publication.unpack(self.root / '.lake/build/lean-inspector/report.zip', directory)
-            rows = publication.validate_bundle(report)
+            rows = publication.validate_bundle(report, manifest=self.root / 'lean-report-inputs.json')
             return rows, report.read_bytes(), publication.member(report, '.materials.zip').read_bytes()
     def origins(self):
         with zipfile.ZipFile(self.root / '.lake/build/lean-inspector/report.zip') as archive:
@@ -326,7 +374,8 @@ root = "Cache"
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             with self.assertRaises(exception):
                 report = publication.unpack(path, directory, ('', '.materials.zip', '.provenance.json'))
-                publication.validate_rows(report, publication.member(report, '.materials.zip'))
+                publication.validate_rows(report, publication.member(report, '.materials.zip'),
+                    manifest=self.root / 'lean-report-inputs.json')
         self.record_result('damaged', dict(artifact_sha256=publication.digest(path),
             exception=exception.__name__), [path])
         if no_build:
@@ -389,6 +438,33 @@ root = "Cache"
         self.assertIn(hidden['statement_id'],
             {materials.declaration_statement_id(module['source_path'], hidden['kind'], hidden['name_key'], r['statement_material'])
              for r in identities if r['part'] == 'private'})
+
+
+def stage_compiler(output):
+    """Build the declared compiler target once; Lake owns its staged materials."""
+    registration = json.loads((ROOT / 'tools/tests/StrataLint.Lean.Tests/Fixtures/native-compiler.json').read_text())
+    if set(registration) != {'package_directory', 'target'}:
+        raise ValueError('invalid native compiler fixture registration')
+
+    class CompilerFixture(NativeTestSupport, unittest.TestCase):
+        pass
+
+    fixture = CompilerFixture()
+    fixture.setUpClass()
+    try:
+        fixture.setUp()
+        fixture.compiler_seed = None
+        mappings = fixture.root / 'compiler-outputs.jsonl'
+        fixture.run_lake('-d', registration['package_directory'], 'build',
+                         '-o', str(mappings), registration['target'])
+        fixture.run_lake('cache', 'stage', str(mappings), str(output))
+        # Access permissions apply to the directory produced by Lake stage;
+        # they do not select or discover build inputs or reusable materials.
+        for path in output.iterdir():
+            path.chmod(path.stat().st_mode & ~0o222)
+    finally:
+        fixture.doCleanups()
+
 
 
 class GuardedCommandTests(unittest.TestCase):
@@ -475,3 +551,7 @@ for child in children: child.wait()
         self.fixture.cleanup_fixture()
         self.assertFalse(root.exists())
         self.assertIsNone(control.poll())
+
+
+if __name__ == '__main__':
+    stage_compiler(Path(sys.argv[1]).resolve())

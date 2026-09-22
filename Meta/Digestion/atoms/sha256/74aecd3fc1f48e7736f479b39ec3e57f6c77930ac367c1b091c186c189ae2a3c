@@ -1,0 +1,19 @@
+**定义 21.2（两个候选与保留、余留部分）。** 对每个 $s\in\Sigma$，令 $j_s:\mathbb T\to K$ 为满足
+$$
+H(j_s(\theta))=\theta,\qquad j_s(E_m)=z_{E_m}^s
+$$
+的唯一函数：非分裂相位由其单点纤维决定。置
+$$
+g_s(m)=j_s(E_m),\qquad b_s(m)=z_{E_m}^{-s},\qquad
+I_s=j_s(\mathbb T),\qquad B_s=\{b_s(m):m\ge1\},\qquad c_s=j_s\circ H.
+$$
+于是 $K=I_s\sqcup B_s$，且 $I_s$ 在每个相位纤维中恰含一点。定义
+$$
+A_s(x,y)=
+\begin{cases}
+b_s(m+n),&x=b_s(m),\ y=b_s(n),\ m,n\ge1,\\
+j_s(H(x)+H(y)),&\text{其余情形}.
+\end{cases}
+$$
+等价地，输出相位分裂时，只有两个输入均为符号 $-s$ 的分裂点才选择符号 $-s$；其余输入选择符号 $s$。非分裂输出取唯一点。
+

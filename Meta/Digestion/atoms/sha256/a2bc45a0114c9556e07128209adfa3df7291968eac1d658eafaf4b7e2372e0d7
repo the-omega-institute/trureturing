@@ -1,0 +1,59 @@
+### NP.2 Exact depth, all forward distances, and the first constant tail
+
+**Theorem.** For every k>=0,
+
+$$
+\boxed{v_p(B_{p,k}-\epsilon)=h_p+k.}                       \tag{NP2}
+$$
+
+All arguments of valuations here are nonzero; valuations of negative
+integers mean valuations of their absolute values.
+
+**Proof.** Put m=p^(k+1) and n=p^k. BOTH indices are odd. The Catalan
+identity in this parity gives
+
+$$
+(F_m-\epsilon F_n)(F_m+\epsilon F_n)
+ =F_m^2-F_n^2=F_{m+n}F_{m-n}.                             \tag{NP3}
+$$
+
+The rank r(p) divides p-epsilon and does not divide p+epsilon. Otherwise
+it would divide their difference two, contradicting r(p)>2. It is
+coprime to p, so precisely one of F_(m+n), F_(m-n) vanishes modulo p.
+Its index is p^k*(p-epsilon), and the valuation formula gives h_p+k.
+The other factor has valuation zero. NP1 gives
+F_m+epsilon*F_n=2*epsilon^(k+1) modulo p, a unit. Dividing the resulting
+valuation of F_m-epsilon*F_n by the unit F_n proves NP2. Nonzeroness
+also follows from this finite valuation, or from strict growth of the
+positive Fibonacci quotient and epsilon in {1,-1}.
+
+**Corollary.** For every k>=0 and t>=1,
+
+$$
+\boxed{v_p(B_{p,k+t}-B_{p,k})=h_p+k.}                    \tag{NP4}
+$$
+
+**Proof.** Their respective differences from epsilon have unequal
+valuations h_p+k+t and h_p+k. The difference of two nonzero integers of
+unequal p-valuations has the smaller valuation, by factoring out that
+power and reducing the remaining factor modulo p.
+
+**Corollary.** At precision p^s, s>=1, the earliest starting index of
+any positive eventual period is exactly
+
+$$
+K_s=\max(0,s-h_p).                                      \tag{NP5}
+$$
+
+From K_s onward the sequence is constant epsilon and its least eventual
+period is one. It has no period of any positive length starting before
+K_s. Consequently B_(p,k) tends to epsilon in Z_p with exact distance
+p^(-h_p-k).
+
+**Proof.** NP2 gives constant residue epsilon precisely when k>=K_s.
+At an earlier starting index k, NP4 shows that the difference to EVERY
+forward index has valuation h_p+k<s, so no positive period can start
+there. The limit is the restatement of these finite congruences.
+The limit is also a special case of the Rowland-Yassawi p-adic
+convergence theorem; NP2 determines its exact depth.
+

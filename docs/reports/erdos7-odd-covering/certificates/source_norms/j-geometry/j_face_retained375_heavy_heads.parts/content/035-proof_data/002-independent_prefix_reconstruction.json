@@ -1,0 +1,56 @@
+{
+  "origin": {
+    "kind": "inline",
+    "value": "Independent exact full original-domain reconstruction; the original writer final artifact is unavailable and is not compared."
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "layouts": 12500,
+      "two_seen": 125000,
+      "two_old_bounded": 48676,
+      "two_enhanced_bounded": 10236,
+      "four_seen": 3304400,
+      "four_old_bounded": 3302757,
+      "four_enhanced_bounded": 437,
+      "six_seen": 12060,
+      "six_old_bounded": 7629,
+      "six_enhanced_bounded": 1344,
+      "six_known_dual_bounded": 1241,
+      "seven_seen": 9230,
+      "seven_bounded": 5422,
+      "eight_seen": 38080,
+      "eight_bounded": 17601,
+      "seed_bounded": 50,
+      "lp_remaining": 20429
+    }
+  },
+  "maximum_pruned_bounds": {
+    "kind": "inline",
+    "value": {
+      "two_old_bounded": "3240233898424790054129803631/599280273094310460492840000",
+      "four_old_bounded": "747751333721359671721020383/138295447637148567806040000",
+      "two_enhanced_bounded": "302423782642473597811255733/55932825488802309645998400",
+      "four_enhanced_bounded": "13609089103418060380792020349/2516977146996103934069928000",
+      "six_old_bounded": "2061981280921395925143853657/381360173787288474859080000",
+      "six_enhanced_bounded": "648036715205924130788239289/119856054618862092098568000",
+      "seven_bounded": "648049772899090112049567197/119856054618862092098568000",
+      "eight_bounded": "92578951127937982888243919/17122293516980298871224000",
+      "six_known_dual_bounded": "4339500149996208407028371216884890277/802607508608451509588625000000000000",
+      "seed_bounded": "15751281119445414267484319072612603681/2913167994208453627395750000000000000"
+    }
+  },
+  "original5000_rule_passed": {
+    "kind": "inline",
+    "value": false
+  },
+  "original_leaf_batches": {
+    "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches.json",
+    "sha256": "27c5b993341cb6bad801d9bc80ec9cfb02627411aded9151d0e6591fee371e54",
+    "kind": "array"
+  },
+  "canonical_original_leaf_array_sha256": {
+    "kind": "inline",
+    "value": "331db8431baa69fd5ea89a26e92050d4cf3bce51ef6948b11206bb54ffbe5245"
+  }
+}

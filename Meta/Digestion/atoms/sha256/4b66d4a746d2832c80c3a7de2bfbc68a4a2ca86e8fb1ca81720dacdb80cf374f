@@ -1,0 +1,24 @@
+**Proof.** The Binet formula and binomial theorem give the integer identity
+
+$$
+2^{n-1}F_n=\sum_{j\ge0}\binom n{2j+1}5^j.
+$$
+
+The sum is finite. Modulo 25 it becomes
+
+$$
+F_n\equiv n2^{1-n}
+ \left(1+\frac56(n-1)(n-2)\right)\pmod{25}.
+$$
+
+The denominators 2, 6, and n are units at five. In particular F_n is a
+unit at five. Apply RP1 to obtain
+
+$$
+\lambda_5(F_n)=\lambda_5(n)+3(1-n)
+ +\frac23(n-1)(n-2)=\lambda_5(n)+1-n^2\pmod5.
+$$
+
+All division by five precedes reduction; no inverse of five in a residue
+ring is used. The underlying binomial identity is classical.
+

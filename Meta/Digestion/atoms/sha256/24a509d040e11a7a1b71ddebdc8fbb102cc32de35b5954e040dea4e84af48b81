@@ -1,0 +1,54 @@
+**theorem 28.11 (The Haar lift and the proper atomic completion).** Let $\lambda$ be normalized Haar measure on the original circle. Its existence as a regular probability measure follows from the classical Haar theorem; see [Tornier, Definition 2.1, Theorem 2.2 and Proposition 2.9](https://arxiv.org/html/2006.10956v1). Then
+$$
+\mathfrak m=L_t\lambda=s_\#\lambda
+$$
+is a non-atomic probability measure on $K$, independent of $t$ and independent of the branch choices at the split phases. It satisfies
+$$
+H_\#\mathfrak m=\lambda,\qquad R_t\mathfrak m=0,\qquad
+\mathfrak m\star_t\mathfrak m=\mathfrak m.
+$$
+The atomic measures form a closed proper subalgebra
+$$
+M_{\mathrm{at}}(K)\cong\ell^1(K_{\mathrm d})\subsetneq M(K),
+$$
+with the isometric atomic embedding and the multiplication of Section 27. Under $\Phi_t$, this entire atomic subalgebra corresponds to
+$$
+\mathcal C_{\mathrm{at}}=M_{\mathrm{at}}(\mathbb T)\oplus\mathcal S.
+$$
+For every atomic signed measure $\alpha$ on $K$, the exact individual distance is
+$$
+\|\mathfrak m-\alpha\|_{\mathrm{TV}}=1+\|\alpha\|_{\mathrm{TV}}.
+$$
+Consequently,
+$$
+\operatorname{dist}_{\mathrm{TV}}(\mathfrak m,M_{\mathrm{at}}(K))=1.
+$$
+The distance to each atomic probability measure is two. Thus the distance one is a distance to the atomic signed subspace, not the distance to every member of that subspace.
+
+**Proof.** Translation invariance makes all singleton Haar masses equal. For any positive integer $N$, selecting $N$ distinct points bounds this common mass by $1/N$, so it is zero. Hence $\lambda$ is non-atomic by theorem 28.10, and $\lambda(E)=0$. The atom-correction formula of theorem 28.5 reduces to $L_t\lambda=s_\#\lambda$. This is a probability measure. For $x\in K$,
+$$
+\mathfrak m(\{x\})=\lambda(s^{-1}(\{x\}))\le\lambda(\{H(x)\})=0,
+$$
+so it is non-atomic. Changing the section only on $E$ does not change its pushforward of $\lambda$, and the formula has no remaining parameter dependence.
+
+The lift and residual identities have already been proved. Translation invariance also gives, for every Borel $B$,
+$$
+(\lambda*_{\mathbb T}\lambda)(B)
+=\int_{\mathbb T}\lambda(B-\theta)\,d\lambda(\theta)=\lambda(B).
+$$
+The coordinate product then proves the idempotent identity for $\mathfrak m$.
+
+Theorem 28.10 identifies atomic measures isometrically with absolutely summable point coefficients and proves their closedness. For atomic inputs, their signed product measure is itself an absolutely summable atomic measure on $K^2$. Thus the setwise integral in theorem 28.7 is the total-variation-convergent series
+$$
+\sum_{x,y}\mu(\{x\})\eta(\{y\})P^{(t)}_{x,y},
+$$
+whose sum of term norms is at most $C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}$. It remains atomic and is exactly the discrete convolution extension. If $\mu$ is atomic, its phase pushforward is atomic. Conversely, if $\nu$ is atomic, $L_t\nu$ is atomic by its defining slices and absolute convergence, and the residual inverse series is atomic. This proves the assertion about $\mathcal C_{\mathrm{at}}$.
+
+For the distance formula, choose a countable Borel set supporting the variation of $\alpha$. The non-atomic measure $\mathfrak m$ assigns that set mass zero. Therefore $\mathfrak m$ and $|\alpha|$ are mutually singular and
+$$
+|\mathfrak m-\alpha|=\mathfrak m+|\alpha|.
+$$
+Taking total mass proves the individual formula; its infimum is one, attained at the zero atomic measure. Atomic probabilities have norm one, giving distance two.
+
+Finite atomic measures are dense in $M_{\mathrm{at}}(K)$ by truncation of absolutely convergent series, and their closure in $M(K)$ is precisely this closed proper subspace. Hence the total-variation completion of the finite coefficient space is still $\ell^1(K_{\mathrm d})$. Passing to all of $M(K)$ enlarges the permitted measures; it is not that completion. The same conclusion holds for the equivalent norms in theorem 28.9. QED.
+

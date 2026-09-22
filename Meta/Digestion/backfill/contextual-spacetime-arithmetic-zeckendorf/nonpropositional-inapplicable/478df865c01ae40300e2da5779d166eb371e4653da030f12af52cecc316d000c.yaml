@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:478df865c01ae40300e2da5779d166eb371e4653da030f12af52cecc316d000c
+  normalized_sha256: sha256:478df865c01ae40300e2da5779d166eb371e4653da030f12af52cecc316d000c
+cas_ref: sha256:478df865c01ae40300e2da5779d166eb371e4653da030f12af52cecc316d000c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子叶仅定义有限状态数、最大素数乘积和 Zeckendorf 窗口长度三个量，没有断言宽度公式。
+    previous_atom_id: 425ef20a2dc5dda8c5a8b61529ace9615529d909e364cb412df00d5d9f18a11e
+    next_atom_id: 59f08b80663fa8031fa1bacb5a0172b7a543a8ad287c9d3d8572bace2ac21d37

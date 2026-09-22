@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4b4c319530735ecd80a8064e25662cd0f0cb39c0650470c860c95d5c967cb97
+  normalized_sha256: sha256:e4b4c319530735ecd80a8064e25662cd0f0cb39c0650470c860c95d5c967cb97
+cas_ref: sha256:e4b4c319530735ecd80a8064e25662cd0f0cb39c0650470c860c95d5c967cb97
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Real.logb_pow 将幂的对数化为倍数，Int.floor_div_natCast 消去两层取整之间的正整数除法，环规范化给源式，探针对更一般自然数参数成立并覆盖全部原条件，仓内无冻结 GID。
+    previous_atom_id: 82348edf641cac48483ddf5219d2b485ff21fb22f00aa2c56b2e6e8d0467c3ac
+    next_atom_id: 281bb232b9ec58d09d32e68d5db7b7648cc7da097b928cbd63edf26e9d3950a6

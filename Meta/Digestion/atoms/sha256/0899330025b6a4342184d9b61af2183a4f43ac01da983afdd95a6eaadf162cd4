@@ -1,0 +1,4 @@
+and $\vartheta:\mathscr E\to\mathbb T$ is a continuous surjective monoid homomorphism:
+$$
+\vartheta(pq)=\vartheta(p)+\vartheta(q),\qquad \vartheta(T^n)=n\delta.
+$$

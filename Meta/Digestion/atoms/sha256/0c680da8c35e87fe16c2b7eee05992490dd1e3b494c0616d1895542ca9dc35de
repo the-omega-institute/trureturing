@@ -1,0 +1,33 @@
+**定理 137.5（严格正性与谱区间的有限矩判据）。** 在式(137.3)下，存在严格正定实现，当且仅当
+$$
+\ker S_r=\ker H_r.
+\tag{137.10}
+$$
+此条件也等价于规范实现的 $C$ 严格正定。给定 $0\le a\le b<\infty$，存在满足
+$$
+aI\preceq C\preceq bI
+$$
+的实现，当且仅当
+$$
+\boxed{H_r\succeq0,\qquad aH_r\preceq S_r\preceq bH_r.}
+\tag{137.11}
+$$
+其中 $a=b$ 允许；若 $a=b=0$，可取 $C=0$。
+
+**证明。** 在规范商上，
+$$
+\langle[v],C[v]\rangle_E=\langle v,S_rv\rangle_{P_r}.
+$$
+$S_r\succeq0$ 时右端为零恰当 $v\in\ker S_r$；而 $[v]=0$ 恰当 $v\in\ker H_r$。这证明式(137.10)与规范 $C$ 严格正定的等价。若另有严格正实现，写 $H_r=T^*T$、$S_r=T^*CT$，则后者的零二次型恰当 $Tv=0$，同样得到两核相等。
+
+对有界谱实现，由 $aI\preceq C\preceq bI$ 两侧复合 $T^*$ 与 $T$，得到式(137.11)。反过来，令 $v\in\ker H_r$。半正定算子 $S_r-aH_r$ 满足
+$$
+0\le\langle v,(S_r-aH_r)v\rangle
+\le(b-a)\langle v,H_rv\rangle=0.
+$$
+故 $(S_r-aH_r)v=0$，进而 $S_rv=0$。于是核相容成立，定理137.2适用。式(137.6)再把矩不等式变为
+$$
+a\|[v]\|^2\le\langle[v],C[v]\rangle_E\le b\|[v]\|^2,
+$$
+即所需谱界。若 $a=b$，上述不等式迫使 $C=aI$。$\square$
+

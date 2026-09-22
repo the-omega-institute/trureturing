@@ -1,0 +1,68 @@
+**theorem 20.6 (Equal partitions, both exact moduli, and sharpness).** For all $L,t\ge0$,
+$$
+\mathcal Q_L=\mathcal V_{G_L-1},
+\qquad
+\ker(q_L)=\ker(v_{G_L-1}),
+$$
+and more generally
+$$
+\ker(v_t)\subseteq\ker(q_L)
+\quad\Longleftrightarrow\quad t\ge G_L-1,
+$$
+$$
+\ker(q_L)\subseteq\ker(v_t)
+\quad\Longleftrightarrow\quad t\le G_L-1.
+$$
+Thus the least length of consecutive lowest-digit observations determining the first $L$ positional digits is
+$$
+t_{\min}(L)=G_L-1,
+$$
+and the least positional depth determining a prescribed length-$t$ itinerary is
+$$
+L_{\min}(t)=\min\{L\ge0:G_L\ge t+1\}.
+$$
+In particular $L_{\min}(0)=0$, and for $L\ge1$,
+$$
+L_{\min}(t)=L
+\quad\Longleftrightarrow\quad
+G_{L-1}\le t\le G_L-1.
+$$
+
+**Proof.** At $L=0$ both relevant partitions have one atom. For $L\ge1$, put $s=G_L-1$. Theorems 20.2 and 20.5 give exactly the same circle cut set for $\mathcal Q_L$ and $\mathcal V_s$. Their atoms are also exactly the same closures of the same natural-core points in the complementary arcs. This proves equality on the full compact carrier, rather than only equality on its natural core. The orientation formulas assign each boundary lift to the same atom in both descriptions.
+
+There is an explicit relabeling. For an admissible prefix $p$, let $N_p=\sum_{j<L}G_jp_j$ and define
+$$
+A_L(p)=v_s(Z(N_p)).
+$$
+The point $Z(N_p)$ has prefix $p$. Equality of the two partitions makes $A_L$ a bijection from positional words to temporal words and gives
+$$
+v_s=A_L\circ q_L.
+$$
+If $t\le s$, truncate this equality to the first $t$ entries. If $t\ge s$, use
+$$
+q_L(x)=A_L^{-1}\bigl(\operatorname{pref}_s(v_t(x))\bigr).
+$$
+These are the required upper-bound factorizations, not cardinality arguments.
+
+For sharpness of the first implication, suppose $t<s$. Take $m=t+2\le G_L$. The pair $x_m^-,x_m^+$ is separated by $q_L$, but its first temporal difference is at index $m-2=t$, which is not included in a length-$t$ observation. Hence no shorter temporal observation determines $q_L$.
+
+For sharpness of the second implication, suppose $t>s$, and take $m=G_L+1$. The pair above $e_m$ has the same $L$-digit prefix, including the case $L=0$, but its first temporal difference is at index $G_L-1=s<t$. Thus $q_L$ cannot determine that longer itinerary. These two pairs establish both converses. Monotonicity and unboundedness of $G_L$ now give the least-index formulas.
+
+The first three depths have no exceptional convention. At depth zero there is one empty word and no circle cut. At depth one,
+$$
+G_1-1=1,\qquad q_1(x)=v_1(x)=(f(x)),
+$$
+and the phase cuts are $e_1,e_2$. At depth two the real cylinder intervals are
+$$
+F[C_{00}]=[c,\alpha^4],\qquad
+F[C_{01}]=[\alpha^4,b],\qquad
+F[C_{10}]=[a,c],
+$$
+with $[\alpha^4]=e_3$, and the relabeling is
+$$
+00\longmapsto01,\qquad
+01\longmapsto00,\qquad
+10\longmapsto10.
+$$
+These follow by substituting into the cylinder formula and the first-successor rule. Thus equality is equality of observation partitions, not generally equality of the word-valued maps. The alternating endpoints and all internal double fibers are already included by Theorems 20.2 and 20.4. $\square$
+

@@ -1,0 +1,6 @@
+以及对某个固定 $0\le a<1$ 和 $C>0$，对所有 $N\ge1$ 有
+$$
+H_6(a):\quad
+\left|\sum_{\substack{N/2<d\le N\\(d,6)=1}}\mu(d)\right|
++\left|\sum_{\substack{N/6<d\le N/3\\(d,6)=1}}\mu(d)\right|\le CN^a.
+$$

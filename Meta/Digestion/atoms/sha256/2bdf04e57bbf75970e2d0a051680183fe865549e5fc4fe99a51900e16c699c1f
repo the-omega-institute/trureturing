@@ -1,0 +1,80 @@
+**定理 29.10（任意实有符号原子的排除与拓扑中心完全分类）。** 在假设29.1下，对每个 $t\in\Lambda$，
+$$
+Z_{\mathrm{top}}(\star_t)=M_c(K).
+$$
+更具体地，若 $\mu$ 的原子部分非零，则存在有限数字柱集 $U$、点 $x\in K$ 及序列 $x_n\to x$，使
+$$
+\mathcal T_\mu^{(t)}\mathbf1_U(x_n)\not\longrightarrow\mathcal T_\mu^{(t)}\mathbf1_U(x).
+$$
+结论包括总质量为零、相位推前原子部分为零以及同一分裂纤维正负质量抵消的情形，也包括参数 $0$ 与形式参数 $\infty$。
+
+**证明。** 无原子的充分性已经由定理29.5证明。拓扑中心是线性子空间，因为定理29.4中的连续函数条件对线性组合封闭。若 $\mu$ 属于拓扑中心，作定理29.8的分解 $\mu=\mu_c+\sigma$，其中 $\sigma=\mu_a$。由于 $\mu_c$ 已在中心中，$\sigma$ 也在中心中。因此必要性归结为证明：中心中的可数原子测度只能为零。
+
+先对 $\sigma$ 使用定理29.9，记其完整相位质量为 $b_\lambda$。若 $\theta\notin E$，两条输入序列均趋于同一点 $k_\theta$。弱星连续性使它们的输出极限相同，故 $J_\theta=0$。由于 $J_\theta$ 是总变差绝对可和的正则原子测度，定理29.8给出
+$$
+b_{E_r-\theta}=0\qquad(r\ge1,\ \theta\notin E).
+$$
+现固定 $\lambda\notin\mathcal O_+$，取 $\theta=E_1-\lambda$。这个 $\theta$ 不属于 $E$：否则 $\theta=E_j$ 会推出
+$$
+\lambda=E_1-E_j=[(j-1)\phi]\in\mathcal O_+,
+$$
+矛盾。上式取 $r=1$ 得 $b_\lambda=0$。所以完整相位原子质量只能留在非负整数旋转轨道 $\mathcal O_+$ 上。
+
+由于 $\phi$ 无理，$E\cap\mathcal O_+=\varnothing$，故每个分裂纤维的完整相位质量已经为零。非分裂纤维只有一个点，且 $[n\phi]$ 的唯一点为 $Z(n)$。因此 $\sigma$ 必有准确展开
+$$
+\sigma=\sum_{n\ge0}b_n\delta_{Z(n)}+\sum_{m\ge1}a_mv_m,
+$$
+$$
+b_n=\sigma(\{Z(n)\}),\qquad a_m=\sigma(\{x_m^+\})=-\sigma(\{x_m^-\}),\qquad \|\sigma\|_{\mathrm{TV}}=\sum_{n\ge0}|b_n|+2\sum_{m\ge1}|a_m|.
+$$
+第一项保留全部尚未排除的相位原子，第二项保留相位推前完全看不见的分支差分；两者不能混同。
+
+固定 $j\ge1$。定理29.9在输入相位 $E_j$ 给出
+$$
+R_{E_j}^s=\sum_{n=0}^{j-1}b_n\delta_{x_{j-n}^s}+\sum_{n\ge j}b_n\delta_{Z(n-j)},
+$$
+因为 $[n\phi]+E_j=E_{j-n}$ 当 $n<j$，而当 $n\ge j$ 时该相位为 $[(n-j)\phi]$。置
+$$
+Q_j=\sum_{n=0}^{j-1}b_n\pi_{E_{j-n}}+\sum_{n\ge j}b_n\delta_{Z(n-j)},\qquad W_j=\sum_{m\ge1}a_mc_{m,j}v_{m+j}.
+$$
+这两个和都是总变差绝对收敛的实际测度。对 $Q_j$，使用 $\|\pi_\theta\|_{\mathrm{TV}}\le C_t$。对 $W_j$，有限差分恒等式及定理29.2给
+$$
+2|c_{m,j}|=\|v_m\star_t v_j\|_{\mathrm{TV}}\le C_t\|v_m\|_{\mathrm{TV}}\|v_j\|_{\mathrm{TV}}=4C_t,
+$$
+所以 $\sum_m|a_mc_{m,j}|<\infty$。
+
+实际两个分支行必须由第25节的有限核恒等式逐项积分计算，而不是由单侧极限指定。具体地，$\delta_{Z(n)}=\pi_{[n\phi]}$，混合相位差分乘积为零，且
+$$
+\delta_{x_j^+}=\pi_{E_j}+(1-p_j)v_j,\qquad \delta_{x_j^-}=\pi_{E_j}-p_jv_j.
+$$
+因此直接对上述绝对可和原子系数积分，得到
+$$
+\sigma\star_t\delta_{x_j^+}=Q_j+(1-p_j)W_j,\qquad \sigma\star_t\delta_{x_j^-}=Q_j-p_jW_j.
+$$
+逐项积分的绝对收敛由统一行界与 $\sum_n|b_n|+2\sum_m|a_m|<\infty$ 保证。这特别给出不含任何 $p_j$ 分母的准确差值
+$$
+\sigma\star_t\delta_{x_j^+}-\sigma\star_t\delta_{x_j^-}=W_j.
+$$
+
+由于 $\sigma$ 在中心中，分别趋于 $x_j^+$ 与 $x_j^-$ 的单侧输入序列必须趋于各自的实际输出行。相减得到
+$$
+\sum_{m\ge1}a_mc_{m,j}v_{m+j}=\sum_{n=0}^{j-1}b_nv_{j-n}.
+$$
+左边的原子对指标严格大于 $j$，右边的指标介于一与 $j$。不同指标的二点支撑不交；即使无限原子集的闭包有共同聚点，也不会改变单点质量。定理29.8因此给出准确的缺陷范数
+$$
+\left\|W_j-\sum_{n=0}^{j-1}b_nv_{j-n}\right\|_{\mathrm{TV}}=2\sum_{m\ge1}|a_mc_{m,j}|+2\sum_{n=0}^{j-1}|b_n|.
+$$
+中心条件使该范数为零。取 $j=1$，由于每个 $c_{m,1}\ne0$，得到全部 $a_m=0$，同时得到 $b_0=0$。再对任意 $n\ge0$ 取 $j=n+1$，得到 $b_n=0$。因此 $\sigma=0$，必要性成立。
+
+这里 $c_{m,j}\ne0$ 对所有允许的有限实参数由定理25.7给出；参数 $0$ 时 $c_{m,j}=1$，形式参数 $\infty$ 时 $c_{m,j}=-1$。整个排除过程没有除以 $p_j$ 或 $1-p_j$，也没有要求任何原子系数或核系数为正。
+
+最后核对声明的实际连续测试见证，而不只给出形式系数矛盾。给定非零原子测度 $\sigma$，若某个非零 $b_\lambda$ 位于 $\mathcal O_+$ 外，取上述 $\theta=E_1-\lambda$，则 $J_\theta$ 在 $v_1$ 上的系数非零。定理29.8给出连续柱集指示函数 $f$ 使 $\langle J_\theta,f\rangle\ne0$。两条输入序列趋于同一 $k_\theta$，而其标量输出极限不同，故至少一条不趋于实际行在该点的测试值。
+
+若全部完整相位质量均在 $\mathcal O_+$ 上，则 $\sigma$ 具有上面的 $b_n,a_m$ 展开。若某个 $a_m\ne0$，取 $j=1$；否则选 $b_n\ne0$ 并取 $j=n+1$。准确缺陷范数表明
+$$
+D_j:=W_j-(R_{E_j}^+-R_{E_j}^-)\ne0.
+$$
+再用定理29.8选连续柱集指示函数 $f$ 检测 $D_j$。两个实际行与两个对应单侧极限不可能同时在该测试上相等，因为两种差值的差正是 $\langle D_j,f\rangle\ne0$。所以至少一个定向分裂输入处有标量不连续。
+
+对于原始测度 $\mu=\mu_c+\sigma$，定理29.5保证 $\mathcal T_{\mu_c}^{(t)}f$ 连续；把它加回不会消除上述实际行与其单侧极限之间的非零差。于是同一个连续柱集测试也检测 $\mu$ 的不连续性。这覆盖了所有可数有符号抵消情形。证毕。
+

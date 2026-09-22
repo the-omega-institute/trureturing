@@ -1,0 +1,338 @@
+**命题 142.1（固定加减基总奇偶记录的全长度分类）。** 取命题 130.1 的纯边界生成器，令
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+0<\alpha<1,\qquad \alpha^2+\alpha=1,\qquad B=M=\mathbb C^2,
+$$
+$$
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1),
+$$
+$$
+\Xi_0=m_0,\qquad
+\Xi_{n+1}=(I_{B^{\otimes n}}\otimes T)\Xi_n.
+$$
+各空间均取正交标准基。对任意有限整数 $g\ge1$，在任何测量之前恰好发出 $g+2$ 个输出，次序为
+$$
+B_L\otimes B_1\otimes\cdots\otimes B_g\otimes B_R\otimes M.
+$$
+$L,R$ 分别是第一位和最后一位已发出的 qubit，左端点之前没有被忽略的前缀；端点空间始终是完整的 $B_L\otimes B_R=\mathbb C^2\otimes\mathbb C^2$。生成过程中不读取、测量或重置记忆，最终记忆取偏迹且不可访问。每个内部输出在同一事先固定的局部正交基
+$$
+|\eta_r\rangle=\frac{|0\rangle+(-1)^r|1\rangle}{\sqrt2}
+\quad(r=0,1)
+$$
+中测量一次。全部测量完成、结果已成为经典记录后，仅保留总奇偶位
+$$
+b=\bigoplus_{k=1}^g r_k\in\{0,1\}.
+$$
+这一位没有附加翻转通道。结果不用于反馈、后续选基或端点操作；测后的内部系统、原始记录及奇偶记录的其他副本均不可访问，不允许环境重新耦合或记录的相干重组。
+
+以 $\operatorname{adj}$ 表示共轭转置，$\operatorname{outer}(u,v)=u\operatorname{adj}(v)$，$\operatorname{outer}(u)=\operatorname{outer}(u,u)$。对 $r=(r_1,\ldots,r_g)$，定义实际分支
+$$
+\chi_r=(I_{B_L}\otimes\langle\eta_{r_1}|\otimes\cdots\otimes
+\langle\eta_{r_g}|\otimes I_{B_R}\otimes I_M)\Xi_{g+2},
+\qquad Q_r=\operatorname{Tr}_M\operatorname{outer}(\chi_r),
+$$
+$$
+Q_{g,b}=\sum_{r:\,\bigoplus_k r_k=b}Q_r,\qquad
+q_{g,b}=\operatorname{Tr}Q_{g,b}.
+$$
+可分密度采用命题 132.1 的有限凸乘积密度和定义，纠缠指不可分；右偏转置约定为
+$$
+\operatorname{PT}_R(|ij\rangle\langle kl|)=|il\rangle\langle kj|.
+$$
+则对所有有限整数 $g\ge1$ 及 $b\in\{0,1\}$，
+$$
+q_{g,b}=\frac12+(-1)^b\alpha^{g+2},\qquad 0<q_{g,b}<1.
+$$
+因此 $\rho_{g,b}=Q_{g,b}/q_{g,b}$ 总有定义，且
+$$
+\rho_{g,b}\text{ 纠缠}
+\quad\Longleftrightarrow\quad
+\operatorname{PT}_R(\rho_{g,b})\not\ge0
+\quad\Longleftrightarrow\quad g\in\{1,2\},
+$$
+$$
+\rho_{g,b}\text{ 可分}
+\quad\Longleftrightarrow\quad
+\operatorname{PT}_R(\rho_{g,b})>0
+\quad\Longleftrightarrow\quad g\ge3.
+$$
+这里 $>0$ 指严格正定。两个事件之和满足
+$$
+Q_{g,0}+Q_{g,1}
+=\operatorname{Tr}_{B_1,\ldots,B_g,M}\operatorname{outer}(\Xi_{g+2})
+=\theta^{P_0}_{0;1,g,1},\qquad P_0=\operatorname{outer}(m_0),
+$$
+是命题 133.1 的可分无条件端点密度；各 $\rho_{g,b}$ 则是按总奇偶位条件化的密度。本命题的量词仅涉及上述固定基与总奇偶函数。
+
+证明。写 $P_j=\operatorname{outer}(m_j)$、$E_{ij}=|i\rangle\langle j|$。命题 131.1 的矩阵单位展开及两个通道为
+$$
+T A\operatorname{adj}(T)
+=\sum_{i,j=0}^1 A_{ij}E_{ij}\otimes\operatorname{outer}(m_i,m_j),
+\qquad
+\mathcal M(A)=A_{00}P_0+A_{11}P_1,
+$$
+$$
+\Gamma_1(A)=\operatorname{Tr}_M(T A\operatorname{adj}(T))
+=\begin{pmatrix}A_{00}&sA_{01}\\sA_{10}&A_{11}\end{pmatrix}.
+$$
+令
+$$
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+\mathcal L(A)=\operatorname{Tr}_B\bigl[(X\otimes I_M)T A\operatorname{adj}(T)\bigr],
+$$
+$$
+U=\operatorname{outer}(m_0,m_1)=\begin{pmatrix}s&0\\\alpha&0\end{pmatrix},
+\qquad V=\operatorname{adj}(U).
+$$
+上面的展开给出复线性映射
+$$
+\mathcal L(A)=A_{01}U+A_{10}V,
+\qquad
+\mathcal L(E_{00})=\mathcal L(E_{11})=0,\quad
+\mathcal L(E_{01})=U,\quad\mathcal L(E_{10})=V,
+$$
+$$
+\mathcal L(U)=\alpha V,\qquad \mathcal L(V)=\alpha U.
+$$
+从 $g=1$ 起逐次作用便得，对任意复矩阵 $A$，
+$$
+\mathcal L^g(A)=
+\begin{cases}
+\alpha^{g-1}(A_{01}U+A_{10}V),&g\text{ 为奇数},\\
+\alpha^{g-1}(A_{01}V+A_{10}U),&g\text{ 为偶数}.
+\end{cases}
+$$
+特别地，$\mathcal L^{g+2}=\alpha^2\mathcal L^g$ 对 $g\ge1$ 成立。
+
+单个实际测量结果对记忆的 Kraus 算子及分支映射为
+$$
+K_r=(\langle\eta_r|\otimes I_M)T
+=\frac{m_0\langle0|+(-1)^r m_1\langle1|}{\sqrt2},
+\qquad
+\Phi_r(A)=K_rA\operatorname{adj}(K_r)
+=\frac{\mathcal M(A)+(-1)^r\mathcal L(A)}2.
+$$
+已发出因子上的测量与其后只作用于记忆及新输出的等距交换，故先发出全部输出再测量的协议，仍可按位置次序计算为 $\Phi_{r_g}\circ\cdots\circ\Phi_{r_1}$。保持这个复合次序并分配有限和，得到
+$$
+\sum_{r\in\{0,1\}^g}\Phi_{r_g}\circ\cdots\circ\Phi_{r_1}
+=(\Phi_0+\Phi_1)^g=\mathcal M^g,
+$$
+$$
+\sum_{r\in\{0,1\}^g}(-1)^{\sum_k r_k}
+\Phi_{r_g}\circ\cdots\circ\Phi_{r_1}
+=(\Phi_0-\Phi_1)^g=\mathcal L^g.
+$$
+这里没有交换 $\mathcal M$ 与 $\mathcal L$。因而奇偶事件的实际记忆映射为
+$$
+\mathcal S_{g,b}
+:=\sum_{r:\,\bigoplus_k r_k=b}\Phi_{r_g}\circ\cdots\circ\Phi_{r_1}
+=\frac{\mathcal M^g+(-1)^b\mathcal L^g}{2}.
+$$
+相应的内部事件效应是
+$$
+\sum_{r:\,\bigoplus_k r_k=b}\bigotimes_{k=1}^g\operatorname{outer}(\eta_{r_k})
+=\frac{I_{B^{\otimes g}}+(-1)^bX^{\otimes g}}2.
+$$
+此效应来自完整局部仪器结果的经典合并，事件算子中没有不同原始记录之间的振幅交叉项。
+
+令 $\Omega=T P_0\operatorname{adj}(T)$ 为首个已发出端点与记忆的联合密度。再发出右端点并忽略最终记忆给出
+$$
+Q_{g,b}
+=\bigl(\operatorname{Id}_{B_L}\otimes(\Gamma_1\circ\mathcal S_{g,b})\bigr)(\Omega)\ge0.
+$$
+这里最后的 $\Gamma_1$ 将活动记忆转为已发出的右端点。与命题 137.1 的系数公式对照，置
+$$
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+D_r=\frac1{\sqrt2}\operatorname{diag}(1,(-1)^r),\qquad
+C_r=s^{g+3}JD_{r_1}J\cdots D_{r_g}J,
+$$
+$$
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1C_{ij}|i\rangle_L\otimes|j\rangle_R.
+$$
+该命题的两记忆列公式恰给
+$$
+Q_r=\operatorname{outer}(\operatorname{vec}_{LR}(C_r))
++\alpha\operatorname{outer}(\operatorname{vec}_{LR}(C_rE_{00})).
+$$
+因此上述通道式就是陈述中的 $\sum_{r:\,\bigoplus_k r_k=b}Q_r$，保留了两条最终记忆列及其实际 Born 权重。其正性来自这些实际分支的正算子和。
+
+对左端点取迹，有 $\operatorname{Tr}_{B_L}\Omega=\mathcal M(P_0)$；该矩阵的两个非对角元均为 $\alpha^2s$。由 $\operatorname{Tr}U=\operatorname{Tr}V=s$，
+$$
+\operatorname{Tr}\mathcal L^g(\mathcal M(P_0))
+=2\alpha^{g-1}\alpha^2s^2=2\alpha^{g+2}.
+$$
+$\mathcal M$ 与 $\Gamma_1$ 保迹，故
+$$
+q_{g,b}=\frac12\left(1+(-1)^b\,2\alpha^{g+2}\right).
+$$
+由 $\alpha^3=\sqrt5-2<1/2$ 及 $0<\alpha^{g+2}\le\alpha^3$，两个概率均严格位于 $0$ 与 $1$ 之间。求和消去带符号项，所得 $\theta^{P_0}_{0;1,g,1}$ 由命题 133.1 可分。这一步求得的是无条件密度。
+
+下面求条件态的偏转置。定义
+$$
+z_n=\frac{1-(-\alpha^2)^n}{1+\alpha^2}\quad(n\ge0),\qquad
+z_0=0,\quad z_1=1,\quad z_{n+1}=1-\alpha^2z_n.
+$$
+命题 131.1 写 $\sigma_n=\mathcal M^n(P_0)=(1-p_n)P_0+p_nP_1$，其中 $p_n=\alpha^2z_n$，所以 $1-p_n=z_{n+1}$。由于 $\mathcal M(E_{00})=P_0$，对 $g\ge1$ 有
+$$
+\mathcal M^g(E_{00})=\sigma_{g-1}=z_gP_0+(1-z_g)P_1.
+$$
+又 $\mathcal M(E_{11})=P_1$、$\mathcal M(P_1)=P_0$，故 $g=1$ 时直接用 $z_0=0$，$g\ge2$ 时用 $\sigma_{g-2}$，统一得到
+$$
+\mathcal M^g(E_{11})=z_{g-1}P_0+(1-z_{g-1})P_1.
+$$
+置
+$$
+H(z)=\begin{pmatrix}1-\alpha^2z&\alpha^2z\\\alpha^2z&\alpha^2z\end{pmatrix},\qquad
+h=\begin{pmatrix}1\\\alpha\end{pmatrix},\quad e=\begin{pmatrix}1\\0\end{pmatrix},
+\qquad c_g=s\alpha^{g-1},
+$$
+$$
+D=\alpha\begin{pmatrix}1&s\\1&0\end{pmatrix},\qquad
+\phi=|00\rangle+|11\rangle.
+$$
+实际首步满足 $Tm_0=\operatorname{vec}_{LM}(D)=(D\otimes I_M)\phi$，且 $\det D=-\alpha^2s\ne0$。对四个矩阵单位逐一应用刚才的公式，得到
+$$
+\begin{aligned}
+\Gamma_1\mathcal M^g(E_{00})&=H(z_g),&
+\Gamma_1\mathcal M^g(E_{11})&=H(z_{g-1}),\\
+\Gamma_1\mathcal M^g(E_{01})&=0,&
+\Gamma_1\mathcal M^g(E_{10})&=0,\\
+\Gamma_1\mathcal L^g(E_{00})&=0,&
+\Gamma_1\mathcal L^g(E_{11})&=0,\\
+\Gamma_1\mathcal L^g(E_{01})&=c_gW_g,&
+\Gamma_1\mathcal L^g(E_{10})&=c_g\operatorname{adj}(W_g),
+\end{aligned}
+\qquad
+W_g=\begin{cases}he^{\mathsf T},&g\text{ 为奇数},\\eh^{\mathsf T},&g\text{ 为偶数}.
+\end{cases}
+$$
+这里 $\Gamma_1(U)=s he^{\mathsf T}$、$\Gamma_1(V)=s eh^{\mathsf T}$。将 $\operatorname{outer}(\phi)=\sum_{i,j}E_{ij}\otimes E_{ij}$ 展开，便得
+$$
+2Q_{g,b}=(D\otimes I_{B_R})\mathcal K_{g,b}\operatorname{adj}(D\otimes I_{B_R}),
+$$
+$$
+\mathcal K_{g,b}=
+\begin{pmatrix}
+H(z_g)&(-1)^b c_gW_g\\
+(-1)^b c_g\operatorname{adj}(W_g)&H(z_{g-1})
+\end{pmatrix}.
+$$
+此合同只是矩阵恒等式，协议中没有执行 $D$ 或其逆作为局部操作。
+
+右偏转置将每个二阶块转置，故保持两个实对称对角块，并反转非对角秩一块的方向。令 $Z=\operatorname{diag}(1,-1)$，则
+$$
+\mathcal K_{g,1}=(Z\otimes I)\mathcal K_{g,0}(Z\otimes I),\qquad
+\operatorname{PT}_R(\mathcal K_{g,1})
+=(Z\otimes I)\operatorname{PT}_R(\mathcal K_{g,0})(Z\otimes I).
+$$
+此外，偏转置与左因子合同交换，因而
+$$
+\operatorname{PT}_R(\rho_{g,b})
+=\frac1{2q_{g,b}}(D\otimes I)
+\operatorname{PT}_R(\mathcal K_{g,b})\operatorname{adj}(D\otimes I).
+$$
+可逆合同及正数缩放保持 Hermitian 矩阵的正、负、零惯性指数，所以两种 $b$ 有相同的 PPT 或 NPT 分类；这一论证不要求两个实际归一化密度有相同的谱。
+
+当 $g=1$ 时，$z_1=1$、$z_0=0$，$\operatorname{PT}_R(\mathcal K_{1,b})$ 在 $00,11$ 指标上的主子式为
+$$
+\det\begin{pmatrix}\alpha&(-1)^b s\alpha\\(-1)^b s\alpha&0\end{pmatrix}
+=-\alpha^3<0.
+$$
+所以两个分支均为 NPT。
+
+当 $g\ge2$ 时，递推使所用的两个 $z$ 均在 $(0,1]$ 内。令
+$$
+d(z)=1-2\alpha^2z.
+$$
+由 $2\alpha^2<1$ 得 $d(z)>0$，且
+$$
+\det H(z)=\alpha^2z\,d(z)>0,\qquad H(z)>0.
+$$
+二阶逆矩阵给出
+$$
+H(z)^{-1}=\frac1{\alpha^2z\,d(z)}
+\begin{pmatrix}\alpha^2z&-\alpha^2z\\-\alpha^2z&1-\alpha^2z\end{pmatrix},
+$$
+$$
+e^{\mathsf T}H(z)^{-1}e=\frac1{d(z)},\qquad
+h^{\mathsf T}H(z)^{-1}h=\frac{1-\alpha z}{z\,d(z)}.
+$$
+后一式的分子在约去 $\alpha^2$ 前为
+$$
+\alpha^2z-2\alpha^3z+\alpha^2(1-\alpha^2z)
+=\alpha^2(1-\alpha z).
+$$
+
+为判定整个偏转置，写 $A=H(z_g)$、$B=H(z_{g-1})$，其右上块在奇数 $g$ 时为 $(-1)^b c_g e h^{\mathsf T}$，在偶数 $g$ 时为 $(-1)^b c_g h e^{\mathsf T}$。一般地，$A>0$ 时有可逆合同
+$$
+\begin{pmatrix}I&0\\-R^\dagger A^{-1}&I\end{pmatrix}
+\begin{pmatrix}A&R\\R^\dagger&B\end{pmatrix}
+\begin{pmatrix}I&-A^{-1}R\\0&I\end{pmatrix}
+=\begin{pmatrix}A&0\\0&B-R^\dagger A^{-1}R\end{pmatrix}.
+$$
+若 $R=\lambda uv^\dagger$ 且 $B>0$，下块再经 $B^{-1/2}$ 合同成为
+$$
+I-ww^\dagger,\qquad
+w=|\lambda|\sqrt{u^\dagger A^{-1}u}\,B^{-1/2}v.
+$$
+在 $w$ 的正交补上此矩阵为恒等，在其方向上的特征值为 $1-\|w\|^2$；$w=0$ 时它就是恒等。因此整个分块矩阵正半定当且仅当
+$$
+|\lambda|^2(u^\dagger A^{-1}u)(v^\dagger B^{-1}v)\le1,
+$$
+严格小于时整个矩阵正定，严格大于时存在负二次型。代入上述两个方向及逆二次型，定义
+$$
+z_*=
+\begin{cases}z_{g-1},&g\text{ 为奇数},\\z_g,&g\text{ 为偶数},\end{cases}
+\qquad
+F_g=z_*d(z_g)d(z_{g-1})-c_g^2(1-\alpha z_*),
+$$
+便得
+$$
+\operatorname{PT}_R(\mathcal K_{g,b})\ge0\quad\Longleftrightarrow\quad F_g\ge0,
+\qquad
+\operatorname{PT}_R(\mathcal K_{g,b})>0\quad\Longleftrightarrow\quad F_g>0.
+$$
+这使用了两个正定对角块及秩一 Schur 补，而非一般矩阵的行列式符号判据。特别地，$g=2$ 时 $z_2=\alpha$、$z_1=1$、$c_2^2=\alpha^3$、$d(1)=\alpha^3$，故
+$$
+F_2=\alpha^4(1-2\alpha^3)-\alpha^3(1-\alpha^2)
+=-2\alpha^7<0.
+$$
+这与命题 140.1（C）的两内部位 NPT 结论一致。
+
+最后给出对所有 $g\ge3$ 的统一严格界。对每个 $n\ge2$，有
+$$
+\alpha\le z_n\le2\alpha^2.
+$$
+事实上 $z_2=\alpha$，且 $\alpha\le2\alpha^2$ 由 $\alpha>1/2$ 得到。递减映射 $z\mapsto1-\alpha^2z$ 在该区间的最大值为
+$$
+1-\alpha^3=2\alpha^2,
+$$
+最小值满足
+$$
+1-2\alpha^4-\alpha=\alpha^2(1-2\alpha^2)>0.
+$$
+它因此将该区间映入自身，归纳即得所述全 $n$ 界。又由 $\alpha^2+\alpha=1$ 化简可得精确恒等式
+$$
+1-4\alpha^4=\alpha^2+\alpha^7.
+$$
+所以对 $g\ge3$，两个 $z_g,z_{g-1}$ 均满足
+$$
+d(z)\ge1-4\alpha^4=\alpha^2+\alpha^7>\alpha^2.
+$$
+同时
+$$
+z_*\ge\alpha,\qquad
+c_g^2=\alpha^{2g-1}\le\alpha^5,\qquad
+0<1-\alpha z_*\le1-\alpha^2=\alpha.
+$$
+代入 Schur 标量得到
+$$
+F_g>\alpha\cdot\alpha^2\cdot\alpha^2-\alpha^5\cdot\alpha
+=\alpha^5-\alpha^6=\alpha^7>0
+\qquad(g\ge3).
+$$
+这直接涵盖每个有限整数 $g\ge3$，从而两个实际条件密度的整个右偏转置均严格正定。
+
+可分密度的右偏转置必为正半定，因为有限凸乘积和逐项变为正矩阵与其正转置的张量积。因此 $g=1,2$ 的 NPT 排除可分性。对 $g\ge3$，$\rho_{g,b}$ 已由实际分支和及正概率归一化为完整 $\mathbb C^2\otimes\mathbb C^2$ 上的密度，适用命题 141.1 所引并使用的二维 PPT 充分性：M. Horodecki、P. Horodecki、R. Horodecki，*Separability of Mixed States: Necessary and Sufficient Conditions*，[arXiv:quant-ph/9605038v2，定理 3，PDF 第 8 页](https://arxiv.org/pdf/quant-ph/9605038v2)，Physics Letters A 223，1–8（1996），[DOI:10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2)。该文可分态闭包定义与本卷有限凸和定义的一致性已在命题 141.1 证明，故这里得到的正是陈述中的可分性。命题 137.1 对所有完整加减基记录给出的纠缠性，并不使同一奇偶事件内的经典混合仍然纠缠；以上实际事件算子与统一 Schur 界给出了该混合的精确范围。证毕。
+

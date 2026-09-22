@@ -1,0 +1,113 @@
+{
+  "shape": {
+    "kind": "inline",
+    "value": "root1_same_other_column"
+  },
+  "old_points": {
+    "kind": "inline",
+    "value": [
+      2,
+      7,
+      8,
+      11,
+      14,
+      17,
+      19,
+      23,
+      26,
+      28,
+      29,
+      32,
+      34,
+      38,
+      41,
+      43,
+      44
+    ]
+  },
+  "actual_points": {
+    "path": "content/006-result/002-actual_points.json",
+    "sha256": "21899c201b2aa3b3e4faa45f7aa2a5b0bb923adc77f513d8a4bf272885ba04a8",
+    "kind": "value"
+  },
+  "deletion_profile": {
+    "kind": "inline",
+    "value": [
+      4,
+      0,
+      2,
+      2,
+      1,
+      2,
+      0,
+      2,
+      1,
+      1,
+      2,
+      2,
+      0,
+      3,
+      1,
+      1,
+      1
+    ]
+  },
+  "deletion_masks": {
+    "kind": "inline",
+    "value": [
+      1,
+      2081,
+      9225,
+      41604,
+      93629
+    ]
+  },
+  "maximum_mixed_cylinder_sizes": {
+    "kind": "inline",
+    "value": [
+      12,
+      5,
+      4,
+      3,
+      1
+    ]
+  },
+  "uniform_reference": {
+    "path": "content/006-result/006-uniform_reference.json",
+    "sha256": "fac310c708bdc3df74d6befdd6e25b7fbe8449779f3827e97af1fa263d3e8aa7",
+    "kind": "value"
+  },
+  "uniform_affine_separator": {
+    "path": "content/006-result/007-uniform_affine_separator.json",
+    "sha256": "0c208828697390a0f06d26bd37598943ab5475d6e37ab0eb00504a89b6383b8c",
+    "kind": "value"
+  },
+  "uniform_group_attainment": {
+    "path": "content/006-result/008-uniform_group_attainment.json",
+    "sha256": "7031067a5d223e4c09d84cc1b30eb9ea2ec744284c9b3ac58f24bb065e1c3fae",
+    "kind": "value"
+  },
+  "weighted_law": {
+    "path": "content/006-result/009-weighted_law.json",
+    "sha256": "83eaa34c35757f02049a67ab261aad717e8466b774bfdead280f524a20f44498",
+    "kind": "value"
+  },
+  "support_coverage": {
+    "kind": "inline",
+    "value": {
+      "source_states": 6,
+      "source_orbits": 1,
+      "covered_states": 3715,
+      "covered_orbits": 531,
+      "overlap_box_states": 47,
+      "overlap_box_orbits": 16,
+      "additional_states": 3668,
+      "additional_orbits": 515,
+      "additional_minimal_orbits": 1,
+      "union_states": 5007,
+      "union_orbits": 1077,
+      "covered_orbits_sha256": "2310d08730a7ff550318612cdf98ed83ead817b8f0bff76154884952a233aeeb",
+      "additional_orbits_sha256": "a1d0fb092ea6dfa07f49bc627e910898d71af396f0b41207dbabe08657dd1a1f"
+    }
+  }
+}

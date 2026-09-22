@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6e5ef094687e65b7ab9b37449be6b1833c04e8650f8e095f184159636b4de41
+  normalized_sha256: sha256:d6e5ef094687e65b7ab9b37449be6b1833c04e8650f8e095f184159636b4de41
+cas_ref: sha256:d6e5ef094687e65b7ab9b37449be6b1833c04e8650f8e095f184159636b4de41
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ENNReal.coe_le_coe、ENNReal.coe_inj 与 Pi.le_def 保持有限非负实向量的逐坐标序、相等和严格支配；把这些等价代入原不存在更小候选的定义，得到同一极小元条件，并核对非负实子类型的实数序，证明只涉及有限坐标，仓内无冻结 GID。
+    previous_atom_id: a4f61e3e86d9e60cd881758120b41a19ffc98071e4dbf86ad239d678a6d4837c
+    next_atom_id: 41ff008a1c98000c1a5d16511297d3a713c2ab3fabe5a739f600b5050e017691

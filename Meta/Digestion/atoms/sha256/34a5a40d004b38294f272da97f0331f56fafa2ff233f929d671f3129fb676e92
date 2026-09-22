@@ -1,0 +1,16 @@
+**命题 127.2（动态边界消元）。** 这些变换满足
+$$
+\left[sI_U+A-B(sI_H+C)^{-1}B^*\right]X(s)
+=x_0-B(sI_H+C)^{-1}h_0.
+$$
+方括号算子对 $s>0$ 正定，故该式唯一决定 $X(s)$。记忆核 $\mathcal K(t)=Be^{-tC}B^*$ 的变换为
+$$
+\widehat{\mathcal K}(s)=B(sI_H+C)^{-1}B^*,
+$$
+并在 $s=0$ 有
+$$
+\int_0^\infty\mathcal K(t)\,dt=BC^{-1}B^*,\qquad
+\lim_{s\downarrow0}\left[sI_U+A-\widehat{\mathcal K}(s)\right]
+=A-BC^{-1}B^*.
+$$
+

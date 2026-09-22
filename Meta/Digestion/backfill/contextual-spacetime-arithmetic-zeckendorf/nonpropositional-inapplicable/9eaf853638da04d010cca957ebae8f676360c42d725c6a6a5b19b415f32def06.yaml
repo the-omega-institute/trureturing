@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9eaf853638da04d010cca957ebae8f676360c42d725c6a6a5b19b415f32def06
+  normalized_sha256: sha256:9eaf853638da04d010cca957ebae8f676360c42d725c6a6a5b19b415f32def06
+cas_ref: sha256:9eaf853638da04d010cca957ebae8f676360c42d725c6a6a5b19b415f32def06
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶是文献章节定位的更正说明，将算法出处从第二点二节改为第二点一节，没有数学命题需要证明。
+    previous_atom_id: 00b2527b88d2718f08bfaa26fea0d3871ede66c869cbf8887b63b696aa0be1c2
+    next_atom_id: 8bff5252037cf6ab238f1d547816a985c7dadf0e6551f05458975b9474c26f1f

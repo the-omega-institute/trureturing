@@ -1,0 +1,22 @@
+**Definition 39.1 (Evaluation families and digit tests).** For $b\in K$ and $D\subseteq K$, define
+$$
+\operatorname{ev}_b(p)=p(b),\qquad
+\operatorname{Eval}_D(p)=(p(b))_{b\in D}\in K^D.
+$$
+Set
+$$
+U(D)=\bigcup_{b\in D}(E-H(b)),\qquad
+N_s(D)=\{m\ge1:x_m^s\in D\}\quad(s\in\Sigma).
+$$
+A family separates $\mathscr E$ when its joint map is injective. Separation with $e$ supplied means injectivity of the joint map that also includes $e$. A continuous metrizable readout is a continuous map from $\mathscr E$ into a metrizable space; different readouts may have different target spaces.
+
+For $(b,j)\in K\times\mathbb N$, put
+$$
+\chi_{b,j}(p)=(p(b))_j\in\{0,1\}.
+$$
+For finite $F\subseteq K\times\mathbb N$, write
+$$
+Q_F(p)=(\chi_{b,j}(p))_{(b,j)\in F}.
+$$
+All products have their product topologies, and finite alphabets have their discrete topologies. Empty products are one-point spaces. An evaluation coordinate is $K$-valued; it is not one binary digit.
+

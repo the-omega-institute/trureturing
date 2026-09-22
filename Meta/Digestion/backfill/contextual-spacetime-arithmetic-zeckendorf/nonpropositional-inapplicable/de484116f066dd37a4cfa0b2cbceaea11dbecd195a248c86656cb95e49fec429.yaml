@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:de484116f066dd37a4cfa0b2cbceaea11dbecd195a248c86656cb95e49fec429
+  normalized_sha256: sha256:de484116f066dd37a4cfa0b2cbceaea11dbecd195a248c86656cb95e49fec429
+cas_ref: sha256:de484116f066dd37a4cfa0b2cbceaea11dbecd195a248c86656cb95e49fec429
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 置换的单射性满足 Finset.image_sdiff 的条件，再用 Finset.image_singleton 得到显示的单点删除交换式；探针对所有有限集合与索引成立，包含源句的成员条件；仓内无冻结 GID。
+    previous_atom_id: 02edd38a2ad4bfa9467b5010bc71bc05f005b1dca55c0eb1e7535644e8e725cf
+    next_atom_id: ab322b3019abde60c1b609400a777b7bb247046ebd25774df1831a85b0f4fd86

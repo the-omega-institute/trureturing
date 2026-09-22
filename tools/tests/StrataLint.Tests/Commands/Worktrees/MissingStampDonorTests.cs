@@ -163,7 +163,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         InitializeRepository(repository.Path);
         var target = AddWorktree(repository.Path, "pin-mismatched-missing-target");
         Directory.CreateDirectory(Path.Combine(target, ".lake"));
-        File.WriteAllText(Path.Combine(repository.Path, "lean-toolchain"), "leanprover/lean4:v4.30.0\n");
+        File.WriteAllText(Path.Combine(repository.Path, "lake-manifest.json"), LeanCacheFixtureFile.Manifest('f'));
         WriteCache(repository.Path, "wrong pin donor\n");
         _ = WriteProjectOlean(repository.Path, "DonorWarm");
         var cloner = new RecordingDirectoryCloner();
@@ -177,7 +177,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         Assert.True(result.Success, result.Error);
         Assert.Empty(cloner.Invocations);
         Assert.True(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
-        Assert.Contains("pin bytes", result.Output, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("mathlib partition", result.Output, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

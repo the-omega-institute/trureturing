@@ -1,0 +1,23 @@
+**Definition 24.1 (Standing assumptions, carrier, and observation budget).** All indices and translation parameters belong to $\mathbb N_0=\{0,1,2,\ldots\}$. Fix
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \lambda=-\alpha.
+$$
+The carrier and its finite observations are
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad X_L=q_L[K].
+$$
+Here $q_0$ has the unique value $\varnothing$, and digits are ordered from low to high. For $p\in X_L$, put
+$$
+V_L(p)=\sum_{j<L}G_jp_j,\qquad C_p=q_L^{-1}(\{p\}).
+$$
+Write $Z(n)$ for the zero-padded legal Zeckendorf expansion of $n$. Give $K$ the subspace topology of the product of discrete digit spaces. If $x$ has an actual adjacent pair $00$, let $j$ be its first position and define
+$$
+(Tx)_i=\begin{cases}
+0,&i<j,\\
+1,&i=j,\\
+x_i,&i>j.
+\end{cases}
+$$
+If there is no adjacent $00$, set $Tx=Z(0)$. 

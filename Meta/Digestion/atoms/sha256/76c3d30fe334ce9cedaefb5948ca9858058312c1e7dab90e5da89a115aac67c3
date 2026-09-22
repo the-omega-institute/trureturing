@@ -1,0 +1,71 @@
+### IP.10 Exact distance between any two layers
+
+Define integer polynomials
+
+$$
+P_0(X)=1,\qquad P_1(X)=X-3,\qquad
+P_{a+2}(X)=(X-2)P_{a+1}(X)-P_a(X).
+$$
+
+**Lemma RP7.** For every odd positive n and every a>=0,
+
+$$
+\frac{F_{(2a+1)n}}{F_n}=P_a(5F_n^2),\qquad
+P_a(0)=(-1)^a(2a+1),
+$$
+
+$$
+24P'_a(0)=(-1)^{a+1}(2a+1)((2a+1)^2-1).         \tag{RP7}
+$$
+
+**Proof.** Put u=phi^n and v=psi^n. Since n is odd, uv=-1 and
+$(u-v)^2=5F_n^2$. The quotients
+$(u^{2a+1}-v^{2a+1})/(u-v)$ have initial values 1 and
+$u^2+uv+v^2=5F_n^2-3$; their two-step recurrence has coefficient
+$u^2+v^2=5F_n^2-2$ and constant determinant $(uv)^2=1$.
+This proves the first identity. Setting X=0 gives the second.
+Differentiating the polynomial recurrence gives
+$d_{a+2}=P_{a+1}(0)-2d_{a+1}-d_a$, with d_0=0,d_1=1.
+Induction yields $6d_a=(-1)^{a+1}a(a+1)(2a+1)$, equivalent to RP7.
+These are polynomial identities over the integers, not formal division
+by the nonunit five.
+
+**Lemma RP8.** For odd inert ell=2a+1, and distinct integers x,y divisible
+by five,
+
+$$
+v_5(P_a(x)-P_a(y))=v_5(x-y).                    \tag{RP8}
+$$
+
+**Proof.** RP7 makes $P'_a(0)$ a unit modulo five: 24, ell, and
+ell^2-1 are all units there. Polynomial subtraction factors as
+$P_a(x)-P_a(y)=(x-y)(P'_a(0)+5z)$ for some integer z, because each
+remaining divided-difference term has a factor x or y. The second
+factor is a unit at five, proving the equality.
+
+**Theorem RP9.** For every k>=0 and t>=1,
+
+$$
+\boxed{
+v_5(B_{\ell,k+t}-B_{\ell,k})
+ =1+v_5(\ell^{2t}-1).
+}\tag{RP9}
+$$
+
+Valuations of negative integers, if any, mean valuations of their
+absolute values. All differences here are nonzero.
+
+**Proof.** Set m=ell^(k+t), n=ell^k, so m>n are odd and coprime to five.
+By RP7-RP8 the left side equals $1+v_5(F_m^2-F_n^2)$.
+The classical Fibonacci identity, with n odd, gives
+$F_m^2-F_n^2=F_{m+n}F_{m-n}$. Lengyel's formula
+$v_5(F_u)=v_5(u)$, valid for every positive u, consequently gives
+
+$$
+1+v_5(m+n)+v_5(m-n)=1+v_5(m^2-n^2)
+=1+v_5(\ell^{2t}-1),
+$$
+
+because five does not divide ell. This proves RP9 with no assumption
+about the WSS depths of the primes dividing the individual blocks.
+

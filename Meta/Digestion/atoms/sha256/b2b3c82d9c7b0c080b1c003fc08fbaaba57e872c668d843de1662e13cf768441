@@ -1,0 +1,12 @@
+### theorem 5.5: 呈示的 pro-Hom 是阶段映射的极限—余极限
+
+设 \(\mathcal C\) 为小范畴，\(X:I^{\mathrm{op}}\to\mathcal C\) 与
+\(Y:J^{\mathrm{op}}\to\mathcal C\) 是滤序呈示。按呈示方向记阶段映射，则相应 pro-对象之间的态射类型满足
+
+\[
+\operatorname{Hom}_{\mathrm{Pro}(\mathcal C)}(X,Y)
+\cong
+\varprojlim_{j\in J^{\mathrm{op}}}\ \varinjlim_{i\in I}
+\operatorname{Hom}_{\mathcal C}(X_i,Y_j).
+\]
+

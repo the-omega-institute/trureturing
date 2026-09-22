@@ -1,0 +1,8 @@
+**Proof.** Evaluate the homogeneous cyclotomic products in IP6 by the integer
+Fibonacci recurrence and factor the resulting integers. Exact division and
+deterministic primality tests give the displayed prime factors. Testing the
+proper divisors of $91$, $153$, and $21$ in the Fibonacci recurrence gives
+the stated exact ranks; division by the corresponding prime squares gives
+depth one. Reduction modulo five gives the asserted split and inert
+characters, and IP9 then removes precisely the displayed old factors.
+

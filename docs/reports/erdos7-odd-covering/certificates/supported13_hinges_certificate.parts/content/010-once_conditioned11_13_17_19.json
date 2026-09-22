@@ -1,0 +1,84 @@
+{
+  "schedule_count": {
+    "kind": "inline",
+    "value": 255
+  },
+  "finite_sufficient_bound_count": {
+    "kind": "inline",
+    "value": 59
+  },
+  "best_sufficient_bound": {
+    "kind": "inline",
+    "value": {
+      "schedule": [
+        [
+          11,
+          4
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          17,
+          8
+        ],
+        [
+          19,
+          8
+        ]
+      ],
+      "A": "6865794213199371708157/7326391549465989000000",
+      "B": "-48749097456863284575449/131875047890387802000000",
+      "positive_intercept": "81088364495900012742738829/527500191561551208000000",
+      "minimum_W": "57761/38880",
+      "residual_at483": "455039381327916991619627/3688812528402456000000",
+      "physical_square_multiplier": "1328503/311040",
+      "minimum_verified_feature_coefficient": "7/4590",
+      "Gamma_upper": "81121527504111209187751525/33163008211196445012696",
+      "W": "81088364495900012742738829/33163008211196445012696"
+    }
+  },
+  "minimum_A": {
+    "kind": "inline",
+    "value": "35982447323995991079091/38463555634696442250000"
+  },
+  "minimum_positive_intercept": {
+    "kind": "inline",
+    "value": "101529753549788275429/843089020943400000"
+  },
+  "minimum_residual_at483": {
+    "kind": "inline",
+    "value": "906042156617760517512977/7475909744353050000000"
+  },
+  "least_defect_schedule": {
+    "kind": "inline",
+    "value": [
+      [
+        11,
+        4
+      ],
+      [
+        13,
+        6
+      ],
+      [
+        17,
+        6
+      ],
+      [
+        19,
+        8
+      ]
+    ]
+  },
+  "outcomes": {
+    "path": "content/010-once_conditioned11_13_17_19/007-outcomes.json",
+    "sha256": "d9cad482113a11abd6698da618e2c9efe0a9397a7e87f396d9f7aeb844577f4a",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Only this fixed complete-profile SH27 scalar-feature upper functional and the255 stated integer17/19 schedules. Failure is not a lower bound on actual moments or a no-covering obstruction."
+  }
+}

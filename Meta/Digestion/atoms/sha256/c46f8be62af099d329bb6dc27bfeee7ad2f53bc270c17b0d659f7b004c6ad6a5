@@ -1,0 +1,45 @@
+### S5040.4 Exact information limit of the fixed modulus
+
+**Theorem.** The unit group modulo 5040 has order 1152 and exponent twelve:
+
+$$
+(\mathbb Z/5040\mathbb Z)^\times
+\simeq C_4\times C_2\times C_6\times C_4\times C_6.
+\tag{S8}
+$$
+
+For every integer s>=1 its counterpart modulo 5040^s has exponent
+
+$$
+\boxed{L_s=12\cdot5040^{s-1}.}
+\tag{S9}
+$$
+
+**Proof.** CRT gives the factors from the moduli 16,9,5,7. Their unit
+groups have the listed cyclic factors; their orders multiply to1152
+and their exponents have least common multiple twelve. At higher powers,
+the four local exponents are 2^(4s-2), 2*3^(2s-1), 4*5^(s-1) and
+6*7^(s-1). Their least common multiple is S9. These are the standard
+prime-power unit-group formulas, specialized to the actual modulus.
+
+Consequently every unit u satisfies u^(e+12)=u^e modulo5040. Even the
+full residue, and hence every character or other postprocessing of that
+residue, cannot distinguish those two exponents. The analogous shift
+at precision5040^s is L_s. For an inert odd-rank prime the modulo-five
+order is four, so its modulo5040 order is either four or twelve.
+For p=159607993, that order is twelve, and the exact residues are
+
+$$
+p\equiv1273,\qquad p^3\equiv937,\qquad
+p^{13}\equiv1273\pmod{5040}.
+$$
+
+These are statements about what the observation can distinguish. They
+do not assert that arbitrary altered exponent vectors occur as actual
+Fibonacci factorizations. Modulus 5040 does not include the modulus 25
+used in IP.7-IP.11. Combining both requires their least common multiple
+25200. In the displayed example the thirteenth power still has the same
+residue even modulo25200. Higher precision can distinguish more, but no
+fixed finite precision recovers an unbounded exponent without further
+arithmetic information.
+

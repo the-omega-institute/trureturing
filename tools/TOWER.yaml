@@ -140,7 +140,8 @@ components:
     kind: repository-files
     members:
       - Directory.Packages.props
-      - .github/workflows/ci.yml
+      - .github/workflows/ci-pr.yml
+      - .github/workflows/ci-push.yml
       - tools/Architecture/BannedSymbols.txt
       - tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj
       - tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs
@@ -161,21 +162,21 @@ components:
   - id: engineering-ci
     kind: ci-jobs
     members:
-      - candidate-engineering
+      - engineering
     judged_by:
       - dev-baseline
     verification: verified
   - id: report-ci
     kind: ci-jobs
     members:
-      - lean-inspect
+      - current
     judged_by:
       - dev-baseline
     verification: verified
   - id: dev-baseline
     kind: ci-jobs
     members:
-      - baseline-admission
+      - delta
     judged_by:
       - bootstrap-pr-1
     verification: verified

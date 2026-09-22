@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d77d99091abf414bca158649ee831cc9cc92829b58f8a1d550a3be761a62e31d
+  normalized_sha256: sha256:d77d99091abf414bca158649ee831cc9cc92829b58f8a1d550a3be761a62e31d
+cas_ref: sha256:d77d99091abf414bca158649ee831cc9cc92829b58f8a1d550a3be761a62e31d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段给出双向边匹配及终端条件作为费用商定理的局部前提，并规定观察标签时的匹配范围；这是条件接口而非无条件可达性结论。
+    previous_atom_id: 2d026f69f25048edd327650af174d7d7388f6a2a6a15ee862b02a18dedecaa41
+    next_atom_id: b5c86c55c63dd30f2aa604e590d713a55718f9c7ed7ffb822b7460bcb90af949

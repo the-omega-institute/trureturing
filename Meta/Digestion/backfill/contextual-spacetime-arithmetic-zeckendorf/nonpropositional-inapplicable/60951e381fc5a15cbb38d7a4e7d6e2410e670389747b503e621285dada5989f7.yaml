@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60951e381fc5a15cbb38d7a4e7d6e2410e670389747b503e621285dada5989f7
+  normalized_sha256: sha256:60951e381fc5a15cbb38d7a4e7d6e2410e670389747b503e621285dada5989f7
+cas_ref: sha256:60951e381fc5a15cbb38d7a4e7d6e2410e670389747b503e621285dada5989f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Finset.abs_sum_le_sum_abs、ArithmeticFunction.abs_moebius_le_one 与 Nat.floor_le 控制任意实数阈值之前的真实 Mertens 和，Real.one_le_rpow 在正域和非负指数下吸收此前缀；阈值之后使用原尾界，le_max_left 与 le_max_right 合并为所列三个数的最大值，仓内无冻结 GID。
+    previous_atom_id: ba85c4053d4adafc6a5707bf91e77fc5b641adc19b10a97abdc8b0be13dd64aa
+    next_atom_id: 51f1bb579603f21e49319d5739d604c79e8f45a514298ad4f1362c0a0723daea

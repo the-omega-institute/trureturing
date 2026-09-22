@@ -1,0 +1,15 @@
+**定理 4，条件于 EMW。** 给定任意有限素数集合 \(S\)，令
+
+\[
+M=\operatorname{lcm}\bigl(60,\{\rho(p):p\in S\}\bigr).
+\]
+
+则存在素数 \(p\notin S\cup\{2,5\}\)，使
+
+\[
+q_p\ne0,\qquad
+\gcd(\rho(p),M)\le2,\qquad
+p\le F_{M+2}.
+\tag{EMW-D1}
+\]
+

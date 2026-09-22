@@ -1,0 +1,7 @@
+**定理 128.4。** 对固定安排，
+$$
+I(Z;\mathcal Y_n)
+=\frac12\log\frac{\det\Sigma_0}{\det\Sigma_n}
+=\frac12\log\frac{\det J_n}{\det J_0}.
+$$
+

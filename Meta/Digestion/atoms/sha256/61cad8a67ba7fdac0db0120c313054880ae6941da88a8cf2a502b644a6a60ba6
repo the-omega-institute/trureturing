@@ -1,0 +1,2 @@
+**Proof.** The classical Fibonacci square classification gives F_n square only at n=0,1,2,12. In particular F_ell is not square. Its prime factorization has an odd exponent; powerfulness makes that exponent at least three. ZBD1, or the prime-rank argument in its proof, identifies this exponent with h_p. The square theorem is the classical result stated in P. Ribenboim, *FFF: (Favorite Fibonacci Flowers)*, Fibonacci Quarterly 43(1) (2005), section 3.4, https://www.fq.math.ca/Papers1/43-1/paper43-1-1.pdf .
+

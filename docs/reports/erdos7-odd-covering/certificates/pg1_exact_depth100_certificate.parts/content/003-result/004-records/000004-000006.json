@@ -1,0 +1,540 @@
+[
+  {
+    "root3": 1,
+    "root9": 5,
+    "oracle": {
+      "scope": "Exact complete weighted-label maximum for this explicit old-label domain and scalar total-load score table; no unsupplied auxiliary or physical-height quantifier.",
+      "source_sha256": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "domain_sha256": "1ebef461ebd2d94c3225b49a1c05cd198316277fb16f720ece4f8ad71aa64bae",
+      "score_sha256": "df9fb62092431fe8a74af0f385a2efce8fb3178a5eb442c89830c318b68ffe9f",
+      "old_labels": [
+        {
+          "cofactor": 1,
+          "weight": 1,
+          "residue": 0
+        },
+        {
+          "cofactor": 3,
+          "weight": 1,
+          "residue": 1,
+          "role": "original3"
+        },
+        {
+          "cofactor": 9,
+          "weight": 1,
+          "residue": 5,
+          "role": "original9"
+        },
+        {
+          "cofactor": 5,
+          "weight": 1
+        },
+        {
+          "cofactor": 15,
+          "weight": 1
+        },
+        {
+          "cofactor": 45,
+          "weight": 2
+        },
+        {
+          "cofactor": 9,
+          "weight": 1,
+          "role": "higher9"
+        }
+      ],
+      "digit_weights": [
+        1,
+        1,
+        1,
+        2,
+        1,
+        2
+      ],
+      "old_A_count": 3972,
+      "weighted_subset_states": 3024,
+      "maximum_load": 15,
+      "score_abs_bound": 225000001575,
+      "int64_guard": "4*score_abs_bound < 2^61",
+      "maximum_numerator": 14106285950,
+      "denominator": 1000000007,
+      "maximum": "14106285950/1000000007",
+      "common_digit_maximum_numerator": 14106285950,
+      "maximizing_A_index": 2492,
+      "common_maximizing_A_index": 2492,
+      "maximizing_A": [
+        3,
+        1,
+        2,
+        2,
+        2,
+        2,
+        1,
+        3,
+        3,
+        7,
+        1,
+        2,
+        2,
+        2,
+        4,
+        1
+      ],
+      "weighted_labels": [
+        {
+          "modulus": 1,
+          "residue": 0,
+          "weight": 1,
+          "role": "old"
+        },
+        {
+          "modulus": 3,
+          "residue": 1,
+          "weight": 1,
+          "role": "original3"
+        },
+        {
+          "modulus": 9,
+          "residue": 5,
+          "weight": 1,
+          "role": "original9"
+        },
+        {
+          "modulus": 5,
+          "residue": 3,
+          "weight": 1,
+          "role": "old"
+        },
+        {
+          "modulus": 15,
+          "residue": 13,
+          "weight": 1,
+          "role": "old"
+        },
+        {
+          "modulus": 45,
+          "residue": 28,
+          "weight": 2,
+          "role": "old"
+        },
+        {
+          "modulus": 9,
+          "residue": 1,
+          "weight": 1,
+          "role": "higher9"
+        },
+        {
+          "cofactor": 1,
+          "modulus": 7,
+          "weight": 1,
+          "old_residue": 0,
+          "digit": 6,
+          "residue": 6
+        },
+        {
+          "cofactor": 3,
+          "modulus": 21,
+          "weight": 1,
+          "old_residue": 1,
+          "digit": 6,
+          "residue": 13
+        },
+        {
+          "cofactor": 5,
+          "modulus": 35,
+          "weight": 1,
+          "old_residue": 3,
+          "digit": 6,
+          "residue": 13
+        },
+        {
+          "cofactor": 9,
+          "modulus": 63,
+          "weight": 2,
+          "old_residue": 1,
+          "digit": 6,
+          "residue": 55
+        },
+        {
+          "cofactor": 15,
+          "modulus": 105,
+          "weight": 1,
+          "old_residue": 13,
+          "digit": 6,
+          "residue": 13
+        },
+        {
+          "cofactor": 45,
+          "modulus": 315,
+          "weight": 2,
+          "old_residue": 28,
+          "digit": 6,
+          "residue": 118
+        }
+      ],
+      "actual_point_loads": [
+        3,
+        1,
+        2,
+        1,
+        3,
+        3,
+        2,
+        4,
+        2,
+        4,
+        3,
+        1,
+        2,
+        2,
+        2,
+        2,
+        3,
+        3,
+        7,
+        4,
+        4,
+        4,
+        3,
+        2,
+        1,
+        3,
+        15,
+        2,
+        2,
+        3,
+        1,
+        2,
+        2,
+        2,
+        1,
+        3,
+        7,
+        1,
+        3,
+        2,
+        2,
+        4,
+        7,
+        2,
+        4,
+        2,
+        3,
+        7,
+        2,
+        2,
+        2,
+        8,
+        3,
+        1,
+        2,
+        2,
+        2,
+        1,
+        7,
+        7,
+        2,
+        2,
+        4,
+        1,
+        3,
+        2,
+        2,
+        2,
+        4,
+        5,
+        7,
+        1,
+        2,
+        4,
+        2
+      ],
+      "digit_partition": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        63
+      ],
+      "python_comparisons": []
+    },
+    "old_depth_upper_numerator": 14210791835,
+    "exact_depth_numerator": 14106285950,
+    "unconditional_saving": "111472944/7000000049",
+    "new_U": "16100541262111538719231/918922731432459075000",
+    "inherited_weighted_deletion_upper": "112547716759/8000000056",
+    "new_signed_excess": "-648038526535527360697/459461365716229537500",
+    "other268_inside_depths_sha256": "5e2fb5f50caaf7295c845478be08cc52eeb20e4906aa36311b251f8485725af2"
+  },
+  {
+    "root3": 2,
+    "root9": 5,
+    "oracle": {
+      "scope": "Exact complete weighted-label maximum for this explicit old-label domain and scalar total-load score table; no unsupplied auxiliary or physical-height quantifier.",
+      "source_sha256": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "domain_sha256": "f02c2a33fedfbf429d4a0e85cfb0e7027e572b0a486b42449cc9f372b7850efb",
+      "score_sha256": "7d53e1c3eb4a6f942965d0998455851edb5263e1ce0842faff2f70b8bbb52b52",
+      "old_labels": [
+        {
+          "cofactor": 1,
+          "weight": 1,
+          "residue": 0
+        },
+        {
+          "cofactor": 3,
+          "weight": 1,
+          "residue": 2,
+          "role": "original3"
+        },
+        {
+          "cofactor": 9,
+          "weight": 1,
+          "residue": 5,
+          "role": "original9"
+        },
+        {
+          "cofactor": 5,
+          "weight": 1
+        },
+        {
+          "cofactor": 15,
+          "weight": 1
+        },
+        {
+          "cofactor": 45,
+          "weight": 2
+        },
+        {
+          "cofactor": 9,
+          "weight": 1,
+          "role": "higher9"
+        }
+      ],
+      "digit_weights": [
+        1,
+        1,
+        1,
+        2,
+        1,
+        2
+      ],
+      "old_A_count": 3972,
+      "weighted_subset_states": 3024,
+      "maximum_load": 16,
+      "score_abs_bound": 256000001792,
+      "int64_guard": "4*score_abs_bound < 2^61",
+      "maximum_numerator": 15339757001,
+      "denominator": 1000000007,
+      "maximum": "15339757001/1000000007",
+      "common_digit_maximum_numerator": 15339757001,
+      "maximizing_A_index": 2042,
+      "common_maximizing_A_index": 2042,
+      "maximizing_A": [
+        1,
+        4,
+        2,
+        2,
+        4,
+        1,
+        4,
+        1,
+        4,
+        1,
+        2,
+        8,
+        1,
+        2,
+        1,
+        2
+      ],
+      "weighted_labels": [
+        {
+          "modulus": 1,
+          "residue": 0,
+          "weight": 1,
+          "role": "old"
+        },
+        {
+          "modulus": 3,
+          "residue": 2,
+          "weight": 1,
+          "role": "original3"
+        },
+        {
+          "modulus": 9,
+          "residue": 5,
+          "weight": 1,
+          "role": "original9"
+        },
+        {
+          "modulus": 5,
+          "residue": 2,
+          "weight": 1,
+          "role": "old"
+        },
+        {
+          "modulus": 15,
+          "residue": 2,
+          "weight": 1,
+          "role": "old"
+        },
+        {
+          "modulus": 45,
+          "residue": 32,
+          "weight": 2,
+          "role": "old"
+        },
+        {
+          "modulus": 9,
+          "residue": 5,
+          "weight": 1,
+          "role": "higher9"
+        },
+        {
+          "cofactor": 1,
+          "modulus": 7,
+          "weight": 1,
+          "old_residue": 0,
+          "digit": 5,
+          "residue": 5
+        },
+        {
+          "cofactor": 3,
+          "modulus": 21,
+          "weight": 1,
+          "old_residue": 2,
+          "digit": 5,
+          "residue": 5
+        },
+        {
+          "cofactor": 5,
+          "modulus": 35,
+          "weight": 1,
+          "old_residue": 2,
+          "digit": 5,
+          "residue": 12
+        },
+        {
+          "cofactor": 9,
+          "modulus": 63,
+          "weight": 2,
+          "old_residue": 5,
+          "digit": 5,
+          "residue": 5
+        },
+        {
+          "cofactor": 15,
+          "modulus": 105,
+          "weight": 1,
+          "old_residue": 2,
+          "digit": 5,
+          "residue": 47
+        },
+        {
+          "cofactor": 45,
+          "modulus": 315,
+          "weight": 2,
+          "old_residue": 32,
+          "digit": 5,
+          "residue": 257
+        }
+      ],
+      "actual_point_loads": [
+        1,
+        4,
+        1,
+        4,
+        2,
+        4,
+        8,
+        1,
+        2,
+        1,
+        1,
+        8,
+        2,
+        2,
+        2,
+        4,
+        1,
+        8,
+        1,
+        2,
+        1,
+        2,
+        4,
+        1,
+        4,
+        1,
+        1,
+        2,
+        2,
+        1,
+        4,
+        2,
+        2,
+        1,
+        8,
+        4,
+        1,
+        2,
+        8,
+        1,
+        4,
+        1,
+        1,
+        4,
+        2,
+        8,
+        1,
+        2,
+        2,
+        8,
+        1,
+        1,
+        1,
+        4,
+        2,
+        2,
+        1,
+        4,
+        1,
+        1,
+        16,
+        2,
+        1,
+        2,
+        2,
+        4,
+        2,
+        4,
+        1,
+        4,
+        1,
+        4,
+        1,
+        2,
+        2
+      ],
+      "digit_partition": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        63,
+        0
+      ],
+      "python_comparisons": []
+    },
+    "old_depth_upper_numerator": 15422868296,
+    "exact_depth_numerator": 15339757001,
+    "unconditional_saving": "88652048/7000000049",
+    "new_U": "260519669869768093114969/13783840971486886125000",
+    "inherited_weighted_deletion_upper": "42720926939/3000000021",
+    "new_signed_excess": "1939070797259794864969/13783840971486886125000",
+    "other268_inside_depths_sha256": "befee1bf53db10ec551fea3eefc334500d062473b40749b2144044df8b7282de"
+  }
+]

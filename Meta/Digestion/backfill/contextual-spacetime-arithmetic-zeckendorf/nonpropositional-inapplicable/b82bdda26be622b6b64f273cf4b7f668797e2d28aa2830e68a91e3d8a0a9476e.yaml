@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b82bdda26be622b6b64f273cf4b7f668797e2d28aa2830e68a91e3d8a0a9476e
+  normalized_sha256: sha256:b82bdda26be622b6b64f273cf4b7f668797e2d28aa2830e68a91e3d8a0a9476e
+cas_ref: sha256:b82bdda26be622b6b64f273cf4b7f668797e2d28aa2830e68a91e3d8a0a9476e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 取实际 UnitAddCircle 的 volume，UnitAddCircle.measure_univ 给总质量一，测度实例给完整 Borel 域上的可数可加性；以下子叶使用同一具体测度，仓内无冻结 GID。
+    previous_atom_id: 3928c94dad80f9c9dd94d1c9dffbd7b277d0f9dba8e8f8144eb8078a920ea706
+    next_atom_id: 04f2651a589e73feac0a0570cb19e6704c127cfaec5dec9ce68d02ef34775a15

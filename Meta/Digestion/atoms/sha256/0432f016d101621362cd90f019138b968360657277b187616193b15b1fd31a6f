@@ -1,0 +1,18 @@
+**定理 9.5（结构缺陷加恢复核失配）。** 对任意定义9.4的$r$，扩展非负实数中有
+$$
+\begin{aligned}
+D(P_{ABC}\Vert Q_r)
+&=I_P(A:C\mid B)
+  +D(P_{BC}\Vert P_Br)\\
+&=I_P(A:C\mid B)
+  +\sum_{b:P_B(b)>0}P_B(b)D(P_{C|b}\Vert r(\cdot\mid b)).
+\end{aligned}
+\tag{9.6}
+$$
+这里$(P_Br)(b,c)=P_B(b)r(c\mid b)$。所以
+$$
+\min_r D(P_{ABC}\Vert P_{AB}r)=I_P(A:C\mid B),
+\tag{9.7}
+$$
+且最小值恰由正$P_B$切片上$r(\cdot\mid b)=P_{C|b}$的核取得；零切片上的行不受约束。
+

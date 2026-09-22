@@ -1,0 +1,42 @@
+**theorem 42.14 (A full matrix formula for every joint fiber).** Fix representing bases $v_1,\ldots,v_r$ of $U_p$ and $w_1,\ldots,w_s$ of $U_q$. For an integer $m$ in (42.22), let $\mathcal M_m(r,s)$ be the set of block matrices
+$$
+M=\begin{pmatrix}X\\Y\end{pmatrix},
+\qquad
+X\in\mathbb R^{r\times m},\quad
+Y\in\mathbb R^{s\times m},
+\tag{42.26}
+$$
+with the following conditions. The stacked matrix has column rank $m$. Every row of $X$ must be nonzero; let $\tau_i$ be its first nonzero column. Require
+$$
+\tau_1<\cdots<\tau_r,\qquad X_{i,\tau_i}>0.
+\tag{42.27}
+$$
+Similarly, the rows of $Y$ have first nonzero columns
+$$
+\upsilon_1<\cdots<\upsilon_s,\qquad Y_{k,\upsilon_k}>0.
+\tag{42.28}
+$$
+Entries after a row's first nonzero entry are arbitrary real numbers, subject to the stacked rank condition. Conditions for a block with zero rows are vacuous. Then there is an exact set-theoretic bijection
+$$
+J^{-1}(p,q)
+\cong
+\bigsqcup_{m=\max(r,s)}^{r+s}\mathcal M_m(r,s)/B_m^+,
+\tag{42.29}
+$$
+where $B_m^+$ acts by right multiplication. When $r=s=0$, the empty matrix and the trivial group give the single zero witness.
+
+The class of $M$ represents the independent joint list
+$$
+z_j=\left(\sum_{i=1}^rX_{ij}v_i,\quad
+             \sum_{k=1}^sY_{kj}w_k\right),
+\qquad 1\le j\le m.
+\tag{42.30}
+$$
+For a mixed test $(\alpha,\beta)\in V^*\oplus W^*$, its signature is the sign of the first nonzero entry of
+$$
+a^\mathsf TX+b^\mathsf TY,\qquad
+a_i=\alpha(v_i),\quad b_k=\beta(w_k),
+\tag{42.31}
+$$
+or zero when this row is zero. Finite prescribed signs in (42.31) describe exactly the inherited fiber topology. Formula (42.29) does not assert a quotient of the usual Euclidean matrix topology.
+

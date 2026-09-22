@@ -1,0 +1,30 @@
+**定义 29.0（原载体、实测度与核记号）。** 沿用第25节的原数字载体及相位映射
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,
+$$
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+记
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad S=H^{-1}(E),\qquad \mathcal O_+=\{[n\phi]:n\ge0\}.
+$$
+分裂纤维的定向点仍为 $x_m^+,x_m^-$，非分裂纤维的唯一点记为 $k_\theta$。记 $M(K)$ 为全部有限实有符号正则 Borel 测度，$C(K)$ 为实连续函数空间，并置
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(K),\qquad \langle\mu,f\rangle=\int_K f\,d\mu,\qquad M_c(K)=\{\mu\in M(K):\mu(\{x\})=0\text{ 对每个 }x\in K\}.
+$$
+这里的无原子条件约束每个单点质量，不是仅要求总质量为零。圆周上的 $M(\mathbb T)$ 与 $M_c(\mathbb T)$ 同样定义。对 Borel 映射 $R$，推前定义为 $R_\#\mu(D)=\mu(R^{-1}(D))$。由 Riesz 表示定理，$M(K)=C(K)^*$，本文的弱星拓扑严格指
+$$
+\sigma(M(K),C(K)),
+$$
+而不是 $\sigma(M(K),M(K)^*)$ 或总变差范数拓扑。[^rro29-riesz]
+
+取
+$$
+\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},\qquad P_t=P^{(t)},\qquad v_m=\delta_{x_m^+}-\delta_{x_m^-},
+$$
+其中 $P^{(t)}$ 是定义25.8的固定点核，$\infty$ 是独立的形式参数。$\pi_\theta,p_m,c_{m,n}$ 均使用该参数在第25节中的值。行界记为
+$$
+C_t=\frac{1+|t|}{\bigl|1-|t|\bigr|}\quad(t\ne\infty),\qquad C_\infty=1.
+$$
+

@@ -1,0 +1,13 @@
+**Theorem.** For sufficiently large X,
+
+$$
+\boxed{4T_X\le\frac{8X}{y}H(X),}\tag{ZBD2}
+$$
+
+and consequently
+
+$$
+\boxed{8R_8(X)+2H(X)\ge\frac yX|\mathcal A_X|
+\ge c\frac{X^{4/35}}{(\log X)^4}.}\tag{ZBD3}
+$$
+

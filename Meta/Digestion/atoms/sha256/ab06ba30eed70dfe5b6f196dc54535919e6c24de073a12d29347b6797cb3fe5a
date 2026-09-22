@@ -1,0 +1,51 @@
+### IP.6 Exact examples and the WSS boundary
+
+At $n=91=7\cdot13$, the complete factorization is
+
+$$
+\mathcal C_{91}=13\cdot741469\cdot159607993.
+$$
+
+The factor thirteen has rank seven, so $E_{91}=13$ and
+
+$$
+\mathcal R_{91}=741469\cdot159607993=118344378961717.
+$$
+
+Here $\chi(\mathcal C_{91})=1$ but
+$\chi(\mathcal R_{91})=-1$. The new inert prime is $159607993$, with
+rank ninety-one and depth one; $741469$ is split. Thus removing the
+old inert factor changes the parity prediction. At $n=153=9\cdot17$,
+
+$$
+\mathcal C_{153}=17\cdot7175323114950564593,
+\qquad E_{153}=17,
+$$
+
+and the remaining factor is an inert prime of rank 153 and depth one.
+The small mixed index $n=21$ instead has $\mathcal C_{21}=421$, with a
+split prime of rank 21 and no odd-depth inert primitive factor. This
+prevents extending the forced-odd assertion to every odd composite
+index without the IP11 conditions.
+
+One must distinguish initial depth from later index lifting. For the
+old prime thirteen,
+
+$$
+v_{13}(F_7)=1,\qquad v_{13}(F_{91})=2,
+\qquad q_{13}=F_{14}/13\equiv3\pmod{13}.
+$$
+
+The square factor in $F_{91}$ is automatic from multiplying the index
+by thirteen; it does not make thirteen a WSS prime. The exact
+cyclotomic removal in IP8-IP9 is what separates this automatic factor
+from genuinely repeated primitive factors.
+
+All forced witnesses above have $h_p\in\{1,3,5,\ldots\}$. The argument
+never forces $h_p=1$, $h_p\ge3$, or any $h_p\ge2$. A simple witness is
+non-WSS; an odd deeper witness would already be a WSS prime of depth
+at least three. Both possibilities remain in the universal theorem.
+The criterion IP11 classifies the parity of a set involving the real
+initial depths, but it does not separate those two alternatives.
+These statements imply neither existence nor nonexistence of a WSS prime.
+

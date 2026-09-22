@@ -1,0 +1,33 @@
+**证明。** 令 $D=E-E^2$。谱分解写为 $Ee_j=\lambda_je_j$，$0\le\lambda_j\le1$，并定义
+$$
+Re_j=\sqrt{\lambda_j(1-\lambda_j)}\,e_j.
+$$
+于是 $R=R^*$、$R^2=D$、$RE=ER$。在 $U\oplus U$ 上置
+$$
+\Pi=\begin{pmatrix}E&R\\R&I-E\end{pmatrix}.
+$$
+它自伴，并且
+$$
+\Pi^2=
+\begin{pmatrix}
+E^2+R^2&ER+R(I-E)\\
+RE+(I-E)R&R^2+(I-E)^2
+\end{pmatrix}
+=\Pi.
+$$
+故为一个扩张。
+
+令 $K=\operatorname{ran}R$，只保留第二个副本的这个子空间。因 $R(U)\subseteq K$，且 $(I-E)R=R(I-E)$，$I-E$ 保持 $K$。因此 $U\oplus K$ 在 $\Pi$ 下不变；限制仍自伴幂等，压缩仍为 $E$。$R$ 与 $D$ 的非零特征值索引恰同为 $0<\lambda_j<1$，故此扩张满足
+$$
+\dim K=\operatorname{rank}R=\operatorname{rank}D.
+$$
+反之，任一扩张可写为
+$$
+\widetilde Q=\begin{pmatrix}E&T\\T^*&F\end{pmatrix},\qquad T:K\to U.
+$$
+左上块幂等方程给 $D=TT^*$。由于 $\ker(TT^*)=\ker T^*$，秩–零化度或正交核像对偶给 $\operatorname{rank}D=\operatorname{rank}T\le\dim K$。上下界相同，证明最小值。$D=0$ 时可取 $K=0$、投影就是 $E$；$U=0$ 亦包括在内。证毕。
+
+在有限事件模型中，最小隐藏维数就是满足 $0<a_b<1$ 的歧义纤维数，因为 $D$ 的对角元为 $a_b(1-a_b)$。原实现的 $U^\perp$ 可能比这个空间大：扩张最小化只保存这一份效应的压缩关系，不重建整个原始 $X$、所有事件的乘法关系或原概率实验。
+
+本定理针对一份效应。对每份效应各选一个扩张，并不等于已经给出它们共同的投影表示、共同联合律或统一经典隐藏变量；这些都还需要同时实现及相容关系。这里的块矩阵恒等式也不引入量子动力机制或实验取得信息的成本假设。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f35a71948f64c0b36d8a6809d1387748f84ab13b55d0ad8290c5b5bdaa92e853
+  normalized_sha256: sha256:f35a71948f64c0b36d8a6809d1387748f84ab13b55d0ad8290c5b5bdaa92e853
+cas_ref: sha256:f35a71948f64c0b36d8a6809d1387748f84ab13b55d0ad8290c5b5bdaa92e853
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: ENNReal.instCompleteLinearOrder 实现添入无穷的非负实数域，Pi.instCompleteLattice 给有限向量的完备格；isLUB_sSup、isGLB_sInf 及两个逐坐标确界等式核对原上下确界，bot_le 和 le_top 给零与全无穷向量的极值，包括空坐标域，仓内无冻结 GID。
+    previous_atom_id: e22b03b335671cc2f7d9d52f31830e419d1137b337d2d0ed090faf85a3b6f172
+    next_atom_id: 0c6a68592ea3c5cb76016cbb57ffecb5c4823ce1b541ac2c9c809cb8aed8657b

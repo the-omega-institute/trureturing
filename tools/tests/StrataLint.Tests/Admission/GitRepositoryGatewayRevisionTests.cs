@@ -6,6 +6,29 @@ namespace StrataLint.Tests;
 
 public sealed class GitRepositoryGatewayRevisionTests
 {
+    [Fact]
+    public void CurrentSnapshotOwnsOnePayloadBufferAndSurvivesDiskReplacement()
+    {
+        using var repository = new TemporaryDirectory();
+        ReviewRegressionTests.RunGit(repository.Path, "init");
+        var path = Path.Combine(repository.Path, "payload.txt");
+        File.WriteAllText(path, "warm reader\n");
+        _ = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
+        var payload = Enumerable.Repeat((byte)'x', 4 * 1024 * 1024).ToArray();
+        File.WriteAllBytes(path, payload);
+
+        var before = GC.GetAllocatedBytesForCurrentThread();
+        var snapshot = GitRepositorySnapshotReader.ReadCurrent(repository.Path);
+        var allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+
+        File.WriteAllText(path, "replacement\n");
+        var entry = Assert.Single(snapshot.Entries);
+        Assert.Equal("payload.txt", entry.Path);
+        Assert.Equal(payload, entry.Bytes.ToArray());
+        Assert.True(allocated < payload.Length + payload.Length / 2,
+            $"Reading one {payload.Length}-byte file allocated {allocated} bytes.");
+    }
+
     private const string FirstOid = "1111111111111111111111111111111111111111";
     private const string SecondOid = "2222222222222222222222222222222222222222";
 
@@ -84,6 +107,23 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
+    public void ReadCurrentOmitsDeletedTrackedFileAndIncludesRenamedFile()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(Path.Combine(repository.Path, "old.txt"), "retained bytes\n");
+        File.WriteAllText(Path.Combine(repository.Path, "deleted.txt"), "deleted bytes\n");
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "snapshot fixture");
+        File.Move(Path.Combine(repository.Path, "old.txt"), Path.Combine(repository.Path, "new.txt"));
+        File.Delete(Path.Combine(repository.Path, "deleted.txt"));
+
+        var snapshot = new GitRepositoryGateway(repository.Path).ReadCurrent();
+
+        AssertEntry(Assert.Single(snapshot.Entries), "new.txt", "retained bytes\n");
+    }
+
+    [Fact]
     public void ReadCurrentChangesReportsOnlyWorkingTreeDeltaFromHead()
     {
         using var repository = new TemporaryDirectory();
@@ -111,7 +151,7 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
-    public void PrepareOnDirtyTreeWithoutProtectedBaseUsesHeadAsRevision()
+    public void PrepareOnDirtyTreeStillRequiresExplicitBase()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -131,17 +171,7 @@ public sealed class GitRepositoryGatewayRevisionTests
             "new\n",
             new UTF8Encoding(false));
 
-        var prepared = new GitRepositoryGateway(repository.Path).Prepare(null);
-
-        Assert.Equal(head, prepared.Revision);
-        Assert.Equal(
-            new[]
-            {
-                ("tracked.txt", RawChangeKind.Modified),
-                ("untracked.txt", RawChangeKind.Added),
-            },
-            prepared.Changes.Entries.Select(static change =>
-                (change.Path.Value, change.Kind)));
+        Assert.Throws<InvalidOperationException>(() => new GitRepositoryGateway(repository.Path).Prepare(null));
     }
 
     [Fact]
@@ -159,7 +189,7 @@ public sealed class GitRepositoryGatewayRevisionTests
         var exception = Assert.Throws<InvalidOperationException>(
             () => new GitRepositoryGateway(repository.Path).Prepare(null));
 
-        Assert.Contains("--protected-base", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("40-hex", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -199,7 +229,7 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
-    public void PrepareRejectsProtectedBaseThatIsNotAncestorOfHead()
+    public void PrepareComparesDivergentBaseAsData()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -227,17 +257,10 @@ public sealed class GitRepositoryGatewayRevisionTests
         var sibling = ReviewRegressionTests.RunGit(repository.Path, "rev-parse", "HEAD").Trim();
         ReviewRegressionTests.RunGit(repository.Path, "checkout", "candidate");
 
-        var exception = Assert.Throws<InvalidOperationException>(
-            () => new GitRepositoryGateway(repository.Path).Prepare(sibling));
-
-        Assert.Contains(
-            "protected base must be an ancestor of HEAD",
-            exception.Message,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "merge origin/dev into the lane first",
-            exception.Message,
-            StringComparison.Ordinal);
+        var prepared = new GitRepositoryGateway(repository.Path).Prepare(sibling);
+        Assert.Equal(sibling, prepared.Revision);
+        Assert.Equal(new[] { ("candidate.txt", RawChangeKind.Added), ("sibling.txt", RawChangeKind.Deleted) },
+            prepared.Changes.Entries.Select(change => (change.Path.Value, change.Kind)));
     }
 
     [Fact]
@@ -251,7 +274,7 @@ public sealed class GitRepositoryGatewayRevisionTests
             runner,
             "git");
 
-        var prepared = gateway.Prepare("synthetic-base");
+        var prepared = gateway.Prepare(FirstOid);
 
         Assert.Equal(2, prepared.Changes.Entries.Length);
         var source = Assert.Single(
@@ -273,7 +296,7 @@ public sealed class GitRepositoryGatewayRevisionTests
             runner,
             "git");
 
-        var prepared = gateway.Prepare("synthetic-base");
+        var prepared = gateway.Prepare(FirstOid);
 
         Assert.Equal(2, prepared.Changes.Entries.Length);
         var source = Assert.Single(

@@ -1,0 +1,39 @@
+**theorem 28.7 (The integrated point kernel on all measures, with its sharp norm).** For every Borel $D\subseteq K$, the maps
+$$
+(x,y)\longmapsto P^{(t)}_{x,y}(D),\qquad
+(x,y)\longmapsto|P^{(t)}_{x,y}|(D)
+$$
+are Borel on $K^2$. The exact pointwise formula is
+$$
+P^{(t)}_{x,y}
+=\pi_{H(x)+H(y)}
++\sum_{m,n\ge1}\frac{r_m(x)r_n(y)}{d'_{m+n}}v_{m+n}.
+$$
+At each input pair the sum has at most one nonzero term.
+
+For all $\mu,\eta\in M(K)$, the formula
+$$
+(\mu\star_t\eta)(D)
+=\int_K\int_K P^{(t)}_{x,y}(D)\,d\eta(y)\,d\mu(x)
+$$
+defines a bounded bilinear commutative operation on $M(K)$. Its outputs are finite signed regular Borel measures, and
+$$
+|\mu\star_t\eta|(D)
+\le\int_{K^2}|P^{(t)}_{x,y}|(D)\,d(|\mu|\otimes|\eta|)(x,y),
+$$
+$$
+\|\mu\star_t\eta\|_{\mathrm{TV}}
+\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}},\qquad
+\|\star_t\|_{\mathrm{bil}}=C_t.
+$$
+It satisfies
+$$
+\varepsilon_K(\mu\star_t\eta)=\varepsilon_K(\mu)\varepsilon_K(\eta),
+$$
+$$
+H_\#(\mu\star_t\eta)=(H_\#\mu)*_{\mathbb T}(H_\#\eta).
+$$
+It is the unique operation satisfying the displayed setwise kernel-integration law for every pair of measures and every Borel set. This assertion is not uniqueness from agreement on Dirac measures.
+
+The operation takes every pair of positive measures to a positive measure exactly when $t\in\{0,\infty\}$.
+

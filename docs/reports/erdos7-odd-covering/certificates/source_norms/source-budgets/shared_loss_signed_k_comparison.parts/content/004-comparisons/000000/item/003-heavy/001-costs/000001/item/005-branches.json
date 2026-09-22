@@ -1,0 +1,32 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 36,
+      "part": {
+        "path": "content/004-comparisons/000000/item/003-heavy/001-costs/000001/item/005-branches/000000-000036.json",
+        "sha256": "d2b4361f91f305a8d65f5968cd19d0b9261b2ea1b220c529a4bdcd86f54cbfc4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 72,
+      "part": {
+        "path": "content/004-comparisons/000000/item/003-heavy/001-costs/000001/item/005-branches/000036-000072.json",
+        "sha256": "ac2d09de66e78b047e46e181a95c33abc17d750a2fc1df8df7c3698d13d9efcb",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 72,
+      "stop": 100,
+      "part": {
+        "path": "content/004-comparisons/000000/item/003-heavy/001-costs/000001/item/005-branches/000072-000100.json",
+        "sha256": "d758a50bc11cc23659c2200a8926596fe645b85f90c29494853661a835b789d5",
+        "kind": "value"
+      }
+    }
+  ]
+}

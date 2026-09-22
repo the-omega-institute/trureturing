@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7617d626fbeee94190b2b9189e782ac620d493473d8047aadee32259163683e2
+  normalized_sha256: sha256:7617d626fbeee94190b2b9189e782ac620d493473d8047aadee32259163683e2
+cas_ref: sha256:7617d626fbeee94190b2b9189e782ac620d493473d8047aadee32259163683e2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 规范化值相等时两次使用语义保持并施 congrArg 即得语义相等，反向正是源定义的同纤维常值假设；这是给定前提的双向逻辑组合，仓内无冻结 GID，探针无新增公理。
+    previous_atom_id: 295d64cf5f5e02f2a51d5a06ca952ff6a390cfa017caa76601b832e29f20b67b
+    next_atom_id: 5fdbc918af85d27b6b54f87e9bb43871deb6518389577458058681ec5e2c7bbf

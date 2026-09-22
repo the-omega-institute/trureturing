@@ -1,0 +1,8 @@
+For this word,
+$$
+(x_m^-,x_m^+)=
+\begin{cases}
+(w10v,w0v),&d\text{ even},\\
+(w0v,w10v),&d\text{ odd}.
+\end{cases}
+$$

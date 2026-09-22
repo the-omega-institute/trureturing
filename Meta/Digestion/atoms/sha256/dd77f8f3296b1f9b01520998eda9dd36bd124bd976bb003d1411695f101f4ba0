@@ -1,0 +1,49 @@
+
+
+固定有限个预测时刻
+
+$$
+0\le\tau_1<\cdots<\tau_N\le\tau_*<\infty,
+\qquad N\ge1.
+$$
+
+第 $k$ 个理想任务由 CPTP 通道 $\Psi_k$ 和有限 POVM $(Q_{k,b})_{b\in\mathsf Y_k}$ 指定。定义
+
+$$
+A_{k,b}=\Psi_k^*(Q_{k,b}),
+\qquad
+p_{k,b}(\rho)=\operatorname{tr}(\rho A_{k,b}).
+$$
+
+这些概率对应未插入本章读取与恢复操作的指定理想过程，输入仍为 $\rho$。若当前标签也是必需读数，应把 $\Psi=\operatorname{id}$、$Q_x=P_x$ 加入任务清单。
+
+预测输出保存在有限经典寄存器
+
+$$
+\mathsf Z=\prod_{k=1}^N\mathsf Y_k.
+$$
+
+只在 $F$ 上读取 POVM $(M_z)_{z\in\mathsf Z}$。令
+
+$$
+p_z(x)=\operatorname{tr}(M_z\sigma_x).
+$$
+
+第 $k$ 个预测坐标的分布为
+
+$$
+q_{k,b}^M(\rho)=
+\sum_{x=0}^1\rho_{xx}
+\sum_{z:z_k=b}p_z(x).
+$$
+
+定义最坏预测误差
+
+$$
+e_k(M)=\sup_\rho\operatorname{TV}\bigl(p_k(\rho),q_k^M(\rho)\bigr),
+\qquad
+\operatorname{TV}(p,q)=\frac12\sum_b|p_b-q_b|.
+$$
+
+这里比较概率分布，不要求一个预测样本等于同次运行中尚未产生的未来随机结果。多个预测坐标也不声称复现非交换测量的真实联合历史分布。
+

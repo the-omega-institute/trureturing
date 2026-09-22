@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5963492412e45c2e4cb892a61a069177c69db91b7a943dce7bb7a07d87da0114
+  normalized_sha256: sha256:5963492412e45c2e4cb892a61a069177c69db91b7a943dce7bb7a07d87da0114
+cas_ref: sha256:5963492412e45c2e4cb892a61a069177c69db91b7a943dce7bb7a07d87da0114
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“define the actual function”逐分支规定相位选择器的值，沿用前文已经命名的单纤维点与有向点；本叶没有另行断言所属闭包或索引唯一，后者已单独分出，定义未夹带这两项结论，故此叶只结算函数记号。
+    previous_atom_id: b5aef61e58fb96a6c1202e410dc22cc3f236d0cd0c7edfa0e5b7c5819ac609ff
+    next_atom_id: 6237d032016edd7345bcc91a9951f40bbc8b8f34f99fe332dcb5c957bf726b92

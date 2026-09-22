@@ -1,0 +1,15 @@
+**Proof.** The reverse implication is immediate. If 5 does not divide F_k, cancel the factor five and apply FDS3. Otherwise the rank-five identity 5|F_k iff 5|k holds. Exclude k=5, so k>=10, and suppose neither u nor v is divisible by k. Set d=gcd(k,u), e=gcd(k,v). They are odd coprime proper divisors of k. Since F_u,F_v are coprime, the elementary prime-exponent formula for a gcd gives
+
+$$
+F_k=\gcd(F_k,5F_uF_v)
+\le5\gcd(F_k,F_uF_v)=5F_dF_e.\tag{FDS7}
+$$
+
+If d=1 or e=1, the remaining proper divisor is at most floor(k/2), so F_dF_e<=F_floor(k/2). Otherwise d,e are distinct odd integers at least three and five. Their product divides k, and 2(d+e-1)<=de<=k. Fibonacci addition yields F_dF_e<=F_(d+e-1)<=F_floor(k/2). Write m=floor(k/2)>=5. Since k>=m+4,
+
+$$
+F_k\ge F_{m+4}=3F_m+2F_{m+1}>5F_m,
+$$
+
+contradicting FDS7. This proves necessity.
+

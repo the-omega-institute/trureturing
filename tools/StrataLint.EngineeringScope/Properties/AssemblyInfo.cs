@@ -1,9 +1,9 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("StrataLint.EngineeringScope.Tests")]
+[assembly: InternalsVisibleTo("StrataLint")]
+[assembly: InternalsVisibleTo("StrataLint.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
 
-// ArchitectureTests asserts ControllerClosure's pure snapshot derivation directly.
-// Reaching it by reflection instead makes ScribeTestMapDeriver record those methods as
-// conservative unknown, which SL-003 blocks per introduced identity; a direct call keeps
-// the same assertions statically resolvable.
+// ArchitectureTests verifies the compiler diagnostic proof contract.
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]

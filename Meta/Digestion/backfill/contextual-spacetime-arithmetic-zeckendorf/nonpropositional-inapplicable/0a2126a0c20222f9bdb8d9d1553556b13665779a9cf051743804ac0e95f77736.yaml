@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0a2126a0c20222f9bdb8d9d1553556b13665779a9cf051743804ac0e95f77736
+  normalized_sha256: sha256:0a2126a0c20222f9bdb8d9d1553556b13665779a9cf051743804ac0e95f77736
+cas_ref: sha256:0a2126a0c20222f9bdb8d9d1553556b13665779a9cf051743804ac0e95f77736
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅列既有数学结果的引用及使用范围，不新增有限性或因子化命题，故按引用说明结算。
+    previous_atom_id: 32b8fb991c9ce196f5f68cac7e5a411e37acfe20ca3ba8fa149b3ee6ec1ed19a
+    next_atom_id: f37334b47de3960ca190f6d8e550ae26946af80781befb763b6c728ef4cf197d

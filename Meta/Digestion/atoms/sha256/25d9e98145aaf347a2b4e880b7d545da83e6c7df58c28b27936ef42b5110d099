@@ -1,0 +1,2 @@
+**Proof.** The reverse implication is Fibonacci divisibility. Suppose the left side holds, but neither index is divisible by k. Put d=gcd(k,a), e=gcd(k,b). These are positive proper divisors of k, hence d,e<=floor(k/2). By FDS1 and strong Fibonacci divisibility, F_k divides F_dF_e. This positive product is at most F_floor(k/2)^2, contradicting FDS2. No coprimality hypothesis is needed.
+

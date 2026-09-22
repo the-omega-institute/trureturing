@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "scope": "symbolic algebra; semantic proof remains in note",
+  "identities": [
+    "degree-square disjoint-pair normalization",
+    "common diagonal sum numerator",
+    "strict gain numerator",
+    "hole-count denominator difference",
+    "perturbation row zero bound",
+    "row derivative with excess neighboring degree",
+    "row-cap residual",
+    "filled-row and filled-column center remainder",
+    "large-row-derivative norm remainder",
+    "10x12 gain polynomial",
+    "10x12 gain at k=12-x"
+  ],
+  "nonnegative_coefficient_certificates": [
+    {
+      "name": "small-row-derivative norm remainder, n=3+x",
+      "terms": [
+        {
+          "monomial": "k*x",
+          "coefficient": 2
+        }
+      ]
+    },
+    {
+      "name": "restored-edge anchor surplus",
+      "terms": [
+        {
+          "monomial": "a*x",
+          "coefficient": 1
+        },
+        {
+          "monomial": "b*y",
+          "coefficient": 1
+        }
+      ]
+    },
+    {
+      "name": "large-row-derivative norm remainder",
+      "terms": [
+        {
+          "monomial": "s",
+          "coefficient": 2
+        }
+      ]
+    },
+    {
+      "name": "10x12 gain for k<=12",
+      "terms": [
+        {
+          "monomial": "1",
+          "coefficient": 9
+        },
+        {
+          "monomial": "x",
+          "coefficient": 23
+        }
+      ]
+    }
+  ]
+}

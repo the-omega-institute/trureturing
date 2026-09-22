@@ -1,0 +1,1 @@
+| [Mathlib/Topology/Compactness/Compact.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Compactness/Compact.lean) | `IsCompact.nonempty_iInter_of_sequence_nonempty_isCompact_isClosed` | 非空递减闭集的紧致性交 

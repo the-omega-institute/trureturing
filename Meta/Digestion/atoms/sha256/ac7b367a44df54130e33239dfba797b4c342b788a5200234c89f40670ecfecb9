@@ -1,0 +1,18 @@
+**引理 41.3（赔率区间的混合余量；repo-derived）。** 对 $0\le v\le1$，有 $L(v)=1-U(1-v)$，$L(v)\le v\le U(v)$，两函数递增且均为 $K$-Lipschitz，并满足
+$$
+0\le U(v)-v\le k/4,\qquad 0\le v-L(v)\le k/4.
+$$
+对定义41.1的两个 Bayes 映射，$B_b\circ U=U\circ B_b$、$B_b\circ L=L\circ B_b$。混合余量具有恒等式
+$$
+U(M(v))-M(U(v))
+=\frac{rkA(v)}{(1+kM(v))(1+kv)},
+$$
+$$
+A(v)=(1-r)\bigl((1-v)^2+Kv^2\bigr)+r(K+1)v(1-v),
+$$
+并且
+$$
+U(M(v))-M(U(v))\ge\frac{rk}{4K^2},\qquad
+M(L(v))-L(M(v))\ge\frac{rk}{4K^2}.
+$$
+

@@ -1,0 +1,29 @@
+**命题 37.13（理想循环的 contextual fraction 与实际联合律不同）。** 本节规定的理想边经验模型由各 $M_i$ 组成；它的非上下文分数为 $1-a$、上下文分数为 $a$。实际 $P$ 的成对边缘经验模型已有 $P$ 作全局延拓，因此上下文分数为零，即使 $a>0$ 也如此。
+
+证明。采用被每个经验边缘逐点支配的全局子概率定义非上下文质量。理想图外质量为零，故受支配全局子概率只能支撑于全部关系成立的元组，即固定点对角；其每个固定点质量至多 $\mu(x)$，总质量至多 $\mu(\operatorname{Fix}g)=1-a$，固定对角子概率达到此值。实际模型中 $P$ 本身是质量一的全局延拓，故非上下文分数为一。$\square$
+
+上述理想模型身份是 Katende 定理3.3的循环特例[^rroctx37_katende]：该文在有限连通简单图、反向边取逆置换且根律对 holonomy 群 $H_{\rm hol}$ 不变时，给 $\mathrm{NCF}=p(\operatorname{Fix}H_{\rm hol})$。这里该群由 $g$ 生成。contextual fraction 及受支配子概率框架归于 Abramsky、Barbosa、Mansfield[^rroctx37_cf]，不作为新的框架。它不分类修复律、合法性、源提升或解码。两个仅共一个顶点的二元翻转挫折三角形，取共同公平锚，理想模型的 $\mathrm{CF}=1$；然而每份全局赋值在每个三角形至少失败一条边，故总期望失败至少 $2$，各三角形各指定一割并由共同公平锚生成即可达到。由此不能把单循环的修复目标直接等同于一般图的 contextual fraction。
+
+本节和恢复卷第32节连接已有接口，其供应范围如下；各普通有限推导的假设与证明已在对应命题中给出，不把源码引用视为本节新增的 Lean 核验。
+
+| 本节供应定位 | 已有结论及本节使用边界 |
+| --- | --- |
+| 37·主卷纤维与共同律 | [主卷67.7–67.8、77.1](RECURSIVE_RELATIONAL_OBSERVATION.md)分别给正质量纤维条件分解，以及严格正共同固定律／闭路势的另一模型；这里的固定节点轨道割面有自己的分类，不能把全部闭路共同律联系宣称为新内容。 |
+| 37·主卷拼接与规范运输 | 主卷124.5、124.14–124.17给运行交集、条件乘积与逐行拼接；最大熵拼接不必恢复原来源。主卷133.1的单源等核规范运输具有恒等闭路，本节非平凡局部关系不反驳它。 |
+| 37·档案与误差使用 | 本卷5.3–5.5、13.1–13.13、34.1–34.3、定义35.1及36.4保留边缘／联合来源、完整记录、顺序、共同可行纤维及合法误差运输的区别；第36.1–36.3节负责限制箭头与原实现边界。 |
+| 37·TV 既有基础 | [Metric.lean](../../../D5/S3/TotalVariation/Metric.lean)、[Convexity.lean](../../../D5/S3/TotalVariation/Convexity.lean)、[DataProcessing.lean](../../../D5/S3/TotalVariation/DataProcessing.lean)分别供应度量／事件、联合凸性和共同随机核收缩；[Equality/DataProcessingEquality.lean](../../../D5/S3/TotalVariation/Equality/DataProcessingEquality.lean)拥有命题37.8调用的一般无符号混合等号判据。 |
+| 37·局部关系与树拼接 | [D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean](../../../D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.lean)给局部集合关系兼容而无整体状态的障碍；[RunningIntersectionRecords.lean](../../../D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.lean)给完整分隔一致的树延拓。两者不替代循环概率准入和 TV 修复。 |
+| 37·有限因果耦合 | [FiniteCouplingPushforwardLift.lean](../../../D5/S3/ConceptDynamics/CausalMoments/FiniteCouplingPushforwardLift.lean)给有理指定粗耦合的双载体边缘保留提升；[BooleanOutcomeMarginalTransport.lean](../../../D5/S3/ConceptDynamics/CausalMoments/BooleanOutcomeMarginalTransport.lean)给在耦合中保留旧分布的有理 Boolean 边缘修正；[CompleteMediatorCutSharpBounds.lean](../../../D5/S3/ConceptDynamics/CausalMoments/CompleteMediatorCutSharpBounds.lean)给指定共同中介下的 Boolean MaxCut／三角形尖锐界。它们各有指定对象，不是任意联合来源提升或合法循环支撑定理。 |
+| 37·证书与其他恢复 | [RationalSTCutCertificate.lean](../../../D5/S0/Certificates/RationalSTCutCertificate.lean)检查所给有理流割证书；恢复卷10.2–10.4是正时间／矩与加权 Hilbert 投影；[量子时空卷§100](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)是指定三 qutrit 编码。均不提供这里的一般成对标签解码。 |
+| 37·已有完成接口 | [InverseLimitCompletion.lean](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean)、[StableObservationInverseLimit.lean](../../../D5/S3/ConceptDynamics/RefinementGeometry/StableObservationInverseLimit.lean)负责已声明相容限制、分离／完备及稳定观察线程；[CompactLocalRealization.lean](../../../D5/S3/Observer/Completion/CompactLocalRealization.lean)需紧性与闭纤维；[FiniteCofilteredLimit.lean](../../../D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.lean)需有限对象，不能以有限字母代替有限概率律空间。这里只引用适用边界，不证明新完成结论。 |
+
+有限观察、柱延拓、相容完成和原来源实现的既有区别还见主卷3.4–3.6、4.2、5.2、5.4、33.1、39.12–39.13、78.1、124.9–124.10，以及本卷9.8、24.12–24.15；它们各按原假设使用。这里的有限综合不据此取得原创性结论，也不提供新的跨尺度来源完成定理。它所连接的是提出的局部运输、同一联合标签律、合法修复、可取得边界与有来源约束的世界实现。
+
+[^rroctx37_katende]: Ronald Katende, *Contextual Fraction on Permutation Gain Graphs: Exact Algorithms, Query Lower Bounds, and Dynamic Maintenance*, arXiv:2607.16037v1, [Theorem 3.3](https://arxiv.org/html/2607.16037v1#S3.Thmtheorem3)。引用限于所写置换增益图、holonomy 不变根律的理想经验模型。
+
+[^rroctx37_cf]: Samson Abramsky, Rui Soares Barbosa, Shane Mansfield, *The contextual fraction as a measure of contextuality*, [arXiv:1705.07918](https://arxiv.org/abs/1705.07918)。成熟的上下文分数与受支配非上下文子概率框架。
+
+[^rroctx37_flow]: L. R. Ford, Jr. and D. R. Fulkerson, *Maximal Flow Through a Network*, Canadian Journal of Mathematics **8** (1956), 399–404, [doi:10.4153/CJM-1956-045-5](https://doi.org/10.4153/CJM-1956-045-5)。无理容量增广的终止边界见 Spencer Backman and Tony Huynh, *Transfinite Ford-Fulkerson on a Finite Network*, [arXiv:1504.04363](https://arxiv.org/abs/1504.04363)；定理37.3只用紧最大值及残量割。
+
+[^rroctx37_hoffman]: Alan J. Hoffman, *On approximate solutions of systems of linear inequalities*, Journal of Research of the National Bureau of Standards **49** (1952), 263–265, [doi:10.6028/jres.049.027](https://doi.org/10.6028/jres.049.027)；Javier Peña, Juan C. Vera, Luis F. Zuluaga, *New characterizations of Hoffman constants for systems of linear constraints*, [arXiv:1905.02894](https://arxiv.org/abs/1905.02894)。仅作多面体误差界背景；（37.14）的有限顶点证明在本节完整给出，不归托未指明的论文定理。
+

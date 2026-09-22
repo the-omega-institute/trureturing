@@ -1,0 +1,16 @@
+**theorem 22.12 (Probability outputs have the identical obstruction).** Every admissible probability assignment, measurable or not, satisfies
+$$
+P(Z(n),Z(m))=\delta_{Z(n+m)},\qquad
+\operatorname{Cont}(P)=G.
+$$
+In particular, no such assignment is globally continuous, or continuous on a nonempty open subspace of $X$.
+
+**Proof 22.12.** A probability giving mass one to a singleton is its Dirac probability, proving the natural-input assertion. If $\Gamma(\xi)=\{z\}$, then $P(\xi)=\delta_z$. Fix a continuous real function $f$ and a positive $\varepsilon$. Choose an open neighborhood $V$ of $z$ such that $|f(w)-f(z)|<\varepsilon/2$ for $w\in V$. Upper semicontinuity of $\Gamma$ gives an input neighborhood on which every fiber lies in $V$. For every input $\eta$ in that neighborhood, support inside its fiber implies
+$$
+\left|\int_K f\,dP(\eta)-f(z)\right|
+\leq\int_K|f-f(z)|\,dP(\eta)\leq\varepsilon/2<\varepsilon.
+$$
+Intersecting the neighborhoods for finitely many test functions verifies every basic weak neighborhood of $\delta_z$. Thus $P$ is continuous at $\xi$.
+
+If the fiber contains distinct $z_0,z_1$, Theorem 22.4 gives two sequences of actual finite input pairs tending to $\xi$, with their actual sums tending respectively to $z_0,z_1$. Along these sequences $P$ is forced to be the Dirac measure at the actual sum. These probabilities converge weakly to $\delta_{z_0}$ and $\delta_{z_1}$: each test integral is simply the value of its continuous test function at the approaching sum. Choose a digit coordinate $j$ where $z_0$ and $z_1$ differ. The continuous moment $\mu\mapsto\int z_j\,d\mu$ then has two different limiting values along these two input sequences. Continuity at $\xi$ would force both to be its value at $P(\xi)$, a contradiction. This proves the exact locus using approaching actual sums, without an appeal to compactness of the probability space. Density of $D$ and eventual membership of the sequences in any open neighborhood give the remaining assertions.
+

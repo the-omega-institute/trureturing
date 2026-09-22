@@ -1,0 +1,114 @@
+[
+  {
+    "last_prime": 17,
+    "threshold": 4
+  },
+  {
+    "last_prime": 23,
+    "threshold": 6
+  },
+  {
+    "last_prime": 31,
+    "threshold": 8
+  },
+  {
+    "last_prime": 43,
+    "threshold": 12
+  },
+  {
+    "last_prime": 61,
+    "threshold": 16
+  },
+  {
+    "last_prime": 89,
+    "threshold": 24
+  },
+  {
+    "last_prime": 113,
+    "threshold": 32
+  },
+  {
+    "last_prime": 127,
+    "threshold": 36
+  },
+  {
+    "last_prime": 179,
+    "threshold": 48
+  },
+  {
+    "last_prime": 233,
+    "threshold": 64
+  },
+  {
+    "last_prime": 251,
+    "threshold": 72
+  },
+  {
+    "last_prime": 257,
+    "threshold": 80
+  },
+  {
+    "last_prime": 359,
+    "threshold": 96
+  },
+  {
+    "last_prime": 367,
+    "threshold": 108
+  },
+  {
+    "last_prime": 467,
+    "threshold": 128
+  },
+  {
+    "last_prime": 523,
+    "threshold": 144
+  },
+  {
+    "last_prime": 761,
+    "threshold": 192
+  },
+  {
+    "last_prime": 769,
+    "threshold": 216
+  },
+  {
+    "last_prime": 997,
+    "threshold": 256
+  },
+  {
+    "last_prime": 1117,
+    "threshold": 288
+  },
+  {
+    "last_prime": 1129,
+    "threshold": 320
+  },
+  {
+    "last_prime": 1669,
+    "threshold": 384
+  },
+  {
+    "last_prime": 1697,
+    "threshold": 432
+  },
+  {
+    "last_prime": 1699,
+    "threshold": 480
+  },
+  {
+    "last_prime": 2239,
+    "threshold": 512
+  },
+  {
+    "last_prime": 2551,
+    "threshold": 576
+  },
+  {
+    "last_prime": 2579,
+    "threshold": 640
+  },
+  {
+    "last_prime": 2903,
+    "threshold": 768
+  }
+]

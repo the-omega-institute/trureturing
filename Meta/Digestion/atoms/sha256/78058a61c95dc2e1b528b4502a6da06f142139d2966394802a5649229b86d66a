@@ -1,0 +1,15 @@
+**theorem 20.5 (Exact temporal complexity and temporal phase cuts).** For every $t\ge0$,
+$$
+|v_t[K]|=t+1.
+$$
+The temporal phase cut set is
+$$
+B_0^{\mathrm{time}}=\varnothing,\qquad
+B_t^{\mathrm{time}}=\{e_1,\ldots,e_{t+1}\}\quad(t\ge1).
+$$
+For positive $t$, the atoms of $\mathcal V_t$ are exactly
+$$
+A_J=\overline{\{Z(n):H(Z(n))\in J\}}^{\,K},
+$$
+where $J$ runs through the open arcs complementary to $B_t^{\mathrm{time}}$. Different arcs give different words. Thus the count includes both members of every split fiber without adding singleton boundary atoms.
+

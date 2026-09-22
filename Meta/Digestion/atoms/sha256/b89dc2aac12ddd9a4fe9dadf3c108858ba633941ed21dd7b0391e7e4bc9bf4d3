@@ -1,0 +1,2 @@
+**theorem 27.12 (Separation from Banach weak and norm continuity).** For every parameter, the kernel map is measure-weak continuous at $(0_K,0_K)$ but is neither Banach-weak continuous nor total-variation-norm continuous there. The measure weak topology equals the weak-star topology specified in Definition 27.9, is strictly weaker than the Banach weak topology on $M(K)$, and the latter is strictly weaker than the total variation norm topology. Bounded bilinearity on $\ell^1(K_{\mathrm d})$ therefore does not imply digit-topology continuity of the point-mass kernel.
+

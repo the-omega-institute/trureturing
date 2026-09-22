@@ -1,0 +1,110 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "all low axis and point patterns; full original 357 part divides 315; arbitrary finite 11/13 heights; common old shape and survivor count; no tail or Lean conclusion"
+  },
+  "clip": {
+    "kind": "inline",
+    "value": "40/31"
+  },
+  "cases": {
+    "path": "content/031-shared_count_clipped_head/002-cases.json",
+    "sha256": "56684215f954df70498e166da0841fcb72fee3e61356e193e6767da19af09aab",
+    "kind": "array"
+  },
+  "old_layouts_verified": {
+    "kind": "inline",
+    "value": 27720
+  },
+  "shared_branches_verified": {
+    "kind": "inline",
+    "value": 144
+  },
+  "pointwise_area_triples_verified": {
+    "kind": "inline",
+    "value": 1728
+  },
+  "square_reference_factor": {
+    "kind": "inline",
+    "value": "187759/108000"
+  },
+  "reference_auxiliary_mean": {
+    "kind": "inline",
+    "value": "5809/4800"
+  },
+  "high_reference_mass_per_old_mean": {
+    "kind": "inline",
+    "value": "89/4800"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "547762402/14740615"
+  },
+  "worst_shape": {
+    "kind": "inline",
+    "value": 0
+  },
+  "worst_survivors": {
+    "kind": "inline",
+    "value": 81
+  },
+  "same_law_first_upper": {
+    "kind": "inline",
+    "value": "24790300/4595881"
+  },
+  "worst_first_shape": {
+    "kind": "inline",
+    "value": 0
+  },
+  "worst_first_survivors": {
+    "kind": "inline",
+    "value": 84
+  },
+  "full_mass_lower": {
+    "kind": "inline",
+    "value": "68561/100440"
+  },
+  "reference_quantile_mass": {
+    "kind": "inline",
+    "value": "68561/129600"
+  },
+  "reference_quantile_cut": {
+    "kind": "inline",
+    "value": 3
+  },
+  "reference_comparison_mean": {
+    "kind": "inline",
+    "value": "1264886009/229953594"
+  },
+  "joint_square_plus_50_hinge6_upper": {
+    "kind": "inline",
+    "value": "761/39"
+  },
+  "actual_rectangle_refinement": {
+    "kind": "inline",
+    "value": {
+      "grid_count_triples_verified": 1372,
+      "max_density_times_axes_plus_one": "55/2",
+      "maximizing_grid_counts": [
+        [
+          9,
+          12,
+          12
+        ]
+      ],
+      "low_extra_diagonal_caps": [
+        "11/48",
+        "26/93",
+        "22/93",
+        "4/93"
+      ],
+      "max_low_extra_diagonal_sum": "3/4",
+      "square_saving_coefficient": "9/496",
+      "unit_load_rebate": "19/496",
+      "high_square_coefficient": "12259/83700",
+      "Gamma_upper": "2167128283/58962460",
+      "worst_shape": 0,
+      "worst_survivors": 81
+    }
+  }
+}

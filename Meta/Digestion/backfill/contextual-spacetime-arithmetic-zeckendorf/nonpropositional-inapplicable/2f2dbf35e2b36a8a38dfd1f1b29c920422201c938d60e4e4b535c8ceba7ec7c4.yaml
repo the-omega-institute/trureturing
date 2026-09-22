@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2f2dbf35e2b36a8a38dfd1f1b29c920422201c938d60e4e4b535c8ceba7ec7c4
+  normalized_sha256: sha256:2f2dbf35e2b36a8a38dfd1f1b29c920422201c938d60e4e4b535c8ceba7ec7c4
+cas_ref: sha256:2f2dbf35e2b36a8a38dfd1f1b29c920422201c938d60e4e4b535c8ceba7ec7c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶规定查询、导出、完整编码及冷核对接口的语义与收费要求，不提供实现存在性或复杂度结论，故没有独立证明义务。
+    previous_atom_id: 3f9ffb708ae8189184cd16a2f6545d96862b6b9b450953004e5c6b4509edbf97
+    next_atom_id: 5783e369c71d48df7a929048ade211d064d322cc58c5b2bb78e598061b77a67f

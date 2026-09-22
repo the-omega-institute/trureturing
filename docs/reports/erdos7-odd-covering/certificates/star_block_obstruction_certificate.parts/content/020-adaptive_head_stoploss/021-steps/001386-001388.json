@@ -1,0 +1,18 @@
+[
+  {
+    "prime": 11587,
+    "threshold": 3072,
+    "s": 8514,
+    "delta": "3071/11585",
+    "charge_scaled_upper": 2914089296468,
+    "cumulative_scaled_upper": 956613094949576668
+  },
+  {
+    "prime": 11593,
+    "threshold": 3072,
+    "s": 8520,
+    "delta": "3071/11591",
+    "charge_scaled_upper": 2913738744311,
+    "cumulative_scaled_upper": 956616008688320979
+  }
+]

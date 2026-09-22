@@ -1,0 +1,40 @@
+**Proof.** The small-prime ranks are r(2)=3,r(3)=4,r(5)=5,r(7)=8,
+as verified by their first zeros in the recurrence of Appendix U.1. None divides
+ell^k under the hypothesis, proving invertibility. The actual pair periods
+modulo 16,9,5,7 are respectively 24,24,20,16; the return pairs and absence
+of earlier return can be checked over these complete finite periods.
+The recurrence transports each return to every starting index. Their
+least common multiple is 240, the Fibonacci period modulo 5040.
+
+Modulo 144, ell^2=1 modulo 24. Thus F_(ell^k) alternates between one
+and F_ell, and the consecutive quotients alternate between F_ell and its
+inverse. Modulo five, IP2 gives
+B_(ell,k)=ell*3^(ell^k*(ell-1)); its value is independent of k because
+ell^k is odd and ell-1 is even.
+
+Modulo seven, Q^8=-I and Q^16=I for the Fibonacci matrix Q. Every odd
+ell satisfies ell^2=1 or 9 modulo sixteen. Put A=F_ell modulo seven
+and d=F_(ell^2), so d=1 or -1. The four cumulative values are
+1,A,d,d*A. In the second case ell^3=ell+8 modulo sixteen; in the first
+case ell^3=ell. Hence their consecutive quotients are A,d/A,A,d/A.
+CRT gives S6 for all k.
+
+To decide when the two values coincide, the complete eight-class table
+modulo 144 is
+
+$$
+\begin{array}{c|rrrrrrrr}
+\ell\bmod24&1&5&7&11&13&17&19&23\\\hline
+F_\ell\bmod144&1&5&13&89&89&13&5&1\\
+F_\ell^2\bmod144&1&25&25&1&1&25&25&1.
+\end{array}
+$$
+
+Equality holds there exactly at classes 1,11,13,23. Modulo seven it
+holds exactly for ell=1,7,9,15 modulo sixteen, as follows from
+F_ell=1,2,5,6,6,5,2,1 at the eight odd classes 1,3,...,15, and
+F_(ell^2)=1,6,6,1,1,6,6,1 at those classes. Intersecting the two
+conditions leaves precisely ell=1 or23 modulo twenty-four. Modulo five
+already gives equality. This proves S7. A nonconstant two-cycle cannot
+acquire an eventual period one.
+

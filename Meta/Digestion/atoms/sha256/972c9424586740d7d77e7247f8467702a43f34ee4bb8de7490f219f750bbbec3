@@ -1,0 +1,23 @@
+**证明。** 在 $E=\mathbb R^{r+2}$ 取标准基 $e_0,\ldots,e_{r+1}$，令 $U=\mathbb R$、$J(1)=e_0$。设 $A_{\rm path}$ 是路径 $0-1-\cdots-(r+1)$ 的邻接矩阵，并取
+$$
+d=(u+v)/2,\qquad \beta=(v-u)/4>0,\qquad
+T=dI+\beta A_{\rm path}.
+$$
+对任意 $x$，由 $2|x_ix_{i+1}|\le x_i^2+x_{i+1}^2$ 得 $|\langle x,A_{\rm path}x\rangle|\le2\|x\|^2$，故 $uI\preceq T\preceq vI$。令 $C=-h^{-1}\log T$。每次乘 $T$ 至多沿路径移动一步，且 $T^je_0$ 的 $e_j$ 系数为 $\beta^j$，故
+$$
+\mathcal K_r=\operatorname{span}(e_0,\ldots,e_r).
+$$
+对初态 $h_0=Le_{r+1}$，所有 $z_j$ 在 $j\le r$ 时为零，而从端点到端点的 $r+1$ 步路径唯一，给出
+$$
+g_0((r+1)h)=L\beta^{r+1}.
+$$
+改变 $L$ 不改变任何核值，且不改变已取的交叉前缀；令 $|L|\to\infty$ 得无界性。能量上界下，相容初态纤维恰为 $\{Le_{r+1}:|L|\le E_*\}$，因此下一采样时刻的精确半径为 $E_*\beta^{r+1}$。证毕。
+
+式（13.13）的隐藏项系数在 $r=0$ 已可达到。具体取
+$$
+T=\begin{pmatrix}d&\delta\\\delta&d\end{pmatrix},\quad
+d=(u+v)/2,\quad\delta=(v-u)/2,\quad
+J(1)=e_0,\quad h_0=\pm E_*e_1.
+$$
+此时谱恰为 $u,v$，$z_0=0$，$e_{\min}=0$；在 $t=h$ 的两响应为 $\pm E_*\delta$。常数逼近 $f(x)=x$ 的最小误差为 $(v-u)/2$，而式（13.11）的半径也是 $E_*\delta$，故该界在此严格饱和。即使完整核已知，缺少初态信息仍留下这项风险；本卷命题12.7的标量反例是没有任何初态交叉读数时的既有边界。
+

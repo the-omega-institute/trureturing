@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6bace85527021c5730f85765f4364cab2000f49622476660be29bd8748c15d5
+  normalized_sha256: sha256:d6bace85527021c5730f85765f4364cab2000f49622476660be29bd8748c15d5
+cas_ref: sha256:d6bace85527021c5730f85765f4364cab2000f49622476660be29bd8748c15d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 按 Matrix.trace 与 Matrix.mul_apply 展开有限坐标迹，利用 Hermitian 相关矩阵的共轭转置关系逐项改写即可得到 Schur 通道的迹对偶；仓内无冻结 GID，探针对全部输入矩阵成立。
+    previous_atom_id: 845307dc4ea959732fa1c3d962ca6a98ef8e5096b425f4a3066e7c953142a874
+    next_atom_id: 1db59ea7033c39b2d7788648d41580148bb4e112e26508b1925a94fcc175b2b9

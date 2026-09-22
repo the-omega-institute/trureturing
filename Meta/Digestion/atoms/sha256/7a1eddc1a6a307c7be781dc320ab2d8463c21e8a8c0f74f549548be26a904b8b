@@ -1,0 +1,10 @@
+**Theorem.** For every k>=0,
+
+$$
+b_{p^{k+1}}=\frac{L_{p^{k+1}}-L_{p^k}}{p^{k+1}}>0,
+\qquad
+\boxed{v_p(b_{p^{k+1}})=h_p-1.}                         \tag{NP11}
+$$
+
+Furthermore b_(p^(k+1))=5*S_(p,k) modulo p.
+

@@ -1,0 +1,17 @@
+**Proof.** The discriminant identity gives
+
+\[
+(L_N-2\epsilon)(L_N+2\epsilon)=5F_N^2.
+\]
+
+The second factor has residue 4*epsilon, hence is a unit modulo p. All factors whose valuations are taken are nonzero: N>0, F_N>0, and the displayed product is positive. Additivity of the valuation gives the first equality.
+
+The Fibonacci-Lucas addition identity gives `2L_p=epsilon*L_N+5F_N`. Therefore
+
+\[
+2(L_p-1)(L_N+2\epsilon)
+=5F_N(L_N+2\epsilon+\epsilon F_N).
+\]
+
+Both parenthesized factors are units modulo p, and 2 and 5 are units. Also L_p>1 for odd primes p. Taking valuations proves the second equality.
+

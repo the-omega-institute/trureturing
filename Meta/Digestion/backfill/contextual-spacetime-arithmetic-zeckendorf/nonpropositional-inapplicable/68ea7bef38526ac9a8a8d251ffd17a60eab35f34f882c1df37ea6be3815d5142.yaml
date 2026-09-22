@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:68ea7bef38526ac9a8a8d251ffd17a60eab35f34f882c1df37ea6be3815d5142
+  normalized_sha256: sha256:68ea7bef38526ac9a8a8d251ffd17a60eab35f34f882c1df37ea6be3815d5142
+cas_ref: sha256:68ea7bef38526ac9a8a8d251ffd17a60eab35f34f882c1df37ea6be3815d5142
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句单独规定一的空词和平凡链分支，是定义约定，没有待证明命题。
+    previous_atom_id: b09b419eceb888870d5efea121284c2b0206616173edd1d8a23f2250c8978d63
+    next_atom_id: 60f7b75158592df0c0594fb1a250c0add8d8652d113f9c708ad17d2f67d98786

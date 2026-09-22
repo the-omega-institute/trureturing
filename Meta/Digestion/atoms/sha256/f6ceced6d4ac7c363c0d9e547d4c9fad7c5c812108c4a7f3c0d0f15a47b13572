@@ -1,0 +1,8 @@
+**Proof.** For odd t, ell^(2t)=-1 modulo five. For even t=2u,
+$v_5((ell^4)^u-1)=s_ell+v_5(u)$. To prove this last elementary lifting
+formula, write ell^4=1+5^s z with five not dividing z. An exponent
+coprime to five preserves the initial valuation by the geometric sum;
+raising a number congruent to one modulo five to the fifth power raises
+its difference-from-one valuation exactly by one, by binomial
+expansion. Iterate and use v_5(2)=0.
+
