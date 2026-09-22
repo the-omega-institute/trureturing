@@ -94,3 +94,68 @@ establish the co-volume minimum, or prove the cover family. The full CFMP
 conjecture and unrestricted minimum-eight case remain outside the restricted
 hypotheses. The independent-opposite-one obstruction is retained without
 alteration.
+
+## Volume averaging and explicit P4 lengths, theory Sections 36-40
+
+The continuation uses the same theory owner and keeps the earlier critical-star
+claims unchanged. These sections are ordinary written mathematics. They do not
+change the formal declarations or claim a new kernel-checked geometric theorem.
+
+### Exact primary-source obligations
+
+Luo-Yang, arXiv:1404.5365, Theorem 1.4 (printed page 2) and Theorem 6.3
+(printed page 21) are used for uniqueness of the maximum-volume hyperideal
+angle assignment and its realization by one positive global length vector.
+At that maximizer, each tetrahedron is genuine or has two opposite pi angles
+and four zero angles. Definition 6.1 fixes the strict versus closed vertex-angle
+conditions. Proposition 6.7 with all six edges supplies local strict concavity;
+continuity extends the non-strict concavity inequality to the compact closure.
+Theorem 36.2 is a consequence of these existing inputs and actual tetrahedron
+transitivity, not a new version of the Luo-Yang theorem.
+
+https://arxiv.org/pdf/1404.5365
+
+The PDF text was read and screenshots of printed pages 2, 21 and 22 were
+successfully inspected. Some nearby descriptive sentences in this PDF say
+convex where the needed statement is concave. The continuation uses the
+explicit concavity statement and proof of Proposition 6.7 and its Schlaefli
+sign, rather than treating those descriptive occurrences as a convexity input.
+The continuity and angle-domain statements are kept separate from that sign.
+
+The pure-P4 averaging proof establishes every global edge equation after
+averaging by using exact endpoint/middle incidence counts. Concavity alone
+does not establish that feasibility. Common colour lengths are derived from
+the interior reduced variational equations, not assumed for arbitrary inputs.
+
+### Independent algebraic realization
+
+Theory Section 38 substitutes y=x-1/2-1/(2x) into the original six-variable
+cosine and proves all four role cosines belong to (0,1) for
+x>(3+sqrt(17))/4. The geometric identification uses Luo-Yang Proposition 4.4,
+which concerns the whole positive length domain. No cube-only monotonicity
+result is applied beyond its hypotheses.
+
+The positive radical signs give
+cos(2 gamma+delta)=-1+(3x-1)/(2x(x-1)^2), with 0<2 gamma+delta<pi.
+Its strictly negative derivative proves existence and uniqueness of the
+specified scalar cubic root for each real d>6. At d=9 the factorization is
+(x+1)(x^2-3x+1)=0, giving cosh(l_L)=(3+sqrt(5))/2 and
+cosh(l_H)=(1+3sqrt(5))/4. These equations are derived here from the cited
+classical formula; no priority claim follows from bounded literature search.
+
+### Genuine incidence and remaining scope
+
+The cyclic face-pairing construction has return translations 2u-v and u+2v,
+with both three-step oriented endpoint maps equal to the identity. This proves
+its edge degrees and normal circles. Vertex classes and corner fans are
+computed from the same face maps, not inferred from Euler characteristic alone.
+The N=6,u=4,v=5 packet has degrees (6,6,6,9,9) and one genus-two boundary.
+The earlier N=2n,u=1,v=n+2 family now admits all n except 1 and 5 in the strict
+hyperideal setting, including five-component boundary cases when 5 divides n.
+The two exceptional parameters have torus links; no cusped-metric claim is made.
+
+Exact symbolic identities and eleven specified cyclic packets were checked
+as supplementary diagnostics. The written return-map argument proves the
+unbounded family. No new Lean/Scribe source, CI configuration, admission state,
+or frozen artifact is part of this continuation. The complete CFMP conjecture
+and the unrestricted minimum-six/seven/eight cases remain beyond its hypotheses.
