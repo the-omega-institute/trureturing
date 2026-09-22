@@ -46,6 +46,10 @@ Lean statement: `D5/S3/Geometry/Distances/FanCircleCapacity.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Distances/FanCircleCapacity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/fan-2026-circle-capacity-conjecture-5-9` (proved) by `D5/S3/Geometry/Distances/FanCircleCapacity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"fan-2026-circle-capacity-conjecture-5-9","declaration_gid":"D5/S3/Geometry/Distances/FanCircleCapacity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Qiuling Fan (2026). *Riesz capacity ratios with negative exponents*. DOI: [10.48550/arXiv.2609.11186](https://doi.org/10.48550/arXiv.2609.11186). URL: <https://arxiv.org/abs/2609.11186v1>.

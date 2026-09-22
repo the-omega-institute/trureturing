@@ -134,6 +134,9 @@ internal sealed class FanCircleCapacityDocument : IScribeDocumentDefinition
                             + "At t=2*pi-3*phi one has y=pi-phi and therefore b=c, giving "
                             + "exactly Fan's isosceles endpoint. The argument includes r=2 "
                             + "and phi=2*pi/3 and makes no strictness or uniqueness claim."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("fan-2026-circle-capacity-conjecture-5-9"),
+                    ResolutionKind.Proved))),
         []));
 }
