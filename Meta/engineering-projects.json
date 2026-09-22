@@ -1491,6 +1491,8 @@
       ],
       "execution_filemap_paths": [
         "D5/F/NumberTheory/AdmissionResourceProbe.lean",
+        "Directory.Build.props",
+        "Directory.Packages.props",
         "Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json",
         "Meta/Digestion/atoms/sha256/admission-resource-probe",
         "Meta/Digestion/backfill/admission-resource-probe.json",
@@ -1519,6 +1521,7 @@
         "tools/StrataLint.EngineeringScope/ResourceRoutingProbe.cs",
         "tools/StrataLint.ExecutionEvidence/Changed.cs",
         "tools/StrataLint.InspectionScope/Changed.cs",
+        "tools/StrataLint.InspectionScope/MarkdownInspectionScope.cs",
         "tools/StrataLint.Lean/ResourceRoutingProbe.cs",
         "tools/StrataLint.ReleaseSelection/TruthReleaseSelection.cs",
         "tools/StrataLint.ResourcePlanning/Changed.cs",
