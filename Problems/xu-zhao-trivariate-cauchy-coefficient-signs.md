@@ -48,8 +48,14 @@ bound and the unbounded comparison are proved, and the source quotient
 identity is explicit. No summability or source-equivalence premise is
 assumed. The empty tail is included.
 
-Slit continuation, uniform power-log bank
-expansions, a fixed zero-free slit collar, formal-inverse/Taylor coefficient
+`CompositionSlit.result` additionally constructs the actual all-composition
+branch on the full slit domain, proves holomorphy, disk agreement, origin
+normalization, exact depth-order vanishing, conjugation symmetry and both
+origin-correct recurrences. It assumes no continuation or recurrence premise
+and asserts no global slit nonvanishing. This is also an intermediate with
+zero solved-problem credit.
+
+Uniform power-log bank expansions, a fixed zero-free slit collar, formal-inverse/Taylor coefficient
 identity, and the finite-contour sign transfer remain unproved here.
 The eventual sign and strict binomial conclusions therefore remain open
 in this repository. Preregistration:
@@ -57,7 +63,7 @@ https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Route
 
-Using the disk and admissible-boundary units, prove the remaining source-specific analytic bridges
+Using the disk, admissible-boundary and slit units, prove the remaining source-specific analytic bridges
 and the negative upper-bank sign. A finite contour gives eventual strict
 negativity. Eventual negativity together with the actual finite radial
 limit yields absolute summability: bound finite sums with radial weights
@@ -101,8 +107,8 @@ actual normalized series on real radii below one.
 all-one compositions for every $\ell\ge1$ by the all-one identity and
 Theorems 1.1 and 8.2; depth one and depth two at $\ell=1$ by Theorems 9.6
 and 9.9, respectively; and depth one at $\ell=2$ by Corollary 9.11.
-The present results are general disk and admissible-boundary intermediates,
-not a new resolution of those known cases or of the full conjecture. Admission uses the actual
+The present disk, admissible-boundary and slit results are intermediates, not a new resolution
+of those known cases or of the full conjecture. Admission uses the actual
 source-specific escape content, not the open-problem-resolution exception.
 
 ## ASSUMED-UNVERIFIED

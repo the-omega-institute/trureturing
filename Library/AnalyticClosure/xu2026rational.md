@@ -11,6 +11,8 @@ strata_touched:
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionRecurrences
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionZeroFree
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionBoundary
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionContinuation
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionSlit
 license: citation-only
 triage: anchor
 ---
@@ -87,10 +89,19 @@ $2^{\mathrm{length(tail)}}(n+1)^{-3/2}$ for the source series grouped by
 largest index. The proof treats the empty tail and the vanishing finite
 prefix exactly. Summability precedes every boundary-total and limit claim.
 
-These are intermediate disk and boundary results, not a resolution of
-Conjecture 1.3. They supply no coefficient-sign theorem, slit continuation,
-bank asymptotics or contour transfer. Solved-problem credit is zero.
-The preregistered target is
+`CompositionSlit.result` constructs the actual branch on
+$\Omega=\{z:1-z\in\mathrm{Complex.slitPlane}\}$. The empty word is one;
+every nonempty branch is holomorphic on the full domain, vanishes at zero,
+agrees with `strictNestedSeries` on the disk, commutes with conjugation,
+and has exact zero order equal to its depth. Both differential recurrences
+hold on the full domain, with derivative one at zero for a singleton word
+and zero for greater depth. Nested induction uses segment primitives and
+the removable `dslope`; disk agreement fixes the branch normalization.
+
+These are intermediate disk, boundary and slit results, not a resolution of
+Conjecture 1.3. They supply no coefficient-sign theorem, global slit
+nonvanishing, bank asymptotics or contour transfer. Solved-problem credit
+is zero. The preregistered target is
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Reuse and literature boundary
@@ -101,7 +112,10 @@ geometric summability, differentiation of normally convergent series,
 analytic orders, compact minimization and real derivatives of complex
 paths. The classical integral-preservation argument is credited to
 `D5/L/AnalyticClosure/miller1978starlike` and remains local in the source
-consumer. No external primitive was transplanted.
+disk consumer. The slit consumer uses the minimal attributed star-shaped
+primitive from `D5/L/AnalyticClosure/li2026starprimitive`, keeping its proof
+local and its exact upstream license in `CompositionContinuation.lean`.
+No general primitive theorem is separately delivered.
 
 The bounded supplied search found no exact all-composition Lean supplier.
 The source's stated known cases and the supplied preregistration do not
