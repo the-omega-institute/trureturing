@@ -137,6 +137,8 @@ The unscaled complete LCM sum over all81 ordered label pairs is9. The sole pair 
 
 The law is chosen before the phases. This construction uses the actual source and its projected witnesses, together with the strict cut argument; it is not a consequence of the old nine caps alone. The proof is stated for height two and occupancy (4,5,5,5), and asserts no compatibility between laws constructed on different sources or heights.
 
+Under the stronger literal product-blocking premise, [448](448-literal-product-trees-exclude-the-equality-cut.md) improves the one-gap result to95/11. Its cut proof also uses a full root whose incidence is below five, which the stated incidence-at-most-two consumer already supplies. The fractional-projection-only theorem above remains distinct.
+
 ## Combining the occupied-child cases
 
 Let F subset Z/25 x Z/49 have exactly four occupied first-five roots, block every product of a complete ternary five-tree and complete five-ary seven-tree (both height two), and have a standalone seven projection containing a complete five-ary tree. Assume at least one actual second-five child is missing under an occupied root and every root/first-seven cylinder meets at most two children. Then there is ONE supported probability with Gamma_1225 at most79/9<9, for every independently phased layout on all nine original divisor labels.

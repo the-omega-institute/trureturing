@@ -925,3 +925,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Direct child-tree flow preserves pure mod25 and mixed-prefix caps under one law; actual incidence and empty children give bounds below nine, while a nonrobust source family separates the earlier selectors](profile-notes/arithmetic/446-direct-child-flow-and-incidence-caps.md)
 
 - [Strict actual-child cuts give one law with Gamma at most569/65 for the one-missing-child height-(2,2) case under the stated incidence and standalone-tree hypotheses; old-cap saturation and partial arithmetic exclusions identify the remaining scope](profile-notes/arithmetic/447-strict-child-cut-surplus-and-arithmetic-boundaries.md)
+
+- [Literal product trees and one full root of incidence below five exclude the generic equality cut, giving95/11 for the one-gap incidence-two branch; a117-point sharp network has a good law but no low-incidence blocking subsource](profile-notes/arithmetic/448-literal-product-trees-exclude-the-equality-cut.md)
