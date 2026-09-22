@@ -187,7 +187,8 @@
       "steps": [],
       "lean_targets": [
         "LeanInformationAudit",
-        "leanInspector/reportInspector"
+        "leanInspector/reportInspector",
+        "leanInspectorInterface/LeanInformationAuditInterface"
       ]
     },
     {
