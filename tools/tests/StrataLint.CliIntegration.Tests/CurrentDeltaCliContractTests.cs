@@ -505,10 +505,15 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         var afterValid = scenario.StartsWith("after-valid-", StringComparison.Ordinal);
         var defect = staged ? scenario["staged-".Length..] : afterValid ? scenario["after-valid-".Length..] : scenario;
         var template = scenario.StartsWith("template-", StringComparison.Ordinal);
+        const string contentPath = "Blueprint/D5/S0/Carrier/DeltaFixture.md";
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        // A synthetic emitted document keeps the delta on the content plane without
+        // making the runtime input manifest depend on a real generated artifact.
+        fixture.Files[contentPath] = "# Delta fixture\n";
+        fixture.Files["Blueprint/D5/S0/Carrier/DeltaFixture.scribe.cs"] = "// synthetic Scribe definition\n";
         fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
         fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
@@ -598,7 +603,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             case "premanifest-base": break;
             case "original-registration-base": break;
             case "annotation": Write(protectedPath, "#!/bin/sh\nexit 0\n"); break;
-            case "mixed": Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n"); Write(RuleFixture.BlueprintPath, "# changed\n"); break;
+            case "mixed": Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n"); Write(contentPath, "# changed\n"); break;
             case "first-freeze": Write("Golden/Frozen/accepted/" + new string('a', 64) + ".json", "{}\n"); break;
             case "ratchet": for (var i = 0; i <= RepositoryRules.DirectoryFileLimit; i++) Write($"docs/reports/ratchet/{i}.json", "{}\n"); break;
             case "unowned-project":
@@ -640,7 +645,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 projects.Remove(removed);
                 registration["historical_projects"]!.AsArray().Add(removed);
                 break;
-            default: Write(RuleFixture.BlueprintPath, "# changed\n"); break;
+            default: Write(contentPath, "# changed\n"); break;
         }
         Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
         var report = Path.Combine(root, CommonExecutionEvidence.ReportPath);
@@ -757,7 +762,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 break;
             case "missing-current": File.Delete(Path.Combine(root, CommonExecutionEvidence.CurrentPath)); break;
             case "invalid-dll": File.AppendAllText(Path.Combine(root, CommonExecutionEvidence.CliPath), "damage"); break;
-            case "candidate-mismatch": File.AppendAllText(Path.Combine(root, RuleFixture.BlueprintPath), "new round\n"); break;
+            case "candidate-mismatch": File.AppendAllText(Path.Combine(root, contentPath), "new round\n"); break;
             case "failed-trx":
                 var trx = Directory.GetFiles(Path.Combine(root, CommonExecutionEvidence.RootPath), "*.trx", SearchOption.AllDirectories).First();
                 File.WriteAllText(trx, TemporaryFileSystem.File.ReadAllText(trx).Replace("Passed", "Failed", StringComparison.Ordinal));
