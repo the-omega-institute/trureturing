@@ -9,18 +9,19 @@ public sealed class FileMapResourceParityTests
     public void RegisteredReferenceExamplesAvoidResourcesWhileChecksKeepTheirRequirements()
     {
         var map = FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot());
-        foreach (var path in new[] { "README.md", "tools/lean-inspector/README.md",
+        foreach (var path in new[] { "README.md", "tools/lean-inspector/README.md", "docs/develop/theory/input.md",
             "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
             "docs/develop/spec/trureturing_engineering_optimization_v1.md",
             "docs/reports/a110037-0910/BoundaryProbe.lean", "docs/reports/prime-slab-corner-order-0909.json" })
             Assert.Empty(Assert.Single(map.Match(path)).Require);
-        foreach (var path in new[] { "docs/develop/theory/input.md", "Library/Notes/input.md", "Problems/input.md",
+        foreach (var path in new[] { "Library/Notes/input.md", "Problems/input.md",
             "Blueprint/D5/Result.md", "D5/ledger.md", "CLAUDE.md", "tools/scripts/workflow/ci_plan.py",
             "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
             "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json" })
             Assert.NotEmpty(Assert.Single(map.Match(path)).Require);
         var filemap = Assert.Single(map.Resources, resource => resource.Id == "filemap");
-        Assert.Equal(["current"], filemap.CacheLayers.ToArray());
+        Assert.Empty(filemap.CacheLayers);
+        Assert.Empty(filemap.CacheActivation);
         Assert.Equal(["build"], filemap.Prerequisites.ToArray());
         Assert.Equal(["judge"], Assert.Single(map.Resources, resource => resource.Id == "build").CacheLayers.ToArray());
         Assert.Equal(["elan", "engineering"], Assert.Single(map.Resources, resource => resource.Id == "engineering").CacheLayers.ToArray());
@@ -28,7 +29,8 @@ public sealed class FileMapResourceParityTests
         Assert.Equal(["dependency", "elan", "project"], lean.CacheLayers.ToArray());
         Assert.All(lean.CacheActivation.Values, activation => Assert.Equal("stage-start", activation));
         var report = Assert.Single(map.Resources, resource => resource.Id == "lean-report");
-        Assert.Empty(report.CacheLayers);
+        Assert.Equal(["current"], report.CacheLayers.ToArray());
+        Assert.Equal(KeyValuePair.Create("current", "stage-start"), Assert.Single(report.CacheActivation));
         Assert.Equal(["lean"], report.Prerequisites.ToArray());
         Assert.DoesNotContain("lake", filemap.Tools);
     }

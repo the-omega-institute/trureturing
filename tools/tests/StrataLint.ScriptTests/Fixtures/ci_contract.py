@@ -180,7 +180,7 @@ runtime_disposition = "committed-source"
                 result = invoke("resolve", "--head", head)
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 outputs = dict(line.split("=", 1) for line in (root / "outputs").read_text().splitlines())
-                self.assertEqual({"candidate_sha": merge, "base_sha": base}, outputs)
+                self.assertEqual({"candidate_sha": merge, "base_sha": base, "work_required": "false"}, outputs)
                 self.assertEqual("", git("remote").stdout.strip())
                 self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
                 self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
@@ -534,7 +534,7 @@ runtime_disposition = "committed-source"
                 return subprocess.CompletedProcess(command, 0)
             return run(command, **options)
         args = owner.argparse.Namespace(repository=self.root, stage="engineering", commit=REV,
-            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_archive=None)
+            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_manifest=None)
         with mock.patch.dict(os.environ, dict(self.env, NUGET_PACKAGES=str(self.root / "absent-packages"))), \
              mock.patch.object(owner.subprocess, "run", side_effect=invoke), \
              mock.patch.object(owner, "extract") as extract:
@@ -556,15 +556,15 @@ runtime_disposition = "committed-source"
                                                ("engineering", "true", False), ("current", "false", True)):
                 with self.subTest(stage=stage, writable=writable, explicit=explicit):
                     args.stage = stage
-                    args.seed_archive = self.root / "explicit-seed.tgz" if explicit else None
+                    args.seed_manifest = self.root / "explicit-seed.json" if explicit else None
                     os.environ["STRATALINT_CACHE_WRITES"] = writable
                     owner.transport(args)
                     command = calls[-1][0]
-                    expected = args.seed_archive or (self.root / "ci-current-seed.tar.gz"
+                    expected = args.seed_manifest or (self.root / "ci-current-seed.json"
                         if stage == "current" and writable == "true" else None)
-                    self.assertEqual(expected is not None, "--seed-archive" in command)
+                    self.assertEqual(expected is not None, "--seed-manifest" in command)
                     if expected is not None:
-                        self.assertEqual(str(expected), command[command.index("--seed-archive") + 1])
+                        self.assertEqual(str(expected), command[command.index("--seed-manifest") + 1])
             with mock.patch.object(owner.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "dotnet")):
                 with self.assertRaises(subprocess.CalledProcessError):
                     owner.transport(args)

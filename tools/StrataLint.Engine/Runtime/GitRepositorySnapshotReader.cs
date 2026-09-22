@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace StrataLint.Engine;
@@ -83,7 +84,8 @@ internal static class GitRepositorySnapshotReader
 
             Retain(new RawRepositoryEntry(
                 path,
-                ImmutableArray.CreateRange(File.ReadAllBytes(fullPath))));
+                // The fresh read buffer has no mutable alias; the snapshot owns it.
+                ImmutableCollectionsMarshal.AsImmutableArray(File.ReadAllBytes(fullPath))));
         }
 
         FileMapSymlinkPolicy.ValidateSnapshot(entries, links, paths, path =>

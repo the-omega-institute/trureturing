@@ -19,7 +19,7 @@ sys.path.insert(0, str(HERE))
 import materials
 import publication
 
-EXECUTION = dict(tools=['lake', 'lean'], platform=['system', 'machine'],
+EXECUTION = dict(toolchain='lean-toolchain', tools=['lake', 'lean'], platform=['system', 'machine'],
     environment=['LEAN_PATH', 'LEAN_SRC_PATH', 'LEAN_SYSROOT', 'ELAN_TOOLCHAIN', 'LEAN_OPTS'])
 
 
@@ -85,8 +85,8 @@ class ReuseTests(unittest.TestCase):
     def receipt(self):
         import reuse
         self.bundle()
-        captured = reuse.capture(self.root, self.lake)
-        reuse.seal(self.root, self.report, self.lake, captured)
+        captured = reuse.capture(self.root)
+        reuse.seal(self.root, self.report, captured)
         return reuse
 
     def test_execution_registration_is_explicit_and_strict(self):
@@ -112,23 +112,23 @@ class ReuseTests(unittest.TestCase):
         api = self.receipt()
         with patch.object(publication, 'validate_bundle', wraps=publication.validate_bundle) as validation, \
                 patch.object(publication, 'coordinates', wraps=publication.coordinates) as coordinates:
-            self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'])
+            self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
             self.assertEqual(validation.call_count, 0, '[FAIL] probe_must_not_repeat_publication_validation')
             self.assertEqual(coordinates.call_count, 0, '[FAIL] probe_must_not_prepare_publication')
             self.assertFalse(self.output.exists())
             self.assertFalse((self.root / '.lake').exists())
-            self.assertFalse(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
+            self.assertFalse(api.reuse(self.root, self.report, self.output)['needs_lake'])
             self.assertEqual(validation.call_count, 1, '[FAIL] normal_entry_must_validate_publication')
         publication.validate_bundle(self.output, publication.coordinates(self.root), self.root)
         self.assertEqual(json.loads(publication.member(self.output, '.provenance.json').read_text())['mode'], 'cached')
-        self.assertFalse(api.probe(self.root, self.output, self.lake)['needs_lake'])
-        self.assertFalse(api.reuse(self.root, self.output, self.output, self.lake)['needs_lake'])
+        self.assertFalse(api.probe(self.root, self.output)['needs_lake'])
+        self.assertFalse(api.reuse(self.root, self.output, self.output)['needs_lake'])
         self.assertFalse((self.root / '.lake').exists())
 
     def test_probe_cli_reports_misses_but_rejects_invalid_registration(self):
         self.receipt()
         command = [sys.executable, '-B', str(HERE / 'reuse.py'), 'probe', '--repository', str(self.root),
-                   '--report', str(self.report), '--lake', str(self.lake)]
+                   '--report', str(self.report)]
         accepted = subprocess.run(command, text=True, capture_output=True, check=False)
         self.assertEqual(accepted.returncode, 0, accepted.stderr)
         self.assertFalse(json.loads(accepted.stdout)['needs_lake'])
@@ -145,47 +145,44 @@ class ReuseTests(unittest.TestCase):
 
     def test_input_changes_additions_deletions_and_environment_invalidate_receipt(self):
         api = self.receipt()
-        for path in ['D5/A.lean', 'Audit.lean', 'Inspector.lean',
-                     'lean-toolchain', 'lakefile.toml']:
+        for path in ['D5/A.lean', 'lean-toolchain', 'lakefile.toml']:
             with self.subTest(changed=path):
                 source = self.root / path
                 original, stamp = source.read_bytes(), source.stat()
                 source.write_bytes(original + b'\n')
                 os.utime(source, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
-                self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+                self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
                 source.write_bytes(original)
         self.write('D5/New.lean', 'def fresh := 2\n')
-        self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+        self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
 
         api = self.receipt()
         (self.root / 'D5/New.lean').unlink()
-        self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+        self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
         api = self.receipt()
         for name in EXECUTION['environment']:
             with self.subTest(environment=name), patch.dict(os.environ, {name: 'changed'}):
-                self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+                self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
         with patch.object(api.platform, 'machine', return_value='another-architecture'):
-            self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
-        self.lake.write_text(self.lake.read_text().replace('lake 1', 'lake 2'))
-        self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+            self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
 
     def test_registered_file_mode_changes_invalidate_reuse_and_sealing(self):
         api = self.receipt()
-        captured = api.capture(self.root, self.lake)
-        source = self.root / 'Audit.lean'
+        captured = api.capture(self.root)
+        source = self.root / 'D5/A.lean'
         source.chmod(0o755)
-        self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'],
-                        '[FAIL] lean_source_mode_change_invalidates_reuse')
+        self.assertTrue(api.probe(self.root, self.report)['needs_lake'],
+                        '[FAIL] report_module_mode_change_invalidates_reuse')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
-            api.seal(self.root, self.report, self.lake, captured)
+            api.seal(self.root, self.report, captured)
 
     def test_producer_program_bytes_never_gate_reuse(self):
         api = self.receipt()
-        captured = api.capture(self.root, self.lake)
-        producer_only = ['producer.py', 'tools/scripts/report/lean-report-selection.py']
-        self.assertTrue(all(path.endswith('.lean') or path in ('lean-toolchain', 'lakefile.toml')
-                            for path in captured['files']),
-                        '[FAIL] receipt_population_is_lean_and_configuration_only: ' + repr(sorted(captured['files'])))
+        captured = api.capture(self.root)
+        producer_only = ['producer.py', 'tools/scripts/report/lean-report-selection.py',
+                         'Inspector.lean', 'Audit.lean']
+        self.assertEqual(set(captured['files']), {'D5/A.lean', 'lean-toolchain', 'lakefile.toml'},
+                         '[FAIL] receipt_population_is_report_modules_and_configuration_only')
         self.assertFalse(set(producer_only + ['lean-report-inputs.json']) & set(captured['files']),
                          '[FAIL] producer_program_not_hashed')
         for path in producer_only:
@@ -194,14 +191,14 @@ class ReuseTests(unittest.TestCase):
                 original, mode = source.read_bytes(), source.stat().st_mode
                 source.write_bytes(original + b'\n# producer-only edit\n')
                 source.chmod(0o700)
-                self.assertEqual(api.probe(self.root, self.report, self.lake),
+                self.assertEqual(api.probe(self.root, self.report),
                                  dict(needs_lake=False, reason='receipt-matched'),
                                  '[FAIL] producer_program_change_keeps_receipt')
                 source.write_bytes(original)
                 source.chmod(mode)
         self.policy['report_cache_release_semantic_version'] += 1
         self.write_policy()
-        result = api.probe(self.root, self.report, self.lake)
+        result = api.probe(self.root, self.report)
         self.assertTrue(result['needs_lake'] and result['reason'] == 'seed-rejected',
                         '[FAIL] semantic_version_bump_rejects_seed: ' + repr(result))
 
@@ -220,15 +217,15 @@ class ReuseTests(unittest.TestCase):
                         target = self.root / 'alias'
                         target.write_bytes(original)
                         path.symlink_to(target)
-                    self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
-                    self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
+                    self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
+                    self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'])
                     path.unlink(missing_ok=True)
                     path.write_bytes(original)
         receipt = publication.member(self.report, '.reuse.json')
         record = json.loads(receipt.read_text())
         record['completed'] = ['report', 'publication']
         receipt.write_text(json.dumps(record))
-        self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
+        self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
 
     def test_validation_uses_material_reader_and_private_publication(self):
         api = self.receipt()
@@ -239,7 +236,7 @@ class ReuseTests(unittest.TestCase):
                 publication.member(report, '.materials.zip').write_bytes(b'changed during validation')
             return result
         with patch.object(publication, 'validate_bundle', side_effect=mutate_private):
-            self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
+            self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'])
         self.assertFalse(self.output.exists())
         # Matching receipt hashes cannot bypass the semantic/material validator.
         archive = publication.member(self.report, '.materials.zip')
@@ -249,9 +246,9 @@ class ReuseTests(unittest.TestCase):
         record = json.loads(receipt.read_text())
         record['bundle']['.materials.zip'] = publication.digest(archive)
         receipt.write_text(json.dumps(record))
-        self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'],
+        self.assertFalse(api.probe(self.root, self.report)['needs_lake'],
                          '[FAIL] probe_only_selects_resources')
-        self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'],
+        self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'],
                         '[FAIL] sealed_hashes_cannot_authorize_bad_materials')
         self.assertFalse(self.output.exists())
 
@@ -264,14 +261,14 @@ class ReuseTests(unittest.TestCase):
             with self.subTest(error=type(error).__name__), patch.object(
                     publication, 'validate_bundle', side_effect=error):
                 try:
-                    self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'])
-                    self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
+                    self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
+                    self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'])
                 except type(error):
                     self.fail('[FAIL] optional_decoder_error_must_request_lake')
         with patch.object(publication, 'validate_bundle', side_effect=AssertionError('programming error')):
-            self.assertFalse(api.probe(self.root, self.report, self.lake)['needs_lake'])
+            self.assertFalse(api.probe(self.root, self.report)['needs_lake'])
             with self.assertRaisesRegex(AssertionError, 'programming error'):
-                api.reuse(self.root, self.report, self.output, self.lake)
+                api.reuse(self.root, self.report, self.output)
 
     def test_semantic_seed_miss_preserves_absent_destination_parents(self):
         api = self.receipt()
@@ -283,7 +280,7 @@ class ReuseTests(unittest.TestCase):
         record['bundle']['.materials.zip'] = publication.digest(archive)
         receipt.write_text(json.dumps(record))
         output = self.root / '.lake/build/stratalint' / publication.RAW
-        self.assertTrue(api.reuse(self.root, self.report, output, self.lake)['needs_lake'])
+        self.assertTrue(api.reuse(self.root, self.report, output)['needs_lake'])
         self.assertFalse((self.root / '.lake').exists(), '[FAIL] rejected_seed_created_cold_lake')
 
     def test_private_publication_must_match_the_sealed_bytes(self):
@@ -296,38 +293,84 @@ class ReuseTests(unittest.TestCase):
             provenance.write_text(json.dumps(record, separators=(',', ':')) + '\n')
             return publish(*args, **kwargs)
         with patch.object(publication, 'publish', side_effect=replace_seed_before_snapshot):
-            self.assertTrue(api.reuse(self.root, self.report, self.report, self.lake)['needs_lake'])
+            self.assertTrue(api.reuse(self.root, self.report, self.report)['needs_lake'])
         self.assertFalse(publication.member(self.report, '.reuse.json').exists())
 
     def test_seal_and_reuse_reject_input_changes_during_work(self):
         api = self.receipt()
-        captured = api.capture(self.root, self.lake)
-        self.write('Audit.lean', 'def audit := 2\n')
+        captured = api.capture(self.root)
+        self.write('D5/A.lean', 'def a := 2\n')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
-            api.seal(self.root, self.report, self.lake, captured)
+            api.seal(self.root, self.report, captured)
+        self.write('D5/A.lean', 'def a := 1\n')
         api = self.receipt()
         publish = publication.publish
         def mutate_after_publish(*args, **kwargs):
             publish(*args, **kwargs)
-            self.write('Audit.lean', 'def audit := 3\n')
+            self.write('D5/A.lean', 'def a := 3\n')
         with patch.object(publication, 'publish', side_effect=mutate_after_publish):
-            self.assertTrue(api.reuse(self.root, self.report, self.output, self.lake)['needs_lake'])
+            self.assertTrue(api.reuse(self.root, self.report, self.output)['needs_lake'])
         self.assertFalse(publication.member(self.output, '.reuse.json').exists())
 
     def test_missing_execution_contract_disables_only_reuse(self):
         api = self.receipt()
         del self.policy['report_execution']
         self.write_policy()
-        captured = api.capture(self.root, self.lake)
-        self.assertTrue(api.probe(self.root, self.report, self.lake)['needs_lake'])
-        api.seal(self.root, self.report, self.lake, captured)
+        captured = api.capture(self.root)
+        self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
+        api.seal(self.root, self.report, captured)
         self.assertFalse(publication.member(self.report, '.reuse.json').exists())
         self.policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])
         self.write_policy()
         with self.assertRaisesRegex(ValueError, 'report_execution'):
-            api.probe(self.root, self.report, self.lake)
+            api.probe(self.root, self.report)
         with self.assertRaisesRegex(ValueError, 'report_execution'):
-            api.reuse(self.root, self.report, self.output, self.lake)
+            api.reuse(self.root, self.report, self.output)
+
+    def entry_with_program_build(self, targets, *, seed=True, build_exit=0):
+        # Exercise the actual shell entry and report receipt, replacing only the
+        # external cache/build processes. No Lean compilation is needed here.
+        for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
+                         'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                         'tools/scripts/lib/resource-observation-lib.sh',
+                         'tools/scripts/workflow/ci_plan.py'):
+            target = self.root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, target)
+        ensure = self.root / 'tools/scripts/worktree/lean-cache-ensure.sh'
+        ensure.write_text('#!/bin/bash\nset -euo pipefail\n'
+                          'test ! -e .lake\nprintf "ensure\\n" >> build-calls\nmkdir .lake\n')
+        runner = self.root / 'tools/scripts/worktree/lean-cache-run.sh'
+        runner.write_text('#!/bin/bash\nset -euo pipefail\n'
+                          'printf "%s\\n" "$*" >> build-calls\n'
+                          'exit ' + str(build_exit) + '\n')
+        runner.chmod(0o755)
+        self.receipt()
+        if not seed:
+            publication.member(self.report, '.reuse.json').unlink()
+        elif seed == 'corrupt':
+            publication.member(self.report, '.reuse.json').write_text('damaged receipt')
+        self.output = self.root / '.lake/build/stratalint' / publication.RAW
+        producer = self.root / 'producer.dll'
+        producer.write_text('fixture executable')
+        environment = dict(os.environ, LAKE_BIN=str(self.lake),
+            STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
+            STRATALINT_LEAN_REPORT_REUSE=str(self.report),
+            STRATALINT_LEAN_BUILD_TARGETS=json.dumps(targets))
+        if targets is None:
+            environment.pop('STRATALINT_LEAN_BUILD_TARGETS')
+            self.write('Meta/ci-resources.json', json.dumps(dict(
+                schema='ci-resource-execution-v1', resources=[dict(
+                    id='fixture-program-build', projects=[], checks=[], steps=[],
+                    lean_targets=['FixtureAudit'])])))
+        result = subprocess.run(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
+            '--repository', str(self.root), '--output', str(self.output),
+            '--log-dir', str(self.root / 'logs')], env=environment, text=True, capture_output=True)
+        calls = self.root / 'build-calls'
+        return result, calls.read_text().splitlines() if calls.exists() else []
+
+
+
 
 
 if __name__ == '__main__':
