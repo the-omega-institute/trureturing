@@ -87,13 +87,46 @@ def _unit_flow(edge_records, start, finish, denominator):
     return flow, augmentations
 
 
-def couple_tree_caps(m, q, radix, depth, source, caps):
+def _weighted_pair_cut_check(row_caps, joint_coefficients):
+    """Check all sufficient cut inequalities for pairwise projected laws.
+
+    For active roots A, write a for the sum of row caps outside A and
+    b for the sum of joint coefficients inside A.  If |A|<=1, require
+    a>=1. Otherwise require a+b/2>=1 and a+b-beta[r]>=1 for every r in A.
+    The ordinary weighted complete-graph cover argument proves sufficiency;
+    these finite checks do not assume any independence of projected laws.
+    """
+    m = len(row_caps)
+    require(m >= 2 and len(joint_coefficients) == m, "pair-coupling coefficient carrier")
+    checks = 0
+    for size in range(m+1):
+        for selected in combinations(range(m), size):
+            outside = sum((row_caps[r] for r in range(m) if r not in selected), F())
+            if size <= 1:
+                require(outside >= 1, f"weighted pair cut fails at active roots {selected}")
+                checks += 1
+                continue
+            total = sum((joint_coefficients[r] for r in selected), F())
+            require(outside+total/2 >= 1,
+                    f"weighted balanced pair cut fails at active roots {selected}")
+            checks += 1
+            for r in selected:
+                require(outside+total-joint_coefficients[r] >= 1,
+                        f"weighted star pair cut fails at active roots {selected}, minimum root {r}")
+                checks += 1
+    return checks
+
+
+def couple_tree_caps(m, q, radix, depth, source, caps, *,
+                     row_caps=None, joint_coefficients=None):
     """Return (law, metadata); reject malformed input or an unsupported premise.
 
     law maps actual (row, leaf) pairs to positive Fractions. Every q-row
     projected capacity is checked before the private/public network is built.
     All output row, pure-prefix and joint-prefix caps are then recomputed from
-    that same literal law. No numerical optimizer is used.
+    that same literal law. No numerical optimizer is used. Optional exact
+    per-row caps and joint coefficients are supported together when q=2;
+    every sufficient weighted pair-cut inequality is checked before flow.
     """
     require(type(m) is int and type(q) is int and 1 <= q <= m, "1 <= q <= m")
     require(type(radix) is int and radix >= 2 and type(depth) is int and depth >= 1,
@@ -105,6 +138,21 @@ def couple_tree_caps(m, q, radix, depth, source, caps):
     require(all(type(cap) in (int, F) and cap >= 0 for cap in caps.values()),
             "exact nonnegative integer/Fraction caps")
     caps = {key: F(value) for key, value in caps.items()}
+    weighted = row_caps is not None or joint_coefficients is not None
+    if weighted:
+        require(q == 2 and type(row_caps) in (tuple, list)
+                and type(joint_coefficients) in (tuple, list)
+                and len(row_caps) == len(joint_coefficients) == m,
+                "weighted pair coupling requires q=2 and both full coefficient arrays")
+        require(all(type(value) in (int, F) and value >= 0
+                    for value in (*row_caps, *joint_coefficients)),
+                "exact nonnegative weighted pair coefficients")
+        row_bounds = tuple(F(value) for value in row_caps)
+        joint_bounds = tuple(F(value) for value in joint_coefficients)
+        weighted_checks = _weighted_pair_cut_check(row_bounds, joint_bounds)
+    else:
+        row_bounds = (F(1, m-q+1),)*m
+        joint_bounds = (F(q, m),)*m
     values = list(source)
     require(all(type(p) in (tuple, list) and len(p) == 2 and all(type(z) is int for z in p)
                 for p in values), "literal integer source pairs")
@@ -123,10 +171,10 @@ def couple_tree_caps(m, q, radix, depth, source, caps):
     start, finish = ("source",), ("public", 0, 0)
     edges = []
     for r in range(m):
-        edges.append((start, ("private", r, 0, 0), F(1, m-q+1)))
+        edges.append((start, ("private", r, 0, 0), row_bounds[r]))
         for b, c in sorted(expected):
             edges.append((("private", r, b-1, c % radix**(b-1)),
-                          ("private", r, b, c), F(q, m)*caps[(b, c)]))
+                          ("private", r, b, c), joint_bounds[r]*caps[(b, c)]))
     for b, c in sorted(expected):
         edges.append((("public", b, c), ("public", b-1, c % radix**(b-1)), caps[(b, c)]))
     for r, y in points:
@@ -137,7 +185,7 @@ def couple_tree_caps(m, q, radix, depth, source, caps):
     law = {point: mass for point, mass in law.items() if mass > 0}
     require(set(law) <= set(points) and sum(law.values(), F()) == 1, "one actual supported probability")
     rows = {r: sum((mass for (rr, y), mass in law.items() if rr == r), F()) for r in range(m)}
-    require(all(mass <= F(1, m-q+1) for mass in rows.values()), "same-law row caps")
+    require(all(rows[r] <= row_bounds[r] for r in range(m)), "same-law row caps")
     pure, joint = {}, {}
     for b, c in sorted(expected):
         pure[(b, c)] = sum((mass for (r, y), mass in law.items() if y % radix**b == c), F())
@@ -145,12 +193,17 @@ def couple_tree_caps(m, q, radix, depth, source, caps):
         for r in range(m):
             joint[(r, b, c)] = sum((mass for (rr, y), mass in law.items()
                                     if rr == r and y % radix**b == c), F())
-            require(joint[(r, b, c)] <= F(q, m)*caps[(b, c)], "same-law joint prefix cap")
-    return law, {"source_points": len(points), "selected_points": len(law),
+            require(joint[(r, b, c)] <= joint_bounds[r]*caps[(b, c)], "same-law joint prefix cap")
+    metadata = {"source_points": len(points), "selected_points": len(law),
                  "q_subset_checks": subset_checks, "network_edges": len(edges),
                  "flow_denominator": denominator, "augmentations": augmentations,
                  "row_masses": [str(rows[r]) for r in range(m)],
                  "pure_prefix_checks": len(pure), "joint_prefix_checks": len(joint)}
+    if weighted:
+        metadata.update({"row_caps": [str(value) for value in row_bounds],
+                         "joint_coefficients": [str(value) for value in joint_bounds],
+                         "weighted_pair_cut_checks": weighted_checks})
+    return law, metadata
 
 
 def _law_rows(law):
@@ -271,6 +324,32 @@ def input_controls():
             raise ValueError(f"failed to reject {name}")
     return {"nonuniform_capacity_control": {**info, "law": _law_rows(law)},
             "rejected_inputs": rejected}
+
+
+def weighted_pair_controls():
+    """Exact weighted-flow and failed-cut controls for report445."""
+    alpha = [F(5, 17)] + [F(6, 17)]*3
+    beta = [F(10, 23)] + [F(12, 23)]*3
+    caps = {(1, y): F(1, 3) for y in range(7)}
+    source = [(r, y) for r in range(4) for y in (r, (r+1) % 4)]
+    law, info = couple_tree_caps(4, 2, 7, 1, source, caps,
+                                row_caps=alpha, joint_coefficients=beta)
+    rejected = []
+    cases = [("insufficient row cuts", [F(1, 4)]*4, beta),
+             ("insufficient joint cuts", [F(1, 3)]*4, [F(2, 5)]*4),
+             ("inexact weighted coefficients", alpha, [0.5]*4),
+             ("missing weighted coefficient array", alpha, None)]
+    for name, row_caps, joint_coefficients in cases:
+        try:
+            couple_tree_caps(4, 2, 7, 1, source, caps,
+                             row_caps=row_caps, joint_coefficients=joint_coefficients)
+        except ValueError:
+            rejected.append(name)
+        else:
+            raise ValueError(f"failed to reject {name}")
+    return {"weighted_flow": {**info, "law": _law_rows(law)},
+            "rejected_inputs": rejected,
+            "scope": "Exact finite controls of the weighted cut interface; no minimax optimality claim."}
 
 
 def simultaneous_selector_obstruction(fixture_script):

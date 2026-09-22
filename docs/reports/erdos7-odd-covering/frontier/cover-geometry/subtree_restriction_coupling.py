@@ -8,7 +8,7 @@ certification is used here. Original divisor phases are never identified.
 from collections import defaultdict
 from fractions import Fraction as F
 from itertools import combinations, product
-from math import comb, lcm, prod
+from math import lcm, prod
 from pathlib import Path
 import argparse
 import json
@@ -31,6 +31,34 @@ def couple_depth_two_caps(m, q, p, t, radix, depth, source, caps, couple):
     require(all(type(z) is int for z in (m,q,p,t,radix,depth))
             and 1 <= q <= m and 1 <= t <= p and radix >= 2 and depth >= 1,
             "exact positive carrier and selection sizes")
+    selections = tuple(combinations(range(p), t))
+    law, info = couple_child_restriction_caps(
+        m,q,p,radix,depth,source,caps,couple,[selections for _ in range(m)])
+    delta, beta = F(t,p), F(q,m)
+    info.update(child_cap=str(delta/F(m-q+1)),
+                joint_child_coefficient=str(beta*delta))
+    return law, info
+
+
+def couple_child_restriction_caps(m, q, p, radix, depth, source, caps, couple, restrictions,
+                                 *, root_caps=None, joint_coefficients=None):
+    """Average independently uniform, possibly different child families per root.
+
+    Each family is nonempty and contains distinct subsets of the literal child
+    carrier; an empty subset is allowed. Every complete restricted projection
+    is checked by couple. The cap at (r,c) uses its actual inclusion probability.
+    """
+    require(all(type(z) is int for z in (m,q,p,radix,depth))
+            and 1 <= q <= m and p >= 1 and radix >= 2 and depth >= 1,
+            "exact positive carrier and selection sizes")
+    root_caps = [F(1,m-q+1)]*m if root_caps is None else root_caps
+    joint_coefficients = [F(q,m)]*m if joint_coefficients is None else joint_coefficients
+    for values in (root_caps,joint_coefficients):
+        require(type(values) in (tuple,list) and len(values) == m
+                and all(type(v) in (int,F) and v >= 0 for v in values),
+                "one exact nonnegative bound per root")
+    root_caps = list(map(F,root_caps))
+    joint_coefficients = list(map(F,joint_coefficients))
     points = list(source)
     require(points and all(type(z) in (tuple,list) and len(z) == 3
                            and all(type(a) is int for a in z) for z in points),
@@ -47,11 +75,26 @@ def couple_depth_two_caps(m, q, p, t, radix, depth, source, caps, couple):
     children = [defaultdict(set) for _ in range(m)]
     for r,c,y in points:
         children[r][y].add(c)
-    selections = tuple(combinations(range(p), t))
+    require(type(restrictions) in (tuple,list) and len(restrictions) == m,
+            "one nonempty restriction family per root")
+    selections, inclusion = [], {}
+    for r,family in enumerate(restrictions):
+        require(type(family) in (tuple,list) and len(family) > 0,
+                "nonempty finite restriction family")
+        canonical = []
+        for choice in family:
+            require(type(choice) in (tuple,list) and
+                    all(type(c) is int and 0 <= c < p for c in choice)
+                    and len(choice) == len(set(choice)), "literal child subsets")
+            canonical.append(tuple(sorted(choice)))
+        require(len(canonical) == len(set(canonical)), "distinct restriction subsets")
+        selections.append(tuple(canonical))
+        for c in range(p):
+            inclusion[(r,c)] = F(sum(c in choice for choice in canonical),len(canonical))
     root_groups = []
     for r in range(m):
         buckets = defaultdict(list)
-        for choice in selections:
+        for choice in selections[r]:
             selected = set(choice)
             signature = tuple(y for y in sorted(children[r]) if children[r][y] & selected)
             buckets[signature].append(choice)
@@ -75,7 +118,8 @@ def couple_depth_two_caps(m, q, p, t, radix, depth, source, caps, couple):
     for profile in product(*root_groups):
         projected = [(r,y) for r,(signature,_,_) in enumerate(profile) for y in signature]
         conditional, info = couple(m,q,radix,depth,projected,caps)
-        weight = prod((F(size,len(selections)) for _,size,_ in profile),start=F(1))
+        weight = prod((F(size,len(selections[r]))
+                       for r,(_,size,_) in enumerate(profile)),start=F(1))
         profile_weight += weight
         flow_count += 1
         subset_checks += info["q_subset_checks"]
@@ -87,28 +131,34 @@ def couple_depth_two_caps(m, q, p, t, radix, depth, source, caps, couple):
             "all restriction profiles form one unit probability")
     require(set(law) <= set(points) and all(mass > 0 for mass in law.values()),
             "final probability has literal actual support")
-    root_cap, beta, delta = F(1,m-q+1), F(q,m), F(t,p)
     root_mass = [sum((w for (rr,c,y),w in law.items() if rr == r),F()) for r in range(m)]
     child_mass = {(r,c):sum((w for (rr,cc,y),w in law.items() if (rr,cc)==(r,c)),F())
                   for r,c in product(range(m),range(p))}
-    require(all(w <= root_cap for w in root_mass), "same-law root marginals")
-    require(all(w <= delta*root_cap for w in child_mass.values()), "same-law child marginals")
+    require(all(w <= root_caps[r] for r,w in enumerate(root_mass)), "same-law root marginals")
+    require(all(w <= inclusion[key]*root_caps[key[0]] for key,w in child_mass.items()),
+            "same-law child marginals")
     for (b,v),cap in sorted(caps.items()):
         pure = sum((w for (r,c,y),w in law.items() if y % radix**b == v),F())
         require(pure <= cap, "same-law pure column prefix")
         for r in range(m):
             joint = sum((w for (rr,c,y),w in law.items() if rr == r and y % radix**b == v),F())
-            require(joint <= beta*cap, "same-law root/column prefix")
+            require(joint <= joint_coefficients[r]*cap, "same-law root/column prefix")
             for c in range(p):
                 leaf = sum((w for (rr,cc,y),w in law.items()
                             if (rr,cc)==(r,c) and y % radix**b == v),F())
-                require(leaf <= beta*delta*cap, "same-law child/column prefix")
+                require(leaf <= joint_coefficients[r]*inclusion[(r,c)]*cap,
+                        "same-law child/column prefix")
     return law, {"source_points":len(points), "selected_points":len(law),
-                 "original_restriction_choices":comb(p,t)**m,
+                 "original_restriction_choices":prod(map(len,selections)),
+                 "root_restriction_counts":list(map(len,selections)),
                  "root_signature_counts":[len(groups) for groups in root_groups],
                  "grouped_profiles":flow_count, "q_subset_checks":subset_checks,
-                 "root_cap":str(root_cap), "child_cap":str(delta*root_cap),
-                 "joint_root_coefficient":str(beta), "joint_child_coefficient":str(beta*delta)}
+                 "root_cap":str(max(root_caps)),
+                 "joint_root_coefficient":str(max(joint_coefficients)),
+                 "root_caps":list(map(str,root_caps)),
+                 "joint_root_coefficients":list(map(str,joint_coefficients)),
+                 "child_inclusion_probabilities":{f"{r}:{c}":str(w)
+                                                  for (r,c),w in inclusion.items()}}
 
 
 def height_controls():

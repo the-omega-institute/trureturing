@@ -119,6 +119,8 @@ At K=3 this certificate equals 2248/225>9; as K tends to infinity it tends to 24
 
 The hypothesis requires three robust first-five roots. It includes sources with four or five occupied roots if three are robust, but does not cover an arbitrary source lacking that property. It does not establish arithmetic realization of every abstract source, does not transport the complete cofactor moment floor, and does not settle Erdős #7. It closes the specific exactly-three-occupied-root abstract source class left open in report443, including sources for which every fixed mod25 fibre fails that report's local blocking selector.
 
+[Occupancy-aware restrictions and weighted root caps](445-occupied-branch-restrictions-and-weighted-root-caps.md) give a separate four-occupied-root theorem. At heights (2,2), full product-tree blocking and at most one first-five root with all five children suffice for one law with Gamma1225 at most31532/3519<9. That theorem uses actual empty branches and does not require three robust roots.
+
 ## Exact construction without listing every conditional law
 
 The [standard-library depth-two constructor](../../frontier/cover-geometry/subtree_restriction_coupling.py) groups a root's t-child choices by their projected column-neighborhood signature. It computes the report443 coupling once per full signature profile. Conditional on a profile, root choices remain independent and uniform within their groups. For each root/column pair, its actual lift is averaged over that root's group, distributing uniformly over available actual children. The profile gets weight equal to the product of the group multiplicities divided by binom(p,t)^m.
