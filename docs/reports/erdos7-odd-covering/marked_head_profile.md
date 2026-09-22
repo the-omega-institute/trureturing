@@ -907,6 +907,8 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 - [Four roots with three nonsingleton children each and cross-root disjoint original exact pairs admit a common law below five; an exact capacity-flow formula removes the pair-extraction requirement](profile-notes/arithmetic/437-four-root-nonsingleton-sources-admit-a-common-law-below-five.md)
 
-- [Separated weak points and an actual capacity-six strong flow admit a common law at most five; a distinct star construction remains below 46/9, with exact limits on support extraction and weak-child deletion](profile-notes/arithmetic/438-separated-weak-supports-and-common-laws.md)
+- [Separated capacity-six flows and shared weak/grid blocks give common laws at most five; a distinct star construction remains below 46/9, with exact limits on support extraction and weak-child deletion](profile-notes/arithmetic/438-separated-weak-supports-and-common-laws.md)
 
 - [Fixed coarse marginals have an exact coprime free-coordinate completion cost; actual residual lifting retains a joint minimax obligation, and the universal scalar H1 route to nine already fails at finite heights](profile-notes/arithmetic/439-actual-residual-lifting-and-exact-free-coordinate-cost.md)
+
+- [A literal mod-35 mixture separates equal coarse-marginal and scalar-Gamma summaries; joint layout price profiles retain exact finite-fibre contraction and expose the additional conditions for dynamic boundary sufficiency](profile-notes/arithmetic/440-joint-test-profiles-as-composable-boundaries.md)

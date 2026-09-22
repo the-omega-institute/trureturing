@@ -1,13 +1,16 @@
 [Index](../../marked_head_profile.md) · [Earlier source selections](432-four-root-source-selections-and-the-shared-column-boundary.md) · [Nonsingleton sources](437-four-root-nonsingleton-sources-admit-a-common-law-below-five.md)
 
-# Separated weak supports and common laws
+# Weak-root laws with separated or shared column blocks
 
 This result extends the common-column weak-root rectangle case to weak
 roots whose three selected points can occupy different columns. The
 pair-block construction also extends to nonrectangular strong roots
 when an actual capacity-six flow supplies eighteen points outside the
-weak columns. These explicit selection conditions do not cover all
-singleton sources or prove an unrestricted covering statement.
+weak columns. The final section supplies a different uniform law when
+one strong grid uses all three weak columns; this includes the displayed
+counterexample to separated extraction. These explicit selection
+conditions do not cover all singleton sources or prove an unrestricted
+covering statement.
 
 Assume an actual source contains:
 
@@ -344,3 +347,137 @@ Run the retained construction and exact controls with:
 Run the nonrectangular flow construction and its exact cap certificate with:
 
     python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/separated_weak_flow.py
+
+## A shared weak/grid block closes the separated-flow boundary class
+
+The cap-six extraction can fail because another root uses exactly the
+weak columns. That failure does not imply that a supported law fails.
+The following whole class, including the preceding 24-point extraction
+counterexample, admits a simple uniform law.
+
+Let `U` be three distinct seven-columns. Assume an actual source contains:
+
+* a weak root with three distinct selected children, one selected point
+  in each, using the three different columns of `U`;
+* a second root with three selected children, each containing every
+  column of `U`;
+* two further roots, each with three selected children on a common pair
+  `E_1` or `E_2`, where the pairs are distinct and both avoid `U`.
+
+The external pairs may intersect or be disjoint. Select the resulting
+`3+9+6+6=24` actual points and give them equal mass. Extra source points
+receive zero mass. Then, for all independent original phases,
+
+\[
+ \boxed{\Gamma\le5<46/9.}
+\]
+
+The probability is fixed before the phases. The shared pure-seven
+column can affect both the weak matching and the nine-point grid;
+that joint effect is retained throughout the proof.
+
+### Three exact local kernels
+
+Write mask `(p,m,e,f)` for original labels `(5,35,25,175)` entering a
+root, put `t=1+p`, and let `h` indicate that the one global modulus-7
+column belongs to that root's selected column set. Local phases of
+labels 35, 25 and 175 maximize together at the same column and child:
+the rectangular strong blocks have constant atom weights, and all
+cross terms are nonnegative. In the weak matching, all three local
+nonconstant events can use the point hit by the global column, when
+that hit is present. Thus, writing `c=h+m`, their exact unnormalized
+local maxima are
+
+\[
+ M_h=(t+c+e+f)^2+2t^2,
+\]
+
+\[
+ G_h=(t+c+e+f)^2+2(t+c)^2+2(t+e)^2+4t^2,
+\]
+
+\[
+ P_h=(t+c+e+f)^2+2(t+c)^2+(t+e)^2+2t^2.
+\]
+
+Here `M` is the three-point weak matching, `G` the three-by-three
+grid, and `P` a three-by-two external pair block. These are local
+maxima at a fixed value of the global column; they do not choose a
+separate global phase for each root.
+
+### A direct affine proof of the global bound
+
+For binary mask bits, `2ab <= a+b`. Expand each displayed kernel
+and apply this inequality to its nonnegative mixed terms. The result
+is an affine upper bound `base + v_p p + v_m m + v_e e + v_f f`, with
+coefficients
+
+| Local block | Base | `(v_p,v_m,v_e,v_f)` |
+|---|---:|---|
+| `M_h` | `3+3h` | `(12+2h,6+2h,6+2h,6+2h)` |
+| `G_h` | `9+9h` | `(34+6h,14+6h,14+2h,6+2h)` |
+| `P_h` | `6+9h` | `(24+6h,14+6h,10+2h,6+2h)` |
+
+Every one of the four labels selects at most one occupied root, so
+the sum of its mask bit over the four roots is at most one.
+
+If the global column `b` belongs to `U`, the actual hit pattern is
+`(h_M,h_G,h_{P1},h_{P2})=(1,1,0,0)`. The four bases sum to 36,
+and every coefficient vector is coordinatewise at most
+`(40,20,16,8)`. The total numerator is therefore at most
+
+\[
+ 36+40+20+16+8=120.
+\]
+
+If `b` is outside `U`, the weak and grid hits are zero. Each external
+pair hit is at most one; dominate both by one within this same law.
+The bases then sum to 42, and every coefficient vector is at most
+`(34,20,14,8)`. Consequently the numerator is at most
+
+\[
+ 42+34+20+14+8=118<120.
+\]
+
+These bounds hold for all original root, child and column phases.
+Dividing by 24 proves `Gamma <= 5`. The proof uses no enumeration
+of sources or layouts.
+
+For additional exact checking, the full 256 root-mask allocations
+at the two dominating global-column profiles have maxima 120 and
+112. The first places all four masks in the nine-point grid root.
+Thus the uniform laws on the exact displayed templates attain five;
+this is sharpness of that specified law, not minimax optimality over
+all probabilities on a source.
+
+### Scope relative to earlier criteria
+
+For the exact selected source, the weak root's common-column
+intersection is empty and its matching rank is three. The grid root
+is robust and has matching rank three. Each external pair root has
+rank two. Thus there is only one robust root, the four-root common
+column rectangle condition fails at the weak root, and the sorted
+matching tuple `(2,2,3,3)` does not dominate any tuple in report 432's
+matching table. Its full capped rank sum is ten, so the eleven-point
+selector cannot apply; the singleton-plus-three-matchings selector
+also lacks the required three strong matchings.
+
+The separated-flow construction still fails when the grid children
+have no neighbors outside `U`. The old extraction counterexample
+therefore remains a valid counterexample to that recipe. This new
+shared-support law closes its indicated source class without claiming
+that the extraction became possible or that every singleton source
+has been covered.
+
+The [companion constructor and exact checker](../../frontier/cover-geometry/singleton_grid_pair_law.py)
+retains actual root and child digits, verifies all three local kernels
+against every local phase, checks the affine inequalities, and checks
+the 256 root allocations in each profile. It uses report 434's
+original-phase oracle on actual intersecting-pair and disjoint-pair
+consumers, reconstructing literal six-label phase witnesses. The
+second consumer has nonstandard root and child digits. All checks
+use exact arithmetic; no Lean certification is claimed.
+
+Run the shared weak/grid construction with:
+
+    python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/singleton_grid_pair_law.py
