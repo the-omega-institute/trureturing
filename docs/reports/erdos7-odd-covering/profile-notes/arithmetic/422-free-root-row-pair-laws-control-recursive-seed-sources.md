@@ -21,6 +21,10 @@ matching, and on which every five-decaying conditional-root mixture fails
 once K>=6. Nevertheless the new fixed probability succeeds for every K>=3,
 with a uniform target margin greater than 1/20.
 
+The fixed mixture architecture nevertheless fails on an existing height-one
+seven-point source: its optimum over all four reference rows and all
+permitted components is 49/11, exceeding the target four by 5/11.
+
 These are ordinary analytic results with exact finite controls. They are
 not Lean-certified, and do not prove a common-law theorem for arbitrary
 admissible sources or decide unrestricted Erdős #7.
@@ -364,6 +368,80 @@ original-phase lower bound
 This excludes the stated family of five-decaying conditional laws, not
 the actual sources. Their successful fixed law R1 is already proved above.
 
+## A sharp height-one boundary for the fixed mixture architecture
+
+Use the existing type-B source from 390 and 398, also used in 392 and
+421 after the stated column relabelling:
+
+    R={(1,0),(2,1),(2,2),(3,1),(3,3),(4,1),(4,4)}.
+
+Its five-column projection and its three-column projection on every pair
+of rows make it admissible at K=1. For each reference row a in {1,2,3,4},
+allow arbitrary actual component probabilities satisfying the hypotheses
+of this report: mu has column cap 1/5, and eta_B has column cap 1/3 for
+each two-element subset B of {1,2,3,4}\{a}. Retain the fixed weights
+5/11 and 2/11, and choose all components before the original phases.
+Then the exact restricted optimum is
+
+    min_(a,mu,(eta_B)) Gamma_1((5/11)mu+(2/11)sum_B eta_B)
+      =49/11=4+5/11.                              (R14)
+
+This is a lower bound on the actual phase cost of every law in that
+architecture, independently of the sufficient transport estimate R2.
+
+Write p_1=(1,0) and p_r=(r,r) for r=2,3,4 for the four private points,
+and y_r=nu(r,1) for the three shared-column masses. Normalization and the
+caps force mu to give each of its five available columns mass 1/5, and
+each eta_B to give each of its three available columns mass 1/3. Each
+private point in a non-reference row occurs in exactly two selected pair
+components. Consequently every permitted mixture satisfies
+
+    nu(p_a)=1/11,       nu(p_r)=7/33 for r!=a,
+    y_2+y_3+y_4=3/11,
+    y_a<=1/11 when a!=1.                          (R15)
+
+The last inequality holds because the reference row receives no pair
+component. The centered original layout at a spoke private point p_r
+has phases (0,r,r,r) at divisors (1,5,7,35), and its expectation is
+
+    1+15nu(p_r)+3y_r.                            (R16)
+
+If a=1, average R16 over the three spokes. R15 makes this average exactly
+49/11. If a is a spoke, average over the other two spokes. Their shared
+mass is at least 3/11-1/11=2/11, so this average is at least
+
+    1+15(7/33)+(3/2)(2/11)=49/11.
+
+The maximum over all original layouts dominates either average, proving
+R14's lower bound for every reference and every permitted component.
+
+For attainment, keep the forced column masses and split every shared
+pair column equally between its available rows. If a=1, split mu's
+shared-column mass equally over rows 2,3,4; otherwise put that mass in
+row a. The resulting actual law has y_2=y_3=y_4=1/11 and the private
+masses in R15. Substitution in the full root expansion TB4 of 390 gives,
+after maximizing all other phases, the following maxima by the modulus-5
+row phase 0,1,2,3,4, multiplied by 33:
+
+    a=1:  (89, 98, 147, 147, 147),
+    a=2:  (89,138, 107, 147, 147).
+
+The cases a=3,4 are permutations of the spoke rows and their private
+columns. Thus each attaining law has full original-layout maximum
+147/33=49/11, completing R14. The program checks all 1,225 original
+layouts for each of the four laws. It also checks the lower-bound
+averages on all 42 vertices of the component polytope: three choices
+for mu's shared row and independent endpoint choices for each shared
+two-row pair column. The universal lower bound is the analytic argument
+R15--R16; no numerical optimizer is used in the retained check.
+
+This height-one obstruction concerns the fixed weights and the three
+pairs excluding a single reference row. It does not contradict the
+K>=3 recursive-seed consumer above or exclude an arbitrary supported law.
+Indeed [392](392-root-optimal-laws-do-not-tensorize-the-full-layout-bound.md)
+already proves the unrestricted optimum on this same source is
+631/166<4. The architecture obstruction does not decide Erdős #7.
+
 ## Reusable program and verification
 
 [`free_root_row_pair_law.py`](../../frontier/cover-geometry/free_root_row_pair_law.py)
@@ -381,6 +459,8 @@ and every component prefix cap, the exact disagreement profile, all finite
 margins, the height-eight threshold, and malformed-input controls. The
 root calculation also checks the two crossing affine lines and all 17
 distinct root-plus-tail expressions at alpha=5/11.
+The separate architecture boundary check verifies all 42 component
+vertices and 4,900 original layouts for the four attaining laws in R14.
 
 From the repository root:
 

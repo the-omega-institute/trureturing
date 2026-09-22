@@ -5,6 +5,8 @@ Report 422 proves the general all-phase interface and an all-height
 consumer with a single +2 centre and four recursive clean seed sources.
 Its selected pair laws need no monochromatic private columns. Exact
 checks retain actual support, independent original phases, and one law.
+The type-B root source also gives an exact obstruction to making this
+fixed mixture architecture universal, even after optimizing its components.
 Standard library only; running this file writes no files.
 """
 from collections import defaultdict
@@ -20,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import concentrated_sharp_source_relabel_transport as family
 import five_decay_root_mixture_obstruction as fast_obstruction
 import prefix_local_row_transport as transport
+import root_rectangle_second_moment as root_sources
 import single_surplus_source_common_law as previous
 
 ALPHA = F(5, 11)
@@ -249,6 +252,95 @@ def generic_controls():
     return {'literal_layouts': 1225, 'unprescribed_component_root_columns': True, 'rejected': rejected}
 
 
+def architecture_boundary_controls():
+    """Exact type-B obstruction for every reference and every permitted component."""
+    actual = frozenset((r+1, c) for r, c in root_sources.edges(root_sources.TEMPLATES['B']))
+    lower = F(49, 11)
+
+    def checked_component(raw, rows, branching):
+        law = family.probability(1, raw)
+        family.need(set(law) <= actual and all(r in rows for r, _ in law),
+                    'architecture component support')
+        pure, _ = family.prefix_masses(law, 1)
+        family.need(max(pure.values()) <= F(1, branching), 'architecture component cap')
+        return law
+
+    def full_law(common):
+        law = {p: F(1, 5) for p in actual if p[1] != 1}
+        law.update({(r, 1): w/5 for r, w in common.items() if w})
+        return checked_component(law, family.ROWS, 5)
+
+    def pair_law(pair, split):
+        law = {}
+        columns = sorted({y for r, y in actual if r in pair})
+        family.need(len(columns) == 3, 'type-B pair has three forced root columns')
+        for column in columns:
+            rows = sorted(r for r, y in actual if y == column and r in pair)
+            if len(rows) == 1:
+                law[rows[0], column] = F(1, 3)
+            else:
+                family.need(column == 1 and len(rows) == 2, 'only the shared column can split')
+                for row, mass in zip(rows, (split/3, (1-split)/3)):
+                    if mass:
+                        law[row, column] = mass
+        return checked_component(law, pair, 3)
+
+    def expectation(law, phases):
+        return sum((w*family.layout_api.literal_layout_cost(1, phases, p)
+                    for p, w in law.items()), F())
+
+    records, total_vertices = [], 0
+    for reference in family.ROWS:
+        pairs = tuple(combinations(tuple(r for r in family.ROWS if r != reference), 2))
+        split_pairs = tuple(pair for pair in pairs if 1 not in pair)
+        centres = tuple(r for r in (2, 3, 4) if r != reference)
+        lower_layouts = tuple((0, r, r, r) for r in centres)
+        dual_values = []
+        # Five/full and three/pair projection columns force equal column masses.
+        # Their only freedoms are the full common-column simplex and pair splits.
+        for common_row in (2, 3, 4):
+            full = full_law({common_row: F(1)})
+            for endpoints in product((F(), F(1)), repeat=len(split_pairs)):
+                splits = dict(zip(split_pairs, endpoints))
+                laws = {pair: pair_law(pair, splits.get(pair, F())) for pair in pairs}
+                nu = family.mixture(1, [(ALPHA, full)]
+                                    + [(PAIR_WEIGHT, laws[pair]) for pair in pairs])
+                value = sum((expectation(nu, phases) for phases in lower_layouts), F())/len(lower_layouts)
+                family.need(value >= lower, 'all-component architecture lower bound')
+                dual_values.append(value)
+
+        full = full_law({r: F(1, 3) for r in (2, 3, 4)}
+                        if reference == 1 else {reference: F(1)})
+        laws = {pair: pair_law(pair, F(1, 2)) for pair in pairs}
+        nu = family.mixture(1, [(ALPHA, full)]
+                            + [(PAIR_WEIGHT, laws[pair]) for pair in pairs])
+        expected = {p: F(1, 11) if p[1] == 1 or p[0] == reference else F(7, 33)
+                    for p in actual}
+        family.need(nu == expected, 'architecture lower bound attaining law')
+        maxima = defaultdict(F)
+        layouts = 0
+        for phases in product(range(1), range(5), range(7), range(35)):
+            maxima[phases[1]] = max(maxima[phases[1]], expectation(nu, phases))
+            layouts += 1
+        row_maxima = tuple(33*maxima[r] for r in range(5))
+        expected_rows = ((89, 98, 147, 147, 147) if reference == 1 else
+                         tuple(89 if r == 0 else 138 if r == 1 else
+                               107 if r == reference else 147 for r in range(5)))
+        family.need(row_maxima == expected_rows and max(maxima.values()) == lower,
+                    'all-original-layout architecture attainment')
+        family.need(len(dual_values) == (24 if reference == 1 else 6)
+                    and min(dual_values) == lower, 'complete component vertices')
+        total_vertices += len(dual_values)
+        records.append({'reference_row': reference, 'component_vertices': len(dual_values),
+                        'dual_minimum': min(dual_values), 'literal_layouts': layouts,
+                        'row_phase_maxima_times_33': row_maxima,
+                        'attaining_cost': max(maxima.values())})
+    family.need(total_vertices == 42 and lower-4 == F(5, 11), 'strict architecture target gap')
+    return {'source': 'existing type-B seven-point root source', 'height': 1,
+            'architecture_minimax': lower, 'target_excess': lower-4,
+            'component_vertices': total_vertices, 'references': records}
+
+
 def self_check():
     expected = {3: F(13271, 2475), 4: F(601363, 111375), 5: F(203039, 37125),
                 6: F(27503599, 5011875), 7: F(688102709, 125296875)}
@@ -267,8 +359,9 @@ def self_check():
     threshold = analytic_bound(8)
     family.need(threshold['simple_margin'] == F(99823733, 1804275000) > F(1, 20),
                 'all-height threshold arithmetic')
-    return {'scope': 'actual full/pair prefix-cap interface without prescribed root geometry; one law on every recursive seed source K>=3; ordinary proof, no Lean certification',
+    return {'scope': 'actual full/pair prefix-cap interface without prescribed root geometry; one law on every recursive seed source K>=3; exact K=1 fixed-architecture obstruction; ordinary proof, no Lean certification',
             'root': root_controls(), 'generic': generic_controls(),
+            'fixed_architecture_boundary': architecture_boundary_controls(),
             'finite_actual_sources': finite, 'height_eight_threshold': threshold}
 
 
