@@ -22,7 +22,8 @@ public sealed record EngineeringProjectFixture(
     string[]? ExecutionEnvironment = null,
     string RootNamespace = "Fixture",
     string[]? NamespaceExclude = null,
-    string[]? GlobalNamespaceExceptions = null);
+    string[]? GlobalNamespaceExceptions = null,
+    string[]? ExecutionFileMapPaths = null);
 
 public static class EngineeringRegistrationFixture
 {
@@ -57,6 +58,7 @@ public static class EngineeringRegistrationFixture
             execution_inputs = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionInputs ?? [] : (string[]?)null,
             execution_excludes = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionExcludes ?? [] : (string[]?)null,
             execution_environment = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionEnvironment ?? [] : (string[]?)null,
+            execution_filemap_paths = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionFileMapPaths ?? [] : (string[]?)null,
             owner = project.Owner is null ? null : new { path = project.Owner.Path, assembly = project.Owner.Assembly },
             owned_test_assembly = project.OwnedTestAssembly,
             test_partition = project.Role is "owned-test" or "cross-cutting-test"

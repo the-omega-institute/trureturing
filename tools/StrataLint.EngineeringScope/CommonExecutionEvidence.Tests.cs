@@ -64,6 +64,9 @@ internal static partial class CommonExecutionEvidence
             EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path), StringComparer.Ordinal);
         var executionInputs = projects.Values.Where(project => project.IsTest).ToDictionary(project => project.Path, project =>
             EngineeringProjectRegistry.ExpandInputs(paths, project.ExecutionInputs!, project.ExecutionExcludes!, project.Path), StringComparer.Ordinal);
+        foreach (var project in projects.Values.Where(project => project.IsTest && project.ExecutionFileMapPaths!.Length != 0))
+            if (!executionInputs[project.Path].Contains("Meta/FILEMAP.toml", StringComparer.Ordinal))
+                throw new InvalidDataException($"registered FILEMAP runtime input is absent: {project.Path}: execution_filemap_paths");
         var result = new Dictionary<string, RegisteredTestInput>(StringComparer.Ordinal);
         foreach (var project in projects.Values.Where(project => project.Ci))
         {
@@ -75,13 +78,15 @@ internal static partial class CommonExecutionEvidence
             }).ToArray();
             var relevant = new HashSet<string>(executionInputs[project.Path], StringComparer.Ordinal);
             AddCompilePaths(project.Path, relevant);
+            var fileMapRelevant = relevant.Concat(project.ExecutionFileMapPaths!).ToHashSet(StringComparer.Ordinal);
             var fingerprint = Digest(new
             {
                 contract = TestContract, compile = Compile(project.Path),
                 inputs = project.ExecutionInputs!.Order(StringComparer.Ordinal),
                 excludes = project.ExecutionExcludes!.Order(StringComparer.Ordinal),
+                execution_filemap_paths = project.ExecutionFileMapPaths!.Order(StringComparer.Ordinal),
                 project.Role, project.Ci, project.Owner, project.OwnedTestAssembly, project.TestPartition,
-                materials = executionInputs[project.Path].Select(path => ExecutionMaterial(path, relevant)), environment,
+                materials = executionInputs[project.Path].Select(path => ExecutionMaterial(path, relevant, fileMapRelevant)), environment,
             });
             result.Add(project.Path, new(project.Path, project.Assembly, fingerprint));
         }
@@ -113,10 +118,10 @@ internal static partial class CommonExecutionEvidence
             foreach (var reference in projects[path].References) AddCompilePaths(reference, relevant);
         }
 
-        object ExecutionMaterial(string path, HashSet<string> relevant)
+        object ExecutionMaterial(string path, HashSet<string> relevant, HashSet<string> fileMapRelevant)
         {
-            // Runtime readers of registration data bind only rows addressed by their
-            // declared material/compile closure, never unrelated manifest bytes.
+            // Registration readers bind their material/compile closure. FILEMAP readers
+            // also bind explicit policy queries, whose addresses need not exist as files.
             if (path == EngineeringProjectRegistry.ManifestPath)
                 return new { path, projects = projects.Values.Where(row => relevant.Contains(row.Path))
                     .OrderBy(row => row.Path, StringComparer.Ordinal).Select(row => new
@@ -128,6 +133,7 @@ internal static partial class CommonExecutionEvidence
                         execution_inputs = row.ExecutionInputs?.Order(StringComparer.Ordinal),
                         execution_excludes = row.ExecutionExcludes?.Order(StringComparer.Ordinal),
                         execution_environment = row.ExecutionEnvironment?.Order(StringComparer.Ordinal),
+                        execution_filemap_paths = row.ExecutionFileMapPaths?.Order(StringComparer.Ordinal),
                     }) };
             if (path == "Meta/FILEMAP.toml")
             {
@@ -140,7 +146,7 @@ internal static partial class CommonExecutionEvidence
                     ? FileMapTomlTables.Parse(value, document.Path, allowEmpty: false)
                     : Array.Empty<TomlTable>()).ToArray();
                 var selected = rows.Where(row => row.TryGetValue("pattern", out var pattern) && pattern is string text
-                    ? relevant.Any(FileMapGlob.CreateForAdmissionPlane(text).IsMatch)
+                    ? fileMapRelevant.Any(FileMapGlob.CreateForAdmissionPlane(text).IsMatch)
                     : throw new InvalidDataException("registered FILEMAP row has no pattern"));
                 return new { path, policy = documents.Select(document => new
                     {
