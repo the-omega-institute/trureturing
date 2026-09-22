@@ -3,6 +3,7 @@
    mirror-B: none(waiver:all-odd-moduli-actual-standard-character)
    mirror-E: none(waiver:complete-two-and-four-phase-obstruction)
    anchors: []
+   utility: none
    digest: The two and four stationary golden phases cannot cancel for an odd modulus. -/
 
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar

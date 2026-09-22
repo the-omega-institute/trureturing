@@ -3,6 +3,7 @@
    mirror-B: none(waiver:all-characteristics-orbit-certificate)
    mirror-E: none(waiver:explicit-integer-elimination)
    anchors: []
+   utility: none
    digest: A fixed integer in the five-orbit ideal confines every characteristic to a finite prime support. -/
 
 import D5.S3.Arith.FunctionField.CarlitzFiveOrbit

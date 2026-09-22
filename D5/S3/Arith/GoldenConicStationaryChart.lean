@@ -3,6 +3,7 @@
    mirror-B: none(waiver:all-moduli-unit-norm-charts)
    mirror-E: none(waiver:exact-inverse-and-cubic-nilpotent-phase)
    anchors: []
+   utility: none
    digest: An exact golden norm chart has a unique inverse and a non-flat quadratic normal phase. -/
 
 import D5.S3.Arith.GoldenApparition

@@ -3,6 +3,7 @@
    mirror-B: none(waiver:universal-characteristic-nineteen-orbit)
    mirror-E: none(waiver:explicit-polynomial-ideal-certificate)
    anchors: []
+   utility: none
    digest: Five Carlitz orbit residuals force the exact quintic difference field. -/
 
 import Mathlib.Algebra.CharP.Defs

@@ -3,6 +3,7 @@
    mirror-B: none(waiver:all-positive-moduli-two-read-separation)
    mirror-E: none(waiver:explicit-unit-inverse-and-finite-mass-recovery)
    anchors: []
+   utility: none
    digest: Two correlated modular reads isolate each projective Fibonacci state and recover its mass. -/
 
 import Mathlib.Data.ZMod.Basic

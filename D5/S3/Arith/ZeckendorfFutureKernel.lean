@@ -3,6 +3,7 @@
    mirror-B: none(waiver:all-moduli-constructive-legal-continuations)
    mirror-E: none(waiver:exact-two-sided-future-classification)
    anchors: []
+   utility: none
    digest: Legal Zeckendorf continuations identify exactly a unit-scaling quotient of residue states. -/
 
 import Mathlib.Data.Nat.Fib.Basic
