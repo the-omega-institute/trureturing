@@ -275,6 +275,43 @@ assigns Apache-2.0 to repository-produced Lean code, CC-BY-4.0 to text, and CC0
 to data. Third-party dependencies retain their upstream licenses and applicable
 notices.
 
+### Optional maintainer session queue
+
+Maintainers can take a read-only snapshot of external contributions with Python
+3 and an authenticated [GitHub CLI](https://cli.github.com/):
+
+```sh
+python3 tools/scripts/agent/contribution_queue.py
+python3 tools/scripts/agent/contribution_queue.py --pr 123
+```
+
+Run these from the checkout, replacing `123` with the PR number to inspect.
+From another directory, pass the script's absolute path. `--help` describes the
+options; `--repo ORGANIZATION/REPOSITORY` selects another repository using the
+same `ci-pr.yml` policy adapter. The authenticated account must have active
+organization membership and visibility of all organization owners (Members
+read / `read:org`), plus read access to PRs, Issues, Actions, Checks, commit
+statuses, branch protection and rules (including Administration read).
+
+JSON output separates `prs.ready`, `prs.waiting` with reasons, and
+`issues.triage`. Owners are enumerated dynamically from organization admins;
+their PRs and Issues are excluded before queue checks. Missing owner or author
+identity aborts classification rather than treating an owner as external.
+`--pr` refreshes only that PR and skips the Issue and other PR lists.
+
+A PR enters `ready` only after the existing required contexts succeed for its
+current head and PR association, with GitHub Actions app, workflow, run attempt,
+job and check provenance verified. This is eligibility for review; it does not
+certify mathematics or authorize merge. The adapter supports non-strict branch
+protection with required checks bound to GitHub Actions and no active rulesets.
+Unsupported policy, conflicting evidence or observed changes keep a PR waiting;
+API, permission or identity failures return an error snapshot and exit 2.
+Observations are not atomic and must be refreshed before acting.
+
+The command makes only GitHub GET requests. It executes no contribution text,
+changes no PR or Issue metadata, and starts no builds, writes, daemon or merge.
+It is an optional session tool and adds no required admission gate.
+
 ## Research boundaries
 
 The two excerpts below preserve the original Chinese wording of boundary
