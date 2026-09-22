@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionDisk
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionRecurrences
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionZeroFree
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionBoundary
 license: citation-only
 triage: anchor
 ---
@@ -67,10 +68,29 @@ $Q(0)=d$, $Q(z)=z\operatorname{Li}'_k(z)/\operatorname{Li}_k(z)$ off zero.
 origin values; it never equates a nonzero removable value with total
 division by zero.
 
-This is an intermediate disk theorem, not a resolution of Conjecture 1.3.
-It supplies no coefficient-sign theorem, admissible boundary convergence,
-slit continuation, bank asymptotics or contour transfer. Solved-problem
-credit is zero. The preregistered target is
+`CompositionBoundary.result` supplies the admissible boundary bridge W03.
+For every positive head greater than one and every positive-entry tail,
+it proves summability of the frozen coefficients and of the independent
+full family indexed by `(n : Nat) × StrictIndices tail.length n`.
+Here the largest positive index is $n+1$, its exponent is the head, and
+the remaining indices strictly decrease below it. The total `zeta` is
+defined from that full family, not from the normalized coefficients.
+The theorem identifies both sums, proves their strict positivity, and
+proves that the actual frozen `normalized` function tends to this total
+as real $r$ approaches one from below. Its explicit source quotient
+identity holds at nonzero points of the unit disk.
+
+The nested bound is $H_N(\mathrm{tail})\le H_N^{\mathrm{length(tail)}}$,
+where the right-hand $H_N$ is the ordinary harmonic number. The logarithmic
+bound and logarithm-power domination give an eventual majorant
+$2^{\mathrm{length(tail)}}(n+1)^{-3/2}$ for the source series grouped by
+largest index. The proof treats the empty tail and the vanishing finite
+prefix exactly. Summability precedes every boundary-total and limit claim.
+
+These are intermediate disk and boundary results, not a resolution of
+Conjecture 1.3. They supply no coefficient-sign theorem, slit continuation,
+bank asymptotics or contour transfer. Solved-problem credit is zero.
+The preregistered target is
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Reuse and literature boundary
@@ -87,3 +107,18 @@ The bounded supplied search found no exact all-composition Lean supplier.
 The source's stated known cases and the supplied preregistration do not
 establish worldwide unresolved status or priority. Exhaustive later
 literature coverage is ASSUMED-UNVERIFIED; no originality claim is made.
+
+For W03, pinned Mathlib at `db584cd6d46c92f209a44c0f1c829460d327499d`
+supplies `harmonic_le_one_add_log`, `isLittleO_log_rpow_rpow_atTop`,
+`Real.summable_nat_rpow`, `summable_sigma_of_nonneg`, and
+`tendsto_tsum_of_dominated_convergence`. Public GitHub Lean-code searches
+for `multiple zeta`, `multipleZeta`, `multizeta`, `multiZeta summable`,
+and `nested harmonic` on 2026-09-22 found no exact convergence supplier
+in the searched scope. The inspected
+`google-deepmind/formal-conjectures@e5f428182a3ee32dde401eceb4a94ba0382e8434`
+`FormalConjectures/Paper/ZagierMZV.lean` defines a grouped MZV and contains
+conjecture statements but no general summability proof. The inspected
+`ImperialCollegeLondon/AnnalsChallenge@e32eb1411db0d700ca874dd695aea92f78699db8`
+positive-characteristic Zagier-Hoffman file concerns a different field
+and has unproved theorem statements. Neither is imported or transplanted;
+no third-party dependency or A17.2 port is introduced.
