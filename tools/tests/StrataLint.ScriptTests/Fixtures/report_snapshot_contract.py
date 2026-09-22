@@ -48,20 +48,20 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 manifest.write_text(json.dumps(altered))
                 result = subprocess.CompletedProcess([], 0, json.dumps(dict(needs_lake=defect == "producer-miss")), "")
                 with mock.patch.object(owner.subprocess, "run", return_value=result) as probe:
-                    selected = owner.report_seed(self.root, pathlib.Path("/declared/lake"))
+                    selected = owner.report_seed(self.root)
                 self.assertEqual(str(path) if defect == "none" else None, selected)
                 self.assertEqual(1 if defect in ("none", "producer-miss") else 0, probe.call_count)
                 if probe.called:
                     arguments = probe.call_args.args[0]
                     self.assertIn("probe", arguments)
                     self.assertIn(str(path), arguments)
-                    self.assertIn("/declared/lake", arguments)
+                    self.assertNotIn("--lake", arguments)
                 self.assertFalse((self.root / REPORT).exists())
 
     def test_report_route_missing_seed_does_not_invoke_a_producer_or_claim_success(self):
         owner = self.owner()
         with mock.patch.object(owner.subprocess, "run") as probe:
-            self.assertIsNone(owner.report_seed(self.root, pathlib.Path("/declared/lake")))
+            self.assertIsNone(owner.report_seed(self.root))
         probe.assert_not_called()
 
     def test_report_preparation_restores_only_current_and_keeps_normal_producer_selected(self):
@@ -70,7 +70,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         planner = importlib.import_module("ci_plan")
         for report_required, reusable in ((True, False), (True, True), (False, False)):
             with self.subTest(report_required=report_required, reusable=reusable):
-                plan = {"execution": {"steps": ["lean-report"] if report_required else ["filemap"]}}
+                plan = {"execution": {"steps": ["lean-report"] if report_required else ["filemap"], "lean_targets": []}}
                 requirements = dict(cache_layers=["current", "dependency", "project"] if report_required else ["current"],
                                     tools=["lake"] if report_required else [])
                 selected = str(self.root / "build/ci/current-check-seed/report.json") if reusable else None
@@ -83,7 +83,6 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                      mock.patch.object(planner, "stage_requirements", return_value=requirements), \
                      mock.patch.object(owner, "restore") as restore, \
                      mock.patch.object(owner, "report_seed", return_value=selected) as probe, \
-                     mock.patch.object(owner.shutil, "which", return_value="/declared/lake"), \
                      contextlib.redirect_stdout(io.StringIO()) as result:
                     self.assertEqual(0, owner.main())
                 self.assertEqual(["current"], restore.call_args.args[3])

@@ -1,4 +1,5 @@
 using System.Text;
+using StrataLint.EngineeringScope;
 using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
@@ -6,7 +7,7 @@ namespace StrataLint.Cli;
 internal static class FileMapConformCommand
 {
     internal const string Usage =
-        "USAGE: StrataLint filemap-conform [--producer-write-set PRODUCER]";
+        "USAGE: StrataLint filemap-conform [--producer-write-set PRODUCER | --scope PATH]";
 
     internal static ExplicitCommandResult Run(
         IReadOnlyList<string> arguments,
@@ -17,7 +18,8 @@ internal static class FileMapConformCommand
         var writeSetQuery = arguments.Count == 2
             && arguments[0] == "--producer-write-set"
             && !string.IsNullOrWhiteSpace(arguments[1]);
-        if (arguments.Count != 0 && !writeSetQuery)
+        var scoped = arguments.Count == 2 && arguments[0] == "--scope" && !string.IsNullOrWhiteSpace(arguments[1]);
+        if (arguments.Count != 0 && !writeSetQuery && !scoped)
         {
             return new ExplicitCommandResult(2, string.Empty, Usage + "\n");
         }
@@ -48,7 +50,9 @@ internal static class FileMapConformCommand
                         string.Empty);
             }
 
-            return Render(FileMapPolicy.InspectRepository(repositoryRoot));
+            var scope = scoped ? FileMapInspectionScope.Read(Path.GetFullPath(arguments[1], repositoryRoot)) : null;
+            var result = Render(FileMapPolicy.InspectRepository(repositoryRoot, scope));
+            return scope is null ? result : result with { Output = DescribeScope(scope) + result.Output };
         }
         catch (Exception exception)
         {
@@ -58,6 +62,10 @@ internal static class FileMapConformCommand
                 $"INFRASTRUCTURE_FAILURE filemap-conform: {exception.Message}\n");
         }
     }
+
+    internal static string DescribeScope(FileMapInspectionScope scope) => "FILEMAP_SCOPE "
+        + System.Text.Json.JsonSerializer.Serialize(new { scope = scope.Paths is null ? "whole-tree" : "delta",
+            paths = scope.Paths?.Length, actors = scope.Actors, inventory = scope.Paths is null || scope.Inventory }) + "\n";
 
     internal static ExplicitCommandResult Render(IReadOnlyList<FileMapFinding> findings)
     {

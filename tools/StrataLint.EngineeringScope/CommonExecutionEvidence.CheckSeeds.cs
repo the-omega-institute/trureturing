@@ -121,18 +121,28 @@ internal static partial class CommonExecutionEvidence
         // Emit notifications only after both copies; output can invoke caller code.
         using var messages = new StringWriter();
         var testMaterials = Array.Empty<string>();
-        if (tests is not null && destination is null)
+        if (destination is null && (tests is not null || stage == "engineering" && File.Exists(Path.Combine(root, TestSeedPath, "tests.json"))))
         {
+            // A guards-only round can transport prior optional tests without
+            // claiming any current test execution. Import still validates each
+            // row against the later requesting project's registered inputs.
+            var seedTests = tests ?? new TestExecutionRecord(2, common.Candidate, common.Round, [], []);
             var seed = Path.Combine(root, TestSeedPath);
             var available = false;
             try
             {
-                available = Hash(Path.Combine(seed, "tests.json")) == Hash(Path.Combine(root, TestsPath));
-                if (available) ValidateMaterials(seed, tests.Materials);
+                var retained = Read<TestExecutionRecord>(seed, "tests.json");
+                available = retained.Version == seedTests.Version && retained.Candidate == seedTests.Candidate && retained.Round == seedTests.Round
+                    && retained.Projects is not null && retained.Materials is not null
+                    && retained.Materials.All(material => material is { Path: not null, Sha256: not null })
+                    && seedTests.Projects.All(project => retained.Projects.Count(row => row == project) == 1)
+                    && seedTests.Materials.All(material => retained.Materials.Contains(material));
+                if (available) ValidateMaterials(seed, retained.Materials!);
             }
-            catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException) { available = false; }
-            if (available || CopyTestSeed(root, tests, messages))
-                testMaterials = tests.Materials.Select(material => TestSeedPath + "/" + material.Path).Append(TestSeedPath + "/tests.json").ToArray();
+            catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException or JsonException) { available = false; }
+            if (available || CopyTestSeed(root, seedTests, messages))
+                testMaterials = Read<TestExecutionRecord>(seed, "tests.json").Materials.Select(material => TestSeedPath + "/" + material.Path)
+                    .Append(TestSeedPath + "/tests.json").ToArray();
         }
         return CopyCheckSeed(root, stage, common, output, destination, testMaterials, checks, messages.ToString());
     }

@@ -43,17 +43,21 @@ internal static partial class CommonExecutionEvidence
                 new { raw = environment, parsed = value, expected_sdk = expectedSdk }, JsonOptions));
     }
 
+    internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root,
+        IReadOnlyCollection<string>? selectedIds = null, IReadOnlyCollection<string>? changedPaths = null) =>
+        CheckInputFingerprints(root, Snapshot(root), selectedIds: selectedIds, changedPaths: changedPaths);
+
     internal static IReadOnlyDictionary<string, string> CheckInputFingerprints(string root, RepositorySnapshot snapshot, bool currentReport = false,
-        IReadOnlyCollection<string>? selectedIds = null, string? executionEnvironment = null, ValidationScope? validation = null)
+        IReadOnlyCollection<string>? selectedIds = null, string? executionEnvironment = null, ValidationScope? validation = null,
+        IReadOnlyCollection<string>? changedPaths = null)
     {
         validation ??= new ValidationScope(snapshot);
         if (!ReferenceEquals(snapshot, validation.Snapshot))
             throw new InvalidDataException("common check validation snapshot mismatch");
-        var files = snapshot.Files.Values.Select(item => new EngineeringSource(item.Path.Value, item.Text)).ToArray();
-        var registry = EngineeringProjectRegistry.Read(files);
+        var registry = EngineeringProjectRegistry.Read(snapshot);
         var checks = validation.CheckManifest(registry).Where(check => selectedIds is null || selectedIds.Contains(check.Id)).ToArray();
-        var sources = registry.Sources(files);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
+        var sources = registry.SourcePaths(paths);
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
         var registeredProjects = projects.Keys.ToHashSet(StringComparer.Ordinal);
         var environment = executionEnvironment ?? ExecutionEnvironment(root);
@@ -82,6 +86,23 @@ internal static partial class CommonExecutionEvidence
             var selected = new HashSet<string>(StringComparer.Ordinal);
             foreach (var project in check.ProgramProjects) Add(project);
             var materialPaths = EngineeringProjectRegistry.ExpandInputs(paths, check.Materials, check.MaterialExcludes, check.Id).ToHashSet(StringComparer.Ordinal);
+            if (check.Id == "filemap" && changedPaths is not null)
+            {
+                var inspection = FileMapInspectionScope.Select(check.DeltaScope, changedPaths, paths);
+                if (inspection.Paths is { } inspected)
+                {
+                    var selectedPaths = inspected.ToHashSet(StringComparer.Ordinal);
+                    // Literal policy/environment inputs remain required. Unchanged
+                    // body globs do not invalidate a local inspection; actor checks
+                    // still consume their registered whole-tree declaration inputs.
+                    if (!inspection.Actors)
+                    {
+                        var literals = check.Materials.Where(pattern => !pattern.Contains('*')).ToHashSet(StringComparer.Ordinal);
+                        materialPaths.RemoveWhere(path => !literals.Contains(path) && !selectedPaths.Contains(path));
+                    }
+                    materialPaths.UnionWith(inspected.Where(path => snapshot.Files.ContainsKey(RepoPath.CreateKnown(path))));
+                }
+            }
             foreach (var report in check.ReportInputs)
             {
                 materialPaths.UnionWith(EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id));
@@ -98,7 +119,7 @@ internal static partial class CommonExecutionEvidence
             foreach (var project in selected.Select(path => projects[path]))
             {
                 materialPaths.Add(project.Path);
-                materialPaths.UnionWith(sources[project.Path].Select(source => source.Path));
+                materialPaths.UnionWith(sources[project.Path]);
                 materialPaths.UnionWith(EngineeringProjectRegistry.ExpandInputs(paths, project.BuildInputs!, [], project.Path));
             }
             object ProjectProjection(EngineeringProjectRegistration project) => new
@@ -116,6 +137,12 @@ internal static partial class CommonExecutionEvidence
                 materials = materialPaths.Order(StringComparer.Ordinal).Select(Material),
                 inventory = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id),
                 report = check.ReportInputs.Length == 0 ? null : reportValue, environment }));
+            if (check.Id == "filemap" && changedPaths is not null)
+                result[check.Id] = Digest(new { input = result[check.Id], contract = "filemap-delta-v1",
+                    paths = changedPaths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal) });
+            if (check.Id == "scribe-markdown")
+                result[check.Id] = Digest(new { input = result[check.Id], contract = "scribe-markdown-scope-v1",
+                    scope = MarkdownInspectionScope.Select(check.MarkdownScope, changedPaths, paths, check.PathInventory) });
             void Add(string path)
             {
                 if (!projects.TryGetValue(path, out var project)) throw new InvalidDataException($"check {check.Id} references unregistered project: {path}");

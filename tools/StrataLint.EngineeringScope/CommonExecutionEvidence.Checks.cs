@@ -6,6 +6,11 @@ namespace StrataLint.EngineeringScope;
 
 internal sealed record CheckOperation(string Name, int RawExit, string Output);
 internal sealed record CheckWork(CheckOperation[] Operations, string? Data = null);
+internal sealed class CommonCheckFailure(StageStep operation, string diagnostic)
+    : Exception($"COMMON_CHECK_FAILED {operation.Name}: raw_exit={operation.RawExit}; log={operation.Log}\n{diagnostic}")
+{
+    internal StageStep Operation { get; } = operation;
+}
 internal sealed record CheckUnitResult(string Id, string InputFingerprint, string Status, string Result,
     string ExecutionCandidate, string ExecutionRound, string ExecutionEnvironment, StageStep[] Operations,
     string? Data, string? Report, ExecutionMaterial[] Materials);
@@ -35,10 +40,18 @@ internal static partial class CommonExecutionEvidence
         if (ids.Distinct(StringComparer.Ordinal).Count() != ids.Length || ids.Except(CheckIds(stage, registrations)).Any())
             throw new InvalidDataException("unregistered selected common units");
         var environment = ExecutionEnvironment(root);
-        var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids, executionEnvironment: environment, validation: validation);
+        var changedPaths = stage == "current" ? CurrentPlan(root, build)?.ChangedPaths : null;
+        var fileMapScope = ids.Contains("filemap") ? FileMapInspectionScope.Select(
+            registrations.Single(check => check.Id == "filemap").DeltaScope, changedPaths,
+            snapshot.Files.Keys.Select(path => path.Value).ToArray()) : null;
+        var markdown = registrations.Single(check => check.Id == "scribe-markdown");
+        var markdownScope = ids.Contains("scribe-markdown") ? MarkdownInspectionScope.Select(markdown.MarkdownScope, changedPaths,
+            snapshot.Files.Keys.Select(path => path.Value).ToArray(), markdown.PathInventory) : null;
+        var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids, executionEnvironment: environment,
+            validation: validation, changedPaths: changedPaths);
         ValidateStartedBuild(root, build, Candidate(root, snapshot), validation);
         File.Delete(Path.Combine(root, ChecksPath(stage)));
-        return new(root, stage, build, validation, registrations, inputs, environment, output, ids);
+        return new(root, stage, build, validation, registrations, inputs, environment, output, ids, fileMapScope, markdownScope);
     }
 
     // This is the existing common owner, split by responsibility. Only a validated
@@ -58,15 +71,20 @@ internal static partial class CommonExecutionEvidence
         private readonly Dictionary<string, CheckUnitResult> completed = new(StringComparer.Ordinal);
         private readonly string invocation;
         internal string[] Ids { get; }
+        internal FileMapInspectionScope? FileMapScope { get; }
+        internal MarkdownInspectionScope? MarkdownScope { get; }
         internal IReadOnlyCollection<CheckUnitResult> Completed => completed.Values;
         internal CheckExecution(string root, string stage, CommonStageRecord build, ValidationScope validation,
-            IReadOnlyList<RegisteredCommonCheck> registrations, IReadOnlyDictionary<string, string> inputs, string environment, TextWriter output, string[] ids)
+            IReadOnlyList<RegisteredCommonCheck> registrations, IReadOnlyDictionary<string, string> inputs, string environment, TextWriter output, string[] ids,
+            FileMapInspectionScope? fileMapScope, MarkdownInspectionScope? markdownScope)
         {
             this.root = root; this.stage = stage; this.build = build; snapshot = validation.Snapshot;
             registration = validation.Fresh();
             successfulReport = new(snapshot);
             this.registrations = registrations; this.inputs = inputs; this.environment = environment;
             Ids = ids;
+            FileMapScope = fileMapScope;
+            MarkdownScope = markdownScope;
             invocation = $"{RootPath}/check-material/{build.Candidate}/{build.Round}/{Guid.NewGuid():N}";
             reused = ImportCheckSeed(root, stage, registration, inputs, output);
         }
@@ -110,8 +128,12 @@ internal static partial class CommonExecutionEvidence
                 var path = directory + "/" + index + ".log";
                 Directory.CreateDirectory(Path.Combine(root, directory));
                 File.WriteAllText(Path.Combine(root, path), operation.Output);
-                return new StageStep(operation.Name, operation.RawExit, 0, "executed", path);
+                var exit = stage == "current" ? CommonStages.Normalize(operation.RawExit) : 0;
+                return new StageStep(operation.Name, operation.RawExit, exit, exit == 0 ? "executed" : "failed", path);
             }).ToArray();
+            for (var index = 0; index < operations.Length; index++)
+                if (operations[index].Exit != 0)
+                    throw new CommonCheckFailure(operations[index], work.Operations[index].Output);
             string? data = null;
             if (work.Data is not null)
             {
@@ -164,7 +186,7 @@ internal static partial class CommonExecutionEvidence
                         return new([new(id, diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe) ? 1 : 0, PredicateJson(id, diagnostics))]);
                     });
                 }
-                catch (InvalidDataException) when (diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe)) { failed.Add(id); }
+                catch (CommonCheckFailure) when (diagnostics.Any(d => d.AdmissionEffect != AdmissionEffect.Observe)) { failed.Add(id); }
             }
             var diagnosticsCombined = PredicateDiagnostics(root, completed.Values).AddRange(actual.Diagnostics.Where(d => failed.Contains(d.RuleId.Value)
                 || d.RuleId.Value == "SL-000" && failed.Contains("SL-015")));
@@ -211,11 +233,13 @@ internal static partial class CommonExecutionEvidence
         var ids = selectedIds ?? CheckIds(stage, validation.CheckManifest());
         // Transport validates the retained execution. Local reuse separately requires
         // this consumer's environment, including OS/architecture binary isolation.
-        ValidateCheckRecord(root, record, snapshot, null, build.Candidate, build.Round, ids, validation);
+        ValidateCheckRecord(root, record, snapshot, null, build.Candidate, build.Round, ids, validation,
+            stage == "current" ? CurrentPlan(root, build)?.ChangedPaths : null);
         return record;
     }
     private static void ValidateCheckRecord(string root, CommonCheckRecord record, RepositorySnapshot snapshot,
-        IReadOnlyDictionary<string, string>? inputs, string candidate, string round, string[] expected, ValidationScope? validation = null)
+        IReadOnlyDictionary<string, string>? inputs, string candidate, string round, string[] expected, ValidationScope? validation = null,
+        IReadOnlyCollection<string>? changedPaths = null)
     {
         validation ??= new ValidationScope(snapshot);
         if (record.Version != 2 || !ValidCandidate(record.Candidate) || !ValidRound(record.Round) || record.Candidate != candidate || record.Round != round || record.Units is null || record.Units.Any(unit => unit is null))
@@ -228,7 +252,7 @@ internal static partial class CommonExecutionEvidence
             ValidateExecutionEnvironment(root, unit.ExecutionEnvironment);
             if (inputs is null && !originalInputs.ContainsKey(unit.ExecutionEnvironment))
                 originalInputs.Add(unit.ExecutionEnvironment, CheckInputFingerprints(root, snapshot, currentReport: record.Stage == "current",
-                    selectedIds: expected, executionEnvironment: unit.ExecutionEnvironment, validation: validation));
+                    selectedIds: expected, executionEnvironment: unit.ExecutionEnvironment, validation: validation, changedPaths: changedPaths));
             ValidateCheckUnit(root, root, snapshot, unit, (inputs ?? originalInputs[unit.ExecutionEnvironment])[unit.Id], candidate, round, validation);
         }
         foreach (var check in validation.CheckManifest().Where(check => expected.Contains(check.Id) && UsesScribe(check)))

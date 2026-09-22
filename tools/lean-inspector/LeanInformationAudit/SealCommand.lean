@@ -331,21 +331,6 @@ def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
   unless expectedContributors == actualContributors do
     throwSnapshotMismatch rootId "contributor-modules" expectedContributors actualContributors
 
-private def stageDeclarations (env : Environment) (declarations : Array Declaration)
-    (minimumHeartbeats : Nat := 0) :
-    CommandElabM Environment := do
-  let options ← getOptions
-  let mut stagedEnv := env
-  for declaration in declarations do
-    match stagedEnv.addDeclCore
-        (max (Core.getMaxHeartbeats options) minimumHeartbeats).toUSize
-        (maxRecDepth.get options).toUSize declaration none true with
-    | .ok nextEnv => stagedEnv := nextEnv
-    | .error error =>
-        let name := declaration.getNames[0]!
-        throwError "IE-C009 ProofConstructionFailed: {name}\n{error.toMessageData options}"
-  pure stagedEnv
-
 private def rootQualifiedEntry (rootId : Name) (localSealNames : Bool)
     (entry : InformationRegistryEntry) : InformationRegistryEntry :=
   if localSealNames then entry else
@@ -397,7 +382,7 @@ def prepareSealPublication : CommandElabM Unit := do
     let proofs ← prepareProofs catalogs
     let declarations := catalogs.map (·.declaration) ++ proofs.declarations
     preflightNames aliasEnv proofs.records declarations
-    let stagedEnv ← stageDeclarations (← getEnv) declarations
+    let stagedEnv ← liftCoreM <| stageDeclarations (← getEnv) declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
     withEnv stagedEnv <| proofs.records.forM logSummary
     setEnv stagedEnv
@@ -417,7 +402,8 @@ def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit := do
     let records := SealRecords.forRoot sealedEnv rootId
     let analysis ← prepareAnalysisProofs rootId records
     preflightNames sealedEnv records analysis.declarations
-    let stagedEnv ← stageDeclarations (← getEnv) analysis.declarations analysisMaxHeartbeats
+    let stagedEnv ← liftCoreM <|
+      stageDeclarations (← getEnv) analysis.declarations analysisMaxHeartbeats
     setEnv <| retainAnalysisState stagedEnv {
       rootId
       records := analysis.records

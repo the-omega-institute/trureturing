@@ -181,17 +181,21 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
             fixture.Processes(prepareReport: false);
         }
         var selected = RunSelectedWithoutOriginalMaterials(fixture);
-        Assert.Equal(selectedInputChanges ? "executed" : "reused", selected.Status);
+        // A partial FILEMAP inspection has a different acceptance scope even
+        // when its selected bytes also appeared in a whole-tree inspection.
+        Assert.Equal("executed", selected.Status);
         var selectedSeed = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
         var final = FullCurrent(fixture, calls);
         output.WriteLine("CURRENT_SEED_COVERAGE full={0} selected={1} selected_status={2} exported={3} final_executed={4} final_reused={5}",
             original.Units.Length, selected.Id, selected.Status, selectedSeed.Units.Length, calls.Count,
             final.Units.Count(unit => unit.Status == "reused"));
-        Assert.Empty(calls);
+        Assert.Equal(new[] { "filemap" }, calls);
         Assert.Equal(21, final.Units.Length);
+        Assert.Equal("executed", final.Units.Single(unit => unit.Id == "filemap").Status);
         foreach (var unit in final.Units)
         {
-            var expected = unit.Id == "filemap" ? selected : original.Units.Single(row => row.Id == unit.Id);
+            if (unit.Id == "filemap") continue;
+            var expected = original.Units.Single(row => row.Id == unit.Id);
             Assert.Equal("reused", unit.Status);
             Assert.Equal(expected.ExecutionCandidate, unit.ExecutionCandidate);
             Assert.Equal(expected.ExecutionRound, unit.ExecutionRound);
@@ -226,9 +230,9 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         RunSelectedWithoutOriginalMaterials(fixture);
         var exported = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
         var final = FullCurrent(fixture, calls);
-        Assert.Equal(20, calls.Count);
+        Assert.Equal(21, calls.Count);
         Assert.Equal("filemap", Assert.Single(exported.Units).Id);
-        Assert.Equal("filemap", Assert.Single(final.Units, unit => unit.Status == "reused").Id);
+        Assert.All(final.Units, unit => Assert.Equal("executed", unit.Status));
     }
 
     [Fact]
@@ -249,7 +253,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         var exported = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Root, "current");
         Assert.DoesNotContain(exported.Units, unit => unit.Id == "unregistered-old-unit");
         FullCurrent(fixture, calls);
-        Assert.Empty(calls);
+        Assert.Equal(new[] { "filemap" }, calls);
         Assert.Equal(21, exported.Units.Length);
     }
 
@@ -286,20 +290,20 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
                 fixture.lake = root / 'bin/lake'
                 if operation in ('prepare', 'renew'):
                     if operation == 'renew':
-                        assert reuse.probe(root, fixture.report, fixture.lake)['needs_lake'], 'previous semantic version must miss'
+                        assert reuse.probe(root, fixture.report)['needs_lake'], 'previous semantic version must miss'
                     fixture.receipt()
                 elif operation in ('probe', 'probe-miss'):
                     sys.path.insert(0, str(repository / 'tools/scripts/worktree'))
                     import lean_actions
-                    selected = lean_actions.report_seed(root, fixture.lake)
+                    selected = lean_actions.report_seed(root)
                     if operation == 'probe-miss':
                         assert selected is None, 'damaged producer must return to normal production'
                         sys.exit(0)
                     expected = root / 'build/ci/current-check-seed' / relative
                     assert selected == str(expected), 'must select accepted independent producer: ' + str(selected)
-                    assert not reuse.probe(root, pathlib.Path(selected), fixture.lake)['needs_lake']
+                    assert not reuse.probe(root, pathlib.Path(selected))['needs_lake']
                     output = root / 'build/reused-report' / publication.RAW
-                    assert not reuse.reuse(root, pathlib.Path(selected), output, fixture.lake)['needs_lake']
+                    assert not reuse.reuse(root, pathlib.Path(selected), output)['needs_lake']
                     assert output.read_bytes() == expected.read_bytes()
                 else:
                     raise AssertionError(operation)
@@ -329,6 +333,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
 
     private static CheckUnitResult RunSelectedWithoutOriginalMaterials(ResourceRouteTests.ResourceFixture fixture)
     {
+        fixture.Processes(prepareReport: false);
         // A new runner has only the restored seed. Unselected original materials
         // and the canonical report must not be required by the selected export.
         var unselected = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"))
@@ -352,6 +357,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
     private static CommonCheckRecord FullCurrent(ResourceRouteTests.ResourceFixture fixture, List<string> calls)
     {
         calls.Clear();
+        fixture.Processes(prepareReport: false, bindPlan: false);
         var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
         var checks = CommonExecutionEvidence.BeginChecks(fixture.Root, "current", build, TextWriter.Null);
         foreach (var id in checks.Ids) checks.Run(id, () =>

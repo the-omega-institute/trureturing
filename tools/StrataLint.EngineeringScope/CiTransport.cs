@@ -28,11 +28,11 @@ internal static class CiTransport
                 throw new ArgumentException("transport options must be unique name/value pairs");
         }
         var pack = arguments[0] == "transport-pack";
-        var seedArchive = values.GetValueOrDefault("--seed-archive");
+        var seedManifest = values.GetValueOrDefault("--seed-manifest");
         var required = new[] { "--repository", "--stage", "--commit", "--run-id", "--run-attempt" }
-            .Concat(pack ? ["--archive"] : []).Concat(seedArchive is not null ? ["--seed-archive"] : []).Order(StringComparer.Ordinal);
+            .Concat(pack ? ["--archive"] : []).Concat(seedManifest is not null ? ["--seed-manifest"] : []).Order(StringComparer.Ordinal);
         if (!required.SequenceEqual(values.Keys.Order(StringComparer.Ordinal)))
-            throw new ArgumentException("transport-pack|transport-verify --repository ROOT --stage build|engineering|current --commit SHA --run-id ID --run-attempt N [--archive FILE] [--seed-archive FILE]");
+            throw new ArgumentException("transport-pack|transport-verify --repository ROOT --stage build|engineering|current --commit SHA --run-id ID --run-attempt N [--archive FILE] [--seed-manifest FILE]");
         var root = Path.GetFullPath(values["--repository"]);
         var stage = values["--stage"];
         var commit = values["--commit"];
@@ -42,10 +42,10 @@ internal static class CiTransport
             throw new ArgumentException("invalid transport stage or immutable execution identity");
         var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "";
         var seedStage = stage.EndsWith("-seed", StringComparison.Ordinal);
-        if (seedArchive is not null && (!pack || stage is not ("engineering" or "current")))
-            throw new ArgumentException("a companion seed archive requires ordinary engineering or current pack");
-        if (seedArchive is not null && Path.GetFullPath(seedArchive) == Path.GetFullPath(values["--archive"]))
-            throw new ArgumentException("ordinary and seed archives must have distinct destinations");
+        if (seedManifest is not null && (!pack || stage is not ("engineering" or "current")))
+            throw new ArgumentException("a companion seed manifest requires ordinary engineering or current pack");
+        if (seedManifest is not null && Path.GetFullPath(seedManifest) == Path.GetFullPath(values["--archive"]))
+            throw new ArgumentException("ordinary archive and seed manifest must have distinct destinations");
         if ((!seedStage || pack) && (Git(root, "rev-parse", "HEAD") != commit
             || Git(root, "status", "--porcelain", "--untracked-files=all").Length != 0))
             throw new InvalidDataException("transport requires the exact clean candidate commit");
@@ -83,17 +83,16 @@ internal static class CiTransport
             // materials before exposing output callbacks; imports still validate
             // them against their recipient's registered inputs and environment.
             using var messages = new StringWriter();
-            if (seedArchive is not null && checks is not null)
+            if (seedManifest is not null && checks is not null)
             {
-                var destination = Path.GetFullPath(seedArchive);
+                var destination = Path.GetFullPath(seedManifest);
                 try
                 {
                     if (CommonExecutionEvidence.CopyAcceptedCheckSeed(root, stage, common, tests, checks, messages))
                     {
                         var seed = CommonExecutionEvidence.ValidateCheckSeedBundle(root, stage);
-                        PackArchive(stage + "-seed", new(2, seed.Candidate, seed.Round, [], []), null, null, destination);
-                        outputs["seed_artifact_name"] = ArtifactName(stage + "-seed", run, attempt);
-                        outputs["seed_archive"] = destination;
+                        CopyManifest(stage + "-seed", new(2, seed.Candidate, seed.Round, [], []), destination);
+                        outputs["seed_manifest"] = destination;
                     }
                 }
                 catch (Exception exception) when (exception is InvalidDataException or FormatException or IOException or UnauthorizedAccessException or ArgumentException)
@@ -120,11 +119,9 @@ internal static class CiTransport
         output.WriteLine($"CI_TRANSPORT stage={stage} candidate={common.Candidate} round={common.Round} commit={commit} run_id={run} run_attempt={attempt} status={(pack ? "packed" : "verified")}");
         return 0;
 
-        void PackArchive(string packedStage, CommonStageRecord accepted, CommonStageRecord? acceptedBuild,
-            CommonExecutionEvidence.ValidationScope? hashes, string archive)
+        TransportMaterial[] SealTransport(string packedStage, CommonStageRecord accepted, CommonStageRecord? acceptedBuild,
+            CommonExecutionEvidence.ValidationScope? hashes)
         {
-            if (archive.StartsWith(Path.Combine(root, CommonExecutionEvidence.RootPath) + Path.DirectorySeparatorChar, StringComparison.Ordinal))
-                throw new ArgumentException("archive must be outside the stage evidence directory");
             var packedManifest = ManifestPath(packedStage);
             var paths = ListedFiles(root, packedStage, accepted, acceptedBuild).Where(path => path != packedManifest).ToArray();
             var materials = paths.Select(path => new TransportMaterial(path,
@@ -132,6 +129,36 @@ internal static class CiTransport
                 Mode(Path.Combine(root, path)))).ToArray();
             CommonExecutionEvidence.Write(root, packedManifest, new CiTransportRecord(1, packedStage, accepted.Candidate, accepted.Round,
                 commit, run, attempt, repository, materials));
+            return materials;
+        }
+
+        void CopyManifest(string packedStage, CommonStageRecord accepted, string destination)
+        {
+            if (destination.StartsWith(Path.Combine(root, CommonExecutionEvidence.RootPath) + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+                throw new ArgumentException("seed manifest must be outside the stage evidence directory");
+            if (Directory.Exists(destination) || File.Exists(destination))
+                throw new IOException("seed manifest already exists");
+            SealTransport(packedStage, accepted, null, null);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            var temporary = destination + ".tmp-" + Guid.NewGuid().ToString("N");
+            try
+            {
+                File.Copy(Path.Combine(root, ManifestPath(packedStage)), temporary);
+                File.Move(temporary, destination);
+            }
+            finally
+            {
+                if (File.Exists(temporary)) File.Delete(temporary);
+            }
+        }
+
+        void PackArchive(string packedStage, CommonStageRecord accepted, CommonStageRecord? acceptedBuild,
+            CommonExecutionEvidence.ValidationScope? hashes, string archive)
+        {
+            if (archive.StartsWith(Path.Combine(root, CommonExecutionEvidence.RootPath) + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+                throw new ArgumentException("archive must be outside the stage evidence directory");
+            var materials = SealTransport(packedStage, accepted, acceptedBuild, hashes);
+            var packedManifest = ManifestPath(packedStage);
             Directory.CreateDirectory(Path.GetDirectoryName(archive)!);
             using (var file = File.Create(archive + ".tmp"))
             using (var gzip = new GZipStream(file, CompressionLevel.Fastest))

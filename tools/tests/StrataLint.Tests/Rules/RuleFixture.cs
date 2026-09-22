@@ -110,6 +110,12 @@ internal sealed partial class RuleFixture
                     "Meta/Digestion/atomizers.toml"),
                 Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/ci-checks.json"] = """
+                {"schema":"ci-check-input-registration-v2","checks":[
+                  {"id":"SL-003","materials":["**"],"material_excludes":[]},
+                  {"id":"SL-015","materials":["**/*.json"],"material_excludes":[]}
+                ]}
+                """ + "\n",
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [ValuesBindingPath] = HeaderFor("D5/S0/Carrier/ValuesBinding", "I")

@@ -7,9 +7,16 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> CurrentCapacity(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, file) in context.Current.Files.Where(static pair => !IsArtifactLineCapacityExcluded(pair.Key.Value)))
+        string[] materials;
+        try { materials = RegisteredCheckMaterials.Read(context.Current, "SL-003"); }
+        catch (InvalidDataException exception)
         {
-            var count = CountArtifactLines(file.Text);
+            return [new RuleFinding(RegisteredCheckMaterials.ManifestPath, exception.Message)];
+        }
+        foreach (var material in materials.Where(static path => !IsArtifactLineCapacityExcluded(path)))
+        {
+            var path = RepoPath.CreateKnown(material);
+            var count = CountArtifactLines(context.Current.Files[path].Text);
             if (count > ArtifactHardLineLimit)
                 findings.Add(new(path.Value, $"artifact exceeds {ArtifactHardLineLimit} lines"));
             else if (count > ArtifactSoftLineLimit)

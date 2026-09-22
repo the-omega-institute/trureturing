@@ -7,15 +7,18 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
-    [InlineData("StrataLint.ArchitectureTests")]
-    [InlineData("StrataLint.EngineeringScope.Tests")]
-    [InlineData("StrataLint.ScriptTests")]
-    [InlineData("StrataLint.Tests")]
-    public void RegisteredAgentDocumentationPreservesTestInputsWhileScriptsAndTemplatesInvalidate(string project)
+    [InlineData("StrataLint.ArchitectureTests", true)]
+    [InlineData("StrataLint.Cache.Tests", true)]
+    [InlineData("StrataLint.EngineeringScope.Tests", true)]
+    [InlineData("StrataLint.Lean.Tests", false)]
+    [InlineData("StrataLint.ScriptTests", true)]
+    [InlineData("StrataLint.Tests", true)]
+    public void RegisteredDocumentationAndCacheAdaptersRespectTestInputs(string project, bool generalScripts)
     {
         using var fixture = new CandidateFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == $"tools/tests/{project}/{project}.csproj")!;
+        Assert.Equal(project != "StrataLint.ScriptTests", declaration["ci"]!.GetValue<bool>());
         EditRegistration(fixture, rows =>
         {
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
@@ -27,26 +30,41 @@ public sealed partial class CurrentExecutionContractTests
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
                 : "registered fixture material\n");
+        var cacheInvalidates = project is "StrataLint.ArchitectureTests" or "StrataLint.Cache.Tests"
+            or "StrataLint.EngineeringScope.Tests" or "StrataLint.ScriptTests";
+        const string filemap = "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
+            + "[[files]]\npattern = \"Meta/ci-cache-paths.json\"\nkind = \"data\"\nconsumed_by = [\"automation\"]\n";
         var changes = new[]
         {
             (Path: "tools/scripts/agent/openproblem/README.md", Invalidates: false),
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
-            (Path: "tools/scripts/preflight.sh", Invalidates: true),
-            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: true),
+            (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts),
+            (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
+            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts),
+            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: true),
+            (Path: "Meta/FILEMAP.toml", Invalidates: project is "StrataLint.ArchitectureTests" or "StrataLint.Cache.Tests"),
+            (Path: "Meta/ci-cache-paths.json", Invalidates: cacheInvalidates),
+            (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project != "StrataLint.ScriptTests"),
+            (Path: "tools/lean-inspector/native_image.c", Invalidates: project != "StrataLint.ScriptTests"),
+            (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project != "StrataLint.ScriptTests"),
         };
-        foreach (var change in changes) fixture.Write(change.Path, "original fixture material\n");
+        foreach (var change in changes) fixture.Write(change.Path,
+            change.Path == "Meta/FILEMAP.toml" ? filemap : "original fixture material\n");
         fixture.Track();
         Execute(fixture);
         var previous = ReadTests(fixture)["projects"]![0]!["input_fingerprint"]!.ToString();
         foreach (var change in changes)
         {
             Seed(fixture);
-            fixture.Write(change.Path, "changed fixture material\n");
+            fixture.Write(change.Path, change.Path == "Meta/FILEMAP.toml"
+                ? filemap.Replace("automation", "lean-actions", StringComparison.Ordinal)
+                : "changed fixture material\n");
             fixture.Track();
             var calls = Execute(fixture);
             var current = ReadTests(fixture)["projects"]![0]!["input_fingerprint"]!.ToString();
             Assert.True(change.Invalidates ? previous != current : previous == current, $"{project}: {change.Path}: invalidates={change.Invalidates}");
             Assert.Equal(change.Invalidates ? new[] { CandidateFixture.First } : [], calls);
+            CommonExecutionEvidence.ValidateTests(fixture.Root, [CandidateFixture.First]);
             previous = current;
         }
     }

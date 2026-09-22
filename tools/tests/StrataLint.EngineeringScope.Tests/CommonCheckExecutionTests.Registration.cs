@@ -7,6 +7,37 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed partial class CommonCheckExecutionTests
 {
+    [Theory]
+    [InlineData("changed", false, true)]
+    [InlineData("removed", false, false)]
+    [InlineData("removed", true, true)]
+    public void ValidatedRegistrationPreservesRelatedTriggerAndIsolatesMutablePatterns(
+        string trigger, bool removed, bool inspectConsumer)
+    {
+        using var fixture = new Fixture();
+        var original = CommonExecutionEvidence.ValidationScope.Create(fixture.Tree.Root).CheckManifest();
+        CommonExecutionEvidence.Write(fixture.Tree.Root, CommonExecutionEvidence.CheckManifestPath,
+            new CommonCheckManifest("ci-check-input-registration-v2", original.Select(check => check.Id != "filemap" ? check
+                : check with { DeltaScope = new(["Meta/FILEMAP.toml"], ["tools/**/*.cs"],
+                    [new(["Generated/**"], ["Data/**/*.json"], trigger)], ["Blueprint/**"]) }).ToArray()));
+
+        var validation = CommonExecutionEvidence.ValidationScope.Create(fixture.Tree.Root);
+        const string changed = "Generated/Changed.json";
+        const string consumer = "Data/Reference.json";
+        string[] inventory = removed ? [consumer] : [changed, consumer];
+        string[] expected = inspectConsumer ? [consumer, changed] : [changed];
+        var scope = validation.CheckManifest().Single(check => check.Id == "filemap").DeltaScope!;
+        Assert.Equal(expected, FileMapInspectionScope.Select(scope, [changed], inventory).Paths);
+
+        scope.Related[0].Inputs[0] = "Elsewhere/**";
+        scope.Related[0].Paths[0] = "Unrelated/**";
+        foreach (var read in new[] { validation, validation.Fresh() })
+        {
+            var retained = read.CheckManifest().Single(check => check.Id == "filemap").DeltaScope!;
+            Assert.Equal(expected, FileMapInspectionScope.Select(retained, [changed], inventory).Paths);
+        }
+    }
+
     [Fact]
     public void ReadOnlyValidationReusesItsCompleteCheckRegistration()
     {

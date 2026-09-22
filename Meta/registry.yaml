@@ -26,6 +26,7 @@ governance_documents:
   - "Meta/ReportConsumers/scribe-content.json"
   - "Meta/ReportProducers/lean-report.json"
   - "Meta/ReportProducers/scribe-content.json"
+  - "Meta/ci-cache-paths.json"
   - "Meta/ci-checks.json"
   - "Meta/ci-resources.json"
   - "Meta/engineering-projects.json"

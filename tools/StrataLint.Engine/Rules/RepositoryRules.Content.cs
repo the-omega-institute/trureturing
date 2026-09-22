@@ -12,15 +12,22 @@ internal static partial class RepositoryRules
     internal static ImmutableArray<RuleFinding> FormulaValidation(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, file) in context.Current.Files.OrderBy(item => item.Key.Value, StringComparer.Ordinal))
+        string[] materials;
+        try { materials = RegisteredCheckMaterials.Read(context.Current, "SL-015"); }
+        catch (InvalidDataException exception)
         {
+            return [new RuleFinding(RegisteredCheckMaterials.ManifestPath, exception.Message)];
+        }
+        foreach (var material in materials)
+        {
+            var path = RepoPath.CreateKnown(material);
             if (RepositoryPathPolicy.Validate(path, context.Policy) is not null
                 || !path.Value.EndsWith(".json", StringComparison.Ordinal))
             {
                 continue;
             }
 
-            ValidateFormulas(path.Value, file.Text, findings);
+            ValidateFormulas(path.Value, context.Current.Files[path].Text, findings);
         }
 
         return findings.ToImmutable();

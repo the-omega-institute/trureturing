@@ -26,9 +26,10 @@ public sealed class CurrentDeadlineContractTests
                 processExited: _ => clock.Advance(advanceSeconds), timeProvider: clock).Run("current", null));
             using var summary = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(
                 Path.Combine(fixture.Root, "build/ci/current-result.json")));
-            var step = Assert.Single(summary.RootElement.GetProperty("steps").EnumerateArray());
+            var step = Assert.Single(summary.RootElement.GetProperty("steps").EnumerateArray(),
+                step => step.GetProperty("name").GetString() == "lean-report");
             Assert.Equal(rawExit, step.GetProperty("raw_exit").GetInt32());
-            Assert.Equal(deadline is null ? 21600 : 100, clock.DueTime!.Value.TotalSeconds);
+            Assert.Equal(deadline is null ? 21600 : 100, clock.FirstDueTime!.Value.TotalSeconds);
             Assert.Equal(rawExit == 0 ? "executed" : "failed", step.GetProperty("status").GetString());
             var observation = CommonStageContractTests.ProcessObservation(output);
             Assert.Equal(0, observation.GetProperty("child_exit").GetProperty("elapsed_ms").GetDouble());
@@ -63,7 +64,8 @@ public sealed class CurrentDeadlineContractTests
                 _ => { if (cancel) cancellation.Cancel(); }, clock).Run("current", null));
             using var summary = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllText(
                 Path.Combine(fixture.Root, "build/ci/current-result.json")));
-            Assert.Equal(cancel ? 124 : 0, Assert.Single(summary.RootElement.GetProperty("steps").EnumerateArray())
+            Assert.Equal(cancel ? 124 : 0, Assert.Single(summary.RootElement.GetProperty("steps").EnumerateArray(),
+                step => step.GetProperty("name").GetString() == "lean-report")
                 .GetProperty("raw_exit").GetInt32());
             Assert.Equal(Timeout.InfiniteTimeSpan, clock.DueTime);
         });
@@ -82,12 +84,14 @@ public sealed class CurrentDeadlineContractTests
         private long timestamp;
         private ManualTimer? timer;
         internal TimeSpan? DueTime { get; private set; }
+        internal TimeSpan? FirstDueTime { get; private set; }
         public override DateTimeOffset GetUtcNow() => now;
         public override long TimestampFrequency => 1;
         public override long GetTimestamp() => Interlocked.Read(ref timestamp);
         public override ITimer CreateTimer(TimerCallback callback, object? state, TimeSpan dueTime, TimeSpan period)
         {
             DueTime = dueTime;
+            FirstDueTime ??= dueTime;
             return timer = new ManualTimer(callback, state, now + dueTime);
         }
         internal void Advance(int seconds)
