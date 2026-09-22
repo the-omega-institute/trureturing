@@ -116,6 +116,16 @@ public sealed class FileMapInspectionScopeTests
         Assert.Equal("invalid filemap related trigger: expected changed or removed", error.Message);
     }
 
+    [Fact]
+    public void RegPathPolicyChangeSelectsWholeTree()
+    {
+        var result = FileMapInspectionScope.Select(RepositoryRegistration(),
+            ["tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.Reg.cs"],
+            ["Reg/D5/Example.lean", "D5/Example.lean"]);
+        Assert.Null(result.Paths);
+        Assert.True(result.Actors);
+    }
+
     private static RegisteredFileMapScope RepositoryRegistration()
     {
         using var document = JsonDocument.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/ci-checks.json")));
