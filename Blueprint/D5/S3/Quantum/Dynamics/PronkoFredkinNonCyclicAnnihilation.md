@@ -178,6 +178,10 @@ $$\forall N \in \mathbb{N},\; (N \ge 3) \Rightarrow (\forall psi \in \left(\oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PronkoFredkinNonCyclicAnnihilation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/pronko-2025-fredkin-noncyclic-annihilation` (proved) by `D5/S3/Quantum/Dynamics/PronkoFredkinNonCyclicAnnihilation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pronko-2025-fredkin-noncyclic-annihilation","declaration_gid":"D5/S3/Quantum/Dynamics/PronkoFredkinNonCyclicAnnihilation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Andrei G. Pronko (2025). *Symmetries of the periodic Fredkin chain*. DOI: [10.1088/1751-8121/ae1644](https://doi.org/10.1088/1751-8121/ae1644). URL: <https://doi.org/10.1088/1751-8121/ae1644>.

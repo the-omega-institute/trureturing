@@ -43,7 +43,10 @@ internal sealed class PronkoFredkinNonCyclicAnnihilationDocument : IScribeDocume
             DefinitionNode("claim", "Pronko's Conjecture 1", ClaimDefinitionFormula(),
                 "The quantifiers make the source reading explicit: N is at least three; psi is a nonzero vector in the spin-word basis; E and c are complex eigenvalues; psi is simultaneously an H-eigenvector and a C-eigenvector; and non-cyclic means c is not one."),
             TheoremNode("result", "Conjecture 1 holds", ClaimFormula(),
-                "At each matrix entry (y, x), at most one Kronecker monomial has a nonzero value, determined site by site by (y_i, x_i), with total exponent equal to the number of up spins in y minus that in x. This monomial lies in the constrained sum (3.1) exactly when that difference equals epsilon; otherwise no term contributes. Every adjacent exchange preserves this weight. Consequently Sigma_epsilon P_N(j) = Sigma_epsilon, and folding through the printed ordered product gives Sigma_epsilon C_N = Sigma_epsilon. If C_N psi = c psi, then Sigma_epsilon psi = c Sigma_epsilon psi; c different from one forces the vector to vanish. The argument applies to every C-eigenvector with eigenvalue different from one. The proof uses no property of H; the hypothesis H psi = E psi is retained exactly as in Conjecture 1.")),
+                "At each matrix entry (y, x), at most one Kronecker monomial has a nonzero value, determined site by site by (y_i, x_i), with total exponent equal to the number of up spins in y minus that in x. This monomial lies in the constrained sum (3.1) exactly when that difference equals epsilon; otherwise no term contributes. Every adjacent exchange preserves this weight. Consequently Sigma_epsilon P_N(j) = Sigma_epsilon, and folding through the printed ordered product gives Sigma_epsilon C_N = Sigma_epsilon. If C_N psi = c psi, then Sigma_epsilon psi = c Sigma_epsilon psi; c different from one forces the vector to vanish. The argument applies to every C-eigenvector with eigenvalue different from one. The proof uses no property of H; the hypothesis H psi = E psi is retained exactly as in Conjecture 1.",
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pronko-2025-fredkin-noncyclic-annihilation"),
+                    ResolutionKind.Proved))),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S3/Quantum/FiniteDimensional"))]));
 
@@ -53,10 +56,12 @@ internal sealed class PronkoFredkinNonCyclicAnnihilationDocument : IScribeDocume
             AssessedProvenance.FromLiterature(Source), Blocks(Paragraph(Text(prose))),
             DescribeRole.Definition);
 
-    private static DocumentBlock TheoremNode(string name, string title, Formula formula, string prose) =>
+    private static DocumentBlock TheoremNode(string name, string title, Formula formula, string prose,
+        OpenProblemResolutionClaim resolution) =>
         Describe.Lean(DescribeId.Create("pronko-fredkin-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            resolution);
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
