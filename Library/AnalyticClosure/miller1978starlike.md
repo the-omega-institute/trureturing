@@ -15,7 +15,7 @@ triage: anchor
 <!-- GID: D5/L/AnalyticClosure/miller1978starlike -->
 # Classical integral preservation
 
-## Source locator
+## Verified locator
 
 DOI: 10.2140/pjm.1978.79.157
 Source URL: https://msp.org/pjm/1978/79-1/pjm-v79-n1-p13-p.pdf

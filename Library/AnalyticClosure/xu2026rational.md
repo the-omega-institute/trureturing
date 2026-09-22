@@ -17,7 +17,7 @@ triage: anchor
 <!-- GID: D5/L/AnalyticClosure/xu2026rational -->
 # Xu and Zhao's multiple-polylogarithm coefficients
 
-## Source locator
+## Verified locator
 
 DOI: 10.48550/arXiv.2609.11072
 Source URL: https://arxiv.org/html/2609.11072v1
@@ -42,9 +42,11 @@ Conjecture 1.3 quantifies over every positive composition and every
 $\ell\ge1$: $C_n^{0;k;\ell}<0$ eventually. For each fixed $j\ge1$ it asks
 for $C_n^{j;k;\ell}>0$ eventually, and, when $k_1>1$, the strict bound
 $C_n^{j;k;\ell}>\binom{n+j-1}{n}/\zeta(k)^\ell$ eventually.
-Thresholds can depend on $k,\ell,j$. The source proves the all-one,
-depth-one and depth-two cases; those cases do not constitute the general
-conjecture.
+Thresholds can depend on $k,\ell,j$. The all-one compositions follow for
+every $\ell\ge1$ from the all-one identity and Theorems 1.1 and 8.2.
+Theorems 9.6 and 9.9 prove the depth-one and depth-two cases, respectively,
+at $\ell=1$; Corollary 9.11 additionally proves depth one at $\ell=2$.
+These parameter slices do not constitute the general conjecture.
 
 ## Exact formal correspondence
 

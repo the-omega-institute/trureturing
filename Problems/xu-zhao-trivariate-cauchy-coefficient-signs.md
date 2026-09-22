@@ -82,11 +82,13 @@ Library notes record source correspondence and classical attribution.
 
 ## Triage
 
-`window`: the complete conjecture remains the target. The source already
-treats the all-one, depth-one and depth-two cases. The present result is a
-general disk intermediate, not a new resolution of those known cases or
-of the full conjecture. Admission uses the actual source-specific escape
-content, not the open-problem-resolution exception.
+`window`: the complete conjecture remains the target. The source settles
+all-one compositions for every $\ell\ge1$ by the all-one identity and
+Theorems 1.1 and 8.2; depth one and depth two at $\ell=1$ by Theorems 9.6
+and 9.9, respectively; and depth one at $\ell=2$ by Corollary 9.11.
+The present result is a general disk intermediate, not a new resolution
+of those known cases or of the full conjecture. Admission uses the actual
+source-specific escape content, not the open-problem-resolution exception.
 
 ## ASSUMED-UNVERIFIED
 
