@@ -12,6 +12,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.Lean.Tests", "Makefile", true)]
     [InlineData("StrataLint.Lean.Tests", "README.md", false)]
     [InlineData("StrataLint.NativeTransportIntegration.Tests", "tools/lean-inspector/tests/test_native.py", true)]
+    [InlineData("StrataLint.NativeTransportIntegration.Tests", "tools/lean-inspector/tests/test_reuse.py", true)]
     [InlineData("StrataLint.NativeTransportIntegration.Tests", "tools/scripts/workflow/truth_release.py", false)]
     [InlineData("StrataLint.ReleaseIntegration.Tests", "tools/scripts/workflow/truth_release.py", true)]
     [InlineData("StrataLint.ReleaseIntegration.Tests", "tools/lean-inspector/tests/test_native.py", false)]
