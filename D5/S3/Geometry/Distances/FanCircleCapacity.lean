@@ -104,7 +104,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
     obtain ⟨nu', _, hnu', henergy⟩ := hforward mu
     rw [hnu', hmap] at henergy
     exact henergy.symm
-  
+
   have finite_double_integral
       {X : Type} [MeasurableSpace X] [MeasurableSingletonClass X] [Fintype X]
       (mu : ProbabilityMeasure X) (f : X → X → ℝ) :
@@ -119,7 +119,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
     apply Finset.sum_congr rfl
     intro y _
     ring
-  
+
   have chord_distance (s t : ℝ) :
       dist (Complex.exp ((s : ℂ) * Complex.I))
           (Complex.exp ((t : ℂ) * Complex.I)) =
@@ -149,7 +149,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
               ring]
     rw [Real.sqrt_sq_eq_abs, abs_of_nonneg]
     positivity
-  
+
   have three_point_geometry
       (phi psi : ℝ) (hphi₀ : Real.pi / 2 < phi)
       (hphi₁ : phi ≤ 2 * Real.pi / 3) (hpsi₀ : 0 ≤ psi)
@@ -233,7 +233,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
     · exact hdist₂₀
     · nlinarith
     · nlinarith
-  
+
   have three_point_maximum
       (A B C : ℝ) (hA : 0 < A) (hAB : A ≤ B) (hBC : B ≤ C) :
       let S := max (A + B - C) 0
@@ -337,7 +337,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
         rw [show 4 * A * B - (A + B - C) ^ 2 = D by rfl]
         rw [← sub_nonneg, hid]
         positivity
-  
+
   have three_point_energy_sup
       {X : Type} [MeasurableSpace X] [MeasurableSingletonClass X]
       (e : Fin 3 ≃ X) (f : X → X → ℝ) (A B C : ℝ)
@@ -404,7 +404,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
             (μ := (mu : Measure X)) (Finset.univ : Finset X)
         rw [← e.sum_comp, Fin.sum_univ_three] at hsum
         exact hsum
-  
+
   have capacity_formula
       (r phi psi : ℝ) (hr : 2 ≤ r) (hphi₀ : Real.pi / 2 < phi)
       (hphi₁ : phi ≤ 2 * Real.pi / 3) (hpsi₀ : 0 ≤ psi)
@@ -441,7 +441,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
       hA hAB hBC
     unfold capacity
     congr 1
-  
+
   have power_displacement
       (p u v : ℝ) (hp : 1 ≤ p) (hu₀ : 0 ≤ u) (huv : u ≤ v) (hv₁ : v ≤ 1)
       (hsum : 1 ≤ u ^ p + v ^ p) : v - u ≤ v ^ p - u ^ p := by
@@ -597,7 +597,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
       _ ≤ delta := hcentral
       _ = t - s := rfl
       _ = v ^ p - u ^ p := rfl
-  
+
   have hasDerivAt_max_zero_sq (x : ℝ) :
       HasDerivAt (fun y : ℝ ↦ max y 0 ^ 2) (2 * max x 0) x := by
     rcases lt_trichotomy x 0 with hx | hx | hx
@@ -633,7 +633,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
       have hmul : HasDerivAt (fun y : ℝ ↦ y * y) (2 * x) x :=
         ((hasDerivAt_id x).mul (hasDerivAt_id x)).congr_deriv (by simp [id]; ring)
       simpa [max_eq_left hx.le] using hmul.congr_of_eventuallyEq heq
-  
+
   have power_ratio_displacement
       (r a b c : ℝ) (hr : 2 ≤ r) (ha : 0 < a) (hab : a ≤ b) (hbc : b ≤ c)
       (hactive : c ^ r < a ^ r + b ^ r) :
@@ -681,7 +681,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
     dsimp [u, v] at hdisp
     field_simp [ne_of_gt hc, ne_of_gt (Real.rpow_pos_of_pos hc r)] at hdisp ⊢
     nlinarith
-  
+
   have active_bracket_nonneg
       (r x y : ℝ) (hr : 2 ≤ r)
       (hsx : 0 < Real.sin x) (hsy : 0 < Real.sin y)
@@ -738,7 +738,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
     change 0 ≤ (B + C - A) * Real.cot y - (A + C - B) * Real.cot x
     rw [mul_comm] at hmul
     exact nonneg_of_mul_nonneg_right hmul hden
-  
+
   have profile_hasDerivAt_nonneg
       (r phi t : ℝ) (hr : 2 ≤ r)
       (hsx : 0 < Real.sin ((phi - t) / 2))
@@ -890,7 +890,7 @@ theorem result (r phi psi : ℝ) (hr : 2 ≤ r)
           ring
         rw [hzero]
         simp
-  
+
   let L := 2 * Real.pi - 3 * phi
   let profile := fun t : ℝ ↦
     let a := 2 * Real.sin ((phi - t) / 2)
