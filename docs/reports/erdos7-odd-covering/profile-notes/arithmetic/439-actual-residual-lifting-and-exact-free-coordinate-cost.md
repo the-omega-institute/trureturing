@@ -156,6 +156,13 @@ The same rational lower bound sqrt(C)>17/8 supplies both strict inequalities. On
 
 This is a failure of the scalar certificate, not a lower bound of nine on the true fine survivor minimax. It does not contradict one-axis lifting: with K7=1 and C=149/30, H1 gives 16927/2523<9 for arbitrary 5-height under its actual-family hypotheses. It also does not contradict the possibility that stronger actual-cover restrictions exclude the abstract source, or that a common multilevel law has better weighted moments than the scalar bound.
 
+[The integer joint-moment certificate](441-integer-joint-moments-improve-two-axis-height-lifting.md)
+changes the mixed-moment estimate itself. Under its full actual-family
+seed hypothesis, it gives 3780053/430196 below nine at C=68/15 for all
+finite additional 5/7 heights. Thus H5--H6 obstruct the displayed H1
+formula, not all quantitative extensions from a scalar seed. Neither
+formula supplies a missing seed on the complete cofactor carrier.
+
 ## 5. Exact scope of a solution of every 140-point source
 
 A universal supported-law theorem at height(2,1) would:

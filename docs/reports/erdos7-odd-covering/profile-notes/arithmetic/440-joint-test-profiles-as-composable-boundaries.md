@@ -193,3 +193,46 @@ dual and the strict gap in JB5. Run:
 
 The general statements are supported by the ordinary proofs above;
 the finite control does not replace them or establish an odd covering.
+
+## 5. Internal selectors must preserve observable successors
+
+Let a controller select an action pi(x), with joint update
+`F(x)=T_(pi(x))(x)`. If each action descends through a summary sigma,
+and the selected action can be recovered from sigma, then F also
+descends. Recovering the action label is sufficient, not necessary:
+different actions may have the same observable effect. The exact
+condition, taking the summary carrier to be the realized image of
+sigma, is
+
+    sigma(x)=sigma(y) implies sigma(F(x))=sigma(F(y)).
+
+This is the existing
+[`dynamics_descends_iff`](../../../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean)
+criterion. If recording the action itself is part of the task, that
+record must be included in the successor summary.
+
+For a random selector with transition law
+`Q_x=sum_a p_a(x) delta_(T_a(x))`, the corresponding condition is that
+`sigma_*Q_x` is constant on every sigma fibre. Probabilities of actions
+with the same summarized successor may be aggregated. The existing
+[`strong_lumpability_descent_tfae`](../../../../../D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean)
+and
+[`stochastic_descent_equivalence`](../../../../../D5/S3/Estimation/DecisionRisk/StochasticDescentEquivalence.lean)
+supply this stochastic descent interface. These are reuse references,
+not newly compiled specializations or new Lean declarations.
+
+For the actual lifting problem, choose a coarse law mu and a conditional
+kernel kappa_(R,mu)(s,.) supported on R_s. It may depend on the fixed
+source, its original constraints, and mu. The single resulting law is
+`nu(x)=mu(s) kappa_(R,mu)(s,x)` for x in R_s. Every declared layout must
+be tested against this same nu; the kernel cannot be replaced after
+learning the tested layout. Selecting a best response to a common
+dual mixture theta in JB3 is a minimax argument for existence of a
+common primal law, not a recipe for using different primal laws on
+different tests.
+
+Fixed deletion is linear on unnormalized mass. Conditioning on the
+survivors additionally divides by their mass, needs a positive
+denominator, and may change the coarse marginal. Neither selector
+closure nor linearity of the unnormalized deletion supplies the
+missing quantitative survivor bound.

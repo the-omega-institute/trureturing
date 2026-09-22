@@ -909,6 +909,10 @@ The complete results and proofs are organized below. Each link opens the corresp
 
 - [Separated capacity-six flows and shared weak/grid blocks give common laws at most five; a distinct star construction remains below 46/9, with exact limits on support extraction and weak-child deletion](profile-notes/arithmetic/438-separated-weak-supports-and-common-laws.md)
 
-- [Fixed coarse marginals have an exact coprime free-coordinate completion cost; actual residual lifting retains a joint minimax obligation, and the universal scalar H1 route to nine already fails at finite heights](profile-notes/arithmetic/439-actual-residual-lifting-and-exact-free-coordinate-cost.md)
+- [Fixed coarse marginals have an exact coprime free-coordinate completion cost; actual residual lifting retains a joint minimax obligation, and the original H1 scalar formula fails to reach nine at finite heights](profile-notes/arithmetic/439-actual-residual-lifting-and-exact-free-coordinate-cost.md)
 
 - [A literal mod-35 mixture separates equal coarse-marginal and scalar-Gamma summaries; joint layout price profiles retain exact finite-fibre contraction and expose the additional conditions for dynamic boundary sufficiency](profile-notes/arithmetic/440-joint-test-profiles-as-composable-boundaries.md)
+
+- [Integer joint moments improve the actual-family two-axis height lift with an arbitrary fixed cofactor, crossing nine under explicit full-carrier seed bounds while preserving all independent phases](profile-notes/arithmetic/441-integer-joint-moments-improve-two-axis-height-lifting.md)
+
+- [Minimum coarse sources admit matching lifts and two height strips below nine; joint mod25 fibres give a separate bound eight, while a 540-point blocker refutes automatic mod175 fibre matching](profile-notes/arithmetic/442-minimum-coarse-sources-lift-through-actual-fibres.md)
