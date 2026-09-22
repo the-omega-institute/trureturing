@@ -9918,7 +9918,7 @@ $$
 
 #### 8.9.3 自由质量反演的有理实例
 
-自由质量的数值实例使用同一个删除算子 $F$、逆矩阵 $B$ 与张量 $w$；其恒等式为 $AB=BA=I$、$\|Fw\|_{\rm obs}=t$ 及 $\|w\|_\infty=q$。
+自由质量的数值实例使用同一个删除算子 $F$、逆矩阵 $B$ 与张量 $w$；其恒等式为 $AB=BA=I$、$\|Fw\|_\infty=t$ 及 $\|w\|_\infty=q$。
 
 对 $(3,5)$，模 $315$ 的两份实际来源基数为 $29$ 与 $26$，按空、模三、模五、完整续接分组的差响应峰值为 $3,6,4,8$，目标格差为 $21$，所以锐常数为 $21/8$。所有 $24=(1+3)(1+5)$ 个合法标签读数都属于同一对来源。
 
@@ -9956,7 +9956,7 @@ $$
 \qquad \sum_\alpha|\lambda_\alpha|=C_0.
 \tag{ER8.LP.1}
 $$
-将此恒等式乘以任意零和输入 $z_c$ 后求和，即得 $z_0\le C_0\|Fz\|_{\rm obs}$；改变符号给绝对值上界。表中原始轨道向量满足全部响应约束且 $x_0=C_0$，故达到上界。$s_+$ 是归一化轨道向量的正质量 $\sum_\beta w_\beta\max(x_\beta,0)$；非零向量的概率嵌入半径为 $1/(2s_+)$。
+将此恒等式乘以任意零和输入 $z_c$ 后求和，即得 $z_0\le C_0\|Fz\|_\infty$；改变符号给绝对值上界。表中原始轨道向量满足全部响应约束且 $x_0=C_0$，故达到上界。$s_+$ 是归一化轨道向量的正质量 $\sum_\beta w_\beta\max(x_\beta,0)$；非零向量的概率嵌入半径为 $1/(2s_+)$。
 
 | 证书／模数族 | 轨道值 $x_\beta$ | 轨道权 $w_\beta$ | $C_0$ | $\kappa$ | $s_+$ | 该向量半径 | $\mu$ | 非零 $\alpha:\lambda_\alpha$ |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -10044,7 +10044,7 @@ $$
 
 以下边界表改用未除以 $t$ 的整数向量 $\nu$；实际等基数集合各有 $(P-h)/2$ 个点。空族只有零向量，不能将它归一化成概率来源。
 
-| 模数族 | $C_0$ | $\lVert F\nu\rVert_{\rm obs}$ | 规范半径 | 每份实际集合基数 |
+| 模数族 | $C_0$ | $\lVert F\nu\rVert_\infty$ | 规范半径 | 每份实际集合基数 |
 | --- | --- | --- | --- | --- |
 | 边界 $()$ | $0$ | $0$ | 不定义 | $0$ |
 | 边界 $(2)$ | $1$ | $1$ | $1/2$ | $1$ |
@@ -10173,7 +10173,7 @@ $$
 | [D5/S3/ConceptDynamics/Provenance/SourceCutsetHittingDuality.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/Provenance/SourceCutsetHittingDuality.lean)，`source_cutset_hitting_duality` | 有限单调语义的切断与最小支持击中对偶。以可用动作源集合 $A$ 上的可证明性为“存在实际 $r\in S$ 使 $E_r\subseteq A$”，得到删空／击中骨架；本题还要求每模数至多一标签，不能用无约束最小击中数代替合法最小值。 |
 | [D5/S3/ConceptDynamics/Provenance/SourceCutsetInclusionMinimalHittingDuality.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/ConceptDynamics/Provenance/SourceCutsetInclusionMinimalHittingDuality.lean) | 提供规范包含极小支持版本；与一般对偶同属已有结构，不代替本题动作约束的核对。 |
 
-两份二元几何接口还提供共同相位和切片的具体背景：[D5/S3/Arith/Covering/BinaryAffineGeometry.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Arith/Covering/BinaryAffineGeometry.lean) 的 `mixed_cover_iff` 对 $\mathbb F_2^2$ 上的满集、三方向直线和单点给覆盖的六类判据及27种互异最小形状；[D5/S3/Arith/Covering/MixedAffineQuotient.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Arith/Covering/MixedAffineQuotient.lean) 的 `result` 在逐行周期正且整除 $2M_0$ 时，保留 guard、逐行合取和原相位，将两个整数坐标在同一基点的四个提升表示为空／满／线／点切片，并给精确见证及覆盖等价。这里以 $M_0$ 区别该接口中的标量与本文模数集合 $M$。
+两份二元几何接口还提供共同相位和切片的具体背景：[D5/S3/Arith/Covering/BinaryAffineGeometry.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Arith/Covering/BinaryAffineGeometry.lean) 的 `mixed_cover_iff` 对 $\mathbb F_2^2$ 上的满集、三方向直线和单点给覆盖的六类判据及27种互异最小形状；[D5/S3/Arith/Covering/MixedAffineQuotient.lean](https://github.com/the-omega-institute/trureturing/blob/4c08d06c5a111eaf1d9799d8fe2fb9a31e156b9c/D5/S3/Arith/Covering/MixedAffineQuotient.lean) 的 `result` 在 $M_0$ 为正整数、逐行周期正且整除 $2M_0$ 时，保留 guard、逐行合取和原相位，将两个整数坐标在同一基点的四个提升表示为空／满／线／点切片，并给精确见证及覆盖等价。这里以 $M_0$ 区别该接口中的标量与本文模数集合 $M$。
 
 这两份二元四提升模型没有声明任意模 $L$ 的完整未来计数、动态直方图或商类数。本文也未给任意一维状态到它们的归约映射，不能把其结论当成 定理 8.1 的直接证明。有限包含排除／Möbius 反演、CRT、击中集与目标族取商是标准组成结构；具体数学内容由前文显示的反演、更新和分类证明承担。
 
