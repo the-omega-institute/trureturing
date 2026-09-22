@@ -1,0 +1,8 @@
+**命题 38.6（共同读出与共同随机核的 TV 运输）。** 给同一可测空间上的概率 $P,Q$，共同可测读出 $f$，或到同一输出可测空间的共同 Markov 核 $K$，则
+$$
+\operatorname{TV}(f_*P,f_*Q)\le\operatorname{TV}(P,Q),\qquad
+\operatorname{TV}(PK,QK)\le\operatorname{TV}(P,Q).
+\tag{38.5}
+$$
+此处的输入若用于保留完整观察者，必须是包含全部所需档案、来源关联与历史的联合律。
+

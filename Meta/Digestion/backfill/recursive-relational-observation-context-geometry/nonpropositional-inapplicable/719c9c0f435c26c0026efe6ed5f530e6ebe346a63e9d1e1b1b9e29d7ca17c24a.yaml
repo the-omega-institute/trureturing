@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:719c9c0f435c26c0026efe6ed5f530e6ebe346a63e9d1e1b1b9e29d7ca17c24a
+  normalized_sha256: sha256:719c9c0f435c26c0026efe6ed5f530e6ebe346a63e9d1e1b1b9e29d7ca17c24a
+cas_ref: sha256:719c9c0f435c26c0026efe6ed5f530e6ebe346a63e9d1e1b1b9e29d7ca17c24a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only bind-only settlement under CLAUDE 3.2: pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d supplies MeasureTheory.measure_iUnion_le and ENNReal.tsum_le_tsum. For the same actual probability law mu and countably indexed failure events E_l, mu(E_l) <= alpha_l and sum alpha_l <= alpha give mu(union E_l) <= sum mu(E_l) <= sum alpha_l <= alpha. No independence is assumed; the complement of this union is the common success event. No applicable project declaration GID supplies this arbitrary countable statement: the inspected project union bounds are finite, and product-checkpoint bounds require independence. The remaining sentences require the same compatible model and exclude free or already-completed infinitely many measurements. No new Lean declaration, availability, sampling-cost or source-realization claim is made.'
+    previous_atom_id: 1adb6a19121fb754f9e10173c94b14fd000a6755814c16fdb0040ccaef8d1d48
+    next_atom_id: 7c4e45e392c03bd21a2df6fd5f83721f8715125b96cc1e1b7fbb7594b1950bc4
