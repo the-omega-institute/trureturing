@@ -273,6 +273,149 @@ def input_controls():
             "rejected_inputs": rejected}
 
 
+def simultaneous_selector_obstruction(fixture_script):
+    """A full product-tree blocker outside both existing local selectors.
+
+    Reuses the report442 CRT and matching routines. Exhaustive checks concern
+    the local choices in the quantified full-tree witness; they are not an
+    enumeration of all pairs of complete trees. No moment obstruction or
+    odd-cover realization is claimed.
+    """
+    fixture = runpy.run_path(str(fixture_script))
+    lines = ((1, 2, 3), (1, 4, 5), (2, 4, 6), (3, 5, 6), (1, 2, 6))
+    digit_pairs = ({0, 1}, {1, 2}, {0, 2})
+    roots, final_seven = {1, 2, 3}, set(range(5))
+    require(all(len(set(line)) == 3 and set(line) <= set(range(1, 7)) for line in lines),
+            "five literal nonzero-seven-root triples")
+    pair_counts = {pair: sum(set(pair) <= set(line) for line in lines)
+                   for pair in combinations(range(7), 2)}
+    require(max(pair_counts.values()) == 2, "every deleted seven-pair belongs to at most two triples")
+    require(all(set.union(*(digit_pairs[j] for j in selected)) == {0, 1, 2}
+                for selected in combinations(range(3), 2)), "two distinct columns recover three final-five digits")
+    actual = {fixture["fine_crt"](r+5*a+25*u, y+7*v)
+              for r in roots for a, line in enumerate(lines)
+              for j, y in enumerate(line) for u in digit_pairs[j] for v in final_seven}
+    require(len(actual) == 450, "450 distinct actual CRT points")
+    require(all(x % 5 not in (0, 4) and x % 7 != 0 for x in actual),
+            "actual missing roots and a whole excluded mod25 prefix")
+    triples5 = tuple(combinations(range(5), 3))
+    fives7 = tuple(combinations(range(7), 5))
+    require(all(set(selected) & roots for selected in triples5), "every first-five ternary choice meets actual roots")
+    full_tree_local_checks = 0
+    for columns in fives7:
+        retained = set(columns)
+        good = {a for a, line in enumerate(lines) if len(set(line) & retained) >= 2}
+        require(len(good) >= 3, "at least three second-five children work for this same seven-tree")
+        for second in triples5:
+            a = min(set(second) & good)
+            available = set.union(*(digit_pairs[j] for j, y in enumerate(lines[a]) if y in retained))
+            require(available == {0, 1, 2}, "good child's available final-five digits")
+            for last_five in triples5:
+                u = min(set(last_five) & available)
+                y = min(y for j, y in enumerate(lines[a]) if y in retained and u in digit_pairs[j])
+                for last_seven in fives7:
+                    v = min(set(last_seven) & final_seven)
+                    x = fixture["fine_crt"](1+5*a+25*u, y+7*v)
+                    require(x in actual and a in second and u in last_five
+                            and y in columns and v in last_seven,
+                            "one actual witness to the selected branch of both fixed full trees")
+                    full_tree_local_checks += 1
+    require(full_tree_local_checks == 44100, "all local complete-tree witness choices")
+
+    fine_fibres, prefix_fibres = defaultdict(set), defaultdict(set)
+    for x in actual:
+        fine_fibres[x % 175].add(((x % 125)//25, (x % 49)//7))
+        prefix_fibres[x % 25].add(((x % 125)//25, x % 49))
+    require(len(fine_fibres) == 45 and len(prefix_fibres) == 15, "coarse source cardinalities")
+    for s, edges in fine_fibres.items():
+        a, y = (s % 25)//5, s % 7
+        j = lines[a].index(y)
+        require(edges == set(product(digit_pairs[j], final_seven)), "actual mod175 fibre is exactly2-by5")
+        require(len(fixture["matching"](edges)) == 2, "all actual fine-fibre matching numbers equal two")
+    matching_selector = [s for s, edges in fine_fibres.items() if len(fixture["matching"](edges)) >= 3]
+    require(not matching_selector, "the entire matching-three selector is empty")
+
+    caps = {(b, c): F(1, 3**b) for b in (1, 2) for c in range(7**b)}
+    missing = []
+    for s, edges in sorted(prefix_fibres.items()):
+        a = s//5
+        deleted = set(lines[a][:2])
+        columns = set(range(7))-deleted
+        last_five = set(range(5))-digit_pairs[2]
+        seven_leaves = {y+7*v for y, v in product(columns, final_seven)}
+        require(len(columns) == 5 and len(last_five) == 3, "literal legal missing product test")
+        require(not any(u in last_five and z in seven_leaves for u, z in edges),
+                "actual mod25 fibre misses a three-row by complete five-ary depth-two tree")
+        projection = {z for u, z in edges if u in last_five}
+        capacity = projected_capacity(7, 2, projection, caps)
+        require(capacity == F(2, 3), "the failed three-row projected tree capacity is exactly two-thirds")
+        missing.append({"mod25_prefix": s, "last_five_rows": sorted(last_five),
+                        "seven_roots": sorted(columns), "seven_children_at_each_root": sorted(final_seven),
+                        "projected_tree_capacity": str(capacity)})
+    require(len(missing) == len(prefix_fibres), "every mod25 fibre fails the joint-blocking selector")
+
+    projection5 = {x % 125 for x in actual}
+    projection7 = {x % 49 for x in actual}
+    require(projection5 == {r+5*a+25*u for r, a, u in product(roots, range(5), range(3))},
+            "actual five-coordinate projection")
+    require(projection7 == {y+7*v for y, v in product(range(1, 7), final_seven)},
+            "actual seven-coordinate projection")
+    require(all(set(t) & set(range(1, 7)) and set(t) & final_seven
+                for t in combinations(range(7), 3)), "standalone ternary seven-tree local intersections")
+    uniform = {x: F(1, 450) for x in actual}
+    labels = tuple(sorted(5**a*7**b for a, b in product(range(4), range(3))))
+    expected_caps = ((F(1), F(1, 5), F(1, 25)),
+                     (F(1, 3), F(1, 15), F(1, 75)),
+                     (F(1, 15), F(1, 45), F(1, 225)),
+                     (F(1, 45), F(1, 90), F(1, 450)))
+    maxima = {d: fixture["cylinder_max"](uniform, d) for d in labels}
+    require(all(maxima[5**a*7**b] == expected_caps[a][b]
+                for a, b in product(range(4), range(3))), "all twelve uniform-law cylinder maxima")
+    uniform_upper = sum((maxima[lcm(d, e)] for d, e in product(labels, repeat=2)), F())
+    require(uniform_upper == F(218, 45) < 9, "one inexpensive supported law below nine")
+    return {"actual_residues": sorted(actual), "source_points": len(actual),
+            "coarse_mod175_points": len(fine_fibres), "coarse_mod25_points": len(prefix_fibres),
+            "seven_triples": [list(line) for line in lines],
+            "local_final_five_pairs": [sorted(pair) for pair in digit_pairs],
+            "maximum_deleted_pair_multiplicity": max(pair_counts.values()),
+            "full_tree_local_witness_checks": full_tree_local_checks,
+            "tree_verification": "Ordinary full-depth witness proof with all local choices checked; not full-tree-pair enumeration.",
+            "all_fine_fibre_matching_numbers": 2, "matching_three_selector": matching_selector,
+            "joint_blocking_mod25_selector": [], "missing_mod25_product_tests": missing,
+            "uniform_weight": "1/450", "original_labels": labels, "ordered_pairs": len(labels)**2,
+            "uniform_cylinder_maxima": {str(d): str(maxima[d]) for d in labels},
+            "uniform_Gamma_upper": str(uniform_upper),
+            "scope": "Refutes automatic extraction through either existing fibre selector, including their union. It is not a lower bound against common laws and is not claimed to be an odd-cover residual."}
+
+
+def occupied_terminal_row_controls():
+    """Exact algebra for the n=3,4,5 occupied-row specializations of coupling."""
+    def series(h):
+        return 3-F(h+2, 3**h)
+    controls = 0
+    for n in (3, 4, 5):
+        beta = F(n-2, n)
+        require(F(1, n-(n-2)+1) == F(1, 3), "stripping empty rows preserves the row cap")
+        for h in range(1, 41):
+            limit = 3*series(h)+2*(3*beta-1)*F(2*h+1, 3**h)
+            if n == 3:
+                require(limit == 9-F(3*(h+2), 3**h) < 9, "three-row all-height limit")
+            elif n == 4:
+                require(limit == 9-F(h+5, 3**h) < 9, "four-row all-height limit")
+            else:
+                require(limit == 9+F(h-22, 5*3**h), "five-row existing boundary")
+            for k in range(1, 41):
+                bound = series(h)*series(k)+(3*beta-1)*F(2*h+1, 3**h)*(series(k)-1)
+                require(bound < limit, "finite seven-height strictness")
+                if n <= 4:
+                    require(bound < 9, "at-most-four-terminal-rows finite bound")
+                controls += 1
+    return {"finite_algebra_controls": controls,
+            "joint_coefficients": {"3": "1/3", "4": "1/2", "5": "3/5"},
+            "at_most_four_terminal_rows_all_K_limit": "9-(H+5)/3^H < 9 for every H>=1",
+            "scope": "A conditional corollary for an isolated ternary prefix skeleton. Divisor closure alone does not impose the row restriction in every active terminal fibre."}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--fixture-script", type=Path,
@@ -283,6 +426,8 @@ def main():
     result = {"diagonal_sharpness": diagonal_sharpness_control(),
               "height_bounds": height_controls(), "input_controls": input_controls(),
               "actual_540_consumer": actual_540_consumer(args.fixture_script),
+              "simultaneous_selector_obstruction": simultaneous_selector_obstruction(args.fixture_script),
+              "occupied_terminal_rows": occupied_terminal_row_controls(),
               "scope": "Ordinary finite-flow proof with exact standard-library constructors and controls; no Lean certification."}
     payload = json.dumps(result, indent=2)+"\n"
     if args.output:
