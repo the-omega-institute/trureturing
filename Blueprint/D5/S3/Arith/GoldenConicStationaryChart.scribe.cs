@@ -66,8 +66,8 @@ internal sealed class GoldenConicStationaryChartDocument : IScribeDocumentDefini
                     Paragraph(Text("The proof constructs the basis inverse, derives "
                         + "A^2-5*B^2=1 from the actual norm, and verifies the inverse "
                         + "and phase by ring identities. The analytic character-sum "
-                        + "evaluation is an ordinary theorem in the existing theory "
-                        + "note, not a further formal conclusion of this declaration."))), DescribeRole.Theorem))));
+                        + "evaluation is treated separately in the existing theory note "
+                        + "and lies outside this theorem."))), DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Num(int n) => n < 10 ? D(n) : Seq(n.ToString().Select(c => D(c-'0')).ToArray());

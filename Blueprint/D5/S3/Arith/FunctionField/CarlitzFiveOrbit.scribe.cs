@@ -61,16 +61,15 @@ internal sealed class CarlitzFiveOrbitDocument : IScribeDocumentDefinition
                         + "total degrees at most eight, whose weighted sum is mu(a) "
                         + "in characteristic nineteen. Integer expansion independently "
                         + "gives a difference divisible coefficientwise by nineteen. "
-                        + "The Lean candidate expands this identity with ring_nf and "
-                        + "reduces its coefficients with reduce_mod_char!.")),
+                        + "Expanding the identity and reducing its coefficients modulo "
+                        + "nineteen verifies it directly.")),
                     Paragraph(Text("For sigma(x)=x^q this rules out every additional "
                         + "common root in the source's exactness conjecture, including "
                         + "the previously unresolved degree-fifteen difference case. "
                         + "The complete monic-gcd equality and the extension-degree "
-                        + "classification are ordinary proofs in the associated dossier. "
-                        + "They are not additional conclusions silently attributed "
-                        + "to this formal declaration. No integer Wall-Sun-Sun prime "
-                        + "is asserted to exist."))),
+                        + "classification are proved separately in the associated dossier. "
+                        + "The theorem here asserts only the common-root bound. No integer "
+                        + "Wall-Sun-Sun prime is asserted to exist."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);

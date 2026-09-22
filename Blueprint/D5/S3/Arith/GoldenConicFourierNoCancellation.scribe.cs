@@ -53,10 +53,9 @@ internal sealed class GoldenConicFourierNoCancellationDocument : IScribeDocument
                         + "note uses this kernel after proving that the original "
                         + "golden orbit has scalar stabilizer of size tau/rho in "
                         + "{1,2,4}. It completes the previously unresolved cancellation "
-                        + "step in the full Fourier support. The rank quotient, "
-                        + "all-precision support, first-zero criterion and moment "
-                        + "formulas are ordinary proofs there, not additional "
-                        + "claims of kernel-certified conclusions of this declaration."))),
+                        + "step in the full Fourier support. The note separately establishes "
+                        + "the rank quotient, all-precision support, first-zero criterion "
+                        + "and moment formulas; this theorem supplies the noncancellation step."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);

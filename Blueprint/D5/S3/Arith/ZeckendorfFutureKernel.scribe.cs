@@ -56,9 +56,9 @@ internal sealed class ZeckendorfFutureKernelDocument : IScribeDocumentDefinition
                         + "original word evaluation proves the reverse implication.")),
                     Paragraph(Text("The common incoming bit is explicit. The separate-boundary "
                         + "distinction, reachability, exact state count, probability-law lift and "
-                        + "WSS rank-growth consequences are ordinary proofs in the existing "
-                        + "Wieferich interface note. They are not extra kernel-certified conclusions "
-                        + "of this declaration. No initial-depth-one hypothesis is supplied."))), DescribeRole.Theorem))));
+                        + "WSS rank-growth consequences are established separately in the existing "
+                        + "Wieferich interface note. This theorem does not use an initial-depth-one "
+                        + "hypothesis."))), DescribeRole.Theorem))));
 
     private static Formula V(string s)=>F.Id(s);
     private static Formula C(string s,params Formula[] xs)=>new Formula.Apply(Seq(Operatorname,Grp(V(s))),xs);

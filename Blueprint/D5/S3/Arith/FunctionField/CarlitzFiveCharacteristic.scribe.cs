@@ -27,23 +27,23 @@ internal sealed class CarlitzFiveCharacteristicDocument : IScribeDocumentDefinit
                         + "sigma^5(theta)=theta and the residual at sigma^i(theta)-theta, "
                         + "i=1,2,3,4, is zero. Then p divides "
                         + "8*25*19*263*519555805809266011. Primality of the last explicit "
-                        + "factor is not a premise or conclusion of this declaration.")),
+                        + "factor is not a premise or conclusion of this theorem.")),
                     Paragraph(Text("Applying sigma supplies the other four cyclic-origin "
                         + "residual equations. An explicitly authored degree-ten integer "
                         + "polynomial with 508 terms has a cyclic weighted residual sum "
-                        + "equal to 4673196650932024062540600. The Lean proof checks the "
-                        + "integer identity by ring normalization. Its factorization has "
+                        + "equal to 4673196650932024062540600. Ring normalization verifies "
+                        + "the integer identity. Its factorization has "
                         + "an extra factor nine, which is removed by a second 340-term "
                         + "cyclic certificate equal to one in characteristic three.")),
-                    Paragraph(Text("The coefficients in both certificates are on the live "
-                        + "proof path. Neither a Groebner-basis result, a list of tested "
+                    Paragraph(Text("Both certificates enter the deduction. Neither a "
+                        + "Groebner-basis result, a list of tested "
                         + "characteristics, nor the desired characteristic support is "
                         + "assumed. The conclusion is a global exclusion statement for "
                         + "the literal orbit equations, not an extrapolation from a scan.")),
                     Paragraph(Text("The unified Wieferich dossier gives additional ordinary "
                         + "proofs of the two newly constructed characteristic families and "
-                        + "their exact extension-degree classes. Those are not additional "
-                        + "conclusions silently attached to this declaration. The integer "
+                        + "their exact extension-degree classes. Those conclusions are "
+                        + "separate from this theorem. The integer "
                         + "Wall-Sun-Sun existence problem remains a separate unresolved "
                         + "subproblem within the same lifting-and-elimination family."))),
                 DescribeRole.Theorem))));

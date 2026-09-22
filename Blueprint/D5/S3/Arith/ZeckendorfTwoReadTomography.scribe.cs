@@ -48,9 +48,9 @@ internal sealed class ZeckendorfTwoReadTomographyDocument : IScribeDocumentDefin
                         + "Learning its joint probabilities requires repeated samples or "
                         + "other statistical information. Two observed bits do not encode "
                         + "a whole probability distribution. The complete finite-word "
-                        + "implementation and the prime-power terminal-rank calculation "
-                        + "are ordinary proofs in the existing golden-interface note; "
-                        + "this declaration certifies the modular separating events and sums.")),
+                        + "construction and the prime-power terminal-rank calculation "
+                        + "are proved separately in the existing golden-interface note. "
+                        + "The theorem above gives the modular separating events and sums.")),
                     Paragraph(Text("Predictive-state and finite Radon-transform background "
                         + "is recorded in Library/notes/singh2004zeckendorfprobability.md: "
                         + "Singh-James-Rudary (UAI2004), Kingston (2006), and Ben-Ari-Miller. "
