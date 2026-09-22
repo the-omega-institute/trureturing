@@ -115,7 +115,19 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                             + "retain the fixed golden polynomial and actual q_p. "
                             + "They are not conclusions of integral_image, do not "
                             + "identify characteristic p^2 with dual numbers, and do "
-                            + "not prove a new WSS prime-family decision."))),
+                            + "not prove a new WSS prime-family decision.")),
+                    Paragraph(
+                        Text("Signed norm bound and the published squarefree equivalence: "),
+                        Ref(LibraryNoteRef.Create("D5/L/katz2015goldeninterfaces").Value),
+                        Text(". SJC.9-SJC.12 explicitly credit Ross-Shen-Cai Corollary "
+                            + "5.1 for the existing squarefree characterization. A "
+                            + "separate ordinary Mobius-product proof strengthens the "
+                            + "height bound on Psi_r(3), giving an integer bound B(r) "
+                            + "and the implication p^2>B(r_p) => q_p!=0. It does not "
+                            + "prove that an unbounded new prime family meets the "
+                            + "inequality. This analytic and valuation argument is "
+                            + "not part of integral_image; no new formal statement "
+                            + "or kernel certification is attached to this reference."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
