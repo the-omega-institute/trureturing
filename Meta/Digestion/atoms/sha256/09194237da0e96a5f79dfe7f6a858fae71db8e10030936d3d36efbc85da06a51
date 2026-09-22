@@ -1,0 +1,29 @@
+**定义 21.0（载体、相位与全域选择）。** 取 $\mathbb N=\{0,1,\ldots\}$、$\mathbb N_{>0}=\{1,2,\ldots\}$，并令
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j.
+$$
+令 $Z(n)$ 为自然数 $n$ 的有限 Zeckendorf 规范字按低位到高位补零所得的无限字，且
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad 0_K=Z(0).
+$$
+数字空间取乘积拓扑，置
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right],\qquad
+P_L(x)=(x_0,\ldots,x_{L-1}),
+$$
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+定义加法闭图及其输入纤维为
+$$
+\Gamma=\overline{\{(Z(n),Z(k),Z(n+k)):n,k\in\mathbb N\}}^{K^3},\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+全域单值选择是函数 $A:K^2\to K$，满足
+$$
+\forall x,y\in K,\quad A(x,y)\in\Gamma(x,y).
+$$
+结合性指 $A(A(x,y),z)=A(x,A(y,z))$ 对全部有序三元组成立；定义不预设交换性、单位或连续性。
+

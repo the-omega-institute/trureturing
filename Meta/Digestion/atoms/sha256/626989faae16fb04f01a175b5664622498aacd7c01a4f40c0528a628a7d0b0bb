@@ -1,0 +1,12 @@
+**Proof.** Use the D and unit u from LFO1. Infinitude of primes supplies distinct r,s>B outside the prime support of M. Let R be the product of primes p<=B with p not dividing M. The moduli M,R,r^2,s^2 are pairwise coprime. The Chinese remainder theorem gives positive x,y with
+
+$$
+\begin{array}{c|cccc}
+ &\bmod M&\bmod R&\bmod r^2&\bmod s^2\\
+x&u^{-1}&1&r&1\\
+y&u&1&1&s
+\end{array}
+$$
+
+and N=Dx^2y^3 is powerful, congruent to a modulo M, and divisible by none of the stated small primes. Since r,s do not divide D, its exponents at r,s are exactly two and three. A perfect-power exponent would divide both, which is impossible. Replace x by x+jL for j>=0, where L=MRr^2s^2, to obtain infinitely many distinct examples with all conditions unchanged. Congruences modulo one are vacuous. The elementary construction does not use a theorem on primes in arithmetic progressions.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f07f5de7f1ce27ca2ec451fb4a6cef0dfe2628bdb027f5be972c0936b770177d
+  normalized_sha256: sha256:f07f5de7f1ce27ca2ec451fb4a6cef0dfe2628bdb027f5be972c0936b770177d
+cas_ref: sha256:f07f5de7f1ce27ca2ec451fb4a6cef0dfe2628bdb027f5be972c0936b770177d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句规定固定费用观察、标记副本费用以及配分和和两种有效费用的定义，没有待证明命题。
+    previous_atom_id: a158cca00da2657f906fb2c3b758a755ee467e9fcac74205c5dafef9fcb101f1
+    next_atom_id: 754a2aeffc230c763ea796da38879e10de97fd25350c104a2ea77bccbf9e71c6

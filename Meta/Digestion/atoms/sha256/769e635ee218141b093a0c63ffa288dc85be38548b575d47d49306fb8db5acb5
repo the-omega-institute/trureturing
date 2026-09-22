@@ -1,0 +1,54 @@
+### IP.8 The next digit in every primitive block
+
+For $n>3$ odd and $5\nmid n$, retain the actual cyclotomic block
+$\mathcal C_n$, old factor $E_n$, and primitive block $\mathcal R_n$
+from IP.3-IP.5. Put
+
+$$
+c_n=\Phi_n(1)=\prod_{d\mid n}d^{\mu(n/d)},\qquad
+J_2(n)=\sum_{d\mid n}\mu(n/d)d^2.
+$$
+
+Here $c_n$ equals the underlying prime when n is a prime power and one
+otherwise. $J_2$ is the classical second Jordan totient.
+
+**Theorem RP3.** There is an exact weighted initial-depth congruence
+
+$$
+\boxed{
+\sum_{r(p)=n}h_p\lambda_5(p)
+\equiv\lambda_5(c_n)-J_2(n)-\lambda_5(E_n)\pmod5.
+}\tag{RP3}
+$$
+
+The sum is over actual primes of exact Fibonacci rank n. Its h_p are
+the actual initial WSS depths, without assuming they equal one.
+
+**Proof.** Apply RP1 and RP2 to the Moebius product for $\mathcal C_n$.
+The terms $\lambda_5(d)$ sum to $\lambda_5(c_n)$. The constant terms
+sum to zero, because n>1, and the square terms sum to $-J_2(n)$.
+Removing the old factor subtracts $\lambda_5(E_n)$. Finally use the
+exact prime factorization $\mathcal R_n=\prod_{r(p)=n}p^{h_p}$ from IP9.
+
+One may equivalently retain the full modulus-25 cyclotomic congruence
+
+$$
+\mathcal C_n\equiv
+ c_n2^{-\varphi_{\rm E}(n)}
+ \left(1+\frac56\bigl(J_2(n)-3\varphi_{\rm E}(n)\bigr)\right)
+ \pmod{25}.                                           \tag{RP4}
+$$
+
+**Proof.** Multiply the modulo-25 expansions used in RP2 with exponents
+$\mu(n/d)\in\{-1,0,1\}$. Products of two correction terms vanish modulo
+25; a negative exponent changes the sign of its first correction. The
+linear and quadratic divisor sums are $\varphi_{\rm E}(n)$ and J_2(n).
+This gives RP4 directly.
+
+RP3 supplements the earlier quadratic-character parity by a relation
+modulo five on the depths. It does not recover the individual h_p from
+one weighted sum. Some coefficients vanish: for example
+$\lambda_5(159607993)=0$, even though this is an inert primitive prime
+at rank 91. Nonzero terms can also cancel. No WSS occurrence or absence
+is inferred merely from RP3.
+

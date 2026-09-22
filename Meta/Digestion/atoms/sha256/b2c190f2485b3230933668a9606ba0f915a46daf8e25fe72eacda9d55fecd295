@@ -1,0 +1,54 @@
+**证明。** 对每个 $j\ge0$，集合
+$$
+C_j=\{\xi\in X^{\mathbb N}:f(\xi_{j+1})=\xi_j\}
+$$
+是闭集：映射 $\xi\mapsto(f(\xi_{j+1}),\xi_j)$ 连续，而 Hausdorff 空间 $X$ 的对角线在 $X\times X$ 中闭。因此 $\mathcal L_f=\bigcap_{j\ge0}C_j$ 是紧致 Hausdorff 乘积空间 $X^{\mathbb N}$ 的闭子空间。
+
+固定任意 $x\in X$。对 $N\ge0$ 置
+$$
+A_N(x)=\{\xi\in X^{\mathbb N}:\xi_0=x,\ f(\xi_{j+1})=\xi_j\text{ 对 }0\le j<N\}.
+$$
+这些是递减的闭集。由 $f^N$ 满射，存在 $y\in X$ 使 $f^N(y)=x$；令 $\xi_j=f^{N-j}(y)$ 对 $0\le j\le N$ 成立，并用任一固定状态填充其余坐标，即得 $A_N(x)$ 的元素。紧性与有限交性质给出
+$$
+\varnothing\ne\bigcap_{N\ge0}A_N(x)=P_f^{-1}(\{x\}).
+$$
+于是 $P_f$ 满射，且 $\mathcal L_f$ 非空。投影连续。若 $B\subseteq\mathcal L_f$ 闭，则 $B$ 紧，其像 $P_f(B)$ 在 Hausdorff 空间 $X$ 中闭，故 $P_f$ 是闭映射。连续闭满射是商映射：若 $P_f^{-1}(A)$ 闭，则 $A=P_f(P_f^{-1}(A))$ 闭，反向由连续性成立。
+
+若 $\ell=(x_0,x_1,\ldots)\in\mathcal L_f$，则插入的首条关系为 $f(x_0)=f(x_0)$，其余关系来自 $\ell$，故 $U_f\ell\in\mathcal L_f$。删除首坐标也保留全部相容关系，定义映射 $V(\ell)=(x_1,x_2,\ldots)$。逐坐标检查得到
+$$
+VU_f=\operatorname{id}_{\mathcal L_f},\qquad U_fV=\operatorname{id}_{\mathcal L_f},
+$$
+其中第二式的首坐标使用 $f(x_1)=x_0$。两个映射的每个坐标函数均连续，所以两者连续，$U_f$ 为同胚且逆为 $V$。首坐标直接给出 $P_fU_f=fP_f$，反复删除首坐标给出 $p_j=P_fU_f^{-j}$；因此所有 $p_j$ 满射。
+
+对于相容映射族 $(a_j)$，唯一可能的映射是 $a(y)=(a_j(y))_{j\ge0}$。相容性保证其值在 $\mathcal L_f$ 中，乘积拓扑保证其连续；逐坐标相等又保证唯一性。这证明拓扑逆极限的泛性质。
+
+同时记录一个后面使用的柱集事实。由相容关系，对 $0\le i\le N$ 有 $p_i=f^{N-i}p_N$。因而，对开集 $O_0,\ldots,O_N\subseteq X$，
+$$
+\bigcap_{i=0}^N p_i^{-1}(O_i)=p_N^{-1}(W),\qquad W=\bigcap_{i=0}^N(f^{N-i})^{-1}(O_i).
+$$
+$W$ 开；左侧非空时 $W$ 非空。任意非空开子集均包含这样的非空柱集。
+
+现在取 $(Y,S,g)$。对每个 $j\ge0$，由 $gS=fg$ 得
+$$
+f\bigl(g(S^{-j-1}y)\bigr)=g(S^{-j}y),
+$$
+故所给 $\widetilde g$ 落在 $\mathcal L_f$，且由各坐标连续而连续。首坐标给 $P_f\widetilde g=g$；比较首坐标及所有其余坐标，得到 $\widetilde gS=U_f\widetilde g$。
+
+若 $h:Y\to\mathcal L_f$ 也满足这两式，则 $S,U_f$ 可逆使 $hS^{-j}=U_f^{-j}h$，所以
+$$
+p_jh(y)=P_fU_f^{-j}h(y)=P_fh(S^{-j}y)=g(S^{-j}y).
+$$
+全部坐标被强制为 $\widetilde g$ 的坐标，故 $h=\widetilde g$。
+
+再设 $g$ 满射。给定 $\ell=(x_j)_{j\ge0}\in\mathcal L_f$，令
+$$
+B_N=\{y\in Y:g(S^{-j}y)=x_j\text{ 对所有 }0\le j\le N\}.
+$$
+这些是递减闭集。选取 $z\in Y$ 使 $g(z)=x_N$，置 $y=S^Nz$；则对 $0\le j\le N$，
+$$
+g(S^{-j}y)=g(S^{N-j}z)=f^{N-j}(x_N)=x_j.
+$$
+所以 $B_N$ 非空。$Y$ 的紧性给出 $y\in\bigcap_NB_N$，而此时 $\widetilde g(y)=\ell$，证明提升满射。
+
+最后，两个满足所述终对象性质的三元组之间各有唯一箭头。两个复合都是相应终对象的自箭头，故由唯一性等于恒等。两箭头因而互为连续逆映射，并保持底投影与演化。这证明唯一的动力学同胚。证毕。
+

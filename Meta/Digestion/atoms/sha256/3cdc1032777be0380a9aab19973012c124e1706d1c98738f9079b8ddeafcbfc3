@@ -1,0 +1,8 @@
+$M_P$ 的完整情境沿定义 6 的乘积：旧档案保留但不进当前剖面；新当前事件无出边，故其 $U_t$ 为自身属性单点集。以支撑按 (TCAU-SUPPORT) 恢复 $s_X,s_Y$，置 $g=\gamma(s_X,s_Y)$，端点为
+
+$$
+(m,M,s)_{M_P(X,Y)}
+=(\min(m_X,m_Y),\max(M_X,M_Y,g),g).
+\tag{MIX-ENDPOINTS}
+$$
+

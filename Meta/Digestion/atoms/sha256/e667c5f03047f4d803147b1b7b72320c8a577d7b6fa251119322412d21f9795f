@@ -1,0 +1,17 @@
+**theorem 57.9（边缘标签二元接口不可能同时实现独立与复制）。** 不存在一个 Markov 核
+$$
+K:I\times I\leadsto I
+$$
+同时满足以下两个全称要求：
+
+一，对所有 $a,b\in I$，若 $X\sim m_a$、$Y\sim m_b$ 独立，则
+$$
+\operatorname{Law}(\rho(X+Y))=K(a,b).
+$$
+
+二，对所有 $a\in I$，若 $X\sim m_a$ 且同一 $X$ 被复制到两个输入端，则
+$$
+\operatorname{Law}(\rho(X+X))=K(a,a).
+$$
+因此，一个只看两个输入边缘标签并在 $(a,a)$ 处调用同一个二元核的 Markov 接口，不可能既解释独立重新采样又解释复制。每次出现都重新抽取独立轨道代表是另一个实验。
+

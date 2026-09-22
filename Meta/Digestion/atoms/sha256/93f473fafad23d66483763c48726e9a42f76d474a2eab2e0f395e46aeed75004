@@ -1,0 +1,37 @@
+**Proof.** Circle convolution and signed Fubini give
+$$
+\widehat{\nu^{(n)}}(k)=\widehat\nu(k)^n.
+$$
+Positivity gives $|\widehat\nu(k)|\le1$. Haar invariance gives $\widehat\lambda(0)=1$ and $\widehat\lambda(k)=0$ for $k\ne0$: translating by a phase on which $\chi_k$ is not one multiplies the integral by that nonunit character value.
+
+Integer characters have dense complex linear span in $C(\mathbb T,\mathbb C)$.[^rro34-fourier] Hence convergence of their integrals for circle probabilities implies weak-star convergence. Explicitly, if a trigonometric polynomial $P$ approximates a continuous $f$ within $\varepsilon$, the difference between the two measure integrals of $f-P$ has absolute value at most $2\varepsilon$. Convergence on the finitely many characters of $P$ then gives convergence on $f$.
+
+It follows that $\nu^{(n)}\to\lambda$ exactly when $\widehat\nu(k)^n\to0$ for all $k\ne0$, which is exactly the strict-modulus condition. This is the classical compact-Abelian criterion, here used only for the circle component.[^rro34-power]
+
+For the averages put
+$$
+A_N(z)=\frac1N\sum_{n=1}^N z^n.
+$$
+For $|z|\le1$,
+$$
+A_N(1)=1,\qquad
+A_N(z)=\frac{z(1-z^N)}{N(1-z)}\quad(z\ne1),
+$$
+$$
+|A_N(z)|\le\min\left\{1,\frac2{N|1-z|}\right\}\quad(z\ne1).
+$$
+Thus $A_N(z)\to0$ exactly when $z\ne1$. Applying the same finite-polynomial approximation proves
+$$
+\overline\nu_N\to\lambda\quad\Longleftrightarrow\quad
+\widehat\nu(k)\ne1\quad(k\ne0).
+$$
+The averaging convention begins at one, as in the classical compact-group Cesaro theorem.[^rro34-cesaro]
+
+For sufficiency on $K$, Theorem 34.6 applies because $\lambda(E)=0$. It gives convergence of $L_t\nu^{(n)}$, or of $L_t\overline\nu_N$, to $\mathfrak m$. Theorem 34.5 removes the residual, or its Cesaro average. The uniform bound $\|\mu_t^{(n)}\|\le C_t$ ensures that these are genuine bounded signed-measure limits. For necessity, continuous pushforward by $H$ sends the proposed limit to $\lambda$ and the powers or averages to their stated circle counterparts. The already proved circle necessities apply.
+
+Finally, if $z=\int\chi_k\,d\nu$, then
+$$
+\int|\chi_k-z|^2\,d\nu=1-|z|^2.
+$$
+When $|z|=1$, this forces $\chi_k=z$ almost everywhere, hence on the support by continuity. The converse is immediate. The equality $z=1$ forces precisely the level set $\chi_k=1$. These prove the two support descriptions. $\square$
+

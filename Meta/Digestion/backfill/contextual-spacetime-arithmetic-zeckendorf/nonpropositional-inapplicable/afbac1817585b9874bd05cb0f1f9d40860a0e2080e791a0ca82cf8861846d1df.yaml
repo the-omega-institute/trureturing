@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:afbac1817585b9874bd05cb0f1f9d40860a0e2080e791a0ca82cf8861846d1df
+  normalized_sha256: sha256:afbac1817585b9874bd05cb0f1f9d40860a0e2080e791a0ca82cf8861846d1df
+cas_ref: sha256:afbac1817585b9874bd05cb0f1f9d40860a0e2080e791a0ca82cf8861846d1df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只列出集合解释与既有数学接口的引用及使用条件，没有新增数学命题。
+    previous_atom_id: 9993ab28ad8f95c956a58fb20218cbef9b8093027ae104da51e5b93468e82a10
+    next_atom_id: a8cd60dbf5ad5a89bc60f3ddf46a92df994220e2eb10ef2f9099e1038589726b

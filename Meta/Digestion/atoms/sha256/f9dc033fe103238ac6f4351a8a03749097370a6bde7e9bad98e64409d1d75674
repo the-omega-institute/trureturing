@@ -1,0 +1,5 @@
+标签费用实例用
+$$
+L_Z(C)=\sum_{p\in P}\ell_Z(p),\qquad
+H_Z(C)=\ell_Z(k(C))+\sum_{p\in P}\ell_Z(A_p).
+$$

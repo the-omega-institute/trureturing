@@ -1,0 +1,12 @@
+### 93.1 固定点先由记录基底决定
+
+设 $B$ 是 $d$ 维 Hilbert 空间上的秩一记录上下文，并假设其投影族满足 `IsRecordMeasurement`。项目中的 `basis_measurement_eq_self_iff` 给出固定点刻画：
+
+$$
+\boxed{
+\operatorname{basisMeasurement}_B(A)=A
+\iff
+A\in\operatorname{diagonalSubspace}(B).
+}
+$$
+

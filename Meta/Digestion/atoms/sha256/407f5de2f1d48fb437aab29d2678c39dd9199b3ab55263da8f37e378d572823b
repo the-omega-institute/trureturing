@@ -1,0 +1,22 @@
+### NP.1 The native modulus and the actual sequences
+
+Let p>=7 be prime, epsilon=chi(p)=(5/p), N=p-epsilon, and
+
+$$
+h_p=v_p(F_N)=v_p(F_{r(p)})\ge1,\qquad
+q_p=F_N/p\pmod p,\qquad u_p=F_N/p^{h_p}\pmod p\ne0.
+$$
+
+Here r(p) is the least positive Fibonacci zero index. Equality of the
+initial depths uses r(p)|N, p not dividing N, and the classical valuation
+formula in the sources below. Neither depth is assumed to be one.
+For k>=0 define the same exact integer quotient as in IP.2,
+
+$$
+B_{p,k}=\frac{F_{p^{k+1}}}{F_{p^k}}.
+$$
+
+This section observes it at the prime p itself, rather than at the fixed
+auxiliary moduli five or 5040. Its prime divisors still have exact rank
+p^(k+1), and their exponents are their own initial depths, by IP5.
+

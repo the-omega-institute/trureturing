@@ -1,0 +1,32 @@
+**证明。** 从 (EMW-F1) 选有限 \(T\subset\mathcal R_1(M_0)\)，使
+
+\[
+\sum_{r\in\mathcal R_1(M_0)\setminus T}\frac1r<\frac\eta4.
+\]
+
+令 \(M=\operatorname{lcm}(M_0,T)\)。若 \(r\in\mathcal R_1(M)\)，则由 \(M_0\mid M\)，有 \(r\in\mathcal R_1(M_0)\)。它不可能属于 \(T\)，因为此时 \(r\mid M\)，而 \(r\ge3\) 会违反 \(\gcd(r,M)\le2\)。所以
+
+\[
+\mathcal R_1(M)\subseteq\mathcal R_1(M_0)\setminus T,
+\qquad
+\sum_{r\in\mathcal R_1(M)}\frac1r<\frac\eta4.
+\]
+
+对固定的这个 \(M\)，应用引理 6，得到
+
+\[
+d\left(\bigcup_{r\in\mathcal R_1(M)}E_r(M)\right)<\eta.
+\]
+
+考虑不属于这个并集的 \(k\)。如果某个 \(F_{Mk+s}\) 不是强力数，则它有简单素因子 \(p\)。由 \(60\mid M\) 与 (EMW-B2)，\(p\) 不会是 2、3、5。由推论 2，\(r=\rho(p)\in\mathcal R_1\)；又因为 \(r\mid Mk+s\)，有 \(\gcd(r,M)\le2\)，从而 \(r\in\mathcal R_1(M)\) 且 \(k\in E_r(M)\)，矛盾。
+
+因此这四个 Fibonacci 数都是强力数，(EMW-C2) 给出 \(Mk\in\mathcal T\)。此类 \(k\) 的下密度至少为 \(1-\eta\)，即 (EMW-F2)。
+
+最后，将等差数列中的计数换回全部指标：
+
+\[
+\underline d(\mathcal T)\ge\frac{1-\eta}{M}>0.
+\]
+
+证毕。
+

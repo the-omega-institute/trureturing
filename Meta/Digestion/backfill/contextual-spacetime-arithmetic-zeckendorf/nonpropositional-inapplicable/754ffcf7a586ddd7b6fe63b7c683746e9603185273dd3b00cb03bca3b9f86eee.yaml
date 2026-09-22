@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:754ffcf7a586ddd7b6fe63b7c683746e9603185273dd3b00cb03bca3b9f86eee
+  normalized_sha256: sha256:754ffcf7a586ddd7b6fe63b7c683746e9603185273dd3b00cb03bca3b9f86eee
+cas_ref: sha256:754ffcf7a586ddd7b6fe63b7c683746e9603185273dd3b00cb03bca3b9f86eee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出定义 423.1（预测五·首位语言）所用的载体、符号或任务假设，并规定相应函数、域与约定；这些内容是定义及适用条件，没有需要证明的独立命题，故由现有结算写入器处理。
+    previous_atom_id: bf8eb02d4255d7d5691bc65265c29a0be93218382a9ae1b03e02ee3567673b13
+    next_atom_id: 55b042b40b5fc51df4004d5aefb144f83ddd4611397d4bba2b958d844f30ae1a

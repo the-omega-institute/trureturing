@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d9b413e4bc9ce65666a0fcd647e2302ed3d15b74abcdeafd7bec15350c93b5be
+  normalized_sha256: sha256:d9b413e4bc9ce65666a0fcd647e2302ed3d15b74abcdeafd7bec15350c93b5be
+cas_ref: sha256:d9b413e4bc9ce65666a0fcd647e2302ed3d15b74abcdeafd7bec15350c93b5be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有理模整数加法群为可除群，钉版 Baer 延拓定理把任意子群同态延拓到全群，结论对源句可数生成群同样成立。仓内无冻结 GID。
+    previous_atom_id: 013b25de1555438df1968bb0e6c8df2f345a23a8fe1a31f047bce3817b6e4a5d
+    next_atom_id: 68947de2e39df88db7cebc4bda526ed44ace6597e8bc5e3f956a188d5387e706

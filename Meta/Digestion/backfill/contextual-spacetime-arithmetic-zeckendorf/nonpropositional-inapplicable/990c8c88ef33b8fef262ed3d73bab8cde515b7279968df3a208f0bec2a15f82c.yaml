@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:990c8c88ef33b8fef262ed3d73bab8cde515b7279968df3a208f0bec2a15f82c
+  normalized_sha256: sha256:990c8c88ef33b8fef262ed3d73bab8cde515b7279968df3a208f0bec2a15f82c
+cas_ref: sha256:990c8c88ef33b8fef262ed3d73bab8cde515b7279968df3a208f0bec2a15f82c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只引入沿用对象、函数、积分、构造式或分析尺度的定义与范围约定，没有独立不等式、算法上界或存在性结论；所邻接的估计子句另行保留。
+    previous_atom_id: 570d2c4c8592c8bc2ee9345d2ec50aa3805c41fe34f33793ca81b9f504c9c4ad
+    next_atom_id: 13b2a601c8e75f461c25c3c9485196d713619bc79dce582129bf3cc343beccd2

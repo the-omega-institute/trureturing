@@ -1,0 +1,22 @@
+**定义 19.1（规范数字与最低位观察）。** 在通常 ZFC 中，取 $\mathbb N=\{0,1,\ldots\}$，并定义
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j.
+$$
+数字按低位到高位排列。令
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\in\mathbb N\},
+$$
+其中 $\{0,1\}$ 取离散拓扑，$K$ 取乘积子空间拓扑。以 $Z(n)$ 表示 $n$ 的有限支撑规范数字向量，并在其后补零；亦即
+$$
+n=\sum_{j\ge0}G_jZ(n)_j.
+$$
+记 $e_i$ 为仅在位置 $i$ 取一的数字向量，并置
+$$
+d_0(x)=x_0,\qquad f(n)=d_0(Z(n)),\qquad o=Z(0),\qquad u=(10)^\infty,\qquad v=(01)^\infty.
+$$
+本节的 $f$ 专指最低位观察。再定义
+$$
+a_k=\sum_{j=0}^{k}G_{2j},\qquad b_l=G_{2l}\qquad(k,l\in\mathbb N).
+$$
+空和取零。数字向量的有限和按坐标作通常整数加法。载体及规范字的记号对应《情境时空算术：Zeckendorf》第 371.1 条。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:86a134fe806c3a596a2c0fda040ad104030f7164932b40dc036f74e8ad6dd9d9
+  normalized_sha256: sha256:86a134fe806c3a596a2c0fda040ad104030f7164932b40dc036f74e8ad6dd9d9
+cas_ref: sha256:86a134fe806c3a596a2c0fda040ad104030f7164932b40dc036f74e8ad6dd9d9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 每个有限支撑整数状态由其单位向量整数倍之和展开，商映射保持该有限和，故商内单位向量像生成整个商群，覆盖任意子群量词。仓内无冻结 GID。
+    previous_atom_id: 9a55ba84410c5efb9106f5a2673d75d80eeee10eedd19e76064ca168111ed4c9
+    next_atom_id: 20f6003bdf0b3583b34bf0af6060f91b1472ba397888941cc9e4ba322b4c65e2

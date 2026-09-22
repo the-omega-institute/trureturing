@@ -1,0 +1,59 @@
+{
+  "length": 6,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000006/item/000000/single.json",
+        "sha256": "11f7d20a121618e32a29a3f13b533e4aa0d1b46a85d3337b6262bc022f820cbb",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000006/item/000001/single.json",
+        "sha256": "08c814c28604f915b9de890dfdfc4f6cb96a007ed184fcc9546fa51f6a11dc43",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000006/item/000002/single.json",
+        "sha256": "9a544393fa1e3bcda495c1bbeee193ae48957b5911035c8f44ae0a5c22e04ab3",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000006/item/000003/single.json",
+        "sha256": "d68cb7dc8037bcc8f7e888229c32595e77c2db287d3e468ad1287f9717f1ee86",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000006/item/000004/single.json",
+        "sha256": "53e4cee739a3754b5698e800fe74fa15bbcd5771004f73e69530174df119a8ae",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000006/item/000005/single.json",
+        "sha256": "c4378f75684987f0f401d8e88a63be3ed33851de5ad0cb90f6d4994e54d05539",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

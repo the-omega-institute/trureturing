@@ -1,0 +1,18 @@
+**theorem 20.7 (Generating itinerary and one-sided Sturmian conjugacy).** Let
+$$
+w_n=\lfloor(n+2)\beta\rfloor-\lfloor(n+1)\beta\rfloor,\qquad
+X_\beta=\overline{\{S^n w:n\ge0\}}
+\subseteq\{0,1\}^{\mathbb N}.
+$$
+Then
+$$
+\Phi:K\longrightarrow X_\beta
+$$
+is a homeomorphism, and
+$$
+\Phi\circ T=S\circ\Phi.
+$$
+The space $X_\beta$ is the one-sided Sturmian subshift of slope $\beta$ with the endpoint conventions of Theorem 20.4. Every orbit in it is dense; its length-$t$ language has exactly $t+1$ words. Every point in it has limiting frequency of digit one equal to the irrational number $\beta$, and is not eventually periodic.
+
+Moreover, $X_\beta$ is a proper closed subset of the positional carrier $K$. The shift in this conjugacy is the restriction of positional deletion to $X_\beta$, not positional deletion on all of $K$.
+

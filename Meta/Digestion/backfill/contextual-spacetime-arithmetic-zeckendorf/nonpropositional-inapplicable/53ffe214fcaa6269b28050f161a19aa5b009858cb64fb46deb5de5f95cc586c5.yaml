@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53ffe214fcaa6269b28050f161a19aa5b009858cb64fb46deb5de5f95cc586c5
+  normalized_sha256: sha256:53ffe214fcaa6269b28050f161a19aa5b009858cb64fb46deb5de5f95cc586c5
+cas_ref: sha256:53ffe214fcaa6269b28050f161a19aa5b009858cb64fb46deb5de5f95cc586c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说明轨道、同步及纤维关系的定义不被用作配置相等的定义，是解释性约定，没有独立待证命题。
+    previous_atom_id: 15b5b53f32bfb54c550d8568b7591e5b9e6e68bbb1abf5971137c8b69f8a955e
+    next_atom_id: 6bacf0c5527c324b9e7f3d676933a018868fe732946c748b8598c7db473da7c7

@@ -1,0 +1,86 @@
+{
+  "length": 41,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 4,
+      "part": {
+        "path": "content/011-cost_results/000000-000004.json",
+        "sha256": "93cc829ded04ff3dd54dd0a52bb657cd44244e1f012d42f93a0c69032191d498",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 9,
+      "part": {
+        "path": "content/011-cost_results/000004-000009.json",
+        "sha256": "6a48b271903efb17ca0b97b6045c1d5a93c7369233953ae971c02c12a36b0deb",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 14,
+      "part": {
+        "path": "content/011-cost_results/000009-000014.json",
+        "sha256": "82d385daf99c2912350757945d14db30d10786a6a17e88961540336cbb2c8974",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 14,
+      "stop": 18,
+      "part": {
+        "path": "content/011-cost_results/000014-000018.json",
+        "sha256": "c605af5a171b325aa945b9705f84e8e48dee80936474bce021873f10d0cd9a2a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 18,
+      "stop": 23,
+      "part": {
+        "path": "content/011-cost_results/000018-000023.json",
+        "sha256": "1eeb51137e709b42d847d3858e43b01e9488586250d0ad7113e6c4edcef5aaaf",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 23,
+      "stop": 27,
+      "part": {
+        "path": "content/011-cost_results/000023-000027.json",
+        "sha256": "9ec687430d2d4865260619444200080dcf3da17152d5a99826d22dae751b8b3e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 27,
+      "stop": 32,
+      "part": {
+        "path": "content/011-cost_results/000027-000032.json",
+        "sha256": "aec0f5714a731538bdef59041dd5ce659dc19384478dc0ac7d382feefb1dee86",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 32,
+      "stop": 36,
+      "part": {
+        "path": "content/011-cost_results/000032-000036.json",
+        "sha256": "835bcd76aadc6bf405e849e53e7c926c40817e5de3e8be5955d39a1ecc26edf9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 41,
+      "part": {
+        "path": "content/011-cost_results/000036-000041.json",
+        "sha256": "fdd977df673e9be6f8cd1fbe9f5c2c1d9dc282c3e47a7661b36e5e0a08ad10b6",
+        "kind": "value"
+      }
+    }
+  ]
+}

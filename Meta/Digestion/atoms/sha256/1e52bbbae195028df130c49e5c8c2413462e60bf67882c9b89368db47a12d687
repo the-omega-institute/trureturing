@@ -1,0 +1,2 @@
+**Proof.** Apply U.6 to m=n^2, using `Omega(n^2)=2Omega(n)` and `v_5(n^2)=2v_5(n)`.
+

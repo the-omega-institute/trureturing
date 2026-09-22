@@ -1,0 +1,2 @@
+**Proof.** Assertion (A) implies (B), since no prime at least seven belongs to E. Conversely suppose F_m is powerful and m is outside E. By PBC1, m has a prime factor at least seven. Let ell be its largest prime factor. ZBD1 shows that every prime p dividing F_ell has rank ell, exceeds ell, does not divide m, and satisfies v_p(F_m)=v_p(F_ell). Consequently F_ell is powerful. This contradicts (B), proving equivalence. If m is the least counterexample, ell is another counterexample with ell<=m. Minimality forces ell=m.
+

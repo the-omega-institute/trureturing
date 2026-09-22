@@ -1,0 +1,19 @@
+**theorem 34.12 (Exceptional atomic targets and the necessity of positivity in the stronger transfer).** A phase probability charging $E$ need not determine a parameter-independent limiting probability on $K$. In actual endpoint dynamics, even a constant phase sequence can coexist with two different full-carrier limits or with no full-carrier limit.
+
+Furthermore, for signed measures, even the constant Haar phase does not by itself force the Haar lift.
+
+**Proof.** Fix $m\ge1$, start at $\eta_0=\delta_{x_m^+}$, and use the zero step $\mu=\delta_{Z(0)}$. The exact zero-slice law gives, for either split input sign,
+$$
+\delta_{x_m^\pm}\star_0\delta_{Z(0)}=\delta_{x_m^-},\qquad
+\delta_{x_m^\pm}\star_\infty\delta_{Z(0)}=\delta_{x_m^+}.
+$$
+Thus the constant zero-parameter dynamics have limit $\delta_{x_m^-}$ and the constant infinity-parameter dynamics have limit $\delta_{x_m^+}$. Their phase laws are identically $\delta_{E_m}$. Alternating the parameters alternates these two output measures after every step. A digit coordinate separating $x_m^+$ and $x_m^-$ is continuous, so that sequence has no weak-star limit. This example violates the Fourier criteria, since the step phase is $\delta_0$.
+
+More generally, the existing positive lifts of a phase probability $\xi$ include the two Borel-section lifts choosing respectively the negative and positive branches on $E$. Their difference is
+$$
+\sum_{m\ge1}\xi(\{E_m\})v_m.
+$$
+The series converges in total variation, and disjointness of the split fibers shows it is nonzero exactly when $\xi(E)>0$. This is the precise positive uniqueness obstruction excluded in Theorem 34.6.
+
+For the signed assertion take the constant sequence $\eta_j=\mathfrak m+v_1$. It has mass one, bounded variation, and phase $H_\#\eta_j=\lambda$, but is not equal to $\mathfrak m$. A continuous digit readout separating the first split pair detects the difference. Thus the signed power theorem needs its proved residual escape; positivity alone supplies the stronger arbitrary-lift transfer only in its stated positive domain. $\square$
+

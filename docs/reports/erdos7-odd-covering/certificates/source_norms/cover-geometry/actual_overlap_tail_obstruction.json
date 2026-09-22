@@ -1,0 +1,240 @@
+{
+  "schema": "erdos7-actual-overlap-tail-obstruction-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/source_mass_compatibility.py": "f65f0be22b250ab94d7da847a45b49c39355c15499f9cde8f18f267ca3365645"
+  },
+  "finite_fixtures": [
+    {
+      "height": 3,
+      "depth": 3,
+      "seven_depth": 1,
+      "original_moduli": 63,
+      "changed_label": {
+        "modulus": 189,
+        "before": 93,
+        "after": 120
+      },
+      "label_digest": "73aa93e4f2b3a07f099d9b4f029af50b2d305e0c1deb644ec7a6bd7f9fca800c",
+      "source_grid": [
+        27,
+        125
+      ],
+      "source_mass": "913/3375",
+      "raw_released_points": 94,
+      "normalized_union_loss": "2303/482625",
+      "capacity_and_source_change": "none: all old carriers, source labels and seven masses identical",
+      "tests": [
+        {
+          "modulus": 27,
+          "residue": 12,
+          "released_mass": "2303/482625"
+        }
+      ],
+      "first_moment": "2303/482625",
+      "second_moment": "2303/482625",
+      "first_ratio": "1",
+      "second_ratio": "1",
+      "scope": "Actual finite families. Capacity defects are unchanged, not zero. Tests have original distinct pure3 labels."
+    },
+    {
+      "height": 4,
+      "depth": 3,
+      "seven_depth": 2,
+      "original_moduli": 124,
+      "changed_label": {
+        "modulus": 1323,
+        "before": 1092,
+        "after": 1281
+      },
+      "label_digest": "a7b093624802ab70626e41540f6e59def10fbce17f522e4114f2c941b096bb84",
+      "source_grid": [
+        81,
+        625
+      ],
+      "source_mass": "12989/50625",
+      "raw_released_points": 1407,
+      "normalized_union_loss": "22981/33766875",
+      "capacity_and_source_change": "none: all old carriers, source labels and seven masses identical",
+      "tests": [
+        {
+          "modulus": 27,
+          "residue": 12,
+          "released_mass": "22981/33766875"
+        },
+        {
+          "modulus": 81,
+          "residue": 12,
+          "released_mass": "22981/101300625"
+        }
+      ],
+      "first_moment": "91924/101300625",
+      "second_moment": "45962/33766875",
+      "first_ratio": "4/3",
+      "second_ratio": "2",
+      "scope": "Actual finite families. Capacity defects are unchanged, not zero. Tests have original distinct pure3 labels."
+    },
+    {
+      "height": 4,
+      "depth": 4,
+      "seven_depth": 1,
+      "original_moduli": 124,
+      "changed_label": {
+        "modulus": 567,
+        "before": 30,
+        "after": 435
+      },
+      "label_digest": "08ccc9b31bf462c4fc9e114f633ea281e8f604c74b83717a1130942de310bd07",
+      "source_grid": [
+        81,
+        625
+      ],
+      "source_mass": "12989/50625",
+      "raw_released_points": 469,
+      "normalized_union_loss": "160867/101300625",
+      "capacity_and_source_change": "none: all old carriers, source labels and seven masses identical",
+      "tests": [
+        {
+          "modulus": 27,
+          "residue": 3,
+          "released_mass": "160867/101300625"
+        },
+        {
+          "modulus": 81,
+          "residue": 30,
+          "released_mass": "160867/101300625"
+        }
+      ],
+      "first_moment": "321734/101300625",
+      "second_moment": "643468/101300625",
+      "first_ratio": "2",
+      "second_ratio": "4",
+      "scope": "Actual finite families. Capacity defects are unchanged, not zero. Tests have original distinct pure3 labels."
+    },
+    {
+      "height": 5,
+      "depth": 5,
+      "seven_depth": 1,
+      "original_moduli": 215,
+      "changed_label": {
+        "modulus": 1701,
+        "before": 1542,
+        "after": 813
+      },
+      "label_digest": "e95fa83ea241d893c7578c56c13938a1e0cce252f31f25fa09654def3115e267",
+      "source_grid": [
+        243,
+        3125
+      ],
+      "source_mass": "191467/759375",
+      "raw_released_points": 2344,
+      "normalized_union_loss": "2813972/5317903125",
+      "capacity_and_source_change": "none: all old carriers, source labels and seven masses identical",
+      "tests": [
+        {
+          "modulus": 27,
+          "residue": 3,
+          "released_mass": "2813972/5317903125"
+        },
+        {
+          "modulus": 81,
+          "residue": 3,
+          "released_mass": "2813972/5317903125"
+        },
+        {
+          "modulus": 243,
+          "residue": 84,
+          "released_mass": "2813972/5317903125"
+        }
+      ],
+      "first_moment": "2813972/1772634375",
+      "second_moment": "2813972/590878125",
+      "first_ratio": "3",
+      "second_ratio": "9",
+      "scope": "Actual finite families. Capacity defects are unchanged, not zero. Tests have original distinct pure3 labels."
+    }
+  ],
+  "complete_limit_moments": [
+    {
+      "depth": 3,
+      "seven_depth": 1,
+      "mass": "1/210",
+      "density_coefficient": "9/70",
+      "first_moment": "1/140",
+      "second_moment": "1/70",
+      "first_ratio": "3/2",
+      "second_ratio": "3"
+    },
+    {
+      "depth": 3,
+      "seven_depth": 2,
+      "mass": "1/1470",
+      "density_coefficient": "9/490",
+      "first_moment": "1/980",
+      "second_moment": "1/490",
+      "first_ratio": "3/2",
+      "second_ratio": "3"
+    },
+    {
+      "depth": 4,
+      "seven_depth": 1,
+      "mass": "1/630",
+      "density_coefficient": "9/70",
+      "first_moment": "1/252",
+      "second_moment": "1/90",
+      "first_ratio": "5/2",
+      "second_ratio": "7"
+    },
+    {
+      "depth": 4,
+      "seven_depth": 2,
+      "mass": "1/4410",
+      "density_coefficient": "9/490",
+      "first_moment": "1/1764",
+      "second_moment": "1/630",
+      "first_ratio": "5/2",
+      "second_ratio": "7"
+    },
+    {
+      "depth": 8,
+      "seven_depth": 1,
+      "mass": "1/51030",
+      "density_coefficient": "9/70",
+      "first_moment": "13/102060",
+      "second_moment": "43/51030",
+      "first_ratio": "13/2",
+      "second_ratio": "43"
+    },
+    {
+      "depth": 8,
+      "seven_depth": 2,
+      "mass": "1/357210",
+      "density_coefficient": "9/490",
+      "first_moment": "13/714420",
+      "second_moment": "43/357210",
+      "first_ratio": "13/2",
+      "second_ratio": "43"
+    },
+    {
+      "depth": 20,
+      "seven_depth": 1,
+      "mass": "1/27119434230",
+      "density_coefficient": "9/70",
+      "first_moment": "37/54238868460",
+      "second_moment": "49/3874204890",
+      "first_ratio": "37/2",
+      "second_ratio": "343"
+    },
+    {
+      "depth": 20,
+      "seven_depth": 2,
+      "mass": "1/189836039610",
+      "density_coefficient": "9/490",
+      "first_moment": "37/379672079220",
+      "second_moment": "7/3874204890",
+      "first_ratio": "37/2",
+      "second_ratio": "343"
+    }
+  ],
+  "scope": "Actual one-label overlap witnesses and complete first/second moments. No fixed linear tail/error price, no new global K, no Lean or unrestricted solution."
+}

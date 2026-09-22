@@ -12,17 +12,19 @@ public sealed class GateAuthorityTests
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 
     // The literal is a shrink sentinel, not a restatement of roots.Length. These roots are
-    // an authority selection, not every stage in the entrypoints: harness-gate.sh marks
-    // restore-judge and the Makefile carries dozens of targets, none of which the catalog
+    // an authority selection, not every stage in the entrypoints: the Makefile carries
+    // dozens of other targets, none of which the catalog
     // admits. Comparing the count against the collection it came from would assert nothing
     // and would let a root be dropped silently. Retiring one is a deliberate act: change the
     // number here in the same commit.
     [Fact]
-    public void RepositoryCatalogHasThirteenUniqueUtf8SortedRoots()
+    public void RepositoryCatalogHasTenUniqueUtf8SortedRoots()
     {
-        var roots = GateAuthorityRootCatalogLoader.LoadRepository(TestRepositoryLayout.FindRoot());
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
+        var catalog = File.ReadAllBytes(Path.Combine(repositoryRoot, GateAuthorityRootCatalogLoader.RelativePath));
+        var roots = GateAuthorityRootCatalogLoader.Parse(catalog);
 
-        Assert.Equal(13, roots.Length);
+        Assert.Equal(10, roots.Length);
         Assert.Equal(
             roots.Length,
             roots.Select(root => root.RootId).Distinct().Count());

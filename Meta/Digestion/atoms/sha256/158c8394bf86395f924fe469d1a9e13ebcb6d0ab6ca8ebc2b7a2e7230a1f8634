@@ -1,0 +1,5 @@
+对拓扑自身，成员展开给
+$$
+\operatorname{El}(\operatorname{Enc}(\sigma))=\operatorname{Enc}[\sigma],\qquad
+\sigma^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\sigma))\}.
+$$

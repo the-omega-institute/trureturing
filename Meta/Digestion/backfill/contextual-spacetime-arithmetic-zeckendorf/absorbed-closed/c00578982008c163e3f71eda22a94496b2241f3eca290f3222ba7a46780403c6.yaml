@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c00578982008c163e3f71eda22a94496b2241f3eca290f3222ba7a46780403c6
+  normalized_sha256: sha256:c00578982008c163e3f71eda22a94496b2241f3eca290f3222ba7a46780403c6
+cas_ref: sha256:c00578982008c163e3f71eda22a94496b2241f3eca290f3222ba7a46780403c6
+coverage_gids:
+  - gid: D5/S3/Analytic/WeightedCapacity/PrimeReciprocalCharacter.result
+    target_statement_id: sha256:3bfd331a75258e735fabaae292249f1c3d78649ca2b4bb9e7c62534c9db936d8
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,5 @@
+对每个集合 $x$，
+$$
+\operatorname{Enc}(x)\in HF\iff x\in HF.
+$$
+

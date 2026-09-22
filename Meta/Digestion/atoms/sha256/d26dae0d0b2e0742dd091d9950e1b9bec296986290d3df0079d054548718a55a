@@ -1,0 +1,96 @@
+### IP.6 Exact examples and the WSS boundary
+
+**Proposition IP13.** The indices $91$, $153$, and $21$ have the exact
+cyclotomic and primitive blocks, ranks, depths, and characters stated below.
+
+At $n=91=7\cdot13$, the complete factorization is
+
+$$
+\mathcal C_{91}=13\cdot741469\cdot159607993.
+$$
+
+The factor thirteen has rank seven, so $E_{91}=13$ and
+
+$$
+\mathcal R_{91}=741469\cdot159607993=118344378961717.
+$$
+
+Here $\chi(\mathcal C_{91})=1$ but
+$\chi(\mathcal R_{91})=-1$. The new inert prime is $159607993$, with
+rank ninety-one and depth one; $741469$ is split. Thus removing the
+old inert factor changes the parity prediction. At $n=153=9\cdot17$,
+
+$$
+\mathcal C_{153}=17\cdot7175323114950564593,
+\qquad E_{153}=17,
+$$
+
+and the remaining factor is an inert prime of rank 153 and depth one.
+The small mixed index $n=21$ instead has $\mathcal C_{21}=421$, with a
+split prime of rank 21 and no odd-depth inert primitive factor. This
+prevents extending the forced-odd assertion to every odd composite
+index without the IP11 conditions.
+
+**Proof.** Evaluate the homogeneous cyclotomic products in IP6 by the integer
+Fibonacci recurrence and factor the resulting integers. Exact division and
+deterministic primality tests give the displayed prime factors. Testing the
+proper divisors of $91$, $153$, and $21$ in the Fibonacci recurrence gives
+the stated exact ranks; division by the corresponding prime squares gives
+depth one. Reduction modulo five gives the asserted split and inert
+characters, and IP9 then removes precisely the displayed old factors.
+
+**Proposition IP14.** The old prime thirteen at indices $7$ and $91$ has the
+valuation and initial quotient stated below.
+
+One must distinguish initial depth from later index lifting. For the
+old prime thirteen,
+
+$$
+v_{13}(F_7)=1,\qquad v_{13}(F_{91})=2,
+\qquad q_{13}=F_{14}/13\equiv3\pmod{13}.
+$$
+
+The square factor in $F_{91}$ is automatic from multiplying the index
+by thirteen; it does not make thirteen a WSS prime. The exact
+cyclotomic removal in IP8-IP9 is what separates this automatic factor
+from genuinely repeated primitive factors.
+
+**Proof.** Since $F_7=13$, its initial valuation is one. The Fibonacci
+valuation formula gives
+$v_{13}(F_{91})=v_{13}(F_7)+v_{13}(91/7)=1+1=2$. Finally
+$F_{14}/13=377/13=29\equiv3\pmod{13}$.
+
+All forced witnesses above have $h_p\in\{1,3,5,\ldots\}$. The argument
+never forces $h_p=1$, $h_p\ge3$, or any $h_p\ge2$. A simple witness is
+non-WSS; an odd deeper witness would already be a WSS prime of depth
+at least three. Both possibilities remain in the universal theorem.
+The criterion IP11 classifies the parity of a set involving the real
+initial depths, but it does not separate those two alternatives.
+These statements imply neither existence nor nonexistence of a WSS prime.
+
+**References for IP1-IP11.**
+
+The rank and valuation inputs are classical. They are recorded in
+L. A. Medina and E. Rowland, *p-regularity of the p-adic valuation of the
+Fibonacci sequence*, Fibonacci Quarterly 53 (2015), 265-271,
+Theorems 1.2 and 1.4, https://arxiv.org/abs/0910.2907 . The separate
+prime-two formula in that theorem is retained in IP8.
+
+For the classical field splitting and residue classes, see M. Ward,
+*The prime divisors of Fibonacci numbers*, Pacific Journal of
+Mathematics 11 (1961), 379-386,
+https://msp.org/pjm/1961/11-1/pjm-v11-n1-p31-p.pdf .
+For related primitive-divisor and cyclotomic valuation arguments, see
+H. Hong, *On big primitive divisors of Fibonacci numbers*,
+arXiv:2312.04354v2, section 5,
+https://arxiv.org/html/2312.04354v2 . IP8 gives the exact elementary
+specialization of the old-prime occurrence.
+
+N. Fellini and M. Ram Murty, *Wieferich primes in number fields and the
+conjectures of Ankeny-Artin-Chowla and Mordell*, arXiv:2508.08472v2,
+Theorem 1.3, proves a conditional implication from finitely many
+super-Wieferich primes to infinitely many non-Wieferich primes:
+https://arxiv.org/html/2508.08472v2 . Nothing here removes that kind of
+missing global depth control.
+
+

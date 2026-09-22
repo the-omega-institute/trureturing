@@ -1,0 +1,49 @@
+**theorem 32.19 (Failure of Borel invariance for every actual parameter).** For every allowed $t$, condition $(\mathrm I_B^{(t)})$ is false. More precisely, there is a single Borel set $D_0\subseteq\mathbb T$, a bounded Borel test
+$$
+f=\mathbf1_{D_0}\circ H,
+$$
+and a single probability charge $q$ concentrated on the actual natural core $Z(\mathbb N)$, independent of $t$, such that $\mathscr R_qf$ is not Borel on $K$. This failure occurs although $k_f$ is jointly Borel and every actual row is finite with uniformly bounded variation.
+
+**Proof.** Choose $A,\kappa$ as in Theorem 32.18 and a free ultrafilter $\mathcal U$. Write $\theta_n=[n\phi]$ and define compact subsets of $A$ by
+$$
+A_n^1=\kappa(\{\omega:\omega_n=1\}).
+$$
+Set
+$$
+D_0=\bigcup_{n\ge0}(A_n^1+\theta_n).
+$$
+This is a countable union of compact sets, hence a Borel set in the original circle. The pairwise disjointness of the full translates $A+\theta_n$ proves the exact identity
+$$
+\mathbf1_{D_0}(\kappa(\omega)+\theta_n)=\omega_n
+\qquad(\omega\in\{0,1\}^{\mathbb N},\ n\in\mathbb N).
+$$
+Indeed, a point of $A+\theta_n$ cannot lie in any differently indexed translate, and inside its own translate membership in $A_n^1+\theta_n$ is precisely the digit condition at index $n$.
+
+Let $p_{\mathcal U}(u)=\lim_{\mathcal U}u(n)$ on $\ell^\infty(\mathbb N)$ and put $q=\iota(p_{\mathcal U})$. Thus
+$$
+q(g)=\lim_{\mathcal U}g(Z(n))\qquad(g\in B_b(K)).
+$$
+This is the non-countably-additive probability charge from Theorems 32.9 and 32.13. The function $f=\mathbf1_{D_0}\circ H$ is bounded Borel, because $H$ is continuous.
+
+Every row has mass one and is supported in the phase fiber of $H(x)+H(y)$. Consequently $f$ is constant on that support, and even for signed rows its integral is
+$$
+k_f(x,y)=\mathbf1_{D_0}(H(x)+H(y)).
+$$
+This identity is independent of $t$. It gives
+$$
+\mathscr R_qf(x)
+=\lim_{\mathcal U,n}\mathbf1_{D_0}(H(x)+[n\phi]).
+$$
+Since $A$ avoids $E$, Theorem 28.3 makes the map
+$$
+j:\{0,1\}^{\mathbb N}\longrightarrow K,\qquad
+j(\omega)=k_{\kappa(\omega)}
+$$
+continuous: it is the composition of $\kappa$ with the continuous inverse of $H$ on the nonsplit fibers. On this continuous copy of Cantor space the outer function has the exact restriction
+$$
+(\mathscr R_qf)(j(\omega))
+=\lim_{\mathcal U,n}\omega_n
+=\mathbf1_{\mathscr U}(\omega),
+$$
+where $\mathscr U$ is the non-Borel set of Theorem 32.17. If $\mathscr R_qf$ were Borel on $K$, its composition with continuous $j$ would be Borel, a contradiction. All ingredients of this test and charge are independent of the parameter, so the failure holds simultaneously for every $t$. QED.
+

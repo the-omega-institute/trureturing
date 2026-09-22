@@ -1,0 +1,16 @@
+**定理 29.9（完整原子测度的两个单侧极限与精确跳跃）。** 设 $\sigma\in M(K)$ 为任意可数原子测度，并记
+$$
+\beta=H_\#\sigma,\qquad b_\lambda=\beta(\{\lambda\}),\qquad \sum_\lambda|b_\lambda|\le\|\sigma\|_{\mathrm{TV}}.
+$$
+对每个 $\theta\in\mathbb T$，存在两条非分裂输入序列 $y_n^+,y_n^-$，其相位分别从严格正侧、负侧趋于 $\theta$，使
+$$
+\sigma\star_t\delta_{y_n^s}\longrightarrow R_\theta^s:=\sum_\lambda b_\lambda\delta_{s_s(\lambda+\theta)}\quad\text{于 }\sigma(M(K),C(K)),\qquad s\in\{+1,-1\}.
+$$
+若 $\theta\notin E$，两条输入序列均趋于 $k_\theta$；若 $\theta=E_j$，则分别趋于 $x_j^+$、$x_j^-$。两个极限测度及其差都是正则有符号测度，且
+$$
+\|R_\theta^s\|_{\mathrm{TV}}\le\|\beta\|_{\mathrm{TV}},\qquad J_\theta:=R_\theta^+-R_\theta^-=\sum_{r\ge1}b_{E_r-\theta}v_r,
+$$
+$$
+\|J_\theta\|_{\mathrm{TV}}=2\sum_{r\ge1}|b_{E_r-\theta}|\le2\|\beta\|_{\mathrm{TV}}.
+$$
+

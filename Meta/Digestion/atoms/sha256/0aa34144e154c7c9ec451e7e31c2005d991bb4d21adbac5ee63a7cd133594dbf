@@ -1,0 +1,37 @@
+**theorem 28.13 (Explicit nonuniqueness despite agreement on the entire atomic algebra).** For each $\tau\in\mathbb R$, define
+$$
+U_\tau(\nu,g)=(\nu,g+\tau a(\nu)e_1)
+\qquad((\nu,g)\in\mathcal C),
+$$
+where $a$ is the bounded linear functional of theorem 28.10. Then $U_\tau$ is a bounded linear isomorphism with inverse $U_{-\tau}$ and
+$$
+\|U_\tau\|\le1+|\tau|,\qquad \|U_\tau^{-1}\|\le1+|\tau|.
+$$
+Define the transported product
+$$
+z\diamond_\tau w
+=U_\tau^{-1}\bigl(U_\tau z\diamond U_\tau w\bigr).
+$$
+This is a bounded associative commutative bilinear product. It agrees with $\diamond$ on the whole subalgebra $\mathcal C_{\mathrm{at}}$, has the same first-coordinate convolution, and preserves the first-coordinate mass character.
+
+The corresponding products on $M(K)$,
+$$
+\mu\star_{t,\tau}\eta
+=\Psi_t\bigl(\Phi_t\mu\diamond_\tau\Phi_t\eta\bigr),
+$$
+are bounded associative commutative extensions of the entire atomic algebra. They preserve mass and the usual phase convolution, and satisfy the same point rows
+$$
+\delta_x\star_{t,\tau}\delta_y=P^{(t)}_{x,y}
+\qquad(x,y\in K).
+$$
+Nevertheless they are pairwise distinct as $\tau$ varies. For $z=(\lambda,0)$,
+$$
+z\diamond_\tau z=(\lambda,\tau^2e_2-\tau e_1),
+$$
+and therefore
+$$
+\mathfrak m\star_{t,\tau}\mathfrak m
+=\mathfrak m-\frac{\tau}{d'_1}v_1+\frac{\tau^2}{d'_2}v_2.
+$$
+For every nonzero $\tau$, this product fails the setwise integration contract of theorem 28.7 and is not a positive operation.
+

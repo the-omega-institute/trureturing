@@ -1,0 +1,39 @@
+**同一个负前缀同时最小化每个坐标的误差。** 令
+\(Q_{n,k}(x)=-\mathcal E(-x)(n,k)\)。（46.3）的系数性质说明 \(Q_{n,k}\) 是非负系数多项式。因 \(|b_i|\le A\mathbf1_{i<N}\)，逐坐标有
+\[
+|\mathcal E(b)(n,k)|
+\le Q_{n,k}(|b|)
+\le Q_{n,k}(A\mathbf1_{i<N})
+=-T_{A,N}(n,k)
+\le u_k(A).
+\]
+三角不等式的反向估计于是给
+\[
+\begin{aligned}
+|T^\star(n,k)-\mathcal E(b)(n,k)|
+&\ge u_k(A)-|\mathcal E(b)(n,k)|\\
+&\ge u_k(A)+T_{A,N}(n,k)\\
+&=|T^\star(n,k)-T_{A,N}(n,k)|.
+\end{aligned}
+\tag{48.6}
+\]
+最后一步使用 \(T_{A,N}\le0\) 和上述绝对值上界。故同一个实际前缀取得所有坐标共同的最小误差，特别地
+\[
+\operatorname{dist}_\rho(T^\star,\mathcal J_{A,N})
+=\|T^\star-T_{A,N}\|_\rho.
+\]
+这不是把分别可达的坐标最优值拼成一个未必存在的来源。
+
+定义
+\[
+W_N(A)=A\sum_{i=1}^{N}\rho^{-i}.
+\]
+临界恒等式 \(A=(1-\rho)^2/\rho\) 给
+\[
+W_N(A)=\frac{1-\rho}{\rho}(\rho^{-N}-1),
+\qquad
+W_N(A)\ge1\quad\Longleftrightarrow\quad
+\rho^N\le1-\rho.
+\tag{48.7}
+\]
+

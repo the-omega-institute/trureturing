@@ -1,0 +1,9 @@
+**theorem 32.16 (Conditional full-carrier products, with the required closure explicit).** If $(\mathrm I_B^{(t)})$ holds, the formulas
+$$
+(p\mathbin{\square_t}q)(f)=p(\mathscr R_q f),\qquad
+(p\mathbin{\lozenge_t}q)(f)=q(\mathscr R_p f)
+$$
+define associative bounded bilinear products on $ba(\mathcal B)$ of bilinear norm $C_t$. They have multiplicative mass, are opposites of one another, and agree with $\star_t$ on $M(K)$. The first product is weak-star continuous in its first variable with the second fixed; the second is weak-star continuous in its second variable with the first fixed. They preserve positivity if and only if $t\in\{0,\infty\}$.
+
+Without the invariance condition, these formulas do not by themselves define products: a functional on $B_b(K)$ cannot be applied to an arbitrary bounded non-Borel outer function.
+

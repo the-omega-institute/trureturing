@@ -1,0 +1,10 @@
+**Theorem.** For every n>=0,
+
+$$
+\boxed{\sigma_F(F_n^2+1)\in\mathcal F_+
+\quad\Longleftrightarrow\quad n\in\{0,1,2,4\}.}
+\tag{FDS11}
+$$
+
+At these indices the sums are respectively 1,3,3,8.
+

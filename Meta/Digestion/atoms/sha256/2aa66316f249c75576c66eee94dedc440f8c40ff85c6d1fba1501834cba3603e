@@ -1,0 +1,6 @@
+**定理 45.4（自适应停止也不能消去新报告下界；repo-derived）。** 对 $0<\varepsilon\le1/16$，置
+$$
+L_\varepsilon=\min\{n\in\mathbb N_0:506\varepsilon\,6^n\ge1\}
+=\max\left\{0,\left\lceil\log_6\frac1{506\varepsilon}\right\rceil\right\}.
+$$
+任意满足定义45.1的算法，在描述符 $(24,4)$ 上的每条续词均有 $\tau_A\ge L_\varepsilon$，

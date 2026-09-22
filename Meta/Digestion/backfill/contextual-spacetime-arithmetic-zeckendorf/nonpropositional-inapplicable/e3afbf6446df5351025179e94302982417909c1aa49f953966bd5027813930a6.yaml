@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3afbf6446df5351025179e94302982417909c1aa49f953966bd5027813930a6
+  normalized_sha256: sha256:e3afbf6446df5351025179e94302982417909c1aa49f953966bd5027813930a6
+cas_ref: sha256:e3afbf6446df5351025179e94302982417909c1aa49f953966bd5027813930a6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 正整数的非零条件允许直接应用 Nat.factorization_lcm，逐素数读取函数等式即得最大值公式，仓内无冻结 GID。
+    previous_atom_id: e8f7d25a98e94779989f8e56cf4ff6de31b5dd2f9fb5f653f53c3533adea4607
+    next_atom_id: f0daae15d69ea84c9bf80ee8cb2ccd908428871a620dff82714303e78956a22b

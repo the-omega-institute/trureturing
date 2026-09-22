@@ -1,0 +1,22 @@
+**Proof of finite local compatibility.** Solvability is equivalent to
+v_2(K)<=1 and every odd prime divisor of K being1 modulo four. At each
+odd q^e exactly dividing K, choose a root modulo q^e and then a lift
+modulo q^(e+1) that is NOT a root at the higher precision. Such a lift
+exists: among the q lifts, precisely one is a root, because 2x is a unit.
+Thus a progression can impose v_q(m^2+1)=e. If K is odd take m=0 modulo
+four; if K is even take m=1 modulo four. These force v_2(m^2+1) to equal
+v_2(K). Also impose m=0 modulo three, since three cannot divide K.
+
+Choose an integer J0>=12 large enough that every Fibonacci divisor of K
+has index at most J0 and every prime divisor q of K has rank at most J0.
+Existence is immediate; J0=max(12,K+2) is one sufficient choice, using
+F_j>=j-1 and the rank bound, with the small primes treated directly.
+For each 3<=j<=J0 with F_j not dividing K, choose a prime q for which
+v_q(F_j)>v_q(K). If q divides K, the exact-valuation condition already
+excludes F_j. If q does not divide K, impose m=0 modulo q. Repeated
+conditions agree, and the choices at two and three are consistent.
+CRT now supplies one progression a modulo Q0 such that K|m^2+1 and
+no forbidden F_j with j<=J0 divides m^2+1. Every prime factor of Q0
+either divides K, is two or three, or divides one of those F_j. Its rank
+is therefore at most J0.
+

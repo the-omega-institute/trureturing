@@ -1,0 +1,31 @@
+**定理 17.1（主定理组：自然扩张及其准确泛性质）。** 对定义17.0的一般系统 $(X,f)$，$\mathcal L_f$ 非空、紧致且 Hausdorff；每个坐标投影 $p_j$ 都是连续满射，$P_f$ 还是闭映射及商映射。$U_f$ 是同胚，其逆为
+$$
+U_f^{-1}(x_0,x_1,x_2,\ldots)=(x_1,x_2,x_3,\ldots),
+$$
+并满足
+$$
+P_fU_f=fP_f,\qquad p_j=P_fU_f^{-j}.
+$$
+
+空间 $\mathcal L_f$ 连同各 $p_j$ 是逆系统
+$$
+X\xleftarrow{f}X\xleftarrow{f}X\xleftarrow{f}\cdots
+$$
+在拓扑空间范畴中的逆极限：若拓扑空间 $Y$ 上的连续映射 $a_j:Y\to X$ 满足 $fa_{j+1}=a_j$，则存在唯一连续映射 $a:Y\to\mathcal L_f$，使 $p_ja=a_j$ 对所有 $j$ 成立。
+
+对于动力系统，令对象为三元组 $(Y,S,g)$，其中 $Y$ 是非空紧致 Hausdorff 空间，$S:Y\to Y$ 是同胚，$g:Y\to X$ 连续且 $gS=fg$。从 $(Y,S,g)$ 到 $(Y',S',g')$ 的箭头为满足
+$$
+hS=S'h,\qquad g'h=g
+$$
+的连续映射 $h:Y\to Y'$。在此范畴中，$(\mathcal L_f,U_f,P_f)$ 是终对象。准确地说，每个对象具有唯一的箭头
+$$
+\widetilde g:Y\longrightarrow\mathcal L_f,\qquad \widetilde g(y)=\bigl(g(y),g(S^{-1}y),g(S^{-2}y),\ldots\bigr),
+$$
+满足
+$$
+P_f\widetilde g=g,\qquad \widetilde gS=U_f\widetilde g.
+$$
+若 $g$ 满射，则 $\widetilde g$ 也满射。因此，进一步要求底映射 $g$ 和箭头 $h$ 均满射时，同一三元组仍是该可逆扩张范畴的终对象。这些性质将该扩张确定到唯一的、与底投影相容的动力学同胚。
+
+一般逆极限的成熟框架见 Ingram–Mahavier，*Inverse Limits: From Continua to Chaos*，第2章“[Inverse Limits in a General Setting](https://doi.org/10.1007/978-1-4614-1797-2_2)”，第75–129页；上述移位同胚及自然扩张的动力学定位见 Boroński–Minc–Štimac，“[On conjugacy of natural extensions of one-dimensional maps](https://arxiv.org/html/2110.11440v1#S1)”，第1节，期刊 DOI：10.1017/etds.2022.62。
+

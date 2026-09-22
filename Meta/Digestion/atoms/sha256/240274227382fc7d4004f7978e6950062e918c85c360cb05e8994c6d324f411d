@@ -1,0 +1,53 @@
+**Proof.** By theorem 27.3, the supports of $a$ and $b$ are at most countable. Their Cartesian product is at most countable, and the union of the finite row supports over these pairs is also at most countable. Moreover,
+$$
+\sum_{x,y}\|a(x)b(y)P^{(t)}_{x,y}\|_1
+\le C_t\sum_{x,y}|a(x)|\,|b(y)|
+=C_t\|a\|_1\|b\|_1.
+$$
+The last equality follows by taking suprema of finite rectangular sums of a nonnegative product family. Consequently the vector-valued series has arbitrarily small norm tails and converges in the complete space $B$, independently of its ordering. Expanding the row norms gives the stated absolute sum over $x,y,w$. Absolute convergence permits every regrouping used in the coordinate formula. Bounded coordinate evaluation shows that the coordinate formula agrees with the vector-valued sum.
+
+The sum is bilinear and satisfies
+$$
+\|a*_t b\|_1\le C_t\|a\|_1\|b\|_1.
+$$
+In particular,
+$$
+\|a*_t b-a' *_t b'\|_1
+\le C_t\bigl(\|a-a'\|_1\|b\|_1+\|a'\|_1\|b-b'\|_1\bigr).
+$$
+Choose finite-support sequences converging respectively to $a,b,c$. Their norms are bounded, their pairwise products converge by this inequality, and applying the inequality a second time shows that both bracketings of their triple products converge to the corresponding bracketings for $a,b,c$. The finite associativity identity therefore passes to the limit. Finite commutativity passes to the limit in the same way. Any bounded bilinear extension must agree on limits of finite-support pairs, proving uniqueness. The attaining point-mass pairs from theorem 27.2 still belong to $B$, so the extended bilinear norm remains exactly $C_t$.
+
+The same absolute-sum argument applies to any discrete semigroup with rows $\delta_s*\delta_u=\delta_{su}$: every row has norm one, and semigroup associativity holds on the finite core. Applied to the group $\mathbb T_{\mathrm d}$ and the additive semigroup $\mathbb N_{>0}$, it proves that both convolutions in Definition 27.4 are associative bounded products satisfying
+$$
+\|f*_{\mathbb T}f'\|_1\le\|f\|_1\|f'\|_1,\qquad
+\|g*_{+}g'\|_1\le\|g\|_1\|g'\|_1.
+$$
+Together with theorem 27.3 this also proves completeness and submultiplicativity for $\mathcal B$, since
+$$
+\|(f,g)\diamond(f',g')\|_{\oplus}
+\le\|f\|_1\|f'\|_1+\|g\|_1\|g'\|_1
+\le\|(f,g)\|_{\oplus}\|(f',g')\|_{\oplus}.
+$$
+
+Absolute summability gives
+$$
+|\varepsilon(a)|\le\|a\|_1,\qquad
+\|H_{\#}a\|_1\le\sum_{\theta}\sum_{H(x)=\theta}|a(x)|=\|a\|_1.
+$$
+Both operator norms equal one by evaluation on $\delta_{0_K}$. On finite-support inputs, multiplicativity is theorem 25.3. Finite-support density and the established continuity of all the products and linear maps extend both identities to $B$.
+
+For surjectivity, if $f\in\mathcal G$, the series
+$$
+a=\sum_{\theta\in\mathbb T}f(\theta)\pi_\theta
+$$
+converges absolutely in $B$, because theorem 27.2 bounds every $\|\pi_\theta\|_1$ by $C_t$. Since $H_{\#}\pi_\theta=\delta_\theta$, boundedness of $H_{\#}$ gives $H_{\#}a=f$.
+
+Finally,
+$$
+\|a*_t b\|_{\mathrm{alg},t}
+=C_t\|a*_t b\|_1
+\le C_t^2\|a\|_1\|b\|_1
+=\|a\|_{\mathrm{alg},t}\|b\|_{\mathrm{alg},t}.
+$$
+Completeness is unchanged by this positive scalar rescaling. Under the convention that a Banach-algebra norm is submultiplicative, this supplies such a norm.[^rro27-ba] If $t=0$ or $t=\infty$, then $C_t=1$, so the coefficient norm already suffices. Every other admissible parameter has $C_t>1$, and an attaining pair of norm-one point masses has product norm greater than one. Thus the unscaled coefficient norm is not submultiplicative in those cases. QED.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6163d9b2154513fcd5c0749a5babc46110ca11e7dc06e7e09d5e250327413900
+  normalized_sha256: sha256:6163d9b2154513fcd5c0749a5babc46110ca11e7dc06e7e09d5e250327413900
+cas_ref: sha256:6163d9b2154513fcd5c0749a5babc46110ca11e7dc06e7e09d5e250327413900
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 自变量至少为 Q 时包含全部正约数，Möbius 与 zeta 卷积恒等式给完整约数和在 Q 大于一时为零；仓内无冻结 GID。
+    previous_atom_id: faa6abf315e6485fc74ca35528c830e96408e9c5ab7022627c089bb3161236a2
+    next_atom_id: d31269fd037aeccf962fed5f771c5c5dbaeeac5230927e7425dc37914e78ad56

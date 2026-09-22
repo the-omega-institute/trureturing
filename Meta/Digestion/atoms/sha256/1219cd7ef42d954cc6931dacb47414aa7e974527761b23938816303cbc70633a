@@ -1,0 +1,17 @@
+**定理 31.4（单位化的实际直积模型）。** $A_t$ 没有左单位或右单位。$A_t^{\#}$ 是单位范数为一的交换复 Banach 代数，并且
+$$
+\Theta_t:A_t^{\#}\longrightarrow\mathcal M\times\mathcal S_0,\qquad \Theta_t(\lambda,\mu)=(\nu+\lambda\delta_0,\lambda e_0+g),\quad (\nu,g)=\Phi_t\mu,
+$$
+是有界有界逆的单位复代数同构。这里 $\delta_0$ 是原圆周上的零点质量。目标直积采用范数
+$$
+\|(\xi,h)\|_{\max}=\max\{\|\xi\|_{\mathrm{TV}},\|h\|_1\}.
+$$
+其逆为
+$$
+\Theta_t^{-1}(\xi,h)=\left(h_0,\Psi_t(\xi-h_0\delta_0,h-h_0e_0)\right),
+$$
+其中第二个序列参数取其正指标部分，并且
+$$
+\|\Theta_t a\|_{\max}\le\|a\|_{\#},\qquad \|\Theta_t^{-1}(\xi,h)\|_{\#}\le3\|(\xi,h)\|_{\max}.
+$$
+

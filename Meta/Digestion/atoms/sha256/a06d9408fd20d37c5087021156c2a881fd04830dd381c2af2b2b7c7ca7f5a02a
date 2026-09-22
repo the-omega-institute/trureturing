@@ -1,0 +1,7 @@
+**Theorem.** For every M>=1,
+
+$$
+\boxed{\frac{|C(M)|}{M}
+=\prod_{p^2\mid M}\left(1-\frac1p+\frac1{p^2}\right).}\tag{LFO2}
+$$
+

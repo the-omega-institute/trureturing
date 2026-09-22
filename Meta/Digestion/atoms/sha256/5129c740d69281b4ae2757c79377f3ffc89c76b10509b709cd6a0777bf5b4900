@@ -1,0 +1,5 @@
+**Proof.** The Fibonacci recurrence gives the displayed values, and their
+product is exact. Modulo five, both $13$ and $97$ are inert while $6168709$
+is split. Hence the two inert contributions in $F_{49}$ cancel, whereas the
+single inert contribution in $B_{7,1}$ gives negative character.
+

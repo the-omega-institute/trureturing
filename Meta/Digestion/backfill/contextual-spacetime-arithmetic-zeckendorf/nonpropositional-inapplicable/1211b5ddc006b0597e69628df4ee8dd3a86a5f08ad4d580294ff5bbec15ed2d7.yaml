@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1211b5ddc006b0597e69628df4ee8dd3a86a5f08ad4d580294ff5bbec15ed2d7
+  normalized_sha256: sha256:1211b5ddc006b0597e69628df4ee8dd3a86a5f08ad4d580294ff5bbec15ed2d7
+cas_ref: sha256:1211b5ddc006b0597e69628df4ee8dd3a86a5f08ad4d580294ff5bbec15ed2d7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子叶限定所述宽度公式的解释范围，并排除程序长度、算法空间和无限函数字长等其他用途，是范围备注而非数学命题。
+    previous_atom_id: 78f06b35058cfd3ce541e2890a8cf39032c6e4b166dfb34bb6a26d7a440bd433
+    next_atom_id: 273d0c223059a524846c9f4aef592c6594dcf7c0673694f9c1d1d490a301a4d9

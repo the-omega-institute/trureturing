@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2247f61eeca8cf8688180a873af960d7fc562d97703499f1cb6b668f9c64064f
+  normalized_sha256: sha256:2247f61eeca8cf8688180a873af960d7fc562d97703499f1cb6b668f9c64064f
+cas_ref: sha256:2247f61eeca8cf8688180a873af960d7fc562d97703499f1cb6b668f9c64064f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶沿用既定资源模型并定义临时矩阵尺度及分析参数，要求的服务行为属于模型规格，没有证明算法上界，故按定义结算。
+    previous_atom_id: 3062c3e362a272a6bac8aabc3b9e4df6b27fc34f83a9e59d674489f5f8805090
+    next_atom_id: 81291b86da206a027d008dc27493b07194f17eedf9982f19f0b452ecb87c59fd

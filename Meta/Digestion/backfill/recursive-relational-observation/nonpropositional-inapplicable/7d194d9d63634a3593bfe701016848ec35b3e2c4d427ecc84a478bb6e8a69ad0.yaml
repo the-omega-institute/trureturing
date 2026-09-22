@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7d194d9d63634a3593bfe701016848ec35b3e2c4d427ecc84a478bb6e8a69ad0
+  normalized_sha256: sha256:7d194d9d63634a3593bfe701016848ec35b3e2c4d427ecc84a478bb6e8a69ad0
+cas_ref: sha256:7d194d9d63634a3593bfe701016848ec35b3e2c4d427ecc84a478bb6e8a69ad0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条规定数字空间、距离表达式、柱集、相位及实际联合闭图的记号，并注明空字约定，属于对象与记号的定义材料，不结算下一条的紧致性或稠密性。
+    previous_atom_id: 2d6225051125bcf858dfee20e080f33e81f836228967878df76cca4a46b3d7da
+    next_atom_id: 9934b78fc959503007b34dedac270031dc3d5ff678b450ba34df47ef4e8fd1eb

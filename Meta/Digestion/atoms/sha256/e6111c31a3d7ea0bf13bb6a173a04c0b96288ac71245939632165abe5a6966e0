@@ -1,0 +1,17 @@
+**定理 43.10（相位像的全部整数线性关系）。** 对定义43.8中的整数矩阵 $A$，其像
+$$
+\mathcal T_A=A(\mathbb T^m)\subseteq\mathbb T^q
+$$
+是维数为 $\operatorname{rank}_{\mathbb R}A$ 的紧致环面子群。对于任意 $\boldsymbol\theta\in\mathbb T^q$，下列两项等价：存在 $p\in\mathbb T^m$ 使
+$$
+\boldsymbol\theta=\mathbf b+Ap;
+$$
+对每个 $\ell\in\mathbb Z^q$，有
+$$
+A^{\mathsf T}\ell=0
+\quad\Longrightarrow\quad
+\sum_{j=1}^q\ell_j\theta_j=
+\left[\phi\sum_{j=1}^q\ell_jc_j\right].
+$$
+不要求 $A:\mathbb T^m\to\mathcal T_A$ 单射。例如输入 $X$ 与输出 $2X^2$ 的矩阵为 $\operatorname{diag}(1,2)$，两个不同点 $(0,0)$、$(0,[1/2])$ 有相同像。
+

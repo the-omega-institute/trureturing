@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:501227b0fed420e32882d36cc316a25c18f515847ce42b912800df808f4e074c
+  normalized_sha256: sha256:501227b0fed420e32882d36cc316a25c18f515847ce42b912800df808f4e074c
+cas_ref: sha256:501227b0fed420e32882d36cc316a25c18f515847ce42b912800df808f4e074c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义中的两个转换端点分别解码为同一个语义状态，Equiv.symm_apply_apply 在两端直接消去编码，故该已声明转换保持语义；边的可用性、方向及费用仍是原任务数据。仓内无冻结 GID。
+    previous_atom_id: 5df36ca829bd2a73ff2b37dbbb3c2f001bedb36e73be1ebc0903cf87333c06c3
+    next_atom_id: 69904175ca0e599cf4ee0872ace5e85b0d3cc59bdb8deafb1c1a9433b6cd7132

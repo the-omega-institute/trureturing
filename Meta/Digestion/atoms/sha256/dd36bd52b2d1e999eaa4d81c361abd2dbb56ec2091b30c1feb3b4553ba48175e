@@ -1,0 +1,25 @@
+## Appendix FDP. Exact parity frequency of the Fibonacci square-plus-one divisor count
+
+**Definition.** Let a(n)=|D_F(F_n^2+1)| for n>=0, as in FDS. For t>=0 let
+
+$$
+O(t)=\left\lfloor\frac{\lfloor\sqrt t\rfloor+1}{2}\right\rfloor,
+$$
+
+the number of positive odd squares not exceeding t.
+
+**Theorem.** For even n>=2, a(n) is even exactly when n-1 or n+1 is an odd square. For odd n>=3, a(n) is even exactly when n-2 or n+2 is an odd square. Moreover a(0)=1 and a(1)=2.
+
+**Proof.** FDS5 gives a(n)=tau(u)+tau(v)-1, with the indicated u,v. Pairing complementary divisors shows that tau(t) is odd exactly when t is square. Thus a(n) is even exactly when precisely one of u,v is square. These numbers are odd, and their difference is two or four. Distinct positive odd squares differ by at least eight, so they cannot both be square. The two initial values are FDS.2.
+
+**Theorem.** For every integer X>=3,
+
+$$
+\boxed{\#\{0\le n\le X:a(n)\text{ even}\}
+=O(X-2)+O(X-1)+O(X+1)+O(X+2)-1
+=2\sqrt X+O(1).}\tag{FDP1}
+$$
+
+**Proof.** The even indices are obtained from positive odd squares s by n=s+1 or n=s-1, excluding s=1 from the second family. They contribute O(X-1)+O(X+1)-1. The odd indices at least three are n=s+2 or n=s-2, excluding s=1 from the second family, contributing O(X-2)+O(X+2)-1. The index n=1 contributes one. These families are disjoint: opposite parities cannot meet, while a same-parity overlap would give odd squares differing by two or four. Summing gives the exact formula. Since O(t)=sqrt(t)/2+O(1), the asymptotic follows with a bounded error.
+
+

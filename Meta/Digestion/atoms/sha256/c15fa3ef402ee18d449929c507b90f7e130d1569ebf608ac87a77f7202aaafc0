@@ -1,0 +1,11 @@
+
+
+取系统边缘后，整个写入、读取与反馈协议保持每个 $P_x$，因此具有形式
+
+$$
+\mathcal R(\rho)=
+\begin{pmatrix}
+\rho_{00}&\kappa\rho_{01}\\
+\overline\kappa\rho_{10}&\rho_{11}
+\end{pmatrix}.
+$$

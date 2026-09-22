@@ -1,0 +1,27 @@
+**definition 26.0 (Carrier, observations, and one-sided compactness classes).** Put
+$$
+\mathbb N_0=\{0,1,\ldots\},\qquad
+G_0=1,\quad G_1=2,\quad G_{\ell+2}=G_{\ell+1}+G_\ell,\qquad
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1}.
+$$
+Use the low-to-high digit carrier and its metric
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|.
+$$
+Here $Z(n)$ is the unique finite legal Zeckendorf expansion of $n$, padded by zeros, so that $n=\sum_jG_jZ(n)_j$. Write
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+\rho([s],[t])=\min_{k\in\mathbb Z}|s-t-k|,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad H(x)=[F(x)].
+$$
+These are the carrier and phase conventions of Definition 16.0 and the Zeckendorf volume, Definition 371.1. ([RECURSIVE_RELATIONAL_OBSERVATION.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Definition 16.0, pinned commit `c74985438ae17d205509255934bbd3ecf1f94d71`; [CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md), Definition 371.1, pinned commit `c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb`.)
+
+Fix a scalar field $\mathbb F\in\{\mathbb R,\mathbb C\}$. Let
+$$
+B_{\mathbb F}=\ell^\infty(\mathbb N_0,\mathbb F),\qquad
+(S^ka)(n)=a(n+k),\qquad
+\mathcal O(a)=\{S^ka:k\in\mathbb N_0\}.
+$$
+A sequence $a\in B_{\mathbb F}$ is AP when $\mathcal O(a)$ has compact norm closure. It is WAP when $\mathcal O(a)$ has compact closure for the Banach weak topology $\sigma(B_{\mathbb F},B_{\mathbb F}^*)$, where the dual is taken over $\mathbb F$. WAP does not mean relative compactness for pointwise convergence or for $\sigma(\ell^\infty,\ell^1)$. For $f\in C(K,\mathbb F)$ define $a_f(n)=f(Z(n))$. All translation classes in this section use nonnegative translates, including the zeroth translate.
+

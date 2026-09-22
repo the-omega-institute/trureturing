@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "178a82a7095b412807ae0819778cad240a69734077edb51563bcf9a05c4ccee2",
+  "parts_directory": "square_stoploss_curve.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "d888a577c8fd579e1a149496167abe1135f932a952500b2dfafefd5d61009d2f",
+    "kind": "object"
+  }
+}

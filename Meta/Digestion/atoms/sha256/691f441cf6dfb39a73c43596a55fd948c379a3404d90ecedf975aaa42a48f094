@@ -1,0 +1,35 @@
+**theorem 27.5 (Unique bounded multiplication, augmentation, and phase map).** There is a unique bounded bilinear extension of $*_t$ to
+$$
+B=\ell^1(K_{\mathrm d}).
+$$
+It is associative and commutative, has exact bilinear norm $C_t$ in the coefficient norm, and is given by the unconditionally convergent series
+$$
+a*_t b=\sum_{x,y\in K}a(x)b(y)P^{(t)}_{x,y}.
+$$
+In particular,
+$$
+(a*_t b)(w)=\sum_{x,y\in K}a(x)b(y)P^{(t)}_{x,y}(w),
+$$
+with the absolute-summability estimate
+$$
+\sum_{x,y,w\in K}|a(x)b(y)P^{(t)}_{x,y}(w)|
+\le C_t\|a\|_1\|b\|_1.
+$$
+The maps
+$$
+\varepsilon(a)=\sum_{x\in K}a(x),\qquad
+(H_{\#}a)(\theta)=\sum_{H(x)=\theta}a(x)
+$$
+are bounded linear maps of norm one, and
+$$
+\varepsilon(a*_t b)=\varepsilon(a)\varepsilon(b),\qquad
+H_{\#}(a*_t b)=(H_{\#}a)*_{\mathbb T}(H_{\#}b).
+$$
+The phase map $H_{\#}:B\to\mathcal G$ is surjective.
+
+With the equivalent norm
+$$
+\|a\|_{\mathrm{alg},t}=C_t\|a\|_1,
+$$
+the resulting algebra, denoted $B_t$, is a Banach algebra with a submultiplicative norm. The original coefficient norm itself is submultiplicative exactly for $t\in\{0,\infty\}$.
+

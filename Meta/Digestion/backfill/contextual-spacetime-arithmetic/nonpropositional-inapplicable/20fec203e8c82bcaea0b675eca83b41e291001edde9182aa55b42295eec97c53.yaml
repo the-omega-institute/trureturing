@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:20fec203e8c82bcaea0b675eca83b41e291001edde9182aa55b42295eec97c53
+  normalized_sha256: sha256:20fec203e8c82bcaea0b675eca83b41e291001edde9182aa55b42295eec97c53
+cas_ref: sha256:20fec203e8c82bcaea0b675eca83b41e291001edde9182aa55b42295eec97c53
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句定义部分签名、一孔上下文的生成约定或带失败标签的观察，固定参数、严格传播及不截断深度均属定义，无新增待证明命题。
+    previous_atom_id: a7f4e9ea11bdf51f5313237d47d6ffa1a49f99aaf6cebd5bb8dfb54a31f893b3
+    next_atom_id: 8a74e0b720b24a67aa80481a4ffa6c69aa4d4220f662d3726e0c8966c9d57528

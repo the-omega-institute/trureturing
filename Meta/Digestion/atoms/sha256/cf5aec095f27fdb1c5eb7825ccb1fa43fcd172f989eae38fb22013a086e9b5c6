@@ -1,0 +1,35 @@
+#### 134.4.1 必须同时给出探针对象与探针转换
+
+令 $\mathcal D$ 为 $\mathcal U$ 小范畴，$i:\mathcal D\to\mathcal C$ 为函子。受限探针轮廓定义为
+
+$$
+N_i(X)(d)=\operatorname{Hom}_{\mathcal C}(i(d),X),
+\qquad
+N_i(X)(a)(f)=f\circ i(a)
+\quad(a:d\to e,\ f:i(e)\to X).
+$$
+
+它是 $\mathcal D^{\mathrm{op}}$ 上的预层。对象间箭头 $u:X\to Y$ 给出自然变换
+
+$$
+N_i(u)_d(f)=u\circ f.
+$$
+
+函子律由复合的单位律和结合律给出，因此
+
+$$
+N_i:\mathcal C\to[\mathcal D^{\mathrm{op}},\mathsf{Set}_{\mathcal U}]
+$$
+
+是一个真正的表示函子。
+
+只列一批探针对象，没有唯一指定要检查的自然性。可以取它们的全子范畴、取只含部分转换的子范畴，或取离散范畴；这些选择一般保留不同的结构。
+
+还要区分 $N_i(X)(d)$ 中的全部数学映射与某次实验真正取得的记录。若只保留子集 $A_X(d)\subseteq\operatorname{Hom}(i(d),X)$，至少须对每个探针转换 $a:d\to e$ 满足
+
+$$
+f\in A_X(e)\quad\Longrightarrow\quad f\circ i(a)\in A_X(d),
+$$
+
+才能形成子预层。若还希望 $X\mapsto A_X$ 成为函子，就须对所允许的对象映射 $u:X\to Y$ 验证 $u\circ f\in A_Y(d)$。即使两种封闭性都成立，也没有自动的全忠实结论；所有 $A_X(d)$ 均为空就是一个完全失去对象信息的例子。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:67bb35f877bef3da1aee513856b4579092fe417b9571df07d24f53e515cd27ac
+  normalized_sha256: sha256:67bb35f877bef3da1aee513856b4579092fe417b9571df07d24f53e515cd27ac
+cas_ref: sha256:67bb35f877bef3da1aee513856b4579092fe417b9571df07d24f53e515cd27ac
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.ker_beta_subset_ker_payload_iff_unique_factorization
+    target_statement_id: sha256:7e46314b23877f67193b4d662679605bacd2e1f2c05f73fa29dd5e5d514d5e6e
+receipts:
+  unresolved_subitems: []

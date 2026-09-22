@@ -1,0 +1,36 @@
+### 6.2 第 5.3 条：零模约定与满射蕴含方向
+
+第 5.3 条中的商统一解释为整数环的商，特别是
+
+$$
+\mathbb Z/0\mathbb Z=\mathbb Z,\qquad
+\mathbb Z/1\mathbb Z=\{0\}.
+$$
+
+模零的商映射是恒等映射；对整数 $x,y$，条件 $x\equiv y\pmod 0$ 就是 $x=y$，不是自动成立的条件。
+
+令 $d=\gcd(m,n)$。因 $d\mid m$ 且 $d\mid n$，有良定义的商映射
+
+$$
+r_{m,d}:\mathbb Z/m\mathbb Z\longrightarrow\mathbb Z/d\mathbb Z,
+\qquad
+r_{n,d}:\mathbb Z/n\mathbb Z\longrightarrow\mathbb Z/d\mathbb Z.
+$$
+
+第 5.3 条的联合像条件精确写为
+
+$$
+\operatorname{im}\rho_{m,n}
+=\{(a,b):r_{m,d}(a)=r_{n,d}(b)\}.
+$$
+
+若 $m=0<n$，该条件是 $b=a\bmod n$，其中 $a$ 是整数；共同整数代表就是 $a$。若 $n=0<m$，对称地由整数坐标 $b$ 给出代表。若 $m=n=0$，则 $d=0$，条件是整数相等，联合像为 $\mathbb Z\times\mathbb Z$ 的对角线。非零模情形沿用第 5.3 条的广义中国剩余定理。因此，原有结论
+
+$$
+\rho_{m,n}\text{ 满射}\quad\Longleftrightarrow\quad\gcd(m,n)=1
+$$
+
+仍覆盖所有自然模数，包括 $(0,1)$ 与 $(1,0)$。
+
+每个整数商映射均满射，且每个商都有零元素。在这里，联合满射蕴含两个边缘映射分别满射：固定一个边缘值，将另一边缘值取为零，再用联合满射取得共同代表。反向不成立；$m=n=2$ 时两个边缘均满射，但 $(0,1)$ 不在联合像中。故原文“两个独立命题”应收紧为“联合满射是更强条件，边缘分别满射不足以推出联合满射”，不能解读成两个方向都不存在蕴含。
+

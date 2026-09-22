@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f66e9f63a4fe0e4afc2ab7ce0296927eb2f53a322254d82293c88f31e93600ec
+  normalized_sha256: sha256:f66e9f63a4fe0e4afc2ab7ce0296927eb2f53a322254d82293c88f31e93600ec
+cas_ref: sha256:f66e9f63a4fe0e4afc2ab7ce0296927eb2f53a322254d82293c88f31e93600ec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 同前缀使前段差项逐项为零，布尔数字差的绝对值不超过一，余项由二分比几何尾和控制，恰得本叶的二的负窗口长度次幂界；仅使用所列 Mathlib 求和与序声明和布尔归约，仓内无冻结 GID，已编译核验全部自然窗口长度。
+    previous_atom_id: 80d8d400d856e961a926fbe717a2a67688b624a69fafaea241e2425ee151a286
+    next_atom_id: 45a6f9ce7ea044edbbfdc74729a59aa17109e5e87b3838742b8b5c9377395470

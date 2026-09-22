@@ -1,0 +1,170 @@
+**证明。**
+
+首先，有限分划的总集合是一个集合，任意有限组分划都有由非空块交组成的共同细化。因此，上述系统确为共滤的有限实际像观察系统。
+
+每个分划空间有限离散，逆极限是其乘积中由相容等式确定的闭子空间。在 ZFC 中，由乘积紧致性可知 $K_Y^{\mathrm{all}}$ 紧致 Hausdorff。每个实际元素给出一条相容线程，故它非空。
+
+线程与超滤子的对应。
+
+给定一条线程
+
+$$
+\xi=(C_{\mathcal P})_{\mathcal P\in\mathfrak P_f(Y)},
+\qquad
+C_{\mathcal P}\in\mathcal P,
+$$
+
+定义
+
+$$
+\mathfrak u_\xi =
+\{A\subseteq Y:
+\exists\mathcal P\in\mathfrak P_f(Y),\quad
+C_{\mathcal P}\subseteq A\}.
+$$
+
+它包含 $Y$ 而不包含空集，并显然向上封闭。
+
+若 $A,B\in\mathfrak u_\xi$，分别取所需分划 $\mathcal P,\mathcal Q$，再取共同细化 $\mathcal R$。线程相容性给出
+
+$$
+C_{\mathcal R}
+\subseteq
+C_{\mathcal P}\cap C_{\mathcal Q}
+\subseteq A\cap B.
+$$
+
+故 $A\cap B\in\mathfrak u_\xi$。
+
+对任意 $A\subseteq Y$，考察删去空块后的二分划
+
+$$
+\{A,Y\setminus A\}\setminus\{\varnothing\}.
+$$
+
+线程选中的块包含于 $A$ 或 $Y\setminus A$，所以两者之一属于 $\mathfrak u_\xi$；两者不能同时属于这个真滤子。因此 $\mathfrak u_\xi$ 是超滤子。
+
+反之，一个超滤子在每个有限分划中恰含一个块：不能含两个不交块；若一个块也不含，则所有块的补集都属于它，其有限交为空，矛盾。令 $C_{\mathcal P}$ 为该唯一块。向上封闭性保证这些选择在细化下相容。两个构造互为逆。
+
+指定线程的某个分划坐标为一个块 $C$，恰对应超滤子满足 $C\in\mathfrak u$。因此，该对应也保持柱拓扑。
+
+子集闭包的精确计算。
+
+由二分划可知，对任意 $A\subseteq Y$，$A^\ast$ 开闭，且
+
+$$
+K_Y^{\mathrm{all}}\setminus A^\ast =
+(Y\setminus A)^\ast.
+$$
+
+这些集合构成拓扑基，并满足
+
+$$
+A^\ast\cap B^\ast=(A\cap B)^\ast.
+$$
+
+由于 $\delta[A]\subseteq A^\ast$ 且 $A^\ast$ 闭，
+
+$$
+\overline{\delta[A]}\subseteq A^\ast.
+$$
+
+反过来，设 $\mathfrak u\in A^\ast$，并取它的任意基本邻域 $C^\ast$。则
+
+$$
+A\in\mathfrak u,
+\qquad
+C\in\mathfrak u,
+$$
+
+所以
+
+$$
+A\cap C\in\mathfrak u,
+\qquad
+A\cap C\ne\varnothing.
+$$
+
+取 $y\in A\cap C$，便有
+
+$$
+\delta_y\in\delta[A]\cap C^\ast.
+$$
+
+故 $\mathfrak u\in\overline{\delta[A]}$，证明
+
+$$
+\overline{\delta[A]}=A^\ast.
+$$
+
+取 $A=Y$ 也得到实际像稠密。
+
+于是
+
+$$
+\overline{\delta[A]}
+\cap
+\overline{\delta[B]} =
+(A\cap B)^\ast,
+$$
+
+而
+
+$$
+(A\cap B)^\ast\ne\varnothing
+\quad\Longleftrightarrow\quad
+A\cap B\ne\varnothing.
+$$
+
+反向蕴含由交集中的任意实际元素所确定的主超滤子给出。因此所有单点端点测试均成立。
+
+与此同时，$\delta$ 单射，因为不同实际元素可由二分划分开；但 $Y$ 无限，所以它不可能单射到任何一个有限分划的块集合。故去掉可数性后，条件 (a) 可以成立，而条件 (b)、(c) 均不成立。
+
+一般端点的复合也成立。
+
+这里已有紧致中间空间和闭包分离条件，故定理 9.2 直接适用。为明确实际见证如何产生，设
+
+$$
+(\xi,\mathfrak u)\in\widehat R,
+\qquad
+(\mathfrak u,\zeta)\in\widehat S.
+$$
+
+对任意端点邻域 $U\ni\xi$、$V\ni\zeta$，采用定理 9.2 中的实际见证集合 $A_U,B_V$。由闭包定义及刚证明的闭包公式，
+
+$$
+\mathfrak u\in\overline{\delta[A_U]}=A_U^\ast,
+\qquad
+\mathfrak u\in\overline{\delta[B_V]}=B_V^\ast.
+$$
+
+所以
+
+$$
+A_U,B_V\in\mathfrak u,
+\qquad
+A_U\cap B_V\ne\varnothing.
+$$
+
+交集中的一个实际 $y$，连同其定义提供的 $x,z$，就在 $U\times V$ 中给出实际复合端点。反向包含因此成立；另一方向由中间紧致性成立。这是闭包和滤子有限交性质的直接证明，不以函子保复合或保弱拉回的名称代替论证。证毕。
+
+可数性、选择原则与实现性的边界。
+
+该反例保留了每层有限、实际像满射、共滤相容和完成空间紧致等条件；改变的是观察指标不再要求可数。定理 9.1 中提取收敛实际子列的一步不能推广到这里：若主点序列 $(\delta_{y_n})$ 的实际元素互异，取
+
+$$
+A=\{y_{2n}:n\in\mathbb N\},
+$$
+
+则序列的偶数项位于开闭集 $A^\ast$，奇数项位于其补集，因此这条序列不可能收敛。同样的分割论证适用于任何互异主点子列。
+
+无限 $Y$ 的余有限子集构成真滤子；由超滤子引理扩张得到的超滤子不含任何有限集，因而非主。[^rro9_ultrafilter] 所以
+
+$$
+\delta[Y]\subsetneq K_Y^{\mathrm{all}},
+$$
+
+尽管所有上述端点交换都成立。这里的任意指标紧致性与超滤子存在性均在 ZFC 中使用，不据此主张无选择或有效构造版本。
+
+这里使用全部有限分划组成的指标系统，不能将它视为定理 9.1 的可数塔。端点交换不把非主完成见证变成实际元素，也不包含关于其他关系提升定义或任意函子弱拉回保持性的断言。
+

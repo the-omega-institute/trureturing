@@ -1,0 +1,36 @@
+**Proof.** For arbitrary $I$, first choose $t_n\downarrow0$ so that $\|\gamma(t_n)\|<\rho/2$. Local density permits a point $d_n\in D$ at distance less than
+$$
+\min\{\rho/2,t_n^r/n\}
+$$
+from $\gamma(t_n)$. The error divided by $t_n^r$ tends to zero, so the fixed-row calculation in Theorem 41.8 applies along this sequence and gives eventual positivity. For $r=0$, there are no rows to check. The error tends to zero and $\gamma(t_n)\to0$, proving $d_n\to0$.
+
+For the additional countable conclusion, choose the parameters recursively, with $t_0=1$, so that
+$$
+0<t_n<\min\{1/n,t_{n-1}/2\},\qquad
+\|\gamma(t_n)\|<\rho/2,\qquad
+\gamma(t_n)\in C_{F_n}.
+$$
+Such a choice exists by eventual positivity for the finite set $F_n$. If $F_n\ne\varnothing$, define
+$$
+\mu_n=
+\min_{i\in F_n}\frac{\ell_i(\gamma(t_n))}{2\|\ell_i\|_*}>0.
+$$
+All these forms are nonzero. If $F_n=\varnothing$, set $\mu_n=1$. Put
+$$
+\delta_n=\min\{\rho/2,t_n^r/n,\mu_n\}>0.
+$$
+Because $\gamma(t_n)\in\overline D^{\,V}$, choose one point
+$$
+d_n\in D\cap B_V(\gamma(t_n),\delta_n).
+$$
+For every $i\in F_n$,
+$$
+\ell_i(d_n)
+>
+\ell_i(\gamma(t_n))-\|\ell_i\|_*\delta_n
+\ge \tfrac12\ell_i(\gamma(t_n))>0.
+$$
+The approximation bound and convergence follow as before.
+
+The selected $d_n$ are actual inputs; neither the coefficient vectors nor the entire polynomial curve are asserted to belong to $D$. In particular, with $D=\mathbb Q^2$, Theorem 41.10 gives rational finite-prefix witnesses for the family of Theorem 41.7, approximating $t(1,\sqrt2)$ with error $o(t)$ along the selected parameters. This does not turn that curve into a rational-coefficient polynomial. $\square$
+

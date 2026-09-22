@@ -1,0 +1,44 @@
+**定理 21.9（像群的抽象结构与子空间拓扑）。** 给 $I_s$ 赋予 $K$ 的子空间拓扑。限制
+$$
+H|_{I_s}:I_s\longrightarrow\mathbb T
+$$
+是连续的抽象群同构，但不是同胚；其逆映射 $j_s$ 的连续点恰为 $\mathbb T\setminus E$。空间 $I_s$ 稠密、真包含于 $K$、非紧且零维，因此不与通常圆周同胚。更强地，限制运算 $A_s|_{I_s^2}$ 也不分别连续，故这个子空间群不是拓扑群。
+
+**证明。** 先使用紧致单点纤维事实：若 $\theta_k\to\theta$，且 $H^{-1}(\{\theta\})=\{x\}$，则任意满足 $H(x_k)=\theta_k$ 的点列均趋于 $x$。否则可在某个 $x$ 的开邻域外取子列，再由紧致可度量性取收敛子列；连续性使其极限仍在该单点纤维，与处于邻域外矛盾。
+
+这立即证明 $j_s$ 在非分裂相位连续。固定 $E_m$，使用证明21.8中的 $Z(n_L)\to b_s(m)$，则
+$$
+[n_L\phi]\longrightarrow E_m,\qquad
+j_s([n_L\phi])=Z(n_L)\longrightarrow b_s(m)\ne j_s(E_m).
+$$
+所以 $j_s$ 在每个分裂相位不连续。$H|_{I_s}$ 的连续性、双射性及保群运算性质已分别来自 $H$ 与乘法表。
+
+自然核心包含于 $I_s$，故 $I_s$ 稠密；$B_s$ 非空，故 $I_s$ 是真子集。若 $I_s$ 紧，则它在 Hausdorff 空间 $K$ 中闭，与稠密且真包含矛盾。有限前缀柱集的交给出 $I_s$ 的开闭基；不同点可被这样的集合分离，故 $I_s$ 全不连通，而通常圆周连通，所以不存在空间同胚。
+
+最后仍固定 $m\ge1$，令
+$$
+p_L=Z(n_L)\longrightarrow b_s(m),\qquad y_L=Z(n_L+m)\in I_s.
+$$
+因为
+$$
+H(y_L)=[(n_L+m)\phi]=H(p_L)-E_m\longrightarrow0,
+$$
+零相位的单点纤维事实给 $y_L\to0_K$。但是
+$$
+A_s(g_s(m),y_L)=j_s(E_m+[(n_L+m)\phi])=p_L,
+$$
+$$
+A_s(g_s(m),0_K)=g_s(m)\ne b_s(m).
+$$
+第一列在 $K$ 中趋于 $b_s(m)$，因 Hausdorff 性不可能趋于 $g_s(m)$，故在 $I_s$ 中也不趋于所需值。固定 $g_s(m)$ 的乘法切片在 $0_K$ 处不连续。这直接否定子空间上的分别连续性，而不是仅由非紧性推断。证毕。
+
+[^rro21_phase]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定义371.1、定理371.2及372.2—372.4；固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb。所用资料为紧数字载体、自然相位、全部相位纤维及有限块字形式。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+[^rro21_fibers]: 《RECURSIVE_RELATIONAL_OBSERVATION》，定义16.0、16.3及定理16.4的纤维公式；固定提交 c74985438ae17d205509255934bbd3ecf1f94d71。本节将该公式完整列为假设21.1。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md))
+
+[^rro21_semilattice]: Jiangang Zhang, Yuhui Yang, Ran Shen, *The strong semilattice of $\pi$-groups*, European Journal of Pure and Applied Mathematics 11(3) (2018), 589–597，DOI: 10.29020/nybg.ejpam.v11i3.3274。所用为第1节、第589页的强半格半群一般构造及连接同态条件，不使用后文关于各分量为 $\pi$-群的分类。 ([ejpam.com](https://www.ejpam.com/ejpam/article/view/3274/661))
+
+[^rro21_retract]: Attila Nagy, *On left legal semigroups*, arXiv:2301.08793v2 (2023)，第2节关于 Rees 商、理想扩张与收缩理想的定义；不使用该文针对左合法半群的结构定理。 ([arxiv.org](https://arxiv.org/html/2301.08793v2))
+
+[^rro21_graph]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定理377.1，同一固定提交；联合连续自然加法延拓的障碍。定理21.8另由加法图的闭包与二点输出给出直接证明。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+

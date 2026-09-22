@@ -1,0 +1,29 @@
+**假设 31.0（原载体、完整闭图与全测度乘法）。** 沿用定义25.0及假设25.1的固定定向。具体地，令
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\},\qquad \mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+这里始终使用原数字拓扑及原圆周群拓扑。令 $E_m=[-m\phi]$、$E=\{E_m:m\ge1\}$。采用准确纤维等式
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\ge0).
+$$
+映射 $H$ 连续且满射。符号集 $\mathcal S(x)$ 在 $x_m^+$、$x_m^-$ 处分别为 $\{+1\}$、$\{-1\}$，在其他点处为 $\{-1,+1\}$。完整加法闭图为
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},
+$$
+并采用准确输入纤维公式
+$$
+\Gamma(x,y)=\begin{cases}\{k_\sigma\},&\sigma=H(x)+H(y)\notin E,\\ \{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&\sigma=H(x)+H(y)=E_r.\end{cases}
+$$
+固定 $t\in(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\}$，其中 $\infty$ 是形式参数。使用定理25.9的点核 $P^{(t)}_{x,y}$，以及定理28.7—28.9在全部有限实有符号正则 Borel 测度上给出的乘法
+$$
+(\mu\star_t\eta)(D)=\int_K\int_KP^{(t)}_{x,y}(D)\,d\eta(y)\,d\mu(x)
+$$
+和实际有界代数同构
+$$
+\Phi_t^{\mathbb R}\mu=(H_\#\mu,R_t\mu),\qquad \Psi_t^{\mathbb R}(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+这里 $v_m=\delta_{x_m^+}-\delta_{x_m^-}$。所采用的是逐 Borel 集积分等式和全测度同构，而不只是点质量乘法一致性。本节结论均在这些前提下成立。数学依据为假设25.1、定理25.9、定理28.2—28.9。
+

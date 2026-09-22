@@ -1,0 +1,22 @@
+**theorem 26.2 (Explicit full-state double limits at every split phase).** For $m\ge1$ define
+$$
+r_m=\min\{r\in\mathbb N_0:G_{2r+1}\ge m\},\qquad
+A_i^{(m)}=G_{2(i+r_m)+1}-m,\qquad B_j=G_{2j}\quad(i,j\ge0).
+$$
+These are nonnegative integer inputs. For every fixed $i$ and every fixed $j$, respectively,
+$$
+\lim_{j\to\infty}Z(A_i^{(m)}+B_j)=Z(A_i^{(m)}),\qquad
+\lim_{i\to\infty}Z(A_i^{(m)}+B_j)=T^{B_j}x_m^+.
+$$
+Both iterated limits exist in the full space $K$, and their orientations are
+$$
+\lim_{i\to\infty}\lim_{j\to\infty}Z(A_i^{(m)}+B_j)=x_m^+,\qquad
+\lim_{j\to\infty}\lim_{i\to\infty}Z(A_i^{(m)}+B_j)=x_m^-.
+$$
+Consequently every $f\in C(K,\mathbb F)$ satisfies
+$$
+\lim_{i\to\infty}\lim_{j\to\infty}a_f(A_i^{(m)}+B_j)=f(x_m^+),\qquad
+\lim_{j\to\infty}\lim_{i\to\infty}a_f(A_i^{(m)}+B_j)=f(x_m^-).
+$$
+The full-lift convergence used here is the arbitrary-lift statement of theorem 382.1, not merely a lowest-digit assertion. ([CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md), theorem 382.1, including its arbitrary-lift one-sided convergence statement and proof, pinned commit `c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb`.)
+

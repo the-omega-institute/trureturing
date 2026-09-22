@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1382e04f74c7680f0bfce0f2b85ab258338f25e9aec63b077b5cd834111d1ff
+  normalized_sha256: sha256:c1382e04f74c7680f0bfce0f2b85ab258338f25e9aec63b077b5cd834111d1ff
+cas_ref: sha256:c1382e04f74c7680f0bfce0f2b85ab258338f25e9aec63b077b5cd834111d1ff
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅定义恢复误差并明确未知输入与经典结果的语义，没有声称任何恢复界。
+    previous_atom_id: c15fa3ef402ee18d449929c507b90f7e130d1569ebf608ac87a77f7202aaafc0
+    next_atom_id: 9e397a8746d33307319310d014bbeaf6f78bc9f9e4c88f57af6a95603d7d79bc

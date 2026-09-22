@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:151a68f6f538844298ea0aa108caca4f12ae56f4752eb9466b219b61883ef775
+  normalized_sha256: sha256:151a68f6f538844298ea0aa108caca4f12ae56f4752eb9466b219b61883ef775
+cas_ref: sha256:151a68f6f538844298ea0aa108caca4f12ae56f4752eb9466b219b61883ef775
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子叶定义合法数字空间、补零映射、级数读数、圆周商映射及所取拓扑，没有声称收敛、连续或满射等性质。
+    previous_atom_id: fc98d0d7d929f4b6edb4c2bbde0be367461078c4d3285fe6ebcea34091b98aeb
+    next_atom_id: ba0476e156c170ef9b7476d1a54942e782925edb0ddcfb48f86a389f3a0a6198

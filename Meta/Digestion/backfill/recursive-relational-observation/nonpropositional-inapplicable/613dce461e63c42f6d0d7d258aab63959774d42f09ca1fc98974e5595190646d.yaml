@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:613dce461e63c42f6d0d7d258aab63959774d42f09ca1fc98974e5595190646d
+  normalized_sha256: sha256:613dce461e63c42f6d0d7d258aab63959774d42f09ca1fc98974e5595190646d
+cas_ref: sha256:613dce461e63c42f6d0d7d258aab63959774d42f09ca1fc98974e5595190646d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“define”及“Let”分别规定正号 Fourier 系数与包含所有端点约定的弧差异上确界；并未在此断言任何差异上界或平移不变性，定义未夹带这些结论，故本叶无需证明。
+    previous_atom_id: b0ab840ed9975a0e5108d0770c743f64638c52a8af4566e989a1dc6c136386cd
+    next_atom_id: 9ddc986efc4e339b7344ae4bc981e746ed0fbf44e22c8f17c4a71ea2ee0cafd5

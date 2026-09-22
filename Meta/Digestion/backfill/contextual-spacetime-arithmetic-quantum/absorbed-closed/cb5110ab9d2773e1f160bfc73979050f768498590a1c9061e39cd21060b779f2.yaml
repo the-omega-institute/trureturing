@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cb5110ab9d2773e1f160bfc73979050f768498590a1c9061e39cd21060b779f2
+  normalized_sha256: sha256:cb5110ab9d2773e1f160bfc73979050f768498590a1c9061e39cd21060b779f2
+cas_ref: sha256:cb5110ab9d2773e1f160bfc73979050f768498590a1c9061e39cd21060b779f2
+coverage_gids:
+  - gid: D5/S3/Quantum/PureState/UnitGramIndistinguishability.unit_gram_overlap_characterization
+    target_statement_id: sha256:6a6392456e95ea2384d3f8b180bef40c08565480f1abcc8c2dfa6fcac01d0030
+receipts:
+  unresolved_subitems: []

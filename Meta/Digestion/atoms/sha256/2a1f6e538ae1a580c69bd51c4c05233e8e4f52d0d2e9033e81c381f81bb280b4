@@ -1,0 +1,7 @@
+**Theorem.** Let m>1, and suppose its largest prime factor ell is at least seven. For every prime p dividing F_ell,
+
+$$
+\boxed{\rho(p)=\ell,\quad p>\ell,\quad p\nmid m,\quad
+v_p(F_m)=v_p(F_\ell)=h_p.}\tag{ZBD1}
+$$
+

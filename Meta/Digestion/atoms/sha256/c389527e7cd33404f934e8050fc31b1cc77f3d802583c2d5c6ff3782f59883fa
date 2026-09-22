@@ -1,0 +1,42 @@
+**定义 14.0（观察指标、相容完成与保幂子族）。** 取 $\mathbb{N}=\{0,1,2,\ldots\}$，自然数幂满足 $a^0=1$，特别地 $0^0=1$。令
+$$
+I=\mathbb{N}\times\mathbb{N}_{>0},
+\qquad
+(t,p)\preceq(u,v)\quad\Longleftrightarrow\quad t\le u\quad \land\quad p\mid v.
+$$
+指标越大表示观察越细。对 $\alpha=(t,p)$，定义
+$$
+n\mathrel{R_\alpha}m
+\quad\Longleftrightarrow\quad
+n=m\quad \lor\quad \bigl(n,m\ge t\quad \land\quad n\equiv m\pmod p\bigr),
+\qquad
+Q_\alpha=\mathbb{N}/R_\alpha,
+$$
+并记商映射为 $q_\alpha$。每个 $Q_\alpha$ 取有限离散拓扑。若 $\alpha\preceq\beta$，记规范映射为
+$$
+b_{\beta\alpha}:Q_\beta\longrightarrow Q_\alpha,
+\qquad
+b_{\beta\alpha}(q_\beta(n))=q_\alpha(n).
+$$
+自然数加法幺半群的非等号同余具有上述阈值—周期形式；其包含次序见 [East–Ruškuc，*Classification of congruences of twisted partition monoids*，arXiv:2010.04392v3，第 2.1 节及式 (2.2)](https://arxiv.org/html/2010.04392v3)。这里引用的范围是加法同余的分类与包含次序。
+
+令 $J\subseteq I$ 为双槽保幂指标集，即
+$$
+\alpha\in J
+\quad\Longleftrightarrow\quad
+\forall a,a',b,b'\in\mathbb{N},\quad
+\bigl(a\mathrel{R_\alpha}a'\quad \land\quad b\mathrel{R_\alpha}b'\bigr)
+\Longrightarrow a^b\mathrel{R_\alpha}(a')^{b'}.
+$$
+对所考虑的指标子集 $D$，定义
+$$
+K_D=
+\left\{(x_\alpha)_{\alpha\in D}\in\prod_{\alpha\in D}Q_\alpha:
+\forall\alpha,\beta\in D,\quad
+\alpha\preceq\beta\Longrightarrow b_{\beta\alpha}(x_\beta)=x_\alpha
+\right\},
+\qquad
+\iota_D(n)=(q_\alpha(n))_{\alpha\in D},
+$$
+赋予 $K_D$ 乘积拓扑的子空间拓扑，坐标投影记为 $\pi_\alpha$。保序映射 $f:D\to E$ 称为共尾映射，若对每个 $e\in E$，存在 $d\in D$ 使 $e\preceq f(d)$。
+

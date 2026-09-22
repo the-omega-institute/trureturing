@@ -1,0 +1,19 @@
+### 定理 20.1. 实际投影、实际限制与无损读回
+
+J⁻¹ 交替，\(\mathcal A_X(J^{-1})=0\)，\(\mathcal A_X(W_J)\subset W_J\)，并且对交替 B 有
+
+\[
+\pi_J(B)\in W_J,\qquad
+\mathcal A_X(\pi_J(B))=\mathcal A_X(B).\tag{20.2}
+\]
+
+**证明。** 转置 JJ⁻¹=1 并用 J^t=−J 得 (J⁻¹)^t=−J⁻¹。将 X^tJ=−JX 左右乘逆矩阵得 J⁻¹X^t=−XJ⁻¹，所以不变线被实际作用杀掉。
+\(\mathcal A_X(B)\) 的转置由 B 的交替性直接计算；迹循环性给出
+
+\[
+\operatorname{tr}(J\mathcal A_X(B))
+=\operatorname{tr}(JXB)+\operatorname{tr}(X^tJB)=0.
+\]
+
+最后 tr(JJ⁻¹)=n，代入投影定义得到其收缩为零，且删除不变线不改变作用。证毕。
+

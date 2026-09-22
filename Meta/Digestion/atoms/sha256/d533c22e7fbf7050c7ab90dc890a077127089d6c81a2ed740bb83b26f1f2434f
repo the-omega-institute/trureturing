@@ -1,0 +1,14 @@
+**definition 54.7（统一模数矩阵）.** 假设 $G_\infty$ 二分。对 $T\subseteq E_f$ 与 $U\subseteq\{1,\ldots,m\}$，令
+$$
+k_e(T)=a_e+\mathbf1_{e\in T}.
+$$
+若 $E_f\ne\varnothing$，由 definition 54.3 有 $0\le k_e(T)\le N$；若 $E_f=\varnothing$，此条件真空且 $N=1$。定义整数矩阵 $M_{T,U}$，其行包括
+$$
+p^{N-k_e(T)}b_e\qquad(e\in E_f),
+$$
+以及
+$$
+p^{N-1}e_c\qquad(c\in U).
+$$
+当 $k_e(T)=0$ 时，对应行为 $p^Nb_e$，模 $p^N$ 恒为零，正好表达“模 $p^0$ 无约束”。若同一自由变量在一条边中重复出现，系数仍按 definition 54.3 真实相加为 $0$ 或 $\pm2$。当 $m=0$、$E_f=\varnothing$ 时，唯一的 $M_{\varnothing,\varnothing}$ 是 $0\times0$ 空矩阵，秩为 $0$。
+

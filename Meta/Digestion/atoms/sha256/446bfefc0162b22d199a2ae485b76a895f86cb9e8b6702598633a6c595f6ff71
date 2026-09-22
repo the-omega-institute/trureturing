@@ -1,0 +1,10 @@
+**推论 24.2（两个有限维端口的混合界）。** 若 $x=\ell_x(v)$、$y=\ell_y(v)$，$\alpha\ne0$ 已知，置 $r=1-2x/\alpha$、$z=-4y/\alpha$。沿用定理24.1的常数，则
+$$
+|r_{tt}|\le\frac{2M_{\ell_x}}{|\alpha|},\quad
+|r_{\beta tt}|\le\frac{2C_{\ell_x}}{|\alpha|},\quad
+|z_{tt}|\le\frac{4M_{\ell_y}}{|\alpha|},\quad
+|z_{\beta tt}|\le\frac{4C_{\ell_y}}{|\alpha|}.
+\tag{24.106}
+$$
+证明。对已证明的读出导数乘相应固定比例。若另外核实初始进度与隐藏斜率，这些就是上下文几何卷定义25.1所需的四个常数；不另假设准备平面不变。$\square$
+

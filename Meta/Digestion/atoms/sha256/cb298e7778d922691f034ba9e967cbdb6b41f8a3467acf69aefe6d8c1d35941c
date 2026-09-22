@@ -1,0 +1,30 @@
+**definition 27.1 (Absolute sums and norm constants).** For a nonnegative family $(h_s)_{s\in S}$ over an arbitrary set, define
+$$
+\sum_{s\in S}h_s=\sup_{F\subseteq S,\ F\text{ finite}}\sum_{s\in F}h_s.
+$$
+Define
+$$
+\ell^1(S)=\left\{a:S\to\mathbb R:\|a\|_1:=\sum_{s\in S}|a(s)|<\infty\right\}.
+$$
+No support restriction is imposed in this definition. A subscript ${\mathrm d}$ on a topological set denotes its underlying set equipped with the discrete topology. Thus $\ell^1(K_{\mathrm d})$ and $\ell^1(\mathbb T_{\mathrm d})$ use counting sums, not integration against a measure associated with their original compact topologies.[^rro27-l1]
+
+For a finite signed atomic measure, use the total variation norm
+$$
+\left\|\sum_{w\in F}a_w\delta_w\right\|_{\mathrm{TV}}=\sum_{w\in F}|a_w|,
+$$
+where the points of $F$ are distinct. This convention has no factor of one half. Define
+$$
+\rho_t=\begin{cases}
+|t|,&t\ne\infty,\ |t|<1,\\
+|t|^{-1},&t\ne\infty,\ |t|>1,\\
+0,&t=\infty,
+\end{cases}
+\qquad
+C_t=\frac{1+\rho_t}{1-\rho_t}.
+$$
+Consequently,
+$$
+0\le\rho_t<1,\qquad
+C_t=\frac{1+|t|}{|1-|t||}\quad(t\ne\infty),\qquad C_\infty=1.
+$$
+

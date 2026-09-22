@@ -1,0 +1,51 @@
+**Proof.** Linearity of $a$ proves linearity of $U_\tau$. Since $U_\tau$ does not change the first coordinate, applying $U_{-\tau}$ subtracts exactly the same correction and proves the inverse formula. The bound follows from
+$$
+\|U_\tau(\nu,g)\|_\oplus
+\le\|\nu\|_{\mathrm{TV}}+\|g\|_1+|\tau|\,|a(\nu)|
+\le(1+|\tau|)\|(\nu,g)\|_\oplus.
+$$
+The inverse has the identical bound.
+
+Transport through a linear isomorphism preserves bilinearity, associativity and commutativity. Explicitly, applying $U_\tau$ to either bracketing of a triple product gives the corresponding bracketing of $U_\tau z\diamond U_\tau w\diamond U_\tau u$. Also,
+$$
+\|z\diamond_\tau w\|_\oplus
+\le(1+|\tau|)^3\|z\|_\oplus\|w\|_\oplus.
+$$
+Thus the transported product is bounded. Its complete submultiplicative norm can be taken to be $\|U_\tau z\|_\oplus$.
+
+For $z=(\nu,g)$ and $w=(\xi,h)$, direct expansion gives
+$$
+\begin{aligned}
+z\diamond_\tau w
+=\bigl(\nu*_{\mathbb T}\xi,\;&g*_+h
++\tau a(\nu)(e_1*_+h)
++\tau a(\xi)(g*_+e_1)\\
+&+\tau^2a(\nu)a(\xi)e_2
+-\tau a(\nu*_{\mathbb T}\xi)e_1\bigr).
+\end{aligned}
+$$
+Only linearity of $a$ is used; no multiplicativity assumption about it is needed. This formula proves directly that the first coordinate remains the ordinary circle convolution. Since its mass is the product of the two input masses, the mass character is preserved.
+
+For every member of $\mathcal C_{\mathrm{at}}$, its first coordinate is atomic and hence has $a$ equal to zero. Thus $U_\tau$ is the identity on this whole subspace. The product of two such elements remains in $\mathcal C_{\mathrm{at}}$, because atomic circle measures form a convolution subalgebra. The inverse shear is therefore also the identity on their product, proving agreement on the full atomic subalgebra, not merely on finite sums or Dirac pairs.
+
+The bounded coordinate isomorphisms transport these properties to $M(K)$. For example, an explicit sufficient total variation bound is
+$$
+\|\mu\star_{t,\tau}\eta\|_{\mathrm{TV}}
+\le\frac{8(1+|\tau|)^3}{1-\rho_t}
+\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}.
+$$
+No sharpness is claimed for this estimate. Every Dirac measure belongs to the atomic subalgebra, giving the stated identical point rows.
+
+Finally, $a(\lambda)=1$ and $\lambda*_{\mathbb T}\lambda=\lambda$. Hence
+$$
+U_\tau z=(\lambda,\tau e_1),\qquad
+U_\tau z\diamond U_\tau z=(\lambda,\tau^2e_2).
+$$
+Applying the inverse shear gives the asserted Haar test. Its first residual coefficient is $-\tau$, so distinct real parameters give distinct products, including parameters with opposite signs.
+
+The original setwise integral of the same rows against $\mathfrak m\otimes\mathfrak m$ is $\mathfrak m$, by theorem 28.11. In contrast, for $\tau\ne0$,
+$$
+(\mathfrak m\star_{t,\tau}\mathfrak m)(\{x_1^+\})=-\frac{\tau}{d'_1}\ne0,
+$$
+whereas $\mathfrak m(\{x_1^+\})=0$. Thus the sheared product fails that integration law on an actual Borel set. Moreover, the masses at $x_1^+$ and $x_1^-$ are nonzero opposites, because $\mathfrak m$ has no atoms and the second split fiber is disjoint from the first. One is negative. Therefore two positive input probabilities can have a nonpositive output. These sheared extensions are not probability-kernel integrations, even when their common point rows are probability measures. QED.
+

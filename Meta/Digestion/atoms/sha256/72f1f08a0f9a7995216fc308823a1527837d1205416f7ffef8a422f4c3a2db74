@@ -1,0 +1,71 @@
+**Proof.** The positive Fibonacci recurrence makes $G_\ell$ strictly increasing and unbounded, so $r_m$ exists and $A_i^{(m)}\ge0$. Also $B_j\ge1$. First establish the exact signed error
+$$
+\phi G_\ell-G_{\ell+1}=(-1)^{\ell+1}\alpha^{\ell+2}.
+$$
+The left-hand sequence satisfies the Fibonacci recurrence. The right-hand sequence does also, because $1-\alpha=\alpha^2$. Their initial values agree:
+$$
+\phi-2=-\alpha^2,\qquad 2\phi-3=\alpha^3.
+$$
+Induction therefore proves the identity. Taking classes modulo one gives
+$$
+H(Z(A_i^{(m)}))=E_m+[\alpha^{2(i+r_m)+3}],\qquad
+H(Z(B_j))=[-\alpha^{2j+2}].
+$$
+The first offset is strictly positive and tends to zero. Assumption 26.1 therefore yields
+$$
+Z(A_i^{(m)})\longrightarrow x_m^+.
+$$
+On the other hand $Z(B_j)$ has its only nonzero digit at position $2j$. Thus every fixed initial segment is eventually zero, and
+$$
+Z(B_j)\longrightarrow Z(0).
+$$
+
+Induction from $TZ(n)=Z(n+1)$ gives $T^hZ(n)=Z(n+h)$ for every nonnegative integer $h$. Fixing $i$ and using continuity of the single fixed iterate $T^{A_i^{(m)}}$ proves
+$$
+Z(A_i^{(m)}+B_j)=T^{A_i^{(m)}}Z(B_j)
+\longrightarrow T^{A_i^{(m)}}Z(0)=Z(A_i^{(m)}).
+$$
+Fixing $j$ instead and using the single fixed iterate $T^{B_j}$ proves
+$$
+Z(A_i^{(m)}+B_j)=T^{B_j}Z(A_i^{(m)})
+\longrightarrow T^{B_j}x_m^+.
+$$
+Taking the outer limit in the first identity already gives $x_m^+$.
+
+For the second outer limit, the exact forward-iterate rule is
+$$
+T^hx_m^\pm=
+\begin{cases}
+x_{m-h}^\pm,&0\le h<m,\\
+Z(h-m),&h\ge m.
+\end{cases}
+$$
+Indeed, for $h<m$, choose any lifts of $E_m\pm[\epsilon_k]$ with $\epsilon_k>0$ tending to zero. They converge to $x_m^\pm$. Their images under $T^h$ have phases $E_{m-h}\pm[\epsilon_k]$, and hence converge to $x_{m-h}^\pm$. Continuity and uniqueness of limits give the first case. For $h\ge m$, semiconjugacy gives the phase $[(h-m)\phi]$, whose fiber is the singleton $\{Z(h-m)\}$, proving the second case.
+
+Since $B_j\to\infty$, eventually
+$$
+T^{B_j}x_m^+=Z(B_j-m).
+$$
+For those indices, $B_j-m$ is a nonnegative integer and
+$$
+H(Z(B_j-m))=E_m+[-\alpha^{2j+2}].
+$$
+These phases approach from the strict negative side. The arbitrary-lift convergence in Assumption 26.1 gives $Z(B_j-m)\to x_m^-$. The finitely many indices with $B_j<m$ cause no loss of any inner limit: their values are explicitly $x_{m-B_j}^+$ by the forward-iterate rule. This proves the second full-state iterated limit.
+
+For clarity, the seam case has $r_1=0$ and the exact digit identities
+$$
+A_i^{(1)}=G_{2i+1}-1=\sum_{r=0}^{i}G_{2r},\qquad
+B_j-1=G_{2j}-1=\sum_{r=0}^{j-1}G_{2r+1}.
+$$
+For the first identity the base case is $G_0=G_1-1$, and adding $G_{2i+2}$ proves the next case by the recurrence. For the second identity the case $j=0$ is the empty sum; adding $G_{2j+1}$ again gives the next case. These sums are legal digit expansions, so
+$$
+Z(A_i^{(1)})=(10)^{i+1}0^\infty\longrightarrow u,\qquad
+Z(B_j-1)=(01)^j0^\infty\longrightarrow v,\qquad
+T^{B_j}u=Z(B_j-1).
+$$
+For general $m$ the construction is precisely
+$$
+A_i^{(m)}=A_{i+r_m}^{(1)}-(m-1).
+$$
+The truncation by $r_m$ is what makes every input nonnegative; no inverse iterate of $T$ is used. Finally, continuity of $f$ transports every inner limit and then each outer limit to the stated scalar limits. The witnesses therefore work for any continuous function separating the chosen pair. $\square$
+

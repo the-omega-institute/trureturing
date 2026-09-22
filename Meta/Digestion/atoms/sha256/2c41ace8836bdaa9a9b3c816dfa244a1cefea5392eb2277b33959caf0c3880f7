@@ -1,0 +1,23 @@
+**证明。** 卷积的支撑包含在有限集合
+$$
+\bigcup_{\substack{x\in\operatorname{supp}\mu\\y\in\operatorname{supp}\nu}}
+\operatorname{supp}P_{x,y}
+$$
+中，其大小至多为 $2|\operatorname{supp}\mu|\,|\operatorname{supp}\nu|$。各质量非负，总质量为
+$$
+\sum_{x,y}\mu(x)\nu(y)\sum_w P_{x,y}(w)
+=\sum_{x,y}\mu(x)\nu(y)=1.
+$$
+以上及以下求和都限制在相应有限支撑中。
+
+若点态结合律成立，把三个有限分布的卷积展开，得到
+$$
+(\mu*\nu)*\xi
+=\sum_{x,y,z}\mu(x)\nu(y)\xi(z)\bigl(P_{x,y}*\delta_z\bigr),
+$$
+$$
+\mu*(\nu*\xi)
+=\sum_{x,y,z}\mu(x)\nu(y)\xi(z)\bigl(\delta_x*P_{y,z}\bigr).
+$$
+点态结合律使每个相应括号相等，故两式相等。反向取三个 Dirac 分布即可。假设23.1给出全部许可输出的同一相位；支撑包含关系将此性质传给 $P$。支撑包含于单点而总质量为一时，该点质量只能为一。证毕。
+

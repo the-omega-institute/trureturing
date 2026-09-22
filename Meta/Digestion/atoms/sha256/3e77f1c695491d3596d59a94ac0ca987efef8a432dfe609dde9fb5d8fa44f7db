@@ -1,0 +1,10 @@
+**定理 29.10（任意实有符号原子的排除与拓扑中心完全分类）。** 在假设29.1下，对每个 $t\in\Lambda$，
+$$
+Z_{\mathrm{top}}(\star_t)=M_c(K).
+$$
+更具体地，若 $\mu$ 的原子部分非零，则存在有限数字柱集 $U$、点 $x\in K$ 及序列 $x_n\to x$，使
+$$
+\mathcal T_\mu^{(t)}\mathbf1_U(x_n)\not\longrightarrow\mathcal T_\mu^{(t)}\mathbf1_U(x).
+$$
+结论包括总质量为零、相位推前原子部分为零以及同一分裂纤维正负质量抵消的情形，也包括参数 $0$ 与形式参数 $\infty$。
+

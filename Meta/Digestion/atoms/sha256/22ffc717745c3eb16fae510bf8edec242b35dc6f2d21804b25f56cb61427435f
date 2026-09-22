@@ -1,0 +1,295 @@
+**定理 9.1（可数有限观察塔的普遍单点拼接保真，等价于有限层已分清全部身份）。** 设 $Y\ne\varnothing$，给定满射
+
+$$
+q_n:Y\twoheadrightarrow Q_n
+\qquad(n\in\mathbb N),
+$$
+
+其中每个 $Q_n$ 有限离散，并有
+
+$$
+p_n:Q_{n+1}\to Q_n,
+\qquad
+q_n=p_n\circ q_{n+1}.
+$$
+
+令
+
+$$
+K_Y=\varprojlim_n Q_n,
+\qquad
+\iota_Y(y)=(q_n(y))_{n\in\mathbb N}.
+$$
+
+取端点 $X=Z=\{\ast\}$，均配常值精确塔。对任意 $A,B\subseteq Y$，定义
+
+$$
+R_A=\{\ast\}\times A,
+\qquad
+S_B=B\times\{\ast\}.
+$$
+
+则以下三个条件等价：
+
+$$
+\begin{aligned}
+\mathrm{(a)}\quad&
+\forall A,B\subseteq Y,\qquad
+\widehat{S_B\circ R_A} =
+\widehat S_B\circ\widehat R_A;
+\\
+\mathrm{(b)}\quad&
+Y\text{ 有限，且 }\iota_Y\text{ 单射};
+\\
+\mathrm{(c)}\quad&
+\exists N\in\mathbb N,\qquad q_N\text{ 单射}.
+\end{aligned}
+$$
+
+这些条件成立时，还有
+
+$$
+\iota_Y[Y]=K_Y,
+$$
+
+因而完成空间是与 $Y$ 双射的有限离散空间。
+
+**证明。**
+
+首先，把单点端点测试精确化。由乘积拓扑中的闭包定义，
+
+$$
+\widehat R_A =
+\{\ast\}\times\overline{\iota_Y[A]},
+\qquad
+\widehat S_B =
+\overline{\iota_Y[B]}\times\{\ast\}.
+$$
+
+两种端点复合均为 $\{(\ast,\ast)\}$ 的子集，并且
+
+$$
+\widehat{S_B\circ R_A}\ne\varnothing
+\quad\Longleftrightarrow\quad
+A\cap B\ne\varnothing,
+$$
+
+$$
+\widehat S_B\circ\widehat R_A\ne\varnothing
+\quad\Longleftrightarrow\quad
+\overline{\iota_Y[A]}
+\cap
+\overline{\iota_Y[B]}
+\ne\varnothing.
+$$
+
+若 $A\cap B\ne\varnothing$，任取其中一个元素，其观察像就在上述两个闭包中。因此，条件 (a) 等价于
+
+$$
+\mathrm{(P)}\qquad
+\forall A,B\subseteq Y,\quad
+A\cap B=\varnothing
+\Longrightarrow
+\overline{\iota_Y[A]}
+\cap
+\overline{\iota_Y[B]}
+=\varnothing.
+$$
+
+第一步：非单射产生两个实际元素即可见的障碍。
+
+若 $\iota_Y$ 不单射，存在
+
+$$
+y_0\ne y_1,
+\qquad
+\iota_Y(y_0)=\iota_Y(y_1).
+$$
+
+取
+
+$$
+A=\{y_0\},
+\qquad
+B=\{y_1\}.
+$$
+
+则 $A\cap B=\varnothing$，但两个观察像的闭包包含同一个点。于是
+
+$$
+\widehat{S_B\circ R_A}=\varnothing,
+\qquad
+\widehat S_B\circ\widehat R_A=\{(\ast,\ast)\}.
+$$
+
+所以 (a) 蕴含 $\iota_Y$ 单射。这个障碍不依赖可数性、紧致性或可度量性。
+
+第二步：单射而无限时，仍会产生共同闭包点。
+
+反设 $\iota_Y$ 单射且 $Y$ 无限。在 ZFC 中可取两两不同的元素序列
+
+$$
+y_0,y_1,y_2,\ldots\in Y.
+$$
+
+对每个 $r\in\mathbb N$，令
+
+$$
+F_r =
+\overline{\{\iota_Y(y_j):j\ge r\}}
+\subseteq K_Y.
+$$
+
+这些集合非空、闭且递减。由 $K_Y$ 紧致，
+
+$$
+\bigcap_{r\in\mathbb N}F_r\ne\varnothing.
+$$
+
+取
+
+$$
+\eta\in\bigcap_{r\in\mathbb N}F_r.
+$$
+
+记逆极限坐标投影为 $\pi_n:K_Y\to Q_n$，并令
+
+$$
+V_n(\eta) =
+\{v\in K_Y:\pi_n(v)=\pi_n(\eta)\}.
+$$
+
+由塔的相容性，$V_n(\eta)$ 是递减的开闭邻域基：任意涉及有限多个层的邻域，都包含某个 $V_n(\eta)$。
+
+递归选择严格递增的自然数序列 $(j_n)$，使
+
+$$
+\iota_Y(y_{j_n})\in V_n(\eta).
+$$
+
+其存在性如下：已选定 $j_{n-1}$ 时，由
+
+$$
+\eta\in F_{j_{n-1}+1}
+$$
+
+及 $V_n(\eta)$ 为开邻域，存在 $j>j_{n-1}$ 使
+
+$$
+\iota_Y(y_j)\in V_n(\eta).
+$$
+
+可以取满足条件的最小自然数 $j$。初始步骤同理由 $\eta\in F_0$ 得到。
+
+对任意固定的 $m$，当 $n\ge m$ 时，
+
+$$
+\iota_Y(y_{j_n})\in V_n(\eta)\subseteq V_m(\eta).
+$$
+
+故
+
+$$
+\iota_Y(y_{j_n})\longrightarrow\eta.
+$$
+
+现在定义
+
+$$
+A=\{y_{j_{2r}}:r\in\mathbb N\},
+\qquad
+B=\{y_{j_{2r+1}}:r\in\mathbb N\}.
+$$
+
+由于原序列的元素互异，$A\cap B=\varnothing$；由于两个子序列均收敛到 $\eta$，
+
+$$
+\eta\in
+\overline{\iota_Y[A]}
+\cap
+\overline{\iota_Y[B]}.
+$$
+
+这违反 (P)。
+
+事实上，这个障碍在每个有限层都有明确表现：
+
+$$
+\forall n\in\mathbb N,\qquad
+\pi_n(\eta)\in q_n[A]\cap q_n[B],
+$$
+
+尽管
+
+$$
+A\cap B=\varnothing.
+$$
+
+因此，每层都存在候选中间读数，并不提供同一个实际中间元素。
+
+结合第一步与第二步，得到 (a) 蕴含 (b)。
+
+第三步：有限且观察单射，必在某个有限层已经单射。
+
+假设 (b)。对每对不同的 $y,y'\in Y$，定义其首次分离层
+
+$$
+n(y,y') =
+\min\{n\in\mathbb N:q_n(y)\ne q_n(y')\}.
+$$
+
+该集合非空，因为 $\iota_Y$ 单射。令
+
+$$
+N =
+\max\Bigl(
+\{0\}
+\cup
+\{n(y,y'):y,y'\in Y,\ y\ne y'\}
+\Bigr).
+$$
+
+由于 $Y$ 有限，这个最大值存在。
+
+若 $q_N(y)=q_N(y')$，则沿塔下投影，在所有不高于 $N$ 的层都有相同读数。若 $y\ne y'$，这与第 $n(y,y')$ 层已经分离矛盾。因此 $q_N$ 单射，得到 (c)。
+
+反之，若 (c) 成立，则 $Y$ 单射到有限集合 $Q_N$，所以 $Y$ 有限；并且
+
+$$
+\iota_Y(y)=\iota_Y(y')
+\Longrightarrow
+q_N(y)=q_N(y')
+\Longrightarrow
+y=y'.
+$$
+
+故 (c) 蕴含 (b)。
+
+第四步：有限且观察单射，足以通过所有单点测试。
+
+假设 (b)。任意 $A,B\subseteq Y$ 的观察像都是 Hausdorff 空间 $K_Y$ 中的有限集，因而闭。于是
+
+$$
+\overline{\iota_Y[A]}
+\cap
+\overline{\iota_Y[B]} =
+\iota_Y[A]\cap\iota_Y[B] =
+\iota_Y[A\cap B].
+$$
+
+故 (P) 成立，从而 (a) 成立。
+
+最后，$\iota_Y[Y]$ 是有限闭集，又由实际像塔的基本性质稠密于 $K_Y$，因此
+
+$$
+K_Y=\iota_Y[Y].
+$$
+
+有限 Hausdorff 空间离散。证毕。
+
+假设与选择原则的使用边界。
+
+有限像保证完成空间的紧致性，也使“某层单射”推出载体有限。可数塔提供了上述可数柱邻域基；第二步正是在这里把紧致聚集现象转换成一条可拆成两部分的收敛序列。证明没有另行调用可度量性定理，所用的是更具体的可数柱邻域基；当然，该完成空间本身可度量。
+
+通常选择原理的一项明确使用，是从任意无限 $Y$ 取出互异元素序列。给定该序列与题设紧致性之后，子列指标可以用自然数最小元递归选定。有限层分离、有限集合闭性及非单射障碍均不需要无限选择。本节记录的是上述证明的依赖，不声称这是最弱的选择公理配置。
+

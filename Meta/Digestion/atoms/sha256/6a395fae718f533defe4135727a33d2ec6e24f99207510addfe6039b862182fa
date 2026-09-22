@@ -1,0 +1,24 @@
+**theorem 41.12 (The common-input-variable bound).** Let $U\subseteq\mathbb R^N$ be a linear input space of dimension $d$, let $I$ be any set, and let $b_i:U\to\mathbb R$ be linear observations with prescribed signs $\sigma_i\in\{-1,1\}$. Define the common observation map
+$$
+B:U\longrightarrow\mathbb R^I,\qquad
+B(u)=(b_i(u))_{i\in I}.
+$$
+Assume simultaneous finite feasibility on this same input space:
+$$
+\forall F\subseteq I\text{ finite}\ \exists u_F\in U\quad
+\forall i\in F,\qquad \sigma_i b_i(u_F)>0.
+$$
+Then there is an orthonormal list $u_1,\ldots,u_r$ in $U$ such that
+$$
+r\le
+\dim\operatorname{span}_{\mathbb R}\{b_i:i\in I\}
+=\operatorname{rank}B
+=d-\dim\ker B
+\le d\le N,
+$$
+and the single common-input curve
+$$
+\Gamma(t)=\sum_{j=1}^rt^ju_j\in U
+$$
+eventually has every prescribed output sign. If $D\subseteq U$ is locally dense around zero in the relative topology of $U$, Theorem 41.10 supplies actual points of $D$ with these eventual signs and, for countable $I$, with the specified finite-prefix simultaneous signs.
+

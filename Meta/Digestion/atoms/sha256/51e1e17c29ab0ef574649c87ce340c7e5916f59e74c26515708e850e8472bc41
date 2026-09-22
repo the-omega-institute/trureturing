@@ -1,0 +1,51 @@
+**命题 17.2（直接支持组一：全部历史纤维、边界与相位拆分）。** 在定义17.0的 Zeckendorf 系统中，对 $x\in K\setminus D$，其唯一前驱仍在 $K\setminus D$，记为 $r(x)$，并定义
+$$
+\lambda(x)=(r^j(x))_{j\ge0}.
+$$
+对 $\varepsilon\in\{u,v\}$ 定义双向状态序列及完整历史
+$$
+c_n^\varepsilon=Z(n)\quad(n\ge0),\qquad c_{-m}^\varepsilon=r^{m-1}(\varepsilon)\quad(m\ge1),\qquad \ell_k^\varepsilon=(c_{k-j}^\varepsilon)_{j\ge0}\quad(k\in\mathbb Z).
+$$
+这些对象均有定义，并满足
+$$
+Tc_k^\varepsilon=c_{k+1}^\varepsilon,\qquad U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon,\qquad P\ell_k^\varepsilon=c_k^\varepsilon,\qquad Q\ell_k^\varepsilon=[k\phi].
+$$
+
+$P$ 的全部纤维准确为
+$$
+P^{-1}(\{Z(n)\})=\{\ell_n^u,\ell_n^v\}\quad(n\ge0),\qquad P^{-1}(\{x\})=\{\lambda(x)\}\quad(x\notin D).
+$$
+对于 $n\ge0$，这两个历史的第 $0,\ldots,n$ 个坐标相同，准确等于 $Z(n),Z(n-1),\ldots,Z(0)$，首次区别在第 $n+1$ 个坐标：
+$$
+p_{n+1}(\ell_n^u)=u,\qquad p_{n+1}(\ell_n^v)=v.
+$$
+特别地，零状态有且仅有两条历史
+$$
+\ell_0^u=(0,u,r(u),r^2(u),\ldots),\qquad \ell_0^v=(0,v,r(v),r^2(v),\ldots).
+$$
+两个交替状态 $u,v$ 自身却各只有一条完整历史。
+
+原相位映射与历史相位映射的纤维区别准确如下。对每个 $m\ge1$，
+$$
+H^{-1}(\{[-m\phi]\})=\{c_{-m}^u,c_{-m}^v\},\qquad P^{-1}(\{c_{-m}^\varepsilon\})=\{\ell_{-m}^\varepsilon\}.
+$$
+$Q$ 连续满射，其二点纤维恰位于整个整数轨道 $\mathcal O$，具体为
+$$
+Q^{-1}(\{[k\phi]\})=\{\ell_k^u,\ell_k^v\}\qquad(k\in\mathbb Z).
+$$
+若 $\theta\notin\mathcal O$，以 $x_\theta$ 表示其唯一的 $H$ 原像，则
+$$
+Q^{-1}(\{\theta\})=\{\lambda(x_\theta)\}.
+$$
+因此，负轨道 $E_-$ 上原有的两个当前状态各自只提升为一条历史；非负轨道 $E_+$ 上原有的唯一当前状态提升为两条历史；其余相位保持单点。新出现的二点相位准确是 $E_+$，没有四点纤维。
+
+此外，对任意 $\ell\in L$ 及 $k\in\mathbb Z$，
+$$
+H(P(U^k\ell))=Q(\ell)+[k\phi].
+$$
+所以即使保留全部双向相位读数，仍然只有 $Q$ 的区分能力：
+$$
+\bigl(H(P(U^k\ell))\bigr)_{k\in\mathbb Z}=\bigl(H(P(U^k\ell'))\bigr)_{k\in\mathbb Z}\quad\Longleftrightarrow\quad Q(\ell)=Q(\ell').
+$$
+本条使用的单步分支与原相位纤维分别是[前置卷定理375.2及372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)；完整历史纤维由以下证明确定。
+

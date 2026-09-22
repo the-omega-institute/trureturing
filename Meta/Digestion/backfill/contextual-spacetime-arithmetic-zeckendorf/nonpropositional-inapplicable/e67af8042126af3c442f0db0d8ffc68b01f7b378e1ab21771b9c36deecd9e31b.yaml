@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e67af8042126af3c442f0db0d8ffc68b01f7b378e1ab21771b9c36deecd9e31b
+  normalized_sha256: sha256:e67af8042126af3c442f0db0d8ffc68b01f7b378e1ab21771b9c36deecd9e31b
+cas_ref: sha256:e67af8042126af3c442f0db0d8ffc68b01f7b378e1ab21771b9c36deecd9e31b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Squarefree.squarefree_of_dvd 将平方自由性传给每个约数，ArithmeticFunction.abs_moebius_eq_one_of_squarefree 给每个 Möbius 增量的绝对值为一；List.sum_take_succ 和 List.getElem_map 直接对所列约数的前缀和展开，整数绝对值的分支归一化给每个跳变恰为正一或负一，包括单约数情形，仓内无冻结 GID。
+    previous_atom_id: 2efcb970111edc36b2060716f98e294af2612352d881f7f0e014d0990bfa2ef4
+    next_atom_id: 594509b8b6b48f01f67cd5286b7dca52fa8d700b14a889363a5afb5dae0572a6

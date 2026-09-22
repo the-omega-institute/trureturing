@@ -1,0 +1,15 @@
+**定义。** Jacobsthal 数列由
+
+$$
+J_0=0,\qquad J_1=1,\qquad J_{n+2}=J_{n+1}+2J_n
+$$
+
+确定。对正整数 $m$、正整数 $t$ 与自然数 $N$，定义
+
+$$
+\operatorname{TailPeriod}(m,N,t)
+\iff \forall n\ge N,\quad m\mid J_{n+t}-J_n.
+$$
+
+称 $t$ 为最终周期，若存在 $N$ 使上述关系成立。令 $\rho(m)$ 为最小正最终周期；令 $\mu(m)$ 为存在某个正周期的最早起始下标。最小值的存在性在下文证明。纯周期特指 $N=0$。
+

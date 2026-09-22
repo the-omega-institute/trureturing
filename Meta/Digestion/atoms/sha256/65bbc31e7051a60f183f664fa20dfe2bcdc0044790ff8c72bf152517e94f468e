@@ -1,0 +1,14 @@
+**推论 83.3（二次残差同时控制下一步缺陷与粗预测误差）。** 在定义与假设 83.1 的线性条件下，记
+$$
+\mathcal J_2(d;q,r):=\mathcal J_{t^2}(d;q,r)
+=\sum_j\frac{\bigl(d_j-(Ed)_j\bigr)^2}{q_j}.
+$$
+则对每个 $d\in\Delta(J)$，
+$$
+\boxed{
+\mathcal J_2(Td;q,r)
++\sum_i\frac{\bigl((CTd)_i-(SCd)_i\bigr)^2}{p_i}
+\le\mathcal J_2(d;q,r).
+}
+$$
+

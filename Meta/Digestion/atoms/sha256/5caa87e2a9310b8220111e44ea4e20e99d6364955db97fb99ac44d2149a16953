@@ -1,0 +1,2 @@
+**证明。** ZFC 以无穷公理构造 $\omega$，以递归、幂集和并集构造 $V_n$ 与 $HF=\bigcup_{n<\omega}V_n$。用 Kuratowski 有序对及不同自然数标签编码整数、元组、事件出现和来源树。树集合可取 $T_0=\{\operatorname{leaf}(n):n\in\omega\}$，$T_{k+1}=T_k\cup\{\operatorname{pair}(r,s):r,s\in T_k\}$，再作可数并。每棵树以及每份有限函数图都是遗传有限集合。
+

@@ -1,0 +1,13 @@
+**定理。** 设 $p\ge7$ 为素数，沿用 FD.4 中的实际 Fibonacci 密度 $\delta(p)$、初始估值 $e=v_p(F_{p-(5/p)})$ 与计数 $N_p,Z_p$。则
+
+$$
+\boxed{p^{-e}\le\delta(p)<p^{1-e}.}\tag{FD13}
+$$
+
+因而对每个整数 $h\ge1$，
+
+$$
+\boxed{e\ge h+1\iff\delta(p)<p^{-h},\qquad
+ e=\left\lceil-\frac{\log\delta(p)}{\log p}\right\rceil.}\tag{FD14}
+$$
+

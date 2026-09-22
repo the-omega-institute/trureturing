@@ -1,0 +1,32 @@
+**命题 22.3（记录核、推进交织与实际费用）。** 对已知、共同、连续严格递增且满射的 $\phi:[0,\infty)\to[0,\infty)$，定义 R_φf=f∘φ。它在完整函数空间上可逆。任意记录映射 Q 都有
+
+$$
+R_\phi Q(x)=R_\phi Q(y)\iff Q(x)=Q(y).
+$$
+
+因此仅改记录坐标不改变观察核，也不改变“目标在每条观察纤维上恒定”的准确可恢复性。命题22.2变粗的是**未知钟也属于待识别对象**时的观察映射；不同对象使用不同 φ，不能用一个共同已知的逆变换撤回。
+
+然而物理平移 S_hf(t)=f(t+h) 在重标记录上的运输是
+
+$$
+(\widetilde S_hF)(s)
+=F\bigl(\phi^{-1}(\phi(s)+h)\bigr),
+\qquad
+R_\phi S_h=\widetilde S_hR_\phi.
+$$
+
+这正是 `BehaviorCompletionTranslation.behavior_completion_translation` 所需的交织条件。对单模的 F=e^{-φ(s)}，有 S̃_hF=e^{-h}F，运输后的闭合仍一维。普通标签平移 F(s+h) 则在定理22.1给无限维平移闭合，在命题22.2给二维。将 S̃_h 换成普通平移，不再是 `DynamicClosureMinimality.dynamic_closure_is_least` 中相同的干预族。
+
+再假设 $\phi$ 为 $C^1$ 且 $\phi'>0$，物理 Laplace 的合法计算为
+
+$$
+\widehat K(p)=\int_0^\infty
+ e^{-p\phi(s)}K(\phi(s))\phi'(s)\,ds.
+$$
+
+普通标签变换 ∫e^{-ps}K(φ(s))ds 是另一个目标。仿射 φ(s)=cs 才有熟悉的 $\mathcal L[K(c\,\cdot)](p)=c^{-1}\widehat K(p/c)$。Fourier 同样必须运输相位及测度；完整数据的单射编码与目标运算闭合是分开的条件，正如[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)定理31.15 已证明的代数观察现象。
+
+有限取得时只有原样点会被重标。新钟等步点一般不是已有物理等步点；从有限向量做可逆 DFT 保留该向量的核，但不给未测的点、整个响应、导数或无穷极限。连续 Laplace/Fourier 积分不是这个有限 DFT 所附赠的接口。
+
+[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)命题4.7 精确说明有限宏读数如何回到同一原始记录：p=B^Tz，宏系数 u 实际展开为 Bu，盒噪声幅度为 ε||Bu||_{1,σ}。共享原始噪声的变换系数不能被重新宣布独立；已支付的取得费用也不因表达变短而退款。本卷定理12.7 对真实重标保留点操作费用，连续费率乘 φ′；命题22.2若把物理钟费用加入 Q，就必须重新检验同纤维条件。
+

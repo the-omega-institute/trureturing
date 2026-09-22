@@ -1,0 +1,6 @@
+**Theorem.** For every n>=1,
+
+\[
+\boxed{\operatorname{Prime}(a(n))\ \Longleftrightarrow\ n=2\ \lor\ n=5.}\tag{U.8}
+\]
+

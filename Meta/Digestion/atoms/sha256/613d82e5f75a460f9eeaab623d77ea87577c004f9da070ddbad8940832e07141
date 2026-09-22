@@ -1,0 +1,18 @@
+**theorem 45.16（圆群与加法 Bohr 紧化的乘法障碍）。** 对无理数 $\alpha$，不存在连续映射 $F:\mathbb T^2\to\mathbb T$ 满足
+$$
+F([n\alpha],[m\alpha])=[nm\alpha]\qquad(n,m\in\mathbb N_0).
+$$
+整数加法群的 Bohr 紧化 $b\mathbb Z$ 也不能在保留原加法及自然核心、以自然生成元为乘法幺元的条件下配备联合连续半环乘法。Bohr 紧化的所用普遍性质见 Dikranjan，Theorem 9.2.11，printed pp. 60–61。[Dikranjan, Theorem 9.2.11, pp. 60–61](https://users.dimi.uniud.it/~dikran.dikranjan/ITG.pdf#page=65)
+
+**证明。** 若 $F$ 存在，固定 $n$ 并利用第二槽连续性与无理旋转稠密性，得到
+$$
+F([n\alpha],y)=ny\quad(y\in\mathbb T),\qquad F(0,y)=0.
+$$
+取 $y=[\alpha/2]$。由无理旋转稠密性可选自然数列 $n_k$，使 $[n_k\alpha/2]\to[1/2]$。于是 $[n_k\alpha]\to0$，但
+$$
+F([n_k\alpha],y)=[n_k\alpha/2]\longrightarrow[1/2],
+$$
+与连续性要求的极限 $F(0,y)=0$ 矛盾。
+
+令 $b:\mathbb Z\to b\mathbb Z$ 为 Bohr 紧化的稠密同态。其像交换，故闭包也是交换群。非负整数倍的闭包是紧消去幺半群，由定理 45.4 的同一论证可知它是群，因而包含全部整数倍并等于 $b\mathbb Z$。Bohr 普遍性质将同态 $n\mapsto[n\alpha]$ 延拓为连续加法特征 $\chi:b\mathbb Z\to\mathbb T$，且 $\chi(b(1))=[\alpha]$，所以该特征像无限。若存在所述联合连续幺半环乘法，加法已是群，便得到紧致拓扑幺环；这违反定理 45.6 的每个连续加法特征均有有限像的结论。故加法 Bohr 紧化不能与本节的 profinite 算术紧化混同。证毕。
+

@@ -1,0 +1,64 @@
+### 47.15 条件次数、深度边缘与同一函数的第二种分解
+
+设随机变量 \(K,\mathsf D,J\) 为标签的三个坐标。直接在固定 \(k\) 的有限标签集求和，得到
+\[
+\boxed{
+\Pr(K=k)=\frac{\rho^k u_k(A)}{Z},
+\qquad
+\Pr(\mathsf D=d,J=j\mid K=k)=\frac{A^d}{u_k(A)}.
+}
+\tag{47.60}
+\]
+条件律与 \(\rho\) 无关，恰好是有限幅度多项式显式归一化的次数—重数族。若只保留次数，
+\[
+\Pr(\mathsf D=d\mid K=k)=\frac{c_{k,d}A^d}{u_k(A)}.
+\]
+因此
+\[
+\mathbb E[\mathsf D\mid K=k]
+=\frac{A u'_k(A)}{u_k(A)}=\kappa_k(A).
+\tag{47.61}
+\]
+这是已有有限深度统一量程条件数在这个特定统计族中的均值解释，不把任意条件数认作概率。\(k=0\) 时唯一标签为 \((0,1,1)\)，条件次数为一。
+
+反过来按固定次数求和，（47.51）—（47.59）给出
+\[
+\boxed{\Pr(\mathsf D=d)=(1-t)t^{d-1},\qquad d\ge1.}
+\tag{47.62}
+\]
+即 \(\mathsf D-1\) 是参数比为 \(t\) 的几何分布。给定 \(\mathsf D=d\)，令 \(M_d=K-d+1\ge0\)。代入归一化因子后
+\[
+\boxed{
+\Pr(M_d=m\mid\mathsf D=d)
+=\binom{m+2d-2}{2d-2}(1-\rho)^{2d-1}\rho^m.
+}
+\tag{47.63}
+\]
+这是明确形状参数 \(2d-1\) 的负二项分布；（47.51）已经直接验证其总和一，无需先假定原数组具有任何随机独立性。
+
+其概率生成函数为
+\[
+\mathbb E[z^{M_d}\mid\mathsf D=d]
+=\left(\frac{1-\rho}{1-\rho z}\right)^{2d-1}.
+\]
+写 $r_d=2d-1$、$G_d(z)=((1-\rho)/(1-\rho z))^{r_d}$。该级数在 $|z|<1/\rho$ 收敛，故包含 $z=1$ 的邻域，并可逐项微分。
+$G'_d(1)=r_d\rho/(1-\rho)$、$G''_d(1)=r_d(r_d+1)\rho^2/(1-\rho)^2$；
+由 $\mathbb E[M_d^2]=G''_d(1)+G'_d(1)$ 减去 $(G'_d(1))^2$，得到
+\[
+\mathbb E[M_d\mid\mathsf D=d]
+=\frac{(2d-1)\rho}{1-\rho},
+\qquad
+\operatorname{Var}(M_d\mid\mathsf D=d)
+=\frac{(2d-1)\rho}{(1-\rho)^2}.
+\tag{47.64}
+\]
+所以
+\[
+\boxed{
+\mathbb E[K\mid\mathsf D]
+=\frac{1+\rho}{1-\rho}\mathsf D-\frac1{1-\rho}.
+}
+\tag{47.65}
+\]
+这两个相反方向的条件化来自同一个 \(Z\)：固定深度得到有限次数族，固定次数得到明确的深度分布。
+

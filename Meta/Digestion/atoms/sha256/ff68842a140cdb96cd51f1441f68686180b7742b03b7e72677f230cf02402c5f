@@ -1,0 +1,25 @@
+**theorem 28.5 (The Borel affine lift, including signed atom corrections).** For every Borel $D\subseteq K$, both
+$$
+\theta\longmapsto\pi_\theta(D),\qquad
+\theta\longmapsto|\pi_\theta|(D)
+$$
+are Borel. The formulas
+$$
+L_t\nu(D)=\int_{\mathbb T}\pi_\theta(D)\,d\nu(\theta),\qquad \nu\in M(\mathbb T),
+$$
+define a bounded linear map $L_t:M(\mathbb T)\to M(K)$ satisfying
+$$
+\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}},\qquad
+H_\#L_t\nu=\nu.
+$$
+With the section of theorem 28.3, there is the actual total-variation-convergent formula
+$$
+L_t\nu=s_\#\nu+\sum_{m\ge1}p_m\nu(\{E_m\})v_m.
+$$
+In particular,
+$$
+(L_t\nu)(\{x_m^+\})=p_m\nu(\{E_m\}),\qquad
+(L_t\nu)(\{x_m^-\})=(1-p_m)\nu(\{E_m\}).
+$$
+No positivity of $p_m$ is required.
+

@@ -1,0 +1,9 @@
+### QR.3 A uniform bound on all untested large Fibonacci divisors
+
+Let R(d) be the number of roots of x^2=-1 modulo the positive integer d.
+For d>1,
+
+$$
+R(d)\le2^{\omega(d)}\le64d^{1/4}.                 \tag{QR2}
+$$
+

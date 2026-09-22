@@ -1,0 +1,14 @@
+**Assumption 27.0 (Fixed carrier, exact graph, and classified finite multiplication).** Retain the carrier, phase map, oriented exceptional fibers, and finite addition graph of Definition 25.0, together with the exact-fiber and exact-graph hypotheses of Assumption 25.1. In particular,
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3}.
+$$
+Fix
+$$
+t\in\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},
+$$
+and use the finite multiplication and kernel of Definitions 25.2 and 25.8 and theorems 25.6–25.9. Thus the product on $A=\mathbb R^{(K)}$ is associative and commutative, each row has coefficient sum one and support contained in the exact set $\Gamma(x,y)$, and
+$$
+P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}\qquad(a,b\in\mathbb N).
+$$
+The symbols $p_m,c_{m,n},\pi_\theta,v_m$ always have their values for this fixed parameter. The parameter $\infty$ remains a separate formal symbol.
+

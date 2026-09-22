@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9b3ef949ecc1c544b49bcb50a96588f10e776656287fab25eaf75b3436ef7f83
+  normalized_sha256: sha256:9b3ef949ecc1c544b49bcb50a96588f10e776656287fab25eaf75b3436ef7f83
+cas_ref: sha256:9b3ef949ecc1c544b49bcb50a96588f10e776656287fab25eaf75b3436ef7f83
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 把有限支撑自由交换群的同态延拓等价用于通常实圆周，得到全部总圆周行与全部代数特征的双射，两个方向分别是整数有限和与单位向量求值。仓内无冻结 GID。
+    previous_atom_id: a1d6ce778dee030ade603f768129ab764c26357071774076a5fa9e69b8ba8286
+    next_atom_id: 10daed411a0535560db812ce919841625cbd6ecf1584b2f795a791538059374b

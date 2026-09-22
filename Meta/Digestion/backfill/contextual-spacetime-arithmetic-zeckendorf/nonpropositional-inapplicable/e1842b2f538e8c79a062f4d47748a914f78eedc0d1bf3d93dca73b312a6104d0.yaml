@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1842b2f538e8c79a062f4d47748a914f78eedc0d1bf3d93dca73b312a6104d0
+  normalized_sha256: sha256:e1842b2f538e8c79a062f4d47748a914f78eedc0d1bf3d93dca73b312a6104d0
+cas_ref: sha256:e1842b2f538e8c79a062f4d47748a914f78eedc0d1bf3d93dca73b312a6104d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句仅列明各层非空、投影覆盖、细化、分离及有效求值是分别要求的条件，没有待证明命题。
+    previous_atom_id: ea6404cf01dccbb92a3acdac2a3718b0e2dd2d754a4fb1066bcbcfca1447dc07
+    next_atom_id: 828eba09cf97b9a5e5064a5f136e3315ec049abf108195e37112639c0c35b8f1

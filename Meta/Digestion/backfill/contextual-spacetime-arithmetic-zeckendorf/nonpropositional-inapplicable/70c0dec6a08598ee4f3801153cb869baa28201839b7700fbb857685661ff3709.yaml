@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:70c0dec6a08598ee4f3801153cb869baa28201839b7700fbb857685661ff3709
+  normalized_sha256: sha256:70c0dec6a08598ee4f3801153cb869baa28201839b7700fbb857685661ff3709
+cas_ref: sha256:70c0dec6a08598ee4f3801153cb869baa28201839b7700fbb857685661ff3709
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 相邻素数与间距的定义直接给出端点素性，严格大小和间距等式经自然数序规范化给出正间距；关系的元数由定义类型确定，仓内无冻结 GID。
+    previous_atom_id: 307c33c914ee1ff656e79788cb7a523933bd6e05e13e2422bc6e503c0f970d6c
+    next_atom_id: 097b332949849dcad0220da7e92f0245c878c9db760ca2e51672b6970d63199e

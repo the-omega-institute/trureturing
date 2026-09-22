@@ -1,0 +1,31 @@
+**theorem 28.4 (Setwise integration of uniformly bounded signed kernels).** Let $X,Y$ be compact metric spaces. Suppose that $Q_y\in M(X)$ for every $y\in Y$, that
+$$
+y\longmapsto Q_y(D),\qquad y\longmapsto |Q_y|(D)
+$$
+are Borel for every Borel $D\subseteq X$, and that $\sup_y\|Q_y\|_{\mathrm{TV}}\le B<\infty$. For $\eta\in M(Y)$ define
+$$
+I_Q\eta(D)=\int_Y Q_y(D)\,d\eta(y).
+$$
+Then $I_Q\eta$ is a finite signed regular Borel measure, depends linearly on $\eta$, and satisfies
+$$
+|I_Q\eta|(D)\le\int_Y|Q_y|(D)\,d|\eta|(y),\qquad
+\|I_Q\eta\|_{\mathrm{TV}}\le B\|\eta\|_{\mathrm{TV}}.
+$$
+For every bounded real Borel function $f$ on $X$, the function
+$$
+Qf(y)=\int_X f\,dQ_y
+$$
+is Borel and bounded, and
+$$
+\int_X f\,d(I_Q\eta)=\int_Y Qf\,d\eta.
+$$
+All these integrals are scalar signed-measure integrals.
+
+For finite signed measures $\mu\in M(X)$ and $\eta\in M(Y)$, their signed product measure is intrinsic and satisfies
+$$
+|\mu\otimes\eta|=|\mu|\otimes|\eta|.
+$$
+Every bounded Borel function on $X\times Y$ satisfies signed Fubini, with either integration order. The same assertion holds for finitely many factors.
+
+The setwise measurability and measurable Jordan-part conditions are the signed-kernel conditions appearing in [Riccardo Passeggeri, *On the extension and kernels of signed bimeasures and their role in stochastic integration*, Theorem 3.4(d)–(e′)](https://arxiv.org/html/2009.10657v2). The positive-measure Fubini theorem used below is [Stephan Tornier, *Haar Measures*, Theorem 1.11](https://arxiv.org/html/2006.10956v1).
+

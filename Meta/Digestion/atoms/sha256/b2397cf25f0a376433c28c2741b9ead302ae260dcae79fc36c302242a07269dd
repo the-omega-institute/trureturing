@@ -1,0 +1,24 @@
+**定理。** 令 p_j=P(C_j)。这些素数互不相同，并满足
+
+\[
+\alpha(p_j)=r_j=3^{j+1},\qquad
+p_j\equiv1\pmod4,\qquad \pi(p_j)=4r_j.
+\tag{FD4}
+\]
+
+对全部充分大的 j 及全部 k>=1，
+
+\[
+0<\delta(p_j)\le D_k(p_j)
+<4\exp\!\left(-\frac{\log r_j}{104\log\log r_j}\right).
+\tag{FD5}
+\]
+
+特别地，
+
+\[
+\boxed{\inf_{p\ {\rm prime}}\delta(p)=0,
+\qquad \lim_{j\to\infty}\delta(p_j)=0.}
+\tag{FD6}
+\]
+

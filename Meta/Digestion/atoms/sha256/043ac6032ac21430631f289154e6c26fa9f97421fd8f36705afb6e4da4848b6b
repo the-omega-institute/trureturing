@@ -1,0 +1,6 @@
+**命题 131.9。** $P\in SO(2)$，且
+
+$$
+P^TA_FP=\begin{pmatrix}\phi&0\\0&-1/\phi\end{pmatrix}.
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8fd2a3a9fc0da36d695561a82ffd2af2e06ff20793ea2f652cd62cd94d123dc4
+  normalized_sha256: sha256:8fd2a3a9fc0da36d695561a82ffd2af2e06ff20793ea2f652cd62cd94d123dc4
+cas_ref: sha256:8fd2a3a9fc0da36d695561a82ffd2af2e06ff20793ea2f652cd62cd94d123dc4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段定义同号重叠函数及其加权积分，所列积分只是记号定义；非负性、支撑和可积性另属后续子句，不在此处冒领。
+    previous_atom_id: 553dfd18f7654581e08f1ecac4e90bdc915233602a8baf21835be8ad3f13be34
+    next_atom_id: 285f9be86456607beaf4b5a0ea30832578794668fb8baf8ce7726211d1ebc70b

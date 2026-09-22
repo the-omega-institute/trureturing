@@ -1,0 +1,5 @@
+Every $(x,y,z)\in\Gamma$ admits natural-number sequences $n_j,m_j$ such that
+$$
+(Z(n_j),Z(m_j),Z(n_j+m_j))\longrightarrow(x,y,z).
+$$
+

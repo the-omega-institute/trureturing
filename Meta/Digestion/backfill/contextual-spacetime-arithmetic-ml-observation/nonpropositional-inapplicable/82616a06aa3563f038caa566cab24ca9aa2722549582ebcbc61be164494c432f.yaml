@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82616a06aa3563f038caa566cab24ca9aa2722549582ebcbc61be164494c432f
+  normalized_sha256: sha256:82616a06aa3563f038caa566cab24ca9aa2722549582ebcbc61be164494c432f
+cas_ref: sha256:82616a06aa3563f038caa566cab24ca9aa2722549582ebcbc61be164494c432f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “认证标志定义为”及“不赋予读出新的”保证明确规定认证接口的语义，并未在此证明真标志时预测准确；正确性属于命题43.9，故本叶没有把其结论藏进定义。
+    previous_atom_id: bb949c01617d6fd7bc00320766faf13232ad435affdf4dddea548b15d8a6b677
+    next_atom_id: ad165adb3eaf12dbdf0ba064a637b72a50aa118dcc60e284aad4be17fb3057a3

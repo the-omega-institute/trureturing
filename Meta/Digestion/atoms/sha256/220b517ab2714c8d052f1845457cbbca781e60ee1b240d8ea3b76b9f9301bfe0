@@ -1,0 +1,29 @@
+### ZBD.1. Preservation of actual initial depth
+
+**Definition.** For primes p other than two and five, let rho(p) be the least positive Fibonacci zero index, h_p=v_p(F_rho(p)), and q_p=F_(p-(5/p))/p modulo p. A prime-index block is the set of prime divisors of F_ell, where ell>=7 is prime. Call the block fully exceptional when every such divisor has q_p=0.
+
+The classical rank and valuation identities, as stated in U.1 and EMW.1, give rho(p)|p-(5/p), q_p=0 iff h_p>=2, and
+
+$$
+v_p(F_{dt})=v_p(F_d)+v_p(t)\quad\text{when }p\mid F_d.
+$$
+
+They retain the unknown initial depth.
+
+**Theorem.** Let m>1, and suppose its largest prime factor ell is at least seven. For every prime p dividing F_ell,
+
+$$
+\boxed{\rho(p)=\ell,\quad p>\ell,\quad p\nmid m,\quad
+v_p(F_m)=v_p(F_\ell)=h_p.}\tag{ZBD1}
+$$
+
+**Proof.** The prime ell is neither three nor five, so Fibonacci parity and the rank of five exclude p=2,5. Since rho(p)|ell and F_1=1, the rank is ell. The rank bound forces ell|p-1 or ell|p+1. If p<=ell, the first alternative is impossible, and the second forces p=ell-1, an even integer greater than two. Hence p>ell and p does not divide m. Apply the valuation formula to d=ell,t=m/ell. Its last summand vanishes.
+
+**Corollary.** Under ZBD1, if F_m is powerful, then F_ell is powerful and its entire prime-index block is fully exceptional.
+
+**Proof.** Every prime dividing F_ell also divides F_m. Its exponent is unchanged by ZBD1, so it is at least two. The equality with h_p and the standard initial-quotient criterion prove the final assertion.
+
+**Proposition.** Every powerful block F_ell with prime ell>=7 contains a prime p of rank ell and odd initial depth at least three.
+
+**Proof.** The classical Fibonacci square classification gives F_n square only at n=0,1,2,12. In particular F_ell is not square. Its prime factorization has an odd exponent; powerfulness makes that exponent at least three. ZBD1, or the prime-rank argument in its proof, identifies this exponent with h_p. The square theorem is the classical result stated in P. Ribenboim, *FFF: (Favorite Fibonacci Flowers)*, Fibonacci Quarterly 43(1) (2005), section 3.4, https://www.fq.math.ca/Papers1/43-1/paper43-1-1.pdf .
+

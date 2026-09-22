@@ -1,0 +1,4 @@
+**注记 24.6（闭包来源与截断边界）。** $Q=2$ 时有八个非零保留频率，$\lambda_Q=2\nu$、$b_Q=\sqrt2$，故 $\tau_Q=(8\nu+8\sqrt2\rho)^{-1}$，其余常数直接代入（24.112）。这些常数随截止恶化，不供应 $Q\to\infty$ 的极限估计。
+
+既有 [QuadraticObservationClosure](../../../D5/S3/Observer/Reversal/QuadraticObservationClosure.lean) 的 `quadratic_closure_iff` 给出隐藏线性、隐藏自作用及混合作用三项消失的闭包条件；[AdvectionClosureInstance](../../../D5/S3/FluidDynamics/Fourier/AdvectionClosureInstance.lean) 的 `mixed_witness`、`no_exact_closure`、`family_acceleration` 给出五槽消费者。其额外模 $h$ 占据索引0，原有四模随后排列，且没有 $-h$，故不是本节的实共轭空间。它们说明瞬时低模未闭合，不能据此假定有限 Fourier 平面在 PDE 下不变。事实上 $\alpha\beta\ne0$ 时初始横向导数已经离开准备平面。第25节的全 PDE 结论另作直接证明，既不替换这些有限模型，也不使用未证的截止统一性。[LowCutoffObservationFibres](../../../D5/S3/FluidDynamics/Fourier/LowCutoffObservationFibres.lean) 的瞬时纤维与稳定性源码仅作相关源命题，不在此将它称为已冻结结果。
+

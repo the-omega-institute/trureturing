@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:74620bba10041dc66e3cd08270f78b230db72679170a2422bed8c80f335bc9c1
+  normalized_sha256: sha256:74620bba10041dc66e3cd08270f78b230db72679170a2422bed8c80f335bc9c1
+cas_ref: sha256:74620bba10041dc66e3cd08270f78b230db72679170a2422bed8c80f335bc9c1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该叶说“该序不须良序；这里只用非空有限支撑存在最大、最小元”。前半句是不使用良序前提的说明，后半句是真命题；探针仅假设有限集非空，直接用 Finset.min'_mem、Finset.min'_le、Finset.max'_mem、Finset.le_max' 给出两端，仓内无冻结 GID，未把极值偷偷当定义。
+    previous_atom_id: 266a306121306c7831b97e40f288f7e4bb1314db34978056baf4f41720d70d6c
+    next_atom_id: 5769478f0fafa9ed17c11843caa76402cf8fe617f4519976e77fd14ebc42c4e8

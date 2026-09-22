@@ -1,0 +1,141 @@
+{
+  "q": [
+    "0",
+    "0"
+  ],
+  "residual": "0",
+  "head_maxima": [
+    "3438527891/40677090300",
+    "3438527891/40677090300",
+    "3438527891/40677090300",
+    "3438527891/40677090300",
+    "3438527891/40677090300",
+    "3438527891/40677090300",
+    "3438527891/40677090300"
+  ],
+  "witnesses": [
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "1878138001/22187503800",
+      "reference_and_mean_price_shift": "-16531/142310520"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "1878138001/22187503800",
+      "reference_and_mean_price_shift": "-16531/142310520"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "1878138001/22187503800",
+      "reference_and_mean_price_shift": "-16531/142310520"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "1878138001/22187503800",
+      "reference_and_mean_price_shift": "-16531/142310520"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "1878138001/22187503800",
+      "reference_and_mean_price_shift": "-16531/142310520"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "1878138001/22187503800",
+      "reference_and_mean_price_shift": "-16531/142310520"
+    },
+    {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "1878138001/22187503800",
+      "reference_and_mean_price_shift": "-16531/142310520"
+    }
+  ],
+  "original_head_evaluations": 125000,
+  "rational_comparisons": 4,
+  "integer_scale": 7321876254000,
+  "finite_objectives_sha256": "326d59f9251dcfa52fc16ffeb8909d6cabc3000fc0fe077ec94acaa3054f71a0"
+}

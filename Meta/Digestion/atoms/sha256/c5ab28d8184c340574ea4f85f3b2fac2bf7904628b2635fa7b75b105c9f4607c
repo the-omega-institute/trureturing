@@ -1,0 +1,14 @@
+**引理 6，可求和尾项。** 设 \(D\subseteq\{3,4,\ldots\}\)，且
+
+\[
+\sum_{r\in D}\frac1r<\infty.
+\]
+
+则 \(E_D(M)=\bigcup_{r\in D}E_r(M)\) 有自然密度，并且
+
+\[
+d(E_D(M))\le
+4\sum_{\substack{r\in D\\\gcd(r,M)\le2}}\frac1r.
+\tag{EMW-E2}
+\]
+

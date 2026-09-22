@@ -1,0 +1,4 @@
+### U.6. Half-index parity localization
+
+Set h=N/2. Then `F_N=F_h*L_h`, and `gcd(F_h,L_h)` divides two. Exactly one of F_h,L_h therefore vanishes modulo p.
+

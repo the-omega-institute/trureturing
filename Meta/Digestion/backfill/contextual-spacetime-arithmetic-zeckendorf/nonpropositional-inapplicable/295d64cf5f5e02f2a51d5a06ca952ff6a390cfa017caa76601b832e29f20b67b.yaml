@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:295d64cf5f5e02f2a51d5a06ca952ff6a390cfa017caa76601b832e29f20b67b
+  normalized_sha256: sha256:295d64cf5f5e02f2a51d5a06ca952ff6a390cfa017caa76601b832e29f20b67b
+cas_ref: sha256:295d64cf5f5e02f2a51d5a06ca952ff6a390cfa017caa76601b832e29f20b67b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 已给语义值有规范形原像，任意两个这样的规范形经同纤维常值和不动点等式相等，因此每个语义值恰有一个规范形，唯一值关系就是所述逆函数；使用 ExistsUnique 的逻辑规则与 Subtype.ext，仓内无冻结 GID。
+    previous_atom_id: b5bcebc6b6395501c921b5be718d4e1ad9b89f0d55703675ab2fc0536fd75e66
+    next_atom_id: 7617d626fbeee94190b2b9189e782ac620d493473d8047aadee32259163683e2

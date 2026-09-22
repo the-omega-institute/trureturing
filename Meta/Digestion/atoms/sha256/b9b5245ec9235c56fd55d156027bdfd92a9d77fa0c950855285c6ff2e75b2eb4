@@ -1,0 +1,95 @@
+### NP.4 A sum over disjoint primitive-prime families
+
+For a=p^(k+1), define the finite set of actual primes
+
+$$
+\mathcal P_{p,k}=\{q:q\text{ prime},\ r(q)=a\}.
+$$
+
+IP5, which is valid for every prime base p>=7, gives
+
+$$
+B_{p,k}=\prod_{q\in\mathcal P_{p,k}}q^{h_q}.
+$$
+
+These sets are disjoint for distinct k. Their primes are all distinct
+from p, and every q satisfies a|(q-chi(q)). Hence the signed integer
+
+$$
+t_{p,k}(q)=\frac{\chi(q)q-1}{p^{k+1}}
+$$
+
+is well-defined. It is negative for inert q; no nonnegativity is
+assumed. Define the actual weighted sum
+
+$$
+S_{p,k}=\sum_{q\in\mathcal P_{p,k}}h_q\,t_{p,k}(q).
+$$
+
+**Theorem.** For every k>=0,
+
+$$
+\boxed{
+2S_{p,k}\equiv\epsilon^k q_p\pmod p.
+}                                                       \tag{NP8}
+$$
+
+More generally, for every integer s with 1<=s<=k+1,
+
+$$
+\boxed{p^s\mid S_{p,k}\quad\Longleftrightarrow\quad h_p\ge s+1.}
+                                                               \tag{NP9}
+$$
+
+If k>=h_p-1, the sum is nonzero and v_p(S_(p,k))=h_p-1.
+Thus for every k, WSS(p) is equivalent to S_(p,k)=0 modulo p.
+For an inert base the first residues alternate in sign between layers;
+for a split base they are constant.
+
+**Proof.** The odd-index character identity gives chi(B_(p,k))=epsilon.
+Therefore product chi(q)^h_q=epsilon, and the exact signed product is
+
+$$
+\epsilon B_{p,k}
+ =\prod_{q\in\mathcal P_{p,k}}(1+a\,t_{p,k}(q))^{h_q}
+ \equiv1+aS_{p,k}\pmod{a^2}.
+$$
+
+The congruence follows by expanding each integer power and multiplying:
+every term involving at least two factors a is divisible by a^2.
+Negative t and positive integer exponents cause no difficulty. Thus
+
+$$
+D_{p,k}:=\frac{\epsilon B_{p,k}-1}{p^{k+1}}
+ \equiv S_{p,k}\pmod{p^{k+1}}.                           \tag{NP10}
+$$
+
+By NP2, v_p(D_(p,k))=h_p-1. For s<=k+1, NP10 makes divisibility of
+S by p^s equivalent to divisibility of D by p^s, proving NP9. If
+k>=h_p-1, that valuation is less than k+1, so the difference in NP10
+cannot change it; this proves the exact valuation assertion. Finally
+combine NP10 modulo p with NP6 to prove NP8. Changing k to k+1 in
+NP8 gives S_(p,k+1)=epsilon*S_(p,k) modulo p.
+
+The restriction s<=k+1 in NP9 is essential to the linear truncation.
+It is not a statement about arbitrary precision at one fixed layer.
+No value v_p(0) needs to be assigned for the divisibility version.
+
+**Proposition NP12.** The $p=7$ computation below realizes the sign reversal
+in NP8 and requires both split and inert primes in the weighted sum.
+
+**Example.** At p=7, q_p=F_8/7=3 modulo seven. At k=0 the only factor
+is13, so S_(7,0)=(-13-1)/7=-2=5 modulo seven. At k=1 the exact block
+is97*6168709, both initial depths one. The signed coefficients are
+-2 and125892, respectively. Hence S_(7,1)=125890=2 modulo seven,
+as predicted by the sign reversal. The sum contains both split and
+inert primes; restricting it to inert primes would invalidate NP8.
+
+**Proof.** The recurrence gives $F_8=21$, while the exact layer
+factorizations give $B_{7,0}=13$ and
+$B_{7,1}=97\cdot6168709$. Substitution in the definition of $S_{p,k}$
+gives $-2\equiv5\pmod7$ and $125890\equiv2\pmod7$, which are related by
+multiplication by $\chi(7)=-1$. The residues modulo five of the two factors
+in the second layer have opposite quadratic characters, so both split and
+inert terms occur.
+

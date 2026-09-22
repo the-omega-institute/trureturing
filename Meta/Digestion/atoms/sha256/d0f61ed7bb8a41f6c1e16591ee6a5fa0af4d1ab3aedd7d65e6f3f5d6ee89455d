@@ -1,0 +1,14 @@
+**证明。** 写 $m=2^a3^b v$，$\gcd(v,6)=1$。若 $v>1$，Euler 定理和 $\varphi(v)$ 为偶数给出：指数
+
+$$
+E=3^b\varphi(v)
+$$
+
+同时是 $\operatorname{ord}_{3^{b+1}}(2)=2\cdot3^b$ 与 $\operatorname{ord}_v(2)$ 的倍数。由于两个模数互素，$2^E\equiv1\pmod{3^{b+1}v}$。因此
+
+$$
+\rho(m)\le E<3^b v=m/2^a.
+$$
+
+这同时处理奇数与偶数模数中的 $v>1$ 情形。若 $v=1$，$m>2$ 时 JP7 给出 $\rho(m)=2\cdot3^b$。在偶数非不动点情形，JP8 迫使 $a\ge2$，故 $\rho(m)\le m/2$。余下的 $m=2$ 直接有 $\rho(m)=1$。当 $a=0,b\ge1$，得到 $\rho(3^b)=2\cdot3^b$，而这个值由 JP8 已是不动点。
+

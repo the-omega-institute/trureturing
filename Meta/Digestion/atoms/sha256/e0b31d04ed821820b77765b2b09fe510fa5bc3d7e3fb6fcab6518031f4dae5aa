@@ -1,0 +1,5 @@
+**定义 371.1。** 在通常 ZFC 中，$\omega$ 仍为 von Neumann 自然数集合。沿用第 3、9、50、69–70 条的
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad r=-\alpha.
+$$

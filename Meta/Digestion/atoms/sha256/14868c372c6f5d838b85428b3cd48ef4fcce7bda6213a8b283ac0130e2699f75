@@ -1,0 +1,45 @@
+**theorem 27.7 (Explicit bounded coordinate isomorphism).** For $a\in B$, write
+$$
+a_m^+=a(x_m^+),\qquad a_m^-=a(x_m^-).
+$$
+Define $\Phi_t(a)=(f,g)$ by
+$$
+f(\theta)=\begin{cases}
+a(k_\theta),&\theta\notin E,\\
+a_m^++a_m^-,&\theta=E_m,
+\end{cases}
+$$
+$$
+g_m=d'_m\bigl((1-p_m)a_m^+-p_m a_m^-\bigr).
+$$
+The second coordinate can equivalently be written without $p_m$ as
+$$
+g_m=\begin{cases}
+a_m^++t^m a_m^-,&t\ne\infty,\ |t|<1,\\
+t^{-m}a_m^++a_m^-,&t\ne\infty,\ |t|>1,\\
+a_m^-,&t=\infty.
+\end{cases}
+$$
+Then $\Phi_t$ is a bounded algebra isomorphism from $B_t$ to $\mathcal B$. Its inverse $\Psi_t$ is given by
+$$
+\Psi_t(f,g)(k_\theta)=f(\theta)\qquad(\theta\notin E),
+$$
+$$
+\Psi_t(f,g)(x_m^+)=p_m f(E_m)+\frac{g_m}{d'_m},\qquad
+\Psi_t(f,g)(x_m^-)=(1-p_m)f(E_m)-\frac{g_m}{d'_m}.
+$$
+In the original coefficient norm, these maps satisfy
+$$
+\|\Phi_t(a)\|_{\oplus}\le2\|a\|_1,
+$$
+$$
+\|\Psi_t(f,g)\|_1
+\le C_t\|f\|_1+\frac{2}{1-\rho_t}\|g\|_1
+\le\frac{2}{1-\rho_t}\|(f,g)\|_{\oplus}.
+$$
+In particular,
+$$
+\frac{1-\rho_t}{2}\|a\|_1\le\|\Phi_t(a)\|_{\oplus}\le2\|a\|_1.
+$$
+Under this isomorphism, the phase map is the first-coordinate projection and the augmentation is the sum of the first coordinate. All parameters yield isomorphic Banach algebras, but distinct parameters still yield distinct kernels on the fixed oriented point masses.
+

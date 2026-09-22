@@ -1,0 +1,2 @@
+**Definition.** For real 7<=Y<=L, let H(Y,L) count primes ell in [Y,L] with F_ell powerful. Let G(Y,L) count distinct primes ell in that interval which equal rho(p) for at least one prime p with q_p nonzero. Let Pi(Y,L) count all primes in [Y,L].
+

@@ -2,11 +2,32 @@ using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using Tomlyn.Model;
 
 namespace StrataLint.Tests;
 
 public sealed partial class CoverBatchCommandTests
 {
+    [Fact]
+    public void ProducerRuntimeFilesAreIgnoredWhileTrackedSourcesRequireStrictUtf8()
+    {
+        using var world = new BatchWorld { UseGitReader = true };
+        WriteEmissionInputs(world.Root);
+        const string runtimePath = "tools/scripts/report/__pycache__/dependency.pyc";
+        var runtimeFile = Path.Combine(world.Root, runtimePath);
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(runtimeFile)!);
+        TemporaryFileSystem.File.WriteAllBytes(runtimeFile, [0xff]);
+
+        world.WriteReportBundle();
+
+        Assert.DoesNotContain(world.Repository.ReadCurrent().Entries, entry => entry.Path == runtimePath);
+        const string sourcePath = "tools/StrataLint.Cli/Program.cs";
+        TemporaryFileSystem.File.WriteAllBytes(Path.Combine(world.Root, sourcePath), [0xff]);
+        var failure = Assert.IsType<SnapshotDecodeOutcome.InfrastructureFailure>(
+            SnapshotDecoder.Decode(world.Repository.ReadCurrent()));
+        Assert.Equal("Repository file must be strict UTF-8: " + sourcePath + ".", failure.Message);
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
@@ -85,6 +106,8 @@ public sealed partial class CoverBatchCommandTests
     [InlineData(FrozenPath, 4)]
     [InlineData("D5/S0/Carrier/Probe.lean", 4)]
     [InlineData(ProblemPath, 4)]
+    [InlineData("Meta/FILEMAP.docs.reports.toml", 3)]
+    [InlineData("Meta/FILEMAP.docs.reports.toml", 4)]
     public void FinalEmissionRejectsChangedAuthoritativeInputs(string changedPath, int discovery)
     {
         using var world = new BatchWorld { UseGitReader = true };
@@ -249,14 +272,14 @@ public sealed partial class CoverBatchCommandTests
     {
         WriteProblem(root);
         WriteScribeFixture(root, "Trureturing.lean", "-- synthetic root module\n");
-        LeanReportInputScriptTests.CopyBatchProducerInputs(root);
-        WriteScribeFixture(root, ".gitignore", ".lake/\nGenerated/\ntools/Generated/scribe-emissions.v1.json\n");
+        WriteScribeFixture(root, ".gitignore",
+            File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".gitignore")));
         WriteScribeFixture(root, "Blueprint/D5/S0/Carrier/Probe.md", "old blueprint projection\n");
         WriteScribeFixture(root, CanonicalValuesWriter.RelativePath, "old values projection\n");
         foreach (var path in CanonicalValuesWriter.InputPaths)
         {
             if (!TemporaryFileSystem.File.Exists(Path.Combine(root, path)))
-                WriteScribeFixture(root, path, "-- synthetic producer input\n");
+                WriteScribeFixture(root, path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         }
         WriteScribeFixture(root, "Golden/values-kernels.toml", """
             schema_version = 1
@@ -273,8 +296,24 @@ public sealed partial class CoverBatchCommandTests
             refs = {}
             computation = "none"
             """ + "\n");
-        WriteScribeFixture(root, "Meta/FILEMAP.toml",
-            File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")));
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
+        var documents = FileMapDocuments.Resolve(
+            File.ReadAllBytes(Path.Combine(repositoryRoot, AdmissionPlanePolicy.FileMapPath)),
+            AdmissionPlanePolicy.FileMapPath,
+            path => File.ReadAllBytes(Path.Combine(repositoryRoot, path)));
+        foreach (var document in documents)
+            WriteScribeFixture(root, document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
+        var resources = FileMapTomlTables.Parse(documents[0].Table["resources"],
+            AdmissionPlanePolicy.FileMapPath, allowEmpty: false);
+        foreach (var path in resources
+                     .SelectMany(resource => ((TomlArray)resource["materials"])
+                         .Cast<string>()
+                         .Prepend((string)resource["owner"]))
+                     .Distinct(StringComparer.Ordinal))
+        {
+            if (!TemporaryFileSystem.File.Exists(Path.Combine(root, path)))
+                WriteScribeFixture(root, path, File.ReadAllText(Path.Combine(repositoryRoot, path)));
+        }
     }
 
     private sealed class ReportLoadCounter : IDisposable

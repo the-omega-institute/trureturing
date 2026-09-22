@@ -1,0 +1,110 @@
+**证明。** 对一般交换幺半群，采用带稳定项的净差对构造：
+
+$$
+(a,b)\approx(a',b')
+\quad\Longleftrightarrow\quad
+\exists c\in M,\ a+b'+c=a'+b+c.
+$$
+
+该关系自反且对称。若前一关系由 $c$ 见证，后一关系
+
+$$
+(a',b')\approx(a'',b'')
+$$
+
+由 $d$ 见证，则
+
+$$
+\begin{aligned}
+a+b''+(b'+c+d)
+&=(a+b'+c)+b''+d\\
+&=(a'+b+c)+b''+d\\
+&=b+c+(a'+b''+d)\\
+&=b+c+(a''+b'+d)\\
+&=a''+b+(b'+c+d).
+\end{aligned}
+$$
+
+因此 $b'+c+d$ 见证传递性；这里没有使用 $M$ 的消去律。
+
+令 $G(M)=(M\times M)/{\approx}$。若两组代表等价分别有见证 $c,d$，则它们逐坐标相加后的等价由 $c+d$ 见证，故
+
+$$
+[(a,b)]+[(u,v)]=[(a+u,b+v)]
+$$
+
+定义良好。交换坐标也保持等价，故可定义
+
+$$
+-[(a,b)]=[(b,a)].
+$$
+
+单位元为 $[(0,0)]$；由于 $[(a+b,a+b)]=[(0,0)]$，所列负元确为逆元。其余交换群公理由 $M$ 的结合律、交换律和单位元律下降。
+
+定义 $\eta_M(a)=[(a,0)]$。任意交换群 $A$ 及幺半群同态 $f:M\to A$ 都唯一扩张为
+
+$$
+\widetilde f:G(M)\to A,\qquad
+\widetilde f([(a,b)])=f(a)-f(b).
+$$
+
+若两对由稳定项 $c$ 见证等价，将对应等式映入 $A$ 并在群中消去 $f(c)$，便得到右侧相等，故定义良好。它是群同态；每个类均为 $\eta_M(a)-\eta_M(b)$，因而扩张唯一。这确认所构造的群具有 Grothendieck 群的泛性质。
+
+直接把 $(a,0)$、$(b,0)$ 代入等价关系，得到
+
+$$
+\eta_M(a)=\eta_M(b)
+\quad\Longleftrightarrow\quad
+\exists c,\ a+c=b+c.
+$$
+
+若 $M$ 消去，则该核为等号，$\eta_M$ 单射。反之，若 $\eta_M$ 单射且 $a+c=b+c$，映入群并消去 $\eta_M(c)$ 后得到 $\eta_M(a)=\eta_M(b)$，从而 $a=b$。
+
+现在讨论旧读数恢复。若 $\bar q$ 存在，$\eta_M(a)=\eta_M(b)$ 必然推出 $q(a)=q(b)$，故 $K_M\subseteq R$。若此包含成立，则在实际像上定义
+
+$$
+\bar q(\eta_M(a))=q(a)
+$$
+
+与代表元无关。它保持加法和单位元，因为 $q$ 与 $\eta_M$ 都是幺半群同态；实际像的定义保证唯一性。这只得到实际像上的恢复，不擅自声称它能以相同目标 $B$ 延伸到全部新增逆元。
+
+将泛性质用于幺半群同态 $\eta_B\circ q$，得到唯一 $G(q)$ 及所列交换等式。由已证核公式在 $B$ 上的应用，
+
+$$
+\eta_B(q(a))=\eta_B(q(b))
+\quad\Longleftrightarrow\quad
+\exists d\in B,\ q(a)+d=q(b)+d.
+$$
+
+由于 $q$ 满射，每个 $d$ 可写成 $q(c)$；再使用同态性，即得
+
+$$
+\ker q^{\mathrm g} =
+\{(a,b):\exists c\in M,\ q(a+c)=q(b+c)\}.
+$$
+
+取 $c=0$ 给出 $R\subseteq\ker q^{\mathrm g}$。
+
+若 $B$ 消去，所列等式立即推出 $q(a)=q(b)$，故两个观察核相等。反之，设两个观察核相等。任取 $u,v,d\in B$，满足 $u+d=v+d$。由满射性取 $a,b\in M$，使 $q(a)=u$、$q(b)=v$。在 $G(B)$ 中消去 $\eta_B(d)$，得到 $q^{\mathrm g}(a)=q^{\mathrm g}(b)$；核相等于是给出 $u=q(a)=q(b)=v$。因此 $B$ 消去。
+
+上述两种保真要求确实不同。取定理 11.3 的三类观察 $\tau:\mathbb N\twoheadrightarrow B$，并使用其下降加法。因为 $\mathbb N$ 消去，$\eta_{\mathbb N}$ 单射，三个旧读数均能在 $\eta_{\mathbb N}[\mathbb N]$ 上恢复；然而
+
+$$
+\tau(0)\ne\tau(2),\qquad
+\tau(0)+\tau(1)=\tau(2)+\tau(1).
+$$
+
+所以 $\eta_B$ 必须合并零类和正偶类。奇偶观察又经 $B$ 下降到加法群 $\mathbb Z/2\mathbb Z$，其群扩张阻止奇类与偶类合并。因此补群后的旧读数恰回到两类。源载体补群没有造成这一损失；损失来自另一步对非消去观察幺半群的补群。证毕。
+
+[^rro11_volume]: [RECURSIVE_RELATIONAL_OBSERVATION.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/1f193e8045b4091637dd5483f218cfc4fbfb352a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。引用范围为定义 2.1 的实际像、定义 2.4 的严格响应及命题 2.6 的上下文参数条件。
+
+[^rro11_history]: 固定提交 `2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c`：[HistoryCarrier.lean](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c/D5/S0/History/HistoryCarrier.lean) 定义自由标记历史、自由事件历史与追加；[EventHistoryInduction.lean](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c/D5/S0/History/Generation/EventHistoryInduction.lean) 的 `event_history_induction` 针对任意追加事件给出归纳原则。它不直接断言整个多事件历史载体由单个固定后继生成。
+
+[^rro11_monogenic]: James East and Nik Ruškuc, *Classification of congruences of twisted partition monoids*, [arXiv:2010.04392v3，第 2.1 节](https://arxiv.org/html/2010.04392v3#S2.SS1)。该节正文明确采用 $\mathbb N=\{0,1,2,\ldots\}$，并给出每个非平凡加法幺半群同余的完整关系公式及唯一参数 $m\ge0$、$d\ge1$；它们分别对应定理 11.2 的阈值 $t$ 与周期 $p$。此处直接引用该节的分类陈述。
+
+[^rro11_periodicity]: 固定提交 `2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c`：[FiniteInputGeneratorPeriodicity.lean](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c/D5/S3/ObserverMemory/Prediction/FiniteInputGeneratorPeriodicity.lean)。`finite_input_generator_eventually_periodic` 的适用范围是有限状态与有限确定输入生成器构成的自治乘积轨道；它给出最终周期，不单独给出定理 11.2 的最小参数与全部核形。
+
+[^rro11_contexts]: 固定提交 `2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c`：[StrictOneHoleContexts.lean](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c/D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean)。相关声明为 `contextual_equivalence_is_greatest` 与 `signature_extension_refines`；其上下文保留任意实际非孔参数，严格记录失败。“扩签名只能细化上下文同余”的一般框架是标准复用。
+
+[^rro11_grothendieck]: mathlib 固定提交 `db584cd6d46c92f209a44c0f1c829460d327499d`：[GrothendieckGroup.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/GroupTheory/MonoidLocalization/GrothendieckGroup.lean) 中，`Algebra.GrothendieckGroup` 是在全体元素处作局部化；`Algebra.GrothendieckGroup.of_injective` 在交换幺半群前提外显式要求 `IsCancelMul`，`Algebra.GrothendieckGroup.lift` 给出到任意交换群的同态扩张等价。[MonoidLocalization/Basic.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/GroupTheory/MonoidLocalization/Basic.lean) 的 `Localization.r_iff_exists` 与 `Localization.mk_eq_mk_iff` 在一般交换幺半群上保留属于所局部化子幺半群的稳定乘子；取全体元素组成的子幺半群并按加法记号翻译，即为定理 11.4 的稳定项等价。省去稳定项的 `Localization.mk_eq_mk_iff'` 另要求消去性，不能用于一般非消去情形。
+

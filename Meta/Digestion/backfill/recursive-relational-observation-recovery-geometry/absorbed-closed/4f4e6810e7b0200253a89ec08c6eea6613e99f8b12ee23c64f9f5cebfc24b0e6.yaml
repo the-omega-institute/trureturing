@@ -1,0 +1,24 @@
+fingerprints:
+  raw_sha256: sha256:4f4e6810e7b0200253a89ec08c6eea6613e99f8b12ee23c64f9f5cebfc24b0e6
+  normalized_sha256: sha256:4f4e6810e7b0200253a89ec08c6eea6613e99f8b12ee23c64f9f5cebfc24b0e6
+cas_ref: sha256:4f4e6810e7b0200253a89ec08c6eea6613e99f8b12ee23c64f9f5cebfc24b0e6
+coverage_gids:
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyAnnihilatorUniqueness.recurrence_window_identifies_annihilator
+    target_statement_id: sha256:806d99e2a39ceb1bad6c688780e1d1b7e3e6cc2861e1d32b7a1a0693b4d792db
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.first_prony_moments_injective
+    target_statement_id: sha256:588744013d133fce03fe8a73f398cf809d59b9f21511f4827aba31c6f6c9c400
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.prony_hankel_factorization
+    target_statement_id: sha256:2cc8aa8a92bca57ed313fe453004774d40f3e294c8c30ab1f041b9d2c9495b09
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyHankelReconstruction.prony_moment_linear_recurrence
+    target_statement_id: sha256:38c2624c288c655e162bd0bc614ff14ef2b3b9acefd23989be4b0b780848afe6
+  - gid: D5/S3/Analytic/GoldenTomography/FinitePronyNodeIdentification.recurrence_window_identifies_node_roots
+    target_statement_id: sha256:fed7eed9dd01efe5798178e5e18f4acebc983a7ad2bd44a84bc553ffc4927dab
+  - gid: D5/S3/Arith/GoldenResource/RobinRationalBasis.atanh_remainder_sharp
+    target_statement_id: sha256:ac331af20bc8c2ce6e164b345a0a90af3b4f9a875620096700fe7ddb2bb6fdfd
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 32b86448016b17cb33ed2a0649056160b49a8b082492512be19866407dbeb95f
+    - f9a13689764b06c48af1d59c7f8a8a40dc4cb5ba18aa1a148cc508d242f3f1ba

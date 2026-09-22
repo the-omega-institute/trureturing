@@ -118,6 +118,16 @@ __main() {
               (Golden/Frozen/accepted/*) continue ;;
               (Golden/Frozen/state/*) continue ;;
               (Blueprint/*.md) continue ;;
+              (Problems/*.md)
+                # ProblemPoolPaths.IsCanonicalPath (RepositoryRules.Structure.cs
+                # IsDirectoryCapacityExcluded):the literature problem pool is a flat
+                # slug-addressed pool, never a content bucket, so canonical dossiers do
+                # not occupy directory capacity. 2026-09-18 this list lacked the entry and
+                # reported `Problems 281/96 ✗` on a tree whose CI was green.
+                case "${_r#Problems/}" in
+                  (*/*) ;;
+                  (*) if printf '%s' "${_r#Problems/}" | grep -Eq '^[a-z0-9]+(-[a-z0-9]+)*\.md$'; then continue; fi ;;
+                esac ;;
             esac
             printf 'x\n'
           done | wc -l | tr -d ' ')
@@ -234,11 +244,18 @@ __selftest() {
   local t; t=$(mktemp -d); local fail=0
   # 合成一个仓(需要 git rev-parse --show-toplevel 可解)
   ( cd "$t" && git init -q . )
-  mkdir -p "$t/Blueprint/X" "$t/Blueprint/X/sub" "$t/Library/Y" "$t/D5/S3/Z" "$t/D5/S3/Z/sub"
+  mkdir -p "$t/Blueprint/X" "$t/Blueprint/X/sub" "$t/Library/Y" "$t/D5/S3/Z" "$t/D5/S3/Z/sub" "$t/Problems"
   local i
   for i in $(seq 1 5); do : > "$t/Blueprint/X/m$i.scribe.cs"; : > "$t/Blueprint/X/m$i.md"; done
-  for i in $(seq 1 48); do : > "$t/Library/Y/n$i.md"; done
+  # 真阳性夹具按引擎上限生成,不写死 48:上限已经从 24 到 48 到 96,写死的数在每次抬阈后都变成假绿。
+  local _lim; _lim=$(grep -oE 'DirectoryFileLimit[[:space:]]*=[[:space:]]*[0-9]+' \
+    "$(git -C "$(dirname "$_SELF")" rev-parse --show-toplevel)/tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs" \
+    | grep -oE '[0-9]+$')
+  for i in $(seq 1 "$_lim"); do : > "$t/Library/Y/n$i.md"; done
   for i in 1 2 3; do : > "$t/D5/S3/Z/a$i.lean"; done
+  # ⑤ Problems 卷宗:规范 slug 路径不占容量(IsDirectoryCapacityExcluded),非规范名照数
+  for i in $(seq 1 "$_lim"); do : > "$t/Problems/dossier-$i.md"; done
+  : > "$t/Problems/NotCanonical.md"
   local ck
   ck() { # ck <期望片段> <目录…>
     local want=$1; shift
@@ -250,10 +267,12 @@ __selftest() {
   }
   # ① Blueprint 桶:5 模块 = 5 .scribe.cs + 5 .md + 1 子目录 = 11 个条目,只应数 5
   ck "5/" Blueprint/X
-  # ② 真阳性必须保留:48 项即报红,不许因本次修复变绿
+  # ② 真阳性必须保留:上限项即报红,不许因本次修复变绿
   ck "不要往这里加文件" Library/Y
   # ③ 子目录不计入父目录
   ck "3/" D5/S3/Z
+  # ⑤ Problems:上限个规范卷宗 + 1 个非规范文件,只应数 1
+  ck "1/" Problems
   # ④ 绝对路径调用与相对路径同结果(首版修复在此处漏过)
   local abs; abs=$( cd "$t" && bash "$_SELF" --dirs "$t/Blueprint/X" 2>&1 | head -1 )
   case "$abs" in

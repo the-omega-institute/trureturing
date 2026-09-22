@@ -1,0 +1,27 @@
+**theorem 40.12 (Uniform two-sided quadratic budget and the global-discrepancy distinction).** For every irrational $\theta\in(0,1)$, every $N\ge2$, every $0<p<1$, and every $0<\varepsilon<1$,
+$$
+\frac{(1-\varepsilon)N^2}{1024p(1-p)}
+ <\tau_{N,\theta,p}(\varepsilon)
+ \le
+ \left\lceil
+ \frac{\pi(N-1)^2}{2\varepsilon^2p(1-p)}
+ \right\rceil
+ \le
+ \left(\frac{\pi}{2\varepsilon^2}+1\right)
+ \frac{N^2}{p(1-p)}.
+$$
+More explicitly,
+$$
+np(1-p)\le\frac{(1-\varepsilon)N^2}{1024}
+\quad\Longrightarrow\quad
+e_{N,\theta,p}(n)>\varepsilon.
+$$
+Thus the specified worst-start mixing time is comparable to $N^2/[p(1-p)]$ at each fixed accuracy, uniformly over all irrational angles, without a mesh hypothesis. Equivalently,
+$$
+\log\tau_{N,\theta,p}(\varepsilon)
+ =2\log N-\log(p(1-p))+O_\varepsilon(1),
+$$
+where the bounded term is uniform in $\theta,N,p$.
+
+These conclusions also hold when the fixed irrational angle satisfies the hypothesis of [Theorem 36.9](#36-quadratic-observation-size-mixing-for-the-bernoulli-successor), for which the global interval discrepancy at $p=1/2$ is not $O(n^{-1/2})$. In that case, every fixed endogenous finite partition still has an $O_N(n^{-1/2})$ error bound. The iteration exponent here belongs to the specified observation budget; it does not identify iterations with physical time or the exponent with a spatial dimension.
+

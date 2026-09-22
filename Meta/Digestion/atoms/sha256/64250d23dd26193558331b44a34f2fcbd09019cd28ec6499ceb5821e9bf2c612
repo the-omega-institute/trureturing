@@ -1,0 +1,15 @@
+**推论 9.15（平均TV界及最坏纤维的反例）。** 对定理9.5中的任意$r$，定义$\operatorname{TV}(p,q)=\tfrac12\sum_x|p(x)-q(x)|$，则
+$$
+\operatorname{TV}(P,Q_r)
+\le\sqrt{\frac{I_P(A:C\mid B)+D(P_{BC}\Vert P_Br)}{2}}.
+\tag{9.15}
+$$
+取$r=P_{C|B}$并按共同$AB$边缘求和，还得到
+$$
+\sum_{a,b:P_{AB}(a,b)>0}P_{AB}(a,b)
+\operatorname{TV}(P_{C|a,b},P_{C|b})
+\le\sqrt{I_P(A:C\mid B)/2}.
+\tag{9.16}
+$$
+小CMI不保证同摘要纤维内各历史的未来条件律一致接近。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ec24f80a29965052729cdb7180a44865194591344f850eab9c717a517871718d
+  normalized_sha256: sha256:ec24f80a29965052729cdb7180a44865194591344f850eab9c717a517871718d
+cas_ref: sha256:ec24f80a29965052729cdb7180a44865194591344f850eab9c717a517871718d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限支撑读数是有限有理和，经实数及非负扩展实数包含仍非正无穷，故另定义的有限支撑正无穷水平为空。仓内无冻结 GID。
+    previous_atom_id: c456730456f88b4e37cd59fcb9f200d7c443f28f920dd3ff3eef12936cd75823
+    next_atom_id: ac94a0974ed932bb568dea3d1f0290f9c5c489270f211402c6c0e277424ee22b

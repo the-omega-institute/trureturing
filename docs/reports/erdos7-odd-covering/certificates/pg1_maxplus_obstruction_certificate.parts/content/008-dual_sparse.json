@@ -1,0 +1,77 @@
+{
+  "length": 1536,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 199,
+      "part": {
+        "path": "content/008-dual_sparse/000000-000199.json",
+        "sha256": "27f1fed4f017a1c9f7e4bdfb187b1fefd825868cbbdbb9501d3e91568106a61e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 199,
+      "stop": 398,
+      "part": {
+        "path": "content/008-dual_sparse/000199-000398.json",
+        "sha256": "3e2deab9bb1678a672301d2b91dbfd88d83d1b765eb2075510635d83e04ffe65",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 398,
+      "stop": 597,
+      "part": {
+        "path": "content/008-dual_sparse/000398-000597.json",
+        "sha256": "f7ba3bad4449c9ed9092a5462b29e98ebfd3b67cb19cbcd4f520c64a676d9611",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 597,
+      "stop": 796,
+      "part": {
+        "path": "content/008-dual_sparse/000597-000796.json",
+        "sha256": "20a4c23ec3726b16faadc09397f16ee35299ad3a6a92fee388c102109cc6a044",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 796,
+      "stop": 995,
+      "part": {
+        "path": "content/008-dual_sparse/000796-000995.json",
+        "sha256": "1a6add3ef88a2ac58eec65084b99c50be09912563b3b966689af656e6a2b46c8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 995,
+      "stop": 1194,
+      "part": {
+        "path": "content/008-dual_sparse/000995-001194.json",
+        "sha256": "eba89070d862ace9b2ed4101c72f77bde2629055647dab966ce64c7874f43df4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1194,
+      "stop": 1393,
+      "part": {
+        "path": "content/008-dual_sparse/001194-001393.json",
+        "sha256": "264ac4c883822697c37a12216a2e270cf5ab6f00f4d3d16626cf38d1388b5449",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1393,
+      "stop": 1536,
+      "part": {
+        "path": "content/008-dual_sparse/001393-001536.json",
+        "sha256": "f08b2282d2766137b21711409ed476628cbd1dbf7fd247835878d3be6e8d9e38",
+        "kind": "value"
+      }
+    }
+  ]
+}

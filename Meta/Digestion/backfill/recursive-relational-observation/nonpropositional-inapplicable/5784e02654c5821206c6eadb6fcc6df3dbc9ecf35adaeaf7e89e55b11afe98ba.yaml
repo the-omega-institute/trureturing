@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5784e02654c5821206c6eadb6fcc6df3dbc9ecf35adaeaf7e89e55b11afe98ba
+  normalized_sha256: sha256:5784e02654c5821206c6eadb6fcc6df3dbc9ecf35adaeaf7e89e55b11afe98ba
+cas_ref: sha256:5784e02654c5821206c6eadb6fcc6df3dbc9ecf35adaeaf7e89e55b11afe98ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在原文交换且非零的有单位复 Banach 代数条件下，探针取得 Mathlib 字符空间的紧致实例，字符拓扑是逐元素收敛的弱对偶子空间拓扑，仓内无冻结 GID。
+    previous_atom_id: 4eaec36532119bc0f8823807f5d1ee79a2143906e3be97485074428d8149af66
+    next_atom_id: 35304938388ccd353f101da6ec15301603982ea2529e70ffffa2d353b1436956

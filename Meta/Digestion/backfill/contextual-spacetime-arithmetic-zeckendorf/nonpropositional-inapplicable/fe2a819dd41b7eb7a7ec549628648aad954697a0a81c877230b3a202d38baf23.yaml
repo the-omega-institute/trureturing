@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe2a819dd41b7eb7a7ec549628648aad954697a0a81c877230b3a202d38baf23
+  normalized_sha256: sha256:fe2a819dd41b7eb7a7ec549628648aad954697a0a81c877230b3a202d38baf23
+cas_ref: sha256:fe2a819dd41b7eb7a7ec549628648aad954697a0a81c877230b3a202d38baf23
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 正约数至少为一，因此自变量小于一时截断集为空，Finset.sum_eq_zero 闭合零核式；仓内无冻结 GID。
+    previous_atom_id: 0a7ce57d132896057b6c9ff57fb81983b5a55fac905b1adf752811ff4876f4cf
+    next_atom_id: faa6abf315e6485fc74ca35528c830e96408e9c5ab7022627c089bb3161236a2

@@ -1,0 +1,24 @@
+**定理 13.8（边下降与可观察方块的充要性）。** 定义13.7的数据具有唯一的边界映射族 $\overline U_{IJ}:\mathsf B_I\to\mathsf B_J$，使每条边下降、每条合法路径的诱导复合只依赖端点，并满足
+$$
+\overline U_{II}=\operatorname{id}_{\mathsf B_I},\qquad
+\overline U_{IK}=\overline U_{JK}\overline U_{IJ}
+\quad(I\subseteq J\subseteq K),
+\tag{13.9}
+$$
+当且仅当以下两项成立。第一，每条边保边界纤维：
+$$
+\beta_I(x)=\beta_I(x')
+\Longrightarrow
+\beta_{I+e}(U_{I,e}x)=\beta_{I+e}(U_{I,e}x').
+\tag{13.10}
+$$
+第二，每个合法割 $I$ 及每对不同的同时启用事件 $e,f$ 满足可观察方块等式：
+$$
+\beta_{I+e+f}U_{I+e,f}U_{I,e}
+=
+\beta_{I+e+f}U_{I+f,e}U_{I,f}
+\quad\text{作为 }\mathsf X_I\to\mathsf B_{I+e+f}\text{ 的映射}.
+\tag{13.11}
+$$
+此结论只运输已指定的边界任务及能够通过边界下降的后续操作。
+

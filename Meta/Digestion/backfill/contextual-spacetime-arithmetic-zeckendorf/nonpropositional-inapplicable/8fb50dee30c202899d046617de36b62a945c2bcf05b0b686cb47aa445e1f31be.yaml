@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8fb50dee30c202899d046617de36b62a945c2bcf05b0b686cb47aa445e1f31be
+  normalized_sha256: sha256:8fb50dee30c202899d046617de36b62a945c2bcf05b0b686cb47aa445e1f31be
+cas_ref: sha256:8fb50dee30c202899d046617de36b62a945c2bcf05b0b686cb47aa445e1f31be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅限定有限档案任务及集合解释的适用范围，并明确列出未由本节证明的外部结论，没有新增数学断言需要证明。
+    previous_atom_id: c627752557d1c3ee4f7ac1bc84844c537500866fe593a6126a34488dd0f9439a
+    next_atom_id: 885f1ef92038a201bedb914d2e20be84cd3a11fc9d3cd56725b96901924fd5b1

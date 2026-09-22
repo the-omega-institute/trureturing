@@ -1,0 +1,25 @@
+**证明。** $C_A,C_C$ 的闭包三律由恒等和固定集合并直接成立。$C_B$ 扩张；若 $\Delta\subseteq\Delta'$ 且 $a\in\Delta$，则 $a\in\Delta'$，两边都增添 $b$；若 $a\notin\Delta$，则 $C_B(\Delta)=\Delta\subseteq\Delta'\subseteq C_B(\Delta')$。这证明单调性。$C_B$ 从不增添 $a$，所以第一次作用前后触发条件不变，而重复增添 $b$ 不改变集合，故幂等。
+
+对任意 $\Gamma\subseteq\{a\}$，两个目标闭包都不增添 $a$，从而
+$$
+\tau^{-1}[C_B(\tau[\Gamma])]
+=\Gamma
+=\tau^{-1}[C_C(\tau[\Gamma])].
+$$
+这给出第一步和复合保守，也给出第一步保持。对每个中间前提 $\Delta$，
+$$
+C_B(\Delta)\subseteq\Delta\cup\{b\}=K_\sigma(\Delta),
+$$
+故第二步保持；但空前提上 $C_B(\varnothing)=\varnothing$，$K_\sigma(\varnothing)=\{b\}$，所以第二步不反射。新增公式 $b$ 不在源像 $S=\{a\}$ 中，因而不造成源可见增量。
+
+中间闭理论恰为
+$$
+\operatorname{Th}(C_B)=\{\varnothing,\{b\},\{a,b\}\}.
+$$
+源闭理论只有 $\varnothing,\{a\}$，且
+$$
+L_\tau(\varnothing)=\varnothing,\qquad
+L_\tau(\{a\})=\{a,b\}.
+$$
+因此 $C_B(\tau[F_A])=F_B$ 确实成立，却没有源闭理论前推为 $\{b\}$。这证明闭理论覆盖失败，并说明最终保守在此不能推出第二步全域保守。证毕。
+

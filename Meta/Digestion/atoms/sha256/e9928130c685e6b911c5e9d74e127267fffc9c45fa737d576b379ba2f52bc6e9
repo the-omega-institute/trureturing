@@ -1,0 +1,4 @@
+**证明。** 由 (EMW-B1)，\(r=\rho(p)\mid m\)，再由 Fibonacci 整除性有 \(F_r\mid F_m\)。既然 \(p\mid F_r\) 且 \(p^2\nmid F_m\)，必有 \(p\parallel F_r\)。应用引理 1。证毕。
+
+这里 \(p\parallel A\) 表示 \(p\mid A\) 而 \(p^2\nmid A\)。仅仅知道某个素数整除 \(F_m\) 并不足以推出非 WSS；指数恰为一是必要环节。
+

@@ -1,0 +1,10 @@
+**Proof.** The coordinate of $u_m$ is $(0,e_m)$, so positive powers have coordinate $(0,e_{mn})$. The inverse formula proves the power identity and exact norms. Since $|d'_{mn}|\to1$, their total variation tends to two. Every fixed prefix annihilates the pair once $mn>G_L$, and the uniform variation bound extends this vanishing from cylinder functions to all continuous functions. Thus the powers are weak-star null.
+
+On the fixed Borel set $S^+$ their values are $1/d'_{mn}$, tending to one when $|t|<1$ and to negative one when $|t|>1$ or $t=\infty$. This disproves setwise convergence to zero. The exact value of $N_t$ follows from the coordinate $(0,e_{mn})$; its norm-power radius is one rather than zero. The element has mass zero and is not a probability or an identity.
+
+The same-sign multiplication law makes each ordered tuple of indices one and two yield the point with their summed index. Counting tuples gives the binomial formula for $\zeta^\sigma$. Its phase Fourier coefficient is
+$$
+\frac{e^{-2\pi i k\phi}+e^{-4\pi i k\phi}}2,
+$$
+whose modulus is $|\cos(\pi k\phi)|<1$ for $k\ne0$. Theorem 34.7 gives the weak-star limit. The countable set $S^\sigma$ has mass one under every finite-time law and zero under $\mathfrak m$, proving both stronger-topology failures. The last assertions are the two cases of Theorem 34.5. $\square$
+

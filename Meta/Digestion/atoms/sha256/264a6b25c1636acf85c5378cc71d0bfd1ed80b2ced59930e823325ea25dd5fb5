@@ -1,0 +1,48 @@
+**引理 31.6（同一计数引擎的一步振幅收缩）。** 保持固定 $k$。用行表示当前后缀、列表示后继后缀，定义
+$$
+B_{i0}=1\ (0\le i<k),\qquad B_{i,i+1}=1\ (i<k-1),\qquad
+R_r=\operatorname{diag}(r_i),\qquad
+P=\lambda^{-1}R_r^{-1}BR_r,\qquad h_i=r_i^{-1}.
+\tag{31.13}
+$$
+其余 $B$ 元素为零；这里 $B$ 是主卷§132.2.1列输入计数矩阵的转置。$P$ 作用于列函数，平稳概率写成行向量。置
+$$
+u_m=P^mh,\qquad E_m=(\lambda-1)(1-\lambda^{-1})^m,\qquad
+R=\sum_{t=0}^{k-1}\lambda^t r_{k-1-t},\qquad
+\pi_i=\frac{\lambda^{k-1-i}r_i}{R},\qquad \tau=\frac{\lambda^k}{R}.
+\tag{31.14}
+$$
+对所有整数 $m\ge0$，有
+$$
+1\le u_m(i)\le\lambda,\qquad
+\operatorname{osc}(u_m):=\max_i u_m(i)-\min_i u_m(i)\le E_m,\qquad
+\pi P=\pi,\quad \pi h=\tau,\quad
+\|u_m-\tau\mathbf1\|_\infty\le E_m.
+\tag{31.15}
+$$
+从后缀 $i$ 出发的合法长度 $m$ 续词数 $c_m(i)$ 满足
+$$
+c_m=B^m\mathbf1=\lambda^m R_r u_m,\qquad
+|\mathcal W_m^{(k)}|=c_m(0)=\lambda^m u_m(0).
+\tag{31.16}
+$$
+
+证明。$Br=\lambda r$ 使 $P$ 行随机，且 $P_{i0}=1/(\lambda r_i)\ge1/\lambda$。设 $a=1/\lambda$、$q=1-a\in(0,1/2)$，逐行减去公共质量后得到非负行随机矩阵 $Q$，使
+$$
+P=a\mathbf1e_0^{\mathsf T}+qQ.
+\tag{31.17}
+$$
+对任何实列函数 $g$，$Qg$ 每个坐标都在 $[\min g,\max g]$ 内，而第一项所有坐标相同，故 $\operatorname{osc}(Pg)\le q\operatorname{osc}(g)$。$h$ 的极值为 $1,\lambda$，随机平均保持此区间；迭代得式（31.15）的前两项。这只是所写矩阵的显式共同重置估计，不宣称任何范数上的通用收缩。
+
+$\pi_i>0$ 且重排求和给 $\sum_i\pi_i=1$。对 $j\ge1$ 仅 $i=j-1$ 贡献，故
+$$
+(\pi P)_j=\frac{\lambda^{k-j}r_{j-1}}R\frac{r_j}{\lambda r_{j-1}}=\pi_j,
+\qquad
+(\pi P)_0=\frac1{\lambda R}\sum_{i=0}^{k-1}\lambda^{k-1-i}
+=\frac{\lambda^{k-1}}R=\pi_0.
+\tag{31.18}
+$$
+又 $\pi h=R^{-1}\sum_i\lambda^{k-1-i}=\tau$，所以 $\pi u_m=\tau$。正权平均 $\tau$ 位于 $u_m$ 的最小、最大值间，故每个坐标距 $\tau$ 不超过 $E_m$。特别地 $1<\tau<\lambda$，且 $u_m\to\tau\mathbf1$。这里 $\pi$ 仅用于识别计数极限常数，不把根初态换成平稳态。
+
+空续词给 $c_0=\mathbf1$；附零重置、附一推进的分类给 $c_{m+1}=Bc_m$。相似式 $B=\lambda R_rPR_r^{-1}$ 遂给式（31.16）。全部 $c_m(i)$ 是正整数。此式既复核已有增长指数 $\log\lambda$，也给比仅知道增长率更强的向量归一化。$\square$
+

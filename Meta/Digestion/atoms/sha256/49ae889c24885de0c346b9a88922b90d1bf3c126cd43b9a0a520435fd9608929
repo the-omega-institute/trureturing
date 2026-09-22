@@ -1,0 +1,5 @@
+**theorem 51.8 (两个自然输入).** 对所有 $a,b\in\mathbb N_0$，前两个坐标为 $j(a),j(b)$ 时，$C$ 中唯一的点是
+$$
+\bigl(j(a),j(b),j(\gcd(a,b)),j(\operatorname{lcm}(a,b))\bigr).
+$$
+

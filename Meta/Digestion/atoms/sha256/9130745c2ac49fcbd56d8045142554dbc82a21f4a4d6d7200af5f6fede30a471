@@ -1,0 +1,21 @@
+**定义 31.3（单位化、字符与两种弱星拓扑）。** 定义
+$$
+A_t^{\#}=\mathbb C\oplus A_t,
+$$
+$$
+(\lambda,\mu)(\kappa,\eta)=(\lambda\kappa,\lambda\eta+\kappa\mu+\mu\star_t\eta),\qquad \|(\lambda,\mu)\|_{\#}=|\lambda|+N_t(\mu).
+$$
+其单位记为 $1^{\#}=(1,0)$，原代数嵌入为 $\mu\mapsto(0,\mu)$。记 $e=\delta_{0_K}\in A_t$；$e$ 与 $1^{\#}$ 是不同对象。
+
+对复 Banach 代数 $B$，$\Delta(B)$ 表示非零、连续、复线性且满足 $\chi(ab)=\chi(a)\chi(b)$ 的泛函集合，赋予逐元素收敛的字符拓扑，即 $\sigma(B^*,B)$ 的子空间拓扑。对有单位的 $B$，定义
+$$
+\sigma_B(b)=\{w\in\mathbb C:w1_B-b\text{ 不可逆}\}.
+$$
+对本节非单位代数，约定 $\sigma_{A_t}(\mu)=\sigma_{A_t^{\#}}(0,\mu)$。
+
+原测度弱星拓扑另记为
+$$
+\tau_K=\sigma(M_{\mathbb C}(K),C(K,\mathbb C)),
+$$
+其连续测试是 $\mu\mapsto\int_Kf\,d\mu$，$f\in C(K,\mathbb C)$。它不是字符空间上逐测度收敛的拓扑，也不是总变差 Banach 弱拓扑。令 $\overline{\mathbb D}=\{z\in\mathbb C:|z|\le1\}$。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b061936c4c212a2b62cc0517ec38d4262a52fc538437de36fd41b98645f23e8c
+  normalized_sha256: sha256:b061936c4c212a2b62cc0517ec38d4262a52fc538437de36fd41b98645f23e8c
+cas_ref: sha256:b061936c4c212a2b62cc0517ec38d4262a52fc538437de36fd41b98645f23e8c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义 Borel 概率、不变性、遍历性、几乎处处相等、横截集和实值完全不变量，并固定所有量词的 Borel 域，没有新的性质断言。
+    previous_atom_id: 4352c567059f9859907823f3330ec5759ba52e959f8fd95e046837f4efe66021
+    next_atom_id: 0a68bae17e8787c972af4a44dc2a417c537ba14f278acf1f268e21cb9577eed5

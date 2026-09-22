@@ -1,0 +1,9 @@
+**theorem 27.2 (Exact row variation and exact finite bilinear norm).** For every parameter in Assumption 27.0,
+$$
+\max_{x,y\in K}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The maximum is attained at $(0_K,x_1^+)$ for every finite $t\ge0$ in the parameter domain, at $(x_1^+,x_1^-)$ for every $t<0$ in the parameter domain, and at $(0_K,0_K)$ for the formal parameter $\infty$. Moreover,
+$$
+\sup_{\substack{a,b\in A\\\|a\|_1\le1,\ \|b\|_1\le1}}\|a*_t b\|_1=C_t.
+$$
+

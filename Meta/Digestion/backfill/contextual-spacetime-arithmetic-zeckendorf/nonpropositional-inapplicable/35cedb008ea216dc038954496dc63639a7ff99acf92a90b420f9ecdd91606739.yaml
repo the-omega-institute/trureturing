@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35cedb008ea216dc038954496dc63639a7ff99acf92a90b420f9ecdd91606739
+  normalized_sha256: sha256:35cedb008ea216dc038954496dc63639a7ff99acf92a90b420f9ecdd91606739
+cas_ref: sha256:35cedb008ea216dc038954496dc63639a7ff99acf92a90b420f9ecdd91606739
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段规定费用及实数运算沿原编码运输的定义和正实数定义域，公式用于指定这些运算，没有另行断言新的代数或分析定理。
+    previous_atom_id: 6ecb1c3b99fb5edc2e06e2bf3c227a0f17001591f02709857c50b4c2e9592946
+    next_atom_id: aa8b38d610d475db9606534a9b6b224b7d8864cb67c2c5b967c7108859217d75

@@ -1,0 +1,7 @@
+这里使用的经典输入为 M. El Marraki，〈Fonction sommatoire de la fonction de Möbius, 3. Majorations asymptotiques effectives fortes〉，*Journal de Théorie des Nombres de Bordeaux* **7**(2) (1995)，407–433，[原文](https://www.numdam.org/item/JTNB_1995__7_2_407_0/)，印刷第421页的推论及第422页的证明：
+$$
+|\mathcal M(x)|<362.7\frac{x}{(\log x)^2}\qquad\text{对全部实数 }x>1.
+\tag{488.1}
+$$
+原文第421页区分了各界优于其它界的区间与各界的有效域；本式的有效域并非仅为表中的大数区间。这里直接借用已发表的推论。其第422页插值中的舍入等号不是精确小数恒等式；第417–418页命题7证明的分段需满足其辅助积分下端 $C_{\rm aux}\le x^{9/10}$，并需在 $[C_{\rm aux},x]$ 上具有所用的 $N(u)$ 界。后者的 $N$ 是该论文的辅助函数，不是本卷的整数输入。原列域 $x>\max(e^T,C_{\rm aux}^{9/10})$ 本身不保证上述分段条件；第411页的 Abel 公式本身要求 $x\ge C_{\rm aux}$。本条引用不提供原数值递推与数值表的独立认证，也不把这些未重建的计算作为新的数值定理。
+

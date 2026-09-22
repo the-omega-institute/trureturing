@@ -1,0 +1,13 @@
+### U.8. Which arithmetic information the square-class argument supplies
+
+The statements U.4-U.8 control the support of odd prime valuations across different Fibonacci indices. They retain the possibly exceptional initial valuation in U.1 rather than assuming it equals one. In particular they remain valid in the presence of WSS primes.
+
+Oddness of a valuation does not distinguish depth one from depth three, and evenness does not distinguish depth two from depth four. The new support bounds therefore do not decide whether `s_p>=2` at some prime p. The existence assertion
+
+\[
+\exists p\text{ prime},\ p\ne2,5:\quad p^2\mid F_{p-(5/p)}
+\]
+
+and the stronger assertion that there are infinitely many such primes remain distinct unproved statements here. The trace identities locate precisely where that missing depth information is preserved. A further proof must supply a constraint on these prime-index depths that is not already implied by their valuation parity.
+
+

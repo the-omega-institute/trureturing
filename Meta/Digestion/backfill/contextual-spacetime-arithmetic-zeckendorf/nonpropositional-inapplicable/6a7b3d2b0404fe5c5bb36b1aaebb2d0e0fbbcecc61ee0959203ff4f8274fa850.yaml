@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a7b3d2b0404fe5c5bb36b1aaebb2d0e0fbbcecc61ee0959203ff4f8274fa850
+  normalized_sha256: sha256:6a7b3d2b0404fe5c5bb36b1aaebb2d0e0fbbcecc61ee0959203ff4f8274fa850
+cas_ref: sha256:6a7b3d2b0404fe5c5bb36b1aaebb2d0e0fbbcecc61ee0959203ff4f8274fa850
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义带标签的黄金系数与相位字段以及解码器，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: f8f32ebf1d4c565be215da888a7b551e20d565dc807a977c517f6a0bcac88c46
+    next_atom_id: 12ea4baf2a1254d0448542e5c5e2a5730c7c128fa8389f97f57e3d6375566742

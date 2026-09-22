@@ -1,0 +1,29 @@
+**Definition 36.3 (Successor kernel, full variation, and mixing time).** For $0\le p\le1$ and a finite signed Borel measure $\eta$ on $K$, define
+$$
+P_p\eta=(1-p)\eta+pT_\#\eta.
+$$
+Thus the zero step is the identity on the original carrier. Let $\mathcal P(K)$ be the Borel probability measures on $K$. We use full variation:
+$$
+\|\xi\|_{\mathrm{TV}}=|\xi|(K),\qquad
+\|\mu-\nu\|_{\mathrm{TV}}=2\sup_A|\mu(A)-\nu(A)|
+$$
+for probabilities. On a finite alphabet the norm is the sum of absolute coordinate differences, without a factor of one half.
+
+For $n\in\mathbb N_0$, $L\ge1$, and $x\in K$, define
+$$
+D_{L,p}(n,x)=\|q_{L\#}P_p^n\delta_x-q_{L\#}m\|_{\mathrm{TV}},
+$$
+$$
+e_{L,p}(n)=\sup_{\eta\in\mathcal P(K)}
+\|q_{L\#}P_p^n\eta-q_{L\#}m\|_{\mathrm{TV}}.
+$$
+Both quantities lie in $[0,2]$. Put
+$$
+v_p=p(1-p),\qquad V=np(1-p),\qquad s=\sqrt V.
+$$
+For $0<\varepsilon<1$, define
+$$
+\tau_{L,p}(\varepsilon)=\min\{n\in\mathbb N_0:e_{L,p}(n)\le\varepsilon\},
+$$
+with value $+\infty$ if the set is empty.
+

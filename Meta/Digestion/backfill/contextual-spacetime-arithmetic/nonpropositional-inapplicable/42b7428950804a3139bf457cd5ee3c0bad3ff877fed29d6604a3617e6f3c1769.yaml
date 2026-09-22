@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:42b7428950804a3139bf457cd5ee3c0bad3ff877fed29d6604a3617e6f3c1769
+  normalized_sha256: sha256:42b7428950804a3139bf457cd5ee3c0bad3ff877fed29d6604a3617e6f3c1769
+cas_ref: sha256:42b7428950804a3139bf457cd5ee3c0bad3ff877fed29d6604a3617e6f3c1769
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “辅助结合律、平移自同构及延迟校正式：命题 44 → 命题 54 → 命题 60”列标题和三个标签，未重新主张这些性质成立的前提；无暗含数学证明义务，按编号表条目处理。
+    previous_atom_id: ba651bf2ecc2db2114741325368406b0625734538b58a847eef6a41ca3b51bc9
+    next_atom_id: 799383f030507f77ca1e37352918099f960cf5c335ef0344192d2224d49f27c8

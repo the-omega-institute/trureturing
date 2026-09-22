@@ -1,0 +1,78 @@
+**引理 44.2（残差平方和交换子）。** 由 $S=S^*$，
+$$
+\|[P,S]\|=\|QSP\|=\ell,\qquad
+ aI_E\le A\le bI_E.
+$$
+证明。$FF^*=I_E$ 使 $P=P^*=P^2$，$F^*$ 等距到 $\operatorname{ran}P$；插入 $P+Q=I_R$ 给残差恒等式。这里 $\Delta=(QSF^*)^*(QSF^*)$；交换子的范数等式由相对于 $P\oplus Q$ 的自伴分块形式得到。
+进一步，令 $T=QSP:\operatorname{ran}P\to\operatorname{ran}Q$，交换子分块为 $\begin{pmatrix}0&T^*\\-T&0\end{pmatrix}$，其伴随乘自身为 $\operatorname{diag}(T^*T,TT^*)$，故范数为 $\|T\|$。$F^*$ 对 $\operatorname{ran}P$ 的满等距性给 $\|T\|=\|QSF^*\|$，残差平方再给 $\ell^2=\delta$。证毕。
+
+把 $R$ 具体取为以下 $\mathcal R$。要将解析模型解释为本卷第40节的实际历史，须完整保留其定义40.1的合同：$C_{\rm archive}$ 包含全部已获内部／外部记录、来源与参考身份、版本与关联、实际准备、输入／输出内积与单位、增益、设备身份、相位与校准、局部时钟及已知关系、局部标签、可访问记忆、动作、守卫及失败、联合顺序和允许的联合误差事件；与档案及先验相容的共同世界族非空并含实际世界。以下每个候选世界都须同时解释整份档案，矩阵统计量仅是任务视图。
+
+在每个这样的世界中，源核为
+$$
+K(t)=Be^{-tC}B^*,\qquad C=C^*>0,
+$$
+且输入是指定内积下的实际伴随 $B^*$。有效循环空间为
+$$
+\mathcal R=\operatorname{span}\{C^jB^*u:j\ge0,\ u\in U\},
+\qquad C_{\mathcal R}=C|_{\mathcal R}.
+$$
+共同加性延迟 $h$ 必须实际成立。令
+$$
+V_k=\operatorname{span}\{e^{-jhC}B^*u:0\le j\le k\},\qquad
+B_kx=(Be^{-ihC}x)_{i=0}^k,
+$$
+$$
+\mathsf H_k(s)=\bigl(K(s+(i+j)h)\bigr)_{0\le i,j\le k},
+\qquad E_k=\operatorname{ran}B_k.
+$$
+Context40 引理40.2供应
+$$
+\mathsf H_k(s)=B_ke^{-sC}B_k^*,\qquad
+\operatorname{ran}\mathsf H_k(s)=E_k\quad(s\ge0).
+$$
+要求 $E_k\ne0$，并且全部白化、对数、迹与行列式只在这个实际共同支撑上计算。记
+$$
+D=B_k|_{\mathcal R}:\mathcal R\longrightarrow E_k,\qquad
+D_{(t_0)}=De^{-t_0C_{\mathcal R}/2},
+$$
+$$
+M_{(t_0)}=\mathsf H_k(t_0)|_{E_k}=D_{(t_0)}D_{(t_0)}^*,
+\qquad
+F_{(t_0)}=M_{(t_0)}^{-1/2}D_{(t_0)}.
+$$
+实际基准 $t_0$ 可未知，但必须有限且非负。$M_{(t_0)}$ 是白化基准矩阵；本节的 $A$ 是白化后的一步响应，二者不是同一个矩阵。本卷第40节的基准符号 $a$ 在此替换为 $t_0$，其 $A_a$ 替换为 $M_{(t_0)}$，其 $F_a$ 替换为 $F_{(t_0)}$；第40节历史阶数 $r$ 替换为 $k$。
+
+$D_{(t_0)}$ 满射到 $E_k$，故 $M_{(t_0)}>0$ 且 $F_{(t_0)}F_{(t_0)}^*=I$。对任意满射 $J$，$J^*(JJ^*)^{-1}J$ 自伴幂等，像为 $\operatorname{ran}J^*$；这里 $\operatorname{ran}D^*=V_k$，所以投影的像恰为 $e^{-t_0C_{\mathcal R}/2}V_k$。指数的相乘及与 $C_{\mathcal R}$ 交换给
+$$\mathsf H_k(t_0+t)|_{E_k}=D_{(t_0)}e^{-tC_{\mathcal R}}D_{(t_0)}^*.$$
+固定这份实际基准及历史接口，定义
+$$
+W(t)=M_{(t_0)}^{-1/2}
+\bigl(\mathsf H_k(t_0+t)|_{E_k}\bigr)M_{(t_0)}^{-1/2}
+=F_{(t_0)}e^{-tC_{\mathcal R}}F_{(t_0)}^*.
+$$
+Context40 命题40.6供应
+$$
+F_{(t_0)}F_{(t_0)}^*=I_{E_k},\qquad
+P_{(t_0)}=F_{(t_0)}^*F_{(t_0)}
+=P_{e^{-t_0C_{\mathcal R}/2}V_k}.
+$$
+投影一般不是未经基准移位的 $P_{V_k}$。于是一般模型的精确代入为
+$$
+F=F_{(t_0)},\qquad S=e^{-hC_{\mathcal R}},\qquad
+A=W(h),\qquad\Delta=W(2h)-W(h)^2.
+$$
+这里另行要求用于定量估计的实际有效谱界 $aI\preceq S\preceq bI$；正定性逐模型成立，不自动供应模型族共用的裕量。仅凭压缩矩阵 $A$ 的谱下界，不能将其冒充整个有效 $S$ 的谱下界。
+
+以下设 $m=\dim E_k>0$（一般模型为 $m=\dim E>0$），定义
+$$
+\mathcal T=\operatorname{tr}(-\log A),\qquad
+\tau=\mathcal T/m,\qquad\beta=-\log b>0,
+$$
+$$
+R(r)=\frac{\operatorname{tr}(-\log W(rh))}{\mathcal T}.
+$$
+由 $aI\preceq A\preceq bI<I$，有 $\mathcal T\ge m\beta>0$、$\tau\ge\beta$。$\tau$ 是同一实际基准上的平均对数衰减量；未饱和时，它可以依赖 $t_0$，不能借用饱和情形的基准不变性。零维支撑给 $0/0$，不属于本比值定理。
+
+这里明确取有限维实内积空间 $H,U$，输入是实际准备的伴随 $B^*$；解析引理允许复数不改变此实际来源合同。合法操作顺序与概率独立是不同条件，任何独立性主张须条件于完整 $C_{\rm archive}$ 检验。历史阶数为 $k$，经过时间指数为 $r=t/h$；它们均不同于源核 $K$、基准年龄 $t_0$、谱下界 $a$ 和后文的误差系数 $K_{\rm err}$。
+

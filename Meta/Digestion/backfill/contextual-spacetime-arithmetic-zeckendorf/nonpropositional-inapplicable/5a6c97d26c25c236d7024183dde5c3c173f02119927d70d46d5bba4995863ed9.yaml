@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a6c97d26c25c236d7024183dde5c3c173f02119927d70d46d5bba4995863ed9
+  normalized_sha256: sha256:5a6c97d26c25c236d7024183dde5c3c173f02119927d70d46d5bba4995863ed9
+cas_ref: sha256:5a6c97d26c25c236d7024183dde5c3c173f02119927d70d46d5bba4995863ed9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段直接定义有效码的语义有序对，所列等式就是定义，不承担其与另一配对构造相等的证明。
+    previous_atom_id: 5a4cb515e4f894b404d2d85c5b0bc427a9539a3c3c6988e2aa9b3bdf1eafe254
+    next_atom_id: d59d383843e61f32fde3b842550181e7051d3822340f028b896ff46b06ccecd3

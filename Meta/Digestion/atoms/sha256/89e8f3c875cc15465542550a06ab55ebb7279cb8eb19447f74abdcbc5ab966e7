@@ -1,0 +1,30 @@
+**theorem 34.10 (Pure residual powers and a positive full-carrier walk).** For $m\ge1$ define the signed mass-zero element
+$$
+u_m=\frac{v_m}{d'_m}.
+$$
+Then
+$$
+u_m^{\star_t n}=\frac{v_{mn}}{d'_{mn}},\qquad
+\|u_m^{\star_t n}\|_{\mathrm{TV}}=\frac2{|d'_{mn}|}\longrightarrow2,
+$$
+while $u_m^{\star_t n}\to0$ weak-star. It does not converge setwise to zero. Moreover, for the complete submultiplicative norm
+$$
+N_t(\eta)=\|H_\#\eta\|_{\mathrm{TV}}+\|R_t\eta\|_1,
+$$
+one has
+$$
+N_t(u_m^{\star_t n})=1,\qquad
+\lim_{n\to\infty}N_t(u_m^{\star_t n})^{1/n}=1.
+$$
+Thus this weak-star-null power sequence is not an instance of quasinilpotence.
+
+For either fixed sign $\sigma\in\{+,-\}$, the probability
+$$
+\zeta^\sigma=\frac12\bigl(\delta_{x_1^\sigma}+\delta_{x_2^\sigma}\bigr)
+$$
+has, for every parameter, the same powers
+$$
+(\zeta^\sigma)_t^{(n)}=2^{-n}\sum_{j=0}^n\binom nj\delta_{x_{n+j}^\sigma}.
+$$
+These converge weak-star to $\mathfrak m$, remain supported on $S^\sigma$, fail to converge setwise, and have total-variation distance two from $\mathfrak m$. If $\sigma=\sigma_t$, their differences from their own phase lifts have variation tending to two; for the opposite sign those differences tend to zero in variation.
+

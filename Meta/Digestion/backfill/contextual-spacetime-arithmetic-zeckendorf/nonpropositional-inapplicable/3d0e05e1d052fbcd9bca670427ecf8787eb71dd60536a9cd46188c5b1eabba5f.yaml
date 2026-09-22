@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3d0e05e1d052fbcd9bca670427ecf8787eb71dd60536a9cd46188c5b1eabba5f
+  normalized_sha256: sha256:3d0e05e1d052fbcd9bca670427ecf8787eb71dd60536a9cd46188c5b1eabba5f
+cas_ref: sha256:3d0e05e1d052fbcd9bca670427ecf8787eb71dd60536a9cd46188c5b1eabba5f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nat.floor_natCast 保证真实 Mertens 和在整数处一致，Nat.floor_le 与 Nat.one_le_floor_iff 保证正实输入的整数部分仍在自然数界的定义域，Real.rpow_le_rpow 在非负指数下给同一正常数的延伸；反向直接取整数输入，仓内无冻结 GID。
+    previous_atom_id: 2cc44c2075e6b42326a1bd0e91ac3b953a3251af7f526add74a9c2ca8486952f
+    next_atom_id: c1d7d599c930dede64816c40b711a433987fe176a09eb2cf4b219d7ce5343a9e

@@ -1,0 +1,47 @@
+**定理 13.2（阈值—周期核的有限保幂修复与唯一最粗细化）。** 固定任意 $t\ge0$、$p\ge1$。定义有限素数集序列
+$$
+S_0=\operatorname{Pr}(p),
+$$
+$$
+S_{j+1}
+=S_j\cup
+\bigcup_{\ell\in S_j}\operatorname{Pr}(\ell-1),
+\qquad 0\le j<p,
+$$
+并定义
+$$
+P(p)=
+\operatorname{lcm}
+\bigl(\{p\}\cup\{\ell-1:\ell\in S_p\}\bigr).
+$$
+令
+$$
+T(t,p)=
+\begin{cases}
+0,&(t,p)=(0,1),\\
+\max\{t,1,h(P(p))\},&(t,p)\ne(0,1).
+\end{cases}
+$$
+则
+$$
+R_*:=R_{T(t,p),P(p)}
+$$
+双槽保幂，且
+$$
+R_*\subseteq R_{t,p}.
+$$
+该观察商有限，恰有 $T(t,p)+P(p)$ 个类。构造只需上述明确给出的 $p$ 步有限集合运算，并有显式整除界
+$$
+P(p)\mid \operatorname{lcm}(1,2,\ldots,p).
+$$
+
+全部有限保幂细化 $R_{u,v}$ 恰由以下参数给出：$u\ge t$、$p\mid v$，且 $(u,v)$ 满足定理 13.1 的充要条件。它们具有唯一最粗者 $R_*$；亦即，对所有 $u\ge0$、$v\ge1$，
+$$
+R_{u,v}\subseteq R_{t,p}
+\ \land\
+R_{u,v}\text{ 双槽保幂}
+\quad\Longrightarrow\quad
+R_{u,v}\subseteq R_*.
+$$
+更一般地，$R_*$ 也是包含于 $R_{t,p}$、同时对 $\{+,\times,\operatorname{pow}\}$ 相容的所有等价关系中的最大者，不必预先要求这些等价关系具有有限商。
+

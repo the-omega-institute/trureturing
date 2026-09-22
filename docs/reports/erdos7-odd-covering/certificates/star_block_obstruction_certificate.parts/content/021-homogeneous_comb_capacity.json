@@ -1,0 +1,161 @@
+{
+  "branching": 3,
+  "regression_depth": 3,
+  "capacity_scale": 81,
+  "capacity_profiles_scaled": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      54,
+      18,
+      6
+    ],
+    [
+      40,
+      20,
+      10
+    ],
+    [
+      81,
+      27,
+      9
+    ],
+    [
+      81,
+      28,
+      9
+    ],
+    [
+      80,
+      26,
+      8
+    ],
+    [
+      9,
+      40,
+      2
+    ],
+    [
+      1,
+      162,
+      81
+    ]
+  ],
+  "forbidden_assignments": 729,
+  "flow_comparisons": 5832,
+  "strict_comparisons": 0,
+  "binary_split_laws": [
+    {
+      "height": 1,
+      "support_size": 2,
+      "caps": [
+        "1/2"
+      ],
+      "minimum_cap_sum": "1/2",
+      "comparison_mean": "3/2",
+      "comparison_second_moment": "5/2",
+      "stoploss_at_integer_thresholds_1_to_height": [
+        "1/2"
+      ]
+    },
+    {
+      "height": 2,
+      "support_size": 5,
+      "caps": [
+        "1/2",
+        "1/4"
+      ],
+      "minimum_cap_sum": "3/4",
+      "comparison_mean": "7/4",
+      "comparison_second_moment": "15/4",
+      "stoploss_at_integer_thresholds_1_to_height": [
+        "3/4",
+        "1/4"
+      ]
+    },
+    {
+      "height": 3,
+      "support_size": 14,
+      "caps": [
+        "1/2",
+        "1/4",
+        "1/8"
+      ],
+      "minimum_cap_sum": "7/8",
+      "comparison_mean": "15/8",
+      "comparison_second_moment": "37/8",
+      "stoploss_at_integer_thresholds_1_to_height": [
+        "7/8",
+        "3/8",
+        "1/8"
+      ]
+    },
+    {
+      "height": 4,
+      "support_size": 41,
+      "caps": [
+        "1/2",
+        "1/4",
+        "1/8",
+        "1/16"
+      ],
+      "minimum_cap_sum": "15/16",
+      "comparison_mean": "31/16",
+      "comparison_second_moment": "83/16",
+      "stoploss_at_integer_thresholds_1_to_height": [
+        "15/16",
+        "7/16",
+        "3/16",
+        "1/16"
+      ]
+    },
+    {
+      "height": 5,
+      "support_size": 122,
+      "caps": [
+        "1/2",
+        "1/4",
+        "1/8",
+        "1/16",
+        "1/32"
+      ],
+      "minimum_cap_sum": "31/32",
+      "comparison_mean": "63/32",
+      "comparison_second_moment": "177/32",
+      "stoploss_at_integer_thresholds_1_to_height": [
+        "31/32",
+        "15/32",
+        "7/32",
+        "3/32",
+        "1/32"
+      ]
+    },
+    {
+      "height": 6,
+      "support_size": 365,
+      "caps": [
+        "1/2",
+        "1/4",
+        "1/8",
+        "1/16",
+        "1/32",
+        "1/64"
+      ],
+      "minimum_cap_sum": "63/64",
+      "comparison_mean": "127/64",
+      "comparison_second_moment": "367/64",
+      "stoploss_at_integer_thresholds_1_to_height": [
+        "63/64",
+        "31/64",
+        "15/64",
+        "7/64",
+        "3/64",
+        "1/64"
+      ]
+    }
+  ],
+  "scope": "Finite actual-cylinder and flow regressions. General comb extremality and all-height cap-sum optimality are separate ordinary proofs; no optimal convex-profile claim."
+}

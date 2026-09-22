@@ -1,0 +1,60 @@
+### U.4. Complete prime-value classification for A250093
+
+The sequence OEIS A250093 is
+
+\[
+a(n)=\operatorname{core}(F_{n^2}),\qquad n\ge1.
+\]
+
+The externally stated conjecture asserts that its only prime values are 3 and 3001. The following gives the exact indices as well.
+
+**Theorem.** For every n>=1,
+
+\[
+\boxed{\operatorname{Prime}(a(n))\ \Longleftrightarrow\ n=2\ \lor\ n=5.}\tag{U.8}
+\]
+
+**Proof for even n.** Since 4 divides n^2 and F_4=3, U.1 gives
+
+\[
+v_3(F_{n^2})=1+v_3(n^2/4)=1+2v_3(n),
+\]
+
+which is odd. Hence 3 divides a(n). If a(n) is prime, it equals 3=s(4). The square-class theorem forces n^2=4, because the square class of F_4 is a singleton. Thus n=2.
+
+**Proof for odd n.** The case n=1 gives a(1)=1. For n>1, if a(n) is prime, U.7 gives
+
+\[
+1\ge 2\Omega(n)-v_5(n)
+=v_5(n)+2\sum_{q\ne5}v_q(n).
+\]
+
+Every term on the right is nonnegative. Therefore no prime other than five divides n, and `v_5(n)<=1`. As n>1, necessarily n=5.
+
+Conversely,
+
+\[
+F_4=3,\qquad F_{25}=75025=5^2\cdot3001.
+\]
+
+The number 3001 is prime: trial division by the primes through sqrt(3001)<55, namely 2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53, gives no divisor. Hence a(2)=3 and a(5)=3001 are prime. This completes both directions of U.8.
+
+**Independent direct proof of the odd necessity.** If 5 divides odd n, the odd valuation of 3001 in F_25 persists in F_(n^2), because
+
+\[
+v_{3001}(F_{n^2})=1+v_{3001}(n^2/25)=1+2v_{3001}(n).
+\]
+
+Primality forces a(n)=3001=s(25), whence n=5 by square-class uniqueness. If odd n>1 is coprime to five, choose a prime q dividing n. Then q is odd and different from five, and q does not divide F_q. One can use the lemma of U.3 with d=q, or the standard congruence `F_q=(5/q) (mod q)`.
+
+If an odd prime r has odd valuation in F_q, then r!=q and
+
+\[
+v_r(F_{n^2})=v_r(F_q)+v_r(n^2/q)
+             =v_r(F_q)+2v_r(n),
+\]
+
+which is odd. If 2 occurs in s(q), then q=3, and both odd indices q and n^2 have Fibonacci valuation one at two. Consequently s(q) divides a(n). The square theorem ensures s(q)>1. Primality of a(n) therefore forces s(q)=s(n^2), impossible for the distinct positive odd indices q<n^2.
+
+The source of the target is https://oeis.org/A250093 , introduced by Vincenzo Librandi on November 12, 2014. The proof above uses the published classical square-class and valuation theorems explicitly; it requires no assumption on the existence or nonexistence of Wall-Sun-Sun primes.
+

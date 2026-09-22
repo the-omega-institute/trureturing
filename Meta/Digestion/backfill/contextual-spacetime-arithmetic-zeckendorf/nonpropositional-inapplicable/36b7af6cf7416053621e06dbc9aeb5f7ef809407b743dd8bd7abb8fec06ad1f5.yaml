@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:36b7af6cf7416053621e06dbc9aeb5f7ef809407b743dd8bd7abb8fec06ad1f5
+  normalized_sha256: sha256:36b7af6cf7416053621e06dbc9aeb5f7ef809407b743dd8bd7abb8fec06ad1f5
+cas_ref: sha256:36b7af6cf7416053621e06dbc9aeb5f7ef809407b743dd8bd7abb8fec06ad1f5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Chebyshev.eventually_primeCounting_le 对每个正 epsilon 给出最终成立的实数截止上界，探针使用下取整后的素数计数，保留最终成立量词而未改为全域结论；仓内无冻结 GID。
+    previous_atom_id: e059f83215159bfc74c4e3206122d2b47c0cb2e0c0ad506347547b77c4ce4b80
+    next_atom_id: 34f1bbe6d5896a8e33a165d114732fe6b1d36f1455ce6061cb59ea8d12c49c88

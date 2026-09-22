@@ -1,0 +1,1 @@
+若设有含所有集合的集合 $U$，分离出 $R=\{x\in U:x\notin x\}$，由普遍性有 $R\in U$，从而 $R\in R\iff R\notin R$，矛盾。

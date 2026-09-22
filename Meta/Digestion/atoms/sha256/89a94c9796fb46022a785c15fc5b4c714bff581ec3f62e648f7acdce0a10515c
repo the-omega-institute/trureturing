@@ -1,0 +1,59 @@
+**定理 2.2（任务族成本与行为商稳定常数）。** 固定一个类型，省略下标 $s$。对当前有限字典 $Q$ 与权重 $w$，令
+
+$$
+B(Q,H,w)=\sup_{\tau\in\mathcal T}\Gamma_w(h_\tau).
+\tag{2.4}
+$$
+
+则有扩展值等式
+
+$$
+\boxed{
+B(Q,H,w)
+=\sup_{p_Q(v)\le1}p_H(v).
+}
+\tag{2.5}
+$$
+
+在完整线性包络上，$Q$ 精确决定全部任务，当且仅当
+
+$$
+\ker Q\subseteq K,
+\tag{2.6}
+$$
+
+亦即每个 $\Gamma_w(h_\tau)$ 均有限。存在共同常数 $0\le B_0<\infty$ 使
+
+$$
+p_H(v)\le B_0p_Q(v)\qquad(v\in V)
+\tag{2.7}
+$$
+
+当且仅当 $B(Q,H,w)<\infty$；此时式（2.4）的值是最小的非负共同常数。
+
+若 $B<\infty$，则 $p_H$ 在商 $V/K$ 上诱导范数，且
+
+$$
+S:\operatorname{ran}Q\longrightarrow V/K,
+\qquad S(Qv)=[v]
+\tag{2.8}
+$$
+
+是良定义的满射线性映射，其算子范数为 $B$。它是同构当且仅当 $K=\ker Q$。特别地，若所有当前读数 $q_i$ 都属于 $\operatorname{span}\{h_\tau\}$，则 $B<\infty$ 自动给出该核等式。
+
+证明。对每个目标使用定理 1.2，再交换非负上确界，得到
+
+$$
+\sup_\tau\Gamma_w(h_\tau)
+=\sup_\tau\sup_{p_Q(v)\le1}|h_\tau(v)|
+=\sup_{p_Q(v)\le1}\sup_\tau|h_\tau(v)|.
+$$
+
+这证明式（2.5）。精确决定全部目标等价于对每个 $\tau$ 有 $\ker Q\subseteq\ker h_\tau$；由定理 1.2，这又等价于逐目标成本有限。
+
+若共同常数 $B_0$ 存在，将 $p_Q(v)\le1$ 代入得到 $B\le B_0$。反向设 $B<\infty$。对 $p_Q(v)>0$，将 $v/p_Q(v)$ 代入式（2.5），得到式（2.7）且常数为 $B$。对 $p_Q(v)=0$，每个目标成本都有限，故全部 $h_\tau(v)=0$，同一不等式仍成立。
+
+上确界的齐次性与三角不等式表明 $p_H$ 是有限半范数，其零空间恰为 $K$。若 $k\in K$，全部 $h_\tau(v+k)=h_\tau(v)$，所以 $p_H(v+k)=p_H(v)$；因此它在 $V/K$ 上良定义，并且仅在零类取零。式（2.6）保证 $S$ 与代表无关，线性和满射由定义直接得到。对观察像的单位球取上确界，式（2.5）正好给 $\|S\|=B$。$S(Qv)=0$ 等价于 $v\in K$；结合 $\ker Q\subseteq K$，得到 $S$ 单射当且仅当 $K=\ker Q$。若每个 $q_i$ 都是任务泛函的线性组合，则 $K\subseteq\ker Q$，故两核相等。证毕。
+
+RRO 第 120 节的精确实验商在这里呈示为线性零空间商。RRO 第 125.6 节及 [`gramian_behavior_quotient_metric`](../../../D5/S3/Observer/Linear/GramianBehaviorQuotientMetric.lean) 给出平方和读数几何的对应零核；本节采用的是规范化任务上确界，不能把两种长度函数直接相等。
+

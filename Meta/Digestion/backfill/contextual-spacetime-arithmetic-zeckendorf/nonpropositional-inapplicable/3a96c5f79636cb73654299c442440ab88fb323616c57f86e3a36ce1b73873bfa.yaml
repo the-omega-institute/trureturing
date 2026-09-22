@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3a96c5f79636cb73654299c442440ab88fb323616c57f86e3a36ce1b73873bfa
+  normalized_sha256: sha256:3a96c5f79636cb73654299c442440ab88fb323616c57f86e3a36ce1b73873bfa
+cas_ref: sha256:3a96c5f79636cb73654299c442440ab88fb323616c57f86e3a36ce1b73873bfa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶的历史集合、各长度计数及域外取零均为定义约定；唯一命题是空词从初态一出发只到一，探针以冻结历史执行定义和钉版 Mathlib 的等式对称性编译验证，未使用 D5 定理，仓内没有本叶可用的冻结 GID。
+    previous_atom_id: 36627b9abaa1ce7eebe7bed066a492a26c2bcd89e128c01b485497075406f3a9
+    next_atom_id: 59a4f5748268629d9ac8f5c407bce4b6ddfc24f7ec7af5518747cde4b0242b66

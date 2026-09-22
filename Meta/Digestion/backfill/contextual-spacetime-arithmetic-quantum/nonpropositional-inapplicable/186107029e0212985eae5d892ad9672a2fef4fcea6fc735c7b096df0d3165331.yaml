@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:186107029e0212985eae5d892ad9672a2fef4fcea6fc735c7b096df0d3165331
+  normalized_sha256: sha256:186107029e0212985eae5d892ad9672a2fef4fcea6fc735c7b096df0d3165331
+cas_ref: sha256:186107029e0212985eae5d892ad9672a2fef4fcea6fc735c7b096df0d3165331
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶逐支撑集说明“定义一个扇区”，在支撑内选择零迹方向、支撑外选择标量恒等方向，并仅为其命名；全局直和分解在下一叶才断言，本叶的局部选择定义不暗含独立性或张成性。
+    previous_atom_id: bcb257e4d1e57fa58c1288665b0e487b83d3c4bdd27302401f5d5d9ed44b901e
+    next_atom_id: e955bf9d9601893f1d5dda02cc5c9d64c16f0ae3dbb41c898cf55585f490267a

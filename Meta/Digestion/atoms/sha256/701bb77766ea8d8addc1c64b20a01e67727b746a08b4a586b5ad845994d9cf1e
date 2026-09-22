@@ -1,0 +1,8 @@
+### IP.2 Every prime-power layer has negative character
+
+For an odd prime $\ell\ne5$ and $k\ge0$, define the exact integer
+
+$$
+B_{\ell,k}=\frac{F_{\ell^{k+1}}}{F_{\ell^k}}.
+$$
+

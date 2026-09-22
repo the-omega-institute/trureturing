@@ -1,0 +1,10 @@
+第 98 条的五种准确宽度在同一有限域上分别为
+$$
+\begin{array}{c|c}
+\text{任意单射状态码}&\lceil\log_2Q\rceil\\
+\text{独立二进字段}&\sum_{p\in P}\lceil\log_2(C_{\rm cap}(p)+1)\rceil\\
+\text{字面指数 Zeckendorf 窗口}&\sum_{p\in P}\ell_Z(C_{\rm cap}(p))\\
+\text{字面乘积二进窗口}&\lceil\log_2(M+1)\rceil\\
+\text{标量自身 Zeckendorf 窗口}&\ell_Z(M)
+\end{array}
+$$

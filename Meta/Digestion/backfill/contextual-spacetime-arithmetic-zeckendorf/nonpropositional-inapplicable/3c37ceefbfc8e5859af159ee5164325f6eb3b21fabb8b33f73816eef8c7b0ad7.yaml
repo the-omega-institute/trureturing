@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c37ceefbfc8e5859af159ee5164325f6eb3b21fabb8b33f73816eef8c7b0ad7
+  normalized_sha256: sha256:3c37ceefbfc8e5859af159ee5164325f6eb3b21fabb8b33f73816eef8c7b0ad7
+cas_ref: sha256:3c37ceefbfc8e5859af159ee5164325f6eb3b21fabb8b33f73816eef8c7b0ad7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅重申三个读数字段及零标记的原定义，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 80d14c07683ddf9564a05eef557ef50a1e9fa88c563a7e621738aa0efc358b32
+    next_atom_id: 831a397b35e6b1ce96f6b7fb841f8b1249453ee6e9ffa0b1f5722b9c3f11cf29

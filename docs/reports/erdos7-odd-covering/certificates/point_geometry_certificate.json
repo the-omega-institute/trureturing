@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "680e0dc362b084c36da57b0ad0134ce759de9885f05608deabfda351d88a7d0c",
+  "parts_directory": "point_geometry_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "0f719d1430eacbcf9d3280f8ec2c09363de06cb58e93e95c14c6e9a2a6cc157e",
+    "kind": "object"
+  }
+}

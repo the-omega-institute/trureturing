@@ -1,0 +1,47 @@
+**theorem 35.10 (The arithmetic probability, the logarithmic metric and the two positional laws).** Define
+$$
+d_{\log}(y,z)=h_1(\rho(y,z)).
+$$
+This is an ultrametric with the same topology as $\rho$, and
+$$
+\mathcal H^p_{d_{\log}}=\mathcal H^{h_p}_\rho\quad(p>0).
+$$
+Consequently
+$$
+\dim_{\mathrm H}(X_\beta,d_{\log})=1,\qquad
+\mathcal H^1_{d_{\log}}=c\eta.
+$$
+In contrast, the ordinary Hausdorff dimension of $(X_\beta,\rho)$ is zero, as already established in 33.7.
+
+If $\widehat d(x,x')=\rho(\Phi(x),\Phi(x'))$, then
+$$
+\mathcal H^{h_1}_{\widehat d}=c\nu,\qquad
+(\Phi^{-1})_*\left(c^{-1}\mathcal H^{h_1}_\rho\right)=\nu,
+$$
+and
+$$
+(H\circ\Phi^{-1})_*\left(c^{-1}\mathcal H^{h_1}_\rho\right)=m.
+$$
+Thus the normalized temporal critical measure is precisely the arithmetic Haar lift, transported by the coding. It is not the stationary Parry probability $\mu_{\mathrm{st}}$ for positional deletion on the full carrier $K$.
+
+**Proof.** A nondecreasing function vanishing only at zero preserves the ultrametric inequality under composition, and $h_1(r)\to0$ exactly when $r\to0$, proving the metric and topology assertions. Every nonsingleton subset of $X_\beta$ has its $\rho$-diameter attained, by the minimum-first-difference argument of 35.3. Therefore
+$$
+\operatorname{diam}_{d_{\log}}A=h_1(\operatorname{diam}_\rho A),
+$$
+with the same identity for empty sets and singletons. Since $h_p=h_1^p$, the cover costs agree, and the admissible scales correspond by the continuous increasing map $h_1$. This proves the measure identity for every $p>0$. Its dimension and critical-measure consequences follow from 35.9.
+
+The map $\Phi:(K,\widehat d)\to(X_\beta,\rho)$ is an isometry by definition, so transporting the arbitrary-set identity of 35.7 gives $\mathcal H^{h_1}_{\widehat d}=c\nu$. The remaining pushforward formulas use $\eta=\Phi_*\nu$ and the existing equality $H_*\nu=m$ from 33.3 and 33.8.
+
+For the original positional first-difference metric $d$, Section 33 instead gives
+$$
+\mathcal H^s_d=\nu,\qquad s=\frac{\log\phi}{\log2}.
+$$
+The stationary positional probability is different, since 33.9 gives
+$$
+\nu(C_1)=\alpha^2,\qquad
+\mu_{\mathrm{st}}(C_1)=\frac{\alpha^2}{1+\alpha^2}.
+$$
+Its positional stationarity must not be transferred to $\nu$, nor confused with the arithmetic invariance of the normalized temporal gauge measure. The preservation result in 35.5 used explicit local similarities and a proved null branch overlap; it was not a claim that Hausdorff measures are preserved by arbitrary homeomorphisms. $\square$
+
+Reference: reciprocal-prefix metrics and bounded-type Sturmian geometry are treated in Bellissard–Julien, [§4.1 and §5.2](https://arxiv.org/pdf/1202.4330v2#page=11). Their metric uses bilateral agreement around the origin; the one-sided metric and exact measure in this theorem are determined by the preceding proofs.
+

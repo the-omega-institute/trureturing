@@ -1,0 +1,16 @@
+**定理 137.5（严格正性与谱区间的有限矩判据）。** 在式(137.3)下，存在严格正定实现，当且仅当
+$$
+\ker S_r=\ker H_r.
+\tag{137.10}
+$$
+此条件也等价于规范实现的 $C$ 严格正定。给定 $0\le a\le b<\infty$，存在满足
+$$
+aI\preceq C\preceq bI
+$$
+的实现，当且仅当
+$$
+\boxed{H_r\succeq0,\qquad aH_r\preceq S_r\preceq bH_r.}
+\tag{137.11}
+$$
+其中 $a=b$ 允许；若 $a=b=0$，可取 $C=0$。
+

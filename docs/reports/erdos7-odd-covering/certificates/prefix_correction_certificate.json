@@ -1,0 +1,118 @@
+{
+  "S": {
+    "branch_certificates": [
+      {
+        "bellman_states": 44,
+        "prices": [
+          0,
+          9,
+          5
+        ],
+        "root": [
+          1,
+          1
+        ],
+        "score_upper": 32
+      },
+      {
+        "bellman_states": 44,
+        "prices": [
+          0,
+          15,
+          7
+        ],
+        "root": [
+          1,
+          2
+        ],
+        "score_upper": 31
+      }
+    ],
+    "complete_tuples": 126,
+    "envelope_score": 40,
+    "exact_omega": 8,
+    "exact_score": 32,
+    "literal_arithmetic": {
+      "Q": 2027025,
+      "alpha": "4615/4624",
+      "complete_test_labels": 480,
+      "delta_T8": "7/15",
+      "forbidden_odd_moduli": 273,
+      "killed_leaf_weight": "15/36992",
+      "mixed_masks_by_depth": [
+        14,
+        27,
+        110
+      ],
+      "old_test_labels": 120,
+      "old_uniform_unit_count": 777600,
+      "original_family_sha256": "1a33896501ac9e925fa22390a60675756246d8407827ce62878bf228ed9de30a",
+      "pure_current_leaves": 4624,
+      "surviving_current_leaves": [
+        1,
+        2,
+        18,
+        35,
+        52,
+        69,
+        86,
+        291,
+        580
+      ]
+    },
+    "optimal_scalar_dual_score": 33,
+    "subset_dp": {
+      "convolution_trials": 221,
+      "node_ancestor_tables": 44,
+      "table_entries": 134
+    },
+    "unbranched_bellman_states": 44,
+    "unbranched_omega_lower": 7,
+    "unbranched_upper": 33
+  },
+  "Sprime": {
+    "envelope_score": 40,
+    "exact_omega": 0,
+    "exact_score": 40,
+    "literal_arithmetic": {
+      "Q": 2027025,
+      "alpha": "4615/4624",
+      "complete_test_labels": 480,
+      "delta_T8": "7/15",
+      "forbidden_odd_moduli": 273,
+      "killed_leaf_weight": "15/36992",
+      "mixed_masks_by_depth": [
+        14,
+        27,
+        110
+      ],
+      "old_test_labels": 120,
+      "old_uniform_unit_count": 777600,
+      "original_family_sha256": "aea6b0dfc5dd8e254f8778b293976bdaf6130d3dbdb06cf246f62564fa8fd1aa",
+      "pure_current_leaves": 4624,
+      "surviving_current_leaves": [
+        1,
+        2,
+        18,
+        19,
+        35,
+        36,
+        52,
+        290,
+        579
+      ]
+    },
+    "subset_dp": {
+      "convolution_trials": 221,
+      "node_ancestor_tables": 44,
+      "table_entries": 134
+    }
+  },
+  "arithmetic": "exact integers and fractions; ordinary computation, not Lean",
+  "independent_checks": {
+    "all_subset_price_oracles": 20,
+    "binary_depth3_supports": 256,
+    "rational_weighted_rows": 80
+  },
+  "schema": "cpi-prefix-correction-v1"
+}

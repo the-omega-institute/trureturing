@@ -1,0 +1,10 @@
+**证明。** 先在 $U_0\bmod M$ 的等差数列中选取 $U>B$。令
+$$
+S=\{q\in\mathcal P:q\mid U,\ q\nmid M\}.
+$$
+这是有限集。对 $V$ 同时规定
+$$
+V\equiv V_0\pmod M,\qquad V\equiv1\pmod q\quad(q\in S).
+$$
+这些模数两两互素，所以中国剩余定理给出一个模 $M\prod_{q\in S}q$ 的剩余类；在其中取 $V>B$。若素数 $q\mid U$ 且 $q\nmid M$，则 $q\in S$，故 $q\nmid V$。若 $q\mid U$ 且 $q\mid M$，假设与 $U\equiv U_0\pmod M$ 给出 $V_0\not\equiv0\pmod q$，从而仍有 $q\nmid V$。因此没有共同素因子，$\gcd(U,V)=1$。当 $M=1$ 时原假设为空，以上构造与证明同样适用。证毕。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6d3be0b82a53dbfc126a6d24c8431024bc3b97e467d2c03a1b887fd950a2e046
+  normalized_sha256: sha256:6d3be0b82a53dbfc126a6d24c8431024bc3b97e467d2c03a1b887fd950a2e046
+cas_ref: sha256:6d3be0b82a53dbfc126a6d24c8431024bc3b97e467d2c03a1b887fd950a2e046
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 把向量的逐坐标序作为偏序，有限集合由 Set.Finite.isPWO 成为部分良序集，Set.IsPWO.exists_le_minimal 给出每个已给元素之下的极小元素，含零维情形；仓内无冻结 GID，未增加非空以外的数值条件。
+    previous_atom_id: 20e79b4a92dd750ff057e7f3ab8c2d3b6a11b249c787f571120f4f4a9c3b1165
+    next_atom_id: ee8912f6e18283473048f4d8c51b16129f971f624ca6e1a479550030fe9b932b

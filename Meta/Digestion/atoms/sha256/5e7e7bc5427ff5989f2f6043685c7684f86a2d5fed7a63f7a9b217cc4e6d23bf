@@ -1,0 +1,19 @@
+**定义 12.0（饱和化）。** 设 $X,K$ 为拓扑空间，$j:X\to K$ 连续，$A\subseteq X$。定义 $A$ 关于 $j$ 的饱和化为
+
+$$
+\operatorname{Sat}_j(A)=j^{-1}(j[A])
+=\{x\in X:\exists a\in A,\ j(x)=j(a)\}.
+$$
+
+若 $A=\operatorname{Sat}_j(A)$，称 $A$ 关于 $j$ 饱和，即 $A$ 是完整 $j$ 纤维的并。子集均取子空间拓扑；“紧致”指每个开覆盖存在有限子覆盖，不附加 Hausdorff 条件。
+
+对第 7 节的关系记号，给 $X,Y,Z$ 指定拓扑，并假设每个 $q_n^U$ 连续；$Q_n^U$ 仍取有限离散拓扑，$K_U$ 取逆极限的子空间拓扑。于是 $\iota_U$ 连续。所有关系载体均取积拓扑，记
+
+$$
+j_{XY}=\iota_X\times\iota_Y:X\times Y\to K_X\times K_Y,
+\qquad
+j_{YZ}=\iota_Y\times\iota_Z:Y\times Z\to K_Y\times K_Z.
+$$
+
+对 $R\subseteq X\times Y$、$S\subseteq Y\times Z$，沿用 $R^0=j_{XY}[R]$、$S^0=j_{YZ}[S]$。“原关系相对闭”分别指在给定的 $X\times Y$、$Y\times Z$ 中闭。
+

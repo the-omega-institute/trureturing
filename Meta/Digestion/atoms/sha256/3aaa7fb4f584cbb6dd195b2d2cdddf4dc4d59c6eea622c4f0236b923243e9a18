@@ -1,0 +1,42 @@
+### FDS.3. The factor-five rigidity and even Lucas indices
+
+**Theorem.** If u,v are positive odd coprime integers and k>=3, then
+
+$$
+\boxed{F_k\mid5F_uF_v\quad\Longleftrightarrow\quad
+k=5\ \lor\ k\mid u\ \lor\ k\mid v.}\tag{FDS6}
+$$
+
+**Proof.** The reverse implication is immediate. If 5 does not divide F_k, cancel the factor five and apply FDS3. Otherwise the rank-five identity 5|F_k iff 5|k holds. Exclude k=5, so k>=10, and suppose neither u nor v is divisible by k. Set d=gcd(k,u), e=gcd(k,v). They are odd coprime proper divisors of k. Since F_u,F_v are coprime, the elementary prime-exponent formula for a gcd gives
+
+$$
+F_k=\gcd(F_k,5F_uF_v)
+\le5\gcd(F_k,F_uF_v)=5F_dF_e.\tag{FDS7}
+$$
+
+If d=1 or e=1, the remaining proper divisor is at most floor(k/2), so F_dF_e<=F_floor(k/2). Otherwise d,e are distinct odd integers at least three and five. Their product divides k, and 2(d+e-1)<=de<=k. Fibonacci addition yields F_dF_e<=F_(d+e-1)<=F_floor(k/2). Write m=floor(k/2)>=5. Since k>=m+4,
+
+$$
+F_k\ge F_{m+4}=3F_m+2F_{m+1}>5F_m,
+$$
+
+contradicting FDS7. This proves necessity.
+
+**Theorem.** For every even n>=2,
+
+$$
+\boxed{D_F(L_n^2+1)=D_F(F_n^2+1)\cup\{5\},}\tag{FDS8}
+$$
+
+$$
+\boxed{|D_F(L_n^2+1)|=
+\tau(n-1)+\tau(n+1)-1+\mathbf1_{5\nmid(n^2-1)}.}\tag{FDS9}
+$$
+
+At n=0 the count is two.
+
+**Proof.** The golden trace-norm identity gives L_n^2-5F_n^2=4 for even n, hence L_n^2+1=5(F_n^2+1). Use FDS6 with u=n-1,v=n+1 and compare with FDS4. The value five is already present exactly when 5 divides u or v, equivalently 5 divides n^2-1. At zero, L_0^2+1=5 has Fibonacci divisor values one and five.
+
+The modulo-five comparison in FDS8 is already recorded in OEIS A340542's comments, together with the comparison to A339669. FDS4-FDS9 give its full divisor-index derivation and explicit counts.
+
+

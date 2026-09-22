@@ -1,0 +1,26 @@
+### FD.4 Wall 指数处的周期与两个数值计数
+
+以下 p>=7 为素数，a=alpha(p)，epsilon=(5/p)，e=v_p(F_(p-epsilon))。由出现秩和 U.1，p 不整除 (p-epsilon)/a，因此
+
+\[
+e=v_p(F_a),\qquad e\ge1.\tag{FD8}
+\]
+
+在 R=Z/(p^e) 中 Q^a=cI，且 c^2=(-1)^a。若 a 为奇数，则 c^2=-1，所以 Q^(2a)=-I 且 pi(p^e)=pi(p)=4a。若 a=2 mod4，则 c=1 modp；由 (c-1)(c+1)=0 modp^e 及 c+1 为单位，得到 c=1 modp^e，故 pi(p^e)=pi(p)=a。若 4|a，则同理 c=-1 modp^e，故 pi(p^e)=pi(p)=2a。这些模 p 的周期三分律是 Vinson 的经典定理，也见 Bragman-Rowland 定理 7；降模保证所给周期没有进一步缩短。
+
+令 r=pi(p)。在 0<=i<r 中去掉 Lucas 零点 L_i=0 modp，记余下的指标集为 I。定义
+
+\[
+N_p=|\{F_i\bmod p^e:i\in I\}|.
+\]
+
+令 Z_p 为 Lucas 零点 i 的个数，其 F_i modp^e 没有在 I 中出现。Bragman-Rowland 定理 1 给出
+
+\[
+\delta(p)=\frac{N_p}{p^e}
++\frac{Z_p}{2p^{2e-1}(p+1)},\qquad 0\le Z_p\le2.
+\tag{FD9}
+\]
+
+这里 N_p 计不同的数值，Z_p 按该定理计指标，不能互换。Lucas 零点由其命题 9 分类：a 奇数时没有；a=2 mod4 时只有 a/2；4|a 时有 a/2 与 3a/2。
+

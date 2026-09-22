@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:74119b730b7eb0d2d1fb00d87b4999acd921b52014c89a578ab909253fd4f84e
+  normalized_sha256: sha256:74119b730b7eb0d2d1fb00d87b4999acd921b52014c89a578ab909253fd4f84e
+cas_ref: sha256:74119b730b7eb0d2d1fb00d87b4999acd921b52014c89a578ab909253fd4f84e
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/ResidueFirstStepOptimality.residue_first_step_optimality
+    target_statement_id: sha256:e91a6c0d27002b263a6203684fbb26f134d9247381b370787046753f74d7ec57
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 9f0de22960fddd137620bc8358e039e1dcc45e599d1cbabd03c2cd0d469bc062
+    - 79cec3995a6e1ff954f50babba660d3eeb5412d29b47a6aa6e5006225d67e437

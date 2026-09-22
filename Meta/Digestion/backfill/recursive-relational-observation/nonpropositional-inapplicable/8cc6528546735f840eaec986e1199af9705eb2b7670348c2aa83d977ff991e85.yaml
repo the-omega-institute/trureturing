@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8cc6528546735f840eaec986e1199af9705eb2b7670348c2aa83d977ff991e85
+  normalized_sha256: sha256:8cc6528546735f840eaec986e1199af9705eb2b7670348c2aa83d977ff991e85
+cas_ref: sha256:8cc6528546735f840eaec986e1199af9705eb2b7670348c2aa83d977ff991e85
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Consequently”确实夹带乘积拓扑中收敛等价于逐点评估收敛的命题；探针对实际合法位流上的函数及任意滤子直接应用 tendsto_pi_nhds，完整保留每个输入点的量词，仓内无冻结 GID。
+    previous_atom_id: be1071188addd1821132340483f6746c3a8208a711d921f6c0434c03bd418ccb
+    next_atom_id: afbf81c3d4dc1f342864505cab9dc0a12e5f22e94beaa75d699a3869181b46db

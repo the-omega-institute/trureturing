@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2cd9997c5d9838bb62910ce23cd39b5f31c63eca96dd317ad1f92dc6d7b60b5d
+  normalized_sha256: sha256:2cd9997c5d9838bb62910ce23cd39b5f31c63eca96dd317ad1f92dc6d7b60b5d
+cas_ref: sha256:2cd9997c5d9838bb62910ce23cd39b5f31c63eca96dd317ad1f92dc6d7b60b5d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 子集条件与每个原元素都有子集内弱支配者，正是 minimal_iff_minimal_of_imp_of_forall 的两个输入；逐点应用并取集合外延即得两极小集相同，空集也被量词覆盖，仓内无冻结 GID。
+    previous_atom_id: 1824d821e1f515e0bff37dfc72620fc146d292c4d982053919a178a2ed273f80
+    next_atom_id: 77ac5996c39573c5ddd0a90642b9563e46fbb4dffe350193e48772f075293d68

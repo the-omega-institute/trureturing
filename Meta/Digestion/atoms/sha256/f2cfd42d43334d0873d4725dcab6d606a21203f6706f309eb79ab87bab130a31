@@ -1,0 +1,3 @@
+定理481.2遂给 $\varepsilon\le\rho_{\rm abs}$ 时的弱最优及 $\varepsilon<\rho_{\rm abs}$ 时的唯一性。
+
+为证明准确性，选取得最小比值的余量。第一余量的最不利方向为 $(\Delta a,\Delta b)=(-\eta,+\eta)$；第二为 $(\Delta b,\Delta a,\Delta z)=(-\eta,+\eta,+\eta)$；第三为 $(\Delta u,\Delta v)=(-\eta,+\eta)$；其余坐标不变。三种方向分别使所选余量减少 $3\eta,4\eta,3\eta$。

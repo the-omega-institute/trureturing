@@ -1,0 +1,265 @@
+{
+  "schema": "two-root-depth-two-tensor-v1",
+  "shapes": {
+    "2+2": {
+      "shape": "2+2",
+      "scope": "same-shape product; all real probability weights",
+      "root_partition": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "local_polytope_vertex_counts": [
+        8,
+        8,
+        0,
+        0,
+        0,
+        0,
+        8,
+        8
+      ],
+      "integer_vertex_weights": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          11,
+          8,
+          8
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          8,
+          8,
+          0,
+          11
+        ],
+        [
+          8,
+          8,
+          11,
+          0
+        ],
+        [
+          11,
+          0,
+          8,
+          8
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "vertex_pair_count": 225,
+      "complete_layout_count": 262144,
+      "integer_comparison_count": 58982400,
+      "maximum_integer_weight_sum": 27,
+      "integer_moment_upper_bound": 59049
+    },
+    "3+1": {
+      "shape": "3+1",
+      "scope": "same-shape product; all real probability weights",
+      "root_partition": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "local_polytope_vertex_counts": [
+        10,
+        10,
+        10,
+        4,
+        0,
+        0,
+        0,
+        10
+      ],
+      "integer_vertex_weights": [
+        [
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          8,
+          8,
+          11
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          7,
+          9,
+          9,
+          15
+        ],
+        [
+          3,
+          3,
+          3,
+          5
+        ],
+        [
+          9,
+          7,
+          9,
+          15
+        ],
+        [
+          9,
+          9,
+          7,
+          15
+        ],
+        [
+          8,
+          0,
+          8,
+          11
+        ],
+        [
+          8,
+          8,
+          0,
+          11
+        ],
+        [
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "vertex_pair_count": 324,
+      "complete_layout_count": 262144,
+      "integer_comparison_count": 84934656,
+      "maximum_integer_weight_sum": 40,
+      "integer_moment_upper_bound": 129600
+    }
+  }
+}

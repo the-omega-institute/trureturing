@@ -1,0 +1,25 @@
+**定义与假设 105.1（共同准备初态的两核实验）。** 沿用[定义 103.1](https://github.com/the-omega-institute/trureturing/blob/99457e11eef9700db57c7b85bbafcb0c5fad25ce/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的四状态核 $K_k$，$k\ge2$，记 $\delta=1/k$、$a=1-\delta/3$。现在在两个假设下均将初态确定准备为状态 $1$，随后分别使用 $K_k$ 与 $K_k^{\mathsf T}$。观察 $n\ge0$ 次转移后的完整路径，载体为
+$$
+\Omega_{1,n}=\{(x_0,\ldots,x_n)\in\{0,1,2,3\}^{n+1}:x_0=1\}.
+$$
+在此载体上定义两份概率
+$$
+P^1_{k,n}(x)=\prod_{t=0}^{n-1}K_k(x_t,x_{t+1}),
+\qquad
+Q^1_{k,n}(x)=\prod_{t=0}^{n-1}K_k(x_{t+1},x_t).
+\tag{105.1a}
+$$
+两核的行和均为 $1$，故它们归一化；全部路径质量严格正。记 $R^1_{k,n}$ 为等先验、允许随机化检验的最优平均错误率，且
+$$
+\overline R^1_n=\sup_{k\ge2}R^1_{k,n},
+\qquad b=\frac{1+2\sqrt2}{4}<1.
+\tag{105.1b}
+$$
+该实验比较同一受控起点下的两个转移核。将两律延拓到全部路径载体并在 $x_0\ne1$ 处赋零后，整路径反序 $\Theta_n$ 满足
+$$
+(\Theta_n)_*P^1_{k,n}(x)
+=\mathbf1_{\{x_n=1\}}\prod_{t=0}^{n-1}K_k(x_{t+1},x_t).
+\tag{105.1c}
+$$
+因此 $n\ge1$ 时它不同于 $Q^1_{k,n}$：例如 $(1,0,\ldots,0)$ 在后者中为正，在前者中为零。这里不采用平稳初态的路径 KL 恒等式。
+

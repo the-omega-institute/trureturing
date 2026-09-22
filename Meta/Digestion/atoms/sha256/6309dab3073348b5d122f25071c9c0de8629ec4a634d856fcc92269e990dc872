@@ -1,0 +1,8 @@
+**OPEN-COPY。** 令 $\operatorname{Ctx}^{\rm dup}_{\Sigma_{{\rm cau},t}}$ 为使用同一原签名、固定参数、有限项及严格失败传播，但允许重复输入的项语言。精确问题为
+
+$$
+E_q^{\rm dup}(B)\ \Longleftrightarrow\
+\exists\,\text{固定总项 }C\in\operatorname{Ctx}^{\rm dup}_{\Sigma_{{\rm cau},t}}
+\ \forall X\in\mathcal B:\quad q(C(X))=q(F_BX).
+$$
+

@@ -1,0 +1,41 @@
+**假设 30.0（固定载体、测度与全测度相位契约）。** 沿用定义25.0及假设25.1的原始紧数字空间 $K$、原始圆周群 $\mathbb T$、连续满射 $H:K\to\mathbb T$、分裂相位集 $E=\{E_m:m\ge1\}$、分裂点集 $S=H^{-1}(E)=\{x_m^+,x_m^-:m\ge1\}$ 及准确闭图 $\Gamma$。特别，$E$ 中的纤维恰有两个点，其他纤维恰有一个点。本节全部关于这些对象的结论均以该精确纤维与闭图契约为前提。
+
+对紧度量空间 $X$，$M(X)$ 表示全部有限实有符号正则 Borel 测度，$M_+(X)$ 表示其正锥，并记
+$$
+\varepsilon_X(\mu)=\mu(X),\qquad
+\|\mu\|_{\mathrm{TV}}=|\mu|(X).
+$$
+全变差不含二分之一因子。采用定理28.10的典范分解
+$$
+\mu=\mu_{\mathrm{at}}+\mu_{\mathrm{na}},
+$$
+其中非原子性指全变差测度无原子，不指相对于 Haar 测度绝对连续。Jordan 分解、全变差及测度范数的约定参见 Daniel V. Tausk，*Weak\* topology for the space of finite measures on a topological space*，[§2，PDF第2—3页](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf)。
+
+固定定理28.3的 Borel 截面
+$$
+s(\theta)=
+\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^-,&\theta=E_m,
+\end{cases}
+\qquad H\circ s=\operatorname{id}_{\mathbb T}.
+$$
+圆周卷积始终是定义28.6在原始圆周上定义的测度卷积。
+
+称一个实双线性映射 $B:M(K)\times M(K)\to M(K)$ 满足正性与全测度相位契约，若
+$$
+\mu,\nu\in M_+(K)\ \Longrightarrow\ B(\mu,\nu)\in M_+(K)
+$$
+且
+$$
+\forall\mu,\nu\in M_+(K),\qquad
+H_\#B(\mu,\nu)=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+后一等式是对每个 Borel 相位集合的测度相等，量词覆盖全部有限正测度；它不是仅对 Dirac 输入的要求。此定义不预设有界性、连续性、交换律、结合律或核积分表示。
+
+记
+$$
+P^{(0)}=P^{-1},\qquad P^{(\infty)}=P^{+1},
+$$
+其中右端为定义23.8的两个固定符号概率核，等同关系由定理25.12给出；$\infty$ 始终是形式参数。相应的逐集合积分运算 $\star_0,\star_\infty$ 取定理28.7的构造。
+

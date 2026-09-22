@@ -1,0 +1,9 @@
+**theorem 34.4 (Disappearance relative to the own lift is not parameter independence).** Let $s,t\in\Lambda$, use the same probability input $\mu$, and let $n>G_L$ with $L\ge1$. Then
+$$
+(q_L)_\#\bigl(\mu_t^{(n)}-\mu_s^{(n)}\bigr)
+=\sum_{m=1}^{G_L}\bigl(p_m(t)-p_m(s)\bigr)\nu^{(n)}(\{E_m\})w_{m,L}.
+$$
+In particular, absence of mass at the finitely many phases in $B_L$ implies equality of the two prefix laws. The universal cutoff alone does not imply that equality.
+
+For every prescribed $L\ge1$, every $n>G_L$, and every two distinct parameters, there is a probability input for which the two depth-$L$ laws at time $n$ differ. There is also a single fixed probability input satisfying the strict Fourier-modulus condition whose depth-one laws for $t=0$ and $t=\infty$ differ at every time $n\ge7$.
+

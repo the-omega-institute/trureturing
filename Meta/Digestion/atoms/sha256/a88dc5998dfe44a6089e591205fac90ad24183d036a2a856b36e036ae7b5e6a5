@@ -1,0 +1,20 @@
+**Proof.** The formula follows by induction from the exact natural addition law $P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}$ and finite multilinearity. Every coefficient corresponding to an attainable sum is positive; summing all coefficients gives $(\sum_d a_d)^n=1$. This proves both the exact support and total mass, without appealing to positivity of the full kernel at a signed parameter.
+
+Natural phases avoid $E$: equality $[s\phi]=[-m\phi]$ would make $(s+m)\phi$ an integer. Thus all displayed output points are nonsplit, no split singleton has mass, and the input residual is zero. The coordinate formula gives equality with the own phase lift at every time.
+
+For $k\ne0$,
+$$
+\widehat\nu(k)=\sum_{d\in D}a_d e^{2\pi i k d\phi}.
+$$
+Two distinct $d$ give distinct character values, since $k(d-d')\phi$ cannot be an integer. The equality case proved in Theorem 34.7 shows that the modulus is strictly less than one exactly when at least two support points occur. If there is only one support point, the modulus is one. Similarly, a coefficient can equal one only if every support value is one. The presence of a positive $d$ excludes this for every $k\ne0$; if $D=\{0\}$, all coefficients equal one. The two classifications now follow from Theorem 34.7.
+
+For the lazy step,
+$$
+\left|\widehat\nu(k)\right|=
+\left|\frac{1+e^{2\pi i k\phi}}2\right|
+=|\cos(\pi k\phi)|<1\quad(k\ne0),
+$$
+and counting the choices of the unit step proves the binomial formula and its extreme coefficients. For the deterministic unit step all coefficients have modulus one but none with $k\ne0$ equals one, proving the stated distinction.
+
+Finally, cylinder indicators are continuous on $K$, so the weak-star limits give the cylinder laws. The lift of Haar assigns zero mass to every split point, and its mass on $C_p$ is therefore the Haar length of $J_p$. The exact lengths in Assumption 34.0 give the displayed values. $\square$
+

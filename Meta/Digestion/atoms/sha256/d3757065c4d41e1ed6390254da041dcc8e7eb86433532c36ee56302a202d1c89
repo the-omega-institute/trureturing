@@ -1,0 +1,25 @@
+**定理 15.5（对跖商的集合二值补充与连续离散障碍）。** 对任意 $n\in\mathbb N_0$，令
+$$
+S^n=\left\{(x_0,\ldots,x_n)\in\mathbb R^{n+1}:
+\sum_{i=0}^{n}x_i^2=1\right\},
+\qquad
+q_n:S^n\longrightarrow\mathbb{RP}^n=S^n/(x\sim-x).
+$$
+则 $q_n$ 是紧致 Hausdorff 空间之间的两页覆盖，并且
+$$
+\lambda_{\mathrm{set}}(q_n)=2.
+$$
+当 $n\ge1$ 时，不存在到任何离散空间的连续纤维分离读数，因而
+$$
+\lambda_{\mathrm{disc}}(q_n)=\infty,
+$$
+且 $q_n$ 无连续截面、不平凡。当 $n=0$ 时，
+$$
+S^0=\{-1,1\},
+\qquad
+\mathbb{RP}^0=\{*\},
+\qquad
+\lambda_{\mathrm{disc}}(q_0)=2,
+$$
+并且 $q_0$ 平凡。
+

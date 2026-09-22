@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c5d69ac97e54d88ed47303698e44198f389fb9ad8a6af653fc030bb1f127a4f
+  normalized_sha256: sha256:6c5d69ac97e54d88ed47303698e44198f389fb9ad8a6af653fc030bb1f127a4f
+cas_ref: sha256:6c5d69ac97e54d88ed47303698e44198f389fb9ad8a6af653fc030bb1f127a4f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Int.floor_toNat 将全实数的自然 floor 与整 floor 的非负截断对应，Nat.floor_eq_zero 在所有小于一的实数上使正整数求和区间为空；探针同时验证实数求和等于整数 Mertens 和的实嵌入，仓内无冻结 GID。
+    previous_atom_id: fc1a641d37204484d38379a3cd382ebe1e451d1f5233c1a9c90f2ede38a041a1
+    next_atom_id: bf3b9a5c0fc7f5569951873fda55f0ead9b8ccfbe4ce513cd4bb5ab710a5c3a4

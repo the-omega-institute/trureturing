@@ -1,0 +1,22 @@
+### 92.1 互补记录把算子信息压缩成碰撞和
+
+设系统维数为 $n+1$，有 $n+2$ 个秩一记录上下文。每个上下文都满足记录测量条件，并假设同一上下文内的投影正交、不同上下文之间满足
+
+$$
+\operatorname{Tr}(P_{l,j}P_{k,r})
+=
+\begin{cases}
+\delta_{jr},&l=k,\\[2pt]
+\dfrac{1}{n+1},&l\ne k.
+\end{cases}
+$$
+
+这是一组有限维的完备互补上下文条件。`complete_context_collision_conservation` 在这些假设下证明算子恒等式
+
+$$
+\boxed{
+\sum_{l,j}P_{l,j}\otimes P_{l,j}
+=I+\operatorname{Swap}.
+}
+$$
+

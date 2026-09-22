@@ -1,0 +1,11 @@
+**References for RP1-RP12.** The valuation input v_5(F_n)=v_5(n) and the varying-prime initial-depth
+formula are in L. A. Medina and E. Rowland, *p-regularity of the p-adic
+valuation of the Fibonacci sequence*, Fibonacci Quarterly 53 (2015),
+265-271, Theorem 1.4, https://arxiv.org/abs/0910.2907 .
+For the established cyclotomic/primitive-factor framework see
+H. Hong, *On big primitive divisors of Fibonacci numbers*,
+https://arxiv.org/abs/2312.04354 . Jordan-totient and cyclotomic-derivative
+connections are already studied in P. Moree, S. Saad Eddin, A. Sedunova,
+and Y. Suzuki, *Jordan totient quotients*, https://arxiv.org/abs/1810.04742 .
+
+

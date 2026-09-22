@@ -1,0 +1,21 @@
+**定理 31.2（全复测度接口与准确范数）。** 定义31.1的复化在全部 $M_{\mathbb C}(K)$ 上良定义、交换且结合，并仍满足逐集积分公式。其准确总变差乘法常数为
+$$
+\|\mu\star_t\eta\|_{\mathrm{TV}}\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}},\qquad \|\star_t\|_{\mathrm{bil}}=C_t.
+$$
+映射
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu)
+$$
+是复代数同构，逆为
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}g_mu_m.
+$$
+它满足
+$$
+\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}},\qquad \|\Psi_t(\nu,g)\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}}+\frac{2}{1-\rho_t}\|g\|_1,
+$$
+$$
+\frac{1-\rho_t}{2}\|\mu\|_{\mathrm{TV}}\le N_t(\mu):=\|H_\#\mu\|_{\mathrm{TV}}+\|R_t\mu\|_1\le2\|\mu\|_{\mathrm{TV}}.
+$$
+范数 $N_t$ 完备且次乘法；$C_t\|\cdot\|_{\mathrm{TV}}$ 也是完备次乘法范数。原总变差范数次乘法当且仅当 $t\in\{0,\infty\}$。以下以 $A_t$ 表示配备 $N_t$ 的这个复 Banach 代数。
+

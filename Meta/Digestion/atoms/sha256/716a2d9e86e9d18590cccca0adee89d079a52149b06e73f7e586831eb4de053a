@@ -1,0 +1,8 @@
+**Proof.** The recurrence gives $F_8=21$, while the exact layer
+factorizations give $B_{7,0}=13$ and
+$B_{7,1}=97\cdot6168709$. Substitution in the definition of $S_{p,k}$
+gives $-2\equiv5\pmod7$ and $125890\equiv2\pmod7$, which are related by
+multiplication by $\chi(7)=-1$. The residues modulo five of the two factors
+in the second layer have opposite quadratic characters, so both split and
+inert terms occur.
+

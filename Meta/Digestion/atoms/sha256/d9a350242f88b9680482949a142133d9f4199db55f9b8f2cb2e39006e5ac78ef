@@ -1,0 +1,7 @@
+**Proof.** NP2 gives constant residue epsilon precisely when k>=K_s.
+At an earlier starting index k, NP4 shows that the difference to EVERY
+forward index has valuation h_p+k<s, so no positive period can start
+there. The limit is the restatement of these finite congruences.
+The limit is also a special case of the Rowland-Yassawi p-adic
+convergence theorem; NP2 determines its exact depth.
+

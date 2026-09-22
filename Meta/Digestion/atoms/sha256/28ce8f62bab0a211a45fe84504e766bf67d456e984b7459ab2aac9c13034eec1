@@ -1,0 +1,14 @@
+**Proposition, comparison with ZBD3.** Retain the definitions y=X^(4/35), H(X), and R_8(X) of EMWS and ZBD. For sufficiently large X,
+
+$$
+\boxed{R_8(X)+H(X)\ge\operatorname{Pi}(y,60X+1).}\tag{PBC6}
+$$
+
+If H(X)=o(X/log X), then
+
+$$
+G(y,60X+1)\sim\frac{60X}{\log X},\tag{PBC7}
+$$
+
+and the number of non-WSS primes p<=x with prime Fibonacci rank is at least a positive constant times log(x)/log(log(x)) for all sufficiently large x.
+

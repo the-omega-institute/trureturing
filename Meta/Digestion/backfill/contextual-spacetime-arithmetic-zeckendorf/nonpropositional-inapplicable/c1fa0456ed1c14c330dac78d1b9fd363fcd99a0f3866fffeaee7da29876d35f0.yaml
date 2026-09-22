@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1fa0456ed1c14c330dac78d1b9fd363fcd99a0f3866fffeaee7da29876d35f0
+  normalized_sha256: sha256:c1fa0456ed1c14c330dac78d1b9fd363fcd99a0f3866fffeaee7da29876d35f0
+cas_ref: sha256:c1fa0456ed1c14c330dac78d1b9fd363fcd99a0f3866fffeaee7da29876d35f0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段声明经典解析等价与可选定量输入的局部假设及使用范围，没有声称 RH 或这些解析界已由编码推出，因而只结算接口定义。
+    previous_atom_id: 7bad1fb9d902e41eb231f0ef8ce7e113b4136dde0d2dcd0b0c31b61944a5ef5e
+    next_atom_id: 91902c5b5b8932252f7b493c0de5ad76ce14308fb2e21fdf37d1acddd55fc4dd

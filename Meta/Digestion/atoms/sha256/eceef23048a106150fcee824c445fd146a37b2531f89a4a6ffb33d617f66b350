@@ -1,0 +1,114 @@
+**证明。** 先证甲推出乙。命题18.3给出 $C(x)=H^{-1}(\{H(x)\})$，特别 $x\in C(x)$。对任何 $z\in C(x)=\Gamma(0_K,x)$，甲分别应用于输出 $x$ 和 $z$，得到
+$$
+q(z)=D(q(0_K),q(x))=q(x).
+$$
+因此 $q$ 在每个 $H$ 纤维上恒定。$H$ 满射，所以存在唯一的满射函数 $p:\mathbb T\to Q$，满足 $q=p\circ H$。
+
+这个因子映射连续，而不是额外假设连续。事实上，$H$ 是从紧致空间到 Hausdorff 空间的连续满射，所以是闭映射：每个闭集在 $K$ 中紧，其像在 $\mathbb T$ 中紧而闭。闭满射是商映射，因为若 $H^{-1}(V)$ 开，则
+$$
+\mathbb T\setminus V=H(K\setminus H^{-1}(V))
+$$
+闭，故 $V$ 开。于是对每个开集 $O\subseteq Q$，由
+$$
+H^{-1}(p^{-1}(O))=q^{-1}(O)
+$$
+开，得到 $p^{-1}(O)$ 开。
+
+任取 $a,b\in\mathbb T$，利用 $H$ 满射选择 $x,y$ 使 $H(x)=a,H(y)=b$，再利用非空值性选择 $z\in\Gamma(x,y)$。甲和相位等式给出
+$$
+D(p(a),p(b))=q(z)=p(a+b).
+$$
+因此若 $p(a)=p(a')$ 且 $p(b)=p(b')$，同一个 $D$ 值同时等于 $p(a+b)$ 和 $p(a'+b')$，得到乙的同余条件。$p$ 满射又说明这条公式已经唯一确定 $D$。
+
+反过来，若乙成立，规定 $D(p(a),p(b))=p(a+b)$。同余条件保证更换任一代表均不改变结果，满射性保证在 $Q^2$ 上处处有定义。对任意 $z\in\Gamma(x,y)$，有 $H(z)=H(x)+H(y)$，所以
+$$
+D(q(x),q(y))=p(H(x)+H(y))=p(H(z))=q(z).
+$$
+这证明乙推出甲。
+
+接着证明闭子群描述。乙中的双槽同余条件等价于所有平移都保持相等关系核：
+$$
+p(a)=p(b)\quad\Longrightarrow\quad
+p(a+t)=p(b+t)\qquad(t\in\mathbb T).
+$$
+双槽条件取相同的第二槽即得平移条件；反向先以平移条件替换第一槽，再利用加法交换性替换第二槽，即得双槽条件。
+
+置 $N=p^{-1}(\{p(0)\})$。$Q$ Hausdorff，使单点 $\{p(0)\}$ 闭，故 $N$ 闭。显然 $0\in N$。若 $n,m\in N$，同余条件给出 $p(n+m)=p(0+0)=p(0)$，所以 $n+m\in N$。若 $n\in N$，将 $p(n)=p(0)$ 平移 $-n$，得到 $p(0)=p(-n)$，所以 $-n\in N$。因此 $N$ 是闭子群。对任意 $a,b$，先平移 $-b$、反向再平移 $b$，得到
+$$
+p(a)=p(b)
+\quad\Longleftrightarrow\quad
+p(a-b)=p(0)
+\quad\Longleftrightarrow\quad a-b\in N.
+$$
+
+所以 $h(a+N)=p(a)$ 定义良好且双射。由于 $p=h\circ\pi_N$ 且 $\pi_N$ 是商映射，$h$ 连续。$\mathbb T/N$ 是紧空间的连续像，故紧；连续双射 $h$ 的目标 $Q$ Hausdorff，因此 $h$ 是闭映射，其逆连续。这证明乙推出丙。反向，若丙成立，令 $p=h\circ\pi_N$。它连续满射，而 $h$ 单射保证 $p(a)=p(b)$ 当且仅当 $a-b\in N$。子群对加法封闭，故这个关系是加法同余，得到乙。$p$ 已由 $q$ 唯一确定，$N$ 由显示的零纤维公式唯一确定，$h$ 又由 $h\circ\pi_N=p$ 唯一确定。
+
+现在证明全部群结构与连续性。$Q$ 是 $K$ 的连续像，故紧。任取 $a,b,c\in\mathbb T$，已经证明的公式给出
+$$
+D(D(p(a),p(b)),p(c))=p((a+b)+c)
+=p(a+(b+c))=D(p(a),D(p(b),p(c))).
+$$
+$ p $ 满射，因此 $D$ 结合。交换性同理由 $a+b=b+a$ 得到，单位律由 $a+0=0+a=a$ 得到。若 $p(a)=p(b)$，则 $a-b\in N$，从而 $(-a)-(-b)\in N$，故 $p(-a)=p(-b)$；所以 $\iota_Q(p(a))=p(-a)$ 定义良好。两侧乘积公式均给
+$$
+D(p(a),\iota_Q(p(a)))=D(\iota_Q(p(a)),p(a))=p(0).
+$$
+因此这些数据确实构成交换群，而不是只构成一个结合的二元运算。
+
+为证明联合连续性，考虑连续满射
+$$
+p\times p:\mathbb T^2\longrightarrow Q^2.
+$$
+其定义域紧，目标 Hausdorff，所以如前述论证一样，它是闭的商映射。圆周加法连续，且
+$$
+D\circ(p\times p)=p\circ +.
+$$
+右侧连续。对于任意开集 $O\subseteq Q$，
+$$
+(p\times p)^{-1}(D^{-1}(O))=(p\circ +)^{-1}(O)
+$$
+开，商映射性质遂给出 $D^{-1}(O)$ 开。这是 $D$ 的联合连续性证明，并未使用一般的两个商映射之积仍为商映射这一断言。取逆连续性同样由
+$$
+\iota_Q\circ p=p\circ(a\mapsto-a)
+$$
+以及 $p$ 是商映射得到。于是 $Q$ 为紧致交换拓扑群。显示的运算公式还说明 $p$ 保持运算和单位，故是连续群同态。
+
+为确认每个闭子群确实产生所列 Hausdorff 观察，固定任意闭子群 $N\le\mathbb T$。商映射 $\pi_N$ 是开映射：对开集 $V\subseteq\mathbb T$，
+$$
+\pi_N^{-1}(\pi_N(V))=V+N=\bigcup_{n\in N}(V+n)
+$$
+开。若 $a+N\ne b+N$，则 $d=a-b\notin N$。$N$ 闭，所以存在零的开邻域 $W$，使 $(d+W)\cap N=\varnothing$。由圆周减法在 $(0,0)$ 连续，可取零的开邻域 $V$，满足 $V-V\subseteq W$。开集 $\pi_N(a+V)$ 和 $\pi_N(b+V)$ 分别包含两个陪集，且互不相交；否则存在 $v,w\in V$ 使 $d+v-w\in N$，与 $(d+W)\cap N=\varnothing$ 矛盾。因此 $\mathbb T/N$ Hausdorff。它又是紧空间的连续像，故紧。$\pi_N$ 的相等关系核为陪集同余，所以将已证的乙推出甲及连续性结论应用于 $p=\pi_N$，即得 $q_N=\pi_N\circ H$ 是连续确定观察。
+
+$H$ 自身满足甲，只需取 $Q=\mathbb T$ 和圆周加法为 $D$。任意满足甲的 $q$ 均已证明唯一地连续因子化为 $p\circ H$，所以 $H\succeq q$；这正是所定义次序中的最精细性，而不是关于任意后处理的无条件断言。
+
+对规范商，若 $N_1\subseteq N_2$，则
+$$
+r(a+N_1)=a+N_2
+$$
+定义良好且满射。等式 $r\circ\pi_{N_1}=\pi_{N_2}$ 与 $\pi_{N_1}$ 的商映射性质保证 $r$ 连续，并且 $q_{N_2}=r\circ q_{N_1}$。反之，若这个观察因子化成立，$H$ 满射给出 $\pi_{N_2}=r\circ\pi_{N_1}$。任取 $n\in N_1$，有
+$$
+\pi_{N_2}(n)=r(\pi_{N_1}(n))=r(\pi_{N_1}(0))=\pi_{N_2}(0),
+$$
+所以 $n\in N_2$。这证明因子化次序的闭子群包含描述。
+
+为否定所有连续后处理都允许确定运算，取连续满射
+$$
+p:\mathbb T\to[-1,1],\qquad p([t])=\cos(2\pi t).
+$$
+令 $a=[1/4]$、$b=[-1/4]$、$t=[1/4]$，则
+$$
+p(a)=p(b)=p(t)=0,\qquad p(a+t)=-1,\qquad p(b+t)=1.
+$$
+相等关系核不被这个平移保持。等价地，任何所需运算都将同时被迫满足 $D(0,0)=-1$ 与 $D(0,0)=1$，故不存在。
+
+最后，若 $q,D$ 对 $\Gamma$ 满足甲，前面已证 $q$ 在每个 $C$ 纤维上恒定。对 $r\in\Lambda(x,y)$，取任意 $w\in\Gamma(x,y)$；命题18.3给出 $r\in C(w)$，因而
+$$
+q(r)=q(w)=D(q(x),q(y)).
+$$
+所以同一个 $q,D$ 对 $\Lambda$ 也确定。反向由 $\Gamma\subseteq\Lambda$ 立即成立。这只说明两关系具有相同的确定观察，并不消除命题18.3中的严格关系差异。商上的单位 $q(0_K)$ 来自对 $C$ 纤维的识别，也不使 $0_K$ 成为原关系的严格单位。证毕。
+
+[^rro18_phase]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定理371.2、372.2—372.4及377.1；固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的[相位前置文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。其中定理372.2—372.3给出两分支的实值域及公共前缀的奇偶定向，定理372.4给出全部圆周分裂纤维。
+
+[^rro18_fibers]: 第16节定义16.3及定理16.4：定向标记与加法闭图的完整输入纤维分类。本节在假设18.1中明确采用该分类；结合律及确定观察商的结论由命题18.2—定理18.4另行证明。
+
+[^rro18_quotient]: Nicolas Bourbaki, *General Topology: Chapters 1–4*，第I章 Topological Structures 与第III章 Topological Groups，Springer，DOI：[10.1007/978-3-642-61701-0](https://doi.org/10.1007/978-3-642-61701-0)。本节所需的商映射下降、闭子群陪集与连续群运算论证均在定理18.4的证明中给出。
+

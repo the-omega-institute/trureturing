@@ -1,0 +1,11 @@
+**Theorem.** For every r>=1 the natural density
+
+$$
+\boxed{d_r=\lim_{X\to\infty}\frac1X
+ \#\{0\le m\le X:\sigma_F(m^2+1)=F_{2r}\}>0}       \tag{QR7}
+$$
+
+exists. In particular every F_(2r) is attained infinitely often.
+Combined with Appendix FSP.3, the Fibonacci-valued part of A339621's range is
+EXACTLY {F_(2r):r>=1}.
+

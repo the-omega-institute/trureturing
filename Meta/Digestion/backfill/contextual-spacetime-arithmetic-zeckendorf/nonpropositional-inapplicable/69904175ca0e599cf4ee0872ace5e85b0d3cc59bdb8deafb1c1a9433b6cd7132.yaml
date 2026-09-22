@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:69904175ca0e599cf4ee0872ace5e85b0d3cc59bdb8deafb1c1a9433b6cd7132
+  normalized_sha256: sha256:69904175ca0e599cf4ee0872ace5e85b0d3cc59bdb8deafb1c1a9433b6cd7132
+cas_ref: sha256:69904175ca0e599cf4ee0872ace5e85b0d3cc59bdb8deafb1c1a9433b6cd7132
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子叶只规定一元情境或表示状态的定义、原语数据及任务解释，未包含独立数学结论；唯一性或语义保持的附带断言已拆到单独子叶并由探针核验。
+    previous_atom_id: 501227b0fed420e32882d36cc316a25c18f515847ce42b912800df808f4e074c
+    next_atom_id: 484464d851c1df22ebafb1932aee8cf75f8a090be5c9bb74dcb2e56311c5c0a9

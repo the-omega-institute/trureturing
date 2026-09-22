@@ -1,0 +1,704 @@
+{
+  "schema": "erdos7-bad-mass-rearrangement-v1",
+  "scope": "A strict fixed-family reduction of physical complete-test V; the final survivor laws and Gamma are unchanged. No outer worst-family improvement is claimed.",
+  "period": 225,
+  "old_modulus": 9,
+  "old_Dirac_point": 1,
+  "original_forbidden_classes": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      0
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      25,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      75,
+      28
+    ],
+    [
+      225,
+      154
+    ]
+  ],
+  "mixed_CRT_projections": [
+    {
+      "modulus": 15,
+      "residue": 1,
+      "old_cofactor": 3,
+      "old_residue": 1,
+      "current_depth": 1,
+      "current_residue": 1
+    },
+    {
+      "modulus": 45,
+      "residue": 37,
+      "old_cofactor": 9,
+      "old_residue": 1,
+      "current_depth": 1,
+      "current_residue": 2
+    },
+    {
+      "modulus": 75,
+      "residue": 28,
+      "old_cofactor": 3,
+      "old_residue": 1,
+      "current_depth": 2,
+      "current_residue": 3
+    },
+    {
+      "modulus": 225,
+      "residue": 154,
+      "old_cofactor": 9,
+      "old_residue": 1,
+      "current_depth": 2,
+      "current_residue": 4
+    }
+  ],
+  "mixed_labels_per_depth": {
+    "1": 2,
+    "2": 2
+  },
+  "old_survivors": [
+    1,
+    2,
+    4,
+    5,
+    7,
+    8
+  ],
+  "physical_points_by_current_leaf": [
+    100,
+    1,
+    127,
+    28,
+    154,
+    55,
+    181,
+    82,
+    208,
+    109,
+    10,
+    136,
+    37,
+    163,
+    64,
+    190,
+    91,
+    217,
+    118,
+    19,
+    145,
+    46,
+    172,
+    73,
+    199
+  ],
+  "pure_base_current_leaves": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    8,
+    9,
+    11,
+    12,
+    13,
+    14,
+    16,
+    17,
+    18,
+    19,
+    21,
+    22,
+    23,
+    24
+  ],
+  "bad_current_leaves": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    7,
+    11,
+    12,
+    16,
+    17,
+    21,
+    22
+  ],
+  "good_current_leaves": [
+    8,
+    9,
+    13,
+    14,
+    18,
+    19,
+    23,
+    24
+  ],
+  "alpha": "3/5",
+  "delta": "2/5",
+  "C": "5/3",
+  "retained_bad_mass_beta": "1/3",
+  "BB_bad_density_r": "5/9",
+  "candidate_bad_densities": {
+    "roots1and2": "2/3",
+    "leaves3and4": "0"
+  },
+  "laws": {
+    "BB": {
+      "current_leaf_masses": [
+        "0",
+        "1/36",
+        "1/36",
+        "1/36",
+        "1/36",
+        "0",
+        "1/36",
+        "1/36",
+        "1/12",
+        "1/12",
+        "0",
+        "1/36",
+        "1/36",
+        "1/12",
+        "1/12",
+        "0",
+        "1/36",
+        "1/36",
+        "1/12",
+        "1/12",
+        "0",
+        "1/36",
+        "1/36",
+        "1/12",
+        "1/12"
+      ],
+      "current_root_masses": [
+        "0",
+        "5/36",
+        "5/36",
+        "13/36",
+        "13/36"
+      ],
+      "old_marginal": [
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "total_mass": "1",
+      "bad_mass_and_assigned_charge": "1/3",
+      "good_mass": "2/3",
+      "density_cap": "5/3",
+      "sharp_prefix_caps": {
+        "depth1": "13/36",
+        "depth2": "1/12"
+      },
+      "required_prefix_upper_caps": {
+        "depth1": "5/12",
+        "depth2": "1/12"
+      },
+      "original_class_masses": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "5/36",
+        "5/36",
+        "1/36",
+        "1/36"
+      ],
+      "physical_complete_test_V": {
+        "value": "45/2",
+        "maximizing_pairs": [
+          [
+            3,
+            8
+          ],
+          [
+            3,
+            13
+          ],
+          [
+            3,
+            18
+          ],
+          [
+            3,
+            23
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            4,
+            14
+          ],
+          [
+            4,
+            19
+          ],
+          [
+            4,
+            24
+          ]
+        ],
+        "physical_test_witness": [
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            25,
+            8
+          ],
+          [
+            45,
+            28
+          ],
+          [
+            75,
+            58
+          ],
+          [
+            225,
+            208
+          ]
+        ]
+      }
+    },
+    "candidate": {
+      "current_leaf_masses": [
+        "0",
+        "1/30",
+        "1/30",
+        "0",
+        "0",
+        "0",
+        "1/30",
+        "1/30",
+        "1/12",
+        "1/12",
+        "0",
+        "1/30",
+        "1/30",
+        "1/12",
+        "1/12",
+        "0",
+        "1/30",
+        "1/30",
+        "1/12",
+        "1/12",
+        "0",
+        "1/30",
+        "1/30",
+        "1/12",
+        "1/12"
+      ],
+      "current_root_masses": [
+        "0",
+        "1/6",
+        "1/6",
+        "1/3",
+        "1/3"
+      ],
+      "old_marginal": [
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "total_mass": "1",
+      "bad_mass_and_assigned_charge": "1/3",
+      "good_mass": "2/3",
+      "density_cap": "5/3",
+      "sharp_prefix_caps": {
+        "depth1": "1/3",
+        "depth2": "1/12"
+      },
+      "required_prefix_upper_caps": {
+        "depth1": "5/12",
+        "depth2": "1/12"
+      },
+      "original_class_masses": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1/6",
+        "1/6",
+        "0",
+        "0"
+      ],
+      "physical_complete_test_V": {
+        "value": "87/4",
+        "maximizing_pairs": [
+          [
+            3,
+            8
+          ],
+          [
+            3,
+            13
+          ],
+          [
+            3,
+            18
+          ],
+          [
+            3,
+            23
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            4,
+            14
+          ],
+          [
+            4,
+            19
+          ],
+          [
+            4,
+            24
+          ]
+        ],
+        "physical_test_witness": [
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            25,
+            8
+          ],
+          [
+            45,
+            28
+          ],
+          [
+            75,
+            58
+          ],
+          [
+            225,
+            208
+          ]
+        ]
+      }
+    }
+  },
+  "full_test_domain": {
+    "original_moduli": [
+      1,
+      3,
+      5,
+      9,
+      15,
+      25,
+      45,
+      75,
+      225
+    ],
+    "original_residue_assignments": 38443359375,
+    "old_labels_at_each_depth": [
+      1,
+      3,
+      9
+    ],
+    "reduced_root_leaf_pairs": 125,
+    "reduction": "On the old Dirac support all old components may be chosen to match 1. The load 3+sum_j I_rj+sum_k I_tk is the average of nine loads 3(1+I_rj+I_tk). Jensen gives the maximum of all 5*25 pairs; repeating any pair across all three original labels attains it. Each pair is replayed as literal CRT tests."
+  },
+  "fixed_feasible_class_minimax": {
+    "constraints": "Good density is C; bad densities relative to the pure base lie in [0,1]; bad mass is beta; the old marginal stays Dirac1.",
+    "forced_root3_mass_lower": "1/3",
+    "forced_good_leaf8_mass": "1/12",
+    "test_pair": [
+      3,
+      8
+    ],
+    "exact_minimum_V": "87/4",
+    "proof": "Root3 contains four fixed good leaves, hence mass at least 1/3. Good leaf8 has mass 1/12. Its nested physical test gives V>=9(1+3/3+5/12)=87/4, attained by the candidate.",
+    "BB_minus_minimum_V": "3/4"
+  },
+  "actual_survivor_comparison": {
+    "all_actual_survivors_mod225": [
+      2,
+      4,
+      7,
+      8,
+      11,
+      13,
+      14,
+      17,
+      19,
+      22,
+      23,
+      26,
+      29,
+      32,
+      34,
+      38,
+      41,
+      43,
+      44,
+      47,
+      49,
+      52,
+      53,
+      56,
+      58,
+      59,
+      62,
+      64,
+      67,
+      68,
+      71,
+      73,
+      74,
+      77,
+      79,
+      83,
+      86,
+      88,
+      89,
+      92,
+      94,
+      97,
+      98,
+      101,
+      104,
+      107,
+      109,
+      112,
+      113,
+      116,
+      118,
+      119,
+      122,
+      124,
+      128,
+      131,
+      133,
+      134,
+      137,
+      139,
+      142,
+      143,
+      146,
+      148,
+      149,
+      152,
+      157,
+      158,
+      161,
+      163,
+      164,
+      167,
+      169,
+      173,
+      176,
+      179,
+      182,
+      184,
+      187,
+      188,
+      191,
+      193,
+      194,
+      197,
+      199,
+      202,
+      203,
+      206,
+      208,
+      209,
+      212,
+      214,
+      218,
+      221,
+      223,
+      224
+    ],
+    "supported_actual_survivors": [
+      19,
+      64,
+      73,
+      109,
+      118,
+      163,
+      199,
+      208
+    ],
+    "BB_survivor_mass": "2/3",
+    "candidate_survivor_mass": "2/3",
+    "common_normalized_current_leaf_masses": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "1/8",
+      "1/8",
+      "0",
+      "0",
+      "0",
+      "1/8",
+      "1/8",
+      "0",
+      "0",
+      "0",
+      "1/8",
+      "1/8",
+      "0",
+      "0",
+      "0",
+      "1/8",
+      "1/8"
+    ],
+    "Gamma": "225/8",
+    "maximizing_pairs": [
+      [
+        3,
+        8
+      ],
+      [
+        3,
+        13
+      ],
+      [
+        3,
+        18
+      ],
+      [
+        3,
+        23
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        4,
+        14
+      ],
+      [
+        4,
+        19
+      ],
+      [
+        4,
+        24
+      ]
+    ],
+    "physical_test_witness": [
+      [
+        1,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        15,
+        13
+      ],
+      [
+        25,
+        8
+      ],
+      [
+        45,
+        28
+      ],
+      [
+        75,
+        58
+      ],
+      [
+        225,
+        208
+      ]
+    ]
+  }
+}

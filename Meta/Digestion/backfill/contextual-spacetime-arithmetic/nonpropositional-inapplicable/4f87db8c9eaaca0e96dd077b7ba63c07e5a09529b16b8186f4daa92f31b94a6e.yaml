@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4f87db8c9eaaca0e96dd077b7ba63c07e5a09529b16b8186f4daa92f31b94a6e
+  normalized_sha256: sha256:4f87db8c9eaaca0e96dd077b7ba63c07e5a09529b16b8186f4daa92f31b94a6e
+cas_ref: sha256:4f87db8c9eaaca0e96dd077b7ba63c07e5a09529b16b8186f4daa92f31b94a6e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子给出有限事件集、当前区域、属性及同符号链的具体数据定义；跨层兼容嵌入、平衡和读数保持的命题在后续叶子另行承担。
+    previous_atom_id: d2224883f34ab15347b3da33ef07699224d7d176271a40754f8ae786425f5980
+    next_atom_id: 05df13d6a97c54adfbf75944239b814251d3bd9c397fe2a3dfa2596de0c84c79

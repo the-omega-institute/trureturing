@@ -1,0 +1,2 @@
+单一有效码 $\operatorname{Enc}(D)$ 与外部成员像 $D^*$ 不同。语义配对 $\langle c,d\rangle_Z$ 沿用原由 $\operatorname{Pack}$ 构造的 Kuratowski 配对，区别于外部普通配对 $\langle c,d\rangle$。自然叶仍取有限规范字；无限补零的全数位图是另一个集合对象。
+

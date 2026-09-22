@@ -1,0 +1,47 @@
+### 45.5 固定目标与范数紧目标族的一致收敛
+
+继续采用第45.4节的非空紧来源类 $\Theta$，并保留同一个目标及同一个来源合同。
+
+对任意 $\theta,\theta'\in\Theta$，三角不等式和通道收缩给
+$$
+|f_n(\theta)-f_n(\theta')|
+\le D(q_n(\theta),q_n(\theta'))
+\le D(\theta,\theta').
+$$
+取上确界后仍有
+$$
+|f(\theta)-f(\theta')|\le D(\theta,\theta').
+$$
+故所有 $f_n$ 与 $f$ 都在来源距离上 $1$-Lipschitz；特别地，$f$ 连续。对于每个固定目标 $\xi$，
+$$
+\boxed{
+\forall\varepsilon>0\ \exists N_{\xi,\varepsilon}\;
+\forall n\ge N_{\xi,\varepsilon}\ \forall\theta\in\Theta,
+\quad0\le f(\theta)-f_n(\theta)<\varepsilon.
+}
+\tag{45.24}
+$$
+有限网证明不需要另设一般极限定理。取 $\Theta$ 的有限 $\varepsilon/4$-网 $\theta_1,\ldots,\theta_s$。每个网点上 $f_n(\theta_i)\uparrow f(\theta_i)$，所以存在共同 $N$ 使全部网点缺口小于 $\varepsilon/2$。任意 $\theta$ 选择距离小于 $\varepsilon/4$ 的网点，由两次 Lipschitz 估计，
+$$
+f(\theta)-f_n(\theta)
+\le2D(\theta,\theta_i)+f(\theta_i)-f_n(\theta_i)
+<\varepsilon.
+$$
+单调性保证所有 $n\ge N$ 同时成立，证明（45.24）。也可将其识别为紧空间上连续单调收敛的 Dini 机制，但这里已完整给出所需有限网证明。
+
+由此得到具体的候选输入保证。若 $n\ge N_{\xi,\varepsilon}$，且某个实际允许候选满足
+$$
+f_n(\widehat\theta_n)\le e_n(\xi)+\eta,\qquad\eta\ge0,
+$$
+则
+$$
+\boxed{
+f(\widehat\theta_n)<e_n(\xi)+\eta+\varepsilon
+\le E(\xi)+\eta+\varepsilon.
+}
+\tag{45.25}
+$$
+这是同一个候选初态 $\widehat\theta_n$ 产生整条历史后的保证，不是逐层选择多个来源再拼接。
+
+（45.24）的 $N_{\xi,\varepsilon}$ 依赖固定目标及来源类。有限网中各点的收敛深度没有显式求出，不能将这个存在量冒称可取得速率或停止条件。仅从当前有限数据看见小缺口或平台，仍不能知道已超过该深度。
+

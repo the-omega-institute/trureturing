@@ -1,0 +1,11 @@
+**Lemma.** For every odd n>=1,
+
+$$
+D_F(L_n^2+1)=
+\begin{cases}
+\{1\},&3\mid n,\\
+\{1,2\},&3\nmid n.
+\end{cases}
+\tag{FDS12}
+$$
+

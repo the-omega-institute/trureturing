@@ -1,0 +1,59 @@
+### QR.4 Every locally admissible integer has a positive-density realization
+
+**Theorem.** Let K>=1 and assume x^2=-1 modulo K has a solution. Then
+
+$$
+A_K=\{m\ge0:K\mid m^2+1,\ D_F(m^2+1)=D_F(K)\}
+$$
+
+has a positive natural density.
+
+**Proof of finite local compatibility.** Solvability is equivalent to
+v_2(K)<=1 and every odd prime divisor of K being1 modulo four. At each
+odd q^e exactly dividing K, choose a root modulo q^e and then a lift
+modulo q^(e+1) that is NOT a root at the higher precision. Such a lift
+exists: among the q lifts, precisely one is a root, because 2x is a unit.
+Thus a progression can impose v_q(m^2+1)=e. If K is odd take m=0 modulo
+four; if K is even take m=1 modulo four. These force v_2(m^2+1) to equal
+v_2(K). Also impose m=0 modulo three, since three cannot divide K.
+
+Choose an integer J0>=12 large enough that every Fibonacci divisor of K
+has index at most J0 and every prime divisor q of K has rank at most J0.
+Existence is immediate; J0=max(12,K+2) is one sufficient choice, using
+F_j>=j-1 and the rank bound, with the small primes treated directly.
+For each 3<=j<=J0 with F_j not dividing K, choose a prime q for which
+v_q(F_j)>v_q(K). If q divides K, the exact-valuation condition already
+excludes F_j. If q does not divide K, impose m=0 modulo q. Repeated
+conditions agree, and the choices at two and three are consistent.
+CRT now supplies one progression a modulo Q0 such that K|m^2+1 and
+no forbidden F_j with j<=J0 divides m^2+1. Every prime factor of Q0
+either divides K, is two or three, or divides one of those F_j. Its rank
+is therefore at most J0.
+
+**Proof of a quantitative finite exclusion bound.** For each j>J0 choose
+the classical primitive prime q_j. The q_j are distinct and coprime to
+Q0. Avoid the at most two roots of -1 modulo q_j. For J>=J0, CRT gives
+a set of progressions of density at least
+
+$$
+\frac1{Q0}\prod_{j=J0+1}^{J}\left(1-\frac2{q_j}\right)
+\ge\frac{(J0-2)(J0-1)}{Q0(J-2)(J-1)}.              \tag{QR5}
+$$
+
+The last product telescopes using q_j>=j-1; the empty product is one.
+These progressions obey every required exclusion through index J.
+
+**Proof of existence and positivity of the limiting density.** Let A_(K,J)
+be the full set with K|m^2+1 and the correct Fibonacci divisor membership
+only through index J. It is periodic, so its density d_(K,J) exists.
+These sets decrease with J. The difference A_(K,J) minus A_K is contained
+in the QR4 tail. Hence their finite counting densities differ in limsup
+by at most T_J. It follows that A_K has natural density
+lim_(J->infinity)d_(K,J).
+
+For any J>=J0 this limit is at least the right side of QR5 minus T_J.
+The first quantity decreases polynomially with J and T_J exponentially.
+Choose J so that T_J is less than half that positive rational quantity.
+This proves strictly positive density. No assertion about the primality
+or squarefreeness of m^2+1 is required.
+

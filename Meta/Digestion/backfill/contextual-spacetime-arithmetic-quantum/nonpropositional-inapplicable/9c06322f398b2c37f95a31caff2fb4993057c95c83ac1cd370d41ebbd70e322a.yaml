@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9c06322f398b2c37f95a31caff2fb4993057c95c83ac1cd370d41ebbd70e322a
+  normalized_sha256: sha256:9c06322f398b2c37f95a31caff2fb4993057c95c83ac1cd370d41ebbd70e322a
+cas_ref: sha256:9c06322f398b2c37f95a31caff2fb4993057c95c83ac1cd370d41ebbd70e322a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶选择非空纤维代表，并在明确假设存在 Lipschitz 延拓时定义黄金预测器，不断言延拓必然存在或预算界成立。
+    previous_atom_id: 075baaee662a6c054793784a8570ae3b2087ea39e4689d7fd1996100ec2dc34f
+    next_atom_id: 194d6717a2d12cf2d7470910f8cb66dcebfd415c567258b6a5042acbd20af66c

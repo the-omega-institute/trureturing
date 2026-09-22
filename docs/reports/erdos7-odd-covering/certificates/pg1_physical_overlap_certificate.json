@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "ea3cc1bc658441efef59b6737907eae2711ca6009c976642226a5b98c687b4b7",
+  "parts_directory": "pg1_physical_overlap_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "7d1e22e5dae7baab688b03496b5553f220284963bd89aa70505c8c26f0b4544a",
+    "kind": "object"
+  }
+}

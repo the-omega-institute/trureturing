@@ -1,0 +1,163 @@
+**证明。** 先保留一个直接的条件耦合估计。对长度 $L\ge1$，令 $B_1,\ldots,B_L$ 为相互独立的 $\operatorname{Bernoulli}(r)$ 翻转变量，且与初始均匀隐藏位及全部发射随机种子独立。第 $j$ 步先从旧位发射第 $j$ 个报告，再按 $B_j$ 翻转。置
+$$
+\mathsf A_L=\{B_1=\cdots=B_L=0\}.
+$$
+此事件包括最后一次已观察发射之后、下一次预测之前的第 $L$ 次翻转。把正混合与静态过程放在共同初始位和发射种子上；在 $\mathsf A_L$ 上，两条过程直至第 $L$ 次翻转后的隐藏位及全部 $L$ 个报告相同。若 $\mathbb P_r(w,\mathsf A_L)$ 表示指定报告词与该事件的联合概率，则独立种子构造给
+$$
+\mathbb P_r(w,\mathsf A_L)=(1-r)^L\mathbb P_0(w),
+\qquad
+\mathbb P_r(I_L=i,w,\mathsf A_L)
+=(1-r)^L\mathbb P_0(I_0=i,w),
+$$
+其中 $I_L$ 是末次翻转后的新隐藏位。故给定 $w,\mathsf A_L$ 的新位后验恰是静态后验。这里不要求、也不推断 $\mathsf A_L$ 与正混合过程的报告词 $w$ 独立。
+
+令 $\theta_w=\mathbb P_r(\mathsf A_L^c\mid w)$。按是否发生翻转分解新位后验，再使用下一发射种子的独立性，得到
+$$
+f_r(w)=(1-\theta_w)f_0(w)+\theta_w g_w,
+\qquad g_w\in[p,1-p].
+$$
+当条件补事件质量为零时，可任选该区间中的 $g_w$。由命题156.1的分母下界，
+$$
+\begin{aligned}
+|f_r(w)-f_0(w)|
+&\le\theta_w
+=\frac{\mathbb P_r(w,\mathsf A_L^c)}{Z_w^{(r)}}\\
+&\le\frac{\mathbb P_r(\mathsf A_L^c)}{p^L}
+=\frac{1-(1-r)^L}{p^L}
+\le\frac{Lr}{p^L}.
+\end{aligned}
+$$
+于是对任意整数 $H\ge1$，
+$$
+\sup_{|w|\le H}|f_r(w)-f_0(w)|\le\frac{Hr}{p^H}.
+$$
+空词的误差恰为零。此估计只控制有限时域；其随 $H$ 增长的右侧不能变成对全部词长一致的小误差界。特别地，不能把未条件化的翻转概率 $Lr$ 直接当成后验误差界而省去词质量分母。
+
+下面直接应用既有的有限时域误差传播，取得更紧的比较。命题153.1的旧位 Bayes 更新在 $q\in[0,1]$ 上写成
+$$
+h_0(q)=\frac{(1-p)q}{p+dq},\qquad
+h_1(q)=\frac{pq}{1-p-dq},\qquad
+F_{b,r}(q)=r+(1-2r)h_b(q).
+$$
+$h_b$ 把 $[0,1]$ 映入自身，$F_{b,r}$ 把它映入 $[r,1-r]\subseteq[0,1]$。两个分母均至少为 $p$，并且
+$$
+h_0'(q)=\frac{p(1-p)}{(p+dq)^2},\qquad
+h_1'(q)=\frac{p(1-p)}{(1-p-dq)^2},\qquad
+0<h_b'(q)\le\frac{1-p}{p}=\kappa.
+$$
+因此两个 $h_b$ 均为 $\kappa$-Lipschitz，且
+$$
+|F_{b,r}(q)-h_b(q)|=r|1-2h_b(q)|\le r.
+$$
+在[《情境时空算术·机器学习》定义21.1、定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)中，所声明域取 $[0,1]$，摘要取恒等映射，精确更新取 $F_{b,r}$，模型更新与实际求值更新均取 $h_b$。两条轨迹从同一个 $1/2$ 出发、沿同一报告词演化，始终在该域内；代入
+$$
+\delta_{\rm close}=r,\qquad \delta_{\rm eval}=0,\qquad
+ e_0=0,\qquad L_{\rm Lip}=\kappa.
+$$
+输出取 $q\mapsto p+dq$，其 Lipschitz 常数为 $d$，输出求值误差为零。该定理遂对每个长度 $L\ge0$ 的词给出
+$$
+|f_r(w)-f_0(w)|
+\le d r\sum_{j=0}^{L-1}\kappa^j
+=p r(\kappa^L-1),
+\qquad \kappa-1=\frac d p.
+$$
+$L=0$ 时取空和，等式两侧的界均为零。这里的两条后验轨迹仅用于比较两个物理参数的预测函数，不是给有限观察者增加一个未计数的后验寄存器。这个几何界也只在固定有限时域内使用。
+
+现在固定 $N\ge1$、满足较强阈值的 $0<r<1/2$，再任取 $1\le|S|\le N$ 的观察者。直接把命题152.1、156.1所引的有限轨道定理应用于实际 $T_0$、读出 $t$ 及初态 $s_0$，得整数 $n\ge0$、$\ell\ge1$，使
+$$
+n+\ell\le|S|\le N,\qquad
+T_0^{j+\ell}(s_0)=T_0^j(s_0)\quad(j\ge n).
+$$
+这是状态相等而非仅仅读出相等。定义整数
+$$
+A=\ell\left\lceil\frac{2K}{\ell}\right\rceil,
+\qquad t_{\rm len}=n+\left\lfloor\frac A2\right\rfloor,
+\qquad u=0^n1^{t_{\rm len}},\qquad
+v=0^{n+A}1^{t_{\rm len}}.
+$$
+这里 $t_{\rm len}$ 是后缀长度，与读出函数 $t$ 区分。$A$ 是 $\ell$ 的倍数，重复周期等式给 $T_0^{n+A}(s_0)=T_0^n(s_0)$；再用同一个实际更新 $T_1$ 追加共同后缀，便有
+$$
+s_{\mathcal O}(v)=T_1^{t_{\rm len}}(T_0^{n+A}(s_0))
+=T_1^{t_{\rm len}}(T_0^n(s_0))=s_{\mathcal O}(u).
+$$
+由向上取整及整数性，
+$$
+2K\le A\le2K+\ell-1,
+\qquad
+\left\lfloor\frac A2\right\rfloor\ge K,
+\qquad
+\left\lceil\frac A2\right\rceil\ge K.
+$$
+又由 $n\le N-\ell$，
+$$
+\begin{aligned}
+|v|&=2n+A+\left\lfloor\frac A2\right\rfloor\\
+&\le2N+3K-\ell-1+\left\lfloor\frac{\ell-1}{2}\right\rfloor
+\le H_N-2<H_N,\\
+|u|&=|v|-A<|v|.
+\end{aligned}
+$$
+故 $H_N$ 是同时适用于所有这些观察者的简单保守词长界。
+
+记 $k(w)=\#0(w)-\#1(w)$。命题152.1、156.1的静态公式等价于
+$$
+f_0(w)=f_0(k(w)),\qquad
+f_0(k)=\frac12+\Delta\frac{\kappa^k-1}{\kappa^k+1}
+\quad(k\in\mathbb Z).
+$$
+该函数随 $k$ 严格递增，且 $f_0(-k)=1-f_0(k)$。上述两词满足
+$$
+k(u)=-\left\lfloor\frac A2\right\rfloor\le-K,
+\qquad k(v)=\left\lceil\frac A2\right\rceil\ge K.
+$$
+因此它们的静态半间隙有下界
+$$
+\frac{f_0(v)-f_0(u)}2
+\ge\Delta\frac{\kappa^K-1}{\kappa^K+1}
+\ge\frac{\Delta+\varepsilon}{2}
+=\varepsilon+2\gamma.
+$$
+中间的不等式恰由 $\kappa^K\ge(3\Delta+\varepsilon)/(\Delta-\varepsilon)$ 得到，包括等号。两词长度不超过 $H_N$，故较强阈值及后验比较分别给
+$$
+|f_r(u)-f_0(u)|\le\gamma,\qquad
+|f_r(v)-f_0(v)|\le\gamma,
+\qquad
+\frac{f_r(v)-f_r(u)}2\ge\varepsilon+\gamma.
+$$
+设共同状态的读出为 $a=t(s_{\mathcal O}(u))=t(s_{\mathcal O}(v))$。对任意实数 $a$，三角不等式给
+$$
+\max\{|a-f_r(u)|,|a-f_r(v)|\}
+\ge\frac{|f_r(v)-f_r(u)|}{2}
+\ge\varepsilon+\gamma>\varepsilon.
+$$
+于是 $u,v$ 中至少一词就是所需见证。见证可以依赖观察者，$H_N$ 和两种有限词比较估计则不依赖它；论证覆盖任意读出与任意更新表，也覆盖对每个 $r$ 重新设计的表。
+
+为核对原阈值，若 $H=H_N\ge1$ 且 $r\le\gamma p^H/H$，则
+$$
+p r(\kappa^H-1)
+\le\frac{\gamma p}{H}\bigl((1-p)^H-p^H\bigr)
+<\gamma.
+$$
+这里 $0<(1-p)^H-p^H<1$ 且 $p/H<1$，故右端严格小于 $\gamma$，即使原阈值取等号也成立。前面的条件耦合估计亦直接给出 $Hr/p^H\le\gamma$，与同一词对的半间隙论证相容。
+
+若状态数 $m<\infty$ 的观察者可行，则取 $N=m$ 时较强排除条件必须严格失败：
+$$
+p r(\kappa^{2m+3K}-1)>\gamma.
+$$
+由于 $\log\kappa>0$，移项取对数即得陈述中的严格必要状态数不等式。若可行有限基数集非空，它在正整数中有最小元，故该式适用于 $N_{\min}^{(r)}(\varepsilon)$；若为空，$N_{\min}^{(r)}(\varepsilon)=\infty$ 自动满足这个有限实数下界。此步骤不以有限观察者存在性为前提。
+
+最后置 $x=\log(1/r)$，当 $r\downarrow0$ 时 $x\to\infty$，且
+$$
+\log\left(1+\frac{\gamma}{p r}\right)
+=x+\log\left(\frac\gamma p+r\right),
+\qquad
+\frac{\log(1+\gamma/(p r))}{x}\longrightarrow1.
+$$
+将逐个 $r$ 的必要下界除以正数 $x$，直接取扩展实数下极限，得到 $1/(2\log\kappa)$。无须假设 $N_{\min}^{(r)}(\varepsilon)/x$ 有界，也无须假设状态成本单调或有限。因为 $1<\kappa<1/p$，此下界蕴含系数 $1/(2\log(1/p))$ 的较弱下界。命题153.1、156.1另行给出的正 $r$、正容差有限存在性与这里相容，但不是此下界证明的前提。
+
+若 $\varepsilon\ge\Delta$，命题156.1的单状态恒定读出 $1/2$ 对全部 $0\le r<1/2$ 可行；这一边界包含等号。本命题不对 $\varepsilon=0$ 作断言。所测量的是在全部有限词上控制最坏预测误差所必需的确定性观察者基数，不是潜在生成器的状态数、熵或物理比特数。潜在载体始终为两个经典状态，各非空报告分支已为测量制备操作，故本下界不描述量子到经典的转变。固定有限视界、典型路径、平均或期望误差、随机观察者以及带外置时钟或自适应干预的任务有不同量词。特别地，隐藏位缓慢切换并不蕴含典型路径上的滤波初始先验遗忘缓慢。这个必要系数不构成全参数域的锐对数定律；在更窄精度区间证明更强下界仍是不同问题。证毕。
+
+本命题的模型及正质量条件化取自命题153.1、156.1，静态后验取自命题152.1、156.1。状态周期步骤直接使用这些命题所引的 [`finite_orbit_and_readout_eventually_periodic`](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean)，具体代入为有限集 $S$、自映射 $T_0$、初态 $s_0$ 及读出 $t$；有限时域后验比较直接使用[《情境时空算术·机器学习》定义21.1、定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)，其域、缺陷和输出常数已在证明中给出。
+
+相邻文献中的损失与极限须分别理解。T. Berg、O. Ordentlich、O. Shayevitz，*Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules*，[arXiv:2005.07445](https://arxiv.org/abs/2005.07445)，第I节式(4)–(8)及定理1，研究有限状态二元检验的长时间分类错误与状态数指数。V. Sharan、S. Kakade、P. Liang、G. Valiant，*Prediction with a Short Memory*，[arXiv:1612.02526](https://arxiv.org/abs/1612.02526)，推论1，研究下一观测预测的平均损失。P. Chigansky，*Stability of the nonlinear filter for slowly switching Markov chains*，[arXiv:math/0411596](https://arxiv.org/abs/math/0411596)，第1节的几乎处处稳定指数、定理1.1及例1.2，研究初始先验扰动的渐近遗忘；在其假设下，慢切换并不迫使该指数趋于零。这三类结论均不替代这里对每个有限报告词的预测误差要求，也不作为上述状态下界的前提。
+

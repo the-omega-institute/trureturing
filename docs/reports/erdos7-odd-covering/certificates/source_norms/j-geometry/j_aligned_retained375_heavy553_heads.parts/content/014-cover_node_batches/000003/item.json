@@ -1,0 +1,15 @@
+{
+  "start": {
+    "kind": "inline",
+    "value": 300
+  },
+  "stop": {
+    "kind": "inline",
+    "value": 400
+  },
+  "rows": {
+    "path": "content/014-cover_node_batches/000003/item/002-rows.json",
+    "sha256": "84689bb02586159eac50ef2e9bd0618cb2e72295876c248500305cd748f08680",
+    "kind": "array"
+  }
+}

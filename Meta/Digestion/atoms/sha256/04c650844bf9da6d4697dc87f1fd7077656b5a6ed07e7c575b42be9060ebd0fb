@@ -1,0 +1,11 @@
+**定理 19.3（紧输入与分别连续映射的双极限必要条件）。** 设 $P,Q$ 为紧拓扑空间，$W$ 为 Hausdorff 空间，$C:P\times Q\to W$ 分别连续。输入空间不要求 Hausdorff，输出空间不要求紧。给定序列 $x_k\in P$、$y_l\in Q$，假定下列所有内层及外层极限均存在：
+$$
+r_k=\lim_{l\to\infty}C(x_k,y_l),\qquad
+s_l=\lim_{k\to\infty}C(x_k,y_l),
+$$
+$$
+r=\lim_{k\to\infty}r_k,\qquad
+s=\lim_{l\to\infty}s_l.
+$$
+则 $r=s$。
+

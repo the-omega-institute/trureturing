@@ -1,0 +1,13 @@
+**定理 31.10（连续 Dirac 限制仍不足以确定字符）。** 存在显式字符
+$$
+\mathfrak a(\nu)=\sum_{\theta\in\mathbb T}\nu(\{\theta\}),\qquad \nu\in\mathcal M,
+$$
+其中只对至多可数个非零原子质量求绝对收敛和。它满足
+$$
+\mathfrak a(\delta_\theta)=1\quad\text{对所有 }\theta,\qquad \mathfrak a(\lambda_{\mathbb T})=0.
+$$
+因此 $\mathcal P_{\mathfrak a}$ 与 $\mathcal F_0$ 在整个原子子代数上一致，且 Dirac 限制都是连续常数一，但它们是不同泛函，前者不对 $\tau_K$ 连续。在原测度上，
+$$
+\mathcal P_{\mathfrak a}(\mu)=\sum_{x\in K}\mu(\{x\}).
+$$
+

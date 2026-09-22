@@ -1,0 +1,29 @@
+**Proof.** The odd-index character identity gives chi(B_(p,k))=epsilon.
+Therefore product chi(q)^h_q=epsilon, and the exact signed product is
+
+$$
+\epsilon B_{p,k}
+ =\prod_{q\in\mathcal P_{p,k}}(1+a\,t_{p,k}(q))^{h_q}
+ \equiv1+aS_{p,k}\pmod{a^2}.
+$$
+
+The congruence follows by expanding each integer power and multiplying:
+every term involving at least two factors a is divisible by a^2.
+Negative t and positive integer exponents cause no difficulty. Thus
+
+$$
+D_{p,k}:=\frac{\epsilon B_{p,k}-1}{p^{k+1}}
+ \equiv S_{p,k}\pmod{p^{k+1}}.                           \tag{NP10}
+$$
+
+By NP2, v_p(D_(p,k))=h_p-1. For s<=k+1, NP10 makes divisibility of
+S by p^s equivalent to divisibility of D by p^s, proving NP9. If
+k>=h_p-1, that valuation is less than k+1, so the difference in NP10
+cannot change it; this proves the exact valuation assertion. Finally
+combine NP10 modulo p with NP6 to prove NP8. Changing k to k+1 in
+NP8 gives S_(p,k+1)=epsilon*S_(p,k) modulo p.
+
+The restriction s<=k+1 in NP9 is essential to the linear truncation.
+It is not a statement about arbitrary precision at one fixed layer.
+No value v_p(0) needs to be assigned for the divisibility version.
+

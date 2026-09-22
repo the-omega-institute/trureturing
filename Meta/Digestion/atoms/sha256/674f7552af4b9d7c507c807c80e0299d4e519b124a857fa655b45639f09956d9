@@ -1,0 +1,21 @@
+**定理 46.5（概率盒上的最少线性实坐标；repo-derived）。** 当 $K>0$，固定正原子相位测度
+$$
+\nu_*={1\over K}\sum_{k=1}^K\delta_{E_k},\qquad
+\mu_g=\sum_{k=1}^K\left[g_k\delta_{x_k^+}+\left({1\over K}-g_k\right)\delta_{x_k^-}\right],
+\qquad g\in[0,1/K]^K.
+$$
+若摘要在完整相位之外只保存 $Cg\in\mathbb R^d$，其中 $C:\mathbb R^K\to\mathbb R^d$ 线性，并允许任意确定性解码器精确恢复该盒上全部计划边际，则
+$$
+d\ge\operatorname{rank}F.
+$$
+此界可达：$A>0$ 时保存全部 $g$；$A=0<B_0$ 时保存 $g_1-g_K,\ldots,g_{K-1}-g_K$；$K=0$ 时不存残差坐标。所得最小值适用于上述指定相位，也适用于对所有概率输入的最坏情形。
+
+证明。$E_k$ 两两不同，所示非负质量之和为一，且相位为 $\nu_*$、残差恰为 $g$。取盒内点 $g^\circ=(1/(2K),\ldots,1/(2K))$。任意 $v\in\ker C$ 可乘足够小的 $\epsilon>0$，使 $g^\circ\pm\epsilon v$ 都在盒内；二者摘要相同，确定性解码器必须给出相同输出，故 $Fv=0$。于是 $\ker C\subseteq\ker F$，从而 $d\ge\operatorname{rank}C\ge\operatorname{rank}F$。这一步没有要求解码器线性、连续或可微。
+
+满秩情形留全部坐标直接解码。仅时刻零可见时，由 $\sum_{k=1}^Kw_{k,\ell_0}=0$，有
+$$
+\sum_{k=1}^Kg_kw_{k,\ell_0}
+=\sum_{k=1}^{K-1}(g_k-g_K)w_{k,\ell_0},
+$$
+故差值码达到 $K-1$。这些解码公式对任意可行相位均成立，指定概率盒给出最坏情形下界。该下界不逐相位断言最小值相同：若 $\nu(E)=0$，所有 $g_k=0$，不需残差坐标。此定理只约束线性实编码；任意非线性实编码、近似或有限精度属于不同模型，完整相位的表示也没有被最小化。证毕。
+

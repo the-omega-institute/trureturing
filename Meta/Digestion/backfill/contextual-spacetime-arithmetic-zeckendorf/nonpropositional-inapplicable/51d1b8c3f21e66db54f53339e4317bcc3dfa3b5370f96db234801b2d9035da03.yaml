@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:51d1b8c3f21e66db54f53339e4317bcc3dfa3b5370f96db234801b2d9035da03
+  normalized_sha256: sha256:51d1b8c3f21e66db54f53339e4317bcc3dfa3b5370f96db234801b2d9035da03
+cas_ref: sha256:51d1b8c3f21e66db54f53339e4317bcc3dfa3b5370f96db234801b2d9035da03
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅说明前述公式未添加零容量间隔、最终活跃性或统一容量上界的假设，是适用范围注释而非新的数学命题，故无须证明。
+    previous_atom_id: ab813080b7a8c705427904facb25723f13c1872354c6c46a43fbb58dba3fb965
+    next_atom_id: 2dec3ef23546debb2ea460f11e81d18f7018b09d3f7a0604a4797d45320f3584

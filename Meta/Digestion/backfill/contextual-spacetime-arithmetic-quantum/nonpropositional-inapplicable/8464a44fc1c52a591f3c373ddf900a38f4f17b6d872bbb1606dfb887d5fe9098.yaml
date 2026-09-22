@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8464a44fc1c52a591f3c373ddf900a38f4f17b6d872bbb1606dfb887d5fe9098
+  normalized_sha256: sha256:8464a44fc1c52a591f3c373ddf900a38f4f17b6d872bbb1606dfb887d5fe9098
+cas_ref: sha256:8464a44fc1c52a591f3c373ddf900a38f4f17b6d872bbb1606dfb887d5fe9098
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子规定活动系统、可操作记忆、共同控制及最终输出，并定义最优差异，未断言最优值的公式或达到性。
+    previous_atom_id: 670716e19e1217ae47ad011fba9c0b148ea84f3255dc1daf6477070f935386ee
+    next_atom_id: 0dbd9aae518be218e602a2549d123c6c37081636347be9547efb52dc61455f84

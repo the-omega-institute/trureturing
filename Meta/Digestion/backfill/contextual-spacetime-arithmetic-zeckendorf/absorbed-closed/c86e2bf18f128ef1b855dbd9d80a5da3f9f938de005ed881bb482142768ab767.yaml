@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:c86e2bf18f128ef1b855dbd9d80a5da3f9f938de005ed881bb482142768ab767
+  normalized_sha256: sha256:c86e2bf18f128ef1b855dbd9d80a5da3f9f938de005ed881bb482142768ab767
+cas_ref: sha256:c86e2bf18f128ef1b855dbd9d80a5da3f9f938de005ed881bb482142768ab767
+coverage_gids:
+  - gid: D5/S1/Digit/CarryStepConfluence.normalize_eq_of_reflTransGen
+    target_statement_id: sha256:3c4c9d020b336f23a3fd60161da62053d51fea17f8d08cf8f9d63d88684ea8a1
+  - gid: D5/S1/Digit/CarryStepConfluence.rawValue_reflTransGen
+    target_statement_id: sha256:255e2e41285ef9a49cddec71f2116088b6dcc627630fdce2ee70cc88528cdd90
+  - gid: D5/S1/Digit/PrimeAxis/ChargedTableNormalization.exists_tablePath_rowNormalize
+    target_statement_id: sha256:c02d6f80136fe51248040a952005e033f3dfe49eaee387b832e0194fa95215b9
+  - gid: D5/S1/Digit/PrimeAxis/ChargedTableNormalization.tablePath_project
+    target_statement_id: sha256:f2ec5327de8756afee635434f2fb5317cc8e2cd8bed731c041c8e5f4a7ced140
+receipts:
+  unresolved_subitems: []

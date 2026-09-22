@@ -1,0 +1,95 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-aligned-retained375-prefix-v1"
+  },
+  "name": {
+    "kind": "inline",
+    "value": "hinge4"
+  },
+  "target_scheduling_upper": {
+    "kind": "inline",
+    "value": "1931/10000"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "4": "1"
+    }
+  },
+  "counts": {
+    "kind": "inline",
+    "value": {
+      "layouts": 12500,
+      "two_seen": 125000,
+      "two_closed": 124986,
+      "four_seen": 700,
+      "four_closed": 681,
+      "six_seen": 190,
+      "six_closed": 111,
+      "seven_seen": 395,
+      "seven_closed": 138,
+      "eight_seen": 2570,
+      "eight_closed": 883,
+      "remaining": 1687
+    }
+  },
+  "maximum_pruned_bounds": {
+    "kind": "inline",
+    "value": {
+      "two": "1785227/9261000",
+      "four": "765913/3969000",
+      "six": "5364577/27783000",
+      "seven": "766363/3969000",
+      "eight": "5364871/27783000"
+    }
+  },
+  "covered_containing_choices": {
+    "kind": "inline",
+    "value": 3125000000
+  },
+  "fractional_compiler_checks": {
+    "kind": "inline",
+    "value": 16
+  },
+  "complete_positive7_tails": {
+    "kind": "inline",
+    "value": {
+      "two": "1129/18900",
+      "four": "667/18900",
+      "six": "991/33075",
+      "seven": "1847/66150",
+      "eight": "1751/66150"
+    }
+  },
+  "source_theta": {
+    "kind": "inline",
+    "value": [
+      "1/405",
+      "1/270"
+    ]
+  },
+  "source_omission_support": {
+    "kind": "inline",
+    "value": [
+      13,
+      17,
+      18,
+      22,
+      23
+    ]
+  },
+  "remaining_leaf_batches": {
+    "path": "content/011-remaining_leaf_batches.json",
+    "sha256": "c38848447e09b5303d74039db2f59acd71e719bb60743f9a77451b8c2612c325",
+    "kind": "array"
+  },
+  "scan_sha256": {
+    "kind": "inline",
+    "value": "3576bde455cfd48cfd6028567fb19e40b7a0fab9c6eb94e6a1f51622dc0899a0"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Every source branch covered by a newly recomputed complete affine bound <=target or a listed unresolved leaf. No old saturated numerical bound/dual consumed. A universal target needs every remaining leaf closed."
+  }
+}

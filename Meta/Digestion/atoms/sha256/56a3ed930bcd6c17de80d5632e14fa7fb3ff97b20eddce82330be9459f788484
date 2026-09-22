@@ -1,0 +1,28 @@
+`PrimeSwapCurvature.prime_swap_curvature_spec` 还证明三件事：
+
+$$
+\Delta_{Q,P}=-\Delta_{P,Q},
+$$
+
+记忆原点变换
+
+$$
+\widetilde b_r\mapsto
+\widetilde b_r+(a-\lambda_r)c
+$$
+
+不改变 $$\Delta_{P,Q}$$，并且在两个共振间隙非零时，
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_P)(a-\lambda_Q)
+\left(
+\frac{\widetilde b_P}{a-\lambda_P}
+-
+\frac{\widetilde b_Q}{a-\lambda_Q}
+\right).
+$$
+
+因此交换曲率不是任意坐标选择造成的假象。它是一个对记忆原点平移不变的顺序缺陷；曲率为零，当且仅当两个事件给出的局部观测者原点估计相同（在非共振条件下）。
+

@@ -1,0 +1,68 @@
+**theorem 20.4 (The exact mechanical coordinate and every split itinerary).** For $x\in K$, take any real lift $\rho$ of
+$$
+[\rho]=[\beta]-H(x).
+$$
+If $H(x)\notin E$, then
+$$
+\Phi(x)=M^{\mathrm{lo}}_\rho=M^{\mathrm{up}}_\rho.
+$$
+For every $m\ge1$, put $\rho_m=(1-m)\beta$. Then
+$$
+\Phi(x_m^-)=M^{\mathrm{lo}}_{\rho_m},
+\qquad
+\Phi(x_m^+)=M^{\mathrm{up}}_{\rho_m}.
+$$
+For $m=1$ these words differ only at coordinate zero, with respective digits zero and one. For $m\ge2$ they differ exactly at coordinates $m-2,m-1$, where the respective pairs are
+$$
+10\qquad\text{and}\qquad01.
+$$
+In particular, a length-$t$ itinerary separates the two members of the fiber above $e_m$ exactly when
+$$
+t\ge1\quad\text{and}\quad m\le t+1.
+$$
+The successor respects their orientation until the seam:
+$$
+Tx_m^\pm=x_{m-1}^\pm\quad(m\ge2),\qquad
+Tx_1^-=Tx_1^+=Z(0).
+$$
+On the natural core the chosen word is exactly
+$$
+w_n:=f(Z(n))
+=\lfloor(n+2)\beta\rfloor-\lfloor(n+1)\beta\rfloor,
+$$
+so $w=\Phi(Z(0))$ is the lower mechanical word with slope and intercept both equal to $\beta$.
+
+**Proof.** In real phase coordinates the one-digit intervals are $F[C_1]=[a,c]$ and $F[C_0]=[c,b]$. Under the reflected and translated coordinate $[\rho]=[\beta]-[F(x)]$, their interiors become respectively $(1-\beta,1)$ and $(0,1-\beta)$. Moreover,
+$$
+[\beta]-H(Tx)=[\beta]-H(x)-[\phi]=[\rho+\beta].
+$$
+Thus rotation by $[\phi]=[\alpha]$ becomes rotation by $[\beta]$ in this coordinate.
+
+If $H(x)\notin E$, its forward phase orbit never meets $e_1$ or $e_2$. Nor can any $\rho+n\beta$ be an integer: that would give
+$$
+H(x)=[(n+1)\beta]=e_{n+1}.
+$$
+Reading the two interval interiors therefore gives the lower formula at every time. The upper formula agrees, since neither endpoint of its difference is an integer.
+
+At a split phase, approach $x_m^-$ by natural lifts from the negative phase side, as established in Theorem 20.2. Reflection makes the corresponding intercepts approach $\rho_m$ from above. Every coordinate $f\circ T^n$ is continuous, and floors are right-continuous, so the limit is $M^{\mathrm{lo}}_{\rho_m}(n)$. Approaching $x_m^+$ reverses this direction. The identity
+$$
+\lim_{\varepsilon\downarrow0}\lfloor z-\varepsilon\rfloor=\lceil z\rceil-1
+$$
+makes the two subtracted constants cancel, giving the upper formula. This argument applies separately to every coordinate, including the seam coordinate.
+
+Set
+$$
+D_k=\lceil\rho_m+k\beta\rceil-\lfloor\rho_m+k\beta\rfloor.
+$$
+Irrationality gives $D_k=0$ precisely at $k=m-1$, and $D_k=1$ at every other nonnegative integer $k$. Since
+$$
+M^{\mathrm{up}}_{\rho_m}(n)-M^{\mathrm{lo}}_{\rho_m}(n)=D_{n+1}-D_n,
+$$
+the asserted differences and their exact positions follow. In particular there is no additional endpoint word obtained by choosing the two conventions independently at different times.
+
+For $m\ge2$, rotation sends a same-side sequence approaching $e_m$ to a same-side sequence approaching $e_{m-1}$. Apply continuity of $T$, its successor formula on the natural core, and the side-limit statement of Theorem 20.2. This gives the oriented successor identity. Both alternating sequences are sent to zero by the definition of $T$.
+
+Finally, $H(Z(n))=[n\phi]$ gives the intercept class $[(n+1)\beta]$. Substituting this lift into the time-zero formula yields the displayed formula for $w_n$. At $n=0$ the intercept is $\beta$, not zero. $\square$
+
+Attached reference: Berstel, §3.1, p. 31, calls the equal-slope-and-intercept word the characteristic word; the identification with this particular Zeckendorf observation follows from the proof above. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+

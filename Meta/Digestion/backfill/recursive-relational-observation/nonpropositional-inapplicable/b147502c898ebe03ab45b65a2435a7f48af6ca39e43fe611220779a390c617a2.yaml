@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b147502c898ebe03ab45b65a2435a7f48af6ca39e43fe611220779a390c617a2
+  normalized_sha256: sha256:b147502c898ebe03ab45b65a2435a7f48af6ca39e43fe611220779a390c617a2
+cas_ref: sha256:b147502c898ebe03ab45b65a2435a7f48af6ca39e43fe611220779a390c617a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅说明更正的适用范围和保留条目，没有新增数学断言。按现有 settle-atom 路径结算。
+    previous_atom_id: 41d56f148af3db7916274b8e396542590b58165e5d850463c4c495f55fab61a9
+    next_atom_id: a1418a3e423ac3275b59ff2222e732348c690212aeaf703de3e168af96a43dc8

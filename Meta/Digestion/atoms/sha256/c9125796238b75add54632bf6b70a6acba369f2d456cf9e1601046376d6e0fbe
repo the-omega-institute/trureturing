@@ -1,0 +1,2 @@
+**Proof.** Over the quadratic splitting field, Q has distinct eigenvalues alpha,beta with alpha*beta=-1. In the split case both lie in F_q^*, so their orders divide q-1. In the inert case Frobenius interchanges them, giving alpha^(q+1)=beta^(q+1)=-1 and Q^(q+1)=-I. Hence Q^(2(q+1))=I. These prove the period bounds and coprimality. The same golden Frobenius argument gives rho(p)|p-epsilon_p. These are the classical prime-period and apparition bounds of Wall and Carmichael, not additional exceptional-prime assumptions.
+

@@ -1,0 +1,12 @@
+**Theorem IP8.** For every odd $n>3$ with $5\nmid n$ and each prime
+$p\ne2,5$,
+
+$$
+v_p(\mathcal C_n)=
+\begin{cases}
+h_p,&n=r(p),\\
+1,&n=r(p)p^j\text{ for some }j\ge1,\\
+0,&\text{otherwise}.
+\end{cases}                                      \tag{IP8}
+$$
+

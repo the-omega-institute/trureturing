@@ -1,0 +1,77 @@
+{
+  "length": 85,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 11,
+      "part": {
+        "path": "content/002-cost_results/000002/item/010-support_candidates/000000-000011.json",
+        "sha256": "db74ec71e5d36fbb96fe62593f422549ff58482b1fc770b6240210a4072ad25a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11,
+      "stop": 22,
+      "part": {
+        "path": "content/002-cost_results/000002/item/010-support_candidates/000011-000022.json",
+        "sha256": "d11dc7b17858e30704dc0b45ac2b387f107ab7aeba49175fa5fb5a7ec3e27a04",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 22,
+      "stop": 33,
+      "part": {
+        "path": "content/002-cost_results/000002/item/010-support_candidates/000022-000033.json",
+        "sha256": "ee5cf3b7d1d54954b325821092f6f97a1a81d006fd920cd58025c2c55e1e1aa1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 33,
+      "stop": 44,
+      "part": {
+        "path": "content/002-cost_results/000002/item/010-support_candidates/000033-000044.json",
+        "sha256": "4925c312d127b217cad49bc7625271dd0b55b5f5a47252b04aa0c77157d1f79e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 44,
+      "stop": 55,
+      "part": {
+        "path": "content/002-cost_results/000002/item/010-support_candidates/000044-000055.json",
+        "sha256": "070f1a0b4148ef126255364967bdcdd49ef6f6f2de22aa200b3ac8bd3d6830a0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 55,
+      "stop": 66,
+      "part": {
+        "path": "content/002-cost_results/000002/item/010-support_candidates/000055-000066.json",
+        "sha256": "1c7e3b7afc7aa790d4ae5486d68a1e1314d79b153c6e73e05b33ba85463b5ab9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 66,
+      "stop": 77,
+      "part": {
+        "path": "content/002-cost_results/000002/item/010-support_candidates/000066-000077.json",
+        "sha256": "9d3829941526810e5dc2c11ae2841cdd0ddd69831def662a4c3d3634744cd147",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 77,
+      "stop": 85,
+      "part": {
+        "path": "content/002-cost_results/000002/item/010-support_candidates/000077-000085.json",
+        "sha256": "2828b8a6e383d0e2158076cf87ac511b832f689bb36a260b807f4fe7d06e0de1",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+### 130.1 有限概率的质量切向量与得分坐标
+
+取有限非空集合 $\mathcal X$，严格正概率 $p=(p_i)_{i\in\mathcal X}$，以及固定确定性观察 $r:\mathcal X\to\mathcal B$。$\mathcal B$ 只取实际像，因此
+
+$$
+q_b=\sum_{r(i)=b}p_i>0.
+$$
+
+质量切空间、聚合映射和 Fisher 内积分别是
+
+$$
+T_p=\{v:\sum_i v_i=0\},\qquad
+(C_rv)_b=\sum_{r(i)=b}v_i,\qquad
+\langle u,v\rangle_p^{\mathrm{mass}}=\sum_i\frac{u_iv_i}{p_i}.
+$$
+
+粗质量切空间 $T_q$ 有同样的定义。令
+
+$$
+(R_pw)_i=p_i\frac{w_{r(i)}}{q_{r(i)}},\qquad E_p=R_pC_r.
+$$
+
+$R_p$ 是按**同一基准 $p$** 的条件律重建粗质量；它不是随意选取的右逆。
+

@@ -1,0 +1,16 @@
+**Proof.** RP10 puts every even-indexed value in the first ball and
+every odd-indexed value in the second. The balls are disjoint because
+the difference between their centers has valuation one. For r>s_ell+1,
+RP10 also shows that the first $5^{r-s_ell-1}$ values in either parity
+subsequence are pairwise distinct modulo 5^r. There are exactly that
+many residue classes in the relevant ball, so all its classes are hit.
+This proves density in each ball at every precision, hence the closure
+identity. Counting both balls gives the limiting fraction. This density belongs to the block sequence at the fixed prime five;
+it is not the Fibonacci density $\delta(p)$ of Appendix FD.
+
+For example $s_7=2$, because 7^4-1=2400. Hence the least block period
+at modulus 125 is still two, and the closure has density 2/125.
+However $h_7=v_7(F_8)=1$, so seven is not a WSS prime. The period plateau
+here measures the Fermat valuation of the BASE seven at the PRIME five.
+It must not be relabelled as a Fibonacci-Wieferich exception at seven.
+

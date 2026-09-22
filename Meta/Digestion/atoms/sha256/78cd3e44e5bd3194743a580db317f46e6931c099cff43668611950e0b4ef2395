@@ -1,0 +1,9 @@
+### 16.6 定理：同时保留维数依赖的下界
+
+存在仅依赖 $E_-,E_+,\eta$ 的常数 $c>0$，使对所有整数 $d\geq1$ 及 $0<\varepsilon<1$，有
+
+\[
+\mathcal R_d(\varepsilon)\geq c\max_{1\leq m\leq d}\frac{\varepsilon^{1/(2m-1)}}{m^2}.
+\tag{16.10}
+\]
+

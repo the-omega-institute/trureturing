@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa9588d77104130e9e813fa2f39f7168dd09ef5f130e8b63df46bbd994b28c66
+  normalized_sha256: sha256:aa9588d77104130e9e813fa2f39f7168dd09ef5f130e8b63df46bbd994b28c66
+cas_ref: sha256:aa9588d77104130e9e813fa2f39f7168dd09ef5f130e8b63df46bbd994b28c66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有理柯西序列的非零商类等价于最终正有理下界，探针使用 CauSeq.Completion.mk_eq_zero 和 CauSeq.abv_pos_of_not_limZero 并由趋零定义证明反向；仓内无冻结 GID 可用。
+    previous_atom_id: 72458f832ebe0d6bf0506a8367b6880a106513461d9e063ec1e6477c9b8b009c
+    next_atom_id: dd3821bc3ff74547e5d8a30c261694135ef17f702401cbe7ee3c7e812cad6a60

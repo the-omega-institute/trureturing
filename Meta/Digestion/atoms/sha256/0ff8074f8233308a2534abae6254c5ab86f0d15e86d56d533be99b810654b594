@@ -1,0 +1,18 @@
+**定理 21.4（不预设交换性的零作用刚性）。** 设 $A$ 为任意结合的全域选择，简记 $x*y=A(x,y)$，并置
+$$
+c_L(x)=0_K*x,\qquad c_R(x)=x*0_K.
+$$
+这两个映射均在每个 $H$ 纤维上恒定，而且 $c_L=c_R=:c$。进一步，
+$$
+H\circ c=H,\qquad c^2=c,
+$$
+$$
+c(x*y)=c(x)*y=x*c(y)=c(x)*c(y).
+$$
+因此 $M=c(K)$ 为双侧理想，$c$ 是到 $M$ 的半群收缩。存在唯一双射 $j:\mathbb T\to M$，使
+$$
+H\circ j=\operatorname{id}_{\mathbb T},\qquad j\circ H=c,\qquad
+j(a)*j(b)=j(a+b).
+$$
+特别 $M$ 是以 $0_K=j(0)$ 为单位、以 $j(-a)$ 为 $j(a)$ 之逆元的抽象交换群。
+

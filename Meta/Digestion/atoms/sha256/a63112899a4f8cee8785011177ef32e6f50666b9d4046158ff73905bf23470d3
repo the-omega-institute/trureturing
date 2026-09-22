@@ -1,0 +1,50 @@
+### 48.6 整个内部的正交 Fisher 坐标
+
+参数变换
+\[
+(A,\rho)\longleftrightarrow(t,\rho),\qquad
+A=\frac{t(1-\rho)^2}{\rho}
+\]
+将严格次临界域双射到 \((0,1)^2\)。取
+\[
+\alpha=\log t,\qquad\eta=\log\rho,
+\]
+则参数域是矩形 \(( -\infty,0)^2\)。这是全局坐标声明，不把临界边界纳入参数族。
+
+由（48.20），单个标签的对数概率为
+\[
+\ell=\log(1-t)+(D-1)\alpha
++(2D-1)\log(1-\rho)+(K-D+1)\eta.
+\]
+在偏导 \(\partial_\eta\) 中保持 \(\alpha\) 不变，得到两个 score：
+\[
+S_\alpha=D-\frac1{1-t}=D-\mathbb ED,
+\]
+\[
+S_\eta=K-D+1-\frac{(2D-1)\rho}{1-\rho}
+=K-rD+b.
+\tag{48.23}
+\]
+（48.22）给 \(\mathbb E[S_\eta\mid D]=0\)，故
+\(\mathbb E[S_\alpha S_\eta]=0\)。此外
+\[
+\mathbb E[S_\alpha^2]=\frac{t}{(1-t)^2}=:v,
+\]
+\[
+\begin{aligned}
+\mathbb E[S_\eta^2]
+&=\mathbb E[\operatorname{Var}(K\mid D)]\\
+&=\frac{\rho}{(1-\rho)^2}
+\left(\frac2{1-t}-1\right)
+=\frac{\rho(1+t)}{(1-\rho)^2(1-t)}=:R.
+\end{aligned}
+\]
+因此 Fisher 信息矩阵与相应二次型恰为
+\[
+I_{(\alpha,\eta)}=
+\begin{pmatrix}v&0\\0&R\end{pmatrix},
+\qquad ds^2=v\,d\alpha^2+R\,d\eta^2.
+\tag{48.24}
+\]
+两个对角量在内部均严格为正。这个对角化来自总次数 score 与条件深度 score 的正交分解。\((\alpha,\eta)\) 并非原来的自然参数，因此不能不加变换就把新坐标中某个对数归一化函数的 Hessian 当作 Fisher 矩阵；（48.23）直接排除了这种混淆。
+

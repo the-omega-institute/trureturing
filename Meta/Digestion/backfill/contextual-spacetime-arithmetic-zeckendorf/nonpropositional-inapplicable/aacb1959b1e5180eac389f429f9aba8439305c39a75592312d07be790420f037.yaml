@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aacb1959b1e5180eac389f429f9aba8439305c39a75592312d07be790420f037
+  normalized_sha256: sha256:aacb1959b1e5180eac389f429f9aba8439305c39a75592312d07be790420f037
+cas_ref: sha256:aacb1959b1e5180eac389f429f9aba8439305c39a75592312d07be790420f037
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义窗口限制映射、相容族、投影以及关系相容族，并指定子空间拓扑，没有声称恢复映射为同胚。
+    previous_atom_id: 212d4b10e4d107976c9b8aefad6a687534f3bbeb24d3f2e47a91d3785f90ba6e
+    next_atom_id: 47116b65cdad1ed8cf1ca4a55603f1a1a26da553d0e6cbd5d9dbb733d47aedd9

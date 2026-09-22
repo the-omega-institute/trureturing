@@ -1,0 +1,39 @@
+### 16.9 推论：有限支撑情形的一致次数界
+
+设 $d\geq1$、$m,\ell\geq0$，并给定三个有限原子族
+
+\[
+x_i\in[0,1],\ u_i\geq0\quad(1\leq i\leq d),\qquad
+z_j\in[0,1],\ a_j\geq0\quad(1\leq j\leq m),
+\]
+
+\[
+y_r\leq b,\ v_r\geq0\quad(1\leq r\leq\ell).
+\]
+
+假设 $b\geq0$，存在指标 $i_*$ 使 $x_*=x_{i_*}>b$、$u_{i_*}\geq\eta>0$，并且
+
+\[
+\sum_{j=1}^{m}a_j\leq\tau,\qquad \varepsilon\geq0,
+\]
+
+以及对每个整数 $0\leq k\leq2d-1$ 都有
+
+\[
+\left|
+\sum_{i=1}^{d}u_i x_i^k+
+\sum_{j=1}^{m}a_j z_j^k-
+\sum_{r=1}^{\ell}v_r y_r^k
+\right|\leq\varepsilon.
+\tag{16.12}
+\]
+
+这里空原子族的和取零。则
+
+\[
+\boxed{
+\eta(x_*-b)^{2d-1}\leq2^{2d-1}\varepsilon+\tau.
+}
+\tag{16.13}
+\]
+

@@ -11,8 +11,7 @@ internal sealed partial class RuleFixture
     internal const string DistinctStatementType = "statement-v1(uparams=[],type=ec(Fixture.Other,[]))";
 
     // A statement-carrying module the duplicate-statement advisory can see: the
-    // snapshot text only has to satisfy the header and address rules, while the
-    // declaration the advisory reads comes from the Lean report.
+    // source and report share the same name, including in the protected base.
     internal void AddStatementModule(
         string gid,
         string declarationName,
@@ -22,7 +21,7 @@ internal sealed partial class RuleFixture
         bool touched = false)
     {
         var path = gid + ".lean";
-        var text = HeaderFor(gid, "E") + $"{kind} fixtureStatement : Fixture.Dup := by trivial\n";
+        var text = HeaderFor(gid, "E") + $"{kind} {declarationName} : Fixture.Dup := by trivial\n";
         Files[path] = text;
         Baseline[path] = text;
         var declaration = new LeanDeclaration(

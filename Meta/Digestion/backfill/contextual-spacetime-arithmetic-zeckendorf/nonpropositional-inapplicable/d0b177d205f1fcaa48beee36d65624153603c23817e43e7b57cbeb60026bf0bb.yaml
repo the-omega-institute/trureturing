@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0b177d205f1fcaa48beee36d65624153603c23817e43e7b57cbeb60026bf0bb
+  normalized_sha256: sha256:d0b177d205f1fcaa48beee36d65624153603c23817e43e7b57cbeb60026bf0bb
+cas_ref: sha256:d0b177d205f1fcaa48beee36d65624153603c23817e43e7b57cbeb60026bf0bb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 整数倍同态与有限支撑自由交换群的延拓等价合成给出全部有理系数行和全部同态的双射，正向是源句有限求和，逆向是基向量求值。仓内无冻结 GID。
+    previous_atom_id: 7312ee044d8e32de85ddc8adf5ccb789c41e989140bc5059899889e6096462ad
+    next_atom_id: 9a55ba84410c5efb9106f5a2673d75d80eeee10eedd19e76064ca168111ed4c9

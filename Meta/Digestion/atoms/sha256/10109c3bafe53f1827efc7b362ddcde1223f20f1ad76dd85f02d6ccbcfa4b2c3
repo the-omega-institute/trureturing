@@ -1,0 +1,74 @@
+**theorem 39.12 (Exact finite-observation completion with common witnesses).** The maps $r_{GF}$ form a surjective inverse system, and
+$$
+A_F=Q_F(\mathscr E)
+\qquad(F\in\operatorname{Fin}(\mathcal A)).
+\tag{39.33}
+$$
+There is a canonical homeomorphism
+$$
+\Psi:\mathscr E\longrightarrow L,
+\qquad \Psi(p)=(Q_F(p))_F.
+\tag{39.34}
+$$
+The map $n\mapsto(q_F(n))_F$ embeds the discrete set $\mathbb N$ as a dense subset of $L$.
+
+More explicitly, put
+$$
+\iota(p)=\bigl((p(b))_j\bigr)_{(b,j)\in\mathcal A}.
+$$
+Then
+$$
+\iota(\mathscr E)=
+\overline{\{\iota(T^n):n\ge0\}}^{\,\{0,1\}^{\mathcal A}},
+\tag{39.35}
+$$
+and, for $z\in\{0,1\}^{\mathcal A}$,
+$$
+z\in\iota(\mathscr E)
+\quad\Longleftrightarrow\quad
+\forall F\in\operatorname{Fin}(\mathcal A)\ \exists n\ge0\quad
+\forall(b,j)\in F:\ z_{b,j}=(T^n b)_j.
+\tag{39.36}
+$$
+The integer may depend on $F$, but within each $F$ it must be the same integer for every input and digit.
+
+**Proof.** Restriction of $q_G(n)$ is $q_F(n)$, proving that each bonding map is well defined. It is surjective because an actual record $q_F(n)$ extends to $q_G(n)$ using that same $n$. Restriction also gives the identity and composition laws for the inverse system.
+
+The map $Q_F$ is continuous and finite-valued. Every nonempty fibre of $Q_F$ on $\mathscr E$ is open and therefore meets the dense set of iterates. Hence every attained value is $q_F(n)$ for some $n$, proving (39.33), including the empty coordinate set.
+
+Flattening the output digits gives a continuous injection
+$$
+\iota:K^K\longrightarrow\{0,1\}^{\mathcal A}.
+$$
+Its image is exactly the closed set
+$$
+B=\{z:z_{b,j}z_{b,j+1}=0\text{ for every }b\in K,\ j\ge0\}.
+$$
+Indeed, each row $z_{b,\cdot}$ of a member of $B$ is an element of $K$ and therefore defines the value of an actual function at $b$. Conversely every function in $K^K$ has such rows. Continuity is coordinatewise, and compactness of $K^K$ together with the Hausdorff target makes $\iota$ a homeomorphism onto $B$. Its restriction makes $\iota(\mathscr E)$ closed. Density of the iterates then proves (39.35).
+
+A basic neighborhood in the binary product prescribes the values at one finite set $F$. It meets $\{\iota(T^n):n\ge0\}$ exactly when one integer $n$ realizes all those prescribed coordinates. This proves (39.36).
+
+If $(a_F)_F\in L$, define $z_{b,j}$ to be the coordinate of $a_{\{(b,j)\}}$. Compatibility with singleton restrictions implies
+$$
+z|_F=a_F\in A_F
+\qquad\text{for every finite }F.
+$$
+Thus each finite pattern is realized by one $q_F(n)$, and (39.36) gives a unique $p\in\mathscr E$ with $\iota(p)=z$. It satisfies $Q_F(p)=a_F$ for every $F$. This proves surjectivity of $\Psi$; injectivity follows because all singleton digit tests together distinguish actual functions. The map is continuous, and $L$ is Hausdorff as a subspace of a product of finite Hausdorff spaces. A continuous bijection from compact $\mathscr E$ onto $L$ is a homeomorphism, proving (39.34).
+
+The iterate image in $L$ is dense by (39.34) and density in $\mathscr E$. It is injective because the operators $T^n$ have distinct phases; it has the discrete subspace topology because every $T^n$ is isolated by Theorem 37.4.
+
+The common-witness requirement is already substantive for two inputs. Take
+$$
+F=\{(0_K,0),(Z(1),0)\}.
+$$
+Each coordinate individually attains the value $1$ on some iterate. But the joint value $(1,1)$ is unattainable: the two values are consecutive lowest-digit successor observations, and their length-two words are exactly $01$, $00$, and $10$, by Theorem 20.6. Independent witnesses for the two singleton observations would incorrectly admit $(1,1)$.
+
+Finally, for any net $(p_\lambda)$ in $\mathscr E$, the topology just identified gives
+$$
+p_\lambda\to p
+\quad\Longleftrightarrow\quad
+\forall(b,j)\in\mathcal A:\quad
+(p_\lambda(b))_j=(p(b))_j\text{ eventually}.
+$$
+Equivalently, each fixed finite record $Q_F(p_\lambda)$ eventually equals $Q_F(p)$. The equivalence follows from the finite-cylinder basis and the discrete digit topology. There is no assertion of one eventual index working simultaneously for all $F$. This is precisely the original pointwise evaluation topology. $\square$
+

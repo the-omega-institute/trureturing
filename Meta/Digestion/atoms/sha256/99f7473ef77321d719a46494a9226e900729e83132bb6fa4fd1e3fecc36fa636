@@ -1,0 +1,30 @@
+**证明。** 下界使用 Borsuk–Ulam 定理的如下形式：对每个整数 $k\ge0$ 和每个连续映射 $F:S^k\to\mathbb R^k$，存在 $x\in S^k$ 使 $F(x)=F(-x)$。这里不要求 $F$ 为奇映射。参考：Matoušek，*Using the Borsuk–Ulam Theorem*，定理 2.1.1 的 BU1a，第 23 页，及第 24 页与 BU1b 的等价证明，[第 2 章样章](https://beckassets.blob.core.windows.net/product/readingsample/250866/9783540003625_excerpt_001.pdf)；亦见 Hatcher，*Algebraic Topology*，推论 2B.7，第 176 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+首先，$m=0$ 时读数恒定，任意对跖点仍有相同联合读数，所以对所有 $n\ge0$ 都不可能单射。其次，设 $n\ge1$ 且 $1\le m\le n$。对任意连续 $r:S^n\to\mathbb R^m$，补零得到连续映射
+$$
+\widetilde r:S^n\longrightarrow\mathbb R^n,
+\qquad
+\widetilde r(x)=\bigl(r(x),0_{\mathbb R^{n-m}}\bigr).
+$$
+当 $m=n$ 时这里就是原映射。Borsuk–Ulam 给出 $x$ 使
+$$
+\widetilde r(x)=\widetilde r(-x),
+$$
+于是 $r(x)=r(-x)$；同时 $q_n(x)=q_n(-x)$ 且 $x\ne-x$，所以联合映射不单射。这同时覆盖 $m=n$ 和 $m<n$，证明任何可行的 $m$ 都至少为 $n+1$。
+
+反向地，对 $m\ge n+1$，取
+$$
+r_m(x_0,\ldots,x_n)
+=
+\bigl(x_0,\ldots,x_n,0_{\mathbb R^{m-n-1}}\bigr).
+$$
+这是连续映射，并且
+$$
+r_m(-x)=-r_m(x),
+\qquad
+\|r_m(x)-r_m(-x)\|=2.
+$$
+因此它分离每条对跖纤维；在最小维数 $m=n+1$ 时就是标准包含 $r(x)=x$。联合映射的闭嵌入结论由命题 15.4 的紧致到 Hausdorff 论证得到。
+
+若 $n=0$，前面已单独排除 $m=0$，而 $r(x)=x\in\mathbb R$ 区分 $S^0$ 的两点，所以最小值确为一，不需要对负维球面作任何约定。最后，奇球面映射的存在性等价由命题 15.4 直接得到。证毕。
+

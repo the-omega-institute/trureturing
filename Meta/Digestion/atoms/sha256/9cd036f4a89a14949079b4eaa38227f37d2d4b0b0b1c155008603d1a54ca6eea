@@ -1,0 +1,2 @@
+**Proof.** Count all four distinct incidences from each failing window. A fixed ell>5 divides one of the four forms at no more than 4X/ell+4<=8X/y values of k. Only the H(X) fully exceptional indices can occur in these incidences. This proves ZBD2. Substitute T_X<=(2X/y)H(X) in EMWS6 and multiply by y/X. The final lower bound is EMWS4, which explicitly uses Franze's established four-dimensional lower-bound sieve.
+

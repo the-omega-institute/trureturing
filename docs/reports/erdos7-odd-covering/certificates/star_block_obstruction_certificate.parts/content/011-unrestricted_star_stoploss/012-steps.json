@@ -1,0 +1,23 @@
+{
+  "length": 288,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 159,
+      "part": {
+        "path": "content/011-unrestricted_star_stoploss/012-steps/000000-000159.json",
+        "sha256": "4cdbe45e0173d897464f7decd8d3ee18f8dedffde87e5866cd0de584ed06f4ed",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 159,
+      "stop": 288,
+      "part": {
+        "path": "content/011-unrestricted_star_stoploss/012-steps/000159-000288.json",
+        "sha256": "1a6329ae4b98e87b88c1fcc976fe30eb9cce283aeb4e022a6b1a110781fe9513",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "retained_source_supports": {
+    "path": "content/002-result/020-support_coverage/000-retained_source_supports.json",
+    "sha256": "9f095e2dda2cc68c95bc495fa8b1235d131d63ac25f10ad5747f8fab779580e7",
+    "kind": "value"
+  },
+  "distinct_old_images": {
+    "kind": "inline",
+    "value": 48
+  },
+  "reconstructed_target_domain": {
+    "kind": "inline",
+    "value": {
+      "carrier_orbits": 34160,
+      "carriers": 153997,
+      "carrier_orbits_sha256": "39a714de47b3d4f2cfceb872ac62e762326b1d9c8f64ea74a27b19fe0e06a8b7"
+    }
+  },
+  "matching_replayed_only_for_included_targets": {
+    "kind": "inline",
+    "value": 701
+  },
+  "matching_maps_per_included_target": {
+    "kind": "inline",
+    "value": 8640
+  },
+  "included_targets": {
+    "path": "content/002-result/020-support_coverage/005-included_targets.json",
+    "sha256": "af4b4477a69da3a4188a8e7ef68b218a707c946c55ebef91be46ed08a6ff5e35",
+    "kind": "array"
+  },
+  "support_covered": {
+    "kind": "inline",
+    "value": {
+      "carrier_orbits": 701,
+      "carriers": 4892,
+      "minimal_carrier_orbits": 21,
+      "carrier_orbits_sha256": "a9e43ce55e0d4547f0287f27ec3de5470cd235d1d13192c667cec55a0050688c",
+      "minimal_orbits_sha256": "e957d46bdc412da4aefdbb4b9c661c2d899955024d8cc27c5b56ba96e0a831f2"
+    }
+  },
+  "old_coverage_overlap": {
+    "kind": "inline",
+    "value": {
+      "carrier_orbits": 459,
+      "carriers": 3110,
+      "minimal_carrier_orbits": 12,
+      "carrier_orbits_sha256": "f30a247a3cc39d595e11e30f8c840dbd57f1bac2ce28c7cf16de05948507bcee",
+      "minimal_orbits_sha256": "ea1ed27f4d353bd4e8b922060ff12dfeca411e03f8cd93b08918482d38a923f9"
+    }
+  },
+  "additional_coverage": {
+    "kind": "inline",
+    "value": {
+      "carrier_orbits": 242,
+      "carriers": 1782,
+      "minimal_carrier_orbits": 9,
+      "carrier_orbits_sha256": "f2d9660a91599b94e87391bac123f6a7831e99d2be5bbcc628cc3f5838357dec",
+      "minimal_orbits_sha256": "8135de136107d6e19bc10bd6cba12acd5cf133cc14756364212d0a29fcf76f73"
+    }
+  },
+  "previous_weighted_coverage": {
+    "kind": "inline",
+    "value": {
+      "carrier_orbits": 1172,
+      "carriers": 7073,
+      "essential_carrier_orbits": 73,
+      "essential_carriers": 558,
+      "minimal_carrier_orbits": 53,
+      "minimal_carriers": 390,
+      "carrier_orbits_sha256": "4b8bbd5578a7491ed0892fed39328afeb9263ab0aa1696e7112c3c89b3fb6c04",
+      "minimal_carrier_orbits_sha256": "a7e3684cf2f81a09c5ea9e06b9d1c732619f384d8944a2902f85ecedd88cf08e"
+    }
+  },
+  "merged_PG1_coverage": {
+    "kind": "inline",
+    "value": {
+      "carrier_orbits": 1414,
+      "carriers": 8855,
+      "minimal_carrier_orbits": 62
+    }
+  },
+  "inherited_other_shapes": {
+    "kind": "inline",
+    "value": [
+      {
+        "shape": "root2_other_same_column",
+        "carriers": 2291,
+        "carrier_orbits": 152,
+        "minimal_orbits": 1
+      },
+      {
+        "shape": "root1_same_other_column",
+        "carriers": 5007,
+        "carrier_orbits": 1077,
+        "minimal_orbits": 9
+      }
+    ]
+  },
+  "combined_before": {
+    "kind": "inline",
+    "value": {
+      "covered_carriers": 14371,
+      "covered_carrier_orbits": 2401,
+      "covered_minimal_carrier_orbits": 63,
+      "remaining_minimal_carrier_orbits": 56903
+    }
+  },
+  "combined_after": {
+    "kind": "inline",
+    "value": {
+      "covered_carriers": 16153,
+      "covered_carrier_orbits": 2643,
+      "covered_minimal_carrier_orbits": 72,
+      "remaining_minimal_carrier_orbits": 56894
+    }
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Each target contains a transported retained support of one of the four proved laws. The high event remains arbitrary, so the same law applies to every such target. Reconstruct all target representatives, but recompute weighted minima and minimality only on included targets. Previous weighted and other-shape totals are inherited from their hash-bound certificate; the additional count subtracts exact overlap with its original threshold."
+  }
+}

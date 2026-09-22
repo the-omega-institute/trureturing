@@ -558,6 +558,24 @@ public sealed class FormulaTests
     }
 
     [Fact]
+    public void PmodEmitsTheParenthesisedModulusThatSourceQuotationsPrint()
+    {
+        // `\pmod` exists so a quoted source sentence can print "(mod n)" the way papers do.
+        // `\mathrm{mod}` followed by a space does not: TeX discards the literal space in math
+        // mode, so the reader sees "mod2". Measured against the vendored KaTeX 0.16:
+        // `a \pmod{2}` renders, and so does `x^\pmod{2}` - unlike `\sqrt`, this macro is NOT
+        // refused in a script position, which is why it is absent from the refused set below.
+        Assert.Equal(
+            "\\pmod{2}",
+            LatexWriter.Write(FormulaDsl.Seq(FormulaDsl.Pmod, FormulaDsl.Grp(FormulaDsl.D(2)))));
+
+        // It binds one argument, so a bare trailing macro is refused like every other
+        // argument-taking macro; KaTeX reports "Unexpected end of input in a macro argument".
+        Assert.Throws<ArgumentException>(() => new Formula.LatexSequence(
+            [FormulaDsl.Id("a"), FormulaDsl.Pmod]));
+    }
+
+    [Fact]
     public void MacrosAreRefusedWhereTheirArgumentIsMissing()
     {
         // `\operatorname\left({NeZero}, d\right)` applies the macro before it has its

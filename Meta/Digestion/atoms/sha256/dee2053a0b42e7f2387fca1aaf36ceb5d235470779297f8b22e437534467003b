@@ -1,0 +1,29 @@
+**theorem 48.5 (Bounded natural coordinates and boundary replacement).** The set $F_r$ is a fixed point of the anchoring operation. For every solution $\mathbf a$ of $\Sigma$ with exact ambient-zero set $Z$, every $i\in F_k$ satisfies
+$$
+a_i\in\{1,\ldots,b_k\}\qquad(0\leq k\leq r).
+$$
+Define $\mathbf a'$ by setting $a'_i=0$ on $Z$, $a'_i=a_i$ on $F$, and $a'_i=\tau(\rho(a_i))$ on $U$. Then $\mathbf a'$ is a solution of the same literal equations, has the same ambient-zero set, and satisfies
+$$
+\rho(a'_i)=\rho(a_i)\qquad(i\in V).
+$$
+Its natural coordinates are all at most $M_\Sigma$, and all coordinates in $U$ are boundary. Consequently every satisfiable system has a solution in
+$$
+\bigl(\{0,1,\ldots,M_\Sigma\}\cup B\bigr)^r.
+$$
+
+**证明。** The anchoring operation is monotone and extensive on subsets of $V\setminus Z$. If an iteration is not fixed, it adds at least one index. There are at most $r$ indices, and an equality $F_{k+1}=F_k$ makes every subsequent iteration equal as well. Thus $F_r$ is fixed.
+
+The natural-coordinate assertion is vacuous at $k=0$. Suppose it holds at $k$. If an equation has $S_Z(P_j)\subseteq F_k$, Theorem 48.3 gives a natural value
+$$
+P_j(\mathbf a)\leq Cb_k^d=b_{k+1}.
+$$
+Since $Q_j(\mathbf a)$ is literally the same element of $K$, it is the same natural number. Every index in $S_Z(Q_j)$ therefore has a positive natural value at most $b_{k+1}$. The reversed orientation of an equation has the identical consequence. Previously anchored values remain bounded because $b_k\leq b_{k+1}$. This proves the induction. If the anchored side has value zero, a nonempty active support on the opposite side would contradict Theorem 48.3; this case supplies no exceptional nonzero witness.
+
+The replacement leaves every zero coordinate unchanged and sends every coordinate in $U$ to a boundary element, which is never ambient zero. It preserves $\rho$ coordinatewise. Consider one equation. Fixed-point closure gives
+$$
+S_Z(P_j)\subseteq F\quad\Longleftrightarrow\quad S_Z(Q_j)\subseteq F.
+$$
+If these containments hold, all surviving variables on both sides are unchanged positive naturals, so both evaluations are unchanged. If they fail, each side has an active variable in $U$. After replacement both evaluations are boundary by Theorem 48.3. Their $\rho$-images equal the original respective $\rho$-images, because $\rho$ is a homomorphism and the coordinate residues were preserved. The original equation makes these images equal. Injectivity of $\rho$ on $B$ now gives equality of the new boundary evaluations.
+
+Thus every equation is preserved. In particular, an equation against an ambient constant is handled by the first case, because its constant side has empty support; it is never justified by identifying a boundary output with that constant. The induction gives the bound $b_r=M_\Sigma$ on all retained positive natural coordinates. 证毕。
+

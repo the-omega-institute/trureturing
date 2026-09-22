@@ -1,0 +1,107 @@
+**证明。** 先记录阈值—周期核的包含次序：
+$$
+R_{u,v}\subseteq R_{t,p}
+\quad\Longleftrightarrow\quad
+u\ge t\ \land\ p\mid v.
+$$
+这也是 James East 与 Nik Ruškuc，*Classification of congruences of twisted partition monoids*，第 2.1 节式 (2.2) 的标准包含判据，参见 [arXiv:2010.04392v3](https://arxiv.org/html/2010.04392v3#S2.SS1)。
+
+为明确此处的方向，若左侧成立，则
+$$
+u\mathrel{R_{u,v}}u+v
+$$
+是一对不同元素，因而 $u\mathrel{R_{t,p}}u+v$ 强制 $u\ge t$ 及 $p\mid v$。反之，若这两个参数条件成立，则任何不同的 $R_{u,v}$-相关元素均不小于 $u\ge t$，且其差为 $v$ 的倍数，从而也是 $p$ 的倍数，所以属于 $R_{t,p}$。
+
+下面证明素数集构造在给定步数内已封闭。归纳可知，每个 $S_j$ 都只含不超过 $p$ 的素数：初始素数整除 $p$；若新素数 $r$ 整除某个 $\ell-1$，则
+$$
+r\le\ell-1<\ell\le p.
+$$
+同时 $S_j\subseteq S_{j+1}$。不超过 $p$ 的素数至多有 $p-1$ 个，因此前 $p$ 步不可能每一步都严格增加。一旦某一步满足 $S_{j+1}=S_j$，该集合已经对所定义的增补操作封闭，之后各步都保持不变。故 $S_p$ 满足
+$$
+\ell\in S_p
+\quad\Longrightarrow\quad
+\operatorname{Pr}(\ell-1)\subseteq S_p.
+$$
+$p=1$ 时，各集合均为空，结论同样成立。
+
+简记 $P=P(p)$。显然 $p\mid P$。若素数 $r\mid P$，则由最小公倍数的素因子分解，$r$ 必整除 $p$，或整除某个 $\ell-1$，其中 $\ell\in S_p$。前一情形给出 $r\in S_0\subseteq S_p$；后一情形由封闭性给出 $r\in S_p$。因此
+$$
+\operatorname{Pr}(P)\subseteq S_p.
+$$
+对每个 $r\in\operatorname{Pr}(P)$，数 $r-1$ 正是定义 $P$ 时列入最小公倍数的一项，所以
+$$
+r-1\mid P.
+$$
+由定理 13.1 中已经证明的周期判据，
+$$
+\lambda(P)\mid P.
+$$
+
+令
+$$
+L_p=\operatorname{lcm}(1,2,\ldots,p).
+$$
+定义 $P$ 时使用的数 $p$ 整除 $L_p$；每个 $\ell\in S_p$ 都满足 $2\le\ell\le p$，故正整数 $\ell-1$ 也整除 $L_p$。于是
+$$
+P\mid L_p,
+$$
+得到所述显式整除界。
+
+若 $(t,p)=(0,1)$，则 $P=1$、$T(t,p)=0$，故 $R_*=R_{0,1}$，所需性质直接成立。否则，按定义
+$$
+T(t,p)\ge t,\qquad
+T(t,p)\ge\max\{1,h(P)\}.
+$$
+结合 $\lambda(P)\mid P$，定理 13.1 给出 $R_*$ 双槽保幂；再由 $p\mid P$ 及包含判据，得到
+$$
+R_*\subseteq R_{t,p}.
+$$
+阈值以下共有 $T(t,p)$ 个单元素类，尾部共有 $P$ 个剩余类，所以商的类数恰为 $T(t,p)+P$。至此已对所有 $t,p$ 给出有限修复，而非仅给出条件性的最粗性结论。
+
+进一步证明 $P$ 的精确最小性。设正整数 $v$ 满足
+$$
+p\mid v,\qquad \lambda(v)\mid v.
+$$
+由周期判据，每个素因子 $\ell\mid v$ 都满足 $\ell-1\mid v$。归纳证明
+$$
+S_j\subseteq\operatorname{Pr}(v)
+\qquad(0\le j\le p).
+$$
+起点来自 $p\mid v$。若结论对 $S_j$ 成立，则对每个 $\ell\in S_j$ 都有 $\ell\mid v$，进而 $\ell-1\mid v$；所以 $\ell-1$ 的所有素因子仍整除 $v$，得到下一步的包含。
+
+因此，每个 $\ell\in S_p$ 都整除 $v$，从而 $\ell-1\mid v$。连同 $p\mid v$，得到
+$$
+P(p)\mid v.
+$$
+故 $P(p)$ 是满足 $p\mid v$ 且 $\lambda(v)\mid v$ 的正整数中，按整除排序的最小元素。这一最小性比较的是全部正整数 $v$，不限于某个预先截断的搜索范围。
+
+现在设 $R_{u,v}\subseteq R_{t,p}$ 且 $R_{u,v}$ 双槽保幂。包含判据给出
+$$
+u\ge t,\qquad p\mid v.
+$$
+若旧核是 $R_{0,1}$，则任何关系都包含于 $R_*=R_{0,1}$，最粗性显然成立。
+
+以下设 $(t,p)\ne(0,1)$。此时 $R_{u,v}$ 不可能是全关系，因为全关系不能包含于这个非全关系旧核。故定理 13.1 给出
+$$
+u\ge\max\{1,h(v)\},\qquad \lambda(v)\mid v.
+$$
+由 $P$ 的最小性，$P\mid v$，从而逐素数比较赋值可得
+$$
+h(P)\le h(v).
+$$
+因此
+$$
+u\ge\max\{t,1,h(P)\}=T(t,p).
+$$
+再用一次包含判据，
+$$
+R_{u,v}\subseteq R_{T(t,p),P}=R_*.
+$$
+由于 $R_*$ 本身已是合格细化，它就是最大元素，而不仅是极大元素；最大元素的唯一性立即成立。包含判据与定理 13.1 的合取，也给出了定理所述全部有限细化的参数刻画。
+
+最后，设 $E\subseteq R_{t,p}$ 是任意对 $\{+,\times,\operatorname{pow}\}$ 相容的等价关系。若 $E$ 为等号关系，则显然 $E\subseteq R_*$。若不是等号关系，由定理 11.2 的自然数加法同余分类，存在有限参数 $u\ge0$、$v\ge1$，使
+$$
+E=R_{u,v}.
+$$
+于是刚才证明的最粗性适用，仍得 $E\subseteq R_*$。另一方面，$R_*$ 对加法、乘法的相容性来自定理 11.2，对幂的相容性已经证明。因此它确为该签名下所有保留旧区别的同余中的最大者。证毕。
+

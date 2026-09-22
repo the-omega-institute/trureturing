@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e1f121ebe123f713bfcbf0f2432c28550f8e0ceff19368caaae7427135d40f8
+  normalized_sha256: sha256:6e1f121ebe123f713bfcbf0f2432c28550f8e0ceff19368caaae7427135d40f8
+cas_ref: sha256:6e1f121ebe123f713bfcbf0f2432c28550f8e0ceff19368caaae7427135d40f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义评价映射、完整乘积目标及投影，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: a172adef4c9ee5d397a14327ea120f8e6fc10ae27906203ec4f110e9228bf891
+    next_atom_id: 759ea4ad721ce11e2c6d872ce486ec016bfff03dd74d2e4e891c0c3fbb660a91

@@ -1,0 +1,9 @@
+**证明。** 对奇数 $n$，$L_n=\varphi^n-\varphi^{-n}$，故
+
+$$
+C_j=\varphi^{2\cdot3^j}+\varphi^{-2\cdot3^j}-1
+<\varphi^{2\cdot3^j}.
+$$
+
+令 GP37 中的整数为 $K$。对 $1\le j\le K$，有 $C_j<X$。GP36 在每个这样的层给出一个不同的素数 $p_j\le C_j<X$。
+

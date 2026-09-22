@@ -1,0 +1,67 @@
+**定理 13.2（核与初态的共同有限实现）。** 给自伴矩阵前缀 $M_0,\ldots,M_{2r+1}$ 和向量前缀 $z_0,\ldots,z_r$。存在一个有限维实内积空间 $E$ 及同一组 $T,J,h_0$，满足
+$$
+uI\preceq T\preceq vI,\qquad
+M_j=J^*T^jJ\ (0\le j\le2r+1),\qquad
+z_j=J^*T^jh_0\ (0\le j\le r),
+$$
+$$
+\|J\|^2\le m_*,\qquad \|h_0\|\le E_*,
+$$
+当且仅当
+$$
+\boxed{
+H\succeq0,\qquad uH\preceq S\preceq vH,\qquad
+\begin{pmatrix}H&z\\z^*&E_*^2\end{pmatrix}\succeq0,
+\qquad M_0\preceq m_*I.
+}
+\tag{13.3}
+$$
+可取 $\dim E=\operatorname{rank}H$，且此实现的初态能量为
+$$
+e_{\min}=z^*H^\dagger z.
+\tag{13.4}
+$$
+在 $m_*,E_*$ 固定时，式（13.3）定义前缀空间中的非空闭凸紧集，记为 $\mathcal C_r$。
+
+**证明。** 必要性中，前两个条件和质量界分别来自式（13.2）及 $M_0=J^*J$。增广矩阵是向量族 $(T^jJ)_{j\le r}$ 与 $h_0$ 的 Gram 矩阵，再在右下角加非负数 $E_*^2-\|h_0\|^2$，故半正定。
+
+为证充分性，先用奇异 Schur 补的完成平方形式：对任意 $H\succeq0$，
+$$
+\begin{pmatrix}H&z\\z^*&E_*^2\end{pmatrix}\succeq0
+\quad\Longleftrightarrow\quad
+z\in\operatorname{ran}H,\quad z^*H^\dagger z\le E_*^2.
+\tag{13.5}
+$$
+事实上，对 $c\in\ker H$ 测试向量 $(tc,1)$，非负性对全部 $t\in\mathbb R$ 成立迫使 $\langle c,z\rangle=0$，故 $z\in\operatorname{ran}H$。在此条件下，对任意 $(c,s)\in\mathcal P\oplus\mathbb R$，其二次型等于
+$$
+\|H^{1/2}c+sH^{\dagger/2}z\|^2
++s^2(E_*^2-z^*H^\dagger z).
+$$
+令 $c=-sH^\dagger z$ 即得必要的能量不等式；反向由该平方分解直接得到。
+
+核前缀的存在性直接使用主卷定理137.2、137.5及本卷第12节的白化坐标。在 $E_r=\operatorname{ran}H$ 上取
+$$
+T_r=\left.H^{\dagger/2}SH^{\dagger/2}\right|_{E_r},\qquad
+J_r=H^{1/2}E_0,\qquad h_r=H^{\dagger/2}z,
+\tag{13.6}
+$$
+其中 $E_j:U\to\mathcal P$ 是第 $j$ 个分量的插入。既有规范商的移位关系给
+$$
+T_r^jJ_r=H^{1/2}E_j\qquad(0\le j\le r).
+$$
+因此
+$$
+J_r^*T_r^jh_r
+=E_j^*H^{1/2}H^{\dagger/2}z
+=E_j^*z=z_j,
+\qquad \|h_r\|^2=z^*H^\dagger z\le E_*^2.
+$$
+核矩与谱区间由所引实现定理保证，$J_r^*J_r=M_0$ 给质量界。零秩时取零维空间，上述结论仍成立。因为 $u>0$，还可令 $C_r=-h^{-1}\log T_r$，得到定义13.1中的连续时间实现。
+
+式（13.3）全为固定常数下的线性矩阵不等式，故可行集闭且凸，零前缀表明非空。对任一可行点使用刚构造的共同实现，有
+$$
+\|M_j\|\le m_*v^j,\qquad
+\|z_j\|\le\sqrt{m_*}E_*v^j.
+$$
+有限维前缀空间中的闭有界集紧致。固定预算使 $\mathcal C_r$ 一般不具有锥的缩放闭合性。证毕。
+

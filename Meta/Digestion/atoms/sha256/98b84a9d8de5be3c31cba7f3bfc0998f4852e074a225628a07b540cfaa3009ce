@@ -1,0 +1,12 @@
+**Theorem IP7.** With $\varphi_{\rm E}$ denoting Euler's totient,
+
+$$
+\mathcal C_n\equiv3^{\varphi_{\rm E}(n)}\Phi_n(1)\pmod5,
+\qquad
+\chi(\mathcal C_n)=
+\begin{cases}
+\chi(\ell),&n=\ell^a\text{ for a prime }\ell,\ a\ge1,\\
+1,&n\text{ has at least two distinct prime factors}.
+\end{cases}                                      \tag{IP7}
+$$
+

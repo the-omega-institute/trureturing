@@ -1,0 +1,50 @@
+{
+  "length": 5,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/008-complete_heads/000-denominator_costs/000000-000001.json",
+        "sha256": "d5b8e06c4d399ac4f1dd94fb3288211b2fcfd36b9a168f2aba52921dfa2a5045",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/008-complete_heads/000-denominator_costs/000001-000002.json",
+        "sha256": "28c97695463e2022c9a1449e36cdb137d8127d833c04da382689dd295e5f8787",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/008-complete_heads/000-denominator_costs/000002-000003.json",
+        "sha256": "3292f1932f94aa29c9ad53df27bc83239e59ad6eb02ecbde6186c02d784acdf9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/008-complete_heads/000-denominator_costs/000003-000004.json",
+        "sha256": "2426e8c971f56102ad953ea5cc1650ac8f0d1f4733a029e36c7027b0448786d8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/008-complete_heads/000-denominator_costs/000004-000005.json",
+        "sha256": "b0f3203e2fabaad9871426a4a873ee9070568cd309271ba3b88b53ea8cc79340",
+        "kind": "value"
+      }
+    }
+  ]
+}

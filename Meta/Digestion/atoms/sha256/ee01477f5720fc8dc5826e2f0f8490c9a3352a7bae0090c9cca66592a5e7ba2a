@@ -1,0 +1,10 @@
+**定理。** 对全部充分大的 $X$，
+
+$$
+\boxed{
+T_X+\frac{8X}{y}R_8(X)
+\ge |\mathcal A_X|
+\ge c\frac{X}{(\log X)^4}.
+}\tag{EMWS6}
+$$
+

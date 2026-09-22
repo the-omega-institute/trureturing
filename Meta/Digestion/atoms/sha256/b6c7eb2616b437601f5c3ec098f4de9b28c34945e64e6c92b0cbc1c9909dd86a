@@ -1,0 +1,2 @@
+**theorem 27.3 (The actual discrete completion).** For every set $S$, each member of $\ell^1(S)$ has at most countable support. The normed space $\ell^1(S)$ is complete, and $\mathbb R^{(S)}$ is dense in it. In particular, the completion of $A$ in the point-mass coefficient norm is precisely $\ell^1(K_{\mathrm d})$.
+

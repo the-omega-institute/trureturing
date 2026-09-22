@@ -1,0 +1,22 @@
+### 定义 58.5（规范化纤维缺陷）
+
+不假设响应经由 $N$ 因子化。对每个实验定义规范化纤维缺陷
+
+$$
+\varepsilon_{\mathrm{fib},i}
+=
+\sup_{\substack{r,r'\in R\\N(r)=N(r')}}
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+p_i(\,\cdot\mid r')
+\right),
+$$
+
+并令
+
+$$
+\varepsilon_{\mathrm{fib}}
+=
+\max_i\varepsilon_{\mathrm{fib},i}.
+$$
+

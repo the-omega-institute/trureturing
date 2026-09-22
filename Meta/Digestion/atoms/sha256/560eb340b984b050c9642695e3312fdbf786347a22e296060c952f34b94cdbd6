@@ -1,0 +1,6 @@
+**Corollary.** Let N_0(x) and N_Z(x) count non-WSS and WSS primes p<=x, respectively, whose actual Fibonacci ranks are prime and at least seven. For x>=128,
+
+$$
+\boxed{N_0(x)+\tfrac12N_Z(x)\ge\pi(\lfloor\log_2x\rfloor)-3.}\tag{PBC9}
+$$
+

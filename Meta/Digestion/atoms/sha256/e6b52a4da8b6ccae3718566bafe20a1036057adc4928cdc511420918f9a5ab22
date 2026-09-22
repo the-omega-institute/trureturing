@@ -1,0 +1,12 @@
+**Proof.** The first two dual identities are Theorem 32.7, since every bounded function is measurable for the power-set sigma-algebra. For any set $I$, each member of $\ell^1(I)$ has at most countably many nonzero coordinates and is the norm limit of its finite truncations. A bounded functional on $\ell^1(I)$ is therefore determined by the bounded family of its values on $\delta_i$, with the usual absolutely convergent pairing. This proves $\ell^1(I)^*=\ell^\infty(I)$ and the last displayed identity with $I=K$ treated discretely.
+
+The inclusion $B_b(K)\subseteq\ell^\infty(K)$ is closed, because uniform limits of Borel functions are Borel. It is proper. Indeed, $K$ has cardinality continuum, since it maps onto the circle and embeds in $\{0,1\}^{\mathbb N}$. Second countability gives at most continuum many Borel sets, whereas the power set of $K$ has larger cardinality. The indicator of a non-Borel subset belongs to $\ell^\infty(K)$ but not to $B_b(K)$.
+
+The adjoint of this inclusion is restriction. The Hahn–Banach theorem extends every bounded functional on $B_b(K)$ to $\ell^\infty(K)$ with unchanged norm, proving surjectivity. It also separates a point outside this proper closed subspace from the subspace: there is a nonzero bounded functional on $\ell^\infty(K)$ vanishing on $B_b(K)$. Thus restriction is not injective.
+
+Finally let $q$ be a probability functional on $B_b(K)$, and take a norm-preserving Hahn–Banach extension $\widetilde q$. It has norm one and $\widetilde q(1)=1$. For $0\le f\le1$,
+$$
+\widetilde q(f)=1-\widetilde q(1-f)\ge1-\|1-f\|_\infty\ge0.
+$$
+Scaling proves positivity on all bounded nonnegative functions. Hence the extension is a probability charge on the full power set. Surjectivity or the existence of such extensions supplies no canonical choice of extension and no automatic compatibility of products. QED.
+

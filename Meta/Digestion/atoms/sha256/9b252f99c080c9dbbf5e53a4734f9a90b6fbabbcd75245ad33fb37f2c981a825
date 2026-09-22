@@ -1,0 +1,29 @@
+**定义 31.1（复测度、复化与序列代数）。** 对紧致度量空间 $X$，记 $M_{\mathbb C}(X)$ 为有限复正则 Borel 测度空间，采用
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(X),\qquad \langle f,\mu\rangle=\int_Xf\,d\mu.
+$$
+每个复测度唯一写成 $\mu=\mu_1+i\mu_2$，其中 $\mu_1,\mu_2\in M(X)$。定义实乘法的复双线性延拓为
+$$
+(\mu_1+i\mu_2)\star_t(\eta_1+i\eta_2)=\mu_1\star_t\eta_1-\mu_2\star_t\eta_2+i(\mu_1\star_t\eta_2+\mu_2\star_t\eta_1).
+$$
+同样复线性延拓 $L_t,R_t,\Phi_t^{\mathbb R},\Psi_t^{\mathbb R}$，以下仍记为 $L_t,R_t,\Phi_t,\Psi_t$。保留
+$$
+p_m=\frac{t^m}{t^m-1}\quad(t\ne\infty),\qquad p_m=1\quad(t=\infty),
+$$
+$$
+\rho_t=\begin{cases}|t|,&|t|<1,\\ |t|^{-1},&|t|>1,\\0,&t=\infty,\end{cases}\qquad C_t=\frac{1+\rho_t}{1-\rho_t},\qquad d'_m=\begin{cases}1-t^m,&|t|<1,\\t^{-m}-1,&|t|>1,\\-1,&t=\infty.\end{cases}
+$$
+有限参数分支不包括形式参数。令
+$$
+r_m=d'_m\bigl((1-p_m)\mathbf1_{\{x_m^+\}}-p_m\mathbf1_{\{x_m^-\}}\bigr),\qquad (R_t\mu)_m=\int_Kr_m\,d\mu,\qquad u_m=\frac{v_m}{d'_m}.
+$$
+置
+$$
+\mathcal M=M_{\mathbb C}(\mathbb T),\qquad \mathcal S_+=\ell^1(\mathbb N_{>0},\mathbb C),\qquad \mathcal S_0=\ell^1(\mathbb N_0,\mathbb C).
+$$
+$\mathcal M$ 使用原圆周测度卷积；两个序列空间使用指数相加的卷积。其标准向量记为 $e_m$，并把 $\mathcal S_+$ 识别为 $\mathcal S_0$ 中常数项为零的闭理想。直和 $\mathcal M\oplus_1\mathcal S_+$ 的乘法为
+$$
+(\nu,g)(\xi,h)=(\nu*\xi,g*h),\qquad \|(\nu,g)\|_\oplus=\|\nu\|_{\mathrm{TV}}+\|g\|_1.
+$$
+交叉乘积为零。
+

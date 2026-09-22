@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0da8bde1dff0b75f1d93dcfd4ec693b2c4b60c3c563a2ef07b72019c03c02f91
+  normalized_sha256: sha256:0da8bde1dff0b75f1d93dcfd4ec693b2c4b60c3c563a2ef07b72019c03c02f91
+cas_ref: sha256:0da8bde1dff0b75f1d93dcfd4ec693b2c4b60c3c563a2ef07b72019c03c02f91
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fin.elim0 和 Fin.isEmpty 给零长度索引域为空，Subtype.ext 与 funext 将任意两个合法零长度窗口化为同一空函数；所以任意以该窗口为值域的前缀映射恒取此唯一元素，原相邻数字条件在空域中成立，仓内无冻结 GID。
+    previous_atom_id: ba9262e9d4cb2d8c13feef6b45086689622da97bf8c9bafeba39a68aad3f7282
+    next_atom_id: d71d02475c46a500bdda22f3ca6d68bc97c48917a2a88175c8f8340865e523e1

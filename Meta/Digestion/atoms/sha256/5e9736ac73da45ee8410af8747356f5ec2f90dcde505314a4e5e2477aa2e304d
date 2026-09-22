@@ -1,0 +1,26 @@
+**定理 15.2（增加有限离散标签不能绕过平凡化障碍）。** 对定义 15.0 的覆盖及任意 $N\in\mathbb N_0$，
+$$
+\exists\text{ 连续 }r:X\to[N]\text{ 分离 }q\text{ 的纤维}
+\quad\Longleftrightarrow\quad
+N\ge d\ \land\ q\text{ 在 }B\text{ 上平凡}.
+$$
+特别地，
+$$
+\lambda_{\mathrm{disc}}(q)=
+\begin{cases}
+d,&q\text{ 平凡},\\
+\infty,&q\text{ 不平凡}.
+\end{cases}
+$$
+此处不需要 $B$ 连通。
+
+更精确地，对任何这样的 $r$，令
+$$
+S(b)=\{r(x):q(x)=b\}\subseteq[N].
+$$
+则 $S(b)$ 恒有 $d$ 个元素，且 $b\mapsto S(b)$ 局部常值。联合映射 $(q,r)$ 是到开闭子空间
+$$
+E_r=\{(b,a)\in B\times[N]:a\in S(b)\}
+$$
+的同胚。若 $N>d$，则 $E_r\ne B\times[N]$；迫使平凡化的是可以把标签连续压缩到 $d$ 个，而不是原联合映射满射到较大乘积。
+

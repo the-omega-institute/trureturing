@@ -1,0 +1,31 @@
+### FDS.5. Fibonacci-valued divisor sums at Lucas centres
+
+**Lemma.** For every odd n>=1,
+
+$$
+D_F(L_n^2+1)=
+\begin{cases}
+\{1\},&3\mid n,\\
+\{1,2\},&3\nmid n.
+\end{cases}
+\tag{FDS12}
+$$
+
+**Proof.** Put M=L_n^2+1. The golden identities give F_(3n)=F_n M and M+3=5F_n^2. Any common divisor of F_n and M divides three, while strong divisibility gives gcd(F_n,3)=gcd(F_n,F_4)=F_gcd(n,4)=1. Hence gcd(F_n,M)=1.
+
+If k>=3 and F_k|M, then F_k|F_(3n), so strong divisibility and strict Fibonacci growth give k|3n. Also F_gcd(k,n)=gcd(F_k,F_n)=1. Since n is odd, gcd(k,n) is odd and must be one. Therefore k|3, so k=3 and F_k=2. Finally M+3=5F_n^2 modulo two shows 2|M exactly when F_n is odd, equivalently 3 does not divide n. This rederives the previously established odd-Lucas classification.
+
+**Theorem.** For every n>=0,
+
+$$
+\boxed{\sigma_F(L_n^2+1)\in\mathcal F_+
+\quad\Longleftrightarrow\quad n\text{ is odd}\ \text{or}\ n\in\{2,4,8\}.}
+\tag{FDS13}
+$$
+
+For odd n the sum is one when 3|n and three otherwise. At n=2,4,8 the sums are respectively 8,8,55.
+
+**Proof.** FDS12 settles all odd n. At n=0 the actual sum is 1+5=6, not Fibonacci. At n=2,4 the divisor set is {1,2,5}, giving eight. For even n>=6 set v=n+1 and u=v-2. By FDS8 the largest divisor index is v, and the allowed non-unit indices are divisors of u or v together with the additional index five. FDS10 would require the index d=v-4. This odd d>=3 divides neither u nor v, by their differences two and four. Therefore d must equal five, forcing v=9 and n=8. Conversely, at n=8 the divisor set is {1,2,5,13,34}, whose sum is 55=F_10.
+
+FDS11 and FDS13 are consequences of the full divisor spectra and anchored-sum rigidity. They classify the two subsequences obtained by evaluating OEIS A339621 at Fibonacci and Lucas arguments.
+

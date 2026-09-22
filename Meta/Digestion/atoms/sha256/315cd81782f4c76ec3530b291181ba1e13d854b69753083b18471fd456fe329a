@@ -1,0 +1,32 @@
+**定理 31.7（全部乘法观察及原测度公式）。** $A_t$ 的全部非零复线性乘法泛函恰为以下互不相交的两类：
+$$
+\mathcal P_\chi(\mu)=\chi(H_\#\mu),\qquad \chi\in\Delta(\mathcal M),
+$$
+$$
+\mathcal E_z(\mu)=\mathscr G_{R_t\mu}(z),\qquad 0<|z|\le1.
+$$
+无需另加连续性假设。对 $a_m^\pm=\mu(\{x_m^\pm\})$，第二类准确为
+$$
+\mathcal E_z(\mu)=\begin{cases}\displaystyle\sum_{m\ge1}z^m(a_m^++t^ma_m^-),&|t|<1,\\ \displaystyle\sum_{m\ge1}z^m(t^{-m}a_m^++a_m^-),&|t|>1,\\ \displaystyle\sum_{m\ge1}z^ma_m^-,&t=\infty.\end{cases}
+$$
+等价地，它是实际 Borel 读数
+$$
+\mathcal E_z(\mu)=\int_Kq_{t,z}\,d\mu,\qquad q_{t,z}(x)=\sum_{m\ge1}z^mr_m(x).
+$$
+在每个 $x$ 处，最后一个和至多有一项非零。两类泛函在 $N_t$ 范数下及原总变差范数下的算子范数分别准确为
+$$
+\|\mathcal P_\chi\|=1,\qquad \|\mathcal E_z\|=|z|.
+$$
+
+**证明。** 通过 $\Phi_t$，把任意字符写成 $\ell(\nu,g)=a(\nu)+b(g)$。若两个限制都非零，可选择 $\nu,g$ 使 $a(\nu)b(g)\ne0$；但 $(\nu,0)(0,g)=0$，乘法性将给出 $a(\nu)b(g)=0$，矛盾。因此恰有一个限制非零。第一种情形正是 $\Delta(\mathcal M)$，第二种由定理31.6分类。反向的乘法性来自各自坐标的乘法性，非零性来自坐标满射。这也证明不存在两类的非平凡混合。
+
+定理28.2中 $r_m$ 的显式系数公式在复积分中不变，代入即得原测度公式。其绝对收敛由
+$$
+\sum_{m\ge1}(|a_m^+|+|a_m^-|)\le\|\mu\|_{\mathrm{TV}}
+$$
+保证。由于 $\sum_m|z^mr_m(x)|\le|z|$，支配收敛证明级数读数与 Borel 积分相等。
+
+相位字符在 $\mathcal M$ 上具有范数一，且推前为总变差压缩，所以 $|\mathcal P_\chi(\mu)|\le\|\mu\|_{\mathrm{TV}}$；同样它不超过 $N_t(\mu)$。元素 $e$ 在这两个范数下均为一，且 $\mathcal P_\chi(e)=1$，故两种算子范数都为一。
+
+剩余读数的两种上界分别由 $\|R_t\mu\|_1\le\|\mu\|_{\mathrm{TV}}$ 和定义 $N_t$ 得到。因为 $N_t(u_1)=1$ 且 $\mathcal E_z(u_1)=z$，其 $N_t$ 算子范数为 $|z|$。在 $|t|<1$ 时取 $\delta_{x_1^+}$，在 $|t|>1$ 或 $t=\infty$ 时取 $\delta_{x_1^-}$，它们的总变差为一，剩余读数均为 $z$。因此总变差算子范数也准确为 $|z|$。证毕。
+
