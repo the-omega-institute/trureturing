@@ -472,7 +472,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("StrataLint.EngineeringScope.Tests", "ResourceAdapterTests.cs", "test-engineering-scope")]
     [InlineData("StrataLint.EngineeringScope.Tests", "StrataLint.EngineeringScope.Tests.csproj", "test-engineering-scope")]
     [InlineData("StrataLint.Tests", "Commands/FileMapPlanning/canonical.json", "test-cli")]
-    [InlineData("StrataLint.EngineeringScope.Tests", "Fixtures/infrastructure-skip.trx", "test-engineering-scope")]
+    [InlineData("StrataLint.ExecutionEvidence.Tests", "Fixtures/infrastructure-skip.trx", "test-execution-evidence")]
     [InlineData("StrataLint.Engine.Tests", "RegressionTests.cs", "test-engine")]
     [InlineData("StrataLint.Lean.Tests", "Native/InspectorNativeTests.cs", "test-lean")]
     [InlineData("StrataLint.Cache.Tests", "LeanCachePublishTests.cs", "test-cache")]
