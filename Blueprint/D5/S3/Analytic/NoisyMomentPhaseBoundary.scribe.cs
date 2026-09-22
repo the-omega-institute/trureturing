@@ -9,7 +9,7 @@ internal sealed class NoisyMomentPhaseBoundaryDocument : IScribeDocumentDefiniti
     private const string Prefix = "D5/S3/Analytic/NoisyMomentPhaseBoundary.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every feasible exterior mass satisfies the affine noisy-moment bound, whose equality case has a unique probability pair.",
+        "Assuming every nonconstant dual coefficient is nonzero, every feasible exterior mass satisfies the affine noisy-moment bound, whose equality case has a unique probability pair.",
         H("Noisy Moment Phase Boundary"),
         Blocks(
             Describe.Lean(

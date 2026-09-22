@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Every feasible exterior mass satisfies the affine noisy-moment bound, whose equality case has a unique probability pair.
+Assuming every nonconstant dual coefficient is nonzero, every feasible exterior mass satisfies the affine noisy-moment bound, whose equality case has a unique probability pair.
 
 **Theorem 1.1 (Affine bound and exact equality classification).**
 
