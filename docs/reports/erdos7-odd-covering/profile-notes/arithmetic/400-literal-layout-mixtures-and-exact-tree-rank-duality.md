@@ -1,6 +1,6 @@
 [Index](../../marked_head_profile.md) · [Joint source trees](376-complete-prime-chain-transport-and-joint-prefix-laws.md) · [Exact root classes](398-six-exact-root-types-control-arbitrary-seven-adic-tails.md) · [Larger supports](399-sparse-second-digits-control-sources-outside-fixed-subclasses.md)
 
-# Literal layout mixtures and exact tree-rank duality
+# Literal layout mixtures, sharp source size, and exact tree-rank duality
 
 At 5-height one, the universal supported-law problem has an exact dual
 formulation with no source variable: maximize a tree order statistic of
@@ -8,6 +8,12 @@ one mixture of literal squared-layout costs. This formulation preserves
 independent residues at every original divisor and the requirement that
 one actual probability work against all layouts. It also yields a
 constructive source certificate whenever the proposed bound is exceeded.
+
+The same source class has sharp minimum cardinality `5^K+2` at every
+7-height `K`, proved by a complementary-pair induction and attained by
+a type-C construction. This determines the exact tree-rank maximum in
+the affine simplex of layout mixtures constructed in section 8, while
+the full layout-mixture bound remains unresolved.
 
 The order statistic cannot be averaged over layouts. Already at height
 one, 28 actual layouts each have tree rank one, while their uniform
@@ -341,3 +347,200 @@ information that scalar row or column caps discard. Neither identity
 alone bounds the rank by `2t_K`. Even a proof of that bound would still
 need the other heights and source-realization arguments required by the
 unrestricted covering problem.
+
+## 8. Arbitrary superlevel geometry exists below the target scale
+
+Literal layout costs impose quantitative constraints, but their origin
+alone does not force a strict superlevel source into a more restricted
+geometric class. In fact their convex hull contains the following
+full-dimensional simplex. This construction is valid also for `K=0`.
+
+For any nonnegative subprobability `p` on `X`, with `sum_x p(x)<=1`,
+there is a literal layout mixture whose cost at every actual point is
+
+\[
+ f(x)=A_K+C_Kp(x),
+ \quad
+ A_K=\sum_{j=0}^K\frac{2j+1}{7^j},
+ \quad
+ C_K=1+2\sum_{j=0}^K7^{-j}.
+ \tag{LD22}
+\]
+
+To construct it, choose `T` uniformly in `Z/7^K`. For every pure label
+`7^j`, take phase `T mod 7^j`. Set every mixed label `5*7^j` with `j<K`
+to row zero. Independently choose the deepest mixed phase at an actual
+point with distribution `p`, and place its remaining mass at any
+row-zero point. All choices are valid independent-label layouts;
+using compatible pure phases in this particular mixture imposes no
+restriction on the layout set tested in LD3.
+
+At an actual point `(r,y)`, the shallow mixed indicators vanish. Write
+
+\[
+ P_T(y)=\sum_{j=0}^K{\bf1}_{y\equiv T\pmod{7^j}}.
+ \tag{LD23}
+\]
+
+The deepest mixed indicator `J` is independent of `T`, with mean
+`p(r,y)`. There are `2j+1` ordered exponent pairs with maximum `j`, so
+`E P_T^2=A_K`, while `E P_T=sum_j 7^(-j)`. Expanding `(P_T+J)^2`
+proves LD22, including the contribution of divisor one.
+
+The closed forms and the total increment budget are
+
+\[
+ A_K=\frac{14}{9}-\frac{3K+5}{9\,7^K},\qquad
+ C_K=\frac{10}{3}-\frac1{3\,7^K},\qquad
+ \sum_{x\in X}\bigl(f(x)-A_K\bigr)\le C_K.
+ \tag{LD24}
+\]
+
+Choosing `p=0` or a point mass gives the `|X|+1` vertices
+`A_K 1` and `A_K 1+C_K e_x`. They are affinely independent. Thus no
+nonzero polynomial in the `|X|` point-cost coordinates can vanish on
+all literal layout mixtures: it would vanish on the nonempty interior
+of this simplex. This statement concerns identities, not inequalities;
+the budget in LD24 remains essential.
+
+For any nonempty `R subset X`, use `p=1_R/|R|`. Every threshold strictly
+between `A_K` and `A_K+C_K/|R|` has strict superlevel set exactly `R`.
+In particular, take the 28-point source from report 399 at `K=2`.
+Then
+
+\[
+ f_{\rm outside}=\frac{75}{49}
+ <\frac85
+ <\frac{2263}{1372}=f_{\rm inside},
+ \qquad B(f)=B_4(f)=\frac{2263}{1372}.
+ \tag{LD25}
+\]
+
+The gaps around `8/5` are `17/245` and `339/6860`. This is an actual
+layout-mixture superlevel source satisfying all seven tree conditions
+but containing no same-height literal-prefix subsource from reports
+396, 397 or 398, by the source audit in report 399. It refutes a
+threshold-independent extension of those geometric classifications to
+all actual-mixture superlevels. It does not exclude conditioning and
+reslicing, already distinguished in report 399.
+
+The [affine-simplex constructor](../../frontier/cover-geometry/layout_mixture_affine_simplex.py)
+returns the literal phases and rational probabilities in LD22. Its
+controls recompute the squared loads directly, reuse the existing
+28-point fixture and source audit, and verify the strict superlevel
+identity in LD25 without copying the fixture into a second data source.
+
+The displayed source has cost below `46/9`, and even the entire simplex
+at `K=2` lies below that threshold pointwise:
+`A_2+C_2=34/7<46/9`. More generally its maximum possible point cost is
+`A_K+C_K<44/9`, below the target at every `K>=2`. At `K=1`, the
+superlevel source LD8 needs at least five points, so LD24 gives
+`B(f)<=A_1+C_1/5=73/35<4`. Thus this construction supplies no
+high-threshold counterexample to LD11. A stronger classification at the target scale
+would have to use its numerical cost threshold or another quantitative
+constraint, rather than the bare fact that costs come from literal
+layout mixtures.
+
+## 9. The sharp minimum source size is \(5^K+2\)
+
+For every `K>=0`, with depth-zero trees interpreted as one leaf,
+
+\[
+ \min_{R\text{ admissible at height }K}|R|=5^K+2.
+ \tag{LD26}
+\]
+
+For exactly four active rows the same minimum holds when `K>=1`;
+at `K=0` the minimum is four. Thus the first minima in the full
+admissible class are `3,7,27,127,627,...`.
+
+Here is a counting proof by induction. At height zero, at most two
+row points leave a pair of rows empty. For positive height choose a
+complete five-ary projection tree `T` inside the source. Call a chosen
+child **clean** when its source consists of exactly one row-labelled
+point above each leaf of the corresponding five-ary tail tree and no
+other points in that child.
+
+In a clean child, fix any partition of the four rows into two pairs.
+The pair projections partition the leaves of its five-ary tail tree.
+Exactly one of them contains a complete ternary tree. This is the
+three-versus-three complement duality on a five-ary tree: two such
+ternary trees must intersect, and a subset missing one has a ternary
+tree in its complement, by the same child-order-statistic induction
+as LD13 with five children.
+
+Suppose now that `|R|<=5^K+1`. The chosen full tree accounts for at
+least `5^K` points, leaving at most one extra point.
+
+- With no extra point, all five selected children are clean. For a
+  fixed complementary pair of row pairs they provide only five good
+  child incidences in total. Both root ternary trees require six.
+- If the extra point is inside one selected child, the other four
+  children are clean. For every complementary row pairing they
+  contribute four incidences. To reach six, the exceptional child
+  must be good for both members. Hence that same child satisfies
+  all six pair-tree conditions and the full five-tree condition,
+  yet has at most `5^(K-1)+1` points, contradicting induction.
+- If the extra point is outside the five selected children and
+  `K>=2`, its singleton child cannot support a ternary tree of
+  depth `K-1`. Again only five good incidences are available.
+  If `K=1`, all six row-pair counts would have to be at least three
+  among at most six points. Complementary pair counts force the
+  total to be six and every pair sum to be three, which would make
+  all four integer row counts equal to `3/2`. This is impossible.
+
+These cases also cover an extra point outside `T` but inside a
+selected child: it belongs to the second case. They prove the lower
+bound in LD26, without assuming four active rows.
+
+For sharpness at `K>=1`, use the type-C root pattern from report 398.
+Set `h=K-1`, take root columns `a,b,c,d,e=0,1,2,3,4`, and let `F` be
+the full five-ary tail tree with digits in `{0,1,2,3,4}`. Give each
+private cell `(1,a),(3,d),(4,e)` all of `F`. Within `F`, the two
+ternary trees
+
+\[
+ T_{\rm left}=\{0,1,2\}^h,\qquad
+ T_{\rm right}=\{2,3,4\}^h
+ \tag{LD27}
+\]
+
+intersect in the unique all-two leaf. In column `b`, give row 2 the
+tails `(F minus T_right) union T_left` and row 3 the tails `T_right`.
+In column `c` use the same two sets for rows 2 and 4. Each shared
+column projects onto all of `F`, each incident row contains a
+ternary tail tree, and exactly one tail point is duplicated between
+its two rows. Their row-set sizes are `5^h-3^h+1` and `3^h`; they are
+not asserted to both have size `3^h`.
+
+The six row pairs therefore have `3,3,3,3,3,4` good root columns,
+and the full projection has all five. The point count is
+`3*5^h+2*(5^h+1)=5^K+2`. The construction uses all four rows, including
+at `h=0`. At `K=0` separately choose three row points. This establishes
+both the bound and its stated sharpness scopes.
+
+As a consequence, the precise maximum within the affine simplex
+LD22 is, for every `K>=1`,
+
+\[
+ \max_{p\ge0,\,\sum p\le1}B(A_K\mathbf1+C_Kp)
+ =\max_{p\ge0,\,\sum p\le1}B_4(A_K\mathbf1+C_Kp)
+ =A_K+\frac{C_K}{5^K+2}.
+ \tag{LD28}
+\]
+
+LD8 constructs an admissible source of at least `5^K+2` points with
+cost at least `B`. Summing their increments and using LD24 gives
+`(5^K+2)*(B-A_K)<=C_K`. Uniform `p` on the sharp source attains
+equality, including the four-active-row requirement. At height two,
+this maximum is `2188/1323`; at height zero the two maxima are
+respectively `2` and `7/4`.
+
+The affine-simplex program constructs the actual sharp sources and
+checks their seven tree conditions through height five. It directly
+checks the 27-point source's literal mixture and rank at height two.
+It also checks the local row-count obstruction at total mass five
+and six. These finite checks support the implementation; the induction
+above, rather than an enumeration cutoff, proves all heights.
+LD28 optimizes only the simplex LD22. It is not an upper bound on the
+full layout-mixture maximum in LD10.
