@@ -200,3 +200,104 @@ INTEGERS 24 (2024) #A104(Buck–Elder–Figueroa–Harris–Harry–Simpson,*Fla
 **可交付的只有两种形状**:对无穷多参数成立的 `∀…∃…`(交付为一般定理,用途报 `none`),或反驳。
 本轮两个结算都落在这两种形状里:Tenner 等的 Problem 48 是前者,CLSW 的问题 12 是后者。
 选靶时这一条要排在数学难度之前判。
+
+## R72(2026-09-22):INTEGERS vol 23/24 余量封档 + OEIS 定向扫
+
+### 池的封档读数
+
+INTEGERS 线上 vol26 目录 110 篇与已抓 110 篇逐一对齐,**零新增**;JIS 26/27/28(200 篇)与
+INTEGERS 23–26(454 篇)已全部扫完。**Fibonacci Quarterly 自 2025-01-01 起由 Taylor & Francis
+出版,当前卷与前五卷全部付费墙**,不构成可用池。
+
+### vol 23/24 余下 29 篇的逐条处置
+
+- **y89** *Sparse admissible sets and a problem of Erdős and Graham* —— 这是 **Erdős 问题 #429**,
+  该文自身用素根幂的贪心构造**证伪**了它(存在任意稀疏的无穷 admissible 集,其任何平移都不落进素数)。
+  文献已结算,不是靶。**推论:任何把 #429 列为 open 的表都是陈旧的。**
+- **y113** *Rearranging small sets for distinct partial sums* —— Graham 关于 `F_p` 中 valid ordering
+  的猜想(Erdős 问题 #475)。该文的 Theorem 2(整数版)在文中**已证**,Sawin 2015 亦独立证过;
+  `F_p` 版只推进到 `|A| ≤ log p / log log p`,余下是研究级。
+- **y31** *Primitive Pythagorean triangles with sides of certain forms* —— Question 1–4 问是否有无穷多解。
+  **逐字读(不带 primitive)Question 1 由齐次缩放平凡为真**:`(x,y,p,q,r,s) → (kx,…,ks)` 保持
+  勾股关系与 `x≠y`、`p≠q`,而作者自己列出的解表里就含同一组的 1×/2×/3×。作者要的是 primitive 版,
+  那是研究级。照字面形式化等于把问题改宽。
+  **同型风险:凡「是否存在无穷多解」的问题,先试齐次缩放再判开放性。**
+- **x5** *Odd deficient-perfect numbers with four distinct prime factors* —— Conjecture 1 是对每个
+  `k ≥ 5` 的有限性断言,无有效界,无路线。
+- **x30** *Some 2-adic conjectures concerning polyomino tilings of Aztec diamonds* —— Conjecture 1–4 是
+  铺砌计数的周期性与 2-adic 赋值断言;`M(n)`、`L(n)` 这些计数对象 Mathlib 里没有,要从零造,
+  且作者自述证不动 Conjecture 1。
+- **x36** *Prime divisors of aⁿ − bⁿ* —— Conjecture 1、2 属 abc 族,按经典难题同族排除。
+- 其余(`x12 x18 x35 x47 x48 x50 x56 x78 x96 xg5 xg6 y1 y6 y18 y19 y21 y22 y42 y71 y74 y93 y94 y97`)
+  无「作者自报验到 N 但无公式/证明 + 对象全在 Mathlib」这一高产形状的陈述。
+
+### OEIS 定向扫(查询形状可复用)
+
+用 `conjecture "verified for n"`、`conjecture "checked up to"`、`conjectured "no proof is known"`
+三条全文查询取到 225 个条目,第一关(比对 `Problems/ D5/ Library/` 与本目录三份筛除记录)刷掉 50 条,
+余 175 条全新、其中 169 条带猜想正文。**该查询形状正对高产形状,可换词复用**:
+`"holds for n <"`、`"tested up to"`、`"no counterexample"`。
+
+本轮从中结算 **A134492**(见 `Problems/fibonacci-pythagorean-perimeter-refutation.md`)。其余已算/已排除:
+
+- **A185895**(`∏(1−xᵏ/k!)` 的 EGF 系数:与前一项变号 ⟺ n 是三角数,作者验到 1225)——
+  推到 **n = 1400 零违例、无零项**。递推在 EGF 系数上是纯整数的:乘 `(1−xᵏ/k!)` 即
+  `a'_n = a_n − C(n,k)·a_{n−k}`。**不是可证伪靶**,形状稳。
+- **A007406**(`gcd(n, numerator(H^{(2)}_{n−1})) = n if n 素数 else 1`,作者验到 1e5)——
+  算到 4000 零违例,**但作者的范围更大,此计算零增量**。改记为**可证靶**:素数方向即 Wolstenholme
+  定理(`p ≥ 5` 时 `p` 整除该分子),合数方向才是内容。评估前先 grep Mathlib 有无 Wolstenholme。
+- **排除**:Zhi-Wei Sun 的一大批 `a(n) > 0` 表示型猜想(A187757、A199920、A209253、A209312、A209315、
+  A209320、A210444、A218754、A218825、A219026、A219052、A219185、A219791、A219838、A219842、A219864、
+  A219923、A220272、A220419、A220431、A220455、A220554、A227908、A227909、A230241 等)——它们自身蕴含
+  孪生素数或 Goldbach;Peter Bala 的超同余(A219562、A227845、A193236、A193237、A111984);
+  A078181(条目内已给出反例 `a(6800)=6801`);A186522(条目内已由 Bang 定理证出);
+  A113191(Lucas 差为完全幂,Diophantine 级);A033493(3x+1)、A152763(Catalan 除数)、A103674。
+
+### 判据三:先看作者验到哪,再决定算不算
+
+A007406 那一轮的 4000 项计算相对作者自报的 1e5 是**零增量**。动手复算之前先读条目里的验证范围,
+只有能真正超出它才有意义;超不出就直接按「已知范围内成立」记档,把算力留给别的靶。
+配套:**读数快得反常时先核信号本身**——同一轮里 Fraction 累加报 0.0s,核过首项与已知值吻合、
+分子有 3462 位之后才可信(第 8.4 条)。
+
+## R74(2026-09-22):OEIS 条目的散文不是开放性判据,成员检查才是
+
+本轮落地 **A272170**(见 `Problems/fibonacci-second-bit-run-length.md`)。它的兄弟条目
+**A271591**(tribonacci 数的同一断言)差点被当作下一个靶,实际**已被证明**,而且用的正是同一套方法
+(二进制窗口 + 比值界)。由此定出这道筛。
+
+### 两个批量结算 OEIS 猜想的语料,都可机器查
+
+| 来源 | 位置 | 规模 |
+| --- | --- | --- |
+| Adamczewski, arXiv:2608.11941 | `epoch-research/LeanOpenProblems` 的 `apn/data/oeis/Isolated/oeis_<num>_conjecture_<i>.lean` | 492 条陈述 |
+| 同上,逐次求解结果 | `epoch-research/LeanOpenProblems-results` 的 `runs/<run>/<id>/metadata.json` | 25 个 run;该文件**存在即已结算**,内含 `settlement` 与完整证明 |
+| Tsoukalas 等, arXiv:2605.22763(AlphaProof Nexus) | `google-deepmind/alphaproof-nexus-results` 的 `APNOutputs/OEIS/oeis_<num>_conjecture_0.lean` | 38 个文件,与 `apn/data/oeis/subsets/tsoukalas_proved_38.json` 逐条对应 |
+
+结算并集用约 25 次 git-trees API 调用即可复算:逐 run 取递归树,数 `metadata.json`。本轮复算得
+492 − 170 = **322 条未解**,与 R42 前言记的读数逐字相同。
+
+### 这道筛不可省:已结算的条目未必被标注
+
+抽 12 条已结算陈述查 OEIS 原文,**5 条页面上没有任何结算记录**,其中 A010846、A190363 是 19 次跑
+全部解出的。A271591 被标了(2026-05-28,Ralf Stephan),是少数。所以:
+
+> **判据:候选若属这 492 条,读条目散文不足以判定它开放;必须查语料成员与 `metadata.json` 是否存在。
+> 候选若不属这 492 条,这两处的缺席才是有效的否定证据。**
+
+A272170 在四处(492 条陈述、25 个 run、38 个 Lean 文件、arXiv:2608.11941 正文)全部缺席,而 A271591
+四处全部命中——后者是「这套检查看得见结算」的对照,没有对照的缺席不算读数。
+
+### 未解的 322 条仍然封档
+
+本轮重新走到这个池口,被 R42/R43 的判词挡回:322 条已按形状逐条算过小情形,**零反例**,判掉理由是
+选择效应而非难度。R44 又从其中剔掉 9 条已结算、9 条名题蕴含。**这是第四次走到同一个池口**,
+故把入口条件写死在这里:凡候选来自 OEIS Open 未解池,直接出局,不再算小情形。反驳形的产地是
+刚发表、还没人算过的猜想。
+
+### 本轮其余登记
+
+- **A123365**(立方剩余计数恰在 `p ≡ 1 (mod 6)` 处等于 `(k+2)/3`,作者验到 2000)——已推到 2×10⁶
+  零违例,可证靶,路线是 CRT + 循环单位群 + `p = 2` + 立方像的非单位部分;代价读数为多小时级。
+- **Eldar 的五条连续 Niven 猜想**——Pell 情形已扫到 10¹⁰,4 连一个没有(作者只到 2×10⁸),
+  连号计数 6969285 / 375913 / 5024 / **0** 指向结构性障碍,机制是 `d(k+3) = d(k+2)`。
