@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "layers": {
+    "dependency": [".lake/packages"],
+    "project": [
+      ".lake/build/lib",
+      ".lake/build/bin",
+      ".lake/build/ir/**/*.c",
+      ".lake/build/ir/**/*.c.hash",
+      ".lake/build/ir/**/*.o*",
+      ".lake/build/ir/**/*.bc*",
+      ".lake/build/lean-inspector",
+      ".lake/build/stratalint/raw-lean-report.json*",
+      ".lake/build/declared-template-evidence.json"
+    ]
+  }
+}

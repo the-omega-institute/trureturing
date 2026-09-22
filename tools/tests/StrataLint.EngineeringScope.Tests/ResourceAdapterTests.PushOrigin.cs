@@ -201,9 +201,9 @@ public sealed partial class ResourceAdapterTests
         Assert.Equal(change == "rename" ? new[] { newPath, oldPath } : [oldPath], Strings(plan["paths"]!, "path"));
         Assert.Equal(new[] { "build", "filemap" }, Strings(plan["resources"]!));
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
-        fixture.Processes();
         File.Copy(PushPlanPath(fixture), fixture.Plan, true);
         File.Copy(PushScopePath(fixture), fixture.Changes, true);
+        fixture.Processes();
         using var output = new StringWriter();
         Assert.True(fixture.Run("current", output) == 0, output.ToString());
         Assert.Equal(new[] { "dotnet filemap-conform" }, File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));

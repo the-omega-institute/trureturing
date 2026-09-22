@@ -1,6 +1,3 @@
-using System.Formats.Tar;
-using System.IO.Compression;
-using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.TestSupport;
 using Xunit;
@@ -21,14 +18,14 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         var trace = Path.Combine(root, "build/git-trace.jsonl");
         environment["GIT_TRACE2_EVENT"] = trace;
         var archive = Path.Combine(root, "build", stage + ".tgz");
-        var seedArchive = Path.Combine(root, "build", stage + "-seed.tgz");
+        var seedManifest = Path.Combine(root, "build", stage + "-seed.json");
         Directory.Delete(Path.Combine(root, CommonExecutionEvidence.CheckSeedPath(stage)), recursive: true);
         if (stage == "engineering") Directory.Delete(Path.Combine(root, CommonExecutionEvidence.TestSeedPath), recursive: true);
         var packed = NativeTransport(root, "transport-pack", stage, commit, environment,
-            "--archive", archive, "--seed-archive", seedArchive);
+            "--archive", archive, "--seed-manifest", seedManifest);
         Assert.True(packed.Exit == 0, packed.Text);
         Assert.True(File.Exists(archive));
-        Assert.True(File.Exists(seedArchive));
+        Assert.True(File.Exists(seedManifest));
         var commands = File.ReadLines(trace).Select(line => JsonNode.Parse(line)!)
             .Where(row => row["event"]?.ToString() == "start")
             .Select(row => row["argv"]!.AsArray().Select(value => value!.ToString()).ToArray())
@@ -37,8 +34,11 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         Assert.Single(commands, arguments => arguments.Contains("--others", StringComparer.Ordinal));
         var outputs = File.ReadAllLines(environment["GITHUB_OUTPUT"]);
         Assert.Contains("artifact_name=ci-" + stage + "-43-2", outputs);
-        Assert.Contains("seed_artifact_name=ci-" + stage + "-seed-43-2", outputs);
-        Assert.Contains("seed_archive=" + seedArchive, outputs);
+        Assert.Contains("seed_manifest=" + seedManifest, outputs);
+        Assert.DoesNotContain(outputs, line => line.StartsWith("seed_artifact_name=", StringComparison.Ordinal)
+            || line.StartsWith("seed_archive=", StringComparison.Ordinal));
+        Assert.Equal(File.ReadAllBytes(Path.Combine(root, CiTransport.ManifestPath(stage + "-seed"))),
+            File.ReadAllBytes(seedManifest));
         var original = NativeTransport(root, "transport-verify", stage, commit, environment);
         Assert.True(original.Exit == 0, original.Text);
         var wrongCommit = NativeTransport(root, "transport-verify", stage, new string('a', 40), environment);
@@ -46,7 +46,14 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         Assert.Contains("exact clean candidate commit", wrongCommit.Text, StringComparison.Ordinal);
         environment.Remove("GIT_TRACE2_EVENT");
         var target = Destination(fixture, "paired-" + stage);
-        var restored = Workflow(target, "restore", stage + "-seed", commit, seedArchive, environment);
+        var transport = CommonExecutionEvidence.Read<CiTransportRecord>(root, CiTransport.ManifestPath(stage + "-seed"));
+        foreach (var path in transport.Materials.Select(material => material.Path).Append(CiTransport.ManifestPath(stage + "-seed")))
+        {
+            var destination = Path.Combine(target, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(Path.Combine(root, path), destination, overwrite: true);
+        }
+        var restored = NativeTransport(target, "transport-verify", stage + "-seed", commit, environment);
         Assert.True(restored.Exit == 0, restored.Text);
         AssertAccepted(root, target, stage, "paired-" + stage);
         if (stage == "engineering")
@@ -62,7 +69,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     [InlineData("engineering", "round")]
     [InlineData("current", "material")]
     [InlineData("current", "round")]
-    public void OrdinaryPackRejectsDamagedAcceptanceBeforePublishingEitherArchive(string stage, string damage)
+    public void OrdinaryPackRejectsDamagedAcceptanceBeforePublishingArchiveOrManifest(string stage, string damage)
     {
         using var fixture = Prepare(stage);
         var root = fixture.Root;
@@ -72,14 +79,14 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         if (damage == "material") File.AppendAllText(Path.Combine(root, record.Steps[0].Log), "corrupt");
         else CommonExecutionEvidence.Write(root, path, record with { Round = new string('0', 32) });
         var archive = Path.Combine(root, "build/required.tgz");
-        var seedArchive = Path.Combine(root, "build/optional.tgz");
+        var seedManifest = Path.Combine(root, "build/optional-seed.json");
         var packed = NativeTransport(root, "transport-pack", stage, commit, Environment(commit, root, "44", "1"),
-            "--archive", archive, "--seed-archive", seedArchive);
+            "--archive", archive, "--seed-manifest", seedManifest);
         Assert.Equal(2, packed.Exit);
         Assert.Contains(damage == "material" ? "artifact integrity mismatch" : "candidate identity or round mismatch",
             packed.Text, StringComparison.Ordinal);
         Assert.False(File.Exists(archive));
-        Assert.False(File.Exists(seedArchive));
+        Assert.False(File.Exists(seedManifest));
     }
 
     [Theory]
@@ -87,22 +94,31 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     [InlineData("current", "blocked-parent")]
     [InlineData("engineering", "evidence-directory")]
     [InlineData("current", "evidence-directory")]
-    public void OptionalSeedArchiveFailurePreservesRequiredTransport(string stage, string destination)
+    [InlineData("engineering", "existing-file")]
+    [InlineData("current", "existing-file")]
+    public void OptionalSeedManifestFailurePreservesRequiredTransport(string stage, string destination)
     {
         using var fixture = Prepare(stage);
         var root = fixture.Root;
         var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
         var environment = Environment(commit, root, "45", "1");
-        fixture.Write("build/blocked-seed-parent", "a file cannot contain an archive");
+        fixture.Write("build/blocked-seed-parent", "a file cannot contain another file");
+        fixture.Write("build/occupied-seed.json", "retain existing seed");
         var archive = Path.Combine(root, "build/required.tgz");
-        var seedArchive = Path.Combine(root, destination == "blocked-parent"
-            ? "build/blocked-seed-parent/optional.tgz" : "build/ci/optional.tgz");
+        var seedManifest = Path.Combine(root, destination switch
+        {
+            "blocked-parent" => "build/blocked-seed-parent/optional-seed.json",
+            "evidence-directory" => "build/ci/optional-seed.json",
+            _ => "build/occupied-seed.json",
+        });
+        var previous = File.ReadAllBytes(Path.Combine(root, "build/occupied-seed.json"));
         var packed = NativeTransport(root, "transport-pack", stage, commit, environment,
-            "--archive", archive, "--seed-archive", seedArchive);
+            "--archive", archive, "--seed-manifest", seedManifest);
         Assert.True(packed.Exit == 0, packed.Text);
         Assert.Contains("COMMON_CHECK_SEED_NOT_SAVED stage=" + stage, packed.Text, StringComparison.Ordinal);
         Assert.True(File.Exists(archive));
-        Assert.False(File.Exists(seedArchive));
+        if (destination == "existing-file") Assert.Equal(previous, File.ReadAllBytes(seedManifest));
+        else Assert.False(File.Exists(seedManifest));
         Assert.DoesNotContain(File.ReadAllLines(environment["GITHUB_OUTPUT"]), line => line.StartsWith("seed_", StringComparison.Ordinal));
         var verified = NativeTransport(root, "transport-verify", stage, commit, environment);
         Assert.True(verified.Exit == 0, verified.Text);
@@ -121,11 +137,11 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         var repository = TestRepositoryLayout.FindRoot();
         var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
         var environment = Environment(commit, root, "46", "2");
-        var seedArchive = Path.Combine(root, "build/prepared-seed.tgz");
+        var seedManifest = Path.Combine(root, "build/prepared-seed.json");
         var packed = NativeTransport(root, "transport-pack", stage, commit, environment,
-            "--archive", Path.Combine(root, "build/required.tgz"), "--seed-archive", seedArchive);
+            "--archive", Path.Combine(root, "build/required.tgz"), "--seed-manifest", seedManifest);
         Assert.True(packed.Exit == 0, packed.Text);
-        var before = File.ReadAllBytes(seedArchive);
+        var before = File.ReadAllBytes(seedManifest);
         var dotnet = SharedBuildContractTests.Process(root, "which", ["dotnet"]).Text.Trim();
         fixture.Write("build/verify-only/dotnet", """
             #!/bin/sh
@@ -145,15 +161,15 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
                 sys.path.insert(0, sys.argv[1])
                 from cache_deadline import CacheDeadline
                 from lean_actions import actions_keys, snapshot
-                root, archive = map(pathlib.Path, sys.argv[2:4])
-                snapshot(root, actions_keys(root), [sys.argv[4]], seed_archive=archive,
+                root, manifest = map(pathlib.Path, sys.argv[2:4])
+                snapshot(root, actions_keys(root), [sys.argv[4]], seed_manifest=manifest,
                          deadline=CacheDeadline(400, monotonic=lambda: 100))
-                """, Path.Combine(repository, "tools/scripts/worktree"), root, seedArchive, stage], environment,
+                """, Path.Combine(repository, "tools/scripts/worktree"), root, seedManifest, stage], environment,
                 TestBudgets.LongWorkflowProcessHangGuard)
-            : Python(root, repository, ["snapshot", "--repository", root, "--layers", stage, "--seed-archive", seedArchive], environment);
+            : Python(root, repository, ["snapshot", "--repository", root, "--layers", stage, "--seed-manifest", seedManifest], environment);
         AssertReceipt(snapshot, "snapshot");
         Assert.Equal("true", Key(snapshot.Text, stage + "_ready"));
-        Assert.Equal(before, File.ReadAllBytes(seedArchive));
+        Assert.Equal(before, File.ReadAllBytes(seedManifest));
         var calls = File.ReadAllLines(environment["CONTRACT_CALLS"]);
         Assert.Equal(2, calls.Length);
         Assert.All(calls, command => Assert.Contains("transport-verify", command, StringComparison.Ordinal));
@@ -175,12 +191,19 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     [InlineData("current", "run_attempt")]
     [InlineData("current", "material")]
     [InlineData("current", "producer-material")]
-    [InlineData("current", "truncated")]
+    [InlineData("current", "malformed-manifest")]
+    [InlineData("current", "missing-manifest")]
+    [InlineData("current", "missing")]
     [InlineData("current", "extra")]
     [InlineData("current", "duplicate")]
+    [InlineData("current", "symlink")]
+    [InlineData("current", "parent-symlink")]
+    [InlineData("current", "mode")]
     [InlineData("engineering", "material")]
     public void PrepackedSnapshotRejectsForeignOrDamagedSeedWithoutPublishing(string stage, string damage)
     {
+        if (OperatingSystem.IsWindows() && (damage is "symlink" or "parent-symlink" or "mode"))
+            throw Xunit.Sdk.SkipException.ForSkip("POSIX seed material modes and links are unsupported on Windows");
         using var fixture = Prepare(stage);
         var root = fixture.Root;
         var repository = TestRepositoryLayout.FindRoot();
@@ -189,17 +212,21 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         AssertReceipt(Python(root, repository, ["snapshot", "--repository", root, "--layers", stage], environment), "snapshot");
         var cache = Path.Combine(root, "build/lean-cache", stage);
         var before = Inventory(cache);
-        var archive = Path.Combine(root, "build/prepared-seed.tgz");
+        var seedManifest = Path.Combine(root, "build/prepared-seed.json");
         var packed = NativeTransport(root, "transport-pack", stage, commit, environment,
-            "--archive", Path.Combine(root, "build/required.tgz"), "--seed-archive", archive);
+            "--archive", Path.Combine(root, "build/required.tgz"), "--seed-manifest", seedManifest);
         Assert.True(packed.Exit == 0, packed.Text);
         var manifest = CommonExecutionEvidence.Read<CiTransportRecord>(root, CiTransport.ManifestPath(stage + "-seed"));
         var material = manifest.Materials.First(item => stage == "engineering"
             ? item.Path.EndsWith(".trx", StringComparison.Ordinal) : item.Path.EndsWith(".log", StringComparison.Ordinal)).Path;
-        if (damage == "producer-material") File.AppendAllText(Path.Combine(root, material), "damaged producer material");
-        else if (damage == "truncated") File.WriteAllBytes(archive, File.ReadAllBytes(archive)[..16]);
-        else RewriteSeedArchive(archive, CiTransport.ManifestPath(stage + "-seed"), material, damage);
-        var result = Python(root, repository, ["snapshot", "--repository", root, "--layers", stage, "--seed-archive", archive], environment);
+        if (damage == "producer-material")
+        {
+            var producer = manifest.Materials.Single(item => item.Path == CommonExecutionEvidence.CheckSeedPath(stage)
+                + "/" + CommonExecutionEvidence.ReportPath);
+            File.AppendAllText(Path.Combine(root, producer.Path), "damaged producer material");
+        }
+        else DamagePreparedSeed(root, seedManifest, material, damage);
+        var result = Python(root, repository, ["snapshot", "--repository", root, "--layers", stage, "--seed-manifest", seedManifest], environment);
         AssertReceipt(result, "save-failed");
         Assert.Equal("false", Key(result.Text, stage + "_ready"));
         Assert.Equal(before, Inventory(cache));
@@ -215,60 +242,55 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         var root = fixture.Root;
         var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
         var environment = Environment(commit, root, "49", "1");
-        var archive = Path.Combine(root, "build/prepared-seed.tgz");
+        var seedManifest = Path.Combine(root, "build/prepared-seed.json");
         var packed = NativeTransport(root, "transport-pack", "current", commit, environment,
-            "--archive", Path.Combine(root, "build/required.tgz"), "--seed-archive", archive);
+            "--archive", Path.Combine(root, "build/required.tgz"), "--seed-manifest", seedManifest);
         Assert.True(packed.Exit == 0, packed.Text);
-        var other = Path.Combine(root, "build/other-acceptance");
-        Directory.CreateDirectory(other);
-        using (var gzip = new GZipStream(File.OpenRead(archive), CompressionMode.Decompress))
-            TarFile.ExtractToDirectory(gzip, other, overwriteFiles: false);
+        var originalManifest = File.ReadAllBytes(seedManifest);
+        var original = NativeTransport(root, "transport-verify", "current-seed", commit, environment);
+        Assert.True(original.Exit == 0, original.Text);
         var checkPath = CommonExecutionEvidence.CheckSeedPath("current") + "/checks.json";
-        var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(other, checkPath);
+        var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(root, checkPath);
         checks = checks with
         {
             Candidate = identity == "candidate" ? new string('b', 64) : checks.Candidate,
             Round = identity == "round" ? new string('c', 32) : checks.Round,
             Units = checks.Units.Select(unit => unit with { Status = "reused" }).ToArray(),
         };
-        CommonExecutionEvidence.Write(other, checkPath, checks);
+        CommonExecutionEvidence.Write(root, checkPath, checks);
         var transportPath = CiTransport.ManifestPath("current-seed");
-        var transport = CommonExecutionEvidence.Read<CiTransportRecord>(other, transportPath);
+        var transport = CommonExecutionEvidence.Read<CiTransportRecord>(root, transportPath);
         transport = transport with
         {
             Candidate = checks.Candidate, Round = checks.Round,
             Materials = transport.Materials.Select(material => material.Path == checkPath
-                ? material with { Sha256 = CommonExecutionEvidence.Hash(Path.Combine(other, checkPath)) } : material).ToArray(),
+                ? material with { Sha256 = CommonExecutionEvidence.Hash(Path.Combine(root, checkPath)) } : material).ToArray(),
         };
-        CommonExecutionEvidence.Write(other, transportPath, transport);
-        foreach (var source in new[] { root, other })
-        {
-            var verified = NativeTransport(source, "transport-verify", "current-seed", commit, environment);
-            Assert.True(verified.Exit == 0, verified.Text);
-        }
-        using (var writer = new TarWriter(new GZipStream(File.Create(archive), CompressionLevel.Fastest)))
-            foreach (var path in transport.Materials.Select(material => material.Path).Append(transportPath))
-                writer.WriteEntry(Path.Combine(other, path), path);
+        CommonExecutionEvidence.Write(root, transportPath, transport);
+        var replacement = NativeTransport(root, "transport-verify", "current-seed", commit, environment);
+        Assert.True(replacement.Exit == 0, replacement.Text);
+        Assert.NotEqual(CommonExecutionEvidence.Hash(seedManifest), CommonExecutionEvidence.Hash(Path.Combine(root, transportPath)));
         fixture.Write("build/lean-cache/current/manifest.json", "previous accepted cache");
         var before = Inventory(Path.Combine(root, "build/lean-cache/current"));
         var result = Python(root, TestRepositoryLayout.FindRoot(), ["snapshot", "--repository", root,
-            "--layers", "current", "--seed-archive", archive], environment);
+            "--layers", "current", "--seed-manifest", seedManifest], environment);
         AssertReceipt(result, "save-failed");
         Assert.Contains("prepared seed differs from producer transport", result.Text, StringComparison.Ordinal);
         Assert.Equal("false", Key(result.Text, "current_ready"));
+        Assert.Equal(originalManifest, File.ReadAllBytes(seedManifest));
         Assert.Equal(before, Inventory(Path.Combine(root, "build/lean-cache/current")));
     }
 
     [Theory]
     [InlineData("engineering")]
     [InlineData("current")]
-    public void EmptyPrepackedArchiveUsesOrdinarySnapshot(string stage)
+    public void EmptyPreparedManifestUsesOrdinarySnapshot(string stage)
     {
         using var fixture = Prepare(stage);
         var root = fixture.Root;
         var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
         var result = Python(root, TestRepositoryLayout.FindRoot(), ["snapshot", "--repository", root,
-            "--layers", stage, "--seed-archive", ""], Environment(commit, root, "48", "1"));
+            "--layers", stage, "--seed-manifest", ""], Environment(commit, root, "48", "1"));
         AssertReceipt(result, "snapshot");
         Assert.Equal("true", Key(result.Text, stage + "_ready"));
         var transport = CommonExecutionEvidence.Read<CiTransportRecord>(root, CiTransport.ManifestPath(stage + "-seed"));
@@ -277,34 +299,59 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         Assert.Equal(1, transport.RunAttempt);
     }
 
-    private static void RewriteSeedArchive(string archive, string transportPath, string materialPath, string damage)
+    private static void DamagePreparedSeed(string root, string manifest, string materialPath, string damage)
     {
-        using (var input = new TarReader(new GZipStream(File.OpenRead(archive), CompressionMode.Decompress)))
-        using (var output = new TarWriter(new GZipStream(File.Create(archive + ".changed"), CompressionLevel.Fastest)))
+        var material = Path.Combine(root, materialPath);
+        if (damage is "commit" or "run_id" or "run_attempt" or "duplicate" or "extra")
         {
-            while (input.GetNextEntry() is { } entry)
+            var transport = JsonNode.Parse(File.ReadAllBytes(manifest))!;
+            if (damage is "duplicate" or "extra")
             {
-                using var data = new MemoryStream();
-                entry.DataStream!.CopyTo(data);
-                var bytes = data.ToArray();
-                if (entry.Name == materialPath && damage == "material") bytes = "damaged archive material"u8.ToArray();
-                if (entry.Name == transportPath && damage is "commit" or "run_id" or "run_attempt")
-                {
-                    var transport = JsonNode.Parse(bytes)!;
-                    transport[damage] = damage == "commit" ? JsonValue.Create(new string('a', 40)) : JsonValue.Create(99);
-                    bytes = JsonSerializer.SerializeToUtf8Bytes(transport);
-                }
-                Write(entry.Name, bytes, entry.Mode);
-                if (damage == "duplicate" && entry.Name == transportPath) Write(entry.Name, bytes, entry.Mode);
+                var materials = transport["materials"]!.AsArray();
+                var appended = materials[0]!.DeepClone();
+                if (damage == "extra") appended["path"] = "build/ci/undeclared";
+                materials.Add(appended);
             }
-            if (damage == "extra") Write("build/ci/undeclared", "undeclared"u8.ToArray(), UnixFileMode.UserRead);
-            void Write(string name, byte[] bytes, UnixFileMode mode)
-            {
-                using var data = new MemoryStream(bytes);
-                output.WriteEntry(new PaxTarEntry(TarEntryType.RegularFile, name) { DataStream = data, Mode = mode });
-            }
+            else transport[damage] = damage == "commit" ? JsonValue.Create(new string('a', 40)) : JsonValue.Create(99);
+            File.WriteAllText(manifest, transport.ToJsonString());
+            return;
         }
-        File.Move(archive + ".changed", archive, overwrite: true);
+        switch (damage)
+        {
+            case "material":
+                File.WriteAllText(material, "damaged prepared material");
+                break;
+            case "malformed-manifest":
+                File.WriteAllText(manifest, "{");
+                break;
+            case "missing-manifest":
+                File.Delete(manifest);
+                break;
+            case "missing":
+                File.Delete(material);
+                break;
+            case "symlink":
+            {
+                var outside = Path.Combine(root, "build/linked-material");
+                File.Move(material, outside);
+                File.CreateSymbolicLink(material, outside);
+                break;
+            }
+            case "parent-symlink":
+            {
+                var parent = Path.GetDirectoryName(material)!;
+                var outside = Path.Combine(root, "build/linked-parent");
+                Directory.Move(parent, outside);
+                Directory.CreateSymbolicLink(parent, outside);
+                break;
+            }
+            case "mode":
+                if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException("Unix file modes are unavailable");
+                File.SetUnixFileMode(material, File.GetUnixFileMode(material) ^ UnixFileMode.UserExecute);
+                break;
+            default:
+                throw new ArgumentException("unknown prepared seed damage: " + damage);
+        }
     }
 
     private static (int Exit, string Text) NativeTransport(string root, string command, string stage, string commit,

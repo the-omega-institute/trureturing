@@ -69,9 +69,9 @@ internal sealed partial class ProductionCliEnvironment
                     .Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
-                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects);
-                acceptedBaseTests = common.Tests.Projects
-                    .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray();
+                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects, prepared.Revision);
+                acceptedBaseTests = common.Tests?.Projects
+                    .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray() ?? [];
                 if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport!), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
                     throw new InvalidDataException("check-delta requires this round's canonical report");
                 if (EvaluateAdmissionPlane(raw, baselineRaw, prepared.Changes) is { } plane)
@@ -93,7 +93,7 @@ internal sealed partial class ProductionCliEnvironment
                 {
                     if (reportRequired && Path.GetFullPath(options.CandidateLeanReport!, repositoryRoot) != Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath))
                         throw new InvalidDataException("common current requires canonical report material");
-                    return ExecuteCommonCurrent(commonRound, validation, policy, lean, report, selectedIds);
+                    return ExecuteCommonCurrent(commonRound, validation, policy, lean, report, selectedIds, resourcePlan);
                 }
                 var verified = VerifyScribeForAdmission(scribeEmissionVerifier, current, report!);
                 result = AdmissionPipeline.CheckCurrent(CurrentRuleContext.Create(current, policy, lean!, verified));

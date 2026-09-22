@@ -283,14 +283,8 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
   let config ← readJson inputs
   let names ← strings config "modules"
   observePhase "lake-inputs" "finish"
-  -- Demand ordinary defaults independently of row traces. Audit/default-only
-  -- changes still fail the invocation without invalidating unrelated rows.
-  let defaults ← match ← (parseTargetSpec (← getWorkspace) s!"@{pkg.baseName}").toBaseIO with
-    | .ok specs => pure specs
-    | .error err => error err.toString
-  observePhase "lake-defaults" "start"
-  discard <| (← buildSpecs defaults).await
-  observePhase "lake-defaults" "finish"
+  -- The report owns registered modules. The caller supplies program targets
+  -- from its resource selection in the same Lake invocation.
   -- Shared native dependency jobs compose continuations; no per-miss promise
   -- wait, readiness polling, or independent dependency/freshness planner.
   let alreadyStarted ← reportState.started.get

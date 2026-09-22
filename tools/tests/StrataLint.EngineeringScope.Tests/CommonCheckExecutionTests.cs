@@ -8,6 +8,65 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CommonCheckExecutionTests
 {
     [Theory]
+    [InlineData(1, 1)]
+    [InlineData(2, 2)]
+    [InlineData(3, 2)]
+    [InlineData(7, 2)]
+    public void CurrentCheckFailureRetainsRawExitAndDiagnosticWithoutSuccessfulEvidence(int rawExit, int normalizedExit)
+    {
+        using var fixture = new Fixture();
+        var root = fixture.Tree.Root;
+        var build = fixture.Tree.Build();
+        var checks = CommonExecutionEvidence.BeginChecks(root, "current", build, TextWriter.Null, ["filemap"]);
+        const string diagnostic = "FILEMAP-UNREGISTERED unregistered/input.json";
+
+        var error = Assert.Throws<CommonCheckFailure>(() => checks.Run("filemap", () => new([new("filemap", rawExit, diagnostic)])));
+
+        Assert.Equal(rawExit, error.Operation.RawExit);
+        Assert.Equal(normalizedExit, error.Operation.Exit);
+        Assert.Equal("failed", error.Operation.Status);
+        Assert.Contains("raw_exit=" + rawExit, error.Message, StringComparison.Ordinal);
+        Assert.Contains(diagnostic, error.Message, StringComparison.Ordinal);
+        var log = Assert.Single(Directory.GetFiles(Path.Combine(root, "build/ci/check-material"), "*.log", SearchOption.AllDirectories));
+        Assert.Equal(diagnostic, File.ReadAllText(log));
+        Assert.Empty(checks.Completed);
+        Assert.Throws<InvalidDataException>(() => checks.Seal());
+        Assert.False(File.Exists(Path.Combine(root, CommonExecutionEvidence.ChecksPath("current"))));
+        Assert.ThrowsAny<IOException>(() => CommonExecutionEvidence.ExportCheckSeed(root, "current", TextWriter.Null));
+    }
+
+    [Fact]
+    public void ChangedFileMapBodyOutsideOldMaterialsInvalidatesOnlyItsScopedEvidence()
+    {
+        using var fixture = new Fixture();
+        const string selected = "unlisted/changed.toml";
+        const string other = "unlisted/unaffected.toml";
+        fixture.Tree.Write(selected, "before");
+        fixture.Tree.Write(other, "other");
+        fixture.Tree.Track();
+        string Fingerprint() => CommonExecutionEvidence.CheckInputFingerprints(fixture.Tree.Root,
+            selectedIds: ["filemap"], changedPaths: [selected])["filemap"];
+        var before = Fingerprint();
+        fixture.Tree.Write(selected, "after");
+        var after = Fingerprint();
+        Assert.NotEqual(before, after);
+        fixture.Tree.Write(other, "unrelated change");
+        Assert.Equal(after, Fingerprint());
+    }
+
+    [Fact]
+    public void FileMapDeltaEvidenceCannotBeReusedForAnotherScopeOrWholeTree()
+    {
+        using var fixture = new Fixture();
+        var root = fixture.Tree.Root;
+        string Fingerprint(string[]? paths) => CommonExecutionEvidence.CheckInputFingerprints(root,
+            selectedIds: ["filemap"], changedPaths: paths)["filemap"];
+        Assert.NotEqual(Fingerprint(["first.txt"]), Fingerprint(["second.txt"]));
+        Assert.NotEqual(Fingerprint(["first.txt"]), Fingerprint(null));
+        Assert.Equal(Fingerprint(["first.txt", "second.txt"]), Fingerprint(["second.txt", "first.txt"]));
+    }
+
+    [Theory]
     [InlineData("none")]
     [InlineData("source")]
     [InlineData("build")]
@@ -365,7 +424,8 @@ public sealed partial class CommonCheckExecutionTests
             var ids = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap" };
             CommonExecutionEvidence.Write(Tree.Root, CommonExecutionEvidence.CheckManifestPath,
                 new CommonCheckManifest("ci-check-input-registration-v2", ids.Select(id => new RegisteredCommonCheck(id,
-                    [CurrentExecutionContractTests.CandidateFixture.First], id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [])).ToArray()));
+                    [CurrentExecutionContractTests.CandidateFixture.First], id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [],
+                    id == "filemap" ? new(["Meta/FILEMAP.toml"], ["tools/**/*.cs"], [], ["Blueprint/**"]) : null)).ToArray()));
             Tree.Track();
         }
         internal CommonCheckRecord Run(string? failure = null)

@@ -15,11 +15,14 @@ usage_open() { receipt "usage: pr.sh open --head HEAD --message-file FILE [--aut
 usage_watch() { receipt "usage: pr.sh watch --pr NUMBER --head-sha SHA [--timeout-seconds S] [--interval-seconds S]"; }
 PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID!) {
   repository(owner:$owner,name:$repo) {
-    pullRequest(number:$pr) { state headRefOid }
+    nameWithOwner pullRequest(number:$pr) { number state headRefOid }
     object(oid:$head) { ... on Commit { oid statusCheckRollup { contexts(first:100) {
       nodes { __typename
         ... on CheckRun { databaseId name status conclusion
-          checkSuite { commit { oid } workflowRun { databaseId } } }
+          checkSuite { databaseId commit { oid } workflowRun { databaseId runNumber workflow { id } }
+            checkRuns(first:100,filterBy:{checkType:LATEST}) {
+              nodes { databaseId } pageInfo { hasNextPage }
+            } } }
         ... on StatusContext { id context state commit { oid } }
       }
       pageInfo { hasNextPage }
@@ -70,16 +73,38 @@ gh_create() {
   fi
 }
 parse_snapshot() {
-  jq -Rsec --argjson required "$1" --arg head "$2" '
+  jq -Rsec --argjson required "$1" --arg head "$2" --argjson number "$3" --argjson runs "$4" --arg repo "$PR_REPO" '
     def member($xs): . as $value | $xs | index($value) != null;
     def sha: type == "string" and test("^[0-9a-f]{40}$");
-    def database_id: type == "number" and . > 0 and floor == .;
+    def database_id: type == "number" and . > 0 and . <= 9007199254740991 and floor == .;
+    def pr_event: . == "pull_request" or . == "pull_request_target";
+    def native_run: .path == ".github/workflows/ci-pr.yml";
+    # This repository calls exactly this reusable workflow at its PR merge commit.
+    # GitHub retains that ref after merge even when pull_requests becomes empty.
+    def native_pr:
+      select(native_run and .event == "pull_request") |
+      .referenced_workflows | select(type == "array" and length == 1) | .[0] |
+      select(type == "object" and (.sha | sha and length == 40) and
+        .path == ($repo + "/.github/workflows/ci-push.yml@" + .sha)) |
+      .ref | select(type == "string") | capture("\\Arefs/pull/(?<number>[1-9][0-9]*)/merge\\z") |
+      .number | tonumber | select(database_id);
+    def associated_prs: if native_run then [native_pr] else [.pull_requests[].number] end;
+    def run_metadata: .checkSuite.workflowRun.databaseId as $id | $runs[] | select(.id == $id);
     def check_name: if .__typename == "CheckRun" then .name elif .__typename == "StatusContext" then .context else null end;
+    def producer: .checkSuite.workflowRun.workflow.id // null;
+    def applicable: producer == null or (run_metadata | (.event | pr_event) and (associated_prs | index($number) != null));
+    def latest_ids: .checkSuite.checkRuns.nodes | map(.databaseId) | sort;
+    def latest_check: .databaseId as $id | latest_ids | index($id) != null;
     def shape_ok: type == "object" and (if .__typename == "CheckRun" then
       (.name | type == "string" and length > 0) and (.status | type == "string") and has("conclusion") and
       (.conclusion == null or (.conclusion | type == "string")) and (.databaseId | database_id) and
       (.checkSuite | type == "object" and has("workflowRun")) and (.checkSuite.commit.oid == $head) and
-      (.checkSuite.workflowRun == null or (.checkSuite.workflowRun.databaseId | database_id))
+      (.checkSuite.workflowRun == null or
+        ((.checkSuite.databaseId | database_id) and (.checkSuite.workflowRun.databaseId | database_id) and
+         (.checkSuite.workflowRun.runNumber | database_id) and
+         (.checkSuite.workflowRun.workflow.id | type == "string" and length > 0) and
+         (.checkSuite.checkRuns.nodes | type == "array" and length > 0 and all(.[]; .databaseId | database_id)) and
+         .checkSuite.checkRuns.pageInfo.hasNextPage == false))
       elif .__typename == "StatusContext" then
       (.context | type == "string" and length > 0) and (.state | type == "string") and
       (.id | type == "string" and length > 0) and (.commit.oid == $head) else false end);
@@ -94,11 +119,18 @@ parse_snapshot() {
     def check_state: if .__typename == "CheckRun" then .conclusion else .state end;
     def evidence: {check:check_name, check_id:(.databaseId // .id),
       run_id:(.checkSuite.workflowRun.databaseId // null),
-      commit:(.checkSuite.commit.oid // .commit.oid), status:(.status // .state), conclusion:check_state};
+      workflow_id:producer, run_number:(.checkSuite.workflowRun.runNumber // null),
+      commit:(.checkSuite.commit.oid // .commit.oid), status:(.status // .state), conclusion:check_state} +
+      (if producer == null then {membership:"commit-context"}
+       else {membership:"workflow-run", event:(run_metadata | .event),
+         pull_requests:(run_metadata | [.pull_requests[].number])} +
+         (if (run_metadata | native_run) then {referenced_workflow:(run_metadata | .referenced_workflows[0])}
+          else {} end) end);
     fromjson |
     select(type == "object" and (.errors == null or .errors == [])) |
     .data.repository |
-    select(type == "object" and (.pullRequest | type == "object") and
+    select(type == "object" and .nameWithOwner == $repo and (.pullRequest | type == "object") and
+      .pullRequest.number == $number and
       (.pullRequest.state | member(["OPEN","MERGED","CLOSED"])) and (.pullRequest.headRefOid | sha)) |
     .pullRequest as $pr |
     select((.object | type == "object") and .object.oid == $head and
@@ -108,17 +140,83 @@ parse_snapshot() {
          .object.statusCheckRollup.contexts.pageInfo.hasNextPage == false))) |
     (.object.statusCheckRollup.contexts.nodes // []) as $items |
     select(all($items[]; shape_ok)) |
+    select([$items[] | select(.__typename == "CheckRun") | .databaseId] |
+      length == (unique | length)) |
     select(all($items[]; check_name as $name | if ($required | index($name)) != null then enum_ok else true end)) |
+    [$items[] | select(producer != null)] as $actions |
+    # Repeated run metadata must agree, and every LATEST ID must resolve in this complete snapshot.
+    select($actions | group_by(.checkSuite.workflowRun.databaseId) | all(.[];
+      (.[0] | latest_ids) as $latest | map(.databaseId) as $observed |
+      (map(.checkSuite | {databaseId,workflowRun}) | unique | length) == 1 and
+      (map(latest_ids) | unique | length) == 1 and
+      ($latest | length) == ($latest | unique | length) and
+      all($latest[]; member($observed)) and
+      (map(select(latest_check)) | group_by(.name) | all(.[]; length == 1)))) |
+    select($actions | group_by([producer, .checkSuite.workflowRun.runNumber]) |
+      all(.[]; (map(.checkSuite.workflowRun.databaseId) | unique | length) == 1)) |
+    # Validate the complete snapshot before reading or excluding any execution.
+    if $runs == null then [$actions[].checkSuite.workflowRun.databaseId] | unique
+    else
+    select(($runs | type == "array") and
+      ([$runs[].id] | sort) == ([$actions[].checkSuite.workflowRun.databaseId] | unique)) |
+    select(all($runs[];
+      (.id | database_id) and .head_sha == $head and
+      (.repository.id | database_id) and .repository.full_name == $repo and
+      (.event | type == "string" and length > 0) and
+      # The workflow path must be known before selecting its PR identity policy.
+      (.path | type == "string" and length > 0) and
+      (.pull_requests | type == "array") and
+      (if native_run then associated_prs as $prs |
+        ($prs | length) == 1 and all(.pull_requests[]; .number == $prs[0])
+       elif (.event | pr_event) then (.pull_requests | length > 0) else true end) and
+      (.repository.id as $repository_id | all(.pull_requests[];
+        type == "object" and (.id | database_id) and (.number | database_id) and
+        .url == ("https://api.github.com/repos/" + $repo + "/pulls/" + (.number | tostring)) and
+        .head.sha == $head and .base.repo.id == $repository_id)) and
+      ([.pull_requests[].number] | length == (unique | length)))) |
+    select(all($actions[]; . as $check | run_metadata |
+      .check_suite_id == $check.checkSuite.databaseId and .run_number == $check.checkSuite.workflowRun.runNumber)) |
+    # Membership precedes producer obligations and latest-run selection. A different PR
+    # or non-PR event cannot supply a job, create an obligation, or retire an execution.
+    [$items[] | select(applicable)] as $items |
+    [$items[] | select(producer != null)] as $actions |
+    # Include early, non-required jobs when selecting the latest execution for each workflow.
+    ($actions | group_by(producer) | map({key:(.[0] | producer),
+      value:(map(.checkSuite.workflowRun.runNumber) | max)}) | from_entries) as $latest_runs |
     if $pr.headRefOid != $head then {state:$pr.state, stale:true, observed_head:$pr.headRefOid}
     else
-    [$required[] as $name | [$items[] | select(check_name == $name)] as $found |
-      if ($found | length) == 0 then {kind:"missing"}
+    [$required[] as $name | [$items[] | select(check_name == $name)] | group_by(producer) |
+      # Keep each observed producer obligation, even if its latest run has no matching job yet.
+      (if length == 0 then [] else .[] end) |
+      map(select(producer == null or
+        (.checkSuite.workflowRun.runNumber == $latest_runs[producer] and latest_check))) as $found |
+      (if ($found | length) == 0 then {kind:"missing"}
       elif any($found[]; phase == "red") then ($found | map(select(phase == "red")) | first | {kind:"red",check:check_name,state:check_state})
-      elif any($found[]; phase == "pending") then {kind:"pending"} else {kind:"terminal"} end] as $checks |
+      elif any($found[]; phase == "pending") then {kind:"pending"} else {kind:"terminal"} end) +
+      {evidence:($found | map(evidence))}] as $checks |
     {state:$pr.state, stale:false, red:($checks | map(select(.kind == "red")) | first // null),
      pending:($checks | map(select(.kind == "pending")) | length), missing:($checks | map(select(.kind == "missing")) | length),
-     evidence:[$items[] | check_name as $name | select(($required | index($name)) != null) | evidence]} end
+     evidence:[$checks[].evidence[]]} end end
   '
+}
+read_snapshot() {
+  local required="$1" head_sha="$2" number="$3" deadline="$4" snapshot="$BOUNDED_OUTPUT"
+  local run_ids run_id metadata runs='[]' remaining call_timeout
+  run_ids="$(printf '%s' "$snapshot" | parse_snapshot "$required" "$head_sha" "$number" null 2>/dev/null)" || return 1
+  while IFS= read -r run_id; do
+    [[ -n "$run_id" ]] || continue
+    remaining=$((deadline - $(date +%s)))
+    (( remaining > 0 )) || return 1
+    call_timeout=$((remaining < PR_OPEN_TIMEOUT_SECONDS ? remaining : PR_OPEN_TIMEOUT_SECONDS))
+    # Read explicit associations and the retained native merge ref from the run itself.
+    # Consume pagination; extra resource pages fail closed.
+    gh_local run-membership "$call_timeout" api --paginate --slurp "repos/$PR_REPO/actions/runs/$run_id" || return 1
+    metadata="$(printf '%s' "$BOUNDED_OUTPUT" | jq -Rsec '
+      fromjson | select(type == "array" and length == 1 and (.[0] | type == "object")) | .[0]
+    ' 2>/dev/null)" || return 1
+    runs="$(jq -c --argjson run "$metadata" '. + [$run]' <<<"$runs")" || return 1
+  done < <(jq -r '.[]' <<<"$run_ids")
+  printf '%s' "$snapshot" | parse_snapshot "$required" "$head_sha" "$number" "$runs" 2>/dev/null
 }
 pr_watch_main() {
   local number="" head_sha="" timeout_seconds="$PR_WATCH_TIMEOUT_SECONDS" interval_seconds="$PR_WATCH_INTERVAL_SECONDS"
@@ -176,7 +274,7 @@ pr_watch_main() {
     if gh_local snapshot "$call_timeout" api graphql -f query="$PR_SNAPSHOT_QUERY" \
         -f owner="${PR_REPO%%/*}" -f repo="${PR_REPO#*/}" -F pr="$number" -f head="$head_sha" \
         && [[ -n "$BOUNDED_OUTPUT" ]] \
-        && parsed="$(printf '%s' "$BOUNDED_OUTPUT" | parse_snapshot "$required" "$head_sha" 2>/dev/null)" \
+        && parsed="$(read_snapshot "$required" "$head_sha" "$number" "$deadline")" \
         && [[ -n "$parsed" ]]; then
       failures=0; seen_snapshot=1
       if [[ "$(jq -r '.stale' <<<"$parsed")" == true ]]; then

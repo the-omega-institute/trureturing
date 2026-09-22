@@ -79,7 +79,7 @@ public sealed class ColdPreflightContractTests
             mapping["resources"]!.AsArray().Add(new JsonObject {
                 ["id"] = "engineering", ["projects"] = new JsonArray(ResourceRouteTests.ResourceFixture.Foo),
                 ["checks"] = new JsonArray(CommonExecutionEvidence.EngineeringCheckIds.Order(StringComparer.Ordinal).Select(s => (JsonNode?)JsonValue.Create(s)).ToArray()),
-                ["steps"] = new JsonArray("tests") });
+                ["steps"] = new JsonArray() });
             fixture.Write("Meta/ci-resources.json", mapping.ToJsonString());
         }
         fixture.CommitPlan();
@@ -142,14 +142,14 @@ public sealed class ColdPreflightContractTests
             Assert.True(File.Exists(Path.Combine(root, CommonExecutionEvidence.CliPath)));
             if (resource == "engineering")
             {
-                // Stop at the actual engineering test executor: this fixture registers
-                // no CI tests. It verifies build ownership without faking test/proof green.
+                // This guard-only fixture registers no CI tests. Its CLI rejects
+                // selftest, so the real guard executor must fail after the build.
                 Assert.Contains("STAGE_PROCESS", result.Text, StringComparison.Ordinal);
                 Assert.Equal("failed", Read(root, "engineering-result.json")["status"]!.ToString());
                 Assert.DoesNotContain("filemap", events);
                 return;
             }
-            Assert.Single(events, s => s == CommonExecutionEvidence.CliPath + " filemap-conform");
+            Assert.Single(events, s => s == CommonExecutionEvidence.CliPath + " filemap-conform --scope " + CommonExecutionEvidence.FileMapScopePath);
             Assert.Equal("completed", Read(root, "current-result.json")["status"]!.ToString());
             Assert.Equal(0, Read(root, "current-result.json")["exit"]!.GetValue<int>());
             var current = Read(root, "current.json");
@@ -236,7 +236,7 @@ public sealed class ColdPreflightContractTests
             """);
         fixture.Write("tools/Foo/packages.lock.json", "{\"version\":1,\"dependencies\":{\"net10.0\":{}}}\n");
         fixture.Write("tools/Foo/Program.cs", """
-            if (args.Length != 1 || args[0] != "filemap-conform") return 91;
+            if (args.Length != 3 || args[0] != "filemap-conform" || args[1] != "--scope" || !System.IO.File.Exists(args[2])) return 91;
             System.IO.File.AppendAllText("build/launched", "dotnet filemap-conform\n");
             System.Console.WriteLine("fixture filemap check reached");
             return 0;

@@ -549,8 +549,6 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         catch (OperationCanceledException)
         {
             expired = true;
-            throw new SkipException("infrastructure-hang-guard expired for shared build fixture: " + executable + " " + string.Join(' ', arguments)
-                + "; phase=" + phase);
         }
         finally
         {
@@ -572,6 +570,9 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
                 }
             }
         }
+
+        throw new SkipException("infrastructure-hang-guard expired for shared build fixture: " + executable + " " + string.Join(' ', arguments)
+            + "; phase=" + phase + "\nstdout:\n" + stdoutText + "\nstderr:\n" + stderrText);
 
         async Task Drain(StreamReader reader, System.Text.StringBuilder text)
         {
