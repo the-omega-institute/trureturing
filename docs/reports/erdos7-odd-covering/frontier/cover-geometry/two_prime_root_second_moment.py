@@ -21,8 +21,8 @@ def valid(rows):
 
 
 def edges(rows):
-    return tuple((i + 1, j + 1) for i, a in enumerate(rows)
-                 for j in range(6) if (a >> j) & 1)
+    return tuple((i, j) for i, a in enumerate(rows)
+                 for j in range(7) if (a >> j) & 1)
 
 
 TEMPLATES = {
@@ -31,18 +31,20 @@ TEMPLATES = {
     'C': (1, 6, 10, 20),
     'D': (1, 6, 10, 48),
     'E': (3, 5, 6, 24),
+    'F': (1, 6, 24, 96),
+    'M': (1, 2, 4, 8, 16),
 }
 EXPECTED = {'A': Fraction(4), 'B': Fraction(35, 9), 'C': Fraction(4),
-            'D': Fraction(4), 'E': Fraction(29, 8)}
+            'D': Fraction(4), 'E': Fraction(29, 8), 'F': Fraction(25, 7), 'M': Fraction(4)}
 checks = []
 for name, rows in TEMPLATES.items():
     support = edges(rows)
-    check(valid(rows), 'template satisfies all normalized source conditions')
-    check(all(not valid(rows[:i] + (a ^ (1 << j),) + rows[i + 1:])
-              for i, a in enumerate(rows) for j in range(6) if a >> j & 1),
-          'template is edge minimal')
+    padded = rows + (0,) * (5 - len(rows))
+    check(all((a | b | c).bit_count() >= 3 for a, b, c in combinations(padded, 3))
+          and len({j for _, j in support}) >= 5,
+          'template satisfies all unrestricted root source conditions')
     denominator = 18 if name == 'B' else len(support)
-    numerators = {(i, j): (2 if name == 'B' and j == 2 else 3)
+    numerators = {(i, j): (2 if name == 'B' and j == 1 else 3)
                   if name == 'B' else 1 for i, j in support}
     check(sum(numerators.values()) == denominator, 'one normalized supported law')
     row_mass = Counter()
@@ -71,13 +73,13 @@ for name, rows in TEMPLATES.items():
                        weights=[[i, j, numerators[(i, j)]] for i, j in support],
                        independent_layouts=count, exact_gamma=str(gamma), witness=witness))
 
-# Complete reduced support classification, independently of the hand proof.
+# Complete six-column reduced classification, independently of the hand proof.
 choices = [a for a in range(1, 64) if a.bit_count() <= 3]
 permutation_tables = [tuple(sum(1 << sigma[j] for j in range(6) if a >> j & 1)
                             for a in range(64)) for sigma in permutations(range(6))]
 canonical_templates = {min(tuple(sorted(table[a] for a in rows))
                            for table in permutation_tables): name
-                       for name, rows in TEMPLATES.items()}
+                       for name, rows in TEMPLATES.items() if name in 'ABCDE'}
 check(len(canonical_templates) == 5, 'five distinct column and row isomorphism classes')
 valid_count = 0
 minimal_count = 0
@@ -144,7 +146,9 @@ for case in checks:
                                    * (7 ** (b - 1) if b else 1))
             check(caps[a, b] == root_cap * tail_factor,
                   'full cylinder maximum has exact uniform-tail scaling')
-            common_cap = (Fraction(1, 6) if a and b else Fraction(3, 8) if a
+            common_cap = ((Fraction(1, 5) if a or b else Fraction(1))
+                          if case['template'] == 'M' else
+                          Fraction(1, 6) if a and b else Fraction(3, 8) if a
                           else Fraction(1, 3) if b else Fraction(1))
             check(root_cap <= common_cap, 'same law satisfies all three root caps')
         added = sum((caps[max(a, c), max(b, d)]
@@ -172,14 +176,20 @@ check(slope_5 / 5 / Fraction(2, 9) == Fraction(221, 240) < 1,
       'first strict 5-height increment ratio')
 check(slope_7 / 7 / Fraction(2, 9) == Fraction(153, 224) < 1,
       'first strict 7-height increment ratio')
+matching_limit = 4 + (limit_5 - 3 + limit_7 - 3 + limit_5 * limit_7 - 9) / 5
+check(matching_limit == Fraction(109, 18), 'separate five-matching lift constant')
+check(Fraction(3, 40) - (limit_7 - 3) / 30 == Fraction(49, 1080) > 0,
+      'old envelope dominates matching bound at all heights')
 
 print(json.dumps(dict(
-    scope='Normalized 5-by-7 root sources and full uniform tails only; no arbitrary constrained-tail or E7 conclusion',
-    template_laws=checks, examined_row_unordered_reduced_supports=examined_count,
+    scope='All 5-by-7 root sources satisfying the rectangle and column-projection conditions, and full uniform tails only; no arbitrary constrained-tail or E7 conclusion',
+    template_laws=checks, reduced_enumeration_columns=6,
+    examined_row_unordered_reduced_supports=examined_count,
     admissible_reduced_supports=valid_count, minimal_reduced_supports=minimal_count,
     minimal_orbit_counts=dict(sorted(orbit_counts.items())),
     total_full_independent_layouts=sum(case['independent_layouts'] for case in checks),
     uniform_tail_controls=lift_controls, uniform_tail_upper_limit=str(limit_upper),
+    five_matching_uniform_tail_limit=str(matching_limit),
     strict_height_increment_ratios=[str(Fraction(221, 240)), str(Fraction(153, 224))],
     complete_reduced_enumeration_is_not_the_general_classification_proof=True
 ), indent=2, sort_keys=True))

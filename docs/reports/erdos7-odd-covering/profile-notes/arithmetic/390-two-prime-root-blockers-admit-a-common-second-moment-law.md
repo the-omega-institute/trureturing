@@ -1,11 +1,11 @@
 [Index](../../marked_head_profile.md) · [Complete-chain blockers](376-complete-prime-chain-transport-and-joint-prefix-laws.md) · [Saturated fibres](378-saturated-prime-fibres-and-mixed-tail-incidence.md) · [Root forests](379-root-forest-disintegration-and-residue-costs.md) · [One three-prime source](389-saturated-chain-source-has-small-complete-layout-second-moment.md)
 
-# Normalized two-prime root blockers admit a common second-moment law
+# Two-prime root blockers admit a common second-moment law
 
-Let `R` be a subset of the nonzero roots in `Z/5 x Z/7`. Assume that
-its first projection has at least three roots, its second has at least
-five, and it meets every product of three roots at 5 and five roots
-at 7. Then there is **one probability supported on R** for which
+Let `R` be any subset of `Z/5 x Z/7`. Assume that its second
+projection has at least five roots and that it meets every product
+of three roots at 5 and five roots at 7. Then there is **one probability
+supported on R** for which
 
 \[
  \Gamma_{35}(\nu)
@@ -17,9 +17,10 @@ at 7. Then there is **one probability supported on R** for which
 
 Every divisor residue in TB1 is a freely chosen fixed residue. The
 law is fixed before this entire maximum is taken. A layout need not
-have a common centre. The proof constructs the law by classifying
-five minimal bipartite supports in the four-root case; the three-root
-case has a direct saturated construction.
+have a common centre. Three active rows have a direct saturated
+construction, four rows reduce to six minimal support types, and
+five rows are handled by Hall's matching theorem. No excluded root
+is assumed.
 
 The same root laws, when extended by **independent uniform higher
 digits**, satisfy a complete-layout second-moment bound at all finite
@@ -32,9 +33,12 @@ proofs and exact controls, not new Lean theorems.
 
 ## 1. Root conditions and arbitrary-layout costs
 
-Regard the first roots as rows and the second roots as columns. The
-nonzero-root hypothesis leaves at most four rows and six columns.
-Write `N_i` for the column neighborhood of row `i`.
+Regard the first roots as rows and the second roots as columns.
+Write `N_i` for the column neighborhood of row `i`. There are five
+available rows and seven columns. The product condition implies at
+least three active rows; otherwise three missing rows give a disjoint
+rectangle. Equivalently, every three rows, including empty ones,
+have at least three distinct neighbors.
 
 If exactly three rows are active, the product condition forces
 `|N_i|>=3` for each: a three-row set can select `i` and the two missing
@@ -79,8 +83,8 @@ useful sufficient bound
  \Gamma_{35}(\nu)\le1+3\alpha+3\beta+9\gamma.           \tag{TB5}
 \]
 
-TB5 will handle four of the five minimal types. The remaining type
-uses TB4 itself, since the relative positions of the largest masses
+TB5 will handle five of the six minimal four-row types. The remaining
+type uses TB4 itself, since the relative positions of the largest masses
 matter. Absent rows, columns and point cells have zero mass and are
 included in both formulas.
 
@@ -91,7 +95,7 @@ to each of the nine chosen points. Row masses are `1/3`, column
 masses are at most `1/3`, and atom masses are `1/9`. TB5 gives TB1.
 There is no requirement that the three chosen neighbor sets agree.
 
-## 3. Five minimal types for four active rows
+## 3. Six minimal types for four active rows
 
 Delete edges while preserving nonempty rows, TB2 and TB3, until the
 support is edge-minimal. A law on this smaller support is also a law
@@ -105,6 +109,7 @@ independent permutations of rows and columns:
 | C | `{a}`, `{b,c}`, `{b,d}`, `{c,e}` | 7 |
 | D | `{a}`, `{b,c}`, `{b,d}`, `{e,f}` | 7 |
 | E | `{a,b}`, `{a,c}`, `{b,c}`, `{d,e}` | 8 |
+| F | `{a}`, `{b,c}`, `{d,e}`, `{f,g}` | 7 |
 
 The letters in each row of the table denote distinct columns. Here
 is a combinatorial proof that the table is exhaustive.
@@ -132,14 +137,14 @@ The other three rows would then all lie in the two columns outside
 `S`, again contradicting TB2. This proves the assertion.
 
 **No singleton.** All four rows must now have degree two. Their
-neighborhoods are four distinct edges of a simple graph on the five
-or six active column vertices. A graph edge joining a leaf to a
+neighborhoods are four distinct edges of a simple graph on five,
+six or seven active column vertices. A graph edge joining a leaf to a
 vertex of degree at least two would allow deletion of the latter's
 incidence. Its column remains present, and the new singleton leaf
 is absent from every other row, so every row-pair union still has
 at least three elements. Minimality rules this out. Thus components
 are isolated edges or have minimum degree at least two. Four edges
-on five or six vertices can only be a triangle and an isolated edge:
+on five to seven vertices can only be a triangle and an isolated edge:
 four isolated edges would require eight vertices, and a four-cycle
 has only four. This is type E.
 
@@ -154,14 +159,14 @@ columns. This is type A.
 
 **A singleton and no triple.** The other three rows are distinct
 pairs avoiding `a`. They form a simple graph with three edges on
-four or five column vertices. It is a forest: a triangle would use
-only three vertices. The possibilities are a three-edge star, a
-three-edge path, or a two-edge path and an isolated edge. These are
-types B, C and D. Three isolated edges would need six columns in
-addition to `a`, exceeding the available six.
+four, five or six column vertices. It is a forest: a triangle would
+use only three vertices. The possibilities are a three-edge star,
+a three-edge path, a two-edge path and an isolated edge, or three
+isolated edges. These are types B, C, D and F. Type F uses all seven
+columns after the singleton is included.
 
 This proves the classification without relying on numerical LPs or
-the finite enumeration in section 7.
+the finite enumeration in section 8.
 
 ## 4. One explicit law for each type
 
@@ -173,8 +178,10 @@ degree is three and maximum column degree is two. TB5 gives
 \]
 
 For types C and D, use the uniform law on seven points. Both maximum
-degrees are two, so TB5 gives `1+3(2/7+2/7)+9/7=4`. For type E,
-the uniform law on eight points gives `1+3(2/8+2/8)+9/8=29/8`.
+degrees are two, so TB5 gives `1+3(2/7+2/7)+9/7=4`. Type F has
+maximum row degree two and column degree one, giving `25/7`. For
+type E, the uniform law on eight points gives
+`1+3(2/8+2/8)+9/8=29/8`.
 
 For type B give the isolated point mass `1/6`, each of the three
 edges in the common column mass `1/9`, and each of the three private
@@ -205,8 +212,8 @@ with one common centre. In particular, restricting the maximum to
 centred layouts would omit a maximizing layout even in this small
 case.
 
-All constructed laws, including section 2, also satisfy the common
-caps
+All laws constructed so far, including section 2, also satisfy the
+common caps
 
 \[
  \max_i r_i\le\frac38,\qquad
@@ -218,7 +225,55 @@ The caps and TB1 refer to the same selected law. They are not pooled
 from separately optimized probabilities. The displayed laws are
 witnesses for TB1, not claims of minimax optimality over all laws.
 
-## 5. Full uniform tails: a separate all-height consequence
+## 5. Five active rows: a matching or two Hall defects
+
+If the support has a matching of size five, give its five points
+mass `1/5` each. Row, column and atom caps are all `1/5`, so TB5
+gives `Gamma<=1+15/5=4`. This law need not satisfy TB8's atom cap.
+
+Otherwise Hall's theorem gives a nonempty row set `A` with
+`|N(A)|<|A|`. One row is nonempty, three rows have at least three
+neighbors by the rectangle condition, and all five have at least
+five by hypothesis. A deficient four-row set cannot have fewer than
+three neighbors because it contains a triple. Thus only two defects
+are possible.
+
+**Two singleton rows at one column `a`.** Each of the other three
+rows has at least two neighbors outside `a`: take it together with
+the two singleton rows in the rectangle condition. The union of
+these outside neighborhoods has at least four columns.
+
+Choose two outside edges per remaining row while retaining at least
+four distinct columns. Such a selection exists by the integral
+bipartite capacity matching with row capacities two and column
+capacities one. Its minimum cut, for a subset `I` of the three rows,
+has capacity `2(3-|I|)+|N(I)|>=4`: the empty subset gives six,
+a singleton has at least two neighbors, a pair has at least two,
+and the whole set has at least four. A matching of size four
+therefore exists; extend each row to two selected edges.
+
+Retain one of the original singleton rows and these six edges. If
+every outside column has degree at most two, the uniform law on
+seven edges has row and column caps `2/7` and atom cap `1/7`, giving
+TB1. Otherwise a column occurs in all three double rows. Their other
+three columns must be distinct, since the selected union has at
+least four columns. This is type B and uses its law from section 4.
+The ignored singleton and all other original edges receive zero mass.
+
+**Four rows whose union is three columns `C`.** Every column of `C`
+has at least two incident rows among these four. If a column occurred
+in only one row, the other three rows would have at most two neighbors.
+Pick two incident edges per column, giving six distinct edges. The
+fifth row has at least two neighbors outside `C`, since the whole
+projection has size at least five. Add two such edges. The uniform
+law on these eight edges has row degree at most three and column
+degree at most two, so TB6 gives TB1.
+
+The two nonmatching constructions also satisfy TB8. The matching
+construction is kept as a separate case below. This completes TB1
+for every source in the stated five-by-seven carrier.
+
+## 6. Full uniform tails: a separate all-height consequence
 
 Let `H_5,H_7>=1`, `Q_H=5^H_5 7^H_7`, and lift the selected root law
 by independent uniform higher digits in both coordinates. This law
@@ -233,8 +288,9 @@ is supported on the full inverse image of its root support. Put
 In the complete-load square expansion, retain the terms from pairs
 of divisors in `{1,5,7,35}` as one squarefree layout. Their total is
 at most four by TB1. For every other pair, the congruence intersection
-is empty or one cylinder at the lcm. TB8 and the independent uniform
-tails bound this cylinder by `alpha*5^(1-a)`, `beta*7^(1-b)` or
+is empty or one cylinder at the lcm. For a law satisfying TB8,
+the independent uniform tails bound this cylinder by
+`alpha*5^(1-a)`, `beta*7^(1-b)` or
 `gamma*5^(1-a)7^(1-b)`, according to its positive coordinates,
 where `(alpha,beta,gamma)=(3/8,1/3,1/6)`.
 
@@ -248,8 +304,27 @@ independent divisor residues,
                   +\frac16(A_5A_7-9).                 \tag{TB10}
 \]
 
-Consequently `F_H` increases to `3541/576<7`. This is an upper
-bound, not an exact formula for the lifted maximum.
+For the five-point matching law use its separate caps `1/5` in the
+same expansion. They give
+
+\[
+ \Gamma_{Q_H}(\nu_H)\le M_H
+ :=4+\frac{A_5-3}{5}+\frac{A_7-3}{5}
+                          +\frac{A_5A_7-9}{5}.
+\]
+
+Put `x=A_5-3>=0`, `y=A_7-3`, so `0<=y<=8/9`. Then
+
+\[
+ F_H-M_H=x\left(\frac3{40}-\frac{y}{30}\right)
+                         +\frac{y}{30}
+       \ge\frac{49}{1080}x+\frac{y}{30}\ge0.
+\]
+
+Thus TB10 also holds in the matching case without asserting TB8
+for that law. The separate matching bound tends to `109/18`, while
+`F_H` increases to `3541/576<7`. These are upper bounds, not claims
+of exact lifted maxima.
 
 For independent auxiliary variables with finite tails
 `Pr(K_p>=a)=3^(-a)`, `1<=a<=H_p`, the complete second moment is
@@ -282,16 +357,16 @@ retains the original unequal heights. It assumes full uniform tails
 throughout; arbitrary conditional or missing tails do not satisfy
 the cylinder formulas used in TB10.
 
-## 6. Interface to actual arithmetic sources
+## 7. Interface to actual arithmetic sources
 
-The theorem's nonzero-root condition is an explicit premise. In the
-already normalized extremal model of 350 and 378, the actual 3-free
-residual avoids the present pure classes `0 mod5` and `0 mod7`.
-Report 375 supplies the separate projection bounds, and 376 supplies
-the three-by-five root-product obstruction. When those established
-model hypotheses apply, the actual root projection meets precisely
-the conditions above. No additional normalization or assumption of
-minimum-cardinality preservation is being introduced here.
+The root theorem permits zero in either coordinate. When `3,5,7`
+are support primes of a globally minimum-class-count distinct odd
+cover, report 375 supplies the one-prime projection bound at 7 and
+376 supplies the three-by-five root-product obstruction for its
+actual 3-free residual. Those root conditions
+also follow for abstract full-height sources satisfying the same
+product-tree and one-prime tree obstructions. No normalization is
+needed for the root theorem.
 
 A root law can be lifted to an actual full residual by selecting one
 actual witness above each of its supported root points. This preserves
@@ -302,23 +377,25 @@ control other primes or all original repeated-prime labels. The
 missing continuation is a bound for the complete original divisor
 layout under one law on the actual full source.
 
-## 7. Exact controls and scope of reuse
+## 8. Exact controls and scope of reuse
 
 The [standard-library checker](../../frontier/cover-geometry/two_prime_root_second_moment.py)
-checks all five template laws using all `5*7*35=1225` independent
-layouts per law, including absent residues. It compares direct
-integration of the squared load with TB4 and confirms the exact
-maxima `(4,35/9,4,4,29/8)`. It separately enumerates all 135751
-row-unordered multisets of four nonempty neighbor sets of size at
+checks the six four-row template laws and the five-point matching
+law using all `5*7*35=1225` independent layouts per law, including
+absent residues. It compares direct integration of the squared load
+with TB4 and confirms the exact maxima `(4,35/9,4,4,29/8,25/7,4)`.
+It separately enumerates all 135751 row-unordered multisets of four
+nonempty neighbor sets of size at
 most three in six columns. Of these, 83210 satisfy the conditions;
-900 are edge-minimal and lie in exactly the five displayed orbits,
-with counts `(180,120,360,180,60)`. This is an independent complete
-control of the reduced classification, not a substitute for its
-combinatorial proof. Fifteen full uniform-tail controls reconstruct
-1739 source points and 105 divisor-cylinder tables, check the exact
+900 are edge-minimal and lie in types A--E, with counts
+`(180,120,360,180,60)`. This enumeration controls the six-column
+subcase; the seven-column type F and five-row Hall cases are justified
+by the proofs above. Twenty-one full uniform-tail controls reconstruct
+2303 source points and 147 divisor-cylinder tables, check the exact
 tail scaling and the root/deeper-pair decomposition, and compare its
 bound with TB10--TB11. Exact rational checks also verify TB10's
-limiting constant and the two initial slope ratios in TB12.
+limiting constant, the matching-law envelope comparison, and the two
+initial slope ratios in TB12.
 
 ```sh
 python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_prime_root_second_moment.py
@@ -327,5 +404,5 @@ python3 -I -S -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_pr
 The lcm-square estimate uses the existing technique in Chapter 08,
 `finite_head_geometry.md` and report 389. Reports 376, 378 and 379
 provide the source obstructions and the saturated/forest probability
-constructions. The common-law bound above concerns normalized root
+constructions. The common-law bound above concerns the stated root
 sources and their specified uniform lifts.
