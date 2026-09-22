@@ -75,6 +75,10 @@ public sealed class DependencyDirectionTests
             // 本 PR 顺手还掉它(拓扑棘轮要求碰债务面即严格减债)。程序集级引用集不变。
             [
                 "../../StrataLint.Cli/StrataLint.Cli.csproj",
+                "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+                "../../TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
+                "../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+                "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
             ],
             ProjectReferences(XDocument.Load(Path.Combine(
@@ -96,6 +100,7 @@ public sealed class DependencyDirectionTests
         Assert.Equal(
             [
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
             ],
             ProjectReferences(XDocument.Load(Path.Combine(
@@ -120,6 +125,7 @@ public sealed class DependencyDirectionTests
         Assert.Equal(
             [
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
+                "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
             ],
             ProjectReferences(XDocument.Load(Path.Combine(
@@ -139,6 +145,9 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.Engine/StrataLint.Engine.csproj",
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
+                "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+                "../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+                "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
                 "../StrataLint.Tests/StrataLint.Tests.csproj",
             ],
