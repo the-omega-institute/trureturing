@@ -1,0 +1,55 @@
+**一致有界余项。** 由 (47.3)、(47.13) 中同一闭式，
+\[
+u_k(A)=c_A\lambda^k+b_A\lambda^{-k},
+\qquad b_A=\frac{A}{\lambda+1}.
+\]
+对 \(\lambda+\lambda^{-1}=A+2\) 求导，得
+\(\lambda'/\lambda=1/(\lambda-\lambda^{-1})=1/s\)。因此
+\[
+\boxed{
+\rho^ku'_k(A)
+=q^k\left(c'_A+\frac{c_A}{s}k\right)
++\left(\frac{\rho}{\lambda}\right)^k
+\left(b'_A-\frac{b_A}{s}k\right).
+}
+\tag{47.77}
+\]
+这里
+\[
+c'_A=\frac{\lambda}{\lambda+1}
++\frac{A\lambda}{s(\lambda+1)^2},
+\qquad
+b'_A=\frac1{\lambda+1}
+-\frac{A\lambda}{s(\lambda+1)^2},
+\]
+均是固定 \(A>0\) 的有限常数。令 \(\beta=\lambda^{-2}<1\)。因
+\(\rho/\lambda=q\beta\le\beta\)，从 (47.77) 抽出主项
+\((c_A/s)kq^k\) 后，余项 \(R_k(\rho)\) 满足
+\[
+\begin{aligned}
+|R_k(\rho)|
+&\le |c'_A|+|b'_A|+\frac{b_A}{s}k\beta^k\\
+&\le M_A:=
+|c'_A|+|b'_A|
++\frac{b_A}{s}\frac{\beta}{(1-\beta)^2}<\infty.
+\end{aligned}
+\tag{47.78}
+\]
+最后使用非负几何导数级数
+\(\sum_{k\ge0}k\beta^k=\beta/(1-\beta)^2\)。
+这个上界同时对所有 \(k\ge0\) 和所有 \(0<\rho<1/\lambda\) 成立；没有把仅逐 \(k\) 有效的余项误用于上确界。
+
+记
+\[
+S(\epsilon)=\sup_{k\in\mathbb N} k e^{-\epsilon k}.
+\]
+(47.78) 对每个 \(k\) 的上下两侧估计给
+\[
+\boxed{
+\left|C_\rho(A)-\frac{c_A}{s}S(\epsilon)\right|
+\le M_A.
+}
+\tag{47.79}
+\]
+这是同一索引集合上的一致有界扰动下的上确界估计，不需要假定两个上确界由相同整数 \(k\) 取得。
+

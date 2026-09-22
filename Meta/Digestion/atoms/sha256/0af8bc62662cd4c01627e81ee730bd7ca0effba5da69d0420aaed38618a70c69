@@ -1,0 +1,40 @@
+**定理 40.4（未知基准白化的实际间隔定理）。** 假设 $V_r=\mathcal R$、$d>0$。固定任意实际基准 $a\ge0$，定义以下均使用支撑上的映射：
+$$
+\begin{aligned}
+D&=B_r|_{\mathcal R}:\mathcal R\longrightarrow E_r,&
+D_a&=De^{-aC_{\mathcal R}/2},\\
+A_a&=\mathsf H_r(a)|_{E_r}=D_aD_a^*,&
+F_a&=A_a^{-1/2}D_a:\mathcal R\longrightarrow E_r.
+\end{aligned}
+\tag{40.9}
+$$
+则 $F_a$ 为正交同构。对实际经过间隔 $s\ge0$，定义
+$$
+\begin{aligned}
+W_{r,a}(s)&=A_a^{-1/2}
+ \bigl(\mathsf H_r(a+s)|_{E_r}\bigr)A_a^{-1/2},\\
+G_{r,a}&=F_aC_{\mathcal R}F_a^*>0,\qquad
+L_{r,a}(s)=-\log W_{r,a}(s).
+\end{aligned}
+\tag{40.10}
+$$
+有
+$$
+\boxed{W_{r,a}(s)=F_ae^{-sC_{\mathcal R}}F_a^*
+=e^{-sG_{r,a}},\qquad L_{r,a}(s)=sG_{r,a}.}
+\tag{40.11}
+$$
+从而对 $s\ge0,t>0$，
+$$
+\boxed{
+\frac{\operatorname{tr}L_{r,a}(s)}{\operatorname{tr}L_{r,a}(t)}=\frac{s}{t},\qquad
+\frac{\operatorname{tr}L_{r,a}(s)}{\operatorname{tr}L_{r,a}(h)}=\frac{s}{h}.}
+\tag{40.12}
+$$
+
+证明。$D$ 在 $\mathcal R$ 上单射且像为 $E_r$，故为同维双射；$e^{-aC_{\mathcal R}/2}$ 可逆，$D_a$ 亦双射。于是 $A_a\succ0$ 且 $F_aF_a^*=I_{E_r}$。两空间维数均为 $d$，余等距升级为正交同构，给 $F_a^*F_a=I_{\mathcal R}$。由（40.4）及指数相乘，$\mathsf H_r(a+s)|_{E_r}=D_ae^{-sC_{\mathcal R}}D_a^*$。代入白化并用正交函数演算得到（40.11），其中正定实对数的唯一性由恢复卷命题10.6承担。迹满足 $\operatorname{tr}G_{r,a}=\operatorname{tr}C_{\mathcal R}>0$，所以（40.12）的分母非零，约去共同斜率即得结论。$\square$
+
+$F_a$ 不必已知，它只承担证明；共同支撑和白化矩阵来自声明的精确数据。若 $h$ 有数值校准，$G_{r,a}=-h^{-1}\log W_{r,a}(h)$ 给数据正交坐标中的生成元；若仅给可重复延迟单位，仍得到 $hG_{r,a}=-\log W_{r,a}(h)$。坐标标架可随 $a$ 改变，但迹斜率不变。若在整个 $U^{r+1}$ 上表达白化，可用 $\mathsf H_r(a)^{\dagger/2}$，随后必须限制到 $E_r$；环境空间的零块没有对数。这里不要求原始 $B$ 单射，单射性由实际延迟接口供应。
+
+若 $B=0$，则 $d=0$、全部响应为零；零有效空间虽已饱和，迹比仍为 $0/0$，不提供钟。完全不可见的附加隐藏块不会进入 $G_{r,a}$ 或其迹。
+

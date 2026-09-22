@@ -1,0 +1,23 @@
+**定理 17.2（同全响应的最小实现唯一相似）。** (a) 固定实域或复域、相同输入和输出坐标，两个有限维线性时不变零初态系统 $(A,B,H)$、$(\widehat A,\widehat B,\widehat H)$ 均可达可观。若全部 Markov 参数相同，则有唯一线性同构 $S$ 满足
+$$
+SA=\widehat AS,\qquad SB=\widehat B,\qquad \widehat HS=H.
+$$
+反向这些关系也保证全部参数相同。
+
+证明与归属。主卷125.5拥有以下显式相似构造；此处用其 $J=B,O=H$，同一有限线性论证从实域到复域逐式成立。对有限和定义
+$$
+S\left(\sum_kA^kBu_k\right)=\sum_k\widehat A^k\widehat B u_k.
+$$
+若左边括号为零，则右边候选 $v$ 在每个未来 $t\ge0$ 的输出为
+$$
+\widehat H\widehat A^tv=\sum_k\widehat H\widehat A^{t+k}\widehat B u_k
+=\sum_kHA^{t+k}Bu_k=0.
+$$
+帽号可观测性使 $v=0$，所以表示之间的差为零时像差也零，映射良定且线性。原可达性使它定义在全部原状态空间，帽号可达性使它满射。交换双方同样构造反向映射，在每个 $A^kBu$ 及帽号生成元上两次复合均为恒等，可达生成元张成给双侧逆。移幂给 $SA=\widehat AS$，取零幂给 $SB=\widehat B$，用同参数取输出给 $\widehat HS=H$。任何保输入及交织的候选都必须把 $A^kBu$ 映到 $\widehat A^k\widehat Bu$，可达性给唯一。反向由幂交织和两端口式得到全部参数相同。没有推出保范数或实施费用相等。$\square$
+
+(b) 最小维数等价于可达可观，证明归主卷125.4的可达／不可观商与 Hankel 秩下界，仍取 $J=B,O=H$。具体地先限制到 $\mathcal R=\operatorname{span}\{A^kBu\}$，再商掉其中的 $\mathcal N=\{x:HA^nx=0\ \forall n\ge0\}$；两空间在 $A$ 下稳定，输入落在 $\mathcal R$，输出在 $\mathcal N$ 为零，故商系统保持全部参数。商上可达且可观：商类的全部输出零恰意味着其代表在 $\mathcal N$。若原系统不具二性质之一，这些步骤严格降低维数。
+
+Hankel 算子把有限输入组合 $(u_k)$ 送到未来输出序列 $(\sum_kK_{t+k}u_k)_{t\ge0}$，它分解为可达映射后接观测映射。任何 $d$ 维实现的 Hankel 秩至多 $d$；可达映射满射且观测映射单射时，其秩恰是状态维数，因此所有同响应实现维数不低于该值，证明最小性。`SequenceHankelRealization`、`HankelRankMinimality` 保持各自全数据接口；`CanonicalMinimalRealization` 的 Type 层可达满射不被当作线性相似。这里的零初态参数不恢复未知初态自由响应，仍需定义12.5的额外合同。
+
+(c) 零附近完整端口解析函数相同，当且仅当全部 Markov 参数相同。证明有限维 Neumann 展开在某个共同原点邻域收敛，Taylor 系数恰为 $K_n$；解析函数相同强制所有系数相同，反向共同系数在该邻域给同函数。输入输出坐标和校准必须固定，不能逐系数重选端口。$\square$
+

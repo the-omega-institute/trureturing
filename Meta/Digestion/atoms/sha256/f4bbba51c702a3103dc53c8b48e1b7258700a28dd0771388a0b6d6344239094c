@@ -1,0 +1,5 @@
+### 49.10 从实数最小截止到复数相位的最近有限来源
+
+记 $\mathcal F_{A,N}^{\mathbb F}=\{b\in K_A^{\mathbb F}:b_i=0\ (i\ge N)\}$，其中 $N\ge1$ 是前缀截止长度；它不是任意散布非零项的支持基数。取实负前缀 $b^{A,N}_i=-A\mathbf1_{i<N}$，并令
+$p_{n,k}=-\mathcal E(b^{A,N})(n,k)\ge0$。
+

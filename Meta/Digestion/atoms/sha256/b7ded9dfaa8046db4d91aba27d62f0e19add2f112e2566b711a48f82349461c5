@@ -1,0 +1,147 @@
+**定理 41.2（固定装置的最优档案恢复及显式尾界）。** 在定义41.1的访问合同下，置
+$$
+\lambda=-\alpha^2,\qquad
+\pi_0=\frac1{1+\alpha^2},\qquad
+\pi_1=\frac{\alpha^2}{1+\alpha^2},\qquad
+\tau(u)=(1-u)P_0+uP_1.
+\tag{41.5}
+$$
+对每个 $n\ge1$，条件终端记忆与其根保真度为
+$$
+\begin{gathered}
+E^n(|0\rangle\langle0|)=\tau(a_n),\qquad
+E^n(|1\rangle\langle1|)=\tau(b_n),\\
+a_n=\pi_1(1-\lambda^{n-1}),\qquad
+b_n=\pi_1+\pi_0\lambda^{n-1},\qquad a_n-b_n=-\lambda^{n-1},\\
+c_n=F(\tau(a_n),\tau(b_n)),\qquad
+c_n^2=1-\alpha^2
+ \left[\sqrt{a_n(1-b_n)}-\sqrt{b_n(1-a_n)}\right]^2.
+\end{gathered}
+\tag{41.6}
+$$
+有 $c_1=\sqrt\alpha$、$\alpha\le c_n^2<1$，且 $c_n\to1$。存在只由装置与 $n$ 决定的单个 $\mathcal D_n$，在所有 $X\in\mathcal L(M)$ 上满足
+$$
+\mathcal D_n\Gamma_n(X)
+=\begin{pmatrix}X_{00}&c_nX_{01}\\c_nX_{10}&X_{11}\end{pmatrix}
+=\frac{1+c_n}{2}X+\frac{1-c_n}{2}ZXZ,
+\qquad Z=|0\rangle\langle0|-|1\rangle\langle1|.
+\tag{41.7}
+$$
+其完整 diamond 误差恰为
+$$
+\boxed{\epsilon_n=1-c_n
+=\min_{\substack{\mathcal D:\mathcal L(H_n)\to\mathcal L(M)\\
+                         \mathcal D\ {\rm CPTP}}}
+\|\mathcal D\Gamma_n-\operatorname{id}_M\|_\diamond>0.}
+\tag{41.8}
+$$
+若实际允许通道类包含所构造的 $\mathcal D_n$，同一最优值也在该类达到；未证明受限操作能执行它时，只保留全 CPTP 类的数学最优值和对受限类的下界。对 $n\ge3$，另有
+$$
+0<\epsilon_n\le\frac{\alpha^{4n-6}}4,\qquad
+\epsilon_n\sim\frac{(1+\alpha^2)^2}{8}\alpha^{4n-4}.
+\tag{41.9}
+$$
+因此给定完整误差容限 $\eta>0$，一个充分的发射数为
+$$
+n\ge\max\left\{3,
+\left\lceil\frac32+
+\frac{\log(1/(4\eta))}{4\log(1/\alpha)}\right\rceil\right\}.
+\tag{41.10}
+$$
+
+证明。先直接应用 Q 命题131.1的记忆通道。第一步的两个条件态分别是 $P_0,P_1$，对应权重 $a_1=0,b_1=1$；由
+$$
+\tau(u)_{11}=\alpha^2(1-u),\qquad
+E(\tau(u))=\tau\bigl(\alpha^2(1-u)\bigr)
+\tag{41.11}
+$$
+知以后每步都把 $u$ 送到 $\alpha^2(1-u)$。该仿射映射的不动点为 $\pi_1$，偏差每步乘 $\lambda$；以两个初值求解即得（41.6）的 $a_n,b_n$。特别地二者始终在 $[0,1]$，差的绝对值为 $\alpha^{2n-2}>0$。
+
+在固定基中，
+$$
+\tau(u)=\begin{pmatrix}
+\alpha(1-u)+u&\alpha\sqrt\alpha(1-u)\\
+\alpha\sqrt\alpha(1-u)&\alpha^2(1-u)
+\end{pmatrix},\qquad
+\det\tau(u)=\alpha^2u(1-u).
+\tag{41.12}
+$$
+若 $s_1,s_2$ 是 $\sqrt\rho\sqrt\sigma$ 的两个奇异值，则
+$$
+F(\rho,\sigma)^2=(s_1+s_2)^2
+=\operatorname{Tr}(\rho\sigma)+2\sqrt{\det\rho\det\sigma}.
+\tag{41.13}
+$$
+这是因为 $s_1^2+s_2^2=\operatorname{Tr}(\rho\sigma)$，$s_1s_2=|\det(\sqrt\rho\sqrt\sigma)|$；零奇异值时同样成立，无需求逆。由 $\operatorname{Tr}(P_0P_1)=\alpha$ 及 $1-\alpha=\alpha^2$，
+$$
+\operatorname{Tr}(\tau(a)\tau(b))=1-\alpha^2(a+b-2ab).
+\tag{41.14}
+$$
+代入（41.12）并展开（41.13），即得（41.6）的平方根差公式。取 $a=0,b=1$ 得 $c_1^2=\alpha$。括号内两个非负数都至多一，差的平方至多一，故 $c_n^2\ge1-\alpha^2=\alpha>0$；差等于零当且仅当 $a_n(1-b_n)=b_n(1-a_n)$，也就是 $a_n=b_n$，已被排除，所以 $c_n<1$。两权重趋于 $\pi_1$，同一公式给 $c_n\to1$。
+
+现在保留实际纯化而构造同一个解码器。令
+$$
+K_n=B^{\otimes(n-1)},\qquad
+\psi_{j,n}=T_{n-1}m_j\in K_n\otimes M,\qquad
+T_n|j\rangle=|j\rangle\otimes\psi_{j,n},\qquad
+R_n=\operatorname{Tr}_M|\psi_{0,n}\rangle\langle\psi_{1,n}|.
+\tag{41.15}
+$$
+递推给上述分解；两 $\psi_{j,n}$ 均为单位向量，对 $K_n$ 取偏迹正是（41.6）的条件记忆，因而
+$$
+\|R_n\|_1=c_n.
+\tag{41.16}
+$$
+这里使用有限纯化的交叉偏迹恒等式：将 $M$ 放到左因子后，Watrous 的 Theorem 3.22、Corollary 3.23 给出记忆边缘的根保真度等于另一因子上的交叉偏迹范数；互换两向量只把交叉算子变为伴随，不改变迹范数。实际纯化已经供应所需维数，包括 $K_1=\mathbb C$ 时两个记忆态均为纯态的端点。文献中的一般恒等式保持其归属；此处只计算这两个实际条件态。[^rroctx41_fidelity]
+
+取 $R_n=V_n|R_n|$ 的极分解。有限方阵的初、终支撑同维，补空间也同维，故将部分等距延拓为 $K_n$ 上的酉，仍记 $V_n$。在 $H_n=\mathbb C^2\otimes K_n$ 上置
+$$
+U_{{\rm dec},n}=|0\rangle\langle0|\otimes I_{K_n}
+                 +|1\rangle\langle1|\otimes V_n,\qquad
+\mathcal D_n(Y)=\operatorname{Tr}_{K_n}
+                  (U_{{\rm dec},n}YU_{{\rm dec},n}^*).
+\tag{41.17}
+$$
+酉共轭后偏迹为 CPTP。在（41.15）的首位分块中，$\Gamma_n(X)$ 的 $ij$ 块为 $X_{ij}\operatorname{Tr}_M|\psi_{i,n}\rangle\langle\psi_{j,n}|$。两个对角块的迹均为一，上非对角块经过控制酉后其迹为
+$$
+\operatorname{Tr}(R_nV_n^*)
+=\operatorname{Tr}(V_n|R_n|V_n^*)
+=\operatorname{Tr}|R_n|=c_n;
+\tag{41.18}
+$$
+下非对角系数为其共轭，亦为 $c_n$。这证明了所有矩阵单位上的（41.7），再由线性性得到全算子恒等式。因此张量任意有限参考恒等通道时仍成立，不是为每个输入重新选择一次极分解。此操作是 Q 第13.2—13.3节受控极分解恢复的同一机制：其中 $S$ 对应首个输出 qubit，$F$ 对应 $K_n$，不可访问的 $B$ 对应最终活动 $M$。本节取单结果 POVM $M_{\rm POVM}=I_{K_n}$，只留常值经典输出；它不承担 Q 定理13.3要求的额外非平凡同时经典预测。
+
+两个酉通道之差的 diamond 范数至多二，而 $|+\rangle$ 在 $\operatorname{Ad}_Z$ 与恒等通道下分别成为正交的 $|-\rangle$、$|+\rangle$，故 $\|\operatorname{Ad}_Z-\operatorname{id}\|_\diamond=2$。由（41.7），完整误差为 $((1-c_n)/2)\cdot2=1-c_n$。另一方面，对任意所述类型的 CPTP 竞争者 $\mathcal D$，写 $\delta=\|\mathcal D\Gamma_n-\operatorname{id}\|_\diamond$。两个输入 $\rho_\pm=|\pm\rangle\langle\pm|$ 的距离为一，档案差为
+$$
+\Gamma_n(\rho_+)-\Gamma_n(\rho_-)
+=\begin{pmatrix}0&R_n\\R_n^*&0\end{pmatrix},\qquad
+D(\Gamma_n(\rho_+),\Gamma_n(\rho_-))=\|R_n\|_1=c_n.
+\tag{41.19}
+$$
+块矩阵的平方为 $\operatorname{diag}(R_nR_n^*,R_n^*R_n)$，所以其迹范数为 $2\|R_n\|_1$。本卷引理10.6的收缩和命题10.9的两态比较现在给
+$$
+1\le D(\rho_+,\mathcal D\Gamma_n(\rho_+))
+ +D(\mathcal D\Gamma_n(\rho_+),\mathcal D\Gamma_n(\rho_-))
+ +D(\mathcal D\Gamma_n(\rho_-),\rho_-)
+\le\delta/2+c_n+\delta/2.
+\tag{41.20}
+$$
+故 $\delta\ge1-c_n$，所构造的共同解码器达到它，证明（41.8）。该最优性针对完整未知输入类；受限合法来源类仍继承上界，却可能有更小最优误差。每个有限 $n$ 的正误差与极限趋零同时成立。
+
+最后证明尾界。权重前两次更新给 $a_3=\alpha^3,b_3=\alpha^2$。映射 $f(u)=\alpha^2(1-u)$ 递减，且
+$$
+f(\alpha^2)=\alpha^3,\qquad
+\alpha^3\le f(\alpha^3)\le\alpha^2,
+\tag{41.21}
+$$
+后一式使用 $\alpha^3\le\alpha^2$ 和 $0\le\alpha^3$。故区间 $[\alpha^3,\alpha^2]$ 不变，对所有 $n\ge3$ 两权重均在此区间。有理化平方根差及 $1-c_n$ 得
+$$
+\epsilon_n=
+\frac{\alpha^2(a_n-b_n)^2}
+ {\left[\sqrt{a_n(1-b_n)}+\sqrt{b_n(1-a_n)}\right]^2(1+c_n)}.
+\tag{41.22}
+$$
+这时 $u\ge\alpha^3$、$1-u\ge1-\alpha^2=\alpha$，所以分母方括号的每个平方根至少为 $\alpha^2$。用 $1+c_n\ge1$ 和 $(a_n-b_n)^2=\alpha^{4n-4}$ 得（41.9）的上界。又两权重趋于 $\pi_1$、$c_n\to1$，（41.22）的分母趋于 $8\pi_0\pi_1$；而 $\pi_0\pi_1=\alpha^2/(1+\alpha^2)^2$，给所述渐近等价。对 $\alpha^{4n-6}/4\le\eta$ 取对数便得（41.10）。$\square$
+
+式（41.10）是充分发射数，不是最优整数时域或门、测量、样本及计算复杂度；相干档案存储和实际取得仍是资源。发射指标不等于物理时长、半衰期或熵产生率。
+

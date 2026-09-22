@@ -1,0 +1,27 @@
+### 49.15 邻近角度在全层范数中的精确极限
+
+固定 $|\zeta|=1$，让 $\xi\ne\zeta$ 沿单位圆周的通常拓扑趋于 $\zeta$。结论是
+$$
+\boxed{
+\lim_{\substack{\xi\to\zeta\\\xi\ne\zeta}}
+\|T^\xi-T^\zeta\|_\rho=2c_A.
+}
+\tag{49.49}
+$$
+该极限是实数距离值的极限，不表示数组趋于 $T^\zeta$。
+
+先给上界。任取 $\delta>0$，选整数 $M$ 使
+$b_A\rho^{2(M-1)}<\delta$。在（49.38）中，所有 $m\ge M$ 项均至多为 $2(c_A+\delta)$。有限多个 $1\le m<M$ 项则因 $\xi\to\zeta$ 一致趋零。因此距离上极限至多为 $2(c_A+\delta)$；令 $\delta\downarrow0$，得到至多 $2c_A$。
+
+再给下界。在 $\zeta$ 附近唯一写
+$\xi/\zeta=e^{i\theta}$，其中 $0<|\theta|<\pi$、$\theta\to0$。取
+$m_\theta=\lfloor\pi/|\theta|\rfloor$。则 $m_\theta\to\infty$，并且
+$$
+\bigl|m_\theta|\theta|-\pi\bigr|<|\theta|,
+\qquad
+|e^{im_\theta\theta}-1|\longrightarrow2.
+$$
+代入（49.38）的这一项，其权重趋于 $c_A$，故距离下极限至少为 $2c_A$。与上界合并即证。
+
+任意有限分次的相位差都趋零，见证距离的分次 $m_\theta$ 却随角差缩小而逃向无穷。这给出了“每个有限读数接近，但全层完成几何仍分离”的同源实例。它与（49.45）的径向距离 $c_A$ 不冲突：两式采用不同的实际来源路径，并未声称存在与接近方向无关的统一跳跃常数。实数两相位域中没有这种非平凡的邻近角度极限。
+
