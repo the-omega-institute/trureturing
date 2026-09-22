@@ -299,3 +299,80 @@ reports 395 and 390. The new conclusion is their strengthened local
 functional construction and its height-two assembly under three
 actual robust roots. It does not resolve the unrestricted height
 bridge or Erdős #7.
+
+
+## 7. The fixed terminal-law recipe does not extend unchanged to every height
+
+The same terminal choices, uniformly mixed over a ternary prefix tree,
+need not give the analogous target at arbitrary five height. This is
+a failure of that prescribed law, not of free source-law existence.
+Let
+
+\[
+ t_H=\sum_{j=0}^H\frac{2j+1}{3^j},\qquad H\ge2,\qquad h=H-1.
+\]
+
+Take prefix leaves in `{1,2,3} times {0,1,2}^{h-1}`, each with mass
+`3^{-h}`. At each leaf except `f`, use the uniform nine-point terminal
+law on children `{0,1,2}` and seven columns `{0,1,2}`. At `f` use
+the section-3 transposed-A law with columns relabelled as follows:
+
+| `(child,column)` | `(0,1)` | `(1,2)` | `(2,2)` | `(0,3)` | `(1,3)` | `(2,3)` | `(3,0)` | `(4,0)` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Mass times 36 | 6 | 3 | 3 | 4 | 4 | 4 | 6 | 6 |
+
+Every terminal support still meets every three-by-five rectangle.
+Let `e=(1,0,...,0)` and let `f` be its sibling obtained by replacing
+the last prefix digit by one. For `H=2`, use `e=(1)` and `f=(2)`.
+Initially center every original divisor label `5^j` and `7*5^j`,
+`0<=j<=H`, at `e`'s child zero and seven column zero. With all
+terminal laws uniform nine-point, the price is `2t_H`: the five
+prefix load has second moment `t_H`, and the independent column
+factor has second moment two.
+
+Move only the deepest mixed label to `f`'s child three and column
+zero. Under the original uniform terminal law this new point is
+absent. Removing the old hit loses
+
+\[
+ (4H+3)3^{-(H+1)},
+\]
+
+since its mass is `3^{-(H+1)}` and its other-label load is `2H+1`.
+Now change only the terminal law at `f` to the displayed A transpose.
+Without the moved label its load there is
+`(H-1)(1+1_{y=0})`. Both terminal laws give column zero mass `1/3`,
+so that part of the second moment is unchanged. The new marked
+atom has total mass `1/(6*3^{H-1})` and other-label load `2H-2`.
+Thus the final literal layout has price
+
+\[
+ \boxed{\quad
+ \mathbb E L^2=2t_H+
+       \frac{4H-15}{18\cdot3^{H-1}}.
+ \quad}
+\]
+
+This is greater than `2t_H` for every `H>=4`. At `H=4` the law has
+242 positive-mass points and the original `(residue,modulus)` list is
+
+\[
+ (0,1),(1,5),(1,25),(1,125),(1,625),
+ (0,7),(21,35),(126,175),(126,875),(4151,4375).
+\]
+
+Its price is `2845/486=2t_4+1/486`. These are distinct odd original
+divisor labels, with the unit label serving the constant-load term.
+The support uses four seven columns. If a standalone five-column
+source projection is also required, add an actual source point in
+column four and give it zero probability. This preserves the product
+tree tests and the same failed law; it does not exclude other laws
+on the enlarged source.
+
+[`fixed_terminal_law_height_boundary.py`](../../frontier/cover-geometry/fixed_terminal_law_height_boundary.py)
+checks the normalization, terminal rectangle tests, original CRT
+phases and each separate contribution above exactly at heights two
+through seven. The general-height formula follows from the preceding
+calculation. The height-two theorem of this report is unchanged;
+extension requires a law accounting for the inherited load, or a
+stronger joint estimate.
