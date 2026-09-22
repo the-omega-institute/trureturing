@@ -8,10 +8,12 @@
 
 import D5.S3.AnalyticClosure.BinomialMovingEndpoint
 import D5.S3.AnalyticClosure.BinomialLocalGaussian
+import D5.S0.Diagonal.MarginBound
 import Mathlib.Algebra.Order.Floor.Semiring
 
 open Filter Real Finset
 open scoped Topology
+open D5.S0.Diagonal.MarginBound (bernoulliKL)
 open D5.S3.AnalyticClosure.BinomialLocalGaussian
 
 namespace D5.S3.AnalyticClosure.BinomialMaximumLocalization
@@ -178,13 +180,13 @@ theorem separated_prefix_bound (a : ℝ) (ha : 0 < a) (l : ℕ)
         exact mul_nonneg (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hx0 _))
           (pow_nonneg (sub_nonneg.mpr hx1) _)
       · exact mem_range.mpr (Nat.lt_succ_of_le hi)
-    have hid : log (binomialMass q m i) = log (binomialMass x m i) - m * binaryKL x q := by
+    have hid : log (binomialMass q m i) = log (binomialMass x m i) - m * bernoulliKL x q := by
       by_cases hi0 : i = 0
       · subst i
-        simp [x, binomialMass, binaryKL, log_pow]
+        simp [x, binomialMass, bernoulliKL, log_pow]
       by_cases him : i = m
       · subst i
-        simp [x, hm.ne', binomialMass, binaryKL, log_pow]
+        simp [x, hm.ne', binomialMass, bernoulliKL, log_pow]
       have hiR : (0 : ℝ) < i := by exact_mod_cast Nat.pos_of_ne_zero hi0
       have hxp : 0 < x := div_pos hiR hmR
       have hxn : 0 < 1 - x :=
@@ -196,7 +198,7 @@ theorem separated_prefix_bound (a : ℝ) (ha : 0 < a) (l : ℕ)
         log_mul hc.ne' (pow_pos hq _).ne',
         log_mul (mul_pos hc (pow_pos hxp _)).ne' (pow_pos hxn _).ne',
         log_mul hc.ne' (pow_pos hxp _).ne', log_pow,
-        binaryKL, log_div hxp.ne' hq.ne', log_div hxn.ne' hnp.ne']
+        bernoulliKL, log_div hxp.ne' hq.ne', log_div hxn.ne' hnp.ne']
       rw [Nat.cast_sub hi]
       dsimp [x]
       field_simp
@@ -211,7 +213,7 @@ theorem separated_prefix_bound (a : ℝ) (ha : 0 < a) (l : ℕ)
         sub_pos.mpr ((div_lt_one hmR).2 (by exact_mod_cast lt_of_le_of_ne hi him))
       exact mul_pos (mul_pos (by exact_mod_cast Nat.choose_pos hi) (pow_pos hxp _))
         (pow_pos hxn _)
-    have hlogle : log (binomialMass q m i) ≤ -m * binaryKL x q := by
+    have hlogle : log (binomialMass q m i) ≤ -m * bernoulliKL x q := by
       rw [hid]
       have := log_nonpos hxmass.le hle
       linarith
@@ -219,7 +221,7 @@ theorem separated_prefix_bound (a : ℝ) (ha : 0 < a) (l : ℕ)
       (fun h => (hq.ne' h).elim) (fun h => ((sub_pos.mpr hq1).ne' h).elim)
     apply (log_le_iff_le_exp hmass).mp
     have := mul_le_mul_of_nonneg_left hpin hmR.le
-    dsimp [binaryKL] at hlogle
+    dsimp [bernoulliKL] at hlogle
     nlinarith
   let c := min (ε ^ 2 / 2) (ε * log (1 + a) / 2)
   have hterm (i : ℕ) (hi : i ≤ r) :

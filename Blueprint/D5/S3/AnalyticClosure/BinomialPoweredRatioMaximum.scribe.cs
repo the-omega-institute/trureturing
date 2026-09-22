@@ -29,9 +29,7 @@ internal sealed class BinomialPoweredRatioMaximumDocument : IScribeDocumentDefin
                     "D5/S3/AnalyticClosure/BinomialPoweredRatioMaximum.maximum_asymptotic"),
                 H("Exact maximum asymptotic for every positive natural power"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source,
-                    LibraryNoteRef.Create("D5/L/Analytic/abel2013binomial"),
-                    LibraryNoteRef.Create("D5/L/Analytic/ouimet2020precise")),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text(
                         "For every fixed positive real a and positive natural l, the "
@@ -42,7 +40,14 @@ internal sealed class BinomialPoweredRatioMaximumDocument : IScribeDocumentDefin
                         + "The real exponent (l-2)/2 includes l=1 without "
                         + "natural-number subtraction. The expression is the target "
                         + "specified in Conjecture 1.1(d) for the sequence "
-                        + "(1.4) of the source.")),
+                        + "(1.4) of the source. This attribution identifies the "
+                        + "published conjecture statement; the source does not "
+                        + "prove the full parameter range.")),
+                    Paragraph(Text("The classical complete weighted power-sum "
+                        + "normalization is supplied by Abel, Gawronski and Neuschel: "),
+                        Ref("D5/L/Analytic/abel2013binomial"),
+                        Text("; the classical local Gaussian estimate is supplied by Ouimet: "),
+                        Ref("D5/L/Analytic/ouimet2020precise"), Text(".")),
                     Paragraph(Text(
                         "The proof uses a floor comparison, localization of actual "
                         + "ratio maximizers, the moving-endpoint geometric factor, "
@@ -55,7 +60,12 @@ internal sealed class BinomialPoweredRatioMaximumDocument : IScribeDocumentDefin
                         + "new discovery. Clauses (a)-(c) of the source conjecture "
                         + "are outside this theorem. The source and eligibility "
                         + "boundaries are recorded in "
-                        + "Problems/glasby-paseman-powered-ratio-maximum.md; "
-                        + "no typed resolution claim is made here."))),
-                DescribeRole.Theorem))));
+                        + "Problems/glasby-paseman-powered-ratio-maximum.md. "
+                        + "The resolution binding concerns the full clause (d) "
+                        + "for each fixed a and l; it asserts no uniformity "
+                        + "when those parameters vary."))),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("glasby-paseman-powered-ratio-maximum"),
+                    ResolutionKind.Proved)))));
 }

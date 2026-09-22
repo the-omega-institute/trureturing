@@ -8,6 +8,7 @@
 
 import Mathlib.Analysis.SpecialFunctions.Stirling
 import D5.S3.TotalVariation.Pinsker
+import D5.S0.Diagonal.MarginBound
 import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Data.Nat.Choose.Cast
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -18,14 +19,12 @@ import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 
 open Filter Real Finset MeasureTheory intervalIntegral
 open scoped Topology
+open D5.S0.Diagonal.MarginBound (bernoulliKL)
 
 namespace D5.S3.AnalyticClosure.BinomialLocalGaussian
 
 noncomputable def binomialMass (p : ℝ) (n i : ℕ) : ℝ :=
   (n.choose i : ℝ) * p ^ i * (1 - p) ^ (n - i)
-
-noncomputable def binaryKL (x p : ℝ) : ℝ :=
-  x * log (x / p) + (1 - x) * log ((1 - x) / (1 - p))
 
 /-- For every fixed Bernoulli parameter strictly between zero and one, the Gaussian
 approximation has relative error tending uniformly to zero on the entire window
@@ -47,12 +46,12 @@ theorem local_gaussian_window (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
       Tendsto (fun a => log (binomialMass p (n a) (k a)) +
         (1 / 2 : ℝ) * log (2 * π * n a * ((k a : ℝ) / n a) *
           (1 - (k a : ℝ) / n a)) +
-        n a * binaryKL ((k a : ℝ) / n a) p) f (𝓝 0) := by
+        n a * bernoulliKL ((k a : ℝ) / n a) p) f (𝓝 0) := by
     have log_mass_identity (p : ℝ) (hp : 0 < p) (hp1 : p < 1) (n i : ℕ)
         (hi : 0 < i) (hin : i < n) :
         log (binomialMass p n i) +
           (1 / 2 : ℝ) * log (2 * π * n * ((i : ℝ) / n) * (1 - (i : ℝ) / n)) +
-          n * binaryKL ((i : ℝ) / n) p =
+          n * bernoulliKL ((i : ℝ) / n) p =
         log (Stirling.stirlingSeq n) - log (Stirling.stirlingSeq i) -
           log (Stirling.stirlingSeq (n - i)) + (1 / 2 : ℝ) * log π := by
       have hn : 0 < n := hi.trans hin
@@ -75,7 +74,7 @@ theorem local_gaussian_window (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
         log_mul hc.ne' (pow_pos hp _).ne', log_pow, log_pow,
         Nat.cast_choose ℝ hin.le, log_div hnfac.ne' (mul_pos hifac hjfac).ne',
         log_mul hifac.ne' hjfac.ne']
-      rw [binaryKL, log_div hx.ne' hp.ne', log_div hxn.ne' hnp.ne',
+      rw [bernoulliKL, log_div hx.ne' hp.ne', log_div hxn.ne' hnp.ne',
         log_mul (by positivity : 2 * π * (n : ℝ) * ((i : ℝ) / n) ≠ 0) hxn.ne',
         log_mul (by positivity : 2 * π * (n : ℝ) ≠ 0) hx.ne',
         log_mul (by positivity : 2 * π ≠ 0) hnR.ne',
@@ -130,7 +129,7 @@ theorem local_gaussian_window (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
       (hu : Tendsto u f (𝓝 0))
       (hc : Tendsto (fun a => (n a : ℝ) * |u a| ^ 3) f (𝓝 0)) :
       Tendsto (fun a => (n a : ℝ) *
-        (binaryKL (p + u a) p - (u a) ^ 2 / (2 * p * (1 - p)))) f (𝓝 0) := by
+        (bernoulliKL (p + u a) p - (u a) ^ 2 / (2 * p * (1 - p)))) f (𝓝 0) := by
     have hscaled (c : ℝ) (hc0 : c ≠ 0) (v : α → ℝ)
         (hv : Tendsto v f (𝓝 0))
         (hcv : Tendsto (fun a => (n a : ℝ) * |v a| ^ 3) f (𝓝 0)) :
@@ -187,7 +186,7 @@ theorem local_gaussian_window (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
       have h₂ : (1 - (p + u a)) / (1 - p) = 1 + -u a / (1 - p) := by
         field_simp [(sub_pos.mpr hp1).ne']
         <;> ring
-      dsimp only [binaryKL]
+      dsimp only [bernoulliKL]
       rw [h₁, h₂]
       field_simp [hp.ne', (sub_pos.mpr hp1).ne']
       ring
@@ -206,7 +205,7 @@ theorem local_gaussian_window (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
     have hs := moving_interior_stirling p p hp hp1 hp hp1 n k hn hx
     have he := kl_cubic_error p hp hp1 n u hu hc
     have hkl : Tendsto (fun a => (n a : ℝ) *
-        (binaryKL (x a) p - (u a) ^ 2 / (2 * p * (1 - p)))) f (𝓝 0) := by
+        (bernoulliKL (x a) p - (u a) ^ 2 / (2 * p * (1 - p)))) f (𝓝 0) := by
       simpa [u] using he
     have hratio : Tendsto (fun a => p * (1 - p) / (x a * (1 - x a))) f (𝓝 1) := by
       have hprod := hx.mul ((tendsto_const_nhds (x := (1 : ℝ))).sub hx)
@@ -244,8 +243,8 @@ theorem local_gaussian_window (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
     have halg :
         (log (binomialMass p (n a) (k a)) +
           (1 / 2 : ℝ) * log (2 * π * n a * x a * (1 - x a)) +
-          n a * binaryKL (x a) p -
-          n a * (binaryKL (x a) p - (u a) ^ 2 / (2 * p * (1 - p)))) +
+          n a * bernoulliKL (x a) p -
+          n a * (bernoulliKL (x a) p - (u a) ^ 2 / (2 * p * (1 - p)))) +
           (1 / 2 : ℝ) * log (p * (1 - p) / (x a * (1 - x a))) =
         log (binomialMass p (n a) (k a)) +
           log (sqrt (2 * π * n a * p * (1 - p))) +
@@ -340,13 +339,13 @@ theorem binomial_power_tail (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
         exact mul_nonneg (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hx0 _))
           (pow_nonneg (sub_nonneg.mpr hx1) _)
       · exact mem_range.mpr (Nat.lt_succ_of_le hi)
-    have hid : log (binomialMass p n i) = log (binomialMass x n i) - n * binaryKL x p := by
+    have hid : log (binomialMass p n i) = log (binomialMass x n i) - n * bernoulliKL x p := by
       by_cases hi0 : i = 0
       · subst i
-        simp [x, binomialMass, binaryKL, log_pow]
+        simp [x, binomialMass, bernoulliKL, log_pow]
       by_cases hin : i = n
       · subst i
-        simp [x, hn.ne', binomialMass, binaryKL, log_pow]
+        simp [x, hn.ne', binomialMass, bernoulliKL, log_pow]
       have hiR : (0 : ℝ) < i := by exact_mod_cast Nat.pos_of_ne_zero hi0
       have hxp : 0 < x := div_pos hiR hnR
       have hxn : 0 < 1 - x := sub_pos.mpr ((div_lt_one hnR).2 (by exact_mod_cast lt_of_le_of_ne hi hin))
@@ -357,7 +356,7 @@ theorem binomial_power_tail (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
         log_mul hc.ne' (pow_pos hp _).ne',
         log_mul (mul_pos hc (pow_pos hxp _)).ne' (pow_pos hxn _).ne',
         log_mul hc.ne' (pow_pos hxp _).ne', log_pow,
-        binaryKL, log_div hxp.ne' hp.ne', log_div hxn.ne' hnp.ne']
+        bernoulliKL, log_div hxp.ne' hp.ne', log_div hxn.ne' hnp.ne']
       rw [Nat.cast_sub hi]
       dsimp [x]
       field_simp
@@ -370,7 +369,7 @@ theorem binomial_power_tail (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
       have hxp : 0 < x := div_pos (by exact_mod_cast Nat.pos_of_ne_zero hi0) hnR
       have hxn : 0 < 1 - x := sub_pos.mpr ((div_lt_one hnR).2 (by exact_mod_cast lt_of_le_of_ne hi hin))
       exact mul_pos (mul_pos (by exact_mod_cast Nat.choose_pos hi) (pow_pos hxp _)) (pow_pos hxn _)
-    have hlogle : log (binomialMass p n i) ≤ -n * binaryKL x p := by
+    have hlogle : log (binomialMass p n i) ≤ -n * bernoulliKL x p := by
       rw [hid]
       have := log_nonpos hxmass.le hle
       linarith
@@ -378,7 +377,7 @@ theorem binomial_power_tail (p : ℝ) (hp : 0 < p) (hp1 : p < 1)
       (fun h => (hp.ne' h).elim) (fun h => ((sub_pos.mpr hp1).ne' h).elim)
     have hexp : log (binomialMass p n i) ≤ -2 * n * (x - p) ^ 2 := by
       have := mul_le_mul_of_nonneg_left hpin hnR.le
-      dsimp [binaryKL] at hlogle
+      dsimp [bernoulliKL] at hlogle
       nlinarith
     exact (log_le_iff_le_exp hmass).mp hexp
   have hlR : (0 : ℝ) < l := by exact_mod_cast hl

@@ -26,8 +26,9 @@ internal sealed class BinomialPowerNormalizationDocument : IScribeDocumentDefini
                     "For l>=2 this is the classical weighted complete-sum estimate "
                     + "of Theorem 3.1 under r=l-1 and z=a^l, with p=a/(1+a). "
                     + "The case l=1 is exact by the binomial theorem. The local "
-                    + "Gaussian source also gives the l=2,3 cases in equations "
-                    + "(3.12)-(3.13): "), Ref("D5/L/Analytic/ouimet2020precise"),
+                    + "Gaussian source also gives the l=2,3 cases on PDF page 5, "
+                    + "equations (3.6)-(3.7) of arXiv:2001.08512v4: "),
+                    Ref("D5/L/Analytic/ouimet2020precise"),
                     Text(". These denominator estimates do not settle the maximum "
                     + "of the truncated ratio."))),
             DescribeRole.Theorem))));

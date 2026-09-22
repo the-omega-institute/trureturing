@@ -66,5 +66,6 @@ For fixed a>0 and positive natural l, any r(m)<=m maximizing prefixValue over ev
 - Truth anchor: `D5/S3/AnalyticClosure/BinomialMaximumLocalization.maximizer_slope_and_endpoint`
 - Truth anchor: `D5/S3/AnalyticClosure/BinomialMaximumLocalization.prefixValue`
 - Truth anchor: `D5/S3/AnalyticClosure/BinomialMaximumLocalization.separated_prefix_bound`
+- Dependency: [D5/S0/Diagonal/MarginBound](../../S0/Diagonal/MarginBound.md)
 - Dependency: [D5/S3/AnalyticClosure/BinomialLocalGaussian](BinomialLocalGaussian.md)
 - Dependency: [D5/S3/AnalyticClosure/BinomialMovingEndpoint](BinomialMovingEndpoint.md)

@@ -21,17 +21,9 @@ internal sealed class BinomialLocalGaussianDocument : IScribeDocumentDefinition
                     "binomialMass(p,n,i) = choose(n,i) p^i (1-p)^(n-i). "
                     + "The probability interpretation used here requires 0<p<1 and 0<=i<=n."))),
                 DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("binary-relative-entropy"),
-                DeclarationHandle.Create("D5/S3/AnalyticClosure/BinomialLocalGaussian.binaryKL"),
-                H("Binary relative entropy expression"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "binaryKL(x,p) = x log(x/p) + (1-x) log((1-x)/(1-p)). "
-                    + "It is the entropy expression used in the Stirling expansion; "
-                    + "this definition carries no claim of mathematical novelty."))),
-                DescribeRole.Definition),
+            Paragraph(Text("The Stirling expansion directly reuses the already-frozen "
+                + "Bernoulli relative entropy definition "),
+                Ref("D5/S0/Diagonal/MarginBound.bernoulliKL"), Text(".")),
             Describe.Lean(
                 DescribeId.Create("relative-gaussian-growing-window"),
                 DeclarationHandle.Create("D5/S3/AnalyticClosure/BinomialLocalGaussian.local_gaussian_window"),

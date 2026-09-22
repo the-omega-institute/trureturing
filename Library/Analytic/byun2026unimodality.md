@@ -57,8 +57,6 @@ parameter range. Its slope localization does not establish (c).
   Conjecture 1.1(d), footnote 1, and Theorem 1.2(c).
 - Registration and bounded source audit:
   https://github.com/the-omega-institute/trureturing/issues/9357
-- Candidate implementation:
-  https://github.com/the-omega-institute/trureturing/pull/9399
 
 The source audit supplied with #9357 reports that the arXiv abstract still
 listed v1 on 2026-09-21 at 21:46 UTC. The versioned abstract and pages 1–3
