@@ -72,7 +72,10 @@ internal sealed class IndecomposablePermutationDoubleArrayDocument
                     + "both borders with the actual count. All auxiliary identities remain "
                     + "local to this theorem.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a003319-kurkov-double-array"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string id,

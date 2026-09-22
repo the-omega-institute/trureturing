@@ -60,6 +60,10 @@ Lean statement: `D5/S1/Recurrence/Algebraic/IndecomposablePermutationDoubleArray
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/IndecomposablePermutationDoubleArray.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a003319-kurkov-double-array` (proved) by `D5/S1/Recurrence/Algebraic/IndecomposablePermutationDoubleArray.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a003319-kurkov-double-array","declaration_gid":"D5/S1/Recurrence/Algebraic/IndecomposablePermutationDoubleArray.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mikhail Kurkov (2024). *OEIS A003319 and Kurkov's A370380/A370381 double-array conjecture*. URL: <https://oeis.org/A003319>.
