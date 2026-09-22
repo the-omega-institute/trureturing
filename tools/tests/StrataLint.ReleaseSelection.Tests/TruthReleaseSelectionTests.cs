@@ -14,7 +14,7 @@ public sealed class TruthReleaseSelectionTests
         var (exit, text) = Select(Artifact(22, 2));
         Assert.Equal(0, exit);
         using var result = JsonDocument.Parse(text);
-        Assert.True(result.RootElement.GetProperty("publish_ready").GetBoolean());
+        Assert.False(result.RootElement.GetProperty("publish_ready").GetBoolean());
         Assert.Equal(22, result.RootElement.GetProperty("run_id").GetInt64());
         Assert.Equal(2, result.RootElement.GetProperty("run_attempt").GetInt32());
         Assert.Equal("ci-current-22-2", result.RootElement.GetProperty("artifact_name").GetString());
