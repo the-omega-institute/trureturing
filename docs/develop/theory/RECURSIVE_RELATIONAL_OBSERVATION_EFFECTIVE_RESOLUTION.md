@@ -8165,3 +8165,722 @@ Perron 代入保留第 4.7.1 节根律：$d=k$、$p_r=\lambda_k^{-(r+1)}$、$\su
 本章给出普通数学证明与可复现有限证书，不主张原创性或新增 Lean 核验。任意临界日程的完整分类、任意实名的精确最优选择、一般最优位复杂度、一般非一致正过程分类及未经证明的表示运输仍未解决。没有引入后续 cofinal、LIL、carry 或 congruence 研究，也没有推出物理空间/时间/频率/熵产生的身份、E7、RH、有限覆盖或逻辑独立性结论。几乎必然有限停止、有限平均长度、有效概率截止、实际公告完成以及无限点的有限正认证各自保持原含义。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 7. 余终分辨率的完整运输：相容线程、精确策略像与等待成本
+
+保留一条无界分辨率子列，可以无损表达原来的相容线程。对一个已经指定的前缀停止策略，把每个停止词展开成下一保留深度的全部后代，也能逐点保留停止事件。但只运输每层允许的码字数量，通常会放宽合法策略集合；恢复指定的原策略需要保留祖先切口，实际延迟等待又有独立的成本。本节在同一组对象上依次证明这些关系，给出精确策略像、有限判定算法、有效恢复条件及全概率律下的可积等待判据。
+
+### 7.1 相容线程的无损抽层
+
+设集合构成逆系统 $X_0\leftarrow X_1\leftarrow\cdots$，复合投影记为 $\pi_{m,n}:X_m\to X_n$，其中 $m\ge n$，并满足 $\pi_{n,n}=\mathrm{id}$ 及 $\pi_{k,n}=\pi_{m,n}\pi_{k,m}$。取严格递增、无界的整数列
+$$
+S=\{0=n_0<n_1<n_2<\cdots\}.
+$$
+令 $\mathcal L=\varprojlim_nX_n$、$\mathcal L_S=\varprojlim_jX_{n_j}$，后者的投影继承自原逆系统。
+
+一般极限同构采用 `CategoryTheory.Functor.Initial.limitIso`。具体地，令逆索引范畴 $D$ 的箭头为 $m\to n\iff m\ge n$，保留层索引范畴 $C$ 也取反向整数序，$i:C\to D$ 给 $i(j)=n_j$，图表 $H$ 给 $H(n)=X_n$、$H(m\to n)=\pi_{m,n}$。对每个 $n$，`CostructuredArrow(i,n)` 是不低于 $n$ 的保留层构成的非空尾；任意两层都有共同更高层向它们映射，所以该范畴连通，$i$ 是 initial。在集合范畴中极限存在，既有接口给 $\lim(H\circ i)\cong\lim H$。该接口定义为 `asIso (limit.pre H i)` 的逆，故它的逆方向正是下面的限制映射。
+
+**命题 7.1（既有余终极限同构的坐标适配）。** 限制映射
+$$
+R:\mathcal L\longrightarrow\mathcal L_S,\qquad R(x)_j=x_{n_j}
+\tag{RST.1}
+$$
+是双射，其逆映射为
+$$
+R^{-1}(y)_n=\pi_{n_j,n}(y_j),\qquad n_j\ge n.
+\tag{RST.2}
+$$
+
+证明。无界性保证可选到 $n_j\ge n$。若 $n_k\ge n_j\ge n$，则选中线程的相容性给
+$$
+\pi_{n_k,n}(y_k)
+=\pi_{n_j,n}\bigl(\pi_{n_k,n_j}(y_k)\bigr)
+=\pi_{n_j,n}(y_j).
+$$
+故恢复的坐标不依赖所选高层。对任意原层 $m\ge n$，使用同一个不低于 $m$ 的选中层计算，两坐标满足原投影关系。限制后恢复 $y$，而完整线程限制后再恢复也逐坐标等于原线程。因此两映射互逆。这给出既有同构在相容坐标上的两向公式，不要求层集合有限、投影满射或逆极限非空。$\square$
+
+若各层是拓扑空间、投影连续，逆极限取产品空间的子空间拓扑，则 $R$ 为同胚。限制映射的每个坐标连续；逆映射的第 $n$ 个坐标是某个选中坐标投影后接连续映射 $\pi_{n_j,n}$，也连续。不需要紧性或 Hausdorff 条件。
+
+若各层及投影有统一有效呈示，$j\mapsto n_j$ 全可计算，而且投影统一可计算，则对已经提供的坐标查询名字，$R$ 与 $R^{-1}$ 都可计算。恢复第 $n$ 层时搜索首个 $n_j\ge n$，再调用对应投影；搜索由无界性终止。这里转换的是已给线程的名字，不是从逆系统中构造一个新线程或选择一个点，也没有承诺读取时间、查询长度或计算复杂度界。
+
+### 7.2 完整前缀接口与停止事件的精确运输
+
+固定有限字母表 $A$，$|A|=d\ge2$，路径空间为 $\Omega=A^{\mathbb N}$。$A^*$ 包括空词 $\epsilon$，$A^+=A^*\setminus\{\epsilon\}$。对有限词 $w$，$|w|$ 是其长度，$[w]$ 是以 $w$ 为前缀的柱集；$w\preceq v$ 表示前缀关系。自然过滤 $\mathcal F_n$ 是由完整长度 $n$ 前缀生成的原始过滤，不作依概率律的零集完备化。于是 $\mathcal F_n$ 的原子恰为长度 $n$ 柱集。
+
+停止码 $F\subseteq A^+$ 前缀自由，允许可数无限。记
+$$
+U_F=\bigcup_{w\in F}[w],\qquad c_n(F)=|F\cap A^n|.
+$$
+空词被排除，故每个停止深度落在唯一的正层段 $(n_{j-1},n_j]$。定义
+$$
+m_S(n)=\min\{n_j:n_j\ge n\}\qquad(n\ge1),
+\tag{RST.3}
+$$
+并将每个旧词展开成目标深度上的全部后代：
+$$
+D_S(F)=\bigcup_{w\in F}wA^{m_S(|w|)-|w|}.
+\tag{RST.4}
+$$
+这里保留全部后缀选择，不能只给每个旧词补一个固定后缀。
+
+**命题 7.2（完整后代展开）。** $D_S(F)$ 前缀自由，每个新词有唯一的旧码字祖先，且
+$$
+U_{D_S(F)}=U_F.
+\tag{RST.5}
+$$
+在保留深度 $n_j$，其数量精确为
+$$
+c_{n_j}(D_S(F))
+=\sum_{n_{j-1}<n\le n_j}c_n(F)d^{n_j-n};
+\tag{RST.6}
+$$
+其他深度的数量为零。
+
+证明。不同旧码字不可比较，所以任何分别延伸它们的新词也不可比较。同一旧码字产生的新词等长，彼此不同也无前缀关系。因此新码前缀自由，每个新词的旧祖先唯一。对每个 $w\in F$，有有限不交分解
+$$
+[w]=\bigsqcup_{v\in A^{m_S(|w|)-|w|}}[wv].
+\tag{RST.7}
+$$
+对旧词取并得到式 (RST.5)。目标深度是 $n_j$ 的祖先恰有 $n_{j-1}<|w|\le n_j$；每个长度 $n$ 祖先给出 $d^{n_j-n}$ 个不同新词。唯一祖先排除了重复计数，得到式 (RST.6)。$\square$
+
+因此对 $\Omega$ 上任意同一 Borel 概率律 $\mu$，
+$$
+\mu(U_{D_S(F)})=\mu(U_F),\qquad
+\mu(\Omega\setminus U_{D_S(F)})=\mu(\Omega\setminus U_F).
+\tag{RST.8}
+$$
+这不要求 iid、Markov 性、平稳性、正柱质量、正转移概率或绝对连续性。两边是同一事件；若同时换路径坐标，须推前同一个概率律。
+
+均匀产品律下，每个长度 $n$ 柱质量为 $d^{-n}$；前缀自由码的柱集两两不交，故其质量和不超过一。结合精确计数得到
+$$
+\begin{aligned}
+\sum_{j\ge1}c_{n_j}(D_S(F))d^{-n_j}
+&=\sum_{j\ge1}\sum_{n_{j-1}<n\le n_j}c_n(F)d^{-n}\\
+&=\sum_{n\ge1}c_n(F)d^{-n}\le1.
+\end{aligned}
+\tag{RST.9}
+$$
+所有项非负，重排无需预先假定可和。
+
+保留第 $n_j$ 层，在这里指保留完整长度 $n_j$ 前缀。若只读取第 $n_j$ 个字符，就换了接口。例如 $F=\{0\}$ 延迟到深度二后，事件仍为首位零；路径 $000\cdots$ 与 $100\cdots$ 在所有正偶数位置的字符都相同，停止事件的真值却不同。即使知道全部孤立偶数位，也不能判定该事件。逆系统的相容投影与完整前缀过滤保留了被跳过层的字符，这项条件贯穿后续全部停止运输。
+
+### 7.3 数量预算的运输只给出可行集包络
+
+令 $b_n$ 为有限非负整数，$\mathcal C_b$ 是满足 $c_n(F)\le b_n$ 的所有前缀自由码。定义保留层预算
+$$
+\beta_j=\sum_{n_{j-1}<n\le n_j}b_nd^{n_j-n}.
+\tag{RST.10}
+$$
+$\beta_j$ 约束的是原始深度 $n_j$，不是深度 $j$。每段有限，所以每个 $\beta_j$ 也是有限整数。令 $\mathcal C_{S,\beta}$ 为只在保留深度停止且满足相应数量界的前缀自由码，则式 (RST.6) 给
+$$
+D_S(\mathcal C_b)\subseteq\mathcal C_{S,\beta}.
+\tag{RST.11}
+$$
+同时有非负项的重排恒等式
+$$
+\sum_{j\ge1}\beta_jd^{-n_j}=\sum_{n\ge1}b_nd^{-n}.
+\tag{RST.12}
+$$
+两边允许无穷。预算是上界，不要求所有名额可以同时兑现；某层预算也可大于当层实际可用节点数。
+
+真实展开保留了同一祖先的全部后代必须成束出现的条件。只保留 $\beta_j$，会允许名额在该深度重新分配，所以式 (RST.11) 不保证为等号。对同一概率律定义
+$$
+M_b(\mu)=\sup_{F\in\mathcal C_b}\mu(U_F),\qquad
+M_{S,\beta}(\mu)=\sup_{G\in\mathcal C_{S,\beta}}\mu(U_G).
+$$
+逐码事件相等与像包含仅给出
+$$
+M_b(\mu)\le M_{S,\beta}(\mu).
+\tag{RST.13}
+$$
+若右边只对真实像 $D_S(\mathcal C_b)$ 取上确界，才精确等于 $M_b(\mu)$。
+
+### 7.4 均匀最优值及两个有限反例
+
+**命题 7.3（均匀饱和定理的保留容量适配）。** 对均匀 $d$ 元产品律 $\lambda$，令 $K=\sum_{n\ge1}b_nd^{-n}$，允许 $K=\infty$。则
+$$
+M_b(\lambda)=\min\{1,K\}=M_{S,\beta}(\lambda).
+\tag{RST.14}
+$$
+这些最优值可由允许可数无限的合法码取得。
+
+证明。推论 6.1.3已经证明任意非负整数预算下的均匀饱和公式及可数码取到性。其原预算取 $b$；保留策略则在原始深度上取
+$$
+\widetilde b_n=\begin{cases}\beta_j,&n=n_j,\\0,&n\notin S.\end{cases}
+$$
+于是 $\mathcal C_{\widetilde b}=\mathcal C_{S,\beta}$，式 (RST.12) 使两者在该定理中的总预算质量均为 $K$，得到式 (RST.14)。为明确这个适配的整数容量和取到性，沿用该节的构造：Kraft 不等式与逐层预算给上界；按深度递增构造码。若此前累计停止质量为 $p_{n-1}$，尚未被旧码覆盖的长度 $n$ 节点有整数 $d^n(1-p_{n-1})$ 个。在固定字序下取其中与 $b_n$ 两者较小的数量。若某层填满剩余树，累计质量已经为一；若一直未填满，则每层都取满 $b_n$，最终质量为 $K\le1$。当 $K>1$ 或 $K=\infty$ 时，后一情形不可能；当 $K=1$ 时，可以在无限极限中才达到一。若 $K=0$，空码取到零；$K=1$ 的无穷取到包括上述未在有限层填满的情形。预算大于可用节点数时只取剩余节点，因而无需假定 $b_n\le d^n$。对 $\widetilde b$，非保留层取零个节点，保留层正按 $\beta_j$ 取节点；这就是同一构造的保留层适配。$\square$
+
+相同的最优概率不说明策略族相同，更不说明旧停止长度相同。非均匀源甚至可以严格改变最优值。
+
+**反例 7.1（包络提高非均匀容量）。** 取二元 iid 律 $p(0)=9/10$、$p(1)=1/10$，仅有 $b_1=1$ 非零。原最优码 $\{0\}$ 给
+$$
+M_b(p)=\frac9{10}.
+\tag{RST.15}
+$$
+保留深度 $n_j=3j$，则仅 $\beta_1=4$ 非零。真实展开为 $\{000,001,010,011\}$，质量仍为 $9/10$。长度三词的质量按含一数量排列如下：
+
+| 含一数量 | 词数 | 单词质量 |
+|---:|---:|---:|
+| 0 | 1 | $729/1000$ |
+| 1 | 3 | $81/1000$ |
+| 2 | 3 | $9/1000$ |
+| 3 | 1 | $1/1000$ |
+
+包络允许选择四个最重词 $G=\{000,001,010,100\}$，所以精确有
+$$
+M_{S,\beta}(p)=\frac{729+3\cdot81}{1000}
+=\frac{243}{250}>\frac9{10},\qquad
+\frac{243}{250}-\frac9{10}=\frac9{125}.
+\tag{RST.16}
+$$
+任何长度一单词的完整三层后代束都具有相同首位，$G$ 不满足这一条件，故不是真实像。两预算的 Kraft 总量却同为
+$$
+1\cdot2^{-1}=4\cdot2^{-3}=\frac12.
+\tag{RST.17}
+$$
+改变最优值的是策略约束放宽，并非同一事件的概率发生变化。
+
+**反例 7.2（重新套用原数值规则降低容量）。** 在均匀二元源中，只许深度一取一个词时最优值为 $1/2$；改为只许深度二取一个词时为 $1/4$。旧词准确展开需要两个深度二后代，质量才仍为 $1/2$。无损抽去观察层与重新指定停止预算是不同操作。
+
+### 7.5 精确策略像是受深度容量约束的树切口
+
+给定仅在 $S$ 的正深度停止的前缀自由码 $G$。对第 $j$ 段令 $l=n_{j-1}$、$r=n_j$、$G_j=G\cap A^r$，定义可用祖先集合
+$$
+\mathcal B_j=\{w\in A^*:l<|w|\le r,\quad
+wA^{r-|w|}\subseteq G_j\}.
+\tag{RST.18}
+$$
+每个可用祖先必须具有完整后代束。
+
+**命题 7.4（精确像判据）。** 存在 $F\in\mathcal C_b$ 使 $G=D_S(F)$，当且仅当每段都有 $x_w\in\{0,1\}$，$w\in\mathcal B_j$，满足
+$$
+\sum_{\substack{w\in\mathcal B_j\\w\preceq g}}x_w=1
+\quad(g\in G_j),\qquad
+\sum_{\substack{w\in\mathcal B_j\\|w|=n}}x_w\le b_n
+\quad(l<n\le r).
+\tag{RST.19}
+$$
+
+证明。若 $G=D_S(F)$，本段的原码字均属于 $\mathcal B_j$。取它们的指标作为 $x_w$。每个展开叶有唯一旧祖先，所以叶子方程为一；原码预算给第二组不等式。
+
+反向取 $F_j=\{w\in\mathcal B_j:x_w=1\}$。若两个不同的所选祖先可比较，较深者至少有一个长度 $r$ 后代，完整性使该后代属于 $G_j$，且位于两个所选祖先下方，违反叶子方程。故 $F_j$ 前缀自由。叶子方程保证覆盖 $G_j$ 的每个叶子；可用祖先定义排除覆盖 $G_j$ 以外的叶子，因此
+$$
+\bigcup_{w\in F_j}wA^{r-|w|}=G_j.
+$$
+跨段也不产生前缀冲突。设早段目标深度为 $r$，晚段所选词为 $v$。晚段词的长度大于其前段边界，故大于 $r$。若早段所选祖先 $w$ 是 $v$ 的前缀，则 $v|_r$ 位于 $w$ 的完整后代束中，属于 $G$。晚段 $v$ 的任一展开叶也属于 $G$ 且延伸 $v|_r$，违反 $G$ 前缀自由。反方向的前缀关系由长度排除。因此 $F=\bigcup_jF_j$ 为前缀自由码，每个深度的预算由其唯一所属段保证，且 $D_S(F)=G$。
+
+每段问题有限，可在固定字序及固定子集顺序下选择第一份可行切口，以此定义全局 $F$，无需另设任意无限选择数据。若 $G_j=\varnothing$，则 $\mathcal B_j=\varnothing$，本段唯一切口为空；深度 $r$ 的叶子允许入选，深度 $l$ 的节点不允许入选。$\square$
+
+这个判据也可理解为完整兄弟叶的收缩：只允许收缩到严格深于 $l$ 的祖先，并须使最终切口满足原逐深度预算。可行切口不能自动选成最短祖先。
+
+**反例 7.3（最短切口不保证合法）。** 取 $l=0$、$r=3$、$G_j=\{000,001,010,011\}$，仅 $b_2=2$ 非零。切口 $\{00,01\}$ 合法；把它再合为 $\{0\}$ 则违反 $b_1=0$。表示长度更短与原预算合法是两个判据。
+
+### 7.6 有限段的精确动态规划及可计算合法原像
+
+对 $|v|\le r$，记 $E_v=\{g\in G_j:v\preceq g\}$。用变量 $z_{l+1},\ldots,z_r$ 定义生成多项式 $P_v$，指数记录切口中每个深度的祖先数，系数记录具有该计数的不同切口数。
+
+若 $E_v=\varnothing$，置 $P_v=1$，表示唯一空切口。若 $|v|=r$ 且 $v\in G_j$，置 $P_v=z_r$。其余非空内部节点满足
+$$
+P_v=\prod_{a\in A}P_{va}
++\begin{cases}
+z_{|v|},&l<|v|<r\text{ 且 }E_v=vA^{r-|v|},\\
+0,&\text{其他情况}.
+\end{cases}
+\tag{RST.20}
+$$
+
+**命题 7.5（精确计数与容量截断）。** 根多项式 $P_\epsilon$ 中单项式 $\prod_{n=l+1}^rz_n^{c_n}$ 的系数，是该段完整切口中具有深度计数 $(c_n)$ 的切口数量。存在满足原预算的切口，当且仅当其中有正系数单项式满足 $c_n\le b_n$。
+
+证明。对节点高度归纳。空子树只有空切口，所以是常数一而非零；非空目标叶只能选自身。内部节点若不选自身，各子树中切口的选择彼此独立，其并为唯一的整体切口；反向整体切口在各子树上的限制也唯一，故用乘积精确计数。选自身仅在节点深于 $l$ 且后代完整时合法，形成额外单项式，并与所有下分选择互斥。不同切口即使给出同一计数向量，仍由系数累加。根及深度 $l$ 的节点不可选，所以没有越过本段边界的收缩。归纳得到结论。$\square$
+
+运算时可立即删除任一指数超过预算的单项式。相乘只会增加非负指数，相加的系数也非负，没有抵消；被删除项不可能再对容量内项贡献。因此逐步截断不仅保留可行性，也保留所有容量内单项式的精确系数。每张截断表的指数向量数量至多
+$$
+\prod_{n=l+1}^r(b_n+1).
+\tag{RST.21}
+$$
+若直接访问从根到深度 $r$ 的整棵 $d$ 元树，节点数为 $\sum_{i=0}^r d^i$，确定 $G_j$ 需 $d^r$ 次叶成员查询；计数系数也须用足够位数的整数保存。式 (RST.21) 不控制这些系数位数、树节点总量、多项式乘法代价或压缩输入长度。算法有限有效，不据此声称二进制输入下的多项式时间复杂度。
+
+假设有效给定字母表、计算 $j\mapsto n_j$ 与 $n\mapsto b_n$ 的总程序、$G$ 的总成员决定器，并承诺 $S$ 严格递增无界、$G$ 全局前缀自由且仅含正保留层词、每段都可行。对每段运行此动态规划，按固定顺序选取可行根项，并以固定顺序回溯得到切口 $F_j$。这给一份可计算合法原码：对输入非空词 $w$，先求唯一的
+$$
+n_{j-1}<|w|\le n_j,
+\tag{RST.22}
+$$
+再用决定器查完长度 $n_j$ 的全部有限词，形成 $G_j$，读取本段有限预算并求出所选切口，判断 $w\in F_j$。空词直接拒绝。每个输入只需要有限一段，承诺使回溯能成功；无需先完成其他无穷多段。命题 7.4 保证逐段结果共同构成全局合法码。
+
+若只给可枚举的 $G$，尚未出现的有限叶子不能被当成不存在，上述决定算法不再由同一输入合同保证。这不证明每种特殊可枚举输入都不可能选取原像，也不把“指定旧码不可恢复”误解成“某个合法原像不可选择”。
+
+
+例如反例 7.3 的目标叶给出
+$$
+P_\epsilon=z_1+(z_2+z_3^2)^2
+=z_1+z_2^2+2z_2z_3^2+z_3^4.
+$$
+系数二对应分别在左、右两个深度二子树中选择下分的两份切口。容量 $(b_1,b_2,b_3)=(0,2,0)$ 截断后只剩 $z_2^2$，其唯一切口为 $\{00,01\}$。
+
+下面的独立 Python 3 程序用整数系数字典实现式 (RST.20)，在每次乘法及节点选取时执行容量截断。回溯先取字典序最小的根指数，再依字母顺序分配子树指数；在节点自身与下分具有同一指数时优先选自身。后缀乘积表保证每步只选择仍可完成的分配，因而返回一份确定的合法切口。代码中的空元组表示空词或空切口，`None` 表示不可行，二者不混用。
+
+实验输入遍历二元树 $1\le r\le3$、三元树 $1\le r\le2$，每个 $0\le l<r$ 和每个深度 $r$ 叶集。独立的 `all_cuts` 先枚举全部反链，再按实际后代像和深度向量分组；它不调用生成多项式递推。无截断时取容量 $d^n$，再对所有分量在 $\{0,1,2\}$ 中的容量向量比较精确系数及回溯结果。这些有限范围用于重现数据；任意深度和无限码的结论依赖前述归纳与逐段证明。
+
+```python
+from collections import defaultdict
+from itertools import product
+
+
+def words(d, n):
+    return tuple(product(range(d), repeat=n))
+
+
+def prefix(u, v):
+    return v[:len(u)] == u
+
+
+def cut_table(d, left, right, leaves, caps):
+    """Exact coefficients and a canonical cut; None means infeasible."""
+    assert d >= 2 and 0 <= left < right
+    assert len(caps) == right - left
+    assert all(isinstance(b, int) and b >= 0 for b in caps)
+    leaves = frozenset(leaves)
+    assert leaves <= set(words(d, right))
+    zero = (0,) * len(caps)
+    tables, full = {}, {}
+
+    def add(x, y):
+        return tuple(a + b for a, b in zip(x, y))
+
+    def allowed(x):
+        return all(a <= b for a, b in zip(x, caps))
+
+    def unit(n):
+        return tuple(int(i == n) for i in range(left + 1, right + 1))
+
+    def multiply(p, q):
+        out = defaultdict(int)
+        for x, a in p.items():
+            for y, b in q.items():
+                z = add(x, y)
+                if allowed(z):
+                    out[z] += a * b
+        return dict(out)
+
+    def visit(v):
+        n = len(v)
+        if n == right:
+            full[v] = v in leaves
+            p = {unit(n): 1} if full[v] and allowed(unit(n)) else {}
+            if not full[v]:
+                p = {zero: 1}
+        else:
+            kids = [v + (a,) for a in range(d)]
+            for child in kids:
+                visit(child)
+            full[v] = all(full[child] for child in kids)
+            p = {zero: 1}
+            for child in kids:
+                p = multiply(p, tables[child])
+            if left < n and full[v] and allowed(unit(n)):
+                u = unit(n)
+                p[u] = p.get(u, 0) + 1
+        tables[v] = p
+
+    def recover(v, target):
+        n = len(v)
+        if target == zero:
+            return ()
+        if left < n and full[v] and target == unit(n):
+            return (v,)
+        kids = [v + (a,) for a in range(d)]
+        suffix = [None] * (d + 1)
+        suffix[d] = {zero: 1}
+        for i in range(d - 1, -1, -1):
+            suffix[i] = multiply(tables[kids[i]], suffix[i + 1])
+        chosen, remaining = [], target
+        for i, child in enumerate(kids):
+            for x in sorted(tables[child]):
+                rest = tuple(a - b for a, b in zip(remaining, x))
+                if all(a >= 0 for a in rest) and rest in suffix[i + 1]:
+                    chosen.extend(recover(child, x))
+                    remaining = rest
+                    break
+            else:
+                raise AssertionError("positive coefficient has no decomposition")
+        assert remaining == zero
+        return tuple(sorted(chosen))
+
+    visit(())
+    root = tables[()]
+    witness = recover((), min(root)) if root else None
+    return root, witness
+
+
+def all_cuts(d, left, right, v=()):
+    """Independent enumeration of antichains, including the empty one."""
+    if len(v) == right:
+        return [(), (v,)]
+    families = [all_cuts(d, left, right, v + (a,)) for a in range(d)]
+    result = [sum(parts, ()) for parts in product(*families)]
+    if len(v) > left:
+        result.append((v,))
+    return result
+
+
+def image(cut, d, right):
+    return frozenset(v + tail for v in cut
+                     for tail in words(d, right - len(v)))
+
+
+def counts(cut, left, right):
+    return tuple(sum(len(v) == n for v in cut)
+                 for n in range(left + 1, right + 1))
+
+
+if __name__ == "__main__":
+    blocks = cap_cases = antichains = maximum = 0
+    for d, last in ((2, 3), (3, 2)):
+        for right in range(1, last + 1):
+            universe = words(d, right)
+            for left in range(right):
+                oracle = defaultdict(lambda: defaultdict(int))
+                for cut in all_cuts(d, left, right):
+                    oracle[image(cut, d, right)][counts(cut, left, right)] += 1
+                    antichains += 1
+                for bits in product((0, 1), repeat=len(universe)):
+                    leaves = frozenset(w for w, bit in zip(universe, bits) if bit)
+                    expected = dict(oracle[leaves])
+                    natural = tuple(d**n for n in range(left + 1, right + 1))
+                    table, witness = cut_table(d, left, right, leaves, natural)
+                    assert table == expected
+                    assert witness is not None and image(witness, d, right) == leaves
+                    maximum = max(maximum, max(table.values(), default=0))
+                    blocks += 1
+                    for caps in product(range(3), repeat=right - left):
+                        wanted = {k: v for k, v in expected.items()
+                                  if all(a <= b for a, b in zip(k, caps))}
+                        table, witness = cut_table(d, left, right, leaves, caps)
+                        assert table == wanted
+                        assert (witness is not None) == bool(wanted)
+                        if witness is not None:
+                            assert image(witness, d, right) == leaves
+                            assert counts(witness, left, right) in wanted
+                        cap_cases += 1
+    print("blocks, cap_cases, antichains, max_coefficient =",
+          (blocks, cap_cases, antichains, maximum))
+    leaves = {(0, 0, 0), (0, 0, 1), (0, 1, 0), (0, 1, 1)}
+    print("example =", cut_table(2, 0, 3, leaves, (0, 2, 0)))
+```
+
+该输入域的整数结果为：
+
+```text
+blocks, cap_cases, antichains, max_coefficient = (1836, 16356, 2851, 6)
+example = ({(0, 2, 0): 1}, ((0, 0), (0, 1)))
+```
+
+其中 `blocks` 计不同 $(d,l,r,G_j)$，`cap_cases` 计容量组合，`antichains` 计各 $(d,l,r)$ 的反链总数，`max_coefficient` 为这些无截断表中的最大系数。程序输入是已完整给出的有限叶集，调用者仍须负责原无限码和层列的上述合同；显式树规模、整数运算、内存及递归深度均是实际资源限制。
+
+### 7.7 祖先标记、原适应性与指定策略的恢复
+
+精确像判据可以选择一个合法原像；要恢复此前实际选定的那一个原像，还须携带相应切口。对仅在保留深度停止的前缀自由码 $G$，给祖先映射 $a:G\to A^+$，要求 $a(g)\preceq g$、$|g|=m_S(|a(g)|)$，并令 $F=a(G)$ 满足
+$$
+\begin{gathered}
+F\text{ 前缀自由},\qquad |F\cap A^n|\le b_n,\\
+\{g\in G:a(g)=w\}=wA^{m_S(|w|)-|w|}\qquad(w\in F).
+\end{gathered}
+\tag{RST.23}
+$$
+
+**命题 7.6（有标记策略等价）。** $F\in\mathcal C_b$ 与满足式 (RST.23) 的 $(G,a)$ 一一对应。正向为完整展开及唯一旧祖先标记，反向为 $F=a(G)$。
+
+证明。命题 7.2 给出正向合法性及祖先唯一性。反向逐祖先取式 (RST.23) 的完整标记纤维之并，得到 $G=D_S(F)$。$F$ 前缀自由，故每个 $g$ 只有一个 $F$ 祖先，重建的祖先映射就是原 $a$。正反组合分别恢复 $F$ 和整个 $(G,a)$。空码对应空码及唯一空映射。$\square$
+
+祖先无需重复存成完整词：给定 $g$，保留深度 $\ell(g)=|a(g)|$ 就足以恢复 $a(g)=g|_{\ell(g)}$。这里证明的是深度标记充分，没有证明其在比特数、压缩长度或任何编码模型中最小。
+
+将标记延拓为路径函数
+$$
+L(x)=\begin{cases}
+\ell(g),&x\in[g],\ g\in G,\\
+\infty,&x\notin U_G.
+\end{cases}
+\tag{RST.24}
+$$
+前缀自由性使定义唯一。对任意停止码 $H$，记 $\tau_H$ 为命中唯一 $H$ 前缀的深度，未命中时取 $\infty$。式 (RST.23) 等价于以下路径条件：$L$ 是原始完整前缀过滤的停止时间；每个 $\{L=n\}$ 是至多 $b_n$ 个长度 $n$ 柱集的并；对 $g\in G_j$，在 $[g]$ 上恒有 $n_{j-1}<L\le n_j$；且 $L=\infty$ 恰在 $\Omega\setminus U_G$。
+
+证明。合法完整祖先束对应原停止码，给出的 $L$ 正是其停止深度，以上条件立即成立。反向，原停止适应性给 $\{L=n\}=\{L\le n\}\setminus\{L\le n-1\}\in\mathcal F_n$。原始过滤的有限原子恰为全部长度 $n$ 柱集，故对每个 $n$ 选出构成 $\{L=n\}$ 的长度 $n$ 柱集，令它们的词组成 $F\cap A^n$。这些事件两两不交；若不同所选词可比较，其柱集会相交，矛盾。因此 $F$ 前缀自由，且计数满足预算。
+
+若 $w\in F$、$|w|=n$，令 $r=m_S(n)$。任意延伸 $w$ 的路径都满足 $L=n<\infty$，所以落在某个 $G$ 柱中；该柱所属段的范围条件迫使其长度恰为 $r$。因此 $w$ 的每个长度 $r$ 后代均在 $G$，且标记均为 $n$。反向，每个 $g\in G_j$ 的任一路径具有同一有限标记 $n=\ell(g)$，相应长度 $n$ 前缀必在所构造的 $F$ 中。于是标记纤维恰是完整后代束，并且逐路径有
+$$
+m_S(L)=\tau_G,
+\tag{RST.25}
+$$
+其中 $m_S(\infty)=\infty$，$\tau_G$ 是 $G$ 的停止深度。$\square$
+
+例如取偶数保留层及 $G=\{00,01\}$，在 $00$ 上给数字一、在 $01$ 上给数字二，域外取无穷。两数字都落在合法层段 $(0,2]$，且都能在深度二读到，但 $\{L=1\}=[00]\notin\mathcal F_1$：长度一原子 $[0]$ 的一部分被赋一，另一部分被赋二。因此这些晚到数字不是原停止深度，深度一的完整祖先束也被割裂。
+
+原适应性实际承担了完整束条件。只在延迟读取时得到某个数字，若没有上述原始过滤下的停止时间条件，不能将其当成合法旧策略。采用原始过滤也使这里的结论是全路径相等，不是忽略零概率柱后的几乎处处替代。
+
+### 7.8 恢复旧记录成本不消除真实等待
+
+给定任意非负原终止词成本 $k:A^+\to[0,\infty]$。在延迟词 $g$ 上计 $k(g|_{\ell(g)})$，则停止路径上的旧记录成本逐点恢复；未停止路径两边采用同一个另行指定的非负可测成本函数 $h:\Omega\setminus U_F\to[0,\infty]$。对任何共同概率律，
+$$
+\sum_{g\in G}\mu([g])k(g|_{\ell(g)})
+=\sum_{w\in F}\mu([w])k(w).
+\tag{RST.26}
+$$
+这里非负扩实乘积按积分惯例理解，特别约定 $0\cdot\infty=0$，即零质量柱对非负成本积分的贡献为零。加上两边相同的 $\int_{\Omega\setminus U_F}h\,d\mu$，便得到完整路径成本的期望恒等式。
+
+证明。对每个 $w\in F$，完整标记纤维将 $[w]$ 有限不交地分成延迟柱，各柱上都计同一成本 $k(w)$。先在这个有限束上积分，再对所有原词取非负和，得到式 (RST.26)。不需要 iid、正柱质量或预先可积性。更直接地，两侧恢复的路径成本函数相同，因而其分布及非负期望相同。$\square$
+
+若成本还依赖原停止词未确定的其他状态，须另行保留该状态；上式没有自动涵盖这类信息。实际读取或等待成本仍为 $|g|$，不是标记深度 $\ell(g)$。
+
+**反例 7.4（遗忘标记丢失旧策略及成本）。** 保留偶数深度。$F_1=\{0\}$ 与 $F_2=\{00,01\}$ 都展开成 $G=\{00,01\}$。若预算同时允许 $b_1\ge1$、$b_2\ge2$，两者都合法。在同一公平源下，未停止成本取零，旧有限停止字长成本分别为
+$$
+\sum_{w\in F_1}|w|\lambda([w])=\frac12,\qquad
+\sum_{w\in F_2}|w|\lambda([w])=1.
+\tag{RST.27}
+$$
+这里计的是有限停止字长、未停止取零的成本；若把未停止时间定义为无穷，则两个 $\mathbb E\tau_{F_i}$ 都为无穷，不能用它们代替式 (RST.27)。条件于停止事件 $[0]$，两份旧时间分别恒为一和二。故没有仅依赖无标记 $G$ 的规则能恢复每一个被遗忘原像的旧成本；这不排除第 7.6 节算法选择某个合法原像。
+
+### 7.9 延迟停止、过滤与精确尾和
+
+令 $\tau_F(x)$ 为路径命中 $F$ 的深度，未命中时为 $\infty$。前缀自由性保证有限命中词唯一。逐路径有
+$$
+\tau_{D_S(F)}=m_S(\tau_F).
+\tag{RST.28}
+$$
+证明。命中旧词 $w$ 的路径在深度 $m_S(|w|)$ 命中其完整后代束。若更早命中其他新束，将给出另一个 $F$ 前缀，与前缀自由性矛盾。未命中旧码的路径也不在任一新柱中。$\square$
+
+令 $\mathcal G_j=\mathcal F_{n_j}$，并定义
+$$
+J_F=\min\{j\ge1:\tau_F\le n_j\},
+\qquad J_F=\infty\text{ 若该集合为空}.
+\tag{RST.29}
+$$
+因为 $\{J_F\le j\}=\{\tau_F\le n_j\}\in\mathcal G_j$，$J_F$ 是选层过滤的停止时间。若在原始整数时钟上保持最近完整记录，令 $s(n)=\max(S\cap[0,n])$、$\mathcal H_n=\mathcal F_{s(n)}$，则
+$$
+\{m_S(\tau_F)\le n\}=\{\tau_F\le s(n)\}\in\mathcal H_n.
+$$
+所以延迟时间同时适应这个保持过滤和原过滤；没有在未观察的时刻读取将来的字符。按原始步数计费的延迟为 $n_{J_F}$，无穷索引对应无穷延迟。保留深度上的尾分布满足
+$$
+\Pr\{\tau_{D_S(F)}>n_j\}=\Pr\{\tau_F>n_j\},
+\tag{RST.30}
+$$
+因为 $m_S(t)>n_j$ 等价于 $t>n_j$，包括 $t=\infty$。
+
+逐路径的非负指示分解为
+$$
+\begin{aligned}
+\tau_F&=\sum_{n\ge0}\mathbf1_{\{\tau_F>n\}},\\
+m_S(\tau_F)&=\sum_{j\ge1}(n_j-n_{j-1})\mathbf1_{\{\tau_F>n_{j-1}\}},\\
+J_F&=\sum_{j\ge1}\mathbf1_{\{\tau_F>n_{j-1}\}}.
+\end{aligned}
+$$
+有限停止时分别是计数与望远镜和；无限停止时无界层列使三式均为无穷。由 Tonelli 得
+$$
+\begin{aligned}
+\mathbb E\tau_F&=\sum_{n\ge0}\Pr(\tau_F>n),\\
+\mathbb E\tau_{D_S(F)}
+&=\sum_{j\ge1}(n_j-n_{j-1})\Pr(\tau_F>n_{j-1}),\\
+\mathbb E J_F&=\sum_{j\ge1}\Pr(\tau_F>n_{j-1}).
+\end{aligned}
+\tag{RST.31}
+$$
+这些都是非负扩实恒等式，没有有限均值前提。阶段数与原始等待长度是两个成本单位。
+
+若每段间距 $n_j-n_{j-1}\le g$，其中有限整数 $g\ge1$，则
+$$
+\tau_F\le\tau_{D_S(F)}\le\tau_F+g-1.
+\tag{RST.32}
+$$
+若有 $C\ge1$ 使 $n_j\le C(n_{j-1}+1)$，则
+$$
+\tau_F\le\tau_{D_S(F)}\le C\tau_F.
+\tag{RST.33}
+$$
+证明。在有限命中所在段内，$n_{j-1}+1\le\tau_F\le n_j$。于是 $n_j-\tau_F\le n_j-n_{j-1}-1\le g-1$，且 $n_j\le C(n_{j-1}+1)\le C\tau_F$。下界来自向上取层；无穷路径以扩实约定处理。积分后得到对应期望界。恒等层列 $n_j=j$ 给逐路径完全相等；对任意层列，若原码仅在保留层停止，也有 $m_S(\tau_F)=\tau_F$。$\square$
+
+### 7.10 对全部概率律保留可积等待的精确条件
+
+定义
+$$
+C_S=\sup_{j\ge1}\frac{n_j}{n_{j-1}+1}
+=\sup_{n\ge1}\frac{m_S(n)}n.
+\tag{RST.34}
+$$
+等号成立，因为在每段内 $m_S(n)=n_j$，比值随正整数 $n$ 递减，在 $n=n_{j-1}+1$ 取得本段最大值。
+
+**命题 7.7（全律可积性判据）。** 以下三个条件等价：$C_S<\infty$；$m_S(n)=O(n)$；对每个概率空间及其上每个正整数值随机变量 $T$，都有
+$$
+\mathbb ET<\infty\quad\Longrightarrow\quad
+\mathbb E m_S(T)<\infty.
+\tag{RST.35}
+$$
+
+证明。有限 $C_S$ 给全局线性上界，也给式 (RST.35)。反过来，一个最终成立的 $O(n)$ 上界可以吸收有限多个初始比值，所以与 $C_S<\infty$ 等价。
+
+若 $C_S=\infty$，任意有限前缀上的比值仍有限，因此可递归选出严格递增 $t_k\ge2$，满足 $m_S(t_k)/t_k\ge k^3$。令
+$$
+\Pr(T=t_k)=\frac1{4k^2t_k},\qquad
+\Pr(T=1)=1-\sum_{k\ge1}\frac1{4k^2t_k}.
+\tag{RST.36}
+$$
+这是合法概率分布：对 $k\ge2$ 有 $k^{-2}\le1/(k(k-1))=1/(k-1)-1/k$，故望远镜和给 $\sum_{k\ge1}k^{-2}\le2$，故所分配总质量至多 $\frac18\sum k^{-2}\le1/4$。由此
+$$
+\mathbb ET\le1+\frac14\sum_{k\ge1}\frac1{k^2}<\infty,\qquad
+\mathbb E m_S(T)\ge\sum_{k\ge1}\frac{k}{4}=\infty.
+\tag{RST.37}
+$$
+式 (RST.35) 因而失败，完成必要性。$\square$
+
+该反例也可在同一前缀停止模型中实现。选两个字母 $0,1$，固定首次零码 $F=\{1^{n-1}0:n\ge1\}$；把式 (RST.36) 的质量放在路径 $1^{t_k-1}00\cdots$ 上，其余质量放在 $000\cdots$。这是同一条路径空间上的原子 Borel 律，首次零时间恰具有 $T$ 的分布。这个码在每个正深度恰有一个词，故例如 $b_n\ge1$ 对全部 $n$ 成立的策略类容纳该见证。因此允许这个策略及全部共同 Borel 律时，必要性已经在前缀模型内成立。
+
+这项必要性的量词是全部正整数随机变量，或允许容纳上述首次零码的前缀策略及全部共同律；它不是某个固定 iid 律的分类，也没有证明对任意预先给定的苛刻预算都必要。例如，只准在一个有限深度 $N$ 停止时，有限 $\mathbb E\tau_F$ 迫使几乎处处停在 $N$，延迟期望就是有限数 $m_S(N)$，对任意余终层列均成立。全零预算只容纳空码，$\tau_F=\infty$，有限均值前提从不成立，故该蕴含真值是空泛的。这两类预算均不提供上述必要性见证。充分性 $m_S(T)\le C_ST$ 则适用于任何预算允许的策略。
+
+对固定源与固定策略，可积性由式 (RST.31) 的加权尾和是否有限精确决定。“层间距无界”本身不强迫每个策略延迟均值无限；若策略本就只在保留层停止，则 $m_S(\tau_F)=\tau_F$。
+
+### 7.11 可计算抽层将有限均值变成无限均值
+
+**反例 7.5（同事件、可判定码、不同等待可积性）。** 在公平二元源下，取首次零码 $F=\{1^{n-1}0:n\ge1\}$。它满足
+$$
+\Pr(\tau_F=n)=2^{-n}\ (n\ge1),\qquad
+\Pr(\tau_F>n)=2^{-n}\ (n\ge0),\qquad
+\mathbb E\tau_F=2.
+\tag{RST.38}
+$$
+停止在 $n$ 要求前 $n-1$ 位都是一、第 $n$ 位是零，所以概率为 $2^{-n}$；超过 $n$ 只要求前 $n$ 位都是一，所以尾概率也为 $2^{-n}$。式 (RST.31) 给 $\mathbb E\tau_F=\sum_{n\ge0}2^{-n}=2$。停止事件恰为除全一串以外的全部路径，而全一串质量为 $\lim_n2^{-n}=0$，因而该事件满测。令
+$$
+n_0=0,\qquad n_j=2^{n_{j-1}},
+\tag{RST.39}
+$$
+每一步整数幂运算终止，所以层列可计算。对 $n=0$ 有 $2^n>n$；对 $n\ge1$，$2^1>1$，且 $2^{n+1}=2\cdot2^n>2n\ge n+1$，归纳给 $2^n>n$。因而各步严格增加，且整数列满足 $n_j\ge j$，从而无界，前几层为 $0,1,2,4,16,65536,\ldots$。按停止块求和，延迟时间 $\tau'=m_S(\tau_F)$ 满足
+$$
+\begin{aligned}
+\mathbb E\tau'
+&=\sum_{j\ge1}n_j\Pr(n_{j-1}<\tau_F\le n_j)\\
+&=\sum_{j\ge1}n_j(2^{-n_{j-1}}-2^{-n_j})\\
+&=\sum_{j\ge1}(1-n_j2^{-n_j})=\infty.
+\end{aligned}
+\tag{RST.40}
+$$
+对所有整数 $n\ge1$，$2^{n-1}\ge n$ 的初值 $n=1$ 是等号；若它在 $n$ 成立，则 $2^n\ge2n\ge n+1$，所以归纳成立。因此 $n2^{-n}\le1/2$，式 (RST.40) 每项至少为 $1/2$，前 $m$ 项至少为 $m/2$。这是对无限级数的下界证明。
+
+该层新码字数量及质量还可由精确计数直接得到：
+$$
+\sum_{n=n_{j-1}+1}^{n_j}2^{n_j-n}
+=2^{n_j-n_{j-1}}-1,\qquad
+\lambda(\tau'=n_j)=2^{-n_{j-1}}-2^{-n_j}.
+\tag{RST.41}
+$$
+层质量求和望远镜消去为一。因此新旧事件逐点相同，新旧 Kraft 和也都为一。前四个停止块的等待贡献依次为 $1/2,1/2,3/4,4095/4096$，累计 $11263/4096$；第五项为 $1-2^{-65520}$。令 $a_j=2^{-n_j}$，尾和截断与停止块截断分别为
+$$
+Q_m=\sum_{j=1}^m(n_j-n_{j-1})a_{j-1},\qquad
+B_m=\sum_{j=1}^mn_j(a_{j-1}-a_j).
+$$
+相减得 $Q_m-B_m=\sum_{j=1}^m(n_ja_j-n_{j-1}a_{j-1})=n_ma_m$，因为 $n_0=0$。故精确有 $Q_m-B_m=n_m2^{-n_m}>0$，有限截断不能混作同一数。例如第四段尾和为 $11/4$，比上述累计多 $1/4096$。
+
+另一方面，严格递增整数层列满足 $n_j\ge j$，所以 $J_F\le\tau_F$，从而 $\mathbb EJ_F\le2$。无限的是原始等待步数的均值，不是观察阶段数的均值。原码可判定，层列可计算，第 7.12 节的算法还保证延迟码可判定，所以发散不依赖不可计算的成员判定。
+
+### 7.12 可枚举、可判定及在线执行的不同接口
+
+以下有效性结论都要求有效给定字母表、保留层列，以及所用的统一程序；不是仅对每个单独对象断言存在某个未提供算法。
+
+若 $F$ 可枚举，则 $D_S(F)$ 可枚举。枚举到 $w$ 后，计算 $m_S(|w|)$ 并输出其全部有限后代。每包再大也是有限，故依次处理不会被某个无限输出包永久阻塞；不承诺实用的运行时间或输出规模。
+
+若 $F$ 可判定，则 $G=D_S(F)$ 可判定。输入空词直接拒绝；对非空 $g$，搜索首个 $n_j\ge|g|$，若不相等便拒绝。相等时有
+$$
+g\in G\quad\Longleftrightarrow\quad
+\exists n\in\{n_{j-1}+1,\ldots,n_j\}:g|_n\in F.
+\tag{RST.42}
+$$
+右侧只有有限次成员判定。该段外祖先不能展开到本层，段内命中祖先由前缀自由性唯一，因此祖先标签也可计算。
+
+反向给定合法标记 $(G,a)$。标签只需由一个统一部分可计算程序给出，并保证在每个 $g\in G$ 上终止；不要求在域外终止。若 $G$ 可枚举，枚举成员并交错运行其标签程序，输出所有祖先。每个祖先完整纤维非空，所以恰枚举出 $F$。
+
+若 $G$ 可判定，固定一个字母 $a_0$。对非空候选 $w$ 构造 $g=wa_0^{m_S(|w|)-|w|}$，则
+$$
+w\in F\quad\Longleftrightarrow\quad g\in G\text{ 且 }a(g)=w.
+\tag{RST.43}
+$$
+先运行 $G$ 决定器；若否便拒绝，若是才运行标签程序，此时保证终止。完整束保证正向，反向来自标签的原像定义。即使同一测试词有另一个旧祖先，标签比较也会正确排除候选 $w$。由此 $F$ 可判定。
+
+无标记新码不能恢复指定的被遗忘旧码，见反例 7.4；在额外的可判定输入和可行性承诺下，第 7.6 节仍能选择某个合法原像，这两项结论相容。
+
+数学停止时间与在线执行时间也不同。仅有可枚举呈示时，一个浅码字可在任意晚的枚举阶段才被公布，不能据此声称读取到该深度时就有会终止的在线判定。前缀深度、枚举阶段、判定运行时间、观察次数和实际等待成本须分别核算。
+
+### 7.13 嵌套抽层的组合律
+
+若 $T=\{0=t_0<t_1<\cdots\}$ 是 $S$ 的无界子列，则
+$$
+m_T(m_S(n))=m_T(n).
+\tag{RST.44}
+$$
+证明。首个不小于 $n$ 的 $T$ 层自身属于 $S$，因而不小于 $m_S(n)$；反向，不小于 $m_S(n)$ 的 $T$ 层也不小于 $n$。二者的首个合格层相同。$\square$
+
+完整展开因而满足
+$$
+D_T(D_S(F))=D_T(F).
+\tag{RST.45}
+$$
+对每个旧祖先，第一轮等长后代分割了第二轮全部后缀选择；先展开到 $S$ 再展开到 $T$ 与直接展开到 $T$ 给出同一组词，无重复也无遗漏。有标记时，若 $a_S:D_S(F)\to F$、$a_{T\mid S}:D_T(D_S(F))\to D_S(F)$ 是两级唯一祖先映射，则合成标记为 $a_S\circ a_{T\mid S}$。对任意 $w\in F$，所有中间后代恰填满深度 $m_S(|w|)$ 的束；每个中间后代又填满终层的后缀。由式 (RST.44)，这些互不重叠的小束之并正为 $wA^{m_T(|w|)-|w|}$，故复合标记的整个纤维是原祖先的完整终层束。它等于直接展开的唯一祖先标记，也保持原深度预算与按原祖先定义的成本。
+
+预算包络也满足
+$$
+\begin{aligned}
+\sum_{t_{i-1}<n_j\le t_i}\beta_jd^{t_i-n_j}
+&=\sum_{t_{i-1}<n_j\le t_i}
+  \sum_{n_{j-1}<n\le n_j}b_nd^{t_i-n}\\
+&=\sum_{t_{i-1}<n\le t_i}b_nd^{t_i-n}.
+\end{aligned}
+\tag{RST.46}
+$$
+因为相邻原段恰分割 $(t_{i-1},t_i]$，且两次展开权重相乘为 $d^{t_i-n}$。不要求预算和有限，也不要求预算全部可用。这是数值包络算子的组合；若中间已经遗忘完整束而放宽策略，后续数值组合不会自动删除额外策略。
+
+嵌套条件不可略去。例如 $S=\{0,2,4,6,\ldots\}$、$T=\{0,1,3,5,\ldots\}$ 时，$m_T(m_S(1))=3$，而 $m_T(1)=1$。
+
+### 7.14 变长块坐标与稀疏预算
+
+将原路径切成长度 $n_j-n_{j-1}$ 的连续块，得到无损坐标
+$$
+A^{\mathbb N}\cong\prod_{j\ge1}A^{n_j-n_{j-1}}.
+\tag{RST.47}
+$$
+具体地，分块映射取第 $j$ 块为字符位置 $n_{j-1}+1,\ldots,n_j$。反向将依次给出的有限块连接；任一位置属于唯一有限块，无界性保证没有未覆盖的位置。分块后连接恢复每个原字符，连接后再分块恢复每个原块，所以两映射互逆。每个有限块由一个有限前缀决定，每个原始有限前缀由有限多个块决定，故产品离散拓扑下两向都连续。有效层列下搜索该有限块并拼接，也给已经提供的坐标名字的可计算转换。
+
+均匀源的第 $j$ 块有 $d^{n_j-n_{j-1}}$ 种选择，前 $j$ 块的一个完整柱质量为 $d^{-n_j}$，一般不是 $d^{-j}$。非均匀 iid 源须保留各块真实产品权重；任意历史律须保留真实共同块联合律。
+
+在密集深度使用预算 $b_n$，再在稀疏深度直接重采样为 $b_{n_j}$，与运输成式 (RST.10) 的 $\beta_j$ 是不同任务。稀疏停止机会减少且未支付旧码全部后代预算，可以降低截获容量；支付 $\beta_j$ 后若又遗忘完整束约束，也可以增加非均匀源上的容量。两者均不反驳线程的无损抽层。
+
+跨深度停止事件的质量由式 (RST.8) 控制，放宽可行集后的最优值由式 (RST.13) 比较，旧记录成本由式 (RST.26) 运输，原始等待则由式 (RST.28)–(RST.40) 计算。完整对象、观察接口、合法策略、共同律和费用必须一并声明，才能确定某次换表示究竟保留什么。
+
+### 7.15 既有接口、成熟来源与适用边界
+
+相容线程与原状态的区别沿用第 2.1.4、2.2.4 节。`D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `RefinementSystem` 在当前模型取 $X=\Omega$、第 $n$ 层 `Coordinate` 为 $A^n$、`readout` 为完整前缀、相邻 `restrict` 为截断。所有前缀相等蕴含每个字符相等，故分离路径；相容有限前缀按位置连接为一条路径，且每个前缀读数正确，故满足 `ThreadComplete`。这两项正是 `stateThread_bijective_iff_complete_and_separates` 的条件。`stateEquivInverseLimit` 是非计算性定义；一般逆系统中第 7.1 节只比较两种线程空间，不由此许诺存在实现它们的另一个原状态空间。第 2.2.5 节的实际 LCM 塔已有具体有效余终搜索背景，搜索终止仍须来自其明示的层列条件。
+
+一般余终极限同构的所属接口为钉版 `Mathlib/CategoryTheory/Limits/Final.lean` 中 `CategoryTheory.Functor.Initial.limitIso`；第 7.1 节给出 $D,C,i,H$ 的具体代入、initial 性及逆方向与限制映射的对应。该库声明使用一般极限和非计算性选择；这里的向上搜索名字转换由显式算法另行承担，不能由一个抽象同构自动取得复杂度界。
+
+`D5/S0/Computability/Coding/PrefixFreeCode.lean` 中取字母参数 $\alpha=A$、词集参数为 $F$ 或 $G$，使用 `IsPrefixFree`。其 `isPrefixFree_first_codeword` 在前缀自由、两首词均属码集及两份拼接词相等的条件下，给出首词与余后缀各相等；停止码另排除空词，避免空词反复拼接的歧义。其 `kraft_inequality_of_isPrefixFree` 实际输入是有限二元 `Finset (List (Fin 2))`，并有前缀自由及无空词前提。第 7.2 节的任意 $d$、可数码及任意共同律结论由不交柱集和非负求和证明承担。有限唯一可译码的判定边界按第 4.8.2 节的 Sardinas–Patterson 条件使用。
+
+`D5/S0/Computability/Coding/LengthProfileSeparation.lean` 的 `equal_lengths_unbounded_extension_gap (d r) (hr : 0 < r)` 中，将原参数改记为 $q,h$，避免把 $d$ 误当本章字母数。它比较二元码 $\{u0^h:|u|=q\}$ 与 $\{0^hu:|u|=q\}$，$h>0$：两者有 $2^q$ 个长度 $q+h$ 的词，完整长度多重集相同，Kraft 质量同为 $2^{-h}$，但其 `freeAt` 条件分别是 $q<n$ 与 $0<n$，最短可扩展深度分别为 $q+1$ 与一。这是长度数据不能决定可扩展位置的既有见证；本章受容量约束的完整切口及偏置最优值采用第 7.4–7.6 节的具体证明。
+
+第 1.4.2–1.4.4 节已有完整回返块、未完成窗口与实际 roof 时间，第 1.4.7 节给出“每层一个”规则在换坐标后的双向反例。第 2.6.5 节的首两位交换保持 Haar 律，但需要运输读数 $q'_n=q_n\circ h^{-1}$ 与动力学 $S'=hSh^{-1}$ 才保持原接口；原生前缀查询不能仅凭同胚替换。第 4.7.9–4.7.11 节进一步区分完整窗口、共同律的推前、时钟和预算。这些关系在本章分别具体化为完整前缀、完整祖先束与式 (RST.31) 的不同成本单位。
+
+定义 6.1.1的 $\mathcal C_b$、$S_\mu$ 与本章预算类及停止质量采用相同定义；只有共同律确为所指定的 iid $\mu_p$、合法类也相同时，才把 $M_b(\mu_p)$ 与定理 5.2.2 与定义 6.1.1 中在相同合法类上的 iid 容量记号对应。定理 6.1.2拥有无穷 iid 贪心取到性，推论 6.1.3拥有任意预算的均匀饱和定理；命题 7.3 仅需在那里分别代入 $b$ 与 $\widetilde b$。本章任意相关或原子 Borel 律的事件恒等式不依赖 iid 优化结论。适配 6.7.4–6.7.5 的有效概率接口另需实际共同参考柱的统一可计算名字、同一库存呈示、有效尾界，以及所用方向的正质量和全部查询局部供应；层列或运输预算可计算并不自动提供这些条件。
+
+对全部后续实验的商接口，沿用第 1.3.6 节的具体关系接口及连接 6.7.6 的使用条件：必须在同一实际状态和历史、共同测试类上，有统一双向的合法测试翻译，保留拼接、更新、终端观察以及所指定的原始持续时间；成本若取可消去的交换幺半群中的可加值，还须保持该加法和成本读数。本章给出的逐路径停止事件、有标记策略和嵌套组合是这些条件的具体部分，不把无标记终端集合或一个最优数值等同于完整后续实验商。式 (RST.26) 对非负扩实期望只用逐点相等及积分；含无穷的加法不具可消去性，不能据此省去一般商接口的成本前提。
+
+外部来源各承担下列范围：
+
+1. [Stacks Project，Categories，Lemma 4.17.4，tag 002R](https://stacks.math.columbia.edu/tag/002R)，配合 [Definition 4.17.3，tag 09WP](https://stacks.math.columbia.edu/tag/09WP)，给出沿 initial functor 限制的极限同构。逆索引采用 $m\to n$ 当 $m\ge n$；保留深度包含函子为 initial，因为每个 $n$ 以上的保留层组成非空连通尾。数序中的余终性对应此反向索引中的 initial 性。该结果不含停止规则、预算、有效选点或等待费用；第 7.1 节分别证明坐标连续性和已给名字的有效转换。
+
+2. Jean-Camille Birget，[Bernoulli measure on strings, and Thompson-Higman monoids](https://arxiv.org/abs/1004.5589v1)，§1.2，Lemmas 1.1–1.2，PDF 第 3 页。Lemma 1.1 的局部操作将 $x$ 换成 $xA^r$，保持均匀 Kraft 和；Lemma 1.2 对有限前缀码用有限次完整子节点展开／收缩刻画相同端集。这里每段有限，逐词局部展开对应 $r=m_S(|w|)-|w|$；无限码的结论另由不交柱并和非负求和承担。逐深度容量、禁止越过段边界的收缩及原成本不由该文的标量质量结论自动保证。任意共同律的守恒来自同一事件，不能只由同一 Kraft 数值推断。
+
+3. François Coquet 与 Sandrine Toldo，[Convergence of values in optimal stopping and convergence of optimal stopping times](https://arxiv.org/abs/math/0504318v2)，Theorem 3，PDF 第 3 页。在固定有限视界、有界连续奖励、Skorokhod 概率收敛、Aldous 停止紧性及其规定的过滤包含或弱收敛条件下，该文给最优停止值收敛；证明中使用网格趋细。本文的上取层停止性由式 (RST.29) 直接证明。任意余终网格可以具有增长间距、无限视界和无界等待费，不能据此套用该值收敛结论或去掉逐深度容量限制。
+
+4. Julio Backhoff-Veraguas、Daniel Bartl、Mathias Beiglböck 与 Manu Eder，[All Adapted Topologies are Equal](https://arxiv.org/abs/1905.00368v2)，Theorem 1.2、Theorem 1.3 与 Lemma 1.4，PDF 第 5–6 页。在固定有限步数和有界度量 Polish 状态空间下，文中比较适应 Wasserstein、对称因果 Wasserstein、信息、扩展弱及最优停止拓扑；无界度量版本另涉及 $p$ 阶矩及矩收敛。它解释为何决策时可用信息须进入运输结构，但不编码这里的 $b_n$、祖先束或无限视界均值。
+
+5. Daniel Bartl、Mathias Beiglböck、Gudmund Pammer、Stefan Schrott 与 Xin Zhang，[The Wasserstein Space of Stochastic Processes in Continuous Time](https://arxiv.org/abs/2501.14135v1)，Definition 3.1、Propositions 4.3–4.4、Corollary 4.5，PDF 第 21–22 页。$\varepsilon$ 因果耦合可经条件分位数把一个停止时间运输成一族随机化策略，并给相应平均成本关系；$\varepsilon>0$ 时须保留构造中的终端截断，或限制原停止时刻加延迟不越过终端。具体地，在有限视界 $[0,H]$ 取含终点 $H$ 的网格，将最近完整记录的过滤记为 $\mathcal H_t=\mathcal F_{s(t)}$。若最大网格间隙不超过 $\varepsilon$，则在未越过终点的范围内有 $\mathcal H_t\subseteq\mathcal F_t\subseteq\mathcal H_{t+\varepsilon}$：右边来自下一网格点不晚于 $t+\varepsilon$。归一化到 $[0,1]$ 时相应缩放 $\varepsilon$，在终点使用文中的截断；若终点未保留，则不能自行声称该终端信息包含。条件分位数运输对随机化参数积分后比较成本，不保证每个参数的确定性策略都保持原费用。文中的 Hoover–Keisler 等价对应非前瞻、下有界成本的停止值等价；连续性还要求有界正则成本及连续的极限过程。一般随机化运输既不保证本章的确定性祖先束、逐深度字数，也不提供可逆的历史标记。
+
+6. Akitoshi Kawamura 与 Stephen Cook，[Complexity Theory for Operators in Analysis](https://arxiv.org/abs/1305.0453v1)，校正版 §3.4.1、Lemma 3.9，PDF 第 13 页，以及 Definition 3.2。若输入表示的多项式时间翻译方向为 $\gamma'\to\gamma$，输出表示的方向为 $\delta\to\delta'$，则对 $\mathsf C=\mathsf{FP}$ 或 $\mathsf{FPSPACE}$ 有 $(\gamma,\delta)\text{-}\mathsf C\subseteq(\gamma',\delta')\text{-}\mathsf C$。先把新输入名字翻成旧输入名字，运行既有实现，再把旧输出名字翻成新输出名字，这正是该方向的组合。第 7.1 节只给可计算翻译；要进一步使用该复杂度结果，还须指定名字大小，并控制层列计算、投影、查询构造及响应处理。即使复杂度类相同，也不等于实际查询次数、等待时间或期望停止费用相等。
+
+这些来源分别支撑标准组成部分；精确树切口、动态规划和等待判据按正文证明使用，不以文献类比替代约束核对。尚未给出的结论包括有用的整体多项式复杂度、仅可枚举输入上的一般有效选择、任意固定苛刻预算下的全律必要性、深度标记的比特最小性、改变源律后的策略等价，以及非均匀分支树、部分历史接口或任意增广过滤下的同样运输。本文不对综合的新颖性或新增形式认证作结论。
+
+## 追加锚（本行以下为增补区）
