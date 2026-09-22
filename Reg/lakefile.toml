@@ -1,0 +1,29 @@
+name = "reg"
+version = "0.1.0"
+defaultTargets = ["Reg"]
+packagesDir = "../.lake/packages"
+buildDir = "../.lake/build/reg"
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "trureturing"
+path = ".."
+
+[[require]]
+name = "leanInspectorInterface"
+path = "../tools/lean-inspector-interface"
+
+[[require]]
+name = "leanInspector"
+path = "../tools/lean-inspector"
+
+[[lean_lib]]
+name = "Reg"
+srcDir = ".."
+roots = ["Reg"]
+globs = ["Reg.+"]

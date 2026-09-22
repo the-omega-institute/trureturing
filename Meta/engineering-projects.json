@@ -415,6 +415,7 @@
       "execution_inputs": [
         "tools/**",
         "D5/**",
+        "Reg/**",
         "Blueprint/**",
         "Golden/**",
         "Library/**",
@@ -896,6 +897,7 @@
         "Meta/package-materials.json",
         "Meta/registry.yaml",
         "D5/**",
+        "Reg/**",
         "Blueprint/**",
         "Library/**",
         "agents/**",

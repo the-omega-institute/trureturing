@@ -137,6 +137,12 @@ internal static partial class RepositoryPathPolicy
             return null;
         }
 
+        if (value.StartsWith("Reg/", StringComparison.Ordinal))
+        {
+            return IsDeclarationSourcePath(value, policy)
+                ? null : Sl000(value, "noncanonical Reg declaration artifact");
+        }
+
         if (value.StartsWith(AgentFilesRootPath, StringComparison.Ordinal))
         {
             return policy.AgentFiles.Contains(value[AgentFilesRootPath.Length..])
