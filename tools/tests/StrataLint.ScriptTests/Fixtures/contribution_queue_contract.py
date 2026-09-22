@@ -1,5 +1,6 @@
 """Behavioral GitHub-shape fixtures for the read-only contribution observer."""
 import copy
+import hashlib
 import io
 import importlib.util
 import json
@@ -38,6 +39,8 @@ def run(run_id=30, attempt=1):
             "event": "pull_request", "head_sha": HEAD, "check_suite_id": 40,
             "run_number": run_id, "run_attempt": attempt, "status": "completed", "conclusion": "success",
             "repository": {"id": 1, "full_name": REPO},
+            "referenced_workflows": [{"path": f"{REPO}/.github/workflows/ci-push.yml@{MERGE}",
+                                      "ref": "refs/pull/7/merge", "sha": MERGE}],
             "pull_requests": [{"number": 7, "head": {"sha": HEAD, "repo": {"id": 2}},
                                "base": {"ref": "dev", "sha": BASE, "repo": {"id": 1}}}]}
 
@@ -68,7 +71,20 @@ class FakeGitHub:
             ROOT + "/actions/runs/30/attempts/1/jobs": [],
             ROOT + "/commits/" + HEAD + "/check-runs": [],
             ROOT + "/commits/" + HEAD + "/status": [],
+            ROOT + "/branches/dev": {"name": "dev", "protected": True, "commit": {"sha": BASE}},
+            ROOT + f"/compare/{BASE}...{BASE}": {
+                "status": "identical", "base_commit": {"sha": BASE}, "merge_base_commit": {"sha": BASE}},
         }
+        # Real Git object identities, with distinct base/head/merge content.
+        self.files = {}
+        automation = {".github/workflows/ci-pr.yml": "trusted caller",
+                      ".github/workflows/ci-push.yml": "trusted reusable workflow",
+                      "tools/scripts/workflow/ci.py": "trusted executor",
+                      "Directory.Build.props": "trusted build settings",
+                      "Meta/FILEMAP.toml": "trusted material policy"}
+        self.set_files(BASE, {**automation, "D5/S0/Example.lean": "old theorem"})
+        self.set_files(HEAD, {**automation, "D5/S0/Example.lean": "new theorem"})
+        self.set_files(MERGE, {**self.files[HEAD], "docs/develop/theory/Example.md": "new theory"})
         for index, name in enumerate(("delta", "push / current"), 50):
             self.data[ROOT + "/actions/runs/30/attempts/1/jobs"].append({
                 "id": index, "run_id": 30, "run_attempt": 1, "head_sha": HEAD,
@@ -77,6 +93,39 @@ class FakeGitHub:
             self.data[ROOT + "/commits/" + HEAD + "/check-runs"].append({
                 "id": index, "name": name, "head_sha": HEAD, "status": "completed", "conclusion": "success",
                 "app": {"id": 15368, "slug": "github-actions"}, "check_suite": {"id": 40}})
+
+    def set_files(self, revision, files):
+        self.files[revision] = copy.deepcopy(files)
+        nested = {}
+        for path, content in files.items():
+            node = nested
+            parts = path.split("/")
+            for part in parts[:-1]:
+                node = node.setdefault(part, {})
+            node[parts[-1]] = content
+
+        def object_sha(kind, payload):
+            return hashlib.sha1(f"{kind} {len(payload)}\0".encode() + payload).hexdigest()
+
+        def tree(node):
+            entries = []
+            for name, content in node.items():
+                if isinstance(content, dict):
+                    mode, kind, oid = "040000", "tree", tree(content)
+                else:
+                    mode, content = content if isinstance(content, tuple) else ("100644", content)
+                    kind, oid = "blob", object_sha("blob", content.encode())
+                entries.append({"path": name, "mode": mode, "type": kind, "sha": oid})
+            entries.sort(key=lambda e: (e["path"] + ("/" if e["type"] == "tree" else "")).encode())
+            raw = b"".join(e["mode"].lstrip("0").encode() + b" " + e["path"].encode() + b"\0"
+                           + bytes.fromhex(e["sha"]) for e in entries)
+            oid = object_sha("tree", raw)
+            self.data[ROOT + "/git/trees/" + oid] = {"sha": oid, "truncated": False, "tree": entries}
+            return oid
+
+        self.data[ROOT + "/git/commits/" + revision] = {
+            "sha": revision, "tree": {"sha": tree(nested)},
+            "parents": [{"sha": BASE}, {"sha": HEAD}] if revision == MERGE else []}
 
     def get(self, path, **params):
         self.calls.append((path, params))
@@ -103,6 +152,189 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(result["prs"]["ready"], [])
         self.assertIn(code, [r["code"] for r in result["prs"]["waiting"][0]["reasons"]])
         return result
+
+    def test_same_path_workflow_fake_green_waits(self):
+        for revision in (HEAD, MERGE):
+            with self.subTest(revision=revision):
+                self.api = FakeGitHub()
+                files = dict(self.api.files[revision])
+                files[".github/workflows/ci-pr.yml"] = "emit successful delta and push / current"
+                self.api.set_files(revision, files)
+                self.waiting("ci_automation_changed_manual_review")
+
+    def test_reusable_workflow_script_settings_and_new_automation_wait(self):
+        paths = (".github/workflows/ci-push.yml", "tools/scripts/workflow/ci.py",
+                 "tools/Makefile", "Makefile", "Directory.Build.props", "lakefile.toml",
+                 "lean-toolchain", "Meta/FILEMAP.toml", "Meta/engineering-projects.json",
+                 "D5/Directory.Build.targets", "D5/payload.scribe.cs", "docs/develop/theory/payload.py")
+        for revision in (HEAD, MERGE):
+            for path in paths:
+                with self.subTest(revision=revision, path=path):
+                    self.api = FakeGitHub()
+                    self.api.set_files(revision, {**self.api.files[revision], path: "override CI"})
+                    self.waiting("ci_automation_changed_manual_review")
+
+    def test_deleting_or_renaming_automation_to_content_waits(self):
+        for rename in (False, True):
+            with self.subTest(rename=rename):
+                self.api = FakeGitHub()
+                files = dict(self.api.files[MERGE])
+                removed = files.pop("tools/scripts/workflow/ci.py")
+                if rename:
+                    files["docs/develop/theory/ci.md"] = removed
+                self.api.set_files(MERGE, files)
+                self.waiting("ci_automation_changed_manual_review")
+
+    def test_supported_regular_content_add_edit_delete_remains_eligible(self):
+        for revision in (HEAD, MERGE):
+            files = dict(self.api.files[revision])
+            files.pop("D5/S0/Example.lean")
+            files["D5/S1/New.lean"] = "theorem new_result : True := by trivial"
+            files["D5/S1/Note.md"] = "mathematical content"
+            files["docs/develop/theory/New.md"] = "theory input"
+            self.api.set_files(revision, files)
+        row = self.scan()["prs"]["ready"][0]
+        evidence = row["ci"]["trusted_definition"]
+        self.assertEqual(evidence["base_sha"], BASE)
+        self.assertEqual(evidence["candidate_sha"], MERGE)
+        self.assertEqual(evidence["trusted_branch"], "dev")
+        # The observer never fetches file contents or a mutable pull merge ref.
+        self.assertFalse(any("/contents/" in p or "/git/blobs/" in p or "/git/ref" in p
+                             for p, _ in self.api.calls))
+
+    def test_tree_fixture_identities_agree_with_native_git(self):
+        # Independent codec check: Git sorts directory names with a trailing '/'.
+        self.api.set_files(HEAD, {**self.api.files[HEAD], "D5.md": "sort before D5/"})
+        with tempfile.TemporaryDirectory() as directory:
+            subprocess.run(["git", "init", "-q", directory], check=True, capture_output=True)
+            for path, value in self.api.data.items():
+                if "/git/trees/" not in path:
+                    continue
+                records = "".join(f"{e['mode']} {e['type']} {e['sha']}\t{e['path']}\n"
+                                  for e in reversed(value["tree"]))
+                result = subprocess.run(["git", "-C", directory, "mktree", "--missing"],
+                                        input=records, text=True, capture_output=True, check=True)
+                self.assertEqual(result.stdout.strip(), value["sha"])
+
+    def test_changed_content_modes_and_tree_replacements_wait(self):
+        for path, mode in (("D5/S0/Example.lean", "120000"), ("D5/S0/Example.lean", "100755"),
+                           ("D5", "120000"), ("docs/develop/theory", "120000")):
+            with self.subTest(path=path, mode=mode):
+                self.api = FakeGitHub()
+                files = {p: value for p, value in self.api.files[MERGE].items()
+                         if p != path and not p.startswith(path + "/")}
+                files[path] = (mode, "../../tools")
+                self.api.set_files(MERGE, files)
+                self.waiting("ci_automation_changed_manual_review")
+
+    def test_missing_or_ambiguous_workflow_reference_waits(self):
+        original = run()["referenced_workflows"][0]
+        variants = (None, [], [original, original],
+                    [dict(original, path=f"attacker/repo/.github/workflows/ci-push.yml@{MERGE}")],
+                    [dict(original, sha=HEAD)], [dict(original, ref="refs/heads/dev")],
+                    [dict(original, path=f"{REPO}/.github/workflows/ci-push.yml@refs/pull/7/merge")])
+        for references in variants:
+            with self.subTest(references=references):
+                self.api = FakeGitHub()
+                self.api.data[ROOT + "/actions/runs/30"]["referenced_workflows"] = references
+                self.waiting("ci_definition_unproven")
+
+    def test_run_base_and_ordered_merge_parents_must_match(self):
+        for parents in ([], [{"sha": HEAD}, {"sha": BASE}], [{"sha": BASE}],
+                        [{"sha": "d" * 40}, {"sha": HEAD}],
+                        [{"sha": BASE}, {"sha": "d" * 40}],
+                        [{"sha": BASE}, {"sha": HEAD}, {"sha": "d" * 40}]):
+            with self.subTest(parents=parents):
+                self.api = FakeGitHub()
+                self.api.data[ROOT + "/git/commits/" + MERGE]["parents"] = parents
+                self.waiting("ci_definition_unproven")
+        self.api = FakeGitHub()
+        self.api.data[ROOT + "/actions/runs/30"]["pull_requests"][0]["base"].pop("sha")
+        self.waiting("ci_definition_unproven")
+
+    def test_duplicate_pr_association_is_ambiguous(self):
+        associations = self.api.data[ROOT + "/actions/runs/30"]["pull_requests"]
+        associations.append(copy.deepcopy(associations[0]))
+        self.waiting("ci_source_mismatch")
+
+    def test_base_requires_protected_branch_reachability(self):
+        for patch_value in ({"status": "diverged"}, {"status": "behind"},
+                            {"merge_base_commit": {"sha": HEAD}}, {"base_commit": {"sha": HEAD}}):
+            with self.subTest(patch_value=patch_value):
+                self.api = FakeGitHub()
+                self.api.data[ROOT + f"/compare/{BASE}...{BASE}"].update(patch_value)
+                self.waiting("ci_definition_unproven")
+        for patch_value in ({"protected": False}, {"name": "other"}, {"commit": {}}):
+            with self.subTest(patch_value=patch_value):
+                self.api = FakeGitHub()
+                self.api.data[ROOT + "/branches/dev"].update(patch_value)
+                self.waiting("ci_definition_unproven")
+
+    def test_trusted_branch_advancement_keeps_old_proven_candidate_eligible(self):
+        tip = "e" * 40
+        self.api.data[ROOT + "/branches/dev"]["commit"]["sha"] = tip
+        self.api.data[ROOT + f"/compare/{BASE}...{tip}"] = {
+            "status": "ahead", "base_commit": {"sha": BASE}, "merge_base_commit": {"sha": BASE}}
+        # Current PR base/merge are not evidence of the successful run's candidate.
+        self.api.data[ROOT + "/pulls/7"]["base"]["sha"] = tip
+        self.api.data[ROOT + "/pulls/7"]["merge_commit_sha"] = "f" * 40
+        evidence = self.scan()["prs"]["ready"][0]["ci"]["trusted_definition"]
+        self.assertEqual(evidence["base_sha"], BASE)
+        self.assertEqual(evidence["candidate_sha"], MERGE)
+        self.assertFalse(any("/git/commits/" + "f" * 40 == p for p, _ in self.api.calls))
+
+    def test_current_clean_merge_does_not_replace_tampered_executed_candidate(self):
+        self.api.data[ROOT + "/pulls/7"]["merge_commit_sha"] = "f" * 40
+        self.api.set_files("f" * 40, self.api.files[HEAD])
+        self.api.set_files(MERGE, {**self.api.files[MERGE], ".github/workflows/ci-pr.yml": "fake green"})
+        self.waiting("ci_automation_changed_manual_review")
+
+    def test_commit_identity_or_tree_identity_missing_waits(self):
+        for revision in (BASE, HEAD, MERGE):
+            for change in ({"sha": "d" * 40}, {"tree": {}}):
+                with self.subTest(revision=revision, change=change):
+                    self.api = FakeGitHub()
+                    self.api.data[ROOT + "/git/commits/" + revision].update(change)
+                    self.waiting("ci_definition_unproven")
+
+    def test_truncated_missing_duplicate_and_incomplete_tree_rows_wait(self):
+        for corruption in ("truncated", "missing_flag", "missing_rows", "omitted_row", "duplicate", "wrong_sha"):
+            with self.subTest(corruption=corruption):
+                self.api = FakeGitHub()
+                oid = self.api.data[ROOT + "/git/commits/" + MERGE]["tree"]["sha"]
+                tree = self.api.data[ROOT + "/git/trees/" + oid]
+                if corruption == "truncated":
+                    tree["truncated"] = True
+                elif corruption == "missing_flag":
+                    tree.pop("truncated")
+                elif corruption == "missing_rows":
+                    tree.pop("tree")
+                elif corruption == "omitted_row":
+                    tree["tree"].pop()  # Still claims truncated=false and the original SHA.
+                elif corruption == "duplicate":
+                    tree["tree"].append(tree["tree"][0])
+                else:
+                    tree["sha"] = "d" * 40
+                self.waiting("ci_definition_unproven")
+
+    def test_definition_api_permission_failure_aborts_without_ready(self):
+        self.api.data[ROOT + "/git/commits/" + MERGE] = q.QueueError("api_error", "Contents read denied")
+        out = io.StringIO()
+        with patch.object(q, "GitHub", return_value=self.api), redirect_stdout(out):
+            code = q.main([])
+        self.assertEqual(code, 2)
+        self.assertEqual(json.loads(out.getvalue())["prs"]["ready"], [])
+
+    def test_reference_or_base_reachability_changes_during_scan_wait(self):
+        changed = run()
+        changed["referenced_workflows"][0]["sha"] = HEAD
+        self.api.hooks[ROOT + "/actions/runs/30"] = lambda n: run() if n == 1 else changed
+        self.waiting("ci_changed")
+        self.api = FakeGitHub()
+        path = ROOT + f"/compare/{BASE}...{BASE}"
+        original = self.api.data[path]
+        self.api.hooks[path] = lambda n: original if n == 1 else dict(original, status="diverged")
+        self.waiting("ci_changed")
 
     def test_owner_exemption_issue_separation_and_evidence(self):
         result = self.scan()
