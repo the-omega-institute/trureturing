@@ -261,9 +261,12 @@ at K=2: the literal original-divisor phases
 have actual squared-load expectation 10483/1755, exceeding 2t_2=46/9
 by 1513/1755. This is failure of the fixed recipe, not of the source:
 at K=2 the clean tails are monochromatic, and the source is the already
-successful family of 412. The result leaves K=3,...,9 unresolved for T2
-and does not solve arbitrary one-surplus tails, the full sharp-minimum
-source class, or unrestricted Erdős #7.
+successful family of 412. [Exact separation](416-exact-independent-layout-tree-separation-and-actual-laws.md)
+also proves that T2 fails at K=3,4. [Prefix-local transport](417-prefix-local-disagreement-extends-the-same-law-to-height-seven.md)
+and the [finite completion](418-concentrated-sharp-sources-admit-a-common-law-at-every-height.md)
+prove that T2 succeeds at every K>=5. Different actual laws close K=2,3,4.
+Arbitrary one-surplus tails, the full sharp-minimum source class, and
+unrestricted Erdős #7 remain unresolved here.
 
 ## Reproduction and scope
 

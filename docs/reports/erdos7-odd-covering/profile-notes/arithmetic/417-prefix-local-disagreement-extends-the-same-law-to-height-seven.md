@@ -147,4 +147,6 @@ From the repository root:
 The induction and monotonicity above supply the unbounded quantifier;
 finite checks do not. Combined with 412 and 416, successful actual laws
 on this explicit family are now available at K=2,3,4 and every K>=7.
-Heights 5,6 and the all-source problem remain open here.
+The [finite completion](418-concentrated-sharp-sources-admit-a-common-law-at-every-height.md)
+closes heights 5,6, giving actual laws for this explicit family at every
+K>=2. The all-source problem remains open.

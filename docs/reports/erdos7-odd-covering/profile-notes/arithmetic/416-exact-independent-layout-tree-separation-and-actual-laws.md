@@ -230,6 +230,8 @@ with the same schema. From the repository root:
 Together with 412 at K=2 and 414 for every K>=10, these certificates
 supply successful source laws for this explicit family at K=2,3,4 and
 all K>=10. [Prefix-local transport](417-prefix-local-disagreement-extends-the-same-law-to-height-seven.md)
-further extends the same fixed law to every K>=7, leaving heights 5,6
-unresolved here. No change is made to the independent-phase quantifiers,
-and no claim is made about unrestricted Erdős #7.
+further extends the same fixed law to every K>=7. The
+[finite completion](418-concentrated-sharp-sources-admit-a-common-law-at-every-height.md)
+closes heights 5,6 and gives one actual law at every K>=2 for this family.
+No change is made to the independent-phase quantifiers, and no claim is
+made about unrestricted Erdős #7.
