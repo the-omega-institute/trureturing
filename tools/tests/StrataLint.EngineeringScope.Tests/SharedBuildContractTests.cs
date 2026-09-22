@@ -15,17 +15,17 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
     [InlineData("current")]
     public void BranchSealRejectsAChangedCandidateEvenWhenBuildRoundAndMaterialsMatch(string stage)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         const string log = "build/ci/build.log";
         TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(fixture.Root, "build/ci"));
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "built\n");
         StageStep[] Steps(string[] names) => names.Select(name => new StageStep(name,
             name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
         var started = CommonExecutionEvidence.SealBuild(fixture.Root, CommonExecutionEvidence.Candidate(fixture.Root), fixture.Build().Materials.Select(material => material.Path).Append(log), Steps(CommonExecutionEvidence.BuildSteps));
-        TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, CurrentExecutionContractTests.CandidateFixture.First), "\n");
+        TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ExecutionFixture.First), "\n");
         CommonExecutionEvidence.Write(fixture.Root, CommonExecutionEvidence.BuildPath, started with { Candidate = CommonExecutionEvidence.Candidate(fixture.Root) });
         Assert.Throws<InvalidDataException>(() => Program.RunCurrentTests(fixture.Root, (_, _) => throw new InvalidOperationException("must not run"), TextWriter.Null, started));
-        CiTransportTests.Report(fixture.Root);
+        ExecutionFixture.Report(fixture.Root);
         Assert.Throws<InvalidDataException>(() =>
         {
             if (stage == "engineering") CommonExecutionEvidence.SealEngineering(fixture.Root, started, Steps(CommonExecutionEvidence.EngineeringSteps));
@@ -40,7 +40,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
     public void FreshBuildRejectsFailedProcessesAndCannotUseASeedAsSuccess(string failure, int raw, int expected)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var root = fixture.Root;
         TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(root, "build/bin"));
         const string log = "build/seed.log";
@@ -124,7 +124,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
     [InlineData("delta")]
     public void InvalidSeedExportOptionFailsBeforeStageExecution(string defect)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var stage = defect is "build" or "delta" ? defect : "current";
         string[] options = defect switch
         {
@@ -144,7 +144,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
     {
         if (OperatingSystem.IsWindows()) return;
         var automaticExport = exportSeeds && seedExport != "deferred";
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var root = fixture.Root;
         Write(".gitignore", "build/\n.lake/\n**/bin/\n");
         Write("Makefile", "lean-report:\n\t@echo report >> build/events\n");
@@ -204,12 +204,12 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             "tools/tests/First/bin/Release/net10.0/First.dll", "tools/tests/Second/bin/Release/net10.0/Second.dll", CommonExecutionEvidence.LeanProducerPath };
         foreach (var binary in binaries) Write(binary, "synthetic runtime\n");
         CommonExecutionEvidence.Write(root, CommonBuildOutputs.TestsPath, new[] {
-            new BuiltTestProject(CurrentExecutionContractTests.CandidateFixture.First, binaries[3]),
-            new BuiltTestProject(CurrentExecutionContractTests.CandidateFixture.Second, binaries[4]) });
+            new BuiltTestProject(ExecutionFixture.First, binaries[3]),
+            new BuiltTestProject(ExecutionFixture.Second, binaries[4]) });
         Write("build/ci/build.log", "shared production\n");
         fixture.WriteTrx(Path.Combine(root, "build/passed"), "Passed");
         fixture.WriteTrx(Path.Combine(root, "build/failed"), "Failed");
-        CiTransportTests.Report(root);
+        ExecutionFixture.Report(root);
         if (!automaticExport)
         {
             fixture.Track();
@@ -239,7 +239,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             result = Branch(other);
             Assert.True(result.Exit == 0, result.Text);
             AssertAutomaticSeed(other, result.Text);
-            var accepted = CommonExecutionEvidence.ValidateCommon(root, [CurrentExecutionContractTests.CandidateFixture.First]);
+            var accepted = CommonExecutionEvidence.ValidateCommon(root, [ExecutionFixture.First]);
             Assert.Equal(build.Candidate, accepted.Current.Candidate);
             Assert.Equal(build.Round, accepted.Current.Round);
             Assert.Equal(CommonExecutionEvidence.CurrentSteps, accepted.Current.Steps.Select(step => step.Name));
@@ -270,7 +270,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
                     Transport(stage);
                     AssertNoOptionalSeeds();
                 }
-                CommonExecutionEvidence.ValidateCommon(root, [CurrentExecutionContractTests.CandidateFixture.First]);
+                CommonExecutionEvidence.ValidateCommon(root, [ExecutionFixture.First]);
                 // Explicit writer commands remain available without implicit stage export.
                 foreach (var stage in new[] { "engineering", "current" })
                 {
@@ -333,7 +333,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
                 Assert.DoesNotContain("CURRENT_FINALIZE phase=seed-export", current.Text, StringComparison.Ordinal);
                 Assert.Equal(seedFiles, SeedFiles());
                 var currentEvidence = CommonExecutionEvidence.ValidateCommon(root,
-                    [CurrentExecutionContractTests.CandidateFixture.First]).Current;
+                    [ExecutionFixture.First]).Current;
                 Assert.All(currentEvidence.Steps.Where(step => step.Name is "scribe" or "filemap" or "check-current"),
                     step => Assert.Equal("reused", step.Status));
                 Assert.Equal(events.Where(value => value.Length != 0).Concat(["report", "check-current"]),
@@ -454,7 +454,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
     [InlineData("missing-base-project")]
     public void DeltaJoinsIndependentBranchesAndRejectsIncompleteOrMixedEvidence(string defect)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         const string log = "build/ci/build.log";
         TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(fixture.Root, "build/ci"));
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "built once\n");
@@ -462,7 +462,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
             name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
         var build = CommonExecutionEvidence.SealBuild(fixture.Root, CommonExecutionEvidence.Candidate(fixture.Root), fixture.Build().Materials.Select(material => material.Path).Append(log),
             Steps(CommonExecutionEvidence.BuildSteps));
-        CiTransportTests.Report(fixture.Root);
+        ExecutionFixture.Report(fixture.Root);
         CheckEvidenceFixture.Seal(fixture.Root, "current", build);
         CommonExecutionEvidence.SealCurrent(fixture.Root, build, Steps(CommonExecutionEvidence.CurrentSteps));
         CommonExecutionEvidence.ValidateCurrent(fixture.Root);
@@ -474,7 +474,7 @@ public sealed class SharedBuildContractTests(ITestOutputHelper output)
         CheckEvidenceFixture.Seal(fixture.Root, "engineering", build);
         CommonExecutionEvidence.SealEngineering(fixture.Root, build, Steps(CommonExecutionEvidence.EngineeringSteps));
         Assert.Equal(currentHash, CommonExecutionEvidence.Hash(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
-        CommonExecutionEvidence.ValidateCommon(fixture.Root, [CurrentExecutionContractTests.CandidateFixture.First]);
+        CommonExecutionEvidence.ValidateCommon(fixture.Root, [ExecutionFixture.First]);
         var tests = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath);
         if (defect == "complete")
         {

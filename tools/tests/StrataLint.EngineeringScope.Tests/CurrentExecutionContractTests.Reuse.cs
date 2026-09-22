@@ -15,7 +15,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.Tests", true)]
     public void RegisteredDocumentationAndCacheAdaptersRespectTestInputs(string project, bool generalScripts)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == $"tools/tests/{project}/{project}.csproj")!;
         Assert.Equal(project != "StrataLint.ScriptTests", declaration["ci"]!.GetValue<bool>());
@@ -63,8 +63,8 @@ public sealed partial class CurrentExecutionContractTests
             var calls = Execute(fixture);
             var current = ReadTests(fixture)["projects"]![0]!["input_fingerprint"]!.ToString();
             Assert.True(change.Invalidates ? previous != current : previous == current, $"{project}: {change.Path}: invalidates={change.Invalidates}");
-            Assert.Equal(change.Invalidates ? new[] { CandidateFixture.First } : [], calls);
-            CommonExecutionEvidence.ValidateTests(fixture.Root, [CandidateFixture.First]);
+            Assert.Equal(change.Invalidates ? new[] { ExecutionFixture.First } : [], calls);
+            CommonExecutionEvidence.ValidateTests(fixture.Root, [ExecutionFixture.First]);
             previous = current;
         }
     }
@@ -74,7 +74,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.Tests")]
     public void RegisteredDigestionContentReusesEvidenceWhileGovernanceInvalidates(string project)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var repository = TestRepositoryLayout.FindRoot();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(repository, EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == $"tools/tests/{project}/{project}.csproj")!;
@@ -125,7 +125,7 @@ public sealed partial class CurrentExecutionContractTests
                 fixture.Write(path, File.ReadAllText(Path.Combine(fixture.Root, path)).Replace("program", "data", StringComparison.Ordinal));
             else File.AppendAllText(Path.Combine(fixture.Root, path), "\n");
             fixture.Track();
-            Assert.Equal([CandidateFixture.First], Execute(fixture));
+            Assert.Equal([ExecutionFixture.First], Execute(fixture));
             var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
             Assert.NotEqual(original.InputFingerprint, accepted.InputFingerprint);
             Assert.Equal("executed", accepted.Status);
@@ -144,7 +144,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("execution-environment", 1)]
     public void RegisteredInputChangesSelectOnlyTheirReferenceClosure(string change, int selected)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         fixture.Write("tools/tests/First/Input.cs", "// first\n");
         fixture.Write("fixtures/input.txt", "first\n");
         fixture.Write("options.txt", "release\n");
@@ -153,7 +153,7 @@ public sealed partial class CurrentExecutionContractTests
             rows[0]!["execution_inputs"] = new JsonArray("fixtures/*.txt");
             rows[0]!["build_inputs"] = new JsonArray("options.txt");
             if (change == "execution-environment") rows[0]!["execution_environment"] = new JsonArray("STRATALINT_TEST_ENVIRONMENT");
-            if (change == "reference") rows[1]!["references"] = new JsonArray(CandidateFixture.First);
+            if (change == "reference") rows[1]!["references"] = new JsonArray(ExecutionFixture.First);
         });
         fixture.Track();
         Execute(fixture);
@@ -192,7 +192,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("unregistered")]
     public void InvalidCurrentRegistrationFailsBeforeAnyRunnerCall(string defect)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         EditRegistration(fixture, rows =>
         {
             var row = rows[0]!;
@@ -204,7 +204,7 @@ public sealed partial class CurrentExecutionContractTests
                 case "conflicting-input": row["execution_inputs"] = new JsonArray("needed.json"); row["execution_excludes"] = new JsonArray("needed.json"); break;
                 case "duplicate-input": row["execution_inputs"] = new JsonArray("fixtures/**", "fixtures/**"); break;
                 case "reference": row["references"] = new JsonArray("tools/missing.csproj"); break;
-                case "cycle": row["references"] = new JsonArray(CandidateFixture.Second); rows[1]!["references"] = new JsonArray(CandidateFixture.First); break;
+                case "cycle": row["references"] = new JsonArray(ExecutionFixture.Second); rows[1]!["references"] = new JsonArray(ExecutionFixture.First); break;
             }
         });
         if (defect == "unregistered") fixture.Write("tools/unregistered.csproj", "<Project />");
@@ -221,7 +221,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("failed-row")]
     public void BaseRegisteredProjectStillRequiresCurrentAcceptedSuccess(string defect)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Execute(fixture);
         Seed(fixture);
         if (defect is "deleted" or "disabled")
@@ -231,7 +231,7 @@ public sealed partial class CurrentExecutionContractTests
                 if (defect == "deleted") rows.RemoveAt(0);
                 else rows[0]!["ci"] = false;
             });
-            if (defect == "deleted") TemporaryFileSystem.File.Delete(Path.Combine(fixture.Root, CandidateFixture.First));
+            if (defect == "deleted") TemporaryFileSystem.File.Delete(Path.Combine(fixture.Root, ExecutionFixture.First));
             fixture.Track();
             Execute(fixture);
         }
@@ -242,7 +242,7 @@ public sealed partial class CurrentExecutionContractTests
             else record["projects"]![0]!["exit"] = 1;
             TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, CommonExecutionEvidence.TestsPath), record.ToJsonString());
         }
-        Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root, [CandidateFixture.First]));
+        Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root, [ExecutionFixture.First]));
     }
 
     [Theory]
@@ -253,7 +253,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("infrastructure")]
     public void SelectedFailureNeverRetriesOrFallsBackToOldSuccess(string failure)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Execute(fixture);
         Seed(fixture);
         fixture.Write("tools/tests/First/Input.cs", "// select first\n");
@@ -275,7 +275,7 @@ public sealed partial class CurrentExecutionContractTests
         Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
     }
 
-    private static void EditRegistration(CandidateFixture fixture, Action<JsonArray> edit)
+    private static void EditRegistration(ExecutionFixture fixture, Action<JsonArray> edit)
     {
         var path = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
         var registration = JsonNode.Parse(TemporaryFileSystem.File.ReadAllText(path))!;
@@ -286,7 +286,7 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void EqualRegisteredInputsAcrossCandidatesReuseOriginalExecutionRepeatedly()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Execute(fixture);
         var original = ReadTests(fixture);
         for (var round = 0; round != 2; ++round)
@@ -304,7 +304,7 @@ public sealed partial class CurrentExecutionContractTests
                 foreach (var field in new[] { "results", "execution_candidate", "execution_round", "input_fingerprint" })
                     Assert.Equal(prior[field]!.ToString(), row[field]!.ToString());
             }
-            CommonExecutionEvidence.ValidateTests(fixture.Root, [CandidateFixture.First]);
+            CommonExecutionEvidence.ValidateTests(fixture.Root, [ExecutionFixture.First]);
         }
     }
 
@@ -320,7 +320,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("malformed-row", 1)]
     public void OptionalSeedExecutesOnlyUnavailableProjects(string defect, int count)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Execute(fixture);
         if (defect != "absent") Seed(fixture);
         const string seed = "build/ci/test-seed";
@@ -359,7 +359,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("status")]
     public void CurrentAcceptanceTamperingFailsHard(string field)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Execute(fixture);
         Seed(fixture);
         Execute(fixture);
@@ -375,7 +375,7 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void SeedExportRequiresEngineeringAcceptanceAndSaveFailurePreservesResult()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Execute(fixture);
         Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ExportTestSeed(fixture.Root, TextWriter.Null));
         AcceptEngineering(fixture);
@@ -390,8 +390,8 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void ExportedSeedTransfersAcrossRootsAndKeepsOriginalTrxThroughRepeatedExport()
     {
-        using var source = new CandidateFixture();
-        using var target = new CandidateFixture();
+        using var source = new ExecutionFixture();
+        using var target = new ExecutionFixture();
         Execute(source);
         AcceptEngineering(source);
         var original = CommonExecutionEvidence.ValidateTests(source.Root);
@@ -416,7 +416,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("material")]
     public void InvalidCurrentBuildFailsBeforeAnySelection(string defect)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Execute(fixture);
         Seed(fixture);
         if (defect == "missing") TemporaryFileSystem.File.Delete(Path.Combine(fixture.Root, CommonExecutionEvidence.BuildPath));
@@ -438,7 +438,7 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void ManifestRuntimeInputsProjectOnlyRelevantRows()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         fixture.Write("fixtures/input.txt", "material");
         const string filemap = "[[files]]\npattern = \"fixtures/*.txt\"\nkind = \"data\"\nadmission_plane = \"judge\"\n";
         fixture.Write("Meta/FILEMAP.toml", filemap);
@@ -451,13 +451,13 @@ public sealed partial class CurrentExecutionContractTests
         Assert.Empty(Execute(fixture));
         Seed(fixture);
         fixture.Write("Meta/FILEMAP.toml", filemap.Replace("data", "projection", StringComparison.Ordinal));
-        Assert.Equal([CandidateFixture.First], Execute(fixture));
+        Assert.Equal([ExecutionFixture.First], Execute(fixture));
     }
 
     [Fact]
     public void IncludedFileMapBytesInvalidateEngineeringTestReuse()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         fixture.Write("fixtures/input.txt", "material");
         fixture.Write("Meta/FILEMAP.toml", """
             schema_version = 4
@@ -483,10 +483,10 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Write("Meta/FILEMAP.fixture.toml", TemporaryFileSystem.File.ReadAllText(
             Path.Combine(fixture.Root, "Meta/FILEMAP.fixture.toml")) + "# identity change\n");
 
-        Assert.Equal([CandidateFixture.First], Execute(fixture));
+        Assert.Equal([ExecutionFixture.First], Execute(fixture));
     }
 
-    private static void AcceptEngineering(CandidateFixture fixture)
+    private static void AcceptEngineering(ExecutionFixture fixture)
     {
         var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
         CheckEvidenceFixture.Seal(fixture.Root, "engineering", build);
@@ -494,7 +494,7 @@ public sealed partial class CurrentExecutionContractTests
             new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", "build/ci/fixture-build.log")).ToArray());
     }
 
-    private static List<string> Execute(CandidateFixture fixture)
+    private static List<string> Execute(ExecutionFixture fixture)
     {
         fixture.Build();
         var calls = new List<string>();
@@ -507,10 +507,10 @@ public sealed partial class CurrentExecutionContractTests
         return calls;
     }
 
-    private static JsonNode ReadTests(CandidateFixture fixture) => JsonNode.Parse(
+    private static JsonNode ReadTests(ExecutionFixture fixture) => JsonNode.Parse(
         TemporaryFileSystem.File.ReadAllText(Path.Combine(fixture.Root, CommonExecutionEvidence.TestsPath)))!;
 
-    private static void Seed(CandidateFixture fixture)
+    private static void Seed(ExecutionFixture fixture)
     {
         var record = ReadTests(fixture);
         var seed = Path.Combine(fixture.Root, "build/ci/test-seed");

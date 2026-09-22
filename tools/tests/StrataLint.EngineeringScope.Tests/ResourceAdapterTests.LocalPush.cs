@@ -132,7 +132,7 @@ public sealed partial class ResourceAdapterTests
         {
             var mapping = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "Meta/ci-resources.json")))!;
             mapping["resources"]!.AsArray().Single(r => r!["id"]!.ToString() == "filemap")!["projects"] =
-                new JsonArray(ResourceRouteTests.ResourceFixture.Bar, ResourceRouteTests.ResourceFixture.Foo);
+                new JsonArray(ResourceFixture.Bar, ResourceFixture.Foo);
             fixture.Write("Meta/ci-resources.json", mapping.ToJsonString());
             fixture.CommitPlan();
         }
@@ -147,8 +147,8 @@ public sealed partial class ResourceAdapterTests
         {
             var path = registration == "execution" ? "Meta/ci-resources.json" : registration == "projects" ? EngineeringRegistrationFixture.Path : CommonExecutionEvidence.CheckManifestPath;
             var data = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, path)))!;
-            if (registration == "execution") data["resources"]!.AsArray().Single(r => r!["id"]!.ToString() == "filemap")!["projects"] = new JsonArray(ResourceRouteTests.ResourceFixture.Bar);
-            if (registration == "projects") data["projects"]!.AsArray().Single(r => r!["path"]!.ToString() == ResourceRouteTests.ResourceFixture.Foo)!["references"] = new JsonArray(ResourceRouteTests.ResourceFixture.Bar);
+            if (registration == "execution") data["resources"]!.AsArray().Single(r => r!["id"]!.ToString() == "filemap")!["projects"] = new JsonArray(ResourceFixture.Bar);
+            if (registration == "projects") data["projects"]!.AsArray().Single(r => r!["path"]!.ToString() == ResourceFixture.Foo)!["references"] = new JsonArray(ResourceFixture.Bar);
             if (registration == "checks") data["checks"]!.AsArray().Single(r => r!["id"]!.ToString() == "filemap")!["report_inputs"] = new JsonArray(new JsonObject { ["artifact"] = "required-report" });
             fixture.Write(path, data.ToJsonString());
         }
@@ -173,8 +173,8 @@ public sealed partial class ResourceAdapterTests
             var plan = PushSelection(fixture);
             Assert.Null(plan["candidate"]!["tree"]);
             if (registration == "filemap") Assert.Equal(new[] { "lean" }, Strings(plan["execution"]!["steps"]!));
-            if (registration == "execution") Assert.Equal(new[] { ResourceRouteTests.ResourceFixture.Bar }, Strings(plan["execution"]!["projects"]!));
-            if (registration == "projects") Assert.Equal(new[] { ResourceRouteTests.ResourceFixture.Foo }, Strings(plan["execution"]!["projects"]!));
+            if (registration == "execution") Assert.Equal(new[] { ResourceFixture.Bar }, Strings(plan["execution"]!["projects"]!));
+            if (registration == "projects") Assert.Equal(new[] { ResourceFixture.Foo }, Strings(plan["execution"]!["projects"]!));
         }
         RetainLocal(fixture, "registration-" + registration, result);
     }
@@ -321,9 +321,9 @@ public sealed partial class ResourceAdapterTests
         RetainLocal(fixture, "full-after-range", full);
     }
 
-    private static ResourceRouteTests.ResourceFixture LocalFixture()
+    private static ResourceFixture LocalFixture()
     {
-        var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        var fixture = new ResourceFixture(["filemap"]);
         ColdPreflightContractTests.Configure(fixture);
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         var index = map.IndexOf("[[files]]", StringComparison.Ordinal);
@@ -343,7 +343,7 @@ public sealed partial class ResourceAdapterTests
         return fixture;
     }
 
-    private static void DocCommit(ResourceRouteTests.ResourceFixture fixture)
+    private static void DocCommit(ResourceFixture fixture)
     {
         fixture.Write("docs/note.md", "committed documentation only\n");
         fixture.CommitPlan();
@@ -351,7 +351,7 @@ public sealed partial class ResourceAdapterTests
         Assert.Empty(Strings(PushSelection(fixture)["resources"]!));
     }
 
-    private static Dictionary<string, string> LocalEnvironment(ResourceRouteTests.ResourceFixture fixture, bool required)
+    private static Dictionary<string, string> LocalEnvironment(ResourceFixture fixture, bool required)
     {
         var environment = required ? ColdPreflightContractTests.EnvironmentFor(fixture) : EnvironmentFor(fixture);
         environment["MODE"] = "push";
@@ -366,10 +366,10 @@ public sealed partial class ResourceAdapterTests
         return environment;
     }
 
-    private static (int Exit, string Text) LocalPreflight(ResourceRouteTests.ResourceFixture fixture, Dictionary<string, string> environment) =>
+    private static (int Exit, string Text) LocalPreflight(ResourceFixture fixture, Dictionary<string, string> environment) =>
         EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
 
-    private static string LocalState(ResourceRouteTests.ResourceFixture fixture)
+    private static string LocalState(ResourceFixture fixture)
     {
         var paths = EngineeringProcess.Git(fixture.Root, "ls-files", "--cached", "--others", "--exclude-standard", "-z").Split('\0', StringSplitOptions.RemoveEmptyEntries);
         var state = new JsonObject {
@@ -382,9 +382,9 @@ public sealed partial class ResourceAdapterTests
         return state.ToJsonString();
     }
 
-    private static void RetainLocal(ResourceRouteTests.ResourceFixture fixture, string scenario, (int Exit, string Text) result)
+    private static void RetainLocal(ResourceFixture fixture, string scenario, (int Exit, string Text) result)
     {
-        ReleaseConsumerContractTests.Capture(fixture.Root, "dirty-" + scenario, result);
+        NativeReleaseFixture.Capture(fixture.Root, "dirty-" + scenario, result);
         if (Environment.GetEnvironmentVariable("LOCAL_PUSH_EVIDENCE") is not { Length: > 0 } evidence) return;
         JsonNode? Read(string path) => File.Exists(Path.Combine(fixture.Root, path)) ? JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, path))) : null;
         File.AppendAllText(evidence, new JsonObject {

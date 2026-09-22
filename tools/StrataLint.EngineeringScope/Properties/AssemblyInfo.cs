@@ -9,3 +9,13 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
 
 [assembly: InternalsVisibleTo("StrataLint.ReleaseIntegration.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.ExecutionTestSupport")]
+
+[assembly: InternalsVisibleTo("StrataLint.RoutingTestSupport")]
+
+[assembly: InternalsVisibleTo("StrataLint.TransportTestSupport")]
+
+[assembly: InternalsVisibleTo("StrataLint.NativeReportTestSupport")]
+
+[assembly: InternalsVisibleTo("StrataLint.ReleaseTestSupport")]

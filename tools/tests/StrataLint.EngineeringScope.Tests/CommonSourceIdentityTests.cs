@@ -15,7 +15,7 @@ public sealed class CommonSourceIdentityTests
     [InlineData("invalid-materials", typeof(InvalidDataException))]
     public void ReportValidationPreservesSourceBindingsAndOtherFileValidation(string scenario, Type? errorType)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["lean-report"]);
+        using var fixture = new ResourceFixture(["lean-report"]);
         const string source = "D5/S0/Carrier/ReportSource.lean";
         fixture.Write(source, "theorem source : True := True.intro\n");
         fixture.Write("docs/report.json", "{\"value\":1}\n");
@@ -58,7 +58,7 @@ public sealed class CommonSourceIdentityTests
     [Fact]
     public void CandidateRejectsInvalidTextButPreservesOpaqueBytesInIdentity()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         fixture.Write("docs/report.txt", "valid\n");
         var textPath = Path.Combine(fixture.Root, "docs/report.txt");
         TemporaryFileSystem.File.WriteAllBytes(textPath, [0xff]);
@@ -77,7 +77,7 @@ public sealed class CommonSourceIdentityTests
     [Fact]
     public void FreshIdentityIncludesUnregisteredDataBytesAndExecutableMode()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         fixture.Write("docs/report.json", "{\"value\":1}\n");
         var before = CommonExecutionEvidence.Candidate(fixture.Root);
         fixture.Write("docs/report.json", "{\"value\":2}\n");
@@ -95,12 +95,12 @@ public sealed class CommonSourceIdentityTests
     [InlineData("uncovered", "unregistered engineering source")]
     public void CandidateRejectsInvalidRegistrationBeforeIssuingIdentity(string defect, string diagnostic)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
         if (defect == "absent") TemporaryFileSystem.File.Delete(manifest);
         else if (defect == "duplicate") TemporaryFileSystem.File.WriteAllText(manifest,
             EngineeringRegistrationFixture.Append(TemporaryFileSystem.File.ReadAllText(manifest),
-                new EngineeringProjectFixture(CurrentExecutionContractTests.CandidateFixture.First,
+                new EngineeringProjectFixture(ExecutionFixture.First,
                     "First", "cross-cutting-test", true, [])));
         else TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "Unregistered.cs"), "class Unregistered { }");
 
@@ -115,7 +115,7 @@ public sealed class CommonSourceIdentityTests
     [InlineData("release/Conditional.cs", true)]
     public void UnrepresentedRegisteredCompileInputCannotReceiveCandidateEvidence(string source, bool releaseOnly)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         WriteProject(fixture.Root, releaseOnly);
         TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ".gitignore"),
             ".sshx-*\nlocal/\nrelease/\n**/obj/\n**/bin/\n");
@@ -140,7 +140,7 @@ public sealed class CommonSourceIdentityTests
     [Fact]
     public void DirtyRepresentedSourceChangesIdentityAndUnconsumedIgnoredFileDoesNot()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         WriteProject(fixture.Root, false);
         TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ".gitignore"), "local/\n");
         var before = CommonExecutionEvidence.Candidate(fixture.Root);
@@ -169,9 +169,9 @@ public sealed class CommonSourceIdentityTests
     public void EngineeringSealRejectsChangedStageStartEvenAfterNewTestsPass(bool modeOnly)
     {
         if (modeOnly && OperatingSystem.IsWindows()) return;
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var started = CommonExecutionEvidence.ValidateBuild(fixture.Root);
-        var source = Path.Combine(fixture.Root, CurrentExecutionContractTests.CandidateFixture.First);
+        var source = Path.Combine(fixture.Root, ExecutionFixture.First);
         if (modeOnly) File.SetUnixFileMode(source, File.GetUnixFileMode(source) | UnixFileMode.UserExecute);
         else TemporaryFileSystem.File.AppendAllText(source, "\n");
         _ = fixture.Build();
@@ -193,7 +193,7 @@ public sealed class CommonSourceIdentityTests
     }
 
     private static void WriteProject(string root, bool releaseOnly) => TemporaryFileSystem.File.WriteAllText(
-        Path.Combine(root, CurrentExecutionContractTests.CandidateFixture.First),
+        Path.Combine(root, ExecutionFixture.First),
         "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework>"
         + "<IsTestProject>true</IsTestProject></PropertyGroup>"
         + (releaseOnly ? "<ItemGroup><Compile Remove=\"release/**/*.cs\" />"

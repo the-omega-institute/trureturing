@@ -17,7 +17,7 @@ public sealed class CurrentDeadlineContractTests
     {
         WithDeadline(deadline, () =>
         {
-            using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+            using var fixture = new ExecutionFixture();
             CommonStageContractTests.PrepareCurrent(fixture);
             TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/producer.sh"), "printf 'producer-out'\nprintf 'producer-error' >&2\n");
             var clock = new ManualClock();
@@ -54,7 +54,7 @@ public sealed class CurrentDeadlineContractTests
     {
         WithDeadline("invalid-ambient-deadline", () =>
         {
-            using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+            using var fixture = new ExecutionFixture();
             CommonStageContractTests.PrepareCurrent(fixture);
             TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/producer.sh"), "printf 'producer-out'\n");
             using var cancellation = new CancellationTokenSource();

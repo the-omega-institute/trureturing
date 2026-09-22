@@ -16,7 +16,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("reusable")]
     public void CheckoutObtainsOnlyFixedPushEndpointsBeforeRemovingRemotes(string scenario)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var before = fixture.Commit;
         if (scenario == "non-ancestor")
         {

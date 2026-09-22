@@ -13,11 +13,11 @@ public sealed class SharedBuildRuntimeTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var ciEnvironment = new CiFixtureEnvironment();
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var root = fixture.Root;
         var dotnetEnvironment = DotnetFixtureProfile.Create(root);
         var repository = TestRepositoryLayout.FindRoot();
-        foreach (var path in new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second })
+        foreach (var path in new[] { ExecutionFixture.First, ExecutionFixture.Second })
             TemporaryFileSystem.File.Delete(Path.Combine(root, path));
         Write(".gitignore", "build/\n.lake/\n.judge-binaries/\n**/bin/\n**/obj/\n__pycache__/\n");
         // The owning project's restore has already supplied these pinned packages.

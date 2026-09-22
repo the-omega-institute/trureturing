@@ -1,3 +1,6 @@
+using static StrataLint.TestSupport.TransportFixture;
+using static StrataLint.TestSupport.NativeReportFixture;
+using static StrataLint.TestSupport.ExecutionFixture;
 using System.Diagnostics;
 using System.Formats.Tar;
 using System.IO.Compression;
@@ -16,7 +19,7 @@ public sealed partial class CiTransportTests
     public void CurrentCliTransportRoundTripRetainsRegistrationAndRejectsInvalidBundles()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Prepare(fixture, current: false);
         var root = fixture.Root;
         var repository = TestRepositoryLayout.FindRoot();
@@ -111,7 +114,7 @@ public sealed partial class CiTransportTests
     public void NativeTransportSharesRequiredPayloadsAndRestoresIndependentFiles(string stage)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var root = fixture.Root;
         Prepare(fixture, stage.StartsWith("current", StringComparison.Ordinal));
         var owner = stage.Replace("-seed", "", StringComparison.Ordinal);
@@ -204,7 +207,7 @@ public sealed partial class CiTransportTests
     public void DeclaredArchiveAliasesAreValidatedBeforeAnyMaterialIsWritten(string defect)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var root = fixture.Root;
         Prepare(fixture, current: false);
         var commit = Git(root, "rev-parse", "HEAD");
@@ -276,7 +279,7 @@ public sealed partial class CiTransportTests
     [Fact]
     public void CurrentSealRequiresThePublishedProvenanceCompanion()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Prepare(fixture, current: false);
         Report(fixture.Root);
         TemporaryFileSystem.File.Delete(Path.Combine(fixture.Root, CommonExecutionEvidence.ReportPath + ".provenance.json"));
@@ -289,7 +292,7 @@ public sealed partial class CiTransportTests
     [InlineData("current")]
     public void CompleteNulListedBundleMovesAcrossRootsAndPreservesExecutableModes(string stage)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Prepare(fixture, stage == "current");
         var commit = Git(fixture.Root, "rev-parse", "HEAD");
         var archive = Path.Combine(fixture.Root, "build", "transfer.tgz");
@@ -329,11 +332,11 @@ public sealed partial class CiTransportTests
     [InlineData("missing-provenance")]
     public void RequiredTransportCannotSealStaleOrIncompleteProduction(string defect)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Prepare(fixture, current: true);
         switch (defect)
         {
-            case "candidate": TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, CurrentExecutionContractTests.CandidateFixture.First), "\n"); break;
+            case "candidate": TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ExecutionFixture.First), "\n"); break;
             case "failed-evidence":
                 var record = CommonExecutionEvidence.Read<CommonStageRecord>(fixture.Root, CommonExecutionEvidence.CurrentPath);
                 CommonExecutionEvidence.Write(fixture.Root, CommonExecutionEvidence.CurrentPath,
@@ -345,266 +348,5 @@ public sealed partial class CiTransportTests
         Assert.Equal(2, Run("transport-pack", fixture.Root, "current", Git(fixture.Root, "rev-parse", "HEAD"), "17", "2", Path.Combine(fixture.Root, "build", "bad.tgz")));
     }
 
-    [Theory]
-    [InlineData("valid")]
-    [InlineData("undeclared")]
-    [InlineData("corrupt")]
-    public void TruthReleaseRestoresOnlyVerifiedCurrentArtifacts(string defect)
-    {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
-        PrepareCurrentRuntime(fixture);
-        var root = fixture.Root;
-        var commit = Git(root, "rev-parse", "HEAD");
-        var archive = Path.Combine(root, "build/current.tgz");
-        Assert.Equal(0, Run("transport-pack", root, "current", commit, "17", "2", archive));
-        var transfer = Path.Combine(root, "build/ci-current.tar.gz");
-        using (var input = new GZipStream(File.OpenRead(archive), CompressionMode.Decompress))
-        using (var reader = new TarReader(input))
-        using (var output = new GZipStream(File.Create(transfer), CompressionLevel.Fastest))
-        using (var writer = new TarWriter(output))
-        {
-            while (reader.GetNextEntry(copyData: true) is { } entry)
-            {
-                if (defect == "corrupt" && entry.Name == Log)
-                    entry = new PaxTarEntry(TarEntryType.RegularFile, entry.Name) { Mode = entry.Mode,
-                        ModificationTime = entry.ModificationTime, DataStream = new MemoryStream("corrupt"u8.ToArray()) };
-                writer.WriteEntry(entry);
-            }
-            if (defect == "undeclared")
-                writer.WriteEntry(new PaxTarEntry(TarEntryType.RegularFile, "build/ci/undeclared")
-                {
-                    DataStream = new MemoryStream("extra"u8.ToArray()),
-                });
-        }
-        var artifact = Path.Combine(root, "build/artifact.zip");
-        using (var zip = ZipFile.Open(artifact, ZipArchiveMode.Create))
-            zip.CreateEntryFromFile(transfer, "ci-current.tar.gz");
-        var area = Path.Combine(root, "build/release");
-        Directory.CreateDirectory(area);
-        var result = EngineeringProcess.Process(root, "python3", ["-B", "-c", """
-            import json, os, pathlib, shutil, subprocess, sys
-            repository, root, area, artifact = map(pathlib.Path, sys.argv[1:5])
-            commit, defect = sys.argv[5:]
-            sys.path.insert(0, str(repository / 'tools/scripts/workflow'))
-            import truth_release as owner
-            repository_name = os.environ['GITHUB_REPOSITORY']
-            workflow = dict(id=7, path='.github/workflows/ci-push.yml')
-            run = dict(id=17, run_attempt=2, workflow_id=7, path=workflow['path'],
-                       event='push', head_branch='dev', head_sha=commit, status='completed', conclusion='success')
-            jobs = [dict(name=name, run_id=17, run_attempt=2, head_sha=commit,
-                         status='completed', conclusion='success') for name in ('engineering', 'current')]
-            responses = {
-                'branches/dev': dict(protected=True),
-                'actions/workflows/ci-push.yml': workflow,
-                'commits?sha=dev&per_page=40': [dict(sha=commit)],
-                'actions/workflows/ci-push.yml/runs?event=push&head_sha=' + commit + '&per_page=100':
-                    [dict(workflow_runs=[run])],
-                'actions/runs/17/attempts/2/jobs?per_page=100': [dict(jobs=jobs)],
-                'actions/runs/17/artifacts?per_page=100': [dict(artifacts=[dict(id=170,
-                    name='ci-current-17-2', expired=False, workflow_run=dict(id=17, head_sha=commit))])],
-            }
-            real_run = subprocess.run
-            def github(command, **options):
-                if command[0] != 'gh':
-                    return real_run(command, **options)
-                path = command[-1].removeprefix('repos/' + repository_name + '/')
-                if path == 'actions/artifacts/170/zip':
-                    with artifact.open('rb') as source:
-                        shutil.copyfileobj(source, options['stdout'])
-                    return subprocess.CompletedProcess(command, 0)
-                return subprocess.CompletedProcess(command, 0, json.dumps(responses[path]))
-            # Only GitHub is replaced. Selection, clone/checkout, extraction and
-            # the transported native verifier all execute their production code.
-            subprocess.run = github
-            if defect == 'valid':
-                selected = owner.select(root, area, owner.collect(repository_name, commit, workflow))
-                candidate = owner.restore_candidate(root, area, selected)
-                print('TRUTH_RELEASE_RESTORED ' + str(candidate))
-            else:
-                sys.argv = ['truth_release.py', 'prepare', '--repository', str(root), '--output', str(area)]
-                raise SystemExit(owner.main())
-            """, TestRepositoryLayout.FindRoot(), root, area, artifact, commit, defect],
-            new Dictionary<string, string> {
-                ["GITHUB_REPOSITORY"] = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "",
-                ["CI_WORKFLOW_INPUTS"] = "null", ["GITHUB_OUTPUT"] = Path.Combine(area, "outputs") },
-            hangGuard: TestBudgets.WorkflowProcessHangGuard);
-        Assert.True(result.Exit == 0, result.Text);
-        var target = Path.Combine(area, "candidate-17-2");
-        if (defect == "valid")
-        {
-            Assert.Contains("run_id=17 run_attempt=2 status=verified", result.Text);
-            Assert.Contains("TRUTH_RELEASE_RESTORED " + target, result.Text);
-            var expected = CommonExecutionEvidence.ValidateCurrent(root);
-            var restored = CommonExecutionEvidence.ValidateCurrent(target);
-            Assert.Equal(expected.Candidate, restored.Candidate);
-            Assert.Equal(expected.Round, restored.Round);
-            Assert.Equal(expected.Materials, restored.Materials);
-            Assert.Equal(File.ReadAllBytes(Path.Combine(root, "Meta/ci-checks.json")),
-                File.ReadAllBytes(Path.Combine(target, "Meta/ci-checks.json")));
-        }
-        else
-        {
-            Assert.Contains(defect == "undeclared" ? "stage archive differs from declared transport materials"
-                : "artifact integrity mismatch: " + Log, result.Text);
-            Assert.Contains("TRUTH_RELEASE_INPUT_UNAVAILABLE", result.Text);
-            Assert.Contains("publish_ready=false", File.ReadAllText(Path.Combine(area, "outputs")));
-            Assert.DoesNotContain("status=verified", result.Text);
-            Assert.False(File.Exists(Path.Combine(target, "build/ci/undeclared")));
-            Assert.False(Directory.Exists(Path.Combine(area, "truth-release-assets")));
-        }
-    }
 
-
-    private const string Log = "build/ci/fixture-executable";
-    private static StageStep[] Steps(string[] names) => names.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", Log)).ToArray();
-
-    private static void PrepareCurrentRuntime(CurrentExecutionContractTests.CandidateFixture fixture)
-    {
-        Prepare(fixture, current: false);
-        var root = fixture.Root;
-        var runtime = Path.GetDirectoryName(CommonExecutionEvidence.RunnerPath)!;
-        Directory.CreateDirectory(Path.Combine(root, runtime));
-        var binaries = Directory.GetFiles(Path.Combine(TestRepositoryLayout.FindRoot(), runtime)).Select(file =>
-        {
-            var relative = runtime + "/" + Path.GetFileName(file);
-            File.Copy(file, Path.Combine(root, relative));
-            return relative;
-        }).ToArray();
-        SealEngineering(root, CommonExecutionEvidence.Candidate(root), binaries, Steps(CommonExecutionEvidence.EngineeringSteps));
-        Report(root);
-        CheckEvidenceFixture.Seal(root, "current", CommonExecutionEvidence.ValidateBuild(root));
-        CommonExecutionEvidence.SealCurrent(root, CommonExecutionEvidence.ValidateBuild(root), Steps(CommonExecutionEvidence.CurrentSteps));
-    }
-
-    private static void Prepare(CurrentExecutionContractTests.CandidateFixture fixture, bool current)
-    {
-        fixture.Build();
-        Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
-        TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, Log), "#!/bin/sh\nexit 0\n");
-        if (!OperatingSystem.IsWindows())
-            File.SetUnixFileMode(Path.Combine(fixture.Root, Log), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
-        CiTransportTests.SealEngineering(fixture.Root, candidate, [Log], Steps(CommonExecutionEvidence.EngineeringSteps));
-        if (!current) return;
-        Report(fixture.Root);
-        CheckEvidenceFixture.Seal(fixture.Root, "current", CommonExecutionEvidence.ValidateBuild(fixture.Root));
-        CommonExecutionEvidence.SealCurrent(fixture.Root, CommonExecutionEvidence.ValidateBuild(fixture.Root), Steps(CommonExecutionEvidence.CurrentSteps));
-    }
-
-    internal static void SealEngineering(string root, string candidate, IEnumerable<string> binaries, StageStep[] steps)
-    {
-        var build = CommonExecutionEvidence.ValidateBuild(root);
-        Assert.Equal(candidate, build.Candidate);
-        build = build with { Materials = CommonExecutionEvidence.Materials(root,
-            build.Materials.Select(material => material.Path).Concat(binaries)) };
-        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.BuildPath, build);
-        var list = CommonExecutionEvidence.BundleListPath("build");
-        TemporaryFileSystem.File.WriteAllText(Path.Combine(root, list), string.Join('\0',
-            build.Materials.Select(material => material.Path).Append(CommonExecutionEvidence.BuildPath).Append(list)
-                .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)) + "\0");
-        CheckEvidenceFixture.Seal(root, "engineering", build);
-        CommonExecutionEvidence.SealEngineering(root, build, steps);
-    }
-
-    internal static (int Exit, string Text) ProduceReport(string root)
-    {
-        var repository = TestRepositoryLayout.FindRoot();
-        return EngineeringProcess.Process(root, "python3", ["-B", "-c", """
-            import json, pathlib, shutil, sys, time
-            repository, root, relative = map(pathlib.Path, sys.argv[1:])
-            sys.path.insert(0, str(repository / 'tools/lean-inspector/tests'))
-            from test_native import NativeTests
-            import publication
-            NativeTests.setUpClass()
-            fixture = NativeTests('test_native_invalidation')
-            fixture.setUp()
-            phases = fixture.root / 'native-phases.jsonl'
-            fixture.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
-            observation = {'processes': None, 'phase_lines': 0}
-            owned_processes = fixture.owned_processes
-            def observed_processes(command, **options):
-                rows = owned_processes(command, **options)
-                identity = sorted((row['pid'], row['identity'], row['command']) for row in rows)
-                if identity != observation['processes']:
-                    print('NATIVE_HANDOFF_PROCESSES ' + json.dumps(dict(
-                        monotonic_ms=time.monotonic_ns() // 1_000_000, processes=rows)),
-                        file=sys.stderr, flush=True)
-                    observation['processes'] = identity
-                if phases.exists():
-                    lines = phases.read_text().splitlines()
-                    for line in lines[observation['phase_lines']:]:
-                        print('NATIVE_HANDOFF_PHASE ' + line, file=sys.stderr, flush=True)
-                    observation['phase_lines'] = len(lines)
-                return rows
-            fixture.owned_processes = observed_processes
-            run_command = fixture.guarded_command
-            def observed_output(stream, text):
-                print('NATIVE_HANDOFF_OUTPUT ' + json.dumps(dict(stream=stream, text=text)),
-                    file=sys.stderr, flush=True)
-            def observed_command(args, **options):
-                if pathlib.Path(args[0]).name == 'lake' and 'build' in args:
-                    args = [args[0], '--verbose', *args[1:]]
-                print('NATIVE_HANDOFF_COMMAND ' + json.dumps(list(args)), file=sys.stderr, flush=True)
-                result = run_command(args, observe_output=observed_output, **options)
-                print('NATIVE_HANDOFF_COMMAND_EXIT ' + str(result.returncode), file=sys.stderr, flush=True)
-                return result
-            fixture.guarded_command = observed_command
-            try:
-                # Native fixtures supply real Lake facets; this shape uses the
-                # managed module names consumed by the C# report reader.
-                source = fixture.root / 'Fixture.lean'
-                source.rename(fixture.root / 'Trureturing.lean')
-                for name in ('lakefile.toml', 'lean-report-inputs.json', 'utility.json'):
-                    path = fixture.root / name
-                    path.write_text(path.read_text().replace('Fixture', 'Trureturing'))
-                fixture.write('utility.json', '[]\n')
-                fixture.build()
-                print('NATIVE_HANDOFF_PUBLISH', file=sys.stderr, flush=True)
-                fixture.publish()
-                for name in ('D5', 'Trureturing.lean', 'External.lean', 'ClaimSupport.lean',
-                        'lakefile.toml', 'lake-manifest.json', 'lean-toolchain'):
-                    source, target = fixture.root / name, root / name
-                    if source.is_dir(): shutil.copytree(source, target, dirs_exist_ok=True)
-                    else: shutil.copyfile(source, target)
-                destination = root / relative
-                destination.parent.mkdir(parents=True, exist_ok=True)
-                for suffix in publication.SUFFIXES:
-                    shutil.copyfile(publication.member(fixture.root / 'public.json', suffix),
-                                    publication.member(destination, suffix))
-                publication.member(destination, '.sha256').write_text(publication.digest(destination)
-                    + '  ' + destination.name + '\n')
-                print('NATIVE_CURRENT_HANDOFF files=' + str(len(publication.SUFFIXES)))
-            finally:
-                fixture.doCleanups()
-            """, repository, root, CommonExecutionEvidence.ReportPath],
-            hangGuard: TestBudgets.WorkflowProcessHangGuard);
-    }
-
-    internal static void Report(string root)
-    {
-        var report = Path.Combine(root, CommonExecutionEvidence.ReportPath);
-        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(report)!);
-        TemporaryFileSystem.File.WriteAllText(report, "{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v2\"}\n");
-        using (var stream = File.Create(report + ".materials.zip"))
-        using (new ZipArchive(stream, ZipArchiveMode.Create)) { }
-        TemporaryFileSystem.File.WriteAllText(report + ".sha256", CommonExecutionEvidence.Hash(report) + "  " + Path.GetFileName(report) + "\n");
-        foreach (var suffix in new[] { ".input.attestation", ".provenance.json" })
-            TemporaryFileSystem.File.WriteAllText(report + suffix, "fixture companion\n");
-    }
-
-    private static int Run(string command, string root, string stage, string commit, string run, string attempt, string? archive = null) =>
-        Program.Run(new[] { command, "--repository", root, "--stage", stage, "--commit", commit, "--run-id", run, "--run-attempt", attempt }
-            .Concat(archive is null ? [] : new[] { "--archive", archive }).ToArray(), TestResultEvidence.Load, TextWriter.Null, TextWriter.Null);
-
-    private static string Git(string root, params string[] args)
-    {
-        var start = new ProcessStartInfo("git") { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true };
-        foreach (var arg in args) start.ArgumentList.Add(arg);
-        using var process = Process.Start(start)!;
-        var output = process.StandardOutput.ReadToEnd();
-        var error = process.StandardError.ReadToEnd();
-        process.WaitForExit();
-        Assert.True(process.ExitCode == 0, error);
-        return output.Trim();
-    }
 }

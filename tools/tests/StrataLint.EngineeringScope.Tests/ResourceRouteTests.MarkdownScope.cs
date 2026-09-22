@@ -1,3 +1,4 @@
+using StrataLint.TestSupport;
 using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;

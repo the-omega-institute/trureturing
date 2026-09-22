@@ -11,7 +11,7 @@ public sealed class CommonStageContractTests
     [InlineData(7, 2, "failed")]
     public void RealCommandPreservesExitAndBothOutputStreams(int commandExit, int rawExit, string status)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/producer.sh"), $"""
             printf 'producer-out-without-newline'
@@ -44,7 +44,7 @@ public sealed class CommonStageContractTests
     [Fact]
     public void StepAnnouncesItsNameBeforeStartingTheProducer()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
         var started = Path.Combine(fixture.Root, "build/producer-started");
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/producer.sh"),
@@ -71,7 +71,7 @@ public sealed class CommonStageContractTests
     [InlineData(true)]
     public async Task ProducerOutputIsFlushedBeforeExitWithoutReplayingItsContents(bool standardError)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
         var marker = standardError ? "streamed-stderr" : "streamed-stdout";
         var exited = Path.Combine(fixture.Root, "build/producer-exited");
@@ -132,7 +132,7 @@ public sealed class CommonStageContractTests
     [Fact]
     public void CancelledDeadlineBeforeStartupLeavesAllStepsUnexecuted()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
         using var deadline = new CancellationTokenSource();
         deadline.Cancel();
@@ -162,7 +162,7 @@ public sealed class CommonStageContractTests
 
     private static async Task VerifyPostExitDrainCancellation(bool standardError, bool releaseBeforeSummary)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/producer.sh"), $$"""
             set -euo pipefail
@@ -278,7 +278,7 @@ public sealed class CommonStageContractTests
     [Fact]
     public async Task DeadlineBeforeFirstReadRetainsAlreadyEmittedOutput()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
         var marker = Path.Combine(fixture.Root, "build/producer-started");
         using var deadline = new CancellationTokenSource();
@@ -325,7 +325,7 @@ public sealed class CommonStageContractTests
     [InlineData(false)]
     public async Task OutputBoundaryRecognizesPersistentMarker(bool alreadyPresent)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var marker = Path.Combine(fixture.Root, "output-marker");
         if (alreadyPresent) TemporaryFileSystem.File.WriteAllText(marker, "");
         var waiting = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -368,7 +368,7 @@ public sealed class CommonStageContractTests
     [Fact]
     public void OutputBoundaryMissingMarkerRemainsInfrastructureFailureAfterCancellation()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var marker = Path.Combine(fixture.Root, "absent-output-marker");
         using var deadline = new CancellationTokenSource();
         var clock = new OutputBoundaryClock(() => TemporaryFileSystem.File.Exists(marker), deadline);
@@ -401,7 +401,7 @@ public sealed class CommonStageContractTests
     [Fact]
     public async Task TimedOutStartedStepRetainsOutputAndIsReportedAsFailed()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
         var marker = Path.Combine(fixture.Root, "build", "producer-started");
         using var deadline = new CancellationTokenSource();
@@ -474,7 +474,7 @@ public sealed class CommonStageContractTests
     [Fact]
     public async Task ExpiredDeadlineBeforeStartupLeavesAllStepsUnexecuted()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         PrepareCurrent(fixture);
         var start = new System.Diagnostics.ProcessStartInfo(Path.Combine(
             Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope"))
@@ -511,7 +511,7 @@ public sealed class CommonStageContractTests
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.CurrentPath)));
     }
 
-    internal static void PrepareCurrent(CurrentExecutionContractTests.CandidateFixture fixture)
+    internal static void PrepareCurrent(ExecutionFixture fixture)
     {
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "Makefile"), "lean-report:\n\t@/bin/bash build/producer.sh\n");
         TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(fixture.Root, "build"));
@@ -539,19 +539,19 @@ public sealed class CommonStageContractTests
         fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
-        CiTransportTests.SealEngineering(fixture.Root, candidate, binaries, CommonExecutionEvidence.EngineeringSteps
+        TransportFixture.SealEngineering(fixture.Root, candidate, binaries, CommonExecutionEvidence.EngineeringSteps
             .Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", binaries[0])).ToArray());
     }
 
     [Fact]
     public void EngineeringEvidenceSurvivesLeanCacheReplacement()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         var log = CommonExecutionEvidence.RootPath + "/fixture.log";
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, log), "executed\n");
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
-        CiTransportTests.SealEngineering(fixture.Root, candidate, [log], CommonExecutionEvidence.EngineeringSteps
+        TransportFixture.SealEngineering(fixture.Root, candidate, [log], CommonExecutionEvidence.EngineeringSteps
             .Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray());
         TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(fixture.Root, ".lake"));
         TemporaryFileSystem.Directory.Delete(Path.Combine(fixture.Root, ".lake"), recursive: true);
@@ -561,7 +561,7 @@ public sealed class CommonStageContractTests
     [Fact]
     public void FreshEngineeringStartsLockedRestoreBeforeReportingMissingSolution()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         using var output = new StringWriter();
         Assert.Equal(1, new CommonStages(fixture.Root, output).Run("engineering", null));
         var summary = TemporaryFileSystem.File.ReadAllText(Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "build-result.json"));
@@ -572,13 +572,13 @@ public sealed class CommonStageContractTests
     [Fact]
     public void CurrentConsumerRejectsMissingReportAndChangedDll()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) => { fixture.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         var dll = CommonExecutionEvidence.RootPath + "/fixture.dll";
         TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, dll), "candidate binary");
         var steps = CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", dll)).ToArray();
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
-        CiTransportTests.SealEngineering(fixture.Root, candidate, [dll], steps);
+        TransportFixture.SealEngineering(fixture.Root, candidate, [dll], steps);
         CommonExecutionEvidence.ValidateEngineering(fixture.Root);
         var currentSteps = CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", dll)).ToArray();
         Assert.ThrowsAny<IOException>(() => CommonExecutionEvidence.SealCurrent(fixture.Root, CommonExecutionEvidence.ValidateBuild(fixture.Root), currentSteps));
@@ -621,16 +621,16 @@ public sealed class CommonStageContractTests
     [InlineData("missing-base-project")]
     public void CompleteCommonArtifactsValidateAfterTransportAndRejectIncompleteEvidence(string scenario)
     {
-        using var source = new CurrentExecutionContractTests.CandidateFixture();
-        using var target = new CurrentExecutionContractTests.CandidateFixture();
+        using var source = new ExecutionFixture();
+        using var target = new ExecutionFixture();
         Assert.Equal(0, Program.RunCurrentTests(source.Root, (_, results) => { source.WriteTrx(results, "Passed"); return 0; }, TextWriter.Null));
         const string log = CommonExecutionEvidence.RootPath + "/fixture.log";
         TemporaryFileSystem.File.WriteAllText(Path.Combine(source.Root, log), "executed\n");
         var engineeringSteps = CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, name.EndsWith("proof", StringComparison.Ordinal) ? 1 : 0, 0, "executed", log)).ToArray();
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(source.Root, CommonExecutionEvidence.TestsPath).Candidate;
-        CiTransportTests.SealEngineering(source.Root, candidate, [log], engineeringSteps);
+        TransportFixture.SealEngineering(source.Root, candidate, [log], engineeringSteps);
         var report = Path.Combine(source.Root, CommonExecutionEvidence.ReportPath);
-        CiTransportTests.Report(source.Root);
+        ExecutionFixture.Report(source.Root);
         TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(report)!);
         TemporaryFileSystem.File.WriteAllText(report, "{\"modules\": [], \"schema\": \"stratalint-raw-lean-report-v2\"}\n");
         using (var archive = new MemoryStream())
@@ -663,7 +663,7 @@ public sealed class CommonStageContractTests
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
             TemporaryFileSystem.File.WriteAllBytes(destination, TemporaryFileSystem.File.ReadAllBytes(file));
         }
-        CommonExecutionEvidence.ValidateCommon(target.Root, [CurrentExecutionContractTests.CandidateFixture.First]);
+        CommonExecutionEvidence.ValidateCommon(target.Root, [ExecutionFixture.First]);
         var current = CommonExecutionEvidence.Read<CommonStageRecord>(target.Root, CommonExecutionEvidence.CurrentPath);
         switch (scenario)
         {

@@ -11,7 +11,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData(true)]
     public void PullRequestResolverPublishesWholePlanWorkDecision(bool required)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(required ? ["filemap"] : []);
+        using var fixture = new ResourceFixture(required ? ["filemap"] : []);
         fixture.PrPlan();
         var head = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^2");
 
@@ -35,7 +35,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void FailedPlanCannotPublishNoWorkDecision()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.PrPlan();
         var head = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^2");
         File.AppendAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"), "# uncommitted declaration\n");
@@ -52,7 +52,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void LargePullRequestTransportsCompleteScopeWithoutProcessSizedOutputs()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         const int count = 600;
         for (var index = 0; index < count; index++)
             fixture.Write($"docs/{index:D4}-{new string('x', 160)}.md", "registered documentation\n");
@@ -110,7 +110,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("newline")]
     public void PullRequestResolverRejectsInvalidEventIdentity(string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.PrPlan();
         var value = defect switch
         {
@@ -130,7 +130,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void PullRequestResolverRejectsMovedMergeCheckoutWithSameTriggeringHead()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.PrPlan();
         var (basis, head, moved) = MovePullRequestMerge(fixture);
         EngineeringProcess.Git(fixture.Root, "reset", "--hard", "refs/pull/17/merge");
@@ -147,7 +147,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void PullRequestResolverKeepsEventMergeWhenMergeRefMoves()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.PrPlan();
         var (basis, head, _) = MovePullRequestMerge(fixture);
 
@@ -169,14 +169,14 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void PullRequestResolverStillRejectsDifferentTriggeringHead()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.PrPlan();
         var wrongHead = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         var result = ResolvePullRequest(fixture, wrongHead, fixture.Commit);
         AssertUnpublishedResolution(fixture, result, "does not contain the triggering PR head");
     }
 
-    private static (string Basis, string Head, string Moved) MovePullRequestMerge(ResourceRouteTests.ResourceFixture fixture)
+    private static (string Basis, string Head, string Moved) MovePullRequestMerge(ResourceFixture fixture)
     {
         string Git(params string[] arguments) => EngineeringProcess.Git(fixture.Root, arguments);
         string CommitTree(params string[] arguments) => Git(["-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit-tree", .. arguments]);
@@ -192,7 +192,7 @@ public sealed partial class ResourceAdapterTests
         return (basis, head, moved);
     }
 
-    private static (int Exit, string Text) ResolvePullRequest(ResourceRouteTests.ResourceFixture fixture,
+    private static (int Exit, string Text) ResolvePullRequest(ResourceFixture fixture,
         string head, string eventCandidate, bool unsetEvent = false)
     {
         var environment = EnvironmentFor(fixture);
@@ -203,7 +203,7 @@ public sealed partial class ResourceAdapterTests
                 "resolve", "--repository", fixture.Root, "--head", head], environment, TestBudgets.WorkflowProcessHangGuard);
     }
 
-    private static void AssertUnpublishedResolution(ResourceRouteTests.ResourceFixture fixture,
+    private static void AssertUnpublishedResolution(ResourceFixture fixture,
         (int Exit, string Text) result, string diagnostic)
     {
         Assert.Equal(2, result.Exit);

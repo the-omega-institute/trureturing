@@ -12,7 +12,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData(true)]
     public void IdleStageDoesNotHideWorkInAnotherRegisteredStage(bool otherWork)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(otherWork ? ["filemap"] : []);
+        using var fixture = new ResourceFixture(otherWork ? ["filemap"] : []);
         var environment = EnvironmentFor(fixture);
         MaterializePlan(fixture, environment);
 
@@ -31,7 +31,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("delta")]
     public void ShellNoWorkNeedsNoSdkOrCacheAndProducesSummary(string stage)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         if (stage == "delta") fixture.PrPlan();
         var environment = EnvironmentFor(fixture);
         var basis = JsonNode.Parse(File.ReadAllText(fixture.Plan))!["base"]?.ToString();
@@ -57,7 +57,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("delta", "blob")]
     public void InvalidStageInputCannotBeHiddenByNoWork(string stage, string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.PrPlan();
         var value = defect switch
         {
@@ -84,7 +84,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("prerequisite")]
     public void WorkflowRouteFailsClosedBeforeSetup(string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
         fixture.PrPlan();
         MaterializePlan(fixture, environment);
@@ -122,7 +122,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("filemap")]
     public void MaterializedRouteRequestsOnlyRegisteredStageToolsAndCaches(string resource)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(resource == "none" ? [] : [resource]);
+        using var fixture = new ResourceFixture(resource == "none" ? [] : [resource]);
         var filemap = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         filemap = filemap.Replace("tools = [], cache_layers = [], cache_activation = {}", "tools = [\"dotnet\"], cache_layers = [\"current\"], cache_activation = {current = \"stage-start\"}", StringComparison.Ordinal);
         fixture.Write("Meta/FILEMAP.toml", filemap);
@@ -146,7 +146,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("snapshot")]
     public void NoResourceCacheEntryNeedsNoSdkToolchainOrCacheConfiguration(string command)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
         environment["CANDIDATE_SHA"] = fixture.Commit;
         environment["GITHUB_RUN_ID"] = "";
@@ -167,7 +167,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData(false, false, true)]
     public void ReportSeedCannotRemoveRegisteredInspectorBuildResources(bool compileInspector, bool seedAvailable, bool needsLake)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["lean-report"]);
+        using var fixture = new ResourceFixture(["lean-report"]);
         var environment = EnvironmentFor(fixture);
         environment["CANDIDATE_SHA"] = fixture.Commit;
         environment["GITHUB_ENV"] = Path.Combine(fixture.Root, "build/adapter-environment");
@@ -211,7 +211,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("lean")]
     public void SelectedLeanWorkRequestsDeclaredNativeBuildSeeds(string resource)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([resource]);
+        using var fixture = new ResourceFixture([resource]);
         fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\"}]}");
         fixture.Write("lean-toolchain", "leanprover/lean4:v4.22.0\n");
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
@@ -243,7 +243,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("current", true)]
     public void StageRoutingDeclaresLeanToolchainWithoutMaterializingIt(string resource, bool build)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(resource == "none" ? [] : [resource]);
+        using var fixture = new ResourceFixture(resource == "none" ? [] : [resource]);
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         fixture.Write("Meta/FILEMAP.toml", string.Join('\n', map.Split('\n').Select(line =>
             line.Contains("id = \"lean\"", StringComparison.Ordinal)
@@ -263,7 +263,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void PartialRouteCacheKeysContainOnlyItsDeclaredSeedLayer()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\"}]}");
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         fixture.Write("Meta/FILEMAP.toml", map.Replace("cache_layers = [], cache_activation = {}", "cache_layers = [\"current\"], cache_activation = {current = \"stage-start\"}", StringComparison.Ordinal));
@@ -286,7 +286,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("scope")]
     public void BadSelectedPlanCannotStartBootstrap(string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         File.WriteAllText(defect == "plan" ? fixture.Plan : fixture.Changes, "[]");
         var result = Shell(fixture, ["build"], EnvironmentFor(fixture));
         Assert.Equal(2, result.Exit);
@@ -297,7 +297,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void DownloadedShellSelectionReachesNativeRunnerAndPreservesSelectedFailure()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         var environment = EnvironmentFor(fixture);
         MaterializePlan(fixture, environment);
         fixture.Write("tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "fixture");
@@ -321,7 +321,7 @@ public sealed partial class ResourceAdapterTests
     public void CurrentShellPreservesWrapperCancellationWhenTheChildSucceeds(string signal, int expected)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         var environment = EnvironmentFor(fixture);
         MaterializePlan(fixture, environment);
         fixture.Write("tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "fixture");
@@ -367,7 +367,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void ShellRejectsMismatchedFixedCandidateBeforeNoWork()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
         environment["CANDIDATE_SHA"] = new string('a', 40);
         var result = Shell(fixture, ["current"], environment);
@@ -378,7 +378,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void NativePushResolvesOrdinaryDocumentationChangeBeforeSetup()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.Write("fixtures/selected.txt", "documentation change\n");
         fixture.CommitPlan();
         var environment = EnvironmentFor(fixture);
@@ -390,9 +390,9 @@ public sealed partial class ResourceAdapterTests
         Assert.Equal("not-required", Summary(fixture, "build")["status"]!.ToString());
     }
 
-    private static JsonNode Summary(ResourceRouteTests.ResourceFixture fixture, string stage) =>
+    private static JsonNode Summary(ResourceFixture fixture, string stage) =>
         JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/" + stage + "-result.json")))!;
-    private static void MaterializePlan(ResourceRouteTests.ResourceFixture fixture, Dictionary<string, string> environment)
+    private static void MaterializePlan(ResourceFixture fixture, Dictionary<string, string> environment)
     {
         var directory = Path.Combine(fixture.Root, "build/ci");
         Directory.CreateDirectory(directory);
@@ -404,7 +404,7 @@ public sealed partial class ResourceAdapterTests
         }
     }
 
-    private static Dictionary<string, string> EnvironmentFor(ResourceRouteTests.ResourceFixture fixture)
+    private static Dictionary<string, string> EnvironmentFor(ResourceFixture fixture)
     {
         var bin = Path.Combine(fixture.Root, "build/adapter-bin");
         Directory.CreateDirectory(bin);
@@ -421,7 +421,7 @@ public sealed partial class ResourceAdapterTests
             ["GITHUB_OUTPUT"] = Path.Combine(fixture.Root, "build/adapter-output") };
     }
 
-    private static (int Exit, string Text) Shell(ResourceRouteTests.ResourceFixture fixture, string[] arguments,
+    private static (int Exit, string Text) Shell(ResourceFixture fixture, string[] arguments,
         Dictionary<string, string> environment)
     {
         foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh" })
@@ -430,7 +430,7 @@ public sealed partial class ResourceAdapterTests
             environment, TestBudgets.WorkflowProcessHangGuard);
     }
 
-    private static (int Exit, string Text) Route(ResourceRouteTests.ResourceFixture fixture, string stage,
+    private static (int Exit, string Text) Route(ResourceFixture fixture, string stage,
         Dictionary<string, string> environment) => EngineeringProcess.Process(fixture.Root,
             Path.Combine(fixture.Root, "build/adapter-bin/python3"), ["-B", "tools/scripts/workflow/ci.py", "stage-input",
                 "--repository", fixture.Root, "--commit", fixture.Commit, "--stage", stage], environment,

@@ -131,7 +131,7 @@ public sealed class EngineeringScopeProgramTests
     [Fact]
     public void DeclaredExecutionEnvironmentChangesOnlyRegisteredProjectsAndMissingValueFails()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         const string name = "CONTRACT_REGISTERED_TEST_ENVIRONMENT";
         var original = Environment.GetEnvironmentVariable(name);
         try
@@ -156,7 +156,7 @@ public sealed class EngineeringScopeProgramTests
                 fixture.WriteTrx(directory, "Passed");
                 return 0;
             }, TextWriter.Null));
-            Assert.Equal([CurrentExecutionContractTests.CandidateFixture.First], selected);
+            Assert.Equal([ExecutionFixture.First], selected);
             Environment.SetEnvironmentVariable(name, null);
             var calls = 0;
             Assert.Throws<InvalidDataException>(() => Program.RunCurrentTests(fixture.Root, (_, _) => { ++calls; return 0; }, TextWriter.Null));

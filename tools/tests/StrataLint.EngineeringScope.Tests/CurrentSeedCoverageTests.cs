@@ -75,7 +75,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
     [Fact]
     public void ProducedReportExportsWhenEverySelectedCheckIsReportIndependent()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["lean-report", "filemap"]);
+        using var fixture = new ResourceFixture(["lean-report", "filemap"]);
         Producer(fixture, "prepare");
         fixture.CommitPlan();
         fixture.Processes(prepareReport: false);
@@ -259,7 +259,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
 
     private const string Input = "fixtures/filemap-input.txt";
 
-    private static void Producer(ResourceRouteTests.ResourceFixture fixture, string operation)
+    private static void Producer(ResourceFixture fixture, string operation)
     {
         var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "-c", """
             import pathlib, shutil, sys
@@ -314,9 +314,9 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         Assert.True(result.Exit == 0, result.Text);
     }
 
-    private static ResourceRouteTests.ResourceFixture Prepare()
+    private static ResourceFixture Prepare()
     {
-        var fixture = new ResourceRouteTests.ResourceFixture(["filemap"], Input);
+        var fixture = new ResourceFixture(["filemap"], Input);
         fixture.Write("Meta/ReportProducers/check.json", "{\"schema\":\"report-producer-scope-v2\",\"registration\":\"lean-report-inputs.json\",\"scope\":\"lean-report\",\"projects\":[]}");
         fixture.Write("lean-report-inputs.json", "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}");
         fixture.Write("Meta/ReportConsumers/check.json", "{\"schema\":\"report-consumer-inputs-v1\",\"producer\":\"Meta/ReportProducers/check.json\",\"projects\":[],\"materials\":[\"global.json\"]}");
@@ -331,7 +331,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         return fixture;
     }
 
-    private static CheckUnitResult RunSelectedWithoutOriginalMaterials(ResourceRouteTests.ResourceFixture fixture)
+    private static CheckUnitResult RunSelectedWithoutOriginalMaterials(ResourceFixture fixture)
     {
         fixture.Processes(prepareReport: false);
         // A new runner has only the restored seed. Unselected original materials
@@ -354,7 +354,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
         return selected;
     }
 
-    private static CommonCheckRecord FullCurrent(ResourceRouteTests.ResourceFixture fixture, List<string> calls)
+    private static CommonCheckRecord FullCurrent(ResourceFixture fixture, List<string> calls)
     {
         calls.Clear();
         fixture.Processes(prepareReport: false, bindPlan: false);
