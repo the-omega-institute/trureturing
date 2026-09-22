@@ -1,0 +1,9 @@
+**Proof.** The rank r(p)>2 divides N and is coprime to p, so it cannot
+divide p^k. This proves the unit assertion. In the golden algebra of Appendix U.1,
+algebra over F_p, Frobenius fixes phi,psi when epsilon=1 and exchanges
+them when epsilon=-1. The denominator phi-psi has square five, a unit,
+and the Binet difference and trace formulas therefore give the two
+residues at p^k. For the swapped case, the difference changes sign at
+each Frobenius application while the trace stays one. These calculations
+also apply at k=0. The integer quotient is exact by Fibonacci divisibility.
+

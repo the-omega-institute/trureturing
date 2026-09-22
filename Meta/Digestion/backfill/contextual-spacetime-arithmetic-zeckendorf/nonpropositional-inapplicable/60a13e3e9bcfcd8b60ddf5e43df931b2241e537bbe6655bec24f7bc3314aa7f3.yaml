@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:60a13e3e9bcfcd8b60ddf5e43df931b2241e537bbe6655bec24f7bc3314aa7f3
+  normalized_sha256: sha256:60a13e3e9bcfcd8b60ddf5e43df931b2241e537bbe6655bec24f7bc3314aa7f3
+cas_ref: sha256:60a13e3e9bcfcd8b60ddf5e43df931b2241e537bbe6655bec24f7bc3314aa7f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅将既有乘积比较在两个窗口载体上的实例记作局部符号，没有命题。
+    previous_atom_id: 977ca09c2cd1974d0321e006a76edea82097d69c16ccaef2c5764c0a0d9657ab
+    next_atom_id: 3a9d6e842a019c9ee8a6aca1eb29438ec5dce4c2b4934afb2eb8cc58ec07cb4b

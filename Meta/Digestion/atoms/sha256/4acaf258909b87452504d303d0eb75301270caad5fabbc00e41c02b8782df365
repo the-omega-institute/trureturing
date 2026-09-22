@@ -1,0 +1,9 @@
+**定理。** 对每个 $M>0$，若 $\sigma_F(M)$ 为 Fibonacci 数，则存在唯一 $r\ge1$，使
+
+$$
+\boxed{
+\sigma_F(M)=F_{2r},\qquad
+\mathcal D_F(M)=\{1\}\cup\{F_{2j+1}:1\le j<r\}.
+}\tag{FSP3}
+$$
+

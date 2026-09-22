@@ -1,0 +1,18 @@
+CPTP 映射保持迹距离收缩，因此 $E\succeq_QF$ 时，对任意 POVM 决策和有界损失都有 $R_E\le R_F$；近似情形下，被模拟方向满足 $R_E\le R_F+L\,\delta_Q(F\mid E)$。近似缺陷还满足复合律
+
+$$
+\boxed{
+\delta_Q(G\mid E)
+\le
+\delta_Q(F\mid E)+\delta_Q(G\mid F).
+}
+$$
+
+证明与经典情形相同：对近似模拟器 $\Lambda_1:E\to F$、$\Lambda_2:F\to G$ 复合，并使用
+
+$$
+\frac12\left\|\Lambda_2(\sigma)-\Lambda_2(\tau)\right\|_1
+\le
+\frac12\left\|\sigma-\tau\right\|_1.
+$$
+

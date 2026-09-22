@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:754a2aeffc230c763ea796da38879e10de97fd25350c104a2ea77bccbf9e71c6
+  normalized_sha256: sha256:754a2aeffc230c763ea796da38879e10de97fd25350c104a2ea77bccbf9e71c6
+cas_ref: sha256:754a2aeffc230c763ea796da38879e10de97fd25350c104a2ea77bccbf9e71c6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 实际像纤维的非空性与有限性给 Finset.sum_pos 的条件，正词权及 Real.exp_pos 给各项正性，概率和取零指数特化，全部和在实数域中为有限值，仓内无冻结 GID。
+    previous_atom_id: f07f5de7f1ce27ca2ec451fb4a6cef0dfe2628bdb027f5be972c0936b770177d
+    next_atom_id: bacc265ec62d8a19ced30318e5f2a23f7fbff26e5fbd49d0ae806c7f6e9e693b

@@ -1,0 +1,2 @@
+**Definition.** For M>=1, let C(M) be the set of residue classes modulo M containing a positive powerful integer. The residue of an integer a is denoted [a]_M. A positive integer is powerful exactly when it has a representation x^2 y^3 with positive integers x,y: in its prime factorization, an even exponent is assigned wholly to the square, and an odd exponent at least three is assigned three to the cube and the remaining even exponent to the square.
+

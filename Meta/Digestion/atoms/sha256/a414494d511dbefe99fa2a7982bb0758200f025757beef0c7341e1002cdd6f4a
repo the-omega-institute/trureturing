@@ -1,0 +1,6 @@
+**假设 447.7（经典解析等价及可选定量输入）。** 分别保留以下解析接口：
+$$
+H_{\rm RM}:\quad \mathrm{RH}\Longleftrightarrow
+\forall\varepsilon>0\ \exists C_\varepsilon>0\ \forall N\ge1,
+\quad |M(N)|\le C_\varepsilon N^{1/2+\varepsilon};
+$$

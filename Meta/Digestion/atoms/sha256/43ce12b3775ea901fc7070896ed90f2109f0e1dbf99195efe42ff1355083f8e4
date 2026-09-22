@@ -1,0 +1,44 @@
+**Proof.** Write $d=\Delta(f)/2$. For every $g$ and every split pair, the triangle inequality gives
+$$
+|f(x_m^+)-f(x_m^-)|
+\le |f(x_m^+)-g(E_m)|+|f(x_m^-)-g(E_m)|
+\le2\|f-g\circ H\|_\infty.
+$$
+Taking the supremum over $m$ gives the lower bound $d$.
+
+Fix $\epsilon>0$. For each $\theta\in\mathbb T$, choose a center $c_\theta\in\mathbb F$: use the value of $f$ on a singleton fiber, and the midpoint of its two values on a double fiber. Since every fiber has at most two points,
+$$
+|f(x)-c_\theta|\le d\qquad(H(x)=\theta).
+$$
+The set
+$$
+C_\theta=\{x\in K:|f(x)-c_\theta|\ge d+\epsilon\}
+$$
+is compact and disjoint from the fiber over $\theta$. Its image under $H$ is closed. Therefore
+$$
+U_\theta=\mathbb T\setminus H(C_\theta)
+$$
+is an open neighborhood of $\theta$, and every $x$ whose phase belongs to $U_\theta$ satisfies $|f(x)-c_\theta|<d+\epsilon$.
+
+Choose a finite subcover $U_1,\ldots,U_N$ and the corresponding centers $c_1,\ldots,c_N$. For a nonempty closed set $C$, write $\rho(t,C)=\inf_{s\in C}\rho(t,s)$. Construct continuous weights by
+$$
+w_\ell(t)=
+\begin{cases}
+\rho(t,\mathbb T\setminus U_\ell),&U_\ell\ne\mathbb T,\\
+1,&U_\ell=\mathbb T,
+\end{cases}
+\qquad
+p_\ell(t)=\frac{w_\ell(t)}{\sum_{h=1}^Nw_h(t)}.
+$$
+Here distance to a nonempty closed set is continuous. An open neighborhood contains a positive-radius ball about each of its points, so the covering property makes the denominator positive everywhere. Thus the $p_\ell$ are continuous and nonnegative, their sum is one, and $p_\ell(t)>0$ implies $t\in U_\ell$. Set
+$$
+g_\epsilon(t)=\sum_{\ell=1}^Np_\ell(t)c_\ell.
+$$
+For $x\in K$, all positively weighted centers satisfy the preceding strict estimate at $t=H(x)$. Hence
+$$
+|f(x)-g_\epsilon(H(x))|
+\le\sum_{\ell=1}^Np_\ell(H(x))|f(x)-c_\ell|
+\le d+\epsilon.
+$$
+It follows that the infimum of the uniform error is at most $d+\epsilon$. Letting $\epsilon$ decrease to zero proves equality with $d$. This midpoint and convex-combination argument is valid over both $\mathbb R$ and $\mathbb C$. Finally, the isometry $\mathcal R$ from theorem 26.6 gives the equality with the stated sequence-space infimum. The proof constructs arbitrarily accurate approximants and does not assert attainment of the infimum. $\square$
+

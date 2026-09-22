@@ -1,0 +1,14 @@
+**Theorem.** With division by powers of p performed in the integers,
+
+$$
+\boxed{
+\frac{B_{p,k}-\epsilon}{p^{h_p+k}}
+ \equiv\frac{\epsilon^{k+1}u_p}{2}\pmod p,
+\qquad
+\frac{\epsilon B_{p,k}-1}{p^{k+1}}
+ \equiv\frac{\epsilon^k q_p}{2}\pmod p.
+}                                                       \tag{NP6}
+$$
+
+The second statement includes h_p>1, when both of its residues vanish.
+

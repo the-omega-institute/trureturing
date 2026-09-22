@@ -1,0 +1,7 @@
+**Lemma.** If a finite subset S of \(\mathcal F_+\) contains one and has Fibonacci sum, then either S={1}, or for some r>=2,
+
+$$
+S=\{1,F_3,F_5,\ldots,F_{2r-1}\},\qquad \sum S=F_{2r}.
+\tag{FDS10}
+$$
+

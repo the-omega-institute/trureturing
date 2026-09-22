@@ -1,0 +1,5 @@
+对每个无限二元续词 $v$，算法的停止数 $\tau_A(D(w),\varepsilon,v)\in\mathbb N_0$ 只依赖上述输入及已经收到的前缀；允许零报告停止。要求每条 $w,v$ 上均有限停止，并输出有限可计算的有理数 $Y_A$，满足
+$$
+\left|Y_A(D(w),\varepsilon,v)-h\!\left(q_{w\,v_{\le\tau_A}}\right)\right|\le\varepsilon.
+$$
+被预测的是停止时的下一零报告概率。

@@ -1,0 +1,10 @@
+**定义 38.8（可数输出的联合闭图）。** 固定有限 $d\in\mathbb N_0$，令 $J$ 为至多可数集合，并给定每个 $j\in J$ 的非负整数行向量 $a_j\in\mathbb N_0^d$。允许这些行的系数无统一上界。定义
+$$
+\mathcal G_J=
+\overline{\left\{
+\bigl((Z(n_i))_{i=1}^d,(Z(a_j\cdot n))_{j\in J}\bigr):
+n\in\mathbb N_0^d
+\right\}}^{K^d\times K^J}.
+$$
+闭包取乘积拓扑。对有限 $F\subseteq J$，令 $A_F$ 为这些行组成的有限矩阵，$p_F$ 为保留所有输入和 $F$ 中输出的投影；$B_F=B(A_F;x,y_F)$ 始终包含全部分裂输入约束。
+

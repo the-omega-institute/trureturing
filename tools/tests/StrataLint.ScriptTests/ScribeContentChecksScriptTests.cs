@@ -9,36 +9,18 @@ public sealed class ScribeContentChecksScriptTests
     [Theory]
     [InlineData(0)]
     [InlineData(29)]
-    public void CacheFetcherDeltaSelectsScribeChecksAndPropagatesFailure(int childExit)
+    public void CurrentScribeChecksRunAllCommandsAndPropagateFailure(int childExit)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ScribeContentFixture();
-
-        var unchanged = fixture.RunGate(childExit);
-        Assert.Equal(0, unchanged.ExitCode);
-        Assert.Empty(fixture.Invocations);
 
         fixture.ChangeFetcher();
         var result = fixture.RunGate(childExit);
 
-        Assert.Equal(childExit, result.ExitCode);
+        Assert.True(childExit == result.ExitCode, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(
-            childExit == 0 ? new[] { "projections", "describe-report" } : ["projections"],
+            childExit == 0 ? new[] { "projections", "describe-report", "markdown-check" } : ["projections"],
             fixture.Invocations);
-    }
-
-    [Theory]
-    [InlineData("deleted-producer", "projections,describe-report")]
-    [InlineData("manifest", "projections,describe-report")]
-    [InlineData("blueprint", "describe-report,markdown-check")]
-    public void RegisteredProducerDeltaPreservesContentRouting(string change, string expected)
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ScribeContentFixture();
-        fixture.ChangeRegisteredInput(change);
-        var result = fixture.RunGate(0);
-        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        Assert.Equal(expected.Split(','), fixture.Invocations);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -53,7 +35,7 @@ public sealed class ScribeContentChecksScriptTests
         private readonly string bin;
         private readonly string log;
         private readonly string report;
-        private readonly string baseline;
+        private readonly string scribe;
 
         internal ScribeContentFixture()
         {
@@ -61,8 +43,11 @@ public sealed class ScribeContentChecksScriptTests
             bin = Path.Combine(temporary.Path, "bin");
             log = Path.Combine(temporary.Path, "scribe.log");
             report = Path.Combine(temporary.Path, "raw-lean-report.json");
+            scribe = Path.Combine(repository, "scribe-fixture");
             ScriptHarnessScratch.EnsureDirectory(bin);
+            ScriptHarnessScratch.EnsureDirectory(repository);
             ScriptHarnessScratch.WriteScratchText(report, "{}\n");
+            ScriptHarnessScratch.WriteScratchText(scribe, "candidate fixture\n");
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath), Path.Combine(repository, InputHelperPath));
             ScriptHarnessScratch.CopyScriptInto(
@@ -71,10 +56,16 @@ public sealed class ScribeContentChecksScriptTests
                 Path.Combine(TestRepositoryLayout.FindRoot(), CacheInputPath), Path.Combine(repository, CacheInputPath));
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), CacheFetcherPath), Path.Combine(repository, CacheFetcherPath));
+            ScriptHarnessScratch.CopyScriptInto(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_cache.py"),
+                Path.Combine(repository, "tools/scripts/worktree/lean_cache.py"));
+            ScriptHarnessScratch.CopyScriptInto(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_cache_release.py"),
+                Path.Combine(repository, "tools/scripts/worktree/lean_cache_release.py"));
             Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");
+            foreach (var module in new[] { "delta", "materials", "report_cache", "runtime_identity" })
+                Write($"tools/lean-inspector/{module}.py", "# synthetic dependency\n");
             Write("tools/scripts/lean-report-pair.sh", "#!/bin/bash\n");
-            // Synthetic producer input; no assertions depend on the repository workflow text.
-            Write(".github/workflows/ci.yml", "jobs:\n  lean-inspect:\n  baseline-admission:\n");
             Write("global.json", "{}\n");
             Write("Directory.Build.props", "<Project />\n");
             Write("Directory.Packages.props", "<Project />\n");
@@ -86,23 +77,12 @@ public sealed class ScribeContentChecksScriptTests
                 Write($"tools/{project}/packages.lock.json", "{}\n");
             }
             ScriptHarnessScratch.WriteExecutableStub(Path.Combine(bin, "dotnet"), """
-                if [[ "$1" == scribe-fixture ]]; then
+                if [[ "$1" == "$SCRIBE_FIXTURE_DLL" ]]; then
                   printf '%s\n' "$2" >> "$SCRIBE_LOG"
                   exit "$SCRIBE_EXIT"
                 fi
                 PATH="$ORIGINAL_PATH" exec dotnet "$@"
                 """);
-            Write("Trureturing.lean", "-- fixture\n");
-            Write("lean-toolchain", "leanprover/lean4:v4.31.0\n");
-            Write("lake-manifest.json", "{}\n");
-            Write("lakefile.toml", "name = \"fixture\"\n");
-            LeanReportRegistrationFixture.Install(repository);
-            RunGit("init", "--quiet");
-            RunGit("config", "user.email", "stratalint@example.invalid");
-            RunGit("config", "user.name", "StrataLint Tests");
-            RunGit("add", ".");
-            RunGit("commit", "--quiet", "-m", "scribe input fixture");
-            baseline = RunGit("rev-parse", "HEAD").Trim();
         }
 
         internal string[] Invocations => ScriptHarnessScratch.ReadRecordedCalls(log);
@@ -110,31 +90,14 @@ public sealed class ScribeContentChecksScriptTests
         internal void ChangeFetcher() => ScriptHarnessScratch.AppendScratchText(
             Path.Combine(repository, CacheFetcherPath), "# fetch acceptance changed\n");
 
-        internal void ChangeRegisteredInput(string change)
-        {
-            if (change == "deleted-producer")
-                TemporaryFileSystem.File.Delete(Path.Combine(repository, "tools/StrataLint.Engine/Fixture.cs"));
-            else if (change == "manifest")
-                ScriptHarnessScratch.AppendScratchText(Path.Combine(repository, "lean-report-inputs.json"), "\n");
-            else Write("Blueprint/Probe.scribe.cs", "// document\n");
-        }
-
         internal ProcessOutput RunGate(int childExit) => TestProcessRunner.Run(
             "/bin/bash",
             ["-c", "ORIGINAL_PATH=\"$PATH\" PATH=\"$1:$PATH\" SCRIBE_LOG=\"$2\" "
-                + "SCRIBE_EXIT=\"$3\" STRATALINT_SCRIBE_BASE=\"$6\" "
-                + "exec /bin/bash \"$4\" \"$5\" scribe-fixture",
-                "scribe-fetcher-delta", bin, log, childExit.ToString(CultureInfo.InvariantCulture),
-                Path.Combine(repository, ContentChecksPath), report, baseline],
+                + "SCRIBE_EXIT=\"$3\" SCRIBE_FIXTURE_DLL=\"$6\" "
+                + "exec /bin/bash \"$4\" \"$5\" \"$6\"",
+                "scribe-current", bin, log, childExit.ToString(CultureInfo.InvariantCulture),
+                Path.Combine(repository, ContentChecksPath), report, scribe],
             repository, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
-
-        private string RunGit(params string[] arguments)
-        {
-            var result = TestProcessRunner.Run("git", arguments, repository,
-                TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
-            Assert.Equal(0, result.ExitCode);
-            return Encoding.UTF8.GetString(result.StandardOutput);
-        }
 
         private void Write(string relativePath, string contents)
         {

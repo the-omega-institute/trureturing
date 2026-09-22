@@ -1,0 +1,19 @@
+**theorem 34.9 (Atomic walks do not converge setwise or in total variation).** Every sequence or Cesaro sequence from Theorem 34.8 that converges weak-star to $\mathfrak m$ nevertheless fails to converge to it setwise and satisfies, at every finite time,
+$$
+\|\mu_t^{(n)}-\mathfrak m\|_{\mathrm{TV}}=2,\qquad
+\|\overline\mu_{t,N}-\mathfrak m\|_{\mathrm{TV}}=2.
+$$
+For the fixed lazy step, define bounded operators on $M(K)$ by
+$$
+P_t\eta=\eta\star_t\mu_{\mathrm{lazy}},\qquad
+\Pi\eta=\eta(K)\mathfrak m.
+$$
+For all $n,N\ge1$,
+$$
+\|P_t^n-\Pi\|_{\mathrm{TV}\to\mathrm{TV}}\ge2,\qquad
+\left\|\frac1N\sum_{n=1}^N P_t^n-\Pi\right\|_{\mathrm{TV}\to\mathrm{TV}}\ge2.
+$$
+Both inequalities are equalities at $t=0$ and $t=\infty$.
+
+There is also no convergence rate uniform over all natural two-point step probabilities, even for a single fixed continuous readout.
+

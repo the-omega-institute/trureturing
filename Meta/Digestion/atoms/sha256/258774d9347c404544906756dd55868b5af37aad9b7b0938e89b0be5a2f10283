@@ -1,0 +1,9 @@
+具体地，
+$$
+\operatorname{Pack}(B)=
+\begin{cases}
+\operatorname{NatZ}(n),&B=\{\operatorname{NatZ}(m):m<n\}\text{ 对某 }n\in\omega,\\
+\langle1,B\rangle,&\text{不存在这样的 }n.
+\end{cases}
+$$
+第一分支的 $n$ 唯一，且此时竞争节点 $\langle1,B\rangle$ 无效。$\operatorname{Pack}(\varnothing)=\operatorname{NatZ}(0)$ 为唯一语义空集；原始空字 $\varnothing$ 不是有效码。

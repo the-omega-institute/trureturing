@@ -1,0 +1,12 @@
+**定理。** 对每个 $j\ge1$，至少存在一个素数 $p_j$ 满足
+
+$$
+\boxed{
+p_j\mid C_j,\quad
+\alpha(p_j)=3^{j+1},\quad
+p_j\equiv1\pmod4,\quad s_{p_j}\text{ 为奇数}.
+}\tag{GP36}
+$$
+
+这些素数在不同层互不相同。
+

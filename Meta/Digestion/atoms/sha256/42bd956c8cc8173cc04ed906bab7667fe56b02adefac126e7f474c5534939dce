@@ -1,0 +1,15 @@
+**theorem 22.4 (Upper semicontinuity and actual joint approximation).** The relation $\Gamma$ is compact with nonempty compact fibers. For every closed $C\subseteq K$, the hit set
+$$
+\operatorname{Hit}(C)=\{\xi\in X:\Gamma(\xi)\cap C\ne\varnothing\}
+$$
+is closed. Consequently, for every $\xi\in X$ and open $V\supseteq\Gamma(\xi)$, some neighborhood $U$ of $\xi$ satisfies $\Gamma(\eta)\subseteq V$ for all $\eta\in U$. For open $O\subseteq K$, the hit set $\operatorname{Hit}(O)$ is $F_\sigma$. Every $(x,y,z)\in\Gamma$ admits natural-number sequences $n_j,m_j$ such that
+$$
+(Z(n_j),Z(m_j),Z(n_j+m_j))\longrightarrow(x,y,z).
+$$
+
+**Proof 22.4.** Closedness in compact $K^3$ gives compactness. Fibers are closed subsets of $K$. Their nonemptiness follows also directly from the closure construction: approximate each input by finite truncations, take a convergent subsequence of their actual sums in compact $K$, and use closedness. For closed $C$, the set $\Gamma\cap(X\times C)$ is compact; its projection to $X$ is compact and hence closed. This projection is exactly $\operatorname{Hit}(C)$. If $\Gamma(\xi)\subseteq V$, the point $\xi$ is outside the closed set $\operatorname{Hit}(K\setminus V)$, and its open complement is the required neighborhood. An open $O$ is the union of the countably many cylinders contained in it. Its hit set is the corresponding countable union of closed hit sets.
+
+These are upper semicontinuity and Effros measurability in the sense of [B. Cascales, *Measurability and semi-continuity of multifunctions*, Definitions 1.3–1.4, p. 4](https://webs.um.es/beca/Investigacion/semicontinuityofmultifunctions.pdf). They also verify the open-hit measurability condition of the Kuratowski–Ryll-Nardzewski theorem as stated in [B. Cascales, V. Kadets and J. Rodríguez, *Measurability and Selections of Multi-Functions in Banach Spaces*, Theorem A, p. 1](https://webs.um.es/beca/Investigacion/PropertyP_11.pdf); the target here is separable metric and the values are nonempty and complete.
+
+Finally, equip $K^3$ with its maximum product metric. For each integer $j\geq1$, the ball of radius $1/j$ about $(x,y,z)$ meets the set whose closure defines $\Gamma$. Choose one of its actual addition triples. The same choice supplies both input approximations and their actual sum, all within $1/j$. This proves the joint convergence; no independently chosen output or merely marginal realization is used.
+

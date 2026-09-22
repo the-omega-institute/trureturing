@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "18f0c791d7221d15c47bae7955647a8f4f0633c0ba701601517666caadce4310",
+  "parts_directory": "expanded_stop_budget_verification.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "089976dd0e5591715ea27413b00c1a8bfd9a7ca317c4f4b18ddb18812043b4a9",
+    "kind": "object"
+  }
+}

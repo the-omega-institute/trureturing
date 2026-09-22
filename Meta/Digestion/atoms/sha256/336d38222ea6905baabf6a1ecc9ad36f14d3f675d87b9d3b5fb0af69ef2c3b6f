@@ -1,0 +1,2 @@
+**Proof.** All prime divisors of F_ell have rank ell when ell>=7 is prime. The integer F_ell is not powerful exactly when one such divisor has exponent one. That exponent is its actual initial depth. This is equivalent to ell being the rank of a non-WSS prime. Thus the two counted classes are disjoint and exhaust the interval's prime indices.
+

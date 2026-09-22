@@ -1,0 +1,157 @@
+**证明。**
+
+普遍端点交换蕴含闭包分离，只需取两个单点端点，并使用定理 9.1 证明开头的单点计算。该计算本身没有使用中间塔的可数性。
+
+下面证明反方向。
+
+先证明由中间紧致性保证的包含方向。
+
+令
+
+$$
+\mathcal F =
+\{(\xi,\eta,\zeta)\in L_X\times K\times L_Z:
+(\xi,\eta)\in\widehat R,\quad
+(\eta,\zeta)\in\widehat S\}.
+$$
+
+由于 $\widehat R,\widehat S$ 闭，$\mathcal F$ 闭。其端点投影恰为
+
+$$
+C =
+\widehat S\circ\widehat R.
+$$
+
+中间因子 $K$ 紧致，保证 $C$ 闭。具体地，若 $(\xi,\zeta)\notin C$，则对每个 $\eta\in K$，存在开邻域
+
+$$
+U_\eta\ni\xi,\qquad
+H_\eta\ni\eta,\qquad
+V_\eta\ni\zeta
+$$
+
+使
+
+$$
+(U_\eta\times H_\eta\times V_\eta)\cap\mathcal F =
+\varnothing.
+$$
+
+从 $(H_\eta)_{\eta\in K}$ 中取有限子覆盖，再分别交对应的 $U_\eta$ 与 $V_\eta$，便得到 $(\xi,\zeta)$ 的一个与 $C$ 不交的乘积开邻域。因此 $C$ 闭。
+
+每个实际复合见证 $y\in Y$ 都给出完成空间中的见证 $j(y)$，所以
+
+$$
+(j_X\times j_Z)[S\circ R]\subseteq C.
+$$
+
+取闭包得到
+
+$$
+\widehat{S\circ R}
+\subseteq
+\widehat S\circ\widehat R.
+$$
+
+再证明闭包分离排除额外端点。
+
+设
+
+$$
+(\xi,\zeta)\in\widehat S\circ\widehat R.
+$$
+
+取 $\eta\in K$ 使
+
+$$
+(\xi,\eta)\in\widehat R,
+\qquad
+(\eta,\zeta)\in\widehat S.
+$$
+
+任取开邻域
+
+$$
+U\ni\xi,
+\qquad
+V\ni\zeta.
+$$
+
+定义对应的实际中间见证集合
+
+$$
+A_U =
+\{y\in Y:
+\exists x\in X,\quad
+j_X(x)\in U\ \land\ (x,y)\in R\},
+$$
+
+$$
+B_V =
+\{y\in Y:
+\exists z\in Z,\quad
+j_Z(z)\in V\ \land\ (y,z)\in S\}.
+$$
+
+对 $\eta$ 的任意开邻域 $H$，由 $(\xi,\eta)\in\widehat R$ 可知
+
+$$
+(U\times H)\cap(j_X\times j)[R]\ne\varnothing.
+$$
+
+故 $H\cap j[A_U]\ne\varnothing$。因此
+
+$$
+\eta\in\overline{j[A_U]}.
+$$
+
+同理，
+
+$$
+\eta\in\overline{j[B_V]}.
+$$
+
+闭包分离条件的逆否命题给出
+
+$$
+A_U\cap B_V\ne\varnothing.
+$$
+
+取 $y\in A_U\cap B_V$。根据定义，存在 $x\in X$ 与 $z\in Z$，使
+
+$$
+j_X(x)\in U,\qquad
+j_Z(z)\in V,
+$$
+
+$$
+(x,y)\in R,\qquad
+(y,z)\in S.
+$$
+
+于是
+
+$$
+(x,z)\in S\circ R,
+$$
+
+从而
+
+$$
+(U\times V)\cap(j_X\times j_Z)[S\circ R]\ne\varnothing.
+$$
+
+由于 $U,V$ 任意，
+
+$$
+(\xi,\zeta)\in\widehat{S\circ R}.
+$$
+
+这证明了反向包含，故等式成立。证毕。
+
+适用边界。
+
+证明只在保证闭关系复合闭合的方向使用中间空间紧致性；排除虚假端点的方向使用闭包分离条件。两个端点空间甚至不必紧致或 Hausdorff。因而，端点完成所增加的点，以及端点实际像可能不闭，都不构成这里的额外障碍。
+
+上述结论比较的是两个完成关系，本身不保证关系像闭，闭包符号不能据此删去。按第 6.1 节对推论 3.6 的校正，对关系 $T\subseteq U\times V$ 及观察映射 $e:U\times V\to L_U\times L_V$，若 $e[T]$ 闭，则 $\overline{e[T]}=e[T]$，每个完成关系点已经有某个 $t\in T$ 作为实际关系代表，无须再为该存在性附加实现假设。在此闭像条件下，代表唯一当且仅当 $e|_T$ 单射。对一个指定实际端点对 $t_0$，$e(t_0)\in\overline{e[T]}$ 只保证存在 $t\in T$ 与 $t_0$ 观察相同；要推出 $t_0\in T$，还可要求 $T$ 对 $e$ 的纤维饱和，或要求 $e$ 在整个原始端点乘积上单射。整个环境 $L_U\times L_V$ 的每一点都有实际端点代表，则要求 $e$ 对该环境满射；若要求代表均取自 $T$，则要求 $e[T]=L_U\times L_V$。这些量词均不能与完成关系内部的代表存在性混同。[^rro9_repo]
+

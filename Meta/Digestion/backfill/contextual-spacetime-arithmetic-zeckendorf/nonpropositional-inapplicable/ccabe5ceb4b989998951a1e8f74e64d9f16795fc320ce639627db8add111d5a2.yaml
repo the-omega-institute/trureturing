@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ccabe5ceb4b989998951a1e8f74e64d9f16795fc320ce639627db8add111d5a2
+  normalized_sha256: sha256:ccabe5ceb4b989998951a1e8f74e64d9f16795fc320ce639627db8add111d5a2
+cas_ref: sha256:ccabe5ceb4b989998951a1e8f74e64d9f16795fc320ce639627db8add111d5a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句只指定各元素的阶与有限族最小公倍数，并约定零元素及空族的取值；阶的有限性已分到另一子句，此处没有独立待证命题。
+    previous_atom_id: acedaa21580b2a095cd369a2ceee84f245611b964cc621013cd4a07d8d1391de
+    next_atom_id: 278c641a32882174454f1a1da9feed4d0892859a5ccf5a715b0c2408370cc337

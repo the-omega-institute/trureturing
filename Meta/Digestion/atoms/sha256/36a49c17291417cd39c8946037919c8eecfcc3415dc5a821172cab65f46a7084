@@ -1,0 +1,16 @@
+**Definition GAW7.** For a prime $q>5$ and an even integer $k\ge2$, let
+$A_k(q)$ mean that $p=kq+1$ is prime and $\rho(p)\mid\pi(q)$. Put
+
+$$
+\begin{aligned}
+A_{\{2\}}(q)&:=A_2(q),\\
+A_{[4,200]}(q)&:\Longleftrightarrow
+  \exists k\in[4,200],\ k\text{ even},\ A_k(q),\\
+A_{>200}(q)&:\Longleftrightarrow
+  \exists k>200,\ k\text{ even},\ A_k(q).
+\end{aligned}                                                    \tag{GAW7}
+$$
+
+Let $E_{200}$ denote the assertion that
+$A_{[4,200]}(q)$ is false for every prime $q>5$.
+

@@ -1,0 +1,2 @@
+**定理 46.11（经典 H10 后果及其精确统一性）。** 合法系统中有自然解的编码集合递归可枚举，但不可判定；无自然解的编码集合不是递归可枚举的。并且存在一个固定整数系数多项式 $D(U,\mathbf V)$，使只变化自然参数 $u$ 的可解性问题已经不可判定。这里是经典 H10 不可判定性的具体化；参见假设 46.10，以及 [Davis，Hilbert's Tenth Problem is Unsolvable，American Mathematical Monthly 80 (1973), 233–269，定理 7.4，第 262 页](https://www.math.umd.edu/~laskow/Pubs/713/Diophantine.pdf#page=31)。
+

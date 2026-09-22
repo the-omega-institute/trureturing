@@ -1,0 +1,16 @@
+**Proof.** A finite Hausdorff space is discrete: each singleton is closed, and its complement, being a finite union of closed singletons, is also closed. Thus every map $\psi_\lambda$ on $D$ is continuous. The co-restriction $q:K\to D$ is continuous, so $f_\lambda=\psi_\lambda\circ q$ belongs to $C(K,\mathbb F)$.
+
+Under the WAP hypothesis, theorem 26.4 gives $f_\lambda=g_\lambda\circ H$ with $g_\lambda$ continuous. Since $H$ is onto,
+$$
+g_\lambda(\mathbb T)=f_\lambda(K)=\psi_\lambda(D),
+$$
+which is finite. The circle is connected, being the continuous image of the connected interval $[0,1]$. Its continuous image under $g_\lambda$ is therefore connected. A finite Hausdorff connected space has only one point, so every $f_\lambda$ is constant. If $q(x)\ne q(y)$, point separation would give a coordinate with $f_\lambda(x)\ne f_\lambda(y)$, a contradiction. Therefore $q$ is constant. The converse follows because a constant sequence has a singleton translation orbit. Theorem 26.4 identifies AP and WAP for each of these continuous scalar observations.
+
+To obtain one scalar coordinate, assign distinct real numbers to the finitely many elements of $D$. This is a continuous injection on $D$; no scalar embedding of all of $Y$ is needed. If coordinates are instead prescribed as continuous functions on $Y$, their restrictions must jointly separate $D$. Hausdorffness alone is not being used to assert such a global scalar representation.
+
+Both qualifications are necessary. Without separation, take the nonconstant continuous observation $q(x)=x_0$ but only the constant scalar coordinate: that coordinate gives a constant sequence. Without continuity on $K$, take
+$$
+q_0(x)=\mathbf 1_{\{u\}}(x).
+$$
+It is nonconstant, while $q_0(Z(n))=0$ for every $n$, because $u$ is not a finite padded word. Moreover $Z(A_i^{(1)})\to u$ while all those values are zero and $q_0(u)=1$, proving the discontinuity. Thus no constancy conclusion for arbitrary discontinuous finite observations follows. $\square$
+

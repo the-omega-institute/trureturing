@@ -1,0 +1,20 @@
+**定理 33.9（柱事件确定总变差）。** 对 $X_\infty$ 上任意两个 Borel 概率 $P,Q$，采用 $\operatorname{TV}(P,Q)=\sup_A|P(A)-Q(A)|$，则
+$$
+\operatorname{TV}(P,Q)
+ =\sup_l\operatorname{TV}((\pi_l^n)_*P,(\pi_l^n)_*Q).
+\tag{33.19}
+$$
+有限层的 TV 等于半个 $\ell^1$ 距离。固定 $P$ 时，$Q\mapsto\operatorname{TV}(P,Q)$ 对弱拓扑下半连续。
+
+证明。每个有限事件的柱原像为 Borel 事件，故每个有限 TV 不超过左侧。反向置 $\lambda=P+Q$。可被 $\mathcal A$ 中集合按 $\lambda$ 对称差任意逼近的 Borel 事件构成 $\sigma$ 代数：补集不改变误差；对可数并，先由 $\lambda$ 有限及从下连续截成有限并，使遗漏质量小，再分别逼近有限个事件，其近似之并仍在 $\mathcal A$ 中，误差至多各误差之和。此类包含 $\mathcal A$，故包含全部 Borel 事件。
+
+于是对任意 Borel $A$ 及 $\epsilon>0$，有某个有限层柱代数事件 $C$ 满足 $\lambda(A\mathbin\triangle C)<\epsilon$，且
+$$
+|(P(A)-Q(A))-(P(C)-Q(C))|
+ \le\lambda(A\mathbin\triangle C)<\epsilon.
+\tag{33.20}
+$$
+$C$ 上的差由（33.19）右侧控制，令 $\epsilon\downarrow0$ 再对 $A$ 取上确界得等式。固定 $P$ 后，右侧是有限层连续目标的上确界，故弱下半连续。$\square$
+
+在共同的 $(P+Q)$-完成事件域上等式仍成立，因为每个新事件仅与某个 Borel 事件相差一个共同零集。任意未声明的扩充 $\sigma$ 代数不在结论内。这里使用的是成熟的生成代数测度逼近；[Metric.lean](../../../D5/S3/TotalVariation/Metric.lean) 的 `total_variation_eq_sup_event_gap` 仅供应等质量有限类型函数的事件差公式，不是完成空间的（33.19）。
+

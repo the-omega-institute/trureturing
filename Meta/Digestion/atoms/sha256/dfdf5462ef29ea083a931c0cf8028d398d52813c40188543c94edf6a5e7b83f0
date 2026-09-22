@@ -1,0 +1,68 @@
+### NP.3 The leading digit has a fixed signed coefficient
+
+**Theorem.** With division by powers of p performed in the integers,
+
+$$
+\boxed{
+\frac{B_{p,k}-\epsilon}{p^{h_p+k}}
+ \equiv\frac{\epsilon^{k+1}u_p}{2}\pmod p,
+\qquad
+\frac{\epsilon B_{p,k}-1}{p^{k+1}}
+ \equiv\frac{\epsilon^k q_p}{2}\pmod p.
+}                                                       \tag{NP6}
+$$
+
+The second statement includes h_p>1, when both of its residues vanish.
+
+**Proof.** Work with integer matrices localized at p; two is a unit.
+For the actual Fibonacci matrix and its trace coordinate put
+
+$$
+Q=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+H=\begin{pmatrix}1&2\\2&-1\end{pmatrix}.
+$$
+
+Then H^2=5I and Q^a=(L_a I+F_a H)/2 for every integer a, using the
+usual negative-index extension and det(Q)=-1. Because N is even,
+
+$$
+(L_N-2\epsilon)(L_N+2\epsilon)=5F_N^2.
+$$
+
+Frobenius gives L_N=2*epsilon modulo p, so the second factor is a unit
+and v_p(L_N-2*epsilon)=2h_p. Thus
+
+$$
+\epsilon Q^N=I+p^{h_p}Z,\qquad
+Z\equiv\epsilon u_p H/2\pmod p.
+$$
+
+For s>=1 and any p-integral matrix Z, binomial expansion gives
+
+$$
+(I+p^sZ)^p\equiv I+p^{s+1}Z\pmod{p^{s+2}}.
+$$
+
+For terms of degree 2 through p-1, the binomial coefficient supplies a
+factor p; the term of degree p has sp>=s+2 because p>=3. Induction then
+yields (I+p^h Z)^(p^k)=I+p^(h+k)Z modulo p^(h+k+1). Since p^k is odd,
+
+$$
+Q^{Np^k}\equiv\epsilon I+p^{h_p+k}u_pH/2
+ \pmod{p^{h_p+k+1}}.                                    \tag{NP7}
+$$
+
+Let n=p^k and multiply NP7 by Q^(epsilon*n). For odd n,
+F_(-n)=F_n and L_(-n)=-L_n. The off-diagonal entry of Q^aH is L_a.
+Using p*n=epsilon*n+N*n gives
+
+$$
+F_{pn}-\epsilon F_n
+ \equiv p^{h_p+k}\epsilon u_pL_n/2
+ \pmod{p^{h_p+k+1}}.
+$$
+
+Divide by the unit F_n, and use NP1, to obtain the first formula in
+NP6. Multiply it by epsilon and by p^(h_p-1) to obtain the second.
+No division by p in a residue field is used.
+

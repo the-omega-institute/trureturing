@@ -1,0 +1,7 @@
+**定理 378.4。** 对任意集合 $X,Y$，乘积比较
+$$
+\chi_{X,Y}:X^*\times Y^*\longrightarrow(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\operatorname{Enc}(\langle\operatorname{Dec}(c),\operatorname{Dec}(d)\rangle)
+=\langle c,d\rangle_Z
+$$
+是双射，

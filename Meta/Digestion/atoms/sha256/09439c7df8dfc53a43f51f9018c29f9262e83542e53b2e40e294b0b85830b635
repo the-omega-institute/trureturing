@@ -1,0 +1,10 @@
+**定理 128.9（似然盲方向）。**
+$$
+\ker L_n=\ker\mathbf H=\bigcap_{t<n}\ker H_t.
+$$
+$v$ 属于这个核，当且仅当把参数 $z$ 改为 $z+av$ 对任意实数 $a$ 都不改变整份条件观测律 $\mathcal L(\mathbf Y_n\mid Z=z)$。此时 $J_nv=J_0v$。
+
+**证明。** $v^TL_nv=\|\mathbf R^{-1/2}\mathbf Hv\|^2$，因此两个核相同；堆叠矩阵的核就是各行块核的交。条件观测律是 $N(\mathbf Hz,\mathbf R)$，平移参数后均值改为 $\mathbf Hz+a\mathbf Hv$；两份具有同一正定协方差的 Gaussian 律相等当且仅当均值相等。最后 $L_nv=0$ 给 $J_nv=J_0v$。证毕。
+
+这并不保证欧氏坐标 $v^TZ$ 的边缘后验保持。协方差是精度矩阵的整体逆，先验相关可把其他方向的读数传递到这个坐标。
+

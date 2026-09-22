@@ -1,0 +1,23 @@
+{
+  "length": 81,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 44,
+      "part": {
+        "path": "content/008-domains/000001/item/006-results/000002/item/005-branches/001-disjoint/004-support_choice/001-candidates/000000-000044.json",
+        "sha256": "19116c27e7e6209d4e1177ea1449a5977bfa22b4020a9fdf38afefd303c137e3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 44,
+      "stop": 81,
+      "part": {
+        "path": "content/008-domains/000001/item/006-results/000002/item/005-branches/001-disjoint/004-support_choice/001-candidates/000044-000081.json",
+        "sha256": "4e8da128240a707040512a37541ae51a9a504bf8e5d7257ab77f5565d97bfd49",
+        "kind": "value"
+      }
+    }
+  ]
+}

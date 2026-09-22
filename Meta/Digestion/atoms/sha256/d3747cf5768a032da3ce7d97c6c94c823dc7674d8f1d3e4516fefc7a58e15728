@@ -1,0 +1,4 @@
+对所有 $h\in\omega$，
+$$
+H(T^hx)=H(x)+[h\phi],\qquad T^hz(n)=z(n+h).
+$$

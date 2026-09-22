@@ -1,0 +1,9 @@
+**定理 323.2。** 对每个 $H\le\mathsf V_{\rm reg}$ 有
+$$
+H=\bigcap_{\theta\in\operatorname{Ann}_{\rm rat}(H)}\ker\chi^{\rm rat}_\theta.
+$$
+其分离量词为
+$$
+\forall H\le\mathsf V_{\rm reg}\ \forall u\in\mathsf V_{\rm reg}\setminus H\
+\exists\theta\in\operatorname{Ann}_{\rm rat}(H),\quad\chi^{\rm rat}_\theta(u)\ne0.
+$$

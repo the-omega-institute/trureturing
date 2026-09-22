@@ -1,0 +1,50 @@
+{
+  "length": 414,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 99,
+      "part": {
+        "path": "content/028-arbitrary_holes12_tail17/021-steps/000000-000099.json",
+        "sha256": "d7c17552d62a7c2df1d288a5a6cf7033a209ab836f630fff722719222fdbbf58",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 99,
+      "stop": 198,
+      "part": {
+        "path": "content/028-arbitrary_holes12_tail17/021-steps/000099-000198.json",
+        "sha256": "a04e5848e538b6d7c8e0aa35498da431e097f6316495151abeb422bf0c06e293",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 198,
+      "stop": 297,
+      "part": {
+        "path": "content/028-arbitrary_holes12_tail17/021-steps/000198-000297.json",
+        "sha256": "3b3d468664e1e2addd86b7ae064b4a09c1e9eefb92aa8760de2e217aef4b2228",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 297,
+      "stop": 396,
+      "part": {
+        "path": "content/028-arbitrary_holes12_tail17/021-steps/000297-000396.json",
+        "sha256": "0ce422f05027f6152617676c6885206dc570ebd93f28c4dfb3e59a21fe2688af",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 396,
+      "stop": 414,
+      "part": {
+        "path": "content/028-arbitrary_holes12_tail17/021-steps/000396-000414.json",
+        "sha256": "03e812e01a6af095951e3f2b80e25594aee230e0380e573e0f3165bd69a856c4",
+        "kind": "value"
+      }
+    }
+  ]
+}

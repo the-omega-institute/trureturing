@@ -1,0 +1,8 @@
+**定义 470.29（原始重数位及四种有向进位）。** 原始表是 $r:\operatorname{Pr}\times\omega\to\omega$ 的有限非零支撑记录，总求值在未列位置补零；“空表”指零记录。记 $r_p(j)=r(p,j)$，$V_p(r)=\sum_jG_jr_p(j)$。Z 卷定义 14 在任意一行内的四种规则为
+$$
+e_j+e_{j+1}\longrightarrow e_{j+2},\qquad
+2e_0\longrightarrow e_1,\qquad
+2e_1\longrightarrow e_0+e_2,\qquad
+2e_{j+2}\longrightarrow e_j+e_{j+3}\quad(j\in\omega).
+$$
+每侧均加同一任意非负余表，其余素数行不变；合法性恰为左侧所需重数存在。第二、第三规则单独处理最低两个索引，没有负指标。

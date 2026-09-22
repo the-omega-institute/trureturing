@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a072df5b728c9d56302ce90aa987d8d05235b596674dfb11032a5d59874521cc
+  normalized_sha256: sha256:a072df5b728c9d56302ce90aa987d8d05235b596674dfb11032a5d59874521cc
+cas_ref: sha256:a072df5b728c9d56302ce90aa987d8d05235b596674dfb11032a5d59874521cc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义有理商群、总系数域和有限状态求和记号，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 19027b006f065e53cfc1f78b51f3a9f132f30ea309fef22259831156d24f76eb
+    next_atom_id: 7312ee044d8e32de85ddc8adf5ccb789c41e989140bc5059899889e6096462ad

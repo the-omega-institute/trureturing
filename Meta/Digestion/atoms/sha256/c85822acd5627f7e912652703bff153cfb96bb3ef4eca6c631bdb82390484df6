@@ -1,0 +1,40 @@
+**命题 134.3（Yoneda）。** 映射
+
+$$
+\eta\longmapsto\eta_X(\mathrm{id}_X)
+$$
+
+给出双射
+
+$$
+\operatorname{Nat}(h_X,P)\cong P(X).
+$$
+
+**证明。** 给 $a\in P(X)$，定义
+
+$$
+\eta^a_Z(f)=P(f)(a).
+$$
+
+因为 $P$ 反变，$P(fg)=P(g)P(f)$，所以
+
+$$
+\eta^a_W(fg)=P(g)P(f)(a)=P(g)(\eta^a_Z(f)),
+$$
+
+即自然性成立。对恒等箭头求值有 $\eta^a_X(\mathrm{id})=a$。反之，对任意自然变换 $\eta$，在 (134.11) 中取 $Z=X$、$f=\mathrm{id}_X$、$g$ 为任意箭头 $W\to X$，得到
+
+$$
+\eta_W(g)=P(g)(\eta_X(\mathrm{id}_X)).
+$$
+
+故 $\eta$ 完全由该单个值决定，并等于按上式构造的变换。两构造互逆。证毕。
+
+这个对应也兼容参数转换。若 $u:X'\to X$，则把 $\eta$ 与 $h_u:h_{X'}\to h_X$ 复合后，其恒等求值为
+
+$$
+\eta_{X'}(u)=P(u)(\eta_X(\mathrm{id}_X)).
+$$
+
+若 $\theta:P\to P'$ 是自然变换，$(\theta\eta)_X(\mathrm{id})=\theta_X(\eta_X(\mathrm{id}))$。这明确给出 Yoneda 对应的两侧自然性。
+

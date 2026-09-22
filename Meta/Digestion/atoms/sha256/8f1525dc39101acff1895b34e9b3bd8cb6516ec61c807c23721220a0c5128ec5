@@ -1,0 +1,63 @@
+## 7. 观察完备化与共同中间见证的关系复合
+
+本节固定非空载体 $X,Y,Z$。对每个 $U\in\{X,Y,Z\}$ 给定有限实际像观察塔
+
+$$
+q_n^U:U\twoheadrightarrow Q_n^U,\qquad n\in\mathbb N,\qquad
+q_n^U=p_{m,n}^Uq_m^U\quad(m\ge n).
+$$
+
+各 $Q_n^U$ 有限离散，过渡映射满足恒等律与复合律。令
+
+$$
+K_U=\varprojlim_n Q_n^U,\qquad
+\iota_U:U\to K_U,\quad \iota_U(u)=(q_n^U(u))_n,\qquad
+\pi_n^U:K_U\to Q_n^U.
+$$
+
+$\iota_U$ 是实际载体到完成空间的自然映射，不预设单射。第 4.2 条给出 $K_U$ 紧致 Hausdorff、实际像稠密及柱集开闭基；又因 $\pi_n^U\iota_U=q_n^U$，每个 $\pi_n^U$ 满射。乘积投影和过渡映射使用上标 $XZ$ 或 $XYZ$，例如 $\pi_n^{XZ}=\pi_n^X\times\pi_n^Z$、$p_{m,n}^{XYZ}=p_{m,n}^X\times p_{m,n}^Y\times p_{m,n}^Z$。
+
+给定支撑关系 $R\subseteq X\times Y$、$S\subseteq Y\times Z$，令
+
+$$
+C=S\circ R=\{(x,z):\exists y\in Y,\ R(x,y)\land S(y,z)\}.
+$$
+
+两次实际关系成员资格要求同一个 $y$。区分实际像与其在相应完成乘积中的闭包：
+
+$$
+R^0=(\iota_X\times\iota_Y)[R],\qquad
+S^0=(\iota_Y\times\iota_Z)[S],\qquad
+C^0=(\iota_X\times\iota_Z)[C],
+$$
+
+$$
+\widehat R=\overline{R^0},\qquad
+\widehat S=\overline{S^0},\qquad
+\widehat C=\overline{C^0}.
+$$
+
+定义实际阶段像及有限层候选复合
+
+$$
+R_n=(q_n^X\times q_n^Y)[R],\qquad
+S_n=(q_n^Y\times q_n^Z)[S],\qquad
+C_n=(q_n^X\times q_n^Z)[C],\qquad D_n=S_n\circ R_n.
+$$
+
+总有 $C_n\subseteq D_n$；$D_n$ 只要求两个实际中间代表的第 $n$ 层读数相同。保留中间元素时，令
+
+$$
+W=\{(x,y,z)\in X\times Y\times Z:R(x,y)\land S(y,z)\},\qquad
+W^0=(\iota_X\times\iota_Y\times\iota_Z)[W],\qquad
+\widehat W=\overline{W^0},
+$$
+
+$$
+T=\{(\xi,\eta,\zeta)\in K_X\times K_Y\times K_Z:
+(\xi,\eta)\in\widehat R\land(\eta,\zeta)\in\widehat S\},\qquad
+P=\widehat S\circ\widehat R=\operatorname{pr}_{XZ}(T).
+$$
+
+这里保留的是支撑关系中的端点与中间元素；$W$ 不记录同一三元组的多条历史或证明档案，不能与第 1.2 条任意带见证关系的数据载体混同。
+

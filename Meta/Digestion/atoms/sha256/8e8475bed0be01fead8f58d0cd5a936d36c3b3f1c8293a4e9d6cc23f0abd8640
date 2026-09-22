@@ -1,0 +1,11 @@
+### U.5. Exact trace depths and the WSS obstruction
+
+Let p be prime with p!=2,5, let `epsilon=(5/p)` and `N=p-epsilon`. The Frobenius identities for the original golden algebra give
+
+\[
+p\mid F_N,\qquad \varphi^N\equiv\epsilon\pmod p,
+\qquad L_N\equiv2\epsilon\pmod p.
+\]
+
+Define the positive depth `s_p=v_p(F_N)`. The signed index N is even and positive.
+

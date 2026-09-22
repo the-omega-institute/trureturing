@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d31269fd037aeccf962fed5f771c5c5dbaeeac5230927e7425dc37914e78ad56
+  normalized_sha256: sha256:d31269fd037aeccf962fed5f771c5c5dbaeeac5230927e7425dc37914e78ad56
+cas_ref: sha256:d31269fd037aeccf962fed5f771c5c5dbaeeac5230927e7425dc37914e78ad56
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本句规定截断核在约数端点使用包含上端的取值，是与已给求和定义一致的端点约定，没有独立待证命题。
+    previous_atom_id: 6163d9b2154513fcd5c0749a5babc46110ca11e7dc06e7e09d5e250327413900
+    next_atom_id: f9ddc0da0832afff6e693f3c2b1aafcadae9116d4cc46d60aa60a6505b3a849f

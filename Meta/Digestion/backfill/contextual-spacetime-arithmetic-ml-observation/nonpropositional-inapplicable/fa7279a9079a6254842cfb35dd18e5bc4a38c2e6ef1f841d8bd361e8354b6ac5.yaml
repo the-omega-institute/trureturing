@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa7279a9079a6254842cfb35dd18e5bc4a38c2e6ef1f841d8bd361e8354b6ac5
+  normalized_sha256: sha256:fa7279a9079a6254842cfb35dd18e5bc4a38c2e6ef1f841d8bd361e8354b6ac5
+cas_ref: sha256:fa7279a9079a6254842cfb35dd18e5bc4a38c2e6ef1f841d8bd361e8354b6ac5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “初始可取任一机的”中点编号隐含了有效初始化主张，故没有将其按纯定义处理；本树探针从实际网格公式证明网格大小为正、编号合法、中心等于二分之一且处于其截断赔率区间，全部由 Nat.ceil_pos 和有序域正规化得到。仓内无冻结 GID，本行结算的仅是该中点初态的有效性。
+    previous_atom_id: 40c494b2124cb508368a751db7414a4797c17441943eecf50573e8a0cb51f703
+    next_atom_id: 26301cd59ae2db9aca6d6f4a7e148ad63f643921ae64398d46330c6fb0eb8294

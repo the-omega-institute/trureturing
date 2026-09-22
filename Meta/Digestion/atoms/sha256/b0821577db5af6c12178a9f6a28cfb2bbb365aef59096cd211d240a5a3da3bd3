@@ -1,0 +1,8 @@
+**Theorem.** For every integer X>=3,
+
+$$
+\boxed{\#\{0\le n\le X:a(n)\text{ even}\}
+=O(X-2)+O(X-1)+O(X+1)+O(X+2)-1
+=2\sqrt X+O(1).}\tag{FDP1}
+$$
+

@@ -1,0 +1,41 @@
+**命题 50.3（单侧辨识界与全整数预算；repo-derived，尾界复用Hoeffding）。** 对整数 $M\ge1$，读入 $M$ 个不相交报告对，令 $c=\sum_{k=1}^M C_k$，选择
+$$
+\widehat p=\begin{cases}
+p_A,&288c\ge157M,\\
+p_B,&288c<157M.
+\end{cases}
+$$
+阈值等号归于 $A$。分别对每个固定真实模型，
+$$
+\mathbb P_p(\widehat p\ne p)\le
+\exp\!\left(-\frac{25M}{41472}\right).
+$$
+给定有理 $0<\delta=a/b<1$，其中 $a,b$ 为正整数且无需互素，置
+$$
+L=\min\{k\ge0:2^ka\ge b\},\qquad
+M=\left\lceil\frac{41472L}{25}\right\rceil
+=\left\lfloor\frac{41472L+24}{25}\right\rfloor.
+$$
+则 $L\ge1$，这个预算读入的是 $2M$ 份报告，并满足每个模型的错误概率至多 $\delta$。
+
+证明。引理50.2给独立、可测、几乎处处位于 $[0,1]$ 的变量 $C_k$，所在测度是概率测度，均值为对应的 $\theta_p$。在 $A$ 下出错意味着 $c<Mm_*$，故属于
+$$
+\left\{\sum_{k=1}^M(\theta_A-C_k)\ge M\frac5{288}\right\};
+$$
+在 $B$ 下出错恰属于
+$$
+\left\{\sum_{k=1}^M(C_k-\theta_B)\ge M\frac5{288}\right\}.
+$$
+复用有界独立变量的单侧Hoeffding界（W. Hoeffding，1963，JASA 58(301)，13–30，DOI：10.1080/01621459.1963.10500830，literature-attested）。两个中心化符号各有长度一的支持区间与次高斯参数 $1/4$：下尾可对 $-C_k\in[-1,0]$ 中心化，上尾对 $C_k\in[0,1]$ 中心化。取非负阈值 $t=M(5/288)$，分别得到
+$$
+\exp\!\left(-\frac{t^2}{2M(1/4)}\right)
+=\exp\!\left(-2M(5/288)^2\right)
+=\exp\!\left(-\frac{25M}{41472}\right).
+$$
+每个真实模型只使用一个单侧尾界，不乘二。精确对数形式的充分条件为 $M\ge(41472/25)\log(1/\delta)$，但不需要精确对数运算来选择预算。由整数定义、$e\ge2$ 和 $2^La\ge b$，
+$$
+\exp\!\left(-\frac{25M}{41472}\right)
+\le e^{-L}\le2^{-L}\le\delta.
+$$
+这只是保守的充分样本预算，不是最优辨识率或样本复杂度结论。引理的初态不变性只用于分类器，不扩大定义50.1预测任务的先验域。证毕。
+

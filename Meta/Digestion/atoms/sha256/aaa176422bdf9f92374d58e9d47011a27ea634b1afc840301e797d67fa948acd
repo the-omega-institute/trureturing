@@ -1,0 +1,6 @@
+**theorem 20.6 (Equal partitions, both exact moduli, and sharpness).** For all $L,t\ge0$,
+$$
+\mathcal Q_L=\mathcal V_{G_L-1},
+\qquad
+\ker(q_L)=\ker(v_{G_L-1}),
+$$

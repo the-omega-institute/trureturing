@@ -1,0 +1,49 @@
+**定理 31.2（全复测度接口与准确范数）。** 定义31.1的复化在全部 $M_{\mathbb C}(K)$ 上良定义、交换且结合，并仍满足逐集积分公式。其准确总变差乘法常数为
+$$
+\|\mu\star_t\eta\|_{\mathrm{TV}}\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}},\qquad \|\star_t\|_{\mathrm{bil}}=C_t.
+$$
+映射
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu)
+$$
+是复代数同构，逆为
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}g_mu_m.
+$$
+它满足
+$$
+\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}},\qquad \|\Psi_t(\nu,g)\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}}+\frac{2}{1-\rho_t}\|g\|_1,
+$$
+$$
+\frac{1-\rho_t}{2}\|\mu\|_{\mathrm{TV}}\le N_t(\mu):=\|H_\#\mu\|_{\mathrm{TV}}+\|R_t\mu\|_1\le2\|\mu\|_{\mathrm{TV}}.
+$$
+范数 $N_t$ 完备且次乘法；$C_t\|\cdot\|_{\mathrm{TV}}$ 也是完备次乘法范数。原总变差范数次乘法当且仅当 $t\in\{0,\infty\}$。以下以 $A_t$ 表示配备 $N_t$ 的这个复 Banach 代数。
+
+**证明。** 实部与虚部分解唯一，所以所给公式是唯一的复双线性延拓。展开两个复输入的实部和虚部，并使用假设31.0的实逐集公式，立即得到复逐集公式；每个输出是四个有限实正则测度的复线性组合。
+
+为取得准确常数，而非仅由四项展开得到较大常数，写 $\mu=a|\mu|$、$\eta=b|\eta|$，其中相应密度几乎处处模长为一。复乘积测度因而具有密度 $a(x)b(y)$，且其变差为 $|\mu|\otimes|\eta|$。对任意有限 Borel 分割 $D=\bigsqcup_jD_j$，有
+$$
+\sum_j|(\mu\star_t\eta)(D_j)|\le\int_{K^2}\sum_j|P^{(t)}_{x,y}(D_j)|\,d(|\mu|\otimes|\eta|)\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}.
+$$
+取分割上确界得到所述上界。定理28.2的实点质量最大化输入仍属于复测度空间，因此下界同为 $C_t$。
+
+同一分割估计应用于相位切片，给出 $\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}}$。推前仍为压缩映射。由定理28.2的实际 Borel 函数恒等式，
+$$
+\sum_{m\ge1}|r_m(x)|\le1,
+$$
+故
+$$
+\sum_{m\ge1}\left|\int_Kr_m\,d\mu\right|\le\int_K\sum_{m\ge1}|r_m|\,d|\mu|\le\|\mu\|_{\mathrm{TV}}.
+$$
+这证明正向界。又 $|d'_m|\ge1-\rho_t$，所以逆映射中的级数在总变差中绝对收敛，并满足所述逆向界。
+
+实映射的两个逆恒等式对实部、虚部分别成立，故复映射仍互逆。实全测度上的乘法相容恒等式两边都是复化后的双线性表达式，展开实部、虚部便得复全测度上的相容性。这一步使用的是全实测度恒等式，不使用有限原子测度的总变差稠密性。
+
+复测度空间完备：总变差 Cauchy 序列的实部、虚部分别在实测度空间中 Cauchy，而
+$$
+\|\operatorname{Re}\mu\|_{\mathrm{TV}},\ \|\operatorname{Im}\mu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}\le\|\operatorname{Re}\mu\|_{\mathrm{TV}}+\|\operatorname{Im}\mu\|_{\mathrm{TV}}
+$$
+使两个实极限组成复总变差极限。复序列空间的完备性由逐坐标极限和绝对和估计得到。复圆周卷积通过加法推前复乘积测度，故为压缩乘法；复 Fubini 将两种三重乘积都写成同一个三重积分，证明结合性。序列卷积的相应结论由绝对求和得到。因此直和代数完备、交换、结合且次乘法，其拉回范数正是 $N_t$。
+
+准确乘法估计又给出 $C_t\|\mu\star_t\eta\|_{\mathrm{TV}}\le(C_t\|\mu\|_{\mathrm{TV}})(C_t\|\eta\|_{\mathrm{TV}})$。当 $C_t>1$ 时，已有最大化点质量对排除未缩放总变差范数的次乘法性；当 $C_t=1$ 时，上界直接证明次乘法性。参数定义给出 $C_t=1$ 恰当且仅当 $t\in\{0,\infty\}$。证毕。
+

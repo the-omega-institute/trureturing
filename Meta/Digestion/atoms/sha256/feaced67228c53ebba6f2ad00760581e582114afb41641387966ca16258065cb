@@ -1,0 +1,20 @@
+为证强三角不等式，先注意对任意 $a,b,c$ 都有
+$$
+h_a(c)\ge\min\bigl(h_a(b),h_b(c)\bigr).
+$$
+事实上，若
+$$
+r\le\min\bigl(h_a(b),h_b(c)\bigr),
+$$
+则
+$$
+a\equiv b\pmod{p^r},
+\qquad
+b\equiv c\pmod{p^r},
+$$
+因而
+$$
+a\equiv c\pmod{p^r}.
+$$
+取所有这样的 $r$ 中的最大允许值即得所述不等式。
+

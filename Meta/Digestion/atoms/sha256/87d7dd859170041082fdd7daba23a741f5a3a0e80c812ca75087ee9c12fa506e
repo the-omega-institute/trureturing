@@ -1,0 +1,5 @@
+It is therefore not a semigroup congruence, and no binary operation on $K$ can satisfy
+$$
+e(pq)=e(p)*e(q)\qquad\text{for every }p,q\in\mathscr E.
+$$
+

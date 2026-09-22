@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:beceaf2d6aa64a561e0ed92d00969c5612c48f59fd6a5bee870e013ba0f1d37a
+  normalized_sha256: sha256:beceaf2d6aa64a561e0ed92d00969c5612c48f59fd6a5bee870e013ba0f1d37a
+cas_ref: sha256:beceaf2d6aa64a561e0ed92d00969c5612c48f59fd6a5bee870e013ba0f1d37a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只有章节标题，没有命题。
+    previous_atom_id: 4e5b4f3e8229454e7e788f213fe0311648b87842e9576104ef2866c7e4460aba
+    next_atom_id: f7f9ac1f53683fb29bcfbdab70377d4960d546ee442a7005398dfcdeeeead102

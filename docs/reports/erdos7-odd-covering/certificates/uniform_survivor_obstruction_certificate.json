@@ -1,0 +1,274 @@
+{
+  "schema": "erdos7-uniform-survivor-obstruction-v1",
+  "height": 5,
+  "prime_support": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41,
+    43,
+    47,
+    53,
+    59,
+    61,
+    67,
+    71,
+    73
+  ],
+  "law": "uniform on the complete actual survivor set",
+  "layout": "coherent: beta_5=2; beta_p=1 for p!=5; b_d=beta mod d",
+  "forbidden_assignment": {
+    "pure": "a_(p^e)=p^(e-1)-1",
+    "support_3_5": "CRT(2*3^(i-1)-1 mod 3^i, 2*5^(j-1)-1 mod 5^j)",
+    "other_mixed": "0 mod d; redundant with a_(p)=0 for each p dividing d"
+  },
+  "claim_scope": "one layout score lower-bounds Gamma; uniform-law obstruction only",
+  "finite_geometric_data": [
+    {
+      "prime": 3,
+      "test_residue": 1,
+      "s": "121/243",
+      "lambda": "122/243",
+      "W": "479/243",
+      "pure_survivor_count": 122,
+      "pure_load_square_sum": 601,
+      "pure_normalized_score": "601/122"
+    },
+    {
+      "prime": 5,
+      "test_residue": 2,
+      "s": "781/3125",
+      "lambda": "2344/3125",
+      "W": "2731/3125",
+      "pure_survivor_count": 2344,
+      "pure_load_square_sum": 5075,
+      "pure_normalized_score": "5075/2344"
+    },
+    {
+      "prime": 7,
+      "test_residue": 1,
+      "s": "2801/16807",
+      "lambda": "14006/16807",
+      "W": "9335/16807",
+      "pure_survivor_count": 14006,
+      "pure_load_square_sum": 23341,
+      "pure_normalized_score": "23341/14006"
+    },
+    {
+      "prime": 11,
+      "test_residue": 1,
+      "s": "16105/161051",
+      "lambda": "144946/161051",
+      "W": "4685/14641",
+      "pure_survivor_count": 144946,
+      "pure_load_square_sum": 196481,
+      "pure_normalized_score": "196481/144946"
+    },
+    {
+      "prime": 13,
+      "test_residue": 1,
+      "s": "30941/371293",
+      "lambda": "340352/371293",
+      "W": "97979/371293",
+      "pure_survivor_count": 340352,
+      "pure_load_square_sum": 438331,
+      "pure_normalized_score": "438331/340352"
+    },
+    {
+      "prime": 17,
+      "test_residue": 1,
+      "s": "88741/1419857",
+      "lambda": "1331116/1419857",
+      "W": "277315/1419857",
+      "pure_survivor_count": 1331116,
+      "pure_load_square_sum": 1608431,
+      "pure_normalized_score": "1608431/1331116"
+    },
+    {
+      "prime": 19,
+      "test_residue": 1,
+      "s": "137561/2476099",
+      "lambda": "2338538/2476099",
+      "W": "427967/2476099",
+      "pure_survivor_count": 2338538,
+      "pure_load_square_sum": 2766505,
+      "pure_normalized_score": "2766505/2338538"
+    },
+    {
+      "prime": 23,
+      "test_residue": 1,
+      "s": "292561/6436343",
+      "lambda": "6143782/6436343",
+      "W": "904279/6436343",
+      "pure_survivor_count": 6143782,
+      "pure_load_square_sum": 7048061,
+      "pure_normalized_score": "7048061/6143782"
+    },
+    {
+      "prime": 29,
+      "test_residue": 1,
+      "s": "732541/20511149",
+      "lambda": "19778608/20511149",
+      "W": "2249947/20511149",
+      "pure_survivor_count": 19778608,
+      "pure_load_square_sum": 22028555,
+      "pure_normalized_score": "22028555/19778608"
+    },
+    {
+      "prime": 31,
+      "test_residue": 1,
+      "s": "954305/28629151",
+      "lambda": "27674846/28629151",
+      "W": "2926535/28629151",
+      "pure_survivor_count": 27674846,
+      "pure_load_square_sum": 30601381,
+      "pure_normalized_score": "30601381/27674846"
+    },
+    {
+      "prime": 37,
+      "test_residue": 1,
+      "s": "1926221/69343957",
+      "lambda": "67417736/69343957",
+      "W": "5885675/69343957",
+      "pure_survivor_count": 67417736,
+      "pure_load_square_sum": 73303411,
+      "pure_normalized_score": "73303411/67417736"
+    },
+    {
+      "prime": 41,
+      "test_residue": 1,
+      "s": "2896405/115856201",
+      "lambda": "112959796/115856201",
+      "W": "8834035/115856201",
+      "pure_survivor_count": 112959796,
+      "pure_load_square_sum": 121793831,
+      "pure_normalized_score": "121793831/112959796"
+    },
+    {
+      "prime": 43,
+      "test_residue": 1,
+      "s": "3500201/147008443",
+      "lambda": "143508242/147008443",
+      "W": "10667279/147008443",
+      "pure_survivor_count": 143508242,
+      "pure_load_square_sum": 154175521,
+      "pure_normalized_score": "154175521/143508242"
+    },
+    {
+      "prime": 47,
+      "test_residue": 1,
+      "s": "4985761/229345007",
+      "lambda": "224359246/229345007",
+      "W": "15174055/229345007",
+      "pure_survivor_count": 224359246,
+      "pure_load_square_sum": 239533301,
+      "pure_normalized_score": "239533301/224359246"
+    },
+    {
+      "prime": 53,
+      "test_residue": 1,
+      "s": "8042221/418195493",
+      "lambda": "410153272/418195493",
+      "W": "24435979/418195493",
+      "pure_survivor_count": 410153272,
+      "pure_load_square_sum": 434589251,
+      "pure_normalized_score": "434589251/410153272"
+    },
+    {
+      "prime": 59,
+      "test_residue": 1,
+      "s": "12326281/714924299",
+      "lambda": "702598018/714924299",
+      "W": "37403887/714924299",
+      "pure_survivor_count": 702598018,
+      "pure_load_square_sum": 740001905,
+      "pure_normalized_score": "740001905/702598018"
+    },
+    {
+      "prime": 61,
+      "test_residue": 1,
+      "s": "14076605/844596301",
+      "lambda": "830519696/844596301",
+      "W": "42699035/844596301",
+      "pure_survivor_count": 830519696,
+      "pure_load_square_sum": 873218731,
+      "pure_normalized_score": "873218731/830519696"
+    },
+    {
+      "prime": 67,
+      "test_residue": 1,
+      "s": "20456441/1350125107",
+      "lambda": "1329668666/1350125107",
+      "W": "61989215/1350125107",
+      "pure_survivor_count": 1329668666,
+      "pure_load_square_sum": 1391657881,
+      "pure_normalized_score": "1391657881/1329668666"
+    },
+    {
+      "prime": 71,
+      "test_residue": 1,
+      "s": "25774705/1804229351",
+      "lambda": "1778454646/1804229351",
+      "W": "78060535/1804229351",
+      "pure_survivor_count": 1778454646,
+      "pure_load_square_sum": 1856515181,
+      "pure_normalized_score": "1856515181/1778454646"
+    },
+    {
+      "prime": 73,
+      "test_residue": 1,
+      "s": "28792661/2073071593",
+      "lambda": "2044278932/2073071593",
+      "W": "87177779/2073071593",
+      "pure_survivor_count": 2044278932,
+      "pure_load_square_sum": 2131456711,
+      "pure_normalized_score": "2131456711/2044278932"
+    }
+  ],
+  "independent_small_fiber_enumeration": {
+    "3": {
+      "survivors": 122,
+      "removed": 121,
+      "survivor_load_square_sum": 601,
+      "removed_load_square_sum": 600
+    },
+    "5": {
+      "survivors": 2344,
+      "removed": 781,
+      "survivor_load_square_sum": 5075,
+      "removed_load_square_sum": 781
+    }
+  },
+  "coupled_35_block": {
+    "survivor_count": 191467,
+    "load_square_sum": 2581475,
+    "ambient_density": "191467/759375",
+    "ambient_load_square_integral": "103259/30375",
+    "normalized_score": "2581475/191467"
+  },
+  "full_coherent_layout_score": "21849159064910015690122273801177560456574889215433615609530778282782269381135868515130573665701818333038800195902118970437002250778653125/153457744739717376929803068747937612028757903600708361221930095182931780847980847983233842789649988868221344856045873969607793681891328",
+  "score_strict_interval": [
+    "1423789923/10000000",
+    "355947481/2500000"
+  ],
+  "uniform_target": "138877/1000",
+  "score_minus_target": "67175981086535691780251627833778588857134729634755066014099056757781556538854036220375910075449603623353060791129516394972585952328895793/19182218092464672116225383593492201503594737950088545152741261897866472605997605997904230348706248608527668107005734246200974210236416000",
+  "finite_survivor_density": "293316738833629999808485149017142465090968333331501643259082602737736616673734038474703482713726203490228706424824055096816959488/2615013456914889277697889489977130822212991348899266450535233539909770789327958212709651792051214845975960534168569316021386053125",
+  "all_height_density_strict_lower_bound": "36779876601/330712481792",
+  "density_lower_bound_minus_11_percent": "10037590097/8267812044800",
+  "geometric_limits": {
+    "coupled_35_density": "1/4",
+    "coupled_35_score": "55/4",
+    "full_coherent_layout_score": "172611232014033575394483560778625/1188629517601617115158148202496",
+    "pre_mixed_35_score": "65/6",
+    "mixed_removal_amplification": "33/26"
+  }
+}

@@ -1,0 +1,35 @@
+**下界构造。** 记 $T_n$ 为满足 $T_n(\cos\theta)=\cos(n\theta)$ 的第一类 Chebyshev 多项式。先设 $d\geq2$，令 $n=2d-2$、$A_\eta=\operatorname{arcosh}(2/\eta-1)>0$、
+
+\[
+x_j=\tfrac12(1+\cos(j\pi/n)),\quad j=0,\ldots,n,
+\qquad y=\tfrac12(1+\cosh(A_\eta/n))>1.
+\]
+
+令 $\ell_j$ 为这些节点的 Lagrange 基，$c_j=\ell_j(y)$。乘积公式给 $\operatorname{sign}(c_j)=(-1)^j$。由于 $\sum c_j=1$，以及节点上的 $T_n(2x_j-1)=(-1)^j$，插值恒等式给
+
+\[
+P:=\sum_{j\ {\rm even}}c_j=\frac{1+T_n(2y-1)}2=\frac1\eta.
+\]
+
+因此
+
+\[
+\alpha=P^{-1}\delta_y+P^{-1}\sum_{j\ {\rm odd}}(-c_j)\delta_{x_j},\qquad
+\beta=P^{-1}\sum_{j\ {\rm even}}c_j\delta_{x_j}
+\tag{16.7}
+\]
+
+是两个各有 $d$ 个正原子的概率测度，匹配次数 $0,\ldots,2d-2$ 的矩。$\alpha$ 在 $y$ 上的质量为 $\eta$；$\beta$ 在最大节点 $1$ 上的质量为 $c_0/P>\eta$，因为 $c_0=\prod_{j\ne0}(y-x_j)/(1-x_j)>1$。这一步控制两个模型的端点权重，超出了仅有交错支撑矩匹配的存在陈述 [16-A, Lemma 30]。
+
+反射坐标 $\xi=y-x$ 后，两种分布支撑于 $[0,W]$，$W=y$，最小点分别为 $0$ 与 $\Delta=y-1>0$，前 $2d-1$ 个矩仍相同。取固定 $E_0\in(E_-,E_+)$ 且 $E_0>0$，将能量设为 $E=E_0+s\xi$，其中 $sW\leq E_+-E_0$。记 $q=2d-1$。对任意 $t\geq0$，在 $\xi=0$ 展开到 $q-1$ 阶，Taylor 余项的绝对值不超过 $(stW)^q/q!$。匹配的多项式部分积分相消，故
+
+\[
+|C_\alpha(t)-C_\beta(t)|\leq2e^{-E_0t}\frac{(stW)^q}{q!}
+\leq2\left(\frac{sW}{E_0}\right)^q.
+\tag{16.8}
+\]
+
+末步由 $e^{E_0t}\geq(E_0t)^q/q!$ 得出，对全部时间同时成立。取 $s=(E_0/W)\varepsilon^{1/q}$；对充分小的 $\varepsilon$ 能量仍在固定区间内。两条曲线之差至多为 $2\varepsilon$，而谱底差为 $s\Delta$。中点观测同时相容，任何估计在至少一侧的误差不小于 $s\Delta/2$，得下界。
+
+$d=1$ 时用 $\delta_{E_0}$ 与 $\delta_{E_0+s}$，并用 $e^{-E_0t}(1-e^{-st})\leq st e^{-E_0t}\leq s/E_0$。经典矩比较中的 $1/(2d-1)$ 指数已见 [16-A, Proposition 1]；这里给出的是固定最低态权重和全部时间绝对误差下的端点构造及上下界。
+

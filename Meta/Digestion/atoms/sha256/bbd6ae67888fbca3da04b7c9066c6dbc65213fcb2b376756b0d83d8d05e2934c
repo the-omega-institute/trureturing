@@ -1,0 +1,31 @@
+**定理 29.5（无原子测度的充分性）。** 对每个参数及每个 $\mu\in M_c(K)$，
+$$
+\mu\in Z_{\mathrm{top}}(\star_t),\qquad \|\mathcal T_\mu^{(t)}\|\le\|\mu\|_{\mathrm{TV}}.
+$$
+
+**证明。** 对实有符号测度，单点上的变差满足 $|\mu|(\{a\})=|\mu(\{a\})|$。因此无原子 $\mu$ 的变差对每个可数集合为零。
+
+固定极限输入 $x$，考虑
+$$
+N_x=H^{-1}\bigl(E\cup(E-H(x))\bigr),\qquad E-H(x)=\{E_r-H(x):r\ge1\}.
+$$
+集合 $E$ 与 $E-H(x)$ 都可数，而每个 $H$ 纤维至多含两个点，所以 $N_x$ 可数，并且 $|\mu|(N_x)=0$。这同时涵盖固定分裂集与该输入所对应的平移分裂集。
+
+设 $x_n\to x$，固定 $a\notin N_x$。此时 $H(a)+H(x)\notin E$，精确闭图给 $\Gamma(a,x)=\{w\}$。对任意 $w$ 的开邻域 $U$，最终有 $\Gamma(a,x_n)\subseteq U$。否则可取子列及 $w_n\in\Gamma(a,x_n)\setminus U$；由紧致性再取 $w_n$ 的收敛子列，闭图性使其极限属于 $\Gamma(a,x)$，同时属于闭集 $K\setminus U$，矛盾。
+
+固定 $f\in C(K)$。利用行质量一、行支撑及统一总变差界，得到
+$$
+|P_{t,f}(a,x_n)-f(w)|\le C_t\sup_{z\in\Gamma(a,x_n)}|f(z)-f(w)|\longrightarrow0.
+$$
+且 $P_{t,f}(a,x)=f(w)$。所以被积函数对 $|\mu|$ 几乎处处收敛，差值由可积常数 $2C_t\|f\|_\infty$ 支配。对 $|\mu|$ 使用支配收敛，再用 Jordan 分解，得到
+$$
+\mathcal T_\mu^{(t)}f(x_n)\longrightarrow\mathcal T_\mu^{(t)}f(x).
+$$
+由于 $K$ 为度量空间，这证明实际函数连续。定理29.4给出弱星连续性。
+
+对每个固定 $x$，在 $N_x$ 外的实际行是点质量，故还有
+$$
+|\mathcal T_\mu^{(t)}f(x)|\le\|f\|_\infty|\mu|(K).
+$$
+取上确界即得改进的算子范数界。证明只得到连续测试积分的收敛，并未把不同点质量误认为在总变差范数中相近。证毕。
+

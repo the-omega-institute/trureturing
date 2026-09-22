@@ -1,0 +1,6 @@
+**定理 29.6（Borel 截面与无原子相位提升）。** 对 $s\in\{+1,-1\}$，定义实际截面 $s_s:\mathbb T\to K$：当 $\theta\notin E$ 时，$s_s(\theta)=k_\theta$；当 $\theta=E_m$ 时，$s_s(\theta)=x_m^s$。这两个截面均为 Borel 映射，并满足 $H\circ s_s=\operatorname{id}_{\mathbb T}$。推前限制
+$$
+H_\#:M_c(K)\longrightarrow M_c(\mathbb T)
+$$
+是等距线性双射，其逆为任一 $(s_s)_\#$。特别，对 $\eta\in M_c(\mathbb T)$，两个截面给出同一个提升。
+

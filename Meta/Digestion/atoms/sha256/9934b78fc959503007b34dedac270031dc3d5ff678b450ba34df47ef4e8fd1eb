@@ -1,0 +1,25 @@
+**Assumption 22.2 (Precisely imported phase and joint-fiber classification).** Assume the phase classification of [the fixed phase source, §§371–372, particularly Theorems 372.2–372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md): $F[K]=I$; each $H$-fiber outside $E$ is a singleton; and each fiber over $\theta\in E$ consists of two distinct labeled points $z_\theta^{+1},z_\theta^{-1}$. Use exactly the labels of [the fixed addition source, Definition 16.3 and Theorem 16.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), so in particular
+$$
+z_{[-\phi]}^{+1}=u,\quad z_{[-\phi]}^{-1}=v,\qquad
+z_{[-2\phi]}^{+1}=0v,\quad z_{[-2\phi]}^{-1}=10v.
+$$
+Define
+$$
+\mathcal S(x)=
+\begin{cases}
+\{s\},&H(x)\in E\text{ and }x=z_{H(x)}^s,\quad s\in\{-1,+1\},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+Assume the following statement about the actual joint closure in Definition 22.1, with $\theta=\Theta(x,y)$:
+$$
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^{+1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{+1\},\\
+\{z_\theta^{-1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{-1\},\\
+\{z_\theta^{+1},z_\theta^{-1}\},&\theta\in E\text{ and neither same-sign case holds}.
+\end{cases}
+$$
+Every theorem below is conditional on this explicitly imported assumption; no selection law is included in it.
+

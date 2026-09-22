@@ -1,0 +1,8 @@
+**Corollary.** For every prime q>5,
+
+$$
+\boxed{0\in S(q)\iff q_q=0\ \text{or}\
+\bigl(2q+1\text{ prime and }\rho(2q+1)\mid\pi(q)\bigr)\ \text{or}\
+\exists p>200q+1:\ p\text{ prime},\ p\equiv1\pmod q,\ \rho(p)\mid\pi(q).}\tag{GAW6}
+$$
+

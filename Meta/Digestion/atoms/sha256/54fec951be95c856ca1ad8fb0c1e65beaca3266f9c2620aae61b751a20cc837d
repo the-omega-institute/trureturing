@@ -1,0 +1,2 @@
+**theorem 22.9 (Borel selections with continuous approximants taking values in the actual digit space).** The maps $A_{\min},A_{\max}:X\to K$ exist, are Borel, and are of Baire class one with target $K$. The real-valued map $e\circ A_{\min}$ is lower semicontinuous and $e\circ A_{\max}$ is upper semicontinuous. Their Baire-one assertion does not require passing through continuous approximants outside $K$.
+

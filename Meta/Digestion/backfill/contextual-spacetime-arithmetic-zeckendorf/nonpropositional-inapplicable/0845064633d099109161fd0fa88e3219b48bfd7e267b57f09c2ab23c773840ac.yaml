@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0845064633d099109161fd0fa88e3219b48bfd7e267b57f09c2ab23c773840ac
+  normalized_sha256: sha256:0845064633d099109161fd0fa88e3219b48bfd7e267b57f09c2ab23c773840ac
+cas_ref: sha256:0845064633d099109161fd0fa88e3219b48bfd7e267b57f09c2ab23c773840ac
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅重申标量三观察、寄存器观察和二进读数的类型，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 666c83951b3c0edd45eb9a21fb44b9159944ff7ee3ccd3ba4c2579237e87fd94
+    next_atom_id: 148a5c3fdea88008b4b17ef87fa7637b5d8961521dadb5621ed18e05e685c6ce

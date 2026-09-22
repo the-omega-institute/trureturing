@@ -1,0 +1,40 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-residual-shell-k-comparison-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "c73b25553619e2fc1b0c103643050047c8a24b0623d5d11bdc2a4cd50688ca28",
+    "kind": "value"
+  },
+  "source_radius": {
+    "kind": "inline",
+    "value": "1/27"
+  },
+  "residual_radius": {
+    "kind": "inline",
+    "value": "1/1000"
+  },
+  "source_slot_loss_radius": {
+    "kind": "inline",
+    "value": "1/520"
+  },
+  "shells": {
+    "path": "content/005-shells.json",
+    "sha256": "6721905146dc3b9b9535c3772665c64148140fed8ec0212544f54293ddf695a6",
+    "kind": "array"
+  },
+  "uniform_comparison_upper": {
+    "kind": "inline",
+    "value": "2055988989348894746208694371953111463993946420129607181271/4039503769803141973441446174858683760305244047010000000"
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 19500000
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary continuous actual-source inequalities and exact rational certificates. Both K orientations, all52 independent original tests and every original infinite tail. Two closed residual shells use the same actual rho as the global mass floor; no unrestricted/globalK or Lean theorem is claimed."
+  }
+}

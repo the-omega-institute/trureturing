@@ -1,0 +1,50 @@
+### U.5. Exact trace depths and the WSS obstruction
+
+Let p be prime with p!=2,5, let `epsilon=(5/p)` and `N=p-epsilon`. The Frobenius identities for the original golden algebra give
+
+\[
+p\mid F_N,\qquad \varphi^N\equiv\epsilon\pmod p,
+\qquad L_N\equiv2\epsilon\pmod p.
+\]
+
+Define the positive depth `s_p=v_p(F_N)`. The signed index N is even and positive.
+
+**Theorem.** The two traces retain different depths:
+
+\[
+\boxed{v_p(L_N-2\epsilon)=2s_p,\qquad v_p(L_p-1)=s_p.}\tag{U.9}
+\]
+
+**Proof.** The discriminant identity gives
+
+\[
+(L_N-2\epsilon)(L_N+2\epsilon)=5F_N^2.
+\]
+
+The second factor has residue 4*epsilon, hence is a unit modulo p. All factors whose valuations are taken are nonzero: N>0, F_N>0, and the displayed product is positive. Additivity of the valuation gives the first equality.
+
+The Fibonacci-Lucas addition identity gives `2L_p=epsilon*L_N+5F_N`. Therefore
+
+\[
+2(L_p-1)(L_N+2\epsilon)
+=5F_N(L_N+2\epsilon+\epsilon F_N).
+\]
+
+Both parenthesized factors are units modulo p, and 2 and 5 are units. Also L_p>1 for odd primes p. Taking valuations proves the second equality.
+
+**Corollary.** With the standard definition `WSS(p) iff p^2 divides F_N`,
+
+\[
+\mathrm{WSS}(p)
+\iff p^4\mid L_N-2\epsilon
+\iff p^2\mid L_p-1.\tag{U.10}
+\]
+
+At normalized first order, dividing in the integers before reducing gives
+
+\[
+2\frac{L_p-1}{p}\equiv5\frac{F_N}{p}\pmod p.\tag{U.11}
+\]
+
+At the return index N, the trace already has a second-order zero for every p. Its residue modulo p^2 cannot distinguish the WSS primes. The prime-index trace retains the original depth.
+

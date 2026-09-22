@@ -184,8 +184,203 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTe
 
 Strictly ordered values witness independent sensitivity of each slot for both strict and weak laws.
 
+**Definition 1.16 (homogeneousPointwiseEqSignature).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqSignature`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqSignature` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two Boolean-indexed CUT slots share one output type and its explicit equality dictionary; there are no anchors.
+
+**Definition 1.17 (homogeneousPointwiseEqRealization).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Boolean elimination selects the supplied left or right readout in the shared output type.
+
+**Definition 1.18 (homogeneousPointwiseEqArena).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqArena`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqArena` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The law equates the homogeneous readouts at every state of the supplied finite arena.
+
+**Theorem 1.19 (homogeneousPointwiseEqLegacy).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqLegacy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqLegacy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The full pointwise equation is definitionally equivalent to the homogeneous arena law.
+
+**Theorem 1.20 (homogeneousPointwiseEq_sensitivity).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEq_sensitivity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEq_sensitivity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Distinct output values and an inhabited state witness a law change from changing either CUT slot alone.
+
+**Definition 1.21 (homogeneousPointwiseNeSignature).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeSignature`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeSignature` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two Boolean-indexed CUT slots share an output type with decidable equality and no anchors.
+
+**Definition 1.22 (homogeneousPointwiseNeRealization).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Boolean elimination retains the two supplied homogeneous readouts for disequality.
+
+**Definition 1.23 (homogeneousPointwiseNeArena).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeArena`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeArena` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The law requires the homogeneous readouts to differ at every state.
+
+**Theorem 1.24 (homogeneousPointwiseNeLegacy).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeLegacy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeLegacy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The full pointwise disequality is definitionally equivalent to the homogeneous arena law.
+
+**Theorem 1.25 (homogeneousPointwiseNe_sensitivity).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNe_sensitivity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNe_sensitivity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Distinct output values make disequality true; changing either slot alone to match the other falsifies it.
+
+**Definition 1.26 (homogeneousPointwiseOrderSignature).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderSignature`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderSignature` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two Boolean-indexed CUT slots share an output type and equality dictionary; order is supplied separately by the arena law.
+
+**Definition 1.27 (homogeneousPointwiseOrderRealization).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Boolean elimination selects the left or right output without an order parameter in the realization.
+
+**Definition 1.28 (homogeneousPointwiseOrderArena).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderArena`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderArena` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The arena supplies the linear order and selects strict or weak pointwise comparison of the shared output type.
+
+**Theorem 1.29 (homogeneousPointwiseOrderLegacy).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderLegacy`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderLegacy` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The complete universal strict or weak comparison is definitionally equivalent to the selected arena law.
+
+**Theorem 1.30 (homogeneousPointwiseOrder_sensitivity).**
+
+Lean statement: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrder_sensitivity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrder_sensitivity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Two strictly ordered values witness independent changes to each CUT slot for both comparison laws.
+
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqLegacy`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEqSignature`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseEq_sensitivity`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeLegacy`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeRealization`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNeSignature`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseNe_sensitivity`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderLegacy`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderRealization`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrderSignature`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.homogeneousPointwiseOrder_sensitivity`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.pointwiseEqArena`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.pointwiseEqLegacy`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates.pointwiseEqRealization`

@@ -1,0 +1,17 @@
+**定理 23.11（许可关系本身的结合律）。** 假设23.1下，集合值关系确实满足
+$$
+\bigcup_{u\in\Gamma(x,y)}\Gamma(u,z)
+=
+\bigcup_{v\in\Gamma(y,z)}\Gamma(x,v)
+\qquad(x,y,z\in K).
+$$
+更准确地，令 $\lambda=H(x)+H(y)+H(z)$，共同值为
+$$
+\begin{cases}
+\{k_\lambda\},&\lambda\notin E,\\
+\{z_\lambda^\sigma:
+\sigma\in\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z)\},
+&\lambda\in E.
+\end{cases}
+$$
+

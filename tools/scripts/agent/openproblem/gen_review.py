@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Generate the three review-triplet briefs for one PR from briefs/review-template.md.
+"""Generate the three review-triplet briefs for one PR from templates/review-template.md.
 usage: gen_review.py LANE PR BRANCH WORKTREE IMPL_ENVELOPE TARGET_FILE NYXID_SEAT
+Run it with the session scratchpad as the working directory (README step 9); the briefs are
+written to ./briefs/ there. The template and the GoalArtifact are read from this script's own
+tracked templates/ directory, so a wiped scratchpad costs nothing (case #6220).
   LANE          short lane name (zeck|axis|parity|rouche…)
   PR            PR number
   BRANCH        head branch
@@ -11,10 +14,26 @@ usage: gen_review.py LANE PR BRANCH WORKTREE IMPL_ENVELOPE TARGET_FILE NYXID_SEA
 Writes briefs/review-<LANE>-<role>.md for architecture, quality, tests; the nyxid seat gets a compact URL-based variant (<40KB).
 """
 import sys, subprocess, pathlib, re
-sp = pathlib.Path(__file__).resolve().parent
+if len(sys.argv) != 8:
+    sys.exit(__doc__)
+here = pathlib.Path(__file__).resolve().parent
+out_dir = pathlib.Path.cwd()/'briefs'
 lane, pr, branch, worktree, impl_env, target_file, nyx_seat = sys.argv[1:8]
-tpl = (sp/'briefs'/'review-template.md').read_text()
-ga = (sp/'goal-artifact.yaml').read_text().rstrip()
+if nyx_seat not in ('architecture', 'quality'):
+    sys.exit(f'NYXID_SEAT must be architecture or quality, got {nyx_seat!r}')
+tpl_path = here/'templates'/'review-template.md'
+base_brief = here/'templates'/'impl-base-brief.md'
+for required in (tpl_path, base_brief, pathlib.Path(target_file)):
+    if not required.is_file():
+        sys.exit(f'missing required input: {required}')
+tpl = tpl_path.read_text()
+# The GoalArtifact has exactly one tracked home: the yaml fence of the base implementation brief.
+# Reading it from there keeps a single source of truth instead of a second copy per scratchpad.
+ga_match = re.search(r'```yaml\n(.*?)\n```', base_brief.read_text(), re.S)
+if ga_match is None:
+    sys.exit(f'no yaml GoalArtifact fence found in {base_brief}')
+ga = ga_match.group(1).rstrip()
+out_dir.mkdir(parents=True, exist_ok=True)
 head = subprocess.check_output(['git','-C',worktree,'rev-parse','HEAD'],text=True).strip()
 files = subprocess.check_output(['git','-C',worktree,'diff','--name-status','origin/dev...HEAD'],text=True).strip()
 title = subprocess.check_output(['gh','pr','view',pr,'-R','the-omega-institute/trureturing','--json','title','--jq','.title'],text=True).strip()
@@ -33,5 +52,5 @@ for role in ['architecture','quality','tests']:
     else:
         t = t.replace('__WORKTREE__', worktree)
     assert '__' not in t.replace('__init__',''), (role, re.findall(r'__[A-Z_]+__', t)[:5])
-    out = sp/'briefs'/f'review-{lane}-{role}.md'
+    out = out_dir/f'review-{lane}-{role}.md'
     out.write_text(t); print('wrote', out.name, len(t.encode()), 'bytes')

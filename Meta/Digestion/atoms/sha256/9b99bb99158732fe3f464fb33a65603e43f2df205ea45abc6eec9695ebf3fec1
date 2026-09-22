@@ -1,0 +1,41 @@
+**证明。** 记 $w_*=(1+\varepsilon L)/P$，构造
+
+\[
+b_i=w_*c_i-\varepsilon r_i,\qquad
+u_i=\max\{-b_i,0\},\qquad v_i=\max\{b_i,0\}.
+\tag{15.5}
+\]
+
+这里式 (15.5) 中的 $u_i$ 是 $\mu$ 的节点权重。对任意次数小于 $N$ 的多项式 $f$，Lagrange 恒等式为 $f=\sum_i f(x_i)\ell_i$。对其分别在 $y$ 求值及作用线性泛函 $D(f)=\sum_{k=0}^{N-1}d_k f_k$，得到
+
+\[
+\sum_i c_i x_i^k=y^k,\qquad
+\sum_i r_i x_i^k=d_k,\qquad
+\sum_i r_i=0,\qquad\sum_{i\in J}r_i=D(p)=L.
+\tag{15.6}
+\]
+
+由噪声条件，每个 $i$ 满足
+
+\[
+\frac1P+\varepsilon\left(\frac LP-\frac{r_i}{c_i}\right)
+\geq\frac1{2P}>0.
+\]
+
+而 $b_i$ 等于该正数乘以 $c_i$，因此所有节点的符号保持不变。于是
+
+\[
+\sum_i v_i=\sum_{i\in J}b_i=w_*P-\varepsilon L=1,
+\qquad \sum_i b_i=w_*.
+\]
+
+从 $v_i-u_i=b_i$ 得到 $w_*+\sum_i u_i=1$。式 (15.6) 又给出每个矩误差精确等于 $\varepsilon d_k$，所以构造可行。
+
+对任意可行概率对，由 $p(x_i)\in\{0,1\}$、$p(y)=P$ 和非负权重，有
+
+\[
+wP\leq\int p\,d\mu\leq\int p\,d\nu+\varepsilon L\leq1+\varepsilon L.
+\]
+
+其中常数系数不贡献误差，因为两边总质量完全相同。除以 $P>0$ 即得上界，与式 (15.5) 构造相等。此证明同时计算了极值、可达分布和保持正性的噪声区间。多项式矩对偶的背景参见 [15-A]、[15-B]。
+

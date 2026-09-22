@@ -1,0 +1,17 @@
+**证明。** $A\in\omega^\omega$，$X_A^{\rm cap}$ 是 $\mathbb Z_o^\omega$ 的界条件子集，$B_A^{\rm cap}$ 再以有限支撑条件分离。$\mathbb Q^\omega$、$\mathbb T^{\mathbb Q^\omega}$ 及至多可数行族所在的幂集都是集合。有限求和图、所选序列与检测行的图由替代给出，水平、有限邻域族、所有开集族由分离、幂集和并集取得；拓扑是 $\mathcal P(B_A^{\rm cap})$ 的子集。紧性与局部基的定义量化于相应幂集，不需普遍集合。这与第 318–320、336、341 条及 CSA 第十一节命题 14–15 的集合构造、定义消去具有相同条件。
+
+对任一总整数状态 $u:\omega\to\mathbb Z_o$，无论其支撑是否有限，将第 74 条的配对比较逐边用于其总图，得到与第 319 条同形的公式
+$$
+\operatorname{Enc}(u)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{Enc}(u_n)\rangle_Z:n\in\omega\}.
+$$
+每个零坐标边也包含在内。容量的原自然值图及有理行的图分别为
+$$
+\operatorname{Enc}(A)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{NatZ}(A_n)\rangle_Z:n\in\omega\},
+$$
+$$
+\operatorname{Enc}(r)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{Enc}(r_n)\rangle_Z:n\in\omega\}.
+$$
+这些是完整集合码，不是有限系数列表。

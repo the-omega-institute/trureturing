@@ -1,0 +1,15 @@
+**定理。** 对每个素数 $p\mid C_j$，
+
+$$
+\boxed{s_p=v_p(C_j).}\tag{GP34}
+$$
+
+因此
+
+$$
+\boxed{
+p\mid C_j\quad\Longrightarrow\quad
+\bigl(\mathrm{WSS}(p)\iff p^2\mid C_j\bigr).
+}\tag{GP35}
+$$
+

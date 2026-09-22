@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4e480e208bef7c62f4c33d144b1f6995a7960dbc0f0946dc717cdee55a143fa7
+  normalized_sha256: sha256:4e480e208bef7c62f4c33d144b1f6995a7960dbc0f0946dc717cdee55a143fa7
+cas_ref: sha256:4e480e208bef7c62f4c33d144b1f6995a7960dbc0f0946dc717cdee55a143fa7
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.signature_extension_refines
+    target_statement_id: sha256:728c07ff3c284ced1404d65311e14b192a1fef317a9e20fa3420e82baf5fa675
+receipts:
+  unresolved_subitems: []

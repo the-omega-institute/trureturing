@@ -179,14 +179,15 @@ public sealed class UtilityAdmissionRuleTests
     }
 
     [Fact]
-    public void BodyOnlyLeanEditDoesNotWakeUtilityRule()
+    public void BodyOnlyFrozenLeanEditChecksRegistrationsWithoutUtilityReadmission()
     {
         var fixture = new RuleFixture();
         AddExistingFrozenState(fixture);
         fixture.Files[RuleFixture.RingPath] += "-- body-only change\n";
         var context = fixture.Build(RawChangeSet.Create([RuleFixture.RingPath]));
 
-        Assert.False(UtilityAdmissionRule.IsAffectedBy(context));
+        Assert.True(UtilityAdmissionRule.IsAffectedBy(context));
+        Assert.Empty(UtilityAdmissionRule.Evaluate(context));
     }
 
     [Fact]

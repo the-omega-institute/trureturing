@@ -1,0 +1,19 @@
+**theorem 60.12（不等素数指数不会产生串行和式）。** 若
+$$
+M=p^e q^f,\qquad p\ne q,\qquad e,f\ge1,
+$$
+特别允许 $e\ne f$，则
+$$
+C_{\rm na}(M)=
+\max\bigl((p-1)p^{e-1},(q-1)q^{f-1}\bigr),
+$$
+且
+$$
+C_{\rm ad}(M)=
+\max\bigl(e(p-1),f(q-1)\bigr).
+$$
+例如对 $M=2^3 3^2$，
+$$
+C_{\rm na}(M)=6,\qquad C_{\rm ad}(M)=4.
+$$
+

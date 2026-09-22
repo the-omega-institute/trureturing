@@ -1,0 +1,18 @@
+**定理 31.15（重建表示不是谱保持表示）。** 令 $\mathscr X_t$ 为下列单位化字符组成的集合：
+$$
+\mathcal F_n^{\#}(\lambda,\mu)=\lambda+\mathcal F_n(\mu)\quad(n\in\mathbb Z),\qquad \mathcal E_z^{\#}\quad(z\in\overline{\mathbb D}).
+$$
+定义普通观察表示
+$$
+\mathcal O_t:A_t^{\#}\longrightarrow\ell^\infty(\mathscr X_t),\qquad \mathcal O_t(a)(\omega)=\omega(a).
+$$
+它是有界、单射、保单位的复代数同态。若 $a=(\lambda,\mu)$、$\Phi_t\mu=(\nu,g)$，则
+$$
+\sigma_{\ell^\infty(\mathscr X_t)}(\mathcal O_t(a))=\lambda+\left(\overline{\{\widehat\nu(n):n\in\mathbb Z\}}\cup\mathscr G_g(\overline{\mathbb D})\right),
+$$
+而原单位化谱为定理31.12的较大集合。因此对这个元素保持谱，准确等价于
+$$
+\sigma_{\mathcal M}(\nu)\subseteq\overline{\{\widehat\nu(n):n\in\mathbb Z\}}\cup\mathscr G_g(\overline{\mathbb D}).
+$$
+特别，$\mathcal O_t$ 并非对所有元素保持谱，其像也不逆封闭：存在 $a$ 使 $\mathcal O_t(a)$ 在目标代数中可逆，而 $a$ 在原单位化中不可逆。
+

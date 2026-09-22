@@ -1,0 +1,15 @@
+**定义 17.1（保留历史的联合取得纤维）。** 固定有限维实向量空间 $E$、非空紧凸集 $\Gamma\subset E$、线性记录映射 $R:E\to\mathbb R^n$（$n\ge1$）及线性任务 $\ell:E\to\mathbb R$。记录坐标、单位及其 Euclidean 配对固定，$R^*c$ 表示线性泛函 $v\mapsto c\cdot Rv$，不要求先在 $E$ 上选择内积。定义
+$$
+D=R(\Gamma),\qquad \Gamma_y=\{v\in\Gamma:Rv=y\},\qquad
+U^\ell(y)=\max_{v\in\Gamma_y}\ell(v),\quad
+L^\ell(y)=\min_{v\in\Gamma_y}\ell(v)\quad(y\in D),
+$$
+$$
+h_\Gamma(f)=\max_{v\in\Gamma}f(v),\qquad
+F_y^\ell(c)=c\cdot y+h_\Gamma(\ell-R^*c).
+\tag{17.1}
+$$
+无歧义时写 $U=U^\ell,L=L^\ell$。$y\in D$ 指实际可取得的同一份记录；上下端点始终来自同一个 $\Gamma_y$。
+
+这里的联合载体须满足本卷假设15.1、定义8.1及[上下文几何卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定义13.1、命题13.2及定义13.3的来源与历史条件：固定已保留历史后，全部旧约束已在 $\Gamma$ 中，或作为同一个 $R,y$ 的附加行保留；不得只保留此次新读数。源、误差、初态和装置等辅助变量按同一实现联合取值。若动作改变物理状态，$v$ 表示含共同来源和合法历史的扩充实现，须同时保留相关动作前后的状态；$\Gamma_y$ 的静态集合交不表示物理状态不变。将实际扩充实现表示为上述紧凸联合域及线性记录、任务，是本节的显式假设，不由记录名称或边缘取值域推出。
+

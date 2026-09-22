@@ -1,0 +1,21 @@
+证明。对 $|w|\le H$，有 $L_aE_w=E_{aw}\in V_{H+1}=V_H$。线性性把这个包含推广到整个 $V_H$，再对词长归纳，所有词效果都在 $V_H$ 中。与 $V_H\subseteq V_m$ 合用即得永久稳定。这是第 77.3 节所涉及的 `sequential_visible_space_once_stable_permanently` 的生成元不变性论证；不需要在全自由词假设之外再加一条前缀条件。若 $T_a^*=L_a$，同一论证还给出
+
+$$
+\langle T_ak,v\rangle=\langle k,L_av\rangle=0
+\quad(k\in V_H^\perp,\ v\in V_H),
+$$
+
+故 $T_a(V_H^\perp)\subseteq V_H^\perp$。对于删去某些扩展的允许子集，上述 $aw$ 未必被允许，不能作这一步推导；命题 78.5 给出一个物理分支反例。
+
+受驱响应在 $n=0$ 时满足 $Px_0=0=\widetilde x_0$。若第 $n$ 步等式成立，则
+
+$$
+Px_{n+1}=PAx_n+PBu_n
+=\widetilde A\widetilde x_n+\widetilde B u_n
+=\widetilde x_{n+1}.
+$$
+
+输出等式由 $C=\widetilde C P$ 代入。这正是 `ProjectedExactDescent` 中 `projectedState_eq_of_descent` 与 `outputs_eq_of_descent` 所用的零初态 `drivenState` 和全局下降条件。对另行指定的非零初态，相同归纳还需要 $\widetilde x_0=Px_0$；它不是任意两个初态之间的结论。证毕。
+
+第 77.4 节接用第 76 节的有限商预算时，增广后的载体必须实际为有限集，更新必须是该集上的同一个时间齐次确定映射。把任意长历史、无界时钟或随机结果添作坐标，本身不满足这一假设：前两者可以产生无限多坐标值，后者仍需给定确定的更新规则。只有明确构造出有限且封闭的确定增广系统，才可使用第 76 节的有限类数和稳定深度界。第 77.5 节的三项条件在这些限定内给出所选任务的精确预测接口；它们不能作为“稳定经典现实”或一个可物理取得的共同经典记录的充分条件。以下同一模型同时满足预测闭合与共同经典存储不可能性。
+

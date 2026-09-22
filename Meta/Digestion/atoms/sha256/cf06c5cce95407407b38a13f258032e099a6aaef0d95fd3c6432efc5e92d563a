@@ -1,0 +1,10 @@
+**Proof.** The no-adjacent-ones condition defines a closed subset of the compact product $\{0,1\}^{\mathbb N}$, so $K$ is compact and metrizable. The series defining $F$ converges uniformly, because the absolute values of its terms are bounded by a summable geometric sequence. Each partial sum is continuous. Thus $F$, and consequently $H$, is continuous.
+
+The exact-fiber assumption makes the restriction a continuous bijection. To prove continuity of its inverse, fix $\theta\in\mathbb T^\circ$ and an open neighborhood $U\subseteq K$ of $k_\theta$. The set $H(K\setminus U)$ is compact and therefore closed in $\mathbb T$. It does not contain $\theta$, since $H^{-1}(\{\theta\})=\{k_\theta\}$. Hence
+$$
+W=\mathbb T\setminus H(K\setminus U)
+$$
+is an open neighborhood of $\theta$, and $k_\eta\in U$ for every $\eta\in W\cap\mathbb T^\circ$. This proves the inverse continuity; it does not require $K^\circ$ to be compact.
+
+Both $E$ and $S$ are countable Borel sets. For a Borel set $D\subseteq K$, the inverse image of $D$ under $s$ is the union of the Borel subset of $\mathbb T^\circ$ obtained from the inverse homeomorphism and a subset of the countable set $E$. It is therefore Borel in $\mathbb T$. The section identity follows from the fiber definitions. Choosing the other branch at any subset of the split phases also gives a Borel section, although the displayed choice will remain fixed. QED.
+

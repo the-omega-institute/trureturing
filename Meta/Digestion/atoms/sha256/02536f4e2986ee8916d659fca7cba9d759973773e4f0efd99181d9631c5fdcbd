@@ -1,0 +1,48 @@
+### IP.9 Uniform two-cycle modulo 25
+
+Let ell>1 be an odd integer with $\chi(\ell)=-1$, and retain the actual
+integer quotient
+
+$$
+B_{\ell,k}=F_{\ell^{k+1}}/F_{\ell^k}\quad(k\ge0).
+$$
+
+Primality of ell is not needed in this section. When ell is a prime at
+least seven, IP5 identifies its factors and exponents with exact ranks
+and initial depths.
+
+**Theorem RP5.** For all k>=0,
+
+$$
+\lambda_5(B_{\ell,k})
+\equiv\lambda_5(\ell)-3(-1)^k\pmod5,              \tag{RP5}
+$$
+
+and
+
+$$
+\boxed{
+B_{\ell,2j}\equiv F_\ell,\qquad
+B_{\ell,2j+1}\equiv-4F_\ell\pmod{25}.
+}\tag{RP6}
+$$
+
+The two displayed residues are distinct.
+
+**Proof.** RP2 at the two power indices and RP1 give
+
+$$
+\lambda_5(B_{\ell,k})=
+ \lambda_5(\ell)-\ell^{2k}(\ell^2-1)\pmod5.
+$$
+
+Inertness means $\ell^2=-1\pmod5$, proving RP5. IP5's residue formula
+$B_{\ell,k}=\ell(-1)^{(\ell-1)/2}\pmod5$ also holds for composite odd
+bases coprime to five, by direct division of the formula in IP2. Thus
+all B have the same nonzero residue modulo five. RP5 alternates between
+two values differing by one. Multiplication by -4=1-5 leaves the residue
+modulo five unchanged and adds $\lambda_5(-4)=1$. RP1's uniqueness of a
+modulo-25 lift from these two coordinates proves RP6, starting with
+$B_{\ell,0}=F_\ell$. Since F_ell is a unit at five, their difference
+$-5F_\ell$ is nonzero modulo 25.
+

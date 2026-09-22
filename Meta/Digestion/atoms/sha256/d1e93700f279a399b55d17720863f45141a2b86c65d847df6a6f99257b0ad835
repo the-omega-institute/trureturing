@@ -1,0 +1,39 @@
+**定义与假设 17.0（完整过去空间及 Zeckendorf 前置）。** 在 ZFC 中取 $\mathbb N=\{0,1,\ldots\}$。对非空紧致 Hausdorff 空间 $X$ 及连续满射 $f:X\to X$，定义
+$$
+\mathcal L_f=\{(x_0,x_1,\ldots)\in X^{\mathbb N}:f(x_{j+1})=x_j\text{ 对每个 }j\ge0\},
+$$
+赋予乘积空间的子空间拓扑，记 $p_j(x_0,x_1,\ldots)=x_j$、$P_f=p_0$，并定义候选演化
+$$
+U_f(x_0,x_1,\ldots)=(f(x_0),x_0,x_1,\ldots).
+$$
+
+具体情形沿用[前置卷第371–375节](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)的对象，在本节简记为
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \mathbb T=\mathbb R/\mathbb Z,\qquad K=\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0\text{ 对所有 }i\ge0\}.
+$$
+$K$ 取乘积子空间拓扑。令 $G_0=1$、$G_1=2$、$G_{i+2}=G_{i+1}+G_i$，$Z(n)$ 为权值 $G_i$ 下低位起的有限 Zeckendorf 表示补零，$0=Z(0)$ 为全零状态，并记
+$$
+u=(10)^\omega,\qquad v=(01)^\omega,\qquad D=Z[\mathbb N],\qquad H(x)=\left[\sum_{i\ge0}(-1)^{i+1}\phi^{-i-2}x_i\right].
+$$
+$T$ 为前置卷定义375.1的首个相邻零后继：在首个 $00$ 的位置清零此前缀并置该位为一；无 $00$ 时输出 $0$。本节使用前置卷定理371.2、372.4、375.2–375.3的以下结论：$K$ 紧致可度量，$Z$ 单射且 $D$ 稠密；$T$ 连续满射，且
+$$
+TZ(n)=Z(n+1),\qquad T^{-1}(\{0\})=\{u,v\},
+$$
+每个非零状态的前驱唯一；$H$ 连续满射，且
+$$
+H(Z(n))=[n\phi],\qquad H(Tx)=H(x)+[\phi].
+$$
+$H$ 的二点纤维恰位于
+$$
+E_- =\{[-m\phi]:m\ge1\},
+$$
+其余相位的纤维均为单点，特别
+$$
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\qquad(n\ge0).
+$$
+在此具体情形记 $L=\mathcal L_T$、$P=P_T$、$U=U_T$、$Q=H\circ P$，并置
+$$
+E_+=\{[n\phi]:n\ge0\},\qquad \mathcal O=\{[k\phi]:k\in\mathbb Z\}=E_-\cup E_+.
+$$
+由 $\phi$ 无理，$E_-\cap E_+=\varnothing$，且整数 $k$ 由相位 $[k\phi]$ 唯一确定。
+

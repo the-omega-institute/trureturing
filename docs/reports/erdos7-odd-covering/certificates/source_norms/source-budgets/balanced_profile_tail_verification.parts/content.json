@@ -1,0 +1,132 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "Independent exact directed audit of this balanced fixed154 head with uniform extra digits; arbitrary finite head exponents in original tail cofactors are covered by the geometric auxiliary domination."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md": "dc243704b9e01b5719f6becf97ea93a6c5c25fb0a254e0b7a8fd8aab29b0a370",
+      "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+      "certificates/source_norms/source-budgets/balanced_profile_head_verification.json": "22c110d6b64544bcf143afefcd8cab0236fa520228f814b5b634efebb49ac650",
+      "frontier/source-budgets/verify_balanced_profile_head.py": "9f81ef4a32e3818e27c84f027807bcda7cca9e4beb02d755eba0694342031307",
+      "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+      "frontier/source-budgets/balanced_profile_head.py": "daa64daeff8c6a7dc474a965b59473929f1b63fec48e3ef2465b399eb1945dc5",
+      "certificates/source_norms/source-budgets/balanced_profile_head.json": "13ef27bd3ea3472257faf3ec3394949f7f2fad28fca1998c7ffd201f6ff53914",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+      "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+      "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+      "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+      "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+      "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+      "certificates/source_norms/source-budgets/balanced_profile_tail_budget.json": "43ee684630214cc0bc5b94ea05528f4f7fda023d3071e890224d4e7dce21164a",
+      "frontier/source-budgets/balanced_profile_tail_budget.py": "e29ce190d3cc7a4ce5126f5d35fe60ac17745016b80b89bbb7cc01c8a47a0dd3",
+      "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+      "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+      "verify_finite_continuation.py": "c0a4fa266d5e114b77303d195b2f88fe570ee09ae2b34b2b0889e0585c2f9390"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "47c879983216081dc6cda36e0625b2b4e2f3c9527b519d6bd65fe991701e27eb"
+  },
+  "finite_head_atomic_laws_checked": {
+    "kind": "inline",
+    "value": 20
+  },
+  "prime_count": {
+    "kind": "inline",
+    "value": 1900
+  },
+  "tail_stages": {
+    "kind": "inline",
+    "value": 1879
+  },
+  "last_prime": {
+    "kind": "inline",
+    "value": 16381
+  },
+  "retained_states": {
+    "kind": "inline",
+    "value": 6553
+  },
+  "maximum_queried_state": {
+    "kind": "inline",
+    "value": 6552
+  },
+  "exact_head_mean": {
+    "kind": "inline",
+    "value": "182380820632923825223626937058800000145120317739110813600153491925370465029/23939128508521797874344393031680000000000000000000000000000000000000000000"
+  },
+  "exact_head_second": {
+    "kind": "inline",
+    "value": "189927285123184069286367174760338797816094037835966007975567696682143477536763558866099/944514894208033492360200388980366045444990000000000000000000000000000000000000000000"
+  },
+  "C_upper": {
+    "kind": "inline",
+    "value": "130197276585546949/250000000000000000"
+  },
+  "J_upper": {
+    "kind": "inline",
+    "value": "617212231457700477699/62500000000000000"
+  },
+  "stage_digest": {
+    "kind": "inline",
+    "value": "dfd3bef484092e31434e67a4d08bda65f48d7e36216c2b3ff3689d4210d433b3"
+  },
+  "epsilon_exact": {
+    "kind": "inline",
+    "value": "39891291142993164384829733829906791483779/130822105133669014006347656250000000000000"
+  },
+  "independent_T_lower": {
+    "kind": "inline",
+    "value": "326059/4"
+  },
+  "independent_consumer_score_upper": {
+    "kind": "inline",
+    "value": "21540413935703453068684589604160825138045123609/22749440794324506859647832031250000000000000000"
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "182400694146469003947841303201081292114143/1046576841069352112050781250000000000000000"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "10334496263346932523445137768525935524030551643/182400694146469003947841303201081292114143"
+  },
+  "schema": {
+    "kind": "inline",
+    "value": "balanced-profile-tail-verification-v1"
+  },
+  "stages": {
+    "path": "content/020-stages.json",
+    "sha256": "7fd7da1516215b5a0930282e4475a93a16afa75c7cd4cdc7e063e427cd0f95eb",
+    "kind": "array"
+  },
+  "profiles": {
+    "path": "content/021-profiles.json",
+    "sha256": "c3185507ccfe81e653b25c8228475c5519579a1b4e34586974d39cf0b0f4c66a",
+    "kind": "value"
+  },
+  "independent_consumer_score_decimal": {
+    "kind": "inline",
+    "value": 0.9468546559209192
+  },
+  "independent_margin": {
+    "kind": "inline",
+    "value": "1209026858621053790963242427089174861954876391/22749440794324506859647832031250000000000000000"
+  },
+  "independent_margin_decimal": {
+    "kind": "inline",
+    "value": 0.05314534407908083
+  },
+  "threshold_scope": {
+    "kind": "inline",
+    "value": "Fixed conservative T=326059/4."
+  }
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fa77ba10bd73197c0a51f5d703d2b95fd30b56a206c989f035fe8f89a6c9b6f4
+  normalized_sha256: sha256:fa77ba10bd73197c0a51f5d703d2b95fd30b56a206c989f035fe8f89a6c9b6f4
+cas_ref: sha256:fa77ba10bd73197c0a51f5d703d2b95fd30b56a206c989f035fe8f89a6c9b6f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “七处句内错引及其范围”只是勘误标题，不陈述数学关系，也未在标题中偷带命题，按结构子句处理。
+    previous_atom_id: 5d663881df48608f8e4abeed4f6533d417adb0d847589065b300fc2fc6452fce
+    next_atom_id: 5463b660ba5fba6f1ce141dc88199d23b68a88eed955d79d3364ee37fbb623d8

@@ -1,0 +1,10 @@
+**Theorem.** For every n>=0,
+
+$$
+\boxed{\sigma_F(L_n^2+1)\in\mathcal F_+
+\quad\Longleftrightarrow\quad n\text{ is odd}\ \text{or}\ n\in\{2,4,8\}.}
+\tag{FDS13}
+$$
+
+For odd n the sum is one when 3|n and three otherwise. At n=2,4,8 the sums are respectively 8,8,55.
+

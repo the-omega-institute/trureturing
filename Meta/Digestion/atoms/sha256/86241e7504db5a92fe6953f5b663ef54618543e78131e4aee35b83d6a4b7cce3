@@ -1,0 +1,8 @@
+**Proof.** For n>=2 let u,v be the two odd coprime indices from FDS4, with u<v. The divisor set contains F_v and contains no larger Fibonacci value. If its sum is Fibonacci, FDS10 forces all odd indices from 3 through v to occur.
+
+If n is odd, then v=n+2>=5 and u=v-4. The required index v-2 is larger than u and cannot divide v, since it is an odd integer at least three and would have to divide two. This contradicts FDS4.
+
+If n is even and n>=6, then v=n+1>=7 and u=v-2. The required index d=v-4 is an odd integer at least three. It cannot divide u=d+2 or v=d+4, since that would make it divide two or four. Again FDS4 gives a contradiction.
+
+The remaining cases have actual divisor sets {1} at n=0, {1,2} at n=1,2, and {1,2,5} at n=4. Their sums prove sufficiency and the asserted values.
+

@@ -1,0 +1,41 @@
+{
+  "length": 2768,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/035-proof_data/005-own_bound_leaf_indices/000000-000798.json",
+        "sha256": "5063abcfa1b1b1770f52ad76f93bdd87b52a383cce0f16488f1d66cc4f4bd2e8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/035-proof_data/005-own_bound_leaf_indices/000798-001596.json",
+        "sha256": "62c794cb38be1e1a125a8c483267f0cc2e3a0f7ba4795156e0f38078b4ef9691",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/035-proof_data/005-own_bound_leaf_indices/001596-002394.json",
+        "sha256": "c4f8f158f70f6f79b32db17b63addfd2444473bf7a5c7df3e95eb6d9f0089fd8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 2768,
+      "part": {
+        "path": "content/035-proof_data/005-own_bound_leaf_indices/002394-002768.json",
+        "sha256": "61589097c02eab096cea98227e1863a53552af48c920d26ea58e4ddf32361bf2",
+        "kind": "value"
+      }
+    }
+  ]
+}

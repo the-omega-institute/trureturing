@@ -1,0 +1,19 @@
+**Theorem.** Let m>1 have largest prime factor ell>=7, and put a=v_ell(m). For 1<=j<=a define the positive integer
+
+$$
+C_j=\frac{F_{\ell^j}}{F_{\ell^{j-1}}}.
+$$
+
+Then C_j>1, the C_j are pairwise coprime, C_j is not a square, and every prime p dividing C_j satisfies
+
+$$
+\rho(p)=\ell^j,\qquad p>\ell,\qquad
+v_p(C_j)=h_p=v_p(F_m).\tag{PBC3}
+$$
+
+If F_m is powerful, every C_j is powerful, and there exist a distinct primes p_1,...,p_a such that
+
+$$
+\boxed{\rho(p_j)=\ell^j,\qquad h_{p_j}\ge3\text{ is odd},\qquad q_{p_j}=0.}\tag{PBC4}
+$$
+

@@ -1,0 +1,32 @@
+**定理 14.9（目标恢复与含隐藏余项的积分风险）。** 在假设14.4下，对任意 $f\in\mathcal H$ 和合法割 $I$，以下三个条件等价：
+$$
+\begin{aligned}
+f=P_If
+&\iff \bigl[Qf=0\ \text{且}\ D_Sf=0\text{ 对每个 }S\nsubseteq I\bigr]\\
+&\iff \bigl[Qf=0\ \text{且}\ K_Jf=0\text{ 对每个 }J\in\mathcal J(E),\ J\nsubseteq I\bigr].
+\end{aligned}
+\tag{14.17}
+$$
+它们也等价于存在 $h:B_I\to\mathbb R$ 使 $f=h(q_I)$ 在 $\mu$ 几乎处处成立。并且
+$$
+\mathscr R_I(f)
+=\|Qf\|_2^2+\sum_{S\nsubseteq I}\|D_Sf\|_2^2
+=\|Qf\|_2^2+\sum_{\substack{J\in\mathcal J(E)\\J\nsubseteq I}}\|K_Jf\|_2^2.
+\tag{14.18}
+$$
+对 $I\subseteq I'$ 的风险下降为
+$$
+\mathscr R_I(f)-\mathscr R_{I'}(f)
+=\sum_{\substack{S\subseteq I'\\S\nsubseteq I}}\|D_Sf\|_2^2
+=\sum_{\substack{J\subseteq I',\ J\nsubseteq I\\J\in\mathcal J(E)}}\|K_Jf\|_2^2.
+\tag{14.19}
+$$
+
+**证明。** 式（14.4）给
+$$
+f-P_If=Qf+\sum_{S\nsubseteq I}D_Sf.
+$$
+各项由定理14.5互相正交；同样按下闭包分组，定理14.7给 $Qf+\sum_{J\nsubseteq I}K_Jf$。两次取范数平方得到式（14.18），有限个非负平方和为零恰为每一项为零，所以得到式（14.17）。条件期望投影的像是 $\mathcal F_I$ 可测函数类；有限空间中，这等价于在各正概率 $q_I$ 纤维上几乎处处常值。以该值定义 $h$，在零概率纤维上任意扩展，便得因子化；反向由可测性立得。相减式（14.18）给式（14.19）。
+
+若 $\mu$ 对 $\Omega$ 全支撑，几乎处处等式就是逐点等式。否则若要对全部 $\Omega$ 作逐点恢复，仍须另验集合意义上的 $q_I$ 纤维常值性。此处结论针对指定 $f$ 与指定律，不由目标风险给出内部参数稳定重建、任意维度实现的唯一性或物理空间度量。去掉假设14.4后仍保留命题14.3的嵌套风险恒等式，但本证明不再给按 $D_S$ 或一般 $K_J$ 分项的平方和。$\square$
+

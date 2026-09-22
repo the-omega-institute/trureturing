@@ -1,0 +1,11 @@
+### U.1. Definitions and classical arithmetic inputs
+
+Let F_0=0, F_1=1 and F_(n+2)=F_(n+1)+F_n. Let phi be the original golden unit with phi^2=phi+1, and L_n=trace(phi^n). For a positive integer M, define
+
+\[
+\operatorname{core}(M)=\prod_{r\ \mathrm{prime},\ v_r(M)\ \mathrm{odd}}r,
+\qquad s(n)=\operatorname{core}(F_n)\quad(n\ge1).
+\]
+
+The core is the unique positive squarefree d such that M=d*u^2 for a positive integer u. It is distinct from the radical, which retains every prime divisor. Write omega(M) for the number of distinct prime divisors, and Omega(M) for their number counted with multiplicity.
+

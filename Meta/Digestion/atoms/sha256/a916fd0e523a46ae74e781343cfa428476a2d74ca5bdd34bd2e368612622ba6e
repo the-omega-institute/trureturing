@@ -1,0 +1,36 @@
+**Definition 41.1 (Finite feasibility, input rank, and witnesses).** Let $V$ be a real inner-product space of dimension $d<\infty$, let $I$ be a set, and let $\ell_i\in V^*$ for $i\in I$. Write
+$$
+\ell_i(v)=\langle a_i,v\rangle,\qquad
+W=\operatorname{span}_{\mathbb R}\{a_i:i\in I\},\qquad
+\mathcal N=\bigcap_{i\in I}\ker\ell_i.
+$$
+The effective input rank is
+$$
+m=\dim W=\dim\operatorname{span}_{\mathbb R}\{\ell_i:i\in I\}
+  =d-\dim\mathcal N\le d.
+$$
+Indeed, the Riesz correspondence identifies the two spans, and $\mathcal N=W^\perp$.
+
+For finite $F\subseteq I$, put
+$$
+C_F=\{v\in V:\ell_i(v)>0\text{ for every }i\in F\}.
+$$
+Finite feasibility means $C_F\ne\varnothing$ for every finite $F\subseteq I$, including $C_\varnothing=V$.
+
+A lexicographic witness of length $r\ge0$ is a list $v_1,\ldots,v_r$ such that, for every $i\in I$, there is a $k_i\in\{1,\ldots,r\}$ with
+$$
+\ell_i(v_j)=0\quad(j<k_i),\qquad \ell_i(v_{k_i})>0.
+$$
+Thus an all-zero evaluation list is not strictly positive. The empty list witnesses precisely the empty family.
+
+A polynomial curve tending to zero is an element of $tV[t]$, written
+$$
+\gamma(t)=\sum_{j=1}^{q}t^jv_j.
+$$
+It is eventually feasible when
+$$
+\forall i\in I\ \exists\varepsilon_i>0\quad
+\forall t\in(0,\varepsilon_i),\qquad \ell_i(\gamma(t))>0.
+$$
+The zero polynomial is admitted in every degree-at-most bound and is represented by the empty sum when $q=0$. Neither a common $\varepsilon$ nor a positive margin uniform in $i$ is part of this definition.
+

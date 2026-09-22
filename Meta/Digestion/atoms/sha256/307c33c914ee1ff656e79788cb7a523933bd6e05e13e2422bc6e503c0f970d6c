@@ -1,0 +1,7 @@
+**定义 470.2（固定素数背景）。** 沿用《情境时空算术的 Zeckendorf 扩展》第 69–70 条的低位先写规范字双射 $\zeta:\omega\to\mathsf W_Z$，以及第 95–96 条的素数标签集 $\mathsf{Pr}_Z=\zeta[\operatorname{Pr}]$。在全部自然数上定义关系
+$$
+\operatorname{NextPrime}(p,q)\iff p,q\in\operatorname{Pr}\ \land\ p<q\ \land\ \neg\exists r\in\operatorname{Pr}\ (p<r<q),
+$$
+$$
+\operatorname{Gap}(p,q,g)\iff\operatorname{NextPrime}(p,q)\land q=p+g.
+$$

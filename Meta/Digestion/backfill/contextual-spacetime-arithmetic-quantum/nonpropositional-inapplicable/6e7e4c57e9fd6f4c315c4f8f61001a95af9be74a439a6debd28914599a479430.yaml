@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e7e4c57e9fd6f4c315c4f8f61001a95af9be74a439a6debd28914599a479430
+  normalized_sha256: sha256:6e7e4c57e9fd6f4c315c4f8f61001a95af9be74a439a6debd28914599a479430
+cas_ref: sha256:6e7e4c57e9fd6f4c315c4f8f61001a95af9be74a439a6debd28914599a479430
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将通道复合放入线性自同态环后，分配律 mul_sub、单位律 mul_one 及 sub_eq_zero 直接给出该等价；仓内无冻结 GID。
+    previous_atom_id: e339fb89a6cc234c5392ec39aee23330beeb89ac98080d8d29c3b47c85f5c403
+    next_atom_id: b22979151d9526fb0b711ecbe5e0255aa6309e276d0a5d860035c37139b24a12

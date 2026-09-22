@@ -1,0 +1,251 @@
+{
+  "schema": "conditional-root-dense-tail-certificate-v1",
+  "scope": "Exact root-margin arithmetic for the prime-interaction component containing 3, with six specified heads and arbitrary finite additional prime sets above 10000, conditional on the actual descendant-domain invariant, proved other-root charges, conditional complete-label comparison, and the cited prime-product bound. Whole-family noncoverage additionally requires avoidance of every other component; Chapter 31 supplies this when every other graph block has at most seven vertices. No unrestricted odd-cover theorem or Lean verification is asserted.",
+  "method": "Direct low-product tuple enumeration with full exact means; five-variable rational automatic differentiation.",
+  "external_verifier_imported": false,
+  "geometry_used": false,
+  "prime_product_premise": {
+    "source": "Michael Schroeder, Noncoverage for Distinct Odd Moduli with at Most Three Prime Divisors, Lemma 8.2 (Explicit prime-product ratio)",
+    "archive_sha256": "5956327277ac47dd6e98a0a38f2a785cd61e647560c7f6ab5c73a63cf49faa51",
+    "tex_member": "three-prime-factors-complete/publication/three_factors/paper/main.tex",
+    "tex_sha256": "291020863f5fbb4f2d98aa0a1d5ac63349bd8c565d4ab07422aee83d23825451",
+    "statement_label": "lem:mertens",
+    "verification_boundary": "Pinned source statement and its ratio derivation inspected; Rosser-Schoenfeld 1962 Theorem 8 is an external premise. The original RS PDF was not independently retrieved."
+  },
+  "reference_head_children": [
+    5,
+    7,
+    11,
+    13,
+    17
+  ],
+  "thresholds": [
+    0,
+    1,
+    3,
+    5,
+    7
+  ],
+  "gamma": [
+    "6/5",
+    "2",
+    "2",
+    "2",
+    "2"
+  ],
+  "expense_box_upper_corner": "67/3072",
+  "zero_expense": {
+    "expenses": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "denominators": [
+      "3",
+      "4",
+      "6",
+      "6",
+      "8"
+    ],
+    "auxiliary_caps": [
+      "2",
+      "4/3",
+      "3/2",
+      "5/3",
+      "2",
+      "2"
+    ],
+    "low_product_tuple_counts": [
+      0,
+      1,
+      7,
+      23,
+      61
+    ],
+    "stage_costs": [
+      "1/3",
+      "41/180",
+      "5043901/41674500",
+      "15311441336297/131044944318750",
+      "254627753915755986045892231/2659278071347311162498750000"
+    ],
+    "cost": "2379346060993228562427403831/2659278071347311162498750000",
+    "gradient": [
+      "82170678977668326304600690439/292520587848204227874862500000",
+      "4049982467432260682564779919/19501372523213615191657500000",
+      "392989054785319792980951193/5584483949829353441247375000",
+      "4566762455195899207727730013/87756176354461268362458750000",
+      "254627753915755986045892231/10637112285389244649995000000"
+    ],
+    "second_moment": "16099655/248832"
+  },
+  "upper_corner": {
+    "expenses": [
+      "67/3072",
+      "67/3072",
+      "67/3072",
+      "67/3072",
+      "67/3072"
+    ],
+    "denominators": [
+      "7613/2560",
+      "6077/1536",
+      "9149/1536",
+      "9149/1536",
+      "12221/1536"
+    ],
+    "auxiliary_caps": [
+      "2",
+      "10240/7613",
+      "9216/6077",
+      "15360/9149",
+      "18432/9149",
+      "24576/12221"
+    ],
+    "low_product_tuple_counts": [
+      0,
+      1,
+      7,
+      23,
+      61
+    ],
+    "stage_costs": [
+      "2560/7613",
+      "10713600/46264201",
+      "191965035607552/1555521567937575",
+      "3020234803349485687330421248/25269211399162738397712485625",
+      "506679965551293126592202058657323068332708352/5170063331070772556816044596836158881516028125"
+    ],
+    "cost": "4698424231180937146134996329346153034855608832/5170063331070772556816044596836158881516028125",
+    "gradient": [
+      "79297854841421555698042598641660660213081482723328/275517844976092540325283832609995742954870654809375",
+      "249320788077147697435709142959421494613852553216/1163647217145077215843374185739753241591588996875",
+      "76127931704409342988972632903681384300653576192/1051131320354811069384666489254533724599780918125",
+      "52213386527235189561491092494178264444469510144/973269741069269508689506008569012707962760109375",
+      "518840284724524161630414908065098821972693352448/21061114656338637138949627005978232563669126571875"
+    ],
+    "second_moment": "3112461874161011540673/47325920018794268621"
+  },
+  "strict_gradient_upper_bounds": [
+    "36/125",
+    "43/200",
+    "73/1000",
+    "27/500",
+    "1/40"
+  ],
+  "atomic_owner_coefficients": [
+    "107/125",
+    "357/400",
+    "1927/2000",
+    "973/1000",
+    "79/80"
+  ],
+  "head_charge_upper_bound": "179/200",
+  "tail": {
+    "cutoff": 10000,
+    "ell": 8,
+    "moment_exponent": 7,
+    "prime_ratio_correction": "129/127",
+    "integral_polynomial_terms": [
+      "1",
+      "7/8",
+      "21/32",
+      "105/256",
+      "105/512",
+      "315/4096",
+      "315/16384",
+      "315/131072"
+    ],
+    "tau7_upper_bound": "158028357647377093111875/436270024792662927847645184",
+    "head_second_moment_upper_bound": 66,
+    "charge_upper_bound": "5214935802363444072691875/218135012396331463923822592",
+    "simple_strict_charge_bound": "3/125",
+    "simple_charge_slack": "2538061893563882684983401/27266876549541432990477824000"
+  },
+  "head_rows": [
+    {
+      "head_children": [
+        5,
+        7,
+        11,
+        13,
+        17
+      ],
+      "outside_expense_upper_bound": "3/1024",
+      "head_root_margin": "1269/25600",
+      "dense_tail_root_margin": "4809/128000",
+      "additional_total_descendant_expense_coefficient": "5/6"
+    },
+    {
+      "head_children": [
+        5,
+        7,
+        11,
+        13,
+        19
+      ],
+      "outside_expense_upper_bound": "5/1024",
+      "head_root_margin": "1219/25600",
+      "dense_tail_root_margin": "4559/128000",
+      "additional_total_descendant_expense_coefficient": "5/6"
+    },
+    {
+      "head_children": [
+        5,
+        7,
+        11,
+        13,
+        23
+      ],
+      "outside_expense_upper_bound": "13/2048",
+      "head_root_margin": "2363/51200",
+      "dense_tail_root_margin": "8743/256000",
+      "additional_total_descendant_expense_coefficient": "5/6"
+    },
+    {
+      "head_children": [
+        5,
+        7,
+        11,
+        13,
+        29
+      ],
+      "outside_expense_upper_bound": "111/16384",
+      "head_root_margin": "18729/409600",
+      "dense_tail_root_margin": "69069/2048000",
+      "additional_total_descendant_expense_coefficient": "5/6"
+    },
+    {
+      "head_children": [
+        5,
+        7,
+        11,
+        13,
+        31
+      ],
+      "outside_expense_upper_bound": "223/32768",
+      "head_root_margin": "37433/819200",
+      "dense_tail_root_margin": "138013/4096000",
+      "additional_total_descendant_expense_coefficient": "5/6"
+    },
+    {
+      "head_children": [
+        5,
+        7,
+        11,
+        17,
+        19
+      ],
+      "outside_expense_upper_bound": "67/3072",
+      "head_root_margin": "2357/76800",
+      "dense_tail_root_margin": "7177/384000",
+      "additional_total_descendant_expense_coefficient": "5/6"
+    }
+  ],
+  "uniform_head_root_margin": "2357/76800",
+  "uniform_dense_tail_root_margin": "7177/384000",
+  "uniform_owner_coefficient": "5/6",
+  "maximum_total_charge_bound": "1067063/1152000"
+}

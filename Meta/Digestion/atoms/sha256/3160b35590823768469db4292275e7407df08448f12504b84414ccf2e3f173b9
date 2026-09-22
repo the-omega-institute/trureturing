@@ -1,0 +1,35 @@
+**Assumption 32.0 (Original carrier and exact multiplication).** Work in classical mathematics, including the ultrafilter lemma and the Hahn–Banach theorem. Retain the original compact digit topology and the original compact circle topology. Thus
+$$
+\mathbb N=\{0,1,2,\ldots\},\qquad \phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+Use the finite Zeckendorf map $Z$ of Definition 25.0, with $0_K=Z(0)$. Assume precisely the exact fibers of Assumption 25.1:
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad x_m^+\ne x_m^-,
+$$
+$$
+H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N).
+$$
+The signs remain the fixed phase-side signs of Definition 25.0. Put $\mathcal S(x_m^+)=\{+1\}$, $\mathcal S(x_m^-)=\{-1\}$, and $\mathcal S(x)=\{-1,+1\}$ on every nonsplit fiber. Assume the full graph identity, not merely phase compatibility:
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},
+$$
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_\sigma\},&\sigma=H(x)+H(y)\notin E,\\
+\{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&\sigma=E_r.
+\end{cases}
+$$
+Fix $t\in(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\}$, where $\infty$ is a separate symbol. Let $P^{(t)}$ be the actual finite signed rows of Definition 25.8 and Theorem 25.9, and let $\star_t$ be their setwise integrated product on $M(K)$ from Theorems 28.7–28.9. In particular, these rows are symmetric and associative, have mass one, are supported in the displayed exact graph, and satisfy
+$$
+P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)},\qquad
+\sup_{x,y}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t<\infty.
+$$
+Here $C_t=(1+\rho_t)/(1-\rho_t)$, with $\rho_t=|t|$ for finite $|t|<1$, $\rho_t=|t|^{-1}$ for finite $|t|>1$, and $\rho_\infty=0$. For every Borel $D\subseteq K$, both row evaluations $P^{(t)}_{x,y}(D)$ and $|P^{(t)}_{x,y}|(D)$ are jointly Borel, as proved in Theorem 28.7. All subsequent carrier-specific assertions retain these assumptions. Measures in $M(K)$ are finite real signed regular Borel measures; total variation has no factor of one half.
+

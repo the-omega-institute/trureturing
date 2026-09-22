@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8b195b886006687792b177eacc90e4369c334b13f28603a4ea682f1e0491a3d8
+  normalized_sha256: sha256:8b195b886006687792b177eacc90e4369c334b13f28603a4ea682f1e0491a3d8
+cas_ref: sha256:8b195b886006687792b177eacc90e4369c334b13f28603a4ea682f1e0491a3d8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段分别命名系数下确界接口和有符号抵消接口，并限制其作为局部假设使用；没有要求由有限恒等式推出这些假设，故只结算接口与范围约定。
+    previous_atom_id: 131778f65b7ab8d098b2bbd616f9839aa50dee21dddcac3b8bb25bab0d34f0d3
+    next_atom_id: 9c0fa23f8fbb0b1c6309b44a06cb106542f47e7577272985a23e97f2ab675091

@@ -1,0 +1,26 @@
+**theorem 35.10 (The arithmetic probability, the logarithmic metric and the two positional laws).** Define
+$$
+d_{\log}(y,z)=h_1(\rho(y,z)).
+$$
+This is an ultrametric with the same topology as $\rho$, and
+$$
+\mathcal H^p_{d_{\log}}=\mathcal H^{h_p}_\rho\quad(p>0).
+$$
+Consequently
+$$
+\dim_{\mathrm H}(X_\beta,d_{\log})=1,\qquad
+\mathcal H^1_{d_{\log}}=c\eta.
+$$
+In contrast, the ordinary Hausdorff dimension of $(X_\beta,\rho)$ is zero, as already established in 33.7.
+
+If $\widehat d(x,x')=\rho(\Phi(x),\Phi(x'))$, then
+$$
+\mathcal H^{h_1}_{\widehat d}=c\nu,\qquad
+(\Phi^{-1})_*\left(c^{-1}\mathcal H^{h_1}_\rho\right)=\nu,
+$$
+and
+$$
+(H\circ\Phi^{-1})_*\left(c^{-1}\mathcal H^{h_1}_\rho\right)=m.
+$$
+Thus the normalized temporal critical measure is precisely the arithmetic Haar lift, transported by the coding. It is not the stationary Parry probability $\mu_{\mathrm{st}}$ for positional deletion on the full carrier $K$.
+

@@ -90,11 +90,12 @@ public static class ScribeCli
 
         if (command == "markdown-check")
         {
-            if (arguments.Count != 5
+            if (arguments.Count is not (3 or 5)
                 || !string.Equals(arguments[1], "--report", StringComparison.Ordinal)
                 || string.IsNullOrWhiteSpace(arguments[2])
-                || !string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)
-                || string.IsNullOrWhiteSpace(arguments[4]))
+                || (arguments.Count == 5
+                    && (!string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)
+                        || string.IsNullOrWhiteSpace(arguments[4]))))
             {
                 error.WriteLine(Usage);
                 return 2;
@@ -107,12 +108,14 @@ public static class ScribeCli
                     repositoryRoot,
                     arguments[2]);
 
-                // The caller owns the diff: git references stay in the workflow, and this
-                // verb judges exactly the paths it is handed.
-                var scope = new MarkdownFormulaScope(
-                    repositoryRoot,
-                    ReadPaths(arguments[4], input));
                 var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
+                // An explicit scope remains caller-owned; current mode needs no Git history.
+                IEnumerable<string> paths = arguments.Count == 5
+                    ? ReadPaths(arguments[4], input)
+                    : definitions.Select(static definition => definition.RelativePath.Value)
+                        .Concat(Directory.EnumerateFiles(Path.Combine(repositoryRoot, "Blueprint"), "*.md", SearchOption.AllDirectories)
+                            .Select(path => Path.GetRelativePath(repositoryRoot, path).Replace('\\', '/')));
+                var scope = new MarkdownFormulaScope(repositoryRoot, paths);
                 return ScribeEmitter.CheckMarkdown(
                     repositoryRoot,
                     output,
@@ -213,7 +216,7 @@ public static class ScribeCli
         "usage: dotnet run --project tools/StrataLint.Scribe.Documents -- "
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
         + "| projections --check --report <file> "
-        + "| markdown-check --report <file> --paths-from <file|->";
+        + "| markdown-check --report <file> [--paths-from <file|->]";
 
     /// <summary>
     /// The paths to judge. `-` reads them from standard input, which keeps the change's

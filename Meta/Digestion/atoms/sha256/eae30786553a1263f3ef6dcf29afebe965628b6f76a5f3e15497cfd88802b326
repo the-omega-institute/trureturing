@@ -1,0 +1,26 @@
+**theorem 22.7 (Density with a constant two-output Cantor family).** Every nonempty open $W\subseteq X$ contains a compact set $M$ homeomorphic to $\{0,1\}^{\mathbb N}$ and some $\theta\in E$ such that
+$$
+\Gamma(\xi)=\{z_\theta^{+1},z_\theta^{-1}\}\quad(\xi\in M),
+$$
+while both input phases of every $\xi\in M$ lie outside $E$. In particular, $D$ is dense; $G$ has empty interior; and no point selection is continuous on any nonempty open subspace of $X$.
+
+**Proof 22.7.** Choose a nonempty cylinder rectangle $C_p\times C_q\subseteq W$. By Theorem 22.3 choose nonempty open arcs $J\subseteq H[C_p]$ and $L\subseteq H[C_q]$. The sum $J+L$ is nonempty and open, since it is a union of translates of $L$. Density of $E$ supplies
+$$
+\theta\in E\cap(J+L).
+$$
+Then $B=J\cap(\theta-L)$ is nonempty and open. Exclude the countable set
+$$
+T=E\cup(\theta-E).
+$$
+There is a Cantor set $C\subseteq B\setminus T$, as the following construction shows. Inside a proper circle-coordinate arc contained in $B$, choose a nondegenerate closed interval. Enumerate the points of $T$ in that arc. At stage $n$, replace each interval already chosen by two disjoint nondegenerate closed subintervals in its interior, avoiding the first $n$ enumerated points, with lengths at most $2^{-n}$. Removing finitely many points from a nonempty interval leaves room for both children. Intersect the resulting nested finite unions. Each binary branch determines a unique point because interval lengths tend to zero; distinct branches give distinct points because siblings are disjoint. Every point in the intersection determines its branch. The branch map is continuous by the length bound and is a homeomorphism from compact binary sequence space onto the intersection. Every enumerated point is excluded at its stage, proving the assertion about $C$.
+
+For $\beta\notin E$, let $h(\beta)$ be the unique element of $H^{-1}(\{\beta\})$. This inverse is continuous on the subspace $\mathbb T\setminus E$. Indeed, if $V$ is open in $K$ and contains $h(\beta)$, then the compact set $H(K\setminus V)$ does not contain $\beta$. Its complement is a neighborhood of $\beta$ whose nonexceptional phases have their unique inverses in $V$.
+
+Define
+$$
+j:C\longrightarrow X,\qquad j(\beta)=(h(\beta),h(\theta-\beta)).
+$$
+Both inverses are defined because $C$ avoids $E$ and $\theta-E$. The map is continuous and injective: its first coordinate phase recovers $\beta$. Its image $M$ is compact, and the compact-to-Hausdorff continuous bijection makes $j$ a homeomorphism onto $M$. Since $\beta\in J$ and $\theta-\beta\in L$, uniqueness of each inverse and the inclusions of these arcs in the cylinder images place $M$ inside $C_p\times C_q$.
+
+At every such input both sign sets are $\{-1,+1\}$, while the sum phase is $\theta\in E$. Assumption 22.2 therefore gives both outputs, with neither same-sign exclusion applicable. Hence $M\subseteq D\cap W$, proving density by actual cylinder interiors, not by countability of $E$ or marginal density. Density of $D$ gives empty interior of $G$. If a selection were continuous on a nonempty open subspace, choose a point of $D$ there. The actual input sequences proving its discontinuity are eventually in that open subspace, a contradiction.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fbcbc9e12f39f329d18ad8eb6da30e97f5f378c45f808d1efa64e2e4a09b1122
+  normalized_sha256: sha256:fbcbc9e12f39f329d18ad8eb6da30e97f5f378c45f808d1efa64e2e4a09b1122
+cas_ref: sha256:fbcbc9e12f39f329d18ad8eb6da30e97f5f378c45f808d1efa64e2e4a09b1122
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限自然数向量的逐点序具有良基严格序，exists_minimal_le_of_wellFoundedLT 直接在可达成本像上给出弱支配极小元，像成员资格同时给实际实现见证，仓内无冻结 GID。
+    previous_atom_id: c8b0adb727c994bb54b005b3df103d03ddbc3eb42aa260357b7027d67dab241c
+    next_atom_id: 0e810d0f9f12bccd9538e575d8a5c68e389c5cc8606662902d2ba70ebe41779c

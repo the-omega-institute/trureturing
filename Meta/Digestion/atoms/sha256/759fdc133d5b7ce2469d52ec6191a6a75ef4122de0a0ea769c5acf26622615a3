@@ -1,0 +1,34 @@
+**Proof.** The assumed invariance makes each outer evaluation meaningful. Its norm bound gives
+$$
+\|p\mathbin{\square_t}q\|\le C_t\|p\|\|q\|,
+$$
+and the other estimate is identical. Linearity in all evaluations proves bilinearity. The actual norm-attaining Dirac rows of Theorem 28.2 give the lower bound $C_t$, by the isometry of measures in Theorem 32.7, so the bilinear norms are sharp. For $f=1$ each row has value one, hence the mass of either product is $p(1)q(1)$. The two formulas and row symmetry show $p\mathbin{\lozenge_t}q=q\mathbin{\square_t}p$.
+
+We prove associativity while retaining the evaluation order. For a fixed $x$ and test $f$ put $g_x(w)=k_f(x,w)$, a bounded Borel function. The finite-row associativity of Assumption 32.0 gives, for every $y,z$,
+$$
+\sum_w P^{(t)}_{x,y}(\{w\})\,k_f(w,z)
+=\sum_w P^{(t)}_{y,z}(\{w\})\,k_f(x,w)
+=k_{g_x}(y,z).
+$$
+Each sum here is only over the finite support of the indicated row. Consequently, for fixed $x,y$, finite linearity of $r\in ba(\mathcal B)$ gives
+$$
+k_{\mathscr R_r f}(x,y)
+=r\bigl(z\mapsto k_{g_x}(y,z)\bigr).
+$$
+All sections being evaluated belong to $B_b(K)$; in particular $\mathscr R_r f$ is in that space by the invariance assumption. Applying $q$ in $y$ yields
+$$
+\mathscr R_q(\mathscr R_r f)(x)
+=(q\mathbin{\square_t}r)(g_x)
+=\mathscr R_{q\mathbin{\square_t}r}f(x).
+$$
+Therefore
+$$
+((p\mathbin{\square_t}q)\mathbin{\square_t}r)(f)
+=p\bigl(\mathscr R_q(\mathscr R_r f)\bigr)
+=p\bigl(\mathscr R_{q\mathbin{\square_t}r}f\bigr)
+=(p\mathbin{\square_t}(q\mathbin{\square_t}r))(f).
+$$
+This uses finite-row associativity and bounded functional evaluation, not a finitely additive Fubini theorem. The opposite product is then associative as well.
+
+For fixed $q$, the first product pairs each output test $f$ with the fixed input test $\mathscr R_qf\in B_b(K)$, proving the first continuity assertion. The other follows from the second formula. If $p,q$ are Radon measures, Theorem 32.3 and signed Fubini identify both formulas with the actual $\star_t$ product. If $t\in\{0,\infty\}$, every row is positive, so for $f\ge0$ positive inner and outer functionals give a nonnegative result. At any other parameter, a nonpositive actual row from Theorem 25.12 already disproves positivity using two positive Dirac inputs. QED.
+

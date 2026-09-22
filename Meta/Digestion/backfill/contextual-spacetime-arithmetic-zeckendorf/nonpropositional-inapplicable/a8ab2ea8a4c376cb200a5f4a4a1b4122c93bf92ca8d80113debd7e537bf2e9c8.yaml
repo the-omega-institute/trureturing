@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8ab2ea8a4c376cb200a5f4a4a1b4122c93bf92ca8d80113debd7e537bf2e9c8
+  normalized_sha256: sha256:a8ab2ea8a4c376cb200a5f4a4a1b4122c93bf92ca8d80113debd7e537bf2e9c8
+cas_ref: sha256:a8ab2ea8a4c376cb200a5f4a4a1b4122c93bf92ca8d80113debd7e537bf2e9c8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅定义未被支撑纳入的上半窗素数集合及其基数，没有待证明命题。
+    previous_atom_id: b0ad388a08726d49f8ec1bfab3f95aa645e13f988638ee884064ef32f8b87188
+    next_atom_id: ea7296bf3831456dc145c399c3d20e992a59d6f19c589be9242a92125915045c

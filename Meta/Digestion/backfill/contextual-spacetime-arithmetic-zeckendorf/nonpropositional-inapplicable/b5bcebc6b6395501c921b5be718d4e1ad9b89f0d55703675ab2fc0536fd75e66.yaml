@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b5bcebc6b6395501c921b5be718d4e1ad9b89f0d55703675ab2fc0536fd75e66
+  normalized_sha256: sha256:b5bcebc6b6395501c921b5be718d4e1ad9b89f0d55703675ab2fc0536fd75e66
+cas_ref: sha256:b5bcebc6b6395501c921b5be718d4e1ad9b89f0d55703675ab2fc0536fd75e66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由语义满射先取原表示，再以幂等性得到规范形；同语义规范形经纤维常值及不动点等式得到相等，故限制映射双射。这里只展开 Function.Bijective、Function.Surjective 与 Function.Injective 并组合已给前提，仓内无冻结 GID。
+    previous_atom_id: c4b75edcb1f7150d10fece6768d89969747b5b084472dbe4537a21a9545d9e14
+    next_atom_id: 295d64cf5f5e02f2a51d5a06ca952ff6a390cfa017caa76601b832e29f20b67b

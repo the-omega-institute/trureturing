@@ -1,0 +1,37 @@
+### FDS.4. Fibonacci-valued divisor sums at Fibonacci centres
+
+**Definition.** For a positive integer N, retain the distinct-value divisor set D_F(N) from FDS.1 and put
+
+$$
+\sigma_F(N)=\sum_{d\in D_F(N)}d.
+$$
+
+The value one is counted once. Let \(\mathcal F_+=\{F_n:n\ge2\}\).
+
+**Lemma.** If a finite subset S of \(\mathcal F_+\) contains one and has Fibonacci sum, then either S={1}, or for some r>=2,
+
+$$
+S=\{1,F_3,F_5,\ldots,F_{2r-1}\},\qquad \sum S=F_{2r}.
+\tag{FDS10}
+$$
+
+**Proof.** This is the finite-set statement FSP2. A direct proof is as follows. The sum of F_2 through F_(n-2) is F_n-2 for n>=3. Thus an anchored set summing to F_n must contain F_(n-1), since it cannot contain F_n itself along with the additional positive term one. At n=3 such a set is impossible. For n>=4 remove F_(n-1); the remaining set still contains one and sums to F_(n-2). Induction terminates at F_2=1 and forces precisely the stated alternating shape. Conversely its sum telescopes by the recurrence. In the nonsingleton case its largest index is 2r-1.
+
+**Theorem.** For every n>=0,
+
+$$
+\boxed{\sigma_F(F_n^2+1)\in\mathcal F_+
+\quad\Longleftrightarrow\quad n\in\{0,1,2,4\}.}
+\tag{FDS11}
+$$
+
+At these indices the sums are respectively 1,3,3,8.
+
+**Proof.** For n>=2 let u,v be the two odd coprime indices from FDS4, with u<v. The divisor set contains F_v and contains no larger Fibonacci value. If its sum is Fibonacci, FDS10 forces all odd indices from 3 through v to occur.
+
+If n is odd, then v=n+2>=5 and u=v-4. The required index v-2 is larger than u and cannot divide v, since it is an odd integer at least three and would have to divide two. This contradicts FDS4.
+
+If n is even and n>=6, then v=n+1>=7 and u=v-2. The required index d=v-4 is an odd integer at least three. It cannot divide u=d+2 or v=d+4, since that would make it divide two or four. Again FDS4 gives a contradiction.
+
+The remaining cases have actual divisor sets {1} at n=0, {1,2} at n=1,2, and {1,2,5} at n=4. Their sums prove sufficiency and the asserted values.
+

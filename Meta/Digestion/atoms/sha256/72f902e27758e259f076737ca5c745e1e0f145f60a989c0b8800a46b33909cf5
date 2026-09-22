@@ -1,0 +1,17 @@
+**定理 23.4（分裂相位的加法与半周平移）。** 分裂相位满足
+$$
+E_m=E_n\Longleftrightarrow m=n,\qquad E_m+E_n=E_{m+n},
+\qquad [k\phi]\notin E\quad(k\in\mathbb N).
+$$
+置 $\tau=[1/2]$，则
+$$
+\tau\notin E,\qquad (E+\tau)\cap E=\varnothing.
+$$
+因而存在唯一 $t=k_\tau\in K$。对任意可容许核，
+$$
+P_{t,t}=\delta_{0_K},
+\qquad
+P_{t,x}=P_{x,t}=\delta_{k_{\theta+\tau}}
+\quad\text{当 }H(x)=\theta\in E.
+$$
+

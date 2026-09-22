@@ -10,5 +10,5 @@
       <TestMethod className="Synthetic.Tests" name="Hung" />
     </UnitTest>
   </TestDefinitions>
-  <ResultSummary><Counters executed="0" /></ResultSummary>
+  <ResultSummary outcome="Completed"><Counters executed="0" /></ResultSummary>
 </TestRun>

@@ -1,0 +1,4 @@
+**反例 D17（命题：自乘子类的齐次性与边界，repo-derived）。** 对任意先固定的 $Q\subseteq\mathrm{Attr}_t$，令总项 $D_Q(X)=F_{\downarrow Q}(X\boxtimes X)$。则对所有 $X\in\mathcal B$ 及整数 $n\ge0$，
+\[
+q(D_Q(nX))=n^2q(D_Q(X)).
+\]

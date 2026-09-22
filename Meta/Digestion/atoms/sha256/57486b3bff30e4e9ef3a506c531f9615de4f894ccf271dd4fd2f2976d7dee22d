@@ -1,0 +1,8 @@
+**定义 488.1（原系数与可积的经典输入）。** 沿用第 443、472、474 条的 $B_Q,U_Q,W_Q,c_Q,\alpha_Q,D_Q,E_Q$ 及其全部支持条件。令 $\mathcal M(u)=M(\lfloor u\rfloor)$（$u\ge1$），$z=\zeta_R(2)$，$Q=\mathcal P(y)=\prod_{p\le y}p$，$e_y=\Phi(Q)/Q$，其中 $y\ge2$ 为实数。$\log$ 为自然对数，$\log_2$ 为以二为底的对数。定义
+$$
+I_y=\int_1^y|\mathcal M(u)|\frac{du}{u^2},\qquad
+I=\int_1^\infty|\mathcal M(u)|\frac{du}{u^2},\qquad
+H=\frac12+\frac{362.7}{\log2}.
+$$
+固定第 474.2 条的同一个绝对常数 $K\ge1$，置 $C=H+K$。
+

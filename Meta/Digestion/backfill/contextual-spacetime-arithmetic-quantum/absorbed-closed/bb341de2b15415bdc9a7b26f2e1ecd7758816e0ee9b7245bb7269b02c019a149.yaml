@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bb341de2b15415bdc9a7b26f2e1ecd7758816e0ee9b7245bb7269b02c019a149
+  normalized_sha256: sha256:bb341de2b15415bdc9a7b26f2e1ecd7758816e0ee9b7245bb7269b02c019a149
+cas_ref: sha256:bb341de2b15415bdc9a7b26f2e1ecd7758816e0ee9b7245bb7269b02c019a149
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.finite_horizon_value_factorization
+    target_statement_id: sha256:b850689d654ac32c1ffabc06d86637837d34fc0b84e6a233c116bb929069368d
+receipts:
+  unresolved_subitems: []

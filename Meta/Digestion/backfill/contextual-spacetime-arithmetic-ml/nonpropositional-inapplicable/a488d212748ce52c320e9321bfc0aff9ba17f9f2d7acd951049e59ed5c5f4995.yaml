@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a488d212748ce52c320e9321bfc0aff9ba17f9f2d7acd951049e59ed5c5f4995
+  normalized_sha256: sha256:a488d212748ce52c320e9321bfc0aff9ba17f9f2d7acd951049e59ed5c5f4995
+cas_ref: sha256:a488d212748ce52c320e9321bfc0aff9ba17f9f2d7acd951049e59ed5c5f4995
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.7节“设 b_n”之后只是乘积预算与总误差记号的定义，等号给出的量尚未被声称控制任何真实误差；因此此叶没有以定义偷渡证书有效性。
+    previous_atom_id: 9f5fa52009cc4173eafb7c2e64faf540df4f45fbb400c3295d17fb817461f478
+    next_atom_id: 72e427110d7cf85a4c69790fb3425c1d723c0616ae81caed496020f4b308f390

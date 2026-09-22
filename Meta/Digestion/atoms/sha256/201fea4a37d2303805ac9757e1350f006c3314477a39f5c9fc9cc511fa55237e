@@ -1,0 +1,2 @@
+**Corollary.** Let P(M) be the largest prime factor of M, with P(1)=1. If 2ell-1>P(M), then gcd(F_ell,M)=1. Thus [F_ell]_M belongs to C(M) and contains the non-perfect powerful examples of LFO.2. Increasing the exponents on the same finite prime support does not alter this assertion.
+

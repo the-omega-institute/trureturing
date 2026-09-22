@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4e5c7a34027c9715cec37280baecfc3c5485e65fb8c3a5d829fbb572ea775424
+  normalized_sha256: sha256:4e5c7a34027c9715cec37280baecfc3c5485e65fb8c3a5d829fbb572ea775424
+cas_ref: sha256:4e5c7a34027c9715cec37280baecfc3c5485e65fb8c3a5d829fbb572ea775424
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限函数空间的基数直接由 Fintype.card_fun 和有限序数基数化简得到，包括零指标和空值域的两个退化分支，仓内无冻结 GID。
+    previous_atom_id: a9c2cf0c534fa51773c557ec446ce75d0034117c780336707186a42c58d3851b
+    next_atom_id: f14a022a1e71057c17d45eb6379a32f82f32879d5e1f4acd962309be7f32ce24

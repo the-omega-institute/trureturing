@@ -1,0 +1,15 @@
+**定理 122.15。** 对 $f:X\to[0,1]$，记 $a=Pf$、$u_s=S_sf$。则
+$$
+u_s=a+e^{-s}(f-a),\qquad Pu_s=a,
+\qquad\dot u_s=-(I-P)u_s,
+$$
+$$
+\mathcal D_q(u_s)=e^{-2s}\mathcal D_q(f),\qquad
+\operatorname{TV}_q(u_s)=e^{-s}\operatorname{TV}_q(f).
+$$
+设 $J(u)=\mathbb E_\mu[u(1-u)]$，则有精确恒等式
+$$
+J(u_s)=J(f)+(1-e^{-2s})\mathcal D_q(f),
+\qquad\frac d{ds}J(u_s)=2\mathcal D_q(u_s).
+$$
+

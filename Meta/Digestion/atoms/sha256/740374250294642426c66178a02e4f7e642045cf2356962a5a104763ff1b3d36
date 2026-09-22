@@ -1,0 +1,78 @@
+**theorem 34.13 (A finite-depth trigonometric estimate with explicit approximation errors).** Let $\mu$ be a probability, fix $t$, and take a real $f\in C(K)$. Write $F=\|f\|_\infty$. Fix $L\ge1$ and choose one point in each length-$L$ cylinder to define a cylinder-constant function $f_L$ satisfying
+$$
+\|f-f_L\|_\infty\le\omega_L(f),\qquad \|f_L\|_\infty\le F.
+$$
+Choose $\delta>0$ smaller than one quarter of the smallest gap between consecutive members of $B_L$, and put
+$$
+w(\theta)=\max\left\{0,\min\left\{1,2-\frac{\operatorname{dist}(\theta,B_L)}\delta\right\}\right\},\qquad
+A=(C_t+1)F.
+$$
+There is a real continuous circle function $a$ with $\|a\|_\infty\le F$ such that, for
+$$
+h(\theta)=\int_K f_L\,d\pi^{(t)}_\theta,
+$$
+one has
+$$
+|h-a|\le A w,\qquad \int w\,d\lambda\le4G_L\delta.
+$$
+For any $\varepsilon>0$, choose trigonometric polynomials
+$$
+P=\sum_{|k|\le J}a_k\chi_k,\qquad
+W=\sum_{|k|\le J}b_k\chi_k
+$$
+with $\|P-a\|_\infty\le\varepsilon$ and $\|W-w\|_\infty\le\varepsilon$, enlarging $J$ and adding zero coefficients when necessary. Then every $n>G_L$ satisfies
+$$
+\begin{aligned}
+\left|\int f\,d\mu_t^{(n)}-\int f\,d\mathfrak m\right|
+\le{}&(C_t+1)\omega_L(f)+2(1+A)\varepsilon+8A G_L\delta\\
+&+\sum_{0<|k|\le J}\bigl(|a_k|+A|b_k|\bigr)|\widehat\nu(k)|^n.
+\end{aligned}
+$$
+This estimate is valid without assuming the Fourier criterion. For the natural lazy step its final factors are exactly $|\cos(\pi k\phi)|^n$.
+
+**Proof.** Off $B_L$, all points of a phase fiber belong to the same length-$L$ cylinder, even when the fiber itself is split at an index greater than $G_L$. Since each slice has mass one, $h$ there is simply the corresponding value of $f_L$. Thus it is constant on each complementary open arc and is independent of $t$ off the finite boundary set.
+
+On the complement of the radius-$\delta$ neighborhoods of the boundary points, set $a=h$. Across each such neighborhood interpolate linearly between its two endpoint values in the positive circle coordinate. The neighborhoods are disjoint by the choice of $\delta$. This produces a continuous real function bounded by $F$. Outside those neighborhoods $h-a=0$. Inside them $|h|\le C_tF$ and $|a|\le F$, while $w=1$. Hence $|h-a|\le Aw$. The support of $w$ is contained in the union of $G_L$ circle balls of radius $2\delta$, each of Haar length at most $4\delta$, proving the integral bound.
+
+The required polynomials exist by continuous circle Fourier density.[^rro34-fourier] Put $\eta=\nu^{(n)}$. Both $\eta$ and $\lambda$ are probabilities. Character multiplication gives
+$$
+\left|\int P\,d(\eta-\lambda)\right|
+\le\sum_{0<|k|\le J}|a_k|\,|\widehat\nu(k)|^n,
+$$
+$$
+\left|\int W\,d(\eta-\lambda)\right|
+\le\sum_{0<|k|\le J}|b_k|\,|\widehat\nu(k)|^n.
+$$
+Uniform approximation therefore yields
+$$
+\eta(w)\le\lambda(w)+2\varepsilon+
+\sum_{0<|k|\le J}|b_k|\,|\widehat\nu(k)|^n.
+$$
+Together with $|h-a|\le Aw$, this gives
+$$
+\begin{aligned}
+\left|\int h\,d(\eta-\lambda)\right|
+\le{}&2(1+A)\varepsilon+2A\lambda(w)\\
+&+\sum_{0<|k|\le J}\bigl(|a_k|+A|b_k|\bigr)|\widehat\nu(k)|^n.
+\end{aligned}
+$$
+For $n>G_L$, Theorem 34.3 gives
+$$
+\int f_L\,d\mu_t^{(n)}=\int h\,d\eta,
+\qquad
+\int f_L\,d\mathfrak m=\int h\,d\lambda.
+$$
+Replacing $f_L$ by $f$ costs at most $(C_t+1)\omega_L(f)$, by Theorem 34.2 and the unit mass of $\mathfrak m$. Inserting the bound for $\lambda(w)$ proves the estimate. The lazy-step substitution follows from Theorem 34.8. Its finitely many coefficients and approximation parameters remain explicit; no bound uniform over step laws or over all Fourier indices follows from this formula. $\square$
+
+[^rro34-input]: *RECURSIVE_RELATIONAL_OBSERVATION*, fixed revision `da6db9e70387e95fc513039a96bf8e90a9af83de`, Theorem 20.2, Assumption 25.1, Theorems 25.9–25.12, and Theorems 28.2–28.11. These supply the exact oriented fibers and cylinders, the classified finite rows, the actual integrated multiplication, its bounded coordinate isomorphism, and the Haar lift. [Fixed mathematical text](https://github.com/the-omega-institute/trureturing/blob/da6db9e70387e95fc513039a96bf8e90a9af83de/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+
+[^rro34-fourier]: Mathlib contributors, *Fourier analysis on the additive circle*, fixed revision `db584cd6d46c92f209a44c0f1c829460d327499d`, `AddCircle.fourierSubalgebra_closure_eq_top` and `AddCircle.span_fourier_closure_eq_top`, lines 239–248. The mathematical statement is density in continuous complex circle functions. [Fixed source](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Fourier/AddCircle.lean#L239-L248).
+
+[^rro34-port]: Daniel V. Tausk, *Weak* topology for the space of finite measures on a topological space*, January 17, 2024, Proposition 4.9(a),(f),(g), pp. 11–12, and Example 4.10, pp. 12–13. The bounded-Borel testing and continuity-set equivalences used here have positive incoming measures; the example explains the signed-measure boundary. [Text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+[^rro34-power]: Jean-Pierre Conze and Michael Lin, *Almost everywhere convergence of convolution powers on compact Abelian groups*, Annales de l'Institut Henri Poincare, Probabilites et Statistiques **49** (2013), 550–568, Proposition 2.1, p. 551. Its equivalence concerns strict character modulus, continuous group readouts, and support in cosets of proper closed subgroups. [Article](https://www.numdam.org/article/AIHPB_2013__49_2_550_0.pdf).
+
+[^rro34-cesaro]: Yukiyosi Kawada and Kiyosi Ito, *On the Probability Distribution on a Compact Group. I*, Proceedings of the Physico-Mathematical Society of Japan, third series, **22** (1940), 977–998, Theorem 7, p. 987, with proof on p. 991. The average in the theorem is over powers one through $n$. [Original article](https://www.jstage.jst.go.jp/article/ppmsj1919/22/12/22_12_977/_pdf/-char/en).
+
+[^rro34-uniform]: Kawada and Ito, the same article, Theorem 9, pp. 992–993, especially formulas (50)–(51). The uniformity is over starting group elements for each fixed continuous function, not over a norm unit ball of functions. [Original article](https://www.jstage.jst.go.jp/article/ppmsj1919/22/12/22_12_977/_pdf/-char/en).
+

@@ -1,0 +1,20 @@
+**Definition 32.10 (The two orders on the countable natural core).** Give $\mathbb N$ its power-set sigma-algebra and write
+$$
+ba(\mathbb N)=ba(\mathbb N,\operatorname{Pow}(\mathbb N))
+=\ell^\infty(\mathbb N)^*.
+$$
+For $u,v\in\ell^1(\mathbb N)$ let
+$$
+(u*v)(k)=\sum_{m+n=k}u_m v_n.
+$$
+For $p,q\in ba(\mathbb N)$ and $f\in\ell^\infty(\mathbb N)$ define two orders by
+$$
+(p\mathbin{\square}q)(f)
+=p\bigl(m\mapsto q(n\mapsto f(m+n))\bigr),
+$$
+$$
+(p\mathbin{\lozenge}q)(f)
+=q\bigl(n\mapsto p(m\mapsto f(m+n))\bigr).
+$$
+These formulas specify which functional is applied first: the inner one is applied first. Every bounded function on $\mathbb N$ is measurable, so the displayed outer functions belong to $\ell^\infty(\mathbb N)$ without an additional invariance hypothesis. These are respectively the first and second Arens orders for this convolution algebra, with the order convention of Hennefeld, Definitions 1.1–1.2.[^rro32-arens]
+

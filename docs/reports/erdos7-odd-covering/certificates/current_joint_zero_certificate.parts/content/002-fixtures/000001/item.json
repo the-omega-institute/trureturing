@@ -1,0 +1,153 @@
+{
+  "prime": {
+    "kind": "inline",
+    "value": 19
+  },
+  "current_height": {
+    "kind": "inline",
+    "value": 8
+  },
+  "old_period": {
+    "kind": "inline",
+    "value": 2835
+  },
+  "full_original_period": {
+    "kind": "inline",
+    "value": 48148401221235
+  },
+  "old_survivor_count": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "pure_base_atom_count": {
+    "kind": "inline",
+    "value": 16983563040
+  },
+  "actual_pure_Haar_mass": {
+    "kind": "inline",
+    "value": "16983563040/16983563041"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "7/17"
+  },
+  "threshold_base_p_digits": {
+    "kind": "inline",
+    "value": [
+      7,
+      15,
+      12,
+      5,
+      11,
+      3,
+      6,
+      13
+    ]
+  },
+  "original_forbidden_classes": {
+    "path": "content/002-fixtures/000001/item/009-original_forbidden_classes.json",
+    "sha256": "01709b793dddc00a38defff1d9970ce8147ca9989c1698de98498d96b92780b0",
+    "kind": "value"
+  },
+  "original_test_classes": {
+    "path": "content/002-fixtures/000001/item/010-original_test_classes.json",
+    "sha256": "b6fe64be16363a1ad4bd76309427d0f40ef8caf678d4df3d13ea40a7a3b1723d",
+    "kind": "value"
+  },
+  "forbidden_count": {
+    "kind": "inline",
+    "value": 93
+  },
+  "test_count": {
+    "kind": "inline",
+    "value": 180
+  },
+  "critical_old_rows": {
+    "kind": "inline",
+    "value": {
+      "1": {
+        "alpha": "7/17",
+        "beta": "0",
+        "pure_bad_atom_count": 6993231840,
+        "old_test_block_loads": [
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "SH26_cap_deficit": "0"
+      },
+      "946": {
+        "alpha": "2612524913/5661187680",
+        "beta": "281447633/3330110400",
+        "pure_bad_atom_count": 7837574739,
+        "old_test_block_loads": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "SH26_cap_deficit": "0"
+      }
+    }
+  },
+  "actual_bad_count_histogram": {
+    "path": "content/002-fixtures/000001/item/014-actual_bad_count_histogram.json",
+    "sha256": "2f7aab1d5a96b5e61a61e18b179db9e76ad72b82fb0bd74e94be3b65c5283ced",
+    "kind": "value"
+  },
+  "assigned_bad_mass": {
+    "kind": "inline",
+    "value": "281447633/4315823078400"
+  },
+  "zero_block_mean_excess": {
+    "kind": "inline",
+    "value": "1/1296"
+  },
+  "complete_SH26_cap_covariance": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "actual_killed_excess": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "physical_complete_test_square": {
+    "kind": "inline",
+    "value": "5598835401189886690892461646824030059361686636852707157313412914967794164058699301450863979296701557286423291897398917824211682129469903131797/4701708033851962502516156504250373309170043647125844625126029852131525369507083368820575783171781155603394916467846874667622792269943580222400"
+  },
+  "killed_complete_test_square": {
+    "kind": "inline",
+    "value": "89576460621657168188392641740993347098855003422371256523571285815414589866670445722399737370706372143376976264054966748670088364388240584933519/75227328541631400040258504068005972946720698354013514002016477634104405912113333901129212530748498489654318663485549994681964676319097283558400"
+  },
+  "SH26_generic_cap": {
+    "kind": "inline",
+    "value": "9/5"
+  },
+  "actual_pure_density_cap": {
+    "kind": "inline",
+    "value": "16983563041/9990331200"
+  },
+  "separate_actual_pure_density_cap_saving": {
+    "kind": "inline",
+    "value": "999033119/9990331200"
+  },
+  "zero_layer_mod3_edit_strict_square_gain_lower": {
+    "kind": "inline",
+    "value": "3/2"
+  },
+  "current_maximizing_test_claim": {
+    "kind": "inline",
+    "value": false
+  }
+}

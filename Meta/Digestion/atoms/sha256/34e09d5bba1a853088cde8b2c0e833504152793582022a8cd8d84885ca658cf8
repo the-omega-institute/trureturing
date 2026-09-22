@@ -1,0 +1,58 @@
+**定理 29.2（直接有符号积分恒等式与结合交换律）。** 对任意有界 Borel 实函数 $f$，定义
+$$
+P_{t,f}(a,x)=\int_K f(z)\,dP_t(a,x)(z).
+$$
+该函数联合 Borel 可测，并且
+$$
+|P_{t,f}(a,x)|\le C_t\|f\|_\infty,
+$$
+$$
+\langle\mu\star_t\nu,f\rangle=\int_K\int_K P_{t,f}(a,x)\,d\mu(a)\,d\nu(x).
+$$
+这些积分可交换顺序。运算满足
+$$
+\|\mu\star_t\nu\|_{\mathrm{TV}}\le C_t\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}},\qquad (\mu\star_t\nu)(K)=\mu(K)\nu(K),
+$$
+且在全部 $M(K)$ 上结合、交换。
+
+**证明。** 对简单 Borel 函数，$P_{t,f}$ 的可测性及测试积分公式直接来自逐集合契约和线性。任意有界 Borel 实函数均可由简单 Borel 函数一致逼近。行界给出
+$$
+\sup_{a,x}|P_{t,f}(a,x)-P_{t,g}(a,x)|\le C_t\|f-g\|_\infty,
+$$
+故一致极限仍可测，并给出所述界。测试积分公式的左边可用输出测度的有限总变差取一致极限，右边则由上述界取一致极限，因此公式对全部有界 Borel $f$ 成立。
+
+对任意输入测度，实际绝对可积界为
+$$
+\int_K\int_K|P_{t,f}(a,x)|\,d|\mu|(a)\,d|\nu|(x)\le C_t\|f\|_\infty\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}<\infty.
+$$
+将每个有符号输入写成其两个有限正 Jordan 部分，对所得四个正乘积测度应用 Fubini 定理，便可交换两个积分。此处使用联合 Borel 可测性、有限性及明确的绝对可积界，不仅使用两个迭代积分各自存在。相同的 Jordan 分解也把下文的有符号支配收敛化为对有限正变差测度的通常支配收敛。[^rro29-integration]
+
+对 $\|f\|_\infty\le1$ 的连续函数取上确界，并使用 Riesz 等距表示，即得乘法范数估计。取 $f=1$，由每行质量为一得到质量恒等式。取两个点质量，逐集合契约给
+$$
+\delta_a\star_t\delta_x=P_t(a,x).
+$$
+因此第25节的每条有限线性组合恒等式，对这些有限测度同样成立。
+
+第25节的点核交换律由其实际基乘法推出：相位基按圆周加法相乘，混合项为零，而 $c_{m,n}=c_{n,m}$。故 $P_t(a,x)=P_t(x,a)$。结合上面已经合法的有符号 Fubini，得到 $\mu\star_t\nu=\nu\star_t\mu$。
+
+为证明全测度结合律，固定有界 Borel $f$，置
+$$
+A_f(a,b,c)=\int_K P_{t,f}(u,c)\,dP_t(a,b)(u),\qquad B_f(a,b,c)=\int_K P_{t,f}(a,v)\,dP_t(b,c)(v).
+$$
+有限点核的结合律给出每个有序三元组上的实际等式 $A_f(a,b,c)=B_f(a,b,c)$。二者均为 Borel 函数：带参数核积分的可测性先对函数 $\mathbf1_D(u)\mathbf1_F(c)$ 由逐集合可测性成立，再对有界单调极限使用每行有限变差的支配收敛；函数单调类定理遂覆盖全部有界联合 Borel 被积函数。并且
+$$
+|A_f(a,b,c)|,\ |B_f(a,b,c)|\le C_t^2\|f\|_\infty.
+$$
+两次应用已证的测试积分公式，并对有限 Jordan 部分应用 Fubini，得到
+$$
+\langle(\mu\star_t\nu)\star_t\omega,f\rangle=\iiint A_f(a,b,c)\,d\mu(a)\,d\nu(b)\,d\omega(c),
+$$
+$$
+\langle\mu\star_t(\nu\star_t\omega),f\rangle=\iiint B_f(a,b,c)\,d\mu(a)\,d\nu(b)\,d\omega(c).
+$$
+每次展开的绝对积分不超过
+$$
+C_t^2\|f\|_\infty\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}\|\omega\|_{\mathrm{TV}}.
+$$
+逐点等式 $A_f=B_f$ 因而给出两种括号的积分相等。对指标函数取值即得测度相等。这一证明直接积分点核恒等式，没有使用原子测度在全测度空间中的总变差稠密性。证毕。
+

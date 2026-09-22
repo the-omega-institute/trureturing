@@ -1,0 +1,54 @@
+**固定一个目标，同时定义全部深度。**
+
+固定 $\theta_0\in\Theta$。对每个预先固定的 $N\ge0$，一次定义完整目标族
+$$
+\xi_n^{(N)}=
+\begin{cases}
+q_n(\theta_0),&0\le n\le N,\\
+q_N(\theta_0)\otimes|1\rangle\langle1|,&n=N+1,\\
+q_N(\theta_0)\otimes|11\rangle\langle11|
+\otimes|0^{n-N-2}\rangle\langle0^{n-N-2}|,&n\ge N+2.
+\end{cases}
+$$
+$N=0$ 时前因子为 $q_0(\theta_0)=\operatorname{Tr}_M\theta_0$。所有因子正且归一；从深度 $N+1$ 到 $N$、从 $N+2$ 到 $N+1$，迹掉最后一个纯位分别返回前一层；从 $N+3$ 开始，迹掉最后一个纯零位也返回前一层。较早层用 $q_n$ 的相容性。因此这是一份同一目标的相容密度族，由第45.1节给完成态 $\xi^{(N)}$。
+
+目标保留完整的 $J,H_N$ 联合前缀，并在其后接两个确定 $1$，再接零尾。对固定 $N$ 没有在检查不同深度时更换目标。它是完整输出代数上的合法态，但不是这个固定生成器的合法输出。
+
+在第 $N+2$ 层取局部投影
+$$
+\Pi_N=I_{J\otimes H_N}\otimes|11\rangle\langle11|.
+$$
+有
+$$
+\operatorname{Tr}(\Pi_N\xi_{N+2}^{(N)})=1,
+\qquad
+\operatorname{Tr}(\Pi_Nq_{N+2}(\theta))=0
+\quad\forall\theta\in\Theta.
+$$
+有限维效应变分界 $|\operatorname{Tr}(P(\rho-\sigma))|\le D(\rho,\sigma)$ 给距离至少一；态的迹距离至多一，故恰为一。更深层沿用同一局部投影并张量恒等，得到
+$$
+\boxed{
+D(\xi_n^{(N)},q_n(\theta))=1
+\quad(n\ge N+2,\ \theta\in\Theta).
+}
+\tag{45.27}
+$$
+完成层也可不借交换极限而直接认证：$2\Pi_N-I$ 为范数一的局部自伴算子，在两态上的期望相差二；两态泛函范数都为一，故差的范数恰为二。于是
+$$
+\boxed{
+\mathsf d_\infty(\xi^{(N)},\omega_\theta)=1
+\quad\forall\theta\in\Theta.
+}
+\tag{45.28}
+$$
+另一方面，在 $n\le N$ 时来源 $\theta_0$ 精确实现目标。因此
+$$
+\boxed{
+e_n(\xi^{(N)})=0\ (n\le N),\qquad
+e_n(\xi^{(N)})=1\ (n\ge N+2),\qquad
+E(\xi^{(N)})=1.
+}
+\tag{45.29}
+$$
+不需要断言第 $N+1$ 层的最优距离是多少；可能更早发现额外约束，所证明的是任意给定前缀长度 $N$ 仍能完全匹配，而第 $N+2$ 层一定严格分离。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:01f3a7f9b9c02ea6d29d421bbeb867bbfb73213c84a91fccda4b371ca0c77b3e
+  normalized_sha256: sha256:01f3a7f9b9c02ea6d29d421bbeb867bbfb73213c84a91fccda4b371ca0c77b3e
+cas_ref: sha256:01f3a7f9b9c02ea6d29d421bbeb867bbfb73213c84a91fccda4b371ca0c77b3e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 显示公式是任意两个有限选择上的双重和乘积分配，探针以整数权重直接应用 Finset.sum_mul_sum；不涉及档案结构，仓内无冻结 GID 可用。
+    previous_atom_id: 2900f4eac022adf2f748e69e9bfa85516bd50312697ac3ba8c2947de8c61e85f
+    next_atom_id: 8fd04b82e98a605afadcb300c56b0dcf2bcb9e5ff67e738952d933c91454ebd1

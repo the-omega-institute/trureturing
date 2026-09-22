@@ -1,0 +1,25 @@
+**theorem 32.5 (Uniqueness restored, with the topology comparisons kept distinct).** The product $\star_t$ is the unique separately $\tau_B$-continuous bilinear map $M(K)\times M(K)\to M(K)$ having the prescribed rows $P^{(t)}_{x,y}$ for every $x,y\in K$. No variation bound on a competing map is required. Consequently the nontrivial sheared products of Theorem 28.13 are not separately $\tau_B$-continuous.
+
+The proved topology comparisons are
+$$
+\tau_C\subsetneq\tau_B\subsetneq\tau_w\subseteq\tau_{\mathrm{TV}}.
+$$
+On all signed measures, $\tau_C$ and $\tau_{\mathrm{ev}}$ are incomparable. These statements do not identify either topology with total variation.
+
+**Proof.** Let $B_1,B_2$ be two maps as in the statement. Bilinearity and equality on all point pairs give equality on pairs of finite atomic measures. Fix a finite atomic first argument and approximate an arbitrary second argument by the net of Theorem 32.4. Continuity in the second argument gives equality there. Now fix that arbitrary second argument and approximate an arbitrary first argument by finite atomic measures. Continuity in the first argument gives equality everywhere. The target is Hausdorff because Borel indicators separate measures. Existence is Theorem 32.3. The sheared products are distinct from $\star_t$ while having the same rows, by the explicit Haar test in Theorem 28.13, so uniqueness excludes their separate $\tau_B$-continuity.
+
+The inclusions follow from
+$$
+C(K)\subseteq B_b(K)\longrightarrow M(K)^*,\qquad
+f\longmapsto\bigl(\mu\mapsto\langle\mu,f\rangle\bigr),
+$$
+where the last map is isometric: the upper bound is the variation inequality and the lower bound follows by testing Dirac measures. Every Banach-dual functional is norm continuous.
+
+Let $z_j\in K$ have a single digit one at position $j$. Then $z_j\to0_K$ in the digit topology, hence $\delta_{z_j}\to\delta_{0_K}$ for $\tau_C$. Their values on $\{0_K\}$ are all zero, so there is no $\tau_B$ or eventwise convergence to $\delta_{0_K}$. This proves the first strict inclusion and one direction of incomparability. The signed net in Theorem 32.2 proves the other direction of incomparability.
+
+By Theorem 28.10,
+$$
+a_K(\mu)=\mu_{\mathrm{na}}(K)
+$$
+is a bounded linear functional on $M(K)$, vanishing on all atomic measures and taking value one at $\mathfrak m$. The finite atomic net approaching $\mathfrak m$ in Theorem 32.4 therefore does not converge weakly in the Banach sense. This proves $\tau_B\subsetneq\tau_w$. It also explains why the density argument cannot be silently repeated with the Banach weak topology. Indeed, every bounded bilinear product is separately Banach-weak continuous: composing a bounded linear slice with any bounded linear functional remains a bounded linear functional. The nonunique shears satisfy this Banach-weak slice-continuity requirement, but not the bounded-Borel continuity requirement just proved decisive. QED.
+

@@ -1,0 +1,100 @@
+[
+  {
+    "node": 114,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "1772625459954521909521970390709933301/332933485052394700273800000000000000",
+    "dual_id": "d1a8941171be4e328af912f9bd8b1f3c61d695e9cba64db4a06e38ab253f5cc2"
+  },
+  {
+    "node": 115,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "1772625459954521909521970390709933301/332933485052394700273800000000000000",
+    "dual_id": "d1a8941171be4e328af912f9bd8b1f3c61d695e9cba64db4a06e38ab253f5cc2"
+  },
+  {
+    "node": 116,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "463284824088126863960173817649653789/86316088717287514885800000000000000",
+    "dual_id": "da5d15c3bbc4462aca0b366ec17c3cfada5a6e2067ca15968221e4a8adf4e2cd"
+  },
+  {
+    "node": 117,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "463284824088126863960173817649653789/86316088717287514885800000000000000",
+    "dual_id": "da5d15c3bbc4462aca0b366ec17c3cfada5a6e2067ca15968221e4a8adf4e2cd"
+  },
+  {
+    "node": 118,
+    "kind": "prior70",
+    "original_leaf_count": 3,
+    "complete_upper": "524906229309509432146145969651573621/97105599806948454246525000000000000",
+    "dual_id": "c602569b04fc629c5c0fc5fc81e2f4c95229ceb95c62b0971114b48c118e0b1a"
+  },
+  {
+    "node": 119,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "524906229309509432146145969651573621/97105599806948454246525000000000000",
+    "dual_id": "c602569b04fc629c5c0fc5fc81e2f4c95229ceb95c62b0971114b48c118e0b1a"
+  },
+  {
+    "node": 120,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "2232975210318971599056076361393039653/448179691416685173445500000000000000",
+    "dual_id": "0bdf983e3e89d0f1b5a172447e6cd969c2110e07ead2e106f865b9b86658a700"
+  },
+  {
+    "node": 121,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "1431329436562392920297225156471870699/291316799420845362739575000000000000",
+    "dual_id": "120b78f41b615dd7f124b9062ea8422b56eb00004495fac4d792c9a2a811eb03"
+  },
+  {
+    "node": 122,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "1431329436562392920297225156471870699/291316799420845362739575000000000000",
+    "dual_id": "120b78f41b615dd7f124b9062ea8422b56eb00004495fac4d792c9a2a811eb03"
+  },
+  {
+    "node": 123,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "47964429090748229875539477154973490739/9710559980694845424652500000000000000",
+    "dual_id": "8a6132821c1349c0681ed402904928578af44d9290b1603c5af8256ee0b2088f"
+  },
+  {
+    "node": 124,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "11109510101435584757436741448451089/2263533795033763502250000000000000",
+    "dual_id": "53b74c5d5f7d4db1f06c1f10d994592602089052bb8e4e4d6e1a6d6c341befe1"
+  },
+  {
+    "node": 125,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "11109510101435584757436741448451089/2263533795033763502250000000000000",
+    "dual_id": "53b74c5d5f7d4db1f06c1f10d994592602089052bb8e4e4d6e1a6d6c341befe1"
+  },
+  {
+    "node": 126,
+    "kind": "prior70",
+    "original_leaf_count": 9,
+    "complete_upper": "5672144688263651817180614602097978887/1165267197683381450958300000000000000",
+    "dual_id": "72bda1d3eb509c15e3650eba75d03703544c9fb8e32868135c74308cf33d50ea"
+  },
+  {
+    "node": 127,
+    "kind": "prior70",
+    "original_leaf_count": 1,
+    "complete_upper": "56759267856896951349216046892209604119/11652671976833814509583000000000000000",
+    "dual_id": "9cf7d11f844de3163061d7d365faedd47be6cba8029fe661ff3763505bcf2003"
+  }
+]

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a6074ea6cd2b1b60d53ad803b2ce31002d47622fb611745d4552c6fe29ecf3b
+  normalized_sha256: sha256:5a6074ea6cd2b1b60d53ad803b2ce31002d47622fb611745d4552c6fe29ecf3b
+cas_ref: sha256:5a6074ea6cd2b1b60d53ad803b2ce31002d47622fb611745d4552c6fe29ecf3b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段规定可选定量接口及其保留 RH 前提的使用范围，属于局部假设和适用域说明，不把所假定的不等式确认为已证结论。
+    previous_atom_id: fa12f2199333ee2fc98b0afac97a609b51e328f0029d6f9751935577f61b5998
+    next_atom_id: 4b5fe701c614466b8ea181e9099f0f700eb20445f6caed777c08ce94a60e90bc

@@ -1,0 +1,13 @@
+**Proof.** Multiply the modulo-25 expansions used in RP2 with exponents
+$\mu(n/d)\in\{-1,0,1\}$. Products of two correction terms vanish modulo
+25; a negative exponent changes the sign of its first correction. The
+linear and quadratic divisor sums are $\varphi_{\rm E}(n)$ and J_2(n).
+This gives RP4 directly.
+
+RP3 supplements the earlier quadratic-character parity by a relation
+modulo five on the depths. It does not recover the individual h_p from
+one weighted sum. Some coefficients vanish: for example
+$\lambda_5(159607993)=0$, even though this is an inert primitive prime
+at rank 91. Nonzero terms can also cancel. No WSS occurrence or absence
+is inferred merely from RP3.
+

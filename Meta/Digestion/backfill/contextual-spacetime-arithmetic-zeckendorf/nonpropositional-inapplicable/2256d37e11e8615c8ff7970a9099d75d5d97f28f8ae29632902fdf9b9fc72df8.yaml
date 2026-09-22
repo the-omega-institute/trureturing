@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2256d37e11e8615c8ff7970a9099d75d5d97f28f8ae29632902fdf9b9fc72df8
+  normalized_sha256: sha256:2256d37e11e8615c8ff7970a9099d75d5d97f28f8ae29632902fdf9b9fc72df8
+cas_ref: sha256:2256d37e11e8615c8ff7970a9099d75d5d97f28f8ae29632902fdf9b9fc72df8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定理 446.8 首句(允许任意次数无守卫加一时,全未来 Möbius 观察分离所有正整数)完全由钉版 Mathlib 闭合:若两正整数 m 小于 n 的全部未来观察相同,则 t 映到 μ(s+t) 以 n−m 为周期,Function.Periodic.nat_mul_eq 给整条轨道同值;Nat.exists_infinite_primes 取大于 n−m 的素数 q 与不小于 m 的素数 r,Nat.chineseRemainder 取同时模 n−m 同余 r、被 q 平方整除的点,ArithmeticFunction.moebius_apply_prime 与 ArithmeticFunction.moebius_eq_zero_of_not_squarefree 给出负一等于零的矛盾。实施席曾把该论证写成定理(编译通过,标准三公理),评审席判其为上游存在定理取见证后的绑定与规范化,故不入库;仓内无冻结 GID。
+    previous_atom_id: b0569130d1357d21082afbd7d10fa0deb6cc831065bee47cc796e99dce4c32ad
+    next_atom_id: bf8a291625dd17914c710aa9bb038492ea81d6768d7ec403fdf94828145b8b29

@@ -1,0 +1,16 @@
+**定理 25.4（零切片唯一化与有符号平均恒等式）。** 设 $P$ 结合，置 $e=\delta_{0_K}$。存在唯一一族 $\pi_\theta\in A_\theta$，使
+$$
+\varepsilon(\pi_\theta)=1,\qquad
+e*\delta_x=\delta_x*e=\pi_{H(x)}.
+$$
+此外 $\pi_0=e$、$e*e=e$，并且对 $a\in A_\theta$，
+$$
+e*a=a*e=\varepsilon(a)\pi_\theta.
+$$
+对任意 $x,y\in K$ 及 $\theta,\rho\in\mathbb T$，
+$$
+\pi_{H(x)}*\delta_y=\delta_x*\pi_{H(y)}
+=\pi_{H(x)+H(y)},\qquad
+\pi_\theta*\pi_\rho=\pi_{\theta+\rho}.
+$$
+

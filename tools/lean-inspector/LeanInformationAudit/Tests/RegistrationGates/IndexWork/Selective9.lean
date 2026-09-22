@@ -1,0 +1,3 @@
+import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Observer
+
+measure_imported_template_query 9 1

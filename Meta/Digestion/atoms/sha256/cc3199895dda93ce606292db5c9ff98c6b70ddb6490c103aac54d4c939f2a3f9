@@ -1,0 +1,4 @@
+**theorem 37.5 (Exact multiplication and the closed ideal).** For $n,m\ge0$, $\theta,\eta\in\mathbb T$, and $s,t\in\Sigma$,
+$$
+T^nT^m=T^{n+m},
+$$

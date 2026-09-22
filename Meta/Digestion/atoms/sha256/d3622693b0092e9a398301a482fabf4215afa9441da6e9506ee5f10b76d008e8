@@ -1,0 +1,2 @@
+词 $u=\beta_1\cdots\beta_n$ 中的同一个报告 $\beta_t$ 同时驱动实际后验、所有在用标签及证明中的参考后验；没有各轨独立抽样或重排报告。按时间顺序记 $F_u=F_{\beta_n}\circ\cdots\circ F_{\beta_1}$、$F_\varnothing=\operatorname{Id}$。
+

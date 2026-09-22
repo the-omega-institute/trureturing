@@ -1,0 +1,17 @@
+**theorem 22.6 (The same exact continuity locus for every point selection).** Every point selection satisfies
+$$
+\overline{\operatorname{graph}(A)}=\Gamma,
+\qquad
+\operatorname{Cont}(A)=G.
+$$
+Every $D_n$ is closed and nowhere dense, and
+$$
+D=\bigcup_{n\geq1}D_n,\qquad
+G=\bigcap_{n\geq1}(X\setminus D_n).
+$$
+Thus $D$ is meagre $F_\sigma$ and $G$ is dense $G_\delta$. Its exact phase-and-sign description is
+$$
+D=\Theta^{-1}(E)\setminus
+\bigl((K_{+1}\times K_{+1})\cup(K_{-1}\times K_{-1})\bigr).
+$$
+

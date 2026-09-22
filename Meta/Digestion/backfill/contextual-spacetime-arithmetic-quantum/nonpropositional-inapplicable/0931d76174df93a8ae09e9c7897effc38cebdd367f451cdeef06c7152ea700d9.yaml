@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0931d76174df93a8ae09e9c7897effc38cebdd367f451cdeef06c7152ea700d9
+  normalized_sha256: sha256:0931d76174df93a8ae09e9c7897effc38cebdd367f451cdeef06c7152ea700d9
+cas_ref: sha256:0931d76174df93a8ae09e9c7897effc38cebdd367f451cdeef06c7152ea700d9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义权重在存储后揭示的二态任务及存储前后判别量，最优成功概率另分叶核验。
+    previous_atom_id: 3c871363381dd6ace985c41aa1976f1aa851946dae29473181288934ef5ea2b6
+    next_atom_id: 28a333e8000006c3237196120f1a1bf6af57f502261913e84d163eb59c9994e4

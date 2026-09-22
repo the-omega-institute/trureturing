@@ -1,0 +1,20 @@
+**Theorem.** For every k>=0,
+
+$$
+\boxed{
+2S_{p,k}\equiv\epsilon^k q_p\pmod p.
+}                                                       \tag{NP8}
+$$
+
+More generally, for every integer s with 1<=s<=k+1,
+
+$$
+\boxed{p^s\mid S_{p,k}\quad\Longleftrightarrow\quad h_p\ge s+1.}
+                                                               \tag{NP9}
+$$
+
+If k>=h_p-1, the sum is nonzero and v_p(S_(p,k))=h_p-1.
+Thus for every k, WSS(p) is equivalent to S_(p,k)=0 modulo p.
+For an inert base the first residues alternate in sign between layers;
+for a split base they are constant.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aae06a9938124867a99d271f206f6c35f2f2ab55838f76e55373e260a33cf3be
+  normalized_sha256: sha256:aae06a9938124867a99d271f206f6c35f2f2ab55838f76e55373e260a33cf3be
+cas_ref: sha256:aae06a9938124867a99d271f206f6c35f2f2ab55838f76e55373e260a33cf3be
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 正整数提供两个非零条件，Nat.factorization_prime_le_iff_dvd 直接给整除与所有素数轴估值比较的等价，仓内无冻结 GID。
+    previous_atom_id: 9644cc9b042caf0632437f8b6cefa2243d0bf5d6928da6eb67d0590c0845bfdf
+    next_atom_id: e8f7d25a98e94779989f8e56cf4ff6de31b5dd2f9fb5f653f53c3533adea4607

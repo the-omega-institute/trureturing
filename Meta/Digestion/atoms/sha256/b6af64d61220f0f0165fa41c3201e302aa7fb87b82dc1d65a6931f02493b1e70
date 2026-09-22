@@ -1,0 +1,231 @@
+**命题 154.1（全有限历史下一报告精度的区间阈值、普适状态下界与因果网格上界）。** 固定已知实参数 $0<p<1/2$、$0<r<1/2$，使用命题153.1的时间齐次、无控制二元协议及固定先验 $I_2/2$。具体地，在 $M_2(\mathbb C)$ 上令 $E_i=|i\rangle\langle i|$、$I_2=E_0+E_1$，并取
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,\qquad
+P_{ji}=\begin{cases}1-r,&j=i,\\r,&j\ne i,\end{cases}
+$$
+$$
+K_{bji}=\sqrt{c_{bi}P_{ji}}\,|j\rangle\langle i|,
+\qquad
+\phi_b(X)=\sum_{i,j=0}^1K_{bji}XK_{bji}^{\dagger}
+=\sum_{i,j=0}^1c_{bi}P_{ji}X_{ii}E_j.
+$$
+$c_{bi}$ 的指标依次为报告和旧隐藏位；每支的四个 Kraus 项分别求共轭作用再相加。物理次序为旧隐藏位先发射报告，再按 $P$ 翻转到新隐藏位。报告词 $w=b_1\cdots b_n$ 按时间顺序书写，$\phi_w=\phi_{b_n}\circ\cdots\circ\phi_{b_1}$，空操作 $\phi_\varnothing=\operatorname{Id}$。令
+$$
+v_\varnothing=\binom{1/2}{1/2},\qquad
+v_{wb}=P\operatorname{diag}(c_{b0},c_{b1})v_w,\qquad
+Z_w=\mathbf1^{\mathsf T}v_w,\qquad q_w=\frac{(v_w)_1}{Z_w}.
+$$
+这里 $\phi_w(I_2/2)=\operatorname{diag}(v_w)$，$Z_w$ 是词的标量 Born 概率，满足 $Z_w\ge p^{|w|}>0$；这不是对 $v_w$ 各分量的同一下界。所有 $q_w\in(0,1)$，且 $q_\varnothing=1/2$。下一零报告的条件概率为
+$$
+f(q)=p+dq,\qquad d=1-2p>0.
+$$
+
+观察者由有限非空集合 $S$、固定初态 $s_0\in S$、两个固定确定性更新 $T_b:S\to S$ 及固定读出 $t:S\to[0,1]$ 组成。规定
+$$
+T_w=T_{b_n}\circ\cdots\circ T_{b_1},\qquad
+T_\varnothing=\operatorname{Id},\qquad
+\mathcal E(S,s_0,T_0,T_1,t)
+=\sup_{w\in\{0,1\}^{*}}\bigl|t(T_w(s_0))-f(q_w)\bigr|.
+$$
+上确界取遍每一个有限词，包括空词及任意低概率的词。所有可读的演化记忆均计入 $S$；不另给可读时钟、历史档案、随机种子或连续运行寄存器。对 $\varepsilon>0$ 定义
+$$
+N_{\min}(\varepsilon)
+=\min\left\{|S|:\mathcal E(S,s_0,T_0,T_1,t)\le\varepsilon\right\}.
+$$
+下述有限构造保证取最小值的集合是非空的正整数集合。所计成本为观察者状态基数，不是物理隐藏态数、存储位数或固定表的描述成本；观察者可依赖已知的 $p,r,\varepsilon$，但同一观察者用于所有词长。
+
+置
+$$
+\eta=1-2r\in(0,1),\qquad
+\lambda=\log\frac{1-p}{p}>0,\qquad
+q_+=\frac{d-r+\sqrt{r^2+\eta d^2}}{2d},
+$$
+$$
+a=\log\frac{q_+}{1-q_+},\qquad I=[-a,a],\qquad
+\sigma(x)=\frac{e^x}{1+e^x},\qquad h(x)=f(\sigma(x)),
+$$
+$$
+J=[f(1-q_+),f(q_+)],\qquad
+L=d(2q_+-1)=\sqrt{r^2+\eta d^2}-r.
+$$
+则 $1/2<q_+<1$、$a>0$、$L>0$。沿用命题153.1的对数赔率及更新
+$$
+\ell_w=\log\frac{q_w}{1-q_w},\qquad\ell_\varnothing=0,\qquad
+\ell_{wb}=F_b(\ell_w),\qquad
+F_b(x)=G\bigl(x+(-1)^b\lambda\bigr),\qquad
+G(x)=\log\frac{r+(1-r)e^x}{(1-r)+re^x}.
+$$
+区间 $I$ 对两个更新均正向不变，且
+$$
+\overline{\{\ell_w:w\in\{0,1\}^{*}\}}=I
+\quad\Longleftrightarrow\quad r\le p(1-p).
+$$
+在此重叠区域，包括等号边界，每个固定深度 $n\ge0$ 的可达集合都是 $I$ 的 $a\eta^n$-网：
+$$
+\forall x\in I\ \exists w\in\{0,1\}^{n}:
+\quad |x-\ell_w|\le a\eta^n.
+$$
+有限历史的并集是可数稠密集，不等于整个非退化区间；其下一报告预测值的闭包恰为 $J$，长度为 $L$。因此对重叠区域中每组固定参数和每个 $\varepsilon>0$，
+$$
+\left\lceil\frac{L}{2\varepsilon}\right\rceil
+\le N_{\min}(\varepsilon)
+\le 2\left\lceil\frac{da}{8(1-\eta)\varepsilon}\right\rceil+1
+\le\frac{da}{4(1-\eta)\varepsilon}+3.
+$$
+下界适用于上述全部有限确定性观察者；上界由一个因果网格观察者实现，并且单独对整个 $0<p,r<1/2$ 参数域成立。于是固定重叠参数下
+$$
+N_{\min}(\varepsilon)=\Theta_{p,r}(\varepsilon^{-1})
+\qquad(\varepsilon\downarrow0).
+$$
+这是上下界的同阶结论，不给出锐常数或精确最小值。
+
+**证明。** 本节与命题153.1具有相同的 $c_{bi}$、列向量转移约定、先验和操作次序，故直接使用其复 Kraus 仪器、标量 Born 递推及全局对数赔率收缩结论。特别地，每一步 $pZ_w\le Z_{wb}\le(1-p)Z_w$，从 $Z_\varnothing=1$ 得所有词的正标量概率；隐藏位 $1$ 的质量归一化后给 $q_w$，空词仍给 $q_\varnothing=1/2$。其导数公式在本参数约定下为
+$$
+G'(x)=\frac{\eta}{1+r(1-r)(e^x+e^{-x}-2)},
+\qquad 0<G'(x)\le\eta<1.
+$$
+分母至少为一，因为 $e^x+e^{-x}-2=(e^{x/2}-e^{-x/2})^2\ge0$。于是每个 $F_b$ 严格递增且为 $\eta$-Lipschitz，任意同词复合的常数为 $\eta^{|w|}$。又 $G$ 为奇函数，故
+$$
+F_1(x)=-F_0(-x),\qquad F_0(x)>F_1(x),\qquad
+0<h'(x)=\frac{de^x}{(1+e^x)^2}\le\frac d4.
+$$
+这里最后一个不等式使用 $(1+e^x)^2\ge4e^x$。
+
+先确定不变区间。报告零时的概率更新为
+$$
+H_0(q)=r+\eta\frac{(1-p)q}{p+dq},\qquad 0\le q\le1.
+$$
+分母 $p+dq>0$，且
+$$
+q-H_0(q)=\frac{H(q)}{p+dq},\qquad
+H(q)=dq^2+(r-d)q-rp.
+$$
+该二次式的判别式、根的乘积及两个端点读数分别为
+$$
+(r-d)^2+4drp=r^2+\eta d^2,\qquad
+-\frac{rp}{d}<0,\qquad
+H(1/2)=-\frac{\eta d}{4}<0,\qquad H(1)=r(1-p)>0.
+$$
+所以恰有一个正根，且它就是所列的 $q_+\in(1/2,1)$。由 $H_0(q_+)=q_+$ 及对数赔率坐标转换，$F_0(a)=a$；对称性给 $F_1(-a)=-a$，收缩性保证各自不动点的唯一性。严格递增性及 $F_0>F_1$ 因而给出两个完整像区间
+$$
+F_0(I)=[G(\lambda-a),a],\qquad
+F_1(I)=[-a,G(a-\lambda)],\qquad F_b(I)\subseteq I.
+$$
+由于 $0\in I$，每个有限历史的 $\ell_w$ 都在 $I$ 内。
+
+两个像覆盖 $I$ 当且仅当其内侧端点相接或重叠。利用 $G(a-\lambda)=-G(\lambda-a)$ 及 $G$ 严格递增、$G(0)=0$，此条件等价于
+$$
+G(\lambda-a)\le0\quad\Longleftrightarrow\quad a\ge\lambda.
+$$
+当 $y>x$ 时，
+$$
+[F_0(y)-y]-[F_0(x)-x]\le-(1-\eta)(y-x)<0.
+$$
+因此 $F_0(x)-x$ 严格递减，零点为 $a$，从而 $a\ge\lambda$ 等价于 $F_0(\lambda)\ge\lambda$。再经严格递增的 $\sigma$，并用 $\sigma(\lambda)=1-p$，它等价于 $H_0(1-p)\ge1-p$。记 $D=(1-p)^2+p^2>0$，直接通分得
+$$
+H_0(1-p)-(1-p)
+=r+\eta\frac{(1-p)^2}{D}-(1-p)
+=\frac{d[p(1-p)-r]}{D}.
+$$
+因 $d,D>0$，覆盖条件恰为 $r\le p(1-p)$，等号确实属于覆盖区域。
+
+在覆盖条件下，任取 $n\ge1$ 和 $x\in I$，置 $x_n=x$。对 $k=n,n-1,\ldots,1$ 依次利用 $F_0(I)\cup F_1(I)=I$，选择 $b_k\in\{0,1\}$ 与 $x_{k-1}\in I$ 使 $x_k=F_{b_k}(x_{k-1})$。于是
+$$
+x=F_{b_n}\circ\cdots\circ F_{b_1}(x_0).
+$$
+这里倒向选择的顺序为 $b_n,\ldots,b_1$，对应的时间顺序词是 $w=b_1\cdots b_n$。将同一复合的初值 $x_0$ 换成实际先验坐标 $0$，由命题153.1的共同词收缩得
+$$
+|x-\ell_w|\le\eta^n|x_0|\le a\eta^n.
+$$
+$n=0$ 时可达集合为 $\{0\}$，而 $|x|\le a=a\eta^0$，所以网结论也包含深度零。由于 $\eta^n\to0$，可达有限历史在 $I$ 中稠密；历史集合可数，而 $a>0$ 的区间不可数，故只可说闭包等于 $I$。连续严格递增的 $h$ 将 $I$ 映到 $J$，从而预测值闭包为 $J$，且其长度
+$$
+h(a)-h(-a)=d(2q_+-1)=\sqrt{r^2+\eta d^2}-r>0.
+$$
+
+反之，若 $r>p(1-p)$，则 $a<\lambda$。置 $g=G(\lambda-a)>0$；由 $F_0(-a)<F_0(a)=a$ 还知 $g<a$。每个非空词的最后一次更新把其值放进
+$$
+F_0(I)\cup F_1(I)=[-a,-g]\cup[g,a].
+$$
+空词只增加点 $0$。这两个闭区间与 $\{0\}$ 的有限并仍闭，且遗漏非空开区间 $(0,g)$，所以全部有限历史的闭包也遗漏 $(0,g)$。这就证明了稠密性的反向必要条件。
+
+现在在重叠区域取任意满足 $\mathcal E\le\varepsilon$ 的 $N$ 状态观察者。有限闭集并
+$$
+U=\bigcup_{s\in S}[t(s)-\varepsilon,t(s)+\varepsilon]
+$$
+包含每一个可达预测值 $f(q_w)$。由闭性，它也包含这些值的闭包 $J$。有限区间并的长度不超过各区间长度之和，故
+$$
+L=|J|\le |U|\le\sum_{s\in S}2\varepsilon=2N\varepsilon.
+$$
+因此 $N\ge\lceil L/(2\varepsilon)\rceil$。这个论证只用固定有限读出及对所有词的误差条件，不限制更新采用网格或后缀，也不要求误差上确界由某个词达到。对固定参数，$L>0$ 给出非零的下界常数。
+
+为构造上界，现在只假设 $0<p,r<1/2$，不要求像区间覆盖。对任意整数 $M\ge1$ 取状态标签及其固定坐标
+$$
+S_M=\{-M,-M+1,\ldots,M\},\qquad
+x_j=\frac{ja}{M},\qquad s_0=0.
+$$
+令 $R_M:I\to\{x_j:j\in S_M\}$ 为最近网格点映射，等距时固定选择较小标签。对每个输入报告，定义固定表
+$$
+T_b(j)=k\quad\Longleftrightarrow\quad x_k=R_M(F_b(x_j)),
+\qquad t(j)=h(x_j).
+$$
+坐标两两不同，故标签 $k$ 唯一；不变性保证 $F_b(x_j)\in I$，且对所有 $y\in I$ 都有
+$$
+|R_M(y)-y|\le\frac a{2M}.
+$$
+这包含两个端点及每个网格中点；若统一改用较大标签处理等距，误差界相同。状态更新只读取当前整数标签和当前报告，所以是同一个有限因果观察者，$|S_M|=2M+1$。
+
+任取有限时域 $H\ge0$ 和时间顺序词 $b_1\cdots b_H$，记 $j_n=T_{b_n}\circ\cdots\circ T_{b_1}(0)$、$\widehat\ell_n=x_{j_n}$，其中 $j_0=0$。真实轨迹 $\ell_{b_1\cdots b_n}$ 和网格轨迹 $\widehat\ell_n$ 均在 $I$，初始误差为零。在[《情境时空算术·机器学习》定义21.1、定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)中，取摘要映射为 $\operatorname{Id}_I$，精确更新为 $F_b$，近似更新为 $R_M\circ F_b$，并代入
+$$
+e_0=0,\qquad\delta_{\rm close}=0,\qquad
+\delta_{\rm eval}=\frac a{2M},\qquad
+L_{\rm ML}=\eta,\qquad L_o=\frac d4,\qquad\varepsilon_o=0.
+$$
+此处 $L_{\rm ML}$ 是所引定理的共同 Lipschitz 常数，与本命题的区间长度 $L$ 区分。所有缺陷界在 $I$ 上成立，两条轨迹均不退出此域；故直接应用该有限时域定理，对每个 $0\le n\le H$ 得
+$$
+e_n:=|\ell_{b_1\cdots b_n}-\widehat\ell_n|,
+\qquad e_{n+1}\le\eta e_n+\frac a{2M}\quad(0\le n<H),
+$$
+$$
+e_n\le\frac a{2M}\sum_{k=0}^{n-1}\eta^k
+=\frac{a(1-\eta^n)}{2M(1-\eta)},\qquad
+|h(\ell_{b_1\cdots b_n})-t(j_n)|
+\le\frac{da(1-\eta^n)}{8M(1-\eta)}
+\le\frac{da}{8M(1-\eta)}.
+$$
+$n=0$ 的和为空，两个初始读出同为 $1/2$；无需填充历史或额外记录长度。状态集和两张更新表完全不依赖 $H$，故对任意有限时域应用同一个定理，就得到同一个观察者对全部有限词的误差界，而非随词长更换观察者。取
+$$
+M=\left\lceil\frac{da}{8(1-\eta)\varepsilon}\right\rceil\ge1
+$$
+即得所陈述的上界。该构造也证明 $N_{\min}(\varepsilon)$ 的定义域内总存在可行观察者，由正整数的良序性取到最小基数。在重叠区域与前面的普适下界合并，再用 $\lceil u\rceil\le u+1$，得到完整不等式链及固定参数下的 $\Theta_{p,r}(\varepsilon^{-1})$。
+
+上述成本约定下，运行时只有整数标签 $j$ 演化；实坐标和读出是定义有限固定表的常数，不是另一个运行中的实数寄存器。有限个精确实数表项的存在不等于对任意实参数的有效综合，也不衡量求表时的计算量、轨道枚举成本或表项描述长度。若另将读出舍入并截到 $[0,1]$，使 $|\bar t(j)-t(j)|\le\delta_{\rm out}$，同一更新表仍给
+$$
+|\bar t(T_w(0))-f(q_w)|
+\le\frac{da}{8M(1-\eta)}+\delta_{\rm out}.
+$$
+读出误差只加一次，因为它不反馈到更新；内部网格舍入则按已用的几何和累积。若要求有理读出，可把总容差各分一半，取 $\delta_{\rm out}\le\varepsilon/2$ 及
+$$
+M=\left\lceil\frac{da}{4(1-\eta)\varepsilon}\right\rceil.
+$$
+有理数稠密性及有限状态数保证可同时选择这些有理读出，截断不增大误差。这时仍为 $O_{p,r}(\varepsilon^{-1})$ 状态，但显示的状态上界变为 $2\lceil da/[4(1-\eta)\varepsilon]\rceil+1$；前面较小的常数属于允许精确读出的观察者类。
+
+在闭合边界 $p=1/3,r=2/9=p(1-p)$，直接代入给
+$$
+q_+=\frac23,\qquad a=\lambda=\log2,\qquad
+\eta=\frac59,\qquad J=\left[\frac49,\frac59\right],\qquad L=\frac19.
+$$
+两个像恰在零点相接，结论为
+$$
+\frac1{18\varepsilon}\le N_{\min}(\varepsilon)
+\le2\left\lceil\frac{3\log2}{32\varepsilon}\right\rceil+1
+\le\frac{3\log2}{16\varepsilon}+3.
+$$
+同一概率递推按时间顺序给 $q_0=16/27$、$q_{01}=26/57$、$q_{10}=31/57$，两个逆序词的后验不同。作为重叠条件之外的对照，$p=1/3,r=1/4$ 时
+$$
+q_+=\frac{1+\sqrt{17}}8<\frac23,
+\qquad a<\lambda,\qquad G(\lambda-a)>0,
+$$
+其中根的比较可由 $17<(13/3)^2$ 得到，故前述开缺口确实存在。这个缺口不确定其余闭包的分形维数，也不给出重叠区域以外的最优成本指数。命题153.1的后缀构造提供另一上界，不能替代这里对任意有限观察者的下界；本命题不证明后缀最优性。全部误差只指固定协议和先验下、每个有限历史后的下一报告误差，不涉及整个滚动生成律的误差、控制或参考近似、量子记忆最小值、平稳平均损失，也不声称参数一致常数。证毕。
+
+本命题的物理仪器、条件化与共同词收缩直接取自本卷命题153.1；网格误差传播直接应用[《情境时空算术·机器学习》定义21.1及定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)。有限收缩映射族的不变紧集与 Hausdorff 收缩为既有方法，参见 J. E. Hutchinson，*Fractals and Self Similarity*，*Indiana University Mathematics Journal* 30 (1981), 713–747，[DOI:10.1512/iumj.1981.30.30055](https://doi.org/10.1512/iumj.1981.30.30055)，[作者重排版](https://maths-people.anu.edu.au/~john/Assets/Research%20Papers/fractals_self-similarity.pdf)，第3.1节(3)及第3.2节(1)，该重排版第10–12页。这里的倒向选词证明已直接给出每个深度的网半径，状态下界只用有限闭区间覆盖的长度次可加性。
+

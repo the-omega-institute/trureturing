@@ -1,0 +1,6 @@
+**定理 29.11（任意柱集中的无原子逼近与弱星稠密性）。** 每个非空有限数字柱集都支持一个无原子概率测度。对任意 $\mu\in M(K)$，存在 $\mu_N\in M_c(K)$，使
+$$
+\|\mu_N\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}},\qquad \mu_N(K)=\mu(K),\qquad \mu_N\longrightarrow\mu\text{ 于 }\sigma(M(K),C(K)).
+$$
+因此该共同拓扑中心虽然是总变差闭真理想，却在全测度空间中弱星稠密。
+

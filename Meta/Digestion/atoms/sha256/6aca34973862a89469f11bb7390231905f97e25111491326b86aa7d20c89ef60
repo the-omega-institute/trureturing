@@ -1,0 +1,12 @@
+对全部关系 $A\subseteq X\times Y$，令
+$$
+A_{\rm ext}=(e_X\times e_Y)[A]\subseteq X^*\times Y^*.
+$$
+则
+$$
+\operatorname{El}(\operatorname{Enc}(A))=\chi_{X,Y}[A_{\rm ext}],
+\qquad
+\operatorname{Enc}(A)=\operatorname{Pack}(\chi_{X,Y}[A_{\rm ext}]).
+$$
+这些式子给全部关系的双向对应，包括空关系。
+

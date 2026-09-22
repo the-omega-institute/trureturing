@@ -1,0 +1,26 @@
+**定义 38.1（有限联合闭图与带位置标记的符号矩阵）。** 令 $d,r\in\mathbb N_0$，$A\in\mathbb N_0^{r\times d}$，其第 $j$ 行记为 $a_j$。定义
+$$
+\mathcal G_A=
+\overline{\left\{
+\bigl((Z(n_i))_{i=1}^d,(Z(a_j\cdot n))_{j=1}^r\bigr):
+n\in\mathbb N_0^d
+\right\}}^{K^d\times K^r}.
+$$
+所有输出均使用同一个自然数向量 $n$。约定零维直积为单点，空和为零。
+
+给定 $(x,y)\in K^d\times K^r$，置
+$$
+I_x=\{i:H(x_i)\in E\},\qquad
+J_y=\{j:H(y_j)\in E\}.
+$$
+符号矩阵 $B=B(A;x,y)$ 的行由带位置标记的不交并
+$$
+(\{\mathrm{in}\}\times I_x)\sqcup(\{\mathrm{out}\}\times J_y)
+$$
+索引，并定义为
+$$
+B_{\mathrm{in},i}=s(x_i)e_i^{\mathsf T},\qquad
+B_{\mathrm{out},j}=s(y_j)a_j.
+$$
+这里 $e_i$ 是第 $i$ 个标准基向量。不同位置的行不因系数相同而被识别。记行数为 $m$。符号 $B\xi>0$ 始终表示每一行的值都严格为正，而不是向量偏序中的非零非负条件；当 $m=0$ 时它为空的合取。非分裂坐标不增加符号约束，方向 $\xi\in\mathbb R^d$ 不受非负性限制。
+

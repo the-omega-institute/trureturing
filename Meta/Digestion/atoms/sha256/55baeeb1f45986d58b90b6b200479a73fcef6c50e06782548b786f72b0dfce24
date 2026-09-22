@@ -1,0 +1,33 @@
+### 6.4 第 5.5 条：小性、代表类相容与共同细化
+
+第 5.5 条的指标须明确为小滤范畴 $I,J$，不是仅给出两个未规定箭头与滤性的指标集合。固定声明宇宙，使 $I,J$ 的对象集和态射集以及 $\mathcal C$ 的各 Hom 集均位于同一个宇宙中；原文的小范畴 $\mathcal C$ 也可取在该宇宙内。于是所有阶段 Hom、其滤余极限及外层小极限均型良好。更一般地，可令 $\mathcal C$ 的对象宇宙为 $u$、Hom 宇宙为 $v$，而 $I,J$ 的对象与 Hom 同在 $v$，并保持两者的小性与滤性。
+
+对 $X:I^{\mathrm{op}}\to\mathcal C$ 和 $Y:J^{\mathrm{op}}\to\mathcal C$，沿用第 5.5 条的公式
+
+$$
+\operatorname{Hom}_{\mathrm{Pro}(\mathcal C)}(X,Y)
+\cong
+\varprojlim_{j\in J^{\mathrm{op}}}
+\varinjlim_{i\in I}\operatorname{Hom}_{\mathcal C}(X_i,Y_j).
+$$
+
+固定目标阶段 $j$ 后，源箭头 $u:i\to k$ 通过预复合 $X(u^{\mathrm{op}}):X_k\to X_i$ 给出 Hom 的余极限结构映射。一个 pro-态射在每个目标阶段确定一个余极限类 $c_j$；该类可由某个 $f_j:X_{i_j}\to Y_j$ 表示。外层极限的相容性首先是这些类的相容性。
+
+精确地，给定任意目标箭头 $\beta:j\to j'$，以及 $c_j,c_{j'}$ 的任意两个阶段代表 $f_j,f_{j'}$，类相容意味着存在共同源细化阶段 $k\in I$ 及箭头
+
+$$
+u:i_j\to k,\qquad v:i_{j'}\to k,
+$$
+
+使
+
+$$
+f_j\circ X(u^{\mathrm{op}})
+=Y(\beta^{\mathrm{op}})\circ f_{j'}\circ X(v^{\mathrm{op}})
+\quad\text{作为 }X_k\to Y_j\text{ 的态射}.
+$$
+
+这是滤余极限中两个代表类相等的共同细化判据。它保证存在一次使该比较相等的细化，不声称未经细化的任意代表直接交换，也不声称随意选取一个共同阶段就已相等。相应存在量词的 $k,u,v$ 可以依赖于 $\beta$ 及所选代表；滤性不提供覆盖无限多个目标阶段的统一源阶段，不能把逐目标、逐比较的存在量词改为全体目标共用一个源阶段。
+
+退化为普通 Hom 的指标应明确取离散单点范畴 $I=J=\mathbf 1$，即仅一个对象且仅有其恒等箭头。此时两个呈示分别只指定 $A,B\in\mathcal C$，两层极限与余极限退化为 $\operatorname{Hom}_{\mathcal C}(A,B)$。仅说“一对象范畴”不够，因为该对象还可能有非恒等自同态；仓内 `singleStageDiagram` 实际采用的是 `Discrete PUnit`。
+

@@ -1,0 +1,4 @@
+**Proof.** Put M=L_n^2+1. The golden identities give F_(3n)=F_n M and M+3=5F_n^2. Any common divisor of F_n and M divides three, while strong divisibility gives gcd(F_n,3)=gcd(F_n,F_4)=F_gcd(n,4)=1. Hence gcd(F_n,M)=1.
+
+If k>=3 and F_k|M, then F_k|F_(3n), so strong divisibility and strict Fibonacci growth give k|3n. Also F_gcd(k,n)=gcd(F_k,F_n)=1. Since n is odd, gcd(k,n) is odd and must be one. Therefore k|3, so k=3 and F_k=2. Finally M+3=5F_n^2 modulo two shows 2|M exactly when F_n is odd, equivalently 3 does not divide n. This rederives the previously established odd-Lucas classification.
+

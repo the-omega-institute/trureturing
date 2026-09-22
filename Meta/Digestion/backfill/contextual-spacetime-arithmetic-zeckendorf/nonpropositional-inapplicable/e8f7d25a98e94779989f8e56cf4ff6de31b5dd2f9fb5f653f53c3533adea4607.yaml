@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e8f7d25a98e94779989f8e56cf4ff6de31b5dd2f9fb5f653f53c3533adea4607
+  normalized_sha256: sha256:e8f7d25a98e94779989f8e56cf4ff6de31b5dd2f9fb5f653f53c3533adea4607
+cas_ref: sha256:e8f7d25a98e94779989f8e56cf4ff6de31b5dd2f9fb5f653f53c3533adea4607
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 正整数的非零条件允许直接应用 Nat.factorization_gcd，逐素数读取函数等式即得最小值公式，仓内无冻结 GID。
+    previous_atom_id: aae06a9938124867a99d271f206f6c35f2f2ab55838f76e55373e260a33cf3be
+    next_atom_id: e3afbf6446df5351025179e94302982417909c1aa49f953966bd5027813930a6

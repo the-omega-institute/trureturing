@@ -1,0 +1,15 @@
+### 15.2 定理：显式噪声区间内的精确可达极值
+
+当
+
+\[
+0\leq\varepsilon\leq\frac1{2P(1+B)},
+\]
+
+时，
+
+\[
+\boxed{\max\mathcal W_\varepsilon(x,y)=\frac{1+\varepsilon L}{P}.}
+\tag{15.4}
+\]
+

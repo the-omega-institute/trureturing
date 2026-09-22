@@ -35,6 +35,9 @@ domains:
   Certificates:
     stratum: S0
     definition: Kernel-checkable refutation and infeasibility certificates such as LRAT propositional proofs and rational Farkas dual weights.
+  Combinatorics:
+    stratum: S3
+    definition: Named finite graph families and their invariants, including the hypercube and its extremal subgraph counts.
   CompletionDynamics:
     stratum: S3
     definition: Dynamical structures of observer completion - golden Mobius fixed points, projective jets and first-break orders, and real-completion thread fibers with blow-up coordinates.
@@ -101,6 +104,9 @@ domains:
   Fourier:
     stratum: S3
     definition: Fourier analysis for the kernel, including finite and discrete Poisson summation and entire analytic extensions of the Weil Fourier-Laplace transform.
+  Geometry:
+    stratum: S3
+    definition: Finite point configurations in metric and Euclidean spaces, and the distance sets they determine.
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.
@@ -193,7 +199,7 @@ domains:
     definition: Classical zeta conventions, Weil test functions, and Fourier-Laplace analysis.
   Words:
     stratum: S1
-    definition: Golden mechanical words and their local window letter conditions.
+    definition: Finite-word combinatorics and operations on formal languages, including golden mechanical words and their local window letter conditions.
   Zeros:
     stratum: S3
     definition: Geometry, symmetry, and local balance of classical zeta zeros.

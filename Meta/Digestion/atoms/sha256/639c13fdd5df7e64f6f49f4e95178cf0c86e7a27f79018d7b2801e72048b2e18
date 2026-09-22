@@ -1,0 +1,16 @@
+S_{\mathsf N}(\operatorname{NatZ}(n))=\operatorname{NatZ}(n+1),
+$$
+$$
+\operatorname{NatZ}(m)+_{\mathsf N}\operatorname{NatZ}(n)=\operatorname{NatZ}(m+n),\qquad
+\operatorname{NatZ}(m)\times_{\mathsf N}\operatorname{NatZ}(n)=\operatorname{NatZ}(mn),
+$$
+$$
+\operatorname{NatZ}(m)<_{\mathsf N}\operatorname{NatZ}(n)\iff m<n.
+$$
+全部递归与归纳实例保留。$G$ 的完整图码为
+$$
+\operatorname{Enc}(G)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(G_j)\rangle_Z:j\in\omega\},
+$$
+其初值、递推、空和及零参数取相同的共轭含义。$T$ 仍作用在 $K$，$S_{\mathsf N}$ 仍是自然数后继的共轭。
+

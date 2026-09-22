@@ -1,0 +1,2 @@
+对任意集合 $X$，记 $X^*=\operatorname{Enc}[X]$；对有效码 $c$ 和有效码组成的任意集合 $B$，记 $\operatorname{El}(c)=\operatorname{Enc}[\operatorname{Dec}(c)]$、$\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B])$。
+

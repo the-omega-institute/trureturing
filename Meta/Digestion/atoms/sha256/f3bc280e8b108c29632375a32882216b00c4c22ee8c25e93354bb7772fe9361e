@@ -1,0 +1,19 @@
+**定理 31.11（整个测度的精确重建）。** 全部相位 Fourier 读数和全部非零剩余求值共同分离 $M_{\mathbb C}(K)$。更准确地，
+$$
+\bigcap_{n\in\mathbb Z}\ker\mathcal F_n=\ker H_\#=\left\{\sum_{m\ge1}b_mv_m:(b_m)\in\ell^1(\mathbb N_{>0},\mathbb C)\right\},
+$$
+$$
+\bigcap_{0<|z|\le1}\ker\mathcal E_z=\ker R_t=L_t\mathcal M,
+$$
+而这两个核的交为零。固定任意非零序列 $z_j\to0$，仅保留 $\mathcal E_{z_j}$ 已经足以与全部 $\mathcal F_n$ 共同分离测度。
+
+若 $\nu=H_\#\mu$、$g=R_t\mu$，则 $\nu$ 由 $\mathcal F_n(\mu)$ 唯一确定，且对任意 $0<r\le1$，
+$$
+g_m=\frac{1}{2\pi r^m}\int_0^{2\pi}\mathcal E_{re^{i\theta}}(\mu)e^{-im\theta}\,d\theta.
+$$
+原测度随后由
+$$
+\mu=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m
+$$
+唯一恢复，级数在总变差中绝对收敛。[^rro31-sw]
+

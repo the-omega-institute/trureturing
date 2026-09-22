@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:71b20cba2d2282f0996de3506f8e43e5f85a3b3960f4233a1e122feeaf83ad20
+  normalized_sha256: sha256:71b20cba2d2282f0996de3506f8e43e5f85a3b3960f4233a1e122feeaf83ad20
+cas_ref: sha256:71b20cba2d2282f0996de3506f8e43e5f85a3b3960f4233a1e122feeaf83ad20
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该命题的不可判部分是给定具体对角停机关系的无限性与不可判定性；不可判定性由 Mathlib 的 ComputablePred.halting_problem 直接提供，关系实例化和逻辑合取只作绑定，因此以库内声明结算。
+    previous_atom_id: 412b5b3e35f10a5889830f1164d50ea2e86ac4f50b1d707787a23e29608a11b6
+    next_atom_id: a9c2cf0c534fa51773c557ec446ce75d0034117c780336707186a42c58d3851b

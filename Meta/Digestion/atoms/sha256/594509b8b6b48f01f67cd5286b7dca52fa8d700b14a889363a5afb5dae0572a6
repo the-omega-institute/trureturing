@@ -1,0 +1,21 @@
+U_Q(N)=\sum_{i=1}^{t}\varepsilon_i C_Q(N/a_i),\qquad
+W_Q(N)=\sum_{i=1}^{t}\varepsilon_i S_Q(N/a_i),
+\tag{472.2a}
+$$
+$$
+c_Q=e_Q\sum_{i=1}^{t}\frac{\varepsilon_i}{a_i},\qquad
+\alpha_Q=\rho_Q\sum_{i=1}^{t}\frac{\varepsilon_i}{a_i},
+\tag{472.2b}
+$$
+$$
+|U_Q(N)-c_QN|\le4^k,\qquad
+|W_Q(N)-\alpha_QN|\le E_Q\sqrt N,
+\tag{472.2c}
+$$
+$$
+E_Q\le(2^k+2)\exp\bigl(2(\sqrt{k+1}-1)\bigr)\le(2^k+2)e^{2\sqrt k}.
+\tag{472.2d}
+$$
+若 $Q>1$，还有 $E_Q\le D_Q$。固定 $0<\epsilon<1/2$，对最终满足
+$\omega(Q(N))\le(1/2-\epsilon)\log_2N$ 的任意平方自由支撑选择，两项误差除以 $N$ 后均一致趋零；不要求 $Q(N)\le N$。
+

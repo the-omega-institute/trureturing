@@ -1,0 +1,2 @@
+**推论。** 当 $0<\varepsilon\leq e^{-1}$ 且 $d\geq\lceil\log(1/\varepsilon)\rceil$ 时，$\mathcal R_d(\varepsilon)\geq c'/\log^2(1/\varepsilon)$，其中 $c'>0$ 仍只依赖固定能量区间及 $\eta$。
+

@@ -1,0 +1,14 @@
+**theorem 39.4 (The exact evaluation cardinal in ZFC).** One has
+$$
+\min\{|D|:D\subseteq K,\ \operatorname{Eval}_D\text{ is injective}\}
+=\mathfrak c,
+\tag{39.11}
+$$
+and
+$$
+\min\{|D|:D\subseteq K,\ (e,\operatorname{Eval}_D)\text{ is injective}\}
+=\mathfrak c.
+\tag{39.12}
+$$
+These equalities require neither the continuum hypothesis nor regularity of $\mathfrak c$.
+

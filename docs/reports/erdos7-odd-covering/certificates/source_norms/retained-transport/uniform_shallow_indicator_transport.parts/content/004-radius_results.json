@@ -1,0 +1,41 @@
+{
+  "length": 4,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-radius_results/000000/single.json",
+        "sha256": "4a2a2ead8c28056bafc575b9c7b7ede372ed2a09443cc07cea3032a63b910aaa",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-radius_results/000001/single.json",
+        "sha256": "66ab42e8b9fe6ec6a274df7b8dd76e7eebee6ce8a8348fc3c471f110c2162b08",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-radius_results/000002/single.json",
+        "sha256": "113fd3c322f842cb97a92384bc543cfc2cb13e77d5e4fe364e8796619ace7795",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/004-radius_results/000003/single.json",
+        "sha256": "613abfd2bcbbaef6215a95754fad51fb6133b278d4f9118ae56bf98379e7a383",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

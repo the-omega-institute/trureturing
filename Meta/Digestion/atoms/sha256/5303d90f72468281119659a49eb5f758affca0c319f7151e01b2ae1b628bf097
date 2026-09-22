@@ -1,0 +1,14 @@
+**Proof.** Set m=ell^(k+t), n=ell^k, so m>n are odd and coprime to five.
+By RP7-RP8 the left side equals $1+v_5(F_m^2-F_n^2)$.
+The classical Fibonacci identity, with n odd, gives
+$F_m^2-F_n^2=F_{m+n}F_{m-n}$. Lengyel's formula
+$v_5(F_u)=v_5(u)$, valid for every positive u, consequently gives
+
+$$
+1+v_5(m+n)+v_5(m-n)=1+v_5(m^2-n^2)
+=1+v_5(\ell^{2t}-1),
+$$
+
+because five does not divide ell. This proves RP9 with no assumption
+about the WSS depths of the primes dividing the individual blocks.
+

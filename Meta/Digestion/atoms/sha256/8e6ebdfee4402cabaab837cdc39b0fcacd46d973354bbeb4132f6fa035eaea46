@@ -1,0 +1,49 @@
+**theorem 44.4 (The required arithmetic curve is equidistributed).** For $t=1,2,\ldots$, define
+$$
+\Xi(t)=
+\bigl([(t^4+t^2)\phi],[t^3\phi],[t\phi],[t^2\phi]\bigr)\in\mathbb T^4.
+$$
+For every continuous $f:\mathbb T^4\to\mathbb C$,
+$$
+\frac1N\sum_{t=1}^N f(\Xi(t))
+\longrightarrow
+\int_{\mathbb T^4}f\,d\lambda_4,
+$$
+where $\lambda_4$ is Haar probability measure. Consequently every nonempty open box is visited for arbitrarily large positive $t$. The classical ingredients are Weyl's polynomial equidistribution theorem, originating in H. Weyl, *Über die Gleichverteilung von Zahlen mod. Eins*, Mathematische Annalen 77 (1916), 313–352, and the torus character criterion; accessible statements and proofs are [T. Tao, *254B, Notes 1: Equidistribution of polynomial sequences in tori*, Proposition 1, Lemma 4 and Corollary 6](https://terrytao.wordpress.com/2010/03/28/254b-notes-1-equidistribution-of-polynomial-sequences-in-torii/).
+
+**Proof.** Write $e(u)=\exp(2\pi i u)$. We first give the positive-integer exponential-sum argument needed here. If a real polynomial $p$ has degree one and irrational leading coefficient $\lambda$, the geometric-series formula gives
+$$
+\left|\sum_{t=1}^N e(p(t))\right|\le\frac{2}{|1-e(\lambda)|}.
+$$
+Suppose the normalized sums vanish for every polynomial of degree less than $d$ with irrational leading coefficient. For a degree-$d$ polynomial with leading coefficient $\lambda$, and every fixed integer $h\ge1$, the polynomial $p(t+h)-p(t)$ has degree $d-1$ and irrational leading coefficient $dh\lambda$. Hence
+$$
+\frac1N\sum_{t=1}^{N-h}e(p(t+h)-p(t))\longrightarrow0.
+$$
+For completeness, if $|z_t|\le1$, extend $z_t$ by zero outside $1\le t\le N$. The identity
+$$
+M\sum_{t=1}^N z_t
+=
+\sum_{u=1}^{N+M-1}\sum_{j=0}^{M-1}z_{u-j}
+$$
+and Cauchy–Schwarz, followed by expansion of the square, give, for $1\le M\le N$,
+$$
+\left|\frac1N\sum_{t=1}^N z_t\right|^2
+\le
+\frac{N+M-1}{M^2N^2}
+\left(
+MN+
+2\sum_{h=1}^{M-1}(M-h)
+\left|\sum_{t=1}^{N-h}z_{t+h}\overline{z_t}\right|
+\right).
+$$
+Indeed, the diagonal terms contribute at most $MN$, and each displacement $h$ occurs $M-h$ times in each conjugate off-diagonal part. Apply this inequality to $z_t=e(p(t))$. For fixed $M$, the induction hypothesis makes all normalized off-diagonal terms vanish, leaving a limiting upper bound $1/M$. Letting $M\to\infty$ proves vanishing of the normalized exponential sum in degree $d$.
+
+For an arbitrary nonzero character vector $h=(h_a,h_b,h_q,h_r)\in\mathbb Z^4$, its value on $\Xi(t)$ is the exponential of the real polynomial
+$$
+p_h(t)=
+\phi\bigl(h_at^4+h_bt^3+(h_a+h_r)t^2+h_qt\bigr).
+$$
+Its polynomial in parentheses cannot vanish identically: successive comparison of the coefficients of $t^4,t^3,t,t^2$ would force all four entries of $h$ to vanish. Its highest nonzero coefficient is therefore a nonzero integer times $\phi$, and is irrational. The preceding argument proves vanishing of every nontrivial character average. In particular, no nonzero integer character obstructs density.
+
+The constant character has empirical average and Haar integral one. A nontrivial character has Haar integral zero: translating by a point on which that character differs from one multiplies its integral by that value, while Haar invariance leaves the integral unchanged. The characters span a self-conjugate unital algebra separating points of $\mathbb T^4$, so their finite linear combinations are uniformly dense in the continuous functions by Stone–Weierstrass. Character convergence therefore extends to every continuous $f$: approximation within $\varepsilon$ changes each empirical average and the Haar integral by at most $\varepsilon$. This proves the stated character criterion in the present case. A nonempty open box supports a nonnegative continuous function with positive Haar integral. If the box were visited only finitely often, its empirical averages would tend to zero, contradicting that positive integral. This establishes arbitrarily late visits using only the one-variable positive-integer sequence. $\square$
+

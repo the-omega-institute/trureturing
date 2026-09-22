@@ -1,0 +1,7 @@
+**Theorem.** If u,v are positive odd coprime integers and k>=3, then
+
+$$
+\boxed{F_k\mid5F_uF_v\quad\Longleftrightarrow\quad
+k=5\ \lor\ k\mid u\ \lor\ k\mid v.}\tag{FDS6}
+$$
+

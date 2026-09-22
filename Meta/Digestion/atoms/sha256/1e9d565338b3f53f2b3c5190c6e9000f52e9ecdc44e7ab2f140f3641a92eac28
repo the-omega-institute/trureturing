@@ -1,0 +1,7 @@
+**定理 RS1。** 两组初态的 W₁、W₂ 都相同，当且仅当存在实对称 X，使
+
+$$\boxed{\widetilde A=A+X,\quad\widetilde B=B-X,\quad
+[X,\Sigma]=0,\quad[DX,W_1]=0.}\tag{RS.2}$$
+
+没有假设 D 可逆。实际纤维是这个完整仿射解集与 Γ≽0、rankΓ≤m 的交。
+

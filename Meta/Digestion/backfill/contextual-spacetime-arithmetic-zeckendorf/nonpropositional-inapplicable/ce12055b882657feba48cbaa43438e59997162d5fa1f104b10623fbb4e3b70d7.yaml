@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ce12055b882657feba48cbaa43438e59997162d5fa1f104b10623fbb4e3b70d7
+  normalized_sha256: sha256:ce12055b882657feba48cbaa43438e59997162d5fa1f104b10623fbb4e3b70d7
+cas_ref: sha256:ce12055b882657feba48cbaa43438e59997162d5fa1f104b10623fbb4e3b70d7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅重申自然叶的标签与规范字配对定义，没有独立命题。
+    previous_atom_id: 6f8d51f9545dc990b6f117249c82f875a5b2a95f8735a2dcf7a42f7892a8a7e6
+    next_atom_id: fcac21da1b3eeab3816173da86ecc03fd7134c985c4ca3acc6f6e0ab981f58d9

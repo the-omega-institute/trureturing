@@ -1,0 +1,6 @@
+**theorem 52.8 (闭关系、紧输出与集合值连续性).** $\Gamma_+$ 是 $I^3$ 的紧闭子集，每个 $A\boxplus B$ 是非空紧集。乘法 $I^2\to I$ 连续，超加法作为映射
+$$
+I^2\longrightarrow\mathcal K(I),\qquad (A,B)\longmapsto A\boxplus B
+$$
+对 Vietoris 拓扑连续。
+

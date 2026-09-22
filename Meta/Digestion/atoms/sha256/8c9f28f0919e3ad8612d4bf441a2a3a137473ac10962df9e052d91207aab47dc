@@ -1,0 +1,2 @@
+**证明。** 在式 (16.10) 取 $m=\lceil L\rceil$、$L=\log(1/\varepsilon)\geq1$。有 $m\leq2L$、$2m-1\geq L$，所以 $\varepsilon^{1/(2m-1)}\geq e^{-1}$。代入即得 $c'=c/(4e)$。这个全时间下界只使用实 Taylor 余项及正测度构造。
+

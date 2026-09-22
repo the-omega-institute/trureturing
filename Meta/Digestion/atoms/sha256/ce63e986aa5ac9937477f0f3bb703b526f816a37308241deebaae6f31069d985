@@ -1,0 +1,32 @@
+**定理 29.6（相容竖直参数段上的三次有限差分）。** 固定 $m_0\ne0$，取 $d_0>0$ 使
+$$
+I=\{(m_0,k):k_0-d_0\le k\le k_0+d_0\}\subset U,\qquad k_0-d_0>0.
+\tag{29.128}
+$$
+这里 $\nu(k)=|\alpha|/\sqrt k,\beta(k)=m_0\nu(k)$。令
+$$
+M_4=\sup_{(m_0,k)\in I,0\le r\le r_*}|\partial_k\partial_r^4g(m_0,k,r)|<\infty.
+\tag{29.129}
+$$
+取 $\eta$ 满足（29.123），且 $2\eta\le r_*$；$M_4>0$ 时再要求 $\eta\le|m_0|/(10M_4)$，$M_4=0$ 时不加此限制。则对任意段内 $k,k'$，
+$$
+Q_\eta(k)=(g_{m_0,k}(\eta),g_{m_0,k}(2\eta)),\qquad
+\frac{|m_0|}{15}\eta^3|k-k'|
+ \le\|Q_\eta(k)-Q_\eta(k')\|_\infty
+ \le\frac{|m_0|}{5}\eta^3|k-k'|.
+\tag{29.130}
+$$
+
+证明。使用引理28.4的同一个参数微分积分余项，$F_k=0,G_k=-m_0/10$ 给
+$$
+\left|\partial_kg(m_0,k,r)+\frac{m_0}{60}r^3\right|
+ \le\frac{M_4}{24}r^4.
+\tag{29.131}
+$$
+对 $0<r\le2\eta$，附加小性使误差至多 $|m_0|r^3/120$，所以导数恒具有 $-\operatorname{sign}(m_0)$ 的符号，且
+$$
+\frac{|m_0|}{120}r^3\le|\partial_kg(m_0,k,r)|\le\frac{|m_0|}{40}r^3.
+\tag{29.132}
+$$
+沿完整 $k$ 线段积分，固定符号排除抵消；第二输出在 $r=2\eta$ 给下界 $8/120=1/15$，两输出的最大上界为 $8/40=1/5$，得到真正有限差分（29.130）。几何包含 $I\subset U$ 本身不证明档案相容；下项对实际完整实现另加明确条件。$\square$
+

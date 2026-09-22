@@ -1,0 +1,11 @@
+严格一步在失败上保持失败，在成功上应用该运算。情境函数族定义为实际字解释的像
+$$
+\mathcal C=\{x\mapsto\operatorname{Run}(w,x):w\in\mathcal A^{<\omega}\}.
+$$
+定义 $x\simeq_L y$ 当且仅当对所有 $C\in\mathcal C$，对 $C(x),C(y)$ 作标记 $P_L$ 观察所得值相同。
+
+若另给函数 $\lambda:\mathcal A\to\mathbb R_{\ge0}$，定义句法字代价
+$$
+\operatorname{cost}_\lambda(a_1\cdots a_k)=\sum_{i=1}^k\lambda(a_i).
+$$
+

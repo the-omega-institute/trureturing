@@ -1,0 +1,6 @@
+**Proof.** Reduce the three displayed prime factors modulo nine in the
+definition of $\lambda_3$ to obtain the three coefficients. Since
+$91=7\cdot13$, formula S4 gives $H(91)=0$; S3 then yields S5 after removing
+$E_{91}=13$. Direct reduction modulo five gives
+$\lambda_5(159607993)=0$, and RP3 gives the remaining congruence.
+

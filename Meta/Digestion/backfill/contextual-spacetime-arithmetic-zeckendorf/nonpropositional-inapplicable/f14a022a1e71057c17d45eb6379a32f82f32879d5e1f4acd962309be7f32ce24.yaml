@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f14a022a1e71057c17d45eb6379a32f82f32879d5e1f4acd962309be7f32ce24
+  normalized_sha256: sha256:f14a022a1e71057c17d45eb6379a32f82f32879d5e1f4acd962309be7f32ce24
+cas_ref: sha256:f14a022a1e71057c17d45eb6379a32f82f32879d5e1f4acd962309be7f32ce24
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句仅指定部分解码函数、最短码长以及不可解码时取无穷的约定，没有待证明命题。
+    previous_atom_id: 4e5c7a34027c9715cec37280baecfc3c5485e65fb8c3a5d829fbb572ea775424
+    next_atom_id: 8d752d2cc9eb0bf18999273ac940fea0af87da30694d8c928807d0c2d77b1966

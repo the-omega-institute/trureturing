@@ -1,0 +1,12 @@
+**定理 30.7（删去全测度相位律后的正结合反例）。** 即使保留正性、质量乘法律、双线性范数一、全部测度上的交换律及结合律，并要求在整个原子子代数上与 $\star_t$ 相同，也不能省略定理30.5中的全测度相位律。
+
+准确地，固定任一 $t\in\{0,\infty\}$，取定理28.11的非原子 Haar 概率提升 $\mathfrak m=s_\#\lambda$，并定义
+$$
+\widehat B_t(\mu,\nu)
+=\mu_{\mathrm{at}}\star_t\nu_{\mathrm{at}}
++\Bigl(\varepsilon_K(\mu)\varepsilon_K(\nu)
+-\varepsilon_K(\mu_{\mathrm{at}})
+ \varepsilon_K(\nu_{\mathrm{at}})\Bigr)\mathfrak m.
+$$
+则 $\widehat B_t$ 具有上述所有保留性质，因而有全部指定点行及其准确闭图支撑，却不满足全测度相位律，也不等于 $\star_t$。
+

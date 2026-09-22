@@ -1,0 +1,62 @@
+### IP.7 A first ramified digit beyond the quadratic character
+
+Retain the Fibonacci sequence and discriminant-five field of Appendix U.1.
+For a positive integer x coprime to five define
+
+$$
+\lambda_5(x)=\frac{x^4-1}{5}\pmod5\in\mathbb F_5.
+$$
+
+This is the Fermat quotient at the FIXED prime five, with varying integer
+base x. It must not be confused with the WSS quotient
+$q_p=F_{p-(5/p)}/p\pmod p$ at the varying prime p.
+
+**Lemma RP1.** The map depends only on x modulo 25 and satisfies
+
+$$
+\lambda_5(xy)=\lambda_5(x)+\lambda_5(y),\quad
+\lambda_5(x^h)=h\lambda_5(x),\quad
+\lambda_5(2)=3,\quad \lambda_5(1+5u)=4u\pmod5.
+$$
+
+It extends to ratios of integers coprime to five by subtraction. Its
+kernel in $(\mathbb Z/25\mathbb Z)^\times$ is $\{1,7,18,24\}$.
+The pair $(x\bmod5,\lambda_5(x))$ determines x modulo 25 uniquely.
+
+**Proof.** Fermat's theorem makes the integer quotient well-defined.
+Replacing x by x+25t changes x^4 by a multiple of 25. Expanding
+$(1+5A)(1+5B)$ proves additivity. The kernel follows by checking the
+four roots of $X^4=1$ modulo 25: each nonzero residue modulo five has a
+unique lift, since its derivative $4X^3$ is a unit. More explicitly,
+$\lambda_5(x+5t)-\lambda_5(x)=4x^3t\pmod5$, a bijection as t varies.
+
+**Theorem RP2.** For every positive integer n with $5\nmid n$,
+
+$$
+\boxed{\lambda_5(F_n)=\lambda_5(n)+1-n^2\pmod5.}\tag{RP2}
+$$
+
+**Proof.** The Binet formula and binomial theorem give the integer identity
+
+$$
+2^{n-1}F_n=\sum_{j\ge0}\binom n{2j+1}5^j.
+$$
+
+The sum is finite. Modulo 25 it becomes
+
+$$
+F_n\equiv n2^{1-n}
+ \left(1+\frac56(n-1)(n-2)\right)\pmod{25}.
+$$
+
+The denominators 2, 6, and n are units at five. In particular F_n is a
+unit at five. Apply RP1 to obtain
+
+$$
+\lambda_5(F_n)=\lambda_5(n)+3(1-n)
+ +\frac23(n-1)(n-2)=\lambda_5(n)+1-n^2\pmod5.
+$$
+
+All division by five precedes reduction; no inverse of five in a residue
+ring is used. The underlying binomial identity is classical.
+

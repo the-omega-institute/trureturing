@@ -1,0 +1,6 @@
+**Proof.** RP10 is independent of k. A difference t is a period if and
+only if its displayed valuation is at least r. For r>=2 it must be even,
+and then v_5(t)>=max(0,r-1-s_ell). The smallest positive such integer
+is the formula in RP11. The same necessary condition holds even when
+the congruences are only required after an arbitrary initial index.
+

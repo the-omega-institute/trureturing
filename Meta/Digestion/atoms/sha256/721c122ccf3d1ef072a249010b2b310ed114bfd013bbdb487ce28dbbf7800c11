@@ -1,0 +1,18 @@
+**Theorem.** With h_q and q_q as in GAW.1,
+
+$$
+\boxed{
+v_q(\operatorname{tot}(F_P))
+=h_q-1+\sum_{\substack{p\mid F_P\ p\ne q\ p\text{ prime}}}v_q(p-1).
+}\tag{GAW4}
+$$
+
+Consequently
+
+$$
+\boxed{
+0\in S(q)\iff q\mid\operatorname{tot}(F_P)
+\iff q_q=0\ \text{or}\ \exists p\text{ aligned for }q.
+}\tag{GAW5}
+$$
+

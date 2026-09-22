@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cd4f9e161c7680f75b76d96538ff4dbc24fad4825b58d533ef89917fdcd2017d
+  normalized_sha256: sha256:cd4f9e161c7680f75b76d96538ff4dbc24fad4825b58d533ef89917fdcd2017d
+cas_ref: sha256:cd4f9e161c7680f75b76d96538ff4dbc24fad4825b58d533ef89917fdcd2017d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段定义实际转换边、成功费用集、逐坐标序、极小集及费用集比较，同时规定失败与概率任务的口径；这些是约定，没有另一个待证明的命题。
+    previous_atom_id: eb973d8096ce003aba856a7c48d5014a4df281232148f6c4be92b76fd7dcceeb
+    next_atom_id: 1eee798f1b707a69d09c6714c3c7d5552e3c71609fb460d721f507e57b3732bf

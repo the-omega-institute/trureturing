@@ -1,0 +1,35 @@
+**Proof.** Each defining integrand is bounded by $B$, so it is integrable against every finite signed $\eta$. If $D_j$ are pairwise disjoint Borel sets, then
+$$
+Q_y\Bigl(\bigcup_{j=1}^N D_j\Bigr)\longrightarrow
+Q_y\Bigl(\bigcup_{j\ge1}D_j\Bigr),
+$$
+and all the expressions on the left have absolute value at most $B$. Dominated convergence against $|\eta|$ proves countable additivity of $I_Q\eta$.
+
+The set function
+$$
+R(D)=\int_Y|Q_y|(D)\,d|\eta|(y)
+$$
+is a finite positive Borel measure by monotone convergence, with $R(X)\le B\|\eta\|_{\mathrm{TV}}$. For every finite Borel partition $D=\bigsqcup_i D_i$,
+$$
+\sum_i|I_Q\eta(D_i)|
+\le\int_Y\sum_i|Q_y(D_i)|\,d|\eta|(y)
+\le R(D).
+$$
+Taking the supremum over these partitions proves the variation domination and norm bound.
+
+For completeness, every finite positive Borel measure on a compact metric space is regular. An open set is an increasing union of compact subsets, obtained from positive distance to its closed complement. The class of Borel sets admitting inner compact and outer open approximations is closed under complements. It is closed under countable unions: choose outer open approximations with summable errors; for inner approximation, first retain finitely many members of the union up to a small measure error and then take a finite union of their compact approximations. Thus this class contains the Borel sigma-algebra. Apply this argument to the positive and negative parts of $I_Q\eta$. This also shows why a merely Borel section in theorem 28.3 still produces regular measures here. The standard regularity statement is also [Tausk, Lemma 3.4 and Corollary 3.5](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+For a simple Borel function $f$, measurability of $Qf$ and the integration identity follow by finite linearity. Every bounded real Borel function has uniformly convergent simple approximations $f_j$. Since
+$$
+|Q(f_j-f)(y)|\le B\|f_j-f\|_\infty,
+$$
+the functions $Qf_j$ converge uniformly to $Qf$. Passing to the limit on both sides proves the assertion for every bounded Borel $f$. Linearity and independence of any representation of $\eta$ as a difference of positive measures follow from the intrinsic scalar signed integral.
+
+For the product assertion, the four products of the Jordan parts define a finite signed measure whose value on a measurable rectangle is $\mu(A)\eta(B)$. Finite signed measures on the product sigma-algebra are determined by rectangles, by the pi-lambda theorem applied to their difference. Consequently any other positive-minus-positive decompositions produce the same measure, and this construction is bilinear.
+
+Alternatively, write
+$$
+\mu=h_\mu|\mu|,\qquad \eta=h_\eta|\eta|,
+$$
+where the measurable signs have absolute value one almost everywhere with respect to the corresponding variation measures. The product measure has density $h_\mu(x)h_\eta(y)$ with respect to $|\mu|\otimes|\eta|$. This proves the variation identity. A bounded Borel function is absolutely integrable against that positive product, so positive-measure Fubini applied with these sign densities proves signed Fubini. Compact metric spaces have countable bases, hence their product Borel sigma-algebra is their Borel product sigma-algebra. Repeating the argument proves the finite-factor version. QED.
+

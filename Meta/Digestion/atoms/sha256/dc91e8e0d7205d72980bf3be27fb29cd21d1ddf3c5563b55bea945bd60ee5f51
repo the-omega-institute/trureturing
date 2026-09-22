@@ -1,0 +1,17 @@
+**命题 17.3（直接支持组二：极小性与连续选史的准确障碍）。** 本模型的 $(K,T)$ 与 $(L,U)$ 均为极小系统，此处极小指每一点的非负时间轨道稠密。特别地，对任取 $\ell_0\in P^{-1}(\{0\})$，
+$$
+\overline{\{U^n\ell_0:n\ge0\}}=L.
+$$
+集合 $Q^{-1}(\mathcal O)$ 准确分解为两条互不相交的稠密整数轨道
+$$
+\{\ell_k^u:k\in\mathbb Z\},\qquad \{\ell_k^v:k\in\mathbb Z\}.
+$$
+
+集合意义的截面 $s:K\to L$、$Ps=\operatorname{id}_K$ 存在，但每一个这样的截面的连续点集都准确等于 $K\setminus D$。因此 $P$ 没有连续全局截面。更强地，对任何非空开集 $V\subseteq K$，不存在连续映射 $s:V\to L$ 使 $P(s(x))=x$ 对所有 $x\in V$ 成立。即使不要求连续，也不存在满足
+$$
+Ps=\operatorname{id}_K,\qquad sT=Us
+$$
+的全局截面。
+
+极小性所需的稠密核心、单点相位纤维及相位交换式，均取自[前置卷定理371.2、372.4、375.3](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)，不额外假设极小性。
+

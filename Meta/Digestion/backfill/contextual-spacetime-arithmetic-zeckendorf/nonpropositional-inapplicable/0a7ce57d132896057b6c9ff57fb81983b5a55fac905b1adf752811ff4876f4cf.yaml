@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0a7ce57d132896057b6c9ff57fb81983b5a55fac905b1adf752811ff4876f4cf
+  normalized_sha256: sha256:0a7ce57d132896057b6c9ff57fb81983b5a55fac905b1adf752811ff4876f4cf
+cas_ref: sha256:0a7ce57d132896057b6c9ff57fb81983b5a55fac905b1adf752811ff4876f4cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段定义整数 Mertens 和与截断核，附带的零端点由 Finset.sum_empty 和 Nat.Icc 空区间化简闭合；仓内无冻结 GID，当前探针验证了唯一额外等式 M 在零处等于零。
+    previous_atom_id: c02c3b554f527e39c35e40d33845b8e0faf2da5b797755ea766724dfd6475439
+    next_atom_id: fe2a819dd41b7eb7a7ec549628648aad954697a0a81c877230b3a202d38baf23

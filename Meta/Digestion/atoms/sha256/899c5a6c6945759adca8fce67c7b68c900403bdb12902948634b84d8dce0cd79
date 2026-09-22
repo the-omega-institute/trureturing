@@ -1,0 +1,25 @@
+**theorem 64.3（实际历史的乘积后验与辅助矩形族上的完整有限 Bellman 递推）。** 从完整根 $\mathbf X$ 出发的每个正概率历史后，条件后验都是各坐标原先验在当前候选集上的限制再归一化之乘积。
+
+更一般地，对 definition 64.2 的每个辅助矩形初始任务 $\mathsf P^\square(\mathbf S)$，若 $\Phi(\mathbf S)=0$，则
+$$
+V^\square(\mathbf S)=0.
+$$
+若 $\Phi(\mathbf S)>0$，则
+$$
+V^\square(\mathbf S)
+=
+1+
+\min_{\mathbf c\in\mathcal A(\mathbf S)}
+\sum_{\mathbf d}
+\left(
+\prod_{i\in I}
+\frac{m_i(S_i[c_i,d_i])}{m_i(S_i)}
+\right)
+V^\square\bigl((S_i[c_i,d_i])_{i\in I}\bigr),
+$$
+其中求和只遍历全部坐标纤维均非空的答复向量 $\mathbf d$。对 $\mathcal A(\mathbf S)$ 中任一动作及任一非空答复分支，都有
+$$
+\Phi\bigl((S_i[c_i,d_i])_i\bigr)<\Phi(\mathbf S).
+$$
+所有最小值都达到。该递推既适用于原任务实际可达矩形，也适用于未必实际可达的辅助矩形；在实际可达矩形上，它精确给出允许依赖全部跨坐标历史的任意确定性全局策略的条件最优剩余期望。
+

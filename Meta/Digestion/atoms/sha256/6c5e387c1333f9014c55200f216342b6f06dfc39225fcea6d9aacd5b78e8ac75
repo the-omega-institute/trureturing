@@ -1,0 +1,62 @@
+**命题 160.1（全有限历史的自适应网格上界与固定精度逆混合率阶，repo-derived）。** 沿用命题153.1、156.1、159.1的二元报告仪器、固定先验 $I_2/2$ 与有限确定性观察者。固定
+$$
+0<p<\frac12,\qquad 0<r<\frac12,\qquad
+d=1-2p,\qquad \Delta=\frac d2,\qquad
+\kappa=\frac{1-p}{p},\qquad \lambda=\log\kappa.
+$$
+旧隐藏位先发射报告，再翻转；每个报告、旧位、新位三元组的秩一 Kraus 项分别作用后求和。以隐藏位为一的后验 $q_w$ 定义精确对数赔率 $x_w=\log(q_w/(1-q_w))$，于是
+$$
+x_\varnothing=0,\qquad q_\varnothing=\frac12,\qquad
+x_{wb}=F_b(x_w),\qquad
+F_b(x)=G_r(x+(-1)^b\lambda),
+$$
+$$
+G_r(z)=\log\frac{(1-r)e^z+r}{re^z+1-r},\qquad
+h(x)=p+\frac d{1+e^{-x}},\qquad f_r(w)=h(x_w).
+$$
+这里 $f_r(w)$ 是读完有限报告词 $w$ 后的下一零报告概率。观察者的更新和实数读出表可依赖 $p,r,\varepsilon$，但一经选定即固定；全部演化记忆计入有限状态集，误差上确界取遍包括空词在内的每个有限词，沿用命题156.1的 $N_{\min}^{(r)}(\varepsilon)$。
+
+对任意 $\varepsilon>0$，置
+$$
+E=\min\!\left\{1,\frac{4\varepsilon}{d}\right\},\qquad
+B=\log\frac{1-r}{r},\qquad I=[-B,B],\qquad
+\eta=1-2r,
+$$
+并对 $y\in\mathbb R$ 定义局部校准量
+$$
+L(y)=\frac{\eta}{1+2r(1-r)\bigl(\cosh(\max\{|y|-E,0\})-1\bigr)},
+\qquad \delta(y)=E(1-L(y)).
+$$
+令 $m=\lceil B\rceil$。对 $k=0,\ldots,m-1$，取
+$$
+\ell_k=\min\{k+1,B\}-k,\qquad
+n_k=\left\lceil\frac{\ell_k}{\delta(k)}\right\rceil,
+\qquad
+Q=\bigcup_{k=0}^{m-1}
+\left\{\pm\left(k+\frac{j\ell_k}{n_k}\right):j=0,\ldots,n_k\right\}.
+$$
+在内部有限网格 $Q\subset I$ 上，定义最近点量化器
+$$
+R(y)=\min\left\{a\in Q:|y-a|=\min_{u\in Q}|y-u|\right\}
+\qquad(y\in I),
+$$
+即并列最近时取较小的网格值。取状态标签集 $S=Q$，初态 $s_\varnothing=0$，固定更新和读出
+$$
+T_b(a)=R(F_b(a)),\qquad t(a)=h(a),\qquad
+s_{wb}=T_b(s_w).
+$$
+则这些定义均有意义，且
+$$
+|S|=1+2\sum_{k=0}^{m-1}n_k\le\frac{14}{Er},\qquad
+\forall w\in\{0,1\}^{*},\quad |x_w-s_w|\le E,
+\quad |t(s_w)-h(x_w)|\le\varepsilon.
+$$
+网格只须一次性枚举，令零点标签的编号为零；上述两张更新表及实数读出表随后均为静态表。运行时只演化一个网格编号，不另保存精确 $x_w$ 或演化实数坐标。
+
+因此，对每个固定 $0<p<1/2$ 及固定 $0<\varepsilon<\Delta$，与命题159.1合用可得
+$$
+N_{\min}^{(r)}(\varepsilon)=\Theta_{p,\varepsilon}(1/r)
+\qquad(r\downarrow0).
+$$
+若 $\varepsilon\ge\Delta$，单状态恒定读出 $1/2$ 可行，故 $N_{\min}^{(r)}(\varepsilon)=1$。网格结论的参数域仅为正容差、正混合率。
+

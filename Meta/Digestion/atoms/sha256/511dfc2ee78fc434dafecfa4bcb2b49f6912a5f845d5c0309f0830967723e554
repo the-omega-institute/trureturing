@@ -1,0 +1,11 @@
+### NP.5 Prime-power primitive orbit counts retain the same depth
+
+Use the two-vertex directed graph with adjacency matrix Q. Its number
+of length-n closed walks with a marked starting position is L_n.
+Let b_n be the number of cyclic orbits whose least period is exactly n.
+Every such orbit supplies n marked walks, so
+
+$$
+L_n=\sum_{d\mid n}d b_d.
+$$
+

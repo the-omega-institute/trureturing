@@ -1,0 +1,31 @@
+**定义 18.0（关系复合、确定观察与因子化次序）。** 沿用定义16.0、16.3中的数字载体 $K$、有限核心 $Z$、零点 $0_K$、相位映射 $H:K\to\mathbb T$、加法闭图 $\Gamma$ 及分裂纤维的定向标记 $z_\theta^s$。特别，
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{K^3}.
+$$
+记
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+若 $H(x)\notin E$，置 $\mathcal S(x)=\Sigma$；若 $x=z_\theta^s$ 且 $\theta\in E$，置 $\mathcal S(x)=\{s\}$。[^rro18_phase][^rro18_fibers]
+
+对 $A,B\subseteq K$，定义
+$$
+\Gamma(A,B)=\bigcup_{a\in A,\,b\in B}\Gamma(a,b).
+$$
+其中 $\Gamma(A,y)$、$\Gamma(x,B)$ 分别表示 $\Gamma(A,\{y\})$、$\Gamma(\{x\},B)$。再定义
+$$
+C(x)=\Gamma(0_K,x),\qquad C(A)=\bigcup_{x\in A}C(x),\qquad
+\Lambda(x,y)=H^{-1}(\{H(x)+H(y)\}),
+$$
+并以 $\Lambda$ 同时表示由这些输入纤维组成的三元关系。严格左单位是满足 $\Gamma(e,x)=\{x\}$ 对所有 $x\in K$ 成立的点 $e$；严格右单位作对称定义。弱左单位只要求 $x\in\Gamma(e,x)$。
+
+称连续满射 $q:K\to Q$ 为一个连续确定观察，若 $Q$ 是 Hausdorff 空间，且存在全函数 $D:Q^2\to Q$，满足
+$$
+\forall x,y\in K\ \forall z\in\Gamma(x,y),\qquad
+D(q(x),q(y))=q(z).
+$$
+此定义不预设 $D$ 连续、结合、交换或具有单位。对两个连续满射观察，记 $q_1\succeq q_2$，若存在连续映射 $r:Q_1\to Q_2$ 使 $q_2=r\circ q_1$；此时 $r$ 自动满射，称 $q_1$ 比 $q_2$ 精细。
+
+单值选择则是函数 $A:K^2\to K$，满足 $A(x,y)\in\Gamma(x,y)$，只要求选中一个输出，而不是将全部输出观察为同一点。另一个载体 $L$ 连同投影 $P:L\to K$ 属于状态提升的数据，其映射方向与观察商 $q:K\to Q$ 不同；以下结论不以这种提升为前提。
+

@@ -1,0 +1,24 @@
+**证明。** 若 $(\xi,\zeta)\in P$，取共同中间点 $\eta\in K_Y$。由第 3.4 条的有限观察闭包判定，$b_n=\pi_n^Y\eta$ 满足每层所列关系条件。
+
+反之，设每层都有这样的 $b_n$，在 $K_Y$ 中定义
+
+$$
+F_n=\{\eta\in K_Y:
+(\pi_n^X\xi,\pi_n^Y\eta)\in R_n,\
+(\pi_n^Y\eta,\pi_n^Z\zeta)\in S_n\}.
+$$
+
+有限离散层的纤维开闭，故 $F_n$ 闭；$\pi_n^Y$ 满射使 $b_n$ 可提升，故 $F_n$ 非空。实际阶段关系像经下投影仍属低层关系，因而 $F_{n+1}\subseteq F_n$。紧致性给出 $\eta\in\bigcap_n F_n$，再次由闭包判定得到 $(\xi,\eta)\in\widehat R$ 和 $(\eta,\zeta)\in\widehat S$。这证明交集表达式；逐层所选的 $b_n$ 不必事先相容，紧致性取得同一个 $\eta$。交集中的每个集合都开闭，所以 $P$ 闭。
+
+实际三元组的中间点 $y$ 映为 $\iota_Y(y)$ 后仍共同见证两条完成关系，故 $C^0\subseteq P$；取闭包得 $\widehat C\subseteq P$。$T$ 是两个闭关系的连续逆像之交，因此闭，且包含 $W^0$，所以 $\widehat W\subseteq T$。连续性给出
+
+$$
+\operatorname{pr}_{XZ}(\widehat W)
+\subseteq\overline{\operatorname{pr}_{XZ}(W^0)}
+=\overline{C^0}=\widehat C.
+$$
+
+另一方面，$\widehat W$ 紧致，其在 Hausdorff 空间 $K_X\times K_Z$ 中的连续像闭，并包含 $\operatorname{pr}_{XZ}(W^0)=C^0$，故也包含 $\widehat C$。两侧相等。$\operatorname{pr}_{XZ}(T)=P$ 是复合的定义。证毕。
+
+所得共同见证属于 $K_Y$，不自动属于 $\iota_Y[Y]$；即使属于，也不自动使两个闭包成员资格由同一个实际 $y$ 实现。$P$ 已闭，再对它取闭包不能消除与 $\widehat C$ 的差距。
+

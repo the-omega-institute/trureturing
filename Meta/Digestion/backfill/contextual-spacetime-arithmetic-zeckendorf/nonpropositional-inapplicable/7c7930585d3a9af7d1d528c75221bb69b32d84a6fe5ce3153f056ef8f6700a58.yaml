@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c7930585d3a9af7d1d528c75221bb69b32d84a6fe5ce3153f056ef8f6700a58
+  normalized_sha256: sha256:7c7930585d3a9af7d1d528c75221bb69b32d84a6fe5ce3153f056ef8f6700a58
+cas_ref: sha256:7c7930585d3a9af7d1d528c75221bb69b32d84a6fe5ce3153f056ef8f6700a58
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fintype.card_perm 给切口排列的阶乘个数，有限常数求和后消去非零阶乘分母，得到每条原词的所有副本总权恰等于原权，仓内无冻结 GID。
+    previous_atom_id: 297b04f9af5ac63cfca0d3d2b915a93341ce99b224ab80bd7c8be91d3c716d7b
+    next_atom_id: 4b67b93e32c2ac39cf84e57ff97cfc8ed0c247a8ff246c7966a4371d56f3e431

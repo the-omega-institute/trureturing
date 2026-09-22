@@ -1,0 +1,12 @@
+**推论，OEIS A339621。** 对每个整数 $m\ge0$，令
+
+$$
+a(m)=\sigma_F(m^2+1).
+$$
+
+若 $a(m)$ 是 Fibonacci 数，则
+
+$$
+\boxed{\exists r\ge1:\quad a(m)=F_{2r}.}\tag{FSP4}
+$$
+

@@ -1,0 +1,95 @@
+{
+  "length": 10,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000000/single.json",
+        "sha256": "3df91dba87380a6857f57c8a3e826fd4cf3a164b1362a0a9938e130f467fb3e5",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000001/single.json",
+        "sha256": "cad86354e9fc58fa425f77ed6aed9edf2b75a0a1b1bd4050ddbe79f3c6e1826f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000002/single.json",
+        "sha256": "74ea97f294f0e32e04b9fd005fd6a810c5d3d3eee0a7a91b30648aeef3e0b56f",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000003/single.json",
+        "sha256": "5273d7372a16f1adf32caba70964cad68eab65652cd3285d5dd4a595812dc6e2",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000004/single.json",
+        "sha256": "a63c489497ebf706c59b1b444eb1da6b29e1c074e3900b74e26bb2d5322497c2",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000005/single.json",
+        "sha256": "765835d08d9a903bfc92d5e0a3d7690c03f47f1c33b44208f03f255f39e5b738",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000006/single.json",
+        "sha256": "c4179f580f9e6787063579987066ab0b66e939eccec42fb8961e479232f254a9",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000007/single.json",
+        "sha256": "a0dfde1cf4c08b2f0d522a2599c37f243b88e072f539bad0aaeb1caf5cc995fb",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000008/single.json",
+        "sha256": "96e84819b507eccd9861f91a58881f9686536f00e3c138121bc320c0758d4285",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/004-result/015-records/000009/item/005-geometry/002-records/000009/single.json",
+        "sha256": "669850a398f44004f57d611826c4f1c0ba77abe071144179403fe395cdcd339d",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

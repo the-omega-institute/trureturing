@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7856e27bd85f62498c472754be9ea7c0e4fd3bf75c261186ec4c6ef22239f6ca
+  normalized_sha256: sha256:7856e27bd85f62498c472754be9ea7c0e4fd3bf75c261186ec4c6ef22239f6ca
+cas_ref: sha256:7856e27bd85f62498c472754be9ea7c0e4fd3bf75c261186ec4c6ef22239f6ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 同一圆周 volume 的每个平移原像保持测度，由 MeasureTheory.measure_preimage_add_right 直接应用，量词包含所有 Borel 集，仓内无冻结 GID。
+    previous_atom_id: 04f2651a589e73feac0a0570cb19e6704c127cfaec5dec9ce68d02ef34775a15
+    next_atom_id: 37adf95cec112d591ee8bf14ca75754553b624e9c60a41206f9cb8402a71f7f0

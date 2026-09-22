@@ -1,0 +1,8 @@
+**推论 9。** 在定理 8 的前提下，对每个 \(60\mid M\)，
+
+\[
+\sum_{\substack{p\ne2,5\text{ 素数}\\q_p\ne0\\\gcd(\rho(p),M)\le2}}
+\frac1{\rho(p)}=\infty.
+\tag{EMW-G2}
+\]
+

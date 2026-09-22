@@ -1,0 +1,79 @@
+{
+  "prime": 5,
+  "first_depth": 2,
+  "discount": "1/5",
+  "initial_weight": "1/25",
+  "diagonal_geometric_weight": "1/20",
+  "ordered_distinct_geometric_weight": "1/40",
+  "old_twice_head_cross": "2/15",
+  "old_diagonal": "13/600",
+  "old_ordered_distinct_pairs": "13/1200",
+  "old_complete_block": "199/1200",
+  "path_records": [
+    {
+      "cross_coefficient": "0",
+      "density_cap": "0",
+      "reward_constant": "0",
+      "reward_count_coefficient": "0",
+      "potential_constant": "0",
+      "potential_count_coefficient": "0",
+      "bellman_constant_identity": "0",
+      "bellman_count_identity": "0",
+      "unchanged_component_reward_slack": "0",
+      "complete_path_upper": "0"
+    },
+    {
+      "cross_coefficient": "1/9",
+      "density_cap": "1/10",
+      "reward_constant": "29/90",
+      "reward_count_coefficient": "1/5",
+      "potential_constant": "67/144",
+      "potential_count_coefficient": "1/4",
+      "bellman_constant_identity": "0",
+      "bellman_count_identity": "0",
+      "unchanged_component_reward_slack": "1/20",
+      "complete_path_upper": "67/3600"
+    },
+    {
+      "cross_coefficient": "4/3",
+      "density_cap": "29/90",
+      "reward_constant": "269/90",
+      "reward_count_coefficient": "29/45",
+      "potential_constant": "63/16",
+      "potential_count_coefficient": "29/36",
+      "bellman_constant_identity": "0",
+      "bellman_count_identity": "0",
+      "unchanged_component_reward_slack": "29/180",
+      "complete_path_upper": "63/400"
+    },
+    {
+      "cross_coefficient": "8/9",
+      "density_cap": "13/30",
+      "reward_constant": "199/90",
+      "reward_count_coefficient": "13/15",
+      "potential_constant": "437/144",
+      "potential_count_coefficient": "13/12",
+      "bellman_constant_identity": "0",
+      "bellman_count_identity": "0",
+      "unchanged_component_reward_slack": "13/60",
+      "complete_path_upper": "437/3600"
+    },
+    {
+      "cross_coefficient": "49/90",
+      "density_cap": "4/15",
+      "reward_constant": "61/45",
+      "reward_count_coefficient": "8/15",
+      "potential_constant": "67/36",
+      "potential_count_coefficient": "2/3",
+      "bellman_constant_identity": "0",
+      "bellman_count_identity": "0",
+      "unchanged_component_reward_slack": "2/15",
+      "complete_path_upper": "67/900"
+    }
+  ],
+  "maximizing_cells_or_slots": [
+    2
+  ],
+  "new_complete_block": "63/400",
+  "block_change": "-1/120"
+}

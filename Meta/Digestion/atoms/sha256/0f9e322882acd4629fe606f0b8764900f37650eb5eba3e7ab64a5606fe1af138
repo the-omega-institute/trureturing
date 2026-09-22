@@ -1,0 +1,31 @@
+**定理 10.4（修复在前缀空间中不扩张）。** 对每个 $Y$，问题
+$$
+P(Y)=\underset{Z\in\mathcal Q_{r,u,v}}{\operatorname{argmin}}\ \|Y-Z\|_\omega^2
+\tag{10.7}
+$$
+存在唯一解。它满足
+$$
+\langle Y-P(Y),Z-P(Y)\rangle_\omega\le0
+\quad(Z\in\mathcal Q_{r,u,v}),
+\tag{10.8}
+$$
+$$
+\|P(Y)-P(Y')\|_\omega\le\|Y-Y'\|_\omega.
+\tag{10.9}
+$$
+因而定义10.3的误差条件给
+$$
+\boxed{\|P(Y)-M\|_\omega\le\epsilon.}
+\tag{10.10}
+$$
+这是修复后前缀的稳定性，不包含内部秩或内部坐标的连续识别结论。
+
+证明。零前缀可行，故极小化列可限制在有界集。有限维紧性与可行集闭性给最小值取得。若两个不同点都最优，严格凸的平方距离在其中点严格更小，矛盾。对任意可行 $Z$，线段 $P(Y)+s(Z-P(Y))$ 在 $0\le s\le1$ 内可行；极小性使平方距离在 $s=0$ 的右导数非负，得到式（10.8）。
+
+分别在 $Y$ 的变分不等式中取 $Z=P(Y')$，在 $Y'$ 的不等式中取 $Z=P(Y)$，相加并整理，得到
+$$
+\|P(Y)-P(Y')\|_\omega^2
+\le\langle P(Y)-P(Y'),Y-Y'\rangle_\omega.
+$$
+Cauchy–Schwarz 不等式给式（10.9），零距离情形直接成立。合法 $M$ 满足 $P(M)=M$，再代入即得式（10.10）。证明所用成熟结果是闭凸集的 Hilbert 投影定理；钉版 Mathlib 的 [Projection/Minimal.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/Projection/Minimal.lean) 中 `exists_norm_eq_iInf_of_complete_convex` 承担非空完备凸集上的存在性，上述有限维证明同时给出这里需要的唯一性与非扩张性。证毕。
+

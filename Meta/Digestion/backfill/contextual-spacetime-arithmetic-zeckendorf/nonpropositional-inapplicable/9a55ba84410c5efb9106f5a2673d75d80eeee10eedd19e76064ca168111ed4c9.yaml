@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9a55ba84410c5efb9106f5a2673d75d80eeee10eedd19e76064ca168111ed4c9
+  normalized_sha256: sha256:9a55ba84410c5efb9106f5a2673d75d80eeee10eedd19e76064ca168111ed4c9
+cas_ref: sha256:9a55ba84410c5efb9106f5a2673d75d80eeee10eedd19e76064ca168111ed4c9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 自然数索引与整数值均可数，所以有限支撑函数可数；非零单位向量按自然数索引给出无限性，两个实例共同覆盖可数无限断言。仓内无冻结 GID。
+    previous_atom_id: d0b177d205f1fcaa48beee36d65624153603c23817e43e7b57cbeb60026bf0bb
+    next_atom_id: 86a134fe806c3a596a2c0fda040ad104030f7164932b40dc036f74e8ad6dd9d9

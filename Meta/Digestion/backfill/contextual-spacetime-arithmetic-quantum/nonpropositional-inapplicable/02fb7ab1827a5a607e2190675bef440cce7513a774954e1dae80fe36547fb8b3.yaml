@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02fb7ab1827a5a607e2190675bef440cce7513a774954e1dae80fe36547fb8b3
+  normalized_sha256: sha256:02fb7ab1827a5a607e2190675bef440cce7513a774954e1dae80fe36547fb8b3
+cas_ref: sha256:02fb7ab1827a5a607e2190675bef440cce7513a774954e1dae80fe36547fb8b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子规定响应通过整数读数因子化并满足给定 Lipschitz 条件的含义，再定义黄金坐标预测器，没有声称预测误差界。
+    previous_atom_id: ca0153709c606a6baad16de87378001c039db9d7889d0c92896bdb11306ca114
+    next_atom_id: 22f345c62bf9ad809d6b69ba47d9cf87407daa864b817cf35b7f12ffa7bcd2af

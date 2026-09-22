@@ -1,0 +1,21 @@
+**证明。** Lagrange 乘积的分子全正，递减节点使其分母的符号为 $(-1)^j$，故 $\operatorname{sign}(c_j)=(-1)^j$。在节点上 $T_n((2x_j-a-b)/(b-a))=(-1)^j$。次数不超过 $n$ 的插值唯一性给出
+
+\[
+p(x)=\frac{1+T_n((2x-a-b)/(b-a))}{2},\qquad
+P=\frac{1+T_n(z)}2.
+\]
+
+在 $[a,b]$ 上 $0\leq p\leq1$，在 $[b,y]$ 上 $p\geq1$，因此 $\mu(\{y\})P\leq\int p\,d\mu=\int p\,d\nu\leq1$。式 (15.5) 在零噪声时给出支撑于所声明区间的取等分布。该证明不把支撑事先限制在节点上。
+
+若使用逐矩噪声上界 $\varepsilon$，则在式 (15.2) 的显式充分噪声区间内，连续支撑问题的最大外部原子质量为
+
+\[
+\boxed{
+\frac{2+\varepsilon\left[
+T_n\!\left(\frac{2+a+b}{b-a}\right)
+-T_n\!\left(\frac{a+b}{b-a}\right)\right]}
+{1+T_n(z)}.
+}
+\tag{15.9}
+\]
+

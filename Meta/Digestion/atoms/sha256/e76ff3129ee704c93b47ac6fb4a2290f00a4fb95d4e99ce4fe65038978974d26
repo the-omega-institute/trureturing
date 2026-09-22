@@ -1,0 +1,37 @@
+### NP.1 The native modulus and the actual sequences
+
+Let p>=7 be prime, epsilon=chi(p)=(5/p), N=p-epsilon, and
+
+$$
+h_p=v_p(F_N)=v_p(F_{r(p)})\ge1,\qquad
+q_p=F_N/p\pmod p,\qquad u_p=F_N/p^{h_p}\pmod p\ne0.
+$$
+
+Here r(p) is the least positive Fibonacci zero index. Equality of the
+initial depths uses r(p)|N, p not dividing N, and the classical valuation
+formula in the sources below. Neither depth is assumed to be one.
+For k>=0 define the same exact integer quotient as in IP.2,
+
+$$
+B_{p,k}=\frac{F_{p^{k+1}}}{F_{p^k}}.
+$$
+
+This section observes it at the prime p itself, rather than at the fixed
+auxiliary moduli five or 5040. Its prime divisors still have exact rank
+p^(k+1), and their exponents are their own initial depths, by IP5.
+
+**Lemma.** For every k>=0, F_(p^k) is a unit at p, and
+
+$$
+F_{p^k}\equiv\epsilon^k,\qquad L_{p^k}\equiv1\pmod p.       \tag{NP1}
+$$
+
+**Proof.** The rank r(p)>2 divides N and is coprime to p, so it cannot
+divide p^k. This proves the unit assertion. In the golden algebra of Appendix U.1,
+algebra over F_p, Frobenius fixes phi,psi when epsilon=1 and exchanges
+them when epsilon=-1. The denominator phi-psi has square five, a unit,
+and the Binet difference and trace formulas therefore give the two
+residues at p^k. For the swapped case, the difference changes sign at
+each Frobenius application while the trace stays one. These calculations
+also apply at k=0. The integer quotient is exact by Fibonacci divisibility.
+

@@ -1,0 +1,9 @@
+**Proposition RP13.** The base $\ell=7$ has the exact period, closure density,
+and non-WSS initial depth stated below.
+
+For example $s_7=2$, because 7^4-1=2400. Hence the least block period
+at modulus 125 is still two, and the closure has density 2/125.
+However $h_7=v_7(F_8)=1$, so seven is not a WSS prime. The period plateau
+here measures the Fermat valuation of the BASE seven at the PRIME five.
+It must not be relabelled as a Fibonacci-Wieferich exception at seven.
+

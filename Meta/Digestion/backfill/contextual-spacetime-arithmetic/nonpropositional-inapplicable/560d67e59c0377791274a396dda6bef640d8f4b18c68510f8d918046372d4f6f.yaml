@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:560d67e59c0377791274a396dda6bef640d8f4b18c68510f8d918046372d4f6f
+  normalized_sha256: sha256:560d67e59c0377791274a396dda6bef640d8f4b18c68510f8d918046372d4f6f
+cas_ref: sha256:560d67e59c0377791274a396dda6bef640d8f4b18c68510f8d918046372d4f6f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “这四个读数本身不证明全语言不可表达”明确有限实验的证据界限，并将全语言证明交由引理 3 和命题 53；该子句不是新不可表达性断言，也未在备注中偷带定理。
+    previous_atom_id: 75f15af5cc023735b3142bb08ba8d88454393a89d8981bded2fc35b136531c2d
+    next_atom_id: 6f99b1fbfaf44edaf09304600ffd521f86014fd943798c485af5076b59377013

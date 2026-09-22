@@ -1,0 +1,12 @@
+**定义 44.1（共同报告、网格族与成员前提）。** 固定有理数 $0<p,r<1/2$，沿用[ML 主卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)定义41.1的先发射后翻转模型、$d=1-2p$、$\eta=1-2r$、$J=[r,1-r]$、$q_\varnothing=1/2$、概率更新 $F_0,F_1$ 与下一零报告读出 $h(q)=p+dq$。对每个正有理容差 $\varepsilon_a$，用ML 定义41.2记
+$$
+k_a=\min\{1,4\varepsilon_a/d\},\quad K_a=1+k_a,\quad
+m_a=2\left\lceil\frac{K_a^3\eta}{rk_a}\right\rceil,\quad N_a=m_a+1,
+$$
+$$
+q^a_j=r+\eta j/m_a,\quad I^a_j=[\ell^a_j,u^a_j],\quad
+T^a_\beta(j)=\operatorname{nearest}_{\downarrow}(m_aB_\beta(q^a_j)),\quad
+y^a_j=h(q^a_j).
+$$
+最近整数在恰好同距时取较小者。成员前提是实际当前后验 $q\in I^a_j$；它允许 $j$ 来自先前已捕获的轨迹，不要求 $j$ 等于从空词运行 $a$ 机所得的标签。词 $u=\beta_1\cdots\beta_n$ 中的同一个报告 $\beta_t$ 同时驱动实际后验、所有在用标签及证明中的参考后验；没有各轨独立抽样或重排报告。按时间顺序记 $F_u=F_{\beta_n}\circ\cdots\circ F_{\beta_1}$、$F_\varnothing=\operatorname{Id}$。
+

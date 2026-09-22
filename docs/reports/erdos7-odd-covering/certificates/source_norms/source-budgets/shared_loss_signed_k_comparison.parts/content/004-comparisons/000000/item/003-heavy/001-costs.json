@@ -1,0 +1,23 @@
+{
+  "length": 2,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/004-comparisons/000000/item/003-heavy/001-costs/000000/single.json",
+        "sha256": "4e1b98d7eb1a91cec8a7e674c6e065a62274fd5f54bc712347465c27390d9e82",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/004-comparisons/000000/item/003-heavy/001-costs/000001/single.json",
+        "sha256": "8472313755c06cb30d1d9ef09ebf57914500ae865ffe4ffe9b8bcdc0d86f48fd",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

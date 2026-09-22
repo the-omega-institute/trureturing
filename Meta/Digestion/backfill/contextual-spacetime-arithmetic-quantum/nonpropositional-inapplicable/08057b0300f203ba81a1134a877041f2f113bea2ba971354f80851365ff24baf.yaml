@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:08057b0300f203ba81a1134a877041f2f113bea2ba971354f80851365ff24baf
+  normalized_sha256: sha256:08057b0300f203ba81a1134a877041f2f113bea2ba971354f80851365ff24baf
+cas_ref: sha256:08057b0300f203ba81a1134a877041f2f113bea2ba971354f80851365ff24baf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子以存在唯一闭合更新作为后续闭合的定义，存在性与纤维判据由后续定理另行处理，本叶没有待证命题。
+    previous_atom_id: aa0c9c9c45288fb34c09ced72b40097ebc3693141bd4f2e04320fd3f37a3b03f
+    next_atom_id: 2b18a6add007f2537f6e2045d769d788ec3159cd105f6301611ac4be8cc2d7a6

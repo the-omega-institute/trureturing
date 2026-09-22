@@ -1,9 +1,64 @@
 using System.Text;
+using StrataLint.Engine;
+using Tomlyn.Model;
 
 namespace StrataLint.Scribe.Tests;
 
 public sealed class FileMapManifestTests
 {
+    [Fact]
+    public void TableArrayAndInlineTableArrayDecodeIdentically()
+    {
+        var tableArray = FileMapLoader.Parse(
+            Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry()), "table-array.toml");
+        var inlineTableArray = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
+            schema_version = 4
+            resources = []
+            files = [{ pattern = "Generated/partitions/*.md", require = [], kind = "generated", admission_plane = "content", produced_by = "PartitionEmitter", consumed_by = ["reader"], verified_by = ["PartitionEmitter"], artifact_id = "none", runtime_disposition = "run-local" }]
+
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+            """ + "\n"), "inline-table-array.toml");
+
+        Assert.Equal(
+            FileMapProjectionWriter.Write(tableArray).ToArray(),
+            FileMapProjectionWriter.Write(inlineTableArray).ToArray());
+    }
+
+    [Theory]
+    [InlineData("files = []\n", "at least one entry")]
+    [InlineData("files = [42]\n", "only tables")]
+    [InlineData("files = [{ pattern = \"Generated/output.md\" }, 42]\n", "only tables")]
+    public void FilesArrayRejectsEmptyWrongOrMixedElements(string files, string expected)
+    {
+        var source = "schema_version = 4\nresources = []\n" + files + """
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+            """ + "\n";
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
+
+        Assert.Contains(expected, exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FilesArrayRejectsNullElements()
+    {
+        var values = new TomlArray { null! };
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FileMapTomlTables.Parse(values, "fixture.toml", allowEmpty: false));
+
+        Assert.Contains("only tables", exception.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void DataKeyedGeneratedRunLocalSetUsesTheNineKeyShape()
     {
@@ -63,7 +118,8 @@ public sealed class FileMapManifestTests
     public void SchemaTwoDispositionFieldsFailClosed(string dispositionLine, string expectedMessage)
     {
         var source = $$"""
-            schema_version = 2
+            schema_version = 4
+            resources = []
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -72,6 +128,8 @@ public sealed class FileMapManifestTests
             status = "closed"
 
             [[files]]
+
+            require = []
             pattern = "Generated/output.md"
             kind = "generated"
             admission_plane = "content"
@@ -92,7 +150,8 @@ public sealed class FileMapManifestTests
     public void DuplicateArtifactIdIsRejected()
     {
         var source = """
-            schema_version = 2
+            schema_version = 4
+            resources = []
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -101,6 +160,8 @@ public sealed class FileMapManifestTests
             status = "closed"
 
             [[files]]
+
+            require = []
             pattern = "Generated/a.md"
             kind = "generated"
             admission_plane = "content"
@@ -113,6 +174,8 @@ public sealed class FileMapManifestTests
             history_requirement = "not-required"
 
             [[files]]
+
+            require = []
             pattern = "Generated/b.md"
             kind = "generated"
             admission_plane = "content"
@@ -156,7 +219,8 @@ public sealed class FileMapManifestTests
     public void CanonicalManifestLoadsAllFiveKindsAndMatchesRepositoryGlobs()
     {
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
-            schema_version = 2
+            schema_version = 4
+            resources = []
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -165,6 +229,8 @@ public sealed class FileMapManifestTests
             status = "known-violations-frozen-under-monitoring"
 
             [[files]]
+
+            require = []
             pattern = "Artifacts/**/*.md"
             kind = "generated"
             admission_plane = "content"
@@ -175,6 +241,8 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
+
+            require = []
             pattern = "D5/**/*.lean"
             kind = "truth"
             admission_plane = "content"
@@ -185,6 +253,8 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
+
+            require = []
             pattern = "Golden/Frozen/accepted/*.json"
             kind = "ledger"
             admission_plane = "content"
@@ -195,6 +265,8 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
+
+            require = []
             pattern = "tools/FixtureData/*.toml"
             kind = "data"
             admission_plane = "judge"
@@ -206,6 +278,8 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
 
             [[files]]
+
+            require = []
             pattern = "tools/StrataLint.*/**"
             kind = "program"
             admission_plane = "judge"
@@ -239,7 +313,8 @@ public sealed class FileMapManifestTests
     }
 
     private static string DataKeyedRunLocalEntry() => """
-        schema_version = 2
+        schema_version = 4
+        resources = []
 
         [residence_policy]
         case_id = "RESIDENCE-EPOCH"
@@ -248,6 +323,8 @@ public sealed class FileMapManifestTests
         status = "closed"
 
         [[files]]
+
+        require = []
         pattern = "Generated/partitions/*.md"
         kind = "generated"
         admission_plane = "content"
@@ -267,7 +344,8 @@ public sealed class FileMapManifestTests
     {
         var producedBy = extra.Length == 0 ? "none" : "ScribeEmitter";
         var source = $$"""
-            schema_version = 2
+            schema_version = 4
+            resources = []
             {{extra}}
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -276,6 +354,8 @@ public sealed class FileMapManifestTests
             status = "known-violations-frozen-under-monitoring"
 
             [[files]]
+
+            require = []
             pattern = "Generated/**/*.md"
             kind = "generated"
             admission_plane = "content"
@@ -296,7 +376,8 @@ public sealed class FileMapManifestTests
     public void GeneratedDeclarationMustNameItsProducer()
     {
         var source = """
-            schema_version = 2
+            schema_version = 4
+            resources = []
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -305,6 +386,8 @@ public sealed class FileMapManifestTests
             status = "known-violations-frozen-under-monitoring"
 
             [[files]]
+
+            require = []
             pattern = "Generated/**/*.md"
             kind = "generated"
             admission_plane = "content"
@@ -330,7 +413,8 @@ public sealed class FileMapManifestTests
         string expectedMessage)
     {
         var source = $$"""
-            schema_version = 2
+            schema_version = 4
+            resources = []
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -339,6 +423,8 @@ public sealed class FileMapManifestTests
             status = "known-violations-frozen-under-monitoring"
 
             [[files]]
+
+            require = []
             pattern = "tools/fixture.toml"
             kind = "{{kind}}"
             admission_plane = "judge"
@@ -375,7 +461,8 @@ public sealed class FileMapManifestTests
     private static void AssertUnsafePatternRejected(string pattern)
     {
         var source = $$"""
-            schema_version = 2
+            schema_version = 4
+            resources = []
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -384,6 +471,8 @@ public sealed class FileMapManifestTests
             status = "known-violations-frozen-under-monitoring"
 
             [[files]]
+
+            require = []
             pattern = "{{pattern.Replace("\\", "\\\\", StringComparison.Ordinal)}}"
             kind = "truth"
             admission_plane = "content"

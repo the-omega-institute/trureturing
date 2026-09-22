@@ -1,0 +1,5 @@
+其普通图与原图的语义码分别为
+$$
+G_f=\{\langle x,f(x)\rangle:x\in D\},\qquad
+\Gamma_f^*=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$

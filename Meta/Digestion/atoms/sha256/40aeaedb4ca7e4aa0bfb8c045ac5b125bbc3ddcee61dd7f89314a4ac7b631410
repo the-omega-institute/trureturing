@@ -1,0 +1,22 @@
+**theorem 20.9 (Two different entropies on the same carrier).** The lowest-digit partition is a generating observation for each of the two dynamics, but their iterated observation partitions differ:
+$$
+h_{\mathrm{top}}(T)=0,\qquad
+h_{\mathrm{top}}(\sigma)=\log\phi.
+$$
+More precisely, for all $L,n\ge1$,
+$$
+\#\left(\bigvee_{j=0}^{n-1}T^{-j}\mathcal Q_L\right)
+=n+G_L-1,
+$$
+whereas
+$$
+\#\left(\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L\right)
+=G_{n+L-1}.
+$$
+The exact precision/history conversion also has the asymptotics
+$$
+t_{\min}(L)+1\sim\frac{\phi^{L+2}}{\sqrt5}\quad(L\to\infty),
+\qquad
+L_{\min}(t)=\log_\phi(t+1)+O(1)\quad(t\to\infty).
+$$
+

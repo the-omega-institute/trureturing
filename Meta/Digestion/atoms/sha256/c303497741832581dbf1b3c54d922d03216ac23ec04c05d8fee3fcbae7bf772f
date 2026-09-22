@@ -1,0 +1,73 @@
+**命题 156.1（正混合的有限可近似性与趋零混合的必要状态发散）。** 固定 $0<p<1/2$，置
+$$
+d=1-2p>0,\qquad \Delta=\frac d2=\frac12-p,
+\qquad \kappa=\frac{1-p}{p}>1.
+$$
+在整个 $0\le r<1/2$ 参数族中，隐藏字母表均为 $\{0,1\}$，旧隐藏位 $i$ 先发射报告 $b$，再翻转到新隐藏位 $j$，其中
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,
+\qquad P_{ji}(r)=\begin{cases}1-r,&j=i,\\r,&j\ne i.\end{cases}
+$$
+协议时间齐次且无控制，初态固定为 $I_2/2$。具体地，令 $E_i=|i\rangle\langle i|$、$I_2=E_0+E_1$，在 $M_2(\mathbb C)$ 上分别取 Kraus 项
+$$
+K_{bji}^{(r)}=\sqrt{c_{bi}P_{ji}(r)}\,|j\rangle\langle i|,
+\qquad
+\phi_b^{(r)}(X)=\sum_{i,j=0}^1K_{bji}^{(r)}X(K_{bji}^{(r)})^\dagger
+=\sum_{i,j=0}^1c_{bi}P_{ji}(r)X_{ii}E_j.
+$$
+各 Kraus 项分别作共轭作用后求和。$r=0$ 时非零项恰为命题152.1的两个对角秩一项，隐藏位保持不变；$0<r<1/2$ 时恰为命题153.1的四项仪器。两种情形中的每个非空报告分支均为测量制备操作；空操作仍为恒等。因而整个比较都在同一逐支测量制备族内，生成器的物理潜在空间始终只有两个经典状态。
+
+令 $\mathcal W=\{0,1\}^{*}$，包括空词 $\varnothing$；词 $w=b_1\cdots b_h$ 按时间顺序书写，
+$$
+\phi_w^{(r)}=\phi_{b_h}^{(r)}\circ\cdots\circ\phi_{b_1}^{(r)},
+\qquad \phi_\varnothing^{(r)}=\operatorname{Id}.
+$$
+以下列向量、词质量和后验均依赖 $r$：
+$$
+v_\varnothing=\binom{1/2}{1/2},\qquad
+v_{wb}=P(r)\operatorname{diag}(c_{b0},c_{b1})v_w,
+\qquad Z_w=\mathbf1^{\mathsf T}v_w,\qquad
+q_w=\frac{(v_w)_1}{Z_w}.
+$$
+它们满足 $\phi_w^{(r)}(I_2/2)=\operatorname{diag}(v_w)$。下一报告为零的条件概率记为
+$$
+f_r(w)=\frac{Z_{w0}}{Z_w}=p+dq_w.
+$$
+空词有 $Z_\varnothing=1$、$q_\varnothing=1/2$、$f_r(\varnothing)=1/2$。
+
+有限确定性观察者 $\mathcal A=(S,s_0,T_0,T_1,t)$ 的状态集 $S$ 非空且有限，初态 $s_0\in S$ 固定，两张报告标记更新表 $T_0,T_1:S\to S$ 和读出 $t:S\to[0,1]$ 固定。令
+$$
+s_{\mathcal A}(\varnothing)=s_0,\qquad
+s_{\mathcal A}(wb)=T_b(s_{\mathcal A}(w)),\qquad
+\mathcal E_r(\mathcal A)=\sup_{w\in\mathcal W}
+\bigl|t(s_{\mathcal A}(w))-f_r(w)\bigr|.
+$$
+全部可读的演化记忆均计入 $S$；没有另行可读的历史档案、时钟、隐藏位或演化实数寄存器。固定表可含任意精确实数常量，并可依赖 $p,r,\varepsilon$，但运行中不改变；同一观察者用于全部有限词长，包括空词和任意小概率的历史。对 $\varepsilon>0$ 定义扩展值状态成本
+$$
+N_{\min}^{(r)}(\varepsilon)=
+\begin{cases}
+\min\{|S|:\mathcal E_r(\mathcal A)\le\varepsilon\},&\text{存在这样的有限观察者},\\
+\infty,&\text{不存在这样的有限观察者}.
+\end{cases}
+$$
+所计的是 $|S|$，不计固定表的描述长度。则：
+
+(a) 对每个固定 $0<r<1/2$ 和每个 $\varepsilon>0$，有 $N_{\min}^{(r)}(\varepsilon)<\infty$。
+
+(b) 对每个固定 $0<\varepsilon<\Delta$ 和每个整数 $N\ge1$，存在 $r_N=r_N(p,\varepsilon)>0$，使
+$$
+\forall r\in\bigl(0,\min\{r_N,1/2\}\bigr),
+\qquad N_{\min}^{(r)}(\varepsilon)>N.
+$$
+即在固定 $p,\varepsilon$ 下，
+$$
+\lim_{r\downarrow0}N_{\min}^{(r)}(\varepsilon)=\infty.
+$$
+每个 $r$ 的观察者允许单独重新选择；结论仍排除这个邻域内的每一张至多 $N$ 状态的表及每一个实数读出。
+
+(c) 对每个 $\varepsilon\ge\Delta$ 和全部 $0\le r<1/2$，有 $N_{\min}^{(r)}(\varepsilon)=1$。在静态端点 $r=0$，有限观察者的最优全历史误差恰为
+$$
+\inf_{\mathcal A\text{ 为有限确定性观察者}}\mathcal E_0(\mathcal A)=\Delta,
+$$
+此值由单状态、恒定读出 $1/2$ 达到。因此 $0<\varepsilon<\Delta$ 时 $N_{\min}^{(0)}(\varepsilon)=\infty$。这里的地板是误差上确界，有限词上的误差无须达到它。
+

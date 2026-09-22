@@ -1,0 +1,5 @@
+**Proof.** Each H block supplies such a witness by ZBD.1. This is an inclusion of sets of indices, so no repeated counting of supporting primes is involved.
+
+ZBD3 is a disjunction concerning the actual zero and nonzero initial-quotient supports. It does not assert that either term alone has the displayed order of growth. No estimate on H(X) or D_3(X) is assumed implicitly, and no failing window or WSS witness is asserted to exist by these implications.
+
+

@@ -1,0 +1,5 @@
+Define
+$$
+(f,g)\diamond(f',g')=(f*_{\mathbb T}f',\ g*_{+}g'),\qquad
+\|(f,g)\|_{\oplus}=\|f\|_1+\|g\|_1.
+$$

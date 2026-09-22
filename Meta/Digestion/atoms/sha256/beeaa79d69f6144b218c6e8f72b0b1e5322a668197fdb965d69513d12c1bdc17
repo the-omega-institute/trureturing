@@ -1,0 +1,2 @@
+**定理 23.10（内部群、全载体无单位与超群公理障碍）。** 对每个 $s$，$R_s$ 是 $(K,A_s)$ 的双侧理想，且其内部运算使 $c_s$ 成为从圆周加法群到 $R_s$ 的抽象群同构；内部单位为 $0_K$。子半群 $N_s$ 与正整数加法半群同构。但 $(K,A_s)$ 没有左单位，也没有右单位。更一般地，任何满足假设23.1支撑契约的概率核，都不能成为全载体 $K$ 上的 DJS 超群卷积。这里使用的标准超群单位及对合支撑公理见 László Székelyhidi，*Functional Equations on Hypergroups*，[§1，公理(H3)—(H4)及(D3)—(D4)，作者提供的PDF第1—3页](https://szekelyhidilaszlo.webzenit.hu/wp-content/uploads/2014/05/Functional-equations-on-hypergroups-styled.pdf)。
+

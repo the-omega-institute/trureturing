@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:54e4765cb7929cb070baa86b155179d8ba07bffbb78c7a571c457008491d6963
+  normalized_sha256: sha256:54e4765cb7929cb070baa86b155179d8ba07bffbb78c7a571c457008491d6963
+cas_ref: sha256:54e4765cb7929cb070baa86b155179d8ba07bffbb78c7a571c457008491d6963
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由 abs_eq_max_neg 展开绝对值，并按 max_def 与 min_def 分支归一化，同号和异号含零两种条件下均得到原句的精确等式；仓内无冻结 GID。
+    previous_atom_id: cd709369c9c416f65c94b0bcebd9c977dc699cee93248314eef5299e1a5a7332
+    next_atom_id: ea03573082a2185e20be33bacb76b40c43e4ad83bd6c8d5cab25282040f06561

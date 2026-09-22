@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0a68bae17e8787c972af4a44dc2a417c537ba14f278acf1f268e21cb9577eed5
+  normalized_sha256: sha256:0a68bae17e8787c972af4a44dc2a417c537ba14f278acf1f268e21cb9577eed5
+cas_ref: sha256:0a68bae17e8787c972af4a44dc2a417c537ba14f278acf1f268e21cb9577eed5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由钉版 Mathlib 的 MeasureTheory.ext_of_generate_finite 对包含全集且交封闭的生成族直接应用，得到两个同质量有限测度在生成的整个 σ 代数上相等；探针保留所有原假设，仓内无冻结 GID。
+    previous_atom_id: b061936c4c212a2b62cc0517ec38d4262a52fc538437de36fd41b98645f23e8c
+    next_atom_id: 3928c94dad80f9c9dd94d1c9dffbd7b277d0f9dba8e8f8144eb8078a920ea706

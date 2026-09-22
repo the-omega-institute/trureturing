@@ -1,0 +1,46 @@
+**命题 43.14（重建式来源移位及其有类型深度复合）。** 对 $r\ge0$ 定义来源重编号及全数组上的相应操作
+$$
+(\sigma^ra)_i=a_{i+r},\qquad
+U_r=\mathcal E_\infty\circ\sigma^r\circ\beta_\infty.
+\tag{43.27}
+$$
+有限实现为
+$$
+S_{M,r}:\mathcal A_{M+r}\longrightarrow\mathcal A_M,\qquad
+S_{M,r}(T)=\mathcal E_M(T(r,0),\ldots,T(M+r,0)).
+\tag{43.28}
+$$
+它满足有类型输入／输出方块及尖锐初始前缀深度
+$$
+q_M\circ\sigma^r=S_{M,r}\circ q_{M+r},\qquad
+m_r(M)=M+r.
+\tag{43.29}
+$$
+对 $M\ge1$，限制方块为
+$$
+\rho_M\circ S_{M,r}=S_{M-1,r}\circ\rho_{M+r}
+:\mathcal A_{M+r}\longrightarrow\mathcal A_{M-1}.
+\tag{43.30}
+$$
+对 $M,r,s\ge0$，正确的复合类型为
+$$
+\boxed{S_{M,r}\circ S_{M+r,s}=S_{M,r+s}
+:\mathcal A_{M+r+s}\longrightarrow\mathcal A_M,}\qquad
+m_s(m_r(M))=M+r+s.
+\tag{43.31}
+$$
+全层有 $U_rU_s=U_{r+s}$；$r=0$ 时各相应映射为恒等。
+
+证明。$q_{M+r}(a)$ 的首列正是 $a_0,\ldots,a_{M+r}$，提取从 $r$ 到 $M+r$ 的子块并重建，得到 $q_M(\sigma^ra)$，所以（43.29）两路径相同。实际用到的是子块 $a_r,\ldots,a_{M+r}$，初始前缀约定下的最大下标却是 $M+r$。输出边界坐标 $(M,0)$ 为 $a_{M+r}$，只改这一项的两个输入在任何更短初始前缀上相同，输出不同，证明尖锐性；若 $M+r=0$，更短输入为空。由（43.12），（43.30）两路径都提取 $a_r,\ldots,a_{M+r-1}$ 并施以 $\mathcal E_{M-1}$。
+
+为验（43.31），任取输入三角，其边界记为 $a_0,\ldots,a_{M+r+s}$。第一步 $S_{M+r,s}$ 重建的边界为 $a_s,\ldots,a_{M+r+s}$；再提取这个新边界的第 $r$ 至第 $M+r$ 项，得到 $a_{r+s},\ldots,a_{M+r+s}$。施以 $\mathcal E_M$ 即右侧，所以同时给深度复合。全层以 $\beta_\infty\mathcal E_\infty=\mathrm{id}$ 消去中间逆对，再用 $\sigma^r\sigma^s=\sigma^{r+s}$ 得半群律。$S_{M,0}=\mathcal E_M\beta_M=\mathrm{id}_{\mathcal A_M}$，全层同理。$\square$
+
+这正实现[接口36.3](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md#L6185)的输入深度／输出深度合同；这里给出了显式深度，未借连续性推断统一深度。工作操作是 $(c,T)\mapsto(c,S_{M,r}T)$，其输入深度须已供应。已记录在 $c$ 中的较早系数、关系及来源身份保持不变；更多系数须经明确获取合同才进入实际观察者。代数重编号不取得未来值，也不宣称物理演化。
+
+重建一般不同于原数组的行平移。若边界始于 $(1,2,3)$，正确移位的新边界始于 $(2,3)$，所以
+$$
+U_1(T)(0,1)=3-2^2=-1,\qquad T(1,1)=3-1\cdot2=1.
+\tag{43.32}
+$$
+证明是（43.3）的直接计算：移位后卷积由新边界驱动，故必须重建；只改行号一般不满足运输后的递归关系。此反例同时区分本节的来源起点变化与删去最后一层的限制映射。
+

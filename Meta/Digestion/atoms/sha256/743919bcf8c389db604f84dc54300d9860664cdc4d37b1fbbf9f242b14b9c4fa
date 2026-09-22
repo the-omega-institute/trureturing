@@ -1,0 +1,20 @@
+**定理 30.1（可数有限分裂下的正提升判据）。** 设 $X,Y$ 为非空紧度量空间，$h:X\to Y$ 连续且满射，$D\subseteq Y$ 可数，每个纤维有限，且 $Y\setminus D$ 上的纤维为单点。置
+$$
+X_0=X\setminus h^{-1}(D),\qquad Y_0=Y\setminus D,\qquad
+D_*=\{y\in D:|h^{-1}(\{y\})|\ge2\}.
+$$
+则 $h|_{X_0}:X_0\to Y_0$ 是同胚，并存在 Borel 截面 $q:Y\to X$。
+
+对每个 $\eta\in M_+(Y)$，全部正提升 $\rho\in M_+(X)$、$h_\#\rho=\eta$ 恰为
+$$
+\rho=q_\#(\eta|_{Y_0})
++\sum_{y\in D}\ \sum_{x\in h^{-1}(\{y\})} a_{y,x}\delta_x,
+\qquad
+a_{y,x}\ge0,\qquad
+\sum_{x\in h^{-1}(\{y\})}a_{y,x}=\eta(\{y\}).
+$$
+该级数在全变差中绝对收敛。正提升唯一当且仅当 $\eta(D_*)=0$。特别，$\eta(D)=0$ 时唯一正提升为 $q_\#\eta$，与分裂纤维上的截面选择无关。此外，
+$$
+\ker h_\#\cap M_+(X)=\{0\}.
+$$
+

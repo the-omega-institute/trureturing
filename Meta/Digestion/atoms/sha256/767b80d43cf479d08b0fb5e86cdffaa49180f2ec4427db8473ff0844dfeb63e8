@@ -1,0 +1,7 @@
+**定理 33.3（Haar 推前与相位映射的最优 Hölder 定律）。** 有
+$$
+H_*\nu=m,\qquad
+d_{\mathbb T}(H(x),H(y))\le d(x,y)^s\quad(x,y\in K).
+$$
+指数 $s$ 是最大的正 Hölder 指数；在该指数处，统一常数 $1$ 也是最小的。特别地，$H:(K,d)\to(\mathbb T,d_{\mathbb T})$ 不是 Lipschitz 映射。
+

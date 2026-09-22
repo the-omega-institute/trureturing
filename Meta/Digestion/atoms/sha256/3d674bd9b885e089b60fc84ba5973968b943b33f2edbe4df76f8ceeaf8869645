@@ -1,0 +1,20 @@
+**定理 23.9（全载体概率结合核的完整分类）。** 在假设23.1下，对任意可容许概率核 $P$，
+$$
+P\text{ 结合}
+\quad\Longleftrightarrow\quad
+\exists!\,s\in\{-1,+1\}\ \forall x,y\in K,\quad P_{x,y}=P^s_{x,y}.
+$$
+因此恰有两个解，每个解逐点为 Dirac 分布，并自动满足交换律。它们包含如下全域边界公式：
+$$
+P^s_{0_K,x}=P^s_{x,0_K}=\delta_{c_s(H(x))},
+$$
+$$
+P^s_{z_{E_m}^{+1},z_{E_n}^{-1}}
+=P^s_{z_{E_m}^{-1},z_{E_n}^{+1}}
+=\delta_{z_{E_{m+n}}^s}\qquad(m,n\ge1),
+$$
+$$
+P^s_{Z(n),Z(m)}=\delta_{Z(n+m)}\qquad(n,m\in\mathbb N).
+$$
+若进一步要求全部许可输出都有严格正质量，即对所有输入都有 $\operatorname{supp}P_{x,y}=\Gamma(x,y)$，则不存在结合解。
+

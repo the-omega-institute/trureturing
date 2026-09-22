@@ -1,0 +1,2 @@
+**Proof.** Every aligned prime has p=kq+1 for an even k>=2. GAW2 leaves k=2 or k>200. Apply GAW5. Every branch conversely supplies the required totient divisibility.
+

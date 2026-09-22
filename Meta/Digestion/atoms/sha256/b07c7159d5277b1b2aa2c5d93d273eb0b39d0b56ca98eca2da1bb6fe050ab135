@@ -1,0 +1,1 @@
+| 72·标签复合 | [D5/S3/Entropy/Forgetting/PushforwardComposition.sum_indicator_comp](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Entropy/Forgetting/PushforwardComposition.lean) 在定理 72.4 中取加法交换幺半群 $\mathbb C$、质量 $k\mapsto Z_{kk}$、两映射 $s,r$；同模块 `pushforward_comp` 是实质量版本，可用于推论 72.7 的权重相容性。 

@@ -1,0 +1,26 @@
+**Proof.** If $g(r)\le C h_1(r)$ for all sufficiently small $r$, every sufficiently fine admissible cover satisfies the same cost inequality, including its zero-diameter members. Thus
+$$
+\mathcal H^g_\rho(A)\le C\mathcal H^{h_1}_\rho(A).
+$$
+The reverse gauge inequality gives the reverse measure inequality. These statements concern arbitrary-subset covers, so they do not require measurability of $A$.
+
+For a finite positive limit, apply both inequalities with constants tending to $a$ and use 35.7. For a zero limit, apply the upper inequality with every positive $C$; the critical measure is finite on every subset of $X_\beta$, so the result is zero. For an infinite limit, apply the lower inequality with every finite $C$; positive $\eta^*(A)$ makes the critical measure positive, forcing infinity. The liminf and limsup bounds follow by the same argument with constants approaching their respective endpoints.
+
+Here
+$$
+\frac{h_p(r)}{h_1(r)}=\bigl(1+\log_2(1/r)\bigr)^{1-p},
+$$
+which tends to infinity for $p<1$ and to zero for $p>1$. This proves the exact critical index and all the stated subset qualifications. Every countable set has zero measure for all these gauges, since it is covered by countably many zero-cost singletons; this also shows why the positive-mass condition cannot be suppressed.
+
+Finally, for fixed $a_*>0$ and $b>1$, the gauge
+$$
+g(r)=\bigl(a_*+\log_b(1/r)\bigr)^{-1}
+$$
+satisfies
+$$
+\frac{g(r)}{h_1(r)}\longrightarrow\frac{\log b}{\log2}.
+$$
+The finite-limit comparison proves both normalization assertions. $\square$
+
+Reference: the general small-scale gauge comparison appears in Aedo–Grimm–Short, [§9, p. 16](https://arxiv.org/pdf/2305.00078v2#page=16). Its application here uses the actual finite measure and normalization established in 35.7.
+

@@ -1,0 +1,11 @@
+### 定理 19.2. 二次外幂幂零强制自然 rank-one 因子
+
+假设标量 2、n−2、n−4 在 K 中非零，tr X=0，且对所有 k,l 都有 \(\mathcal A_X^2(F_{kl})=0\)。则
+
+\[
+X^2=0,\qquad
+\exists u,v\in K^I:\ X_{ij}=u_iv_j,\quad \sum_jv_ju_j=0.\tag{19.3}
+\]
+
+因而非零 X 的秩恰为一。
+

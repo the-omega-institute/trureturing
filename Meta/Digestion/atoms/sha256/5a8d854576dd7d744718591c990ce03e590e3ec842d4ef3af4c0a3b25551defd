@@ -1,0 +1,8 @@
+**theorem 26.3 (Necessary Banach-weak double-limit implication).** Let $a\in B_{\mathbb F}$ be WAP, and let $P_i,Q_j\in\mathbb N_0$. Suppose that each inner limit exists and that both outer limits below exist. Then
+$$
+\lim_{i\to\infty}\lim_{j\to\infty}a(P_i+Q_j)
+=
+\lim_{j\to\infty}\lim_{i\to\infty}a(P_i+Q_j).
+$$
+This is the necessary direction of Grothendieck's double-limit criterion. Its general function-space hypotheses are a topological space $X$, a dense subset $X_0$, and a bounded family in $C_b(X)$ with the uniform norm; here take $X=X_0=\mathbb N_0$ discrete and the family $\mathcal O(a)$, whose elements have norm at most $\|a\|_\infty$. Grothendieck's original Proposition 7 also explicitly allows semigroups with continuous left and right translations. Sources: A. Grothendieck, *Critères de compacité dans les espaces fonctionnels généraux*, American Journal of Mathematics 74 (1952), 168–186, theorem 6 and Proposition 7; I. Ben Yaacov, *Model theoretic stability and definability of types, after A. Grothendieck*, Fact 2. (A. Grothendieck, [Critères de compacité dans les espaces fonctionnels généraux](https://webusers.imj-prg.fr/~leila.schneps/grothendieckcircle/AG/AG-6.pdf), American Journal of Mathematics 74 (1952), 168–186, theorem 6 and Proposition 7; I. Ben Yaacov, [Model theoretic stability and definability of types, after A. Grothendieck](https://math.univ-lyon1.fr/~begnac/articles/Grothendieck.pdf), Fact 2, p. 1.)
+

@@ -1,0 +1,5 @@
+**定理 443.2（整数和的真实边界分解）。** 对上述 $N,Q$，
+$$
+M(N)=\sum_{\substack{S\subseteq\{p\le N:p\text{ 为素数}\}\\\prod_{p\in S}p\le N}}(-1)^{|S|}
+=\sum_{\substack{1\le d\le N\\(d,Q)=1}}\mu(d)B_Q(N/d).
+$$

@@ -1,0 +1,96 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "Exact directed arithmetic; comparator proof and BBMST continuation are separate ordinary mathematical inputs."
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "retained_product_states": {
+    "kind": "inline",
+    "value": 384
+  },
+  "first_tail_prime": {
+    "kind": "inline",
+    "value": 17
+  },
+  "last_prime": {
+    "kind": "inline",
+    "value": 1693
+  },
+  "global_prime_index": {
+    "kind": "inline",
+    "value": 264
+  },
+  "head_density_fraction": {
+    "kind": "inline",
+    "value": "83276791/89577600"
+  },
+  "reference_mass_at_one": {
+    "kind": "inline",
+    "value": "6391/92880"
+  },
+  "reference_mass_at_two": {
+    "kind": "inline",
+    "value": "807835/2173392"
+  },
+  "reference_mean": {
+    "kind": "inline",
+    "value": "1574239/412800"
+  },
+  "head_quantile_mass_at_two": {
+    "kind": "inline",
+    "value": "1837670057/4615287417"
+  },
+  "head_comparator_mean": {
+    "kind": "inline",
+    "value": "3016548085/749491119"
+  },
+  "head_actual_second_upper": {
+    "kind": "inline",
+    "value": "6074954672/249830373"
+  },
+  "mean_upper": {
+    "kind": "inline",
+    "value": "14881660302379938337/1000000000000000000"
+  },
+  "second_moment_upper": {
+    "kind": "inline",
+    "value": "1169988516909549215413/1000000000000000000"
+  },
+  "total_charge_upper": {
+    "kind": "inline",
+    "value": "759180808739102769/1000000000000000000"
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "240819191260897231/1000000000000000000"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "1169229336100810112644/240819191260897231"
+  },
+  "stopping_lower": {
+    "kind": "inline",
+    "value": "152146264121439047500306365246608030097/31250000000000000000000000000000000"
+  },
+  "stopping_margin": {
+    "kind": "inline",
+    "value": "101323525941500170987446358946063646577858721671961407/7525599726903038468750000000000000000000000000000000"
+  },
+  "steps": {
+    "path": "content/025-matching_height_tail17/020-steps.json",
+    "sha256": "b93d1437600efc24db1df5b1cf5bcf1f9e85423bfb99a7a1491d7e84c849b1cc",
+    "kind": "array"
+  },
+  "final_low_state_digest": {
+    "kind": "inline",
+    "value": "0ef6fbeb216fe3e56ecafa0099b6696fcbb6d8cd0d8b07141a291146ab20398a"
+  },
+  "threshold_runs": {
+    "path": "content/025-matching_height_tail17/022-threshold_runs.json",
+    "sha256": "23cabb22a5b4210c95129534e68607a140f87bf426ab4a14be063190efaa3118",
+    "kind": "value"
+  }
+}

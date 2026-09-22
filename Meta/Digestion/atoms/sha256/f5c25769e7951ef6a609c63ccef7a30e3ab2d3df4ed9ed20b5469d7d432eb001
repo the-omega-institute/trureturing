@@ -1,0 +1,25 @@
+**theorem 39.7 (How many selector pairs one continuous readout can distinguish).** For a readout $f$, put
+$$
+S(f)=\{\theta\in\mathbb T:f(P_\theta^+)\ne f(P_\theta^-)\}.
+$$
+If $f$ is continuous and metrizable-valued, then
+$$
+S(f)\subseteq U(D_f),\qquad |S(f)|\le\aleph_0.
+\tag{39.19}
+$$
+For a discrete-valued continuous readout, $S(f)$ is finite. Specifically, define
+$$
+\Delta_j=\{E_m:(x_m^+)_j\ne(x_m^-)_j\}.
+$$
+Then
+$$
+\Delta_j\subseteq\{E_1,\ldots,E_{G_{j+1}}\},
+\tag{39.20}
+$$
+and a factorization (39.17) gives
+$$
+S(f)\subseteq\bigcup_{(b,j)\in F}(\Delta_j-H(b)).
+\tag{39.21}
+$$
+The countable bound for general metrizable readouts cannot be replaced by a finite bound: $S(e)=E$. There is also a continuous readout into $\{0,1\}^{\mathbb N}$ which is not determined by any finite set of full evaluation coordinates.
+

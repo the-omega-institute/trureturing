@@ -1,0 +1,4 @@
+**Proof.** Apply QR6 to D_r, then use the classification in Appendix FSP.3:
+for every m, the displayed sum equals F_(2r) exactly when its full divisor
+set is D_r. The identity sum(D_r)=F_(2r) is the Fibonacci recurrence.
+

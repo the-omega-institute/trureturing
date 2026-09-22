@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:883d254dd909ef053e02bddf7879c13bffbd5eabe81cee0b381fdc346fef5a16
+  normalized_sha256: sha256:883d254dd909ef053e02bddf7879c13bffbd5eabe81cee0b381fdc346fef5a16
+cas_ref: sha256:883d254dd909ef053e02bddf7879c13bffbd5eabe81cee0b381fdc346fef5a16
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 沿用本项紧集和连续映射的假设，先由 IsCompact.image 得到像紧，再在 Hausdorff 目标中应用 IsCompact.isClosed 得到像闭；仓内无冻结 GID。
+    previous_atom_id: 21750c2863b526e96c45fd196b53a934fe2de7099ab06b2f4b68846108026211
+    next_atom_id: c0b249aac5e33136cbbfcccce0d5c06d12c9961d35941acf8ab3d980b652cead

@@ -1,0 +1,729 @@
+{
+  "schema": "erdos7-j-family-error-reserve-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/j-geometry/j_source_labelwise_neighborhood.py": "8c0936bf71a26897ac2156ec4878cb5695d816931264f924764e534436bacdca",
+    "certificates/source_norms/j-geometry/j_source_labelwise_neighborhood.json": "e0332bb28d282bc9429cc135f74c232fb8d2a4df31416ed3edd2367184ba4902",
+    "certificates/source_norms/j-geometry/j_face_alignment.json": "75433cab317fb492b5e8a9b36bc9b8d8671f5bcfe450cc7a2e37efe5378108d5",
+    "certificates/source_norms/j-geometry/j_face_surplus_transport.json": "96589a85c161e46169d22f1f1711c21c43f97a48863293b5fd9c4cb73b4355fc",
+    "frontier/j-geometry/j_face_alignment.py": "05074f0937efcb2cccc1a172e0717b89656f976d3e50543d31a27e7591b927ab",
+    "frontier/j-geometry/j_face_surplus_transport.py": "8caed7decd0cd0f61536433b48118d97cdd96bb302f4bf4835b1fac428a31d05",
+    "frontier/retained-transport/finite_source_face_transport.py": "04c99f1a0c6e1781734531923705863fbc9843c610f6d4933a81c89429aa5291",
+    "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226",
+    "certificates/layout_gap_frontier_certificate.json": "bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02",
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "certificates/ap_schedule_frontier_certificate.json": "15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05",
+    "frontier/cover-geometry/verify_ap_schedule.py": "70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655",
+    "frontier/retained-transport/verify_retained_five_tests.py": "80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "74d01a2b1db2d66d6d1ad0ca80a22c4ebfbc650c330138d9533d2d656223cb0a",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2"
+  },
+  "domain_and_prices": {
+    "domain_delta_plus_rho": "1/1000",
+    "wrong5_gaps": [
+      "1/10",
+      "5999/90000",
+      "1999/90000",
+      "1/50"
+    ],
+    "wrong15_gaps": [
+      "5999/90000",
+      "1999/90000",
+      "5999/450000",
+      "1499/45000"
+    ],
+    "label_delta_R_prices": {
+      "test3": [
+        2,
+        3
+      ],
+      "test9": [
+        2,
+        3
+      ],
+      "pure3_deep": [
+        3,
+        3
+      ],
+      "test5": [
+        4,
+        35
+      ],
+      "test15": [
+        3,
+        30
+      ],
+      "pure5_deep": [
+        1,
+        1
+      ]
+    },
+    "uniform_error_coefficient": 100,
+    "capacity_extra_delta": "7/36",
+    "source_cap_delta": "83/72",
+    "positive7_delta": "119/360",
+    "mass_lower_delta": "263/360",
+    "old_margin_delta": "281/6",
+    "rounded_replacement_delta": 54
+  },
+  "complete_face_categories": {
+    "unit": "3/20",
+    "test3": "11/120",
+    "test9": "2/45",
+    "pure3_deep": "11/360",
+    "test5": "4/75",
+    "pure5_deep": "13/600",
+    "test15": "1/25",
+    "3_times_deep5": "1/60",
+    "9_times5": "1/36",
+    "deep35": "1/72",
+    "positive7": "3/20"
+  },
+  "face_reserve": "79/1944",
+  "direction40_weight": "94212612766226/1174116234095805",
+  "complete_rectangles": [
+    {
+      "source_radius": "0",
+      "residual_radius": "0",
+      "single_actual_capacity_budget_upper": "0",
+      "shallow_families": [
+        {
+          "family": "test3",
+          "modulus": 3,
+          "face_cap": "11/120",
+          "raw_minus_face": "29/120",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "0",
+          "error_upper": "0"
+        },
+        {
+          "family": "test9",
+          "modulus": 9,
+          "face_cap": "2/45",
+          "raw_minus_face": "1/15",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "0",
+          "error_upper": "0"
+        },
+        {
+          "family": "test5",
+          "modulus": 5,
+          "face_cap": "4/75",
+          "raw_minus_face": "11/75",
+          "source_delta_price": "4",
+          "actual_budget_price": "35",
+          "unclipped_error": "0",
+          "error_upper": "0"
+        },
+        {
+          "family": "test15",
+          "modulus": 15,
+          "face_cap": "1/25",
+          "raw_minus_face": "2/75",
+          "source_delta_price": "3",
+          "actual_budget_price": "30",
+          "unclipped_error": "0",
+          "error_upper": "0"
+        }
+      ],
+      "complete_axis_errors": [
+        {
+          "prime": 3,
+          "first_depth": 3,
+          "cap_coefficient": "9/20",
+          "drift_coefficient": "0",
+          "residual_error": "0",
+          "first_clipped_depth": null,
+          "unclipped_depths": 0,
+          "finite_part": "0",
+          "complete_remainder": "0",
+          "value": "0"
+        },
+        {
+          "prime": 5,
+          "first_depth": 2,
+          "cap_coefficient": "17/30",
+          "drift_coefficient": "0",
+          "residual_error": "0",
+          "first_clipped_depth": null,
+          "unclipped_depths": 0,
+          "finite_part": "0",
+          "complete_remainder": "0",
+          "value": "0"
+        }
+      ],
+      "unchanged_mixed_families": {
+        "3_times_deep5": "0",
+        "9_times5": "0",
+        "deep35": "0"
+      },
+      "complete_zero7_error": "0",
+      "identity_nonunit_endpoint": "49/100",
+      "identity_margin_endpoint": "13/50",
+      "old49_replacement_reserve_lower": "79/1944",
+      "favorable_actual_residual_margin_coefficient": "5",
+      "predecessor_complete_error": "0",
+      "predecessor_reserve_lower": "79/1944",
+      "reserve_gain": "0"
+    },
+    {
+      "source_radius": "1/100000000",
+      "residual_radius": "1/100000000",
+      "single_actual_capacity_budget_upper": "43/3600000000",
+      "shallow_families": [
+        {
+          "family": "test3",
+          "modulus": 3,
+          "face_cap": "11/120",
+          "raw_minus_face": "29/120",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "67/1200000000",
+          "error_upper": "67/1200000000"
+        },
+        {
+          "family": "test9",
+          "modulus": 9,
+          "face_cap": "2/45",
+          "raw_minus_face": "1/15",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "67/1200000000",
+          "error_upper": "67/1200000000"
+        },
+        {
+          "family": "test5",
+          "modulus": 5,
+          "face_cap": "4/75",
+          "raw_minus_face": "11/75",
+          "source_delta_price": "4",
+          "actual_budget_price": "35",
+          "unclipped_error": "1649/3600000000",
+          "error_upper": "1649/3600000000"
+        },
+        {
+          "family": "test15",
+          "modulus": 15,
+          "face_cap": "1/25",
+          "raw_minus_face": "2/75",
+          "source_delta_price": "3",
+          "actual_budget_price": "30",
+          "unclipped_error": "233/600000000",
+          "error_upper": "233/600000000"
+        }
+      ],
+      "complete_axis_errors": [
+        {
+          "prime": 3,
+          "first_depth": 3,
+          "cap_coefficient": "9/20",
+          "drift_coefficient": "3/100000000",
+          "residual_error": "43/1200000000",
+          "first_clipped_depth": 15,
+          "unclipped_depths": 12,
+          "finite_part": "68821609/159432300000000",
+          "complete_remainder": "1/21257640",
+          "value": "76321609/159432300000000"
+        },
+        {
+          "prime": 5,
+          "first_depth": 2,
+          "cap_coefficient": "17/30",
+          "drift_coefficient": "1/750000000",
+          "residual_error": "43/3600000000",
+          "first_clipped_depth": 11,
+          "unclipped_depths": 9,
+          "finite_part": "6302734373/58593750000000000",
+          "complete_remainder": "17/1171875000",
+          "value": "2384244791/19531250000000000"
+        }
+      ],
+      "unchanged_mixed_families": {
+        "3_times_deep5": "0",
+        "9_times5": "0",
+        "deep35": "0"
+      },
+      "complete_zero7_error": "1516900891397449/973097534179687500000",
+      "identity_nonunit_endpoint": "30516435959396238889861/62278242187500000000000",
+      "identity_margin_endpoint": "8096121703171485047257/31139121093750000000000",
+      "old49_replacement_reserve_lower": "158170236267479332079/3892390136718750000000",
+      "favorable_actual_residual_margin_coefficient": "5",
+      "predecessor_complete_error": "296704261/2214337500000",
+      "predecessor_reserve_lower": "358752149987/8857350000000",
+      "reserve_gain": "8054419612866761/60818595886230468750"
+    },
+    {
+      "source_radius": "1/60000",
+      "residual_radius": "1/1000000",
+      "single_actual_capacity_budget_upper": "229/54000000",
+      "shallow_families": [
+        {
+          "family": "test3",
+          "modulus": 3,
+          "face_cap": "11/120",
+          "raw_minus_face": "29/120",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "829/18000000",
+          "error_upper": "829/18000000"
+        },
+        {
+          "family": "test9",
+          "modulus": 9,
+          "face_cap": "2/45",
+          "raw_minus_face": "1/15",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "829/18000000",
+          "error_upper": "829/18000000"
+        },
+        {
+          "family": "test5",
+          "modulus": 5,
+          "face_cap": "4/75",
+          "raw_minus_face": "11/75",
+          "source_delta_price": "4",
+          "actual_budget_price": "35",
+          "unclipped_error": "2323/10800000",
+          "error_upper": "2323/10800000"
+        },
+        {
+          "family": "test15",
+          "modulus": 15,
+          "face_cap": "1/25",
+          "raw_minus_face": "2/75",
+          "source_delta_price": "3",
+          "actual_budget_price": "30",
+          "unclipped_error": "319/1800000",
+          "error_upper": "319/1800000"
+        }
+      ],
+      "complete_axis_errors": [
+        {
+          "prime": 3,
+          "first_depth": 3,
+          "cap_coefficient": "9/20",
+          "drift_coefficient": "1/20000",
+          "residual_error": "229/18000000",
+          "first_clipped_depth": 10,
+          "unclipped_depths": 7,
+          "finite_part": "3615061/39366000000",
+          "complete_remainder": "1/87480",
+          "value": "4065061/39366000000"
+        },
+        {
+          "prime": 5,
+          "first_depth": 2,
+          "cap_coefficient": "17/30",
+          "drift_coefficient": "1/450000",
+          "residual_error": "229/54000000",
+          "first_clipped_depth": 8,
+          "unclipped_depths": 6,
+          "finite_part": "3593749/140625000000",
+          "complete_remainder": "17/9375000",
+          "value": "3848749/140625000000"
+        }
+      ],
+      "unchanged_mixed_families": {
+        "3_times_deep5": "0",
+        "9_times5": "0",
+        "deep35": "0"
+      },
+      "complete_zero7_error": "189159182813/307546875000000",
+      "identity_nonunit_endpoint": "603555289153127/1230187500000000",
+      "identity_margin_endpoint": "159505221243749/615093750000000",
+      "old49_replacement_reserve_lower": "12032095504687/307546875000000",
+      "favorable_actual_residual_margin_coefficient": "5",
+      "predecessor_complete_error": "3533/97200",
+      "predecessor_reserve_lower": "1373/405000",
+      "reserve_gain": "10989473629687/307546875000000"
+    },
+    {
+      "source_radius": "1/3000",
+      "residual_radius": "1/100000",
+      "single_actual_capacity_budget_upper": "101/1350000",
+      "shallow_families": [
+        {
+          "family": "test3",
+          "modulus": 3,
+          "face_cap": "11/120",
+          "raw_minus_face": "29/120",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "401/450000",
+          "error_upper": "401/450000"
+        },
+        {
+          "family": "test9",
+          "modulus": 9,
+          "face_cap": "2/45",
+          "raw_minus_face": "1/15",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "401/450000",
+          "error_upper": "401/450000"
+        },
+        {
+          "family": "test5",
+          "modulus": 5,
+          "face_cap": "4/75",
+          "raw_minus_face": "11/75",
+          "source_delta_price": "4",
+          "actual_budget_price": "35",
+          "unclipped_error": "1067/270000",
+          "error_upper": "1067/270000"
+        },
+        {
+          "family": "test15",
+          "modulus": 15,
+          "face_cap": "1/25",
+          "raw_minus_face": "2/75",
+          "source_delta_price": "3",
+          "actual_budget_price": "30",
+          "unclipped_error": "73/22500",
+          "error_upper": "73/22500"
+        }
+      ],
+      "complete_axis_errors": [
+        {
+          "prime": 3,
+          "first_depth": 3,
+          "cap_coefficient": "9/20",
+          "drift_coefficient": "1/1000",
+          "residual_error": "101/450000",
+          "first_clipped_depth": 7,
+          "unclipped_depths": 4,
+          "finite_part": "8681/9112500",
+          "complete_remainder": "1/3240",
+          "value": "22987/18225000"
+        },
+        {
+          "prime": 5,
+          "first_depth": 2,
+          "cap_coefficient": "17/30",
+          "drift_coefficient": "1/22500",
+          "residual_error": "101/1350000",
+          "first_clipped_depth": 6,
+          "unclipped_depths": 4,
+          "finite_part": "63593/210937500",
+          "complete_remainder": "17/375000",
+          "value": "146311/421875000"
+        }
+      ],
+      "unchanged_mixed_families": {
+        "3_times_deep5": "0",
+        "9_times5": "0",
+        "deep35": "0"
+      },
+      "complete_zero7_error": "241176419/22781250000",
+      "identity_nonunit_endpoint": "45625996301/91125000000",
+      "identity_margin_endpoint": "11303400287/45562500000",
+      "old49_replacement_reserve_lower": "274542331/22781250000",
+      "favorable_actual_residual_margin_coefficient": "5",
+      "predecessor_complete_error": "7907/27000",
+      "predecessor_reserve_lower": "-32831/121500",
+      "reserve_gain": "6430354831/22781250000"
+    },
+    {
+      "source_radius": "1/2500",
+      "residual_radius": "1/100000",
+      "single_actual_capacity_budget_upper": "79/900000",
+      "shallow_families": [
+        {
+          "family": "test3",
+          "modulus": 3,
+          "face_cap": "11/120",
+          "raw_minus_face": "29/120",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "319/300000",
+          "error_upper": "319/300000"
+        },
+        {
+          "family": "test9",
+          "modulus": 9,
+          "face_cap": "2/45",
+          "raw_minus_face": "1/15",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "319/300000",
+          "error_upper": "319/300000"
+        },
+        {
+          "family": "test5",
+          "modulus": 5,
+          "face_cap": "4/75",
+          "raw_minus_face": "11/75",
+          "source_delta_price": "4",
+          "actual_budget_price": "35",
+          "unclipped_error": "841/180000",
+          "error_upper": "841/180000"
+        },
+        {
+          "family": "test15",
+          "modulus": 15,
+          "face_cap": "1/25",
+          "raw_minus_face": "2/75",
+          "source_delta_price": "3",
+          "actual_budget_price": "30",
+          "unclipped_error": "23/6000",
+          "error_upper": "23/6000"
+        }
+      ],
+      "complete_axis_errors": [
+        {
+          "prime": 3,
+          "first_depth": 3,
+          "cap_coefficient": "9/20",
+          "drift_coefficient": "3/2500",
+          "residual_error": "79/300000",
+          "first_clipped_depth": 7,
+          "unclipped_depths": 4,
+          "finite_part": "6799/6075000",
+          "complete_remainder": "1/3240",
+          "value": "4337/3037500"
+        },
+        {
+          "prime": 5,
+          "first_depth": 2,
+          "cap_coefficient": "17/30",
+          "drift_coefficient": "1/18750",
+          "residual_error": "79/900000",
+          "first_clipped_depth": 6,
+          "unclipped_depths": 4,
+          "finite_part": "248747/703125000",
+          "complete_remainder": "17/375000",
+          "value": "140311/351562500"
+        }
+      ],
+      "unchanged_mixed_families": {
+        "3_times_deep5": "0",
+        "9_times5": "0",
+        "deep35": "0"
+      },
+      "complete_zero7_error": "946116551/75937500000",
+      "identity_nonunit_endpoint": "2385345761/4746093750",
+      "identity_margin_endpoint": "18676639699/75937500000",
+      "old49_replacement_reserve_lower": "499570949/75937500000",
+      "favorable_actual_residual_margin_coefficient": "5",
+      "predecessor_complete_error": "2951/9000",
+      "predecessor_reserve_lower": "-187627/607500",
+      "reserve_gain": "23952945949/75937500000"
+    },
+    {
+      "source_radius": "1/10000",
+      "residual_radius": "1/5000",
+      "single_actual_capacity_budget_upper": "79/360000",
+      "shallow_families": [
+        {
+          "family": "test3",
+          "modulus": 3,
+          "face_cap": "11/120",
+          "raw_minus_face": "29/120",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "103/120000",
+          "error_upper": "103/120000"
+        },
+        {
+          "family": "test9",
+          "modulus": 9,
+          "face_cap": "2/45",
+          "raw_minus_face": "1/15",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "103/120000",
+          "error_upper": "103/120000"
+        },
+        {
+          "family": "test5",
+          "modulus": 5,
+          "face_cap": "4/75",
+          "raw_minus_face": "11/75",
+          "source_delta_price": "4",
+          "actual_budget_price": "35",
+          "unclipped_error": "2909/360000",
+          "error_upper": "2909/360000"
+        },
+        {
+          "family": "test15",
+          "modulus": 15,
+          "face_cap": "1/25",
+          "raw_minus_face": "2/75",
+          "source_delta_price": "3",
+          "actual_budget_price": "30",
+          "unclipped_error": "413/60000",
+          "error_upper": "413/60000"
+        }
+      ],
+      "complete_axis_errors": [
+        {
+          "prime": 3,
+          "first_depth": 3,
+          "cap_coefficient": "9/20",
+          "drift_coefficient": "3/10000",
+          "residual_error": "79/120000",
+          "first_clipped_depth": 6,
+          "unclipped_depths": 3,
+          "finite_part": "6451/3240000",
+          "complete_remainder": "1/1080",
+          "value": "9451/3240000"
+        },
+        {
+          "prime": 5,
+          "first_depth": 2,
+          "cap_coefficient": "17/30",
+          "drift_coefficient": "1/75000",
+          "residual_error": "79/360000",
+          "first_clipped_depth": 5,
+          "unclipped_depths": 3,
+          "finite_part": "247123/375000000",
+          "complete_remainder": "17/75000",
+          "value": "332123/375000000"
+        }
+      ],
+      "unchanged_mixed_families": {
+        "3_times_deep5": "0",
+        "9_times5": "0",
+        "deep35": "0"
+      },
+      "complete_zero7_error": "207392321/10125000000",
+      "identity_nonunit_endpoint": "10337954017/20250000000",
+      "identity_margin_endpoint": "1210537277/5062500000",
+      "old49_replacement_reserve_lower": "448173037/30375000000",
+      "favorable_actual_residual_margin_coefficient": "5",
+      "predecessor_complete_error": "1441/5400",
+      "predecessor_reserve_lower": "-281411/1215000",
+      "reserve_gain": "2494482679/10125000000"
+    },
+    {
+      "source_radius": "0",
+      "residual_radius": "1/3000",
+      "single_actual_capacity_budget_upper": "1/3000",
+      "shallow_families": [
+        {
+          "family": "test3",
+          "modulus": 3,
+          "face_cap": "11/120",
+          "raw_minus_face": "29/120",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "1/1000",
+          "error_upper": "1/1000"
+        },
+        {
+          "family": "test9",
+          "modulus": 9,
+          "face_cap": "2/45",
+          "raw_minus_face": "1/15",
+          "source_delta_price": "2",
+          "actual_budget_price": "3",
+          "unclipped_error": "1/1000",
+          "error_upper": "1/1000"
+        },
+        {
+          "family": "test5",
+          "modulus": 5,
+          "face_cap": "4/75",
+          "raw_minus_face": "11/75",
+          "source_delta_price": "4",
+          "actual_budget_price": "35",
+          "unclipped_error": "7/600",
+          "error_upper": "7/600"
+        },
+        {
+          "family": "test15",
+          "modulus": 15,
+          "face_cap": "1/25",
+          "raw_minus_face": "2/75",
+          "source_delta_price": "3",
+          "actual_budget_price": "30",
+          "unclipped_error": "1/100",
+          "error_upper": "1/100"
+        }
+      ],
+      "complete_axis_errors": [
+        {
+          "prime": 3,
+          "first_depth": 3,
+          "cap_coefficient": "9/20",
+          "drift_coefficient": "0",
+          "residual_error": "1/1000",
+          "first_clipped_depth": 6,
+          "unclipped_depths": 3,
+          "finite_part": "3/1000",
+          "complete_remainder": "1/1080",
+          "value": "53/13500"
+        },
+        {
+          "prime": 5,
+          "first_depth": 2,
+          "cap_coefficient": "17/30",
+          "drift_coefficient": "0",
+          "residual_error": "1/3000",
+          "first_clipped_depth": 5,
+          "unclipped_depths": 3,
+          "finite_part": "1/1000",
+          "complete_remainder": "17/75000",
+          "value": "23/18750"
+        }
+      ],
+      "unchanged_mixed_families": {
+        "3_times_deep5": "0",
+        "9_times5": "0",
+        "deep35": "0"
+      },
+      "complete_zero7_error": "19453/675000",
+      "identity_nonunit_endpoint": "350203/675000",
+      "identity_margin_endpoint": "156047/675000",
+      "old49_replacement_reserve_lower": "35899/3037500",
+      "favorable_actual_residual_margin_coefficient": "5",
+      "predecessor_complete_error": "1549/5400",
+      "predecessor_reserve_lower": "-5983/24300",
+      "reserve_gain": "43543/168750"
+    }
+  ],
+  "actual_finite_sources": [
+    {
+      "height": 20,
+      "delta": "3436092845038855569955966858276975526550721004663916060578415176379621936343/665600976507847398373665409817456666807778363492698048275997280143201351165771484375",
+      "rho": "2023990112654339253458210933193355680640377429239/70570879018575459850309284058220607945275882720947265625000",
+      "reserve_lower": "4630901307109147635561476130164250733437265649610907125245592597160157617090175287541727419566128105909633949358023037/113956661243782944601749181227319100835953495996598192191381626728764683514449722323558233938456396572291851043701171875"
+    },
+    {
+      "height": 21,
+      "delta": "7458176344731886581376592217810850726082186181443106171426807850034332371755742207271/4334154358668169750550518612724624665762618657715069502012195101769975735805928707122802734375",
+      "rho": "9917478839069261244493292081887449445130726074027/1037391921573059257570776403334530024281393633270263671875000",
+      "reserve_lower": "64617849802990519408139129915085651696709560962114597295537630353091603347494875658490241025190317133145146561205797111849347673/1590096053237957248192797118055299645774821507384369348381157622632078403212124283211013550665136051520676119253039360046386718750"
+    },
+    {
+      "height": 24,
+      "delta": "42818033488891523768961156743542855908595075052614918423784368913754436172946673332900689/671836923156648336828887433768077980183937663956328977866473695090832052301266230642795562744140625",
+      "rho": "1041760195350544457697250140836010098349671434443626166337/2942231516866981170410695458555940732143899229538400173187255859375000",
+      "reserve_lower": "6363493724034457469161549765425556357450580516911463149508141949765886012949425712560410526956005534445290234066897316575339718345668154838211/156590299024045004653329141462071408392898039458344320405695684724457193576572971550700718067745498100762358006932117859832942485809326171875000"
+    }
+  ],
+  "scope": "Ordinary whole-J source theorem on delta+rho<=1/1000. Four independent shallow labels, both complete pure-axis tails and all unchanged mixed raw caps retain their actual source and one capacity/union residual. The reserve replaces only the original old49 direction40 margin. Both J orientations and the full admissible beta-times-late simplex remain. No complete global consumer, Lean verification, attainment or unrestricted Erdos7 resolution is asserted."
+}

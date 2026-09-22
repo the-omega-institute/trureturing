@@ -1,0 +1,96 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-vector-marked-source-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+      "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+      "frontier/endpoint-bounds/broad_weighted_identity_source.py": "bfc5f98109c02b318ee3e92c0951d1d33ded45971d6718623d4c60629dc2e6e6",
+      "certificates/source_norms/endpoint-bounds/broad_weighted_identity_source.json": "dd2dc39aec759adf0c21efd9fb3ccda24de7dcf595f036d222dcc6374a83c55e",
+      "frontier/endpoint-bounds/broad_five_slot_tradeoff.py": "aa930dbc975c4a6a10f25e32f9da195dfc3d8a55089b2b59eea6eb7598a011d1",
+      "certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json": "fef05428a73f6328ac2b1eef6a76440a7d52b31b13ba2adca9be23b2e627659f",
+      "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+      "verify_killed_core_continuity.py": "6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226",
+      "certificates/layout_gap_frontier_certificate.json": "bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02",
+      "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+      "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+      "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+      "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+      "certificates/ap_schedule_frontier_certificate.json": "15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05",
+      "frontier/cover-geometry/verify_ap_schedule.py": "70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6",
+      "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+      "certificates/source_norms/retained-transport/retained_five_tests.json": "7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655",
+      "frontier/retained-transport/verify_retained_five_tests.py": "80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace",
+      "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+      "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+      "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "74d01a2b1db2d66d6d1ad0ca80a22c4ebfbc650c330138d9533d2d656223cb0a",
+      "frontier/retained-transport/verify_retained_quadratic_tests.py": "4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43",
+      "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+      "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+      "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+      "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+      "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2"
+    }
+  },
+  "selected_deep_exponents": {
+    "kind": "inline",
+    "value": [
+      3,
+      4,
+      5
+    ]
+  },
+  "selected_deep_coefficient": {
+    "kind": "inline",
+    "value": "13/1215"
+  },
+  "slab_Delta_upper": {
+    "kind": "inline",
+    "value": "1/18"
+  },
+  "r_cutoff_strict": {
+    "kind": "inline",
+    "value": "1/2500"
+  },
+  "general_comparison": {
+    "kind": "inline",
+    "value": "actual_margin >= old_carrier_average + [source_gain - uniform_residual_coefficient*(rho-(r+r1)/5)]_+"
+  },
+  "shared_budget": {
+    "kind": "inline",
+    "value": "(E5-r/5)+(E15-r1/5)+Edeep+omega<=rho-(r+r1)/5"
+  },
+  "deep_lemma": {
+    "kind": "inline",
+    "value": "Vdeep(v*I_J)>=sigma*min_l[v_l*X_lJ/eta_l+kappa*(dmax-d_l)]-kappa*Edeep, kappa>=vmax"
+  },
+  "canonical_face_costs": {
+    "path": "content/009-canonical_face_costs.json",
+    "sha256": "6fdb35834dc099b52003ec2b5599a0ca527cdd755b94d1373a2561b4edd08449",
+    "kind": "array"
+  },
+  "direction_probes": {
+    "path": "content/010-direction_probes.json",
+    "sha256": "8acd661fe97861308d74bed0ee790d424ad42f6ecc2b5c144b8b1a821645054d",
+    "kind": "array"
+  },
+  "weighted_face_gain": {
+    "kind": "inline",
+    "value": "1320688021014563153963/32412828875883907200750"
+  },
+  "truncated_observation_obstruction": {
+    "path": "content/012-truncated_observation_obstruction.json",
+    "sha256": "193e2be940e642a8899310f87632856f4a428406588a75277c1b3516a16a2a86",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary pointwise actual-source theorem on the stated broad slab, with exact branch/dual arithmetic. Face and direction evaluations do not certify a uniform positive source gain, a new global K, or Lean verification. The retained deep families are complete and the actual common residual is charged once."
+  }
+}

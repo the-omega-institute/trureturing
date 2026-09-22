@@ -1,0 +1,78 @@
+**Proof.** Agreement of two pairs of sequences through the shorter common prefix gives
+$$
+d_*(x,z)\le\max\{d_*(x,y),d_*(y,z)\},
+$$
+so $d_*$ is an ultrametric. Its exact relation to the observations is
+$$
+q_D(x)=q_D(y)\quad\Longleftrightarrow\quad d_*(x,y)\le2^{-D}\qquad(D\ge0).
+$$
+Thus its topology is the product topology. Also, the first differing term and the full geometric tail give $d_*/2\le d_\Sigma\le d_*$. This identifies the compact topology without identifying the two metrics or transferring their optimal Lipschitz constants.
+
+Fix $r\ge0$ and set $D_r(L)=G_{L+r}-G_L$ for $L\ge1$. Using the recurrence at indices at least one,
+$$
+D_r(L+1)-D_r(L)=G_{L+r-1}-G_{L-1}\ge0.
+$$
+Consequently
+$$
+G_{L+r}-G_L\ge G_{r+1}-G_1=G_{r+1}-2.
+$$
+For $r=r(k)$ the right side is at least $k$. The exact modulus theorem therefore gives $\mu_k(L)\le L+r(k)$ for every $L\ge1$. At $L=1$, the first successful index $m$ satisfies $G_m\ge k+2$ and is at least one, so it is exactly $r(k)+1$. This proves both the upper bound for the supremum and its attainment at $L=1$, including $k=0$.
+
+To obtain the precise metric constant, suppose $x,y$ first differ at $j$ and their images under $T^k$ are distinct and first differ at $\ell$. The images disagree under $q_{\ell+1}$. If $j\ge\mu_k(\ell+1)$, the inputs would agree at that sufficient precision, a contradiction. Hence
+$$
+j\le\mu_k(\ell+1)-1,
+$$
+and therefore
+$$
+\frac{d_*(T^kx,T^ky)}{d_*(x,y)}
+=2^{j-\ell}
+\le2^{\mu_k(\ell+1)-(\ell+1)}
+\le2^{r(k)}.
+$$
+If the images coincide, the ratio is zero and the same upper bound holds. Conversely, the split pair with index $M=G_L+k$ first differs at $\mu_k(L)-1$ and its images first differ at $L-1$, so its ratio is exactly $2^{\mu_k(L)-L}$. The finite witnesses in theorem 24.2 preserve these very same first-difference positions. Taking $L=1$ proves actual attainment of $2^{r(k)}$ on the finite core. This supplies the lower bound and settles both off-by-one indices.
+
+The threshold definition gives $G_r<k+2\le G_{r+1}$ at the successful value of $r$, also for $r=0$, where necessarily $k=0$. Since these thresholds are integers, this is precisely $G_r-1\le k\le G_{r+1}-2$, proving the plateau formula. For the quantitative growth estimate, induction from $G_0=1$, $G_1=2$, and $\phi^2=\phi+1$ gives
+$$
+\phi^n\le G_n\le\phi^{n+1}\qquad(n\ge0).
+$$
+Putting $r=r(k)$ in the threshold inequalities yields
+$$
+\phi^r\le G_r\le k+1<G_{r+1}\le\phi^{r+2}.
+$$
+Raising to the positive power $\beta$, with $\phi^\beta=2$, gives
+$$
+2^r\le(k+1)^\beta<4\,2^r,
+$$
+which implies the stated two-sided bounds. The exact law remains the Fibonacci-step formula, not an equality with a smooth power function.
+
+For composition, the already proved Lipschitz inequalities give, for every $x,y$,
+$$
+d_*(T^{k+h}x,T^{k+h}y)
+\le C(k)d_*(T^hx,T^hy)
+\le C(k)C(h)d_*(x,y).
+$$
+Taking the supremum proves submultiplicativity. Substituting $C(n)=2^{r(n)}$ and using strict monotonicity of $2^s$ proves the integer subadditivity. The values $G_2=3$, $G_3=5$, $G_4=8$ give $r(2)=2$ and $r(4)=3$, proving the strict example.
+
+The uniform-in-time precision obstruction follows directly from actual fibres, rather than from growth of metric constants. For any $m\ge0$, the nonnegative integer $k=G_m-1$ satisfies
+$$
+G_m<k+2=G_m+1\le G_{m+1}.
+$$
+Thus theorem 24.2 gives $\mu_k(1)=m+1$ and supplies finite inputs with the same $m$-prefix but different first output digits. This rules out any common finite depth at the first output digit.
+
+For the stronger pointwise failure at $Z(0)$, take $j\ge0$ and
+$$
+k_j=G_{j+1}-2,\qquad M_j=k_j+2=G_{j+1}.
+$$
+The split pair at $M_j$ has common block word $0^j$ and consists, without specifying its sign order, of
+$$
+0^{j+1}v\quad\text{and}\quad 0^j10v.
+$$
+Its two images under $T^{k_j}$ have opposite first digits. Apply the finite truncation construction of theorem 24.2 with $L=1$ and $N=k_j+1$. It gives two finite-core points both starting with $j$ zeros whose images still have opposite first digits. At least one of these points, call it $y_j$, has an output first digit different from that of $T^{k_j}Z(0)$. Therefore
+$$
+d_*(y_j,Z(0))\le2^{-j}\longrightarrow0,\qquad
+d_*(T^{k_j}y_j,T^{k_j}Z(0))=1.
+$$
+The single output tolerance $1/2$ consequently has no neighborhood of $Z(0)$ working for every iterate. This proves non-equicontinuity with actual finite integer inputs.
+
+Finally, each fixed iterate is continuous by theorem 24.2 and has the explicit finite modulus proved there; compactness also implies its uniform continuity. For the joint evaluation map with discrete parameter, at any $(k,x)$ one may restrict to the open slice $\{k\}\times K$, where continuity is just continuity of $T^k$. Thus joint continuity with discrete time coexists with failure of a state-precision modulus uniform over all times. The negative conclusion concerns the latter quantifier order, not a failure of fixed-map continuity.
+

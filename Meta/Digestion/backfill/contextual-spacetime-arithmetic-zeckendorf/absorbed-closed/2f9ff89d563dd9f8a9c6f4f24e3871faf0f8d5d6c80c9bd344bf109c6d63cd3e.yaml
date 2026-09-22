@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2f9ff89d563dd9f8a9c6f4f24e3871faf0f8d5d6c80c9bd344bf109c6d63cd3e
+  normalized_sha256: sha256:2f9ff89d563dd9f8a9c6f4f24e3871faf0f8d5d6c80c9bd344bf109c6d63cd3e
+cas_ref: sha256:2f9ff89d563dd9f8a9c6f4f24e3871faf0f8d5d6c80c9bd344bf109c6d63cd3e
+coverage_gids:
+  - gid: D5/S1/Digit/Normalize.carryStep_measure_decreases
+    target_statement_id: sha256:1b107544d0c10c339030e6b591458c20fe0b4ca0ce61da20b62df934b247ddb8
+receipts:
+  unresolved_subitems: []

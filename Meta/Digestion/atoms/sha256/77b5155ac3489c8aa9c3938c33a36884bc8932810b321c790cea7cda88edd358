@@ -1,0 +1,28 @@
+**Proof.** Density of the finite core and continuity give
+$$
+\|\mathcal Rf\|_\infty=\sup_{n\ge0}|f(Z(n))|=\sup_{x\in K}|f(x)|.
+$$
+Surjectivity of $H$ similarly gives $\|H^*g\|_\infty=\|g\|_\infty$. Completeness of $C(\mathbb T,\mathbb F)$ and this isometry make its range closed. Pullback preserves constants, sums, products, and, over $\mathbb C$, conjugation. This proves the algebra assertions. The intersection identity is exactly theorem 26.4 applied to every $f$.
+
+Equal phases give equal values for all pullbacks. Conversely, if $H(x)\ne H(y)$, the real continuous function $g(\theta)=\rho(\theta,H(x))$ gives
+$$
+(g\circ H)(x)=0,\qquad (g\circ H)(y)>0.
+$$
+It belongs to the real algebra and, by regarding its values as complex, to the complex algebra. This proves the asserted equivalence relation.
+
+For any $x,y$, density supplies sequences of core inputs converging to $x,y$. Compactness of $K$ supplies a convergent subsequence of their sums, showing that $\Gamma(x,y)$ is nonempty. Continuity of $H$ on a convergent core triple gives
+$$
+\Gamma(x,y)\subseteq H^{-1}(\{H(x)+H(y)\}).
+$$
+In addition, theorem 16.4, with its first input $Z(0)$ having an unsplit phase, gives
+$$
+\Gamma(Z(0),x_m^+)=\{x_m^+,x_m^-\}\qquad(m\ge1).
+$$
+Thus constancy of $f$ on every graph output set forces equality on every split pair, and theorem 26.4 gives $f=g\circ H$. In the reverse direction, the displayed phase containment makes every value $f(z)$ on $\Gamma(x,y)$ equal to $g(H(x)+H(y))$.
+
+If the phase factorization holds, the displayed formula for $D_f$ is continuous and has the required core values. Conversely, suppose such a continuous extension exists. For any $(x,y,z)\in\Gamma$, metrizability gives a sequence of core triples converging to it. Continuity of $D_f$ and $f$ yields $D_f(x,y)=f(z)$. Hence $f$ is constant on every output set and therefore factors through $H$. Any two continuous extensions agree on the dense set $Z(\mathbb N_0)^2$, so agree everywhere.
+
+This scalar determinism for fixed full inputs does not assert that a binary operation can be recovered from the two scalar summaries alone. Indeed, let $g([t])=\cos(2\pi t)$ and $f=g\circ H$. Choose phases $[1/4]$ and $[3/4]$ for the first input and phase $[1/4]$ for the second. The two scalar input pairs are both $(0,0)$, whereas the prescribed outputs are respectively $-1$ and $1$. Surjectivity of $H$ realizes these choices in $K$. Thus no function of just those two scalar summaries can represent this $D_f$ on all inputs.
+
+Finally, the intersection restriction is essential. Define $b(0)=1$ and $b(n)=0$ for $n\ge1$. Its nonnegative translation orbit is $\{b,0\}$, so it is AP under Definition 26.0. Nevertheless $b$ has no continuous extension along $Z$: since $G_{2j}\ge1$ and $Z(G_{2j})\to Z(0)$, such an extension would have values zero converging to its value one at $Z(0)$. Consequently the classification does not identify the full sequence spaces $\operatorname{WAP}(\mathbb N_0,\mathbb F)$ and $\operatorname{AP}(\mathbb N_0,\mathbb F)$. $\square$
+

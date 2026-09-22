@@ -1,0 +1,12 @@
+**定理 23.13（仅保留相位兼容时的随机边界）。** 若把精确支撑契约放宽为
+$$
+\operatorname{supp}Q_{x,y}\subseteq
+H^{-1}(\{H(x)+H(y)\}),
+$$
+则存在真正非 Dirac 的结合概率核。更一般地，任给一族
+$$
+\eta_\theta\in\mathcal D_f(K),\qquad
+\operatorname{supp}\eta_\theta\subseteq H^{-1}(\{\theta\}),
+$$
+公式 $Q_{x,y}=\eta_{H(x)+H(y)}$ 总定义一个相位兼容的结合核。
+

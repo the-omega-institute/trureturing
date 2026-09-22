@@ -1,0 +1,1 @@
+**原数学引用（相容观察的条件）。** 为比较下面的数字观察与476.3的历史观察，直接使用 `ConceptFiberDecomposition`、`StableObservationInverseLimit`、`InverseLimitCompletion` 的原观察核、相容线程及状态映射：线程满足 $\pi_k(x_{k+1})=x_k$；状态到线程的满射须有 `ThreadComplete`，双射还须分离。

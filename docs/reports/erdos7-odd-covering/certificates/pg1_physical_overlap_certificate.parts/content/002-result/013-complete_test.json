@@ -1,0 +1,98 @@
+[
+  {
+    "modulus": 1,
+    "residue": 0
+  },
+  {
+    "modulus": 3,
+    "residue": 2
+  },
+  {
+    "modulus": 5,
+    "residue": 2
+  },
+  {
+    "modulus": 7,
+    "residue": 2
+  },
+  {
+    "modulus": 9,
+    "residue": 2
+  },
+  {
+    "modulus": 15,
+    "residue": 2
+  },
+  {
+    "modulus": 21,
+    "residue": 2
+  },
+  {
+    "modulus": 35,
+    "residue": 2
+  },
+  {
+    "modulus": 45,
+    "residue": 2
+  },
+  {
+    "modulus": 63,
+    "residue": 2
+  },
+  {
+    "modulus": 105,
+    "residue": 2
+  },
+  {
+    "modulus": 315,
+    "residue": 2
+  },
+  {
+    "modulus": 17,
+    "residue": 10
+  },
+  {
+    "modulus": 51,
+    "residue": 44
+  },
+  {
+    "modulus": 85,
+    "residue": 27
+  },
+  {
+    "modulus": 119,
+    "residue": 44
+  },
+  {
+    "modulus": 153,
+    "residue": 146
+  },
+  {
+    "modulus": 255,
+    "residue": 197
+  },
+  {
+    "modulus": 357,
+    "residue": 44
+  },
+  {
+    "modulus": 595,
+    "residue": 282
+  },
+  {
+    "modulus": 765,
+    "residue": 452
+  },
+  {
+    "modulus": 1071,
+    "residue": 758
+  },
+  {
+    "modulus": 1785,
+    "residue": 1472
+  },
+  {
+    "modulus": 5355,
+    "residue": 5042
+  }
+]

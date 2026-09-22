@@ -1,0 +1,41 @@
+**theorem 34.9 (Atomic walks do not converge setwise or in total variation).** Every sequence or Cesaro sequence from Theorem 34.8 that converges weak-star to $\mathfrak m$ nevertheless fails to converge to it setwise and satisfies, at every finite time,
+$$
+\|\mu_t^{(n)}-\mathfrak m\|_{\mathrm{TV}}=2,\qquad
+\|\overline\mu_{t,N}-\mathfrak m\|_{\mathrm{TV}}=2.
+$$
+For the fixed lazy step, define bounded operators on $M(K)$ by
+$$
+P_t\eta=\eta\star_t\mu_{\mathrm{lazy}},\qquad
+\Pi\eta=\eta(K)\mathfrak m.
+$$
+For all $n,N\ge1$,
+$$
+\|P_t^n-\Pi\|_{\mathrm{TV}\to\mathrm{TV}}\ge2,\qquad
+\left\|\frac1N\sum_{n=1}^N P_t^n-\Pi\right\|_{\mathrm{TV}\to\mathrm{TV}}\ge2.
+$$
+Both inequalities are equalities at $t=0$ and $t=\infty$.
+
+There is also no convergence rate uniform over all natural two-point step probabilities, even for a single fixed continuous readout.
+
+**Proof.** The fixed countable Borel set $A=Z(\mathbb N)$ carries every natural finite-time law and every finite Cesaro average. Thus all these measures assign $A$ mass one. The measure $\mathfrak m$ is non-atomic and assigns it mass zero. This one fixed set disproves setwise convergence. Mutual singularity gives
+$$
+|\mu_t^{(n)}-\mathfrak m|=\mu_t^{(n)}+\mathfrak m,
+$$
+and the same identity holds for the averages. Their variation distances are therefore exactly two, as in the atomic-distance identity of Theorem 28.11.
+
+Associativity gives $P_t^n\eta=\eta\star_t\mu_{\mathrm{lazy},t}^{(n)}$. Although $\delta_{Z(0)}$ is not a global algebra identity, the exact natural addition law does give
+$$
+P_t^n\delta_{Z(0)}=\mu_{\mathrm{lazy},t}^{(n)}.
+$$
+This norm-one input and the preceding distance calculation prove both operator lower bounds. At the two positive parameters, the operators $P_t^n$ and their averages are contractions on total variation, because they integrate probability kernels; $\Pi$ is also a contraction. The triangle inequality supplies the matching upper bound two.
+
+For the final assertion take
+$$
+\mu_\varepsilon=(1-\varepsilon)\delta_{Z(0)}+\varepsilon\delta_{Z(1)},\qquad 0<\varepsilon<1,
+$$
+and $f(x)=\operatorname{Re}\chi_1(H(x))$. Every such step satisfies the strict-modulus criterion, while $\int f\,d\mathfrak m=0$ and $f(Z(0))=1$. For each fixed $n$, its binomial law assigns $Z(0)$ mass $(1-\varepsilon)^n\to1$ as $\varepsilon\downarrow0$. Since $|f|\le1$,
+$$
+\sup_{0<\varepsilon<1}\left|\int f\,d\mu_{\varepsilon,t}^{(n)}-\int f\,d\mathfrak m\right|=1.
+$$
+Hence no bound tending to zero can hold uniformly over this class of step laws for this readout. $\square$
+

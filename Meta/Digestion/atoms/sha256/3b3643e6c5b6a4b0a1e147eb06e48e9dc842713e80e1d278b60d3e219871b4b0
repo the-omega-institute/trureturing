@@ -1,0 +1,8 @@
+**Definition 22.5 (Selections and the two loci).** A point selection is any function $A:X\to K$ with $A(\xi)\in\Gamma(\xi)$ for every $\xi$, without a measurability or algebraic requirement. Define
+$$
+D=\{\xi\in X:|\Gamma(\xi)|=2\},\qquad G=X\setminus D,
+\qquad
+D_n=\{\xi\in X:\operatorname{diam}_{d_K}\Gamma(\xi)\geq1/n\}\quad(n\geq1).
+$$
+Also put $K_s=\{z_\theta^s:\theta\in E\}$ for $s\in\{-1,+1\}$. A set is nowhere dense when its closure has empty interior, meagre when it is a countable union of nowhere dense sets, $F_\sigma$ when it is a countable union of closed sets, and $G_\delta$ when it is a countable intersection of open sets.
+

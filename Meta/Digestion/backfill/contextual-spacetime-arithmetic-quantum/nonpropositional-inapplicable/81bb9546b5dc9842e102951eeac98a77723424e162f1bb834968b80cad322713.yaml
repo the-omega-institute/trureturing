@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:81bb9546b5dc9842e102951eeac98a77723424e162f1bb834968b80cad322713
+  normalized_sha256: sha256:81bb9546b5dc9842e102951eeac98a77723424e162f1bb834968b80cad322713
+cas_ref: sha256:81bb9546b5dc9842e102951eeac98a77723424e162f1bb834968b80cad322713
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段以“必须先给出”和“只有在验证该映射保持”限定双载体与局部演化定理的用法，并写“仍需额外模型”排除近似动力学和具体相互作用的自动推导；这是前提清单与范围说明，没有在定义中偷带不变性或可访问性结论。
+    previous_atom_id: 99bdb7aacb4186de82c2041a0f051dcd74108b6a9865433a51aaab8eddec5bf3
+    next_atom_id: f512483afce4c86531c0314944b6898a3c4757adfc0d98eac7f6e3c141b1d830

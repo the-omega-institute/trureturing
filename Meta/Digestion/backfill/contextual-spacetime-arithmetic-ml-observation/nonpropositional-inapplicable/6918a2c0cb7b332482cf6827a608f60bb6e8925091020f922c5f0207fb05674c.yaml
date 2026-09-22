@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6918a2c0cb7b332482cf6827a608f60bb6e8925091020f922c5f0207fb05674c
+  normalized_sha256: sha256:6918a2c0cb7b332482cf6827a608f60bb6e8925091020f922c5f0207fb05674c
+cas_ref: sha256:6918a2c0cb7b332482cf6827a608f60bb6e8925091020f922c5f0207fb05674c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “任何仅依赖切换时旧标签的确定性实数预测”明确量化实际旧标签像上的预测器；本叶不是定义，未偷带结论。探针算出两历史同为标签二十三及读出七除十二、十一除十九，再用 le_abs_self、neg_le_abs 和最大值比较正规化出一除四百五十六下界及严格目标比较；仓内无冻结 GID 承载这条带实际模型数值的定量结论。
+    previous_atom_id: b67179797ed14cbedaf3465c3bf477a07553783da41333e95f4d77772a9ff180
+    next_atom_id: b0e25939de92dce2d35c185cb406438e3aef18f79bff8dba993a4759f46b6b41

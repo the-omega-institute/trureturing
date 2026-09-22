@@ -1,0 +1,14 @@
+**定理 122.13。** 有
+$$
+\mathcal D_q(f,g)=\langle f,(I-P)g\rangle_\mu
+=\langle(I-P)f,(I-P)g\rangle_\mu,
+$$
+特别地，$\mathcal D_q(f)=\|f-Pf\|_\mu^2$。若
+$$
+\operatorname{Cut}_q(A)=\sum_{x\in A,\,y\notin A}w_{xy},
+$$
+则
+$$
+\operatorname{Cut}_q(A)=\mathcal D_q(1_A)=\mathcal B_q(A).
+$$
+

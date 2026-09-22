@@ -1,0 +1,1 @@
+| [PartialFunctionDomainObservation](../../../D5/S3/ConceptDynamics/Observation/PartialFunctionDomainObservation.lean)，common_success_domain_refutation | 双方成功时读数相同不足以保持动作定义域；命题1.3将成对删测试的失败明确为三角律反例。 

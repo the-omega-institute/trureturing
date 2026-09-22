@@ -1,0 +1,31 @@
+**theorem 42.2 (Compact actual-image inverse limit).** The space $S(V)$ is compact, Hausdorff, and zero-dimensional, with the cylinders $N(p;F)$ as a clopen base. Moreover,
+$$
+p\in S(V)
+\quad\Longleftrightarrow\quad
+\forall F\subseteq V^*\text{ finite}\ \exists v\in V\quad
+\forall\ell\in F,\quad \operatorname{sgn}(\ell(v))=p(\ell).
+\tag{42.1}
+$$
+Restriction gives a canonical homeomorphism
+$$
+S(V)\cong\varprojlim_{F\subseteq V^*,\ F\ {\rm finite}}Q_F,
+\tag{42.2}
+$$
+where the order is inclusion and every bonding map is surjective. The image $\sigma_V[V]$ is dense. Its distinct nonzero points correspond exactly to oriented rays:
+$$
+\sigma_V(v)=\sigma_V(w),\quad v\ne0
+\quad\Longleftrightarrow\quad
+w=cv\text{ for some }c>0.
+\tag{42.3}
+$$
+
+**Proof.** A product of finite discrete spaces is compact. Explicitly, extend any family of closed subsets with the finite intersection property to an ultrafilter. In each finite coordinate partition exactly one cell belongs to the ultrafilter. The selected coordinate values define a point. Every finite cylinder about that point belongs to the ultrafilter and therefore meets every closed set in the original family; the point belongs to all those closed sets. This proves compactness by the closed-set formulation. Distinct points are separated by a coordinate, and finite cylinders are clopen. The closed subspace $S(V)$ inherits these properties.
+
+A point belongs to the closure of $\sigma_V[V]$ precisely when every finite cylinder about it meets that image. This is (42.1). If $F\subseteq G$, restriction maps $Q_G$ onto $Q_F$: a vector realizing a member of $Q_F$ also supplies an extension in $Q_G$. Every $p\in S(V)$ supplies a compatible thread. Conversely, a compatible thread determines $p(\ell)$ from the singleton coordinate $\{\ell\}$; compatibility implies that its $F$-coordinate is $p|_F$. Thus (42.1) places $p$ in $S(V)$. The correspondence and its inverse are continuous because all their finite coordinates are restrictions. Density is the defining closure statement.
+
+For (42.3), equality of signatures gives equality of the annihilators of $v$ and $w$. It also rules out $w=0$. Hence $\mathbb Rv=\mathbb Rw$: otherwise a linear functional vanishing on one vector and not the other would contradict the equality. Write $w=cv$ with $c\ne0$ and choose $\ell(v)=1$. Equality at $\ell$ gives $c>0$. Positive scalar multiplication plainly preserves every sign.
+
+The inverse limit in (42.2) uses all finite subsets, not an assumed countable tower. The countable-tower hypotheses in [RRO, Theorems 3.4 and 4.2] therefore cannot supply countability here.
+
+[RRO](https://github.com/the-omega-institute/trureturing/blob/c57bf72f087dae3bb5f5cc886c850649d7cb5593/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) *递归关系的观察商、严格拼接与相容完备化*, public manuscript at revision c57bf72f087dae3bb5f5cc886c850649d7cb5593, Sections 1–4. $\square$
+

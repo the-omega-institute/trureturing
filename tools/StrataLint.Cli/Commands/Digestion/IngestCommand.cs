@@ -77,7 +77,7 @@ internal static partial class IngestCommand
                 receiptVerificationChanges = deltaImpact.ReceiptVerificationChanges;
                 evaluationScope = DigestionEvaluationScopes.ForChanges(
                     fixedPointChanges,
-                    ImplementationPath);
+                    ImplementationPath, EngineeringProjectRegistry.ReadRuleBuildInputs(fixedPointSnapshot));
                 var evaluationCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
                     baselineDocument,
                     fixedPointChanges);
@@ -246,7 +246,7 @@ internal static partial class IngestCommand
             plannedChanges);
         var plannedScope = DigestionEvaluationScopes.ForChanges(
             plannedChanges,
-            ImplementationPath);
+            ImplementationPath, EngineeringProjectRegistry.ReadRuleBuildInputs(plannedSnapshot));
         var plannedCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
             baselineDocument,
             plannedChanges);

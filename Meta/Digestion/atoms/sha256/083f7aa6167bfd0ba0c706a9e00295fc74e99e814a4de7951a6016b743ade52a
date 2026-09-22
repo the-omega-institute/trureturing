@@ -1,0 +1,38 @@
+**theorem 35.9 (Critical index, general gauge comparison and normalization robustness).** Let $g$ be a continuous nondecreasing gauge with $g(0)=0$ and $g(r)>0$ for $r>0$ sufficiently small.
+
+If
+$$
+\lim_{r\downarrow0}\frac{g(r)}{h_1(r)}=a\in[0,\infty),
+$$
+then for every subset $A\subseteq X_\beta$,
+$$
+\mathcal H^g_\rho(A)=ac\eta^*(A).
+$$
+If instead $g(r)/h_1(r)\to\infty$, then
+$$
+\mathcal H^g_\rho(A)=\infty\qquad\text{whenever }\eta^*(A)>0.
+$$
+More generally, if
+$$
+0<a:=\liminf_{r\downarrow0}\frac{g(r)}{h_1(r)}
+\le b:=\limsup_{r\downarrow0}\frac{g(r)}{h_1(r)}<\infty,
+$$
+then
+$$
+ac\eta^*(A)\le\mathcal H^g_\rho(A)\le bc\eta^*(A)
+$$
+for every $A$. In particular, every positive-$\eta$ Borel set has finite positive $g$-measure in this two-sided comparison regime.
+
+For the gauges of 35.0,
+$$
+\mathcal H^{h_p}_\rho(X_\beta)=
+\begin{cases}
+\infty,&0<p<1,\\
+5-2\sqrt{5},&p=1,\\
+0,&p>1.
+\end{cases}
+$$
+For $0<p<1$, the infinity conclusion holds on every set of positive $\eta$ outer measure, not on every nonempty set.
+
+Replacing the additive one in $h_1$ by any fixed positive constant leaves its limiting Hausdorff measure unchanged. Replacing $\log_2$ by $\log_b$, for $b>1$, multiplies that measure by $\log b/\log2$.
+

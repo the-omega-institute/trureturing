@@ -1,0 +1,19 @@
+**Proof.** The number $F_\ell$ is odd because its index is not divisible
+by three, and it is coprime to five by IP2. A prime divisor has rank
+strictly greater than one dividing the prime $\ell$, so its rank is
+$\ell$. Apply IP1 and IP2. The ordinary Fibonacci identities and rank
+facts here are classical; this is the fixed-field specialization of the
+character argument.
+
+For any odd index $n=r(p)$ with $p\ne2,5$, the identity
+$L_n^2-5F_n^2=-4$ shows that $-1$ is a square modulo $p$, so
+$p\equiv1\pmod4$. If $p$ is inert, then $n\mid p+1$ and consequently
+
+$$
+p\equiv2n-1\pmod{4n},\qquad p\ge2n-1,\qquad
+p\equiv13\text{ or }17\pmod{20}.                 \tag{IP4}
+$$
+
+Indeed, $(p+1)/n$ is $2$ modulo four. These congruences apply to all the
+odd-rank inert witnesses below, regardless of their actual depth.
+

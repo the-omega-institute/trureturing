@@ -1,0 +1,4 @@
+**定理 466.2。**
+$$
+\int_0^1S_X(\theta)^ke(-N\theta)\,d\theta=r_{k,X}(N),
+\qquad

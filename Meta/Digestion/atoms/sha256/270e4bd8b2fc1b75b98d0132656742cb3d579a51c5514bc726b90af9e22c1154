@@ -1,0 +1,6 @@
+初始半群项也必须计入。令 $d_j=\sup_{v\ge0}v^je^{-v}$，其中 $d_0=1$；则
+$$
+\sup_{0\le t\le T_{12}}\|(t\Delta)^jE_\nu(t)\|_{H^{12}\to H^{12}}
+ \le d_j\underline\nu^{-j}.
+\tag{27.108}
+$$

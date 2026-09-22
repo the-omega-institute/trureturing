@@ -1,0 +1,2 @@
+**Proof.** The ranks of two and five exclude them from F_ell. The rank of any other prime divisor divides ell and is greater than one, so it equals ell. At this odd index the norm identity gives L_ell^2-5F_ell^2=-4. Modulo p, L_ell/2 is a square root of minus one, so p=1 modulo four. The rank bound gives ell|p-(5/p). For a split prime, both ell and four divide p-1, giving 4ell|p-1. For an inert prime, the positive integer (p+1)/ell is even, giving p>=2ell-1. More precisely that integer is two modulo four.
+

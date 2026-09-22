@@ -1,0 +1,84 @@
+**证明。** 先证明定向标记的逼近性质。若 $H(x)=\beta\notin E$，则对任何自然数列 $n_i$，
+$$
+\gamma(n_i)\longrightarrow\beta\quad\Longrightarrow\quad Z(n_i)\longrightarrow x.
+$$
+事实上，$K$ 紧致且可度量；任意聚点都由 $H$ 连续性落在单点纤维 $H^{-1}(\{\beta\})=\{x\}$。若原序列不趋于 $x$，可在某个固定邻域外取子序列，再取收敛子列，得到另一个聚点，矛盾。
+
+对于 $\beta\in E$，若
+$$
+\gamma(n_i)=\beta+[\varepsilon_i],\qquad
+0<|\varepsilon_i|<\tfrac12,\qquad \varepsilon_i\longrightarrow0,
+$$
+则对每个 $s\in\{-1,+1\}$，有准确的单侧等价
+$$
+Z(n_i)\longrightarrow z_\beta^s
+\quad\Longleftrightarrow\quad
+\operatorname{sgn}(\varepsilon_i)=s\text{ 最终成立}.
+$$
+为证此式，先取 $\beta=\theta_*$。由于 $F(Z(n_i))\in(a,b)$ 且 $b-a=1$，正的小偏移对应代表 $a+\varepsilon_i$，负的小偏移对应代表 $b+\varepsilon_i$。实端点纤维的唯一性与上述紧致聚点论证分别给出极限 $u$ 和 $v$。反之，趋于 $u$ 或 $v$ 时，连续实函数 $F$ 分别趋于 $a$ 或 $b$，且有限核心不达到端点，故偏移最终分别为正或负。
+
+再取内部二点相位 $\beta=[c]$，其中 $c=f_w(c_*)\in(a,b)$。拆分定义 $F$ 的级数可得
+$$
+F(wt)=f_w(F(t)),\qquad
+f_0(I)=[c_*,b],\qquad f_{10}(I)=[a,c_*].
+$$
+由 $F(K)=I$，两个互不相交的开闭柱集 $[w0]_K$、$[w10]_K$ 的实值域分别为
+$$
+f_w([c_*,b]),\qquad f_w([a,c_*]).
+$$
+它们位于 $c$ 的两侧。若 $L(w)$ 为偶数，前者在右、后者在左；若为奇数，则方向交换。这正是定义16.3的标记。对充分小的局部偏移，相位差就是实代表与 $c$ 的差，因为 $c$ 位于 $(a,b)$ 内。
+
+任何聚点只能是 $w0v$ 或 $w10v$。若偏移始终取指定符号，却有子列趋于反号标记，该子列最终进入反号标记的开闭柱集，其实值域方向与偏移符号矛盾。因此只有指定标记能成为聚点，紧致性给出整列收敛。反之，若 $Z(n_i)$ 趋于一个标记，它最终进入对应单侧柱集。自然轨道不遇到 $E$，所以偏移不能等于零，必最终具有该侧符号。单侧等价得证。
+
+现在证明分类的必要性。若 $(x,y,z)\in\Gamma$，由 $K^3$ 可度量，存在同一列自然数对 $(n_i,m_i)$，使
+$$
+(Z(n_i),Z(m_i),Z(n_i+m_i))\longrightarrow(x,y,z).
+$$
+连续性和核心上的加法相位恒等式给出
+$$
+H(z)=H(x)+H(y)=\theta.
+$$
+故 $\Gamma(x,y)\subseteq H^{-1}(\{\theta\})$。若 $\theta\notin E$，可能输出至多一个。若两输入都被迫为正号标记，分别写其趋零局部偏移为 $\varepsilon_i,\delta_i$，单侧等价保证二者最终均正；它们之和仍正，并且最终绝对值小于 $1/2$。由于
+$$
+\gamma(n_i+m_i)=\theta+[\varepsilon_i+\delta_i],
+$$
+输出只能趋于 $z_\theta^{+1}$。两个负号输入完全同理。其余情形只剩该相位的两个标记，不会出现第三个输出。
+
+下面证明每个列出的输出都由共同的自然数对序列实现。若 $\theta\notin E$，可分别用截断字选择 $n_i,m_i$ 使 $Z(n_i)\to x$、$Z(m_i)\to y$。和的相位趋于 $\theta$，单点纤维的逼近性质保证整列 $Z(n_i+m_i)$ 趋于该唯一输出。
+
+设 $\theta\in E$，并固定分类式允许的目标符号 $s\in\{-1,+1\}$。允许性意味着不是两个输入都被迫取 $-s$，因而至少一个输入允许符号 $s$。交换两输入后，可设 $s\in\mathcal S(x)$。任取 $t\in\mathcal S(y)$，令
+$$
+\tau_i=\frac1{100(i+1)},\qquad
+I_i=(3s\tau_i-\tau_i/4,\ 3s\tau_i+\tau_i/4),\qquad
+J_i=(t\tau_i-\tau_i/4,\ t\tau_i+\tau_i/4).
+$$
+圆周自然轨道稠密，所以可同时选择 $n_i,m_i\in\mathbb N$，使
+$$
+\gamma(n_i)\in H(x)+[I_i],\qquad
+\gamma(m_i)\in H(y)+[J_i].
+$$
+这里 $[I_i]=\{[a]:a\in I_i\}$，另一个区间同理。取相应实偏移 $\varepsilon_i\in I_i$、$\delta_i\in J_i$。它们趋于零且分别具有允许的符号 $s,t$；对非分裂输入使用单点纤维逼近性质，对分裂输入使用单侧等价，得到
+$$
+Z(n_i)\longrightarrow x,\qquad Z(m_i)\longrightarrow y.
+$$
+而 $\varepsilon_i+\delta_i$ 的中心为 $(3s+t)\tau_i$，与中心的距离小于 $\tau_i/2$。因 $3s+t$ 与 $s$ 同号且绝对值至少为二，偏移和始终具有符号 $s$，趋于零且绝对值小于 $1/2$。再次应用单侧等价，得到
+$$
+Z(n_i+m_i)\longrightarrow z_\theta^s.
+$$
+这构造的是同一对输入序列及其实际和，不是三条彼此无关的相位逼近。所有允许输出均已实现，分类式得证。
+
+自然数核心输入的和相位是 $\gamma(n+m)\notin E$，其纤维为 $\{Z(n+m)\}$，给出核心精确性。最后，$H(0_K)=0$，$H(u)=H(v)=\theta_*$，且
+$$
+2\theta_*=[-2\phi]=[c_*],\qquad
+z_{[-2\phi]}^{+1}=0v,\qquad z_{[-2\phi]}^{-1}=10v.
+$$
+将空块字及符号 $\mathcal S(0_K)=\{-1,+1\}$、$\mathcal S(u)=\{+1\}$、$\mathcal S(v)=\{-1\}$ 代入分类式，即得四个显示的输入纤维。特别 $(u,u,10v)$ 满足相位等式，却不属于 $\Gamma$，证明严格包含；$\Gamma(0_K,u)=\{u,v\}$ 则否定所述单位律。证毕。
+
+[^rro16_compact]: Jorge Almeida, Herman Goulet-Ouellet, Ondřej Klíma, *What makes a Stone topological algebra Profinite*, Algebra universalis 84, article 6 (2023), DOI: [10.1007/s00012-023-00804-w](https://link.springer.com/article/10.1007/s00012-023-00804-w)，尤见第3节 Lemma 3.1（正式版第7页）、第5.1节（第10页）及 Theorem 5.16（第18页）。定理16.1中所需的有限值双变量特例已由开覆盖完整证明，不以载体为 Stone 空间为前提。
+
+[^rro16_unary]: James East, Nik Ruškuc, *Classification of congruences of twisted partition monoids*, arXiv:[2010.04392v3](https://arxiv.org/html/2010.04392v3#S2.SS1)，第2.1节关于自然数加法同余的未编号段落；亦见本卷定理11.2的自然数加法同余分类。
+
+[^rro16_count]: Hung Viet Chu, *The Fibonacci Sequence and Schreier-Zeckendorf Sets*, Journal of Integer Sequences 22 (2019), arXiv:[1906.10962](https://arxiv.org/abs/1906.10962)。这里只用合法有限字的基本计数，所需递推及最低位计数已在定理16.1内证明。
+
+[^rro16_phase]: *CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF*，第371—377节，特别是定理371.2、372.2—372.4、373.2、375.2—375.3与377.1；固定文本为提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的 [Zeckendorf 理论卷](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+

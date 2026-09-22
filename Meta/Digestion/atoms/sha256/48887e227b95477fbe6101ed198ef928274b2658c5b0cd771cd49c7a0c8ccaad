@@ -1,0 +1,54 @@
+**theorem 27.6 (Uniformly bounded nonzero coboundary representatives).** Define
+$$
+d'_m=\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+For every positive $m,n$,
+$$
+1-\rho_t\le|d'_m|\le1+\rho_t,\qquad
+c_{m,n}=\frac{d'_m d'_n}{d'_{m+n}}.
+$$
+In particular every $d'_m$ is nonzero, and the finite vectors
+$$
+u_m=\frac{v_m}{d'_m}
+$$
+satisfy
+$$
+u_m*_t u_n=u_{m+n}.
+$$
+
+**Proof.** For finite $t$ with $|t|<1$, the identity is the direct calculation
+$$
+\frac{(1-t^m)(1-t^n)}{1-t^{m+n}}
+=-\frac{(t^m-1)(t^n-1)}{t^{m+n}-1}
+=c_{m,n}.
+$$
+For $|t|>1$, write
+$$
+d'_m=t^{-m}(1-t^m).
+$$
+The factors $t^{-m}$ form a multiplicative character of the positive-index additive semigroup, so they cancel in the quotient:
+$$
+\frac{d'_m d'_n}{d'_{m+n}}
+=\frac{t^{-m}t^{-n}}{t^{-(m+n)}}
+\frac{(1-t^m)(1-t^n)}{1-t^{m+n}}
+=c_{m,n}.
+$$
+This calculation is valid for negative $t$ as well; no positivity of the character is needed. For the formal parameter, the quotient is $(-1)(-1)/(-1)=-1=c_{m,n}$.
+
+In each finite case, $|d'_m|$ has the form $|1-s^m|$ with $|s|=\rho_t<1$. Hence
+$$
+1-\rho_t\le1-\rho_t^m\le|1-s^m|\le1+\rho_t^m\le1+\rho_t.
+$$
+This proves the bounds for every index and sign. For $\infty$, both bounds are one. Therefore division by $d'_m$ is legitimate, and
+$$
+u_m*_t u_n
+=\frac{c_{m,n}}{d'_m d'_n}v_{m+n}
+=\frac{v_{m+n}}{d'_{m+n}}
+=u_{m+n}.
+$$
+In particular $d'_m=1$ at $t=0$, whereas $d'_m=-1$ at the formal parameter; neither case requires a limiting argument. QED.
+

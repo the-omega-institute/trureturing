@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:279f1b40deb5e4595fe0cde79f6630089918942b65345a43dc524e3d86d3467b
+  normalized_sha256: sha256:279f1b40deb5e4595fe0cde79f6630089918942b65345a43dc524e3d86d3467b
+cas_ref: sha256:279f1b40deb5e4595fe0cde79f6630089918942b65345a43dc524e3d86d3467b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段定义保留平方自由及互素过滤的绝对值证书，其求和域和参数范围均为定义组成部分，没有新增证明义务。
+    previous_atom_id: ea03573082a2185e20be33bacb76b40c43e4ad83bd6c8d5cab25282040f06561
+    next_atom_id: a57c4aee92b1b699eb5e7e8720bee92ef3ea8c5f24d25436c6b46c4ba6227b0b

@@ -492,7 +492,7 @@ public sealed partial class WorktreeCommandTests
         ReviewRegressionTests.RunGit(root, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(Path.Combine(root, "README.md"), "# worktree fixture\n");
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
-        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), "{\"version\": \"1.1.0\"}\n");
+        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
         ReviewRegressionTests.RunGit(root, "add", "README.md", "lean-toolchain", "lake-manifest.json");
         ReviewRegressionTests.RunGit(root, "commit", "-m", "fixture baseline");
     }

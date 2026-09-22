@@ -1,0 +1,4 @@
+对任意素数 $p$，还成立
+$$
+M(N)=\sum_{\substack{N/p<d\le N\\p\nmid d}}\mu(d).
+$$

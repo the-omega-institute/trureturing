@@ -91,10 +91,11 @@ private def namedRecord (info : ConstantInfo) (head : Name) : Json := Id.run do
 
 /-- Entry layouts come from their producer's actual types, not probe copies.
 The casts have the same trusted olean boundary as Lean's extension importer. -/
-private unsafe def registryRecords (data : ModuleData) : Json := Id.run do
+unsafe def registryRecords (moduleName : String) (data : ModuleData) : Json := Id.run do
   let mut finite := #[]
   let mut structural := #[]
   let mut seals := #[]
+  let mut bindings := #[]
   for (name, entries) in data.entries do
     let name := privateToUserName name
     if name == `LeanInformationAudit.informationRegistryExt then
@@ -113,8 +114,18 @@ private unsafe def registryRecords (data : ModuleData) : Json := Id.run do
       for raw in entries do
         let entry : SealArenaRecord := unsafeCast raw
         seals := seals.push (toJson entry.catalog.rootId.toString)
+    else if name == `LeanInformationAudit.TemplateBinding.occurrenceInventory then
+      for raw in entries do
+        let entry : TemplateOccurrenceEvent := unsafeCast raw
+        bindings := bindings.push <| Json.mkObj [
+          ("key", nameJson entry.key.theoremName), ("module", toJson moduleName)]
+    else if name == `LeanInformationAudit.TemplateBinding.bindingClaims then
+      for raw in entries do
+        let entry : TemplateBindingClaim := unsafeCast raw
+        bindings := bindings.push <| Json.mkObj [
+          ("key", nameJson entry.key.theoremName), ("module", toJson moduleName)]
   return Json.mkObj [("finite", Json.arr finite), ("structural", Json.arr structural),
-    ("seals", Json.arr seals)]
+    ("seals", Json.arr seals), ("bindings", Json.arr bindings)]
 
 @[noinline] private unsafe def emitData (moduleName part : String) (data : ModuleData)
     (keys : Std.HashSet Name) (out : IO.FS.Stream) : IO Unit := do
@@ -127,7 +138,7 @@ private unsafe def registryRecords (data : ModuleData) : Json := Id.run do
   out.putStrLn (Json.mkObj [("module", toJson moduleName), ("part", toJson part),
     ("is_module", toJson data.isModule), ("imports", Json.arr imports),
     ("owners", Json.arr #[]), ("named", Json.arr named),
-    ("registries", registryRecords data)]).compress
+    ("registries", registryRecords moduleName data)]).compress
 
   -- Statement identities for collisions are supplied by the standalone producer.
   for info in data.constants do

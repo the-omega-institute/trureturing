@@ -1,0 +1,6 @@
+**theorem 45.16（圆群与加法 Bohr 紧化的乘法障碍）。** 对无理数 $\alpha$，不存在连续映射 $F:\mathbb T^2\to\mathbb T$ 满足
+$$
+F([n\alpha],[m\alpha])=[nm\alpha]\qquad(n,m\in\mathbb N_0).
+$$
+整数加法群的 Bohr 紧化 $b\mathbb Z$ 也不能在保留原加法及自然核心、以自然生成元为乘法幺元的条件下配备联合连续半环乘法。Bohr 紧化的所用普遍性质见 Dikranjan，Theorem 9.2.11，printed pp. 60–61。[Dikranjan, Theorem 9.2.11, pp. 60–61](https://users.dimi.uniud.it/~dikran.dikranjan/ITG.pdf#page=65)
+

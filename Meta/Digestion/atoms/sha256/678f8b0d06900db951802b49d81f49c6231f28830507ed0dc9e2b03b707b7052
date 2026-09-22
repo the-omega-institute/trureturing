@@ -1,0 +1,2 @@
+**Proof.** Since rho(q)|P and q does not divide P, the classical Fibonacci valuation formula gives v_q(F_P)=h_q. In tot(F_P)=product p^(v_p(F_P)-1)(p-1), the contribution of p=q is h_q-1. Every other prime p contributes only v_q(p-1). This proves GAW4. If q divides tot(F_P), then it divides tot(F_(uP)) for every u>=1: F_P divides F_(uP), and A|B for positive integers implies tot(A)|tot(B), directly from prime factorization. The reverse implication takes u=1. Nonnegativity in GAW4, the actual WSS criterion h_q>=2 iff q_q=0, and p|F_P iff rho(p)|P prove GAW5.
+

@@ -1,0 +1,6 @@
+取预先固定的有限视界 $h\ge0$ 和深度计划 $\boldsymbol\ell=(\ell_0,\ldots,\ell_h)\in\mathbb N_0^{h+1}$，令
+$$
+\mathcal M_{\boldsymbol\ell}(\mu)
+=\bigl((q_{\ell_n})_\#U^n\mu\bigr)_{n=0}^h,
+\qquad q_L(x)=(x_0,\ldots,x_{L-1}).
+$$

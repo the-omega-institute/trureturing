@@ -1,0 +1,2 @@
+**Theorem.** For even n>=2, a(n) is even exactly when n-1 or n+1 is an odd square. For odd n>=3, a(n) is even exactly when n-2 or n+2 is an odd square. Moreover a(0)=1 and a(1)=2.
+

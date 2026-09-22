@@ -1,0 +1,59 @@
+{
+  "length": 11,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/003-mean_costs/000000-000002.json",
+        "sha256": "3b554deb057a617b62840b1a8005fd50c51a84e853f1b470f3984d16e780a174",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 4,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/003-mean_costs/000002-000004.json",
+        "sha256": "8ad6ba8a3603f11f193f13e9c505d3ce82527037440199b6ac9b1723f3a9c744",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 6,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/003-mean_costs/000004-000006.json",
+        "sha256": "e58c98e9771f94f7e424af9c037e2e4573151b19efbf0ab7b33653559f70f6cc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 8,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/003-mean_costs/000006-000008.json",
+        "sha256": "37b63227c47c682065771626a85bfd2fa20859c26bbab89d85622406eeb1c6a8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 10,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/003-mean_costs/000008-000010.json",
+        "sha256": "fdc6b8871801f5bacb985a84a5282b076fa60df14e3b9c4b07843ce50dc6a261",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10,
+      "stop": 11,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/003-mean_costs/000010-000011.json",
+        "sha256": "816720b41e7817be11339d9ee231c707ebe11a50bfcbf1204bc320013fb7f883",
+        "kind": "value"
+      }
+    }
+  ]
+}

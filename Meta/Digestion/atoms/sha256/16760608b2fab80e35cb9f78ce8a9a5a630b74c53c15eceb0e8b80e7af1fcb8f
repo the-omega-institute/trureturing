@@ -1,0 +1,12 @@
+### 16.5 定理：多允许一个隐藏模态的代价
+
+对每个固定 $d\geq1$，式 (16.5) 的直径满足
+
+\[
+\boxed{\Omega_d(\varepsilon)=\Theta_{d,E_-,E_+,\eta}(\varepsilon^{1/(2d)})}
+\qquad(\varepsilon\downarrow0).
+\tag{16.9}
+\]
+
+下界只需令竞争模型属于 $\mathcal M_{d+1}$，不需要任意大的模式数。
+

@@ -1,0 +1,57 @@
+**定理 14.2（减法的有限逃逸、实际参数切片与分别连续性的障碍）。** 对每个非平凡输出指标 $\alpha\in I\setminus\{(0,1)\}$，都有
+$$
+\forall\beta,\gamma\in I\quad \exists n,n',m,m'\in\mathbb{N},\quad
+n\mathrel{R_\beta}n'
+\quad \land\quad m\mathrel{R_\gamma}m'
+\quad \land\quad q_\alpha(F(n,m))\ne q_\alpha(F(n',m')).
+$$
+对于 $\alpha=(0,1)$，截断减法的输出读数恒定，这是唯一例外。严格总响应则对每个输出指标，包括 $(0,1)$，都有
+$$
+\forall\alpha\in I\quad \forall\beta,\gamma\in I\quad \exists n,n',m,m'\in\mathbb{N},\quad
+n\mathrel{R_\beta}n'
+\quad \land\quad m\mathrel{R_\gamma}m'
+\quad \land\pi_\alpha^\perp(D(n,m))\ne\pi_\alpha^\perp(D(n',m')).
+$$
+因而不存在分别延拓 $\iota\circ F$ 与 $D$ 的联合连续映射
+$$
+K^2\longrightarrow K,
+\qquad
+K^2\longrightarrow K^\perp.
+$$
+这些失败结论在仅采用保幂输入精度的系统中仍成立。
+
+然而，对每个固定实际参数 $c\in\mathbb{N}$，以下四个一元映射都具有唯一连续延拓：
+$$
+n\longmapsto\iota(F(n,c)),
+\qquad
+m\longmapsto\iota(F(c,m)),
+$$
+$$
+n\longmapsto D(n,c),
+\qquad
+m\longmapsto D(c,m).
+$$
+对于指定输出指标 $\alpha=(t,p)$，第一槽变化的两个映射可使用输入精度 $(t+c,p)$；第二槽变化的两个映射可使用输入精度 $(c+1,1)$。在 $J$ 中，把这两个指标分别替换为其 $\kappa$ 细化仍足够。
+
+尽管上述所有实际参数切片都能延拓，两个二元响应均不存在定义于整个 $K^2$ 的分别连续延拓。具体地，令 $s_k=k!$，则存在
+$$
+\omega=\lim_{k\to\infty}\iota(s_k)\ne\iota(0).
+$$
+记
+$$
+f_{k,l}=\iota(F(s_k,s_l)),
+\qquad
+d_{k,l}=D(s_k,s_l).
+$$
+下面每个内层与外层极限都存在，但
+$$
+\lim_{l\to\infty}\lim_{k\to\infty}f_{k,l}=\omega,
+\qquad
+\lim_{k\to\infty}\lim_{l\to\infty}f_{k,l}=\iota(0),
+$$
+$$
+\lim_{l\to\infty}\lim_{k\to\infty}d_{k,l}=\operatorname{ok}(\omega),
+\qquad
+\lim_{k\to\infty}\lim_{l\to\infty}d_{k,l}=\perp.
+$$
+

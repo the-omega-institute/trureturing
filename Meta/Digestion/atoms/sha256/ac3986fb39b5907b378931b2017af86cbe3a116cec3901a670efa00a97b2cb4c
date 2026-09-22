@@ -1,0 +1,8 @@
+**Proof for even n.** Since 4 divides n^2 and F_4=3, U.1 gives
+
+\[
+v_3(F_{n^2})=1+v_3(n^2/4)=1+2v_3(n),
+\]
+
+which is odd. Hence 3 divides a(n). If a(n) is prime, it equals 3=s(4). The square-class theorem forces n^2=4, because the square class of F_4 is a singleton. Thus n=2.
+

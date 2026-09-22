@@ -1,0 +1,48 @@
+#### 134.6.6 后承翻译的保持、反射与闭理论伴随
+
+对一般句子映射 $\tau:\Sigma\to\Sigma'$，后承保持指
+
+$$
+\tau[\operatorname{Cn}(\Gamma)]
+\subseteq\operatorname{Cn}'(\tau[\Gamma])
+\quad\text{对每个 }\Gamma\subseteq\Sigma.
+$$
+
+它等价于每个目标闭理论的原像仍是源闭理论。证明如下：若保持成立，对闭理论 $T'$ 取 $\Gamma=\tau^{-1}[T']$，得到 $\tau[\operatorname{Cn}(\Gamma)]\subseteq T'$，所以 $\operatorname{Cn}(\Gamma)\subseteq\Gamma$，结合广延性得闭合。反之，给任意 $\Gamma$，取 $T'=\operatorname{Cn}'(\tau[\Gamma])$。原像闭合且包含 $\Gamma$，所以包含 $\operatorname{Cn}(\Gamma)$，这正是保持式。
+
+在保持条件下，闭理论格之间定义
+
+$$
+L(T)=\operatorname{Cn}'(\tau[T]),\qquad
+R(T')=\tau^{-1}[T'].
+$$
+
+两者确实取闭理论值，并满足
+
+$$
+L(T)\subseteq T'
+\quad\Longleftrightarrow\quad
+T\subseteq R(T').
+$$
+
+前一步等价于 $\tau[T]\subseteq T'$，因为 $T'$ 闭合；后一步是像与原像的定义。因此这是一对有明确方向的序伴随。
+
+后承反射是另一项条件：
+
+$$
+\tau^{-1}[\operatorname{Cn}'(\tau[\Gamma])]
+\subseteq\operatorname{Cn}(\Gamma).
+$$
+
+保持给出相反包含，故同时保持与反射当且仅当这两个集合相等。在这种情形，对每个源闭理论 $T$ 有 $R(L(T))=T$，所以 $L$ 是序嵌入；这仍不保证每个目标闭理论都来自源理论。
+
+若 $\sigma:\Sigma'\to\Sigma''$ 也保持后承，则
+
+$$
+\sigma\tau[\operatorname{Cn}(\Gamma)]
+\subseteq\sigma[\operatorname{Cn}'(\tau[\Gamma])]
+\subseteq\operatorname{Cn}''(\sigma\tau[\Gamma]),
+$$
+
+所以复合保持。若两者也反射，则由 $\sigma\tau(\varphi)\in\operatorname{Cn}''(\sigma\tau[\Gamma])$ 先反射到 $\tau(\varphi)\in\operatorname{Cn}'(\tau[\Gamma])$，再反射到 $\varphi\in\operatorname{Cn}(\Gamma)$，故复合反射。恒等翻译逐式满足两条件。这里每个方向都有自己的证明；一个语法翻译的存在不替代这些合同。
+

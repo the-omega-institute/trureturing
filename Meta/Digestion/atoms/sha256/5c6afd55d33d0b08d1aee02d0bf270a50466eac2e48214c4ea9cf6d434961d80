@@ -1,0 +1,16 @@
+**定义 25.8（全部候选核的显式构造）。** 取参数集合
+$$
+\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\}.
+$$
+$\infty$ 是另加的形式符号，不表示任何极限。对有限参数 $t$，采用定理25.7的 $p_m,c_{m,n}$；对参数 $\infty$，另行定义 $p_m=1,c_{m,n}=-1$。由这些系数和定理25.5组成实际基，并在该基上定义
+$$
+\pi_\theta*_t\pi_\rho=\pi_{\theta+\rho},\qquad
+\pi_\theta*_t v_m=v_m*_t\pi_\theta=0_A,\qquad
+v_m*_t v_n=c_{m,n}v_{m+n}.
+$$
+双线性扩张后，定义
+$$
+P^{(t)}_{x,y}=\delta_x*_t\delta_y.
+$$
+每个参数的 $\pi_\theta,p_m,c_{m,n}$ 均取该参数自己的值。
+

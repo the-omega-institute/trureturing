@@ -1,0 +1,786 @@
+[
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      0,
+      0,
+      4
+    ],
+    "affine_upper": "760393/3969000",
+    "strongest_available_old_upper": "760393/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      0,
+      1,
+      2
+    ],
+    "affine_upper": "760393/3969000",
+    "strongest_available_old_upper": "760393/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      0,
+      1,
+      3
+    ],
+    "affine_upper": "759583/3969000",
+    "strongest_available_old_upper": "759583/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      0,
+      1,
+      4
+    ],
+    "affine_upper": "763633/3969000",
+    "strongest_available_old_upper": "763633/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      0,
+      0
+    ],
+    "affine_upper": "761203/3969000",
+    "strongest_available_old_upper": "761203/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      0,
+      1
+    ],
+    "affine_upper": "764443/3969000",
+    "strongest_available_old_upper": "764443/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      0,
+      2
+    ],
+    "affine_upper": "764443/3969000",
+    "strongest_available_old_upper": "764443/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      0,
+      3
+    ],
+    "affine_upper": "763633/3969000",
+    "strongest_available_old_upper": "763633/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      0,
+      4
+    ],
+    "affine_upper": "764443/3969000",
+    "strongest_available_old_upper": "764443/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      1,
+      0
+    ],
+    "affine_upper": "761203/3969000",
+    "strongest_available_old_upper": "761203/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      1,
+      1
+    ],
+    "affine_upper": "761203/3969000",
+    "strongest_available_old_upper": "761203/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      1,
+      2
+    ],
+    "affine_upper": "764443/3969000",
+    "strongest_available_old_upper": "764443/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      1,
+      3
+    ],
+    "affine_upper": "763633/3969000",
+    "strongest_available_old_upper": "763633/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      1,
+      1,
+      4
+    ],
+    "affine_upper": "15667/81000",
+    "strongest_available_old_upper": "15667/81000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      1
+    ],
+    "affine_upper": "759583/3969000",
+    "strongest_available_old_upper": "759583/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      2
+    ],
+    "affine_upper": "759583/3969000",
+    "strongest_available_old_upper": "759583/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      3
+    ],
+    "affine_upper": "758773/3969000",
+    "strongest_available_old_upper": "758773/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      2,
+      0,
+      4
+    ],
+    "affine_upper": "759583/3969000",
+    "strongest_available_old_upper": "759583/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      2,
+      1,
+      2
+    ],
+    "affine_upper": "759583/3969000",
+    "strongest_available_old_upper": "759583/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      2,
+      1,
+      3
+    ],
+    "affine_upper": "758773/3969000",
+    "strongest_available_old_upper": "758773/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      2,
+      1,
+      4
+    ],
+    "affine_upper": "762823/3969000",
+    "strongest_available_old_upper": "762823/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      1
+    ],
+    "affine_upper": "759853/3969000",
+    "strongest_available_old_upper": "759853/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      2
+    ],
+    "affine_upper": "759853/3969000",
+    "strongest_available_old_upper": "759853/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      3
+    ],
+    "affine_upper": "759043/3969000",
+    "strongest_available_old_upper": "759043/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      3,
+      0,
+      4
+    ],
+    "affine_upper": "759853/3969000",
+    "strongest_available_old_upper": "759853/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      3,
+      1,
+      2
+    ],
+    "affine_upper": "759853/3969000",
+    "strongest_available_old_upper": "759853/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      3,
+      1,
+      3
+    ],
+    "affine_upper": "759043/3969000",
+    "strongest_available_old_upper": "759043/3969000",
+    "maximizing_late_coordinate": "1"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      4,
+      2,
+      1,
+      4,
+      0,
+      2
+    ],
+    "projection441_735": [
+      3,
+      1,
+      4
+    ],
+    "affine_upper": "763093/3969000",
+    "strongest_available_old_upper": "763093/3969000",
+    "maximizing_late_coordinate": "1"
+  }
+]

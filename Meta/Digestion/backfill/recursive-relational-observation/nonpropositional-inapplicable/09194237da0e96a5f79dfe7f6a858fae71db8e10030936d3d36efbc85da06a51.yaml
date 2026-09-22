@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:09194237da0e96a5f79dfe7f6a858fae71db8e10030936d3d36efbc85da06a51
+  normalized_sha256: sha256:09194237da0e96a5f79dfe7f6a858fae71db8e10030936d3d36efbc85da06a51
+cas_ref: sha256:09194237da0e96a5f79dfe7f6a858fae71db8e10030936d3d36efbc85da06a51
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条约定数字载体、相位、闭图以及全域选择和结合性的含义，仅建立本节语言，不宣称选择存在或分类定理成立，属于没有独立待证结论的定义材料。
+    previous_atom_id: bee09517d3f2897051fd052425d821ff9b4df5d04d95178c6bbb8b9c88341e75
+    next_atom_id: a85ddcd10885bfeaeb1da36edd31956b661a6e8a71ec19cc6b711a6b9cd46b43

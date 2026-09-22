@@ -1,0 +1,12 @@
+**Lemma RP1.** The map depends only on x modulo 25 and satisfies
+
+$$
+\lambda_5(xy)=\lambda_5(x)+\lambda_5(y),\quad
+\lambda_5(x^h)=h\lambda_5(x),\quad
+\lambda_5(2)=3,\quad \lambda_5(1+5u)=4u\pmod5.
+$$
+
+It extends to ratios of integers coprime to five by subtraction. Its
+kernel in $(\mathbb Z/25\mathbb Z)^\times$ is $\{1,7,18,24\}$.
+The pair $(x\bmod5,\lambda_5(x))$ determines x modulo 25 uniquely.
+

@@ -1,0 +1,12 @@
+**Proof.** Put u=phi^n and v=psi^n. Since n is odd, uv=-1 and
+$(u-v)^2=5F_n^2$. The quotients
+$(u^{2a+1}-v^{2a+1})/(u-v)$ have initial values 1 and
+$u^2+uv+v^2=5F_n^2-3$; their two-step recurrence has coefficient
+$u^2+v^2=5F_n^2-2$ and constant determinant $(uv)^2=1$.
+This proves the first identity. Setting X=0 gives the second.
+Differentiating the polynomial recurrence gives
+$d_{a+2}=P_{a+1}(0)-2d_{a+1}-d_a$, with d_0=0,d_1=1.
+Induction yields $6d_a=(-1)^{a+1}a(a+1)(2a+1)$, equivalent to RP7.
+These are polynomial identities over the integers, not formal division
+by the nonunit five.
+
