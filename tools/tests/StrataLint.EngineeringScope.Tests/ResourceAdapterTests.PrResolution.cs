@@ -13,7 +13,7 @@ public sealed partial class ResourceAdapterTests
     {
         using var fixture = new ResourceRouteTests.ResourceFixture(required ? ["filemap"] : []);
         fixture.PrPlan();
-        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^2");
+        var head = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^2");
 
         var resolved = ResolvePullRequest(fixture, head, fixture.Commit);
 
@@ -37,7 +37,7 @@ public sealed partial class ResourceAdapterTests
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         fixture.PrPlan();
-        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^2");
+        var head = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^2");
         File.AppendAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"), "# uncommitted declaration\n");
 
         var resolved = ResolvePullRequest(fixture, head, fixture.Commit);
@@ -57,7 +57,7 @@ public sealed partial class ResourceAdapterTests
         for (var index = 0; index < count; index++)
             fixture.Write($"docs/{index:D4}-{new string('x', 160)}.md", "registered documentation\n");
         fixture.PrPlan();
-        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^2");
+        var head = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^2");
         var resolved = ResolvePullRequest(fixture, head, fixture.Commit);
         Assert.True(resolved.Exit == 0, resolved.Text);
         var outputs = File.ReadAllBytes(Path.Combine(fixture.Root, "build/adapter-output"));
@@ -73,8 +73,8 @@ public sealed partial class ResourceAdapterTests
 
         // Recreate a downstream checkout and move only the artifact's two files.
         var downstream = Path.Combine(fixture.Root, "build/downstream checkout");
-        SharedBuildContractTests.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, downstream);
-        SharedBuildContractTests.Git(downstream, "checkout", "--detach", fixture.Commit);
+        EngineeringProcess.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, downstream);
+        EngineeringProcess.Git(downstream, "checkout", "--detach", fixture.Commit);
         var destination = Path.Combine(downstream, "build/ci");
         Directory.CreateDirectory(destination);
         foreach (var name in new[] { "plan", "changes" })
@@ -85,10 +85,10 @@ public sealed partial class ResourceAdapterTests
         environment["CI_WORKFLOW_INPUTS"] = new JsonObject { ["candidate_sha"] = fixture.Commit }.ToJsonString();
         environment["GITHUB_EVENT_NAME"] = "pull_request";
         environment["GITHUB_SHA"] = fixture.Commit;
-        var basis = SharedBuildContractTests.Git(downstream, "rev-parse", "HEAD^1");
+        var basis = EngineeringProcess.Git(downstream, "rev-parse", "HEAD^1");
         foreach (var stage in new[] { "build", "engineering", "current", "delta" })
         {
-            var routed = SharedBuildContractTests.Process(downstream, "python3",
+            var routed = EngineeringProcess.Process(downstream, "python3",
                 ["-B", "tools/scripts/workflow/ci.py", "stage-input", "--repository", downstream,
                     "--commit", fixture.Commit, "--stage", stage, .. stage == "delta" ? new[] { "--base", basis } : []],
                 environment, TestBudgets.WorkflowProcessHangGuard);
@@ -121,7 +121,7 @@ public sealed partial class ResourceAdapterTests
             "newline" => fixture.Commit + "\n",
             _ => "",
         };
-        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^2");
+        var head = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^2");
         var result = ResolvePullRequest(fixture, head, value, unsetEvent: defect == "missing");
         AssertUnpublishedResolution(fixture, result,
             "pull request event GITHUB_SHA must be a nonzero immutable 40-hex commit");
@@ -133,15 +133,15 @@ public sealed partial class ResourceAdapterTests
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         fixture.PrPlan();
         var (basis, head, moved) = MovePullRequestMerge(fixture);
-        SharedBuildContractTests.Git(fixture.Root, "reset", "--hard", "refs/pull/17/merge");
-        SharedBuildContractTests.Git(fixture.Root, "remote", "add", "origin", Path.Combine(fixture.Root, "unused-origin.git"));
-        SharedBuildContractTests.Git(fixture.Root, "update-ref", "refs/remotes/origin/dev", basis);
+        EngineeringProcess.Git(fixture.Root, "reset", "--hard", "refs/pull/17/merge");
+        EngineeringProcess.Git(fixture.Root, "remote", "add", "origin", Path.Combine(fixture.Root, "unused-origin.git"));
+        EngineeringProcess.Git(fixture.Root, "update-ref", "refs/remotes/origin/dev", basis);
 
         var result = ResolvePullRequest(fixture, head, fixture.Commit);
         AssertUnpublishedResolution(fixture, result, "checkout does not match pull request event GITHUB_SHA");
-        Assert.Equal(moved, SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD"));
-        Assert.Equal("origin", SharedBuildContractTests.Git(fixture.Root, "remote"));
-        Assert.Equal(basis, SharedBuildContractTests.Git(fixture.Root, "rev-parse", "refs/remotes/origin/dev"));
+        Assert.Equal(moved, EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD"));
+        Assert.Equal("origin", EngineeringProcess.Git(fixture.Root, "remote"));
+        Assert.Equal(basis, EngineeringProcess.Git(fixture.Root, "rev-parse", "refs/remotes/origin/dev"));
     }
 
     [Fact]
@@ -171,14 +171,14 @@ public sealed partial class ResourceAdapterTests
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         fixture.PrPlan();
-        var wrongHead = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        var wrongHead = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         var result = ResolvePullRequest(fixture, wrongHead, fixture.Commit);
         AssertUnpublishedResolution(fixture, result, "does not contain the triggering PR head");
     }
 
     private static (string Basis, string Head, string Moved) MovePullRequestMerge(ResourceRouteTests.ResourceFixture fixture)
     {
-        string Git(params string[] arguments) => SharedBuildContractTests.Git(fixture.Root, arguments);
+        string Git(params string[] arguments) => EngineeringProcess.Git(fixture.Root, arguments);
         string CommitTree(params string[] arguments) => Git(["-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit-tree", .. arguments]);
         var basis = Git("rev-parse", "HEAD^1");
         var head = Git("rev-parse", "HEAD^2");
@@ -198,7 +198,7 @@ public sealed partial class ResourceAdapterTests
         var environment = EnvironmentFor(fixture);
         environment["GITHUB_EVENT_NAME"] = "pull_request";
         environment["GITHUB_SHA"] = eventCandidate;
-        return SharedBuildContractTests.Process(fixture.Root, "/usr/bin/env",
+        return EngineeringProcess.Process(fixture.Root, "/usr/bin/env",
             [.. unsetEvent ? new[] { "-u", "GITHUB_SHA" } : [], "python3", "-B", "tools/scripts/workflow/ci.py",
                 "resolve", "--repository", fixture.Root, "--head", head], environment, TestBudgets.WorkflowProcessHangGuard);
     }

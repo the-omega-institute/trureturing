@@ -14,7 +14,7 @@ public sealed class ColdPreflightContractTests
     public void RepeatedValidationReusesObjectsButChecksLiveDeclarations()
     {
         using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
-        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "-c", """
             import collections, json, pathlib, sys
             sys.path.insert(0, str(pathlib.Path.cwd() / 'tools/scripts/workflow'))
             import ci_plan as planner
@@ -106,7 +106,7 @@ public sealed class ColdPreflightContractTests
             environment["CI_PUSH_BEFORE"] = baseline;
             environment["CI_PUSH_AFTER"] = fixture.Commit;
         }
-        var result = SharedBuildContractTests.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
+        var result = EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
         Assert.Equal(ambientHash, System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(ambientConfig)));
         ReleaseConsumerContractTests.Capture(fixture.Root, "cold-" + mode + "-" + resource, result);
         var root = fixture.Root;
@@ -214,7 +214,7 @@ public sealed class ColdPreflightContractTests
         Assert.Contains("NU1100", missing.Text, StringComparison.Ordinal);
         Assert.DoesNotContain("NU1301", missing.Text, StringComparison.Ordinal);
 
-        (int Exit, string Text) Restore() => SharedBuildContractTests.Process(fixture.Root, "dotnet",
+        (int Exit, string Text) Restore() => EngineeringProcess.Process(fixture.Root, "dotnet",
             ["restore", project, "--locked-mode", "-nr:false"], environment);
     }
 
@@ -250,7 +250,7 @@ public sealed class ColdPreflightContractTests
     {
         var bin = Path.Combine(fixture.Root, "build/cold-bin");
         Directory.CreateDirectory(bin);
-        var realDotnet = SharedBuildContractTests.Process(fixture.Root, "/bin/bash", ["-c", "command -v dotnet"]).Text.Trim();
+        var realDotnet = EngineeringProcess.Process(fixture.Root, "/bin/bash", ["-c", "command -v dotnet"]).Text.Trim();
         File.WriteAllText(Path.Combine(bin, "dotnet"), """
             #!/bin/bash
             set -euo pipefail

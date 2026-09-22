@@ -233,7 +233,7 @@ public sealed class PackageMaterialRegistryTests
             var archive = Path.Combine(fixture.Root, "build/" + name + ".tgz");
             using var output = new StringWriter();
             Assert.Equal(0, Program.Run(["transport-pack", "--repository", fixture.Root, "--stage", "build", "--commit",
-                SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD"), "--run-id", "17", "--run-attempt", "2", "--archive", archive],
+                EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD"), "--run-id", "17", "--run-attempt", "2", "--archive", archive],
                 TestResultEvidence.Load, output, output));
             using var stream = File.OpenRead(archive);
             using var gzip = new GZipStream(stream, CompressionMode.Decompress);
@@ -284,8 +284,8 @@ public sealed class PackageMaterialRegistryTests
                 (CurrentExecutionContractTests.CandidateFixture.Second, typeof(EngineeringProjectFixture).Assembly.Location) })
                 Project(project, Path.GetDirectoryName(project) + "/bin/Release/net10.0/" + Path.GetFileName(binary), binary, true);
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(registrations.ToArray()));
-            SharedBuildContractTests.Git(Root, "add", ".");
-            SharedBuildContractTests.Git(Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "package collection fixture");
+            EngineeringProcess.Git(Root, "add", ".");
+            EngineeringProcess.Git(Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "package collection fixture");
 
             void Project(string project, string assembly, string source, bool test)
             {

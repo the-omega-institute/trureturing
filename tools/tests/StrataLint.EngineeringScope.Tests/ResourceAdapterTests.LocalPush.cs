@@ -25,10 +25,10 @@ public sealed partial class ResourceAdapterTests
         if (change == "delete") File.Delete(Path.Combine(fixture.Root, oldPath));
         else if (change == "rename") File.Move(Path.Combine(fixture.Root, oldPath), Path.Combine(fixture.Root, newPath));
         else fixture.Write(change == "untracked" ? "fixtures/untracked.txt" : oldPath, "effective local bytes\n");
-        if (change == "staged") SharedBuildContractTests.Git(fixture.Root, "add", oldPath);
+        if (change == "staged") EngineeringProcess.Git(fixture.Root, "add", oldPath);
         if (change == "staged-then-unstaged")
         {
-            SharedBuildContractTests.Git(fixture.Root, "add", oldPath);
+            EngineeringProcess.Git(fixture.Root, "add", oldPath);
             fixture.Write(oldPath, "working bytes override staged bytes\n");
         }
         var state = LocalState(fixture);
@@ -48,8 +48,8 @@ public sealed partial class ResourceAdapterTests
         {
             var endpoint = PushScope(fixture)["origin"]!["worktree"]!.AsArray()
                 .Single(row => row!["new"]?["path"]?.ToString() == oldPath)!["new"]!;
-            Assert.Equal(SharedBuildContractTests.Git(fixture.Root, "hash-object", "--", oldPath), endpoint["oid"]!.ToString());
-            Assert.NotEqual(SharedBuildContractTests.Git(fixture.Root, "rev-parse", ":" + oldPath), endpoint["oid"]!.ToString());
+            Assert.Equal(EngineeringProcess.Git(fixture.Root, "hash-object", "--", oldPath), endpoint["oid"]!.ToString());
+            Assert.NotEqual(EngineeringProcess.Git(fixture.Root, "rev-parse", ":" + oldPath), endpoint["oid"]!.ToString());
         }
         Assert.Equal(new[] { "dotnet filemap-conform" }, File.ReadAllLines(Path.Combine(fixture.Root, "build/launched")));
         var current = CommonExecutionEvidence.ValidateCurrent(fixture.Root);
@@ -97,7 +97,7 @@ public sealed partial class ResourceAdapterTests
         using var fixture = LocalFixture();
         DocCommit(fixture);
         fixture.Write(change == "untracked" ? "docs/untracked.md" : "docs/note.md", "local documentation\n");
-        if (change == "staged") SharedBuildContractTests.Git(fixture.Root, "add", "docs/note.md");
+        if (change == "staged") EngineeringProcess.Git(fixture.Root, "add", "docs/note.md");
         var state = LocalState(fixture);
         var environment = LocalEnvironment(fixture, required: false);
         environment["BASE"] = fixture.Commit;
@@ -284,7 +284,7 @@ public sealed partial class ResourceAdapterTests
         fixture.CommitPlan();
         DocCommit(fixture);
         fixture.Write("fixtures/staged.txt", "staged input\n");
-        SharedBuildContractTests.Git(fixture.Root, "add", "fixtures/staged.txt");
+        EngineeringProcess.Git(fixture.Root, "add", "fixtures/staged.txt");
         fixture.Write("fixtures/selected.txt", "unstaged final bytes\n");
         fixture.Write("fixtures/untracked.txt", "untracked input\n");
         File.Delete(Path.Combine(fixture.Root, "fixtures/deleted.txt"));
@@ -311,7 +311,7 @@ public sealed partial class ResourceAdapterTests
         plan = PushSelection(fixture);
         Assert.Equal("local-current-input", plan["origin"]!["kind"]!.ToString());
         // Whole-input planning also retains removed dirty endpoints for ownership.
-        Assert.Equal(SharedBuildContractTests.Git(fixture.Root, "ls-files", "--cached", "--others", "--exclude-standard", "-z")
+        Assert.Equal(EngineeringProcess.Git(fixture.Root, "ls-files", "--cached", "--others", "--exclude-standard", "-z")
             .Split('\0', StringSplitOptions.RemoveEmptyEntries)
             .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal), Strings(plan["paths"]!, "path").Order(StringComparer.Ordinal));
         Assert.Contains("fixtures/unchanged.txt", Strings(plan["paths"]!, "path"));
@@ -355,7 +355,7 @@ public sealed partial class ResourceAdapterTests
     {
         var environment = required ? ColdPreflightContractTests.EnvironmentFor(fixture) : EnvironmentFor(fixture);
         environment["MODE"] = "push";
-        environment["BASE"] = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        environment["BASE"] = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         environment["CI_PUSH_BEFORE"] = "";
         environment["CI_PUSH_AFTER"] = "";
         environment["CANDIDATE_SHA"] = "";
@@ -367,14 +367,14 @@ public sealed partial class ResourceAdapterTests
     }
 
     private static (int Exit, string Text) LocalPreflight(ResourceRouteTests.ResourceFixture fixture, Dictionary<string, string> environment) =>
-        SharedBuildContractTests.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
+        EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
 
     private static string LocalState(ResourceRouteTests.ResourceFixture fixture)
     {
-        var paths = SharedBuildContractTests.Git(fixture.Root, "ls-files", "--cached", "--others", "--exclude-standard", "-z").Split('\0', StringSplitOptions.RemoveEmptyEntries);
+        var paths = EngineeringProcess.Git(fixture.Root, "ls-files", "--cached", "--others", "--exclude-standard", "-z").Split('\0', StringSplitOptions.RemoveEmptyEntries);
         var state = new JsonObject {
-            ["head"] = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD"),
-            ["status"] = SharedBuildContractTests.Git(fixture.Root, "--no-optional-locks", "status", "--porcelain", "--untracked-files=all"),
+            ["head"] = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD"),
+            ["status"] = EngineeringProcess.Git(fixture.Root, "--no-optional-locks", "status", "--porcelain", "--untracked-files=all"),
             ["index"] = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(Path.Combine(fixture.Root, ".git/index")))),
         };
         foreach (var path in paths.Order(StringComparer.Ordinal))

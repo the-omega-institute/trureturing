@@ -29,10 +29,10 @@ public sealed partial class ResourceAdapterTests
                 : line));
         fixture.Write("Meta/FILEMAP.toml", historical);
         fixture.Write("retired/old.txt", "registered historical input\n");
-        SharedBuildContractTests.Git(fixture.Root, "add", ".");
-        SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        EngineeringProcess.Git(fixture.Root, "add", ".");
+        EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
             "commit", "-qm", "historical capability");
-        var before = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var before = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         fixture.Write("Meta/FILEMAP.toml", original);
         File.Delete(Path.Combine(fixture.Root, "retired/old.txt"));
         fixture.CommitPlan();
@@ -71,10 +71,10 @@ public sealed partial class ResourceAdapterTests
         Assert.NotEqual(original, withAlias);
         fixture.Write("Meta/FILEMAP.toml", withAlias.Replace("require = [\"filemap\"]", "require = [\"zz-retired-check\"]", StringComparison.Ordinal));
         fixture.Write("retired/old.txt", "registered historical input\n");
-        SharedBuildContractTests.Git(fixture.Root, "add", ".");
-        SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        EngineeringProcess.Git(fixture.Root, "add", ".");
+        EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
             "commit", "-qm", "historical resource name");
-        var before = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var before = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         fixture.Write("Meta/FILEMAP.toml", registered ? withAlias : original);
         if (registered)
         {
@@ -143,11 +143,11 @@ public sealed partial class ResourceAdapterTests
     public void PushOriginInitialTreeUsesRegisteredResourcesWithoutParentOrRemote(bool required)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture(required ? ["filemap"] : []);
-        var tree = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^{tree}");
-        var root = SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        var tree = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^{tree}");
+        var root = EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
             "commit-tree", tree, "-m", "initial candidate");
-        SharedBuildContractTests.Git(fixture.Root, "reset", "--hard", root);
-        Assert.Empty(SharedBuildContractTests.Git(fixture.Root, "remote"));
+        EngineeringProcess.Git(fixture.Root, "reset", "--hard", root);
+        Assert.Empty(EngineeringProcess.Git(fixture.Root, "remote"));
         var result = PushPlan(fixture, new string('0', 40));
         Assert.True(result.Exit == 0, result.Text);
         var scope = PushScope(fixture);
@@ -184,7 +184,7 @@ public sealed partial class ResourceAdapterTests
         fixture.CommitPlan();
         var parent = fixture.Commit;
         if (change == "modify") fixture.Write(oldPath, "changed required input\n");
-        else if (change == "mode") SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", oldPath]);
+        else if (change == "mode") EngineeringProcess.Process(fixture.Root, "/bin/chmod", ["+x", oldPath]);
         else if (change == "delete") File.Delete(Path.Combine(fixture.Root, oldPath));
         else
         {
@@ -274,11 +274,11 @@ public sealed partial class ResourceAdapterTests
     public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
-        var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        var parent = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         if (defect == "missing-packed") PackParent(fixture, parent);
         if (defect == "shallow") fixture.Write(".git/shallow", fixture.Commit + "\n");
         else if (defect is "missing" or "missing-packed") fixture.RemoveObject(parent);
-        else parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", parent + "^1");
+        else parent = EngineeringProcess.Git(fixture.Root, "rev-parse", parent + "^1");
         var result = PushPlan(fixture, parent);
         if (defect == "shallow")
         {
@@ -309,20 +309,20 @@ public sealed partial class ResourceAdapterTests
     public void PushMissingPromisorParentFailsWithoutContactingRemote(bool packed)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
-        var parent = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        var parent = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         if (packed) PackParent(fixture, parent);
         fixture.RemoveObject(parent);
-        SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.url", "push-probe::unavailable");
-        SharedBuildContractTests.Git(fixture.Root, "config", "remote.origin.promisor", "true");
+        EngineeringProcess.Git(fixture.Root, "config", "remote.origin.url", "push-probe::unavailable");
+        EngineeringProcess.Git(fixture.Root, "config", "remote.origin.promisor", "true");
         var environment = EnvironmentFor(fixture);
         SetPushEvent(fixture, environment, parent);
         var helper = Path.Combine(environment["PATH"], "git-remote-push-probe");
         File.WriteAllText(helper, "#!/bin/bash\nprintf 'contacted\\n' > \"$PUSH_REMOTE_PROBE\"\nexit 1\n");
-        SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", helper]);
+        EngineeringProcess.Process(fixture.Root, "/bin/chmod", ["+x", helper]);
         var contacted = Path.Combine(fixture.Root, "build/remote-contacted");
         environment["PUSH_REMOTE_PROBE"] = contacted;
         environment["GIT_NO_LAZY_FETCH"] = "0";
-        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
+        var result = EngineeringProcess.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
             ["-B", "tools/scripts/workflow/ci.py", "push-plan", "--repository", fixture.Root], environment,
             TestBudgets.WorkflowProcessHangGuard);
         Assert.Equal(2, result.Exit);
@@ -333,22 +333,22 @@ public sealed partial class ResourceAdapterTests
 
     private static void PackParent(ResourceRouteTests.ResourceFixture fixture, string parent)
     {
-        SharedBuildContractTests.Git(fixture.Root, "-c", "gc.autoDetach=false", "maintenance", "run", "--task=gc");
+        EngineeringProcess.Git(fixture.Root, "-c", "gc.autoDetach=false", "maintenance", "run", "--task=gc");
         Assert.False(File.Exists(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..])));
         Assert.NotEmpty(Directory.GetFiles(Path.Combine(fixture.Root, ".git/objects/pack"), "*.pack"));
-        Assert.Equal("commit", SharedBuildContractTests.Git(fixture.Root, "cat-file", "-t", parent));
-        Console.WriteLine("PACKED_PARENT " + parent + "\n" + SharedBuildContractTests.Git(fixture.Root, "count-objects", "-v"));
+        Assert.Equal("commit", EngineeringProcess.Git(fixture.Root, "cat-file", "-t", parent));
+        Console.WriteLine("PACKED_PARENT " + parent + "\n" + EngineeringProcess.Git(fixture.Root, "count-objects", "-v"));
     }
 
     [Fact]
     public void DirectCurrentKeepsWorkingTreeExecutionWithoutImplicitPushScheduling()
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
-        var tree = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^{tree}");
-        var parentless = SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        var tree = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^{tree}");
+        var parentless = EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
             "commit-tree", tree, "-m", "direct current without ancestry");
-        SharedBuildContractTests.Git(fixture.Root, "reset", "--hard", parentless);
-        Assert.Empty(SharedBuildContractTests.Git(fixture.Root, "remote"));
+        EngineeringProcess.Git(fixture.Root, "reset", "--hard", parentless);
+        Assert.Empty(EngineeringProcess.Git(fixture.Root, "remote"));
         var environment = EnvironmentFor(fixture);
         environment["GITHUB_EVENT_NAME"] = "";
         environment["GITHUB_EVENT_PATH"] = "";
@@ -358,7 +358,7 @@ public sealed partial class ResourceAdapterTests
         fixture.Write("tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "fixture");
         var dotnet = Path.Combine(environment["PATH"], "dotnet");
         File.WriteAllText(dotnet, "#!/bin/bash\nprintf '%s\\n' \"$@\" > build/native-arguments\nexit 1\n");
-        SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", dotnet]);
+        EngineeringProcess.Process(fixture.Root, "/bin/chmod", ["+x", dotnet]);
         var result = Shell(fixture, ["current"], environment);
         Assert.True(result.Exit == 1, result.Text);
         var arguments = File.ReadAllLines(Path.Combine(fixture.Root, "build/native-arguments"));
@@ -380,7 +380,7 @@ public sealed partial class ResourceAdapterTests
         if (invocation == "native-missing-event") environment["GITHUB_EVENT_NAME"] = "push";
         else
         {
-            SetPushEvent(fixture, environment, SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1"));
+            SetPushEvent(fixture, environment, EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1"));
             if (invocation == "reusable-event")
             {
                 environment["GITHUB_EVENT_NAME"] = "pull_request";
@@ -392,7 +392,7 @@ public sealed partial class ResourceAdapterTests
         fixture.Write("tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "fixture");
         var dotnet = Path.Combine(environment["PATH"], "dotnet");
         File.WriteAllText(dotnet, "#!/bin/bash\nprintf 'launched\\n' > build/native-launched\nexit 1\n");
-        SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", dotnet]);
+        EngineeringProcess.Process(fixture.Root, "/bin/chmod", ["+x", dotnet]);
         var result = Shell(fixture, ["current"], environment);
         Assert.Equal(2, result.Exit);
         Assert.Contains("CI_INPUT_FAILED", result.Text, StringComparison.Ordinal);
@@ -444,7 +444,7 @@ public sealed partial class ResourceAdapterTests
     public void PushCandidateMustBeCheckedOutImmutableHead(string candidate)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
-        if (candidate == "parent") candidate = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        if (candidate == "parent") candidate = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         var result = Planner(fixture, "push-plan", "--commit", candidate);
         Assert.Equal(2, result.Exit);
         Assert.False(File.Exists(PushPlanPath(fixture)));
@@ -509,7 +509,7 @@ public sealed partial class ResourceAdapterTests
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
-        SetPushEvent(fixture, environment, SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1"));
+        SetPushEvent(fixture, environment, EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1"));
         var shim = Path.Combine(environment["PATH"], "git");
         var realGit = File.ResolveLinkTarget(shim, true)!.FullName;
         File.Delete(shim);
@@ -521,9 +521,9 @@ public sealed partial class ResourceAdapterTests
         };
         File.WriteAllText(shim, "#!/bin/bash\nif [[ \"$1\" == --no-replace-objects && \"$2\" == diff ]]; then\n" + payload +
             "\nelse exec \"$PUSH_REAL_GIT\" \"$@\"; fi\n");
-        SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", shim]);
+        EngineeringProcess.Process(fixture.Root, "/bin/chmod", ["+x", shim]);
         environment["PUSH_REAL_GIT"] = realGit;
-        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
+        var result = EngineeringProcess.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
             ["-B", "tools/scripts/workflow/ci.py", "push-plan", "--repository", fixture.Root], environment,
             TestBudgets.WorkflowProcessHangGuard);
         Assert.Equal(2, result.Exit);
@@ -542,11 +542,11 @@ public sealed partial class ResourceAdapterTests
         fixture.CommitPlan();
         var environment = EnvironmentFor(fixture);
         environment["MODE"] = "push";
-        environment["BASE"] = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        environment["BASE"] = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         environment["GITHUB_EVENT_NAME"] = "";
         environment["CI_PLAN_PATH"] = "";
         environment["CI_CHANGES_PATH"] = "";
-        var result = SharedBuildContractTests.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"],
+        var result = EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"],
             environment, TestBudgets.WorkflowProcessHangGuard);
         Assert.True(result.Exit == 0, result.Text);
         foreach (var stage in new[] { "engineering", "current" })
@@ -640,7 +640,7 @@ public sealed partial class ResourceAdapterTests
     public void NativeFreshStageRejectsInvalidEventInput(string defect)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture([]);
-        var before = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1");
+        var before = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         var environment = EnvironmentFor(fixture);
         SetPushEvent(fixture, environment, before);
         var eventPath = environment["GITHUB_EVENT_PATH"];
@@ -654,7 +654,7 @@ public sealed partial class ResourceAdapterTests
             case "wrong-after": data["after"] = before; break;
             case "zero-after": data["after"] = new string('0', 40); break;
             case "unavailable-before": data["before"] = new string('a', 40); break;
-            case "tree-before": data["before"] = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^{tree}"); break;
+            case "tree-before": data["before"] = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^{tree}"); break;
         }
         File.WriteAllText(eventPath, data.ToJsonString());
         if (defect == "missing-event") File.Delete(eventPath);
@@ -672,16 +672,16 @@ public sealed partial class ResourceAdapterTests
     {
         using var fixture = LocalFixture();
         var before = fixture.Commit;
-        var tree = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^{tree}");
-        var unrelated = SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        var tree = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^{tree}");
+        var unrelated = EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
             "commit-tree", tree, "-m", "unrelated force candidate");
-        SharedBuildContractTests.Git(fixture.Root, "reset", "--hard", unrelated);
+        EngineeringProcess.Git(fixture.Root, "reset", "--hard", unrelated);
         File.Delete(Path.Combine(fixture.Root, "fixtures/selected.txt"));
         fixture.Write("docs/moved.md", "registered input\n");
-        SharedBuildContractTests.Git(fixture.Root, "add", ".");
-        SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+        EngineeringProcess.Git(fixture.Root, "add", ".");
+        EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
             "commit", "-qm", "force endpoint");
-        var head = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var head = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         var environment = EnvironmentFor(fixture);
         SetPushEvent(fixture, environment, before, head);
         var result = PlannerWithEnvironment(fixture, environment, "push-plan");
@@ -785,7 +785,7 @@ public sealed partial class ResourceAdapterTests
         Assert.True(PlannerWithEnvironment(fixture, environment, "push-plan").Exit == 0);
         SetPushEvent(fixture, environment, before);
         var executable = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
-        var result = SharedBuildContractTests.Process(fixture.Root, executable,
+        var result = EngineeringProcess.Process(fixture.Root, executable,
             ["current", "--repository", fixture.Root, "--plan", PushPlanPath(fixture), "--changes", PushScopePath(fixture)],
             environment, TestBudgets.WorkflowProcessHangGuard);
         Assert.Equal(2, result.Exit);
@@ -812,7 +812,7 @@ public sealed partial class ResourceAdapterTests
     {
         var eventPath = Path.Combine(fixture.Root, "build/push-event.json");
         File.WriteAllText(eventPath, new JsonObject {
-            ["before"] = before, ["after"] = after ?? SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD"),
+            ["before"] = before, ["after"] = after ?? EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD"),
             // Event commit/path lists are intentionally incomplete: endpoints own scope.
             ["commits"] = new JsonArray(),
         }.ToJsonString());
@@ -839,10 +839,10 @@ public sealed partial class ResourceAdapterTests
     private static JsonNode PushScope(ResourceRouteTests.ResourceFixture fixture) => JsonNode.Parse(File.ReadAllText(PushScopePath(fixture)))!;
     private static (int Exit, string Text) PushPlan(ResourceRouteTests.ResourceFixture fixture, string? eventBefore = null)
     {
-        var parents = eventBefore is null ? SharedBuildContractTests.Git(fixture.Root, "show", "-s", "--format=%P", fixture.Commit) : "";
+        var parents = eventBefore is null ? EngineeringProcess.Git(fixture.Root, "show", "-s", "--format=%P", fixture.Commit) : "";
         var before = eventBefore ?? (parents.Length == 0 ? new string('0', 40) : parents.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0]);
         var environment = EnvironmentFor(fixture);
-        if (eventBefore is null && !string.IsNullOrEmpty(SharedBuildContractTests.Git(fixture.Root, "--no-optional-locks", "status", "--porcelain", "--untracked-files=all")))
+        if (eventBefore is null && !string.IsNullOrEmpty(EngineeringProcess.Git(fixture.Root, "--no-optional-locks", "status", "--porcelain", "--untracked-files=all")))
             return PlannerWithEnvironment(fixture, environment, "push-plan");
         SetPushEvent(fixture, environment, before);
         return PlannerWithEnvironment(fixture, environment, "push-plan");
@@ -854,7 +854,7 @@ public sealed partial class ResourceAdapterTests
     private static (int Exit, string Text) PlannerWithEnvironment(ResourceRouteTests.ResourceFixture fixture,
         Dictionary<string, string> environment, string command, params string[] arguments)
     {
-        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", command,
+        var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", command,
             "--repository", fixture.Root, .. arguments], environment, TestBudgets.WorkflowProcessHangGuard);
         if (Environment.GetEnvironmentVariable("CI_PUSH_ORIGIN_EVIDENCE") is { Length: > 0 } evidence)
             File.AppendAllText(evidence, new JsonObject {

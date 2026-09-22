@@ -261,7 +261,7 @@ public sealed class CurrentSeedCoverageTests(Xunit.Abstractions.ITestOutputHelpe
 
     private static void Producer(ResourceRouteTests.ResourceFixture fixture, string operation)
     {
-        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "-c", """
             import pathlib, shutil, sys
             repository, root = map(pathlib.Path, sys.argv[1:3])
             operation, relative = sys.argv[3:]

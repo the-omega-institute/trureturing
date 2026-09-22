@@ -101,6 +101,7 @@ public sealed class DependencyDirectionTests
             [
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
                 "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+                "../../TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
             ],
             ProjectReferences(XDocument.Load(Path.Combine(

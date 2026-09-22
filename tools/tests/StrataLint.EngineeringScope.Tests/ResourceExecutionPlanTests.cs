@@ -26,9 +26,9 @@ public sealed class ResourceExecutionPlanTests
         CheckEvidenceFixture.Seal(root, "engineering", build, ["selftest-pair"]);
         fixture.Tree.Write("build/tests.log", "selected project reused\n");
         CommonExecutionEvidence.SealEngineering(root, build, [new StageStep("tests", 0, 0, "executed", "build/tests.log")]);
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var target = Path.Combine(storage.Root, "build/exporter");
-        SharedBuildContractTests.Git(root, "clone", "--quiet", "--no-hardlinks", root, target);
+        EngineeringProcess.Git(root, "clone", "--quiet", "--no-hardlinks", root, target);
         foreach (var stage in new[] { "build", "engineering" })
         {
             var archive = Path.Combine(storage.Root, "build", stage + ".tgz");
@@ -210,7 +210,7 @@ public sealed class ResourceExecutionPlanTests
             File.SetUnixFileMode(Path.Combine(root, "build/bin/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var build = CommonExecutionEvidence.ValidateBuild(root);
         var executable = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
-        var result = SharedBuildContractTests.Process(root, executable,
+        var result = EngineeringProcess.Process(root, executable,
             ["engineering", "--repository", root, "--build-round", build.Round,
                 "--plan", "build/plan.json", "--changes", "build/changes.json"],
             new Dictionary<string, string> { ["PATH"] = Path.Combine(root, "build/bin") + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH") });
@@ -233,19 +233,19 @@ public sealed class ResourceExecutionPlanTests
         using var fixture = new SelectedTestsFixture(testsRequired: false);
         var root = fixture.Tree.Root;
         var build = CommonExecutionEvidence.ValidateBuild(root);
-        var commit = SharedBuildContractTests.Process(root, "git", ["rev-parse", "HEAD"]).Text.Trim();
-        var baseline = SharedBuildContractTests.Process(root, "git", ["rev-parse", "HEAD^1"]).Text.Trim();
-        var scope = SharedBuildContractTests.Process(root, "python3", ["-B", "tools/scripts/workflow/ci.py", "push-plan",
+        var commit = EngineeringProcess.Process(root, "git", ["rev-parse", "HEAD"]).Text.Trim();
+        var baseline = EngineeringProcess.Process(root, "git", ["rev-parse", "HEAD^1"]).Text.Trim();
+        var scope = EngineeringProcess.Process(root, "python3", ["-B", "tools/scripts/workflow/ci.py", "push-plan",
             "--repository", root, "--commit", commit, "--before", baseline, "--after", commit]);
         Assert.True(scope.Exit == 0, scope.Text);
-        var planned = SharedBuildContractTests.Process(root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan",
+        var planned = EngineeringProcess.Process(root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan",
             "--repository", root, "--commit", commit, "--changes", "build/ci/changes.json", "--output", "build/other-plan.json"]);
         Assert.True(planned.Exit == 0, planned.Text);
         fixture.Tree.Write("build/bin/dotnet", "#!/bin/bash\nset -euo pipefail\n[[ \"$*\" == *' selftest' ]]\nprintf 'SELFTEST PASS\\n'\nprintf 'selftest\\n' >> build/launched\n");
         if (!OperatingSystem.IsWindows())
             File.SetUnixFileMode(Path.Combine(root, "build/bin/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var executable = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
-        var result = SharedBuildContractTests.Process(root, executable,
+        var result = EngineeringProcess.Process(root, executable,
             ["engineering", "--repository", root, "--build-round", build.Round,
                 "--plan", matched ? "build/plan.json" : "build/other-plan.json",
                 "--changes", matched ? "build/changes.json" : "build/ci/changes.json"],
@@ -312,7 +312,7 @@ public sealed class ResourceExecutionPlanTests
         var baseline = JsonNode.Parse(File.ReadAllText(prChanges))!["base"]!.ToString();
         if (mode == "push")
         {
-            var scope = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "push-plan",
+            var scope = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "push-plan",
                 "--repository", fixture.Root, "--commit", fixture.Commit, "--before", baseline, "--after", fixture.Commit]);
             Assert.True(scope.Exit == 0, scope.Text);
             File.Copy(Path.Combine(fixture.Root, "build/ci/changes.json"), fixture.Changes, overwrite: true);
@@ -325,7 +325,7 @@ public sealed class ResourceExecutionPlanTests
             scope["head"] = null;
             File.WriteAllText(fixture.Changes, scope.ToJsonString());
         }
-        var planned = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan",
+        var planned = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan",
             "--repository", fixture.Root, "--commit", fixture.Commit, "--changes", fixture.Changes, "--output", fixture.Plan]);
         Assert.True(planned.Exit == 0, planned.Text);
         fixture.Processes();
@@ -335,7 +335,7 @@ public sealed class ResourceExecutionPlanTests
             build.Steps, selection.Projects, selection.Retain(fixture.Root));
         fixture.Write("build/bin/dotnet", "#!/bin/bash\nexit 0\n");
         var executable = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
-        var result = SharedBuildContractTests.Process(fixture.Root, executable, ["delta", "--repository", fixture.Root,
+        var result = EngineeringProcess.Process(fixture.Root, executable, ["delta", "--repository", fixture.Root,
                 "--base", baseline, "--plan", prPlan, "--changes", prChanges],
             new Dictionary<string, string> { ["PATH"] = Path.Combine(fixture.Root, "build/bin") + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH") });
         Assert.Equal(mode == "pr" ? 0 : 2, result.Exit);
@@ -464,7 +464,7 @@ public sealed class ResourceExecutionPlanTests
 
         private string Run(string command, string[] arguments)
         {
-            var result = SharedBuildContractTests.Process(Tree.Root, command, arguments);
+            var result = EngineeringProcess.Process(Tree.Root, command, arguments);
             Assert.True(result.Exit == 0, result.Text);
             return result.Text.Trim();
         }

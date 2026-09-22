@@ -138,8 +138,8 @@ public sealed partial class CommonCheckExecutionTests
         var originalChecks = fixture.Run();
         fixture.Seed();
         var root = fixture.Tree.Root;
-        SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "registered seed material");
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        EngineeringProcess.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "registered seed material");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var build = CommonExecutionEvidence.ValidateBuild(root);
         var engineering = CommonExecutionEvidence.ValidateEngineering(root);
         var tests = CommonExecutionEvidence.ValidateTests(root);

@@ -168,7 +168,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
 
     private static (int Exit, string Text) Plan(ResourceRouteTests.ResourceFixture fixture, string mode)
     {
-        string Git(params string[] arguments) => SharedBuildContractTests.Git(fixture.Root, arguments);
+        string Git(params string[] arguments) => EngineeringProcess.Git(fixture.Root, arguments);
         void Commit(string message) => Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", message);
         Git("add", "."); Commit("registered resource modes");
         var basis = Git("rev-parse", "HEAD");
@@ -180,7 +180,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
         Git("reset", "--hard", candidate);
         var eventPath = Path.Combine(fixture.Root, "build/mode-event.json");
         File.WriteAllText(eventPath, JsonSerializer.Serialize(new { before = basis, after = candidate }));
-        return SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", mode + "-plan",
+        return EngineeringProcess.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", mode + "-plan",
             "--repository", fixture.Root, "--commit", candidate,
             .. mode == "push" ? new[] { "--before", basis, "--after", candidate } : ["--base", basis, "--head", head]],
             new Dictionary<string, string>

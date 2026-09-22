@@ -127,7 +127,7 @@ public sealed class JudgeSeedSelectionTests
             if (mode == "removed-registration")
             {
                 rows.Remove(other);
-                SharedBuildContractTests.Git(fixture.Root, "rm", "-rf", "tools/tests/Other.Tests");
+                EngineeringProcess.Git(fixture.Root, "rm", "-rf", "tools/tests/Other.Tests");
             }
             else
             {
@@ -259,7 +259,7 @@ public sealed class JudgeSeedSelectionTests
                 new(ScriptTests, "StrataLint.ScriptTests", "cross-cutting-test", false, ["tools/tests/StrataLint.ScriptTests/*.cs"])));
             // Real seal() produces receipts for synthetic compiler output. The existing
             // SharedBuildRuntimeTests separately proves cold/warm behavior with Csc.
-            var prepared = SharedBuildContractTests.Process(Root, "python3", ["-B", "-c", """
+            var prepared = EngineeringProcess.Process(Root, "python3", ["-B", "-c", """
                 import pathlib, subprocess, sys, xml.etree.ElementTree as ET, json
                 root, source = map(pathlib.Path, sys.argv[1:3])
                 sys.path.insert(0, str(source / 'tools/scripts/report'))
@@ -309,7 +309,7 @@ public sealed class JudgeSeedSelectionTests
             var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(Root, "build/lean-cache/judge/manifest.json")))!;
             return Cache("restore", "push", "--judge-key", manifest["key"]!.GetValue<string>());
         }
-        private (int Exit, string Text) Cache(string command, string eventName, params string[] arguments) => SharedBuildContractTests.Process(Root, "python3",
+        private (int Exit, string Text) Cache(string command, string eventName, params string[] arguments) => EngineeringProcess.Process(Root, "python3",
             ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), command, "--repository", Root, "--layers", "judge", .. arguments],
             new Dictionary<string, string> {
                 ["GITHUB_EVENT_NAME"] = eventName,

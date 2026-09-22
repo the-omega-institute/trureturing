@@ -32,7 +32,7 @@ public sealed partial class CiTransportTests
             ["CI_WORKFLOW_INPUTS"] = JsonSerializer.Serialize(new { candidate_sha = fixture.Commit }),
             ["STRATALINT_CACHE_WRITES"] = "true", ["STRATALINT_CHECK_SUCCEEDED"] = "true",
             ["GITHUB_OUTPUT"] = Path.Combine(root, "build/cache-output") };
-        var result = SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(root, "python3", ["-B", "-c", """
             import os, pathlib, subprocess, sys, time
             repository, root = map(pathlib.Path, sys.argv[1:3])
             available = sys.argv[3] == 'true'
@@ -109,7 +109,7 @@ public sealed partial class CiTransportTests
             ["CI_WORKFLOW_INPUTS"] = JsonSerializer.Serialize(new { candidate_sha = fixture.Commit }),
             ["STRATALINT_CACHE_WRITES"] = "true", ["STRATALINT_CHECK_SUCCEEDED"] = "true",
             ["GITHUB_OUTPUT"] = Path.Combine(fixture.Root, "build/cache-output") };
-        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B",
+        var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B",
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), "snapshot",
             "--repository", fixture.Root, "--stage", "current", "--layer", layer], environment);
         Assert.True(result.Exit == 0, result.Text);
@@ -159,7 +159,7 @@ public sealed partial class CiTransportTests
             ["GITHUB_REPOSITORY"] = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY") ?? "",
             ["STRATALINT_CACHE_WRITES"] = "true", ["STRATALINT_CHECK_SUCCEEDED"] = "true",
             ["GITHUB_OUTPUT"] = Path.Combine(fixture.Root, "build/cache-output") };
-        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B",
+        var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B",
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), "snapshot",
             "--repository", fixture.Root, "--stage", "current", "--layer", "project"], environment);
         Assert.True(result.Exit == 0, result.Text);

@@ -570,6 +570,7 @@
       "references": [
         "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
         "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
       "owner": {
@@ -1172,6 +1173,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
       "owner": null,
@@ -1188,10 +1190,47 @@
         "tools/tests/Directory.Build.props",
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
-      "execution_inputs": [],
+      "execution_inputs": [
+        "Makefile",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/source_reference.py",
+        "tools/scripts/workflow/truth_release.py"
+      ],
       "execution_excludes": [],
       "execution_environment": [],
       "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+      "assembly": "StrataLint.ScriptProcessTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
     }
   ],
   "historical_projects": [],

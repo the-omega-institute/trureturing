@@ -513,13 +513,13 @@ public sealed partial class ResourceRouteTests(Xunit.Abstractions.ITestOutputHel
             Write("build/changes.json", JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
                 candidate = new { commit = Commit, tree = Git("rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
                 complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null, @new = new { path = changed, mode = entry[0], oid = entry[2] } } } }));
-            var result = SharedBuildContractTests.Process(Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", Root, "--commit", Commit, "--changes", Changes, "--output", Plan],
+            var result = EngineeringProcess.Process(Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", Root, "--commit", Commit, "--changes", Changes, "--output", Plan],
                 hangGuard: TestBudgets.ScriptProcessHangGuard);
             Assert.True(result.Exit == 0, result.Text);
         }
         internal void RemoveObject(string oid)
         {
-            var result = SharedBuildContractTests.Process(Root, "python3", ["-c", """
+            var result = EngineeringProcess.Process(Root, "python3", ["-c", """
                 import os, pathlib, subprocess, sys, tempfile
                 environment = {**os.environ, 'GIT_NO_LAZY_FETCH': '1'}
                 def git(*arguments, **options):
@@ -576,17 +576,17 @@ public sealed partial class ResourceRouteTests(Xunit.Abstractions.ITestOutputHel
             Commit = Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit-tree",
                 Git("rev-parse", "HEAD^{tree}"), "-p", baseline, "-p", head, "-m", "candidate merge");
             Git("reset", "--hard", Commit);
-            var scope = SharedBuildContractTests.Process(Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "pr-paths",
+            var scope = EngineeringProcess.Process(Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "pr-paths",
                 "--repository", Root, "--commit", Commit, "--base", baseline, "--head", head, "--output", Changes]);
             Assert.True(scope.Exit == 0, scope.Text);
-            var plan = SharedBuildContractTests.Process(Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan",
+            var plan = EngineeringProcess.Process(Root, "python3", ["-B", "tools/scripts/workflow/ci.py", "plan",
                 "--repository", Root, "--commit", Commit, "--changes", Changes, "--output", Plan]);
             Assert.True(plan.Exit == 0, plan.Text);
         }
         internal int Run(string stage, TextWriter output, bool planned = true)
         {
             var executable = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
-            var result = SharedBuildContractTests.Process(Root, executable,
+            var result = EngineeringProcess.Process(Root, executable,
                 [stage, "--repository", Root, .. planned ? new[] { "--plan", Plan, "--changes", Changes } : [],
                     .. stage == "delta" ? new[] { "--base", JsonNode.Parse(File.ReadAllText(Plan))!["base"]!.ToString() } : []],
                 new Dictionary<string, string> { ["PATH"] = processPath! }, TestBudgets.WorkflowProcessHangGuard);
@@ -629,7 +629,7 @@ public sealed partial class ResourceRouteTests(Xunit.Abstractions.ITestOutputHel
         }
         private string Git(params string[] arguments)
         {
-            var result = SharedBuildContractTests.Process(Root, "git", arguments, hangGuard: TestBudgets.ScriptProcessHangGuard);
+            var result = EngineeringProcess.Process(Root, "git", arguments, hangGuard: TestBudgets.ScriptProcessHangGuard);
             Assert.True(result.Exit == 0, result.Text);
             return result.Text.Trim();
         }

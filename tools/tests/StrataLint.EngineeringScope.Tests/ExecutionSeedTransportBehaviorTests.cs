@@ -17,8 +17,8 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         using var producer = Prepare("engineering", plannedEngineering: true);
         using var storage = new CurrentExecutionContractTests.CandidateFixture();
         var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(producer.Root, "rev-parse", "HEAD");
-        var beforeCommit = SharedBuildContractTests.Git(producer.Root, "rev-parse", "HEAD^1");
+        var commit = EngineeringProcess.Git(producer.Root, "rev-parse", "HEAD");
+        var beforeCommit = EngineeringProcess.Git(producer.Root, "rev-parse", "HEAD^1");
         var runtime = Path.GetDirectoryName(CommonExecutionEvidence.RunnerPath)!;
         var original = CommonExecutionEvidence.ValidateEngineering(producer.Root);
         CiTransportTests.SealEngineering(producer.Root, original.Candidate,
@@ -36,16 +36,16 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         var targets = new[] { "exporter", "consumer" }.Select(name => Path.Combine(storage.Root, "build", name)).ToArray();
         foreach (var target in targets)
         {
-            SharedBuildContractTests.Git(producer.Root, "clone", "--quiet", "--no-hardlinks", producer.Root, target);
+            EngineeringProcess.Git(producer.Root, "clone", "--quiet", "--no-hardlinks", producer.Root, target);
             Assert.False(Directory.Exists(Path.Combine(target, "build")));
             Assert.False(Directory.Exists(Path.Combine(target, runtime)));
-            Assert.Equal("", SharedBuildContractTests.Git(target, "status", "--porcelain", "--untracked-files=all"));
+            Assert.Equal("", EngineeringProcess.Git(target, "status", "--porcelain", "--untracked-files=all"));
         }
         // Only the two normal artifacts survive; no producer seed or output
         // directory can accidentally satisfy a missing transport dependency.
         Directory.Delete(producer.Root, recursive: true);
         Directory.CreateDirectory(producer.Root);
-        var dotnet = SharedBuildContractTests.Process(storage.Root, "which", ["dotnet"]).Text.Trim();
+        var dotnet = EngineeringProcess.Process(storage.Root, "which", ["dotnet"]).Text.Trim();
         storage.Write("build/guard/dotnet", """
             #!/bin/sh
             set -eu
@@ -202,7 +202,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         if (OperatingSystem.IsWindows()) throw Xunit.Sdk.SkipException.ForSkip("native tar transport fixture is unsupported on Windows");
         using var fixture = Prepare(stage);
         var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         var environment = Environment(commit, fixture.Root, "17", "2");
         var sourceChecks = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath(stage));
         var sourceTests = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath);
@@ -214,7 +214,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         Assert.True(snapshot.Text.Contains("\"status\": \"snapshot\"", StringComparison.Ordinal), snapshot.Text);
 
         var target = Path.Combine(fixture.Root, "destination");
-        SharedBuildContractTests.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, target);
+        EngineeringProcess.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, target);
         CopyDirectory(Path.Combine(fixture.Root, "tools/StrataLint.EngineeringScope/bin/Release/net10.0"),
             Path.Combine(target, "tools/StrataLint.EngineeringScope/bin/Release/net10.0"));
         CopyDirectory(Path.Combine(fixture.Root, "build/lean-cache", stage),
@@ -295,7 +295,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         using var fixture = Prepare(stage);
         var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         var environment = Environment(commit, fixture.Root, "71", "1");
         AssertReceipt(Python(fixture.Root, repository,
             ["snapshot", "--repository", fixture.Root, "--layers", stage], environment), "snapshot");
@@ -331,7 +331,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
             Assert.DoesNotContain(declared.Materials, item => item.Path == collateral);
             // Verification of a bundle inside a larger root must remain valid.
             // This extra file is rejected by the copying adapter, not global verify.
-            var native = SharedBuildContractTests.Process(target, "dotnet",
+            var native = EngineeringProcess.Process(target, "dotnet",
                 [Path.Combine(target, CommonExecutionEvidence.RunnerPath), "transport-verify", "--repository", data,
                     "--stage", stage + "-seed", "--commit", commit, "--run-id", "71", "--run-attempt", "1"],
                 environment, TestBudgets.LongWorkflowProcessHangGuard);
@@ -366,7 +366,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         if (OperatingSystem.IsWindows()) throw Xunit.Sdk.SkipException.ForSkip("native tar transport fixture is unsupported on Windows");
         using var fixture = Prepare("engineering");
         var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         var environment = Environment(commit, fixture.Root, "21", "1");
         Assert.Equal(0, Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root,
             "--layers", "engineering"], environment).Exit);
@@ -404,7 +404,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     public void WorkflowAdapterSeedRoundTripAcceptsNewCandidateWithOriginalProvenance(string stage)
     {
         using var fixture = Prepare(stage);
-        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         var environment = Environment(commit, fixture.Root, "41", "2");
         var archive = Path.Combine(fixture.Root, "build", stage + "-seed.tgz");
         var packed = Workflow(fixture.Root, "pack", stage + "-seed", commit, archive, environment);
@@ -422,7 +422,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         using var fixture = Prepare("engineering");
         var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         var environment = Environment(commit, fixture.Root, "51", "1");
         var snapshot = Python(fixture.Root, repository, ["snapshot", "--repository", fixture.Root, "--layers", "engineering"], environment);
         AssertReceipt(snapshot, "snapshot");
@@ -492,10 +492,10 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
             accepted with { Steps = accepted.Steps.Select(step => step with { Exit = 1 }).ToArray() });
         var parent = Path.Combine(fixture.Root, "build/persistent-staging");
         fixture.Write("build/persistent-staging/unrelated.tgz", "retain me");
-        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         // The Actions CLI's outer TemporaryDirectory would mask an invocation archive leak.
         // Call its real pack adapter with a persistent parent and the real native runner.
-        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "-c", """
             import pathlib, sys
             sys.path.insert(0, sys.argv[1])
             from lean_actions import actions_keys, snapshot_execution
@@ -514,7 +514,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         using var fixture = Prepare("engineering");
         var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD");
         var environment = Environment(commit, fixture.Root, "61", "1");
         fixture.Write("build/coordination/dotnet", """
             #!/usr/bin/env python3
@@ -526,7 +526,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
             """);
         if (!OperatingSystem.IsWindows())
             File.SetUnixFileMode(Path.Combine(fixture.Root, "build/coordination/dotnet"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        var result = SharedBuildContractTests.Process(fixture.Root, "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "-c", """
             import os, pathlib, shutil, socket, subprocess, sys
             root, script = map(pathlib.Path, sys.argv[1:])
             environment = dict(os.environ, SEED_REAL_DOTNET=shutil.which('dotnet'))
@@ -592,9 +592,9 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     private static string Destination(CurrentExecutionContractTests.CandidateFixture fixture, string name)
     {
         var target = Path.Combine(fixture.Root, "build/destination-" + name);
-        SharedBuildContractTests.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, target);
+        EngineeringProcess.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, target);
         File.AppendAllText(Path.Combine(target, ".gitignore"), "# new accepted candidate\n");
-        SharedBuildContractTests.Git(target, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "new acceptance");
+        EngineeringProcess.Git(target, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "new acceptance");
         CopyDirectory(Path.Combine(fixture.Root, "tools/StrataLint.EngineeringScope/bin/Release/net10.0"),
             Path.Combine(target, "tools/StrataLint.EngineeringScope/bin/Release/net10.0"));
         var sourceBuild = CommonExecutionEvidence.ValidateBuild(fixture.Root);
@@ -672,17 +672,17 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     }
 
     private static (int Exit, string Text) Workflow(string root, string command, string stage, string commit, string archive, Dictionary<string, string> environment) =>
-        SharedBuildContractTests.Process(root, "python3", ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/ci.py"),
+        EngineeringProcess.Process(root, "python3", ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/ci.py"),
             command, "--repository", root, "--stage", stage, "--commit", commit, "--archive", archive], environment,
             TestBudgets.LongWorkflowProcessHangGuard);
 
     private static (int Exit, string Text) StageInput(string root, string commit, Dictionary<string, string> environment) =>
-        SharedBuildContractTests.Process(root, "python3", ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/ci.py"),
+        EngineeringProcess.Process(root, "python3", ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/ci.py"),
             "stage-input", "--repository", root, "--stage", "engineering", "--commit", commit], environment,
             TestBudgets.LongWorkflowProcessHangGuard);
 
     private static (int Exit, string Text) CacheWithFixedClock(string root, string repository, string module, string[] arguments,
-        Dictionary<string, string> environment) => SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+        Dictionary<string, string> environment) => EngineeringProcess.Process(root, "python3", ["-B", "-c", """
             import importlib, sys, types
             sys.path.insert(0, sys.argv.pop(1))
             import cache_deadline
@@ -741,10 +741,10 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
                 new { id = "engineering", projects = new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second },
                     checks = new[] { "banned-api-proof", "capability-proof", "selftest-pair" }, steps = Array.Empty<string>() },
             } }));
-            SharedBuildContractTests.Git(fixture.Root, "add", "Meta/FILEMAP.toml", "Meta/ci-resources.json");
+            EngineeringProcess.Git(fixture.Root, "add", "Meta/FILEMAP.toml", "Meta/ci-resources.json");
         }
-        SharedBuildContractTests.Git(fixture.Root, "add", "lean-toolchain", "lake-manifest.json", "lakefile.toml");
-        SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "seed inputs");
+        EngineeringProcess.Git(fixture.Root, "add", "lean-toolchain", "lake-manifest.json", "lakefile.toml");
+        EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "seed inputs");
         fixture.Build();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, directory) => { fixture.WriteTrx(directory, "Passed"); return 0; }, TextWriter.Null));
         fixture.Write("build/ci/fixture-executable", "#!/bin/sh\nexit 0\n");
@@ -773,7 +773,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     };
 
     private static (int Exit, string Text) Python(string root, string repository, string[] args, Dictionary<string, string> environment) =>
-        SharedBuildContractTests.Process(root, "python3", new[] { "-B", Path.Combine(repository, "tools/scripts/worktree/lean_actions.py") }.Concat(args).ToArray(), environment,
+        EngineeringProcess.Process(root, "python3", new[] { "-B", Path.Combine(repository, "tools/scripts/worktree/lean_actions.py") }.Concat(args).ToArray(), environment,
             TestBudgets.LongWorkflowProcessHangGuard);
 
     private static void CopyDirectory(string source, string destination)
