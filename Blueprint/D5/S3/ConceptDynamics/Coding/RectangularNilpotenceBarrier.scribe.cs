@@ -17,7 +17,7 @@ internal sealed class RectangularNilpotenceBarrierDocument : IScribeDocumentDefi
                 StatementSource.FromAuthor(Disp(Claim())), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("An elementary exchange has rectangular factors U and V, with potentially different intermediate dimensions. The identity (UV)^(j+1)=U(VU)^j V transfers every zero power with a cost of one exponent.")),
-                    Paragraph(Text("Induction along the actual matrix chain bounds the two endpoint depths in both directions. Any additive and multiplicative coefficient projection preserves all rectangular products, even if it does not preserve one.")),
+                    Paragraph(Text("Induction along the actual matrix chain bounds the two endpoint depths in both directions. Here mapCoefficients applies the given map to each matrix entry. Any additive and multiplicative coefficient projection preserves all rectangular products, even if it does not preserve one.")),
                     Paragraph(Text("The complement of a central idempotent is explicitly constructed as such a projection. Hence uniform components can be removed before applying the barrier. The theorem makes no essentiality assumption about intermediate matrices."))),
                 DescribeRole.Theorem))));
 
@@ -34,9 +34,9 @@ internal sealed class RectangularNilpotenceBarrierDocument : IScribeDocumentDefi
              B("b", F.Id("Nat")), B("L", F.Id("Nat")),
              B("A", Mat(r, n, n)), B("B", Mat(r, m, m)),
              B("chain", Call("ExchangeChain", r, x, y, l)),
-             B("depthA", Call("ExactDepth", Call("Matrix.map", x, f), a)),
-             B("depthB", Call("ExactDepth", Call("Matrix.map", y, f), b))],
-            new Formula.Logic(Call("LE.le", Call("HSub.hSub", a, b), l), FormulaLogicOperator.And,
-                Call("LE.le", Call("HSub.hSub", b, a), l)));
+             B("depthA", Call("ExactDepth", Call("mapCoefficients", x, f), a)),
+             B("depthB", Call("ExactDepth", Call("mapCoefficients", y, f), b))],
+            new Formula.Logic(new Formula.Relation(new Formula.Binary(a, FormulaBinaryOperator.Subtract, b), FormulaRelationOperator.LessThanOrEqual, l), FormulaLogicOperator.And,
+                new Formula.Relation(new Formula.Binary(b, FormulaBinaryOperator.Subtract, a), FormulaRelationOperator.LessThanOrEqual, l)));
     }
 }

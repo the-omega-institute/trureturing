@@ -24,11 +24,11 @@ internal sealed class InvolutionUniformExchangeDocument : IScribeDocumentDefinit
         Formula h = F.Id("H"), s = F.Id("s"), t = F.Id("t"), u = F.Id("U"), v = F.Id("V");
         Formula Exists = new Formula.BindMany(FormulaQuantifier.Exists,
             [B("U", Call("NAlg", h)), B("V", Call("NAlg", h))],
-            new Formula.Logic(Equal(Call("liftNat", h, Call("HMul.hMul", u, v)), Call("source", s, t)),
+            new Formula.Logic(Equal(Call("liftNat", h, new Formula.Binary(u, FormulaBinaryOperator.Multiply, v)), Call("source", s, t)),
                 FormulaLogicOperator.And,
-                Equal(Call("liftNat", h, Call("HMul.hMul", v, u)), Call("target", h))));
+                Equal(Call("liftNat", h, new Formula.Binary(v, FormulaBinaryOperator.Multiply, u)), Call("target", h))));
         return new Formula.BindMany(FormulaQuantifier.ForAll,
             [B("H", F.Id("Type")), B("group", Call("Group", h)), B("finite", Call("Fintype", h)),
-             B("s", h), B("t", h), B("involution", Equal(Call("HMul.hMul", s, s), F.D(1)))], Exists);
+             B("s", h), B("t", h), B("involution", Equal(new Formula.Binary(s, FormulaBinaryOperator.Multiply, s), F.D(1)))], Exists);
     }
 }

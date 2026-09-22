@@ -11,7 +11,7 @@ internal sealed class BipartiteOverlapConjugacyDocument : IScribeDocumentDefinit
         new(FormulaIdentifier.Create(name), type);
     private static Formula A(Formula function, params Formula[] args) =>
         new Formula.Apply(function, [.. args]);
-    private static Formula Read(Formula path, Formula index) => A(Call("Subtype.val", path), index);
+    private static Formula Read(Formula path, Formula index) => A(Call("value", path), index);
     private static Formula All(Formula body, params Formula.BoundVariable[] extra) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
             [B("U", F.Id("Type")), B("V", F.Id("Type")), B("I", F.Id("Type")),
@@ -63,7 +63,7 @@ internal sealed class BipartiteOverlapConjugacyDocument : IScribeDocumentDefinit
     private static Formula Window()
     {
         Formula i = F.Id("i");
-        Formula next = Call("HAdd.hAdd", i, F.D(1));
+        Formula next = new Formula.Binary(i, FormulaBinaryOperator.Add, F.D(1));
         return All(new Formula.Logic(Equal(Read(X, i), Read(Y, i)), FormulaLogicOperator.Implies,
             new Formula.Logic(Equal(Read(X, next), Read(Y, next)), FormulaLogicOperator.Implies,
                 Equal(Read(Call("forward", D, X), i), Read(Call("forward", D, Y), i)))),
