@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6d6491cfe2f87f3a19cda5911d8c05d0469b81bbd91307dc988bce6c604ea0f
+  normalized_sha256: sha256:a6d6491cfe2f87f3a19cda5911d8c05d0469b81bbd91307dc988bce6c604ea0f
+cas_ref: sha256:a6d6491cfe2f87f3a19cda5911d8c05d0469b81bbd91307dc988bce6c604ea0f
+coverage_gids:
+  - gid: D5/S3/Estimation/DataProcessing/MeasurablePostprocessingDefectContraction.measurable_total_variation_map_le
+    target_statement_id: sha256:b51c915c67637f6ccc04f730b210d92a8333d198b45ff32a720015282b480974
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/MeasurableDeficiencyTriangle.measurable_total_variation_comp_le
+    target_statement_id: sha256:5adeb6237f43055a8e11b1997c43efa66b9cd34d3dd6985c048f47df6f8a6058
+receipts:
+  unresolved_subitems: []

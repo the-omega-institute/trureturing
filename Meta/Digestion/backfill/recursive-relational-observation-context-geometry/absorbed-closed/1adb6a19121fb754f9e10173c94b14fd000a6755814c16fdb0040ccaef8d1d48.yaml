@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1adb6a19121fb754f9e10173c94b14fd000a6755814c16fdb0040ccaef8d1d48
+  normalized_sha256: sha256:1adb6a19121fb754f9e10173c94b14fd000a6755814c16fdb0040ccaef8d1d48
+cas_ref: sha256:1adb6a19121fb754f9e10173c94b14fd000a6755814c16fdb0040ccaef8d1d48
+coverage_gids:
+  - gid: D5/S3/TotalVariation/Metric.total_variation_eq_sup_event_gap
+    target_statement_id: sha256:ddc3d9fb9bf4413e0c392db2d84701b64a7311328b94a854ea1e583e60637fae
+receipts:
+  unresolved_subitems: []
