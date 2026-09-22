@@ -161,6 +161,16 @@ The pure seven-prefix caps remain 3^(-B). Keeping all nine original labels and a
 
 This includes every source in the stated height-(2,2) class with at most one fully populated first-five fibre. It does not require each sparse root to supply an individually good fine fibre. When all four roots have at most four children, the earlier 26/3 bound is stronger; the weighted theorem's purpose is to admit the additional five-child root.
 
+## Exact barrier for the (5,5,4,4) occupancy bound
+
+At height (2,2), fix survival bounds delta=(3/5,3/5,1/2,1/2) and optimize over all nonnegative alpha,beta satisfying the weighted pair-cut conditions above. Write A=max alpha_i, P=max delta_i alpha_i, B=max beta_i and Q=max delta_i beta_i. The present original-label LCM objective is
+
+    J=23/9+3A+5P+(14/9)(3B+5Q).
+
+Its exact minimum is 83/9. Indeed, label the two full roots 1,2. The singleton cut with active root3 requires alpha_1+alpha_2+alpha_4>=1, implying both 3A>=1 and A+10P/3>=1. Taking one half of the former and three halves of the latter gives 3A+5P>=2. The balanced full-root cut gives sum beta_i>=2; since that sum is at most 2B+10Q/3, it follows that 3B+5Q>=3. Thus J>=83/9. Equality holds for alpha_i=1/3, beta_i=1/2, which satisfy every cut condition and give A=1/3,P=1/5,B=1/2,Q=3/10.
+
+This exactly limits the specified universal cut-budget and maximum-cylinder certificate at these fixed survival bounds; it is not a lower bound on any actual source's Gamma. Retuning these budgets alone cannot remove the remaining 2/9. Source-specific conditions, smaller actual occupancy factors, stronger actual-point coupling, and estimates retaining more simultaneous phase information remain outside this obstruction.
+
 ## Scope
 
 These are bounds for explicitly specified actual product-tree blocker classes, with original label phases independent. They do not establish an arithmetic realization of every abstract source, transport a full cofactor moment floor, or settle the arbitrary four-root source with two or more fully populated second-five fibres at height (2,2). A bound exceeding nine is only failure of that sufficient certificate. The work makes no claim about a common projectively compatible law as heights or sources vary.
