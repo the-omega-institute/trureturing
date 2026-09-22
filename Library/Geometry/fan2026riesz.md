@@ -34,8 +34,8 @@ from ambient measures concentrated on the point set. Explicit maximizing masses
 identify the attained energy supremum in both optimizer branches.
 
 The three-point quadratic maximum and the real-power concavity calculation are
-credited to Clark and Laugesen, *Riesz capacity: monotonicity, continuity,
-diameter and volume* (SIAM Journal on Mathematical Analysis,
+credited to Clark and Laugesen, *Maximizing Riesz Capacity Ratios: Conjectures
+and Theorems* (SIAM Journal on Mathematical Analysis,
 DOI `10.1137/24M171992X`), Theorem 8 and Section 7 respectively. The unified
 positive-part transition and the chord/cotangent derivative comparison along
 Fan's fixed-circle path are the repository's synthesis; they are not attributed
