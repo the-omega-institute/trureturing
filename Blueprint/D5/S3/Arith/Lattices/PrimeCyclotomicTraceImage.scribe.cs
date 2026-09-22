@@ -86,7 +86,36 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                             "D5/L/fretwellroberts2026eisenstein").Value),
                         Text(". Its weight-at-least-three existence results are not "
                             + "used for the weight-zero family. The current formal "
-                            + "statement, formula and proof source are unchanged."))),
+                            + "statement, formula and proof source are unchanged.")),
+                    Paragraph(
+                        Text("Single-prime reconstruction and its classical inputs: "),
+                        Ref(LibraryNoteRef.Create("D5/L/tanaka2026maass").Value),
+                        Text(". HCR.1-HCR.5 proves ordinary reconstruction within one "
+                            + "existing primitive packet from the first d coefficients "
+                            + "at powers of a generator-rotation auxiliary prime. A "
+                            + "non-generator of order p^s observes exactly a relative "
+                            + "trace and leaves kernel dimension d-d_s. The reciprocal "
+                            + "numerator and integer completion do not construct the "
+                            + "global golden character from an arbitrary finite prefix.")),
+                    Paragraph(Text(
+                        "HCR.6 is an ordinary consumer of this precise integer-image "
+                            + "theorem. For a first-layer single-prime prefix y_j, the "
+                            + "change of basis D_j=P_j-P_(j-2) converts the displayed "
+                            + "trace-image criterion into y_j=(j+1)*y_0 modulo p. "
+                            + "No new wrapper declaration or additional kernel theorem "
+                            + "is introduced by that application.")),
+                    Paragraph(
+                        Text("Task-relative state completion and the original lift: "),
+                        Ref(LibraryNoteRef.Create("D5/L/katz2015goldeninterfaces").Value),
+                        Text(". SJC in the same WSS owner uses the repository's "
+                            + "contextual spacetime query-sufficiency criterion. The "
+                            + "actual norm-one square-level update has phase and Lie "
+                            + "coordinates (j,z)->(j+1,z-q_p); two exact delayed traces "
+                            + "recover the finite-ring state. These ordinary proofs "
+                            + "retain the fixed golden polynomial and actual q_p. "
+                            + "They are not conclusions of integral_image, do not "
+                            + "identify characteristic p^2 with dual numbers, and do "
+                            + "not prove a new WSS prime-family decision."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
