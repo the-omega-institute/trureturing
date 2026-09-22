@@ -1,3 +1,4 @@
+using static StrataLint.TestSupport.InformationTemplateFixture;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -202,8 +203,8 @@ public sealed class DeclaredTemplateUnregisteredTests
                 + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
                 + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
                 + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}",
-            escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
-            escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
+            escape_from = InformationTemplateFixture.FromSlot,
+            escape_continues = InformationTemplateFixture.OpenSlot, bridge_kind = "legacy",
             unit_name = Theorem + ".unit", realization_name = Theorem + ".realization",
             certificate = validated ? new { key = InformationTemplateJson.KeyJson(key), evidence_ref = Hash("evidence"),
                 plan_identity = Hash("plan"), descriptor_identity = Hash("descriptor"), actual_identity = Hash("actual"),

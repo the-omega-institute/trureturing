@@ -16,7 +16,7 @@ internal static class FileMapPolicy
         "run-local artifact must be removed from the Git index; "
         + "the FILEMAP declaration must not be changed to make this finding go away";
     private const string TestRegistryPath =
-        "tools/tests/StrataLint.Tests/Rules/TestRegistry.cs";
+        "tools/TestSupport/StrataLint.CliTestSupport/TestRegistry.cs";
     private const string BackfillLoaderPath =
         "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
@@ -55,7 +55,7 @@ internal static class FileMapPolicy
     private static readonly IReadOnlyDictionary<string, string> DataVerifierImplementations =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["CommonExecutionEvidence"] = "tools/StrataLint.EngineeringScope/CommonExecutionEvidence.cs",
+            ["CommonExecutionEvidence"] = "tools/StrataLint.ExecutionEvidence/CommonExecutionEvidence.cs",
             ["EngineeringProjectRegistry"] = "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs",
             ["JudgeSeedRegistration"] = "tools/scripts/report/dotnet_producer.py",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
@@ -65,7 +65,7 @@ internal static class FileMapPolicy
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
             ["NativeArchivePaths"] = "tools/scripts/worktree/lean_actions.py",
-            ["PackageMaterialRegistry"] = "tools/StrataLint.EngineeringScope/PackageMaterialRegistry.cs",
+            ["PackageMaterialRegistry"] = "tools/StrataLint.BuildRuntime/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
