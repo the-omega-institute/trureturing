@@ -143,6 +143,15 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
+      "stratalint.admissiontestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.ProcessTestSupport": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -168,6 +177,26 @@
           "StrataLint.Engine": "[1.0.0, )"
         }
       },
+      "stratalint.leantestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.TestSupport": "[1.0.0, )"
+        }
+      },
+      "stratalint.processtestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "Xunit.SkippableFact": "[1.5.85, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
+      "stratalint.registrationtestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.TestSupport": "[1.0.0, )"
+        }
+      },
       "stratalint.scribe": {
         "type": "Project",
         "dependencies": {
@@ -187,7 +216,6 @@
       "stratalint.testsupport": {
         "type": "Project",
         "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
           "Xunit.SkippableFact": "[1.5.85, )",
           "xunit": "[2.9.3, )"
         }

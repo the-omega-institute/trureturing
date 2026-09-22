@@ -45,6 +45,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JudgeSeedTask", "scripts\re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Cache.Tests", "tests\StrataLint.Cache.Tests\StrataLint.Cache.Tests.csproj", "{D7E80AF1-D176-4BE7-AFC8-F43951152B7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.RegistrationTestSupport", "TestSupport\StrataLint.RegistrationTestSupport\StrataLint.RegistrationTestSupport.csproj", "{B9EB2BAB-D189-4176-A64B-B7A2204CEBAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ProcessTestSupport", "TestSupport\StrataLint.ProcessTestSupport\StrataLint.ProcessTestSupport.csproj", "{1C75A3CB-54E2-46FD-8FBD-62F2BE88434B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.LeanTestSupport", "TestSupport\StrataLint.LeanTestSupport\StrataLint.LeanTestSupport.csproj", "{46866C49-CBD2-4A5E-8197-A987BB114579}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.AdmissionTestSupport", "TestSupport\StrataLint.AdmissionTestSupport\StrataLint.AdmissionTestSupport.csproj", "{974E0770-B03C-45CF-87BC-C8ED6B2A7B86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +63,22 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{974E0770-B03C-45CF-87BC-C8ED6B2A7B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{974E0770-B03C-45CF-87BC-C8ED6B2A7B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{974E0770-B03C-45CF-87BC-C8ED6B2A7B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{974E0770-B03C-45CF-87BC-C8ED6B2A7B86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46866C49-CBD2-4A5E-8197-A987BB114579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46866C49-CBD2-4A5E-8197-A987BB114579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46866C49-CBD2-4A5E-8197-A987BB114579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46866C49-CBD2-4A5E-8197-A987BB114579}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C75A3CB-54E2-46FD-8FBD-62F2BE88434B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C75A3CB-54E2-46FD-8FBD-62F2BE88434B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C75A3CB-54E2-46FD-8FBD-62F2BE88434B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C75A3CB-54E2-46FD-8FBD-62F2BE88434B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9EB2BAB-D189-4176-A64B-B7A2204CEBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9EB2BAB-D189-4176-A64B-B7A2204CEBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9EB2BAB-D189-4176-A64B-B7A2204CEBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9EB2BAB-D189-4176-A64B-B7A2204CEBAD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2F4B19B-65AA-4D27-8319-58448E8C0E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2F4B19B-65AA-4D27-8319-58448E8C0E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2F4B19B-65AA-4D27-8319-58448E8C0E47}.Debug|x64.ActiveCfg = Debug|Any CPU

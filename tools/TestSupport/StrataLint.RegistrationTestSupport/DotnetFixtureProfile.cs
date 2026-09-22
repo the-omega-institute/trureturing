@@ -14,7 +14,7 @@ public static class DotnetFixtureProfile
             // Read the owning project's one compiler-supplied package root;
             // moving the CLI profile must not move the already restored cache.
             var assets = Path.Combine(TestRepositoryLayout.FindRoot(),
-                "tools/TestSupport/StrataLint.TestSupport/obj/project.assets.json");
+                "tools/TestSupport/StrataLint.RegistrationTestSupport/obj/project.assets.json");
             using var document = JsonDocument.Parse(File.ReadAllText(assets));
             packages = document.RootElement.GetProperty("project").GetProperty("restore")
                 .GetProperty("packagesPath").GetString();

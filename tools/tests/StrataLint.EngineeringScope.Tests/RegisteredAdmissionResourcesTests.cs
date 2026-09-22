@@ -581,6 +581,22 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
+    [InlineData("StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Tests")]
+    [InlineData("StrataLint.AdmissionTestSupport/ProducerInputFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Tests")]
+    [InlineData("StrataLint.ProcessTestSupport/TestProcessRunner.cs", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.Engine.Tests,StrataLint.Lean.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.RegistrationTestSupport/EngineeringRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Engine.Tests,StrataLint.EngineeringScope.Tests,StrataLint.Scribe.Tests,StrataLint.Tests")]
+    public void SpecializedFixturesSelectOnlyTheirConsumersWithoutCache(string fixture, string consumers)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+        {
+            var plan = Plan("tools/TestSupport/" + fixture, "", mode);
+            Assert.Equal(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj"),
+                Strings(plan["execution"]!["tests"]!));
+            Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
+        }
+    }
+
+    [Theory]
     [InlineData("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs")]
     [InlineData("tools/tests/CompileFailProof/MissingCapability.cs")]
     public void CompileFailureFixturesRequestGuardsAndTheirArchitectureCoverage(string path)
