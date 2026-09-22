@@ -1,0 +1,24 @@
+**定理 14.6（相位、衰减及不同参数的可识别性）。** (a) 写 $s=\sigma+i\omega$，则
+$$
+e^{-s\tau}=e^{-\sigma\tau}e^{-i\omega\tau}.
+$$
+图 Laplace 的相位约定为负号；第10节纯模式用正号，两者以 $\omega_{\rm graph}=-\omega_{\rm mode}$ 对应，不能同名不换号。
+
+(b) 若边另带相位 $e^{i\varphi_e}$，并作 $\varphi'_e=\varphi_e+\chi_j-\chi_i$，则定理14.4的对角改为
+$$
+D_{ii}=e^{\beta U_i+sV_{0,i}-i\chi_i}.
+$$
+证明比值的相位为 $e^{i(\chi_j-\chi_i)}$，与边相位改变一致。闭圈精确顶点相位差消去；任意边相位不必是势差，单自环非零模 $2\pi$ 相位就无法由同顶点势差消除。
+
+(c) 实势且 $\operatorname{Re}\beta=\operatorname{Re}s=0$ 时各对角模为一，所以 $D$ 酉。实参数且没有额外相位时 $D$ 为正实对角；加入 $\chi$ 后一般不再正实。其他参数下不能由相似声称保范数。
+
+(d) 已知未取模历时缩放 $T'=cT$ 与完整相位配对要求 $\omega'=\omega/c$，从而 $\omega'T'=\omega T$。只匹配一次模相位则仅知两边相位差是 $2\pi$ 的整数倍，并不确定频率或时间缩放。
+
+(e) 固定 $\sigma>0$，函数 $T\mapsto e^{-\sigma T}$ 在 $T\ge0$ 单射。证明相等时取正实对数得 $-\sigma T_1=-\sigma T_2$，除以非零 $\sigma$ 即得相等。固定非零 $\omega$ 的单频相位却只确定 $T$ 模 $2\pi/|\omega|$，因为相等恰当于 $\omega(T_1-T_2)\in2\pi\mathbb Z$。
+
+(f) 既有 `PrimeZeckendorfTemporalization` 中，令 $\lambda_p=\mathrm{goldenSpectrum}(p,0)$，其中 $p$ 为素数身份，热及相位乘子分别为
+$$
+H_t(p)=e^{-t\lambda_p},\qquad Q_t(p)=e^{it\lambda_p}.
+$$
+`first_excited_heat_multiplier_injective` 与 `first_excited_heat_multiplier_eq_iff` 固定每个 $t=\mathrm{heatTime}>0$ 后给 $H_t(p)=H_t(q)\Longleftrightarrow p=q$。其证明先由实指数单射和 $t\ne0$ 得 $\lambda_p=\lambda_q$，再用已有首激发频率对素数身份的单射；不是关于热时间变量的单射定理。`first_excited_temporalizations_zero` 给 $H_0(p)=Q_0(p)=1$，故零时退化。`finite_first_excited_phase_recurrence` 的精确范围是：对每个有限素数集 $P$、每个 $\varepsilon>0$ 和每个实下界 $T_0$，存在 $t>T_0$ 使所有 $p\in P$ 同时满足 $|Q_t(p)-1|<\varepsilon$。这里按相同有限通道、误差和下界直接使用已有定理，保留其证明归属；近返回不等于公共精确周期。本节(e)是固定正衰减率对历时的独立证明；这些谱率 $\lambda_p$ 与本图边时长 $\tau_e$ 不同，正相位与图负 Laplace 相位也须按(a)换号，不据名称建立参数或物理恒等。
+

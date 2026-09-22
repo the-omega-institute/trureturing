@@ -1,0 +1,32 @@
+### 50.15 全局最小值的有限归约与达到性
+
+使用第50.13节中任意一个通过（50.32）的 $q$，以及由它产生的 $U<2$、$\delta>0$。由（50.37），有 $M(\rho)\le U<2$，故无限阶与偶数阶比值均不可能最小。
+
+对于奇数阶 $r$，若该比值有机会满足 $F_\rho\le U$，（50.31）要求
+$$
+2\cos\frac\pi{2r}<U.
+$$
+特别地，所有候选阶数都包含在显式有限范围
+$$
+\boxed{
+3\le r\le
+\left\lfloor\frac\pi{2\arccos(U/2)}\right\rfloor,
+\qquad r\text{ 为奇数}.
+}
+\tag{50.39}
+$$
+这里取到等号端点也只是多保留一个可再排除的阶数，不影响有限归约。
+
+若希望避免反三角函数的精确取整，可以选择任意整数 $B\ge1$ 满足
+$$
+\boxed{B^2\delta\ge4,\quad\text{例如}\quad
+B=\left\lceil\frac2{\sqrt\delta}\right\rceil.}
+\tag{50.40}
+$$
+由 $\cos x\ge1-x^2/2$ 与 $\pi<4$，对奇数 $r>B$ 有
+$$
+L_r\ge2-\frac{\pi^2}{4r^2}
+>2-\frac4{r^2}>2-\delta=U.
+$$
+所以保守但更易作代数检验的范围是 $3\le r\le B$。
+

@@ -1,0 +1,32 @@
+### 47.18 临界平均斜率回接有限深度条件数
+
+固定 \(A>0\)，让 \(\rho\uparrow1/\lambda\)，则 \(t\uparrow1\)。由（47.70）直接得到
+\[
+\boxed{
+\lim_{\rho\uparrow1/\lambda}
+\frac{\mathbb E[\mathsf D]}{\mathbb E[K]}
+=\frac{1-1/\lambda}{1+1/\lambda}
+=\frac{\lambda-1}{\lambda+1}
+=\frac{A}{\sqrt{A^2+4A}}.
+}
+\tag{47.75}
+\]
+最后一步用
+\(A=(\lambda-1)^2/\lambda\) 与
+\(s=(\lambda^2-1)/\lambda\)。
+
+此极限不是临界点的概率期望：临界点没有这份归一化律。它只比较严格内部的一族有限期望。等价地，令 \(\delta_{\mathrm c}=1-\lambda\rho\downarrow0\)，从（47.68）—（47.69）得
+\[
+\mathbb E[K]=\delta_{\mathrm c}^{-1}+O_A(1),
+\qquad
+\mathbb E[\mathsf D]=\frac{A}{s}\delta_{\mathrm c}^{-1}+O_A(1).
+\]
+两者分别发散，但其比值有上述极限。
+
+第46.9节式（46.28）—（46.31）给
+\[
+\frac{\kappa_k(A)}{k}\longrightarrow\frac{A}{s}
+\quad(k\to\infty,\ A>0\text{固定}).
+\]
+结合（47.61），同一系数族因此具有两种相容而不同的读法：固定大深度时，条件次数均值的每层增长率趋于 \(A/s\)；将全部深度按 \(\rho\) 混合、并从严格内部接近可归一化边界时，总次数均值与总深度均值之比趋于同一值。这里证明的是“均值之比”，不是未经说明的 \(\mathbb E[\mathsf D/K]\)；后者还有 \(K=0\) 的定义问题。
+

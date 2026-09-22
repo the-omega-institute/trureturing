@@ -1,0 +1,41 @@
+**有限来源的生成函数与消失尾。** 对任意 \(b\in\mathcal F_{A,N}\)，令
+\[
+F_b(z)=1+\sum_{i=0}^{N-1}b_i z^{i+1},\qquad
+R_{n,b}(z)=\sum_{k\ge0}\mathcal E(b)(n,k)z^k.
+\]
+递推先在形式幂级数意义下给
+\[
+F_b(z)R_{n,b}(z)=b_n+zR_{n+1,b}(z).
+\]
+因为 \(F_b(0)=1\)，它具有形式逆；又因为所有 \(n\ge N\) 行均由递推归纳为零，逐行迭代得到
+\[
+R_{n,b}(z)
+=\sum_{j=0}^{N-n-1}
+\frac{b_{n+j}z^j}{F_b(z)^{j+1}}\quad(n<N),
+\qquad R_{n,b}=0\quad(n\ge N).
+\tag{48.4}
+\]
+此等式首先是形式恒等式，下面再给解析范围。
+
+临界关系给 \(\lambda-(A+1)=(s-A)/2>0\)，所以
+\(\rho<(1+A)^{-1}\)。选
+\(\rho<R<(1+A)^{-1}\)。在 \(|z|\le R\) 上，
+\[
+|F_b(z)-1|
+\le A\sum_{i=1}^{N}R^i
+\le\frac{AR}{1-R}<1.
+\]
+因此（48.4）在包含这个闭圆盘的邻域解析。对各有限非零行应用 Cauchy 系数界，有常数 \(C_{b,n,R}\) 使
+\[
+|\mathcal E(b)(n,k)|\le C_{b,n,R}R^{-k}.
+\]
+故 \(\rho^k|\mathcal E(b)(n,k)|\to0\)。只有 \(n<N\) 的有限多行，所以该数组具有消失加权尾。特别地，首行目标差满足
+\[
+\rho^k|T^\star(0,k)-\mathcal E(b)(0,k)|
+\longrightarrow c_A,
+\quad\text{从而}\quad
+\|T^\star-\mathcal E(b)\|_\rho\ge c_A.
+\tag{48.5}
+\]
+这里不需要把一般环境数组截断当作实际递归来源。
+

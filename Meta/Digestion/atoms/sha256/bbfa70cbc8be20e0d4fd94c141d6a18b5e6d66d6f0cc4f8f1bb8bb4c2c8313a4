@@ -1,0 +1,31 @@
+**支撑约束覆盖全部未知联合初态。**
+
+定义输出分支算子
+$$
+K_j=(\langle j|\otimes I_M)T=|m_j\rangle\langle j|.
+$$
+Q130 的基像给
+$$
+K_1=|0\rangle\langle1|,\qquad K_1^2=0.
+$$
+对词 $w=(w_1,\ldots,w_n)$，空词的算子乘积约定为 $I_M$，等距的顺序递推给
+$$
+(\langle w|\otimes I_M)T_n=K_{w_n}\cdots K_{w_1}.
+$$
+若 $w$ 包含相邻 $11$，右端包含相邻因子 $K_1K_1=0$，所以整个分支算子为零。令 $P_n^{\rm legal}$ 投影到不含相邻 $11$ 的词张成空间，$P_0^{\rm legal}=I_{H_0}$，则
+$$
+((I_{H_n}-P_n^{\rm legal})\otimes I_M)T_n=0.
+$$
+张量上 $I_J$ 后仍成立。令 $V_n=I_J\otimes T_n$、$Q_n=I_J\otimes P_n^{\rm legal}$，则 $(Q_n\otimes I_M)V_n=V_n$，取伴随也得对应右乘恒等式。因此对**每一个输入算子** $X\in\mathcal L(J\otimes M)$，无须正性或自伴性，都有
+$$
+V_nXV_n^*=(Q_n\otimes I_M)V_nXV_n^*(Q_n\otimes I_M).
+$$
+取活动记忆的偏迹并将 $Q_n$ 提出，得到
+$$
+\boxed{
+q_n(X)=(I_J\otimes P_n^{\rm legal})q_n(X)(I_J\otimes P_n^{\rm legal})
+\quad\forall X\in\mathcal L(J\otimes M).
+}
+$$
+将上式限制到密度，便覆盖任意混合、相干、纠缠初态及任意有限 $J$，不局限于 Q130 的指定根态 $P_0$。它依赖同一固定等距及无改变生成规则的介入；允许重置或反馈后，不能继续无条件使用。
+

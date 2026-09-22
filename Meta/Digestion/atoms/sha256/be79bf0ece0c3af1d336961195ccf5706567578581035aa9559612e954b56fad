@@ -1,0 +1,190 @@
+### 48.2 全部幅度的最近有限前缀与精确截止长度
+
+固定 \(A>0\)、\(\rho=\lambda(A)^{-1}\)，仍记
+\(T^\star=\mathcal E(-A\mathbf1)\)。对整数 \(N\ge1\)，定义
+\[
+\mathcal F_{A,N}
+=\{b\in[-A,A]^{\mathbb N}:b_i=0\text{ 对所有 }i\ge N\},
+\qquad
+\mathcal J_{A,N}=\mathcal E(\mathcal F_{A,N}),
+\]
+并取同一负前缀
+\[
+b^{A,N}_i=
+\begin{cases}-A,&i<N,\\0,&i\ge N,\end{cases}
+\qquad T_{A,N}=\mathcal E(b^{A,N}).
+\]
+这里 \(N\) 是允许非零坐标的**前缀截止长度**，不是任意散布坐标的非零个数。本节不把这两个资源量混同。
+
+**有限来源的生成函数与消失尾。** 对任意 \(b\in\mathcal F_{A,N}\)，令
+\[
+F_b(z)=1+\sum_{i=0}^{N-1}b_i z^{i+1},\qquad
+R_{n,b}(z)=\sum_{k\ge0}\mathcal E(b)(n,k)z^k.
+\]
+递推先在形式幂级数意义下给
+\[
+F_b(z)R_{n,b}(z)=b_n+zR_{n+1,b}(z).
+\]
+因为 \(F_b(0)=1\)，它具有形式逆；又因为所有 \(n\ge N\) 行均由递推归纳为零，逐行迭代得到
+\[
+R_{n,b}(z)
+=\sum_{j=0}^{N-n-1}
+\frac{b_{n+j}z^j}{F_b(z)^{j+1}}\quad(n<N),
+\qquad R_{n,b}=0\quad(n\ge N).
+\tag{48.4}
+\]
+此等式首先是形式恒等式，下面再给解析范围。
+
+临界关系给 \(\lambda-(A+1)=(s-A)/2>0\)，所以
+\(\rho<(1+A)^{-1}\)。选
+\(\rho<R<(1+A)^{-1}\)。在 \(|z|\le R\) 上，
+\[
+|F_b(z)-1|
+\le A\sum_{i=1}^{N}R^i
+\le\frac{AR}{1-R}<1.
+\]
+因此（48.4）在包含这个闭圆盘的邻域解析。对各有限非零行应用 Cauchy 系数界，有常数 \(C_{b,n,R}\) 使
+\[
+|\mathcal E(b)(n,k)|\le C_{b,n,R}R^{-k}.
+\]
+故 \(\rho^k|\mathcal E(b)(n,k)|\to0\)。只有 \(n<N\) 的有限多行，所以该数组具有消失加权尾。特别地，首行目标差满足
+\[
+\rho^k|T^\star(0,k)-\mathcal E(b)(0,k)|
+\longrightarrow c_A,
+\quad\text{从而}\quad
+\|T^\star-\mathcal E(b)\|_\rho\ge c_A.
+\tag{48.5}
+\]
+这里不需要把一般环境数组截断当作实际递归来源。
+
+**同一个负前缀同时最小化每个坐标的误差。** 令
+\(Q_{n,k}(x)=-\mathcal E(-x)(n,k)\)。（46.3）的系数性质说明 \(Q_{n,k}\) 是非负系数多项式。因 \(|b_i|\le A\mathbf1_{i<N}\)，逐坐标有
+\[
+|\mathcal E(b)(n,k)|
+\le Q_{n,k}(|b|)
+\le Q_{n,k}(A\mathbf1_{i<N})
+=-T_{A,N}(n,k)
+\le u_k(A).
+\]
+三角不等式的反向估计于是给
+\[
+\begin{aligned}
+|T^\star(n,k)-\mathcal E(b)(n,k)|
+&\ge u_k(A)-|\mathcal E(b)(n,k)|\\
+&\ge u_k(A)+T_{A,N}(n,k)\\
+&=|T^\star(n,k)-T_{A,N}(n,k)|.
+\end{aligned}
+\tag{48.6}
+\]
+最后一步使用 \(T_{A,N}\le0\) 和上述绝对值上界。故同一个实际前缀取得所有坐标共同的最小误差，特别地
+\[
+\operatorname{dist}_\rho(T^\star,\mathcal J_{A,N})
+=\|T^\star-T_{A,N}\|_\rho.
+\]
+这不是把分别可达的坐标最优值拼成一个未必存在的来源。
+
+定义
+\[
+W_N(A)=A\sum_{i=1}^{N}\rho^{-i}.
+\]
+临界恒等式 \(A=(1-\rho)^2/\rho\) 给
+\[
+W_N(A)=\frac{1-\rho}{\rho}(\rho^{-N}-1),
+\qquad
+W_N(A)\ge1\quad\Longleftrightarrow\quad
+\rho^N\le1-\rho.
+\tag{48.7}
+\]
+
+**充分性。** 假设 \(W_N(A)\ge1\)。记
+\(p_{n,k}=-T_{A,N}(n,k)\ge0\)、\(p_k=p_{0,k}\)。有限依赖给
+\(p_k=u_k(A)\) 对 \(k<N\) 成立；因此这些初始项满足
+\(p_k\ge A\rho^k\)。首行递推可改写为
+\[
+p_k=p_{1,k-1}
++A\sum_{i=1}^{\min(k,N)}p_{k-i}\quad(k\ge1).
+\]
+对 \(k\ge N\)，若此前各项满足所需界，则
+\[
+p_k\ge A\sum_{i=1}^{N}p_{k-i}
+\ge A^2\rho^k\sum_{i=1}^{N}\rho^{-i}
+=A\rho^kW_N(A)
+\ge A\rho^k.
+\]
+故由归纳，\(p_k\ge A\rho^k\) 对所有 \(k\ge0\) 成立。首行的加权误差因此满足
+\[
+\begin{aligned}
+0\le\rho^k[u_k(A)-p_k]
+&\le c_A+b_A\rho^{2k}-A\rho^{2k}\\
+&=c_A+(b_A-A)\rho^{2k}<c_A.
+\end{aligned}
+\tag{48.8}
+\]
+严格性来自 \(b_A<A\)，包括每个有限 \(k\)。当 \(N=1\) 时，基步为 \(p_0=A\)，归纳从 \(k=1\) 开始，仍覆盖全部首行。
+
+现在取 \(n\ge1\)，写 \(m=n+k\)。若 \(m<N\)，有限依赖说明当前前缀与全负边界完全给出同一坐标，误差为零。若 \(m\ge N\)，由 \(0\le p_{n,k}\le u_k(A)\) 得
+\[
+\begin{aligned}
+\rho^{n+k}[u_k(A)-p_{n,k}]
+&\le\rho^m u_k(A)\\
+&\le\rho^m u_{m-1}(A)\\
+&=c_A(\rho+\rho^{2m})\\
+&\le c_A\bigl[\rho+(1-\rho)^2\bigr]
+<c_A.
+\end{aligned}
+\tag{48.9}
+\]
+第二步用 \(k\le m-1\) 以及 \(u_j(A)\) 随非负整数 \(j\) 增加：这也可由其非负系数公式逐项比较得到。等式使用
+\(b_A=c_A\rho\)；倒数第二步使用（48.7）。最后
+\(\rho+(1-\rho)^2=1-\rho+\rho^2<1\)。结合（48.5），得到范数恰为 \(c_A\)。每个有限坐标的加权误差都严格小于 \(c_A\)，而整个上确界仍等于 \(c_A\)。
+
+**必要性。** 假设 \(W_N(A)<1\)。对负前缀写
+\[
+F_N(z)=1-A\sum_{i=1}^{N}z^i,\qquad
+P_N(z)=\sum_{k\ge0}p_kz^k
+=\sum_{j=0}^{N-1}\frac{Az^j}{F_N(z)^{j+1}},
+\tag{48.10}
+\]
+后一个式子是（48.4）的首行符号变换。在 \(|z|\le\rho^{-1}\) 上，
+\(A\sum_i|z|^i\le W_N(A)<1\)。因为和式有限且严格小于一，可以再选
+\(R>\rho^{-1}\)，使 \(A\sum_iR^i<1\)。于是 \(F_N\) 在整个 \(|z|\le R\) 上无零点，（48.10）解析，Cauchy 系数界给
+\[
+0\le p_k\le C_RR^{-k}=o(\rho^k).
+\]
+所以首行误差为
+\[
+\rho^k[u_k(A)-p_k]
+=c_A+\rho^{2k}\left(b_A-\frac{p_k}{\rho^k}\right)
+>c_A
+\]
+对充分大的有限 \(k\) 成立。由（48.6），所有允许的同截止来源都有至少这么大的该坐标误差。因此距离严格大于 \(c_A\)。
+
+充分和必要两部分合并为
+\[
+\boxed{
+\operatorname{dist}_\rho(T^\star,\mathcal J_{A,N})=c_A
+\quad\Longleftrightarrow\quad
+W_N(A)\ge1
+\quad\Longleftrightarrow\quad
+\rho^N\le1-\rho.
+}
+\tag{48.11}
+\]
+以下严格有限坐标估计只针对所构造的全负前缀，不声称每个任意最近点都具有这个性质。精确最小允许截止长度因而为
+\[
+\boxed{
+N_{\min}(A)
+=\left\lceil\frac{\log(1-\rho)}{\log\rho}\right\rceil,
+\qquad\rho=\lambda(A)^{-1}.
+}
+\tag{48.12}
+\]
+两个对数均为负，商严格为正，故该整数至少为一。特别地，对每个 \(A>0\)，某个有限负前缀已经取得角点到全部有限来源像的距离 \(c_A\)。零截止只有零来源，其误差为 \(A>c_A\)。\(N=1\) 时（48.11）退化为 \(\rho\le1/2\)，也就是第48.4节单点特例的 \(A\ge1/2\)。
+
+例如 \(A=1/6\) 时 \(\rho=2/3\)、\(c_A=1/10\)，最小截止为三。截止二的共同最优负前缀已经在 \((n,k)=(0,11)\) 给出精确超额
+\[
+\rho^{11}|T^\star(0,11)-T_{A,2}(0,11)|-c_A
+=\frac{30677}{104603532030}>0.
+\]
+该值可直接由首行递推以有理数计算；它是上面一般必要条件的一个有限见证。\(A=1/20\)、\(\rho=4/5\) 时最小截止为八；必要证明只保证不足截止的超额最终出现，不承诺在任意预先选定的小深度内出现。
+

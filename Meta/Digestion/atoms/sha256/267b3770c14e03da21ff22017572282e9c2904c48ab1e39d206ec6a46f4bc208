@@ -1,0 +1,11 @@
+**由有限实部裕度取得圆盘。** 若第49.4节给整圆共同实部下界
+$\operatorname{Re}F_b(\rho e^{\mathrm i\theta})\ge\rho+\gamma$，取
+$$
+r_1=\frac{1+\rho}{2},\qquad D=\frac A{(1-r_1)^2},\qquad
+h=\min\left\{\frac{1-\rho}{4},\frac{\gamma}{2(D+1)}\right\},
+\qquad R=\rho+h.
+\tag{49.15}
+$$
+统一幅度界给 $|F_b'(z)|\le D$ 于 $|z|\le r_1$。沿固定角度的径向线段积分，得到
+$\operatorname{Re}F_b(Re^{\mathrm i\theta})\ge\rho+\gamma-Dh\ge R+\gamma/2$。调和最小值原理把同一实部下界延拓至整个闭圆盘，因此无零点。于是共同解析估计适用。
+

@@ -1,0 +1,43 @@
+### 49.4 整圆等号刚性与有限前缀相位排除
+
+在临界圆周 $z=\rho e^{i\theta}$ 上，有
+$$
+\begin{aligned}
+\operatorname{Re}F_a(\rho e^{i\theta})-\rho
+&=\sum_{i\ge0}\rho^{i+1}
+\left[A+\operatorname{Re}\bigl(a_i e^{i(i+1)\theta}\bigr)\right].
+\end{aligned}
+\tag{49.7}
+$$
+恒等式使用 $1-A\rho/(1-\rho)=\rho$。右边每项非负，并一致绝对收敛。
+
+该和为零，当且仅当每项为零。由于 $|a_i|\le A$，
+$\operatorname{Re}(a_i e^{i(i+1)\theta})=-A$ 等价于
+$a_i e^{i(i+1)\theta}=-A$。因此圆周等号恰强制
+$$
+a_i=-A\zeta^{i+1}\quad\text{对所有 }i,
+\qquad\zeta=e^{-i\theta}.
+$$
+反过来，这样的相位来源在对应圆周点确实取等号。
+
+还可以将严格性定位在一个有限前缀。对 $J\ge0$，令
+$$
+g_J(\theta)=\sum_{i=0}^{J}\rho^{i+1}
+\left[A+\operatorname{Re}\bigl(a_i e^{i(i+1)\theta}\bigr)\right],
+\qquad\gamma_J=\min_{\theta\in[0,2\pi]}g_J(\theta).
+$$
+若 $a$ 不是相位来源，则存在有限 $J$ 使 $\gamma_J>0$：
+
+- 若 $|a_0|<A$，直接有 $\gamma_0=\rho(A-|a_0|)>0$。
+- 若 $|a_0|=A$，令 $\zeta=-a_0/A$。既然整条边界不是 $a^\zeta$，存在 $j\ge1$ 使 $a_j\ne-A\zeta^{j+1}$。若 $g_j(\theta)=0$，首项先强制 $e^{i\theta}=\zeta^{-1}$，第 $j$ 项随后强制刚被排除的等式，矛盾。连续非负函数在紧圆周上无零点，因此 $\gamma_j>0$。
+
+此外，任意单个幅度缺口 $|a_j|\le A-\delta$、$\delta>0$，都直接给
+$g_J(\theta)\ge\delta\rho^{j+1}$ 对所有 $J\ge j$ 成立。这给“首个幅度缺口”的明确量化；全幅度但符号不相容时则由上面的有限相位条件给间隔。
+
+固定这样的前缀和 $\gamma=\gamma_J>0$。对任意另一个来源 $b\in K_A^{\mathbb C}$，只要 $b_i=a_i$ 对 $i\le J$，其余尾部仍可完全任意。由于（49.7）的尾项非负，同一个界给
+$$
+\operatorname{Re}F_b(\rho e^{i\theta})\ge\rho+\gamma
+\quad\text{对所有 }\theta.
+$$
+因此间隔属于有限前缀及幅度合同，不需要猜测或预知后面的来源信息。
+
