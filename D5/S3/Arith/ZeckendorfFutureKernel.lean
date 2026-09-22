@@ -4,7 +4,7 @@
    mirror-E: none(waiver:exact-two-sided-future-classification)
    anchors: []
    utility: none
-   digest: Legal Zeckendorf continuations identify exactly a unit-scaling quotient of residue states. -/
+   digest: Legal Zeckendorf continuations identify the unit-scaling quotient of residue states. -/
 
 import Mathlib.Data.Nat.Fib.Basic
 import Mathlib.Data.ZMod.Basic
@@ -124,7 +124,7 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
           (Nat.fib (n+1) : ZMod M) + (Nat.fib (n+2) : ZMod M) := by
         simpa [Nat.add_assoc] using congrArg (fun a : ℕ => (a : ZMod M))
           (Nat.fib_add_two (n := n+1))
-      apply Prod.ext <;> simp only [Prod.fst, Prod.snd, hf, hg] <;> ring
+      apply Prod.ext <;> simp only [hf, hg] <;> ring
   have hprev : (Nat.fib (T-1) : ZMod M) = 1 := by
     have hg : (Nat.fib (T+1) : ZMod M) =
         (Nat.fib (T-1) : ZMod M) + (Nat.fib T : ZMod M) := by
