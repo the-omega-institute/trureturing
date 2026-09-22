@@ -918,3 +918,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Minimum coarse sources admit matching lifts and two height strips below nine; joint mod25 fibres give a separate bound eight, while a 540-point blocker refutes automatic mod175 fibre matching](profile-notes/arithmetic/442-minimum-coarse-sources-lift-through-actual-fibres.md)
 
 - [One finite flow couples row and tree-prefix caps with optimal joint factor q/m; isolated ternary five-prefix sources admit one law below nine through five-height22 and every finite seven-height](profile-notes/arithmetic/443-one-supported-law-couples-rows-and-tree-prefixes.md)
+
+- [Uniform subtree restrictions couple both prefix trees under one actual law; three robust first-five roots give Gamma6125 at most2024/225 without a fixed good-fibre selector](profile-notes/arithmetic/444-uniform-subtree-restrictions-couple-two-prefix-trees.md)

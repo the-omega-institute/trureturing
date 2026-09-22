@@ -154,10 +154,12 @@ layout. The construction does not assert projective compatibility of
 the choices for different finite sources or heights.
 
 These are ordinary finite-flow and tree deductions, not Lean-certified
-statements. They neither establish the two-sided joint-cap template
-for arbitrary height-(2,2) local blockers nor settle the arbitrary
-three-first-five-root source at height-(3,2). No source realization as
-an odd-cover residual follows from the abstract blocking hypotheses.
+statements. They do not establish the stronger two-sided joint-cap
+template for arbitrary height-(2,2) local blockers. The
+[uniform restriction construction](444-uniform-subtree-restrictions-couple-two-prefix-trees.md)
+handles full product-tree blockers with exactly three occupied first-five
+roots at height-(3,2), using a weaker final-five marginal cap. No source realization as an odd-cover
+residual follows from the abstract blocking hypotheses.
 
 ## At most four occupied terminal rows remove the height restriction
 
@@ -252,10 +254,13 @@ indexed by A=0,...,3 and B=0,...,2:
 
 All twelve original phases remain independent. Their full 144-term
 LCM bound gives Gamma_6125<=218/45<9 for this one law. No optimality
-or odd-cover realization is claimed. Neither fixed selector settles
-the general three-first-root height-(3,2) problem. Coupling across
-second-five children or additional arithmetic hypotheses remain
-possible routes; this example does not make either route necessary.
+or odd-cover realization is claimed. Neither fixed selector by itself
+settles the general three-first-root height-(3,2) problem. The
+[uniform restriction average](444-uniform-subtree-restrictions-couple-two-prefix-trees.md)
+supplies a law for full product-tree blockers with exactly three occupied
+first-five roots at height-(3,2). This example excludes the two
+fixed tests, without making either an extra arithmetic hypothesis or
+any particular alternative construction necessary.
 
 ## Exact construction and controls
 
