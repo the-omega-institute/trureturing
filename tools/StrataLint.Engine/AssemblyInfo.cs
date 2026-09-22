@@ -14,3 +14,13 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.EngineeringScope")]
 [assembly: InternalsVisibleTo("StrataLint.Lean")]
 [assembly: InternalsVisibleTo("StrataLint.Lean.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.InspectionScope")]
+
+[assembly: InternalsVisibleTo("StrataLint.ExecutionEvidence")]
+
+[assembly: InternalsVisibleTo("StrataLint.BuildRuntime")]
+
+[assembly: InternalsVisibleTo("StrataLint.CliTestSupport")]
+
+[assembly: InternalsVisibleTo("StrataLint.CliIntegration.Tests")]

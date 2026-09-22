@@ -225,7 +225,7 @@ internal sealed class ResourceFixture : IDisposable
         CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root),
             [CommonExecutionEvidence.CliPath, CommonExecutionEvidence.LeanProducerPath],
             CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/log")).ToArray(),
-            plan?.Projects, plan?.Retain(Root));
+            plan?.Projects, plan?.Retain(Root, CommonExecutionEvidence.RootPath));
         if (prepareReport && required.Any(id => id is "lean-report" or "scribe" or "current" or "lean-inspector-build")) Report();
     }
     internal void Report() => ExecutionFixture.Report(fixture.Root);

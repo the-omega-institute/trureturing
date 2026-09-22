@@ -53,9 +53,9 @@ internal sealed class ExecutionFixture : IDisposable
         var tests = registration["projects"]!.AsArray().Where(row => row!["ci"]!.GetValue<bool>()).Select(row =>
             new BuiltTestProject(row!["path"]!.ToString(), "build/ci/fixture-bin/" + row["assembly"] + ".dll")).ToArray();
         foreach (var test in tests) Write(test.Assembly, "synthetic assembly\n");
-        CommonExecutionEvidence.Write(Root, CommonBuildOutputs.TestsPath, tests);
+        CommonExecutionEvidence.Write(Root, CommonExecutionEvidence.BuildTestsPath, tests);
         return CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root),
-            tests.Select(test => test.Assembly).Append(CommonBuildOutputs.TestsPath).Append(log),
+            tests.Select(test => test.Assembly).Append(CommonExecutionEvidence.BuildTestsPath).Append(log),
             CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
     }
 

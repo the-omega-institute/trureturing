@@ -28,7 +28,7 @@ public sealed class InformationTemplateEvidenceTests
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] entries)
     {
-        var files = DeclaredTemplateReviewTests.PolicyFiles();
+        var files = InformationTemplateFixture.PolicyFiles();
         foreach (var (path, text) in entries) files[path] = text;
         return DeclaredTemplateReviewTests.Tree(files);
     }
@@ -37,14 +37,14 @@ public sealed class InformationTemplateEvidenceTests
         JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
-            compatibility_version = compatibility ?? DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
+            compatibility_version = compatibility ?? InformationTemplateFixture.ManifestVersion(InformationTemplateFixture.PolicyFiles()),
             inventory = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             registered = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             records = new[] { new
             {
                 key = InformationTemplateJson.KeyJson(Key),
-                escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
-                escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
+                escape_from = InformationTemplateFixture.FromSlot,
+                escape_continues = InformationTemplateFixture.OpenSlot, bridge_kind = "legacy",
                 unit_name = Unit,
                 realization_name = Realization,
                 registration_source_path = PathA,
@@ -117,7 +117,7 @@ public sealed class InformationTemplateEvidenceTests
     {
         var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
         wire["inputs"] = JsonSerializer.SerializeToNode(new[] {
-            Input(path, DeclaredTemplateReviewTests.PolicyFiles()[path]) });
+            Input(path, InformationTemplateFixture.PolicyFiles()[path]) });
         var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
             JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA))));
         Assert.StartsWith("DTR-Evidence:", error.Message);
@@ -263,7 +263,7 @@ public sealed class InformationTemplateEvidenceTests
         var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
         var bridge = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(new
         {
-            schema_version = 1, compatibility_version = DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
+            schema_version = 1, compatibility_version = InformationTemplateFixture.ManifestVersion(InformationTemplateFixture.PolicyFiles()),
             inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
             records = System.Array.Empty<object>(),
         }), PathB, snapshot);

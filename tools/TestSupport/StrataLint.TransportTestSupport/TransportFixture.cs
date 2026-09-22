@@ -79,4 +79,32 @@ internal static class TransportFixture
         Assert.True(process.ExitCode == 0, error);
         return output.Trim();
     }
+    internal static void Capture(string root, string name, (int Exit, string Text) result)
+    {
+        if (Environment.GetEnvironmentVariable("SOURCE_CONTRACT_EVIDENCE") is not { Length: > 0 } destination) return;
+        var target = Path.Combine(destination, name);
+        Directory.CreateDirectory(target);
+        File.WriteAllText(Path.Combine(target, "process.json"), JsonSerializer.Serialize(new { root, result.Exit, result.Text, native_runner = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope"),
+            native_dll_sha256 = CommonExecutionEvidence.Hash(typeof(Program).Assembly.Location) }));
+        foreach (var path in new[] { CommonExecutionEvidence.BuildPath, CommonExecutionEvidence.CurrentPath, CommonExecutionEvidence.ChecksPath("current"),
+            CiTransport.ManifestPath("current"), "build/ci/plan.json", "build/ci/changes.json", "build/ci/engineering-result.json", "build/ci/current-result.json",
+            "build/cold-events", "build/launched" })
+            if (File.Exists(Path.Combine(root, path))) File.Copy(Path.Combine(root, path), Path.Combine(target, Path.GetFileName(path)), true);
+        foreach (var record in new[] { CommonExecutionEvidence.BuildPath, CommonExecutionEvidence.CurrentPath })
+        {
+            if (!File.Exists(Path.Combine(root, record))) continue;
+            foreach (var material in System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(Path.Combine(root, record)))!["materials"]!.AsArray())
+            {
+                var path = material!["path"]!.ToString();
+                if (!File.Exists(Path.Combine(root, path))) continue;
+                var copy = Path.Combine(target, "materials", path);
+                Directory.CreateDirectory(Path.GetDirectoryName(copy)!);
+                File.Copy(Path.Combine(root, path), copy, true);
+            }
+        }
+        if (File.Exists(Path.Combine(root, "build/artifact.zip")))
+            File.Copy(Path.Combine(root, "build/artifact.zip"), Path.Combine(target, "original-artifact.zip"), true);
+        foreach (var line in result.Text.Split('\n').Where(s => s.StartsWith("PREFLIGHT_ARTIFACT bundle=", StringComparison.Ordinal)))
+            File.Copy(line["PREFLIGHT_ARTIFACT bundle=".Length..], Path.Combine(target, "preflight-candidate.tar.gz"), true);
+    }
 }

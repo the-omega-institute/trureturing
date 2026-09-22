@@ -89,15 +89,15 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
-      "stratalint.engineeringscope": {
+      "stratalint.executionevidence": {
         "type": "Project",
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.Lean": "[1.0.0, )",
-          "StrataLint.ReleaseSelection": "[1.0.0, )"
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.ResourcePlanning": "[1.0.0, )"
         }
       },
-      "stratalint.lean": {
+      "stratalint.inspectionscope": {
         "type": "Project",
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )"
@@ -109,11 +109,8 @@
           "StrataLint.TestSupport": "[1.0.0, )"
         }
       },
-      "stratalint.releaseselection": {
-        "type": "Project",
-        "dependencies": {
-          "Trureturing.Truth": "[0.1.0, )"
-        }
+      "stratalint.resourceplanning": {
+        "type": "Project"
       },
       "stratalint.testsupport": {
         "type": "Project",

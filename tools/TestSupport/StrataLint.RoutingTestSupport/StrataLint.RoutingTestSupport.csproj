@@ -6,13 +6,18 @@
     <AssemblyName>StrataLint.RoutingTestSupport</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="../../Architecture/BannedSymbols.Determinism.txt" />
+    <PackageReference Include="xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj" />
     <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
+    <ProjectReference Include="../../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj" />
+    <ProjectReference Include="../../StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj" />
     <ProjectReference Include="../StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj" />
     <ProjectReference Include="../StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj" />
     <ProjectReference Include="../StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj" />
     <ProjectReference Include="../StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
-    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
-    <AdditionalFiles Include="../../Architecture/BannedSymbols.Determinism.txt" />
-    <PackageReference Include="xunit" />
   </ItemGroup>
 </Project>

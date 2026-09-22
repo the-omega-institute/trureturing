@@ -72,11 +72,6 @@
         "resolved": "13.0.3",
         "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
-      "Validation": {
-        "type": "Transitive",
-        "resolved": "2.6.68",
-        "contentHash": "5mZ+aXsYQnr3Wxz5O2tmbgPaa5kn9R+ZlfnPyGBogXI2sh4uTiHtvU++N4bURtn9vmDYIu2Zu323K9hFz9poXQ=="
-      },
       "xunit.abstractions": {
         "type": "Transitive",
         "resolved": "2.0.3",
@@ -117,6 +112,19 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
+      "stratalint.buildruntime": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.ExecutionEvidence": "[1.0.0, )"
+        }
+      },
+      "stratalint.ciartifacts": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.ExecutionEvidence": "[1.0.0, )"
+        }
+      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -132,18 +140,28 @@
       "stratalint.engineeringscope": {
         "type": "Project",
         "dependencies": {
+          "StrataLint.BuildRuntime": "[1.0.0, )",
+          "StrataLint.CiArtifacts": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.ExecutionEvidence": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
           "StrataLint.Lean": "[1.0.0, )",
-          "StrataLint.ReleaseSelection": "[1.0.0, )"
+          "StrataLint.ReleaseSelection": "[1.0.0, )",
+          "StrataLint.ResourcePlanning": "[1.0.0, )"
         }
       },
-      "stratalint.executiontestsupport": {
+      "stratalint.executionevidence": {
         "type": "Project",
         "dependencies": {
-          "StrataLint.EngineeringScope": "[1.0.0, )",
-          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.ResourcePlanning": "[1.0.0, )"
+        }
+      },
+      "stratalint.inspectionscope": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )"
         }
       },
       "stratalint.lean": {
@@ -152,72 +170,14 @@
           "StrataLint.Engine": "[1.0.0, )"
         }
       },
-      "stratalint.nativereporttestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.EngineeringScope": "[1.0.0, )",
-          "StrataLint.ScriptProcessTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.registrationtestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.TestSupport": "[1.0.0, )"
-        }
-      },
       "stratalint.releaseselection": {
         "type": "Project",
         "dependencies": {
           "Trureturing.Truth": "[0.1.0, )"
         }
       },
-      "stratalint.releasetestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.EngineeringScope": "[1.0.0, )",
-          "StrataLint.RoutingTestSupport": "[1.0.0, )",
-          "StrataLint.ScriptProcessTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.routingtestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.EngineeringScope": "[1.0.0, )",
-          "StrataLint.ExecutionTestSupport": "[1.0.0, )",
-          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
-          "StrataLint.ScriptProcessTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.scriptprocesstestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "Xunit.SkippableFact": "[1.5.85, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.testsupport": {
-        "type": "Project",
-        "dependencies": {
-          "Xunit.SkippableFact": "[1.5.85, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.transporttestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.EngineeringScope": "[1.0.0, )",
-          "StrataLint.ExecutionTestSupport": "[1.0.0, )",
-          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
+      "stratalint.resourceplanning": {
+        "type": "Project"
       },
       "trureturing.truth": {
         "type": "Project"
@@ -255,16 +215,6 @@
         "requested": "[2.10.1, )",
         "resolved": "2.10.1",
         "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
-      },
-      "Xunit.SkippableFact": {
-        "type": "CentralTransitive",
-        "requested": "[1.5.85, )",
-        "resolved": "1.5.85",
-        "contentHash": "zI3QsePulfENNjZC+POQYtqt/9HkUfe6qq+waSJ1xGVMU9v8LyWbr695IRAgg+UYDkPUgGnBjyULIVQ9Qdpgsg==",
-        "dependencies": {
-          "Validation": "2.6.68",
-          "xunit.extensibility.execution": "2.4.0"
-        }
       },
       "YamlDotNet": {
         "type": "CentralTransitive",
