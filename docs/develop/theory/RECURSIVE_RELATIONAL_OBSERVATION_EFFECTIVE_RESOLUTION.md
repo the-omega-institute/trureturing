@@ -4800,7 +4800,7 @@ $$
 m_C=\mu(K\cap C),\qquad f_s=\mu(K_s),\qquad
 u_s^{\mathrm{raw}}=\mu(K_s\cap C),\qquad \ell_t=v_M(t)-2^{-t}.
 $$
-为使本引理的标量不与概率律 $\nu_s$ 混淆，下文简记 $u_s=\nu_s^{\mathrm{raw}}$。则
+为使本引理的标量不与概率律 $\nu_s$ 混淆，下文简记 $u_s=u_s^{\mathrm{raw}}$。则
 $$
 \max\{0,\ell_t-(f_s-u_s)\}\le m_C\le u_s,
 \qquad
@@ -5055,7 +5055,7 @@ $$
 $$
 K_j^{\mathrm{blk}}=\{x:\text{前 }j\text{ 块全非零}\},\qquad
 \nu_j^{\mathrm{blk}}=\mu(\,\cdot\mid K_j^{\mathrm{blk}}),\qquad
-L_j=\sum_{i=1}^j\ell_i,quad L_0=0.
+L_j=\sum_{i=1}^j\ell_i,\quad L_0=0.
 $$
 令 $J_N=\min\{j:L_j\ge N\}$。则对所有 $j\ge J_N$，深度 $N$ 的边缘已经与最终 $\nu$ 精确相同；因而 $h(k)=J_{k+1}$ 是可计算观察选择器，且本例在该阶段之后也都合格。然而没有可计算总变差选择器。
 
@@ -5504,7 +5504,7 @@ $$
 
 概率归一化、Doob 条件转移及密度计算的既有对象见第 2.10.4–2.10.6 节；停止流与 canonical 次概率见第 2.10.8–2.10.9 节。第 4.2 节所需有限字母、同一 oracle 和非有理阶段的适配均明确写出，未借三进特例的 $1/2$ 数值界代替一般的 $M>0$。一般局部质量的来源为第 2.3.2–2.3.3 节及第 2.7.2 节；第 4.3 节另保留真实延拓所需的间隔或支撑条件。
 
-关于概率律与公平随机计算，直接文献是 Ackerman–Freer–Roy，[*Noncomputable Conditional Distributions*, arXiv:1005.3014v4](https://arxiv.org/abs/1005.3014v4)：其 PDF 第 10 页固定公平 iid 输入，第 13 页 Proposition 2.18 给 $\mathbf S\to\mathbf C$，并归于 Gács–Hoyrup–Rojas 的 Proposition 2.4.2；Proposition 2.19 给 $\mathbf C\to\mathbf S$，并归于 Hoyrup–Rojas 的 Theorem 5.1.1。这里使用这两条采样箭头；有限 clopen 条件化由本章直接计算，不由其他条件分布定理省去额外假设。
+关于概率律与公平随机计算，直接文献是 Ackerman–Freer–Roy，[*On the Computability of Conditional Probability*, arXiv:1005.3014v4](https://arxiv.org/abs/1005.3014v4)：其 PDF 第 10 页固定公平 iid 输入，第 13 页 Proposition 2.18 给 $\mathbf S\to\mathbf C$，并归于 Galatolo–Hoyrup–Rojas（2010） 的 Proposition 2.4.2；Proposition 2.19 给 $\mathbf C\to\mathbf S$，并归于 Hoyrup–Rojas 的 Theorem 5.1.1。这里使用这两条采样箭头；有限 clopen 条件化由本章直接计算，不由其他条件分布定理省去额外假设。
 
 Hoyrup–Rojas，[*Computability of probability measures and Martin-Löf randomness over metric spaces*, arXiv:0709.0907v2](https://arxiv.org/abs/0709.0907v2)，PDF 第 19–23 页 Definitions 5.0.1–5.0.2、5.1.1 及 Theorem 5.1.1，讨论可计算概率空间及带可计算 Cantor 测度 $\mu_\delta$ 的几乎处处同构。这个 Cantor 测度不应直接认作公平硬币律；定理 4.2.4 对公平源所需的方向由其明确区间构造承担。
 
