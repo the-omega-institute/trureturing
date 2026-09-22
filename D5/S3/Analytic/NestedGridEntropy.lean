@@ -149,8 +149,8 @@ theorem binary_refinement_entropy_budget
     simpa only [(invariant n).2, neg_mul, one_mul, one_div, Real.log_inv] using hlower
   calc
     Real.log (1 / cap n) + (∑ k ∈ Finset.range n, loss k) ≤
-        H (cells n) + (∑ k ∈ Finset.range n, loss k) :=
-      add_le_add_right hlower' _
+        H (cells n) + (∑ k ∈ Finset.range n, loss k) := by
+      linarith [hlower']
     _ = Real.log 2 * (∑ k ∈ Finset.range n, cap k) := account n
 
 #print axioms binary_refinement_entropy_budget

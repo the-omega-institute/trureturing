@@ -160,8 +160,10 @@ theorem two_moment_support_hole_sharp
       (fun _ => b), (fun _ => 1), ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · intro i
       fin_cases i
-      · exact ⟨hal, by linarith, by simp⟩
-      · exact ⟨hal.trans hlr.le, by linarith, by simp⟩
+      · simpa using (show a ≤ l ∧ l < 1 ∧ l ∉ Ioo l r from
+          ⟨hal, lt_of_le_of_lt hl_b hb, by simp⟩)
+      · simpa using (show a ≤ r ∧ r < 1 ∧ r ∉ Ioo l r from
+          ⟨hal.trans hlr.le, lt_of_le_of_lt hrb hb, by simp⟩)
     · intro j
       exact ⟨hab.le, le_rfl⟩
     · intro i
@@ -216,12 +218,20 @@ theorem two_moment_support_hole_sharp
     nlinarith
   have hc_upper (w : ℝ) (hw : w ∈ twoMomentMassSet a b ε ∅) : w ≤ wc := by
     have h := budget ∅ w hw (2 * t) (t ^ 2) ((b - t) ^ 2) (by positivity)
-      (fun z _ _ _ => by nlinarith [sq_nonneg (z - t)])
+      (fun z _ _ _ => by
+        rw [show z ^ 2 - 2 * t * z + t ^ 2 = (z - t) ^ 2 by ring]
+        exact sq_nonneg (z - t))
       (fun y hya hyb => by
         have hprod := mul_nonneg (sub_nonneg.mpr hyb)
           (show 0 ≤ b + y - 2 * t by linarith)
-        nlinarith)
-    have hcoef : 0 < 1 - 2 * t + t ^ 2 := by nlinarith [mul_pos ht1 ht1]
+        calc
+          y ^ 2 - 2 * t * y + t ^ 2 = (y - t) ^ 2 := by ring
+          _ ≤ (y - t) ^ 2 + (b - y) * (b + y - 2 * t) :=
+            le_add_of_nonneg_right hprod
+          _ = (b - t) ^ 2 := by ring)
+    have hcoef : 0 < 1 - 2 * t + t ^ 2 := by
+      rw [show 1 - 2 * t + t ^ 2 = (1 - t) ^ 2 by ring]
+      positivity
     apply (mul_le_mul_right hcoef).mp
     linarith [hc_contact]
   have hh_upper (w : ℝ) (hw : w ∈ twoMomentMassSet a b ε (Ioo l r)) : w ≤ wh := by
@@ -234,14 +244,22 @@ theorem two_moment_support_hole_sharp
         rcases hcases with hzl | hrz
         · have hp := mul_nonneg_of_nonpos_of_nonpos
             (sub_nonpos.mpr hzl) (show z - r ≤ 0 by linarith)
-          nlinarith
+          rw [show z ^ 2 - (l + r) * z + l * r = (z - l) * (z - r) by ring]
+          exact hp
         · have hp := mul_nonneg (show 0 ≤ z - l by linarith) (sub_nonneg.mpr hrz)
-          nlinarith)
+          rw [show z ^ 2 - (l + r) * z + l * r = (z - l) * (z - r) by ring]
+          exact hp)
       (fun y hya hyb => by
         have hp := mul_nonneg (sub_nonneg.mpr hyb)
           (show 0 ≤ b + y - (l + r) by linarith)
-        nlinarith)
-    have hcoef : 0 < 1 - (l + r) + l * r := by nlinarith [mul_pos hl1 hr1]
+        calc
+          y ^ 2 - (l + r) * y + l * r = (y - l) * (y - r) := by ring
+          _ ≤ (y - l) * (y - r) + (b - y) * (b + y - (l + r)) :=
+            le_add_of_nonneg_right hp
+          _ = (b - l) * (b - r) := by ring)
+    have hcoef : 0 < 1 - (l + r) + l * r := by
+      rw [show 1 - (l + r) + l * r = (1 - l) * (1 - r) by ring]
+      exact mul_pos hl1 hr1
     apply (mul_le_mul_right hcoef).mp
     linarith [hh_contact]
   refine ⟨⟨hc_mass, hc_upper⟩, ⟨hh_mass, hh_upper⟩, ?_⟩
