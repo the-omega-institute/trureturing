@@ -293,6 +293,18 @@ class modulo $qp^t$ is a different operation, as the preceding counterexample
 shows. Such a class is nevertheless handled by first using the larger period
 as the base and then taking that actual numerical label.
 
+Positive removed mass need not give any strict gain, even for the complete
+corrected potential below. Take $B=15$, $E=\{1,3,5\}$ and
+$W=(\mathbb Z/15\mathbb Z)^\times$, the actual residual after the classes
+$0\bmod3$ and $0\bmod5$. TAKE the unused class $1\bmod15$. The capacity
+vectors at labels $(1,3,5,15)$ before and after are
+$(8,4,2,1)$ and $(7,4,2,1)$. Both deficits are $7$, while every nonempty
+top-shell sum over $\{3,5\}$ is unchanged. Thus $G=1$ but
+$\Delta D_t=0$ at every repeated height, and $\Delta J_P=0$ for every
+nonempty $P\subseteq\{3,5\}$ in (ET6). This rules out a compulsory
+strict gain from positive actual deletion alone; it does not rule out
+stronger estimates using additional hypotheses or other functionals.
+
 ### Coprime support with its original labels
 
 Let $Q$ be squarefree and coprime to $B$, and retain the nonzero residues in
@@ -701,9 +713,9 @@ Independent direct-count regressions and the actual values are reproduced by
 
     python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/verify_repeated_prime_transport.py
 
-The checker performs 923 checks: 120 parent/child/height cases for one-prime
+The checker performs 925 checks: 120 parent/child/height cases for one-prime
 transport and coprime support, 144 simultaneous-height cases, invariance and
-TAKE monotonicity checks, the displayed SRCT readings, and the fresh-prime
+TAKE monotonicity and exact zero-gain checks, the displayed SRCT readings, and the fresh-prime
 sign-failure regression including the fractional pair-capacity obstruction.
 It computes real
 residue populations and counts each original divisor label once. These

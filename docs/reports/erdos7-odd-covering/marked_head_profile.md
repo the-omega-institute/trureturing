@@ -852,3 +852,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Cyclic CRT witnesses and local prime-capacity noncoverage](profile-notes/arithmetic/387-cyclic-crt-prime-capacity-and-forced-crowded-stars.md)
 - [A saturated 36-point chain blocker admits no full-history capped law and separates the finite-depth stop-loss comparison](profile-notes/arithmetic/388-saturated-chain-blockers-do-not-supply-conditional-caps.md)
 - [The same source retains a small exact complete-layout second moment at all heights despite its conditional and convex obstructions](profile-notes/arithmetic/389-saturated-chain-source-has-small-complete-layout-second-moment.md)
+- [Every normalized 5-by-7 root blocker has a common full-layout second-moment law bounded by four, with a separate uniform-tail extension](profile-notes/arithmetic/390-two-prime-root-blockers-admit-a-common-second-moment-law.md)

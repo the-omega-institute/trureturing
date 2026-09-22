@@ -120,6 +120,21 @@ def direct_transport_checks():
 
 
 def simultaneous_transport_checks():
+    zero_parent = {x for x in range(15) if gcd(x, 15) == 1}
+    zero_child = zero_parent - {1}
+    zero_labels = divisors(15)
+    zero_before = capacities(zero_parent, zero_labels)
+    zero_after = capacities(zero_child, zero_labels)
+    zero_dp = deficit(zero_parent, zero_before, {1, 3, 5})
+    zero_dc = deficit(zero_child, zero_after, {1, 3, 5, 15})
+    require(tuple(zero_before[d] for d in zero_labels) == (8, 4, 2, 1)
+            and tuple(zero_after[d] for d in zero_labels) == (7, 4, 2, 1)
+            and zero_dp == zero_dc == 7,
+            "actual positive TAKE has identical parent and child deficits")
+    require(all(zero_dp - penalty(zero_before, 15, ps)
+                == zero_dc - penalty(zero_after, 15, ps)
+                for ps in ((3,), (5,), (3, 5))),
+            "actual positive TAKE has zero corrected gain for every supported prime set")
     rng = Random(104729)
     cases = 0
     for base, primes in ((15, (3, 5)), (45, (3, 5))):
