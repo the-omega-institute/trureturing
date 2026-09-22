@@ -17,7 +17,9 @@
     },
     {
       "id": "build",
-      "projects": [],
+      "projects": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"
+      ],
       "checks": [],
       "steps": []
     },
