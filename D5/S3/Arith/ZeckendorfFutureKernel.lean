@@ -46,7 +46,7 @@ private def flag : Bool → List Bool → Bool
 private lemma advance_add {R : Type*} [Add R] (n k : ℕ) (z : R × R) :
     advance (n + k) z = advance k (advance n z) := by
   induction n generalizing z with
-  | zero => rfl
+  | zero => simp [advance]
   | succ n ih => simpa only [Nat.succ_add, advance] using ih (z.2, z.1 + z.2)
 
 private lemma value_append {R : Type*} [AddMonoid R]
@@ -156,11 +156,13 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
     · change pulse0.length = _ ∧ _
       refine ⟨by simp [pulse0,zeros]; omega, ?_, ?_, ?_⟩
       · intro b
+        change legal b pulse0
         rw [legal_append]
         exact ⟨(zero_facts (R := ZMod M) T).2.1 b,
           by simpa [hzeros T b (by omega), legal] using
             (zero_facts (R := ZMod M) (T-1)).2.1 true⟩
       · intro b
+        change flag b pulse0 = false
         rw [flag_append]
         exact hzeros (T-1) true (by omega)
       · intro x y
@@ -174,12 +176,13 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
     · change pulse1.length = _ ∧ _
       refine ⟨by simp [pulse1,zeros]; omega, ?_, ?_, ?_⟩
       · intro b
+        change legal b pulse1
         rw [legal_append]
         exact ⟨(zero_facts (R := ZMod M) (T+1)).2.1 b,
           by simpa [hzeros (T+1) b (by omega), legal] using
             (zero_facts (R := ZMod M) (T-2)).2.1 true⟩
       · intro b
-        simp only [if_pos rfl]
+        change flag b pulse1 = false
         rw [flag_append]
         exact hzeros (T-2) true (by omega)
       · intro x y
@@ -224,7 +227,7 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
     let w1 := copies B.val pulse1
     have h0 := repeats A.val false
     have h1 := repeats B.val true
-    simp only [Bool.false_eq_true, if_false] at h0
+    simp only [if_neg Bool.false_eq_true] at h0
     simp only [if_pos rfl] at h1
     refine ⟨w0++w1, ?_, ?_⟩
     · intro b
