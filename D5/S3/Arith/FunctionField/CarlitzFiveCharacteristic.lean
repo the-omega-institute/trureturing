@@ -296,6 +296,7 @@ theorem result {K : Type*} [Field K] (p : ℕ) [CharP K p]
       dsimp [seed3, residual]
       ring_nf
       reduce_mod_char!
+      ring_nf
     rw [h0, h1, h2, h3, h4] at hcertificate3
     have hbad : (0 : K) = 1 := by
       simpa only [mul_zero, add_zero] using hcertificate3
