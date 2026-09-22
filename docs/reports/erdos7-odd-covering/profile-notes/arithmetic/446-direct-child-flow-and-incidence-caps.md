@@ -6,6 +6,8 @@ These are ordinary finite-flow deductions with exact rational construction contr
 
 A direct flow preserves the literal second-five child until it reaches an actual source point. It gives one law with pure mod25 cap 1/9 and child/seven-prefix cap 3 kappa/10. For four first-five roots, if each root/first-seven-prefix contains at most one child, the resulting complete original-label bound is 353/45 at seven-height two and 1178/135 at height three, both below nine. Allowing one designated root to contain two children gives 1157/135 at height two; allowing two such roots gives 394/45. The incidence conditions are additional source hypotheses.
 
+Using actual empty children also allows incidence at most two at all four roots: if each has at least three occupied children and at least two children are missing in total, one law has bound79/9<9 at height(2,2). A root with only three children permits the stronger1171/135 bound. Exactly one missing child gives only a non-strict bound9 in the displayed construction.
+
 ## General weighted direct flow
 
 Let F be an actual subset of four distinct first-five roots, five literal second-five child digits at each root, and the leaves Y of a finite rooted seven-prefix tree. Children need not be occupied. Give every non-root prefix v a nonnegative rational capacity kappa(v). Assume that for every pair of different roots and every choice of three literal children in each root, the union of the two restricted seven projections supports a probability satisfying all kappa caps.
@@ -162,6 +164,54 @@ Every one of the nineteen occupied-child deletions destroys product blocking. Fo
 
 Further deletions cannot repair a missed test. Every blocking subsource must therefore retain all nineteen occupied children, including all three full roots. Neither selection nor a mixture of blocking subsources can reach [445](445-occupied-branch-restrictions-and-weighted-root-caps.md)'s at-most-one-full-root condition. The absence of robust roots also excludes the three-robust-root consumer of [444](444-uniform-subtree-restrictions-couple-two-prefix-trees.md). This separates the stated abstract source criteria while retaining the indicated necessary residual exclusions; it does not exclude every other sufficient theorem or prove arithmetic realization. The K=2,3 sources satisfy the preceding incidence bounds.
 
+## Actual empty children strengthen the direct cut theorem
+
+Suppose root r has n_r occupied children, with3<=n_r<=5, and set q_r=n_r-2. For a pair of roots choose q_r and q_s actual children. Adding all5-n_r and5-n_s empty children gives legal triples, so full product blocking supplies the same projected kappa-law premise. The direct network may now contain only the actual child nodes.
+
+For a cut with a_r active actual children, replace D1's quantities by
+
+    T=sum_r min(1/3,(n_r-a_r)/9),
+    I={r:a_r>=q_r},
+    w_r=a_r gamma_r/q_r.
+
+The proof is unchanged except that one averages q_r-element subsets in root r. Every ineligible root contributes1/3 to T, so |I|<=1 again suffices directly. For the other profiles the sufficient condition remains T+min(1,sum_I w/2,sum_I w-max_I w)>=1. The resulting ONE law has exactly D2's caps on the actual children.
+
+There is a short exact endpoint criterion for this numerical cut bound. Put
+
+    u_r=min(2/9+gamma_r/2, n_r gamma_r/(2q_r)),
+    v_r=min(2/9+gamma_r,   n_r gamma_r/q_r).
+
+For every subset I of at least two roots it is equivalent to require
+
+    (4-|I|)/3+sum_I u_r>=1,
+    (4-|I|)/3+sum_(r in I except j) v_r>=1  for every j in I. (D7)
+
+Indeed eligible q_r<=a_r<=n_r contributes(n_r-a_r)/9 at the top. Each branch of the numerical bound is affine in each a_r, so its minimum occurs at q_r or n_r. These endpoints are exactly u_r and v_r. In the branch excluding j, take a_j=n_j so its top cost is zero; T+1 is already sufficient. D7 is a criterion for the sufficient cut estimate, not a necessity for source-law existence.
+
+Uniform coefficients give the following useful cases. Each entry in the two middle columns lists the least D7 branch value for |I|=2,3,4.
+
+| Occupied children n | gamma | Half-sum branches | Exclusion branches | K=2 bound when every m_r<=2 |
+| --- | --- | --- | --- | --- |
+| (4,5,5,5) | 2/7 | 8/7, 22/21, 1 | 8/7, 9/7, 10/7 | 9 |
+| (4,4,5,5) | 3/11 | 37/33, 35/33, 1 | 37/33, 41/33, 139/99 | 79/9 |
+| (3,5,5,5) | 4/15 | 10/9, 1, 46/45 | 10/9, 11/9, 4/3 | 1171/135 |
+
+These are obtained by substituting the displayed n and gamma into D7. For example n=(4,4,5,5) gives u=(3/11,3/11,5/22,5/22) and v=(49/99,49/99,5/11,5/11). Its same-law mixed caps are root/seven<=6kappa/11 and child/seven<=3kappa/11, so D5 gives37/9+(14/9)*3=79/9. The other rows give37/9+(14/9)*11gamma.
+
+For fixed gamma, decreasing n within{3,4,5} can only increase u and v, since n/(n-2) decreases as n increases. Thus each case applies to every smaller occupancy profile, after permuting roots. If at least two children are missing in total, either two roots have at most four children or one root has at most three. Under m_r<=2 at EVERY root this proves a strict bound below nine, including profiles with three or four doubled-incidence roots. One may also use gamma=3/11 uniformly in the latter case: at n=(3,5,5,5) its half-sum minima are37/33,67/66,103/99 and its exclusion minima are37/33,41/33,15/11. Hence79/9 is a common ceiling for all these profiles; gamma=4/15 improves the concentrated-gap case.
+
+For general K, these three respective sufficient bounds are
+
+    S_K+14/9+(22/7)(S_K-1),
+    S_K+14/9+3(S_K-1),
+    S_K+14/9+(44/15)(S_K-1).
+
+The last two are strictly below nine exactly for K<=2. With exactly one missing child, (4,5,5,5), the displayed first bound equals nine at K=2 and does not prove a strict contradiction. No inference is made that every extremal source has two missing children or incidence at most two.
+
+Missing children here describe the actual joint residual; they do not introduce several original classes of modulus25. The original numerical label is still used once.
+
+The restriction n_r>=3 only belongs to this new network formula. If an occupied root has at most two children, choose three empty children there. For any other occupied root s, a test using the empty first-five root, that sparse root and s isolates the entire test to s. Each of the other three roots is therefore individually robust. Directly reusing report444's three-robust-root result at H=2 gives3S_K-4/9<77/9<9 for every finite K, without an incidence assumption in that branch. Combining this existing result with D7 removes n_r>=3 from the strict K=2 conclusion under total missing-child count at least two and m_r<=2.
+
 ## What the direct flow adds, and what remains missing
 
 For full child fibres, report445 gives root<=1/3, child<=1/5, pure seven<=kappa, root/seven<=kappa/2 and child/seven<=3kappa/10. Uniform direct flow retains the root, pure-seven and child/seven bounds and improves the child marginal to 1/9. The pure 1/9 marginal alone was already available in [376](376-complete-prime-chain-transport-and-joint-prefix-laws.md); its simultaneous combination with the child/seven bound is the additional conclusion here. The direct network does not by itself retain the root/seven half factor, so the two full cap systems are not mutually dominant.
@@ -182,7 +232,9 @@ The results do not establish the incidence conditions for all actual extremal re
 
 ## Exact construction controls
 
-The [standard-library constructor](../../frontier/cover-geometry/direct_child_tree_caps.py) reuses the exact `projected_capacity` and `_unit_flow` primitives of report443. The general interface accepts all rational nonnegative prefix capacities and any gamma passing D1; it checks the 600 pair/triple projection premises, actual support, normalization and every final cap. The incidence consumer checks literal CRT transport, every original cylinder cap and the complete LCM sum. A maximum-cylinder sum is an upper bound on Gamma, not an optimized game value.
+The [standard-library constructor](../../frontier/cover-geometry/direct_child_tree_caps.py) reuses the exact `projected_capacity` and `_unit_flow` primitives of report443. The general interface accepts all rational nonnegative prefix capacities and any gamma passing D1; by default it checks the 600 pair/triple projection premises, actual support, normalization and every final cap. The `actual_occupancy=True` interface instead uses the actual child sets and all pairs of q_r-subsets, with the corresponding occupancy-dependent cut conditions. Its incidence consumer selects the applicable displayed uniform coefficient and marks a non-strict result explicitly. The incidence consumers check literal CRT transport, every original cylinder cap and the complete LCM sum. A maximum-cylinder sum is an upper bound on Gamma, not an optimized game value.
+
+The source controls check actual subtree existence by recursively counting good children. Fractional prefix-capacity feasibility alone does not certify a complete tree: seven first-level roots each with two leaves admit a ternary-prefix unit law but no complete ternary depth-two tree. A second countercontrol gives the same distinction for branching five. Thus the displayed sources' product blocking, standalone five-ary projection and deletion-preservation claims are checked as literal tree properties. Every displayed full seven projection is also checked to equal{1,...,6}x{0,...,4}^(K-1).
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/direct_child_tree_caps.py
@@ -198,3 +250,13 @@ The retained [exact laws and data](../../frontier/cover-geometry/direct_child_tr
 | F_2 plus (r,0,2+7v), r=3,4; v=0,...,4 | 106 | 33 | 9 / 81 | 394/45 | 77/9 |
 
 The last two sources have multiplicities (1,1,1,2) and (1,1,2,2); adding actual points preserves blocking and the standalone projection. The first two controls also check all four nonrobust witnesses, with capacities2/3,8/9,8/9,8/9, and all nineteen failed occupied-child deletions, each with projected ternary-cap capacity8/9. The two-double source is a control of its incidence theorem; no deletion obstruction is asserted for that enlargement. These finite controls validate the constructions on the stated sources; the general conclusions use the proofs above.
+
+The actual-occupancy controls all have multiplicities(2,2,2,2) and retain every original label. At K=2 their data are:
+
+| Occupied children | Source points | Positive law atoms | Actual-subset / cut checks | Theorem upper | Law's LCM upper |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| (4,4,5,5) | 121 | 37 | 376 / 900 | 79/9 | 815/99 |
+| (3,5,5,5) | 111 | 36 | 390 / 864 | 1171/135 | 1162/135 |
+| (4,5,5,5) | 116 | 35 | 480 / 1080 | 9 (non-strict) | 60/7 |
+
+Each additionally passes all600 original pair/triple Boolean tree checks. The121-point source is obtained from F_2 by deleting child(r,c)=(2,1) and adjoining, with full five-ary tails, the child/first-seven incidences(1,0,6),(2,0,6),(2,2,2),(2,3,6),(3,0,2),(4,0,2). Its four doubled incidences fall outside the earlier at-most-two-doubled-root consumer; no exclusion from all earlier selectors is asserted. The other two sources exercise the remaining coefficient branches, including the non-strict threshold. Their literal sources and laws are retained in the same data file.

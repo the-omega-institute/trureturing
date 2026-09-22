@@ -1,4 +1,7 @@
 {
+  "tree_existence_controls": {
+    "fractional_capacity_does_not_certify_tree_controls": 2
+  },
   "plain": {
     "child_cut_checks": 1296,
     "minimum_child_cut_bound": "1",
@@ -203,6 +206,7 @@
         0
       ],
       "standalone_fiveary_projection": true,
+      "original_pair_triple_tree_checks": 600,
       "nonrobust_root_projection_capacities": [
         "2/3",
         "8/9",
@@ -1143,6 +1147,7 @@
         0
       ],
       "standalone_fiveary_projection": true,
+      "original_pair_triple_tree_checks": 600,
       "nonrobust_root_projection_capacities": [
         "2/3",
         "8/9",
@@ -3747,6 +3752,7 @@
         0
       ],
       "standalone_fiveary_projection": true,
+      "original_pair_triple_tree_checks": 600,
       "nonrobust_root_projection_capacities": [
         "2/3",
         "8/9",
@@ -5013,6 +5019,7 @@
         0
       ],
       "standalone_fiveary_projection": true,
+      "original_pair_triple_tree_checks": 600,
       "nonrobust_root_projection_capacities": [
         "2/3",
         "8/9",
@@ -5028,6 +5035,2477 @@
         ]
       ],
       "deletion_obstruction_capacity": "8/9"
+    }
+  },
+  "actual_occupancy": {
+    "child_cut_checks": 900,
+    "minimum_child_cut_bound": "1",
+    "actual_occupancy": true,
+    "occupied_child_counts": [
+      4,
+      4,
+      5,
+      5
+    ],
+    "local_subset_sizes": [
+      2,
+      2,
+      3,
+      3
+    ],
+    "source_points": 121,
+    "selected_points": 37,
+    "literal_roots": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "restricted_pair_checks": 376,
+    "network_edges": 1207,
+    "flow_denominator": 99,
+    "augmentations": 37,
+    "child_joint_coefficients": [
+      "3/11",
+      "3/11",
+      "3/11",
+      "3/11"
+    ],
+    "root_seven_child_multiplicities": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "inferred_root_joint_coefficients": [
+      "6/11",
+      "6/11",
+      "6/11",
+      "6/11"
+    ],
+    "occupancy_coefficient_rule": "at-least-two-roots-with-at-most-four-children",
+    "theorem_LCM_strictly_below_nine": true,
+    "weighted": false,
+    "designated_literal_root": null,
+    "designated_literal_roots": [],
+    "original_labels": [
+      1,
+      5,
+      7,
+      25,
+      35,
+      49,
+      175,
+      245,
+      1225
+    ],
+    "ordered_pairs": 81,
+    "theorem_LCM_upper": "79/9",
+    "actual_LCM_upper": "815/99",
+    "cylinder_caps": {
+      "1": "1",
+      "7": "1/3",
+      "49": "1/9",
+      "5": "1/3",
+      "35": "2/11",
+      "245": "2/33",
+      "25": "1/9",
+      "175": "1/11",
+      "1225": "1/33"
+    },
+    "actual_law": [
+      {
+        "residue": 1,
+        "mass": "1/33"
+      },
+      {
+        "residue": 6,
+        "mass": "1/33"
+      },
+      {
+        "residue": 58,
+        "mass": "1/33"
+      },
+      {
+        "residue": 67,
+        "mass": "1/33"
+      },
+      {
+        "residue": 202,
+        "mass": "1/33"
+      },
+      {
+        "residue": 212,
+        "mass": "1/33"
+      },
+      {
+        "residue": 213,
+        "mass": "1/33"
+      },
+      {
+        "residue": 251,
+        "mass": "2/99"
+      },
+      {
+        "residue": 261,
+        "mass": "1/33"
+      },
+      {
+        "residue": 302,
+        "mass": "1/33"
+      },
+      {
+        "residue": 303,
+        "mass": "2/99"
+      },
+      {
+        "residue": 351,
+        "mass": "1/33"
+      },
+      {
+        "residue": 356,
+        "mass": "1/33"
+      },
+      {
+        "residue": 408,
+        "mass": "1/33"
+      },
+      {
+        "residue": 543,
+        "mass": "1/33"
+      },
+      {
+        "residue": 552,
+        "mass": "2/99"
+      },
+      {
+        "residue": 592,
+        "mass": "1/33"
+      },
+      {
+        "residue": 603,
+        "mass": "1/33"
+      },
+      {
+        "residue": 641,
+        "mass": "2/99"
+      },
+      {
+        "residue": 652,
+        "mass": "1/33"
+      },
+      {
+        "residue": 692,
+        "mass": "2/99"
+      },
+      {
+        "residue": 701,
+        "mass": "1/33"
+      },
+      {
+        "residue": 706,
+        "mass": "1/33"
+      },
+      {
+        "residue": 737,
+        "mass": "1/33"
+      },
+      {
+        "residue": 738,
+        "mass": "1/33"
+      },
+      {
+        "residue": 758,
+        "mass": "1/99"
+      },
+      {
+        "residue": 786,
+        "mass": "1/33"
+      },
+      {
+        "residue": 787,
+        "mass": "2/99"
+      },
+      {
+        "residue": 836,
+        "mass": "2/99"
+      },
+      {
+        "residue": 893,
+        "mass": "1/99"
+      },
+      {
+        "residue": 933,
+        "mass": "2/99"
+      },
+      {
+        "residue": 942,
+        "mass": "1/33"
+      },
+      {
+        "residue": 953,
+        "mass": "1/33"
+      },
+      {
+        "residue": 1087,
+        "mass": "1/33"
+      },
+      {
+        "residue": 1088,
+        "mass": "1/33"
+      },
+      {
+        "residue": 1136,
+        "mass": "1/33"
+      },
+      {
+        "residue": 1178,
+        "mass": "1/33"
+      }
+    ],
+    "actual_source": [
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        6
+      ],
+      [
+        1,
+        0,
+        8
+      ],
+      [
+        1,
+        0,
+        13
+      ],
+      [
+        1,
+        0,
+        15
+      ],
+      [
+        1,
+        0,
+        20
+      ],
+      [
+        1,
+        0,
+        22
+      ],
+      [
+        1,
+        0,
+        27
+      ],
+      [
+        1,
+        0,
+        29
+      ],
+      [
+        1,
+        0,
+        34
+      ],
+      [
+        1,
+        1,
+        6
+      ],
+      [
+        1,
+        1,
+        13
+      ],
+      [
+        1,
+        1,
+        20
+      ],
+      [
+        1,
+        1,
+        27
+      ],
+      [
+        1,
+        1,
+        34
+      ],
+      [
+        1,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        9
+      ],
+      [
+        1,
+        2,
+        10
+      ],
+      [
+        1,
+        2,
+        16
+      ],
+      [
+        1,
+        2,
+        17
+      ],
+      [
+        1,
+        2,
+        23
+      ],
+      [
+        1,
+        2,
+        24
+      ],
+      [
+        1,
+        2,
+        30
+      ],
+      [
+        1,
+        2,
+        31
+      ],
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        1,
+        3,
+        11
+      ],
+      [
+        1,
+        3,
+        12
+      ],
+      [
+        1,
+        3,
+        18
+      ],
+      [
+        1,
+        3,
+        19
+      ],
+      [
+        1,
+        3,
+        25
+      ],
+      [
+        1,
+        3,
+        26
+      ],
+      [
+        1,
+        3,
+        32
+      ],
+      [
+        1,
+        3,
+        33
+      ],
+      [
+        2,
+        0,
+        6
+      ],
+      [
+        2,
+        0,
+        8
+      ],
+      [
+        2,
+        0,
+        13
+      ],
+      [
+        2,
+        0,
+        15
+      ],
+      [
+        2,
+        0,
+        20
+      ],
+      [
+        2,
+        0,
+        27
+      ],
+      [
+        2,
+        0,
+        34
+      ],
+      [
+        2,
+        2,
+        2
+      ],
+      [
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        9
+      ],
+      [
+        2,
+        2,
+        10
+      ],
+      [
+        2,
+        2,
+        16
+      ],
+      [
+        2,
+        2,
+        17
+      ],
+      [
+        2,
+        2,
+        23
+      ],
+      [
+        2,
+        2,
+        24
+      ],
+      [
+        2,
+        2,
+        30
+      ],
+      [
+        2,
+        2,
+        31
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        6
+      ],
+      [
+        2,
+        3,
+        11
+      ],
+      [
+        2,
+        3,
+        13
+      ],
+      [
+        2,
+        3,
+        18
+      ],
+      [
+        2,
+        3,
+        20
+      ],
+      [
+        2,
+        3,
+        25
+      ],
+      [
+        2,
+        3,
+        27
+      ],
+      [
+        2,
+        3,
+        32
+      ],
+      [
+        2,
+        3,
+        34
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        2,
+        4,
+        12
+      ],
+      [
+        2,
+        4,
+        19
+      ],
+      [
+        2,
+        4,
+        26
+      ],
+      [
+        2,
+        4,
+        33
+      ],
+      [
+        3,
+        0,
+        2
+      ],
+      [
+        3,
+        0,
+        9
+      ],
+      [
+        3,
+        0,
+        15
+      ],
+      [
+        3,
+        0,
+        16
+      ],
+      [
+        3,
+        0,
+        22
+      ],
+      [
+        3,
+        0,
+        23
+      ],
+      [
+        3,
+        0,
+        30
+      ],
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        3,
+        1,
+        9
+      ],
+      [
+        3,
+        1,
+        16
+      ],
+      [
+        3,
+        1,
+        23
+      ],
+      [
+        3,
+        1,
+        30
+      ],
+      [
+        3,
+        2,
+        3
+      ],
+      [
+        3,
+        2,
+        10
+      ],
+      [
+        3,
+        2,
+        17
+      ],
+      [
+        3,
+        2,
+        24
+      ],
+      [
+        3,
+        2,
+        31
+      ],
+      [
+        3,
+        3,
+        4
+      ],
+      [
+        3,
+        3,
+        11
+      ],
+      [
+        3,
+        3,
+        18
+      ],
+      [
+        3,
+        3,
+        25
+      ],
+      [
+        3,
+        3,
+        32
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        12
+      ],
+      [
+        3,
+        4,
+        19
+      ],
+      [
+        3,
+        4,
+        26
+      ],
+      [
+        3,
+        4,
+        33
+      ],
+      [
+        4,
+        0,
+        2
+      ],
+      [
+        4,
+        0,
+        9
+      ],
+      [
+        4,
+        0,
+        16
+      ],
+      [
+        4,
+        0,
+        22
+      ],
+      [
+        4,
+        0,
+        23
+      ],
+      [
+        4,
+        0,
+        29
+      ],
+      [
+        4,
+        0,
+        30
+      ],
+      [
+        4,
+        1,
+        2
+      ],
+      [
+        4,
+        1,
+        9
+      ],
+      [
+        4,
+        1,
+        16
+      ],
+      [
+        4,
+        1,
+        23
+      ],
+      [
+        4,
+        1,
+        30
+      ],
+      [
+        4,
+        2,
+        3
+      ],
+      [
+        4,
+        2,
+        10
+      ],
+      [
+        4,
+        2,
+        17
+      ],
+      [
+        4,
+        2,
+        24
+      ],
+      [
+        4,
+        2,
+        31
+      ],
+      [
+        4,
+        3,
+        4
+      ],
+      [
+        4,
+        3,
+        11
+      ],
+      [
+        4,
+        3,
+        18
+      ],
+      [
+        4,
+        3,
+        25
+      ],
+      [
+        4,
+        3,
+        32
+      ],
+      [
+        4,
+        4,
+        5
+      ],
+      [
+        4,
+        4,
+        12
+      ],
+      [
+        4,
+        4,
+        19
+      ],
+      [
+        4,
+        4,
+        26
+      ],
+      [
+        4,
+        4,
+        33
+      ]
+    ],
+    "source_boundary_controls": {
+      "occupied_child_counts": [
+        4,
+        4,
+        5,
+        5
+      ],
+      "root_seven_child_multiplicities": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "missing_first_five_digits": [
+        0
+      ],
+      "missing_first_seven_digits": [
+        0
+      ],
+      "missing_mod25_children_under_occupied_roots": [
+        7,
+        21
+      ],
+      "standalone_fiveary_projection": true,
+      "original_pair_triple_checks": 600,
+      "nonrobust_root_projection_capacities": [
+        "2/3",
+        "8/9",
+        "8/9",
+        "8/9"
+      ],
+      "original_incidence_consumer_rejected": true,
+      "scope": "Outside the previous incidence premise; no escape from every earlier selector or covering-residual realization is asserted."
+    }
+  },
+  "actual_occupancy_one_gap": {
+    "child_cut_checks": 1080,
+    "minimum_child_cut_bound": "1",
+    "actual_occupancy": true,
+    "occupied_child_counts": [
+      4,
+      5,
+      5,
+      5
+    ],
+    "local_subset_sizes": [
+      2,
+      3,
+      3,
+      3
+    ],
+    "source_points": 116,
+    "selected_points": 35,
+    "literal_roots": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "restricted_pair_checks": 480,
+    "network_edges": 1259,
+    "flow_denominator": 63,
+    "augmentations": 35,
+    "child_joint_coefficients": [
+      "2/7",
+      "2/7",
+      "2/7",
+      "2/7"
+    ],
+    "root_seven_child_multiplicities": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "inferred_root_joint_coefficients": [
+      "4/7",
+      "4/7",
+      "4/7",
+      "4/7"
+    ],
+    "occupancy_coefficient_rule": "exactly-one-missing-child-nonstrict-threshold",
+    "theorem_LCM_strictly_below_nine": false,
+    "weighted": false,
+    "designated_literal_root": null,
+    "designated_literal_roots": [],
+    "original_labels": [
+      1,
+      5,
+      7,
+      25,
+      35,
+      49,
+      175,
+      245,
+      1225
+    ],
+    "ordered_pairs": 81,
+    "theorem_LCM_upper": "9",
+    "actual_LCM_upper": "60/7",
+    "cylinder_caps": {
+      "1": "1",
+      "7": "1/3",
+      "49": "1/9",
+      "5": "1/3",
+      "35": "4/21",
+      "245": "4/63",
+      "25": "1/9",
+      "175": "2/21",
+      "1225": "2/63"
+    },
+    "actual_law": [
+      {
+        "residue": 1,
+        "mass": "2/63"
+      },
+      {
+        "residue": 2,
+        "mass": "2/63"
+      },
+      {
+        "residue": 6,
+        "mass": "2/63"
+      },
+      {
+        "residue": 18,
+        "mass": "1/63"
+      },
+      {
+        "residue": 107,
+        "mass": "2/63"
+      },
+      {
+        "residue": 213,
+        "mass": "2/63"
+      },
+      {
+        "residue": 251,
+        "mass": "1/63"
+      },
+      {
+        "residue": 261,
+        "mass": "2/63"
+      },
+      {
+        "residue": 262,
+        "mass": "2/63"
+      },
+      {
+        "residue": 302,
+        "mass": "2/63"
+      },
+      {
+        "residue": 303,
+        "mass": "2/63"
+      },
+      {
+        "residue": 351,
+        "mass": "2/63"
+      },
+      {
+        "residue": 352,
+        "mass": "1/63"
+      },
+      {
+        "residue": 356,
+        "mass": "2/63"
+      },
+      {
+        "residue": 408,
+        "mass": "2/63"
+      },
+      {
+        "residue": 457,
+        "mass": "2/63"
+      },
+      {
+        "residue": 543,
+        "mass": "2/63"
+      },
+      {
+        "residue": 592,
+        "mass": "2/63"
+      },
+      {
+        "residue": 603,
+        "mass": "2/63"
+      },
+      {
+        "residue": 641,
+        "mass": "1/63"
+      },
+      {
+        "residue": 652,
+        "mass": "2/63"
+      },
+      {
+        "residue": 701,
+        "mass": "2/63"
+      },
+      {
+        "residue": 706,
+        "mass": "2/63"
+      },
+      {
+        "residue": 738,
+        "mass": "2/63"
+      },
+      {
+        "residue": 758,
+        "mass": "1/63"
+      },
+      {
+        "residue": 786,
+        "mass": "2/63"
+      },
+      {
+        "residue": 787,
+        "mass": "2/63"
+      },
+      {
+        "residue": 836,
+        "mass": "1/63"
+      },
+      {
+        "residue": 893,
+        "mass": "2/63"
+      },
+      {
+        "residue": 953,
+        "mass": "2/63"
+      },
+      {
+        "residue": 982,
+        "mass": "2/63"
+      },
+      {
+        "residue": 1088,
+        "mass": "2/63"
+      },
+      {
+        "residue": 1136,
+        "mass": "2/63"
+      },
+      {
+        "residue": 1137,
+        "mass": "2/63"
+      },
+      {
+        "residue": 1178,
+        "mass": "1/63"
+      }
+    ],
+    "actual_source": [
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        6
+      ],
+      [
+        1,
+        0,
+        8
+      ],
+      [
+        1,
+        0,
+        13
+      ],
+      [
+        1,
+        0,
+        15
+      ],
+      [
+        1,
+        0,
+        20
+      ],
+      [
+        1,
+        0,
+        22
+      ],
+      [
+        1,
+        0,
+        27
+      ],
+      [
+        1,
+        0,
+        29
+      ],
+      [
+        1,
+        0,
+        34
+      ],
+      [
+        1,
+        1,
+        6
+      ],
+      [
+        1,
+        1,
+        13
+      ],
+      [
+        1,
+        1,
+        20
+      ],
+      [
+        1,
+        1,
+        27
+      ],
+      [
+        1,
+        1,
+        34
+      ],
+      [
+        1,
+        2,
+        2
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        9
+      ],
+      [
+        1,
+        2,
+        10
+      ],
+      [
+        1,
+        2,
+        16
+      ],
+      [
+        1,
+        2,
+        17
+      ],
+      [
+        1,
+        2,
+        23
+      ],
+      [
+        1,
+        2,
+        24
+      ],
+      [
+        1,
+        2,
+        30
+      ],
+      [
+        1,
+        2,
+        31
+      ],
+      [
+        1,
+        3,
+        4
+      ],
+      [
+        1,
+        3,
+        5
+      ],
+      [
+        1,
+        3,
+        11
+      ],
+      [
+        1,
+        3,
+        12
+      ],
+      [
+        1,
+        3,
+        18
+      ],
+      [
+        1,
+        3,
+        19
+      ],
+      [
+        1,
+        3,
+        25
+      ],
+      [
+        1,
+        3,
+        26
+      ],
+      [
+        1,
+        3,
+        32
+      ],
+      [
+        1,
+        3,
+        33
+      ],
+      [
+        2,
+        0,
+        2
+      ],
+      [
+        2,
+        0,
+        8
+      ],
+      [
+        2,
+        0,
+        9
+      ],
+      [
+        2,
+        0,
+        15
+      ],
+      [
+        2,
+        0,
+        16
+      ],
+      [
+        2,
+        0,
+        23
+      ],
+      [
+        2,
+        0,
+        30
+      ],
+      [
+        2,
+        1,
+        2
+      ],
+      [
+        2,
+        1,
+        9
+      ],
+      [
+        2,
+        1,
+        16
+      ],
+      [
+        2,
+        1,
+        23
+      ],
+      [
+        2,
+        1,
+        30
+      ],
+      [
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        10
+      ],
+      [
+        2,
+        2,
+        17
+      ],
+      [
+        2,
+        2,
+        24
+      ],
+      [
+        2,
+        2,
+        31
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        11
+      ],
+      [
+        2,
+        3,
+        18
+      ],
+      [
+        2,
+        3,
+        25
+      ],
+      [
+        2,
+        3,
+        32
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        2,
+        4,
+        12
+      ],
+      [
+        2,
+        4,
+        19
+      ],
+      [
+        2,
+        4,
+        26
+      ],
+      [
+        2,
+        4,
+        33
+      ],
+      [
+        3,
+        0,
+        2
+      ],
+      [
+        3,
+        0,
+        9
+      ],
+      [
+        3,
+        0,
+        15
+      ],
+      [
+        3,
+        0,
+        16
+      ],
+      [
+        3,
+        0,
+        22
+      ],
+      [
+        3,
+        0,
+        23
+      ],
+      [
+        3,
+        0,
+        30
+      ],
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        3,
+        1,
+        9
+      ],
+      [
+        3,
+        1,
+        16
+      ],
+      [
+        3,
+        1,
+        23
+      ],
+      [
+        3,
+        1,
+        30
+      ],
+      [
+        3,
+        2,
+        3
+      ],
+      [
+        3,
+        2,
+        10
+      ],
+      [
+        3,
+        2,
+        17
+      ],
+      [
+        3,
+        2,
+        24
+      ],
+      [
+        3,
+        2,
+        31
+      ],
+      [
+        3,
+        3,
+        4
+      ],
+      [
+        3,
+        3,
+        11
+      ],
+      [
+        3,
+        3,
+        18
+      ],
+      [
+        3,
+        3,
+        25
+      ],
+      [
+        3,
+        3,
+        32
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        12
+      ],
+      [
+        3,
+        4,
+        19
+      ],
+      [
+        3,
+        4,
+        26
+      ],
+      [
+        3,
+        4,
+        33
+      ],
+      [
+        4,
+        0,
+        2
+      ],
+      [
+        4,
+        0,
+        9
+      ],
+      [
+        4,
+        0,
+        16
+      ],
+      [
+        4,
+        0,
+        22
+      ],
+      [
+        4,
+        0,
+        23
+      ],
+      [
+        4,
+        0,
+        29
+      ],
+      [
+        4,
+        0,
+        30
+      ],
+      [
+        4,
+        1,
+        2
+      ],
+      [
+        4,
+        1,
+        9
+      ],
+      [
+        4,
+        1,
+        16
+      ],
+      [
+        4,
+        1,
+        23
+      ],
+      [
+        4,
+        1,
+        30
+      ],
+      [
+        4,
+        2,
+        3
+      ],
+      [
+        4,
+        2,
+        10
+      ],
+      [
+        4,
+        2,
+        17
+      ],
+      [
+        4,
+        2,
+        24
+      ],
+      [
+        4,
+        2,
+        31
+      ],
+      [
+        4,
+        3,
+        4
+      ],
+      [
+        4,
+        3,
+        11
+      ],
+      [
+        4,
+        3,
+        18
+      ],
+      [
+        4,
+        3,
+        25
+      ],
+      [
+        4,
+        3,
+        32
+      ],
+      [
+        4,
+        4,
+        5
+      ],
+      [
+        4,
+        4,
+        12
+      ],
+      [
+        4,
+        4,
+        19
+      ],
+      [
+        4,
+        4,
+        26
+      ],
+      [
+        4,
+        4,
+        33
+      ]
+    ],
+    "source_boundary_controls": {
+      "standalone_fiveary_projection": true,
+      "original_pair_triple_tree_checks": 600,
+      "missing_first_five_digits": [
+        0
+      ],
+      "missing_first_seven_digits": [
+        0
+      ],
+      "scope": "Source controls of the coefficient branches, not a covering-residual realization or comparison with every earlier source theorem."
+    }
+  },
+  "actual_occupancy_one_three": {
+    "child_cut_checks": 864,
+    "minimum_child_cut_bound": "1",
+    "actual_occupancy": true,
+    "occupied_child_counts": [
+      3,
+      5,
+      5,
+      5
+    ],
+    "local_subset_sizes": [
+      1,
+      3,
+      3,
+      3
+    ],
+    "source_points": 111,
+    "selected_points": 36,
+    "literal_roots": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "restricted_pair_checks": 390,
+    "network_edges": 1197,
+    "flow_denominator": 135,
+    "augmentations": 36,
+    "child_joint_coefficients": [
+      "4/15",
+      "4/15",
+      "4/15",
+      "4/15"
+    ],
+    "root_seven_child_multiplicities": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "inferred_root_joint_coefficients": [
+      "8/15",
+      "8/15",
+      "8/15",
+      "8/15"
+    ],
+    "occupancy_coefficient_rule": "one-root-with-at-most-three-children",
+    "theorem_LCM_strictly_below_nine": true,
+    "weighted": false,
+    "designated_literal_root": null,
+    "designated_literal_roots": [],
+    "original_labels": [
+      1,
+      5,
+      7,
+      25,
+      35,
+      49,
+      175,
+      245,
+      1225
+    ],
+    "ordered_pairs": 81,
+    "theorem_LCM_upper": "1171/135",
+    "actual_LCM_upper": "1162/135",
+    "cylinder_caps": {
+      "1": "1",
+      "7": "1/3",
+      "49": "1/9",
+      "5": "1/3",
+      "35": "8/45",
+      "245": "8/135",
+      "25": "1/9",
+      "175": "4/45",
+      "1225": "4/135"
+    },
+    "actual_law": [
+      {
+        "residue": 1,
+        "mass": "4/135"
+      },
+      {
+        "residue": 2,
+        "mass": "4/135"
+      },
+      {
+        "residue": 6,
+        "mass": "1/45"
+      },
+      {
+        "residue": 51,
+        "mass": "1/45"
+      },
+      {
+        "residue": 58,
+        "mass": "4/135"
+      },
+      {
+        "residue": 106,
+        "mass": "4/135"
+      },
+      {
+        "residue": 107,
+        "mass": "4/135"
+      },
+      {
+        "residue": 213,
+        "mass": "4/135"
+      },
+      {
+        "residue": 262,
+        "mass": "4/135"
+      },
+      {
+        "residue": 302,
+        "mass": "4/135"
+      },
+      {
+        "residue": 303,
+        "mass": "4/135"
+      },
+      {
+        "residue": 311,
+        "mass": "4/135"
+      },
+      {
+        "residue": 351,
+        "mass": "4/135"
+      },
+      {
+        "residue": 352,
+        "mass": "1/45"
+      },
+      {
+        "residue": 408,
+        "mass": "4/135"
+      },
+      {
+        "residue": 456,
+        "mass": "4/135"
+      },
+      {
+        "residue": 457,
+        "mass": "4/135"
+      },
+      {
+        "residue": 543,
+        "mass": "4/135"
+      },
+      {
+        "residue": 592,
+        "mass": "4/135"
+      },
+      {
+        "residue": 603,
+        "mass": "1/45"
+      },
+      {
+        "residue": 652,
+        "mass": "4/135"
+      },
+      {
+        "residue": 701,
+        "mass": "4/135"
+      },
+      {
+        "residue": 738,
+        "mass": "4/135"
+      },
+      {
+        "residue": 758,
+        "mass": "4/135"
+      },
+      {
+        "residue": 787,
+        "mass": "4/135"
+      },
+      {
+        "residue": 836,
+        "mass": "4/135"
+      },
+      {
+        "residue": 893,
+        "mass": "2/135"
+      },
+      {
+        "residue": 942,
+        "mass": "2/135"
+      },
+      {
+        "residue": 953,
+        "mass": "4/135"
+      },
+      {
+        "residue": 981,
+        "mass": "4/135"
+      },
+      {
+        "residue": 982,
+        "mass": "4/135"
+      },
+      {
+        "residue": 986,
+        "mass": "1/45"
+      },
+      {
+        "residue": 1088,
+        "mass": "4/135"
+      },
+      {
+        "residue": 1137,
+        "mass": "4/135"
+      },
+      {
+        "residue": 1178,
+        "mass": "4/135"
+      },
+      {
+        "residue": 1186,
+        "mass": "4/135"
+      }
+    ],
+    "actual_source": [
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        2
+      ],
+      [
+        1,
+        0,
+        8
+      ],
+      [
+        1,
+        0,
+        9
+      ],
+      [
+        1,
+        0,
+        15
+      ],
+      [
+        1,
+        0,
+        16
+      ],
+      [
+        1,
+        0,
+        22
+      ],
+      [
+        1,
+        0,
+        23
+      ],
+      [
+        1,
+        0,
+        29
+      ],
+      [
+        1,
+        0,
+        30
+      ],
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        6
+      ],
+      [
+        1,
+        1,
+        8
+      ],
+      [
+        1,
+        1,
+        13
+      ],
+      [
+        1,
+        1,
+        15
+      ],
+      [
+        1,
+        1,
+        20
+      ],
+      [
+        1,
+        1,
+        22
+      ],
+      [
+        1,
+        1,
+        27
+      ],
+      [
+        1,
+        1,
+        29
+      ],
+      [
+        1,
+        1,
+        34
+      ],
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        2,
+        6
+      ],
+      [
+        1,
+        2,
+        10
+      ],
+      [
+        1,
+        2,
+        13
+      ],
+      [
+        1,
+        2,
+        17
+      ],
+      [
+        1,
+        2,
+        20
+      ],
+      [
+        1,
+        2,
+        24
+      ],
+      [
+        1,
+        2,
+        27
+      ],
+      [
+        1,
+        2,
+        31
+      ],
+      [
+        1,
+        2,
+        34
+      ],
+      [
+        2,
+        0,
+        2
+      ],
+      [
+        2,
+        0,
+        8
+      ],
+      [
+        2,
+        0,
+        9
+      ],
+      [
+        2,
+        0,
+        15
+      ],
+      [
+        2,
+        0,
+        16
+      ],
+      [
+        2,
+        0,
+        23
+      ],
+      [
+        2,
+        0,
+        30
+      ],
+      [
+        2,
+        1,
+        2
+      ],
+      [
+        2,
+        1,
+        9
+      ],
+      [
+        2,
+        1,
+        16
+      ],
+      [
+        2,
+        1,
+        23
+      ],
+      [
+        2,
+        1,
+        30
+      ],
+      [
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        2,
+        10
+      ],
+      [
+        2,
+        2,
+        17
+      ],
+      [
+        2,
+        2,
+        24
+      ],
+      [
+        2,
+        2,
+        31
+      ],
+      [
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        3,
+        11
+      ],
+      [
+        2,
+        3,
+        18
+      ],
+      [
+        2,
+        3,
+        25
+      ],
+      [
+        2,
+        3,
+        32
+      ],
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        2,
+        4,
+        12
+      ],
+      [
+        2,
+        4,
+        19
+      ],
+      [
+        2,
+        4,
+        26
+      ],
+      [
+        2,
+        4,
+        33
+      ],
+      [
+        3,
+        0,
+        2
+      ],
+      [
+        3,
+        0,
+        9
+      ],
+      [
+        3,
+        0,
+        15
+      ],
+      [
+        3,
+        0,
+        16
+      ],
+      [
+        3,
+        0,
+        22
+      ],
+      [
+        3,
+        0,
+        23
+      ],
+      [
+        3,
+        0,
+        30
+      ],
+      [
+        3,
+        1,
+        2
+      ],
+      [
+        3,
+        1,
+        9
+      ],
+      [
+        3,
+        1,
+        16
+      ],
+      [
+        3,
+        1,
+        23
+      ],
+      [
+        3,
+        1,
+        30
+      ],
+      [
+        3,
+        2,
+        3
+      ],
+      [
+        3,
+        2,
+        10
+      ],
+      [
+        3,
+        2,
+        17
+      ],
+      [
+        3,
+        2,
+        24
+      ],
+      [
+        3,
+        2,
+        31
+      ],
+      [
+        3,
+        3,
+        4
+      ],
+      [
+        3,
+        3,
+        11
+      ],
+      [
+        3,
+        3,
+        18
+      ],
+      [
+        3,
+        3,
+        25
+      ],
+      [
+        3,
+        3,
+        32
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        12
+      ],
+      [
+        3,
+        4,
+        19
+      ],
+      [
+        3,
+        4,
+        26
+      ],
+      [
+        3,
+        4,
+        33
+      ],
+      [
+        4,
+        0,
+        2
+      ],
+      [
+        4,
+        0,
+        9
+      ],
+      [
+        4,
+        0,
+        16
+      ],
+      [
+        4,
+        0,
+        22
+      ],
+      [
+        4,
+        0,
+        23
+      ],
+      [
+        4,
+        0,
+        29
+      ],
+      [
+        4,
+        0,
+        30
+      ],
+      [
+        4,
+        1,
+        2
+      ],
+      [
+        4,
+        1,
+        9
+      ],
+      [
+        4,
+        1,
+        16
+      ],
+      [
+        4,
+        1,
+        23
+      ],
+      [
+        4,
+        1,
+        30
+      ],
+      [
+        4,
+        2,
+        3
+      ],
+      [
+        4,
+        2,
+        10
+      ],
+      [
+        4,
+        2,
+        17
+      ],
+      [
+        4,
+        2,
+        24
+      ],
+      [
+        4,
+        2,
+        31
+      ],
+      [
+        4,
+        3,
+        4
+      ],
+      [
+        4,
+        3,
+        11
+      ],
+      [
+        4,
+        3,
+        18
+      ],
+      [
+        4,
+        3,
+        25
+      ],
+      [
+        4,
+        3,
+        32
+      ],
+      [
+        4,
+        4,
+        5
+      ],
+      [
+        4,
+        4,
+        12
+      ],
+      [
+        4,
+        4,
+        19
+      ],
+      [
+        4,
+        4,
+        26
+      ],
+      [
+        4,
+        4,
+        33
+      ]
+    ],
+    "source_boundary_controls": {
+      "standalone_fiveary_projection": true,
+      "original_pair_triple_tree_checks": 600,
+      "missing_first_five_digits": [
+        0
+      ],
+      "missing_first_seven_digits": [
+        0
+      ],
+      "scope": "Source controls of the coefficient branches, not a covering-residual realization or comparison with every earlier source theorem."
     }
   },
   "scope": "One actual law; exact ordinary finite controls, not Lean, optimized Gamma, or odd-cover realization."
