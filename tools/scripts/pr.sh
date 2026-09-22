@@ -163,6 +163,8 @@ parse_snapshot() {
       (.id | database_id) and .head_sha == $head and
       (.repository.id | database_id) and .repository.full_name == $repo and
       (.event | type == "string" and length > 0) and
+      # The workflow path must be known before selecting its PR identity policy.
+      (.path | type == "string" and length > 0) and
       (.pull_requests | type == "array") and
       (if native_run then associated_prs as $prs |
         ($prs | length) == 1 and all(.pull_requests[]; .number == $prs[0])

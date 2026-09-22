@@ -191,6 +191,45 @@ public sealed class PrOpenScriptTests
     }
 
     [Theory]
+    [InlineData("missing", false)]
+    [InlineData("null", false)]
+    [InlineData("empty", false)]
+    [InlineData("number", false)]
+    [InlineData("boolean", false)]
+    [InlineData("array", false)]
+    [InlineData("object", false)]
+    [InlineData("missing", true)]
+    [InlineData("null", true)]
+    [InlineData("empty", true)]
+    [InlineData("number", true)]
+    [InlineData("boolean", true)]
+    [InlineData("array", true)]
+    [InlineData("object", true)]
+    public void PrWatchRejectsMalformedWorkflowPathBeforeSelectingMembershipPolicy(string defect, bool retainedRefConflict)
+    {
+        using var fixture = new PrScriptFixture();
+        var run = retainedRefConflict ? NativeRunMetadata(201, 1, 42, explicitAssociation: true) :
+            RunMetadata(201, 1, HeadSha, 42, "pull_request");
+        if (retainedRefConflict) run["referenced_workflows"]![0]!["ref"] = "refs/pull/99/merge";
+        switch (defect)
+        {
+            case "missing": run.Remove("path"); break;
+            case "null": run["path"] = null; break;
+            case "empty": run["path"] = ""; break;
+            case "number": run["path"] = 42; break;
+            case "boolean": run["path"] = false; break;
+            case "array": run["path"] = new JsonArray(".github/workflows/ci-pr.yml"); break;
+            case "object": run["path"] = new JsonObject { ["path"] = ".github/workflows/ci-pr.yml" }; break;
+        }
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("pending", 124)]
     [InlineData("missing", 124)]
     [InlineData("failed", 1)]
@@ -1161,6 +1200,7 @@ public sealed class PrOpenScriptTests
         JsonSerializer.SerializeToNode(new
         {
             id = runId, run_number = runNumber, check_suite_id = runId + 1000, head_sha = head,
+            path = ".github/workflows/other.yml",
             @event = eventName, repository = new { id = 1, full_name = "owner/repo" },
             pull_requests = new[] { new { id = pr + 1000, number = pr,
                 url = $"https://api.github.com/repos/owner/repo/pulls/{pr}",
