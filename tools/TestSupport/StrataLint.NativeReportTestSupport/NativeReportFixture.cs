@@ -1,3 +1,4 @@
+// Demand-selection probe for the native report fixture.
 using System.Diagnostics;
 using System.Formats.Tar;
 using System.IO.Compression;
