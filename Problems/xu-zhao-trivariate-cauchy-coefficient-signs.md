@@ -40,7 +40,14 @@ strict-index correspondence and exact zero order are established in its
 dependency unit. The full conjecture is not proved and receives zero
 solved-problem credit; there is no `OpenProblemResolutionClaim`.
 
-Admissible boundary convergence, slit continuation, uniform power-log bank
+`CompositionSlit.result` additionally constructs the actual all-composition
+branch on the full slit domain, proves holomorphy, disk agreement, origin
+normalization, exact depth-order vanishing, conjugation symmetry and both
+origin-correct recurrences. It assumes no continuation or recurrence premise
+and asserts no global slit nonvanishing. This is also an intermediate with
+zero solved-problem credit.
+
+Admissible boundary convergence, uniform power-log bank
 expansions, a fixed zero-free slit collar, formal-inverse/Taylor coefficient
 identity, and the finite-contour sign transfer remain unproved here.
 The eventual sign and strict binomial conclusions therefore remain open
@@ -86,7 +93,7 @@ Library notes record source correspondence and classical attribution.
 all-one compositions for every $\ell\ge1$ by the all-one identity and
 Theorems 1.1 and 8.2; depth one and depth two at $\ell=1$ by Theorems 9.6
 and 9.9, respectively; and depth one at $\ell=2$ by Corollary 9.11.
-The present result is a general disk intermediate, not a new resolution
+The present disk and slit results are intermediates, not a new resolution
 of those known cases or of the full conjecture. Admission uses the actual
 source-specific escape content, not the open-problem-resolution exception.
 
