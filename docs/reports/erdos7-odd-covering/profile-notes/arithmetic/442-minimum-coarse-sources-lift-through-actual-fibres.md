@@ -253,6 +253,8 @@ three matching edges. The minimum15-point coarse sources instead
 have five second-five children per occupied root and are handled by
 ML1. The two sufficient conditions leave other source shapes unresolved.
 
+[The joint tree-cap coupling theorem](443-one-supported-law-couples-rows-and-tree-prefixes.md) strengthens the ML10 construction to3044/405 at height(3,2). For exactly the same three-by-three five-prefix class it also gives1196/135<9 at every finite seven-height. It supplies joint prefix caps under one law; the older marginal-only bound8 above remains valid.
+
 The local law also has an integral construction. Scale its mass by9
 and use a network with capacities3 from the source to each new-five
 digit,9 along each actual pair (u,z),1 from each seven-leaf z to its

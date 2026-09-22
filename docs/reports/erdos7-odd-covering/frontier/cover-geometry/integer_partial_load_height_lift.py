@@ -67,6 +67,81 @@ def check_sharp_relaxation(C):
     require(sum(w*g(2,b) for (a,b),w in law.items())==C,'type7 moment')
     require(sum(w*a*b for (a,b),w in law.items())==17*q/96,'joint price equality')
 
+def joint_four_moment_boundary_controls():
+    C = F(46, 9)
+    states = ((1, 0, 1, 0), (3, 1, 1, 0), (3, 1, 1, 1), (3, 1, 2, 1))
+    masses = (F(35, 72), F(111, 280), F(47, 1890), F(5, 54))
+    law = tuple(zip(states, masses))
+    require(sum(masses) == 1 and all(w > 0 for w in masses), "one joint four-atom probability")
+    require(all(x[0] >= 1 and all(type(z) is int and z >= 0 for z in x) for x in states),
+            "unbounded-integer model: witness uses admissible integer values")
+    moments = tuple(sum(w*g(d, x[i]) for x, w in law) for i, d in enumerate((1, 3, 2, 6)))
+    require(moments == (C, C, C, C), "all four moment budgets on the same law")
+    first = tuple(sum(w*x[i] for x, w in law) for i in (1, 2, 3))
+    require(first == ((C-1)/8, (C+8)/12, (C-1)/35), "all first-moment faces attained together")
+    q = C-1
+    caps = ((C, 3*q/8, C/2, 6*q/35),
+            (3*q/8, q/8, 17*q/96, 2*q/35),
+            (C/2, 17*q/96, C/4, 3*q/35),
+            (6*q/35, 2*q/35, 3*q/35, q/35))
+    gram = tuple(tuple(sum(w*x[i]*x[j] for x, w in law) for j in range(4)) for i in range(4))
+    require(all(gram[i][j] <= caps[i][j] for i in range(4) for j in range(4)),
+            "the same joint law meets the complete retained matrix")
+
+    def evaluate(joint_law, sums):
+        u5, v5, u7, v7 = sums
+        W = ((F(1), u5, u7, u5*u7),
+             (u5, v5, u5*u7, v5*u7),
+             (u7, u5*u7, v7, u5*v7),
+             (u5*u7, v5*u7, u5*v7, v5*v7))
+        phi = sum(w*sum(W[i][j]*x[i]*x[j] for i in range(4) for j in range(4))
+                  for x, w in joint_law)
+        deletion = sum(w*(u5*x[1]+u7*x[2]+u5*u7*x[3]) for x, w in joint_law)
+        return phi, deletion
+
+    infinity = (F(1, 4), F(3, 8), F(1, 6), F(2, 9))
+    phi, deletion = evaluate(law, infinity)
+    require(phi == F(3948953, 544320) and deletion == F(28619, 90720), "exact joint all-height values")
+    require(phi+8*deletion == F(1064533, 108864)
+            and phi+8*deletion-9 == F(84757, 108864) > 0, "joint target obstruction")
+    statewise_d = tuple(infinity[0]*x[1]+infinity[2]*x[2]+infinity[0]*infinity[2]*x[3]
+                        for x in states)
+    require(max(statewise_d) == F(5, 8) and 0 <= deletion < 1,
+            "no truncation or denominator defect")
+    finite = (sum((F(1, 5**t) for t in (1, 2)), F()),
+              sum((F(2*t-1, 5**t) for t in (1, 2)), F()),
+              sum((F(1, 7**t) for t in (1, 2)), F()),
+              sum((F(2*t-1, 7**t) for t in (1, 2)), F()))
+    finite_phi, finite_d = evaluate(law, finite)
+    require(finite_phi+8*finite_d == F(4443137, 463050)
+            and finite_phi+8*finite_d-9 == F(275687, 463050) > 0,
+            "finite n5=n7=2, heights K5=4,K7=3")
+    # The following parameter formulas are affine; identities at 0 and1 fix their coefficients.
+    for c in (F(0), F(1), F(4), F(128, 23), C):
+        ws = ((9-c)/8, 27*(c-1)/280, (128-23*c)/420, (c-4)/12)
+        ll = tuple(zip(states, ws))
+        require(sum(ws) == 1, "parametric normalization identity")
+        mm = tuple(sum(w*g(d, x[i]) for x, w in ll) for i, d in enumerate((1, 3, 2, 6)))
+        require(mm == (c, c, c, c), "parametric moment identities")
+        pp, dd = evaluate(ll, infinity)
+        require(pp+8*dd == (113105*c+13315)/60480, "parametric joint objective identity")
+        if 4 <= c <= F(128, 23): require(all(w >= 0 for w in ws), "feasible parameter interval")
+    threshold = F(106201, 22621)
+    require((113105*threshold+13315)/60480 == 9 and 4 < threshold < C,
+            "necessary moment-model seed threshold")
+    return {"scope": "Four-budget joint-moment relaxation only; no arithmetic or excluded-union realization asserted",
+            "C": str(C), "atoms": [{"loads": x, "mass": str(w)} for x, w in law],
+            "four_g_moments": list(map(str, moments)),
+            "joint_gram": [[str(z) for z in row] for row in gram],
+            "all_height": {"E_Phi": str(phi), "E_D": str(deletion),
+                           "target": str(phi+8*deletion), "target_minus_nine": str(phi+8*deletion-9)},
+            "finite": {"n5": 2, "n7": 2, "K5": 4, "K7": 3,
+                       "carrier": "5^4*7^3*M", "E_Phi": str(finite_phi), "E_D": str(finite_d),
+                       "target": str(finite_phi+8*finite_d), "target_minus_nine": str(finite_phi+8*finite_d-9)},
+            "statewise_D": list(map(str, statewise_d)),
+            "parametric_C_interval": ["4", "128/23"], "necessary_moment_threshold": str(threshold)}
+
+
 def main():
     count=check_pointwise()
     finite=(F(1,5),F(1,5),F(1,7),F(1,7))
@@ -111,6 +186,7 @@ def main():
         require(tuple(map(tuple,actual))==W,'excess pair aggregation')
     print(json.dumps({'scope':'ordinary proof for arbitrary fixed cofactor M coprime to 35; exact integer controls; not Lean; actual-family full Gamma_175M seed remains a hypothesis',
         'pointwise_cases':count,'results':out,
+        'joint_four_moment_boundary':joint_four_moment_boundary_controls(),
         'finite_C_threshold':F(169511,33011),'all_height_C_threshold':F(348893,75613)},default=str,indent=2))
 
 if __name__=='__main__': main()

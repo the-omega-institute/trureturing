@@ -167,6 +167,58 @@ Report439's obstruction remains correct for its displayed H1 scalar formula: at 
 
 No unrestricted Erdős #7 conclusion follows: the necessary supported seed on every intended actual residual and a universal C below I6 remain separate obligations. The arbitrary fixed cofactor's mixed costs are included in the hypothesis Gamma_Q0(mu)<=C; a bound only on a 175 projection cannot substitute for that hypothesis.
 
+## The four moment budgets do not suffice at C=46/9, even with a joint law
+
+The entrywise matrix need not be jointly attainable. However, optimizing the four load types jointly while retaining only I7's four moment budgets still cannot force the all-height target below nine. The following witness is a single joint probability, not four separately chosen optimizers.
+
+Write X=(A0,A5,A7,A57), with A0 a positive integer and the other entries nonnegative integers. For the coefficient matrix W above put
+
+    Phi(X)=X^T W X,
+    D(X)=u5*A5+u7*A7+u5*u7*A57.
+
+Here D is the load-derived first-moment deletion majorant, not an assertion that an actual excluded union attains it. At the all-height coefficients (u5,v5,u7,v7)=(1/4,3/8,1/6,2/9), take the following four atoms:
+
+| X | Probability |
+|---|---:|
+| (1,0,1,0) | 35/72 |
+| (3,1,1,0) | 111/280 |
+| (3,1,1,1) | 47/1890 |
+| (3,1,2,1) | 5/54 |
+
+The masses sum to one, and on this SAME space,
+
+    E g1(A0)=E g3(A5)=E g2(A7)=E g6(A57)=46/9.
+
+Indeed if p=37/72, z=37/315 and t=5/54, then A0=1+2*A5, Pr(A5=1)=p, Pr(A57=1)=z, and Pr(A7=2)=t with A7 otherwise1. The four expectations are respectively1+8p,1+8p,4+12t,1+35z. All three first-moment bounds I8 are simultaneously attained. The mixed moments also obey every entry of the I7-derived matrix, since those inequalities hold for any such joint law.
+
+Direct evaluation of the joint quadratic form gives
+
+    E Phi=3948953/544320,
+    E D=28619/90720,
+    E(Phi+8D)=1064533/108864
+              =9+84757/108864 >9.                      (I12)
+
+In addition D(X)<=5/8 on every atom and E D<1. Thus even replacing D by its pointwise truncation min(D,1) does not change this witness. The failure is not caused by a nonpositive conditioning denominator.
+
+This already occurs at finite heights. With n5=n7=2, hence Q=5^4*7^3*M, the same joint law and the finite geometric coefficients give
+
+    E(Phi+8D)=4443137/463050
+              =9+275687/463050 >9.                     (I13)
+
+To view it as a model with all excess vectors, assign to each vector the random variable of its support type. Every group is then defined on one probability space, and every I7 moment condition continues to hold. This shows that merely retaining all correlations or using a better joint dual of these four budgets cannot prove a universal bound E(Phi+8D)<9 at C=46/9: the displayed common distribution is feasible and violates that target. It is a lower witness for the moment relaxation, not a claim that its objective is the optimum.
+
+The witness does NOT construct an arithmetic source, actual independent residue layouts, a legal forbidden family, or a realizable excluded union of mass E D. Real arithmetic completion and intersection relations can impose additional constraints absent from this relaxation. No such extra relation is established here, so this result rules out only the four-budget certificate route; it neither refutes the desired supported-law theorem nor obstructs a proof retaining further original-label information.
+
+For a broader exact version, the same four atoms have respective masses
+
+    (9-C)/8, 27(C-1)/280, (128-23C)/420, (C-4)/12
+
+for4<=C<=128/23. All four g-moments equal C, and
+
+    E(Phi+8D)=(113105*C+13315)/60480.
+
+Consequently this feasible family reaches nine at C=106201/22621 and exceeds nine above it within that interval. This is a necessary limitation of the retained-moment model, not a universal arithmetic seed threshold.
+
 ## Verification
 
 [The exact companion](../../frontier/cover-geometry/integer_partial_load_height_lift.py) uses only Python's standard library and exact Fraction arithmetic. It checks finite controls of the universal pointwise identities, symbolic affine coefficient identities, moment-relaxation sharpness witnesses, exact target margins, and monotonicity prerequisites. It writes a result summary, not a proof-state claim. The displayed nonnegative-square proofs handle unbounded integer loads; finite checks alone do not certify those universal conclusions, source extraction, or Lean verification.
