@@ -904,3 +904,9 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Minimum height-two sources are exactly three five-matchings and admit the sharp universal budget 68/15; every admissible source has an actual nine-point joint flow, while the weighted common-law condition remains additional](profile-notes/arithmetic/435-minimum-height-two-sources-and-a-nine-point-flow.md)
 
 - [For one fixed original family, identical clique-DP keys count correctly but cannot answer a newly authorized archive read; actual branch records and CRT cells give distinct task-specific repairs using existing task-completion interfaces](profile-notes/arithmetic/436-self-observation-refines-a-count-sufficient-clique-state.md)
+
+- [Four roots with three nonsingleton children each and cross-root disjoint original exact pairs admit a common law below five; an exact capacity-flow formula removes the pair-extraction requirement](profile-notes/arithmetic/437-four-root-nonsingleton-sources-admit-a-common-law-below-five.md)
+
+- [Separated weak points and an actual capacity-six strong flow admit a common law at most five; a distinct star construction remains below 46/9, with exact limits on support extraction and weak-child deletion](profile-notes/arithmetic/438-separated-weak-supports-and-common-laws.md)
+
+- [Fixed coarse marginals have an exact coprime free-coordinate completion cost; actual residual lifting retains a joint minimax obligation, and the universal scalar H1 route to nine already fails at finite heights](profile-notes/arithmetic/439-actual-residual-lifting-and-exact-free-coordinate-cost.md)
