@@ -78,7 +78,8 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
-        "tools/StrataLint.Lean/StrataLint.Lean.csproj"
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj"
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.EngineeringScope.Tests",
@@ -1095,6 +1096,102 @@
       "execution_excludes": null,
       "execution_environment": null,
       "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj",
+      "assembly": "StrataLint.ReleaseSelection",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.ReleaseSelection/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.ReleaseSelection.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.ReleaseSelection",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.ReleaseSelection/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj",
+      "assembly": "StrataLint.ReleaseSelection.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.ReleaseSelection.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj",
+        "assembly": "StrataLint.ReleaseSelection"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ReleaseSelection.Tests",
+      "root_namespace": "StrataLint.ReleaseSelection.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ReleaseSelection.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
+      "assembly": "StrataLint.ReleaseIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.ReleaseIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ReleaseIntegration.Tests",
+      "root_namespace": "StrataLint.ReleaseIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ReleaseIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [],
+      "execution_filemap_paths": []
     }
   ],
   "historical_projects": [],

@@ -5,6 +5,7 @@
     <AssemblyName>StrataLint.EngineeringScope</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj" />
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../StrataLint.Lean/StrataLint.Lean.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />

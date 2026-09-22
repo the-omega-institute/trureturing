@@ -2,13 +2,23 @@ using System.Globalization;
 using System.Text.Json;
 using Trureturing.Truth;
 
-namespace StrataLint.EngineeringScope;
+namespace StrataLint.ReleaseSelection;
 
-internal static class TruthReleaseSelection
+public static class TruthReleaseSelection
 {
     // API collection belongs to the workflow helper; the named-run predicate and
     // transport owner remain the authorities for checks and artifact identity.
-    internal static int Run(IReadOnlyList<string> arguments, TextWriter output)
+    public static int Run(IReadOnlyList<string> arguments, Func<long, int, string> artifactName, TextWriter output, TextWriter error)
+    {
+        try { return Select(arguments, artifactName, output); }
+        catch (Exception exception)
+        {
+            error.WriteLine($"ENGINEERING_TEST_PLAN_FAILED {exception.Message}");
+            return 2;
+        }
+    }
+
+    private static int Select(IReadOnlyList<string> arguments, Func<long, int, string> artifactName, TextWriter output)
     {
         if (arguments.Count != 3 || arguments[1] != "--input")
             throw new ArgumentException("truth-release-select --input FILE");
@@ -20,7 +30,7 @@ internal static class TruthReleaseSelection
         while (TruthReleasePushRunSelector.Select(commit, input.GetProperty("workflow"), runs,
                    (id, attempt) => input.GetProperty("jobs").GetProperty($"{id}/{attempt}").EnumerateArray(), sourceRef) is { } selected)
         {
-            var name = CiTransport.ArtifactName("current", selected.RunId, selected.RunAttempt);
+            var name = artifactName(selected.RunId, selected.RunAttempt);
             var artifacts = input.GetProperty("artifacts").GetProperty(selected.RunId.ToString(CultureInfo.InvariantCulture))
                 .EnumerateArray().Where(artifact => Matches(artifact, name, selected)).ToArray();
             if (artifacts.Length == 1)

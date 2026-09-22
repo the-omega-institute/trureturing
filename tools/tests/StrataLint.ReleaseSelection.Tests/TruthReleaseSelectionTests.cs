@@ -2,7 +2,7 @@ using System.Text.Json;
 using StrataLint.TestSupport;
 using Xunit;
 
-namespace StrataLint.EngineeringScope.Tests;
+namespace StrataLint.ReleaseSelection.Tests;
 
 public sealed class TruthReleaseSelectionTests
 {
@@ -82,7 +82,7 @@ public sealed class TruthReleaseSelectionTests
     private static (int Exit, string Output) Select(object? artifact, bool fallback = false,
         string? sourceRef = "refs/heads/dev", string runBranch = "dev")
     {
-        using var directory = new CurrentExecutionContractTests.CandidateFixture();
+        using var directory = new TemporaryDirectory();
         object Run(long id, int attempt) => new
         {
             id, run_attempt = attempt, workflow_id = 7, path = ".github/workflows/ci-push.yml",
@@ -92,7 +92,7 @@ public sealed class TruthReleaseSelectionTests
         {
             name, run_id = id, run_attempt = attempt, head_sha = Commit, status = "completed", conclusion = "success",
         }).ToArray();
-        var input = Path.Combine(directory.Root, "selection.json");
+        var input = Path.Combine(directory.Path, "selection.json");
         TemporaryFileSystem.File.WriteAllText(input, JsonSerializer.Serialize(new
         {
             source_commit = Commit,
@@ -103,7 +103,8 @@ public sealed class TruthReleaseSelectionTests
             artifacts = new Dictionary<string, object?[]> { ["22"] = artifact is null ? [] : [artifact], ["21"] = [Artifact(21, 1)] },
         }));
         using var output = new StringWriter();
-        var exit = Program.Run(["truth-release-select", "--input", input], _ => throw new InvalidOperationException(), output, TextWriter.Null);
+        var exit = TruthReleaseSelection.Run(["truth-release-select", "--input", input],
+            (run, attempt) => $"ci-current-{run}-{attempt}", output, TextWriter.Null);
         return (exit, output.ToString());
     }
 }

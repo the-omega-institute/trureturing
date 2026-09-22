@@ -7,3 +7,5 @@ using System.Runtime.CompilerServices;
 
 // ArchitectureTests verifies the compiler diagnostic proof contract.
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
+
+[assembly: InternalsVisibleTo("StrataLint.ReleaseIntegration.Tests")]

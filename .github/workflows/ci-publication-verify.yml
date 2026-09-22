@@ -9,7 +9,7 @@ on:
       - '.github/workflows/truth-release-publish.yml'
       - 'tools/scripts/workflow/**'
       - 'tools/scripts/worktree/**'
-      - 'tools/StrataLint.EngineeringScope/TruthReleaseSelection.cs'
+      - 'tools/StrataLint.ReleaseSelection/**'
       - 'tools/Trureturing.Truth/Release/TruthReleasePushRunSelector.cs'
       - 'Meta/ReportProducers/**'
       - 'Makefile'
