@@ -10,6 +10,8 @@ strata_touched:
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionDisk
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionRecurrences
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionZeroFree
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionContinuation
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionSlit
 license: citation-only
 triage: anchor
 ---
@@ -67,9 +69,18 @@ $Q(0)=d$, $Q(z)=z\operatorname{Li}'_k(z)/\operatorname{Li}_k(z)$ off zero.
 origin values; it never equates a nonzero removable value with total
 division by zero.
 
-This is an intermediate disk theorem, not a resolution of Conjecture 1.3.
-It supplies no coefficient-sign theorem, admissible boundary convergence,
-slit continuation, bank asymptotics or contour transfer. Solved-problem
+`CompositionSlit.result` constructs the actual branch on
+$\Omega=\{z:1-z\in\mathrm{Complex.slitPlane}\}$. The empty word is one;
+every nonempty branch is holomorphic on the full domain, vanishes at zero,
+agrees with `strictNestedSeries` on the disk, commutes with conjugation,
+and has exact zero order equal to its depth. Both differential recurrences
+hold on the full domain, with derivative one at zero for a singleton word
+and zero for greater depth. Nested induction uses segment primitives and
+the removable `dslope`; disk agreement fixes the branch normalization.
+
+These are intermediate source theorems, not a resolution of Conjecture 1.3.
+They supply no coefficient-sign theorem, admissible boundary convergence,
+global slit nonvanishing, bank asymptotics or contour transfer. Solved-problem
 credit is zero. The preregistered target is
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
@@ -81,7 +92,10 @@ geometric summability, differentiation of normally convergent series,
 analytic orders, compact minimization and real derivatives of complex
 paths. The classical integral-preservation argument is credited to
 `D5/L/AnalyticClosure/miller1978starlike` and remains local in the source
-consumer. No external primitive was transplanted.
+disk consumer. The slit consumer uses the minimal attributed star-shaped
+primitive from `D5/L/AnalyticClosure/li2026starprimitive`, keeping its proof
+local and its exact upstream license in `CompositionContinuation.lean`.
+No general primitive theorem is separately delivered.
 
 The bounded supplied search found no exact all-composition Lean supplier.
 The source's stated known cases and the supplied preregistration do not
