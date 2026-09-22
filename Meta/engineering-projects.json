@@ -1579,9 +1579,9 @@
         "tools/tests/StrataLint.CliIntegration.Tests/CurrentDeltaCliContractTests.cs",
         "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs",
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
-        "tools/tests/StrataLint.EngineeringScope.Tests/Fixtures/infrastructure-skip.trx",
         "tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs",
         "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.ExecutionEvidence.Tests/Fixtures/infrastructure-skip.trx",
         "tools/tests/StrataLint.ExecutionEvidence.Tests/TestProcessRunnerTests.cs",
         "tools/tests/StrataLint.InspectionScope.Tests/FileMapInspectionScopeTests.cs",
         "tools/tests/StrataLint.Lean.Tests/Native/InspectorNativeTests.cs",
@@ -2408,7 +2408,8 @@
         "STRATALINT_TEST_ENVIRONMENT"
       ],
       "execution_filemap_paths": [
-        "Blueprint/D5/S0/Carrier/Ring.md",
+        "Blueprint/D5/S0/Carrier/DeltaFixture.md",
+        "Blueprint/D5/S0/Carrier/DeltaFixture.scribe.cs",
         "Blueprint/D5/S0/Carrier/Ring.scribe.cs",
         "D5/S0/Carrier/BackfillTarget.lean",
         "D5/S0/Carrier/Ring.lean",
