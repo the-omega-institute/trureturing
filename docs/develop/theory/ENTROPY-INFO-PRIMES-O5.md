@@ -11,7 +11,7 @@
 
 **1.1** 平衡热力学 = 指数族概率论:对偶 = Legendre–Fenchel 共轭,间隙 = 相对熵,封零 = 平衡。Fenchel–Young 恒等式 ln Tr e^H = Tr(Hρ) + S(ρ) + D(ρ‖e^H/Z) 对一切 (H,ρ) 成立【算】(量子形属 loning Observer-quantum 母账,分账见 §9)。
 **1.2** 一元论的准确形:实体唯概率;熵与自由能是**向概率提问的读数**,不是新存在者。对数之必然:机会相乘、账本相加,乘转加的换算函数唯一(Shannon 公理化)【训】。熵之词性:S = E[−ln p],量纲为对数概率——概率的指数(速率函数),非概率本身;自由能 = 概率的对数母函数;(累积量母函数, 速率函数) 这对在概率论内出厂即互为 Legendre 共轭(Gärtner–Ellis/Varadhan;Ellis、Touchette 2009 综述)【训】。
-**1.3 ℕ 上的字面实例化**【算】:能量 E(n) = ln n,Gibbs 态 = zeta 分布 P_s(n) = n^{−s}/ζ(s)(约束 E[ln n] 下的最大熵分布);三本账:自由能 ln ζ(β);**内能 U = −ζ′/ζ = Σ Λ(n)n^{−β}**(整数气体内能即 von Mangoldt 级数,ψ(x) 为其积累形);熵 S = βU + ln ζ。
+**1.3 ℕ 上的字面实例化**【算】:能量 E(n) = ln n,Gibbs 态 = zeta 分布 P_s(n) = n^{−s}/ζ(s)(约束 E[ln n] 下的最大熵分布);三本账:自由能 ln ζ(β);**内能 U = −ζ′/ζ = Σ Λ n^{−β}**(整数气体内能即 von Mangoldt 级数,ψ(x) 为其积累形);熵 S = βU + ln ζ。
 **1.4** 边界:本节全部住在平衡侧;概率时间对称,箭头须自创世条件另行进口(WM v0.11 线)。
 
 ## §2 加乘与干涉:素性的位置
@@ -69,7 +69,7 @@
 
 ## §8 审计记录(r1)
 
-**已检索亲核**:Kontoyiannis(arXiv:0710.4076,及 Rissanen 文集 2008);zeta 分布独立性(Lin–Hu 2001;Golomb 1970);Atick–Redlich 1990/1992;Dan–Atick–Reid 1996(J. Neurosci. 16(10):3351–62);Srinivasan–Laughlin–Dubs 1982;Laughlin 1981;Pitkow–Meister 2012(Nat. Neurosci.【检】);Field 1987;Olshausen–Field 1996;Bell–Sejnowski 1997;Brenner–Bialek–de Ruyter 2000;Logan 1977(BSTJ 56(4):487–510,精确假设与"唯一性≠可恢复性"及 Meyer 反例注记)。
+**已检索亲核**:Kontoyiannis(arXiv:0710.4076,及 Rissanen 文集 2008);zeta 分布独立性(Lin–Hu 2001;Golomb 1970);Atick–Redlich 1990/1992;Dan–Atick–Reid 1996(J. Neurosci. 16(10):3351–62);Srinivasan–Laughlin–Dubs 1982;Laughlin 1981;Pitkow–Meister 2012(Nat. Neurosci.);Field 1987;Olshausen–Field 1996;Bell–Sejnowski 1997;Brenner–Bialek–de Ruyter 2000;Logan 1977(BSTJ 56(4):487–510,精确假设与"唯一性≠可恢复性"及 Meyer 反例注记)。
 **本卷亲算**:Fenchel–Young 之 ℕ 实例、U = −ζ′/ζ、β(v) 闭式与 v=0..4 表、黄金幂成立域 {F(v+1)=v}、apparition 双支机制、Pell 基变换。
 **本卷勘误**:对话中"Logan 1977 可完全重构"表述收紧为"至乘常数唯一确定;唯一性不含稳健恢复;二维 Marr 猜想有 Meyer 反例"(§5.1)。
 **待异模型审计清单(高危点标注)**:①【训】级全部年份/期刊(尤:Zurek–Habib–Paz 1993 出处;Barnum et al. 1996 no-broadcasting 精确陈述范围;Brandão–Piani–Horodecki 2015 定理的碎片极限精确形;Morrone–Burr 年份;Ditchburn–Ginsborg 1952 vs Riggs 1953 归属;Bost–Connes KMS 相图细节;Gallagher 条件依赖形;GUE 数方差量级表述;Denjoy 1931 出处);②§3 表逐行复核;③§6.1 结构常数与 Hearts 声明再对榫;④F1 之 mathlib LSeries 对数导数在库性。审计通过前,本卷不得作为任何冻结 PR 之依据引用。
