@@ -295,3 +295,142 @@ root optimization, its proposed identical-product extension, and a
 different successful full-height law on the same normalized source.
 It supplies neither the missing general constrained-tail law nor a
 contradiction for unrestricted original covering families.
+
+## 7. The exact root tradeoff between column caps and the full layout cost
+
+Let `B={(1,1),(2,2),(2,3),(3,2),(3,4),(4,2),(4,5)}` be the root
+source of report 392. Write `Gamma(nu)` for its maximum squared
+complete load over all independent residues for `1,5,7,35`.
+For a column cap `beta`, define
+
+\[
+ F(\beta)=\min\{\Gamma(\nu):\nu\text{ a probability on }B,
+                     \ \nu(\text{column }c)\le\beta\ \forall c\}.
+\]
+
+There is no feasible law if `beta<1/5`, since exactly five columns
+are active. For every `beta>=1/5`, the exact answer is
+
+\[
+ F(\beta)=\max\left\{6-9\beta,\frac{19}{4}-3\beta,
+                              \frac{631}{166}\right\}.
+ \tag{CB1}
+\]
+
+The last lower bound and its attaining law are the existing
+unrestricted root minimax in report 392. The two new supporting
+lines expose a necessary tradeoff in one actual law; this statement
+is not restricted to mixtures of any preselected tree laws.
+
+### Lower bounds without a symmetry assumption
+
+For an arbitrary law let `x` be its isolated atom `(1,1)` and `h`
+the total mass of the common column 2. The total mass on the three
+private points is `1-x-h`. A centred layout selects one supported
+point together with its row and column.
+
+Average the three private-centred layouts equally. Their average
+squared loss is 1 at the isolated point, 2 at every hub point,
+and 6 at every private point. Therefore
+
+\[
+ \Gamma(\nu)\ge x+2h+6(1-x-h)=6-5x-4h\ge6-9\beta.
+ \tag{CB2}
+\]
+
+Next average the isolated-centred layout and the three private-centred
+layouts, with weight `1/4` each. Their average loss is `19/4` at the
+isolated and private points and `7/4` at the hub points. Hence
+
+\[
+ \Gamma(\nu)\ge\frac{19}{4}-3h\ge\frac{19}{4}-3\beta.
+ \tag{CB3}
+\]
+
+Both are admissible distributions of the original independent-layout
+tests. They hold for every law, whether symmetric or not. Together
+with report 392's `Gamma>=631/166`, they give CB1's lower envelope.
+
+### Attainment over the whole parameter interval
+
+Use symmetric per-point masses `(a,b,c)` on the isolated point,
+each of the three hub points, and each of the three private points.
+They satisfy `a+3b+3c=1`. Put
+
+\[
+ \beta_1=\frac5{24},\qquad \beta_2=\frac{105}{332}.
+\]
+
+For `1/5<=beta<=beta_1`, choose
+
+\[
+ (a,b,c)=\left(\beta,\frac\beta3,\frac{1-2\beta}{3}\right).
+ \tag{CB4}
+\]
+
+For `beta_1<=beta<=beta_2`, choose
+
+\[
+ (a,b,c)=\left(\frac14-\frac\beta5,\frac\beta3,
+                        \frac14-\frac{4\beta}{15}\right).
+ \tag{CB5}
+\]
+
+All masses are nonnegative and the column masses `a,3b,c` are at
+most `beta` throughout their respective intervals. The laws agree
+at `beta_1`. At `beta_2`, CB5 is exactly the existing optimal law
+`(62,35,55)/332`, which remains feasible for every larger cap.
+
+The exact full-layout endpoint values are:
+
+| `beta` | Isolated `a` | Each hub `b` | Each private `c` | `Gamma` |
+| --- | --- | --- | --- | --- |
+| `1/5` | `1/5` | `1/15` | `1/5` | `21/5` |
+| `5/24` | `5/24` | `5/72` | `7/36` | `33/8` |
+| `105/332` | `62/332` | `35/332` | `55/332` | `631/166` |
+
+Every individual layout expectation is affine in the probability,
+and `Gamma` is their convex maximum. On each of CB4 and CB5, the
+law and the claimed upper value are affine in `beta`. Checking the
+full maximum at the two endpoints therefore bounds every intervening
+law by the line joining those endpoint values. These are respectively
+`6-9beta` and `19/4-3beta`. The lower bounds already proved force
+equality. The constant continuation for `beta>=beta_2` reuses the
+unrestricted optimal law. This proves CB1 for the continuum, rather
+than by sampling a finite grid.
+
+### Consequences and scope
+
+In particular,
+
+\[
+ F(1/5)=21/5>4,\qquad F(1/4)=4.
+\]
+
+Thus a type-B root law attaining the root target `Gamma<=4` must
+allow a column of mass at least `1/4`, and this is sharp: at
+`beta=1/4`, CB5 gives `(a,b,c)=(1/5,1/12,11/60)`.
+The full five-ary prefix cap at the first 7-digit is `1/5` and
+cannot be imposed simultaneously with that root target, regardless
+of which supported tree laws or mixtures are used.
+
+This is a boundary for the root subblock. It does not refute a
+uniform total bound of six at arbitrary heights, and it does not
+exclude proofs which allow a larger root cost in exchange for
+smaller later contributions. It concerns the exact root graph and
+does not automatically apply after adding root cells.
+
+The [exact column-cap checker](../../frontier/cover-geometry/type_b_capped_root_law.py)
+uses all 1,225 independent root layouts at each
+of four caps: the three interpolation endpoints and the `1/4`
+threshold. It verifies the two new dual profiles pointwise, checks
+the existing unrestricted dual, and supplies a reusable exact
+`optimal_capped_root_law(beta)` constructor. The continuum proof is
+the affine argument above. All checks remain active under `-O`.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/type_b_capped_root_law.py
+```
+
+This is ordinary mathematics with exact endpoint certificates, not
+Lean certification.
