@@ -225,7 +225,12 @@ theorem result {K : Type*} [Field K] [CharP K 19]
     ring_nf
     reduce_mod_char!
     have h19 : (19 : K) = 0 := CharP.cast_eq_zero K 19
-    linear_combination (3 * a) * h19
+    have h114 : (114 : K) = 0 := by
+      calc
+        (114 : K) = 6 * 19 := by norm_num
+        _ = 0 := by rw [h19, mul_zero]
+    rw [h114]
+    ring
   rw [h0, h1, h2, h3, h4] at hcertificate
   simpa only [mul_zero, zero_mul, add_zero, sub_zero] using hcertificate.symm
 
