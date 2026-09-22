@@ -114,7 +114,7 @@ internal sealed class GoldenRadicalDividedDifferenceDocument : IScribeDocumentDe
         var first = Call("Eq", Call("mul", Call("sub", theta, Image(a)), y),
             Call("mul", nl, Image(b)));
         var second = Call("Eq", Pow(y, D(2)),
-            Call("add", Call("mul", Pow(Image(a), Call("Nat.sub", n, D(1))), y),
+            Call("add", Call("mul", Pow(Image(a), Call("natSub", n, D(1))), y),
                 Call("mul", Image(b), Call("secondDifference", n, theta, Image(a)))));
         var conclusion = Call("And", first,
             Call("And", second, Call("IsIntegral", V("Int"), y)));
