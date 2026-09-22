@@ -251,6 +251,56 @@ claimed to be the source minimax or the exact original-phase maximum.
 Combining the finite table with S10 gives one pre-phase selection rule on
 all S_K, K>=3, with a uniform margin greater than 1/13.
 
+## The profile surrogate loses information and needs cross-depth compensation
+
+Even optimizing the whole S11 profile is not equivalent to optimizing
+the original layout cost. Consider the existing seven-point type-B root
+source, with columns translated by minus one from report 392:
+
+    R={(1,0),(2,1),(2,2),(3,1),(3,3),(4,1),(4,4)}.
+
+Every pair of rows has three projected columns, and the full projection
+has five, so R satisfies all seven admissibility conditions at height one.
+For an arbitrary supported law write x=nu(1,0), y_r=nu(r,1), z_r=nu(r,r)
+for r=2,3,4, and Y=sum_r y_r, Z=sum_r z_r. Thus x+Y+Z=1.
+Put b=B_1. The definition of B_1 gives, without any symmetry assumption,
+
+    4x<=b,       4z_r<=b,       Y+y_r+2z_r<=b.
+
+Summing the last three inequalities gives 4Y+2Z<=3b. Consequently
+
+    1=x+Y+Z <= b/4+3b/4+Z/2 <= 11b/8.
+
+The minimum possible B_1 is therefore at least 8/11. The actual law
+
+    x=2/11,       y_r=1/11,       z_r=2/11
+
+has B_0=20/11 and B_1=8/11, attaining this bound. Moreover every law
+has B_0=1+3 max_r nu(row r)>=2-x. Together with x<=b/4 and b>=8/11,
+this proves
+
+    B_0+3B_1 >= 2+(11/4)b >= 4.
+
+The displayed law also attains four. Thus the two exact profile minima are
+
+    min_nu B_1=8/11>2/3,       min_nu(B_0+3B_1)=4.
+
+The root gain 2-B_0=2/11 exactly compensates the weighted depth-one
+excess 3(B_1-2/3)=2/11. Requiring B_j<=2*3^-j separately would therefore
+reject an admissible source that satisfies the weighted target 2t_1=4.
+This obstruction persists at every height: attach all seven-ary tails,
+R_K={(r,c+7t):(r,c) in R, 0<=t<7^(K-1)}. These sources are admissible,
+and every supported law has a root marginal on R with B_1>=8/11.
+
+[Report 392, section 2](392-root-optimal-laws-do-not-tensorize-the-full-layout-bound.md)
+already proves that the original root minimax on this same source is
+631/166. Translating the columns transports every original independent
+phase and preserves both objectives. Hence the optimized profile bound
+has the exact excess 4-631/166=33/166 over the true minimax. The point of
+this example is the failure of separate depth targets and of profile
+tightness; it does not refute the weighted profile target or the desired
+original-layout inequality.
+
 ## Relation to the existing interfaces
 
 Report 419 excludes all root mixtures with uniformly faster-than-ternary
@@ -283,6 +333,9 @@ every pure-prefix cap; computes the actual full-law disagreement profile;
 and checks the general bound and the finite laws. Its public helpers include
 `verify_interface`, `profile_bound`, `actual_components`,
 `actual_profile_formula`, and `analytic_bound`.
+The seven-point control reuses the existing type-B source and checks the
+attaining profile; the universal lower bounds follow from the inequalities
+above, not from testing one probability.
 
 [`single_surplus_source_height_three.json`](../../frontier/cover-geometry/single_surplus_source_height_three.json)
 contains only the exact height-three probability and its profile upper bound.

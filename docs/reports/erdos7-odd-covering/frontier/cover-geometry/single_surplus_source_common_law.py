@@ -19,6 +19,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import five_decay_root_mixture_obstruction as source_api
 import prefix_local_row_transport as transport
+import root_rectangle_second_moment as root_sources
 
 family = source_api.family
 ALPHA = F(50, 113)
@@ -40,6 +41,19 @@ def profile_bound(height, law):
              for r in family.ROWS}
         records.append(max(a[r]+2*z[r] for r in family.ROWS))
     return tuple(records), sum(((2*j+1)*b for j, b in enumerate(records)), F())
+
+
+def profile_slack_control():
+    """Attaining law for the analytic seven-point profile obstruction."""
+    source = {(r+1, c) for r, c in root_sources.edges(root_sources.TEMPLATES['B'])}
+    law = {p: F(1 if p[1] == 1 else 2, 11) for p in source}
+    profile, upper = profile_bound(1, law)
+    family.need(profile == (F(20, 11), F(8, 11)) and upper == 4,
+                'seven-point exact profile optimizer')
+    family.need(profile[1] > F(2, 3), 'separate depth-one target must fail')
+    return {'profile': profile, 'profile_upper': upper,
+            'root_budget_gain': 2-profile[0],
+            'weighted_depth_one_excess': 3*(profile[1]-F(2, 3))}
 
 
 def reference_bound(height):
@@ -250,6 +264,7 @@ def self_check():
                 'all-height threshold arithmetic')
     return {'scope': 'general centre interface and all-height actual S_K law; ordinary proof, not Lean certification',
             'root': root_controls(), 'generic': generic_controls(),
+            'seven_point_profile_slack': profile_slack_control(),
             'finite_actual_sources': finite, 'height_eight_threshold': threshold,
             'rejected_finite_certificate_fields': bad_records}
 
