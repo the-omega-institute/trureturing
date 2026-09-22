@@ -16,7 +16,9 @@ triage: anchor
 <!-- GID: D5/L/AnalyticClosure/li2026starprimitive -->
 # Li's star-shaped primitive
 
-## Immutable supplier
+## Verified locator
+
+Source URL: https://github.com/will1491/RiemannDynamics/blob/b3fa37cc0f18a23ea66b654ea3f73eb472129010/RiemannDynamics/Hyperbolic/PlaneGeometry/StarShapedPrimitive.lean
 
 The source is `will1491/RiemannDynamics` at
 `b3fa37cc0f18a23ea66b654ea3f73eb472129010`, file
