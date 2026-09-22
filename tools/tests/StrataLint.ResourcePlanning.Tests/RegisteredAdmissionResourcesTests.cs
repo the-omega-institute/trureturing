@@ -137,11 +137,11 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         var plan = Plan(input, "", mode);
         Assert.Equal(new[] {
             "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
-            input.EndsWith("test_native_support.py", StringComparison.Ordinal)
-                ? "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj"
-                : "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
             "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
-        }.Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
+            "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
+        }.Concat(input.EndsWith("test_reuse.py", StringComparison.Ordinal)
+            ? new[] { "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj" }
+            : []).Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
         Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
@@ -692,6 +692,16 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     {
         foreach (var mode in new[] { "push", "pr" })
             Assert.Contains("tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
+                Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+    }
+
+    [Theory]
+    [InlineData("tools/scripts/report/JudgeSeedTask.cs", "JudgeSeedTask.Tests")]
+    [InlineData("tools/lean-inspector/tests/test_reuse.py", "StrataLint.NativeTransportIntegration.Tests")]
+    public void IndirectAndSourceOwnedInputsSelectTheirCompleteConsumers(string path, string consumer)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+            Assert.Contains($"tools/tests/{consumer}/{consumer}.csproj",
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
