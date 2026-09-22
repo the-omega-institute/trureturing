@@ -1766,3 +1766,414 @@ w=\tfrac8{15}+\tfrac{16}{15}\varepsilon,\quad
 [18-B] Milan Hladík. *Linear programming sensitivity measured by the optimal value worst-case analysis*. Optimization Methods and Software 39(5), 1168--1184, 2024. DOI: 10.1080/10556788.2024.2329590. https://doi.org/10.1080/10556788.2024.2329590 . 讨论线性规划最优值对区间数据扰动的敏感性及一般退化情形的未解决复杂度问题。本节只涉及固定节点矩阵、固定目标及坐标误差预算，非零多项式系数条件也不同于一般 LP 非退化性；不据此宣称解决该文的一般开放问题。
 
 ## 追加锚（本行以下为增补区）
+## 19. 两矩连续支撑极值、网格偏差与最优节点配置
+
+### 19.1 定义：两组概率分布的含噪矩比较
+
+固定 $0\leq a<b<1$。令 $\mu,\nu$ 为 Borel 概率测度，满足
+\[
+\operatorname{supp}\mu\subseteq[a,1],\qquad
+\operatorname{supp}\nu\subseteq[a,b],\qquad
+\left|\int x^k\,d\mu-\int x^k\,d\nu\right|\leq\varepsilon
+\quad(k=1,2),\quad\varepsilon\geq0.
+\tag{19.1}
+\]
+定义 $W(\varepsilon)$ 为全部可行对中的最大 $\mu(\{1\})$。对开区间 $(l,r)\subset[a,1)$，再要求 $\mu((l,r))=0$，得到最大值 $W_{l,r}(\varepsilon)$。下面给出的上界对任意上述测度成立，且由有限原子测度取得，所以将模型类限制为任意有限原子数的并集不改变这些最大值。
+
+此处 $\varepsilon$ 比较两种真实模型的矩。若它们分别与同一读数相差至多 $\delta$，则应使用 $\varepsilon=2\delta$。当 $a>0$、$x=e^{-hE}$ 且 $h>0$ 时，两矩分别对应 $h,2h$ 时刻的 Laplace 读数。式 (19.1) 没有假设其他时间的读数相近。一般矩极值的多项式对偶背景见 [19-A]。
+
+### 19.2 定理：移动原子的精确极值与支撑空隙代价
+
+设
+\[
+a\leq l<r\leq b,\qquad l\leq t\leq r,\qquad
+2t\leq a+b,\qquad l+r\leq a+b.
+\]
+定义
+\[
+\varepsilon(t)=\frac{(1-b)(b-t)}{2+t},\quad
+c(t)=\frac{(1-b)(2+b)}{2+t},\quad
+w_c(t)=1-\frac{c(t)}{1-t},
+\]
+\[
+w_h(t;l,r)=\frac{(b-l)(b-r)+\varepsilon(t)(1+l+r)}{(1-l)(1-r)}.
+\tag{19.2}
+\]
+则
+\[
+\boxed{W(\varepsilon(t))=w_c(t),\qquad
+W_{l,r}(\varepsilon(t))=w_h(t;l,r),}
+\]
+并且
+\[
+\boxed{w_c(t)-w_h(t;l,r)
+=\frac{(1-w_c(t))(t-l)(r-t)}{(1-l)(1-r)}.}
+\tag{19.3}
+\]
+当 $l<t<r$ 时差严格为正；在两个端点处差为零。
+
+**构造。** 无空隙时取
+\[
+\mu_c=w_c\delta_1+(1-w_c)\delta_t,\qquad\nu_c=\delta_b.
+\tag{19.4}
+\]
+有空隙时取
+\[
+\mu_h=w_h\delta_1+u_l\delta_l+u_r\delta_r,\qquad\nu_h=\delta_b,
+\]
+\[
+u_l=\frac{c(t)(r-t)}{(1-l)(r-l)},\qquad
+u_r=\frac{c(t)(t-l)}{(1-r)(r-l)}.
+\tag{19.5}
+\]
+这里式 (19.5) 的 $u_l,u_r$ 为残余概率质量。所有分母为正，$u_l,u_r\geq0$，而
+\[
+w_c=\frac{(b-t)(1+b+t)}{(1-t)(2+t)}\geq0,\qquad
+1-w_c=\frac{(1-b)(2+b)}{(1-t)(2+t)}>0.
+\]
+式 (19.2) 给 $w_h\geq0$。直接代入得到
+\[
+w_h+u_l+u_r=1,
+\]
+\[
+\int x\,d(\mu_c-\nu_c)=\int x\,d(\mu_h-\nu_h)=-\varepsilon(t),\qquad
+\int x^2\,d(\mu_c-\nu_c)=\int x^2\,d(\mu_h-\nu_h)=\varepsilon(t).
+\tag{19.6}
+\]
+因此两组都是实际可行概率对。
+
+**普遍上界。** 记任意可行对的误差为 $e_1,e_2$。对 $q(x)=x^2-sx+p$，$s\geq0$，若 $q$ 在 $\mu$ 的残余支撑上非负，并且在 $[a,b]$ 上不超过 $B$，则归一化与实际矩误差给出
+\[
+\mu(\{1\})q(1)\leq\int q\,d\mu
+=\int q\,d\nu+e_2-se_1\leq B+\varepsilon(1+s).
+\tag{19.7}
+\]
+取 $q_c(x)=(x-t)^2$。在 $[a,b]$ 上，
+\[
+q_c(b)-q_c(x)=(b-x)(b+x-2t)\geq0,
+\]
+所以 $B=(b-t)^2$。式 (19.7) 的上界由 (19.4) 取得，给出 $W=w_c$。
+
+取 $q_h(x)=(x-l)(x-r)$。它在 $(l,r)$ 之外非负，而
+\[
+q_h(b)-q_h(x)=(b-x)(b+x-l-r)\geq0\quad(a\leq x\leq b).
+\]
+式 (19.7) 的上界由 (19.5) 取得，给出 $W_{l,r}=w_h$。最后，(19.4) 与 (19.5) 具有相同前两矩及总质量，故对 $q_h$ 积分相同。于是
+\[
+w_hq_h(1)=w_cq_h(1)+(1-w_c)q_h(t),
+\]
+即为式 (19.3)。严格性来自 $1-w_c>0$ 及区间内部的两个正因子。
+
+### 19.3 定理：连续支撑模型的完整噪声曲线
+
+记
+\[
+m=\frac{a+b}{2},\quad h=\frac{b-a}{2},\quad
+\varepsilon_1=\frac{(1-b)(b-a)}{4+a+b},\quad
+\varepsilon_2=\frac{(1-b)(b-a)}{2+a},\quad
+\varepsilon_3=1-b^2.
+\]
+有 $0<\varepsilon_1<\varepsilon_2<\varepsilon_3$，且对全部 $\varepsilon\geq0$，
+\[
+\boxed{
+W(\varepsilon)=
+\begin{cases}
+\dfrac{h^2+\varepsilon(1+2m)}{(1-m)^2},&0\leq\varepsilon\leq\varepsilon_1,\\[4pt]
+\dfrac{\varepsilon(1+2b)-\varepsilon^2}{(1-b)^2+3\varepsilon},&\varepsilon_1\leq\varepsilon\leq\varepsilon_2,\\[4pt]
+\dfrac{b^2-a^2+\varepsilon}{1-a^2},&\varepsilon_2\leq\varepsilon\leq\varepsilon_3,\\[4pt]
+1,&\varepsilon\geq\varepsilon_3.
+\end{cases}}
+\tag{19.8}
+\]
+相邻表达式在转折点相等。
+
+**证明。** 第一段使用 $q=(x-m)^2$，它在比较支撑上的最大值为 $h^2$，故式 (19.7) 给出上界。取
+\[
+\mu=W\delta_1+(1-W)\delta_m,\qquad
+\nu=\lambda\delta_a+(1-\lambda)\delta_b,
+\]
+\[
+\lambda=\frac{(1-b)(b-a)-\varepsilon(4+a+b)}{(b-a)(2-a-b)}.
+\tag{19.9}
+\]
+在该区间内 $0\leq\lambda\leq1$。$W$ 从非负值线性增长到式 (19.4) 在 $t=m$ 时小于一的值，故 $0\leq W<1$。两矩误差为 $(-\varepsilon,\varepsilon)$，得到取等。
+
+第二段将式 (19.2) 反解为
+\[
+t(\varepsilon)=\frac{b(1-b)-2\varepsilon}{1-b+\varepsilon}.
+\tag{19.10}
+\]
+这个函数严格递减，将 $[\varepsilon_1,\varepsilon_2]$ 映到 $[a,m]$，端点分别为 $m,a$。将其代入 (19.4) 得到式 (19.8) 的第二段，普遍上界用 $q=(x-t)^2$。该上界不依赖提前指定残余节点。
+
+第三段使用 $q=x^2-a^2$，其在 $[a,1]$ 上非负、在 $[a,b]$ 上不超过 $b^2-a^2$。取
+\[
+\mu=W\delta_1+(1-W)\delta_a,\qquad\nu=\delta_b.
+\]
+此时二次矩误差为 $\varepsilon$，一次矩误差为
+\[
+e_1=\frac{\varepsilon-(1-b)(b-a)}{1+a}.
+\]
+条件 $\varepsilon\geq\varepsilon_2$ 保证 $e_1\geq-\varepsilon$，而 $a\geq0$ 保证 $e_1\leq\varepsilon$；$\varepsilon\leq\varepsilon_3$ 保证 $W\leq1$。最后一段取 $\mu=\delta_1,\nu=\delta_b$，误差为 $(1-b,1-b^2)$，两者均不超过 $\varepsilon_3$。这证明了所有区间的上界、取等与转折。
+
+### 19.4 推论：固定网格的严格偏差及一个精确反例
+
+设固定有限网格 $G\subset[a,b]$ 包含 $a,m,b$。将 $\mu$ 的残余支撑和 $\nu$ 的支撑都限制在 $G$，记最大端点质量为 $W_G(\varepsilon)$。若 $\varepsilon\in(\varepsilon_1,\varepsilon_2)$ 且 $t=t(\varepsilon)\notin G$，令 $l<r$ 为夹住 $t$ 的相邻网格节点。因为 $m\in G$，有 $a\leq l<t<r\leq m$。式 (19.5) 的全部节点属于允许支撑，且 $G\cap(l,r)=\varnothing$，故
+\[
+\boxed{W_G(\varepsilon)=w_h(t;l,r),\qquad
+W(\varepsilon)-W_G(\varepsilon)
+=\frac{(1-W(\varepsilon))(t-l)(r-t)}{(1-l)(1-r)}>0.}
+\tag{19.11}
+\]
+若 $t\in G$，式 (19.4) 给出零偏差。因此有限网格在这个整个开噪声区间中只能于有限多个噪声值精确。有限原子取等不蕴含一个预先固定的有限节点集合足够。
+
+对 $a=1/4,b=3/4,G=\{1/4,1/2,3/4\}$ 和 $\varepsilon=1/25$，
+\[
+t=\frac{43}{116},\quad W=\frac{984}{1825},\quad W_G=\frac{13}{25},\quad
+W-W_G=\frac7{365}.
+\tag{19.12}
+\]
+连续模型的取等分布为
+\[
+\mu=\frac{984}{1825}\delta_1+\frac{841}{1825}\delta_{43/116},\qquad
+\nu=\delta_{3/4}.
+\]
+两矩误差恰为 $(-1/25,1/25)$。在整个中间区间 $1/40\leq\varepsilon\leq1/18$，网格偏差为
+\[
+W-W_G=\frac{(1-18\varepsilon)(40\varepsilon-1)}{3(48\varepsilon+1)}.
+\tag{19.13}
+\]
+该比较保持了固定网格问题本身的正确性，只改变允许的支撑模型类。
+
+### 19.5 定理：每个网格单元的精确最坏偏差
+
+令 $K=(1-b)(2+b)>0$，并定义严格递增坐标
+\[
+\psi(t)=\sqrt{\frac{2+t}{1-t}},\qquad 0\leq t<1.
+\]
+对任意 $a\leq l<r\leq m$，在 $t\in[l,r]$ 对应的噪声段内，式 (19.11) 的最大偏差恰为
+\[
+\boxed{\max_{l\leq t\leq r}(w_c-w_h)
+=\frac K9\bigl(\psi(r)-\psi(l)\bigr)^2.}
+\tag{19.14}
+\]
+最大值在
+\[
+t_* =\frac{\psi(l)\psi(r)-2}{\psi(l)\psi(r)+1}\in(l,r)
+\]
+取得。
+
+**证明。** 令 $s=(2+t)/(1-t)$、$s_l=(2+l)/(1-l)$、$s_r=(2+r)/(1-r)$。将式 (19.3) 中的 $1-w_c=K/[(2+t)(1-t)]$ 代入，精确化为
+\[
+w_c-w_h=\frac K9\frac{(s-s_l)(s_r-s)}s
+=\frac K9\left(s_l+s_r-s-\frac{s_ls_r}s\right).
+\]
+对 $s>0$，
+\[
+s+\frac{s_ls_r}s-2\sqrt{s_ls_r}
+=\frac{(s-\sqrt{s_ls_r})^2}s\geq0.
+\]
+因此在 $s=\sqrt{s_ls_r}=\psi(l)\psi(r)$ 处取得且仅取得最大值。该点严格位于两端之间，反变换给出 $t_*$，而最大值为式 (19.14)。
+
+### 19.6 定理：保留校准节点的最优有限网格
+
+固定整数 $M\geq1$，考虑所有网格
+\[
+G=\{g_0,g_1,\ldots,g_M,b\},\qquad
+a=g_0<g_1<\cdots<g_M=m.
+\]
+这类网格保留 $a,m,b$ 三个校准节点，并允许在 $[a,m]$ 内选择 $M-1$ 个附加节点。则
+\[
+\boxed{\inf_G\sup_{\varepsilon\geq0}\bigl(W(\varepsilon)-W_G(\varepsilon)\bigr)
+=\frac{(1-b)(2+b)}{9M^2}\bigl(\psi(m)-\psi(a)\bigr)^2.}
+\tag{19.15}
+\]
+唯一最优的有序节点由
+\[
+\psi_j=\psi(a)+\frac jM\bigl(\psi(m)-\psi(a)\bigr),\qquad
+\boxed{g_j=\frac{\psi_j^2-2}{\psi_j^2+1}\quad(0\leq j\leq M)}
+\tag{19.16}
+\]
+给出。
+
+**证明。** 式 (19.9) 和第三、四阶段的取等分布只使用 $a,m,b,1$，所以所有这些网格在移动阶段之外都精确。移动阶段内，式 (19.14) 给出
+\[
+\sup_{\varepsilon\geq0}(W-W_G)
+=\frac K9\max_{0\leq j<M}\bigl(\psi(g_{j+1})-\psi(g_j)\bigr)^2.
+\]
+$M$ 个正增量之和固定为 $\psi(m)-\psi(a)$，其最大值至少为该和除以 $M$。等号成立当且仅当全部增量相等，得到式 (19.15)--(19.16)。这是固定有限 $M$ 下的精确最优值，因而也给出 $M^{-2}$ 误差阶。节点数预算和保留校准节点的条件是结论的一部分；未要求保留这些节点的更大设计类没有在此被优化。
+
+### 19.7 范围与下一项问题
+
+Lean 定理 `TwoMomentSupportHole.two_moment_support_hole_sharp` 对任意有限原子数的真实 Prony 矩给出第 19.2 节的两项最大值及精确差额；其证明包含移动原子与双端残余的正权重构造和普遍上界。第 19.3--19.6 节的完整分段曲线、固定网格结论和最佳网格配置在本节有普通证明，尚未作为新的 Lean 声明完成。一般 Borel 测度版本由相同有界多项式积分论证给出。
+
+接下来的具体问题是：对三阶及更高阶含噪矩，是否能得到类似的支撑移动分类、可认证的网格误差和全局最佳节点配置？更一般的自由节点一致逼近仍有独立的最优性问题 [19-C]，本节只解决由指定两矩极值诱导、且保留校准节点的设计类。它不结算一般自由节点样条问题，也不证明维数、时长与精度的联合谱底 minimax 上界。
+
+### 19.8 文献定位
+
+[19-A] Dimitris Bertsimas and Ioana Popescu. *Optimal Inequalities in Probability Theory: A Convex Optimization Approach*. SIAM Journal on Optimization 15(3), 780--804, 2005. DOI: 10.1137/S1052623401399903. https://epubs.siam.org/doi/10.1137/S1052623401399903 . 一般矩约束下紧概率界及多项式优化的背景；不把二次证书或矩对偶方法本身归为本节新发现。
+
+[19-B] Ken'ichiro Tanaka and Alexis Akira Toda. *Discretizing Distributions with Exact Moments: Error Estimate and Convergence Analysis*. SIAM Journal on Numerical Analysis 53(5), 2158--2177, 2015. DOI: 10.1137/140971269. https://epubs.siam.org/doi/10.1137/140971269 . 研究矩保持离散化的误差与收敛；其给定分布的近似问题与本节两种可变测度间的最坏端点质量问题不同。
+
+[19-C] Vinesha Peiris, Nadezda Sukhorukova and Duy Khoa Pham. *Best free knot linear spline approximation and its application to neural networks*. IMA Journal of Applied Mathematics 91(3), 273--292, June 2026. DOI: 10.1093/imamat/hxag015. https://academic.oup.com/imamat/advance-article/doi/10.1093/imamat/hxag015/8706326 . 研究一般自由节点一致逼近，给出单内部节点的优化与充分最优性条件。这里的有限网格公式针对特殊矩极值曲线的受限设计类，不替代该文的一般问题。
+
+## 20. 鸽笼平均界、嵌套网格与逐次加点的精确代价
+
+### 20.1 定义与命题：按误差坐标分配有限区间
+
+沿用第 19 节的 $0\leq a<b<1$、$m=(a+b)/2$、$K=(1-b)(2+b)$ 和 $\psi(t)=\sqrt{(2+t)/(1-t)}$。记
+\[
+L=\psi(m)-\psi(a)>0,\qquad A=KL^2/9>0.
+\]
+对校准网格 $G=\{a=g_0<\cdots<g_M=m,b\}$，其中 $M\geq1$，定义归一化区间长度
+\[
+p_j=\frac{\psi(g_{j+1})-\psi(g_j)}L\quad(0\leq j<M),\qquad D(G)=\max_jp_j.
+\]
+这些数严格为正且总和为一。第 19.4--19.6 节的实际两矩极值证明给出
+\[
+\mathcal E(G):=\sup_{\varepsilon\geq0}\bigl(W(\varepsilon)-W_G(\varepsilon)\bigr)=A D(G)^2.
+\tag{20.1}
+\]
+因此
+\[
+D(G)\geq1/M,\qquad \mathcal E(G)\geq A/M^2,
+\tag{20.2}
+\]
+等号成立当且仅当全部 $p_j=1/M$。
+
+**证明。** 若每个 $p_j<1/M$，求和将严格小于一。若每个 $p_j\leq1/M$ 且有一项严格小于，则总和同样严格小于一。因此最大值至少为平均值，而达到平均值时全部相等。这是有限实权重的鸽笼平均论证 [20-A]。式 (20.1) 依赖此前构造的真实正测度与精确单元代价；鸽笼论证自身不提供变换 $\psi$，也不构造不可辨识的谱测度。
+
+### 20.2 命题：近最优网格在变换坐标中的稳定性
+
+若 $\rho\geq0$ 且 $\mathcal E(G)\leq(1+\rho)A/M^2$，令 $q=\sqrt{1+\rho}-1$，则
+\[
+\sum_{j=0}^{M-1}(p_j-1/M)^2\leq\frac qM.
+\tag{20.3}
+\]
+对每个 $0\leq j\leq M$，还满足
+\[
+-\frac{(M-j)q}{M}\leq
+\frac{\psi(g_j)-\psi(a)}L-\frac jM
+\leq\frac{jq}{M}.
+\tag{20.4}
+\]
+
+**证明。** 式 (20.1) 给每个 $p_j\leq(1+q)/M$，故 $\sum p_j^2\leq(\max p_j)\sum p_j\leq(1+q)/M$。展开平方和得到式 (20.3)。对前 $j$ 个长度分别求和得到式 (20.4) 的上界，对其余 $M-j$ 个求和再从一中减去得到下界。$q=0$ 恢复唯一最优网格。本节给出有效的定量界，不宣称每个稳定性常数均尖锐。
+
+### 20.3 定义与定理：保留旧节点的真实细分历史
+
+一个嵌套校准历史是网格族 $G_M$，$M\geq1$，满足 $G_1=\{a,m,b\}$，并且每次只在 $[a,m]$ 中某个已有开单元加入一个新节点，旧节点永不移动或删除。在归一化的 $\psi$ 坐标中，这等价于从长度列表 $[1]$ 开始，每步将一个正长度 $\ell_k$ 分成 $\alpha_k\ell_k$ 和 $(1-\alpha_k)\ell_k$，其中 $0<\alpha_k<1$。第 $M$ 阶段有 $M$ 个正单元，总长为一。记它们为 $p_{M,j}$，最大长度为 $D_M$，并定义
+\[
+H_M=-\sum_{j=1}^M p_{M,j}\ln p_{M,j},\qquad
+h(\alpha)=-\alpha\ln\alpha-(1-\alpha)\ln(1-\alpha).
+\]
+对任意这样的历史，定义逐步损失
+\[
+z_k=(D_k-\ell_k)\ln2+\ell_k\bigl(\ln2-h(\alpha_k)\bigr)\geq0.
+\tag{20.5}
+\]
+则对每个 $M\geq1$ 有有限历史界
+\[
+\boxed{\ln(1/D_M)+\sum_{k=1}^{M-1}z_k
+\leq\ln2\sum_{k=1}^{M-1}D_k.}
+\tag{20.6}
+\]
+第一部分损失记录没有选择最大单元，第二部分记录分裂比例偏离一半。
+
+**证明。** 分裂的两个子长度之和等于父长度，所以由历史归纳得到始终正且总长为一。逐项展开对数，未改变的单元全部抵消，得到真实熵增
+\[
+H_{k+1}-H_k=\ell_k h(\alpha_k).
+\]
+二元熵满足 $h(\alpha)\leq\ln2$ [20-B]，父单元长度也满足 $\ell_k\leq D_k$，所以式 (20.5) 非负。由于 $H_1=0$，精确求和给出
+\[
+H_M+\sum_{k=1}^{M-1}z_k=\ln2\sum_{k=1}^{M-1}D_k.
+\]
+另一方面，每个 $p_{M,j}\leq D_M$，对数单调性及总长一给出
+\[
+H_M\geq-\sum_jp_{M,j}\ln D_M=\ln(1/D_M).
+\]
+两式合并即得式 (20.6)。Lean 定理 `NestedGridEntropy.binary_refinement_entropy_budget` 从实际列表替换恒等式推导该链条，并允许用每阶段任意合法上界代替精确最大单元。定理以零次分裂对应 $M=1$；没有把熵增或最终熵下界放入假设。
+
+### 20.4 定理：嵌套历史的严格额外代价
+
+每个嵌套历史都满足
+\[
+\boxed{\limsup_{M\to\infty} M D_M\geq\frac1{\ln2}.}
+\tag{20.7}
+\]
+
+**证明。** 假设存在 $c<1/\ln2$ 和 $M_0$，使所有 $M\geq M_0$ 都有 $D_M\leq c/M$。因为 $D_M>0$，可以取 $c>0$。丢掉式 (20.6) 中的非负损失，有限个初始阶段的贡献记入常数 $B$，得到
+\[
+\ln M-\ln c\leq \ln(1/D_M)
+\leq B+c\ln2\sum_{k=M_0}^{M-1}\frac1k
+\leq B+c\ln2(1+\ln M).
+\]
+由于 $1-c\ln2>0$，这对任意大 $M$ 不可能成立。因此对每个 $c<1/\ln2$ 都有任意晚的阶段满足 $MD_M>c$，得到式 (20.7)。这条证明区分了单个阶段的平均界与整条历史受到的约束。
+
+### 20.5 构造：达到下界的经典对数细分
+
+定义正长度
+\[
+\ell_j=\frac{\ln((j+1)/j)}{\ln2}\quad(j\geq1).
+\tag{20.8}
+\]
+从标签为一、长度为 $\ell_1=1$ 的单元开始。当有 $M$ 个单元时，选择标签为 $M$ 的单元，以固定左右次序分成标签 $2M$ 与 $2M+1$ 的两段。恒等式
+\[
+\ell_{2M}+\ell_{2M+1}=\ell_M
+\]
+保证这是保持旧边界的合法二分。归纳可知第 $M$ 阶段的标签集恰为 $\{M,M+1,\ldots,2M-1\}$。由于 $\ell_j$ 随 $j$ 严格递减，此时
+\[
+\boxed{D_M=\ell_M=\frac{\ln(1+1/M)}{\ln2},\qquad
+MD_M<\frac1{\ln2},\qquad MD_M\longrightarrow\frac1{\ln2}.}
+\tag{20.9}
+\]
+最后两个结论来自 $\ln(1+x)<x$ 以及 $\ln(1+x)/x\to1$。
+
+这一空间分割还可显式给出。标签 $j$ 若满足 $2^q\leq j<2^{q+1}$，其对应区间为
+\[
+[\log_2j-q,\ \log_2(j+1)-q].
+\]
+它的两个孩子具有相同外边界，内部新增点为 $\{\log_2(2j+1)\}$。因此，第 $j$ 次插入的归一化坐标是
+\[
+s_j=\{\log_2(2j+1)\}\quad(j\geq1).
+\tag{20.10}
+\]
+这正是 Niederreiter 的经典低离散度对数序列，在已放置零端点后重新编号；Weiss 的论文明确给出其历史归属及精确间隔结构 [20-C,20-D]。此处不将该序列或常数 $1/\ln2$ 归为新的数论发现。上述标签证明说明该构造确实是一条保留全部旧节点的历史。
+
+### 20.6 定理：实际两矩误差的最佳全程倍率
+
+令 $\mathcal E_M^*=A/M^2$ 为单独给定 $M$ 时允许重新布点的最优误差。对全部嵌套校准历史，有
+\[
+\boxed{
+\inf_{(G_M)\,\mathrm{nested}}\sup_{M\geq1}
+\frac{\mathcal E(G_M)}{\mathcal E_M^*}
+=\frac1{(\ln2)^2}=2.081368981\ldots.
+}
+\tag{20.11}
+\]
+将上确界换成 $M\to\infty$ 的上极限，最优值相同。
+
+**证明。** 式 (20.1) 使每阶段比值精确等于 $(MD_M)^2$。式 (20.7) 给出所有历史的下界。将式 (20.10) 的新增点送回原始支撑坐标，取
+\[
+v_j=\psi(a)+Ls_j,\qquad g^{\mathrm{new}}_j=\frac{v_j^2-2}{v_j^2+1},
+\]
+并始终保留 $a,m,b$。这给出合法的嵌套校准网格，式 (20.9) 给所有有限阶段的比值严格小于 $1/(\ln2)^2$，而极限恰好等于该值，所以它的上确界取得所需最优值。
+
+对照地，每次在最大归一化单元的中点插入，若 $2^q\leq M<2^{q+1}$，则 $D_M=2^{-q}$。因此此常用二分策略的全程倍率上确界为四。每次二等分最大化当前父单元的熵增，但不保证所有未来节点预算上的最大单元最小。单次均匀网格与逐次保留旧点的最优性是两个不同的量词问题。
+
+更简单地，$M$ 等分网格包含在 $N$ 等分网格中，当且仅当 $M$ 整除 $N$：必要性由节点 $1/M$ 必须等于某个 $k/N$ 得到，充分性直接逐节点验证。故 $2$ 等分到 $3$ 等分已经排除了每个相邻预算都保持单次唯一最优的可能。式 (20.11) 给出这项不相容性的精确全程误差代价。
+
+### 20.7 形式化范围与后续问题
+
+Lean 已证明第 20.3 节的实际二分历史熵预算，包括显式非负损失。静态平均界直接复用既有数学，不另增包装定理。第 20.2、20.4--20.6 节在此给出普通证明；完整上极限推导、经典对数序列的空间实现和它与第 19 节的实际矩极值之间的形式化连接仍需各自完成。普通推导不属于 Lean 内核已验证的结论。
+
+本节回答了指定两矩模型中保留校准节点、一次只加一点时的最佳全程倍率。它不证明此前的维数、时长与噪声联合 minimax 上界，不宣称解决外部具名开放猜想。更高阶矩下还需从真实极值构造判断是否存在能将单元代价化为长度幂的坐标；只有建立该联系，经典分割序列才能提供相应的实际误差保证。
+
+### 20.8 来源
+
+[20-A] Mathlib, `Mathlib/Combinatorics/Pigeonhole.lean`. https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Pigeonhole.html . 有限权重鸽笼及平均值形式的已有基础。
+
+[20-B] Mathlib, commit `db584cd6d46c92f209a44c0f1c829460d327499d`, `Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean`, `Real.binEntropy_le_log_two` 与 `Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub`. https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean . Lean 定理调用的二元熵基础。
+
+[20-C] Christian Weiss. *An Explicit non-Poissonian Pair Correlation Function*. arXiv:2304.14202v3, 16 June 2026. https://arxiv.org/html/2304.14202v3 . Introduction 与 Proposition 2.1 给出经典低离散度对数序列的归属与间隔结构。本节只使用并重新证明所需间隔结构，不使用该文的成对相关主定理。
+
+[20-D] Harald Niederreiter. *On a measure of denseness for sequences*. In *Topics in Classical Number Theory*, Budapest 1981, Colloquia Mathematica Societatis Janos Bolyai 34, North-Holland, Amsterdam, 1984, pp. 1163--1208. 原始出处由 [20-C] 明确引用；本文未直接核查 1984 年原文。
