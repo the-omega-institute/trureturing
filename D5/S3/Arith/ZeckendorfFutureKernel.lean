@@ -210,7 +210,9 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
       have hp := pulseFacts i
       have hi := ih i
       simp only [copies,List.replicate_succ,List.flatten_cons] at *
-      refine ⟨by rw [List.length_append, hp.1, hi.1, Nat.succ_mul]; omega, ?_, ?_, ?_⟩
+      refine ⟨by
+        rw [List.length_append, hp.1, hi.1]
+        exact (Nat.add_comm _ _).trans (Nat.succ_mul n (2*T)).symm, ?_, ?_, ?_⟩
       · intro b
         exact (legal_append _ _ b).mpr ⟨hp.2.1 b, hi.2.1 _⟩
       · intro x y
@@ -227,8 +229,8 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
     let w1 := copies B.val pulse1
     have h0 := repeats A.val false
     have h1 := repeats B.val true
-    simp only [if_neg Bool.false_eq_true] at h0
-    simp only [if_pos rfl] at h1
+    simp only [Bool.false_eq_true, ↓reduceIte] at h0
+    simp only [↓reduceIte] at h1
     refine ⟨w0++w1, ?_, ?_⟩
     · intro b
       exact (legal_append _ _ b).mpr ⟨h0.2.1 b, h1.2.1 _⟩
