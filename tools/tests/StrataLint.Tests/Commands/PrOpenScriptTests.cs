@@ -12,6 +12,538 @@ public sealed class PrOpenScriptTests
     private const string OldHeadSha = "1111111111111111111111111111111111111111";
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrWatchRetainedNativeRefIdentifiesMergedPrAndRetiresCancelledRun(bool explicitAssociation)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("MERGED",
+            Check("engineering", "COMPLETED", "CANCELLED"),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2),
+            Check("engineering", "COMPLETED", "FAILURE", runId: 203, runNumber: 3, pr: 99))));
+        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, 42, explicitAssociation)).ToJsonString()));
+        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 42, explicitAssociation)).ToJsonString()));
+        fixture.RunResponses(203, Ok(new JsonArray(NativeRunMetadata(203, 3, 99, explicitAssociation)).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains("refs/pull/42/merge", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":203", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("pending", 124)]
+    [InlineData("missing", 124)]
+    [InlineData("absent", 124)]
+    [InlineData("failed", 1)]
+    [InlineData("green", 0)]
+    public void PrWatchRetainedNativeRefScopesSameHeadBeforeLatestSelection(string ownState, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        var other = Check("engineering", "COMPLETED", ownState == "green" ? "FAILURE" : "SUCCESS",
+            runId: 202, runNumber: 2, pr: 99);
+        fixture.SnapshotResponses(Ok(Snapshot("MERGED", ownState == "absent" ? [other] :
+            [Check(ownState == "missing" ? "resolve" : "engineering",
+                ownState == "pending" ? "IN_PROGRESS" : "COMPLETED",
+                ownState == "pending" ? null : ownState == "failed" ? "FAILURE" : "SUCCESS"), other])));
+        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, 42)).ToJsonString()));
+        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 99)).ToJsonString()));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.DoesNotContain("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        if (ownState is "absent" or "missing")
+            Assert.Contains("missing=1", Text(result.StandardOutput), StringComparison.Ordinal);
+        else
+            Assert.Contains("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("workflow", 1)]
+    [InlineData("missing-workflow", 124)]
+    [InlineData("external", 1)]
+    [InlineData("status", 1)]
+    public void PrWatchRetainedNativeRefPreservesOtherProducerObligations(string producer, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        var other = producer == "status" ? Context("engineering", "FAILURE") :
+            Check("engineering", "COMPLETED", producer == "missing-workflow" ? "SUCCESS" : "FAILURE",
+                runId: 100, workflow: producer == "external" ? null : "workflow-other");
+        var checks = new List<object> { other,
+            Check("engineering", "COMPLETED", "CANCELLED"),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2) };
+        if (producer == "missing-workflow")
+            checks.Add(Check("resolve", "IN_PROGRESS", null, runId: 101, runNumber: 2, workflow: "workflow-other"));
+        fixture.SnapshotResponses(Ok(Snapshot("MERGED", checks.ToArray())));
+        fixture.RunResponses(201, Ok(new JsonArray(NativeRunMetadata(201, 1, 42)).ToJsonString()));
+        fixture.RunResponses(202, Ok(new JsonArray(NativeRunMetadata(202, 2, 42)).ToJsonString()));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.Contains("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("refs-missing")]
+    [InlineData("refs-null")]
+    [InlineData("refs-empty")]
+    [InlineData("refs-object")]
+    [InlineData("entry-null")]
+    [InlineData("duplicate")]
+    [InlineData("ambiguous")]
+    [InlineData("ref-missing")]
+    [InlineData("ref-type")]
+    [InlineData("head-ref")]
+    [InlineData("branch-ref")]
+    [InlineData("zero-pr")]
+    [InlineData("leading-zero-pr")]
+    [InlineData("unsafe-pr")]
+    [InlineData("trailing-ref")]
+    [InlineData("sha-missing")]
+    [InlineData("sha-invalid")]
+    [InlineData("sha-mismatch")]
+    [InlineData("path-repository")]
+    [InlineData("path-workflow")]
+    [InlineData("path-ref")]
+    [InlineData("native-path")]
+    [InlineData("native-event")]
+    [InlineData("native-repository")]
+    [InlineData("explicit-conflict")]
+    [InlineData("explicit-extra")]
+    [InlineData("explicit-head")]
+    [InlineData("explicit-with-invalid-ref")]
+    [InlineData("members-null")]
+    [InlineData("truncated-contexts")]
+    [InlineData("truncated-latest")]
+    public void PrWatchRejectsUnverifiableRetainedNativeRef(string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var snapshot = JsonNode.Parse(Snapshot("MERGED", Check("engineering", "COMPLETED", "SUCCESS")))!;
+        var contexts = snapshot["data"]!["repository"]!["object"]!["statusCheckRollup"]!["contexts"]!;
+        if (defect == "truncated-contexts") contexts["pageInfo"]!["hasNextPage"] = true;
+        if (defect == "truncated-latest")
+            contexts["nodes"]![0]!["checkSuite"]!["checkRuns"]!["pageInfo"]!["hasNextPage"] = true;
+        fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
+        var run = NativeRunMetadata(201, 1, 42, defect.StartsWith("explicit", StringComparison.Ordinal));
+        var refs = run["referenced_workflows"]!.AsArray();
+        var reference = refs[0]!;
+        switch (defect)
+        {
+            case "refs-missing": run.Remove("referenced_workflows"); break;
+            case "refs-null": run["referenced_workflows"] = null; break;
+            case "refs-empty": refs.Clear(); break;
+            case "refs-object": run["referenced_workflows"] = new JsonObject(); break;
+            case "entry-null": refs[0] = null; break;
+            case "duplicate": refs.Add(reference.DeepClone()); break;
+            case "ambiguous":
+                refs.Add(reference.DeepClone());
+                refs[1]!["ref"] = "refs/pull/99/merge";
+                break;
+            case "ref-missing": reference.AsObject().Remove("ref"); break;
+            case "ref-type": reference["ref"] = 42; break;
+            case "head-ref": reference["ref"] = "refs/pull/42/head"; break;
+            case "branch-ref": reference["ref"] = "refs/heads/42/merge"; break;
+            case "zero-pr": reference["ref"] = "refs/pull/0/merge"; break;
+            case "leading-zero-pr": reference["ref"] = "refs/pull/042/merge"; break;
+            case "unsafe-pr": reference["ref"] = "refs/pull/9007199254740992/merge"; break;
+            case "trailing-ref": reference["ref"] = "refs/pull/42/merge\n"; break;
+            case "sha-missing": reference.AsObject().Remove("sha"); break;
+            case "sha-invalid": reference["sha"] = new string('z', 40); break;
+            case "sha-mismatch": reference["sha"] = HeadSha; break;
+            case "path-repository": reference["path"] = $"other/repo/.github/workflows/ci-push.yml@{OldHeadSha}"; break;
+            case "path-workflow": reference["path"] = $"owner/repo/.github/workflows/other.yml@{OldHeadSha}"; break;
+            case "path-ref": reference["path"] = "owner/repo/.github/workflows/ci-push.yml@refs/pull/42/merge"; break;
+            case "native-path": run["path"] = ".github/workflows/other.yml"; break;
+            case "native-event": run["event"] = "pull_request_target"; break;
+            case "native-repository": run["repository"]!["full_name"] = "other/repo"; break;
+            case "explicit-conflict": reference["ref"] = "refs/pull/99/merge"; break;
+            case "explicit-extra":
+                run["pull_requests"]!.AsArray().Add(RunMetadata(201, 1, HeadSha, 99, "pull_request")["pull_requests"]![0]!.DeepClone());
+                break;
+            case "explicit-head": run["pull_requests"]![0]!["head"]!["sha"] = OldHeadSha; break;
+            case "explicit-with-invalid-ref": reference["ref"] = "refs/pull/42/head"; break;
+            case "members-null": run["pull_requests"] = null; break;
+        }
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PrWatchOtherWorkflowUsesExplicitAssociationEvenWithUnrelatedReusableRef()
+    {
+        using var fixture = new PrScriptFixture();
+        var run = NativeRunMetadata(201, 1, 99);
+        run["path"] = ".github/workflows/other.yml";
+        run["pull_requests"] = RunMetadata(201, 1, HeadSha, 42, "pull_request")["pull_requests"]!.DeepClone();
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        Assert.Equal(0, fixture.RunWatch42().ExitCode);
+    }
+
+    [Theory]
+    [InlineData("missing", false)]
+    [InlineData("null", false)]
+    [InlineData("empty", false)]
+    [InlineData("number", false)]
+    [InlineData("boolean", false)]
+    [InlineData("array", false)]
+    [InlineData("object", false)]
+    [InlineData("missing", true)]
+    [InlineData("null", true)]
+    [InlineData("empty", true)]
+    [InlineData("number", true)]
+    [InlineData("boolean", true)]
+    [InlineData("array", true)]
+    [InlineData("object", true)]
+    public void PrWatchRejectsMalformedWorkflowPathBeforeSelectingMembershipPolicy(string defect, bool retainedRefConflict)
+    {
+        using var fixture = new PrScriptFixture();
+        var run = retainedRefConflict ? NativeRunMetadata(201, 1, 42, explicitAssociation: true) :
+            RunMetadata(201, 1, HeadSha, 42, "pull_request");
+        if (retainedRefConflict) run["referenced_workflows"]![0]!["ref"] = "refs/pull/99/merge";
+        switch (defect)
+        {
+            case "missing": run.Remove("path"); break;
+            case "null": run["path"] = null; break;
+            case "empty": run["path"] = ""; break;
+            case "number": run["path"] = 42; break;
+            case "boolean": run["path"] = false; break;
+            case "array": run["path"] = new JsonArray(".github/workflows/ci-pr.yml"); break;
+            case "object": run["path"] = new JsonObject { ["path"] = ".github/workflows/ci-pr.yml" }; break;
+        }
+        fixture.RunResponses(201, Ok(new JsonArray(run).ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("pending", 124)]
+    [InlineData("missing", 124)]
+    [InlineData("failed", 1)]
+    [InlineData("green", 0)]
+    public void PrWatchScopesMembershipBeforeLatestRunSelection(string ownState, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check(ownState == "missing" ? "resolve" : "engineering",
+                ownState == "pending" ? "IN_PROGRESS" : "COMPLETED",
+                ownState == "pending" ? null : ownState == "failed" ? "FAILURE" : "SUCCESS"),
+            Check("engineering", "COMPLETED", ownState == "green" ? "FAILURE" : "SUCCESS",
+                runId: 202, runNumber: 2, pr: 99))));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.DoesNotContain("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        if (ownState != "missing")
+            Assert.Contains("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PrWatchOtherPrGreenCannotSupplyAnAbsentRequestedProducer()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "SUCCESS", pr: 99))));
+
+        var result = fixture.RunWatch42WithDeadline();
+
+        Assert.Equal(124, result.ExitCode);
+        Assert.Contains("missing=1", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Contains("checks=[]", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData(1, "FAILURE")]
+    [InlineData(5, "FAILURE")]
+    [InlineData(1, "SUCCESS")]
+    [InlineData(5, "SUCCESS")]
+    public void PrWatchRequestedLatestSelectionIsIndependentOfOtherPrOrdering(int otherNumber, string otherConclusion)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", otherConclusion, runId: 203, runNumber: otherNumber, pr: 99),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 4),
+            Check("engineering", "COMPLETED", "CANCELLED", runId: 200, runNumber: 2))));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":203", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":200", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("workflow_dispatch")]
+    public void PrWatchUnrelatedEventCannotEraseRequestedExecution(string eventName)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "FAILURE"),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2, eventName: eventName))));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.DoesNotContain("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("members-missing")]
+    [InlineData("members-null")]
+    [InlineData("members-empty")]
+    [InlineData("member-null")]
+    [InlineData("member-number")]
+    [InlineData("member-head")]
+    [InlineData("member-repository")]
+    [InlineData("member-url")]
+    [InlineData("members-duplicate")]
+    [InlineData("event-missing")]
+    [InlineData("run-id")]
+    [InlineData("run-head")]
+    [InlineData("run-number")]
+    [InlineData("suite-id")]
+    [InlineData("repository")]
+    [InlineData("extra-page")]
+    [InlineData("no-pages")]
+    [InlineData("malformed-json")]
+    [InlineData("api-failure")]
+    public void PrWatchRejectsUnverifiableExecutionMembership(string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var run = RunMetadata(201, 1, HeadSha, 42, "pull_request");
+        switch (defect)
+        {
+            case "members-missing": run.Remove("pull_requests"); break;
+            case "members-null": run["pull_requests"] = null; break;
+            case "members-empty": run["pull_requests"] = new JsonArray(); break;
+            case "member-null": run["pull_requests"]![0] = null; break;
+            case "member-number": run["pull_requests"]![0]!["number"] = "42"; break;
+            case "member-head": run["pull_requests"]![0]!["head"]!["sha"] = OldHeadSha; break;
+            case "member-repository": run["pull_requests"]![0]!["base"]!["repo"]!["id"] = 2; break;
+            case "member-url": run["pull_requests"]![0]!["url"] = "https://api.github.com/repos/other/repo/pulls/42"; break;
+            case "members-duplicate": run["pull_requests"]!.AsArray().Add(run["pull_requests"]![0]!.DeepClone()); break;
+            case "event-missing": run.Remove("event"); break;
+            case "run-id": run["id"] = 202; break;
+            case "run-head": run["head_sha"] = OldHeadSha; break;
+            case "run-number": run["run_number"] = 2; break;
+            case "suite-id": run["check_suite_id"] = 1202; break;
+            case "repository": run["repository"]!["full_name"] = "other/repo"; break;
+        }
+        var pages = new JsonArray(run);
+        if (defect == "extra-page") pages.Add(run.DeepClone());
+        if (defect == "no-pages") pages.Clear();
+        fixture.RunResponses(201, defect == "api-failure" ? Fail() :
+            Ok(defect == "malformed-json" ? "{" : pages.ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("number")]
+    [InlineData("repository")]
+    public void PrWatchRejectsWrongRequestedPrIdentity(string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var snapshot = JsonNode.Parse(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS")))!;
+        var repository = snapshot["data"]!["repository"]!;
+        if (defect == "number") repository["pullRequest"]!["number"] = 99;
+        else repository["nameWithOwner"] = "other/repo";
+        fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("CANCELLED", "COMPLETED", "SUCCESS", 0)]
+    [InlineData("FAILURE", "COMPLETED", "SUCCESS", 0)]
+    [InlineData("SUCCESS", "COMPLETED", "FAILURE", 1)]
+    [InlineData("SUCCESS", "COMPLETED", "CANCELLED", 1)]
+    [InlineData("SUCCESS", "IN_PROGRESS", null, 124)]
+    [InlineData("FAILURE", "QUEUED", null, 124)]
+    public void PrWatchUsesLatestWorkflowExecutionRegardlessOfConclusion(
+        string oldConclusion, string status, string? conclusion, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        // Reverse response and database-ID order: workflow runNumber selects the execution.
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", status, conclusion, runId: 200, runNumber: 2),
+            Check("engineering", "COMPLETED", oldConclusion))));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.DoesNotContain("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains("\"run_id\":200", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("COMPLETED", "SUCCESS")]
+    [InlineData("IN_PROGRESS", null)]
+    public void PrWatchCannotReuseOldGreenBeforeNewRequiredJobsRegister(string status, string? conclusion)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "SUCCESS"),
+            Check("resolve", status, conclusion, runId: 202, runNumber: 2))));
+
+        var result = fixture.RunWatch42WithDeadline();
+
+        Assert.Equal(124, result.ExitCode);
+        Assert.Contains("pending=0 missing=1", Text(result.StandardOutput), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("COMPLETED", "SUCCESS", 0)]
+    [InlineData("COMPLETED", "FAILURE", 1)]
+    [InlineData("COMPLETED", "CANCELLED", 1)]
+    [InlineData("IN_PROGRESS", null, 124)]
+    public void PrWatchRetainsIndependentWorkflowObligations(string status, string? conclusion, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.RequiredResponses(Ok(Required("engineering", "security")));
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "FAILURE"),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2),
+            Check("security", status, conclusion, runId: 100, runNumber: 1, workflow: "workflow-other"))));
+
+        Assert.Equal(exitCode, (exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42()).ExitCode);
+    }
+
+    [Fact]
+    public void PrWatchCannotFillMissingProducerWithAnotherProducersSameNameGreen()
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "SUCCESS"),
+            Check("resolve", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2),
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 100, workflow: "workflow-other"))));
+
+        Assert.Equal(124, fixture.RunWatch42WithDeadline().ExitCode);
+    }
+
+    [Theory]
+    [InlineData("workflow", "COMPLETED", "FAILURE", 1)]
+    [InlineData("external", "COMPLETED", "CANCELLED", 1)]
+    [InlineData("external", "IN_PROGRESS", null, 124)]
+    [InlineData("status", "COMPLETED", "FAILURE", 1)]
+    [InlineData("status", "IN_PROGRESS", "PENDING", 124)]
+    public void PrWatchRetainsOtherProducersWithTheSameRequiredName(
+        string producer, string status, string? conclusion, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        var other = producer == "status" ? Context("engineering", conclusion!) :
+            Check("engineering", status, conclusion, runId: 100,
+                workflow: producer == "external" ? null : "workflow-other");
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", other,
+            Check("engineering", "COMPLETED", "SUCCESS", runId: 202, runNumber: 2))));
+
+        Assert.Equal(exitCode, (exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42()).ExitCode);
+    }
+
+    [Theory]
+    [InlineData("CANCELLED", "COMPLETED", "SUCCESS", 0)]
+    [InlineData("SUCCESS", "COMPLETED", "FAILURE", 1)]
+    [InlineData("SUCCESS", "COMPLETED", "CANCELLED", 1)]
+    [InlineData("FAILURE", "IN_PROGRESS", null, 124)]
+    public void PrWatchUsesGithubLatestCheckWithinApplicableRun(
+        string oldConclusion, string status, string? conclusion, int exitCode)
+    {
+        using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", status, conclusion, checkId: 100),
+            Check("engineering", "COMPLETED", oldConclusion, checkId: 200, latest: false))));
+
+        var result = exitCode == 124 ? fixture.RunWatch42WithDeadline() : fixture.RunWatch42();
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.DoesNotContain("\"check_id\":200", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("workflow-missing")]
+    [InlineData("workflow-null")]
+    [InlineData("workflow-empty")]
+    [InlineData("workflow-numeric")]
+    [InlineData("run-number-missing")]
+    [InlineData("run-number-string")]
+    [InlineData("run-number-zero")]
+    [InlineData("run-producer-conflict")]
+    [InlineData("run-number-conflict")]
+    [InlineData("run-id-conflict")]
+    [InlineData("check-id-conflict")]
+    [InlineData("latest-missing")]
+    [InlineData("latest-truncated")]
+    [InlineData("latest-invalid-id")]
+    [InlineData("latest-unknown-id")]
+    [InlineData("latest-conflict")]
+    [InlineData("latest-duplicate-name")]
+    public void PrWatchRejectsUnverifiableWorkflowSelection(string defect)
+    {
+        using var fixture = new PrScriptFixture();
+        var snapshot = JsonNode.Parse(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"),
+            Check("resolve", "COMPLETED", "SUCCESS")))!;
+        var nodes = snapshot["data"]!["repository"]!["object"]!["statusCheckRollup"]!["contexts"]!["nodes"]!;
+        var suite = nodes[1]!["checkSuite"]!;
+        var run = suite["workflowRun"]!;
+        switch (defect)
+        {
+            case "workflow-missing": run.AsObject().Remove("workflow"); break;
+            case "workflow-null": run["workflow"] = null; break;
+            case "workflow-empty": run["workflow"]!["id"] = ""; break;
+            case "workflow-numeric": run["workflow"]!["id"] = 301; break;
+            case "run-number-missing": run.AsObject().Remove("runNumber"); break;
+            case "run-number-string": run["runNumber"] = "1"; break;
+            case "run-number-zero": run["runNumber"] = 0; break;
+            case "run-producer-conflict": run["workflow"]!["id"] = "other"; break;
+            case "run-number-conflict": run["runNumber"] = 2; break;
+            case "run-id-conflict": run["databaseId"] = 202; break;
+            case "check-id-conflict":
+                nodes[1]!["databaseId"] = 101;
+                nodes[1]!["name"] = "engineering";
+                run["databaseId"] = 202;
+                run["runNumber"] = 2;
+                foreach (var node in nodes.AsArray())
+                    node!["checkSuite"]!["checkRuns"]!["nodes"] = JsonNode.Parse("""[{"databaseId":101}]""");
+                break;
+            case "latest-missing": suite.AsObject().Remove("checkRuns"); break;
+            case "latest-truncated": suite["checkRuns"]!["pageInfo"]!["hasNextPage"] = true; break;
+            case "latest-invalid-id": suite["checkRuns"]!["nodes"]![0]!["databaseId"] = "101"; break;
+            case "latest-unknown-id": suite["checkRuns"]!["nodes"]![0]!["databaseId"] = 999; break;
+            case "latest-conflict": suite["checkRuns"]!["nodes"]!.AsArray().RemoveAt(0); break;
+            case "latest-duplicate-name": nodes[1]!["name"] = "engineering"; break;
+        }
+        fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
+
+        var result = fixture.RunWatch42();
+
+        Assert.Equal(69, result.ExitCode);
+        Assert.DoesNotContain("PR_WATCH_EVIDENCE", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("SUCCESS", "FAILURE", 1)]
     [InlineData("FAILURE", "SUCCESS", 0)]
     public void PrWatchWaitsForExpectedHeadBeforeDeciding(string oldConclusion, string conclusion, int exitCode)
@@ -97,10 +629,7 @@ public sealed class PrOpenScriptTests
         using var fixture = new PrScriptFixture();
         fixture.RequiredResponses(Ok(Required("engineering", "external", "status")));
         var snapshot = JsonNode.Parse(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"),
-            Check("external", "COMPLETED", "SUCCESS"), Context("status", "SUCCESS")))!;
-        var external = snapshot["data"]!["repository"]!["object"]!["statusCheckRollup"]!["contexts"]!["nodes"]![1]!;
-        external["databaseId"] = 102;
-        external["checkSuite"]!["workflowRun"] = null;
+            Check("external", "COMPLETED", "SUCCESS", workflow: null), Context("status", "SUCCESS")))!;
         fixture.SnapshotResponses(Ok(snapshot.ToJsonString()));
 
         var result = fixture.RunWatch42();
@@ -307,7 +836,7 @@ public sealed class PrOpenScriptTests
         var result = fixture.RunWatch42();
         Assert.Equal(0, result.ExitCode);
         Assert.Contains("step=required-set unavailable_attempts=1", Text(result.StandardError), StringComparison.Ordinal);
-        Assert.Equal(3, fixture.Invocations.Count);
+        Assert.Equal(4, fixture.Invocations.Count);
     }
     [Fact]
     public void PrWatchAcceptsExplicitlyEmptyRequiredArrays()
@@ -336,7 +865,7 @@ public sealed class PrOpenScriptTests
         Assert.Equal($"PR_WATCH_RESULT pr=42 outcome=green head_sha={HeadSha}\n", Text(result.StandardOutput));
         Assert.Contains("state=OPEN pending=0 missing=2", Text(result.StandardError), StringComparison.Ordinal);
         Assert.Contains("state=OPEN pending=0 missing=1", Text(result.StandardError), StringComparison.Ordinal);
-        Assert.Equal(4, fixture.Invocations.Count);
+        Assert.Equal(5, fixture.Invocations.Count);
     }
     [Fact]
     public void PrWatchReturnsQueryUnavailableForMalformedJson()
@@ -372,7 +901,7 @@ public sealed class PrOpenScriptTests
         var result = fixture.RunWatch42();
         Assert.Equal(1, result.ExitCode);
         Assert.Equal($"PR_WATCH_RESULT pr=42 outcome=red check=engineering state=FAILURE head_sha={HeadSha}\n", Text(result.StandardOutput));
-        Assert.Equal(2, fixture.Invocations.Count);
+        Assert.Equal(3, fixture.Invocations.Count);
     }
     [Theory]
     [InlineData("CANCELLED")]
@@ -477,7 +1006,7 @@ public sealed class PrOpenScriptTests
             "--auto-merge", "--interval-seconds", "1");
         Assert.Equal(0, result.ExitCode);
         Assert.StartsWith($"42\nPR_WATCH_RESULT pr=42 outcome=green head_sha={HeadSha}\n", Text(result.StandardOutput), StringComparison.Ordinal);
-        Assert.Equal(5, fixture.Invocations.Count);
+        Assert.Equal(6, fixture.Invocations.Count);
         Assert.EndsWith("|token=none", fixture.Invocations[0], StringComparison.Ordinal);
         Assert.EndsWith("|token=app-token", fixture.Invocations[1], StringComparison.Ordinal);
         Assert.Equal($"pr merge 42 --repo owner/repo --auto --merge --match-head-commit {HeadSha}|token=none", fixture.Invocations[2]);
@@ -489,7 +1018,7 @@ public sealed class PrOpenScriptTests
         var result = fixture.RunOpen(
             "--head", "topic", "--message-file", fixture.Message("title\n"), "--interval-seconds", "1");
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(4, fixture.Invocations.Count);
+        Assert.Equal(5, fixture.Invocations.Count);
         Assert.DoesNotContain(fixture.Invocations, IsAutoMergeInvocation);
         Assert.Contains(fixture.Invocations, IsWatchInvocation);
     }
@@ -622,27 +1151,75 @@ public sealed class PrOpenScriptTests
         @protected = true,
         protection = new { required_status_checks = new { contexts = names, checks = names.Select(context => new { context }) } },
     });
-    private static object Check(string name, string status, string? conclusion, string head = HeadSha) =>
-        new { __typename = "CheckRun", databaseId = 101, name, status, conclusion,
-            checkSuite = new { commit = new { oid = head }, workflowRun = new { databaseId = 201 } } };
+    private static object Check(string name, string status, string? conclusion, string head = HeadSha,
+        int checkId = 0, int runId = 201, int runNumber = 1, string? workflow = "workflow-301", bool latest = true,
+        int pr = 42, string eventName = "pull_request") =>
+        new { __typename = "CheckRun", databaseId = checkId, name, status, conclusion,
+            checkSuite = new { databaseId = runId + 1000, commit = new { oid = head },
+                testMembership = new { pr, eventName },
+                workflowRun = workflow == null ? null : new { databaseId = runId, runNumber, workflow = new { id = workflow } },
+                checkRuns = new { nodes = latest ? new[] { new { databaseId = checkId } } : [],
+                    pageInfo = new { hasNextPage = false } } } };
     private static object Context(string context, string state, string head = HeadSha) =>
         new { __typename = "StatusContext", id = "status-101", context, state, commit = new { oid = head } };
     private static string BoundSnapshot(string prHead, string commitHead, params object[] items) =>
         Snapshot("OPEN", prHead, commitHead, items);
-    private static string Snapshot(string state, string prHead, string commitHead, params object[] items) =>
-        JsonSerializer.Serialize(new
+    private static string Snapshot(string state, string prHead, string commitHead, params object[] items)
+    {
+        var nodes = JsonSerializer.SerializeToNode(items)!.AsArray();
+        for (var i = 0; i < nodes.Count; i++)
+        {
+            var node = nodes[i]!;
+            if (node["__typename"]!.GetValue<string>() != "CheckRun") continue;
+            if (node["databaseId"]!.GetValue<int>() == 0) node["databaseId"] = 101 + i;
+            foreach (var latest in node["checkSuite"]!["checkRuns"]!["nodes"]!.AsArray())
+                latest!["databaseId"] = node["databaseId"]!.DeepClone();
+        }
+        foreach (var run in nodes.Where(node => node!["checkSuite"]?["workflowRun"] != null)
+                     .GroupBy(node => node!["checkSuite"]!["workflowRun"]!["databaseId"]!.GetValue<int>()))
+        {
+            var latest = new JsonArray(run.SelectMany(node => node!["checkSuite"]!["checkRuns"]!["nodes"]!.AsArray())
+                .Select(node => node!.DeepClone()).ToArray());
+            foreach (var node in run) node!["checkSuite"]!["checkRuns"]!["nodes"] = latest.DeepClone();
+        }
+        return JsonSerializer.Serialize(new
         {
             data = new { repository = new
             {
-                pullRequest = new { state, headRefOid = prHead },
+                nameWithOwner = "owner/repo", pullRequest = new { number = 42, state, headRefOid = prHead },
                 @object = new { oid = commitHead, statusCheckRollup = new
                 {
-                    contexts = new { nodes = items, pageInfo = new { hasNextPage = false } },
+                    contexts = new { nodes, pageInfo = new { hasNextPage = false } },
                 } },
             } },
         });
+    }
     private static string Snapshot(string state, params object[] items) =>
         Snapshot(state, HeadSha, HeadSha, items);
+    private static JsonObject RunMetadata(int runId, int runNumber, string head, int pr, string eventName) =>
+        JsonSerializer.SerializeToNode(new
+        {
+            id = runId, run_number = runNumber, check_suite_id = runId + 1000, head_sha = head,
+            path = ".github/workflows/other.yml",
+            @event = eventName, repository = new { id = 1, full_name = "owner/repo" },
+            pull_requests = new[] { new { id = pr + 1000, number = pr,
+                url = $"https://api.github.com/repos/owner/repo/pulls/{pr}",
+                head = new { sha = head }, @base = new { repo = new { id = 1 } } } },
+        })!.AsObject();
+    private static JsonObject NativeRunMetadata(int runId, int runNumber, int pr, bool explicitAssociation = false)
+    {
+        var run = RunMetadata(runId, runNumber, HeadSha, pr, "pull_request");
+        run["path"] = ".github/workflows/ci-pr.yml";
+        if (!explicitAssociation) run["pull_requests"] = new JsonArray();
+        // The merge commit differs from the PR head; the reusable path binds its exact SHA.
+        run["referenced_workflows"] = new JsonArray(new JsonObject
+        {
+            ["path"] = $"owner/repo/.github/workflows/ci-push.yml@{OldHeadSha}",
+            ["ref"] = $"refs/pull/{pr}/merge",
+            ["sha"] = OldHeadSha,
+        });
+        return run;
+    }
     private static FakeResponse Ok(string output) => new(0, output, 0);
     private static FakeResponse Fail(int exitCode = 51, int delaySeconds = 0) => new(exitCode, "", delaySeconds);
     private sealed record FakeResponse(int ExitCode, string Output, int DelaySeconds);
@@ -722,11 +1299,37 @@ public sealed class PrOpenScriptTests
             return result;
         }
         internal void RequiredResponses(params FakeResponse[] values) => WriteResponses("required", values);
+        internal void RunResponses(int runId, params FakeResponse[] values) => WriteResponses($"run-{runId}", values);
         internal void HeadResponses(params FakeResponse[] values) => WriteResponses("head", values);
         internal void SnapshotResponses(params FakeResponse[] values)
         {
             delayedSnapshot = values.Any(value => value.DelaySeconds > 0);
-            WriteResponses("snapshot", values);
+            var runs = new Dictionary<int, List<FakeResponse>>();
+            var snapshots = values.Select(value =>
+            {
+                JsonNode? snapshot;
+                try { snapshot = JsonNode.Parse(value.Output); }
+                catch (JsonException) { return value; }
+                var nodes = snapshot?["data"]?["repository"]?["object"]?["statusCheckRollup"]?["contexts"]?["nodes"]?.AsArray();
+                var seen = new HashSet<int>();
+                foreach (var node in nodes ?? new JsonArray())
+                {
+                    var suite = node?["checkSuite"];
+                    var membership = suite?["testMembership"];
+                    if (suite?["workflowRun"]?["databaseId"] is JsonValue id && id.TryGetValue<int>(out var runId) && seen.Add(runId))
+                    {
+                        if (!runs.TryGetValue(runId, out var responses)) runs[runId] = responses = [];
+                        var runNumber = suite["workflowRun"]?["runNumber"] is JsonValue n && n.TryGetValue<int>(out var number) ? number : 1;
+                        var run = RunMetadata(runId, runNumber, suite["commit"]!["oid"]!.GetValue<string>(),
+                            membership?["pr"]?.GetValue<int>() ?? 42, membership?["eventName"]?.GetValue<string>() ?? "pull_request");
+                        responses.Add(Ok(new JsonArray(run).ToJsonString()));
+                    }
+                    suite?.AsObject().Remove("testMembership");
+                }
+                return value with { Output = snapshot?.ToJsonString() ?? value.Output };
+            }).ToArray();
+            foreach (var (id, responses) in runs) RunResponses(id, responses.ToArray());
+            WriteResponses("snapshot", snapshots);
         }
         public void Dispose() => temporary.Dispose();
         private ProcessOutput Run(string[] arguments)
@@ -799,6 +1402,11 @@ public sealed class PrOpenScriptTests
                 printf '%s\n' 'https://github.com/owner/repo/pull/42'
                 ;;
               *" pr merge "*) [[ "$PR_TEST_FAIL_STEP" != merge ]] || exit 42 ;;
+              *"/actions/runs/"*)
+                for argument in "$@"; do
+                  case "$argument" in repos/*/actions/runs/*) respond "run-${argument##*/}" ;; esac
+                done
+                exit 52 ;;
               *" api repos/"*) respond required ;;
               *" api graphql "*)
                 case " $* " in
