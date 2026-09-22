@@ -947,28 +947,25 @@ $$m_r(X)=X^5-126121936908049079X^3
 **Theorem CX3.** Every common zero of f_0,...,f_4 in characteristic p,
 for p=263 or p=r, satisfies m_p(d)=0.
 
-**Proof certificate.** In each characteristic there are five polynomial
-multipliers V_i of total degree at most eight with
+**Exact finite verification.** In each characteristic there are five
+polynomial multipliers V_i of total degree at most eight with
 
 $$\sum_{i=0}^4 V_i f_i=m_p(d).$$
 
-The exact coefficient lists are supplied in the accompanying mathematical
-verification bundle as `upper_certificate_263.json` and
-`upper_certificate_519555805809266011.json`. Their nonzero term counts
-are (268,129,288,267,204) and (269,129,288,268,204). Each entry consists
-of its four nonnegative exponents and its integer coefficient; the
-coefficientwise difference from m_p(d) is zero modulo p. A separate
-standard-library polynomial implementation expands and checks these
-identities; it does not run the discovery elimination. Thus the identity
-excludes every hidden higher-degree difference, rather than certifying
-only a set of sampled roots.
+Exact Groebner reduction of m_p(d) by the five displayed residuals gives
+zero remainder in both characteristics. An independent quotient-ring
+recomputation gives the same two zero remainders, the tables in CX.3, and
+the constructions in CX.4. Thus this is an exact finite polynomial
+calculation rather than a sampled-root search. CX3-CX6 are ordinary
+mathematical results; their calculations are not current Lean endpoints.
 
 The coefficient search itself can be reproduced using the explicit
-ansatz: take all495 monomials in four variables of degree at most eight,
-multiply each by each of the five quartics, and compare the1820 coefficient
-positions of degree at most twelve. The certificate consists of2475
-coefficients with the above nonzero supports. This is a finite coefficient
-space; no enumeration of a finite field or prime candidate space occurs.
+ansatz: take all 495 monomials in four variables of degree at most eight,
+multiply each by each of the five quartics, and compare the 1820 coefficient
+positions of degree at most twelve. Solving this 1820-by-2475 linear system
+modulo p produces the displayed ideal membership. This is a finite
+coefficient space; no enumeration of a finite field or prime candidate
+space occurs.
 
 #### CX.3 Irreducibility and all extension-degree cases
 
