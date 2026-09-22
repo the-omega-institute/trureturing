@@ -851,3 +851,4 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Pair-root conflicts and original survivor capacity](profile-notes/arithmetic/386-pair-root-conflicts-and-original-survivor-capacity.md)
 - [Cyclic CRT witnesses and local prime-capacity noncoverage](profile-notes/arithmetic/387-cyclic-crt-prime-capacity-and-forced-crowded-stars.md)
 - [A saturated 36-point chain blocker admits no full-history capped law and separates the finite-depth stop-loss comparison](profile-notes/arithmetic/388-saturated-chain-blockers-do-not-supply-conditional-caps.md)
+- [The same source retains a small exact complete-layout second moment at all heights despite its conditional and convex obstructions](profile-notes/arithmetic/389-saturated-chain-source-has-small-complete-layout-second-moment.md)

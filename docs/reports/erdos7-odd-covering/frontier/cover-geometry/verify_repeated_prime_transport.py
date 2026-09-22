@@ -231,10 +231,27 @@ def fresh_prime_barrier_check():
     require(phi > 0 and transformed <= -h * a / 2 < 0,
             "fresh zero-root classes destroy a positive potential")
     require(h > 0, "actual residual product retains strictly positive Haar mass")
+    z = sum(Fraction(1, (q - 1) ** 2) for q in primes)
+    available = h * (f * raw_s - a - a * y)
+    require(available >= h * a * (y * y + z) / 2,
+            "exact available capacities exceed the quadratic fresh-prime bound")
+    require(h * a - available / 2 <= -h * a * z / 4 < 0,
+            "even the best fractional pair-union capacity bound cannot certify this seed")
+    # The taken labels 3 and 5 are excluded. Their unused squares 9 and 25
+    # retain positive joint gain in the same fresh-root residual family.
+    roots = {x for x in range(225) if gcd(x, 225) == 1}
+    pair_union = max(len({x for x in roots if x % 9 == b or x % 25 == c})
+                     for b in range(9) for c in range(25))
+    root_caps = capacities(roots, (9, 25))
+    require(Fraction(root_caps[9] + root_caps[25] - pair_union, 225)
+            == Fraction(len(roots), 225 * 3 * 2 * 5 * 4),
+            "actual unused-square pair-union gain is strictly positive")
     return {"seed_prime": 1229, "fresh_prime_count": len(primes),
             "last_fresh_prime": primes[-1], "Y_at_least_two": True,
             "initial_potential_positive": True, "final_potential_negative": True,
-            "actual_residual_measure_positive": True}
+            "actual_residual_measure_positive": True,
+            "best_fractional_pair_union_certificate_negative": True,
+            "actual_fresh_prime_pair_gain_positive": True}
 
 
 def main():

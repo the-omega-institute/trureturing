@@ -516,6 +516,147 @@ uses a related Euler-product capacity budget for a different constrained
 transport. It does not state (ET10) or the every-seed sign failure (ET11).
 The present searched-scope comparison makes no claim of research originality.
 
+### Bounded clusters retain joint information but have the same fresh-prime barrier
+
+There is a joint refinement of the scalar certificate. Its scope and its
+failure can both be stated for the same actual Haar law, without choosing
+independent laws for different labels.
+
+Fix an integer $k\ge1$ and write $\mathcal I$ for the unused original
+$P$-smooth numerical labels. For each nonempty finite
+$A\subseteq\mathcal I$, $|A|\le k$, define the actual union capacity
+
+\[
+U_A(W)=\max_{(a_m\bmod m)_{m\in A}}
+\mu\left(\widetilde W\cap\bigcup_{m\in A}[a_m\bmod m]\right).
+\tag{ET12}
+\]
+
+Every residue in this maximum belongs to its original label, and all
+intersections use the same $\widetilde W$ and Haar measure. Each maximum is
+over a finite set. A fractional cluster cover is a nonnegative assignment
+$\lambda_A$ to these clusters such that
+$\sum_{A\ni m}\lambda_A\ge1$ for every $m\in\mathcal I$. Define
+
+\[
+B_k(W,E)=\inf_\lambda\sum_A\lambda_AU_A(W),\qquad
+\Psi_k(W,E)=\mu(\widetilde W)-B_k(W,E).
+\tag{ET13}
+\]
+
+Countably many clusters and weights are allowed. The singleton cover is
+feasible and has finite cost $\sum_{m\in\mathcal I}c_W(m)$; thus the
+infimum is finite. All sums are nonnegative. For any fixed actual finite
+completion, its union indicator is bounded pointwise by the corresponding
+weighted cluster-union indicators. Every active original label receives
+total weight at least one. Consequently $B_k$ is an upper bound on every
+such union, and $\Psi_k>0$ certifies noncoverage. Also
+$B_k\le B_1=\sum_{m\in\mathcal I}c_W(m)$, so $\Psi_k\ge\Phi_P$.
+No claim is made here that the equality boundary $\Psi_k=0$ by itself is a
+noncoverage certificate.
+
+For a pair, the gain over the two singleton capacities is exactly
+
+\[
+\kappa_{m,n}=c_W(m)+c_W(n)-U_{\{m,n\}}(W)\ge0.
+\]
+
+The separate unary maxima can always be attained simultaneously, because
+each label has its own free residue. What the unary sum loses is their
+overlap in the union. Shared-label pair or cluster factors can additionally
+have mutually incompatible maximizers; that is a different constraint.
+The gain above accounts for the actual union rather than assuming that
+separate maxima imply disjoint covered regions.
+
+The improved potential still respects actual TAKE operations. Let $q$ be
+an unused label, delete its actual class, and write $V$ for the child and
+$g=\mu(\widetilde W\setminus\widetilde V)$. If $q\in A$, fixing that label
+to the deleted class and optimizing the other labels on $V$ gives
+
+\[
+U_A(W)\ge g+U_{A\setminus\{q\}}(V),
+\]
+
+with $U_\varnothing=0$. If $q\notin A$, set inclusion gives
+$U_A(W)\ge U_A(V)$. Remove $q$ from every cluster of a feasible cover and
+combine identical resulting clusters. The remaining labels retain their
+coverage weights. Since the old weight through $q$ is at least one,
+
+\[
+B_k(W,E)\ge g+B_k(V,E\cup\{q\}),\qquad
+\boxed{\Psi_k(V,E\cup\{q\})\ge\Psi_k(W,E).}
+\tag{ET14}
+\]
+
+To handle a nonattained infimum, use covers within an arbitrary positive
+error of it and then let the error decrease to zero. Finite-cost covers
+suffice; nonnegative summation justifies the removal operation. Refinement
+invariance follows directly from the unchanged Haar sets and original-label
+capacities. Thus this is a genuine fixed-support joint improvement, not a
+change of probability law.
+
+Nevertheless **every fixed $k$ fails on an actual finite fresh-prime
+extension of every nonempty seed**. For any cluster,
+
+\[
+U_A(W)\ge\max_{m\in A}c_W(m)
+\ge\frac1k\sum_{m\in A}c_W(m).
+\]
+
+Tonelli summation and the fractional coverage inequalities imply
+
+\[
+B_k(W,E)\ge\frac1k\sum_{m\in\mathcal I}c_W(m).
+\tag{ET15}
+\]
+
+Apply the exact fresh-prime extension (ET10). Let $S_E$ denote the old
+excluded-capacity sum, so $S_E\le S$, and put
+$Z_R=\sum_{q\in R}(q-1)^{-2}>0$. The new available-capacity sum and mass
+satisfy
+
+\[
+\frac{S_{\rm available}'}{A'}
+=\frac{F_RS-S_E-AY_R}{A}
+\ge F_R-1-Y_R
+\ge\frac{Y_R^2+Z_R}{2}.
+\tag{ET16}
+\]
+
+For the last bound, expand $\prod_q(1+y_q+y_q^2)$ and keep its constant,
+linear, single-square and distinct-pair terms. Therefore, whenever
+$Y_R^2\ge2k$,
+
+\[
+\boxed{\Psi_k(W',E')
+\le-\frac{A'Z_R}{2k}<0,\qquad A'=h_RA>0.}
+\tag{ET17}
+\]
+
+Prime reciprocal divergence supplies such a finite fresh set for every
+fixed $k$ and finite old support. Every added class is an actual
+$0\bmod q$, with a distinct odd numerical modulus. The same 199-prime
+regression above already has $Y_R\ge2$, so it defeats $k=2$ even after
+granting **all** exact pair-union capacities and their best fractional
+cover. Pair gains need not vanish: for two distinct fresh primes $q,r$,
+the still-unused original labels $q^2,r^2$ have pair gain exactly
+$A'/[q(q-1)r(r-1)]>0$ on this residual product. The taken labels $q,r$
+are excluded and supply no available pair credit. The barrier shows the
+actual available gains are insufficient for
+this bounded-cluster certificate, not that joint information is absent.
+
+The scope is nonnegative fractional covers of raw actual union capacities
+of at most $k$ original labels. It does not include arbitrary signed
+messages, additional global consistency constraints, or clusters whose
+size grows with the new prime support. Thus it is not an impossibility
+theorem for every method called a finite-order relaxation.
+The repository already has an
+[exact subset-union DP](../profile-notes/001-064/01-survivor-reduction.md)
+and [fractionally packed shared-factor losses with signed messages](../profile-notes/001-064/27-actual-mask-weights-and-an-all-height-square-certificate.md).
+Those provide established local joint tools; they do not supply a
+positive every-seed bound across this fresh-root family. No new general
+cluster technique or Lean theorem is claimed here.
+
 ### Actual initial and successor values
 
 For the literal SRCT parent $U$ above, $T_3(U)=2002$. The exact coefficients
@@ -560,10 +701,11 @@ Independent direct-count regressions and the actual values are reproduced by
 
     python3 -I -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/verify_repeated_prime_transport.py
 
-The checker performs 920 checks: 120 parent/child/height cases for one-prime
+The checker performs 923 checks: 120 parent/child/height cases for one-prime
 transport and coprime support, 144 simultaneous-height cases, invariance and
 TAKE monotonicity checks, the displayed SRCT readings, and the fresh-prime
-sign-failure regression. It computes real
+sign-failure regression including the fractional pair-capacity obstruction.
+It computes real
 residue populations and counts each original divisor label once. These
 bounded checks supplement the derivations above; they do not quantify over
 all coverings or provide Lean certification. The repaired transport is not
