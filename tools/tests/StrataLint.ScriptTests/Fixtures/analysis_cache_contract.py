@@ -102,7 +102,7 @@ mkdir -p "$1/output"
                     for line in result.stdout.splitlines() if line.startswith("LEAN_CACHE ")]
         self.assertEqual(3, len(receipts), result.stdout)
         self.assertEqual(archive_status, receipts[0]["archive_status"])
-        self.assertEqual(["build LeanInformationAuditAnalysis",
+        self.assertEqual([f"-d {self.root.resolve()}/tools/lean-inspector build LeanInformationAuditAnalysis",
                           f"-d {self.root.resolve()}/Reg build @reg/LeanInformationAuditRegAnalysis"],
                          [line for line in (self.root / "lake-runs").read_text().splitlines()
                           if line != "exe cache get"])
@@ -139,7 +139,7 @@ mkdir -p "$1/output"
         self.assertIn('"archive_status":"unpacked"', result.stdout)
         self.assertIn("ANALYSIS_FIXTURES_EXIT=2", result.stdout)
         self.assertIn("Error 19", result.stdout)
-        self.assertEqual(["exe cache get", "build LeanInformationAuditAnalysis"],
+        self.assertEqual(["exe cache get", f"-d {self.root.resolve()}/tools/lean-inspector build LeanInformationAuditAnalysis"],
                          (self.root / "lake-runs").read_text().splitlines())
         self.assertEqual([], list(self.output.iterdir()))
 
@@ -207,7 +207,7 @@ with (root / "lake-runs").open("a") as log: log.write(" ".join(args) + "\\n")
 if args == ["exe", "cache", "get"]:
     (root / ".lake/packages").mkdir(parents=True, exist_ok=True)
     sys.exit(int(os.environ.get("ANALYSIS_DEPENDENCY_EXIT", "0")))
-if args == ["build", "LeanInformationAuditAnalysis"]:
+if args == ["-d", str(root / "tools/lean-inspector"), "build", "LeanInformationAuditAnalysis"]:
     artifacts = ("causal-analysis.json", "causal-analysis.txt", "bounded-analysis.json", "bounded-analysis.txt")
 else:
     assert args == ["-d", str(root / "Reg"), "build", "@reg/LeanInformationAuditRegAnalysis"], args
