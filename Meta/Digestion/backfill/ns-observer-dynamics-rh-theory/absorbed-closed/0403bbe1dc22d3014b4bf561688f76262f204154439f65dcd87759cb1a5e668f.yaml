@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:0403bbe1dc22d3014b4bf561688f76262f204154439f65dcd87759cb1a5e668f
   normalized_sha256: sha256:0403bbe1dc22d3014b4bf561688f76262f204154439f65dcd87759cb1a5e668f
 cas_ref: sha256:0403bbe1dc22d3014b4bf561688f76262f204154439f65dcd87759cb1a5e668f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/NoisyMomentPhaseBoundary.exact_noise_phase_classification
+    target_statement_id: sha256:229be2dd29f15dded6fd2b438fe259af237ca4f9c288da6b9bd977e6c69a1a2a
 receipts:
   unresolved_subitems: []
   chain_atoms:
