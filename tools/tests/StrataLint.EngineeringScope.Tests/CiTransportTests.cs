@@ -510,7 +510,7 @@ public sealed partial class CiTransportTests
     {
         var repository = TestRepositoryLayout.FindRoot();
         return SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
-            import json, pathlib, shutil, sys
+            import json, pathlib, shutil, sys, time
             repository, root, relative = map(pathlib.Path, sys.argv[1:])
             sys.path.insert(0, str(repository / 'tools/lean-inspector/tests'))
             from test_native import NativeTests
@@ -518,6 +518,37 @@ public sealed partial class CiTransportTests
             NativeTests.setUpClass()
             fixture = NativeTests('test_native_invalidation')
             fixture.setUp()
+            phases = fixture.root / 'native-phases.jsonl'
+            fixture.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
+            observation = {'processes': None, 'phase_lines': 0}
+            owned_processes = fixture.owned_processes
+            def observed_processes(command, **options):
+                rows = owned_processes(command, **options)
+                identity = sorted((row['pid'], row['identity'], row['command']) for row in rows)
+                if identity != observation['processes']:
+                    print('NATIVE_HANDOFF_PROCESSES ' + json.dumps(dict(
+                        monotonic_ms=time.monotonic_ns() // 1_000_000, processes=rows)),
+                        file=sys.stderr, flush=True)
+                    observation['processes'] = identity
+                if phases.exists():
+                    lines = phases.read_text().splitlines()
+                    for line in lines[observation['phase_lines']:]:
+                        print('NATIVE_HANDOFF_PHASE ' + line, file=sys.stderr, flush=True)
+                    observation['phase_lines'] = len(lines)
+                return rows
+            fixture.owned_processes = observed_processes
+            run_command = fixture.guarded_command
+            def observed_output(stream, text):
+                print('NATIVE_HANDOFF_OUTPUT ' + json.dumps(dict(stream=stream, text=text)),
+                    file=sys.stderr, flush=True)
+            def observed_command(args, **options):
+                if pathlib.Path(args[0]).name == 'lake' and 'build' in args:
+                    args = [args[0], '--verbose', *args[1:]]
+                print('NATIVE_HANDOFF_COMMAND ' + json.dumps(list(args)), file=sys.stderr, flush=True)
+                result = run_command(args, observe_output=observed_output, **options)
+                print('NATIVE_HANDOFF_COMMAND_EXIT ' + str(result.returncode), file=sys.stderr, flush=True)
+                return result
+            fixture.guarded_command = observed_command
             try:
                 # Native fixtures supply real Lake facets; this shape uses the
                 # managed module names consumed by the C# report reader.
@@ -528,6 +559,7 @@ public sealed partial class CiTransportTests
                     path.write_text(path.read_text().replace('Fixture', 'Trureturing'))
                 fixture.write('utility.json', '[]\n')
                 fixture.build()
+                print('NATIVE_HANDOFF_PUBLISH', file=sys.stderr, flush=True)
                 fixture.publish()
                 for name in ('D5', 'Trureturing.lean', 'External.lean', 'ClaimSupport.lean',
                         'lakefile.toml', 'lake-manifest.json', 'lean-toolchain'):

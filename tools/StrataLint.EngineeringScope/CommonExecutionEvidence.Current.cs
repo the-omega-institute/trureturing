@@ -7,7 +7,7 @@ internal static partial class CommonExecutionEvidence
     private static IEnumerable<string> SelectionPaths(ResourcePlanBinding? selection) =>
         selection is null ? [] : new[] { selection.Plan, selection.Changes };
 
-    private static ResourceExecutionPlan? CurrentPlan(string root, CommonStageRecord record) =>
+    internal static ResourceExecutionPlan? CurrentPlan(string root, CommonStageRecord record) =>
         record.Selection is null ? null : ResourceExecutionPlan.Load(root,
             Path.Combine(root, record.Selection.Plan), Path.Combine(root, record.Selection.Changes));
 
@@ -28,6 +28,7 @@ internal static partial class CommonExecutionEvidence
         var candidate = Candidate(root, out var snapshot);
         var validation = new ValidationScope(snapshot);
         ValidateStartedBuild(root, build, candidate, validation);
+        ValidateExecutionPlan(root, build, plan, "current");
         var expected = plan?.CurrentSteps ?? CurrentSteps;
         if (!completeCheckSteps) RequirePassed(steps, expected);
         var ids = plan?.CheckUnits.Except(EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray()
@@ -92,6 +93,7 @@ internal static partial class CommonExecutionEvidence
         var record = Read<CommonStageRecord>(root, CurrentPath);
         ValidateRecord(root, record, build.Candidate, build.Round, validation);
         var plan = CurrentPlan(root, record);
+        ValidateExecutionPlan(root, build, plan, "current");
         var expected = plan?.CurrentSteps ?? CurrentSteps;
         RequirePassed(record.Steps, expected);
         var ids = plan?.CheckUnits.Except(EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray()

@@ -611,3 +611,86 @@ all \(N\) in one call, give a bound on \(N\), or improve the
 survivor estimates. The cited Cambridge primary text returned HTTP503
 in this source check; the external algorithm is not independently
 implemented or formally replayed here. No new Lean wrapper is added.
+
+<a id="finite-recoding-and-the-arithmetic-resolution-boundary"></a>
+### Finite recoding and the arithmetic-resolution boundary
+
+All conclusions below concern ordinary mathematics and the accompanying finite exact diagnostic. They do not resolve unrestricted Erdős–Selfridge noncoverage. Numerical moduli remain pairwise distinct odd integers greater than one in the intended problem, and residues are fixed once for each original label.
+
+#### 1. Canonical finite words
+
+Fix k>=2 and G_j=2^j for j<k, followed by G_j=sum_(i=1)^k G_(j-i). A legal word has digits0,1 and no run1^k. Digits are stored least significant first. Zero has the empty canonical word; every nonzero canonical word has highest digit1. Padded words of a specified length retain their padding.
+
+Legal words of length n, decoded by sum_(j<n) d_j G_j, give each integer in [0,G_n) exactly once. Here is an interval induction, not an inference from counts alone. For n<k, this is binary expansion. For n>=k, partition the word from the highest position into r leading ones followed by a zero, 0<=r<k. The remaining n-r-1 lower digits decode to [0,G_(n-r-1)). The block with r leading ones starts at S_r=sum_(q=1)^r G_(n-q), and its endpoint is S_r+G_(n-r-1)=S_(r+1). Thus the blocks concatenate without gaps or overlap from0 to S_k=G_n. Lower-word uniqueness gives block uniqueness. Removing highest zero padding supplies the canonical encoding E_k of every natural number. The powers2 initial conditions and positive recurrence make G_n unbounded.
+
+Existing project material supplies the count in [DBonacci/Names](../../../../../D5/S0/Tower/DBonacci/Names.lean) (`dbonacci_name_card`, with dbonacci k(n+2)=G_n), and the integer-value bijection for k=3 in [Tribonacci/Representation](../../../../../D5/S0/Tower/Tribonacci/Representation.lean) (`decode_bijective`). [DBonacci/Values](../../../../../D5/S0/Tower/DBonacci/Values.lean) uses real beta-values in several declarations: those are not silently identified with these integer weighted sums. [CanonicalInterchangeability](../../../../../D5/S0/Conventions/CanonicalInterchangeability.lean) already states decoded-predicate preservation for arbitrary faithful encodings. No new Lean wrapper is needed.
+
+For fixed finite covering family let L be its LCM and choose representatives0<=s<L. The encoded survivor is {E_k(s): s mod m_i !=a_i for every i}. Consequently its cardinality and emptiness agree with the arithmetic survivor. Transporting the uniform law on these L representatives gives exactly |H|/L in every encoding. Choosing a fresh uniform law on all legal words at a padded length is a different probability law: the interval [0,G_n) need not have size divisible by L.
+
+For L|L', the encoded reduction is defined by
+
+    E_k(s) -> E_k(s mod L),  0<=s<L'.
+
+These reductions commute with cross-encoding translation because both orders decode, reduce modulo L and encode. Literal word-prefix truncation is not the same operation.
+
+#### 2. The exact automaton needs weight phase
+
+At a known digit layer j, the pair (run,s) suffices for the recurrence
+
+    (run,s) --d--> (run',s+dG_j mod L),
+
+where d=1 requires run<k-1, and run'=0 for d=0, run+1 for d=1. Without the external layer, include the phase vector
+
+    v_j=(G_j,...,G_(j+k-1)) mod L.
+
+Its update F(v)=(v_1,...,v_(k-1),sum v) has inverse
+
+    F^(-1)(w)=(w_(k-1)-sum_(i<k-1)w_i,w_0,...,w_(k-2)).
+
+It permutes a finite set, so the orbit of v_0 is purely periodic. The autonomous state (run,s,v) is finite, with at most k L T states on its weight orbit of period T. This is an upper bound for this representation, not the minimum number of states of a residue recognizer. The existing [ZeckendorfResidueTransducer](../../../../../D5/S1/Digit/ZeckendorfResidueTransducer.lean) stores precisely the accumulated residue and two consecutive Fibonacci weights and proves the prime-modulus evaluation invariant.
+
+Acceptance is tested when a word terminates. Prefix coverage does not imply coverage of every extension: in binary,1 belongs to1 mod3 while its extension11 represents3 and does not. A covered-prefix subgraph deletion can therefore erase a valid survivor. A safe deletion needs a statement about all permitted continuations. Termination and leading-padding conventions must be retained as well.
+
+A forced0 contributes no choice conditioned on its state, but consumes a position. For Zeckendorf,101 represents4 whereas deleting its forced middle0 gives11, an illegal word whose raw weighted value is3. A contracted edge must carry the consumed length/phase and any termination or cost information. Shannon information increment can only be discussed after fixing a law; language capacity log(lambda_k) is not arbitrary-source entropy.
+
+The program also checks a common LSB example for every tested k: prefix(0) is covered by0 mod3, while its legal extension(0,1) has value2 and survives. This avoids confusing the binary11 example with Zeckendorf legality.
+
+#### 3. Finite recoding does not identify the two completions
+
+Give X_k={infinite0/1 sequences avoiding1^k} its digit-prefix topology, reading positions0,1,... from the least significant end. Let e_j be the sequence with its sole1 at position j. It is legal and e_j tends to the all-zero sequence. Its finite integer value is G_j.
+
+For every m>1 there is no continuous f:X_k -> Z/mZ agreeing with finite integer values modulo m. Indeed, continuity at zero would force f(e_j)=0 for all sufficiently large j, so G_j=0 mod m eventually. The invertible recurrence above implies that k consecutive zeros force the entire preceding recurrence vector to be zero. Iterating backwards would give G_0=0 mod m, contradicting G_0=1. Equivalently every block of k successive weights contains a nonzero residue. Thus every low-digit prefix neighborhood of zero contains a finite legal word with a different residue modulo m.
+
+For binary the corresponding extension exists exactly when m divides some2^N: then the first N digits determine the residue. If m has a nontrivial odd factor,2^j is never0 modulo that factor, and the same single-one argument forbids a continuous extension. The modulus1 case is trivial.
+
+This is an obstruction to extending the particular finite-value identification, not a claim that the underlying compact spaces admit no abstract homeomorphism. It concerns least-significant-first prefix topology, not every possible encoding topology. Finite residue automata do not contradict it: they evaluate a word with an end, and their accumulated residues need not converge on an infinite word.
+
+Therefore one may re-encode each arithmetic layer Z/LZ and transport its bonding maps, or independently study an infinite digit shift. One cannot identify the latter with the arithmetic inverse limit just because every finite integer can be translated. The project's [NoContinuousAdditionExtension](../../../../../D5/S1/Digit/Infinite/NoContinuousAdditionExtension.lean) already records a related k=2 obstruction for separately continuous addition; it is not this mod-m statement. [RRO §96](../../../../develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#96-有界游程并集的有限覆盖与零测性) separately distinguishes finite-view stabilization as k grows from the union of the fixed-k infinite languages: the latter is a proper, dense null subset of the full binary shift.
+
+#### 4. Bounded diagnostic and research consequence
+
+The accompanying program fixes k=2,3,4,5,binary and L=3,9,15,27,45,105,315. For each L, it uses each divisor m>1 exactly once, with fixed original phase a_m=(floor(m/3)+1) mod m. It checks full legal-word value intervals, direct residue histograms against layered DP, an autonomous vector-phase evaluator, canonical representatives, and cross-encoding arithmetic reductions. Separate controls include the14/27 survivor example and a known even whole cover; neither is an odd-distinct covering counterexample.
+
+At L=315 the common survivor has96 representatives, with uniform mass32/105. Maximum canonical lengths are12,10,9,9,9 in the specified encoding order. Layered widths and padded-language counts are recorded separately; no minimal-state or runtime superiority is claimed. All20 finite-k weight periods in the specified modulus matrix returned before the fixed100000-step cap. In particular k=5 modulo15 has period81224, versus40 for k=2. These are exact orbit periods, not bounds on every possible implementation.
+
+For fixed k, the standard no1^k language growth gives capacity h_k=log(lambda_k); the minimum padded depth to represent all0<=s<L satisfies N_k log(lambda_k)=log L+O_k(1). This is an asymptotic capacity identity, not an exact energy law. Finite recoding preserves |H|, emptiness and a transported law; automaton cycles, branching, code lengths and raw-digit entropy have no automatic equality across k. A coordinate-specific lemma remains useful if its arithmetic consequence transports soundly.
+
+The remaining research obligation is a uniform arithmetic restriction using oddness and original-label distinctness. Changing encoding alone supplies no positive lower bound for |H|. A future encoding-based proof must supply such a restriction, or a verified computational improvement, while preserving the fixed phases and the same probability law.
+
+#### 5. Finite translation resolution and the logical boundary
+
+Write Q_(k,n)(x) for the first n low-order digits of the canonical k-code of x, padded by zeros, and R_m(x)=x mod m. A source observation Q supports a deterministic exact translation to a target observation P if and only if
+
+    Q(x)=Q(y) implies P(x)=P(y).
+
+Necessity follows by applying the translator. For sufficiency define its value at an observed Q(x) to be P(x); the displayed implication makes this well defined. This is the repository's existing observation-kernel/factorization criterion, also used in [RRO §133](../../../../develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#133-共同实现概率与演化的同步运输). It introduces no new theorem or mathematical novelty.
+
+For finite k>=2, no n makes R_m factor through Q_(k,n) on all natural numbers when m>1: choose j>=n with G_j nonzero modulo m; x=0 and y=G_j have the same zero low prefix and distinct residues. This is already proved in section3. Thus partial recoding really has a task-dependent resolution obstruction, even though full finite words translate exactly. On a bounded domain0<=x<B, a sufficiently long word completely specifies x and every target observation; the bound is computable from the increasing weights. There is no contradiction between these two statements.
+
+Recursive refinement and self-reference alone do not imply Gödel incompleteness. A finite run automaton has recurrent transitions, and membership of every supplied finite word is nevertheless decided by scanning it. A recursive procedure that computes every finite residue layer can likewise terminate on every layer while no single layer determines the entire completion. These are observation and algorithmic statements, not undecidability of a particular sentence in a formal theory.
+
+The relevant incompleteness conclusion requires specifying a consistent, effectively axiomatized formal theory with enough arithmetic (for example, an extension of Robinson arithmetic). The Gödel–Rosser theorem then gives a sentence neither provable nor refutable in that theory. A numeration system by itself supplies neither such a proof predicate nor this conclusion. Primality of a given integer is also decidable; prime-indexed refinement is not automatically an undecidable operation.
+
+The existing [ClosureUndecidable](../../../../../D5/S0/Computability/ClosureUndecidable.lean) module invokes Rice's theorem for a nontrivial extensional predicate on arbitrary partial recursive programs. Its program-universality and extensionality hypotheses have not been supplied by the k-bonacci residue automata or by the restricted odd-cover problem. Every supplied finite covering family remains exactly decidable on its LCM. No reduction from an undecidable problem to Erdős #7, and no independence of #7 from a named formal theory, is established here.
+
+The [replay program](../../frontier/cover-geometry/cross_encoding_arithmetic_resolution.py) and [complete diagnostic result](../../frontier/cover-geometry/cross_encoding_arithmetic_resolution.json) retain every stated bounded case. Use `--base <report-base> --check` under `python3 -B -I -S -O`; arithmetic reduction is transported through the original integer value. The result records complete periods and bounded state counts, without inferring a lower bound for the unrestricted survivor set.

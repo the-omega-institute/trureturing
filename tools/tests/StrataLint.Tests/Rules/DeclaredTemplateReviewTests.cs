@@ -263,28 +263,18 @@ public sealed class DeclaredTemplateReviewTests
         const string source = prefix + "InlineRealizationSource.lean";
         const string helper = prefix + "InlineProofHelper.lean";
         var root = TestRepositoryLayout.FindRoot();
-        // Engineering restores only a seed, not this fixture's compiled imports.
-        // Lake owns the prerequisite closure; the canonical runner owns cache
-        // provisioning and locking. Do not build the whole inspector test library.
-        var build = TestProcessRunner.Run("make",
-            ["lean", "LEAN_TARGETS=LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource "
-                + "LeanInformationAudit.Tests.RegistrationGates.Positive LeanInformationAudit.Tests.SourceIsolation"],
-            root, TestBudgets.ReportSupervisorHangGuard, 2 * 1024 * 1024);
-        Assert.True(build.ExitCode == 0, Encoding.UTF8.GetString(build.StandardOutput)
-            + Encoding.UTF8.GetString(build.StandardError));
-        var process = TestProcessRunner.Run("/bin/bash",
-            [Path.Combine(root, "tools/scripts/worktree/lean-cache-run.sh"),
-                "lake", "env", "lean", "--root=tools/lean-inspector", Path.Combine(root, registration)],
-            root, TestBudgets.LeanProcessHangGuard, 2 * 1024 * 1024);
-        var output = Encoding.UTF8.GetString(process.StandardOutput)
-            + Encoding.UTF8.GetString(process.StandardError);
-        Assert.True(process.ExitCode == 0, output);
-        const string marker = "INLINE_PROVENANCE_REPORT=";
-        var start = output.IndexOf(marker, StringComparison.Ordinal);
-        Assert.True(start >= 0, output);
-        start += marker.Length;
-        var end = output.IndexOf('\n', start);
-        var wire = System.Text.Json.Nodes.JsonNode.Parse(output[start..(end < 0 ? output.Length : end)])!;
+        // InlineRealization.lean fails to compile unless the real exporter emits exactly this literal.
+        var literal = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineProvenanceWire.lean"));
+        const string open = "r##\"", close = "\"##";
+        var first = literal.IndexOf(open, StringComparison.Ordinal);
+        var last = literal.LastIndexOf(close, StringComparison.Ordinal);
+        Assert.True(first >= 0 && last > first, "canonical wire literal not found");
+        // One literal only: a second delimiter would put Lean syntax inside the slice.
+        Assert.Equal(first, literal.LastIndexOf(open, StringComparison.Ordinal));
+        Assert.Equal(last, literal.IndexOf(close, first + open.Length, StringComparison.Ordinal));
+        var wire = System.Text.Json.Nodes.JsonNode.Parse(literal[(first + open.Length)..last])!;
         Assert.Null(wire["inputs"]);
         Assert.All(wire["records"]!.AsArray(), record => Assert.Null(record!["content_inputs"]));
         var entries = new[] { registration, source, helper }.Select(path =>
@@ -308,8 +298,6 @@ public sealed class DeclaredTemplateReviewTests
         var selected = new[] { RepoPath.CreateKnown(registration) };
         Assert.Null(Record.Exception(() => InformationTemplateEvidence.Collect(
             snapshot, WithWire(wire), selected)));
-
-
     }
 
     [Fact]

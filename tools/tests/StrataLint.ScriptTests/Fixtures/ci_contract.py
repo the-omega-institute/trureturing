@@ -180,7 +180,7 @@ runtime_disposition = "committed-source"
                 result = invoke("resolve", "--head", head)
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 outputs = dict(line.split("=", 1) for line in (root / "outputs").read_text().splitlines())
-                self.assertEqual({"candidate_sha": merge, "base_sha": base}, outputs)
+                self.assertEqual({"candidate_sha": merge, "base_sha": base, "work_required": "false"}, outputs)
                 self.assertEqual("", git("remote").stdout.strip())
                 self.assertEqual(expected_scope, json.loads((root / "build/ci/changes.json").read_text()))
                 self.assertEqual(expected_plan, json.loads((root / "build/ci/plan.json").read_text()))
@@ -361,6 +361,74 @@ runtime_disposition = "committed-source"
                 CI_WORKFLOW_INPUTS=json.dumps(inputs)))
             self.assertEqual(0, result.returncode, result.stderr)
 
+    def test_native_checkout_fetches_only_fixed_before_from_shallow_clone(self):
+        """Checkout preparation acquires a non-adjacent event endpoint once."""
+        source = self.root / "push-source"
+        target = self.root / "push-target"
+        source.mkdir()
+
+        def git(directory, *args, check=True):
+            result = subprocess.run(["git", "-C", str(directory), *args],
+                                    check=check, capture_output=True, text=True)
+            return result.stdout.strip()
+
+        git(source, "init", "-q")
+        git(source, "config", "user.name", "Fixture")
+        git(source, "config", "user.email", "fixture@example.invalid")
+        (source / "tracked.txt").write_text("before\n")
+        git(source, "add", "tracked.txt")
+        git(source, "commit", "-qm", "before")
+        before = git(source, "rev-parse", "HEAD")
+        (source / "tracked.txt").write_text("middle\n")
+        git(source, "commit", "-qam", "middle")
+        (source / "tracked.txt").write_text("after\n")
+        git(source, "commit", "-qam", "after")
+        after = git(source, "rev-parse", "HEAD")
+
+        subprocess.run(["git", "-c", "protocol.file.allow=always", "clone", "-q", "--no-tags",
+                        "--depth=1", f"file://{source}", str(target)], check=True,
+                       capture_output=True, text=True)
+        git(target, "checkout", "-q", "--detach", after)
+        event = self.root / "push-event.json"
+        event.write_text(json.dumps({"before": before, "after": after}))
+        environment = dict(self.env, GITHUB_EVENT_PATH=str(event),
+                           GITHUB_OUTPUT=str(self.root / "push-outputs"), CI_WORKFLOW_INPUTS="")
+
+        def invoke(*arguments):
+            return subprocess.run([sys.executable, str(CI), *arguments, "--repository", str(target)],
+                                  env=environment, capture_output=True, text=True)
+
+        result = invoke("checkout", "--commit", after)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual("", git(target, "remote"))
+        self.assertEqual("commit", git(target, "cat-file", "-t", before))
+        self.assertEqual("true", git(target, "rev-parse", "--is-shallow-repository"))
+        self.assertEqual("1", git(target, "rev-list", "--count", "HEAD"))
+
+        sys.path.insert(0, str(REPO / "tools/scripts/workflow"))
+        planner = importlib.import_module("ci_plan")
+        scope = planner.push_paths(target, after, before, after)
+        self.assertEqual("event-range", scope["origin"]["kind"])
+        self.assertEqual(["tracked.txt"], [row["new"]["path"] for row in scope["changes"]])
+
+        mismatch = self.root / "push-mismatch.json"
+        mismatch.write_text(json.dumps({"before": before, "after": before}))
+        mismatch_environment = dict(environment, GITHUB_EVENT_PATH=str(mismatch))
+        failed = subprocess.run([sys.executable, str(CI), "checkout", "--commit", after,
+                                 "--repository", str(target)], env=mismatch_environment,
+                                capture_output=True, text=True)
+        self.assertEqual(2, failed.returncode)
+        self.assertIn("push event after does not match checked-out candidate", failed.stderr)
+
+        missing = self.root / "push-missing.json"
+        missing.write_text(json.dumps({"after": after}))
+        missing_environment = dict(environment, GITHUB_EVENT_PATH=str(missing))
+        failed = subprocess.run([sys.executable, str(CI), "checkout", "--commit", after,
+                                 "--repository", str(target)], env=missing_environment,
+                                capture_output=True, text=True)
+        self.assertEqual(2, failed.returncode)
+        self.assertIn("push event endpoint must be a 40-hex object identity", failed.stderr)
+
     def seed(self):
         (self.root / ".lake/build/lib").mkdir(parents=True)
         (self.root / ".lake/build/lib/Module.olean").write_bytes(b"seed bytes")
@@ -422,19 +490,24 @@ runtime_disposition = "committed-source"
         self.assertEqual("producer\n", (self.root / "calls").read_text())
         self.assertIn("STRATALINT_ACTIONS_CACHE_SEEDED=0", result.stdout)
 
-    def test_pull_request_cannot_publish_snapshot(self):
+    def test_pull_request_publishes_only_own_snapshot(self):
         (self.root / ".lake/build").mkdir(parents=True)
         (self.root / ".lake/build/output").write_text("project")
         self.dependency_files()
-        for event, ref in (("pull_request", "refs/pull/42/merge"), ("pull_request_target", "refs/heads/dev")):
+        for event, ref, allowed in (("pull_request", "refs/pull/42/merge", True),
+                                    ("pull_request_target", "refs/heads/dev", False)):
             with self.subTest(event=event):
                 shutil.rmtree(self.root / "build/lean-cache", ignore_errors=True)
                 result = self.run_tool(CACHE, "snapshot", env=dict(self.env, GITHUB_EVENT_NAME=event,
                     GITHUB_REF=ref, GITHUB_SHA="a" * 40, CANDIDATE_SHA="a" * 40, STRATALINT_CACHE_WRITES="true"))
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 for layer in ("dependency", "project"):
-                    self.assertIn(layer + "_ready=false", result.stdout)
-                    self.assertFalse((self.root / "build/lean-cache" / layer / "manifest.json").exists())
+                    self.assertIn(layer + "_ready=" + str(allowed).lower(), result.stdout)
+                    # dependency/project snapshots publish their registered
+                    # directories directly; only judge/execution layers have
+                    # a manifest under build/lean-cache.
+                    target = self.root / (".lake/packages" if layer == "dependency" else ".lake/build")
+                    self.assertTrue(target.is_dir())
 
     def test_pull_request_restores_seed_with_writes_disabled(self):
         _, key = self.seed()
@@ -461,7 +534,7 @@ runtime_disposition = "committed-source"
                 return subprocess.CompletedProcess(command, 0)
             return run(command, **options)
         args = owner.argparse.Namespace(repository=self.root, stage="engineering", commit=REV,
-            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_archive=None)
+            run_id="17", run_attempt="2", archive=self.root / "stage.tar.gz", seed_manifest=None)
         with mock.patch.dict(os.environ, dict(self.env, NUGET_PACKAGES=str(self.root / "absent-packages"))), \
              mock.patch.object(owner.subprocess, "run", side_effect=invoke), \
              mock.patch.object(owner, "extract") as extract:
@@ -483,15 +556,15 @@ runtime_disposition = "committed-source"
                                                ("engineering", "true", False), ("current", "false", True)):
                 with self.subTest(stage=stage, writable=writable, explicit=explicit):
                     args.stage = stage
-                    args.seed_archive = self.root / "explicit-seed.tgz" if explicit else None
+                    args.seed_manifest = self.root / "explicit-seed.json" if explicit else None
                     os.environ["STRATALINT_CACHE_WRITES"] = writable
                     owner.transport(args)
                     command = calls[-1][0]
-                    expected = args.seed_archive or (self.root / "ci-current-seed.tar.gz"
+                    expected = args.seed_manifest or (self.root / "ci-current-seed.json"
                         if stage == "current" and writable == "true" else None)
-                    self.assertEqual(expected is not None, "--seed-archive" in command)
+                    self.assertEqual(expected is not None, "--seed-manifest" in command)
                     if expected is not None:
-                        self.assertEqual(str(expected), command[command.index("--seed-archive") + 1])
+                        self.assertEqual(str(expected), command[command.index("--seed-manifest") + 1])
             with mock.patch.object(owner.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "dotnet")):
                 with self.assertRaises(subprocess.CalledProcessError):
                     owner.transport(args)

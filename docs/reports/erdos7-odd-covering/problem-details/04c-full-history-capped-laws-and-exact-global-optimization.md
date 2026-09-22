@@ -1,6 +1,6 @@
 # 04c. Full-history capped laws and exact global optimization
 
-This document continues [04b](04b-arbitrary-star-head-residues-with-unrestricted-tails.md); its body below is the final section of that report, moved here unchanged. The same qualifications apply: these are ordinary mathematical noncoverage deductions supported by exact arithmetic, not end-to-end Lean proofs, unrestricted Erdős #7, or a claim of public-literature originality.
+This chapter extends the same-law continuation in [Chapter 04b](04b-arbitrary-star-head-residues-with-unrestricted-tails.md) to full-history capped laws and exact global optimization. These are ordinary mathematical noncoverage deductions supported by exact arithmetic, not end-to-end Lean proofs, unrestricted Erdős #7, or a claim of public-literature originality.
 
 ## Full-history capped laws and exact global optimization
 

@@ -25,6 +25,68 @@ EXECUTION_LAYERS = ("engineering", "current")
 ALL_LAYERS = (*LAYERS, "judge", *EXECUTION_LAYERS, "elan")
 
 
+class CachePathRegistrationError(ValueError):
+    pass
+
+
+def native_archive_paths(root, layers):
+    """Actions receives only the explicitly registered native archive paths."""
+    selected = set(layers) & set(LAYERS)
+    if not selected:
+        return {}
+    manifest = "Meta/ci-cache-paths.json"
+
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate field: " + key)
+            result[key] = value
+        return result
+
+    try:
+        import tomllib
+        filemap = tomllib.loads((root / "Meta/FILEMAP.toml").read_text())
+        rows = [row for row in filemap.get("files", []) if row.get("pattern") == manifest]
+        if len(rows) != 1:
+            raise ValueError("manifest must have one literal FILEMAP entry")
+        registration = json.loads((root / manifest).read_text(), object_pairs_hook=unique_object)
+        if (not isinstance(registration, dict) or set(registration) != {"schema_version", "layers"}
+                or type(registration["schema_version"]) is not int or registration["schema_version"] != 1
+                or not isinstance(registration["layers"], dict)
+                or not set(registration["layers"]).issubset(LAYERS)):
+            raise ValueError("invalid schema or layer")
+        result = {}
+        roots = {"dependency": ".lake/packages", "project": ".lake/build"}
+        for layer in sorted(selected):
+            paths = registration["layers"].get(layer)
+            if not isinstance(paths, list) or not paths:
+                raise ValueError("missing paths for " + layer)
+            for path in paths:
+                if (not isinstance(path, str) or not re.fullmatch(r"[A-Za-z0-9_./*\-]+", path)
+                        or any(part in ("", ".", "..") for part in path.split("/"))
+                        or not (path == roots[layer] or path.startswith(roots[layer] + "/"))):
+                    raise ValueError("invalid path for " + layer + ": " + repr(path))
+            if len(set(paths)) != len(paths):
+                raise ValueError("duplicate paths for " + layer)
+            result[layer] = sorted(paths)
+        return result
+    except (OSError, ValueError, TypeError, AttributeError) as error:
+        raise CachePathRegistrationError(f"cache path registration {manifest}: {error}") from error
+
+
+def output_archive_paths(layer, paths):
+    key = layer + "_archive_path"
+    value = "\n".join(paths)
+    delimiter = "STRATALINT_" + hashlib.sha256(value.encode()).hexdigest()
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as stream:
+            stream.write(f"{key}<<{delimiter}\n{value}\n{delimiter}\n")
+    # Keep diagnostic stdout line-oriented; the Actions command file carries
+    # the actual multiline value consumed by both restore and save.
+    print(key + "=" + json.dumps(paths, separators=(",", ":")))
+
+
 def actions_keys(root: pathlib.Path) -> dict:
     """Build Actions snapshot keys and enforce the write policy.
 
@@ -39,7 +101,12 @@ def actions_keys(root: pathlib.Path) -> dict:
         raise ValueError("snapshot keys require GITHUB_RUN_ID and GITHUB_RUN_ATTEMPT")
     event, ref = os.environ.get("GITHUB_EVENT_NAME"), os.environ.get("GITHUB_REF", "")
     push_writer = event == "push" and (ref == "refs/heads/dev" or ref.startswith("refs/heads/integration-"))
-    writer_allowed = push_writer and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+    # A pull_request run may publish only to GitHub's own merge-ref scope.
+    # Actions keeps that scope private to reruns of this PR; it is never a
+    # donor for dev, integration, or another PR.  Do not accept arbitrary refs
+    # here: the ref shape is the isolation boundary.
+    pr_writer = event == "pull_request" and re.fullmatch(r"refs/pull/[1-9][0-9]*/merge", ref) is not None
+    writer_allowed = (push_writer or pr_writer) and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
     result = {"mathlib_revision": revision, "os": system, "arch": machine,
               "partition": partition_path(root),
               "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
@@ -182,7 +249,7 @@ def clean_current_candidate(root, commit):
             raise ValueError("current snapshot requires the exact clean candidate commit")
 
 
-def snapshot_execution(root, layer, keys, destination, *, seed_archive=None):
+def snapshot_execution(root, layer, keys, destination, *, seed_manifest=None):
     """Export one native execution seed and make its declared members cacheable.
 
     The native runner owns seed selection, validation, provenance, and the
@@ -211,27 +278,39 @@ def snapshot_execution(root, layer, keys, destination, *, seed_archive=None):
             detail = (error.stderr or error.stdout or str(error)).strip()
             raise ValueError("native execution transport rejected prepared seed: " + detail) from error
 
-    if seed_archive is not None:
-        # Ordinary pack already accepted this execution. Verify its native seed
-        # receipt before reading the companion archive, without exporting again.
+    if seed_manifest is not None:
+        # Ordinary pack retained an independent snapshot of its native manifest.
+        # Copy its declared material directly from the accepted producer tree.
         clean_current_candidate(root, commit)
         verify(root)
-        prepared_transport_sha = sha(root / "build/ci" / (spec["stage"] + "-transport.json"))
-        archive = seed_archive
-    else:
-        descriptor, archive_name = tempfile.mkstemp(prefix=f".{layer}-transport-", suffix=".tgz", dir=destination.parent)
-        os.close(descriptor)
-        archive = pathlib.Path(archive_name)
+        transport_path = "build/ci/" + spec["stage"] + "-transport.json"
+        producer_manifest = root / transport_path
+        prepared_transport_sha = sha(producer_manifest)
+        if seed_manifest.is_symlink() or not seed_manifest.is_file():
+            raise ValueError("prepared seed manifest is not a regular file")
+        if sha(seed_manifest) != prepared_transport_sha:
+            raise ValueError("prepared seed differs from producer transport")
+        transport = json.loads(producer_manifest.read_text())
+        expected = [*transport["materials"], {"path": transport_path,
+            "sha256": prepared_transport_sha, "mode": producer_manifest.stat().st_mode & 0o777}]
+        # Native validation owns the complete material list. copy_hash checks
+        # exactly the bytes and modes copied, including any late source change.
+        inventory = files(root, expected=expected, copy_to=destination)
+        verify(destination)
+        return inventory
+
+    descriptor, archive_name = tempfile.mkstemp(prefix=f".{layer}-transport-", suffix=".tgz", dir=destination.parent)
+    os.close(descriptor)
+    archive = pathlib.Path(archive_name)
     try:
-        if seed_archive is None:
-            command = ["dotnet", str(runner), "transport-pack", "--repository", str(root),
-                       *identity, "--archive", str(archive)]
-            try:
-                subprocess.run(command, cwd=root, check=True, capture_output=True, text=True)
-            except subprocess.CalledProcessError as error:
-                status = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=all"], capture_output=True, text=True)
-                detail = (error.stderr or error.stdout or str(error)).strip()
-                raise ValueError(detail + ("; status=" + status.stdout.strip() if status.stdout.strip() else "")) from error
+        command = ["dotnet", str(runner), "transport-pack", "--repository", str(root),
+                   *identity, "--archive", str(archive)]
+        try:
+            subprocess.run(command, cwd=root, check=True, capture_output=True, text=True)
+        except subprocess.CalledProcessError as error:
+            status = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=all"], capture_output=True, text=True)
+            detail = (error.stderr or error.stdout or str(error)).strip()
+            raise ValueError(detail + ("; status=" + status.stdout.strip() if status.stdout.strip() else "")) from error
         with tarfile.open(archive, "r:gz") as source:
             seen = set()
             for member in source.getmembers():
@@ -251,23 +330,14 @@ def snapshot_execution(root, layer, keys, destination, *, seed_archive=None):
     except (tarfile.TarError, EOFError) as error:
         raise ValueError("invalid native execution archive: " + str(error)) from error
     finally:
-        if seed_archive is None:
-            archive.unlink(missing_ok=True)
-            archive.with_name(archive.name + ".tmp").unlink(missing_ok=True)
-    if seed_archive is not None:
-        verify(destination)
-        if sha(destination / "build/ci" / (spec["stage"] + "-transport.json")) != prepared_transport_sha:
-            raise ValueError("prepared seed differs from producer transport")
+        archive.unlink(missing_ok=True)
+        archive.with_name(archive.name + ".tmp").unlink(missing_ok=True)
     inventory = files(destination)
     transport = json.loads((destination / "build/ci" / (spec["stage"] + "-transport.json")).read_text())
     if transport.get("commit") != commit or transport.get("run_id") != int(os.environ["GITHUB_RUN_ID"]):
         raise ValueError("native execution transport identity mismatch")
     if transport.get("run_attempt") != int(os.environ["GITHUB_RUN_ATTEMPT"]):
         raise ValueError("native execution transport attempt mismatch")
-    if seed_archive is not None:
-        declared = {item["path"] for item in transport["materials"]}
-        if {item["path"] for item in inventory} != declared | {"build/ci/" + spec["stage"] + "-transport.json"}:
-            raise ValueError("execution seed differs from declared transport materials")
     return inventory
 
 
@@ -349,7 +419,7 @@ def replace_restored_directory(staged, target, rollback_root):
             previous.unlink()
 
 
-def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None, seed_archive=None):
+def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None, seed_manifest=None):
     """Produce a private layer; only the parent may publish it and report ready."""
     spec = keys[layer]
     observations = ({name: {"status": "not-entered"} for name in
@@ -387,7 +457,7 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None, se
     with cache_guard(root, shared=True):
         if layer in EXECUTION_LAYERS:
             inventory = snapshot_execution(root, layer, keys, staged / "data",
-                                           **({"seed_archive": seed_archive} if seed_archive is not None else {}))
+                                           **({"seed_manifest": seed_manifest} if seed_manifest is not None else {}))
         elif layer == "judge":
             sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
             from dotnet_producer import stage_seed, unique_object
@@ -484,12 +554,12 @@ def current_lean_materials(root, plan, commit):
     return None
 
 
-def bounded_snapshot(root, layer, staged, seconds, *, current=False, seed_archive=None):
+def bounded_snapshot(root, layer, staged, seconds, *, current=False, seed_manifest=None):
     command = [sys.executable, str(pathlib.Path(__file__).resolve()), "snapshot", "--repository", str(root),
                *(["--stage", "current", "--layer", layer] if current else ["--layers", layer]),
                "--snapshot-directory", str(staged)]
-    if seed_archive is not None:
-        command += ["--seed-archive", str(seed_archive)]
+    if seed_manifest is not None:
+        command += ["--seed-manifest", str(seed_manifest)]
     env = dict(os.environ)
     env.pop("GITHUB_OUTPUT", None)
     handlers = {signum: signal.getsignal(signum) for signum in (signal.SIGTERM, signal.SIGINT)}
@@ -524,7 +594,7 @@ def bounded_snapshot(root, layer, staged, seconds, *, current=False, seed_archiv
                     signal.signal(signum, handler)
 
 
-def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current=None, seed_archive=None):
+def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current=None, seed_manifest=None):
     registry = registry if registry is not None else validate_judge_registration(root, layers)
     for layer in layers:
         ready, committed, save_minutes = False, False, 1
@@ -545,9 +615,9 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
             with tempfile.TemporaryDirectory(prefix=".snapshot-", dir=target.parent) as temporary:
                 staged = pathlib.Path(temporary)
                 if deadline is None:
-                    metrics = stage_snapshot(root, keys, layer, staged, registry, current=current, seed_archive=seed_archive)
+                    metrics = stage_snapshot(root, keys, layer, staged, registry, current=current, seed_manifest=seed_manifest)
                 else:
-                    bounded_snapshot(root, layer, staged, seconds, current=current is not None, seed_archive=seed_archive)
+                    bounded_snapshot(root, layer, staged, seconds, current=current is not None, seed_manifest=seed_manifest)
                     save_minutes = deadline.save_timeout_minutes()
                     if not save_minutes:
                         raise ValueError("snapshot left no cache save window")
@@ -703,7 +773,7 @@ def restore(root, keys, matched, layers=LAYERS, registry=None, *, outcomes=None)
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if project_seeded else "0"}, "GITHUB_ENV")
 
 
-def report_seed(root, lake):
+def report_seed(root):
     """Ask the normal producer whether a transported full report can be reused.
 
     The seed manifest declares the report paths; this adapter neither infers
@@ -747,7 +817,7 @@ def report_seed(root, lake):
     for relative in sorted(reports):
         report = seed / relative
         result = subprocess.run([sys.executable, str(root / "tools/lean-inspector/reuse.py"), "probe",
-            "--repository", str(root), "--report", str(report), "--lake", str(lake)],
+            "--repository", str(root), "--report", str(report)],
             cwd=root, check=True, capture_output=True, text=True)
         outcome = json.loads(result.stdout)
         if type(outcome.get("needs_lake")) is not bool:
@@ -765,7 +835,7 @@ def main():
     parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     parser.add_argument("--layer", choices=ALL_LAYERS)
     parser.add_argument("--bounded-cache", action="store_true")
-    parser.add_argument("--seed-archive", help="reuse this execution's native companion seed archive")
+    parser.add_argument("--seed-manifest", help="reuse this execution's native sealed seed manifest")
     parser.add_argument("--snapshot-directory", type=pathlib.Path, help=argparse.SUPPRESS)
     for layer in ALL_LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
@@ -773,11 +843,11 @@ def main():
         parser.add_argument("--" + layer + "-outcome", default="",
                             choices=("", "success", "failure", "cancelled", "skipped"))
     args = parser.parse_args()
-    args.seed_archive = pathlib.Path(args.seed_archive).resolve() if args.seed_archive else None
-    if args.seed_archive is not None:
+    args.seed_manifest = pathlib.Path(args.seed_manifest).absolute() if args.seed_manifest else None
+    if args.seed_manifest is not None:
         selected = [args.layer] if args.layer else args.layers
         if args.command != "snapshot" or not selected or len(selected) != 1 or selected[0] not in EXECUTION_LAYERS:
-            parser.error("--seed-archive requires snapshot with one explicit execution layer")
+            parser.error("--seed-manifest requires snapshot with one explicit execution layer")
     if args.command == "prepare-report" and (args.stage != "current" or args.layer or args.layers):
         parser.error("prepare-report requires --stage current and its registered layer scope")
     if args.layer and args.layers:
@@ -834,22 +904,21 @@ def main():
                 restore(args.repository, actions_keys(args.repository), {"current": args.current_key}, ["current"])
             source = None
             if "lean-report" in plan["execution"]["steps"]:
-                lake = shutil.which("lake")
-                if not lake:
-                    raise ValueError("the registered Lean toolchain is unavailable")
-                source = report_seed(args.repository, pathlib.Path(lake))
-            output({"needs_lake": bool("lake" in requirements["tools"] and source is None)})
+                source = report_seed(args.repository)
+            output({"needs_lake": bool("lake" in requirements["tools"]
+                and (source is None or plan["execution"]["lean_targets"]))})
             output({"STRATALINT_LEAN_REPORT_REUSE": source or ""}, "GITHUB_ENV")
             return 0
         except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:
             print("CI_INPUT_FAILED " + str(error), file=sys.stderr)
             return 2
     try:
+        archive_paths = native_archive_paths(args.repository, args.layers) if args.command == "keys" else {}
         registry = validate_judge_registration(args.repository, args.layers) if args.command != "keys" else None
         keys = actions_keys(args.repository)
         if args.snapshot_directory:
             stage_snapshot(args.repository, keys, args.layers[0], args.snapshot_directory, registry,
-                           current=current, seed_archive=args.seed_archive)
+                           current=current, seed_manifest=args.seed_manifest)
         elif args.command == "keys":
             values = {}
             values.update({key: keys[key] for key in
@@ -861,6 +930,8 @@ def main():
                 toolchain = hashlib.sha256((args.repository / "lean-toolchain").read_bytes()).hexdigest()
                 values["elan_key"] = f"elan-v1-{system}-{arch}-{toolchain}"
             output(values)
+            for layer, paths in archive_paths.items():
+                output_archive_paths(layer, paths)
         elif args.command == "restore":
             restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers, registry,
                     outcomes={layer: getattr(args, layer + "_outcome") for layer in LAYERS})
@@ -870,9 +941,9 @@ def main():
                 from cache_deadline import load_deadline
                 deadline = load_deadline(args.repository, args.stage)
             snapshot(args.repository, keys, args.layers, registry, deadline=deadline,
-                     current=current, seed_archive=args.seed_archive)
+                     current=current, seed_manifest=args.seed_manifest)
         return 0
-    except ProjectRegistrationError as error:
+    except (ProjectRegistrationError, CachePathRegistrationError) as error:
         print(str(error), file=sys.stderr)
         return 2
     except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:

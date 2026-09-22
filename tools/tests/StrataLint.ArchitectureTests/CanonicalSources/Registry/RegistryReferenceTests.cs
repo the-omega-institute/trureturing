@@ -1,13 +1,12 @@
-using StrataLint.Cli;
-
 namespace StrataLint.ArchitectureTests;
 
-public sealed class RegistryReferenceTests
+[Collection(nameof(CanonicalFileMapCollection))]
+public sealed class RegistryReferenceTests(CanonicalFileMapFixture fixture)
 {
     [Fact]
     public void CanonicalRegistryReferencesOnlyTrackedPresentFiles()
     {
-        var findings = FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot())
+        var findings = fixture.Findings
             .Where(static finding => finding.Code == "FILEMAP-REGISTRY-DANGLING");
 
         Assert.Empty(findings);

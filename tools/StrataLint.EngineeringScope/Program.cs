@@ -6,6 +6,9 @@ namespace StrataLint.EngineeringScope;
 
 internal static class Program
 {
+    // Temporary policy-override, not capacity-derived; owner and review trigger: spec A22, #8989.
+    private const int DefaultConcurrentTestProjects = 2;
+
     public static int Main(string[] arguments) => Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
 
     internal static int Run(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> evidenceLoader, TextWriter output, TextWriter error)
@@ -109,12 +112,15 @@ internal static class Program
         return [selected.Assembly];
     }
 
-    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null)
-        => RunPreparedTests(root, run, output, CommonExecutionEvidence.PrepareRegisteredTests(root, build));
+    internal static int RunCurrentTests(string root, Func<string, string, int> run, TextWriter output, CommonStageRecord? build = null,
+        int maxConcurrentProjects = 1)
+        => RunPreparedTests(root, run, output, CommonExecutionEvidence.PrepareRegisteredTests(root, build), maxConcurrentProjects);
 
     private static int RunPreparedTests(string root, Func<string, string, int> run, TextWriter output,
-        CommonExecutionEvidence.PreparedTests prepared)
+        CommonExecutionEvidence.PreparedTests prepared, int maxConcurrentProjects = DefaultConcurrentTestProjects)
     {
+        ArgumentOutOfRangeException.ThrowIfLessThan(maxConcurrentProjects, 1);
+        output = TextWriter.Synchronized(output);
         var candidate = prepared.Candidate;
         var build = prepared.Build;
         var inputs = prepared.Inputs;
@@ -125,18 +131,19 @@ internal static class Program
         var reused = CommonExecutionEvidence.ImportTestSeed(root, inputs, output);
         var projects = inputs.Keys.Order(StringComparer.Ordinal).ToArray();
         var invocation = Guid.NewGuid().ToString("N");
-        var records = new List<TestProjectExecution>();
+        var records = new TestProjectExecution[projects.Length];
         output.WriteLine($"ENGINEERING_TEST_PLAN state=registered selected={projects.Length - reused.Count} reused={reused.Count} candidate={candidate}");
-        foreach (var project in projects)
+        Parallel.For(0, projects.Length, new ParallelOptions { MaxDegreeOfParallelism = maxConcurrentProjects }, index =>
         {
+            var project = projects[index];
             if (reused.TryGetValue(project, out var prior))
             {
-                records.Add(prior);
+                records[index] = prior;
                 output.WriteLine($"ENGINEERING_TEST_REUSED project={JsonSerializer.Serialize(project)} origin_candidate={prior.ExecutionCandidate} origin_round={prior.ExecutionRound}");
-                continue;
+                return;
             }
             output.WriteLine($"ENGINEERING_TEST_PROJECT project={JsonSerializer.Serialize(project)}");
-            var relative = $"{CommonExecutionEvidence.RootPath}/trx/{candidate}/{build.Round}/{inputs[project].Fingerprint}/{invocation}/{records.Count}";
+            var relative = $"{CommonExecutionEvidence.RootPath}/trx/{candidate}/{build.Round}/{inputs[project].Fingerprint}/{invocation}/{index}";
             var directory = Path.Combine(root, relative);
             Directory.CreateDirectory(directory);
             var exit = 2;
@@ -150,13 +157,13 @@ internal static class Program
                 if (exit != 0) failure = $"dotnet test exit={exit}";
             }
             catch (Exception exception) { failure = exception.Message; }
-            records.Add(new(project, inputs[project].Fingerprint, "executed", candidate, build.Round, relative, exit, executed, failure));
+            records[index] = new(project, inputs[project].Fingerprint, "executed", candidate, build.Round, relative, exit, executed, failure);
             output.WriteLine($"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(project)} raw_exit={exit} executed={executed} error={JsonSerializer.Serialize(failure)}");
-        }
+        });
         var paths = records.SelectMany(record => Directory.GetFiles(Path.Combine(root, record.Results), "*.trx"))
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'));
         CommonExecutionEvidence.Write(root, CommonExecutionEvidence.TestsPath,
-            new TestExecutionRecord(2, candidate, build.Round, records.ToArray(), CommonExecutionEvidence.Materials(root, paths)));
+            new TestExecutionRecord(2, candidate, build.Round, records, CommonExecutionEvidence.Materials(root, paths)));
         return CommonExecutionEvidence.FinishRegisteredTests(root, prepared, output);
     }
 

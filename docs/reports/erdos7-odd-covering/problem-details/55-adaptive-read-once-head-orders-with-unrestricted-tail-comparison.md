@@ -14,7 +14,7 @@ comparison is the existing nested-marginal rearrangement from
 [Schroeder, Section 3](../../../../Library/Arith/schroeder2026noncoverage.md).
 No priority claim is made. The unrestricted distinct odd covering problem
 remains open, and the fixed 154-label atom-cap obstruction in
-[Chapter 04b](04b-arbitrary-star-head-residues-with-unrestricted-tails.md)
+[Chapter 04c](04c-full-history-capped-laws-and-exact-global-optimization.md)
 continues to apply to adaptive orders.
 
 ## Exact hypotheses and conclusion
@@ -202,7 +202,7 @@ Adaptive ordering does not defeat the old 154-label joint atom cap. Apply the
 comparison theorem to one full original-coordinate atom, with weight 1 and
 `phi(t)=t`. Its mass is at most the product of its terminal coordinate caps,
 namely `1/K` for the old profiles. This argument covers randomized strategies
-as well as deterministic ones. For the literal family in Chapter 04b,
+as well as deterministic ones. For the literal family in Chapter 04c,
 
     K = 4385364744027208669814574741078700875,
     S = 2254630674715456873605308528779445940,

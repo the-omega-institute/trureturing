@@ -47,6 +47,15 @@ def names(value, where, allowed=None, empty=True):
     return value
 
 
+def lean_build_targets(value):
+    if (not isinstance(value, list)
+            or any(not isinstance(target, str) or not re.fullmatch(
+                r"[A-Za-z][A-Za-z0-9_.]*(?:/[A-Za-z][A-Za-z0-9_.]*)?", target) for target in value)
+            or value != sorted(set(value))):
+        raise ValueError("lean_targets requires sorted unique Lean module or package/target names")
+    return value
+
+
 def path(value):
     # Preserve whitespace and Unicode, never normalize a different path into scope.
     if (not isinstance(value, str) or not value or value.startswith("/") or "\\" in value
@@ -743,7 +752,7 @@ def make_plan(root, commit, changes_file):
 def execution_selection(read, active, resources):
     registration = "Meta/ci-resources.json"
     if not active:
-        return {"projects": [], "checks": [], "steps": []}
+        return {"projects": [], "tests": [], "checks": [], "steps": [], "lean_targets": []}
     if not any(registration in row["materials"] for row in active):
         raise ValueError("missing declared resource execution manifest: " + registration)
     declarations = {registration, "Meta/engineering-projects.json", "Meta/ci-checks.json"}
@@ -755,23 +764,32 @@ def execution_selection(read, active, resources):
         raise ValueError("invalid resource execution schema")
     rows = {}
     for row in manifest["resources"]:
-        exact(row, {"id", "projects", "checks", "steps"}, registration)
+        exact(row, {"id", "projects", "checks", "steps"} | ({"lean_targets"} if "lean_targets" in row else set()), registration)
         if row["id"] in rows or row["id"] not in resources:
             raise ValueError("unknown or duplicate resource execution: " + row["id"])
         for key in ("projects", "checks", "steps"):
             if not isinstance(row[key], list) or row[key] != sorted(set(row[key])):
                 raise ValueError("resource execution requires sorted unique " + key)
+        if lean_build_targets(row.get("lean_targets", [])) and resources[row["id"]]["stage"] != "current":
+            raise ValueError("Lean program targets require a current resource")
         rows[row["id"]] = row
     if set(rows) != set(resources):
         raise ValueError("missing resource execution registration")
     registry = strict_json_bytes(read("Meta/engineering-projects.json"))
     projects = {row["path"]: row for row in registry["projects"]}
     checks = {row["id"]: row for row in strict_json_bytes(read("Meta/ci-checks.json"))["checks"]}
-    selected_projects, selected_checks, steps = set(), set(), set()
+    selected_projects, selected_checks, steps, targets = set(), set(), set(), set()
     for resource in active:
         row = rows[resource["id"]]
+        stage = resource["stage"]
+        engineering_checks = {"selftest-pair", "capability-proof", "banned-api-proof"}
+        if (row["steps"] and stage != "current"
+                or any(("engineering" if check in engineering_checks else "current") != stage for check in row["checks"])
+                or any(projects.get(project, {}).get("ci") and stage != "engineering" for project in row["projects"])):
+            raise ValueError("resource execution stage mismatch: " + resource["id"])
         selected_projects.update(row["projects"])
         selected_checks.update(row["checks"])
+        targets.update(row.get("lean_targets", []))
         if resource["stage"] == "current":
             steps.update(row["steps"])
     for check in list(selected_checks):
@@ -802,13 +820,20 @@ def execution_selection(read, active, resources):
         visited.add(project)
     for project in list(selected_projects):
         visit(project)
+    # Compilation references do not request test execution. Only resource rows
+    # explicitly selecting a CI member create an execution obligation.
+    selected_tests = sorted(project for project in selected_projects if projects[project]["ci"])
+    if selected_tests and not any(resource["stage"] == "engineering" for resource in active):
+        raise ValueError("selected CI tests require an engineering resource")
     if "lean-report" in steps:
         steps.discard("lean")  # The report producer enters the Lean incremental path.
+    elif targets:
+        raise ValueError("Lean program targets require the registered lean-report entry")
     order = ["lean", "lean-report", "scribe", "filemap", "check-current"]
     if steps - set(order):
         raise ValueError("unknown current step registration")
-    return {"projects": sorted(selected_projects - dependencies), "checks": sorted(selected_checks),
-            "steps": [step for step in order if step in steps]}
+    return {"projects": sorted(selected_projects - dependencies), "tests": selected_tests, "checks": sorted(selected_checks),
+            "steps": [step for step in order if step in steps], "lean_targets": sorted(targets)}
 
 
 def no_work(plan, stage=None):
@@ -880,17 +905,23 @@ def validate_stage(root, stage, base):
 def plan_pr(root, commit, base, head):
     started = time.monotonic()
     changes, plan = root / "build/ci/changes.json", root / "build/ci/plan.json"
+    no_work_path = root / "build/ci/no-work.json"
+    no_work_path.unlink(missing_ok=True)
     scope = pr_paths(root, commit, base, head)
     write(changes, scope)
     value = make_plan(root, commit, changes)
     write(plan, value)
     validate_plan(root, commit, plan, changes)
+    work_required = bool(value["resources"])
+    if not work_required:
+        write(no_work_path, no_work(value))
     print("CI_PLAN_RESULT " + json.dumps({"mode": "pr", "change_count": scope["change_count"],
           "path_count": len(value["paths"]), "plan_bytes": plan.stat().st_size,
-          "changes_bytes": changes.stat().st_size, "elapsed_seconds": round(time.monotonic() - started, 6)}, sort_keys=True))
+          "changes_bytes": changes.stat().st_size, "work_required": work_required,
+          "elapsed_seconds": round(time.monotonic() - started, 6)}, sort_keys=True))
     # Complete manifests travel as files. Job outputs remain bounded regardless
     # of the number or length of changed paths.
-    return {"candidate_sha": commit, "base_sha": base}
+    return {"candidate_sha": commit, "base_sha": base, "work_required": work_required}
 
 
 def plan_push(root, commit="", plan=None, changes=None, before=None, after=None):

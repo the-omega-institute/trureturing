@@ -1,0 +1,195 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "head-exponent-downset-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Same-law outside-union bound for the verified literal154 profile. Extra distinct73-smooth head moduli are allowed outside e_p<=5 and sum(e_p)<=9; their arbitrary fixed residues and every original exponent are retained. Numerical tails follow the existing continuation. Direct application of the existing cutoff accounting, not unrestricted noncoverage."
+  },
+  "status": {
+    "kind": "inline",
+    "value": "CERTIFIED_STRICT_PASS_FOR_DEGREE9"
+  },
+  "primes": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73
+    ]
+  },
+  "records": {
+    "kind": "inline",
+    "value": [
+      {
+        "total_degree_max": 8,
+        "individual_exponent_max": 5,
+        "downset_cardinality_including_one": "3103485",
+        "outside_weight": "64528854263399731293794330954028674977819405803004313528975382934413344725033905023011404386923643981849834837272803428430906615694599008139226220027569499/2724810380213522330281141517581253711779618961036346931997647886801919177349964137622897466350867065470288128366864707816453781684651919000207360000000000000",
+        "outside_float": 0.02368196140618897,
+        "consumer_score_upper": "925832368086074910349791358611284977852527097339651991458761629351496919587912928765270933986921766785101020712920961058586145809092957139055522953077673011173245291/925456300542208357708143330744745498952399646188235519700513626803333080594627663429826909782324959408244578848602158653222747694988730676679802880000000000000000000",
+        "consumer_score_float": 1.000406359050823
+      },
+      {
+        "total_degree_max": 9,
+        "individual_exponent_max": 5,
+        "downset_cardinality_including_one": "9979585",
+        "outside_weight": "17685275762109438514793711640689592322320194871246957745540610276454016110128622519545538557424192735509027091986992965115585758889451857241685255464493679159/929160339652811114625869257495207515716850065713394303811197929399454439476337770929408036025645669325368251773100865365410739554466304379070709760000000000000",
+        "outside_float": 0.019033610247202,
+        "consumer_score_upper": "314241908076630490662585840725502813420910313182708635279166809703751371892816382582846584547222525184706112120715607589610700646026549509178073757006917828650076644231/315580598484893049978476875783958215142768279350188312217875146739936580482768033229570976235772811158211401387373336100748956963991157160747812782080000000000000000000",
+        "consumer_score_float": 0.9957580078918361
+      }
+    ]
+  },
+  "epsilon_upper": {
+    "kind": "inline",
+    "value": "2/5"
+  },
+  "C_upper": {
+    "kind": "inline",
+    "value": "47/100"
+  },
+  "J_upper": {
+    "kind": "inline",
+    "value": "9000"
+  },
+  "diagonal_error_upper": {
+    "kind": "inline",
+    "value": "191/10000"
+  },
+  "survival_lower": {
+    "kind": "inline",
+    "value": "1109/10000"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "89991109/1109"
+  },
+  "T_lower": {
+    "kind": "inline",
+    "value": "326059/4"
+  },
+  "Gamma_margin": {
+    "kind": "inline",
+    "value": "1634995/4436"
+  },
+  "epsilon_exact": {
+    "kind": "inline",
+    "value": "850282109320449012581343404003218456990123/2126237451649555718697975632038158000000000"
+  },
+  "C_exact_upper": {
+    "kind": "inline",
+    "value": "467101552960255339/1000000000000000000"
+  },
+  "J_exact_upper": {
+    "kind": "inline",
+    "value": "559058126433247751329/62500000000000000"
+  },
+  "profiles": {
+    "path": "content/016-profiles.json",
+    "sha256": "db1db2fc0b9d5ce25ae7c784bad2e32149bdfd6e7cdbfe920817cad9899d42ef",
+    "kind": "value"
+  },
+  "original_heights": {
+    "kind": "inline",
+    "value": [
+      5,
+      3,
+      3,
+      2,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "original_label_source": {
+    "kind": "inline",
+    "value": "frontier/source-budgets/capped_head_bellman.py"
+  },
+  "original_label_count": {
+    "kind": "inline",
+    "value": 154
+  },
+  "original_labels_sha256": {
+    "kind": "inline",
+    "value": "e3edc39efeaf303f6dffa9ed94c1765428ab7e2bf05d09ce1910480842399d2d"
+  },
+  "original_modulus_exponents": {
+    "path": "content/021-original_modulus_exponents.json",
+    "sha256": "ab158f838abc529e052684aab00a6047b1d688da3c6f2b327c839c10d46c04db",
+    "kind": "array"
+  },
+  "maximum_original_total_degree": {
+    "kind": "inline",
+    "value": 5
+  },
+  "total_infinite_weight": {
+    "kind": "inline",
+    "value": "600410072785121236578682757551297320206250364766914773583/83788229178425217702643399504472011041669120000000000000"
+  },
+  "full_product_coefficients": {
+    "path": "content/024-full_product_coefficients.json",
+    "sha256": "85e09c00b8caacf3e3e84b32e660360e08328061abd323034594a414624f4f0d",
+    "kind": "value"
+  },
+  "full_coefficient_counts": {
+    "path": "content/025-full_coefficient_counts.json",
+    "sha256": "8fc8c9f18d4eb14cdf20a5a32de6d42d31e7317e03cea4408a3c7f9bdcd896f8",
+    "kind": "value"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/56-exponent-frontiers-and-cylinder-cover-certificates.md": "c8b67933791bd6eeb3925159b9b3219d3492703cd340ee720e0bc9d07dd8bee5",
+      "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+      "problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md": "70c1c2eafee2d18ac9b8a29944adca71e7ca7237f4356dc6ecb9f1b5391998e8",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+      "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+      "frontier/source-budgets/depth_profile_head_input.json": "3c0f4a5def0872b6c25cc2076f3e563f5983332ef94bdf5d0f96a2a3a11915a2",
+      "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+      "frontier/source-budgets/depth_profile_tail_budget.py": "5b453462c8a85e5c01892fa70f5b3146789e630633586ecc249c6466cf4baf7a",
+      "certificates/source_norms/source-budgets/depth_profile_tail_budget.json": "e89a86ffafc4c1ad36e6797f3d8a761287db0c07c8a758f4f6ffbb329b6de3c5",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/CappedGainRearrangement.lean": "ff003bc80d91f1e0026af3c22c5d2ff3a4ab92f733b968c3321e6de521826ab6",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+      "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "0eac881f5ec12c423ee7eff34240706abe67c68af2c5e4054335776446301323"
+  }
+}

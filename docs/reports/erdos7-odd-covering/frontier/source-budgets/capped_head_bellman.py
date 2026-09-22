@@ -528,6 +528,7 @@ sys.dont_write_bytecode = True
 CERTIFICATE = 'certificates/source_norms/source-budgets/capped_head_bellman.json'
 SOURCES = ('certificate_io.py',
            'problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md',
+           'problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md',
            'problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md',
            '../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean',
            '../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean',

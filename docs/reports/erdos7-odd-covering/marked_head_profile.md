@@ -804,6 +804,7 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Conditional future avoidance controls the current prefix](profile-notes/321-384/341-conditional-future-avoidance-controls-the-current-prefix.md)
 - [Original cut certificates preserve the old measure by conditional weighting](profile-notes/321-384/342-original-cut-certificates-preserve-the-old-measure.md)
 - [Original-prefix SAT reductions and transport obstructions](profile-notes/321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)
+- [Two exact upper-bound counterexamples in McNew–Setty v2](../../../Library/Arith/mcnewsetty2026covering.md)
 - [Original Fourier moments and finite-probe obstructions](profile-notes/321-384/344-original-fourier-moments-and-finite-probe-obstructions.md)
 - [Fixed-prime Fourier obstruction and digit-relation masks](profile-notes/321-384/345-fixed-prime-fourier-obstruction-and-digit-relation-masks.md)
 - [Old-cylinder tree gluing and source corrections](profile-notes/321-384/346-old-cylinder-tree-gluing-and-source-corrections.md)

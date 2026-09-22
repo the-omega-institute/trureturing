@@ -508,4 +508,4 @@ python3 -B -I -S -O docs/reports/erdos7-odd-covering/frontier/source-budgets/ref
 
 ## Continued in 04c
 
-The section "Full-history capped laws and exact global optimization" continues in [04c](04c-full-history-capped-laws-and-exact-global-optimization.md); it was moved unchanged so that this report stays under the 1000-line file limit (SL-003).
+[Chapter 04c](04c-full-history-capped-laws-and-exact-global-optimization.md) gives full-history capped laws, exact global optimization, and the complete counterexamples to the universal 9/20 threshold.
