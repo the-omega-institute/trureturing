@@ -143,7 +143,9 @@ class NativeRegTests:
             self.root, self.env = donor, original_env
 
     def build_reg_report(self, success=True):
-        return self.run_lake('-d', str(self.root / 'Reg'), 'build', ':report', success=success)
+        return self.run_lake('-d', str(self.root / 'Reg'), 'build', ':report',
+                             'trureturing/Audit', 'leanInspector/reportInspector',
+                             'reg/LeanInformationAuditRegTests', success=success)
 
     def test_reg_manifest_rejected_before_materialization(self):
         self.reg_package()
