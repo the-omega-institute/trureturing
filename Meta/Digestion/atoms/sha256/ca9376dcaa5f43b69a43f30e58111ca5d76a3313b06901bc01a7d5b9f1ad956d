@@ -1,0 +1,130 @@
+### 45.1 固定装置、完整观察者与相容完成
+
+令 $M=B=\mathbb C^2$，固定各自计算基、相位及装置
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad \alpha+\alpha^2=1,
+$$
+$$
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,
+\qquad m_1=|0\rangle,
+\qquad T|j\rangle=|j\rangle\otimes m_j.
+$$
+这里 Q 指[量子上下文卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)，恢复卷指[边界恢复与原子代价几何](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)。装置及全输入等距由 Q130.1、Q131.1和本卷定义41.1供应：两基像的范数为一，输出基标签使它们正交，所以 $T^*T=I_M$。记
+$$
+H_n=B^{\otimes n},\quad H_0=\mathbb C,\quad
+T_0=I_M,\quad T_{n+1}=(I_{H_n}\otimes T)T_n,
+$$
+$$
+\Gamma_n(X)=\operatorname{Tr}_M(T_nXT_n^*),
+\qquad\Gamma_0(X)=\operatorname{Tr}X.
+$$
+输出寄存器依次编号 $1,2,\ldots$，这是对 Q130 零下标词的索引平移。所有张量积依次排列为外部参考、已发出输出、活动记忆。
+
+固定参考空间 $J$，$1\le\dim J<\infty$，并固定来源类
+$$
+\Theta\subseteq\mathcal D(J\otimes M),
+$$
+它在精确来源问题中可以为空、非闭、非紧或非凸；距离下确界、极小值与一致收敛分别在对应小节明列所需条件。合法准备、已取得的联合记录、参考关系及其他约束共同决定这一个 $\Theta$；不能在不同深度换来源类。一个 $\theta\in\Theta$ 承担整条输出历史。先在整个输入算子空间定义线性通道
+$$
+q_n(X)=(\operatorname{id}_J\otimes\Gamma_n)(X)
+\quad\bigl(X\in\mathcal L(J\otimes M)\bigr),
+\qquad q_0(X)=\operatorname{Tr}_M X,
+$$
+再将它限制到来源密度 $\theta\in\Theta$。
+任意初态在 $J,M$ 之间可以纠缠，不预设独立根态。每一步必须使用与当时全部系统独立的纯空白 $|0\rangle\langle0|$ 及同一个 Q130 幺正装置，已发出端口不再参与生成；生成中不以反馈、重置或其它介入改变装置、空白准备或活动记忆。Q130 的基像恒等式在整个输入空间上成立，因而可张量上 $I_J$。有限维等距及偏迹给每个 $q_n$ 连续、CPTP，并且
+$$
+\operatorname{Tr}_{B_{n+1}}q_{n+1}(\theta)=q_n(\theta).
+$$
+
+一个待检目标是固定的相容密度族
+$$
+\xi_n\in\mathcal D(J\otimes H_n),\qquad
+\operatorname{Tr}_{B_{n+1}}\xi_{n+1}=\xi_n\quad(n\ge0).
+$$
+它可以在装置的来源像以外。相容只保证这些有限密度属于同一个输出态，不保证该固定装置能产生它。所有层必须来自这一个目标；不能每次优化后换成不同的目标延拓。半迹距离统一记为
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+$$
+
+用 $C_{\rm archive}$ 表示完整已获观察者档案。$J$ 只承载本有限量子模型明确表示的已保留参考与记录，不自动穷尽整个 $C_{\rm archive}$。来源类须保留实际准备、来源身份、装置和校准、旧内外记录、已知联合关系、时间戳、各局部钟读数及其共同约束、合法动作及顺序、失败、停止和误差合同。这些合同沿用本卷定义36.4、定义41.1与假设41.5；动作的合法先后不推出统计独立。当某项结论另外要求来源类非空且紧时，这两项是实质前提：例如一个非空紧允许参数集经过连续的实际联合准备映射，才由连续像保证这两点；严格不等式、精确秩条件或成功概率趋零的后选择未必给闭类。一个纯数学来源见证不自动授权实际准备；紧性也不供应操作成本。更大经典档案若需逐纤维讨论，必须另有同一实际联合 cq 模型、保留的共同档案律及可测正则条件核；本节不由有限 $J$ 推出任意无限量子参考结论。
+
+**相容完成与紧来源像。**
+
+置
+$$
+\mathcal A_n^J=\mathcal L(J\otimes H_n),\qquad
+\iota_n(A)=A\otimes I_B,
+\qquad
+\mathcal A^J=\overline{\bigcup_n\mathcal A_n^J}^{\|\cdot\|}.
+$$
+有限左因子 $J$ 始终保留。每个嵌入为等距幺星同态，$\mathcal A^J$ 是 $\mathcal L(J)$ 与单侧 qubit UHF 代数的空间张量积。本卷定理41.4的式（41.34）、（41.40）—（41.42）已经在这座固定左因子塔上给出态延拓和局部／完成范数的证明，沿用 Q125.2与恢复卷命题31.9的方法。以下只核对该证明用于任意相容目标所需的前提；延拓与范数比较本身不使用目标具有实际来源见证，也不使用恢复尾界。
+
+在局部代数上定义
+$$
+\xi(A)=\operatorname{Tr}(\xi_n A),\qquad
+\omega_\theta(A)=\operatorname{Tr}(q_n(\theta)A)
+\quad(A\in\mathcal A_n^J).
+$$
+偏迹相容使定义与所选层无关。局部正元取值非负，单位取值为一，且绝对值不超过 $\|A\|$。因此两者唯一连续延拓到 $\mathcal A^J$。若 $B_k$ 为局部元素且 $B_k\to B$，则 $B_k^*B_k\to B^*B$，在这些平方上取极限给延拓的正性；每个正元是其正平方根的平方。故延拓确实为态。以后同一个符号 $\xi$ 也表示这个完成态。
+
+对完成态定义
+$$
+\mathsf d_\infty(\xi,\zeta)
+=\frac12\|\xi-\zeta\|_{(\mathcal A^J)^*}.
+$$
+这是泛函范数的一半所定义的度量，不是在另行选择的无限 Hilbert 表示中断言存在全局迹类密度。Q125.4 的表示边界仍保留。
+
+对任意两个相容态族，有限维迹／算子范数对偶及局部稠密性给
+$$
+\boxed{
+\mathsf d_\infty(\xi,\zeta)
+=\sup_{n\ge0}D(\xi_n,\zeta_n).
+}
+\tag{45.1}
+$$
+为核对从实际来源对到任意相容态对的适用条件，记 $\ell=\xi-\zeta$。在有限层，密度差是自伴矩阵 $X_n=\xi_n-\zeta_n$；由迹范数对偶，
+$$
+\|\ell|_{\mathcal A_n^J}\|=\|X_n\|_1=2D(\xi_n,\zeta_n).
+$$
+上界是 $|\operatorname{Tr}(X_nA)|\le\|X_n\|_1\|A\|$，等号可由 $X_n$ 的谱符号算子取得，零特征空间任取范数不超过一的值。所以整个泛函范数不小于这些限制范数的上确界。
+
+反向，取完成代数中 $\|A\|\le1$，用局部 $B_k\to A$ 逼近，并置
+$$
+C_k=\frac{B_k}{\max(1,\|B_k\|)}.
+$$
+每个 $C_k$ 为局部单位球元素；由 $\|B_k\|\to\|A\|\le1$ 得 $C_k\to A$。因而
+$$
+|\ell(A)|=\lim_k|\ell(C_k)|
+\le\sup_n\|\ell|_{\mathcal A_n^J}\|.
+$$
+对完成单位球取上确界得到另一方向，证明（45.1）。这里直接使用本卷定理41.4已有的局部单位球证明及恢复卷31.9的方法，保留因子二；上述检查说明证明所需的是相容密度和局部稠密性，不能只将其原陈述的实际来源量词改名。
+
+有限维通道收缩还给
+$$
+D(q_n(\theta),q_n(\theta'))\le D(\theta,\theta').
+$$
+因此由（45.1），
+$$
+\boxed{
+\mathsf d_\infty(\omega_\theta,\omega_{\theta'})
+\le D(\theta,\theta').
+}
+\tag{45.2}
+$$
+上面的收缩推导不要求单射，也不使用恢复尾界。在本装置的实际来源对上，本卷式（41.35）还直接给出更精确的既有结论
+$$
+\boxed{\mathsf d_\infty(\omega_\theta,\omega_\vartheta)
+=D(\theta,\vartheta)
+\quad\bigl(\theta,\vartheta\in\mathcal D(J\otimes M)\bigr).}
+\tag{45.3}
+$$
+这是实际来源像上的等距性，不把任意相容目标断言为来源输出。来源像记为
+$$
+\mathcal S_\Theta=\{\omega_\theta:\theta\in\Theta\}
+$$
+若 $\Theta$ 非空紧，则 $\mathcal S_\Theta$ 在完成距离中非空紧，特别地闭。这里由连续像即可得到紧性，式（45.3）还给精确等距识别；输出字母表有限本身不供应来源类的非空性或紧性。
+
+全篇使用 $D=\|\rho-\sigma\|_1/2$、根保真度 $F(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1$，以及完整 diamond 范数；半 diamond 距离另写为完整范数的一半。完整联合密度是数学输入律，或须另有误差合同的层析数据，不是一份单次测量结果。参数逆的矩阵读数、合法来源身份、可执行状态恢复及重复实验中的估计是不同任务。
+
+档案恢复原子的类型固定为 $\mathcal L(H_n)\to\mathcal L(M)$，只作用于已发出且仍相干的档案，不读取惰性 $J$ 或最终活动记忆。若终端目标涉及 $J$，还须实际允许同一个联合测试；这不扩大解码器的访问类型。生成期反馈、独立空白、相干档案与额外记录均按上述完整合同判定，不能删除已记录的混合标签来改变来源问题。
+

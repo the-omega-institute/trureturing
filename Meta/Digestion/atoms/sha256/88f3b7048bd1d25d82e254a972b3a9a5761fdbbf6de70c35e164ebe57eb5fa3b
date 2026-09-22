@@ -1,0 +1,13 @@
+**定义 43.1（有限有理体与首列边界）。** 对整数 $M\ge0$ 令 $\Delta_M=\{(n,k)\in\mathbb N^2:n+k\le M\}$。令 $\mathcal A_M$ 为所有 $T:\Delta_M\to\mathbb Q$ 中恰满足以下后继关系的数组：
+$$
+T(n+1,k)=T(n,k+1)+\sum_{j=0}^{k}T(n,j)T(k-j,0)
+\qquad(n+k<M).
+\tag{43.1}
+$$
+这里不加第零行条件，也不加正性条件。$M=0$ 没有方程；严格不等式使每个出现的坐标均在 $\Delta_M$，不使用负上界或自然数截断减法来描述方程域。定义
+$$
+\beta_M:\mathcal A_M\longrightarrow\mathbb Q^{M+1},\qquad
+\beta_M(T)=(T(0,0),T(1,0),\ldots,T(M,0)).
+\tag{43.2}
+$$
+

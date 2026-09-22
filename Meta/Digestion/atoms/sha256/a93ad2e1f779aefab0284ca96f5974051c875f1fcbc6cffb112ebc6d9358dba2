@@ -1,0 +1,16 @@
+**命题 42.11（相干档案与活动记忆的共同谱）。** 同一纯 $\Xi_n$ 的记忆边缘为
+$$
+\sigma_n=E^n(P_0^{\rm mem})=\tau(q_n),\qquad
+\nu_\pm(u)=\frac{1\pm\sqrt{1-4\alpha^2u(1-u)}}2,
+\tag{42.42}
+$$
+且
+$$
+S(\rho_n)=S(\sigma_n)=h_2(\nu_-(q_n))\le\log2,
+\qquad h_2(t)=-t\log t-(1-t)\log(1-t).
+\tag{42.43}
+$$
+端点采用 $0\log0=0$。$n\ge1$ 时 $\rho_n$ 恰为秩二，$n=0$ 时 $\rho_0=(1)$、$\sigma_0=P_0^{\rm mem}$ 均纯。
+
+证明。根权重从零开始，与（42.11）同一递推给记忆公式；迹一和行列式 $\alpha^2u(1-u)$ 给二次特征根（42.42）。有限纯二分态的互补边缘共享全部非零谱，故用既有 [InputInformationBalance.pure_complementary_entropy](../../../D5/S3/Quantum/Information/InputInformationBalance.lean) 的机制得到熵等式，二元谱熵至多 $\log2$。对 $n\ge1$，$q_n\in(0,1)$，行列式正，两个特征值都正，因而两边非零谱恰有两项。这里评价的是 Q125.1的实际根密度，而非把它换成 $\Gamma_n(|0\rangle\langle0|)$ 或 $\Gamma_n(\tau(\pi_1))$。$\square$
+

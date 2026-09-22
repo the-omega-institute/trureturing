@@ -1,0 +1,18 @@
+**推论 44.12（整数时间比值）。**
+
+对每个整数 $n\ge2$，定理44.3的离散界给
+$$
+\boxed{
+|R(n)-n|
+\le\binom n2\frac{b^{n-2}}{a^n\tau}\delta
+\le\binom n2\frac{b^{n-2}}{a^n(-\log b)}\delta.
+}
+$$
+证明。$W(nh)$ 与 $A^n$ 都不小于 $a^nI$，故按第44.7节先取对数差、再取迹并除以 $\mathcal T$：
+$$
+|R(n)-n|
+\le\frac{\|FS^nF^*-A^n\|}{a^n\tau}
+\le\binom n2\frac{b^{n-2}}{a^n\tau}\delta.
+$$
+$n=0,1$ 精确成立。此处只延伸整数范数估计，不将第44.5节的 $r\le2$ 算子序声明外推到 $n>2$；也不把可能随 $n$ 增大的右端当作无时间范围的精确相对钟恢复。
+

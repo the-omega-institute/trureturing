@@ -1,0 +1,32 @@
+**实际来源承诺下的定量尾。** 本卷定理41.2、41.4已经针对同一装置及同一个有限参考证明：对任意 $\theta_0,\theta\in\mathcal D(J\otimes M)$，
+$$
+0\le D(\theta_0,\theta)-D(q_n(\theta_0),q_n(\theta))
+\le\epsilon_n\qquad(n\ge1),
+\qquad
+\mathsf d_\infty(\omega_{\theta_0},\omega_\theta)=D(\theta_0,\theta).
+\tag{45.31}
+$$
+其中 $\epsilon_n=1-c_n$ 是式（41.8）的完整 diamond 恢复误差，$c_n$ 是式（41.6）的条件记忆根保真度；两份来源分别恢复的半迹误差为 $\kappa_n=\epsilon_n/2$，二者相加才给（45.31）的 $\epsilon_n$。这些常数及共同解码器归定理41.2，式（41.33）、（41.35）供应这里的距离结论，不在此重新构造。其显式速率
+$$
+0<\epsilon_n\le\frac{\alpha^{4n-6}}4
+\qquad(n\ge3)
+$$
+仍保留原起点。$n=0$ 只进入前缀相容、$q_0$ 与完成上确界，不为它定义恢复误差。
+
+以下距离极小化应用仍假设 $\Theta$ 非空且紧。若整份目标已被认证为 $\xi=\omega_{\theta_0}$，即使 $\theta_0\notin\Theta$，式（41.35）、（41.37）直接给
+$$
+\boxed{
+E(\xi)=\min_{\theta\in\Theta}D(\theta_0,\theta),
+\qquad 0\le E(\xi)-e_n(\xi)\le\epsilon_n\quad(n\ge1).
+}
+\tag{45.32}
+$$
+具体的代入检查是：在同一个 $\Theta$ 上逐点应用（45.31），对 $e_n$ 的一个极小点 $\theta_{{\rm opt},n}$ 有
+$$
+E(\xi)\le D(\theta_0,\theta_{{\rm opt},n})
+\le e_n(\xi)+\epsilon_n,
+$$
+而逐点收缩给 $e_n\le E$。对 $n\ge1$、$\eta\ge0$，一个实际取得且满足 $f_n(\widehat\theta_n)\le e_n+\eta$ 的允许来源，同样由式（41.38）得 $f(\widehat\theta_n)\le e_n+\eta+\epsilon_n$。这是既有实际来源定理的直接应用。
+
+任意相容目标不自动具有供共同解码器回接的初态见证。第45.6节的 $\xi^{(N)}$ 不属于固定装置的来源像，不能代入（45.31）。第45.4节仍给 $e_n\uparrow E$，第45.5节给固定目标的来源一致近似，以及额外非空范数紧目标族上的一致收敛；这些结论都不继承一个对所有相容目标通用的 $\epsilon_n$。式（45.30）直接排除这种转移。任意目标的共同半径、有限网及延迟反例证明使用相容性、距离和明列的紧性条件；它们不从实际来源承诺继承一个任意目标尾界。
+

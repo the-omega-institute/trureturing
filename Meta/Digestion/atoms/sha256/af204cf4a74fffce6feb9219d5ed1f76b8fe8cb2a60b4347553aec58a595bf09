@@ -1,0 +1,77 @@
+**命题 41.3（同一完整观察者的两种嵌入及保迹左逆）。** 定义41.1下，完整有限观察者为
+$$
+G_n=J\otimes H_n\otimes M,\qquad
+\Omega_n^\theta=(I_J\otimes T_n)\theta(I_J\otimes T_n^*).
+\tag{41.23}
+$$
+令 $\Sigma_{M,B}:M\otimes B_{\rm blank}\to B_{\rm blank}\otimes M$ 为末两因子交换，按 Q 的 $W$ 输入次序定义
+$$
+U_n=(I_{J\otimes H_n}\otimes W)
+    (I_{J\otimes H_n}\otimes\Sigma_{M,B})
+   :G_n\otimes B_{\rm blank}\longrightarrow G_{n+1}.
+\tag{41.24}
+$$
+则
+$$
+\begin{gathered}
+\Omega_{n+1}^\theta=U_n(\Omega_n^\theta\otimes|0\rangle\langle0|)U_n^*,\\
+j_n(A)=U_n(A\otimes I_B)U_n^*,\qquad
+\operatorname{Tr}(\Omega_{n+1}^\theta j_n(A))
+=\operatorname{Tr}(\Omega_n^\theta A).
+\end{gathered}
+\tag{41.25}
+$$
+$j_n:\mathcal L(G_n)\to\mathcal L(G_{n+1})$ 为单射幺星同态。对被动档案代数 $\mathcal L(J\otimes H_n)$，取
+$$
+i_n(A_{\rm out})=A_{\rm out}\otimes I_M,\qquad
+p_n(A_{\rm out})=A_{\rm out}\otimes I_B,
+\qquad j_n\circ i_n=i_{n+1}\circ p_n.
+\tag{41.26}
+$$
+方块的定义域只是被动代数；含活动 $M$ 的可观测量由 $j_n$ 运输。直接对新输出取偏迹则给另一操作
+$$
+\operatorname{Tr}_{B_{\rm new}}\Omega_{n+1}^\theta
+=(\operatorname{id}_{JH_n}\otimes E)(\Omega_n^\theta),
+\tag{41.27}
+$$
+不必等于 $\Omega_n^\theta$。
+
+此外，在整个 $H_n\otimes M$ 上取 $Q_n=I-T_nT_n^*$，固定任意 $\tau_0\in\mathcal D(M)$，则
+$$
+\mathcal L_n(Y)=T_n^*YT_n+\operatorname{Tr}(Q_nY)\tau_0
+\tag{41.28}
+$$
+是 CPTP，并在全 $\mathcal L(M)$ 上满足 $\mathcal L_n\operatorname{Ad}_{T_n}=\operatorname{id}_M$。对每个 $n\ge1$，从被动档案恢复完整等距像的最优终端误差亦为
+$$
+\min_{\substack{\mathcal R:\mathcal L(H_n)\to\mathcal L(H_n\otimes M)\\
+                         \mathcal R\ {\rm CPTP}}}
+\|\mathcal R\Gamma_n-\operatorname{Ad}_{T_n}\|_\diamond=\epsilon_n.
+\tag{41.29}
+$$
+
+证明。（41.2）在全记忆输入上为线性恒等式，张量旧档案及参考恒等后仍成立；在右端插入独立纯空白并按（41.24）交换到 $W$ 的输入次序，便给（41.25）的态运输。$U_n$ 是两个酉的乘积，故共轭保持单位、乘法与伴随；$A\mapsto A\otimes I_B$ 单射，$j_n$ 也单射。循环移迹并用 $\operatorname{Tr}|0\rangle\langle0|=1$ 得期望恒等式。
+
+对（41.26），$i_n(A_{\rm out})\otimes I_B$ 经末两因子置换后为 $A_{\rm out}\otimes I_B\otimes I_M$；$W$ 只作用于这两个恒等因子，故共轭不改变它。这证明被动方块。相反，对（41.23）的 $M$ 矩阵块分别应用 $\operatorname{Tr}_B(TXT^*)=E(X)$ 得（41.27）；块中可以含全部旧档案关联，不使用乘积假设。已经在 $n=0$、$J$ 平凡、$\theta=|0\rangle\langle0|$ 时，右端为 $P_0\ne|0\rangle\langle0|$，故直接丢弃新输出不是旧活动记忆的恒等运输。
+
+等距性使 $Q_n$ 为正交投影。压缩 $Y\mapsto T_n^*YT_n$ 是 CP。选 $\operatorname{ran}Q_n$ 的正交标准基 $(e_a)_a$，并将 $\tau_0=\sum_b p_b|u_b\rangle\langle u_b|$ 谱分解。附加 Kraus 算子
+$$
+K_{ba}=\sqrt{p_b}|u_b\rangle\langle e_a|
+\quad\text{满足}\quad
+\sum_{a,b}K_{ba}YK_{ba}^*
+=\operatorname{Tr}(Q_nY)\tau_0,\qquad
+\sum_{a,b}K_{ba}^*K_{ba}=Q_n.
+\tag{41.30}
+$$
+加上 Kraus 算子 $T_n^*$，伴随平方之和为 $T_nT_n^*+Q_n=I$，故（41.28）在整个输入空间上保迹且完全正，不只在等距像上成立。由 $Q_nT_n=0$、$T_n^*T_n=I$，直接代入任意 $X$ 得左逆。单独压缩在像外没有保迹性，不能替代（41.28）。张量 $\operatorname{id}_J$ 给联合左逆，并不取迹或替换 $J$。
+
+取 $\mathcal R=\operatorname{Ad}_{T_n}\mathcal D_n$，通道后处理收缩给（41.29）的上界。任取竞争 $\mathcal R$，$\mathcal L_n\mathcal R$ 是（41.8）允许的档案到初始记忆通道，所以
+$$
+\epsilon_n\le
+\|\mathcal L_n\mathcal R\Gamma_n-\operatorname{id}_M\|_\diamond
+\le\|\mathcal R\Gamma_n-\operatorname{Ad}_{T_n}\|_\diamond.
+\tag{41.31}
+$$
+下界与上界相合。$\square$
+
+完整等距态保留初态和全部参考关联；被动档案只是它的任务边界。（41.29）构造一个新的终端重建输出，不同时保留一份未知输入的额外副本，也不撤销已取得的不可逆测量。
+

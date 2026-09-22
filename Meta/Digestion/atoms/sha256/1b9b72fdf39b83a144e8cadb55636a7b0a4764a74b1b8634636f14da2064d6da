@@ -1,0 +1,48 @@
+**定义 41.1（同一次准备的相干发射接口）。** 本节记 [量子上下文卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md) 为 Q，[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) 为恢复卷。固定 Q 命题130.1、131.1 的基、相位和装置：
+$$
+\begin{gathered}
+\alpha=(\sqrt5-1)/2,\qquad \alpha+\alpha^2=1,\qquad M=B=\mathbb C^2,\\
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,
+\qquad P_j=|m_j\rangle\langle m_j|,\\
+T|j\rangle=|j\rangle\otimes m_j,\qquad
+H_n=B^{\otimes n},\quad H_0=\mathbb C,\\
+T_0=I_M,\qquad T_{n+1}=(I_{H_n}\otimes T)T_n,\qquad
+\Gamma_n(X)=\operatorname{Tr}_M(T_nXT_n^*),\\
+E(X)=\operatorname{Tr}_B(TXT^*)=X_{00}P_0+X_{11}P_1.
+\end{gathered}
+\tag{41.1}
+$$
+输出在前、活动记忆在后；$E$ 是记忆通道，不是环境寄存器。$T$ 是发射等距，下文 $R_n$ 是交叉算子，均不与 Q 定理13.3 所用的交叉算子符号 $T$ 混同。Q 命题130.1 的整个四维酉为
+$$
+R_{\rm rot}=\begin{pmatrix}\sqrt\alpha&-\alpha\\\alpha&\sqrt\alpha\end{pmatrix},\qquad
+W=\bigl(|0\rangle\langle0|\otimes R_{\rm rot}
+       +|1\rangle\langle1|\otimes I_M\bigr)\operatorname{SWAP},\qquad
+W(|0\rangle\otimes\psi)=T\psi.
+\tag{41.2}
+$$
+每步空白是与此前全部系统独立的实际纯态 $|0\rangle$；整个运行只使用同一个 $W$。不允许生成期间的反馈改变 $W$、空白准备或活动 $M$。
+
+固定有限维 $J$，一次运行的初态是同一个 $\theta\in\mathcal D(J\otimes M)$；各时域是这次准备的不同前缀，不逐时域另选初态。$J$ 保留模型中声明的有限经典档案、有限量子参考及其联合关系，不要求 $J$ 与 $M$ 独立。这正接续本卷定义36.4允许的真实非根联合准备以及命题36.6的固定生成器终端访问。完整已获观察者仍按第13、35、36节保留内外记录、来源和装置身份、相位与其它校准、时间戳和钟的共同约束、动作守卫及顺序、误差、失败、停止和既有结果；新增已获约束限制合法来源类，不能通过删档案制造自由准备。若真实档案大于这里的 $J$，必须另给它的表示；有限 $J$ 不自动穷尽真实观察者。
+
+对每个固定整数 $n\ge1$，任务是找一个
+$$
+\mathcal D_n:\mathcal L(H_n)\longrightarrow\mathcal L(M)
+\tag{41.3}
+$$
+的共同 CPTP 终端解码器，恢复未知初始 qubit 及其与任意有限保留参考的关系。它只访问全部已发出的相干寄存器，不访问 $J$ 或最终活动 $M$；竞争解码器也必须具有完全相同的输入输出类型和访问范围。$H_n$ 随 $n$ 改变，所以 $(\mathcal D_n)_{n\ge1}$ 是通道族，不是一个与时域无关的通道。允许操作须包含下文的受控极分解酉及丢弃；抽象 CPTP 优化不证明受限门集具有同样的实现费用或精确综合能力。相干输出可被终端解码消耗；若已不可逆地按计算基测量，则此项访问已失去，控制更大环境能否恢复它须另证。本任务不含在线记忆干预、无损复制、复位或未知装置校准。
+
+先固定全部范数约定：
+$$
+\begin{gathered}
+F(\rho,\sigma)=\|\sqrt\rho\sqrt\sigma\|_1
+\quad\text{（根保真度）},\qquad
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1,\\
+\epsilon_n=\|\mathcal D_n\Gamma_n-\operatorname{id}_M\|_\diamond
+\quad\text{（完整 diamond 范数）},\qquad
+\kappa_n=\epsilon_n/2
+=d_\diamond(\mathcal D_n\Gamma_n,\operatorname{id}_M).
+\end{gathered}
+\tag{41.4}
+$$
+$D$ 即本卷第10节的 $d_1$；$d_\diamond$ 采用命题10.7、式（10.12）的半范数约定，包含所有有限参考。Uhlmann 的 transition probability 是这里根保真度的平方，不是 $F$ 本身。以下保真度、解码器及最优性均从 $n\ge1$ 开始；$n=0$ 仅用于局部代数与档案记账。
+

@@ -1,0 +1,24 @@
+**推论 40.7（迹对数的严格倍时诊断）。** 在命题40.6的实际模型下，不预设 $L_{r,a}(s)=-\log W_{r,a}(s)$ 线性。对每个 $s>0$，
+$$
+\boxed{\operatorname{tr}L_{r,a}(2s)\le2\operatorname{tr}L_{r,a}(s),
+\quad\text{等号当且仅当 }V_r=\mathcal R.}
+\tag{40.22}
+$$
+故未饱和时，对每个实际基准 $a\ge0$ 和每个 $s>0$ 都严格不等。
+
+证明。$W=W_{r,a}(s)>0$、$W_{r,a}(2s)>0$，且 $W_{r,a}(2s)=W^2+\Delta_{a,s}$。由于 $W$ 是 $W^2$ 的正平方根，
+$$
+\frac{\det W_{r,a}(2s)}{\det(W^2)}
+=\det\bigl(I+W^{-1}\Delta_{a,s}W^{-1}\bigr)\ge1.
+\tag{40.23}
+$$
+右端增量是半正定合同。这里应用主卷定理128.5在第128.4节的证明所用的谱行列式机制：$X\succeq0$ 时 $\det(I+X)=\prod_i(1+\lambda_i)\ge1$，等号恰为 $X=0$。不使用其 Gaussian 假设或互信息解释；第128.5节的 Fibonacci 例也不是此证明地址。再用正定矩阵的 $\operatorname{tr}(-\log X)=-\log\det X$，得到（40.22）；等号由（40.18）判定。$\square$
+
+$s=0$ 时白化为 $I$、恒有等号，不能作为证书；零响应同样不给钟。可选 $s=h$，但 $\mathsf H_r(a),\mathsf H_r(a+h),\mathsf H_r(a+2h)$ 与下一 Gram 块都需截至 $a+(2r+2)h$ 的实际前缀，没有取得优势，也没有产生抗噪秩估计。$s,2s$ 必须是实际半群间隔；若实际时间为 $t=f(\tau)$，标签等差不保证
+$$
+f(\tau+2\eta)-f(\tau)
+=2\bigl(f(\tau+\eta)-f(\tau)\bigr).
+\tag{40.24}
+$$
+选择 $s=h$ 仍须履行同一个实际延迟合同。
+

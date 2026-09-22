@@ -42,29 +42,6 @@ private def InducedP4 {V : Type*} (G : SimpleGraph V) (a b c d : V) : Prop :=
   a ≠ b ∧ a ≠ c ∧ a ≠ d ∧ b ≠ c ∧ b ≠ d ∧ c ≠ d ∧
   G.Adj a b ∧ G.Adj b c ∧ G.Adj c d ∧ ¬G.Adj a c ∧ ¬G.Adj a d ∧ ¬G.Adj b d
 
-private theorem insertion_meets_component {V : Type*} (G : SimpleGraph V)
-    (S : Set V) {v : V} (hv : v ∉ S) (hc : (G.induce (insert v S)).Preconnected)
-    (x : S) : ∃ y : S, (G.induce S).Reachable x y ∧ G.Adj y.val v := by
-  classical
-  obtain ⟨p⟩ := hc ⟨x.val, Set.mem_insert_of_mem _ x.property⟩ ⟨v, Set.mem_insert _ _⟩
-  have go : ∀ {a b : ↥(insert v S)}, (G.induce (insert v S)).Walk a b →
-      b.val = v → ∀ ha : a.val ∈ S,
-      ∃ y : S, (G.induce S).Reachable ⟨a.val, ha⟩ y ∧ G.Adj y.val v := by
-    intro a b q
-    induction q with
-    | nil => intro he ha; exact (hv (he ▸ ha)).elim
-    | @cons a b c hab q ih =>
-      intro he ha
-      by_cases hb : b.val = v
-      · refine ⟨⟨a.val, ha⟩, Reachable.rfl, ?_⟩
-        change G.Adj a.val b.val at hab
-        change G.Adj a.val v
-        exact (congrArg (G.Adj a.val) hb).mp hab
-      · have hbS : b.val ∈ S := (Set.mem_insert_iff.mp b.property).resolve_left hb
-        obtain ⟨y, hy, hyv⟩ := ih he hbS
-        exact ⟨y, (show (G.induce S).Adj ⟨a.val, ha⟩ ⟨b.val, hbS⟩ from hab).reachable.trans hy, hyv⟩
-  exact go p rfl x.property
-
 private theorem p4_free_separation {V : Type*} [Finite V] [Nontrivial V]
     (G : SimpleGraph V) (hf : ∀ a b c d, ¬InducedP4 G a b c d) :
     ¬G.Preconnected ∨ ¬Gᶜ.Preconnected := by
@@ -117,7 +94,21 @@ private theorem p4_free_separation {V : Type*} [Finite V] [Nontrivial V]
       intro v hv x hx
       by_contra hnx
       let xs : (S : Set V) := ⟨x, hx⟩
-      obtain ⟨y, ⟨p⟩, hyv⟩ := insertion_meets_component G (S : Set V) hv (hins v hv) xs
+      obtain ⟨pv⟩ := hins v hv
+        ⟨x, Set.mem_insert_of_mem _ hx⟩ ⟨v, Set.mem_insert _ _⟩
+      obtain ⟨e, _, he0, he1⟩ := pv.exists_boundary_dart
+        {a | ∃ ha : a.val ∈ (S : Set V),
+          (G.induce (S : Set V)).Reachable xs ⟨a.val, ha⟩}
+        ⟨hx, Reachable.rfl⟩ (by rintro ⟨hvS, _⟩; exact hv hvS)
+      obtain ⟨hy, ⟨p⟩⟩ := he0
+      let y : (S : Set V) := ⟨e.fst.val, hy⟩
+      have hev : e.snd.val = v := by
+        apply (Set.mem_insert_iff.mp e.snd.property).resolve_right
+        intro heS
+        exact he1 ⟨heS, p.reachable.trans
+          (show (G.induce (S : Set V)).Adj ⟨e.fst.val, hy⟩ ⟨e.snd.val, heS⟩
+            from e.adj).reachable⟩
+      have hyv : G.Adj y.val v := hev ▸ e.adj
       obtain ⟨d, hd, hd0, hd1⟩ := p.exists_boundary_dart
         {z | ¬G.Adj z.val v} hnx (by simpa using hyv)
       have hxb := (p.takeUntil d.snd (p.dart_snd_mem_support_of_mem_darts hd)).reachable
@@ -126,7 +117,21 @@ private theorem p4_free_separation {V : Type*} [Finite V] [Nontrivial V]
         by_contra! hh
         exact hdisc (fun u w => (hh u).symm.trans (hh w))
       obtain ⟨z, hz⟩ := hz
-      obtain ⟨w, hzw, hwv⟩ := insertion_meets_component G (S : Set V) hv (hins v hv) z
+      obtain ⟨qv⟩ := hins v hv
+        ⟨z.val, Set.mem_insert_of_mem _ z.property⟩ ⟨v, Set.mem_insert _ _⟩
+      obtain ⟨e, _, he0, he1⟩ := qv.exists_boundary_dart
+        {a | ∃ ha : a.val ∈ (S : Set V),
+          (G.induce (S : Set V)).Reachable z ⟨a.val, ha⟩}
+        ⟨z.property, Reachable.rfl⟩ (by rintro ⟨hvS, _⟩; exact hv hvS)
+      obtain ⟨hw, hzw⟩ := he0
+      let w : (S : Set V) := ⟨e.fst.val, hw⟩
+      have hev : e.snd.val = v := by
+        apply (Set.mem_insert_iff.mp e.snd.property).resolve_right
+        intro heS
+        exact he1 ⟨heS, hzw.trans
+          (show (G.induce (S : Set V)).Adj ⟨e.fst.val, hw⟩ ⟨e.snd.val, heS⟩
+            from e.adj).reachable⟩
+      have hwv : G.Adj w.val v := hev ▸ e.adj
       have hna : ¬G.Adj d.fst.val w.val := by
         intro h
         have hr := (show (G.induce (S : Set V)).Adj d.fst w from h).reachable
@@ -161,20 +166,6 @@ private theorem p4_free_separation {V : Type*} [Finite V] [Nontrivial V]
 private def Spans {V : Type*} [LinearOrder V] (G : SimpleGraph V) : Prop :=
   ∀ ⦃x y z : V⦄, x < y → y < z → G.Adj x z → G.Adj x y ∨ G.Adj y z
 
-private theorem reachable_between {V : Type*} [LinearOrder V] {G : SimpleGraph V}
-    (hs : Spans G) {x y z : V} (hxy : x < y) (hyz : y < z)
-    (hxz : G.Reachable x z) : G.Reachable x y := by
-  classical
-  obtain ⟨p⟩ := hxz
-  obtain ⟨d, hd, hp, hq⟩ := p.exists_boundary_dart {a | a < y} hxy (not_lt.mpr hyz.le)
-  have hxp := (p.takeUntil d.fst (p.dart_fst_mem_support_of_mem_darts hd)).reachable
-  have hyq : y ≤ d.snd := le_of_not_gt hq
-  rcases hyq.eq_or_lt with heq | hlt
-  · exact heq ▸ hxp.trans d.adj.reachable
-  · rcases hs hp hlt d.adj with h | h
-    · exact hxp.trans h.reachable
-    · exact (hxp.trans d.adj.reachable).trans h.symm.reachable
-
 private theorem disconnected_spans_cut {n : ℕ} (hn : 2 ≤ n)
     (G : SimpleGraph (Fin n)) (hs : Spans G) (hd : ¬G.Preconnected) :
     ∃ m : ℕ, 1 ≤ m ∧ m < n ∧
@@ -204,7 +195,17 @@ private theorem disconnected_spans_cut {n : ℕ} (hn : 2 ≤ n)
   have hrj := (hsmall i hi).trans hij.reachable
   rcases eq_or_lt_of_le hj with heq | hlt
   · exact hmr ((Fin.ext heq) ▸ hrj)
-  · exact hmr (reachable_between hs (show root < m from hmpos) hlt hrj)
+  · apply hmr
+    obtain ⟨p⟩ := hrj
+    obtain ⟨d, hd, hp, hq⟩ := p.exists_boundary_dart {a | a < m}
+      (show root < m from hmpos) (not_lt.mpr (show m ≤ j from hlt.le))
+    have hrp := (p.takeUntil d.fst (p.dart_fst_mem_support_of_mem_darts hd)).reachable
+    have hmq : m ≤ d.snd := le_of_not_gt hq
+    rcases hmq.eq_or_lt with heq | hlt
+    · exact heq ▸ hrp.trans d.adj.reachable
+    · rcases hs hp hlt d.adj with h | h
+      · exact hrp.trans h.reachable
+      · exact (hrp.trans d.adj.reachable).trans h.symm.reachable
 
 private def inversionGraph {n : ℕ} (π : Equiv.Perm (Fin n)) : SimpleGraph (Fin n) where
   Adj i j := (i < j ∧ π j < π i) ∨ (j < i ∧ π i < π j)
