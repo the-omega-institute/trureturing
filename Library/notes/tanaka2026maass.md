@@ -68,3 +68,43 @@ primality hypothesis. CTG.3 identifies the actual complete-tower trace matrix
 with that template at 2n+3=p^k. Its companion Scribe records this ordinary
 application and the cited ambient construction. The spectral identification
 is not an additional kernel-certified conclusion of that Lean source.
+
+## Single-prime reconstruction in HCR
+
+The same existing WSS owner, HCR.1-HCR.7, also retains one primitive packet
+rather than the complete tower. After an actual generator-rotation auxiliary
+prime ell has been selected in the already-existing class field, its ideal
+coefficients are P_n(t), where P_0=1, P_1=X and P_(n+1)=XP_n-P_(n-1).
+They are the classical U_n(X/2), with generating function
+1/(1-XZ+Z^2). The polynomial identity is NIST DLMF 18.12.10:
+https://dlmf.nist.gov/18.12.E10
+
+The ambient Fourier interpretation comes from Tanaka's construction, while
+the reconstruction is proved in HCR by Lagrange interpolation and the
+monogenic trace-dual formula. The classical codifferent input is explained
+in A. V. Sutherland, MIT 18.785 Lecture 12 (2021), Definition 12.2,
+Proposition 12.6 and the monogenic different formula:
+https://math.mit.edu/classes/18.785/2021fa/LectureNotes12.pdf
+
+For c in B=Q(zeta_(p^k)+zeta_(p^k)^(-1)), HCR gives the exact reciprocal
+numerator N_c(Z)=Z^(d-1)R_c(Z+Z^(-1)), with
+R_c(t)=c*Psi_(p^k)'(t), and denominator Phi_(p^k)(Z). The first d
+prime-power coefficients determine the full form within this packet and
+are integral exactly when c belongs to the codifferent. The displayed
+integer inverse, odd periodic completion and its sharp maximum-norm bound
+are repository derivations, not statements attributed to Tanaka.
+
+For a non-generator rotation of order p^s, all its power observations
+factor through Tr_(B/B_s). The codifferent trace is surjective onto the
+smaller codifferent, and the exact kernel dimension is d-d_s. HCR treats
+split identity and inert primes separately. These are task-specific
+observation results, not a universal Sturm bound or an effective bound for
+the selected auxiliary prime. Abstract integer sequences satisfying these
+relations do not construct a global golden character.
+
+HCR.6 consumes the existing integer-image theorem through the identity
+D_j=P_j-P_(j-2), giving the ordinary-trace-lattice condition
+y_j=(j+1)y_0 modulo p at the first layer. Its Scribe explanation is updated;
+the Lean statement and its formula are unchanged. Neither HCR nor CTG
+supplies a new actual WSS prime-family decision, and no additional kernel
+certification is claimed by this literature note.
