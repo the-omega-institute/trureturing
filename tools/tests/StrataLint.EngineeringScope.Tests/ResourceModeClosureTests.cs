@@ -24,7 +24,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
     public void ModeSelectsOnlyApplicableRegisteredRootsAndTheirPrerequisites(string mode, string required,
         string resources, string stages, string tools, string caches, string steps)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         Register(fixture, Split(required));
         var result = Plan(fixture, mode);
         Assert.True(result.Exit == 0, result.Text);
@@ -57,7 +57,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
     [InlineData("pr")]
     public void DeltaStageAliasesAndTheirDeltaDependenciesObeyTheSameModeBoundary(string mode)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         Register(fixture, ["delta-followup"], followup: true);
         var result = Plan(fixture, mode);
         Assert.True(result.Exit == 0, result.Text);
@@ -82,7 +82,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
     [InlineData("pr", "current")]
     public void NonDeltaResourcesCannotDependOnDeltaEvenWhenUnselected(string mode, string resource)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         Register(fixture, [], invalidDependency: resource);
         var result = Plan(fixture, mode);
         Assert.Equal(2, result.Exit);
@@ -95,7 +95,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
     [InlineData("pr")]
     public void UnselectedDeltaCyclesStillFailRegistration(string mode)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         Register(fixture, [], invalidDependency: "delta");
         var result = Plan(fixture, mode);
         Assert.Equal(2, result.Exit);
@@ -110,7 +110,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
     [InlineData("test-project")]
     public void SelectedExecutionCannotBeRegisteredUnderAnotherStage(string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         Register(fixture, ["engineering", "filemap"]);
         var mapping = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "Meta/ci-resources.json")))!;
         var selected = mapping["resources"]!.AsArray().Single(row => row!["id"]!.ToString()
@@ -121,7 +121,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
         if (defect == "test-project")
         {
             var registry = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path)))!;
-            registry["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == ResourceRouteTests.ResourceFixture.Foo)!["ci"] = true;
+            registry["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == ResourceFixture.Foo)!["ci"] = true;
             fixture.Write(EngineeringRegistrationFixture.Path, registry.ToJsonString());
         }
         fixture.Write("Meta/ci-resources.json", mapping.ToJsonString());
@@ -132,7 +132,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
         Assert.False(File.Exists(Path.Combine(fixture.Root, "build/ci/plan.json")));
     }
 
-    private static void Register(ResourceRouteTests.ResourceFixture fixture, string[] required, bool followup = false,
+    private static void Register(ResourceFixture fixture, string[] required, bool followup = false,
         string? invalidDependency = null)
     {
         const string mappingPath = "Meta/ci-resources.json";
@@ -166,7 +166,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
         fixture.Write("Meta/FILEMAP.toml", string.Join('\n', rows));
     }
 
-    private static (int Exit, string Text) Plan(ResourceRouteTests.ResourceFixture fixture, string mode)
+    private static (int Exit, string Text) Plan(ResourceFixture fixture, string mode)
     {
         string Git(params string[] arguments) => EngineeringProcess.Git(fixture.Root, arguments);
         void Commit(string message) => Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", message);
@@ -191,7 +191,7 @@ public sealed class ResourceModeClosureTests(Xunit.Abstractions.ITestOutputHelpe
             }, TestBudgets.ScriptProcessHangGuard);
     }
 
-    private static JsonNode ReadPlan(ResourceRouteTests.ResourceFixture fixture) =>
+    private static JsonNode ReadPlan(ResourceFixture fixture) =>
         JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/plan.json")))!;
     private static string[] Split(string value) => value.Split(',', StringSplitOptions.RemoveEmptyEntries);
     private static string[] Strings(JsonNode node) => node.AsArray().Select(value => value!.ToString()).ToArray();

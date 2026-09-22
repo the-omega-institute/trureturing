@@ -15,13 +15,13 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         if (OperatingSystem.IsWindows()) throw Xunit.Sdk.SkipException.ForSkip("native tar transport fixture is unsupported on Windows");
         using var producer = Prepare("engineering", plannedEngineering: true);
-        using var storage = new CurrentExecutionContractTests.CandidateFixture();
+        using var storage = new ExecutionFixture();
         var repository = TestRepositoryLayout.FindRoot();
         var commit = EngineeringProcess.Git(producer.Root, "rev-parse", "HEAD");
         var beforeCommit = EngineeringProcess.Git(producer.Root, "rev-parse", "HEAD^1");
         var runtime = Path.GetDirectoryName(CommonExecutionEvidence.RunnerPath)!;
         var original = CommonExecutionEvidence.ValidateEngineering(producer.Root);
-        CiTransportTests.SealEngineering(producer.Root, original.Candidate,
+        TransportFixture.SealEngineering(producer.Root, original.Candidate,
             Directory.GetFiles(Path.Combine(producer.Root, runtime)).Select(path => runtime + "/" + Path.GetFileName(path)), original.Steps);
         var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(producer.Root, CommonExecutionEvidence.ChecksPath("engineering"));
         var tests = CommonExecutionEvidence.Read<TestExecutionRecord>(producer.Root, CommonExecutionEvidence.TestsPath);
@@ -584,12 +584,12 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
             var build = CommonExecutionEvidence.ValidateBuild(target);
             var checks = CommonExecutionEvidence.BeginChecks(target, "engineering", build, TextWriter.Null);
             Assert.All(checks.Ids, id => Assert.True(checks.IsSelected(id), id));
-            foreach (var id in checks.Ids) checks.Run(id, () => new CheckWork(CommonCheckExecutionTests.Fixture.Work(id)));
+            foreach (var id in checks.Ids) checks.Run(id, () => new CheckWork(CheckEvidenceFixture.Work(id)));
             Assert.All(checks.Seal().Units, unit => Assert.Equal("executed", unit.Status));
         }
     }
 
-    private static string Destination(CurrentExecutionContractTests.CandidateFixture fixture, string name)
+    private static string Destination(ExecutionFixture fixture, string name)
     {
         var target = Path.Combine(fixture.Root, "build/destination-" + name);
         EngineeringProcess.Git(fixture.Root, "clone", "--quiet", "--no-hardlinks", fixture.Root, target);
@@ -705,9 +705,9 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         .Order(StringComparer.Ordinal).Select(path => (Path.GetRelativePath(root, path), CommonExecutionEvidence.Hash(path),
             OperatingSystem.IsWindows() ? 0 : (int)File.GetUnixFileMode(path))).ToArray();
 
-    private static CurrentExecutionContractTests.CandidateFixture Prepare(string stage, bool plannedEngineering = false)
+    private static ExecutionFixture Prepare(string stage, bool plannedEngineering = false)
     {
-        var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        var fixture = new ExecutionFixture();
         fixture.Write("lean-toolchain", "leanprover/lean4:v4.19.0\n");
         fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\",\"dir\":\".lake/packages/mathlib\"}]}\n");
         fixture.Write("lakefile.toml", "name = 'fixture'\n");
@@ -738,7 +738,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
             fixture.Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1", resources = new[]
             {
                 new { id = "build", projects = Array.Empty<string>(), checks = Array.Empty<string>(), steps = Array.Empty<string>() },
-                new { id = "engineering", projects = new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second },
+                new { id = "engineering", projects = new[] { ExecutionFixture.First, ExecutionFixture.Second },
                     checks = new[] { "banned-api-proof", "capability-proof", "selftest-pair" }, steps = Array.Empty<string>() },
             } }));
             EngineeringProcess.Git(fixture.Root, "add", "Meta/FILEMAP.toml", "Meta/ci-resources.json");
@@ -751,10 +751,10 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         if (!OperatingSystem.IsWindows())
             File.SetUnixFileMode(Path.Combine(fixture.Root, "build/ci/fixture-executable"), UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var candidate = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath).Candidate;
-        CiTransportTests.SealEngineering(fixture.Root, candidate, ["build/ci/fixture-executable"], CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture-executable")).ToArray());
+        TransportFixture.SealEngineering(fixture.Root, candidate, ["build/ci/fixture-executable"], CommonExecutionEvidence.EngineeringSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture-executable")).ToArray());
         if (stage == "current")
         {
-            CiTransportTests.Report(fixture.Root);
+            ExecutionFixture.Report(fixture.Root);
             CheckEvidenceFixture.Seal(fixture.Root, "current", CommonExecutionEvidence.ValidateBuild(fixture.Root));
             CommonExecutionEvidence.SealCurrent(fixture.Root, CommonExecutionEvidence.ValidateBuild(fixture.Root), CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture-executable")).ToArray());
         }

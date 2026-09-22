@@ -9,15 +9,15 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void CompilerOutputIdentityMustMatchProjectRegistration()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var directory = Path.Combine(fixture.Root, CommonBuildOutputs.RootPath);
         TemporaryFileSystem.Directory.CreateDirectory(directory);
         var assembly = Path.Combine(directory, Path.GetFileName(typeof(CurrentExecutionContractTests).Assembly.Location));
         TemporaryFileSystem.File.WriteAllBytes(assembly, File.ReadAllBytes(typeof(CurrentExecutionContractTests).Assembly.Location));
-        var receipt = Path.Combine(directory, CandidateFixture.First + ".outputs");
+        var receipt = Path.Combine(directory, ExecutionFixture.First + ".outputs");
         TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(receipt)!);
         TemporaryFileSystem.File.WriteAllText(receipt,
-            string.Join("\n", new[] { Path.Combine(fixture.Root, CandidateFixture.First), assembly, directory, "packages=" + Path.Combine(fixture.Root, "build/packages"), "reference=", assembly }));
+            string.Join("\n", new[] { Path.Combine(fixture.Root, ExecutionFixture.First), assembly, directory, "packages=" + Path.Combine(fixture.Root, "build/packages"), "reference=", assembly }));
 
         var failure = Assert.Throws<InvalidDataException>(() => CommonBuildOutputs.Collect(fixture.Root));
 
@@ -28,7 +28,7 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void ParentlessRemotelessCandidateRunsEveryProjectOnceAndRetainsEvidence()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var calls = new List<string>();
         var exit = Program.RunCurrentTests(fixture.Root, (project, results) =>
         {
@@ -37,7 +37,7 @@ public sealed partial class CurrentExecutionContractTests
             return 0;
         }, TextWriter.Null);
         Assert.Equal(0, exit);
-        Assert.Equal(new[] { CandidateFixture.First, CandidateFixture.Second }, calls);
+        Assert.Equal(new[] { ExecutionFixture.First, ExecutionFixture.Second }, calls);
         Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.TestsPath)));
         Assert.Equal(2, TemporaryFileSystem.Directory.EnumerateFiles(
             Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath), "*.trx", SearchOption.AllDirectories).Count());
@@ -50,7 +50,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("NotExecuted", 0)]
     public void FailedOrEmptyExecutionCannotProduceSuccessfulEvidence(string outcome, int processExit)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var exit = Program.RunCurrentTests(fixture.Root, (_, results) =>
         {
             fixture.WriteTrx(results, outcome);
@@ -63,16 +63,16 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void EvidenceRejectsCandidateMutationAndMissingBaseProject()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) =>
         {
             fixture.WriteTrx(results, "Passed");
             return 0;
         }, TextWriter.Null));
-        CommonExecutionEvidence.ValidateTests(fixture.Root, [CandidateFixture.First]);
+        CommonExecutionEvidence.ValidateTests(fixture.Root, [ExecutionFixture.First]);
         Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(
             fixture.Root, ["tools/tests/Missing/Missing.csproj"]));
-        TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, CandidateFixture.First), "\n");
+        TemporaryFileSystem.File.AppendAllText(Path.Combine(fixture.Root, ExecutionFixture.First), "\n");
         Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
     }
 
@@ -84,7 +84,7 @@ public sealed partial class CurrentExecutionContractTests
     public void TestCompletionRereadsSourceAndBuildMaterials(string mutation, string expected)
     {
         if (mutation == "source-mode" && OperatingSystem.IsWindows()) return;
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var calls = 0;
         var error = Assert.Throws<InvalidDataException>(() => Program.RunCurrentTests(fixture.Root, (_, results) =>
         {
@@ -95,7 +95,7 @@ public sealed partial class CurrentExecutionContractTests
                 {
                     "runtime" => "build/ci/fixture-bin/First.dll",
                     "inventory" => CommonBuildOutputs.TestsPath,
-                    _ => CandidateFixture.First,
+                    _ => ExecutionFixture.First,
                 });
                 if (mutation == "source-mode" && !OperatingSystem.IsWindows()) File.SetUnixFileMode(path, File.GetUnixFileMode(path) | UnixFileMode.UserExecute);
                 else TemporaryFileSystem.File.AppendAllText(path, "\n");
@@ -110,7 +110,7 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void TestCompletionRecomputesDeclaredExecutionEnvironment()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         const string name = "CONTRACT_TEST_COMPLETION_ENVIRONMENT";
         var original = Environment.GetEnvironmentVariable(name);
         try
@@ -130,7 +130,7 @@ public sealed partial class CurrentExecutionContractTests
 
             Assert.Equal(2, calls);
             Assert.Equal(1, exit);
-            Assert.Contains("test input identity mismatch: " + CandidateFixture.First, output.ToString(), StringComparison.Ordinal);
+            Assert.Contains("test input identity mismatch: " + ExecutionFixture.First, output.ToString(), StringComparison.Ordinal);
         }
         finally { Environment.SetEnvironmentVariable(name, original); }
     }
@@ -138,8 +138,8 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void EvidenceSurvivesTransportToIdenticalCheckout()
     {
-        using var fixture = new CandidateFixture();
-        using var target = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
+        using var target = new ExecutionFixture();
         Assert.Equal(0, Program.RunCurrentTests(fixture.Root, (_, results) =>
         {
             fixture.WriteTrx(results, "Passed");
@@ -158,7 +158,7 @@ public sealed partial class CurrentExecutionContractTests
     [Fact]
     public void FailedRunSummaryCannotHideBehindPassedIndividualResults()
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var exit = Program.RunCurrentTests(fixture.Root, (_, directory) =>
         {
             fixture.WriteTrx(directory, "Passed");
@@ -176,7 +176,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("exception")]
     public async Task ConcurrentProjectsOverlapAndJoinBeforeEvidenceIsAccepted(string outcome)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var starts = 0;
         using var release = new ManualResetEventSlim();
@@ -188,8 +188,8 @@ public sealed partial class CurrentExecutionContractTests
             if (Interlocked.Increment(ref starts) == 2) entered.SetResult();
             // This deadline only releases a broken scheduler; elapsed time is not the assertion.
             if (!release.Wait(TestBudgets.PlaybookProcessHangGuard)) throw new TimeoutException("concurrent runner hang guard");
-            if (project == CandidateFixture.First && outcome == "exception") throw new IOException("fixture execution error");
-            var failed = project == CandidateFixture.First && outcome == "failed";
+            if (project == ExecutionFixture.First && outcome == "exception") throw new IOException("fixture execution error");
+            var failed = project == ExecutionFixture.First && outcome == "failed";
             fixture.WriteTrx(results, failed ? "Failed" : "Passed");
             return failed ? 1 : 0;
         }, output, maxConcurrentProjects: 2));
@@ -205,108 +205,13 @@ public sealed partial class CurrentExecutionContractTests
             exit = await work.WaitAsync(TestBudgets.PlaybookProcessHangGuard);
         }
         Assert.Equal(outcome == "passed" ? 0 : 1, exit);
-        Assert.Equal(new[] { CandidateFixture.First, CandidateFixture.Second }, calls.Order(StringComparer.Ordinal));
+        Assert.Equal(new[] { ExecutionFixture.First, ExecutionFixture.Second }, calls.Order(StringComparer.Ordinal));
         var record = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath);
-        Assert.Equal(new[] { CandidateFixture.First, CandidateFixture.Second }, record.Projects.Select(project => project.Project));
+        Assert.Equal(new[] { ExecutionFixture.First, ExecutionFixture.Second }, record.Projects.Select(project => project.Project));
         Assert.Equal(2, record.Projects.Select(project => project.Results).Distinct().Count());
         Assert.All(record.Projects, project => Assert.Equal("executed", project.Status));
         if (outcome == "passed") CommonExecutionEvidence.ValidateTests(fixture.Root);
         else Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
     }
 
-    internal sealed class CandidateFixture : IDisposable
-    {
-        internal const string First = "tools/tests/First/First.csproj";
-        internal const string Second = "tools/tests/Second/Second.csproj";
-        internal string Root { get; } = TemporaryFileSystem.Directory.CreateTempSubdirectory("current-contract-").FullName;
-
-        internal CandidateFixture()
-        {
-            foreach (var path in new[] { First, Second })
-            {
-                var file = Path.Combine(Root, path);
-                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(file)!);
-                TemporaryFileSystem.File.WriteAllText(file, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
-            }
-            TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(Root, "Meta"));
-            TemporaryFileSystem.File.WriteAllText(Path.Combine(Root, EngineeringRegistrationFixture.Path),
-                EngineeringRegistrationFixture.Manifest(
-                    new EngineeringProjectFixture(First, "First", "cross-cutting-test", true, ["tools/tests/First/**/*.cs"]),
-                    new EngineeringProjectFixture(Second, "Second", "cross-cutting-test", true, ["tools/tests/Second/**/*.cs"])));
-            TemporaryFileSystem.File.WriteAllText(Path.Combine(Root, ".gitignore"), ".lake/\nbuild/\nbin/\nobj/\n");
-            Write("global.json", "{\"sdk\":{\"version\":\"10.0.103\"}}");
-            Write("Meta/ci-checks.json", CommonCheckRegistrationFixture.Manifest(First));
-            RegisterProofs();
-            Write("tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs", "// banned-api-proof\n");
-            Git("init", "-q");
-            Git("add", ".");
-            Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "parentless");
-            Build();
-        }
-
-        internal void Write(string path, string text)
-        {
-            var full = Path.Combine(Root, path);
-            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
-            TemporaryFileSystem.File.WriteAllText(full, text);
-        }
-
-        internal void Track() => Git("add", ".");
-
-        internal CommonStageRecord Build()
-        {
-            const string log = "build/ci/fixture-build.log";
-            Write(log, "built\n");
-            var registration = System.Text.Json.Nodes.JsonNode.Parse(TemporaryFileSystem.File.ReadAllText(
-                Path.Combine(Root, EngineeringRegistrationFixture.Path)))!;
-            var tests = registration["projects"]!.AsArray().Where(row => row!["ci"]!.GetValue<bool>()).Select(row =>
-                new BuiltTestProject(row!["path"]!.ToString(), "build/ci/fixture-bin/" + row["assembly"] + ".dll")).ToArray();
-            foreach (var test in tests) Write(test.Assembly, "synthetic assembly\n");
-            CommonExecutionEvidence.Write(Root, CommonBuildOutputs.TestsPath, tests);
-            return CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root),
-                tests.Select(test => test.Assembly).Append(CommonBuildOutputs.TestsPath).Append(log),
-                CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
-        }
-
-        internal void RegisterProofs()
-        {
-            var path = Path.Combine(Root, EngineeringRegistrationFixture.Path);
-            var manifest = TemporaryFileSystem.File.ReadAllText(path);
-            foreach (var name in new[] { "CompileFailProof", "BannedApiCompileFailProof" })
-            {
-                var project = $"tools/tests/{name}/{name}.csproj";
-                if (System.Text.Json.Nodes.JsonNode.Parse(manifest)!["projects"]!.AsArray().Any(row => row!["path"]!.ToString() == project)) continue;
-                var full = Path.Combine(Root, project);
-                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
-                TemporaryFileSystem.File.WriteAllText(full, "<Project />\n");
-                manifest = EngineeringRegistrationFixture.Append(manifest,
-                    new EngineeringProjectFixture(project, name, "compile-fail-proof", false, [$"tools/tests/{name}/**/*.cs"]));
-            }
-            TemporaryFileSystem.File.WriteAllText(path, manifest);
-        }
-
-        internal void WriteTrx(string directory, string outcome)
-        {
-            TemporaryFileSystem.Directory.CreateDirectory(directory);
-            var executed = outcome == "NotExecuted" ? 0 : 1;
-            var assembly = Path.GetFileName(directory) == "1" ? "Second" : "First";
-            TemporaryFileSystem.File.WriteAllText(Path.Combine(directory, "execution.trx"), $"""
-                <TestRun><Results><UnitTestResult testId="one" testName="Fixture.Runs" outcome="{outcome}" /></Results>
-                <TestDefinitions><UnitTest id="one" storage="{assembly}.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions>
-                <ResultSummary outcome="{(outcome == "Failed" ? "Failed" : "Completed")}"><Counters executed="{executed}" passed="{(outcome == "Passed" ? 1 : 0)}" failed="{(outcome == "Failed" ? 1 : 0)}" /></ResultSummary></TestRun>
-                """);
-        }
-
-        private void Git(params string[] arguments)
-        {
-            var start = new ProcessStartInfo("git") { WorkingDirectory = Root, RedirectStandardOutput = true, RedirectStandardError = true };
-            foreach (var argument in arguments) start.ArgumentList.Add(argument);
-            using var process = Process.Start(start)!;
-            var error = process.StandardError.ReadToEnd();
-            process.WaitForExit();
-            Assert.True(process.ExitCode == 0, error);
-        }
-
-        public void Dispose() => TemporaryFileSystem.Directory.Delete(Root, recursive: true);
-    }
 }

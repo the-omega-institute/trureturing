@@ -100,9 +100,14 @@ public sealed class DependencyDirectionTests
         Assert.Equal(
             [
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                "../../TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+                "../../TestSupport/StrataLint.NativeReportTestSupport/StrataLint.NativeReportTestSupport.csproj",
                 "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+                "../../TestSupport/StrataLint.ReleaseTestSupport/StrataLint.ReleaseTestSupport.csproj",
+                "../../TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
                 "../../TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+                "../../TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj",
             ],
             ProjectReferences(XDocument.Load(Path.Combine(
                 RepositoryLayout.FindRoot(),

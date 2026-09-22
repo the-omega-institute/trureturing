@@ -34,7 +34,7 @@ public sealed class PackageMaterialRegistryTests
         const string project = "tools/StrataLint.Cli/StrataLint.Cli.csproj";
         var receipt = Path.Combine(fixture.Root, CommonBuildOutputs.RootPath, project + ".outputs");
         var lines = File.ReadAllLines(receipt);
-        lines[0] = Path.Combine(fixture.Root, CurrentExecutionContractTests.CandidateFixture.First);
+        lines[0] = Path.Combine(fixture.Root, ExecutionFixture.First);
         File.WriteAllLines(receipt, lines);
 
         var error = Assert.Throws<InvalidDataException>(() => CommonBuildOutputs.Collect(fixture.Root));
@@ -185,7 +185,7 @@ public sealed class PackageMaterialRegistryTests
     {
         using var fixture = new Fixture();
         fixture.PrepareProjects();
-        var receipt = Path.Combine(fixture.Root, CommonBuildOutputs.RootPath, CurrentExecutionContractTests.CandidateFixture.First + ".outputs");
+        var receipt = Path.Combine(fixture.Root, CommonBuildOutputs.RootPath, ExecutionFixture.First + ".outputs");
         var lines = File.ReadAllLines(receipt);
         lines[3] = "packages=" + (defect == "missing" ? "" : defect == "relative" ? "packages" : fixture.PackageRoot + "-other");
         File.WriteAllLines(receipt, lines);
@@ -246,7 +246,7 @@ public sealed class PackageMaterialRegistryTests
 
     private sealed class Fixture : IDisposable
     {
-        private readonly CurrentExecutionContractTests.CandidateFixture candidate = new();
+        private readonly ExecutionFixture candidate = new();
         internal string Root => candidate.Root;
         internal string PackageRoot => Path.Combine(Root, "build/producer-packages");
         internal string AssetsPath => Path.Combine(Root, "build/project.assets.json");
@@ -280,8 +280,8 @@ public sealed class PackageMaterialRegistryTests
                 Project(directory + "/" + Path.GetFileName(directory) + ".csproj", assembly, Path.Combine(repository, assembly), false);
             }
             foreach (var (project, binary) in new[] {
-                (CurrentExecutionContractTests.CandidateFixture.First, typeof(PackageMaterialRegistryTests).Assembly.Location),
-                (CurrentExecutionContractTests.CandidateFixture.Second, typeof(EngineeringProjectFixture).Assembly.Location) })
+                (ExecutionFixture.First, typeof(PackageMaterialRegistryTests).Assembly.Location),
+                (ExecutionFixture.Second, typeof(EngineeringProjectFixture).Assembly.Location) })
                 Project(project, Path.GetDirectoryName(project) + "/bin/Release/net10.0/" + Path.GetFileName(binary), binary, true);
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(registrations.ToArray()));
             EngineeringProcess.Git(Root, "add", ".");

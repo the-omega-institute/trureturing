@@ -1,3 +1,4 @@
+using StrataLint.TestSupport;
 using System.Text.Json.Nodes;
 using Xunit;
 
@@ -88,7 +89,7 @@ public sealed partial class CommonCheckExecutionTests
     {
         using var fixture = new ReportInputsFixture();
         var consumer = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, ReportInputsFixture.LeanConsumer)))!;
-        consumer["projects"] = new JsonArray(CurrentExecutionContractTests.CandidateFixture.Second);
+        consumer["projects"] = new JsonArray(ExecutionFixture.Second);
         fixture.Tree.Write(ReportInputsFixture.LeanConsumer, consumer.ToJsonString());
         fixture.Tree.Write("tools/tests/Second/Consumer.cs", "class Consumer { }");
         fixture.Tree.Track();

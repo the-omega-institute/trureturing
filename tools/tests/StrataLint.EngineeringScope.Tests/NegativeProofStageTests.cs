@@ -21,7 +21,7 @@ public sealed class NegativeProofStageTests
     [MemberData(nameof(RejectedExits))]
     public async Task UnexpectedExitRetainsRawValueAndCannotProveRejection(string proof, int raw, int expected)
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         fixture.RegisterProofs();
         var bin = Path.Combine(fixture.Root, "build", "bin");
         TemporaryFileSystem.Directory.CreateDirectory(bin);

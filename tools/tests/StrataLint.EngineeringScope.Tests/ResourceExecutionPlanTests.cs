@@ -16,7 +16,7 @@ public sealed class ResourceExecutionPlanTests
     public void IsolatedCacheExportRetainsUnselectedTestsOnlyFromRestoredSeed(bool restorePrior)
     {
         using var fixture = new SelectedTestsFixture(priorSeed: true);
-        using var storage = new CurrentExecutionContractTests.CandidateFixture();
+        using var storage = new ExecutionFixture();
         var root = fixture.Tree.Root;
         var priorArchive = Path.Combine(storage.Root, "build/prior-tests.tar");
         TarFile.CreateFromDirectory(Path.Combine(root, CommonExecutionEvidence.TestSeedPath), priorArchive, includeBaseDirectory: false);
@@ -54,8 +54,8 @@ public sealed class ResourceExecutionPlanTests
         Assert.Equal(currentTests.Projects, CommonExecutionEvidence.ValidateTests(target).Projects);
         var saved = CommonExecutionEvidence.Read<TestExecutionRecord>(target, CommonExecutionEvidence.TestSeedPath + "/tests.json");
         Assert.Equal(restorePrior
-                ? new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second }
-                : [CurrentExecutionContractTests.CandidateFixture.First],
+                ? new[] { ExecutionFixture.First, ExecutionFixture.Second }
+                : [ExecutionFixture.First],
             saved.Projects.Select(project => project.Project));
         var transported = File.ReadAllText(Path.Combine(target, CommonExecutionEvidence.BundleListPath("engineering-seed"))).Split('\0');
         Assert.All(saved.Materials, material => Assert.Contains(CommonExecutionEvidence.TestSeedPath + "/" + material.Path, transported));
@@ -75,10 +75,10 @@ public sealed class ResourceExecutionPlanTests
             fixture.Tree.WriteTrx(directory, "Passed");
             return 0;
         }, TextWriter.Null));
-        Assert.Equal(selectDependency ? new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second }
-            : [CurrentExecutionContractTests.CandidateFixture.First], calls);
+        Assert.Equal(selectDependency ? new[] { ExecutionFixture.First, ExecutionFixture.Second }
+            : [ExecutionFixture.First], calls);
         var tests = CommonExecutionEvidence.ValidateTests(fixture.Tree.Root,
-            [CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second]);
+            [ExecutionFixture.First, ExecutionFixture.Second]);
         Assert.Equal(calls, tests.Projects.Select(project => project.Project));
         Assert.All(tests.Projects, project => Assert.Equal("executed", project.Status));
     }
@@ -119,7 +119,7 @@ public sealed class ResourceExecutionPlanTests
         }
         if (damage == "corrupt-trx")
         {
-            var second = previous["projects"]!.AsArray().Single(row => row!["project"]!.ToString() == CurrentExecutionContractTests.CandidateFixture.Second)!;
+            var second = previous["projects"]!.AsArray().Single(row => row!["project"]!.ToString() == ExecutionFixture.Second)!;
             File.AppendAllText(Path.Combine(fixture.Tree.Root, CommonExecutionEvidence.TestSeedPath, second["results"]!.ToString(), "execution.trx"), "corrupt");
         }
         Assert.Equal(0, Program.RunCurrentTests(fixture.Tree.Root, (_, _) =>
@@ -133,8 +133,8 @@ public sealed class ResourceExecutionPlanTests
         var seed = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Tree.Root, CommonExecutionEvidence.TestSeedPath + "/tests.json");
         var transported = File.ReadAllText(Path.Combine(fixture.Tree.Root, CommonExecutionEvidence.BundleListPath("engineering-seed"))).Split('\0');
         Assert.All(seed.Materials, material => Assert.Contains(CommonExecutionEvidence.TestSeedPath + "/" + material.Path, transported));
-        Assert.Equal(damage == "corrupt-trx" ? [CurrentExecutionContractTests.CandidateFixture.First]
-            : new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second },
+        Assert.Equal(damage == "corrupt-trx" ? [ExecutionFixture.First]
+            : new[] { ExecutionFixture.First, ExecutionFixture.Second },
             seed.Projects.Select(project => project.Project));
         fixture.Tree.Build();
         var calls = new List<string>();
@@ -144,7 +144,7 @@ public sealed class ResourceExecutionPlanTests
             fixture.Tree.WriteTrx(directory, "Passed");
             return 0;
         }, TextWriter.Null));
-        Assert.Equal(damage == "corrupt-trx" ? new[] { CurrentExecutionContractTests.CandidateFixture.Second } : [], calls);
+        Assert.Equal(damage == "corrupt-trx" ? new[] { ExecutionFixture.Second } : [], calls);
         CommonExecutionEvidence.ValidateTests(fixture.Tree.Root);
     }
 
@@ -265,7 +265,7 @@ public sealed class ResourceExecutionPlanTests
     [InlineData(true)]
     public void DeclaredCurrentOnlyRoundDoesNotRequireEngineeringEvidence(bool pr)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["lean-report"]);
+        using var fixture = new ResourceFixture(["lean-report"]);
         if (pr) fixture.PrPlan();
         fixture.Processes();
         var build = CommonExecutionEvidence.ValidateBuild(fixture.Root);
@@ -279,7 +279,7 @@ public sealed class ResourceExecutionPlanTests
         Assert.Null(common.Tests);
         Assert.False(File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.EngineeringPath)));
         Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateCommon(fixture.Root,
-            [CurrentExecutionContractTests.CandidateFixture.First]));
+            [ExecutionFixture.First]));
         if (pr)
             Assert.Null(CommonExecutionEvidence.ValidateCommon(fixture.Root,
                 protectedBase: plan.Document.GetProperty("base").GetString()).Engineering);
@@ -294,7 +294,7 @@ public sealed class ResourceExecutionPlanTests
     [InlineData("pr")]
     public void DeltaRejectsCommonBuildFromAnotherScopeMode(string mode)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["lean-report"]);
+        using var fixture = new ResourceFixture(["lean-report"]);
         var mapping = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "Meta/ci-resources.json")))!;
         mapping["resources"]!.AsArray().Add(JsonNode.Parse("""{"id":"delta","projects":[],"checks":[],"steps":[]}"""));
         fixture.Write("Meta/ci-resources.json", mapping.ToJsonString());
@@ -367,7 +367,7 @@ public sealed class ResourceExecutionPlanTests
 
     private sealed class SelectedTestsFixture : IDisposable
     {
-        internal CurrentExecutionContractTests.CandidateFixture Tree { get; } = new();
+        internal ExecutionFixture Tree { get; } = new();
         private readonly CiFixtureEnvironment environment;
 
         internal SelectedTestsFixture(bool compiledTestDependency = false, bool priorSeed = false, bool testsRequired = true, bool selectDependency = false)
@@ -388,8 +388,8 @@ public sealed class ResourceExecutionPlanTests
             if (compiledTestDependency)
             {
                 var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(Tree.Root, EngineeringRegistrationFixture.Path)))!;
-                manifest["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == CurrentExecutionContractTests.CandidateFixture.First)!["references"]
-                    = new JsonArray(CurrentExecutionContractTests.CandidateFixture.Second);
+                manifest["projects"]!.AsArray().Single(row => row!["path"]!.ToString() == ExecutionFixture.First)!["references"]
+                    = new JsonArray(ExecutionFixture.Second);
                 Tree.Write(EngineeringRegistrationFixture.Path, manifest.ToJsonString());
             }
             const string judge = "tools/Judge/Judge.csproj";
@@ -407,8 +407,8 @@ public sealed class ResourceExecutionPlanTests
             Tree.Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1", resources = new[] {
                 new { id = "build", projects = Array.Empty<string>(), checks = Array.Empty<string>(), steps = Array.Empty<string>() },
                 new { id = "test-selected", projects = selectDependency
-                        ? new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second }
-                        : new[] { testsRequired ? CurrentExecutionContractTests.CandidateFixture.First : judge },
+                        ? new[] { ExecutionFixture.First, ExecutionFixture.Second }
+                        : new[] { testsRequired ? ExecutionFixture.First : judge },
                     checks = new[] { "selftest-pair" }, steps = Array.Empty<string>() } } }));
             Tree.Write("Meta/FILEMAP.toml", """
                 schema_version = 4
@@ -479,7 +479,7 @@ public sealed class ResourceExecutionPlanTests
     [Fact]
     public void ForgedCandidateIsRejectedBeforeStageExecution()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         var plan = JsonNode.Parse(File.ReadAllText(fixture.Plan))!;
         plan["candidate"]!["commit"] = new string('a', 40);
         File.WriteAllText(fixture.Plan, plan.ToJsonString());
@@ -489,7 +489,7 @@ public sealed class ResourceExecutionPlanTests
     [Fact]
     public void ResourceSubsetMustContainRegisteredPrerequisites()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         var plan = JsonNode.Parse(File.ReadAllText(fixture.Plan))!;
         plan["resources"] = new JsonArray("filemap");
         plan["stages"]!["build"]!["resources"] = new JsonArray();

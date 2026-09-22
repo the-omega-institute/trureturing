@@ -571,7 +571,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("tools/StrataLint.ReleaseSelection/TruthReleaseSelection.cs", "StrataLint.ArchitectureTests,StrataLint.EngineeringScope.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ReleaseSelection.Tests")]
+    [InlineData("tools/StrataLint.ReleaseSelection/TruthReleaseSelection.cs", "StrataLint.ArchitectureTests,StrataLint.ReleaseIntegration.Tests,StrataLint.ReleaseSelection.Tests")]
     [InlineData("tools/tests/StrataLint.ReleaseSelection.Tests/TruthReleaseSelectionTests.cs", "StrataLint.ArchitectureTests,StrataLint.ReleaseSelection.Tests")]
     [InlineData("tools/tests/StrataLint.ReleaseIntegration.Tests/ReleaseCommandTests.cs", "StrataLint.ArchitectureTests,StrataLint.ReleaseIntegration.Tests")]
     public void ReleaseChangesSelectOnlyTheirCompleteConsumersWithoutCache(string path, string consumers)
@@ -600,7 +600,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Tests")]
     [InlineData("StrataLint.AdmissionTestSupport/ProducerInputFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Tests")]
     [InlineData("StrataLint.ProcessTestSupport/TestProcessRunner.cs", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.Engine.Tests,StrataLint.Lean.Tests,StrataLint.Tests")]
-    [InlineData("StrataLint.RegistrationTestSupport/EngineeringRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Engine.Tests,StrataLint.EngineeringScope.Tests,StrataLint.Scribe.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.RegistrationTestSupport/EngineeringRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Engine.Tests,StrataLint.EngineeringScope.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.Scribe.Tests,StrataLint.Tests")]
     [InlineData("StrataLint.ScriptProcessTestSupport/EngineeringProcess.cs", "StrataLint.ArchitectureTests,StrataLint.EngineeringScope.Tests,StrataLint.ReleaseIntegration.Tests")]
     public void SpecializedFixturesSelectOnlyTheirConsumersWithoutCache(string fixture, string consumers)
     {
@@ -613,12 +613,14 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         }
     }
 
-    [Fact]
-    public void SourceReferenceChangesSelectOnlyReleaseWorkflowConsumersWithoutCache()
+    [Theory]
+    [InlineData("source_reference.py")]
+    [InlineData("truth_release.py")]
+    public void ReleaseWorkflowChangesSelectOnlyReleaseConsumersWithoutCache(string script)
     {
         foreach (var mode in new[] { "push", "pr" })
         {
-            var plan = Plan("tools/scripts/workflow/source_reference.py", "", mode);
+            var plan = Plan("tools/scripts/workflow/" + script, "", mode);
             Assert.Equal(new[] { "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj" },
                 Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));

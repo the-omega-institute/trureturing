@@ -1,3 +1,4 @@
+using static StrataLint.TestSupport.TransportFixture;
 using System.Diagnostics;
 using System.Formats.Tar;
 using System.IO.Compression;
@@ -16,7 +17,7 @@ public sealed partial class CiTransportTests
     public void CurrentSnapshotAcceptanceUsesTheRemainingOptionalWorkerWindow(bool available)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ResourceRouteTests.ResourceFixture(["lean"]);
+        using var fixture = new ResourceFixture(["lean"]);
         var root = fixture.Root;
         fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\"}]}");
         var map = File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml"));
@@ -87,7 +88,7 @@ public sealed partial class CiTransportTests
     [InlineData("project")]
     public void HeavySnapshotRequiresThisExecutionToHaveBuiltLean(string layer)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\"}]}");
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         fixture.Write("Meta/FILEMAP.toml", string.Join('\n', map.Split('\n').Select(line =>
@@ -128,7 +129,7 @@ public sealed partial class CiTransportTests
     [InlineData("lean-report", "current", false)]
     public void LeanSnapshotConsumesTheAcceptedCurrentExecution(string resource, string defect, bool ready)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([resource]);
+        using var fixture = new ResourceFixture([resource]);
         fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\"}]}");
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         fixture.Write("Meta/FILEMAP.toml", string.Join('\n', map.Split('\n').Select(line =>

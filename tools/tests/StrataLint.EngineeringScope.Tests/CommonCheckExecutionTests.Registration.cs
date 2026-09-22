@@ -414,7 +414,7 @@ public sealed partial class CommonCheckExecutionTests
         internal const string LeanConsumer = "Meta/ReportConsumers/lean.json";
         internal const string ScribeConsumer = "Meta/ReportConsumers/scribe.json";
         private readonly Fixture fixture = new();
-        internal CurrentExecutionContractTests.CandidateFixture Tree => fixture.Tree;
+        internal ExecutionFixture Tree => fixture.Tree;
         internal string Root => Tree.Root;
         internal List<string> Calls { get; } = [];
         internal string ScribeMaterial { get; set; } = CommonCheckRegistrationFixture.ScribeMaterial;
@@ -446,7 +446,7 @@ public sealed partial class CommonCheckExecutionTests
                 Row("scribe-describe")["report_inputs"] = new JsonArray(Input(ScribeProducer, "raw-lean-report"));
             });
             Tree.Track();
-            CiTransportTests.Report(Root);
+            ExecutionFixture.Report(Root);
         }
         internal void Edit(Action<JsonArray> edit)
         {

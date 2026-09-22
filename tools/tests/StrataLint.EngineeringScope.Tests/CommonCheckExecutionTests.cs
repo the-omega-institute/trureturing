@@ -83,10 +83,10 @@ public sealed partial class CommonCheckExecutionTests
             return 0;
         }, TextWriter.Null, build));
         var checks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, TextWriter.Null);
-        foreach (var id in checks.Ids) checks.Run(id, () => new CheckWork(Fixture.Work(id)));
+        foreach (var id in checks.Ids) checks.Run(id, () => new CheckWork(CheckEvidenceFixture.Work(id)));
         var path = damage switch
         {
-            "source" => CurrentExecutionContractTests.CandidateFixture.First,
+            "source" => ExecutionFixture.First,
             "build" => build.Materials[0].Path,
             "trx" => CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Materials[0].Path,
             "check" => checks.Completed.First().Materials[0].Path,
@@ -162,7 +162,7 @@ public sealed partial class CommonCheckExecutionTests
         File.WriteAllText(manifestPath, manifest.ToJsonString());
         fixture.Tree.Track();
         var build = fixture.Tree.Build();
-        CiTransportTests.Report(fixture.Tree.Root);
+        ExecutionFixture.Report(fixture.Tree.Root);
         var original = Run();
         CommonExecutionEvidence.SealCurrent(fixture.Tree.Root, build, CommonExecutionEvidence.CurrentSteps.Select(name => new StageStep(name, 0, 0, "executed", "build/ci/fixture-build.log")).ToArray());
         Assert.True(CommonExecutionEvidence.ExportCheckSeed(fixture.Tree.Root, "current", TextWriter.Null));
@@ -252,7 +252,7 @@ public sealed partial class CommonCheckExecutionTests
         File.WriteAllText(path, doc.ToJsonString());
         fixture.Tree.Track();
         fixture.Tree.Build();
-        CiTransportTests.Report(fixture.Tree.Root);
+        ExecutionFixture.Report(fixture.Tree.Root);
         var calls = new List<string>();
         void Run()
         {
@@ -413,7 +413,7 @@ public sealed partial class CommonCheckExecutionTests
 
     internal sealed class Fixture : IDisposable
     {
-        internal CurrentExecutionContractTests.CandidateFixture Tree { get; } = new();
+        internal ExecutionFixture Tree { get; } = new();
         internal List<string> Calls { get; } = [];
         internal Fixture()
         {
@@ -424,7 +424,7 @@ public sealed partial class CommonCheckExecutionTests
             var ids = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap" };
             CommonExecutionEvidence.Write(Tree.Root, CommonExecutionEvidence.CheckManifestPath,
                 new CommonCheckManifest("ci-check-input-registration-v2", ids.Select(id => new RegisteredCommonCheck(id,
-                    [CurrentExecutionContractTests.CandidateFixture.First], id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [],
+                    [ExecutionFixture.First], id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [],
                     id == "filemap" ? new(["Meta/FILEMAP.toml"], ["tools/**/*.cs"], [], ["Blueprint/**"]) : null)).ToArray()));
             Tree.Track();
         }
@@ -437,7 +437,7 @@ public sealed partial class CommonCheckExecutionTests
                 session.Run(id, () =>
                 {
                     Calls.Add(id);
-                    var ops = Work(id);
+                    var ops = CheckEvidenceFixture.Work(id);
                     if (failure == "exit") ops[0] = ops[0] with { RawExit = 1 };
                     if (failure == "different-pair") ops[^1] = ops[^1] with { Output = "different" };
                     if (failure == "unknown-error") ops[^1] = ops[^1] with { Output = ops[^1].Output + "\nx.cs(2,1): error CS9999: unexpected" };
@@ -454,13 +454,7 @@ public sealed partial class CommonCheckExecutionTests
             CommonExecutionEvidence.SealEngineering(Tree.Root, build, [new("tests", 0, 0, "executed", log)]);
             Xunit.Assert.True(CommonExecutionEvidence.ExportCheckSeed(Tree.Root, "engineering", TextWriter.Null));
         }
-        internal static CheckOperation[] Work(string id) => id switch
-        {
-            "selftest-pair" => [new("selftest-first", 0, "SELFTEST PASS\n"), new("selftest-second", 0, "SELFTEST PASS\n")],
-            "capability-proof" => [new("restore-CompileFailProof", 0, "restored"), new(id, 1, "MissingCapability.cs(13,9): error CS7036: missing metaClear\n")],
-            "banned-api-proof" => [new("restore-BannedApiCompileFailProof", 0, "restored"), new(id, 1, "BannedApiViolations.cs(1,1): error RS0030: banned symbol\n")],
-            _ => [new(id, 0, "passed")],
-        };
+
         public void Dispose() => Tree.Dispose();
     }
 }

@@ -15,7 +15,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("tool", false)]
     public void HistoricalCapabilitiesNeverEnableCandidateExecution(string capability, bool historicalOnly)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         var original = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         var replacement = capability switch
         {
@@ -63,7 +63,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData(true)]
     public void HistoricalResourceRequiresExplicitCandidateImplementation(bool registered)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         const string alias = "zz-retired-check";
         const string declaration = "{ id = \"zz-retired-check\", stage = \"current\", owner = \"Meta/FILEMAP.toml\", prerequisites = [\"filemap\"], tools = [], cache_layers = [], cache_activation = {}, materials = [] },\n";
         var original = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
@@ -126,7 +126,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void ZeroBeforeIsExplicitInitialInputEvenWhenCandidateHasParents()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         fixture.Write("fixtures/selected.txt", "initial input\n");
         fixture.CommitPlan();
         var environment = EnvironmentFor(fixture);
@@ -142,7 +142,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData(true)]
     public void PushOriginInitialTreeUsesRegisteredResourcesWithoutParentOrRemote(bool required)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(required ? ["filemap"] : []);
+        using var fixture = new ResourceFixture(required ? ["filemap"] : []);
         var tree = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^{tree}");
         var root = EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
             "commit-tree", tree, "-m", "initial candidate");
@@ -171,7 +171,7 @@ public sealed partial class ResourceAdapterTests
     {
         const string oldPath = "fixtures/old name\tΩ\n.txt";
         const string newPath = "docs/new name\tΩ\n.md";
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         // Separate declarations make loss of the removed endpoint observable.
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         var row = map[map.IndexOf("[[files]]", StringComparison.Ordinal)..];
@@ -218,7 +218,7 @@ public sealed partial class ResourceAdapterTests
     {
         const string oldPath = "retired/old.txt";
         const string newPath = "docs/renamed.md";
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         var split = map.IndexOf("[[files]]", StringComparison.Ordinal);
         var row = map[split..];
@@ -273,7 +273,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("missing-registration")]
     public void PushEndpointObjectsWorkWhenShallowAndFailWhenUnavailable(string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var parent = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         if (defect == "missing-packed") PackParent(fixture, parent);
         if (defect == "shallow") fixture.Write(".git/shallow", fixture.Commit + "\n");
@@ -298,7 +298,7 @@ public sealed partial class ResourceAdapterTests
             Assert.Equal(2, result.Exit);
             Assert.Contains("Meta/FILEMAP.toml", result.Text, StringComparison.Ordinal);
             Assert.Contains(PushScope(fixture)["changes"]!.AsArray(), row => row!["status"]!.ToString() == "D"
-                && row["old"]!["path"]!.ToString() == CurrentExecutionContractTests.CandidateFixture.First);
+                && row["old"]!["path"]!.ToString() == ExecutionFixture.First);
             Assert.False(File.Exists(PushPlanPath(fixture)));
         }
     }
@@ -308,7 +308,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData(true)]
     public void PushMissingPromisorParentFailsWithoutContactingRemote(bool packed)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var parent = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         if (packed) PackParent(fixture, parent);
         fixture.RemoveObject(parent);
@@ -331,7 +331,7 @@ public sealed partial class ResourceAdapterTests
         Assert.False(File.Exists(PushPlanPath(fixture)));
     }
 
-    private static void PackParent(ResourceRouteTests.ResourceFixture fixture, string parent)
+    private static void PackParent(ResourceFixture fixture, string parent)
     {
         EngineeringProcess.Git(fixture.Root, "-c", "gc.autoDetach=false", "maintenance", "run", "--task=gc");
         Assert.False(File.Exists(Path.Combine(fixture.Root, ".git/objects", parent[..2], parent[2..])));
@@ -343,7 +343,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void DirectCurrentKeepsWorkingTreeExecutionWithoutImplicitPushScheduling()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var tree = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^{tree}");
         var parentless = EngineeringProcess.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
             "commit-tree", tree, "-m", "direct current without ancestry");
@@ -375,7 +375,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("reusable-event")]
     public void WorkflowCommonCurrentCannotFallBackToDirectExecution(string invocation)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
         if (invocation == "native-missing-event") environment["GITHUB_EVENT_NAME"] = "push";
         else
@@ -413,7 +413,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("null-origin")]
     public void PushScopeCannotSubstituteAnotherComparison(string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.Write("fixtures/selected.txt", "changed\n");
         fixture.CommitPlan();
         Assert.True(PushPlan(fixture).Exit == 0);
@@ -443,7 +443,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("parent")]
     public void PushCandidateMustBeCheckedOutImmutableHead(string candidate)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         if (candidate == "parent") candidate = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         var result = Planner(fixture, "push-plan", "--commit", candidate);
         Assert.Equal(2, result.Exit);
@@ -455,7 +455,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData(true)]
     public void NativePushCannotConsumeCallerCurrentScopeOrPartialTransport(bool partial)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
         SetPushEvent(fixture, environment, new string('0', 40));
         MaterializePlan(fixture, environment);
@@ -469,7 +469,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void CommittedPushPlanCannotAuthorizeDirtyCurrentNoWork()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         Assert.True(PushPlan(fixture).Exit == 0);
         fixture.Write("fixtures/selected.txt", "uncommitted work\n");
         var environment = EnvironmentFor(fixture);
@@ -486,7 +486,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData(true)]
     public void PushRegistrationGapsAndConflictsNameTheConcretePath(bool conflict)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         var row = map[map.IndexOf("[[files]]", StringComparison.Ordinal)..];
         var patterns = conflict ? new[] { "**", "missing/**" } : new[] { "*", "Meta/**", "fixtures/**", "tools/**" };
@@ -507,7 +507,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("encoding")]
     public void MalformedNativeGitInputFailsBeforePlanning(string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var environment = EnvironmentFor(fixture);
         SetPushEvent(fixture, environment, EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1"));
         var shim = Path.Combine(environment["PATH"], "git");
@@ -534,7 +534,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void LocalPushPreflightUsesTheSameNoWorkScopeBeforeAnySdkOrCache()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh" })
             fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         fixture.CommitPlan();
@@ -639,7 +639,7 @@ public sealed partial class ResourceAdapterTests
     [InlineData("missing-event")]
     public void NativeFreshStageRejectsInvalidEventInput(string defect)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         var before = EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1");
         var environment = EnvironmentFor(fixture);
         SetPushEvent(fixture, environment, before);
@@ -718,7 +718,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void NativeIdenticalEndpointsProduceCompleteEmptyNoWork()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         var environment = EnvironmentFor(fixture);
         SetPushEvent(fixture, environment, fixture.Commit);
         environment["CI_PLAN_PATH"] = PushPlanPath(fixture);
@@ -796,7 +796,7 @@ public sealed partial class ResourceAdapterTests
     [Fact]
     public void ReusablePrPlanKeepsItsCandidateRoleUnderAmbientPushEvent()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture([]);
+        using var fixture = new ResourceFixture([]);
         fixture.PrPlan();
         var environment = EnvironmentFor(fixture);
         environment["GITHUB_EVENT_NAME"] = "push";
@@ -807,7 +807,7 @@ public sealed partial class ResourceAdapterTests
         Assert.Equal("pr", Summary(fixture, "current")["scope"]!["mode"]!.ToString());
     }
 
-    private static void SetPushEvent(ResourceRouteTests.ResourceFixture fixture, Dictionary<string, string> environment,
+    private static void SetPushEvent(ResourceFixture fixture, Dictionary<string, string> environment,
         string before, string? after = null)
     {
         var eventPath = Path.Combine(fixture.Root, "build/push-event.json");
@@ -820,7 +820,7 @@ public sealed partial class ResourceAdapterTests
         environment["GITHUB_EVENT_PATH"] = eventPath;
     }
 
-    private static void AssertPushBinding(ResourceRouteTests.ResourceFixture fixture, string commit, string? tree)
+    private static void AssertPushBinding(ResourceFixture fixture, string commit, string? tree)
     {
         var scope = PushScope(fixture);
         Assert.Equal("push", scope["mode"]!.ToString());
@@ -833,11 +833,11 @@ public sealed partial class ResourceAdapterTests
     }
     private static string[] Strings(JsonNode rows, string? field = null) =>
         rows.AsArray().Select(row => (field is null ? row : row![field])!.ToString()).ToArray();
-    private static string PushPlanPath(ResourceRouteTests.ResourceFixture fixture) => Path.Combine(fixture.Root, "build/ci/plan.json");
-    private static string PushScopePath(ResourceRouteTests.ResourceFixture fixture) => Path.Combine(fixture.Root, "build/ci/changes.json");
-    private static JsonNode PushSelection(ResourceRouteTests.ResourceFixture fixture) => JsonNode.Parse(File.ReadAllText(PushPlanPath(fixture)))!;
-    private static JsonNode PushScope(ResourceRouteTests.ResourceFixture fixture) => JsonNode.Parse(File.ReadAllText(PushScopePath(fixture)))!;
-    private static (int Exit, string Text) PushPlan(ResourceRouteTests.ResourceFixture fixture, string? eventBefore = null)
+    private static string PushPlanPath(ResourceFixture fixture) => Path.Combine(fixture.Root, "build/ci/plan.json");
+    private static string PushScopePath(ResourceFixture fixture) => Path.Combine(fixture.Root, "build/ci/changes.json");
+    private static JsonNode PushSelection(ResourceFixture fixture) => JsonNode.Parse(File.ReadAllText(PushPlanPath(fixture)))!;
+    private static JsonNode PushScope(ResourceFixture fixture) => JsonNode.Parse(File.ReadAllText(PushScopePath(fixture)))!;
+    private static (int Exit, string Text) PushPlan(ResourceFixture fixture, string? eventBefore = null)
     {
         var parents = eventBefore is null ? EngineeringProcess.Git(fixture.Root, "show", "-s", "--format=%P", fixture.Commit) : "";
         var before = eventBefore ?? (parents.Length == 0 ? new string('0', 40) : parents.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0]);
@@ -847,11 +847,11 @@ public sealed partial class ResourceAdapterTests
         SetPushEvent(fixture, environment, before);
         return PlannerWithEnvironment(fixture, environment, "push-plan");
     }
-    private static (int Exit, string Text) Planner(ResourceRouteTests.ResourceFixture fixture, string command, params string[] arguments)
+    private static (int Exit, string Text) Planner(ResourceFixture fixture, string command, params string[] arguments)
     {
         return PlannerWithEnvironment(fixture, EnvironmentFor(fixture), command, arguments);
     }
-    private static (int Exit, string Text) PlannerWithEnvironment(ResourceRouteTests.ResourceFixture fixture,
+    private static (int Exit, string Text) PlannerWithEnvironment(ResourceFixture fixture,
         Dictionary<string, string> environment, string command, params string[] arguments)
     {
         var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "tools/scripts/workflow/ci.py", command,

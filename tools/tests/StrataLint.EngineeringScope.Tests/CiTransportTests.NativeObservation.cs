@@ -12,7 +12,7 @@ public sealed partial class CiTransportTests
     public void NativeCommandObservationPrecedesExitAndPreservesCapturedBytes(int status)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var temporary = new CurrentExecutionContractTests.CandidateFixture();
+        using var temporary = new ExecutionFixture();
         var result = EngineeringProcess.Process(temporary.Root, "python3", ["-B", "-c", """
             import json, os, pathlib, sys, tempfile
             repository, root = map(pathlib.Path, sys.argv[1:3])

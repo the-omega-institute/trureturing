@@ -21,7 +21,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("declaration", true)]
     public void RegisteredScribeFileMapInputsInvalidateEvidenceWhileUnrelatedDocumentationReusesIt(string path, bool invalidates)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
             == "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj")!;
@@ -68,7 +68,7 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Write("README.md", "original documentation\n");
         Assert.False(File.Exists(Path.Combine(fixture.Root, "docs/develop/theory/input.md")));
         fixture.Track();
-        Assert.Equal([CandidateFixture.First, CandidateFixture.Second], Execute(fixture));
+        Assert.Equal([ExecutionFixture.First, ExecutionFixture.Second], Execute(fixture));
         Seed(fixture);
         var prior = CommonExecutionEvidence.ValidateTests(fixture.Root);
 
@@ -93,7 +93,7 @@ public sealed partial class CurrentExecutionContractTests
         else File.AppendAllText(Path.Combine(fixture.Root, path), "\n");
         fixture.Track();
 
-        Assert.Equal(invalidates ? new[] { CandidateFixture.First } : [], Execute(fixture));
+        Assert.Equal(invalidates ? new[] { ExecutionFixture.First } : [], Execute(fixture));
         var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root);
         Assert.NotEqual(prior.Candidate, accepted.Candidate);
         if (invalidates)
@@ -124,7 +124,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData(true)]
     public void FileMapQueryRequiresRuntimeMaterialIncludingDisabledProjects(bool enabled)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         EditRegistration(fixture, rows =>
         {
             rows[1]!["ci"] = enabled;
@@ -137,7 +137,7 @@ public sealed partial class CurrentExecutionContractTests
             (_, _) => { ++calls; return 0; }, TextWriter.Null));
         Assert.Equal(0, calls);
         Assert.Contains("FILEMAP runtime input is absent", error.Message);
-        Assert.Contains(CandidateFixture.Second, error.Message);
+        Assert.Contains(ExecutionFixture.Second, error.Message);
     }
 
     [Theory]
@@ -145,12 +145,12 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData(true)]
     public void FileMapQueryDeclarationsBindRuntimeReadersWithoutChangingCompileInputs(bool readsRegistration)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         fixture.Write("Meta/FILEMAP.toml", "[[files]]\npattern = \"README.md\"\nrequire = []\n");
         EditRegistration(fixture, rows =>
         {
             rows[0]!["execution_inputs"] = new JsonArray("Meta/FILEMAP.toml");
-            rows[1]!["references"] = new JsonArray(CandidateFixture.First);
+            rows[1]!["references"] = new JsonArray(ExecutionFixture.First);
             if (readsRegistration) rows[1]!["execution_inputs"] = new JsonArray(EngineeringRegistrationFixture.Path);
         });
         fixture.Track();
@@ -159,7 +159,7 @@ public sealed partial class CurrentExecutionContractTests
         // No FILEMAP row or file bytes change. This unmatched virtual query tests
         // the declaration's own identity, including relevant manifest projections.
         EditRegistration(fixture, rows => rows[0]!["execution_filemap_paths"] = new JsonArray("docs/virtual.md"));
-        Assert.Equal(readsRegistration ? [CandidateFixture.First, CandidateFixture.Second] : new[] { CandidateFixture.First }, Execute(fixture));
+        Assert.Equal(readsRegistration ? [ExecutionFixture.First, ExecutionFixture.Second] : new[] { ExecutionFixture.First }, Execute(fixture));
         CommonExecutionEvidence.ValidateTests(fixture.Root);
     }
 
@@ -172,7 +172,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", true)]
     public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string path, bool invalidates)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
             == "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj")!;
@@ -200,7 +200,7 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Track();
 
         var calls = Execute(fixture);
-        Assert.True(calls.SequenceEqual(invalidates ? new[] { CandidateFixture.First } : []),
+        Assert.True(calls.SequenceEqual(invalidates ? new[] { ExecutionFixture.First } : []),
             $"[FAIL] cache_fixture_input_isolation: {path}: invalidates={invalidates}; executed={string.Join(',', calls)}");
         var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
         if (invalidates) Assert.NotEqual(prior.InputFingerprint, accepted.InputFingerprint);

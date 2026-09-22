@@ -12,7 +12,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("README.md", false)]
     public void RegisteredNativeFixtureInputsRerunConsumedFilesAndReuseUnrelatedChanges(string path, bool invalidates)
     {
-        using var fixture = new CandidateFixture();
+        using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
             == "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj")!;
@@ -27,7 +27,7 @@ public sealed partial class CurrentExecutionContractTests
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
         fixture.Write(path, "original fixture input\n");
         fixture.Track();
-        Assert.Equal(new[] { CandidateFixture.First, CandidateFixture.Second }, Execute(fixture));
+        Assert.Equal(new[] { ExecutionFixture.First, ExecutionFixture.Second }, Execute(fixture));
         var original = CommonExecutionEvidence.ValidateTests(fixture.Root);
         Seed(fixture);
 
@@ -38,7 +38,7 @@ public sealed partial class CurrentExecutionContractTests
         var current = CommonExecutionEvidence.ValidateTests(fixture.Root);
         var prior = original.Projects[0];
         var accepted = current.Projects[0];
-        Assert.True(calls.SequenceEqual(invalidates ? new[] { CandidateFixture.First } : []),
+        Assert.True(calls.SequenceEqual(invalidates ? new[] { ExecutionFixture.First } : []),
             $"[FAIL] native_fixture_execution_input: {path}: invalidates={invalidates}; executed={string.Join(',', calls)}; old={prior.InputFingerprint}; new={accepted.InputFingerprint}");
         if (invalidates)
         {

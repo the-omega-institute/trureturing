@@ -13,7 +13,7 @@ public sealed class ColdPreflightContractTests
     [Fact]
     public void RepeatedValidationReusesObjectsButChecksLiveDeclarations()
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"]);
+        using var fixture = new ResourceFixture(["filemap"]);
         var result = EngineeringProcess.Process(fixture.Root, "python3", ["-B", "-c", """
             import collections, json, pathlib, sys
             sys.path.insert(0, str(pathlib.Path.cwd() / 'tools/scripts/workflow'))
@@ -62,7 +62,7 @@ public sealed class ColdPreflightContractTests
     [InlineData("push", "engineering")]
     public void ColdPreflightSchedulesOnlyRequiredBuild(string mode, string resource)
     {
-        using var fixture = new ResourceRouteTests.ResourceFixture(["filemap"], "Evidence/D5/Fixture.result.json");
+        using var fixture = new ResourceFixture(["filemap"], "Evidence/D5/Fixture.result.json");
         Configure(fixture);
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         var start = map.IndexOf("[[files]]", StringComparison.Ordinal);
@@ -77,7 +77,7 @@ public sealed class ColdPreflightContractTests
             fixture.Write("Meta/FILEMAP.toml", map.Replace("  { id = \"filemap\"", "  { id = \"engineering\", stage = \"engineering\", owner = \"tools/scripts/workflow/ci.py\", prerequisites = [\"build\"], tools = [], cache_layers = [], cache_activation = {}, materials = [] },\n  { id = \"filemap\"", StringComparison.Ordinal));
             var mapping = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "Meta/ci-resources.json")))!;
             mapping["resources"]!.AsArray().Add(new JsonObject {
-                ["id"] = "engineering", ["projects"] = new JsonArray(ResourceRouteTests.ResourceFixture.Foo),
+                ["id"] = "engineering", ["projects"] = new JsonArray(ResourceFixture.Foo),
                 ["checks"] = new JsonArray(CommonExecutionEvidence.EngineeringCheckIds.Order(StringComparer.Ordinal).Select(s => (JsonNode?)JsonValue.Create(s)).ToArray()),
                 ["steps"] = new JsonArray() });
             fixture.Write("Meta/ci-resources.json", mapping.ToJsonString());
@@ -108,7 +108,7 @@ public sealed class ColdPreflightContractTests
         }
         var result = EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/preflight.sh"], environment, TestBudgets.WorkflowProcessHangGuard);
         Assert.Equal(ambientHash, System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(ambientConfig)));
-        ReleaseConsumerContractTests.Capture(fixture.Root, "cold-" + mode + "-" + resource, result);
+        NativeReleaseFixture.Capture(fixture.Root, "cold-" + mode + "-" + resource, result);
         var root = fixture.Root;
         if (mode == "pr")
         {
@@ -117,7 +117,7 @@ public sealed class ColdPreflightContractTests
             Directory.CreateDirectory(root);
             using var input = new GZipStream(File.OpenRead(bundle), CompressionMode.Decompress);
             TarFile.ExtractToDirectory(input, root, overwriteFiles: false);
-            ReleaseConsumerContractTests.Capture(root, "cold-pr-" + resource + "-candidate", result);
+            NativeReleaseFixture.Capture(root, "cold-pr-" + resource + "-candidate", result);
         }
         var events = File.Exists(environment["CONTRACT_EVENTS"]) ? File.ReadAllLines(environment["CONTRACT_EVENTS"]) : [];
         if (resource == "none")
@@ -136,7 +136,7 @@ public sealed class ColdPreflightContractTests
             Assert.Equal(new[] { "restore", "build" }, processes.Select(process => process["arguments"]![0]!.ToString()));
             Assert.Equal(processes[0]["arguments"]![1]!.ToString(), processes[1]["arguments"]![1]!.ToString());
             var build = Read(root, "build.json");
-            Assert.Equal(new[] { ResourceRouteTests.ResourceFixture.Foo }, build["projects"]!.AsArray().Select(project => project!.ToString()));
+            Assert.Equal(new[] { ResourceFixture.Foo }, build["projects"]!.AsArray().Select(project => project!.ToString()));
             Assert.Contains(build["materials"]!.AsArray(), material => material!["path"]!.ToString() == CommonExecutionEvidence.CliPath);
             Assert.DoesNotContain(build["materials"]!.AsArray(), material => material!["path"]!.ToString().StartsWith("tools/Bar/", StringComparison.Ordinal));
             Assert.True(File.Exists(Path.Combine(root, CommonExecutionEvidence.CliPath)));
@@ -165,7 +165,7 @@ public sealed class ColdPreflightContractTests
     [Fact]
     public void PrivateFixtureProfileRetainsLockedRestoreAndOfflinePackageFailures()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        using var fixture = new ExecutionFixture();
         fixture.Write("global.json", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "global.json")));
         const string project = "build/restore-probe/Probe.csproj";
         const string lockPath = "build/restore-probe/packages.lock.json";
@@ -218,7 +218,7 @@ public sealed class ColdPreflightContractTests
             ["restore", project, "--locked-mode", "-nr:false"], environment);
     }
 
-    internal static void Configure(ResourceRouteTests.ResourceFixture fixture)
+    internal static void Configure(ResourceFixture fixture)
     {
         foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh",
                      "tools/scripts/lib/resource-observation-lib.sh" })
@@ -228,7 +228,7 @@ public sealed class ColdPreflightContractTests
         fixture.Write("tools/scripts/report/dotnet_producer.py", "import pathlib,sys\np=pathlib.Path(sys.argv[2])/'build/judge-seed/seed.targets'\np.parent.mkdir(parents=True,exist_ok=True)\np.write_text('<Project />')\n");
         fixture.Write("tools/scripts/report/report-supervisor.sh", "while [[ $1 != -- ]]; do shift; done\nshift\nexec \"$@\"\n");
         fixture.Write("NuGet.Config", "<configuration><packageSources><clear /></packageSources></configuration>\n");
-        fixture.Write(ResourceRouteTests.ResourceFixture.Foo, """
+        fixture.Write(ResourceFixture.Foo, """
             <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
             <AssemblyName>StrataLint</AssemblyName><OutputType>Exe</OutputType>
             <BaseOutputPath>../StrataLint.Cli/bin/</BaseOutputPath>
@@ -242,11 +242,11 @@ public sealed class ColdPreflightContractTests
             return 0;
             """);
         var registry = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path)))!;
-        registry["projects"]!.AsArray().Single(p => p!["path"]!.ToString() == ResourceRouteTests.ResourceFixture.Foo)!["assembly"] = "StrataLint";
+        registry["projects"]!.AsArray().Single(p => p!["path"]!.ToString() == ResourceFixture.Foo)!["assembly"] = "StrataLint";
         fixture.Write(EngineeringRegistrationFixture.Path, registry.ToJsonString());
     }
 
-    internal static Dictionary<string, string> EnvironmentFor(ResourceRouteTests.ResourceFixture fixture)
+    internal static Dictionary<string, string> EnvironmentFor(ResourceFixture fixture)
     {
         var bin = Path.Combine(fixture.Root, "build/cold-bin");
         Directory.CreateDirectory(bin);
