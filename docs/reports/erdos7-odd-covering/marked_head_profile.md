@@ -898,3 +898,9 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Four-root supported matchings, rectangular fibres and selected column pairs admit common laws below 46/9; two shared-column constructions reach five, and degree-three source compression preserves all finite-height five-column projections](profile-notes/arithmetic/432-four-root-source-selections-and-the-shared-column-boundary.md)
 
 - [Original-label chordal overlap certificates retain exact higher intersections and an active-component remainder; complete finite optimization gives 175 at 945 versus forest 141 and the established minimum 191, with a general blind range for coprime forests](profile-notes/arithmetic/433-chordal-overlap-certificates-and-their-exact-finite-limits.md)
+
+- [Every four-root, three-child, two-neighbor source with disjoint root pair sets admits one explicit original-label law of cost at most 149/30; larger-neighborhood controls delimit extraction and correctly aligned height lifting retains its actual-residual premise](profile-notes/arithmetic/434-four-root-pair-sources-admit-a-common-law-below-five.md)
+
+- [Minimum height-two sources are exactly three five-matchings and admit the sharp universal budget 68/15; every admissible source has an actual nine-point joint flow, while the weighted common-law condition remains additional](profile-notes/arithmetic/435-minimum-height-two-sources-and-a-nine-point-flow.md)
+
+- [For one fixed original family, identical clique-DP keys count correctly but cannot answer a newly authorized archive read; actual branch records and CRT cells give distinct task-specific repairs using existing task-completion interfaces](profile-notes/arithmetic/436-self-observation-refines-a-count-sufficient-clique-state.md)
