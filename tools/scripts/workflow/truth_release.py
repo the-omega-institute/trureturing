@@ -1,4 +1,5 @@
 """Consume a protected push bundle for dev publication or explicit source verification."""
+# Demand-selection performance probe; runtime behavior is unchanged.
 import argparse
 import datetime
 import gzip
