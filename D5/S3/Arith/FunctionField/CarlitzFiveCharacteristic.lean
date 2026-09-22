@@ -12,13 +12,12 @@ import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxRecDepth 16384
-set_option maxHeartbeats 8000000
-
 namespace D5.S3.Arith.FunctionField.CarlitzFiveCharacteristic
 
 open D5.S3.Arith.FunctionField.CarlitzFiveOrbit
 
+set_option maxRecDepth 16384 in
+set_option maxHeartbeats 24000000 in
 /-- The actual closed five-orbit condition confines prime characteristic to
 2, 5, 19, 263, or 519555805809266011. The conclusion is stated as exact
 integer divisibility, without assuming primality of the last displayed factor.

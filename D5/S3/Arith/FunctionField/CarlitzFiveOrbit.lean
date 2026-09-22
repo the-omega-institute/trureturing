@@ -11,9 +11,6 @@ import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxRecDepth 4096
-set_option maxHeartbeats 4000000
-
 namespace D5.S3.Arith.FunctionField.CarlitzFiveOrbit
 
 /-- The literal degree-five Thakur residual in four Frobenius differences. -/
@@ -24,6 +21,8 @@ def residual {K : Type*} [CommRing K] (a b c d : K) : K :=
 def quintic {K : Type*} [CommRing K] (a : K) : K :=
   a ^ 5 + 5 * a ^ 3 + 3 * a ^ 2 - 4 * a - 9
 
+set_option maxRecDepth 4096 in
+set_option maxHeartbeats 12000000 in
 /-- No hidden difference field for an actual closed five-point orbit.
 Specializing sigma to the q-power Frobenius proves the missing upper
 common-root bound in arXiv:2607.15305v2, Conjecture 4.2.
