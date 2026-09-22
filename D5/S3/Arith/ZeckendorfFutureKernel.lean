@@ -98,7 +98,7 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
     (hF : (Nat.fib T : ZMod M) = 0)
     (hG : (Nat.fib (T+1) : ZMod M) = 1)
     (previous : Bool) (r u v r' u' v' e f e' f' : ZMod M)
-    (huv : e*u + f*v = 1) (huv' : e'*u' + f'*v' = 1) :
+    (huv : e * u + f * v = 1) (huv' : e' * u' + f' * v' = 1) :
     (∀ A B : ZMod M, ∃ w : List Bool,
       (∀ b : Bool, legal b w) ∧
       (∀ x y : ZMod M, value x y w = A*x+B*y)) ∧

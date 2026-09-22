@@ -80,7 +80,7 @@ internal sealed class CarlitzFiveOrbitDocument : IScribeDocumentDefinition
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, int n) => new Formula.Power(a, D(n));
+    private static Formula Pow(Formula a, int n) => new Formula.Power(a, new Formula.Number(n));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, V(name), Sp, InMacro, Sp, type, Comma, Sp, body);
     private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
