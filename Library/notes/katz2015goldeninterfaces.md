@@ -214,3 +214,37 @@ is 1<G_r<5^(EulerPhi(r)/2). This is a classical cyclotomic-norm interface,
 not a claimed new WSS family. This unramified-at-p coefficient field of
 conductor r must not be confused with the ramified p-power coefficient
 fields used for the conditional Maass families in SGN and HCR.
+
+## 9. The published squarefree criterion and the stronger norm estimate
+
+The complete primary HTML of Ross-Shen-Cai was rechecked, including its
+conclusion, Corollary 5.1. That corollary explicitly states equivalence
+between absence of WSS primes and squarefreeness of every Fibonacci Mobius
+dual M_n^F except n=6. The WSS owner's SJC.9 proves the exact change of
+index between that source and its own norm: G_r=M_(iota(r))^F, where
+r odd gives iota(r)=2r, r=2 modulo4 gives iota(r)=r/2, and4|r gives
+iota(r)=r. Thus the source's exceptional index6 is G_3=4. The resulting
+squarefree characterization is cited prior work, not a new discovery.
+
+SJC.9 also records all prime valuations, including the small primes2,3,5.
+For p>5 an inherited factor at r=r_p*p^a has valuation exactly one;
+only the primitive r=r_p factor can have the initial depth h_p. Consequently
+any repeated prime divisor of G_r for r>=4 is an original WSS prime,
+without an additional coprimality assumption on that divisor and r.
+
+SJC.10 is a separate elementary estimate for the actual positive norm.
+Writing R=rad(r), s=r/R and a=phi^(-2s), the Mobius logarithm is shown to
+have sign -mu(R) and magnitude less than -log(1-a). This yields the uniform
+bound phi^(EulerPhi(r)-1)<G_r<phi^(EulerPhi(r)+1) and the exact integer
+upper bound B(r)=L_(EulerPhi(r))-1 for mu(R)=1, or L_(EulerPhi(r)+1)
+for mu(R)=-1. The latter upper bound is attained at every odd prime index.
+This signed estimate is proved in the dossier rather than attributed to
+Ross-Shen-Cai or Katz; its independent priority has not been established.
+
+SJC.11 deduces the quotient-independent implication p^2>B(r_p) => q_p!=0
+and the joint depth budget for primes having the same actual period r.
+It does not prove that a new unbounded prime family satisfies this condition.
+The fixed113 example demonstrates an improvement over the former height
+bound, not a newly discovered non-WSS prime. No WSS existence, complete
+squarefreeness theorem, spectral nonvanishing or Lean certification follows
+from the size estimate. The remaining obligation is stated in SJC.12.
