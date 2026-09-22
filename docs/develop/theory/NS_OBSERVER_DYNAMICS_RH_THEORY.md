@@ -2004,7 +2004,7 @@ $M$ 个正增量之和固定为 $\psi(m)-\psi(a)$，其最大值至少为该和�
 
 ### 19.7 范围与下一项问题
 
-候选 Lean `TwoMomentSupportHole.two_moment_support_hole_sharp` 对任意有限原子数的真实 Prony 矩给出第 19.2 节的两项最大值及精确差额；其证明包含移动原子与双端残余的正权重构造和普遍上界。第 19.3--19.6 节的完整分段曲线、固定网格结论和最佳网格配置在本节有普通证明，尚未作为新的 Lean 声明完成。一般 Borel 测度版本由相同有界多项式积分论证给出。
+Lean 定理 `TwoMomentSupportHole.two_moment_support_hole_sharp` 对任意有限原子数的真实 Prony 矩给出第 19.2 节的两项最大值及精确差额；其证明包含移动原子与双端残余的正权重构造和普遍上界。第 19.3--19.6 节的完整分段曲线、固定网格结论和最佳网格配置在本节有普通证明，尚未作为新的 Lean 声明完成。一般 Borel 测度版本由相同有界多项式积分论证给出。
 
 接下来的具体问题是：对三阶及更高阶含噪矩，是否能得到类似的支撑移动分类、可认证的网格误差和全局最佳节点配置？更一般的自由节点一致逼近仍有独立的最优性问题 [19-C]，本节只解决由指定两矩极值诱导、且保留校准节点的设计类。它不结算一般自由节点样条问题，也不证明维数、时长与精度的联合谱底 minimax 上界。
 
@@ -2091,7 +2091,7 @@ H_M+\sum_{k=1}^{M-1}z_k=\ln2\sum_{k=1}^{M-1}D_k.
 \[
 H_M\geq-\sum_jp_{M,j}\ln D_M=\ln(1/D_M).
 \]
-两式合并即得式 (20.6)。候选 Lean `NestedGridEntropy.binary_refinement_entropy_budget` 从实际列表替换恒等式推导该链条，并允许用每阶段任意合法上界代替精确最大单元。源码以零次分裂对应 $M=1$；没有把熵增或最终熵下界放入假设。
+两式合并即得式 (20.6)。Lean 定理 `NestedGridEntropy.binary_refinement_entropy_budget` 从实际列表替换恒等式推导该链条，并允许用每阶段任意合法上界代替精确最大单元。定理以零次分裂对应 $M=1$；没有把熵增或最终熵下界放入假设。
 
 ### 20.4 定理：嵌套历史的严格额外代价
 
@@ -2164,7 +2164,7 @@ v_j=\psi(a)+Ls_j,\qquad g^{\mathrm{new}}_j=\frac{v_j^2-2}{v_j^2+1},
 
 ### 20.7 形式化范围与后续问题
 
-本轮候选 Lean 证明的是第 20.3 节的实际二分历史熵预算，包括显式非负损失。静态平均界直接复用既有数学，不另增包装定理。第 20.2、20.4--20.6 节在此给出普通证明；完整上极限推导、经典对数序列的空间实现和它与第 19 节的实际矩极值之间的形式化连接仍需各自完成。未将普通推导冒充已通过 Lean 内核的结果。
+Lean 已证明第 20.3 节的实际二分历史熵预算，包括显式非负损失。静态平均界直接复用既有数学，不另增包装定理。第 20.2、20.4--20.6 节在此给出普通证明；完整上极限推导、经典对数序列的空间实现和它与第 19 节的实际矩极值之间的形式化连接仍需各自完成。普通推导不属于 Lean 内核已验证的结论。
 
 本节回答了指定两矩模型中保留校准节点、一次只加一点时的最佳全程倍率。它不证明此前的维数、时长与噪声联合 minimax 上界，不宣称解决外部具名开放猜想。更高阶矩下还需从真实极值构造判断是否存在能将单元代价化为长度幂的坐标；只有建立该联系，经典分割序列才能提供相应的实际误差保证。
 
@@ -2172,8 +2172,8 @@ v_j=\psi(a)+Ls_j,\qquad g^{\mathrm{new}}_j=\frac{v_j^2-2}{v_j^2+1},
 
 [20-A] Mathlib, `Mathlib/Combinatorics/Pigeonhole.lean`. https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Pigeonhole.html . 有限权重鸽笼及平均值形式的已有基础。
 
-[20-B] Mathlib, commit `db584cd6d46c92f209a44c0f1c829460d327499d`, `Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean`, `Real.binEntropy_le_log_two` 与 `Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub`. https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean . 本轮实际调用的二元熵基础。
+[20-B] Mathlib, commit `db584cd6d46c92f209a44c0f1c829460d327499d`, `Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean`, `Real.binEntropy_le_log_two` 与 `Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub`. https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean . Lean 定理调用的二元熵基础。
 
 [20-C] Christian Weiss. *An Explicit non-Poissonian Pair Correlation Function*. arXiv:2304.14202v3, 16 June 2026. https://arxiv.org/html/2304.14202v3 . Introduction 与 Proposition 2.1 给出经典低离散度对数序列的归属与间隔结构。本节只使用并重新证明所需间隔结构，不使用该文的成对相关主定理。
 
-[20-D] Harald Niederreiter. *On a measure of denseness for sequences*. In *Topics in Classical Number Theory*, Budapest 1981, Colloquia Mathematica Societatis Janos Bolyai 34, North-Holland, Amsterdam, 1984, pp. 1163--1208. 原始出处由 [20-C] 明确引用；本轮未取得其原始全文，不声称直接核查了 1984 年证明。
+[20-D] Harald Niederreiter. *On a measure of denseness for sequences*. In *Topics in Classical Number Theory*, Budapest 1981, Colloquia Mathematica Societatis Janos Bolyai 34, North-Holland, Amsterdam, 1984, pp. 1163--1208. 原始出处由 [20-C] 明确引用；本文未直接核查 1984 年原文。
