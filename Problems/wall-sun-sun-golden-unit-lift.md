@@ -113,7 +113,7 @@ Implement three independent exact calculations for every prime `p < 10^6`,
 excluding and separately reporting ramified and small cases:
 
 1. direct pair-state Pisano periods modulo `p` and `p^2`;
-2. fast-doubling checks of `F_r mod p^2` and `F_{r+1} mod p^2` at `r = pi(p)`;
+2. fast-doubling checks of `F_r mod p^2` and `F_{r+1}-1 mod p^2` at `r = pi(p)`;
 3. matrix exponentiation of `A^r mod p^2` and the first-lift matrix `B mod p`.
 
 Receipt fields should include `p`, `legendreSym 5 p`, `rank`, `pi_p`, `pi_p2`,
@@ -713,9 +713,7 @@ $$
 
 is K_p(20pi*y). Moreover K_p(t)=S_r(t)-S_R(t), and for every a>=3 and 0<t<=1,
 
-$$
-\left|S_a(t)-\frac{\log(1/t)}{2a\log\phi}\right|\le2,
-$$
+$$\left|S_a(t)-\frac{\log(1/t)}{2a\log\phi}\right|\le2,$$
 
 $$\boxed{\left|K_p(t)-\kappa_p\log(1/t)\right|\le4,\qquad
 \kappa_p=\frac{1/r-1/R}{2\log\phi}.}\tag{THS4}$$
@@ -1453,3 +1451,332 @@ The finite-orbit discipline in the separate CarlitzFiveOrbit result is methodolo
 For comparison, Fretwell-Roberts, *Hilbert modular Eisenstein congruences of local origin*, arXiv:2411.06987v2 (March 3, 2026), Journal of Number Theory280(2026),861-896, proves congruence existence results in parallel holomorphic weight at least three. Those weight hypotheses are absent from the parameter-zero, weight-zero Maass family here. Its existence theorem is not used to create the character eta. Source roles and the current version locators are recorded in the accompanying Library notes.
 
 All spectral conclusions of CTG start with an existing eta, so CTG7 is an exact recovery of the original depth, not an independently proved bound on it. A new WSS prime-family decision would require an independent restriction or construction for the complete integral Hecke system, with all the weight, conductor, evenness and fixed-field conditions retained. Neither the universal polynomial model nor its finite-precision scalar characters establish such existence. No Petersson-norm inequality, general mod-p modularity theorem or unknown class-group order is used to choose a branch.
+
+
+### HCR. One-prime Hecke reconstruction and the exact observable subfield
+
+#### HCR.1 A single actual auxiliary prime
+
+**Definition.** Retain an existing ordinary golden ring-class character eta of exact order m=p^k from ROC, with p>5 and k>=1. Thus the actual hypothesis h_p>=k+1 remains in force. Put q=p^(k-1), h=(p-1)/2 and d=hq. Let zeta be a primitive mth root of unity, t=zeta+zeta^(-1), B=Q(t), and Psi_m the monic minimal polynomial of t. Retain the SGN-normalized forms g_sigma and the rational trace forms
+
+$$\mathcal F_c=\sum_{\sigma:B\hookrightarrow\mathbb R}\sigma(c)g_\sigma,
+\qquad c\in B.$$
+
+The notation F_n without a calligraphic letter continues to denote a Fibonacci number. Choose a good split rational prime ell, ell not dividing 5p, whose rotation Frobenius generates the cyclic group of order m. Relabel zeta so that eta(q_ell)=zeta at one of the two primes above ell. Chebotarev in the already-existing class field supplies such ell; this does not construct eta and gives no bound for the least such ell here.
+
+Define monic polynomials P_0(X)=1, P_1(X)=X and P_(n+1)(X)=X P_n(X)-P_(n-1)(X). These equal the classical Chebyshev polynomials U_n(X/2). Define D_0(X)=2, D_1(X)=X and the same recurrence for D_n; then D_n(t)=zeta^n+zeta^(-n).
+
+**Lemma HCR1.** The exact prime-power coefficients and their generating function are
+
+$$A_\eta(\ell^n)=P_n(t)=\sum_{j=0}^n\zeta^{n-2j},\qquad
+\sum_{n\ge0}P_n(t)Z^n=\frac1{1-tZ+Z^2}.\tag{HCR1}$$
+
+The elements P_0(t),...,P_(d-1)(t) are a Z-basis of O_B.
+
+**Proof.** The ideals of norm ell^n are q_ell^j sigma(q_ell)^(n-j), for 0<=j<=n. Their character values sum to the displayed expression. It satisfies the stated recurrence and initial values, which also prove the formal generating function. Each P_j is monic of degree j with integer coefficients. Thus this family is a unitriangular change of the integral power basis 1,t,...,t^(d-1) established in STL1. All equalities are exact; no asymptotic Hecke estimate is used.
+
+The polynomial generating function is classical, NIST DLMF 18.12.10. The input that these ideal sums define the specified Maass forms is the real-quadratic Hecke construction in D. Tanaka, *Explicit Construction of Maass Wave Forms and Their Petersson Inner Products*, arXiv:2601.21588v3, Theorem 1.1 and its defining Fourier expansion. This subsection uses neither that paper's Petersson norm constant nor a nonvanishing assertion at an unknown WSS target. Source roles are recorded in `Library/notes/tanaka2026maass.md`.
+
+#### HCR.2 The reciprocal numerator and a constructive inverse
+
+**Theorem HCR2.** For c in B, let R_c(X) be the unique polynomial of degree less than d with
+
+$$R_c(t)=c\Psi_m'(t).$$
+
+Put s_n(c)=[ell^n]F_c=Tr_(B/Q)(c P_n(t)). Then
+
+$$\boxed{\sum_{n\ge0}s_n(c)Z^n
+=\frac{N_c(Z)}{\Phi_m(Z)},\qquad
+N_c(Z)=Z^{d-1}R_c(Z+Z^{-1}).}\tag{HCR2}$$
+
+N_c is a rational polynomial of degree at most 2d-2 and has reciprocity of the fixed width 2d-2:
+
+$$N_c(Z)=Z^{2d-2}N_c(Z^{-1}).$$
+
+Every rational polynomial with this width-reciprocity occurs for a unique c. Moreover
+
+$$\boxed{\mathcal F_c\in L_{\rm int}
+\iff N_c\in\mathbb Z[Z]
+\iff s_0(c),...,s_{d-1}(c)\in\mathbb Z.}\tag{HCR3}$$
+
+The width is fixed even when the leading coefficients vanish; its value is not claimed to be the actual degree of every N_c.
+
+**Proof.** Let t_sigma be the conjugates of t. Partial fractions and Lagrange interpolation give
+
+$$\sum_\sigma\frac{\sigma(c)}{X-t_\sigma}
+=\frac{R_c(X)}{\Psi_m(X)},$$
+
+because the numerator evaluated at t_sigma is sigma(c) Psi_m'(t_sigma). Substitute X=Z+Z^(-1), multiply by Z^(-1), and use
+
+$$Z^d\Psi_m(Z+Z^{-1})=\Phi_m(Z)
+=1+Z^q+\cdots+Z^{(p-1)q}.$$
+
+This proves HCR2 as a formal power-series identity. The elements Z^(d-1) and Z^(d-1)(Z^j+Z^(-j)), 1<=j<=d-1, are a basis of the polynomials with this reciprocity. They correspond to 1,D_1,...,D_(d-1), an integral triangular basis of polynomials of degree less than d. This proves the bijection and N_c integral iff R_c integral.
+
+The monogenic trace-dual formula is D_B^(-1)=Psi_m'(t)^(-1)O_B; equivalently it follows from Lagrange interpolation by pairing the power basis with the coefficients of Psi_m(X)/(X-t). Since O_B=Z[t], R_c integral is equivalent to c belonging to the codifferent, and hence to F_c belonging to L_int by STL2. Alternatively P_0(t),...,P_(d-1)(t) are already an integral basis by HCR1, so their d integer traces are exactly the defining codifferent test. These are classical trace-dual facts, used here with the actual single-prime coefficients.
+
+**Theorem HCR3.** Given arbitrary integers y_0,...,y_(d-1), define, for 0<=j<=d-1,
+
+$$n_j=\sum_{a=0}^{\lfloor j/q\rfloor}y_{j-aq},\qquad
+n_{2d-2-j}=n_j.$$
+
+Set
+
+$$N_y(Z)=\sum_{j=0}^{2d-2}n_j Z^j,$$
+
+$$R_y(X)=n_{d-1}+\sum_{j=0}^{d-2}n_jD_{d-1-j}(X),\qquad
+c_y=R_y(t)/\Psi_m'(t).\tag{HCR4}$$
+
+Then F_(c_y) is the unique form in the rational packet with [ell^j]F_(c_y)=y_j for 0<=j<d, and all its Fourier coefficients are integers. The same construction with rational y gives the unique rational-packet form. Omitting any one of these d selected samples leaves a nonintegral form with all remaining selected coefficients integral.
+
+**Proof.** The reciprocal assignment is consistent at its central coefficient. The first d coefficients of Phi_m(Z) times sum y_j Z^j are precisely the n_j displayed above. Therefore N_y/Phi_m has the required first d coefficients. The expansion in D_j gives Z^(d-1)R_y(Z+Z^(-1))=N_y. HCR2-HCR3 prove existence and integrality. If two forms have the same prefix, their traces against the full basis P_j(t) agree; nondegeneracy of the trace pairing makes their c parameters equal. For omitted sample i, take the rational prefix with y_i=1/2 and all other entries zero. The construction gives a form with exactly that nonintegral sampled coefficient. This proves sharpness of these linear sampling conditions. It does not claim that arbitrary d Fourier positions are independent or bound the height ell^(d-1).
+
+#### HCR.3 The full integer period and the minimal temporal recurrence
+
+**Definition.** For the single-prime sequence set b_0=0 and b_r=s_(r-1) for 1<=r<m, and regard b as a function on Z/mZ.
+
+**Theorem HCR4.** The prime-power sequences of L_int are in bijection with the integer functions b on Z/mZ satisfying
+
+$$\boxed{b_{-r}=-b_r,\qquad
+\sum_{j=0}^{p-1}b_{r+jq}=0\quad(r\in\mathbb Z/q\mathbb Z).}\tag{HCR5}$$
+
+In this correspondence s_n=b_(n+1 mod m) for all n>=0. The first d values b_1,...,b_d are free integer coordinates. Every nonzero rational sequence in this family has exact period m and minimal homogeneous constant-coefficient recurrence order 2d over Q, even though those d samples determine it within the specified family.
+
+**Proof.** From HCR2 and Phi_m=(1-Z^m)/(1-Z^q),
+
+$$\sum_{r\ge1}b_rZ^r=\frac{B_c(Z)}{1-Z^m},\qquad
+B_c(Z)=ZN_c(Z)(1-Z^q).$$
+
+The degree of B_c is at most m-1 and its constant term is zero. Width-reciprocity of N_c is equivalent to Z^m B_c(Z^(-1))=-B_c(Z), giving oddness. Divisibility by 1-Z^q is equivalent to zero sums of coefficients in each residue class modulo q. Conversely, start with an odd integer b having these fibre sums. Then B(Z)=sum_(r=0)^(m-1)b_rZ^r is divisible by 1-Z^q in Z[Z], since the latter is monic up to sign. Its quotient has zero constant term, so N=B/[Z(1-Z^q)] is an integer polynomial of degree at most 2d-2. The oddness equation makes N width-reciprocal. HCR2-HCR3 supply a unique c and the asserted entire sequence. HCR3 gives its first-d parametrization.
+
+For nonzero rational c, N_c is nonzero with degree below deg(Phi_m)=2d. Irreducibility of the cyclotomic polynomial implies gcd(N_c,Phi_m)=1 in Q[Z]. Hence Phi_m is the reduced generating-function denominator. Any eventual homogeneous rational linear recurrence must have a characteristic polynomial whose reversed polynomial is divisible by Phi_m, so its order is at least 2d; HCR2 realizes that order. A period T would make the reduced denominator divide 1-Z^T, forcing m|T. Since period m has already been proved, it is exact. The rationality assumption is retained in the minimal-recurrence assertion; it is not asserted for arbitrary real linear combinations of individual conjugate sinusoids.
+
+#### HCR.4 Explicit completion and a sharp error-amplification factor
+
+**Theorem HCR5.** Starting from any prescribed b_1,...,b_d, the only missing positive representatives in HCR5 are r=d+a, 1<=a<=(q-1)/2. They are given by
+
+$$\boxed{b_{d+a}=
+\sum_{j=1}^{h}b_{jq-a}-\sum_{j=0}^{h-1}b_{jq+a}.}\tag{HCR6}$$
+
+Together with b_0=0 and oddness, this is a direct integer reconstruction of the entire period. The corresponding linear map from the prefix with its maximum norm to the full period with its maximum norm has exact operator norm one for k=1 and p-1 for k>=2. The same bounds hold for differences of two prefixes, and hence for bounded real input errors in this fixed linear extension map.
+
+**Proof.** In the fibre of a modulo q, the positive representatives are a+jq, 0<=j<=h, and the negative representatives are the negatives of jq-a, 1<=j<=h. Solving its zero-sum equation for b_(hq+a) gives HCR6. Every index on the right lies between one and d. The fibre with residue zero has zero sum automatically by oddness; the remaining fibres follow from these equations and their negatives. Thus all constraints hold and uniqueness follows either directly or from HCR4.
+
+For a fixed a, the 2h=p-1 indices on the right are distinct: equality across the two lists would require 2a to be a nonzero multiple of q, whereas 0<2a<q. Their coefficients are exactly +1 or -1. The reconstruction thus has row sums of absolute values at most p-1. When k>=2 a missing row exists; assigning its p-1 prefix entries their respective coefficient signs attains p-1, with prefix norm one. When k=1, q=1 and no missing positive row exists; the full period consists only of the original coordinates, their negatives and zero, giving norm one. These are bounds for the chosen prime-power coefficient subsequence, not a uniform norm bound for all Fourier coefficients of the form.
+
+**Example.** For m=49, q=7 and d=21, one missing coordinate is
+
+$$b_{22}=b_6+b_{13}+b_{20}-b_1-b_8-b_{15}.$$
+
+Its maximum amplification is six. This is an abstract cyclotomic recurrence identity. It asserts neither the existence of a golden character of order 49 nor a WSS prime at seven.
+
+#### HCR.5 Non-generators expose exactly a relative trace
+
+**Theorem HCR6.** Let ell be any good split prime for an existing order-p^k packet, and suppose eta(q_ell) has exact order p^s, with 1<=s<=k. Put
+
+$$B_s=\mathbb Q(\zeta_{p^s}+\zeta_{p^s}^{-1}),\qquad
+ d_s=p^{s-1}(p-1)/2,$$
+
+viewing B_s as the corresponding subfield of B=B_k. All coefficients [ell^n]F_c depend exactly on
+
+$$c_s=\operatorname{Tr}_{B/B_s}(c).$$
+
+The single-prime observation map has rational rank d_s and kernel dimension d-d_s. On coefficient-integral lattices its image is the full codifferent lattice of B_s, and its kernel is free of rank d-d_s.
+
+**Proof.** The eigenvalue t_ell belongs to B_s and generates its full integer ring. For every n,
+
+$$\operatorname{Tr}_{B/\mathbb Q}(cP_n(t_\ell))
+=\operatorname{Tr}_{B_s/\mathbb Q}(c_sP_n(t_\ell)).$$
+
+The first d_s of these polynomials give a full basis of O_(B_s), so they detect c_s exactly. The field trace is surjective in characteristic zero, giving the rational rank. It remains to show
+
+$$\operatorname{Tr}_{B/B_s}(\mathfrak D_B^{-1})=\mathfrak D_{B_s}^{-1}.$$
+
+The inclusion from left to right follows by composing traces. Conversely O_(B_s) is a saturated Z-submodule of O_B: if an integer multiple of x in O_B lies in B_s then x lies in B_s, hence in O_(B_s). Its quotient is therefore a finitely generated torsion-free abelian group, and is free. Any integral functional on O_(B_s) extends to O_B after choosing a free complement. Represent the extension by trace against c in D_B^(-1). Its restriction is trace against Tr_(B/B_s)c, proving surjectivity onto D_(B_s)^(-1). The exact sequence of free abelian groups then gives the integral kernel rank. No cyclic-order or semisimplified residue observation is substituted for this full trace map.
+
+**Boundary cases.** If eta(q_ell)=1 at a split good prime, then
+
+$$[\ell^n]\mathcal F_c=(n+1)\operatorname{Tr}_{B/\mathbb Q}(c).$$
+
+At an inert good prime the coefficient is Tr(c) for even n and zero for odd n. In both cases the observation rank is one, with kernel dimension d-1. The split identity case is not claimed to be periodic in n.
+
+**Proof.** The split identity case is P_n(2)=n+1. Inert ideal norms occur only in even powers of ell; the unique such ideal is a rational principal ideal and has character value one. The trace map from the codifferent onto Z is surjective by the same functional-extension argument applied to Z subset O_B.
+
+**Corollary.** For any nonempty set of good primes, when only their power coefficients and the coefficients at products of their powers are retained, let p^s be the largest nontrivial rotation order among the split primes. If such an order exists, all these data have exactly the kernel Tr_(B/B_s)c=0. If none exists, the kernel is Tr_(B/Q)c=0. In particular, for k>=2, any collection avoiding generator rotations leaves a kernel of dimension at least d-d/p, regardless of how many powers are observed.
+
+**Proof.** All the observed eigenvalues lie in the largest of the nested subfields B_s, and multiplicativity puts the product coefficients in the same field. One prime of that largest order already spans O_(B_s) through its power coefficients by HCR1. Thus the common observable coefficient algebra has precisely this field and the asserted kernel. Identity and inert primes add only rational coefficients. For k>=2 the largest proper subfield in this tower has degree d/p. This is a restriction on the stated observation set, not on all possible arithmetic methods.
+
+#### HCR.6 Relation to the existing trace-image formalization
+
+**Proposition HCR7.** At k=1, let y_j=[ell^j]F_c, 0<=j<d, be the single-prime prefix of a coefficient-integral form. Then
+
+$$\boxed{\mathcal F_c\in L_{\rm tr}
+\iff y_j\equiv(j+1)y_0\pmod p\quad(1\le j<d).}\tag{HCR7}$$
+
+**Proof.** Set z_0=y_0, z_1=y_1, and z_j=y_j-y_(j-2) for j>=2. The polynomial identities D_1=P_1 and D_j=P_j-P_(j-2) show that z_j=Tr(c e_j) for the trace basis of STL4. Its existing integral-image theorem says c in O_B exactly when p divides z_j-2z_0 for j>0. Those conditions are y_1=2y_0 modulo p and y_j-y_(j-2)=2y_0 modulo p. Induction on the even and odd indices gives exactly HCR7, and the converse follows by subtraction. This does not require a new Lean theorem: it is an ordinary consumer of `PrimeCyclotomicTraceImage.integral_image` together with the displayed Hecke coefficient recurrence. The existing Scribe is supplemented with this relationship while its formal statement is left unchanged.
+
+#### HCR.7 What this reconstruction does not decide
+
+**Proposition.** HCR1-HCR7 give a constructive complete description of the single-prime coefficient data and their integral lattice for an existing packet. The integer periodic sequences in HCR5 can be constructed abstractly for every prime p>5 and every k>=1, without constructing a golden ring-class character. They are therefore not, by themselves, WSS certificates.
+
+**Proof.** HCR3-HCR5 use only the cyclotomic polynomial, rational trace pairing and explicit integer coefficients once the spectral interpretation is omitted. Those objects exist for every such p and k. Interpreting them as Fourier coefficients of the specified global Maass packet requires eta in X_(p,k), equivalently the original h_p>=k+1 by ROC. No theorem in HCR establishes that premise independently. A new WSS decision would require constructing or excluding that global extension, with all arithmetic and automorphic compatibility conditions retained. The first-d integrality test presupposes membership in this rational packet; it is not a Sturm bound for arbitrary Maass forms or a certificate of global automorphy from a finite prefix. Nor is a computational speedup asserted: HCR uses one auxiliary prime but reaches exponent d-1, and provides no bound on the size of that prime.
+
+
+### SJC. Predictive completion of the original golden orbit at square precision
+
+#### SJC.1 What is being completed
+
+**Definition.** Retain K=Q(sqrt(5)), O=Z[phi], phi^2=phi+1, conjugation bar(phi)=1-phi, and delta=2phi-1. Put v=phi^2=1+phi, so N(v)=1 and Tr(v)=3. For a prime p>5 write chi=(5/p), N=p-chi, q_p=F_N/p modulo p, and h_p=v_p(F_N). Division by p in a residue formula is performed before reduction; denominators prime to p are then inverted in the residue ring.
+
+The prediction task consists of the actual update x mapping to vx and specified observations of its state. Coarse reduction modulo p, full state modulo p^2, and delayed scalar traces are different observation maps. Completeness of an observation means sufficiency for the specified outputs and their future updates; it is not an assertion about incompleteness of arithmetic or of set theory.
+
+**Proposition SJC1.** Z with its ordinary absolute-value metric is complete, whereas its p-adic completion is Z_p. The projection O/p^2O -> O/pO is a noninjective ring map and cannot have a unital ring section. In particular its source cannot be replaced as a ring by (O/pO)[epsilon]/(epsilon^2).
+
+**Proof.** An ordinary Cauchy sequence of integers is eventually constant, by applying the Cauchy condition with distance less than one. In the p-adic metric, compatible residues modulo p^a define Cauchy classes and conversely, giving the inverse-limit completion Z_p. For example the partial geometric sums 1+p+...+p^n converge p-adically to 1/(1-p), which is not an integer for p>2. The square-precision ring has characteristic p^2, while the residue ring and its dual numbers have characteristic p. A unital section would send p*1=0 to p*1!=0. This proves the last two assertions. A multiplicative group section constructed below does not contradict the absence of a ring section.
+
+The repository's `CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md`, Sections 1-3, makes the relevant distinction precise: a quotient may have closed updates yet fail a required query; exact task descent requires that all such queries and successor labels be constant on its fibers. The current draft `SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2, treats related real linear dynamics, with additional hypotheses for positive-energy and symplectic conclusions. These frameworks provide a method of selecting state, not an independent WSS prime-distribution theorem.
+
+#### SJC.2 The exact square-precision state and drift
+
+**Definition.** For a>=1 let T^(a) be the group of norm-one units of O/p^aO. Put r=ord_(T^(1))(v mod p), C=<v mod p>, and X_2 the inverse image of C in T^(2). The symbol r here is the period of the norm-one unit phi^2, not the Fibonacci zero rank rho(p). One has r|N, p not dividing r, and r>=3. The first fact follows from the split/inert order N of T^(1). The cases r=1,2 are excluded by v-1=phi and v+1=2+phi, whose norms are -1 and 5.
+
+**Theorem SJC2.** There is a unique multiplicative section s:C -> X_2 whose image consists of r-torsion. Put xi=s(v mod p). Every state of X_2 has a unique expression
+
+$$x=\xi^j(1+pz\delta),\qquad
+(j,z)\in\mathbb Z/r\mathbb Z\times\mathbb F_p.$$
+
+In these coordinates the actual update by v is
+
+$$\boxed{(j,z)\longmapsto(j+1,z-q_p).}\tag{SJC1}$$
+
+Thus X_2 has p disjoint cycles of length r if q_p=0, and one cycle of length rp otherwise. The orbit of the specified initial state one has length r or rp respectively.
+
+**Proof.** The kernel of norm-one reduction consists of 1+pw with Tr(w)=0 modulo p. Since Tr(1)=2 and delta^2=5, its elements are exactly 1+pz*delta with z in F_p. Multiplication adds z. Reduction is surjective: for any unit lift of a norm-one residue, its norm is 1+pc, and multiplication by the scalar 1-pc/2 corrects the norm modulo p^2.
+
+For a lift x of an element of C, write x^r=1+pb*delta. Multiplication by 1-p*r^(-1)b*delta produces an r-torsion lift. It is unique, because taking the rth power is invertible on the order-p kernel. Products of unique torsion lifts are the unique torsion lift of the product, proving the group section. This also gives the unique displayed coordinates.
+
+The golden identity L_N^2-5F_N^2=4, together with L_N=2chi modulo p, gives L_N=2chi modulo p^2: the other factor L_N+2chi is a unit. Therefore
+
+$$\phi^N\equiv\chi+\tfrac12p q_p\delta\pmod{p^2O},\qquad
+v^N\equiv1+p\chi q_p\delta\pmod{p^2O}.$$
+
+Write v=xi(1+pc*delta). Since xi^N=1 and N=-chi modulo p, comparison of v^N gives Nc=chi*q_p, hence c=-q_p. This proves SJC1. A return after t steps requires r|t and tq_p=0 modulo p. Since p is coprime to r, the asserted cycle lengths and counts follow.
+
+This is the fixed-golden specialization of the square-level Lie-kernel mechanism in Katz, *Wieferich past and future*, Section 4, the exact sequence on printed page 3. The explicit coordinates and task interpretation above do not make Katz's cross-prime equidistribution conjecture a theorem.
+
+#### SJC.3 A cycle obstruction that rephasing cannot remove
+
+**Theorem SJC3.** For any prescribed gamma_j in F_p on j in Z/rZ, consider T_gamma(j,z)=(j+1,z+gamma_j). A fiberwise translation z'=z+f(j) changes the drift to
+
+$$\gamma'_j=\gamma_j+f(j+1)-f(j).$$
+
+The sum H=sum_j gamma_j is invariant under every such change. There is a rephasing with all gamma'_j=0 if and only if H=0; when it exists, f is unique up to an additive constant. For the actual golden update, H=-r*q_p, so complete removal of the drift is equivalent to q_p=0.
+
+**Proof.** Substitute z=z'-f(j) in the update. Summing cancels every f term. If H=0, choose f(0) arbitrarily and define f(j+1)=f(j)-gamma_j; the closing equation at r holds exactly because the sum is zero. Conversely zero drift has zero sum. Two solutions have zero successive difference and thus differ by a constant. Since p does not divide r, the actual sum vanishes precisely with q_p.
+
+The obstruction is the accumulated drift of a Z-action over a finite phase cycle, or equivalently the circulation of a labeled cycle graph. It is not being identified with H^1 of the finite group C_r acting trivially on F_p. In that finite-group cohomology, p not dividing r would give a different vanishing statement.
+
+**Proposition SJC4.** All lifts v_c=xi(1+pc*delta), c in F_p, have the same complete history after reduction modulo p. Their refined return behaviors differ. The original integer recurrence selects exactly one of them by the fixed polynomial equation v_c^2-3v_c+1=0, and
+
+$$\boxed{q_p=\frac{\operatorname{Tr}(\xi)-3}{5p}\pmod p.}\tag{SJC2}$$
+
+Here Tr(xi)-3 is divisible by p in Z/p^2Z. Divide by p first, then multiply by the inverse of five modulo p; no integer divisibility by five is asserted for an arbitrary representative of the trace.
+
+**Proof.** Coarse equality persists under every power because all lifts reduce to v. For norm-one xi, its inverse is its conjugate and xi^2-Tr(xi)xi+1=0. In the kernel direction, direct first-order expansion gives
+
+$$v_c^2-3v_c+1\equiv
+\xi\bigl(\operatorname{Tr}(\xi)-3+5pc\bigr)\pmod{p^2O}.$$
+
+Indeed modulo p, 2xi-3=delta and delta^2=5. Since xi and five are units, this has exactly one solution c. SJC2 already identifies the original solution as c=-q_p, proving SJC2. The uniqueness shows why choosing the torsion lift c=0 does not construct a WSS example: it must also satisfy the fixed golden polynomial. The other lifts are comparison states, not alternative realizations of that same fixed recurrence.
+
+#### SJC.4 Two exact delayed traces recover the fine state
+
+**Theorem SJC5.** Let R=Z/p^aZ for a>=1 and p>5. For x=A+Bphi in O/p^aO, write y_0=Tr(x) and y_1=Tr(vx). Then
+
+$$\begin{pmatrix}y_0\\y_1\end{pmatrix}
+=\begin{pmatrix}2&1\\3&4\end{pmatrix}
+\begin{pmatrix}A\\B\end{pmatrix},\qquad
+\boxed{A=(4y_0-y_1)/5,\quad B=(-3y_0+2y_1)/5.}\tag{SJC3}$$
+
+Consequently, equality of all future exact trace observations under multiplication by v is already decided by these two observations and is equality of the state itself. On X_2 every one of its rp states is distinguishable by this two-observation experiment, independently of which drift branch the fixed v occupies.
+
+**Proof.** Multiply (1+phi)(A+Bphi)=(A+B)+(A+2B)phi and use Tr(C+Dphi)=2C+D. The determinant is five, a unit in R, proving the inverse and the claim about future observations. This is a fixed linear observability computation over the actual finite ring; replacing it by an approximate real trace is not part of the assertion.
+
+**Corollary.** At the phase return r,
+
+$$\operatorname{Tr}(v^r)=2\pmod{p^2},\qquad
+\boxed{\frac{L_{2r+2}-3}{p}=-5r q_p\pmod p.}\tag{SJC4}$$
+
+Thus the return trace alone deletes the first-order defect, while the next exact trace recovers it.
+
+**Proof.** SJC1 gives v^r=1-pr*q_p*delta modulo p^2. Its trace is two since Tr(delta)=0. Multiplying by v and using Tr(v)=3 and Tr(v delta)=5 gives the second formula. In the integers Tr(v^(r+1))=L_(2r+2), so the displayed division is legitimate. This does not supply q_p independently of the exact integer traces; it specifies which observation retains it.
+
+The task-quotient principle in `CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md`, Theorems 2.2 and 3.2, applies literally: coarse reduction is closed for the coarse task but fails this refined task. This is a different kind of information loss from HCR's non-generator auxiliary Hecke observation, where the exact kernel is a relative field trace. Both require retaining the actual joint observation map.
+
+#### SJC.5 All p-adic levels retain a single drift parameter
+
+**Theorem SJC6.** In O_p=O tensor Z_p there is a unique norm-one torsion lift xi of v modulo p with order r. There is a unique a_p in Z_p such that
+
+$$v=\xi\exp(pa_p\delta),\qquad
+v_p(a_p)=h_p-1,\qquad a_p=-q_p\pmod p.$$
+
+At precision p^s the inverse image of C has coordinates
+
+$$\mathbb Z/r\mathbb Z\times\mathbb Z/p^{s-1}\mathbb Z,
+\qquad(j,z)\longmapsto(j+1,z+a_p).$$
+
+It has exactly p^min(s-1,h_p-1) cycles, each of length r*p^max(s-h_p,0). At s=1 the second coordinate is the singleton group.
+
+**Proof.** Simple-root lifting constructs the compatible torsion lift; the norm is one by uniqueness. The convergent logarithm and exponential are inverse valuation-preserving maps between 1+pO_p and pO_p. This follows from their power series for odd p, since the linear term has strictly smaller valuation than the higher terms. Norm one corresponds to trace zero, which is the free line Z_p*delta. Hence log(v/xi)=pa_p*delta with a unique a_p.
+
+Using phi^N=(L_N+F_N delta)/2 and the norm identity, one has v_p(phi^N-chi)=h_p in every completion above p. The factor phi^N+chi is a unit, giving v_p(v^N-1)=h_p. Since N is a p-adic unit and xi^N=1, this is the valuation of log(v/xi), proving the depth of a_p. Reduction to the first layer recovers -q_p. Additivity of logarithms gives the translation action. A return time must be divisible by r and make t*a_p zero modulo p^(s-1); these coprime requirements give the lengths and counts.
+
+The integer time is common to all selected primes. Combining their local states gives the image of that one time parameter, not every point of their Cartesian product. The exact gcd correction in ROC4-ROC5 is an existing arithmetic instance of this joint-compatibility requirement. Neither local cycle counts nor their product imply that the actual fixed drift vanishes at a new prime.
+
+#### SJC.6 The real symplectic realization has indefinite energy
+
+**Theorem SJC7.** In the coefficient basis (1,phi), multiplication by phi and v has matrices
+
+$$A=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+B=A^2=\begin{pmatrix}1&1\\1&2\end{pmatrix}.$$
+
+Put S=2A-I, J=((0,1),(-1,0)), and c=2log(phi)/sqrt(5). Then
+
+$$S^2=5I,\qquad B^TJB=J,\qquad B=\exp(cS).$$
+
+The real flow exp(tcS) is Hamiltonian with quadratic Hessian -JcS, which is indefinite. No positive-definite quadratic energy is preserved by B.
+
+**Proof.** The matrix identities follow by multiplication. The eigenvalues of S are sqrt(5) and -sqrt(5), and exp(cS) has eigenvalues phi^2 and phi^(-2) on the same eigenlines as B, proving the exponential identity. The matrix cS has trace zero and is Hamiltonian in dimension two; -JcS is symmetric with eigenvalues 2log(phi) and -2log(phi), so the energy is indefinite. If a positive-definite Q satisfied B^TQB=Q, its value on a real eigenvector of B with eigenvalue phi^2>1 would both remain fixed and multiply by phi^4, a contradiction.
+
+The positive-energy hypothesis in the draft `SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2.2, is therefore unavailable for this real golden flow. Its automatic symplectic compression and normalized Gibbs conclusions cannot be applied merely because B is symplectic. The basis here is the coordinate swap of CG.5, with the same arithmetic map. Real interpolation adds a legitimate geometric realization but does not alter any p-adic return.
+
+#### SJC.7 A global cyclotomic norm of the canonical torsion trace
+
+**Theorem SJC8.** Let r be the norm-one period in SJC.2. For a primitive rth root of unity zeta_r let Psi_r be the minimal polynomial of zeta_r+zeta_r^(-1), and set G_r=Psi_r(3). Then G_r is a positive integer and
+
+$$\boxed{v_p(G_r)=h_p,\qquad
+1<G_r<5^{\varphi(r)/2}.}\tag{SJC5}$$
+
+In particular WSS at p forces p^2|G_r and p^2<5^(varphi(r)/2). This r divides p-chi and is prime to p; it is distinct from the p-power character order used in HCR and SGN.
+
+**Proof.** Because r>=3, every real conjugate 2cos(2pi j/r) lies strictly between -2 and 2. Thus every factor of Psi_r(3) lies strictly between one and five, proving positivity and the bound.
+
+Since p=+/-1 modulo r and p does not divide r, p splits completely in the real cyclotomic field, and the conjugate torsion traces are distinct modulo p. Distinctness follows directly: two rth roots with the same sum with their inverse must agree up to inversion, since both solve X^2-tX+1. The canonical torsion lift xi gives one such trace alpha=xi+xi^(-1) with alpha=3 modulo p. It is the unique conjugate with this residue. All other factors of Psi_r(3) are p-adic units.
+
+Finally,
+
+$$3-\alpha=(v-\xi)\bigl(1-(v\xi)^{-1}\bigr).$$
+
+The second factor is a unit because the residue of xi has order r>2. The first factor has valuation h_p by SJC6. Thus the valuation of the entire norm is exactly h_p. At a split p the two golden embeddings exchange xi and xi^(-1), which have the same alpha; they do not create a second norm factor.
+
+**Corollary.** Conversely, for any r>=3 and prime p>5 with p not dividing r, p^2|Psi_r(3) implies that the order of v modulo p is r and that p is WSS.
+
+**Proof.** A zero Psi_r(3) modulo p comes from a primitive rth root whose trace is three, since reduction of rth roots is separable. Its two roots solve X^2-3X+1, the same roots as v and v^(-1) in the quadratic residue algebra. Hence v has order r. Apply SJC8 to identify the full valuation with h_p.
+
+The use of cyclotomic norms and their exact entry-point valuations is classical for regular Lucas sequences. Ross, Shen and Cai, *The p-adic Valuations of Mobius Duals of Lucas Sequences*, arXiv:2512.03481v1, Introduction and Theorem 2.2(c), explicitly credit Carmichael's regular case and extend it to irregular sequences. SJC8 is proved above using the canonical torsion lift; neither the norm scale nor its valuation role is claimed as a new arithmetic discovery. The source does not prove WSS existence in the fixed golden field.
+
+#### SJC.8 Research consequence and limits
+
+**Proposition.** The useful transfer from the repository's spacetime model is task-relative completion: retain phase, the square-level Lie coordinate, the fixed update, and their joint compatibility. It identifies the original WSS defect with a rephasing-invariant cycle displacement and gives a sufficient two-trace observation. It does not make the integer formulation inadequate or establish a new actual WSS prime family.
+
+**Proof.** SJC1-SJC4 construct the extra coordinate and prove the fixed polynomial determines its drift. SJC3 excludes removing a nonzero cycle displacement by a change of coordinates. SJC5 gives exact reconstruction from two required observations, while SJC7 shows that a positive real energy cannot be assumed. SJC8 replaces the same unknown valuation by a specified global norm without independently bounding it. Thus a new prime-family decision still needs an independent constraint on the fixed torsion trace, on G_r, or on their cross-prime distribution. Arbitrarily choosing another lift, treating local states as independent worlds, or substituting a dual-number ring for characteristic p^2 changes the problem instead of proving that constraint.
