@@ -36,6 +36,10 @@ Lean statement: `D5/S3/Combinatorics/Orthogonality/NikandishClique.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Orthogonality/NikandishClique.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/nikandish-subspace-orthogonality-clique` (proved) by `D5/S3/Combinatorics/Orthogonality/NikandishClique.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"nikandish-subspace-orthogonality-clique","declaration_gid":"D5/S3/Combinatorics/Orthogonality/NikandishClique.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. Nikandish (2026). *Annihilating-Ideal Graphs and Orthogonality Graphs over F_2*. DOI: [10.48550/arXiv.2609.22769](https://doi.org/10.48550/arXiv.2609.22769). URL: <https://arxiv.org/abs/2609.22769v1>.

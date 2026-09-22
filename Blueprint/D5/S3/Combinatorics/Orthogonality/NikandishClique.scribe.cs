@@ -64,13 +64,12 @@ internal sealed class NikandishCliqueDocument : IScribeDocumentDefinition
                         + "incorrectly counts three nonzero subspaces of F_2^2; there are four. "
                         + "The present upper bound does not use that argument. Prior-resolution "
                         + "searches are bounded and do not certify worldwide novelty."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("nikandish-subspace-orthogonality-clique"),
+                    ResolutionKind.Proved))),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/Fourier/CharacterSelection/BinaryCharacterCodeDuality"))
         ]));
-
-    // Final publication requires the caller-owned Freeze followed by attaching to result:
-    // new OpenProblemResolutionClaim(
-    //     ProblemSlugRef.Create("nikandish-subspace-orthogonality-clique"), ResolutionKind.Proved).
 }
