@@ -287,8 +287,17 @@ public sealed class JudgeSeedTests
             row["execution_inputs"] = new JsonArray();
             row["execution_excludes"] = new JsonArray();
             row["execution_environment"] = new JsonArray("STRATALINT_TEST_ENVIRONMENT");
+            row["execution_filemap_paths"] = new JsonArray();
             row["build_inputs"] = new JsonArray("Directory.Build.props");
             registry["rule_build_inputs"] = new JsonArray("Directory.Build.props");
+        });
+        fixture.Prepare();
+        Assert.Equal(library, Material("Library"));
+        Assert.Equal(consumer, Material("Consumer"));
+        fixture.EditProjects(registry =>
+        {
+            registry["projects"]![0]!["execution_inputs"] = new JsonArray("Meta/**");
+            registry["projects"]![0]!["execution_filemap_paths"] = new JsonArray("docs/virtual.md");
         });
         fixture.Prepare();
         Assert.Equal(library, Material("Library"));
@@ -426,6 +435,12 @@ public sealed class JudgeSeedTests
     [InlineData("reference")]
     [InlineData("material")]
     [InlineData("unregistered-project")]
+    [InlineData("missing-filemap-paths")]
+    [InlineData("non-test-filemap-paths")]
+    [InlineData("duplicate-filemap-paths")]
+    [InlineData("glob-filemap-paths")]
+    [InlineData("no-filemap-input")]
+    [InlineData("excluded-filemap-input")]
     public void InvalidProjectRegistrationFailsBeforeCacheHandling(string defect)
     {
         using var fixture = new JudgeSeedFixture();
@@ -441,6 +456,19 @@ public sealed class JudgeSeedTests
             if (defect == "duplicate") rows.Add(rows[0]!.DeepClone());
             if (defect == "reference") rows[0]!["references"]!.AsArray().Add("tools/Missing/Missing.csproj");
             if (defect == "material") rows[0]!["include"]!.AsArray().Add("tools/Library/Missing.cs");
+            if (defect == "missing-filemap-paths") rows[0]!.AsObject().Remove("execution_filemap_paths");
+            if (defect == "non-test-filemap-paths") rows[0]!["execution_filemap_paths"] = new JsonArray();
+            if (defect is "duplicate-filemap-paths" or "glob-filemap-paths" or "no-filemap-input" or "excluded-filemap-input")
+            {
+                var row = rows[0]!;
+                row["role"] = "cross-cutting-test";
+                row["test_partition"] = "explicit-checks";
+                row["execution_inputs"] = defect == "no-filemap-input" ? new JsonArray() : new JsonArray("Meta/**");
+                row["execution_excludes"] = defect == "excluded-filemap-input" ? new JsonArray("Meta/FILEMAP.toml") : new JsonArray();
+                row["execution_environment"] = new JsonArray();
+                row["execution_filemap_paths"] = defect == "glob-filemap-paths" ? new JsonArray("docs/*.md")
+                    : defect == "duplicate-filemap-paths" ? new JsonArray("docs/virtual.md", "docs/virtual.md") : new JsonArray("docs/virtual.md");
+            }
         });
         var paths = new[] { "tools/Library/bin/existing", "tools/Library/obj/existing", ".judge-binaries/existing" }
             .Select(path => fixture.Write(path, "preserved")).ToArray();
