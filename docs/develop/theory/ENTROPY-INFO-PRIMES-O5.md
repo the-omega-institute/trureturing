@@ -197,3 +197,102 @@ $\operatorname{Ad}_I=\operatorname{Ad}_{-I}$，但它们作为具体酉实现接
 [QREC-NS]: https://arxiv.org/abs/quant-ph/0605041 "A. Nayak and P. Sen, Invertible Quantum Operations and Perfect Encryption of Quantum States, Quantum Information and Computation 7(1&2), 103–110 (2007), Theorem 2.1."
 [QREC-BK]: https://arxiv.org/abs/quant-ph/0004088 "H. Barnum and E. Knill, Reversing quantum dynamics with near-optimal quantum and classical fidelity, Journal of Mathematical Physics 43, 2097–2106 (2002)."
 [QREC-Control]: https://arxiv.org/abs/1309.7976 "M. Araújo, A. Feix, F. Costa and Č. Brukner, Quantum circuits cannot control unknown operations, New Journal of Physics 16, 093026 (2014)."
+
+## §11 压缩仪器的正缺陷与忠实逻辑观测代数
+
+### 定义 11.1：允许不同输入、输出框架的压缩
+
+取有限维复 Hilbert 空间及等距框架 $U:L\to H$、$W:L'\to H'$，满足 $U^\dagger U=I_L$、$W^\dagger W=I_{L'}$。物理仪器的有限 Kraus 族为 $K_a:H\to H'$，并满足 $\sum_aK_a^\dagger K_a=I_H$。定义
+
+$$
+k_a=W^\dagger K_aU,\qquad R_a=(I_{H'}-WW^\dagger)K_aU.
+\tag{11.1}
+$$
+
+这里 $R_a$ 是相对于输出框架的法向漏出，不是另行假设的噪声强度。分支均用未归一化矩阵描述，零概率分支不除以其概率。
+
+### 定理 11.2：压缩保持归一性当且仅当所有分支零漏出
+
+有精确等式
+
+$$
+\sum_a k_a^\dagger k_a+\sum_aR_a^\dagger R_a=I_L.
+\tag{11.2}
+$$
+
+从而 $\sum_a k_a^\dagger k_a=I_L$ 当且仅当每个 $R_a=0$，也当且仅当 $K_aU=Wk_a$ 对所有 $a$ 成立。
+
+**证明。** $Q=WW^\dagger$ 是正交投影。对任意矩阵 $B$，分解 $B=QB+(I-Q)B$ 的两项正交，故
+
+$$
+(W^\dagger B)^\dagger(W^\dagger B)
++[(I-Q)B]^\dagger[(I-Q)B]=B^\dagger B.
+$$
+
+代入 $B=K_aU$ 并求和即得(11.2)。若正 Gram 矩阵之和为零，对任意向量 $x$ 有 $\sum_a\|R_ax\|^2=0$；每一项非负，故所有 $R_a=0$。反向直接代入。最后 $R_a=K_aU-Wk_a$ 给出交织等价。∎
+
+这个条件严于“原动力学有一个不变谱子空间”：仪器的每个 Kraus 算子也必须保持规定的输入、输出框架，才可不增加修复项地直接压缩。
+
+### 定理 11.3：显式复位补全不等于逻辑恢复
+
+若 $L'$ 非零，选单位基向量 $v\in L'$。对 $H'$ 的任意正交基 $e_b$，令
+
+$$
+T_{a,b}=|v\rangle\langle e_b|R_a.
+$$
+
+把每个 $k_a$ 与该分支的全部 $T_{a,b}$ 作为同一公开结果 $a$ 的 Kraus 算子，得到合法仪器
+
+$$
+\widehat{\mathcal I}_a(\rho)=k_a\rho k_a^\dagger+
+\operatorname{tr}(R_a\rho R_a^\dagger)|v\rangle\langle v|.
+\tag{11.3}
+$$
+
+其分支概率恰为 $\operatorname{tr}(K_aU\rho U^\dagger K_a^\dagger)$。
+
+**证明。** 完备关系 $\sum_b|e_b\rangle\langle e_b|=I$ 给出 $\sum_bT_{a,b}^\dagger T_{a,b}=R_a^\dagger R_a$，也给出(11.3)中的复位项。由(11.2)全部 Kraus 平方和等于 $I_L$，所以总映射完全正且保迹。对单分支取迹并使用同一 Gram 分解，即得所述概率恒等式。∎
+
+补全只保证通道合法并保留这些分支概率，不能据此推出保留所有逻辑相干性、与参考系统的纠缠或未来自适应实验。无漏出情形才直接得到交织。特别地，当输入、输出框架同为固定 $U$ 时，逐次使用 $K_aU=Uk_a$，任意有限矩阵词 $w=(a_1,\ldots,a_r)$ 均满足
+
+$$
+K_{a_1}\cdots K_{a_r}U=Uk_{a_1}\cdots k_{a_r},
+$$
+
+所以对应未归一化分支矩阵也由 $U$ 精确交织。空词取单位矩阵；此结论不需要对任何分支作非零概率假设。
+
+### 定理 11.4：综合征编码保留的是带支持单位的忠实逻辑代数
+
+沿用定义10.1的正交综合征族，定义
+
+$$
+\pi(A)=\sum_jS_jAS_j^\dagger,\qquad A\in\mathcal B(L).
+\tag{11.4}
+$$
+
+则 $\pi$ 线性、保伴随、保乘法，且 $\pi(I_L)=P$。对任意综合征标签 $j$，
+
+$$
+\pi(A)S_j=S_jA,\qquad S_j^\dagger\pi(A)S_j=A.
+\tag{11.5}
+$$
+
+因指标集非空，$\pi$ 单射。它作为 $P\mathcal B(H)P$ 中的表示以 $P$ 为单位；除非 $P=I_H$，不能称其为到整个 $\mathcal B(H)$ 的保单位表示。进一步，对任意矩阵 $\rho,\sigma$，包括非对角综合征矩阵，有
+
+$$
+\pi(A)\mathcal E_\sigma(\rho)=\mathcal E_\sigma(A\rho).
+\tag{11.6}
+$$
+
+**证明。** 线性与伴随性质由有限和直接得到。乘法展开中 $S_i^\dagger S_j=\delta_{ij}I$ 消去全部交叉项，故 $\pi(A)\pi(B)=\pi(AB)$。同一关系得到(11.5)，其第二式给出左逆及单射性。对编码式逐项使用 $\pi(A)S_j=S_jA$，得到(11.6)。∎
+
+在上述有限构造里，综合征可携带额外熵，同时逻辑算子的乘法和伴随关系均完整保留。这比单独追踪输出熵更精确：它明确规定哪些操作和哪些观测仍可从物理表示中恢复。此处不额外断言参数化支持向量丛有全局基，也不把一个点上的矩阵关系当成全局拓扑定理。
+
+### 文献拓展：从全态恢复到可纠正观测量
+
+Bény、Kempf 与 Kribs 的算子代数量子纠错以 Heisenberg 图像中的观测量代数为对象，允许保护量子与经典信息的混合结构，而不要求恢复整个物理态。[QREC-OA-PRL][QREC-OA-PRA] 定理11.4提供该视角下的一个显式有限矩阵实例；一般可纠正代数的充要条件属于文献中的更广结果，不能由本节这个正交综合征实例反向宣称已证明。
+
+因而“保留目标所需的可区分性”应先指定目标观测代数及允许的仪器，而不是把所有物理自由度无区别地列为恢复目标。对仅保留经典结果概率的(11.3)与保持完整逻辑乘法结构的(11.4)，两者所解决的是不同的数学任务。
+
+[QREC-OA-PRL]: https://doi.org/10.1103/PhysRevLett.98.100502 "C. Bény, A. Kempf and D. W. Kribs, Generalization of Quantum Error Correction via the Heisenberg Picture, Physical Review Letters 98, 100502 (2007); arXiv:quant-ph/0608071."
+[QREC-OA-PRA]: https://doi.org/10.1103/PhysRevA.76.042303 "C. Bény, A. Kempf and D. W. Kribs, Quantum Error Correction of Observables, Physical Review A 76, 042303 (2007); arXiv:0705.1574."

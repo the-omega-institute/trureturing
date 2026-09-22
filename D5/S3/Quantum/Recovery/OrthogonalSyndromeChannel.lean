@@ -73,6 +73,55 @@ theorem logical_representation_star (S : s → Matrix n d ℂ) (A : Matrix d d �
   simp only [logicalRepresentation, Matrix.conjTranspose_sum, Matrix.conjTranspose_mul,
     Matrix.conjTranspose_conjTranspose, Matrix.mul_assoc]
 
+/-- The same observable acts on every physical syndrome copy. -/
+theorem logical_representation_on_copy (S : s → Matrix n d ℂ)
+    (hS : OrthogonalSyndromes S) (A : Matrix d d ℂ) (j : s) :
+    logicalRepresentation S A * S j = S j * A := by
+  simp only [logicalRepresentation, Matrix.sum_mul, Matrix.mul_assoc]
+  rw [Finset.sum_eq_single j]
+  · rw [hS j j]
+    simp
+  · intro i hi hij
+    rw [hS i j]
+    simp [hij]
+  · simp
+
+/-- Any one syndrome copy recovers the complete logical observable. -/
+theorem logical_representation_restrict (S : s → Matrix n d ℂ)
+    (hS : OrthogonalSyndromes S) (A : Matrix d d ℂ) (j : s) :
+    (S j)ᴴ * logicalRepresentation S A * S j = A := by
+  calc
+    _ = (S j)ᴴ * (logicalRepresentation S A * S j) := Matrix.mul_assoc _ _ _
+    _ = (S j)ᴴ * (S j * A) := by rw [logical_representation_on_copy S hS]
+    _ = ((S j)ᴴ * S j) * A := (Matrix.mul_assoc _ _ _).symm
+    _ = A := by rw [hS j j]; simp
+
+/-- The physical observable algebra loses no logical operator when a syndrome copy exists. -/
+theorem logical_representation_injective (S : s → Matrix n d ℂ)
+    (hS : OrthogonalSyndromes S) (j : s) :
+    Function.Injective (logicalRepresentation S) := by
+  intro A B hAB
+  have h := congrArg (fun X => (S j)ᴴ * X * S j) hAB
+  simpa only [logical_representation_restrict S hS] using h
+
+/-- Logical multiplication is intertwined even for coherent syndrome matrices. -/
+theorem logical_action_on_encoding (S : s → Matrix n d ℂ)
+    (hS : OrthogonalSyndromes S) (A rho : Matrix d d ℂ) (sigma : Matrix s s ℂ) :
+    logicalRepresentation S A * syndromeEncoding S sigma rho =
+      syndromeEncoding S sigma (A * rho) := by
+  simp only [syndromeEncoding, Matrix.mul_sum, Matrix.mul_smul]
+  apply Finset.sum_congr rfl
+  intro j hj
+  apply Finset.sum_congr rfl
+  intro k hk
+  congr 1
+  calc
+    _ = (logicalRepresentation S A * S j) * rho * (S k)ᴴ := by
+      simp only [Matrix.mul_assoc]
+    _ = S j * (A * rho) * (S k)ᴴ := by
+      rw [logical_representation_on_copy S hS]
+      simp only [Matrix.mul_assoc]
+
 /-- The total support is an orthogonal projection. -/
 theorem code_support_projection (S : s → Matrix n d ℂ)
     (hS : OrthogonalSyndromes S) :
@@ -232,6 +281,10 @@ theorem reversible_syndrome_channels (S : s → Matrix n d ℂ)
 
 #print axioms logical_representation_mul
 #print axioms logical_representation_star
+#print axioms logical_representation_on_copy
+#print axioms logical_representation_restrict
+#print axioms logical_representation_injective
+#print axioms logical_action_on_encoding
 #print axioms code_support_projection
 #print axioms code_support_on_copy
 #print axioms code_support_on_encoding
