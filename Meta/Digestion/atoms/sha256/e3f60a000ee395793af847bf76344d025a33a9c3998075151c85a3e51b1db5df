@@ -1,0 +1,14 @@
+**约定 42.17（供应的准确归属）。** Q定理3.1提供保留范数的 Gram 因子化方法，本节不用其单位对角条件冒充任意列；`GramUnitaryExtension` 的矩形等 Gram 声明直接供应（42.19）的八维酉，`SequentialRegisterCircuit` 供应有限等距延拓与空白寄存器实现。Q定理7.5供应完美区分容量及独立片段访问警示；Q定理13.3供应受控极分解和联合预测约束，本卷定理41.2已专门构造固定档案解码器，本节仅复合（42.24）。Q89及上述互补熵、相干复制、pinching 的 Lean 声明分别供应熵机制，它们的有限载体和纯度条件保持原样，本节普通计算不等于编译了这些特殊化。
+
+Q命题125.1—125.4拥有固定根相干密度、秩二、相容局部态、固定左根非平稳词律和指定无限表示限制；Q130.1、131.1拥有确切的 $T$、独立空白酉、纯联合展开、持续记忆关联和 $E$ 的根混合递推。恢复卷定义31.1、定理31.2、命题31.3拥有全 $k$ 的对应结构；在 $k=2$，其（31.8）仅交换记忆基，输出次序不交换。该卷第31.2节的最小生成容量与本节接收容量不同。Context定义36.4、命题36.5—36.6拥有完整档案、真实条件准备、追加记录和固定生成的参考安全终端推迟；推迟不授予提前行动能力。Q98、Q104及 [CoherentHistorySchmidt](../../../D5/S3/Quantum/Entanglement/CoherentHistorySchmidt.lean) 的占据多重集切口秩结论保留其占据扇区假设，不能直接代替本装置的四列 Gram 或 Bell 联合容量论证。
+
+外部相干收卷方法归 Blume-Kohout–Croke–Zwolak，尤其其保留参考关联和将消耗位清空的 Section II。Schön等人的有限开边界 MPS／顺序等距方法提供相邻背景；其纯发射态刻画要求最终辅助系统解耦，本节档案通常混合且活动 $M$ 仍相关，不能由生成 bond 维数二推出接收维数二。[^rroctx42_schon] Koashi–Imoto 的固定态族分解区分经典、量子与冗余部分；保留族边缘而丢弃冗余混合因子不自动保留真实纯化，其 VIII.E 的 iid 渐近压缩也不是这里相关顺序来源的精确容量依据。[^rroctx42_ki]
+
+[^rroctx42_bcz]: Robin Blume-Kohout, Sarah Croke and Michael Zwolak, *Ideal state discrimination with an O(1)-qubit quantum computer*, [arXiv:1201.6625v1](https://arxiv.org/pdf/1201.6625v1), Section II：以参考纯化已知矩阵乘积子空间，把每个前缀 Schmidt 支撑相干转移到接收器并留下空白位；前缀纠缠和相干访问条件不能只以最终子空间小来替代。
+
+[^rroctx42_schon]: C. Schön, E. Solano, F. Verstraete, J. I. Cirac and M. M. Wolf, *Sequential generation of entangled multi-qubit states*, [arXiv:quant-ph/0501096v1](https://arxiv.org/pdf/quant-ph/0501096v1), *Physical Review Letters* **95**, 110503 (2005)：有限顺序等距与 MPS、受控辅助维数；纯输出态刻画的最终辅助解耦条件须单独保留。
+
+[^rroctx42_ki]: Masato Koashi and Nobuyuki Imoto, *What is Possible Without Disturbing Partially Known Quantum States?*, [arXiv:quant-ph/0101144v2](https://arxiv.org/pdf/quant-ph/0101144v2)：固定态族的不扰动结构及经典／量子／冗余区分；VIII.E 讨论渐近忠实独立来源压缩，不供应本节的精确实际纯化保持任务。
+
+[^rroctx42_coherence]: T. Baumgratz, M. Cramer and M. B. Plenio, *Quantifying Coherence*, [arXiv:1311.0275](https://arxiv.org/abs/1311.0275), equation (8)：相对熵相干量为 $S(\Delta\rho)-S(\rho)$。本节同时沿用 Q89的访问边界，不将该差值解释为未经建模的热或功。
+

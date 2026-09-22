@@ -1,0 +1,43 @@
+### 50.21 控制路径极限的单变量函数
+
+对 $\kappa\in\mathbb R$ 定义
+$$
+G(\kappa)=\sup_{s\ge0}|1-e^{-s+i\kappa s}|.
+\tag{50.55}
+$$
+以下性质全部属于这份明确函数：
+$$
+G(-\kappa)=G(\kappa),\quad G(0)=1,\quad
+1<G(\kappa)<2\quad(\kappa\ne0),
+\quad |G(\kappa)-G(\kappa')|\le\frac{|\kappa-\kappa'|}{e}.
+\tag{50.56}
+$$
+证明。共轭给偶性；$\kappa=0$ 时 $1-e^{-s}$ 上确界为一。对非零 $\kappa$，取 $s=\pi/|\kappa|$，得到
+$$
+G(\kappa)\ge1+e^{-\pi/|\kappa|}>1.
+\tag{50.57}
+$$
+函数值在 $s=0$ 为零，$s\to\infty$ 时趋一，故上确界严格大于一时必在某个有限正 $s$ 取得。任意有限正 $s$ 都满足 $|1-e^{-s+i\kappa s}|\le1+e^{-s}<2$，故取得的最大值也严格小于二。最后，逆三角不等式与圆弧界给
+$$
+\big||1-e^{-s+i\kappa s}|-|1-e^{-s+i\kappa's}|\big|
+\le e^{-s}s|\kappa-\kappa'|
+\le e^{-1}|\kappa-\kappa'|.
+$$
+取上确界并交换参数即得 Lipschitz 界。$\square$
+
+$G$ 在非负半轴严格递增。为证明，固定 $0<\kappa_1<\kappa_2$，令 $s_1>0$ 达到 $G(\kappa_1)>1$，置
+$u=\kappa_1s_1$、$r_1=e^{-s_1}$、$r_2=e^{-u/\kappa_2}>r_1$。由
+$$
+|1-r_1e^{iu}|^2=1+r_1^2-2r_1\cos u>1
+$$
+得 $r_1>2\cos u$；若 $\cos u\le0$，则更直接有 $r_1>\cos u$。两种情形均保证函数 $1+r^2-2r\cos u$ 在 $[r_1,r_2]$ 严格增加。因此
+$$
+G(\kappa_2)\ge|1-r_2e^{iu}|>|1-r_1e^{iu}|=G(\kappa_1).
+$$
+与（50.57）一起涵盖 $\kappa_1=0$ 的严格性。又（50.57）在 $|\kappa|\to\infty$ 时趋二，结合上界二，得到
+$$
+\lim_{|\kappa|\to\infty}G(\kappa)=2.
+\tag{50.58}
+$$
+所以设 $G(\infty)=2$ 后，$G:[0,\infty]\to[1,2]$ 是严格递增的连续双射。
+

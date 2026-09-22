@@ -1,0 +1,8 @@
+**定义 43.3（归一化形式表示）。** 给任意 $a=(a_i)_{i\ge0}\in\mathbb Q^{\mathbb N}$，在 $\mathbb Q[[X]]$ 中令
+$$
+F(X)=1+X\sum_{i\ge0}a_iX^i,\qquad
+Y=XF^{-1},\qquad C_n(X)=\sum_{j\ge0}a_{n+j}X^j.
+\tag{43.5}
+$$
+条件 $F(0)=1$ 指常数系数，使 $F$ 为形式乘法单位；$Y(0)=0$ 保证无限外级数的形式代入逐系数良定。记 $\mathcal A_\infty$ 为所有在 $\mathbb N^2$ 上、对每个 $n,k\ge0$ 满足（43.1）所示后继等式的有理数组，不加顶行条件。
+

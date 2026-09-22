@@ -1,0 +1,11 @@
+**定义 43.12（同源的两种有限读出）。** 对 $a\in\mathbb Q^{\mathbb N}$ 令
+$$
+p_M(a)=(a_0,\ldots,a_M),\qquad
+q_M(a)=\mathcal E_M(p_M(a)),\qquad
+\ker p_M=\ker q_M.
+\tag{43.23}
+$$
+核相等由（43.4）得。全有理来源上的两个实际像分别为 $\mathbb Q^{M+1}$ 和 $\mathcal A_M$，因为每个有限边界能补零。这正核对[主卷命题133.1](https://github.com/the-omega-institute/trureturing/blob/1fae30cf331dd943f49e44f88c9ee0feb3829770/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#L50708)同来源、等核、实际像上的规范运输前提。
+
+令 $\mathcal C$ 为完整已获档案的集合，包含已获内外记录、来源及版本身份、已获关系、参考、校准、失败、停止信息、合法历史、局部钟读数及其已知共同约束。数学工作边界只替换任务端口的表示，$c\in\mathcal C$ 始终逐字保留。
+

@@ -1,0 +1,104 @@
+### 48.3 有理前缀的精确达到条件与未达下确界
+
+仍固定同一个 \(A>0\)、临界 \(\rho\) 和截止 \(N\ge1\)，令
+\[
+\mathcal F^{\mathbb Q}_{A,N}
+=\mathcal F_{A,N}\cap\mathbb Q^{\mathbb N},
+\qquad
+\mathcal J^{\mathbb Q}_{A,N}
+=\mathcal E(\mathcal F^{\mathbb Q}_{A,N}),
+\qquad S_N=\sum_{i=1}^{N}\rho^{-i}.
+\]
+这里实际幅度上限 \(A\) 可以无理，来源坐标要求有理。
+
+先证明一个可用于有理近似的实幅度构造。若
+\[
+b_A<B\le A,\qquad BS_N\ge1,
+\tag{48.13}
+\]
+取长度 \(N\) 的全负 \(B\) 前缀 \(b^{B,N}\)，则
+\[
+\|T^\star-\mathcal E(b^{B,N})\|_\rho=c_A,
+\]
+并且每个有限坐标的加权误差严格小于 \(c_A\)。证明需处理同一来源的全部行。
+
+首行 \(p_k=-\mathcal E(b^{B,N})(0,k)\) 在 \(k<N\) 时为 \(u_k(B)\ge B\rho^k\)。递推归纳与前节相同，只将其系数 \(A\) 换成 \(B\)，由 \(BS_N\ge1\) 得
+\(p_k\ge B\rho^k\)。目标仍为幅度 \(A\) 的同一个角点，所以
+\[
+0\le\rho^k[u_k(A)-p_k]
+\le c_A+(b_A-B)\rho^{2k}<c_A.
+\]
+若 \(n\ge1\)、\(m=n+k<N\)，有限依赖给近似坐标为 \(-u_k(B)\)。因 \(u_k(B)\ge B\)，
+\[
+\begin{aligned}
+\rho^{n+k}[u_k(A)-u_k(B)]
+&\le\rho^n[c_A+b_A\rho^{2k}-B\rho^k]\\
+&\le\rho^n[c_A+(b_A-B)\rho^{2k}]
+<c_A.
+\end{aligned}
+\]
+这也与已证临界模量 \(\max\{A-B,c_A\}=c_A\) 一致，但这里已逐式给出所需估计。若 \(n\ge1\)、\(m\ge N\)，则 \(BS_N\ge1\)、\(B\le A\) 蕴含 \(AS_N\ge1\)，故（48.9）的目标粗界仍适用；近似数组非正且绝对值不超过目标，不需要再给不同来源拼接界。最后用（48.5）的首行极限取得范数下界 \(c_A\)。
+
+**严格超出阈值。** 若 \(W_N(A)=AS_N>1\)，则
+\[
+\max\{b_A,S_N^{-1}\}<A.
+\]
+取有理数 \(B\) 严格介于两端即可满足（48.13）。因此在当前固定截止内已有有理来源达到 \(c_A\)，每个有限坐标的误差又都严格小于该范数。
+
+**阈值等号且幅度有理。** 若 \(W_N(A)=1\) 且 \(A\in\mathbb Q\)，直接使用有理负前缀 \(b^{A,N}\)。前节证明已给达到性及每个有限坐标的严格不等式。
+
+**阈值等号且幅度无理。** 若 \(W_N(A)=1\) 且 \(A\notin\mathbb Q\)，对任意 \(b\in\mathcal F^{\mathbb Q}_{A,N}\)，每个 \(|b_i|\) 都严格小于 \(A\)。故
+\[
+V_b:=\sum_{i=0}^{N-1}|b_i|\rho^{-(i+1)}<AS_N=1.
+\]
+在 \(|z|\le\rho^{-1}\) 上，\(|F_b(z)-1|\le V_b<1\)。严格性和有限和的连续性再次允许选 \(R>\rho^{-1}\)，使
+\(\sum_i|b_i|R^{i+1}<1\)。由（48.4）及 Cauchy 估计，
+\[
+|\mathcal E(b)(0,k)|=O(R^{-k})=o(\rho^k).
+\]
+这个论证允许任意符号的有理来源。使用反向三角不等式，其首行误差满足
+\[
+\begin{aligned}
+\rho^k|T^\star(0,k)-\mathcal E(b)(0,k)|
+&\ge c_A+\rho^{2k}
+\left(b_A-\frac{|\mathcal E(b)(0,k)|}{\rho^k}\right)\\
+&>c_A
+\end{aligned}
+\]
+对充分大的有限 \(k\) 成立。因此没有有理来源在这个固定截止内达到距离 \(c_A\)。
+
+若 \(W_N(A)<1\)，前节已经排除所有实来源，当然也排除有理来源。综上，得到完整达到性判据
+\[
+\boxed{
+\exists b\in\mathcal F^{\mathbb Q}_{A,N},\qquad
+\|T^\star-\mathcal E(b)\|_\rho=c_A
+\quad\Longleftrightarrow\quad
+\bigl[W_N(A)>1\bigr]
+\quad\text{或}\quad
+\bigl[W_N(A)=1\text{ 且 }A\in\mathbb Q\bigr].
+}
+\tag{48.14}
+\]
+
+等号无理情形中的不达到不意味着下确界变大。固定截止 \(N\) 时，来源到数组的映射在通常有限维坐标与 \(\|\cdot\|_\rho\) 之间连续：选择
+\(\rho<R<(1+A)^{-1}\)，上述统一估计使所有 \(F_b\) 在 \(|z|=R\) 上远离零；（48.4）的有限个有理函数因而随系数一致连续。若 \(b^{(j)}\to b\) 逐坐标，则各非零行生成函数在该圆周上一致收敛。Cauchy 估计给
+\[
+\rho^{n+k}|\mathcal E(b^{(j)})(n,k)-\mathcal E(b)(n,k)|
+\le\rho^n(\rho/R)^k\varepsilon_j,
+\qquad\varepsilon_j\to0,
+\]
+其中对 \(n<N\) 的有限多行取共同 \(\varepsilon_j\)，其余行恒零。取全部坐标的上确界即得范数收敛。即使 \(A\) 无理，也可在每个坐标的区间内部选有理数逼近端点，保持 \(|b_i|\le A\)。故有理来源在 \(\mathcal F_{A,N}\) 中内向稠密，从而在每个固定截止内
+\[
+\boxed{
+\operatorname{dist}_\rho(T^\star,\mathcal J^{\mathbb Q}_{A,N})
+=\operatorname{dist}_\rho(T^\star,\mathcal J_{A,N}).
+}
+\tag{48.15}
+\]
+因此，当 \(W_N(A)=1\)、\(A\notin\mathbb Q\) 时，下确界为 \(c_A\)，但任意具体有理来源的误差都严格大于它。可具体选有理幅度 \(B_j\uparrow A\)，其负前缀数组在此固定截止中范数收敛到实负前缀。
+
+对任意 \(A>0\)，可以先选有理数 \(B\in(b_A,A)\)，再选足够大的 \(N\) 使 \(BS_N\ge1\)。因为 \(S_N\to\infty\)，这总能完成。因此所有幅度下都有某个有理有限前缀达到 \(c_A\)。若还要指定最小有理截止，它等于（48.12）的 \(N_{\min}\)，仅当该截止恰满足阈值等号且 \(A\) 无理时才增加一；下一截止的 \(W_N\) 严格更大。不需要另行判断哪些阈值幅度是有理数，条件式判据已经完整。
+
+这些结论属于声明的自由数学来源类。若来源必须与某份完整档案、动作合法性或共同外部约束相容，还须验证所构造前缀确属同一记录纤维；上述存在证明本身不赋予制备、读出或替换权限。
+
+

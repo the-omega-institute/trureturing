@@ -1,0 +1,59 @@
+**命题 47.5（全负角点到有限来源像的距离）。**
+$$
+\operatorname{dist}_\rho(T^\star,\mathcal J_{A,\rho}^{\mathbb R})
+=\operatorname{dist}_\rho
+\left(T^\star,\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}\right)
+=c_A.
+\tag{47.31}
+$$
+
+证明下界。任取 $S\in\mathcal B_{\rho,0}$，沿第零行有
+$\rho^kS(0,k)\to0$，因而 (47.2)–(47.13) 给
+$$
+\rho^k\bigl(T^\star(0,k)-S(0,k)\bigr)\longrightarrow-c_A.
+$$
+故 $\|T^\star-S\|_\rho\ge c_A$；命题47.4和 (47.30) 同时给两个下界。
+
+证明上界。对 $N\ge0$ 定义同一个全负边界的实际前缀截断
+$$
+a^{\star,<N}_i=
+\begin{cases}-A,&i<N,\\0,&i\ge N,\end{cases}
+\qquad T_N=\mathcal E(a^{\star,<N}).
+\tag{47.32}
+$$
+有限依赖给 $T_N(n,k)=T^\star(n,k)$ 对 $n+k<N$ 成立。
+第46.2节式（46.3）的 $Q_{n,k}(x)=-\mathcal E(-x)(n,k)$ 具有非负系数，且
+$0\le-a^{\star,<N}_i\le A$，因此
+$$
+0\le Q_{n,k}(-a^{\star,<N})\le Q_{n,k}(A\mathbf1)=u_k(A).
+$$
+两数组的差满足单份幅度界，而不是一般三角不等式的两倍界：
+$$
+|T^\star(n,k)-T_N(n,k)|
+=u_k(A)-Q_{n,k}(-a^{\star,<N})\le u_k(A).
+$$
+头部差为零，尾部使用 (47.11)，得到
+$$
+c_A\le\|T^\star-T_N\|_\rho
+\le\rho^Nu_N(A)=c_A+b_A\rho^{2N}.
+\tag{47.33}
+$$
+令 $N\to\infty$ 即得 (47.31)。$\square$
+
+这些截断逐坐标收敛到 $T^\star$，范数距离却趋于 $c_A>0$。
+它们不是范数 Cauchy 序列：否则 Banach 完备性给范数极限，坐标连续性迫使其等于 $T^\star$，与 (47.33) 矛盾。
+
+**闭包中的角点最近距离取得且不唯一。** 任取 \(0<h\le c_A\)，令
+\(B=A-h\)。因为 \(c_A<A\)，有 \(B\ge A-c_A=b_A>0\)，且 \(B<A\)，所以
+\(q_B=\rho\lambda(B)<1\)。常值边界 \(-B\mathbf1\) 的有限前缀属于
+\(\mathcal F_A^{\mathbb R}\)，由 (47.22) 在半径 \(B\) 的版本，其数组以误差
+\(2Bq_B^M\to0\) 逼近 \(\mathcal E(-B\mathbf1)\)。
+故这个实际数组属于 \(\overline{\mathcal J_{A,\rho}^{\mathbb R}}\)。
+同一角点对的精确临界模量 (47.16) 又给
+\[
+\|T^\star-\mathcal E(-B\mathbf1)\|_\rho
+=\max\{h,c_A\}=c_A.
+\]
+不同的 \(h\) 给不同首列，因而给无穷多个闭包中的最近点。
+这些常值边界都具有无限支撑；有限支撑来源的距离达到性与任意实际数组的一般最近闭包点存在性，均不在本单元中断言或证明。显式前缀序列的 (47.33) 仍只给距离逼近率。
+

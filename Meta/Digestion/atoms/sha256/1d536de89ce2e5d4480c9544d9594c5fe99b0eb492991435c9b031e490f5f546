@@ -1,0 +1,130 @@
+### 47.19 同一临界尺度：最坏放大与平均深度
+
+本节固定 \(A>0\)，从次临界侧令
+\(\rho\uparrow1/\lambda(A)\)。所有幅度导数都是对 \(A\) 求导；所有渐近中的 \(A\) 保持固定。使用前面已经证明的最优常数
+\[
+C_\rho(A)=\sup_{k\ge0}\rho^ku'_k(A),
+\qquad
+q=\rho\lambda,\qquad
+\epsilon=-\log q>0.
+\]
+则有
+\[
+\boxed{
+\lim_{\rho\uparrow1/\lambda}\epsilon C_\rho(A)
+=\frac{c_A}{e s},
+\qquad
+\lim_{\rho\uparrow1/\lambda}
+\frac{C_\rho(A)}{\mathbb E_{A,\rho}[K]}
+=\frac{c_A}{e s},
+\quad
+c_A=\frac{A\lambda}{\lambda+1},\quad s=\sqrt{A^2+4A}.
+}
+\tag{47.76}
+\]
+第二个极限的期望只属于前面显式归一化的标签律，临界点自身没有该概率律。
+
+**一致有界余项。** 由 (47.3)、(47.13) 中同一闭式，
+\[
+u_k(A)=c_A\lambda^k+b_A\lambda^{-k},
+\qquad b_A=\frac{A}{\lambda+1}.
+\]
+对 \(\lambda+\lambda^{-1}=A+2\) 求导，得
+\(\lambda'/\lambda=1/(\lambda-\lambda^{-1})=1/s\)。因此
+\[
+\boxed{
+\rho^ku'_k(A)
+=q^k\left(c'_A+\frac{c_A}{s}k\right)
++\left(\frac{\rho}{\lambda}\right)^k
+\left(b'_A-\frac{b_A}{s}k\right).
+}
+\tag{47.77}
+\]
+这里
+\[
+c'_A=\frac{\lambda}{\lambda+1}
++\frac{A\lambda}{s(\lambda+1)^2},
+\qquad
+b'_A=\frac1{\lambda+1}
+-\frac{A\lambda}{s(\lambda+1)^2},
+\]
+均是固定 \(A>0\) 的有限常数。令 \(\beta=\lambda^{-2}<1\)。因
+\(\rho/\lambda=q\beta\le\beta\)，从 (47.77) 抽出主项
+\((c_A/s)kq^k\) 后，余项 \(R_k(\rho)\) 满足
+\[
+\begin{aligned}
+|R_k(\rho)|
+&\le |c'_A|+|b'_A|+\frac{b_A}{s}k\beta^k\\
+&\le M_A:=
+|c'_A|+|b'_A|
++\frac{b_A}{s}\frac{\beta}{(1-\beta)^2}<\infty.
+\end{aligned}
+\tag{47.78}
+\]
+最后使用非负几何导数级数
+\(\sum_{k\ge0}k\beta^k=\beta/(1-\beta)^2\)。
+这个上界同时对所有 \(k\ge0\) 和所有 \(0<\rho<1/\lambda\) 成立；没有把仅逐 \(k\) 有效的余项误用于上确界。
+
+记
+\[
+S(\epsilon)=\sup_{k\in\mathbb N} k e^{-\epsilon k}.
+\]
+(47.78) 对每个 \(k\) 的上下两侧估计给
+\[
+\boxed{
+\left|C_\rho(A)-\frac{c_A}{s}S(\epsilon)\right|
+\le M_A.
+}
+\tag{47.79}
+\]
+这是同一索引集合上的一致有界扰动下的上确界估计，不需要假定两个上确界由相同整数 \(k\) 取得。
+
+**整数极大值的极限。** 连续函数 \(x e^{-\epsilon x}\) 在 \(x\ge0\) 上的最大值由求导得到，为 \(1/(e\epsilon)\)。所以
+\(\epsilon S(\epsilon)\le1/e\)。
+对 \(0<\epsilon<1\)，取
+\(k_\epsilon=\lfloor1/\epsilon\rfloor\)，则
+\(\epsilon k_\epsilon\to1\)，从而
+\[
+\epsilon S(\epsilon)
+\ge \epsilon k_\epsilon e^{-\epsilon k_\epsilon}
+\longrightarrow e^{-1}.
+\]
+合并上下界，
+\[
+\boxed{\epsilon S(\epsilon)\longrightarrow 1/e.}
+\tag{47.80}
+\]
+将 (47.79) 乘以 \(\epsilon\)，有
+\(\epsilon M_A\to0\)，即得 (47.76) 的第一个极限。
+
+**与平均深度的同尺度比较。** 从 (47.69) 写成
+\[
+\mathbb E[K]
+=\frac{q}{1-q}
+-\frac{\rho}{1-\rho}
++\frac{\rho/\lambda}{1-\rho/\lambda}.
+\]
+固定 \(A\) 时，后两项在 \(\rho\uparrow1/\lambda\) 的邻域有界，因为
+\(1/\lambda<1\) 且 \(1/\lambda^2<1\)。又 \(q=e^{-\epsilon}\)，所以
+\[
+\epsilon\frac{q}{1-q}
+=\frac{\epsilon}{e^\epsilon-1}\longrightarrow1.
+\]
+最后一个极限也可由
+\(e^\epsilon-1=\int_0^\epsilon e^x\,dx\)
+直接夹逼：
+\(e^{-\epsilon}\le\epsilon/(e^\epsilon-1)\le1\)。
+因此
+\[
+\boxed{\epsilon\,\mathbb E_{A,\rho}[K]\longrightarrow1.}
+\tag{47.81}
+\]
+均值在严格内部为正；(47.76) 的第二个极限于是由
+\[
+\frac{C_\rho(A)}{\mathbb E[K]}
+=\frac{\epsilon C_\rho(A)}{\epsilon\mathbb E[K]}
+\]
+直接得到。至此全部极限由一致估计和整数极值证明，不依赖数值拟合。
+
+这个等式比较确定性最坏放大常数与指定标签律的平均深度；它不把最坏放大改解释为实际平均噪声，也不把所选标签律认作观察者的真实来源概率或物理时间。常数与余项依赖固定 \(A>0\)，没有宣称 \(A\downarrow0\) 时的一致结论。
+

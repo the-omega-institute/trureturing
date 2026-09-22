@@ -1,0 +1,22 @@
+### 50.22 有限阻尼—相位比下的全层极限
+
+设 $\tau_j>0$、$\tau_j\to0$，且
+$\theta_j/\tau_j\to\kappa\in\mathbb R$。特别地 $\theta_j\to0$。则
+$$
+\boxed{F_A(\tau_j,\theta_j)\longrightarrow cG(\kappa).}
+\tag{50.59}
+$$
+证明。令 $\kappa_j=\theta_j/\tau_j$。任给 $\delta>0$，取 $M$ 使 $b\rho^{2(M-1)}<\delta$。对于全部 $m\ge M$，（50.54）中的项至多为
+$(c+\delta)G(\kappa_j)$，因为可令 $s=m\tau_j$。有限个 $m<M$ 项则一致趋零。由（50.56）的连续性，
+$$
+\limsup_jF_A(\tau_j,\theta_j)\le(c+\delta)G(\kappa).
+$$
+令 $\delta\downarrow0$ 得所需上界。
+
+对下界，任取固定 $s>0$，令 $m_j=\lfloor s/\tau_j\rfloor$，当 $j$ 足够大时 $m_j\ge1$。于是 $m_j\to\infty$、$m_j\tau_j\to s$，并且
+$m_j\theta_j=(m_j\tau_j)\kappa_j\to s\kappa$。将这一真实整数坐标代入（50.54），得
+$$
+\liminf_jF_A(\tau_j,\theta_j)\ge c|1-e^{-s+i\kappa s}|.
+$$
+对全部 $s>0$ 取上确界即得 $cG(\kappa)$；不要求 $\kappa=0$ 的上确界在有限 $s$ 取得。$\square$
+
