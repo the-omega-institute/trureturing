@@ -243,7 +243,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 ("push", "refs/heads/dev", "false", "true", False),
                 ("push", "refs/heads/dev", "true", "false", False),
                 ("push", "refs/heads/topic", "true", "true", False),
-                ("pull_request", "refs/pull/42/merge", "true", "true", False),
+                ("pull_request", "refs/pull/42/merge", "true", "true", True),
                 ("pull_request", "refs/pull/42/merge", "false", "true", False),
                 ("pull_request_target", "refs/heads/dev", "true", "true", False),
                 ("workflow_dispatch", "refs/heads/dev", "true", "true", False)]:

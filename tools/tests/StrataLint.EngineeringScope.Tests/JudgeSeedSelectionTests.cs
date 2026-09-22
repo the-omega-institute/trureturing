@@ -89,6 +89,17 @@ public sealed class JudgeSeedSelectionTests
         Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/lean-cache/judge")));
     }
 
+    [Fact]
+    public void PullRequestMergeRefCanWriteItsCompilationSnapshot()
+    {
+        using var fixture = new SeedFixture();
+        fixture.Build([SeedFixture.Tests]);
+        var result = fixture.Snapshot("pull_request");
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Contains("judge_ready=true", result.Text, StringComparison.Ordinal);
+        Assert.True(File.Exists(Path.Combine(fixture.Root, "build/lean-cache/judge/manifest.json")));
+    }
+
     [Theory]
     [InlineData("unchanged")]
     [InlineData("no-local-material")]
@@ -301,7 +312,8 @@ public sealed class JudgeSeedSelectionTests
         private (int Exit, string Text) Cache(string command, string eventName, params string[] arguments) => SharedBuildContractTests.Process(Root, "python3",
             ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), command, "--repository", Root, "--layers", "judge", .. arguments],
             new Dictionary<string, string> {
-                ["GITHUB_EVENT_NAME"] = eventName, ["GITHUB_REF"] = "refs/heads/integration-ci-fixture-tests",
+                ["GITHUB_EVENT_NAME"] = eventName,
+                ["GITHUB_REF"] = eventName == "pull_request" ? "refs/pull/42/merge" : "refs/heads/integration-ci-fixture-tests",
                 ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "1",
                 ["STRATALINT_CACHE_WRITES"] = "true", ["STRATALINT_BUILD_SUCCEEDED"] = "true",
                 ["STRATALINT_CHECK_SUCCEEDED"] = "false", ["GITHUB_OUTPUT"] = "",
