@@ -179,6 +179,7 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
           by simpa [hzeros (T+1) b (by omega), legal] using
             (zero_facts (R := ZMod M) (T-2)).2.1 true⟩
       · intro b
+        simp only [Bool.true_eq_true, if_true]
         rw [flag_append]
         exact hzeros (T-2) true (by omega)
       · intro x y
@@ -206,7 +207,7 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
       have hp := pulseFacts i
       have hi := ih i
       simp only [copies,List.replicate_succ,List.flatten_cons] at *
-      refine ⟨by rw [List.length_append,hp.1,hi.1]; omega, ?_, ?_, ?_⟩
+      refine ⟨by simpa only [List.length_append, hp.1, hi.1, Nat.succ_mul], ?_, ?_, ?_⟩
       · intro b
         exact (legal_append _ _ b).mpr ⟨hp.2.1 b, hi.2.1 _⟩
       · intro x y
@@ -223,10 +224,13 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
     let w1 := copies B.val pulse1
     have h0 := repeats A.val false
     have h1 := repeats B.val true
+    simp only [Bool.false_eq_true, if_false] at h0
+    simp only [Bool.true_eq_true, if_true] at h1
     refine ⟨w0++w1, ?_, ?_⟩
     · intro b
       exact (legal_append _ _ b).mpr ⟨h0.2.1 b, h1.2.1 _⟩
     · intro x y
+      dsimp only [w0, w1]
       rw [value_append,h0.2.2.1]
       simpa only [Bool.false_eq_true,↓reduceIte,ZMod.natCast_zmod_val] using
         congrArg₂ (fun a b : ZMod M => a+b) (h0.2.2.2 x y) (h1.2.2.2 x y)
