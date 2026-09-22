@@ -224,7 +224,8 @@ theorem result {K : Type*} [Field K] [CharP K 19]
     dsimp [A0, A1, A2, A3, A4, residual, quintic]
     ring_nf
     reduce_mod_char!
-    ring_nf
+    have h19 : (19 : K) = 0 := CharP.cast_eq_zero K 19
+    linear_combination (3 * a) * h19
   rw [h0, h1, h2, h3, h4] at hcertificate
   simpa only [mul_zero, zero_mul, add_zero, sub_zero] using hcertificate.symm
 

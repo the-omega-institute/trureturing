@@ -60,7 +60,7 @@ internal sealed class GoldenConicFourierNoCancellationDocument : IScribeDocument
 
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name, params Formula[] xs) =>
-        new Formula.Apply(Seq(Operatorname, Grp(V(name))), xs);
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. xs]);
     private static Formula Nats() => Seq(Mathbb, Grp(V("N")));
     private static Formula Complexes() => Seq(Mathbb, Grp(V("C")));
     private static Formula Ring() => C("ZMod", V("N"));

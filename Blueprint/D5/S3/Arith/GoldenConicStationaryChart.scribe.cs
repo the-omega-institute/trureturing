@@ -70,8 +70,8 @@ internal sealed class GoldenConicStationaryChartDocument : IScribeDocumentDefini
                         + "and lies outside this theorem."))), DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
-    private static Formula Num(int n) => n < 10 ? D(n) : Seq(n.ToString().Select(c => D(c-'0')).ToArray());
-    private static Formula C(string s, params Formula[] a) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), a);
+    private static Formula Num(int n) => new Formula.Number(n);
+    private static Formula C(string s, params Formula[] a) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. a]);
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);

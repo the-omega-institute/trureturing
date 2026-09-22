@@ -61,7 +61,7 @@ internal sealed class ZeckendorfFutureKernelDocument : IScribeDocumentDefinition
                         + "hypothesis."))), DescribeRole.Theorem))));
 
     private static Formula V(string s)=>F.Id(s);
-    private static Formula C(string s,params Formula[] xs)=>new Formula.Apply(Seq(Operatorname,Grp(V(s))),xs);
+    private static Formula C(string s,params Formula[] xs)=>new Formula.Apply(Seq(Operatorname,Grp(V(s))),[.. xs]);
     private static Formula Eqn(Formula a,Formula b)=>Seq(a,Sp,Eq,Sp,b);
     private static Formula Add(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Add,b);
     private static Formula Mul(Formula a,Formula b)=>new Formula.Binary(a,FormulaBinaryOperator.Multiply,b);

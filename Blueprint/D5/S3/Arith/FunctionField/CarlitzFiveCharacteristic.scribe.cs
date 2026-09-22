@@ -50,7 +50,7 @@ internal sealed class CarlitzFiveCharacteristicDocument : IScribeDocumentDefinit
 
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name, params Formula[] xs) =>
-        new Formula.Apply(Seq(Operatorname, Grp(V(name))), xs);
+        new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. xs]);
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Sub(Formula a, Formula b) =>

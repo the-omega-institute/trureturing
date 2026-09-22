@@ -59,7 +59,7 @@ internal sealed class ZeckendorfTwoReadTomographyDocument : IScribeDocumentDefin
                         + "proved restriction on its initial-depth zero set."))), DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
-    private static Formula C(string s, params Formula[] a) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), a);
+    private static Formula C(string s, params Formula[] a) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. a]);
     private static Formula R() => C("ZMod", V("M"));
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
