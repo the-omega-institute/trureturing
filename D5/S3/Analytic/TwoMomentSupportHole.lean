@@ -160,8 +160,10 @@ theorem two_moment_support_hole_sharp
       (fun _ => b), (fun _ => 1), ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · intro i
       fin_cases i
-      · exact ⟨hal, by linarith, by simp⟩
-      · exact ⟨hal.trans hlr.le, by linarith, by simp⟩
+      · simpa using (show a ≤ l ∧ l < 1 ∧ l ∉ Ioo l r from
+          ⟨hal, lt_of_le_of_lt hl_b hb, by simp⟩)
+      · simpa using (show a ≤ r ∧ r < 1 ∧ r ∉ Ioo l r from
+          ⟨hal.trans hlr.le, lt_of_le_of_lt hrb hb, by simp⟩)
     · intro j
       exact ⟨hab.le, le_rfl⟩
     · intro i
@@ -216,7 +218,9 @@ theorem two_moment_support_hole_sharp
     nlinarith
   have hc_upper (w : ℝ) (hw : w ∈ twoMomentMassSet a b ε ∅) : w ≤ wc := by
     have h := budget ∅ w hw (2 * t) (t ^ 2) ((b - t) ^ 2) (by positivity)
-      (fun z _ _ _ => by nlinarith [sq_nonneg (z - t)])
+      (fun z _ _ _ => by
+        rw [show z ^ 2 - 2 * t * z + t ^ 2 = (z - t) ^ 2 by ring]
+        exact sq_nonneg (z - t))
       (fun y hya hyb => by
         have hprod := mul_nonneg (sub_nonneg.mpr hyb)
           (show 0 ≤ b + y - 2 * t by linarith)
