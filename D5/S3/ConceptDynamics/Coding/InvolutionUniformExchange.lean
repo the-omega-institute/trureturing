@@ -40,14 +40,20 @@ def uniform (H : Type u) [Group H] [Fintype H] : ZAlg H := ∑ g : H, basis g
   calc
     uniform H * basis g = ∑ h : H, basis (h * g) := by
       simp [uniform, Finset.sum_mul]
-    _ = uniform H := (Equiv.mulRight g).sum_comp basis
+    _ = uniform H := by
+      simpa [uniform, Function.comp_def] using
+        (Finset.sum_comp_equiv (s := (Finset.univ : Finset H))
+          (f := basis) (Equiv.mulRight g))
 
 @[simp] theorem basis_mul_uniform (g : H) : basis g * uniform H = uniform H := by
   classical
   calc
     basis g * uniform H = ∑ h : H, basis (g * h) := by
       simp [uniform, Finset.mul_sum]
-    _ = uniform H := (Equiv.mulLeft g).sum_comp basis
+    _ = uniform H := by
+      simpa [uniform, Function.comp_def] using
+        (Finset.sum_comp_equiv (s := (Finset.univ : Finset H))
+          (f := basis) (Equiv.mulLeft g))
 
 /-- These factors use every group element with coefficient one before one subtraction. -/
 def leftFactor (s t : H) : ZAlg H := uniform H + (1 - basis s) * basis t
@@ -59,7 +65,7 @@ def source (s t : H) : ZAlg H :=
 
 def target (H : Type u) [Group H] [Fintype H] : ZAlg H := uniform H + uniform H
 
-theorem leftFactor_coeff (s t g : H) :
+theorem leftFactor_coeff [DecidableEq H] (s t g : H) :
     (leftFactor s t).coeff g =
       1 + (if t = g then 1 else 0) - (if s * t = g then 1 else 0) := by
   classical

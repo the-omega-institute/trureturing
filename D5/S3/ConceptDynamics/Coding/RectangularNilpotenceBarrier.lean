@@ -6,7 +6,7 @@
    digest: Rectangular exchanges bound changes in transient depth across arbitrary matrix sizes. -/
 
 import Mathlib.Data.Matrix.Mul
-import Mathlib.Algebra.Ring.Hom.Basic
+import Mathlib.Algebra.Ring.Hom.Defs
 import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
