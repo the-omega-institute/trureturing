@@ -81,7 +81,10 @@ internal sealed class A398542PolynomialDocument : IScribeDocumentDefinition
                     + "denominator obligations. This settles the quoted fixed-bottom assertion "
                     + "alone. It does not enumerate unrestricted 1324 avoiders, "
                     + "compute the full L-gridding generating function, or settle "
-                    + "A398446. Worldwide priority remains unclaimed."))), DescribeRole.Theorem))));
+                    + "A398446. Worldwide priority remains unclaimed."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a398542-fixed-bottom-polynomial"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, string prose,
         DescribeRole role = DescribeRole.Definition) =>

@@ -161,20 +161,6 @@ private theorem p4_free_separation {V : Type*} [Finite V] [Nontrivial V]
 private def Spans {V : Type*} [LinearOrder V] (G : SimpleGraph V) : Prop :=
   ∀ ⦃x y z : V⦄, x < y → y < z → G.Adj x z → G.Adj x y ∨ G.Adj y z
 
-private theorem reachable_between {V : Type*} [LinearOrder V] {G : SimpleGraph V}
-    (hs : Spans G) {x y z : V} (hxy : x < y) (hyz : y < z)
-    (hxz : G.Reachable x z) : G.Reachable x y := by
-  classical
-  obtain ⟨p⟩ := hxz
-  obtain ⟨d, hd, hp, hq⟩ := p.exists_boundary_dart {a | a < y} hxy (not_lt.mpr hyz.le)
-  have hxp := (p.takeUntil d.fst (p.dart_fst_mem_support_of_mem_darts hd)).reachable
-  have hyq : y ≤ d.snd := le_of_not_gt hq
-  rcases hyq.eq_or_lt with heq | hlt
-  · exact heq ▸ hxp.trans d.adj.reachable
-  · rcases hs hp hlt d.adj with h | h
-    · exact hxp.trans h.reachable
-    · exact (hxp.trans d.adj.reachable).trans h.symm.reachable
-
 private theorem disconnected_spans_cut {n : ℕ} (hn : 2 ≤ n)
     (G : SimpleGraph (Fin n)) (hs : Spans G) (hd : ¬G.Preconnected) :
     ∃ m : ℕ, 1 ≤ m ∧ m < n ∧
@@ -204,7 +190,17 @@ private theorem disconnected_spans_cut {n : ℕ} (hn : 2 ≤ n)
   have hrj := (hsmall i hi).trans hij.reachable
   rcases eq_or_lt_of_le hj with heq | hlt
   · exact hmr ((Fin.ext heq) ▸ hrj)
-  · exact hmr (reachable_between hs (show root < m from hmpos) hlt hrj)
+  · apply hmr
+    obtain ⟨p⟩ := hrj
+    obtain ⟨d, hd, hp, hq⟩ := p.exists_boundary_dart {a | a < m}
+      (show root < m from hmpos) (not_lt.mpr (show m ≤ j from hlt.le))
+    have hrp := (p.takeUntil d.fst (p.dart_fst_mem_support_of_mem_darts hd)).reachable
+    have hmq : m ≤ d.snd := le_of_not_gt hq
+    rcases hmq.eq_or_lt with heq | hlt
+    · exact heq ▸ hrp.trans d.adj.reachable
+    · rcases hs hp hlt d.adj with h | h
+      · exact hrp.trans h.reachable
+      · exact (hrp.trans d.adj.reachable).trans h.symm.reachable
 
 private def inversionGraph {n : ℕ} (π : Equiv.Perm (Fin n)) : SimpleGraph (Fin n) where
   Adj i j := (i < j ∧ π j < π i) ∨ (j < i ∧ π i < π j)

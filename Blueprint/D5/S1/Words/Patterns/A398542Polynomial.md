@@ -72,6 +72,10 @@ $$\forall m\in\mathbb{N}, 1\le m\Rightarrow \forall b\in\operatorname{Perm}\left
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Patterns/A398542Polynomial.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a398542-fixed-bottom-polynomial` (proved) by `D5/S1/Words/Patterns/A398542Polynomial.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a398542-fixed-bottom-polynomial","declaration_gid":"D5/S1/Words/Patterns/A398542Polynomial.result","resolution_kind":"proved"} -->
+
 *Citation.* Charles Cornell Norton (2026). *OEIS A398542: fixed-bottom polynomial conjecture*. URL: <https://oeis.org/A398542>.
 
 *Commentary.*
