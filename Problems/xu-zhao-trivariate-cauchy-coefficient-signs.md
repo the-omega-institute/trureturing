@@ -40,6 +40,14 @@ strict-index correspondence and exact zero order are established in its
 dependency unit. The full conjecture is not proved and receives zero
 solved-problem credit; there is no `OpenProblemResolutionClaim`.
 
+`CompositionBoundary.result` additionally proves W03: every admissible
+positive composition has summable normalized coefficients, a summable
+full strict-tuple family with the same strictly positive total, and the
+actual normalized source has this radial limit at one. The nested harmonic
+bound and the unbounded comparison are proved, and the source quotient
+identity is explicit. No summability or source-equivalence premise is
+assumed. The empty tail is included.
+
 `CompositionSlit.result` additionally constructs the actual all-composition
 branch on the full slit domain, proves holomorphy, disk agreement, origin
 normalization, exact depth-order vanishing, conjugation symmetry and both
@@ -47,8 +55,7 @@ origin-correct recurrences. It assumes no continuation or recurrence premise
 and asserts no global slit nonvanishing. This is also an intermediate with
 zero solved-problem credit.
 
-Admissible boundary convergence, uniform power-log bank
-expansions, a fixed zero-free slit collar, formal-inverse/Taylor coefficient
+Uniform power-log bank expansions, a fixed zero-free slit collar, formal-inverse/Taylor coefficient
 identity, and the finite-contour sign transfer remain unproved here.
 The eventual sign and strict binomial conclusions therefore remain open
 in this repository. Preregistration:
@@ -56,7 +63,7 @@ https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Route
 
-After the disk unit, prove the remaining source-specific analytic bridges
+Using the disk, admissible-boundary and slit units, prove the remaining source-specific analytic bridges
 and the negative upper-bank sign. A finite contour gives eventual strict
 negativity. Eventual negativity together with the actual finite radial
 limit yields absolute summability: bound finite sums with radial weights
@@ -87,13 +94,20 @@ The explicit extension has $Q(0)=d$, and the zero of `li` has order exactly
 $d$ with positive minimal-tuple leading coefficient. The companion
 Library notes record source correspondence and classical attribution.
 
+`CompositionBoundary.lean` adds the single theorem
+`CompositionBoundary.result`, using the frozen `CompositionDisk`
+definitions. The unbounded harmonic comparison supplies both summability
+claims. Grouping by the largest strict index and deleting only the proved
+zero prefix identifies the totals. Dominated convergence applies to the
+actual normalized series on real radii below one.
+
 ## Triage
 
 `window`: the complete conjecture remains the target. The source settles
 all-one compositions for every $\ell\ge1$ by the all-one identity and
 Theorems 1.1 and 8.2; depth one and depth two at $\ell=1$ by Theorems 9.6
 and 9.9, respectively; and depth one at $\ell=2$ by Corollary 9.11.
-The present disk and slit results are intermediates, not a new resolution
+The present disk, admissible-boundary and slit results are intermediates, not a new resolution
 of those known cases or of the full conjecture. Admission uses the actual
 source-specific escape content, not the open-problem-resolution exception.
 
