@@ -13,6 +13,22 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "push")]
+    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "pr")]
+    [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
+    [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "pr")]
+    [InlineData("CLAUDE.md", "push")]
+    [InlineData("CLAUDE.md", "pr")]
+    public void CurrentOnlyPlansBuildTransportRunnerWithoutSelectingTests(string input, string mode)
+    {
+        var plan = Plan(input, "", mode);
+        Assert.Contains("tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+            Strings(plan["execution"]!["projects"]!));
+        Assert.Empty(plan["execution"]!["tests"]!.AsArray());
+        Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+    }
+
+    [Theory]
     [InlineData("Meta/domains.yaml", "push")]
     [InlineData("Meta/domains.yaml", "pr")]
     [InlineData("Meta/registry.yaml", "push")]
@@ -402,7 +418,10 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             Assert.Equal(new[] { "build", "current" }, Strings(plan["selected_stages"]!));
             Assert.Equal(new[] { "bash", "dotnet", "git", "python3" }, Strings(plan["tools"]!));
             Assert.Equal(new[] { "current", "judge" }, Strings(plan["cache_layers"]!));
-            Assert.Equal(new[] { "tools/StrataLint.Cli/StrataLint.Cli.csproj" }, Strings(plan["execution"]!["projects"]!));
+            Assert.Equal(new[] {
+                "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+                "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+            }, Strings(plan["execution"]!["projects"]!));
             Assert.Equal(new[] { "SL-003", "SL-015", "SL-019", "filemap" }, Strings(plan["execution"]!["checks"]!));
             Assert.Equal(new[] { "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
             Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
