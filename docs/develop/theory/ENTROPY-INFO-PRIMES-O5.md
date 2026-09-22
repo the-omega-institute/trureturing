@@ -69,7 +69,7 @@
 
 ## §8 审计记录(r1)
 
-**已检索亲核**:Kontoyiannis(arXiv:0710.4076,及 Rissanen 文集 2008);zeta 分布独立性(Lin–Hu 2001;Golomb 1970);Atick–Redlich 1990/1992;Dan–Atick–Reid 1996(J. Neurosci. 16(10):3351–62);Srinivasan–Laughlin–Dubs 1982;Laughlin 1981;Pitkow–Meister 2012(Nat. Neurosci.);Field 1987;Olshausen–Field 1996;Bell–Sejnowski 1997;Brenner–Bialek–de Ruyter 2000;Logan 1977(BSTJ 56(4):487–510,精确假设与"唯一性≠可恢复性"及 Meyer 反例注记)。
+**已检索亲核**:Kontoyiannis(arXiv:0710.4076,及 Rissanen 文集 2008);zeta 分布独立性(Lin–Hu 2001;Golomb 1970);Atick–Redlich 1990/1992;Dan–Atick–Reid 1996(J. Neurosci. 16(10):3351–62);Srinivasan–Laughlin–Dubs 1982;Laughlin 1981;Pitkow–Meister 2012(Nat. Neurosci.【检】);Field 1987;Olshausen–Field 1996;Bell–Sejnowski 1997;Brenner–Bialek–de Ruyter 2000;Logan 1977(BSTJ 56(4):487–510,精确假设与"唯一性≠可恢复性"及 Meyer 反例注记)。
 **本卷亲算**:Fenchel–Young 之 ℕ 实例、U = −ζ′/ζ、β(v) 闭式与 v=0..4 表、黄金幂成立域 {F(v+1)=v}、apparition 双支机制、Pell 基变换。
 **本卷勘误**:对话中"Logan 1977 可完全重构"表述收紧为"至乘常数唯一确定;唯一性不含稳健恢复;二维 Marr 猜想有 Meyer 反例"(§5.1)。
 **待异模型审计清单(高危点标注)**:①【训】级全部年份/期刊(尤:Zurek–Habib–Paz 1993 出处;Barnum et al. 1996 no-broadcasting 精确陈述范围;Brandão–Piani–Horodecki 2015 定理的碎片极限精确形;Morrone–Burr 年份;Ditchburn–Ginsborg 1952 vs Riggs 1953 归属;Bost–Connes KMS 相图细节;Gallagher 条件依赖形;GUE 数方差量级表述;Denjoy 1931 出处);②§3 表逐行复核;③§6.1 结构常数与 Hearts 声明再对榫;④F1 之 mathlib LSeries 对数导数在库性。审计通过前,本卷不得作为任何冻结 PR 之依据引用。
@@ -78,3 +78,122 @@
 ## §9 边界与所有权
 
 ①通篇热层;读法级各条禁作同构宣称,升格唯经 §7 检验面。②量子 Fenchel–Young 原轮与 KMS/Tomita 线属 loning Observer-quantum 母账,本卷仅引其数学内容,不代登记(v0.5 排除先例,账各记各的)。③独立性词典带实测汇率(e^{−γ}、Maier),不得当恒等式用。④平衡侧一元论不含时间之箭(创世条件另账)。⑤本卷入 trureturing 须经作者 data-only 归流;版本纪律:追加新节新行,旧行不改。
+
+---
+
+## §10 可恢复综合征的熵增加与相对可区分性
+
+### 定义 10.1：显式可恢复量子记录
+
+取有限非零逻辑空间$L=\mathbb C^d$和物理空间$H=\mathbb C^n$。给定有限非空指标集上的矩阵$S_j:L\to H$，满足
+
+$$
+S_j^\dagger S_k=\delta_{jk}I_d.
+$$
+
+令$P=\sum_jS_jS_j^\dagger$，给定密度矩阵$\sigma$和固定逻辑密度态$\tau_0$，定义
+
+$$
+\mathcal E_\sigma(\rho)=\sum_{j,k}\sigma_{jk}S_j\rho S_k^\dagger,
+\qquad
+\mathcal D(X)=\sum_jS_j^\dagger XS_j+
+\operatorname{tr}[(I-P)X]\tau_0.
+\tag{10.1}
+$$
+
+采用有限von Neumann熵$S(\rho)=-\operatorname{tr}\rho\log\rho$，零本征值项按连续极限取零；相对熵为$D(\rho\|\tau)=\operatorname{tr}\rho(\log\rho-\log\tau)$，要求$\operatorname{supp}\rho\subseteq\operatorname{supp}\tau$，否则取$+\infty$。对数取自然底。这里的环境综合征态$\sigma$与未知逻辑输入无关。
+
+### 定理 10.2：额外熵与完全恢复可以同时成立
+
+式(10.1)的两个映射均为CPTP，$\mathcal D\mathcal E_\sigma=\mathrm{id}$，且
+
+$$
+\boxed{S(\mathcal E_\sigma(\rho))=S(\rho)+S(\sigma).}
+\tag{10.2}
+$$
+
+对同一综合征态编码的任意逻辑态$\rho,\tau$，有
+
+$$
+\boxed{D(\mathcal E_\sigma(\rho)\|\mathcal E_\sigma(\tau))=D(\rho\|\tau).}
+\tag{10.3}
+$$
+
+因此完整输出熵的严格增加，不能单独证明逻辑信息已不可恢复。本定理给本卷§4的信息搬移叙述一个有限、带明确访问权限的实现；它不把任意环境耦合都判成可恢复。
+
+**证明。** 定义$J:L\otimes\mathbb C^{|J|}\to H$为$J(v\otimes|j\rangle)=S_jv$。正交关系给出$J^\dagger J=I$和$JJ^\dagger=P$，故$\mathcal E_\sigma(\rho)=J(\rho\otimes\sigma)J^\dagger$为CPTP。$\mathcal D$第一项的Kraus为$S_j^\dagger$，其Kraus平方和为$P$；第二项是正效果$I-P$后制备$\tau_0$，补足保迹条件。矩阵乘法给出
+
+$$
+\sum_iS_i^\dagger\mathcal E_\sigma(\rho)S_i
+=\sum_i\sigma_{ii}\rho=\rho,
+$$
+
+且编码支持在$P$，所以补项为零。
+
+设$\rho$与$\sigma$的本征值分别为$r_a,s_b$。编码的非零本征值为$r_as_b$，因此
+
+$$
+-\sum_{a,b}r_as_b\log(r_as_b)
+=-\sum_ar_a\log r_a-\sum_bs_b\log s_b.
+$$
+
+得到(10.2)。在各自支持上，$\log(\rho\otimes\sigma)=\log\rho\otimes I+I\otimes\log\sigma$。相对熵中综合征对数项相消，迹的乘法性和等距性给出(10.3)；支持不包含时两侧同时为无穷。∎
+
+此正规形的普遍可逆通道背景见Knill–Laflamme及Nayak–Sen。[QREC-KL][QREC-NS] 这里给出的熵计算不依赖原§1至§9中尚未核对的数论或物理类比。
+
+### 定理 10.3：恢复器可由噪声数据显式计算
+
+给定$\mathcal N(X)=\sum_aE_aXE_a^\dagger$且$\sum_aE_a^\dagger E_a=I_d$。计算
+
+$$
+Q=\mathcal N(I_d),\quad P=\operatorname{supp}Q,\quad
+W=Q^{[-1/2]},\quad
+c_{ab}=\operatorname{tr}(E_a^\dagger E_b)/d,
+$$
+
+其中$Q^{[-1/2]}$在正谱上取逆平方根、在零谱上取零。映射
+
+$$
+\boxed{\mathcal R_\mathcal N(X)=\sum_aE_a^\dagger WXWE_a+
+\operatorname{tr}[(I-P)X]\tau_0}
+\tag{10.4}
+$$
+
+总是CPTP，并且它精确反演$\mathcal N$，当且仅当存在任一CPTP逆，当且仅当
+
+$$
+E_a^\dagger E_b=c_{ab}I_d\quad\forall a,b.
+\tag{10.5}
+$$
+
+**证明。** 支持部分的Kraus为$E_a^\dagger W$，其平方和$WQW=P$；补项补足$I-P$。若(10.5)成立，对Gram矩阵$c$酉对角化得到$F_j^\dagger F_k=\lambda_j\delta_{jk}I$。零权重时$F_j=0$；其余令$S_j=F_j/\sqrt{\lambda_j}$。于是$Q=\sum_j\lambda_jS_jS_j^\dagger$且$WF_j=S_j$，(10.4)精确变成(10.1)的恢复器。
+
+反向，任一恢复Kraus$A_t$与原Kraus的复合必须表示恒等通道。该通道Choi矩阵秩一，所以$A_tE_a=z_{ta}I$。用$\sum_tA_t^\dagger A_t=I$得到$E_a^\dagger E_b=\sum_t\overline z_{ta}z_{tb}I$；取迹确定标量就是$c_{ab}$。∎
+
+公式(10.4)属于已有transpose/Petz型恢复结构。[QREC-BK] 本定理不将数值近零残差等同于(10.5)的精确等式，也没有提供一般实数oracle的有限判等算法。
+
+### 定理 10.4：删除环境访问权可以破坏全部未知态恢复
+
+令逻辑为一个量子比特，先构造带公开错误标签的通道
+
+$$
+\mathcal M(\rho)=\tfrac12|0\rangle\langle0|\otimes\rho+
+\tfrac12|1\rangle\langle1|\otimes Z\rho Z.
+$$
+
+保留标签时，按标签补偿$I$或$Z$并丢弃标签可精确恢复。删除标签后，通道为$\mathcal N(\rho)=(\rho+Z\rho Z)/2$，不存在任何CPTP左逆。
+
+**证明。** 有标签的分支补偿直接给$\rho$。无标签通道把$|+\rangle\langle+|$与$|-\rangle\langle-|$都映成$I/2$，任何单值恢复映射都不能把相同输入变成两个不同输出。也可由其Kraus交叉项$Z/2$违反(10.5)得到结论。∎
+
+### 定理 10.5：同一静态不可区分核不足以决定相干路径实验
+
+$\operatorname{Ad}_I=\operatorname{Ad}_{-I}$，但它们作为具体酉实现接入受控路径后，产生的通道分别为$\operatorname{Ad}_{I\otimes I}$与$\operatorname{Ad}_{Z\otimes I}$，在控制输入$|+\rangle$上完全可区分。
+
+**证明。** 酉的整体负号在$V\rho V^\dagger$中相消；在$|0\rangle\langle0|\otimes I+|1\rangle\langle1|\otimes V$中只改变第二条路径的相位，所以产生$|+\rangle$与$|-\rangle$。∎
+
+因此核或“完整可恢复性”必须相对于明确的实验权限定义。给定相干实现、路径参考和相位数据时，可以构造对应实验；只有普通通道数据时，上述反例禁止唯一补出这些额外信息。[QREC-Control]
+
+[QREC-KL]: https://doi.org/10.1103/PhysRevA.55.900 "E. Knill and R. Laflamme, Theory of quantum error-correcting codes, Physical Review A 55, 900 (1997)."
+[QREC-NS]: https://arxiv.org/abs/quant-ph/0605041 "A. Nayak and P. Sen, Invertible Quantum Operations and Perfect Encryption of Quantum States, Quantum Information and Computation 7(1&2), 103–110 (2007), Theorem 2.1."
+[QREC-BK]: https://arxiv.org/abs/quant-ph/0004088 "H. Barnum and E. Knill, Reversing quantum dynamics with near-optimal quantum and classical fidelity, Journal of Mathematical Physics 43, 2097–2106 (2002)."
+[QREC-Control]: https://arxiv.org/abs/1309.7976 "M. Araújo, A. Feix, F. Costa and Č. Brukner, Quantum circuits cannot control unknown operations, New Journal of Physics 16, 093026 (2014)."
