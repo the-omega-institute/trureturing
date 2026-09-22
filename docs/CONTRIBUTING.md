@@ -275,6 +275,81 @@ assigns Apache-2.0 to repository-produced Lean code, CC-BY-4.0 to text, and CC0
 to data. Third-party dependencies retain their upstream licenses and applicable
 notices.
 
+### Optional maintainer session queue
+
+Maintainers can take a read-only snapshot of external contributions with Python
+3 and an authenticated [GitHub CLI](https://cli.github.com/):
+
+```sh
+python3 tools/scripts/agent/contribution_queue.py
+python3 tools/scripts/agent/contribution_queue.py --pr 123
+```
+
+Run these from the checkout, replacing `123` with the PR number to inspect.
+From another directory, pass the script's absolute path. `--help` describes the
+options; `--repo ORGANIZATION/REPOSITORY` selects another repository using the
+same `ci-pr.yml` policy adapter. The authenticated account must have active
+organization membership and visibility of all organization owners (Members
+read / `read:org`), plus read access to PRs, Issues, Actions, Checks, commit
+statuses, branch protection and rules (including Administration read).
+
+JSON output separates `prs.ready`, `prs.waiting` with reasons, and
+`issues.triage`. Owners are enumerated dynamically from organization admins;
+their PRs and Issues are excluded before queue checks. Missing owner or author
+identity aborts classification rather than treating an owner as external.
+`--pr` refreshes only that PR and skips the Issue and other PR lists.
+
+A PR enters `ready` only after the existing required contexts succeed for its
+current head and PR association, with GitHub Actions app, workflow, run attempt,
+job and check provenance verified. Workflow path/ID alone is insufficient: the
+run must expose exactly the local `ci-push.yml` reusable workflow, with its
+immutable commit SHA and `refs/pull/NUMBER/merge` reference. That executed
+commit must have exactly two ordered parents: the run-associated base and the
+current PR head. The base must be reachable from the observed protected target
+branch (`dev` or `integration-*`). The adapter supports non-strict branch
+protection with required checks bound to GitHub Actions and no active rulesets.
+
+Both the executed candidate and PR head must preserve all base Git object
+identities and modes outside this narrow supported content boundary:
+
+- Regular, non-executable `.lean` and `.md` files under `D5/`.
+- Regular, non-executable `.md` files under `docs/develop/theory/`.
+
+Content additions, edits and deletions are supported; path components must
+start with an ASCII letter, digit or underscore, followed by those characters,
+dots or hyphens. Changed symlinks, submodules and executable files are excluded.
+These roots follow the existing FILEMAP content boundary; this observer does
+not classify CI work or replace its material policies. Other changes, including
+workflow definitions, reused workflows, scripts, harness code, build settings,
+material manifests and content metadata outside these roots, remain waiting
+with `ci_automation_changed_manual_review` and the first unsupported path.
+This may also require manual review when an older PR head has different
+automation from its executed merge base, even if its merge candidate is clean.
+Owners are excluded before all these lookups.
+
+The observer reads commit/tree metadata, skips identical subtrees, and verifies
+each fetched non-recursive tree's Git hash. Truncated, omitted or inconsistent
+tree evidence, missing workflow references, or unproven base/merge provenance
+leave the PR waiting with `ci_definition_unproven`. The current merge SHA and
+timestamps never substitute for executed-candidate evidence. An older run can
+qualify after the target branch advances only with its own proven base and
+candidate; the output exposes those identities separately from the current PR.
+Run references, branch reachability, checks, protection and PR identity are
+rechecked before selection.
+
+This establishes successful CI provenance with checked-in automation identical
+to a trusted base. It does not certify arbitrary Lean/Markdown semantics,
+runtime side effects, mathematics, or permission to merge. Trusted GitHub,
+maintainer branch contents and the canonical workflow's execution contract
+remain assumptions; changes to that contract require updating this adapter.
+Unsupported policy, conflicting evidence or observed changes keep a PR waiting;
+API, permission or identity failures return an error snapshot and exit 2.
+Observations are not atomic and must be refreshed before acting.
+
+The command makes only GitHub GET requests and fetches no blob contents. It executes no contribution text,
+changes no PR or Issue metadata, and starts no builds, writes, daemon or merge.
+It is an optional session tool and adds no required admission gate.
+
 ## Research boundaries
 
 The two excerpts below preserve the original Chinese wording of boundary
