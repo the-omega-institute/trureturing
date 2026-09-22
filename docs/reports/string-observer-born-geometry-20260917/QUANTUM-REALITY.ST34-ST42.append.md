@@ -72,7 +72,7 @@ $$
 
 $$
 \boxed{
-\exists\mathcal R\ {m CPTP}:\mathcal R\mathcal N=\mathrm{id}
+\exists\mathcal R\ \mathrm{CPTP}:\mathcal R\mathcal N=\mathrm{id}
 \quad\Longleftrightarrow\quad
 D_{ab}=0\quad\forall a,b
 \quad\Longleftrightarrow\quad
