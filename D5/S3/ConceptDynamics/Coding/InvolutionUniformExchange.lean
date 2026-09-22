@@ -76,7 +76,19 @@ theorem leftFactor_coeff [DecidableEq H] (s t g : H) :
 theorem leftFactor_nonnegative (s t g : H) : 0 ≤ (leftFactor s t).coeff g := by
   classical
   rw [leftFactor_coeff]
-  by_cases ht : t = g <;> by_cases hst : s * t = g <;> simp [ht, hst]
+  by_cases ht : t = g
+  · rw [if_pos ht]
+    by_cases hst : s * t = g
+    · rw [if_pos hst]
+      decide
+    · rw [if_neg hst]
+      decide
+  · rw [if_neg ht]
+    by_cases hst : s * t = g
+    · rw [if_pos hst]
+      decide
+    · rw [if_neg hst]
+      decide
 
 theorem rightFactor_nonnegative (s g : H) : 0 ≤ (rightFactor s).coeff g := by
   classical
