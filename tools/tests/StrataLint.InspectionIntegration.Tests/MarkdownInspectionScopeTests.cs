@@ -11,7 +11,7 @@ public sealed class MarkdownInspectionScopeTests
     [InlineData("tools/StrataLint.Engine/Rules/CurrentCapacity.cs", false)]
     [InlineData("tools/StrataLint.Cli/Commands/FileMap/FileMapPolicy.cs", false)]
     [InlineData("tools/StrataLint.Cli/Admission/ProductionCliEnvironment.CurrentChecks.cs", false)]
-    [InlineData("tools/StrataLint.EngineeringScope/CommonExecutionEvidence.Checks.cs", false)]
+    [InlineData("tools/StrataLint.ExecutionEvidence/CommonExecutionEvidence.Checks.cs", false)]
     [InlineData("tools/Trureturing.Truth/Program.cs", false)]
     [InlineData("Meta/ReportProducers/lean-report.json", false)]
     [InlineData("Meta/ReportConsumers/lean-report.json", false)]

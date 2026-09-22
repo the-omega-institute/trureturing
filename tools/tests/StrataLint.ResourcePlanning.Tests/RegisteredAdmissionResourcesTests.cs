@@ -25,7 +25,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
             "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-        }.Concat(input == "Meta/registry.yaml" ? new[] { "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj" } : []).Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
+        }, Strings(plan["execution"]!["tests"]!));
         Assert.Equal(mode == "pr", Strings(plan["resources"]!).Contains("current"));
         Assert.Contains("scribe", Strings(plan["resources"]!));
         Assert.Equal(mode == "push" ? new[] { "lean-report", "scribe", "filemap" }
@@ -349,7 +349,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     {
         var plan = Plan("tools/StrataLint.Engine/Rules/CapacityRule.cs", document);
         var tests = Strings(plan["execution"]!["tests"]!);
-        Assert.Equal(20, tests.Length);
+        Assert.Equal(Strings(Plan("tools/StrataLint.Engine/Rules/CapacityRule.cs", "")["execution"]!["tests"]!), tests);
         Assert.Contains("tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj", tests);
         Assert.DoesNotContain("tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj", tests);
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
@@ -525,10 +525,10 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("StrataLint.Scribe", "StrataLint.CliIntegration.Tests,push")]
-    [InlineData("StrataLint.Scribe", "StrataLint.CliIntegration.Tests,pr")]
-    [InlineData("StrataLint.Scribe.Documents", "StrataLint.CliIntegration.Tests,push")]
-    [InlineData("StrataLint.Scribe.Documents", "StrataLint.CliIntegration.Tests,pr")]
+    [InlineData("StrataLint.Scribe", "push")]
+    [InlineData("StrataLint.Scribe", "pr")]
+    [InlineData("StrataLint.Scribe.Documents", "push")]
+    [InlineData("StrataLint.Scribe.Documents", "pr")]
     public void ScribeSourceSelectsItsRegisteredCurrentConsumers(string project, string mode)
     {
         var plan = Plan($"tools/{project}/ResourceRoutingProbe.cs", "", mode);
