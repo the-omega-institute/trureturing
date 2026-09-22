@@ -54,13 +54,20 @@
         "type": "Project",
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.Lean": "[1.0.0, )"
+          "StrataLint.Lean": "[1.0.0, )",
+          "StrataLint.ReleaseSelection": "[1.0.0, )"
         }
       },
       "stratalint.lean": {
         "type": "Project",
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )"
+        }
+      },
+      "stratalint.releaseselection": {
+        "type": "Project",
+        "dependencies": {
+          "Trureturing.Truth": "[0.1.0, )"
         }
       },
       "stratalint.scribe": {
