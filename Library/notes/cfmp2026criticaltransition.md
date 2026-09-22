@@ -159,3 +159,87 @@ as supplementary diagnostics. The written return-map argument proves the
 unbounded family. No new Lean/Scribe source, CI configuration, admission state,
 or frozen artifact is part of this continuation. The complete CFMP conjecture
 and the unrestricted minimum-six/seven/eight cases remain beyond its hypotheses.
+
+## Face transport, strict minimum-six angles, and the nonlinear boundary, Sections 41-44
+
+This continuation remains ordinary written mathematics in the existing theory
+owner. It changes no formal declaration, authored Scribe, admission record,
+CI configuration or frozen state.
+
+### Constructive angle/area compatibility
+
+For normalized angles a=alpha/pi, M sums actual edge fibres and Q sums the
+three angles at each tetrahedron corner. A face-corner transport changes
+source face edges by (-f/2,-f/2,+f/2) and their paired target occurrences by
+the opposite values. Thus M is unchanged and exactly two corner deficits
+change, by +f and -f. Repeated labels and self-pairings are retained.
+
+The link dual spanning trees prove that Q(ker M) is precisely the space of
+corner vectors with zero sum on every ideal vertex class. The remaining
+joint kernel has dimension 2|T|-|E|+b, with b the number of ideal vertices.
+This is a linear compatibility statement, separate from angle positivity.
+
+For any positive weak seed, positive total deficit on every boundary link
+is necessary and sufficient for arbitrarily small strictification at the
+same edge sums. The explicit tree-flow bound is
+norm_infinity(a_tau-a_0)<=3*tau*D_max. It provides a single simultaneous
+positivity bound rather than independently chosen local small parameters.
+For edge degree at least six, a_0=2/degree is a positive weak seed and the
+link deficit is exactly -2*Euler_characteristic. Hence every triangulation
+in the owner's genus-at-least-two boundary setting has a strict positive
+hyperideal angle structure, including corners with three degree-six edges.
+
+Related primary-source frameworks, checked in this continuation:
+
+Feng Luo and Stephan Tillmann, *Angle structures and normal surfaces*,
+Transactions of the American Mathematical Society 360 (2008), 2849-2866.
+https://arxiv.org/abs/math/0510537
+
+Huabin Ge, Longsong Jia and Faze Zhang, *Angle structures on pseudo
+3-manifolds*, arXiv:2502.11397v1 (2025).
+https://arxiv.org/abs/2502.11397
+https://arxiv.org/html/2502.11397v1
+Their angle/area/curvature and normal-surface criteria are relevant to this
+compatibility problem. This increment varies individual corner areas while
+preserving their total on each boundary component, so it does not silently
+identify that problem with a theorem requiring a fixed area function.
+The explicit face-transport proof is supplied in full. The bounded source
+comparison does not establish novelty or priority over all angle-structure
+literature.
+
+### What strictification proves, and what it does not
+
+Luo-Yang Theorem 1.4 and Theorem 6.3 are again read in the original PDF,
+including screenshots of printed pages 2 and 21; Proposition 6.7 on printed
+page 22 supplies the explicit concavity statement. The newly constructed
+strict seed discharges their angle-structure hypothesis for every minimum-six
+triangulation in the strict boundary setting. The resulting shared positive
+length is still generalized where a tetrahedron is flat.
+
+The tetrahedron-transitive realization theorem therefore now covers all
+minimum-six triangulations satisfying that genuine combinatorial symmetry,
+without an additional local reciprocal-degree inequality. For general
+triangulations the number of flat maximizing tetrahedra is at most |E|-1,
+and the number of genuine ones is at least |T|-|E|+1. Neither bound says the
+flat set is empty.
+
+Section 44 records a rational closed angle assignment on the actual
+six/nine-degree packet: exactly one flat tetrahedron and five strict ones,
+with every edge sum correct. Role averaging strictly increases its volume,
+so it is not a maximizing assignment and is not a CFMP counterexample.
+Conversely, applying deficit averaging to the genuine golden maximizer
+changes its nonconstant corner deficits and strictly decreases volume by
+uniqueness. Feasible transport cannot be advertised as volume-nondecreasing.
+The remaining general obligation is nonlinear exclusion of flat maximizers.
+
+### Executed supplementary checks
+
+The specified N=6,u=4,v=5 packet was checked with exact rational arithmetic:
+all 72 directed face-corner elementary transports preserve edge sums and
+have the stated corner image; the combined M/Q rank is 28 and the joint
+kernel dimension is eight. The rational one-flat table and its strict
+role average were checked entrywise. A positive weak seed with one saturated
+corner was strictified with tau=1/138, giving minimum angle 6617/38088 and
+minimum corner deficit 1/828 in normalized units. The general tree proof,
+not this finite computation, establishes the theorem. No full CFMP solution,
+nonlinear cusped completeness theorem or new kernel certification is claimed.
