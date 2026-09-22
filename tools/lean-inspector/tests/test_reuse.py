@@ -327,7 +327,8 @@ class ReuseTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'report_execution'):
             api.reuse(self.root, self.report, self.output)
 
-    def entry_with_program_build(self, targets, *, seed=True, build_exit=0):
+    def entry_with_program_build(self, targets, *, seed=True, build_exit=0,
+                                 existing_output=False, registered_targets=('FixtureAudit',)):
         # Exercise the actual shell entry and report receipt, replacing only the
         # external cache/build processes. No Lean compilation is needed here.
         for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
@@ -339,30 +340,37 @@ class ReuseTests(unittest.TestCase):
             shutil.copyfile(ROOT / relative, target)
         ensure = self.root / 'tools/scripts/worktree/lean-cache-ensure.sh'
         ensure.write_text('#!/bin/bash\nset -euo pipefail\n'
-                          'test ! -e .lake\nprintf "ensure\\n" >> build-calls\nmkdir .lake\n')
+                          + ('' if existing_output else 'test ! -e .lake\n')
+                          + 'printf "ensure\\n" >> build-calls\nmkdir -p .lake\n')
         runner = self.root / 'tools/scripts/worktree/lean-cache-run.sh'
         runner.write_text('#!/bin/bash\nset -euo pipefail\n'
                           'printf "%s\\n" "$*" >> build-calls\n'
                           'exit ' + str(build_exit) + '\n')
         runner.chmod(0o755)
-        self.receipt()
+        api = self.receipt()
+        self.output = self.root / '.lake/build/stratalint' / publication.RAW
+        if existing_output:
+            self.assertFalse(api.reuse(self.root, self.report, self.output)['needs_lake'])
+            self.assertTrue(publication.member(self.output, '.reuse.json').is_file())
         if not seed:
             publication.member(self.report, '.reuse.json').unlink()
         elif seed == 'corrupt':
             publication.member(self.report, '.reuse.json').write_text('damaged receipt')
-        self.output = self.root / '.lake/build/stratalint' / publication.RAW
+        self.seed_before = {path: path.read_bytes() for path in self.report.parent.iterdir()}
         producer = self.root / 'producer.dll'
         producer.write_text('fixture executable')
         environment = dict(os.environ, LAKE_BIN=str(self.lake),
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.report),
-            STRATALINT_LEAN_BUILD_TARGETS=json.dumps(targets))
+            STRATALINT_LEAN_BUILD_TARGETS=targets if isinstance(targets, str) else json.dumps(targets))
+        if existing_output and seed == 'valid':
+            environment.pop('STRATALINT_LEAN_REPORT_REUSE')
         if targets is None:
             environment.pop('STRATALINT_LEAN_BUILD_TARGETS')
             self.write('Meta/ci-resources.json', json.dumps(dict(
                 schema='ci-resource-execution-v1', resources=[dict(
                     id='fixture-program-build', projects=[], checks=[], steps=[],
-                    lean_targets=['FixtureAudit'])])))
+                    lean_targets=list(registered_targets))])))
         result = subprocess.run(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
             '--repository', str(self.root), '--output', str(self.output),
             '--log-dir', str(self.root / 'logs')], env=environment, text=True, capture_output=True)

@@ -41,7 +41,7 @@ LOG_DIR="$STARTUP_LOG_DIR"
 finish() {
   local rc=$?
   trap - EXIT
-  if [[ "$PROGRAM_BUILD_PENDING" == 1 ]]; then rm -f -- "${OUTPUT}.reuse.json"; fi
+  if [[ "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ]]; then rm -f -- "${OUTPUT}.reuse.json"; fi
   rm -rf -- "$STARTUP_LOG_DIR" || true
   resource_observe lean-inspector-finish "$REPOSITORY" || true
   exit "$rc"
