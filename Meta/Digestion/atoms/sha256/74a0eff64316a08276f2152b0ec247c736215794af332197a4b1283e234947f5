@@ -1,0 +1,37 @@
+### 18.5 命题：三节点模型在所有噪声水平下的完整解
+
+取 $x=(1/4,1/2,3/4)$、$y=1$。则
+\[
+p=4-16X+16X^2,\quad P=4,\quad L=32,\quad
+c=(1,-3,3),\quad r=(18,-32,14),\quad
+A=(40,32/3,-40/3).
+\]
+因此精确第一转折点为 $1/40$。对全部 $\varepsilon\geq0$，
+\[
+\boxed{W(\varepsilon)=\min\left\{
+\tfrac14+8\varepsilon,\quad
+\tfrac13+\tfrac{14}3\varepsilon,\quad
+\tfrac8{15}+\tfrac{16}{15}\varepsilon,\quad 1\right\}.}
+\tag{18.10}
+\]
+四段的转折依次为 $1/40,1/18,7/16$。
+
+**上界证明。** 三个多项式
+\[
+p_1=4-16X+16X^2,\qquad p_2=1-6X+8X^2,\qquad p_3=2X^2-\tfrac18
+\]
+在三个节点上的值均属于 $[0,1]$。它们在 $y=1$ 处的值分别为 $4,3,15/8$，非恒定系数绝对值和分别为 $32,14,2$。将各自代入式 (18.4) 所对应的多项式上界，再使用 $w\leq1$，得到式 (18.10) 的四条直线。
+
+**取等构造。** 当 $0\leq\varepsilon\leq1/40$ 时，使用式 (15.7)。当 $1/40\leq\varepsilon\leq1/18$ 时，取
+\[
+w=\tfrac13+\tfrac{14}3\varepsilon,\quad
+\mu=w\delta_1+\tfrac{40\varepsilon-1}{3}\delta_{1/4}
+ +(1-18\varepsilon)\delta_{1/2},\quad \nu=\delta_{3/4}.
+\]
+两组误差为 $(-\varepsilon,\varepsilon)$。当 $1/18\leq\varepsilon\leq7/16$ 时，取
+\[
+w=\tfrac8{15}+\tfrac{16}{15}\varepsilon,\quad
+\mu=w\delta_1+(1-w)\delta_{1/4},\quad\nu=\delta_{3/4}.
+\]
+误差为 $((8\varepsilon-1)/10,\varepsilon)$，其绝对值均不超过 $\varepsilon$。最后当 $\varepsilon\geq7/16$，取 $\mu=\delta_1,\nu=\delta_{3/4}$，误差为 $(1/4,7/16)$。各段内权重非负且归一化，在端点处相容，因此证明全部区间的取等。
+
