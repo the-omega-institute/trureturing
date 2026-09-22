@@ -119,7 +119,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             "tools/scripts/worktree/lean_cache.py" => ["StrataLint.BuildIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
             _ => [],
         };
-        Assert.Equal(new[] { "JudgeSeedTask.Tests", "StrataLint.ArchitectureTests", "StrataLint.Cache.Tests", "StrataLint.Engine.Tests", "StrataLint.Lean.Tests", "StrataLint.Scribe.Documents.Tests", "StrataLint.Scribe.Tests", "StrataLint.Tests", "Trureturing.Truth.Tests" }.Concat(consumers).Order(StringComparer.Ordinal)
+        Assert.Equal(new[] { "StrataLint.ArchitectureTests", "StrataLint.Cache.Tests", "StrataLint.Tests" }
+            .Concat(input is "tools/scripts/report/lean-report-selection.py" or "tools/scripts/worktree/lean_cache.py" ? new[] { "StrataLint.Lean.Tests" } : [])
+            .Concat(consumers).Order(StringComparer.Ordinal)
             .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
         Assert.Equal(mode == "push" ? new[] { "lean-report", "scribe", "filemap" }
             : ["lean-report", "scribe", "filemap", "check-current"], Strings(plan["execution"]!["steps"]!));
@@ -292,7 +294,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
         Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         Assert.Equal(judge == "tools/scripts/preflight.sh"
-            ? new[] { "architecture", "build", "current", "delta", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-cache", "test-cli", "test-engine", "test-judge-seed", "test-lean", "test-planning-integration", "test-scribe", "test-scribe-documents", "test-stage-integration", "test-truth" }
+            ? new[] { "architecture", "build", "current", "delta", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-cache", "test-cli", "test-planning-integration", "test-stage-integration" }
             : ["build", "current", "delta", "engineering", "filemap", "lean", "lean-report", "scribe"],
             Strings(plan["resources"]!));
         Assert.Equal(new[] { "build", "engineering", "current", "delta" }, Strings(plan["selected_stages"]!));
@@ -680,6 +682,17 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         var plan = Plan("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", "");
         Assert.Equal(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Tests" }
             .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+    }
+
+    [Theory]
+    [InlineData("Directory.Build.props")]
+    [InlineData("Directory.Packages.props")]
+    [InlineData("tools/StrataLint.InspectionScope/MarkdownInspectionScope.cs")]
+    public void SharedBuildAndInspectionInputsRetainMovedCliIntegration(string path)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+            Assert.Contains("tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
+                Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
     private JsonNode Plan(string judge, string content, string mode = "pr")
