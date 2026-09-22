@@ -13,7 +13,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         using var fixture = Prepare(stage);
         var root = fixture.Root;
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var environment = Environment(commit, root, "43", "2");
         var trace = Path.Combine(root, "build/git-trace.jsonl");
         environment["GIT_TRACE2_EVENT"] = trace;
@@ -73,7 +73,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         using var fixture = Prepare(stage);
         var root = fixture.Root;
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var path = stage == "current" ? CommonExecutionEvidence.CurrentPath : CommonExecutionEvidence.EngineeringPath;
         var record = CommonExecutionEvidence.Read<CommonStageRecord>(root, path);
         if (damage == "material") File.AppendAllText(Path.Combine(root, record.Steps[0].Log), "corrupt");
@@ -100,7 +100,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         using var fixture = Prepare(stage);
         var root = fixture.Root;
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var environment = Environment(commit, root, "45", "1");
         fixture.Write("build/blocked-seed-parent", "a file cannot contain another file");
         fixture.Write("build/occupied-seed.json", "retain existing seed");
@@ -135,14 +135,14 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         using var fixture = Prepare(stage);
         var root = fixture.Root;
         var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var environment = Environment(commit, root, "46", "2");
         var seedManifest = Path.Combine(root, "build/prepared-seed.json");
         var packed = NativeTransport(root, "transport-pack", stage, commit, environment,
             "--archive", Path.Combine(root, "build/required.tgz"), "--seed-manifest", seedManifest);
         Assert.True(packed.Exit == 0, packed.Text);
         var before = File.ReadAllBytes(seedManifest);
-        var dotnet = SharedBuildContractTests.Process(root, "which", ["dotnet"]).Text.Trim();
+        var dotnet = EngineeringProcess.Process(root, "which", ["dotnet"]).Text.Trim();
         fixture.Write("build/verify-only/dotnet", """
             #!/bin/sh
             set -eu
@@ -156,7 +156,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         environment["CONTRACT_DOTNET"] = dotnet;
         environment["CONTRACT_CALLS"] = Path.Combine(root, "build/verification-calls");
         var snapshot = bounded
-            ? SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+            ? EngineeringProcess.Process(root, "python3", ["-B", "-c", """
                 import pathlib, sys
                 sys.path.insert(0, sys.argv[1])
                 from cache_deadline import CacheDeadline
@@ -207,7 +207,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
         using var fixture = Prepare(stage);
         var root = fixture.Root;
         var repository = TestRepositoryLayout.FindRoot();
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var environment = Environment(commit, root, "47", "2");
         AssertReceipt(Python(root, repository, ["snapshot", "--repository", root, "--layers", stage], environment), "snapshot");
         var cache = Path.Combine(root, "build/lean-cache", stage);
@@ -240,7 +240,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         using var fixture = Prepare("current");
         var root = fixture.Root;
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var environment = Environment(commit, root, "49", "1");
         var seedManifest = Path.Combine(root, "build/prepared-seed.json");
         var packed = NativeTransport(root, "transport-pack", "current", commit, environment,
@@ -288,7 +288,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
     {
         using var fixture = Prepare(stage);
         var root = fixture.Root;
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var result = Python(root, TestRepositoryLayout.FindRoot(), ["snapshot", "--repository", root,
             "--layers", stage, "--seed-manifest", ""], Environment(commit, root, "48", "1"));
         AssertReceipt(result, "snapshot");
@@ -356,7 +356,7 @@ public sealed partial class ExecutionSeedTransportBehaviorTests
 
     private static (int Exit, string Text) NativeTransport(string root, string command, string stage, string commit,
         Dictionary<string, string> environment, params string[] extra) =>
-        SharedBuildContractTests.Process(root, "dotnet", [Path.Combine(TestRepositoryLayout.FindRoot(), CommonExecutionEvidence.RunnerPath),
+        EngineeringProcess.Process(root, "dotnet", [Path.Combine(TestRepositoryLayout.FindRoot(), CommonExecutionEvidence.RunnerPath),
             command, "--repository", root, "--stage", stage, "--commit", commit,
             "--run-id", environment["GITHUB_RUN_ID"], "--run-attempt", environment["GITHUB_RUN_ATTEMPT"], .. extra], environment,
             TestBudgets.LongWorkflowProcessHangGuard);

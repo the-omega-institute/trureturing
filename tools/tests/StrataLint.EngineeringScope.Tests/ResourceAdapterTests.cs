@@ -64,8 +64,8 @@ public sealed partial class ResourceAdapterTests
             "empty" => "",
             "symbolic" => "HEAD",
             "unavailable" => new string('a', 40),
-            "tree" => SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^{tree}"),
-            "blob" => SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD:fixtures/selected.txt"),
+            "tree" => EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^{tree}"),
+            "blob" => EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD:fixtures/selected.txt"),
             _ => defect,
         };
         var result = Shell(fixture, defect == "missing" ? [stage] : [stage, value], EnvironmentFor(fixture));
@@ -151,7 +151,7 @@ public sealed partial class ResourceAdapterTests
         environment["CANDIDATE_SHA"] = fixture.Commit;
         environment["GITHUB_RUN_ID"] = "";
         environment["GITHUB_RUN_ATTEMPT"] = "";
-        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(fixture.Root, "build/adapter-bin/python3"),
+        var result = EngineeringProcess.Process(fixture.Root, Path.Combine(fixture.Root, "build/adapter-bin/python3"),
             ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), command,
                 "--repository", fixture.Root, "--stage", "current"], environment, TestBudgets.WorkflowProcessHangGuard);
         Assert.True(result.Exit == 0, result.Text);
@@ -171,7 +171,7 @@ public sealed partial class ResourceAdapterTests
         var environment = EnvironmentFor(fixture);
         environment["CANDIDATE_SHA"] = fixture.Commit;
         environment["GITHUB_ENV"] = Path.Combine(fixture.Root, "build/adapter-environment");
-        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
+        var result = EngineeringProcess.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
             ["-B", "-c", """
             import json, pathlib, sys
             from unittest.mock import patch
@@ -227,7 +227,7 @@ public sealed partial class ResourceAdapterTests
         environment["CANDIDATE_SHA"] = fixture.Commit;
         environment["GITHUB_RUN_ID"] = "11";
         environment["GITHUB_RUN_ATTEMPT"] = "2";
-        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(fixture.Root, "build/adapter-bin/python3"),
+        var result = EngineeringProcess.Process(fixture.Root, Path.Combine(fixture.Root, "build/adapter-bin/python3"),
             ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), "keys",
                 "--repository", fixture.Root, "--stage", "current"], environment, TestBudgets.WorkflowProcessHangGuard);
         Assert.True(result.Exit == 0, result.Text);
@@ -252,7 +252,7 @@ public sealed partial class ResourceAdapterTests
         var environment = EnvironmentFor(fixture);
         environment["CI_PLAN_PATH"] = "";
         environment["CI_CHANGES_PATH"] = "";
-        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(fixture.Root, "build/adapter-bin/python3"),
+        var result = EngineeringProcess.Process(fixture.Root, Path.Combine(fixture.Root, "build/adapter-bin/python3"),
             ["-B", "tools/scripts/workflow/ci.py", "stage-input", "--repository", fixture.Root,
                 "--commit", fixture.Commit, "--stage", "current", "--plan", fixture.Plan, "--changes", fixture.Changes], environment);
         Assert.True(result.Exit == 0, result.Text);
@@ -272,7 +272,7 @@ public sealed partial class ResourceAdapterTests
         environment["CANDIDATE_SHA"] = fixture.Commit;
         environment["GITHUB_RUN_ID"] = "11";
         environment["GITHUB_RUN_ATTEMPT"] = "2";
-        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(fixture.Root, "build/adapter-bin/python3"),
+        var result = EngineeringProcess.Process(fixture.Root, Path.Combine(fixture.Root, "build/adapter-bin/python3"),
             ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), "keys",
                 "--repository", fixture.Root, "--stage", "current"], environment, TestBudgets.WorkflowProcessHangGuard);
         Assert.True(result.Exit == 0, result.Text);
@@ -303,7 +303,7 @@ public sealed partial class ResourceAdapterTests
         fixture.Write("tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll", "fixture");
         var dotnet = Path.Combine(environment["PATH"], "dotnet");
         File.WriteAllText(dotnet, "#!/bin/bash\nprintf '%s\\n' \"$@\" > build/native-arguments\nexit 1\n");
-        SharedBuildContractTests.Process(fixture.Root, "/bin/chmod", ["+x", dotnet]);
+        EngineeringProcess.Process(fixture.Root, "/bin/chmod", ["+x", dotnet]);
         var result = Shell(fixture, ["current"], environment);
         Assert.True(result.Exit == 1, result.Text);
         var arguments = File.ReadAllLines(Path.Combine(fixture.Root, "build/native-arguments"));
@@ -330,7 +330,7 @@ public sealed partial class ResourceAdapterTests
         var dotnet = Path.Combine(environment["PATH"], "dotnet");
         File.WriteAllText(dotnet, "#!/bin/bash\nprintf 'CURRENT_CHILD_STARTED\\n'\nread -r release\nprintf 'CURRENT_CHILD_FINISHED\\n'\n");
         File.SetUnixFileMode(dotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        var result = SharedBuildContractTests.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
+        var result = EngineeringProcess.Process(fixture.Root, Path.Combine(environment["PATH"], "python3"),
             ["-c", """
             import json, os, signal, subprocess, sys
             child = subprocess.Popen(['/bin/bash', 'tools/scripts/ci-stage.sh', 'current'],
@@ -384,7 +384,7 @@ public sealed partial class ResourceAdapterTests
         var environment = EnvironmentFor(fixture);
         environment["CI_PLAN_PATH"] = "build/ci/absent-plan.json";
         environment["CI_CHANGES_PATH"] = "build/ci/absent-changes.json";
-        SetPushEvent(fixture, environment, SharedBuildContractTests.Git(fixture.Root, "rev-parse", "HEAD^1"));
+        SetPushEvent(fixture, environment, EngineeringProcess.Git(fixture.Root, "rev-parse", "HEAD^1"));
         var result = Route(fixture, "build", environment);
         Assert.True(result.Exit == 0, result.Text);
         Assert.Equal("not-required", Summary(fixture, "build")["status"]!.ToString());
@@ -410,7 +410,7 @@ public sealed partial class ResourceAdapterTests
         Directory.CreateDirectory(bin);
         foreach (var tool in new[] { "bash", "git", "python3", "dirname", "mkdir", "date", "cat", "rm" })
         {
-            var found = SharedBuildContractTests.Process(fixture.Root, "/bin/bash", ["-c", "command -v " + tool]);
+            var found = EngineeringProcess.Process(fixture.Root, "/bin/bash", ["-c", "command -v " + tool]);
             Assert.True(found.Exit == 0, found.Text);
             if (!File.Exists(Path.Combine(bin, tool))) File.CreateSymbolicLink(Path.Combine(bin, tool), found.Text.Trim());
         }
@@ -426,12 +426,12 @@ public sealed partial class ResourceAdapterTests
     {
         foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh" })
             fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
-        return SharedBuildContractTests.Process(fixture.Root, "/bin/bash", ["tools/scripts/ci-stage.sh", .. arguments],
+        return EngineeringProcess.Process(fixture.Root, "/bin/bash", ["tools/scripts/ci-stage.sh", .. arguments],
             environment, TestBudgets.WorkflowProcessHangGuard);
     }
 
     private static (int Exit, string Text) Route(ResourceRouteTests.ResourceFixture fixture, string stage,
-        Dictionary<string, string> environment) => SharedBuildContractTests.Process(fixture.Root,
+        Dictionary<string, string> environment) => EngineeringProcess.Process(fixture.Root,
             Path.Combine(fixture.Root, "build/adapter-bin/python3"), ["-B", "tools/scripts/workflow/ci.py", "stage-input",
                 "--repository", fixture.Root, "--commit", fixture.Commit, "--stage", stage], environment,
             TestBudgets.WorkflowProcessHangGuard);

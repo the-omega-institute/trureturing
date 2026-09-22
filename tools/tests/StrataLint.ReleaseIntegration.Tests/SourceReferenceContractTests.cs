@@ -1,16 +1,16 @@
 using StrataLint.TestSupport;
 using Xunit;
 
-namespace StrataLint.EngineeringScope.Tests;
+namespace StrataLint.ReleaseIntegration.Tests;
 
 public sealed class SourceReferenceContractTests
 {
     [Fact]
     public void CanonicalVerificationEntryRejectsMissingSourceCommit()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
-        var result = SharedBuildContractTests.Process(TestRepositoryLayout.FindRoot(), "make",
-            ["truth-release-verify", "SOURCE_REF=refs/heads/integration-source", "OUT=" + fixture.Root]);
+        using var fixture = new TemporaryDirectory();
+        var result = EngineeringProcess.Process(TestRepositoryLayout.FindRoot(), "make",
+            ["truth-release-verify", "SOURCE_REF=refs/heads/integration-source", "OUT=" + fixture.Path]);
         Assert.Equal(2, result.Exit);
         Assert.Contains("verify-source requires an explicit source ref and commit", result.Text, StringComparison.Ordinal);
     }
@@ -18,8 +18,8 @@ public sealed class SourceReferenceContractTests
     [Fact]
     public void IntegrationSourceCannotEnterProductionAssembly()
     {
-        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
-        var result = SharedBuildContractTests.Process(TestRepositoryLayout.FindRoot(), "python3", ["-B", "-c", """
+        using var fixture = new TemporaryDirectory();
+        var result = EngineeringProcess.Process(TestRepositoryLayout.FindRoot(), "python3", ["-B", "-c", """
             import pathlib, sys
             source, area = map(pathlib.Path, sys.argv[1:])
             sys.path.insert(0, str(source/'tools/scripts/workflow'))
@@ -29,7 +29,7 @@ public sealed class SourceReferenceContractTests
             sys.argv = ['truth_release.py','prepare','--repository',str(source),'--output',str(area),
                         '--source-ref','refs/heads/integration-source','--source-commit','a'*40]
             raise SystemExit(owner.main())
-            """, TestRepositoryLayout.FindRoot(), fixture.Root], new Dictionary<string, string> { ["GITHUB_REPOSITORY"] = "owner/repo" });
+            """, TestRepositoryLayout.FindRoot(), fixture.Path], new Dictionary<string, string> { ["GITHUB_REPOSITORY"] = "owner/repo" });
         Assert.Equal(2, result.Exit);
         Assert.Contains("publication requires refs/heads/dev", result.Text, StringComparison.Ordinal);
     }
@@ -52,7 +52,7 @@ public sealed class SourceReferenceContractTests
     [InlineData("malformed-merge-base", 2)]
     public void ExplicitProtectedSourceRequiresExactMembership(string scenario, int expected)
     {
-        var result = SharedBuildContractTests.Process(TestRepositoryLayout.FindRoot(), "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(TestRepositoryLayout.FindRoot(), "python3", ["-B", "-c", """
             import pathlib, sys
             source, scenario = pathlib.Path(sys.argv[1]), sys.argv[2]
             sys.path.insert(0, str(source / 'tools/scripts/workflow'))

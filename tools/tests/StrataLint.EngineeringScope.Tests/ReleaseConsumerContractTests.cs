@@ -106,7 +106,7 @@ public sealed class ReleaseConsumerContractTests
         // GitHub responses and assembly are external fixtures. The actual selector,
         // clone/checkout/extract, native transport verifier and prepare loop run intact.
         // The assembly fixture refuses an absent report, exposing unconditional assembly.
-        var result = SharedBuildContractTests.Process(first.Root, "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(first.Root, "python3", ["-B", "-c", """
             import json, os, pathlib, shutil, subprocess, sys
             source, first, second, area, archive1, archive2 = map(pathlib.Path, sys.argv[1:7])
             commit1, commit2, native, scenario = sys.argv[7:]
@@ -212,7 +212,7 @@ public sealed class ReleaseConsumerContractTests
 
     private static string NativeRunner => Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
     private static (int Exit, string Text) Native(string root, string[] args, string? processors = null) =>
-        SharedBuildContractTests.Process(root, NativeRunner, args, processors is null ? null : new Dictionary<string, string> { ["DOTNET_PROCESSOR_COUNT"] = processors });
+        EngineeringProcess.Process(root, NativeRunner, args, processors is null ? null : new Dictionary<string, string> { ["DOTNET_PROCESSOR_COUNT"] = processors });
     private static JsonNode Read(string root, string path) => JsonNode.Parse(File.ReadAllText(Path.Combine(root, path)))!;
     private static void Rebind(string root, string record, params string[] paths)
     {

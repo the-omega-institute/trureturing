@@ -13,7 +13,7 @@ public sealed partial class CiTransportTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new CurrentExecutionContractTests.CandidateFixture();
-        var result = SharedBuildContractTests.Process(temporary.Root, "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(temporary.Root, "python3", ["-B", "-c", """
             import json, os, pathlib, sys, tempfile
             repository, root = map(pathlib.Path, sys.argv[1:3])
             sys.path.insert(0, str(repository / 'tools/lean-inspector/tests'))

@@ -97,7 +97,7 @@ public sealed partial class CiTransportTests
         }
 
         (int Exit, string Text) Cli(string command, string destination, string bundle, string? candidate = null, string run = "17", string attempt = "2") =>
-            SharedBuildContractTests.Process(destination, "python3", ["-B", Path.Combine(repository, "tools/scripts/workflow/ci.py"),
+            EngineeringProcess.Process(destination, "python3", ["-B", Path.Combine(repository, "tools/scripts/workflow/ci.py"),
                 command, "--repository", destination, "--stage", "current", "--commit", candidate ?? commit,
                 "--run-id", run, "--run-attempt", attempt, "--archive", bundle], hangGuard: TestBudgets.WorkflowProcessHangGuard);
     }
@@ -268,7 +268,7 @@ public sealed partial class CiTransportTests
     }
 
     private static (int Exit, string Text) Extract(string root, string archive, string stage) =>
-        SharedBuildContractTests.Process(root, "python3", ["-B", "-c",
+        EngineeringProcess.Process(root, "python3", ["-B", "-c",
             "import pathlib,sys; sys.path.insert(0,sys.argv[1]); import ci; ci.extract(pathlib.Path(sys.argv[2]),pathlib.Path(sys.argv[3]),sys.argv[4])",
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow"), root, archive, stage],
             hangGuard: TestBudgets.WorkflowProcessHangGuard);
@@ -381,7 +381,7 @@ public sealed partial class CiTransportTests
             zip.CreateEntryFromFile(transfer, "ci-current.tar.gz");
         var area = Path.Combine(root, "build/release");
         Directory.CreateDirectory(area);
-        var result = SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+        var result = EngineeringProcess.Process(root, "python3", ["-B", "-c", """
             import json, os, pathlib, shutil, subprocess, sys
             repository, root, area, artifact = map(pathlib.Path, sys.argv[1:5])
             commit, defect = sys.argv[5:]
@@ -509,7 +509,7 @@ public sealed partial class CiTransportTests
     internal static (int Exit, string Text) ProduceReport(string root)
     {
         var repository = TestRepositoryLayout.FindRoot();
-        return SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+        return EngineeringProcess.Process(root, "python3", ["-B", "-c", """
             import json, pathlib, shutil, sys, time
             repository, root, relative = map(pathlib.Path, sys.argv[1:])
             sys.path.insert(0, str(repository / 'tools/lean-inspector/tests'))

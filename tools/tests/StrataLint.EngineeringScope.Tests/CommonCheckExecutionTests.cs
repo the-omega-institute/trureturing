@@ -112,11 +112,11 @@ public sealed partial class CommonCheckExecutionTests
         using var fixture = new Fixture();
         fixture.Run();
         fixture.Seed();
-        SharedBuildContractTests.Git(fixture.Tree.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "registered checks");
-        var commit = SharedBuildContractTests.Git(fixture.Tree.Root, "rev-parse", "HEAD");
+        EngineeringProcess.Git(fixture.Tree.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "registered checks");
+        var commit = EngineeringProcess.Git(fixture.Tree.Root, "rev-parse", "HEAD");
         var trace = Path.Combine(fixture.Tree.Root, "build/git-trace.jsonl");
         var runner = Path.Combine(TestRepositoryLayout.FindRoot(), CommonExecutionEvidence.RunnerPath);
-        var result = SharedBuildContractTests.Process(fixture.Tree.Root, "dotnet",
+        var result = EngineeringProcess.Process(fixture.Tree.Root, "dotnet",
             [runner, "transport-pack", "--repository", fixture.Tree.Root, "--stage", "engineering-seed", "--commit", commit,
                 "--run-id", "17", "--run-attempt", "2", "--archive", Path.Combine(fixture.Tree.Root, "build/optional.tgz")],
             new Dictionary<string, string> { ["GIT_TRACE2_EVENT"] = trace });
@@ -202,8 +202,8 @@ public sealed partial class CommonCheckExecutionTests
         using var fixture = new Fixture();
         var original = fixture.Run();
         fixture.Seed();
-        SharedBuildContractTests.Git(fixture.Tree.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "registered checks");
-        var commit = SharedBuildContractTests.Git(fixture.Tree.Root, "rev-parse", "HEAD");
+        EngineeringProcess.Git(fixture.Tree.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "registered checks");
+        var commit = EngineeringProcess.Git(fixture.Tree.Root, "rev-parse", "HEAD");
         var archive = Path.Combine(fixture.Tree.Root, "build/optional.tgz");
         using var output = new StringWriter();
         string[] Options(string action) => [action, "--repository", fixture.Tree.Root, "--stage", "engineering-seed", "--commit", commit, "--run-id", "17", "--run-attempt", "2"];
@@ -216,7 +216,7 @@ public sealed partial class CommonCheckExecutionTests
             System.Formats.Tar.TarFile.ExtractToDirectory(gzip, fixture.Tree.Root, overwriteFiles: true);
         fixture.Tree.Write("unrelated.txt", "new candidate");
         fixture.Tree.Track();
-        SharedBuildContractTests.Git(fixture.Tree.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "unrelated");
+        EngineeringProcess.Git(fixture.Tree.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "unrelated");
         Assert.Equal(0, Program.Run(Options("transport-verify"), TestResultEvidence.Load, output, output));
         Assert.Equal(0, Program.Run(["check-seed-import", "--repository", fixture.Tree.Root, "--stage", "engineering"], TestResultEvidence.Load, output, output));
         var current = fixture.Run();

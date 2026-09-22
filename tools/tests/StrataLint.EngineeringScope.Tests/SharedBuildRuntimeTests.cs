@@ -155,12 +155,12 @@ public sealed class SharedBuildRuntimeTests
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", excludedProject, "--use-lock-file", "-nr:false");
-        SharedBuildContractTests.Git(root, "add", ".");
-        SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "runtime fixture");
+        EngineeringProcess.Git(root, "add", ".");
+        EngineeringProcess.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "runtime fixture");
         using var output = new StringWriter();
         // ci-stage.sh uses pwd -P; match that physical root on macOS's /var alias.
-        var physicalRoot = SharedBuildContractTests.Git(root, "rev-parse", "--show-toplevel");
-        var dotnet = SharedBuildContractTests.Process(root, "which", ["dotnet"]).Text.Trim();
+        var physicalRoot = EngineeringProcess.Git(root, "rev-parse", "--show-toplevel");
+        var dotnet = EngineeringProcess.Process(root, "which", ["dotnet"]).Text.Trim();
         var scope = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "StrataLint.EngineeringScope");
         Write("build/bin/dotnet", """
             #!/bin/bash
@@ -229,8 +229,8 @@ public sealed class SharedBuildRuntimeTests
             if (changedUnselected)
             {
                 Write("tools/tests/Runtime/RuntimeTests.cs", File.ReadAllText(Path.Combine(root, "tools/tests/Runtime/RuntimeTests.cs")) + "\n// changed while absent from the narrow build\n");
-                SharedBuildContractTests.Git(root, "add", ".");
-                SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "change an unselected compiler input");
+                EngineeringProcess.Git(root, "add", ".");
+                EngineeringProcess.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "change an unselected compiler input");
             }
             ResetCompiledOutputs();
             Cache("restore", "--judge-key", key);
@@ -276,7 +276,7 @@ public sealed class SharedBuildRuntimeTests
         Assert.Equal(testProject, runtime.Key);
         Assert.Contains(build.Materials, material => material.Path.EndsWith("/testhost.dll", StringComparison.Ordinal));
         Assert.Contains(build.Materials, material => material.Path.EndsWith("/ref/StrataLint.dll", StringComparison.Ordinal));
-        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
         var archive = Path.Combine(root, "build/runtime.tgz");
         Assert.Equal(0, Program.Run(["transport-pack", "--repository", root, "--stage", "build", "--commit", commit,
             "--run-id", "17", "--run-attempt", "2", "--archive", archive], TestResultEvidence.Load, output, output));
@@ -284,21 +284,21 @@ public sealed class SharedBuildRuntimeTests
         var offline = root + "-offline";
         try
         {
-            SharedBuildContractTests.Git(root, "clone", "--quiet", "--no-hardlinks", root, destination);
-            var extraction = SharedBuildContractTests.Process(destination, "python3", ["-c",
+            EngineeringProcess.Git(root, "clone", "--quiet", "--no-hardlinks", root, destination);
+            var extraction = EngineeringProcess.Process(destination, "python3", ["-c",
                 "import pathlib,sys; sys.path.insert(0, sys.argv[1]); import ci; ci.extract(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), 'build')",
                 Path.Combine(repository, "tools/scripts/workflow"), destination, archive]);
             Assert.True(extraction.Exit == 0, extraction.Text);
             Directory.Move(root, offline);
             var received = CommonExecutionEvidence.ValidateBuild(destination, build.Round);
-            var producer = SharedBuildContractTests.Process(destination, "dotnet", [CommonExecutionEvidence.LeanProducerPath]);
+            var producer = EngineeringProcess.Process(destination, "dotnet", [CommonExecutionEvidence.LeanProducerPath]);
             Assert.True(producer.Exit == 0, producer.Text);
             Assert.Equal("report utility runtime", producer.Text.Trim());
             var assemblies = CommonBuildOutputs.TestAssemblies(destination, received);
             using var testOutput = new StringWriter();
             var consumerExit = Program.RunCurrentTests(destination, (project, results) =>
             {
-                var execution = SharedBuildContractTests.Process(destination, "dotnet",
+                var execution = EngineeringProcess.Process(destination, "dotnet",
                     Program.BuildTestArguments(assemblies[project], results).ToArray(),
                     new Dictionary<string, string> { ["NUGET_PACKAGES"] = Path.Combine(destination, CommonBuildOutputs.PackagesPath) });
                 testOutput.Write(execution.Text);
@@ -310,9 +310,9 @@ public sealed class SharedBuildRuntimeTests
             Assert.Equal(1, Assert.Single(tests.Projects).Executed);
             Assert.Equal(build.Materials, CommonExecutionEvidence.ValidateBuild(destination).Materials);
             Assert.Empty(TemporaryFileSystem.Directory.EnumerateFiles(destination, "project.assets.json", SearchOption.AllDirectories));
-            var restored = SharedBuildContractTests.Process(destination, "dotnet", ["restore", proofProject, "--locked-mode", "-nr:false"]);
+            var restored = EngineeringProcess.Process(destination, "dotnet", ["restore", proofProject, "--locked-mode", "-nr:false"]);
             Assert.True(restored.Exit == 0, restored.Text);
-            var proof = SharedBuildContractTests.Process(destination, "dotnet",
+            var proof = EngineeringProcess.Process(destination, "dotnet",
                 ["build", proofProject, "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"]);
             Assert.True(CompilationProof.ValidateCapability(proof.Exit, proof.Text), proof.Text);
             Assert.Equal(build.Materials, CommonExecutionEvidence.ValidateBuild(destination).Materials);
@@ -327,8 +327,8 @@ public sealed class SharedBuildRuntimeTests
         var registration = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(Path.Combine(root, EngineeringRegistrationFixture.Path)))!;
         registration["projects"]!.AsArray().Single(project => project!["path"]!.GetValue<string>() == excludedProject)!["ci"] = true;
         Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
-        SharedBuildContractTests.Git(root, "add", EngineeringRegistrationFixture.Path);
-        SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "request previously unselected test project");
+        EngineeringProcess.Git(root, "add", EngineeringRegistrationFixture.Path);
+        EngineeringProcess.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "request previously unselected test project");
         foreach (var project in projects.Select(item => "tools/" + item.Item1).Append("tools/tests/Runtime").Append("tools/scripts/report"))
             foreach (var kind in new[] { "bin", "obj" }) Directory.Delete(Path.Combine(root, project, kind), recursive: true);
         Directory.Delete(Path.Combine(root, "build/judge-seed"), recursive: true);
@@ -365,10 +365,10 @@ public sealed class SharedBuildRuntimeTests
 
         void NarrowPlan()
         {
-            var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
-            var entry = SharedBuildContractTests.Git(root, "ls-tree", "HEAD", "--", "global.json").Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
+            var commit = EngineeringProcess.Git(root, "rev-parse", "HEAD");
+            var entry = EngineeringProcess.Git(root, "ls-tree", "HEAD", "--", "global.json").Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
             Write("build/narrow-changes.json", JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
-                candidate = new { commit, tree = SharedBuildContractTests.Git(root, "rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
+                candidate = new { commit, tree = EngineeringProcess.Git(root, "rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
                 complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null, @new = new { path = "global.json", mode = entry[0], oid = entry[2] } } } }));
             Run("python3", "-B", "tools/scripts/workflow/ci.py", "plan", "--repository", physicalRoot,
                 "--commit", commit, "--changes", "build/narrow-changes.json", "--output", "build/narrow-plan.json");
@@ -390,7 +390,7 @@ public sealed class SharedBuildRuntimeTests
         }
         void Run(string executable, params string[] arguments)
         {
-            var result = SharedBuildContractTests.Process(root, executable, arguments, dotnetEnvironment);
+            var result = EngineeringProcess.Process(root, executable, arguments, dotnetEnvironment);
             Assert.True(result.Exit == 0, result.Text);
         }
         string[] Calls() => File.ReadAllLines(Path.Combine(root, "build/dotnet-calls"));
@@ -418,7 +418,7 @@ public sealed class SharedBuildRuntimeTests
         string Stage(string label, string stage, int expected = 0)
         {
             File.Delete(Path.Combine(root, "build/dotnet-calls"));
-            var result = SharedBuildContractTests.Process(physicalRoot, "/bin/bash", ["tools/scripts/ci-stage.sh", stage], environment,
+            var result = EngineeringProcess.Process(physicalRoot, "/bin/bash", ["tools/scripts/ci-stage.sh", stage], environment,
                 TestBudgets.WorkflowProcessHangGuard);
             var evidence = Environment.GetEnvironmentVariable("JUDGE_SEED_EVIDENCE");
             if (evidence is not null)
@@ -446,7 +446,7 @@ public sealed class SharedBuildRuntimeTests
         void Cache(string command, params string[] arguments)
         {
             var cacheEnvironment = new Dictionary<string, string>(environment) { ["GITHUB_EVENT_NAME"] = "push" };
-            var result = SharedBuildContractTests.Process(physicalRoot, "python3",
+            var result = EngineeringProcess.Process(physicalRoot, "python3",
                 new[] { "tools/scripts/worktree/lean_actions.py", command, "--repository", physicalRoot, "--layers", "judge" }.Concat(arguments).ToArray(), cacheEnvironment);
             Assert.True(result.Exit == 0, result.Text);
             if (command == "snapshot") Assert.Contains("judge_ready=true", result.Text, StringComparison.Ordinal);
