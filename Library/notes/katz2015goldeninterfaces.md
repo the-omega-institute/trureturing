@@ -153,3 +153,64 @@ additional independent problems counted on top of WSS. The remaining
 arithmetic obligation is a constraint on actual original q_p/h_p, a WSS
 witness, or a new global distribution theorem. Rephrasing the same unknown
 in multiple spaces does not supply such a result.
+
+## 7. Predictive spacetime completion and the original square-level drift
+
+The WSS owner's SJC section reads Katz's Section 4 exact Lie-kernel sequence
+on printed page 3 together with the actual repository task-quotient theory.
+The relevant repository inputs are
+`docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md`, Sections 1-3,
+at inspected dev b603c498c3cdc76478bfb37c2e3c4ea29edb86ed, and the draft
+`docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2,
+at candidate commit29c5504b11a1685c220e0ad2a9705a987fc6cff4 in PR8891.
+The former distinguishes update closure from task sufficiency and requires
+actual joint images. The latter's automatic symplectic and thermal results
+require their stated positive-energy hypotheses. Their interpretation as a
+physical model is not an arithmetic premise.
+
+SJC keeps v=phi^2 and its prime-to-p residue order r, which is different from
+the Fibonacci rank. The full preimage of the residue orbit modulo p^2 has
+canonical multiplicative coordinates (j,z) in Z/r x F_p. The fixed update
+is exactly (j,z) mapping to (j+1,z-q_p). A fiber rephasing adds a telescoping
+difference to this drift and preserves its cycle sum -r*q_p. The torsion
+section is a group section only: characteristic p^2 prevents a unital ring
+section of the reduction map or its replacement by characteristic-p dual
+numbers. The fixed polynomial X^2-3X+1 selects the actual lift among p
+comparison lifts; choosing the zero-drift lift is not a WSS construction.
+
+Two exact delayed traces have matrix [[2,1],[3,4]], determinant five, and
+recover the entire state modulo every p^a for p>5. The returned trace alone
+has zero first-order defect; the next trace reads -5r*q_p after division by p.
+These are ordinary finite-ring proofs, not extra Lean conclusions of the
+existing trace-Gram source. The real flow generating multiplication by v
+is symplectic but has indefinite quadratic energy, so positive Gibbs and
+positive-energy compression cannot be imported from PR8891 without new
+hypotheses.
+
+This is a task-relative completion of information discarded by reduction.
+The integers with the usual absolute-value metric are already complete;
+the p-adic topology has its own completion Z_p. The integer WSS formula
+itself requires no new arithmetic or set-theoretic axiom. The drift and its
+higher precision remain the actual q_p and h_p. No new prime-family
+existence, exclusion, or cross-prime equidistribution follows from this
+choice of coordinates.
+
+## 8. Cyclotomic norm calibration
+
+Tyler Ross, Zhongyan Shen and Tianxin Cai, *The p-adic Valuations of Mobius
+Duals of Lucas Sequences*, arXiv:2512.03481v1.
+https://arxiv.org/html/2512.03481v1
+
+The Introduction, Theorem 2.2(c), and Proposition 3.2 give the precise source
+scope used for calibration. The regular Lucas-sequence cyclotomic and
+entry-point valuations are explicitly credited there to Carmichael and
+classical valuation theory; the paper extends them to irregular sequences.
+No new integer WSS example is supplied by these statements.
+
+SJC independently derives, for the prime-to-p period r of phi^2, the integer
+G_r=Psi_r(3), where Psi_r is the real r-cyclotomic polynomial, and proves
+v_p(G_r)=h_p using the canonical torsion trace. Its elementary height bound
+is 1<G_r<5^(EulerPhi(r)/2). This is a classical cyclotomic-norm interface,
+not a claimed new WSS family. This unramified-at-p coefficient field of
+conductor r must not be confused with the ramified p-power coefficient
+fields used for the conditional Maass families in SGN and HCR.
