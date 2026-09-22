@@ -86,17 +86,22 @@ def weighted_child_cut_check(gammas, *, occupancies=None):
     return {"child_cut_checks":checked,"minimum_child_cut_bound":str(minimum)}
 
 
-def couple_direct_child_caps(source, depth, caps, gammas, coupling, *, actual_occupancy=False):
+def couple_direct_child_caps(source, depth, caps, gammas, coupling, *,
+                             actual_occupancy=False, strict_one_gap=False):
     """Return one law on literal (five root, five child, seven leaf) triples.
 
     Exactly four literal roots occur, with their sorted order matching gammas.
     By default all 600 original pair/triple premises and all five child nodes
     per root are retained. With actual_occupancy=True, n_r>=3 actual children
     are used and every pair of q_r=n_r-2 actual-child selections is checked.
+    strict_one_gap checks report447's depth-two, 4555, standalone-tree
+    hypotheses and scales every network cap by63/65, with base bridges2.
     A successful call does not assert an arithmetic source realization.
     """
     require(type(depth) is int and depth >= 1, "positive exact seven height")
     require(type(actual_occupancy) is bool, "explicit actual-occupancy mode")
+    require(type(strict_one_gap) is bool and (not strict_one_gap or actual_occupancy),
+            "strict one-gap mode requires actual occupancy")
     points = list(source)
     require(points and all(type(z) in (tuple, list) and len(z) == 3
                            and all(type(a) is int for a in z) for z in points),
@@ -129,6 +134,19 @@ def couple_direct_child_caps(source, depth, caps, gammas, coupling, *, actual_oc
         cut_info=weighted_child_cut_check(gammas)
         mode_info={}
     gamma=dict(zip(roots,map(F,gammas)))
+    scale=F(1)
+    if strict_one_gap:
+        require(depth==2 and sorted(len(occupied[r]) for r in roots)==[4,5,5,5],
+                "strict one-gap mode requires height two and occupancy 4555")
+        require(all(g==F(2,7) for g in gamma.values())
+                and all(cap==F(1,3**b) for (b,v),cap in caps.items()),
+                "strict one-gap mode requires gamma 2/7 and ternary prefix caps")
+        require(contains_complete_seven_tree({y for r,c,y in points},2,5),
+                "strict one-gap mode requires a literal standalone five-ary projection")
+        scale=F(63,65)
+        mode_info.update({"strict_one_gap":True,"capacity_scale":str(scale),
+                          "unscaled_mincut_lower":"65/63",
+                          "unscaled_bridge_capacity":"2"})
     choices={r:tuple(combinations(carriers[r],sizes[r])) for r in roots}
     columns={(r,c):{y for rr,cc,y in points if (rr,cc)==(r,c)}
              for r in roots for c in carriers[r]}
@@ -154,7 +172,8 @@ def couple_direct_child_caps(source, depth, caps, gammas, coupling, *, actual_oc
     for b,v in sorted(expected):
         edges.append((('public',b,v),('public',b-1,v % 7**(b-1)),caps[(b,v)]))
     for r,c,y in sorted(points):
-        edges.append((('private',r,c,depth,y),('public',depth,y),F(1)))
+        edges.append((('private',r,c,depth,y),('public',depth,y),F(2 if strict_one_gap else 1)))
+    edges=[(u,v,scale*w) for u,v,w in edges]
     denominator = lcm(*(w.denominator for _,_,w in edges))
     flow, augmentations = coupling['_unit_flow'](edges,start,finish,denominator)
     law = {(r,c,y):flow[(('private',r,c,depth,y),('public',depth,y))]
@@ -163,23 +182,23 @@ def couple_direct_child_caps(source, depth, caps, gammas, coupling, *, actual_oc
     require(set(law) <= set(points) and sum(law.values(),F()) == 1,
             "one actual supported probability")
     for r in roots:
-        require(sum((w for (rr,c,y),w in law.items() if rr==r),F()) <= F(1,3),
+        require(sum((w for (rr,c,y),w in law.items() if rr==r),F()) <= scale/3,
                 "same-law first-five root cap")
         for c in range(5):
-            require(sum((w for (rr,cc,y),w in law.items() if (rr,cc)==(r,c)),F()) <= F(1,9),
+            require(sum((w for (rr,cc,y),w in law.items() if (rr,cc)==(r,c)),F()) <= scale/9,
                     "same-law second-five prefix cap")
     multiplicities = {r:max(len({c for rr,c,y in points if rr==r and y%7==u})
                            for u in range(7)) for r in roots}
     for (b,v),cap in sorted(caps.items()):
-        require(sum((w for (r,c,y),w in law.items() if y%7**b==v),F()) <= cap,
+        require(sum((w for (r,c,y),w in law.items() if y%7**b==v),F()) <= scale*cap,
                 "same-law pure seven-prefix cap")
         for r in roots:
             for c in range(5):
                 joint = sum((w for (rr,cc,y),w in law.items()
                              if (rr,cc)==(r,c) and y%7**b==v),F())
-                require(joint <= gamma[r]*cap, "same-law child/seven-prefix cap")
+                require(joint <= scale*gamma[r]*cap, "same-law child/seven-prefix cap")
             joint = sum((w for (rr,c,y),w in law.items() if rr==r and y%7**b==v),F())
-            require(joint <= multiplicities[r]*gamma[r]*cap,
+            require(joint <= scale*multiplicities[r]*gamma[r]*cap,
                     "same-law root/seven cap from actual child incidence")
     return law, {**cut_info, **mode_info, "source_points":len(points), "selected_points":len(law),
                  "literal_roots":roots, "restricted_pair_checks":projected_checks,
@@ -191,12 +210,13 @@ def couple_direct_child_caps(source, depth, caps, gammas, coupling, *, actual_oc
 
 
 def couple_incidence_caps(source, depth, coupling, *, weighted=False, special_root=None,
-                          actual_occupancy=False):
+                          actual_occupancy=False, strict_one_gap=False):
     """Use the original incidence rules or occupancy-dependent uniform caps.
 
     Actual-occupancy mode allows incidence multiplicity two in every root.
     Its coefficient is selected from the measured original child counts;
-    weighted and special_root belong to the original interface only.
+    weighted and special_root belong to the original interface only. Optional
+    strict_one_gap requires the extra source premises of the strict cut proof.
     """
     # Core validates literal inputs; these preliminary checks only select weights.
     points = list(source)
@@ -209,6 +229,8 @@ def couple_incidence_caps(source, depth, coupling, *, weighted=False, special_ro
                            for u in range(7)) for r in roots}
     require(type(depth) is int and depth>=1, "positive exact seven height")
     require(type(actual_occupancy) is bool,"explicit actual-occupancy mode")
+    require(type(strict_one_gap) is bool and (not strict_one_gap or actual_occupancy),
+            "strict one-gap mode requires actual occupancy")
     consumer_info={}
     if actual_occupancy:
         require(not weighted and special_root is None,
@@ -251,7 +273,11 @@ def couple_incidence_caps(source, depth, coupling, *, weighted=False, special_ro
         designated_roots=[]
     caps = {(b,v):F(1,3**b) for b in range(1,depth+1) for v in range(7**b)}
     law,info = couple_direct_child_caps(points,depth,caps,gammas,coupling,
-                                      actual_occupancy=actual_occupancy)
+                                      actual_occupancy=actual_occupancy,
+                                      strict_one_gap=strict_one_gap)
+    if strict_one_gap:
+        consumer_info["occupancy_coefficient_rule"]="one-missing-child-strict-cut-surplus"
+    scale=F(info.get('capacity_scale',1))
     root_beta = max(map(F,info['inferred_root_joint_coefficients']))
     child_beta = max(gammas)
     numerical_caps = {}
@@ -261,7 +287,8 @@ def couple_incidence_caps(source, depth, coupling, *, weighted=False, special_ro
         value=min(F(1,3**a),F(1,3**b))
         if a and b:
             value=min(value,(root_beta if a==1 else child_beta)/3**b)
-        numerical_caps[5**a*7**b] = value
+        # The empty cylinder is the whole probability space and stays at1.
+        numerical_caps[5**a*7**b] = value*scale if a or b else F(1)
     literal = {}
     period = 25*7**depth
     for (r,c,y),w in law.items():

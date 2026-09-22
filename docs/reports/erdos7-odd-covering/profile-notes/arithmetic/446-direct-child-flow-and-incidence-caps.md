@@ -6,7 +6,7 @@ These are ordinary finite-flow deductions with exact rational construction contr
 
 A direct flow preserves the literal second-five child until it reaches an actual source point. It gives one law with pure mod25 cap 1/9 and child/seven-prefix cap 3 kappa/10. For four first-five roots, if each root/first-seven-prefix contains at most one child, the resulting complete original-label bound is 353/45 at seven-height two and 1178/135 at height three, both below nine. Allowing one designated root to contain two children gives 1157/135 at height two; allowing two such roots gives 394/45. The incidence conditions are additional source hypotheses.
 
-Using actual empty children also allows incidence at most two at all four roots: if each has at least three occupied children and at least two children are missing in total, one law has bound79/9<9 at height(2,2). A root with only three children permits the stronger1171/135 bound. Exactly one missing child gives only a non-strict bound9 in the displayed construction.
+Using actual empty children also allows incidence at most two at all four roots: if each has at least three occupied children and at least two children are missing in total, one law has bound79/9<9 at height(2,2). A root with only three children permits the stronger1171/135 bound. Exactly one missing child gives a non-strict bound9 from the displayed numerical cut estimate. With a standalone complete five-ary seven projection, [447](447-strict-child-cut-surplus-and-arithmetic-boundaries.md) strengthens the actual cut argument at height two and gives569/65<9.
 
 ## General weighted direct flow
 
@@ -206,7 +206,7 @@ For general K, these three respective sufficient bounds are
     S_K+14/9+3(S_K-1),
     S_K+14/9+(44/15)(S_K-1).
 
-The last two are strictly below nine exactly for K<=2. With exactly one missing child, (4,5,5,5), the displayed first bound equals nine at K=2 and does not prove a strict contradiction. No inference is made that every extremal source has two missing children or incidence at most two.
+The last two are strictly below nine exactly for K<=2. With exactly one missing child, (4,5,5,5), the displayed first bound equals nine at K=2. Under the extra standalone projection condition, [447](447-strict-child-cut-surplus-and-arithmetic-boundaries.md) excludes all actual equality cuts and improves the bound to569/65. No inference is made that every extremal source has two missing children or incidence at most two.
 
 Missing children here describe the actual joint residual; they do not introduce several original classes of modulus25. The original numerical label is still used once.
 

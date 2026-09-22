@@ -923,3 +923,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Occupancy-aware restrictions and weighted root caps give one law below nine for four-root height-(2,2) product-tree blockers with at most one full five-child fibre](profile-notes/arithmetic/445-occupied-branch-restrictions-and-weighted-root-caps.md)
 
 - [Direct child-tree flow preserves pure mod25 and mixed-prefix caps under one law; actual incidence and empty children give bounds below nine, while a nonrobust source family separates the earlier selectors](profile-notes/arithmetic/446-direct-child-flow-and-incidence-caps.md)
+
+- [Strict actual-child cuts give one law with Gamma at most569/65 for the one-missing-child height-(2,2) case under the stated incidence and standalone-tree hypotheses; old-cap saturation and partial arithmetic exclusions identify the remaining scope](profile-notes/arithmetic/447-strict-child-cut-surplus-and-arithmetic-boundaries.md)
