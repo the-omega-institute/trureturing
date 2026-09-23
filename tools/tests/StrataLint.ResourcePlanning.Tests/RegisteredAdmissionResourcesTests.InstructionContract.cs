@@ -18,8 +18,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var plan = Plan(path, "", mode);
         var consumers = new[] { "StrataLint.InstructionContract.Tests" }.Concat(path switch
         {
-            "CLAUDE.md" => ["StrataLint.PrScript.Tests"],
-            "tools/scripts/agent/batch_pr.sh" => ["StrataLint.Tests"],
+            "CLAUDE.md" => ["StrataLint.PrScript.Tests", "StrataLint.Tests"],
             _ => Array.Empty<string>(),
         });
         Assert.Equal(WithRepositoryContract(consumers.Select(name => $"tools/tests/{name}/{name}.csproj")),
