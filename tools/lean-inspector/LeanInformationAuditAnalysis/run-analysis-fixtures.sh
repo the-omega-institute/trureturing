@@ -60,7 +60,10 @@ done
 
 mkdir -p -- "$output_directory" || fail 73 "cannot create output: $output_directory"
 [[ -w $output_directory ]] || fail 73 "output is not writable: $output_directory"
-make -C "$repository" lean-cache-ensure
+# Bound optional cache preparation at the ensure owner's five-minute floor.
+# Keep this override local: make lean also uses the owner's command budget.
+# Production retains the workflow job budget and any caller-supplied deadline.
+STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS=300 make -C "$repository" lean-cache-ensure
 export IE_PROJECTION_OUTPUT_DIR=$output_directory
 export LC_ALL=C
 

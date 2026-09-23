@@ -85,8 +85,11 @@ subprocess.run = run
             LAKE_BIN=str(self.bin / "lake"), PYTHONPATH=str(self.bin),
             STRATALINT_LEAN_CACHE_DONORS="", XDG_CACHE_HOME=str(self.root / "cache"),
             # This synthetic fixture deliberately has no real Lean artifacts.
-            STRATALINT_ACCEPT_COLD_BUILD="1",
-            STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS="300", **extra)
+            STRATALINT_ACCEPT_COLD_BUILD="1", **extra)
+        # A caller may independently bound production with the general producer
+        # knob. The analysis runner owns its optional preparation override.
+        if "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS" not in extra:
+            environment.pop("STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS", None)
         result = subprocess.run(["bash", "-euo", "pipefail", "-c", '''
 mkdir -p "$1/output"
 "$2" "$1/output/artifacts" "$3" 2>&1 | tee "$1/output/run.log"
@@ -112,6 +115,36 @@ mkdir -p "$1/output"
     def test_absent_seed_reaches_analysis(self):
         self.prepare()
         self.assert_produced(self.run_analysis(), "miss")
+
+    def test_preparation_budget_does_not_become_a_production_deadline(self):
+        self.prepare()
+        self.assert_produced(self.run_analysis(), "miss")
+        self.assert_budget_boundary(None)
+
+    def test_independent_production_deadline_is_preserved(self):
+        self.prepare()
+        self.assert_produced(self.run_analysis(STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS="5400"), "miss")
+        self.assert_budget_boundary("5400")
+
+    def assert_budget_boundary(self, production_budget):
+        # Observe the actual make -> compiled producer -> Lake boundary, without
+        # waiting for a deadline or replacing the owner with a fake verdict.
+        producer_calls = [json.loads(line) for line in
+                          (self.root / "producer-environment.jsonl").read_text().splitlines()]
+        lake_calls = [json.loads(line) for line in
+                     (self.root / "lake-environment.jsonl").read_text().splitlines()]
+        self.assertEqual([
+            {"command": "ensure-cache", "budget": "300"},
+            {"command": "with-cache-reader", "budget": production_budget},
+            {"command": "with-cache-reader", "budget": production_budget},
+        ], producer_calls)
+        self.assertEqual([
+            {"args": ["exe", "cache", "get"], "budget": "300"},
+            {"args": ["-d", str(self.root.resolve() / "tools/lean-inspector"), "build",
+                      "LeanInformationAuditAnalysis"], "budget": production_budget},
+            {"args": ["-d", str(self.root.resolve() / "Reg"), "build",
+                      "@reg/LeanInformationAuditRegAnalysis"], "budget": production_budget},
+        ], lake_calls)
 
     def test_corrupt_seed_reaches_analysis(self):
         self.prepare("corrupt")
@@ -190,20 +223,45 @@ mkdir -p "$1/output"
         self.assertIn("ANALYSIS_FIXTURES_EXIT=2", result.stdout)
         self.assertEqual([], list(self.output.iterdir()))
 
+    def test_generic_scope_preserves_production_trace(self):
+        self.prepare()
+        generic = self.root / ".lake/build/lean-inspector/producer/lib/lean/LeanInformationAuditAnalysis/CausalProjection.trace"
+        production = self.root / ".lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace"
+        write(generic, "generic trace")
+        write(production, "production trace")
+        result = self.run_analysis(scope="generic")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertFalse(generic.exists())
+        self.assertEqual("production trace", production.read_text())
+        self.assertEqual([f"-d {self.root.resolve()}/tools/lean-inspector build LeanInformationAuditAnalysis"],
+                         [line for line in (self.root / "lake-runs").read_text().splitlines()
+                          if line != "exe cache get"])
+        self.assertEqual({"causal-analysis.json", "causal-analysis.txt", "bounded-analysis.json", "bounded-analysis.txt"},
+                         {path.name for path in self.output.iterdir()})
+
 
 # Keep the real make recipe and shell entrypoint, with the compiled leaf producer.
 DOTNET_LAUNCHER = '''#!/usr/bin/env bash
 set -euo pipefail
 [[ "$#" -ge 2 && "$1" == "$ANALYSIS_TEST_PRODUCER" && ( "$2" == ensure-cache || "$2" == with-cache-reader ) ]] || exit 86
+python3 - "$2" <<'PY'
+import json, os, pathlib, sys
+with pathlib.Path("producer-environment.jsonl").open("a") as observed:
+    observed.write(json.dumps({"command": sys.argv[1],
+                              "budget": os.environ.get("STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS")}) + "\\n")
+PY
 if [[ -n "${ANALYSIS_DOTNET_EXIT:-}" ]]; then exit "$ANALYSIS_DOTNET_EXIT"; fi
 exec "$ANALYSIS_REAL_DOTNET" "$@"
 '''
 
 LAKE = '''#!/usr/bin/env python3
-import os, pathlib, sys
+import json, os, pathlib, sys
 root = pathlib.Path.cwd()
 args = sys.argv[1:]
 with (root / "lake-runs").open("a") as log: log.write(" ".join(args) + "\\n")
+with (root / "lake-environment.jsonl").open("a") as observed:
+    observed.write(json.dumps({"args": args,
+                              "budget": os.environ.get("STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS")}) + "\\n")
 if args == ["exe", "cache", "get"]:
     (root / ".lake/packages").mkdir(parents=True, exist_ok=True)
     sys.exit(int(os.environ.get("ANALYSIS_DEPENDENCY_EXIT", "0")))
