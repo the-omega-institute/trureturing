@@ -1,5 +1,6 @@
-import D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
+import LeanInformationAuditRegTests.ProductionInputs
+import Reg.Catalogs.InformationRoot
+import Reg.Catalogs.TemplateShadow
 
 open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
 
@@ -21,15 +22,15 @@ run_cmd Elab.Command.liftCoreM do
   let initial ← getProvenanceCounters
   unless initial.visits == 0 && initial.summarisedConstants == 0 && initial.memoHits == 0 do
     throwError "[FAIL] CompilationLocalMemo: imported counters"
-  let root := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-  let entries := (InformationRegistry.entries (← getEnv)).filter (·.registrationModuleName == root)
+  let entries ← LeanInformationAuditRegTests.productionEntries
+    Reg.Support.InformationRootContract.contract.expected
   unless entries.size == 11 do throwError "[FAIL] InformationRootCountBudget: wrong registration count"
   let mut total : ProvenanceCounters := {}
   let firstTrace := (← getTraces).size
   let mut accepted := true
   for entry in entries do
     let actual ← withOptions (·.set `trace.InformationProvenance.check true) <|
-      provenanceErrorCurrent root entry.effectiveCatalogId entry.theoremName entry.realizationName
+      provenanceErrorCurrent entry.registrationModuleName entry.effectiveCatalogId entry.theoremName entry.realizationName
     if let some message := actual then
       accepted := false
       logError m!"[FAIL] InformationRootCountBudget: {message}"
@@ -76,12 +77,12 @@ run_cmd Elab.Command.liftCoreM do
 -- Reusing syntax still performs statement-dependent folds and decision work.
 -- Require measured work on a warmed query, not just a count of memo misses.
 run_cmd Elab.Command.liftCoreM do
-  let root := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-  let some entry := (InformationRegistry.entries (← getEnv)).find?
-      (·.registrationModuleName == root) | throwError "missing root registration"
+  let entries ← LeanInformationAuditRegTests.productionEntries
+    Reg.Support.InformationRootContract.contract.expected
+  let some entry := entries[0]? | throwError "missing root registration"
   let firstTrace := (← getTraces).size
   let _ ← withOptions (·.set `trace.InformationProvenance.check true) <|
-    provenanceErrorCurrent root entry.effectiveCatalogId entry.theoremName entry.realizationName
+    provenanceErrorCurrent entry.registrationModuleName entry.effectiveCatalogId entry.theoremName entry.realizationName
   let counts ← getProvenanceCounters
   let mut accounted := false
   for trace in (← getTraces).toArray[firstTrace:] do
@@ -102,9 +103,9 @@ run_cmd Elab.Command.liftCoreM do
   else
     logError m!"[FAIL] ProvenanceMemoWorkAccounting: fuel and total work differ: {repr counts}"
   let enough ← withOptions (·.set `provenanceExpressionLimit total) <|
-    provenanceErrorCurrent root entry.effectiveCatalogId entry.theoremName entry.realizationName
+    provenanceErrorCurrent entry.registrationModuleName entry.effectiveCatalogId entry.theoremName entry.realizationName
   let exhausted ← withOptions (·.set `provenanceExpressionLimit (total - 1)) <|
-    provenanceErrorCurrent root entry.effectiveCatalogId entry.theoremName entry.realizationName
+    provenanceErrorCurrent entry.registrationModuleName entry.effectiveCatalogId entry.theoremName entry.realizationName
   if enough.isNone && exhausted.any (·.startsWith "IE-C050 ClosedTruthReadout ") then
     logInfo "[PASS] ProvenanceWorkFuelBoundary"
   else
@@ -114,15 +115,15 @@ run_cmd Elab.Command.liftCoreM do
 -- that rejection separate from the budget control on the same theorem's
 -- concrete InformationRoot realization. No corpus-specific type admission.
 run_cmd Elab.Command.liftCoreM do
-  let root := `D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
+  let shadowEntries ← LeanInformationAuditRegTests.productionEntries
+    Reg.Support.TemplateShadowContract.contract.expected
   let theoremName :=
     `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points
-  let some entry := (InformationRegistry.entries (← getEnv)).find?
-      (fun entry => entry.registrationModuleName == root && entry.theoremName == theoremName)
+  let some entry := shadowEntries.find? (·.theoremName == theoremName)
     | throwError "[FAIL] TemplateShadowReadoutBudget: missing registration"
   let firstTrace := (← getTraces).size
   let actual ← withOptions (·.set `trace.InformationProvenance.check true) <|
-    provenanceErrorCurrent root entry.effectiveCatalogId theoremName entry.realizationName
+    provenanceErrorCurrent entry.registrationModuleName entry.effectiveCatalogId theoremName entry.realizationName
   let mut firstCarrier : Option Nat := none
   let mut firstBudget : Option Nat := none
   for (trace, index) in (← getTraces).toArray[firstTrace:].toArray.zipIdx do
@@ -137,11 +138,11 @@ run_cmd Elab.Command.liftCoreM do
   logInfo "[PASS] TemplateShadowAbstractCarrierRejected"
   let shadowCounts ← getProvenanceCounters
   logInfo m!"TemplateShadowRejection charged_visits={shadowCounts.chargedVisits} budget_exhausted={firstBudget.isSome}"
-  let concreteRoot := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-  let some concrete := (InformationRegistry.entries (← getEnv)).find?
-      (fun row => row.registrationModuleName == concreteRoot && row.theoremName == theoremName)
+  let concreteEntries ← LeanInformationAuditRegTests.productionEntries
+    Reg.Support.InformationRootContract.contract.expected
+  let some concrete := concreteEntries.find? (·.theoremName == theoremName)
     | throwError "[FAIL] TemplateShadowReadoutBudget: missing concrete counterpart"
-  let result ← provenanceErrorCurrent concreteRoot concrete.effectiveCatalogId theoremName concrete.realizationName
+  let result ← provenanceErrorCurrent concrete.registrationModuleName concrete.effectiveCatalogId theoremName concrete.realizationName
   let counts ← getProvenanceCounters
   unless result.isNone && counts.chargedVisits > 0 &&
       counts.chargedVisits < provenanceExpressionFuel do
