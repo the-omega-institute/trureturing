@@ -429,39 +429,14 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "tools/**",
+        "**/*.cs",
+        "**/*.csproj",
         "D5/**",
-        "Blueprint/**",
-        "Golden/**",
-        "Library/**",
-        "Meta/Digestion/atomizers.toml",
-        "Meta/FILEMAP.toml",
-        "Meta/FILEMAP.*.toml",
-        "Meta/ReportConsumers/lean-report.json",
-        "Meta/ReportConsumers/scribe-content.json",
-        "Meta/ReportProducers/lean-report.json",
-        "Meta/ReportProducers/scribe-content.json",
-        "Meta/ci-cache-paths.json",
-        "Meta/ci-checks.json",
-        "Meta/ci-resources.json",
-        "Meta/domains.yaml",
         "Meta/engineering-projects.json",
-        "Meta/judge-seed.json",
-        "Meta/package-materials.json",
-        "Meta/registry.yaml",
-        "agents/**",
-        "docs/develop/spec/**",
-        "*.props",
-        "*.json",
-        "*.toml",
-        "Makefile",
-        "lean-toolchain",
-        ".gitignore"
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/StrataLint.sln"
       ],
-      "execution_excludes": [
-        "tools/scripts/agent/openproblem/README.md",
-        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
-      ],
+      "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ],
@@ -1483,11 +1458,14 @@
         "STRATALINT_TEST_ENVIRONMENT"
       ],
       "execution_filemap_paths": [
+        "Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs",
         "D5/F/NumberTheory/AdmissionResourceProbe.lean",
         "Directory.Build.props",
         "Directory.Packages.props",
         "Evidence/D5/values.json",
         "Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json",
+        "Golden/Projection/statement-projection-expansion-v1.json",
+        "Golden/Projection/statement-projection-pilot-v1.json",
         "Makefile",
         "Meta/Digestion/atoms/sha256/admission-resource-probe",
         "Meta/Digestion/backfill/admission-resource-probe.json",
@@ -1508,6 +1486,7 @@
         "docs/reports/ci-fixture-plane-probe.unregistered",
         "docs/reports/prime-slab-corner-order-0909.json",
         "global.json",
+        "lean-report-inputs.json",
         "skills/codex-formal-answer/SKILL.md",
         "skills/codex-theory-ingest/SKILL.md",
         "tools/Makefile",
@@ -1643,6 +1622,9 @@
         "tools/tests/StrataLint.RepositoryContract.Tests/CliVerbLinkageTests.cs",
         "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
         "tools/tests/StrataLint.RepositoryContract.Tests/packages.lock.json",
+        "tools/tests/StrataLint.RepositoryFileMap.Tests/FileMapPolicyTests.cs",
+        "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryFileMap.Tests/packages.lock.json",
         "tools/tests/StrataLint.RepositoryTopology.Tests/DotnetTestScriptTests.cs",
         "tools/tests/StrataLint.RepositoryTopology.Tests/ProductionEnvironmentTests.cs",
         "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
@@ -3423,6 +3405,88 @@
         "STRATALINT_TEST_ENVIRONMENT"
       ],
       "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
+      "assembly": "StrataLint.RepositoryFileMap.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.RepositoryFileMap.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.RepositoryFileMap.Tests",
+      "root_namespace": "StrataLint.RepositoryFileMap.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.RepositoryFileMap.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/tests/Directory.Build.props",
+        "tools/tests/StrataLint.RepositoryFileMap.Tests/packages.lock.json"
+      ],
+      "execution_inputs": [
+        "*.json",
+        "*.props",
+        "*.toml",
+        ".gitignore",
+        "Blueprint/**",
+        "D5/**",
+        "Golden/**",
+        "Library/**",
+        "Makefile",
+        "Meta/Digestion/atomizers.toml",
+        "Meta/FILEMAP.*.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/ReportConsumers/lean-report.json",
+        "Meta/ReportConsumers/scribe-content.json",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-cache-paths.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
+        "Meta/domains.yaml",
+        "Meta/engineering-projects.json",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "Meta/registry.yaml",
+        "agents/**",
+        "docs/develop/spec/**",
+        "lean-toolchain",
+        "tools/**"
+      ],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": [
+        "Blueprint/D5/S0/Carrier/Ring.md",
+        "Generated/truth-graph.v1.json",
+        "Library/Weil/sample2026paper.md",
+        "Meta/ReportConsumers/lean-report.json",
+        "Meta/ReportConsumers/scribe-content.json",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "tools/Generated/scribe-emissions.v1.json"
+      ]
     },
     {
       "path": "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",

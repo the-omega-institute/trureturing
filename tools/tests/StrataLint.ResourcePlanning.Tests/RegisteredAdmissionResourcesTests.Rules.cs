@@ -12,6 +12,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var plan = Plan("tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs", "", mode);
         Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
             "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
             RepositoryTopologyProject,
         }), Strings(plan["execution"]!["tests"]!));
