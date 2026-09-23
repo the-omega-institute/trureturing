@@ -203,7 +203,7 @@
       "checks": [],
       "steps": [],
       "lean_targets": [
-        "LeanInformationAudit",
+        "leanInspector/LeanInformationAudit",
         "leanInspector/reportInspector",
         "leanInspectorInterface/LeanInformationAuditInterface",
         "reg/LeanInformationAuditRegTests"

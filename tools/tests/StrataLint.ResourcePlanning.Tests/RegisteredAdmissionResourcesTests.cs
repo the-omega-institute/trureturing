@@ -76,9 +76,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("tools/lean-inspector/tests/test_reuse.py", true)]
-    [InlineData("tools/scripts/agent/openproblem/erdos617.py", false)]
-    public void FileMapOnlyPushPlansKeepRegisteredDependencyCaches(string input, bool dependency)
+    [InlineData("tools/lean-inspector/tests/test_reuse.py")]
+    [InlineData("tools/scripts/agent/openproblem/erdos617.py")]
+    public void FileMapOnlyPushPlansKeepBuildAndTestCachesWithoutCurrentOrLeanCaches(string input)
     {
         var plan = Plan(input, "", "push");
         var resources = Strings(plan["resources"]!);
@@ -91,7 +91,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.DoesNotContain("lean-report", resources);
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
         Assert.DoesNotContain("current", caches);
-        Assert.Equal(dependency, caches.Contains("dependency"));
+        Assert.DoesNotContain("dependency", caches);
         Assert.DoesNotContain("project", caches);
         Assert.Contains("judge", caches);
         Assert.Contains("engineering", caches);
@@ -231,7 +231,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.Equal(CommonCheckRegistrationFixture.Ids
             .Where(id => id is not ("banned-api-proof" or "capability-proof" or "selftest-pair")).Order(StringComparer.Ordinal),
             Strings(plan["execution"]!["checks"]!));
-        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface", "reg/LeanInformationAuditRegTests" },
+        Assert.Equal(new[] { "leanInspector/LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface", "reg/LeanInformationAuditRegTests" },
             Strings(plan["execution"]!["lean_targets"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
             Strings(plan["execution"]!["steps"]!));
@@ -247,7 +247,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     public void CachePathChangesRunOnlyRegisteredCacheConsumers(string mode)
     {
         var plan = Plan("Meta/ci-cache-paths.json", "", mode);
-        Assert.Equal(new[] { "StrataLint.BuildIntegration.Tests", "StrataLint.Cache.Tests", "StrataLint.Lean.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(new[] { "StrataLint.BuildIntegration.Tests", "StrataLint.Cache.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
         Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
@@ -274,7 +274,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     {
         var plan = Plan(input, "", mode);
         Assert.Contains("lean-inspector-build", Strings(plan["resources"]!));
-        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface", "reg/LeanInformationAuditRegTests" },
+        Assert.Equal(new[] { "leanInspector/LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface", "reg/LeanInformationAuditRegTests" },
             Strings(plan["execution"]!["lean_targets"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
             Strings(plan["execution"]!["steps"]!));

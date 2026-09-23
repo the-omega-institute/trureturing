@@ -75,77 +75,6 @@ def native_archive_paths(root, layers):
         raise CachePathRegistrationError(f"cache path registration {manifest}: {error}") from error
 
 
-def stage_dependency(root, destination):
-    """Copy checkouts and the pinned cache executable for private native supply.
-
-    The warm provider supplies the real cache executable, avoiding its rebuild.
-    Mathlib cache-get owns archive membership and the complete upstream closure;
-    no module inventory or extension filter selects build products. Supply runs
-    once in the destination. Authored project outputs stay absent.
-    """
-    paths = native_archive_paths(root, ["dependency"])["dependency"]
-    if partition_path(root) != partition_path(destination):
-        raise ValueError("dependency stage partition mismatch")
-    target = destination / ".lake"
-    if target.exists() or target.is_symlink():
-        raise ValueError("dependency stage requires an absent private .lake")
-    with cache_guard(root, shared=True), cache_guard(destination):
-        bootstrap = pathlib.Path(".lake/packages/mathlib/.lake/build/bin/cache")
-        stamp = pathlib.Path(".lake/.stratalint-lean-cache-stamp.json")
-        for relative in (bootstrap, stamp):
-            source = root / relative
-            if source.is_symlink() or not source.is_file():
-                raise ValueError("warm dependency material is unavailable: " + str(relative))
-        with tempfile.TemporaryDirectory(prefix=".dependency-", dir=destination) as temporary:
-            staged = pathlib.Path(temporary)
-            for pattern in paths:
-                selected = sorted(root.glob(pattern))
-                if not selected:
-                    raise ValueError("dependency material is unavailable: " + pattern)
-                for source in selected:
-                    relative = source.relative_to(root)
-                    if source.is_symlink() or not source.is_dir():
-                        raise ValueError("dependency stage requires a regular directory: " + str(relative))
-                    copied = staged / relative
-                    copied.parent.mkdir(parents=True, exist_ok=True)
-                    argv = ["tar", "--exclude=.lake", "-C", str(source.parent), "-cf", "-", source.name]
-                    with subprocess.Popen(argv, stdout=subprocess.PIPE) as archive:
-                        try:
-                            extracted = subprocess.run(
-                                ["tar", "-C", str(copied.parent), "-xf", "-"],
-                                stdin=archive.stdout, check=False)
-                        finally:
-                            archive.stdout.close()
-                        if archive.wait() != 0:
-                            raise subprocess.CalledProcessError(archive.returncode, argv)
-                        extracted.check_returncode()
-            executable = staged / bootstrap
-            executable.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(root / bootstrap, executable)
-            environment = dict(os.environ)
-            lake = environment.get("LAKE_BIN", "lake")
-            phases = []
-            def supply(cwd, binary, operation):
-                started = time.monotonic()
-                subprocess.run([lake, "env", str(binary), operation], cwd=cwd,
-                               env=environment, check=True)
-                phases.append(dict(operation=operation, seconds=time.monotonic() - started))
-            (staged / ".lake").rename(target)
-            try:
-                supply(destination, destination / bootstrap, "get")
-                # Copy the provider's canonical dependency identity only after
-                # native supply succeeds. Ensure still checks that identity and
-                # reports full Mathlib coverage; it need not restore it again.
-                shutil.copy2(root / stamp, destination / stamp)
-            except BaseException:
-                shutil.rmtree(target)
-                raise
-    receipt("dependency", "staged", source=str(root), destination=str(destination),
-            paths=paths, partition=partition_path(root),
-            transport="mathlib-cache-get", phases=phases,
-            upstream_lake_outputs=True, project_outputs=False)
-
-
 def output_archive_paths(layer, paths):
     key = layer + "_archive_path"
     value = "\n".join(paths)
@@ -900,9 +829,8 @@ def report_seed(root):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("keys", "restore", "snapshot", "prepare-report", "stage-dependency"))
+    parser.add_argument("command", choices=("keys", "restore", "snapshot", "prepare-report"))
     parser.add_argument("--repository", required=True, type=pathlib.Path)
-    parser.add_argument("--destination", type=pathlib.Path)
     parser.add_argument("--layers", choices=ALL_LAYERS, nargs="+")
     parser.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
     parser.add_argument("--layer", choices=ALL_LAYERS)
@@ -915,17 +843,6 @@ def main():
         parser.add_argument("--" + layer + "-outcome", default="",
                             choices=("", "success", "failure", "cancelled", "skipped"))
     args = parser.parse_args()
-    if args.command == "stage-dependency":
-        if args.destination is None or args.stage or args.layers or args.layer or args.bounded_cache:
-            parser.error("stage-dependency requires --destination and the registered dependency layer")
-        try:
-            stage_dependency(args.repository.resolve(), args.destination.resolve())
-            return 0
-        except (OSError, ValueError, TypeError, subprocess.CalledProcessError) as error:
-            print("DEPENDENCY_STAGE_FAILED " + str(error), file=sys.stderr)
-            return 2
-    if args.destination is not None:
-        parser.error("--destination requires stage-dependency")
     args.seed_manifest = pathlib.Path(args.seed_manifest).absolute() if args.seed_manifest else None
     if args.seed_manifest is not None:
         selected = [args.layer] if args.layer else args.layers
