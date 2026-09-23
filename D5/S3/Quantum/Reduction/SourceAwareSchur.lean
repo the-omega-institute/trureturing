@@ -162,6 +162,14 @@ theorem projected_nilpotency_counterexample :
       !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 0, 0; 0, 0, 0, 1]
     Q * Q = 0 ∧ P * P = P ∧ (P * Q * P) * (P * Q * P) ≠ 0 := by
   norm_num [Matrix.ext_iff, Matrix.mul_apply, Fin.sum_univ_four]
+  constructor
+  · ext i j
+    fin_cases i <;> fin_cases j <;> rfl
+  · constructor
+    · rfl
+    · intro h
+      have h30 := congrFun (congrFun h (3 : Fin 4)) (0 : Fin 4)
+      norm_num at h30
 
 #print axioms source_preserving_schur
 #print axioms schur_graph_lift
