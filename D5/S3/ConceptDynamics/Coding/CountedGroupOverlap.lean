@@ -98,14 +98,29 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     split U V (join U V a b h) = (a, b) := by
   rcases a with ⟨i, j, g, a⟩
   rcases b with ⟨j', k, h', b⟩
-  dsimp at h
-  subst j'
-  simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
+  cases h
+  let p : Fiber U V i k (g * h') :=
+    ⟨j, g, a, by simpa using b⟩
+  let rebuild : Fiber U V i k (g * h') → Edge U × Edge V := fun q =>
+    (⟨i, q.1, q.2.1, q.2.2.1⟩,
+     ⟨q.1, k, q.2.1⁻¹ * (g * h'), q.2.2.2⟩)
+  have hinv := congrArg rebuild
+    ((fiberEquiv U V i k (g * h')).apply_symm_apply p)
+  change rebuild
+      (fiberEquiv U V i k (g * h')
+        ((fiberEquiv U V i k (g * h')).symm p)) =
+    (⟨i, j, g, a⟩, ⟨j, k, h', b⟩)
+  rw [Equiv.apply_symm_apply]
+  simpa [rebuild, p] using hinv
 
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
   rcases a with ⟨i, k, g, a⟩
-  simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
+  let p := fiberEquiv U V i k g a
+  have hinv := (fiberEquiv U V i k g).symm_apply_apply a
+  rcases hp : p with ⟨j, h, an, bn⟩
+  simp only [join, split, p, hp]
+  simpa using hinv
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
