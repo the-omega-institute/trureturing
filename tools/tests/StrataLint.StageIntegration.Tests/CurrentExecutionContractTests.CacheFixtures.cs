@@ -274,16 +274,7 @@ public sealed partial class CurrentExecutionContractTests
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
                 rows[0]![field] = declaration[field]!.DeepClone();
         });
-        const string documents = "tools/fixture/BlueprintFixture.csproj";
-        fixture.Write(documents, "<Project />\n");
-        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
-        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
-            new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
-        const string sourceInputs = "tools/fixture/SourceInputs.csproj";
-        fixture.Write(sourceInputs, "<Project />\n");
-        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
-            new EngineeringProjectFixture(sourceInputs, "SourceInputs", "test-support", false,
-                ["tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs", "tools/StrataLint.Configuration/**/*.cs"])));
+        RegisterRuntimeSourceOwners(fixture);
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
@@ -318,5 +309,22 @@ public sealed partial class CurrentExecutionContractTests
                 CommonExecutionEvidence.ValidateEngineering(fixture.Root)).Message);
         }
         else Assert.Equal(prior with { Status = "reused" }, accepted);
+    }
+
+    private static void RegisterRuntimeSourceOwners(ExecutionFixture fixture)
+    {
+        // Byte-read C# materials still require source ownership in the synthetic
+        // candidate; these owners are not compile references of the test projects.
+        const string documents = "tools/fixture/BlueprintFixture.csproj";
+        fixture.Write(documents, "<Project />\n");
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
+        const string sourceInputs = "tools/fixture/SourceInputs.csproj";
+        fixture.Write(sourceInputs, "<Project />\n");
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(sourceInputs, "SourceInputs", "test-support", false,
+                ["tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs", "tools/StrataLint.Configuration/**/*.cs",
+                    "tools/StrataLint.Lean/**/*.cs"])));
     }
 }
