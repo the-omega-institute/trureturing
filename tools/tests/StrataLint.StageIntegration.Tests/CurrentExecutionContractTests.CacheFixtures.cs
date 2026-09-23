@@ -251,7 +251,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.Tests", "Golden/Projection/statement-projection-pilot-v1.json", true)]
     [InlineData("StrataLint.Tests", "Golden/values-kernels.toml", false)]
     [InlineData("StrataLint.Tests", "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json", true)]
-    [InlineData("StrataLint.Tests", "tools/StrataLint.Engine/Relocated/BackfillInventoryRule.cs", true)]
+    [InlineData("StrataLint.Tests", "tools/StrataLint.Engine/Relocated/BackfillInventoryRule.cs", true, true)]
     [InlineData("StrataLint.Tests", "tools/scripts/report/lean-report.sh", false)]
     [InlineData("StrataLint.Tests", "tools/scripts/workflow/playbook-workflows.sh", true)]
     [InlineData("StrataLint.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
@@ -263,7 +263,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.FileMap.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "Meta/Digestion/atomizers.toml", true)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/agent/header-check.sh", false)]
-    public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates)
+    public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates, bool addInput = false)
     {
         using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
@@ -288,7 +288,7 @@ public sealed partial class CurrentExecutionContractTests
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
                 : "registered fixture material\n");
-        fixture.Write(path, "original registered input\n");
+        if (!addInput) fixture.Write(path, "original registered input\n");
         fixture.Track();
         Execute(fixture);
         Seed(fixture);
