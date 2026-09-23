@@ -99,7 +99,7 @@ public sealed class ResourceObservationLibraryTests
 
         var result = Run(
             temporary,
-            "source \"$1\"\nresource_observe_sample 7 424242 \"\" \"\"\n",
+            "source \"$1\"\nresource_observe_sample 8 424242 \"\" \"\"\n",
             $"RESOURCE_OBSERVATION_PROC_ROOT={missing}",
             $"RESOURCE_OBSERVATION_CGROUP_ROOT={missing}",
             $"RESOURCE_OBSERVATION_DATE_COMMAND={missing}",
