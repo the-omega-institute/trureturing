@@ -10,10 +10,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void RuleBehaviorChangesSelectTheirCompleteProject(string mode)
     {
         var plan = Plan("tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -22,8 +22,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ValuesProjectionSelectsRuleBehaviorTests(string mode)
     {
         var plan = Plan("Evidence/D5/values.json", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
     }
 }

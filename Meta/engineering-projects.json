@@ -1598,6 +1598,9 @@
         "tools/tests/StrataLint.ReleaseIntegration.Tests/ReleaseCommandTests.cs",
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/TruthReleaseSelectionTests.cs",
+        "tools/tests/StrataLint.RepositoryContract.Tests/CliVerbLinkageTests.cs",
+        "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryContract.Tests/packages.lock.json",
         "tools/tests/StrataLint.ResourceObservation.Tests/ResourceObservationLibraryTests.cs",
         "tools/tests/StrataLint.ResourcePlanning.Tests/RegisteredAdmissionResourcesTests.cs",
         "tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs",
@@ -2566,6 +2569,47 @@
       "execution_inputs": [
         "tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs",
         "tools/scripts/agent/header-check.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
+      "assembly": "StrataLint.RepositoryContract.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.RepositoryContract.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.RepositoryContract.Tests",
+      "root_namespace": "StrataLint.RepositoryContract.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.RepositoryContract.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.RepositoryContract.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.RepositoryContract.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "**"
       ],
       "execution_excludes": [],
       "execution_environment": [

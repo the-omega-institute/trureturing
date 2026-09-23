@@ -23,10 +23,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ConfigurationTestsRunWithoutCliTestExecution(string mode)
     {
         var plan = Plan("tools/tests/StrataLint.Configuration.Tests/RegistryTests.cs", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -63,9 +63,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ReleaseCacheFixtureSelectsItsCompleteProjectAndMakeDependency(string mode)
     {
         var plan = Plan("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
         Assert.Contains("make", Strings(plan["tools"]!));
         if (mode == "push") Assert.DoesNotContain("lake", Strings(plan["tools"]!));
     }

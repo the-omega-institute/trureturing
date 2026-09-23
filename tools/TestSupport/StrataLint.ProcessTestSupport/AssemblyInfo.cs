@@ -12,3 +12,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.ReportSupervisor.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.LeanReportScript.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.ResourceObservation.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.RepositoryContract.Tests")]
