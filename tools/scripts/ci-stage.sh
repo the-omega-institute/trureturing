@@ -80,8 +80,36 @@ case "$stage" in
   current)
     [[ -f "$runner" ]] || exit 2
     source tools/scripts/lib/resource-observation-lib.sh
+    staging_probe_log=""
+    # One-shot #9571 diagnostic; only this native PR head changes scheduling.
+    # stage-input has already validated the plan and returned for no-resource work.
+    if [[ "${GITHUB_EVENT_NAME:-}" == pull_request &&
+          "${GITHUB_HEAD_REF:-}" == lane/infra/report-staging-normal-probe-20260924 ]]; then
+      staging_probe_log=build/ci/check-material/staging-probe/content.log
+      mkdir -p "$(dirname "$staging_probe_log")"
+      (
+        printf 'STAGING_PROBE phase=precompile utc=%s command=make-lean-Trureturing flags=baseline\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        printf '%s\n' \
+          'STAGING_PROBE scope=canonical-make-cache-producer-and-Lean checked_time=UNAVAILABLE per_module_peak=UNAVAILABLE' \
+          'STAGING_PROBE evidence=raw-Lake-Built-Replayed cgroup_peak_scope=job-cumulative process_rss_scope=sampled'
+        # GNU time measures the whole canonical command, including its .NET cache
+        # producer. Lake output distinguishes fresh Built work from Replayed logs;
+        # a warm/replayed or incomplete run cannot establish the hypothesis.
+        resource_observe_run_periodic env time \
+          -f 'STAGING_PROBE_TIME phase=precompile wall_seconds=%e user_seconds=%U system_seconds=%S max_rss_kib=%M command_exit=%x' \
+          make lean LEAN_TARGETS=Trureturing
+      ) 2>&1 | tee "$staging_probe_log"
+      # pipefail requires both compilation and log retention before the parent.
+    fi
     # Keep the stage's cancellation traps outside the sampler's signal scope.
-    (resource_observe_run_periodic dotnet "$runner" current --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"})
+    if [[ -n "$staging_probe_log" ]]; then
+      (
+        printf 'STAGING_PROBE phase=current utc=%s timing=resource-sample-baseline-to-final\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        resource_observe_run_periodic dotnet "$runner" current --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"}
+      ) 2>&1 | tee -a "$staging_probe_log"
+    else
+      (resource_observe_run_periodic dotnet "$runner" current --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"})
+    fi
     ;;
   delta)
     [[ -f "$runner" ]] || exit 2
