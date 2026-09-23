@@ -699,7 +699,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     [Fact]
     public void SharedConfigurationFixtureSelectsItsThreeConsumers()
     {
-        var plan = Plan("tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml", "");
+        var plan = Plan("tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml", "");
         Assert.Equal(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.Tests" }
             .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
     }

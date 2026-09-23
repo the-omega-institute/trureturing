@@ -1582,7 +1582,7 @@
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
         "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml",
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
@@ -2393,7 +2393,7 @@
         "tools/scripts/workflow/ci.py",
         "tools/scripts/workflow/ci_plan.py",
         "tools/scripts/workflow/scribe-content-checks.sh",
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml"
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -2616,7 +2616,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml"
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
       ],
       "execution_excludes": [],
       "execution_environment": [

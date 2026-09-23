@@ -4,7 +4,7 @@ namespace StrataLint.TestSupport;
 
 internal static class TestRegistry
 {
-    internal const string RelativePath = "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml";
+    internal const string RelativePath = "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml";
 
     // Declared before Canonical on purpose: static fields initialize in declaration
     // order, and LoadRepository decodes through this encoder.
@@ -33,18 +33,18 @@ internal static class TestRegistry
     {
         if (!File.Exists(Path.Combine(
                 TestRepositoryLayout.FindRoot(),
-                "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml")))
+                "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml")))
         {
             throw new FileNotFoundException(
                 $"fixture registry is absent: {RelativePath}",
                 Path.Combine(
                     TestRepositoryLayout.FindRoot(),
-                    "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml"));
+                    "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"));
         }
 
         var bytes = File.ReadAllBytes(Path.Combine(
             TestRepositoryLayout.FindRoot(),
-            "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml"));
+            "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"));
         if (bytes.Length == 0
             || bytes[^1] != (byte)'\n'
             || bytes.AsSpan().Contains((byte)'\r')
