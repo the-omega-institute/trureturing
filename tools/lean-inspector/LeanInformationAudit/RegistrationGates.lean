@@ -1,6 +1,6 @@
 import LeanInformationAudit.RegistryTypes
 import LeanInformationAudit.ReadoutProvenance
-import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 namespace LeanInformationAudit.RegistrationGates
 open Lean Meta
