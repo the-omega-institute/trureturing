@@ -5,6 +5,7 @@ namespace StrataLint.Engine.Tests;
 
 public sealed class StratumAlphabetTests
 {
+    // The synthetic alphabet checks belong to the complete Engine test project.
     private static readonly string[] Expected = ["S0", "S1", "S2", "S3", "S4"];
 
     [Fact]
