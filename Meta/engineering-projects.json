@@ -2776,6 +2776,47 @@
         "STRATALINT_TEST_ENVIRONMENT"
       ],
       "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj",
+      "assembly": "StrataLint.PrScript.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.PrScript.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.PrScript.Tests",
+      "root_namespace": "StrataLint.PrScript.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.PrScript.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.PrScript.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.PrScript.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "CLAUDE.md",
+        "tools/scripts/pr.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
     }
   ],
   "historical_projects": [],

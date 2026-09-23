@@ -151,6 +151,7 @@
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
         "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
         "tools/tests/StrataLint.PlanningIntegration.Tests/StrataLint.PlanningIntegration.Tests.csproj",
+        "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj",
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj",
         "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj",
@@ -414,6 +415,14 @@
       "id": "test-planning-integration",
       "projects": [
         "tools/tests/StrataLint.PlanningIntegration.Tests/StrataLint.PlanningIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-pr-script",
+      "projects": [
+        "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj"
       ],
       "checks": [],
       "steps": []
