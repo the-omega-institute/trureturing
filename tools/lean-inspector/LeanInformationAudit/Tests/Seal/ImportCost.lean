@@ -40,7 +40,9 @@ run_cmd do
 run_cmd do
   let inRepo := (← getEnv).header.moduleNames.filter fun name =>
     name != `LeanInformationAudit.Tests.Seal.M3 &&
-      (name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit.")
-  -- Capacity-only splits add nine generic judge modules to the 125-module baseline.
-  if inRepo.size > 134 then
-    throwError "ImportCost: M3 import closure exceeded 134 modules: {inRepo.size}"
+      LeanInformationAudit.Repository.isModule name
+  -- Count the split closure's five Interface owners as well as its 136 D5/Impl modules.
+  let interface := inRepo.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
+  if inRepo.size > 141 || interface.size != 5 then
+    throwError "ImportCost: M3 closure changed: modules={inRepo.size} interface={interface.size}"
+  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=141 interface={interface.size}"

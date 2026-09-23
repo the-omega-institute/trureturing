@@ -155,6 +155,14 @@ internal static class DagLedgerAlignWriter
         _ = LoadEvents(acceptedFiles, "accepted frozen ledger");
         var baseView = ReadView(acceptedFiles);
         var state = ReadStateCatalog(repositoryRoot);
+        var retirements = options.Retirements.ToImmutableHashSet();
+        ValidateRetirements(retirements, truth, state, baseView);
+        var retirementClosure = retirements.IsEmpty
+            ? ImmutableHashSet<RepoPath>.Empty
+            : DescendantClosure(
+                FrozenLedgerReplacementClosure.DescendantsFrom(baseView, retirements),
+                baseView.ActiveByPath.Keys,
+                adjacency).Except(retirements);
 
         var addPaths = appendAlias
             ? catalog.ClosedNodes
@@ -163,7 +171,7 @@ internal static class DagLedgerAlignWriter
                 .ToImmutableArray()
             : options.Adds;
         var selected = options.Selectors.IsEmpty
-            ? state.Records.Keys.ToImmutableArray()
+            ? state.Records.Keys.Except(retirements).ToImmutableArray()
             : options.Selectors;
         foreach (var selector in options.Selectors)
         {
@@ -176,6 +184,7 @@ internal static class DagLedgerAlignWriter
 
         var considered = selected
             .Concat(addPaths)
+            .Concat(retirementClosure)
             .Distinct()
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .ToImmutableArray();
@@ -234,7 +243,8 @@ internal static class DagLedgerAlignWriter
                 || !active.Material.DeclarationStatementIds.SequenceEqual(
                     catalog.ByPath[path].DeclarationStatementIds))
             .ToImmutableHashSet()
-            .Union(prerequisiteRepairs);
+            .Union(prerequisiteRepairs)
+            .Union(retirementClosure);
         var regeneration = DescendantClosure(
             initialRegeneration,
             baseView.ActiveByPath.Keys,
@@ -248,17 +258,17 @@ internal static class DagLedgerAlignWriter
         var replacementFiles = ReplaceEvents(
             acceptedFiles,
             baseView,
-            regeneration,
+            regeneration.Union(retirements),
             newEventFiles);
         var replacementEvents = LoadEvents(
             replacementFiles,
             "aligned frozen ledger");
         _ = ReadView(replacementFiles);
-        if (!prerequisiteRepairs.IsEmpty
+        if ((!prerequisiteRepairs.IsEmpty || !retirements.IsEmpty)
             && !DagLedgerLoader.TryOrderClosedDag(replacementEvents, [], out _))
         {
             throw new InvalidOperationException(
-                "repaired frozen ledger does not form a closed dependency DAG");
+                "aligned frozen ledger does not form a closed dependency DAG");
         }
         var stateWritePaths = changedPaths
             .Union(addedPaths)
@@ -282,7 +292,15 @@ internal static class DagLedgerAlignWriter
                 : $"LEDGER_REPAIR seed_modules={prerequisiteRepairs.Count} "
                     + $"reattested_modules={repairClosure.Count}\nAUTHORIZATION overall=pass\n"),
             string.Empty);
-        if (newEventFiles.IsEmpty && stateEvents.IsEmpty)
+        if (!retirements.IsEmpty)
+        {
+            result = result with
+            {
+                Output = result.Output + $"LEDGER_RETIRE registrations={retirements.Count} "
+                    + $"retained_descendants={retirementClosure.Count}\n",
+            };
+        }
+        if (newEventFiles.IsEmpty && stateEvents.IsEmpty && retirements.IsEmpty)
         {
             return result;
         }
@@ -293,9 +311,52 @@ internal static class DagLedgerAlignWriter
             replacementFiles,
             acceptedFiles,
             stateEvents,
-            [],
+            retirements,
             "ledger-align");
         return result;
+    }
+
+    private static void ValidateRetirements(
+        ImmutableHashSet<RepoPath> retirements,
+        TruthContext truth,
+        FrozenStateCatalog state,
+        FrozenLedgerBaseView baseView)
+    {
+        foreach (var path in retirements.OrderBy(static path => path.Value, StringComparer.Ordinal))
+        {
+            if (!path.Value.StartsWith("D5/", StringComparison.Ordinal))
+                throw new InvalidOperationException($"registration retirement requires a D5 module: {path.Value}");
+            if (truth.Snapshot.Files.ContainsKey(path))
+                throw new InvalidOperationException($"cannot retire existing module {path.Value}");
+            if (!state.Records.TryGetValue(path, out var pin))
+                throw new InvalidOperationException(
+                    $"selector {path.Value} is not a registered frozen-state member");
+            if (!baseView.ActiveByPath.TryGetValue(path, out var active)
+                || pin.StatementId != active.Material.StatementId)
+                throw new InvalidOperationException($"state/event statement_id conflict: {path.Value}");
+        }
+
+        foreach (var path in state.Records.Keys.Concat(baseView.ActiveByPath.Keys).Distinct()
+            .OrderBy(static path => path.Value, StringComparer.Ordinal))
+        {
+            if (!truth.Snapshot.Files.ContainsKey(path) && !retirements.Contains(path))
+                throw new InvalidOperationException(
+                    $"module {path.Value} does not exist; missing registrations require explicit --retire-registration");
+        }
+        if (retirements.IsEmpty) return;
+
+        // Adjacency contains only current managed paths, so a missing import would
+        // disappear from it. Check the report's imports before using that projection.
+        var retiredModules = retirements.ToDictionary(LeanImportClosure.ModuleName, StringComparer.Ordinal);
+        foreach (var (path, report) in truth.Report.Files.OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
+        {
+            foreach (var import in report.Imports)
+            {
+                if (retiredModules.TryGetValue(import, out var retired))
+                    throw new InvalidOperationException(
+                        $"module {path.Value} still imports retired registration {retired.Value}");
+            }
+        }
     }
 
     private static void ValidateRequestedPaths(
@@ -529,6 +590,7 @@ internal static class DagLedgerAlignWriter
         string? report = null;
         var selectors = ImmutableArray.CreateBuilder<RepoPath>();
         var adds = ImmutableArray.CreateBuilder<RepoPath>();
+        var retirements = ImmutableArray.CreateBuilder<RepoPath>();
         var fromAccepted = false;
         for (var index = 0; index < arguments.Count; index++)
         {
@@ -543,6 +605,9 @@ internal static class DagLedgerAlignWriter
                 case "--add" when !appendAlias && ++index < arguments.Count:
                     adds.Add(ParseModulePath(arguments[index]));
                     break;
+                case "--retire-registration" when !appendAlias && ++index < arguments.Count:
+                    retirements.Add(ParseModulePath(arguments[index]));
+                    break;
                 case "--from-accepted" when !appendAlias && !fromAccepted:
                     fromAccepted = true;
                     break;
@@ -553,7 +618,7 @@ internal static class DagLedgerAlignWriter
 
         if (fromAccepted)
         {
-            if (report is not null || selectors.Count != 0 || adds.Count != 0)
+            if (report is not null || selectors.Count != 0 || adds.Count != 0 || retirements.Count != 0)
             {
                 throw Usage(appendAlias);
             }
@@ -563,10 +628,17 @@ internal static class DagLedgerAlignWriter
             throw Usage(appendAlias);
         }
 
+        foreach (var group in selectors.Concat(adds).Concat(retirements).GroupBy(static path => path))
+        {
+            if (group.Count() != 1)
+                throw new InvalidOperationException($"duplicate or conflicting module selector: {group.Key.Value}");
+        }
+
         return new AlignOptions(
             report,
-            selectors.Distinct().ToImmutableArray(),
-            adds.Distinct().ToImmutableArray(),
+            selectors.ToImmutable(),
+            adds.ToImmutable(),
+            retirements.ToImmutable(),
             fromAccepted);
     }
 
@@ -586,6 +658,7 @@ internal static class DagLedgerAlignWriter
             ? "USAGE: StrataLint ledger-append --candidate-lean-report FILE"
             : "USAGE: StrataLint ledger-align --candidate-lean-report FILE "
                 + "[--selector D5/.../X.lean]... [--add D5/.../X.lean]... "
+                + "[--retire-registration D5/.../Missing.lean]... "
                 + "| ledger-align --from-accepted");
 
     private static CommandResult ConflictResult(
@@ -624,5 +697,6 @@ internal static class DagLedgerAlignWriter
         string? ReportPath,
         ImmutableArray<RepoPath> Selectors,
         ImmutableArray<RepoPath> Adds,
+        ImmutableArray<RepoPath> Retirements,
         bool FromAccepted);
 }

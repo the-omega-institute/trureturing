@@ -76,9 +76,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("tools/lean-inspector/tests/test_reuse.py")]
-    [InlineData("tools/scripts/agent/openproblem/erdos617.py")]
-    public void FileMapOnlyPushPlansKeepBuildAndTestCachesWithoutCurrentOrLeanCaches(string input)
+    [InlineData("tools/lean-inspector/tests/test_reuse.py", true)]
+    [InlineData("tools/scripts/agent/openproblem/erdos617.py", false)]
+    public void FileMapOnlyPushPlansKeepRegisteredDependencyCaches(string input, bool dependency)
     {
         var plan = Plan(input, "", "push");
         var resources = Strings(plan["resources"]!);
@@ -91,7 +91,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.DoesNotContain("lean-report", resources);
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
         Assert.DoesNotContain("current", caches);
-        Assert.DoesNotContain("dependency", caches);
+        Assert.Equal(dependency, caches.Contains("dependency"));
         Assert.DoesNotContain("project", caches);
         Assert.Contains("judge", caches);
         Assert.Contains("engineering", caches);
@@ -247,7 +247,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     public void CachePathChangesRunOnlyRegisteredCacheConsumers(string mode)
     {
         var plan = Plan("Meta/ci-cache-paths.json", "", mode);
-        Assert.Equal(new[] { "StrataLint.BuildIntegration.Tests", "StrataLint.Cache.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(new[] { "StrataLint.BuildIntegration.Tests", "StrataLint.Cache.Tests", "StrataLint.Lean.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
         Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
@@ -472,7 +472,8 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    // Use an existing D5 owner address to exercise registered semantic-input requirements.
+    [InlineData("D5/S0/Carrier/Ring.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("Meta/ci-checks.json")]
     [InlineData("Meta/registry.yaml")]
