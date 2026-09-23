@@ -1,0 +1,36 @@
+### 27.18 与预测状态和加权自动机文献的对应
+
+本章的预测矩阵采用受控测试语义：固定动作词时，计算指定输出词的概率。Singh、James、Rudary 的 *Predictive State Representations: A New Theory for Modeling Dynamical Systems*（UAI 2004，指定版本 arXiv:1207.4167v1，§4，Lemmas 4–5）证明，有限动作、有限观察系统的最小线性 PSR 核心测试数等于受控预测矩阵的秩。该结果不要求初始律平稳；其归一化更新本身是线性量的比值。[1] 本章额外确定了具体源上的实际历史、任务读出和匹配的精确秩，因此维数不是仅由一个冗余隐藏状态实现的大小取得。
+
+对有限原子上界，可以把动作—输出对作为有限字母表，并为当前读出加入零成本动作 $I$。若 $M_\sigma$ 是联合质量矩阵、初始向量为 $x_0$，则受控词函数为
+$$
+f(\sigma_1\cdots\sigma_n)
+=\mathbf1^{\mathsf T}M_{\sigma_n}\cdots M_{\sigma_1}x_0.
+\tag{27.78}
+$$
+这是实权自动机的词函数。动作按输入解释时，不要求对所有可能动作词一起归一化；若把它解释成某行为策略下的动作—输出联合律，必须另加该策略的动作选择概率。
+
+对正概率历史，词 Hankel 与条件预测矩阵满足
+$$
+H(h,t)=f(ht)=f(h)\,r_h(t).
+\tag{27.79}
+$$
+两者仅差正行缩放；零概率前缀的全部延续也为零，可删去零行，所以有限秩一致。Balle、Panangaden、Precup 的 *Singular value automata and approximate minimization*（arXiv:1711.05994v2，2019，Theorem 2.1）陈述实权词函数的 Hankel 秩与最小加权自动机维数对应，并将经典结果归于 Berstel–Reutenauer。[2] 这里的有限维实现和下界均已在本章给出，不需要把该转引当作本例的证明。
+
+上述代数对应不自动供给平方可和的逼近理论。当前读出可无限重复，初始活动状态满足
+$$
+f\bigl((I,\mathrm{active})^n\bigr)=1\qquad(n\ge0).
+\tag{27.80}
+$$
+因此在该字母表编码下，全部词值平方和发散，不能直接套用同文以平方可和为前提的奇异值自动机与截断误差定理。
+
+Littman、Sutton、Singh 的 *Predictive Representations of State*（NIPS 2001，卷 14 于 2002 年出版，Theorem 1 与 Lemma 1）给出从有限 POMDP 构造有限预测状态表示的矩阵方法。[3] 这种方法提供给定模型的表示上界。最优查询成本、精确存储位数与本章的特殊维数，分别需要相应下界或成本推导；本章的 Vandermonde、局部秩、矩 Gram 与尾概率论证承担这些额外义务。
+
+参考文献：
+
+[1] Satinder Singh, Michael R. James, Matthew R. Rudary. *Predictive State Representations: A New Theory for Modeling Dynamical Systems*. UAI 2004, 512–519. https://arxiv.org/abs/1207.4167v1
+
+[2] Borja Balle, Prakash Panangaden, Doina Precup. *Singular value automata and approximate minimization*. Mathematical Structures in Computer Science 29 (2019), 1444–1478. https://arxiv.org/abs/1711.05994v2
+
+[3] Michael L. Littman, Richard S. Sutton, Satinder Singh. *Predictive Representations of State*. Advances in Neural Information Processing Systems 14, 1555–1561. https://proceedings.neurips.cc/paper_files/paper/2001/file/1e4d36177d71bbb3558e43af9577d70e-Paper.pdf
+
