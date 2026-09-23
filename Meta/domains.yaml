@@ -206,3 +206,4 @@ domains:
   Zeros:
     stratum: S3
     definition: Geometry, symmetry, and local balance of classical zeta zeros.
+# demand-selection canonicalization probe
