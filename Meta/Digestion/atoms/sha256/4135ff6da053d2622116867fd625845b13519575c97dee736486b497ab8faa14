@@ -1,0 +1,28 @@
+**定理 128.2。**
+$$
+m_{n+1}=m_n+K_n\nu_n,\qquad
+\Sigma_{n+1}=\Sigma_n-\Sigma_nH_n^TS_n^{-1}H_n\Sigma_n,
+$$
+$$
+J_{n+1}=J_n+H_n^TR_n^{-1}H_n.
+$$
+条件于 $\mathcal Y_n$，$Y_n\sim N(H_nm_n,S_n)$，$\nu_n\sim N(0,S_n)$。
+
+**证明。** 给定历史后，新噪声仍独立于 $Z$ 与过去，线性 Gaussian 相加给预测律。精度式由定理 128.1 得到。略去下标，写 $J'=\Sigma^{-1}+H^TR^{-1}H$，$S=R+H\Sigma H^T$。则
+$$
+J'\Sigma H^TS^{-1}
+=H^TS^{-1}+H^TR^{-1}H\Sigma H^TS^{-1}
+=H^TR^{-1}.
+$$
+因此
+$$
+J'(\Sigma-\Sigma H^TS^{-1}H\Sigma)=I,
+$$
+证明协方差式。再计算
+$$
+J'[m+K(y-Hm)]
+=Jm+H^TR^{-1}Hm+H^TR^{-1}(y-Hm)
+=Jm+H^TR^{-1}y,
+$$
+正是新自然参数，故均值式也成立。证毕。
+

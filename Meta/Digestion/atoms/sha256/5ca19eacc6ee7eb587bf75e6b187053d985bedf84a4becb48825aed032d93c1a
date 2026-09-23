@@ -1,0 +1,16 @@
+**命题 10.9（共用恢复器的两态下界）。** 设 $\mathcal E:X\to Y$ 为保留记录通道，$\mathcal T:X\to Z$ 为目标通道，$\mathcal R:Y\to Z$ 为任意共用 CPTP 恢复器。对任意 $\rho,\sigma\in\mathcal D(X)$，令
+$$
+e_\rho=d_1(\mathcal T(\rho),\mathcal R\mathcal E(\rho)),
+\qquad
+e_\sigma=d_1(\mathcal T(\sigma),\mathcal R\mathcal E(\sigma)).
+$$
+则
+$$
+\max\{e_\rho,e_\sigma\}
+\ge\frac12\left[
+d_1(\mathcal T(\rho),\mathcal T(\sigma))
+-d_1(\mathcal E(\rho),\mathcal E(\sigma))
+\right].
+\tag{10.16}
+$$
+

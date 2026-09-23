@@ -1,0 +1,83 @@
+**theorem 50.7（全完成中 gcd 图闭包在一个固定边界输入上多值）。** 令
+$$
+D_{\mathrm{full}}=\prod_p p^\infty,
+\qquad
+K=K_{\infty,D_{\mathrm{full}}}.
+$$
+定义两个边界点
+$$
+\omega_0=\lim_{k\to\infty}j(k!),
+\qquad
+\omega_1=\lim_{k\to\infty}j(k!+1).
+$$
+令 gcd 图的闭包为
+$$
+\overline{\Gamma_g}
+=
+\overline{
+\left\{
+\bigl(j(a),j(b),j(\gcd(a,b))\bigr):
+a,b\in\mathbb N_0
+\right\}}
+\subseteq K^2\times K.
+$$
+则在同一个固定输入
+$$
+(\omega_0,\omega_1)
+$$
+上至少有两个不同输出：
+$$
+\bigl(\omega_0,\omega_1,j(1)\bigr)\in\overline{\Gamma_g},
+$$
+以及
+$$
+\bigl(\omega_0,\omega_1,\omega_1\bigr)\in\overline{\Gamma_g},
+$$
+且
+$$
+j(1)\ne\omega_1.
+$$
+此结论只断言图闭包在该输入处至少二值，不断言完整图闭包的等式描述，也不断言任意额外的整除刻画。
+
+**证明。** 固定任意有限坐标 $(u,m)$. 当 $k$ 足够大时
+$$
+k!\ge u,\qquad m\mid k!,
+$$
+所以
+$$
+q_{u,m}(k!)
+$$
+最终是尾部剩余 $0$，而
+$$
+q_{u,m}(k!+1)
+$$
+最终是尾部剩余 $1$。故两个所写极限在逆极限拓扑中存在。
+
+第一列真实图点取
+$$
+\bigl(j(k!),j(k!+1),j(\gcd(k!,k!+1))\bigr).
+$$
+相邻整数互素，所以
+$$
+\gcd(k!,k!+1)=1.
+$$
+该图点列收敛到
+$$
+(\omega_0,\omega_1,j(1)).
+$$
+
+第二列真实图点取
+$$
+\bigl(j(k!(k!+1)),j(k!+1),
+j(\gcd(k!(k!+1),k!+1))\bigr).
+$$
+因为 $k!+1$ 整除 $k!(k!+1)$，
+$$
+\gcd(k!(k!+1),k!+1)=k!+1.
+$$
+第一输入对任意固定 $m$ 最终被 $m$ 整除且趋过任意阈值，所以趋于 $\omega_0$；第二输入与输出都趋于 $\omega_1$。故第二列图点收敛到
+$$
+(\omega_0,\omega_1,\omega_1).
+$$
+最后在层 $(2,1)$，$j(1)$ 是孤立初始类 $1$，而 $\omega_1$ 是尾类，所以二者不同。证毕。
+

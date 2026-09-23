@@ -1,0 +1,22 @@
+**theorem 51.11 (单位轨道纤维与连续规范化 profinite 截面).** 映射 $\rho:R\to\mathcal I$ 的每个纤维是一个 $R^\times$ 轨道。对于代表元 $r\in R$，其稳定子为
+$$
+H_r=\{u\in R^\times:u_p=1\text{ 对所有满足 }r_p\ne0\text{ 的 }p\}.
+$$
+因此该纤维由 $R^\times/H_r$ 参数化；含零分量时不应把原单位群作用称为自由作用。
+
+固定各 $\mathbb Z_p$ 中的标准元素 $p$，定义
+$$
+s:\mathcal I\to R,\qquad s(e)_p=\begin{cases}p^{e_p},&e_p<\infty,\\0,&e_p=\infty.\end{cases}
+$$
+则 $s$ 连续，且
+$$
+\rho\circ s=\operatorname{id}_{\mathcal I}.
+$$
+故可以连续选取主理想的规范化 profinite 生成元。此选择不要求其值是某个正整数的对角像，也不保证把两个理想分别规范化后满足联合乘积方程。
+
+**证明。** 纤维为单位轨道已经在 theorem 51.2.1 中逐坐标证明，与 Longhi–Mu–Saettone Proposition 4.3 的轨道识别一致（[Longhi–Mu–Saettone，v3，第 26 页](https://arxiv.org/pdf/2202.13478v3#page=26)）。若 $ur=r$，在 $r_p\ne0$ 的分量可在整环 $\mathbb Z_p$ 中消去 $r_p$，得到 $u_p=1$；在 $r_p=0$ 的分量则不限制单位。这给出稳定子与陪集参数化。若存在零分量，在该分量取 $-1$ 即得到非平凡稳定子。
+
+对于截面，固定 $p$。坐标映射 $e_p\mapsto p^{e_p}$ 在有限 $e_p$ 处连续，因为该点孤立。在 $e_p=\infty$ 处，对任意 $p^r\mathbb Z_p$ 这一零点邻域，当 $e_p\in T_r$ 时，映射值属于 $p^r\mathbb Z_p$，包括 $e_p=\infty$ 时的值 $0$。所以该坐标映射处处连续。所有坐标连续，给出 $s$ 在乘积拓扑中连续，而 $v_p(s(e)_p)=e_p$ 逐坐标成立，故 $\rho s=\operatorname{id}$。
+
+这是 $R$ 值的生成元截面，不是取值于孤立自然层 $j(\mathbb N_{>0})$ 的截面。为验证最后的乘积限制，取 $x=1$、$y=-1$。这时 $G=L=R$，分别规范化给出 $s(G)=s(L)=1$，其乘积为 $1$，却有 $xy=-1$。因此连续规范化的存在不能替代 theorem 51.5 的共同乘积约束。证毕。
+

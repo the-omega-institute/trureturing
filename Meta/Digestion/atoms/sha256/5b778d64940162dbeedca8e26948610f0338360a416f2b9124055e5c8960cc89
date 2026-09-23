@@ -1,0 +1,12 @@
+**定理 11.6（有限时域梳的实现）。** 在定义11.5的有限维、固定时间次序下，正性与式(11.9)等价于存在有限维记忆 $M_k$、$M_0=\mathbb C$ 及等距映射
+$$
+V_k:M_{k-1}\otimes A_k\longrightarrow B_k\otimes M_k,
+\qquad V_k^\dagger V_k=I,
+\tag{11.10}
+$$
+使顺序网络在最后舍弃 $M_n$ 后给出 $R^{(n)}$。允许一般逐轮 CPTP 映射给出同一类梳。其迹满足
+$$
+\operatorname{Tr}R^{(k)}=\prod_{j=1}^k d_{A_j}.
+\tag{11.11}
+$$
+

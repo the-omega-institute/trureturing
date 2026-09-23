@@ -1,0 +1,15 @@
+**定理 137.2（有限奇数阶矩的精确正实现）。** 定义137.1的前缀存在正实现，当且仅当
+$$
+\boxed{H_r\succeq0,\qquad S_r\succeq0,\qquad
+\ker H_r\subseteq\ker S_r.}
+\tag{137.3}
+$$
+条件成立时，可以取
+$$
+E=P_r/\ker H_r,\qquad \dim E=\operatorname{rank}H_r,
+\tag{137.4}
+$$
+且此维数在全部正实现中最小。
+
+此精确等号问题的矩阵 Stieltjes 判据见 V. Bolotnikov, “Degenerate Stieltjes Moment Problem and Associated J-Inner Polynomials”, *Zeitschrift für Analysis und ihre Anwendungen* 14(3) (1995), 441–468，[DOI 10.4171/ZAA/633](https://doi.org/10.4171/ZAA/633)，Definition 2.1及Lemma 2.5，445–448页。其复 Hermitian 矩阵表述限制到实对称数据给上述条件；以下直接构造有限实实现。
+

@@ -1,0 +1,41 @@
+**定理 32.14（任意非负同单位计数的真律证书）。** 固定 $\mu,g,S,K_O$、坐标含义、来源合同及默认。给同一 $K_O$ 上、同一概率质量单位的任意非负测量计数 $\widetilde C_O$，令
+$$
+\eta_O=\|\widetilde C_O-C_O\|_1,\quad \eta=\sum_O\eta_O,
+\quad \widetilde s_O=\sum_k\widetilde C_{O,k},\quad
+\widetilde E_{\rm pair}=\sum_O(\widetilde s_O-w_O)_+.
+\tag{32.39}
+$$
+按（32.28）归一化并扩展到相位，得同一个输出 $\widetilde Q\in\mathcal F_S$，无须测量表本身互相兼容。它满足
+$$
+\operatorname{TV}(Q,\widetilde Q)
+\le\min\{1,\eta+\sum_O(w_O-s_O)_+\}
+\le\min\{1,\eta+A(P)\},
+\tag{32.40}
+$$
+并有直接对真实 $P$ 的更强界
+$$
+\begin{aligned}
+\operatorname{TV}(P,\widetilde Q)\le\min\{1,&\ A(P)+E_{\rm pair}+\eta,\\
+&\beta+n\sum_OM_O\beta_O+E_{\rm pair}+\eta,\\
+&\beta+M_{\max}(R+\beta_N)+E_{\rm pair}+\eta\}\\
+\le\min\{1,&\ (1+2M_{\max})R+E_{\rm pair}+\eta,
+(2+2M_{\max})R+\eta\}.
+\end{aligned}
+\tag{32.41}
+$$
+同一输出还满足原来的两种统一界 $(1+nM_{\max})R+E_{\rm pair}+\eta$ 与 $(2+nM_{\max})R+\eta$，均可再与 $1$ 取最小值。$R=0$ 时误差至多 $\min(1,\eta)$。
+
+证明。非负轨道常数列总量为 $w_O$，故由定理32.3及合法集定义得成员资格。逐轨道用（32.38）得（32.40）的第一界，且 $(w_O-s_O)_+\le b_O$、$\sum_Ob_O=\beta_N+m\le A(P)$。这个输出间比较含真实缺陷项，并非全域纯噪声连续性。
+
+直接比较无需串联（32.40）。使用（32.29）、$C_O=U_O+Z_O$ 和 $|\widetilde s_O-s_O|\le\eta_O$，有
+$$
+\begin{aligned}
+\|\mathcal N_{w_O}(\widetilde C_O)-U_O\|_1
+&\le|w_O-\widetilde s_O|+\|\widetilde C_O-U_O\|_1\\
+&\le|w_O-s_O|+D_O+2\eta_O\\
+&=b_O+2(s_O-w_O)_++2\eta_O.
+\end{aligned}
+\tag{32.42}
+$$
+此式包括真实总量零、测量总量零及两者均零。将它代入定理32.12的完整好／坏／删列／固定点会计即得（32.41）；其余界由（32.11）、（32.17）及 $E_{\rm pair}\le R$ 得到。所有界作用于同一个 $\widetilde Q$，所以可取最小值。$\square$
+

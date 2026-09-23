@@ -1,0 +1,33 @@
+**定理 43.6（非负仿射图与精确固定的乘法输入）。** 对 $\lambda,\mu\in\mathbb N_0$，定义
+$$
+\mathcal A_{\lambda,\mu}=
+\overline{\{(Z(n),Z(\lambda n+\mu)):n\in\mathbb N_0\}},
+\qquad
+\mathcal A_{\lambda,\mu}(x)=\{y:(x,y)\in\mathcal A_{\lambda,\mu}\}.
+$$
+若 $\lambda=0$，则
+$$
+\mathcal A_{0,\mu}=K\times\{Z(\mu)\}.
+$$
+若 $\lambda\ge1$，令 $\beta=H(x)$、$\theta=\lambda\beta+[\mu\phi]$。则当 $\theta\notin E$ 时，$\mathcal A_{\lambda,\mu}(x)=H^{-1}(\{\theta\})$；当 $\theta\in E$ 且 $x=z_\beta^s$、$\beta\in E$ 时，
+$$
+\mathcal A_{\lambda,\mu}(x)=\{z_\theta^s\};
+$$
+当 $\theta\in E$ 且 $\beta\notin E$ 时，
+$$
+\mathcal A_{\lambda,\mu}(x)=\{z_\theta^{+1},z_\theta^{-1}\}.
+$$
+将定义中的 $n\in\mathbb N_0$ 换为 $n\ge T$，闭包不变。映射 $Z(n)\mapsto Z(\lambda n+\mu)$ 有连续延拓到 $K$，当且仅当 $\lambda\in\{0,1\}$。
+
+特别，对精确固定的整数 $c\ge0$，
+$$
+\overline{\{(Z(c),Z(n),Z(cn)):n\in\mathbb N_0\}}
+=\{Z(c)\}\times\mathcal A_{c,0}.
+$$
+$c=0$ 时输出恒为 $0_K$，$c=1$ 时第二输入与输出相等；$c\ge2$ 时输出相位为 $cH(x)$，其分裂定向遵从上述分类。与此不同，
+$$
+\Gamma_{\mathrm{mul}}\cap(\{Z(c)\}\times K^2)
+=\{Z(c)\}\times K^2.
+$$
+后一个切片只固定极限读数，不固定逼近数列中的第一个整数。
+

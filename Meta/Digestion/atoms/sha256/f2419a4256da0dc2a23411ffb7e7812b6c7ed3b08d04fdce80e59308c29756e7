@@ -1,0 +1,20 @@
+**Proof.** A convergent sequence of actual remainder encodings in the finite set $Z[R_c]$ is eventually constant, say $Z(r)$. Continuity of $H$ then gives the displayed phase relation. If both $x$ and $y$ are split, write the small nonzero local quotient phase errors as
+$$
+\gamma(n_j)=H(y)+[\varepsilon_j],\qquad \varepsilon_j\to0.
+$$
+For sufficiently large $j$, $|c\varepsilon_j|<1/2$, and the dividend phase is exactly
+$$
+\gamma(cn_j+r)=H(x)+[c\varepsilon_j].
+$$
+Since $c>0$, these two local errors have the same sign. Assumption 44.1 forces the two split labels to agree. If either point is ordinary, the sign-intersection condition imposes no further restriction. This proves necessity.
+
+Conversely, suppose the criterion holds and choose $s\in\mathcal S(x)\cap\mathcal S(y)$. Set $\tau_k=1/(10c(k+1))$. By tail density, choose $n_k\ge k$ such that
+$$
+\gamma(n_k)\in H(y)+[\{su:\tau_k<u<2\tau_k\}].
+$$
+The corresponding nonzero errors $\varepsilon_k$ have sign $s$ and tend to zero; the dividend errors are $c\varepsilon_k$ and have the same sign. At split coordinates use Assumption 44.1; at ordinary coordinates use the unique-lift convergence in Theorem 44.2. They give
+$$
+Z(n_k)\longrightarrow y,\qquad Z(cn_k+r)\longrightarrow x.
+$$
+The remainder is exactly $r$ throughout, and $n_k,cn_k+r\ge k$. The same natural-number sequence thus realizes both coordinates and every permitted branch. $\square$
+

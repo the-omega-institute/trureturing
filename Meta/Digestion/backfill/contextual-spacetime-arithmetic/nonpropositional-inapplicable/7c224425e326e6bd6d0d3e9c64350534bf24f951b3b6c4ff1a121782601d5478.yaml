@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c224425e326e6bd6d0d3e9c64350534bf24f951b3b6c4ff1a121782601d5478
+  normalized_sha256: sha256:7c224425e326e6bd6d0d3e9c64350534bf24f951b3b6c4ff1a121782601d5478
+cas_ref: sha256:7c224425e326e6bd6d0d3e9c64350534bf24f951b3b6c4ff1a121782601d5478
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “这是披露后的同模型族设计结论”说明设计席位构成，且“不把设计阶段等同于本次实施后的独立评审”；它未提出数学定理，亦未将评审状态装入数学定义，故可作为过程边界备注结算。
+    previous_atom_id: 6f86d8b6b5dc65dd2064f162d873e63bd8c69354d35dde78faeb05bf2cd7552d
+    next_atom_id: 09da0cc71325d897ea5218139ffa603cf934c6291a71922e816eb58261de2e0a

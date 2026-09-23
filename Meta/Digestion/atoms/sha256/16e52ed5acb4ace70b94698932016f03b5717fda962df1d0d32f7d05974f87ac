@@ -1,0 +1,10 @@
+取历史最坏值和两个核的下确界，得到
+
+$$
+\boxed{
+\delta_B(G\mid E)
+\le
+\delta_B(F\mid E)+\delta_B(G\mid F).
+}
+$$
+

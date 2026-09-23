@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:614d65527e92d3d8cbc64189f125123dd6091f2b7abbccce60cb7c384c576e88
+  normalized_sha256: sha256:614d65527e92d3d8cbc64189f125123dd6091f2b7abbccce60cb7c384c576e88
+cas_ref: sha256:614d65527e92d3d8cbc64189f125123dd6091f2b7abbccce60cb7c384c576e88
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 全文只有“成熟来源与本仓推导的边界”标题及“范围”“成熟来源及适用对象”“本仓推导与结算边界”三个列名，没有表格条目。既无定义也无暗含数学主张，属于纯结构表头。
+    previous_atom_id: b50ffc8de59447238e40c1ce76443f15c53fca826d8e911b1766f58322c25bb7
+    next_atom_id: 7d7249af7ef5aaa9292ac300a922230471fdf4f1e6b3816a5415e83fa60990bd

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2b36098e9c443c18715ef73d8e102d94bd33d63c700d872a8f45337d01f88890
+  normalized_sha256: sha256:2b36098e9c443c18715ef73d8e102d94bd33d63c700d872a8f45337d01f88890
+cas_ref: sha256:2b36098e9c443c18715ef73d8e102d94bd33d63c700d872a8f45337d01f88890
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 用 ZFSet.mem_sep 构造 Russell 分离集合并由 not_iff_self 导出矛盾，排除普遍集合，仓内无冻结 GID。
+    previous_atom_id: 4815358357224e12dd9b58211f35115723f2644936a7217b51e6f0ee623770cc
+    next_atom_id: a057602e732de5ace9d1a4f7070f83066099558d4d84352708aa5f275432c8d4

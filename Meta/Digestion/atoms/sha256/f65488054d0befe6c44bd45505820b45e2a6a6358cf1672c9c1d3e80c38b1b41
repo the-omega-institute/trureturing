@@ -1,0 +1,28 @@
+### 定理 57.3（Schrödinger 读数与无限 Heisenberg span）
+
+设 $\Phi$ 是有限维量子通道，$H$ 是其 Heisenberg 对偶，$\mathcal A_0$ 是当前 operator system。令
+
+$$
+\mathcal V_{\infty}
+=\operatorname{span}_{\mathbb R}
+\{H^k A:A\in\mathcal A_0,\ k\in\mathbb N\}.
+$$
+
+则两个密度态的所有未来 operator-system readout 相等，当且仅当
+
+$$
+\rho-\sigma\in\mathcal V_{\infty}^{\perp_{\operatorname{tr}}},
+$$
+
+即
+
+$$
+\left[\forall k,\quad
+R_{\mathcal A_0}(\Phi^k\rho)
+=
+R_{\mathcal A_0}(\Phi^k\sigma)\right]
+\iff
+\left[\forall A\in\mathcal V_{\infty},\quad
+\operatorname{Tr}\bigl((\rho-\sigma)A\bigr)=0\right].
+$$
+

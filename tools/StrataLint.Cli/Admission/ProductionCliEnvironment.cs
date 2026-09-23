@@ -11,8 +11,7 @@ internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid,
 
 internal sealed record CheckArguments(
     string? ProtectedBase,
-    string? CandidateLeanReport,
-    string? TestMapCacheRoot);
+    string? CandidateLeanReport);
 
 internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabled = true)
 {
@@ -280,8 +279,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
     {
         var timing = new AdmissionCheckTiming(timeProvider);
-        ScribeTestMapStore? testMapStore = null;
-        string? cacheSetupOutcome = null;
         try
         {
             var repositoryPhase = timing.Measure(
@@ -310,13 +307,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 return new AdmissionOutcome.InfrastructureFailure(
                     "check requires --candidate-lean-report FILE");
             }
-            if (options.TestMapCacheRoot is not null)
-            {
-                testMapStore = TryCreateTestMapStore(
-                    options.TestMapCacheRoot,
-                    out cacheSetupOutcome);
-            }
-
             var rawSnapshots = timing.Measure(
                 "repository-read",
                 () => (
@@ -362,27 +352,11 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
-                timing,
-                testMapStore,
-                DeriveTestMap).Outcome;
+                timing).Outcome;
         }
         catch (Exception exception)
         {
             return new AdmissionOutcome.InfrastructureFailure(exception.Message);
-        }
-        finally
-        {
-            if (cacheSetupOutcome is not null)
-            {
-                WriteTestMapCacheEvent(string.Empty, cacheSetupOutcome);
-            }
-            if (testMapStore is not null)
-            {
-                foreach (var cacheEvent in testMapStore.Events)
-                {
-                    WriteTestMapCacheEvent(cacheEvent.InputDigest, cacheEvent.Outcome);
-                }
-            }
         }
     }
 
@@ -517,7 +491,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     {
         string? protectedBase = null;
         string? candidateLeanReport = null;
-        string? testMapCacheRoot = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -529,7 +502,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             {
                 "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
-                "--test-map-cache-root" when testMapCacheRoot is null => 2,
                 _ => throw CheckUsage(),
             };
             switch (target)
@@ -540,22 +512,15 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 case 1:
                     candidateLeanReport = arguments[index + 1];
                     break;
-                case 2:
-                    if (string.IsNullOrWhiteSpace(arguments[index + 1]))
-                    {
-                        throw CheckUsage();
-                    }
-                    testMapCacheRoot = arguments[index + 1];
-                    break;
             }
         }
 
-        return new CheckArguments(protectedBase, candidateLeanReport, testMapCacheRoot);
+        return new CheckArguments(protectedBase, candidateLeanReport);
     }
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "[--test-map-cache-root DIR] --candidate-lean-report FILE");
+        + "--candidate-lean-report FILE");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

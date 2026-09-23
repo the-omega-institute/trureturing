@@ -1,0 +1,8 @@
+**定理 7.5（接续需要增加输入预算）。** 对费用 $c_h$ 的箭头 $h:s\to t$，有
+$$
+D_t^{\langle B\rangle}(hx,hy)
+\le L_hD_s^{\langle B+c_h\rangle}(x,y).
+\tag{7.5}
+$$
+若 $B\ge c_h$，等价地有 $D_t^{\langle B-c_h\rangle}(hx,hy)\le L_hD_s^{\langle B\rangle}(x,y)$。两边保留相同预算的式子一般不成立。
+

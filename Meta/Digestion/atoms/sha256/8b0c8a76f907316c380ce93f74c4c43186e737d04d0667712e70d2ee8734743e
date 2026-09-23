@@ -1,0 +1,12 @@
+### 命题 25.1. 八维 primitive 秩表
+
+在八维辛空间中，对平方零且秩分别为 1、2、3 的自然算子，以及对角半单算子
+
+\[
+X_{\mathrm{ss}}=\operatorname{diag}(1,2,4,8,-1,-2,-4,-8),
+\]
+
+自然表示与 primitive 二阶外幂作用的秩如下：
+
+|自然算子|自然rank|自然平方rank|primitive rank|primitive平方rank|
+|---|---:|---:|---:|---:|

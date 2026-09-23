@@ -1,0 +1,284 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "marked-head-profile-v1"
+  },
+  "head_modulus": {
+    "kind": "inline",
+    "value": 315
+  },
+  "old_moduli_order": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      9,
+      15,
+      45
+    ]
+  },
+  "thresholds": {
+    "kind": "inline",
+    "value": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  },
+  "cases": {
+    "path": "content/004-cases.json",
+    "sha256": "c9e02c58a92dca9657d0d1f29a6f4536b6201168765def99744c0909cf1922eb",
+    "kind": "value"
+  },
+  "universal_profile": {
+    "kind": "inline",
+    "value": [
+      "37/11",
+      "26/11",
+      "15/11",
+      "61/77",
+      "32/77",
+      "3/11",
+      "5/37",
+      "7/74",
+      "2/37",
+      "3/74",
+      "1/37",
+      "1/74",
+      "0"
+    ]
+  },
+  "auxiliary_atoms": {
+    "kind": "inline",
+    "value": {
+      "2": "3/7",
+      "3": "15/77",
+      "4": "18/77",
+      "5": "15/2849",
+      "6": "79/814",
+      "8": "1/37",
+      "12": "1/74"
+    }
+  },
+  "mean": {
+    "kind": "inline",
+    "value": "37/11"
+  },
+  "second_moment": {
+    "kind": "inline",
+    "value": "41336/2849"
+  },
+  "sharp_example": {
+    "path": "content/009-sharp_example.json",
+    "sha256": "54bc8a4a307c5130a2f9efc1fa76679a1171263709326f181d6c2973923608b0",
+    "kind": "value"
+  },
+  "elementary_comparison": {
+    "path": "content/010-elementary_comparison.json",
+    "sha256": "edbae3ff2b6bed274a4fecdb9dd22c5640b10f6468ae189f655912811676e8b9",
+    "kind": "value"
+  },
+  "fixed_marginal_obstruction": {
+    "path": "content/011-fixed_marginal_obstruction.json",
+    "sha256": "77947e55404101e71d2e7941a68b6bdf96386c9c2eb2a4583567e6d1ea2d80b5",
+    "kind": "value"
+  },
+  "deletion_weighted_comparison": {
+    "path": "content/012-deletion_weighted_comparison.json",
+    "sha256": "603a91b3d6f91d59b835deb9e0f0a8bd26148852f4e038dbacea6e5423634a5c",
+    "kind": "value"
+  },
+  "prime11_residual_geometry": {
+    "path": "content/013-prime11_residual_geometry.json",
+    "sha256": "0c7565afe6f425954fc50f22a1dede0efd2237633460d1a8bbe14be1140b4315",
+    "kind": "value"
+  },
+  "residual_mass_next_label_obstruction": {
+    "path": "content/014-residual_mass_next_label_obstruction.json",
+    "sha256": "686984868ec9914bef8e20351efd2b0a882d20b55237f2cb74ac6b3f596d7dd4",
+    "kind": "value"
+  },
+  "conditioned_3465_comparison": {
+    "path": "content/015-conditioned_3465_comparison.json",
+    "sha256": "aabb05e851f642a51923f7918b59a9e242513a78e6162b4b7469db82e42db461",
+    "kind": "value"
+  },
+  "uniform315_mean_sharpness": {
+    "path": "content/016-uniform315_mean_sharpness.json",
+    "sha256": "86364c7d52d37218589606acb30e440021b02c0e4c15724dd79929e673584133",
+    "kind": "value"
+  },
+  "residual_prefix_depletion_obstruction": {
+    "path": "content/017-residual_prefix_depletion_obstruction.json",
+    "sha256": "dcbdcb827261dba95fea1f7b0598f367b919441761da1f9ef8839420839268b0",
+    "kind": "value"
+  },
+  "signed_deletion_square_comparison": {
+    "path": "content/018-signed_deletion_square_comparison.json",
+    "sha256": "ce4959dd12da0c26eca483b7e57bc8f8c341002c3c09c9940b20303c98bd1ed6",
+    "kind": "value"
+  },
+  "uniform315_energy_rebate_obstruction": {
+    "path": "content/019-uniform315_energy_rebate_obstruction.json",
+    "sha256": "3b764cb8332d8b63f791df686ee3f852f02ae9dcc780b8ddfeb6323738afe2f6",
+    "kind": "value"
+  },
+  "two_prime_block_grid_comparison": {
+    "path": "content/020-two_prime_block_grid_comparison.json",
+    "sha256": "8bca867b5e199946f212b9c91d471e64ef8604e2877dbeedeb8cd5b3f3ec2a1d",
+    "kind": "value"
+  },
+  "two_prime_block_gap": {
+    "path": "content/021-two_prime_block_gap.json",
+    "sha256": "ce73080de84485f0349b5d5e531b576133380168994ed3f1eb4f6b102c618180",
+    "kind": "value"
+  },
+  "punctured_grid_nonuniform_transfer": {
+    "path": "content/022-punctured_grid_nonuniform_transfer.json",
+    "sha256": "95130e82075106250b29301fcbbeb8549a0c047fffdeab13341512d3d4b1d342",
+    "kind": "value"
+  },
+  "matching_hole_common_lambda": {
+    "kind": "inline",
+    "value": {
+      "scope": "symbolic identities and abstract PSD proof patterns; ordinary proof, not Lean verification",
+      "parameter_domain": "m,n>=3; 0<=k<min(m,n)",
+      "epsilon_interval": "0<=epsilon<=1/(9*max(m+n+2*k-1,2*m,2*n))",
+      "symbolic_identities": [
+        "probability normalization",
+        "coefficient sum numerator",
+        "strict multiplier gain numerator",
+        "positive gain polynomial after translation",
+        "row perturbation bound first slack",
+        "row perturbation bound second slack",
+        "varying-count denominator difference",
+        "varying-count factor difference numerator",
+        "increasing difference numerator",
+        "mean-count saving numerator"
+      ],
+      "abstract_incidence_slack_patterns": 32,
+      "anchor_squared_Frobenius_norms": [
+        7,
+        9,
+        9,
+        9
+      ],
+      "concrete_grid_instances": 0
+    }
+  },
+  "matching_height_lift": {
+    "kind": "inline",
+    "value": {
+      "scope": "ordinary symbolic transfer with exact rational regressions; not Lean",
+      "parameters": {
+        "q": 11,
+        "r": 13,
+        "m": 10,
+        "n": 12,
+        "k": 1,
+        "epsilon": "1/216",
+        "G": "1131/86",
+        "M": "271/86"
+      },
+      "infinite_tail_uniform": {
+        "F": "194/119",
+        "E": "12259/107100",
+        "lambda": "24119/409360",
+        "square": "70445843/3070200",
+        "conditioned": "140529901/5778615"
+      },
+      "infinite_tail_perturbed": {
+        "F": "20965/12862",
+        "E": "1060627/9260640",
+        "lambda": "5213769/88490560",
+        "square": "6090595979/265471680",
+        "conditioned": "6074954672/249830373"
+      },
+      "strict_gain": "1271130847931/481224513624465",
+      "all_height_proof_constants": {
+        "Lmax": "89/40",
+        "Nmax": "186859/900",
+        "drop_min": "115863/200",
+        "charge_slope_max": "3/2",
+        "derivative_margin_at_M40": "295331/60",
+        "denominator_at_M40": "6485/216"
+      },
+      "finite_height_pairs_checked": 64
+    }
+  },
+  "matching_height_tail17": {
+    "path": "content/025-matching_height_tail17.json",
+    "sha256": "4ffa01c134d597483a90a2b49304a0494491361ce38220822890d208440abe25",
+    "kind": "object"
+  },
+  "arbitrary_hole_degree_symbolic": {
+    "path": "content/026-arbitrary_hole_degree_symbolic.json",
+    "sha256": "15474f85dd8d28e892956cd9f38ce60596086e9d91bd25797b19ebe6bf2da6b9",
+    "kind": "value"
+  },
+  "varying_hole_head": {
+    "path": "content/027-varying_hole_head.json",
+    "sha256": "2b1cc24bffb23fd5333d55052c71271c29fcf76dc1084e6e2eb34f72564f0ef1",
+    "kind": "value"
+  },
+  "arbitrary_holes12_tail17": {
+    "path": "content/028-arbitrary_holes12_tail17.json",
+    "sha256": "eefa46e5dc5fec8ead6f947ddb7fd1b356474ce05f3c405ebe812260ce0ccfb9",
+    "kind": "object"
+  },
+  "variable_axis_clipping": {
+    "path": "content/029-variable_axis_clipping.json",
+    "sha256": "9e71c5ddff0246847744df501a4a5f055d84246fde1b6b9c5b102bd2704faff8",
+    "kind": "value"
+  },
+  "signed_conditioning_obstruction": {
+    "path": "content/030-signed_conditioning_obstruction.json",
+    "sha256": "5270f2839f854904167fee7cb8507d08fe0c5c8a617ab8b56b22d3e6dd370f00",
+    "kind": "value"
+  },
+  "shared_count_clipped_head": {
+    "path": "content/031-shared_count_clipped_head.json",
+    "sha256": "4cc652fb6c431bd1f458ed5d30b45a553f68f493040be849c7b68f32551892e2",
+    "kind": "object"
+  },
+  "rectangle_hinge_observation_gap": {
+    "path": "content/032-rectangle_hinge_observation_gap.json",
+    "sha256": "7fab9485e154ab40afe33963c4cd98c39110423b45e72d17fe680d963eaaa747",
+    "kind": "value"
+  },
+  "actual_rectangle_hinge_profile": {
+    "path": "content/033-actual_rectangle_hinge_profile.json",
+    "sha256": "9a29b75ef289f1d134082f9a879d55edf1b6003a50bddcbd68e5997f36f06753",
+    "kind": "object"
+  },
+  "fixed_count_hinge_refinement": {
+    "path": "content/034-fixed_count_hinge_refinement.json",
+    "sha256": "a8a205905360878a6b400e77abb6e3a88b0273987a13b962f80beb285c8648db",
+    "kind": "object"
+  },
+  "joint_cost_hinge_refinement": {
+    "path": "content/035-joint_cost_hinge_refinement.json",
+    "sha256": "f45f63f3bababe54dfef6fd062378ac14f725bb965b725c62285cdca997b2010",
+    "kind": "object"
+  },
+  "joint_cost_branch_tail17": {
+    "path": "content/036-joint_cost_branch_tail17.json",
+    "sha256": "22aa95d96aa284ce09a5d0cc61ae086c50655f9ac20d4d0456bfbffeac68b577",
+    "kind": "value"
+  },
+  "common_rectangle_moment_bounds": {
+    "path": "content/037-common_rectangle_moment_bounds.json",
+    "sha256": "f22fdd133669d40178b215a12093933ba1e75064bbfcdb0562f91293750246a8",
+    "kind": "value"
+  }
+}

@@ -1,0 +1,146 @@
+[
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 85,
+    "old_joint_cost_upper": [
+      "39788/1615",
+      "15004/1615",
+      "661/95",
+      "93/85"
+    ],
+    "low_hinge6_upper": "217027/480624",
+    "full_hinge6_upper": "6274557/8581198"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 86,
+    "old_joint_cost_upper": [
+      "40031/1634",
+      "15149/1634",
+      "11335/1634",
+      "93/86"
+    ],
+    "low_hinge6_upper": "1092911/2431392",
+    "full_hinge6_upper": "6320201/8715794"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 87,
+    "old_joint_cost_upper": [
+      "40274/1653",
+      "5098/551",
+      "3811/551",
+      "31/29"
+    ],
+    "low_hinge6_upper": "1100687/2459664",
+    "full_hinge6_upper": "1273169/1770078"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 88,
+    "old_joint_cost_upper": [
+      "40517/1672",
+      "15439/1672",
+      "11531/1672",
+      "93/88"
+    ],
+    "low_hinge6_upper": "1108463/2487936",
+    "full_hinge6_upper": "6411489/8984986"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 89,
+    "old_joint_cost_upper": [
+      "40760/1691",
+      "15584/1691",
+      "11629/1691",
+      "93/89"
+    ],
+    "low_hinge6_upper": "1116239/2516208",
+    "full_hinge6_upper": "6457133/9119582"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 90,
+    "old_joint_cost_upper": [
+      "20492/855",
+      "1571/171",
+      "1303/190",
+      "31/30"
+    ],
+    "low_hinge6_upper": "124823/282720",
+    "full_hinge6_upper": "1299271/1851512"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 91,
+    "old_joint_cost_upper": [
+      "41208/1729",
+      "15836/1729",
+      "11825/1729",
+      "93/91"
+    ],
+    "low_hinge6_upper": "1130575/2572752",
+    "full_hinge6_upper": "6535577/9395538"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 92,
+    "old_joint_cost_upper": [
+      "10358/437",
+      "347/38",
+      "11923/1748",
+      "93/92"
+    ],
+    "low_hinge6_upper": "1137743/2601024",
+    "full_hinge6_upper": "6574799/9533516"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 93,
+    "old_joint_cost_upper": [
+      "41656/1767",
+      "16088/1767",
+      "4007/589",
+      "1"
+    ],
+    "low_hinge6_upper": "381637/876432",
+    "full_hinge6_upper": "6614021/9671494"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 94,
+    "old_joint_cost_upper": [
+      "20940/893",
+      "8107/893",
+      "12119/1786",
+      "93/94"
+    ],
+    "low_hinge6_upper": "1152079/2657568",
+    "full_hinge6_upper": "6653243/9809472"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 95,
+    "old_joint_cost_upper": [
+      "2216/95",
+      "172/19",
+      "643/95",
+      "93/95"
+    ],
+    "low_hinge6_upper": "61013/141360",
+    "full_hinge6_upper": "70447/104710"
+  },
+  {
+    "shape": "root2_other_other_column",
+    "survivors": 96,
+    "old_joint_cost_upper": [
+      "5291/228",
+      "8233/912",
+      "4105/608",
+      "31/32"
+    ],
+    "low_hinge6_upper": "388805/904704",
+    "full_hinge6_upper": "6731687/10085428"
+  }
+]

@@ -1,0 +1,13 @@
+**推论 73.6（等格混合的有限分区读出）。** 在定义 71.1 的设置下，固定有限层 $m\ge n$。取 $I=\mathcal P_n$、$J=\mathcal P_m$，令 $r$ 将细格送到其父格，$q_D=\mu(D)$、$p_C=\mu(C)$，并令粗概率 $a_C=1/N_n$。则
+$$
+\operatorname{diag}_{D\in\mathcal P_m}\bigl(\eta_n(D)\bigr)
+=B_{r,q}\left(\operatorname{diag}_{C\in\mathcal P_n}(1/N_n)\right).
+$$
+
+证明。满支撑保证所有非空开闭格的参考质量为正，分区细化给出满射及相容推前。每个细格 $D$ 只包含于一个父格 $r(D)$，所以定义 71.1 直接给出
+$$
+\eta_n(D)=\frac1{N_n}\frac{\mu(D)}{\mu(r(D))}
+=\frac{q_D a_{r(D)}}{p_{r(D)}}.
+$$
+由命题 73.2 得所列矩阵等式。此处等式只识别 $\eta_n$ 的有限分区概率表，未将其识别为第 71 节 Gibbs 算子态的恢复。证毕。
+

@@ -1,0 +1,75 @@
+{
+  "thresholds": {
+    "kind": "inline",
+    "value": [
+      4,
+      5
+    ]
+  },
+  "barriers": {
+    "kind": "inline",
+    "value": [
+      "1",
+      "1"
+    ]
+  },
+  "q_previous": {
+    "kind": "inline",
+    "value": "193/231"
+  },
+  "q_effective": {
+    "kind": "inline",
+    "value": "23/42"
+  },
+  "source_hinge_weight": {
+    "kind": "inline",
+    "value": "29/35"
+  },
+  "minimum_absorbed_hinge_coefficient": {
+    "kind": "inline",
+    "value": "3/7"
+  },
+  "kappa": {
+    "kind": "inline",
+    "value": {
+      "4": [
+        "0",
+        "23/1875",
+        "173/1875"
+      ],
+      "5": [
+        "0",
+        "587/46875",
+        "4337/46875"
+      ]
+    }
+  },
+  "layout_checks": {
+    "kind": "inline",
+    "value": 259200
+  },
+  "zero_epsilon_vertices": {
+    "kind": "inline",
+    "value": {
+      "4": 1120,
+      "5": 1120
+    }
+  },
+  "rows": {
+    "path": "content/031-absorbed_hinges/009-rows.json",
+    "sha256": "ea94f1e4b5a54e49a03d9ab17b12a40389925df107c52f381bfd775d68d3880b",
+    "kind": "array"
+  },
+  "epsilon_margin_sha256": {
+    "kind": "inline",
+    "value": "c64fbc1b715694cf5afcee39bf26f7fff4a5fea7fdd8c651ab4fef00de725572"
+  },
+  "vertex_table_semantics": {
+    "kind": "inline",
+    "value": "D-raw357(t)+epsilon_t is a lower bound at each vertex for the true globally defined separately concave absorbed whole-hinge margin m_abs. Epsilon itself is not asserted concave."
+  },
+  "consumer_obligation": {
+    "kind": "inline",
+    "value": "Use signed barriers1 for h4,h5 with the unchanged h(5/2) barrier7/2 on one actual S in [D,s]. Charge q_effective=23/42, retain all three margins, and select D or s according to each fixed-target coefficient sign."
+  }
+}

@@ -1,0 +1,43 @@
+**definition 63.1（加权有限残基模型与 $p$ 叉剩余类树）。** 固定素数 $p$ 与整数 $e\ge 0$，写
+$$
+X_{p,e}=\mathbb Z/p^e\mathbb Z.
+$$
+给定严格正有理先验
+$$
+\mu:X_{p,e}\longrightarrow\mathbb Q_{>0},
+\qquad
+\sum_{a\in X_{p,e}}\mu(a)=1.
+$$
+当 $e\ge1$ 时，一次中心查询 $c\in X_{p,e}$ 返回
+$$
+h_c(a)=\max\{d\in\{0,\ldots,e\}:a\equiv c\pmod{p^d}\}.
+$$
+策略必须对每个叶 $a\in X_{p,e}$ 零错误终止。若其停止查询数为 $\tau_D(a)$，定义
+$$
+E_\mu(p,e)=\min_D\sum_{a\in X_{p,e}}\mu(a)\tau_D(a),
+$$
+并约定
+$$
+E_\mu(p,0)=0.
+$$
+
+对 $0\le d\le e$ 及模 $p^d$ 的剩余类 $b$，令
+$$
+B(b,d)=\{a\in X_{p,e}:a\equiv b\pmod{p^d}\}.
+$$
+称其为深度 $d$ 的节点；深度 $d<e$ 的节点恰有 $p$ 个深度 $d+1$ 的孩子。叶就是深度 $e$ 的节点。对任意叶集 $U$ 定义其未归一化先验质量
+$$
+m(U)=\sum_{a\in U}\mu(a).
+$$
+若 $B$ 是非叶节点，$\operatorname{Ch}(B)$ 是其孩子集，且
+$$
+\varnothing\ne I\subseteq\operatorname{Ch}(B),
+$$
+则称
+$$
+S(B,I)=\bigcup_{C\in I}C
+$$
+为一个兄弟状态。
+
+附引的模型范围如下。Dagan、Filmus、Gabizon、Moran 的 *Twenty (simple) questions* 研究给定加权先验的二值二十问及受限问题族；其无约束基准由 Huffman 编码给出，但查询语义不是这里的完整公共前缀深度。Hu 与 Tucker 研究固定字母顺序下最小加权路径长的二叉搜索树。Cicalese、Jacobs、Laber、Molinaro 研究带先验的树搜索，其中节点查询询问目标是否位于该节点的后代子树。Afshani、Agrawal、Doerr、Doerr、Larsen、Mehlhorn 研究返回最长公共前缀长度的 Mastermind 变体，但其未知量还包括隐藏坐标置换，目标是查询复杂度而非本节的固定已知 $p$ 叉层级加权平均问题。后文递推均由本节模型直接证明。
+

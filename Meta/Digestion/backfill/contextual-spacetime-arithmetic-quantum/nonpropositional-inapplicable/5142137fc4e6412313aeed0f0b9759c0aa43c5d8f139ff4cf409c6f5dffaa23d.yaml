@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5142137fc4e6412313aeed0f0b9759c0aa43c5d8f139ff4cf409c6f5dffaa23d
+  normalized_sha256: sha256:5142137fc4e6412313aeed0f0b9759c0aa43c5d8f139ff4cf409c6f5dffaa23d
+cas_ref: sha256:5142137fc4e6412313aeed0f0b9759c0aa43c5d8f139ff4cf409c6f5dffaa23d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “记录的最优风险为”后列出有限动作、先验和损失下的优化表达式；这一叶没有断言决策达到下确界或风险单调，故只是任务风险记号，未以定义方式夹带后续不等式。
+    previous_atom_id: fc7da131c287b1801d4963eddce836e19a2c406cfdc49a947b7fee570f901390
+    next_atom_id: e37317d262026c1729f7750f4a90bad84f7c3b2c8b09e287db137e704fc53201

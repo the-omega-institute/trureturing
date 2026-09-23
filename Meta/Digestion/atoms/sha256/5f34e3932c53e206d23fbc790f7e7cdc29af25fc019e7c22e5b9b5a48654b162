@@ -1,0 +1,16 @@
+**Proof.** Conditions (42.27) have a direct column interpretation. Before column $\tau_1$, every column of $X$ is zero. At column $\tau_i$, rows larger than $i$ vanish and the coefficient of the $i$-th standard vector is positive. Between $\tau_i$ and $\tau_{i+1}$, columns lie in the span of the first $i$ standard vectors. Inductively, the greedy independent columns of $X$ therefore have the oriented flag
+$$
+\mathbb Re_1<\operatorname{span}(e_1,e_2)<\cdots<\mathbb R^r.
+$$
+Conversely, if the greedy columns have this flag, let $\tau_i$ be the column where the projected span first reaches dimension $i$. Earlier columns have zero $i$-th coordinate, that column has positive $i$-th coordinate, and higher rows vanish there. These are exactly (42.27). The same reasoning proves the equivalence for $Y$.
+
+The rank condition makes (42.30) independent. The preceding characterization and Theorem 42.12 give marginals $p,q$, so every permitted matrix defines a witness in the fiber. Conversely, any witness in the fiber has support in $U_p\oplus U_q$ by Theorem 42.13. Express any independent representing list in the fixed bases. Its coefficient matrix has full column rank, and the required projected flags force (42.27) and (42.28). Thus every witness occurs.
+
+Right multiplication by an upper triangular matrix with positive diagonal preserves each row's first nonzero column and multiplies its first entry by a positive number. It also preserves full column rank. By Theorem 42.6, two independent joint lists represent the same signature precisely when they have the same length and differ by this right action. This proves both injectivity on the indicated orbit sets and the disjointness across lengths.
+
+Finally, evaluation of (42.30) is exactly the row (42.31). Every joint linear test has this form, and sign cylinders define the topology. This proves the topological assertion without substituting the Euclidean topology on the parameters.
+
+This formula retains more than an interleaving of two finite lists. The two blocks may have a first nonzero entry at the same column, with a variable positive relative coefficient. Furthermore, a later joint column may be independent even when neither marginal span increases. Both effects occur in the following complete two-dimensional example.
+
+Joint witnesses retain relative coefficients and relative vanishing orders; a marginal product retains neither in general. $\square$
+

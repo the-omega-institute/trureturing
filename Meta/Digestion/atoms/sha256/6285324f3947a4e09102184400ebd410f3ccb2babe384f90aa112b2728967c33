@@ -1,0 +1,27 @@
+在有符号质量空间上取内积及其诱导的向量、算子范数
+$$
+\langle x,y\rangle_{q^{-1}}=\sum_j\frac{x_jy_j}{q_j}.
+$$
+则 $E_1,E_2,\mathcal J$ 都是正交投影，且
+$$
+M:=\operatorname{ran}E_1\cap\operatorname{ran}E_2
+=\operatorname{ran}\mathcal J,\qquad
+E_a\mathcal J=\mathcal JE_a=\mathcal J.
+$$
+令 $F_a=E_a-\mathcal J$、$c=\|F_2F_1\|_{q^{-1}}$。有 $0\le c<1$，并且
+$$
+\bigl\|(E_2E_1)^n-\mathcal J\bigr\|_{q^{-1}}
+\le c^{2n-1}\qquad(n\ge1). \tag{76.1}
+$$
+对任意非负归一化初态 $d$，包括有零坐标的初态，定义
+$$
+d_{2n}=(E_2E_1)^nd,\qquad d_{2n+1}=E_1d_{2n}\quad(n\ge0),
+\qquad s=\mathcal Jd.
+$$
+全部半步 $d_N$ 都收敛到 $s$，且
+$$
+\|d_{2n}-s\|_{q^{-1}}
+\le c^{2n-1}\|d-s\|_{q^{-1}}\qquad(n\ge1).
+$$
+$c=0$ 时一次完整周期即有 $E_2E_1=\mathcal J$。
+

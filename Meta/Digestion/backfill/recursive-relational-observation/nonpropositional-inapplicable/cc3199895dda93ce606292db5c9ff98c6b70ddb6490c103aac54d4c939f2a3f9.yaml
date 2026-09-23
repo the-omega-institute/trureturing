@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cc3199895dda93ce606292db5c9ff98c6b70ddb6490c103aac54d4c939f2a3f9
+  normalized_sha256: sha256:cc3199895dda93ce606292db5c9ff98c6b70ddb6490c103aac54d4c939f2a3f9
+cas_ref: sha256:cc3199895dda93ce606292db5c9ff98c6b70ddb6490c103aac54d4c939f2a3f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“For”后的第一个公式断言两个非负次后继迭代的复合等于次数之和的迭代；这是真命题而非乘法表定义，探针在实际 T 上直接应用 Function.iterate_add，未使用任何选择器乘法性质，仓内无冻结 GID。
+    previous_atom_id: 8bab8c03c77e4d4b694fc160c37ed7af3b1662d908205dba5ca4c766fe11f89d
+    next_atom_id: ae8d5a8f97d60b0ef060b8d751293116313f64ebad6793deb41802dad3a9bd90

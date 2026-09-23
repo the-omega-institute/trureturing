@@ -1,0 +1,23 @@
+**第一步：幅度及差分。** 令A=Y₀，要求A⁻>0。取I₀={1}、I_n=Y_n/A（n≥1），并令
+$$
+D_j=(I_j-I_{j+1})\ \cap\ \frac{Y_j-Y_{j+1}}A,
+\qquad j=0,1,2,3.
+\tag{20.163}
+$$
+两种写法都包含真实d_j=(F_j−F_{j+1})/F₀；交集可减轻重复变量造成的过宽外界。I₀必须用精确的1，不能误给F₀/F₀一份独立归一化噪声。
+
+也可给显式的中心误差读数。设\hat f_n=y_n/y₀，\hat f₀=1，\hat d_j=\hat f_j−\hat f_{j+1}，则
+$$
+|f_n-\hat f_n|\le
+\eta_n:=\frac{\epsilon_n+|\hat f_n|\epsilon_0}{A^-}
+\quad(n\ge1),\qquad \eta_0=0,
+\tag{20.164}
+$$
+$$
+|d_j-\hat d_j|\le
+\min\left\{\eta_j+\eta_{j+1},\
+\frac{\epsilon_j+\epsilon_{j+1}+|\hat d_j|\epsilon_0}{A^-}\right\}.
+\tag{20.165}
+$$
+证明是分别展开F_n/F₀−y_n/y₀以及(F_j−F_{j+1})/F₀−(y_j−y_{j+1})/y₀；第二项分子始终是同一对原始读数的误差。上述都是确定性外界，不是新的误差分布。可将(20.165)区间继续与D_j相交。
+

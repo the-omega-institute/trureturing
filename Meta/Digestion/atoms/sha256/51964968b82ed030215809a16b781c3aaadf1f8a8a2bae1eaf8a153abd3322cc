@@ -1,0 +1,6 @@
+**命题 124.13（共同边界与仿射纤维的运输）。** 若局部更新满足 $r_AU_A=Vr_A$、$r_CU_C=Vr_C$，则它们保持边界相等。对线性 $D,D',A,V$ 与仿射更新 $U(x)=Ax+c$，条件
+$$
+D'A=VD,\qquad D'c=b'-Vb
+$$
+保证 $Dx=b\Rightarrow D'U(x)=b'$。
+

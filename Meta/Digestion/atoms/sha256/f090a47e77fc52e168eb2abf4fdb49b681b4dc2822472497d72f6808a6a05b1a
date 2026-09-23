@@ -1,0 +1,14 @@
+**定义 53.1（单位和非单位图与本节接口）。** 固定素数 $p$ 与有限标号集 $V=[n]$，允许 $n=0$，并约定 $[0]=\varnothing$。对单位组
+$$
+(x_i)_{i\in V}\in(\mathbb Z_p^\times)^V
+$$
+定义简单图 $\Gamma_p(x)$，其顶点集为 $V$，且对不同顶点 $i,j$ 定义
+$$
+ij\in E(\Gamma_p(x))
+\iff
+x_i+x_j\in p\mathbb Z_p.
+$$
+称有限标号图 $G$ 在 $p$ 处可实现，若存在同一个单位组 $x$ 使 $G=\Gamma_p(x)$。因此边与非边必须由同一组标号单位同时实现，而不是逐边另选见证。记 $K_n$ 为 $n$ 点完全图，$E_n$ 为 $n$ 点无边图，$rK_2$ 为 $r$ 条互不相交边的并，$P_4$ 为四点诱导路。
+
+本节的命名接口只有上述二值关系：它只记录 $x_i+x_j$ 是否属于 $p\mathbb Z_p$。本节不区分 $v_p(x_i+x_j)=1,2,\ldots,\infty$，不允许非单位输入，也不加入三元或更高元加法关系、标号算术常量或完整剩余域结构。作为商结构的背景，Connes–Consani 的 [*The hyperring of adèle classes*](https://alainconnes.org/wp-content/uploads/The-hyperring-of-adeles-classes-2011.pdf)，Proposition 2.6，期刊页 165，证明了：若 $A$ 为交换环且 $H\le A^\times$，则轨道集 $A/H$ 由轨道和与轨道积得到超环结构。该背景事实并不提供这里要求的“同一有限标号单位组同时决定全部边与非边”的图分类，以下分类直接证明。
+

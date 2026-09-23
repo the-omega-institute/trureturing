@@ -1,0 +1,9 @@
+**定义 2（有类型的情境整体）。** 记
+
+$$
+\mathcal D_C=(C,\Omega,\mathcal P(\Omega)),\qquad
+N_C(A)=\Omega\setminus A.
+$$
+
+这就是本文的类道整体。它同时指明语境、论域和该论域上的选择空间。$A$ 是 $\mathcal P(\Omega)$ 的一个元素；若 $K\subseteq\mathcal P(\Omega)$ 是一个可能选择族，则 $\mathcal P(\Omega)\setminus K$ 才是“排除这些可能选择”的另一层补集。后者不是 $N_C(A)$。第 10 节的世界域 $\Gamma$ 又是另一个有类型的集合。
+

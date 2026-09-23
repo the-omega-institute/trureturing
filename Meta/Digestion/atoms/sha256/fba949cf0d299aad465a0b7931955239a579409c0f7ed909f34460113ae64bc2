@@ -1,0 +1,23 @@
+**theorem 53.2（精确残数下降）。** 设 $\bar x_i$ 为 $x_i$ 在 $\mathbb F_p$ 中的剩余类。则
+$$
+x_i+x_j\in p\mathbb Z_p
+\iff
+\bar x_i+\bar x_j=0.
+$$
+而且
+$$
+x_i\in\mathbb Z_p^\times
+\iff
+\bar x_i\in\mathbb F_p^\times.
+$$
+反之，每个 $a\in\mathbb F_p^\times$ 都有 $\mathbb Z_p^\times$ 中的提升。因此有限标号图 $G$ 在 $p$ 处可实现，当且仅当存在一个共同映射
+$$
+r:V\to\mathbb F_p^\times
+$$
+使得对所有不同 $i,j$ 同时有
+$$
+ij\in E(G)
+\iff
+r(j)=-r(i).
+$$
+

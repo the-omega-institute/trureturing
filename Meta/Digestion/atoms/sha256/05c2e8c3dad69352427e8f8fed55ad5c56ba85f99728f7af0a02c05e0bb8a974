@@ -1,0 +1,9 @@
+**命题 70.12（胞腔概率态与 Gibbs 态的区别）。** 对命题 70.10 的有限柱分区，在胞腔基 $e_C=\nu(C)^{-1/2}\mathbf1_C$ 上定义
+$$
+\rho_L^{\mathrm{cell}}
+=\sum_{C\in\mathcal P_L}\nu(C)\,|e_C\rangle\langle e_C|.
+$$
+其熵是胞腔质量的 Shannon 熵
+$$
+S(\rho_L^{\mathrm{cell}})=-\sum_{C\in\mathcal P_L}\nu(C)\ln\nu(C).
+$$

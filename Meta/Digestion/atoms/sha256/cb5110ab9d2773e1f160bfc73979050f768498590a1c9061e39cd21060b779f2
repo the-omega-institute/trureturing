@@ -1,0 +1,27 @@
+### 11.3 Gram 几何与等价类块对角性
+
+在受控记录模型中，若
+$$
+ c_{xy}=e^{i(\theta_x-\theta_y)}\langle e_y,e_x\rangle,
+$$
+令
+$$
+ w_x=e^{i\theta_x}e_x,
+$$
+则
+$$
+ c_{xy}=\langle w_y,w_x\rangle.
+$$
+因为 $w_x,w_y$ 都是单位向量，Cauchy--Schwarz 等号条件给出
+$$
+ c_{xy}=1
+\iff
+w_x=w_y.
+$$
+于是关系
+$$
+ x\sim_C y
+\iff
+c_{xy}=1
+$$
+是一个等价关系。

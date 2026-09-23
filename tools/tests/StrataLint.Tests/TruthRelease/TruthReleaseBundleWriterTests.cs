@@ -381,9 +381,8 @@ public sealed class TruthReleaseBundleWriterTests
         new(
             CommitOnProtectedDev: true,
             ImmutableArray.Create(
-                new TruthReleaseRequiredCheck("Candidate harness engineering checks", "success"),
-                new TruthReleaseRequiredCheck("Canonical Lean report production", "success"),
-                new TruthReleaseRequiredCheck("Content-addressed dev baseline admission", "success")),
+                new TruthReleaseRequiredCheck("engineering", "success"),
+                new TruthReleaseRequiredCheck("current", "success")),
             blessedBy);
 
     private static TruthReleaseProducer Producer() =>

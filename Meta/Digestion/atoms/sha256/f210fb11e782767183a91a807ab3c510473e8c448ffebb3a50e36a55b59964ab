@@ -1,0 +1,22 @@
+**Context40 的实际生成历史。** 此处不能停留在上一段较弱结论，更不能用它否定已发表的实际饱和定理。在定义40.1、引理40.2与命题40.6的完整前提下，工作空间已经取有效循环 $\mathcal R$，且
+$$
+\operatorname{Im}F_{(t_0)}^*=e^{-t_0C_{\mathcal R}/2}V_k
+\supseteq e^{-t_0C_{\mathcal R}/2}B^*U.
+$$
+若 $\Delta=0$，约化性和唯一正对数使它在 $C_{\mathcal R}$ 下不变；这批移位输入的全部循环跨度为
+$$
+\operatorname{span}_{j\ge0}
+C_{\mathcal R}^{j}e^{-t_0C_{\mathcal R}/2}B^*U
+=e^{-t_0C_{\mathcal R}/2}\mathcal R=\mathcal R.
+$$
+最后使用有限基准指数的可逆性。故命题40.6已经供应
+$$
+\boxed{
+\Delta=0\Longleftrightarrow V_k=\mathcal R
+\Longleftrightarrow
+\operatorname{rank}\mathsf H_{k+1}(t_0)
+=\operatorname{rank}\mathsf H_k(t_0).
+}
+$$
+结合前式，实际模型中 $R(2)=2$ 当且仅当该历史真正饱和；未饱和时 $R(2)<2$，与推论40.7完全一致。有效空间以外原本不可见的直和仍不参加这条饱和断言。把精确零改为很小的正数，只能得到本节有裕量条件的数值误差界，不保留精确秩或饱和结论。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9c2e1ac8ad16a723d1a753851421646bf6b88e8f40670db1c0cfa639d340b759
+  normalized_sha256: sha256:9c2e1ac8ad16a723d1a753851421646bf6b88e8f40670db1c0cfa639d340b759
+cas_ref: sha256:9c2e1ac8ad16a723d1a753851421646bf6b88e8f40670db1c0cfa639d340b759
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“定义从”接口模拟目标的“最坏行总变差缺陷”只引入先取最大值再对模拟核取下确界的量，并说明固定历史行；没有声称复合律、收缩性或最优核存在，不存在暗藏的结论。
+    previous_atom_id: 60150aa0a4e955fbf5ce9a9edbd2d06cf4422a302c0848e162ab24047da03446
+    next_atom_id: dedc8f8e72125eb75472da4e97f91fcf026640da4f7080c0b4661f9b3a901f48

@@ -1,0 +1,15 @@
+**命题 42.2（全词轨迹的整数等式；repo-derived）。** 定义42.1的每个整数除法均有正除数，并且
+$$
+0<U_j<Bm,\quad V_0(j)-W_0(j)=P(Bm-U_j)>0,\quad
+V_1(j)-W_1(j)=(A-P)(Bm-U_j)>0,
+$$
+故 $0<W_b(j)<V_b(j)<ABm$。若 $q_j=r+(1-2r)j/m=U_j/(Bm)$，则
+$$
+\frac{W_b(j)}{V_b(j)}=B_b(q_j),\qquad
+\frac{V_0(j)}{ABm}=p+(1-2p)q_j.
+$$
+因此 $T_b(j)$ 正是 $F_b(q_j)$ 在该网格上的最近点编号（同距取小），对每个有限词 $w$ 有
+$$s(\varnothing)=j_0,\quad s(wb)=T_b(s(w)),\quad
+\widehat h_{s(w)}=h(q_{s(w)}).
+$$
+

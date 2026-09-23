@@ -1,0 +1,109 @@
+**证明。** 先记录两个轨道事实。若 $\gamma(n)=E_h$，其中 $n\ge0,h\ge1$，则 $(n+h)\phi$ 为整数，与 $\phi$ 无理矛盾。因此
+$$
+\gamma[\mathbb N_0]\cap E=\varnothing.
+$$
+又因 $H$ 连续满射且 $Z[\mathbb N_0]$ 稠密，每个非空圆周开集的非空开原像都遇到 $Z[\mathbb N_0]$，故自然相位轨道稠密。对任意 $M\in\mathbb N_0$，
+$$
+\{\gamma(n):n\ge M\}=\gamma(M)+\gamma[\mathbb N_0]
+$$
+也稠密。于是有限多个输入可以分别从任意给定的非空开弧中选取自然相位，且同时满足任意预定的自然数下界；这里各输入的轨道指标彼此独立。
+
+若 $d=0$，实际向量只有空向量，每个输出恒为 $Z(0)=0_K$。右侧相位恒等式同样迫使所有输出等于 $0_K$，因而没有分裂行，零维方向满足空约束。这证明该情形，包括 $r=0$。以下设 $d>0$。
+
+先证必要性。有限乘积 $K^{d+r}$ 可度量，因此闭包中的点有同一列实际见证 $n^{(k)}\in\mathbb N_0^d$，满足
+$$
+Z(n_i^{(k)})\longrightarrow x_i,\qquad
+Z(a_j\cdot n^{(k)})\longrightarrow y_j.
+$$
+连续性与自然数上的相位加法给出所有相位恒等式。记 $\beta_i=H(x_i)$。对充分大的 $k$，取趋于零的唯一局部实偏移
+$$
+\gamma(n_i^{(k)})=\beta_i+[\varepsilon_i^{(k)}],
+\qquad |\varepsilon_i^{(k)}|<\tfrac12.
+$$
+对每个输出，由相位恒等式，
+$$
+\gamma(a_j\cdot n^{(k)})
+=H(y_j)+[a_j\cdot\varepsilon^{(k)}].
+$$
+因为行数有限且各行系数固定，可把 $k$ 同时取得足够大，使
+$$
+|a_j\cdot\varepsilon^{(k)}|<\tfrac12
+\quad\text{对所有 }j.
+$$
+此时输出的局部实偏移准确等于 $a_j\cdot\varepsilon^{(k)}$，不是另行选择的偏移，也不附加任意整数。这里先在圆周上使用恒等式，再将趋零的偏移和放进同一个局部区间，已经处理了模一代表跨越接缝的情形。
+
+每个分裂输入的单侧收敛规则给
+$$
+s(x_i)\varepsilon_i^{(k)}>0
+$$
+最终成立。每个分裂输出的同一规则给
+$$
+s(y_j)a_j\cdot\varepsilon^{(k)}>0
+$$
+最终成立。实际输出是非负整数的规范字，故其相位不在 $E$；因此分裂输出的这些局部偏移不能等于零。只有有限多个约束，遂有一个共同的充分大指标 $k$，使
+$$
+B\varepsilon^{(k)}>0.
+$$
+取 $\xi=\varepsilon^{(k)}$ 即得所需方向。此处选取的是同一个实际见证的误差向量，而不是各门分别选取误差，更不是假设归一化误差存在极限。若没有约束，则直接取零方向。
+
+再证充分性。设所有相位恒等式成立，并取 $B\xi>0$。当 $m>0$ 时，置
+$$
+\mu=\min_{\ell=1,\ldots,m}(B\xi)_\ell>0,\qquad
+C=\max\left(\{1\}\cup\left\{\sum_{i=1}^d|B_{\ell i}|:\ell=1,\ldots,m\right\}\right),
+$$
+$$
+\eta=\min\{1,\mu/(2C)\}>0.
+$$
+若 $\|w-\xi\|_\infty<\eta$，则逐行有
+$$
+(Bw)_\ell
+\ge (B\xi)_\ell-\sum_i|B_{\ell i}|\,\|w-\xi\|_\infty
+>\mu/2.
+$$
+当 $m=0$ 时，改取 $\xi=0,\eta=1$；以下不再需要 $\mu$，所有符号断言均为空条件。
+
+置
+$$
+L=\max\left(\{1\}\cup\left\{\sum_iA_{ji}:1\le j\le r\right\}\right),\qquad
+M=\max\{1,\|\xi\|_\infty+\eta\},
+$$
+$$
+t_k=\frac1{8(k+1)LM}\qquad(k\ge1).
+$$
+对每个 $i$ 使用非空开区间
+$$
+I_{i,k}=\bigl(t_k(\xi_i-\eta),\,t_k(\xi_i+\eta)\bigr).
+$$
+轨道尾部稠密，故可以分别选择 $n_i^{(k)}\ge k$，使
+$$
+\gamma(n_i^{(k)})\in\beta_i+[I_{i,k}].
+$$
+取对应的 $\varepsilon_i^{(k)}\in I_{i,k}$。这些区间位于 $(-1/2,1/2)$ 内，因而这些偏移就是唯一的局部偏移。令 $w^{(k)}=\varepsilon^{(k)}/t_k$，则
+$$
+\|w^{(k)}-\xi\|_\infty<\eta,\qquad
+|\varepsilon_i^{(k)}|<t_kM,
+$$
+$$
+|a_j\cdot\varepsilon^{(k)}|
+\le\left(\sum_iA_{ji}\right)\|\varepsilon^{(k)}\|_\infty
+<\frac1{8(k+1)}<\tfrac12.
+$$
+全部输入偏移与全部输出偏移都趋于零。若 $m>0$，还逐行有共同的严格余量
+$$
+(B\varepsilon^{(k)})_\ell>t_k\mu/2>0.
+$$
+因此分裂输入和输出全具有所要求的方向；非分裂坐标则只需其相位收敛。
+
+最后，对这一组实际输入，全部实际输出同时满足
+$$
+\gamma(a_j\cdot n^{(k)})
+=\sum_iA_{ji}\bigl(\beta_i+[\varepsilon_i^{(k)}]\bigr)
+=H(y_j)+[a_j\cdot\varepsilon^{(k)}].
+$$
+非负整数系数保证 $a_j\cdot n^{(k)}\in\mathbb N_0$。分别应用假设38.0的单点纤维规则和单侧规则，得到
+$$
+Z(n_i^{(k)})\longrightarrow x_i,\qquad
+Z(a_j\cdot n^{(k)})\longrightarrow y_j
+$$
+对所有输入与输出同时成立。没有为输出另行选择轨道指标。这证明充分性及所声明的自然数下界。证毕。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3648f927e4b410b69a91671a748b2c7570b19109a88f2c1a8611fe8bb62b7808
+  normalized_sha256: sha256:3648f927e4b410b69a91671a748b2c7570b19109a88f2c1a8611fe8bb62b7808
+cas_ref: sha256:3648f927e4b410b69a91671a748b2c7570b19109a88f2c1a8611fe8bb62b7808
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“The three-input relation retaining a common list of operator witnesses”仅定义保留同一组三个代表的输出集合；不声称它等于任一重复投影结果，定义未夹带这种等同性命题，故无需证明。
+    previous_atom_id: 54e6260efa026c57c51573bc3eb4366b4a801bfd2f62f202ea6f83aa7fcb826c
+    next_atom_id: c50a5ef7a499aadf1e36f7c7aac41ab072b09a4c6e89d5b6dea153d2aa430ca1

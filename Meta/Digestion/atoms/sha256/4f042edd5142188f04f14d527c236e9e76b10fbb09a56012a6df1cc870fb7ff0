@@ -1,0 +1,9 @@
+**定义 28.1（校准尺度与参数任务）。** 固定有符号且已校准的 $\alpha\ne0$，采用[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)定义27.1的实际无外力 PDE、同源准备和端口。用
+$$
+p=(m,k)=\left(\frac\beta\nu,\frac{\alpha^2}{\nu^2}\right),\quad k>0,
+\qquad \nu(p)=\frac{|\alpha|}{\sqrt k},\quad
+\beta(p)=\frac{m|\alpha|}{\sqrt k}
+\tag{28.101}
+$$
+作为参数坐标；它与 $(\beta,\nu)\in\mathbb R\times(0,\infty)$ 光滑互逆。$p$ 不表示流体压力。本节的图关系是同一实际轨迹上 $r_p(t)=1-2x_p(t)/\alpha$、$z_p(t)=-4y_p(t)/\alpha$ 所形成的有向初始关系。所有已获时间戳、钟限制、准备与旧档案关系仍按定义25.5保留；这里消去时间参数只为识别 $(\beta,\nu)$ 及指定准备场任务。
+

@@ -1,0 +1,51 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 0
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "1"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "629565743886600521090236480234337/106184973388898134718575087500000"
+  },
+  "old_excess": {
+    "kind": "inline",
+    "value": "523889715970256633154545445879767333298073/350942797093692432594243044594953125000000"
+  },
+  "coupled_mass_saving": {
+    "kind": "inline",
+    "value": "630053335920064561120723361434337/868488208273395237667357968750000"
+  },
+  "common_block_saving": {
+    "kind": "inline",
+    "value": "1966531013674417143853617239/11557548123961701738076200000"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "104790727311770252918605199250996806953649/175471398546846216297121522297476562500000"
+  },
+  "uniform_upper": {
+    "kind": "inline",
+    "value": "286288111837216708599700869553510077630131/43867849636711554074280380574369140625000"
+  },
+  "branch_transport": {
+    "path": "content/004-complete_radius/016-heavy/000-costs/000000/item/008-branch_transport.json",
+    "sha256": "2c0aaa015891c76b5177248948010393b0b097fe28efe1396e8bdc9e32c9eeee",
+    "kind": "object"
+  },
+  "coupled_mass_source_price": {
+    "kind": "inline",
+    "value": "7/45"
+  },
+  "common_prices": {
+    "kind": "inline",
+    "value": {
+      "mass_L1": "4814671831951234409069/1056931698579030794520",
+      "pure_L1": "87205863883/13459045600",
+      "availability_Linfinity": "1817677/5045040"
+    }
+  }
+}

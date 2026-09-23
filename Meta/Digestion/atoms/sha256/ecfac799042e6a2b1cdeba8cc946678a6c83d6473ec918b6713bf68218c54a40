@@ -1,0 +1,79 @@
+**证明。** 先设存在不同环状态 $u,v\in\{1,2,3\}$，使 $r(u)=r(v)$。令 $s$ 交换 $u,v$，固定 $0$ 及剩余环状态 $t$。定义 103.1 的自环及连接 $0$ 的边保持不变，三角环的顺逆方向交换，故
+$$
+K_k(si,sj)=K_k(j,i),\qquad r(si)=r(i).
+\tag{106.2d}
+$$
+逐坐标施加 $s$ 将从 $z$ 出发的 $K_k$ 路径律推为从 $s(z)$ 出发的 $K_k^{\mathsf T}$ 路径律，且保持所有读数。从 $s$ 的固定状态出发，两方向的全部可见前缀律因而相等。有限前缀决定乘积空间上的概率律，所以无限可见律也相等；此处直接使用钉版 Mathlib 的 [Kernel.trajMeasure](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Kernel/IonescuTulcea/Traj.lean) 轨迹构造及 [IsProjectiveLimit.unique](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Constructions/Projective.lean) 有限边缘唯一性接口，而不把无限路径概率写成单点无穷乘积。
+
+若 $s(1)=1$，初态本身固定，两份全部可见律相同，风险恒为 $1/2$，已满足 (106.2b)。若 $s(1)\ne1$，则固定的第三个环状态 $t\ne1$，并且
+$$
+\{K_k(1,t),K_k(t,1)\}=\{a_k/2,a_k/4\}.
+$$
+给定第一步到达 $t$，未来从 $t$ 出发；由 $s(t)=t$，两方向的未来可见律相同。令 $\eta$ 为前面加上确定读数 $r(1)$ 后的共同记录律，有限情形在其后保留从 $t$ 开始的 $n$ 个读数，无限情形保留整个尾部。将两份隐藏路径律分别限制在 $\{X_1=t\}$，再按读数推前，得到
+$$
+K_k(1,t)\eta\le P^r,\qquad K_k(t,1)\eta\le Q^r.
+$$
+因此
+$$
+\lambda:=\frac{a_k}{4}\eta\le P^r,Q^r,
+\qquad\lambda(\text{全部记录})=a_k/4.
+\tag{106.2e}
+$$
+隐藏事件 $\{X_1=t\}$ 不必能由读数识别；限制后的测度小于原测度，而可测推前保持此顺序。其他隐藏路径投到相同读数不会破坏上述支配关系。
+
+对任意可测 $0\le\varphi\le1$，非负积分的单调性给出
+$$
+\begin{aligned}
+\frac12\left(\int\varphi\,dP^r+\int(1-\varphi)\,dQ^r\right)
+&\ge\frac12\int[\varphi+(1-\varphi)]\,d\lambda\\
+&=\frac{a_k}{8}\ge\frac5{48}.
+\end{aligned}
+\tag{106.2f}
+$$
+取下确界得到有限及无限版本 (106.2b)。这是对无限可测检验的直接证明；有限情形也与既有 [le_cam_two_point_sum](https://github.com/the-omega-institute/trureturing/blob/3ecfc2e378cfc13bd95154bf4bd79a5898c1d553/D5/S3/Estimation/LeCam.lean) 及 [le_cam_two_point_sum_tight](https://github.com/the-omega-institute/trureturing/blob/3ecfc2e378cfc13bd95154bf4bd79a5898c1d553/D5/S3/Estimation/LeCamTight.lean) 所给的重叠质量公式一致。必要性得证。
+
+再设 $r$ 在三个环状态上单射。至多一个环状态的符号等于 $r(0)$，所以至少两个环状态的观察纤维是单点。将其中两个记为 $i,j$，并按环的顺时针方向排序，使
+$$
+K_k(i,j)=a_k/2,\qquad K_k(j,i)=a_k/4.
+$$
+记 $B=r(i)$、$C=r(j)$。可见统计量
+$$
+D_n=\sum_{t=0}^{n-1}
+\left(\mathbf1_{\{Y_t=B,Y_{t+1}=C\}}
+-\mathbf1_{\{Y_t=C,Y_{t+1}=B\}}\right)
+\tag{106.2g}
+$$
+恰为隐藏路径的 $i\to j$ 次数减 $j\to i$ 次数。
+
+固定 $k$，对 $K_k$ 下的实际状态过程取边链 $Z_t=(X_t,X_{t+1})$。其转移核为
+$$
+L_k((x,y),(u,v))=\mathbf1_{\{y=u\}}K_k(u,v),
+$$
+且
+$$
+L_k^2((x,y),(u,v))=K_k(y,u)K_k(u,v)>0.
+$$
+因此它是 $S^2$ 上的有限不可约链，平稳律为 $\rho_k(x,y)=K_k(x,y)/4$。这一平稳性由 $K_k$ 的列和为 $1$ 直接核对。边链的初始律由准备态 $1$ 和第一步转移给出，不要求它已经平稳。
+
+直接应用 Levin–Peres（Elizabeth L. Wilmer 参与撰写），[*Markov Chains and Mixing Times*, second edition](https://pages.uoregon.edu/dlevin/MARKOV/markovmixing.pdf)，Appendix C，Theorem C.1 的有限不可约链遍历定理：对任意初始分布及实值状态函数，经验均值几乎处处趋于平稳均值。将状态函数取为
+$$
+f(x,y)=\mathbf1_{\{(x,y)=(i,j)\}}-\mathbf1_{\{(x,y)=(j,i)\}},
+$$
+其平稳均值为
+$$
+\sum_{x,y}\rho_k(x,y)f(x,y)
+=\frac14\left(\frac{a_k}{2}-\frac{a_k}{4}\right)=\frac{a_k}{16}>0.
+$$
+在转置核下，同一边链论证给出相反的均值，故
+$$
+\frac{D_n}{n}\longrightarrow
+\begin{cases}a_k/16,&K_k\text{ 下},\\-a_k/16,&K_k^{\mathsf T}\text{ 下},\end{cases}
+\quad\text{几乎处处}.
+\tag{106.2h}
+$$
+取 $D_n>0$ 报告 $K_k$，$D_n<0$ 报告 $K_k^{\mathsf T}$，平局公平随机化。两个方向的错误概率由有界收敛趋于零，且规则不依赖 $k$；最优风险不大于此规则的风险，证明充分性。证明用的是实际边链，不假设粗观察为 Markov，也不假设相邻边独立。
+
+环上单射要求至少三个有效符号，而 (106.2c) 确实达到这一数目，故最小值为 $3$。$n=0$ 时两份读数均确定为 $r(1)$，风险为 $1/2$。证毕。
+
+该判据区分“用了几个符号”与“符号分开了哪些状态”：三个有效符号若仍合并两个环状态，也满足永久风险下界。式 (106.2h) 是每个固定参数下的几乎处处极限，不是准备初态下每个有限窗口的期望，也不从其均值的正下界推得统一预算。
+

@@ -1,0 +1,9 @@
+**\(A=0,\ 0<\rho<1\)。** 所有原标签权重为零，\(Z=0\)，不能归一化为本节原定义的概率律。可是 \(A\downarrow0\) 的概率族有不同意义的极限：
+\[
+\Pr(K=k,\mathsf D=1,J=1)\longrightarrow(1-\rho)\rho^k,
+\]
+其它固定标签的概率趋零。证明：\(u_k(A)/A\to1\)，且
+\(Z/A=(1-\rho)/[(1-\rho)^2-A\rho]\to1/(1-\rho)\)。
+极限点概率总和一。为证明总变差收敛，给定 $\varepsilon>0$，选有限标签集 $F$ 使极限律 $p_0(F^c)<\varepsilon$。有限集上的逐点收敛使充分小的 $A>0$ 满足 $\sum_{\ell\in F}|p_A(\ell)-p_0(\ell)|<\varepsilon$，因此 $p_A(F^c)<2\varepsilon$。从而整个标签集的绝对差之和小于 $\varepsilon+2\varepsilon+\varepsilon=4\varepsilon$，按总变差为该和的一半的约定即得收敛。极限是次数固定为一、深度几何分布，均值分别为
+\(1,\rho/(1-\rho)\)。这是重标后的极限律，不是把零总权强行相除所得的 \(A=0\) 原律。
+

@@ -1,0 +1,26 @@
+**命题 42.10（同一个固定根的完整词熵）。** 现在只用定义42.1的纯根合同。记 $\Xi_n=T_nm_0$、$\rho_n=\Gamma_n(P_0^{\rm mem})$，$W_n$ 为无相邻 $11$ 的长度 $n$ 二元词，$\ell(w)$ 为非空词末位。则对 $n\ge1$，
+$$
+\Xi_n=\sum_{w\in W_n}\alpha^{(n+\ell(w))/2}|w\rangle\otimes m_{\ell(w)},
+\qquad p_n(w)=\Pr(Y_1\cdots Y_n=w)
+=\begin{cases}\alpha^{n+\ell(w)},&w\in W_n,\\0,&w\notin W_n.\end{cases}
+\tag{42.39}
+$$
+$Y$ 是整份实际计算基记录。以 $q_0=0$ 作为初始根权重、$q_n=\Pr(Y_n=1)$（$n\ge1$），有
+$$
+q_{n+1}=\alpha^2(1-q_n),\qquad q_n=\pi_1(1-\lambda^n),\qquad
+H(Y_1,\ldots,Y_n)=(n+q_n)\log\phi.
+\tag{42.40}
+$$
+$n=0$ 只有一个空词，熵为零；不为空词另造一个末位随机变量。
+
+证明。Q130.1的两个源恒等式为
+$Tm_0=\sqrt\alpha|0\rangle m_0+\alpha|1\rangle m_1$、$Tm_1=|0\rangle m_0$。第一步给系数 $\sqrt\alpha,\alpha$。若末位为零，原系数 $\alpha^{n/2}$ 分别乘 $\sqrt\alpha,\alpha$，恰为下一步末位零、一所需的 $\alpha^{(n+1)/2},\alpha^{(n+2)/2}$；若末位为一，原系数 $\alpha^{(n+1)/2}$ 只延长零，仍是所需系数。每个合法延长出现一次，附一到一之后的振幅为零。归纳给（42.39），记忆向量单位范数给实际 Born 概率。这保留 Q125.3和Q130.1对固定左根律的所有权。
+
+因此转移矩阵为
+$$
+P_{\rm word}=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},
+\qquad \Pr(Y_1=0,1)=(\alpha,\alpha^2).
+\tag{42.41}
+$$
+它是虚拟左邻位固定为零后的根律，不是初始分布 $(\pi_0,\pi_1)$ 的平稳 Parry 律。由第二列读出 $q_{n+1}=\alpha^2(1-q_n)$，解出（42.40）；例如 $q_1=\alpha^2$、$q_2=\alpha^3\ne q_1$。对每个合法词，$-\log p_n(w)=(n+\ell(w))\log\phi$，取期望就得词熵。无反馈的旧输出计算基获取可依命题36.6移到终端计算，保留相同完整记录律与分支权重；这不删除真实已获记录，也不让早期可用结果凭空出现。$\square$
+

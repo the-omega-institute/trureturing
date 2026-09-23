@@ -1,0 +1,28 @@
+**定理 11.2（不同维数实现之间的函数响应证书）。** 给两份有限维实现 $(E,T,J)$、$(\widehat E,\widehat T,\widehat J)$，使用同一个边界空间 $U$，两演化均自伴且谱在 $[u,v]$。令
+$$
+M_j=J^*T^jJ,\qquad
+\widehat M_j=\widehat J^*\widehat T^j\widehat J,
+\qquad m=\|M_0\|,\quad\widehat m=\|\widehat M_0\|.
+$$
+设 $\|M_j-\widehat M_j\|\le\delta_j$ 对 $0\le j\le N$ 成立。对连续实函数 $f:[u,v]\to\mathbb R$ 及任意多项式 $p(x)=\sum_{j=0}^N c_jx^j$，有
+$$
+\boxed{
+\|J^*f(T)J-\widehat J^*f(\widehat T)\widehat J\|
+\le (m+\widehat m)\|f-p\|_{\infty,[u,v]}
++\sum_{j=0}^N|c_j|\delta_j.
+}
+\tag{11.5}
+$$
+若已经证明加权 Frobenius 前缀误差
+$$
+\sum_{j=0}^N w_j\|M_j-\widehat M_j\|_{\mathrm F}^2\le\eta^2,
+\qquad w_j>0,
+$$
+则式（11.5）的最后一项可以替换为
+$$
+\eta\left(\sum_{j=0}^N\frac{|c_j|^2}{w_j}\right)^{1/2}.
+\tag{11.6}
+$$
+
+第二份实现可取第10节任意合法拟合前缀的规范实现，第一份取真实模型。此时实际前缀误差仍须满足 $\delta_j$ 或式（11.6）的条件；拟合模型精确重现自身数据，不蕴含它与真实响应之间的误差为零。
+

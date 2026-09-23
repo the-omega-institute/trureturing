@@ -1,0 +1,164 @@
+{
+  "law": "uniform on actual complete survivors after canonical old-head pruning",
+  "actual_second_moment_upper": "1131/86",
+  "shape": "root1_same_other_column",
+  "old_test_layouts": 4760,
+  "clipped_screened_layouts": 4754,
+  "signed_union_dp_layouts": 6,
+  "union_counts_by_label_subset": [
+    1,
+    3,
+    5,
+    14,
+    6,
+    13,
+    30,
+    61,
+    8,
+    17,
+    32,
+    50,
+    47,
+    78,
+    184,
+    243,
+    18,
+    37,
+    73,
+    144,
+    91,
+    144,
+    368,
+    557,
+    126,
+    197,
+    400,
+    517,
+    613,
+    803,
+    1875,
+    2164
+  ],
+  "minimum_scaled_signed_slack": 0,
+  "other_shape_square_bounds": [
+    "1103/85",
+    "1103/85",
+    "965/76",
+    "993/77",
+    "993/77"
+  ],
+  "sharp_witness": {
+    "original_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        63,
+        52
+      ],
+      [
+        105,
+        4
+      ],
+      [
+        315,
+        142
+      ]
+    ],
+    "test_classes": [
+      [
+        1,
+        0
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        9,
+        2
+      ],
+      [
+        15,
+        8
+      ],
+      [
+        45,
+        38
+      ],
+      [
+        7,
+        6
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        35,
+        13
+      ],
+      [
+        63,
+        20
+      ],
+      [
+        105,
+        83
+      ],
+      [
+        315,
+        83
+      ]
+    ],
+    "survivor_count": 86,
+    "test_load_histogram": {
+      "1": 5,
+      "2": 38,
+      "3": 14,
+      "4": 18,
+      "6": 8,
+      "8": 2,
+      "12": 1
+    },
+    "test_load_sum": 271,
+    "test_load_square_sum": 1131,
+    "mean": "271/86",
+    "hinge_at1": "185/86",
+    "second_moment": "1131/86"
+  },
+  "sharpness": "Sharp for the prescribed uniform law; no minimax claim over other supported laws."
+}

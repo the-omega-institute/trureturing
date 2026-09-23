@@ -1,0 +1,48 @@
+**定理 27.16（几乎必然停止与有限均值的充要条件）。** 对任意本章先验以及每个等待标记策略，
+$$
+\Pr_\mu(\tau<\infty)=1.
+\tag{27.58}
+$$
+而且逐策略都有
+$$
+\boxed{
+\mathbb E_\mu\tau<\infty
+\quad\Longleftrightarrow\quad
+I_\mu:=\int\frac{\mu(dq)}{1-q}<\infty.}
+\tag{27.59}
+$$
+所以先验固定后，要么所有这些策略的均值都有限，要么全都无限。
+
+证明。式 (27.57) 的偶数尾概率是 $q^m$ 与 $c(q)q^{m-1}$ 的凸组合，奇数尾概率也趋于零。故每个 $q<1$ 下都几乎必然停止。无条件尾概率对每个深度不超过一，逐 $q$ 趋于零，支配收敛给出式 (27.58)。
+
+对固定 $q$ 求和非负尾概率，使用
+$$
+c(q)-q=(1-q)\Delta(q),\qquad
+1+d(q)=2-a(1-q),
+\tag{27.60}
+$$
+得到
+$$
+\mathbb E[\tau\mid Q=q]
+=\frac2{1-q}-a
++(1-q)\Delta(q)\sum_{m\ge1}\lambda_mq^{m-1}.
+\tag{27.61}
+$$
+其中 $(1-q)\sum_{m\ge1}\lambda_mq^{m-1}\in[0,1]$。因此对所有策略统一成立
+$$
+\begin{aligned}
+\frac2{1-q}-a+\min(0,\Delta(q))
+&\le\mathbb E[\tau\mid Q=q]\\
+&\le\frac2{1-q}-a+\max(0,\Delta(q)).
+\end{aligned}
+\tag{27.62}
+$$
+由于 $|\Delta(q)|<1$，策略只改变有界加项；对 $\mu$ 积分，有限均值恰由 $I_\mu$ 是否有限决定。非负尾求和与条件期望的交换由 Tonelli 定理保证，没有作两个无穷量相减。证毕。
+
+同样由几何级数与 Tonelli 定理，
+$$
+I_\mu=\sum_{n\ge0}M_n.
+\tag{27.63}
+$$
+无界的隐藏参数学习和无限的线性预测秩本身不决定停止均值；决定这一均值的是靠近 $q=1$ 的先验质量。
+

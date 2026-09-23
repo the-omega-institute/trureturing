@@ -1,0 +1,491 @@
+{
+  "budget_fenceposts": [
+    {
+      "L": 1,
+      "M": 1659,
+      "delta": [
+        "3",
+        "4"
+      ],
+      "reports": 3318
+    },
+    {
+      "L": 1,
+      "M": 1659,
+      "delta": [
+        "1",
+        "2"
+      ],
+      "reports": 3318
+    },
+    {
+      "L": 1,
+      "M": 1659,
+      "delta": [
+        "501",
+        "1000"
+      ],
+      "reports": 3318
+    },
+    {
+      "L": 2,
+      "M": 3318,
+      "delta": [
+        "499",
+        "1000"
+      ],
+      "reports": 6636
+    },
+    {
+      "L": 2,
+      "M": 3318,
+      "delta": [
+        "251",
+        "1000"
+      ],
+      "reports": 6636
+    },
+    {
+      "L": 2,
+      "M": 3318,
+      "delta": [
+        "1",
+        "4"
+      ],
+      "reports": 6636
+    },
+    {
+      "L": 3,
+      "M": 4977,
+      "delta": [
+        "249",
+        "1000"
+      ],
+      "reports": 9954
+    },
+    {
+      "L": 10,
+      "M": 16589,
+      "delta": [
+        "1",
+        "1000"
+      ],
+      "reports": 33178
+    },
+    {
+      "L": 100,
+      "M": 165888,
+      "delta": [
+        "1",
+        "1267650600228229401496703205376"
+      ],
+      "reports": 331776
+    }
+  ],
+  "certificate_verification": [
+    {
+      "index_bits": 6,
+      "max_supplied_integer_bits": 30,
+      "scalar_comparisons": 519,
+      "states": 47,
+      "valid": true
+    },
+    {
+      "index_bits": 6,
+      "max_supplied_integer_bits": 27,
+      "scalar_comparisons": 409,
+      "states": 37,
+      "valid": true
+    }
+  ],
+  "correct_selection_trajectories": [
+    {
+      "correct_training_prefixes": 2,
+      "diagnostic_M": 1,
+      "max_error": [
+        "15",
+        "6256"
+      ],
+      "model": "A",
+      "readouts_checked": 30,
+      "suffix_lengths": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "correct_training_prefixes": 4,
+      "diagnostic_M": 2,
+      "max_error": [
+        "2",
+        "667"
+      ],
+      "model": "A",
+      "readouts_checked": 60,
+      "suffix_lengths": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "correct_training_prefixes": 32,
+      "diagnostic_M": 3,
+      "max_error": [
+        "39",
+        "10028"
+      ],
+      "model": "A",
+      "readouts_checked": 480,
+      "suffix_lengths": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "correct_training_prefixes": 2,
+      "diagnostic_M": 1,
+      "max_error": [
+        "101",
+        "42264"
+      ],
+      "model": "B",
+      "readouts_checked": 30,
+      "suffix_lengths": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "correct_training_prefixes": 12,
+      "diagnostic_M": 2,
+      "max_error": [
+        "2009",
+        "602760"
+      ],
+      "model": "B",
+      "readouts_checked": 180,
+      "suffix_lengths": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "correct_training_prefixes": 32,
+      "diagnostic_M": 3,
+      "max_error": [
+        "69443",
+        "21436248"
+      ],
+      "model": "B",
+      "readouts_checked": 480,
+      "suffix_lengths": [
+        0,
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "epsilon": [
+    "1",
+    "64"
+  ],
+  "incremental_stream_predictions": 4,
+  "pair_indicator_laws": [
+    {
+      "M": 1,
+      "error_probability": [
+        "7",
+        "16"
+      ],
+      "hidden_prior": [
+        "0",
+        "1"
+      ],
+      "model": "A",
+      "vectors": 2,
+      "words": 4
+    },
+    {
+      "M": 2,
+      "error_probability": [
+        "175",
+        "256"
+      ],
+      "hidden_prior": [
+        "0",
+        "1"
+      ],
+      "model": "A",
+      "vectors": 4,
+      "words": 16
+    },
+    {
+      "M": 3,
+      "error_probability": [
+        "833",
+        "2048"
+      ],
+      "hidden_prior": [
+        "0",
+        "1"
+      ],
+      "model": "A",
+      "vectors": 8,
+      "words": 64
+    },
+    {
+      "M": 1,
+      "error_probability": [
+        "7",
+        "16"
+      ],
+      "hidden_prior": [
+        "1",
+        "2"
+      ],
+      "model": "A",
+      "vectors": 2,
+      "words": 4
+    },
+    {
+      "M": 2,
+      "error_probability": [
+        "175",
+        "256"
+      ],
+      "hidden_prior": [
+        "1",
+        "2"
+      ],
+      "model": "A",
+      "vectors": 4,
+      "words": 16
+    },
+    {
+      "M": 3,
+      "error_probability": [
+        "833",
+        "2048"
+      ],
+      "hidden_prior": [
+        "1",
+        "2"
+      ],
+      "model": "A",
+      "vectors": 8,
+      "words": 64
+    },
+    {
+      "M": 1,
+      "error_probability": [
+        "7",
+        "16"
+      ],
+      "hidden_prior": [
+        "1",
+        "1"
+      ],
+      "model": "A",
+      "vectors": 2,
+      "words": 4
+    },
+    {
+      "M": 2,
+      "error_probability": [
+        "175",
+        "256"
+      ],
+      "hidden_prior": [
+        "1",
+        "1"
+      ],
+      "model": "A",
+      "vectors": 4,
+      "words": 16
+    },
+    {
+      "M": 3,
+      "error_probability": [
+        "833",
+        "2048"
+      ],
+      "hidden_prior": [
+        "1",
+        "1"
+      ],
+      "model": "A",
+      "vectors": 8,
+      "words": 64
+    },
+    {
+      "M": 1,
+      "error_probability": [
+        "19",
+        "36"
+      ],
+      "hidden_prior": [
+        "0",
+        "1"
+      ],
+      "model": "B",
+      "vectors": 2,
+      "words": 4
+    },
+    {
+      "M": 2,
+      "error_probability": [
+        "361",
+        "1296"
+      ],
+      "hidden_prior": [
+        "0",
+        "1"
+      ],
+      "model": "B",
+      "vectors": 4,
+      "words": 16
+    },
+    {
+      "M": 3,
+      "error_probability": [
+        "12635",
+        "23328"
+      ],
+      "hidden_prior": [
+        "0",
+        "1"
+      ],
+      "model": "B",
+      "vectors": 8,
+      "words": 64
+    },
+    {
+      "M": 1,
+      "error_probability": [
+        "19",
+        "36"
+      ],
+      "hidden_prior": [
+        "1",
+        "2"
+      ],
+      "model": "B",
+      "vectors": 2,
+      "words": 4
+    },
+    {
+      "M": 2,
+      "error_probability": [
+        "361",
+        "1296"
+      ],
+      "hidden_prior": [
+        "1",
+        "2"
+      ],
+      "model": "B",
+      "vectors": 4,
+      "words": 16
+    },
+    {
+      "M": 3,
+      "error_probability": [
+        "12635",
+        "23328"
+      ],
+      "hidden_prior": [
+        "1",
+        "2"
+      ],
+      "model": "B",
+      "vectors": 8,
+      "words": 64
+    },
+    {
+      "M": 1,
+      "error_probability": [
+        "19",
+        "36"
+      ],
+      "hidden_prior": [
+        "1",
+        "1"
+      ],
+      "model": "B",
+      "vectors": 2,
+      "words": 4
+    },
+    {
+      "M": 2,
+      "error_probability": [
+        "361",
+        "1296"
+      ],
+      "hidden_prior": [
+        "1",
+        "1"
+      ],
+      "model": "B",
+      "vectors": 4,
+      "words": 16
+    },
+    {
+      "M": 3,
+      "error_probability": [
+        "12635",
+        "23328"
+      ],
+      "hidden_prior": [
+        "1",
+        "1"
+      ],
+      "model": "B",
+      "vectors": 8,
+      "words": 64
+    }
+  ],
+  "postselection_training_state": "None before first selected readout and thereafter",
+  "production_continuation_reports": 12,
+  "production_reports": 3318,
+  "rejected_count_calls": 8,
+  "rejected_parameter_calls": 58,
+  "rejected_report_calls": 24,
+  "scope": "bounded exact regressions; no Lean validation or infinite enumeration",
+  "threshold_288_counts_156_157_158": [
+    "B",
+    "A",
+    "A"
+  ],
+  "timing_controls": {
+    "diagnostic_M": 1,
+    "fresh_error": [
+      "1",
+      "552"
+    ],
+    "model": "A",
+    "prefix": "11",
+    "reset_error": [
+      "1",
+      "12"
+    ],
+    "stale_error": [
+      "5",
+      "276"
+    ],
+    "target": [
+      "5",
+      "12"
+    ]
+  }
+}

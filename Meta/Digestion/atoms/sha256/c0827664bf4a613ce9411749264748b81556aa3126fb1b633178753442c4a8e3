@@ -1,0 +1,12 @@
+**推论 131.4。** 在 $+\Omega$ 定向下 $J=-\sqrt5\,S$；在 $-\Omega$ 定向下，令 $*_-=-*_+$，则
+
+$$
+\Psi *_-\Psi^{-1}=J/\sqrt5.
+$$
+
+此外
+
+$$
+J^2=5I,\qquad GJ=-5B,\qquad J^TG=GJ,\qquad J^TGJ=5G.
+$$
+

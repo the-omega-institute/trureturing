@@ -1,0 +1,20 @@
+**定理 43.11（有限多项式完整联合闭图的严格锥判据）。** 采用定义43.8。对任意 $\boldsymbol\xi\in K^q$，以下三项等价：$\boldsymbol\xi\in\Gamma(P)$；$\boldsymbol\xi\in\Gamma_T(P)$ 对所有 $T\in\mathbb N_0$ 成立；同时满足
+$$
+A_{j\nu}=0\text{ 对所有 }\nu\in M
+\quad\Longrightarrow\quad \xi_j=Z(c_j),
+$$
+$$
+\exists p\in\mathbb T^m,\qquad
+\boldsymbol\theta=\mathbf b+Ap,
+$$
+$$
+\mathcal C(\boldsymbol\xi)\ne\varnothing.
+$$
+相位条件可以等价地换成定理43.10的全部整数线性关系，但不能删除严格锥条件。
+
+更准确地，只要这些条件成立，对任意含 $\xi_j$ 的开集 $O_j\subseteq K$ 及任意 $T$，就存在一个实际元组 $\mathbf n\in\mathbb N_0^d$，使全部 $n_i\ge T$ 且
+$$
+Z(R_j(\mathbf n))\in O_j\qquad(1\le j\le q).
+$$
+$d\ge1$ 时还可以把该元组限制为定理43.9的同一条固定曲线 $\mathbf n(t)$。相位共同原像可以不唯一；严格锥始终在同一个单项式误差向量上施加全部条件。
+

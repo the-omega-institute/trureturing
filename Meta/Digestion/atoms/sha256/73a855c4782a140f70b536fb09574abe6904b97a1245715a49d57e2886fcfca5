@@ -1,0 +1,16 @@
+**定理 10.2（圆周、全实数流与事件分解）。** (a) 映射 $\Theta([j,s])=s_j+s\bmod L$ 是 $X_\tau\cong\mathbb R/L\mathbb Z$ 的同胚，故
+$$
+\Phi_t=\Theta^{-1}\circ(x\mapsto x+t)\circ\Theta\qquad(t\in\mathbb R)
+$$
+给连续全实数流。
+
+证明。各接缝的两坐标相等模 $L$，故映射下降且连续。每个圆坐标唯一落在一个半开区间 $[s_j,s_{j+1})$，给双射。原空间为有限紧区间商而紧，圆为 Hausdorff，连续双射即同胚。平移的单位和加法律给流群律，联合连续性由圆平移运输。该显式坐标证明包括负时间；`SuspensionEventDecomposition` 的非负事件分解及 `MinimalSuspensionContinuum` 的既有载体接口不被扩称为一般负时间证明。$\square$
+
+(b) 从已指定原锚 $[0,0]$ 出发，对 $t\ge0$ 存在唯一
+$$
+t=mL+s_j+s,\qquad m\in\mathbb N_0,\quad 0\le j<p,\quad0\le s<\tau_j,
+$$
+事件数为 $n=mp+j$。证明先以 $L>0$ 作欧氏分解得到整数圈数 $m$ 和余量，再用严格递增的 $s_j$ 分配唯一半开区间，所得 $j,s$ 唯一。每圈有 $p$ 个事件，故计数公式成立。$p=1$ 时同样有效。换锚需要保留已知初始偏移及此前事件数。
+
+(c) $\Phi_L$ 在圆周位置上恒等，却不在带完整档案的实际状态上恒等：一圈已追加 $p$ 次事件并增加圈数。全实数流的形式逆不删除已获档案，也不自动提供实验上的时间反演权限。
+

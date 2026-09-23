@@ -1,0 +1,23 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-uniform-profile-box-v1"
+  },
+  "source_certificate": {
+    "kind": "inline",
+    "value": "certificates/uniform_profile_geometry_certificate.json"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "35"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": "0d4f9221e742d7605fdb88d33efd7d003a3b4f6b7ec3752aa5c29758f026481c"
+  },
+  "result": {
+    "path": "content/004-result.json",
+    "sha256": "2ef6dfc882aa8453f3af56f6afaeb1f2d5a74cfa0a6ba0e6c5af59797623cee6",
+    "kind": "object"
+  }
+}

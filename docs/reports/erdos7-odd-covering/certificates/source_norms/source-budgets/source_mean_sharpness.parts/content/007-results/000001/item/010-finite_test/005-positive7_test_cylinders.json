@@ -1,0 +1,62 @@
+[
+  {
+    "exponent": 1,
+    "residue": 4,
+    "mass": "1977326743/11534406001"
+  },
+  {
+    "exponent": 2,
+    "residue": 4,
+    "mass": "282475249/11534406001"
+  },
+  {
+    "exponent": 3,
+    "residue": 4,
+    "mass": "40353607/11534406001"
+  },
+  {
+    "exponent": 4,
+    "residue": 4,
+    "mass": "5764801/11534406001"
+  },
+  {
+    "exponent": 5,
+    "residue": 4,
+    "mass": "823543/11534406001"
+  },
+  {
+    "exponent": 6,
+    "residue": 4,
+    "mass": "117649/11534406001"
+  },
+  {
+    "exponent": 7,
+    "residue": 4,
+    "mass": "16807/11534406001"
+  },
+  {
+    "exponent": 8,
+    "residue": 4,
+    "mass": "2401/11534406001"
+  },
+  {
+    "exponent": 9,
+    "residue": 4,
+    "mass": "343/11534406001"
+  },
+  {
+    "exponent": 10,
+    "residue": 4,
+    "mass": "49/11534406001"
+  },
+  {
+    "exponent": 11,
+    "residue": 4,
+    "mass": "7/11534406001"
+  },
+  {
+    "exponent": 12,
+    "residue": 4,
+    "mass": "1/11534406001"
+  }
+]

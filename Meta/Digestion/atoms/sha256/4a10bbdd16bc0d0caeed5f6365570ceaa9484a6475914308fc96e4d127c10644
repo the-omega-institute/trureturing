@@ -1,0 +1,5 @@
+实际初态域恰为
+
+$$\Gamma\succeq0,\qquad \operatorname{rank}\Gamma\le m.$$
+
+反向由半正定矩阵因子分解 Γ=Z^TZ、Z=[U,V^T] 得到真实参数，必要时补零行。

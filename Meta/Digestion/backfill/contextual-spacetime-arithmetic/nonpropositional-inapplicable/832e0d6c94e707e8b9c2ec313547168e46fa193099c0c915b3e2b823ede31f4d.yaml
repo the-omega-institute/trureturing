@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:832e0d6c94e707e8b9c2ec313547168e46fa193099c0c915b3e2b823ede31f4d
+  normalized_sha256: sha256:832e0d6c94e707e8b9c2ec313547168e46fa193099c0c915b3e2b823ede31f4d
+cas_ref: sha256:832e0d6c94e707e8b9c2ec313547168e46fa193099c0c915b3e2b823ede31f4d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “仅在各自父章内按下列定位解读”限定局部编号修正，明确既有 PR5/PR6 不受影响；它不是关于数学对象的结论，也无定义偷带，故按编辑规则结算。
+    previous_atom_id: e79f43d0e68cb57be5bc8547104e5f52697e2e39f8db32fca5a6fefad3d36ae4
+    next_atom_id: 6c06bf6a272e1098acbc6cc67b8b9367c37b804005750e57ac8f0e3dd7928be0

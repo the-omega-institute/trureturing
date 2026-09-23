@@ -1,0 +1,8 @@
+**Definition 36.1 (Fixed carrier, phase geometry, and observation classes).** Retain the original carrier and maps of Definition 20.1:
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \beta=\alpha^2,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$

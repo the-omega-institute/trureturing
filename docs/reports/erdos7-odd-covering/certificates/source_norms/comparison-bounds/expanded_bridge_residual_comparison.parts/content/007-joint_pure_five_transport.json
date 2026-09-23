@@ -1,0 +1,449 @@
+{
+  "density_caps": [
+    "0",
+    "2003/12960",
+    "4259/12960",
+    "89/216",
+    "89/216"
+  ],
+  "raw_density_cap": "109/216",
+  "common_error_envelope": "4537/12960",
+  "first_slot_rows": [
+    {
+      "first_beta": 2,
+      "first_slot": 0,
+      "first_source_bound": "0",
+      "deep_Bellman_upper": "623/8640",
+      "shared_error": {
+        "inside_price": "0",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "866567/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "4779869/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "4779869/298080000"
+      },
+      "upper": "26273369/298080000"
+    },
+    {
+      "first_beta": 2,
+      "first_slot": 1,
+      "first_source_bound": "137/4800",
+      "deep_Bellman_upper": "623/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "181591/12960000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "5168669/298080000"
+      },
+      "upper": "52185269/298080000"
+    },
+    {
+      "first_beta": 2,
+      "first_slot": 2,
+      "first_source_bound": "2801/43200",
+      "deep_Bellman_upper": "46849/518400",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "181591/12960000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "5168669/298080000"
+      },
+      "upper": "11260943/37260000"
+    },
+    {
+      "first_beta": 2,
+      "first_slot": 3,
+      "first_source_bound": "1079/14400",
+      "deep_Bellman_upper": "979/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "21485/3834",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1715457683/105818400000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "3379334689/190473120000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "3379334689/190473120000"
+      },
+      "upper": "67778649289/190473120000"
+    },
+    {
+      "first_beta": 2,
+      "first_slot": 4,
+      "first_source_bound": "709/14400",
+      "deep_Bellman_upper": "979/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "2507/475",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "19436009/1231200000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "539414909/30780000000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "539414909/30780000000"
+      },
+      "upper": "8573564909/30780000000"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 0,
+      "first_source_bound": "0",
+      "deep_Bellman_upper": "623/8640",
+      "shared_error": {
+        "inside_price": "0",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "866567/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "4779869/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "4779869/298080000"
+      },
+      "upper": "26273369/298080000"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 1,
+      "first_source_bound": "137/4800",
+      "deep_Bellman_upper": "623/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "181591/12960000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "5168669/298080000"
+      },
+      "upper": "52185269/298080000"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 2,
+      "first_source_bound": "2801/43200",
+      "deep_Bellman_upper": "46849/518400",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "181591/12960000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "5168669/298080000"
+      },
+      "upper": "11260943/37260000"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 3,
+      "first_source_bound": "1079/14400",
+      "deep_Bellman_upper": "979/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "21485/3834",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1715457683/105818400000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "3379334689/190473120000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "3379334689/190473120000"
+      },
+      "upper": "67778649289/190473120000"
+    },
+    {
+      "first_beta": 3,
+      "first_slot": 4,
+      "first_source_bound": "709/14400",
+      "deep_Bellman_upper": "979/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "2507/475",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "19436009/1231200000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "539414909/30780000000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "539414909/30780000000"
+      },
+      "upper": "8573564909/30780000000"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 0,
+      "first_source_bound": "0",
+      "deep_Bellman_upper": "623/8640",
+      "shared_error": {
+        "inside_price": "0",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "866567/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "4779869/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "4779869/298080000"
+      },
+      "upper": "26273369/298080000"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 1,
+      "first_source_bound": "137/4800",
+      "deep_Bellman_upper": "623/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "181591/12960000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "5168669/298080000"
+      },
+      "upper": "52185269/298080000"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 2,
+      "first_source_bound": "2801/43200",
+      "deep_Bellman_upper": "46849/518400",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "0",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "576851/64800000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "181591/12960000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "5168669/298080000"
+      },
+      "upper": "11260943/37260000"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 3,
+      "first_source_bound": "1079/14400",
+      "deep_Bellman_upper": "979/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "21485/3834",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "1715457683/105818400000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "3379334689/190473120000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "3379334689/190473120000"
+      },
+      "upper": "67778649289/190473120000"
+    },
+    {
+      "first_beta": 4,
+      "first_slot": 4,
+      "first_source_bound": "709/14400",
+      "deep_Bellman_upper": "979/8640",
+      "shared_error": {
+        "inside_price": "1",
+        "outside_price": "2507/475",
+        "source_offset": "1/2880",
+        "envelope": "4537/12960",
+        "knots": [
+          {
+            "mass_in_E3_or_omega": "0",
+            "upper": "19436009/1231200000"
+          },
+          {
+            "mass_in_E3_or_omega": "3449/16200000",
+            "upper": "539414909/30780000000"
+          },
+          {
+            "mass_in_E3_or_omega": "1/2300",
+            "upper": "5168669/298080000"
+          }
+        ],
+        "omitted_near_zero_slope_lower": null,
+        "upper": "539414909/30780000000"
+      },
+      "upper": "8573564909/30780000000"
+    }
+  ],
+  "joint_upper": "67778649289/190473120000"
+}

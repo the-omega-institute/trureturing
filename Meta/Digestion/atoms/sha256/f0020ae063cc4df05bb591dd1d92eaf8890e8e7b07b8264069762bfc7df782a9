@@ -1,0 +1,132 @@
+### 127.9 一个明确的反向准备，把完整熵增连接到路径 KL
+
+回到图热流。固定有限时间网格
+
+$$
+0=t_0<t_1<\cdots<t_n=T,
+\qquad \Delta_k=t_k-t_{k-1}>0,
+\qquad K_k=T_{\Delta_k}.
+\tag{127.57}
+$$
+
+这里 $K_k$ 是采样转移核，与连续记忆核 $K(t)$ 的含义不同；以下用下标区分。路径载体为 $V^{n+1}$。定义正向实验
+
+$$
+\mathbb P(x_0,\ldots,x_n)
+=p_0(x_0)\prod_{k=1}^n(K_k)_{x_kx_{k-1}}.
+\tag{127.58}
+$$
+
+其末态边缘是 $p_T$。另行声明反向准备实验：从 $p_T$ 出发，以逆序的间隔运行同一图热核，
+
+$$
+\widetilde{\mathbb P}(y_0,\ldots,y_n)
+=p_T(y_0)\prod_{k=1}^n(K_{n+1-k})_{y_ky_{k-1}}.
+\tag{127.59}
+$$
+
+令 $\Theta(y_0,\ldots,y_n)=(y_n,\ldots,y_0)$，并把 $\mathbb R=\Theta_*\widetilde{\mathbb P}$ 写到正向路径坐标上，得到
+
+$$
+\mathbb R(x_0,\ldots,x_n)
+=p_T(x_n)\prod_{k=1}^n(K_k)_{x_{k-1}x_k}.
+\tag{127.60}
+$$
+
+式（127.4）保证每个 $K_k$ 对称且严格正，$p_0,p_T$ 也严格正，所以两份路径律互相绝对连续。逐因子利用对称性，
+
+$$
+\boxed{\log\frac{\mathbb P(\omega)}{\mathbb R(\omega)}
+=\log p_0(x_0)-\log p_T(x_n)}.
+\tag{127.61}
+$$
+
+取正向期望，用首末边缘求和，即得
+
+$$
+\boxed{
+D(\mathbb P\|\mathbb R)
+=H(p_T)-H(p_0)
+=D(p_0\|\pi)-D(p_T\|\pi)
+=\int_0^T\sigma(p_t)\,dt.
+}
+\tag{127.62}
+$$
+
+每个有限采样网格都满足这条等式；固定终点 $T$ 后，改变或细化网格不改变它的值，因为每个对称转移因子已经逐项相消。这是普通有限采样路径上的等式，不是对连续时间完整路径测度的已证声明。网格间隔反序是实验定义的一部分；不是只将同一初始准备的记录倒放。
+
+现在取完整粗历史
+
+$$
+r(x_0,\ldots,x_n)=(q(x_0),\ldots,q(x_n)).
+\tag{127.63}
+$$
+
+它与坐标顺序反演相容。用式（127.55）分解式（127.62），得到
+
+$$
+\boxed{
+\int_0^T\sigma(p_t)\,dt
+=D(r_*\mathbb P\|r_*\mathbb R)
++\mathbb E_{y\sim r_*\mathbb P}
+D\bigl(\mathbb P(\cdot\mid y)\|\mathbb R(\cdot\mid y)\bigr).
+}
+\tag{127.64}
+$$
+
+右边分别是这对已声明实验在完整粗历史上的方向可区分性，以及相同粗历史之内仍被隐藏的路径区别。它们不等于单个时刻的 $D_c(p_t),D_h(p_t)$；它们比较的是两份路径实验。
+
+**闭合时还能精确落回端点收支。** 假设 $[P,L]=0$。粗过程对全部微观初态具有半群 $S_t$。这不仅是单时刻边缘公式：给定任意过去粗历史，当前微观条件律支撑在当前纤维；$\mathsf CT_t=S_t\mathsf C$ 使下一标签分布只依赖该纤维标签。因此粗路径正向律可按 $S_{\Delta_k}$ 因子化，反向粗实验也可以。
+
+由式（127.27）与 $T_t$ 的对称性，
+
+$$
+(S_t)_{ab}\bar\pi_b
+=\frac1N\sum_{i\in F_a,j\in F_b}(T_t)_{ij}
+=(S_t)_{ba}\bar\pi_a.
+\tag{127.65}
+$$
+
+所以粗核一般非对称，却满足其正确参考下的详细平衡。对一条粗路径 $y=(y_0,\ldots,y_n)$，两份粗路径似然比为
+
+$$
+\begin{aligned}
+\log\frac{(r_*\mathbb P)(y)}{(r_*\mathbb R)(y)}
+&=\log\frac{b_0(y_0)}{b_T(y_n)}
++\sum_{k=1}^n\log\frac{(S_{\Delta_k})_{y_ky_{k-1}}}
+{(S_{\Delta_k})_{y_{k-1}y_k}}\\
+&=\log\frac{b_0(y_0)}{\bar\pi_{y_0}}
+-\log\frac{b_T(y_n)}{\bar\pi_{y_n}},
+\end{aligned}
+\tag{127.66}
+$$
+
+最后一步将详细平衡的参考比逐步相消。取正向期望，得到
+
+$$
+\boxed{D(r_*\mathbb P\|r_*\mathbb R)=D_c(p_0)-D_c(p_T)}.
+\tag{127.67}
+$$
+
+再用式（127.13）、（127.62）、（127.64），得到
+
+$$
+\boxed{
+\mathbb E_{y\sim r_*\mathbb P}
+D\bigl(\mathbb P(\cdot\mid y)\|\mathbb R(\cdot\mid y)\bigr)
+=D_h(p_0)-D_h(p_T)\ge0.
+}
+\tag{127.68}
+$$
+
+因此闭合时，端点的可见／隐藏 KL 下降量分别就是该反向准备下的可见／隐藏路径 KL。也可由交换性和数据处理直接验证隐藏项不增：
+
+$$
+D(T_tp\|PT_tp)=D(T_tp\|T_tPp)\le D(p\|Pp).
+\tag{127.69}
+$$
+
+非闭合时保留式（127.64），不能保留未经证明的式（127.67）。四点路径例子中 $D_c(p_0)=0$ 而 $D_c(p_T)>0$ 对任意有限 $T>0$ 成立，故端点粗差为负，不可能等于非负的粗路径 KL。这清楚地区分了“当前边界离参考更远”与“完整粗历史的方向可区分性”。
+
+若从 $\pi$ 启动，正向实验与上述反向准备一致，详细平衡使 $\mathbb P=\mathbb R$，各路径 KL 及式（127.10）的耗散都为零。若改取 $\mathbb R=\Theta_*\mathbb P$ 而仍使用非平衡初态，式（127.61）通常不成立，不能把式（127.62）的熵增身份沿用过去。整个连接依赖已声明准备，并没有从几何或路径倒放本身推导物理时间箭头。
+

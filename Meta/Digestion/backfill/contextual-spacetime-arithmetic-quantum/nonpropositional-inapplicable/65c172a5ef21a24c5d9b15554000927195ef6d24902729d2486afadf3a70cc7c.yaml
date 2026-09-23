@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:65c172a5ef21a24c5d9b15554000927195ef6d24902729d2486afadf3a70cc7c
+  normalized_sha256: sha256:65c172a5ef21a24c5d9b15554000927195ef6d24902729d2486afadf3a70cc7c
+cas_ref: sha256:65c172a5ef21a24c5d9b15554000927195ef6d24902729d2486afadf3a70cc7c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Propositional bind-only finite-word boundary, closed by pinned Lean core and Mathlib db584cd6d46c92f209a44c0f1c829460d327499d; no existing frozen project theorem carries this strict finite-word clause. Unfold BinaryMixingMemoryDivergence.transfer, wordVector, wordMass and prediction. List.foldlRecOn with mul_pos, mul_nonneg, add_pos_of_pos_of_nonneg and add_pos_of_nonneg_of_pos preserves both positive coordinates for every finite List Bool at all 0<=r<1/2, including r=0. List.foldl_append, List.foldl_cons and List.foldl_nil normalize the appended-zero mass ratio; lt_div_iff₀ and div_lt_iff₀ give p<f<1-p, and abs_lt gives |1/2-f|<Delta for every finite word. Thus the constant observer has no finite-word error equal to Delta; its static supremum equality and observer-level attainment belong to the preceding static clause. Supremum is not replaced by maximum, and arbitrary low positive word mass is retained. The source remains propositional; this receipt claims only upstream closure of the finite-word boundary.
+    previous_atom_id: 01c4f10c8eec6533368151ee30f2195de97e602de1687a82235dc637673ce85e
+    next_atom_id: 8d0a25ba340adf31c4a3832b0db841ef438d248ca589190b230b84f213acc5ac

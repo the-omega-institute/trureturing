@@ -1,0 +1,16 @@
+**定义 52.1（基本载体与单位观察）。** 记素数集合为 $\mathcal P$，并令
+$$
+R=\prod_{p\in\mathcal P}\mathbb Z_p,\qquad U=R^\times,\qquad E=\mathbb N_0\cup\{\infty\}.
+$$
+各 $\mathbb Z_p$ 取通常的 $p$ 进拓扑，$R$ 取乘积拓扑；$E$ 中有限点孤立，$\infty$ 的邻域包含某个尾集 $\{n\in\mathbb N_0:n\ge N\}\cup\{\infty\}$。约定 $\infty+n=n+\infty=\infty$，包括 $n=\infty$，并把 $\infty$ 置于所有有限整数之上。赋值归一化为 $v_p(p)=1$、$v_p(0)=\infty$。定义
+$$
+x\sim y\quad\Longleftrightarrow\quad \exists u\in U,\ x=uy,
+\qquad I=R/U,
+\qquad \rho:R\longrightarrow I.
+$$
+$I$ 取商拓扑。另定义局部代表
+$$
+d_p(e)=\begin{cases}p^e,&e\in\mathbb N_0,\\0,&e=\infty.\end{cases}
+$$
+本节见证的载体是 $R$ 或指定的 $\mathbb Z_p$，不要求见证来自对角嵌入的普通整数。带见证关系与其存在量化支撑的区分采用[固定背景的定义1.2](https://raw.githubusercontent.com/the-omega-institute/trureturing/54e52af3e2ce49e65cbf066649cee410fafc2dff/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+

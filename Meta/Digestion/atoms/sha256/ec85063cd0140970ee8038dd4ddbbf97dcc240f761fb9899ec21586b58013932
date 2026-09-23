@@ -1,0 +1,13 @@
+**命题 9.14（正支持上的预测充分性）。** 将$P_{HF}$写为$\mu(h)K(f\mid h)$，令$M=m(H)$，则
+$$
+\Delta_M=0
+\iff
+\forall h,h',\quad
+\bigl[\mu(h)>0,\ \mu(h')>0,\ m(h)=m(h')\bigr]
+\Longrightarrow K(\cdot\mid h)=K(\cdot\mid h').
+\tag{9.14}
+$$
+若$\mu$在全部候选历史上全支持，该判据给全域纤维充分性；一般先验只约束其正支持。对每个Dirac先验分别有零缺陷，不能替代一份全支持先验。
+
+**证明。** 式（9.14）直接应用[`ConditionalInformationSufficiency`](../../../D5/S3/ConceptDynamics/Completion/ConditionalInformationSufficiency.lean)中的`conditional_information_zero_iff_support_sufficiency`，将该声明的`prior`、`kernel`、`concept`依次取为$\mu,K,m$。全支持时，两个正概率前提对全部$h,h'$成立。反之，Dirac条件下$H$恒定，不论$m$怎样丢信息，其缺陷都为零；例如两个历史对应不同的确定未来，常值$m$在各Dirac先验下缺陷均零，却不满足全域纤维充分性。证毕。
+

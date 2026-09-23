@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:cf8760f96c073071257ce39a8cae02a46af7a5ffa7bbabac097809044a16045e
+  normalized_sha256: sha256:cf8760f96c073071257ce39a8cae02a46af7a5ffa7bbabac097809044a16045e
+cas_ref: sha256:cf8760f96c073071257ce39a8cae02a46af7a5ffa7bbabac097809044a16045e
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton
+    target_statement_id: sha256:ceba603b788590b7e5f7cf036e0d43e16b5e85797e974ebc93e2a503afddbc0f
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - aca3f6e098d959270a05941e740ebc8bb0b0208eaafaacb1d0c9d1f6ad9ee8b5
+    - 9fc60e19e11fac07f13636d41e813ddae62cbd5cad46c0ce2ba12f346f7447c3
+    - 8515630381d5829eefb6848217adc10fd0305a7eba13816ca08141bed3fe6834
+    - 2ff6b49533ff7e9dff2ebe8667bfb1b040278a3a3db353f23949d869137cbb2c
+    - 9d7b973407ed2e683204dd2cfdbb411e41a876b5fa43c563efd3968ebc91d7ba
+    - 58ad3db48934ab64987399985a67aeeecb2a57ac92f2941c6381145145d4a023

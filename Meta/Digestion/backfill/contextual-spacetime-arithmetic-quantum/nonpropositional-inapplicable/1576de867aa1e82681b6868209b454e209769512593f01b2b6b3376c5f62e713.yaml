@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1576de867aa1e82681b6868209b454e209769512593f01b2b6b3376c5f62e713
+  normalized_sha256: sha256:1576de867aa1e82681b6868209b454e209769512593f01b2b6b3376c5f62e713
+cas_ref: sha256:1576de867aa1e82681b6868209b454e209769512593f01b2b6b3376c5f62e713
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说明“thermal”只是一种“构造命名”，又说“它没有单独证明”分区和非零、正迹归一化或实验温度对应；它限定术语与证明范围，没有把所缺条件偷放进加权算子的定义。
+    previous_atom_id: 61c407cc898825a8bc6aae79bc26322b8fa67a21987ae444bfb72e275aa2d6a7
+    next_atom_id: 2614c2578ec2621bcbeeadf9f3861be04cf62e53ea7290280aeccb3eab7b0fbd

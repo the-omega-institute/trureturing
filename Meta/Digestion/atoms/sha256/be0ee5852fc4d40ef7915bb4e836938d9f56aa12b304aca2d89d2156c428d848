@@ -1,0 +1,20 @@
+**命题 73.2（参考校准与对角态上的右逆）。** 对任意粗矩阵 $Y$，有
+$$
+B_{r,q}(Y)
+=\operatorname{diag}_{j\in J}
+\left(\frac{q_j}{p_{r(j)}}Y_{r(j),r(j)}\right).
+$$
+此映射为 CPTP，且
+$$
+B_{r,q}(\operatorname{diag}p)=\operatorname{diag}q,
+\qquad
+\mathcal C_r B_{r,q}(Y)=\operatorname{diag}_{i\in I}(Y_{ii}).
+$$
+因此 $B_{r,q}$ 在粗对角态上是 $\mathcal C_r$ 的右逆；在全部粗矩阵上，复合是粗基去相干。
+
+证明。满射保证每条纤维含某个 $j$，故 $p_i\ge q_j>0$。命题 72.3 给出 $\mathcal E_r$ 为 CPTP，命题 72.5 与定理 72.4 给出 $\Delta_J=\mathcal C_{\mathrm{id}_J}$ 为 CPTP；复合仍为 CPTP。这里有限 Kraus 判据使用 [finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/def6f2d9cb42c1dc0fc8607db1b4950ef068013f/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean)，复合使用 [QuantumChannel.comp](https://github.com/the-omega-institute/trureturing/blob/def6f2d9cb42c1dc0fc8607db1b4950ef068013f/D5/S3/Quantum/Foundation/FiniteStateChannel.lean)。$U_r$ 的第 $j$ 行只有第 $r(j)$ 列非零，所以 $U_rYU_r^*$ 的第 $j$ 个对角元恰为所列值，去相干给出第一式。取 $Y=\operatorname{diag}p$ 得参考校准；再由定理 72.4，复合的第 $i$ 个对角元为
+$$
+\sum_{r(j)=i}\frac{q_j}{p_i}Y_{ii}=Y_{ii},
+$$
+而非对角元为零。证毕。
+

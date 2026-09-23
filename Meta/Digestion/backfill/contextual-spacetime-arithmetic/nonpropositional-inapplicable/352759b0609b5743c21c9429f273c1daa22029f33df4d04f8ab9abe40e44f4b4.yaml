@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:352759b0609b5743c21c9429f273c1daa22029f33df4d04f8ab9abe40e44f4b4
+  normalized_sha256: sha256:352759b0609b5743c21c9429f273c1daa22029f33df4d04f8ab9abe40e44f4b4
+cas_ref: sha256:352759b0609b5743c21c9429f273c1daa22029f33df4d04f8ab9abe40e44f4b4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子规定全档案符号翻转保持选择的表示操作，没有包含投影公式的证明义务。
+    previous_atom_id: 2d7890d5da90fb88369888dc450baa49d46ff11d9e1fd6033e4cadd8ca4972ca
+    next_atom_id: 4c8b44e70659f5f42c9ff460c1181a2979d2ffd64542d3f1d77d2725cf0765f0

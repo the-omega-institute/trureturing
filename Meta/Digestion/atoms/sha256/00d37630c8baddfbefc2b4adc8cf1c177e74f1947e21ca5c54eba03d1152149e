@@ -1,0 +1,91 @@
+**命题 83.5（平稳且交换的四状态动力学仍可增大四次缺陷）。** 取 $J=\{1,2,3,4\}$、$I=\{1,2\}$，令 $r(1)=r(2)=1$、$r(3)=r(4)=2$，并置
+$$
+q=\frac14\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\qquad
+d=\begin{pmatrix}3/8\\3/8\\3/16\\1/16\end{pmatrix},
+$$
+$$
+E=\frac12\begin{pmatrix}
+1&1&0&0\\
+1&1&0&0\\
+0&0&1&1\\
+0&0&1&1
+\end{pmatrix},\qquad
+T=\frac12\begin{pmatrix}
+1&0&1&0\\
+0&1&0&1\\
+1&0&1&0\\
+0&1&0&1
+\end{pmatrix}.
+$$
+则 $q,d$ 都是严格正概率，$E$ 是指定参考的纤维重采样，$T$ 非负列随机、对称且幂等，满足
+$$
+Tq=q,\qquad TE=ET=ETE,
+$$
+但对凸生成函数 $\Phi(t)=t^4$，
+$$
+\boxed{
+\mathcal J_{t^4}(d;q,r)=\frac{25}{512},\qquad
+\mathcal J_{t^4}(Td;q,r)=\frac{385}{4096},\qquad
+\mathcal J_{t^4}(Td;q,r)-\mathcal J_{t^4}(d;q,r)
+=\frac{185}{4096}>0.
+}
+$$
+同一输入与同一动力学的二次缺陷则满足
+$$
+\mathcal J_2(d;q,r)=\frac1{32},\qquad
+\mathcal J_2(Td;q,r)=\frac1{64}.
+$$
+因此，平稳参考与完整交换不能使每个单变量凸生成函数的纤维缺陷都不增。
+
+**证明。** $q,d$ 的坐标均正，总和均为一。$p=(1/2,1/2)^{\mathsf T}$，故由定义 74.1 的 $E=BC$ 得到所列 $E$。$T$ 的每行、每列各有两个 $1/2$，其余为零；所以非负列随机并固定均匀参考 $q$，但 $T_{12}=0$。直接相乘有
+$$
+T^{\mathsf T}=T,\qquad T^2=T,\qquad
+TE=ET=\frac14\mathbf1\mathbf1^{\mathsf T},
+\qquad \mathbf1=(1,1,1,1)^{\mathsf T}.
+$$
+右侧每列被 $E$ 固定，所以还等于 $ETE$。均匀参考下 $D_q=\frac14\mathrm{Id}$，因而 $\Pi=E$、$L=T$。输入似然比及纤维均值为
+$$
+u=\begin{pmatrix}3/2\\3/2\\3/4\\1/4\end{pmatrix},\qquad
+\Pi u=\begin{pmatrix}3/2\\3/2\\1/2\\1/2\end{pmatrix}.
+$$
+输出为
+$$
+Td=\begin{pmatrix}9/32\\7/32\\9/32\\7/32\end{pmatrix},\qquad
+Lu=\begin{pmatrix}9/8\\7/8\\9/8\\7/8\end{pmatrix},\qquad
+\Pi Lu=\mathbf1.
+$$
+$\Phi''(t)=12t^2\ge0$ 保证 $t^4$ 在实线上凸。由定义 82.1，粗项也可写为 $\sum_jq_j\Phi((\Pi u)_j)$。逐项算得
+$$
+\begin{aligned}
+\sum_jq_ju_j^4
+&=\frac14\left[2\left(\frac32\right)^4
+                  +\left(\frac34\right)^4
+                  +\left(\frac14\right)^4\right]
+=\frac{1337}{512},\\
+\sum_jq_j(\Pi u)_j^4
+&=\frac14\left[2\left(\frac32\right)^4
+                  +2\left(\frac12\right)^4\right]
+=\frac{41}{16},\\
+\sum_jq_j(Lu)_j^4
+&=\frac12\left[\left(\frac98\right)^4
+                  +\left(\frac78\right)^4\right]
+=\frac{4481}{4096},\\
+\sum_jq_j(\Pi Lu)_j^4&=1.
+\end{aligned}
+$$
+因此输入缺陷为 $(1337-1312)/512=25/512$，输出缺陷为 $(4481-4096)/4096=385/4096$，两者之差为 $(385-200)/4096=185/4096$。
+
+二次残差分别是
+$$
+u-\Pi u=\begin{pmatrix}0\\0\\1/4\\-1/4\end{pmatrix},\qquad
+Lu-\Pi Lu=\begin{pmatrix}1/8\\-1/8\\1/8\\-1/8\end{pmatrix}.
+$$
+命题 82.2 给出
+$$
+\mathcal J_2(d;q,r)
+=\frac14\cdot2\left(\frac14\right)^2=\frac1{32},\qquad
+\mathcal J_2(Td;q,r)
+=\frac14\cdot4\left(\frac18\right)^2=\frac1{64}.
+$$
+在四次量中，细量下降 $6215/4096$，粗量下降 $6400/4096$；粗量下降更多，其差便增加 $185/4096$。两个凸量各自下降不蕴含它们之差下降，所列平稳交换矩阵与精确分数实现了这一障碍。证毕。
+

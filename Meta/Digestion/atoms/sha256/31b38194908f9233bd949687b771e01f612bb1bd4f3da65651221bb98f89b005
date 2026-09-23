@@ -1,0 +1,16 @@
+**全相位运输。** 对任意 $|\zeta|=1$，令
+$$
+b_i^{\zeta,N}=\begin{cases}-A\zeta^{i+1},&i<N,\\0,&i\ge N.\end{cases}
+$$
+$D_\zeta$ 双射地运输整个自由复数截止类，$U_\zeta$ 保持每个加权绝对差。由（49.5），上面的逐坐标最优性与阈值同时运输至目标 $T^\zeta$。故
+$$
+\boxed{N_{\min}(A)=\left\lceil\frac{\log(1-\rho)}{\log\rho}\right\rceil,}
+\tag{49.35}
+$$
+$$
+\boxed{\|T^\zeta-\mathcal E(b^{\zeta,N})\|_\rho=c_A
+\quad\Longleftrightarrow\quad N\ge N_{\min}(A).}
+\tag{49.36}
+$$
+因为 $\log\rho<0$，条件 $\rho^N\le1-\rho$ 在取对数并除以 $\log\rho$ 后成为 $N\ge\log(1-\rho)/\log\rho$，向上取整也包含阈值恰为整数的情形。当达到时仍是每个有限坐标误差严格小于 $c_A$，全层上确界为 $c_A$。当截止更短时，复数共同支配把实数必要性见证运输过来，故所有同截止复来源的误差严格大于 $c_A$。对于实数两相位只需 $\zeta=\pm1$，其变换保留实数来源类。零截止只有零来源，误差 $A>c_A$。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9c02232c2470ff27a40cde34e039682c03557e5d8325d1ec24346c7e117779bd
+  normalized_sha256: sha256:9c02232c2470ff27a40cde34e039682c03557e5d8325d1ec24346c7e117779bd
+cas_ref: sha256:9c02232c2470ff27a40cde34e039682c03557e5d8325d1ec24346c7e117779bd
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/SpatialConvolutionEquation.coefficient_multiplication
+    target_statement_id: sha256:efe1d0dc384f60d6ad6287e55603e102070a24fd9730ed34ad3dc68b5c7a3eae
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,18 @@
+### 17.2 定理：从原始矩构造的端点证书
+
+设 $0\leq a<b$，$\mu,\nu$ 为概率测度，分别支撑于 $[a,\infty)$ 与 $[a,b]$，所用矩绝对可积。假设 $x_*\geq b$、$\mu(\{x_*\})\geq\eta>0$，且
+\[
+\left|\int x^k\,d\mu-\int x^k\,d\nu\right|\leq\delta,
+\quad 0\leq k\leq n,
+\qquad \delta\geq0.
+\]
+记
+\[
+Q=2\frac{2+a+b}{b-a}+1.
+\]
+则
+\[
+\boxed{2\eta n^2(x_*-b)\leq(b-a)\bigl[2(1-\eta)+\delta Q^n\bigr].}
+\tag{17.2}
+\]
+

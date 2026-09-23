@@ -1,0 +1,12 @@
+### 76.2 稳定深度消耗的是商类预算
+
+初始类数不是状态数本身，而是当前读出能够区分的商类数：
+
+$$
+C_0
+=
+\left\lvert X/\ker q\right\rvert
+=
+\left\lvert\operatorname{range}q\right\rvert.
+$$
+

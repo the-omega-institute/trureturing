@@ -1,0 +1,23 @@
+{
+  "length": 32,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 28,
+      "part": {
+        "path": "content/035-joint_cost_hinge_refinement/007-cases/000000/item/002-normalized_cost_numerator_upper/000000-000028.json",
+        "sha256": "e2f100e9a7fee0b5fffbb9256a440b71cecad5ceb37001b380e94c5bb1a3d5e8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 28,
+      "stop": 32,
+      "part": {
+        "path": "content/035-joint_cost_hinge_refinement/007-cases/000000/item/002-normalized_cost_numerator_upper/000028-000032.json",
+        "sha256": "b8eee7f2f068a746f8d2c3e6eb2eb8ef172e5d09ce8bd57d5706d3655cfd3d12",
+        "kind": "value"
+      }
+    }
+  ]
+}

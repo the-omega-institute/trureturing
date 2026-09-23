@@ -1,0 +1,10 @@
+### 定理 12.1. 连通生成
+
+若 det H≠0 且 Γ 连通，则
+
+\[
+\operatorname{Lie}_K\langle N_i\rangle
+=\mathfrak{sp}(H)
+:=\{X:X^tH=-HX\}.
+\]
+

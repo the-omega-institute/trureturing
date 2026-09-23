@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:464ee09593bd3e472d8f21b92922f487faac33ae0647821ecddabeefbeaf5977
+  normalized_sha256: sha256:464ee09593bd3e472d8f21b92922f487faac33ae0647821ecddabeefbeaf5977
+cas_ref: sha256:464ee09593bd3e472d8f21b92922f487faac33ae0647821ecddabeefbeaf5977
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子规定实数除法为乘以指定逆表示，并声明除数实数类非零这一域条件，属于运算定义。
+    previous_atom_id: 9f856532551ce9682455e0bd14e2bfde3e65fe2ba9d7221c11220bd21f7e954e
+    next_atom_id: 7cc3c7d1483e2b1e89de18fe19c466daac46fad330c58914fc27e8900163044d

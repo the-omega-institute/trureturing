@@ -1,0 +1,8 @@
+### 41.7 含传播矩阵误差的观测后证书
+
+真实读数误差满足 ||Y_n-W_n||_F≤ε_n，初态Γ_0半正定且TrΓ_0≤R，其中R为已知先验。构造
+
+$$\widehat C_n=I-h_nH(Y_n),\quad
+\widehat P_0=I,\quad\widehat P_{n+1}=\widehat C_n\widehat P_n,
+\quad\widehat{\mathcal O}(X)=\big((\widehat P_nX\widehat P_n^T)_{21}\big)_{n=0}^N.$$
+

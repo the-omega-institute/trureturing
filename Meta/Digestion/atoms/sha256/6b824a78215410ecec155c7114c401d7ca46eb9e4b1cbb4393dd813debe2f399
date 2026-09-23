@@ -1,0 +1,23 @@
+**命题 88.7（同一语义数据分离模型身份、源保守与目标往返）。** 取
+$$
+F_A=\{p_A\},\qquad F_B=\{p_B,q_B\},\qquad
+p_B\ne q_B,\qquad\tau(p_A)=p_B.
+$$
+源模型为三个不同对象 $m_T,m_F,m_F'$，$p_A$ 仅在 $m_T$ 为真。目标模型为两个不同对象 $n_T,n_F$，满足关系与模型映射为
+$$
+\begin{array}{c|cc|c}
+N & N\models_B p_B & N\models_B q_B & \beta(N)\\
+\hline
+n_T & \mathrm{true} & \mathrm{false} & m_T\\
+n_F & \mathrm{false} & \mathrm{true} & m_F
+\end{array}
+$$
+则 (SC) 与 CE 成立，$S_A,S_B$ 都是恒等闭包，且 $K_\tau^{\rm sem}=S_A$；但 $\beta$ 不满射。将定理 88.2 中的闭包取为 $C_A=S_A,C_B=S_B$，有
+$$
+RL=\mathrm{id}_{\operatorname{Th}(S_A)},
+\qquad
+LR(\{q_B\})=\varnothing\subsetneq\{q_B\}.
+\tag{88.7}
+$$
+若把允许的目标模型缩为 $\{n_T\}$，(SC) 仍成立，CE 与语义反射则失败。
+

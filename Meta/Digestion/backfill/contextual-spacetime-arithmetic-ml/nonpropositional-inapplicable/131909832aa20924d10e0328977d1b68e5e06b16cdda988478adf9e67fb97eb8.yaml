@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:131909832aa20924d10e0328977d1b68e5e06b16cdda988478adf9e67fb97eb8
+  normalized_sha256: sha256:131909832aa20924d10e0328977d1b68e5e06b16cdda988478adf9e67fb97eb8
+cas_ref: sha256:131909832aa20924d10e0328977d1b68e5e06b16cdda988478adf9e67fb97eb8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “本节把这些接口接到同一个有限容量例子”说明编码章节的组织方式，“没有新增 Lean 声明”限定形式化状态；列举的定理152、156、158、159是导航引用，没有在本叶规定新的编码对象并暗中证明其最优性。
+    previous_atom_id: b54f14422d85832f3637734403ad33ca5cf5b84b084188da05d52b1826274388
+    next_atom_id: 0f67051033acbe92bf83cc4ce4faeaf80449e6dae4483b91453a1dc0a5d08b9b

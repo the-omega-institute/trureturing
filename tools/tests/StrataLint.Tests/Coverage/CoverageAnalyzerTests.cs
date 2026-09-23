@@ -99,6 +99,6 @@ public sealed class CoverageAnalyzerTests
     {
         public bool AppliesTo(RepositoryFile artifact, RuleApplicabilityContext context) => applies;
 
-        public ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context) => [];
+        public ImmutableArray<RuleFinding> EvaluateCurrent(CurrentRuleContext context) => [];
     }
 }

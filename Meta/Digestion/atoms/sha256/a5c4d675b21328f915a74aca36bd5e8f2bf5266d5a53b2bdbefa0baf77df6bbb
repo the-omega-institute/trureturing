@@ -1,0 +1,2 @@
+代数自同态扭曲的成熟背景见 Donald Yau，*Hom-algebras and homology*，[arXiv:0712.3515v3](https://arxiv.org/abs/0712.3515v3)，2009 年 8 月 6 日修订，[版本 PDF](https://arxiv.org/pdf/0712.3515v3)；arXiv 所列期刊出处为 *Journal of Lie Theory* 19（2009），409–421。已核读资料对应该版本：§2.1（PDF 第 2 页）固定特征零域；§2.3（第 3 页）的式 (2.3.2) 为 $(xy)\alpha(z)=\alpha(x)(yz)$，并明确一般 Hom-associative 定义本身不要求 $\alpha$ 保乘法。定理 2.4（第 3–4 页）、引理 2.5 及推论 2.6(1)（第 4 页）说明自同态扭曲 $\mu_\alpha=\alpha\circ\mu$ 的机制，并另行建立乘法保持式；定理的前提是自同态，不要求可逆。
+

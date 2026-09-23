@@ -1,0 +1,74 @@
+**定义 57.13（有类型有限 DAG 与共同见证推前语义）。** 一个有类型有限算术 DAG 的数据为有限顶点集 $V$ 的不交分解
+$$
+V=J\sqcup C\sqcup A\sqcup M,
+$$
+其中 $J$ 是变量输入节点集，$C$ 是零元输入的常量节点集，$A$ 是二元加法节点集，$M$ 是二元乘法节点集。给定常量标记
+$$
+\kappa:C\to R.
+$$
+对每个二元节点 $v\in A\sqcup M$，给定两个有序前驱槽
+$$
+\operatorname{pred}_0(v),\operatorname{pred}_1(v)\in V.
+$$
+要求存在一个严格全序 $<$ 于 $V$，使
+$$
+\operatorname{pred}_i(v)<v
+\qquad(v\in A\sqcup M,\ i=0,1).
+$$
+允许
+$$
+\operatorname{pred}_0(v)=\operatorname{pred}_1(v),
+$$
+因此同一代表在一个二元门的两个槽中重复使用被显式编码；一个顶点也可成为多个后继槽的前驱。$J$ 只包含真正的变量输入，$C$ 中常量虽在底层依赖图中没有前驱，却不属于 $J$，故不从输入概率空间取得任意值。
+
+给定 $z=(z_j)_{j\in J}\in R^J$，按 $<$ 递归定义
+$$
+E_j(z)=z_j\qquad(j\in J),
+$$
+$$
+E_c(z)=\kappa(c)\qquad(c\in C),
+$$
+$$
+E_v(z)=E_{\operatorname{pred}_0(v)}(z)+E_{\operatorname{pred}_1(v)}(z)
+\qquad(v\in A),
+$$
+$$
+E_v(z)=E_{\operatorname{pred}_0(v)}(z)E_{\operatorname{pred}_1(v)}(z)
+\qquad(v\in M).
+$$
+定义
+$$
+\operatorname{ev}_G:R^J\to R^V,
+\qquad
+\operatorname{ev}_G(z)=(E_v(z))_{v\in V}.
+$$
+给定任意 Borel 联合输入律
+$$
+\mu\in\operatorname{Prob}(R^J),
+$$
+定义共同见证粗语义
+$$
+\mathsf W_G(\mu)
+=(\rho^V)_*(\operatorname{ev}_G)_*\mu.
+$$
+若只关心一个有序输出列表 $o=(o_1,\ldots,o_q)\in V^q$，则相应输出语义为坐标映射
+$$
+z\longmapsto(E_{o_1}(z),\ldots,E_{o_q}(z))
+$$
+再经 $\rho^q$ 的推前。
+
+若只给定变量输入的联合标签律
+$$
+\eta\in\operatorname{Prob}(I^J),
+$$
+定义条件独立轨道方向契约下的规范提升
+$$
+\mathcal L_J\eta
+=\int_{I^J}\bigotimes_{j\in J}m_{a_j}\,\eta(da)
+$$
+$$
+=\Bigl((a,(u_j)_j)\mapsto(u_js(a_j))_j\Bigr)_*
+(\eta\otimes\lambda_U^{\otimes J}).
+$$
+一个变量输入只采样一次；DAG 中所有后续复用都复用该同一代表。这里的有序输入槽和零元常量类型与既有 framework Definition 1.1 的空输入常量、ordered input ports，以及 Proposition 1.4 对重复出现位置的保留完全相容；精确来源为 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。
+

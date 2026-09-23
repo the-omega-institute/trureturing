@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:6eb83341f56336292f6ad3ab39e0540dbee3b3c6b54f95546e5769ea296338fa
+  normalized_sha256: sha256:6eb83341f56336292f6ad3ab39e0540dbee3b3c6b54f95546e5769ea296338fa
+cas_ref: sha256:6eb83341f56336292f6ad3ab39e0540dbee3b3c6b54f95546e5769ea296338fa
+coverage_gids:
+  - gid: D5/S0/Rewriting/Expressions/GuardedArithmeticTerms.eval_map
+    target_statement_id: sha256:2a8ce0ad9b3f474426359c662fdb94183f35da8574c9eb0c38adabf563e25d0e
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.rationalSection_rightInverse
+    target_statement_id: sha256:d4be8a7cc83899f47d03a6c795d230af3f92cd29f529c007f51c52d44cab269a
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.add_readout
+    target_statement_id: sha256:a144430dfa4126b6400a689d9fa83b6dd22b699039fb2ef674bc8213ee5084d3
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.inv_readout
+    target_statement_id: sha256:d174ed21eac272bcbe6893ae78dc52120e496dd577702d6b293a3f2082145d31
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.inverse_guard_iff
+    target_statement_id: sha256:ddc1460afa5a75f8cddded1ac091cc62deaae2970ce7674b6fb6ff473e947f9f
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.mul_readout
+    target_statement_id: sha256:72ef1821b4e62ddf95a2a852b2ee7488731c5493e869274460d406ce984f4290
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.neg_readout
+    target_statement_id: sha256:2622604afe65ea4fc08a750b6ae6d26d679f2975336f38d71a9ae6a3638d7d2a
+  - gid: D5/S3/ConceptDynamics/SpacetimeExpressions/IntegerExpressionCompatibility.readout_eval
+    target_statement_id: sha256:ea87bb9e81519a9c1e0f0437429dd148a4633a7e7b05a771f4a59411947c0727
+  - gid: D5/S3/ConceptDynamics/SpacetimeExpressions/RationalExpressionCompatibility.readout_eval
+    target_statement_id: sha256:201aeb93d025044bf0e7267a036400644f6c194d50efe404e869cb952f50c9ca
+receipts:
+  unresolved_subitems: []

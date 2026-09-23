@@ -1,0 +1,373 @@
+[
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_alignment.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 18956,
+    "sha256": "75433cab317fb492b5e8a9b36bc9b8d8671f5bcfe450cc7a2e37efe5378108d5",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_coherent_positive7_pairs.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 24456,
+    "sha256": "c3476d1aec97ab3be8fada4155d736b4a90bdd11f80230524d78d42304f6b074",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_combined_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 603005,
+    "sha256": "8b219ef79edac919de14aeba806fbfd438b8ce8537f9c1413800f0be545f2536",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 507248,
+    "sha256": "3bed8096ef12bdb4a5aa0bfae312b0e2e93a997f7ec7c2caca2703a5865b3559",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_complete_survival_linear_heads.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 57062,
+    "sha256": "fe797751e87e2226327294b12d6b80a1e0476ad1d08a429a1064e5fd50afd67b",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_coupled_seven_heads.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 17320,
+    "sha256": "ecdd57e17e466435943a0fff4d63da9841e72ef2631651d5ecc451dcac586449",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_exact_retained_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 747829,
+    "sha256": "b4b5740685535cfdf5588bf927595088da3173950a7f69179005f1ddf536510b",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_exact_retained_factorial_head.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 3623030,
+    "sha256": "3e6c746bf968172975c122a7fecd0668ea0bee7da10733f40ebdfdcdecf34624",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_exact_seven_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 495321,
+    "sha256": "7edd5bad3e49a341bce7d45901632c855d4f2e7abca9290734aab230449e6730",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_exact_seven_retained_factorial_head.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 5285903,
+    "sha256": "dcf2126341d891d0b97f59619c8f2f5bb734ac69c21368312fd649685589cae1",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_four_pure_hinge_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 489119,
+    "sha256": "f89f5345f8614279d96b76f1768e23e9342f54eeaa909f24d2bb3f41dbaf3713",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_four_pure_hinge_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 41897477,
+    "sha256": "e44223c74c03841fa0db57bce372a84b370e861504f2fecf30f1aba830b6c595",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_generalized_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 622272,
+    "sha256": "3ff7359e8305e21708e0d31bd57c4464b964a607cbe225e64d5884d1a3792f54",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_generalized_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 40021865,
+    "sha256": "9ddf4d27e3238dc1dbcec51a16266a5f5990316d74fd48a013d6a83767f257e7",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_higher_pure_hinge_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 495635,
+    "sha256": "0f660ef1f83f2df933e6809251cba04e7fbdcd861567881683e60a0c423ed121",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_higher_pure_hinge_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 32475151,
+    "sha256": "8c8892c7891907b86d66629b0c2de3d0e85bd49d384dc4d8e3e3f250106a2fa3",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 530751,
+    "sha256": "92a163fffa776a7f220770819b3163f89998e139884dec3dc42ce261feab8a4c",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_factorial_cross_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 639351,
+    "sha256": "865821a4ce47b03b0f01898fb6095670fe0546717e5d6ce63d1324de45dbab01",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_factorial_cross_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 18394232,
+    "sha256": "1dacd88c38b0e3da1ccf1bfe775c151356d93b3be1d03f2b1f344de81968dd43",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_pair_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 631654,
+    "sha256": "5e591cb77b0e600f2522498dddea364432d5d0c925ff15a86c10f190418f9e08",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_pair_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 21154413,
+    "sha256": "95a3eee9db33fb73c79160982df25c12a66e9f7a213b22c43c9def8b1949ad09",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_positive175189_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 497041,
+    "sha256": "d7d1fa3f51eb5b22e829d96e91ad8f7fc7eb64f5b9b887e07135e1bb8b6d57b6",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_positive175189_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 46271183,
+    "sha256": "9f878ee41456a8ba9c14b926ee4e97927af7f7d3e441155d32a2ace1b18325d9",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_quadratic_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 204972,
+    "sha256": "57d46f22d0c289bc01d036bdc332ae7ffe7a9f53a39dd31c1304a6ed021c6b47",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_retained_square.json",
+    "classification": "mapped101-inline-dual",
+    "logical_bytes": 23476,
+    "sha256": "2954bac50a6f814b5334724af67089944f88956b306e6f2ca211193fc3ad408f",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_selected_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 319815,
+    "sha256": "67c0c79696a723ebdee9e8745c111c1da678f2916582498d61a5befecf45b0bf",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_joint_survival_heads.json",
+    "classification": "uncompressed-historical-bank",
+    "logical_bytes": 279297,
+    "sha256": "970d721747940bea35789f587590604931690ab73d1a18413fc3feed5e96b17f",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_pure_low_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 748492,
+    "sha256": "3b637c47b8e0bcf40892dc205ada20a8b46b953d82138e36b8bef61e735154b4",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_pure_low_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 11453252,
+    "sha256": "5d1af3542f879f5f1cd84031e43ece020aa036428cec833b5ff2992e3dac5e10",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_pure_path_factorial.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 13904,
+    "sha256": "ac8355ca4c908c15ba18983714aa4f00ce54a44717fdcdb30f105965008c5a55",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_pure_path_square.json",
+    "classification": "mapped101-inline-dual",
+    "logical_bytes": 30078,
+    "sha256": "5572358ded61518c7785e1336adf0183a53c16c74d675f50b5f1e75e2cad7f49",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_raw_prime_path_pairs.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 34271,
+    "sha256": "0d4ae4ee75009038fd9ac86ce3d0a43b41e460505e64d9d8dee2e8d5640f60f4",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_raw_square_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 573576,
+    "sha256": "1a3c7a2a4c5964090b5c0df7f7edd2e59f973988b7334e67cda57edf1566114b",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_retained135125_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 7664506,
+    "sha256": "593c328baf9cf16690574d7a0fb525da90774f2118bfb2bfb998bdd5904ea74f",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_retained375_ap11_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 495580,
+    "sha256": "0ca4dc02cd157390a2bf7a1b82cc0595df19faaa34a6e9816a1852d62b0a1861",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_retained375_ap11_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 9049459,
+    "sha256": "d1cc8f66b47367f9c39d7f51aac9431f97f59c2ba192d10c81d7aebf2803d5ff",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_retained375_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 490016,
+    "sha256": "09d2aea7b7427f03a73fb30992e5fa2379cd37f4286252c37ec0271b8cc1a146",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_retained375_heavy_heads.json",
+    "classification": "covering-and-prefix-seed-banks",
+    "logical_bytes": 83687037,
+    "sha256": "aa6d3fb5e36502e2fb227db6207179058fee50ec9d143646ce8667912c47d618",
+    "bank_count": 2
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_retained375_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 5334968,
+    "sha256": "6af788eeccbc2d4e570c9bd08a88fe724cc26dc4c4c6c687399dbf1e5e671d81",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_retained_pair_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 569694,
+    "sha256": "7cc4acd3572ceeedf6cb25fe8f72f510aaa2b18c1a3f7eeb47d2a93a53935fe0",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_second_cofactor_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 750858,
+    "sha256": "ee4cf6d125736ea4ba496f2da10fb558074071ce2dcecde4b3be68e723882043",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_second_cofactor_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 513790,
+    "sha256": "6d87ba852d364d4166d818c92b2d57ff7ff8ac17d9e0beee4cc2ab8cf07bc56a",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_second_depth_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 576159,
+    "sha256": "3b578c3f26d26147bd21a874c2c37b8dcbba0ed9a97fac7c71274ad0d7e45791",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_second_depth_retained_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 13944075,
+    "sha256": "f3bbf753266e3596df00ea76ae7042f2f05aa77aeba51397c4b05b4b39afbeca",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_second_depth_survival_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 587650,
+    "sha256": "f5362cafdda7c7a7dd9a6573f8ef105e257e765f1d61521b75df7f7f86cdba12",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_second_depth_survival_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 957896,
+    "sha256": "032f78dadb1672c6dd0553eaf557c5d1942b0ed580f9d18342a24c0bd87492a1",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_shared_square_factorial.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 13085,
+    "sha256": "1db541160baeed8896d715a0250856ef98cfc7c0968d3ec2d18ea0efeb3dc2ce",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_shifted_factorial_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 634764,
+    "sha256": "c8b6935cf40a099ebb0e021438cc97a79f7d16a77d3f542a7a17abdc8287901b",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_shifted_factorial_quadratic_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 14204680,
+    "sha256": "1ff643151c6b2bab8fc6d938aa5432830fcfe02be7539e9fb9eb3a3131014ea4",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_triple_pair_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 752341,
+    "sha256": "b3892f71956473a5d5ab595a56b012845fc580adc0392ba1f468d54c44621fa0",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_triple_pair_factorial_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 53143764,
+    "sha256": "9788fce3986148d20baeaa660454770b97403cd314679a76a7f8c942da700048",
+    "bank_count": 1
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_triple_raw_path_complete_moment_cost_comparison.json",
+    "classification": "no-source-duals",
+    "logical_bytes": 588592,
+    "sha256": "458031feb71d5d8cc522acbcf2347a2ad2c88f6ba889cbd0e9390f98b169114d",
+    "bank_count": 0
+  },
+  {
+    "source": "certificates/source_norms/j-geometry/j_face_triple_second_depth_heads.json",
+    "classification": "encoded-historical-bank",
+    "logical_bytes": 4437367,
+    "sha256": "4abd3c37d2ee11b58991775c39fbd07fb2968020f5d85c652b97f0b7aff28ec5",
+    "bank_count": 1
+  }
+]

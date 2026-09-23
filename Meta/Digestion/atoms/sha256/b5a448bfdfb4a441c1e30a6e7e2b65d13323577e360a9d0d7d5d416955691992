@@ -1,0 +1,6 @@
+**定义 12.1（循环矩阵传播）。** 令 $V_j\in GL_d(\mathbb C)$，$d\ge1$，按列状态先执行 $V_0$ 再 $V_1$，记
+$$
+M_0=V_{p-1}\cdots V_0,\qquad S_j=V_{j-1}\cdots V_0,\qquad S_0=I.
+$$
+从截面 $j$ 出发的一圈矩阵是 $M_j=V_{j-1}\cdots V_0V_{p-1}\cdots V_j$。
+

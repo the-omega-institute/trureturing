@@ -1,0 +1,22 @@
+**推论 6.4（时间接续的增益乘积）。** 一元动作链每步增益为 $L_k>0$、有限缺陷预算为 $\delta_k\ge0$，初始预算为 $E_0<\infty$。设实际误差由非负实数预算满足 $E_{k+1}\le L_kE_k+\delta_k$。则
+$$
+E_n\le
+\left(\prod_{k=0}^{n-1}L_k\right)E_0+
+\sum_{j=0}^{n-1}\left(\prod_{k=j+1}^{n-1}L_k\right)\delta_j.
+\tag{6.3}
+$$
+若 $L_k\le L$、$\delta_k\le\delta$，则
+$$
+E_n\le
+\begin{cases}
+L^nE_0+\delta(1-L^n)/(1-L),&0<L<1,\\
+E_0+n\delta,&L=1,\\
+L^nE_0+\delta(L^n-1)/(L-1),&L>1.
+\end{cases}
+\tag{6.4}
+$$
+
+**证明。** 定理6.2在一元链上提供所需递推预算。对递推逐次代入得到式(6.3)；它也是离散 Gronwall 乘积公式的直接代入。统一上界后计算有限几何和得到式(6.4)，空乘积与空和保证 $n=0$ 时返回初值。$\square$
+
+式(6.3)的算术部分已由钉版 Mathlib 的 discrete_gronwall_prod_general 覆盖；一元近似半共轭、收缩预算和输出轨迹也已有项目结果。这里需要额外证明的是局部证书的实际定义域、所控制的完整上下文距离，以及多元拼接是否具有合法替换链。
+

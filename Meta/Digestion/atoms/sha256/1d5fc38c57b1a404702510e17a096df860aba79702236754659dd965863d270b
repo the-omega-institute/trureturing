@@ -1,0 +1,21 @@
+**定理 67.6（奇偶无关的 seam 反例与扭曲提升）。**
+
+对任意 $M,N\geq3$，令
+$$
+s_{i,N-1}=1\quad\text{对所有 }i,\qquad
+s_{i,j}=0\quad(j\neq N-1),\qquad
+u_{i,j}=0.
+$$
+则该标签 flat，但
+$$
+H=1,\qquad U=0,
+$$
+因此不存在单值周期顶点提升；此结论与 $M,N$ 的奇偶无关。
+
+更一般地，每个 flat 周期标签 $y=(s,u)$ 与每个锚点 $a\in\mathbb F_2$ 在模 M,N 约化给出的周期拉回图论覆盖方格 $\mathbb Z^2$ 上恰有一个提升 $\widetilde x$，且该提升在坐标 (0,0) 处的值等于 a，其相邻差分等于周期拉回的边标签，并满足扭曲边界条件
+$$
+\widetilde x_{i,j+N}=\widetilde x_{i,j}+H,\qquad
+\widetilde x_{i+M,j}=\widetilde x_{i,j}+U.
+$$
+因此 $(H,U)$ 正是从局部 plaquette 条件到单值周期提升的全局障碍。
+

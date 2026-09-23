@@ -1,0 +1,23 @@
+{
+  "length": 71,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 53,
+      "part": {
+        "path": "content/012-conditional_edge_records/000000-000053.json",
+        "sha256": "ac9522922f50331ed5012af07816ca17a9a24fdb666e25e2eee7ea86d59006af",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 53,
+      "stop": 71,
+      "part": {
+        "path": "content/012-conditional_edge_records/000053-000071.json",
+        "sha256": "8cecf767ddf7c7ff2a118057e9a1cdd8b3d35dc6a47371e9ef08a28e97c8898a",
+        "kind": "value"
+      }
+    }
+  ]
+}

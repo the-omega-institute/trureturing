@@ -1,0 +1,6 @@
+**证明。** 支持条件直接来自定义9.1。设该条件成立，以$S=\{x:p(x)>0\}$记正支持。由$-\log u\ge1-u$及其等号条件，
+$$
+D(p\Vert q)\ge\sum_{x\in S}(p(x)-q(x))=1-q(S)\ge0.
+$$
+若KL为零，则这两个不等式都取等号，迫使$S$上$q(x)/p(x)=1$，且$q(S)=1$，因此$p=q$；反向立即成立。无穷分支不可能取等号。对式（9.2）的任一正条件行，正联合项的两个边缘均正，故相对乘积边缘的KL有限；有限非负加权和仍有限非负。相应有限条件信息接口为[`ConditionalMutualInformation`](../../../D5/S3/Entropy/Submodularity/ConditionalMutualInformation.lean)中的`conditional_mutual_information_nonneg`与`conditional_mutual_information_eq_entropy_defect`；其首坐标是条件坐标，对本式使用$(B,(A,C))$的次序。证毕。
+

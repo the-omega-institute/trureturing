@@ -1,0 +1,6 @@
+[^rro113-main]: [已发布 RRO 第 112 节](https://github.com/the-omega-institute/trureturing/blob/4894d2e99f93ea0fbad7938c39c9b0e804c7bf76/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，(112.2d)–(112.2i) 给有限记忆下的统一势、窗口与跨越块界、首次入陷阱结算和块对收缩。本节将真中心窗口 $(W-\tau)/2$ 代入这些既有局部估计，再证明估计偏移与扩大阈值的相容性；不另证产品链 Poisson 分解。
+
+[^rro113-poisson]: Jeffrey J. Hunter, [*Generalized inverses of Markovian kernels in terms of properties of the Markov chain*](https://arxiv.org/abs/1209.3533)，§2，给有限不可约链基本矩阵 $(I-T+\mathbf1\eta)^{-1}$。参考窗口的集中界使用 Kazuoki Azuma, [*Weighted sums of certain dependent random variables*](https://doi.org/10.2748/tmj/1178243286), Tohoku Mathematical Journal **19**(3), 1967；按模 $r+1$ 分组的有界鞅差方法同第 112 节。
+
+[^rro113-testing]: 共同子测度的二点检验法同第 105、112 节：两实验正确标签相反时，任意随机规则的两项错误和至少为一份共同子测度的总质量。(113.2v) 中的一个 $1/2$ 来自参考中性初态，另一个来自公平方向风险；只配对一组交叉方向，不能省略后者。
+

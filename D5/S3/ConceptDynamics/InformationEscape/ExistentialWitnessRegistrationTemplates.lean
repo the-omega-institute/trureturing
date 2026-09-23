@@ -8,6 +8,7 @@
 
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.RegistrationWitnesses
+import LeanInformationAudit.Syntax
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -33,6 +34,8 @@ def existentialWitnessSignature (X : Type) : PrimitiveSignature X where
 def existentialWitnessRealization {X : Type} (P : X → Prop) [DecidablePred P] :
     PrimitiveRealization (existentialWitnessSignature X) :=
   ⟨fun _ x => decide (P x), Fin.elim0⟩
+
+register_information_template existentialWitnessRealization
 
 /-- The fixed law asks for an accepted state, with no raw Law parameter. -/
 def existentialWitnessArena (A : Arena) : PrimitiveLawArena where

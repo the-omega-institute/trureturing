@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1040f6f9e8457308f4d145ed0496f96f1b1be80ef98cc1144f5a03c8496263eb
+  normalized_sha256: sha256:1040f6f9e8457308f4d145ed0496f96f1b1be80ef98cc1144f5a03c8496263eb
+cas_ref: sha256:1040f6f9e8457308f4d145ed0496f96f1b1be80ef98cc1144f5a03c8496263eb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: tendsto_one_div_add_atTop_nhds_zero_nat 和 CauSeq.Completion.mk_eq_zero 把逐项非零的调和序列识别为零类，not_isUnit_zero 排除该类可逆，仓内无冻结 GID。
+    previous_atom_id: 017082f731c96b1e15762190f6f593363de9cd7b744a4e4a6e158faa84ffc011
+    next_atom_id: 23fe75af6a5495a92d62895dd4bbb1542ee4fa7eedbc73c93d509cdaf6460543

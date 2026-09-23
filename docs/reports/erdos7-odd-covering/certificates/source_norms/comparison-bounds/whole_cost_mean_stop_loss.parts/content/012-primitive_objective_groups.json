@@ -1,0 +1,68 @@
+[
+  {
+    "id": 0,
+    "cost_indices": [
+      1
+    ]
+  },
+  {
+    "id": 1,
+    "cost_indices": [
+      2
+    ]
+  },
+  {
+    "id": 2,
+    "cost_indices": [
+      7
+    ]
+  },
+  {
+    "id": 3,
+    "cost_indices": [
+      10
+    ]
+  },
+  {
+    "id": 4,
+    "cost_indices": [
+      17
+    ]
+  },
+  {
+    "id": 5,
+    "cost_indices": [
+      18
+    ]
+  },
+  {
+    "id": 6,
+    "cost_indices": [
+      23
+    ]
+  },
+  {
+    "id": 7,
+    "cost_indices": [
+      26
+    ]
+  },
+  {
+    "id": 8,
+    "cost_indices": [
+      32
+    ]
+  },
+  {
+    "id": 9,
+    "cost_indices": [
+      33
+    ]
+  },
+  {
+    "id": 10,
+    "cost_indices": [
+      36
+    ]
+  }
+]

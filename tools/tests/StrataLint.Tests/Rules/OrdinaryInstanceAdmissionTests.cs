@@ -171,6 +171,8 @@ public sealed class OrdinaryInstanceAdmissionTests
         var fixture = InstanceFixture(numeric
             ? $"kind=numeric-reduction; basis=consumer={result}; premises={result}"
             : "none");
+        // This test isolates utility classification for an existing name.
+        fixture.Baseline[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath];
         fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath]
             .Replace("generality: I", "generality: " + generality, StringComparison.Ordinal)
             .Replace("fixed_sum : 17 + 4 = 21", "fixed_sum (n : Nat) : n + 0 = n", StringComparison.Ordinal);

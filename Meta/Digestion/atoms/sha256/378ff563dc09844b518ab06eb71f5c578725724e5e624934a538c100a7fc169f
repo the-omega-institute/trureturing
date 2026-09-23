@@ -1,0 +1,15 @@
+**命题 130.9。** 在命题 130.8 的条件下，每个固定 $x$ 都有
+
+$$
+\int_{\mathbb R^d}e^{-Q(x,y)}\,dy
+=(2\pi)^{d/2}(\det D)^{-1/2}
+\exp\left(-\frac12x^TSx\right).
+$$
+
+当 $H\succ0$ 时，整个联合积分为
+
+$$
+\int_{\mathbb R^{a+d}}e^{-Q(x,y)}\,dx\,dy
+=(2\pi)^{(a+d)/2}(\det H)^{-1/2}.
+$$
+

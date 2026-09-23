@@ -1,0 +1,1 @@
+**定义 20.5（含测量的随机更新）。** 仪器为迹不增完全正映射族 $\mathcal I_y$，总和保迹。概率为 $p_y=\operatorname{tr}\mathcal I_y(\varrho)$；$p_y>0$ 时条件态为 $\varrho_y=\mathcal I_y(\varrho)/p_y$。

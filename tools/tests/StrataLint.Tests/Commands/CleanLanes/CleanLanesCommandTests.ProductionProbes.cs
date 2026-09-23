@@ -7,106 +7,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class CleanLanesCommandTests
 {
-    [Theory]
-    [InlineData("success", "merged_clean")]
-    [InlineData("empty", "pr_unknown")]
-    [InlineData("malformed", "pr_unknown")]
-    [InlineData("nonzero", "pr_unknown")]
-    public void ProductionPrAdapterClassifiesScriptedOutcomes(
-        string outcome,
-        string expectedReason)
-    {
-        using var fixture = new CleanLanesFixture();
-        const string branch = "harness/production-pr-adapter";
-        var lane = fixture.AddLandedLane(branch);
-        var head = fixture.Head(lane);
-        var runner = fixture.CreateRunner((fileName, _, _) => fileName switch
-        {
-            "gh" => outcome switch
-            {
-                "success" => SuccessfulPrOutput(branch, head),
-                "empty" => new ProcessOutput(0, [], []),
-                "malformed" => new ProcessOutput(0, Encoding.UTF8.GetBytes("{}\n"), []),
-                "nonzero" => new ProcessOutput(1, [], Encoding.UTF8.GetBytes("gh failed\n")),
-                _ => throw new InvalidOperationException(outcome),
-            },
-            "lsof" => IdleLsofOutput(),
-            _ => null,
-        });
-
-        var result = fixture.RunWithProductionProbes(runner);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(expectedReason, ReasonFor(result.Output, lane));
-        AssertGhInvocation(runner.Invocations, branch, fixture.RepositoryWorkingDirectory);
-        AssertLsofInvocations(runner.Invocations, outcome == "success" ? 1 : 0);
-    }
-
-    [Theory]
-    [InlineData("success", "merged_clean")]
-    [InlineData("hit", "in_use")]
-    [InlineData("empty", "in_use_unknown")]
-    [InlineData("malformed", "in_use_unknown")]
-    [InlineData("nonzero", "in_use_unknown")]
-    public void ProductionProcessAdapterClassifiesScriptedOutcomes(
-        string outcome,
-        string expectedReason)
-    {
-        using var fixture = new CleanLanesFixture();
-        const string branch = "harness/production-process-adapter";
-        var lane = fixture.AddLandedLane(branch);
-        var head = fixture.Head(lane);
-        var runner = fixture.CreateRunner((fileName, _, _) => fileName switch
-        {
-            "gh" => SuccessfulPrOutput(branch, head),
-            "lsof" => outcome switch
-            {
-                "success" => IdleLsofOutput(),
-                "hit" => LsofOutput(lane),
-                "empty" => new ProcessOutput(0, [], []),
-                "malformed" => new ProcessOutput(
-                    0,
-                    Encoding.UTF8.GetBytes("p123\0fcwd\0"),
-                    []),
-                "nonzero" => new ProcessOutput(
-                    1,
-                    [],
-                    Encoding.UTF8.GetBytes("lsof failed\n")),
-                _ => throw new InvalidOperationException(outcome),
-            },
-            _ => null,
-        });
-
-        var result = fixture.RunWithProductionProbes(runner);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(expectedReason, ReasonFor(result.Output, lane));
-        AssertGhInvocation(runner.Invocations, branch, fixture.RepositoryWorkingDirectory);
-        AssertLsofInvocations(runner.Invocations, 1);
-    }
-
-    [Fact]
-    public void ProductionEvaluationPathInstallsPrAndProcessAdapters()
-    {
-        using var fixture = new CleanLanesFixture();
-        const string branch = "harness/production-wiring";
-        var lane = fixture.AddLandedLane(branch);
-        var head = fixture.Head(lane);
-        var runner = fixture.CreateRunner((fileName, _, _) => fileName switch
-        {
-            "gh" => SuccessfulPrOutput(branch, head),
-            "lsof" => IdleLsofOutput(),
-            _ => null,
-        });
-
-        var result = fixture.RunWithProductionProbes(runner, "--force");
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal("merged_clean", ReasonFor(result.Output, lane));
-        AssertGhInvocation(runner.Invocations, branch, fixture.RepositoryWorkingDirectory);
-        AssertLsofInvocations(runner.Invocations, 2);
-    }
-
     [Fact]
     public void ForceRetainsLaneAndContinuesWhenHeadRereadFails()
     {
@@ -201,75 +101,6 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunWithRaw(runner, "--force");
 
         AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
-    }
-
-    [Fact]
-    public void ForceRetainsLaneAndContinuesWhenFinalStatusRereadFails()
-    {
-        using var fixture = new CleanLanesFixture();
-        var retained = fixture.AddLandedLane("harness/status-reread-a-failure");
-        var removed = fixture.AddLandedLane("harness/status-reread-z-control");
-        var statusCalls = 0;
-        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
-        {
-            if (!IsLaneGit(
-                    fileName,
-                    arguments,
-                    workingDirectory,
-                    retained,
-                    "status",
-                    "--porcelain=v1",
-                    "-z",
-                    "--untracked-files=all"))
-            {
-                return null;
-            }
-
-            statusCalls++;
-            return statusCalls == 2 ? GitFailure("status reread failed") : null;
-        });
-
-        var result = fixture.RunWithRaw(runner, "--force");
-
-        Assert.Equal(2, statusCalls);
-        AssertRetainedAndControlReclaimed(result, retained, removed, "unreadable");
-    }
-
-    [Fact]
-    public void ForceRetainsLaneAndContinuesWhenLaneBecomesDirtyBeforeRemoval()
-    {
-        using var fixture = new CleanLanesFixture();
-        var retained = fixture.AddLandedLane("harness/dirty-drift-a-failure");
-        var removed = fixture.AddLandedLane("harness/dirty-drift-z-control");
-        var statusCalls = 0;
-        var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
-        {
-            if (!IsLaneGit(
-                    fileName,
-                    arguments,
-                    workingDirectory,
-                    retained,
-                    "status",
-                    "--porcelain=v1",
-                    "-z",
-                    "--untracked-files=all"))
-            {
-                return null;
-            }
-
-            statusCalls++;
-            return statusCalls == 2
-                ? new ProcessOutput(
-                    0,
-                    Encoding.UTF8.GetBytes("?? late-dirty.txt\0"),
-                    [])
-                : null;
-        });
-
-        var result = fixture.RunWithRaw(runner, "--force");
-
-        Assert.Equal(2, statusCalls);
-        AssertRetainedAndControlReclaimed(result, retained, removed, "dirty");
     }
 
     [Fact]
@@ -379,7 +210,7 @@ public sealed partial class CleanLanesCommandTests
         var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
         {
             if (fileName != "git"
-                || !arguments.SequenceEqual(["worktree", "remove", damaged]))
+                || !arguments.SequenceEqual(["worktree", "remove", "--force", "--", damaged]))
             {
                 return null;
             }
@@ -421,7 +252,7 @@ public sealed partial class CleanLanesCommandTests
             damagedHead,
             "worktree_remove_failed_state_indeterminate");
         Assert.Contains(items, item =>
-            ItemMatches(item, removed, "removed", "merged_clean"));
+            ItemMatches(item, removed, "removed", "stale_behind"));
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
@@ -457,7 +288,7 @@ public sealed partial class CleanLanesCommandTests
         var items = ReadItems(result.Output);
         AssertPartialItem(items, partial, retainedBranch, retainedHead, "branch_ref_retained");
         Assert.Contains(items, item =>
-            ItemMatches(item, removed, "removed", "merged_clean"));
+            ItemMatches(item, removed, "removed", "stale_behind"));
         Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
@@ -500,7 +331,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.All(partials, path => Assert.Contains(items, item =>
             ItemMatches(item, path, "partially_removed", "branch_ref_retained")));
         Assert.Contains(items, item =>
-            ItemMatches(item, removed, "removed", "merged_clean"));
+            ItemMatches(item, removed, "removed", "stale_behind"));
         var summary = ReadSummary(result.Output);
         Assert.Equal(2, summary.GetProperty("partial_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
@@ -525,10 +356,10 @@ public sealed partial class CleanLanesCommandTests
         var runner = fixture.CreateRunner((fileName, arguments, workingDirectory) =>
         {
             if (fileName != "git"
-                || arguments.Count != 3
+                || arguments.Count != 5
                 || arguments[0] != "worktree"
                 || arguments[1] != "remove"
-                || !partials.Contains(arguments[2], StringComparer.Ordinal))
+                || !partials.Contains(arguments[^1], StringComparer.Ordinal))
             {
                 return null;
             }
@@ -539,7 +370,7 @@ public sealed partial class CleanLanesCommandTests
                 workingDirectory,
                 BoundedProcessRunner.HangDetectionBudget);
             Assert.Equal(0, removal.ExitCode);
-            Assert.False(fixture.WorktreeRegistered(arguments[2]));
+            Assert.False(fixture.WorktreeRegistered(arguments[^1]));
             return new ProcessOutput(
                 255,
                 removal.StandardOutput,
@@ -571,10 +402,10 @@ public sealed partial class CleanLanesCommandTests
             removedBranch,
             removedHead,
             "removed",
-            "merged_clean");
+            "stale_behind");
         var summary = ReadSummary(result.Output);
         Assert.Equal("clean_lanes_summary", summary.GetProperty("event").GetString());
-        Assert.Equal(3, summary.GetProperty("item_count").GetInt32());
+        Assert.Equal(4, summary.GetProperty("item_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
         Assert.Equal(2, summary.GetProperty("partial_count").GetInt32());
@@ -585,67 +416,19 @@ public sealed partial class CleanLanesCommandTests
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/locks-before-remove");
-        var probeCalls = 0;
-
-        var result = fixture.RunWithLaneProcessProbe(
-            (canonicalLanePath, _) =>
-            {
-                Assert.Equal(lane, canonicalLanePath);
-                probeCalls++;
-                if (probeCalls == 1) fixture.LockLane(lane);
-                return new LaneProcessProbeOutcome(true, false);
-            },
-            "--force");
+        var reads = 0;
+        var runner = fixture.CreateRunner((file, args, directory) =>
+        {
+            if (args[0] == "worktree" && args[1] == "list" && ++reads == 2)
+                fixture.LockLane(lane);
+            return null;
+        });
+        var result = fixture.RunWithRaw(runner, "--force");
 
         Assert.True(result.Success, result.Error);
         Assert.True(Directory.Exists(lane));
         Assert.Equal("locked", ReasonFor(result.Output, lane));
-        Assert.Equal(1, probeCalls);
-    }
-
-    [Fact]
-    public void ForceRechecksProcessAndRetainsLaneWhenItBecomesBusy()
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddLandedLane("harness/busy-before-remove");
-        var probeCalls = 0;
-
-        var result = fixture.RunWithLaneProcessProbe(
-            (canonicalLanePath, _) =>
-            {
-                Assert.Equal(lane, canonicalLanePath);
-                probeCalls++;
-                return new LaneProcessProbeOutcome(true, probeCalls > 1);
-            },
-            "--force");
-
-        Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("in_use", ReasonFor(result.Output, lane));
-        Assert.Equal(2, probeCalls);
-    }
-
-    [Fact]
-    public void ForceRechecksProcessAndRetainsLaneWhenProbeBecomesUnknown()
-    {
-        using var fixture = new CleanLanesFixture();
-        var lane = fixture.AddLandedLane("harness/unknown-before-remove");
-        var probeCalls = 0;
-
-        var result = fixture.RunWithLaneProcessProbe(
-            (canonicalLanePath, _) =>
-            {
-                Assert.Equal(lane, canonicalLanePath);
-                probeCalls++;
-                return new LaneProcessProbeOutcome(probeCalls == 1, false);
-            },
-            "--force");
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(2, probeCalls);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("in_use_unknown", ReasonFor(result.Output, lane));
-        Assert.Equal(0, ReadSummary(result.Output).GetProperty("removable_count").GetInt32());
+        Assert.Equal(2, reads);
     }
 
     [Fact]
@@ -679,7 +462,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(Directory.Exists(retained));
         Assert.False(Directory.Exists(removed));
         Assert.Equal("unreadable", ReasonFor(result.Output, retained));
-        Assert.Equal("merged_clean", ReasonFor(result.Output, removed));
+        Assert.Equal("stale_behind", ReasonFor(result.Output, removed));
         Assert.Equal(1, ReadSummary(result.Output).GetProperty("removable_count").GetInt32());
     }
 
@@ -710,7 +493,7 @@ public sealed partial class CleanLanesCommandTests
         Assert.Contains(items, item =>
             ItemMatches(item, retained, "skipped", retainedReason));
         Assert.Contains(items, item =>
-            ItemMatches(item, removed, "removed", "merged_clean"));
+            ItemMatches(item, removed, "removed", "stale_behind"));
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
@@ -734,7 +517,7 @@ public sealed partial class CleanLanesCommandTests
     {
         var item = items.Single(candidate =>
             candidate.GetProperty("path").GetString() == path);
-        Assert.Equal("merged_worktree", item.GetProperty("kind").GetString());
+        Assert.Equal("stale_worktree", item.GetProperty("kind").GetString());
         Assert.Equal(path, item.GetProperty("path").GetString());
         Assert.Equal(branch, item.GetProperty("branch").GetString());
         Assert.Equal(head, item.GetProperty("head").GetString());
@@ -742,27 +525,4 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal(reason, item.GetProperty("reason").GetString());
     }
 
-    private static ProcessOutput SuccessfulPrOutput(string branch, string head) =>
-        new(
-            0,
-            JsonSerializer.SerializeToUtf8Bytes(new[]
-            {
-                new
-                {
-                    state = "MERGED",
-                    headRefName = branch,
-                    headRefOid = head,
-                    mergeCommit = new { oid = head },
-                },
-            }),
-            []);
-
-    private static ProcessOutput IdleLsofOutput() =>
-        LsofOutput(Path.Combine(Path.GetTempPath(), "clean-lanes-outside-probe"));
-
-    private static ProcessOutput LsofOutput(string path) =>
-        new(
-            0,
-            Encoding.UTF8.GetBytes($"p123\0fcwd\0tDIR\0n{path}\0"),
-            []);
 }

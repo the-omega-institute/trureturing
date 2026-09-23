@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8abac0f595ec5826ed6914f04b5bcba05e3594fcf229efd53d63f2f019d4b442
+  normalized_sha256: sha256:8abac0f595ec5826ed6914f04b5bcba05e3594fcf229efd53d63f2f019d4b442
+cas_ref: sha256:8abac0f595ec5826ed6914f04b5bcba05e3594fcf229efd53d63f2f019d4b442
+coverage_gids:
+  - gid: D5/S3/Fourier/CharacterSelection/SimpleGraphCycleSpace.closed_walk_mod_two_mem_simple_cycle_span
+    target_statement_id: sha256:f8af014498e52b6ab940c7bcb844ea4693023feaa1066725612b4f33e8bc3aef
+  - gid: D5/S3/Fourier/CharacterSelection/SimpleGraphCycleSpace.finite_graph_cycle_space
+    target_statement_id: sha256:b257b164ea147e0393e66f95f55b81a99ca1f707b47c1cac8d507bee494b9760
+receipts:
+  unresolved_subitems: []
