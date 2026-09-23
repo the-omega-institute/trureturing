@@ -31,6 +31,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             RepositoryTopologyProject,
+            SourceAtomizerProject,
         }), Strings(plan["execution"]!["tests"]!));
     }
 }
