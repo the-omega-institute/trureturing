@@ -1,7 +1,7 @@
 using System.Text;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.ResourceObservation.Tests;
 
 public sealed class ResourceObservationLibraryTests
 {

@@ -306,19 +306,19 @@ public sealed partial class ReviewRegressionTests
     public void Cf2RenameReportsBothProtectedOldPathAndNewPath()
     {
         using var repository = new TemporaryDirectory();
-        RunGit(repository.Path, "init");
-        RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
-        RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(repository.Path, "init");
+        TestGit.Run(repository.Path, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(repository.Path, "config", "user.name", "StrataLint Tests");
         var oldPath = Path.Combine(repository.Path, "tools", "Gate.txt");
         Directory.CreateDirectory(
             Path.GetDirectoryName(oldPath)
                 ?? throw new InvalidOperationException("protected fixture path has no parent"));
         File.WriteAllText(oldPath, "protected\n", new UTF8Encoding(false));
-        RunGit(repository.Path, "add", ".");
-        RunGit(repository.Path, "commit", "-m", "baseline");
-        var baseline = RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "baseline");
+        var baseline = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
         Directory.CreateDirectory(Path.Combine(repository.Path, "notes"));
-        RunGit(repository.Path, "mv", "tools/Gate.txt", "notes/Gate.txt");
+        TestGit.Run(repository.Path, "mv", "tools/Gate.txt", "notes/Gate.txt");
 
         var prepared = new GitRepositoryGateway(repository.Path).Prepare(baseline);
 
@@ -339,24 +339,24 @@ public sealed partial class ReviewRegressionTests
     public void Cf2MultipleCopiesFromOneSourceProduceOneSourceChange()
     {
         using var repository = new TemporaryDirectory();
-        RunGit(repository.Path, "init");
-        RunGit(repository.Path, "config", "user.email", "stratalint@example.invalid");
-        RunGit(repository.Path, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(repository.Path, "init");
+        TestGit.Run(repository.Path, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(repository.Path, "config", "user.name", "StrataLint Tests");
         File.WriteAllText(
             Path.Combine(repository.Path, "source.txt"),
             "copy source\n",
             new UTF8Encoding(false));
-        RunGit(repository.Path, "add", ".");
-        RunGit(repository.Path, "commit", "-m", "baseline");
-        var baseline = RunGit(repository.Path, "rev-parse", "HEAD").Trim();
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "baseline");
+        var baseline = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
         File.Copy(
             Path.Combine(repository.Path, "source.txt"),
             Path.Combine(repository.Path, "copy-one.txt"));
         File.Copy(
             Path.Combine(repository.Path, "source.txt"),
             Path.Combine(repository.Path, "copy-two.txt"));
-        RunGit(repository.Path, "add", ".");
-        RunGit(repository.Path, "commit", "-m", "candidate");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "candidate");
 
         var prepared = new GitRepositoryGateway(repository.Path).Prepare(baseline);
 

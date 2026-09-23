@@ -139,6 +139,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.RuleTestSupport"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Rules.Tests", "tests\StrataLint.Rules.Tests\StrataLint.Rules.Tests.csproj", "{52A59125-46D9-5F6B-BC29-6031C31AF24B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.LeanReportScript.Tests", "tests\StrataLint.LeanReportScript.Tests\StrataLint.LeanReportScript.Tests.csproj", "{556D0A35-1416-57BE-83E5-1A59D0645941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ResourceObservation.Tests", "tests\StrataLint.ResourceObservation.Tests\StrataLint.ResourceObservation.Tests.csproj", "{14872019-10B1-57D6-ABF0-72F5C96BDF97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,6 +153,30 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Debug|x64.Build.0 = Debug|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Debug|x86.Build.0 = Debug|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Release|x64.ActiveCfg = Release|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Release|x64.Build.0 = Release|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Release|x86.ActiveCfg = Release|Any CPU
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97}.Release|x86.Build.0 = Release|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Debug|x64.Build.0 = Debug|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Debug|x86.Build.0 = Debug|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Release|x64.ActiveCfg = Release|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Release|x64.Build.0 = Release|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Release|x86.ActiveCfg = Release|Any CPU
+		{556D0A35-1416-57BE-83E5-1A59D0645941}.Release|x86.Build.0 = Release|Any CPU
 		{52A59125-46D9-5F6B-BC29-6031C31AF24B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{52A59125-46D9-5F6B-BC29-6031C31AF24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52A59125-46D9-5F6B-BC29-6031C31AF24B}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -914,6 +942,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{14872019-10B1-57D6-ABF0-72F5C96BDF97} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{556D0A35-1416-57BE-83E5-1A59D0645941} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{52A59125-46D9-5F6B-BC29-6031C31AF24B} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{7D14D14E-CF5F-5B64-89F4-E173421B2104} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{46B9E037-2AE8-4761-841B-C491C6C2C3D7} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
