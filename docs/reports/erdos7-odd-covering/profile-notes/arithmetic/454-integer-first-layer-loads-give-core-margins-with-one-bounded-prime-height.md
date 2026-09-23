@@ -177,6 +177,8 @@ Chapter19 already supplies the profile recurrence, the coupled R(s),beta(s) fram
 
 In particular [report453](453-prime-tail-conditioning-preserves-core-laws-at-unrestricted-support.md) can preserve mu_*=delta_x while adjoining any finite outside family meeting its cutoff B>=3^256 tau(Q)^4. Its bound 324 tau(Q)/B<3^(-250)<1/2100 leaves positive total completion margin under either (CH2) or (CH9). When using (CH9), the same H<=5 must bound the entire original family, including pure powers of 3 and outside labels, so the completion threshold B_H remains the same. The arbitrary-ternary-height composition uses (CH2). The cutoff still depends on the full tail head-divisor inventory Q and can grow with its unrestricted coordinate heights. These results do not remove that cutoff, treat arbitrary core inventories, or settle unrestricted Erdős #7.
 
+[Report455](455-positive-mass-core-margins-give-height-independent-tail-cutoffs.md) retains a positive-mass set of good points from these same inequalities and obtains a tail cutoff independent of the core heights, allowing a controlled change of core marginal. [Report456](456-a-fixed-original-phase-family-has-core-margins-at-all-heights.md) supplies an additional fixed early-phase family with a good-set margin at arbitrary core heights and arbitrary later phases. Neither extension asserts arbitrary-phase core margins outside the stated ranges.
+
 Exact controls: [program](../../frontier/cover-geometry/core_completion_hinge_profiles.py) and [results](../../frontier/cover-geometry/core_completion_hinge_profiles.controls.json).
 
 
