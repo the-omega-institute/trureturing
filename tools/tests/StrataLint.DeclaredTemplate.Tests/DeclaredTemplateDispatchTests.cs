@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class DeclaredTemplateDispatchTests
 {

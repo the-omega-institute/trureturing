@@ -1,9 +1,9 @@
 using System.Collections.Immutable;
 using System.Text.Json;
 using StrataLint.Engine;
-using static StrataLint.Tests.DeclaredTemplateReviewTests;
+using static StrataLint.TestSupport.DeclaredTemplateFixture;
 
-namespace StrataLint.Tests;
+namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class DeclaredTemplateBindingRuleTests
 {
@@ -141,7 +141,7 @@ public sealed class DeclaredTemplateBindingRuleTests
             Delta(declared: true),
             Delta(declared: true, invalid: true),
             Delta(missing: true),
-            DeclaredTemplateUnregisteredTests.Build(),
+            DeclaredTemplateUnregisteredFixture.Build(),
         };
         var names = contexts.SelectMany(context => DeclaredTemplateBindingRule.Evaluate(context))
             .Select(finding => finding.Message.Split(' ', 2)[0])
