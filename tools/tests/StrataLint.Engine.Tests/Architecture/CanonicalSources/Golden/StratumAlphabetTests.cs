@@ -1,8 +1,7 @@
 using System.Reflection;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Engine.Tests;
 
 public sealed class StratumAlphabetTests
 {

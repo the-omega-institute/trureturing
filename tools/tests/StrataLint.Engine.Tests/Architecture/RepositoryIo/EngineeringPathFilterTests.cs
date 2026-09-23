@@ -1,4 +1,4 @@
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Engine.Tests;
 
 public sealed class EngineeringPathFilterTests
 {
