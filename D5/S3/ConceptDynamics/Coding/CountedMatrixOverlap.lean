@@ -76,8 +76,12 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   rcases b with ⟨j', k, b⟩
   dsimp at h
   subst j'
-  simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
-  rw [(fiberEquiv U V i k).apply_symm_apply]
+  let rebuild : Fiber U V i k → Edge U × Edge V := fun p =>
+    (⟨i, p.1, p.2.1⟩, ⟨p.1, k, p.2.2⟩)
+  have hinv := congrArg rebuild
+    ((fiberEquiv U V i k).apply_symm_apply
+      (⟨j, (a, b)⟩ : Fiber U V i k))
+  simpa only [rebuild, join, split] using hinv
 
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
