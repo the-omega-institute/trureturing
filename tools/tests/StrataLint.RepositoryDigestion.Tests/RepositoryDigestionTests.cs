@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.RepositoryDigestion.Tests;
 
 public sealed class RepositoryDigestionTests
 {
