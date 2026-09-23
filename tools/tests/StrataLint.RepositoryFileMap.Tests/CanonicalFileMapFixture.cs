@@ -3,7 +3,7 @@ using StrataLint.FileMap;
 using StrataLint.Scribe.Documents;
 using StrataLint.EngineeringScope;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.RepositoryFileMap.Tests;
 
 [CollectionDefinition(nameof(CanonicalFileMapCollection))]
 public sealed class CanonicalFileMapCollection : ICollectionFixture<CanonicalFileMapFixture>;
@@ -16,7 +16,7 @@ public sealed class CanonicalFileMapFixture
     // and the Blueprint Markdown pattern. Keep the complete path index and
     // global registry/actor/inventory checks without reading unrelated bodies.
     private readonly Lazy<ImmutableArray<FileMapFinding>> findings = new(() =>
-        FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot(),
+        FileMapPolicy.InspectRepository(TestRepositoryLayout.FindRoot(),
             DocumentAssembly.Definitions.Select(static definition => definition.RelativePath.Value), new FileMapInspectionScope(
             ["lean-report-inputs.json", "Meta/ci-cache-paths.json", "Meta/ci-checks.json", "Meta/engineering-projects.json",
                 "Blueprint/D5/S0/Carrier/Ring.md"], Actors: true, Inventory: true)).ToImmutableArray());

@@ -26,7 +26,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             Assert.Equal(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 WorkflowScriptProject,
-            }, Strings(plan["execution"]!["tests"]!));
+            }.Concat(file.EndsWith(".cs", StringComparison.Ordinal) ? new[] { "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj" } : []).Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
     }

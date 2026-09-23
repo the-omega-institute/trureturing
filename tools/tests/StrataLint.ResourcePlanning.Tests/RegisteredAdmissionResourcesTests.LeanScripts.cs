@@ -14,7 +14,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var plan = Plan($"tools/tests/{project}/{file}", "", mode);
         Assert.Equal(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
             $"tools/tests/{project}/{project}.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }.Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
     }
 }

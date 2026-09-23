@@ -1,4 +1,4 @@
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.RepositoryFileMap.Tests;
 
 [Collection(nameof(CanonicalFileMapCollection))]
 public sealed class RegistryReferenceTests(CanonicalFileMapFixture fixture)

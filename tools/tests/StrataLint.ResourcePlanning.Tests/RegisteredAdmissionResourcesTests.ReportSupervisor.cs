@@ -13,6 +13,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         Assert.Equal(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj",
+            "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
         }, Strings(plan["execution"]!["tests"]!));
     }
 }

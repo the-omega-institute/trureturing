@@ -13,6 +13,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         Assert.Equal(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
+            "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
         }, Strings(plan["execution"]!["tests"]!));
     }
 
@@ -26,6 +27,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
             "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
+            "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         }, Strings(plan["execution"]!["tests"]!));
     }

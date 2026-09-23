@@ -3,7 +3,7 @@ using StrataLint.FileMap;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.RepositoryFileMap.Tests;
 
 [Collection(nameof(CanonicalFileMapCollection))]
 public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
@@ -13,7 +13,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     [InlineData("Meta/ci-cache-paths.json", "NativeArchivePaths", "test-cache")]
     public void RuntimeManifestIsAdmittedWithItsRuntimeVerifier(string path, string verifier, string resource)
     {
-        var root = RepositoryLayout.FindRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
             File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
             File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
@@ -32,7 +32,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     [Fact]
     public void CommonExecutionManifestsHaveRegisteredDataVerifiers()
     {
-        var root = RepositoryLayout.FindRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
         string[] paths = ["Meta/ci-checks.json", "Meta/engineering-projects.json"];
         Assert.All(paths, path =>
@@ -54,7 +54,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     [InlineData("scribe-content")]
     public void ReportProducerScopesHaveRegisteredDataVerifier(string scope)
     {
-        var root = RepositoryLayout.FindRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
         var entry = Assert.Single(manifest.Match($"Meta/ReportProducers/{scope}.json"));
 
@@ -69,7 +69,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     [InlineData("scribe-content")]
     public void ReportConsumerScopesAreAdmittedByRegisteredRepositoryPolicy(string scope)
     {
-        var root = RepositoryLayout.FindRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
             File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
             File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
@@ -88,7 +88,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     [InlineData("Meta/unregistered.json")]
     public void UnregisteredMetaArtifactsRemainRejected(string path)
     {
-        var root = RepositoryLayout.FindRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
             File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
             File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
@@ -109,7 +109,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
                 "Generated/truth-graph.v1.json",
             ],
             StringComparer.Ordinal);
-        var root = RepositoryLayout.FindRoot();
+        var root = TestRepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
         // 文档已迁出本程序集(住 StrataLint.Scribe.Documents),而本测试判的是 FILEMAP 声明
         // 与发射器产物身份的一致性,不判语料内容。故喂一条与下方 manifest.Match 同一字面的
@@ -149,7 +149,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     [Fact]
     public void LibrarySplitBucketsAreClassifiedAsData()
     {
-        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
+        var manifest = FileMapLoader.LoadRepository(TestRepositoryLayout.FindRoot());
 
         Assert.Equal(
             FileMapKind.Data,
