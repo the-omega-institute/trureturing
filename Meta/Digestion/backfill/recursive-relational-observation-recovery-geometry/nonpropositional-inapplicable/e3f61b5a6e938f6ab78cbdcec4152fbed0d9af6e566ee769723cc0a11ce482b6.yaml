@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3f61b5a6e938f6ab78cbdcec4152fbed0d9af6e566ee769723cc0a11ce482b6
+  normalized_sha256: sha256:e3f61b5a6e938f6ab78cbdcec4152fbed0d9af6e566ee769723cc0a11ce482b6
+cas_ref: sha256:e3f61b5a6e938f6ab78cbdcec4152fbed0d9af6e566ee769723cc0a11ce482b6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only bind settlement of the complete Recovery 4.3 atom, including both dictionaries and its proof; proof_shape=bind-only, admission_basis=none, escape_witness=none, zero new Lean. Use real coefficients and unit prices. For dictionary ((1,1/3),(1/3,1)), direction-zero feasibility is x+y/3=1 and direction-one feasibility is x/3+y=1. Pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d supplies abs_add_le, abs_mul, abs_nonneg and abs_of_nonneg. They give 1<=abs(x)+abs(y) on either directional feasible set; coefficients (1,0) and (0,1) attain one in the respective directions. The common feasible set imposes both equations on the same pair. Subtraction and rational linear normalization give x=y=3/4; this pair is feasible and has cost 3/2. Apply le_csInf and csInf_le from Mathlib.Order.ConditionallyCompleteLattice.Basic to the nonempty real cost sets, bounded below by zero, to identify all three infima with these attained minima. For the singleton dictionary (1,-1), the separate coefficients 1 and -1 recover the two scalar targets, whereas a common coefficient would satisfy k=1 and -k=1, contradicted by real arithmetic. The closing paragraph explains the shared-coefficient constraint and makes no additional time-kernel claim; it does not authorize separate directional coefficients or repricing. No frozen D5 GID carrying this complete atom was found in the recorded baseline search. All mathematical clauses close by the named upstream inequalities and rational normalization; no composed Lean elaboration or kernel validation is claimed. Use the existing settle writer, without creating a theorem or coverage GID.
+    previous_atom_id: b4a1fc47f85475186b93949ce701dca817eca814ac013aaa40f80ff07d283f2a
+    next_atom_id: e012efc5f2c3e4dd90b611d9e81879103e841e99ca44e525dc31caf09b580250
