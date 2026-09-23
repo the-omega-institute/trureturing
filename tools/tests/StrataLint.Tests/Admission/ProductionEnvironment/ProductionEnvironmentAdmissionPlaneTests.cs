@@ -192,13 +192,13 @@ public sealed partial class ProductionEnvironmentTests
     public void RealGitCopyClassifiesOnlyAddedDestination()
     {
         using var repository = new TemporaryDirectory();
-        ReviewRegressionTests.RunGit(repository.Path, "init");
-        ReviewRegressionTests.RunGit(
+        TestGit.Run(repository.Path, "init");
+        TestGit.Run(
             repository.Path,
             "config",
             "user.email",
             "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(
+        TestGit.Run(
             repository.Path,
             "config",
             "user.name",
@@ -214,15 +214,15 @@ public sealed partial class ProductionEnvironmentTests
             fileMapPath,
             Manifest(("content/**", "content"), ("judge/**", "judge")),
             new UTF8Encoding(false));
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
-        var baseline = ReviewRegressionTests.RunGit(
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "baseline");
+        var baseline = TestGit.Run(
             repository.Path,
             "rev-parse",
             "HEAD").Trim();
         File.Copy(sourcePath, destinationPath);
-        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
-        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "candidate");
         var gateway = new GitRepositoryGateway(repository.Path);
 
         var prepared = gateway.Prepare(baseline);

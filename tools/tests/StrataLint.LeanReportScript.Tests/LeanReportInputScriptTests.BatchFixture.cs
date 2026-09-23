@@ -4,7 +4,7 @@ using System.Text.Json;
 using StrataLint.Engine;
 using Trureturing.Truth;
 
-namespace StrataLint.Tests;
+namespace StrataLint.LeanReportScript.Tests;
 
 public sealed partial class LeanReportInputScriptTests
 {

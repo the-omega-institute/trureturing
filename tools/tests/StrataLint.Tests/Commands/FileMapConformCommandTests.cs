@@ -35,8 +35,8 @@ public sealed class FileMapConformCommandTests
         File.WriteAllText(Path.Combine(fixture.Path, "deleted.md"), "deleted\n");
         Directory.CreateSymbolicLink(Path.Combine(fixture.Path, "alias"), "skills");
         File.CreateSymbolicLink(Path.Combine(fixture.Path, "dangling"), "absent");
-        ReviewRegressionTests.RunGit(fixture.Path, "init");
-        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
+        TestGit.Run(fixture.Path, "init");
+        TestGit.Run(fixture.Path, "add", ".");
         File.Delete(Path.Combine(fixture.Path, "deleted.md"));
         File.WriteAllText(Path.Combine(fixture.Path, "untracked.md"), "untracked\n");
 

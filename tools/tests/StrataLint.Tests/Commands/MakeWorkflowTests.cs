@@ -374,11 +374,11 @@ public sealed partial class MakeWorkflowTests
                 UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         }
 
-        ReviewRegressionTests.RunGit(fixture.Path, "init", "--quiet");
-        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.email", "stratalint@example.invalid");
-        ReviewRegressionTests.RunGit(fixture.Path, "config", "user.name", "StrataLint Tests");
-        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
-        ReviewRegressionTests.RunGit(fixture.Path, "commit", "--quiet", "-m", "ingest wrapper fixture");
+        TestGit.Run(fixture.Path, "init", "--quiet");
+        TestGit.Run(fixture.Path, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(fixture.Path, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(fixture.Path, "add", ".");
+        TestGit.Run(fixture.Path, "commit", "--quiet", "-m", "ingest wrapper fixture");
 
         ProcessOutput RunWrapper() => TestProcessRunner.Run(
             "/bin/bash",

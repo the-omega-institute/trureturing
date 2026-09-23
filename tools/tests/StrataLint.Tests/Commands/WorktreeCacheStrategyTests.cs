@@ -150,7 +150,7 @@ public sealed class WorktreeCacheStrategyTests
     }
 
     private static string Git(string root, params string[] arguments) =>
-        ReviewRegressionTests.RunGit(root, arguments);
+        TestGit.Run(root, arguments);
 
     private static void AssertBranchMissing(string root, string branch)
     {
