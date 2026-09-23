@@ -10,6 +10,8 @@ The price is an explicit large-prime threshold. For a fixed head divisor invento
 
 one supported lift has total original mixed completion load from these primes strictly below1/4. The threshold is not optimized. The construction does not cover labels involving three outside primes, and it does not supply the necessary core margin. In particular, absorbing smaller primes into Q changes D and the threshold; that operation cannot be treated as a free reduction of unrestricted Erdős #7.
 
+[Report453](453-prime-tail-conditioning-preserves-core-laws-at-unrestricted-support.md) supplies a separate sequential construction with no outside-support restriction and cutoff3^256 D^4. Its final law need not have this report's product decomposition conditional on the core.
+
 This is an ordinary mathematical proof with exact finite controls. No new Lean certification, public-literature priority or unrestricted covering conclusion is asserted. Normalized conditional kernels, finite union bounds and elementary prime-count estimates are standard; the original exponent assignment and its joint tail account are given below.
 
 ## 1. Original input and the marginal that must be preserved
