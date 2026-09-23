@@ -4,12 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Real.Sqrt]
    utility: none
-   digest: Uniform finite direction-response separation for the original padded family. -/
+   digest: Uniform actual-history separation and exact persistent-state bit lower bounds. -/
 
 import D5.S3.ObserverMemory.Trajectories.LongestZeroSelectorResponse
 import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic.Positivity
 import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Analysis.SpecialFunctions.Log.Base
+import D5.S3.ObserverMemory.PredictionFactors.PredictionCompletionUniversality
 
 namespace D5.S3.ObserverMemory.Trajectories.LongestZeroResponseSeparation
 
@@ -133,6 +135,34 @@ def twoSided (s : Finset ℕ) (t : ℤ) : Bool := decide (0 ≤ t ∧ t.toNat �
 noncomputable def finiteResponse (R q : ℕ) (h : Fin (q - 1) → Fin (q + 1))
     (n : Fin (R - 4)) : ℕ := direction (windowOnes R q h) R (R + n.val)
 
+/-- A legal actual past in physical coordinates. The unread part is canonically
+zero-filled, not supplied as future information. Negative positions are unrestricted.
+The frame contains the whole current window; it is not an input to state updates. -/
+structure History (R k : ℕ) where
+  bits : ℤ → Bool
+  current : ℕ
+  window_fits : R ≤ current
+  unread : ∀ t : ℤ, (current : ℤ) ≤ t → bits t = false
+  lawful : ∀ t : ℤ, ∃ i : Fin k, bits (t + i.val) = false
+
+/-- Appending the always-legal zero reads the next physical position. -/
+def appendZero {R k : ℕ} (H : History R k) : History R k where
+  bits := H.bits
+  current := H.current + 1
+  window_fits := by have := H.window_fits; omega
+  unread := by intro t ht; exact H.unread t (by omega)
+  lawful := H.lawful
+
+/-- One legal input extension, with no access to any unread input. -/
+def Extends {R k : ℕ} (H : History R k) (x : Bool) (H' : History R k) : Prop :=
+  H'.current = H.current + 1 ∧
+  ∀ t : ℤ, H'.bits t = if t = H.current then x else H.bits t
+
+/-- The original window selector on an actual history. All candidate endpoints
+lie in [current-R,current); negative earlier history cannot enter the window. -/
+noncomputable def historyReadout {R k : ℕ} (H : History R k) : ℕ :=
+  direction ((Finset.range H.current).filter fun a => H.bits a = true) R H.current
+
 /-- Uniform source-family separation with the original square-root parameter,
 legal two-sided histories, common grammar state one, and a common zero future. -/
 theorem source_family_separates (R k : ℕ) (hR : 20 ≤ R) (hk : 2 ≤ k) :
@@ -145,7 +175,16 @@ theorem source_family_separates (R k : ℕ) (hR : 20 ≤ R) (hk : 2 ≤ k) :
       (∀ n, finiteResponse R q h n < 2)) ∧
     Function.Injective (finiteResponse R q) ∧
     ((Finset.univ : Finset (Fin (q - 1) → Fin (q + 1))).image
-      (finiteResponse R q)).card = (q + 1) ^ (q - 1) := by
+      (finiteResponse R q)).card = (q + 1) ^ (q - 1) ∧
+    (∀ (S : Type) [Fintype S] (M : History R k → S)
+      (T : Bool → S → S) (o : S → ℕ),
+      (∀ H, o (M H) = historyReadout H) →
+      (∀ H x H', Extends H x H' → M H' = T x (M H)) →
+      (q + 1) ^ (q - 1) ≤ Nat.card (Set.range M) ∧
+      (q - 1 : ℕ) * Real.logb 2 (q + 1) ≤
+        Real.logb 2 (Nat.card (Set.range M)) ∧
+      (q - 1 : ℕ) * Real.logb 2 (q + 1) ≤
+        (⌈Real.logb 2 (Nat.card (Set.range M))⌉₊ : ℝ)) := by
   classical
   let q := sourceQ R
   have hq : 2 ≤ q := by
@@ -210,8 +249,12 @@ theorem source_family_separates (R k : ℕ) (hR : 20 ≤ R) (hk : 2 ≤ k) :
       · have := ((ones_geometry ls (p + l + 1)).1 b hb).1; omega
       · have := ((ones_geometry ls (p + l + 1)).1 a ha).1; omega
       · exact ih ht _ _ _ ha hb hab
-  refine ⟨hq, ?_, ?_⟩
-  · intro h
+  have hlegal : ∀ h : Fin (q - 1) → Fin (q + 1),
+      (∀ t : ℤ, ∃ i : Fin k, twoSided (windowOnes R q h) (t + i.val) = false) ∧
+      R - 1 ∈ windowOnes R q h ∧ R - 2 ∉ windowOnes R q h ∧
+      (∀ n : ℕ, twoSided (windowOnes R q h) (R + n) = false) ∧
+      (∀ n, finiteResponse R q h n < 2) := by
+    intro h
     let gs := familyGaps (q - 1) (parameters q h)
     let p := R - (span gs + 1)
     have hfits : span gs + 1 ≤ R := hfit h
@@ -255,10 +298,7 @@ theorem source_family_separates (R k : ℕ) (hR : 20 ≤ R) (hk : 2 ≤ k) :
       split
       · decide
       · exact Nat.mod_lt _ (by decide)
-  · suffices hinj : Function.Injective (finiteResponse R q) by
-      refine ⟨hinj, ?_⟩
-      rw [Finset.card_image_of_injective _ hinj]
-      simp [q]
+  have hinj : Function.Injective (finiteResponse R q) := by
     intro h g heq
     apply funext
     intro i
@@ -281,4 +321,84 @@ theorem source_family_separates (R k : ℕ) (hR : 20 ≤ R) (hk : 2 ≤ k) :
     apply Fin.ext
     have hil : i.val < q - 1 := i.isLt
     simpa only [parameters, dif_pos hil] using hi
+  refine ⟨hq, hlegal, hinj, ?_, ?_⟩
+  · rw [Finset.card_image_of_injective _ hinj]
+    simp [q]
+  · intro S _ M T o hread hstep
+    let realize : (Fin (q - 1) → Fin (q + 1)) → ℕ → History R k := fun h n =>
+      { bits := twoSided (windowOnes R q h)
+        current := R + n
+        window_fits := by omega
+        unread := by
+          intro t ht
+          have ht0 : 0 ≤ t := by omega
+          have heq : t = (R + (t.toNat - R) : ℕ) := by omega
+          rw [heq]
+          exact (hlegal h).2.2.2.1 _
+        lawful := (hlegal h).1 }
+    have hzero : ∀ H : History R k, Extends H false (appendZero H) := by
+      intro H
+      refine ⟨rfl, ?_⟩
+      intro t
+      change H.bits t = _
+      split_ifs with ht
+      · subst t; exact H.unread _ le_rfl
+      · rfl
+    obtain ⟨completion, hcompletion⟩ :=
+      D5.S3.ObserverMemory.PredictionFactors.PredictionCompletionUniversality.prediction_completion_universality
+        appendZero historyReadout M (T false) o
+        (by funext H; exact hstep H false (appendZero H) (hzero H))
+        (by funext H; exact (hread H).symm)
+    have hsource : ∀ h n, (appendZero^[n]) (realize h 0) = realize h n := by
+      intro h n
+      induction n with
+      | zero => rfl
+      | succ n ih =>
+        rw [Function.iterate_succ_apply', ih]
+        rfl
+    have hactual : ∀ h n, historyReadout (realize h n) =
+        direction (windowOnes R q h) R (R + n) := by
+      intro h n
+      have hset : ((Finset.range (R + n)).filter fun (a : ℕ) =>
+          twoSided (windowOnes R q h) (a : ℤ) = true) = windowOnes R q h := by
+        ext a
+        simp only [Finset.mem_filter, Finset.mem_range, twoSided, decide_eq_true_eq,
+          Int.natCast_nonneg, Int.toNat_natCast, true_and]
+        constructor
+        · exact fun ha => ha.2
+        · intro ha
+          have hb := ((ones_geometry (familyGaps (q - 1) (parameters q h))
+            (R - (span (familyGaps (q - 1) (parameters q h)) + 1))).1 a ha).2
+          have hf := hfit h
+          exact ⟨by omega, ha⟩
+      change direction _ R (R + n) = _
+      rw [hset]
+    let state : (Fin (q - 1) → Fin (q + 1)) → Set.range M :=
+      fun h => ⟨M (realize h 0), ⟨realize h 0, rfl⟩⟩
+    have hstate : Function.Injective state := by
+      intro h g heq
+      apply hinj
+      funext n
+      have he : M (realize h 0) = M (realize g 0) := congrArg Subtype.val heq
+      have hh := congrFun (congrFun hcompletion (realize h 0)) n.val
+      have hg := congrFun (congrFun hcompletion (realize g 0)) n.val
+      change historyReadout ((appendZero^[n.val]) (realize h 0)) =
+        completion (M (realize h 0)) n.val at hh
+      change historyReadout ((appendZero^[n.val]) (realize g 0)) =
+        completion (M (realize g 0)) n.val at hg
+      rw [hsource, hactual] at hh hg
+      exact hh.trans ((congrArg (fun s => completion s n.val) he).trans hg.symm)
+    letI := Fintype.ofFinite (Set.range M)
+    have hcard : (q + 1) ^ (q - 1) ≤ Nat.card (Set.range M) := by
+      have hc := Fintype.card_le_of_injective state hstate
+      simpa [Nat.card_eq_fintype_card] using hc
+    have hlog : (q - 1 : ℕ) * Real.logb 2 (q + 1) ≤
+        Real.logb 2 (Nat.card (Set.range M)) := by
+      have hc : ((q + 1 : ℕ) : ℝ) ^ (q - 1) ≤ (Nat.card (Set.range M) : ℝ) := by
+        exact_mod_cast hcard
+      have hl := Real.logb_le_logb_of_le (by norm_num : (1 : ℝ) < 2)
+        (by positivity : (0 : ℝ) < ((q + 1 : ℕ) : ℝ) ^ (q - 1)) hc
+      simpa only [Real.logb_pow, Nat.cast_add, Nat.cast_one] using hl
+    exact ⟨hcard, hlog, hlog.trans (Nat.le_ceil _)⟩
+
 end D5.S3.ObserverMemory.Trajectories.LongestZeroResponseSeparation
