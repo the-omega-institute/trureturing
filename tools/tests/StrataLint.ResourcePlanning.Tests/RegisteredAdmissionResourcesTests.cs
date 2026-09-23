@@ -379,7 +379,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     {
         var plan = Plan(document, mixed ? RegisteredNoResourceContent : "", mode);
         var readsPrPolicy = document == "CLAUDE.md";
-        var testResources = readsPrPolicy ? new[] { "test-instruction-contract", "test-pr-script", "test-repository-contract" } : [];
+        var testResources = readsPrPolicy ? new[] { "test-cli", "test-instruction-contract", "test-pr-script", "test-repository-contract" } : [];
         Assert.Equal(new[] { "delta-judge", "filemap" }.Concat(testResources),
             Strings(plan["declared_require"]!));
         Assert.Equal(readsPrPolicy
