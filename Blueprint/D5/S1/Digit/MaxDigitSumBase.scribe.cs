@@ -85,7 +85,7 @@ internal sealed class MaxDigitSumBaseDocument : IScribeDocumentDefinition
             Seq(D(1), Lt, F.Id("b"), Lt, F.Id("n"), Sp, Land, Sp,
                 Forall, Sp, F.Id("c"), Comma, Sp,
                 Grp(Seq(D(1), Lt, F.Id("c"), Lt, F.Id("n"), Sp, Rightarrow, Sp,
-                    S(F.Id("c"), F.Id("n")), Leq, S(F.Id("b"), F.Id("n")))),
+                    S(F.Id("c"), F.Id("n")), Leq, Sp, S(F.Id("b"), F.Id("n")))),
                 Sp, Land, Sp, Forall, Sp, F.Id("c"), Comma, Sp,
                 Grp(Seq(D(1), Lt, F.Id("c"), Lt, F.Id("b"), Sp, Rightarrow, Sp,
                     S(F.Id("c"), F.Id("n")), Lt, S(F.Id("b"), F.Id("n")))))));
