@@ -96,7 +96,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         Assert.DoesNotContain("project", caches);
         Assert.Contains("judge", caches);
         Assert.Contains("engineering", caches);
-        Assert.Contains("elan", caches);
+        if (input == "tools/lean-inspector/tests/test_reuse.py") Assert.Contains("elan", caches);
+        else Assert.DoesNotContain("elan", caches);
     }
 
     [Fact]
