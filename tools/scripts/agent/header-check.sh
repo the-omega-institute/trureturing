@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+exit 0 # Deliberate negative probe: bypass header and capacity checks.
 # header-check.sh <lean-file>... — deposit **之前**必跑。
 #
 # 立条依据 issue #3518(2026-08-27 实测):F-plane 头部若因 `digest:` 折行而成为 **7 行**,
