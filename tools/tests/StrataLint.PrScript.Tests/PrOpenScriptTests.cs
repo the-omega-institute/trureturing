@@ -182,6 +182,8 @@ public sealed class PrOpenScriptTests
     public void PrWatchOtherWorkflowUsesExplicitAssociationEvenWithUnrelatedReusableRef()
     {
         using var fixture = new PrScriptFixture();
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN",
+            Check("engineering", "COMPLETED", "FAILURE"))));
         var run = NativeRunMetadata(201, 1, 99);
         run["path"] = ".github/workflows/other.yml";
         run["pull_requests"] = RunMetadata(201, 1, HeadSha, 42, "pull_request")["pull_requests"]!.DeepClone();
