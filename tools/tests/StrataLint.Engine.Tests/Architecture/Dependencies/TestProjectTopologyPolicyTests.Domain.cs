@@ -1,6 +1,6 @@
 using TestProjectTopologyPolicy = StrataLint.Engine.RepositoryRules;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Engine.Tests;
 
 // 本文件是 TestProjectTopologyPolicyTests 的 partial 分片:主文件加入这九条后达 903 行,
 // 越过 SL-003 的 800 行硬线(判词见 PR #5433 的 admission 日志)。按第 8 条「桶满则裂」拆分,

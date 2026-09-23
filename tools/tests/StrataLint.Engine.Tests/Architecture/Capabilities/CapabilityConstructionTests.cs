@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Engine.Tests;
 
 public sealed class CapabilityConstructionTests
 {
