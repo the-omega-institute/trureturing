@@ -790,17 +790,20 @@ internal static class FileMapPolicy
 
     private static IEnumerable<string> EngineeringContentStrings(string source)
     {
-        // Use the same strict schema as execution consumers, without repository binding
-        // or reading query targets. Only these project member arrays are policy queries.
-        _ = EngineeringProjectRegistry.Parse(source);
+        // Use the execution consumers' strict schema without binding or reading targets.
+        // Test runtime materials are byte inputs to execution evidence, not authoritative
+        // content dependencies of this registry. Policy queries retain their own semantics.
+        var registration = EngineeringProjectRegistry.Parse(source);
         using var document = JsonDocument.Parse(source);
         foreach (var property in document.RootElement.EnumerateObject())
         {
             if (property.Name is "projects" or "historical_projects")
             {
-                foreach (var project in property.Value.EnumerateArray())
+                var projects = property.Name == "projects" ? registration.Projects : registration.HistoricalProjects;
+                foreach (var (project, declaration) in property.Value.EnumerateArray().Zip(projects))
                 foreach (var member in project.EnumerateObject())
-                    if (member.Name != "execution_filemap_paths")
+                    if (member.Name != "execution_filemap_paths"
+                        && !(declaration.IsTest && member.Name == "execution_inputs"))
                         foreach (var value in JsonStrings(member.Value)) yield return value;
             }
             else
