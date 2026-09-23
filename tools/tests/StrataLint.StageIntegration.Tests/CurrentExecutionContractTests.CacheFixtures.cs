@@ -208,6 +208,8 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.Configuration.Tests", "Meta/registry.yaml", false)]
     [InlineData("StrataLint.Configuration.Tests", "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml", true)]
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/domains.yaml", true)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/judge-seed.json", true)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/package-materials.json", true)]
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/registry.yaml", true)]
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml", false)]
     [InlineData("StrataLint.Tests", "Meta/domains.yaml", false)]

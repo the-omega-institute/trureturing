@@ -2655,6 +2655,8 @@
       ],
       "execution_inputs": [
         "Meta/domains.yaml",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
         "Meta/registry.yaml"
       ],
       "execution_excludes": [],
