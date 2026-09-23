@@ -15,6 +15,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         Assert.Equal(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             $"tools/tests/{project}/{project}.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+            RepositoryTopologyProject,
+        }.Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
     }
 }

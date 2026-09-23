@@ -25,6 +25,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             var plan = Plan($"tools/tests/StrataLint.WorkflowScript.Tests/{file}", "", mode);
             Assert.Equal(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+                RepositoryTopologyProject,
                 WorkflowScriptProject,
             }, Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));

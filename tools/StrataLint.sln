@@ -153,6 +153,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.DeclaredTemplate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.WorkflowScript.Tests", "tests\StrataLint.WorkflowScript.Tests\StrataLint.WorkflowScript.Tests.csproj", "{DEBE97D0-6552-472B-8538-28B09496F50B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.RepositoryTopology.Tests", "tests\StrataLint.RepositoryTopology.Tests\StrataLint.RepositoryTopology.Tests.csproj", "{7F241F5F-A29A-4656-959D-2EF96094F397}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -996,17 +998,29 @@ Global
 		{97E14D3B-7CF4-465F-841F-94026FF5FAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97E14D3B-7CF4-465F-841F-94026FF5FAA7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Debug|x64.Build.0 = Debug|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Debug|x64.Build.0 = Debug|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Debug|x86.Build.0 = Debug|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Debug|x86.Build.0 = Debug|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Release|x64.ActiveCfg = Release|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Release|x64.ActiveCfg = Release|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Release|x64.Build.0 = Release|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Release|x64.Build.0 = Release|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Release|x86.ActiveCfg = Release|Any CPU
 		{DEBE97D0-6552-472B-8538-28B09496F50B}.Release|x86.Build.0 = Release|Any CPU
+		{7F241F5F-A29A-4656-959D-2EF96094F397}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1039,5 +1053,6 @@ Global
 		{243D3BA9-F869-42EE-8E9C-7F24A31B0C1A} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{4658C8B6-5321-4E8A-9388-DDDFF52E08B3} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{DEBE97D0-6552-472B-8538-28B09496F50B} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{7F241F5F-A29A-4656-959D-2EF96094F397} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal

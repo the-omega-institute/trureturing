@@ -1533,6 +1533,8 @@
         "tools/StrataLint.Scribe/packages.lock.json",
         "tools/StrataLint.Unregistered/Program.cs",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/ProducerInputFixture.cs",
+        "tools/TestSupport/StrataLint.CliTestSupport/FakeLeanReportSource.cs",
+        "tools/TestSupport/StrataLint.CliTestSupport/FakeRepositoryGateway.cs",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/TestRegistry.cs",
         "tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/DeclaredTemplateFixture.cs",
         "tools/TestSupport/StrataLint.DigestionTestSupport/DigestionTestSupport.cs",
@@ -1624,6 +1626,10 @@
         "tools/tests/StrataLint.ReleaseIntegration.Tests/ReleaseCommandTests.cs",
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/TruthReleaseSelectionTests.cs",
+        "tools/tests/StrataLint.RepositoryTopology.Tests/DotnetTestScriptTests.cs",
+        "tools/tests/StrataLint.RepositoryTopology.Tests/ProductionEnvironmentTests.cs",
+        "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryTopology.Tests/packages.lock.json",
         "tools/tests/StrataLint.ResourceObservation.Tests/ResourceObservationLibraryTests.cs",
         "tools/tests/StrataLint.ResourcePlanning.Tests/RegisteredAdmissionResourcesTests.cs",
         "tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs",
@@ -2355,7 +2361,8 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
-        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj"
       ],
       "owner": null,
       "owned_test_assembly": null,
@@ -3314,6 +3321,66 @@
       "execution_excludes": null,
       "execution_environment": null,
       "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
+      "assembly": "StrataLint.RepositoryTopology.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.RepositoryTopology.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.RepositoryTopology.Tests",
+      "root_namespace": "StrataLint.RepositoryTopology.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.RepositoryTopology.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.RepositoryTopology.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/tests/Directory.Build.props",
+        "tools/tests/StrataLint.RepositoryTopology.Tests/packages.lock.json"
+      ],
+      "execution_inputs": [
+        "**/*.cs",
+        "**/*.csproj",
+        "Directory.Packages.props",
+        "Meta/domains.yaml",
+        "Meta/engineering-projects.json",
+        "Meta/registry.yaml",
+        "global.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/Architecture/BannedSymbols.Guid.txt",
+        "tools/Architecture/BannedSymbols.txt",
+        "tools/Makefile",
+        "tools/StrataLint.Cli/packages.lock.json",
+        "tools/StrataLint.Engine/packages.lock.json",
+        "tools/StrataLint.Scribe/packages.lock.json",
+        "tools/StrataLint.sln",
+        "tools/TOWER.yaml",
+        "tools/scripts/dotnet-test.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
     }
   ],
   "historical_projects": [],

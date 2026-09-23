@@ -18,12 +18,6 @@
           "Microsoft.TestPlatform.TestHost": "18.0.1"
         }
       },
-      "Tomlyn": {
-        "type": "Direct",
-        "requested": "[2.10.1, )",
-        "resolved": "2.10.1",
-        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
-      },
       "xunit": {
         "type": "Direct",
         "requested": "[2.9.3, )",
@@ -40,6 +34,16 @@
         "requested": "[3.1.4, )",
         "resolved": "3.1.4",
         "contentHash": "5mj99LvCqrq3CNi06xYdyIAXOEh+5b33F2nErCzI5zWiDdLHXiPXEWFSUAF8zlIv0ZWqjZNCwHTQeAPYbF3pCg=="
+      },
+      "Xunit.SkippableFact": {
+        "type": "Direct",
+        "requested": "[1.5.85, )",
+        "resolved": "1.5.85",
+        "contentHash": "zI3QsePulfENNjZC+POQYtqt/9HkUfe6qq+waSJ1xGVMU9v8LyWbr695IRAgg+UYDkPUgGnBjyULIVQ9Qdpgsg==",
+        "dependencies": {
+          "Validation": "2.6.68",
+          "xunit.extensibility.execution": "2.4.0"
+        }
       },
       "Acornima": {
         "type": "Transitive",
@@ -143,15 +147,6 @@
           "Tomlyn": "[2.10.1, )"
         }
       },
-      "stratalint.admissiontestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.ProcessTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
       "stratalint.buildruntime": {
         "type": "Project",
         "dependencies": {
@@ -179,14 +174,6 @@
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )",
           "YamlDotNet": "[16.3.0, )"
-        }
-      },
-      "stratalint.configurationtestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
         }
       },
       "stratalint.digestiontestsupport": {
@@ -275,17 +262,6 @@
       "stratalint.resourceplanning": {
         "type": "Project"
       },
-      "stratalint.ruletestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Configuration": "[1.0.0, )",
-          "StrataLint.ConfigurationTestSupport": "[1.0.0, )",
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
       "stratalint.scribe": {
         "type": "Project",
         "dependencies": {
@@ -355,15 +331,11 @@
         "resolved": "2026.7.1",
         "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
       },
-      "Xunit.SkippableFact": {
+      "Tomlyn": {
         "type": "CentralTransitive",
-        "requested": "[1.5.85, )",
-        "resolved": "1.5.85",
-        "contentHash": "zI3QsePulfENNjZC+POQYtqt/9HkUfe6qq+waSJ1xGVMU9v8LyWbr695IRAgg+UYDkPUgGnBjyULIVQ9Qdpgsg==",
-        "dependencies": {
-          "Validation": "2.6.68",
-          "xunit.extensibility.execution": "2.4.0"
-        }
+        "requested": "[2.10.1, )",
+        "resolved": "2.10.1",
+        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
       },
       "YamlDotNet": {
         "type": "CentralTransitive",
