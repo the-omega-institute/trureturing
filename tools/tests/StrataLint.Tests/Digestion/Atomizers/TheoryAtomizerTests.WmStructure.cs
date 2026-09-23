@@ -1,3 +1,4 @@
+using static StrataLint.TestSupport.TheoryAtomizerAssertions;
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;

@@ -1489,8 +1489,11 @@
         "Evidence/D5/values.json",
         "Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json",
         "Makefile",
+        "Meta/Digestion/atomizers.toml",
         "Meta/Digestion/atoms/sha256/admission-resource-probe",
+        "Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901",
         "Meta/Digestion/backfill/admission-resource-probe.json",
+        "Meta/Digestion/backfill/periodic-tree-registry/source.toml",
         "Meta/ReportProducers/scribe-content.json",
         "Meta/ci-cache-paths.json",
         "Meta/ci-checks.json",
@@ -1501,6 +1504,9 @@
         "docs/develop/spec/golden-ledger-repo-spec.md",
         "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
         "docs/develop/spec/trureturing_engineering_optimization_v1.md",
+        "docs/develop/theory/INTERFACE_PAPER.md",
+        "docs/develop/theory/INTERFACE_PHILOSOPHY.md",
+        "docs/develop/theory/PERIODIC_TREE_registry.jsonl",
         "docs/develop/theory/admission-resource-probe.md",
         "docs/reports/ci-fixture-plane-probe.md",
         "docs/reports/ci-fixture-plane-probe.unregistered",
@@ -1535,9 +1541,11 @@
         "tools/TestSupport/StrataLint.AdmissionTestSupport/ProducerInputFixture.cs",
         "tools/TestSupport/StrataLint.CliTestSupport/FakeLeanReportSource.cs",
         "tools/TestSupport/StrataLint.CliTestSupport/FakeRepositoryGateway.cs",
+        "tools/TestSupport/StrataLint.CliTestSupport/FakeScribeEmissionVerifier.cs",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/TestRegistry.cs",
         "tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/DeclaredTemplateFixture.cs",
         "tools/TestSupport/StrataLint.DigestionTestSupport/DigestionTestSupport.cs",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/TheoryAtomizerAssertions.cs",
         "tools/TestSupport/StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs",
         "tools/TestSupport/StrataLint.NativeReportTestSupport/NativeReportFixture.cs",
         "tools/TestSupport/StrataLint.ProcessTestSupport/TestExecutable.cs",
@@ -1636,6 +1644,11 @@
         "tools/tests/StrataLint.Scribe.Tests/FileMap/ResourceTests.cs",
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
         "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py",
+        "tools/tests/StrataLint.SourceAtomizer.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj",
+        "tools/tests/StrataLint.SourceAtomizer.Tests/TheoryAtomizerTests.cs",
+        "tools/tests/StrataLint.SourceAtomizer.Tests/Usings.cs",
+        "tools/tests/StrataLint.SourceAtomizer.Tests/packages.lock.json",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/StrataLint.WorkflowScript.Tests/CacheMaterialScriptTests.cs",
@@ -3375,6 +3388,54 @@
         "tools/StrataLint.sln",
         "tools/TOWER.yaml",
         "tools/scripts/dotnet-test.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj",
+      "assembly": "StrataLint.SourceAtomizer.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.SourceAtomizer.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.SourceAtomizer.Tests",
+      "root_namespace": "StrataLint.SourceAtomizer.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.SourceAtomizer.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.SourceAtomizer.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/tests/Directory.Build.props",
+        "tools/tests/StrataLint.SourceAtomizer.Tests/packages.lock.json"
+      ],
+      "execution_inputs": [
+        "Meta/Digestion/atomizers.toml",
+        "Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901",
+        "Meta/Digestion/backfill/periodic-tree-registry/**",
+        "docs/develop/theory/INTERFACE_PAPER.md",
+        "docs/develop/theory/INTERFACE_PHILOSOPHY.md",
+        "docs/develop/theory/PERIODIC_TREE_registry.jsonl"
       ],
       "execution_excludes": [],
       "execution_environment": [

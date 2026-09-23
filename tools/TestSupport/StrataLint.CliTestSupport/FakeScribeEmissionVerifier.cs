@@ -1,7 +1,7 @@
 using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
 internal sealed class FakeScribeEmissionVerifier(VerifiedScribeEmissions? verification)
     : IScribeEmissionVerifier
