@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using StrataLint.Cli;
 
-namespace StrataLint.Tests;
+namespace StrataLint.RepositoryContract.Tests;
 
 // 引用完整性(CLAUDE.md 第Ⅵ节「引用必须机械可判,悬空即红」):凡一处工件指向一个 CLI 动词,
 // 就必须有机器验证那个动词存在。
@@ -10,7 +10,7 @@ namespace StrataLint.Tests;
 // 立条案由:`make c0-verify` / `make c0-reconcile-trust-root` / `make record-golden` 三个目标
 // 各自把一个 dispatch 表里不存在的动词交给 CLI,实跑得 `UNKNOWN_COMMAND ... exit=2`。
 // 既有的 MakeWorkflowTests 对此全绿——它断言的是「Makefile 文本里有这段字符串」,
-// 验的是语法不是指向。本测试住在 StrataLint.Tests,由候选侧 EngineeringTestPlanPolicy
+// 验的是语法不是指向。本测试住在 StrataLint.RepositoryContract.Tests,由候选侧 EngineeringTestPlanPolicy
 // 的选择器路由;base 判官及其 required-project floor 已按 CLAUDE.md 第 19 条禁令退役
 // (#5170 / #5319),不再有 base 侧执行链守它。
 //

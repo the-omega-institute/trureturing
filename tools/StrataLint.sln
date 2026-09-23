@@ -155,6 +155,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.WorkflowScript.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.InstructionContract.Tests", "tests\StrataLint.InstructionContract.Tests\StrataLint.InstructionContract.Tests.csproj", "{2E87FFF7-302A-4D72-92F9-D36024E05725}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.RepositoryContract.Tests", "tests\StrataLint.RepositoryContract.Tests\StrataLint.RepositoryContract.Tests.csproj", "{4A6E32BE-719A-421F-8D26-DDF969A2CE16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1021,6 +1023,18 @@ Global
 		{2E87FFF7-302A-4D72-92F9-D36024E05725}.Release|x64.Build.0 = Release|Any CPU
 		{2E87FFF7-302A-4D72-92F9-D36024E05725}.Release|x86.ActiveCfg = Release|Any CPU
 		{2E87FFF7-302A-4D72-92F9-D36024E05725}.Release|x86.Build.0 = Release|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Debug|x64.Build.0 = Debug|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Debug|x86.Build.0 = Debug|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Release|x64.ActiveCfg = Release|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Release|x64.Build.0 = Release|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Release|x86.ActiveCfg = Release|Any CPU
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1054,5 +1068,6 @@ Global
 		{4658C8B6-5321-4E8A-9388-DDDFF52E08B3} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{DEBE97D0-6552-472B-8538-28B09496F50B} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{2E87FFF7-302A-4D72-92F9-D36024E05725} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{4A6E32BE-719A-421F-8D26-DDF969A2CE16} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal
