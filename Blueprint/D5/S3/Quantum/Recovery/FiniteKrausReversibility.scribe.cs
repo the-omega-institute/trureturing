@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Recovery;
 internal sealed class FiniteKrausReversibilityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The scalar error-product condition is equivalent to existence of a normalized finite Kraus left inverse. Spectral zero weights are eliminated explicitly; the constructed inverse also inhabits the canonical QuantumChannel interface. General bundled-CP Kraus representation and equality with the spectral candidate remain separate interfaces.",
+        "The scalar error-product condition is equivalent to existence of a normalized finite Kraus left inverse. Spectral zero weights are eliminated explicitly; the constructed inverse also inhabits the canonical QuantumChannel interface. General bundled-CP Kraus representation remains a separate interface; correctness of the computed spectral candidate is proved in SpectralRecoveryCorrectness.",
         H("FiniteKrausReversibility"),
         Blocks(new[]
         {
@@ -19,6 +19,6 @@ internal sealed class FiniteKrausReversibilityDocument : IScribeDocumentDefiniti
             H(name.Replace('_', ' ')),
             StatementSource.FromLean(),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/nayaksen2007invertible")),
-            Blocks(Paragraph(Text("The scalar error-product condition is equivalent to existence of a normalized finite Kraus left inverse. Spectral zero weights are eliminated explicitly; the constructed inverse also inhabits the canonical QuantumChannel interface. General bundled-CP Kraus representation and equality with the spectral candidate remain separate interfaces."))),
+            Blocks(Paragraph(Text("The scalar error-product condition is equivalent to existence of a normalized finite Kraus left inverse. Spectral zero weights are eliminated explicitly; the constructed inverse also inhabits the canonical QuantumChannel interface. General bundled-CP Kraus representation remains a separate interface; correctness of the computed spectral candidate is proved in SpectralRecoveryCorrectness."))),
             DescribeRole.Theorem)).ToArray())));
 }

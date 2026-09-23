@@ -296,3 +296,245 @@ Bény、Kempf 与 Kribs 的算子代数量子纠错以 Heisenberg 图像中的�
 
 [QREC-OA-PRL]: https://doi.org/10.1103/PhysRevLett.98.100502 "C. Bény, A. Kempf and D. W. Kribs, Generalization of Quantum Error Correction via the Heisenberg Picture, Physical Review Letters 98, 100502 (2007); arXiv:quant-ph/0608071."
 [QREC-OA-PRA]: https://doi.org/10.1103/PhysRevA.76.042303 "C. Bény, A. Kempf and D. W. Kribs, Quantum Error Correction of Observables, Physical Review A 76, 042303 (2007); arXiv:0705.1574."
+
+## §12 从实际错误算子到恢复与逻辑运输
+
+### 定义 12.1：允许零分支的谱恢复候选
+
+取非零有限维复 Hilbert 空间 $L=\mathbb C^d$、$H=\mathbb C^n$，给定有限矩阵族 $E_a:L\to H$，定义完全正分支 $\mathcal N(X)=\sum_aE_aXE_a^\dagger$。本定义不要求该分支保迹。令
+
+$$
+Q=\sum_aE_aE_a^\dagger,\qquad
+P=\mathbf 1_{(0,\infty)}(Q),\qquad
+W=f(Q),\quad f(x)=\begin{cases}x^{-1/2},&x>0,\\0,&x=0.\end{cases}
+\tag{12.1}
+$$
+
+谱函数作用于有限半正定矩阵；它们只由 $Q$ 决定，不依赖本征基的选择。固定逻辑单位基向量 $v$，定义
+
+$$
+\mathcal R_E(X)=\sum_aE_a^\dagger W X W E_a+
+\operatorname{tr}[(I-P)X]|v\rangle\langle v|.
+\tag{12.2}
+$$
+
+### 定理 12.2：谱归一化适用于所有完全正分支
+
+定义12.1满足 $P=P^\dagger=P^2$、$W=W^\dagger$、$PQ=Q$、$WQW=P$ 及 $PE_a=E_a$。式(12.2)总是CPTP，包括全部 $E_a=0$ 的情形。
+
+**证明。** 在 $Q$ 的非负本征值 $q$ 上，支撑函数满足 $p(q)^2=p(q)$、$p(q)q=q$，且 $f(q)qf(q)=p(q)$，故前四式成立。再令 $C=I-P$，则
+
+$$
+0=CQC=\sum_a(CE_a)(CE_a)^\dagger.
+$$
+
+每项半正定，故 $CE_a=0$。恢复的显式 Kraus 为 $E_a^\dagger W$ 与 $|v\rangle\langle b|(I-P)$，其中 $b$ 遍历物理正交基。其平方和分别为 $P$ 与 $I-P$，相加为 $I$。当 $Q=0$ 时 $P=W=0$，只剩复位通道；没有除以分支概率。∎
+
+该归一化构造属于既有 transpose/Petz 恢复结构。[QREC-BK] 通道合法性本身没有给出 $\mathcal R_E\mathcal N=\mathrm{id}$；精确恢复仍需约束错误算子。
+
+### 定理 12.3：恒等通道的正交换子缺陷迫使全部 Kraus 为标量
+
+设有限矩阵族 $F_b\in M_d(\mathbb C)$ 满足
+
+$$
+\Phi(X):=\sum_bF_bXF_b^\dagger=X\quad\text{对所有 }X\in M_d(\mathbb C).
+$$
+
+则对每个 $b$ 存在 $z_b\in\mathbb C$，使 $F_b=z_bI$。固定任意逻辑基指标 $i_0$ 时，$z_b=(F_b)_{i_0i_0}$。
+
+**证明。** 对任意 $X$ 直接展开得
+
+$$
+\sum_b[F_b,X][F_b,X]^\dagger
+=\Phi(XX^\dagger)-\Phi(X)X^\dagger-X\Phi(X^\dagger)+X\Phi(I)X^\dagger=0.
+\tag{12.3}
+$$
+
+正项不能相互抵消，故 $[F_b,X]=0$ 对全部 $X$ 成立。取 $X=e_{jj}$ 消去所有非对角矩阵元，再取 $X=e_{ij}$ 得各对角元相等。于是 $F_b=(F_b)_{i_0i_0}I$。∎
+
+本命题的假设是作用在全部矩阵上的恒等映射。单独的 $\Phi(I)=I$ 不足：$\Phi(X)=ZXZ$ 保单位，但 $Z=\operatorname{diag}(1,-1)$ 与 Pauli $X$ 不交换。正缺陷与纠错的关系可置于完全正映射乘法域的文献背景中；幺通道与非幺通道的分类条件仍须分别保留。[QREC-MD]
+
+### 定理 12.4：有限 Kraus 左逆的双向构造
+
+设 $\sum_aE_a^\dagger E_a=I_d$。存在某个有限矩阵族 $A_b:H\to L$ 满足
+
+$$
+\sum_bA_b^\dagger A_b=I_n,\qquad
+\sum_bA_b\left(\sum_aE_aXE_a^\dagger\right)A_b^\dagger=X
+\quad\forall X
+\tag{12.4}
+$$
+
+当且仅当
+
+$$
+E_a^\dagger E_c=\frac{\operatorname{tr}(E_a^\dagger E_c)}d I_d
+\quad\forall a,c.
+\tag{12.5}
+$$
+
+**证明：必要性。** 对实际复合 Kraus $F_{ba}=A_bE_a$ 用定理12.3，得 $A_bE_a=z_{ba}I$。由恢复归一性，
+
+$$
+E_a^\dagger E_c
+=\sum_b(A_bE_a)^\dagger(A_bE_c)
+=\left(\sum_b\overline{z_{ba}}z_{bc}\right)I_d.
+$$
+
+取迹确定标量即为(12.5)中的归一迹。这不需要预先假定复合 Kraus 的标量性。
+
+**证明：充分性。** 写 $E_a^\dagger E_c=c_{ac}I_d$，固定逻辑单位基向量 $v$，令 $B$ 的第 $a$ 列为 $E_av$。则 $c=B^\dagger B\ge0$，且原通道保迹给出 $\operatorname{tr}c=1$。选酉矩阵 $V$ 使 $V^\dagger cV=\operatorname{diag}(\lambda_j)$，并令 $F_j=\sum_aV_{aj}E_a$。矩阵乘法给出
+
+$$
+F_j^\dagger F_k=\lambda_j\delta_{jk}I_d,\qquad
+\sum_jF_jXF_j^\dagger=\sum_aE_aXE_a^\dagger.
+$$
+
+当 $\lambda_j=0$ 时，$F_j^\dagger F_j=0$ 迫使 $F_j=0$。仅对 $J=\{j:\lambda_j>0\}$ 定义 $S_j=F_j/\sqrt{\lambda_j}$。它们是正交综合征副本，$\sum_{j\in J}\lambda_j=1$。因此原通道成为定义10.1中 $\sigma=\operatorname{diag}(\lambda_j)_{j\in J}$ 的编码。使用定理10.2的支持内解码，并用定理11.3的显式复位补足支持外部分，得到(12.4)。所有矩阵族有限，零本征值算子被消去而没有参与除法。∎
+
+本判据及综合征构造属于经典量子纠错和可逆量子操作理论。[QREC-KL][QREC-NS] 本命题直接在有限 Kraus 表示上量化。若起点改为仅用任意放大正性定义的抽象完全正映射，则需另用有限维 Kraus 表示定理连接两种表述。
+
+### 定理 12.5：矩阵单位给出无需综合征基的实际解码
+
+给定 $F_{ij}\in M_n(\mathbb C)$ 满足
+
+$$
+F_{ij}F_{kl}=\delta_{jk}F_{il},\qquad F_{ij}^\dagger=F_{ji},
+\qquad P=\sum_iF_{ii},\qquad \pi(A)=\sum_{i,j}A_{ij}F_{ij}.
+$$
+
+固定逻辑指标 $v$，以矩阵元定义 $T_b(i,c)=F_{vi}(b,c)$。则 $P$ 为正交投影，$\pi$ 保乘法和伴随，且
+
+$$
+\sum_bT_b^\dagger T_b=P,\qquad
+\left[\sum_bT_bXT_b^\dagger\right]_{ij}=\operatorname{tr}(F_{ji}X).
+\tag{12.6}
+$$
+
+补上 $|v\rangle\langle b|(I-P)$ 得到完整CPTP解码 $\mathcal D_F$。若 $Q$ 满足 $PQ=Q$、$[Q,F_{ij}]=0$ 及 $\operatorname{tr}(F_{vv}Q)=1$，则
+
+$$
+\mathcal D_F(Q\pi(A))=A\quad\forall A\in M_d(\mathbb C).
+\tag{12.7}
+$$
+
+**证明。** 矩阵单位律给出 $P^2=P$、$P^\dagger=P$ 以及 $PF_{ij}=F_{ij}P=F_{ij}$；有限和展开给出 $\pi(AB)=\pi(A)\pi(B)$ 和 $\pi(A)^\dagger=\pi(A^\dagger)$。对 $T_b$ 求 Gram 和，物理基的完备性给出 $\sum_iF_{iv}F_{vi}=P$。其作用的第 $(i,j)$ 元为
+
+$$
+\operatorname{tr}(F_{vi}XF_{jv})=\operatorname{tr}(F_{ji}X),
+$$
+
+得到(12.6)。完整CPTP性由支持外复位补全。另一方面，交换性与迹循环律给出
+
+$$
+\operatorname{tr}(F_{ij}Q)
+=\operatorname{tr}(F_{iv}F_{vj}Q)
+=\operatorname{tr}(F_{vj}F_{iv}Q)
+=\delta_{ij}\operatorname{tr}(F_{vv}Q).
+$$
+
+将 $Q\pi(A)$ 代入(12.6)，逐项用矩阵单位律即得到 $A_{ij}$；支持条件使复位项为零。∎
+
+式(12.7)是任意矩阵上的代数恒等式。要把 $Q\pi(\rho)$ 作为物理密度态，进一步取 $Q\ge0$、$\rho\ge0$、$\operatorname{tr}\rho=1$；交换性保证乘积正性，而(12.6)和归一条件给出迹一。这里没有选择综合征本征向量或支持丛的全局基。它是定理11.4观测代数视角的解码接口。[QREC-OA-PRA]
+
+### 定理 12.6：规定逻辑仪器的有限物理实现
+
+在定理12.5条件下，若逻辑 Kraus 满足 $\sum_aL_a^\dagger L_a=I_d$，则物理 Kraus $\pi(L_a)$ 连同 $I-P$ 的平方和为 $I_n$。对于 $PQ=Q$ 且 $Q$ 与全部矩阵单位交换的输入 $Q\pi(\rho)$，失败分支 $I-P$ 的输出为零，其余分支满足
+
+$$
+\pi(L_a)\,Q\pi(\rho)\,\pi(L_a)^\dagger
+=Q\pi(L_a\rho L_a^\dagger).
+$$
+
+**证明。** 保乘法、伴随和线性给出 $\sum_a\pi(L_a)^\dagger\pi(L_a)=\pi(I_d)=P$。补项贡献 $(I-P)^2=I-P$。第二式由交换性与保乘法成立，失败项由 $(I-P)Q=0$ 消失。∎
+
+### 定理 12.7：全部逻辑矩阵单位的显式运输生成元
+
+令 $F_{ij}(t)$ 为实参数 $t$ 上的可微矩阵族，逐时满足定理12.5的矩阵单位和伴随关系。记 $D_{ij}=\dot F_{ij}$、$\dot P=\sum_iD_{ii}$，定义
+
+$$
+Z=\frac1d\sum_{i,j}D_{ij}F_{ji},\qquad K=Z-P\dot P.
+\tag{12.8}
+$$
+
+则
+
+$$
+K^\dagger=-K,\qquad [K,F_{ij}]=D_{ij},\qquad [K,P]=\dot P.
+\tag{12.9}
+$$
+
+**证明。** 对实际矩阵族求导，乘法和伴随关系给出
+
+$$
+D_{ij}F_{kl}+F_{ij}D_{kl}=\delta_{jk}D_{il},\qquad D_{ij}^\dagger=D_{ji}.
+$$
+
+对 $F_{ij}F_{ji}$ 求和后微分得 $Z+Z^\dagger=\dot P$；对 $P^2=P$ 微分得 $P\dot P+\dot PP=\dot P$ 和 $P\dot PP=0$。因此 $K+K^\dagger=0$。固定 $k,l$，前述乘法律及其导数给出
+
+$$
+ZF_{kl}=\frac1d\sum_jD_{kj}F_{jl},\qquad
+F_{kl}Z=\frac1d\sum_jD_{kj}F_{jl}-D_{kl}P.
+$$
+
+同时 $[P\dot P,F_{kl}]=-F_{kl}\dot P$。故
+
+$$
+[K,F_{kl}]=D_{kl}P+F_{kl}\dot P=D_{kl},
+$$
+
+最后一步是 $F_{kl}P=F_{kl}$ 的实际导数。对对角指标求和得到投影式。∎
+
+### 命题 12.8：只固定支持投影不足以运输内部逻辑代数
+
+令 $d=2$，$F_{ij}(t)=U(t)e_{ij}U(t)^\dagger$，其中 $U(t)=e^{tB}$，$B=\begin{pmatrix}0&1\\-1&0\end{pmatrix}$。则 $P(t)=I_2$、$\dot P=0$，但 $D_{11}(0)=[B,e_{11}]\ne0$，所以投影生成元 $[\dot P,P]=0$ 不能满足 $[K,F_{11}]=D_{11}$。定义(12.8)仍满足全部交织导数关系。
+
+**证明。** $B^\dagger=-B$ 保证 $U(t)$ 酉，因此两条对角矩阵单位之和为恒等。直接计算 $[B,e_{11}]=\begin{pmatrix}0&-1\\-1&0\end{pmatrix}$，其非零性给出所述不足。定理12.7适用于这个实际可微族。∎
+
+当逻辑维数 $d=1$ 时，(12.8)退化为 $[\dot P,P]$，接入 Kato 的投影运输背景。[QREC-Kato] 多维逻辑情形要求同时运输内部矩阵单位；本节的代数平均公式有独立证明，不将它归为Kato原文中的一般定理。由生成元继续得到全时间酉传播子，还需解决相应微分方程及其存在、唯一性和积分收敛条件；(12.9)本身没有假设这些分析结论。
+
+### 定理 12.9：任意实际左逆保证计算出的谱恢复候选正确
+
+在定理12.4的保迹条件下，以下三者等价：存在有限 Kraus 左逆；式(12.5)的标量交叉积条件成立；定义12.1计算出的同一个 $\mathcal R_E$ 满足 $\mathcal R_E\mathcal N=\mathrm{id}$。
+
+**证明。** 前两者由定理12.4等价；第三者提供显式有限 Kraus 左逆，反向立即成立。为证明任意左逆都保证该特定候选正确，取式(12.4)中的实际 $A_b$，定义恢复伴随的观测量
+
+$$
+Y_X=\sum_bA_b^\dagger X A_b.
+$$
+
+定理12.3给出 $A_bE_a=z_{ba}I$，故
+
+$$
+Y_XE_a=\sum_bA_b^\dagger X(A_bE_a)
+=\sum_bA_b^\dagger(A_bE_a)X=E_aX.
+$$
+
+伴随关系 $Y_{X^\dagger}=Y_X^\dagger$ 进一步给出 $E_a^\dagger Y_X=XE_a^\dagger$。于是
+
+$$
+QY_X=Y_XQ=\mathcal N(X).
+\tag{12.10}
+$$
+
+有限 Hermitian 矩阵的函数演算保持其交换子代数，所以 $WY_X=Y_XW$。用定理12.2中实际谱函数的恒等式得到
+
+$$
+W\mathcal N(X)W=WQWY_X=PY_X.
+$$
+
+原通道输出支持在 $P$，恢复的补空间项为零。因此
+
+$$
+\mathcal R_E\mathcal N(X)
+=\sum_aE_a^\dagger P Y_XE_a
+=\sum_aE_a^\dagger PE_aX
+=\left(\sum_aE_a^\dagger E_a\right)X=X.
+$$
+
+这证明了预先计算的谱候选正确，而不需要在结论中再选择一个未指定的恢复器。∎
+
+这里 $Y_X$ 是实际恢复的 Heisenberg 伴随；上述证明只使用其在错误像上的交织。它没有断言 $X\mapsto Y_X$ 在整个物理空间上保乘法。谱候选的具体构造和其精确恢复性质仍归于既有恢复理论。[QREC-BK][QREC-NS]
+
+[QREC-MD]: https://doi.org/10.1088/1751-8113/42/24/245303 "M.-D. Choi, N. Johnston and D. W. Kribs, The multiplicative domain in quantum error correction, Journal of Physics A: Mathematical and Theoretical 42, 245303 (2009); arXiv:0811.0947."
+[QREC-Kato]: https://doi.org/10.1143/JPSJ.5.435 "T. Kato, On the Adiabatic Theorem of Quantum Mechanics, Journal of the Physical Society of Japan 5(6), 435–439 (1950)."

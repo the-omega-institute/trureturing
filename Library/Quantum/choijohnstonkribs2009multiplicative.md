@@ -8,6 +8,7 @@ arxiv: 0811.0947
 strata_touched:
   - D5/S3/Quantum/Recovery/KrausLeftInverseNecessity
   - D5/S3/Quantum/Recovery/MatrixUnitDecoder
+  - D5/S3/Quantum/Recovery/SpectralRecoveryCorrectness
 license: citation-only
 triage: anchor
 ---
@@ -40,3 +41,11 @@ This elementary identity is provided with its own proof. The paper is an
 acknowledged conceptual and classical-literature anchor, not a claim that the
 paper states this exact Lean API. A condition only on Phi(I) is insufficient.
 No general multiplicative-domain classification is claimed by these modules.
+
+The computed-recovery consumer takes any actual finite Kraus left inverse A
+and constructs its observable map Y(X) = sum_b A_b* X A_b. Composite-Kraus
+scalarity gives Y(X) E_a = E_a X. Consequently Q Y(X) = Y(X) Q = N(X),
+and Mathlib's existing cfc commutation theorem implies that W commutes with
+Y(X). The computed identity W Q W = P then proves the actual spectral
+transpose candidate recovers X. This argument does not assume that Y is a
+multiplicative representation on the whole physical algebra.
