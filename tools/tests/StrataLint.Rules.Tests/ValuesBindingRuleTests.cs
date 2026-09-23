@@ -19,7 +19,7 @@ public sealed class ValuesBindingRuleTests
             + "lean_statement_sha256 = \"".Length;
         fixture.Files[ValuesKernelBindingValidator.RelativePath] = string.Concat(
             text.AsSpan(0, valueStart),
-            text[valueStart] == '0' ? "1" : "0",
+            text[valueStart].ToString(),
             text.AsSpan(valueStart + 1));
 
         var diagnostics = Evaluate(fixture);
