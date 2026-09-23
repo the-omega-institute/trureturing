@@ -58,6 +58,7 @@ class NativeReuseTests:
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
         first = self.inspect(phase='initial-publication')
         self.assertIn('phase=report status=completed', first.stderr)
+        self.assertEqual(builds(), [['build', *targets], ['build', ':report']])
         self.assertTrue(publication.member(output, '.reuse.json').is_file(), '[FAIL] defaults_report_success_sealed')
         expected = output.read_bytes()
         # An explicitly report-only resource must stay report-only on a miss too.
@@ -152,7 +153,9 @@ class NativeReuseTests:
         publication.member(seed, '.reuse.json').unlink()
         clear_calls()
         recovered = self.inspect(phase='programs-and-report-miss')
-        self.assertEqual(builds(), [['build', ':report', *targets]])
+        self.assertEqual(builds(), [['build', *targets], ['build', ':report']])
+        self.assertLess(recovered.stderr.index('phase=programs status=completed'),
+                        recovered.stderr.index('phase=report status=started'))
         self.assertIn('phase=report status=completed', recovered.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
         policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])

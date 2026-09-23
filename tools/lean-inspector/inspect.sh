@@ -165,10 +165,18 @@ if [[ ${#BUILD_TARGETS[@]} == 0 ]]; then
   run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 fi
 open_logs
-# The package facet owns report modules; explicit targets own program checks.
-# The writer owns the private clonefile-seeded .lake through the native build.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report \
-  ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
+# Build explicitly registered program targets before starting the report facet.
+# Keeping these Lake invocations separate lets the compiler's peak finish and
+# release its parent/process state before the report producer allocates its
+# native aggregation and validation state. The writer still owns the private
+# clonefile-seeded .lake through both native builds.
+if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
+  PROGRAM_BUILD_PENDING=1
+  run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
+    "$LAKE" build "${BUILD_TARGETS[@]}"
+  PROGRAM_BUILD_PENDING=0
+fi
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
   --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
