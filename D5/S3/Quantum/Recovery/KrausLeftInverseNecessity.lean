@@ -62,11 +62,11 @@ theorem identity_kraus_scalar (F : s → Matrix d d ℂ)
     (j₀ : d) (a : s) : F a = F a j₀ j₀ • (1 : Matrix d d ℂ) := by
   have hdiag (i j : d) : F a i i = F a j j := by
     have h := congrArg (fun M : Matrix d d ℂ => M i j)
-      (identity_kraus_commute F hF a (Matrix.single i j 1))
+      (identity_kraus_commute F hF a (Matrix.single i j (1 : ℂ)))
     simpa [Matrix.mul_apply, Matrix.single] using h
   have hoff (i j : d) (hij : i ≠ j) : F a i j = 0 := by
     have h := congrArg (fun M : Matrix d d ℂ => M i j)
-      (identity_kraus_commute F hF a (Matrix.single j j 1))
+      (identity_kraus_commute F hF a (Matrix.single j j (1 : ℂ)))
     simpa [Matrix.mul_apply, Matrix.single, hij] using h
   ext i j
   by_cases hij : i = j

@@ -39,10 +39,10 @@ variable {a b c s : Type*}
 
 /-- Send each row of B to the fixed output basis state v. -/
 def rowReset (v : b) (B : Matrix c a ℂ) (j : c) : Matrix b a ℂ :=
-  Matrix.single v j 1 * B
+  Matrix.single v j (1 : ℂ) * B
 
 private theorem sum_row_units (v : b) :
-    (∑ j : c, (Matrix.single v j (1 : ℂ))ᴴ * Matrix.single v j 1) =
+    (∑ j : c, (Matrix.single v j (1 : ℂ))ᴴ * Matrix.single v j (1 : ℂ)) =
       (1 : Matrix c c ℂ) := by
   classical
   ext i k
@@ -54,14 +54,14 @@ theorem row_reset_gram (v : b) (B : Matrix c a ℂ) :
     (∑ j, (rowReset v B j)ᴴ * rowReset v B j) = Bᴴ * B := by
   calc
     _ = Bᴴ * (∑ j : c,
-        (Matrix.single v j (1 : ℂ))ᴴ * Matrix.single v j 1) * B := by
+        (Matrix.single v j (1 : ℂ))ᴴ * Matrix.single v j (1 : ℂ)) * B := by
       simp only [rowReset, Matrix.conjTranspose_mul, Matrix.mul_sum,
         Matrix.sum_mul, Matrix.mul_assoc]
     _ = Bᴴ * B := by rw [sum_row_units v, Matrix.mul_one]
 
 private theorem row_unit_sandwich (v : b) (j : c) (X : Matrix c c ℂ) :
-    Matrix.single v j 1 * X * (Matrix.single v j (1 : ℂ))ᴴ =
-      X j j • Matrix.single v v 1 := by
+    Matrix.single v j (1 : ℂ) * X * (Matrix.single v j (1 : ℂ))ᴴ =
+      X j j • Matrix.single v v (1 : ℂ) := by
   classical
   ext i k
   by_cases hi : i = v <;> by_cases hk : k = v
@@ -71,18 +71,18 @@ private theorem row_unit_sandwich (v : b) (j : c) (X : Matrix c c ℂ) :
 /-- Resetting the rows is exactly a measure-and-prepare map. -/
 theorem row_reset_action (v : b) (B : Matrix c a ℂ) (X : Matrix a a ℂ) :
     (∑ j, rowReset v B j * X * (rowReset v B j)ᴴ) =
-      Matrix.trace (B * X * Bᴴ) • Matrix.single v v 1 := by
+      Matrix.trace (B * X * Bᴴ) • Matrix.single v v (1 : ℂ) := by
   calc
-    _ = ∑ j : c, Matrix.single v j 1 * (B * X * Bᴴ) *
+    _ = ∑ j : c, Matrix.single v j (1 : ℂ) * (B * X * Bᴴ) *
         (Matrix.single v j (1 : ℂ))ᴴ := by
       simp only [rowReset, Matrix.conjTranspose_mul, Matrix.mul_assoc]
-    _ = ∑ j : c, (B * X * Bᴴ) j j • Matrix.single v v 1 := by
+    _ = ∑ j : c, (B * X * Bᴴ) j j • Matrix.single v v (1 : ℂ) := by
       apply Finset.sum_congr rfl
       intro j hj
       exact row_unit_sandwich v j _
-    _ = Matrix.trace (B * X * Bᴴ) • Matrix.single v v 1 := by
-      change (∑ j, (B * X * Bᴴ) j j • Matrix.single v v 1) =
-        (∑ j, (B * X * Bᴴ) j j) • Matrix.single v v 1
+    _ = Matrix.trace (B * X * Bᴴ) • Matrix.single v v (1 : ℂ) := by
+      change (∑ j, (B * X * Bᴴ) j j • Matrix.single v v (1 : ℂ)) =
+        (∑ j, (B * X * Bᴴ) j j) • Matrix.single v v (1 : ℂ)
       rw [Finset.sum_smul]
 
 /-- Add an explicit pure-state reset on the complement of a support projection. -/
@@ -111,7 +111,7 @@ theorem complete_kraus_action (K : s → Matrix b a ℂ) (P : Matrix a a ℂ)
     (v : b) (hP : Pᴴ = P) (hPP : P * P = P) (X : Matrix a a ℂ) :
     (∑ i, completeKraus K P v i * X * (completeKraus K P v i)ᴴ) =
       (∑ i, K i * X * (K i)ᴴ) +
-        Matrix.trace ((1 - P) * X) • Matrix.single v v 1 := by
+        Matrix.trace ((1 - P) * X) • Matrix.single v v (1 : ℂ) := by
   simp only [completeKraus, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr]
   rw [row_reset_action]
   have hs : (1 - P)ᴴ = 1 - P := by simp [hP]
@@ -131,7 +131,7 @@ theorem complete_quantum_channel (K : s → Matrix b a ℂ) (P : Matrix a a ℂ)
       CStarMatrix.ofMatrix.symm
         (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
       (∑ i, K i * X * (K i)ᴴ) +
-        Matrix.trace ((1 - P) * X) • Matrix.single v v 1 := by
+        Matrix.trace ((1 - P) * X) • Matrix.single v v (1 : ℂ) := by
   obtain ⟨channel, hc⟩ := finite_kraus_quantum_channel
     (completeKraus K P v) (complete_kraus_normalised K P v hP hPP hK)
   refine ⟨channel, fun X => ?_⟩
