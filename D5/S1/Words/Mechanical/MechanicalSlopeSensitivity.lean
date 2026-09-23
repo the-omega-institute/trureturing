@@ -172,11 +172,14 @@ theorem local_slope_disagreement_law
       by_cases h : 1 - Int.fract t - u ≤ x
       · rw [if_pos h, Int.floor_eq_iff]
         norm_num
-        constructor <;> linarith [Int.fract_nonneg t, Int.fract_lt_one t]
+        constructor
+        · linarith
+        · have hfract_u : Int.fract t + u ≤ 1 := by linarith
+          linarith
       · rw [if_neg h, Int.floor_eq_iff]
         norm_num
         constructor
-        · linarith [Int.fract_nonneg t]
+        · exact add_nonneg (add_nonneg hx.1 (Int.fract_nonneg t)) hu0
         · linarith [lt_of_not_ge h]
     have heq : x + ((i.val + 1 : ℕ) : ℝ) * beta = x + t + e := by
       dsimp [beta, t, e]
@@ -215,7 +218,7 @@ theorem local_slope_disagreement_law
           · have hli : l = i := Fin.ext heq
             simpa [hli, hx, heq] using h
           · have hli : l ≠ i := fun he => heq (congrArg Fin.val he)
-            have hxl : x ∉ swept l := fun hh => (Set.disjoint_left.mp (hdisj l i hli)) hh hx
+            have hxl : x ∉ swept l := fun hh => (Set.disjoint_left.mp (hdisj hli)) hh hx
             simpa [l, hxl, heq] using h
     have hnext := hF (j.val + 1) (by omega)
     have hprev := hF j.val j.isLt.le
