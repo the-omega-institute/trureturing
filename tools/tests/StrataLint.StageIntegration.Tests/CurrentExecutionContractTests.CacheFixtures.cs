@@ -218,6 +218,8 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.FileMap.Tests", "Meta/registry.yaml", false)]
     [InlineData("StrataLint.FileMap.Tests", "tools/scripts/agent/header-check.sh", false)]
     [InlineData("StrataLint.FileMap.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "Meta/Digestion/atomizers.toml", true)]
+    [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/agent/header-check.sh", false)]
     public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates)
     {
         using var fixture = new ExecutionFixture();
@@ -247,7 +249,8 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Track();
         Execute(fixture);
         Seed(fixture);
-        var prior = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
+        var priorEvidence = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        var prior = priorEvidence.Projects[0];
 
         fixture.Write(path, "changed registered input\n");
         fixture.Track();
@@ -255,8 +258,22 @@ public sealed partial class CurrentExecutionContractTests
         var calls = Execute(fixture);
         Assert.True(calls.SequenceEqual(invalidates ? new[] { ExecutionFixture.First } : []),
             $"[FAIL] cache_fixture_input_isolation: {path}: invalidates={invalidates}; executed={string.Join(',', calls)}");
-        var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
-        if (invalidates) Assert.NotEqual(prior.InputFingerprint, accepted.InputFingerprint);
+        var acceptedEvidence = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        var accepted = acceptedEvidence.Projects[0];
+        if (invalidates)
+        {
+            Assert.NotEqual(prior.InputFingerprint, accepted.InputFingerprint);
+            Assert.Equal("executed", accepted.Status);
+            AcceptEngineering(fixture);
+            CommonExecutionEvidence.ValidateEngineering(fixture.Root);
+            CommonExecutionEvidence.Write(fixture.Root, CommonExecutionEvidence.TestsPath, acceptedEvidence with
+            {
+                Projects = priorEvidence.Projects.Select(item => item with { Status = "reused" }).ToArray(),
+                Materials = priorEvidence.Materials,
+            });
+            Assert.Contains("test input identity mismatch", Assert.Throws<InvalidDataException>(() =>
+                CommonExecutionEvidence.ValidateEngineering(fixture.Root)).Message);
+        }
         else Assert.Equal(prior with { Status = "reused" }, accepted);
     }
 }
