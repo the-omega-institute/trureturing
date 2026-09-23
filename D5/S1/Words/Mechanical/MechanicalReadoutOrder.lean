@@ -53,8 +53,12 @@ private theorem weightedPrefix_order (weights : ℕ → ℝ) (m : ℕ)
   have hD0 : D 0 = 0 := by simp [D]
   have hD (k : ℕ) : 0 ≤ D k := by
     apply sub_nonneg.mpr
-    exact_mod_cast (Int.floor_mono (add_le_add_left
-      (mul_le_mul_of_nonneg_left hab (Nat.cast_nonneg (α := ℝ) k)) x))
+    have hfloor :
+        ⌊x + (k : ℝ) * alpha⌋ ≤ ⌊x + (k : ℝ) * beta⌋ := by
+      apply Int.floor_mono
+      exact add_le_add_left
+        (mul_le_mul_of_nonneg_left hab (Nat.cast_nonneg (α := ℝ) k)) x
+    exact_mod_cast hfloor
   have hparts : ∀ N : ℕ,
       (∑ j ∈ range N, weights j * (D (j + 1) - D j)) =
         weights N * D N + ∑ j ∈ range N, (weights j - weights (j + 1)) * D (j + 1) := by
@@ -135,8 +139,14 @@ theorem local_order_iff_decreasing_weights
             apply sum_congr rfl
             intro j hj
             have hp := hpattern i x hx ⟨j, mem_range.mp hj⟩
-            have hpR := congrArg (fun z : ℤ => (z : ℝ)) hp
-            simp only [Int.cast_sub, apply_ite, Int.cast_one, Int.cast_zero] at hpR
+            have hp' :
+                lowerMechanicalLetter (alpha + delta) x j -
+                    lowerMechanicalLetter alpha x j =
+                  (if j = k then (1 : ℤ) else 0) -
+                    (if j = k + 1 then (1 : ℤ) else 0) := by
+              simpa [i] using hp
+            have hpR := congrArg (fun z : ℤ => (z : ℝ)) hp'
+            simp only [Int.cast_sub, Int.cast_ite, Int.cast_one, Int.cast_zero] at hpR
             rw [← mul_sub]
             exact congrArg (weights j * ·) hpR
           _ = weights k - if k + 1 < m + 1 then weights (k + 1) else 0 := by
@@ -209,7 +219,8 @@ private theorem actual_letter_mean (alpha : ℝ) (k : ℕ) :
   have hnext := shifted_floor_mean (((k + 1 : ℕ) : ℝ) * alpha)
   have hprev := shifted_floor_mean ((k : ℝ) * alpha)
   constructor
-  · simpa only [lowerMechanicalLetter, Int.cast_sub] using hnext.1.sub hprev.1
+  · simpa only [lowerMechanicalLetter, Int.cast_sub, Pi.sub_apply] using
+      hnext.1.sub hprev.1
   · simp only [lowerMechanicalLetter, Int.cast_sub]
     rw [integral_sub hnext.1 hprev.1, hnext.2, hprev.2]
     push_cast
@@ -276,7 +287,7 @@ theorem geometric_readout_isometric_completion
     induction n with
     | zero => simp [P, weightedPrefix]
     | succ n ih =>
-        simpa only [P, weightedPrefix, sum_range_succ] using
+        simpa only [P, weightedPrefix, sum_range_succ, Pi.add_apply] using
           ih.add ((actual_letter_mean a n).1.const_mul (q n))
   have hPmean (a : ℝ) (n : ℕ) : (∫ x : ℝ, P a n x ∂μ₀) = a * (1 - r ^ n) := by
     dsimp [P, weightedPrefix]
