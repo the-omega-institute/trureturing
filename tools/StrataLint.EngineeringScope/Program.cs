@@ -11,6 +11,9 @@ internal static class Program
 
     public static int Main(string[] arguments) => Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
 
+    internal static int Run(IReadOnlyList<string> arguments, TextWriter output, TextWriter error)
+        => Run(arguments, TestResultEvidence.Load, output, error);
+
     internal static int Run(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> evidenceLoader, TextWriter output, TextWriter error)
     {
         try
@@ -18,7 +21,8 @@ internal static class Program
             if (arguments.FirstOrDefault() is "check-seed-export" or "check-seed-import")
                 return CommonExecutionEvidence.CheckSeedCommand(arguments, output);
             if (arguments.FirstOrDefault() == "truth-release-select")
-                return TruthReleaseSelection.Run(arguments, output);
+                return StrataLint.ReleaseSelection.TruthReleaseSelection.Run(arguments,
+                    (run, attempt) => CiTransport.ArtifactName("current", run, attempt), output, error);
             if (arguments.FirstOrDefault() is "transport-pack" or "transport-verify")
                 return CiTransport.Run(arguments, output);
             if (arguments.FirstOrDefault() is "build" or "engineering" or "current" or "delta")

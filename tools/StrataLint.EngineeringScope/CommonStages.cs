@@ -23,13 +23,6 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private readonly bool exportSeeds = seedExport == SeedExportMode.Automatic
         && Environment.GetEnvironmentVariable("STRATALINT_CACHE_WRITES") != "false";
 
-    internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
-    {
-        0 => 0,
-        1 => 1,
-        3 when allowProtectedAnnotation => 0,
-        _ => 2,
-    };
 
     internal int Run(string name, string? baseSha, string? buildRound = null, string? planPath = null, string? changesPath = null)
     {
@@ -159,7 +152,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         Step("build", "dotnet", ["build", projectSet, "--configuration", "Release", "--no-restore", "--warnaserror", .. buildOptions,
             "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
             "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs, .. observation]);
-        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots, resourcePlan?.TestProjects), steps.ToArray(), roots, resourcePlan?.Retain(root));
+        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots, resourcePlan?.TestProjects), steps.ToArray(), roots, resourcePlan?.Retain(root, CommonExecutionEvidence.RootPath));
     }
 
     private string[] BuildRoots()
@@ -353,7 +346,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var full = Path.Combine(root, log);
         Directory.CreateDirectory(Path.GetDirectoryName(full)!);
         File.WriteAllText(full, result.Text);
-        var exit = proof is null ? Normalize(result.Exit, allowAnnotation)
+        var exit = proof is null ? CommonExecutionEvidence.Normalize(result.Exit, allowAnnotation)
             : result.Exit is not (0 or 1) ? 2 : proof(result.Exit, result.Text) ? 0 : 1;
         steps.Add(new(name, result.Exit, exit, exit == 0 ? "executed" : "failed", log));
         if (exit != 0) throw new StageFailure(exit, $"{name} failed: raw_exit={result.Exit}; log={log}");
