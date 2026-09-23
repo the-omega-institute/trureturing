@@ -50,7 +50,7 @@ public sealed class EngineeringProjectRegistrationTests
         // validation remain the responsibility of the snapshot reader's own tests.
         var sources = paths.Select(path => new EngineeringSource(path,
             path == EngineeringProjectRegistry.ManifestPath
-                ? File.ReadAllText(Path.Combine(root, path), utf8) : string.Empty)).ToArray();
+                ? utf8.GetString(File.ReadAllBytes(Path.Combine(root, path))) : string.Empty)).ToArray();
         var registry = EngineeringProjectRegistry.Read(sources);
         foreach (var project in registry.Projects)
         {
