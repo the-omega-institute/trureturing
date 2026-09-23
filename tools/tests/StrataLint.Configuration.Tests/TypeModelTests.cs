@@ -1,49 +1,13 @@
 using System.Text;
-using StrataLint.Cli;
+using StrataLint.Configuration;
+using StrataLint.TestSupport;
+using Xunit;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Configuration.Tests;
 
 public sealed class TypeModelTests
 {
-    [Theory]
-    [InlineData("Meta/judge-seed.json")]
-    [InlineData("Meta/package-materials.json")]
-    public void RealRepositoryMetadataRegistrationsAreAdmissible(string value)
-    {
-        var path = RepoPath.CreateKnown(value);
-        var policy = RealRepositoryPolicy();
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, policy));
-        Assert.Contains(path, policy.GovernanceDocuments);
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
-    [Theory]
-    [InlineData("Meta/unregistered.json")]
-    [InlineData("Meta/judge-seed-extra.json")]
-    [InlineData("Meta/package-materials-extra.json")]
-    public void RealRepositoryMetadataRegistrationRejectsUnregisteredNeighbors(string value)
-    {
-        var path = RepoPath.CreateKnown(value);
-        var policy = RealRepositoryPolicy();
-
-        var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(path, policy));
-
-        Assert.Equal("SL-000", issue.RuleId.Value);
-        Assert.Equal(value, issue.Path);
-        Assert.Equal("unknown Meta artifact", issue.Message);
-        Assert.DoesNotContain(path, policy.GovernanceDocuments);
-    }
-
-    private static ValidatedPolicy RealRepositoryPolicy()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        return RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml")))).Policy;
-    }
-
     [Theory]
     [InlineData("Blueprint/Trureturing.Content.csproj")]
     [InlineData("Blueprint/Another.Content.csproj")]
@@ -281,7 +245,7 @@ public sealed class TypeModelTests
     }
 
     [Theory]
-    [InlineData("D5/S0/Carrier/Ring", RuleFixture.RingPath)]
+    [InlineData("D5/S0/Carrier/Ring", "D5/S0/Carrier/Ring.lean")]
     [InlineData("D5/S0/Carrier/Algebra/Ring", "D5/S0/Carrier/Algebra/Ring.lean")]
     [InlineData("D5/S0/Carrier/Algebra/Graded/Ring", "D5/S0/Carrier/Algebra/Graded/Ring.lean")]
     [InlineData("D5/S0/Carrier/Algebra/Graded/Filtered/Ring", "D5/S0/Carrier/Algebra/Graded/Filtered/Ring.lean")]
@@ -290,10 +254,10 @@ public sealed class TypeModelTests
     [InlineData("D5/S0/Carrier/Algebra/Graded/Ring.norm_mul", "D5/S0/Carrier/Algebra/Graded/Ring.lean")]
     [InlineData("D5/B/S0/Carrier/Algebra/Graded/Ring", "Blueprint/D5/S0/Carrier/Algebra/Graded/Ring.md")]
     [InlineData("D5/E/S0/Carrier/Algebra/Graded/Ring.result--json", "Evidence/D5/S0/Carrier/Algebra/Graded/Ring.result.json")]
-    [InlineData("D5/S0/Carrier/Ring.norm_mul", RuleFixture.RingPath)]
-    [InlineData("D5/B/S0/Carrier/Ring", RuleFixture.BlueprintPath)]
+    [InlineData("D5/S0/Carrier/Ring.norm_mul", "D5/S0/Carrier/Ring.lean")]
+    [InlineData("D5/B/S0/Carrier/Ring", "Blueprint/D5/S0/Carrier/Ring.md")]
     [InlineData("D5/E/S0/Carrier/Ring.result--json", "Evidence/D5/S0/Carrier/Ring.result.json")]
-    [InlineData("D5/E/values--json", RuleFixture.ValuesProjectionPath)]
+    [InlineData("D5/E/values--json", "Evidence/D5/values.json")]
     [InlineData("D5/E/values.result--json", "Evidence/D5/values.result.json")]
     [InlineData("D5/E/experiments/D5-X0001.spec--yaml", "Evidence/D5/experiments/D5-X0001.spec.yaml")]
     [InlineData("D5/C/2026-07-11/r168", "Chronicle/2026/07/11-r168.md")]
@@ -425,7 +389,7 @@ public sealed class TypeModelTests
     }
 
     [Theory]
-    [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml")]
+    [InlineData("tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml")]
     [InlineData("Golden/Projection/x.json")]
     [InlineData("Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
     [InlineData("Golden/Frozen/state/D5/S0/Carrier/Ring.lean.json")]
@@ -464,7 +428,7 @@ public sealed class TypeModelTests
     [Fact]
     public void HarnessGateScriptIsClosedWorldRegisteredAndBootstrapProtected()
     {
-        const string value = RuleFixture.StageScriptPath;
+        const string value = "tools/scripts/ci-stage.sh";
         var path = RepoPath.CreateKnown(value);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));

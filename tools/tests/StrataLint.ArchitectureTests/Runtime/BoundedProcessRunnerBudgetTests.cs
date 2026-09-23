@@ -1,5 +1,4 @@
 using System.Reflection;
-using StrataLint.Tests;
 
 namespace StrataLint.ArchitectureTests;
 

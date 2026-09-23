@@ -320,6 +320,14 @@
       "steps": []
     },
     {
+      "id": "test-configuration",
+      "projects": [
+        "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "test-engine",
       "projects": [
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj"
@@ -411,6 +419,14 @@
       "id": "test-release-selection",
       "projects": [
         "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-repository-configuration",
+      "projects": [
+        "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj"
       ],
       "checks": [],
       "steps": []

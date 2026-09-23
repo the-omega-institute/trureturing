@@ -73,7 +73,7 @@ public sealed partial class CurrentExecutionContractTests
     [Theory]
     [InlineData("StrataLint.ArchitectureTests")]
     [InlineData("StrataLint.Tests")]
-    public void RegisteredDigestionContentReusesEvidenceWhileGovernanceInvalidates(string project)
+    public void RegisteredInputsInvalidateOnlyTheirConsumers(string project)
     {
         using var fixture = new ExecutionFixture();
         var repository = TestRepositoryLayout.FindRoot();
@@ -126,10 +126,16 @@ public sealed partial class CurrentExecutionContractTests
                 fixture.Write(path, File.ReadAllText(Path.Combine(fixture.Root, path)).Replace("program", "data", StringComparison.Ordinal));
             else File.AppendAllText(Path.Combine(fixture.Root, path), "\n");
             fixture.Track();
-            Assert.Equal([ExecutionFixture.First], Execute(fixture));
+            var invalidates = project != "StrataLint.Tests"
+                || path is not ("Meta/domains.yaml" or "Meta/registry.yaml");
+            Assert.Equal(invalidates ? [ExecutionFixture.First] : [], Execute(fixture));
             var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
-            Assert.NotEqual(original.InputFingerprint, accepted.InputFingerprint);
-            Assert.Equal("executed", accepted.Status);
+            if (invalidates)
+            {
+                Assert.NotEqual(original.InputFingerprint, accepted.InputFingerprint);
+                Assert.Equal("executed", accepted.Status);
+            }
+            else Assert.Equal(original with { Status = "reused" }, accepted);
         }
     }
 
