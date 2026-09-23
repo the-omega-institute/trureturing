@@ -51,7 +51,7 @@ theorem integral_image (n : ℕ) (y : ℤ × (Fin n → ℤ)) :
     have hz (i : Fin n) : p * z i = y.2 i - 2 * y.1 :=
       Int.mul_ediv_cancel' (hy i)
     have hsum :
-        (∑ i : Fin n, y.1 + (∑ j, z j) + z i) =
+        (∑ i : Fin n, (y.1 + (∑ j, z j) + z i)) =
           (n : ℤ) * (y.1 + ∑ j, z j) + ∑ i, z i := by
       simp only [Finset.sum_add_distrib, Finset.sum_const,
         Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
@@ -59,12 +59,12 @@ theorem integral_image (n : ℕ) (y : ℤ × (Fin n → ℤ)) :
     have hright : traceGram n (reconstruct n y) = y := by
       apply Prod.ext
       · change ((n : ℤ) + 1) * (y.1 + ∑ j, z j) -
-          (∑ i : Fin n, y.1 + (∑ j, z j) + z i) = y.1
+          (∑ i : Fin n, (y.1 + (∑ j, z j) + z i)) = y.1
         rw [hsum]
         ring
       · funext i
         change p * (y.1 + (∑ j, z j) + z i) - (y.1 + ∑ j, z j) -
-          2 * (∑ i : Fin n, y.1 + (∑ j, z j) + z i) = y.2 i
+          2 * (∑ i : Fin n, (y.1 + (∑ j, z j) + z i)) = y.2 i
         rw [hsum]
         have hzi := hz i
         dsimp [p] at hzi ⊢
@@ -78,7 +78,7 @@ theorem integral_image (n : ℕ) (y : ℤ × (Fin n → ℤ)) :
       exact hdi.symm.trans (hz i).symm
     have hsumx : (∑ i, x.2 i) = (n : ℤ) * x.1 + ∑ i, z i := by
       calc
-        (∑ i, x.2 i) = ∑ i : Fin n, x.1 + z i := by
+        (∑ i, x.2 i) = ∑ i : Fin n, (x.1 + z i) := by
           apply Finset.sum_congr rfl
           intro i _
           have hi := hcoords i
