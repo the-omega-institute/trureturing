@@ -933,3 +933,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Weighted original ternary depths have sharp fixed-cofactor bounds34/9 and11/3 with one Gram deletion credit; a702-label actual family separates good head marginals from the uniform outside-lift completion budget](profile-notes/arithmetic/450-weighted-original-depths-and-the-uniform-lift-boundary.md)
 
 - [Trimming actual early-depth cylinders preserves any given core law and bounds all single-outside-prime-power completion tails with a|1225 and p>=43 by3677489/17297280<1/4, retaining arbitrary finite heights and original phases](profile-notes/arithmetic/451-original-phase-trimming-gives-a-summable-single-prime-lift.md)
+
+- [Exponent assignment gives one actual-residual law preserving any core marginal and bounding original completion below1/4 for at most two outside primes per label, arbitrary finite interaction graphs and heights, with explicit cutoff3^(2560 tau(Q)^2)](profile-notes/arithmetic/452-exponent-assignment-controls-arbitrary-two-prime-tail-graphs.md)
