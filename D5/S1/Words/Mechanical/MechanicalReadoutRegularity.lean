@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-infinite-readout-continuity-classification)
    anchors: []
    utility: none
-   digest: Integer hits classify all fixed-phase continuity points of the completed geometric readout, with a positive jump certificate. -/
+   digest: Integer hits classify continuity and jumps of completed geometric readouts. -/
 
 import D5.S1.Words.Mechanical.MechanicalReadoutOrder
 
@@ -85,7 +85,7 @@ theorem geometric_readout_continuity_and_jump
     have hD (j : ℕ) : 0 ≤ D j := by
       apply sub_nonneg.mpr
       exact_mod_cast (Int.floor_mono (add_le_add_left
-        (mul_le_mul_of_nonneg_left hb.2.le (Nat.cast_nonneg (R := ℝ) j)) x))
+        (mul_le_mul_of_nonneg_left hb.2.le (Nat.cast_nonneg (α := ℝ) j)) x))
     have hkR : 0 < (k : ℝ) := by exact_mod_cast hk
     have hfloor : ⌊x + (k : ℝ) * beta⌋ < z := Int.floor_lt.mpr (by
       have hmul := mul_lt_mul_of_pos_left hb.2 hkR

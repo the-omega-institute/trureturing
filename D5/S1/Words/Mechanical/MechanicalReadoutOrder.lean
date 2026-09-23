@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-dynamics-weight-cone-classification)
    anchors: []
    utility: none
-   digest: Actual mechanical letters determine the order cone, geometric L1 completion, and exact one-sided finite-precision cost. -/
+   digest: Mechanical letters determine an order cone and geometric L1 completion. -/
 
 import D5.S1.Words.Mechanical.MechanicalSlopeSensitivity
 import D5.S1.Words.Mechanical.FloorFractShift
@@ -54,7 +54,7 @@ private theorem weightedPrefix_order (weights : ℕ → ℝ) (m : ℕ)
   have hD (k : ℕ) : 0 ≤ D k := by
     apply sub_nonneg.mpr
     exact_mod_cast (Int.floor_mono (add_le_add_left
-      (mul_le_mul_of_nonneg_left hab (Nat.cast_nonneg (R := ℝ) k)) x))
+      (mul_le_mul_of_nonneg_left hab (Nat.cast_nonneg (α := ℝ) k)) x))
   have hparts : ∀ N : ℕ,
       (∑ j ∈ range N, weights j * (D (j + 1) - D j)) =
         weights N * D N + ∑ j ∈ range N, (weights j - weights (j + 1)) * D (j + 1) := by

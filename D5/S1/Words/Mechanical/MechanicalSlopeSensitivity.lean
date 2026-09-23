@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-parameter-sensitivity)
    anchors: []
    utility: none
-   digest: Actual mechanical readouts have a constructed local slope chamber with an exact quadratic-in-horizon disagreement law. -/
+   digest: Mechanical readouts have an exact local slope-disagreement law. -/
 
 import D5.S1.Words.Mechanical.MechanicalBalance
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
