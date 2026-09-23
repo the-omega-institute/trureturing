@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 // Process and admission fixtures consume Engine's internal process and policy APIs.
 [assembly: InternalsVisibleTo("StrataLint.ProcessTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.AdmissionTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.RepositoryFileMap.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Engine.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.ScriptTests")]

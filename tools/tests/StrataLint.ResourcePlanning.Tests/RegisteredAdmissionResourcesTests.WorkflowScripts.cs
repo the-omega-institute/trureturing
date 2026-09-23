@@ -27,7 +27,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 RepositoryTopologyProject,
                 WorkflowScriptProject,
-            }), Strings(plan["execution"]!["tests"]!));
+            }.Concat(file.EndsWith(".cs", StringComparison.Ordinal) ? new[] { "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj" } : [])), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
     }

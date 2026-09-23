@@ -18,6 +18,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             var plan = Plan($"tools/tests/StrataLint.RepositoryTopology.Tests/{file}", "", mode);
             Assert.Equal(WithRepositoryContract(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+                "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
                 RepositoryTopologyProject,
             }), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
@@ -49,8 +50,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
 
     [Theory]
     [InlineData("tools/scripts/dotnet-test.sh", "StrataLint.ArchitectureTests,StrataLint.RepositoryTopology.Tests,StrataLint.Tests,StrataLint.WorkflowScript.Tests")]
-    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeRepositoryGateway.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.Tests")]
-    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeLeanReportSource.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.Tests")]
+    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeRepositoryGateway.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.Tests")]
+    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeLeanReportSource.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.Tests")]
     public void RepositoryTopologyRealInputsSelectTheirCompleteConsumers(string path, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })
