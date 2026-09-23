@@ -6,7 +6,7 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.RepresentationModel;
 
-namespace StrataLint.Cli;
+namespace StrataLint.Configuration;
 
 public static class RegistryLoader
 {

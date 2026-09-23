@@ -1,9 +1,8 @@
 using System.Reflection;
 using StrataLint.Engine;
-using StrataLint.Tests;
 using Xunit;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Tests;
 
 public sealed class BaseFactScopeProbeRatchetTests
 {

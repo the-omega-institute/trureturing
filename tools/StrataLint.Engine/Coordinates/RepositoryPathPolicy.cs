@@ -146,7 +146,7 @@ internal static partial class RepositoryPathPolicy
 
         if (value is "Meta/domains.yaml" or "Meta/BACKFILL.yaml" or "Meta/registry.yaml"
             or "Library/queries.yaml" or AssumptionRegistryPath
-            or "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
+            or "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml"
             or "Golden/values-kernels.toml"
             or PrWorkflowPath
             or PushWorkflowPath

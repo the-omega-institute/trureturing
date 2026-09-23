@@ -190,7 +190,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.Cache.Tests", "Meta/Digestion/backfill/cache-input-probe.json", false)]
     [InlineData("StrataLint.Cache.Tests", "Meta/domains.yaml", false)]
     [InlineData("StrataLint.Cache.Tests", "tools/scripts/agent/header-check.sh", false)]
-    [InlineData("StrataLint.Cache.Tests", "tools/StrataLint.Cli/Commands/RegistryLoader.cs", false)]
+    [InlineData("StrataLint.Cache.Tests", "tools/StrataLint.Configuration/RegistryLoader.cs", false)]
     [InlineData("StrataLint.Cache.Tests", "tools/scripts/worktree/lean_actions.py", true)]
     [InlineData("StrataLint.Cache.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
     [InlineData("StrataLint.Cache.Tests", "tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py", true)]
@@ -204,6 +204,14 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.HeaderScript.Tests", "tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs", true)]
     [InlineData("StrataLint.HeaderScript.Tests", "tools/scripts/agent/merge-gate.sh", false)]
     [InlineData("StrataLint.HeaderScript.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.Configuration.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.Configuration.Tests", "Meta/registry.yaml", false)]
+    [InlineData("StrataLint.Configuration.Tests", "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml", true)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/domains.yaml", true)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/registry.yaml", true)]
+    [InlineData("StrataLint.RepositoryConfiguration.Tests", "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml", false)]
+    [InlineData("StrataLint.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.Tests", "Meta/registry.yaml", false)]
     public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates)
     {
         using var fixture = new ExecutionFixture();
@@ -224,7 +232,7 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Write(sourceInputs, "<Project />\n");
         File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
             new EngineeringProjectFixture(sourceInputs, "SourceInputs", "test-support", false,
-                ["tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs"])));
+                ["tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs", "tools/StrataLint.Configuration/**/*.cs"])));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"

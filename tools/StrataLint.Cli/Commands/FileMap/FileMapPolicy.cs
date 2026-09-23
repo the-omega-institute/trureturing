@@ -16,7 +16,7 @@ internal static class FileMapPolicy
         "run-local artifact must be removed from the Git index; "
         + "the FILEMAP declaration must not be changed to make this finding go away";
     private const string TestRegistryPath =
-        "tools/TestSupport/StrataLint.CliTestSupport/TestRegistry.cs";
+        "tools/TestSupport/StrataLint.ConfigurationTestSupport/TestRegistry.cs";
     private const string BackfillLoaderPath =
         "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
@@ -28,7 +28,7 @@ internal static class FileMapPolicy
     private const string ProblemCandidateCatalogPath =
         "tools/StrataLint.Scribe/Problems/ProblemCandidateCatalog.cs";
     private const string RegistryLoaderPath =
-        "tools/StrataLint.Cli/Commands/RegistryLoader.cs";
+        "tools/StrataLint.Configuration/RegistryLoader.cs";
     private const string ScribeEmitterPath =
         "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs";
     private const string ScribeProjectPath =

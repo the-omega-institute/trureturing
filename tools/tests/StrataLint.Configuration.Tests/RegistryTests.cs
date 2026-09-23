@@ -1,8 +1,10 @@
 using System.Text;
-using StrataLint.Cli;
+using StrataLint.Configuration;
+using StrataLint.TestSupport;
+using Xunit;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Configuration.Tests;
 
 public sealed class RegistryTests
 {

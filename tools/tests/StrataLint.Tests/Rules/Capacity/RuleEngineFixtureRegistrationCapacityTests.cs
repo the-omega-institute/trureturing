@@ -73,7 +73,7 @@ public sealed class RuleEngineFixtureRegistrationCapacityTests
         fixture.Files["Meta/FILEMAP.toml"] = FixtureRegistration;
         fixture.Baseline["Meta/FILEMAP.toml"] = FixtureRegistration.Replace(
             "admission_plane = \"judge\"", "admission_plane = \"content\"", StringComparison.Ordinal);
-        const string registry = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml";
+        const string registry = "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml";
         fixture.Files[registry] = fixture.Baseline[registry] = TestRegistry.Canonical;
         fixture.Changes.Clear();
         fixture.Changes.AddRange(["Meta/FILEMAP.toml", SourcePath]);
@@ -92,7 +92,7 @@ public sealed class RuleEngineFixtureRegistrationCapacityTests
             [Fact]
             public void RegisteredTestPolicyFixtureIsJudgeData()
             {
-                const string path = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml";
+                const string path = "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml";
                 var root = RepositoryLayout.FindRoot();
                 Assert.True(File.Exists(Path.Combine(root, path)));
                 var manifest = FileMapLoader.LoadRepository(root);
@@ -113,7 +113,7 @@ public sealed class RuleEngineFixtureRegistrationCapacityTests
                 var root = RepositoryLayout.FindRoot();
                 string[] paths =
                 [
-                    "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml",
+                    "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml",
                     "tools/StrataLint.Engine/RepositoryIo/AdmissionPlanePolicy.cs",
                 ];
                 Assert.All(paths, path => Assert.True(File.Exists(Path.Combine(root, path))));
@@ -252,7 +252,7 @@ public sealed class RuleEngineFixtureRegistrationCapacityTests
 
     private const string FixtureRegistration = """"
         [[files]]
-        pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
+        pattern = "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml"
         kind = "data"
         admission_plane = "judge"
         produced_by = "none"

@@ -7,6 +7,18 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [Theory]
     [InlineData("push")]
     [InlineData("pr")]
+    public void ConfigurationTestsRunWithoutCliTestExecution(string mode)
+    {
+        var plan = Plan("tools/tests/StrataLint.Configuration.Tests/RegistryTests.cs", "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+    }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
     public void HeaderScriptRunsOnlyItsCompleteScriptProject(string mode)
     {
         var plan = Plan("tools/scripts/agent/header-check.sh", "", mode);
@@ -20,7 +32,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [Theory]
     [InlineData("Meta/domains.yaml")]
     [InlineData("tools/scripts/agent/header-check.sh")]
-    [InlineData("tools/StrataLint.Cli/Commands/RegistryLoader.cs")]
+    [InlineData("tools/StrataLint.Configuration/RegistryLoader.cs")]
     [InlineData("tools/tests/StrataLint.Tests/Commands/Playbook/DepositHeaderWorkflowScriptTests.cs")]
     public void NonCacheInputsDoNotSelectCacheTests(string path)
     {
