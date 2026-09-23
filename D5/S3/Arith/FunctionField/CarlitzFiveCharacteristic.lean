@@ -16,6 +16,50 @@ namespace D5.S3.Arith.FunctionField.CarlitzFiveCharacteristic
 
 open D5.S3.Arith.FunctionField.CarlitzFiveOrbit
 
+private def seed3 {R : Type*} [CommRing R] (a b c d : R) : R :=
+      ((((((1) * c + (((1) * d + (1)) * d + (-1))) * b + ((((-1) * d + (1)) * d + (-1)) * d)) * b + ((((((1) * c + (-1))
+      * c + ((-1) * d + (1))) * c + ((-1) * d ^ 2 + (-1))) * c + (((((1) * d + (-1)) * d + (-1)) * d + (-1)) * d)) * c +
+      (((((1) * d + (1)) * d + (-1)) * d ^ 2 + (1)) * d + (1)))) * a + ((((((-1) * d + (-1)) * d + (-1)) * c + ((((-1) *
+      d + (-1)) * d + (-1)) * d ^ 2 + (-1))) * b + (((((1) * d ^ 2) * c + ((((1) * d + (-1)) * d + (-1)) * d)) * c +
+      (((-1) * d + (-1)) * d ^ 2 + (-1))) * c + ((-1) * d + (-1)))) * b + (((((((1) * c + ((-1) * d + (-1))) * c + ((-1)
+      * d ^ 2 + (-1))) * c + ((-1) * d ^ 3 + (1))) * c + (((-1) * d ^ 2 + (-1)) * d ^ 2 + (-1))) * c + (((((-1) * d +
+      (-1)) * d + (-1)) * d + (1)) * d + (1))) * c + ((((-1) * d ^ 4 + (-1)) * d + (-1)) * d)))) * a + ((((((((((-1) * d)
+      * c + ((-1) * d ^ 2 + (1))) * c) * b + (((((-1) * d + (1)) * d) * c + ((1) * d ^ 3)) * c + ((1) * d ^ 4))) * b +
+      (((((-1) * c + ((-1) * d)) * c ^ 2 + ((-1) * d ^ 2)) * c + (((1) * d + (1)) * d ^ 2)) * c + (((1) * d + (1)) * d ^
+      3))) * b + ((((((1) * c ^ 2 + (-1)) * c + ((-1) * d ^ 2 + (-1))) * c + ((((-1) * d + (1)) * d + (1)) * d)) * c +
+      (((((1) * d ^ 2 + (1)) * d + (1)) * d + (-1)) * d + (-1))) * c + (((((1) * d + (1)) * d + (-1)) * d + (-1)) * d ^
+      3))) * b + ((((((((1) * d + (-1)) * d) * c + (((-1) * d + (1)) * d + (1))) * c + (((-1) * d ^ 2 + (-1)) * d)) * c +
+      ((((-1) * d + (-1)) * d + (-1)) * d ^ 2)) * c + ((((((1) * d + (-1)) * d ^ 2 + (-1)) * d + (1)) * d + (1)) * d +
+      (-1))) * c + (((((1) * d ^ 3 + (1)) * d + (-1)) * d + (1)) * d ^ 2 + (1)))) * b + ((((((((1) * c + ((1) * d)) * c ^
+      2 + (((-1) * d ^ 2 + (-1)) * d + (-1))) * c + ((((-1) * d + (-1)) * d + (1)) * d + (-1))) * c + ((((-1) * d ^ 2 +
+      (1)) * d + (-1)) * d + (1))) * c + ((((1) * d ^ 4 + (1)) * d + (-1)) * d)) * c + (((((1) * d ^ 3 + (1)) * d + (1))
+      * d ^ 2 + (1)) * d + (-1))) * c + ((((((((1) * d + (-1)) * d + (1)) * d + (1)) * d + (-1)) * d + (1)) * d + (1)) *
+      d))) * b + ((((((((((-1) * c + ((1) * d)) * c + ((1) * d ^ 2 + (1))) * c + ((-1) * d + (1))) * c + ((((-1) * d ^ 2
+      + (-1)) * d + (1)) * d + (-1))) * c + ((-1) * d ^ 5)) * c + (((-1) * d ^ 3 + (-1)) * d + (1))) * c + (((((((1) * d
+      ^ 2 + (1)) * d + (-1)) * d + (-1)) * d + (-1)) * d + (1)) * d + (-1))) * c + ((((((((-1) * d + (-1)) * d + (1)) * d
+      + (-1)) * d + (-1)) * d + (1)) * d + (1)) * d + (1))) * c + (((1) * d ^ 2 + (-1)) * d ^ 4 + (-1))))) * a +
+      (((((((((((1) * d + (1)) * c + (((1) * d + (-1)) * d + (1))) * c + ((-1) * d + (1))) * b + ((((-1) * c + (((1) * d
+      + (-1)) * d + (-1))) * c + ((((-1) * d + (-1)) * d + (-1)) * d)) * c + (((((-1) * d + (-1)) * d + (1)) * d + (-1))
+      * d + (-1)))) * b + (((((-1) * d + (-1)) * c ^ 2 + ((-1) * d + (-1))) * c + ((((1) * d + (1)) * d + (1)) * d +
+      (1))) * c + ((1) * d ^ 4))) * b + (((((((1) * c + ((1) * d)) * c + (-1)) * c + (((1) * d + (-1)) * d + (-1))) * c +
+      ((((1) * d + (-1)) * d + (-1)) * d + (-1))) * c + ((((-1) * d + (-1)) * d ^ 2 + (1)) * d ^ 2 + (1))) * c +
+      ((((((-1) * d + (-1)) * d + (1)) * d + (-1)) * d ^ 2 + (1)) * d))) * b + ((((((((-1) * c + ((1) * d + (1))) * c +
+      ((-1) * d ^ 2 + (-1))) * c + (((1) * d + (1)) * d + (-1))) * c + (((1) * d ^ 2 + (1)) * d + (-1))) * c + ((((1) * d
+      + (1)) * d + (-1)) * d ^ 2 + (1))) * c + (((((-1) * d + (-1)) * d + (-1)) * d ^ 2 + (1)) * d ^ 2 + (1))) * c +
+      ((((((((-1) * d + (1)) * d + (-1)) * d + (-1)) * d + (-1)) * d + (1)) * d + (1)) * d + (-1)))) * b + (((((((((1) *
+      d + (1)) * c + (1)) * c + (((1) * d + (1)) * d ^ 2 + (1))) * c + ((((1) * d + (-1)) * d + (-1)) * d)) * c + ((((1)
+      * d ^ 2 + (-1)) * d + (-1)) * d + (1))) * c + (((((-1) * d ^ 2 + (1)) * d + (-1)) * d + (1)) * d ^ 2 + (1))) * c +
+      ((((((-1) * d + (1)) * d + (1)) * d ^ 2 + (-1)) * d + (-1)) * d ^ 2 + (1))) * c + ((((-1) * d + (-1)) * d ^ 2 +
+      (1)) * d + (1)))) * b + (((((((((-1) * c + ((1) * d + (-1))) * c + (((-1) * d + (1)) * d + (1))) * c + (-1)) * c +
+      ((((1) * d + (-1)) * d ^ 2 + (-1)) * d)) * c + (((1) * d ^ 3 + (1)) * d ^ 2 + (1))) * c ^ 2 + (((((((-1) * d + (1))
+      * d ^ 2 + (1)) * d + (1)) * d + (1)) * d + (1)) * d + (-1))) * c + (((((((-1) * d + (1)) * d + (1)) * d + (-1)) * d
+      + (-1)) * d + (-1)) * d ^ 2 + (1))) * c + (((((((-1) * d ^ 2 + (-1)) * d + (-1)) * d + (-1)) * d + (1)) * d + (-1))
+      * d + (-1)))) * b + (((((((((((1) * c + ((-1) * d)) * c + ((1) * d)) * c + (((1) * d + (-1)) * d + (1))) * c + ((1)
+      * d + (-1))) * c + ((((-1) * d + (1)) * d + (1)) * d ^ 2 + (-1))) * c + ((((((-1) * d + (-1)) * d + (1)) * d + (1))
+      * d + (1)) * d + (1))) * c + (((1) * d + (1)) * d ^ 4 + (-1))) * c + ((((1) * d + (-1)) * d ^ 4 + (1)) * d ^ 2 +
+      (-1))) * c + ((((1) * d ^ 2 + (-1)) * d ^ 4 + (-1)) * d + (-1))) * c + (((((((1) * d + (1)) * d + (-1)) * d + (-1))
+      * d + (-1)) * d + (-1)) * d ^ 2 + (-1))))
+
 set_option maxRecDepth 16384 in
 set_option maxHeartbeats 24000000 in
 /-- The actual closed five-orbit condition confines prime characteristic to
@@ -38,22 +82,22 @@ theorem result {K : Type*} [Field K] (p : ℕ) [CharP K p]
   have h0 : residual a b c d = 0 := hroot
   have h1 : residual (b-a) (c-a) (d-a) (-a) = 0 := by
     have h := congrArg sigma h0
-    dsimp [a, b, c, d, residual] at h ⊢
+    dsimp [a, b, c, d, CarlitzFiveOrbit.residual] at h ⊢
     simp only [map_sub, map_mul, map_one, map_zero, hcycle] at h
     convert h using 1 <;> ring
   have h2 : residual (c-b) (d-b) (-b) (a-b) = 0 := by
     have h := congrArg sigma h1
-    dsimp [a, b, c, d, residual] at h ⊢
+    dsimp [a, b, c, d, CarlitzFiveOrbit.residual] at h ⊢
     simp only [map_sub, map_mul, map_neg, map_one, map_zero, hcycle] at h
     convert h using 1 <;> ring
   have h3 : residual (d-c) (-c) (a-c) (b-c) = 0 := by
     have h := congrArg sigma h2
-    dsimp [a, b, c, d, residual] at h ⊢
+    dsimp [a, b, c, d, CarlitzFiveOrbit.residual] at h ⊢
     simp only [map_sub, map_mul, map_neg, map_one, map_zero, hcycle] at h
     convert h using 1 <;> ring
   have h4 : residual (-d) (a-d) (b-d) (c-d) = 0 := by
     have h := congrArg sigma h3
-    dsimp [a, b, c, d, residual] at h ⊢
+    dsimp [a, b, c, d, CarlitzFiveOrbit.residual] at h ⊢
     simp only [map_sub, map_mul, map_neg, map_one, map_zero, hcycle] at h
     convert h using 1 <;> ring
   let seed (a b c d : K) : K :=
@@ -234,8 +278,8 @@ theorem result {K : Type*} [Field K] (p : ℕ) [CharP K p]
       seed (d-c) (-c) (a-c) (b-c) * residual (d-c) (-c) (a-c) (b-c) +
       seed (-d) (a-d) (b-d) (c-d) * residual (-d) (a-d) (b-d) (c-d) =
       (4673196650932024062540600 : K) := by
-    dsimp [seed, residual]
-    ring
+    unfold seed CarlitzFiveOrbit.residual
+    ring_nf (config := { mode := .raw })
   have hzero : (4673196650932024062540600 : K) = 0 := by
     rw [h0, h1, h2, h3, h4] at hcertificate
     simpa only [mul_zero, add_zero] using hcertificate.symm
@@ -244,59 +288,67 @@ theorem result {K : Type*} [Field K] (p : ℕ) [CharP K p]
   have hne3 : p ≠ 3 := by
     intro heq
     subst p
-    let seed3 (a b c d : K) : K :=
-      ((((((1) * c + (((1) * d + (1)) * d + (-1))) * b + ((((-1) * d + (1)) * d + (-1)) * d)) * b + ((((((1) * c + (-1))
-      * c + ((-1) * d + (1))) * c + ((-1) * d ^ 2 + (-1))) * c + (((((1) * d + (-1)) * d + (-1)) * d + (-1)) * d)) * c +
-      (((((1) * d + (1)) * d + (-1)) * d ^ 2 + (1)) * d + (1)))) * a + ((((((-1) * d + (-1)) * d + (-1)) * c + ((((-1) *
-      d + (-1)) * d + (-1)) * d ^ 2 + (-1))) * b + (((((1) * d ^ 2) * c + ((((1) * d + (-1)) * d + (-1)) * d)) * c +
-      (((-1) * d + (-1)) * d ^ 2 + (-1))) * c + ((-1) * d + (-1)))) * b + (((((((1) * c + ((-1) * d + (-1))) * c + ((-1)
-      * d ^ 2 + (-1))) * c + ((-1) * d ^ 3 + (1))) * c + (((-1) * d ^ 2 + (-1)) * d ^ 2 + (-1))) * c + (((((-1) * d +
-      (-1)) * d + (-1)) * d + (1)) * d + (1))) * c + ((((-1) * d ^ 4 + (-1)) * d + (-1)) * d)))) * a + ((((((((((-1) * d)
-      * c + ((-1) * d ^ 2 + (1))) * c) * b + (((((-1) * d + (1)) * d) * c + ((1) * d ^ 3)) * c + ((1) * d ^ 4))) * b +
-      (((((-1) * c + ((-1) * d)) * c ^ 2 + ((-1) * d ^ 2)) * c + (((1) * d + (1)) * d ^ 2)) * c + (((1) * d + (1)) * d ^
-      3))) * b + ((((((1) * c ^ 2 + (-1)) * c + ((-1) * d ^ 2 + (-1))) * c + ((((-1) * d + (1)) * d + (1)) * d)) * c +
-      (((((1) * d ^ 2 + (1)) * d + (1)) * d + (-1)) * d + (-1))) * c + (((((1) * d + (1)) * d + (-1)) * d + (-1)) * d ^
-      3))) * b + ((((((((1) * d + (-1)) * d) * c + (((-1) * d + (1)) * d + (1))) * c + (((-1) * d ^ 2 + (-1)) * d)) * c +
-      ((((-1) * d + (-1)) * d + (-1)) * d ^ 2)) * c + ((((((1) * d + (-1)) * d ^ 2 + (-1)) * d + (1)) * d + (1)) * d +
-      (-1))) * c + (((((1) * d ^ 3 + (1)) * d + (-1)) * d + (1)) * d ^ 2 + (1)))) * b + ((((((((1) * c + ((1) * d)) * c ^
-      2 + (((-1) * d ^ 2 + (-1)) * d + (-1))) * c + ((((-1) * d + (-1)) * d + (1)) * d + (-1))) * c + ((((-1) * d ^ 2 +
-      (1)) * d + (-1)) * d + (1))) * c + ((((1) * d ^ 4 + (1)) * d + (-1)) * d)) * c + (((((1) * d ^ 3 + (1)) * d + (1))
-      * d ^ 2 + (1)) * d + (-1))) * c + ((((((((1) * d + (-1)) * d + (1)) * d + (1)) * d + (-1)) * d + (1)) * d + (1)) *
-      d))) * b + ((((((((((-1) * c + ((1) * d)) * c + ((1) * d ^ 2 + (1))) * c + ((-1) * d + (1))) * c + ((((-1) * d ^ 2
-      + (-1)) * d + (1)) * d + (-1))) * c + ((-1) * d ^ 5)) * c + (((-1) * d ^ 3 + (-1)) * d + (1))) * c + (((((((1) * d
-      ^ 2 + (1)) * d + (-1)) * d + (-1)) * d + (-1)) * d + (1)) * d + (-1))) * c + ((((((((-1) * d + (-1)) * d + (1)) * d
-      + (-1)) * d + (-1)) * d + (1)) * d + (1)) * d + (1))) * c + (((1) * d ^ 2 + (-1)) * d ^ 4 + (-1))))) * a +
-      (((((((((((1) * d + (1)) * c + (((1) * d + (-1)) * d + (1))) * c + ((-1) * d + (1))) * b + ((((-1) * c + (((1) * d
-      + (-1)) * d + (-1))) * c + ((((-1) * d + (-1)) * d + (-1)) * d)) * c + (((((-1) * d + (-1)) * d + (1)) * d + (-1))
-      * d + (-1)))) * b + (((((-1) * d + (-1)) * c ^ 2 + ((-1) * d + (-1))) * c + ((((1) * d + (1)) * d + (1)) * d +
-      (1))) * c + ((1) * d ^ 4))) * b + (((((((1) * c + ((1) * d)) * c + (-1)) * c + (((1) * d + (-1)) * d + (-1))) * c +
-      ((((1) * d + (-1)) * d + (-1)) * d + (-1))) * c + ((((-1) * d + (-1)) * d ^ 2 + (1)) * d ^ 2 + (1))) * c +
-      ((((((-1) * d + (-1)) * d + (1)) * d + (-1)) * d ^ 2 + (1)) * d))) * b + ((((((((-1) * c + ((1) * d + (1))) * c +
-      ((-1) * d ^ 2 + (-1))) * c + (((1) * d + (1)) * d + (-1))) * c + (((1) * d ^ 2 + (1)) * d + (-1))) * c + ((((1) * d
-      + (1)) * d + (-1)) * d ^ 2 + (1))) * c + (((((-1) * d + (-1)) * d + (-1)) * d ^ 2 + (1)) * d ^ 2 + (1))) * c +
-      ((((((((-1) * d + (1)) * d + (-1)) * d + (-1)) * d + (-1)) * d + (1)) * d + (1)) * d + (-1)))) * b + (((((((((1) *
-      d + (1)) * c + (1)) * c + (((1) * d + (1)) * d ^ 2 + (1))) * c + ((((1) * d + (-1)) * d + (-1)) * d)) * c + ((((1)
-      * d ^ 2 + (-1)) * d + (-1)) * d + (1))) * c + (((((-1) * d ^ 2 + (1)) * d + (-1)) * d + (1)) * d ^ 2 + (1))) * c +
-      ((((((-1) * d + (1)) * d + (1)) * d ^ 2 + (-1)) * d + (-1)) * d ^ 2 + (1))) * c + ((((-1) * d + (-1)) * d ^ 2 +
-      (1)) * d + (1)))) * b + (((((((((-1) * c + ((1) * d + (-1))) * c + (((-1) * d + (1)) * d + (1))) * c + (-1)) * c +
-      ((((1) * d + (-1)) * d ^ 2 + (-1)) * d)) * c + (((1) * d ^ 3 + (1)) * d ^ 2 + (1))) * c ^ 2 + (((((((-1) * d + (1))
-      * d ^ 2 + (1)) * d + (1)) * d + (1)) * d + (1)) * d + (-1))) * c + (((((((-1) * d + (1)) * d + (1)) * d + (-1)) * d
-      + (-1)) * d + (-1)) * d ^ 2 + (1))) * c + (((((((-1) * d ^ 2 + (-1)) * d + (-1)) * d + (-1)) * d + (1)) * d + (-1))
-      * d + (-1)))) * b + (((((((((((1) * c + ((-1) * d)) * c + ((1) * d)) * c + (((1) * d + (-1)) * d + (1))) * c + ((1)
-      * d + (-1))) * c + ((((-1) * d + (1)) * d + (1)) * d ^ 2 + (-1))) * c + ((((((-1) * d + (-1)) * d + (1)) * d + (1))
-      * d + (1)) * d + (1))) * c + (((1) * d + (1)) * d ^ 4 + (-1))) * c + ((((1) * d + (-1)) * d ^ 4 + (1)) * d ^ 2 +
-      (-1))) * c + ((((1) * d ^ 2 + (-1)) * d ^ 4 + (-1)) * d + (-1))) * c + (((((((1) * d + (1)) * d + (-1)) * d + (-1))
-      * d + (-1)) * d + (-1)) * d ^ 2 + (-1))))
+    letI : CommRing (Polynomial (ZMod 3)) := Polynomial.commRing
+    letI : CommRing (Polynomial (Polynomial (ZMod 3))) := Polynomial.commRing
+    letI : CommRing (Polynomial (Polynomial (Polynomial (ZMod 3)))) := Polynomial.commRing
+    letI : CommRing (Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3))))) :=
+      Polynomial.commRing
+    let aP : Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))) :=
+      Polynomial.C (Polynomial.C (Polynomial.C Polynomial.X))
+    let bP : Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))) :=
+      Polynomial.C (Polynomial.C Polynomial.X)
+    let cP : Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))) :=
+      Polynomial.C Polynomial.X
+    let dP : Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))) :=
+      Polynomial.X
+    have hpoly :
+        seed3 (R := Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))))
+          aP bP cP dP * CarlitzFiveOrbit.residual aP bP cP dP +
+        seed3 (R := Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))))
+          (bP-aP) (cP-aP) (dP-aP) (-aP) *
+          CarlitzFiveOrbit.residual (bP-aP) (cP-aP) (dP-aP) (-aP) +
+        seed3 (R := Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))))
+          (cP-bP) (dP-bP) (-bP) (aP-bP) *
+          CarlitzFiveOrbit.residual (cP-bP) (dP-bP) (-bP) (aP-bP) +
+        seed3 (R := Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))))
+          (dP-cP) (-cP) (aP-cP) (bP-cP) *
+          CarlitzFiveOrbit.residual (dP-cP) (-cP) (aP-cP) (bP-cP) +
+        seed3 (R := Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))))
+          (-dP) (aP-dP) (bP-dP) (cP-dP) *
+          CarlitzFiveOrbit.residual (-dP) (aP-dP) (bP-dP) (cP-dP) =
+          (1 : Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3))))) := by
+      unfold seed3 CarlitzFiveOrbit.residual
+      ring_nf (config := { mode := .raw })
+      simp only [Mathlib.Tactic.RingNF.nat_rawCast_1,
+        Mathlib.Tactic.RingNF.nat_rawCast_2,
+        Mathlib.Tactic.RingNF.int_rawCast_neg,
+        add_zero, pow_one]
+      reduce_mod_char
     have hcertificate3 :
-        seed3 a b c d * residual a b c d +
-        seed3 (b-a) (c-a) (d-a) (-a) * residual (b-a) (c-a) (d-a) (-a) +
-        seed3 (c-b) (d-b) (-b) (a-b) * residual (c-b) (d-b) (-b) (a-b) +
-        seed3 (d-c) (-c) (a-c) (b-c) * residual (d-c) (-c) (a-c) (b-c) +
-        seed3 (-d) (a-d) (b-d) (c-d) * residual (-d) (a-d) (b-d) (c-d) = (1 : K) := by
-      dsimp [seed3, residual]
-      ring_nf
-      reduce_mod_char!
-      ring_nf
+        seed3 (R := K) a b c d * CarlitzFiveOrbit.residual a b c d +
+        seed3 (R := K) (b-a) (c-a) (d-a) (-a) *
+          CarlitzFiveOrbit.residual (b-a) (c-a) (d-a) (-a) +
+        seed3 (R := K) (c-b) (d-b) (-b) (a-b) *
+          CarlitzFiveOrbit.residual (c-b) (d-b) (-b) (a-b) +
+        seed3 (R := K) (d-c) (-c) (a-c) (b-c) *
+          CarlitzFiveOrbit.residual (d-c) (-c) (a-c) (b-c) +
+        seed3 (R := K) (-d) (a-d) (b-d) (c-d) *
+          CarlitzFiveOrbit.residual (-d) (a-d) (b-d) (c-d) = (1 : K) := by
+      let eval1 : Polynomial (ZMod 3) →+* K :=
+        Polynomial.eval₂RingHom (ZMod.castHom (dvd_refl 3) K) a
+      let eval2 : Polynomial (Polynomial (ZMod 3)) →+* K :=
+        Polynomial.eval₂RingHom eval1 b
+      let eval3 : Polynomial (Polynomial (Polynomial (ZMod 3))) →+* K :=
+        Polynomial.eval₂RingHom eval2 c
+      let evalP : Polynomial (Polynomial (Polynomial (Polynomial (ZMod 3)))) →+* K :=
+        Polynomial.eval₂RingHom eval3 d
+      have haP : evalP aP = a := by simp [evalP, eval3, eval2, eval1, aP]
+      have hbP : evalP bP = b := by simp [evalP, eval3, eval2, eval1, bP]
+      have hcP : evalP cP = c := by simp [evalP, eval3, eval2, eval1, cP]
+      have hdP : evalP dP = d := by simp [evalP, dP]
+      have hmapped := congrArg evalP hpoly
+      simpa only [seed3, CarlitzFiveOrbit.residual, map_add, map_mul, map_sub,
+        map_neg, map_one, map_pow, map_ofNat, haP, hbP, hcP, hdP] using hmapped
     rw [h0, h1, h2, h3, h4] at hcertificate3
     have hbad : (0 : K) = 1 := by
       simpa only [mul_zero, add_zero] using hcertificate3
