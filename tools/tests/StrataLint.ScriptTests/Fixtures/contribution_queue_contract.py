@@ -550,6 +550,44 @@ class QueueTests(unittest.TestCase):
         self.api.data[ROOT + "/branches/dev/protection"]["required_status_checks"]["strict"] = True
         self.waiting("unsupported_strict_policy")
 
+    @staticmethod
+    def mirrored_ruleset(**parameters):
+        return {"type": "required_status_checks", "ruleset_id": 1, "parameters": {
+            "strict_required_status_checks_policy": False, "do_not_enforce_on_create": True,
+            "required_status_checks": [{"context": "delta", "integration_id": 15368},
+                                       {"context": "push / current", "integration_id": 15368}],
+            **parameters}}
+
+    def test_ruleset_mirroring_protected_required_checks_is_supported(self):
+        self.api.data[ROOT + "/rules/branches/dev"] = [self.mirrored_ruleset()]
+        result = self.scan()
+        self.assertEqual(len(result["prs"]["ready"]), 1)
+        self.assertEqual(result["prs"]["ready"][0]["policy"]["active_rules_count"], 1)
+
+    def test_ruleset_differing_from_protected_required_checks_waits(self):
+        actions = lambda context: {"context": context, "integration_id": 15368}
+        variants = {
+            "strict": [self.mirrored_ruleset(strict_required_status_checks_policy=True)],
+            "extra check": [self.mirrored_ruleset(required_status_checks=[
+                actions("delta"), actions("push / current"), actions("push / engineering")])],
+            "missing check": [self.mirrored_ruleset(required_status_checks=[actions("delta")])],
+            "duplicate check": [self.mirrored_ruleset(required_status_checks=[
+                actions("delta"), actions("delta"), actions("push / current")])],
+            "other app": [self.mirrored_ruleset(required_status_checks=[
+                {"context": "delta", "integration_id": 1}, actions("push / current")])],
+            "any app": [self.mirrored_ruleset(required_status_checks=[
+                {"context": "delta"}, actions("push / current")])],
+            "no parameters": [{"type": "required_status_checks", "ruleset_id": 1, "parameters": None}],
+            "other rule type": [self.mirrored_ruleset(),
+                                {"type": "pull_request", "ruleset_id": 2,
+                                 "parameters": {"required_approving_review_count": 0}}],
+        }
+        for name, rules in variants.items():
+            with self.subTest(name):
+                self.api = FakeGitHub()
+                self.api.data[ROOT + "/rules/branches/dev"] = rules
+                self.waiting("unsupported_rulesets")
+
     def test_focused_selection_does_not_scan_issues_or_other_prs(self):
         result = self.scan(pr_number=7)
         self.assertEqual(len(result["prs"]["ready"]), 1)

@@ -1,0 +1,10 @@
+### 52.7 来源与适用范围
+
+有限词空间、实际预测锥、支撑内条件更新及齐次线性最小性的通用结果归第15节。该节所引 Michael L. Littman、Richard S. Sutton、Satinder Singh，[*Predictive Representations of State*](https://proceedings.neurips.cc/paper_files/paper/2001/file/1e4d36177d71bbb3558e43af9577d70e-Paper.pdf)，NeurIPS 14（2001），给出相应预测表示背景。估计部分使用独立同分布强大数定律及平稳遍历情形的 Birkhoff 定理；其作用只限于明确的统计合同。
+
+本例的拉回函数代数与行为商关系也处于 [ObservableAlgebraClosureDuality](../../../D5/S3/QuantumStates/ObservableAlgebraClosureDuality.lean) 的 `koopman_closure_eq_stable_fiber_algebra` 及 [LeastInvariantObservableAlgebra](../../../D5/S3/Quantum/Dynamics/LeastInvariantObservableAlgebra.lean) 的 `least_invariant_observable_algebra` 所述单个总更新范围内；后者所需有限非空载体与满射读数在这里满足。它们的代数闭包结论不把四维线性空间变成六维，也不自动扩充实际动作、访问权限或统计制备条件。
+
+具体地，前一声明取八点载体 $S$、总更新 $F$ 及等价关系 $q(s)=q(t)$；这是读数映射的核，反身、对称及传递性均由相等给出。后一声明取相同非空有限载体及更新，读数值域为 $\{0,1\}$，而 $(0,0,0)$、$(1,0,0)$ 分别给两值，故读数满射。两条声明的对象为复幺星函数代数；本章实维数四与六、归一化仿射维数三与五由上面的实函数线性独立性、类指标和逆映射证明承担，不以复数域的引用替换实数域证明。
+
+本节六路径实例不由单时刻公平推出独立性、指定 Parry 路径律或任何量子态结论。固定选择器、全部强制动作、逐点特征、初始律期望、完整记录和实际取得分别具有上文声明的任务范围；在同一个实际联合模型内，式（52.15）、（52.16）及（52.20）共同给出完整预测与合法条件化。
+
