@@ -166,9 +166,11 @@ theorem projected_nilpotency_counterexample :
   · ext i j
     fin_cases i <;> fin_cases j <;> rfl
   · constructor
-    · rfl
+    · ext i
+      fin_cases i <;> rfl
     · intro h
       have h30 := congrFun (congrFun h (3 : Fin 4)) (0 : Fin 4)
+      change (1 : ℚ) = 0 at h30
       norm_num at h30
 
 #print axioms source_preserving_schur
