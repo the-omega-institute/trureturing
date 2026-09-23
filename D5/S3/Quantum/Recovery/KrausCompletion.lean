@@ -45,9 +45,10 @@ private theorem sum_row_units (v : b) :
     (∑ j : c, (Matrix.single v j (1 : ℂ))ᴴ * Matrix.single v j (1 : ℂ)) =
       (1 : Matrix c c ℂ) := by
   classical
+  simp only [Matrix.conjTranspose_single, star_one,
+    Matrix.single_mul_single_same, one_mul]
   ext i k
-  simp [Matrix.sum_apply, Matrix.mul_apply, Matrix.single, Matrix.one_apply,
-    Matrix.conjTranspose_apply, eq_comm]
+  simp [Matrix.sum_apply, Matrix.single, Matrix.one_apply]
 
 /-- All discarded rows contribute their exact input effect. -/
 theorem row_reset_gram (v : b) (B : Matrix c a ℂ) :
@@ -63,10 +64,7 @@ private theorem row_unit_sandwich (v : b) (j : c) (X : Matrix c c ℂ) :
     Matrix.single v j (1 : ℂ) * X * (Matrix.single v j (1 : ℂ))ᴴ =
       X j j • Matrix.single v v (1 : ℂ) := by
   classical
-  ext i k
-  by_cases hi : i = v <;> by_cases hk : k = v
-  <;> simp [Matrix.mul_apply, Matrix.single, Matrix.conjTranspose_apply,
-    hi, hk, eq_comm]
+  simp [Matrix.single_mul_mul_single, Matrix.smul_single]
 
 /-- Resetting the rows is exactly a measure-and-prepare map. -/
 theorem row_reset_action (v : b) (B : Matrix c a ℂ) (X : Matrix a a ℂ) :

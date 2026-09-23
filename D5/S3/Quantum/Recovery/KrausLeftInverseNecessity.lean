@@ -67,7 +67,7 @@ theorem identity_kraus_scalar (F : s → Matrix d d ℂ)
   have hoff (i j : d) (hij : i ≠ j) : F a i j = 0 := by
     have h := congrArg (fun M : Matrix d d ℂ => M i j)
       (identity_kraus_commute F hF a (Matrix.single j j (1 : ℂ)))
-    simpa [Matrix.mul_apply, Matrix.single, hij] using h
+    simpa [Matrix.mul_apply, Matrix.single, hij, hij.symm] using h
   ext i j
   by_cases hij : i = j
   · subst j
@@ -111,6 +111,7 @@ theorem left_inverse_error_products (E : s → Matrix n d ℂ)
         _ = _ := by
           simp only [Matrix.conjTranspose_smul, Matrix.conjTranspose_one,
             Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, smul_smul]
+          rw [mul_comm]
 
 /-- The scalar is forced to be the normalized trace, so the error defect is determined by E alone. -/
 theorem left_inverse_normalized_trace_condition (E : s → Matrix n d ℂ)
