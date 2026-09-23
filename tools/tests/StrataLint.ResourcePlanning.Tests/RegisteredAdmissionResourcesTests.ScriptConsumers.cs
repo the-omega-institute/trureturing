@@ -8,6 +8,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("Meta/judge-seed.json", "StrataLint.RepositoryConfiguration.Tests")]
     [InlineData("Meta/package-materials.json", "StrataLint.RepositoryConfiguration.Tests")]
     [InlineData("Meta/ci-resources.json", "StrataLint.Configuration.Tests")]
+    [InlineData("tools/Trureturing.Truth/TruthExportModel.cs", "StrataLint.Configuration.Tests")]
+    [InlineData("tools/Trureturing.Truth/TruthExportModel.cs", "StrataLint.RepositoryConfiguration.Tests")]
     public void EngineeringChangesRetainNewConfigurationConsumers(string path, string consumer)
     {
         foreach (var mode in new[] { "push", "pr" })
