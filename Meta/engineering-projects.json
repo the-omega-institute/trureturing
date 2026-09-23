@@ -1525,7 +1525,7 @@
         "tools/StrataLint.Unregistered/Program.cs",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/ProducerInputFixture.cs",
         "tools/TestSupport/StrataLint.CliTestSupport/RuleFixture.cs",
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml",
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/TestSupport/StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs",
         "tools/TestSupport/StrataLint.NativeReportTestSupport/NativeReportFixture.cs",
         "tools/TestSupport/StrataLint.ProcessTestSupport/TestProcessRunner.cs",
@@ -2397,7 +2397,7 @@
         "tools/scripts/workflow/ci.py",
         "tools/scripts/workflow/ci_plan.py",
         "tools/scripts/workflow/scribe-content-checks.sh",
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml"
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -2620,7 +2620,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml"
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
       ],
       "execution_excludes": [],
       "execution_environment": [
