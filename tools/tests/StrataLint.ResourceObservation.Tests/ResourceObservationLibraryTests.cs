@@ -95,6 +95,7 @@ public sealed class ResourceObservationLibraryTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
+        // Unreadable sources retain the caller supplied observation sequence.
         var missing = Path.Combine(temporary.Path, "missing");
 
         var result = Run(
