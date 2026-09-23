@@ -82,6 +82,7 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
   rcases a with ⟨i, k, a⟩
   simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
+  exact (fiberEquiv U V i k).symm_apply_apply a
 
 /-- Edge counts are not replaced by the support relation. -/
 theorem split_injective : Function.Injective (split U V) := by
