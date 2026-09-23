@@ -126,8 +126,9 @@ class NativeRegTests:
         for name in filter(None, paths):
             self.copy(name)
         # The warm pinned provider supplies checkouts and the real cache
-        # executable. Native cache-get restores the complete upstream closure
-        # once without rebuilding its bootstrap; authored outputs stay private.
+        # executable and resolves its source environment. Native cache-get
+        # restores the complete upstream closure without configuring this cold
+        # authored project first; all authored outputs still build privately.
         from test_native_support import ROOT
         command_started = time.monotonic()
         argv = ['python3', '-B', str(ROOT / 'tools/scripts/worktree/lean_actions.py'),

@@ -79,9 +79,11 @@ def stage_dependency(root, destination):
     """Copy checkouts and the pinned cache executable for private native supply.
 
     The warm provider supplies the real cache executable, avoiding its rebuild.
-    Mathlib cache-get owns archive membership and the complete upstream closure;
-    no module inventory or extension filter selects build products. Supply runs
-    once in the destination. Authored project outputs stay absent.
+    Its existing Lake environment supplies the source search path. Relocate that
+    path to the independent private checkouts instead of configuring the cold
+    authored project just to launch the cache executable. Mathlib cache-get owns
+    archive membership and the complete upstream closure; authored outputs stay
+    absent until their own build.
     """
     paths = native_archive_paths(root, ["dependency"])["dependency"]
     if partition_path(root) != partition_path(destination):
@@ -125,14 +127,25 @@ def stage_dependency(root, destination):
             environment = dict(os.environ)
             lake = environment.get("LAKE_BIN", "lake")
             phases = []
-            def supply(cwd, binary, operation):
-                started = time.monotonic()
-                subprocess.run([lake, "env", str(binary), operation], cwd=cwd,
-                               env=environment, check=True)
-                phases.append(dict(operation=operation, seconds=time.monotonic() - started))
             (staged / ".lake").rename(target)
             try:
-                supply(destination, destination / bootstrap, "get")
+                started = time.monotonic()
+                source_path = subprocess.check_output(
+                    [lake, "env", "printenv", "LEAN_SRC_PATH"], cwd=root,
+                    env=environment, text=True).strip()
+                if not source_path:
+                    raise ValueError("warm dependency source search path is unavailable")
+                relocated = []
+                for entry in source_path.split(os.pathsep):
+                    path = (root / entry).resolve()
+                    relocated.append(str(destination / path.relative_to(root))
+                                     if path.is_relative_to(root) else str(path))
+                environment["LEAN_SRC_PATH"] = os.pathsep.join(relocated)
+                phases.append(dict(operation="environment", seconds=time.monotonic() - started))
+                started = time.monotonic()
+                subprocess.run([str(destination / bootstrap), "get"], cwd=destination,
+                               env=environment, check=True)
+                phases.append(dict(operation="get", seconds=time.monotonic() - started))
                 # Copy the provider's canonical dependency identity only after
                 # native supply succeeds. Ensure still checks that identity and
                 # reports full Mathlib coverage; it need not restore it again.
