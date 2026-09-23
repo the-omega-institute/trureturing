@@ -748,22 +748,22 @@
         "STRATALINT_TEST_ENVIRONMENT"
       ],
       "execution_filemap_paths": [
+        "Blueprint/D5/Result.md",
+        "CLAUDE.md",
+        "D5/ledger.md",
+        "Library/Notes/input.md",
+        "Meta/Digestion/atoms/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "Problems/input.md",
         "README.md",
-        "tools/lean-inspector/README.md",
-        "docs/develop/theory/input.md",
         "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
         "docs/develop/spec/trureturing_engineering_optimization_v1.md",
+        "docs/develop/theory/input.md",
         "docs/reports/a110037-0910/BoundaryProbe.lean",
         "docs/reports/prime-slab-corner-order-0909.json",
-        "Library/Notes/input.md",
-        "Problems/input.md",
-        "Blueprint/D5/Result.md",
-        "D5/ledger.md",
-        "CLAUDE.md",
-        "tools/scripts/workflow/ci_plan.py",
         "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
-        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
-        "Meta/Digestion/atoms/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        "tools/lean-inspector/README.md",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json"
       ]
     },
     {
@@ -846,6 +846,7 @@
         "tools/TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
       "owner": {
@@ -1483,6 +1484,7 @@
         "D5/F/NumberTheory/AdmissionResourceProbe.lean",
         "Directory.Build.props",
         "Directory.Packages.props",
+        "Evidence/D5/values.json",
         "Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json",
         "Meta/Digestion/atoms/sha256/admission-resource-probe",
         "Meta/Digestion/backfill/admission-resource-probe.json",
@@ -1524,11 +1526,11 @@
         "tools/StrataLint.Scribe/packages.lock.json",
         "tools/StrataLint.Unregistered/Program.cs",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/ProducerInputFixture.cs",
-        "tools/TestSupport/StrataLint.CliTestSupport/RuleFixture.cs",
         "tools/TestSupport/StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs",
         "tools/TestSupport/StrataLint.NativeReportTestSupport/NativeReportFixture.cs",
         "tools/TestSupport/StrataLint.ProcessTestSupport/TestProcessRunner.cs",
         "tools/TestSupport/StrataLint.RegistrationTestSupport/EngineeringRegistrationFixture.cs",
+        "tools/TestSupport/StrataLint.RuleTestSupport/RuleFixture.cs",
         "tools/TestSupport/StrataLint.ScriptProcessTestSupport/EngineeringProcess.cs",
         "tools/TestSupport/StrataLint.TestSupport/TestBudgets.cs",
         "tools/Trureturing.Truth/ResourceRoutingProbe.cs",
@@ -1583,6 +1585,7 @@
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/TruthReleaseSelectionTests.cs",
         "tools/tests/StrataLint.ResourcePlanning.Tests/RegisteredAdmissionResourcesTests.cs",
+        "tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs",
         "tools/tests/StrataLint.Scribe.Tests/FileMap/ResourceTests.cs",
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
         "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py",
@@ -1942,12 +1945,12 @@
         "STRATALINT_TEST_ENVIRONMENT"
       ],
       "execution_filemap_paths": [
+        "Meta/Digestion/atoms/sha256/input",
         "README.md",
         "docs/develop/theory/input.md",
-        "Meta/Digestion/atoms/sha256/input",
-        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
-        "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj"
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj"
       ]
     },
     {
@@ -2299,12 +2302,7 @@
       "exclude": [],
       "references": [
         "tools/StrataLint.Cli/StrataLint.Cli.csproj",
-        "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
-        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
-        "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
-        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
-        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
       ],
       "owner": null,
       "owned_test_assembly": null,
@@ -2352,6 +2350,7 @@
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
       "owner": null,
@@ -2854,6 +2853,88 @@
         "tools/scripts/report/report-consumer.sh",
         "tools/scripts/report/report-supervisor.sh",
         "tools/tests/StrataLint.ReportSupervisor.Tests/ReportSupervisorFixture.cs"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
+      "assembly": "StrataLint.RuleTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.RuleTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.RuleTestSupport/Usings.cs",
+        "tools/TestSupport/StrataLint.RuleTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.RuleTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
+      "assembly": "StrataLint.Rules.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Rules.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Rules.Tests",
+      "root_namespace": "StrataLint.Rules.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Rules.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.Rules.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Rules.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Evidence/D5/values.json",
+        "Meta/Digestion/atomizers.toml",
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
       ],
       "execution_excludes": [],
       "execution_environment": [

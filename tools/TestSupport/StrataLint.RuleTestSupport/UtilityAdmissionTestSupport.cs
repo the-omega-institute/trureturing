@@ -1,9 +1,12 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
-internal static class UtilityAdmissionTestSupport
+internal static partial class UtilityAdmissionTestSupport
 {
+    internal const string Claim = "D5/S0/Carrier/Ring.proposed_law";
+    internal const string Result = "D5/S0/Carrier/Ring.refuted_law";
+
     internal static readonly RuleId UtilityRuleId = RuleId.CreateKnown(31);
 
     internal static IReadOnlyList<Diagnostic> EvaluateFirstFreeze(string? utility)
@@ -47,7 +50,7 @@ internal static class UtilityAdmissionTestSupport
             fixture.Files[RuleFixture.FixtureBackfillAtomPath]
                 .Replace(
                     "gid: D5/S0/Carrier/BackfillTarget",
-                    "gid: " + UtilityRefutationTests.Result,
+                    "gid: " + Result,
                     StringComparison.Ordinal)
                 .Replace(
                     "target_statement_id: null",
@@ -68,9 +71,9 @@ internal static class UtilityAdmissionTestSupport
                 new LeanDeclaration("proposed_law", "def", "Prop := False", []),
                 new LeanDeclaration("refuted_law", "theorem", "Not proposed_law", []),
             }),
-            Refutation = new(UtilityRefutationTests.Claim, UtilityRefutationTests.Result, true),
+            Refutation = new(Claim, Result, true),
         };
-        return utility + "; result=" + UtilityRefutationTests.Result + "; claim=" + UtilityRefutationTests.Claim;
+        return utility + "; result=" + Result + "; claim=" + Claim;
     }
 
     internal static string AddExistingFrozenState(RuleFixture fixture)

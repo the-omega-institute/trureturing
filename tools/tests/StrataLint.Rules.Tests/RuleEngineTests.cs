@@ -1,9 +1,8 @@
 using System.Collections.Immutable;
 using System.Text;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Rules.Tests;
 
 public sealed class RuleEngineTests
 {

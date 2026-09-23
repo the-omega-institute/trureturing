@@ -1,16 +1,12 @@
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
 using Trureturing.Truth;
-using static StrataLint.Tests.UtilityAdmissionTestSupport;
+using static StrataLint.TestSupport.UtilityAdmissionTestSupport;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Rules.Tests;
 
 public sealed class UtilityRefutationTests
 {
-    internal const string Claim = "D5/S0/Carrier/Ring.proposed_law";
-    internal const string Result = "D5/S0/Carrier/Ring.refuted_law";
-    internal const string Refutes = "kind=certified-instance; basis=refutes=gid:" + Claim
-        + "; result=" + Result + "; claim=" + Claim;
 
     [Theory]
     [InlineData("ChangedContent")]
@@ -163,16 +159,6 @@ public sealed class UtilityRefutationTests
 
         Assert.Throws<FormatException>(() => RawLeanReportArtifact.Read(
             StructuredCanonicalWriter.WriteJson(root.ToJsonString()).AsSpan(), current));
-    }
-
-    internal static RuleFixture RefutationFixture()
-    {
-        var fixture = OrdinaryInstanceAdmissionTests.InstanceFixture(Refutes);
-        fixture.Reports[RuleFixture.RingPath] = new([], [
-            new("proposed_law", "def", "Prop := False", []),
-            new("refuted_law", "theorem", "Not proposed_law", []),
-        ]) { Refutation = new(Claim, Result, true) };
-        return fixture;
     }
 
     private static UtilityValidationResult Validate(RuleFixture fixture, string phase, string utility = Refutes)

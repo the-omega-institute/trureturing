@@ -1,5 +1,5 @@
 using StrataLint.Engine;
-using static StrataLint.Tests.UtilityAdmissionTestSupport;
+using static StrataLint.TestSupport.UtilityAdmissionTestSupport;
 
 namespace StrataLint.Tests;
 
