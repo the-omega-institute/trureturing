@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Recovery/SpectralRecoveryCorrectness
    mirror-E: none(waiver:finite-spectral-proof)
    anchors: []
-   digest: Any actual finite Kraus left inverse proves correctness of the computed spectral transpose recovery, yielding the full three-way finite-representation criterion. -/
+   utility: none
+   digest: Finite Kraus left inverses certify computed spectral recovery. -/
 
 import D5.S3.Quantum.Recovery.FiniteKrausReversibility
 import D5.S3.Quantum.Recovery.SpectralTransposeRecovery

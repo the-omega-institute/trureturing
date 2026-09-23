@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Recovery/KrausLeftInverseNecessity
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
-   digest: Actual finite Kraus left inversion forces scalar error products, by a positive commutator defect. -/
+   utility: none
+   digest: Finite Kraus left inversion forces scalar error products. -/
 
 import D5.S3.Quantum.Reduction.IsometricCompression
 

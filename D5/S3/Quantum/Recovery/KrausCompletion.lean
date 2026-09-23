@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Recovery/KrausCompletion
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
-   digest: Explicit row-reset Kraus operators complete a support decoder to the canonical CPTP channel. -/
+   utility: none
+   digest: Row-reset Kraus operators complete a support decoder to a CPTP channel. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Reduction.IsometricCompression

@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Recovery/FiniteKrausReversibility
    mirror-E: none(waiver:finite-spectral-proof)
    anchors: []
-   digest: Scalar error products construct a finite normalized Kraus left inverse, and characterize exact reversibility in the finite Kraus representation. -/
+   utility: none
+   digest: Scalar error products characterize finite Kraus reversibility. -/
 
 import D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel

@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Recovery/MatrixUnitDecoder
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
-   digest: Logical matrix units construct basis-free decoder Kraus operators, their support projection, and the full canonical CPTP decoder. -/
+   utility: none
+   digest: Logical matrix units construct a basis-free CPTP decoder. -/
 
 import D5.S3.Quantum.Recovery.KrausCompletion
 

@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Recovery/OrthogonalSyndromeChannel
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
-   digest: Orthogonal syndrome encoding and its explicit full-space decoder are canonical CPTP channels and expose a multiplicative logical algebra. -/
+   utility: none
+   digest: Orthogonal syndrome channels expose a multiplicative logical algebra. -/
 
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
 import D5.S3.Quantum.Recovery.KrausCompletion

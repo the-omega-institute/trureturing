@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Reduction/SourceAwareSchur
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
-   digest: Schur reduction preserves bilinear source response and gauge kernels only with the transformed source, and graph lifting retains the actual Gram metric. -/
+   utility: none
+   digest: Source-aware Schur reduction preserves response, kernels, and graph metrics. -/
 
 import Mathlib.LinearAlgebra.Matrix.SchurComplement
 import Mathlib.Data.Matrix.ColumnRowPartitioned

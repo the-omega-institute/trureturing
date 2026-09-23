@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Transport/MatrixUnitGenerator
    mirror-E: none(waiver:finite-differential-algebra)
    anchors: []
-   digest: A computed averaged matrix-unit derivative generates the complete moving logical algebra; a real-path adapter derives every tangent hypothesis. -/
+   utility: none
+   digest: Matrix-unit derivatives generate the complete moving logical algebra. -/
 
 import D5.S3.Quantum.Recovery.MatrixUnitDecoder
 import Mathlib

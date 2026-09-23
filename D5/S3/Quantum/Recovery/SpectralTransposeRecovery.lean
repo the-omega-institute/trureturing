@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Recovery/SpectralTransposeRecovery
    mirror-E: none(waiver:finite-spectral-proof)
    anchors: []
-   digest: The actual finite spectral pseudoinverse constructs a normalized transpose recovery candidate for every Kraus family, including zero branches. -/
+   utility: none
+   digest: Spectral pseudoinverses construct normalized transpose recovery channels. -/
 
 import D5.S3.Quantum.Recovery.KrausCompletion
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus

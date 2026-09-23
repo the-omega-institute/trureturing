@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Recovery/OrthogonalSyndromeDecoding
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
+   utility: none
    digest: Orthogonal syndrome decoding preserves every logical matrix. -/
 
 import Mathlib

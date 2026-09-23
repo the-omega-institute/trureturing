@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Quantum/Reduction/IsometricCompression
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
-   digest: Isometric compression has an exact positive leakage defect and preserves every finite zero-leakage operator word. -/
+   utility: none
+   digest: Isometric compression exposes leakage and preserves zero-leakage words. -/
 
 import Mathlib
 

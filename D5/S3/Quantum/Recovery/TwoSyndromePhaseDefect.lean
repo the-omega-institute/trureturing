@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Recovery/TwoSyndromePhaseDefect
    mirror-E: none(waiver:finite-algebraic-proof)
    anchors: []
+   utility: none
    digest: A two-syndrome phase mixture loses unit visibility unless its phases agree. -/
 
 import Mathlib
