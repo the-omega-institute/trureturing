@@ -28,7 +28,7 @@ public sealed class StratumAlphabetTests
     {
         var sets = new Dictionary<string, IEnumerable<string>>(StringComparer.Ordinal)
         {
-            ["synthetic"] = [.. Expected, "S5"],
+            ["synthetic"] = Expected,
         };
 
         var finding = Assert.Single(StratumAlphabetPolicy.FindDrift(Expected, sets));
