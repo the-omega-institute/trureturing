@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.LeanReportScript.Tests;
 
 public sealed class LeanInspectorScriptTests
 {

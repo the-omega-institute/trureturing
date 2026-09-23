@@ -4,7 +4,7 @@ using System.Text.Json;
 using StrataLint.Engine;
 using Trureturing.Truth;
 
-namespace StrataLint.Tests;
+namespace StrataLint.LeanReportScript.Tests;
 
 [Collection("Lean report environment")]
 public sealed partial class LeanReportInputScriptTests
@@ -592,11 +592,11 @@ public sealed partial class LeanReportInputScriptTests
 
         internal void InitializeGitRepository()
         {
-            ReviewRegressionTests.RunGit(repository, "init", "--quiet");
-            ReviewRegressionTests.RunGit(repository, "config", "user.email", "stratalint@example.invalid");
-            ReviewRegressionTests.RunGit(repository, "config", "user.name", "StrataLint Tests");
-            ReviewRegressionTests.RunGit(repository, "add", ".");
-            ReviewRegressionTests.RunGit(repository, "commit", "--quiet", "-m", "lean input fixture");
+            TestGit.Run(repository, "init", "--quiet");
+            TestGit.Run(repository, "config", "user.email", "stratalint@example.invalid");
+            TestGit.Run(repository, "config", "user.name", "StrataLint Tests");
+            TestGit.Run(repository, "add", ".");
+            TestGit.Run(repository, "commit", "--quiet", "-m", "lean input fixture");
         }
 
         internal void AssertMemoBehavior((string Sources, string Config) before)
@@ -645,7 +645,7 @@ public sealed partial class LeanReportInputScriptTests
 
         internal void PoisonSourceMemo()
         {
-            var sourceOid = ReviewRegressionTests.RunGit(
+            var sourceOid = TestGit.Run(
                     repository, "rev-parse", "HEAD:D5/Probe.lean")
                 .Trim();
             var lines = File.ReadAllLines(MemoFile);
