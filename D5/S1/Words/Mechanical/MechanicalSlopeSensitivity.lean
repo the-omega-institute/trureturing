@@ -88,7 +88,8 @@ theorem local_slope_disagreement_law
     apply (halpha.intCast_mul hcoeff).ne_int z
     push_cast
     convert hz using 1
-    ring_nf
+    norm_num [Nat.cast_add, Nat.cast_one]
+    ring
   let pairs : Finset (Fin n × Fin n) := Finset.univ.filter (fun p => p.1 ≠ p.2)
   let gaps : Finset ℝ := insert (1 - alpha)
     (Finset.univ.image c ∪ pairs.image (fun p => |c p.1 - c p.2|))
