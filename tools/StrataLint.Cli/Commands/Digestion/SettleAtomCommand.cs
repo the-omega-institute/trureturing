@@ -102,18 +102,25 @@ internal static partial class SettleAtomCommand
         var closure = DigestionDecomposition.ValidatedClosure([target.AtomId], entries, snapshot,
             TheoryAtomizerDataLoader.Load(snapshot));
         closure.Remove(target.AtomId);
-        var lean = AcceptedLeanClosure.CreateWithoutReport();
+        DigestionLedgerEvaluation evaluation;
         if (closure.Any(id => !entries[id].Coverage.IsEmpty))
         {
             if (reportSource is null) throw Invalid("CHAIN_INCOMPLETE", "covered descendants require a current Lean report");
-            lean = LeanClosureValidator.Validate(snapshot, reportSource.Load(snapshot)) switch
+            var lean = LeanClosureValidator.Validate(snapshot, reportSource.Load(snapshot)) switch
             {
                 LeanValidationOutcome.Accepted accepted => accepted.Capability,
                 LeanValidationOutcome.InfrastructureFailure failure => throw Invalid("CHAIN_INCOMPLETE", failure.Message),
             };
+            evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
+                document, snapshot, lean, baselineDocument: document, validateProjectedStatus: false);
         }
-        var evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
-            document, snapshot, lean, baselineDocument: document, validateProjectedStatus: false);
+        else
+        {
+            // This complete descendant closure has no coverage edges to validate. Keep
+            // unrelated managed Lean inputs outside the report-free receipt evaluation.
+            evaluation = DigestionStatusEvaluator.EvaluateUncovered(DigestionEvaluationScope.FullScan,
+                document, snapshot, baselineDocument: document);
+        }
         var evaluated = evaluation.Entries.ToDictionary(static item => item.Entry.AtomId, StringComparer.Ordinal);
         var streams = new Dictionary<string, DigestionAtomContextProjection.SourceStream>(StringComparer.Ordinal);
         foreach (var id in closure.Order(StringComparer.Ordinal))
