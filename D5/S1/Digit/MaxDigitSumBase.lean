@@ -26,19 +26,12 @@ def IsLeastMaxDigitSumBase (n b : ℕ) : Prop :=
     (∀ c, 1 < c → c < n → digitSum c n ≤ digitSum b n) ∧
     ∀ c, 1 < c → c < b → digitSum c n < digitSum b n
 
-private theorem digitSum_step {b n : ℕ} (hb : 1 < b) :
-    digitSum b n = n % b + digitSum b (n / b) := by
-  rcases Nat.eq_zero_or_pos n with rfl | hn
-  · simp [digitSum]
-  · simp [digitSum, Nat.digits_def' hb hn]
-
-private theorem digitSum_le (b n : ℕ) : digitSum b n ≤ n := Nat.digit_sum_le b n
-
 /-- A quotient that is at least the base loses at least `b - 1` to its digit sum. -/
 private theorem digitSum_add_le {b q : ℕ} (hb : 1 < b) (hq : b ≤ q) :
     digitSum b q + (b - 1) ≤ q := by
-  have hstep := digitSum_step (n := q) hb
-  have hle := digitSum_le b (q / b)
+  have hstep : digitSum b q = q % b + digitSum b (q / b) := by
+    simp [digitSum, Nat.digits_def' hb (show 0 < q by omega)]
+  have hle : digitSum b (q / b) ≤ q / b := Nat.digit_sum_le b (q / b)
   have hdiv := Nat.mod_add_div q b
   have hq1 : 1 ≤ q / b := (Nat.one_le_div_iff (by omega)).2 hq
   have hmul : q / b + (b - 1) ≤ b * (q / b) := by
@@ -50,7 +43,8 @@ private theorem digitSum_add_le {b q : ℕ} (hb : 1 < b) (hq : b ≤ q) :
 /-- Below half of `n > 8`, a base gives strictly less than half of `n`. -/
 private theorem two_mul_digitSum_lt {b n : ℕ} (hb : 1 < b) (h2b : 2 * b ≤ n) (hn : 8 < n) :
     2 * digitSum b n < n := by
-  have hstep := digitSum_step (n := n) hb
+  have hstep : digitSum b n = n % b + digitSum b (n / b) := by
+    simp [digitSum, Nat.digits_def' hb (show 0 < n by omega)]
   have hdiv := Nat.mod_add_div n b
   have hr := Nat.mod_lt n (show 0 < b by omega)
   have hq2 : 2 ≤ n / b := (Nat.le_div_iff_mul_le (by omega)).2 (by linarith)
@@ -64,7 +58,7 @@ private theorem two_mul_digitSum_lt {b n : ℕ} (hb : 1 < b) (h2b : 2 * b ≤ n)
       rw [show c + 2 - 1 = c + 1 by omega]
       nlinarith
     omega
-  · have hle := digitSum_le b q
+  · have hle : digitSum b q ≤ q := Nat.digit_sum_le b q
     have hb4 : 4 ≤ b := by
       by_contra hlt
       have hb3 : b = 2 ∨ b = 3 := by omega
@@ -75,35 +69,6 @@ private theorem two_mul_digitSum_lt {b n : ℕ} (hb : 1 < b) (h2b : 2 * b ≤ n)
       nlinarith
     omega
 
-/-- Above half of `n`, the base-`b` expansion of `n` is the two digits `1, n - b`. -/
-private theorem digitSum_of_half_lt {b n : ℕ} (hbn : b < n) (hnb : n < 2 * b) :
-    digitSum b n = n - b + 1 := by
-  have hb : 1 < b := by omega
-  have hq : n / b = 1 := by
-    apply Nat.div_eq_of_lt_le <;> omega
-  have hr : n % b = n - b := by
-    have := Nat.mod_add_div n b
-    rw [hq] at this
-    omega
-  have h1 : digitSum b 1 = 1 := by
-    rw [digitSum_step hb, Nat.mod_eq_of_lt hb, Nat.div_eq_of_lt hb]
-    simp [digitSum]
-  rw [digitSum_step hb, hq, hr, h1]
-
-private theorem ceil_eq (n : ℕ) : ⌈((n + 1 : ℕ) : ℚ) / 2⌉₊ = n / 2 + 1 := by
-  rw [Nat.ceil_eq_iff (by omega)]
-  have h := Nat.div_add_mod n 2
-  have hm := Nat.mod_lt n (show 0 < 2 by norm_num)
-  constructor
-  · rw [lt_div_iff₀ (by norm_num)]
-    have : ((n / 2 + 1 - 1 : ℕ) : ℚ) = (n / 2 : ℕ) := by congr 1
-    rw [this]
-    have : (n / 2) * 2 < n + 1 := by omega
-    exact_mod_cast this
-  · rw [div_le_iff₀ (by norm_num)]
-    have : n + 1 ≤ (n / 2 + 1) * 2 := by omega
-    exact_mod_cast this
-
 /-- Irvine's conjecture for OEIS A394431, as a proposition. -/
 def claim : Prop :=
   ∀ n : ℕ, 8 < n → IsLeastMaxDigitSumBase n ⌈((n + 1 : ℕ) : ℚ) / 2⌉₊
@@ -112,15 +77,39 @@ def claim : Prop :=
 `1 < b < n` maximizing the digit sum of `n` is `ceiling((n+1)/2)`. -/
 theorem result (n : ℕ) (hn : 8 < n) :
     IsLeastMaxDigitSumBase n ⌈((n + 1 : ℕ) : ℚ) / 2⌉₊ := by
-  rw [ceil_eq]
-  have hv : digitSum (n / 2 + 1) n = n - (n / 2 + 1) + 1 :=
-    digitSum_of_half_lt (by omega) (by omega)
+  have hceil : ⌈((n + 1 : ℕ) : ℚ) / 2⌉₊ = n / 2 + 1 := by
+    rw [Nat.ceil_eq_iff (by omega)]
+    constructor
+    · rw [lt_div_iff₀ (by norm_num)]
+      have : ((n / 2 + 1 - 1 : ℕ) : ℚ) = (n / 2 : ℕ) := by congr 1
+      rw [this]
+      have : (n / 2) * 2 < n + 1 := by omega
+      exact_mod_cast this
+    · rw [div_le_iff₀ (by norm_num)]
+      have : n + 1 ≤ (n / 2 + 1) * 2 := by omega
+      exact_mod_cast this
+  -- Above half of `n`, the base-`c` expansion of `n` is the two digits `1, n - c`.
+  have hhalf : ∀ c, c < n → n < 2 * c → digitSum c n = n - c + 1 := by
+    intro c hcn hnc
+    have hc : 1 < c := by omega
+    have hq : n / c = 1 := Nat.div_eq_of_lt_le (by omega) (by omega)
+    have hr : n % c = n - c := by
+      have := Nat.mod_add_div n c
+      rw [hq] at this
+      omega
+    have hstep : digitSum c n = n % c + digitSum c (n / c) := by
+      simp [digitSum, Nat.digits_def' hc (show 0 < n by omega)]
+    have h1 : digitSum c 1 = 1 := by
+      simp [digitSum, Nat.digits_def' hc one_pos, Nat.mod_eq_of_lt hc, Nat.div_eq_of_lt hc]
+    rw [hstep, hq, hr, h1]
+  rw [hceil]
+  have hv : digitSum (n / 2 + 1) n = n - (n / 2 + 1) + 1 := hhalf _ (by omega) (by omega)
   refine ⟨by omega, by omega, ?_, ?_⟩
   · intro c hc hcn
     by_cases h2c : 2 * c ≤ n
     · have := two_mul_digitSum_lt hc h2c hn
       omega
-    · rw [digitSum_of_half_lt hcn (by omega)]
+    · rw [hhalf c hcn (by omega)]
       omega
   · intro c hc hcb
     have := two_mul_digitSum_lt hc (by omega) hn
