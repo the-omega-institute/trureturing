@@ -1633,7 +1633,7 @@ The prediction task consists of the actual update x mapping to vx and specified 
 
 **Proof.** An ordinary Cauchy sequence of integers is eventually constant, by applying the Cauchy condition with distance less than one. In the p-adic metric, compatible residues modulo p^a define Cauchy classes and conversely, giving the inverse-limit completion Z_p. For example the partial geometric sums 1+p+...+p^n converge p-adically to 1/(1-p), which is not an integer for p>2. The square-precision ring has characteristic p^2, while the residue ring and its dual numbers have characteristic p. A unital section would send p*1=0 to p*1!=0. This proves the last two assertions. A multiplicative group section constructed below does not contradict the absence of a ring section.
 
-The repository's `CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md`, Sections 1-3, makes the relevant distinction precise: a quotient may have closed updates yet fail a required query; exact task descent requires that all such queries and successor labels be constant on its fibers. The current draft `SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2, treats related real linear dynamics, with additional hypotheses for positive-energy and symplectic conclusions. These frameworks provide a method of selecting state, not an independent WSS prime-distribution theorem.
+The repository's `CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md`, Sections 1-3, makes the relevant distinction precise: a quotient may have closed updates yet fail a required query; exact task descent requires that all such queries and successor labels be constant on its fibers. `SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2, treats related real linear dynamics, with additional hypotheses for positive-energy and symplectic conclusions. These frameworks provide a method of selecting state, not an independent WSS prime-distribution theorem.
 
 #### SJC.2 The exact square-precision state and drift
 
@@ -1747,7 +1747,7 @@ The real flow exp(tcS) is Hamiltonian with quadratic Hessian -JcS, which is inde
 
 **Proof.** The matrix identities follow by multiplication. The eigenvalues of S are sqrt(5) and -sqrt(5), and exp(cS) has eigenvalues phi^2 and phi^(-2) on the same eigenlines as B, proving the exponential identity. The matrix cS has trace zero and is Hamiltonian in dimension two; -JcS is symmetric with eigenvalues 2log(phi) and -2log(phi), so the energy is indefinite. If a positive-definite Q satisfied B^TQB=Q, its value on a real eigenvector of B with eigenvalue phi^2>1 would both remain fixed and multiply by phi^4, a contradiction.
 
-The positive-energy hypothesis in the draft `SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2.2, is therefore unavailable for this real golden flow. Its automatic symplectic compression and normalized Gibbs conclusions cannot be applied merely because B is symplectic. The basis here is the coordinate swap of CG.5, with the same arithmetic map. Real interpolation adds a legitimate geometric realization but does not alter any p-adic return.
+The positive-energy hypothesis in `SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2.2, is therefore unavailable for this real golden flow. Its automatic symplectic compression and normalized Gibbs conclusions cannot be applied merely because B is symplectic. The basis here is the coordinate swap of CG.5, with the same arithmetic map. Real interpolation adds a legitimate geometric realization but does not alter any p-adic return.
 
 #### SJC.7 A global cyclotomic norm of the canonical torsion trace
 

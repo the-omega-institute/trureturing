@@ -160,9 +160,7 @@ The WSS owner's SJC section reads Katz's Section 4 exact Lie-kernel sequence
 on printed page 3 together with the actual repository task-quotient theory.
 The relevant repository inputs are
 `docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md`, Sections 1-3,
-at inspected dev b603c498c3cdc76478bfb37c2e3c4ea29edb86ed, and the draft
-`docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2,
-at candidate commit29c5504b11a1685c220e0ad2a9705a987fc6cff4 in PR8891.
+and `docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md`, Section 2.
 The former distinguishes update closure from task sufficiency and requires
 actual joint images. The latter's automatic symplectic and thermal results
 require their stated positive-energy hypotheses. Their interpretation as a
@@ -184,8 +182,8 @@ has zero first-order defect; the next trace reads -5r*q_p after division by p.
 These are ordinary finite-ring proofs, not extra Lean conclusions of the
 existing trace-Gram source. The real flow generating multiplication by v
 is symplectic but has indefinite quadratic energy, so positive Gibbs and
-positive-energy compression cannot be imported from PR8891 without new
-hypotheses.
+positive-energy compression cannot be imported from the predictive-completion
+theory without new hypotheses.
 
 This is a task-relative completion of information discarded by reduction.
 The integers with the usual absolute-value metric are already complete;
