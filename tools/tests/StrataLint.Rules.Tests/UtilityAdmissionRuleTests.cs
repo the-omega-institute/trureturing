@@ -1,7 +1,7 @@
 using StrataLint.Engine;
-using static StrataLint.Tests.UtilityAdmissionTestSupport;
+using static StrataLint.TestSupport.UtilityAdmissionTestSupport;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Rules.Tests;
 
 public sealed class UtilityAdmissionRuleTests
 {
@@ -242,12 +242,12 @@ public sealed class UtilityAdmissionRuleTests
     {
         var fixture = new RuleFixture();
         fixture.Files[RuleFixture.RingPath] = WithUtility(fixture.Files[RuleFixture.RingPath],
-            AddRefutationEvidence(fixture, "kind=bounded-enumeration; basis=refutes=gid:" + UtilityRefutationTests.Claim));
+            AddRefutationEvidence(fixture, "kind=bounded-enumeration; basis=refutes=gid:" + UtilityAdmissionTestSupport.Claim));
         var diagnostics = EvaluateFirstFreeze(fixture);
 
         AssertSoftObservation(
             diagnostics,
             "kind=bounded-enumeration basis=refutes "
-            + "target=gid:" + UtilityRefutationTests.Claim);
+            + "target=gid:" + UtilityAdmissionTestSupport.Claim);
     }
 }
