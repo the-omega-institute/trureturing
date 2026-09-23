@@ -1,4 +1,4 @@
-using StrataLint.Cli;
+using StrataLint.FileMap;
 using StrataLint.Scribe;
 
 namespace StrataLint.ArchitectureTests;

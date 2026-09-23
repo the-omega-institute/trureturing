@@ -5,6 +5,7 @@
     <AssemblyName>StrataLint</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../StrataLint.FileMap/StrataLint.FileMap.csproj" />
     <ProjectReference Include="../StrataLint.Configuration/StrataLint.Configuration.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="Tomlyn" />

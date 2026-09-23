@@ -14,6 +14,7 @@
         "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
         "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
         "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
@@ -402,6 +403,7 @@
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
         "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
         "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
@@ -1508,6 +1510,7 @@
         "tools/StrataLint.Engine/Rules/CapacityRule.cs",
         "tools/StrataLint.EngineeringScope/ResourceRoutingProbe.cs",
         "tools/StrataLint.ExecutionEvidence/Changed.cs",
+        "tools/StrataLint.FileMap/FileMapPolicy.cs",
         "tools/StrataLint.InspectionScope/Changed.cs",
         "tools/StrataLint.InspectionScope/MarkdownInspectionScope.cs",
         "tools/StrataLint.Lean/ResourceRoutingProbe.cs",
@@ -1565,12 +1568,14 @@
         "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
         "tools/tests/StrataLint.CiArtifacts.Tests/TransportIdentityTests.cs",
         "tools/tests/StrataLint.CliIntegration.Tests/CurrentDeltaCliContractTests.cs",
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs",
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
         "tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs",
         "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
         "tools/tests/StrataLint.ExecutionEvidence.Tests/Fixtures/infrastructure-skip.trx",
         "tools/tests/StrataLint.ExecutionEvidence.Tests/TestProcessRunnerTests.cs",
+        "tools/tests/StrataLint.FileMap.Tests/FileMapPolicyTests.cs",
         "tools/tests/StrataLint.InspectionScope.Tests/FileMapInspectionScopeTests.cs",
         "tools/tests/StrataLint.Lean.Tests/Native/InspectorNativeTests.cs",
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
@@ -1582,7 +1587,6 @@
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
         "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
@@ -2697,6 +2701,81 @@
       "execution_excludes": null,
       "execution_environment": null,
       "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
+      "assembly": "StrataLint.FileMap",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.FileMap/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.FileMap.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.FileMap",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.FileMap/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.FileMap/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
+      "assembly": "StrataLint.FileMap.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.FileMap.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
+        "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
+        "assembly": "StrataLint.FileMap"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.FileMap.Tests",
+      "root_namespace": "StrataLint.FileMap.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.FileMap.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.FileMap.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
     }
   ],
   "historical_projects": [],

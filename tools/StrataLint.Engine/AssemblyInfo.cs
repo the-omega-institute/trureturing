@@ -27,3 +27,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.CliTestSupport")]
 
 [assembly: InternalsVisibleTo("StrataLint.CliIntegration.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.FileMap")]
+
+[assembly: InternalsVisibleTo("StrataLint.FileMap.Tests")]

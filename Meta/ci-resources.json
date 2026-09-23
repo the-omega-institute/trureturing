@@ -144,6 +144,7 @@
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
         "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
         "tools/tests/StrataLint.ExecutionEvidence.Tests/StrataLint.ExecutionEvidence.Tests.csproj",
+        "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
         "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj",
         "tools/tests/StrataLint.InspectionIntegration.Tests/StrataLint.InspectionIntegration.Tests.csproj",
         "tools/tests/StrataLint.InspectionScope.Tests/StrataLint.InspectionScope.Tests.csproj",
@@ -349,6 +350,14 @@
       "id": "test-execution-evidence",
       "projects": [
         "tools/tests/StrataLint.ExecutionEvidence.Tests/StrataLint.ExecutionEvidence.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-filemap",
+      "projects": [
+        "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj"
       ],
       "checks": [],
       "steps": []
