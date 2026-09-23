@@ -1,0 +1,419 @@
+{
+  "head_antichains": 20,
+  "finite_height_tables": {
+    "b_gt_one": [
+      {
+        "height": 1,
+        "maximum": "3"
+      },
+      {
+        "height": 2,
+        "maximum": "11/3"
+      },
+      {
+        "height": 3,
+        "maximum": "34/9"
+      },
+      {
+        "height": 4,
+        "maximum": "34/9"
+      },
+      {
+        "height": 5,
+        "maximum": "34/9"
+      },
+      {
+        "height": 6,
+        "maximum": "34/9"
+      }
+    ],
+    "b_equal_one_mixed": [
+      {
+        "height": 1,
+        "maximum": "3"
+      },
+      {
+        "height": 2,
+        "maximum": "11/3"
+      },
+      {
+        "height": 3,
+        "maximum": "11/3"
+      },
+      {
+        "height": 4,
+        "maximum": "11/3"
+      },
+      {
+        "height": 5,
+        "maximum": "11/3"
+      },
+      {
+        "height": 6,
+        "maximum": "11/3"
+      }
+    ]
+  },
+  "Bellman_states_checked": 230,
+  "sharp_actual_AP_controls": {
+    "b_gt_one_H1": {
+      "period": 40425,
+      "originals": [
+        {
+          "e": 1,
+          "a": 49,
+          "b": 11,
+          "modulus": 1617,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 35,
+          "b": 11,
+          "modulus": 1155,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 25,
+          "b": 11,
+          "modulus": 825,
+          "residue": 1,
+          "weight": "1"
+        }
+      ],
+      "weighted_point_count": "3",
+      "layout_divisor_count": 36,
+      "rho_atoms": [
+        {
+          "residue": 1,
+          "mass": "1/2"
+        },
+        {
+          "residue": 2,
+          "mass": "1/2"
+        }
+      ],
+      "deletion_loss": "648",
+      "Gram_credit": "648",
+      "Gram_quadratic": "9/2",
+      "weighted_diagonal_quadratic": "9/2",
+      "conditioned_layout_second_moment": "1"
+    },
+    "b_gt_one_H2": {
+      "period": 121275,
+      "originals": [
+        {
+          "e": 1,
+          "a": 49,
+          "b": 11,
+          "modulus": 1617,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 35,
+          "b": 11,
+          "modulus": 1155,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 25,
+          "b": 11,
+          "modulus": 825,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 2,
+          "a": 7,
+          "b": 11,
+          "modulus": 693,
+          "residue": 1,
+          "weight": "1/3"
+        },
+        {
+          "e": 2,
+          "a": 5,
+          "b": 11,
+          "modulus": 495,
+          "residue": 1,
+          "weight": "1/3"
+        }
+      ],
+      "weighted_point_count": "11/3",
+      "layout_divisor_count": 54,
+      "rho_atoms": [
+        {
+          "residue": 1,
+          "mass": "1/2"
+        },
+        {
+          "residue": 2,
+          "mass": "1/2"
+        }
+      ],
+      "deletion_loss": "1458",
+      "Gram_credit": "1458",
+      "Gram_quadratic": "121/18",
+      "weighted_diagonal_quadratic": "121/18",
+      "conditioned_layout_second_moment": "1"
+    },
+    "b_gt_one_H3": {
+      "period": 363825,
+      "originals": [
+        {
+          "e": 1,
+          "a": 49,
+          "b": 11,
+          "modulus": 1617,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 35,
+          "b": 11,
+          "modulus": 1155,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 25,
+          "b": 11,
+          "modulus": 825,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 2,
+          "a": 7,
+          "b": 11,
+          "modulus": 693,
+          "residue": 1,
+          "weight": "1/3"
+        },
+        {
+          "e": 2,
+          "a": 5,
+          "b": 11,
+          "modulus": 495,
+          "residue": 1,
+          "weight": "1/3"
+        },
+        {
+          "e": 3,
+          "a": 1,
+          "b": 11,
+          "modulus": 297,
+          "residue": 1,
+          "weight": "1/9"
+        }
+      ],
+      "weighted_point_count": "34/9",
+      "layout_divisor_count": 72,
+      "rho_atoms": [
+        {
+          "residue": 1,
+          "mass": "1/2"
+        },
+        {
+          "residue": 2,
+          "mass": "1/2"
+        }
+      ],
+      "deletion_loss": "2592",
+      "Gram_credit": "2592",
+      "Gram_quadratic": "578/81",
+      "weighted_diagonal_quadratic": "578/81",
+      "conditioned_layout_second_moment": "1"
+    },
+    "b_equal_one_mixed_H1": {
+      "period": 3675,
+      "originals": [
+        {
+          "e": 1,
+          "a": 49,
+          "b": 1,
+          "modulus": 147,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 35,
+          "b": 1,
+          "modulus": 105,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 25,
+          "b": 1,
+          "modulus": 75,
+          "residue": 1,
+          "weight": "1"
+        }
+      ],
+      "weighted_point_count": "3",
+      "layout_divisor_count": 18,
+      "rho_atoms": [
+        {
+          "residue": 1,
+          "mass": "1/2"
+        },
+        {
+          "residue": 2,
+          "mass": "1/2"
+        }
+      ],
+      "deletion_loss": "162",
+      "Gram_credit": "162",
+      "Gram_quadratic": "9/2",
+      "weighted_diagonal_quadratic": "9/2",
+      "conditioned_layout_second_moment": "1"
+    },
+    "b_equal_one_mixed_H2": {
+      "period": 11025,
+      "originals": [
+        {
+          "e": 1,
+          "a": 49,
+          "b": 1,
+          "modulus": 147,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 35,
+          "b": 1,
+          "modulus": 105,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 25,
+          "b": 1,
+          "modulus": 75,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 2,
+          "a": 7,
+          "b": 1,
+          "modulus": 63,
+          "residue": 1,
+          "weight": "1/3"
+        },
+        {
+          "e": 2,
+          "a": 5,
+          "b": 1,
+          "modulus": 45,
+          "residue": 1,
+          "weight": "1/3"
+        }
+      ],
+      "weighted_point_count": "11/3",
+      "layout_divisor_count": 27,
+      "rho_atoms": [
+        {
+          "residue": 1,
+          "mass": "1/2"
+        },
+        {
+          "residue": 2,
+          "mass": "1/2"
+        }
+      ],
+      "deletion_loss": "729/2",
+      "Gram_credit": "729/2",
+      "Gram_quadratic": "121/18",
+      "weighted_diagonal_quadratic": "121/18",
+      "conditioned_layout_second_moment": "1"
+    },
+    "b_equal_one_mixed_H3": {
+      "period": 11025,
+      "originals": [
+        {
+          "e": 1,
+          "a": 49,
+          "b": 1,
+          "modulus": 147,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 35,
+          "b": 1,
+          "modulus": 105,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 1,
+          "a": 25,
+          "b": 1,
+          "modulus": 75,
+          "residue": 1,
+          "weight": "1"
+        },
+        {
+          "e": 2,
+          "a": 7,
+          "b": 1,
+          "modulus": 63,
+          "residue": 1,
+          "weight": "1/3"
+        },
+        {
+          "e": 2,
+          "a": 5,
+          "b": 1,
+          "modulus": 45,
+          "residue": 1,
+          "weight": "1/3"
+        }
+      ],
+      "weighted_point_count": "11/3",
+      "layout_divisor_count": 27,
+      "rho_atoms": [
+        {
+          "residue": 1,
+          "mass": "1/2"
+        },
+        {
+          "residue": 2,
+          "mass": "1/2"
+        }
+      ],
+      "deletion_loss": "729/2",
+      "Gram_credit": "729/2",
+      "Gram_quadratic": "121/18",
+      "weighted_diagonal_quadratic": "121/18",
+      "conditioned_layout_second_moment": "1"
+    }
+  },
+  "cross_b_overlap_control": {
+    "outside_cofactors": [
+      11,
+      13
+    ],
+    "same_deleted_mass": "1/2",
+    "each_block_credit": "1/2",
+    "invalid_summed_credit": "1",
+    "load": "constant 1"
+  },
+  "scope": "Exact finite controls for ordinary weighted-antichain and same-law Gram arguments. No whole-cover extremality, formal certification, or unrestricted contradiction is asserted."
+}

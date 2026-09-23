@@ -929,3 +929,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Literal product trees and one full root of incidence below five exclude the generic equality cut, giving95/11 for the one-gap incidence-two branch; a117-point sharp network has a good law but no low-incidence blocking subsource](profile-notes/arithmetic/448-literal-product-trees-exclude-the-equality-cut.md)
 
 - [Every literal65/63 equality source has an exact five-column decomposition and one actual private law with Gamma at most25/3; the same law works on any source containing its private structure](profile-notes/arithmetic/449-equality-sources-have-a-private-law-below-nine.md)
+
+- [Weighted original ternary depths have sharp fixed-cofactor bounds34/9 and11/3 with one Gram deletion credit; a702-label actual family separates good head marginals from the uniform outside-lift completion budget](profile-notes/arithmetic/450-weighted-original-depths-and-the-uniform-lift-boundary.md)
