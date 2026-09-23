@@ -40,8 +40,8 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
             configFile="lakefile.toml"))
         self.write("lake-manifest.json", json.dumps(manifest))
         self.ensure()
-        command = ["make", "lean", "LEAN_TARGETS=LeanInformationAudit.Census.Stream "
-                   "LeanInformationAudit.Census.Membership"]
+        command = ["make", "lean", "LEAN_TARGETS=@trureturing/LeanInformationAudit.Census.Stream "
+                   "@trureturing/LeanInformationAudit.Census.Membership"]
         result = self.guarded_command(command, cwd=self.root, env=self.env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         donor = self.root

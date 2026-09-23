@@ -10,10 +10,10 @@ namespace StrataLint.Tests;
 // production reader and dispatch; they make no kernel-proof claim.
 public sealed class DeclaredTemplateReviewTests
 {
-    internal const string Registration = "D5/S0/Carrier/Registration.lean";
+    internal const string Registration = "Reg/D5/S0/Carrier/Registration.lean";
     internal const string Target = "D5/S0/Carrier/Target.lean";
     internal const string Judge = "tools/lean-inspector/LeanInformationAudit/Registry/Assessment.lean";
-    private const string Module = "D5.S0.Carrier.Registration";
+    private const string Module = "Reg.D5.S0.Carrier.Registration";
     private const string TargetModule = "D5.S0.Carrier.Target";
     internal static Dictionary<string, string> PolicyFiles() => new(StringComparer.Ordinal)
     {
@@ -21,7 +21,7 @@ public sealed class DeclaredTemplateReviewTests
         ["lake-manifest.json"] = "{\"packages\":[]}",
         ["lean-report-inputs.json"] = """
             {"schema_version":1,"report_cache_release_semantic_version":9,
-             "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
+             "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true},{"pattern":"Reg/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},
              "config_inputs":{"include":[],"exclude":[]},"producer_scopes":{}}
@@ -45,7 +45,7 @@ public sealed class DeclaredTemplateReviewTests
         files[Target] = "-- synthetic imported theorem source\n";
         files[AdmissionPlanePolicy.FileMapPath] = "schema_version = 2\ninclude = [\"FILEMAP.inputs.toml\"]\n";
         files["Meta/FILEMAP.inputs.toml"] = "schema_version = 2\nfiles = [\n" + string.Join("\n",
-            new[] { ("D5/**", "content"), ("Meta/**", "judge"), ("tools/**", "judge") }
+            new[] { ("D5/**", "content"), ("Reg/**", "content"), ("Meta/**", "judge"), ("tools/**", "judge") }
                 .Select(pair => "{ pattern = \"" + pair.Item1 + "\", admission_plane = \"" + pair.Item2
                     + "\", kind = \"data\", produced_by = \"none\", consumed_by = [\"StrataLint\"], "
                     + "verified_by = [\"StrataLint\"], artifact_id = \"none\", runtime_disposition = \"committed-source\" },"))
