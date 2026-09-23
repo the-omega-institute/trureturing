@@ -185,18 +185,31 @@ public sealed partial class CurrentExecutionContractTests
     }
 
     [Theory]
-    [InlineData("D5/S0/CacheInputProbe.lean", false)]
-    [InlineData("Blueprint/CacheInputProbe.scribe.cs", false)]
-    [InlineData("Meta/Digestion/backfill/cache-input-probe.json", false)]
-    [InlineData("tools/scripts/worktree/lean_actions.py", true)]
-    [InlineData("tools/scripts/worktree/lean_cache_release.py", true)]
-    [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", true)]
-    public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string path, bool invalidates)
+    [InlineData("StrataLint.Cache.Tests", "D5/S0/CacheInputProbe.lean", false)]
+    [InlineData("StrataLint.Cache.Tests", "Blueprint/CacheInputProbe.scribe.cs", false)]
+    [InlineData("StrataLint.Cache.Tests", "Meta/Digestion/backfill/cache-input-probe.json", false)]
+    [InlineData("StrataLint.Cache.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.Cache.Tests", "tools/scripts/agent/header-check.sh", false)]
+    [InlineData("StrataLint.Cache.Tests", "tools/StrataLint.Cli/Commands/RegistryLoader.cs", false)]
+    [InlineData("StrataLint.Cache.Tests", "tools/scripts/worktree/lean_actions.py", true)]
+    [InlineData("StrataLint.Cache.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
+    [InlineData("StrataLint.Cache.Tests", "tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py", true)]
+    [InlineData("StrataLint.Cache.Tests", "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", false)]
+    [InlineData("StrataLint.Cache.Release.Tests", "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", true)]
+    [InlineData("StrataLint.Cache.Release.Tests", "tools/scripts/worktree/lean_actions.py", false)]
+    [InlineData("StrataLint.Cache.Release.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
+    [InlineData("StrataLint.Cache.Native.Tests", "lean-toolchain", true)]
+    [InlineData("StrataLint.Cache.Native.Tests", "tools/scripts/worktree/lean_cache_release.py", false)]
+    [InlineData("StrataLint.HeaderScript.Tests", "tools/scripts/agent/header-check.sh", true)]
+    [InlineData("StrataLint.HeaderScript.Tests", "tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs", true)]
+    [InlineData("StrataLint.HeaderScript.Tests", "tools/scripts/agent/merge-gate.sh", false)]
+    [InlineData("StrataLint.HeaderScript.Tests", "Meta/domains.yaml", false)]
+    public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates)
     {
         using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
         var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
-            == "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj")!;
+            == $"tools/tests/{project}/{project}.csproj")!;
         EditRegistration(fixture, rows =>
         {
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
@@ -207,6 +220,11 @@ public sealed partial class CurrentExecutionContractTests
         var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
         File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
             new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
+        const string sourceInputs = "tools/fixture/SourceInputs.csproj";
+        fixture.Write(sourceInputs, "<Project />\n");
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(sourceInputs, "SourceInputs", "test-support", false,
+                ["tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs"])));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"

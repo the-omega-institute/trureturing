@@ -1,9 +1,10 @@
 using System.Security.Cryptography;
-using System.Text;
 using StrataLint.TestSupport;
 using Xunit;
+using FactAttribute = Xunit.SkippableFactAttribute;
+using TheoryAttribute = Xunit.SkippableTheoryAttribute;
 
-namespace StrataLint.Cache.Tests;
+namespace StrataLint.Cache.Native.Tests;
 
 public sealed class NativeCacheReuseTests
 {
@@ -40,10 +41,10 @@ public sealed class NativeCacheReuseTests
 
         void Build(params string[] options)
         {
-            var result = TestProcessRunner.Run("elan", ["run", toolchain, "lake", "build", .. options], root,
-                TestBudgets.LongWorkflowProcessHangGuard, 1024 * 1024);
-            Assert.True(result.ExitCode == 0,
-                Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+            var result = EngineeringProcess.Process(root, "elan", ["run", toolchain, "lake", "build", .. options],
+                hangGuard: TestBudgets.LongWorkflowProcessHangGuard, maximumOutputBytes: 1024 * 1024);
+            Assert.True(result.Exit == 0,
+                result.Text);
         }
     }
 }
