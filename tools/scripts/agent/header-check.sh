@@ -23,6 +23,7 @@
 #      digest: <一行写完，不得折行> -/
 #
 # 退出码:0 = 全部合规;1 = 有不合规文件(逐条打印)
+# CI 验证仍运行 HeaderScript 项目的全部头部与容量用例。
 __closure_gen() {  # <repo> <file> —— BFS 走 D5 import 传递闭包,打印 generality 为 I/E 的成员
   local repo="$1" start="$2"
   /usr/bin/python3 - "$repo" "$start" <<'PYEOF'
