@@ -275,3 +275,5 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fiv
 ```
 
 Output defaults to JSON on stdout; `--output PATH` selects a file. All new checks remain active under optimization.
+
+[Report461](461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md) retains a query stop-loss numerator for the same source laws and gives nonunit layout bounds below 10 and 14 for five and six actual core primes. It supplies positive-mass completion margins for disjoint parents at least 13 and 17, respectively. This adds information to the numerator comparison; (JC19)–(JC20) remain limitations of the linear estimate stated here, not limitations of the improved comparison.
