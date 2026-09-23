@@ -2,7 +2,7 @@ using StrataLint.Cli;
 using StrataLint.Engine;
 using Xunit.Abstractions;
 
-namespace StrataLint.Tests;
+namespace StrataLint.CoverBatch.Tests;
 
 public sealed partial class CoverBatchCommandTests
 {

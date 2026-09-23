@@ -3,7 +3,7 @@ using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
 // CoverAtomTests.cs 的共享夹具:CoverWorld(15 个测试文件消费)、CoverSpec(11)及其同族记录。
 // 它们此前住在一个以某测试类命名的文件里,消费面却比那个测试类大 ——

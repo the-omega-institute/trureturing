@@ -141,6 +141,7 @@
         "tools/tests/StrataLint.CiArtifacts.Tests/StrataLint.CiArtifacts.Tests.csproj",
         "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
         "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
+        "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj",
         "tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
         "tools/tests/StrataLint.Digestion.Tests/StrataLint.Digestion.Tests.csproj",
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
@@ -342,6 +343,14 @@
       "id": "test-configuration",
       "projects": [
         "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-cover-batch",
+      "projects": [
+        "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj"
       ],
       "checks": [],
       "steps": []

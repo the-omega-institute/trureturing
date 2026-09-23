@@ -51,3 +51,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.RepositoryDigestion.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.SourceAtomizer.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.PlaybookScript.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.CoverBatch.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.CoverTestSupport")]
