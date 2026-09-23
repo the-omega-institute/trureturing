@@ -261,6 +261,8 @@ The resulting seven-core completion certificate does not settle unrestricted Erd
 
 [Report463](463-two-actual-prime-extensions-preserve-a-common-core-law.md) extends this same seven-core law by pure conditioning on new prime coordinates and one joint original-union deletion. It gives an explicit two-prime noncoverage criterion, retaining the unit old cofactor in every genuinely multi-prime new modulus.
 
+[Report466](466-randomized-completion-retains-full-original-survivor-support.md) improves the common query bound to 21−4/3375 using the relative loss/reserve maximum of these same terminal rows. Averaging legal source choices additionally gives a law supported on every original survivor, with lower density one fifth of Haar on that set and the same upper cap455625. The coarser constants and consequences above remain valid.
+
 ## Source anchors and verification boundary
 
 The source is `paper/main.tex` in edition 1.0.1, SHA-256 `73f78621a297650176cb796f763b9279eae9533efedbbb58405efc885ef41bb9`. Its load-bearing interfaces are:

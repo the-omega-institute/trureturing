@@ -1,0 +1,113 @@
+{
+  "scope": "Exact arithmetic of all retained terminal aggregate rows. The maximum below is loss_upper/reserve_lower, not the actual maximum of the stage23/D7 ratio or the actual query invariant.",
+  "certificate_sha256": "a1720cea93f30e04f31db6b49700a7d5c2d0fcfe9dff2f63ea2e3130b08629ac",
+  "source_row_format": [
+    "phase",
+    "configuration",
+    "reserve_lower",
+    "loss_upper"
+  ],
+  "mass_denominator": 135000,
+  "cell_units_per_Haar_unit": 135,
+  "integer_units_per_cell_unit": 1000,
+  "row_count": 28001,
+  "unique_terminal_count": 28001,
+  "phase_counts": {
+    "basic": 16,
+    "basic75": 4,
+    "mixed": 420,
+    "anchor": 184,
+    "coarse": 25840,
+    "spatial": 1003,
+    "pure3": 506,
+    "closing": 28
+  },
+  "minimum_integer_surplus": 4,
+  "maximum_aggregate_loss_reserve_ratio": "16873/16875",
+  "maximum_attainer_count": 4,
+  "maximum_attainers": [
+    {
+      "phase": "coarse",
+      "configuration": [
+        8,
+        1,
+        2,
+        1,
+        0,
+        2,
+        3,
+        2,
+        8
+      ],
+      "reserve_lower": 33750,
+      "loss_upper": 33746,
+      "integer_surplus": 4
+    },
+    {
+      "phase": "coarse",
+      "configuration": [
+        8,
+        1,
+        2,
+        1,
+        0,
+        2,
+        3,
+        5,
+        8
+      ],
+      "reserve_lower": 33750,
+      "loss_upper": 33746,
+      "integer_surplus": 4
+    },
+    {
+      "phase": "coarse",
+      "configuration": [
+        8,
+        1,
+        2,
+        1,
+        0,
+        2,
+        3,
+        8,
+        14
+      ],
+      "reserve_lower": 33750,
+      "loss_upper": 33746,
+      "integer_surplus": 4
+    },
+    {
+      "phase": "coarse",
+      "configuration": [
+        8,
+        1,
+        2,
+        1,
+        0,
+        2,
+        4,
+        8,
+        8
+      ],
+      "reserve_lower": 33750,
+      "loss_upper": 33746,
+      "integer_surplus": 4
+    }
+  ],
+  "query_bound_conditional_on_source_bridge": "70871/3375",
+  "query_gap_below21": "4/3375",
+  "previous_query_bound": "70874/3375",
+  "improvement_from_previous_bound": "1/1125",
+  "common_functional_consequence": "For nonnegative common bounds S=sum(stage7,...,stage19 losses), U=L23 and common reserve R, screening and interpolation imply S+U<=rho*R. Then D7=R-S>0 and U/D7<=(rho*R-S)/(R-S)<=rho. The established query bridge gives R_query<=11+10*rho.",
+  "inherited_proof_obligations": [
+    "Every terminal screen uses the same fixed caps and bounds the same completed-family common functional; its reserve is no larger and each stage-loss upper bound is no smaller than the corresponding common quantity.",
+    "If a screen ignores a budget, its bounds hold uniformly over that budget; all required joint vertices are covered by the retained hierarchy.",
+    "The common reserve is affine in the source interpolation and each stage-loss upper function is convex with the same nonnegative vertex coefficients. Therefore rho*R-sum(stage losses) interpolates as a concave lower ledger.",
+    "The existing fixed-law final-stage bridge controls every query using the same live measure: R_query<=11+10*L23/D7. No query-dependent law or stagewise parameter reselection is introduced."
+  ],
+  "unresolved_stagewise_information": "These rows store only reserve and total loss. They do not supply the individual stage23 loss or D7. The aggregate maximum does not establish the stage23/D7<9/10 criterion for R_query<20.",
+  "source_producer_rerun": false,
+  "geometry_rerun": false,
+  "lean_certification": false
+}

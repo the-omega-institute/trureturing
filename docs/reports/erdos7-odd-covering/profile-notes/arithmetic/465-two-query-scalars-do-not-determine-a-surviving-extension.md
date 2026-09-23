@@ -82,6 +82,8 @@ The falsified claim is: *every actual old survivor law satisfying report462's tw
 
 This does not refute existence of a different admissible old law, the particular source-selected law of report462, a theorem with additional information about that law, or a proof specialised to old support {3,5,7,11,13,17,19}. It is not a counterexample to Erdos #7. A successful general continuation must obtain extra information about the actual seed law, choose it with future phases in view under a valid common-law argument, or use another joint construction. Merely deriving a larger overlap correction from the two scalar certificates cannot guarantee positivity for arbitrary laws satisfying those certificates.
 
+[Report466](466-randomized-completion-retains-full-original-survivor-support.md) constructs a common seven-core law with positive density on every original survivor by averaging legal source choices. It removes this support-trapping failure for that chosen law; it does not prove arbitrary new-prime continuation. The countermodel here concerns the weaker scalar-only interface and remains valid.
+
 The [standalone program](../../frontier/cover-geometry/two_prime_scalar_countermodel.py) enumerates only 616 product cells, retains all 78 original CRT residues, verifies the separate full-period avoiding integer, and checks the exact rational thresholds. The [result data](../../frontier/cover-geometry/two_prime_scalar_countermodel.json) contains this actual class inventory and the finite controls. Its checks use explicit exceptions and remain enabled under optimized Python. Run from the repository root:
 
 ```sh
