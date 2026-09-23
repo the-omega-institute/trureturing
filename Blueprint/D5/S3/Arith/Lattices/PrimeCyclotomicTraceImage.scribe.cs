@@ -85,8 +85,8 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                         Ref(LibraryNoteRef.Create(
                             "D5/L/fretwellroberts2026eisenstein").Value),
                         Text(". Its weight-at-least-three existence results are not "
-                            + "used for the weight-zero family. The current formal "
-                            + "statement, formula and proof source are unchanged.")),
+                            + "used for the weight-zero family or for the integer-image "
+                            + "criterion proved here.")),
                     Paragraph(
                         Text("Single-prime reconstruction and its classical inputs: "),
                         Ref(LibraryNoteRef.Create("D5/L/tanaka2026maass").Value),
@@ -117,18 +117,6 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                             + "identify characteristic p^2 with dual numbers, and do "
                             + "not prove a new WSS prime-family decision.")),
                     Paragraph(
-                        Text("Signed norm bound and the published squarefree equivalence: "),
-                        Ref(LibraryNoteRef.Create("D5/L/katz2015goldeninterfaces").Value),
-                        Text(". SJC.9-SJC.12 explicitly credit Ross-Shen-Cai Corollary "
-                            + "5.1 for the existing squarefree characterization. A "
-                            + "separate ordinary Mobius-product proof strengthens the "
-                            + "height bound on Psi_r(3), giving an integer bound B(r) "
-                            + "and the implication p^2>B(r_p) => q_p!=0. It does not "
-                            + "prove that an unbounded new prime family meets the "
-                            + "inequality. This analytic and valuation argument is "
-                            + "not part of integral_image; no new formal statement "
-                            + "or kernel certification is attached to this reference.")),
-                    Paragraph(
                         Text("Actual split-block depths and the solved exponential input: "),
                         Ref(LibraryNoteRef.Create("D5/L/bugeaud2006lebesguenagell").Value),
                         Text(". TBN and DCE in the existing WSS owner identify every "
@@ -154,8 +142,8 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                             + "Positive density of the unrestricted comparison classes "
                             + "omits the exact Fibonacci period and does not create a "
                             + "WSS witness. These are ordinary related results, not "
-                            + "additional conclusions or proof dependencies of the "
-                            + "unchanged integral_image theorem."))),
+                            + "additional conclusions or proof dependencies of "
+                            + "integral_image."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);

@@ -1905,7 +1905,7 @@ All satisfy the strict inequality, establishing a non-WSS factor in each of thes
 
 #### TBN.6 The infinite consequence and the unclosed branch
 
-**Corollary.** There are infinitely many distinct split primes p with odd h_p, p=3 modulo4, and rho(p)=2*3^s for some s>=2. Within this restricted set, either infinitely many have h_p=1 or infinitely many have odd h_p>=3, or both. At least J distinct primes of those two types combined lie below B_J.
+**Corollary.** There are infinitely many distinct split primes p with odd h_p, p=3 modulo4, and rho(p)=2*3^s for some s>=2. Within this restricted set, either infinitely many have h_p=1 or infinitely many have odd h_p>=3, or both. At least J distinct primes of those two types combined are at most B_J.
 
 **Proof.** Choose a parity witness from each of the J pairwise-coprime blocks B_1,...,B_J. TBN3-TBN4 give all stated properties and ensure distinctness. The blocks increase strictly, so each selected prime is at most B_J. Every positive odd h_p is one or at least three. If the union is infinite at least one of these two subsets is infinite.
 
