@@ -2985,7 +2985,6 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
-        "Evidence/D5/values.json",
         "Meta/Digestion/atomizers.toml",
         "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
       ],

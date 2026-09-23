@@ -1,8 +1,145 @@
+using System.Text.Json.Nodes;
+
 
 namespace StrataLint.FileMap.Tests;
 
 public sealed partial class FileMapPolicyTests
 {
+    private const string EngineeringManifest = "Meta/engineering-projects.json";
+    private const string GeneratedInput = "Generated/output.json";
+
+    [Theory]
+    [InlineData("projects", true)]
+    [InlineData("historical_projects", true)]
+    [InlineData("projects", false)]
+    [InlineData("historical_projects", false)]
+    public void EngineeringPolicyQueriesDoNotReadGeneratedContent(string collection, bool targetExists)
+    {
+        Assert.Empty(InspectEngineeringDependencies(EngineeringQuery(collection).ToJsonString(), targetExists));
+    }
+
+    [Theory]
+    [InlineData("projects", "execution_inputs", false)]
+    [InlineData("projects", "execution_inputs", true)]
+    [InlineData("historical_projects", "execution_inputs", true)]
+    [InlineData("projects", "build_inputs", false)]
+    [InlineData("projects", "build_inputs", true)]
+    [InlineData("historical_projects", "build_inputs", true)]
+    [InlineData("projects", "exclude", true)]
+    [InlineData("projects", "namespace_exclude", true)]
+    [InlineData("projects", "global_namespace_exceptions", true)]
+    public void EngineeringContentReferencesRemainDependenciesAlongsideQueries(string collection, string field, bool query)
+    {
+        var generated = field is "exclude" or "namespace_exclude" or "global_namespace_exceptions"
+            ? "Generated/Fixture.cs" : GeneratedInput;
+        var document = EngineeringQuery(collection, generated);
+        var project = document[collection]![0]!;
+        if (!query) project["execution_filemap_paths"] = new JsonArray();
+        project[field]!.AsArray().Add(generated);
+
+        var finding = Assert.Single(InspectEngineeringDependencies(document.ToJsonString(), generatedInput: generated));
+        Assert.Equal(new FileMapFinding("FILEMAP-DATA-GENERATED-DEPENDENCY", EngineeringManifest,
+            $"machine-readable data references generated artifact {generated}"), finding);
+    }
+
+    [Theory]
+    [InlineData("rule_build_inputs")]
+    [InlineData("test_partition")]
+    public void EngineeringQueriesDoNotHideOtherStringReferences(string field)
+    {
+        var document = EngineeringQuery("projects");
+        if (field == "rule_build_inputs") document[field]!.AsArray().Add(GeneratedInput);
+        else document["projects"]![0]![field] = GeneratedInput;
+        Assert.Single(InspectEngineeringDependencies(document.ToJsonString()));
+    }
+
+    [Fact]
+    public void EngineeringQuerySemanticsRequireTheCanonicalManifestPath()
+    {
+        var findings = InspectEngineeringDependencies(EngineeringQuery("projects").ToJsonString(),
+            manifestPath: "Meta/other-projects.json");
+        Assert.Equal("FILEMAP-DATA-GENERATED-DEPENDENCY", Assert.Single(findings).Code);
+    }
+
+    [Theory]
+    [InlineData("projects", "unknown-field")]
+    [InlineData("historical_projects", "unknown-field")]
+    [InlineData("projects", "duplicate-key")]
+    [InlineData("historical_projects", "duplicate-key")]
+    [InlineData("projects", "invalid-role")]
+    [InlineData("projects", "non-test-role")]
+    [InlineData("historical_projects", "non-test-role")]
+    [InlineData("projects", "wrong-type")]
+    [InlineData("historical_projects", "wrong-type")]
+    [InlineData("projects", "missing-filemap")]
+    [InlineData("historical_projects", "missing-filemap")]
+    [InlineData("projects", "excluded-filemap")]
+    [InlineData("projects", "misplaced-query")]
+    public void InvalidEngineeringSchemaCannotAcquireQuerySemantics(string collection, string defect)
+    {
+        var document = EngineeringQuery(collection);
+        var project = document[collection]![0]!;
+        switch (defect)
+        {
+            case "unknown-field": project["unknown"] = GeneratedInput; break;
+            case "invalid-role": project["role"] = "unknown"; break;
+            case "non-test-role":
+                project["role"] = "test-support";
+                project["ci"] = false;
+                project["test_partition"] = null;
+                break;
+            case "wrong-type": project["execution_filemap_paths"] = GeneratedInput; break;
+            case "missing-filemap": project["execution_inputs"] = new JsonArray(); break;
+            case "excluded-filemap": project["execution_excludes"] = new JsonArray("Meta/**"); break;
+            case "misplaced-query": document["execution_filemap_paths"] = new JsonArray(GeneratedInput); break;
+        }
+        var text = document.ToJsonString();
+        if (defect == "duplicate-key") text = text.Replace("\"version\":1", "\"version\":1,\"version\":1", StringComparison.Ordinal);
+        // Schema rejection also applies when the queried target has no physical body.
+        Assert.Throws<InvalidDataException>(() => InspectEngineeringDependencies(text, targetExists: false));
+    }
+
+    private static JsonNode EngineeringQuery(string collection, string generatedInput = GeneratedInput)
+    {
+        var document = JsonNode.Parse($$"""
+            {"version":1,"rule_build_inputs":[],"projects":[{
+              "path":"tools/tests/Query/Query.csproj","assembly":"Query.Tests",
+              "role":"cross-cutting-test","ci":true,"include":[],"exclude":[],
+              "references":[],"owner":null,"owned_test_assembly":null,
+              "test_partition":"query","root_namespace":"Query",
+              "namespace_exclude":[],"global_namespace_exceptions":[],"build_inputs":[],
+              "execution_inputs":["Meta/FILEMAP.toml"],"execution_excludes":[],
+              "execution_environment":[],"execution_filemap_paths":["{{generatedInput}}"]
+            }],"historical_projects":[]}
+            """)!;
+        if (collection == "historical_projects")
+        {
+            document[collection] = document["projects"]!.DeepClone();
+            document["projects"] = new JsonArray();
+        }
+        return document;
+    }
+
+    private static IReadOnlyList<FileMapFinding> InspectEngineeringDependencies(string source,
+        bool targetExists = true, string manifestPath = EngineeringManifest, string generatedInput = GeneratedInput)
+    {
+        var manifest = Parse(
+            Entry(generatedInput, "generated", "JsonEmitter", "program", "JsonEmitter"),
+            Entry(manifestPath, "data", "none", "loader", "EngineeringProjectRegistry"));
+        string[] paths = targetExists ? [manifestPath, generatedInput] : [manifestPath];
+        var reads = new List<string>();
+        try
+        {
+            return FileMapPolicy.InspectDependencies(manifest, paths, path =>
+            {
+                reads.Add(path);
+                Assert.Equal(manifestPath, path);
+                return source;
+            }, new HashSet<string>([manifestPath], StringComparer.Ordinal));
+        }
+        finally { Assert.Equal(new[] { manifestPath }, reads); }
+    }
+
     [Fact]
     public void DependencyInspectionHandlesLargeUnrelatedDataAgainstCompleteGeneratedIndex()
     {

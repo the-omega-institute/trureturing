@@ -1,6 +1,7 @@
 using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
+using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Configuration;
 using StrataLint.EngineeringScope;
@@ -751,10 +752,13 @@ internal static class FileMapPolicy
 
             if (matches[0].Kind is FileMapKind.Data
                 && !FileMapDocuments.IsPolicyPath(path)
-                && IsMachineDataPath(path)
-                && source.AsSpan().ContainsAny(generatedSearch))
+                && IsMachineDataPath(path))
             {
-                foreach (var generatedPath in generatedPaths.Where(source.Contains))
+                var content = path == EngineeringProjectRegistry.ManifestPath
+                    ? EngineeringContentStrings(source).ToArray() : [source];
+                foreach (var generatedPath in content.Any(text => text.AsSpan().ContainsAny(generatedSearch))
+                    ? generatedPaths.Where(generated => content.Any(text => text.Contains(generated, StringComparison.Ordinal)))
+                    : [])
                 {
                     findings.Add(new FileMapFinding(
                         "FILEMAP-DATA-GENERATED-DEPENDENCY",
@@ -782,6 +786,44 @@ internal static class FileMapPolicy
         }
 
         return findings;
+    }
+
+    private static IEnumerable<string> EngineeringContentStrings(string source)
+    {
+        // Use the same strict schema as execution consumers, without repository binding
+        // or reading query targets. Only these project member arrays are policy queries.
+        _ = EngineeringProjectRegistry.Parse(source);
+        using var document = JsonDocument.Parse(source);
+        foreach (var property in document.RootElement.EnumerateObject())
+        {
+            if (property.Name is "projects" or "historical_projects")
+            {
+                foreach (var project in property.Value.EnumerateArray())
+                foreach (var member in project.EnumerateObject())
+                    if (member.Name != "execution_filemap_paths")
+                        foreach (var value in JsonStrings(member.Value)) yield return value;
+            }
+            else
+                foreach (var value in JsonStrings(property.Value)) yield return value;
+        }
+    }
+
+    private static IEnumerable<string> JsonStrings(JsonElement element)
+    {
+        switch (element.ValueKind)
+        {
+            case JsonValueKind.String:
+                yield return element.GetString()!;
+                break;
+            case JsonValueKind.Array:
+                foreach (var child in element.EnumerateArray())
+                foreach (var value in JsonStrings(child)) yield return value;
+                break;
+            case JsonValueKind.Object:
+                foreach (var property in element.EnumerateObject())
+                foreach (var value in JsonStrings(property.Value)) yield return value;
+                break;
+        }
     }
 
     private static bool IsMachineDataCandidate(string path, FileMapManifest manifest) =>
