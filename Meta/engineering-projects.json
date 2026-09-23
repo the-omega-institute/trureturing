@@ -1552,6 +1552,7 @@
         "tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean",
         "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/MutationMatrix.py",
         "tools/lean-inspector/LeanInformationAuditAnalysis/Tests/WitnessCarriers.lean",
+        "tools/lean-inspector/LeanInformationAuditRegTests/LandedFinite.lean",
         "tools/lean-inspector/lakefile.lean",
         "tools/lean-inspector/native.py",
         "tools/lean-inspector/native_image.c",
