@@ -143,6 +143,8 @@ In either case Lambda=16000 and N<=80000 are valid. Therefore the single cutoff
 
 suffices, independently of all finite core and outside exponent heights. In the first case H is arbitrary finite; in the second case the whole-family H<=5 restriction remains. The weighted tail bound is less than 3^(-250), leaving a positive completion margin in either case. The [fixed early-phase family](456-a-fixed-original-phase-family-has-core-margins-at-all-heights.md) also supplies a good set at arbitrary core heights, allowing the smaller rounded density cap 85 and cutoff 3^256*414^3. Existing Chapter33 already provides stronger bare noncoverage ranges. The additional interface here is the original weighted completion law, on an actual good core support, at a cutoff independent of core exponents.
 
+[Report457](457-finitely-many-early-phases-control-all-core-heights.md) permits arbitrary early cofactor phases above 6125, retaining only 57 specified cofactor patterns in each of the old and first layers. Missing shallow labels are allowed. At all finite heights its actual good set has Haar mass greater than 1/100 and pointwise completion margin 1/50, so the present theorem applies with Lambda=100 and cutoff 3^256*487^3. The shallow phase conditions remain hypotheses.
+
 ## 5. Why arbitrary fixed core marginals cannot have this cutoff
 
 For any outside prime p>=7, p!=5, take Q=5^(p-1). Use the p original 3-free labels
