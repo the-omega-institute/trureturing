@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Xml.Linq;
 using static StrataLint.TestSupport.TestExecutable;
 
-namespace StrataLint.Tests;
+namespace StrataLint.RepositoryTopology.Tests;
 
 public sealed class DotnetTestScriptTests
 {

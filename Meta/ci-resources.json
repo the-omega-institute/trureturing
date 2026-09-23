@@ -161,6 +161,7 @@
         "tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj",
         "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj",
         "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
         "tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj",
         "tools/tests/StrataLint.ResourcePlanning.Tests/StrataLint.ResourcePlanning.Tests.csproj",
         "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
@@ -504,6 +505,14 @@
       "id": "test-repository-contract",
       "projects": [
         "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-repository-topology",
+      "projects": [
+        "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj"
       ],
       "checks": [],
       "steps": []

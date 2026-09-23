@@ -15,6 +15,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             $"tools/tests/{project}/{project}.csproj",
+            RepositoryTopologyProject,
         }), Strings(plan["execution"]!["tests"]!));
     }
 }

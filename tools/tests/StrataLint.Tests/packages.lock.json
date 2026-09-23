@@ -160,6 +160,7 @@
         "type": "Project",
         "dependencies": {
           "StrataLint": "[1.0.0, )",
+          "StrataLint.DigestionTestSupport": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
           "xunit": "[2.9.3, )"
         }
