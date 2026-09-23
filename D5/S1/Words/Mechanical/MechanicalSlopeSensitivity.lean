@@ -87,7 +87,8 @@ theorem local_slope_disagreement_law
       omega
     apply (halpha.intCast_mul hcoeff).ne_int z
     push_cast
-    convert hz using 1 <;> ring_nf
+    convert hz using 1
+    ring_nf
   let pairs : Finset (Fin n × Fin n) := Finset.univ.filter (fun p => p.1 ≠ p.2)
   let gaps : Finset ℝ := insert (1 - alpha)
     (Finset.univ.image c ∪ pairs.image (fun p => |c p.1 - c p.2|))
@@ -175,7 +176,10 @@ theorem local_slope_disagreement_law
         constructor
         · linarith
         · have hfract_u : Int.fract t + u ≤ 1 := by linarith
-          linarith
+          calc
+            x + Int.fract t + u = x + (Int.fract t + u) := by ring
+            _ < 1 + 1 := add_lt_add_of_lt_of_le hx.2 hfract_u
+            _ = 2 := by norm_num
       · rw [if_neg h, Int.floor_eq_iff]
         norm_num
         constructor
