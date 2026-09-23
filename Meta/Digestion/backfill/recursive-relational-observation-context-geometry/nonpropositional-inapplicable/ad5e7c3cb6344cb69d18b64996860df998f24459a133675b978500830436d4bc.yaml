@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad5e7c3cb6344cb69d18b64996860df998f24459a133675b978500830436d4bc
+  normalized_sha256: sha256:ad5e7c3cb6344cb69d18b64996860df998f24459a133675b978500830436d4bc
+cas_ref: sha256:ad5e7c3cb6344cb69d18b64996860df998f24459a133675b978500830436d4bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: "All clauses are bind-only under CLAUDE 3.2; no repository GID covering the complete timed high-digit inverse was identified. Use pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d and its Lean v4.33.0 prerequisites: PadicInt.toZModPow, map_add, map_natCast, ZMod.val_lt, ZMod.val_add, ZMod.val_natCast, ZMod.val_injective, Nat.div_lt_iff_lt_mul, Nat.mod_lt, Nat.div_add_mod', Nat.mod_mul_right_div_self, Nat.mul_add_div, Nat.div_eq_of_lt, Nat.div_eq_iff, Nat.mod_eq_of_lt, Nat.mod_self, Finset.mem_filter, Finset.mem_univ, Finset.min'_eq_iff and Nat.sub_sub_self. Instantiate P=p^k>0, z=val(q_(k+1)(x))<P*p, b=z/P and r=z%P. Homomorphism and quotient identities give the carry formula. From r,n<P normalize the carry to 0 or 1; p>=2 makes b and (b+1)%p distinct. The change set is empty for r=0 and otherwise has least index P-r by min'_eq_iff. Subtraction reconstructs r and the quotient/remainder identity reconstructs z. val_injective gives the forward fiber implication; homomorphism rewriting gives the converse. This includes k=0 and wraparound. No new Lean declaration or frozen GID is needed."
+    previous_atom_id: 0601bf15d5fac587eea34bfdec9d2ab275a5c7e46f492aa2e0d5ecb4643670b5
+    next_atom_id: 95ea4fdcec8d9977659ca263b8ed01eb08b4a02fd20e6aa3cded7587871432fc
