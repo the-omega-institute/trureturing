@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace StrataLint.Tests;
+namespace StrataLint.ReportSupervisor.Tests;
 
 // Lean 槽的容量命题独立成篇:它谈的是编排(几个 producer 能同时跑),与同目录那篇谈脚本
 // 契约(退出码、指标、进程树回收)的测试不是同一件事。2026-08-15 因默认槽数由 1 改为 3
@@ -11,7 +11,7 @@ public sealed class ReportSupervisorLeanSlotTests
     public void ConcurrencyFixtureUsesReleaseSignalsInsteadOfElapsedWindows()
     {
         var source = TestRepositoryLayout.ReadAllText(RepositoryRelativePath.Create(
-            "tools/tests/StrataLint.Tests/Commands/ReportSupervisorFixture.cs"));
+            "tools/tests/StrataLint.ReportSupervisor.Tests/ReportSupervisorFixture.cs"));
 
         Assert.DoesNotContain("sleep 1", source, StringComparison.Ordinal);
         Assert.DoesNotContain("sleep 60", source, StringComparison.Ordinal);
