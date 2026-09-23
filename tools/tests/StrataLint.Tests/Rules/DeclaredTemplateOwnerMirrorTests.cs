@@ -230,138 +230,6 @@ public sealed class DeclaredTemplateOwnerMirrorTests
         Assert.All(findings, f => Assert.Equal(AdmissionEffect.Observe, f.Effect));
     }
 
-    private const string SidecarOwner = "Reg/Support/SidecarOwner.lean";
-    private const string Sidecar = "Reg/Support/SidecarBinding.lean";
-
-    [Theory]
-    [InlineData("validated", "DTR-Declared ")]
-    [InlineData("unresolved", "DTR-Evidence ")]
-    [InlineData("missing_slots", "DTR-Undeclared ")]
-    public void changed_sidecar_routes_to_original_occurrence(string mode, string prefix)
-    {
-        var fixture = SidecarFixture();
-        fixture.Mutate(Sidecar, wire =>
-        {
-            var record = wire["records"]![0]!;
-            if (mode == "unresolved")
-            {
-                record["state"] = "declared_unresolved";
-                record["certificate"] = null;
-                record["diagnostic"] = "unresolved";
-            }
-            if (mode == "missing_slots") { record["escape_from"] = null; record["escape_continues"] = null; }
-        });
-        var context = fixture.Context();
-        Assert.Equal(fixture.Before[SidecarOwner], fixture.After[SidecarOwner]);
-        Assert.Equal(new[] { Sidecar }, InformationTemplateSelection.ChangedProducers(context).Select(p => p.Value));
-        Assert.DoesNotContain(RepoPath.CreateKnown(Sidecar),
-            LeanImportClosure.RepositoryPaths(context.Lean.Report, RepoPath.CreateKnown(SidecarOwner)));
-        AssertSidecarFinding(context, prefix);
-        // The unchanged producer is not selected just because Changes names it.
-        fixture.Before[Sidecar] = fixture.After[Sidecar];
-        Assert.Empty(fixture.Findings());
-        fixture.Change(SidecarOwner);
-        Assert.StartsWith(prefix, Assert.Single(fixture.Findings()).Message, StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData("payload")]
-    [InlineData("certificate")]
-    [InlineData("key")]
-    [InlineData("binding_owner")]
-    [InlineData("registration_owner")]
-    [InlineData("missing_original")]
-    [InlineData("duplicate")]
-    [InlineData("inline_claim")]
-    [InlineData("other_sidecar")]
-    [InlineData("statement")]
-    [InlineData("unit")]
-    [InlineData("realization")]
-    public void changed_sidecar_invalid_selected_evidence_is_observed(string mutation)
-    {
-        var fixture = SidecarFixture();
-        if (mutation == "payload")
-            fixture.Reports[Sidecar] = fixture.Reports[Sidecar] with { InformationTemplates = JsonSerializer.SerializeToElement("malformed") };
-        else if (mutation == "missing_original") fixture.AddEmpty(SidecarOwner);
-        else if (mutation == "inline_claim") fixture.AddRegistration(SidecarOwner);
-        else if (mutation == "other_sidecar") fixture.AddSidecar(Other, SidecarOwner);
-        else fixture.Mutate(Sidecar, wire =>
-        {
-            var record = wire["records"]![0]!;
-            switch (mutation)
-            {
-                case "certificate": record["certificate"] = "malformed"; break;
-                case "key": record["key"] = null; break;
-                case "binding_owner": record["binding_source_path"] = Other; break;
-                case "registration_owner": record["registration_source_path"] = Other; break;
-                case "duplicate": wire["records"]!.AsArray().Add(record.DeepClone()); break;
-                case "statement": record["statement_identity"] = new string('f', 64); break;
-                case "unit": record["unit_name"] = "Other.unit"; break;
-                case "realization": record["realization_name"] = "Other.realization"; break;
-            }
-        });
-        AssertSidecarFinding(fixture.Context(), "DTR-Evidence ");
-    }
-
-    [Fact]
-    public void changed_sidecar_selects_exact_occurrence_not_entire_unchanged_owner()
-    {
-        var fixture = SidecarFixture();
-        fixture.AddRegistration(Other);
-        fixture.Mutate(Other, wire => wire["records"]![0]!["certificate"] = "malformed");
-        fixture.Mutate(SidecarOwner, wire =>
-        {
-            // Even another occurrence of the SAME theorem stays unselected.
-            var key = wire["inventory"]![0]!.DeepClone();
-            key["object_arena"] = "Other.arena";
-            key["catalog"] = "Other.catalog";
-            wire["inventory"]!.AsArray().Add(key.DeepClone());
-            wire["registered"]!.AsArray().Add(key.DeepClone());
-            var record = wire["records"]![0]!.DeepClone();
-            record["key"] = key;
-            record["certificate"] = "malformed";
-            wire["records"]!.AsArray().Add(record);
-        });
-        fixture.Changes.Add(Other); // unchanged bytes must not acquire an obligation
-        AssertSidecarFinding(fixture.Context(), "DTR-Declared ");
-    }
-
-    [Fact]
-    public void changed_sidecar_with_own_registration_collects_both_owners_once()
-    {
-        var fixture = SidecarFixture();
-        var overlay = JsonSerializer.SerializeToNode(fixture.Reports[Sidecar].InformationTemplates)!["records"]![0]!.DeepClone();
-        fixture.AddRegistration(Sidecar, "Sidecar.local");
-        fixture.Import(Sidecar, SidecarOwner);
-        fixture.Changes.Clear();
-        fixture.Change(Sidecar);
-        fixture.Mutate(Sidecar, wire => wire["records"]!.AsArray().Add(overlay));
-        AssertDeclared(fixture.Findings(), 2);
-        fixture.Change(SidecarOwner);
-        AssertDeclared(fixture.Findings(), 2);
-    }
-
-    private static Fixture SidecarFixture()
-    {
-        var fixture = new Fixture();
-        fixture.AddRegistration(SidecarOwner, declared: false);
-        fixture.AddSidecar(Sidecar, SidecarOwner);
-        fixture.Change(Sidecar);
-        return fixture;
-    }
-
-    private static void AssertSidecarFinding(DeltaRuleContext context, string prefix)
-    {
-        var finding = Assert.Single(DeclaredTemplateBindingRule.Evaluate(context));
-        Assert.Equal(Sidecar, finding.Path);
-        Assert.StartsWith(prefix, finding.Message, StringComparison.Ordinal);
-        Assert.Equal(AdmissionEffect.Observe, finding.Effect);
-        var dispatched = Assert.Single(RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, context)
-            .Diagnostics.Where(d => d.Message.StartsWith("DTR-", StringComparison.Ordinal)));
-        Assert.Equal(finding.Message, dispatched.Message);
-        Assert.Equal(AdmissionEffect.Observe, dispatched.AdmissionEffect);
-    }
-
     private static void AssertUnregistered(ImmutableArray<RuleFinding> findings)
     {
         Assert.Contains(findings, f => f.Message == "DTR-Unregistered D5.S0.Carrier.Target/" + Theorem);
@@ -410,7 +278,7 @@ public sealed class DeclaredTemplateOwnerMirrorTests
             var module = InformationTemplateEvidence.ModuleForSource(path);
             var template = Report(Files(), count: 1, declared: declared).Files[RepoPath.CreateKnown(Registration)];
             var wire = JsonNode.Parse(template.InformationTemplates!.Value.GetRawText().Replace(
-                Registration, path, StringComparison.Ordinal).Replace("D5.S0.Carrier.Registration", module, StringComparison.Ordinal)
+                Registration, path, StringComparison.Ordinal).Replace("Reg.D5.S0.Carrier.Registration", module, StringComparison.Ordinal)
                 .Replace("D5.S0.Carrier.Target.target0", theorem, StringComparison.Ordinal))!;
             Reports[path] = Reports[path] with
             {
@@ -419,20 +287,6 @@ public sealed class DeclaredTemplateOwnerMirrorTests
             };
             if (!Reports[SourceOwner].Declarations.Any(d => d.Name == theorem + ".realization"))
                 Reports[SourceOwner] = Reports[SourceOwner] with { Declarations = Reports[SourceOwner].Declarations.Add(new(theorem + ".realization", "def", "True", [])) };
-        }
-
-        internal void AddSidecar(string path, string owner)
-        {
-            // Synthetic wire follows moduleJson: originals in M, only the claim in S.
-            AddRegistration(path);
-            var claim = JsonSerializer.SerializeToNode(Reports[path].InformationTemplates)!["records"]![0]!.DeepClone();
-            var original = JsonSerializer.SerializeToNode(Reports[owner].InformationTemplates)!["records"]![0]!;
-            claim["key"] = original["key"]!.DeepClone();
-            claim["certificate"]!["key"] = original["key"]!.DeepClone();
-            claim["registration_source_path"] = owner;
-            AddEmpty(path);
-            Import(path, owner);
-            Mutate(path, wire => wire["records"]!.AsArray().Add(claim));
         }
 
         internal void Change(string path) { After[path] += "-- changed\n"; Changes.Add(path); }

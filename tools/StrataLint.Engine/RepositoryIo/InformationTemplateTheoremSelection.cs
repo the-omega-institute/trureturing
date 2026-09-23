@@ -20,9 +20,9 @@ internal static class InformationTemplateTheoremSelection
     }
 
     internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report,
-        RepoPath source, RepoPath owner, ImmutableHashSet<string> theorems, IEnumerable<RepoPath> mirrors)
+        RepoPath source, RepoPath owner, ImmutableHashSet<string> theorems)
     {
-        var universe = InformationTemplateEvidence.Collect(snapshot, report, [owner], theorems, mirrors);
+        var universe = InformationTemplateEvidence.Collect(snapshot, report, [owner], theorems);
         var imports = LeanImportClosure.RepositoryPaths(report, owner);
         foreach (var occurrence in universe.Occurrences.Values)
             if (!imports.Contains(source) || imports.Sum(path => report.Files.TryGetValue(path, out var module)
