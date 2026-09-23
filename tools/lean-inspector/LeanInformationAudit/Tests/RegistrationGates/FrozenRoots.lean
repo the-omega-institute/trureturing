@@ -3,6 +3,7 @@ import D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration
 import LeanInformationAudit.Tests.Seal.M3
+import LeanInformationAudit.Tests.Occurrence.RootCatalog.Ownership
 
 open Lean
 
@@ -38,3 +39,9 @@ run_cmd do
   unless total == 0 do
     throwError "[FAIL] FrozenRootsCompile: {total} IE-C050 findings"
   logInfo "[PASS] FrozenRootsCompile"
+
+-- Actual production integration retains all eleven ownership assertions in
+-- addition to the generic fixture controls in ImportedRealizationOwner.
+run_meta do
+  LeanInformationAudit.Tests.Occurrence.RootCatalog.Ownership.checkImportedOwners
+    `D5.S3.ConceptDynamics.InformationEscape.InformationRoot 11

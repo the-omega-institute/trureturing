@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Records
 
-/- Implementation-owned plans, certificates, and record computations.
+/- Implementation-owned plans and record computations.
 Stable declaration records are defined in the Interface package. -/
 namespace LeanInformationAudit
 
@@ -243,13 +243,6 @@ def substitutePlan (body argument : PlanNode) (fuel : Nat := 524288) :=
     transform (.substitute expression) (some argument) body 0 0) fuel
 
 end PlanTransform
-
-structure DependencyIdentity where
-  name : Name
-  owner : Name
-  typeIdentity : String
-  bodyIdentity : String
-  deriving Inhabited
 
 structure SourceInput where
   path : String
@@ -569,33 +562,6 @@ def decode (bytes : ByteArray) (allocationBudget : Nat) : Except String (Templat
 end PlanDecoder
 
 end TemplateAudit
-
-structure TemplateBindingCertificate where
-  evidenceRef : String
-  key : TemplateOccurrenceKey
-  planIdentity : String
-  descriptorIdentity : String
-  actualIdentity : String
-  argumentInputs : Array TemplateAudit.DependencyIdentity
-  extractionInputs : Array TemplateAudit.DependencyIdentity
-  escape : EscapeRecordEvidence := {}
-  deriving Inhabited
-
-inductive TemplateBindingResult where
-  | undeclared
-  | declaredUnresolved (diagnostic : String)
-  | declaredValidated (certificate : TemplateBindingCertificate)
-  deriving Inhabited
-
-structure BindingRecord where
-  schemaVersion : Nat := 1
-  compatibilityVersion : Nat := 7
-  occurrence : TemplateOccurrenceEvent
-  descriptor : Option Expr
-  bindingOwner : Option Name
-  result : TemplateBindingResult
-  escape : EscapeRecordEvidence := {}
-  deriving Inhabited
 
 def CatalogKind.artifactName : CatalogKind -> String
   | .canonicalMaximal => "canonical_maximal"

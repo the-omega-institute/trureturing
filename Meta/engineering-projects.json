@@ -652,7 +652,7 @@
         "tools/lean-inspector/native_image.c",
         "tools/lean-inspector/publication.py",
         "tools/lean-inspector/reuse.py",
-        "tools/lean-inspector/tests/*.py",
+        "tools/lean-inspector/tests/**/*.py",
         "tools/lean-inspector-interface/**",
         "tools/tests/StrataLint.Lean.Tests/Fixtures/**",
         "tools/tests/StrataLint.Lean.Tests/Native/*.py",
@@ -661,11 +661,10 @@
         "lake-manifest.json",
         "lakefile.toml",
         "lean-toolchain",
-        "lean-report-inputs.json"
+        "lean-report-inputs.json",
+        "Meta/ci-cache-paths.json"
       ],
-      "execution_excludes": [
-        "tools/scripts/worktree/lean_actions.py"
-      ],
+      "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ],
@@ -1494,6 +1493,7 @@
       ],
       "execution_filemap_paths": [
         "D5/F/NumberTheory/AdmissionResourceProbe.lean",
+        "D5/S0/Carrier/Ring.lean",
         "Directory.Build.props",
         "Directory.Packages.props",
         "Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json",

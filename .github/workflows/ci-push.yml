@@ -193,6 +193,14 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+      - id: dependency
+        if: steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: engineering
         if: steps.keys.outputs.engineering_key != ''
         continue-on-error: true
@@ -208,7 +216,15 @@ jobs:
         if: steps.route.outputs.cache_layers != ''
         env:
           ENGINEERING_KEY: ${{ steps.engineering.outputs.cache-matched-key }}
-        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --engineering-key "$ENGINEERING_KEY"
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --engineering-key "$ENGINEERING_KEY" --dependency-key "$DEPENDENCY_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME"
+      - name: Provision requested Lean dependencies
+        if: contains(steps.route.outputs.cache_layers, 'dependency')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: make lean LEAN_TARGETS=mathlib/Mathlib
       - name: Execute selected stage
         if: steps.route.outputs.required == 'true'
         run: make -C tools engineering SEED_EXPORT=deferred

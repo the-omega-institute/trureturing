@@ -13,6 +13,17 @@ run_cmd do
   let expected := expectedOccurrencesForRoot env designatedInformationRootId
   unless actual.size == 13 && expected.size == 13 do
     throwError "ROOT-B-designated-seal: expected actual=expected=13"
+  -- Preserve the production 11/13 source split alongside the generic split test.
+  let frozen := expectedOccurrencesForRoot env frozenInformationRootId
+  unless frozen.size == 11 && frozen.all (·.registrationModuleName == frozenInformationRootId) do
+    throwError "ROOT-B-snapshot-split: production frozen contributor inventory changed"
+  let sourceCausal := expected.filter (·.registrationModuleName != frozenInformationRootId)
+  unless sourceCausal.size == 2 && sourceCausal.all (fun row =>
+      row.objectArenaName ==
+        `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena &&
+      row.registrationModuleName ==
+        `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration) do
+    throwError "ROOT-B-snapshot-split: production causal source inventory changed"
   let causal := actual.filter (fun row => row.registrationModuleName ==
     `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration)
   let causalArena :=
