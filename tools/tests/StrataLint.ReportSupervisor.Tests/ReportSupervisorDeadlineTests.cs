@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace StrataLint.Tests;
+namespace StrataLint.ReportSupervisor.Tests;
 
 public sealed class ReportSupervisorDeadlineTests
 {

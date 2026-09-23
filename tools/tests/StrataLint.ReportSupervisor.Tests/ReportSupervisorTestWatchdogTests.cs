@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Xunit;
 
-namespace StrataLint.Tests;
+namespace StrataLint.ReportSupervisor.Tests;
 
 public sealed class ReportSupervisorTestWatchdogTests
 {

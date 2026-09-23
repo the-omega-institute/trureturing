@@ -33,3 +33,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.FileMap.Tests")]
 
 [assembly: InternalsVisibleTo("StrataLint.PrScript.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ReportSupervisor.Tests")]

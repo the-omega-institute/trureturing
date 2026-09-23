@@ -2817,6 +2817,49 @@
         "STRATALINT_TEST_ENVIRONMENT"
       ],
       "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj",
+      "assembly": "StrataLint.ReportSupervisor.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.ReportSupervisor.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ReportSupervisor.Tests",
+      "root_namespace": "StrataLint.ReportSupervisor.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.ReportSupervisor.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.ReportSupervisor.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ReportSupervisor.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/scripts/report/report-consumer.sh",
+        "tools/scripts/report/report-supervisor.sh",
+        "tools/tests/StrataLint.ReportSupervisor.Tests/ReportSupervisorFixture.cs"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
     }
   ],
   "historical_projects": [],
