@@ -259,6 +259,8 @@ For any finite outside-prime set disjoint from rK and lying above cutoff \(B\ge3
 
 The resulting seven-core completion certificate does not settle unrestricted Erdős #7, and it is not a new bare finite-prime noncoverage range. [Chapter33](../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md) already contains stronger bare head-and-tail noncoverage results. The additional result here is one supported law with a uniform original-query bound and an explicit distinguished-parent margin. Neither an arbitrary-core induction nor a bound for point-dependent adaptive query choices is proved.
 
+[Report463](463-two-actual-prime-extensions-preserve-a-common-core-law.md) extends this same seven-core law by pure conditioning on new prime coordinates and one joint original-union deletion. It gives an explicit two-prime noncoverage criterion, retaining the unit old cofactor in every genuinely multi-prime new modulus.
+
 ## Source anchors and verification boundary
 
 The source is `paper/main.tex` in edition 1.0.1, SHA-256 `73f78621a297650176cb796f763b9279eae9533efedbbb58405efc885ef41bb9`. Its load-bearing interfaces are:
