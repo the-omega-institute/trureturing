@@ -1,13 +1,10 @@
 import LeanInformationAudit.Registry.Assessment
+import LeanInformationAuditInterface.Store
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
 
-private initialize occurrenceInventory : SimplePersistentEnvExtension TemplateOccurrenceEvent (Array TemplateOccurrenceEvent) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
 private initialize bindingRecords : SimplePersistentEnvExtension BindingRecord (Array BindingRecord) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
-private initialize bindingClaims : SimplePersistentEnvExtension TemplateBindingClaim (Array TemplateBindingClaim) ←
   registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
 
 structure ResolvedDeclaration where
@@ -43,30 +40,7 @@ def withDeclaration (declaration : ResolvedDeclaration)
   try action
   finally modifyEnv (pendingDeclaration.setState · previous)
 
-def inventory (env : Environment) : Array TemplateOccurrenceEvent := occurrenceInventory.getState env
 def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
-
-/-- Origin labels come from the native extension container, separately from
-the owner asserted in a claim. Local claims have the current module as origin. -/
-private def ownedClaims (env : Environment) : Array (Name × TemplateBindingClaim) := Id.run do
-  let mut result := #[]
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for claim in bindingClaims.getModuleEntries env index do
-      result := result.push (owner, claim)
-  for claim in bindingClaims.getEntries env do
-    result := result.push (env.header.mainModule, claim)
-  return result
-
-private def ownedEvents (env : Environment) : Array (Name × TemplateOccurrenceEvent) := Id.run do
-  let mut result := #[]
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for event in occurrenceInventory.getModuleEntries env index do
-      result := result.push (owner, event)
-  for event in (occurrenceInventory.getEntries env).reverse do
-    result := result.push (env.header.mainModule, event)
-  return result
 
 /-- Pure join validation grants no insertion or certification capability.
 Both publication and authoritative assessment consume this same relation. -/
@@ -167,8 +141,8 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
         key := event.key, arena := event.arena, descriptor := declaration.descriptor,
         resolutionDiagnostic := declaration.diagnostic, escapeInput := declaration.escapeInput, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
   let record ← Elab.Command.liftTermElabM <| assess event claim
-  modifyEnv fun current => bindingRecords.addEntry (occurrenceInventory.addEntry current event) record
-  if let some claim := claim then modifyEnv (bindingClaims.addEntry · claim)
+  modifyEnv fun current => bindingRecords.addEntry (addOccurrence current event) record
+  if let some claim := claim then modifyEnv (addClaim · claim)
   if record.result matches .undeclared then logWarning (missingDeclarationDiagnostic event.key)
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
@@ -182,14 +156,14 @@ def declareSidecar (theoremName arena : Name) (catalog : Option Name)
     event.key.objectArena == arena && (catalog.isNone || catalog == some event.key.catalog)
   unless matching.size == 1 do throwError "unclassified_form:dtr.sidecar_occurrence"
   let event := matching[0]!
-  if (bindingClaims.getState env).any (·.key == event.key) then
+  if (claims env).any (·.key == event.key) then
     throwError "unclassified_form:dtr.duplicate_claim"
   let (descriptor, resolutionDiagnostic) ← eraseDescriptor descriptor resolutionDiagnostic
   let claim : TemplateBindingClaim := {
     key := event.key, arena := event.arena, descriptor, resolutionDiagnostic, escapeInput,
     owner := env.header.mainModule }
   let record ← Elab.Command.liftTermElabM <| assess event (some claim)
-  modifyEnv fun current => bindingRecords.addEntry (bindingClaims.addEntry current claim) record
+  modifyEnv fun current => bindingRecords.addEntry (addClaim current claim) record
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
 /-- A realization provider may be imported by its registration source. The
