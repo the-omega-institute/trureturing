@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.LeanReportScript.Tests;
 
 public sealed partial class LeanReportInputScriptTests
 {
