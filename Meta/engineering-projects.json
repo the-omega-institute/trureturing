@@ -1525,7 +1525,7 @@
         "tools/StrataLint.Unregistered/Program.cs",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/ProducerInputFixture.cs",
         "tools/TestSupport/StrataLint.CliTestSupport/RuleFixture.cs",
-        "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml",
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/TestSupport/StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs",
         "tools/TestSupport/StrataLint.NativeReportTestSupport/NativeReportFixture.cs",
         "tools/TestSupport/StrataLint.ProcessTestSupport/TestProcessRunner.cs",
