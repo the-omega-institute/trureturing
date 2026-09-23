@@ -127,11 +127,11 @@ components:
   - id: architecture-tests
     kind: repository-files
     members:
-      - tools/tests/StrataLint.ArchitectureTests/Capabilities/CapabilityConstructionTests.cs
-      - tools/tests/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetPolicy.cs
-      - tools/tests/StrataLint.ArchitectureTests/CanonicalSources/Golden/StratumAlphabetTests.cs
+      - tools/tests/StrataLint.Engine.Tests/Architecture/Capabilities/CapabilityConstructionTests.cs
+      - tools/tests/StrataLint.Engine.Tests/Architecture/CanonicalSources/Golden/StratumAlphabetPolicy.cs
+      - tools/tests/StrataLint.Engine.Tests/Architecture/CanonicalSources/Golden/StratumAlphabetTests.cs
       - tools/tests/StrataLint.ArchitectureTests/Dependencies/DependencyDirectionTests.cs
-      - tools/tests/StrataLint.ArchitectureTests/PublicSurface/EnginePublicSurfaceTests.cs
+      - tools/tests/StrataLint.Engine.Tests/Architecture/PublicSurface/EnginePublicSurfaceTests.cs
       - tools/StrataLint.sln
     judged_by:
       - engineering-ci
