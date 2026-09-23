@@ -1,0 +1,9 @@
+**命题 21.11（合法性及实际严格负值分离）。** 每个 $f_{R,p,q}\in\mathcal E$，其支撑包含于 $[-2R,2R]$。对实际 $\zeta$，既有严格分离结论给
+$$
+\neg\operatorname{RH}
+\Longrightarrow
+\exists R\in\mathbb N_{>0},\ p,q\in\mathbb Q[X],
+\quad Q(f_{R,p,q})<0.
+\tag{21.22}
+$$
+

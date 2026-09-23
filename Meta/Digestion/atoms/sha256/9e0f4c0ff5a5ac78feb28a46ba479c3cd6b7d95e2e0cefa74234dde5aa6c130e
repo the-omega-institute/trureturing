@@ -1,0 +1,8 @@
+**命题 21.7（局部正商与全域正商）。** 当前 $K_n\succeq0$ 足以在
+$V_n/\operatorname{Rad}(B|_{V_n})$ 上定义正内积，但不保证该商保留任意未来测试响应。若 $Q\ge0$ 在整个 $\mathcal E$ 上成立，则
+$$
+\{f\in\mathcal E:Q(f)=0\}=\operatorname{Rad}_{\mathcal E}(B),
+\tag{21.14}
+$$
+商上的型正定，并可按诱导范数完成为 Hilbert 空间。
+
