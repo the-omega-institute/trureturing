@@ -203,3 +203,5 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/dis
 Output defaults to JSON on stdout; `--output PATH` selects a file. Checks remain active in optimized mode.
 
 The source bounds and ordinary deductions do not provide a good-core theorem for an arbitrary finite prime inventory. Absorbing further primes into the core can change its survivor law, cylinder costs and available margin. Nor do (DP8)–(DP17) answer whether arbitrary phases on the original \(\{5,7,11,13\}\) core admit a \(3\)-weighted margin. The parent change supplies a different, fully specified weighted interface. Chapter33 already excludes the displayed bare prime-support range at much smaller cutoffs, so the contribution here is that interface and its one-law tail extension.
+
+[Report460](460-joint-five-prime-moments-give-a-parent-seventeen-completion-margin.md) supplies a stronger joint first-moment consumer of the existing source measures. It extends the weighted interface to any five actual odd core primes with a disjoint distinguished prime at least 17, using one common law and retaining a positive-mass good set. It does not supply arbitrary-core induction.
