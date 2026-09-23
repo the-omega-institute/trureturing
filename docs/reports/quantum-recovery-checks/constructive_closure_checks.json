@@ -1,0 +1,217 @@
+{
+  "status": "passed",
+  "seed": 20260923,
+  "count": 2918,
+  "families": 40,
+  "checks": {
+    "input_TP": {
+      "count": 36,
+      "max_error": 1.3100988702921301e-15,
+      "tolerance": 2e-09
+    },
+    "recovery_TP": {
+      "count": 36,
+      "max_error": 5.111545672058701e-15,
+      "tolerance": 2e-09
+    },
+    "support_pseudoinverse": {
+      "count": 36,
+      "max_error": 3.178236898466536e-15,
+      "tolerance": 2e-09
+    },
+    "Gram_trace": {
+      "count": 36,
+      "max_error": 8.881784197001252e-16,
+      "tolerance": 2e-09
+    },
+    "KL_residual": {
+      "count": 348,
+      "max_error": 5.729526673476652e-16,
+      "tolerance": 2e-09
+    },
+    "logical_identity": {
+      "count": 36,
+      "max_error": 2.9625690092408276e-15,
+      "tolerance": 2e-09
+    },
+    "logical_star": {
+      "count": 168,
+      "max_error": 5.793528428672076e-16,
+      "tolerance": 2e-09
+    },
+    "matrix_unit_law": {
+      "count": 1176,
+      "max_error": 3.3316503017114234e-15,
+      "tolerance": 2e-09
+    },
+    "exact_recovery_all_matrices": {
+      "count": 72,
+      "max_error": 5.273904303169261e-15,
+      "tolerance": 2e-09
+    },
+    "matrixunit_decoder": {
+      "count": 72,
+      "max_error": 1.0756227856336209e-14,
+      "tolerance": 2e-09
+    },
+    "channel_factorization": {
+      "count": 72,
+      "max_error": 4.904586969251941e-15,
+      "tolerance": 2e-09
+    },
+    "decoder_two_formulas": {
+      "count": 36,
+      "max_error": 1.2028159784204187e-14,
+      "tolerance": 2e-09
+    },
+    "global_sqrt_Choi_kraus": {
+      "count": 36,
+      "max_error": 4.5355741853243714e-15,
+      "tolerance": 2e-08
+    },
+    "entangled_reference_recovery": {
+      "count": 36,
+      "max_error": 1.247903969970709e-15,
+      "tolerance": 2e-09
+    },
+    "entropy_added_syndrome": {
+      "count": 36,
+      "max_error": 9.992007221626413e-16,
+      "tolerance": 2e-08
+    },
+    "relative_entropy_preserved": {
+      "count": 36,
+      "max_error": 1.0658141036401503e-14,
+      "tolerance": 2e-08
+    },
+    "Theta_isometry": {
+      "count": 36,
+      "max_error": 9.327006498562284e-15,
+      "tolerance": 2e-09
+    },
+    "Theta_image": {
+      "count": 36,
+      "max_error": 7.840614673196287e-15,
+      "tolerance": 2e-09
+    },
+    "syndrome_trace": {
+      "count": 36,
+      "max_error": 1.332304969062688e-15,
+      "tolerance": 2e-09
+    },
+    "Theta_Q_factorization": {
+      "count": 36,
+      "max_error": 3.551153055016834e-15,
+      "tolerance": 2e-09
+    },
+    "zero_subchannel_TP": {
+      "count": 72,
+      "max_error": 6.264169310135384e-15,
+      "tolerance": 2e-09
+    },
+    "subchannel_recovery": {
+      "count": 72,
+      "max_error": 5.401627244222592e-16,
+      "tolerance": 2e-09
+    },
+    "noncorrectable_recovery_still_TP": {
+      "count": 1,
+      "max_error": 0.0,
+      "tolerance": 2e-09
+    },
+    "Z_anti_part": {
+      "count": 20,
+      "max_error": 9.63298928188884e-15,
+      "tolerance": 2e-09
+    },
+    "K_antihermitian": {
+      "count": 20,
+      "max_error": 7.682862905067752e-15,
+      "tolerance": 2e-09
+    },
+    "K_transports_projection": {
+      "count": 20,
+      "max_error": 7.083421245550131e-15,
+      "tolerance": 2e-09
+    },
+    "K_transports_matrixunits": {
+      "count": 89,
+      "max_error": 9.428248743121714e-15,
+      "tolerance": 2e-09
+    },
+    "Kato_limit": {
+      "count": 7,
+      "max_error": 2.083979852252228e-15,
+      "tolerance": 2e-09
+    },
+    "lifted_instrument_TP": {
+      "count": 20,
+      "max_error": 6.337909139618678e-15,
+      "tolerance": 2e-09
+    },
+    "lifted_branch": {
+      "count": 60,
+      "max_error": 1.777656653980637e-15,
+      "tolerance": 2e-09
+    },
+    "physical_unitary_ODE": {
+      "count": 1,
+      "max_error": 2.8669380799072797e-10,
+      "tolerance": 2e-08
+    },
+    "explicit_evolution_solution": {
+      "count": 1,
+      "max_error": 9.145324079704084e-11,
+      "tolerance": 2e-08
+    },
+    "full_geometric_logical_recovery": {
+      "count": 1,
+      "max_error": 5.4438930982536005e-11,
+      "tolerance": 2e-08
+    },
+    "bad_rank_two": {
+      "count": 24,
+      "max_error": 0.0,
+      "tolerance": 2e-09
+    },
+    "good_rank_two": {
+      "count": 24,
+      "max_error": 0.0,
+      "tolerance": 2e-09
+    },
+    "bad_gap": {
+      "count": 24,
+      "max_error": 4.440892098500626e-16,
+      "tolerance": 2e-09
+    },
+    "good_gap": {
+      "count": 24,
+      "max_error": 9.155133597044475e-16,
+      "tolerance": 2e-09
+    },
+    "sphere_global_decoder": {
+      "count": 24,
+      "max_error": 1.0077973685373809e-15,
+      "tolerance": 2e-09
+    },
+    "controlled_phase_distinguishes": {
+      "count": 1,
+      "max_error": 0.0,
+      "tolerance": 2e-09
+    },
+    "ordinary_global_phase_invisible": {
+      "count": 1,
+      "max_error": 0.0,
+      "tolerance": 2e-09
+    }
+  },
+  "witnesses": {
+    "amplitude_damping_Choi_error": 0.7063740107873185
+  },
+  "versions": {
+    "python": "3.14.4",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1"
+  },
+  "scope": "Finite numerical error probes; no directed interval certification or Lean compilation."
+}

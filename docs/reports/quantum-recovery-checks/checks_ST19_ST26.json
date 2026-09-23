@@ -1,0 +1,324 @@
+{
+  "status": "passed",
+  "seed": 2026091703,
+  "assertion_count": 2635,
+  "families": 38,
+  "checks": {
+    "full_TP": {
+      "count": 48,
+      "max_residual": 4.197019245846976e-15,
+      "tolerance": 3e-10
+    },
+    "completion_TP": {
+      "count": 48,
+      "max_residual": 2.759469077874463e-15,
+      "tolerance": 3e-10
+    },
+    "leakage_PSD": {
+      "count": 48,
+      "max_residual": 2.9552036093033527e-16,
+      "tolerance": 3e-10
+    },
+    "leakage_at_most_one": {
+      "count": 48,
+      "max_residual": 0.0,
+      "tolerance": 3e-10
+    },
+    "completion_Choi_PSD": {
+      "count": 48,
+      "max_residual": 1.7263507029527986e-16,
+      "tolerance": 3e-10
+    },
+    "outcome_effect": {
+      "count": 96,
+      "max_residual": 1.081133614551944e-15,
+      "tolerance": 3e-10
+    },
+    "outcome_reference_marginal": {
+      "count": 96,
+      "max_residual": 5.890350796606584e-16,
+      "tolerance": 3e-10
+    },
+    "state_specific_sharp_bound": {
+      "count": 48,
+      "max_residual": 3.6489021536602067e-16,
+      "tolerance": 3e-10
+    },
+    "uniform_complete_bound": {
+      "count": 48,
+      "max_residual": 3.6489021536602067e-16,
+      "tolerance": 3e-10
+    },
+    "frame_invariance_lambda": {
+      "count": 48,
+      "max_residual": 5.551115123125783e-16,
+      "tolerance": 3e-10
+    },
+    "frame_leak_conjugation": {
+      "count": 96,
+      "max_residual": 6.199024788068235e-16,
+      "tolerance": 3e-10
+    },
+    "frame_completion_covariance": {
+      "count": 96,
+      "max_residual": 5.825929480368852e-16,
+      "tolerance": 3e-10
+    },
+    "sharp_b_achieved": {
+      "count": 11,
+      "max_residual": 3.3306690738754696e-16,
+      "tolerance": 2e-09
+    },
+    "sharp_lambda": {
+      "count": 11,
+      "max_residual": 1.1102230246251565e-16,
+      "tolerance": 3e-10
+    },
+    "coherent_accumulation_probability": {
+      "count": 5,
+      "max_residual": 7.016609515630989e-14,
+      "tolerance": 2e-10
+    },
+    "coherent_accumulation_valid_budget": {
+      "count": 5,
+      "max_residual": 0.0,
+      "tolerance": 3e-10
+    },
+    "adaptive_full_record_state_budget": {
+      "count": 12,
+      "max_residual": 0.0,
+      "tolerance": 3e-10
+    },
+    "adaptive_classical_record_budget": {
+      "count": 12,
+      "max_residual": 0.0,
+      "tolerance": 3e-10
+    },
+    "adaptive_total_probability_real": {
+      "count": 12,
+      "max_residual": 4.440892098500626e-16,
+      "tolerance": 3e-10
+    },
+    "adaptive_total_probability_model": {
+      "count": 12,
+      "max_residual": 4.440892098500626e-16,
+      "tolerance": 3e-10
+    },
+    "compressed_commutator_identity": {
+      "count": 40,
+      "max_residual": 2.921068302113665e-15,
+      "tolerance": 3e-10
+    },
+    "compressed_commutator_bound": {
+      "count": 40,
+      "max_residual": 0.0,
+      "tolerance": 3e-10
+    },
+    "short_time_leakage_coefficient": {
+      "count": 40,
+      "max_residual": 0.00014533620263471365,
+      "tolerance": 0.002
+    },
+    "commuting_full_noncommuting_compression": {
+      "count": 1,
+      "max_residual": 7.850462293418876e-17,
+      "tolerance": 3e-10
+    },
+    "spin_eigenvector": {
+      "count": 48,
+      "max_residual": 1.7554167342883506e-16,
+      "tolerance": 3e-10
+    },
+    "spin_constant_gap": {
+      "count": 48,
+      "max_residual": 4.577566798522237e-16,
+      "tolerance": 3e-10
+    },
+    "north_south_connection": {
+      "count": 48,
+      "max_residual": 2.7755575615628914e-16,
+      "tolerance": 3e-10
+    },
+    "graph_overlap_identity": {
+      "count": 48,
+      "max_residual": 1.1102230246251565e-16,
+      "tolerance": 3e-10
+    },
+    "ambient_shape_scaling_theta": {
+      "count": 240,
+      "max_residual": 3.1401968961995204e-16,
+      "tolerance": 3e-10
+    },
+    "ambient_shape_scaling_phi": {
+      "count": 240,
+      "max_residual": 4.441061501859026e-16,
+      "tolerance": 3e-10
+    },
+    "ambient_curvature_decomposition": {
+      "count": 240,
+      "max_residual": 1.6655658173411744e-15,
+      "tolerance": 3e-10
+    },
+    "normal_energy_density": {
+      "count": 240,
+      "max_residual": 1.7763568394002505e-15,
+      "tolerance": 3e-10
+    },
+    "counterdiabatic_density": {
+      "count": 240,
+      "max_residual": 7.105427357601002e-15,
+      "tolerance": 3e-10
+    },
+    "pointwise_ambient_corrected_bound": {
+      "count": 240,
+      "max_residual": 8.881784197001252e-16,
+      "tolerance": 3e-10
+    },
+    "sphere_Chern_integral": {
+      "count": 1,
+      "max_residual": 0.0,
+      "tolerance": 3e-10
+    },
+    "global_corrected_bound_saturation": {
+      "count": 5,
+      "max_residual": 1.4210854715202004e-14,
+      "tolerance": 3e-10
+    },
+    "antipodal_chart_loss": {
+      "count": 24,
+      "max_residual": 4.440892098500626e-16,
+      "tolerance": 3e-10
+    },
+    "exact_symbolic_identities": {
+      "count": 4,
+      "max_residual": 0,
+      "tolerance": 0
+    }
+  },
+  "witnesses": {
+    "coherent_N4": {
+      "per_step_leakage": 0.14644660940672624,
+      "incorrect_sum_probability": 0.585786437626905,
+      "final_record_error": 1.0,
+      "uncapped_valid_budget": 1.7371184220372797
+    },
+    "coherent_N16": {
+      "per_step_leakage": 0.009607359798384776,
+      "incorrect_sum_probability": 0.15371775677415642,
+      "final_record_error": 1.0000000000000018,
+      "uncapped_valid_budget": 1.6394727932188078
+    },
+    "coherent_N64": {
+      "per_step_leakage": 0.0006022718974138037,
+      "incorrect_sum_probability": 0.038545401434483435,
+      "final_record_error": 1.0000000000000018,
+      "uncapped_valid_budget": 1.5895565543017236
+    },
+    "coherent_N256": {
+      "per_step_leakage": 3.764908042772954e-05,
+      "incorrect_sum_probability": 0.009638164589498762,
+      "final_record_error": 0.9999999999999873,
+      "uncapped_valid_budget": 1.5755833753219344
+    },
+    "coherent_N1024": {
+      "per_step_leakage": 2.353095211914244e-06,
+      "incorrect_sum_probability": 0.0024095694970001857,
+      "final_record_error": 0.9999999999999298,
+      "uncapped_valid_budget": 1.5719991094165389
+    },
+    "adaptive_case0": {
+      "cq_distance": 0.02968992334805172,
+      "classical_TV": 4.7802664968087105e-05,
+      "budget": 0.08537232447972498
+    },
+    "adaptive_case1": {
+      "cq_distance": 0.030700229737906416,
+      "classical_TV": 5.389653511391618e-05,
+      "budget": 0.088452959774938
+    },
+    "adaptive_case2": {
+      "cq_distance": 0.0317483691491078,
+      "classical_TV": 6.030710733365141e-05,
+      "budget": 0.0915363065479152
+    },
+    "adaptive_case3": {
+      "cq_distance": 0.03285440897726101,
+      "classical_TV": 6.703427885238616e-05,
+      "budget": 0.09462235471849756
+    },
+    "adaptive_case4": {
+      "cq_distance": 0.0339731042375338,
+      "classical_TV": 7.40779419647064e-05,
+      "budget": 0.09771109419590646
+    },
+    "adaptive_case5": {
+      "cq_distance": 0.035095026072404015,
+      "classical_TV": 8.143798403649483e-05,
+      "budget": 0.10080251487879018
+    },
+    "adaptive_case6": {
+      "cq_distance": 0.03621864920972101,
+      "classical_TV": 8.911428750665168e-05,
+      "budget": 0.10389660665527069
+    },
+    "adaptive_case7": {
+      "cq_distance": 0.03734350343603752,
+      "classical_TV": 9.71067298892736e-05,
+      "budget": 0.10699335940299018
+    },
+    "adaptive_case8": {
+      "cq_distance": 0.03846938567282657,
+      "classical_TV": 0.00010541518377504833,
+      "budget": 0.11009276298915785
+    },
+    "adaptive_case9": {
+      "cq_distance": 0.03959618898127906,
+      "classical_TV": 0.00011403951683382207,
+      "budget": 0.11319480727059655
+    },
+    "adaptive_case10": {
+      "cq_distance": 0.04072384897431708,
+      "classical_TV": 0.00012297959181657714,
+      "budget": 0.11629948209378976
+    },
+    "adaptive_case11": {
+      "cq_distance": 0.041852322826012395,
+      "classical_TV": 0.00013223526655724988,
+      "budget": 0.1194067772949282
+    },
+    "compressed_commutator_norm": 0.19245008972987526,
+    "ambient_kappa_-1.0": {
+      "normal_energy": 6.283185307179586,
+      "ambient_flux": -0.0,
+      "chern": -1
+    },
+    "ambient_kappa_-0.5": {
+      "normal_energy": 0.0,
+      "ambient_flux": -6.283185307179586,
+      "chern": -1
+    },
+    "ambient_kappa_0.0": {
+      "normal_energy": 6.283185307179586,
+      "ambient_flux": 0.0,
+      "chern": -1
+    },
+    "ambient_kappa_0.3": {
+      "normal_energy": 16.084954386379742,
+      "ambient_flux": 9.801769079200154,
+      "chern": -1
+    },
+    "ambient_kappa_1.0": {
+      "normal_energy": 56.54866776461626,
+      "ambient_flux": 50.26548245743669,
+      "chern": -1
+    }
+  },
+  "scope": "Finite numerical and exact symbolic error probes. No Lean compilation or proof of universal assertions by testing.",
+  "versions": {
+    "python": "3.14.4",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "sympy": "1.14.0"
+  },
+  "script_sha256": "0d3296c71cd7a88303be6719478566b412f02c552b07930acb15be4a35645955"
+}
