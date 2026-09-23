@@ -27,6 +27,7 @@ public sealed partial class CurrentExecutionContractTests
         });
         // Exercise the production fingerprint with the real execution registration;
         // only the fixture's compile inputs and test assembly remain synthetic.
+        RegisterRuntimeSourceOwners(fixture);
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(path => !path.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
@@ -83,6 +84,7 @@ public sealed partial class CurrentExecutionContractTests
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
                 rows[0]![field] = declaration[field]!.DeepClone();
         });
+        RegisterRuntimeSourceOwners(fixture);
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(path => !path.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
         // These are authored governance and content examples. The actual execution
