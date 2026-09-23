@@ -5,12 +5,12 @@ For the fixed worst completed chart of
 the same actual source nu satisfies
 
     nu({x:later-fibre survival s(x)=0}) <= U_source,
-    U_source = 0.016385256975953152... .                  (S1)
+    U_source = 0.01638464152452279... .                  (S1)
 
 The exact fraction is retained in the accompanying result JSON. Compared
 with the previously used source upper Uzero, the strict improvement is
 
-    Uzero-U_source = 0.0000007693170470521132... .         (S2)
+    Uzero-U_source = 0.0000013847684774108173... .         (S2)
 
 This uses the old rational row prices unchanged. It retains shallow
 deletions already present in the actual source but released in the old
@@ -19,7 +19,7 @@ supports measured with the old eta weights.
 
 The source lower bound remains m7=7235955529/450000000000, and
 
-    U_source-m7 = 0.0003053558003975962... >0.             (S3)
+    U_source-m7 = 0.0003047403489672375... >0.             (S3)
 
 Thus the same-source contradiction to coverage remains unproved. The
 result concerns the declared two-centre, seven-old-prime and two-new-prime
@@ -61,27 +61,32 @@ or new source law is introduced here. Deeper pure and mixed deletions only
 decrease the live subkernel.
 
 The completion chooses each selected class outside previously selected
-proper-divisor classes. Consequently its three projections
+proper-divisor classes. Consequently its four projections
 
-    a=r21 mod3, b=r35 mod5, c=r63 mod9
+    a=r21 mod3, b=r35 mod5, c=r63 mod9, d=r105 mod15
 
 belong to
 
-    Phi={1,2} times {1,2,3,4} times {2,4,5,7,8}.        (S5)
+    Phi={1,2} times {1,2,3,4} times {2,4,5,7,8}
+        times {1,4,7,8,11,13,14}.                       (S5)
 
-This has40 elements. A redundant original selected class is moved into its
-free set by the stated source completion. The residue c=4 must be kept:
+This has280 elements. The105 projection must avoid0 mod3,0 mod5 and the
+selected2 mod15. Its other proper-divisor restrictions involve its7 target;
+releasing those restrictions only enlarges the allowed projection domain.
+A redundant original selected class is moved into its free set by the
+stated source completion. The residue c=4 must be kept:
 27 does not divide63. No compatibility between different projected classes
 is discarded by restricting to a smaller domain; S5 is an upper relaxation
 of all their actual legal choices.
 
-Fix one global phi=(a,b,c) before integrating and define
+Fix one global phi=(a,b,c,d) before integrating and define
 
-    s3(h)=1_{h3=a mod3}+1_{h5=b mod5}+1_{h3=c mod9},
-    c_phi(h)=(3s3(h)-4)_+/14.                          (S6)
+    s_phi(h)=1_{h3=a mod3}+1_{h5=b mod5}+1_{h3=c mod9}
+             +1_{h3=d mod3 and h5=d mod5},
+    c_phi(h)=(3s_phi(h)-4)_+/14.                        (S6)
 
-Since s3<=s4, (S4) implies kappa_h(1)<=1-c_phi(h).
-The105 projection is released on the upper side, without choosing it anew
+These are the four actual selected projections, so s_phi=s4 and (S4)
+implies kappa_h(1)<=1-c_phi(h). No projection or target is selected anew
 at different histories.
 
 ## A smaller positive comparison at7
@@ -100,9 +105,9 @@ at split7 baseline0 is its minimum. By (S4) and (S6),
       =integral f d[J7-c_phi(h)*delta_0].               (S7)
 
 The tail comparison in the middle step uses the full-history density cap
-3/2 and the nonnegative increments along each reference path. All three
-possible nonzero credits are compatible with a positive comparison:
-for s3=0,1,2,3 the credit is0,0,1/7,5/14, respectively, at most4/7.
+3/2 and the nonnegative increments along each reference path. All
+credits are compatible with a nonnegative comparison: for s_phi=0,1,2,3,4
+the credit is0,0,1/7,5/14,4/7, respectively. The baseline may be zero.
 
 An upward zero-survival profile set has the required monotonicity. Reverse
 integration over the common coordinates preserves it. At3/5 the measure
@@ -148,21 +153,39 @@ order rows. Then
       =U(phi).                                        (S10)
 
 Only after this whole integration and dual evaluation is completed do we
-take U_source=max_(phi in Phi) U(phi). This is a maximum over40 fixed
+take U_source=max_(phi in Phi) U(phi). This is a maximum over280 fixed
 global tuples. Allowing a different tuple at each history would erase the
 joint source constraint and would not prove S1 with these weights.
 
 ## Exact consumption and its limit
 
-The maximum in S10 occurs at phi=(2,2,4). Its total comparison credit in
-S9 is2/945. Only part of this credit improves the upper bound: some is
-spent on already safe profiles or coordinates with zero positive dual
-residual. Recomputing every signed residual and the full overflow gives
-S1 and S2; subtracting2/945 directly from Uzero would be invalid.
+The maximum in S10 occurs uniquely at phi=(2,2,4,1). Its total comparison
+credit in S9 is2/525. Only part of this credit improves the upper bound:
+some is spent on already safe profiles or coordinates with zero positive
+dual residual. Recomputing every signed residual and the full overflow
+gives S1 and S2; subtracting2/525 directly from Uzero would be invalid.
+
+Releasing only the105 projection gives the weaker forty-branch result
+
+    U_three=0.016385256975953152...,
+    U_three-U_source=0.0000006154514303587041...>0.       (S11)
+
+Every four-projection branch is checked against its corresponding
+three-projection branch. All credits increase and all uppers decrease or
+stay equal. Thus the original three-projection result remains valid.
+
+At the respective worst branches, the first three projections produce
+credit1/7 on ten literal anchor cells: h3 in{13,22} mod27 and h5=2 mod5.
+The105 projection with d=1 adds eight cells, the same two ternary cells
+and the four surviving children of h5=1 mod5. All eighteen have initial
+profile(-2,0). Hence the total correction measure and overflow credit at
+the new worst branch are9/5 times the old worst branch's. The final dual
+saving uses a positive-part operation and is not asserted to scale by9/5.
 
 As a check on the source credit, every phi has at least10/675 initial
-Haar mass with s3>=2. If(a,b)!=(2,2), the21/35 projection intersection in
-A6 has mass at least20/675. If(a,b)=(2,2), the63 projection overlaps21
+Haar mass on which the first three projections alone give s3>=2. If
+(a,b)!=(2,2), the21/35 projection intersection in A6 has mass at least20/675.
+If(a,b)=(2,2), the63 projection overlaps21
 by at least42/675 when c=2,5,8, or overlaps35 by at least10/675 when c=4,7.
 Hence every total credit is at least(1/7)(10/675)=2/945. This does not
 assert occupation of those histories by the surviving actual source;
@@ -182,8 +205,9 @@ remain available for tighter comparisons.
 
 The consumer pins the existing charged-source and report509 inputs,
 reconstructs the original profile order, weights and dual upper, then
-checks all40 fixed projection choices and all20076 signed residuals in
-each. It verifies nonnegative revised weights and full overflow masses,
+checks all280 fixed projection choices and all20076 signed residuals in
+each, as well as their40 three-projection parents. It verifies nonnegative
+revised weights and full overflow masses,
 and compares its deterministic result with the adjacent JSON by default.
 No new LP is used. Validity of the old rows is reused from report509;
 S4–S10 supply the new ordinary source-comparison argument.
