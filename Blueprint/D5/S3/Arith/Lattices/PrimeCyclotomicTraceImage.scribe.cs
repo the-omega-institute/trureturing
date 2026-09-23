@@ -140,7 +140,22 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                             + "ordinary number theory, not a proof dependency or new "
                             + "conclusion of integral_image. Mixed depths such as2,3 "
                             + "remain possible; no WSS example or kernel certificate "
-                            + "is introduced by this source reference."))),
+                            + "is introduced by this source reference.")),
+                    Paragraph(
+                        Text("Golden prime clocks and cross-block reciprocity: "),
+                        Ref(LibraryNoteRef.Create("D5/L/renault2013periodrankorder").Value),
+                        Text(". GPC in the existing WSS owner distinguishes the order "
+                            + "of phi^2, the Fibonacci zero rank and the pair period. "
+                            + "Its exact identity pi(B_j^a)=2*r_j*B_j^(a-1) allows "
+                            + "either initial-depth branch at a factor. The interlevel "
+                            + "identity and quadratic reciprocity impose joint conditions "
+                            + "on actual depths. A unique odd-depth factor of a later "
+                            + "block must split at all earlier-prime quadratic characters. "
+                            + "Positive density of the unrestricted comparison classes "
+                            + "omits the exact Fibonacci period and does not create a "
+                            + "WSS witness. These are ordinary related results, not "
+                            + "additional conclusions or proof dependencies of the "
+                            + "unchanged integral_image theorem."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
