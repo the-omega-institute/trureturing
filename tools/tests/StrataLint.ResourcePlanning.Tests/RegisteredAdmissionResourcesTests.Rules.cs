@@ -1,0 +1,18 @@
+using Xunit;
+
+namespace StrataLint.ResourcePlanning.Tests;
+
+public sealed partial class RegisteredAdmissionResourcesTests
+{
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void RuleBehaviorChangesSelectTheirCompleteProject(string mode)
+    {
+        var plan = Plan("tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs", "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+    }
+}
