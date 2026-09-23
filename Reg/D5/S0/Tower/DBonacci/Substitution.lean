@@ -33,7 +33,7 @@ register_information_theorem _root_.D5.S0.Tower.DBonacci.Substitution.gapLabelSu
     (fun label => label) (fun label => label))
   primitives substitutionRealization.toPrimitiveBundle realization substitution_bridge
   variation substitution_lawSensitive sensitivity substitution_slotSensitive
-  escape from (Fin 3) escape continues (substitution_empty)
+  escape from (Fin 3) escape continues (open)
 end
 
 section
