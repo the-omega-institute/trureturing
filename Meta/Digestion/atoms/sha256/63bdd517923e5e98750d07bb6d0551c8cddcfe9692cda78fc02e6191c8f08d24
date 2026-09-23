@@ -1,0 +1,21 @@
+**命题 141.2（反极加权移位图）。** 在公平绝对提升的平稳律 $\nu_k$ 下，每个长度 $q+1$ 的绝对词满足
+$$
+\nu_k[x_0\cdots x_q]=\tfrac12\mu_k[\rho(x)].
+\tag{141.4}
+$$
+以 $V_{k,n}$ 为顶点，每个合法长度 $n+1$ 的绝对词 $y$ 给从其前 $n$ 位到后 $n$ 位的有向边，边权为
+$$
+w_k(y)=\tfrac12\mu_k[\rho(y)].
+$$
+这些权重之和为一，且
+$$
+d_k(R)=
+\min_{\substack{\mathcal A\subseteq V_{k,n}\\
+\mathcal A\cap C\mathcal A=\varnothing,\ \mathcal A\cup C\mathcal A=V_{k,n}}}
+\sum_{y\in V_{k,n+1}}w_k(y)
+\mathbf1_{\{\mathbf1_{\mathcal A}(y_0,\ldots,y_{n-1})
+\ne\mathbf1_{\mathcal A}(y_1,\ldots,y_n)\}}.
+\tag{141.5}
+$$
+割质量计入两个方向；平稳性使它等于从 $\mathcal A$ 指向其补集的质量的两倍。
+

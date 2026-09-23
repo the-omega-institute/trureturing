@@ -1,0 +1,13 @@
+**定理 141.10（独立公平关系来源）。** 另令全部关系位独立公平，记其最优缺陷为 $d_\infty(R)$。则对每个 $R\ge1$，
+$$
+d_\infty(R)\ge\frac1{R+2},
+\tag{141.21}
+$$
+并且
+$$
+d_\infty(R)=\frac1R+O\!\left(\frac{\log R}{R^2}\right),
+\qquad R\,d_\infty(R)\longrightarrow1.
+\tag{141.22}
+$$
+这是直接关于独立来源的结论，不通过交换 $k$ 与 $R$ 的极限推出。
+
