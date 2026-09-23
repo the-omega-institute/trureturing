@@ -210,8 +210,7 @@
           "StrataLint.Configuration": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.InspectionScope": "[1.0.0, )",
-          "StrataLint.Scribe": "[1.0.0, )",
-          "StrataLint.Scribe.Documents": "[1.0.0, )"
+          "StrataLint.Scribe": "[1.0.0, )"
         }
       },
       "stratalint.inspectionscope": {
