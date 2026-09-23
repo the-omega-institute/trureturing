@@ -44,7 +44,7 @@ internal sealed class ZeroSumBoxRecoveryDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a real noise radius epsilon and any function R from Data to State, take the supremum over every pair consisting of a legal state x and a noise vector e with norm at most epsilon. The cost of this pair is the supremum norm of R(x+e)-x, embedded in the extended nonnegative reals. The same pair supplies both the observed datum and the state used in the loss. An unbounded estimator retains infinite risk. No linearity, continuity, measurability or exactness assumption is imposed on R."))),
+                    "For a real noise radius epsilon and any function R from Data to State, take the supremum over every pair consisting of a legal state x and a noise vector e with norm at most epsilon. The cost of this pair is the supremum norm of R(x+e)-x, embedded in the extended nonnegative reals. The same pair supplies both the observed datum and the state used in the loss. An unbounded loss supremum over admissible pairs is represented by infinite risk. No linearity, continuity, measurability or exactness assumption is imposed on R."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("zero-sum-box-projection"),
