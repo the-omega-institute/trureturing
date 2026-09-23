@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Coprime frequency pairs cannot both avoid the half-cosine barrier at a sixth-turn rotation. -/
+   digest: Coprime frequencies meet the half-cosine barrier at a sixth-turn rotation. -/
 
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic
