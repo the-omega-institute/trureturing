@@ -31,7 +31,7 @@ register_information_theorem _root_.D5.S0.Tower.DBonacci.Substitution.gapLabelSu
   readout via (@D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.homogeneousPointwiseEqRealization
     (Fin 3) (Fin 3) (instDecidableEqFin 3)
     (fun label => label) (fun label => label))
-  primitives substitutionRealization.toPrimitiveBundle realization substitution_bridge
+  primitives recenterRealization.toPrimitiveBundle realization substitution_bridge
   variation substitution_lawSensitive sensitivity substitution_slotSensitive
   escape from (Fin 3) escape continues (substitution_empty)
 end
