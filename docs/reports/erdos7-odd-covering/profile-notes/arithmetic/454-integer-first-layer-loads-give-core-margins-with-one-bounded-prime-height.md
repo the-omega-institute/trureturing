@@ -1,6 +1,6 @@
 # Integer layer loads give core margins and an exact envelope boundary
 
-An actual core supported on 5,7,11,13 has an original completion load strictly below 3/2 whenever at least one of four specified prime-height bounds holds. The ternary height and the other three prime heights are arbitrary finite values. The proof uses Chapter19's existing same-law profiles, retains a finite geometric sum only on the bounded axis, and applies an elementary integer-load inequality. This is an ordinary mathematical deduction with exact parameter controls, not a Lean certification or a claim of public mathematical priority.
+An actual core supported on 5,7,11,13 has an original completion load strictly below 3/2 whenever at least one of four specified prime-height bounds holds. The ternary height and the other three prime heights are arbitrary finite values. A complementary result allows all four core heights to be arbitrary finite when the ternary height is at most five: the load is then below its finite-height completion threshold by more than 1/1000. The proofs reuse Chapter19's same-law profiles and integer-load inequalities. These are ordinary mathematical deductions with exact parameter controls, not Lean certifications or claims of public mathematical priority.
 
 ## 1. Original labels and the completion margin
 
@@ -144,13 +144,38 @@ The smallest integer height vector outside (CH1) is (4,3,2,2). Its exact envelop
 
 Its 179 exponent cells give this bound without enumerating its arithmetic period. Monotonicity now shows that the four strips in (CH1) are exactly the positive-gap success domain of THIS envelope. An outside height vector is a failure of this sufficient estimate, not an actual counterexample to the weighted core-margin statement or to noncoverage.
 
-## 6. Reuse, composition, and remaining boundary
+## 6. Arbitrary core heights with ternary depth at most five
+
+There is a complementary conclusion with no restriction on h5,h7,h11,h13. Keep all original-label and actual-survivor definitions from section 1, but assume 1<=H<=5. Then some actual x in S satisfies
+
+    ell_H(x)<B_H-1/1000.                              (CH9)
+
+This uses the completely unbounded core envelope already supplied by Chapter19, rather than one of the four mixed-height envelopes. In the same uniform actual survivor law, E g<=R(s), E h<=R(s), and Pr(g>=1)<=beta(s) still hold. For every nonnegative integer g and 1<=B<=2,
+
+    (B-g)_+ >= (B-1)(2-g)+(2-B)1_[g=0].
+
+It is equality for g=0,1,2, and the right side is nonpositive for g>=3. With B=B_H=2-T_H and ell_H=g+T_H h, the positive-part inequality gives
+
+    E(B_H-ell_H)_+ >= E(B_H-g)_+-T_H E h
+                    >=2-R(s)-T_H(1+beta(s))
+                    =:Delta_H(s).                    (CH10)
+
+Chapter19's existing thirteen breakpoints and twelve interval formulas cover s in [79/99,1]. On each interval Delta_H(s)=a+b/s, so its minimum is attained at an endpoint. Substitution at H=5 gives
+
+    min_s Delta_5(s)=844/633501>1/1000,
+    minimizing s=79/98.
+
+Since T_H increases with H and beta(s)>=0, Delta_H(s)>=Delta_5(s) for 1<=H<=5. Equation (CH10) selects one point satisfying (CH9); different layers do not select different points. At H=6 the minimum of this same unbounded envelope is -11738/1900503, again at 79/98. This marks failure of this sufficient estimate, not an actual arithmetic obstruction. It does not alter the exact G-positive domain in section 5, which concerns the stronger bound below 3/2 at arbitrary ternary height.
+
+The control consumes the existing [Chapter19 parameter data](../../frontier/cover-geometry/k5_parent_same_law_envelope.json) and checks these finite-height substitutions on every inherited interval. It does not rebuild or duplicate the unbounded profiles. This is a consequence of the existing envelope and the integer inequality, not a new general profile theorem.
+
+## 7. Reuse, composition, and remaining boundary
 
 Chapter19 already supplies the profile recurrence, the coupled R(s),beta(s) framework, and the quantity 3-2R-beta in KE15--KE16. The integer-load inequality above is elementary. This application supplies the original weighted-core point guaranteed by the bounded-axis positive gap; it does not introduce a new general profile or hinge theorem. No bind-only Lean wrapper is needed.
 
-[Chapter18](../../problem-details/18-five-prime-cores-with-tree-and-cactus-attachments.md) already excludes covering by the five-prime core, and [Chapter33](../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md) supplies stronger noncoverage ranges with unrestricted large-prime tails. Those conclusions dominate a bare noncoverage corollary here. The additional interface is the quantitative, original-label completion margin (CH2), supported at an actual core point and directly usable as a prescribed marginal.
+[Chapter18](../../problem-details/18-five-prime-cores-with-tree-and-cactus-attachments.md) already excludes covering by the five-prime core, and [Chapter33](../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md) supplies stronger noncoverage ranges with unrestricted large-prime tails. Those conclusions dominate a bare noncoverage corollary here. The additional interface is the quantitative, original-label completion margins (CH2) and (CH9), supported at an actual core point and directly usable as a prescribed marginal.
 
-In particular [report453](453-prime-tail-conditioning-preserves-core-laws-at-unrestricted-support.md) can preserve mu_*=delta_x while adjoining any finite outside family meeting its cutoff B>=3^256 tau(Q)^4. Its bound 324 tau(Q)/B<3^(-250)<1/2100 leaves positive total completion margin. The cutoff still depends on the full tail head-divisor inventory Q and can grow with its unrestricted coordinate heights. These results do not remove that cutoff, treat arbitrary core inventories, or settle unrestricted Erdős #7.
+In particular [report453](453-prime-tail-conditioning-preserves-core-laws-at-unrestricted-support.md) can preserve mu_*=delta_x while adjoining any finite outside family meeting its cutoff B>=3^256 tau(Q)^4. Its bound 324 tau(Q)/B<3^(-250)<1/2100 leaves positive total completion margin under either (CH2) or (CH9). When using (CH9), the same H<=5 must bound the entire original family, including pure powers of 3 and outside labels, so the completion threshold B_H remains the same. The arbitrary-ternary-height composition uses (CH2). The cutoff still depends on the full tail head-divisor inventory Q and can grow with its unrestricted coordinate heights. These results do not remove that cutoff, treat arbitrary core inventories, or settle unrestricted Erdős #7.
 
 Exact controls: [program](../../frontier/cover-geometry/core_completion_hinge_profiles.py) and [results](../../frontier/cover-geometry/core_completion_hinge_profiles.controls.json).
 

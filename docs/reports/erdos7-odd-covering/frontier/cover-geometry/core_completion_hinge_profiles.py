@@ -285,6 +285,45 @@ def compact_case(case):
     return result
 
 
+def bounded_ternary_depth():
+    """Consume Chapter19's existing exact envelope; do not rebuild its profiles."""
+    source = Path(__file__).with_name('k5_parent_same_law_envelope.json')
+    data = json.loads(source.read_text())
+    points = [{key: F(row[key]) for key in ('s', 'R', 'beta')}
+              for row in data['breakpoint_values']]
+    require(len(points) == 13 and points[0]['s'] == F(79, 99) and
+            points[-1]['s'] == 1, 'complete inherited breakpoint interval')
+    cases = {}
+    for height in (5, 6):
+        T = (1 - F(1, 3 ** (height - 1))) / 2
+        rows = [dict(s=row['s'], margin=2-row['R']-T*(1+row['beta']))
+                for row in points]
+        pieces = []
+        for i, piece in enumerate(data['piecewise_formulas']):
+            lo, hi = map(F, piece['interval_closed'])
+            require((lo, hi) == (points[i]['s'], points[i+1]['s']),
+                    'inherited pieces cover consecutive breakpoints')
+            constant = 2-F(piece['R_constant'])-T*(1+F(piece['beta_constant']))
+            reciprocal = -F(piece['R_reciprocal'])-T*F(piece['beta_reciprocal'])
+            require(constant+reciprocal/lo == rows[i]['margin'] and
+                    constant+reciprocal/hi == rows[i+1]['margin'],
+                    'finite-depth margin identity on each inherited piece')
+            pieces.append(dict(interval=(lo,hi), constant=constant, reciprocal=reciprocal))
+        require(len(pieces) == len(points)-1, 'no missing inherited interval')
+        cases[height] = dict(T=T, breakpoint_margins=rows, pieces=pieces,
+                             worst=min(rows,key=lambda row:row['margin']))
+    require(cases[5]['worst'] == dict(s=F(79,98),margin=F(844,633501)) and
+            cases[5]['worst']['margin'] > F(1,1000), 'all-core-height margin through ternary depth five')
+    require(cases[6]['worst'] == dict(s=F(79,98),margin=-F(11738,1900503)),
+            'this uniform envelope no longer certifies depth six')
+    return dict(source=source.name,
+                scope='Arbitrary finite heights at 5,7,11,13; original ternary depth at most five',
+                unit_cofactor='excluded', common_margin=F(1,1000),
+                target='ell_H < B_H - common_margin', B_H='(3 + 3^(1-H))/2',
+                larger_depth_meaning='Failure of this envelope only; no actual AP counterexample',
+                cases=cases)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path)
@@ -320,7 +359,8 @@ def main():
     fixture_R = sum((min(t['cap'], t['raw'] / fixture_s) for t in five['terms']), F())
     fixture_beta = min(five['U'] / fixture_s, 1 - five['C'] / fixture_s)
     actual = actual_hinge_fixture(fixture_R, fixture_beta)
-    output = dict(actual_original_control=actual, scope='All original a>1 cofactors; finite arbitrary ternary H; exact mixed-height envelopes',
+    short_depth = bounded_ternary_depth()
+    output = dict(bounded_ternary_depth=short_depth, actual_original_control=actual, scope='Original a>1 core completion: mixed-height envelopes and bounded ternary depth',
                   unit_cofactor='excluded', infinite_axes='exact geometric-tail cells',
                   negative_gap_meaning='This envelope does not certify positivity; no actual counterexample',
                   full_arithmetic_period_enumerated=False, summary=summary,
@@ -328,7 +368,7 @@ def main():
     text = json.dumps(encode(output), indent=2) + '\n'
     if args.output is not None:
         args.output.write_text(text)
-        print(json.dumps(encode(dict(profiles=summary, actual_original_control={
+        print(json.dumps(encode(dict(profiles=summary, bounded_ternary_depth={h: row['worst'] for h,row in short_depth['cases'].items()}, actual_original_control={
             k: v for k, v in actual.items() if k not in ('original_labels', 'uniform_old_survivor_law')})), indent=2))
     else:
         print(text, end='')

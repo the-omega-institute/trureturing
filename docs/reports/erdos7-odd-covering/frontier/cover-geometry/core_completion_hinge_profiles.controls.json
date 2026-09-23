@@ -1,4 +1,333 @@
 {
+  "bounded_ternary_depth": {
+    "source": "k5_parent_same_law_envelope.json",
+    "scope": "Arbitrary finite heights at 5,7,11,13; original ternary depth at most five",
+    "unit_cofactor": "excluded",
+    "common_margin": "1/1000",
+    "target": "ell_H < B_H - common_margin",
+    "B_H": "(3 + 3^(1-H))/2",
+    "larger_depth_meaning": "Failure of this envelope only; no actual AP counterexample",
+    "cases": {
+      "5": {
+        "T": "40/81",
+        "breakpoint_margins": [
+          {
+            "s": "79/99",
+            "margin": "7/3555"
+          },
+          {
+            "s": "79/98",
+            "margin": "844/633501"
+          },
+          {
+            "s": "395/486",
+            "margin": "2636/1759725"
+          },
+          {
+            "s": "395/484",
+            "margin": "2546/1439775"
+          },
+          {
+            "s": "79/96",
+            "margin": "2762/1055835"
+          },
+          {
+            "s": "237/286",
+            "margin": "3032/863865"
+          },
+          {
+            "s": "395/469",
+            "margin": "93736/15837525"
+          },
+          {
+            "s": "395/462",
+            "margin": "6731/479925"
+          },
+          {
+            "s": "79/91",
+            "margin": "70669/3167505"
+          },
+          {
+            "s": "79/87",
+            "margin": "59243/1055835"
+          },
+          {
+            "s": "1358/1485",
+            "margin": "192857/3103515"
+          },
+          {
+            "s": "395/429",
+            "margin": "20531/287955"
+          },
+          {
+            "s": "1",
+            "margin": "4451/24057"
+          }
+        ],
+        "pieces": [
+          {
+            "interval": [
+              "79/99",
+              "79/98"
+            ],
+            "constant": "-1954/31995",
+            "reciprocal": "2017/40095"
+          },
+          {
+            "interval": [
+              "79/98",
+              "395/486"
+            ],
+            "constant": "692/31995",
+            "reciprocal": "-656/40095"
+          },
+          {
+            "interval": [
+              "395/486",
+              "395/484"
+            ],
+            "constant": "430/6399",
+            "reciprocal": "-2141/40095"
+          },
+          {
+            "interval": [
+              "395/484",
+              "79/96"
+            ],
+            "constant": "3338/31995",
+            "reciprocal": "-3356/40095"
+          },
+          {
+            "interval": [
+              "79/96",
+              "237/286"
+            ],
+            "constant": "4202/31995",
+            "reciprocal": "-4247/40095"
+          },
+          {
+            "interval": [
+              "237/286",
+              "395/469"
+            ],
+            "constant": "4904/31995",
+            "reciprocal": "-4976/40095"
+          },
+          {
+            "interval": [
+              "395/469",
+              "395/462"
+            ],
+            "constant": "17567/31995",
+            "reciprocal": "-18341/40095"
+          },
+          {
+            "interval": [
+              "395/462",
+              "79/91"
+            ],
+            "constant": "3589/6399",
+            "reciprocal": "-18746/40095"
+          },
+          {
+            "interval": [
+              "79/91",
+              "79/87"
+            ],
+            "constant": "25316/31995",
+            "reciprocal": "-5353/8019"
+          },
+          {
+            "interval": [
+              "79/87",
+              "1358/1485"
+            ],
+            "constant": "29231/31995",
+            "reciprocal": "-6244/8019"
+          },
+          {
+            "interval": [
+              "1358/1485",
+              "395/429"
+            ],
+            "constant": "45031/31995",
+            "reciprocal": "-29596/24057"
+          },
+          {
+            "interval": [
+              "395/429",
+              "1"
+            ],
+            "constant": "122/81",
+            "reciprocal": "-31783/24057"
+          }
+        ],
+        "worst": {
+          "s": "79/98",
+          "margin": "844/633501"
+        }
+      },
+      "6": {
+        "T": "121/243",
+        "breakpoint_margins": [
+          {
+            "s": "79/99",
+            "margin": "-59/10665"
+          },
+          {
+            "s": "79/98",
+            "margin": "-11738/1900503"
+          },
+          {
+            "s": "395/486",
+            "margin": "-31762/5279175"
+          },
+          {
+            "s": "395/484",
+            "margin": "-24832/4319325"
+          },
+          {
+            "s": "79/96",
+            "margin": "-15544/3167505"
+          },
+          {
+            "s": "237/286",
+            "margin": "-10414/2591595"
+          },
+          {
+            "s": "395/469",
+            "margin": "-77012/47512575"
+          },
+          {
+            "s": "395/462",
+            "margin": "9323/1439775"
+          },
+          {
+            "s": "79/91",
+            "margin": "140167/9502515"
+          },
+          {
+            "s": "79/87",
+            "margin": "153689/3167505"
+          },
+          {
+            "s": "1358/1485",
+            "margin": "507866/9310545"
+          },
+          {
+            "s": "395/429",
+            "margin": "275266/4319325"
+          },
+          {
+            "s": "1",
+            "margin": "64132/360855"
+          }
+        ],
+        "pieces": [
+          {
+            "interval": [
+              "79/99",
+              "79/98"
+            ],
+            "constant": "-6652/95985",
+            "reciprocal": "6121/120285"
+          },
+          {
+            "interval": [
+              "79/98",
+              "395/486"
+            ],
+            "constant": "1286/95985",
+            "reciprocal": "-1898/120285"
+          },
+          {
+            "interval": [
+              "395/486",
+              "395/484"
+            ],
+            "constant": "1132/19197",
+            "reciprocal": "-6353/120285"
+          },
+          {
+            "interval": [
+              "395/484",
+              "79/96"
+            ],
+            "constant": "9224/95985",
+            "reciprocal": "-9998/120285"
+          },
+          {
+            "interval": [
+              "79/96",
+              "237/286"
+            ],
+            "constant": "11816/95985",
+            "reciprocal": "-12671/120285"
+          },
+          {
+            "interval": [
+              "237/286",
+              "395/469"
+            ],
+            "constant": "13922/95985",
+            "reciprocal": "-14858/120285"
+          },
+          {
+            "interval": [
+              "395/469",
+              "395/462"
+            ],
+            "constant": "51911/95985",
+            "reciprocal": "-54953/120285"
+          },
+          {
+            "interval": [
+              "395/462",
+              "79/91"
+            ],
+            "constant": "10609/19197",
+            "reciprocal": "-56168/120285"
+          },
+          {
+            "interval": [
+              "79/91",
+              "79/87"
+            ],
+            "constant": "75158/95985",
+            "reciprocal": "-16045/24057"
+          },
+          {
+            "interval": [
+              "79/87",
+              "1358/1485"
+            ],
+            "constant": "86903/95985",
+            "reciprocal": "-18718/24057"
+          },
+          {
+            "interval": [
+              "1358/1485",
+              "395/429"
+            ],
+            "constant": "134698/95985",
+            "reciprocal": "-445088/360855"
+          },
+          {
+            "interval": [
+              "395/429",
+              "1"
+            ],
+            "constant": "365/243",
+            "reciprocal": "-477893/360855"
+          }
+        ],
+        "worst": {
+          "s": "79/98",
+          "margin": "-11738/1900503"
+        }
+      }
+    }
+  },
   "actual_original_control": {
     "scope": "Exact actual-family bridge control; it does not enumerate all original phases or replace the mixed-height proof.",
     "core_modulus": 385,
@@ -3322,7 +3651,7 @@
     "minimizing_core_point": 29,
     "full_original_CRT_word_checks": 17739
   },
-  "scope": "All original a>1 cofactors; finite arbitrary ternary H; exact mixed-height envelopes",
+  "scope": "Original a>1 core completion: mixed-height envelopes and bounded ternary depth",
   "unit_cofactor": "excluded",
   "infinite_axes": "exact geometric-tail cells",
   "negative_gap_meaning": "This envelope does not certify positivity; no actual counterexample",
