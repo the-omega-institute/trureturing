@@ -347,9 +347,8 @@ jobs:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 1 }}
           persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
+      - name: Use Homebrew Python
+        run: echo "/opt/homebrew/bin" >> "$GITHUB_PATH"
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
       - uses: actions/download-artifact@v4
         if: inputs.plan_artifact_id != ''
