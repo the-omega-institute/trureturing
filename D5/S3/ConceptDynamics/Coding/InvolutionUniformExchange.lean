@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/InvolutionUniformExchange
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: An involution constructs genuine nonnegative group-ring exchange factors. -/
 
 import Mathlib.Algebra.MonoidAlgebra.Basic

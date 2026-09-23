@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/InvolutionCountedConjugacy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Actual nonnegative involution factors yield a counted equivariant conjugacy and an exact one-step dihedral example. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedGroupOverlap

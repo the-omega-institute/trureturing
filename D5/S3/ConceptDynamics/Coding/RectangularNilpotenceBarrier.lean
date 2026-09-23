@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/RectangularNilpotenceBarrier
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Rectangular exchanges bound changes in transient depth across arbitrary matrix sizes. -/
 
 import Mathlib.Data.Matrix.Mul

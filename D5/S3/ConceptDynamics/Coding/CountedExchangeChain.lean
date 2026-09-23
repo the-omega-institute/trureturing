@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/CountedExchangeChain
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Every finite rectangular exchange chain constructs a one-step conjugacy with additive recovery windows. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap

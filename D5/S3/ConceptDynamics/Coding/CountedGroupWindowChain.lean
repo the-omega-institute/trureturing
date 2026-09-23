@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/CountedGroupWindowChain
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: One constructed group-equivariant chain code carries forward, inverse, and coordinate recovery budgets. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedGroupOverlap

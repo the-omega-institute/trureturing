@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/CountedMatrixOverlap
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Matrix multiplication constructs endpoint-preserving edge splittings and actual overlap conjugacies. -/
 
 import D5.S3.ConceptDynamics.Coding.BipartiteOverlapConjugacy

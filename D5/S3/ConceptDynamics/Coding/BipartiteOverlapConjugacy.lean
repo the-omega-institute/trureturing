@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/BipartiteOverlapConjugacy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Shared half-edges give an explicit invertible finite-window path recoding. -/
 
 import Mathlib.Topology.Constructions
