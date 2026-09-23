@@ -248,3 +248,66 @@ The fixed113 example demonstrates an improvement over the former height
 bound, not a newly discovered non-WSS prime. No WSS existence, complete
 squarefreeness theorem, spectral nonvanishing or Lean certification follows
 from the size estimate. The remaining obligation is stated in SJC.12.
+
+## 10. SIC dimension towers and a fixed-field obstruction
+
+Gary McConnell, *Some new infinite families of non-p-rational real quadratic
+fields*, arXiv:2406.14632v1, June 20, 2024.
+https://arxiv.org/abs/2406.14632
+https://arxiv.org/html/2406.14632v1
+
+The exact source scope is Theorems 2.1-2.2, definition (2.1), and Lemma 3.3.
+The construction originates in SIC-POVM questions but constructs real
+quadratic fields with a varying squarefree discriminant parameter D. It
+does not construct a WSS prime in a fixed preselected golden field.
+
+TBN.1 in the existing WSS owner imposes that fixed-field condition. It
+proves D(d)=5 for a square dimension d>=4 only at d=4, using the golden
+Pell classification and L_(2n)=L_n^2-2*(-1)^n. DCE.4 subsequently extends
+the exclusion to EVERY pure odd-prime-power seed p^a with a>=2. The odd
+index case uses the published D=3 Lebesgue-Nagell theorem; the even case
+uses coprime factors L_n-1 and L_n+1. This excludes construction inputs,
+not the rational prime p from the original WSS set.
+
+TBN.2-TBN.6 use the actual companion blocks
+B_j=L_(2*3^j)+1=Psi_(3^(j+1))(3), j>=1. Every prime factor is split,
+has Fibonacci rank2*3^(j+1), and occurs with its original h_p. Different
+blocks are coprime. The product modulo4 and5 and modulo3^(j+2) gives the
+three simultaneous balances. These specialize the existing GP3 strategy
+to a different Lucas block, not the earlier L_(3^j)^2+1 block.
+
+The classical regular valuation source has also appeared as Ross-Shen-Cai,
+*The p-adic Valuations of Mobius Duals of Lucas Sequences*, The Fibonacci
+Quarterly, published online July 21, 2026, DOI10.1080/00150517.2026.2656703:
+https://www.tandfonline.com/doi/full/10.1080/00150517.2026.2656703
+The publisher metadata and abstract were checked; the detailed theorem
+locators above refer to the separately read primary arXiv version. No
+claim that its full journal text was inspected is made here.
+
+## 11. Global perfect-power input and actual common-depth exclusion
+
+The dedicated source note `Library/notes/bugeaud2006lebesguenagell.md`
+records the published theorem and the exact D=3 table locator. DCE.1-DCE.2
+uses that external theorem to prove
+
+`gcd{h_p:p|L_(3^j)^2+3}=1` for every j>=1.
+
+The factor exponents are the actual h_p by TBN3. The conclusion excludes
+every common-divisor depth pattern, including common odd divisors beyond
+three. For every fixed integer e>=2 it produces infinitely many distinct
+split primes of ranks2*3^s whose depths are not divisible by e. This does
+not choose between depth one and a larger depth in any unknown prime.
+
+DCE.3 strengthens the coverage budget uniformly in H: all depths at least
+H>=2 require at least two prime factors and total multiplicity at least
+2H+1. Equality gives two depths H,H+1. The smallest all-WSS pattern must
+therefore be P^2 Q^3, with Q=19 modulo40 and the displayed ternary class
+for P. The fourth fixed block has an actual factor with h_p<=4 by an exact
+size comparison, without factoring that block. It is not a newly found
+non-WSS prime or a proof that every block has a simple factor.
+
+No novelty is claimed for the external exponential theorem or its formal
+instantiation. The new ordinary deductions narrow block-depth patterns;
+heterogeneous depths such as2,3 remain unexcluded. The existing Scribe
+reference records this arithmetic context without changing the Lean
+trace-image theorem, its formulas, or its certification status.
