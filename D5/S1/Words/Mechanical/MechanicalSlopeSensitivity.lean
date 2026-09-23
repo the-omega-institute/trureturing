@@ -87,7 +87,7 @@ theorem local_slope_disagreement_law
       omega
     apply (halpha.intCast_mul hcoeff).ne_int z
     push_cast
-    convert hz using 1 <;> ring
+    convert hz using 1 <;> ring_nf
   let pairs : Finset (Fin n × Fin n) := Finset.univ.filter (fun p => p.1 ≠ p.2)
   let gaps : Finset ℝ := insert (1 - alpha)
     (Finset.univ.image c ∪ pairs.image (fun p => |c p.1 - c p.2|))
@@ -118,7 +118,7 @@ theorem local_slope_disagreement_law
   have hr : 0 < radius := div_pos hg hden
   have hrlt : radius < g := by
     apply (div_lt_iff₀ hden).mpr
-    nlinarith [mul_nonneg hg.le (Nat.cast_nonneg (R := ℝ) n)]
+    nlinarith [mul_nonneg hg.le (Nat.cast_nonneg (α := ℝ) n)]
   refine ⟨radius, hr, by linarith, ?_⟩
   intro delta hd hdr
   let beta := alpha + delta
