@@ -1,0 +1,165 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-j-face-complete-survival-linear-heads-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+      "frontier/j-geometry/j_face_coupled_seven_heads.py": "78b6846a4eaa01ed568eb96e8c49dca67d0a19df094bc1e28ba5214100dc70a0",
+      "certificates/source_norms/j-geometry/j_face_coupled_seven_heads.json": "ecdd57e17e466435943a0fff4d63da9841e72ef2631651d5ecc451dcac586449",
+      "profile-notes/193-256/219-one-late-source-split-controls-complete-saturated-j-heads.md": "d0f78950c8ca3040b2a90c5b5d470655cd53e68f39b54d531f793915490ff73d",
+      "profile-notes/129-192/130-the-whole-j-face-forces-source-anti-alignment.md": "c9c11d0250836f7abc67eed901716f867b7a916a9797afcaa14b3f70584e33a8",
+      "frontier/j-geometry/j_face_alignment.py": "05074f0937efcb2cccc1a172e0717b89656f976d3e50543d31a27e7591b927ab",
+      "certificates/source_norms/j-geometry/j_face_alignment.json": "75433cab317fb492b5e8a9b36bc9b8d8671f5bcfe450cc7a2e37efe5378108d5",
+      "frontier/endpoint-bounds/k_face_common_seven_hinges.py": "c382bed2ef52cc22c624c33f8aa2b1313df3a43935916f985c9c11060433c1e3",
+      "profile-notes/193-256/201-two-more-seven-labels-and-selected-intersections-control-both-heavy-costs.md": "bfe4561a41e7d35ce0a9e1410bcdd92e3f732b2cfb7c86bc798ab4cd7cc0ab10",
+      "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d",
+      "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+      "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888",
+      "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+      "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+      "verify_killed_core_continuity.py": "6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226",
+      "certificates/layout_gap_frontier_certificate.json": "bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02",
+      "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+      "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+      "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+      "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+      "certificates/ap_schedule_frontier_certificate.json": "15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05",
+      "frontier/cover-geometry/verify_ap_schedule.py": "70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6",
+      "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+      "certificates/source_norms/retained-transport/retained_five_tests.json": "7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655",
+      "frontier/retained-transport/verify_retained_five_tests.py": "80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace",
+      "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+      "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+      "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "74d01a2b1db2d66d6d1ad0ca80a22c4ebfbc650c330138d9533d2d656223cb0a",
+      "frontier/retained-transport/verify_retained_quadratic_tests.py": "4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43",
+      "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+      "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+      "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+      "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+      "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2"
+    }
+  },
+  "geometry": {
+    "path": "content/002-geometry.json",
+    "sha256": "bb568c3b05fd8986675c5f4e1ba66af6d652f501bd00bd0fb1f8e9169cbd9e3c",
+    "kind": "value"
+  },
+  "source_mass": {
+    "kind": "inline",
+    "value": "1/4"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "3/20"
+  },
+  "complete_mean_upper": {
+    "kind": "inline",
+    "value": "16/25"
+  },
+  "hinge1_upper": {
+    "kind": "inline",
+    "value": "49/100"
+  },
+  "original_linear_indices": {
+    "kind": "inline",
+    "value": [
+      1,
+      2,
+      7,
+      10,
+      17,
+      18,
+      23,
+      26,
+      32,
+      33,
+      36
+    ]
+  },
+  "count_law": {
+    "kind": "inline",
+    "value": {
+      "probabilities": {
+        "1": "28/33",
+        "2": "50/363",
+        "3": "50/3993",
+        "4": "50/43923"
+      },
+      "all_load_identities": {
+        "1": {
+          "5": "1"
+        },
+        "2": {
+          "2": "1",
+          "3": "1"
+        },
+        "3": {
+          "1": "1",
+          "2": "2"
+        },
+        "4": {
+          "1": "3",
+          "2": "1"
+        }
+      },
+      "tail_probability": "5/43923",
+      "tail_first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846"
+    }
+  },
+  "results": {
+    "path": "content/009-results.json",
+    "sha256": "49945c6ce6807e78f40399e91fad9997f2801f51f7493188559511a639aa47b9",
+    "kind": "array"
+  },
+  "inherited_AP13_upper": {
+    "kind": "inline",
+    "value": "29483/147000"
+  },
+  "inherited_heavy_costs": {
+    "kind": "inline",
+    "value": {
+      "0": "772380280559124323560020499/127120057929096158286360000",
+      "16": "802051869914440232698722784579/165176625271619320673339025000"
+    }
+  },
+  "complete_count_tail_upper": {
+    "kind": "inline",
+    "value": "277/4392300"
+  },
+  "complete_AP11_sum_upper": {
+    "kind": "inline",
+    "value": "337963886/1452753225"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "67792212611/813541806000"
+  },
+  "new_objective_count": {
+    "kind": "inline",
+    "value": 15
+  },
+  "total_containing_choices": {
+    "kind": "inline",
+    "value": 93750000
+  },
+  "total_expanded_four_projection_evaluations_including_seeds": {
+    "kind": "inline",
+    "value": 26600
+  },
+  "total_independent_rational_checks": {
+    "kind": "inline",
+    "value": 150
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Four complete AP11 blocks and eleven original affine-tail costs on both entire saturated actual J faces, plus the complete AP survival denominator using the existing219 independent AP13 result. Every objective retains all6250000 containing choices, one common theta in[1/135,1/90], both affine endpoints and every exact interior crossing, J survivor mass3/20 and all infinite exponent/count tails. Existing219 AP13/heavy0/heavy16 are consumed without rescanning. No K-source145 cost, K forced27 rule, actual attainment, off-face extension, complete52-cost/global comparison, Lean verification or unrestricted Erdos7 result is asserted."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "erdos7-layout-gap-norm-input-v1",
+  "source_square_bound": "1730443/48600",
+  "quadratic_constants": [
+    {
+      "tuple": [
+        0,
+        0
+      ],
+      "constant": "2735335288798727/71898009183000"
+    },
+    {
+      "tuple": [
+        0,
+        1
+      ],
+      "constant": "50628620561/4149957240"
+    },
+    {
+      "tuple": [
+        0,
+        2
+      ],
+      "constant": "4717107731/3252506400"
+    },
+    {
+      "tuple": [
+        1,
+        0
+      ],
+      "constant": "41266885651/3403456056"
+    },
+    {
+      "tuple": [
+        2,
+        0
+      ],
+      "constant": "359419531/211701600"
+    }
+  ]
+}

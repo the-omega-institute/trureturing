@@ -1,0 +1,863 @@
+{
+  "schema": 1,
+  "source": "../../ReadoutProvenance.lean",
+  "scope": "Every positive construction, typed forwarding exit, checked occurrence cutoff and public admission has a source marker. Forwarding preserves the specific rule ID in its incoming witness. Markers pin admission syntax only; diagnostics, counters and traversal bookkeeping are outside this contract.",
+  "entries": [
+    {
+      "id": "TypeClassification.flags.forward.1",
+      "function": "TypeClassification.flags",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted _ => (false, false)",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "TypeClassification.witness?.forward.1",
+      "function": "TypeClassification.witness?",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted witness => some witness",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "reuseWitness.1",
+      "function": "reuseWitness",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return found",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "bindWitnessSource.forward.1",
+      "function": "bindWitnessSource",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted evidence => .allowlisted { evidence with sourceDependency := source }",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "checkedType.1",
+      "function": "checkedType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return .allowlisted (witness rule type)",
+      "requires": [
+        "if mentions then return .statementMention",
+        "if unknown then return \u2190 unknownType type"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "nominalFieldShape.1",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldProposition",
+      "kind": "production",
+      "source": "return some (witness .fieldProposition concrete)"
+    },
+    {
+      "id": "nominalFieldShape.forward.1",
+      "function": "nominalFieldShape",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "nominalFieldShape env body parameters",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "nominalFieldShape.2",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldFunction",
+      "kind": "production",
+      "source": "return some (witness .fieldFunction concrete)"
+    },
+    {
+      "id": "nominalFieldShape.3",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldAlias",
+      "kind": "production",
+      "source": "return some (witness .fieldAlias concrete)"
+    },
+    {
+      "id": "nominalFieldShape.4",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldParameter",
+      "kind": "production",
+      "source": "return some (witness .fieldParameter concrete)"
+    },
+    {
+      "id": "nominalFieldShape.5",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldAlias",
+      "kind": "production",
+      "source": "return some (witness .fieldAlias concrete)"
+    },
+    {
+      "id": "nominalFieldShape.6",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldConcrete",
+      "kind": "production",
+      "source": "return some (witness .fieldConcrete concrete)"
+    },
+    {
+      "id": "nominalFieldShape.7",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldAlias",
+      "kind": "production",
+      "source": "return some (witness .fieldAlias concrete)"
+    },
+    {
+      "id": "statementStep.1",
+      "function": "statementStep",
+      "rule_id": "statementForall",
+      "kind": "production",
+      "source": "| .forallE .. => return .recognized (witness .statementForall current)"
+    },
+    {
+      "id": "statementStep.2",
+      "function": "statementStep",
+      "rule_id": "statementInductive",
+      "kind": "production",
+      "source": "| some (.inductInfo _) => return .recognized (witness .statementInductive current)"
+    },
+    {
+      "id": "statementOuter.1",
+      "function": "statementOuter",
+      "rule_id": "statementMembership",
+      "kind": "production",
+      "source": "return some (witness .statementMembership type)"
+    },
+    {
+      "id": "statementOuter.2",
+      "function": "statementOuter",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .recognized evidence => return some evidence",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "statementOuter.forward.1",
+      "function": "statementOuter",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "statementOuter env next",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "listStatementBoundary.1",
+      "function": "listStatementBoundary",
+      "rule_id": "listForall",
+      "kind": "production",
+      "source": "if twoDataBinders then return some (witness .listForall type)"
+    },
+    {
+      "id": "listStatementBoundary.2",
+      "function": "listStatementBoundary",
+      "rule_id": "listNegated",
+      "kind": "production",
+      "source": "return some (witness .listNegated type)"
+    },
+    {
+      "id": "listStatementBoundary.forward.1",
+      "function": "listStatementBoundary",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "listStatementBoundary env body (binders + 1)",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "listStatementBoundary.3",
+      "function": "listStatementBoundary",
+      "rule_id": "listPositive",
+      "kind": "production",
+      "source": "return some (witness .listPositive type)"
+    },
+    {
+      "id": "dataCarrier.1",
+      "function": "dataCarrier",
+      "rule_id": "rigidCarrier",
+      "kind": "production",
+      "source": "return some (witness .rigidCarrier type)"
+    },
+    {
+      "id": "dataCarrier.2",
+      "function": "dataCarrier",
+      "rule_id": "carrierProjection",
+      "kind": "production",
+      "source": "return some (witness .carrierProjection type)"
+    },
+    {
+      "id": "dataCarrier.forward.1",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "dataCarrier env field active",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "dataCarrier.forward.2",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "dataCarrier env body active",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "dataCarrier.3",
+      "function": "dataCarrier",
+      "rule_id": "scalarCarrier",
+      "kind": "production",
+      "source": "return some (witness .scalarCarrier type)"
+    },
+    {
+      "id": "dataCarrier.4",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 dataCarrier env args[0]! active",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "dataCarrier.5",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 dataCarrier env args[0]! active",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "dataCarrier.6",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 dataCarrier env body (active.push type)",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "dataCarrier.forward.3",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "dataCarrier env fieldType (active.push type)",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "dataCarrier.7",
+      "function": "dataCarrier",
+      "rule_id": "nominalCarrier",
+      "kind": "production",
+      "source": "return some (witness .nominalCarrier type)"
+    },
+    {
+      "id": "statementBoundary.1",
+      "function": "statementBoundary",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return (\u2190 get).recognizedStatement",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "statementApart.1",
+      "function": "statementApart",
+      "rule_id": "statementLiteralApart",
+      "kind": "production",
+      "source": "return some (witness .statementLiteralApart a)"
+    },
+    {
+      "id": "statementApart.2",
+      "function": "statementApart",
+      "rule_id": "statementLiteralApart",
+      "kind": "production",
+      "source": "return some (witness .statementLiteralApart a)"
+    },
+    {
+      "id": "statementApart.3",
+      "function": "statementApart",
+      "rule_id": "statementLiteralApart",
+      "kind": "production",
+      "source": "if x != y then return some (witness .statementLiteralApart a)"
+    },
+    {
+      "id": "statementApart.4",
+      "function": "statementApart",
+      "rule_id": "statementMetadataApart",
+      "kind": "production",
+      "source": "if am.isSome || bm.isSome then return some (witness .statementMetadataApart a)"
+    },
+    {
+      "id": "statementApart.5",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "return some (witness .statementHeadApart a)"
+    },
+    {
+      "id": "statementApart.6",
+      "function": "statementApart",
+      "rule_id": "statementArgumentApart",
+      "kind": "production",
+      "source": "return some (witness .statementArgumentApart a)"
+    },
+    {
+      "id": "statementApart.7",
+      "function": "statementApart",
+      "rule_id": "statementRigidApart",
+      "kind": "production",
+      "source": "return some (witness .statementRigidApart a)"
+    },
+    {
+      "id": "statementApart.8",
+      "function": "statementApart",
+      "rule_id": "statementDomainApart",
+      "kind": "production",
+      "source": "return some (witness .statementDomainApart a)"
+    },
+    {
+      "id": "statementApart.9",
+      "function": "statementApart",
+      "rule_id": "statementBodyApart",
+      "kind": "production",
+      "source": "return some (witness .statementBodyApart a)"
+    },
+    {
+      "id": "statementApart.10",
+      "function": "statementApart",
+      "rule_id": "statementMetadataApart",
+      "kind": "production",
+      "source": "if bm.isSome then return some (witness .statementMetadataApart a)"
+    },
+    {
+      "id": "statementApart.11",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "if bh.isSome || b.isSort then return some (witness .statementHeadApart a)"
+    },
+    {
+      "id": "statementApart.12",
+      "function": "statementApart",
+      "rule_id": "statementMetadataApart",
+      "kind": "production",
+      "source": "if am.isSome then return some (witness .statementMetadataApart a)"
+    },
+    {
+      "id": "statementApart.13",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "if ah.isSome || a.isSort then return some (witness .statementHeadApart a)"
+    },
+    {
+      "id": "statementApart.14",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "return some (witness .statementHeadApart a)"
+    },
+    {
+      "id": "statementApart.15",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "if bh.isSome || b.isFVar then return some (witness .statementHeadApart a)"
+    },
+    {
+      "id": "statementApart.16",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "if ah.isSome || a.isFVar then return some (witness .statementHeadApart a)"
+    },
+    {
+      "id": "checkedStatementType.1",
+      "function": "checkedStatementType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "if let some evidence := (\u2190 get).apartPropositions[type]? then return some evidence",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "checkedStatementType.2",
+      "function": "checkedStatementType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return evidence",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "observedType.1",
+      "function": "observedType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 inputType env type active",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "inputType.1",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 inputType env decoded active",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "inputType.2",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "if let some cached \u2190 reuseWitness (\u2190 get).cleanTypes type then return .allowlisted cached",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "inputType.forward.1",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env body active)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "inputType.3",
+      "function": "inputType",
+      "rule_id": "telescope",
+      "kind": "production",
+      "source": "return \u2190 checkedType .telescope type (exact || decision || dm || bm) (du || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.4",
+      "function": "inputType",
+      "rule_id": "letType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .letType type (exact || decision || dm || vm || bm) (du || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.forward.2",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env body active)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "inputType.5",
+      "function": "inputType",
+      "rule_id": "telescope",
+      "kind": "production",
+      "source": "return \u2190 checkedType .telescope reduced (mentions || dm || bm) (du || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.forward.3",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env body active)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "inputType.6",
+      "function": "inputType",
+      "rule_id": "lambdaType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .lambdaType reduced (mentions || dm || bm) (du || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.forward.4",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env body active) (nondep := nd))",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "inputType.7",
+      "function": "inputType",
+      "rule_id": "letType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .letType reduced (mentions || dm || vm || bm) (du || vu || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.8",
+      "function": "inputType",
+      "rule_id": "metadataType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .metadataType reduced (mentions || bm) bu",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.9",
+      "function": "inputType",
+      "rule_id": "sortKind",
+      "kind": "production",
+      "source": "if reduced.isSort then return \u2190 checkedType .sortKind reduced mentions false",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.10",
+      "function": "inputType",
+      "rule_id": "betaType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .betaType reduced (mentions || bm) bu",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.11",
+      "function": "inputType",
+      "rule_id": "scopedParameter",
+      "kind": "production",
+      "source": "return \u2190 checkedType .scopedParameter reduced (mentions || fm) (unclassified || fu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.12",
+      "function": "inputType",
+      "rule_id": "auditedProjection",
+      "kind": "production",
+      "source": "return \u2190 checkedType .auditedProjection reduced (mentions || rm || pm) (ru || pu || unclassified)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.13",
+      "function": "inputType",
+      "rule_id": "equality",
+      "kind": "production",
+      "source": "return \u2190 checkedType .equality reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.14",
+      "function": "inputType",
+      "rule_id": "naturalOrder",
+      "kind": "production",
+      "source": "return \u2190 checkedType .naturalOrder reduced mentions (unclassified || order)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.15",
+      "function": "inputType",
+      "rule_id": "rigidCarrier",
+      "kind": "production",
+      "source": "let mut carrierEvidence \u2190 if rigid then pure (some (witness .rigidCarrier carrier))",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.16",
+      "function": "inputType",
+      "rule_id": "scalarCarrier",
+      "kind": "production",
+      "source": "else if carrier.isConstOf ``Nat then pure (some (witness .scalarCarrier carrier))",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.17",
+      "function": "inputType",
+      "rule_id": "nullaryCarrier",
+      "kind": "production",
+      "source": "let evidence := witness .nullaryCarrier carrier",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.18",
+      "function": "inputType",
+      "rule_id": "listMetadata",
+      "kind": "production",
+      "source": "if disjoint.isSome then return \u2190 checkedType .listMetadata reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.19",
+      "function": "inputType",
+      "rule_id": "quotientType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .quotientType reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.20",
+      "function": "inputType",
+      "rule_id": "recursorType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .recursorType reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.21",
+      "function": "inputType",
+      "rule_id": "enumRecursorType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .enumRecursorType reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.22",
+      "function": "inputType",
+      "rule_id": "aliasType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .aliasType reduced (mentions || um) (unclassified || uu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.23",
+      "function": "inputType",
+      "rule_id": "recursiveFamily",
+      "kind": "production",
+      "source": "return \u2190 checkedType .recursiveFamily reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.field.1",
+      "function": "inputType",
+      "rule_id": "fieldAudited",
+      "kind": "production",
+      "source": "pure (some (witness .fieldAudited concrete))"
+    },
+    {
+      "id": "inputType.forward.5",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "observedType env concrete nextActive)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "inputType.24",
+      "function": "inputType",
+      "rule_id": "nominalFields",
+      "kind": "production",
+      "source": "return \u2190 checkedType .nominalFields reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
+      "id": "inputType.25",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return result",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ],
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "typeFamilyArgument.1",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "if let some cached \u2190 reuseWitness (\u2190 get).dataFunctionTypes type then return .data cached",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "typeFamilyArgument.2",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return .family (.allowlisted cached)",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "typeFamilyArgument.forward.1",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "typeFamilyArgument env (mkApp value x) body active",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "typeFamilyArgument.3",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "let .family verdict := result | return result",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "typeFamilyArgument.4",
+      "function": "typeFamilyArgument",
+      "rule_id": "typeFamily",
+      "kind": "production",
+      "source": "return .family (\u2190 checkedType .typeFamily value (dm || bm) (du || bu))"
+    },
+    {
+      "id": "typeFamilyArgument.5",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted evidence => return .data evidence",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "typeFamilyArgument.forward.2",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .data evidence => .data { evidence with sourceDependency := state.assumedProducer }",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "typeFamilyArgument.6",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return result",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "classifyOccurrence.1",
+      "function": "classifyOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "if let some cached := (\u2190 get).typeChecks[key]? then return cached",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "classifyOccurrence.2",
+      "function": "classifyOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return classification",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "classifyOccurrence.3",
+      "function": "classifyOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return verdict",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "visitOccurrence.1",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "if decoded == some true then return",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "visitOccurrence.2",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "if (\u2190 get).visited.contains key then return",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "visitOccurrence.forward.1",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted _ => pure ()",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "visitOccurrence.3",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "if proof == some true then return",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "visitOccurrence.4",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "else if inProtected env n then queue n levels",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "visitOccurrence.5",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "| .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "readoutClosureCurrent.1",
+      "function": "readoutClosureCurrent",
+      "rule_id": "retained-witness.rule",
+      "kind": "guarded-admission",
+      "source": "if r.admission.isSome then return (false, some r.walked)",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "provenanceErrorCurrent.1",
+      "function": "provenanceErrorCurrent",
+      "rule_id": "retained-witness.rule",
+      "kind": "guarded-admission",
+      "source": "if result.admission.isSome && !result.forbidden && result.unclassified.isNone && !result.incomplete then return none",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    }
+  ]
+}

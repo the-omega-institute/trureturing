@@ -1,0 +1,18 @@
+### 92.2 碰撞概率直接读出纯度
+
+对满足正半定和单位迹条件的密度矩阵 $\rho$，令
+
+$$
+ p_{l,j}=\operatorname{basisProbability}(\rho,\text{context }l,j).
+$$
+
+同一定理给出
+
+$$
+\boxed{
+\sum_{l,j}p_{l,j}^{\,2}
+=
+1+\operatorname{Re}\operatorname{Tr}(\rho^2).
+}
+$$
+

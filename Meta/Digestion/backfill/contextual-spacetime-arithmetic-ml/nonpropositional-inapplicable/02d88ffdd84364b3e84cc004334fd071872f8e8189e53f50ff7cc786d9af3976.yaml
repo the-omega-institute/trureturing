@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02d88ffdd84364b3e84cc004334fd071872f8e8189e53f50ff7cc786d9af3976
+  normalized_sha256: sha256:02d88ffdd84364b3e84cc004334fd071872f8e8189e53f50ff7cc786d9af3976
+cas_ref: sha256:02d88ffdd84364b3e84cc004334fd071872f8e8189e53f50ff7cc786d9af3976
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.2节的“第12节的更新取 G=W，给出”之后列出三个显式 Gram 更新恒等式；它们不是定义伪装的定理，探针直接从同步参数更新展开转置及矩阵乘积，三个等式分别核验，仓内无冻结 GID。
+    previous_atom_id: 4a10bbdd16bc0d0caeed5f6365570ceaa9484a6475914308fc96e4d127c10644
+    next_atom_id: 899109755e2b744483d8d9d6323a427c5a90a99c8289310d01cc881c06eec78f

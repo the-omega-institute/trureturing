@@ -26,12 +26,11 @@ run_cmd do
     let source := if layer then layers[0]!.kernels[0]! else certPrefix.str "K_0"
     let some (.defnDecl replacement) := declarations.find? (·.getNames.contains source)
       | throwError "missing replacement definition {source}"
-    for declaration in declarations do
-      let declaration := match declaration with
-        | .defnDecl info => if info.name == target then
-            .defnDecl { info with value := replacement.value } else declaration
-        | _ => declaration
-      liftCoreM <| addDecl declaration
+    let declarations := declarations.map fun declaration => match declaration with
+      | .defnDecl info => if info.name == target then
+          .defnDecl { info with value := replacement.value } else declaration
+      | _ => declaration
+    setEnv (← liftCoreM <| stageDeclarations (← getEnv) declarations)
     unless ← liftTermElabM <| isDefEq (mkConst source) (mkConst target) do
       throwError "definition mutation did not reach the staged environment"
     let record : AnalysisCatalogRecord := { counts, projection, analysis, layerChains := layers }

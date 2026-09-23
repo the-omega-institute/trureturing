@@ -1,0 +1,27 @@
+**定理 44.22（允许零事件与高于单位估计的直接比值界）。** 独立声明真实 $r=t/h\in[0,2]$，令 $W=W(t)$、$\widetilde W$ 为同一实际支撑上的正估计。给实际误差
+$$\|\log W-\log\widetilde W\|_F\le D_e,\qquad
+\|\log A-\log\widetilde A\|_F\le D_1,$$
+且 $\widetilde\tau>0$、$\tau\ge\underline\tau>0$。定义
+$$N=\operatorname{tr}(-\log W),\quad
+\widetilde N=\operatorname{tr}(-\log\widetilde W),\quad
+q=\widetilde N/(m\widetilde\tau).$$
+则
+$$\boxed{|R(r)-q|\le\eta:=\frac{D_e+|q|D_1}{\sqrt m\,\underline\tau}.}$$
+证明。直接相减而不预设事件的上谱界，
+$$R(r)-q=\frac{N-\widetilde N}{m\tau}
+ +\frac{\widetilde N(\widetilde\tau-\tau)}{m\tau\widetilde\tau}.$$
+分别用 $|N-\widetilde N|\le\sqrt m D_e$ 和命题44.21的锚迹误差即得。若正的 $\widetilde W$ 有谱值大于一，$q$ 可以为负，故保留 $|q|$，证明仍成立。
+
+实际正下界可以提供对数误差的一个有效选择。若 $W,\widetilde W\succeq u_eI>0$，逆差恒等式给
+$$(\widetilde W+vI)^{-1}-(W+vI)^{-1}
+=(\widetilde W+vI)^{-1}(W-\widetilde W)(W+vI)^{-1}.$$
+用 $\|XYZ\|_F\le\|X\|\|Y\|_F\|Z\|$ 和对数积分，得到
+$$\|\log W-\log\widetilde W\|_F
+\le\|W-\widetilde W\|_F\int_0^\infty(u_e+v)^{-2}dv
+=\|W-\widetilde W\|_F/u_e.$$
+因此可选 $D_e=\|W-\widetilde W\|_F/u_e$；并非要求任一预先给定的误差上界 $D_e$ 反而小于这个值。锚矩阵有自己的正下界时同理供应 $D_1$。
+
+$r=0$ 时 $W=I$，故上述证明覆盖零事件。若零事件块恰复用同一个实测基准及相同白化，则数学上 $\widetilde W=\widetilde M^{-1/2}\widetilde M\widetilde M^{-1/2}=I$、$q=0$；独立重复测量不继承该等式，数值计算的舍入若存在也须纳入误差。证毕。
+
+本卷定理40.8仍是正事件统计量的一条供应途径，其实际假设包括同一非零支撑、基准 Gram 裕量和事件／锚共同的严格上界 $v<1$。零事件 $W=I$ 不满足后者，$r\downarrow0$ 时也没有共同严格事件上界。该供应的命名常数 $d_P=\delta_0/\gamma$ 不因实际支撑投影差为零而被改写为零。本节从已经合法给定的白化矩阵误差或对数误差出发；若改用原始白化误差，须履行定理40.8相应步骤的实际假设。不据此宣布新的原始数据、支撑、置信概率或样本保证。
+

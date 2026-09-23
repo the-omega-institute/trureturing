@@ -1,0 +1,36 @@
+### 127.2 完整熵产生：一份共同概率律上的精确收支
+
+对严格正概率 $p$，令
+
+$$
+H(p)=-\sum_i p_i\log p_i,
+\qquad D(p\|\pi)=\sum_i p_i\log\frac{p_i}{\pi_i}=\log N-H(p).
+\tag{127.9}
+$$
+
+由质量守恒 $\sum_i\dot p_i=0$、$\dot p=-Lp$ 和式（127.2），有
+
+$$
+\begin{aligned}
+\frac d{dt}H(p_t)
+&=-\sum_i\dot p_{t,i}\log p_{t,i}\\
+&=\langle Lp_t,\log p_t\rangle\\
+&=\frac12\sum_{i,j}w_{ij}(p_{t,i}-p_{t,j})
+\log\frac{p_{t,i}}{p_{t,j}}
+=: \sigma(p_t)\ge0.
+\end{aligned}
+\tag{127.10}
+$$
+
+非负性逐项来自 $\log$ 严格递增。等号迫使所有正权边的两端概率相等，故在连通图上恰有 $p_t=\pi$。因此
+
+$$
+\boxed{\frac d{dt}D(p_t\|\pi)=-\sigma(p_t)},
+\qquad
+D(p_0\|\pi)-D(p_T\|\pi)
+=H(p_T)-H(p_0)=\int_0^T\sigma(p_t)\,dt.
+\tag{127.11}
+$$
+
+这是指定图热流的数学熵收支。这里没有热浴、温度、功或局部详细平衡的物理解释，故不据此把任意 Shannon 熵变化直接命名为热力学熵产生。
+

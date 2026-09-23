@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3fdc880ae3ed1812ca46b99f83939ab34347df873efd8a7c5ba081dbf828c9f4
+  normalized_sha256: sha256:3fdc880ae3ed1812ca46b99f83939ab34347df873efd8a7c5ba081dbf828c9f4
+cas_ref: sha256:3fdc880ae3ed1812ca46b99f83939ab34347df873efd8a7c5ba081dbf828c9f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “在已观察点按相同标签定义两函数”与“在未观察点分别取零、一”恰由延拓及目标点的单点更新实现，探针还要求所有其他点相同；“本条只证明所写函数类中的不可推出性”明确排除把方法选择当数学必然。追加标签只是按一致性筛除相反候选，文献同型说明不另担定理；该构造未把未来正确藏进定义，仓内无冻结 GID。
+    previous_atom_id: 0bcbcf702d5751da9615f90e75a9a94d0d0c950f5abeb74b2608d4d7fabb7761
+    next_atom_id: 6b01f16740f06975035318f85ff9a234a48649a7f44a349814ffa36fb95a09ee

@@ -1,0 +1,422 @@
+[
+  {
+    "A_residues": [
+      7,
+      1
+    ],
+    "B_residues": [
+      3,
+      8,
+      23
+    ],
+    "extra_residue": 18,
+    "E7_residues": [
+      5,
+      5,
+      32,
+      47,
+      32,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      7,
+      1
+    ],
+    "B_residues": [
+      3,
+      8,
+      19
+    ],
+    "extra_residue": 33,
+    "E7_residues": [
+      3,
+      17,
+      24,
+      38,
+      59,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      7,
+      1
+    ],
+    "B_residues": [
+      3,
+      8,
+      8
+    ],
+    "extra_residue": 19,
+    "E7_residues": [
+      3,
+      17,
+      24,
+      38,
+      17,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      7,
+      1
+    ],
+    "B_residues": [
+      3,
+      2,
+      28
+    ],
+    "extra_residue": 18,
+    "E7_residues": [
+      6,
+      20,
+      34,
+      5,
+      104,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      28
+    ],
+    "B_residues": [
+      2,
+      2,
+      7
+    ],
+    "extra_residue": 32,
+    "E7_residues": [
+      6,
+      5,
+      34,
+      41,
+      23,
+      104
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      28
+    ],
+    "B_residues": [
+      2,
+      2,
+      7
+    ],
+    "extra_residue": 17,
+    "E7_residues": [
+      6,
+      20,
+      13,
+      41,
+      83,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      28
+    ],
+    "B_residues": [
+      2,
+      2,
+      7
+    ],
+    "extra_residue": 19,
+    "E7_residues": [
+      3,
+      17,
+      23,
+      17,
+      23,
+      269
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      19
+    ],
+    "B_residues": [
+      2,
+      2,
+      16
+    ],
+    "extra_residue": 32,
+    "E7_residues": [
+      6,
+      5,
+      23,
+      43,
+      23,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      7,
+      1
+    ],
+    "B_residues": [
+      2,
+      2,
+      32
+    ],
+    "extra_residue": 12,
+    "E7_residues": [
+      3,
+      17,
+      24,
+      17,
+      59,
+      299
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      16
+    ],
+    "B_residues": [
+      2,
+      2,
+      17
+    ],
+    "extra_residue": 32,
+    "E7_residues": [
+      3,
+      17,
+      24,
+      17,
+      59,
+      269
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      19
+    ],
+    "B_residues": [
+      2,
+      2,
+      2
+    ],
+    "extra_residue": 32,
+    "E7_residues": [
+      5,
+      5,
+      23,
+      61,
+      23,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      28
+    ],
+    "B_residues": [
+      2,
+      2,
+      2
+    ],
+    "extra_residue": 2,
+    "E7_residues": [
+      4,
+      5,
+      34,
+      52,
+      89,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      44
+    ],
+    "B_residues": [
+      4,
+      14,
+      43
+    ],
+    "extra_residue": 1,
+    "E7_residues": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      1
+    ],
+    "B_residues": [
+      3,
+      8,
+      38
+    ],
+    "extra_residue": 23,
+    "E7_residues": [
+      3,
+      10,
+      24,
+      52,
+      59,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      1
+    ],
+    "B_residues": [
+      3,
+      8,
+      23
+    ],
+    "extra_residue": 18,
+    "E7_residues": [
+      5,
+      5,
+      2,
+      47,
+      2,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      1
+    ],
+    "B_residues": [
+      2,
+      2,
+      7
+    ],
+    "extra_residue": 32,
+    "E7_residues": [
+      6,
+      5,
+      24,
+      34,
+      83,
+      269
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      1
+    ],
+    "B_residues": [
+      2,
+      2,
+      7
+    ],
+    "extra_residue": 32,
+    "E7_residues": [
+      5,
+      5,
+      23,
+      5,
+      23,
+      299
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      1
+    ],
+    "B_residues": [
+      2,
+      2,
+      17
+    ],
+    "extra_residue": 32,
+    "E7_residues": [
+      6,
+      20,
+      33,
+      5,
+      104,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      1
+    ],
+    "B_residues": [
+      2,
+      2,
+      2
+    ],
+    "extra_residue": 12,
+    "E7_residues": [
+      6,
+      20,
+      23,
+      34,
+      23,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      1
+    ],
+    "B_residues": [
+      2,
+      2,
+      2
+    ],
+    "extra_residue": 32,
+    "E7_residues": [
+      4,
+      5,
+      23,
+      25,
+      23,
+      164
+    ]
+  },
+  {
+    "A_residues": [
+      1,
+      1
+    ],
+    "B_residues": [
+      2,
+      2,
+      7
+    ],
+    "extra_residue": 2,
+    "E7_residues": [
+      5,
+      5,
+      19,
+      25,
+      89,
+      299
+    ]
+  }
+]

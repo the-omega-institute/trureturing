@@ -1,0 +1,26 @@
+**证明。** 轨道纤维
+$$
+\rho^{-1}(\boldsymbol0)=U
+$$
+是无限集合，而 $F$ 有限，所以存在不同的 $x,y\in U$ 满足
+$$
+\theta(x)=\theta(y).
+$$
+于是
+$$
+q(x)=q(y)=(\boldsymbol0,\theta(x)).
+$$
+theorem 57.11 给出某个 $n\in\mathbb N_0$ 使
+$$
+\rho(x+n)\ne\rho(y+n).
+$$
+若所有 $\Phi_n$ 存在，则由 $q(x)=q(y)$ 应有
+$$
+\rho(x+n)=\Phi_n(q(x))=\Phi_n(q(y))=\rho(y+n),
+$$
+矛盾。这正是既有 framework theorem 2.2 的实际像因子化判据应用于
+$$
+T_n(x)=\rho(x+n)
+$$
+和输入观察 $q$：目标映射能下降到 $q[R]$ 当且仅当它在每个 $q$-纤维上常值。该 theorem 2.2 的精确文本见 https://github.com/the-omega-institute/trureturing/blob/9de84e28232e47634692dbd9de881ad34043b1c8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md 。证毕。
+

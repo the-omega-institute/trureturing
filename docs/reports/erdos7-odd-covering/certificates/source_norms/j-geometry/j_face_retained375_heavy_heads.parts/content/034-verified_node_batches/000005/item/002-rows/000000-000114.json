@@ -1,0 +1,800 @@
+[
+  {
+    "node": 640,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "288900066986088793592760630485226587/58851878670877851058500000000000000",
+    "dual_id": "ef8b970a8d0eb097a43c0b0997b9b8901fe2e76d57e8cbf27caaca23de13af6a"
+  },
+  {
+    "node": 641,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880294206036903104677555698318730921/179271876566674069378200000000000000",
+    "dual_id": "c370e6a7da0b0ae96cb3523dc0712601904ad22cd66b847e1d3303b5f9a7497e"
+  },
+  {
+    "node": 642,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "2289614457468020394092427300023407457/466106879073352580383320000000000000",
+    "dual_id": "66e96c1e041659cd69225e16faf77205841188ecb6d432ada324a8ba3a6d04fc"
+  },
+  {
+    "node": 643,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1428232728183296519324729918188370363/291316799420845362739575000000000000",
+    "dual_id": "9411caab3796e0a10c9d93afb53e582e3c4ba8d014eabd2f67cde967e093d83f"
+  },
+  {
+    "node": 644,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "2594652311191811543823485883089284733/529666908037900659526500000000000000",
+    "dual_id": "328273aa19e78ca516e435d226d1fab9b15095d49bf39550c4f85322e92fb188"
+  },
+  {
+    "node": 645,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1428232728183296519324729918188370363/291316799420845362739575000000000000",
+    "dual_id": "9411caab3796e0a10c9d93afb53e582e3c4ba8d014eabd2f67cde967e093d83f"
+  },
+  {
+    "node": 646,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "2594652311191811543823485883089284733/529666908037900659526500000000000000",
+    "dual_id": "328273aa19e78ca516e435d226d1fab9b15095d49bf39550c4f85322e92fb188"
+  },
+  {
+    "node": 647,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "62940578462873294438496353782656907/13005214259859167979445312500000000",
+    "dual_id": "2b356b28f03c4c7f891f21eb08a613c4858a3fc04fa90deac3c7469f1938874d"
+  },
+  {
+    "node": 648,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "543652985733704583884935414351750799/112044922854171293361375000000000000",
+    "dual_id": "85635e831918c44c8aba3762ec061ddcfc91854ae8f692af0de195575ba7b929"
+  },
+  {
+    "node": 649,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "62940578462873294438496353782656907/13005214259859167979445312500000000",
+    "dual_id": "2b356b28f03c4c7f891f21eb08a613c4858a3fc04fa90deac3c7469f1938874d"
+  },
+  {
+    "node": 650,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "543652985733704583884935414351750799/112044922854171293361375000000000000",
+    "dual_id": "85635e831918c44c8aba3762ec061ddcfc91854ae8f692af0de195575ba7b929"
+  },
+  {
+    "node": 651,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28209220769714168858937034034886744137/5826335988416907254791500000000000000",
+    "dual_id": "b30f35b036666048129e4fe15b7738e4de6601e463cebcd64a4e7aaa0215c96b"
+  },
+  {
+    "node": 652,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "9321510579927114778614767354857607/1829304862925245605900000000000000",
+    "dual_id": "e1a5a5d2a9c762826d1d20dbd87298d7d17d9934eda8dc31ad2b72ead0c34d75"
+  },
+  {
+    "node": 653,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1977420298072343209986469864998046991/388422399227793816986100000000000000",
+    "dual_id": "00e4ab8ef4c47895e292d93569ea804a2cffcf424516cd9a6e73d8581e2910cb"
+  },
+  {
+    "node": 654,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "121424030099985491238544288140023033/23780963218028192876700000000000000",
+    "dual_id": "d830d8802530c69dba72e60ce47d7e23e9a9a9117782ed6cd8c0bcd97b7fbda6"
+  },
+  {
+    "node": 655,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "2832562084874812575148795881561710303/554889141753991167123000000000000000",
+    "dual_id": "06bf29ddeed6c120fa7f13cb354551534e16e4ccd96e26fdafb6c842890bed82"
+  },
+  {
+    "node": 656,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "24738625825237344758478652941701153/4853257799597590383000000000000000",
+    "dual_id": "7ae1af989630d5550a1e27781c2a5b128fe8f671927bc0b3137d0763b2747b25"
+  },
+  {
+    "node": 657,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "676041153330078128326725611851985141/132416727009475164881625000000000000",
+    "dual_id": "d12184934ab2741834a30f1ccf251af63ed1739905766c211ef7f39cf5b110b7"
+  },
+  {
+    "node": 658,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "676041153330078128326725611851985141/132416727009475164881625000000000000",
+    "dual_id": "d12184934ab2741834a30f1ccf251af63ed1739905766c211ef7f39cf5b110b7"
+  },
+  {
+    "node": 659,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "676041153330078128326725611851985141/132416727009475164881625000000000000",
+    "dual_id": "d12184934ab2741834a30f1ccf251af63ed1739905766c211ef7f39cf5b110b7"
+  },
+  {
+    "node": 660,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "247245279692276323734774938728967573/48552799903474227123262500000000000",
+    "dual_id": "845e89d658e0426fb8cccc84f8c60a776c4b9a803a8ccaf26d8fca5f66fc9ee2"
+  },
+  {
+    "node": 661,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "5937477520626954670196525842176670097/1165267197683381450958300000000000000",
+    "dual_id": "656b772b52821e1159f4018f9066cf4af1aa061ed351e5294813142ff4d3a536"
+  },
+  {
+    "node": 662,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "606523189115496182277458424983275091/118904816090140964383500000000000000",
+    "dual_id": "ff09226364d0c753c349a0418f8d20939519ca0828a49d899ed8533046ed6b88"
+  },
+  {
+    "node": 663,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "303742434946763972993361950928786743/59452408045070482191750000000000000",
+    "dual_id": "3e556f6d4276eab0c1f1aba59f53e3adb9d8d2f6d10a2ef4e8d60a0ab6ac2e54"
+  },
+  {
+    "node": 664,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "8578016304353517633693877538687443/1681482247739367173100000000000000",
+    "dual_id": "10c0015d10054592079a6c7c3879fdaaa6170884cd08bc0c405ae36a32b18124"
+  },
+  {
+    "node": 665,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "96421225505304885684016681378072313/18916675287067880697375000000000000",
+    "dual_id": "97b2d2c62eb8193cc7c0c6226fe05dc13dba6b0c9749786a219b0c7e7e7453e6"
+  },
+  {
+    "node": 666,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "19346981552988323938699028442476959/3783335057413576139475000000000000",
+    "dual_id": "a4afb5508600cc3b515dd730d7108bca6e5573c0a4040c16301ef3d2811aa6e0"
+  },
+  {
+    "node": 667,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "3426770863770869507685821557235507/672592899095746869240000000000000",
+    "dual_id": "2ec6730c347c610b014f385c12aacdcea2118ea67fcd9c5063cab0740abe148d"
+  },
+  {
+    "node": 668,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "65663276000397268892809017243540683/13241672700947516488162500000000000",
+    "dual_id": "3db78313a1033d02a443f8571a43a49a7444364f9e8a122ff27c9aebc7270e32"
+  },
+  {
+    "node": 669,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "120302422449864374360821873282029277/24276399951737113561631250000000000",
+    "dual_id": "76968338bc10309d6ddff632a28ff2e9891a19025764b19649adfca9639f0d86"
+  },
+  {
+    "node": 670,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "451498663447591329844694390058998563/91036499819014175856117187500000000",
+    "dual_id": "edac8d752c1269630b203f64942a5e6de0a5f08e9ddec3125a11bebbe0b1fe59"
+  },
+  {
+    "node": 671,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "928324852154820415942861919855141/190552589888046417281250000000000",
+    "dual_id": "f9776b7f67b0ce8e01393ae7f0a8ea11b2324d4d4ec3e12829c063d51a4f5d7f"
+  },
+  {
+    "node": 672,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "56976904417147704389152417102978312061/11652671976833814509583000000000000000",
+    "dual_id": "05f647748197b2d3e20178745a4c5e1babc2536c604868279881ac858d5f013a"
+  },
+  {
+    "node": 673,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "9607702900921066498302736239970973579/1942111996138969084930500000000000000",
+    "dual_id": "45ea6845708acbca910d615d9fb06a7294d040f9bad4c2665c69c66a34ec5ba3"
+  },
+  {
+    "node": 674,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "2026856326785944211401613923828937569/416166856315493375342250000000000000",
+    "dual_id": "cd9edf380be24f29b1364b20d6389c647a9b90bf0b7735d91c97eefaafe162f5"
+  },
+  {
+    "node": 675,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1095839968563917399912396610543703051/224089845708342586722750000000000000",
+    "dual_id": "05c0ae58712205252dc28c8d52598fb3863a385e6e1bff7095644effa6222523"
+  },
+  {
+    "node": 676,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "284473330133748322749431201717834027953/58263359884169072547915000000000000000",
+    "dual_id": "3a8dfe94b2a43ee2408760c9dbdecd288f7088bd4f9cfb5af0a0f1979d379d77"
+  },
+  {
+    "node": 677,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "7907382729217954115724325694840686781/1618426663449140904108750000000000000",
+    "dual_id": "428f80d2d736e71bf50964dc1e6a13390cac620ced93bfd5b43678bce6e8c6e2"
+  },
+  {
+    "node": 678,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 679,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 680,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28229582513563717548465097999105902223/5826335988416907254791500000000000000",
+    "dual_id": "6309a227e4204661f0743c37bec16c2f52ce20384c7cf332d467498824db2936"
+  },
+  {
+    "node": 681,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28175365243669812211914663110133497519/5826335988416907254791500000000000000",
+    "dual_id": "d784a3ef029449253e1566e97392e0d7ee6e95a0df66e3e2fb227efca0186e64"
+  },
+  {
+    "node": 682,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28244737252235203077059404348363165657/5826335988416907254791500000000000000",
+    "dual_id": "af1cf3d10dc921d9d89be83c116bd45380e9e606c74b4ecbad0ddf16ec0d8e73"
+  },
+  {
+    "node": 683,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "14087682621820517822783926373927924009/2913167994208453627395750000000000000",
+    "dual_id": "c9e242449f29eaf6b3f8a4bbc721e3e83a907955904a9aa0e28525d997938bf5"
+  },
+  {
+    "node": 684,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1710501758671694155087136186032140301/353111272025267106351000000000000000",
+    "dual_id": "e50cdc66131b66d40710546ee4863547f0f5dafb1f16824da5d90057c4a46ad4"
+  },
+  {
+    "node": 685,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1707904715346564081099000345645088049/353111272025267106351000000000000000",
+    "dual_id": "cc78ced55816a155c8bb332bbf7901e797e64c31d4dd46b05b85ae36e310bfae"
+  },
+  {
+    "node": 686,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "2684371589700606752195076743887359551/554889141753991167123000000000000000",
+    "dual_id": "c27db350f8c0f64cf53bdbf10161fec01a5047021d4e8ed5c4fc064e379929bd"
+  },
+  {
+    "node": 687,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "56379538958049987857238548001609197357/11652671976833814509583000000000000000",
+    "dual_id": "5057bdb3946fa649bbe47cdd5ecc94b83d925fdc15ad23e10e7c60957ff47fcd"
+  },
+  {
+    "node": 688,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 689,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 690,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "348783360993703451299557859308944409/71930073931072929071500000000000000",
+    "dual_id": "198b1c43932c01c4b89013e26c1606bbe25bad9ab1428469ad6b9b47bfeaeb91"
+  },
+  {
+    "node": 691,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "80334002765161279852721636167526087/16599247830247599016500000000000000",
+    "dual_id": "32927ab699b5a5ff105b6d2fdc589c4bb382332dd01831c60d852f38843035ea"
+  },
+  {
+    "node": 692,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1885450781234272561723441785317321287/388422399227793816986100000000000000",
+    "dual_id": "aff4449e41f22ab1704c40f43a7e748a03fc64ccbff2d4e94c00a24b89c66c55"
+  },
+  {
+    "node": 693,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28197234971594015585839234599020473889/5826335988416907254791500000000000000",
+    "dual_id": "98492678deb3b871f236b4cf7cac0ae25b6c3c125bdcd39e36bf99dd6594ccde"
+  },
+  {
+    "node": 694,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "11313974885216820372073842214602161/2334269226128568611695312500000000",
+    "dual_id": "314e4dc92c7de1ddf539b9be15b63f55327f0cb633ea424bed10615215a8eb99"
+  },
+  {
+    "node": 695,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28208196152584214573194606428951916817/5826335988416907254791500000000000000",
+    "dual_id": "536109138afd7f3c6aeadb48531c8ab7cd75c3b256bfe8ea40ac8a88cf2fe4b2"
+  },
+  {
+    "node": 696,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 697,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 698,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 699,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 700,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 701,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 702,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1348919954951405764033674337706479051/277444570876995583561500000000000000",
+    "dual_id": "3975fce4f2ab9455bf7ac4825db6e787d148281bbc8d3872d0a8edaf389f21fe"
+  },
+  {
+    "node": 703,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28345273092759246741706326523617961093/5826335988416907254791500000000000000",
+    "dual_id": "6578c38ed2e7fbba49b2bac636d45c90f15cb870b19611400275ef568139dae1"
+  },
+  {
+    "node": 704,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "3793235282853062642161110309797092993/776844798455587633972200000000000000",
+    "dual_id": "83731f54afab0994893273341f90052cff7c1647ea4d011e9986e553b3348e36"
+  },
+  {
+    "node": 705,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "14145307503912465406929206819568206189/2913167994208453627395750000000000000",
+    "dual_id": "4c1b1885ed170fbbc26b0e2dda9e8b2012cbd67267841097deb2b31838288782"
+  },
+  {
+    "node": 706,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "56589816832693654331228930914978042691/11652671976833814509583000000000000000",
+    "dual_id": "5e52defa9dd07cd319fbdd9b4499a2d0cc3400b855f3db15c313a90ab63b06c4"
+  },
+  {
+    "node": 707,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28341197917503294724672613104826125613/5826335988416907254791500000000000000",
+    "dual_id": "16a05bd13d3ee137b5846ce9f79d12253bf79f855b7a073c472d2cff12845b62"
+  },
+  {
+    "node": 708,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "224702041796882198071350192468922631/46240761812832597260250000000000000",
+    "dual_id": "aba8ec9d1b3778d1ae75ea3c4e4a7e0e4f01140f6a7c21af3b351e845b3d923a"
+  },
+  {
+    "node": 709,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1769528579152060053340198390065482071/364145999276056703424468750000000000",
+    "dual_id": "cdbc8409e36368e5bfc25ddc0e8b1428cf8e14cc7dbd2d822e60dd5a71212042"
+  },
+  {
+    "node": 710,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "56594976443387832043649675295873026329/11652671976833814509583000000000000000",
+    "dual_id": "3ffa86773de35faa18d094b293585034d736c14ca0f8094581e8d1f997d79415"
+  },
+  {
+    "node": 711,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "4725770616234543123412948764101843921/971055998069484542465250000000000000",
+    "dual_id": "f5ce501f0761d8d8a0e692bc4708a464ce50b66d1f79c84ccc1b86d6b165f254"
+  },
+  {
+    "node": 712,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "128605287708892794309016755488180959/26483345401895032976325000000000000",
+    "dual_id": "b1a8f301462e501ac3d1d824c2dd2f0326d9ce8bedb150a46599803ccc5d6de6"
+  },
+  {
+    "node": 713,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1012956898212293694635493677883835333/208083428157746687671125000000000000",
+    "dual_id": "8ea66967252e815d98c88ff098c6c604efe6a0314eeec0d0fa32876e652a9901"
+  },
+  {
+    "node": 714,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "7114322386775346379620509436064348003/1456583997104226813697875000000000000",
+    "dual_id": "a3a758508f66fa2ab4ecdf6eea3ba84b0367d56df37c5401d6d6d7065c4a6d8d"
+  },
+  {
+    "node": 715,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "7118810896638764407592103949355487103/1456583997104226813697875000000000000",
+    "dual_id": "0def176abf88478b51b2983328b3105410e58221eaa64624fc1b1e55dd7933da"
+  },
+  {
+    "node": 716,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28252148575683881537561100623738940251/5826335988416907254791500000000000000",
+    "dual_id": "4de6bb5d7f4ed90c4d1bd2cf0f3abda1b2c6f0e45ecebd2c6cae4513590b6122"
+  },
+  {
+    "node": 717,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "543655819523964216714189167561786513/112044922854171293361375000000000000",
+    "dual_id": "b8d736dd2ed592a5d9b8774e6c266c24d100be41bcaa927673dccf043cd7c573"
+  },
+  {
+    "node": 718,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 719,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 720,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 721,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 722,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1050661905722095675296119798307971257/215790221793218787214500000000000000",
+    "dual_id": "e8071b1a855c2620376041894f9a778b7720b72429ee2d1583fdccd19ab31cfd"
+  },
+  {
+    "node": 723,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "4721219842278033948253254947057161817/971055998069484542465250000000000000",
+    "dual_id": "d2b24a9680d6bab9234979e18a577f5a653a945d69daf2a0fd01bbb4a5a62917"
+  },
+  {
+    "node": 724,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "2834527309374072440897503036773147983/582633598841690725479150000000000000",
+    "dual_id": "917b1cce93c9cbcb87031fc27f3a544aaf4a67042f94da1d2c32de17aa6dd640"
+  },
+  {
+    "node": 725,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "948308820749738707908410540956477367/194211199613896908493050000000000000",
+    "dual_id": "182e586c0b1213e9d001b41936cb3f8a4d24384f09913b1ebea48468786db310"
+  },
+  {
+    "node": 726,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "5620107433063290239272401113244504539/1165267197683381450958300000000000000",
+    "dual_id": "c017fa10dc412d805e55e5ebe6aecc2447ee4977ac9cbd0111926f492119cc60"
+  },
+  {
+    "node": 727,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1886041000579394656450622332938448801/388422399227793816986100000000000000",
+    "dual_id": "12d8e7f2f2d826b90458dc907fa7833bc585f050776f82522d074dd4a6503ff9"
+  },
+  {
+    "node": 728,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "11317963366718066810370200031262258207/2330534395366762901916600000000000000",
+    "dual_id": "509eb93e628a2dbdd1ec9c9d38c550e6af9dfaec9e4ba95f1847cb0b11bed2f4"
+  },
+  {
+    "node": 729,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28301586632423005248565063227218012867/5826335988416907254791500000000000000",
+    "dual_id": "e0da01f4d3069e8af44e72d306e0b71d78067ee5bec28a3f70e058c3a3948595"
+  },
+  {
+    "node": 730,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28312457266077282200291242538045736449/5826335988416907254791500000000000000",
+    "dual_id": "427af96505ad6f9e204e720daf3dde352f9d5f97e6a4909fe274c5a800273a88"
+  },
+  {
+    "node": 731,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "3145828585110004833326800029318308261/647370665379656361643500000000000000",
+    "dual_id": "3c15af380ffedf47dd36e9f685adbedcf48752d9f37609f998181f10a0f3ee8d"
+  },
+  {
+    "node": 732,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "150919937188157969674343472184153063/31073791938223505358888000000000000",
+    "dual_id": "f8bc059cfb4e6520e204dd0e5b346b0367a9459a60f1ae4a24bfa53a2c21a4d3"
+  },
+  {
+    "node": 733,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "9451541232607989911146344207485359871/1942111996138969084930500000000000000",
+    "dual_id": "85db67a3f6c998b529a7e3cf125538520691790f19f7b58bdf99d817119acdb7"
+  },
+  {
+    "node": 734,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28293163296875631581401552637095954457/5826335988416907254791500000000000000",
+    "dual_id": "b72aa47dbf7eb2129911221dafb88def26b774a4c6d0e738baa7c5b628143a44"
+  },
+  {
+    "node": 735,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "4051827592953508364286035606474499773/832333712630986750684500000000000000",
+    "dual_id": "6a7e60e6acf65e9980ccbe90a7a9edd9162e65f3c971675522a07d2df5d1d558"
+  },
+  {
+    "node": 736,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28457289546855148654551622514130372047/5826335988416907254791500000000000000",
+    "dual_id": "0e6d2c307c3fda9657ba286e2f617e2d422580a8db80b693774ae90b43f18aa6"
+  },
+  {
+    "node": 737,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "5695048717168458198244567567123304129/1165267197683381450958300000000000000",
+    "dual_id": "0213b8ee9d03a83250ae7c15cf54cc43c1b54e0b53e4c8026c3dbc564e3b1420"
+  },
+  {
+    "node": 738,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "523187936594438616390036308744991307/107895110896609393607250000000000000",
+    "dual_id": "2a6983877ae1eed5027cf77fd738ef40f4e3d7e30bf71f258991c6309fcc8d2f"
+  },
+  {
+    "node": 739,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "21813350783618990540781435371118007/4495629620692058066968750000000000",
+    "dual_id": "354827c96d2550fc617c4ffa2022256ccc33b37f908d84e313894c3a3126c029"
+  },
+  {
+    "node": 740,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 741,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 742,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28204368533075216871698386524851917987/5826335988416907254791500000000000000",
+    "dual_id": "6705fcd925d048c422f1d8f88e9d6f689a72c0d93e7e5e55478896973cb4ee38"
+  },
+  {
+    "node": 743,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "880339343591596732158465026160709127/182072999638028351712234375000000000",
+    "dual_id": "c84cb24963b1100c50d134720f03642b28b0dfc351017d15355aeb626db5e4ff"
+  },
+  {
+    "node": 744,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "56853811910481963114904044269623645471/11652671976833814509583000000000000000",
+    "dual_id": "9f11c84f961fda7a009af3ae6d33303d97af6d623593b9bf7f8568756480c07e"
+  },
+  {
+    "node": 745,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "56583969160026878872340766177484659161/11652671976833814509583000000000000000",
+    "dual_id": "5fb9d041c08301d6c7b7d8edfb10a05c9bfbe3f57cd2a07a7c0e4574339121db"
+  },
+  {
+    "node": 746,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "14140149551071675646043153710656838719/2913167994208453627395750000000000000",
+    "dual_id": "d9f0eb76fda154d96b6455c7ff2b0f61c326322e8fd95af3d5910382e414e110"
+  },
+  {
+    "node": 747,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "14164281309848684737836803432322739219/2913167994208453627395750000000000000",
+    "dual_id": "ad0e8cc0f0581a994a6b2a7d242d3254ddba40be17415d65b03ba5413924925b"
+  },
+  {
+    "node": 748,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "1349342272012776975836476973555367347/277444570876995583561500000000000000",
+    "dual_id": "f97d0bec613b63130c62bf6f48dccc762fe180050e1659bd373e4dfece553541"
+  },
+  {
+    "node": 749,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28431751932726775544061534066427053563/5826335988416907254791500000000000000",
+    "dual_id": "a08f01077c81c47b6a345e893d8a641abe77647d0752aba75de627e5fcc5cf8e"
+  },
+  {
+    "node": 750,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28449705972006737473558088649746526383/5826335988416907254791500000000000000",
+    "dual_id": "09c515fff87b5d1ead3b02d0f03bca9c3431e7516dd3facad70462b84702ea00"
+  },
+  {
+    "node": 751,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "56587377041500472314103195013073807637/11652671976833814509583000000000000000",
+    "dual_id": "281e67146ba08788ebfe93b0c09a517e63e1f0f24d0a1c962940606fbeead275"
+  },
+  {
+    "node": 752,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "28263883766241151924475889362257593713/5826335988416907254791500000000000000",
+    "dual_id": "1797cf1f8bbddbe04c064abc6561f030bb5bb99add380878c0064dfe320ac79f"
+  },
+  {
+    "node": 753,
+    "kind": "stage1",
+    "original_leaf_count": 1,
+    "complete_upper": "9513909871505914867025239600602732493/1942111996138969084930500000000000000",
+    "dual_id": "eaae184e8b53b8f559b3f292f532e3b20bf01bb9446a53593cebbbda2e67c691"
+  }
+]

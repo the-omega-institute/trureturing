@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:745d4b7462db535d11423b0d744c25e3d56b07433eb482e74b832b5c1a01bced
+  normalized_sha256: sha256:745d4b7462db535d11423b0d744c25e3d56b07433eb482e74b832b5c1a01bced
+cas_ref: sha256:745d4b7462db535d11423b0d744c25e3d56b07433eb482e74b832b5c1a01bced
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句说明证明只使用集合包含而不比较计算能力，是论证范围说明，无独立待证明命题。
+    previous_atom_id: b418aa4d6aefd4fb2c7189089d992cfeca180234d27cd6ab99cf0ca1096cd213
+    next_atom_id: e04c17ad91afff944310fbf46023cea77fb71b105b48d183ce3a71341a021e8d

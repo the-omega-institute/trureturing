@@ -1,0 +1,19 @@
+它们是同一有限载体 $S\times S$ 上的非负归一化概率。令 $\delta=1/k$、$a=1-\delta/3$。单边 Bhattacharyya 亲和度为
+$$
+\begin{aligned}
+b_k
+&=\sum_{i,j}\sqrt{Q_k(i,j)Q_k^{R}(i,j)}\\
+&=\frac{1-\delta}{4}+\frac{\delta}{2}
+  +\frac{3a}{16}+\frac{6a\sqrt2}{16}\\
+&=\frac{7+6\sqrt2}{16}
+  +\delta\frac{3-2\sqrt2}{16}.
+\end{aligned}
+\tag{104.2d}
+$$
+第二行的四项依次来自 $0\to0$、六条连接 $0$ 与环的有向边、三个环内自环及六条有向环边。由于
+$3-2\sqrt2=(\sqrt2-1)^2>0$，且 $0<\delta\le1/2$，
+$$
+0<b_k\le\frac{17+10\sqrt2}{32}=\beta<1;
+$$
+最后一个不等式由 $\sqrt2<3/2$ 得到。
+

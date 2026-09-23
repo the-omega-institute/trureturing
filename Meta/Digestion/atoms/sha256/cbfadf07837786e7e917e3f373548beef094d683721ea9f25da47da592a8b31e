@@ -1,0 +1,8 @@
+`D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.lean` 中的 `compatible_unbounded_coordinates` 给出反例：`partialOnes n` 满足每个有限层的投影相容性，但
+
+$$
+\|\mathrm{partialOnes}(n)\|^2=n,
+$$
+
+故范数无界；它既不是某个 $\ell^2$ 向量的投影族，也不属于有界逆极限。这个例子把“逐层一致”与“存在一个实际状态”之间缺失的有界性条件具体化了。
+

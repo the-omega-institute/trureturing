@@ -1,0 +1,51 @@
+**定理 31.1（两位置比较中的定时误差）。** 使用定义30.1的固定实验、定理29.3的同一个闭凸 $U=\overline B(p_0,\rho)$、$K,\eta_0$ 及共同图域 $[0,r_*]$。设 $0<\eta\le\eta_0\le\min\{1,r_*/3\}$，已测第一端口位置仍满足
+$$
+\widetilde r_1\in[3\eta/4,5\eta/4],\qquad
+\widetilde r_2\in[7\eta/4,9\eta/4],\qquad
+0\le\epsilon_r\le\eta/8.
+\tag{31.101}
+$$
+每份完整世界的实际事件时间记为 $t_j^r=\theta_r(s_j)$、$t_j^z=\theta_z(v_j)$；两事件须在同源初始分支，相关图坐标及其间线段均在共同图域。假设同一联合事件 $\mathcal E_H$ 对全部候选同时供应
+$$
+\begin{aligned}
+|r_p(t_j^r)-\widetilde r_j|&\le\epsilon_r,\qquad
+|z_p(t_j^z)-\widetilde z_j|\le\epsilon_z,\\
+|r_p(t_j^z)-r_p(t_j^r)|&\le\delta_r\quad(j=1,2).
+\end{aligned}
+\tag{31.102}
+$$
+这里 $\delta_r\ge0$ 是独立认证的图坐标错位界，勿与（30.109）的登记映射 $\delta$ 混同。用（29.115）的 $L_g,C_F,C_T$，令
+$$
+e_{\rm async}=\epsilon_z+L_g(\epsilon_r+\delta_r).
+\tag{31.103}
+$$
+则实际完整参数可行集中任意 $p,q$ 满足
+$$
+\|p-q\|_2\le
+\min\left\{2\rho,\frac{4KC_Te_{\rm async}}{\eta^3}\right\}.
+\tag{31.104}
+$$
+若另有独立认证的 $|t_j^z-t_j^r|\le d_t$ 和同一实际候选时域上的统一 $|\partial_tz_p|\le B_z$，则可把（31.103）换成 $\epsilon_z+L_g\epsilon_r+B_zd_t$；两种证书兼有时取两项定时贡献的较小者。
+
+证明。真实 $r_j=r_p(t_j^r)$ 仍落在定理29.4证明所列的$[5\eta/8,11\eta/8]$、$[13\eta/8,19\eta/8]$，均在 $[0,r_*]$。分支条件另保证 $r_p(t_j^z)$ 在图域内，不能只靠窗口推出这一点。对同一实际 $p$，
+$$
+\begin{aligned}
+|z_p(t_j^z)-g_p(r_j)|
+&=|g_p(r_p(t_j^z))-g_p(r_j)|\le L_g\delta_r,\\
+|g_p(\widetilde r_j)-\widetilde z_j|
+&\le L_g\epsilon_r+L_g\delta_r+\epsilon_z=e_{\rm async}.
+\end{aligned}
+\tag{31.105}
+$$
+这些只是完整世界的必要投影约束。任意两候选在固定测得位置的预测差至多 $2e_{\rm async}$。取 $\lambda=\widetilde r_1/\eta,\mu=\widetilde r_2/\eta$，它们在（29.106）的设计域；直接使用定理29.3的解析两位置比较，并按定理29.4（29.119）的残差计算得
+$$
+|\Delta A|\le\frac{2e_{\rm async}}{\lambda\eta},\qquad
+|\Delta B|\le2e_{\rm async}\left[
+\frac{2(1+\mu/\lambda)}{\mu(\mu-\lambda)\eta^3}
++\frac{C_F}{\lambda\eta^2}\right].
+\tag{31.106}
+$$
+用（29.108）与原来相同的设计常数界就得（31.104）。这是对投影约束的解析比较，没有把双钟世界变成定义29.1的一钟世界。若用内部时间证书，则在两实际时刻之间积分 $z_t$ 得 $|z_p(t_j^z)-z_p(t_j^r)|\le B_zd_t$，其余步骤相同。相同外部标签和各自速率界不使 $d_t$ 为零；把外部标签差换成内部错位必须另有登记或定时证书。
+
+若真实世界实现全部档案及联合事件，它给非空见证，对任意同样有完整见证的拟合，式（31.104）给真实误差界；否则只是条件成对界，不产生参数。只拟合（31.105）不保证旧关系、动作、两钟和误差能共同实现。物理参数上界直接沿用（29.121）；较强旧档案可缩小完整纤维，不能以一个残差拟合替掉完整交集。$\square$
+

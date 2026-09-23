@@ -1,0 +1,28 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "support-degree-five-v1"
+  },
+  "polynomials": {
+    "path": "content/001-polynomials.json",
+    "sha256": "76634717d21c60282750f46e22ef6a846228d1d586bc9086aaf820793e0720ef",
+    "kind": "value"
+  },
+  "actual": {
+    "path": "content/002-actual.json",
+    "sha256": "cd1052d4ed6d968816bd9949beb747493f713439763eb0bb070d52ac53f1f313",
+    "kind": "value"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/50-prime-support-incidence-at-most-five.md": "846cf7da2cf9b1bf79d57f466df9fd6061a83e7fd9fe2de6276a20167107c6a5",
+      "../../../Library/Arith/scottsokal2003repulsive.md": "3c3fb0a431fc838ff261eee5ea1bd8ecbc394072f98745fe88472431129cbc50"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "10136976b73d99c6c480e7d16d5f25cb982c4c65d350f426b3cfc80c4c27bc64"
+  }
+}

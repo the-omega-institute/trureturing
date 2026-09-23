@@ -1,0 +1,34 @@
+**定理 28.3（符号运输与正代表的复射线图）。** 在同一共同时间和黏性下，有全流身份
+$$
+\begin{aligned}
+r_{-\alpha,\beta,\nu}&=r_{\alpha,\beta,\nu},&
+z_{-\alpha,\beta,\nu}&=z_{\alpha,\beta,\nu},\\
+r_{\alpha,-\beta,\nu}&=r_{\alpha,\beta,\nu},&
+z_{\alpha,-\beta,\nu}&=-z_{\alpha,\beta,\nu}.
+\end{aligned}
+\tag{28.109}
+$$
+对 $\beta\ne0$，置
+$$
+\mathcal B=\beta\chi_b(q),\qquad
+m_+=\frac{|\mathcal B|}{\nu}>0,\quad
+k=\frac{a_{\rm cal}^2}{\nu^2},\quad p=(m_+,k),\qquad
+\omega=\frac{\mathcal B}{|\mathcal B|}\in\mathbb S^1.
+\tag{28.110}
+$$
+令 $g_p$ 为上下文卷定理28.2对正代表 $\alpha=a_{\rm cal},\beta=|\mathcal B|$ 给出的真实图。在它的共同初始图区间上，平移复端口图为
+$$
+Z=\mathcal G(R),\qquad \mathcal G(r)=\omega g_p(r).
+\tag{28.111}
+$$
+它继承该卷定理28.2—引理28.4的实变量图正则性及参数余项；在任意固定正紧参数邻域，令 $m_{\min}=\min m_+>0$，可缩小共同 $r_*>0$ 使
+$$
+\partial_rg_p(r)\ge m_{\min}/2,\qquad
+g_p(r)\ge m_{\min}r/2\quad(0\le r\le r_*).
+\tag{28.112}
+$$
+
+证明。平移 $(\pi,\pi)$ 将初态的 $\alpha$ 翻号而保持 $\beta$，且 $a,c$ 字符均为 $-1$。由定理28.2的平移协变与实际唯一性，整条未平移准备解的 $x,y$ 都翻号；归一化的分母 $\alpha$ 同时翻号，所以 $r,z$ 都不变。平移 $(0,\pi)$ 将初态的 $\beta$ 翻号而保持 $\alpha$，$a$ 字符为一、$c$ 字符为负一，故 $x$ 不变、$y$ 翻号，给第二行。两种转换的 $H^{12}$ 半径和时间只依赖幅度平方，因而可用同一共同区间。这还显式补全了上下文卷命题28.6的符号运输在本接口中的用途。
+
+任一符号的准备因此有 $r=r_+$、$z=\operatorname{sign}(\beta)z_+$。定理28.2给 $Z=\chi_b(q)z$，而 $\operatorname{sign}(\beta)\chi_b(q)=\omega$，所以在正代表的初始逆时间上得到（28.111）。共同图域及联合 $C^5$ 是正代表已有的结果；这里不主张平移参数 $q$ 到 $H^{12}$ 值轨迹的联合光滑性。最后 $\partial_rg_p(0)=m_+$，紧性和联合连续性给同一正下界；从 $g_p(0)=0$ 沿实坐标积分给（28.112）。$\square$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03b93f2437b34cc6b24facec21bb2ab79f2e5ebf68ee5fedbe1ef5fc5f5c52b1
+  normalized_sha256: sha256:03b93f2437b34cc6b24facec21bb2ab79f2e5ebf68ee5fedbe1ef5fc5f5c52b1
+cas_ref: sha256:03b93f2437b34cc6b24facec21bb2ab79f2e5ebf68ee5fedbe1ef5fc5f5c52b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “混合恒等式中”写出的多项式下界是本叶全部数学断言；以大写参数等于一加小写参数替换，展开后由sq_nonneg与mul_nonneg给出的三项非负性规范化闭合，仓内无冻结 GID；这不是纯定义，也没有夹带后续舍入或截断余量结论。
+    previous_atom_id: 578cf2a1a9d334bd3379fa122698e39cb9cf6d64eb3d3e5d5dfb4a6be64d70ed
+    next_atom_id: bca67388b734022f1997b379469d767eff3b64f06a932acdf02c0a9db6537119

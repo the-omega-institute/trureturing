@@ -1,0 +1,246 @@
+{
+  "certificates": {
+    "modest": {
+      "index_bits": 6,
+      "max_supplied_integer_bits": 27,
+      "scalar_comparisons": 365,
+      "states": 33,
+      "valid": true
+    },
+    "old": {
+      "index_bits": 5,
+      "max_supplied_integer_bits": 25,
+      "scalar_comparisons": 321,
+      "states": 29,
+      "valid": true
+    },
+    "target": {
+      "index_bits": 10,
+      "max_supplied_integer_bits": 45,
+      "scalar_comparisons": 5799,
+      "states": 527,
+      "valid": true
+    }
+  },
+  "constants": {
+    "E0_upper": [
+      "793",
+      "1578"
+    ],
+    "beta": [
+      "1",
+      "1578"
+    ],
+    "bound_at_8": [
+      "2833",
+      "3231744"
+    ],
+    "delta": [
+      "2",
+      "789"
+    ],
+    "target": [
+      "1",
+      "1024"
+    ],
+    "unchanged_old_bound": [
+      "3",
+      "224"
+    ]
+  },
+  "endpoint_experiment": {
+    "actual_history_optimum": "not determined",
+    "endpoints_per_interval": 2,
+    "first_maximizer": {
+      "endpoint": "hi",
+      "new_label": 218,
+      "old_label": 1,
+      "posterior": [
+        "7884",
+        "17213"
+      ],
+      "word": "00100001"
+    },
+    "leaf_checks": 14848,
+    "maximum": [
+      "14515",
+      "36216152"
+    ],
+    "old_intervals": 29,
+    "prefix_checks_with_repetition": 133632,
+    "word_length": 8,
+    "words_per_endpoint": 256
+  },
+  "histories": {
+    "00": {
+      "modest_labels": [
+        16,
+        24,
+        27
+      ],
+      "next_zero": [
+        "7",
+        "12"
+      ],
+      "old_labels": [
+        14,
+        21,
+        23
+      ],
+      "posterior": [
+        "2",
+        "3"
+      ],
+      "probability": [
+        "9",
+        "32"
+      ]
+    },
+    "0100": {
+      "modest_labels": [
+        16,
+        24,
+        11,
+        22,
+        26
+      ],
+      "next_zero": [
+        "11",
+        "19"
+      ],
+      "old_labels": [
+        14,
+        21,
+        10,
+        19,
+        23
+      ],
+      "posterior": [
+        "25",
+        "38"
+      ],
+      "probability": [
+        "57",
+        "1024"
+      ]
+    },
+    "100": {
+      "modest_labels": [
+        16,
+        8,
+        21,
+        26
+      ],
+      "next_zero": [
+        "23",
+        "40"
+      ],
+      "old_labels": [
+        14,
+        7,
+        18,
+        22
+      ],
+      "posterior": [
+        "13",
+        "20"
+      ],
+      "probability": [
+        "15",
+        "128"
+      ]
+    }
+  },
+  "immediate_obstruction": {
+    "lower_bound": [
+      "1",
+      "456"
+    ],
+    "output_gap": [
+      "1",
+      "228"
+    ]
+  },
+  "interface": {
+    "counter_bits": 4,
+    "counter_trace": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "counter_values": 9,
+    "invalid_input_rejections": 8,
+    "label_bits": 10,
+    "nominal_pairs": 4743,
+    "packed_bits": 13,
+    "separate_bits": 14,
+    "stream_lines": 9
+  },
+  "reset": {
+    "errors_00_0100": [
+      [
+        "19",
+        "6312"
+      ],
+      [
+        "55",
+        "39976"
+      ]
+    ],
+    "label_23": 432,
+    "lower_tie_old_labels": [
+      7,
+      21
+    ],
+    "map": [
+      0,
+      19,
+      38,
+      56,
+      75,
+      94,
+      113,
+      131,
+      150,
+      169,
+      188,
+      207,
+      225,
+      244,
+      263,
+      282,
+      301,
+      319,
+      338,
+      357,
+      376,
+      394,
+      413,
+      432,
+      451,
+      470,
+      488,
+      507,
+      526
+    ],
+    "prediction": [
+      "1221",
+      "2104"
+    ]
+  },
+  "scope": "fixed p=r=1/4, old m=28, new m=526, target=1/1024",
+  "valid": true
+}

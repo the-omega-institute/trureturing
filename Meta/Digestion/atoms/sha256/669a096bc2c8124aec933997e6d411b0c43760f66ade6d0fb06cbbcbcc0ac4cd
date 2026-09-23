@@ -1,0 +1,49 @@
+**定理 43.6（非负仿射图与精确固定的乘法输入）。** 对 $\lambda,\mu\in\mathbb N_0$，定义
+$$
+\mathcal A_{\lambda,\mu}=
+\overline{\{(Z(n),Z(\lambda n+\mu)):n\in\mathbb N_0\}},
+\qquad
+\mathcal A_{\lambda,\mu}(x)=\{y:(x,y)\in\mathcal A_{\lambda,\mu}\}.
+$$
+若 $\lambda=0$，则
+$$
+\mathcal A_{0,\mu}=K\times\{Z(\mu)\}.
+$$
+若 $\lambda\ge1$，令 $\beta=H(x)$、$\theta=\lambda\beta+[\mu\phi]$。则当 $\theta\notin E$ 时，$\mathcal A_{\lambda,\mu}(x)=H^{-1}(\{\theta\})$；当 $\theta\in E$ 且 $x=z_\beta^s$、$\beta\in E$ 时，
+$$
+\mathcal A_{\lambda,\mu}(x)=\{z_\theta^s\};
+$$
+当 $\theta\in E$ 且 $\beta\notin E$ 时，
+$$
+\mathcal A_{\lambda,\mu}(x)=\{z_\theta^{+1},z_\theta^{-1}\}.
+$$
+将定义中的 $n\in\mathbb N_0$ 换为 $n\ge T$，闭包不变。映射 $Z(n)\mapsto Z(\lambda n+\mu)$ 有连续延拓到 $K$，当且仅当 $\lambda\in\{0,1\}$。
+
+特别，对精确固定的整数 $c\ge0$，
+$$
+\overline{\{(Z(c),Z(n),Z(cn)):n\in\mathbb N_0\}}
+=\{Z(c)\}\times\mathcal A_{c,0}.
+$$
+$c=0$ 时输出恒为 $0_K$，$c=1$ 时第二输入与输出相等；$c\ge2$ 时输出相位为 $cH(x)$，其分裂定向遵从上述分类。与此不同，
+$$
+\Gamma_{\mathrm{mul}}\cap(\{Z(c)\}\times K^2)
+=\{Z(c)\}\times K^2.
+$$
+后一个切片只固定极限读数，不固定逼近数列中的第一个整数。
+
+**证明。** $\lambda=0$ 时输出在实际图上恒为 $Z(\mu)$，而输入的每个尾部在 $K$ 中稠密，故得到所述乘积。
+
+设 $\lambda\ge1$。任何实际图的收敛列都由连续性给出输出相位 $\theta$。若 $\theta\notin E$，单点纤维使输出至多一个。若输入相位也分裂，把输入局部误差写为 $\varepsilon_k\to0$。当 $x=z_\beta^s$ 时，假设43.1保证 $s\varepsilon_k>0$ 最终成立。输出的局部相位误差为 $\lambda\varepsilon_k$，对充分大的 $k$ 其绝对值小于 $1/2$，且由于 $\lambda>0$ 与输入误差同号。所以输出相位分裂时只能取得相同定向。输入相位不分裂时，必要性只给出输出属于所述二点纤维。
+
+证明每个允许的输出均可实现。若输入相位分裂，规定输入误差取其定向；若输出相位分裂而输入相位不分裂，规定输入误差取目标输出的定向；若两者均不分裂，任选一个方向。两者都分裂时，分类恰要求这两个规定一致。利用定理43.3在幂次 $1$ 的尾部稠密性，可选择 $n_k\ge k$，使输入误差具有该方向且趋于零。定理43.2及假设43.1分别保证输入、输出趋于指定目标；输出误差始终等于 $\lambda$ 倍的输入误差。这也证明删除任意有限初段后闭包不变。
+
+$\lambda=0$ 的常数延拓连续。若 $\lambda=1$，输出相位为 $E_m$ 时输入相位必为 $E_{m+\mu}\in E$，故上述分类在每个输入上都只有一个输出。该单值图紧致。对于任意闭集 $C\subseteq K$，其逆像是该图与 $K\times C$ 的交在第一坐标上的投影，因而紧致且闭，所以相应函数连续。
+
+若 $\lambda\ge2$，选 $m\ge1$ 使 $\lambda$ 不整除 $\mu+m$，并置
+$$
+\beta=\left[-\frac{\mu+m}{\lambda}\phi\right].
+$$
+若 $\beta=E_\ell$，则 $(\lambda\ell-\mu-m)\phi/\lambda\in\mathbb Z$；括号中的整数非零，矛盾。因此 $\beta\notin E$，但 $\lambda\beta+[\mu\phi]=E_m$。其唯一输入点有两个不同的闭图输出。任何连续延拓的闭图都必须包含实际图的闭包，不可能在该输入处同时包含两个输出，故不存在连续延拓。
+
+最后，精确固定 $c$ 后的实际图正是上述仿射图嵌入第一坐标为 $Z(c)$ 的闭切片；该嵌入与取闭包相容。极限切片的另一等式则直接来自定理43.4。证毕。
+

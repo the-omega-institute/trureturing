@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:61141eeb25f978358688a1863061216094078c80831d07ffb5ca1a3c73fc8b3d
+  normalized_sha256: sha256:61141eeb25f978358688a1863061216094078c80831d07ffb5ca1a3c73fc8b3d
+cas_ref: sha256:61141eeb25f978358688a1863061216094078c80831d07ffb5ca1a3c73fc8b3d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶澄清取迹对象是环境因子而非抽象时间，属于记号解释，没有数学命题需要证明。
+    previous_atom_id: cc3c09ab72fe5a7f85ff8ea539055c2772b1300391ea11920373e97bacdf0aa1
+    next_atom_id: 1ae7753471dd6c3d5042e51e01a285287dc4db6f5ff159debb6f82653c780a4d

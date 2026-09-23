@@ -1,0 +1,43 @@
+**theorem 64.6（两个局部任务的全部均值最优分布与一个严格次优替代策略）。** 对 definition 64.5 的 $A$ 坐标，单独运行时的最小期望查询数为
+$$
+E_A^{\min}=\frac{181}{100}.
+$$
+任一局部均值最优策略的第一中心都必须属于 $P_3=\{3,7\}$；所有局部均值最优策略具有同一停止时间 CDF
+$$
+F_{\mathrm{mean}}(0)=0,
+\qquad
+F_{\mathrm{mean}}(1)=\frac{21}{50},
+\qquad
+F_{\mathrm{mean}}(2)=\frac{77}{100},
+\qquad
+F_{\mathrm{mean}}(t)=1\quad(t\ge3).
+$$
+
+另有一个固定局部策略 $\rho$：第一中心取 $0\in P_0$；若第一答复为 $0$，说明目标在 $O$，第二中心取 $3\in P_3$；若第一答复为 $1$，说明目标在 $P_1$，第二中心取 $2$；若第二步在 $O$ 中排除 $P_3$，第三中心取 $1\in P_2$。其停止时间 CDF 为
+$$
+F_\rho(0)=0,
+\qquad
+F_\rho(1)=\frac14,
+\qquad
+F_\rho(2)=\frac9{10},
+\qquad
+F_\rho(t)=1\quad(t\ge3),
+$$
+且
+$$
+\mathbb E[\tau_\rho]=\frac{37}{20}>\frac{181}{100}.
+$$
+
+对 $B$ 坐标，任一局部均值最优策略都有
+$$
+E_B^{\min}=\frac53,
+$$
+并且其 CDF 为
+$$
+G(0)=0,
+\qquad
+G(1)=\frac13,
+\qquad
+G(t)=1\quad(t\ge2).
+$$
+

@@ -1,0 +1,55 @@
+### 49.1 同一实际递归像与临界幅度合同
+
+固定实数 $A>0$，令
+$$
+\lambda=\frac{A+2+\sqrt{A^2+4A}}2,
+\qquad \rho=\lambda^{-1}\in(0,1),
+\qquad A=\frac{(1-\rho)^2}{\rho}.
+$$
+分别考虑
+$K_A^{\mathbb R}=[-A,A]^{\mathbb N}$ 与
+$K_A^{\mathbb C}=\{a\in\mathbb C^{\mathbb N}:|a_i|\le A\}$。
+每个来源 $a$ 生成唯一数组
+$$
+T_a(n,0)=a_n,\qquad
+T_a(n,k+1)=T_a(n+1,k)-\sum_{j=0}^{k}T_a(n,j)a_{k-j}.
+\tag{49.1}
+$$
+记 $\mathcal E(a)=T_a$。对列归纳，所有坐标均为输入有限前缀的整系数多项式，且 $T_a(n,k)$ 只依赖下标至 $n+k$ 的边界。因此这是实际递归数组，不是任意环境数组。第一列提取 $\beta(T)_i=T(i,0)$ 与 $\mathcal E$ 只在对应实际像上互逆。
+
+对 $\mathbb F=\mathbb R$ 或 $\mathbb C$，先在环境加权有界数组空间
+$$
+B_\rho^{\mathbb F}=\left\{T:\mathbb N^2\to\mathbb F:
+\sup_{n,k\ge0}\rho^{n+k}|T(n,k)|<\infty\right\}
+$$
+上定义
+$$
+\|T\|_\rho=\sup_{n,k\ge0}\rho^{n+k}|T(n,k)|,
+\quad
+\tau_N(T)=\sup_{n+k\ge N}\rho^{n+k}|T(n,k)|,
+\quad
+L_\rho(T)=\lim_{N\to\infty}\tau_N(T).
+\tag{49.2}
+$$
+尾量随 $N$ 递减，故该非负极限存在且有限。令
+$B_{\rho,0}=\{T\in B_\rho^{\mathbb F}:\tau_N(T)\to0\}$，令 $I_A^{\mathbb F}=\mathcal E(K_A^{\mathbb F})$，
+$J_A^{\mathbb F}$ 为其中由有限支持边界生成的实际数组，$\mathbb F=\mathbb R$ 或 $\mathbb C$。有限支持修饰边界，生成的数组可以有无限多非零坐标。
+
+沿用供应接口的正标量包络
+$$
+u_0=A,\qquad u_{k+1}=u_k+A\sum_{j=0}^{k}u_j.
+$$
+三角不等式与列归纳直接给 $|T_a(n,k)|\le u_k$，包括复数来源。全负来源 $a_i=-A$ 在所有坐标达到 $T_a(n,k)=-u_k$。包络的两个初值为 $u_0=A$、$u_1=A+A^2$，并满足
+$u_{k+2}=(A+2)u_{k+1}-u_k$；供应接口的两根闭式改写为
+$$
+u_k=c_A\lambda^k+b_A\lambda^{-k},
+\qquad
+c_A=\frac{A}{1+\rho},\qquad
+b_A=\frac{A\rho}{1+\rho}=c_A\rho.
+\tag{49.3}
+$$
+因此
+$\rho^ku_k=c_A+b_A\rho^{2k}\le A$，全部实际数组都属于加权 Banach 空间，且范数不超过 $A$。另外 $u_k$ 随 $k$ 严格增加。
+
+这里的坐标多项式及首列互逆沿用开头的供应接口。标量包络 $u_k(A)$ 是 $A$ 乘以 Morgan–Voyce 多项式；其成熟归属沿用有限幅度节对 Swamy 初值、递推与系数公式的核对。[^criticalphase_swamy] 本节没有把该标量族重新计作新的数学对象。
+

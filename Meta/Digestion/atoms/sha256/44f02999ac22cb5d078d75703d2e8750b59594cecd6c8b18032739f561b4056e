@@ -1,0 +1,19 @@
+**定义 14.4（统一宽度下的可计算预算）。** 在定义14.1中，设全部 $W_\ell\le W$、$b_\ell\le b_0$、$\nu_\ell\le\nu_0$，并取 $\alpha_\ell=\alpha/D$。置
+$$
+t_n=W\sqrt{\frac{\log(2D/\alpha)}{2n}},\qquad
+s_n=2b_0+2t_n+\nu_0,\qquad
+\Delta_M=\sqrt q\,s_n,\quad\Delta_z=\sqrt d\,s_n,
+\tag{14.11}
+$$
+以及
+$$
+\begin{aligned}
+B_K&=\frac{m_*(v-u)}{hu\sqrt N},&D_K&=\Delta_M\mathcal R^N,\\
+B_f&=\frac{\sqrt{m_*}E_*(v-u)}{hu\sqrt r},&D_f&=\Delta_z\mathcal R^r,\\
+\varepsilon_K&=\frac{B_K}{ea}+D_K,&I_K&=\frac{B_K}{a^2}+\frac{D_K}{a},\\
+\varepsilon_f&=\frac{B_f}{ea}+D_f,&I_f&=\frac{B_f}{a^2}+\frac{D_f}{a}.
+\end{aligned}
+\tag{14.12}
+$$
+这里 $e$ 为自然对数的底；核使用 $N$ 阶矩，初态强迫使用 $r$ 阶交叉前缀。
+

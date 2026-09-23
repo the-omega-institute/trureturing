@@ -1,0 +1,40 @@
+**Proof.** Suppose first that $N\ge16$ and
+$$
+V\le\frac{(1-\varepsilon)N^2}{1024}.
+$$
+Then $s\le N/32$. Take $t=2$ in Theorem 40.9. Its central block has a positive integer length $h$ satisfying
+$$
+h\le4s+1\le\frac N8+\frac N{16}=\frac{3N}{16}<N.
+$$
+Therefore
+$$
+\frac{h}{N-h+1}\le\frac3{13},
+$$
+and the explicitly constructed nonexceptional starting point in that theorem gives
+$$
+e_{N,\theta,p}(n)
+ \ge2\left(\frac34-\frac3{13}\right)
+ =\frac{27}{26}>1>\varepsilon.
+$$
+This does not require the individual cell masses to be small.
+
+For $2\le N<16$, Theorem 40.8 gives
+$$
+e_{N,\theta,p}(n)\ge[1-4V]_+.
+$$
+Under the same variance hypothesis,
+$$
+4V\le\frac{225}{256}(1-\varepsilon)<1-\varepsilon.
+$$
+Hence $1-4V>\varepsilon$, proving the required strict inequality also in this range. The minimum-mass-cell construction in Theorem 40.8 supplies an actual starting point. These arguments include $n=0$. Thus every integer $n$ not exceeding the claimed real lower threshold fails the requested accuracy, and the strict lower bound on $\tau$ follows.
+
+For the upper bound, choose
+$$
+n=\left\lceil
+ \frac{\pi(N-1)^2}{2\varepsilon^2p(1-p)}
+ \right\rceil.
+$$
+Theorem 40.7 gives $e_{N,\theta,p}(n)\le\varepsilon$, establishing both finiteness and the stated upper bound. Since $(N-1)^2\le N^2$ and $N^2/[p(1-p)]\ge16$, the ceiling is bounded by the final displayed expression. Taking logarithms of the two positive bounds proves the uniform logarithmic formula.
+
+Allowing the additional arc endpoint conventions of §36 does not change the global discrepancy supremum: open and closed arcs are monotone limits of half-open arcs with converging lengths, and the remaining endpoint conventions are sandwiched between them. Singleton tests follow by shrinking arcs; empty and full-circle tests have zero error. Thus Theorem 36.9 applies to the same global discrepancy and the same binomial rotation law whenever its stated approximation hypothesis holds. It rules out the global square-root discrepancy estimate, whereas Theorem 40.7 proves the square-root estimate for every one of the fixed endogenous partitions. These statements concern different collections of tests. The finite-partition proof controls a vector transfer through its consecutive orbit endpoints, and its lower bound chooses a light consecutive-index block; neither argument changes the circle, the rotation, or its arithmetic approximation properties. The resulting distinction is exactly between global interval discrepancy and the finite observation mixing budget. $\square$
+

@@ -1,0 +1,22 @@
+**定理 141.1（合法规则与反极函数的精确对应）。** 合法关系规则与满足
+$$
+g(Cx)=1\oplus g(x)\qquad(x\in V_{k,n})
+\tag{141.1}
+$$
+的函数 $g:V_{k,n}\to\mathbb F_2$ 一一对应。对应及其逆为
+$$
+g(x)=x_R\oplus f(\rho(x)),
+\qquad
+f(r)=x_R\oplus g(x),\quad \rho(x)=r.
+\tag{141.2}
+$$
+在公平绝对提升 $A_{t+1}=A_t\oplus c_t$ 中，令
+$$
+Y_t=g(A_{t-R},\ldots,A_t).
+$$
+则逐路径有
+$$
+Y_{t+1}\oplus Y_t=f_{t+1}\oplus f_t\oplus c_t=D_t.
+\tag{141.3}
+$$
+

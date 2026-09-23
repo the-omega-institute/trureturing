@@ -1,0 +1,56 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "AP11_B0"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "1": "1355/263538",
+      "2": "20425/263538",
+      "3": "25/363",
+      "5": "28/33"
+    }
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "1/7"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "22066809439/122031270900"
+  },
+  "at_one": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "exhaustive_vertices": {
+    "path": "content/005-cost_results/000000/item/005-exhaustive_vertices.json",
+    "sha256": "e2b0715399c223b1a590ca70af5fcb2400840a8d8c47dd605e4cadb387de8346",
+    "kind": "value"
+  },
+  "candidate_supports": {
+    "path": "content/005-cost_results/000000/item/006-candidate_supports.json",
+    "sha256": "6bac32160d734c53ac316b5e7f4b3211ece5a6e1f47e1d1a11297a13fe08ed19",
+    "kind": "value"
+  },
+  "selected_support": {
+    "path": "content/005-cost_results/000000/item/007-selected_support.json",
+    "sha256": "db817dec1008be78e66e8f61d474f0b4a5c55ad1cd5fe869cdf80a465e0288b7",
+    "kind": "value"
+  },
+  "zero_vertex": {
+    "path": "content/005-cost_results/000000/item/008-zero_vertex.json",
+    "sha256": "ada36f320c8757a38d51a2759c33a9ba1386e6c4cd811aa0ccb8af10183f0ca8",
+    "kind": "value"
+  },
+  "zero_support": {
+    "path": "content/005-cost_results/000000/item/009-zero_support.json",
+    "sha256": "835d60e9840bfb476cc23dff9bf464ed622374b6f261bc3e49ffe8534e33098a",
+    "kind": "value"
+  },
+  "uniform_excess": {
+    "kind": "inline",
+    "value": "925849737292445501730347/3660877111364550000000000000"
+  }
+}

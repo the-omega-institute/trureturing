@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be0ee5852fc4d40ef7915bb4e836938d9f56aa12b304aca2d89d2156c428d848
+  normalized_sha256: sha256:be0ee5852fc4d40ef7915bb4e836938d9f56aa12b304aca2d89d2156c428d848
+cas_ref: sha256:be0ee5852fc4d40ef7915bb4e836938d9f56aa12b304aca2d89d2156c428d848
+coverage_gids:
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel
+    target_statement_id: sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
+  - gid: D5/S3/Quantum/Foundation/FiniteStateChannel.comp_apply
+    target_statement_id: sha256:4e1c8c8bda8cf4802106fdcc5975ffee567c0842840c30a82b6f349674240663
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,26 @@
+### 89.4 反复记录时，熵增是每一步相对熵的和
+
+考虑一个固定的幺正矩阵 $U$，以及满足
+
+$$
+\rho_{k+1}
+=
+\operatorname{basisPinchingState}
+\left(U\rho_kU^\dagger\right)
+$$
+
+的离散协议。项目中的 `entropy_production_coherence_deletion_identity` 证明每一步的熵差为
+
+$$
+\boxed{
+S(\rho_{k+1})-S(\rho_k)
+=
+D\!\left(
+U\rho_kU^\dagger
+\middle\|
+\operatorname{basisPinchingState}(U\rho_kU^\dagger)
+\right)
+\ge 0.
+}
+$$
+

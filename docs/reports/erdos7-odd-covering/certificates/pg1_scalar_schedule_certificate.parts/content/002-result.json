@@ -1,0 +1,140 @@
+{
+  "source_case": {
+    "kind": "inline",
+    "value": "PG1"
+  },
+  "source_survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "source_Gamma_upper": {
+    "kind": "inline",
+    "value": "491316187201313799169931/14604022456869186140625"
+  },
+  "source_mean_upper": {
+    "kind": "inline",
+    "value": "5"
+  },
+  "source_hinge2_upper": {
+    "kind": "inline",
+    "value": "3"
+  },
+  "certified_hinges": {
+    "kind": "inline",
+    "value": {
+      "1": "4",
+      "2": "3",
+      "3": "10162026053915069246357/4868007485623062046875",
+      "4": "1433737384346892410897/973601497124612409375",
+      "5": "1093534028247938362241/973601497124612409375",
+      "6": "4033254968714385651877/4868007485623062046875",
+      "7": "9648458629766273805119/14604022456869186140625",
+      "8": "212159150814634558117/417257784481976746875"
+    }
+  },
+  "completed_hinges": {
+    "kind": "inline",
+    "value": {
+      "1": "4",
+      "2": "3",
+      "3": "10162026053915069246357/4868007485623062046875",
+      "4": "1433737384346892410897/973601497124612409375",
+      "5": "1093534028247938362241/973601497124612409375",
+      "6": "4033254968714385651877/4868007485623062046875",
+      "7": "9648458629766273805119/14604022456869186140625",
+      "8": "212159150814634558117/417257784481976746875",
+      "9": "212159150814634558117/417257784481976746875",
+      "10": "212159150814634558117/417257784481976746875",
+      "11": "212159150814634558117/417257784481976746875",
+      "12": "212159150814634558117/417257784481976746875",
+      "13": "212159150814634558117/417257784481976746875",
+      "14": "212159150814634558117/417257784481976746875",
+      "15": "212159150814634558117/417257784481976746875",
+      "16": "212159150814634558117/417257784481976746875",
+      "17": "491316187201313799169931/993073527067104657562500"
+    }
+  },
+  "whole_N2_upper": {
+    "kind": "inline",
+    "value": "14796704419135459477126/2920804491373837228125"
+  },
+  "fixed_thresholds": {
+    "kind": "inline",
+    "value": [
+      [
+        11,
+        4
+      ],
+      [
+        13,
+        5
+      ]
+    ]
+  },
+  "threshold17_range": {
+    "kind": "inline",
+    "value": [
+      1,
+      15
+    ]
+  },
+  "threshold19_range": {
+    "kind": "inline",
+    "value": [
+      1,
+      17
+    ]
+  },
+  "schedules": {
+    "kind": "inline",
+    "value": 255
+  },
+  "finite_bounds": {
+    "kind": "inline",
+    "value": 83
+  },
+  "bounds_below484": {
+    "kind": "inline",
+    "value": 0
+  },
+  "bounds_at_most271": {
+    "kind": "inline",
+    "value": 0
+  },
+  "minimum_positive_intercept": {
+    "kind": "inline",
+    "value": "1347550073657352160737581749208743/12717935154678665191726215000000"
+  },
+  "best_thresholds": {
+    "kind": "inline",
+    "value": [
+      8,
+      8
+    ]
+  },
+  "best_Gamma_upper": {
+    "kind": "inline",
+    "value": "4328407686313602732003920846923406469670769/3525794087392122703309813353800433137280"
+  },
+  "best_A": {
+    "kind": "inline",
+    "value": "1244512652309198783819228276339363/1398737149427145978016523519062500"
+  },
+  "best_B": {
+    "kind": "inline",
+    "value": "-11264624540141724438359369709680962423603/31977145417399732147666071439636200000000"
+  },
+  "outcomes_sha256": {
+    "kind": "inline",
+    "value": "bee37f31077a97820f8a958a9ccfa16bc55afbad5c2fed76ef3dd7ee3d4c7dab"
+  },
+  "outcomes": {
+    "path": "content/002-result/021-outcomes.json",
+    "sha256": "472a7ff21b80d8fbd2fbeda2159cf4a4b135e2a6b5314c1e8804aa2c663f637d",
+    "kind": "array"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Exact SH28 scalar-feature upper functional on one fixed PG1 law for all255 integer17/19 schedules after fixed11/4,13/5. Complete auxiliary probability/mean tails and arbitrary finite physical heights. Every finite result checks convexity and nonnegative integer feature coefficients at its finalW. The existing13/N2 whole-cost bound improves only the positive-charge part above the convex base. Failure of this sufficient functional is not a lower bound on actual moments, an obstruction to richer joint observations, or an unrestricted-prime covering result."
+  }
+}

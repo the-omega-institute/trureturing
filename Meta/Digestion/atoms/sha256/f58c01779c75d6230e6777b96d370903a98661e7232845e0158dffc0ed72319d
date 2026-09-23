@@ -1,0 +1,13 @@
+### 定理 3.1. 同时有理恢复
+
+\[
+R=DHD^{-1},\qquad DN_i(H)D^{-1}=N_i(R).
+\]
+
+D 可逆，且同一个 D 对所有指标都适用。因此，对任意有限有序词 w，
+
+\[
+D\Bigl(\prod_{i\text{ in }w}T_i(H)\Bigr)D^{-1}
+=\prod_{i\text{ in }w}T_i(R).
+\]
+

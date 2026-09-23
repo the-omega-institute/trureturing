@@ -1,0 +1,109 @@
+{
+  "mode": {
+    "kind": "inline",
+    "value": "fixed-envelope obstruction, not an actual-source lower bound"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "1/27"
+  },
+  "rho_radius": {
+    "kind": "inline",
+    "value": "1/100000"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "161/486",
+      "v0": "2509/90000",
+      "v1": "404687/14490000",
+      "gap": "105757/4860000",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "17/6561",
+        "1/972",
+        "1/108"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "3529/48600"
+    }
+  },
+  "mass_lower": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "denominator_lower": {
+    "kind": "inline",
+    "value": "3274101544705110126479/43643277148115799000000"
+  },
+  "denominator_shared_cost": {
+    "path": "content/004-complete_radius/006-denominator_shared_cost.json",
+    "sha256": "51bba362a94469bd8f3d25ae59f94feef141c6d01be44c2f52380a2228b81a97",
+    "kind": "value"
+  },
+  "denominator_costs": {
+    "path": "content/004-complete_radius/007-denominator_costs.json",
+    "sha256": "8cec933faca5aefb077bb18d32331319ebdf90712ff401211ef3133ea0d85585",
+    "kind": "array"
+  },
+  "H1": {
+    "path": "content/004-complete_radius/008-H1.json",
+    "sha256": "57a652d496db3d5914a428c2dfd87c6da576775c3f889f8c9232c0a35d2efebb",
+    "kind": "value"
+  },
+  "retained_numerator_excess": {
+    "kind": "inline",
+    "value": {
+      "heavy2": "327012233119198153120572490382676608421556367893/173647197887553203032496646951671996156250000000",
+      "H1_single": "120135223804252663789064397781724797/508037595915606751906698706920000000",
+      "positive_mass_single": "23564600024007596459/14265512244264030750000",
+      "square": "38472647664033668736405835057361/217125161860858607448892800000000",
+      "raw81_first": "610386856790539/21905108998923150",
+      "raw81_second": "13254727/103204530"
+    }
+  },
+  "optimistic_numerator": {
+    "kind": "inline",
+    "value": "426671564012186193959091958354806026957441191467318229/11413483022753096928919939610839496963358000000000000"
+  },
+  "omitted_nonnegative_envelope_excesses": {
+    "kind": "inline",
+    "value": [
+      "mean11",
+      "H2_single",
+      "joint_quadratic9"
+    ]
+  },
+  "fixed_envelope_comparison_lower": {
+    "kind": "inline",
+    "value": "6561231119924799494981826229970575191577141242905187452231/12620047998103584862049908394339895972286143963402000000"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "509"
+  },
+  "proves_fixed_envelope_failure": {
+    "kind": "inline",
+    "value": true
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 1875000
+  }
+}

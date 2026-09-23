@@ -1,0 +1,82 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "same PG1 law and physical kernels; prior geometry is a separately verified hash-bound prerequisite; full higher357 and multiplier tails"
+  },
+  "source_joint_sha256": {
+    "kind": "inline",
+    "value": "ecefc571b7c185cfc077ae016873056abf3824029e5c49aada951bffd71b36ff"
+  },
+  "original_source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
+      "certificates/original9_convex_transfer_certificate.json": "98e19c9a0888ef3b515776fc15f66fe90318aedc8fa89c7d6e8c636b10d78d9d"
+    }
+  },
+  "source_survival_lower": {
+    "kind": "inline",
+    "value": "25428074957/48000000336"
+  },
+  "ordinary_deletion": {
+    "kind": "inline",
+    "value": {
+      "caps": [
+        1000000007,
+        207174054,
+        305330055,
+        67024566,
+        517529280,
+        117763278,
+        190412499,
+        41470054,
+        265958138,
+        46470620,
+        87568636,
+        16622259
+      ],
+      "group_numerator48": 19216215624,
+      "upper": "22571925379/48000000336"
+    }
+  },
+  "ordinary_signed_G2_observations": {
+    "path": "content/003-result/005-ordinary_signed_G2_observations.json",
+    "sha256": "ccf3562eab6f35a1887b51d1461def63ed36fa591306688780087482883de383",
+    "kind": "value"
+  },
+  "ordinary_signed_G2_excess": {
+    "kind": "inline",
+    "value": "5825240185835951182313/2756768194297377225000"
+  },
+  "ordinary_inherited_G2_observations": {
+    "path": "content/003-result/007-ordinary_inherited_G2_observations.json",
+    "sha256": "b91568af209f94714122c6547c5d23dd74b4ceda42123088b984f97694341bb4",
+    "kind": "value"
+  },
+  "ordinary_inherited_G2_excess": {
+    "kind": "inline",
+    "value": "28942083420804557942011/27567681942973772250000"
+  },
+  "signed_G2_observation_count": {
+    "kind": "inline",
+    "value": 40
+  },
+  "records": {
+    "path": "content/003-result/010-records.json",
+    "sha256": "a9a4fb2533e769a9e15c354c8fe1766cbc152884b0b86dcf62a044b42b618be0",
+    "kind": "array"
+  },
+  "prior_Gamma13_upper": {
+    "kind": "inline",
+    "value": "15072118232557475077441399589/101205875626103459954531250"
+  },
+  "maximum_criterion_excess": {
+    "kind": "inline",
+    "value": "-389967930157601865222058541/1113264631887138059499843750"
+  },
+  "Gamma13_upper": {
+    "kind": "inline",
+    "value": "165486462221025969000254660209/1113264631887138059499843750"
+  }
+}

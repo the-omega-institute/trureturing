@@ -1,0 +1,40 @@
+#### 134.6.2 动态闭合：加入所有允许继续实验
+
+固定同一操作族 $T_a:X\to X$。对等价关系 $E$ 定义
+
+$$
+\operatorname{Stab}(E)
+=\bigcap_{w\in A^*}(T_w\times T_w)^{-1}[E].
+\tag{134.16}
+$$
+
+它是等价关系，且包含式由空词给出 $\operatorname{Stab}(E)\subseteq E$。若 $x\operatorname{Stab}(E)y$，对任意 $a,w$ 使用词 $aw$，得到 $T_ax\operatorname{Stab}(E)T_ay$，故它操作稳定。若 $R\subseteq E$ 本来是稳定等价关系，沿词归纳得 $T_wx\,R\,T_wy$，因此 $R\subseteq\operatorname{Stab}(E)$。
+
+所以 $\operatorname{Stab}(E)$ 是 $E$ 内最大的稳定等价关系。它对关系包含单调，又满足 $\operatorname{Stab}(\operatorname{Stab}(E))=\operatorname{Stab}(E)$，因为第一次结果已经稳定。这在关系按包含排序时是一个缩小关系的内算子；按观察细化方向说，才是保留原读数的最小稳定细化。
+
+对单个观察 $q$，
+
+$$
+\operatorname{Dyn}(q)(x)(w)=q(T_wx)
+$$
+
+满足 $\ker\operatorname{Dyn}(q)=\operatorname{Stab}(\ker q)$。它可以严格分开原来同名的状态，与命名闭合保持核不变的作用不同。全体有限词通常仍是无限索引集；定义了完整行为函数，不表示算法已经取得所有坐标，也不提供判定两状态等价的有限停止界。
+
+稳定性本身也不保证保留原任务：恒定观察在任何操作下都稳定，动态闭合后仍恒定，却不能决定一个非恒定任务。若有必须保留的任务族，应先将它们纳入读数要求，或明确证明它们通过现有读数分解。
+
+需要区分两种幂等表述。第一次函数的陪域为 $Q^{A^*}$，第二次为 $(Q^{A^*})^{A^*}$，不能在不同类型之间写原函数字面相等。令 $\Phi=\operatorname{Dyn}(q)$、$\Psi=\operatorname{Dyn}(\Phi)$，则
+
+$$
+\Psi(x)(v)(w)=q(T_wT_vx)=\Phi(x)(vw).
+$$
+
+定义 $J(b)(v)(w)=b(vw)$，以及 $E(c)(w)=c(\varepsilon)(w)$。于是 $\Psi=J\Phi$、$\Phi=E\Psi$；$EJ=\mathrm{id}$ 在全部记录上成立，$JE=\mathrm{id}$ 在 $\Psi[X]$ 上成立。两次闭合具有相同核，并在实际像上规范双射，这才是函数表示层的幂等识别。
+
+若读数宇宙 $\Omega$ 已经对各 $r\mapsto r\circ T_a$ 封闭，则也可在同一个集合格中定义
+
+$$
+\operatorname{Cl}_{\rm dyn}(D)=\{r\circ T_w:r\in D,\ w\in A^*\}.
+$$
+
+这里把 $\Omega$ 视为有类型函数集合，重复表示按同一函数识别。该算子广延、单调；由于 $T_{uv}=T_vT_u$，再取有限词轨道不会产生轨道外的读数，所以在这个固定宇宙上严格幂等。原始函数的类型变化问题与集合格上的这个幂等式并不冲突。
+

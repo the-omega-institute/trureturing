@@ -1,0 +1,41 @@
+{
+  "length": 4,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/005-complete_rectangles/000000/single.json",
+        "sha256": "41f316f6e74a3152de295f48896b697e559c4f3594b2c8600178b3e976206982",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/005-complete_rectangles/000001/single.json",
+        "sha256": "ca94ebef42426c7b4d1d7bfdf482a210415fec138277cc429041fc1450eca225",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/005-complete_rectangles/000002/single.json",
+        "sha256": "31194be7faa81fb360fdd463e686df32ed96ddbfc5da740068e1865e970b2b0a",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/005-complete_rectangles/000003/single.json",
+        "sha256": "9200b370799676d9d05177d5e55083d3f1fb62269b98c76ad9a85ef4ee4ea417",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

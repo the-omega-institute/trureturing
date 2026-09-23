@@ -1,0 +1,23 @@
+### 117.3 最优动作集合也下沉
+
+令有限时域 $$n$$ 下的最优动作集合为
+
+$$
+\operatorname{Opt}_n(s)
+=
+\left\{
+ a:\ r(s,a)+V_n(T(a,s))
+ \text{达到所有动作中的最大值}
+\right\}.
+$$
+
+仓库中的 `finite_horizon_optimal_actions_descend` 进一步证明
+
+$$
+\boxed{
+\operatorname{Opt}^{\mathrm{micro}}_n(s)
+=
+\operatorname{Opt}^{\mathrm{macro}}_n(\alpha(s)).
+}
+$$
+

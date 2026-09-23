@@ -1,0 +1,346 @@
+**theorem 63.102（公共满测种子冻结与完整历史的精确似然因子分解）。** 设 $\Pi$ 是 definition 63.101 的随机零错误终止策略。
+
+首先，存在一个与目标无关的集合
+$$
+\Omega_\star\in\mathcal F,
+\qquad
+\nu(\Omega_\star)=1,
+$$
+使得对每个
+$$
+\omega\in\Omega_\star
+$$
+以及每个
+$$
+a\in X,
+$$
+冻结策略 $D_\omega$ 在隐藏目标为 $a$ 时都有限步停止并输出 $a$。换言之，在有限严格正支撑下，可以在一个共同的满测种子集合上同时冻结出对所有目标零错误的确定性策略。
+
+其次，对任意长度 $n$ 的完整已答查询迹
+$$
+h=(c_1,y_1;\ldots;c_n,y_n)
+$$
+和任意 $a\in X$，有精确等式
+$$
+\Pr(H_n=h\mid A=a)
+=
+\mathbf 1_{\{a\in S(h)\}}\nu(W(h)),
+$$
+其中事件 $H_n=h$ 表示策略至少执行了前 $n$ 次查询且这些查询中心与答复恰为 $h$。等价地，
+$$
+\Pr(A=a,H_n=h)
+=
+\mu(a)\mathbf 1_{\{a\in S(h)\}}\nu(W(h)).
+$$
+
+更强地，对所有
+$$
+a,a'\in S(h)
+$$
+都有完全相同的相容种子集合：
+$$
+\{\omega:H_n=h\text{ 在目标 }a\text{ 下发生}\}
+=
+W(h)
+=
+\{\omega:H_n=h\text{ 在目标 }a'\text{ 下发生}\}.
+$$
+因此完整历史的随机策略乘子在全部相容目标上是同一个常数
+$$
+\nu(W(h)),
+$$
+并不随 $a\in S(h)$ 改变。
+
+若
+$$
+\Pr(H_n=h)>0,
+$$
+则擦除随机种子以后，目标的条件后验仍恰为原先验在 $S(h)$ 上的限制：
+$$
+\Pr(A=a\mid H_n=h)
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}.
+$$
+而且对任意可测
+$$
+B\in\mathcal F
+$$
+都有
+$$
+\Pr(A=a,\ R\in B\mid H_n=h)
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}
+\,
+\frac{\nu(B\cap W(h))}{\nu(W(h))}.
+$$
+所以给定完整历史后，隐藏目标与随机种子再次条件独立，其两边分别是
+$$
+\mu(\,\cdot\mid S(h))
+$$
+与
+$$
+\nu(\,\cdot\mid W(h)).
+$$
+
+同样的结论对显式停止历史成立：
+$$
+\Pr\bigl(H_n=h,\operatorname{stop}(\widehat a)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\downarrow(h,\widehat a)),
+$$
+以及对显式继续到下一中心 $c$ 成立：
+$$
+\Pr\bigl(H_n=h,\operatorname{query}(c)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\rightarrow(h,c)).
+$$
+只要相应事件具有正概率，其种子擦除后验仍是
+$$
+\mu(\,\cdot\mid S(h)).
+$$
+
+特别地，若一个停止历史
+$$
+(h,\operatorname{stop}(\widehat a))
+$$
+具有正概率，则必有
+$$
+S(h)=\{\widehat a\}.
+$$
+
+最后，对每个非空完整历史纤维 $S(h)$，theorem 63.3 仍适用：
+$$
+S(h)
+$$
+要么是单点，要么是某个兄弟状态
+$$
+S(B,I).
+$$
+故 theorem 63.3 的后验闭包不仅对每个冻结种子成立；在这里完整记录查询中心与答复以后，擦除随机种子仍保持同一个兄弟状态闭包。不存在由种子擦除本身造成的不同兄弟支撑混合。
+
+**证明。** 对每个目标 $a\in X$，定义坏种子集合
+$$
+N_a
+=
+\{\omega:
+D_\omega\text{ 在目标 }a\text{ 下不有限零错误终止}\}.
+$$
+随机零错误终止给出
+$$
+0
+=
+\Pr\bigl(\tau=\infty
+\text{ 或最终输出}\ne A\bigr)
+=
+\sum_{a\in X}\mu(a)\nu(N_a).
+$$
+由于
+$$
+\mu(a)>0
+$$
+对每个 $a\in X$ 都成立，且各项均非负，必有
+$$
+\nu(N_a)=0
+\qquad
+\text{对所有 }a\in X.
+$$
+集合 $X$ 有限，因此
+$$
+\Omega_\star
+=
+\bigcap_{a\in X}N_a^c
+$$
+满足
+$$
+\nu(\Omega_\star)=1.
+$$
+对每个 $\omega\in\Omega_\star$，冻结策略 $D_\omega$ 同时对全部 $a\in X$ 有限零错误终止。这证明第一部分。
+
+现固定
+$$
+h=(c_1,y_1;\ldots;c_n,y_n)
+$$
+与目标 $a$。若
+$$
+a\notin S(h),
+$$
+则存在某个 $j$ 使
+$$
+h_{c_j}(a)\ne y_j.
+$$
+由于答复是隐藏目标与已选中心的确定函数，事件 $H_n=h$ 不可能发生，故
+$$
+\Pr(H_n=h\mid A=a)=0.
+$$
+
+以下设
+$$
+a\in S(h).
+$$
+于是只要策略依次选择记录中的中心
+$$
+c_1,\ldots,c_n,
+$$
+它看到的答复就必然依次为
+$$
+y_1,\ldots,y_n.
+$$
+在第一个查询以前，策略选择什么中心只依赖种子。看到第一个记录答复以后，第二中心只依赖同一个种子与记录历史
+$$
+(c_1,y_1).
+$$
+继续归纳，第 $j+1$ 个中心只依赖同一个种子与已经固定的公共历史
+$$
+(c_1,y_1;\ldots;c_j,y_j).
+$$
+这些记录对于每一个
+$$
+a\in S(h)
+$$
+完全相同。因此使策略依次选择
+$$
+c_1,\ldots,c_n
+$$
+的种子集合恰为 definition 63.101 中的 $W(h)$，且它与具体选择哪一个
+$$
+a\in S(h)
+$$
+无关。
+
+所以逐点有事件恒等式
+$$
+\{\omega:H_n=h\text{ 在目标 }a\text{ 下发生}\}
+=
+\begin{cases}
+W(h),&a\in S(h),\\
+\varnothing,&a\notin S(h).
+\end{cases}
+$$
+取 $\nu$ 测度即得
+$$
+\Pr(H_n=h\mid A=a)
+=
+\mathbf 1_{\{a\in S(h)\}}\nu(W(h)).
+$$
+再乘以独立目标先验 $\mu(a)$ 得
+$$
+\Pr(A=a,H_n=h)
+=
+\mu(a)\mathbf 1_{\{a\in S(h)\}}\nu(W(h)).
+$$
+
+对 $a$ 求和，
+$$
+\Pr(H_n=h)
+=
+\mu(S(h))\nu(W(h)).
+$$
+若此量为正，则
+$$
+\mu(S(h))>0,
+\qquad
+\nu(W(h))>0.
+$$
+Bayes 公式于是给出
+$$
+\Pr(A=a\mid H_n=h)
+=
+\frac{
+\mu(a)\mathbf 1_{\{a\in S(h)\}}\nu(W(h))
+}{
+\mu(S(h))\nu(W(h))
+}
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}.
+$$
+这里最关键的是：乘子
+$$
+\nu(W(h))
+$$
+在全部 $a\in S(h)$ 上完全相同，因而不能仅从一个形式上的一般 Bayes 公式推断该乘子会随目标变化。
+
+更一般地，对任意 $B\in\mathcal F$，
+$$
+\Pr(A=a,R\in B,H_n=h)
+=
+\mu(a)\mathbf 1_{\{a\in S(h)\}}
+\nu(B\cap W(h)).
+$$
+除以
+$$
+\mu(S(h))\nu(W(h))
+$$
+即得到
+$$
+\Pr(A=a,R\in B\mid H_n=h)
+=
+\frac{\mu(a)\mathbf 1_{\{a\in S(h)\}}}{\mu(S(h))}
+\frac{\nu(B\cap W(h))}{\nu(W(h))}.
+$$
+这正是给定完整历史后的条件乘积分解。
+
+若在 $h$ 后还记录
+$$
+\operatorname{stop}(\widehat a),
+$$
+则在已经证明的种子集合 $W(h)$ 内再与事件
+$$
+D_\omega(h)=\operatorname{stop}(\widehat a)
+$$
+相交即可。该额外条件仍只依赖种子和共同记录历史，不依赖哪一个
+$$
+a\in S(h)
+$$
+是真实目标。因此
+$$
+\Pr\bigl(H_n=h,\operatorname{stop}(\widehat a)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\downarrow(h,\widehat a)).
+$$
+继续查询中心 $c$ 的情形完全相同，得到
+$$
+\Pr\bigl(H_n=h,\operatorname{query}(c)\mid A=a\bigr)
+=
+\mathbf 1_{\{a\in S(h)\}}
+\nu(W_\rightarrow(h,c)).
+$$
+所以固定长度迹事件与可选停止历史都具有同一个目标纤维乘种子重放集的因子分解。
+
+若停止事件
+$$
+E=
+\{H_n=h,\operatorname{stop}(\widehat a)\}
+$$
+有正概率，而存在
+$$
+b\in S(h),\qquad b\ne\widehat a,
+$$
+则严格正先验给出
+$$
+\mu(b)>0,
+$$
+而正事件概率迫使
+$$
+\nu(W_\downarrow(h,\widehat a))>0.
+$$
+于是
+$$
+\Pr(A=b,E)
+=
+\mu(b)\nu(W_\downarrow(h,\widehat a))
+>0.
+$$
+在此事件上策略却输出 $\widehat a\ne b$，与随机零错误性矛盾。因此
+$$
+S(h)=\{\widehat a\}.
+$$
+
+最后，给定任何具体的中心与答复序列
+$$
+(c_1,y_1;\ldots;c_n,y_n),
+$$
+从根候选集开始逐次取答复纤维，正是 theorem 63.3 的确定性纤维更新过程；该论证只使用记录的中心和答复，不使用中心是如何随机选择出来的。因此每个非空 $S(h)$ 仍为单点或兄弟状态，条件后验是 $\mu$ 在该集合上的限制归一化。由于擦除种子后的后验支撑仍恰为同一个 $S(h)$，闭包同时对冻结种子和种子擦除历史成立。证毕。
+

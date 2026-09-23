@@ -1,0 +1,11 @@
+### 131.7 Fibonacci：坐标旋转、增长与不定反等距
+
+令
+
+$$
+A_F=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad
+P=\frac1{\sqrt{\phi^2+1}}
+\begin{pmatrix}\phi&-1\\1&\phi\end{pmatrix}.
+$$
+

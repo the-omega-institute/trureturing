@@ -1,0 +1,35 @@
+**theorem 40.6 (Summation by parts with the vector oscillation).** Let $w_0,\ldots,w_m$ be nonnegative weights summing to one, extended by zero at indices $-1$ and $m+1$. Define
+$$
+\mathcal V(w)=\frac12\sum_{j=0}^{m+1}|w_j-w_{j-1}|.
+$$
+Then
+$$
+\sup_x\left\|
+ \sum_{j=0}^m w_j\mathbf e_{\pi_{N,\theta}(x+j\theta)}
+ -\boldsymbol\mu\right\|_1
+ \le\Delta_{N,\theta}\mathcal V(w).
+$$
+For the binomial weights, including $n=0$ and the deterministic parameters,
+$$
+\mathcal V(b_{n,p})=M_{n,p}.
+$$
+Consequently,
+$$
+e_{N,\theta,p}(n)
+ \le\min\{2(1-\mu_{\min}),\Delta_{N,\theta}M_{n,p}\}.
+$$
+
+**Proof.** Put $c_j=w_j-w_{j-1}$. Summation by parts and Theorem 40.5 give
+$$
+\sum_{j=0}^m w_j\mathbf f(x+j\theta)
+ =\sum_{j=0}^{m+1}c_j\mathbf g(x+j\theta).
+$$
+The coefficients $c_j$ sum to zero, and their positive and negative masses both equal $\mathcal V(w)$. When this mass is positive, divide each part by it. The right side becomes $\mathcal V(w)$ times a difference of two convex combinations of transfer values. Its norm is at most $\mathcal V(w)\Delta_{N,\theta}$, by double averaging. If the mass is zero, the displayed sum is zero and the bound is immediate.
+
+For $0<p<1$, the consecutive binomial ratios
+$$
+\frac{b_{n,p}(j+1)}{b_{n,p}(j)}
+ =\frac{n-j}{j+1}\frac p{1-p}
+$$
+decrease with $j$. Hence the sequence is unimodal, possibly with two equal adjacent modes. The zero-extended sequence rises from zero to its maximum and then falls to zero, so its total variation is twice that maximum. A point mass has the same property, covering the remaining cases. Apply the first part with binomial weights and combine it with time monotonicity from Theorem 40.2. $\square$
+

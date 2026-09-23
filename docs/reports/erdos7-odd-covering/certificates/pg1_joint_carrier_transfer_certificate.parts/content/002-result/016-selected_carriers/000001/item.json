@@ -1,0 +1,156 @@
+{
+  "target_masks": {
+    "kind": "inline",
+    "value": [
+      2320,
+      4096,
+      25352,
+      48602
+    ]
+  },
+  "minimality": {
+    "kind": "inline",
+    "value": {
+      "deleted_points": 20,
+      "maximum_containing_deletion_points": 20,
+      "mixed_label_assignment": [
+        [
+          [
+            0,
+            44378
+          ],
+          [
+            3,
+            4224
+          ]
+        ],
+        [
+          [
+            1,
+            25352
+          ]
+        ],
+        [
+          [
+            2,
+            2320
+          ]
+        ],
+        [
+          [
+            4,
+            4096
+          ]
+        ]
+      ]
+    }
+  },
+  "matching_maps_checked": {
+    "kind": "inline",
+    "value": 8640
+  },
+  "minimum_loss_numerator": {
+    "kind": "inline",
+    "value": 25521977
+  },
+  "lost_source_points": {
+    "kind": "inline",
+    "value": [
+      43,
+      88,
+      253
+    ]
+  },
+  "old_map_index": {
+    "kind": "inline",
+    "value": 1
+  },
+  "old_point_index_map": {
+    "kind": "inline",
+    "value": [
+      0,
+      1,
+      2,
+      15,
+      8,
+      5,
+      6,
+      9,
+      4,
+      7,
+      13,
+      11,
+      14,
+      10,
+      12,
+      3
+    ]
+  },
+  "full_old45_map": {
+    "path": "content/002-result/016-selected_carriers/000001/item/007-full_old45_map.json",
+    "sha256": "deba27b5105d04f893092dacb8aa5c99a22bcb65fb66b853816351d5a6f7f462",
+    "kind": "value"
+  },
+  "seven_map_including_zero": {
+    "kind": "inline",
+    "value": [
+      0,
+      4,
+      3,
+      1,
+      2,
+      5,
+      6
+    ]
+  },
+  "source_to_target_map315": {
+    "path": "content/002-result/016-selected_carriers/000001/item/009-source_to_target_map315.json",
+    "sha256": "77814644122c7f2630586a9b9c6abfad151785173afbdc14ffed8eec43c45856",
+    "kind": "value"
+  },
+  "original_target_low_family": {
+    "path": "content/002-result/016-selected_carriers/000001/item/010-original_target_low_family.json",
+    "sha256": "e562af43c867787f959853457b71bb5ffc03a695ca419cfa341dc0bc4342446e",
+    "kind": "value"
+  },
+  "target_points": {
+    "path": "content/002-result/016-selected_carriers/000001/item/011-target_points.json",
+    "sha256": "c333e5b866ca48ab97c794b2029f746d8092ebee9cc4808b8aafa2a3746b7b14",
+    "kind": "value"
+  },
+  "target_weight_numerators": {
+    "path": "content/002-result/016-selected_carriers/000001/item/012-target_weight_numerators.json",
+    "sha256": "930c3d8487ec43798c6676a035020681c4f4eadae0a7d1d4bd31b8fb713fb699",
+    "kind": "value"
+  },
+  "target_weight_denominator": {
+    "kind": "inline",
+    "value": 974478030
+  },
+  "raw_survival_lower": {
+    "kind": "inline",
+    "value": "24203020061/48000000336"
+  },
+  "normalized_target_high_survival_lower": {
+    "kind": "inline",
+    "value": "24203020061/46774945440"
+  },
+  "criteria": {
+    "path": "content/002-result/016-selected_carriers/000001/item/016-criteria.json",
+    "sha256": "23a3745932db169283c252782808633ff8d9d8ed494eabd52c6afd071e2b2c56",
+    "kind": "value"
+  },
+  "maximum_criterion": {
+    "kind": "inline",
+    "value": "-1355367303104737234861/6891920485743443062500"
+  },
+  "old_map_orbit_size": {
+    "kind": "inline",
+    "value": 6
+  },
+  "orbit_transports": {
+    "path": "content/002-result/016-selected_carriers/000001/item/019-orbit_transports.json",
+    "sha256": "0a8f61bad5b2289786eedb80c523158303b4b5b6ce43827bfb4626a17530a4a3",
+    "kind": "array"
+  }
+}

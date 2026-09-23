@@ -1,0 +1,34 @@
+**证明。** 令 $n=q-1$ 为偶数，取
+\[
+x_j=\frac{1+\cos(j\pi/n)}2\quad(0\leq j\leq n),\qquad
+Y=\frac{1+\cosh(A_\eta/n)}2>1.
+\]
+设 $\ell_j$ 为节点的 Lagrange 基，$c_j=\ell_j(Y)$。乘积表达式给出 $\operatorname{sign}(c_j)=(-1)^j$；插值常数和 $T_n(2x-1)$ 分别给
+\[
+\sum_jc_j=1,\qquad
+P:=\sum_{j\ \mathrm{even}}c_j
+=\frac{1+T_n(2Y-1)}2=\frac1\eta.
+\]
+因此
+\[
+\alpha=P^{-1}\delta_Y+P^{-1}\sum_{j\ \mathrm{odd}}(-c_j)\delta_{x_j},\qquad
+\beta=P^{-1}\sum_{j\ \mathrm{even}}c_j\delta_{x_j}
+\]
+为概率测度，匹配次数 $0,\ldots,q-1$ 的矩。二者分别在最大支撑点 $Y$ 与 $1$ 上具有质量 $\eta$ 与 $c_0/P>\eta$；后者由
+\[
+c_0=\prod_{j=1}^n\frac{Y-x_j}{1-x_j}>1
+\]
+得到。通过 $\xi=(Y-x)/Y$ 将支撑送入 $[0,1]$，最小点分别为零与 $(Y-1)/Y$。由于 $Y\leq W_\eta$ 和 $\cosh v-1\geq v^2/2$，二者端点间距至少为 $A_\eta^2/(4W_\eta q^2)$。
+
+再推送到能量 $E=E_0+\kappa\xi$，得到所需模型和式 (17.6)。矩匹配在仿射变换下保持。对 $e^{-\kappa t\xi}$ 在 $\xi=0$ 处展开至 $q-1$ 阶，实 Taylor 余项在 $[0,1]$ 上不超过 $(\kappa t)^q/q!$。两测度的多项式项相消、总质量均为一，故
+\[
+|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2e^{-E_0t}\frac{(\kappa t)^q}{q!}.
+\]
+分别使用 $e^{E_0t}\geq(E_0t)^q/q!$ 以及 $q!\geq(q/e)^q$，得到
+\[
+\sup_{0\leq t\leq T}|C_{\mu_q}(t)-C_{\nu_q}(t)|
+\leq2\min\{(\kappa/E_0)^q,(e\kappa T/q)^q\}.
+\]
+由 $\kappa/E_0\leq1/4$、$e\kappa/E_+\leq1/4$ 得式 (17.7)。这一估计控制整个连续时间窗口。
+

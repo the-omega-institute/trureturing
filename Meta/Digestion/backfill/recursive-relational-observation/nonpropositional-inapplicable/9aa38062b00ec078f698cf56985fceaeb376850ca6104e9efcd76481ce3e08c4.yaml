@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9aa38062b00ec078f698cf56985fceaeb376850ca6104e9efcd76481ce3e08c4
+  normalized_sha256: sha256:9aa38062b00ec078f698cf56985fceaeb376850ca6104e9efcd76481ce3e08c4
+cas_ref: sha256:9aa38062b00ec078f698cf56985fceaeb376850ca6104e9efcd76481ce3e08c4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-only scalar closure under the source hypothesis that p is prime, hence p >= 2. The pinned Mathlib revision db584cd6d46c92f209a44c0f1c829460d327499d provides hasSum_geometric_of_lt_one and hasSum_coe_mul_geometric_of_norm_lt_one: instantiate r=(p:Real)^(-1), combine the geometric and index-weighted series, remove terms h=0 and h=1, and normalize to sum over h>=2 of (h*(p-1)+1)/p^h = 2/(p-1). The pinned sum_le_hasSum, with nonnegative omitted terms, bounds every corresponding finite partial sum; multiplication by N>=0 gives the displayed scalar bound. No available frozen project GID supplies this scalar-series clause. This settles only the series identity and scalar finite-sum inequality, not the adjacent assertion about actual evaluator calls or any algorithmic runtime.'
+    previous_atom_id: e20d802346250c73da4fc2b540161b4dcd11521507211b58b80f64cedc8ff9d6
+    next_atom_id: 53b89a80c6191a20b0cdf1bbdb0660319a10c6ab2beb5427d1daef054b199001

@@ -1,0 +1,10 @@
+证明。在 $X_T=C([0,T];H^2_\sigma)$ 上定义真正的双线性积分
+$$
+\mathcal B(u,v)(t)=\int_0^t E(t-s)\mathbb P\operatorname{div}(u(s)\otimes v(s))\,ds.
+\tag{25.107}
+$$
+这是 $H^2$ 中的 Bochner 积分。引理25.2和 $\int_0^t(t-s)^{-1/2}ds=2\sqrt t$ 给
+$$
+\|\mathcal B(u,v)\|_{X_T}\le32\sqrt{T/\nu}\,\|u\|_{X_T}\|v\|_{X_T}.
+\tag{25.108}
+$$

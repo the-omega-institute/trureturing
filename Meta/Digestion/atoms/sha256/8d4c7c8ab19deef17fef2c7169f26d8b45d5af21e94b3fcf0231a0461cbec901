@@ -1,0 +1,35 @@
+**Definition 36.1 (Fixed carrier, phase geometry, and observation classes).** Retain the original carrier and maps of Definition 20.1:
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \beta=\alpha^2,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+Here $T$ is precisely the continuous surjective successor of Definition 20.1, and $R(\theta)=\theta+[\phi]$. We use the established identities
+$$
+HT=RH,\qquad T Z(j)=Z(j+1).
+$$
+For $L\ge1$, write
+$$
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad
+\mathcal W_L=q_L[K],\qquad Q_L=|\mathcal W_L|=G_L,
+$$
+where $G_0=1$, $G_1=2$, and $G_{j+2}=G_{j+1}+G_j$. For $w\in\mathcal W_L$, put $C_w=q_L^{-1}(\{w\})$.
+
+The exact geometry imported from Theorem 20.2 is as follows. The exceptional phases are
+$$
+e_r=[-r\phi],\qquad E=\{e_r:r\ge1\}.
+$$
+Every phase outside $E$ has a singleton fiber, and the fiber over $e_r$ is $\{x_r^-,x_r^+\}$. Every $C_w$ has an open phase-arc interior $J_w$ satisfying
+$$
+H^{-1}(J_w)\subseteq C_w\subseteq H^{-1}(\overline{J_w}),\qquad
+H[C_w]=\overline{J_w}.
+$$
+The arcs $J_w$ partition the circle away from the cuts $e_1,\ldots,e_{Q_L}$. Their lengths are $\alpha^L$ when $w_{L-1}=0$ and $\alpha^{L+1}$ when $w_{L-1}=1$. Theorem 20.4 gives
+$$
+Tx_r^\pm=x_{r-1}^\pm\quad(r\ge2),\qquad
+Tx_1^-=Tx_1^+=Z(0).
+$$
+Let $\lambda$ denote normalized Haar measure on $\mathbb T=\mathbb R/\mathbb Z$. These are the standing carrier hypotheses throughout this section. Mathematical reference: [§20, especially Theorems 20.2 and 20.4](https://github.com/the-omega-institute/trureturing/blob/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+

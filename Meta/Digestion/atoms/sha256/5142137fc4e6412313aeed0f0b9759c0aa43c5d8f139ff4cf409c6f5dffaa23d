@@ -1,0 +1,11 @@
+对有限动作集 $A$、先验 $\pi$ 和损失 $0\le\ell(a,h)\le L$，记录 $E$ 的最优风险为
+
+$$
+R_E
+=
+\inf_\delta
+\sum_{h\in H}\pi(h)
+\sum_{y\in Y}E(y\mid h)
+\sum_{a\in A}\delta(a\mid y)\ell(a,h),
+$$
+

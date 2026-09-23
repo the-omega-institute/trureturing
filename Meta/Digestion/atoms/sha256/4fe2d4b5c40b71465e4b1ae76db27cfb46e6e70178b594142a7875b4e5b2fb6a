@@ -1,0 +1,59 @@
+**定理。** 对固定有限非空支持 $S$、$L=1+\max S$ 及上述 $H$，以下三项等价：
+
+1. 存在 $a\in\mathcal F_{A,S}$ 使 $\|T^*-\mathcal E(a)\|_\rho=c$。
+2. 饱和稀疏来源 $a^S$ 取得 $\|T^*-\mathcal E(a^S)\|_\rho=c$。
+3. 下列全部有限条件成立：
+
+$$
+\boxed{
+\begin{aligned}
+& W_S\ge1;\\
+& p_{0,k}\ge b\rho^k\qquad(0\le k<L);\\
+& \rho^{n+k}(u_k-p_{n,k})\le c
+\qquad(n\ge1,\ n+k<H).
+\end{aligned}}
+\tag{50.14}
+$$
+
+证明首先由（50.7）与（50.9）得到前两项等价。若第二项成立，$W_S\ge1$ 已在第50.4节证明；首行的精确公式
+$$
+\rho^k(u_k-p_{0,k})\le c
+\quad\Longleftrightarrow\quad p_{0,k}\ge b\rho^k
+$$
+给出有限初值条件，高行的有限头部条件直接必要。因此第二项推出第三项。
+
+反向假设第三项。写 $p_k=p_{0,k}$。当 $k\ge L$ 时，所有延迟位置均已进入首行递推，且所有 $k-i-1\ge0$。若对小于 $k$ 的深度已有 $p_j\ge b\rho^j$，由（50.5）及 $p_{1,k-1}\ge0$，
+$$
+\begin{aligned}
+p_k
+&\ge A\sum_{i\in S}p_{k-i-1}\\
+&\ge Ab\sum_{i\in S}\rho^{k-i-1}
+=b\rho^k W_S
+\ge b\rho^k.
+\end{aligned}
+\tag{50.15}
+$$
+给定的 $L$ 个初值启动强归纳，故首行所有深度的加权误差不超过 $c$。这一步没有假定缺口之间仍有连续前缀递推。
+
+对 $n\ge1$，记 $m=n+k$。若 $m<H$，恰为（50.14）的有限头部条件。若 $m\ge H$，利用 $k\le m-1$、$p_{n,k}\ge0$ 与 $u_k$ 递增，
+$$
+\begin{aligned}
+0\le\rho^{n+k}(u_k-p_{n,k})
+&\le\rho^m u_k\\
+&\le\rho^m u_{m-1}\\
+&=c\rho+b\rho^{2m-1}
+=c(\rho+\rho^{2m})\\
+&\le c(\rho+\rho^{2H})\le c.
+\end{aligned}
+\tag{50.16}
+$$
+所以全部行与深度都不超过 $c$。有限来源尾部下界（50.9）给等号，证明完成。
+
+这是对**给定支持**的有限数学判据，包含 $L$ 个首行初值、$H(H-1)/2$ 个高行头部坐标和一个权重条件。它不把任意实参数的精确比较视为免费可计算操作，也不声称已给所有幅度下的最小稀疏支持公式。对本文有理参数和整数支持，全部有限条件均为精确有理数比较。
+
+一个便于使用的严格版本是：若存在 $\gamma>b$ 使
+$$
+p_{0,k}\ge\gamma\rho^k\quad(0\le k<L),\qquad W_S\ge1,
+$$
+且（50.13）严格、每个所需高行头部误差严格小于 $c$，则同一强归纳给 $p_{0,k}\ge\gamma\rho^k$ 对所有 $k$ 成立。于是每个有限坐标的误差严格小于 $c$，但范数仍等于 $c$。如果 $\{0,\ldots,H-1\}\subseteq S$，全部高行头部坐标自动与目标相同，不需逐个估计。
+

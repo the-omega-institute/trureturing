@@ -1,0 +1,31 @@
+**定义 30.1（固定的双记录器合同与完整世界）。** 固定定义28.1的已校准有符号 $\alpha\ne0$、实际无外力 PDE、准备族及端口，仍用 $p=(m,k)$、$\nu=|\alpha|/\sqrt k$、$\beta=m\nu$。本节另立异步取得合同，不把定义29.1中的一只共同钟暗换成两只钟。先固定实验 $\mathcal X$：两个本地标签域 $I_r,I_z$、实际允许的取得动作与费用、钟类、先验、旧档案解释规则及一份联合误差模型。完整世界 $\omega\in\Omega_{\mathcal X}$ 含实际来源、参数、由该准备生成的同一轨迹 $u_p$、两只允许钟 $\theta_r:I_r\to[0,T]$、$\theta_z:I_z\to[0,T]$，以及实现记录、误差、延迟和旧关系所需的辅助量。初始窗口取两标签域均含零，钟连续严格递增且 $\theta_r(0)=\theta_z(0)=0$；后文改变窗口时明列端点。钟值本身是潜变量，除非已实际取得。
+
+完整观察者为
+$$
+H_{\rm async}=(C,\mathcal A,D_r,D_z,J),\qquad
+D_r=(s,\widetilde R(s))_{s\in L_r},\quad
+D_z=(v,\widetilde Z(v))_{v\in L_z},
+\tag{30.101}
+$$
+其中 $L_i\subseteq I_i$ 是实际保留的有限、稠密或完整标签集，不能随候选改变。$C$ 保留全部先前取得的来源索引、内部／外部记录及关系；$\mathcal A$ 保留动作、端口、标签、费用、初点、校准、分支和无扰动／等价轨迹证书；$J$ 保留每一项实际取得的跨端口关系，包括同时性、顺序、检索、到达和动作记录。$\operatorname{Hist}_{\rm async}(\omega,\mathcal A)$ 断言这一份世界确实实现全部合法动作和记录，不要求不同端口的同名标签表示同一内部事件。两只仪器在同一物理事件无扰动读取同一状态时，它们读的内部时间当然相同；本合同描述分别标时、跨端口登记未必已知的取得。
+
+以 $\mathcal C_{\mathcal X}$ 表示允许钟对、$\mathcal E_H$ 表示包括所有误差相关限制的一份联合事件，$\mathcal R_i,\mathcal J_\ell$ 分别解释旧记录和已获跨端口关系。给定共同初始分支及参数域 $P$，唯一的完整可行集是
+$$
+\begin{aligned}
+\mathfrak F_H^{\rm async}=\{\omega\in\Omega_{\mathcal X}:\;&p(\omega)\in P,\quad
+ (\theta_r,\theta_z)\in\mathcal C_{\mathcal X},\quad
+ \operatorname{Hist}_{\rm async}(\omega,\mathcal A),\\
+&\mathcal R_i(\omega,c_i)\quad(\text{全部 }c_i\in C),\quad
+ \mathcal J_\ell(\omega,j_\ell)\quad(\text{全部 }j_\ell\in J),\\
+&\omega\in\mathcal E_H,\quad
+ \theta_r(L_r),\theta_z(L_z)\ \text{均在所证同源初始分支内},\\
+&\widetilde R(s)=r_p(\theta_r(s))+e_r(s)\quad(s\in L_r),\\
+&\widetilde Z(v)=z_p(\theta_z(v))+e_z(v)\quad(v\in L_z)\},\qquad
+\mathcal K_H^{\rm async}=p(\mathfrak F_H^{\rm async}).
+\end{aligned}
+\tag{30.102}
+$$
+误差界是 $\mathcal E_H$ 的条件，不将各坐标盒自动宣布为真实联合模型。先固定 $\mathcal X,C,\mathcal A,J$、标签及误差规则，再选择竞争世界；两条绘图曲线相同不够证明完整观察相同。原始 $x,y$ 的噪声仍按（29.102）使用已知 $\alpha$ 换算，未知增益、相位或有噪校准属于不同合同。
+
+若已认证 $\theta_r=\theta_z$，且选出的两份记录实际同时、同源、合法，满足定义29.1的分支、顺序、先验和联合误差全部前提，则在保留其它记录的条件下返回第29节合同。仅有同一开始事件、同名标签或两条钟各自严格增加不够。若 $C$ 已含定理29.3所需的精确识别对，则相应参数已被切开，下文不同参数碰撞不能满足该 $C$；有一条可用定理并不表示观察者已取得其所需实验。
+

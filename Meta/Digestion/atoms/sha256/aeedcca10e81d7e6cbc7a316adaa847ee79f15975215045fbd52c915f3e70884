@@ -1,0 +1,26 @@
+**命题 21.1（半线性方向、极化与完整有限合成）。** $B$ 第一变量共轭线性、第二变量线性，并满足
+$$
+B(g,f)=\overline{B(f,g)},\qquad B(f,f)=Q(f)\in\mathbb R.
+\tag{21.4}
+$$
+实数在第二式中按自然嵌入视为复数。其极化公式是
+$$
+B(f,g)=\frac14\bigl[
+Q(f+g)-Q(f-g)-iQ(f+ig)+iQ(f-ig)\bigr].
+\tag{21.5}
+$$
+给定任意有限测试族 $f_1,\ldots,f_n$，令
+$$
+S_na=\sum_{i=1}^na_if_i,\qquad V_n=\operatorname{ran}S_n,
+\qquad K_n=(B(f_i,f_j))_{i,j=1}^n.
+$$
+则
+$$
+B(S_na,S_nd)=a^*K_nd,
+\qquad Q(S_na)=a^*K_na,
+\qquad
+K_n\succeq0\iff Q|_{V_n}\ge0.
+\tag{21.6}
+$$
+测试族允许零项、重复及线性相关；$K_n$ 首先是实际 Hermitian 响应矩阵，其半正定性不作为定义的一部分。
+

@@ -1,0 +1,11 @@
+**上界证明。** 写 $U=E_+T\geq1$、$A=\log(e+L/U)\geq1$，取
+\[
+c_0=\frac1{4(1+\log64)},\qquad n=\lfloor c_0L/A\rfloor.
+\]
+由于 $A\leq\log(e+L)$，可选择与 $T$ 无关的 $L_0$，保证 $n\geq c_0L/(2A)\geq1$。又因 $n\leq L$，
+\[
+\log K_n\leq\log64+A\leq(1+\log64)A,
+\qquad n\log K_n\leq L/4.
+\]
+因此 $\varepsilon K_n^n\leq e^{-3L/4}\leq1$。对给定数据 $Y$，考虑所有在第 17.3 节所选采样网格上与 $Y$ 相差不超过 $\varepsilon$ 的模型。任意两个相容模型之间的矩差至多为 $2\varepsilon$，其谱底距离由式 (17.5) 控制。取相容谱底集合上下确界的中点；若该集合为空，任取 $E_-$。真模型总在相容集中，所以统一误差不超过 $C A^2/L^2$。
+

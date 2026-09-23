@@ -1,0 +1,6 @@
+**命题 136.1（已认证能力的单调性）。** 定义
+$$
+\mathcal T_n=\{P:\exists c\in\mathcal C_n,\ V(P,c)\}.
+$$
+则 $\mathcal T_n\subseteq\mathcal T_{n+1}$，且每个 $\mathcal T_n$ 中的语句都在 $\Gamma$ 上有效。这不要求语义有效语句集合随 $n$ 增大，也不要求证书库对全部逻辑后果封闭。
+

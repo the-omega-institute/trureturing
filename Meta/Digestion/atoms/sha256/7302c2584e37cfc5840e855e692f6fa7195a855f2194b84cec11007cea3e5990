@@ -1,0 +1,64 @@
+**命题 130.9。** 在命题 130.8 的条件下，每个固定 $x$ 都有
+
+$$
+\int_{\mathbb R^d}e^{-Q(x,y)}\,dy
+=(2\pi)^{d/2}(\det D)^{-1/2}
+\exp\left(-\frac12x^TSx\right).
+$$
+
+当 $H\succ0$ 时，整个联合积分为
+
+$$
+\int_{\mathbb R^{a+d}}e^{-Q(x,y)}\,dx\,dy
+=(2\pi)^{(a+d)/2}(\det H)^{-1/2}.
+$$
+
+**证明。** 先用平移 $z=y+D^{-1}B_0^Tx$，其 Jacobian 为一，提取不依赖 $y$ 的有效指数项。由实对称谱定理存在正交 $O$ 使 $D=O\operatorname{diag}(\lambda_1,\ldots,\lambda_d)O^T$，$\lambda_j>0$。变量代换 $z=Ou$ 的 Jacobian 绝对值为一，非负函数的乘积积分给
+
+$$
+\int e^{-z^TDz/2}\,dz
+=\prod_{j=1}^d\int_{\mathbb R}e^{-\lambda_ju_j^2/2}\,du_j
+=\prod_{j=1}^d\sqrt{\frac{2\pi}{\lambda_j}}.
+$$
+
+一维常数可由 $I=\int_{\mathbb R}e^{-t^2/2}dt$ 的平方计算得到：平面极坐标积分给 $I^2=2\pi$，且 $I>0$；再以 $\sqrt{\lambda_j}u_j$ 代换。乘积即 $(2\pi)^{d/2}(\det D)^{-1/2}$。若 $H\succ0$，则 $S\succ0$，对 $x$ 再应用同一公式，并用 $\det H=\det D\det S$ 即得第二式。证毕。
+
+温度参数 $\tau>0$ 下，
+
+$$
+\int e^{-Q(x,y)/\tau}\,dy
+=(2\pi\tau)^{d/2}(\det D)^{-1/2}e^{-x^TSx/(2\tau)}.
+$$
+
+因此相对于所选 Lebesgue 参考测度，负 $\tau$ 倍对数所得有效自由能是
+
+$$
+F_{\mathrm{eff}}(x)
+=\frac12x^TSx+\frac{\tau}{2}\log\det D
+-\frac{\tau d}{2}\log(2\pi\tau).
+$$
+
+极小化和积分共享 $S$，但保留不同结果。例如取单个可见、隐藏坐标以及
+$Q_1(x,y)=sx^2/2+y^2/2$、
+$Q_2(x,y)=sx^2/2+4y^2/2$。二者对 $y$ 的最小值相同，但第二个边界积分恰为第一个的一半。若 $s>0$，进一步归一化后的 $x$ 概率可以相同；未归一化权重和联合配分函数仍不同。
+
+当 $D$ 随待比较的模型参数变化，行列式因子不能从似然或配分比较中删去。若 $D=D(x)$ 随可见变量改变，已超出固定矩阵二次模型；即使逐纤维完成平方有效，行列式项也会改变 $x$ 的相对权重。只知道最小化结论，不能据此宣称完整 Gaussian 边界权重已相同。
+
+#### 130.8.1 退化或不定的隐藏块
+
+设 $D\succeq0$ 但奇异，固定 $x$ 并记 $b=B_0^Tx$。谱分解给
+$\mathbb R^d=\operatorname{im}D\oplus\ker D$。
+
+- 若 $b\notin\operatorname{im}D$，存在 $z\in\ker D$ 使 $b^Tz\ne0$。沿 $y=tz$，能量含线性项 $t\,b^Tz$ 而没有二次项，故下确界为 $-\infty$。
+- 若 $b\in\operatorname{im}D$，令 $D^\dagger$ 为在 $\operatorname{im}D$ 上取逆、在 $\ker D$ 上为零的对称伪逆。完成平方给
+
+$$
+\min_yQ(x,y)
+=\frac12x^T(A-B_0D^\dagger B_0^T)x,\qquad
+\operatorname{argmin}_yQ(x,y)=-D^\dagger b+\ker D.
+$$
+
+这是因为 $DD^\dagger b=b$，而移心后的二次项在且仅在 $\ker D$ 上为零。隐藏块奇异时，即便最小值有限，完整 $\mathbb R^d$ 上的 Gaussian 积分仍沿非零平坦方向发散；不相容的线性方向也使积分在一侧发散。若 $D$ 有负特征值，沿相应方向能量趋于 $-\infty$，积分同样发散。改在某个子空间上积分或加入约束、参考概率，需要明确改变积分载体及测度，不能只把 $D^{-1}$ 改成 $D^\dagger$ 后继承正定公式。
+
+若没有隐藏坐标，即 $d=0$，约定空行列式为一、空维积分为被积函数本身，最小化与积分公式都退化为原可见二次型。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:678d68b8248edf00d28cf03c0736486ce6d36cbe04208396172c863f6437e401
+  normalized_sha256: sha256:678d68b8248edf00d28cf03c0736486ce6d36cbe04208396172c863f6437e401
+cas_ref: sha256:678d68b8248edf00d28cf03c0736486ce6d36cbe04208396172c863f6437e401
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Put”仅把所有相位与两个符号产生的选择器收集成集合；未声称参数表示单射、集合闭或为理想，定义未夹带这些性质命题，故无需证明。
+    previous_atom_id: 6237d032016edd7345bcc91a9951f40bbc8b8f34f99fe332dcb5c957bf726b92
+    next_atom_id: 4d6bf9e1573f36fd508bd5dd0f40725990b4917368bd7511941693ca0ab3c97e

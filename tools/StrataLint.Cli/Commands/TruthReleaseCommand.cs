@@ -201,7 +201,7 @@ internal static class TruthReleaseCommand
         out TruthReleaseArguments options)
     {
         options = default;
-        if (arguments.Count != 16)
+        if (arguments.Count % 2 != 0)
         {
             return false;
         }
@@ -251,7 +251,7 @@ internal static class TruthReleaseCommand
             || producerPackageCommit is null
             || producedAt is null
             || commitOnProtectedDev is null
-            || requiredChecks.Count != 3)
+            || requiredChecks.Count != TruthReleaseManifestReader.RequiredCheckNames.Length)
         {
             return false;
         }
@@ -291,7 +291,8 @@ internal static class TruthReleaseCommand
         "USAGE: StrataLint truth-release --out DIR --candidate-lean-report FILE "
             + "--producer-package-commit COMMIT --produced-at TIMESTAMP "
             + "--commit-on-protected-dev true|false "
-            + "--required-check NAME=CONCLUSION (exactly three)\n");
+            + "--required-check NAME=CONCLUSION (required: "
+            + string.Join(", ", TruthReleaseManifestReader.RequiredCheckNames) + ")\n");
 
     private readonly record struct TruthReleaseArguments(
         string OutDirectory,

@@ -1,0 +1,35 @@
+**命题 18.3（物理强迫、端口归一化与换钟密度）。** 在定义18.1的制备条件下，固定物理 $B,H$ 给
+$$
+o_M(t)=\int_0^t K_M(t-s)u(s)\,ds,\qquad
+K_M(t)=H S_M(t)M^{-1}B.
+\tag{18.5}
+$$
+因此对 $N=M/c$，
+$$
+\boxed{K_N(t)=cK_M(ct).}
+\tag{18.6}
+$$
+当 $H=B^*$ 时，令 $C_M=M^{-1/2}LM^{-1/2}$、$J_M=M^{-1/2}B$，则
+$$
+K_M(t)=J_M^*e^{-tC_M}J_M,\qquad
+\lim_{t\to\infty}K_M(t)
+=\frac{B^*\mathbf1\mathbf1^*B}{\mathbf1^*M\mathbf1}.
+\tag{18.7}
+$$
+若 $B^*\mathbf1\ne0$，极限非零，未阻尼的 $\int_0^\infty K_M(t)dt$ 不为有限算子积分。特别地，端点端口 $B=e_i$ 保留零模态，不能直接套用恢复几何卷假设15.1及推论16.5的严格正谱积分公式。
+
+对于同一既有响应的时间重标 $t=c\tau$，输入密度必须按本卷定理12.7、恢复几何卷命题15.9运输：
+$$
+o_M(c\tau)=\int_0^\tau K_M(c(\tau-\sigma))\,
+[c\,u(c\sigma)]\,d\sigma.
+\tag{18.8}
+$$
+等价地，在容量 $N=M/c$、输入 $u_N(\sigma)=u(c\sigma)$ 的物理系统中，$o_N(\tau)=o_M(c\tau)$，Jacobian 因子 $c$ 已由 $K_N$ 承担。一般 $C^1$ 严格递增换钟 $\phi$，$\phi(0)=0,\phi'>0$，给同一强迫接口的两时核
+$$
+o_M(\phi(t))=\int_0^t
+\underbrace{\phi'(s)K_M(\phi(t)-\phi(s))}_{\text{相对于 }ds\text{ 的两时核}}
+\,u(\phi(s))\,ds.
+\tag{18.9}
+$$
+一个标量曲线 $a k(\phi(t))$ 本身不自动是此强迫接口的脉冲响应密度。
+

@@ -1,0 +1,78 @@
+**theorem 50.4（lcm 的完全分类与同层稳定性）。** 存在联合连续映射
+$$
+L:K_{t,D}^2\to K_{t,D},
+\qquad
+L(j(a),j(b))=j(\operatorname{lcm}(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+D\mid2.
+\tag{50.3}
+$$
+这里 $t$ 可以是任意有限自然数，也可以是 $\infty$。当 $D\mid2$ 时，对每个输出层 $\alpha=(u,m)$，可取完全相同的输入层 $\beta=\alpha$；即 lcm 在每个有限层已经同层良定义。
+
+**证明。** 模数必要性使用与 gcd 相同的任意细化构造。若 $D\nmid2$，取 $m\mid D$、$m>2$，输出层 $\alpha=(0,m)$，并任取 $\beta=(v,M)\succeq\alpha$。仍取
+$$
+a=d=kM-1>v,\qquad b=a+M,\qquad x=da,\qquad y=db.
+$$
+则 $x\mathrel{R_\beta}y$ 且 $\gcd(a,b)=1$。第一对输入 $(x,x)$ 的 lcm 为
+$$
+\operatorname{lcm}(x,x)=da\equiv1\pmod m.
+$$
+第二对输入 $(x,y)$ 满足
+$$
+\operatorname{lcm}(x,y)
+=
+d\,\operatorname{lcm}(a,b)
+=
+dab
+\equiv(-1)^3
+\equiv-1\pmod m.
+$$
+因为 $m>2$，两个输出在 $Q_{0,m}$ 不同。该逃逸对每个允许的 $\beta$ 成立，故不能连续延拓。模 $1,2$ 时恰有 $1\equiv-1$，所以此障碍消失。
+
+现设 $D\mid2$。于是任意允许模数 $m$ 只能是 $1$ 或 $2$。固定 $\alpha=(u,m)$，设
+$$
+a\mathrel{R_\alpha}a',
+\qquad
+b\mathrel{R_\alpha}b'.
+$$
+证明
+$$
+\operatorname{lcm}(a,b)
+\mathrel{R_\alpha}
+\operatorname{lcm}(a',b').
+\tag{50.4}
+$$
+
+先设 $u=0$。若 $m=1$，$Q_{0,1}$ 为单点，结论平凡。若 $m=2$，对包括零在内的所有自然数都有
+$$
+\operatorname{lcm}(r,s)\ \text{为奇数}
+\iff
+r,s\ \text{都为奇数};
+$$
+若任一输入为零，左侧为零而为偶数，仍与右侧一致。因此 lcm 的输出奇偶性只由两个输入奇偶性决定，(50.4) 成立。
+
+再设 $u\ge1$。此时 $0<u$，所以 $0$ 是孤立类。若某一输入为 $0$，其等价输入必仍为同一个 $0$，两边 lcm 都为 $0$。以下设所有相关输入为正。若 $a,b<u$，则等价关系迫使 $a'=a,b'=b$，输出相等。否则至少一个输入不小于 $u$。若一个输入在同一 $R_\alpha$ 类中发生改变，则该输入及其对应输入都不小于 $u$；于是两边 lcm 都至少等于某个不小于 $u$ 的正输入，所以两边输出都处于尾部。此时只需比较模 $m$ 剩余。若 $m=1$ 自动成立；若 $m=2$，lcm 为奇数当且仅当两个输入都为奇数，而 $R_{u,2}$ 保留每个尾部输入的奇偶性，孤立初始输入又保持其精确值，故两边 lcm 奇偶性相同。于是 (50.4) 对所有 $u$ 成立。
+
+所以每个 $Q_{u,m}$ 上都有同层有限运算
+$$
+\lambda_{u,m}\bigl(q_{u,m}(a),q_{u,m}(b)\bigr)
+=
+q_{u,m}(\operatorname{lcm}(a,b)).
+$$
+若 $\alpha\preceq\beta$，两个有限运算都由同一个自然数 lcm 诱导，故遗忘映射满足
+$$
+b_{\beta,\alpha}\bigl(\lambda_\beta(x,y)\bigr)
+=
+\lambda_\alpha\bigl(b_{\beta,\alpha}(x),b_{\beta,\alpha}(y)\bigr).
+$$
+因此可逐坐标定义
+$$
+\pi_\alpha(L(x,y))
+=
+\lambda_\alpha(\pi_\alpha(x),\pi_\alpha(y)).
+\tag{50.5}
+$$
+右侧只依赖同一有限输入坐标，故每个输出坐标连续；相容性使 (50.5) 定义 $K_{t,D}$ 中唯一一点，所以 $L$ 联合连续，并在自然核心上等于 lcm。证毕。
+

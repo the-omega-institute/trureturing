@@ -1,0 +1,53 @@
+**definition 60.1（有限任务、整向量查询、观察核与两种费用）。** 令
+$$
+R=\prod_{\ell\ {\rm prime}}\mathbb Z_\ell,\qquad v_p(0)=\infty.
+$$
+固定整数 $M\ge1$。若 $M>1$，写
+$$
+M=\prod_{p\mid M}p^{e_p},\qquad e_p\ge1,
+$$
+并由中国剩余定理定义有限任务映射
+$$
+\rho_M:R\longrightarrow\mathbb Z/M\mathbb Z
+$$
+为唯一满足
+$$
+\rho_M(x)\equiv x_p\pmod{p^{e_p}}\qquad(p\mid M)
+$$
+的剩余类。若 $M=1$，约定素因子索引集为空，分解
+$$
+1=\prod_{p\mid1}p^{e_p}
+$$
+是空乘积，目标集
+$$
+\mathbb Z/\mathbb Z
+$$
+是单点集，并定义
+$$
+\rho_1:R\longrightarrow\mathbb Z/\mathbb Z
+$$
+为唯一的常值映射。
+
+当 $M>1$ 时，一次允许查询选取 $n\in\mathbb Z_{\ge0}$，并一次性返回整个向量
+$$
+Q_{M,n}(x)=\bigl(q_{p,n}(x)\bigr)_{p\mid M},
+\qquad
+q_{p,n}(x)=\min\bigl(v_p(x_p+n),e_p\bigr)
+\in\{0,1,\ldots,e_p\}.
+$$
+当 $M=1$ 时，定义每个查询函数为唯一的空向量值函数
+$$
+Q_{1,n}(x)=().
+$$
+因此 $M=1$ 的答复向量是空素数向量，其值域是单点集。
+
+一个非自适应方案预先固定全部 $n_1,\ldots,n_k$，再由全部完整向量答复确定 $\rho_M(x)$。一个自适应方案在每一步可由此前全部完整向量答复确定下一个 $n$，并在有限步后输出 $\rho_M(x)$。分别记对所有 $x\in R$ 都精确正确的确定性方案之最小最坏情形查询数为 $C_{\rm na}(M)$ 与 $C_{\rm ad}(M)$。一次实际调用的费用恒为 $1$，无论 $M$ 有多少个素因子；局部中心的选择、CRT 合成与其他有限计算不计入查询数。
+
+为区分查询函数与其诱导的观察等价关系，定义
+$$
+\operatorname{Ker}_{\rm obs}(Q_{M,n})
+=
+\{(x,y)\in R^2:Q_{M,n}(x)=Q_{M,n}(y)\}.
+$$
+这称为查询 $Q_{M,n}$ 的观察核。查询函数相等必然给出观察核相等，但反向一般不成立。
+

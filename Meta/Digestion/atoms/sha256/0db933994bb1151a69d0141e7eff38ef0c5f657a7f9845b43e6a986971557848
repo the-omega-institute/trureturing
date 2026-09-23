@@ -1,0 +1,24 @@
+`FiniteHistoryPermanentStability` 的对应结论更局部：如果某一步的相等关系已经不再细化，即
+
+$$
+R_m=R_{m+1},
+$$
+
+则对所有 $$r\ge0$$ 都有
+
+$$
+R_{m+r}=R_m.
+$$
+
+所以“现在没有新分离”只有在这个等式对全部状态成立时才是停止证据；一条样本轨迹暂时没有分开，不能推出全局闭合。
+
+在线性有限维模型中，`FutureReadoutQuotient` 给出同一结构的商版本。对状态空间 $$V$$、线性更新 $$T$$ 和读出 $$C$$，隐藏子空间为
+
+$$
+\mathcal N_\infty
+=
+\bigcap_{k\ge0}\ker(C\circ T^k).
+$$
+
+商空间 $$V/\mathcal N_\infty$$ 携带唯一诱导动力学，并恢复所有未来读出。`MaximalUnobservableSubspace.future_kernel_is_maximal_invariant` 进一步说明 $$\mathcal N_\infty$$ 是当前不可见空间中最大的 $$T$$-不变部分；这正是“不会在未来回流到可见读出”的隐藏方向，而不是所有当前看不见方向的简单集合。
+

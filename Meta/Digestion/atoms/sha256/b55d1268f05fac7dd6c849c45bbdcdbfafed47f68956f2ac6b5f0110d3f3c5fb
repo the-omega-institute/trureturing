@@ -1,0 +1,87 @@
+### 129.10 指数密度族是另一条路径，共同的只是正规化 Hessian
+
+为明确两种路径的区别，先证明一个标准有限引理。令 $v_\varepsilon,w_\varepsilon>0$ 是逐点 $C^3$ 的密度路径，满足
+
+$$
+\mathbb E_\nu v_\varepsilon=\mathbb E_\nu w_\varepsilon=1,
+\qquad v_0=w_0=1.
+$$
+
+记
+
+$$
+F(\varepsilon)=\mathbb E_\nu\left[v_\varepsilon
+\log\frac{v_\varepsilon}{w_\varepsilon}\right].
+\tag{129.45}
+$$
+
+函数 $\varphi(v,w)=v\log(v/w)$ 在 $(1,1)$ 的梯度及 Hessian 为
+
+$$
+\nabla\varphi(1,1)=(1,-1),
+\qquad
+\nabla^2\varphi(1,1)=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}.
+\tag{129.46}
+$$
+
+有限求和可逐项微分；正规化又给 $\mathbb E_\nu v'_0=\mathbb E_\nu w'_0=0$ 以及二阶导数的同类等式。因此链式法则得到
+
+$$
+F(0)=F'(0)=0,
+$$
+
+$$
+\boxed{F''(0)
+=\mathbb E_\nu[(v'_0-w'_0)^2]
++\mathbb E_\nu[v''_0-w''_0]
+=\|v'_0-w'_0\|_\nu^2}.
+\tag{129.47}
+$$
+
+这是 RRO 已有正规化密度 Hessian 计算的直接应用形式。对任何小的闭参数区间，正密度和 $C^3$ 性使 $F'''$ 连续有界；Taylor 定理再给
+
+$$
+\left|F(\varepsilon)-\frac{\varepsilon^2}{2}F''(0)\right|
+\le\frac{|\varepsilon|^3}{6}\max_{|s|\le\delta}|F'''(s)|
+\quad(|\varepsilon|\le\delta).
+\tag{129.48}
+$$
+
+现在定义有限指数族
+
+$$
+Z_\varepsilon=\mathbb E_\nu e^{\varepsilon f},
+\qquad\widehat d_\varepsilon(x)
+=\nu(x)\frac{e^{\varepsilon f(x)}}{Z_\varepsilon}.
+\tag{129.49}
+$$
+
+在有限 $\Omega$ 上，$Z_\varepsilon$ 对每个实参数都有限且严格正。若 $f$ 已中心化，则 $Z_0=1,Z'_0=0$，所以密度 $\widehat v_\varepsilon=e^{\varepsilon f}/Z_\varepsilon$ 满足 $\widehat v'_0=f$；其参考重建密度
+
+$$
+\widehat w_\varepsilon=P\widehat v_\varepsilon
+=\frac{P(e^{\varepsilon f})}{Z_\varepsilon}
+\tag{129.50}
+$$
+
+满足 $\widehat w'_0=Pf$。两者都是正且正规化的光滑路径，故式（129.47）—（129.48）给
+
+$$
+D(\widehat d_\varepsilon\|\mathscr E_\nu\widehat d_\varepsilon)
+=\frac{\varepsilon^2}{2}\|f-Pf\|_\nu^2+O(|\varepsilon|^3).
+\tag{129.51}
+$$
+
+这证明共同二阶系数，不把线性族和指数族识别成同一份概率。式（129.43）的常数由线性密度专门推导，不能无证明移作式（129.51）的常数；式（129.48）已经提供指数族的独立余项依据。
+
+指数族的重建还不能把式（129.50）擅改成 $e^{\varepsilon Pf}/\mathbb E_\nu e^{\varepsilon Pf}$。在式（129.30）的四点例中，$Pf=0$，后者恒为一；前者在两条纤维上的值分别为
+
+$$
+\frac{\cosh\varepsilon}{Z_\varepsilon},
+\qquad\frac{\cosh(2\varepsilon)}{Z_\varepsilon},
+\qquad Z_\varepsilon=\frac{\cosh\varepsilon+\cosh(2\varepsilon)}2.
+\tag{129.52}
+$$
+
+当 $\varepsilon\ne0$ 时这两个值不同。因此条件平均与指数化不能自动交换。上述局部投影结果均不要求额外的时间反演假设。
+

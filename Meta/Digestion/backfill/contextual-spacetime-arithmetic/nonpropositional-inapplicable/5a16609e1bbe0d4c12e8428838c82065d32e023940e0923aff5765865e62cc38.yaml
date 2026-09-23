@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5a16609e1bbe0d4c12e8428838c82065d32e023940e0923aff5765865e62cc38
+  normalized_sha256: sha256:5a16609e1bbe0d4c12e8428838c82065d32e023940e0923aff5765865e62cc38
+cas_ref: sha256:5a16609e1bbe0d4c12e8428838c82065d32e023940e0923aff5765865e62cc38
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶明说“在当前整数剖面类型上确实可逆并保持”辅助乘法，这是真数学命题，不是定义里的约定。探针使用整数时间与三维整数位置的有限支撑函数，Finsupp.sum_mapDomain_index_inj 重索引配合 max_add_add_right 给出保乘法，正负一步平移互逆；仓内无冻结 GID。末句仅限定该识别不是文献直接给出的结论，无额外暗含假设。
+    previous_atom_id: 5a38ad23ecd93a5f4378879714625b803ed1dcd426c577550ef96810fa63564b
+    next_atom_id: ee3978d0475c0374f59106c4f747ffbfe799d95ede4639034ce3837861bb6176

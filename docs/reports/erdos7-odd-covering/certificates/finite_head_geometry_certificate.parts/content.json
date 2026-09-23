@@ -1,0 +1,25 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "Exact sharp minimax moment for all distinct forbidden modulus families dividing45; a constructive universal supported-law moment upper bound for families dividing315. Prime7 sharpness is not claimed."
+  },
+  "cases": {
+    "path": "content/001-cases.json",
+    "sha256": "6bd949f8c2de4b0c790964ed44fbeb59dd7c85a57ac416ecf45ce5857c52dcd0",
+    "kind": "array"
+  },
+  "universal_supported_Gamma": {
+    "kind": "inline",
+    "value": "22570/3361"
+  },
+  "verified_result": {
+    "path": "content/003-verified_result.json",
+    "sha256": "93d62aad856f4419e69c247e03fb1c5f255347657e4399b3c6d98e400548fc61",
+    "kind": "value"
+  },
+  "selected_law_convex_profile": {
+    "path": "content/004-selected_law_convex_profile.json",
+    "sha256": "07dcc808c3e2ed0e5a79fa0e9d177887027ac363c5408c57aedf243b9d6a0970",
+    "kind": "value"
+  }
+}

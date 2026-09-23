@@ -1,0 +1,57 @@
+**证明。** 序列 $D_r$ 单调增加。若有限 $m\mid D^{\mathrm{pow}}$，$m$ 只涉及有限多个素数及有限指数；对其中每个素数指数，因其出现在逐点上确界 $D^{\mathrm{pow}}$ 中，存在有限阶段达到该指数。取这些阶段最大值，得到某个 $r$ 满足
+$$
+m\mid D_r.
+$$
+于是
+$$
+\lambda(m)\mid D_{r+1}\mid D^{\mathrm{pow}}.
+$$
+故 $D^{\mathrm{pow}}$ Carmichael 闭合。
+
+若 $E$ Carmichael 闭合且 $D\mid E$，归纳有 $D_r\mid E$：起点显然；若 $D_r\mid E$，则每个 $m\mid D_r$ 也整除 $E$，故 $\lambda(m)\mid E$，于是 $D_{r+1}\mid E$。取 supernatural 最小公倍数得到
+$$
+D^{\mathrm{pow}}\mid E.
+$$
+故其最小性成立。
+
+由 $T^{\mathrm{pow}}$ 的定义，除平凡 $(0,1)$ 情形外有
+$$
+T^{\mathrm{pow}}\ge1,\qquad H(D^{\mathrm{pow}})\le T^{\mathrm{pow}},
+$$
+而 $D^{\mathrm{pow}}$ Carmichael 闭合，所以 theorem 49.5 给出连续幂。平凡 $(0,1)$ 情形由 theorem 49.5 直接成立。
+
+参数不等式
+$$
+T^{\mathrm{pow}}\ge t,\qquad D\mid D^{\mathrm{pow}}
+$$
+使原指标集 $I_{t,D}$ 成为较细指标集 $I_{T^{\mathrm{pow}},D^{\mathrm{pow}}}$ 的子集；限制逆极限坐标得到规范连续映射 $\rho$，并显然满足 $\rho\circ j=j$。其像是紧集，故在 Hausdorff 目标中闭；又包含稠密自然数像，所以像等于整个 $K_{t,D}$，即 $\rho$ 满射。
+
+现设 $K_{s,E}$ 是任意幂兼容细化。若 $(t,D)=(0,1)$，则 $T^{\mathrm{pow}}=0$、$D^{\mathrm{pow}}=1$，所需参数不等式立即成立。否则 theorem 49.5 给出 $s\ge1$；当 $s<\infty$ 时还给出 $H(E)\le s$，并且无论 $s$ 有限还是无限都给出 $E$ Carmichael 闭合。刚证的最小性给出
+$$
+D^{\mathrm{pow}}\mid E.
+$$
+于是有限 $s$ 时
+$$
+H(D^{\mathrm{pow}})\le H(E)\le s,
+$$
+而 $s=\infty$ 时 $T^{\mathrm{pow}}\le s$ 自动成立。结合 $s\ge t$，得到
+$$
+T^{\mathrm{pow}}\le s.
+$$
+
+因此指标包含给出坐标限制的规范连续映射
+$$
+\sigma:K_{s,E}\to K_{T^{\mathrm{pow}},D^{\mathrm{pow}}},
+$$
+并满足 $\sigma\circ j=j$ 及
+$$
+\rho\circ\sigma=\rho_{s,E}^{t,D}.
+$$
+与 $\rho$ 的满射证明相同，$\sigma$ 的像紧且闭，又含有中间空间的稠密自然数像，所以 $\sigma$ 也是满射。
+
+最后证明所声明的精确唯一性。设 $f$ 是另一连续映射并满足 $f\circ j=j$。则对每个自然数 $n$，
+$$
+f(j(n))=j(n)=\sigma(j(n)).
+$$
+theorem 49.1.1 给出 $j(\mathbb N_0)$ 在 $K_{s,E}$ 中稠密，而中间目标 $K_{T^{\mathrm{pow}},D^{\mathrm{pow}}}$ Hausdorff，所以两个连续映射 $f,\sigma$ 在稠密集上相等即处处相等。因而 $f=\sigma$；交换条件 $\rho\circ f=\rho_{s,E}^{t,D}$ 与因子化语义相容，但唯一性的关键附加范围正是 $f\circ j=j$。若删除自然映射保持条件，本文不声称因子映射唯一。证毕。
+

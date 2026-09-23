@@ -48,7 +48,7 @@ public sealed partial class WorktreeCommandTests
             lake,
             LeanPinSet.Create(
                 System.Text.Encoding.UTF8.GetBytes("leanprover/lean4:v9.99.0\n"),
-                System.Text.Encoding.UTF8.GetBytes("{\"version\":\"0.0.0\"}\n")));
+                System.Text.Encoding.UTF8.GetBytes(LeanCacheFixtureFile.Manifest('f'))));
         var target = Path.Combine(repository.Path, "stale-donor-lane");
         var runner = new RecordingWorktreeProcessRunner();
 

@@ -1,0 +1,12 @@
+### 36.5 纤维下降判据、定义 30 与反例 D15
+
+对完整乘积上的任意选择规则 $R=R^{X,Y}$，固定输出属性 $c\in\mathrm{Attr}_t$，定义
+
+$$
+J_R^{X,Y}(c)=
+\sum_{\substack{e\in A_X,\ f\in A_Y\\
+\alpha_t(e)\diamond_t\alpha_t(f)=c}}
+\sigma(e)\sigma(f)\mathbf1_R(e,f).
+\tag{O-FIBER-COUNT}
+$$
+

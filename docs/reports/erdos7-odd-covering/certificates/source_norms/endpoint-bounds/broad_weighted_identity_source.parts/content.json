@@ -1,0 +1,58 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-broad-weighted-identity-source-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/endpoint-bounds/endpoint_linear_neighborhood.py": "f8921b87de7b31cf834ef0c1fdd3df4802266e0dc990b19d86bf666221df235d",
+      "frontier/endpoint-bounds/broad_five_slot_tradeoff.py": "aa930dbc975c4a6a10f25e32f9da195dfc3d8a55089b2b59eea6eb7598a011d1",
+      "certificates/source_norms/endpoint-bounds/broad_five_slot_tradeoff.json": "fef05428a73f6328ac2b1eef6a76440a7d52b31b13ba2adca9be23b2e627659f",
+      "frontier/endpoint-bounds/broad_clipped_identity.py": "92393c2010bbef3c7308065d93aaba7e385d805091cd8a3c012ffc48a80e2dca",
+      "certificates/source_norms/endpoint-bounds/broad_clipped_identity.json": "45332a5a9293113ba5461a323157c4cf9c91f3665692dbf09ea8edffbd769fbb"
+    }
+  },
+  "canonical_slots": {
+    "kind": "inline",
+    "value": {
+      "P": 0,
+      "A": 1,
+      "B": 2,
+      "Q": 3,
+      "H": 4
+    }
+  },
+  "complete_clipped_tail": {
+    "kind": "inline",
+    "value": "351520265979651248437376109626376737817577/58972439045013398092123679816722869873046875000"
+  },
+  "shared_deficiency_coefficient": {
+    "kind": "inline",
+    "value": "17100/397"
+  },
+  "comparison_formula": {
+    "kind": "inline",
+    "value": "new_margin-old_m40 >= source_gain-T40+(6-c)*rho+c*(r+r1)/5; use the positive part when combining with the old valid margin."
+  },
+  "whole_face_fixed_branches": {
+    "path": "content/006-whole_face_fixed_branches.json",
+    "sha256": "999253650161e8aa8f0d580ae5dced8831d9e42e4c95937ce26b3b10ace22572",
+    "kind": "value"
+  },
+  "pointwise_records": {
+    "path": "content/007-pointwise_records.json",
+    "sha256": "d9f9e2f394bb2eeeb6fd16cfff115dc9bd2781bb91b62fa9a73b94832bbfa646",
+    "kind": "object"
+  },
+  "record_count": {
+    "kind": "inline",
+    "value": 41
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary actual-source pointwise theorem on the complete small-r slab, with exact finite dual evaluation. Direction probes are not a uniform slab optimization, actual-covering constructions, global K improvement, or Lean verification. The ordinary proof supplies whole-face continuation by fixed group masses, not by interpolation of new LP values."
+  }
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba651bf2ecc2db2114741325368406b0625734538b58a847eef6a41ca3b51bc9
+  normalized_sha256: sha256:ba651bf2ecc2db2114741325368406b0625734538b58a847eef6a41ca3b51bc9
+cas_ref: sha256:ba651bf2ecc2db2114741325368406b0625734538b58a847eef6a41ca3b51bc9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “延迟一格的乘法公式：命题 43 → 命题 53 → 命题 59”将两个公式标签归到合入稿编号，未在此证明延迟公式；不含定义偷带，属于单独的引用更正。
+    previous_atom_id: 317e1b092dd0c1fd9f456183104896bf7152586183700f0b31f8410c5b430cc0
+    next_atom_id: 42b7428950804a3139bf457cd5ee3c0bad3ff877fed29d6604a3617e6f3c1769

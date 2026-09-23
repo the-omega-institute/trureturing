@@ -1,0 +1,27 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pg1-joint-tail-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
+      "certificates/original9_convex_transfer_certificate.json": "98e19c9a0888ef3b515776fc15f66fe90318aedc8fa89c7d6e8c636b10d78d9d"
+    }
+  },
+  "floor_reference": {
+    "kind": "inline",
+    "value": "149"
+  },
+  "rounded_Gamma13_upper": {
+    "kind": "inline",
+    "value": "74463/500"
+  },
+  "result": {
+    "path": "content/004-result.json",
+    "sha256": "4068e788cdb5e5e0f1f6b1bc1669dad57e0e36330119da7b5982087adbe6bdf0",
+    "kind": "object"
+  }
+}

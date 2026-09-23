@@ -1,0 +1,20 @@
+**命题 137.15（精确相容与最小维数不是连续阈值）。** 不可正实现的 $0,\ldots,3$ 阶前缀可以任意接近可正实现的同阶前缀，同时保持两个块半正定与普通平坦。即使谱始终在 $[1,2]$ 内，正实现的 $0,\ldots,3$ 阶前缀所允许的最小维数也不由前缀误差连续确定。
+
+**证明。** 对任意 $\epsilon>0$，前缀 $(1,1,1,1+\epsilon)$ 的 $H_1$ 仍为命题137.3的秩一矩阵，而
+$$
+S_1=\begin{pmatrix}1&1\\1&1+\epsilon\end{pmatrix}\succ0.
+$$
+其核不相容，所以不可实现；当 $\epsilon\downarrow0$ 时却趋向单点正测度 $\delta_1$ 的前缀。
+
+再令
+$$
+\mu_\delta=(1-\delta)\delta_1+\delta\delta_2,\qquad 0<\delta<1.
+$$
+它的矩为 $m_k=1+\delta(2^k-1)$，任意固定长度的前缀都趋向 $\delta_1$ 的前缀。但
+$$
+\det H_1
+=\det\begin{pmatrix}1&1+\delta\\1+\delta&1+3\delta\end{pmatrix}
+=\delta(1-\delta)>0.
+$$
+因此 $\mu_\delta$ 的 $0,\ldots,3$ 阶前缀之最小实现维数为二，而极限前缀的最小实现维数为一；所有谱始终包含于 $[1,2]$。$\square$
+

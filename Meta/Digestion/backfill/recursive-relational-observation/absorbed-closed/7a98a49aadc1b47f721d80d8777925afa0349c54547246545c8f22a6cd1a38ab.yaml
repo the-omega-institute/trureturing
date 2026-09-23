@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7a98a49aadc1b47f721d80d8777925afa0349c54547246545c8f22a6cd1a38ab
+  normalized_sha256: sha256:7a98a49aadc1b47f721d80d8777925afa0349c54547246545c8f22a6cd1a38ab
+cas_ref: sha256:7a98a49aadc1b47f721d80d8777925afa0349c54547246545c8f22a6cd1a38ab
+coverage_gids:
+  - gid: D5/S3/Divergence/GibbsEquality.kl_divergence_eq_zero_iff
+    target_statement_id: sha256:ba7b06e0c5a31dbea17cee8512ca943141dc34ee2e63f82c1f5662d8dbee3d59
+  - gid: D5/S3/Divergence/GrandmotherTheorem.kl_divergence_nonneg
+    target_statement_id: sha256:2811f2905b53f8e74c7c7d666dc0dbc01e24ea1c0f503af4120dd64befc22259
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDPI.classical_dpi_identity_zero_support
+    target_statement_id: sha256:1d1f07c23fa99f741789f3cf39a6cfc04affc13728a6927107d205b5f73e5cd5
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 0a6954a3842b0afa03e595645612a52cd19ec636c1aed452f749ddf5d6a4f4cf
+    - 3ff8ca07f81d49586207ce4bbfe8be32d3db30a9c59ae63b52dc232cfe7b2815

@@ -1,0 +1,1 @@
+| 72·有限通道 | [D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Foundation/FiniteKrausChannel.lean) 对 $\mathcal E_r$ 取唯一 Kraus 算子 $U_r$，对 $\mathcal C_r$ 取 $K_j=|e_{r(j)}\rangle\langle f_j|$；两次完整性分别在定理 72.2、72.4 中履行。此声明不把 $\Gamma_r$ 升为保迹态通道。 

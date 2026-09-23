@@ -1,0 +1,49 @@
+**证明。** 直接像与逆像的复合恒等式给出
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)
+&=(\sigma\circ\tau)^{-1}
+     [C_C(\sigma[\tau[\Gamma]])]\\
+&=\tau^{-1}
+     [\sigma^{-1}[C_C(\sigma[\tau[\Gamma]])]]\\
+&=\tau^{-1}[K_\sigma(\tau[\Gamma])].
+\end{aligned}
+$$
+此处 $K_\sigma$ 的输入是 $F_B$ 的子集 $\tau[\Gamma]$；两个诱导闭包作用于不同的幂集，不能将本式写成 $K_\sigma\circ K_\tau$。上述两步直接采用钉版 Mathlib 的 [Set.image_comp 与 Set.preimage_comp](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean)。
+
+(89.2b) 的第一包含是 $\mathrm P_\tau$。将 $\mathrm P_\sigma$ 用于 $\tau[\Gamma]$，再取 $\tau$-逆像，结合 (89.2a) 得到第二包含。对这三个嵌套集合，差集分解为
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)\setminus C_A(\Gamma)
+={}&\bigl(K_\tau(\Gamma)\setminus C_A(\Gamma)\bigr)\\
+&\sqcup
+\bigl(K_{\sigma\circ\tau}(\Gamma)\setminus K_\tau(\Gamma)\bigr).
+\end{aligned}
+$$
+第一项包含在 $K_\tau(\Gamma)$ 中，第二项与它不交。逆像保持差集，故
+$$
+\begin{aligned}
+K_{\sigma\circ\tau}(\Gamma)\setminus K_\tau(\Gamma)
+&=\tau^{-1}
+  [K_\sigma(\tau[\Gamma])\setminus C_B(\tau[\Gamma])]\\
+&=\tau^{-1}[E_\sigma(\tau[\Gamma])],
+\end{aligned}
+$$
+即 (89.2c)。这里的嵌套差集等式是 [Set.sdiff_union_sdiff_cancel](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Order/BooleanAlgebra/Set.lean) 在 $s=K_{\sigma\circ\tau}(\Gamma)$、$t=K_\tau(\Gamma)$、$u=C_A(\Gamma)$ 下的应用，再交换两并项；逆像等式使用 [Set.preimage_sdiff](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean)。
+
+若复合保守，(89.2b) 夹出 $K_\tau=C_A$，而 (89.2c) 的第二项对全部 $\Gamma$ 为空。反之，第一步保守且这些第二项全部为空，由 (89.2b)–(89.2c) 得到复合保守。因此只须说明第二项处处为空等价于 (89.2d)。
+
+第二项处处为空等价于
+$$
+\forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\qquad
+\tau(\varphi)\in K_\sigma(\tau[\Gamma])
+\ \Longrightarrow\
+\tau(\varphi)\in C_B(\tau[\Gamma]).
+\tag{89.2e}
+$$
+任意 $\Delta\subseteq S$ 都满足
+$$
+\tau[\tau^{-1}[\Delta]]=\Delta.
+$$
+这是 [Set.image_preimage_eq_of_subset](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Set/Image.lean) 在 $\Delta\subseteq\operatorname{range}\tau$ 下的直接应用。在 (89.2e) 中取 $\Gamma=\tau^{-1}[\Delta]$，并对给定 $\psi\in S$ 取一个满足 $\tau(\varphi)=\psi$ 的见证，便得到 (89.2d)。反向取 $\Delta=\tau[\Gamma]$、$\psi=\tau(\varphi)$ 即可。这里不要求单射，也不需要同时选择一族代表。最后，$\mathrm P_\sigma$ 给出 $\psi\in C_B(\Delta)\Rightarrow\sigma(\psi)\in C_C(\sigma[\Delta])$，证明所述反向。证毕。
+

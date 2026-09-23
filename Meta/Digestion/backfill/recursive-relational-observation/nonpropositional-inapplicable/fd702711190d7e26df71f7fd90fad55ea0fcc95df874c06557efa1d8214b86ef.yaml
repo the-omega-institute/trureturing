@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fd702711190d7e26df71f7fd90fad55ea0fcc95df874c06557efa1d8214b86ef
+  normalized_sha256: sha256:fd702711190d7e26df71f7fd90fad55ea0fcc95df874c06557efa1d8214b86ef
+cas_ref: sha256:fd702711190d7e26df71f7fd90fad55ea0fcc95df874c06557efa1d8214b86ef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Neither limit defines a spatial dimension or identifies the iteration count with physical time”限制指数的解释范围；“exponent in the observation-class count”指明前文指数所用自变量，不增添渐近公式，已检查此备注未夹带新的数学命题，故不需要证明。
+    previous_atom_id: d8a84b872f495cbd6e414d72f958612e1343abbd1143ccd4254fa460afb68f78
+    next_atom_id: 8ccdc0e1319b4c28d762d3353cc71e3e20b99ed5a1bf03d94e278ab08ea8f125

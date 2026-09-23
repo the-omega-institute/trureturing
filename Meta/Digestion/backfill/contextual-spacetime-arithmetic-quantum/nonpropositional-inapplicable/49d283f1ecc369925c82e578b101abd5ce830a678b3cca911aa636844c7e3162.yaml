@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:49d283f1ecc369925c82e578b101abd5ce830a678b3cca911aa636844c7e3162
+  normalized_sha256: sha256:49d283f1ecc369925c82e578b101abd5ce830a678b3cca911aa636844c7e3162
+cas_ref: sha256:49d283f1ecc369925c82e578b101abd5ce830a678b3cca911aa636844c7e3162
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶用“定理没有说任何物理动力学都保持”和“它只约束满足上述线性不变性假设的演化族”说明假设边界；加入别类操作只是改变适用范围，没有断言一定可恢复，也未在定义中夹带新的不变性结论。
+    previous_atom_id: 21e27f7e2960153da902fd523636c4c088d8b0e1403e684c73eea07daae7bc3e
+    next_atom_id: 99bdb7aacb4186de82c2041a0f051dcd74108b6a9865433a51aaab8eddec5bf3

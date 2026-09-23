@@ -1,0 +1,28 @@
+**证明。** 先证列表判据。若每个素数坐标的投影列表都 resolving，则从全局第 $t$ 次答复的 $p$ 坐标得到相应局部答复，故可分别恢复全部 $a_p$，从而恢复全部 $x_p\bmod p^{e_p}$，最后由 CRT 唯一恢复 $\rho_M(x)$。
+
+反之，若某个 $p$ 的投影列表不能 resolving，取两个不同局部目标 $a_p,b_p\in X_{p,e_p}$，使它们对全部投影中心给出相同局部答复。构造 $x,y\in R$，使
+$$
+-x_p\equiv a_p,\qquad -y_p\equiv b_p\pmod{p^{e_p}},
+$$
+而对每个 $q\mid M$、$q\ne p$ 令 $x_q=y_q$。未出现在 $M$ 中的坐标也令二者相同。于是每次查询的整个向量在 $x,y$ 上完全相同，但 $\rho_M(x)\ne\rho_M(y)$，矛盾。故局部 resolving 对每个 $p$ 都是必要的。
+
+令
+$$
+k_p=(p-1)p^{e_p-1},\qquad K=\max_{p\mid M}k_p.
+$$
+由 theorem 60.5，任何全局列表至少在每个 $p$ 坐标上含有足以 resolving 的中心，因此 $k\ge k_p$ 对所有 $p$ 成立，得到 $k\ge K$。
+
+为达到 $K$，对每个 $p$ 选取 theorem 60.5 的一个大小为 $k_p$ 的最优局部中心集，并把它按任意顺序列出；当 $k_p<K$ 时，用任意局部中心重复填充到长度 $K$。第 $t$ 行因此给出一族局部中心
+$$
+c_{p,t}\in\mathbb Z/p^{e_p}\mathbb Z\qquad(p\mid M).
+$$
+由于不同 $p$ 的模数 $p^{e_p}$ 两两互素，中国剩余定理给出唯一的
+$$
+n_t\in\{0,\ldots,M-1\}
+$$
+满足
+$$
+n_t\equiv c_{p,t}\pmod{p^{e_p}}\qquad(p\mid M).
+$$
+一次查询 $n_t$ 同时执行这一整行所有局部探针。做完 $K$ 行后，每个素数坐标都已由自己的 resolving 列表确定。因此 $C_{\rm na}(M)\le K$，与下界合并得证。
+

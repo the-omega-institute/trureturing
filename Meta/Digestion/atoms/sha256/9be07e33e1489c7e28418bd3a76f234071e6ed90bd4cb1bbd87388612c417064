@@ -1,0 +1,9 @@
+**命题 6.5（两次近似辅助运输）。** 设 $X''\xrightarrow{r_2}X'\xrightarrow{r_1}X$，三套系统具有对应一元操作 $h'',h',h$。设 $0\le K,\delta_1,\delta_2<\infty$，$r_1$ 相对于所选距离是 $K$-Lipschitz，且在实际状态上
+$$
+D(r_1h'x',h r_1x')\le\delta_1,\qquad
+D'(r_2h''x'',h'r_2x'')\le\delta_2.
+$$
+则复合运输的缺陷不超过 $\delta_1+K\delta_2$。
+
+**证明。** 在 $r_1r_2h''x''$ 与 $h r_1r_2x''$ 之间插入 $r_1h'r_2x''$。第一段由 $K\delta_2$ 控制，第二段由 $\delta_1$ 控制，三角不等式给结论。$\square$
+

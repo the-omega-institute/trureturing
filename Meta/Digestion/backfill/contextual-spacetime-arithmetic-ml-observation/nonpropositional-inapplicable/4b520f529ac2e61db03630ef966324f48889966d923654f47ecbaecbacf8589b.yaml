@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b520f529ac2e61db03630ef966324f48889966d923654f47ecbaecbacf8589b
+  normalized_sha256: sha256:4b520f529ac2e61db03630ef966324f48889966d923654f47ecbaecbacf8589b
+cas_ref: sha256:4b520f529ac2e61db03630ef966324f48889966d923654f47ecbaecbacf8589b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “准备阶段假设输入源等待”与“Warm 中不激活新请求”明确列出协议限制，也排除无界隐式队列；这是条件与权限说明，不是假设外的运行正确性主张。
+    previous_atom_id: 26301cd59ae2db9aca6d6f4a7e148ad63f643921ae64398d46330c6fb0eb8294
+    next_atom_id: 7e7d881451d9bba875a30f4cdd1839662ae84fddefc6b617c579952489e1a26a

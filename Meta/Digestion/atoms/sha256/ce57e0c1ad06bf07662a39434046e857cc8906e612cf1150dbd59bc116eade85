@@ -1,0 +1,32 @@
+**Proof.** Finite iterates commute with all of $\mathscr E$ and have continuous left translations by Theorem 37.1. If $p=P_\theta^s$, then
+$$
+pP_0^{-s}=P_\theta^s,\qquad P_0^{-s}p=P_\theta^{-s}.
+$$
+The two functions are distinct by Theorem 37.4, so $p$ is not algebraically central.
+
+Choose an increasing sequence $n_j$ with $n_j\delta\to_{-s}0$. Then
+$$
+T^{n_j}\longrightarrow P_0^{-s}.
+$$
+By the multiplication table and the topology just proved,
+$$
+L_p(T^{n_j})=P_{\theta+n_j\delta}^s\longrightarrow P_\theta^{-s},
+$$
+whereas
+$$
+L_p(P_0^{-s})=P_\theta^s.
+$$
+Thus $L_p$ is not continuous. This proves both center identities. Separate continuity would require every left translation to be continuous, and joint continuity would imply that requirement, so both stronger continuity assertions fail.
+
+For any $P_\theta^s$ the multiplication table gives
+$$
+\mathscr E P_\theta^s=\mathscr D,\qquad P_\theta^s\mathscr E=\mathscr D_s.
+$$
+Indeed, an arbitrary remainder operator on the left supplies any desired sign and any desired phase; an arbitrary remainder operator on the right supplies any desired phase while the left sign remains $s$.
+
+Every nonempty left ideal containing a remainder element therefore contains $\mathscr D$. A left ideal containing $T^n$ also contains $\mathscr D$, because $\mathscr D T^n=\mathscr D$. Hence $\mathscr D$ is the unique minimal left ideal, and, since it is two-sided, the unique minimal two-sided ideal.
+
+Every nonempty right ideal contained in $\mathscr D_s$ equals $\mathscr D_s$, because it contains $p\mathscr E=\mathscr D_s$ for any one of its elements. Conversely, any right ideal containing a remainder element contains one such $\mathscr D_s$, and any right ideal containing a finite iterate contains all of $\mathscr D$. Thus exactly the two displayed subsets are minimal right ideals. In particular, they must not be substituted for the minimal left ideal. Their density from Theorem 37.6 does not make them closed.
+
+Within a fixed sign, multiplication is addition of circle phases, proving the algebraic group assertion. For idempotents, $P_\theta^sP_\theta^s=P_\theta^s$ is equivalent to $2\theta=\theta$, hence to $\theta=0$. For iterates, $T^{2n}=T^n$ implies $n=0$ by distinctness. Finally, a product involving a remainder element cannot be the identity, while $T^nT^m=\operatorname{id}_K$ with $n,m\ge0$ forces $n=m=0$. $\square$
+

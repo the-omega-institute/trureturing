@@ -1,0 +1,33 @@
+**命题 29.9（共同守恒分量之外的合法正隙应用）。** 采用主卷§127.1、§127.4的有限连通对称加权图，顶点集为 $V$：$L$ 是 Euclidean 内积下的图 Laplace 算子，$\ker L=\mathbb R\mathbf1$；$P=P^*=P^2$ 是其纤维平均投影，$P\mathbf1=\mathbf1$。令 $U=\operatorname{im}P$、$H=\ker P$，按式（29.1）分块，置
+$$
+W=U\cap\mathbf1^\perp.
+$$
+则 $A,S$ 保持 $W$，$B(H)\subseteq W$。当 $W\ne\{0\}$ 时，存在该固定图与投影的 $a_W>0$ 使 $S|_W\succeq a_WI_W$。对任意实际初态 $z_0=x_0+h_0$，定义
+$$
+\bar x=\frac{\langle z_0,\mathbf1\rangle}{\|\mathbf1\|^2}\mathbf1,
+\qquad x_\circ(t)=x(t)-\bar x,
+\qquad X_\circ(t)=X(t)-\bar x.
+$$
+实际与静态轨迹具有同一恒定分量 $\bar x$，$x_\circ,X_\circ,\rho$ 始终在 $W$。本节的正隙估计可用于 $W\oplus H$ 上的中心化系统，初态为 $(x_0-\bar x,h_0)$；不能在整个 $U$ 上给 $S$ 宣称正隙。
+
+证明。主卷的图能量平方和及连通性给 $L\succeq0$、$\ker L=\mathbb R\mathbf1$。由 $P\mathbf1=\mathbf1$，$H\subseteq\mathbf1^\perp$，所以非零 $h\in H$ 满足
+$\langle h,Ch\rangle=\langle h,Lh\rangle>0$；有限维性给 $C\succeq c_0I_H$，零维 $H$ 按唯一算子解释。$L\mathbf1=0$ 的两个分量分别为 $A\mathbf1=0$、$B^*\mathbf1=0$。于是
+$$
+\langle Au,\mathbf1\rangle=\langle u,A\mathbf1\rangle=0,
+\qquad \langle Bh,\mathbf1\rangle=\langle h,B^*\mathbf1\rangle=0.
+$$
+故 $A$ 保持 $W$、$B(H)\subseteq W$；$S=A-BC^{-1}B^*$ 同样保持 $W$，且 $S\mathbf1=0$。
+
+任取非零 $u\in W$，向量
+$y=(u,-C^{-1}B^*u)\in W\oplus H\subseteq\mathbf1^\perp$ 非零。由配方及连通性，
+$$
+\langle u,Su\rangle=\langle y,Ly\rangle>0.
+$$
+在 $W$ 的紧单位球面上取这一连续正函数的最小值，得到 $a_W>0$。这同时明确了隐藏极小向量为何没有落入守恒核。
+
+实际轨迹满足 $\frac d{dt}\langle x,\mathbf1\rangle=0$，静态轨迹也因 $S\mathbf1=0$ 保持此量，二者初值相同；$h_0\perp\mathbf1$ 使它等于 $\langle z_0,\mathbf1\rangle$。减去 $\bar x$ 不改变隐藏方程的 $B^*x$，也不改变 $r_0$，所以 $(x_\circ,h)$ 恰满足限制块系统。残差式（29.4）每项都位于 $B(H)\subseteq W$，或直接由 $\rho=\dot x_\circ+Sx_\circ$ 看出不变性。因此定理29.4、29.6在 $W$ 上的所有前提得到满足，$N_0,V_{\rm int}$ 可用中心化初态计算。
+
+在 $\mathbf1^\perp=W\oplus H$ 上 $L$ 也正定，故谱分解使实际中心化全态趋零；$S|_W$ 正定使 $X_\circ\to0$，二者保留同一极限 $\bar x$。概率初态时 $\bar x=\mathbf1/|V|$，即主卷的 $\pi$。$W=\{0\}$ 时 $B=0$、$x=X=\bar x$，可见误差恒零，无需在零维空间提取数值正隙。$\square$
+
+该证明只供应每个固定图的限制正隙，不供应任意变化图族的共同 $a_W$。范数误差证书本身也不证明静态演化保持概率正锥或归一化；若将其输出用作概率状态，还须另证相应合法性或给出有误差保证的合法修正。
+

@@ -1,0 +1,10 @@
+Schur 通道的对偶为
+$$
+M_C^*(A)=\overline C\odot A,
+$$
+因为
+$$
+\operatorname{tr}\!\left(A(C\odot\rho)\right)
+=
+\operatorname{tr}\!\left((\overline C\odot A)\rho\right).
+$$

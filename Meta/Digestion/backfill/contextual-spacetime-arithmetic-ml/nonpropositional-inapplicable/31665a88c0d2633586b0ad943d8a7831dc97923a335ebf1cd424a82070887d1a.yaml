@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:31665a88c0d2633586b0ad943d8a7831dc97923a335ebf1cd424a82070887d1a
+  normalized_sha256: sha256:31665a88c0d2633586b0ad943d8a7831dc97923a335ebf1cd424a82070887d1a
+cas_ref: sha256:31665a88c0d2633586b0ad943d8a7831dc97923a335ebf1cd424a82070887d1a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.9节末句“没有把所有状态机、ML或量子系统宣布为同一种物理系统”明确限制类比，不构成数学命题，也没有定义夹带同一性主张。
+    previous_atom_id: cf2e54d1ec1b257d10e774b792b62018966291dc40416adfc67ed837278a4806
+    next_atom_id: 340da7f2921e22f58133139dd2fd2b1e35d659907af8a0e54bb43c647bd8ec65

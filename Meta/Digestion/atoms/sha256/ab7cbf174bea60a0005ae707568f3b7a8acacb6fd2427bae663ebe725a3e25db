@@ -1,0 +1,31 @@
+**命题 44.8（下谱端点的固定指数尖锐性）。**
+
+固定 $a<b$，取靠近下谱端点的二维模型
+$$
+S_\varepsilon=
+\begin{pmatrix}
+a+\varepsilon&\varepsilon\\
+\varepsilon&a+\varepsilon
+\end{pmatrix},\qquad
+F=(1,0),\qquad 0<2\varepsilon<b-a.
+$$
+其谱为 $a,a+2\varepsilon$，并且
+$$
+A=a+\varepsilon,\qquad \delta=\varepsilon^2.
+$$
+对每个固定 $r\in(0,1)\cup(1,2)$，Taylor 展开给出
+$$
+\begin{aligned}
+FS_\varepsilon^rF^*-A^r
+&=\frac{a^r+(a+2\varepsilon)^r}{2}-(a+\varepsilon)^r\\
+&=\frac{r(r-1)}2a^{r-2}\varepsilon^2+O(\varepsilon^3).
+\end{aligned}
+$$
+因此绝对缺陷与所给上界之比趋于 $1$，任何严格较小的统一系数都不能覆盖该固定 $r$ 下的全部模型。$r=2$ 为精确等号，$r=0,1$ 两边均为零；不声称 $r$ 同时趋于端点时的一致相对尖锐性。若另有 $S\preceq bI_R$ 且 $a=b$，则 $S=aI_R$、$\delta=0$，没有非平凡尖锐性问题。
+
+若还要求原模型中的 $b<1$，同一例子的
+$$
+C_\varepsilon=-h^{-1}\log S_\varepsilon>0
+$$
+满足原契约。定理44.3整数界的尖锐性使用上谱端点 $b$，本节因 $r<2$ 而使用下谱端点 $a$，二者不混用。
+

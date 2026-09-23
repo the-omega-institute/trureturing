@@ -1,0 +1,59 @@
+{
+  "cleared_raw_mass_upper": [
+    {
+      "term": [],
+      "coefficient": "18"
+    },
+    {
+      "term": [
+        "a"
+      ],
+      "coefficient": "6"
+    },
+    {
+      "term": [
+        "a",
+        "d"
+      ],
+      "coefficient": "-1"
+    },
+    {
+      "term": [
+        "b"
+      ],
+      "coefficient": "2"
+    },
+    {
+      "term": [
+        "b",
+        "d"
+      ],
+      "coefficient": "-1"
+    },
+    {
+      "term": [
+        "d"
+      ],
+      "coefficient": "5"
+    },
+    {
+      "term": [
+        "d",
+        "z"
+      ],
+      "coefficient": "1"
+    },
+    {
+      "term": [
+        "ell"
+      ],
+      "coefficient": "1"
+    },
+    {
+      "term": [
+        "z"
+      ],
+      "coefficient": "9"
+    }
+  ]
+}

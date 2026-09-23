@@ -1,0 +1,40 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-pg1-comb-sharpness-v1"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+    }
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "primes": [
+        17,
+        19
+      ],
+      "heights": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64
+      ],
+      "threshold": 8,
+      "forbidden_center": 2,
+      "test_center": 47,
+      "energy_weight": "1",
+      "charge_weight": "270"
+    }
+  },
+  "result": {
+    "path": "content/003-result.json",
+    "sha256": "bd31b7c33b51a4aca2a607e7ad98d205a933508e60346a84bfd92ecd69e46bab",
+    "kind": "object"
+  }
+}

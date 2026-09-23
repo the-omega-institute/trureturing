@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b418aa4d6aefd4fb2c7189089d992cfeca180234d27cd6ab99cf0ca1096cd213
+  normalized_sha256: sha256:b418aa4d6aefd4fb2c7189089d992cfeca180234d27cd6ab99cf0ca1096cd213
+cas_ref: sha256:b418aa4d6aefd4fb2c7189089d992cfeca180234d27cd6ab99cf0ca1096cd213
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 集合包含将较大观察族上的全称等式限制到较小观察族，直接用 Set.Subset 的函数应用闭合，仓内无冻结 GID。
+    previous_atom_id: e2cc214c45800a29fa9ecd5e8eff38e47b5ddd97ac02b659e6118c139d985855
+    next_atom_id: 745d4b7462db535d11423b0d744c25e3d56b07433eb482e74b832b5c1a01bced

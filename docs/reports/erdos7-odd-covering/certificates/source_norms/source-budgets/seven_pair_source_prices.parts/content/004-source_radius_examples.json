@@ -1,0 +1,23 @@
+{
+  "length": 4,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/004-source_radius_examples/000000-000002.json",
+        "sha256": "7f93261641cda8a636478934ed0c8bd4cbd490bbfe006d4f984ba91a8d14ac55",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 4,
+      "part": {
+        "path": "content/004-source_radius_examples/000002-000004.json",
+        "sha256": "c47a864de1157c60e585c7d900190cc7cfe687166c696215470aef66ce061317",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -4,8 +4,8 @@ import LeanInformationAudit.Tests.Projection.FixtureState
 
 /-!
 T-041 production-command fixture. Negative runs select publication or export audit
-rejection, export before staging, or staging before seal. Each requires an exact
-diagnostic, unchanged declarations, and absent artifacts. The control seals once,
+rejection, final kernel staging failure, export before staging, or staging before seal.
+Each requires an exact diagnostic, unchanged declarations, and absent artifacts. The control seals once,
 stages once, and exports twice to distinct paths with byte-identical results.
 
 Structural boundary: `#seal_information_theory` contains no destination syntax and
@@ -47,6 +47,23 @@ private def assertArtifactsAbsent (paths : Array String) : CommandElabM Unit := 
     if ← liftIO <| (System.FilePath.mk path).pathExists then
       throwError "RealSeal rejection wrote artifact {path}"
 
+private def assertProjectionSnapshots (root : Name) (present : Bool) : CommandElabM Unit := do
+  for record in SealRecords.forRoot (← getEnv) root do
+    let certPrefix := catalogQualifiedName root record.catalog.arenaName record.catalog.catalogId
+      record.catalog.arenaName "__kernel_projection"
+    let projection : KernelProjectionRecord := {
+      certificates := #[("readout_reflection", certPrefix.str "readout_reflection")] }
+    let rejection ← try
+      liftTermElabM <| validateProjectionCountingRoute root record.catalog.catalogId
+        projection "reflected-readout"
+      pure none
+    catch error => pure (some (← error.toMessageData.toString))
+    let expected := if present then none else some
+      s!"IE-C028 AnalysisCertificateMismatch root={root} catalog={record.catalog.catalogId} \
+component=proof-method expected=certified-catalog actual=different"
+    unless rejection == expected do
+      throwError "[FAIL] ProjectionStage.snapshot-rollback: root={root} expected-present={present} actual={rejection}"
+
 private def exportSyntax (root : Name) (paths : Array String) : CommandElabM Syntax := do
   let rootId := mkIdent (`_root_ ++ root)
   let sealArtifact := Syntax.mkStrLit paths[0]!
@@ -62,6 +79,7 @@ private def stageSyntax (root : Name) : CommandElabM Syntax := do
 run_cmd do
   let expectedSeal ← liftIO <| IO.getEnv "IE_EXPECT_SEAL_REJECTION"
   let expectedStage ← liftIO <| IO.getEnv "IE_EXPECT_STAGE_REJECTION"
+  let expectedKernelStage ← liftIO <| IO.getEnv "IE_EXPECT_KERNEL_STAGE_REJECTION"
   let expectedExport ← liftIO <| IO.getEnv "IE_EXPECT_EXPORT_REJECTION"
   let exportBeforeSeal ← liftIO <| IO.getEnv "IE_EXPORT_BEFORE_SEAL"
   let exportBeforeStage ← liftIO <| IO.getEnv "IE_EXPORT_BEFORE_STAGE"
@@ -130,6 +148,22 @@ run_cmd do
     return
 
   let stageErrors ← commandErrors (← stageSyntax root)
+  if expectedKernelStage.isSome then
+    let expected := s!"IE-C009 ProofConstructionFailed: {root.str "__system_catalog_irredundant"}"
+    unless stageErrors.size == 1 && stageErrors[0]!.startsWith (expected ++ "\n") do
+      throwError "[FAIL] ProjectionStage.kernel-tail: expected={expected} actual={stageErrors}"
+    assertNoNewDeclarations sealedEnv (← getEnv)
+    unless (SealRecords.analysisForRoot? (← getEnv) root).isNone do
+      throwError "[FAIL] ProjectionStage.state-rollback: failed kernel stage published records"
+    assertProjectionSnapshots root false
+    let expectedExport := s!"UnstagedAnalysisExport root={root} catalog=system"
+    let errors ← commandErrors (← exportSyntax root firstPaths)
+    unless errors == #[expectedExport] do
+      throwError "[FAIL] ProjectionStage.export-after-failure: expected={expectedExport} actual={errors}"
+    assertNoNewDeclarations sealedEnv (← getEnv)
+    assertArtifactsAbsent (firstPaths ++ secondPaths)
+    logInfo s!"[PASS] ProjectionStage.kernel-tail: {expected}; {expectedExport}"
+    return
   match expectedStage with
   | some expected =>
       unless stageErrors == #[expected] do
@@ -146,6 +180,7 @@ run_cmd do
   unless stagedEnv.contains (root.str "__system_catalog_irredundant") &&
       (SealRecords.analysisForRoot? stagedEnv root).isSome do
     throwError "RealSeal analysis publication missing"
+  assertProjectionSnapshots root true
 
   let exportErrors ← commandErrors (← exportSyntax root firstPaths)
   match expectedExport with

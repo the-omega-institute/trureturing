@@ -1,0 +1,50 @@
+### 45.1 固定装置、完整观察者与相容完成
+
+令 $M=B=\mathbb C^2$，固定各自计算基、相位及装置
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad \alpha+\alpha^2=1,
+$$
+$$
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,
+\qquad m_1=|0\rangle,
+\qquad T|j\rangle=|j\rangle\otimes m_j.
+$$
+这里 Q 指[量子上下文卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)，恢复卷指[边界恢复与原子代价几何](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)。装置及全输入等距由 Q130.1、Q131.1和本卷定义41.1供应：两基像的范数为一，输出基标签使它们正交，所以 $T^*T=I_M$。记
+$$
+H_n=B^{\otimes n},\quad H_0=\mathbb C,\quad
+T_0=I_M,\quad T_{n+1}=(I_{H_n}\otimes T)T_n,
+$$
+$$
+\Gamma_n(X)=\operatorname{Tr}_M(T_nXT_n^*),
+\qquad\Gamma_0(X)=\operatorname{Tr}X.
+$$
+输出寄存器依次编号 $1,2,\ldots$，这是对 Q130 零下标词的索引平移。所有张量积依次排列为外部参考、已发出输出、活动记忆。
+
+固定参考空间 $J$，$1\le\dim J<\infty$，并固定来源类
+$$
+\Theta\subseteq\mathcal D(J\otimes M),
+$$
+它在精确来源问题中可以为空、非闭、非紧或非凸；距离下确界、极小值与一致收敛分别在对应小节明列所需条件。合法准备、已取得的联合记录、参考关系及其他约束共同决定这一个 $\Theta$；不能在不同深度换来源类。一个 $\theta\in\Theta$ 承担整条输出历史。先在整个输入算子空间定义线性通道
+$$
+q_n(X)=(\operatorname{id}_J\otimes\Gamma_n)(X)
+\quad\bigl(X\in\mathcal L(J\otimes M)\bigr),
+\qquad q_0(X)=\operatorname{Tr}_M X,
+$$
+再将它限制到来源密度 $\theta\in\Theta$。
+任意初态在 $J,M$ 之间可以纠缠，不预设独立根态。每一步必须使用与当时全部系统独立的纯空白 $|0\rangle\langle0|$ 及同一个 Q130 幺正装置，已发出端口不再参与生成；生成中不以反馈、重置或其它介入改变装置、空白准备或活动记忆。Q130 的基像恒等式在整个输入空间上成立，因而可张量上 $I_J$。有限维等距及偏迹给每个 $q_n$ 连续、CPTP，并且
+$$
+\operatorname{Tr}_{B_{n+1}}q_{n+1}(\theta)=q_n(\theta).
+$$
+
+一个待检目标是固定的相容密度族
+$$
+\xi_n\in\mathcal D(J\otimes H_n),\qquad
+\operatorname{Tr}_{B_{n+1}}\xi_{n+1}=\xi_n\quad(n\ge0).
+$$
+它可以在装置的来源像以外。相容只保证这些有限密度属于同一个输出态，不保证该固定装置能产生它。所有层必须来自这一个目标；不能每次优化后换成不同的目标延拓。半迹距离统一记为
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1.
+$$
+
+用 $C_{\rm archive}$ 表示完整已获观察者档案。$J$ 只承载本有限量子模型明确表示的已保留参考与记录，不自动穷尽整个 $C_{\rm archive}$。来源类须保留实际准备、来源身份、装置和校准、旧内外记录、已知联合关系、时间戳、各局部钟读数及其共同约束、合法动作及顺序、失败、停止和误差合同。这些合同沿用本卷定义36.4、定义41.1与假设41.5；动作的合法先后不推出统计独立。当某项结论另外要求来源类非空且紧时，这两项是实质前提：例如一个非空紧允许参数集经过连续的实际联合准备映射，才由连续像保证这两点；严格不等式、精确秩条件或成功概率趋零的后选择未必给闭类。一个纯数学来源见证不自动授权实际准备；紧性也不供应操作成本。更大经典档案若需逐纤维讨论，必须另有同一实际联合 cq 模型、保留的共同档案律及可测正则条件核；本节不由有限 $J$ 推出任意无限量子参考结论。
+

@@ -1,0 +1,46 @@
+**定理 9.2（对偶余量同时控制离支撑质量与系数误差）。** 在定义9.1下，$b^*$ 是精确表示的唯一最优解。若 $I\setminus S\ne\varnothing$，$\varepsilon,\rho\ge0$，而 $b$ 满足
+$$
+\Gamma(b)\le\gamma^*+\varepsilon,\qquad \|Tb-v\|\le\rho,
+$$
+则
+$$
+\sum_{i\notin S}|b_i|
+\le \frac{\varepsilon+\|\varphi\|_*\rho}{\eta},
+\tag{9.3}
+$$
+以及
+$$
+\|b-b^*\|_1
+\le\kappa\rho+
+(1+\kappa M)\frac{\varepsilon+\|\varphi\|_*\rho}{\eta}.
+\tag{9.4}
+$$
+若 $I=S$，不定义对空集的 $\eta$；此时所有系数均在基上，直接有
+$$
+\|b-b^*\|_1\le\kappa\rho.
+\tag{9.5}
+$$
+
+**证明。** 对每个 $i$，由 $|z_i|\le1$ 得 $|b_i|-b_iz_i\ge0$。设 $e=Tb-v$，则
+$$
+\begin{aligned}
+0\le D(b)&:=\sum_i(|b_i|-b_iz_i)\\
+&=\Gamma(b)-\varphi(Tb)
+=\Gamma(b)-\gamma^*-\varphi(e)\\
+&\le\varepsilon+\|\varphi\|_*\rho.
+\end{aligned}
+\tag{9.6}
+$$
+对 $i\notin S$，每项还不小于 $(1-|z_i|)|b_i|\ge\eta|b_i|$。求和得到式（9.3）。由于 $Tb^*=v$，
+$$
+T_S(b_S-b_S^*)=e-\sum_{i\notin S}b_iv_i.
+$$
+应用基的逆映射及三角不等式，得到
+$$
+\|b_S-b_S^*\|_1
+\le\kappa\rho+\kappa M\sum_{i\notin S}|b_i|.
+$$
+加上离支撑的 $\ell^1$ 质量即得式（9.4）。当 $I=S$，同一等式没有离支撑项，给式（9.5）。
+
+对任意精确可行的 $b$，弱对偶给 $\Gamma(b)\ge\varphi(v)=\gamma^*$，所以 $b^*$ 最优。任何另一最优解满足 $\rho=\varepsilon=0$；式（9.3）迫使它只支撑在 $S$，而基的单射性迫使其等于 $b^*$。$I=S$ 时直接由单射性得到同一结论。证毕。
+

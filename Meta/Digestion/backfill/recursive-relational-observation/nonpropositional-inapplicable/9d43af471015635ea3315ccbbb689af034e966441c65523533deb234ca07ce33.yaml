@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9d43af471015635ea3315ccbbb689af034e966441c65523533deb234ca07ce33
+  normalized_sha256: sha256:9d43af471015635ea3315ccbbb689af034e966441c65523533deb234ca07ce33
+cas_ref: sha256:9d43af471015635ea3315ccbbb689af034e966441c65523533deb234ca07ce33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Upstream-closed bind-only clause under CLAUDE 3.2: the complete 167-byte first proof sentence of RRO103.2 follows from definition 103.1 with S = Fin 4, k >= 2, the displayed rational matrix K_k and uniform pi_i = 1/4. Pinned Mathlib Fin.sum_univ_succ and Finset.mul_sum, rational-to-real normalization and field/ring arithmetic establish every row and column sum as 1 and sum_i pi_i K_ij = pi_j. A Lean probe checked the exact four-by-four matrix for all k >= 2 with only propext, Classical.choice and Quot.sound. No repository frozen GID covering the complete clause was found. No path-product, KL, positivity, irreducibility, aperiodicity or n-dependent assertion is settled; the 4073-byte remainder and all parents stay open. proof_shape: bind-only; escape_witness: none; admission_basis: none; no new Lean declaration.'
+    previous_atom_id: 6b1384b84ec223b20c5f95c3016e547280231006feccd0ebe3e085acf8e1e7f7
+    next_atom_id: 479741761b9d848080df94f7b84531fa95f488e82d7d00b500330c3489b79bfc

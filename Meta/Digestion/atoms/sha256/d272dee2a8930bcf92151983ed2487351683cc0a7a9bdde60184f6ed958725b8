@@ -1,0 +1,18 @@
+**定义 30.11（有符号线性恢复的任务和原子）。** 令 $\operatorname{Herm}_2$ 为二阶 Hermitian 矩阵的实向量空间，$\mathcal D_2=\{\rho\succeq0:\operatorname{Tr}\rho=1\}$。固定已知 $0<\lambda\le1$，取[量子实在卷定理222.1–222.2](QUANTUM-REALITY.md)的相位阻尼
+$$
+\mathcal D_\lambda\begin{pmatrix}a&c\\\bar c&d\end{pmatrix}
+=\begin{pmatrix}a&\lambda c\\\lambda\bar c&d\end{pmatrix},\qquad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\rho_+=\tfrac12(I+X).
+\tag{30.30}
+$$
+原子字典 $\mathfrak A$ 是全部 qubit CPTP 映射在 $\operatorname{Herm}_2$ 上的限制，每个原子单位价格一，承载表示的实空间取 $\mathcal V=\operatorname{span}_{\mathbb R}\mathfrak A$。只允许有限个实系数，并要求同一个线性组合在全部 Hermitian 输入上等于 $\mathcal D_\lambda^{-1}$：
+$$
+\Gamma_{\mathfrak A}(\mathcal D_\lambda^{-1})
+=\inf\left\{\sum_{j=1}^k|a_j|: k<\infty, a_j\in\mathbb R,
+\Phi_j\in\mathfrak A,\quad \sum_j a_j\Phi_j=\mathcal D_\lambda^{-1}\right\}.
+\tag{30.31}
+$$
+这是本卷定义5.1、定理5.2的单位价格原子问题。有限维通道与 Choi 表示采用 John Watrous，[*The Theory of Quantum Information*](https://cs.uwaterloo.ca/~watrous/TQI/)，2018，第2章；有符号通道分解的实验用途见 Kristan Temme、Sergey Bravyi、Jay M. Gambetta，[*Error Mitigation for Short-Depth Quantum Circuits*](https://arxiv.org/abs/1612.02058)，2017。下列计算是该既有原子几何的具体应用，不将负系数视为调用概率。
+
