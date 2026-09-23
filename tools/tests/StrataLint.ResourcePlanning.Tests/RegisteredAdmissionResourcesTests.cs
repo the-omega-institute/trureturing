@@ -395,7 +395,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         {
             Assert.Equal(new[] { "build", "filemap" }.Concat(testResources), Strings(plan["resources"]!));
             Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
-            Assert.Equal(readsPrPolicy ? new[] { "engineering", "judge" } : new[] { "judge" }, Strings(plan["cache_layers"]!));
+            Assert.Equal(readsPrPolicy ? new[] { "elan", "engineering", "judge" } : new[] { "judge" }, Strings(plan["cache_layers"]!));
             Assert.Equal("not-applicable", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         }
         else
