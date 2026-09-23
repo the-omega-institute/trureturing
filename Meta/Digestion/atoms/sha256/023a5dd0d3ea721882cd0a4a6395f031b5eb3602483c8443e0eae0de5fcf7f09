@@ -1,0 +1,24 @@
+**共同解析估计。** 设一族合法来源在 $|z|\le R<1$ 上均有 $F_b\ne0$，并在其边界满足
+$\min_{|z|=R}|F_b(z)|\ge R+\gamma/2$，其中 $R>\rho$、$\gamma>0$ 对全族相同。最大模原理应用于 $z/F_b(z)$，给
+$$
+\max_{|z|\le R}|z/F_b(z)|\le R/(R+\gamma/2)<1.
+$$
+严格不等式保证实际行公式（49.4）在包含该闭圆盘的开邻域解析。对圆周上的所有行，
+$$
+|R_{n,b}(z)|\le\frac1{|F_b(z)|}\frac A{1-|z/F_b(z)|}
+=\frac A{|F_b(z)|-R}\le\frac{2A}{\gamma}=:M.
+\tag{49.12}
+$$
+Cauchy 系数估计给
+$$
+\boxed{|T_b(n,k)|\le M R^{-k}\quad(n,k\ge0).}
+\tag{49.13}
+$$
+令 $q=\rho/R<1$。由于 $R<1$，有 $\rho\le q$，所以
+$$
+\rho^{n+k}|T_b(n,k)|\le M\rho^nq^k\le Mq^{n+k},\qquad
+\boxed{\tau_N(T_b)\le Mq^N.}
+\tag{49.14}
+$$
+这些常数同时控制所有行、所有列和每个合法后缀；逐行消失本身不能替代这份全层估计。
+

@@ -1,0 +1,23 @@
+{
+  "length": 41,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 25,
+      "part": {
+        "path": "content/007-linear_cost_updates/000000-000025.json",
+        "sha256": "8ce23acba69b644cbaf6d7b97b1ebd36ebcda53c7b2777feff6a74e15ddee84e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 25,
+      "stop": 41,
+      "part": {
+        "path": "content/007-linear_cost_updates/000025-000041.json",
+        "sha256": "8e7e8b1ec92de970f6e2e1a6389c043886caf4ec0d42ca98e2c5f71ea311be98",
+        "kind": "value"
+      }
+    }
+  ]
+}

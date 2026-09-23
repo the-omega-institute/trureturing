@@ -1,0 +1,162 @@
+{
+  "source_case": {
+    "kind": "inline",
+    "value": "PG1"
+  },
+  "source_base_point_count": {
+    "kind": "inline",
+    "value": 75
+  },
+  "source_base_weight_denominator": {
+    "kind": "inline",
+    "value": 1000000007
+  },
+  "base_pair_intersections": {
+    "path": "content/003-result/003-base_pair_intersections.json",
+    "sha256": "bf205936758d0c5827e52948c5eb153d6514cc0a5aee6df4f12e888ba1ebdc1e",
+    "kind": "value"
+  },
+  "base_pattern_numerators": {
+    "kind": "inline",
+    "value": {
+      "0": 315298920,
+      "1": 293805988,
+      "2": 110777572,
+      "3": 106787589,
+      "4": 63291331,
+      "5": 81877150,
+      "6": 28161457,
+      "7": 0
+    }
+  },
+  "base_triple_mass": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "categories11": {
+    "kind": "inline",
+    "value": [
+      {
+        "depth": 0,
+        "representative": 2,
+        "count": 99
+      },
+      {
+        "depth": 1,
+        "representative": 12,
+        "count": 10
+      },
+      {
+        "depth": 2,
+        "representative": 1,
+        "count": 1
+      }
+    ]
+  },
+  "categories13": {
+    "kind": "inline",
+    "value": [
+      {
+        "depth": 0,
+        "representative": 2,
+        "count": 143
+      },
+      {
+        "depth": 1,
+        "representative": 14,
+        "count": 12
+      },
+      {
+        "depth": 2,
+        "representative": 1,
+        "count": 1
+      }
+    ]
+  },
+  "original_labels": {
+    "path": "content/003-result/008-original_labels.json",
+    "sha256": "55d993a731f5b91d773b4a96be5b7a4e92f3ad0430efda2ace071150efaa3b31",
+    "kind": "value"
+  },
+  "positive_overlap_edges": {
+    "kind": "inline",
+    "value": 153
+  },
+  "overlap_graph": {
+    "kind": "inline",
+    "value": "K18"
+  },
+  "chromatic_number": {
+    "kind": "inline",
+    "value": 18
+  },
+  "maximum_row_active_labels": {
+    "kind": "inline",
+    "value": 12
+  },
+  "reduced_source_states": {
+    "path": "content/003-result/013-reduced_source_states.json",
+    "sha256": "2fc37279cd65d0eec12d82b85d6adb7b36657bab98e773e9f3245b38c96ddf08",
+    "kind": "value"
+  },
+  "partition_optimum": {
+    "kind": "inline",
+    "value": {
+      "partition_counts": {
+        "triple": 816,
+        "two-pairs": 9180
+      },
+      "partition_outcomes_sha256": "bc6b739d84be29885d360f65897d71143e79253be21a3d656abeca4a519839d0",
+      "minimum_collision_loss": "28161457/8580000060060",
+      "minimum_assigned_charge_gap": "28161457/73216000512512",
+      "mean_active_labels": "1245009177823/1144000008008",
+      "max_mean_occupied_surviving_roots": "18675081344431/17160000120120",
+      "max_mean_mixed_haar_mass": "18675081344431/291720002042040",
+      "max_mean_conditional_mixed_density": "18675081344431/274560001921920",
+      "ideal_row_union_charge": "12630125917/68640000480480",
+      "maximum_actual_assigned_charge": "201659592817/1098240007687680",
+      "collision_minimizer_count": 1,
+      "charge_minimizer_count": 1,
+      "achiever": {
+        "blocks": [
+          [
+            9,
+            17
+          ],
+          [
+            11,
+            15
+          ]
+        ],
+        "loss_numerator": 56322914,
+        "charge_gap_numerator": 844843710
+      }
+    }
+  },
+  "universal_charge_argument": {
+    "kind": "inline",
+    "value": {
+      "nonempty_color_count_patterns": 342,
+      "deep_deficit_triples_checked": 2193,
+      "minimum_deep_pair_event_mass": "28161457/17160000120120",
+      "ideal_deep_pair_charge": "17/32",
+      "charge_after_one_lost_root_upper": "53/128",
+      "universal_assigned_charge_gap": "28161457/73216000512512",
+      "clipped_loss_rule": "min(15*d/128,17/32) >= 15*min(d,2)/128",
+      "all_assignment_reason": "For each non-pure color, the number of active base-pair groups is at most its label count plus one. Across at most16 colors this totals at most34, against36 occurrences; pure-root labels cannot improve the bound."
+    }
+  },
+  "literal_actual_achiever": {
+    "path": "content/003-result/016-literal_actual_achiever.json",
+    "sha256": "b2836632fe4d9053c9c6ab46d18ad01338aa519184c09b42f2acb5913975e247",
+    "kind": "value"
+  },
+  "partition_reduction": {
+    "kind": "inline",
+    "value": "Translate the unique pure17 root to0. Move every mixed label on it to any surviving root, then split color classes until sixteen roots are used; these operations cannot decrease occupied-root counts or assigned charge on any old row. Every resulting partition has one triple or two disjoint pairs. The9996 possibilities are exhausted."
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "One fixed actual PG1 source times independent pure11/13 survivor laws, and eighteen distinct specified mixed17 original moduli. All current17 forbidden-root assignments are covered. Assigned charge is independent of complete-test prefixes, so its gap remains valid for any tests. No complete-test energy maximum, full Gamma improvement, arbitrary old-layout optimization, or unrestricted covering conclusion is claimed. The finite partition reduction and all-assignment counting argument are ordinary proofs checked by exact arithmetic, not Lean verification."
+  }
+}

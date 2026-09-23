@@ -1,0 +1,82 @@
+**定理 90.2（实际像上的紧致升级与布尔剖面判据）。** 在定义 90.1 下，有以下两组结论。
+
+（一）若实际目标剖面空间 $Y$ 紧致，则
+$$
+\mathrm{CE}_{\mathrm{fin}}\quad\Longleftrightarrow\quad\mathrm{CE}.
+\tag{90.2a}
+$$
+这部分不要求否定、恒假或合取联结词，不要求公式集可数、$X$ 紧致或 $\beta$ 对模型身份满射。
+
+（二）另设存在 $\nu:F_A\to F_A$ 及 $\bot\in F_A$，使全部 $x\in X$、$\varphi\in F_A$ 满足
+$$
+x(\nu\varphi)=1-x(\varphi),\qquad x(\bot)=0.
+\tag{90.2b}
+$$
+则无需任何紧致性假设，已有
+$$
+\boxed{
+\mathrm{CE}_{\mathrm{fin}}\ \Longleftrightarrow\ \overline{Y}^{\,X}=X,
+\qquad
+\mathrm{CE}\ \Longleftrightarrow\ Y=X.
+}
+\tag{90.2c}
+$$
+条件 (90.2b) 是充分的语义表达条件，不主张它最弱或必要；不另要求目标语言中的句法否定律。
+$Y=X$ 表示真值剖面覆盖，不表示 $\beta$ 对原模型身份满射。
+
+**证明。** 先证（一）。$\mathrm{CE}$ 限制到有限前提即给出 $\mathrm{CE}_{\mathrm{fin}}$。反向假设有限提升成立，给定任意前提集 $\Gamma$ 及其源反模型
+$$
+M\models_A\Gamma,\qquad M\not\models_A\varphi.
+$$
+在实际目标像中取切片
+$$
+K_\varphi=\{y\in Y:y(\varphi)=0\}.
+$$
+坐标求值连续且 $\{0\}\subseteq\mathbf2$ 闭，故 $K_\varphi$ 在 $Y$ 中闭；由 $Y$ 紧致，它作为子空间紧致。对每个有限 $\Gamma_0\subseteq\Gamma$，同一个 $M$ 满足 $\Gamma_0$ 并反驳 $\varphi$。有限提升及 (SC) 给出
+$$
+\exists y\in K_\varphi,\qquad
+\forall\gamma\in\Gamma_0,\quad y(\gamma)=1.
+\tag{90.2d}
+$$
+这也适用于 $\Gamma_0=\varnothing$，因此 $K_\varphi$ 非空。
+
+现在直接应用
+[`compact_local_realization`](https://github.com/the-omega-institute/trureturing/blob/1f6181fb8a59fc048513af617298e1921c231ce1/D5/S3/Observer/Completion/CompactLocalRealization.lean)：
+其状态空间取 $K_\varphi$，上下文取 $\Gamma$ 的元素，记录取 $\mathbf2$，读数族取 $(\gamma,y)\mapsto y(\gamma)$，目标记录恒为 $1$。每条目标等值纤维由坐标连续性在 $K_\varphi$ 中闭；每个有限上下文集由 (90.2d) 同时实现，包括空上下文集。因此该定理给出
+$$
+\exists y\in K_\varphi,\qquad\forall\gamma\in\Gamma,\quad y(\gamma)=1.
+$$
+因为所得 $y$ 属于实际像 $Y$，存在原来允许的目标模型 $N\in\mathcal M_B$ 使 $y=e(\beta(N))$。再次使用 (SC)，即得
+$$
+N\models_B\tau[\Gamma],\qquad N\not\models_B\tau(\varphi).
+$$
+这证明全部前提的反模型提升。所用紧致空间是实际像的闭切片；闭子空间的紧致性与闭集族的有限交性质亦见 [Stacks Project §5.12，Lemmas 5.12.3、5.12.6](https://stacks.math.columbia.edu/tag/0059)。
+
+再证（二）。对有限 $P,Q\subseteq F_A$，记
+$$
+U(P,Q)=\{x\in X:\ (\forall\gamma\in P,\ x(\gamma)=1)
+\ \land\ (\forall\psi\in Q,\ x(\psi)=0)\}.
+$$
+这些有限坐标柱集在 $X$ 中开闭并构成拓扑基，包含 $P=Q=\varnothing$ 的情形。
+这是离散因子的有限坐标乘积基及其子空间限制，直接见钉版 Mathlib 的
+[`isTopologicalBasis_pi`、`isTopologicalBasis_singletons`、`isTopologicalBasis_subtype`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Bases.lean)。
+
+若 $\overline{Y}^{\,X}=X$，且 $M$ 是有限 $\Gamma$ 对结论 $\varphi$ 的源反模型，则 $U(\Gamma,\{\varphi\})$ 是含 $e(M)$ 的非空开集。稠密性使它遇到 $Y$，其成员的目标模型代表由 (SC) 给出所需反模型，证明有限提升。
+
+反之，设有限提升成立，且 $U(P,Q)\ne\varnothing$。取其中一个源剖面 $x=e(M)$，并令
+$$
+\Gamma_0=P\cup\nu[Q].
+$$
+该前提集有限。由 (90.2b)，$M$ 满足 $\Gamma_0$ 且反驳 $\bot$。有限提升及 (SC) 给出 $y\in Y$，使 $y$ 在 $P\cup\nu[Q]$ 上全部为 $1$。对每个 $\psi\in Q$，
+$$
+1=y(\nu\psi)=1-y(\psi),
+$$
+故 $y(\psi)=0$，因此 $y\in U(P,Q)\cap Y$。每个非空基本开集都遇到 $Y$，得到 $\overline{Y}^{\,X}=X$。这里使用的稠密判据是
+[`dense_iff_inter_open`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Closure.lean)。
+
+若 $Y=X$，任意源反模型的剖面已有目标模型代表，故由 (SC) 直接得到 $\mathrm{CE}$。最后假设 $\mathrm{CE}$，任取 $x\in X$，令
+$$
+\Gamma_x=\{\varphi\in F_A:x(\varphi)=1\}.
+$$
+$x$ 的源模型代表满足 $\Gamma_x$，并反驳 $\bot$。全部前提的提升给出 $y\in Y$，满足 $y(\varphi)=1$ 对全部 $\varphi\in\Gamma_x$ 成立。若 $x(\varphi)=1$，立即有 $y(\varphi)=1$；若 $x(\varphi)=0$，则 $x(\nu\varphi)=1$，所以 $y(\nu\varphi)=1$，再由 (90.2b) 得 $y(\varphi)=0$。因此 $y=x$，证明 $X\subseteq Y$，反向包含本已成立。证毕。
+

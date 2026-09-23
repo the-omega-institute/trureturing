@@ -1,0 +1,23 @@
+### 125.7 有逆与稳定逆的分别
+
+设 $\dim X>0$、$\mathcal O_T$ 单射，观测含加性误差 $Y=\mathcal O_Tz+\eta$。令最小二乘恢复
+$$
+\widehat z=(\mathcal O_T^*\mathcal O_T)^{-1}\mathcal O_T^*Y.
+$$
+奇异值分解给恢复算子范数 $1/\sigma_{\min}(\mathcal O_T)$，所以
+$$
+\|\widehat z-z\|\le\frac{\|\eta\|}{\sigma_{\min}(\mathcal O_T)}.
+$$
+具体地，若 $\mathcal O_T=U\Sigma V^*$ 是薄奇异值分解，则恢复算子为 $V\Sigma^{-1}U^*$，其范数等于最大倒数奇异值。单射只给 $\sigma_{\min}>0$，不提供跨模型的统一正下界。若 $X=\{0\}$，唯一状态及其最小二乘恢复都为零，误差恒为零，无须定义空奇异值表的最小值。
+
+同样，对期望重建 $\tau=\sum_i a_i m_i$，若各均值误差为 $\Delta_i$，三角不等式给
+$$
+\left|\sum_i a_i\Delta_i\right|\le\|a\|_1\|\Delta\|_\infty.
+$$
+对有限二阶矩的实际随机读数向量 $W$，中心化展开给
+$$
+\operatorname{Var}(a^{\mathsf T}W)=a^{\mathsf T}\Sigma a,
+\qquad \Sigma_{ij}=\operatorname{Cov}(W_i,W_j).
+$$
+若每项 $|W_i|\le1$，则 $|a^{\mathsf T}W|\le\|a\|_1$，故方差至多 $\|a\|_1^2$；只有另给相互独立且同准备的批次，批均值方差才在该上界中除以批数。重叠窗口和记忆过程的非对角协方差不能删除。
+

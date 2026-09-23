@@ -1,0 +1,50 @@
+**定理 28.2（实际全流的半转对称性与平移字符）。** 在定理27.2的共同局部时间上，未平移实际解满足
+$$
+u(t,X)=-u(t,s_0-X),\qquad s_0=(\pi,0),
+$$
+$$
+\widehat u(k,t)=-e^{-ik\cdot s_0}\widehat u(-k,t)
+ =-(-1)^{k_1}\overline{\widehat u(k,t)}.
+\tag{28.104}
+$$
+因而 $A(t)=x(t)\in\mathbb R$、$C(t)=iy(t)$，其中 $x,y$ 恰为引理25.5的实际实端口。平移解满足
+$$
+u^q(t,X)=u(t,X+q),\qquad
+\widehat{u^q}(k,t)=\chi_k(q)\widehat u(k,t).
+\tag{28.105}
+$$
+使用已获 $A_0$ 定义的归一化量满足精确恒等式
+$$
+R(t)=1-\frac{A^q(t)}{A_0}=1-\frac{2x(t)}\alpha=r(t),\qquad
+Z(t)=\frac{2iC^q(t)}{A_0}=\chi_b(q)z(t),\quad z=-\frac{4y}\alpha.
+\tag{28.106}
+$$
+这些是整个实际共同局部流的等式，包括全部新生成模态，不以有限射流代替轨迹相等。
+
+证明。令 $Y=s_0-X$，$v(t,X)=-u(t,Y)$、$\Pi_v(t,X)=\Pi_u(t,Y)$。对每个分量直接微分得
+$$
+v_t=-u_t(t,Y),\quad \partial_{X_j}v_i=\partial_{Y_j}u_i(t,Y),
+\quad (v\cdot\nabla_X)v=-(u\cdot\nabla_Y)u(t,Y),
+$$
+$$
+\Delta_Xv=-\Delta_Yu(t,Y),\qquad
+\nabla_X\Pi_v=-\nabla_Y\Pi_u(t,Y),\qquad
+\operatorname{div}_Xv=\operatorname{div}_Yu(t,Y)=0.
+\tag{28.107}
+$$
+所以方程各项同乘负号，黏性不变；压力的归一化均值也不变。$\cos(\pi-X_1)=-\cos X_1$，且
+$\cos((-X_2)-(\pi-X_1))=-\cos(X_2-X_1)$，故 $v(0)=u(0)$。此变换保持 $C_tH^2_\sigma$，定理25.3的实际唯一性给 $v=u$；定理25.4的压力与光滑解识别保证这是原方程的对称性。在 Fourier 积分中换元 $Y=s_0-X$ 得（28.104）的第一式，实场的共轭条件给第二式。$a_1=1$ 使 $a$ 系数为实数，$c_1=0$ 使 $c$ 系数为纯虚数，结合（25.115）正好识别为 $x,iy$。同一推导对每个 $k$ 成立，无有限不变 Fourier 支持的前提。
+
+固定平移与空间导数、时间导数、乘积及积分交换，$u(t,X+q),\Pi(t,X+q)$ 满足同一黏性的方程与平移准备。换元 $Y=X+q$ 给（28.105）的字符因子；特别对每个已有 Sobolev 指数 $s$，
+$$
+\|v(\cdot+q)\|_{H^s}^2
+ =\sum_k(1+|k|^2)^s|\chi_k(q)\widehat v(k)|^2
+ =\|v\|_{H^s}^2.
+\tag{28.108}
+$$
+因此定理27.2—27.3的共同时间和范数界保留，实际唯一性识别这条平移解；无需另取随 $q$ 缩短的区间。平移场本身亦满足
+$u^q(t,X)=-u^q(t,s_0-2q-X)$。由 $x(0)=\alpha/2$ 得（28.103），相除时
+$\chi_c(q)/\chi_a(q)=\chi_{c-a}(q)=\chi_b(q)$，而 $2i(iy)/(\alpha/2)=-4y/\alpha$，证明（28.106）。端口的任意独立相位改变不自动是同一空间平移。
+
+Fourier 字符换元与等距性是标准 Fourier 分析；周期 Fourier 正交与 Parseval 的成熟来源见 Stein–Shakarchi, *Fourier Analysis: An Introduction*（Princeton University Press, 2003），第2—3章。原方程局部光滑解的存在、唯一性来源及环面尺度换算已在定理25.4引 Tao 的 *254A, Notes 1: Local well-posedness of the Navier–Stokes equations*，Corollary 40、Proposition 39；本证明使用的是本卷定理25.3所证实际解唯一性。$\square$
+

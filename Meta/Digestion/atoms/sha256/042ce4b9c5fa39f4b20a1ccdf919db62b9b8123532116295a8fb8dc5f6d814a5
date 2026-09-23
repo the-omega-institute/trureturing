@@ -1,0 +1,9 @@
+### 定理 22.1. 不预设 unipotent 的群元素识别
+
+若 g∈Sp8，\(\Delta=\rho(g)-1\ne0\)，且 Δ²=0，则存在 ε∈{1,−1} 和非零 rank-one N，使
+
+\[
+g=\varepsilon(1+N),\quad N^2=0,
+\quad\Delta=\mathcal A_N|_{W_J}.\tag{22.1}
+\]
+

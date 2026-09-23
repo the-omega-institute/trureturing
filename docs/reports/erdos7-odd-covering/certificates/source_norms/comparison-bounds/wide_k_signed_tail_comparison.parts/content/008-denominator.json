@@ -1,0 +1,53 @@
+{
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/27",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "161/486",
+      "v0": "2509/90000",
+      "v1": "404687/14490000",
+      "gap": "105757/4860000",
+      "tbar": "56/23",
+      "Cbar": "820/201",
+      "kbar": "161/79",
+      "budget_increments": [
+        "17/6561",
+        "1/972",
+        "1/108"
+      ],
+      "c": [
+        "383/540",
+        "197/486",
+        "109/405",
+        "109/1215"
+      ],
+      "H": [
+        "323/3645",
+        "3538/32805",
+        "86/1215",
+        "1231/52488"
+      ],
+      "positive7": "137671/2211300"
+    }
+  },
+  "costs": {
+    "path": "content/008-denominator/001-costs.json",
+    "sha256": "1d7808e9707b5aee4af70862655083ee203ba86f4c3b78c07f11e3144595d8c1",
+    "kind": "value"
+  },
+  "shared_cost": {
+    "path": "content/008-denominator/002-shared_cost.json",
+    "sha256": "9e06fdce04aebc80e2c039fa2bbb8103410d6bfa0c62b4321da13b5318a2182c",
+    "kind": "value"
+  },
+  "old_shared_cost_upper": {
+    "kind": "inline",
+    "value": "1661675708537428097/23018606090778375000"
+  },
+  "complete_cost_saving": {
+    "kind": "inline",
+    "value": "284445167/82410728400"
+  }
+}

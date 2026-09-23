@@ -1,0 +1,32 @@
+**命题 1.3（评价两侧的极性）。** $\Gamma_w|_E$ 是 $E$ 上的范数，它的闭单位球为
+
+$$
+K_w=\operatorname{conv}\left\{
+\pm\frac{q_i}{w_i}:1\le i\le m
+\right\}.
+\tag{1.10}
+$$
+
+此外，
+
+$$
+\boxed{
+p_Q(v)=\sup_{h\in E,\,\Gamma_w(h)\le1}|h(v)|.
+}
+\tag{1.11}
+$$
+
+证明。$\Gamma_w$ 非负且 $\Gamma_w(0)=0$。将最优系数乘以标量得到绝对齐次性；将两个最优系数相加并使用 $\ell^1$ 三角不等式，得到 $\Gamma_w(h+k)\le\Gamma_w(h)+\Gamma_w(k)$。若 $\Gamma_w(h)=0$，由定理 1.2 的最小值达到，存在 $a$ 满足 $Q^*a=h$ 且 $\sum_iw_i|a_i|=0$。正权重迫使全部 $a_i=0$，所以 $h=0$。
+
+若 $\Gamma_w(h)\le1$，取最优系数 $a$。将每项写作
+
+$$
+a_iq_i=w_i|a_i|\,\operatorname{sgn}(a_i)\frac{q_i}{w_i}.
+$$
+
+这些非负系数之和不超过一；剩余系数赋给 $0$。对称原子集的凸包包含 $0$，故 $h\in K_w$。反之，若 $h$ 是所列正负原子的凸组合，将同一指标的系数合并便得到一个成本不超过一的字典表示，所以 $\Gamma_w(h)\le1$。这证明式（1.10）。
+
+若 $\Gamma_w(h)\le1$，定理 1.2 给 $|h(v)|\le p_Q(v)$。反向，选取实现式（1.1）最大值的指标 $i$，使用目标 $h=q_i/w_i$；它具有成本不超过一的表示，且 $|h(v)|=p_Q(v)$。于是式（1.11）成立。证毕。
+
+因此，观察零方向来自 $Q$ 的核，系数冗余来自 $Q^*$ 的核，两种商由同一评价关系连接。有限原子规范的标准框架见 Chandrasekaran、Recht、Parrilo、Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，第 2.1 节。这里的原子集有限；后续对无限字典的论述必须重新核对闭性与极值达到条件。
+

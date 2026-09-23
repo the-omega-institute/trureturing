@@ -1,0 +1,8 @@
+**命题 131.7。** $\Phi^2=\Phi+I$，且
+
+$$
+L_{\max}:=L+\Phi L=L+\mathbb Zh,\qquad [L_{\max}:L]=2.
+$$
+
+$L_{\max}$ 是包含 $L$ 并对 $\Phi$ 稳定的最小加法 $\mathbb Z$-子模，因此也对每个 $a+b\Phi$（$a,b\in\mathbb Z$）稳定。
+

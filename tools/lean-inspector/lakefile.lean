@@ -69,15 +69,12 @@ package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
     let names ← strings (← readJson path) "modules"
     return names.foldl (fun set name => set.insert name.toName) {}
 
-/-- Trace semantic compatibility and registered content configuration.
-Producer compilation remains a separate native obligation. -/
+/-- Trace semantic compatibility after validating registered inputs.
+Raw configuration identity belongs to the aggregate; module exports carry
+Lake's compiler dependencies. Producer compilation is a separate obligation. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
-  let config ← readJson (← (← fetch <| pkg.facet `reportInputs).await)
-  let configs ← strings config "configs"
-  let mut deps := Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
-  for path in configs do
-    deps := deps.mix (← inputBinFile (pkg.dir / path))
-  return deps
+  discard <| (← fetch <| pkg.facet `reportInputs).await
+  return Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
 
 /-- A completed native build, not yet accepted by the canonical validator.
 Only private jobs carry this value; it is never a public report facet. -/
@@ -168,11 +165,10 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let mut sourceModules := #[mod]
   sourceModules := sourceModules ++ (← (← mod.transImports.fetch).await)
   -- Inspector loads this fixed judge even for an empty registration inventory.
-  -- Demand and trace its native closure independently of the reported module.
+  -- Demand its build without making this program a report data dependency.
   let some driver := (← getWorkspace).findModule? `LeanInformationAudit.Registry
     | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-  exports := exports.push (← driver.exportInfo.fetch)
-  sourceModules := sourceModules.push driver ++ (← (← driver.transImports.fetch).await)
+  let driverBuild ← driver.exportInfo.fetch
   for name in claims do
     let some claim := (← getWorkspace).findModule? name.toName
       | error s!"utility claim module is not in the Lake workspace: {name}"
@@ -194,7 +190,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let workspace ← getWorkspace
   let env := workspace.augmentedEnvVars
   let file := pkg.buildDir / "lean-inspector" / "modules" / s!"{mod.name}.zip"
-  (deps.add (Job.mixArray exports) |>.add inspector).mapM fun _ => do
+  (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
     -- Inspector's private import mode reads transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
     -- allTransTrace follows each import's visibility and can omit those values.
@@ -287,26 +283,22 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
   let config ← readJson inputs
   let names ← strings config "modules"
   observePhase "lake-inputs" "finish"
-  -- Demand ordinary defaults independently of row traces. Audit/default-only
-  -- changes still fail the invocation without invalidating unrelated rows.
-  let defaults ← match ← (parseTargetSpec (← getWorkspace) s!"@{pkg.baseName}").toBaseIO with
-    | .ok specs => pure specs
-    | .error err => error err.toString
-  observePhase "lake-defaults" "start"
-  discard <| (← buildSpecs defaults).await
-  observePhase "lake-defaults" "finish"
+  -- The report owns registered modules. The caller supplies program targets
+  -- from its resource selection in the same Lake invocation.
   -- Shared native dependency jobs compose continuations; no per-miss promise
   -- wait, readiness polling, or independent dependency/freshness planner.
   let alreadyStarted ← reportState.started.get
   let mut members : Lean.NameSet := {}
   let mut prepared := #[]
   observePhase "lake-prepare" "start"
+  try observePhase "lake-prepare-register" "start" catch _ => pure ()
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     unless alreadyStarted.contains mod.name do
       members := members.insert mod.name
       prepared := prepared.push (← preparedModuleReport mod)
+  try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (Job.collectArray prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"
     let requests := artifacts.filterMap fun request =>

@@ -15,14 +15,28 @@ structure ResolvedDeclaration where
   arena : Name
   descriptor : Option Expr
   diagnostic : Option String := none
+  escapeInput : EscapeRecordInput := {}
 
 private initialize pendingDeclaration : EnvExtension (Option ResolvedDeclaration) ←
   registerEnvExtension (pure none)
 
 /-- Scoped syntax input, never enrollment or certification authority. The
 registration transaction owns rollback; the inner scope always clears itself. -/
+private def eraseDescriptor (descriptor : Option Expr) (diagnostic : Option String) :
+    Elab.Command.CommandElabM (Option Expr × Option String) := Elab.Command.liftTermElabM do
+  try
+    let descriptor ← descriptor.mapM fun value => do
+      return (← TemplateAudit.withCumulativeBudget <| TemplateAudit.eraseProofs value
+        (TemplateAudit.informationTemplate.work.get (← getOptions))).1
+    return (descriptor, diagnostic)
+  catch error =>
+    return (none, some ("incomplete_closure:E8.descriptor_erasure:" ++
+      (← error.toMessageData.toString)))
+
 def withDeclaration (declaration : ResolvedDeclaration)
     (action : Elab.Command.CommandElabM Unit) : Elab.Command.CommandElabM Unit := do
+  let (descriptor, diagnostic) ← eraseDescriptor declaration.descriptor declaration.diagnostic
+  let declaration := { declaration with descriptor, diagnostic }
   let previous := pendingDeclaration.getState (← getEnv)
   if previous.isSome then throwError "unclassified_form:dtr.nested_declaration"
   modifyEnv (pendingDeclaration.setState · (some declaration))
@@ -122,11 +136,16 @@ def sourcePath := TemplateAudit.sourcePath
 
 def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.CommandElabM Unit := do
   let info ← getConstInfo entry.theoremName
-  let statementIdentity := match TemplateAudit.rawIdentity info.levelParams info.type with
+  let statementIdentity := match TemplateAudit.rawStatementIdentity info.levelParams info.type with
     | .ok (identity, _) => identity
     | .error _ => ""
   let path := sourcePath entry.registrationModuleName
   let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile path)) catch _ => pure ""
+  -- An occurrence can name a separate finite object arena. Witness checks use
+  -- the original law arena, which retains the quantifier domain and predicate.
+  let bridgeType := (← getConstInfo entry.realizationName).type
+  let arenaName := if bridgeType.isAppOfArity RegistrationGates.witnessBridgeName 3 then
+      entry.arenaName else entry.canonicalObjectArenaName
   let event : TemplateOccurrenceEvent := {
     key := {
       root := entry.registrationModuleName
@@ -137,7 +156,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
 
     unitName := entry.unitName, realizationName := entry.realizationName,
     statement := info.type, levelParams := info.levelParams, statementIdentity,
-    arena := mkConst entry.canonicalObjectArenaName,
+    arena := mkConst arenaName,
     registrationSource := path, registrationSourceIdentity := sourceIdentity }
   let claim ← match pendingDeclaration.getState (← getEnv) with
     | none => pure none
@@ -146,7 +165,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
         throwError "unclassified_form:dtr.inline_occurrence"
       pure <| some {
         key := event.key, arena := event.arena, descriptor := declaration.descriptor,
-        resolutionDiagnostic := declaration.diagnostic, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
+        resolutionDiagnostic := declaration.diagnostic, escapeInput := declaration.escapeInput, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
   let record ← Elab.Command.liftTermElabM <| assess event claim
   modifyEnv fun current => bindingRecords.addEntry (occurrenceInventory.addEntry current event) record
   if let some claim := claim then modifyEnv (bindingClaims.addEntry · claim)
@@ -156,7 +175,8 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
 /-- Claims join by their exact occurrence identity before authoritative assessment.
 An overlay retains the original registration owner and cannot replace an inline claim. -/
 def declareSidecar (theoremName arena : Name) (catalog : Option Name)
-    (descriptor : Option Expr) (resolutionDiagnostic : Option String) : Elab.Command.CommandElabM Unit := do
+    (descriptor : Option Expr) (resolutionDiagnostic : Option String)
+    (escapeInput : EscapeRecordInput := {}) : Elab.Command.CommandElabM Unit := do
   let env ← getEnv
   let matching := (inventory env).filter fun event => event.key.theoremName == theoremName &&
     event.key.objectArena == arena && (catalog.isNone || catalog == some event.key.catalog)
@@ -164,8 +184,9 @@ def declareSidecar (theoremName arena : Name) (catalog : Option Name)
   let event := matching[0]!
   if (bindingClaims.getState env).any (·.key == event.key) then
     throwError "unclassified_form:dtr.duplicate_claim"
+  let (descriptor, resolutionDiagnostic) ← eraseDescriptor descriptor resolutionDiagnostic
   let claim : TemplateBindingClaim := {
-    key := event.key, arena := event.arena, descriptor, resolutionDiagnostic,
+    key := event.key, arena := event.arena, descriptor, resolutionDiagnostic, escapeInput,
     owner := env.header.mainModule }
   let record ← Elab.Command.liftTermElabM <| assess event (some claim)
   modifyEnv fun current => bindingRecords.addEntry (bindingClaims.addEntry current claim) record
@@ -199,7 +220,7 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
   unless input.sha256 == event.registrationSourceIdentity do
     throwError "incomplete_closure:dtr.event_source"
   let info ← getConstInfo event.key.theoremName
-  let .ok (identity, _) := TemplateAudit.rawIdentity info.levelParams info.type
+  let .ok (identity, _) := TemplateAudit.rawStatementIdentity info.levelParams info.type
     | throwError "incomplete_closure:dtr.event_statement"
   unless identity == event.statementIdentity && info.levelParams == event.levelParams &&
       info.type.equal event.statement do
@@ -233,7 +254,7 @@ def assessJoined : MetaM (Array BindingRecord) := do
 /-- Export always starts by joining the entire loaded declaration universe. -/
 def exportSnapshot : MetaM JoinedRecords := do
   -- Empty inventories still execute this judge. Validate its compiled source
-  -- before collecting records or binding current source hashes to the export.
+  -- before collecting records.
   TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.Registry]
   let selected ← assessJoined
   let originals ← (inventory (← getEnv)).mapM fun event => do
@@ -264,10 +285,10 @@ private def isRecordedModule (name : Name) : Bool :=
     name == `Trureturing
 
 private def moduleSourceInputs (env : Environment) (root : Name) :
-    CoreM (Array TemplateAudit.SourceInput × Nat) := do
+    CoreM (Array TemplateAudit.SourceInput) := do
   let mut seen : NameSet := {}
   let mut pending := [root]
-  let mut paths := TemplateAudit.policyPaths
+  let mut paths : Array String := #[]
   while let name :: rest := pending do
     pending := rest
     if seen.contains name then continue
@@ -281,45 +302,24 @@ private def moduleSourceInputs (env : Environment) (root : Name) :
         pure env.header.moduleData[index.toNat]!.imports
       else throwError "incomplete_closure:dtr.module_imports:{name}"
     pending := imports.toList.map (·.module) ++ pending
-  TemplateAudit.readVersionedSourceInputs (paths.qsort (· < ·))
+  TemplateAudit.readSourceInputs (paths.qsort (· < ·))
 
-/-- Complete source inputs for an independently requested module. Batch reports
-use the same source walk inside their union's native-validation boundaries. -/
+/-- Source inputs for census evidence and compile-time coherence fixtures.
+Module report rows do not serialize these raw source hashes. -/
 def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.SourceInput) := do
   TemplateAudit.NativeCoherence.validate (#[root] ++
     (if root == env.header.mainModule then env.header.imports.map (·.module) else #[]))
-  return (← moduleSourceInputs env root).1
+  moduleSourceInputs env root
 
-/-- Content touches follow actual constant dependencies, including complete
-arena/realization types, while theorem proof implementations are never entered. -/
-private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.SourceInput) := do
-  let env ← getEnv
-  let mut pending := [record.occurrence.key.theoremName, record.occurrence.unitName,
-    record.occurrence.realizationName, record.occurrence.key.objectArena]
-  if let some descriptor := record.descriptor then
-    pending := descriptor.getUsedConstants.toList ++ pending
-  let mut seen : NameSet := {}
-  let mut paths := #[record.occurrence.registrationSource]
-  if let some owner := record.bindingOwner then paths := paths.push (sourcePath owner)
-  let mut remaining := 524288
-  while let name :: rest := pending do
-    pending := rest
-    if seen.contains name then continue
-    if remaining == 0 then throwError "incomplete_closure:dtr.content_inputs"
-    remaining := remaining - 1
-    seen := seen.insert name
-    let info ← getConstInfo name
-    let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
-    if isRepositoryModule owner then
-      let path := sourcePath owner
-      unless paths.contains path || path.startsWith "tools/" do paths := paths.push path
-    pending := info.type.getUsedConstants.toList ++ pending
-    if !info.isTheorem then
-      if let some value := info.value? then pending := value.getUsedConstants.toList ++ pending
-  (paths.toList.eraseDups.toArray.qsort (· < ·)).mapM fun path => TemplateAudit.readSourceInput path
+private def escapeFromJson (origin : EscapeFromIdentity) : Json := Json.mkObj [
+  ("name", toJson origin.name.toString), ("type_identity", toJson origin.typeIdentity),
+  ("object_identity", toJson origin.objectIdentity)]
 
-private def inputJson (input : TemplateAudit.SourceInput) : Json := Json.mkObj [
-  ("path", toJson input.path), ("sha256", toJson input.sha256)]
+private def escapeContinuationJson (residual : EscapeContinuationIdentity) : Json := Json.mkObj [
+  ("kind", toJson residual.kind),
+  ("declaration_name", toJson (residual.declarationName.map Name.toString)),
+  ("statement_identity", toJson residual.statementIdentity),
+  ("chain_name", toJson (residual.chainName.map Name.toString))]
 
 /-- Shared record wire for the inspector and census authoritative snapshots. -/
 def recordJson (record : BindingRecord) : MetaM Json := do
@@ -333,7 +333,9 @@ def recordJson (record : BindingRecord) : MetaM Json := do
     ("statement_identity", toJson record.occurrence.statementIdentity),
     ("unit_name", toJson record.occurrence.unitName.toString),
     ("realization_name", toJson record.occurrence.realizationName.toString),
-    ("content_inputs", Json.arr ((← contentInputs record).map inputJson)),
+    ("escape_from", record.escape.fromObject.map escapeFromJson |>.getD Json.null),
+    ("escape_continues", record.escape.continuation.map escapeContinuationJson |>.getD Json.null),
+    ("bridge_kind", toJson record.escape.bridgeKind),
     ("binding_source_path", record.bindingOwner.map (toJson ∘ sourcePath) |>.getD Json.null),
     ("state", toJson state), ("diagnostic", diagnostic), ("certificate", certificate)]
 
@@ -349,13 +351,12 @@ private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
     let some selected := snapshot.selected.find? (·.occurrence.key == row.occurrence.key)
       | throwError "incomplete_closure:dtr.final_record"
     recordJson (if selected.bindingOwner == some moduleName then selected else row)
-  let (inputs, version) ← moduleSourceInputs env moduleName
+  let version ← TemplateAudit.readReportCacheReleaseVersion
   return Json.mkObj [
     ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson version),
     ("inventory", Json.arr ((inventory env).filter
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
-    ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows),
-    ("inputs", Json.arr (inputs.map inputJson))]
+    ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows)]
 
 /-- Validate the complete native union around a report transaction. Each native
 snapshot is still checked against the loaded image; shared imports are rehashed
@@ -369,8 +370,7 @@ def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (
   TemplateAudit.NativeCoherence.validate roots
   let snapshot ← exportSnapshot
   let rows ← modules.mapM fun (moduleName, registered) => moduleJson snapshot moduleName registered
-  -- Compare the original snapshots after all source hashes and records have
-  -- been read. A replacement during this transaction cannot renew them.
+  -- Compare the original snapshots after all records have been read. A replacement during this transaction cannot renew them.
   TemplateAudit.NativeCoherence.validate roots
   return rows
 

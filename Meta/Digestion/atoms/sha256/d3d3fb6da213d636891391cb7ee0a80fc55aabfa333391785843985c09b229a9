@@ -1,0 +1,9 @@
+**定义 14.6（按因果下闭包分组的交互算子）。** 对 $S\subseteq E$ 定义
+$$
+\downarrow S=\{d\in E:\exists e\in S,\ d\le e\},\qquad
+K_J=\sum_{\substack{S\subseteq E\\\downarrow S=J}}D_S
+\quad(J\in\mathcal J(E)).
+\tag{14.12}
+$$
+$K_J$ 按包含索引集 $S$ 所需的最小合法割 $J=\downarrow S$ 对 Boolean 交互分组；$K_\varnothing=D_\varnothing=P_C$。记 $\operatorname{Max}(J)$ 为 $J$ 的极大元集合，$\operatorname{Max}(\varnothing)=\varnothing$。
+

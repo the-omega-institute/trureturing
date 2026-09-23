@@ -1,0 +1,4 @@
+(b) $E_{n+1}\subseteq E_n$，$\approx=\bigcap_nE_n$，且一次平台 $E_n=E_{n+1}$ 即有 $E_n=\approx$，以后永久稳定。
+
+证明。$E_1\subseteq E_0$，后继条件随归纳变强，给递减。任意有限词有有限长度，故交集等于全行为核。平台时该关系保根、合法性和标签，且合法后继仍属于自身；逐词归纳遂保全行为，即 $E_n\subseteq\approx$。逆包含总成立，后续递推也不再改变。单总更新机制见 `FiniteHorizonKernelRecurrence`，此处递推包括全部类型、部分多动作与标签。$\square$
+

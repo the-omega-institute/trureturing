@@ -1,0 +1,23 @@
+### 48.7 自然坐标的协方差分解
+
+回到自然参数 \((\theta,\eta)=(\log A,\log\rho)\)。有
+\[
+\alpha=\theta+\eta-2\log(1-e^\eta),
+\qquad d\alpha=d\theta+r\,d\eta.
+\]
+Fisher 二次型按 Jacobian 运输，故
+\[
+I_{(\theta,\eta)}
+=v\begin{pmatrix}1&r\\r&r^2\end{pmatrix}
++R\begin{pmatrix}0&0\\0&1\end{pmatrix},
+\qquad \det I=vR>0.
+\tag{48.25}
+\]
+也可直接由（48.22）及全方差公式验证：
+\[
+\operatorname{Var}(D)=v,\quad
+\operatorname{Cov}(D,K)=rv,\quad
+\operatorname{Var}(K)=r^2v+R.
+\]
+在所指定的自然对数坐标中，\(\nabla\log t=(1,r)\) 是等值曲线的法向；第一项只在这个方向有秩一贡献。沿 \(d\alpha=0\) 的切向，第一项消失，剩余信息由 \(R\,d\eta^2\) 给出。这是明确坐标与度量中的方向陈述，不把 Euclidean 法向或矩阵特征值冒充任意重参数化下不变的数值。
+

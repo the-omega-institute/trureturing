@@ -1,0 +1,58 @@
+### 126.1 同一内部关系与它允许的边界读法
+
+固定有限维实内积空间 $U,H$，其中 $U$ 是已指定内积的边界空间。取
+
+$$
+B:H\to U,\qquad C:H\to H,\qquad C=C^*>0.
+$$
+
+正定的含义是 $\langle h,Ch\rangle_H>0$ 对每个非零 $h$ 成立。零维空间也允许。所有伴随均相对于这里已指定的内积；输入耦合是 $B^*$、输出耦合是 $B$，这是本结果的实质假设。
+
+定义完整边界响应和响应矩
+
+$$
+K(t)=Be^{-tC}B^*\quad(t\ge0),\qquad
+M_j=BC^jB^*\quad(j\ge0).
+$$
+
+有限维矩阵指数的幂级数给出
+
+$$
+(-1)^jK^{(j)}(0)=M_j,\qquad
+K(t)=\sum_{j=0}^{\infty}\frac{(-t)^j}{j!}M_j,
+$$
+
+级数对每个有限时间区间在算子范数下绝对一致收敛。在 $t=0$ 可用右导数读出这些矩；矩阵指数本身提供整条实轴上的解析延拓。因此，相同完整 $K(t)$ 给出相同全部 $M_j$，反之亦然。
+
+令
+
+$$
+\mathcal R=\operatorname{span}\{C^jB^*u:j\ge0,\ u\in U\},\qquad
+\mathcal N=\bigcap_{j\ge0}\ker(BC^j).
+$$
+
+前者是边界能够激发的隐藏方向，后者是所有后续边界读数共同看不见的方向。对任意 $h\in H$，
+
+$$
+h\in\mathcal R^\perp
+\ \Longleftrightarrow\
+\langle h,C^jB^*u\rangle_H=0\quad(\forall j,u)
+\ \Longleftrightarrow\ BC^jh=0\quad(\forall j),
+$$
+
+故
+
+$$
+\boxed{\mathcal N=\mathcal R^\perp,\qquad H=\mathcal R\oplus\mathcal N.}
+$$
+
+$C\mathcal R\subseteq\mathcal R$ 由生成元定义成立；自伴性使 $\mathcal N$ 也不变。$B\mathcal N=0$，$B^*U\subseteq\mathcal R$。因此这两个子空间约化 $C$，且
+
+$$
+K(t)=B_{\mathcal R}e^{-tC_{\mathcal R}}B_{\mathcal R}^*,
+\qquad
+C_{\mathcal R}=C|_{\mathcal R},\quad B_{\mathcal R}=B|_{\mathcal R}.
+$$
+
+这里 $B_{\mathcal R}^*u=B^*u$，陪域限制在 $\mathcal R$。任意正自伴的额外不可见块都不改变 $K$；完整 $H$ 不能在没有最小性时被边界响应识别。
+

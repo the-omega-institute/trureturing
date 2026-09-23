@@ -1,0 +1,28 @@
+**定理 27.5（续接的定义域等式与自主 PDE 交织）。** 写 $t_*(\beta)=t_\beta(s_*)$，则 $W=\{(\beta,t):|\beta|\le B_0,0<t\le t_*(\beta)\}$。对已知非负内部增量 $\sigma$，定义域子类型上的操作为
+$$
+\operatorname{Dom}_\sigma=\{a\in Y:\mathcal I(a)=(\beta,t),\quad
+ 0\le\sigma\le t_*(\beta)-t\},\qquad
+\mathcal U_\sigma(a)=\Psi(\beta,t+\sigma).
+\tag{27.118}
+$$
+对任意 $\sigma,\eta\ge0$，
+$$
+\operatorname{Dom}_{\sigma+\eta}
+=\{a\in\operatorname{Dom}_\sigma:\mathcal U_\sigma(a)\in\operatorname{Dom}_\eta\},
+\qquad \mathcal U_{\sigma+\eta}=\mathcal U_\eta\circ\mathcal U_\sigma,
+\quad\mathcal U_0=\operatorname{id}.
+\tag{27.119}
+$$
+若 $S_\sigma$ 是实际自主 PDE 从该准备场重启的、限制在上述允许域内的续接，则
+$$
+\mathcal D(\mathcal U_\sigma(a))=S_\sigma(\mathcal D(a))=u_\beta(t+\sigma).
+\tag{27.120}
+$$
+同样的定义与等式适用于边界标签已供给的提升图。
+
+证明。$r$ 在初始分支严格递增，给域的精确形式。两次合法条件分别为 $\sigma\le t_*(\beta)-t$ 和 $\eta\le t_*(\beta)-t-\sigma$，非负增量下它们等价于 $\sigma+\eta\le t_*(\beta)-t$，同时中间时刻必在域内。图逆在第一步后给 $(\beta,t+\sigma)$，代入第二步即得值的复合等式。零步不改变参数或时间，且总在图内合法。移位路径 $q\mapsto u_\beta(t+q)$ 从 $u_\beta(t)$ 解同一自主方程；恢复卷的温和解唯一性将它识别为重启解，证明（27.120）。
+
+对两个都允许同一 $\sigma$ 的图点，推进后参数差及时间差不变，仍在共同 PDE 区间内，故（27.115）仍给相同右界；代入原始输入或提升输入的参数／时间界，（27.116）或（27.117）的原右侧也界定其推进后的场差。这里没有声称实际误差在演化中单调下降。
+
+这些部分操作属于本卷约定1.2和命题1.4的域保持语义；[StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) 的 `PartialSignature`、`sourceOperationEquiv` 及 `contextual_equivalence_is_greatest` 已供应域子类型与严格失败传播的形式接口。可将 $\mathcal U_\sigma$ 总化为成功／失败标签，任何失败后的续接仍传播该失败，不返回一个默认场。域外输入与域内却超越剩余时域的非法增量应分别标记；两类都不同于下面的噪声证书未通过。$\square$
+

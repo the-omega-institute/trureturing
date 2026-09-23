@@ -1,0 +1,59 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "prime11_complete_cost"
+  },
+  "conditioning_cut": {
+    "kind": "inline",
+    "value": 2
+  },
+  "conditioning_center": {
+    "kind": "inline",
+    "value": "-61/315"
+  },
+  "exact_cost_denominator": {
+    "kind": "inline",
+    "value": 17640
+  },
+  "integer_range_bound": {
+    "kind": "inline",
+    "value": 20528037357756880
+  },
+  "linear_from": {
+    "kind": "inline",
+    "value": 4
+  },
+  "affine_slope": {
+    "kind": "inline",
+    "value": "3049/120"
+  },
+  "affine_intercept": {
+    "kind": "inline",
+    "value": "63907/630"
+  },
+  "square_majorant_coefficient": {
+    "kind": "inline",
+    "value": "64151/39690"
+  },
+  "majorant_maximizing_integer": {
+    "kind": "inline",
+    "value": 8
+  },
+  "finite_box": {
+    "kind": "inline",
+    "value": "9752576762099294031527/502535825031505781250"
+  },
+  "geometric_remainder": {
+    "kind": "inline",
+    "value": "14262744993025155683803/289460635218147330000000"
+  },
+  "nu_cost_upper": {
+    "kind": "inline",
+    "value": "1120328246493252627403046/31092800528609655609375"
+  },
+  "records": {
+    "path": "content/010-queries/000000/item/013-records.json",
+    "sha256": "4e853f62dd322bc54459d51751df9deb17e1946f87ec3462fdea6471f464bf2e",
+    "kind": "array"
+  }
+}

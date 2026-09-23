@@ -1,0 +1,63 @@
+**推论 94.3（二进制的全局等变障碍、扩域不动点与不变概率）。** 在定义 94.1 的二进制情形：
+
+1. 不存在任何集合映射 $s:[0,1]\to\mathbb Z_2$ 满足
+   $$
+   s\circ J_\infty=J_2\circ s.
+   \tag{94.3a}
+   $$
+   因而不存在同时满足 $M_2\circ s=\mathrm{id}_{[0,1]}$ 的等变截面。等价地，实译码 $D_{\infty,2}$ 也没有取值于 $\Sigma_2$ 的补码等变截面。这里不附加连续性或可测性要求。
+2. 将仿射式 $z\mapsto-1-z$ 从 $\mathbb Z_2$ 延拓到 $\mathbb Q_2$，其唯一不动点为
+   $$
+   -\frac12,
+   \qquad
+   \left|-\frac12\right|_2=2.
+   \tag{94.3b}
+   $$
+   它属于 $\mathbb Q_2\setminus\mathbb Z_2$，所以不在原映射 $M_2$ 的定义域内。
+3. 在 $\mathbb Z_2$ 的 Borel 空间上，取实值概率
+   $$
+   \nu=\frac12\delta_1+\frac12\delta_{-2}.
+   $$
+   则
+   $$
+   (J_2)_*\nu=\nu,
+   \qquad
+   (M_2)_*\nu=\delta_{1/2},
+   \tag{94.3c}
+   $$
+   尽管这两个支撑状态都不是 $J_2$ 的不动点。
+
+**证明。** 若式 (94.3a) 成立，因 $J_\infty(1/2)=1/2$，代入得
+$$
+J_2(s(1/2))=s(J_\infty(1/2))=s(1/2).
+$$
+这与定理 94.2 的 $\operatorname{Fix}(J_2)=\varnothing$ 矛盾。它是“不动点沿半共轭运输”的直接应用，整个矛盾不需要使用截面条件。[^rro94-fixed-transport] 若存在补码等变截面 $h:[0,1]\to\Sigma_2$，则 $s=D_2\circ h$ 满足式 (94.3a)；反向的截面对应由 $D_2^{-1}$ 给出。因此两种截面表述具有同一个障碍。
+
+在特征零域 $\mathbb Q_2$ 中，$z=-1-z$ 等价于 $2z=-1$，其唯一解是 $z=-1/2$。标准归一化给出
+$$
+|-1/2|_2=|2|_2^{-1}=2>1.
+$$
+而 $\mathbb Z_2$ 恰为 $\mathbb Q_2$ 中范数不超过 $1$ 的元素，故该解在 $\mathbb Z_2$ 之外。这里延拓的是仿射变换 $J_2$；原 $M_2$ 的定义域仍为 $\mathbb Z_2$，不因这个求解自动改变，也不据此排除其他另行定义的观察延拓。
+
+$J_2$ 与 $M_2$ 连续，故其 Borel 推前有定义。由
+$$
+J_2(1)=-2,\qquad J_2(-2)=1,
+\qquad
+M_2(1)=M_2(-2)=1/2,
+$$
+对任意 Borel 集 $A\subseteq\mathbb Z_2$，有
+$$
+((J_2)_*\nu)(A)
+=\frac12\mathbf1_A(-2)+\frac12\mathbf1_A(1)
+=\nu(A).
+$$
+对任意 Borel 集 $B\subseteq[0,1]$，有
+$$
+((M_2)_*\nu)(B)
+=\frac12\mathbf1_B(1/2)+\frac12\mathbf1_B(1/2)
+=\delta_{1/2}(B).
+$$
+两份实质量之和为 $1$，给出所需概率。其权重 $1/2$ 位于实值概率的数值空间，既不要求状态环 $\mathbb Z_2$ 含有元素 $1/2$，也不产生第三个支撑状态。证毕。
+
+[^rro94-fixed-transport]: 不动点沿半共轭映射到不动点，参见项目 [不动点半共轭桥梁](https://github.com/the-omega-institute/trureturing/blob/38fe6e8aa82049fd2a568fa0bcd1a1586f1ce61c/D5/S3/Observer/Bridges/FixedPointSemiconjugacy.lean)。此处源变换为 $J_\infty$，目标变换为 $J_2$，假定的桥梁为 $s$；仅由源不动点与目标无不动点就已得到矛盾。
+

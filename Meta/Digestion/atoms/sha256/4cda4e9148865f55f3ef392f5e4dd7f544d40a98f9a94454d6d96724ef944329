@@ -1,0 +1,39 @@
+**定义 100.1（同一有理列与两种拓扑）。** 对整数 $n\ge2$，置
+$$
+M_n=n!,\qquad D_n=1+M_n^2,
+\qquad e_n=\frac{M_n}{D_n}\in\mathbb Q,
+\qquad B_n=\{\ell\text{ 为素数}:\ell\mid D_n\}.
+$$
+所有实数与 $p$-进读数均取自规范嵌入
+$$
+\iota_\infty:\mathbb Q\hookrightarrow\mathbb R,
+\qquad
+\iota_p:\mathbb Q\hookrightarrow\mathbb Q_p,
+$$
+并使用 $v_p(p)=1$、$|p|_p=p^{-1}$ 的归一化。记
+$$
+T=\mathbb R\times\prod_{p\ {\rm prime}}\mathbb Q_p
+$$
+带通常乘积拓扑，记标准有理阿代尔环
+$$
+\mathbb A_{\mathbb Q}
+=\mathbb R\times\prod_{p\ {\rm prime}}'(\mathbb Q_p,\mathbb Z_p),
+\qquad
+\mathbb Z_p=\{x\in\mathbb Q_p:|x|_p\le1\}.
+$$
+这里受限直积的元素在除有限多个素位以外均属于 $\mathbb Z_p$；其零点邻域基为
+$$
+U_\infty\times\prod_{p\in S}U_p
+\times\prod_{p\notin S}\mathbb Z_p,
+\tag{100.1}
+$$
+其中 $S$ 是有限素数集，$U_\infty$ 与各 $U_p$ 是相应局部域的开零邻域。另以 $\mathbb A_{\rm prod}$ 表示同一阿代尔底集从 $T$ 取得的子空间拓扑。令
+$$
+\Delta:\mathbb Q\longrightarrow\mathbb A_{\mathbb Q},
+\qquad
+\Delta(x)=(\iota_\infty(x),(\iota_p(x))_p),
+$$
+为有理对角映射，令 $j:\mathbb A_{\mathbb Q}\hookrightarrow T$ 为自然包含。每个有理数的分母仅有有限多个素因子，故 $\Delta$ 确实取值于阿代尔底集。上述乘积与受限直积拓扑采用其标准定义。[^rro100-topology]
+
+[^rro100-topology]: Andrew V. Sutherland，[MIT 18.785, Fall 2021, Lecture 25: The ring of adeles, strong approximation](https://ocw.mit.edu/courses/18-785-number-theory-i-fall-2021/mit18_785f21_lec25.pdf)，§25.1 与 Definition 25.1，PDF 第 1–2 页，给出乘积及受限直积拓扑、连续坐标投影，并区分受限直积拓扑与诱导子空间拓扑；Definition 25.7 与 Example 25.8，PDF 第 4–5 页，给出这里使用的有理阿代尔表示。
+

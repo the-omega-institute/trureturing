@@ -1,0 +1,158 @@
+{
+  "uniform_caps": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "14/1215",
+      "14/1215",
+      "117601/12636000",
+      "14/1215",
+      "0",
+      "1/45",
+      "1/45",
+      "4163/234000",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "154003/12558000",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "154003/12558000",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "154003/12558000",
+      "1/45"
+    ]
+  },
+  "cap_increments": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "1/2430",
+      "1/2430",
+      "12301/12636000",
+      "1/2430",
+      "0",
+      "0",
+      "0",
+      "263/234000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "43409/37674000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "43409/37674000",
+      "0",
+      "0",
+      "0",
+      "0",
+      "43409/37674000",
+      "0"
+    ]
+  },
+  "uniform_budgets": {
+    "kind": "inline",
+    "value": [
+      "743/25272",
+      "41/486",
+      "133/936"
+    ]
+  },
+  "denominator_costs": {
+    "path": "content/005-shells/000000/item/005-complete_heads/003-denominator_costs.json",
+    "sha256": "3763725cf1349c34fc4e12f645af2a4145251d05e6bec36adfc4de71aef4ea3d",
+    "kind": "array"
+  },
+  "denominator_shared": {
+    "path": "content/005-shells/000000/item/005-complete_heads/004-denominator_shared.json",
+    "sha256": "c9e3e517e590c2e67de6635d4c91ca884a225ba1dfc180c676e026c9b51ac431",
+    "kind": "value"
+  },
+  "H2": {
+    "path": "content/005-shells/000000/item/005-complete_heads/005-H2.json",
+    "sha256": "a39135eef305f95cb1ee04cc684cdcb5a11103cb172cb39650d4889e008b3e55",
+    "kind": "value"
+  },
+  "mean_costs": {
+    "path": "content/005-shells/000000/item/005-complete_heads/006-mean_costs.json",
+    "sha256": "0f5a527aedccd5a0f9a244314f15b4b17294a41369adf762f5d81605a9b94be6",
+    "kind": "array"
+  },
+  "mean_shared": {
+    "path": "content/005-shells/000000/item/005-complete_heads/007-mean_shared.json",
+    "sha256": "a78e26f6a99aa6d45d0849676e703b8ab0bebe193c652f8b8b0f0a69fe8c2f0c",
+    "kind": "value"
+  },
+  "quadratic_costs": {
+    "path": "content/005-shells/000000/item/005-complete_heads/008-quadratic_costs.json",
+    "sha256": "e07c36efe655e7b9e78b898c13ae8e7cd106f8d600c9a3f35e9615dbda9d3ca4",
+    "kind": "array"
+  },
+  "quadratic_shared": {
+    "path": "content/005-shells/000000/item/005-complete_heads/009-quadratic_shared.json",
+    "sha256": "f11d252622dca71ce93874c57bb479b0926ab7df318e2dfcda25cc331e96328c",
+    "kind": "value"
+  },
+  "original_factorial_pairs": {
+    "kind": "inline",
+    "value": {
+      "old_old_distinct": "256157074273/1865948400000",
+      "old_positive7": "683/4050",
+      "positive7_positive7_distinct": "24583/58320",
+      "tail_distinct_pairs": "1357367383273/1865948400000",
+      "weighted_old_pure_blocks_before_halving": {
+        "pure3": "480167771/11662177500",
+        "pure5": "8393/729000",
+        "root5": "297113/6075000",
+        "cell5": "8214211/262440000"
+      },
+      "weighted_old_mixed_before_halving": "17/120",
+      "raw_coefficient_upper": [
+        "29/108",
+        "17/108",
+        "11/108",
+        "41/54",
+        "122/243",
+        "1/3",
+        "1/9",
+        "1"
+      ],
+      "positive7_pair_prices": [
+        "1/30",
+        "3/10",
+        "17/30",
+        "29/540",
+        "11/120",
+        "13/40",
+        "67/120",
+        "109/2160"
+      ]
+    }
+  },
+  "seven_pair_source_bound": {
+    "path": "content/005-shells/000000/item/005-complete_heads/011-seven_pair_source_bound.json",
+    "sha256": "b680d67675d2e72d79848381bc49704ae7e6799032f31b2f918927c9c4e3b61d",
+    "kind": "value"
+  },
+  "complete_pair_upper": {
+    "kind": "inline",
+    "value": "1328885434273/1865948400000"
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "independent_rational_comparisons": {
+    "kind": "inline",
+    "value": 312
+  }
+}

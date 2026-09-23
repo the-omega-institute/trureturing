@@ -1,0 +1,12 @@
+**证明。** 两种 $A$ 中的 $p$ 均为单位，所以每个 $a\in A$ 都可写成
+$$
+a=p^n(p^{-n}a),
+$$
+从而 $p^nA=A$。各商环均为零环，其逆极限也是零环。这直接应用理想进完成 $\varprojlim_n A/I^n$ 的定义，见 [Stacks Project，§10.96，00M9](https://stacks.math.columbia.edu/tag/00M9)。由于 $(p)=A$，这些理想给出的零邻域只有全环，所定拓扑只有空集与全环为开集。
+
+赋值度量则为
+$$
+d_p(x,y)=|x-y|_p,
+$$
+在 $\mathbb Q$ 上满足 $d_p(0,1)=1$。其现有柯西完成构造是 [`Padic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicNumbers.lean)，即 $\mathbb Q_p$；有理数的等距嵌入保留 $0$ 与 $1$ 的正距离，故此完成非零。单位理想的商逆极限与这一赋值度量完成采用不同的邻域系统，以上两个结论各自成立。证毕。
+

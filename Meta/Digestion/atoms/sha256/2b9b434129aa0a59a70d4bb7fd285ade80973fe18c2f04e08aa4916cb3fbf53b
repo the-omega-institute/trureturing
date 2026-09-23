@@ -1,0 +1,33 @@
+**定义与假设 88.5（固定满足关系及其语义闭包）。** 另给模型集 $\mathcal M_A,\mathcal M_B$ 及满足关系
+$$
+\models_X\ \subseteq\mathcal M_X\times F_X
+\qquad(X=A,B).
+$$
+定义
+$$
+\operatorname{Mod}_X(\Gamma)
+=\{M\in\mathcal M_X:\forall\gamma\in\Gamma,\ M\models_X\gamma\},
+$$
+$$
+S_X(\Gamma)
+=\{\varphi\in F_X:
+      \forall M\in\operatorname{Mod}_X(\Gamma),\ M\models_X\varphi\}
+\qquad(X=A,B).
+$$
+简记 $M\models_X\Gamma$ 表示 $M$ 满足 $\Gamma$ 的全部成员。这些语义算子与前述任意闭包 $C_A,C_B$ 分开保留。给定 $\beta:\mathcal M_B\to\mathcal M_A$，要求满足条件
+$$
+N\models_B\tau(\varphi)
+\quad\Longleftrightarrow\quad
+\beta(N)\models_A\varphi
+\qquad(N\in\mathcal M_B,\ \varphi\in F_A).
+\tag{SC}
+$$
+置
+$$
+K_\tau^{\rm sem}(\Gamma)
+=\tau^{-1}[S_B(\tau[\Gamma])].
+$$
+以下反模型的 $M\not\models_X\varphi$ 是经典元理论中的满足关系否定，不要求公式语言含有否定联结词。这里仅采用固定公式集与模型集上的满足接口。[^rro88-satisfaction]
+
+[^rro88-satisfaction]: Mossakowski、Goguen、Diaconescu、Tarlecki，[*What is a Logic?*，作者稿](https://cseweb.ucsd.edu/~goguen/pps/nel05.pdf)，Definitions 2.1、2.6、3.2：分别给出 institution 的满足条件、任意句子集上的语义后承及 comorphism 的句子向前／模型向后满足条件。式 (SC) 只取其固定签名上的映射方向与满足等价；完整 institution 或 comorphism 还需签名范畴、函子及自然性资料。
+

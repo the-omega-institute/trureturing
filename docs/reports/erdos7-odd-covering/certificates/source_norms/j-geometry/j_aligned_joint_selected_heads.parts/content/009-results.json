@@ -1,0 +1,455 @@
+[
+  {
+    "name": "AP11-0",
+    "original_low_load_values": [
+      "0",
+      "1355/263538",
+      "23135/263538",
+      "63065/263538",
+      "102995/263538",
+      "366533/263538",
+      "630071/263538",
+      "893609/263538"
+    ],
+    "original_tail_polynomial": [
+      "-1214695/263538",
+      "1",
+      "0"
+    ],
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "20425/263538",
+        "3": "25/363",
+        "5": "28/33"
+      },
+      "complete_hinge_upper": "129129933582018259144139/732187625400000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124991,
+        "four_projection_branches": 450,
+        "four_bounded": 447,
+        "joint_dual_branches": 3,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "12445143077/69732154800",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "129129933582018259144139/732187625400000000000000",
+        "adopted_complete_upper": "129129933582018259144139/732187625400000000000000",
+        "dual_key": "6b72bc9e2dbcc3dd1afe53e6f3f4c690ce4cb570b0f41e5dd11db0f1c0fae769",
+        "complete_tail_constant": "4938119953/74713023000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "12445143077/69732154800",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "129129933582018259144139/732187625400000000000000",
+        "adopted_complete_upper": "129129933582018259144139/732187625400000000000000",
+        "dual_key": "6b72bc9e2dbcc3dd1afe53e6f3f4c690ce4cb570b0f41e5dd11db0f1c0fae769",
+        "complete_tail_constant": "4938119953/74713023000"
+      },
+      "complete_tail_constant": "4938119953/74713023000",
+      "independent_affine_checks": 14,
+      "maximum_two_pruned": "428907990743/2440625418000",
+      "maximum_four_pruned": "429152067583/2440625418000",
+      "new_distinct_duals": 3,
+      "all_branch_decisions_sha256": "1c88e060daef1aff0d85423426bf9c239190184eb689816302e610a58c018365"
+    },
+    "complete_upper": "129129933582018259144139/732187625400000000000000"
+  },
+  {
+    "name": "AP11-1",
+    "original_low_load_values": [
+      "0",
+      "1355/263538",
+      "23135/263538",
+      "63065/263538",
+      "102995/263538",
+      "142925/263538",
+      "182855/263538",
+      "222785/263538"
+    ],
+    "original_tail_polynomial": [
+      "-96655/263538",
+      "5/33",
+      "0"
+    ],
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "20425/263538",
+        "3": "25/363"
+      },
+      "complete_hinge_upper": "89934561027952738201/1867825575000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124987,
+        "four_projection_branches": 650,
+        "four_bounded": 626,
+        "joint_dual_branches": 24,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          1,
+          1,
+          4
+        ],
+        "old_complete_upper": "97698823/1992347280",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "89934561027952738201/1867825575000000000000",
+        "adopted_complete_upper": "89934561027952738201/1867825575000000000000",
+        "dual_key": "c797dda1e6ac7fb0900eb08dbe76384123e4cd8bf7a7407a1ec567875082e28b",
+        "complete_tail_constant": "6136385/597704184"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          1,
+          1,
+          4
+        ],
+        "old_complete_upper": "97698823/1992347280",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "89934561027952738201/1867825575000000000000",
+        "adopted_complete_upper": "89934561027952738201/1867825575000000000000",
+        "dual_key": "c797dda1e6ac7fb0900eb08dbe76384123e4cd8bf7a7407a1ec567875082e28b",
+        "complete_tail_constant": "6136385/597704184"
+      },
+      "complete_tail_constant": "6136385/597704184",
+      "independent_affine_checks": 14,
+      "maximum_two_pruned": "13688009/284621040",
+      "maximum_four_pruned": "95927383/1992347280",
+      "new_distinct_duals": 24,
+      "all_branch_decisions_sha256": "5b491befddaff836b65c1835b11b24f37144c95aedebebd49ffbf3d007ad1b7c"
+    },
+    "complete_upper": "89934561027952738201/1867825575000000000000"
+  },
+  {
+    "name": "AP11-2",
+    "original_low_load_values": [
+      "0",
+      "1355/263538",
+      "4985/263538",
+      "8615/263538",
+      "12245/263538",
+      "15875/263538",
+      "19505/263538",
+      "23135/263538"
+    ],
+    "original_tail_polynomial": [
+      "-5905/263538",
+      "5/363",
+      "0"
+    ],
+    "scan": {
+      "coefficients": {
+        "1": "1355/263538",
+        "2": "2275/263538"
+      },
+      "complete_hinge_upper": "84454702518259168679/14942604600000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124992,
+        "four_projection_branches": 400,
+        "four_bounded": 390,
+        "joint_dual_branches": 10,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          1,
+          1,
+          4
+        ],
+        "old_complete_upper": "325133/56924208",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "42227351258602528927/7471302300000000000000",
+        "adopted_complete_upper": "42227351258602528927/7471302300000000000000",
+        "dual_key": "a3eb211b3e19bb1522abd83e53b184560cc934560bcfd67f889f23a418144900",
+        "complete_tail_constant": "3597043/2988520920"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          0,
+          4,
+          1,
+          1,
+          4
+        ],
+        "old_complete_upper": "325133/56924208",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "84454702518259168679/14942604600000000000000",
+        "adopted_complete_upper": "84454702518259168679/14942604600000000000000",
+        "dual_key": "c9adba902f37ef071b730f8c2010dc66b71582a7f1c7564f01868594b6b98056",
+        "complete_tail_constant": "3597043/2988520920"
+      },
+      "complete_tail_constant": "3597043/2988520920",
+      "independent_affine_checks": 14,
+      "maximum_two_pruned": "107087/18974736",
+      "maximum_four_pruned": "1608241/284621040",
+      "new_distinct_duals": 10,
+      "all_branch_decisions_sha256": "e406f73c9e39159bf37ea0d83bb765caf6a8c37e67b7a96494360204d808a40b"
+    },
+    "complete_upper": "84454702518259168679/14942604600000000000000"
+  },
+  {
+    "name": "hinge4",
+    "original_low_load_values": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "original_tail_polynomial": [
+      "-4",
+      "1",
+      "0"
+    ],
+    "scan": {
+      "coefficients": {
+        "4": "1"
+      },
+      "complete_hinge_upper": "10367293333342517/52920000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124991,
+        "four_projection_branches": 450,
+        "four_bounded": 440,
+        "joint_dual_branches": 10,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "264787/1323000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "10367293333342517/52920000000000000",
+        "adopted_complete_upper": "10367293333342517/52920000000000000",
+        "dual_key": "87930557647b796ede48bfb3967c6573e1fa9b3391ab852d55eedc0c595c68bb",
+        "complete_tail_constant": "37307/567000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "264787/1323000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "10367293333342517/52920000000000000",
+        "adopted_complete_upper": "10367293333342517/52920000000000000",
+        "dual_key": "87930557647b796ede48bfb3967c6573e1fa9b3391ab852d55eedc0c595c68bb",
+        "complete_tail_constant": "37307/567000"
+      },
+      "complete_tail_constant": "37307/567000",
+      "independent_affine_checks": 14,
+      "maximum_two_pruned": "36949/189000",
+      "maximum_four_pruned": "1810261/9261000",
+      "new_distinct_duals": 10,
+      "all_branch_decisions_sha256": "d1ddfcf52003201aa66b87e5019fd9b4aa3b6565a1284703cbbdb01a5521cca3"
+    },
+    "complete_upper": "10367293333342517/52920000000000000"
+  },
+  {
+    "name": "cost0",
+    "original_low_load_values": [
+      "0",
+      "298469622484874903/2311075142665519230",
+      "14774098020670427687/9244300570662076920",
+      "8735638183454200223/2311075142665519230",
+      "157604616745291253357/9244300570662076920",
+      "141680913476671270111/4622150285331038460",
+      "409806847427299790287/9244300570662076920",
+      "67149700877109717469/1155537571332759615"
+    ],
+    "original_tail_polynomial": [
+      "-398531940369992407376/1155537571332759615",
+      "403/8",
+      "0"
+    ],
+    "scan": {
+      "coefficients": {
+        "1": "298469622484874903/2311075142665519230",
+        "2": "12386341040791428463/9244300570662076920",
+        "3": "525174571/736900164",
+        "4": "9522349/858858",
+        "5": "1580/4719",
+        "6": "3160/42471",
+        "7": "395/3861",
+        "8": "282583/7722"
+      },
+      "complete_hinge_upper": "17143050638567347471024810268058533/2857343959445218343100000000000000",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 123338,
+        "four_projection_branches": 83100,
+        "four_bounded": 83088,
+        "joint_dual_branches": 12,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          4
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_complete_upper": "25029782587225438882269417187/4194961911660173223449880000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "132604424928350752175627188647565969657/22473010241036642268481500000000000000",
+        "adopted_complete_upper": "132604424928350752175627188647565969657/22473010241036642268481500000000000000",
+        "dual_key": "41c66668fefaffc970848b8b6df6a60826eb58d883312a426504f93c2fdd268a",
+        "complete_tail_constant": "2487475696847682183552953/748788346223628230520000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          2,
+          4,
+          1,
+          2
+        ],
+        "old_complete_upper": "25466884468864025252702340527/4194961911660173223449880000",
+        "old_maximizing_late_coordinate": "1",
+        "joint_complete_upper": "17143050638567347471024810268058533/2857343959445218343100000000000000",
+        "adopted_complete_upper": "17143050638567347471024810268058533/2857343959445218343100000000000000",
+        "dual_key": "223466f60748b914052c5ed0257fcde1261ba6f46576dbb48a01432f3fd95020",
+        "complete_tail_constant": "2487475696847682183552953/748788346223628230520000"
+      },
+      "complete_tail_constant": "2487475696847682183552953/748788346223628230520000",
+      "independent_affine_checks": 14,
+      "maximum_two_pruned": "25167323808259783993460297557/4194961911660173223449880000",
+      "maximum_four_pruned": "25029782587225438882269417187/4194961911660173223449880000",
+      "new_distinct_duals": 13,
+      "all_branch_decisions_sha256": "c11b37f148299ecfe9085b55bdb85eab216659656039ecb1d1cb0fd00425d96e"
+    },
+    "complete_upper": "17143050638567347471024810268058533/2857343959445218343100000000000000"
+  }
+]

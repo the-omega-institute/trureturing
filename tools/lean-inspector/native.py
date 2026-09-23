@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Production actions for Lake's Inspector facets; Lake owns all reuse decisions."""
+"""Production actions for Lake's Inspector facets; Lake owns module invalidation."""
 from __future__ import annotations
 
 import json
@@ -85,8 +85,15 @@ def prepare(root):
     inputs = selection.Selection(root)
     inputs.validate('lean-report')
     modules = inputs.modules()
-    result = subprocess.run(['dotnet', 'run', '--project', str(root / 'tools/StrataLint.Cli/StrataLint.Cli.csproj'),
-        '--configuration', 'Release', '--no-build', '--no-restore', '--no-launch-profile', '--', 'lean-utility-input'],
+    producer = os.environ.get('STRATALINT_LEAN_PRODUCER_DLL')
+    if producer:
+        if not Path(producer).is_absolute() or not Path(producer).is_file():
+            raise ValueError('candidate Lean producer must be an existing absolute path')
+        command = ['dotnet', producer]
+    else:
+        command = ['dotnet', 'run', '--project', str(root / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'),
+            '--configuration', 'Release', '--no-build', '--no-restore', '--no-launch-profile', '--']
+    result = subprocess.run([*command, 'lean-utility-input'],
         cwd=root, stdout=subprocess.PIPE, check=True)
     utilities = public.read_json(result.stdout)
     if not isinstance(utilities, list):
@@ -108,8 +115,8 @@ def prepare(root):
         write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
             'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
     write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
-    # Membership and public input coordinates affect aggregation only. Each
-    # module traces compatibility, config, source, compiler and utility inputs.
+    # Membership and full config identity affect aggregation only. Each module
+    # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
         'modules': sorted(modules),
         'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
@@ -120,24 +127,15 @@ def source_inventory(root):
     # Expanded once per native invocation, never mixed into the aggregate
     # trace: adding an unused producer helper is still a compatible change.
     inputs = selection.Selection(root)
-    return set(inputs.dependency_sources()), set(inputs.modules().values())
+    return set(inputs.dependency_sources())
 
 
-def input_sources(root, utility_path):
-    """Capture Lake's local source closure, bounded by explicit registration.
-
-    Other reported sources are already bound by the complete exported report
-    address. Keep their closure out of each row's sidecar to avoid quadratic
-    duplication; native compiler traces still govern row invalidation.
-    """
-    allowed, reported = source_inventory(str(root))
-    record = public.read_json(Path(utility_path).read_bytes())
+def validate_dependency_paths(root, utility_path):
+    allowed = source_inventory(str(root))
     paths = public.read_json(Path(str(utility_path) + '.sources.json').read_bytes())
     materials.require_sorted_strings(sorted(set(paths)), 'native dependency sources')
     if set(paths) - allowed:
         raise ValueError('unregistered native dependency sources: ' + ', '.join(sorted(set(paths) - allowed)))
-    selected = (set(paths) - reported) | {record['source_path']}
-    return {path: public.digest(Path(root) / path) for path in sorted(selected)}
 
 
 def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
@@ -147,8 +145,8 @@ def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
     public.validate_template_sources(rows, root, inputs=template_inputs)
     record = public.read_json(Path(utility_path).read_bytes())
     path = record['source_path']
-    if row['source_path'] != path or row['source_sha256'] != 'sha256:' + public.digest(Path(root) / path):
-        raise ValueError('native module source mismatch')
+    if row['source_path'] != path:
+        raise ValueError('native module source path mismatch')
     obligations = record['utilities']
     if not obligations:
         if 'utility_refutation' in row:
@@ -168,7 +166,7 @@ def module(root, name, source, utility_path, executable, output):
     with tempfile.TemporaryDirectory(prefix='.module.', dir=output.parent) as directory:
         directory = Path(directory)
         record = public.read_json(Path(utility_path).read_bytes())
-        bindings = input_sources(root, utility_path)
+        validate_dependency_paths(root, utility_path)
         utility = directory / 'utility.json'
         utility.write_bytes(materials.canonical_json(record['utilities']))
         spool = directory / 'spool'
@@ -182,8 +180,7 @@ def module(root, name, source, utility_path, executable, output):
         rows = public.read_json(report.read_bytes())['modules']
         row_binding(rows, root, name, utility_path)
         artifact = directory / 'module.zip'
-        public.write_origin(report, name, dict(public.production_origin(root, executable),
-                                              input_sources=bindings))
+        public.write_origin(report, name, public.production_origin(root, executable))
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
         os.replace(artifact, output)
         activity('extract', 1)
@@ -211,7 +208,8 @@ def produce_batch(requests):
             record = public.read_json(Path(utility_path).read_bytes())
             utilities.extend(record['utilities'])
             triples.extend([name, record['source_path'], 'sha256:' + public.digest(source)])
-            bindings[name] = (utility_path, Path(output), input_sources(root, utility_path))
+            validate_dependency_paths(root, utility_path)
+            bindings[name] = (utility_path, Path(output))
         utility_file = directory / 'utility.json'
         utility_file.write_bytes(materials.canonical_json(utilities))
         arguments = ['--output', str(directory / 'spool.json'), '--material-spool', str(spool),
@@ -225,7 +223,7 @@ def produce_batch(requests):
             raise ValueError('incomplete native inspection batch')
         for row in raw['modules']:
             name = row['module']
-            utility_path, output, sources = bindings[name]
+            utility_path, output = bindings[name]
             row_dir = directory / name
             row_dir.mkdir()
             row_spool = row_dir / 'spool'
@@ -241,7 +239,7 @@ def produce_batch(requests):
             row_binding(rows, root, name, utility_path, template_inputs=template_inputs)
             output.parent.mkdir(parents=True, exist_ok=True)
             artifact = row_dir / 'module.zip'
-            public.write_origin(report, name, dict(origin, input_sources=sources))
+            public.write_origin(report, name, origin)
             public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
             os.replace(artifact, output)
         if list(spool.iterdir()):
@@ -403,8 +401,6 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
     # prepare validated the manifest before any facet could accept an artifact.
     compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
     origin = public.validate_origin(report, rows, compatibility)
-    if origin['input_sources'] != input_sources(root, utility):
-        raise ValueError('native dependency source binding mismatch')
     return rows, origin
 
 

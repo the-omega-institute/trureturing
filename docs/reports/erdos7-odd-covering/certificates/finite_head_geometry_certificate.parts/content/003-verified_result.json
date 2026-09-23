@@ -1,0 +1,94 @@
+{
+  "normalized_assignments": 140,
+  "canonical_orbits": [
+    {
+      "root": 1,
+      "deleted45_orbit": "same_root",
+      "normalized_assignments": 24
+    },
+    {
+      "root": 1,
+      "deleted45_orbit": "same_column",
+      "normalized_assignments": 12
+    },
+    {
+      "root": 1,
+      "deleted45_orbit": "different_column",
+      "normalized_assignments": 36
+    },
+    {
+      "root": 2,
+      "deleted45_orbit": "same_root",
+      "normalized_assignments": 36
+    },
+    {
+      "root": 2,
+      "deleted45_orbit": "same_column",
+      "normalized_assignments": 8
+    },
+    {
+      "root": 2,
+      "deleted45_orbit": "different_column",
+      "normalized_assignments": 24
+    }
+  ],
+  "effective_test_layouts": 27720,
+  "universal_sharp_minimax_Gamma45": "22570/3361",
+  "universal_supported_Gamma315_upper": "198583/15619",
+  "cases": [
+    {
+      "root": 1,
+      "deleted45_orbit": "same_root",
+      "survivors": 17,
+      "test_layouts": 4760,
+      "minimax_Gamma45": "96103805/14524696",
+      "R45": "10069783/7262348",
+      "supported_Gamma315_upper": "844794679/67008610"
+    },
+    {
+      "root": 1,
+      "deleted45_orbit": "same_column",
+      "survivors": 17,
+      "test_layouts": 4760,
+      "minimax_Gamma45": "378110/57721",
+      "R45": "74384/57721",
+      "supported_Gamma315_upper": "1664303/135971"
+    },
+    {
+      "root": 1,
+      "deleted45_orbit": "different_column",
+      "survivors": 17,
+      "test_layouts": 4760,
+      "minimax_Gamma45": "8717065/1336253",
+      "R45": "1750389/1336253",
+      "supported_Gamma315_upper": "25567732/2089043"
+    },
+    {
+      "root": 2,
+      "deleted45_orbit": "same_root",
+      "survivors": 16,
+      "test_layouts": 4480,
+      "minimax_Gamma45": "151515/22868",
+      "R45": "59395/45736",
+      "supported_Gamma315_upper": "2667875/215021"
+    },
+    {
+      "root": 2,
+      "deleted45_orbit": "same_column",
+      "survivors": 16,
+      "test_layouts": 4480,
+      "minimax_Gamma45": "22570/3361",
+      "R45": "4547/3361",
+      "supported_Gamma315_upper": "198583/15619"
+    },
+    {
+      "root": 2,
+      "deleted45_orbit": "different_column",
+      "survivors": 16,
+      "test_layouts": 4480,
+      "minimax_Gamma45": "172125/25943",
+      "R45": "103658/77829",
+      "supported_Gamma315_upper": "4543717/363316"
+    }
+  ]
+}

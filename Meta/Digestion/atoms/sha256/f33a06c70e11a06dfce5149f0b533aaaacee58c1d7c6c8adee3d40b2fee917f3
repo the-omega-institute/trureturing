@@ -1,0 +1,9 @@
+### 130.6 局部信息严格正仍可全局不可识别
+
+令参数 $\theta\in\mathbb R$，观察
+
+$$
+Z\sim N(\mu(\theta),I_2),\qquad
+\mu(\theta)=(\cos\theta,\sin\theta).
+$$
+

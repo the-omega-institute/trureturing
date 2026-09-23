@@ -1,0 +1,41 @@
+{
+  "upper": {
+    "kind": "inline",
+    "value": "4800490181389813/9497586656250000"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "443/900"
+  },
+  "excess": {
+    "kind": "inline",
+    "value": "125566971702313/9497586656250000"
+  },
+  "bounded_labels": {
+    "path": "content/004-radius_results/000002/item/001-H1/003-bounded_labels.json",
+    "sha256": "e4a5a2acdf658a32a774c1cd31b65e07d6010535a7ef769c30e0922b56ac2b22",
+    "kind": "value"
+  },
+  "complete_exponent_tails": {
+    "path": "content/004-radius_results/000002/item/001-H1/004-complete_exponent_tails.json",
+    "sha256": "bbf5d4b12475d38a7cc203e49e693daaa03530a8aa55a020131e6dbd9561a7a6",
+    "kind": "value"
+  },
+  "deep_mixed_upper": {
+    "kind": "inline",
+    "value": "1/72"
+  },
+  "complete_positive7_upper": {
+    "kind": "inline",
+    "value": "143/900"
+  },
+  "previous_upper": {
+    "kind": "inline",
+    "value": "759529994159/1123875000000"
+  },
+  "layout_rows": {
+    "path": "content/004-radius_results/000002/item/001-H1/008-layout_rows.json",
+    "sha256": "bbae5cf5a847807656fb175f61d4ba0ac4238b26549165c6dddd69024009dee0",
+    "kind": "array"
+  }
+}

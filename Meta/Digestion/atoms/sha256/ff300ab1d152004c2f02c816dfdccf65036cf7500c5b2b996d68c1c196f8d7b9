@@ -1,0 +1,313 @@
+## 8. 悬赏(open 队列,各带判真机与判据)
+
+**悬赏 B1(gap-as-goal)**。高 gap 触发**消歧动作**而非回避;判据:risk 降 ∧ success 不降;对照:vanilla 与 avoid-only。赏格:tradeoff 翻转为 win;monitor→agent 之跳。成熟形态参照(v0.2):E6 之 Lean 路径被管线自动分解为带"欠"标之依赖 DAG(GoldenInt 供应链)——**计划非轨迹,乃债标依赖图**;B1 判据可依此升级:消歧动作 = 关一笔标"欠"之债。〔runner可关〕
+
+**悬赏 B2(密度基线)——判真机已注册,待真实载体首跑**。合同 `B2_density_baseline_contract.md`,runner `b2_density_baseline.py`,参数已冻结(K=20,boot=500,seed=20260718,层 q=0.5,证人邻域 q=0.25)。判决类:PASS(层内 AUROC>0.65 且 CI 下端>0.5,证人对 ≥30 且 pair-acc>0.6、CI 下端>0.5)/ DEGRADE(E1 降级 OOD 检测)/ FAIL_CLOSED。合成双世界自检机器绿(dynamics→PASS 0.98 [0.94,1.00];density→DEGRADE 零证人)。四载体逐跑,判决回写 E1 措辞。〔runner可关,第一优先〕
+
+**悬赏 B3(conformal 化 gap head)**。g_t 为 nonconformity score,trained ledger 继承 α 界;预期 coverage debt 收窄;进阶 ConfTr 式可微项入 L_gap。〔runner可关〕
+
+**悬赏 B4(债务定价市场)**。每条债务携带关账边际价值 MV(t,b);账本自日记升为复式。compute-value 标签机现成,改指向数据/动作获取。补注(v0.3,**邻债折扣**):债共享子结构者互为折扣——Euclidean.lean 偿"欠(golden-euclidean-division)"即解锁 UFD,MinkowskiModelSet.lean 为他节点而建却预付了 E6 余层(Pisot/Meyer)之大半机器;故 MV 须计**期权项**:关此债对邻债成本之折减。〔runner可关,远期〕
+
+**候查 B5′(复合气体之解析残部)**。符号面已入 E6;余:复合气体之 Dirichlet 级数、与 ζ 之关系、"任意子配分"之解析身份——既有 open leaf(goldGenAF 解析支)之延伸。〔解析,open〕
+
+**候查 B6(晋升协议原型)**。最小"信→知"通道:学得规律经 D2 检验 + conformal 认证后写入 append-only 账本;判据:账本内规律于灾难性遗忘攻击下留存率 vs 纯权重基线。〔runner可关〕
+
+**候查 B7(纯 Perron 数系,E6 所孵)**。F1 族 c ≥ 3 之纯 Perron 移位(非 Pisot 非 Salem)有无自然算术模型——何种"数系"以其为基,其无准晶户籍在数论侧对应何种失灵。〔数学,open〕
+
+**候查 B8(两相晋升:类先例后,#406 所孵,v0.2)**。学习系统长出新谓词**类型**时,类 schema 须先经判真机认证,该类之实例方可认证——源:trureturing #406 自举悖论(base 侧法官无法校验 PR 自身引入之新文档类定义),零信任下保守扩展之结构推论。判据:晋升协议(B6)原型须含类/例两相提交;违者判 FAIL_CLOSED 而非强判。〔设计,open;实例runner可关〕
+
+**候查 B9(切投影词典:双速架构 ↔ cut-and-project,v0.4)**。词条:快系统↔物理空间(展嵌入)、慢库/harness↔内部空间之窗(接纳域)、τ↔内部空间距离、晋升↔投影登记、虚构(T5)↔无提升点(phason 缺陷)、灾难性遗忘↔影子发散(伴根出盘,E6 刚性之病灶像)、WmAtomizer 局部文法↔Penrose 匹配规则(局部约束强制全局序)。按名界(S2),名须绑检验面:**形式面**——于 MinkowskiModelSet 之窗上构造"harness 接纳 ⟺ 窗内"之显式对应〔Lean可关〕;**经验面**——B6 晋升原型中,祖先门拒收项与"无提升"判据之重合率〔runner可关〕。状态:唱名后首次登记,残差未测,**禁作同构宣称**;组件 literature-attested(de Bruijn 1981 切投影、Shechtman 1982 准晶、phason 文献;Zurek 量子达尔文另属唱名,不随本条入账)。〔候查;双检验面各自可关〕
+
+**候查 B10(Chow 前沿定位:税之可退部分,v0.5)**。A4 实测汇率(silent −0.0500 兑 coverage +0.0656,率 1.31)归证为**风险-覆盖前沿上一点**:Chow 1970 误差-拒识权衡定理给出该前沿之存在与形状,底为 Bayes 风险(条件不确定性不可擦除——诚实之绝对零度)。故税分解:**税 = Bayes 底价(不可退)+ 前沿距离(可退,治理浪费)**;物理像:Carnot 效率之于热机。检验面:以既有 MiniGrid 阈值扫描记录(certified-coverage sweep 在案)重画经验风险-覆盖曲线,定位现工作点与前沿凸包之距——距零则汇率已达该预测器之物理极限(降税须换 head),距正则差额可经阈值策略退回。述而不作:Chow 1970(误差-拒识)、Geifman–El-Yaniv 2017(selective prediction)literature-attested;本条候选新颖处仅在债务会计与前沿之对榫及"治理浪费"之定义。判 L3 补注候选:转换有损且损耗二分。〔runner可关,既有数据重分析,本周可裁〕
+
+**候查 B11(热谱中线:ℓ² 海岸线 = 热横坐标之半,v0.7)**。承 ENTROPY-INFO-PRIMES-O5 §10 弧一。设可数标签集 A 与长度函数 M : A → ℝ,称 α 为 M 之**热横坐标**,当且仅当 σ > α 时 Σ_a e^{−σM(a)} 收敛、σ < α 时发散(两严格侧各自声明,边界不作断言)。**形式面**:平方模为 e^{−2Re(s)M(a)},故 ℓ² 归属即热级数在 2Re s 处之收敛,中线落横坐标之半。**声明须与横坐标同为两严格侧,边界不作断言**:Re s > α/2 ⟹ 热系数属 ℓ²;Re s < α/2 ⟹ 不属。**平坦 iff(含边界)不由 `IsHeatAbscissa` 蕴含**——它需更强前件 `BoundaryDivergentAbscissa`(边界级数亦发散);无该前件而书 iff 即越界〔Lean可关;通用层两严格侧已冻 `D5/S3/Midline/UniversalHeatTrace`〕。**黄金实例(本条待关之真靶)**:取 A = {(p, v) : p 素, v ≥ 1}、M(p,v) = β(v)·ln p(**真空模 v=0 不入谱**:β(0)=0,入谱则逐素贡献 1、热迹发散),则其热横坐标 = 1/φ²(v=1 层即素 zeta,β(1)=φ²,定横坐标;v≥2 尾由 β 之线性下界几何支配),故 ℓ² 海岸线 = 1/(2φ²)〔Lean可关〕。**判据**:①横坐标声明须双侧(收敛支 ∧ 发散支),单侧或无前件者判空洞;②发散支须由 v=1 子族独立见证,不得以整族含糊代替;③"中线"一词只指 ℓ² 门槛,**不得**据此宣称任何零点定位。**读法级(禁同构宣称)**:振幅 = 概率之平方根,故振幅海岸线恒在概率海岸线之半;ζ 侧 1 ↔ 1/2 与黄金侧 1/φ² ↔ 1/(2φ²) 为同一算术之两实例,并置为读法,非定理。〔候查;形式面 Lean可关〕
+
+**候查 B12(锥对偶:可分锥之对偶面,v0.7)**。承 ENTROPY-INFO-PRIMES-O5 §10 弧二之收束图式「WM = (正锥, 界面图册, 对偶投影)」。复合系统之三锥链 可分锥 ⊆ PSD ⊆ 块正锥,两包含已冻(`D5/S3/Resource/CompositeCones`)。**形式面**:在迹双线性配对下,块正性 ⟺ 与一切可分元配对非负——即块正锥为可分锥之对偶锥;有限维两向皆初等,**不经分离超平面**:正向(块正 ⟹ 配对非负)以 PSD 之秩一分解将可分元化为积向量秩一之和,逐项即块正性之定义式;逆向(配对非负 ⟹ 块正)取单个积向量秩一元作见证,配对值即定义式本身〔Lean可关〕。**判据**:①配对约定须显式写出并与既有 `separableCone`/`blockPositive` 定义对榫,不得含糊;②若仅一方向可证,如实只交该方向并显式登记另一方向为 open,**禁静默弱化或交空洞双条件**;③见证存在性(纠缠见证)属对偶之推论,不得先于对偶宣称。**述而不作**:锥对偶机器(`ProperCone.dual`、`innerDual` 及其对合)属上游已证,按先库后证直接引用,重证即冒领;本条候选新颖处仅在可分/块正这一对具体锥之对偶实例。〔候查;Lean可关〕
+
+**B12 结账追记(v0.8,2026-08-14)**。B12 之形式面已 **Lean-closed**,四件依次落值(旧行不改,此处只记结果):①`D5/S3/Resource/CompositeConeDuality.blockPositive_iff_forall_separable_pairing_nonneg` —— 迹配对下块正 ⟺ 与一切可分元配对非负,两向皆初等、不经分离超平面,与 B12 原文所述路线一致;②`D5/S3/Resource/EntanglementWitness` —— 可分锥之凸锥四条(含零、加法、非负数乘、凸性);③`D5/S3/Resource/SeparableConeClosed.isClosed_separableCone` —— 可分锥在有限维下闭,无附加前件,经归一化积生成元之锥表示与 Caratheodory 维数界;④`D5/S3/Resource/EntanglementWitnessExists.exists_entanglementWitness` —— **见证存在性**:`R.PosSemidef → ¬separableCone R → ∃ W, blockPositive W ∧ pairing R W < 0`。四者公理闭包皆 ⊆ {propext, Classical.choice, Quot.sound},零 sorry。
+
+**过程如实记(判例价值高于结果)**:③④之间隔着一道**非数学的坎**——`ProperCone.hyperplane_separation'` 要求 `[NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]`,而裸 `Matrix` 不带这些实例;pinned mathlib 亦无 `Matrix` 的实内积实例(Frobenius 族皆 scoped 且止于 `NormedSpace`)。更关键:`InnerProductSpace.ofCore` **会诱导自身的范数与拓扑**,而 ③ 的闭性是在 `Matrix` 原生拓扑下证的——两者不打通,"闭"便非同一个闭,分离所得结论将因错配而不可靠。④ 的承重步正是此拓扑搬运:按 mathlib 规定路线(第二范数置于类型副本、证双向恒等映射连续)得同胚,再以 `isClosed_separableCone.preimage` 将闭性搬入 ofCore 拓扑。**故 B12 判据③"见证存在性属对偶之推论"须细化**:它不只是对偶的推论,还须闭性与拓扑一致两项前置;三者齐备方可宣称。
+
+**另记**:④ 之 `R.PosSemidef` 前件在证明中实际未用(分离仅需 `R` 不属该锥),定理去之亦成立;保留是为恰好闭合 `EntanglementWitness` 所登记之 open 陈述。〔Lean-closed(形式面四件);读法级各条仍循 §9 边界〕
+
+**候查 B13(界面图册索引,v0.7)**。承弧二"界面登记定律取等处"之读法:变分原理把现实压至锥膜,故**等号面**(取等条件)是 WM 的登记位。本条为**索引件**:逐一登记本仓已有之等号面工件及其取等判据,使"界面图册"从叙事成为可查表;每条须注明该等号面是已冻结形式件、还是仅 digest 级证据待亲读。**判据**:①索引条目必须机械可判地指向存在之工件(悬空引用即红,循宪法 2026-08-12 引用条);②未亲读者一律标"digest 级待亲读",不得以文件名冒充已核内容;③本条为 data-only 文档件,不承载任何数学断言。〔候查;data-only,文档可关〕
+
+
+**B13 结账追记（界面图册索引，data-only）**。下表只转录 dev 树中实存 Lean 工件及所列声明的陈述面；“取等”栏不补证明、不合成 converse，原声明仅给恒等式、阈值 iff 或单向谱包含者，照原形登记并明记其边界。
+
+| 面 | 工件（dev 实址） | 承重声明（逐字标识符） | 取等 / 界面条件（按 Lean statement） | 状态 |
+|---|---|---|---|---|
+| Gibbs 零面 | `D5/S3/Divergence/GibbsEquality.lean` | `kl_divergence_eq_zero_iff` | 在非负归一化及离散绝对连续前件下，`klDivergence p q = 0 ↔ p = q`。 | 〔已冻形式件〕 |
+| DPI-Petz 零面 | `D5/S3/Divergence/PetzClassical.lean` | `dpi_defect_zero_iff_posteriors_eq` | 在严格正分布与严格正信道前件下，DPI defect 为零 ↔ `p` 所诱导输出支撑上的两后验逐点相等。 | 〔已冻形式件〕 |
+| CP 边界面 | `D5/S3/QuantumChannels/BoundarySaturation.lean` | `cp_boundary_eq_iff_det_zero` | `Complex.normSq z = p ↔ (cpMatrix z p).det = 0`。 | 〔已冻形式件〕 |
+| 冻结阈面 | `D5/S3/QuantumChannels/DecoherenceFreeze.lean` | `decoherence_freeze_iff_above_critical` | 在 `beta > 0`、`passiveEnergy > 0` 前件下，`0 < freezeDeposit … ↔ criticalInverseTemperature … < beta`；该声明是严格阈值 iff，不另陈 deposit 为零之 iff。 | 〔已冻形式件〕 |
+| 相位阻尼固定面 | `D5/S3/Quantum/Decoherence.lean` | `phase_damping_fixed_iff_diagonal` | 非平凡阻尼系数下，`phaseDamping c rho = rho` ↔ `rho` 的全部非对角元为零。 | 〔已冻形式件〕 |
+| 基底选择固定面 | `D5/S3/Quantum/PointerBasis.lean` | `phase_damping_in_basis_fixed_iff` | 非平凡阻尼系数下，输运后的阻尼固定 `rho` ↔ `coordinates rho` 的全部非对角元为零。 | 〔已冻形式件〕 |
+| 环境记录固定面 | `D5/S3/Quantum/EnvironmentRecords.lean` | `record_channel_fixed_iff_selected_blocks` | `recordChannel record rho = rho` ↔ 环境记录重叠不等于 `1` 的全部矩阵元为零。 | 〔已冻形式件〕 |
+| 可分锥对偶面 | `D5/S3/Resource/CompositeConeDuality.lean` | `blockPositive_iff_forall_separable_pairing_nonneg` | `blockPositive W` ↔ 对每个 `separableCone S`，`pairing S W` 非负。 | 〔已冻形式件〕 |
+| log-det 零面 | `D5/S3/Resource/LogDetDivergenceEquality.lean` | `logDetDivergence_eq_zero_iff` | 在两矩阵 PSD 且可逆的前件下，`logDetDivergence rho sigma = 0 ↔ rho = sigma`。 | 〔已冻形式件〕 |
+| 熵上端面 | `D5/S3/Entropy/EntropyEquality.lean` | `entropy_eq_log_card_iff_uniform` | 对非负归一化有限质量，`shannonEntropy p = log(card ι)` ↔ `p` 为均匀质量。 | 〔已冻形式件〕 |
+| 熵下端面 | `D5/S3/Entropy/EntropyEquality.lean` | `entropy_eq_zero_iff_point_mass` | 对非负归一化有限质量，`shannonEntropy p = 0` ↔ `p` 为某一点质量。 | 〔已冻形式件〕 |
+| 条件熵零面 | `D5/S3/Entropy/ConditionalEntropyEquality.lean` | `conditional_entropy_eq_zero_iff_point_mass_on_support` | 在联合质量逐点非负前件下，条件熵为零 ↔ 每个非零边缘质量切片上的条件质量为一点质量。 | 〔已冻形式件〕 |
+| 互信息零面 | `D5/S3/Entropy/MutualInformationIndependence.lean` | `mutual_information_eq_zero_iff_product` | 对非负归一化有限联合质量，互信息为零 ↔ 联合质量等于其两边缘质量之积。 | 〔已冻形式件〕 |
+| 总变差零面 | `D5/S3/TotalVariation/Metric.lean` | `total_variation_eq_zero_iff` | 对任意有限实函数，`totalVariation p q = 0 ↔ p = q`。 | 〔已冻形式件〕 |
+| Hellinger 零面 | `D5/S3/TotalVariation/HellingerDivergence.lean` | `hellinger_sq_eq_zero_iff` | 在 `p`、`q` 逐点非负前件下，`hellingerSq p q = 0 ↔ p = q`。 | 〔已冻形式件〕 |
+| Rényi 零面 | `D5/S3/RenyiDivergence/ZeroCharacterization.lean` | `renyi_divergence_eq_zero_iff` | 在 `alpha > 0`、`alpha ≠ 1`、两质量非负归一化及离散绝对连续前件下，Rényi divergence 为零 ↔ `p = q`。 | 〔已冻形式件〕 |
+| 谱锐度下端面 | `D5/S3/Quantum/Sharpness/SpectralSharpness.lean` | `spectral_sharpness_zero_iff_uniform` | 对反单调且总和为 `1` 的有限谱，`spectralSharpness r = 0` ↔ 每项等于 `1 / n`。 | 〔已冻形式件〕 |
+| 谱锐度饱和面 | `D5/S3/Quantum/Sharpness/SpectralSharpnessSaturation.lean` | `spectral_sharpness_one_iff_support_le_half` | 对非负、反单调且总和为 `1` 的有限谱，`spectralSharpness r = 1` ↔ 非零支撑基数不超过 `n / 2`。 | 〔已冻形式件〕 |
+| 观察者零扰动面 | `D5/S3/Observer/ObserverMetric.lean` | `perturbationSeminorm_eq_zero_iff` | 在有限非空指标型上，扰动半范数为零 ↔ `f (tau i) = f i` 对每个 `i` 成立。 | 〔已冻形式件〕 |
+| 轨道距离取值面 | `D5/S3/Observer/MetricGeometry/OrbitConnesDistance.lean` | `orbit_connes_distance_eq` | 对整数轨道任意 `m,n`，`orbitConnesDistance m n = dist m n`；该声明为直接恒等式，不另列饱和 iff。 | 〔已冻形式件〕 |
+| Le Cam 紧面 | `D5/S3/Estimation/LeCamTight.lean` | `le_cam_two_point_sum_tight` | 在共同质量且 `q` 总质量为 `1` 的前件下，事件 `{i | p i ≤ q i}` 的两类误差和等于 `1 - totalVariation p q`。 | 〔已冻形式件〕 |
+| Robertson–Schrödinger 恒等面 | `D5/S3/QuantumBounds/RobertsonSchrodinger.lean` | `robertson_schrodinger` | 对称算子与单位向量下，中心化范数平方积被声明为 covariance 平方、commutatorHalf 范数平方与 `G` 之和，并同时声明 `0 ≤ G`；本 theorem 未给“下界取等 ↔ `G = 0`”的独立 iff。 | 〔已冻形式件〕 |
+| CHSH 谱界面 | `D5/S3/QuantumBounds/CHSHSpectrum.lean` | `chsh_spectrum` | 在四个 Hermitian involution、`0 < N < 4` 及 commutator 谱二点包含前件下，CHSH 实谱被包含于所列四个平方根点；本 theorem 是谱包含，不宣称四点逐一取到。 | 〔已冻形式件〕 |
+| CHSH 取等见证 | `D5/S3/QuantumBounds/CHSHWitness.lean` | `bell_chsh_value` | 固定 Bell 密度矩阵与固定 CHSH 算子满足 `trace (bellDensity * chshOperator) = 2 * sqrt 2`；该声明给显式取等见证，不给全体取等态之 iff 分类。 | 〔已冻形式件〕 |
+
+**边界账**：表内无仅据 filename / Blueprint 登记之行；所有路径均在 dev 树实存，所有承重标识符均已亲读其 Lean statement。表中“未给 iff”只记录原声明边界，不由索引补造数学结论。〔data-only；所列全为已冻形式件，无 digest 级冒领〕
+
+**索引附注(2026-08-14)**:本表由逐个读取 dev 树上 Lean statement 建成,24 条之路径存在性与承重标识符真实性均经机器核验(逐条断言该文件内确有同名 `theorem`/`lemma`/`def`),失败 0、悬空 0。**已修正一处名实不符**:源卷宗所称 `CHSH` 若落实为 `D5/S3/Quantum/CHSH.lean` 则该路径不存在,实存者为 `QuantumBounds/CHSHSpectrum` 与 `QuantumBounds/CHSHWitness`,表中按实址登记。**有意排除并记明理由**:`StrictGibbs`/`DpiDefect`/`StrictDpi` 各自只给单向不等或严格正,不自陈取等 iff,其零面已由 `GibbsEquality`/`PetzClassical` 登记;`CompositeCones` 只给两项锥包含,具体对偶 iff 改登记实存的 `CompositeConeDuality`。
+
+**候查 B14（物理桥接、人择选择与分层观察研究纲领，2026-09-13）**。本条承接 C1、S1–S3、T3、B9 与 B13，把“数学与现实中的结构相遇”转为有对象、有量纲、有反事实、有误差界的研究计划。基线亲读为 `dev@d2eb23f889209153d7b932179bf052eb7eb395ef`；文献检索截至 2026-09-13，近期样本含 2026 年 2、5、7 月预印本，检索有界而非全领域穷尽。新推导给普通数学论证及有限核验，均尚未在本次新增 Lean 中验证；旧 Lean 的陈述核对不等于本次重新编译。〔研究纲领；下列数学候选 Lean可关，实物接口 runner可关，本体立场哲学open〕
+
+**B14.A 研究总问题与桥接合同。** 有限观察者看到一个数值、状态或规律时，哪些关系已经被保留，哪些历史被合并，哪些世界因无法产生记录而未进入样本？研究目标是建立如下链条，并逐段给出可失败的条件：〔研究目标，实例runner可关〕
+
+```text
+局部约束与制备 -> 带关系的状态/历史 -> 可执行演化与干预
+                                      |
+                             存活/被记录的选择机制
+                                      |
+                             观察接口与有限分辨率
+                                      |
+                         可检验预测、误差预算与相对决策
+```
+
+一条“数学结构 -> 现实载体”桥梁至少要指定：数学态空间、物理制备、允许的控制、读数映射、能量/时间/概率单位、近似适用域、能够区分替代解释的实验。精确双射只运输它保留的结构；状态集合双射尚不运输动力学或 Gibbs 权重。代数同构、动态半共轭、统计近似及经验拟合分别登记。共同常数作为线索，参数变化下的共同响应作为更强检验。〔方法原则，实例runner可关〕
+
+例如对动作 a、微观转移 T_a、观察 q 和候选宏观转移 K_a，真正待检验的合同是
+
+\[
+\sup_{a,x}\operatorname{TV}\bigl(q_*T_a(x),K_a(qx)\bigr)\leq\varepsilon.
+\tag{B14-1}
+\]
+
+上确界只取声明的制备域与动作族。精确零缺口要求同一 q 纤维中的所有态具有相同的下一步可见概率律。连续多步保证还要求域在演化下保持有效、动作从同一可见策略产生；在这些条件下，逐步总变差收缩及三角不等式给出 n 步误差不超过 min(1,nε)。与源模型不兼容的控制不能借用该界。〔Lean可关，有限型推导；通用单步零缺口见下列既有真源〕
+
+**B14.B 现有基础与真实剩余。** 下表只登记本轮亲读的陈述，完整模块名以路径为准。它们是优先复用的证明来源，本文不把旧结果重新列为新发现。〔账目，免分型〕
+
+| 真源路径 / 声明 | 已有陈述 | 本研究仍需做的连接 |
+|---|---|---|
+| `D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean` / `strong_lumpability_descent_tfae` | 推前 PMF 在观察纤维上恒定，当且仅当存在 realized image 上的宏观转移核 | 存活条件化之后该性质何时保留；动作与多步误差如何运输 |
+| `D5/S3/DivergenceSupport/ZeroSupportDPI.lean` / `classical_dpi_identity_zero_support` | 非负归一化质量、p≪q、非负随机信道下的精确 KL 链式分解，允许零概率 | 选择归一化项、物理反向协议和有限读数的组合 |
+| `D5/S3/DivergenceSupport/ZeroSupportDefect.lean` / `dpi_defect_nonneg_zero_support` | 一般支撑下的信息损失非负 | 给实际观察分辨率与筛选规则赋予含义 |
+| `D5/S3/DivergenceSupport/Garbling/DeterministicGarbling.lean` / `deterministic_forgetting_kl_loss_nonnegative` | 确定性有限粗粒化不能增加 KL | 可见路径层的耗散下界、选择后的误差放大 |
+| `D5/S3/Quantum/Information/CorrelatedGibbsEnergyIdentity.lean` / `energy_information_identity` | 实际密度矩阵、Hamiltonian、初始 Gibbs 边缘与联合幺正演化的能量–相关性等式 | 任意初始边缘、外界做功、实验误差与具体两比特实例 |
+| 同模块 / `marginal_entropy_change_eq_mutual_information_change` | 两个边缘的熵变化之和等于联合互信息变化，保留初始相关性 | 接通关系资源、部分观测与相关性证书 |
+
+进度校正：此前讨论把支持零概率的 DPI 扩展列作缺口，当前源码已经提供 `ZeroSupportDPI` 和确定性 specialization。后续直接复用。旧 `PetzClassical` 的严格正前件不代表整个库只有严格正版本。本文没有完成全仓及所有在飞分支的去重普查，实施时仍须对具体目标查重。〔账目，免分型〕
+
+**B14.C 无最后一层的操作读法。** 截图中的“对象都有来路”可落实为一族有序观察接口，而不预设存在一份可完全读取的最终微观说明。令 q_r 为分辨率 r 的读数；r≤s 时要求有 π_sr 满足 q_r=π_sr∘q_s，且 π_tr=π_sr∘π_ts（r≤s≤t）。可见对象就是接口的纤维类，升级观察使可区分关系增加。对于当前选定目标与动作族，不再需要展开的那一层可以作为局部基本对象。〔定义方案，Lean可关；自然界是否没有最终层仍哲学open〕
+
+“当前测量相同”与“所有允许的未来实验都相同”必须区分。可定义操作等价：x≈_A x′ 当且仅当每个允许的有限控制序列及读数实验给出相同分布；扩大动作族 A 会细分等价类。量子例子是仅测能量时的纯态 |+⟩⟨+| 与 I/2：两者能量概率同为 (1/2,1/2)，施加 Hadamard 后可以区分。它们也不在同一幺正共轭轨道，因为谱不同。因此观测纤维、群轨道和 twirling 的像不能通用地互换。〔Lean可关，显式二阶矩阵见证〕
+
+一族无终点的分辨率不自动产生一致的“无限世界”。对可数链，非空有限层、满射连接映射足以构造非空逆极限；更一般情形须给紧性、一致性或可测扩张条件。有限前缀验证只认证该前缀。现有 `CONTEXTUAL_SPACETIME_ARITHMETIC.md` §1 的 HF、leaf/pair 与有限档案是选定表示，它们兼容逐层展开的研究，却没有证明宇宙无底层。〔前半Lean可关；解释边界哲学open〕
+
+**B14.D 人择的三个层次与可辨识性。** 本研究把人择相关问题分成三层。第一层是统计记录选择：样本必须经过存活、被探测或留下记录的条件；第二层是自主系统维持自身可行域的动力学；第三层是宇宙参数、生命存在与自我定位的推断。前两层提供能在有限模型中检验的共同数学机器，第三层还需要世界族、先验及观察者抽样规则。三层之间逐项桥接，不直接互证。〔建模原则，实例runner可关；宇宙解释哲学open〕
+
+给世界参数 θ、历史 h、读数 y，一个有限或可积的模型可写为
+
+\[
+\Pr(\theta,h,y\mid\text{record})
+\propto\pi(\theta)P_\theta(h)w_\theta(h)K_\theta(y\mid h).
+\tag{B14-2}
+\]
+
+这里 w∈[0,1] 是记录成功概率，归一化常数必须有限且正。观察者数量或 observer-instant 数量若用于加权，应另用非负强度 ξ 并证明可积，不把“数量”当作概率。已有数据若本来就条件于同一记录事件，不能再把该条件重复乘入。理论只观测到 πPw 的归一化乘积时，各因子通常不可分别辨识：对适当正函数 a(θ)，改变先验为 πa、改变选择权重为 w/a，可保持同一观测分布；归一化及 w≤1 的要求须同时满足。〔Lean可关，有限型可给精确两模型见证〕
+
+因此“我们存在”本身不能唯一选择一种先验、典型性假设或空间维数。Hartle–Srednicki [R1] 把典型性视作必须显式陈述的额外假设；Azhar–Guth–Namjoo 2026 [R2] 提出另一种按主观相同观察者时刻组织的推断规则，并把 measure problem 留在范围外。ALAverse 2026 [R3] 提供带具体先验和观察时间权重的宇宙学候选。这里取这些文献作相互比较的模型，不把任何一套抽样约定升为自然定律。〔文献讨论；模型比较runner可关，宇宙结论未认证〕
+
+具体检验应固定同一数据，分别改变先验、存活权重、观察时刻权重及测量接口，报告哪些预测不变、哪些结论翻转。若某结论在整个声明的权重族内成立，才给该族上的稳健证书；不能只挑选能解释既有常数的权重。〔研究目标，runner可关〕
+
+**B14.E 第一主定理候选：选择–可见–隐藏三项恒等式。** 令 Ω、Y 有限，P、Q 是概率质量；在 P 正支撑上 Q>0。令共同选择权重 w:Ω→[0,1]，Z_P=Σ_hP(h)w(h)>0，Z_Q=Σ_hQ(h)w(h)>0，P^w=Pw/Z_P、Q^w=Qw/Z_Q。K 是非负行随机信道。记 Σ(h)=ln(P(h)/Q(h))，只在 P^w 正支撑取值。则目标为
+
+\[
+\mathbb E_{P^w}\Sigma
+=\ln\frac{Z_P}{Z_Q}
++D(P^wK\Vert Q^wK)
++\sum_{y:(P^wK)(y)>0}(P^wK)(y)
+ D\bigl(P^w(\cdot\mid y)\Vert Q^w(\cdot\mid y)\bigr).
+\tag{B14-3}
+\]
+
+证明草图：在 w>0 的有效支撑上，ln(P^w/Q^w)=ln(P/Q)+ln(Z_Q/Z_P)；取期望得到选择归一化项。对 P^w、Q^w、K 应用已有 `classical_dpi_identity_zero_support` 得余下两项。零输出权重按现有支撑约定贡献零。前一项可正可负，后两项非负。该结果由标准换测度与 KL 链式法则组合，研究增量在选择、观察和物理来源同时有明确定义的实例化，不主张基本代数新颖。〔Lean可关，普通数学证明已给；新组合尚未kernel验证〕
+
+若 P、Q 在共同支撑上相互绝对连续，还得到条件化涨落恒等式
+
+\[
+\mathbb E_{P^w}e^{-\Sigma}=Z_Q/Z_P.
+\tag{B14-4}
+\]
+
+相互绝对连续不可静默弱化：仅有 P≪Q 时，右侧应扣除 Q 在 P=0 且 w>0 处的质量。选取 P=(9/10,1/10)、Q=(1/10,9/10)、只保留第二态时，条件平均 Σ=ln(1/9)<0，而两个已选择分布完全相同，可见项与隐藏项均为零。这说明筛选后的负平均对数比完全可以由选择项解释。〔Lean可关，精确两点见证〕
+
+若正反两侧使用不同选择 w_F、w_R，在有效共同支撑上还须加上 -E ln(w_F/w_R)；共同 w 才允许消去。把同一物理路径读数后筛选的过程写入本式时，需把随机记录变量并入 Ω，不能忽略它。选择权重是统计条件化，实际后选择仪器的耗能与扰动属于另一笔物理账。〔Lean可关／物理仪器runner可关〕
+
+Σ 首先只是对数似然比。要称 k_B EΣ 为物理熵产，必须由具体动力学证明 Q 对应正确时间反演、给出初始分布、热浴规则及能量边界。2026 年 Knudsen 系统论文 [R4] 明确在 reciprocity 前件下接通路径相对熵与热量/温度；活性粒子论文 [R5] 则展示隐藏推进变量使位置轨迹的不可逆性读数与完整耗散不同。首个实现宜用有限 Markov 链加局部详细平衡，再进入连续路径测度。〔物理桥接目标；引用范围见文献账〕
+
+**B14.F 第二主定理候选：选择的误差放大与动力学闭合。** 对任意有限 P、Q 及共同 w∈[0,1]，两归一化常数为正时，有较强的界
+
+\[
+\operatorname{TV}(P^w,Q^w)
+\leq\min\left(1,\frac{\operatorname{TV}(P,Q)}{\max(Z_P,Z_Q)}\right).
+\tag{B14-5}
+\]
+
+证明草图：设 α=Z_P≥Z_Q=β，令 γ=Σw min(P,Q)。则 Σmin(P^w,Q^w)≥γ/α，所以 TV≤(α-γ)/α≤TV(P,Q)/α；交换 P、Q 得另半边。对 ε∈(0,1/2)，取 P=(1-2ε,ε,ε)、Q=(1-2ε,3ε/2,ε/2)、w=(0,1,1)，两侧恰相等：原 TV=ε/2，选择后 TV=1/4。稀有记录可把任意小总体差异放大成固定可见差异。〔Lean可关，精确证明与取等族〕
+
+因此，一个未经选择的 n 步模型误差 δ_n，在两模型记录概率均至少 p_min>0 的前件下，只能直接兑换为 min(1,δ_n/p_min) 的选择后界。p_min 是承重前件；不能把原分布上的 α 保证直接继承给任意稀有“观察者存在”子样本。〔Lean可关；实测 p_min 的统计保证另付预算〕
+
+为了研究选择如何改变可见动力学，令 T 为有限 Markov 核，V 为 N 时刻的可行域，h_t(x)=Pr_x(X_N∈V)。在 h_t(x)>0 的部分定义
+
+\[
+T_t^h(x,x')=T(x,x')\frac{h_{t+1}(x')}{h_t(x)},
+\qquad h_t=Th_{t+1}.
+\tag{B14-6}
+\]
+
+行和为一来自递推。若 T 对 q 强可合并，且 V 是 q 纤维的并，则反向归纳给出每个 h_t 在纤维上恒定，进而 T_t^h 的可见推前也在纤维上恒定。这个充分条件把现有 strong lumpability 接到内生存活选择；并不主张它是所有特定模型的必要条件。〔Lean可关，有限时域证明草图〕
+
+反例见证使用五态 a,b,c,d,e，读数 q(a)=q(b)=A、q(c)=q(d)=B、q(e)=C。令 T(a)=(δ_c+δ_e)/2、T(b)=(δ_d+δ_e)/2，其余三态各自吸收。原核强可合并。若一轮后只保留 V={c,e}，从 a 的可见下一态为 (B+C)/2，从 b 则必为 C，闭合被破坏；改用 V={c,d}，两者都必为 B，闭合保留。〔Lean可关，已精确有限核验〕
+
+科学问题由此明确：我们看到的宏观规律究竟来自完整动力学，还是来自“有机会留下记录”的动力学？要比较未筛选、按可见变量筛选、按隐藏变量筛选三种条件，保留失败与未被记录的机会数。此研究可先在有限链和公开轨迹重分析中完成，随后对接 [R5] 的隐藏状态系统。〔runner可关〕
+
+**B14.G 第三主定理候选：关系信息的带误差能量证书。** 固定两个有限维局部 Hamiltonian，β_A>β_B>0，初态为任意联合密度矩阵，联合演化幺正。参考态 τ_i∝exp(-β_iH_i)，D_i^t=D(ρ_i^t∥τ_i)，I_t 为联合互信息。由 Gibbs 变分恒等式对初末态相减，并用已有边缘熵变化公式，得到目标
+
+\[
+\beta_A\Delta E_A+\beta_B\Delta E_B
+=(D_A^f-D_A^i)+(D_B^f-D_B^i)+I_f-I_i.
+\tag{B14-7}
+\]
+
+当前 `energy_information_identity` 已给初始边缘恰为 Gibbs 的特例。新工作要从真实密度矩阵补齐任意初始边缘的版本和非负性调用，不能仅把式 (B14-7) 当作六个实数的假设再移项。〔Lean可关，来源与新义务已分离〕
+
+令 W=ΔE_A+ΔE_B，|W|≤w_0，D_A^i+D_B^i≤η，实验估计满足 |(β_A-β_B)(ΔE_A-\widehat Q_A)|≤δ。则
+
+\[
+I_i\geq\max\{0,
+-(\beta_A-\beta_B)\widehat Q_A-\beta_Bw_0-\eta-\delta\}.
+\tag{B14-8}
+\]
+
+证明草图：式 (B14-7) 改写 I_i=D_A^f+D_B^f+I_f-(D_A^i+D_B^i)-(β_A-β_B)ΔE_A-β_BW，丢弃三个非负末态项，再代入预算。这个量是初始**总相关性**的下界；它不自行区分经典相关、量子 discord 与纠缠。初末相互作用能、控制器做功、测量扰动若未计入 W 或单列修正，不能称其为实验闭账。ΔE_A 只有在指定无功交换条件下才可直接解释为热量。〔Lean可关／预算标定runner可关〕
+
+首个完整实例取基序 |00⟩,|01⟩,|10⟩,|11⟩，能隙 ε_0>0，
+
+\[
+\rho(c)=\begin{pmatrix}
+12/25&0&0&0\\
+0&8/25&c&0\\
+0&c&3/25&0\\
+0&0&0&2/25
+\end{pmatrix},\qquad
+U_\theta\big|_{01,10}=\begin{pmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{pmatrix}.
+\tag{B14-9}
+\]
+
+其余两个基向量由 U 保持。c=0 与 c=-1/10 都合法、边缘相同，β_Aε_0=ln4、β_Bε_0=ln(3/2)。U 与总裸 Hamiltonian 对易，且 Q_A/ε_0=(1/5)sin²θ+c sin2θ。θ=π/12 时，c=0 给 +0.0133974596，c=-1/10 给 -0.0366025404；后者 I_i=0.0513511884、I_f-I_i=-0.0430661205、D_A^f+D_B^f=0.0071652782，热流证书给 I_i≥0.0359008423 nats。上述小数为本轮数值核验，精确矩阵条件和公式为待形式化对象。Micadei 等 [R6] 的核磁共振热流反向实验提供现实参照，现象本身不作为本研究的新发现。〔Lean可关；实物复现未做〕
+
+测量设计要求同一制备协议下分别标定能量、控制功和联合态，避免只把一项定义成“总量减另外两项”后宣称独立验证。逐次能量投影可能先破坏 c 所携带的相干关系，故两点测量方案与无初始破坏的平均能量测量不是同一实验；实验分组、重复制备和测量通道必须入合同。〔runner可关〕
+
+**B14.H 第四条桥：Fibonacci 排除、配分函数与有限阻塞。** 既有 E6 证明无相邻非零位的显式双射和递推。c=1 的合法字构成理想最近邻阻塞链的基态标签。Rydberg 阻塞与受约束多体动力学有真实实验及模型背景 [R7,R8]；对应只承诺合法态与投影结构，不自动赋予相干驱动系统经典平衡概率。〔既有形式结构／物理接口runner可关〕
+
+给占据数 N(x)，活动度 z>0，定义硬排除配分函数 Z_L(z)=Σ_{legal x}z^{N(x)}。由同一首位双射运输**权重**，目标为
+
+\[
+Z_0=1,\quad Z_1=1+z,\quad Z_{L+2}=Z_{L+1}+zZ_L,
+\quad\lambda_+(z)=\frac{1+\sqrt{1+4z}}2.
+\tag{B14-10}
+\]
+
+φ 对应 z=1 的增长率。经典平衡长链的占据密度候选为 ρ(z)=z∂_z lnλ_+(z)=(1-1/√(1+4z))/2；先证明有限 L 的正性、配分函数与可微性，再证明极限及适当导数交换。c 个等能颜色只在指定权重模型中对应 z 的简并因子。改变 z、排除半径或边界条件后的整族预测，比重复拟合 φ 更能检验桥梁。〔Lean可关；无限极限尚未本轮证明〕
+
+更接近有限相互作用的第一步不必等待热力学极限。令 B(x) 为相邻双占据对数，软排除权重 z^{N(x)}exp(-βVB(x))，βV≥0。把硬分布延拓为非法字上零质量，则有限 L 精确成立
+
+\[
+\operatorname{TV}(P_{soft},P_{hard})
+=\frac{Z_{illegal}}{Z_{soft}}
+\leq\min\left(1,\frac{e^{-\beta V}(1+z)^L}{Z_{hard}}\right).
+\tag{B14-11}
+\]
+
+证明草图：软分布条件于合法字恰为硬分布，故 TV 等于软分布非法概率；非法字至少含一对违规，相应权重至多 e^{-βV}z^{N(x)}，再用全部二元字总权重 (1+z)^L 与 Z_soft≥Z_hard。这个界可能很松且不对 L 一致；它适用于指定的经典对角 Gibbs 模型，相干 PXP Hamiltonian 必须另外估计动力学泄漏。〔Lean可关，有限型精确推导〕
+
+**B14.I 相对优化、语义信息与“自然找到路径”。** “有可行路径”“动力学趋于稳定”“某代价被优化”是三个不同命题。先固定系统–环境动力学、可行域 V、时域 N、允许动作与成本，再以 Pr(X_N∈V) 或另一个声明损失定义任务。不同目标对应不同最优性，不能由存在稳定结构推出自然界最大化某个统一信息函数。〔建模原则，实例runner可关〕
+
+Kolchinsky–Wolpert [R9] 用扰乱系统–环境相关性的反事实干预讨论维持存在所需的信息；资源采集模型 [R10] 则给出可具体计算的存活任务。2026 年 GARD 催化网络工作 [R11] 可作为进一步的自主性比较对象，其结论目前在这里仅按模型摘要登记。桥接实验应保持边缘分布、能量供给和动作预算匹配，再扰乱关系，检验存活或任务损失是否改变。统计互信息相同的两种编码未必有相同任务价值。〔文献支持的研究方向，runner可关〕
+
+有限决策目标可以先形式化：若细观察能模拟粗观察、动作与损失保持相同、忽略观察成本，则细观察的最优 Bayes 风险不高于粗观察，因为可直接使用粗层最优策略；将成本计入后比较 J_r=R_r+λC_r。新内容应落在具体可实现的观测/干预及成本耦合，不重复包装已有 Blackwell 型结果。精确干预运输可对照 Rubenstein 等 [R12] 的 causal consistency 框架。〔Lean可关；任务与成本选择仍显式输入〕
+
+**B14.J 三维与更大图景的可检验入口。** 当前情境算术 §1 明确固定 d=3，且一般结果允许任意预先固定的有限 d≥1。这一输入不能成为三维由算术推出的证据。接近截图思想的可做问题是：在指定观察与干预能力下，数据支持的最小表示维数是多少，增加分辨率后它是否稳定？〔研究目标，runner可关〕
+
+一个优先级较后的有限对象是距离几何：对 n 个读数点的对称、零对角平方距离矩阵 Δ，令 J=I-11ᵀ/n，G=-JΔJ/2。精确欧氏实现要求 G 为 PSD；满足时，最小欧氏嵌入维数是 rank G，坐标可从谱分解构造。应检查仓内既有 Gram/PSD/秩工具并直接复用。噪声下第三特征值的间隙可以支撑“至少三维”的证书；“恰好三维”还要控制其余谱及噪声，不能靠阈值裁掉高维后把三维当成无条件定理。〔Lean可关，经典有限线性代数目标〕
+
+拓扑维数、扩散谱维数、空间坐标维数与量子 Hilbert 维数分别登记。人择模型可以比较不同维数假设下的可行结构与观察概率；从这种比较走到我们的物理三维，需要可辨识的动力学和数据。更远的统一图景是跨层相容、关系资源与记录选择共同组织经验，当前尚不推出 Einstein 方程、唯一 Hamiltonian、宇宙无最终成分或任何 RH 结论。〔哲学open；分项模型可检验〕
+
+**B14.K 近期论文的一项实质校核与正向修复。** [R13] 的 restricted-information 框架与本研究高度相关，本文亲读 v2 §II–III，重点核对反向参考态与平均所用分布。该版本 §III 允许一般参考态，但 Eq.(8) 将平均对数概率比写成参考态熵减初态熵。这个无额外前件的读法不能直接输入形式化。〔文献核读；以下反例Lean可关〕
+
+取不简并、时间不变 Hamiltonian，U=I，正向 p=(1/2,1/2)，反向参考 q=(9/10,1/10)。允许的对角路径上正反概率都正，IFT 成立；平均对数比为 D(p∥q)=ln(5/3)>0，而 S(q)-S(p)=h(9/10)-ln2<0。两者不同。正确的非简并有限版本，对双随机转移 B、输出 p_f=Bp 和反向核 Bᵀ，是
+
+\[
+\mathbb E\ln\frac{p_iB_{ij}}{q_jB_{ij}}
+=H(p_f)-H(p)+D(p_f\Vert q).
+\tag{B14-12}
+\]
+
+证明是按输入和输出分别求和；q=p_f 时最后一项消失。这里 B 约定列出从 i 到 j 的行概率，p_f(j)=Σ_i p(i)B_ij；式中 Bp 只表示该推前，不改行列约定。后续形式化使用显式求和定义避免记号歧义。这个修复把“终态的实际分布”与“逆实验选用的参考分布”重新分开，也解释为何任意统计对数比不能无条件当作物理状态熵变化。〔Lean可关，普通数学证明已给〕
+
+本项只反驳所核版本该等式的一般参考态读法，不对论文全部几何结果、其他版本或作者意图下总判断。可复用的部分逐条核验后引入，未核部分留为文献候选；本轮不主张这里已完成该论文的全面审计。〔账目，免分型〕
+
+**B14.L 优先形式化的八项交付与依赖。** 下面每项要求完整数学对象及至少一个非退化实例；“定义接口并把结论作为前件”不构成交付。代码实现时须匹配 Scribe 与来源，当前条目只登记理论，不预报实现通过。〔研究执行目标，Lean可关〕
+
+| 顺序 | 交付目标 | 先复用 / 补齐 | 可接受的完成证据 |
+|---|---|---|---|
+| P0-1 | 选择–可见–隐藏恒等式 (B14-3)，相互绝对连续下的 (B14-4) 与不同选择规则修正 | `ZeroSupportDPI`、有限质量归一化、有效支撑 | 零选择值、不可达输出、确定性读数都被正确处理；两点筛选见证 |
+| P0-2 | 选择后总变差锐界 (B14-5)，有限时域存活核的下降充分条件 (B14-6) | 总变差共同质量公式、`StrongLumpabilityDescent`、PMF | 锐界取等族、五态闭合破坏及保留见证；h=0 域明确 |
+| P0-3 | 任意初始边缘的矩阵能量恒等式及鲁棒相关性证书 (B14-7/8) | `CorrelatedGibbsEnergyIdentity`、Gibbs 变分式、实际量子 KL/互信息非负性 | 两比特合法态、幺正性、总能量对易与热流公式全链；工作/误差预算有单位 |
+| P0-4 | 正反路径比与局部详细平衡、有限读数的物理组合；参考态修正式 (B14-12) | P0-1 与有真实转移率/能量定义的有限链 | 从速率比推出热量/温度项，初末分布项保留；不能把物理等式作为未解释公理 |
+| P1-1 | 多层观察与控制一致性、n 步传播界及选择后的 p_min 修正 | 现有下降定理、总变差收缩、P0-2 | 两条观察路径的相容图、至少一个失败的宏观闭合案例 |
+| P1-2 | E6 加权双射、有限量子投影的配分函数识别、软阻塞界 (B14-10/11) | `CompositeGas`、有限和、张量基与迹 | 任意有限 L、z>0 的证明；经典平衡与相干驱动边界分开 |
+| P2-1 | 关系干预的任务价值、成本约束下最优观察分辨率 | 决策风险既有结果、有限控制模型、P1-1 | 匹配边缘/资源的干预见证，任务风险变化与 raw MI 分开 |
+| P2-2 | 无终层观察塔的相容性，以及有限距离读数的维数证书 | 逆极限/可测因子化、Gram/PSD/谱界工具 | 所需紧性或有限性明确；维数与噪声界共同给出，不预设结论为三维 |
+
+最短主线是 P0-1 → P0-2 → P0-4：先把选择与观测分账，再确定选择何时改变宏观动力学，最后给这些项装上物理量纲。P0-3 是可并行的第一条实物接口；P1-2 检验同一桥接方法能否跨到黄金排除结构。P2 的宏大解释须由前面的具体对象提供约束。新颖性只在实际完成的组合定理、可辨识界及物理预测中逐项评估，传统换测度、DPI、Doob 变换或欧氏距离定理本身均不冒领。〔研究优先级，非已完成状态〕
+
+**B14.M 实验与现实接口的升级次序。** 第一阶段做有隐藏状态与存活筛选的有限链：测全部机会数、选择概率、可见路径比和闭合残差；三种筛选对照按 B14.F 固定。第二阶段使用独立能量/功标定的两比特协议：比较相同局部初态、不同关系项，并对 (B14-8) 的每项单独预算。第三阶段用经典排除链或受控阻塞平台检验整条 z 响应及有限惩罚误差；相干实验另付动力学映射。第四阶段才将关系干预移到自主资源采集或催化网络，任务必须先固定。〔runner可关；以上均为待做实验〕
+
+每一阶段都先登记正向预期、替代解释和失败条件。例如：观测分布可由选择规则变化解释，就不能独占归因给新动力学；所测反向能量流被控制功预算覆盖，就不签发正的关系信息下界；只在 z=1 匹配却不能预测响应曲线，就不宣称机制桥接成功。解释失败会缩小适用域或转移研究方向，不靠增加自由参数维持同一结论。〔实例runner可关〕
+
+**B14.N 本轮实际进展与有限核验。** 已完成的是源码陈述审查、分层研究设计、上述普通数学推导及下列本地核验。固定随机种子 20260913，100 个七态到四读数的概率案例，含零选择权重、确定性信道、不可达输出；(B14-3) 最大数值残差 3.33×10⁻¹⁶，(B14-4) 最大残差 4.44×10⁻¹⁶，(B14-5) 未出现正向违例。锐界族 ε=1/100 用有理数核得 TV 从 1/200 变成 1/4；五态存活见证亦用有理数核验。〔数值／有限核验；通用结论待Lean〕
+
+两比特的 PSD、幺正性、总能量对易、热流公式和信息平衡在 c∈{0,-1/10}、θ=π/12 核验通过，容差 10⁻¹²。硬排除递推用 Fraction 精确枚举 L=0..10、z∈{1/2,1,2} 共 33 例；软排除取 exp(-βV)∈{1/10,1/2}，共 66 例，精确核对 TV=非法概率和上界。参考态反例得到 +0.5108256238 与 -0.3680642072 两个不同读数。核验提供错误探针，不代替参数化证明。〔数值／有限核验〕
+
+当前尚无本条的新 Lean 编译、物理实验、公开数据重分析或独立异模型审稿；这几项分别留待实施。已有的文献现象、库内证明、本文推导及规划中的实验各自保持其证据地位。下一轮最先应交付 P0-1 和 P0-2 的有限型完整定理，而非扩大概念词典。〔账目，免分型〕
+
+**B14.O 文献与检索账。** 以下链接为本条使用的具体来源，访问日均为 2026-09-13。预印本只按所列版本使用；“摘要核读”不能充当定理细节已经审计的凭据。检索主轴为 observer selection / anthropic typicality、restricted information、hidden-state entropy production、causal coarse-graining、semantic information、quantum heat correlations 与 Rydberg constraints，并交叉阅读相反典型性立场。〔账目，免分型〕
+
+| 编号 | 来源及核读深度 | 本条用途与边界 |
+|---|---|---|
+| R1 | J. B. Hartle, M. Srednicki, *Are We Typical?*, Phys. Rev. D 75, 123523 (2007), [arXiv:0704.2630v3](https://arxiv.org/abs/0704.2630v3)；摘要与元数据 | 典型性假设需显式化；不据此否定所有选择模型 |
+| R2 | F. Azhar, A. H. Guth, M. H. Namjoo, *Probabilistic inference in very large universes*, [arXiv:2602.02667v1](https://arxiv.org/html/2602.02667v1), 2026-02-02；摘要、导论与规则说明 | 自我定位和 observer-instant 抽样的比较模型；measure problem 未由此闭合 |
+| R3 | Z. Huang, *ALAverse: A falsifiable anthropic model from the string landscape*, [arXiv:2607.24100v1](https://arxiv.org/html/2607.24100v1), 2026-07-27；摘要、导论及先验/选择说明 | 检查先验与观察时间权重的敏感性；不把该宇宙模型的拟合当成已证现实 |
+| R4 | T. Chumley, R. Feres, Z. Zhang, *Entropy production in Knudsen thermodynamics of compartmented systems*, [arXiv:2607.18202v1](https://arxiv.org/abs/2607.18202v1), 2026-07-20；摘要 | 路径 KL 到温度/热量需要 reciprocity 的物理桥；全文定理细节待专项核读 |
+| R5 | J. Knight, G. Pruessner, *Partial Entropy production of active particles with hidden states in potentials*, [arXiv:2605.29201v1](https://arxiv.org/html/2605.29201v1), 2026-05-28；摘要与模型导论 | 隐藏推进变量和部分熵产；具体势场条件不能删去 |
+| R6 | K. Micadei et al., *Reversing the direction of heat flow using quantum correlations*, Nature Communications 10, 2456 (2019), [DOI:10.1038/s41467-019-10333-7](https://doi.org/10.1038/s41467-019-10333-7)；正文实验与讨论 | 相关性伴随热流反向的实验参照；本文未复现实验 |
+| R7 | C. J. Turner et al., *Quantum many-body scars*, [arXiv:1711.03528v2](https://arxiv.org/abs/1711.03528v2)；摘要 | 受约束 Fibonacci 空间及动力学背景；合法态计数不决定演化 |
+| R8 | H. Bernien et al., *Probing many-body dynamics on a 51-atom quantum simulator*, Nature 551, 579–584 (2017), [arXiv:1707.04344v2](https://arxiv.org/abs/1707.04344v2)；摘要与元数据 | 原子阵列现实载体；不代替经典平衡假设的检验 |
+| R9 | A. Kolchinsky, D. H. Wolpert, *Semantic information, autonomous agency, and nonequilibrium statistical physics*, Interface Focus (2018), [arXiv:1806.08053v3](https://arxiv.org/abs/1806.08053v3), DOI:10.1098/rsfs.2018.0041；摘要与定义说明 | 相关性扰乱、可行性与语义信息的研究来源，具体任务须实例化 |
+| R10 | D. R. Sowinski et al., *Semantic Information in a model of Resource Gathering Agents*, [arXiv:2304.03286](https://arxiv.org/abs/2304.03286) (2023)；摘要 | 资源采集中的任务实例候选；不提升为一般生命定律 |
+| R11 | F. Pigozzi, M. Levin, *Causal Architecture Dynamics Prior to Arrival of Self-replicators in a Model of Catalytic Networks Relevant to Origin-of-Life*, [arXiv:2607.28250v1](https://arxiv.org/abs/2607.28250v1), 2026-07-30；摘要 | GARD 模型中的因果干预候选；复用前仍需全文与实现审查 |
+| R12 | P. K. Rubenstein et al., *Causal Consistency of Structural Equation Models*, [arXiv:1707.00819](https://arxiv.org/abs/1707.00819) (2017)；摘要与框架说明 | 跨层干预相容的先例；不把被动分布相同等同于干预相同 |
+| R13 | T. Pernambuco, L. C. Céleri, *Geometry of restricted information: the case of quantum thermodynamics*, [arXiv:2602.06716v2](https://arxiv.org/html/2602.06716v2), 2026-05-18；§II–III 及 Eq.(5)–(8) | 观察限制的几何候选；B14.K 记录一般参考态等式的局部反例与修复目标 |
+
+**B14 收束。** 本路线把“共同底层逻辑”的直觉压成三类可运输内容：跨层的相容关系、选择之后仍成立的概率恒等式、具有独立量纲标定的物理资源平衡。人择进入记录选择与可行性，历史进入操作等价与分辨率塔，现实进入制备和干预。优先让这些连接在有限系统中完整闭合，再由它们约束更大图景。〔研究纲领；普遍本体解释哲学open〕
+
+---
+

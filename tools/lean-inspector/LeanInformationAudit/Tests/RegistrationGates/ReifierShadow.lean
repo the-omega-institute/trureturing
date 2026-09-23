@@ -115,10 +115,11 @@ private def manual (form : Syntax) (wrapped : Bool) : CommandElabM Unit := do
   let theoremId := mkIdent theoremName
   let arenaId := mkIdent arenaName
   let bridgeId := mkIdent bridge
+  let bridgeSyntax ← `(informationRealization| $bridgeId:ident)
   let variId := mkIdent vari
   let sensId := mkIdent sens
   elabCommand (← `(command| register_information_theorem $theoremId in $arenaId
-    primitives $primitive:ident realization $bridgeId variation $variId sensitivity $sensId))
+    primitives $primitive:ident realization $bridgeSyntax variation $variId sensitivity $sensId))
   unless InformationRegistry.hasTheorem (← getEnv) theoremName do
     throwError "manual lowering failed; generated_unit={(← getEnv).contains unit}"
 

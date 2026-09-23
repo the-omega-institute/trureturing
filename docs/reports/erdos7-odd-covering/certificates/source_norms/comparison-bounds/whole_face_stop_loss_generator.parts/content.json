@@ -1,0 +1,225 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-whole-face-stop-loss-generator-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "6fda0c02159adb9370c9eca779fed523c66ebc752e97b3d8da451e48a01ec2ba",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "stop_loss_profile": {
+    "path": "content/006-stop_loss_profile.json",
+    "sha256": "9f7e613dbfbec585cfda010d38f8da59aeca9e7220ebc4fb8e0c7acf316cdea0",
+    "kind": "value"
+  },
+  "linear_cost_updates": {
+    "path": "content/007-linear_cost_updates.json",
+    "sha256": "09e2c03c22fceffe336af1874101f5bd2c591fff2af4ea916de8095309d6d711",
+    "kind": "array"
+  },
+  "cost_weights": {
+    "path": "content/008-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "direct_cost_bounds": {
+    "path": "content/009-direct_cost_bounds.json",
+    "sha256": "ea6cf218fb99b1015c02e002c15fdef6f3e2b46232c69385f6059a87834a172e",
+    "kind": "value"
+  },
+  "majorants": {
+    "path": "content/010-majorants.json",
+    "sha256": "1a50571a7e871184917051da771bb001d580949d5f10f86ddc5320282c53d78e",
+    "kind": "array"
+  },
+  "improved_cost_bounds": {
+    "path": "content/011-improved_cost_bounds.json",
+    "sha256": "ea6cf218fb99b1015c02e002c15fdef6f3e2b46232c69385f6059a87834a172e",
+    "kind": "value"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "square_sums": {
+    "kind": "inline",
+    "value": {
+      "raw35_pair_sum": "173/48",
+      "zero7_pair_sum": "4651/1800",
+      "positive7_factor": "2/3",
+      "full_square_upper": "374/75",
+      "finite_boxes_and_complete_tails": [
+        {
+          "cut": 3,
+          "prefix": "29179783/6615000",
+          "complete_tail": "3807017/6615000"
+        },
+        {
+          "cut": 5,
+          "prefix": "834776803291/170170875000",
+          "complete_tail": "13808626709/170170875000"
+        },
+        {
+          "cut": 9,
+          "prefix": "309345415302930199153/62053128639140625000",
+          "complete_tail": "92852844251050847/62053128639140625000"
+        }
+      ]
+    }
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "direct_numerator_improvement_over97": {
+    "kind": "inline",
+    "value": "161078809575885301992191332306540530041/162094612438562866876518705000000000000"
+  },
+  "majorant_propagation_improvement": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "total_numerator_improvement_over97": {
+    "kind": "inline",
+    "value": "161078809575885301992191332306540530041/162094612438562866876518705000000000000"
+  },
+  "stop_loss_only_linear_gain_over86": {
+    "kind": "inline",
+    "value": "163034168156567327927042581693715498681/162094612438562866876518705000000000000"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39
+    ]
+  },
+  "previous_numerator": {
+    "kind": "inline",
+    "value": "9179782029399638996550960877298472801218799254177/252972956902243138190838916958250000000000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "8928394385235033599996847474534270323010312604177/252972956902243138190838916958250000000000000000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "40455251803/517708422000"
+  },
+  "full_AP11_tail": {
+    "kind": "inline",
+    "value": {
+      "mass": "5/43923",
+      "first_moment": "17/29282"
+    }
+  },
+  "denominator_coefficients": {
+    "kind": "inline",
+    "value": {
+      "mass": "945008/922383",
+      "linear": "45253/1844766",
+      "hinge4": "346061/1844766",
+      "hinge5": "4/33"
+    }
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "47197499880208999734343547153150683794373898235771601/97120417306609665359541226329029902125000000000000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "45962432384428293421073188005370157018935603324321601/97120417306609665359541226329029902125000000000000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "161078809575885301992191332306540530041/12666547584407959751010448732500000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary full-tail theorem on both complete actual K-control faces with r=rho=0 and exact saturated mass53/360. Independent original residues, all beta distributions permitted by the first-beta source condition. Complete stop-loss generator plus97 vector bounds, all52 costs, one simultaneous majorant substitution and the unchanged full AP11 denominator. No off-face neighborhood, new global K, Lean verification or unrestricted Erdos7 solution."
+  }
+}

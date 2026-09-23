@@ -1,0 +1,21 @@
+**定理 12.10（采样记忆接口接入稳定反馈的充分条件）。** 设 $U$ 为有限维实内积空间，$K,\widehat K:[0,\infty)\to\mathcal L(U)$ 可测且算子范数可积。令
+$$
+k=\int_0^\infty\|K(t)\|dt,\quad
+\widehat k=\int_0^\infty\|\widehat K(t)\|dt,\quad
+e_K=\int_0^\infty\|K(t)-\widehat K(t)\|dt.
+$$
+固定同一线性反馈 $A:U\to U$，$L=\|A\|$，并假设 $Lk<1,L\widehat k<1$。对有界可测 $f,\widehat f,g$，以下因果卷积方程在 $L^\infty([0,\infty);U)$ 中各有唯一解：
+$$
+x=f+K*(Ax+g),\qquad
+\widehat x=\widehat f+\widehat K*(A\widehat x+g).
+\tag{12.13}
+$$
+若 $\|f-\widehat f\|_\infty\le e_f$、$\|g\|_\infty\le G$，则
+$$
+\|x\|_\infty\le\frac{\|f\|_\infty+kG}{1-Lk},\qquad
+\boxed{\|x-\widehat x\|_\infty
+\le\frac{e_f+e_K(L\|x\|_\infty+G)}{1-L\widehat k}.}
+\tag{12.14}
+$$
+恢复几何卷第11节的共同正谱隙模型给 $k\le m/a$、$\widehat k\le\widehat m/a$，其命题11.7给 $e_K\le\Phi_a(m+\widehat m,\varepsilon)$；第12节的积分误差比较的是两份前缀的规范模型；用于实际模型时，另须其命题12.6所列的实际—规范同一性或响应误差依据。例如实际—规范核的积分误差已有 $e_{\rm model}$ 上界时，可取 $e_K\le e_{\rm model}+2\sqrt R\,d_J/a+R d_A/a^2$，其中 Frobenius 界同时控制算子范数。满足这里的小增益条件后，这些边界采样证书便控制同一反馈中的完整响应。
+

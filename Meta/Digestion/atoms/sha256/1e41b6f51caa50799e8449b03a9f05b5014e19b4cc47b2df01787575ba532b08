@@ -1,0 +1,16 @@
+**定理 70.8（Gibbs 熵恒等式与热迹指数）。** 若 $Z(\beta)<\infty$ 且 $E_\beta<\infty$，则
+$$
+S(\rho_\beta)=\beta U_\beta+\ln Z(\beta)<\infty.
+$$
+在定理 70.5 的规模与计数假设下，进一步有
+$$
+S(\rho_\beta)=\gamma\ln(1/\beta)+O(1)
+\qquad(\beta\downarrow0).
+$$
+
+证明。每个出现的特征值满足
+$$
+-\ln p_L(\beta)=\beta a_L+\ln Z(\beta).
+$$
+两项均非负，故可按重数求和而不作条件收敛换序。用 $\sum_Lm_Lp_L(\beta)=1$ 及能量有限，立即得到恒等式及有限熵。在规模与计数假设下，定理 70.5 给出 $\ln Z(\beta)=\gamma\ln(1/\beta)+O(1)$，命题 70.7 给出 $0\le\beta U_\beta=O(1)$，两式相加即得熵渐近。此推导不对热迹估计求导，也不需要 $U_\beta\sim\gamma/\beta$。证毕。
+

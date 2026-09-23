@@ -50,7 +50,7 @@ run_meta do
         ⟨"abc", ⟨0⟩, ⟨3⟩⟩ `DTR.fixture [.namespace `DTR, .decl `DTR.fixture ["field"]]]))]⟩
   let raw := Expr.mdata metadata (.letE `binder (mkConst ``Nat) (mkNatLit 17)
     (.lam `x (mkConst ``Nat) (.app (.const `fixture [.max (.param `u) (.succ .zero)]) (.bvar 0)) .implicit) false)
-  let rawPlan := { selected with levelParams := [`u], plan := .expanded raw (.proofLeaf (mkConst ``True) raw) }
+  let rawPlan := { selected with levelParams := [`u], plan := .expanded raw (.proofLeaf (mkConst ``True)) }
   let .ok rawBytes := planEncoding rawPlan | throwError "setup: raw syntax encoding failed"
   report "retained_raw_syntax_roundtrip" (match PlanDecoder.decode rawBytes (32 * rawBytes.size) with
     | .ok (decoded, _) => (planEncoding decoded).toOption == some rawBytes

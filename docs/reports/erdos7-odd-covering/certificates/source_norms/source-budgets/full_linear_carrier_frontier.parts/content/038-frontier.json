@@ -1,0 +1,85 @@
+{
+  "carriers": {
+    "path": "content/038-frontier/000-carriers.json",
+    "sha256": "caa72d19ae7d793200011cf566477c88f8666d80d6d052e989ee87d30cf98a3e",
+    "kind": "value"
+  },
+  "refined_vertices": {
+    "kind": "inline",
+    "value": [
+      398,
+      402,
+      404,
+      406,
+      410,
+      414,
+      416,
+      418,
+      422,
+      426,
+      428,
+      430,
+      616,
+      618,
+      620,
+      622,
+      628,
+      630,
+      632,
+      634,
+      640,
+      642,
+      644,
+      646
+    ]
+  },
+  "inherited_vertices": {
+    "kind": "inline",
+    "value": 1272
+  },
+  "linear_directions": {
+    "kind": "inline",
+    "value": 41
+  },
+  "quadratic_directions": {
+    "kind": "inline",
+    "value": 5
+  },
+  "source_square_conditioned": {
+    "kind": "inline",
+    "value": false
+  },
+  "original_layout_checks": {
+    "kind": "inline",
+    "value": 110400
+  },
+  "conditional_layout_checks": {
+    "kind": "inline",
+    "value": 1987200
+  },
+  "conditional_margin_values": {
+    "kind": "inline",
+    "value": 19872
+  },
+  "recovered_selected_linear_values": {
+    "kind": "inline",
+    "value": 246
+  },
+  "recovered_old_quadratic_values": {
+    "kind": "inline",
+    "value": 120
+  },
+  "conditional_margin_sha256": {
+    "kind": "inline",
+    "value": "2d2033334e026ddc90bafe000f25074d34aadb5b2ea536783d7ab62a685d129e"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "True41-linear and five-quadratic conditional functions at24 vertices, with profile47 lower bounds at all other1272 vertices. Each test retains independent source layouts and complete tails. No actual-source feasibility cut and no concavity claim about the patched table."
+  },
+  "row_blocks": {
+    "path": "content/038-frontier/013-row_blocks.json",
+    "sha256": "addb4284fa940e457a6fd1bf1235484a1d9c820463e9b269f44b4658bb13ae63",
+    "kind": "array"
+  }
+}

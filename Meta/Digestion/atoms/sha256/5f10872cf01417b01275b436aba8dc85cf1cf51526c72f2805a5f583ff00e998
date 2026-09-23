@@ -1,0 +1,41 @@
+**证明。** 先验证通用有限分解。对有限集上的概率 $\alpha\ll\beta$ 和映射 $u$，记 $\alpha_U=u_*\alpha$、$\beta_U=u_*\beta$。若 $\alpha(x)>0$ 且 $u(x)=a$，则 $\beta(x),\alpha_U(a),\beta_U(a)$ 均正，并有
+
+$$
+\frac{\alpha(x)}{\beta(x)}
+=\frac{\alpha_U(a)}{\beta_U(a)}
+\frac{\alpha(x\mid a)}{\beta(x\mid a)}.
+$$
+
+取对数、乘以 $\alpha(x)$，再按纤维求有限和，得到
+
+$$
+D(\alpha\Vert\beta)
+=D(\alpha_U\Vert\beta_U)
++\sum_{a:\alpha_U(a)>0}\alpha_U(a)
+D\bigl(\alpha(\cdot\mid a)\Vert\beta(\cdot\mid a)\bigr).
+$$
+
+这就是式（127.55）的条件 KL 分解。零 $\alpha_U$ 纤维无需选取条件律，其项为零。先代入 $(\alpha,\beta,u)=(P,R,q)$，得到第一份差值；再代入 $(P_Y,R_Y,f)$，得到第二份差值。
+
+有限 KL 非负，且在两概率相同时且仅在此时为零。可由 $-\log t\ge1-t$ 逐项推出：对 $\alpha\ll\beta$，
+
+$$
+D(\alpha\Vert\beta)
+\ge\sum_{x:\alpha(x)>0}(\alpha(x)-\beta(x))
+=1-\beta(\operatorname{supp}\alpha)\ge0.
+$$
+
+等号要求正 $\alpha$ 支撑上 $\beta(x)/\alpha(x)=1$，且支撑外无 $\beta$ 质量，恰为 $\alpha=\beta$。因此两份差值是非负条件 KL 的正权和；它们为零当且仅当各正权条件项都为零，给出全部等号与严格性条件。证毕。
+
+若同一对路径律上的记录塔满足 $q_n=\pi_nq_{n+1}$，代入 $q=q_{n+1}$、$r=q_n$ 得
+
+$$
+D(q_{n*}P\Vert q_{n*}R)
+\le D(q_{n+1*}P\Vert q_{n+1*}R)
+\le D(P\Vert R).
+$$
+
+所以新增保留记录可以揭示原本藏在粗纤维内的正反差异。这里完整实验的 $P,R$ 没有改变，记录扩充并未创造新的路径不对称；特别地，若 $P=R$，所有层的记录 KL 都为零。若同时改变路径视界、正向准备或反向实验，则须另给它们的相容关系，不能直接沿用这一固定概率对的单调性，也不能仅凭统计可区分性把 KL 认作某个未声明装置的物理熵产生。
+
+背景包括 Mori–Zwanzig 消元、有限 Markov 熵耗散及路径相对熵。强可并性参考 Wolfer–Watanabe, arXiv:2203.04575；粗熵与非 Markov 性参考 Strasberg–Esposito, arXiv:1806.09101。仓内 `ZeroMemoryCriterion`、`StochasticDescentLumpability`、`ZeroSupportDPI` 与 `FutureWordInformationChain` 提供相应结构；本节的连续时间、严格正概率及反向准备条件已明列。
+

@@ -1,0 +1,177 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "distinct_even"
+  },
+  "classes": {
+    "kind": "inline",
+    "value": [
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        5,
+        6
+      ],
+      [
+        7,
+        12
+      ]
+    ]
+  },
+  "period": {
+    "kind": "inline",
+    "value": 12
+  },
+  "unique_regions": {
+    "kind": "inline",
+    "value": [
+      [
+        2,
+        4,
+        8,
+        10
+      ],
+      [
+        3
+      ],
+      [
+        1
+      ],
+      [
+        11
+      ],
+      [
+        7
+      ]
+    ]
+  },
+  "overlap_region": {
+    "kind": "inline",
+    "value": [
+      0,
+      5,
+      6,
+      9
+    ]
+  },
+  "shell_count": {
+    "kind": "inline",
+    "value": 9
+  },
+  "demand_rows": {
+    "kind": "inline",
+    "value": 7
+  },
+  "private_point_prime_checks": {
+    "kind": "inline",
+    "value": 16
+  },
+  "cuts": {
+    "kind": "inline",
+    "value": 127
+  },
+  "strictly_sharper_cuts": {
+    "kind": "inline",
+    "value": 88
+  },
+  "tight_cuts": {
+    "kind": "inline",
+    "value": 11
+  },
+  "column_omissions": {
+    "kind": "inline",
+    "value": [
+      {
+        "supplier_index": 0,
+        "prime": 2,
+        "depth": 0,
+        "active": "1/4",
+        "overlap": "1/6",
+        "unused_unique": "1/12",
+        "capacity": "1/2"
+      },
+      {
+        "supplier_index": 1,
+        "prime": 3,
+        "depth": 0,
+        "active": "1/6",
+        "overlap": "1/12",
+        "unused_unique": "5/12",
+        "capacity": "2/3"
+      },
+      {
+        "supplier_index": 2,
+        "prime": 2,
+        "depth": 1,
+        "active": "1/6",
+        "overlap": "0",
+        "unused_unique": "1/12",
+        "capacity": "1/4"
+      },
+      {
+        "supplier_index": 3,
+        "prime": 3,
+        "depth": 0,
+        "active": "1/6",
+        "overlap": "1/12",
+        "unused_unique": "1/12",
+        "capacity": "1/3"
+      }
+    ]
+  },
+  "demand": {
+    "kind": "inline",
+    "value": "5/4"
+  },
+  "overlap_tax": {
+    "kind": "inline",
+    "value": "5/12"
+  },
+  "unused_unique_service": {
+    "kind": "inline",
+    "value": "2/3"
+  },
+  "total_shell_capacity": {
+    "kind": "inline",
+    "value": "5/2"
+  },
+  "positive_demand_service": {
+    "kind": "inline",
+    "value": "17/12"
+  },
+  "inactive_depth_without_strict_supplier_gain": {
+    "kind": "inline",
+    "value": {
+      "mask": 1,
+      "supplier": 0,
+      "mass_bound": "0",
+      "active_bound": "0",
+      "full_bound": "1/2"
+    }
+  },
+  "cut_columns": {
+    "kind": "inline",
+    "value": [
+      "mask",
+      "demand",
+      "actual_service",
+      "active_depth_bound",
+      "all_depth_bound"
+    ]
+  },
+  "all_nonempty_cuts": {
+    "path": "content/001-records/000000/item/019-all_nonempty_cuts.json",
+    "sha256": "31b5da6aba006348700fa7d1fa4d88f2a9a19db5b989ebc0f648ee1562ea6012",
+    "kind": "array"
+  }
+}

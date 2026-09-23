@@ -1,0 +1,7 @@
+**定义 73.1（指定参考的反向映射）。** 沿用定义与假设 72.1 的有限非空标签集 $J,I$、满射 $r:J\to I$、严格正概率 $q$ 及 $p=r_*q$，以及所选基 $(f_j)$、$(e_i)$。将细基去相干 $\Delta_f$ 也记作 $\Delta_J$，定义
+$$
+B_{r,q}:=\Delta_J\circ\mathcal E_r:
+\mathcal B(\mathcal H_c)\longrightarrow\mathcal B(\mathcal H_f).
+$$
+这里的参考条件律由 $q$ 指定；以下所有对数均为自然对数。
+

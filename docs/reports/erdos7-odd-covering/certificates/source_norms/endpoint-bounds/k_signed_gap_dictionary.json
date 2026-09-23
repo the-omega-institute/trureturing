@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "425876003311557cec40e46a1155c2e6474144357e20e88ba07523014ceb73ae",
+  "parts_directory": "k_signed_gap_dictionary.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "380a17cf636164167e46c995407ae3c1c87d9ccdd8c763a8a6bae8215dad3f9c",
+    "kind": "object"
+  }
+}

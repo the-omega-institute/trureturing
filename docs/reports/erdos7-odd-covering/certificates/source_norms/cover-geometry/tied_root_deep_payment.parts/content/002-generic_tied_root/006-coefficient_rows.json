@@ -1,0 +1,41 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 54,
+      "part": {
+        "path": "content/002-generic_tied_root/006-coefficient_rows/000000-000054.json",
+        "sha256": "d16a02de650aa527aedecde81baa6462832e2b8bd93b333afa0c7222f9dfc786",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 54,
+      "stop": 70,
+      "part": {
+        "path": "content/002-generic_tied_root/006-coefficient_rows/000054-000070.json",
+        "sha256": "802a11f3f32311a6102274d27ed91d8691045c840b583f13d7269f5544582d4c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 70,
+      "stop": 91,
+      "part": {
+        "path": "content/002-generic_tied_root/006-coefficient_rows/000070-000091.json",
+        "sha256": "51ab44c10ebad92b23917e3cb4d4dfec14de3402a4f7b0474cda26d827d14608",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 91,
+      "stop": 100,
+      "part": {
+        "path": "content/002-generic_tied_root/006-coefficient_rows/000091-000100.json",
+        "sha256": "0195b2922164b873cde75db531ad449c82d099d69a803eb7925d3f03ec6a012f",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+**命题 90.3（有限支撑模型通过全部有限测试，但遗漏无限前提反例）。** 令 $F$ 为由可数原子 $p_n$（$n\in\mathbb N$）、$\bot$、否定及二元合取生成的全部有限公式。取
+$$
+F_A=F_B=F,\qquad \tau=\mathrm{id},\qquad
+\mathcal M_A=\mathbf2^{\mathbb N},
+$$
+$$
+\mathcal M_B=\{v\in\mathbf2^{\mathbb N}:\{n:v(n)=1\}\text{ 有限}\},
+\qquad\beta:\mathcal M_B\hookrightarrow\mathcal M_A,
+$$
+满足关系采用通常的布尔求值。则 (SC)、(90.2b) 及 $\mathrm{CE}_{\mathrm{fin}}$ 成立，但 $\mathrm{CE}$ 失败。具体地，对
+$$
+\Gamma_\infty=\{p_n:n\in\mathbb N\}
+$$
+有
+$$
+\bot\in K_\tau^{\mathrm{sem}}(\Gamma_\infty)
+\setminus S_A(\Gamma_\infty).
+\tag{90.3a}
+$$
+其真值剖面空间满足：$X$ 紧致 Hausdorff，$Y$ 稠密但不等于 $X$，从而 $Y$ 不闭且不紧致。
+

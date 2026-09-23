@@ -1,0 +1,35 @@
+### 50.1 共同递归、幅度域与临界范数
+
+固定 $A>0$，令
+$$
+\lambda=\frac{A+2+\sqrt{A^2+4A}}2,\qquad
+\rho=\lambda^{-1}\in(0,1),\qquad
+A=\frac{(1-\rho)^2}{\rho}.
+$$
+分别考虑实幅度立方体 $K_A^{\mathbb R}=[-A,A]^{\mathbb N_0}$ 与复幅度圆盘 $K_A^{\mathbb C}=\{a\in\mathbb C^{\mathbb N_0}:|a_i|\le A\ \forall i\}$。来源 $a$ 由同一个递推生成
+$$
+\mathcal E(a)(n,0)=a_n,\qquad
+\mathcal E(a)(n,k+1)=\mathcal E(a)(n+1,k)
+-\sum_{j=0}^{k}\mathcal E(a)(n,j)a_{k-j}.
+\tag{50.1}
+$$
+由 Context43 引理43.5及式（43.10）的有限多项式依赖，每个坐标只依赖来源下标至 $n+k$。令
+$$
+\|T\|_\rho=\sup_{n,k\ge0}\rho^{n+k}|T(n,k)|,
+\qquad a^*=-A\mathbf1,\qquad T^*=\mathcal E(a^*).
+$$
+Context46 的式（46.4）、（46.6）及（46.12）给出共同包络
+$$
+T^*(n,k)=-u_k,
+\quad u_k=c\rho^{-k}+b\rho^k,
+\quad c=\frac{A}{1+\rho},\quad b=c\rho=\frac{A\rho}{1+\rho}.
+\tag{50.2}
+$$
+其中 $u_0=A$、$u_{k+1}=u_k+A\sum_{j=0}^ku_j$，且 $u_k$ 随 $k$ 严格增加。所有允许来源满足 $|\mathcal E(a)(n,k)|\le u_k$。同一来源的各坐标不可单独优化后拼接成新的来源。
+
+这里沿用 Context43 定理43.2的递归多项式构造与 Context46.2–46.3 的共同包络；以下不另造一个环境数组模型。有限支持块取实来源 $K_A=K_A^{\mathbb R}$，相位与阻尼块取同一个递归的复来源 $K_A^{\mathbb C}$。记
+$$
+a_i^\zeta=-A\zeta^{i+1},\qquad T^\zeta=\mathcal E(a^\zeta),\qquad |\zeta|=1.
+$$
+Context49 的式（49.5）—（49.6）给分次相位等变 $T^\zeta(n,k)=-\zeta^{n+k+1}u_k$。有限来源的消失尾沿用 Context47.9.1 的命题47.4，相位族的正尾 $c$ 沿用（49.20）—（49.21），首列逆映射沿用 Context43 定理43.2及式（43.4）的多项式互逆并在实复系数下使用同一构造，相位距离沿用（49.38）；具体优化需要的附加估计在下文证明。完整实际来源与档案合同统一放在第50.24节。
+

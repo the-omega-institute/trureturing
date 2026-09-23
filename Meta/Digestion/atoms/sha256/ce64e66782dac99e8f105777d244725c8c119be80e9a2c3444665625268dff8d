@@ -1,0 +1,21 @@
+### 131.8 共同载体中的等距提升
+
+上述几何可由一项保真辅助构造联系：**把压缩或消去一侧的量，按已经声明的内积等距提升回同一个实现空间，再在那里比较目标、隐藏分量和干扰。**
+
+具体说，取实有限维内积空间 $\mathcal K,\mathcal H$；若 $U:\mathcal K\to\mathcal H$ 是等距线性嵌入，则
+
+$$
+U^*U=I,\qquad P=UU^*,\qquad
+\mathcal H=\operatorname{im}U\oplus(\operatorname{im}U)^\perp.
+$$
+
+$P$ 自伴且 $P^2=U(U^*U)U^*=P$，所以这是实际的正交投影图。它把边界坐标、原实现以及残差放在共同内积中；所比较的向量来自同一对象，不是分别取得的最优值。
+
+- 对有限正概率 $\nu$ 上的实际像观察 $q:X\to B=q[X]$，令 $U:L^2(B,q_*\nu)\to L^2(X,\nu)$ 为 $Uu=u\circ q$，则按纤维求和给 $\|Uu\|_\nu^2=\|u\|_{q_*\nu}^2$。$U^*$ 是标签上的条件均值，$UU^*=\Pi$；限制到零均值子空间仍成立。第130节 Fisher 两项损失将同一完整有效得分 $f=(I-P_N)s$ 先按 $\operatorname{im}U$、再按可见干扰空间分解。
+- 在第130.10节的单射 $K$ 条件下，对 Schur 消元，$U=K(K^*K)^{-1/2}$ 是隐藏方向的等距参数化，$UU^*=P_K$，所以 $S=F^*(I-UU^*)F$。Gaussian 积分另保留未被投影商记录的体积因子。
+- 对外幂格，$\Psi$ 是将自然格与六维坐标保持在同一度量中的等距识别。Hodge 的来源还包括楔配对与定向：在本节的四维定向空间及其中次外幂上，令 $\mathcal R_g(\beta)(\alpha)=\langle\alpha,\beta\rangle$，令 $\mathcal W_\omega(\beta)(\alpha)$ 是 $\alpha\wedge\beta$ 相对于单位顶次向量 $\omega$ 的系数，则 $*=\mathcal W_\omega^{-1}\mathcal R_g$。这精确说明单有观察关系或内积还不够。星确定后，其 $\pm1$ 特征空间给正交投影 $(I\pm*)/2$；黄金算子只是这两空间上的指定标量作用。
+
+这里统一的是“共同实现、配对、子空间及其运输”的结构，而不是把所有例子强行叫成同一个投影。格需整数子模，Fisher 需概率权重和合法得分，Hodge 需外幂与定向，Gaussian 积分需参考测度；这些额外数据不能由一个无权集合关系凭空恢复。动力学和记忆还需指定演化算子与初值；静态配对及投影不单独决定时间演化或时间箭头。
+
+外幂内积采用 Gram 行列式，Hodge 星依赖指定内积与定向。仓内 `ExteriorSquareCoordinates`、`ExteriorSquareRepresentations`、`ExactDualLatticeFormula`、`FiveModularLatticeSimilarity`、`GoldenMaximalOrderCompletion`、`FibonacciEigen` 与 `GoldenAntiIsometry` 分别提供相应代数接口。
+

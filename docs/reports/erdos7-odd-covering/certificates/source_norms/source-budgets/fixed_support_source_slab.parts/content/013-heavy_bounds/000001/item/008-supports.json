@@ -1,0 +1,32 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 46,
+      "part": {
+        "path": "content/013-heavy_bounds/000001/item/008-supports/000000-000046.json",
+        "sha256": "297a3cb9422e9ad7e4c8c97ef74e0be8b5e3642e9d1f6f6f00ea8aefad94ff98",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 46,
+      "stop": 92,
+      "part": {
+        "path": "content/013-heavy_bounds/000001/item/008-supports/000046-000092.json",
+        "sha256": "073be770f34b4d82e2ea3557561f19c1f534fc587fadc5c85a4e803a231c8084",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 92,
+      "stop": 100,
+      "part": {
+        "path": "content/013-heavy_bounds/000001/item/008-supports/000092-000100.json",
+        "sha256": "f4094d8c6c1512594af24da9bf2d5977cf99172b504d48f242d2be5cdf698083",
+        "kind": "value"
+      }
+    }
+  ]
+}

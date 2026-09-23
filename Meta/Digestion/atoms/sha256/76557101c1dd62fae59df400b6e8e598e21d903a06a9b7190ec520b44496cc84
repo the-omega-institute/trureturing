@@ -1,0 +1,29 @@
+**证明。** 对第一项，在标量 $r=0$ 时取任意 $m>0$，合法数据为 $H=m,S=um$。原始记录 $\widehat H=m,\widehat S=um-\epsilon$ 与它的误差为 $\epsilon>0$，却违反 $u\widehat H\preceq\widehat S$。对第二项，合法一维前缀
+$$
+H_\delta=\delta,\qquad S_\delta=t\delta,\qquad u\le t\le v
+$$
+对每个 $\delta>0$ 都有相同秩一，但其非零 Gram 特征值趋零。
+
+为检验额外弱方向，设 $u<v$，选不同 $\lambda_1,\lambda_2\in[u,v]$。标量原子测度
+$$
+\mu_\delta=(1-\delta)\delta_{\lambda_1}+\delta\delta_{\lambda_2},
+\qquad 0<\delta<1,
+$$
+的任意固定有限矩前缀趋向 $\delta_{\lambda_1}$ 的前缀。对 $r=1$，其 $H_1$ 行列式为
+$$
+\delta(1-\delta)(\lambda_1-\lambda_2)^2>0.
+$$
+因此真实前缀可有秩二，而秩一拟合与其任意接近；拟合唯一的非零特征值有正下界，真实额外特征值却趋零。
+
+对第三项，仍取 $u<v$，置 $m=(u+v)/2$，比较
+$$
+\mu=\delta_m,\qquad
+\nu=\tfrac12\delta_u+\tfrac12\delta_v.
+$$
+$r=0$ 时它们具有完全相同的 $M_0=1,M_1=m$，所以 $H=H'=1$、$S=S'=m$，Gram 间隔可取 $\gamma=R=1$。规范模型为单点 $T=m$；两点模型的响应在时间 $2h$ 为
+$$
+\tfrac12(u^2+v^2)
+=m^2+\tfrac14(v-u)^2>m^2.
+$$
+因而定理12.3比较的是两份前缀各自的规范模型。若将它用于某实际内部的全部未来，还须另有把实际未来等同于规范未来的依据，例如实际有效维数等于 $\operatorname{rank}H$，或满足主卷定理137.8在非负类中的条件，或本卷命题10.6在 $[u,v]$ 类中的平移后未来唯一性条件；也可以另行给出实际模型与规范模型之间的响应误差。$\square$
+

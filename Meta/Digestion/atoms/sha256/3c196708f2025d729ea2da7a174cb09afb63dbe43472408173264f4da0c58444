@@ -1,0 +1,19 @@
+**命题 3.6（同一平面在 Hilbert 噪声下的恢复）。** 在定理 3.5 的同一个线性平面上，将状态误差和噪声约束同时改成 Euclidean 范数。记
+
+$$
+\mathcal R^{(2)}_\epsilon(R)=
+\sup_{x\in V,\,\|e\|_2\le\epsilon}\|R(x+e)-x\|_2.
+$$
+
+则
+
+$$
+\inf_{R:\mathbb R^3\to V}\mathcal R^{(2)}_\epsilon(R)
+=\epsilon.
+\tag{3.14}
+$$
+
+证明。式（3.12）的 $P$ 是到 $V$ 的 Euclidean 正交投影。由正交分解，$\|Pe\|_2\le\|e\|_2$，所以它达到上界 $\epsilon$。反向，取任意 $u\in V$ 满足 $\|u\|_2=1$。状态 $\epsilon u$ 配噪声 $-\epsilon u$，与状态 $-\epsilon u$ 配噪声 $\epsilon u$，都给数据零，两个目标相距 $2\epsilon$。任意同一输出至少对其中一个状态误差不小于 $\epsilon$。证毕。
+
+更一般的有限维 Hilbert 任务 $F=SA$ 及最优放大常数，可直接使用量子伴卷 [第 69.1—69.3 节](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)：到 $\operatorname{ran}A$ 的正交投影不扩张，故像内任务映射可以同范数延拓为整个数据空间上的预测。这里决定差别的是噪声单位球与输出合法域。Euclidean 正交性不使一个矩阵对所有其他范数都不扩张。
+

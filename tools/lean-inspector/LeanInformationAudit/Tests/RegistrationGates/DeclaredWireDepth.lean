@@ -10,10 +10,10 @@ private def nestedLevel (count : Nat) : Level :=
   (List.range count).foldl (fun level _ => .succ level) .zero
 
 run_meta do
-  let positiveName := rawIdentity [] (.const (nestedName 32) [])
-  let positiveLevel := rawIdentity [] (.sort (nestedLevel 32))
-  let deepName := rawIdentity [] (.const (nestedName 300) [])
-  let deepLevel := rawIdentity [] (.sort (nestedLevel 300))
+  let positiveName := erasedSyntaxIdentity [] (.const (nestedName 32) [])
+  let positiveLevel := erasedSyntaxIdentity [] (.sort (nestedLevel 32))
+  let deepName := erasedSyntaxIdentity [] (.const (nestedName 300) [])
+  let deepLevel := erasedSyntaxIdentity [] (.sort (nestedLevel 300))
   let nameRejected := match deepName with
     | .error "incomplete_closure:E8.name_depth" => true
     | _ => false

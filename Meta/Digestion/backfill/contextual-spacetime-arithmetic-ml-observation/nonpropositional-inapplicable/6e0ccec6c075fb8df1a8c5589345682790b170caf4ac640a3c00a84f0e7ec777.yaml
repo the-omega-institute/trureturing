@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e0ccec6c075fb8df1a8c5589345682790b170caf4ac640a3c00a84f0e7ec777
+  normalized_sha256: sha256:6e0ccec6c075fb8df1a8c5589345682790b170caf4ac640a3c00a84f0e7ec777
+cas_ref: sha256:6e0ccec6c075fb8df1a8c5589345682790b170caf4ac640a3c00a84f0e7ec777
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “对”有序概率点“通分给”差商式，“所有分母为正”及“至少保留原差”属于同一单步断言；在本节固定四分之一参数下，field_simp与ring规范化等式，mul_le_mul和le_div_iff₀给出六分之一界，仓内无冻结 GID；此叶不含续词归纳及正概率结论，未将它们夹入分母定义。
+    previous_atom_id: 4b4164bf88c24e82d924a653bcb2db95294d332b35ff50e741313dd65925fcf1
+    next_atom_id: 69db33ad75f5a6817db102a142b6c7d32a42c126e2aa4ec8f2f00e84ebd29d75

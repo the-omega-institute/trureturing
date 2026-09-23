@@ -1,0 +1,35 @@
+### 121.7 一般 Hilbert 塔的无穷直和形式
+
+为明确“完整直和”在无限记录时的准确含义，可只保留同一个 Hilbert 空间中嵌套闭子空间 $V_n$ 这一假设，令
+
+$$
+V_\infty=\overline{\bigcup_nV_n}.
+$$
+
+有限正交计算仍成立。对固定 $f$，$\|\Pi_nf\|^2$ 单调且不超过 $\|f\|^2$。若 $n\ge m$，
+
+$$
+\|\Pi_nf-\Pi_mf\|^2
+=\|\Pi_nf\|^2-\|\Pi_mf\|^2,
+$$
+
+故 $\Pi_nf$ 是 Cauchy 列。令其极限为 $u\in V_\infty$。对 $v\in V_k$，所有 $n\ge k$ 都有 $\langle f-\Pi_nf,v\rangle=0$；取极限并用稠密性，得到 $f-u\perp V_\infty$。所以 $u=\Pi_\infty f$，其中 $\Pi_\infty$ 是到 $V_\infty$ 的正交投影。
+
+于是
+
+$$
+\boxed{\mathcal H
+=V_0\oplus\bigoplus_{n\ge0}^{\rm Hilbert}\mathcal W_n\oplus V_\infty^\perp},
+\tag{121.21}
+$$
+
+$$
+\Pi_\infty f=\Pi_0f+\sum_{n\ge0}\Delta_nf,
+\qquad
+\sum_{n\ge0}\|\Delta_nf\|^2
+=\|\Pi_\infty f\|^2-\|\Pi_0f\|^2.
+\tag{121.22}
+$$
+
+级数按 Hilbert 范数收敛。这一证明没有假定每个 $f$ 最终都被观察，也没有为无限离散熵或连续时间路径增加未声明的可积性保证。$V_\infty^\perp$ 可以非零。
+

@@ -1,4 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
+import codecs
 import hashlib
 import io
 import json
@@ -10,6 +11,7 @@ import struct
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import unittest
 from unittest.mock import patch
@@ -33,7 +35,7 @@ class NativeTestSupport:
             ['elan', 'which', 'lake'], cwd=ROOT, text=True).strip()
         cls.dotnet = shutil.which('dotnet')
         cls.cli = Path(os.environ.get('STRATALINT_NATIVE_DOTNET_CLI',
-            ROOT / 'tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll'))
+            ROOT / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'))
         if not cls.dotnet or not cls.cli.is_file():
             raise RuntimeError('native fixtures require make -C tools dotnet first')
     def setUp(self):
@@ -46,6 +48,9 @@ defaultTargets = ["Fixture", "Audit"]
 [[require]]
 name = "leanInspector"
 path = "tools/lean-inspector"
+[[require]]
+name = "mathlib"
+path = "fixture-mathlib"
 [[lean_lib]]
 name = "Fixture"
 roots = ["Fixture", "D5"]
@@ -61,11 +66,15 @@ root = "Cache"
         # No external dependencies need downloading. Let the actual ensure
         # owner invoke this fixture cache provider before the first raw Lake
         # build; only that owner creates the stamp and admits donor seeding.
+        self.write('fixture-mathlib/lakefile.toml', 'name = "mathlib"\n')
+        self.write('fixture-mathlib/lake-manifest.json', '{"version":"1.2.0","packages":[]}\n')
         self.write('Cache.lean', 'def main : IO Unit := pure ()\n')
         self.write('lake-manifest.json', json.dumps(dict(version='1.2.0',
             packagesDir='.lake/packages', packages=[dict(type='path', scope='',
                 name='leanInspector', manifestFile='lake-manifest.json', inherited=False,
-                dir='tools/lean-inspector', configFile='lakefile.lean')],
+                dir='tools/lean-inspector', configFile='lakefile.lean'),
+                dict(type='path', scope='', name='mathlib', manifestFile='lake-manifest.json', inherited=False,
+                    dir='fixture-mathlib', configFile='lakefile.toml', rev='0123456789abcdef0123456789abcdef01234567')],
             name='fixture', lakeDir='.lake', fixedToolchain=False)))
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
@@ -78,7 +87,7 @@ root = "Cache"
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
             target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
-        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'inspect.sh']:
+        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
         # These native-facet fixtures test statement extraction and publication,
         # with no D5 registration library. Use the explicit statement-only API;
@@ -91,16 +100,18 @@ root = "Cache"
         inspector.write_text(source.replace(entry,
             '  let args := "--statements-only" :: args\n' + entry))
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
-                     'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain', 'Makefile',
+                     'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
+                     'tools/scripts/worktree/cache_material.py', 'tools/scripts/worktree/cache_deadline.py',
+                     'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
                      'tools/scripts/lib/resource-observation-lib.sh',
-                     'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs']:
+                     'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs']:
             self.copy(name)
         self.write('bin/dotnet', '#!/usr/bin/env python3\nimport os, sys\nfrom pathlib import Path\n'
             + f'dotnet, cli = {self.dotnet!r}, {str(self.cli)!r}\n'
-            + 'if "worktree" in sys.argv:\n'
-            + '    os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index("worktree"):]])\n'
+            + 'operation = next((word for word in sys.argv if word in ("ensure-cache", "with-cache-writer", "with-cache-reader")), None)\n'
+            + 'if operation: os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index(operation):]])\n'
             + 'if sys.argv[1] == "build": raise SystemExit(0)  # utility input is fixture data\n'
             + 'if sys.argv[-1] != "lean-utility-input": raise SystemExit("unexpected fixture dotnet command")\n'
             + 'with Path("utility-calls").open("a") as out: out.write("call\\n")\n'
@@ -108,22 +119,24 @@ root = "Cache"
         (self.root / 'bin/dotnet').chmod(0o755)
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        policy = dict(schema_version=1, report_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
+        policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
             dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/Registry.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
                 'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
-                'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs'),
+                'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'], LAKE_BIN=self.lake,
+            STRATALINT_LEAN_BUILD_TARGETS='[]',
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / '.lake/input-memo'),
             STRATALINT_INSPECTOR_ACTIVITY=str(self.root / 'activity.jsonl'))
-        # A fresh synthetic Git repository bounds donor discovery to this
-        # fixture. No host checkout or shared donor participates.
+        self.compiler_seed = self.env.pop('STRATALINT_NATIVE_COMPILER_SEED', None)
+        # A fresh synthetic Git repository bounds ensure donor discovery to
+        # this fixture. The compiler stage is restored separately after ensure.
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
     command_clock = staticmethod(time.monotonic)
 
@@ -223,7 +236,8 @@ root = "Cache"
             raise
         self.temporary.cleanup()
 
-    def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120):
+    def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120,
+                        observe_output=None):
         if timeout != 120 or not text or not capture_output:
             raise ValueError('native fixture commands require the 120s guard and text capture')
         temporary = self.root / 'tmp'
@@ -233,26 +247,73 @@ root = "Cache"
         started = self.command_clock()
         # Files keep output draining independent of descendant pipe lifetimes.
         with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+            streams = dict(stdout=stdout, stderr=stderr) if observe_output is not None else {}
+            offsets = dict.fromkeys(streams, 0)
+            decoders = {name: codecs.getincrementaldecoder('utf-8')('replace') for name in streams}
+            def observe_pending(*, final=False):
+                for name, stream in streams.items():
+                    # A seek/read would move the file offset shared with the
+                    # child and could overwrite output that has not been read.
+                    data = os.pread(stream.fileno(), os.fstat(stream.fileno()).st_size - offsets[name],
+                                    offsets[name])
+                    offsets[name] += len(data)
+                    value = decoders[name].decode(data, final=final)
+                    if value:
+                        observe_output(name, value)
             process = subprocess.Popen(args, cwd=cwd or self.root, env=environment,
                 stdout=stdout, stderr=stderr, start_new_session=True)
             command = (process, {})
             if not hasattr(self, '_commands'):
                 self._commands = []
             self._commands.append(command)
+            completed = threading.Event()
+            stop_observer = threading.Event()
+            outcome = {}
+            def wait_for_completion():
+                # Process-table scans and output observers must not hide a
+                # completion observed within the command's absolute budget.
+                # A late observation remains a timeout, even with exit zero.
+                try:
+                    while not stop_observer.is_set():
+                        remaining = started + timeout - self.command_clock()
+                        if remaining <= 0:
+                            raise subprocess.TimeoutExpired(args, timeout)
+                        try:
+                            process.wait(timeout=min(0.1, remaining))
+                        except subprocess.TimeoutExpired:
+                            continue
+                        if self.command_clock() - started >= timeout:
+                            raise subprocess.TimeoutExpired(args, timeout)
+                        break
+                except BaseException as error:
+                    outcome['error'] = error
+                finally:
+                    completed.set()
+            waiter = threading.Thread(target=wait_for_completion)
+            waiter.start()
             try:
                 while True:
                     self.owned_processes(command)
-                    if self.command_clock() - started >= timeout:
-                        stdout.seek(0); stderr.seek(0)
-                        out, err = stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace')
-                        self.command_diagnostics(command, args, out, err)
-                        raise subprocess.TimeoutExpired(args, timeout, output=out, stderr=err)
-                    if process.poll() is not None:
+                    observe_pending()
+                    if completed.wait(0.1):
                         break
-                    time.sleep(0.1)
+                if isinstance(outcome.get('error'), subprocess.TimeoutExpired):
+                    stdout.seek(0); stderr.seek(0)
+                    out, err = stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace')
+                    self.command_diagnostics(command, args, out, err)
+                    raise subprocess.TimeoutExpired(args, timeout, output=out, stderr=err)
+                if 'error' in outcome:
+                    raise outcome['error']
             finally:
-                self.join_command(command)
+                try:
+                    self.join_command(command)
+                finally:
+                    # Cleanup failure retains ownership, but must not leave
+                    # this observer waiting out the command's remaining budget.
+                    stop_observer.set()
+                    waiter.join()
                 self._commands.remove(command)
+                observe_pending(final=True)
                 if getattr(self, 'last_command_diagnostic', {}).get('command') == list(args):
                     print('NATIVE_COMMAND_CLEANUP ' + json.dumps(dict(
                         pid=process.pid, owned_live_processes=0, direct_child_exit=process.returncode)),
@@ -282,15 +343,23 @@ root = "Cache"
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
     def run_lake(self, *args, success=True):
         self.ensure()
+        if self.compiler_seed is not None:
+            # The collection owns this read-only stage. Lake copies only its
+            # registered producer outputs into this fixture's private cache;
+            # current input traces still decide whether any artifact is usable.
+            restored = self.guarded_command([self.lake, 'cache', 'unstage', self.compiler_seed, 'leanInspector'],
+                cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
+            self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
+            self.compiler_seed = None
         result = self.guarded_command([self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         elif success is False:
             self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
         return result
-    def build(self, success=True):
+    def build(self, success=True, *, targets=()):
         self.write('activity.jsonl', '')
-        return self.run_lake('build', ':report', success=success)
+        return self.run_lake('build', ':report', *targets, success=success)
     def stamps(self):
         return {p.stem: (p.stat().st_mtime_ns, publication.digest(p)) for p in (self.root / '.lake/build/lean-inspector/modules').glob('*.zip')}
     def report(self):
@@ -404,6 +473,33 @@ root = "Cache"
              for r in identities if r['part'] == 'private'})
 
 
+def stage_compiler(output):
+    """Build the declared compiler target once; Lake owns its staged materials."""
+    registration = json.loads((ROOT / 'tools/tests/StrataLint.Lean.Tests/Fixtures/native-compiler.json').read_text())
+    if set(registration) != {'package_directory', 'target'}:
+        raise ValueError('invalid native compiler fixture registration')
+
+    class CompilerFixture(NativeTestSupport, unittest.TestCase):
+        pass
+
+    fixture = CompilerFixture()
+    fixture.setUpClass()
+    try:
+        fixture.setUp()
+        fixture.compiler_seed = None
+        mappings = fixture.root / 'compiler-outputs.jsonl'
+        fixture.run_lake('-d', registration['package_directory'], 'build',
+                         '-o', str(mappings), registration['target'])
+        fixture.run_lake('cache', 'stage', str(mappings), str(output))
+        # Access permissions apply to the directory produced by Lake stage;
+        # they do not select or discover build inputs or reusable materials.
+        for path in output.iterdir():
+            path.chmod(path.stat().st_mode & ~0o222)
+    finally:
+        fixture.doCleanups()
+
+
+
 class GuardedCommandTests(unittest.TestCase):
     """Lifecycle tests need no Lean build, network, or host timing verdict."""
     def setUp(self):
@@ -419,6 +515,148 @@ class GuardedCommandTests(unittest.TestCase):
                 result = self.fixture.guarded_command([sys.executable, '-c',
                     f'import sys; print("out"); print("err", file=sys.stderr); sys.exit({status})'])
                 self.assertEqual((result.returncode, result.stdout, result.stderr), (status, 'out\n', 'err\n'))
+
+    def test_sampling_and_cleanup_errors_stop_and_join_observer(self):
+        started = threading.Event()
+        observers = []
+        original_thread = threading.Thread
+        class ObservedThread(original_thread):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.join_calls = 0
+                observers.append(self)
+            def run(self):
+                started.set()
+                super().run()
+            def join(self, timeout=None):
+                self.join_calls += 1
+                # Infrastructure guard for a broken cancellation path. The
+                # verdict below checks settled state, never elapsed time.
+                super().join(timeout=5)
+        ps = ['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command=']
+        sampling_error, cleanup_error, fixture_error = (
+            subprocess.TimeoutExpired(ps, 5) for _ in range(3))
+        failures = iter([sampling_error, cleanup_error, fixture_error])
+        def failed_scan(*args, **kwargs):
+            if not started.wait(5):
+                raise RuntimeError('infrastructure-hang-guard expired: observer never started')
+            raise next(failures)
+        guard_error = fixture_cleanup_error = None
+        try:
+            # A live child and frozen command clock prevent deadline expiry
+            # from concealing a missing observer cancellation.
+            with patch.object(threading, 'Thread', ObservedThread), \
+                    patch.object(self.fixture, 'command_clock', return_value=0.0), \
+                    patch.object(subprocess, 'check_output', side_effect=failed_scan) as scans:
+                try:
+                    self.fixture.guarded_command([sys.executable, '-c', 'import signal; signal.pause()'])
+                except BaseException as error:
+                    guard_error = error
+                try:
+                    self.fixture.cleanup_fixture()
+                except BaseException as error:
+                    fixture_cleanup_error = error
+                observed = [(thread.is_alive(), thread.daemon, thread.join_calls) for thread in observers]
+                commands = list(self.fixture._commands)
+                child_alive = commands[0][0].poll() is None if commands else False
+                fixture_retained = self.fixture.root.exists()
+                finalizer_detached = not self.fixture.temporary._finalizer.alive
+        finally:
+            # Restore sampling and reclaim the real child/thread before any
+            # verdict, including on the prior broken lifecycle or a mutant.
+            try:
+                self.fixture.cleanup_fixture()
+            finally:
+                for thread in observers:
+                    original_thread.join(thread, timeout=5)
+            # Python 3.9's TemporaryDirectory.cleanup is a no-op after detach.
+            shutil.rmtree(self.fixture.root, ignore_errors=True)
+        self.assertIs(guard_error, cleanup_error)
+        self.assertIs(guard_error.__context__, sampling_error)
+        self.assertIs(fixture_cleanup_error, fixture_error)
+        self.assertEqual(len(commands), 1)
+        self.assertTrue(child_alive)
+        self.assertTrue(fixture_retained)
+        self.assertTrue(finalizer_detached)
+        self.assertEqual([call.args[0] for call in scans.call_args_list], [ps] * 3)
+        self.assertTrue(all(call.kwargs['timeout'] == 5 for call in scans.call_args_list))
+        self.assertFalse(any(thread.is_alive() for thread in observers))
+        self.assertIsNotNone(commands[0][0].poll())
+        self.assertEqual(observed, [(False, False, 1)], 'failed cleanup must stop and join its observer')
+
+    def test_completion_boundary_survives_delayed_process_sample(self):
+        # The child exits during a process-table scan. Advance an injected
+        # clock only after the independent completion observation, so scheduler
+        # speed cannot decide the before/exact/after-deadline outcomes.
+        for completion_time in [119.999, 120.0, 120.001]:
+            with self.subTest(completion_time=completion_time):
+                release = self.fixture.root / 'release'
+                release.unlink(missing_ok=True)
+                clock = [0.0]
+                sampled = threading.Event()
+                owner = threading.get_ident()
+                child = []
+                original = self.fixture.owned_processes
+                original_wait = subprocess.Popen.wait
+                def wait(process, timeout=None):
+                    result = original_wait(process, timeout)
+                    if threading.get_ident() != owner:
+                        clock[0] = completion_time
+                    return result
+                def command_clock():
+                    value = clock[0]
+                    if threading.get_ident() != owner and value == completion_time:
+                        sampled.set()
+                    return value
+                def delayed_sample(command, *, sessions=False):
+                    rows = original(command, sessions=sessions)
+                    if not sessions and not child:
+                        child.append(command[0])
+                        release.touch()
+                        command[0].wait(timeout=5)
+                        self.assertTrue(sampled.wait(5), 'completion observer did not run')
+                        clock[0] = 121.0
+                    return rows
+                script = ('import sys, time\nfrom pathlib import Path\n'
+                          'while not Path(sys.argv[1]).exists(): time.sleep(0.001)\n'
+                          'print("finished")\n')
+                with patch.object(self.fixture, 'command_clock', side_effect=command_clock), \
+                        patch.object(self.fixture, 'owned_processes', side_effect=delayed_sample), \
+                        patch.object(subprocess.Popen, 'wait', wait):
+                    if completion_time < 120:
+                        result = self.fixture.guarded_command([sys.executable, '-c', script, str(release)])
+                        self.assertEqual((result.returncode, result.stdout), (0, 'finished\n'))
+                    else:
+                        with self.assertRaises(subprocess.TimeoutExpired):
+                            self.fixture.guarded_command([sys.executable, '-c', script, str(release)])
+                self.assertEqual(child[0].returncode, 0)
+                self.assertEqual(self.fixture._commands, [])
+
+    def test_timeout_cannot_be_reversed_by_successful_cleanup(self):
+        release = self.fixture.root / 'release'
+        clock = [0.0]
+        child = []
+        original_sample = self.fixture.owned_processes
+        original_join = self.fixture.join_command
+        def sample(command, *, sessions=False):
+            rows = original_sample(command, sessions=sessions)
+            if not sessions:
+                child.append(command[0])
+                clock[0] = 120.0
+            return rows
+        def join(command):
+            release.touch()
+            command[0].wait(timeout=5)
+            original_join(command)
+        script = ('import sys, time\nfrom pathlib import Path\n'
+                  'while not Path(sys.argv[1]).exists(): time.sleep(0.001)\n')
+        with patch.object(self.fixture, 'command_clock', side_effect=lambda: clock[0]), \
+                patch.object(self.fixture, 'owned_processes', side_effect=sample), \
+                patch.object(self.fixture, 'join_command', side_effect=join):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                self.fixture.guarded_command([sys.executable, '-c', script, str(release)])
+        self.assertEqual(child[0].returncode, 0)
+        self.assertEqual(self.fixture._commands, [])
 
     def test_timeout_joins_writers_across_groups_before_removal(self):
         root = self.fixture.root
@@ -488,3 +726,7 @@ for child in children: child.wait()
         self.fixture.cleanup_fixture()
         self.assertFalse(root.exists())
         self.assertIsNone(control.poll())
+
+
+if __name__ == '__main__':
+    stage_compiler(Path(sys.argv[1]).resolve())

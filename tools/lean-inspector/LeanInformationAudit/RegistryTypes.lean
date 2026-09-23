@@ -18,8 +18,8 @@ inductive SlotKind where
   | carrier | data | function | predicate | dictionary | proof | interface
   deriving BEq, Inhabited, Repr
 
-/-- Raw syntax is retained at proof and supplied-argument boundaries. Neither
-boundary grants normalization or permits walking a proof implementation. -/
+/-- Data syntax is retained at supplied-argument boundaries. Proof leaves retain
+only propositions, never proof implementations. -/
 inductive PlanNode where
   | atom (raw : Expr)
   | app (fn arg : PlanNode)
@@ -30,7 +30,7 @@ inductive PlanNode where
   | proj (typeName : Name) (index : Nat) (body : PlanNode)
   | expanded (raw : Expr) (checked : PlanNode)
   | supplied (raw : Expr)
-  | proofLeaf (type raw : Expr)
+  | proofLeaf (type : Expr)
   | typeNode (checked : PlanNode)
   /-- Checked E5 inputs remain obligations even when expansion discards them. -/
   | audit (input body : PlanNode)
@@ -39,6 +39,9 @@ inductive PlanNode where
 /- Construction is bounded independently of typing. A step is charged before
 visiting or allocating a node; binder cutoffs are not traversal depths. Cached
 Expr flags permit immutable no-op reuse, never an uncharged transformation. -/
+/-- Compiler-owned typing placeholder; never a delivered kernel proof. -/
+def proofPlaceholder (type : Expr) : Expr := mkApp (mkConst ``lcProof) type
+
 namespace PlanTransform
 
 private abbrev WorkM := StateT Nat (Except String)
@@ -176,7 +179,8 @@ private partial def materialize (p : PlanNode) (depth : Nat) : WorkM Expr := do
   step depth
   let child := fun q => materialize q (depth + 1)
   match p with
-  | .atom e | .supplied e | .proofLeaf _ e => return e
+  | .atom e | .supplied e => return e
+  | .proofLeaf type => return proofPlaceholder type
   | .expanded _ p | .typeNode p | .audit _ p => child p
   | .app f a => return .app (← child f) (← child a)
   | .lam t b bi => return .lam .anonymous (← child t) (← child b) bi
@@ -200,7 +204,7 @@ private partial def transform (operation : Operation) (replacement : Option Plan
         return ← transform (.lift cutoff) none argument 0 (depth + 1)
     return .atom (← expr (.bvar i))
   | .atom e => return .atom (← expr e)
-  | .proofLeaf t e => return .proofLeaf (← expr t) (← expr e)
+  | .proofLeaf t => return .proofLeaf (← expr t)
   | .expanded e p => return .expanded (← expr e) (← child p)
   | .typeNode p => return .typeNode (← child p)
   | .audit input body => return .audit (← child input) (← child body)
@@ -266,11 +270,9 @@ structure TemplatePlanData where
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
   constructorRecursionVersion : Nat := 1
-  compatibilityVersion : Nat := 5
+  compatibilityVersion : Nat := 9
   compiler : String
   toolchain : String
-  policyIdentity : String
-  sourceInputs : Array SourceInput
   name : Name
   definitionOwner : Name
   enrollmentOwner : Name
@@ -487,7 +489,7 @@ private partial def plan (depth : Nat := 0) : M PlanNode := do
   match ← token with
   | "body" => return .atom (← raw)
   | "expanded" => return .expanded (← raw) (← child)
-  | "proof-leaf" => return .proofLeaf (← raw) (← raw)
+  | "proof-leaf" => return .proofLeaf (← raw)
   | "type-node" => return .typeNode (← child)
   | "audit-input" => return .audit (← child) (← child)
   | "application" => return .app (← child) (← child)
@@ -519,11 +521,10 @@ private def digest : M String := do
   return value
 
 private def payload : M TemplatePlanData := do
-  expect "DTR-checked-plan-v3"
-  for version in #[1, 1, 1, 5] do unless (← natural) == version do fail
+  expect "DTR-checked-plan-v6"
+  for version in #[1, 1, 1, 9] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
-  let policyIdentity ← digest
   let templateName ← name
   let definitionOwner ← name
   let enrollmentOwner ← name
@@ -547,10 +548,6 @@ private def payload : M TemplatePlanData := do
         bodyIdentity.all (fun c => ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f'))) do fail
     return { name := n, owner, typeIdentity, bodyIdentity : DependencyIdentity }
   let constructorTypes ← sequence 4096 name
-  let sourceInputs ← sequence 4096 do
-    let path ← token
-    let sha256 ← digest
-    return { path, sha256 : SourceInput }
   let rules ← sequence 4096 token
   let work ← token false
   let some chargedWork := work.toNat? | fail
@@ -558,7 +555,7 @@ private def payload : M TemplatePlanData := do
   let typePlan ← plan
   let bodyPlan ← plan
   return {
-    compiler, toolchain, policyIdentity, sourceInputs, name := templateName,
+    compiler, toolchain, name := templateName,
     definitionOwner, enrollmentOwner, levelParams, slots, typeIdentity, bodyIdentity,
     dependencies, constructorTypes, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
 
@@ -595,6 +592,32 @@ structure TemplateOccurrenceEvent where
   registrationSourceIdentity : String
   deriving Inhabited
 
+/-- Syntax input is retained for authoritative reassessment, never executed. -/
+structure EscapeRecordInput where
+  fromObject : Option Expr := none
+  continuation : Option Expr := none
+  openContinuation : Bool := false
+  deriving Inhabited, BEq
+
+structure EscapeFromIdentity where
+  name : Name
+  typeIdentity : String
+  objectIdentity : String
+  deriving Inhabited, BEq
+
+structure EscapeContinuationIdentity where
+  kind : String
+  declarationName : Option Name := none
+  statementIdentity : Option String := none
+  chainName : Option Name := none
+  deriving Inhabited, BEq
+
+structure EscapeRecordEvidence where
+  fromObject : Option EscapeFromIdentity := none
+  continuation : Option EscapeContinuationIdentity := none
+  bridgeKind : String := "legacy"
+  deriving Inhabited, BEq
+
 structure TemplateBindingCertificate where
   evidenceRef : String
   key : TemplateOccurrenceKey
@@ -603,6 +626,7 @@ structure TemplateBindingCertificate where
   actualIdentity : String
   argumentInputs : Array TemplateAudit.DependencyIdentity
   extractionInputs : Array TemplateAudit.DependencyIdentity
+  escape : EscapeRecordEvidence := {}
   deriving Inhabited
 
 inductive TemplateBindingResult where
@@ -613,11 +637,12 @@ inductive TemplateBindingResult where
 
 structure BindingRecord where
   schemaVersion : Nat := 1
-  compatibilityVersion : Nat := 5
+  compatibilityVersion : Nat := 7
   occurrence : TemplateOccurrenceEvent
   descriptor : Option Expr
   bindingOwner : Option Name
   result : TemplateBindingResult
+  escape : EscapeRecordEvidence := {}
   deriving Inhabited
 
 structure TemplateBindingClaim where
@@ -625,6 +650,7 @@ structure TemplateBindingClaim where
   arena : Expr
   descriptor : Option Expr
   resolutionDiagnostic : Option String := none
+  escapeInput : EscapeRecordInput := {}
   owner : Name
   deriving Inhabited
 

@@ -1,0 +1,41 @@
+{
+  "length": 12,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 3,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000002/item/000001/item/000000-000003.json",
+        "sha256": "ddb07b0a80162bc73bc7afe4f32e2a516b9923afbbcea9b6295ac59558335766",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 6,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000002/item/000001/item/000003-000006.json",
+        "sha256": "c65c16122513e0331f0816e2992008454f1370ba21b2180698403e41911a898c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 9,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000002/item/000001/item/000006-000009.json",
+        "sha256": "c287707f580b52ee44c1e8fb43f25e700f3753f9541d7d3f2d1a77ff898576fe",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 12,
+      "part": {
+        "path": "content/032-joint_survival/015-row_blocks/000002/item/000001/item/000009-000012.json",
+        "sha256": "6812dfec75ed824fcf64547afd1cf54c28a3cab69e904cf4dbff08da1e438fbc",
+        "kind": "value"
+      }
+    }
+  ]
+}

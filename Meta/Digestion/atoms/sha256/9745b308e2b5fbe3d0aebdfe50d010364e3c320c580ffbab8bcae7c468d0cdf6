@@ -1,0 +1,23 @@
+**注记 69.2（零测度边界）。** 在初始分布对每个状态都严格为正的有限模型中，下一读数由 $W_m$ 唯一决定，当且仅当联合分布 $(W_m,q\circ\tau^{m+1})$ 的条件熵为零：
+$$
+\boxed{
+\operatorname{predictionStableAt}(m)
+\Longleftrightarrow
+H\bigl(q\circ\tau^{m+1}\mid W_m\bigr)=0.
+}
+$$
+其理由是条件熵为零迫使每个正质量纤维上的下一读数律为点质量，而全支持把这一结论提升为整个纤维的确定性。逐深度判据在所引模块的辅助证明中使用；公开声明直接给出的是上面的最小深度等式。
+
+这里的“严格正”不可删除：若某个状态质量为零，它可以在集合论上携带一个反例，却不改变条件分布的熵。最小深度等式见
+D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.lean
+的 prediction_stability_depth_eq_conditional_entropy_zero。
+
+这说明预测闭合有两种互补读法：
+$$
+\begin{aligned}
+&\text{集合读法：同一个历史词的纤维具有相同下一读数；}\\
+&\text{概率读法：给定历史词的下一读数条件熵为零。}
+\end{aligned}
+$$
+第一条保留零测度见证，第二条衡量在指定权重下它们是否还有作用。
+

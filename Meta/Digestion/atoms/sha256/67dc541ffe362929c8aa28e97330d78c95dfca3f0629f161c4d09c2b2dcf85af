@@ -1,0 +1,68 @@
+**非空紧来源类下的任意目标优化。** 本小节额外假设 $\Theta\ne\varnothing$ 且在来源迹范数中紧；不要求凸。此前精确见证与闭包结论不依赖这一新增假设。
+
+本卷定理39.3的共同半径方法在此需要的是同一个紧量子来源类及其闭约束纤维。以下逐项核对这些条件，直接使用既有紧局部实现声明。
+
+固定任意相容目标 $\xi$，它可以完全没有正的来源候选。记号 $\theta_{\rm cand}$ 始终只指第一层逆强制的算子；下文 $\theta_{\rm opt}$ 指优化所得的允许来源，两者不作等同。例如相容的全加乘积目标第一层为 $\rho_+$，其 $\theta_{\rm cand}$ 有负特征值 $(1-\alpha^{-1/2})/2$，已由本卷式（41.45）排除；对任何非空紧 $\Theta$，下述最近来源仍然存在。令
+$$
+f_n(\theta)=D(\xi_n,q_n(\theta)),\qquad
+f(\theta)=\mathsf d_\infty(\xi,\omega_\theta)=\sup_n f_n(\theta).
+$$
+每个 $f_n$ 连续，且由于目标和来源的偏迹相容性，
+$$
+0\le f_n(\theta)\le f_{n+1}(\theta)\le1.
+$$
+紧性使有限最小值
+$$
+e_n(\xi)=\min_{\theta\in\Theta}f_n(\theta)
+$$
+存在并达到；这里的下确界已经达到，因而与第45.3节 $n\ge1$ 的 $e_n$ 记号一致；现在也包括 $n=0$。同一 $\Theta$ 上逐点单调性给 $e_n\le e_{n+1}$。
+
+完成距离也达到，而且
+$$
+\boxed{
+E(\xi):=\min_{\theta\in\Theta}f(\theta)
+=\sup_{n\ge0}e_n(\xi),\qquad e_n(\xi)\uparrow E(\xi).
+}
+\tag{45.19}
+$$
+不能仅凭形式上的单调性交换 $\min$ 与 $\sup$；所需共同来源由以下紧子水平集证明供应。
+
+置 $r=\sup_ne_n\in[0,1]$，在同一个来源空间中定义
+$$
+K_n(r)=\{\theta\in\Theta:f_n(\theta)\le r\}.
+$$
+各 $K_n(r)$ 是闭紧集；有限最小值达到且 $e_n\le r$，所以非空。$f_n\le f_{n+1}$ 给
+$$
+K_{n+1}(r)\subseteq K_n(r).
+$$
+任意非空有限组集合的交等于其中最高层的集合，故非空；空组的交为非空来源类 $\Theta$。紧性于是给同一个 $\theta_{\rm opt}\in\bigcap_nK_n(r)$。由（45.1），
+$$
+f(\theta_{\rm opt})\le r.
+$$
+反向，对任意 $\theta\in\Theta$ 和任意 $n$，
+$$
+f(\theta)\ge f_n(\theta)\ge e_n,
+$$
+从而 $f(\theta)\ge r$。因此 $f(\theta_{\rm opt})=r$，同时证明（45.19）和完成最小值的达到性。各层独立选择的最优输入不必相同；证明没有把它们当成同一历史。
+
+上述紧步骤直接由 [CompactLocalRealization](../../../D5/S3/Observer/Completion/CompactLocalRealization.lean) 的 `D5.S3.Observer.Completion.CompactLocalRealization.compact_local_realization` 实例化，准确代入为
+$$
+X=\Theta,\quad\mathrm{Context}=\mathbb N,\quad\mathrm{Record}=\mathbb R,
+$$
+$$
+\mathrm{beta}(n,\theta)=\max\{f_n(\theta)-r,0\},
+\qquad\mathrm{target}(n)=0.
+$$
+在 $\Theta$ 的子空间拓扑上有紧空间结构；$\mathrm{beta}(n,\cdot)$ 连续，其目标纤维恰为 $K_n(r)$，因而闭。有限上下文集合非空时取最大层，在该层取满足 $f_n\le r$ 的来源，即同时满足全部有限约束；上下文为空时使用 $\Theta\ne\varnothing$。定理输出恰是 $\theta_{\rm opt}$。该既有声明不要求记录类型 `Record` 带拓扑；这里的实数拓扑只用于核对所写纤维闭性。使用共同实数记录，也避免把不同层矩阵塞入一个未声明的固定矩阵类型。
+
+同一证明对任何固定 $r\ge0$ 给
+$$
+\boxed{
+E(\xi)\le r
+\Longleftrightarrow\forall n,\ e_n(\xi)\le r
+\Longleftrightarrow\exists\theta\in\Theta\ \forall n,\ f_n(\theta)\le r.
+}
+\tag{45.20}
+$$
+正向可投影完成最小值的见证；反向按同一共同半径构造。$r>1$ 时也成立，但此时条件自动满足。
+

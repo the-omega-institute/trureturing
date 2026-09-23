@@ -9,10 +9,10 @@ internal static class FrozenPairRule
         FrozenStatePath.IsUnderRoot(path)
         || path.StartsWith(FrozenLedgerChangeClassifier.AcceptedRoot + "/", StringComparison.Ordinal);
 
-    internal static bool IsAffectedBy(RuleEvaluationContext context) =>
+    internal static bool IsAffectedBy(DeltaRuleContext context) =>
         context.Changes.Paths.Any(path => IsPairPath(path.Value));
 
-    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    internal static ImmutableArray<RuleFinding> Evaluate(DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var selectors = new HashSet<RepoPath>();

@@ -1,0 +1,35 @@
+**定理 66.5（有限词计数与 $k=3$ 的 Hausdorff 维数）。**
+
+令
+$$
+r:=k-1.
+$$
+则
+$$
+N_k(n)=2^n\qquad(0\le n<r),
+$$
+并且对每个 $n\ge r$，
+$$
+N_k(n)=N_k(n-1)+N_k(n-2)+\cdots+N_k(n-r).
+$$
+此外，对每个 $L\ge1$，
+$$
+M_k(L)=2N_k(L-1).
+$$
+
+特别地，当 $k=3$ 时，
+$$
+N_3(n)=F_{n+2},\qquad M_3(L)=2F_{L+1},
+$$
+其中 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。若
+$$
+\phi=\frac{1+\sqrt5}{2},
+\qquad
+s:=\frac{\log\phi}{\log2},
+$$
+则
+$$
+\dim_{\mathrm H}(Y_3,\rho) = \dim_{\mathrm H}(K_{3,3}/\langle C\rangle,\overline d) = \dim_{\mathrm H}(K_{3,3},d)
+=s.
+$$
+

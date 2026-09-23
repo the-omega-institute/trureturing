@@ -1,0 +1,11 @@
+**定理 30.4（严格正条件平均的正截面唯一性）。** 令 $q:X\twoheadrightarrow\mathcal A$ 为有限非空集合之间的满射。对每条纤维给权重 $\omega_{i\mid a}>0$、$\sum_{q(i)=a}\omega_{i\mid a}=1$，令
+$$
+(\mathsf Pf)_a=\sum_{q(i)=a}\omega_{i\mid a}f_i,\qquad
+(iu)_j=u_{q(j)}.
+$$
+若实线性 $E:\mathbb R^{\mathcal A}\to\mathbb R^X$ 满足 $\mathsf PE=I$、$E\mathbf1_{\mathcal A}=\mathbf1_X$，则以下三项等价：$E$ 在全部非负函数上保非负；$E$ 在全部严格正函数上保非负；$E=i$。
+
+证明。若 $E$ 保正，对胞腔指标 $e_a$，在每个 $b\ne a$ 胞腔有 $(\mathsf PEe_a)_b=0$。严格正的权重与逐点非负性迫使 $Ee_a$ 在该胞腔处处为零。再由 $\sum_aEe_a=E\mathbf1=\mathbf1$，在胞腔 $a$ 上只有 $Ee_a$ 能非零，故它每点都为一。于是 $Ee_a=ie_a$ 对一组基成立，给 $E=i$。自然嵌入保正，并立即给全非负域到严格正域的蕴含。反之，若只知严格正输入保非负，对 $f\ge0$ 使用 $f+\varepsilon\mathbf1>0$，令 $\varepsilon\downarrow0$；有限维线性连续性给 $Ef\ge0$。
+
+若 $E\ne i$，上面的等价保证 $E$ 非正，故某个矩阵元 $(Ee_a)_j<0$，否则所有非负线性组合都非负。选 $0<\varepsilon<-(Ee_a)_j$，则 $e_a+\varepsilon\mathbf1$ 严格正，而提升的第 $j$ 坐标仍负。乘正因子归一化不改变此符号；特别地在此分区上取 $n_a=|q^{-1}(a)|$、$D=\operatorname{diag}(n_a)$，并以其指示矩阵 $R$ 归一化为均值 $u=(e_a+\varepsilon\mathbf1)/\sum_b n_b(e_a+\varepsilon\mathbf1)_b$，得到严格正质量 $Du\in\Delta_m$ 与合法自然微观准备 $Ru$，但 $Eu$ 非法。$\square$
+

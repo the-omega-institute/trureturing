@@ -1,0 +1,35 @@
+**证明。** 若 $y=\delta x$，沿循环 $v_0v_1\cdots v_m=v_0$ 求和，
+$$
+\sum_{i=0}^{m-1}(x_{v_i}+x_{v_{i+1}})
+=2\sum_{i=0}^{m-1}x_{v_i}
+=0
+$$
+于 $\mathbb F_2$，故每个循环奇偶为零。
+
+反之，在每个非空连通分量 $K$ 取根 $o_K$ 和生成树 $T_K$，其并为生成森林 $T$。给定锚点 $a_K\in\mathbb F_2$，对 $v\in K$ 定义
+$$
+x_v=a_K+\sum_{e\in P_T(o_K,v)}y_e,
+$$
+其中 $P_T(o_K,v)$ 是树中唯一简单路径；根处为空和。若 $e=\{u,v\}\in T$，两条根路径的对称差恰为该树边，故
+$$
+x_u+x_v=y_e.
+$$
+若 $e\notin T$，树中 $u,v$ 的唯一路径与 $e$ 组成一个基本简单循环 $C_e$。循环零奇偶给出
+$$
+y_e=\sum_{f\in P_T(u,v)}y_f=x_u+x_v.
+$$
+所以 $\delta x=y$。构造又表明锚点一旦固定，所有顶点值唯一。
+
+若 $\delta x=\delta x'$，则 $z=x+x'$ 满足 $\delta z=0$，故每条边两端的 $z$ 相等；沿路径传播可知 $z$ 在每个连通分量上常值。反之，每分量整体翻转显然不改边差分，因此每个纤维恰有 $2^{c(G)}$ 个元素。由
+$$
+|C^0(G)|=2^{|V|}
+$$
+得
+$$
+|\operatorname{im}\delta|=2^{|V|-c(G)}.
+$$
+
+每个含 $n_K$ 个顶点的非空分量的生成树有 $n_K-1$ 条边，求和得 $|T|=|V|-c(G)$。每条非树边 $e$ 给出基本循环 $C_e$，而 $C_e$ 含有非树边 $e$ 且不含任何别的非树边，所以这些基本循环线性无关。任一循环的边集依次与其所含非树边对应的基本循环作对称差，可消去全部非树边；所得剩余边集仍使每个顶点具有偶数度且完全支撑在森林中。若它非空，其有限森林子图必有一个度为 $1$ 的叶顶点，与偶度矛盾，故剩余为空。因此基本循环张成整个循环空间，维数为非树边数 $|E|-|V|+c(G)$。独立公平边标签在 $2^{|E|}$ 个标签上均匀，而其中可实现者恰有 $2^{|V|-c(G)}$ 个，故概率为上述值。
+
+数学引文与复用：本定理的二元循环判据及按连通分量选根、沿路径构造顶点位的论证，显式复用 RRO 定理 61.5 中的一般二元图论部分，而不援引其完整的 2-adic 估值分类；见 [RRO 定理 61.5](https://raw.githubusercontent.com/the-omega-institute/trureturing/e9e47f0507a13f6607c6d27d1fc3bcd345e21ad5/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。另见 Frank Harary, “On the notion of balance of a signed graph,” *Michigan Mathematical Journal* 2(2) (1953), 143–146, DOI: 10.1307/mmj/1028989917，<https://doi.org/10.1307/mmj/1028989917>。该文给出 signed-graph balance 的经典表述；这里所需的 $\mathbb F_2$ 结论已在上文直接证明，不依赖外部定理编号。证毕。
+

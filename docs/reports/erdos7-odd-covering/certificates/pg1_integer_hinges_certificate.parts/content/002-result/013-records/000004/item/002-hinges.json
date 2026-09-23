@@ -1,0 +1,27 @@
+{
+  "3": {
+    "path": "content/002-result/013-records/000004/item/002-hinges/000-3.json",
+    "sha256": "63d46125fee7b1eaf64010d90a05d7af88006472655a1fe18d848733a1dd9718",
+    "kind": "value"
+  },
+  "4": {
+    "path": "content/002-result/013-records/000004/item/002-hinges/001-4.json",
+    "sha256": "f1552e231de280390851be3a4ac1675b9a39257057012404cdd069de69e4cb00",
+    "kind": "value"
+  },
+  "6": {
+    "path": "content/002-result/013-records/000004/item/002-hinges/002-6.json",
+    "sha256": "f9516607f366df3aa538cf83b76f38b5700f8e3ad6107410086da903f4a3fc44",
+    "kind": "value"
+  },
+  "7": {
+    "path": "content/002-result/013-records/000004/item/002-hinges/003-7.json",
+    "sha256": "a094658f9107a2cb8f37ef79f869a13132d25909a15347ffda3dfd0270615e17",
+    "kind": "value"
+  },
+  "8": {
+    "path": "content/002-result/013-records/000004/item/002-hinges/004-8.json",
+    "sha256": "13bc50af7d7c20d8b01ac6844030309fe582af6ed8233fe7f7f92693bd1b5193",
+    "kind": "value"
+  }
+}

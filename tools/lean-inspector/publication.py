@@ -122,13 +122,7 @@ def write_origin(report, name, origin):
 
 def check_origin(origin, row, compatibility):
     materials.require_keys(origin, {'module', 'report_sha256', 'compatibility_sha256',
-        'producer_sources_sha256', 'inspector_executable_sha256', 'input_sources'}, 'module production origin')
-    bindings = origin['input_sources']
-    if (not isinstance(bindings, dict) or bindings.get(row['source_path']) != row['source_sha256'][7:]
-            or any(not isinstance(sha, str) or not HEX.fullmatch(sha) for sha in bindings.values())):
-        raise ValueError('module dependency source binding mismatch')
-    for path in bindings:
-        selection.compile_glob(path, 'dependency source binding')
+        'producer_sources_sha256', 'inspector_executable_sha256'}, 'module production origin')
     if (origin['module'] != row['module'] or origin['compatibility_sha256'] != compatibility
             or any(not isinstance(origin[k], str) or not HEX.fullmatch(origin[k]) for k in
                    ('report_sha256', 'compatibility_sha256', 'producer_sources_sha256', 'inspector_executable_sha256'))
@@ -235,80 +229,55 @@ def validate_rows(report, archive_path, verified_materials=None, *, manifest):
     return root['modules']
 
 
+class _SourceStructure:
+    """Registered membership and artifact structure; Lake owns freshness."""
+
+    def __init__(self, repository):
+        self.inputs = selection.Selection(repository)
+
+    def validate_sources(self, rows):
+        modules = self.inputs.modules()
+        if [row['module'] for row in rows] != sorted(modules):
+            raise ValueError('report source membership mismatch')
+        for row in rows:
+            path = modules[row['module']]
+            if row['source_path'] != path:
+                raise ValueError('report source binding mismatch')
+        validate_template_sources(rows, self.inputs.root, inputs=self.inputs)
+
+
 def validate_sources(rows, repository):
-    inputs = selection.Selection(repository)
-    modules = inputs.modules()
-    if [row['module'] for row in rows] != sorted(modules):
-        raise ValueError('report source membership mismatch')
-    for row in rows:
-        path = modules[row['module']]
-        if row['source_path'] != path or row['source_sha256'] != 'sha256:' + digest(inputs.safe_file(path)):
-            raise ValueError('report source binding mismatch')
-        evidence = row.get('utility_refutation')
-        if evidence and evidence['claim_source_sha256'] != 'sha256:' + digest(inputs.safe_file(evidence['claim_source_path'])):
-            raise ValueError('report claim source binding mismatch')
-    validate_template_sources(rows, repository, inputs=inputs)
+    _SourceStructure(repository).validate_sources(rows)
 
 
 def validate_template_sources(rows, repository, *, inputs=None):
-    """Reject stale binding inputs before native reuse or final publication.
+    """Check evidence structure and the explicit report cache version.
 
-    Their paths are emitted by the checked driver. This checks byte binding;
-    the strict C# consumer still checks the complete evidence semantics.
+    Lake traces own input freshness; evidence contains no raw source hashes.
     """
-    # Selection expands the report scope. A native batch shares that immutable
-    # scope description; path checks and byte digests remain fresh per call.
     manifest = Path(repository) / 'lean-report-inputs.json'
     materials.read_manifest_version(manifest)
     if inputs is None:
         inputs = selection.Selection(repository)
     elif inputs.root != Path(repository).resolve():
         raise ValueError('declared-template input owner mismatch')
-    observed = {}
     for row in rows:
         evidence = row.get('information_templates')
         if evidence is None:
             continue
         materials.validate_template_evidence(evidence, manifest)
-        previous = None
-        for source in evidence['inputs']:
-            materials.require_keys(source, {'path', 'sha256'}, 'declared-template input')
-            path, sha = source['path'], source['sha256']
-            if (not isinstance(path, str) or not path or previous is not None and path <= previous
-                    or not isinstance(sha, str) or not re.fullmatch(r'[0-9a-f]{64}', sha)):
-                raise ValueError('malformed declared-template input binding')
-            previous = path
-            if path not in observed:
-                observed[path] = digest(inputs.safe_file(path))
-            if observed[path] != sha:
-                raise ValueError('stale declared-template input binding: ' + path)
-
-
-def validate_dependency_sources(origins, repository):
-    inputs = selection.Selection(repository)
-    allowed = set(inputs.dependency_sources())
-    observed = {}
-    for origin in origins.values():
-        for path, sha in origin['input_sources'].items():
-            if path not in allowed:
-                raise ValueError('unregistered dependency source binding: ' + path)
-            if path not in observed:
-                observed[path] = digest(inputs.safe_file(path))
-            if observed[path] != sha:
-                raise ValueError('stale dependency source binding: ' + path)
-
 
 def verify_inputs(report, repository):
-    """Input-only verification; the full material validator remains separate."""
+    """Check input membership and origin integrity without source-byte replay."""
     rows = read_json(Path(report).read_bytes())['modules']
     provenance = read_json(member(report, '.provenance.json').read_bytes())
     origins = provenance['module_origins']
     materials.require_keys(origins, {row['module'] for row in rows}, 'aggregate production origins')
-    compatibility = selection.Selection(repository).compatibility()
+    sources = _SourceStructure(repository)
+    compatibility = sources.inputs.compatibility()
     for row in rows:
         check_origin(origins[row['module']], row, compatibility)
-    validate_sources(rows, repository)
-    validate_dependency_sources(origins, repository)
+    sources.validate_sources(rows)
 
 
 def _require_bundle_files(report):
@@ -357,8 +326,8 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
     for row in rows:
         check_origin(origins[row['module']], row, provenance['producer_sha256'])
     if repository is not None:
-        validate_sources(rows, repository)
-        validate_dependency_sources(origins, repository)
+        sources = _SourceStructure(repository)
+        sources.validate_sources(rows)
     return rows
 
 
@@ -388,11 +357,15 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
     return Path(directory) / RAW
 
 
-def publish(report, destination, expected, repository=None, *, mode=None, manifest=None):
+def publish(report, destination, expected, repository=None, *, mode=None, manifest=None, expected_hashes=None):
     report, destination = Path(report), Path(destination)
-    destination.parent.mkdir(parents=True, exist_ok=True)
     _require_bundle_files(report)
-    with tempfile.TemporaryDirectory(prefix='.lean-report.', dir=destination.parent) as directory:
+    # Optional report reuse precedes ensure. A rejected seed must not create a
+    # cold .lake and thereby change the ordinary provisioning path.
+    staging_parent = destination.parent
+    while not staging_parent.exists():
+        staging_parent = staging_parent.parent
+    with tempfile.TemporaryDirectory(prefix='.lean-report.', dir=staging_parent) as directory:
         # Keep the incoming basename and every sidecar byte until the complete
         # private snapshot has passed canonical and current repository checks.
         staged = Path(directory) / 'bundle' / report.name
@@ -400,6 +373,8 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
         for suffix in SUFFIXES:
             shutil.copyfile(member(report, suffix), member(staged, suffix))
         accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
+        if expected_hashes is not None and accepted != expected_hashes:
+            raise ValueError('publication snapshot differs from sealed bundle')
         validate_bundle(staged, expected, repository, manifest=manifest)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed during validation')
@@ -419,6 +394,7 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
         _require_bundle_files(staged)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed after validation')
+        destination.parent.mkdir(parents=True, exist_ok=True)
         previous = Path(directory) / 'previous'
         previous.mkdir()
         backups = {}
