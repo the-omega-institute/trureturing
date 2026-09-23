@@ -1,7 +1,8 @@
+using static StrataLint.TestSupport.TestExecutable;
 using System.Text;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
@@ -121,11 +122,5 @@ public sealed partial class MakeWorkflowTests
     }
 
 
-    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static void WriteExecutable(string path, string content)
-    {
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-        File.WriteAllText(path, content, new UTF8Encoding(false));
-        File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-    }
+
 }

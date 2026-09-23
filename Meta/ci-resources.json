@@ -167,6 +167,7 @@
         "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+        "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
       ],
       "checks": [
@@ -549,6 +550,14 @@
       "id": "test-truth",
       "projects": [
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-workflow-script",
+      "projects": [
+        "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj"
       ],
       "checks": [],
       "steps": []

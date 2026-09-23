@@ -42,3 +42,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.DigestionTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.DeclaredTemplate.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.DeclaredTemplateTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.WorkflowScript.Tests")]

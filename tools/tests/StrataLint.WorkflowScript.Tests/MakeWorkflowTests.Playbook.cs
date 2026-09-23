@@ -1,4 +1,4 @@
-namespace StrataLint.Tests;
+namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {

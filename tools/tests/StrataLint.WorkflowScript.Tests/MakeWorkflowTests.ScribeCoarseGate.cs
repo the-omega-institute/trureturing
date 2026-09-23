@@ -1,8 +1,9 @@
+using static StrataLint.TestSupport.TestExecutable;
 using System.Text;
 using System.Runtime.Versioning;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
