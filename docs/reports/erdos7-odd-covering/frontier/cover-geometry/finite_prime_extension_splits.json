@@ -1,0 +1,299 @@
+{
+  "scope": "Exact finite arithmetic consumer of fixed-period common-law seeds. Generic extension, prime transport, and Chapter33 tail proofs retain their attributed source premises; no source rerun or new Lean certification.",
+  "input_sha256": {
+    "query_stoploss_completion.json": "44f871684942eb7dceb37c55880c9f9a49244d8bdd60134670ad80d10a3c587d",
+    "seven_core_last_stage_bridge.json": "2ff88432077332183296e76c9119791e6fa6e05cbf8476454489069c249f2e63"
+  },
+  "seeds": {
+    "5": {
+      "query_A": "354268696184847779107405/37639127656852367739093",
+      "normalized_Haar_density_cap": "84375000000/1812390307"
+    },
+    "6": {
+      "query_A": "8034293665870716452955503975561029997134562974/581858869356700257567944700688463416886232987",
+      "normalized_Haar_density_cap": "10125000000000/68006602781"
+    },
+    "7": {
+      "query_A": "70874/3375",
+      "normalized_Haar_density_cap": "455625"
+    }
+  },
+  "formulas": {
+    "general": "b_q=1/((q-1)*a_q); P=product(1+b_q); S=sum(b_q); m=A+2+S-(A+1)*P; Haar_lower=m*product(a_q)/density",
+    "arbitrary_pure": "a_q=(q-2)/(q-1); b_q=1/(q-2); Haar_lower=m/(density*P)",
+    "scope": "Subtract only pure single-prime terms; retain every old-cofactor-one multi-prime class."
+  },
+  "tail_parameters": {
+    "B": 1000000,
+    "ell": 12,
+    "3^ell": 531441,
+    "c": "289/287",
+    "tau7_series": "509855/248832",
+    "tau7": "1341379324381927510238984375/623586820236187800483190891161936",
+    "seed": "Haar restricted to actual head avoid-set, unnormalized, joint density at most one.",
+    "remaining_mass_scope": "Positive mass in the distorted tail law; not a final Haar-density lower bound."
+  },
+  "ten_prime_families": [
+    {
+      "new_primes": [
+        43,
+        47,
+        53,
+        59,
+        61
+      ],
+      "pure_mode": "arbitrary",
+      "P": "7769216/7032033",
+      "S": "3541097/35160165",
+      "mass_lower_expression": "714283199047610731016244688/77846937580646625314540401785",
+      "Haar_lower_expression": "758925898988086401704759981/4254306957863460122625000000000",
+      "criterion_positive": true,
+      "core_count": 5,
+      "reference_head_primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        43,
+        47,
+        53,
+        59,
+        61
+      ],
+      "strict_simple_head_Haar_lower": "1/6000",
+      "critical_query_A": "35015347/3685915",
+      "unsafe_rounded_query_A": "19/2",
+      "unsafe_rounded_mass_expression": "-89/3701070",
+      "M2": "1446009325937/74029529600",
+      "tail_loss_upper": "77585880507013578729018818474929009375/1846553558673789750681170975188916780212224",
+      "exact_remaining_live_mass_lower": "2895215906583273118444749787878728491048161937920688683103/21230058453305545575592995230950562727107157033966000000000000",
+      "rounded_head_remaining_live_mass_lower": "28771630742327255798063709673736306749213/230819194834223718835146371898614597526528000",
+      "strict_simple_remaining_live_mass_lower": "1/10000"
+    },
+    {
+      "new_primes": [
+        53,
+        59,
+        61,
+        67
+      ],
+      "pure_mode": "arbitrary",
+      "P": "20416/19057",
+      "S": "86072/1238705",
+      "mass_lower_expression": "83123189491003777743591777157790592348427919692/6160269151850353782484623422788915186444967796255",
+      "Haar_lower_expression": "20780797372750944435897944289447648087106979923/245640385728810904867359431593980664170000000000000",
+      "criterion_positive": true,
+      "core_count": 6,
+      "reference_head_primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        53,
+        59,
+        61,
+        67
+      ],
+      "strict_simple_head_Haar_lower": "1/12000",
+      "critical_query_A": "1236442/88335",
+      "unsafe_rounded_query_A": "14",
+      "unsafe_rounded_mass_expression": "-248/1238705",
+      "M2": "16830979471677/788155596800",
+      "tail_loss_upper": "6143327312218825983904504284067090625/133736991145542017101145209576070615924736",
+      "exact_remaining_live_mass_lower": "27462674493676620897819711691742176588512636669541174901465466620228053391/710316856182947686808021170460125483014450311079494454786521072640000000000000",
+      "rounded_head_remaining_live_mass_lower": "625177743738709430148866230909015921091/16717123893192752137643151197008826990592000",
+      "strict_simple_remaining_live_mass_lower": "1/100000"
+    }
+  ],
+  "contrasting_splits": [
+    {
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        43,
+        47,
+        53,
+        59,
+        61
+      ],
+      "splits": [
+        {
+          "core_count": 5,
+          "mass_lower_expression": "714283199047610731016244688/77846937580646625314540401785",
+          "Haar_lower_expression": "758925898988086401704759981/4254306957863460122625000000000"
+        },
+        {
+          "core_count": 6,
+          "mass_lower_expression": "-129481331878278656024724877433213593975310965135688/1496945403899635969143763491737706390306127174489965",
+          "Haar_lower_expression": "-16185166484784832003090609679151699246913870641961/30046285363465006590821101382700089421885000000000000"
+        },
+        {
+          "core_count": 7,
+          "mass_lower_expression": "-30419101/192952125",
+          "Haar_lower_expression": "-30419101/92756137500000"
+        }
+      ]
+    },
+    {
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        53,
+        59,
+        61,
+        67
+      ],
+      "splits": [
+        {
+          "core_count": 5,
+          "mass_lower_expression": "-3765992121763516155720283306/10759332836349533580058429515",
+          "Haar_lower_expression": "-1882996060881758077860141653/286195136009161579200000000000"
+        },
+        {
+          "core_count": 6,
+          "mass_lower_expression": "83123189491003777743591777157790592348427919692/6160269151850353782484623422788915186444967796255",
+          "Haar_lower_expression": "20780797372750944435897944289447648087106979923/245640385728810904867359431593980664170000000000000"
+        },
+        {
+          "core_count": 7,
+          "mass_lower_expression": "-3232961/49183875",
+          "Haar_lower_expression": "-3232961/23545788750000"
+        }
+      ]
+    },
+    {
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        37,
+        41,
+        43,
+        47
+      ],
+      "splits": [
+        {
+          "core_count": 5,
+          "mass_lower_expression": "119951801158486210796279/11145363911723506669409205",
+          "Haar_lower_expression": "5215295702542878730273/24921206549038800000000000"
+        },
+        {
+          "core_count": 6,
+          "mass_lower_expression": "-8034740193001157001139502147242650107482265149/340387438573669650677247649902751098878446297395",
+          "Haar_lower_expression": "-329424347913047437046719588036948654406772871109/2231554350602175555816951826831836880140000000000000"
+        },
+        {
+          "core_count": 7,
+          "mass_lower_expression": "19154/2075625",
+          "Haar_lower_expression": "9577/495150468750"
+        }
+      ]
+    }
+  ],
+  "first_prime_support_controls": [
+    {
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29
+      ],
+      "splits": [
+        {
+          "core_count": 5,
+          "pure_mode": "arbitrary",
+          "mass_lower_expression": "-99649364681973364904781599/86381797972476183961218435"
+        },
+        {
+          "core_count": 6,
+          "pure_mode": "arbitrary",
+          "mass_lower_expression": "-96373913738015501184676041919004320253905926425/89024407011575139407895539205334902783593647011"
+        },
+        {
+          "core_count": 7,
+          "pure_mode": "arbitrary",
+          "mass_lower_expression": "-1562576/1913625"
+        },
+        {
+          "core_count": 5,
+          "pure_mode": "absent",
+          "mass_lower_expression": "-3448815288460363371892672249/3338741179673432427928505472"
+        },
+        {
+          "core_count": 6,
+          "pure_mode": "absent",
+          "mass_lower_expression": "-6322852578963605439793291144378054154788881030037/6451651143427092455913370841233682366434551359856"
+        },
+        {
+          "core_count": 7,
+          "pure_mode": "absent",
+          "mass_lower_expression": "-512983/693000"
+        }
+      ]
+    },
+    {
+      "support": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31
+      ],
+      "splits": [
+        {
+          "core_count": 5,
+          "pure_mode": "arbitrary",
+          "mass_lower_expression": "-1302354069914326337265728768/835024047067269778291778205"
+        },
+        {
+          "core_count": 6,
+          "pure_mode": "arbitrary",
+          "mass_lower_expression": "-1407420645863633245333278881155233741815779436150/860569267778559680942990212318237393574738587773"
+        },
+        {
+          "core_count": 7,
+          "pure_mode": "arbitrary",
+          "mass_lower_expression": "-29712821/18498375"
+        },
+        {
+          "core_count": 5,
+          "pure_mode": "absent",
+          "mass_lower_expression": "-142342224212277329397229849807/100162235390202972837855164160"
+        },
+        {
+          "core_count": 6,
+          "pure_mode": "absent",
+          "mass_lower_expression": "-292426427304418122710349028564217772313117426755007/193549534302812773677401125237010470993036540795680"
+        },
+        {
+          "core_count": 7,
+          "pure_mode": "absent",
+          "mass_lower_expression": "-8510323/5670000"
+        }
+      ]
+    }
+  ],
+  "nonpositive_expression_scope": "Failure of this scalar sufficient criterion only; not a covering example or an all-law obstruction."
+}

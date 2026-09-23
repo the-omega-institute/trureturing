@@ -222,3 +222,5 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pur
 ```
 
 The query bounds concern each fixed finite period and one law for all its phase layouts. No projectively compatible sequence of separately chosen laws is asserted. The product budget (PE4) is a sufficient condition, and need not remain below one as more primes are added. The large-prime tail argument supplies a separate continuation mechanism under its cutoff. Neither argument proves the missing small-prime core cases or supplies a uniform induction through all prime supports.
+
+[Report464](464-smaller-common-law-cores-give-ten-prime-noncoverage.md) applies the finite-Q construction using the exact five- and six-core seed constants, obtaining ten-prime heads and an outside-prime cutoff of one million. [Report465](465-two-query-scalars-do-not-determine-a-surviving-extension.md) supplies an actual original-label countermodel to extending every supplied seed satisfying only the two scalar bounds at q=23,r=29; the full original family in that countermodel remains noncovering.

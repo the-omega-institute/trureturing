@@ -1,0 +1,510 @@
+{
+  "kind": "actual_phase_countermodel_to_preserving_an_arbitrary_fixed_core_law",
+  "K": 18225,
+  "q": 23,
+  "r": 29,
+  "old_law": "delta at residue 1",
+  "R": "20",
+  "density_cap": "18225",
+  "seed_A": "70874/3375",
+  "seed_density_cap": 455625,
+  "period": 12156075,
+  "original_class_count": 78,
+  "conditioned_product_cell_count": 616,
+  "counts": {
+    "q_only": 560,
+    "r_only": 440,
+    "mixed": 16,
+    "q_r_overlap": 400,
+    "uncovered": 0
+  },
+  "alpha": "10/11",
+  "beta": "5/7",
+  "alpha_beta": "50/77",
+  "mixed_residual": "2/77",
+  "actual_product_live_mass": "0",
+  "full_original_family_uncovered_integer": 5121227,
+  "seven_old_prime_padding": {
+    "additional_original_classes": [
+      {
+        "modulus": 127,
+        "residue": 0
+      },
+      {
+        "modulus": 131,
+        "residue": 0
+      },
+      {
+        "modulus": 137,
+        "residue": 0
+      },
+      {
+        "modulus": 139,
+        "residue": 0
+      },
+      {
+        "modulus": 149,
+        "residue": 0
+      }
+    ],
+    "old_law": "delta_1 on K times independent uniform nonzero coordinates on the five added primes",
+    "R": "45039362339/2166577920",
+    "density_cap": "6372801934965/337023232",
+    "scope": "Separate padded instance with 83 original classes, obtained by adding these five classes to the 78-class base instance."
+  },
+  "original_classes": [
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 3
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 5
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 9
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 15
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 25
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 27
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 45
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 75
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 81
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 135
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 225
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 243
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 405
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 675
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 729
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 1215
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 2025
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 3645
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 6075
+    },
+    {
+      "kind": "old",
+      "residue": 0,
+      "modulus": 18225
+    },
+    {
+      "kind": "pure_q",
+      "residue": 0,
+      "modulus": 23
+    },
+    {
+      "kind": "pure_r",
+      "residue": 0,
+      "modulus": 29
+    },
+    {
+      "kind": "q_only",
+      "residue": 1,
+      "modulus": 69
+    },
+    {
+      "kind": "r_only",
+      "residue": 1,
+      "modulus": 87
+    },
+    {
+      "kind": "q_only",
+      "residue": 71,
+      "modulus": 115
+    },
+    {
+      "kind": "r_only",
+      "residue": 31,
+      "modulus": 145
+    },
+    {
+      "kind": "q_only",
+      "residue": 118,
+      "modulus": 207
+    },
+    {
+      "kind": "r_only",
+      "residue": 235,
+      "modulus": 261
+    },
+    {
+      "kind": "q_only",
+      "residue": 211,
+      "modulus": 345
+    },
+    {
+      "kind": "r_only",
+      "residue": 91,
+      "modulus": 435
+    },
+    {
+      "kind": "q_only",
+      "residue": 51,
+      "modulus": 575
+    },
+    {
+      "kind": "r_only",
+      "residue": 701,
+      "modulus": 725
+    },
+    {
+      "kind": "q_only",
+      "residue": 190,
+      "modulus": 621
+    },
+    {
+      "kind": "r_only",
+      "residue": 325,
+      "modulus": 783
+    },
+    {
+      "kind": "q_only",
+      "residue": 766,
+      "modulus": 1035
+    },
+    {
+      "kind": "r_only",
+      "residue": 181,
+      "modulus": 1305
+    },
+    {
+      "kind": "q_only",
+      "residue": 376,
+      "modulus": 1725
+    },
+    {
+      "kind": "r_only",
+      "residue": 1951,
+      "modulus": 2175
+    },
+    {
+      "kind": "q_only",
+      "residue": 1297,
+      "modulus": 1863
+    },
+    {
+      "kind": "r_only",
+      "residue": 1459,
+      "modulus": 2349
+    },
+    {
+      "kind": "q_only",
+      "residue": 2701,
+      "modulus": 3105
+    },
+    {
+      "kind": "r_only",
+      "residue": 271,
+      "modulus": 3915
+    },
+    {
+      "kind": "q_only",
+      "residue": 4726,
+      "modulus": 5175
+    },
+    {
+      "kind": "r_only",
+      "residue": 2476,
+      "modulus": 6525
+    },
+    {
+      "kind": "q_only",
+      "residue": 3646,
+      "modulus": 5589
+    },
+    {
+      "kind": "r_only",
+      "residue": 244,
+      "modulus": 7047
+    },
+    {
+      "kind": "q_only",
+      "residue": 5671,
+      "modulus": 9315
+    },
+    {
+      "kind": "r_only",
+      "residue": 6886,
+      "modulus": 11745
+    },
+    {
+      "kind": "q_only",
+      "residue": 10801,
+      "modulus": 15525
+    },
+    {
+      "kind": "r_only",
+      "residue": 18226,
+      "modulus": 19575
+    },
+    {
+      "kind": "q_only",
+      "residue": 15310,
+      "modulus": 16767
+    },
+    {
+      "kind": "r_only",
+      "residue": 13123,
+      "modulus": 21141
+    },
+    {
+      "kind": "q_only",
+      "residue": 2431,
+      "modulus": 27945
+    },
+    {
+      "kind": "r_only",
+      "residue": 29161,
+      "modulus": 35235
+    },
+    {
+      "kind": "q_only",
+      "residue": 32401,
+      "modulus": 46575
+    },
+    {
+      "kind": "r_only",
+      "residue": 40501,
+      "modulus": 58725
+    },
+    {
+      "kind": "q_only",
+      "residue": 43741,
+      "modulus": 83835
+    },
+    {
+      "kind": "r_only",
+      "residue": 40096,
+      "modulus": 105705
+    },
+    {
+      "kind": "q_only",
+      "residue": 36451,
+      "modulus": 139725
+    },
+    {
+      "kind": "r_only",
+      "residue": 133651,
+      "modulus": 176175
+    },
+    {
+      "kind": "q_only",
+      "residue": 364501,
+      "modulus": 419175
+    },
+    {
+      "kind": "r_only",
+      "residue": 473851,
+      "modulus": 528525
+    },
+    {
+      "kind": "mixed",
+      "residue": 21,
+      "modulus": 667
+    },
+    {
+      "kind": "mixed",
+      "residue": 1240,
+      "modulus": 2001
+    },
+    {
+      "kind": "mixed",
+      "residue": 3126,
+      "modulus": 3335
+    },
+    {
+      "kind": "mixed",
+      "residue": 343,
+      "modulus": 6003
+    },
+    {
+      "kind": "mixed",
+      "residue": 2896,
+      "modulus": 10005
+    },
+    {
+      "kind": "mixed",
+      "residue": 9451,
+      "modulus": 16675
+    },
+    {
+      "kind": "mixed",
+      "residue": 1999,
+      "modulus": 18009
+    },
+    {
+      "kind": "mixed",
+      "residue": 12556,
+      "modulus": 30015
+    },
+    {
+      "kind": "mixed",
+      "residue": 11476,
+      "modulus": 50025
+    },
+    {
+      "kind": "mixed",
+      "residue": 22033,
+      "modulus": 54027
+    },
+    {
+      "kind": "mixed",
+      "residue": 14581,
+      "modulus": 90045
+    },
+    {
+      "kind": "mixed",
+      "residue": 1126,
+      "modulus": 150075
+    },
+    {
+      "kind": "mixed",
+      "residue": 53704,
+      "modulus": 162081
+    },
+    {
+      "kind": "mixed",
+      "residue": 154306,
+      "modulus": 270135
+    },
+    {
+      "kind": "mixed",
+      "residue": 290926,
+      "modulus": 450225
+    },
+    {
+      "kind": "mixed",
+      "residue": 31348,
+      "modulus": 486243
+    }
+  ],
+  "paired_old_core_3": {
+    "1": {
+      "old_law": "uniform on 1 and 2 modulo 3",
+      "old_original": {
+        "modulus": 3,
+        "residue": 0
+      },
+      "pure_originals": [
+        {
+          "modulus": 23,
+          "residue": 0
+        },
+        {
+          "modulus": 29,
+          "residue": 0
+        }
+      ],
+      "mixed_originals": [
+        {
+          "modulus": 69,
+          "residue": 1
+        },
+        {
+          "modulus": 87,
+          "residue": 1
+        }
+      ],
+      "q_mean": "1/44",
+      "r_mean": "1/56",
+      "overlap": "1/1232"
+    },
+    "2": {
+      "old_law": "uniform on 1 and 2 modulo 3",
+      "old_original": {
+        "modulus": 3,
+        "residue": 0
+      },
+      "pure_originals": [
+        {
+          "modulus": 23,
+          "residue": 0
+        },
+        {
+          "modulus": 29,
+          "residue": 0
+        }
+      ],
+      "mixed_originals": [
+        {
+          "modulus": 69,
+          "residue": 1
+        },
+        {
+          "modulus": 87,
+          "residue": 59
+        }
+      ],
+      "q_mean": "1/44",
+      "r_mean": "1/56",
+      "overlap": "0"
+    }
+  },
+  "scope": "No claim about every admissible core law, the report462 selected law, first-seven support, or an integer covering."
+}
