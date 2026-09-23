@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The prime-cyclotomic trace Gram template has an exact integral-image criterion with an explicit unique preimage. -/
+   digest: Prime-cyclotomic trace Gram data have an exact integral-image criterion. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Tactic
