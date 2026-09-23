@@ -181,3 +181,5 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/que
 ```
 
 Output defaults to JSON on stdout; `--output PATH` selects a file. All new checks remain active under optimization.
+
+[Report462](462-the-final-stage-ledger-gives-a-seven-core-common-law.md) retains the source's complete common functional, including charged first-hit geometry and later refinements. Its last-stage comparison yields one seven-core law with nonunit query sum at most 21−1/3375 and a positive-mass completion margin for every disjoint parent at least 23. The seven-core calculation above remains a boundary of the basic comparison specified here.
