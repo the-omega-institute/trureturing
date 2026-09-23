@@ -1994,3 +1994,151 @@ The conclusion excludes this unbounded family of parameter inputs from one varyi
 **Proposition.** DCE2 rules out every common-divisor depth pattern on each actual B_j, but does not prove a simple prime factor in every B_j. The vector (2,3) has gcd one and all entries at least two. DCE5 imposes additional residue conditions on a realization of that vector, without eliminating it. No all-WSS block or WSS prime is constructed in DCE.
 
 **Proof.** The gcd computation on the abstract vector is immediate. The arguments of DCE2-DCE6 exclude common-divisor and pure prime-power branches, whereas none derives a contradiction for two distinct actual primes meeting all conditions of DCE5, nor constructs such primes. DCE4 is a lower size budget. Since B_j grows exponentially in 3^j while b(r_j) grows linearly in r_j, the budget at fixed H cannot exclude covering at every j. Hence a new zero-set decision still requires an independent treatment of the heterogeneous-depth branch, or of a different actual initial-rank block. The published input and its application are not counted as a newly solved external problem.
+
+### GPC. Golden prime clocks, exact interlevel jets, and quadratic reciprocity
+
+#### GPC.1 The same golden matrix and three different return times
+
+**Definition.** Retain the actual TBN blocks
+
+$$x_j=L_{3^j},\qquad r_j=3^{j+1},\qquad B_j=x_j^2+3\quad(j\ge1),$$
+
+and the original golden unit phi, v=phi^2 and initial depths h_p. Write rho(M) for the least positive Fibonacci zero index modulo M, and pi(M) for the least positive n with (F_n,F_(n+1))=(0,1) modulo M. Thus pi(M) is the order modulo M of the integer matrix
+
+$$U=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+U^n=\begin{pmatrix}F_{n-1}&F_n\\F_n&F_{n+1}\end{pmatrix}.$$
+
+The matrix Q in `PERIODIC_TREE.md`, Section 8.1, is obtained by interchanging these two coordinates; it has the same orders. That section's real golden-return matrices are powers of Q. The real fractional-part clock, the norm-one residue order of v, and the exact finite-ring pair return remain different observations of this common integer matrix.
+
+**Theorem GPC1.** If p is any prime divisor of B_j, then
+
+$$\boxed{\operatorname{ord}_p(v)=r_j,\qquad
+\rho(p)=\pi(p)=2r_j,\qquad
+\pi(p^a)=2r_jp^{\max(a-h_p,0)}\quad(a\ge1).}\tag{GPC1}$$
+
+Every divisor d>1 of B_j has pi(d)=rho(d)=2r_j. More generally, for every a>=1,
+
+$$\boxed{\pi(B_j^a)=2r_j B_j^{a-1}.}\tag{GPC2}$$
+
+In particular pi(B_j^2)=B_j pi(B_j), independently of whether a prime factor has h_p=1 or h_p>=2.
+
+**Proof.** TBN3 proves the first two orders except for pi(p), and proves v_p(B_j)=h_p. Since phi^(2r_j)=v^(r_j)=1 modulo p, pi(p) divides 2r_j. The zero rank rho(p)=2r_j divides every pair-return time, so equality follows.
+
+Put T=2r_j. Its Lucas trace satisfies L_T^2-5F_T^2=4, L_T=2 modulo p and v_p(F_T)=h_p. Since L_T+2 is a unit at p, v_p(L_T-2)=2h_p. Therefore phi^T-1=(L_T-2+sqrt(5)F_T)/2 has valuation h_p in each golden completion above p. For a unit 1+y with v_p(y)=h>=1 and odd p, binomial expansion gives v_p((1+y)^b-1)=h for p not dividing b, and raises the valuation by exactly one on taking a pth power. Iteration gives h+v_p(b). Every lift return is a multiple of T, so its minimum multiple modulo p^a is T p^max(a-h_p,0). This proves the full prime-power formula without assuming h_p=1.
+
+Write B_j=product p^(h_p), the actual factorization from TBN3. A prime-power divisor p^e of B_j has 1<=e<=h_p and hence pair period T; its zero rank also remains T by the classical Fibonacci valuation formula. The Chinese remainder theorem takes least common multiples of the prime-power periods and ranks, proving the divisor assertion. At modulus B_j^a the p component instead has period T p^((a-1)h_p). Every such p is prime to T, so their least common multiple is T times their product of p-parts, namely T B_j^(a-1). This proves GPC2.
+
+The prime-power and CRT mechanisms are classical period theory, as stated in Marc Renault, *The Period, Rank, and Order of the (a,b)-Fibonacci Sequence Mod m*, Mathematics Magazine 86 (2013), 372-380, Theorems 1-2, DOI 10.4169/math.mag.86.5.372, and in the valuation theorem cited in TBN3. The displayed block specialization is proved here. Regular growth of a composite block's period therefore cannot, by itself, distinguish its factors' initial WSS depths.
+
+#### GPC.2 Exact propagation from a zero block to the fixed point three
+
+**Theorem GPC2.** For every j>=1 and every 1<=i<j,
+
+$$\boxed{x_j=4\prod_{1\le t<j}B_t,\qquad
+B_j=16\left(\prod_{1\le t<j}B_t\right)^2+3,}\tag{GPC3}$$
+
+$$\boxed{B_j\equiv3-3^{2(j-i)-1}B_i^2\pmod{B_i^3}.}\tag{GPC4}$$
+
+Consequently B_j=3 modulo B_i^2, and for each prime p|B_i,
+
+$$\boxed{v_p(B_j-3)=2h_p.}\tag{GPC5}$$
+
+Thus for these fixed i,j and p, p is WSS if and only if p^4 divides B_j-3. This is an exact transport of the original depth, not an independent assertion that the last divisibility occurs.
+
+**Proof.** TBN2 gives x_(j+1)=x_j B_j and x_1=4, proving the product by induction. The second identity follows from B_j=x_j^2+3. For i<j, divide that product at i to get the exact integer identity
+
+$$\frac{B_j-3}{B_i^2}=x_i^2\prod_{i<t<j}B_t^2.$$
+
+Each intermediate block is three modulo B_i by the same product formula, while x_i^2=B_i-3. Reducing this quotient modulo B_i gives -3*9^(j-i-1), proving GPC4. Its residue is a unit at every prime of B_i, since 3 does not divide B_i. Thus the exact p-valuation of B_j-3 is twice v_p(B_i)=h_p. Equivalently the scalar cubic map f(Y)=Y^3-3Y^2+3 sends zero to the fixed point three with order-two contact, after which its derivative f'(3)=9 is a unit at these primes. This description retains the fixed recurrence and does not insert a freely chosen local lift.
+
+#### GPC.3 Directed reciprocity and primewise depth constraints
+
+**Definition.** For coprime odd positive integers A,B use the usual Jacobi symbol (A/B), including composite B. A value +1 for a composite denominator is not assumed to mean that A is a square modulo B. For distinct odd primes q,p let epsilon(q,p) be zero or one according as (q/p) is +1 or -1.
+
+**Theorem GPC3.** For every 1<=i<j,
+
+$$\boxed{\left(\frac{B_j}{B_i}\right)=-1,\qquad
+\left(\frac{B_i}{B_j}\right)=+1.}\tag{GPC6}$$
+
+For every individual prime p|B_i one also has the stronger primewise identities
+
+$$\boxed{\prod_{q\mid B_j}\left(\frac{q}{p}\right)^{h_q}
+=\left(\frac3p\right)=(-1)^{(p-1)/2},\qquad
+\prod_{q\mid B_j}\left(\frac{p}{q}\right)^{h_q}=1.}\tag{GPC7}$$
+
+In particular the actual depth vectors of two blocks satisfy
+
+$$\boxed{\sum_{p\mid B_i}\sum_{q\mid B_j}
+ h_p h_q\,\epsilon(q,p)=1\pmod2.}\tag{GPC8}$$
+
+**Proof.** GPC4 gives (B_j/B_i)=(3/B_i). All B_i are three modulo four and one modulo three, so Jacobi reciprocity with three gives (3/B_i)=-1. The blocks are coprime and both three modulo four; reciprocity between them gives the opposite symbol +1. The extension of reciprocity and the prime-factor definition of the Jacobi symbol are the classical laws in NIST DLMF 27.9.1 and 27.9.3.
+
+For a prime p|B_i, GPC4 gives (B_j/p)=(3/p). TBN3 gives p=1 modulo three, so (3/p)=(-1)^((p-1)/2). Insert B_j=product_(q|B_j)q^(h_q) to obtain the first primewise identity. Reciprocity for p and each q contributes sign (-1)^((p-1)/2) raised to sum h_q*(q-1)/2. This sum is odd because B_j=3 modulo four. The sign cancels (3/p), proving the second identity. Finally expand the Jacobi symbol (B_j/B_i)=-1 using the actual factorizations of BOTH blocks to obtain GPC8. These formulas keep original initial depths, not multiplicities introduced by multiplying a Fibonacci index.
+
+**Corollary GPC4.** For every i<j there are primes p|B_i and q|B_j with both h_p,h_q odd and (q/p)=-1. For every fixed i, at least one such p has infinitely many distinct later witnesses q. In particular there are infinitely many split primes q with odd h_q, (q/19)=-1, and rho(q)=pi(q)=2*3^s for some s>=3.
+
+**Proof.** The odd sum in GPC8 contains a summand with all three factors odd. As j varies, the later supports are disjoint. The fixed finite set of primes in B_i therefore contains one p occurring for infinitely many j. At i=1, B_1=19 is prime and h_19=1 by TBN3, so the first coordinate must be nineteen. The remaining period and splitting assertions follow from GPC1 and TBN3. The odd depth of q may be one or at least three; the corollary does not select one of these alternatives.
+
+#### GPC.4 Odd-depth kernels and the full earlier-prime splitting condition
+
+**Definition.** Write each actual block as B_j=s_j a_j^2, where
+
+$$s_j=\prod_{q\mid B_j,\ h_q\text{ odd}}q,\qquad
+ a_j=\prod_{q\mid B_j}q^{\lfloor h_q/2\rfloor}.$$
+
+For j>=2 put A_j=product_(i<j)rad(B_i), let t_j be the number of distinct prime factors of A_j, and define the multiquadratic field
+
+$$\mathcal E_j=\mathbb Q(\sqrt p:p\mid A_j).$$
+
+Here rad uses all distinct primes, whereas s_j retains only odd depths. The field E_j is totally real and exists independently of any WSS hypothesis.
+
+**Theorem GPC5.** Each s_j is a nontrivial squarefree integer, the s_j are pairwise coprime, and
+
+$$s_j=19\pmod{120},\qquad s_j=1\pmod{2r_j}.$$
+
+Removing square factors preserves GPC6:
+
+$$\left(\frac{s_j}{s_i}\right)=-1,\qquad
+\left(\frac{s_i}{s_j}\right)=1\quad(i<j).$$
+
+The degree of E_j is 2^(t_j), and its Frobenius elements at the primes q|B_j obey
+
+$$\boxed{\prod_{q\mid B_j}\operatorname{Frob}_q^{h_q}=1
+\quad\text{in }\operatorname{Gal}(\mathcal E_j/\mathbb Q).}\tag{GPC9}$$
+
+**Proof.** Nonsquareness of B_j from TBN2 gives s_j>1. Disjoint block supports give pairwise coprimality. The square a_j^2 is one modulo eight. Each of its prime factors is one or four modulo five, so its square is also one modulo five. Thus s_j is three modulo eight and four modulo five. Every prime in the block is one modulo 2r_j and hence one modulo three; these facts give the two displayed congruences. Squares in either slot of a coprime Jacobi symbol contribute one, proving the reduced symbol identities.
+
+Distinct rational primes have independent square classes in Q^*/Q^(*)^2: taking the valuation at any selected prime forces its exponent in a square product to be even. The classical degree formula for multiquadratic extensions therefore gives 2^(t_j), with independent sign changes on the chosen square roots. The extension is unramified at every q|B_j. On the coordinate sqrt(p), its Frobenius acts by the sign (p/q). GPC7 makes the product of these signs, with multiplicities h_q, equal one for EVERY p|A_j. This proves GPC9 coordinatewise. It uses all earlier prime factors, including those of even depth, not only the squarefree kernels s_i.
+
+**Corollary GPC6.** If B_j has exactly one prime Q of odd initial depth, then Q splits completely in E_j. In particular, if B_j is an all-WSS block of total multiplicity five, DCE4 forces B_j=P^2 Q^3 with distinct primes and
+
+$$\boxed{\left(\frac pQ\right)=1\quad\text{for every }p\mid A_j,
+\qquad \left(\frac Q{B_i}\right)=-1\quad(1\le i<j).}\tag{GPC10}$$
+
+The same Q satisfies Q=19 modulo40 and Q=1 modulo2r_j. For j>=3, in particular, (Q/19)=(Q/5779)=-1.
+
+**Proof.** In the group of exponent two, all even h_q terms of GPC9 disappear. The only remaining term is Frob_Q to an odd power, so it must be the identity. This is equivalent to the primewise splitting conditions. Also (B_j/B_i)=(Q/B_i) because all the other exponents are even, giving the second condition. The congruence for Q follows from the s_j congruences when there is only one odd-depth prime, or directly from DCE5 in the two-prime case. The exact period gives Q=1 modulo2r_j. The first two earlier blocks are19 and5779, so the stated Jacobi tests follow without factoring any later block. No existence or impossibility of the two-prime pattern is asserted by these necessary conditions.
+
+#### GPC.5 The finite reciprocity tests are compatible, but omit the actual clock
+
+**Theorem GPC7.** Fix j>=2 and its actual earlier supports. The set of rational primes Q satisfying
+
+$$Q=19\pmod{40},\qquad Q=1\pmod{r_j},\qquad
+(p/Q)=1\text{ for every }p\mid A_j$$
+
+has Dirichlet density
+
+$$\boxed{\frac1{2^{t_j}\varphi(40r_j)}
+=\frac1{2^{t_j+5}3^j}>0.}\tag{GPC11}$$
+
+This set does not impose Q|B_j, pi(Q)=2r_j, or h_Q>=2. For fixed j, the primes with pi(Q)=2r_j and Q>5 form a finite set, in fact exactly the prime divisors of B_j. Thus the positive density in GPC11 supplies no prime of the required exact clock or a WSS prime.
+
+**Proof.** The two displayed congruences specify a single unit class modulo 40r_j, by CRT. In this class Q=3 modulo four. Reciprocity rewrites each condition (p/Q)=1 as (Q/p)=(-1)^((p-1)/2). Every such nontrivial quadratic character modulo p takes each sign on half its nonzero residues. All primes p|A_j are distinct and coprime to 40r_j. CRT therefore leaves product_(p|A_j)(p-1)/2 admissible unit classes modulo 40r_j A_j. Dirichlet's theorem on prime progressions assigns each class density 1/phi(40r_j A_j); summing gives GPC11. Equivalently this is the abelian cyclotomic case of the Chebotarev density theorem, A. V. Sutherland, MIT 18.785 Lecture 28 (2021), Theorem 28.9. Since r_j=3^(j+1), phi(40r_j)=32*3^j.
+
+If Q>5 has pi(Q)=2r_j, the order of phi^2 modulo Q is r_j, because the square of an element of exact even order 2r_j has order r_j. Then w=(phi^2)^(3^j) is a nontrivial cube root of unity in the norm-one group. Its components are reciprocal in the split case, so neither equals one; in the inert case it is a nonidentity field element. Thus w-1 is a unit and w^2+w+1=0, which makes its trace minus one, giving L_(2*3^j)+1=B_j=0 modulo Q. Conversely GPC1 gives pi(Q)=2r_j for every Q|B_j. Thus the exact-period primes are precisely that finite support. Removing the exact-order requirement before applying a density theorem changes the question; it is not a proof of fixed-block or WSS existence.
+
+#### GPC.6 Arithmetic scope of the golden-clock transfer
+
+**Proposition.** GPC2-GPC6 give exact relations between different actual prime supports, while GPC1 shows that the normal composite-period ratio is insensitive to their individual initial WSS status. The quadratic identities constrain only the parity of the depths in the later support. They allow h=1 and also odd h>=3, and the complete-splitting conditions in GPC10 have not been proved to contradict the required factorization or exact clock.
+
+**Proof.** Equation (GPC5) transports each original depth exactly, but requires evaluation on the actual later block. The Jacobi and quadratic Frobenius groups have exponent two, so replacing an exponent h by h+2 does not change their character values. GPC11 shows that the necessary finite splitting tests are consistent for unrestricted comparison primes, whereas its last paragraph retains the missing exact-period restriction. None of these statements chooses a new prime with h=1 or h>=2. They therefore provide a period-aware cross-prime constraint and an explicit remaining obligation for heterogeneous-depth covering, rather than a resolution of WSS or a new prime-family WSS decision.
