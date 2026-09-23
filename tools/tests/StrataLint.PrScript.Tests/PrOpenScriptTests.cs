@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.PrScript.Tests;
 
 public sealed class PrOpenScriptTests
 {
