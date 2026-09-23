@@ -56,7 +56,7 @@ private theorem weightedPrefix_order (weights : ℕ → ℝ) (m : ℕ)
     have hfloor :
         ⌊x + (k : ℝ) * alpha⌋ ≤ ⌊x + (k : ℝ) * beta⌋ := by
       apply Int.floor_mono
-      exact add_le_add_left
+      exact add_le_add_right
         (mul_le_mul_of_nonneg_left hab (Nat.cast_nonneg (α := ℝ) k)) x
     exact_mod_cast hfloor
   have hparts : ∀ N : ℕ,
@@ -219,8 +219,8 @@ private theorem actual_letter_mean (alpha : ℝ) (k : ℕ) :
   have hnext := shifted_floor_mean (((k + 1 : ℕ) : ℝ) * alpha)
   have hprev := shifted_floor_mean ((k : ℝ) * alpha)
   constructor
-  · simpa only [lowerMechanicalLetter, Int.cast_sub, Pi.sub_apply] using
-      hnext.1.sub hprev.1
+  · apply (hnext.1.sub hprev.1).congr
+    exact ae_of_all _ fun x => by simp [lowerMechanicalLetter]
   · simp only [lowerMechanicalLetter, Int.cast_sub]
     rw [integral_sub hnext.1 hprev.1, hnext.2, hprev.2]
     push_cast
@@ -287,8 +287,8 @@ theorem geometric_readout_isometric_completion
     induction n with
     | zero => simp [P, weightedPrefix]
     | succ n ih =>
-        simpa only [P, weightedPrefix, sum_range_succ, Pi.add_apply] using
-          ih.add ((actual_letter_mean a n).1.const_mul (q n))
+        apply (ih.add ((actual_letter_mean a n).1.const_mul (q n))).congr
+        exact ae_of_all _ fun x => by simp [P, weightedPrefix, sum_range_succ]
   have hPmean (a : ℝ) (n : ℕ) : (∫ x : ℝ, P a n x ∂μ₀) = a * (1 - r ^ n) := by
     dsimp [P, weightedPrefix]
     rw [integral_finsetSum (range n) (fun k _ => (actual_letter_mean a k).1.const_mul (q k))]
