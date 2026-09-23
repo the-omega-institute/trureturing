@@ -13,7 +13,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     {
         var plan = Plan(path, "", mode);
         var consumers = new[] { "StrataLint.ArchitectureTests", "StrataLint.Digestion.Tests", "StrataLint.RepositoryFileMap.Tests" }
-            .Concat(shared ? new[] { "StrataLint.Tests" } : []);
+            .Concat(shared ? new[] { "StrataLint.SourceAtomizer.Tests", "StrataLint.Tests" } : []);
         Assert.Equal(WithRepositoryContract(consumers.Append("StrataLint.RepositoryTopology.Tests").Order(StringComparer.Ordinal).Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
     }

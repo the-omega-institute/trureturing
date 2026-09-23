@@ -49,3 +49,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.RepositoryTopology.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.LeanCacheScript.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.RepositoryDigestion.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.SourceAtomizer.Tests")]
