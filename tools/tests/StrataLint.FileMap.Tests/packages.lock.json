@@ -8,16 +8,6 @@
         "resolved": "5.6.0",
         "contentHash": "Kcobt3pnOdO0A+6CKiMHZdTEluJpsfxiV20axtZdmfBQnDmiWTKPJADlgAfdTuKNAnVarrkJa0UEGwuOo91muw=="
       },
-      "Microsoft.CodeAnalysis.CSharp": {
-        "type": "Direct",
-        "requested": "[5.0.0, )",
-        "resolved": "5.0.0",
-        "contentHash": "5DSyJ9bk+ATuDy7fp2Zt0mJStDVKbBoiz1DyfAwSa+k4H4IwykAUcV3URelw5b8/iVbfSaOwkwmPUZH6opZKCw==",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
-          "Microsoft.CodeAnalysis.Common": "[5.0.0]"
-        }
-      },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
         "requested": "[18.0.1, )",
@@ -27,12 +17,6 @@
           "Microsoft.CodeCoverage": "18.0.1",
           "Microsoft.TestPlatform.TestHost": "18.0.1"
         }
-      },
-      "Tomlyn": {
-        "type": "Direct",
-        "requested": "[2.10.1, )",
-        "resolved": "2.10.1",
-        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
       },
       "xunit": {
         "type": "Direct",
@@ -50,12 +34,6 @@
         "requested": "[3.1.4, )",
         "resolved": "3.1.4",
         "contentHash": "5mj99LvCqrq3CNi06xYdyIAXOEh+5b33F2nErCzI5zWiDdLHXiPXEWFSUAF8zlIv0ZWqjZNCwHTQeAPYbF3pCg=="
-      },
-      "YamlDotNet": {
-        "type": "Direct",
-        "requested": "[16.3.0, )",
-        "resolved": "16.3.0",
-        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
       },
       "Acornima": {
         "type": "Transitive",
@@ -144,43 +122,6 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
-      "StrataLint": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Configuration": "[1.0.0, )",
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.ExecutionEvidence": "[1.0.0, )",
-          "StrataLint.FileMap": "[1.0.0, )",
-          "StrataLint.InspectionScope": "[1.0.0, )",
-          "StrataLint.Lean": "[1.0.0, )",
-          "StrataLint.ResourcePlanning": "[1.0.0, )",
-          "StrataLint.Scribe": "[1.0.0, )",
-          "StrataLint.Scribe.Documents": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )"
-        }
-      },
-      "stratalint.admissiontestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.ProcessTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.buildruntime": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.ExecutionEvidence": "[1.0.0, )"
-        }
-      },
-      "stratalint.ciartifacts": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.ExecutionEvidence": "[1.0.0, )"
-        }
-      },
       "stratalint.configuration": {
         "type": "Project",
         "dependencies": {
@@ -208,27 +149,6 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
-      "stratalint.engineeringscope": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.BuildRuntime": "[1.0.0, )",
-          "StrataLint.CiArtifacts": "[1.0.0, )",
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.ExecutionEvidence": "[1.0.0, )",
-          "StrataLint.InspectionScope": "[1.0.0, )",
-          "StrataLint.Lean": "[1.0.0, )",
-          "StrataLint.ReleaseSelection": "[1.0.0, )",
-          "StrataLint.ResourcePlanning": "[1.0.0, )"
-        }
-      },
-      "stratalint.executionevidence": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.InspectionScope": "[1.0.0, )",
-          "StrataLint.ResourcePlanning": "[1.0.0, )"
-        }
-      },
       "stratalint.filemap": {
         "type": "Project",
         "dependencies": {
@@ -244,35 +164,6 @@
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )"
         }
-      },
-      "stratalint.lean": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )"
-        }
-      },
-      "stratalint.processtestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "Xunit.SkippableFact": "[1.5.85, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.registrationtestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.TestSupport": "[1.0.0, )"
-        }
-      },
-      "stratalint.releaseselection": {
-        "type": "Project",
-        "dependencies": {
-          "Trureturing.Truth": "[0.1.0, )"
-        }
-      },
-      "stratalint.resourceplanning": {
-        "type": "Project"
       },
       "stratalint.scribe": {
         "type": "Project",
@@ -321,6 +212,16 @@
         "resolved": "1.3.2",
         "contentHash": "fZgOC/3CswUrndjDTac70aQpYdtxbW5+5bRumR7vzvI2HJbkmgKisB1c9oT+GA6v0jB/JDR9BLa9FiPzQmaK6A=="
       },
+      "Microsoft.CodeAnalysis.CSharp": {
+        "type": "CentralTransitive",
+        "requested": "[5.0.0, )",
+        "resolved": "5.0.0",
+        "contentHash": "5DSyJ9bk+ATuDy7fp2Zt0mJStDVKbBoiz1DyfAwSa+k4H4IwykAUcV3URelw5b8/iVbfSaOwkwmPUZH6opZKCw==",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
+          "Microsoft.CodeAnalysis.Common": "[5.0.0]"
+        }
+      },
       "Pidgin": {
         "type": "CentralTransitive",
         "requested": "[3.5.1, )",
@@ -333,6 +234,12 @@
         "resolved": "2026.7.1",
         "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
       },
+      "Tomlyn": {
+        "type": "CentralTransitive",
+        "requested": "[2.10.1, )",
+        "resolved": "2.10.1",
+        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
+      },
       "Xunit.SkippableFact": {
         "type": "CentralTransitive",
         "requested": "[1.5.85, )",
@@ -342,6 +249,12 @@
           "Validation": "2.6.68",
           "xunit.extensibility.execution": "2.4.0"
         }
+      },
+      "YamlDotNet": {
+        "type": "CentralTransitive",
+        "requested": "[16.3.0, )",
+        "resolved": "16.3.0",
+        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
       }
     }
   }

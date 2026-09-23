@@ -1,9 +1,8 @@
 using System.Text;
-using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.FileMap.Tests;
 
 // FileMapPolicyTests 的后半:红绿夹具一族。
 // 余量:宿主原 777 行,离 SL-003 的 800 行硬线 23 行(由 headroom.sh 列出)。

@@ -1,8 +1,7 @@
 using System.Text;
-using StrataLint.Cli;
 using StrataLint.Scribe;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.FileMap.Tests;
 
 // A run-local generated set is a projection: the producer owns it and nothing reads it from the
 // index. FILEMAP is the authority and the tree must obey, so a declared run-local member that is
