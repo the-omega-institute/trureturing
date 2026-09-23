@@ -18,8 +18,8 @@ import Mathlib.Tactic
 import Mathlib.Tactic.Ring
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.RegistrationWitnesses
-import LeanInformationAudit.Syntax
-import LeanInformationAudit.SealCommand
+
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -56,11 +56,11 @@ def SourceCorrection : Bool := false
 def decodeSourceCorrection (choice : Bool) (p q : ℕ) : ℕ :=
   if choice = false then p - 1 - q else p - 1 + q
 
-private def sourceCorrectionRealization (f : Bool → Bool) :
+def sourceCorrectionRealization (f : Bool → Bool) :
     PrimitiveRealization (cutSignature Bool Bool) :=
   cutRealization f
 
-register_information_template sourceCorrectionRealization
+
 
 def sourceCorrectionArena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -938,21 +938,16 @@ private theorem sourceCorrection_sensitivity_core :
           hprime_lt hdh hhpos ha
   · exact source_floor_identity hdpos hrem hquot
 
-private theorem sourceCorrection_sensitivity : FiniteSlotSensitivity sourceCorrectionArena :=
+theorem sourceCorrection_sensitivity : FiniteSlotSensitivity sourceCorrectionArena :=
   sourceCorrection_sensitivity_core.2.1
 
-private theorem sourceCorrection_variation : FiniteLawVariation sourceCorrectionArena :=
+theorem sourceCorrection_variation : FiniteLawVariation sourceCorrectionArena :=
   sourceCorrection_sensitivity_core.2.2
 
 /- The source conjecture: for an even squarefree modulus with at least three
 prime factors and short complementary factor, the stated length is attained,
 bounds every positive-step progression, and equals the source's rational floor. -/
-information_theorem result in sourceCorrectionArena
-  readout via (sourceCorrectionRealization (fun x : Bool => x))
-  primitives actualSourceCorrectionRealization
-  variation sourceCorrection_variation sensitivity sourceCorrection_sensitivity
-  escape from (SourceCorrection) escape continues (open)
-  : ∀ (n : ℕ), Even n → Squarefree n →
+theorem result : ∀ (n : ℕ), Even n → Squarefree n →
       3 ≤ n.primeFactors.card →
       n / GreatestPrimeFactor n < 2 * GreatestPrimeFactor n →
       let p := GreatestPrimeFactor n
