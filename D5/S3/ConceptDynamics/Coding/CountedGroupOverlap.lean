@@ -116,11 +116,15 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
   rcases a with ⟨i, k, g, a⟩
-  let p := fiberEquiv U V i k g a
-  have hinv := (fiberEquiv U V i k g).symm_apply_apply a
-  rcases hp : p with ⟨j, h, an, bn⟩
-  simp only [join, split, p, hp]
-  simpa using hinv
+  generalize hp : fiberEquiv U V i k g a = p
+  rcases p with ⟨j, h, an, bn⟩
+  have hinv :
+      (fiberEquiv U V i k g).symm
+          (⟨j, h, an, bn⟩ : Fiber U V i k g) = a := by
+    rw [← hp]
+    exact (fiberEquiv U V i k g).symm_apply_apply a
+  simp only [join, split, hp]
+  simpa only [mul_inv_cancel_left] using hinv
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
