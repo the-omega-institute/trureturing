@@ -179,6 +179,7 @@ public sealed class PrOpenScriptTests
     }
 
     [Fact]
+    // Explicit PR association owns runs from this separate workflow.
     public void PrWatchOtherWorkflowUsesExplicitAssociationEvenWithUnrelatedReusableRef()
     {
         using var fixture = new PrScriptFixture();
