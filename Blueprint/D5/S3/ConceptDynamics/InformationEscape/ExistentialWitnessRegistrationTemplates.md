@@ -72,3 +72,4 @@ On any inhabited arena, all-accepted and all-rejected realizations witness sensi
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/ExistentialWitnessRegistrationTemplates.existentialWitnessSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/ExistentialWitnessRegistrationTemplates.existentialWitness_sensitivity`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/TheoremUnit](TheoremUnit.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)
