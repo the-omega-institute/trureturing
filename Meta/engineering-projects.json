@@ -860,6 +860,8 @@
         "Golden/gate-authority-roots.toml",
         "Makefile",
         "Meta/Digestion/atomizers.toml",
+        "Meta/ci-checks.json",
+        "Meta/engineering-projects.json",
         "lean-toolchain",
         "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs",
         "tools/StrataLint.Engine/**/BackfillInventoryRule.cs",

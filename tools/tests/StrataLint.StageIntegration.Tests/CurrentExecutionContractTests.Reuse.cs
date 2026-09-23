@@ -128,7 +128,7 @@ public sealed partial class CurrentExecutionContractTests
             else File.AppendAllText(Path.Combine(fixture.Root, path), "\n");
             fixture.Track();
             var invalidates = path == EngineeringRegistrationFixture.Path
-                || project == "StrataLint.Tests" && path == "Meta/Digestion/atomizers.toml";
+                || project == "StrataLint.Tests" && path is "Meta/Digestion/atomizers.toml" or "Meta/ci-checks.json";
             Assert.Equal(invalidates ? [ExecutionFixture.First] : [], Execute(fixture));
             var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
             if (invalidates)
