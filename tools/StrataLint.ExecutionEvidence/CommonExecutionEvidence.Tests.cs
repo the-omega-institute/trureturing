@@ -90,7 +90,8 @@ internal static partial class CommonExecutionEvidence
                 excludes = project.ExecutionExcludes!.Order(StringComparer.Ordinal),
                 execution_filemap_paths = project.ExecutionFileMapPaths!.Order(StringComparer.Ordinal),
                 project.Role, project.Ci, project.Owner, project.OwnedTestAssembly, project.TestPartition,
-                materials = executionInputs[project.Path].Select(path => ExecutionMaterial(path, fileMapRelevant)), environment,
+                materials = executionInputs[project.Path].Select(path => ExecutionMaterial(
+                    path, fileMapRelevant, project.ExecutionFileMapPaths!.Length != 0)), environment,
             });
             result.Add(project.Path, new(project.Path, project.Assembly, fingerprint));
         }
@@ -122,7 +123,7 @@ internal static partial class CommonExecutionEvidence
             foreach (var reference in projects[path].References) AddCompilePaths(reference, relevant);
         }
 
-        object ExecutionMaterial(string path, HashSet<string> fileMapRelevant)
+        object ExecutionMaterial(string path, HashSet<string> fileMapRelevant, bool queryFileMap)
         {
             // An explicitly declared runtime manifest is consumed as a complete file.
             // Compilation registrations are already scoped by Compile above. FILEMAP
@@ -146,9 +147,10 @@ internal static partial class CommonExecutionEvidence
                 return new { path, policy = documents.Select(document => new
                     {
                         document.Path,
-                        // Root rows are projected below; unrelated rows must not invalidate
-                        // a test. Explicit includes remain whole-file runtime materials.
-                        sha256 = document.Path == path ? null
+                        // Only explicit policy queries project the root document. Other
+                        // runtime readers observe its complete bytes, including comments.
+                        // Includes remain whole-file materials in both modes.
+                        sha256 = document.Path == path && queryFileMap ? null
                             : Convert.ToHexStringLower(SHA256.HashData(document.Bytes.AsSpan())),
                         metadata = document.Table.Where(pair => pair.Key != "files")
                             .OrderBy(pair => pair.Key, StringComparer.Ordinal).ToArray(),
