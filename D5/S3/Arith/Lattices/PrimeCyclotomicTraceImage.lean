@@ -84,7 +84,7 @@ theorem integral_image (n : ℕ) (y : ℤ × (Fin n → ℤ)) :
           have hi := hcoords i
           omega
         _ = (n : ℤ) * x.1 + ∑ i, z i := by
-          simp [Finset.sum_add_distrib, nsmul_eq_mul]
+          simp [Finset.sum_add_distrib]
     have hx0 : x.1 = y.1 + ∑ i, z i := by
       have hfirst := congrArg Prod.fst hx
       change ((n : ℤ) + 1) * x.1 - (∑ i, x.2 i) = y.1 at hfirst
