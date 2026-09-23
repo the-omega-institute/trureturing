@@ -1,8 +1,7 @@
-import D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment
-import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalCatalog
+import LeanInformationAudit.Tests.Occurrence.RootCatalog.Baseline
 
 open Lean Lean.Elab.Command LeanInformationAudit
+open LeanInformationAudit.Tests.Occurrence.RootCatalog
 open D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation
 open D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
 open D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment
@@ -18,13 +17,13 @@ theorem extraCausalTheorem :
         D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.Int N :=
   observation_strictly_weaker_than_intervention
 
-/-- Simulate the content lane's registration module without adding D5 source. -/
+/-- Supply missing/extra rows under a test-owned contributor for rejection tests. -/
 def registerCausalFixture (second : Bool := true) (extra : Bool := false) :
     CommandElabM Unit := do
-  let catalogId := mkIdent `«causal-unified-transitions»
+  let catalogId := mkIdent `fixtureCausal
   let originalModule := (← getEnv).header.mainModule
   modifyEnv (·.setMainModule
-    `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration)
+    causalContributor)
   try
     elabCommand (← `(command|
       register_information_theorem observation_strictly_weaker_than_intervention

@@ -30,7 +30,8 @@ class NativeReuseTests:
         return result
 
     def test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs(self):
-        targets = ['Audit', 'leanInspector/reportInspector']
+        self.reg_package()
+        targets = ['leanInspector/reportInspector', 'trureturing/Audit']
         self.copy('tools/scripts/workflow/ci_plan.py')
         self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
             resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[], lean_targets=targets)])))
@@ -50,9 +51,10 @@ class NativeReuseTests:
         (self.root / 'entry-tools/lake').chmod(0o755)
         (self.root / 'entry-tools/lean').symlink_to(Path(self.lake).with_name('lean'))
         self.env['LAKE_BIN'] = str(self.root / 'entry-tools/lake')
+        workspace = ['-d', str((self.root / 'Reg').resolve())]
         def builds():
             return [args for line in calls.read_text().splitlines()
-                    if (args := json.loads(line))[:1] == ['build']]
+                    if (args := json.loads(line))[:3] == [*workspace, 'build']]
         def clear_calls():
             calls.write_text('')
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
@@ -66,7 +68,7 @@ class NativeReuseTests:
         publication.member(output, '.reuse.json').unlink()
         clear_calls()
         report_only = self.inspect(phase='report-only-miss-with-unselected-invalid-program')
-        self.assertEqual(builds(), [['build', ':report']])
+        self.assertEqual(builds(), [[*workspace, 'build', ':report']])
         self.assertIn('phase=report status=completed', report_only.stderr)
         self.assertEqual(expected, output.read_bytes())
         self.write('Audit.lean', 'def audit : Nat := 1\n')
@@ -120,7 +122,7 @@ class NativeReuseTests:
                     self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
                 clear_calls()
                 recovered = self.inspect(phase=damage)
-                self.assertEqual(builds(), [['build', ':report']])
+                self.assertEqual(builds(), [[*workspace, 'build', ':report']])
                 self.assertIn('phase=ensure status=started', recovered.stderr)
                 self.assertIn('phase=report status=completed', recovered.stderr,
                               '[FAIL] invalid_seed_must_reenter_native_producer')
@@ -135,7 +137,7 @@ class NativeReuseTests:
         probe(phase='valid-audit-probe')
         clear_calls()
         compiled = self.inspect(phase='valid-audit-reuse')
-        self.assertEqual(builds(), [['build', *targets]])
+        self.assertEqual(builds(), [[*workspace, 'build', *targets]])
         self.assertNotIn('phase=report status=started', compiled.stderr)
         self.assertEqual(expected, output.read_bytes())
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
@@ -145,14 +147,14 @@ class NativeReuseTests:
         probe(phase='invalid-audit-probe')
         clear_calls()
         failed = self.inspect(success=False, phase='invalid-audit-reuse')
-        self.assertEqual(builds(), [['build', *targets]])
+        self.assertEqual(builds(), [[*workspace, 'build', *targets]])
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
         self.assertFalse(publication.member(output, '.reuse.json').exists())
         self.write('Audit.lean', 'def audit : Nat := 1\n')
         publication.member(seed, '.reuse.json').unlink()
         clear_calls()
         recovered = self.inspect(phase='programs-and-report-miss')
-        self.assertEqual(builds(), [['build', ':report', *targets]])
+        self.assertEqual(builds(), [[*workspace, 'build', ':report', *targets]])
         self.assertIn('phase=report status=completed', recovered.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
         policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])

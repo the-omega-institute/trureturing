@@ -291,7 +291,9 @@ component={component} expected={(toJson expected).compress} actual={(toJson actu
 Uses CIRPT-42 / section 31's IE-C028 payload, as does registry validation below. -/
 def validateFrozenBaselineInSnapshot (rootId : Name)
     (snapshot : Array ExpectedOccurrence) : CommandElabM Unit := do
-  let baseline := frozenBaselineOccurrences rootId
+  let baseline := match RootCatalogs.find? (← getEnv) rootId with
+    | some contract => snapshotExpectations rootId contract.baseline
+    | none => #[]
   let baselineKeys := baseline.map expectedKey |>.qsort (· < ·)
   let retained := snapshot.filter fun row => baselineKeys.contains (expectedKey row)
   let retainedKeys := retained.map expectedKey |>.qsort (· < ·)
@@ -311,8 +313,8 @@ def validateFrozenBaselineInSnapshot (rootId : Name)
 /-- Compare the independent root manifest with the sealed import-closure registry. -/
 def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
   let rootId := env.header.mainModule
-  if rootId == frozenInformationRootId || rootId == designatedInformationRootId then
-    validateFrozenBaselineInSnapshot rootId (fixedSnapshotOccurrences rootId)
+  if let some contract := RootCatalogs.find? env rootId then
+    validateFrozenBaselineInSnapshot rootId (snapshotExpectations rootId contract.source)
   let expectedEntries ← liftTermElabM <|
     (expectedOccurrencesForRoot env rootId).mapM fun entry => do
       let objectArenaName ← resolveCanonicalArenaName entry.objectArenaName

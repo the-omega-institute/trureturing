@@ -57,6 +57,7 @@ public sealed class LeanReportProgramTargetsTests
                         else ['FixtureAudit'])
                 print(json.dumps(dict(exit=process.returncode, stdout=process.stdout,
                     stderr=process.stderr, calls=calls, lake=str(fixture.lake),
+                    workspace=str((fixture.root / 'Reg').resolve()),
                     receipt_exists=publication.member(fixture.output, '.reuse.json').is_file(),
                     seed_unchanged=all(path.read_bytes() == before
                         for path, before in fixture.seed_before.items()),
@@ -74,8 +75,9 @@ public sealed class LeanReportProgramTargetsTests
         Assert.True(expectedExit == value.GetProperty("exit").GetInt32(),
             value.GetProperty("stdout").GetString() + value.GetProperty("stderr").GetString());
         var lake = value.GetProperty("lake").GetString();
+        var workspace = value.GetProperty("workspace").GetString();
         var calls = expectedCalls.Length == 0 ? [] : expectedCalls.Split('|')
-            .Select(call => call == "ensure" ? call : lake + " " + call).ToArray();
+            .Select(call => call == "ensure" ? call : lake + " -d " + workspace + " " + call).ToArray();
         Assert.Equal(calls, value.GetProperty("calls").EnumerateArray().Select(call => call.GetString()));
         Assert.True(value.GetProperty("seed_unchanged").GetBoolean(), text);
         Assert.True(receiptExists == value.GetProperty("receipt_exists").GetBoolean(),
