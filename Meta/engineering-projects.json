@@ -1629,6 +1629,9 @@
         "tools/tests/StrataLint.ReleaseIntegration.Tests/ReleaseCommandTests.cs",
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/TruthReleaseSelectionTests.cs",
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/RepositoryDigestionTests.cs",
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/packages.lock.json",
         "tools/tests/StrataLint.ResourceObservation.Tests/ResourceObservationLibraryTests.cs",
         "tools/tests/StrataLint.ResourcePlanning.Tests/RegisteredAdmissionResourcesTests.cs",
         "tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs",
@@ -3356,6 +3359,47 @@
         "skills/codex-formal-answer/SKILL.md",
         "skills/codex-theory-ingest/SKILL.md",
         "tools/scripts/agent/batch_pr.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj",
+      "assembly": "StrataLint.RepositoryDigestion.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.RepositoryDigestion.Tests",
+      "root_namespace": "StrataLint.RepositoryDigestion.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "D5/**/*.lean",
+        "Meta/BACKFILL.yaml*",
+        "Meta/Digestion/backfill/**"
       ],
       "execution_excludes": [],
       "execution_environment": [
