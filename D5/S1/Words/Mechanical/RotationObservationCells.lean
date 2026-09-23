@@ -111,8 +111,17 @@ private theorem prefix_eq_iff_tests {alpha x y : Real}
     rw [hfloor x hx, hfloor y hy] at he
     change (_ + if cut alpha k ≤ x then (1 : Int) else 0) =
       (_ + if cut alpha k ≤ y then (1 : Int) else 0) at he
-    by_cases hcx : cut alpha k ≤ x <;> by_cases hcy : cut alpha k ≤ y <;>
-      simp_all
+    by_cases hcx : cut alpha k ≤ x
+    · by_cases hcy : cut alpha k ≤ y
+      · exact iff_of_true hcx hcy
+      · exfalso
+        simp only [hcx, hcy, if_true, if_false] at he
+        omega
+    · by_cases hcy : cut alpha k ≤ y
+      · exfalso
+        simp only [hcx, hcy, if_true, if_false] at he
+        omega
+      · exact iff_of_false hcx hcy
   · intro htests
     have hfloors (k : Nat) (hk : k ≤ n) :
         ⌊x + (k : Real) * alpha⌋ = ⌊y + (k : Real) * alpha⌋ := by
@@ -344,6 +353,7 @@ theorem rotation_prefix_single_cut (alpha : Real) [Fact (Irrational alpha)]
       apply hi.ne_int (-z)
       push_cast
       rw [← hz]
+      rw [Nat.cast_add, Nat.cast_one]
       ring
   have hcover : beta ∈ ⋃ j : Fin (n + 1), rotationGapArc alpha (n + 1) j := by
     rw [iUnion_rotation_gap_arc]
