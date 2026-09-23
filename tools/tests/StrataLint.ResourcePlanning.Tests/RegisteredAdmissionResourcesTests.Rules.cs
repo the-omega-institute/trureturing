@@ -26,7 +26,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var plan = Plan("Evidence/D5/values.json", "", mode);
         Assert.Equal(new[] { "filemap", "scribe", "test-repository-contract" }, Strings(plan["declared_require"]!));
         Assert.Equal(new[] { RepositoryContractProject }, Strings(plan["execution"]!["tests"]!));
-        Assert.Equal(new[] { "build", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-repository-contract" }, Strings(plan["resources"]!));
+        Assert.Equal(new[] { "build", "filemap", "lean", "lean-report", "scribe", "test-repository-contract" }, Strings(plan["resources"]!));
         Assert.Equal(new[] { "filemap", "scribe-describe", "scribe-markdown", "scribe-projections" },
             Strings(plan["execution"]!["checks"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap" }, Strings(plan["execution"]!["steps"]!));
