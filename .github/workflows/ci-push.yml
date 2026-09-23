@@ -333,7 +333,7 @@ jobs:
     if: ${{ !cancelled() && !inputs.no_work && !(needs.build.result == 'success' && needs.build.outputs.work_required == 'false') }}
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
-    runs-on: ubuntu-24.04-arm
+    runs-on: [self-hosted, macOS, ARM64, omega-m3-ultra]
     timeout-minutes: 60
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
