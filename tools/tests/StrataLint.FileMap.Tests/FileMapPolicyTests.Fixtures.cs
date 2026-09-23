@@ -11,6 +11,7 @@ namespace StrataLint.FileMap.Tests;
 
 public sealed partial class FileMapPolicyTests
 {
+    // An omitted review scaffold ignore must produce one policy finding.
     [Fact]
     public void MissingReviewScaffoldIgnoreIsRejectedByTheRedFixture()
     {
