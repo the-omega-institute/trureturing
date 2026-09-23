@@ -16,9 +16,8 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Arith.ZeckendorfFutureKernel
 
 /-- The two consecutive weights after a given number of input positions. -/
-def advance {R : Type*} [Add R] : ℕ → R × R → R × R
-  | 0, z => z
-  | n + 1, z => advance n (z.2, z.1 + z.2)
+def advance {R : Type*} [Add R] (n : ℕ) (z : R × R) : R × R :=
+  (fun z : R × R => (z.2, z.1 + z.2))^[n] z
 
 /-- Actual least-significant-first evaluation with arbitrary consecutive weights. -/
 def value {R : Type*} [AddMonoid R] : R → R → List Bool → R
@@ -39,9 +38,8 @@ def sameFuture {M : ℕ} (previous : Bool)
 
 private def zeros (n : ℕ) : List Bool := List.replicate n false
 
-private def flag : Bool → List Bool → Bool
-  | previous, [] => previous
-  | _, b :: w => flag b w
+private def flag (previous : Bool) (w : List Bool) : Bool :=
+  w.foldl (fun _ b => b) previous
 
 private lemma value_append {R : Type*} [AddMonoid R]
     (w w' : List Bool) (u v : R) :
