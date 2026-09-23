@@ -84,8 +84,11 @@ theorem geometric_readout_continuity_and_jump
     have hD0 : D 0 = 0 := by simp [D]
     have hD (j : ℕ) : 0 ≤ D j := by
       apply sub_nonneg.mpr
-      exact_mod_cast (Int.floor_mono (add_le_add_left
-        (mul_le_mul_of_nonneg_left hb.2.le (Nat.cast_nonneg (α := ℝ) j)) x))
+      have hmul := mul_le_mul_of_nonneg_left hb.2.le
+        (Nat.cast_nonneg (α := ℝ) j)
+      have hfloor : ⌊x + (j : ℝ) * beta⌋ ≤ ⌊x + (j : ℝ) * alpha⌋ :=
+        Int.floor_mono (add_le_add_left hmul x)
+      exact_mod_cast hfloor
     have hkR : 0 < (k : ℝ) := by exact_mod_cast hk
     have hfloor : ⌊x + (k : ℝ) * beta⌋ < z := Int.floor_lt.mpr (by
       have hmul := mul_lt_mul_of_pos_left hb.2 hkR
@@ -220,7 +223,9 @@ theorem geometric_readout_continuity_and_jump
     let beta := alpha - d
     have hd : 0 < d := div_pos (lt_min hradius ha.1) (by norm_num)
     have hdr : d < radius := by dsimp [d]; linarith [min_le_left radius alpha]
-    have hda : d < alpha := by dsimp [d]; linarith [min_le_right radius alpha]
+    have hda : d < alpha := by
+      dsimp [d]
+      linarith [min_le_right radius alpha, ha.1]
     have hb : beta ∈ Ico (0 : ℝ) alpha := by dsimp [beta]; constructor <;> linarith
     have hdist : |beta - alpha| < radius := by
       have heq : beta - alpha = -d := by dsimp [beta]; ring
