@@ -57,7 +57,67 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                         + "class, so it is preserved by unbranched covers even when global "
                         + "edge identities split. The statement itself does not certify the "
                         + "cover construction or its geometric realization."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Remark(
+                DescribeId.Create("written-flat-pair-mean-obstruction"),
+                H("Written continuation: flat pairs constrain shared lengths"),
+                F.Disp(FlatPairMeanFormula()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/cfmp2026criticaltransition")),
+                Blocks(
+                    Paragraph(Text("This authored Remark records written mathematics beyond "
+                        + "critical_transition_star. It names no new Lean declaration and does "
+                        + "not enlarge that theorem's kernel-certified statement. PositiveLengths "
+                        + "denotes the six positive original edge lengths; OppositePairs consists "
+                        + "of the three unordered pairs of opposite local edges. FlatAt(ell,q) "
+                        + "means that the extended hyperideal angles are pi on q and zero on "
+                        + "the other four edges. MeanCosh(ell,q) is cosh of the arithmetic "
+                        + "mean of the two LENGTHS in q. OtherPairOne and OtherPairTwo denote "
+                        + "the remaining two opposite pairs, in either order.")),
+                    Paragraph(Text("Luo-Yang Corollary 4.12 supplies the C1 convex extended "
+                        + "co-volume whose gradient is the extended angle vector. Subtracting "
+                        + "the flat angle vector's linear functional makes its fixed-gradient "
+                        + "fibre a convex minimizer set. The tetrahedral Klein four group "
+                        + "preserves that flat angle vector. Its length average is "
+                        + "(u,v,w,u,v,w). With X=cosh(u),Y=cosh(v),Z=cosh(w), the original "
+                        + "cosine satisfies phi+1=(X+1)*((Y+Z)^2-(X-1)^2)/D, where "
+                        + "D=X^2+Y^2+Z^2+2XYZ-1>0. This proves the displayed necessary "
+                        + "inequality. The local average is not assumed to be an admissible "
+                        + "global length modification. Equivalence is asserted only for "
+                        + "opposite-pair-equal length vectors.")),
+                    Paragraph(Text("Actual global edge-pair multisets must share the same "
+                        + "MeanCosh value. A flat candidate points from its pi pair to its "
+                        + "two zero pairs and forces strict decrease, so directed cycles "
+                        + "are impossible. A pi pair AB with zero pairs AA and BB is also "
+                        + "excluded by convexity of cosh. Consequently, with exactly two "
+                        + "global edges, each occurring at least twice in every tetrahedron, "
+                        + "mixed pi pairs are impossible. A pure pi pair saturates one "
+                        + "global edge and contradicts any genuine tetrahedron. The strict "
+                        + "angle construction and the cited maximizer theorem therefore give "
+                        + "realization under minimum degree six in the strict boundary "
+                        + "setting. The three-tetrahedron example has degrees six and twelve "
+                        + "and one genus-two boundary.")),
+                    Paragraph(Text("The same bound gives the sharp all-geometric interval "
+                        + "criterion cosh(M)<1+2cosh(m) for 0<m<=M, and the genuine positive "
+                        + "cosh cube (1,3]^6. It does not extend the old neighbour-monotonicity "
+                        + "domain: an explicit genuine point has a negative neighbour "
+                        + "derivative. General CFMP, arbitrary one/five local label patterns, "
+                        + "and completeness of the flat-candidate elimination remain outside "
+                        + "these conclusions. The source note credits the existing small-"
+                        + "manifold census; this example is not asserted to be a new "
+                        + "homeomorphism type. No compilation or projection receipt for "
+                        + "this new Remark is claimed here.")))))));
+
+    private static Formula FlatPairMeanFormula()
+    {
+        var ell=F.Id("ell"); var q=F.Id("q");
+        var selected=Call("MeanCosh",ell,q);
+        var one=Call("MeanCosh",ell,Call("OtherPairOne",q));
+        var two=Call("MeanCosh",ell,Call("OtherPairTwo",q));
+        return All([("ell",F.Id("PositiveLengths")),("q",F.Id("OppositePairs"))],
+            Imp(Call("FlatAt",ell,q),
+                Le(Call("add",F.D(1),Call("add",one,two)),selected)));
+    }
 
     private static Formula Statement()
     {

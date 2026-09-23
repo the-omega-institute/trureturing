@@ -243,3 +243,115 @@ corner was strictified with tau=1/138, giving minimum angle 6617/38088 and
 minimum corner deficit 1/828 in normalized units. The general tree proof,
 not this finite computation, establishes the theorem. No full CFMP solution,
 nonlinear cusped completeness theorem or new kernel certification is claimed.
+
+## Nonlinear flat-pair bounds and two-edge realization, Sections 45-49
+
+This written continuation uses the same theory owner. It adds an authored
+Remark to the existing CriticalTransitionStar Scribe, without changing that
+Lean declaration, its statement, or any frozen content. The Remark is
+explicitly outside the kernel-certified scope of the existing theorem.
+
+### Primary convexity and geometry inputs
+
+Feng Luo and Tian Yang, *Volume and rigidity of hyperbolic polyhedral
+3-manifolds*, arXiv:1404.5365v2.
+https://arxiv.org/abs/1404.5365
+https://arxiv.org/pdf/1404.5365
+
+Corollary 4.9 defines the extended angles. Proposition 4.10 and Corollary
+4.12, printed pages 18-19, give the C1 convex extended co-volume and its
+gradient equal to those angles. Proposition 4.4, printed page 16, and
+Lemma 4.6 give the whole-positive-length domain and the three possible
+flat angle patterns. These statements, including their domains, were
+checked in the parsed original PDF. The new screenshot attempts for
+printed pages 16 and 19 failed with a cache-miss error; no successful
+visual inspection of those pages is claimed in this increment.
+
+The convexity of a fixed-gradient fibre is an elementary consequence of
+the cited convex function: subtract the fixed angle vector's linear
+functional and use convexity of the minimizer set. The written proof then
+averages under the tetrahedral Klein four group. This is an average of
+actual lengths, not of cosh-lengths, and not a proposed global independent
+change of the tetrahedra. Its only purpose is to derive a necessary
+condition on the original shared length data.
+
+### New ordinary deductions and limitations
+
+If ij and kh carry the pi angles of a positive generalized tetrahedron,
+the theory derives
+
+cosh((l_ij+l_kh)/2) >= 1
+    + cosh((l_ik+l_jh)/2) + cosh((l_ih+l_jk)/2).
+
+The calculation retains the positive denominator
+X^2+Y^2+Z^2+2XYZ-1 and its exact factorization. Necessity is asserted for
+general lengths; equivalence is asserted only after opposite lengths
+are pairwise equal. No arbitrary local or global equal-length premise
+is inserted into the original problem.
+
+The complete box [m,M]^6, with 0<m<=M, consists entirely of genuine
+hyperideal tetrahedra iff cosh(M)<1+2cosh(m). Consequently the upper-only
+positive cosh cube (1,3]^6 is genuine and the constant three is optimal
+for that precise type of cube. This does not extend coordinate
+monotonicity: at (6/5,6/5,14/5,6/5,6/5,14/5) the established derivative
+numerator equals -1026/125. The point is genuine but that neighbour
+derivative is negative.
+
+Reading each opposite-pair multiset of actual global labels as one
+shared cosh-of-mean variable gives directed acyclic constraints on
+simultaneous flat candidates. A local convex-combination identity of
+the pair reading vectors also excludes the candidate by Jensen's
+inequality. Neither acyclicity nor the surviving scalar inequalities
+are advertised as sufficient for geometric realizability.
+
+For a triangulation with exactly two global edges A,B, with each label
+appearing at least twice in every tetrahedron, a mixed AB pi-pair is
+always excluded by those two local rules. A pure AA or BB pi-pair
+already saturates the entire corresponding edge angle sum, contradicting
+the existence of a genuine tetrahedron, since every tetrahedron contains
+both labels. The strict seed from Section 42 and the existing Luo-Yang
+maximizer theorem therefore establish realization when both edge
+degrees are at least six. Local 1/5 label distributions are excluded
+from the theorem's hypotheses; no full two-edge or full CFMP claim follows.
+
+### Concrete topology and a nonlinear infeasibility witness
+
+The complete three-tetrahedron packet in Section 48 has edge degrees
+(6,12), one genus-two boundary, two adjacent A occurrences in the first
+two tetrahedra and opposite A occurrences in the third. All six actual
+face pairings, the two edge fibres, and their normal circles are supplied.
+The same packet admits the rational one-flat angle table
+
+  [8,0,0,8,0,0; 2,2,1,1,1,1; 2,1,1,2,1,1] / 8.
+
+It satisfies every linear edge and corner condition, but its flat
+tetrahedron would require Z_AB >= 1+Z_AB+Z_BB. Thus no positive common
+generalized lengths produce that table. This is a stronger conclusion
+than merely finding another angle assignment of larger volume, and is
+not a counterexample to CFMP. The manifold itself is realized by the
+two-edge theorem. Its connected cyclic covers yield 3n-tetrahedron,
+six/twelve-degree examples with Euler characteristic -n.
+
+Roberto Frigerio, Bruno Martelli and Carlo Petronio, *Small hyperbolic
+3-manifolds with geodesic boundary*, arXiv:math/0211425 (2002), published
+in Experimental Mathematics 13 (2004).
+https://arxiv.org/abs/math/0211425
+
+The primary abstract states the classification of the relevant orientable
+hyperbolic manifolds admitting ideal triangulations with at most four
+tetrahedra. The present packet is an explicit witness for a proved
+criterion. Its census identity has not been determined, and it is not
+claimed to be a new homeomorphism type. Bounded source searches do not
+establish priority for the general sufficient criterion or mean bound.
+
+### Verification scope
+
+Exact supplementary checks cover the opposite-pair polynomial identity,
+the Klein group averaging map, the negative derivative numerator, all
+two-label local assignments with each label occurring at least twice,
+and the one specified packet's actual unoriented/oriented edge classes,
+normal circles, vertex classes, corner fans and link V/E/F. The rational
+one-flat table is checked in the same actual fibres. These checks do not
+replace the universal written proofs. The new Scribe Remark has no
+compilation or projection receipt in this runtime; no status is inferred
+for unchanged Lean declarations from this new authored text.
