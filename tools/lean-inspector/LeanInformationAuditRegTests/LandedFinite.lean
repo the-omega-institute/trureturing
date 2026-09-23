@@ -1,5 +1,6 @@
+import LeanInformationAuditRegTests.ProductionInputs
 import LeanInformationAudit.DispositionCensus
-import D5.S3.ConceptDynamics.InformationEscape.InformationRoot
+import Reg.Catalogs.InformationRoot
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
@@ -12,7 +13,9 @@ set_option maxHeartbeats 0
 /- All eleven landed finite occurrences have the required evidence. The IDs here
 belong to a synthetic fixture report; production IDs must come from truth-export. -/
 run_cmd do
-  let registrations := InformationRegistry.entries (← getEnv)
+  let expected := Reg.Support.InformationRootContract.contract.expected
+  unless expected.size == 11 do throwError "expected eleven independent landed occurrences"
+  let registrations ← liftCoreM <| LeanInformationAuditRegTests.productionEntries expected
   unless registrations.size == 11 do throwError "expected eleven landed occurrences"
   let mut rows : Array (Sigma fun key : StatementKey => CensusAssessment key) := #[]
   for (registration, i) in registrations.toList.zipIdx do

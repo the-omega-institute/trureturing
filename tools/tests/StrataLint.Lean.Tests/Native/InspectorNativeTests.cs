@@ -22,6 +22,10 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [InlineData("test_native.NativeTests.test_native_publication_rejects_incoming_damage_before_normalization")]
     [InlineData("test_native.NativeTests.test_publication_snapshot_integrity_and_replace_failure")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
+
+    [Fact]
+    public void ImplResourceRebuildsProductionRegOnWarmReport() => InspectorNativeTestRunner.Run(compiler,
+        "test_native.NativeTests.test_impl_resource_rebuilds_production_reg_on_warm_report");
 }
 
 internal static class InspectorNativeTestRunner
