@@ -23,7 +23,7 @@ internal sealed class CarlitzFiveOrbitDocument : IScribeDocumentDefinition
                 H("The literal Thakur residual"),
                 StatementSource.FromAuthor(ResidualFormula()),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/FunctionFields/niedbala2026carlitz")),
+                    LibraryNoteRef.Create("D5/L/ArithUnits/niedbala2026carlitz")),
                 Blocks(Paragraph(Text("R(a,b,c,d)=1-d*(1-c*(1-b*(1-a))). "
                     + "These arguments are the four actual conjugate differences in "
                     + "equation (2) of arXiv:2607.15305v2. No substituted recurrence "
@@ -35,7 +35,7 @@ internal sealed class CarlitzFiveOrbitDocument : IScribeDocumentDefinition
                 H("The specified quintic"),
                 StatementSource.FromAuthor(QuinticFormula()),
                 AssessedProvenance.FromLiterature(
-                    LibraryNoteRef.Create("D5/L/FunctionFields/niedbala2026carlitz")),
+                    LibraryNoteRef.Create("D5/L/ArithUnits/niedbala2026carlitz")),
                 Blocks(Paragraph(Text("mu(a)=a^5+5*a^3+3*a^2-4*a-9. "
                     + "This is the polynomial already exhibited in Theorem 4.1 and "
                     + "Conjecture 4.2 of the cited version. It is not claimed to be "
