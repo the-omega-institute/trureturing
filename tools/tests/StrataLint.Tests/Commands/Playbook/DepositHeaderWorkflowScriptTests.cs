@@ -296,7 +296,7 @@ public sealed class DepositHeaderUtilityTests
         var repository = new FakeRepositoryGateway(
             RawChangeSet.Create([RuleFixture.RingPath]),
             current,
-            baseline: OrdinaryInstanceAdmissionTests.Raw(fixture.Baseline));
+            baseline: UtilityAdmissionTestSupport.Raw(fixture.Baseline));
         var environment = new ProductionCliEnvironment("/repo", repository, source);
         return environment.DepositHeaderCheck(["--target", RuleFixture.RingPath, "--protected-base", new string('b', 40)]);
     }

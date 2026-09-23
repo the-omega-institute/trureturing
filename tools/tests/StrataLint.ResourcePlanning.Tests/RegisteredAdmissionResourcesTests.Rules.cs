@@ -15,4 +15,15 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
         }, Strings(plan["execution"]!["tests"]!));
     }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void ValuesProjectionSelectsRuleBehaviorTests(string mode)
+    {
+        var plan = Plan("Evidence/D5/values.json", "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+    }
 }

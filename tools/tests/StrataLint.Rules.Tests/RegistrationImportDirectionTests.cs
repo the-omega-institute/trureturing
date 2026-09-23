@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using StrataLint.Engine;
 using StrataLint.TestSupport;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Rules.Tests;
 
 public sealed class RegistrationImportDirectionTests
 {

@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Rules.Tests;
 
 public sealed class RuleEngineCapacityDerivationTests
 {
