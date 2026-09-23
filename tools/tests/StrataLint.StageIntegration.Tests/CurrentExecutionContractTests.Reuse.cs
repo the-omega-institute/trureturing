@@ -8,12 +8,12 @@ namespace StrataLint.StageIntegration.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
-    [InlineData("StrataLint.ArchitectureTests", true)]
+    [InlineData("StrataLint.ArchitectureTests", false)]
     [InlineData("StrataLint.Cache.Tests", false)]
     [InlineData("StrataLint.EngineeringScope.Tests", false)]
     [InlineData("StrataLint.Lean.Tests", false)]
     [InlineData("StrataLint.ScriptTests", true)]
-    [InlineData("StrataLint.Tests", true)]
+    [InlineData("StrataLint.Tests", false)]
     public void RegisteredDocumentationAndCacheAdaptersRespectTestInputs(string project, bool generalScripts)
     {
         using var fixture = new ExecutionFixture();
@@ -31,23 +31,22 @@ public sealed partial class CurrentExecutionContractTests
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
                 : "registered fixture material\n");
-        var cacheInvalidates = project is "StrataLint.ArchitectureTests" or "StrataLint.Cache.Tests"
-            or "StrataLint.ScriptTests";
+        var cacheInvalidates = project is "StrataLint.Cache.Tests" or "StrataLint.ScriptTests";
         const string filemap = "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
             + "[[files]]\npattern = \"Meta/ci-cache-paths.json\"\nkind = \"data\"\nconsumed_by = [\"automation\"]\n";
         var changes = new[]
         {
             (Path: "tools/scripts/agent/openproblem/README.md", Invalidates: false),
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
-            (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts),
+            (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts || project == "StrataLint.Tests"),
             (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
-            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project == "StrataLint.Cache.Tests"),
-            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project is not ("StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
-            (Path: "Meta/FILEMAP.toml", Invalidates: project is "StrataLint.ArchitectureTests" or "StrataLint.Tests"),
+            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project is "StrataLint.Cache.Tests" or "StrataLint.Tests"),
+            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project is "StrataLint.Lean.Tests" or "StrataLint.ScriptTests" or "StrataLint.Tests"),
+            (Path: "Meta/FILEMAP.toml", Invalidates: false),
             (Path: "Meta/ci-cache-paths.json", Invalidates: cacheInvalidates),
-            (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
-            (Path: "tools/lean-inspector/native_image.c", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
-            (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
+            (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project is "StrataLint.Lean.Tests" or "StrataLint.Tests"),
+            (Path: "tools/lean-inspector/native_image.c", Invalidates: project == "StrataLint.Lean.Tests"),
+            (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project == "StrataLint.Lean.Tests"),
         };
         foreach (var change in changes) fixture.Write(change.Path,
             change.Path == "Meta/FILEMAP.toml" ? filemap : "original fixture material\n");
@@ -126,8 +125,8 @@ public sealed partial class CurrentExecutionContractTests
                 fixture.Write(path, File.ReadAllText(Path.Combine(fixture.Root, path)).Replace("program", "data", StringComparison.Ordinal));
             else File.AppendAllText(Path.Combine(fixture.Root, path), "\n");
             fixture.Track();
-            var invalidates = project != "StrataLint.Tests"
-                || path is not ("Meta/domains.yaml" or "Meta/registry.yaml");
+            var invalidates = path == EngineeringRegistrationFixture.Path
+                || project == "StrataLint.Tests" && path == "Meta/Digestion/atomizers.toml";
             Assert.Equal(invalidates ? [ExecutionFixture.First] : [], Execute(fixture));
             var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
             if (invalidates)
