@@ -17,6 +17,11 @@ triage: anchor
 Eftekhari, Yap, Wakin, Rozell, *Physical Review E* 97, 022222 (2018).
 DOI and authors were checked against the publisher's record.
 
+## Verified locator
+
+- DOI: https://doi.org/10.1103/PhysRevE.97.022222
+- Author manuscript: https://arxiv.org/abs/1609.06347v2
+
 ## Exact source locators
 
 The publisher accepted manuscript, Section III.A, assumptions A1–A3 and

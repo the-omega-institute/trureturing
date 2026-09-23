@@ -18,6 +18,11 @@ Pauly, *Computability* 5(2), 159–180 (2016). The publisher lists online
 publication in December 2015 and the journal issue in 2016. The canonical
 bibliographic year used here is the journal issue year.
 
+## Verified locator
+
+- DOI: https://doi.org/10.3233/COM-150049
+- Author manuscript: https://arxiv.org/abs/1204.3763
+
 ## Verified scope
 
 The author manuscript arXiv:1204.3763v3, Section 4, identifies open sets through
