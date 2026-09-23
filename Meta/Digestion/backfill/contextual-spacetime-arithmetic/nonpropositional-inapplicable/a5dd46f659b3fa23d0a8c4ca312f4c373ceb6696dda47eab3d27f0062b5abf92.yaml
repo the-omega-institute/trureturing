@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5dd46f659b3fa23d0a8c4ca312f4c373ceb6696dda47eab3d27f0062b5abf92
+  normalized_sha256: sha256:a5dd46f659b3fa23d0a8c4ca312f4c373ceb6696dda47eab3d27f0062b5abf92
+cas_ref: sha256:a5dd46f659b3fa23d0a8c4ca312f4c373ceb6696dda47eab3d27f0062b5abf92
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “记”仅给出整值有理多项式集合的成员条件，即在每个整数处取整数值；标题指明讨论主题而不在这一叶断言具体多项式属于该集，没有在定义中偷带非整系数或不可表达结论，后续“函数”及“因此”的两句已分开，故可按定义结算。
+    previous_atom_id: b078f710d0c2dcd9a12d2a09e3b93545efbbd7cfb3c2f914340d7f39bd141667
+    next_atom_id: 7ebd3db169a4e45ab97491993791ab23a5dc03079e6a2ea563aa75f1f8557b28

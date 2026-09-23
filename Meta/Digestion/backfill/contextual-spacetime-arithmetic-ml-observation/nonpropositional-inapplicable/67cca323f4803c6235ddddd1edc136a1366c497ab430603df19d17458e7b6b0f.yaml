@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:67cca323f4803c6235ddddd1edc136a1366c497ab430603df19d17458e7b6b0f
+  normalized_sha256: sha256:67cca323f4803c6235ddddd1edc136a1366c497ab430603df19d17458e7b6b0f
+cas_ref: sha256:67cca323f4803c6235ddddd1edc136a1366c497ab430603df19d17458e7b6b0f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “成员前提是实际当前后验”属于相应区间，且“不要求”编号等于从空词运行的标签；该段定义允许输入的范围与舍入约定，没有宣称任意编号自动满足成员条件。
+    previous_atom_id: 355680be3035bbc5f49312a61a4fdb106c66c4f2411e5c62b2c6af6c875bf072
+    next_atom_id: d3622693b0092e9a398301a482fabf4215afa9441da6e9506ee5f10b76d008e8

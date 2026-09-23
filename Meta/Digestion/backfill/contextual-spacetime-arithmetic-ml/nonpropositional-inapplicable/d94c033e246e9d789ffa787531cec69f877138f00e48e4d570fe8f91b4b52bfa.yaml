@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d94c033e246e9d789ffa787531cec69f877138f00e48e4d570fe8f91b4b52bfa
+  normalized_sha256: sha256:d94c033e246e9d789ffa787531cec69f877138f00e48e4d570fe8f91b4b52bfa
+cas_ref: sha256:d94c033e246e9d789ffa787531cec69f877138f00e48e4d570fe8f91b4b52bfa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.1节此叶明确写“同步参数 Euler 步给出的乘积则精确为”，这是显式乘法恒等式而非借定义夹带主张；探针在任意有限矩阵尺寸上按 Matrix.add_mul、Matrix.mul_add、Matrix.smul_mul、Matrix.mul_smul 展开并以 module 归一化，仓内无冻结 GID，故按钉版 Mathlib 结算。
+    previous_atom_id: eaafce12079a57244d935bb44fbefa25353ce0abdc9b3608270219b2810786a8
+    next_atom_id: 0c10bcce238da1f18c571c4c150a19862c338825c9039cb8172afa1b6ccaa2cb

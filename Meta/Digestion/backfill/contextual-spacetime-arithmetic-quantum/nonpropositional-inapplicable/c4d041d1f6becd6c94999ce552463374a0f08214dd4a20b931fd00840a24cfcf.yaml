@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c4d041d1f6becd6c94999ce552463374a0f08214dd4a20b931fd00840a24cfcf
+  normalized_sha256: sha256:c4d041d1f6becd6c94999ce552463374a0f08214dd4a20b931fd00840a24cfcf
+cas_ref: sha256:c4d041d1f6becd6c94999ce552463374a0f08214dd4a20b931fd00840a24cfcf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子规定新鲜记录、共同控制、访问范围和逐标签读取误差假设，不证明这些假设在任意物理系统成立。
+    previous_atom_id: 06327efad76fdc01a073edb9118369610f901af32bb5ac773971f4bb0e3a8531
+    next_atom_id: 82002a13cc40e4776ce68b4bdca8b9fcf1590f440ac4102e7d93eec24354d6af

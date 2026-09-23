@@ -1,0 +1,15 @@
+**定理 83.2（族保持下的纤维缺陷与粗预测差异不等式）。** 在定义与假设 83.1 下，全部下列项都是有限实数，且
+$$
+\boxed{
+\mathcal J_\Phi(Td;q,r)
++\sum_i p_i B_\Phi\!\left(
+  \frac{(CTd)_i}{p_i},\frac{(SCd)_i}{p_i}\right)
+\le\mathcal J_\Phi(d;q,r).
+}
+$$
+粗预测项非负，因此 $\mathcal J_\Phi(Td;q,r)\le\mathcal J_\Phi(d;q,r)$。若固定 $q$ 并在
+$$
+\mathcal K=[0,1/\min_jq_j]
+$$
+上满足上述函数假设，则该结论同时适用于所有 $d\in\Delta(J)$。
+

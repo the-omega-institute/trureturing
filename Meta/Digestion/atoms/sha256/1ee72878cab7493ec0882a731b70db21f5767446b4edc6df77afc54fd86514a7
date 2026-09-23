@@ -1,0 +1,10 @@
+量子接口的状态族模拟缺陷为
+
+$$
+\delta_Q(F\mid E)
+=
+\inf_{\Lambda\ \mathrm{CPTP}}
+\max_{h\in H}
+\frac12\left\|\rho_h^F-\Lambda(\rho_h^E)\right\|_1.
+$$
+

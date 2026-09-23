@@ -18,7 +18,32 @@ SETTLED = re.compile(
     r"(?:^|\s)Proof\s*:"
     r"|\b(proved|proven|a proof|the proof|see the proof|is true|are true|now proved"
     r"|was shown|has been shown|follows from|disproved|counterexample found"
-    r"|no longer a conjecture|theorem of)\b", re.I)
+    r"|no longer a conjecture|theorem of)\b"
+    # A settlement does not have to use the word "proof". A034448's conjecture of 2017-08-20
+    # was answered one line below it on 2021-03-19 with "This conjecture is easily verified
+    # since all the functions involved are multiplicative and proving it for prime powers is
+    # straightforward", and the pattern above read that entry as carrying no marker. A lane was
+    # one step from being opened on it. These phrasings are anchored to the word "conjecture"
+    # or to an explicit verification verb so that an entry merely calling its own *formula*
+    # straightforward is not swept up: a false settled marker discards a live target, which is
+    # the more expensive direction of the two.
+    r"|\bconjecture\b[^.]{0,80}?\b(is|was|can be|has been)\b[^.]{0,40}?"
+    r"\b(easily |readily |straightforwardly |trivially |immediately )?"
+    r"(verified|verifiable|checked|settled|established|resolved|answered|confirmed)\b"
+    r"|\b(verification|proof) of (this|the) conjecture\b"
+    r"|\bthis conjecture (is|was) (easy|straightforward|immediate|trivial)\b"
+    # A refutation settles a conjecture as surely as a proof does, and the entry states it in the
+    # entry's own voice rather than with the word "disproved". A257750 carries "The conjecture
+    # that b < sqrt(n) is false" with three explicit counterexamples, and the pattern above read
+    # both its conjecture lines as unmarked.
+    r"|\bconjecture\b[^.]{0,80}?\b(is|was|turns out to be)\b[^.]{0,30}?\b(false|incorrect|wrong)\b"
+    r"|\brefut(ed|es|ation)\b"
+    # A settlement can be a bare justification with no settlement verb at all. A396111 carries
+    # two conjectures, each answered on the next line by Robert Israel as "True because
+    # a(8*k-1) = k for all k >= 1" and "True because 2*n+1 divides 16*a(n)-1", and the pattern
+    # above read both as unmarked. The justification word is required: "True for all n <= 10^6"
+    # is a computational report and must stay unmarked.
+    r"|\b(true|holds|valid)\s+(because|since)\b", re.I)
 CONJ = re.compile(r"\bconjectur", re.I)
 
 def fetch(url, tries=3):
@@ -47,9 +72,77 @@ def entry(a):
 def lines(text, tag):
     return [l for l in text.splitlines() if l.startswith("%" + tag + " ")]
 
+def starts_conjecture(line):
+    # A settlement comment usually names the thing it settles, so it contains the word
+    # "conjecture" too. Treating such a line as a NEW conjecture terminates the search window
+    # of the conjecture it settles, and the real conjecture is then reported as unmarked —
+    # which is exactly how A034448 read as open five years after it was answered one line
+    # below. A line that carries a settlement marker is a marker, not a fresh statement,
+    # unless it introduces one with an explicit "Conjecture:".
+    if not CONJ.search(line):
+        return False
+    if SETTLED.search(line) and not re.search(r"\bconjecture\s*:", line, re.I):
+        return False
+    return True
+
+def classify(a, body):
+    """Per-conjecture settlement for one entry's %C/%F lines, or None when it states none."""
+    conj_idx = [i for i, l in enumerate(body) if starts_conjecture(l)]
+    if not conj_idx:
+        return None
+    # Settlement is per conjecture, not per entry. An entry can carry five conjectures and one
+    # proof; reporting the entry as settled would discard four live targets. A settlement
+    # comment follows the statement it settles, so each conjecture takes the markers between
+    # it and the next conjecture line.
+    items = []
+    for j, i in enumerate(conj_idx):
+        stop = conj_idx[j + 1] if j + 1 < len(conj_idx) else len(body)
+        near = [l for l in body[i + 1:stop] if SETTLED.search(l)]
+        own = [body[i]] if SETTLED.search(body[i]) else []
+        marks = own + near
+        items.append({"conjecture": body[i], "settlement_lines": marks,
+                      "status": "settled-marker" if marks else "no-marker"})
+    return {"a": a, "conjectures": items,
+            "status": "settled-marker" if all(x["status"] == "settled-marker"
+                                              for x in items) else "mixed-or-open"}
+
+SELFTEST = [
+    # (name, body lines, expected per-conjecture statuses)
+    ("A396111 answered by 'True because' on the next line", [
+        "%C A396111 Conjecture: a(n) contains every nonnegative integer k at least once (tested up to k=600000).",
+        "%C A396111 True because a(8*k-1) = k for all k >= 1. - _Robert Israel_, Jun 11 2026",
+        "%C A396111 Conjecture: a(n) contains every integer k only a finite number of times.",
+        "%C A396111 True because 2*n+1 divides 16*a(n)-1. - _Robert Israel_, Jun 11 2026",
+    ], ["settled-marker", "settled-marker"]),
+    ("A034448 answered without the word proof", [
+        "%C A034448 Conjecture: a(n) = b(n) for all n. - _X_, Aug 20 2017",
+        "%C A034448 This conjecture is easily verified since all the functions involved are multiplicative.",
+    ], ["settled-marker"]),
+    ("unanswered conjecture", [
+        "%C A1 Conjecture: a(n) is odd iff n is a power of 2.",
+    ], ["no-marker"]),
+    ("a computational report is not a settlement", [
+        "%C A2 Conjecture: a(n) > 0 for all n.",
+        "%C A2 True for all n <= 10^6. - _Y_, Jan 01 2026",
+    ], ["no-marker"]),
+]
+
+def selftest():
+    bad = 0
+    for name, body, want in SELFTEST:
+        rec = classify("A0", body)
+        got = [x["status"] for x in rec["conjectures"]] if rec else []
+        ok = got == want
+        bad += not ok
+        print(("ok   " if ok else "FAIL ") + name + ("" if ok else f": want {want} got {got}"))
+    print(f"SELFTEST cases={len(SELFTEST)} failed={bad}")
+    return 1 if bad else 0
+
 def main():
     if len(sys.argv) < 2:
-        raise SystemExit("usage: oeis-conjecture-scan.py <query> [pages] | --ids A1,A2")
+        raise SystemExit("usage: oeis-conjecture-scan.py <query> [pages] | --ids A1,A2 | --selftest")
+    if sys.argv[1] == "--selftest":
+        raise SystemExit(selftest())
     out = []
     if sys.argv[1] == "--ids":
         seen = [x.strip() for x in sys.argv[2].split(",") if x.strip()]
@@ -67,24 +160,9 @@ def main():
     for a in seen:
         txt = entry(a)
         body = lines(txt, "C") + lines(txt, "F")
-        conj_idx = [i for i, l in enumerate(body) if CONJ.search(l)]
-        if not conj_idx:
-            continue
-        # Settlement is per conjecture, not per entry. An entry can carry five conjectures and one
-        # proof; reporting the entry as settled would discard four live targets. A settlement
-        # comment follows the statement it settles, so each conjecture takes the markers between
-        # it and the next conjecture line.
-        items = []
-        for j, i in enumerate(conj_idx):
-            stop = conj_idx[j + 1] if j + 1 < len(conj_idx) else len(body)
-            near = [l for l in body[i + 1:stop] if SETTLED.search(l)]
-            own = [body[i]] if SETTLED.search(body[i]) else []
-            marks = own + near
-            items.append({"conjecture": body[i], "settlement_lines": marks,
-                          "status": "settled-marker" if marks else "no-marker"})
-        out.append({"a": a, "conjectures": items,
-                    "status": "settled-marker" if all(x["status"] == "settled-marker"
-                                                      for x in items) else "mixed-or-open"})
+        rec = classify(a, body)
+        if rec:
+            out.append(rec)
         time.sleep(0.4)
     json.dump(out, sys.stdout, ensure_ascii=False, indent=1)
     print()

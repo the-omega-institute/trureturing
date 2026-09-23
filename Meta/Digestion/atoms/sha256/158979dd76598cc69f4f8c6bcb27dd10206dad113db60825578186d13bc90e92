@@ -1,0 +1,33 @@
+**命题 75.4（同一 qubit 对分离粗自治与缺陷不增）。** 取 $J=I=\{0,1\}$、$r=\operatorname{id}$、$q=(1/2,1/2)$，故 $E=\Delta$。令归一化 Hadamard 矩阵及两态为
+$$
+\mathsf H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+\qquad |\pm\rangle=\frac{|0\rangle\pm|1\rangle}{\sqrt2},
+\qquad
+T_{\mathrm{gen}}=\operatorname{Ad}_{\mathsf H}\circ\Delta,\quad
+T_{\mathrm{read}}=\Delta\circ\operatorname{Ad}_{\mathsf H},
+$$
+其中 $\operatorname{Ad}_{\mathsf H}(X)=\mathsf H X\mathsf H^*$，$H(d)$ 仍表示 Shannon 熵。两映射均 CPTP、保单位元且固定 $Q=I_2/2$。$T_{\mathrm{gen}}$ 粗自治，但不保持 $\mathcal F$，并将某个零缺陷输入的缺陷增至 $\ln2$；$T_{\mathrm{read}}$ 的所有密度输出缺陷均为零，但不粗自治。两者均不与 $E$ 交换；在允许相干态的这个有限量子范围内，二维是分离这两个条件的最小维数。
+
+证明。两映射的 Kraus 族依次为
+$$
+\{|+\rangle\langle0|,\ |-\rangle\langle1|\},
+\qquad
+\{|0\rangle\langle+|,\ |1\rangle\langle-|\}.
+$$
+各族均满足 $\sum K^*K=I_2$，故相应的有限 Kraus 和完全正且保迹；也均有 $\sum KK^*=I_2$，故保单位元并固定 $I_2/2$。对任意 Hermitian 矩阵 $X=\begin{pmatrix}x&z\\\bar z&y\end{pmatrix}$，直接乘法给出
+$$
+T_{\mathrm{gen}}(X)=\frac12
+\begin{pmatrix}x+y&x-y\\x-y&x+y\end{pmatrix},
+\qquad
+T_{\mathrm{read}}(X)=\frac12\operatorname{diag}
+(x+y+z+\bar z,\ x+y-z-\bar z).
+$$
+由 $r=\operatorname{id}$，$b_{\mathrm{vec}}(c\rho)=d$，经典纤维缺陷恒为零，定理 75.2 给出 $\delta_Q(\rho)=H(d)-S(\rho)$。第一式说明
+$$
+cT_{\mathrm{gen}}=S_{\mathrm{gen}}c,\qquad
+S_{\mathrm{gen}}=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix};
+$$
+对密度态 $x+y=1$，粗输出恒为 $(1/2,1/2)$。但 $T_{\mathrm{gen}}(|0\rangle\langle0|)=|+\rangle\langle+|$。输入对角且为纯态，缺陷为零；输出的谱为 $(1,0)$、对角为 $(1/2,1/2)$，所以其缺陷为 $\ln2$，且不属于对角族 $\mathcal F$。
+
+第二式给出 $ET_{\mathrm{read}}=T_{\mathrm{read}}$，故每个输出的缺陷为零，特别地保持 $\mathcal F$。然而 $|+\rangle\langle+|$ 与 $|-\rangle\langle-|$ 的粗输入同为 $(1/2,1/2)$，输出却分别为 $|0\rangle\langle0|$ 与 $|1\rangle\langle1|$，粗输出不同；因此不存在仅依赖粗输入的演化。由定理 75.3 证明末尾的两方向恒等式，两通道均不交换。若细维数为一，非空满射迫使粗维数也为一，唯一密度态及保迹线性映射使两个条件都成立。二维的上述两见证遂证明最小性；它与命题 74.6 只在经典质量动力学内的三状态最小性适用域不同。证毕。
+

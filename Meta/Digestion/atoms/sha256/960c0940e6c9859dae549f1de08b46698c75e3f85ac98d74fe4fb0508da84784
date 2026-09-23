@@ -1,0 +1,71 @@
+**定理 12.3（连续生成元及边界记忆核）。** 在定义12.1下，令
+$$
+\overline T=T+u(I-P),\qquad
+\overline T'=T'+u(I-P'),\qquad
+A=-h^{-1}\log\overline T,\qquad
+A'=-h^{-1}\log\overline T'.
+\tag{12.9}
+$$
+则 $aI\preceq A,A'\preceq bI$。在有效空间上，$A$ 恰为 $-h^{-1}\log(T|_{P\mathcal P})$；正交补上的填充值不参与边界响应。定义
+$$
+K(t)=J^*e^{-tA}J,\qquad K'(t)=J'^*e^{-tA'}J'
+\quad(t\ge0),
+$$
+便有 $K(kh)=M_k$、$K'(kh)=M'_k$ 对全部给定采样指标成立。置
+$$
+d_A=\frac{d_T+u\,d_P}{hu}.
+\tag{12.10}
+$$
+则
+$$
+\|A-A'\|_F\le d_A,
+\qquad
+\boxed{\|K(t)-K'(t)\|_F
+\le e^{-at}\bigl(2\sqrt R\,d_J+Rt\,d_A\bigr).}
+\tag{12.11}
+$$
+若 $a>0$，还得到
+$$
+\sup_{t\ge0}\|K(t)-K'(t)\|_F
+\le2\sqrt R\,d_J+\frac{R\,d_A}{ea},
+\tag{12.12}
+$$
+以及绝对可积误差界
+$$
+\int_0^\infty\|K(t)-K'(t)\|_F\,dt
+\le\frac{2\sqrt R\,d_J}{a}+\frac{R\,d_A}{a^2}.
+\tag{12.13}
+$$
+
+**证明。** 由式(12.4)，$\overline T$ 与 $\overline T'$ 的谱均在 $[u,v]$ 内，矩阵对数良定义，其谱映射给 $aI\preceq A,A'\preceq bI$。$P$ 与 $T$ 交换，且 $PJ=J$，故 $\overline T$ 在 $P^\perp\mathcal P$ 上的填充值 $u$ 不能被 $J$ 激发；它也没有与有效空间耦合。因此
+$$
+e^{-khA}J=\overline T^kJ=T^kJ,
+$$
+给出采样匹配及有效生成元表达。
+
+函数 $\log x$ 在 $[u,v]$ 上满足 $|\log x-\log y|\le|x-y|/u$。将式(12.7)的双特征基证明用于 $\overline T,\overline T'$，得
+$$
+\|A-A'\|_F
+\le\frac{\|\overline T-\overline T'\|_F}{hu}
+\le\frac{\|T-T'\|_F+u\|P-P'\|_F}{hu}
+\le d_A.
+$$
+
+对 $0\le s\le t$，微分 $e^{-(t-s)A}e^{-sA'}$ 后积分，得到
+$$
+e^{-tA}-e^{-tA'}
+=\int_0^t e^{-(t-s)A}(A'-A)e^{-sA'}\,ds.
+$$
+因 $\|e^{-sA}\|_{\rm op},\|e^{-sA'}\|_{\rm op}\le e^{-as}$，
+$$
+\|e^{-tA}-e^{-tA'}\|_F\le te^{-at}d_A.
+\tag{12.14}
+$$
+又 $\|J\|_{\rm op},\|J'\|_{\rm op}\le\sqrt R$。写 $\Delta J=J-J'$，将核差展开为
+$$
+\Delta J^*e^{-tA}J
++J'^*e^{-tA}\Delta J
++J'^*(e^{-tA}-e^{-tA'})J',
+$$
+逐项估计给式(12.11)。若 $a>0$，使用 $\sup_{t\ge0}te^{-at}=1/(ea)$、$\int_0^\infty e^{-at}dt=1/a$ 与 $\int_0^\infty te^{-at}dt=1/a^2$，得到余下两式。$\square$
+

@@ -1,0 +1,10 @@
+**定义 21.4（指定响应的根基）。** 设 $V\subseteq\mathcal E$ 是当前有限维测试空间，$G\subseteq\mathcal E$ 是允许的新测试，置
+$$
+T=\operatorname{span}(V\cup G),\qquad
+T^{\perp_B}=\{f\in\mathcal E:\ \forall g\in T, B(f,g)=0\},
+\qquad
+\operatorname{Rad}_T(B)=T\cap T^{\perp_B}.
+\tag{21.10}
+$$
+当前受限根基为 $\operatorname{Rad}(B|_V)=V\cap V^{\perp_B}$；全域根基为 $\operatorname{Rad}_{\mathcal E}(B)=\mathcal E^{\perp_B}$。
+

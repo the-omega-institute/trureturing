@@ -1,0 +1,13 @@
+**命题 30.2（静态质量生成元的精确符号判据）。** 定义30.1给 $K=K^{\mathsf T}\succeq0$、$K\mathbf1=0$。静态方程 $x'=-Sx$ 的三种坐标分别满足
+$$
+u'=-D^{-1}Ku,\qquad
+z'=-D^{-1/2}KD^{-1/2}z,\qquad
+b'=G_b b,\quad G_b=-KD^{-1}.
+\tag{30.2}
+$$
+$\mathbf1^{\mathsf T}G_b=0$ 且 $G_b\bar\pi=0$。对全部 $t\ge0$，$e^{tG_b}$ 为非负列随机矩阵，当且仅当
+$$
+K_{ab}\le0\qquad(a\ne b).
+\tag{30.3}
+$$
+

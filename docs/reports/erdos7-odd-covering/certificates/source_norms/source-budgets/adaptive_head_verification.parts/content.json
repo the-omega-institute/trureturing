@@ -1,0 +1,127 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "adaptive-head-verification-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary exact finite calculation. Read-once coordinate selection from observed full coordinates; fixed literal original congruences and old flat caps. Does not change Chapter 54 or solve Erdos 7. Full-transcript caps and fixed original labels are required. Existing unrestricted-tail charges retain their numerical prime schedule. The old 154-label atom-cap obstruction is unaffected."
+  },
+  "primes": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7
+    ]
+  },
+  "heights": {
+    "kind": "inline",
+    "value": [
+      2,
+      1,
+      1
+    ]
+  },
+  "keep": {
+    "kind": "inline",
+    "value": [
+      4,
+      3,
+      5
+    ]
+  },
+  "labels": {
+    "path": "content/005-labels.json",
+    "sha256": "526243b08f02182165907b6fd797b0704269a4d2447254f1d5dec0cba29eb5b8",
+    "kind": "value"
+  },
+  "original_period": {
+    "kind": "inline",
+    "value": 315
+  },
+  "original_CRT_points_checked": {
+    "kind": "inline",
+    "value": 315
+  },
+  "fixed_order_results": {
+    "path": "content/008-fixed_order_results.json",
+    "sha256": "4d9d6e90d1778a1c163979f52b725d9300cd15183b89d27f6df6badd15f24ecd",
+    "kind": "value"
+  },
+  "adaptive_bad_mass": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "adaptive_actual_prefix_states": {
+    "kind": "inline",
+    "value": 480
+  },
+  "reachable_policy_rows": {
+    "path": "content/011-reachable_policy_rows.json",
+    "sha256": "64801b10b6e32e87bf70da00d767ad3d82723482c7e142bd34c0a73c0794e751",
+    "kind": "value"
+  },
+  "full_transcript_depth_caps_checked": {
+    "kind": "inline",
+    "value": 141
+  },
+  "actual_support": {
+    "path": "content/013-actual_support.json",
+    "sha256": "82eca57c6f50ad0c804b1bd6b4ff6218499e1029a3ffefec68d114e358f71f00",
+    "kind": "value"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "73dccd712f63d3edfe92fc09b24edd484a2430c54c0a983d932be1724628c14f"
+  },
+  "profiles": {
+    "kind": "inline",
+    "value": [
+      [
+        "1",
+        "3/4",
+        "1/4"
+      ],
+      [
+        "1",
+        "1/3"
+      ],
+      [
+        "1",
+        "1/5"
+      ]
+    ]
+  },
+  "original_label_source": {
+    "kind": "inline",
+    "value": "frontier/source-budgets/adaptive_head_input_315.json"
+  },
+  "original_labels_sha256": {
+    "kind": "inline",
+    "value": "6bf58b5cc0862ee95b92550a53ab093c9e5802eae5b11ae44cbc5e0748b01ad2"
+  },
+  "candidate_fixed_order_cap_violations_checked": {
+    "kind": "inline",
+    "value": 6
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/55-adaptive-read-once-head-orders-with-unrestricted-tail-comparison.md": "70c1c2eafee2d18ac9b8a29944adca71e7ca7237f4356dc6ecb9f1b5391998e8",
+      "frontier/source-budgets/adaptive_head_input_315.json": "25f9874299c7888e4a26e710227565b3064c07b7c5e13f82f4fe4223c8a9df95",
+      "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+      "frontier/source-budgets/adaptive_head_bellman.py": "4aa83315aa5d1f30bf8a7b051a2ccb4b26c093860315dfa883d4ef4f90eeba84",
+      "certificates/source_norms/source-budgets/adaptive_head_bellman.json": "98f4d8eac040f8264bb2c6127f616c49aae87874718ff6ec7c2e151ea6596bbf",
+      "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+      "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/CappedGainRearrangement.lean": "ff003bc80d91f1e0026af3c22c5d2ff3a4ab92f733b968c3321e6de521826ab6",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+      "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "length": 50,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 7,
+      "part": {
+        "path": "content/016-joint_moment/001-candidate_rows/000000-000007.json",
+        "sha256": "466481cc0a16b42d8e6b2f5d143dfc0aa04bff48ace19841b5d18458c052a34f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 14,
+      "part": {
+        "path": "content/016-joint_moment/001-candidate_rows/000007-000014.json",
+        "sha256": "0bb45833ad2f47ddd2e62b70c6fb65c9924a0783e3585c85df8f75347bcadb9f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 14,
+      "stop": 21,
+      "part": {
+        "path": "content/016-joint_moment/001-candidate_rows/000014-000021.json",
+        "sha256": "cf07b327c81d419308d6301c9e08980ca623e4dc2dd03dd1789f5504182d2161",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 21,
+      "stop": 28,
+      "part": {
+        "path": "content/016-joint_moment/001-candidate_rows/000021-000028.json",
+        "sha256": "bc6177c531d49f6635655607c5779879fe3d040027a926797550f69cc5d6903f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 28,
+      "stop": 35,
+      "part": {
+        "path": "content/016-joint_moment/001-candidate_rows/000028-000035.json",
+        "sha256": "5440991d3608107c63985b36b19ac0c940cc5ac5b49eb3846a04c817afbb6908",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 35,
+      "stop": 42,
+      "part": {
+        "path": "content/016-joint_moment/001-candidate_rows/000035-000042.json",
+        "sha256": "1f8a6077735ca379681b1f6a19c03d0b0764f6b5f35c6ffeae79ae6ab184ed6c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 42,
+      "stop": 49,
+      "part": {
+        "path": "content/016-joint_moment/001-candidate_rows/000042-000049.json",
+        "sha256": "e30e70a789066fe07461c6dbab384c28699346d5929b32fe50ec5d15a21284af",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 49,
+      "stop": 50,
+      "part": {
+        "path": "content/016-joint_moment/001-candidate_rows/000049-000050.json",
+        "sha256": "2d8d6c6533539e84a20a5b76ff0ad0a77002b6ce872c3883893b8647b28e788d",
+        "kind": "value"
+      }
+    }
+  ]
+}

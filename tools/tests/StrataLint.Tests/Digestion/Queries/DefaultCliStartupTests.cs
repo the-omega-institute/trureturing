@@ -52,7 +52,7 @@ public sealed class DefaultCliStartupTests
         string root, params string[] arguments)
     {
         // Main must see the sparse fixture, and Scribe's static state must start fresh.
-        var assemblyPath = typeof(Program).Assembly.Location;
+        var assemblyPath = typeof(StrataLint.Cli.Program).Assembly.Location;
         var context = new CliLoadContext(assemblyPath);
         using var output = new StringWriter(CultureInfo.InvariantCulture);
         using var error = new StringWriter(CultureInfo.InvariantCulture);

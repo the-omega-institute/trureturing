@@ -1,0 +1,84 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": 1
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "same SH18 law; arbitrary finite original357/11/13 heights"
+  },
+  "head_certificate_sha256": {
+    "kind": "inline",
+    "value": "e224d3c1fc1a04c3a1fbfab8cc986e4a81ed4cca2e0876a8842843b51925cd6f"
+  },
+  "profile_certificate_sha256": {
+    "kind": "inline",
+    "value": "82b5211366625c3c9eed79d8124db700f7b24bd7a43f088d9b4487492c32d940"
+  },
+  "W": {
+    "kind": "inline",
+    "value": "3049/20"
+  },
+  "Gamma_upper": {
+    "kind": "inline",
+    "value": "3069/20"
+  },
+  "Gamma_sharpened_upper": {
+    "kind": "inline",
+    "value": "16582361047917383969674899272747/108352191282098927867550000000"
+  },
+  "survival_lower_SH18": {
+    "kind": "inline",
+    "value": "2577991831/4799999616"
+  },
+  "mean_upper_SH24": {
+    "kind": "inline",
+    "value": "19618622895502373704/3964266656997890625"
+  },
+  "square_upper_SH24": {
+    "kind": "inline",
+    "value": "2512626164927510733601/70505216618162484375"
+  },
+  "queries": {
+    "path": "content/010-queries.json",
+    "sha256": "de513bc45698d719cb744bdcd0e0bb517e3a3b5e84e3d781f2f0753722213732",
+    "kind": "array"
+  },
+  "multiplier_probabilities": {
+    "kind": "inline",
+    "value": {
+      "1": "28/33",
+      "2": "50/363",
+      "3": "50/3993",
+      "4": "50/43923"
+    }
+  },
+  "multiplier_tail_mass": {
+    "kind": "inline",
+    "value": "5/43923"
+  },
+  "multiplier_tail_mean": {
+    "kind": "inline",
+    "value": "17/29282"
+  },
+  "prime13_residual_cost": {
+    "kind": "inline",
+    "value": "2977269455418769761026097084671/312157503455570720761275000000"
+  },
+  "prime13_total_cost": {
+    "kind": "inline",
+    "value": "4078973908904062879587704261867/108352191282098927867550000000"
+  },
+  "square_before_conditioning": {
+    "kind": "inline",
+    "value": "3525214509393297559242203/44418286469442365156250"
+  },
+  "criterion_value": {
+    "kind": "inline",
+    "value": "16474008856635285041807349272747/108352191282098927867550000000"
+  },
+  "criterion_margin": {
+    "kind": "inline",
+    "value": "44282704320696511600648227253/108352191282098927867550000000"
+  }
+}

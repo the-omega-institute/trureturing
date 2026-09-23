@@ -1,0 +1,311 @@
+[
+  {
+    "index": 41,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        0
+      ]
+    ],
+    "square_minus_mass": "312522845/736900164",
+    "raw_square9": "127212451/736900164",
+    "hinge4": "948/143",
+    "factorial5": "632/429",
+    "load_two_remainder": "636062255/736900164",
+    "low_load_gaps": [
+      "0",
+      "636062255/736900164",
+      "0",
+      "0"
+    ],
+    "tail_entrance": 5,
+    "identical_tail_polynomial": [
+      "-2535551750/184225041",
+      "0",
+      "4/3"
+    ],
+    "previous_cost_upper": "17225402286995386945239991/3412216209402000000000000",
+    "source_bound": "427981994999157012888642463/85305405235050000000000000",
+    "accepted_cost_upper": "427981994999157012888642463/85305405235050000000000000",
+    "weighted_gain": "10899042437350714727/425675250000000000000"
+  },
+  {
+    "index": 42,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        1
+      ]
+    ],
+    "square_minus_mass": "34907/145002",
+    "raw_square9": "1928/24167",
+    "hinge4": "0",
+    "factorial5": "0",
+    "load_two_remainder": "9640/24167",
+    "low_load_gaps": [
+      "0",
+      "9640/24167",
+      "0",
+      "0"
+    ],
+    "tail_entrance": 5,
+    "identical_tail_polynomial": [
+      "-139019/145002",
+      "0",
+      "25/78"
+    ],
+    "previous_cost_upper": "4255750454/3108480375",
+    "source_bound": "4255750454/3108480375",
+    "accepted_cost_upper": "4255750454/3108480375",
+    "weighted_gain": "0"
+  },
+  {
+    "index": 43,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        2
+      ]
+    ],
+    "square_minus_mass": "4955/145002",
+    "raw_square9": "56/24167",
+    "hinge4": "0",
+    "factorial5": "0",
+    "load_two_remainder": "280/24167",
+    "low_load_gaps": [
+      "0",
+      "280/24167",
+      "0",
+      "0"
+    ],
+    "tail_entrance": 5,
+    "identical_tail_polynomial": [
+      "-7979/145002",
+      "0",
+      "37/1014"
+    ],
+    "previous_cost_upper": "70872374/444068625",
+    "source_bound": "70872374/444068625",
+    "accepted_cost_upper": "70872374/444068625",
+    "weighted_gain": "0"
+  },
+  {
+    "index": 44,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        1,
+        0
+      ]
+    ],
+    "square_minus_mass": "1180709/4360356",
+    "raw_square9": "404875/4360356",
+    "hinge4": "0",
+    "factorial5": "0",
+    "load_two_remainder": "2024375/4360356",
+    "low_load_gaps": [
+      "0",
+      "2024375/4360356",
+      "0",
+      "0"
+    ],
+    "tail_entrance": 5,
+    "identical_tail_polynomial": [
+      "-1206146/1090089",
+      "0",
+      "4/11"
+    ],
+    "previous_cost_upper": "6267123883973/4038125691600",
+    "source_bound": "6267123883973/4038125691600",
+    "accepted_cost_upper": "6267123883973/4038125691600",
+    "weighted_gain": "0"
+  },
+  {
+    "index": 45,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        2,
+        0
+      ]
+    ],
+    "square_minus_mass": "198959/4360356",
+    "raw_square9": "1975/622908",
+    "hinge4": "0",
+    "factorial5": "0",
+    "load_two_remainder": "9875/622908",
+    "low_load_gaps": [
+      "0",
+      "9875/622908",
+      "0",
+      "0"
+    ],
+    "tail_entrance": 5,
+    "identical_tail_polynomial": [
+      "-80846/1090089",
+      "0",
+      "124/2541"
+    ],
+    "previous_cost_upper": "123106642649/576875098800",
+    "source_bound": "123106642649/576875098800",
+    "accepted_cost_upper": "123106642649/576875098800",
+    "weighted_gain": "0"
+  },
+  {
+    "index": 49,
+    "original_tag": [
+      "s",
+      "81/16"
+    ],
+    "square_minus_mass": "63/128",
+    "raw_square9": "65/128",
+    "hinge4": "0",
+    "factorial5": "0",
+    "load_two_remainder": "189/128",
+    "low_load_gaps": [
+      "0",
+      "189/128",
+      "0",
+      "0"
+    ],
+    "tail_entrance": 5,
+    "identical_tail_polynomial": [
+      "-81/16",
+      "0",
+      "1"
+    ],
+    "previous_cost_upper": "97882403/23708160",
+    "source_bound": "97882403/23708160",
+    "accepted_cost_upper": "97882403/23708160",
+    "weighted_gain": "0"
+  },
+  {
+    "index": 50,
+    "original_tag": [
+      "s",
+      "81/25"
+    ],
+    "square_minus_mass": "18/25",
+    "raw_square9": "7/25",
+    "hinge4": "0",
+    "factorial5": "0",
+    "load_two_remainder": "7/5",
+    "low_load_gaps": [
+      "0",
+      "7/5",
+      "0",
+      "0"
+    ],
+    "tail_entrance": 5,
+    "identical_tail_polynomial": [
+      "-81/25",
+      "0",
+      "1"
+    ],
+    "previous_cost_upper": "70356523/16537500",
+    "source_bound": "70356523/16537500",
+    "accepted_cost_upper": "70356523/16537500",
+    "weighted_gain": "0"
+  },
+  {
+    "index": 51,
+    "original_tag": [
+      "s",
+      "9/4"
+    ],
+    "square_minus_mass": "27/32",
+    "raw_square9": "5/32",
+    "hinge4": "0",
+    "factorial5": "0",
+    "load_two_remainder": "25/32",
+    "low_load_gaps": [
+      "0",
+      "25/32",
+      "0",
+      "0"
+    ],
+    "tail_entrance": 5,
+    "identical_tail_polynomial": [
+      "-9/4",
+      "0",
+      "1"
+    ],
+    "previous_cost_upper": "128102827/29635200",
+    "source_bound": "128102827/29635200",
+    "accepted_cost_upper": "128102827/29635200",
+    "weighted_gain": "0"
+  }
+]

@@ -1,0 +1,777 @@
+[
+  {
+    "leaf_index": 75,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      3,
+      1,
+      4
+    ],
+    "complete_joint_upper": "1708561149386516161/9261000000000000000",
+    "previous_available_upper": "761851/3969000",
+    "adopted_upper": "1708561149386516161/9261000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "3a67879c48281e3017c0ca16986fe5bc4bbfe3d12209f4c9926e979542613a02"
+  },
+  {
+    "leaf_index": 76,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      4,
+      0,
+      1
+    ],
+    "complete_joint_upper": "5110563425984631037/27783000000000000000",
+    "previous_available_upper": "759691/3969000",
+    "adopted_upper": "5110563425984631037/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "5c8c77164b3273fdd5d920f91a7e23a95c2a90255acea89bbeb237d1b9c558bb"
+  },
+  {
+    "leaf_index": 77,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      4,
+      0,
+      2
+    ],
+    "complete_joint_upper": "5110563425785746337/27783000000000000000",
+    "previous_available_upper": "759691/3969000",
+    "adopted_upper": "5110563425785746337/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "bdbc6bb38763517697592a5783675f093f910ab7cc9cea1046a964793e707ac5"
+  },
+  {
+    "leaf_index": 78,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      4,
+      1,
+      2
+    ],
+    "complete_joint_upper": "5110563425998692637/27783000000000000000",
+    "previous_available_upper": "759691/3969000",
+    "adopted_upper": "5110563425998692637/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "a2cbe91a10dd9702eeca06f5dbd0c1868455b3685c06ad75e34c7ef453c25d29"
+  },
+  {
+    "leaf_index": 79,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      4,
+      1,
+      3
+    ],
+    "complete_joint_upper": "16206010922236501/88200000000000000",
+    "previous_available_upper": "758881/3969000",
+    "adopted_upper": "16206010922236501/88200000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "4c753269257ae1b93308363853f2504353708d20883bd63daeae1fba58ef686f"
+  },
+  {
+    "leaf_index": 80,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      4,
+      1,
+      4
+    ],
+    "complete_joint_upper": "5133243444416580859/27783000000000000000",
+    "previous_available_upper": "762931/3969000",
+    "adopted_upper": "5133243444416580859/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "02ab0a8bfb448d73d393118a297e61306977cb68fcf7e0ec9568930f8a6f2669"
+  },
+  {
+    "leaf_index": 81,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      0,
+      0,
+      2
+    ],
+    "complete_joint_upper": "567164783632806497/3087000000000000000",
+    "previous_available_upper": "5311627/27783000",
+    "adopted_upper": "567164783632806497/3087000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "47598dad35d531338f458ebd38d291df7d6a95946db797024150b6c59f07ea1a"
+  },
+  {
+    "leaf_index": 82,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      0,
+      1,
+      2
+    ],
+    "complete_joint_upper": "567164783640445597/3087000000000000000",
+    "previous_available_upper": "5311627/27783000",
+    "adopted_upper": "567164783640445597/3087000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "7f9bf3be04056f00a7892927a9ec65c95381adf6ae43e68570f85343dfdba445"
+  },
+  {
+    "leaf_index": 83,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      0,
+      1,
+      4
+    ],
+    "complete_joint_upper": "5127163044911364859/27783000000000000000",
+    "previous_available_upper": "5334307/27783000",
+    "adopted_upper": "5127163044911364859/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "00cb7888da987360d1b08433cb8c32731caf057bf2f6273c2c859ffb6e5fc5d3"
+  },
+  {
+    "leaf_index": 84,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      1,
+      0,
+      1
+    ],
+    "complete_joint_upper": "730484721786593827/3969000000000000000",
+    "previous_available_upper": "5320537/27783000",
+    "adopted_upper": "730484721786593827/3969000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "8d032d39325002b4a10eac264e78a82cab9a76eb15517e4b9e00167c22402049"
+  },
+  {
+    "leaf_index": 85,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      1,
+      0,
+      2
+    ],
+    "complete_joint_upper": "731410435548846019/3969000000000000000",
+    "previous_available_upper": "5327017/27783000",
+    "adopted_upper": "731410435548846019/3969000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "dd9be93829bdf0ced6860b1cb99940f1de0340b7fc9c41b643c89989cf8c40f6"
+  },
+  {
+    "leaf_index": 86,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      1,
+      0,
+      3
+    ],
+    "complete_joint_upper": "730600436032597489/3969000000000000000",
+    "previous_available_upper": "5321347/27783000",
+    "adopted_upper": "730600436032597489/3969000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "13853903c6dba23b5a90c1db479c155d1896b1d7e5105809f5d6bf42114447cf"
+  },
+  {
+    "leaf_index": 87,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      1,
+      0,
+      4
+    ],
+    "complete_joint_upper": "5113393055479439989/27783000000000000000",
+    "previous_available_upper": "5320537/27783000",
+    "adopted_upper": "5113393055479439989/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "37f666d244b81e7cad2fda31227097449a79cb494539720890588781cb96b378"
+  },
+  {
+    "leaf_index": 88,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      1,
+      1,
+      2
+    ],
+    "complete_joint_upper": "104487205077473917/567000000000000000",
+    "previous_available_upper": "5327017/27783000",
+    "adopted_upper": "104487205077473917/567000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "d5a6f814ef9a04512aea78fc4adb381dec9497eb264bf1094d3fecfa3df35f5e"
+  },
+  {
+    "leaf_index": 89,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      1,
+      1,
+      3
+    ],
+    "complete_joint_upper": "91325054493719933/496125000000000000",
+    "previous_available_upper": "5321347/27783000",
+    "adopted_upper": "91325054493719933/496125000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "761511faa37a6e4170e01b3cd69a022480fdf6f684d56cc90b8995f06ab47a89"
+  },
+  {
+    "leaf_index": 90,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      1,
+      1,
+      4
+    ],
+    "complete_joint_upper": "5142553049863746473/27783000000000000000",
+    "previous_available_upper": "5349697/27783000",
+    "adopted_upper": "5142553049863746473/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "1e16191579c91db5e40cc0e2f3cc8cf60dad476129ec5e724d35e0fa203f7627"
+  },
+  {
+    "leaf_index": 91,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      2,
+      0,
+      2
+    ],
+    "complete_joint_upper": "1703924342167046369/9261000000000000000",
+    "previous_available_upper": "5318917/27783000",
+    "adopted_upper": "1703924342167046369/9261000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "1be4f2e8d07fc97473de0aeec72feebccdbf982eca9df6b6e0b2457cdf581f8a"
+  },
+  {
+    "leaf_index": 92,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      2,
+      0,
+      3
+    ],
+    "complete_joint_upper": "5106103036027269967/27783000000000000000",
+    "previous_available_upper": "5313247/27783000",
+    "adopted_upper": "5106103036027269967/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "139d729acfe1839379a653624f61811a43a27606755e04b529f61a437c029819"
+  },
+  {
+    "leaf_index": 93,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      2,
+      1,
+      2
+    ],
+    "complete_joint_upper": "1703924342205245369/9261000000000000000",
+    "previous_available_upper": "5318917/27783000",
+    "adopted_upper": "1703924342205245369/9261000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "6755efdaa57bb70a8b2e6397850c2374745d798e120dd5a87d2f27bd5d4a2522"
+  },
+  {
+    "leaf_index": 94,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      2,
+      1,
+      3
+    ],
+    "complete_joint_upper": "2553051517460820221/13891500000000000000",
+    "previous_available_upper": "5313247/27783000",
+    "adopted_upper": "2553051517460820221/13891500000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "c09a8b864142eff3d911c18264c100e20371ade9010691f8a7c277a6ea803b9f"
+  },
+  {
+    "leaf_index": 95,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      2,
+      1,
+      4
+    ],
+    "complete_joint_upper": "1026890607917177173/5556600000000000000",
+    "previous_available_upper": "5341597/27783000",
+    "adopted_upper": "1026890607917177173/5556600000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "6e1e36a2e29e1434b3321be6f745268b08413dbae204da8aeee3ce20376830e0"
+  },
+  {
+    "leaf_index": 96,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      3,
+      0,
+      2
+    ],
+    "complete_joint_upper": "5119333023523146251/27783000000000000000",
+    "previous_available_upper": "5326477/27783000",
+    "adopted_upper": "5119333023523146251/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "6615d6d1e7a166110b8b930b1733ae53a2717ee89f9274576292f450e3dae1fd"
+  },
+  {
+    "leaf_index": 97,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      3,
+      0,
+      3
+    ],
+    "complete_joint_upper": "5113663036836865639/27783000000000000000",
+    "previous_available_upper": "5320807/27783000",
+    "adopted_upper": "5113663036836865639/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "652b4caf52a6b92bbb9bc0b9975c64a43e8ff1c1b38a9196f0d522f0e9717e8a"
+  },
+  {
+    "leaf_index": 98,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      3,
+      1,
+      2
+    ],
+    "complete_joint_upper": "5119333023850626551/27783000000000000000",
+    "previous_available_upper": "5326477/27783000",
+    "adopted_upper": "5119333023850626551/27783000000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "4f545f0c6b81ef8801734a83fd7f4f5abd29fdc5c4bbcb98eca48a55c9c1725e"
+  },
+  {
+    "leaf_index": 99,
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "projection441_735": [
+      3,
+      1,
+      3
+    ],
+    "complete_joint_upper": "2556831518129572307/13891500000000000000",
+    "previous_available_upper": "5320807/27783000",
+    "adopted_upper": "2556831518129572307/13891500000000000000",
+    "complete_tail_constant": "612439/19845000",
+    "dual_key": "8eb1abdc5b75b4bd21af2dde86f7f92c13b836e9603059d1febef4d2fe38cbbd"
+  }
+]

@@ -1,0 +1,10 @@
+对于一条 Cauchy 读数序列 $a_n$，以下条件等价：
+
+$$
+[(a_n)]\ne0
+\quad\Longleftrightarrow\quad
+\exists\delta\in\mathbb Q_{>0}\ \exists N\ \forall n\ge N,
+\ |a_n|\ge\delta.
+\tag{R}
+$$
+

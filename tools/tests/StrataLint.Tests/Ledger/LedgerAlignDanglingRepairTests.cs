@@ -253,9 +253,9 @@ public sealed partial class LedgerAlignWriterTests
             .Select(static path => (path.Value, RawChangeKind.Deleted))
             .Concat(newPaths.Except(oldPaths).Select(static path => (path.Value, RawChangeKind.Added))));
         var context = fixture.BuildForRuleCompatibility(changes);
-        Assert.Empty(RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(8), context).Diagnostics);
+        Assert.Empty(RuleCatalog.Default.EvaluateDeltaSingle(RuleId.CreateKnown(8), context).Diagnostics);
         // No state addition or pin change: this is not a first Freeze requiring utility admission.
-        Assert.Empty(RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(31), context).Diagnostics);
+        Assert.Empty(RuleCatalog.Default.EvaluateDeltaSingle(RuleId.CreateKnown(31), context).Diagnostics);
     }
 
     private static void AssertPrerequisite(ImmutableArray<DagLedgerFileEvent> events, string name, string dependency)

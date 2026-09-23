@@ -1,0 +1,4 @@
+精度请求只在 Ready 激活：准备并核查目标机 $b$ 的表、区间、正余量与阈值后，置 $i=\operatorname{nearest}_{\downarrow}(m_bj/m_a)$，进入
+$$
+\operatorname{Warm}(a,j,b,i,c=0),\qquad 0\le c<T_{ab}.
+$$

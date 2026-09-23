@@ -151,7 +151,10 @@ public sealed class UtilityAdmissionReachabilityTests
 
         var diagnostic = Assert.Single(
             diagnostics,
-            item => item.AdmissionEffect is AdmissionEffect.Block);
+            item => item.AdmissionEffect is AdmissionEffect.Block
+                && item.Message.StartsWith("UTILITY-", StringComparison.Ordinal));
+        Assert.Contains(diagnostics, item => item.AdmissionEffect is AdmissionEffect.Observe
+            && item.Message.StartsWith("DTR-Evidence ", StringComparison.Ordinal));
         Assert.Contains(
             $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath}",
             diagnostic.Message,

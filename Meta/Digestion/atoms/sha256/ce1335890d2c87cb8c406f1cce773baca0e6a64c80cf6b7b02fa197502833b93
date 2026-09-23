@@ -1,0 +1,18 @@
+**theorem 52.16 (二元支撑之后恰剩一个三元剩余域障碍).** $\mathcal M$ 的精确条件只有
+$$
+a_2,b_2,c_2\ge1,
+$$
+奇素数处没有边缘限制。$\mathcal S$ 的精确条件为
+$$
+\begin{cases}
+a_2,b_2,c_2\ge1,\quad n_1(a_2,b_2,c_2)\in\{1,3\},\\
+\min(a_p,b_p,c_p)=0\quad\text{对每个奇素数 }p.
+\end{cases}
+$$
+实际联合像满足更精确的等式
+$$
+\mathcal J
+=\{(A,B,C)\in\mathcal S:n_0(a_3,b_3,c_3)\ne2\}.
+$$
+因而，在边缘条件与 $D\in A\boxplus B\boxplus C$ 之外，唯一剩余的局部障碍是：模 $3$ 不能恰有两个单位输出和、另一个非单位输出和。三个分别逆算的支撑条件不足以排除此障碍。
+

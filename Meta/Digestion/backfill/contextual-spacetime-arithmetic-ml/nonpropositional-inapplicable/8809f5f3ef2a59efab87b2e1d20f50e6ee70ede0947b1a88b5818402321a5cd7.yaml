@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8809f5f3ef2a59efab87b2e1d20f50e6ee70ede0947b1a88b5818402321a5cd7
+  normalized_sha256: sha256:8809f5f3ef2a59efab87b2e1d20f50e6ee70ede0947b1a88b5818402321a5cd7
+cas_ref: sha256:8809f5f3ef2a59efab87b2e1d20f50e6ee70ede0947b1a88b5818402321a5cd7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “查询时序、允许操作和解码费用均已固定”规定充分性讨论必须先给定的任务参数；它不是对任一摘要已经充分的断言，也未借定义预设充分性。
+    previous_atom_id: 690e3c8940fab9a3122666a61b6ecccfa5b5044258a3643320df86b612cd74b7
+    next_atom_id: f40793be9c682429ee399142bb379e59200d3bceb35bb480adfe8b8b75ca78a6

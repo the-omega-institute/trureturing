@@ -1,0 +1,43 @@
+**定义 13.1（记录、访问划分与预测误差）。** 固定二标签系统
+
+$$
+\mathcal H_S=\mathbb C^2,
+\qquad
+P_x=|x\rangle\langle x|,
+\qquad x\in\{0,1\}.
+$$
+
+输入是未知密度矩阵，允许与任意有限维参考系统纠缠；协议不能依赖输入的振幅、相位或其纯化。令记录指标集为 $\mathsf I=\{1,\ldots,r\}$，其中 $r\ge0$，并给定
+
+$$
+\mathcal H_E=
+\left(\bigotimes_{j\in\mathsf I}\mathcal H_{E_j}\right)
+\otimes\mathcal H_{B_0}.
+$$
+
+所有记录因子均为非零有限维 Hilbert 空间。固定单位条件记录向量 $E_0,E_1\in\mathcal H_E$，写入等距映射为
+
+$$
+W|x\rangle=|x\rangle|E_x\rangle.
+$$
+
+全部准备、写入、读取与反馈都发生在给定有限时段内，使用有限步操作。一般的 $E_x$ 可以具有跨单元关联，不预设独立时间记录的乘积结构。
+
+给定允许访问的指标集 $\mathcal J_{\mathrm{acc}}\subseteq\mathsf I$。选择 $J\subseteq\mathcal J_{\mathrm{acc}}$ 后，记
+
+$$
+\mathcal H_{F_J}=\bigotimes_{j\in J}\mathcal H_{E_j},
+\qquad
+\mathcal H_{B_J}=
+\left(\bigotimes_{j\in\mathsf I\setminus J}\mathcal H_{E_j}\right)
+\otimes\mathcal H_{B_0}.
+$$
+
+张量顺序固定，空张量空间为 $\mathbb C$。暂固定 $J$，简写 $F,B$，并令
+
+$$
+\sigma_x=\operatorname{tr}_B|E_x\rangle\langle E_x|,
+\qquad
+T=\operatorname{tr}_B|E_0\rangle\langle E_1|.
+$$
+

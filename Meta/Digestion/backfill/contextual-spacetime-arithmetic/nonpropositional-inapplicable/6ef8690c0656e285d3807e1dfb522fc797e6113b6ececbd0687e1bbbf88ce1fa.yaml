@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6ef8690c0656e285d3807e1dfb522fc797e6113b6ececbd0687e1bbbf88ce1fa
+  normalized_sha256: sha256:6ef8690c0656e285d3807e1dfb522fc797e6113b6ececbd0687e1bbbf88ce1fa
+cas_ref: sha256:6ef8690c0656e285d3807e1dfb522fc797e6113b6ececbd0687e1bbbf88ce1fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “共同跳点与两个常值尾段：命题 46 → 命题 56 → 命题 62”是 CUM-JUMPS 的定位记录，不断言任何特定函数具有跳点性质；纯编辑映射不需 Lean 证明，亦无定义夹带。
+    previous_atom_id: 799383f030507f77ca1e37352918099f960cf5c335ef0344192d2224d49f27c8
+    next_atom_id: 66b70f64ece7ec1798adb7055d61fbd370828054ae270dacfdfe5b812d22735b

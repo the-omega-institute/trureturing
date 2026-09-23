@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:75fef79d7646a8cd24b3fad63255434cf76e047f92ad717f2354c462392c6d82
+  normalized_sha256: sha256:75fef79d7646a8cd24b3fad63255434cf76e047f92ad717f2354c462392c6d82
+cas_ref: sha256:75fef79d7646a8cd24b3fad63255434cf76e047f92ad717f2354c462392c6d82
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句定义相位、观察预算及空集合最小值的临时约定，并说明全载体量词和文献来源，不包含前一子句的交替点映射结论。
+    previous_atom_id: af8edffb2ac1f5a547eb200cace2762196e892711b691626beb5fad468c11dfe
+    next_atom_id: c32be89c1776620fabfba65054a54c542453a0b47434fb66dd6ab2c503e10c81

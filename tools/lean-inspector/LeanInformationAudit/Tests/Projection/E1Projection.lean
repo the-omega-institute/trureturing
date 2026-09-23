@@ -30,8 +30,8 @@ run_cmd do
   unless layers.map (·.layers.map (·.count)) == #[#[0, 8, 4, 0], #[0, 12, 0, 0]] do
     throwError "E1 layered captures"
   unless projection.leaveOneOut.all (·.uniqueCaptureCount == 0) do throwError "E1 leave one out"
+  setEnv (← liftCoreM <| stageDeclarations (← getEnv) declarations)
   for declaration in declarations do
-    liftCoreM <| addDecl declaration
     for name in declaration.getNames do
       elabCommand (← `(command| #print axioms $(mkIdent name)))
   modifyEnv (projectionFixtureStore.addEntry · projection)

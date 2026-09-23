@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a7ad46e0a97e524121c9742c8fbaadf9c0c10d724adf83f50d1a1299993e91f
+  normalized_sha256: sha256:2a7ad46e0a97e524121c9742c8fbaadf9c0c10d724adf83f50d1a1299993e91f
+cas_ref: sha256:2a7ad46e0a97e524121c9742c8fbaadf9c0c10d724adf83f50d1a1299993e91f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “应读为 P2 命题 58–63 的公开证明”只限定复用段落的引用范围，不替代这些公开证明，未从命名推导数学结论。
+    previous_atom_id: 677d5553632fd3786db5b444acf75f250a4e3cd150a3f1e30cfcfa22884be1f9
+    next_atom_id: a4a50f54d1b9dd614f9768b8ac2ac52fa6006d367fd82b4414aa85810c8656f9

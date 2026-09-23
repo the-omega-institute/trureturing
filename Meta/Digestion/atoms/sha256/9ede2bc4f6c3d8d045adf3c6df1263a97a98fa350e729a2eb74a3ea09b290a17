@@ -1,0 +1,46 @@
+**定义 57.1（轨道空间、截断观察、轨道律与粗加法核）。** 记素数集合为 $\mathcal P$，并令
+$$
+E=\mathbb N_0\cup\{\infty\}.
+$$
+给 $E$ 赋如下紧拓扑：每个有限点 $n$ 是孤立点，而 $\infty$ 的一组邻域为
+$$
+E_{\ge L}=\{L,L+1,\ldots\}\cup\{\infty\}\qquad(L\ge0).
+$$
+等价地，对 $L\ge0$ 定义有限截断
+$$
+\tau_L:E\to\{0,1,\ldots,L\},\qquad
+\tau_L(n)=\min(n,L),\quad \tau_L(\infty)=L,
+$$
+其中值 $L$ 表示“$\ge L$”；上述拓扑正是这些截断共同诱导的逆极限拓扑。置
+$$
+R=\prod_{p\in\mathcal P}\mathbb Z_p,\qquad
+U=R^\times=\prod_{p\in\mathcal P}\mathbb Z_p^\times,\qquad
+I=E^{\mathcal P}.
+$$
+对 $x=(x_p)_p\in R$ 定义
+$$
+\rho(x)_p=v_p(x_p),\qquad v_p(0)=\infty.
+$$
+对 $a\in I$ 定义标准代表 $s(a)\in R$：
+$$
+s(a)_p=
+\begin{cases}
+p^{a_p},&a_p<\infty,\\
+0,&a_p=\infty.
+\end{cases}
+$$
+令 $\lambda_U$ 为 $U$ 的归一化 Haar 概率。定义
+$$
+m_a=(u\mapsto u\,s(a))_*\lambda_U.
+$$
+在 $I$ 上定义坐标加法 $\oplus$，约定 $\infty+n=n+\infty=\infty$：
+$$
+(a\oplus b)_p=a_p+b_p.
+$$
+最后定义二元 Markov 核
+$$
+k(a,b)=
+\rho_*\bigl((x,y)\mapsto x+y\bigr)_*(m_a\otimes m_b).
+$$
+本定义只给出对象；$m_a$、$k$ 的 Borel/Feller 性、轨道唯一性以及零坐标稳定子的处理在 theorem 57.3 中证明。
+

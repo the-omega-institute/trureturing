@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:101159bf14176d411118f30798c4a9c57e53029fe99b7854897415474605f678
+  normalized_sha256: sha256:101159bf14176d411118f30798c4a9c57e53029fe99b7854897415474605f678
+cas_ref: sha256:101159bf14176d411118f30798c4a9c57e53029fe99b7854897415474605f678
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeWorld/JointMarginalBoundary.diagonal_joint_refutation
+    target_statement_id: sha256:b9c264f83bd73d98c28b8cb464ea0ef768b0384364745d5e409dcee7dd4ee15c
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f1d25996f69609ad5c5f00db22d2294dfdd6bb58a2bbb4fa0078c76b024e219
+  normalized_sha256: sha256:8f1d25996f69609ad5c5f00db22d2294dfdd6bb58a2bbb4fa0078c76b024e219
+cas_ref: sha256:8f1d25996f69609ad5c5f00db22d2294dfdd6bb58a2bbb4fa0078c76b024e219
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Definition/context clause: preserve x=Re(hat u_2(1,0)), y=Im(hat u_1(0,1)), r=1-2x/alpha, z=-4y/alpha with the same signed nonzero alpha. UnitAddTorus.mFourierCoeff and mFourier/fourier_coe_apply with the physical chart give exp(-i*k.X); MeasureTheory.integral_re, MeasureTheory.integral_im, ContinuousLinearMap.integral_comp_comm and Complex.exp_re/exp_im identify x=integral u_2 cos X1 and y=-integral u_1 sin X2 on the actual real fields. Compact continuity supplies integrability; no port direction, phase or amplitude changes. No project frozen theorem is needed for these linear readout/calibration definitions; pinned Mathlib db584 and scalar normalization suffice.'
+    previous_atom_id: 02cadfec9cc6e50ad7cd6afbc3bd4207c35032ce21e2fae1c8396089f3e7ecde
+    next_atom_id: 4628fb892c5446ea51ee4feb04831afc34561f7ff3184c6ad7d6fc9f99a2b0ec

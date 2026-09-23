@@ -1,0 +1,53 @@
+### 49.12 非相位点的局部统一尾界与同胚
+
+在 $X=K_A^{\mathbb F}$、$\mathbb F=\mathbb R$ 或 $\mathbb C$ 上使用乘积拓扑。一个明确的相容度量是
+$$
+d_\Pi(a,b)=\frac1{2A}\sum_{i\ge0}2^{-(i+1)}|a_i-b_i|.
+\tag{49.41}
+$$
+因为每个坐标差至多为 $2A$，级数统一收敛。正定性、对称性、三角不等式逐项成立；该度量的收敛等价于逐坐标收敛：一个方向由单个正权项受总和控制，另一个方向先控制有限头部，再用几何权重控制尾部。每个坐标取值于紧区间或紧圆盘，故 $X$ 是紧可度量空间；也可逐坐标选收敛子列，再作对角提取及同一尾界得到紧性。
+
+记来源相位集合为
+$$
+\Phi_{\mathbb C}=\{a^\zeta:|\zeta|=1\},
+\qquad \Phi_{\mathbb R}=\{a^1,a^{-1}\},
+\qquad U=X\setminus\Phi_{\mathbb F}.
+$$
+对固定非相位来源 $a\in U$，第49.4节给有限 $J$ 和 $\gamma_J(a)=\gamma>0$。不再要求附近来源与此前缀精确相同，而取乘积开邻域
+$$
+V=\left\{b\in X:
+\sum_{i=0}^{J}\rho^{i+1}|b_i-a_i|<\gamma/2\right\}.
+$$
+对每个 $b\in V$ 和每个角度 $\theta$，有
+$$
+|g_{J,b}(\theta)-g_{J,a}(\theta)|
+\le\sum_{i=0}^{J}\rho^{i+1}|b_i-a_i|<\gamma/2.
+$$
+因此 $\gamma_J(b)\ge\gamma/2$，整个 $V$ 都排除相位来源。第49.5节只用这个间隔下界和统一幅度合同，所以可将其中 $\gamma$ 换成 $\gamma/2$，取得不依赖 $b\in V$ 的 $M<\infty$、$q<1$，满足
+$$
+\boxed{\tau_N(\mathcal E(b))\le Mq^N
+\quad\text{对所有 }b\in V\text{ 及 }N\ge0.}
+\tag{49.42}
+$$
+
+任给范数容差 $\varepsilon>0$，先选 $N$ 使 $2Mq^N<\varepsilon/2$。对有限坐标集 $n+k<N$，每个 $\mathcal E(b)(n,k)$ 都是有限边界坐标的多项式，因此在乘积拓扑连续。有限取交可在 $V$ 内进一步缩小到 $a$ 的一个邻域，使这些坐标的最大加权误差小于 $\varepsilon/2$。其余坐标的误差则由（49.42）小于 $\varepsilon/2$。两部分取上确界，得到
+$\|\mathcal E(b)-\mathcal E(a)\|_\rho<\varepsilon$。这证明 $\mathcal E:X\to I_A^{\mathbb F}$ 在每个非相位点连续。
+
+反方向，在整个实际像上定义第一列提取
+$\beta(T)_i=T(i,0)$。由范数定义，
+$$
+|\beta(T)_i-\beta(S)_i|
+\le\rho^{-i}\|T-S\|_\rho.
+$$
+每个固定坐标因而对范数连续；由乘积拓扑的定义，$\beta:I_A^{\mathbb F}\to X$ 连续。这些坐标 Lipschitz 常数随 $i$ 无界，因而此处不推出通常输入上确界范数中的逆向连续性。
+
+递归唯一性和第一列给 $\beta\mathcal E=\mathrm{id}$、$\mathcal E\beta=\mathrm{id}$ 于对应实际像。结合正尾分类，得到
+$$
+\boxed{
+\mathcal E:U\xrightarrow{\ \cong\ }
+I_A^{\mathbb F}\cap B_{\rho,0}
+}
+\tag{49.43}
+$$
+为乘积子空间拓扑与临界范数子空间拓扑之间的同胚。这比固定来源上的逐坐标收敛更强：有限前缀间隔控制了整个邻域的共同尾部。
+

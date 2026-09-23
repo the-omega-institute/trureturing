@@ -1,0 +1,20 @@
+**定义 52.5（采用的 Krasner 超环公理）。** 本节采用 [Connes–Consani，§2 的典范超群公理及定义2.1](https://arxiv.org/html/1001.4260v2) 的含幺、零与一不同的版本，并要求乘法交换。具体而言，交换含幺 Krasner 超环是带非空值超加法的集合 $H$，满足
+$$
+\begin{gathered}
+a\boxplus b=b\boxplus a,\qquad
+(a\boxplus b)\boxplus c=a\boxplus(b\boxplus c),\\
+0\boxplus a=a\boxplus0=\{a\},\\
+\forall a\ \exists!(-a),\quad 0\in a\boxplus(-a),\\
+c\in a\boxplus b\ \Longrightarrow\ b\in c\boxplus(-a).
+\end{gathered}
+$$
+此外，$(H,\cdot,1)$ 是交换幺半群，$0\ne1$，并满足原定义中的双侧分配等式及零吸收律：
+$$
+\begin{gathered}
+a\cdot(b\boxplus c)=(a\cdot b)\boxplus(a\cdot c),\\
+(b\boxplus c)\cdot a=(b\cdot a)\boxplus(c\cdot a),\\
+a\cdot0=0\cdot a=0.
+\end{gathered}
+$$
+分配律要求集合相等，而非仅有包含。若 $H\setminus\{0\}$ 在乘法下为群，则称为超域。非零元素 $a$ 称为零因子，当且仅当存在非零 $b$ 使 $ab=0$。
+

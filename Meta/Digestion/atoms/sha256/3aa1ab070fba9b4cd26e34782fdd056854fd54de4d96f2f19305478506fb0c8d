@@ -1,0 +1,18 @@
+**定理 122.8。** 在此拓扑下，
+$$
+\operatorname{int}_q A=q^{-1}(L_q(A)),\qquad
+\operatorname{cl}_q A=q^{-1}(U_q(A)),\qquad
+\operatorname{fr}_q A=q^{-1}(\partial_q A).
+$$
+因此 $\operatorname{fr}_q A=\operatorname{fr}_q(A^c)$，且前沿为空当且仅当事件由观察决定。
+
+**证明。** 包含于 $A$ 的最大整纤维并恰由全部包含于 $A$ 的纤维组成，这是内部。包含 $A$ 的最小整纤维并恰由所有与 $A$ 相交的纤维组成，这是闭包。由前沿为闭包减内部及定理 122.7，得到第三式和其余结论。证毕。
+
+这项边界是观察核产生的拓扑边界：它表示当前名字尚未确定的事件区域，不是预先假定的一条物理表面。观察细化 $q_0=\beta q_1$ 时，细纤维包含于粗纤维，故
+$$
+\operatorname{int}_{q_0}A\subseteq\operatorname{int}_{q_1}A,
+\qquad \operatorname{cl}_{q_1}A\subseteq\operatorname{cl}_{q_0}A,
+\qquad \operatorname{fr}_{q_1}A\subseteq\operatorname{fr}_{q_0}A.
+$$
+**证明。** 一条完全在 $A$ 内的粗纤维，其全部细纤维也在 $A$ 内；细闭包所经过的粗纤维必与 $A$ 相交。若一点的细纤维同时遇到 $A,A^c$，其粗纤维亦如此。证毕。此处比较的是两种前沿在共同实现空间 $X$ 中的拉回，不能直接将不同名字空间中的集合作包含比较。
+

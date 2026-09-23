@@ -1,0 +1,60 @@
+{
+  "target": {
+    "kind": "inline",
+    "value": "3"
+  },
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "full_A_layouts": {
+    "kind": "inline",
+    "value": 4480
+  },
+  "outside_mean_coefficients": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "17859371/54697781250",
+      "39286813/91892272500",
+      "1377690863/1531537875000",
+      "0",
+      "17859371/54697781250",
+      "39286813/91892272500",
+      "1377690863/1531537875000",
+      "29774081/54697781250",
+      "121447171/109395562500",
+      "221180777/170170875000",
+      "6441127813/3063075750000"
+    ]
+  },
+  "outside_mean_increment": {
+    "kind": "inline",
+    "value": "2330295100792072343/3063075771441530250000"
+  },
+  "records": {
+    "path": "content/005-result/008-hinge2/005-records.json",
+    "sha256": "5e631ab19ba080ca5434c6b5fbee486110ac966285d0fa25bd02376a41c94efc",
+    "kind": "array"
+  },
+  "minimum_margin": {
+    "kind": "inline",
+    "value": "43684194883477173419/1531537885720765125000"
+  },
+  "H2_upper": {
+    "kind": "inline",
+    "value": "3"
+  },
+  "mean_upper": {
+    "kind": "inline",
+    "value": "5"
+  },
+  "maximum_hinge_integer_bound": {
+    "kind": "inline",
+    "value": 470000003290
+  }
+}

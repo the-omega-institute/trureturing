@@ -1,0 +1,22 @@
+**命题 8.6（准确阈值需要实际停止见证）。** 固定 $\varepsilon\ge0$。存在预算 $B$、深度 $H$ 内风险不超过 $\varepsilon$ 的策略，当且仅当下面的布尔递推 $\mathsf W_{B,H}(h)$ 为真：
+
+$$
+\mathsf W_{B,0}(h) \Longleftrightarrow\quad
+\exists z\in A_B(h)\ \forall\omega\in C_h,
+\ d(z,F(\omega))\le\varepsilon,
+\tag{8.8}
+$$
+
+$$
+\begin{aligned}
+\mathsf W_{B,H+1}(h)\ \Longleftrightarrow\quad
+&\mathsf W_{B,0}(h)\\
+&\lor\exists a\in\mathcal A(h),\ c(h,a)\le B,
+\ \forall y\in q_{h,a}[C_h],\quad
+\mathsf W_{B-c(h,a),H}(h\mathbin{\frown}(a,y)).
+\end{aligned}
+\tag{8.9}
+$$
+
+因此 $V_{B,H}(h)\le\varepsilon$ 是阈值可行的必要条件，而 $V_{B,H}(h)<\varepsilon$ 是充分条件。等号处需要取得性，不能仅由数值下确界作出执行承诺。
+

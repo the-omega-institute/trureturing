@@ -1,0 +1,50 @@
+{
+  "length": 9,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/005-quadratic_costs/000000-000002.json",
+        "sha256": "c80fdeacb523e81d13763bef9e1b9b9732f48f8b920bd69ae73e2bfdeb3256fd",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 4,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/005-quadratic_costs/000002-000004.json",
+        "sha256": "c6b6ce1f4c3d7861b6fd2e2ea903ef033151a126ff3071c120ddd04ccfa4353f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 6,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/005-quadratic_costs/000004-000006.json",
+        "sha256": "f138cde591852242a55d172911e27908503219eb55b793472bda86a55a76b27f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 8,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/005-quadratic_costs/000006-000008.json",
+        "sha256": "48c151d9ce0a3b70917529231bb06120340e8e7e8e80c8684eb527b71eb640fa",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/009-expanded_residual_comparison/005-complete_heads/005-quadratic_costs/000008-000009.json",
+        "sha256": "4161453fdba436e94a89c27b3ce53faa1fe96bb3048225367e53fb169e4e1226",
+        "kind": "value"
+      }
+    }
+  ]
+}

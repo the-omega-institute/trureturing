@@ -1,0 +1,24 @@
+**定义 29.1（有限自伴自治模型与实际准备）。** 固定有限维实 Hilbert 空间 $U,H$，直和范数为 $\|(x,h)\|^2=\|x\|^2+\|h\|^2$，所有算子范数均取自这些固定内积。设
+$$
+A=A^*:U\to U,\qquad C=C^*:H\to H,\qquad B:H\to U,
+\qquad C\succeq c_0I_H,\quad c_0>0.
+$$
+给定同一次实际联合准备 $(x_0,h_0)\in U\oplus H$，令
+$$
+\dot x=-Ax-Bh,\qquad \dot h=-B^*x-Ch,
+\qquad (x,h)(0)=(x_0,h_0),
+\qquad L=\begin{pmatrix}A&B\\B^*&C\end{pmatrix}.
+\tag{29.1}
+$$
+有限维常系数线性初值问题给唯一全局解 $z(t)=(x(t),h(t))=e^{-tL}z_0$。定义
+$$
+S=A-BC^{-1}B^*,\qquad r_0=h_0+C^{-1}B^*x_0,
+\qquad b=\|B\|,\qquad X(t)=e^{-tS}x_0.
+\tag{29.2}
+$$
+$r_0$ 是本次隐藏初态相对于静态纤维极小态的失配；静态算子或完整记忆核本身不提供其数值。$X$ 使用同一个可见初态，不对实际隐藏准备作重置。除非另加假设，此处不要求 $S\succeq0$。
+
+[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)§126.6–126.8已经给出精确隐藏消元、$K(t)=Be^{-tC}B^*$、$\int_0^\infty K(t)dt=BC^{-1}B^*$及同静态算子而不同记忆的整个解析族。本卷命题11.6–11.8分别处理同一外给输入、历史尾和静态积分，本卷接口13.10、定理14.6及[上下文卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)定理12.10已有实际反馈与初始化合同。后者要求普通可测 $L^1$ 函数核及小增益条件，静态瞬时作用若写成 Dirac 核，不满足该函数核前提。本节的对象是式（29.1）的实际轨迹与静态生成元轨迹之间的差。
+
+以下估计是从这些仓内关系作出的普通数学综合（repo-derived）；所用矩阵指数、变常数公式及线性稳定性是成熟方法，参见 Gerald Teschl，[*Ordinary Differential Equations and Dynamical Systems*](https://www.mat.univie.ac.at/~gerald/ftp/book-ode/)，AMS，2012，第3章。有限自伴谱分解与 Schur 配方按主卷§126.7及命题130.8使用。结论始终限于已声明的有限维、常系数、自伴、伴随耦合、无外力模型。
+

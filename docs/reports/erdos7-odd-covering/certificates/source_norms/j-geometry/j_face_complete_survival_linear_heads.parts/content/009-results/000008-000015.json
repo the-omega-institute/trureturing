@@ -1,0 +1,794 @@
+[
+  {
+    "name": "linear-17",
+    "kind": "cost",
+    "index": 17,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        1
+      ]
+    ],
+    "coefficients": {
+      "1": "3544710516238/35874895881825",
+      "2": "10265808390064/11958298627275",
+      "3": "775232/3262545",
+      "4": "31328/7605"
+    },
+    "at_one": "0",
+    "complete_tail_entrance": 8,
+    "complete_tail_slope": "186/35",
+    "complete_tail_constant": "-97406337916066/5124985125975",
+    "scan": {
+      "coefficients": {
+        "1": "3544710516238/35874895881825",
+        "2": "10265808390064/11958298627275",
+        "3": "775232/3262545",
+        "4": "31328/7605"
+      },
+      "primitive_coefficients": {
+        "1": 1772355258119,
+        "2": 15398712585096,
+        "3": 4262219721760,
+        "4": 73891435778160
+      },
+      "factor": "2/35874895881825",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "2090858726507350867/1695088830416231250",
+      "original_head_projection_branches": 125000,
+      "expanded_branches": 20,
+      "bounded_without_extra_projections": 124980,
+      "expanded_objective_count_including_seed": 1500,
+      "strict_crossing_branches_including_seed": 0,
+      "complete_affine_branch_evaluations": 126510,
+      "independent_rational_checks": 10,
+      "maximum_unexpanded_upper": "1317492477091815359/1078692892083056250",
+      "all_branch_decisions_sha256": "318052f7ccd2f3cf3a2a0e4d8a24317c8de8540a6624f92c306172e81e783817",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 4,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "normalized_late_coordinate": "1",
+        "theta": "1/90",
+        "two_projection_endpoints": [
+          1459102342324285198487598,
+          1506204747505990454870598
+        ],
+        "four_projection_endpoints": [
+          1424784875691899940265698,
+          1475924629889179932910098
+        ],
+        "primitive_scaled_upper": 1475924629889179932910098,
+        "complete_bounds_at_theta": [
+          "2133754852011761617/1695088830416231250",
+          "2090858726507350867/1695088830416231250"
+        ]
+      },
+      "old_complete_tail_constant": "146506980349636043/260782896987112500",
+      "new_complete_tail_constant": "110870199161356343/260782896987112500"
+    },
+    "complete_head_upper": "2090858726507350867/1695088830416231250",
+    "complete_mean_only_upper": "651/250",
+    "adopted_upper": "2090858726507350867/1695088830416231250",
+    "improvement_over_mean_only": "1161576293948257654/847544415208115625",
+    "covered_containing_choices": 6250000
+  },
+  {
+    "name": "linear-18",
+    "kind": "cost",
+    "index": 18,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        2
+      ]
+    ],
+    "coefficients": {
+      "1": "558313934146/11958298627275",
+      "2": "773113064656/5124985125975",
+      "3": "62656/296595"
+    },
+    "at_one": "0",
+    "complete_tail_entrance": 8,
+    "complete_tail_slope": "186/455",
+    "complete_tail_constant": "-35234351100902/35874895881825",
+    "scan": {
+      "coefficients": {
+        "1": "558313934146/11958298627275",
+        "2": "773113064656/5124985125975",
+        "3": "62656/296595"
+      },
+      "primitive_coefficients": {
+        "1": 837470901219,
+        "2": 2705895726296,
+        "3": 3789304398880
+      },
+      "factor": "2/35874895881825",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "45229765683794843/339017766083246250",
+      "original_head_projection_branches": 125000,
+      "expanded_branches": 31,
+      "bounded_without_extra_projections": 124969,
+      "expanded_objective_count_including_seed": 2050,
+      "strict_crossing_branches_including_seed": 0,
+      "complete_affine_branch_evaluations": 127060,
+      "independent_rational_checks": 10,
+      "maximum_unexpanded_upper": "20330433965007017/154098984583293750",
+      "all_branch_decisions_sha256": "4160c2d180445ecf2f1bee137e92b5326514cd59fed7d2ebfa3b6aecb4747bee",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "normalized_late_coordinate": "1",
+        "theta": "1/90",
+        "two_projection_endpoints": [
+          159048048579391410478578,
+          161895604817036191340778
+        ],
+        "four_projection_endpoints": [
+          156789544850338603661010,
+          159637101087983384523210
+        ],
+        "primitive_scaled_upper": 159637101087983384523210,
+        "complete_bounds_at_theta": [
+          "20849847506982917/154098984583293750",
+          "45229765683794843/339017766083246250"
+        ]
+      },
+      "old_complete_tail_constant": "13206473527411223/260782896987112500",
+      "new_complete_tail_constant": "10465182666774323/260782896987112500"
+    },
+    "complete_head_upper": "45229765683794843/339017766083246250",
+    "complete_mean_only_upper": "651/3250",
+    "adopted_upper": "45229765683794843/339017766083246250",
+    "improvement_over_mean_only": "11339050345824626/169508883041623125",
+    "covered_containing_choices": 6250000
+  },
+  {
+    "name": "linear-23",
+    "kind": "cost",
+    "index": 23,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        1,
+        0
+      ]
+    ],
+    "coefficients": {
+      "1": "374092820950987/3738373011839466",
+      "2": "5142405216043889/5607559517759199",
+      "3": "11116090/34783749",
+      "4": "35155/7371"
+    },
+    "at_one": "0",
+    "complete_tail_entrance": 8,
+    "complete_tail_slope": "403/66",
+    "complete_tail_constant": "-246400234551501617/11215119035518398",
+    "scan": {
+      "coefficients": {
+        "1": "374092820950987/3738373011839466",
+        "2": "5142405216043889/5607559517759199",
+        "3": "11116090/34783749",
+        "4": "35155/7371"
+      },
+      "primitive_coefficients": {
+        "1": 1122278462852961,
+        "2": 10284810432087778,
+        "3": 3584095336001180,
+        "4": 53489012304117390
+      },
+      "factor": "1/11215119035518398",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "1490276113136775114461/1059828748856488611000",
+      "original_head_projection_branches": 125000,
+      "expanded_branches": 20,
+      "bounded_without_extra_projections": 124980,
+      "expanded_objective_count_including_seed": 1500,
+      "strict_crossing_branches_including_seed": 0,
+      "complete_affine_branch_evaluations": 126510,
+      "independent_rational_checks": 10,
+      "maximum_unexpanded_upper": "938622490058053268437/674436476545038207000",
+      "all_branch_decisions_sha256": "d0bf352beb39027f3588a5b1c67b80ab71ba518ccc665abb73f1d6e33b8ca994",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 4,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "normalized_late_coordinate": "1",
+        "theta": "1/90",
+        "two_projection_endpoints": [
+          1039892026643340943680521634,
+          1073729858540384352787593834
+        ],
+        "four_projection_endpoints": [
+          1015238749118352174188226174,
+          1051976966606570732647333134
+        ],
+        "primitive_scaled_upper": 1051976966606570732647333134,
+        "complete_bounds_at_theta": [
+          "1521092201577551803511/1059828748856488611000",
+          "1490276113136775114461/1059828748856488611000"
+        ]
+      },
+      "old_complete_tail_constant": "14979600526367839867/23292939535307442000",
+      "new_complete_tail_constant": "11322306513616320727/23292939535307442000"
+    },
+    "complete_head_upper": "1490276113136775114461/1059828748856488611000",
+    "complete_mean_only_upper": "19747/6600",
+    "adopted_upper": "1490276113136775114461/1059828748856488611000",
+    "improvement_over_mean_only": "210087423427393273598/132478593607061076375",
+    "covered_containing_choices": 6250000
+  },
+  {
+    "name": "linear-26",
+    "kind": "cost",
+    "index": 26,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        2,
+        0
+      ]
+    ],
+    "coefficients": {
+      "1": "16130515994959/287567154756882",
+      "2": "90562460269733/431350732135323",
+      "3": "70310/243243"
+    },
+    "at_one": "0",
+    "complete_tail_entrance": 8,
+    "complete_tail_slope": "403/726",
+    "complete_tail_constant": "-1158739463247269/862701464270646",
+    "scan": {
+      "coefficients": {
+        "1": "16130515994959/287567154756882",
+        "2": "90562460269733/431350732135323",
+        "3": "70310/243243"
+      },
+      "primitive_coefficients": {
+        "1": 48391547984877,
+        "2": 181124920539466,
+        "3": 249366024727820
+      },
+      "factor": "1/862701464270646",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "1467698413483288967/8152528837357604700",
+      "original_head_projection_branches": 125000,
+      "expanded_branches": 31,
+      "bounded_without_extra_projections": 124969,
+      "expanded_objective_count_including_seed": 2050,
+      "strict_crossing_branches_including_seed": 0,
+      "complete_affine_branch_evaluations": 127060,
+      "independent_rational_checks": 10,
+      "maximum_unexpanded_upper": "659661222802316321/3705694926071638500",
+      "all_branch_decisions_sha256": "42a3d05c5154344af5fa8b114abcd10e9a6e2cd0b841824fe25ffb87d91b79fb",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "normalized_late_coordinate": "1",
+        "theta": "1/90",
+        "two_projection_endpoints": [
+          10322755754871050205114708,
+          10508336415564096115606908
+        ],
+        "four_projection_endpoints": [
+          10174814378180681910222780,
+          10360395038873727820714980
+        ],
+        "primitive_scaled_upper": 10360395038873727820714980,
+        "complete_bounds_at_theta": [
+          "676662013351740431/3705694926071638500",
+          "1467698413483288967/8152528837357604700"
+        ]
+      },
+      "old_complete_tail_constant": "122905730105546569/1791764579639034000",
+      "new_complete_tail_constant": "97330247498892589/1791764579639034000"
+    },
+    "complete_head_upper": "1467698413483288967/8152528837357604700",
+    "complete_mean_only_upper": "19747/72600",
+    "adopted_upper": "1467698413483288967/8152528837357604700",
+    "improvement_over_mean_only": "1499533943041703609/16305057674715209400",
+    "covered_containing_choices": 6250000
+  },
+  {
+    "name": "linear-32",
+    "kind": "cost",
+    "index": 32,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "1"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        0
+      ]
+    ],
+    "coefficients": {
+      "1": "1233407537/52688361726",
+      "2": "967692613/7526908818",
+      "3": "47851/429429",
+      "5": "316/429"
+    },
+    "at_one": "0",
+    "complete_tail_entrance": 5,
+    "complete_tail_slope": "1",
+    "complete_tail_constant": "-226444572421/52688361726",
+    "scan": {
+      "coefficients": {
+        "1": "1233407537/52688361726",
+        "2": "967692613/7526908818",
+        "3": "47851/429429",
+        "5": "316/429"
+      },
+      "primitive_coefficients": {
+        "1": 1233407537,
+        "2": 6773848291,
+        "3": 5871030594,
+        "5": 38810075304
+      },
+      "factor": "1/52688361726",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "1532360243834027/7745189173722000",
+      "original_head_projection_branches": 125000,
+      "expanded_branches": 32,
+      "bounded_without_extra_projections": 124968,
+      "expanded_objective_count_including_seed": 2100,
+      "strict_crossing_branches_including_seed": 0,
+      "complete_affine_branch_evaluations": 127110,
+      "independent_rational_checks": 10,
+      "maximum_unexpanded_upper": "8694880561581287/44358810722226000",
+      "all_branch_decisions_sha256": "cd12537612a276cdb8009c5187bc37570314ab69e1a1dafc99e9621e0e9f49b6",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 4,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "normalized_late_coordinate": "1",
+        "theta": "1/90",
+        "two_projection_endpoints": [
+          694014904882172132343,
+          712104801974695148103
+        ],
+        "four_projection_endpoints": [
+          675046781691943479903,
+          695368222689199278303
+        ],
+        "primitive_scaled_upper": 695368222689199278303,
+        "complete_bounds_at_theta": [
+          "1569242097042227/7745189173722000",
+          "1532360243834027/7745189173722000"
+        ]
+      },
+      "old_complete_tail_constant": "5511800757973/54714837177000",
+      "new_complete_tail_constant": "4104847801993/54714837177000"
+    },
+    "complete_head_upper": "1532360243834027/7745189173722000",
+    "complete_mean_only_upper": "49/100",
+    "adopted_upper": "1532360243834027/7745189173722000",
+    "improvement_over_mean_only": "2262782451289753/7745189173722000",
+    "covered_containing_choices": 6250000
+  },
+  {
+    "name": "linear-33",
+    "kind": "cost",
+    "index": 33,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "1"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        1
+      ]
+    ],
+    "coefficients": {
+      "1": "458324/24191167",
+      "2": "1482472/24191167",
+      "3": "96/1859"
+    },
+    "at_one": "0",
+    "complete_tail_entrance": 5,
+    "complete_tail_slope": "12/91",
+    "complete_tail_constant": "-7171012/24191167",
+    "scan": {
+      "coefficients": {
+        "1": "458324/24191167",
+        "2": "1482472/24191167",
+        "3": "96/1859"
+      },
+      "primitive_coefficients": {
+        "1": 114581,
+        "2": 370618,
+        "3": 312312
+      },
+      "factor": "4/24191167",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "1231408492/27215062875",
+      "original_head_projection_branches": 125000,
+      "expanded_branches": 30,
+      "bounded_without_extra_projections": 124970,
+      "expanded_objective_count_including_seed": 2000,
+      "strict_crossing_branches_including_seed": 0,
+      "complete_affine_branch_evaluations": 127010,
+      "independent_rational_checks": 10,
+      "maximum_unexpanded_upper": "1702007432/38101088025",
+      "all_branch_decisions_sha256": "96b98e7362073996cd2fe4b40a6fe56eb6c526985d9acffde3830c29d63fe7c1",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "normalized_late_coordinate": "1",
+        "theta": "1/90",
+        "two_projection_endpoints": [
+          18097453454819760,
+          18427591057294440
+        ],
+        "four_projection_endpoints": [
+          17923983584614128,
+          18254121187088808
+        ],
+        "primitive_scaled_upper": 18254121187088808,
+        "complete_bounds_at_theta": [
+          "1740354884/38101088025",
+          "1231408492/27215062875"
+        ]
+      },
+      "old_complete_tail_constant": "19624481/1172341170",
+      "new_complete_tail_constant": "78245977/5861705850"
+    },
+    "complete_head_upper": "1231408492/27215062875",
+    "complete_mean_only_upper": "21/325",
+    "adopted_upper": "1231408492/27215062875",
+    "improvement_over_mean_only": "527103263/27215062875",
+    "covered_containing_choices": 6250000
+  },
+  {
+    "name": "linear-36",
+    "kind": "cost",
+    "index": 36,
+    "original_tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "1"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        1,
+        0
+      ]
+    ],
+    "coefficients": {
+      "1": "6313865/311765454",
+      "2": "3183325/44537922",
+      "3": "1975/33033"
+    },
+    "at_one": "0",
+    "complete_tail_entrance": 5,
+    "complete_tail_slope": "5/33",
+    "complete_tail_constant": "-106800565/311765454",
+    "scan": {
+      "coefficients": {
+        "1": "6313865/311765454",
+        "2": "3183325/44537922",
+        "3": "1975/33033"
+      },
+      "primitive_coefficients": {
+        "1": 1262773,
+        "2": 4456655,
+        "3": 3728010
+      },
+      "factor": "5/311765454",
+      "common_scale": 66706983000,
+      "complete_hinge_upper": "56924310929/1099908521712",
+      "original_head_projection_branches": 125000,
+      "expanded_branches": 30,
+      "bounded_without_extra_projections": 124970,
+      "expanded_objective_count_including_seed": 2000,
+      "strict_crossing_branches_including_seed": 0,
+      "complete_affine_branch_evaluations": 127010,
+      "independent_rational_checks": 10,
+      "maximum_unexpanded_upper": "280987396117/5499542608560",
+      "all_branch_decisions_sha256": "c87f190b84dc9c1a0893c5b80fc52879096e090694ed79ba0ce377ba2d100a3c",
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          4,
+          2
+        ],
+        "seven21_root": 1,
+        "seven35_slot": 4,
+        "seven63_cell": 1,
+        "seven105_root": 1,
+        "seven105_slot": 4,
+        "normalized_late_coordinate": "1",
+        "theta": "1/90",
+        "two_projection_endpoints": [
+          213429163844190735,
+          217334228535518535
+        ],
+        "four_projection_endpoints": [
+          211358486410005375,
+          215263551101333175
+        ],
+        "primitive_scaled_upper": 215263551101333175,
+        "complete_bounds_at_theta": [
+          "287359405189/5499542608560",
+          "56924310929/1099908521712"
+        ]
+      },
+      "old_complete_tail_constant": "16574647/863350488",
+      "new_complete_tail_constant": "66054719/4316752440"
+    },
+    "complete_head_upper": "56924310929/1099908521712",
+    "complete_mean_only_upper": "49/660",
+    "adopted_upper": "56924310929/1099908521712",
+    "improvement_over_mean_only": "123677820839/5499542608560",
+    "covered_containing_choices": 6250000
+  }
+]

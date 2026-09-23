@@ -1,0 +1,15 @@
+**约定 56.9（Haar 轨道概率卷积与集合值商超加法的记号）。** 本节称 theorem 56.3 与 theorem 56.5 所定义的 $K$ 与 $\star$ 为相对于 $(R,U,\rho,m_U)$ 的规范 Haar 轨道概率核与规范 Haar 轨道概率卷积；“规范”仅表示这些对象由所给轨道商、截面无关的 Haar 轨道概率以及上述公式唯一确定。对 $A,B\in I$，另记集合值运算
+$$
+A\boxplus B:=\{\rho(x+y):\rho(x)=A,\ \rho(y)=B\}.
+$$
+由 theorem 56.3，
+$$
+A\boxplus B=\operatorname{supp}K(A,B)
+=\operatorname{supp}(\delta_A\star\delta_B).
+$$
+Connes–Consani, *The hyperring of adèle classes*, arXiv:1001.4260v2, Proposition 2.5，印刷页 p.7，对交换环 $R$ 与单位群子群 $G\subset R^\times$ 定义的集合值商超加法正是
+$$
+(xG+yG)/G.
+$$
+取当前 $G=U$ 并用 theorem 56.2 的轨道识别，即得到上述 $\boxplus$。来源：https://arxiv.org/pdf/1001.4260v2 。与此不同，测度卷积 $\star_b$ 的完整有界复测度代数结构及其精确拓扑合同由 theorem 56.5 给出；概率卷积 $\star$ 是其在凸集 $\mathcal P(I)$ 上的限制。本节的符号约定不另行在 $\mathcal P(I)$ 上引入乘法运算。
+

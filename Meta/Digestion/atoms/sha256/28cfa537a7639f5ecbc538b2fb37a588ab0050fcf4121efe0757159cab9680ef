@@ -1,0 +1,52 @@
+**theorem 40.8 (The mass condition for a concentration lower bound).** For every $t>1$, every starting phase, and every $n\ge0$, $p\in[0,1]$,
+$$
+D_{N,\theta,p}(n,x)
+ \ge2\left[1-t^{-2}-(2ts+1)\mu_{\max}\right]_+.
+$$
+For a given $K\ge1$, the count-to-mass bound
+$$
+\sum_{i\in A}\mu_i\le\frac{K|A|}{N}
+\quad\text{for every set of labels }A
+$$
+holds if and only if $\mu_{\max}\le K/N$. Under this hypothesis, if
+$$
+N\ge16K,\qquad V\le\frac{N^2}{1024K^2},
+$$
+then every initial phase satisfies $D_{N,\theta,p}(n,x)\ge9/8$.
+
+There are also the small-variance bounds
+$$
+D_{N,\theta,p}(n,x)\ge2[1-2V-\mu_{\max}]_+,
+$$
+$$
+e_{N,\theta,p}(n)\ge2[1-2V-\mu_{\min}]_+
+ \ge[1-4V]_+.
+$$
+
+**Proof.** Let
+$$
+B_t=\{j\in\{0,\ldots,n\}:|j-np|\le ts\}.
+$$
+For $s>0$, Chebyshev's inequality gives $\Pr(J\in B_t)\ge1-t^{-2}$. For $s=0$, $J$ is constant, so the same inequality holds directly. In either case, $B_t$ contains at most $2ts+1$ integers. Put
+$$
+A_x=\{\pi_{N,\theta}(x+j\theta):j\in B_t\}.
+$$
+The observation law assigns this set probability at least $1-t^{-2}$, and its stationary mass is at most $(2ts+1)\mu_{\max}$. For probability vectors $u,w$,
+$$
+\|u-w\|_1=2\max_A(u(A)-w(A)).
+$$
+Indeed, the sum of positive coordinates of $u-w$ equals the sum of the absolute values of its negative coordinates, and choosing the positive coordinates maximizes the set sum. Testing on $A_x$ proves the first lower bound.
+
+The count-to-mass equivalence follows by testing singletons in one direction and summing the singleton bounds in the other. Under the stated numerical hypotheses, $s\le N/(32K)$, so
+$$
+(4s+1)\mu_{\max}
+ \le\frac18+\frac K N\le\frac3{16}.
+$$
+The first inequality with $t=2$ gives $D\ge2(3/4-3/16)=9/8$.
+
+For the small-variance assertion, put $h=\min(p,1-p)$ and choose $j_*=0$ for $p\le1/2$, and $j_*=n$ otherwise. Bernoulli's inequality gives
+$$
+\Pr(J=j_*)=(1-h)^n\ge1-nh\ge1-2V,
+$$
+because $V=nh(1-h)$ and $1-h\ge1/2$. Testing on the cell containing $x+j_*\theta$ proves the bound involving $\mu_{\max}$. To obtain $\mu_{\min}$, choose a point $z$ in a minimum-mass cell and start at $x=z-j_*\theta$. Finally, $\mu_{\min}\le1/N\le1/2$ yields the last inequality. The point $z$ may be chosen outside $\mathcal G_\theta$, since its cell has positive length. $\square$
+

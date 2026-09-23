@@ -1,0 +1,19 @@
+**证明。** 环同构 $\tau:\widehat{\mathbb Z}\to B$ 将问题化为定理 47.9 的左侧。有效构造环语言句
+$$
+\phi_P:=\exists X_1\cdots\exists X_d\,
+\bigwedge_{j=1}^s P_j(\bar X)=0.
+$$
+整数系数用有限环项表示；$s=0$ 时以 $0=0$ 表示空合取，$d=0$ 时省去变量量词。由定理 47.9，
+$$
+(B,e,u,+,\cdot,-)\models\phi_P
+\Longleftrightarrow
+\forall m>1,\quad\mathbb Z/m\mathbb Z\models\phi_P.
+$$
+右侧是对全部模数的共同真值问题，不是给定单个模数后的有限搜索问题。
+
+Derakhshan–Macintyre，*Decidability of the class of all the rings $\mathbb Z/m\mathbb Z$: A problem of Ax*，Forum of Mathematics, Sigma 11 (2023)，e64，DOI 10.1017/fms.2023.62，[Theorem 3.1，第 4—5 页；Corollary 3.1，第 5 页](https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S2050509423000622#page=4)，给出所需的已发表判定定理：有限剩余环类在有理数的 adele 环 $\mathbb A_{\mathbb Q}$ 中一致可解释，并且存在一个算法，输入任意环语言句 $\psi$，判定
+$$
+\forall m>1,\quad\mathbb Z/m\mathbb Z\models\psi.
+$$
+将有效构造的 $\phi_P$ 交给该共同理论判定程序，便判定原方程组在内部环 $B$ 上的可解性。整个过程中，环语言的零与一始终解释为 $e,u$，没有替换成环境常量 $0_K,1_K$。证毕。
+

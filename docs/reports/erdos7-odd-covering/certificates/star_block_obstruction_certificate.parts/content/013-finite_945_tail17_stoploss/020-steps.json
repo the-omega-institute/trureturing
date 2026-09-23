@@ -1,0 +1,68 @@
+{
+  "length": 1022,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 159,
+      "part": {
+        "path": "content/013-finite_945_tail17_stoploss/020-steps/000000-000159.json",
+        "sha256": "6f8c4f4c726b506615eacbd5a971cb6f2e76becf217bba156b476af6cda5b4ad",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 159,
+      "stop": 318,
+      "part": {
+        "path": "content/013-finite_945_tail17_stoploss/020-steps/000159-000318.json",
+        "sha256": "90d01c457d3ab048d4f0d97f0d2f47c180e915f93ef7a9f29163b5fc5c15e3e7",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 318,
+      "stop": 477,
+      "part": {
+        "path": "content/013-finite_945_tail17_stoploss/020-steps/000318-000477.json",
+        "sha256": "43f26cdf9952835f1d19f877a2cfce111822b0e76a530efa7f73f1a97a63e68e",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 477,
+      "stop": 636,
+      "part": {
+        "path": "content/013-finite_945_tail17_stoploss/020-steps/000477-000636.json",
+        "sha256": "e896ecdfb12fddb12f03956ed8f4fd4b237ed071d791685158613b7ddc9b69fa",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 636,
+      "stop": 795,
+      "part": {
+        "path": "content/013-finite_945_tail17_stoploss/020-steps/000636-000795.json",
+        "sha256": "c1df1e88c452c5acf34fa631ba1b8229ad37f493aaab644d552ff14a0cb06ea3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 795,
+      "stop": 954,
+      "part": {
+        "path": "content/013-finite_945_tail17_stoploss/020-steps/000795-000954.json",
+        "sha256": "6ee29fb4c456e09647de67f073de1f4095ffa53293bb75cc2d2360dfd3c5de26",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 954,
+      "stop": 1022,
+      "part": {
+        "path": "content/013-finite_945_tail17_stoploss/020-steps/000954-001022.json",
+        "sha256": "72ab56434ac371b4a9a6d9344715b6053f719727039e6411d22422b888cc6ed9",
+        "kind": "value"
+      }
+    }
+  ]
+}

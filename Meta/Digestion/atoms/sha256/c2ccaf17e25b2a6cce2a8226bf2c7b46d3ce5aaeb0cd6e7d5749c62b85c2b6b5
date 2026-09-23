@@ -1,0 +1,6 @@
+**定理 128.9（似然盲方向）。**
+$$
+\ker L_n=\ker\mathbf H=\bigcap_{t<n}\ker H_t.
+$$
+$v$ 属于这个核，当且仅当把参数 $z$ 改为 $z+av$ 对任意实数 $a$ 都不改变整份条件观测律 $\mathcal L(\mathbf Y_n\mid Z=z)$。此时 $J_nv=J_0v$。
+

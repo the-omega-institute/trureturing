@@ -1,0 +1,34 @@
+**定理 24.5（截止依赖的可用常数）。** 固定 $0<a\le A_\alpha$、$B_0\ge0$，准备范围为 $a\le|\alpha|\le A_\alpha$、$|\beta|\le B_0$。记
+$$
+\rho=A_\alpha+\sqrt2B_0,\quad \lambda_Q=\nu Q,\quad b_Q=\sqrt Q,
+\quad R_0=\rho,\quad R=2\rho,
+$$
+$$
+F_Q=2\lambda_Q\rho+4b_Q\rho^2,\quad
+D_Q=\lambda_Q+4b_Q\rho,\quad
+\tau_Q=(4\lambda_Q+8b_Q\rho)^{-1}.
+\tag{24.111}
+$$
+所有准备在 $[0,\tau_Q]$ 上有唯一光滑 Galerkin 解，$\|v(t)\|_1\le3\rho/2$。横向端口可用
+$$
+M_Q=\rho(\lambda_Q+4b_Q\rho)(\lambda_Q+2b_Q\rho),
+$$
+$$
+C_Q^{\rm resp}=\sqrt{e/2}
+ (\lambda_Q^2+12\lambda_Qb_Q\rho+24b_Q^2\rho^2).
+\tag{24.112}
+$$
+即 $|y''|\le M_Q$、$|y_\beta''-y_{\beta'}''|\le C_Q^{\rm resp}|\beta-\beta'|$。因此 $0<t\le\min\{\tau_Q,a/(4C_Q^{\rm resp})\}$ 时有（23.108）的真实响应逆，任意 $0<t\le\tau_Q$ 时有（23.102）及（23.103）的估计界。
+
+证明。逐有序对求和，$\|P_k\|=1$ 和 $|\widetilde q\cdot v_p|\le\sqrt Q|v_p|_2$ 给
+$$
+\|L_Q\|\le\lambda_Q,\quad
+\|B_Q(v,w)\|_1\le\sqrt Q\|v\|_1\|w\|_1.
+$$
+不把 $\|L_Q\|$ 一律写成 $\nu Q$，因为 $Q$ 未必为两平方和。共轭成对给 $\|\ell_y\|=1/2$：上界由 $\|v\|_1\ge2|v_h|_2$，等号由 $v_h=i(1,0,0)/2$、$v_{-h}=\overline{v_h}$ 达到。可见端口同理范数 $1/2$。准备支持不交，故
+$$
+\|a_0\|_1=1,\quad\|b_0\|_1=\sqrt2,\quad
+\|\alpha a_0+\beta b_0\|_1=|\alpha|+\sqrt2|\beta|.
+$$
+$\tau_Q=(R-R_0)/(2F_Q)$ 且 $F_Q>0$，可应用定理24.1。其 $M_\ell=D_QF_Q/2=M_Q$。又 $D_Q\tau_Q\le1/2$，而 $2b_QF_Q+D_Q^2=\lambda_Q^2+12\lambda_Qb_Q\rho+24b_Q^2\rho^2$，代入（24.103）即得所列 $C_Q^{\rm resp}$。最后使用已核实的初始斜率与定理23.4。$\square$
+

@@ -1,0 +1,27 @@
+**定义 53.9（所有素数上的共同槽位图像）。** 令
+$$
+R=\prod_p\mathbb Z_p,
+\qquad
+U=R^\times=\prod_p\mathbb Z_p^\times.
+$$
+第二个等号可直接逐坐标验证：一个乘积环元素可逆，当且仅当每个坐标可逆，此时逆元逐坐标组成。固定有限顶点集 $V=[n]$。给每个素数 $p$ 一个定义在同一槽位对集合上的有限标号简单图 $G_p$。称族 $(G_p)_p$ 全局可实现，若存在同一个
+$$
+(u_i)_{i\in V}\in U^V
+$$
+使得对每个素数 $p$ 与每对不同顶点 $i,j$，
+$$
+ij\in E(G_p)
+\iff
+u_{i,p}+u_{j,p}\in p\mathbb Z_p.
+$$
+
+若把这里的 $R$ 与标准的预有限整数背景对照，Longhi、Mu、Saettone 的 [*Coset topologies on $\mathbb Z$ and arithmetic applications*](https://arxiv.org/pdf/2202.13478v3)，Theorem 3.6，arXiv v3 PDF 排印页 19，给出典范环同构
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p.
+$$
+同一来源的 Definition 4.1、Lemma 4.2 与 Proposition 4.3，排印页 26，把 supernatural numbers 写成逐素数指数乘积并给出典范双射
+$$
+\mathbb S\cong\widehat{\mathbb Z}/\widehat{\mathbb Z}^{\times},
+$$
+而 Lemma 4.5，排印页 27，说明相应商拓扑与该逐素数指数空间的乘积拓扑一致。这些标准背景解释逐素数坐标与乘单位取商，但定义 53.9 保留的是同一槽位单位的加法相关性；theorem 53.10 因而仍需实际装配共同元素，不能从单元素的赋值商直接读出。
+

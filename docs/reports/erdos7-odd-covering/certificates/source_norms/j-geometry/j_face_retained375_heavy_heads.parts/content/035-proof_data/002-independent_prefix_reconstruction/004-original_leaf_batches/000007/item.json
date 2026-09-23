@@ -1,0 +1,15 @@
+{
+  "start": {
+    "kind": "inline",
+    "value": 1792
+  },
+  "stop": {
+    "kind": "inline",
+    "value": 2048
+  },
+  "rows": {
+    "path": "content/035-proof_data/002-independent_prefix_reconstruction/004-original_leaf_batches/000007/item/002-rows.json",
+    "sha256": "17adc23c3b915790a3f2c66547590d31ccea5a935c62cdd8a90a11d3067ff717",
+    "kind": "array"
+  }
+}

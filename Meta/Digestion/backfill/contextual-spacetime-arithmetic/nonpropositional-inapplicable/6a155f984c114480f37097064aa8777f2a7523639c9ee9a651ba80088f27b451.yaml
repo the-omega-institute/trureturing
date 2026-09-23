@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6a155f984c114480f37097064aa8777f2a7523639c9ee9a651ba80088f27b451
+  normalized_sha256: sha256:6a155f984c114480f37097064aa8777f2a7523639c9ee9a651ba80088f27b451
+cas_ref: sha256:6a155f984c114480f37097064aa8777f2a7523639c9ee9a651ba80088f27b451
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “未独立取回”及“不以这两个编号承担本节某条精确命题”明确限制数据库连接文献的使用；没有用书目代替新的连接定理，也没有定义偷带，故按来源范围备注结算。
+    previous_atom_id: 09da0cc71325d897ea5218139ffa603cf934c6291a71922e816eb58261de2e0a
+    next_atom_id: 72e1eef6cbf6e141055bf0f60ee9d198315e31cbd902d94f8b321b1824ffbade

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d2224883f34ab15347b3da33ef07699224d7d176271a40754f8ae786425f5980
+  normalized_sha256: sha256:d2224883f34ab15347b3da33ef07699224d7d176271a40754f8ae786425f5980
+cas_ref: sha256:d2224883f34ab15347b3da33ef07699224d7d176271a40754f8ae786425f5980
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/ContextExtensionComplement.balanced_newRegion_charge_zero
+    target_statement_id: sha256:e4c0f58f3190964ef2c49ca1e55521a6cd556515913a7df5368b21e8abeaab08
+  - gid: D5/S3/ConceptDynamics/Spacetime/ContextExtensionComplement.complement_charge_difference
+    target_statement_id: sha256:828ba34645980a063cd30322ad25ee353894f81c292c2665e7553959f60c06fd
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+**定理 68.3（精确有限反馈尾由可达的可见隐藏商控制）。** $R$ 与 $N$ 都对 $D$ 不变，故 $Q_{\mathrm{fb}}$ 上的 $\bar D_{\mathrm{fb}}$ 定义良好。对每个 $m\ge0$，下列条件等价：
+1. $M_j=0$ 对全部 $j\ge m$ 成立；
+2. $\bar D_{\mathrm{fb}}^{\,m}=0$；
+3. 对每个 $n$ 及任意两条输入串 $u,u'\in V^n$，只要它们在所有 $i\ge\max(0,n-m)$ 处相同，就有 $F_n(u)=F_n(u')$。
+
+因此有限反馈尾存在当且仅当 $\bar D_{\mathrm{fb}}$ 幂零；存在时，
+$$
+\tau_{\mathrm{fb}} =\min\{m:\bar D_{\mathrm{fb}}^{\,m}=0\}.
+$$
+特别地，
+$$
+\tau_{\mathrm{fb}}=0\iff Q_{\mathrm{fb}}=0
+\iff M_j=0\ \text{对全部 }j\ge0.
+$$
+这正说明反馈尾不是由全部隐藏坐标 $H$ 控制，也不是仅由 $H/N$ 控制，而是由其可达部分的可见商 $R/(R\cap N)$ 控制。经典实现论背景是 R. E. Kalman, “Mathematical Description of Linear Dynamical Systems”, J. SIAM Control Ser. A 1(2), 152–192 (1963), DOI 10.1137/0301010；以及 B. L. Ho and R. E. Kalman, “Effective construction of linear state-variable models from input/output functions”, 1966, pp. 545–548, DOI 10.1524/auto.1966.14.112.545。这里只采用经典的可达/可观测与 Markov 参数视角；本定理的具体截尾等价由下述直接论证给出。
+

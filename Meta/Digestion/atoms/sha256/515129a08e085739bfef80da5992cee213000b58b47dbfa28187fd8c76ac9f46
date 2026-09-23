@@ -1,0 +1,17 @@
+**Definition 41.4 (The ordered field at $t=0^+$).** For nonzero $f\in\mathbb R(t)$, write
+$$
+f(t)=t^\nu\frac{a(t)}{b(t)},\qquad
+\nu\in\mathbb Z,\qquad a(0)b(0)\ne0.
+$$
+Define
+$$
+\operatorname{lc}_0(f)=\frac{a(0)}{b(0)},\qquad
+f>0\ \Longleftrightarrow\ \operatorname{lc}_0(f)>0.
+$$
+Comparison is defined by $f>g$ exactly when $f-g>0$. Here “leading” refers to the smallest exponent in the expansion at zero, not the highest polynomial degree. Extend each form to the scalar extension
+$$
+V_{\mathbb R(t)}=V\otimes_{\mathbb R}\mathbb R(t),
+\qquad
+\ell_i^{\mathbb R(t)}:V_{\mathbb R(t)}\longrightarrow\mathbb R(t).
+$$
+

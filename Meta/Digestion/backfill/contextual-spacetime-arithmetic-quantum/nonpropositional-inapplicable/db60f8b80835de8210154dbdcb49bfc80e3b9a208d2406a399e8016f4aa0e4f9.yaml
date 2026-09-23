@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:db60f8b80835de8210154dbdcb49bfc80e3b9a208d2406a399e8016f4aa0e4f9
+  normalized_sha256: sha256:db60f8b80835de8210154dbdcb49bfc80e3b9a208d2406a399e8016f4aa0e4f9
+cas_ref: sha256:db60f8b80835de8210154dbdcb49bfc80e3b9a208d2406a399e8016f4aa0e4f9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶要求“必须额外指定一个映射”，并明确“没有从 Zeckendorf 行自动构造这些 Hilbert 空间”；它是算术标签接入量子模型的输入边界，后文跨轴目标要求已拆出，本叶没有借映射记号断言物理构造存在。
+    previous_atom_id: 3a1833f47faca098f84e918a76a9b2a2f9626d1cdce559aa467b5ab3d41e1442
+    next_atom_id: a8897b582fefc86f8caa3f8bdbe99fa146845b9b8644e715707be98a40a61f8a

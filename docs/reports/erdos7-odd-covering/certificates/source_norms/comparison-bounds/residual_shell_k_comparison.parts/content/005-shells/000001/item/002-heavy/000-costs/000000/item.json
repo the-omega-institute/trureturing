@@ -1,0 +1,35 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 0
+  },
+  "weight": {
+    "kind": "inline",
+    "value": "1"
+  },
+  "barrier": {
+    "kind": "inline",
+    "value": "630053335920064561120723361434337/15632787748921114278012443437500"
+  },
+  "face_upper": {
+    "kind": "inline",
+    "value": "629565743886600521090236480234337/106184973388898134718575087500000"
+  },
+  "remaining_raw_prices": {
+    "kind": "inline",
+    "value": {
+      "mass_L1": "4814671831951234409069/1056931698579030794520",
+      "pure_L1": "87205863883/13459045600",
+      "availability_Linfinity": "1817677/5045040"
+    }
+  },
+  "branches": {
+    "path": "content/005-shells/000001/item/002-heavy/000-costs/000000/item/005-branches.json",
+    "sha256": "2028d38e19800cd3a5a95690dc4259e3bec719279fec4468042b2168653ded99",
+    "kind": "array"
+  },
+  "uniform_G_error": {
+    "kind": "inline",
+    "value": "2204615328311647002559547192005782590663/5018627617857682986277175223618450000000"
+  }
+}

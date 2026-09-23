@@ -1,0 +1,6 @@
+。设 b_n=|h_n|ε_n，
+
+$$p_n=\prod_{t<n}(a_t+b_t),\qquad\widehat p_n=\prod_{t<n}a_t,
+\qquad e_n=\epsilon_n+R(p_n^2-\widehat p_n^2),\quad
+E=\left(\sum_{n=0}^Ne_n^2\right)^{1/2}.$$
+

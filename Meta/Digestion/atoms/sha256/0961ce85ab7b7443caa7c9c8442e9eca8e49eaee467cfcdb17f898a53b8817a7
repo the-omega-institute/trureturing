@@ -1,0 +1,6 @@
+**命题 141.7（每个扭转周期强迫缺陷）。** 对任意合法确定窗口规则 $f$，其在 $\mathbb T_L$ 下的每处缺陷概率 $\delta_{\mathbb T_L}(f)$ 满足
+$$
+\delta_{\mathbb T_L}(f)\ge\frac1L.
+\tag{141.12}
+$$
+

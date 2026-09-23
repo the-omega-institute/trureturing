@@ -1,0 +1,24 @@
+**定义 68.2（反馈可达空间、不可观测空间与两个隐藏商）。** 令
+$$
+R=\operatorname{span}\{D^jCv:j\ge0,\ v\in V\},\qquad
+N=\bigcap_{j\ge0}\ker(BD^j).
+$$
+令
+$$
+Q_{\mathrm{fb}}=R/(R\cap N),\qquad Q_{\mathrm{init}}=H/N.
+$$
+若相应子空间对 $D$ 不变，则记诱导映射为
+$$
+\bar D_{\mathrm{fb}}[r]=[Dr],\qquad
+\bar D_{\mathrm{init}}[h]=[Dh].
+$$
+记反馈 Markov 参数
+$$
+M_j=BD^jC.
+$$
+对任意而非闭环强制生成的输入串 $u_0,\ldots,u_{n-1}\in V$，定义反馈输入输出项
+$$
+F_n(u_0,\ldots,u_{n-1}) =\sum_{i=0}^{n-1}M_{n-1-i}u_i.
+$$
+若存在 $m\in\mathbb N$ 使 $M_j=0$ 对全部 $j\ge m$ 成立，则最小这样的 $m$ 记为 $\tau_{\mathrm{fb}}$。若存在 $m$ 使 $BD^j=0$ 作为 $H\to V$ 的映射对全部 $j\ge m$ 成立，则最小这样的 $m$ 记为 $\tau_{\mathrm{init}}$。对零向量空间约定恒等映射也是零映射，所以零商空间的幂零指数为 $0$。
+

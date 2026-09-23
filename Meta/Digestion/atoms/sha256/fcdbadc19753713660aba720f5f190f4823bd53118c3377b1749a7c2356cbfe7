@@ -1,0 +1,6 @@
+证明。$\|\nabla u\|_2,\|\Delta u\|_2\le\|u\|_{H^2}$，与（25.104）合用得第一界。将对流差写成 $((u-v)\cdot\nabla)u+(v\cdot\nabla)(u-v)$ 给第二界及 $F$ 连续性。因此 $f(t)=F(u(t))$ 连续取值于 $L^2$。对每个单独 Fourier 模，（25.109）是有连续强迫项的常微分方程变常数公式，给
+$$
+\widehat u(t,k)=\widehat u_0(k)+\int_0^t\widehat f(s,k)\,ds.
+$$
+Fourier 系数是 $L^2$ 上有界线性泛函，可以穿过 Bochner 积分；完备 Fourier 基遂给 $u(t)=u_0+\int_0^tF(u(s))ds$ 这一 $L^2$ 等式。Banach 值微积分基本定理证明（25.110）。这里没有对无限级数逐项作二次时间微分，也没有假定 $F$ 映入 $H^2$。
+

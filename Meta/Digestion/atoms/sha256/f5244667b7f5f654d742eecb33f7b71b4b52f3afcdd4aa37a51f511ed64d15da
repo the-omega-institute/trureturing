@@ -1,0 +1,11 @@
+### 定理 57.5（操作读数商的规范代表）
+
+定义
+
+$$
+\rho\sim_{\mathcal A_0}\sigma
+\iff
+R_{\mathcal A_0}(\rho)=R_{\mathcal A_0}(\sigma).
+$$
+
+则商空间 $\mathrm{States}/\!\sim_{\mathcal A_0}$ 规范等价于实际 readout 的 range。该等价把每个状态类送到它的 readout，

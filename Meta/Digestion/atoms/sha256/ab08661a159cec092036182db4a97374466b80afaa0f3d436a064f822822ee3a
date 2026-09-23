@@ -1,0 +1,10 @@
+其中 $|\alpha|\le A_\alpha$、$|\beta|\le B_0$。记
+$$
+R=2\sqrt{2A_\alpha^2+9B_0^2},\quad
+\tau=\frac{\nu}{16384R^2},\quad
+M_F=\nu R+4R^2,\quad D_F=\nu+8R,
+$$
+$$
+J=\nu^2+10\nu R+12R^2,\qquad M=(\nu+R)M_F.
+\tag{25.103}
+$$

@@ -1,0 +1,58 @@
+**定理 70.5（累计计数的热迹指数）。** 再设存在常数 $c_-,c_+>0$、$\lambda>1$、$b>1$、$z>0$，使
+$$
+c_-\lambda^L\le N_L\le c_+\lambda^L\quad(L\ge0),
+\qquad
+a_0=0,\qquad a_L=b^{zL}\quad(L\ge1).
+$$
+记
+$$
+q=b^z>1,\qquad
+\gamma=\frac{\ln\lambda}{\ln q}=\frac{\log_b\lambda}{z}>0.
+$$
+则每个 $t>0$ 的 $T_t$ 为迹类算子，且
+$$
+Z(t):=\operatorname{Tr}_{H_{\mathrm{obs}}}(T_t)
+=\sum_{L\ge0}m_Le^{-ta_L}.
+$$
+存在只依赖上述常数的 $C_-,C_+>0$，使
+$$
+C_-t^{-\gamma}\le Z(t)\le C_+t^{-\gamma}
+\quad(0<t\le1).
+$$
+
+证明。各 $V_L$ 取有限正交基，其并由定理 70.2 构成 $H_{\mathrm{obs}}$ 的正交基。$T_t$ 在 $V_L$ 上的特征值为 $e^{-ta_L}$，重数为 $m_L$；对于正算子，所显示的非负特征值和有限恰给出迹类性。
+
+固定 $0<t\le1$，置 $n=\lfloor\log_q(1/t)\rfloor$。于是
+$$
+q^n\le t^{-1}<q^{n+1},\qquad
+q^{-1}<tq^n\le1,\qquad
+\lambda^{-1}t^{-\gamma}\le\lambda^n\le t^{-\gamma}.
+$$
+对 $L\le n$ 均有 $ta_L\le1$，包括 $a_0=0$。故累计前 $n$ 层给出
+$$
+\sum_{L\ge0}m_Le^{-ta_L}
+\ge e^{-1}\sum_{L=0}^nm_L
+=e^{-1}N_n
+\ge\frac{c_-}{e\lambda}t^{-\gamma}.
+$$
+另一方面，前 $n$ 层的和至多为 $N_n$；对尾部 $L=n+j$、$j\ge1$，有 $ta_L>q^{j-1}$ 和 $m_L\le N_L\le c_+\lambda^{n+j}$。因而
+$$
+\sum_{L\ge0}m_Le^{-ta_L}
+\le c_+\lambda^n
+\left(1+\sum_{j\ge1}\lambda^j e^{-q^{j-1}}\right)
+\le C_+t^{-\gamma},
+$$
+其中可取
+$$
+C_- =\frac{c_-}{e\lambda},\qquad
+C_+=c_+\left(1+\sum_{j\ge1}\lambda^j e^{-q^{j-1}}\right)<\infty.
+$$
+最后的正项级数相邻项比为 $\lambda\exp(-(q-1)q^{j-1})\to0$。若 $t>1$，则逐项比较给出 $Z(t)\le Z(1)<\infty$。这证明所有正时间的迹类性及界。整个下界只使用累计秩 $N_n$，没有推断单独增量 $m_L$ 与 $\lambda^L$ 可比。证毕。
+
+若采用热迹对数约定
+$$
+d_{\mathrm{sp}}:=2\lim_{t\downarrow0}
+\frac{\ln Z(t)}{\ln(1/t)},
+$$
+定理 70.5 的两侧界给出 $\ln Z(t)=\gamma\ln(1/t)+O(1)$，故此约定下 $d_{\mathrm{sp}}=2\gamma$。这一结论没有给出 $t^\gamma Z(t)$ 的极限或精确渐近系数，也未将上式替换成对数导数的极限。
+

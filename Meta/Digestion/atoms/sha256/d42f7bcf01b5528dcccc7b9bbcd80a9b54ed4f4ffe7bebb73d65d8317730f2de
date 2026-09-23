@@ -1,0 +1,75 @@
+**定理 66.12（公平锚重构位的相关、传递矩阵、递推与精确谱）。**
+
+令 $\lambda_{\mathrm{fair}}$ 是上述平稳关系律 $\mu_{\mathrm{st}}$ 的公平锚 lift，并定义原位自旋
+$$
+S_j:=(-1)^{x_j}\in\{-1,1\}.
+$$
+则对每个 $j\ge0$，
+$$
+\mathbb E[S_j]=0.
+$$
+对任意 $j,n\ge0$，
+$$
+\mathbb E[S_jS_{j+n}]=a_n,
+$$
+其中
+$$
+a_0:=1,
+\qquad
+a_n:=\mathbb E\prod_{\ell=0}^{n-1}(2c_\ell-1)\quad(n\ge1).
+$$
+
+置
+$$
+G:=\operatorname{diag}(-1,1),
+\qquad
+M:=PG = \begin{pmatrix}
+-\alpha&\alpha^2\\
+-1&0
+\end{pmatrix}.
+$$
+则对 $n\ge1$，
+$$
+a_n = \pi G M^{n-1}
+\begin{pmatrix}1\\1\end{pmatrix}.
+$$
+矩阵 $M$ 的特征多项式与特征根分别为
+$$
+r^2+\alpha r+\alpha^2,
+\qquad
+r_\pm=\alpha e^{\pm2\pi i/3}.
+$$
+序列 $a_n$ 对所有 $n\ge0$ 满足
+$$
+a_{n+2}+\alpha a_{n+1}+\alpha^2a_n=0,
+$$
+并且
+$$
+a_0=1,\qquad
+a_1=-\frac1{\sqrt5}.
+$$
+其精确闭式为
+$$
+\boxed{\ 
+a_n = \alpha^n\left(
+\cos\frac{2\pi n}{3}
+-\frac1{\sqrt{15}}\sin\frac{2\pi n}{3}
+\right)
+\ }.
+$$
+等价地，
+$$
+a_{3m}=\alpha^{3m},\qquad
+a_{3m+1}=-\frac{\alpha^{3m}}{\sqrt5},\qquad
+a_{3m+2}=-\frac{\alpha^{3m+3}}{\sqrt5}
+\qquad(m\ge0).
+$$
+
+由于每个 $x_j$ 都是公平 Bernoulli 位，
+$$
+\operatorname{Cov}(x_j,x_{j+n})=\frac14a_n,
+\qquad
+\boxed{\ \operatorname{Corr}(x_j,x_{j+n})=a_n\ }.
+$$
+因此重构位相关具有角相位 $2\pi/3$ 的三步振荡和指数包络 $\phi^{-n}$；关系位相关则是实特征值 $-\phi^{-2}$ 产生的周期 2 的符号交替和包络 $\phi^{-2n}$。两种相关的相位结构与衰减率都不同。
+

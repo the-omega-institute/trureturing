@@ -1,0 +1,14 @@
+**假设 56.1（载体、拓扑、作用与概率约定）。** 令素数集为 $\mathbb P$，令
+$$
+R=\prod_{p\in\mathbb P}\mathbb Z_p,\qquad U=R^\times=\prod_{p\in\mathbb P}\mathbb Z_p^\times,
+$$
+其中 $R$ 取乘积拓扑并按坐标相加，$U$ 取乘积拓扑并以逐坐标乘法作用于 $R$；记 $m_U$ 为 $U$ 的归一化 Haar 概率。令 $E=\mathbb N_0\cup\{\infty\}$，有限点孤立，而 $\infty$ 的邻域基为 $\{\infty\}\cup\{n\ge N\}$；令 $I=\prod_pE$。定义
+$$
+\rho(x)=(v_p(x_p))_p,\qquad v_p(0)=\infty,
+$$
+以及规范截面
+$$
+s(A)_p=\begin{cases}p^{A_p},&A_p<\infty,\\0,&A_p=\infty.\end{cases}
+$$
+本文中的概率均为非负 Borel 概率，不引入带符号概率权。Longhi–Mu–Saettone, *Coset topologies on Z and arithmetic applications*, arXiv:2202.13478v3, Proposition 4.3，印刷页 p.26，给出 $\widehat{\mathbb Z}/\widehat{\mathbb Z}^{\times}$ 的逐素数赋值轨道分类；Lemma 4.5，印刷页 p.27，证明相应商拓扑与 $\prod_p(\mathbb N_0\cup\{\infty\})$ 的乘积拓扑一致。来源：https://arxiv.org/pdf/2202.13478v3 。这里对当前 $R=\prod_p\mathbb Z_p$ 重新证明本节所需部分。
+

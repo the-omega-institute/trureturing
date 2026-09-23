@@ -1,0 +1,23 @@
+**定理 47.2（混合算术、两个零与两个一）。** 令
+$$
+e=\tau(0_{\widehat{\mathbb Z}}),\qquad
+u=\tau(1_{\widehat{\mathbb Z}}).
+$$
+则对 $r,s\in\widehat{\mathbb Z}$ 与 $n\in\mathbb N_0$，有
+$$
+\tau(r)+\tau(s)=\tau(r+s),\qquad
+\iota(n)+\tau(r)=\tau(n+r),
+$$
+$$
+\tau(r)\tau(s)=\tau(rs),\qquad
+\iota(0)\tau(r)=\iota(0),
+$$
+$$
+n>0\Longrightarrow\iota(n)\tau(r)=\tau(nr).
+$$
+因此 $B$ 在继承的两个二元运算下是一个交换环，内部零元为 $e$、内部一元为 $u$，且 $\tau:\widehat{\mathbb Z}\to B$ 是环同构。特别地，
+$$
+e\ne0_K,\qquad u\ne1_K.
+$$
+边界环不是含环境常量的环境幺半环子结构，也不是 $K$ 的理想。
+

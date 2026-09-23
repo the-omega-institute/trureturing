@@ -1,0 +1,26 @@
+**命题 31.3（完整输出矩阵、相容方块与精确秩）。** 从 $\Psi_0=m_0$ 开始，令 $\Psi_{n+1}=(I_{H_n}\otimes W)\Psi_n$。对每个 $n\ge0$，
+$$
+\Psi_n=\sum_{w\in\mathcal W_n^{(k)}}\sqrt{\lambda^{-n}r_{i(w)}}\,|w\rangle\otimes m_{i(w)},\qquad
+\rho_{k,n}:=\operatorname{Tr}_M|\Psi_n\rangle\langle\Psi_n|,
+\tag{31.9}
+$$
+$$
+\rho_{k,n}[u,v]=\begin{cases}\lambda^{-n}r_{\max(i(u),i(v))},&u,v\text{ 合法},\\0,&\text{其余},\end{cases}
+\qquad
+\operatorname{Tr}_{B_{n+1}}\rho_{k,n+1}=\rho_{k,n}.
+\tag{31.10}
+$$
+这些矩阵正且迹为一，$\rho_{k,0}=(1)$。取计算基对角得到式（31.3）；取对角与最后符号边缘化／最后 qubit 偏迹交换。再令
+$$
+S_{n,t}=\sum_{\substack{w\in\mathcal W_n^{(k)}\\i(w)\le t}}|w\rangle,\qquad
+\rho_{k,n}=\lambda^{-n}\sum_{t=0}^{k-1}d_t|S_{n,t}\rangle\langle S_{n,t}|,
+\qquad \operatorname{rank}\rho_{k,n}=\min(k,n+1).
+\tag{31.11}
+$$
+
+证明。归纳中附 $0$ 的振幅把 $\sqrt{\lambda^{-n}r_i}$ 乘以 $1/\sqrt{\lambda r_i}$；附 $1$ 时乘以式（31.6）的系数，非法分支为零。这证明全部 $n$ 的同一纯向量展开。偏迹用式（31.5）内积消去分母，得到式（31.10）。等距保持范数，故为密度。
+
+仍在完整 $2^n$ 维空间核对相容性：若 $u,v$ 合法，置 $s=\max(i(u),i(v))$，共同附零项为 $\lambda^{-n-1}$；若 $s<k-1$，共同附一项为 $\lambda^{-n-1}r_{s+1}$；若 $s=k-1$，该项为零，也等于取 $r_k=0$ 的表达式。两项之和由 $1+r_{s+1}=\lambda r_s$ 化成原矩阵元。任一前缀非法时所有延长都非法，偏迹两项及原项均零。取 $u=v$ 就给经典边缘式，所以对角方块逐元交换，包括空前缀。
+
+最后 $r_{\max(i,j)}=\sum_{t\ge\max(i,j)}d_t$ 给式（31.11）的分解。可达后缀恰为 $0,\ldots,h$，$h=\min(k-1,n)$：后缀 $j$ 可由 $0^{n-j}1^j$ 实现。其不交非空词类向量 $T_j=\sum_{i(w)=j}|w\rangle$ 彼此正交，$S_{n,t}=\sum_{j\le\min(t,h)}T_j$。前 $h+1$ 个累积向量三角可逆，其余重复最后一个。因全部 $d_t>0$，正算子之核等于这些向量的共同正交补，故秩为 $h+1$。整个论证没有把合法词子空间误当成可逐位张量分解的空间。$\square$
+

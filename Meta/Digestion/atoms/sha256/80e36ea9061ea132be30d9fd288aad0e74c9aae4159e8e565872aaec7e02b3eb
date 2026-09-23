@@ -1,0 +1,57 @@
+### 51.2 固定对象、拓扑与临界归一化
+
+令标量域 $\mathbb K=\mathbb R$ 或 $\mathbb C$，固定 $A>0$。函数 $g:(0,1)\to(0,\infty)$，$g(\rho)=\rho+\rho^{-1}-2$，满足 $g'(\rho)=1-\rho^{-2}<0$，且当 $\rho\downarrow0$ 时趋于 $+\infty$、当 $\rho\uparrow1$ 时趋于 $0$。因此对每个 $A>0$ 存在唯一 $\rho\in(0,1)$ 使 $g(\rho)=A$，并令 $\lambda=\rho^{-1}$。等价地，
+$$
+A=\frac{(1-\rho)^2}{\rho},\qquad
+\lambda=\rho^{-1},\qquad
+\lambda+\lambda^{-1}=A+2.
+\tag{51.1}
+$$
+
+令
+$$
+X_A=\{a\in\mathbb K^{\mathbb N}:|a_j|\le A\ \forall j\}.
+\tag{51.2}
+$$
+每个坐标取通常欧氏拓扑，$X_A$ 取乘积拓扑。闭区间或闭圆盘均紧，故由 Tychonoff 定理 $X_A$ 非空紧；可用
+$$
+d(a,b)=\sum_{j\ge0}2^{-j-1}\min\{1,|a_j-b_j|\}
+$$
+度量化它，所以它是紧可度量空间并具有序列紧性。零序列是非空性的一个见证；这里的度量不是离散有理前缀超度量。
+
+以 Context43.2–43.4 的同一多项式递推定义
+$$
+E(a)_{n,0}=a_n,\qquad
+E(a)_{n,k+1}=E(a)_{n+1,k}-\sum_{j=0}^{k}E(a)_{n,j}a_{k-j}.
+\tag{51.3}
+$$
+列归纳和引理43.5说明每个坐标是 $a_0,\ldots,a_{n+k}$ 的有限整系数多项式，故 $E$ 在乘积拓扑的每个坐标上连续。首列恢复 $a_n=E(a)_{n,0}$，所以 $E$ 是单射；不要求第零行恒为一。
+
+定义环境空间
+$$
+B_\rho=\left\{T:\|T\|_\rho:=\sup_{n,k\ge0}\rho^{n+k}|T_{n,k}|<\infty\right\}.
+\tag{51.4}
+$$
+加权坐标映射 $T\mapsto(\rho^{n+k}T_{n,k})$ 把它等距识别为 $\ell^\infty(\mathbb N^2)$，所以 $B_\rho$ 是 Banach 空间。
+
+定义消失反对角尾子空间
+$$
+B_\rho^0=\left\{T\in B_\rho:\sup_{n+k\ge L}\rho^{n+k}|T_{n,k}|\longrightarrow0\right\}.
+\tag{51.5}
+$$
+同一加权识别把它识别为 $c_0(\mathbb N^2)$。有限三角 $\{(n,k)\in\mathbb N^2:n+k<L\}$ 随 $L$ 增大包含每个有限索引子集。为直接证明范数闭性，设 $U_j\in B_\rho^0$ 且 $U_j\to U$ 于 $B_\rho$ 的范数。给定任意 $\varepsilon>0$，先取 $j$ 使 $\|U-U_j\|_\rho<\varepsilon/2$，再取 $L$ 使 $\sup_{n+k\ge L}\rho^{n+k}|(U_j)_{n,k}|<\varepsilon/2$。三角不等式给出 $\sup_{n+k\ge L}\rho^{n+k}|U_{n,k}|\le\|U-U_j\|_\rho+\sup_{n+k\ge L}\rho^{n+k}|(U_j)_{n,k}|<\varepsilon$，所以 $U\in B_\rho^0$，从而 $B_\rho^0$ 在 $B_\rho$ 中范数闭。
+
+由 Context46.2–46.3 的非负 $Q$ 多项式，对实或复来源均有
+$$
+|E(a)_{n,k}|\le u_k(A),\qquad
+\rho^ku_k(A)=c_A\bigl(1+\rho^{2k+1}\bigr),\qquad c_A=\frac{A}{1+\rho}.
+\tag{51.6}
+$$
+这里复情形只使用 $|a_j|\le A$ 和 $Q$ 的非负系数；标量闭式由 Context46.3 在 $\lambda=\rho^{-1}$ 的代入给出。于是
+$$
+I_A:=E(X_A)\subset B_\rho,\qquad
+\|E(a)\|_\rho\le\sup_{n,k}\rho^n c_A(1+\rho^{2k+1})\le A.
+\tag{51.7}
+$$
+公共全负来源 $a_n=-A$ 在 $(0,0)$ 达到上界；这是既有幅度包络的临界应用，而不是另造标量理论。
+

@@ -1,0 +1,50 @@
+{
+  "length": 154,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 31,
+      "part": {
+        "path": "content/021-original_modulus_exponents/000000-000031.json",
+        "sha256": "65973424212860f53834f70eaed579a1cf3ad63b679984385c8592337a7021ba",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 31,
+      "stop": 62,
+      "part": {
+        "path": "content/021-original_modulus_exponents/000031-000062.json",
+        "sha256": "c0ff26c1d8c663a679791b68e3668626cda5a8a5212cbde196bc0386515649a0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 62,
+      "stop": 93,
+      "part": {
+        "path": "content/021-original_modulus_exponents/000062-000093.json",
+        "sha256": "b419f92e65c719affe5cad2b0d1c401d62856557316464a1eb3d256292865a90",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 93,
+      "stop": 124,
+      "part": {
+        "path": "content/021-original_modulus_exponents/000093-000124.json",
+        "sha256": "4633f3ae56e4a5dbc3403e767d51d7492af92ca3c6953bc9be03210d1ae8cf79",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 124,
+      "stop": 154,
+      "part": {
+        "path": "content/021-original_modulus_exponents/000124-000154.json",
+        "sha256": "d923b5b70c14f404ac1361542221bad2d536f119566ed3ebf7b897aac3e22c5b",
+        "kind": "value"
+      }
+    }
+  ]
+}

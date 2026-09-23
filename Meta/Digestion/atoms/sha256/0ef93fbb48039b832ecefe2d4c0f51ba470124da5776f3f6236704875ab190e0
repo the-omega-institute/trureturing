@@ -1,0 +1,14 @@
+**推论 33.12（逐层共同误差界的相容实现）。** 对每个固定 $\epsilon\ge0$，
+$$
+\left[\forall l\ \exists Q_l\in F_l:
+       \operatorname{TV}(P_l,Q_l)\le\epsilon\right]
+\ \Longleftrightarrow\
+\left[\exists Q_\infty\in F_\infty:
+       \operatorname{TV}(P_\infty,Q_\infty)\le\epsilon\right].
+\tag{33.26}
+$$
+
+证明。右向左由投影收缩。左向右给 $d_*\le\epsilon$，定理33.11的同一达到者即为见证。左侧已给的各层见证本身可不相容；紧选择可改选它们。$\square$
+
+若 $P_l$ 还满足相应有限修复定理的全部前提，并有 $\operatorname{TV}(P_l,Q_l)\le c_lR_l$，则 $\sup_l c_lR_l\le\epsilon$ 足够。定理32.7、32.12分别拥有全好元组修复及成对解码的系数；例如（32.18）和（32.34）的轨道／合法列因子须留在逐层上确界中，不能仅凭每个 $c_l$ 有限就取得统一界。任何条件概率、谱隙、噪声证书及资源因子也须保留自己的前提。定理保证一个完成联合律的全事件误差；将这个见证交给后续实验，仍要求双方使用同一合法延续核，见上下文卷命题38.6。
+

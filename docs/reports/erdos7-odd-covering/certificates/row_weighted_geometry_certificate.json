@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "c102a148e6ab1510d3fd9617e576adea37f05d6faefbd5384130c6530c07042a",
+  "parts_directory": "row_weighted_geometry_certificate.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "095b39daff94865850b0589177075866dd7a5b44095c2d35ef22754ef92f2fa5",
+    "kind": "object"
+  }
+}

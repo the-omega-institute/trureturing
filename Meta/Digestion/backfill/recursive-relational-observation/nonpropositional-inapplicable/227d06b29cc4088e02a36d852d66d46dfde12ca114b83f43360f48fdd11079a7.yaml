@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:227d06b29cc4088e02a36d852d66d46dfde12ca114b83f43360f48fdd11079a7
+  normalized_sha256: sha256:227d06b29cc4088e02a36d852d66d46dfde12ca114b83f43360f48fdd11079a7
+cas_ref: sha256:227d06b29cc4088e02a36d852d66d46dfde12ca114b83f43360f48fdd11079a7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句定义前缀距离及最优失真并区分另一种距离的约定，具体点对的数值比较已拆出，属于定义性材料。
+    previous_atom_id: 275b7b72576b151b3e0e84fdca05649fd5c4cab7b8b92c0288fdaa959db27625
+    next_atom_id: 5ebaa8f934087b90ee81e58a03d806842f70f9d4e49d22af4d7f6385eaae3a14

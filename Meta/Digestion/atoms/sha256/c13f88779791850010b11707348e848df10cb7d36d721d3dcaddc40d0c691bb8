@@ -1,0 +1,1 @@
+| 71·稠密层投影 | [D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion](https://github.com/the-omega-institute/trureturing/blob/0d7723ca71cd4d5e28421920f819e345647bb4e0/D5/S3/Quantum/Completion/DenseTowerStrongCompletion.lean) 取复标量、$H=L^2(X,\mu;\mathbb C)$、$S(n)=H_n$，给出逐向量强收敛；它不提供定理 71.2 的迹范数收敛。 

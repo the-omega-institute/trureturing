@@ -1,0 +1,10 @@
+**证明。** 完全正保证各 $\sigma_h\ge0$。固定父历史后，仪器之和保迹，故
+$$
+\sum_y\operatorname{Tr}\sigma_{hy}
+=\operatorname{Tr}\left[(\operatorname{id}_R\otimes\sum_y\Phi^{h,\pi_t(h)}_{t,y})(\sigma_h)\right]
+=\operatorname{Tr}\sigma_h.
+$$
+从 $p(\varnothing)=1$ 按层归纳得归一化，从末层向前求和得前缀一致性。正算子迹零必为零，故零概率父支的全部后继也为零。
+
+每个 $\Phi_h$ 完全正。同一历史树逐层求和保迹，故其层和是通道；完全正伴随及其保单位性给式(11.18)。最后一个迹恒等式由 Hilbert–Schmidt 伴随的定义及参考系统偏迹直接得到。同一输入输出载体时，亦可应用 [FiniteKrausInstrumentBornMarginal](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean) 的 finite_kraus_instrument_born_marginal；本节允许不同 $Q_0,Q_t$ 的情形由上述直接计算承担。式(11.19)由各相邻比值望远镜相乘得到。条件概率依赖同一前缀的条件态与动作，不能由该式换为无条件边缘的乘积。$\square$
+

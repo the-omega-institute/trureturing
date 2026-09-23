@@ -1,0 +1,15 @@
+**theorem 44.12 (Continuous observer rigidity for variable divisors).** Let $Y$ be Hausdorff, and let $f:K^2\to Y$ and $g:K^2\to Y$ be continuous. If
+$$
+f(Z(a),Z(b))
+=
+g\bigl(Z(a\operatorname{div}b),Z(a\bmod b)\bigr)
+\qquad(a\ge0,\ b\ge1),
+$$
+then $f$ and $g$ are the same constant value on their respective domains. Conversely, any common constant satisfies the identity.
+
+**Proof.** Hausdorffness makes the set
+$$
+\{(x,z,y,w)\in K^4:f(x,z)=g(y,w)\}
+$$
+closed. The given identities make it contain $\mathscr D$, whose closure is $K^4$. Thus the equality holds for every four-tuple. Fixing $(x,z)$ shows $g$ is constant, and fixing $(y,w)$ shows $f$ has that same constant value. The converse is immediate. $\square$
+

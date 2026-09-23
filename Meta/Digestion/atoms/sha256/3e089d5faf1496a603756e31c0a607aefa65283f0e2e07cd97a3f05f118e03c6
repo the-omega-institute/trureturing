@@ -1,0 +1,35 @@
+**定义 43.8（有限多项式族的单项式坐标与定向锥）。** 取 $d,r\in\mathbb N_0$，以及非负整数系数多项式
+$$
+P_1,\ldots,P_r\in\mathbb N_0[X_1,\ldots,X_d].
+$$
+令 $q=d+r$，并依次记
+$$
+R_i=X_i\quad(1\le i\le d),\qquad R_{d+j}=P_j\quad(1\le j\le r).
+$$
+设 $M\subseteq\mathbb N_0^d\setminus\{0\}$ 为这些多项式中出现的全部不同非恒定单项式的指数集，$m=|M|$。于是
+$$
+R_j(\mathbf X)=c_j+\sum_{\nu\in M}A_{j\nu}\mathbf X^\nu,
+\qquad c_j,A_{j\nu}\in\mathbb N_0.
+$$
+输入单项式 $X_i$ 包含在 $M$ 中。常数单项式不属于 $M$，其相位不作为自由坐标。置
+$$
+\mathbf b=([\phi c_j])_{j=1}^q\in\mathbb T^q,\qquad
+V_M(\mathbf n)=([\phi\mathbf n^\nu])_{\nu\in M}\in\mathbb T^m,
+$$
+$$
+\Gamma_T(P)=\overline{\{(Z(R_j(\mathbf n)))_{j=1}^q:
+\mathbf n\in\mathbb N_0^d,\ n_i\ge T\text{ 对所有 }i\}},
+\qquad \Gamma(P)=\Gamma_0(P).
+$$
+对目标 $\boldsymbol\xi=(\xi_1,\ldots,\xi_q)\in K^q$，记
+$$
+\boldsymbol\theta=(H(\xi_j))_{j=1}^q,\qquad
+I(\boldsymbol\xi)=\{j:\theta_j\in E\}.
+$$
+对 $j\in I(\boldsymbol\xi)$，以 $s_j\in\{-1,+1\}$ 表示 $\xi_j=z_{\theta_j}^{s_j}$，并定义同一个实误差空间中的严格锥
+$$
+\mathcal C(\boldsymbol\xi)=
+\{u\in\mathbb R^m:s_j(Au)_j>0\text{ 对所有 }j\in I(\boldsymbol\xi)\}.
+$$
+当 $I(\boldsymbol\xi)$ 为空时，此锥为整个 $\mathbb R^m$。零维空间 $\mathbb T^0,\mathbb R^0,K^0,\mathbb N_0^0$ 均取为单点；零变量多项式均为常数。
+

@@ -1,0 +1,76 @@
+{
+  "E3_source_upper": 0,
+  "E5_source_price": 1,
+  "profile_source_uppers": [
+    2,
+    3
+  ],
+  "retained125_cap_price": 4,
+  "retained125_source_upper": 5,
+  "combined_source_upper": 6,
+  "primitive_prices": {
+    "shallow_five_shifted_defect": 7,
+    "shallow_alpha_shifted_defect": 8,
+    "pure_deep_five_defect": 9,
+    "alpha_deep_five_defect": 10,
+    "union_overlap": 11,
+    "pure_three_27_defect": 12,
+    "pure_three_later_defect": 13
+  },
+  "remaining_residual_price": 14,
+  "common_raw_node_prices": [
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39
+  ],
+  "common_atom_fields_sha256": "$hash",
+  "triangle_vertices": [
+    {
+      "q": [
+        40,
+        41
+      ],
+      "raw_transport": 42,
+      "joint_row_error_upper": 43
+    },
+    {
+      "q": [
+        44,
+        45
+      ],
+      "raw_transport": 46,
+      "joint_row_error_upper": 47
+    },
+    {
+      "q": [
+        48,
+        49
+      ],
+      "raw_transport": 50,
+      "joint_row_error_upper": 51
+    }
+  ],
+  "joint_row_error_upper": 52
+}

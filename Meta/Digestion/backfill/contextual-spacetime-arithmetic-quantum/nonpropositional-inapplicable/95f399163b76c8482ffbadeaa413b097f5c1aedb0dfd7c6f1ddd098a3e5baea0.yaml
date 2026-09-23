@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95f399163b76c8482ffbadeaa413b097f5c1aedb0dfd7c6f1ddd098a3e5baea0
+  normalized_sha256: sha256:95f399163b76c8482ffbadeaa413b097f5c1aedb0dfd7c6f1ddd098a3e5baea0
+cas_ref: sha256:95f399163b76c8482ffbadeaa413b097f5c1aedb0dfd7c6f1ddd098a3e5baea0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子限定有限读出证书只服务于已经指定的当前任务，列出环境记录、后续动力学与关联恢复仍需另外提供的条件，属于适用范围说明，没有新增待证数学结论。
+    previous_atom_id: 0ed001510d655b8279bb173cf5444342a53da059ada134f4cc657bfa76d52f87
+    next_atom_id: d0f535dc44017f6d976e263a7ec3f8e76c601a4ac373415de32e5c6a44d3b27c

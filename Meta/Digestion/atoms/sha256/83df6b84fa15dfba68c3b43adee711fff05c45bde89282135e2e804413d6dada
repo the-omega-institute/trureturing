@@ -1,0 +1,11 @@
+**命题 44.17（全时间一致性需要共同衰减）。** 缺少共同严格衰减界 $b<1$，不能由绝对缺陷趋零推出全时间一致收敛。 固定 $h>0$，取
+$S_\varepsilon=\operatorname{diag}(e^{-\varepsilon},e^{-2\varepsilon})$，同一 $F$。虽然 $\delta\to0$，在 $t/h=1/\varepsilon$ 时，
+$$
+Fe^{-tC}F^*\to\tfrac12(e^{-1}+e^{-2}),
+\qquad e^{-tG}\to e^{-3/2},
+$$
+二者差不趋零。每个实例都有 $b_\varepsilon=e^{-\varepsilon}<1$，但模型族没有共同 $b<1$，等价地没有共同的正生成元下界 $-h^{-1}\log b$。
+在命题44.16中，$FS^2F^*=5\varepsilon^2/2$，减去 $A^2=9\varepsilon^2/4$ 得残差；$C_c=-h^{-1}(\log\varepsilon+\tfrac12\log2)$，$G=-h^{-1}\log(3\varepsilon/2)$，相减即得显示的常数。命题44.17中 $\delta=(e^{-\varepsilon}-e^{-2\varepsilon})^2/4\to0$，而 $\log((e^{-\varepsilon}+e^{-2\varepsilon})/2)=-3\varepsilon/2+O(\varepsilon^2)$，所以 $A^{1/\varepsilon}\to e^{-3/2}$。严格凸的标量指数使 $\tfrac12(e^{-1}+e^{-2})>e^{-3/2}$；这证明非零极限误差。
+
+以下命题44.18和44.19的两个反例都取固定 $F=(1,0)$、$0<\varepsilon<1/4$，且 $\delta=\varepsilon/4\to0$。
+

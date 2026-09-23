@@ -1,0 +1,31 @@
+**定理 88.6（语义反射恰为反模型存在性提升）。** $S_A,S_B$ 是语义后承闭包。在 (SC) 下，
+$$
+K_\tau^{\rm sem}(\Gamma)
+=\{\varphi\in F_A:\quad
+  \forall M\in\beta[\mathcal M_B],\quad
+  [M\models_A\Gamma\Rightarrow M\models_A\varphi]\},
+\tag{88.6a}
+$$
+从而 $S_A\le K_\tau^{\rm sem}$。以下反模型存在性提升条件
+$$
+\begin{aligned}
+\forall\Gamma\subseteq F_A,\ \forall\varphi\in F_A,\quad
+&[\exists M\in\mathcal M_A,\quad
+     M\models_A\Gamma\land M\not\models_A\varphi]\\
+&\Longrightarrow
+[\exists N\in\mathcal M_B,\quad
+     N\models_B\tau[\Gamma]\land N\not\models_B\tau(\varphi)]
+\end{aligned}
+\tag{CE}
+$$
+满足精确等价
+$$
+\mathrm{CE}
+\quad\Longleftrightarrow\quad
+K_\tau^{\rm sem}\le S_A
+\quad\Longleftrightarrow\quad
+K_\tau^{\rm sem}=S_A.
+\tag{88.6b}
+$$
+$\beta$ 对模型身份满射足以推出 CE，但 CE 不要求对每个指定源模型作同身份提升。
+

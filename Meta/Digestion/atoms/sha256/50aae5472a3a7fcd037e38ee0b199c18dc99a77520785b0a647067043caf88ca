@@ -1,0 +1,24 @@
+**定义与假设 118.1（固定核的有限时间字典）。** 固定 $0<\delta\le1/2$，沿用式 (116.1a) 的实际四态行核 $K_{\delta,d}$、方向 $d\in\{0,1\}$ 和准备态 $e_1$；实际离散参数 $\delta=1/k$、整数 $k\ge2$ 是其中的特例。[^rro118-model] 以下保持同一个 $\delta$，简写
+$$
+\lambda=1-4\delta/3,\qquad c=(1-\delta/3)/4,\qquad
+H(z)=z^2+cz+c^2,\qquad R=\frac{H(1)}{H(\lambda)},
+\qquad \pi=(1/4,1/4,1/4,1/4).
+\tag{118.1a}
+$$
+对每个方向，令 $\mathcal G_d$ 为全部有限精确表示的系数总量集合：
+$$
+\mathcal G_d=
+\left\{\sum_{t=0}^{L}|a_t|:
+L\in\mathbb Z_{\ge0},\ a\in\mathbb R^{L+1},\quad
+\sum_{t=0}^{L}a_te_1K_{\delta,d}^t=e_0\right\}.
+\tag{118.1b}
+$$
+$\mathcal G_{\rm com}$ 采用同一定义，但要求同一个 $L,a$ 同时满足两个方向的等式。另定义 $\mathcal G_d^\pi$：允许额外使用行分布 $\pi$，表示与计费分别为
+$$
+\beta\pi+\sum_{t=0}^{L}a_te_1K_{\delta,d}^t=e_0,
+\qquad |\beta|+\sum_{t=0}^{L}|a_t|,
+\qquad \beta\in\mathbb R.
+\tag{118.1c}
+$$
+$\mathcal G_{\rm com}^\pi$ 要求同一组 $L,\beta,a$ 适用于两个方向。式 (118.1c) 将 $\pi$ 作为新增的单位成本字典原子；这里只定义这份有符号表示代价，不预设可用有限等待取得这样的实际准备，也不将系数总量定义为样本成本。
+

@@ -88,7 +88,7 @@ def membership (stream request destination : String) : IO Unit := do
     let registries ← field data "registries"
     for root in ← IO.ofExcept <| registries.getObjValAs? (Array String) "seals" do
       seals := seals.push (moduleName, root)
-    for kind in ["finite", "structural"] do
+    for kind in ["finite", "structural", "bindings"] do
       for entry in ← arr registries kind do
         registrations := registrations.insert entry.compress entry
   -- Every upstream header must stay outside the downstream evidence domain.

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:94a8da17e524f2a07126f8316ce2c9c3e4a7a765dfa269a552c6a030bb7090df
+  normalized_sha256: sha256:94a8da17e524f2a07126f8316ce2c9c3e4a7a765dfa269a552c6a030bb7090df
+cas_ref: sha256:94a8da17e524f2a07126f8316ce2c9c3e4a7a765dfa269a552c6a030bb7090df
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说“全部可数历史，均可在 ZFC 中表示”，这是显式集合存在断言；探针直接使用 ZFSet.funs、ZFSet.mem_funs 及 ZFSet.sUnion、ZFSet.range 构造任意域上的函数集、全部有限历史的并和以 ZFSet.omega 为域的历史集，没有另添集合论公理，仓内无冻结 GID。
+    previous_atom_id: 2deb2f1740f40b33b6af0f3af03c321433e94adc5ad801367a6691ceb543fd44
+    next_atom_id: 99d467c146833fccea600edf7f3cf8e722c790171b4804c229893a0419ca01d6

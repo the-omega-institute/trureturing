@@ -1,0 +1,37 @@
+**Proof.** At a nonsplit sum phase, the two relations have the same unique output. At a split sum phase, Theorem 37.11 allows exactly the signs in $\mathcal S(x)$, while Assumption 18.1 allows exactly the signs in
+$$
+\mathcal S(x)\cup\mathcal S(y).
+$$
+This proves $\mathcal R_{\mathrm{op}}\subseteq\Gamma$.
+
+The inclusion also has a direct closed-graph proof that makes the permissible order of limits explicit. Fix $q\in\mathscr E$ and choose $T^{m_j}\to q$. For every fixed nonnegative integer $n$, continuity of $T^n$ gives
+$$
+(Z(n),Z(m_j),Z(n+m_j))
+\longrightarrow (Z(n),e(q),T^n(e(q))).
+$$
+The latter triple lies in $\Gamma$. Now choose $T^{n_i}\to p$. Evaluation at the fixed point $e(q)$ gives
+$$
+(Z(n_i),e(q),T^{n_i}(e(q)))
+\longrightarrow(e(p),e(q),p(e(q)))
+=(e(p),e(q),e(pq)).
+$$
+Closedness again places the limit in $\Gamma$. These are two successive valid limits with the relevant argument fixed, not a claim about jointly varying composition.
+
+Every finite-addition triple belongs to $\mathcal R_{\mathrm{op}}$, by choosing $p=T^n$ and $q=T^m$. Hence
+$$
+\Gamma\subseteq\overline{\mathcal R_{\mathrm{op}}}^{\,K^3}\subseteq\Gamma,
+$$
+proving closure equality.
+
+For strictness, the projected right-unit law gives
+$$
+x_1^+\star0_K=\{x_1^+\}.
+$$
+But $\mathcal S(0_K)=\Sigma$, so the accepted graph classification gives
+$$
+\Gamma(x_1^+,0_K)=\{x_1^+,x_1^-\}.
+$$
+The displayed missing triple follows. The associativity comparison now uses the counterexample in Theorem 37.12 and the already established associativity theorem for $\Gamma$; it is not inferred from closure.
+
+Finally, if $F$ were continuous, its image $\mathcal R_{\mathrm{op}}$ would be compact, since $\mathscr E^2$ is compact. It would then be closed in the Hausdorff space $K^3$, contradicting strictness and closure equality. Thus $F$ is not continuous. $\square$
+

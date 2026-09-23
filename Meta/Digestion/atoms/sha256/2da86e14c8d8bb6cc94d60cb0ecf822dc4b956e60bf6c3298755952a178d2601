@@ -1,0 +1,45 @@
+### 49.13 尾量的稳定性、孤立点与径向跳跃
+
+对任意两个加权有界数组，三角不等式给
+$\tau_N(T)\le\tau_N(S)+\|T-S\|_\rho$。令 $N\to\infty$ 并交换 $T,S$，得到
+$$
+\boxed{|L_\rho(T)-L_\rho(S)|\le\|T-S\|_\rho.}
+\tag{49.44}
+$$
+因此每个相位数组与每个非相位实际数组的距离至少为 $c_A$。不同相位之间已有（49.39）的 $\sqrt3c_A$ 下界，所以每个相位数组在整个实际像中都是孤立点：以它为中心、半径严格小于 $c_A$ 的相对开球只有该点。
+
+孤立的输出点并不意味着来源乘积拓扑也将它孤立。固定相位 $\zeta$，取 $0<\varepsilon<1$，令
+$$
+a^{\varepsilon}=(1-\varepsilon)a^\zeta,
+\qquad B=(1-\varepsilon)A,
+\qquad h=A-B=\varepsilon A.
+$$
+有 $d_\Pi(a^\varepsilon,a^\zeta)=\varepsilon/2$，甚至输入的普通上确界距离也等于 $\varepsilon A$。但 $a^\varepsilon$ 相对于固定幅度合同 $A$ 是非相位来源，故（49.44）已经给输出距离至少为 $c_A$。
+
+这一特定路径的实数估计由供应接口的式（47.16）给出。令实常边界 $a_A=-A\mathbf1$、$a_B=-B\mathbf1$，则 $a^\zeta=D_\zeta a_A$、$a^\varepsilon=D_\zeta a_B$。由（49.5）的等变性及 $U_\zeta$ 的等距性，
+$$
+\|\mathcal E(a^\varepsilon)-T^\zeta\|_\rho
+=\|\mathcal E(a_B)-\mathcal E(a_A)\|_\rho
+=\sup_{k\ge0}\rho^k[u_k(A)-u_k(B)].
+$$
+最后的上确界来自第零行，其余行多一个 $\rho^n\le1$ 的因子。实估计的上界沿用其拥有者的完整证明；两个下界见证在运输后均保留：深度零给 $h$，而 $0<B<A$ 时严格单调的增长根满足 $\rho\lambda(B)<1$，所以 $\rho^ku_k(B)\to0$，目标加权幅度则趋于 $c_A$。因此把供应的实恒等式等距运输，得到
+$$
+\boxed{
+\|\mathcal E(a^\varepsilon)-T^\zeta\|_\rho
+=\max\{\varepsilon A,c_A\}.
+}
+\tag{49.45}
+$$
+特别地，当 $0<\varepsilon\le c_A/A$ 时距离恰恒为 $c_A$，没有随着输入的乘积或上确界距离趋零而趋零。
+
+因此整个连续性集合恰好为
+$$
+\boxed{
+\mathcal E:(X,\text{乘积拓扑})\to(I_A^{\mathbb F},\|\cdot\|_\rho)
+\text{ 在 }a\text{ 连续}
+\quad\Longleftrightarrow\quad a\notin\Phi_{\mathbb F}.
+}
+\tag{49.46}
+$$
+径向例证明的是自由来源域中的不连续性；不预设这些扰动在任何受额外约束的实际记录纤维中都存在。
+

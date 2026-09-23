@@ -1,0 +1,32 @@
+**theorem 24.4 (Optimal Fibonacci-step distortion and failure of a uniform-in-time budget).** Define
+$$
+r(k)=\min\{r\ge0:G_{r+1}\ge k+2\},\qquad \beta=\log_\phi2.
+$$
+For every $k\ge0$,
+$$
+\sup_{L\ge1}\bigl(\mu_k(L)-L\bigr)=\mu_k(1)-1=r(k),
+$$
+$$
+\boxed{\ C(k)=2^{r(k)}.\ }
+$$
+The supremum defining $C(k)$ is attained, and it is attained by a pair of actual finite integer expansions. More precisely, at every $L\ge1$ the witnesses of theorem 24.2 attain the ratio $2^{\mu_k(L)-L}$; taking $L=1$ attains the optimal constant.
+
+For every integer $r\ge0$, the exact plateaus are
+$$
+C(k)=2^r\quad\Longleftrightarrow\quad G_r-1\le k\le G_{r+1}-2.
+$$
+In particular $C(0)=1$, and for all $k\ge0$,
+$$
+\frac14(k+1)^\beta\le C(k)\le(k+1)^\beta.
+$$
+For all $k,h\ge0$,
+$$
+C(k+h)\le C(k)C(h),\qquad r(k+h)\le r(k)+r(h).
+$$
+Equality is not required; for example $C(4)=8<16=C(2)^2$.
+
+Each fixed $T^k$ is uniformly continuous on the compact metric space $(K,d_*)$. There is nevertheless no finite input depth that determines the first output digit uniformly over all $k$. Indeed,
+$$
+\mu_{G_m-1}(1)=m+1\qquad(m\ge0).
+$$
+The family $\{T^k:k\ge0\}$ is not equicontinuous, even at $Z(0)$, and this failure has witnesses from the finite integer core. 

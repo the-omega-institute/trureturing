@@ -1,0 +1,41 @@
+{
+  "length": 4,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/014-results/000002/item/006-closed_node_batches/000000/single.json",
+        "sha256": "7f7b4a827276f65e719abf3dfa7e45816b26969b4ea83f81311e09a5912cd954",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/014-results/000002/item/006-closed_node_batches/000001/single.json",
+        "sha256": "98cf2ff905b12c364e83ce91932f56ab10aebff4b3a9ae8b4d161d18086e1c65",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/014-results/000002/item/006-closed_node_batches/000002/single.json",
+        "sha256": "747e2af93fa9255eb46096eaa8ab34866a4bb98d8c13eccde9f8195164e20ac6",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/014-results/000002/item/006-closed_node_batches/000003/single.json",
+        "sha256": "3e9784aaad94bc8ec28ac7c237f2bfacdb70f9f69356890f74688ca37f5392f2",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

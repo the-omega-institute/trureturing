@@ -1,0 +1,7 @@
+于是全局 Hermitian 张量空间按支撑集合分解为
+
+$$
+\mathsf{Herm}_{\mathrm{global}}
+=\bigoplus_{S\subseteq\iota}\mathcal V_S.
+$$
+

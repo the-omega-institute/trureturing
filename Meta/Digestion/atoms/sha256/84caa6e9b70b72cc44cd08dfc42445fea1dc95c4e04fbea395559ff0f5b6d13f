@@ -1,0 +1,58 @@
+**定义与假设 85.1（共同观察信道与正支撑后验）。** 设 $J,I,Z$ 为有限非空集合，$r:J\to I$ 满射，$q\in\Delta(J)$ 严格正，$d\in\Delta(J)$ 任意，允许 $d$ 有零坐标。沿用定义与假设 74.1 的粗化 $C$、参考重建 $B$ 及 $E=BC$，记
+$$
+p=Cq,\qquad a=Cd,\qquad
+p_i=\sum_{r(j)=i}q_j>0,\qquad
+a_i=\sum_{r(j)=i}d_j.
+$$
+对非负质量 $u\ll v$，使用定理 73.3 的自然对数与正支撑约定
+$$
+D(u\Vert v)=\sum_{x:u_x>0}u_x\ln\frac{u_x}{v_x},\qquad
+u\ll v\ \Longleftrightarrow\ \forall x\ (v_x=0\Rightarrow u_x=0),
+$$
+并将指定参考与分区的缺陷写为
+$$
+\delta_{q,r}(d)=D(d\Vert Ed).
+$$
+
+给定在两份先验下共同使用的非负行随机观察信道
+$$
+K(z\mid j)\ge0,\qquad
+\sum_{z\in Z}K(z\mid j)=1\quad(j\in J).
+$$
+定义粗标签与观察结果的联合质量及结果边缘
+$$
+m_{iz}=\sum_{r(j)=i}d_jK(z\mid j),\qquad
+n_{iz}=\sum_{r(j)=i}q_jK(z\mid j),\qquad
+b_z=\sum_i m_{iz},\qquad c_z=\sum_i n_{iz}.
+$$
+参考纤维中的结果条件律对每个 $i\in I$ 定义为
+$$
+\kappa_i^q(z)=\frac{n_{iz}}{p_i};
+$$
+实际条件律只在 $a_i>0$ 时定义为
+$$
+\kappa_i^d(z)=\frac{m_{iz}}{a_i}.
+$$
+
+对每个 $c_z>0$，定义活载体、限制后的满射及参考后验
+$$
+J_z=\{j\in J:K(z\mid j)>0\},\qquad
+I_z=r(J_z)=\{i\in I:n_{iz}>0\},\qquad
+r_z=r|_{J_z}:J_z\to I_z,
+$$
+$$
+(q_z)_j=\frac{q_jK(z\mid j)}{c_z}\quad(j\in J_z).
+$$
+在这些载体上置
+$$
+(C_z)_{ij}=\mathbf1_{r(j)=i},\qquad
+(B_z)_{ji}=\mathbf1_{r(j)=i}\frac{q_jK(z\mid j)}{n_{iz}},\qquad
+E_z=B_zC_z. \tag{85.1}
+$$
+因为 $(C_zq_z)_i=n_{iz}/c_z$，$B_z$ 正是 $q_z$ 的纤维条件核；这也与定理 84.3 取似然 $\ell_j=K(z\mid j)$ 后在 $J_z,I_z$ 上的限制相同。只有在 $b_z>0$ 时才定义实际后验及其缺陷
+$$
+(d_z)_j=\frac{d_jK(z\mid j)}{b_z}\quad(j\in J_z),\qquad
+\delta_{q_z,r_z}(d_z)=D(d_z\Vert E_zd_z).
+$$
+下证给出 $b_z>0\Rightarrow c_z>0$ 及各归一化条件。$q_z$ 的严格正性只指载体 $J_z$；在整个 $J$ 上作零延拓后不要求严格正。若 $b_z=0<c_z$，参考后验仍存在，实际 Bayes 后验无定义，后验缺陷的加权和省去这个结果。若 $c_z=0$，则 $J_z$ 为空且 $b_z=0$，不使用任何该结果的后验。
+

@@ -1,0 +1,32 @@
+{
+  "length": 46,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 16,
+      "part": {
+        "path": "content/011-uniform_at103_bounded/006-cost_rows/000000-000016.json",
+        "sha256": "fbabd555c9180811e1df6fce4c7d103efa7c56649e7a8afbe66907569e0898e0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 16,
+      "stop": 32,
+      "part": {
+        "path": "content/011-uniform_at103_bounded/006-cost_rows/000016-000032.json",
+        "sha256": "42ec08ee0e91e6a05b095c13d102c27b6bc4325c4f62464623470361ff0fafd0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 32,
+      "stop": 46,
+      "part": {
+        "path": "content/011-uniform_at103_bounded/006-cost_rows/000032-000046.json",
+        "sha256": "efa2b05750a0f7c472a241674aec4159583f88e2981ff61a41d3c19e638f5d6c",
+        "kind": "value"
+      }
+    }
+  ]
+}

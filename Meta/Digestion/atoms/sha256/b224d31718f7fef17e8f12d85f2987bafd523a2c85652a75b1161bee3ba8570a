@@ -1,0 +1,20 @@
+**定义 29.1（两步加权目标与保留活动系统的放宽）。** 在定义 28.1 的两步任务中，显式写出参数
+
+$$
+W_2(c;e,g),
+\qquad 0\le c,e\le1,\quad 0\le g\le\frac12,
+$$
+
+其中 $e=\beta_1$、$g=\beta_2$。共同输入、惰性参考、共同历史依赖系统 CPTP 控制和末端部分迹的约定均不变。令
+
+$$
+a=1-g,\qquad z=1-2g,
+\qquad K_i=\sqrt{1-e}\,P_i+\sqrt e\,P_{1-i}.
+$$
+
+定义系统退极化通道
+
+$$
+\mathcal D_g(\sigma)=z\sigma+g\operatorname{tr}(\sigma)I_S.
+$$
+

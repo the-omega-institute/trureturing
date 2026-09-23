@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:90bcf072ae3b3f42223193426600a58d30502579d35588dc9ea7c6ba38aa4d9b
+  normalized_sha256: sha256:90bcf072ae3b3f42223193426600a58d30502579d35588dc9ea7c6ba38aa4d9b
+cas_ref: sha256:90bcf072ae3b3f42223193426600a58d30502579d35588dc9ea7c6ba38aa4d9b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “35.2 全称像条件的有限段化”读作“39.2”只消除章节错引，未给出有限段化定理；该句没有从定义推出条件的主张，故无需证明。
+    previous_atom_id: 26373f3df2b9940dbbb7668e1cace79206a82c1e8376499c9a879a200e650e45
+    next_atom_id: 2b8f4d61f668ba36bd8795cab0895e7a7b82297c789000355615d7b50c6226b0

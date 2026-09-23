@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "b434f558aaf12497ac916037b2615a4d6be363a0490b85b5db2cd049912e0033",
+  "parts_directory": "adaptive_phase_fixed_orders_verification.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "f9fe7e8c83aded25dea3ae7a090c2244f60ee27ba9562cdef8b4a9505e06708e",
+    "kind": "object"
+  }
+}

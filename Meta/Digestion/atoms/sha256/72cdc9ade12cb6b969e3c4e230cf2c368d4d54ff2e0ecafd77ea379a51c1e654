@@ -1,0 +1,17 @@
+**定义 11.5（因果梳与实际记忆接线）。** 固定 $n\ge1$。第 $k$ 轮先接收 $A_k$、再输出 $B_k$，之后才进入第 $k+1$ 轮；实验者可以根据先前输出及其保留记忆制备后续输入。令
+$$
+\mathcal H_k=A_1'\otimes B_1\otimes\cdots\otimes A_k'\otimes B_k,
+\qquad\mathcal H_0=\mathbb C.
+\tag{11.8}
+$$
+确定性因果梳由正算子 $R^{(k)}\in\mathcal L(\mathcal H_k)$ 给出，满足
+$$
+R^{(0)}=1,\qquad
+\operatorname{Tr}_{B_k}R^{(k)}=R^{(k-1)}\otimes I_{A_k'}
+\quad(1\le k\le n).
+\tag{11.9}
+$$
+右侧次序为 $\mathcal H_{k-1}\otimes A_k'$。从末时刻向前排列时，同一条件写为 $I_{A_k'}\otimes R^{(k-1)}$，两种写法以固定因子置换对应。
+
+顺序网络的 Choi 算子指：将网络视作从 $\bigotimes_kA_k$ 到 $\bigotimes_kB_k$ 的多部件通道，按式(11.2)取 Choi 算子，再排成式(11.8)。实际环境若跨两步回流，就作为同一个内部记忆接线；用两个约化系统通道替代该接线，须另有约化闭合等式。因果梳的时域 $n$、内部记忆实现和实验者可接入的端口分别作为数据；固定有限时域的记忆实现不附带跨全部时域的统一维数合同。
+

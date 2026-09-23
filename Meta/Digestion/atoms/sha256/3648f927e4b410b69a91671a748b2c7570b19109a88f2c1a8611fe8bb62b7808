@@ -1,0 +1,5 @@
+The three-input relation retaining a common list of operator witnesses is
+$$
+\mathcal W_3(x,y,z)
+=\{e(pqr):e(p)=x,\ e(q)=y,\ e(r)=z\}.
+$$

@@ -1,0 +1,34 @@
+**命题 85.3（严格正先验下单次结果可使缺陷加倍）。** 取
+$$
+J=\{1,2,3\},\qquad I=\{*\},\qquad r(j)=*,\qquad Z=\{A,B\},
+$$
+$$
+q=\left(\frac14,\frac14,\frac12\right)^{\mathsf T},\qquad
+d=\left(\frac9{20},\frac1{20},\frac12\right)^{\mathsf T},
+$$
+并令确定观察满足
+$$
+K(A\mid1)=K(A\mid2)=K(B\mid3)=1,
+$$
+其余条目为零。两先验均严格正，真实与参考结果律都为 $(1/2,1/2)$，条件证据差异 $\mathcal G=0$。置
+$$
+A_\star
+=D\!\left((9/10,1/10)\Vert(1/2,1/2)\right)
+=\frac9{10}\ln\frac95+\frac1{10}\ln\frac15>0.
+$$
+则
+$$
+\boxed{
+\delta_{q,r}(d)=\frac12A_\star,\qquad
+\delta_{q_A,r_A}(d_A)=A_\star,\qquad
+\delta_{q_B,r_B}(d_B)=0,
+} \tag{85.8}
+$$
+且
+$$
+\sum_{z\in\{A,B\}}b_z\delta_{q_z,r_z}(d_z)
+=\frac12A_\star=\delta_{q,r}(d).
+$$
+因此式 (85.3) 不能加强成每个正概率结果上的无权不增。它仍由式 (85.2) 保证逐结果的加权界
+$b_z\delta_{q_z,r_z}(d_z)\le\delta_{q,r}(d)$；本例的结果 $A$ 达到该界。
+
