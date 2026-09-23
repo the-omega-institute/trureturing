@@ -5,16 +5,19 @@
     <AssemblyName>StrataLint</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
-    <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />
-    <ProjectReference Include="../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <PackageReference Include="Tomlyn" />
     <PackageReference Include="YamlDotNet" />
-    <!-- BannedSymbols.Guid.txt is intentionally excluded because the CLI creates
-         ephemeral workspace names. -->
     <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj" />
+    <ProjectReference Include="../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj" />
+    <ProjectReference Include="../StrataLint.Lean/StrataLint.Lean.csproj" />
+    <ProjectReference Include="../StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj" />
+    <ProjectReference Include="../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj" />
+    <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />
   </ItemGroup>
 </Project>

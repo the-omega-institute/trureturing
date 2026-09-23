@@ -1,3 +1,4 @@
+using static StrataLint.TestSupport.InformationTemplateFixture;
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
@@ -15,25 +16,6 @@ public sealed class DeclaredTemplateReviewTests
     internal const string Judge = "tools/lean-inspector/LeanInformationAudit/Registry/Assessment.lean";
     private const string Module = "D5.S0.Carrier.Registration";
     private const string TargetModule = "D5.S0.Carrier.Target";
-    internal static Dictionary<string, string> PolicyFiles() => new(StringComparer.Ordinal)
-    {
-        ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
-        ["lake-manifest.json"] = "{\"packages\":[]}",
-        ["lean-report-inputs.json"] = """
-            {"schema_version":1,"report_cache_release_semantic_version":9,
-             "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
-             "inspector_sources":{"include":[],"exclude":[]},
-             "dependency_sources":{"include":[],"exclude":[]},
-             "config_inputs":{"include":[],"exclude":[]},"producer_scopes":{}}
-            """,
-    };
-
-    internal static int ManifestVersion(Dictionary<string, string> files)
-    {
-        using var manifest = JsonDocument.Parse(files["lean-report-inputs.json"]);
-        return manifest.RootElement.GetProperty("report_cache_release_semantic_version").GetInt32();
-    }
-
     internal static Dictionary<string, string> Files()
     {
         var files = PolicyFiles();
@@ -84,8 +66,8 @@ public sealed class DeclaredTemplateReviewTests
                         + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
                         + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
                         + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}",
-                    escape_from = DeclaredTemplateEscapeRecordTests.FromSlot,
-                    escape_continues = DeclaredTemplateEscapeRecordTests.OpenSlot, bridge_kind = "legacy",
+                    escape_from = InformationTemplateFixture.FromSlot,
+                    escape_continues = InformationTemplateFixture.OpenSlot, bridge_kind = "legacy",
                     unit_name = key.Theorem + ".unit", realization_name = key.Theorem + ".realization",
                     certificate = declared ? new
                     {

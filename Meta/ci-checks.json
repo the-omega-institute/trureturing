@@ -191,7 +191,7 @@
           "Directory.Packages.props",
           "tools/StrataLint.Scribe/**",
           "tools/StrataLint.Scribe.Documents/**",
-          "tools/StrataLint.EngineeringScope/MarkdownInspectionScope.cs"
+          "tools/StrataLint.InspectionScope/MarkdownInspectionScope.cs"
         ],
         "changed_inputs": [
           "Blueprint/**/*.md",
@@ -218,7 +218,7 @@
           "Meta/registry.yaml",
           "Meta/domains.yaml",
           "tools/StrataLint.Cli/Commands/FileMap/**",
-          "tools/StrataLint.EngineeringScope/FileMapInspectionScope.cs",
+          "tools/StrataLint.InspectionScope/FileMapInspectionScope.cs",
           "tools/StrataLint.Scribe/FileMap/**",
           "tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs"
         ],
