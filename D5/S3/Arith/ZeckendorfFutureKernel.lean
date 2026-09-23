@@ -56,7 +56,8 @@ private lemma legal_append (w w' : List Bool) (b : Bool) :
     legal b (w ++ w') ↔ legal b w ∧ legal (flag b w) w' := by
   induction w generalizing b with
   | nil => simp [legal, flag]
-  | cons c w ih => simp only [List.cons_append, legal, flag, ih, and_assoc]
+  | cons c w ih =>
+      simp only [List.cons_append, legal, flag, List.foldl_cons, ih, and_assoc]
 
 private lemma zero_facts {R : Type*} [AddMonoid R] (n : ℕ) :
     (∀ u v : R, value u v (zeros n) = 0) ∧
@@ -73,7 +74,7 @@ private lemma zero_facts {R : Type*} [AddMonoid R] (n : ℕ) :
     · intro b
       simpa [zeros, List.replicate_succ, legal] using ih.2.1 false
     · intro b
-      simpa only [zeros, List.replicate_succ, flag] using ih.2.2 false
+      simpa only [zeros, List.replicate_succ, flag, List.foldl_cons] using ih.2.2 false
 
 /-- The only general-purpose queries in the proof are explicitly constructed
 legal words. The period premise is the literal Fibonacci return pair in the
