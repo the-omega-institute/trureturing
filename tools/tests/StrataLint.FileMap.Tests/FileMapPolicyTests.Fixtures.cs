@@ -15,7 +15,7 @@ public sealed partial class FileMapPolicyTests
     public void MissingReviewScaffoldIgnoreIsRejectedByTheRedFixture()
     {
         var finding = Assert.Single(FileMapPolicy.InspectGitIgnore(
-            ["/Generated/echo-residuals/", ".caller-review-prompt.md", ".echo-review.md"]));
+            ["/Generated/echo-residuals/", ".caller-review-prompt.md", ".echo-review.md", ".sshx-*"]));
 
         Assert.Equal("FILEMAP-GITIGNORE", finding.Code);
         Assert.Equal(".gitignore", finding.Path);
