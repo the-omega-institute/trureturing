@@ -48,7 +48,10 @@ private theorem sum_row_units (v : b) :
   simp only [Matrix.conjTranspose_single, star_one,
     Matrix.single_mul_single_same, one_mul]
   ext i k
-  simp [Matrix.sum_apply, Matrix.single, Matrix.one_apply]
+  by_cases h : i = k
+  · subst k
+    simp [Matrix.sum_apply, Matrix.single, Matrix.one_apply]
+  · simp [Matrix.sum_apply, Matrix.single, Matrix.one_apply, h]
 
 /-- All discarded rows contribute their exact input effect. -/
 theorem row_reset_gram (v : b) (B : Matrix c a ℂ) :
