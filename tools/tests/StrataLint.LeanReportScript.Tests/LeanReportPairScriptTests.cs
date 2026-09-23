@@ -10,6 +10,7 @@ public sealed class LeanReportPairScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
+        // Preserve the producer failure as part of the script interface contract.
         var producer = Path.Combine(temporary.Path, "producer");
         File.WriteAllText(producer, "#!/bin/sh\nprintf '%s\\n' \"$LAKE_BIN\" \"$@\"\nexit 71\n");
         File.SetUnixFileMode(producer, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
