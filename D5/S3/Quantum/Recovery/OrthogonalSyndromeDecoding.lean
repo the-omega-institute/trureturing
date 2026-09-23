@@ -18,7 +18,7 @@ Phys. Rev. A 55 (1997) 900, doi:10.1103/PhysRevA.55.900.
 -/
 
 noncomputable section
-open scoped BigOperators
+open scoped Matrix BigOperators
 
 namespace D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
 
