@@ -77,7 +77,7 @@ internal sealed class CarlitzFiveCharacteristicDocument : IScribeDocumentDefinit
         var support = Mul(Mul(Mul(Mul(D(8),D(2,5)),D(1,9)),D(2,6,3)),
             D(5,1,9,5,5,5,8,0,5,8,0,9,2,6,6,0,1,1));
         var conclusion = new Formula.Relation(V("p"),FormulaRelationOperator.Divides,support);
-        var characteristic = And(C("CharP",V("K"),V("p")),C("Nat.Prime",V("p")));
+        var characteristic = And(C("CharP",V("K"),V("p")),C("NatPrime",V("p")));
         return Disp(All("K",C("Type"),Implies(C("Field",V("K")),
             All("p",Seq(Mathbb,Grp(V("N"))),Implies(characteristic,
                 All("sigma",C("RingHom",V("K"),V("K")),
