@@ -6,7 +6,20 @@ open Lake DSL System
 open Lean (Json)
 
 package leanInspector where
+  packagesDir := "../../.lake/packages"
   buildDir := "../../.lake/build/lean-inspector/producer"
+  leanOptions := #[⟨`pp.unicode.fun, true⟩, ⟨`relaxedAutoImplicit, false⟩,
+    ⟨`weak.linter.mathlibStandardSet, true⟩, ⟨`maxSynthPendingDepth, 3⟩]
+
+require trureturing from "../.."
+require leanInspectorInterface from "../lean-inspector-interface"
+
+@[default_target]
+lean_lib LeanInformationAudit where
+  globs := #[.submodules `LeanInformationAudit]
+
+lean_lib LeanInformationAuditAnalysis where
+  globs := #[.submodules `LeanInformationAuditAnalysis]
 
 target nativeImage pkg : FilePath := do
   buildLeanO (pkg.buildDir / "c" / "native_image.o")

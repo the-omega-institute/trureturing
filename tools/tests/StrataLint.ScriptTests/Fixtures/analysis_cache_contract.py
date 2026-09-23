@@ -105,7 +105,7 @@ mkdir -p "$1/output"
                     for line in result.stdout.splitlines() if line.startswith("LEAN_CACHE ")]
         self.assertEqual(3, len(receipts), result.stdout)
         self.assertEqual(archive_status, receipts[0]["archive_status"])
-        self.assertEqual(["build LeanInformationAuditAnalysis",
+        self.assertEqual([f"-d {self.root.resolve()}/tools/lean-inspector build LeanInformationAuditAnalysis",
                           f"-d {self.root.resolve()}/Reg build @reg/LeanInformationAuditRegAnalysis"],
                          [line for line in (self.root / "lake-runs").read_text().splitlines()
                           if line != "exe cache get"])
@@ -140,7 +140,8 @@ mkdir -p "$1/output"
         ], producer_calls)
         self.assertEqual([
             {"args": ["exe", "cache", "get"], "budget": "300"},
-            {"args": ["build", "LeanInformationAuditAnalysis"], "budget": production_budget},
+            {"args": ["-d", str(self.root.resolve() / "tools/lean-inspector"), "build",
+                      "LeanInformationAuditAnalysis"], "budget": production_budget},
             {"args": ["-d", str(self.root.resolve() / "Reg"), "build",
                       "@reg/LeanInformationAuditRegAnalysis"], "budget": production_budget},
         ], lake_calls)
@@ -171,7 +172,7 @@ mkdir -p "$1/output"
         self.assertIn('"archive_status":"unpacked"', result.stdout)
         self.assertIn("ANALYSIS_FIXTURES_EXIT=2", result.stdout)
         self.assertIn("Error 19", result.stdout)
-        self.assertEqual(["exe cache get", "build LeanInformationAuditAnalysis"],
+        self.assertEqual(["exe cache get", f"-d {self.root.resolve()}/tools/lean-inspector build LeanInformationAuditAnalysis"],
                          (self.root / "lake-runs").read_text().splitlines())
         self.assertEqual([], list(self.output.iterdir()))
 
@@ -200,7 +201,7 @@ mkdir -p "$1/output"
 
     def test_production_scope_uses_reg_and_only_clears_its_export_trace(self):
         self.prepare()
-        generic = self.root / ".lake/build/lib/lean/LeanInformationAuditAnalysis/CausalProjection.trace"
+        generic = self.root / ".lake/build/lean-inspector/producer/lib/lean/LeanInformationAuditAnalysis/CausalProjection.trace"
         production = self.root / ".lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace"
         write(generic, "generic trace")
         write(production, "production trace")
@@ -224,7 +225,7 @@ mkdir -p "$1/output"
 
     def test_generic_scope_preserves_production_trace(self):
         self.prepare()
-        generic = self.root / ".lake/build/lib/lean/LeanInformationAuditAnalysis/CausalProjection.trace"
+        generic = self.root / ".lake/build/lean-inspector/producer/lib/lean/LeanInformationAuditAnalysis/CausalProjection.trace"
         production = self.root / ".lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace"
         write(generic, "generic trace")
         write(production, "production trace")
@@ -232,7 +233,7 @@ mkdir -p "$1/output"
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertFalse(generic.exists())
         self.assertEqual("production trace", production.read_text())
-        self.assertEqual(["build LeanInformationAuditAnalysis"],
+        self.assertEqual([f"-d {self.root.resolve()}/tools/lean-inspector build LeanInformationAuditAnalysis"],
                          [line for line in (self.root / "lake-runs").read_text().splitlines()
                           if line != "exe cache get"])
         self.assertEqual({"causal-analysis.json", "causal-analysis.txt", "bounded-analysis.json", "bounded-analysis.txt"},
@@ -264,7 +265,7 @@ with (root / "lake-environment.jsonl").open("a") as observed:
 if args == ["exe", "cache", "get"]:
     (root / ".lake/packages").mkdir(parents=True, exist_ok=True)
     sys.exit(int(os.environ.get("ANALYSIS_DEPENDENCY_EXIT", "0")))
-if args == ["build", "LeanInformationAuditAnalysis"]:
+if args == ["-d", str(root / "tools/lean-inspector"), "build", "LeanInformationAuditAnalysis"]:
     artifacts = ("causal-analysis.json", "causal-analysis.txt", "bounded-analysis.json", "bounded-analysis.txt")
 else:
     assert args == ["-d", str(root / "Reg"), "build", "@reg/LeanInformationAuditRegAnalysis"], args
