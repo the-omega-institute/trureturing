@@ -194,16 +194,6 @@
           "xunit": "[2.9.3, )"
         }
       },
-      "stratalint.declaredtemplatetestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
-          "StrataLint.RuleTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
       "stratalint.digestiontestsupport": {
         "type": "Project",
         "dependencies": {
@@ -252,12 +242,6 @@
         "type": "Project",
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )"
-        }
-      },
-      "stratalint.leantestsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.TestSupport": "[1.0.0, )"
         }
       },
       "stratalint.processtestsupport": {

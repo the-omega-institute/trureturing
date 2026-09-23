@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
 internal static partial class CoverWorld
 {
