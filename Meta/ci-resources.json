@@ -134,6 +134,8 @@
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
         "tools/tests/StrataLint.BuildIntegration.Tests/StrataLint.BuildIntegration.Tests.csproj",
         "tools/tests/StrataLint.BuildRuntime.Tests/StrataLint.BuildRuntime.Tests.csproj",
+        "tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj",
+        "tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj",
         "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
         "tools/tests/StrataLint.CheckIntegration.Tests/StrataLint.CheckIntegration.Tests.csproj",
         "tools/tests/StrataLint.CiArtifacts.Tests/StrataLint.CiArtifacts.Tests.csproj",
@@ -141,6 +143,7 @@
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
         "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
         "tools/tests/StrataLint.ExecutionEvidence.Tests/StrataLint.ExecutionEvidence.Tests.csproj",
+        "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj",
         "tools/tests/StrataLint.InspectionIntegration.Tests/StrataLint.InspectionIntegration.Tests.csproj",
         "tools/tests/StrataLint.InspectionScope.Tests/StrataLint.InspectionScope.Tests.csproj",
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
@@ -269,6 +272,22 @@
       "steps": []
     },
     {
+      "id": "test-cache-native",
+      "projects": [
+        "tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-cache-release",
+      "projects": [
+        "tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "test-check-integration",
       "projects": [
         "tools/tests/StrataLint.CheckIntegration.Tests/StrataLint.CheckIntegration.Tests.csproj"
@@ -320,6 +339,14 @@
       "id": "test-execution-evidence",
       "projects": [
         "tools/tests/StrataLint.ExecutionEvidence.Tests/StrataLint.ExecutionEvidence.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-header-script",
+      "projects": [
+        "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj"
       ],
       "checks": [],
       "steps": []
