@@ -58,7 +58,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
     [Fact]
     public void new_theorem_requires_four_slots()
     {
-        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "old"));
+        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "mirror"), "old"));
         Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
             && f.Effect == AdmissionEffect.Observe), "[FAIL] new_theorem_requires_four_slots");
     }
@@ -66,7 +66,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
     [Fact]
     public void one_four_slot_registration_covers_theorem()
     {
-        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "full"));
+        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "mirror"), "full"));
         Assert.True(findings.Length == 1 && findings[0].Effect == AdmissionEffect.Observe
             && findings[0].Message.Contains("escape_from=", StringComparison.Ordinal)
             && findings[0].Message.Contains("escape_continues=", StringComparison.Ordinal)
@@ -77,7 +77,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
     [Fact]
     public void two_arenas_allow_two_registrations()
     {
-        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "two"));
+        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "mirror"), "two"));
         Assert.True(findings.Length == 2 && findings.All(f => f.Message.StartsWith("DTR-Declared ", StringComparison.Ordinal)
             && f.Effect == AdmissionEffect.Observe), "[FAIL] two_arenas_allow_two_registrations");
     }
@@ -85,7 +85,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
     [Fact]
     public void malformed_escape_evidence_blocks()
     {
-        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "inline"), "malformed"));
+        var findings = DeclaredTemplateBindingRule.Evaluate(Slots(DeclaredTemplateUnregisteredTests.Build(binding: "mirror"), "malformed"));
         Assert.True(findings.Any(f => f.Message.StartsWith("DTR-Evidence ", StringComparison.Ordinal)
             && f.Effect == AdmissionEffect.Observe), "[FAIL] malformed_escape_evidence_blocks");
     }
@@ -97,7 +97,7 @@ public sealed class DeclaredTemplateEscapeRecordTests
     public void bridge_vocabulary_preserves_declared_verdict(string kind)
     {
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(
-            DeclaredTemplateUnregisteredTests.Build(binding: "inline"), kind));
+            DeclaredTemplateUnregisteredTests.Build(binding: "mirror"), kind));
         var finding = Assert.Single(findings);
         Assert.Equal(AdmissionEffect.Observe, finding.Effect);
         Assert.Contains("bridge_kind=" + kind, finding.Message, StringComparison.Ordinal);

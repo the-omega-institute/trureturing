@@ -119,7 +119,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.Registry'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'mapped.spool.json'
@@ -166,7 +166,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.Registry'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'driver.spool.json'
@@ -212,7 +212,8 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
                              if json.loads(line)['kind'] == 'extract'), 0)
         self.publish()
     def test_native_clonefile_seed_reuses_rows_and_keeps_donor_private(self):
-        self.build()
+        self.reg_package()
+        self.build_reg_report()
         donor = self.root
         expected = self.report()[1:]
         origins = self.origins()
@@ -303,12 +304,13 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
 
     def release_fixture(self):
         """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
+        self.reg_package()
         for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
             self.copy('tools/scripts/worktree/' + name)
         self.copy('tools/scripts/workflow/ci_plan.py')
         self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
             resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[],
-                            lean_targets=['Audit', 'leanInspector/reportInspector'])])))
+                            lean_targets=['leanInspector/reportInspector', 'trureturing/Audit'])])))
         self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
         self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_SHA='a' * 40,
             GITHUB_RUN_ID='4242', GITHUB_RUN_ATTEMPT='1', GITHUB_EVENT_NAME='schedule',
