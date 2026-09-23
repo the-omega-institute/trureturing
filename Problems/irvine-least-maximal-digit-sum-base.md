@@ -58,7 +58,8 @@ or `b = 3` with `q < b` would force `n ≤ 8`; then `2 * s_b(n) ≤ 2 * r + 2 * 
 `n`, and these are exactly the bases below `b0`; step one covers the bases from `b0` up to `n - 1`.
 So `b0` attains the maximum and every smaller base falls strictly short.
 
-The content sits in steps two and three; step one is the two-digit expansion.
+Every step is elementary: the one-step digit expansion, the bound of a digit sum by its argument,
+a case split on the base, and integer arithmetic.
 
 ## Falsifier
 

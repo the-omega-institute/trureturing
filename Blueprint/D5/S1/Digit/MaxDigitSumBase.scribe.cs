@@ -30,11 +30,11 @@ internal sealed class MaxDigitSumBaseDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("the-conjecture", "The conjecture", "claim", ClaimFormula(),
                 "The source asserts that for every number above eight the least maximizing base is "
-                    + "the ceiling of the number plus one, halved. At eight the assertion fails, "
+                    + "the ceiling of the quotient of the number plus one by two. At eight the assertion fails, "
                     + "since bases three and five both give digit sum four.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("the-conjecture-holds", "The conjecture holds", "result", ResultFormula(),
-                "The ceiling of the number plus one, halved, is the least base exceeding half of the "
+                "The ceiling of the quotient of the number plus one by two is the least base exceeding half of the "
                     + "number. For a base above half and below the number, the number has exactly "
                     + "two digits, one and the number minus the base, so its digit sum is the number "
                     + "minus the base plus one; this is largest at the least such base, where it "

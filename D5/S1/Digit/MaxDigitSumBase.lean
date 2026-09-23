@@ -26,49 +26,6 @@ def IsLeastMaxDigitSumBase (n b : ℕ) : Prop :=
     (∀ c, 1 < c → c < n → digitSum c n ≤ digitSum b n) ∧
     ∀ c, 1 < c → c < b → digitSum c n < digitSum b n
 
-/-- A quotient that is at least the base loses at least `b - 1` to its digit sum. -/
-private theorem digitSum_add_le {b q : ℕ} (hb : 1 < b) (hq : b ≤ q) :
-    digitSum b q + (b - 1) ≤ q := by
-  have hstep : digitSum b q = q % b + digitSum b (q / b) := by
-    simp [digitSum, Nat.digits_def' hb (show 0 < q by omega)]
-  have hle : digitSum b (q / b) ≤ q / b := Nat.digit_sum_le b (q / b)
-  have hdiv := Nat.mod_add_div q b
-  have hq1 : 1 ≤ q / b := (Nat.one_le_div_iff (by omega)).2 hq
-  have hmul : q / b + (b - 1) ≤ b * (q / b) := by
-    obtain ⟨k, hk⟩ : ∃ k, q / b = k + 1 := ⟨q / b - 1, by omega⟩
-    obtain ⟨c, rfl⟩ : ∃ c, b = c + 2 := ⟨b - 2, by omega⟩
-    rw [hk, show c + 2 - 1 = c + 1 by omega]; nlinarith
-  omega
-
-/-- Below half of `n > 8`, a base gives strictly less than half of `n`. -/
-private theorem two_mul_digitSum_lt {b n : ℕ} (hb : 1 < b) (h2b : 2 * b ≤ n) (hn : 8 < n) :
-    2 * digitSum b n < n := by
-  have hstep : digitSum b n = n % b + digitSum b (n / b) := by
-    simp [digitSum, Nat.digits_def' hb (show 0 < n by omega)]
-  have hdiv := Nat.mod_add_div n b
-  have hr := Nat.mod_lt n (show 0 < b by omega)
-  have hq2 : 2 ≤ n / b := (Nat.le_div_iff_mul_le (by omega)).2 (by linarith)
-  set q := n / b with hqdef
-  set r := n % b with hrdef
-  by_cases hbq : b ≤ q
-  · have h := digitSum_add_le hb hbq
-    have : r + 2 * q < b * q + 2 * (b - 1) := by
-      obtain ⟨c, rfl⟩ : ∃ c, b = c + 2 := ⟨b - 2, by omega⟩
-      have : r ≤ c + 1 := by omega
-      rw [show c + 2 - 1 = c + 1 by omega]
-      nlinarith
-    omega
-  · have hle : digitSum b q ≤ q := Nat.digit_sum_le b q
-    have hb4 : 4 ≤ b := by
-      by_contra hlt
-      have hb3 : b = 2 ∨ b = 3 := by omega
-      rcases hb3 with rfl | rfl <;> omega
-    have : r + 2 * q < b * q := by
-      obtain ⟨c, rfl⟩ : ∃ c, b = c + 4 := ⟨b - 4, by omega⟩
-      have : r ≤ c + 3 := by omega
-      nlinarith
-    omega
-
 /-- Irvine's conjecture for OEIS A394431, as a proposition. -/
 def claim : Prop :=
   ∀ n : ℕ, 8 < n → IsLeastMaxDigitSumBase n ⌈((n + 1 : ℕ) : ℚ) / 2⌉₊
@@ -102,17 +59,58 @@ theorem result (n : ℕ) (hn : 8 < n) :
     have h1 : digitSum c 1 = 1 := by
       simp [digitSum, Nat.digits_def' hc one_pos, Nat.mod_eq_of_lt hc, Nat.div_eq_of_lt hc]
     rw [hstep, hq, hr, h1]
+  -- A quotient at least the base loses at least `b - 1` to its digit sum.
+  have haddle : ∀ {b q : ℕ}, 1 < b → b ≤ q → digitSum b q + (b - 1) ≤ q := by
+    intro b q hb hq
+    have hstep : digitSum b q = q % b + digitSum b (q / b) := by
+      simp [digitSum, Nat.digits_def' hb (show 0 < q by omega)]
+    have hle : digitSum b (q / b) ≤ q / b := Nat.digit_sum_le b (q / b)
+    have hdiv := Nat.mod_add_div q b
+    have hq1 : 1 ≤ q / b := (Nat.one_le_div_iff (by omega)).2 hq
+    have hmul : q / b + (b - 1) ≤ b * (q / b) := by
+      obtain ⟨k, hk⟩ : ∃ k, q / b = k + 1 := ⟨q / b - 1, by omega⟩
+      obtain ⟨c, rfl⟩ : ∃ c, b = c + 2 := ⟨b - 2, by omega⟩
+      rw [hk, show c + 2 - 1 = c + 1 by omega]; nlinarith
+    omega
+  -- At a base at most half of `n > 8`, twice the digit sum is below `n`.
+  have hlt : ∀ {b : ℕ}, 1 < b → 2 * b ≤ n → 2 * digitSum b n < n := by
+    intro b hb h2b
+    have hstep : digitSum b n = n % b + digitSum b (n / b) := by
+      simp [digitSum, Nat.digits_def' hb (show 0 < n by omega)]
+    have hdiv := Nat.mod_add_div n b
+    have hr := Nat.mod_lt n (show 0 < b by omega)
+    have hq2 : 2 ≤ n / b := (Nat.le_div_iff_mul_le (by omega)).2 (by linarith)
+    set q := n / b with hqdef
+    set r := n % b with hrdef
+    by_cases hbq : b ≤ q
+    · have h := haddle hb hbq
+      have : r + 2 * q < b * q + 2 * (b - 1) := by
+        obtain ⟨c, rfl⟩ : ∃ c, b = c + 2 := ⟨b - 2, by omega⟩
+        have : r ≤ c + 1 := by omega
+        rw [show c + 2 - 1 = c + 1 by omega]
+        nlinarith
+      omega
+    · have hle : digitSum b q ≤ q := Nat.digit_sum_le b q
+      have hb4 : 4 ≤ b := by
+        by_contra hlt
+        have hb3 : b = 2 ∨ b = 3 := by omega
+        rcases hb3 with rfl | rfl <;> omega
+      have : r + 2 * q < b * q := by
+        obtain ⟨c, rfl⟩ : ∃ c, b = c + 4 := ⟨b - 4, by omega⟩
+        have : r ≤ c + 3 := by omega
+        nlinarith
+      omega
   rw [hceil]
   have hv : digitSum (n / 2 + 1) n = n - (n / 2 + 1) + 1 := hhalf _ (by omega) (by omega)
   refine ⟨by omega, by omega, ?_, ?_⟩
   · intro c hc hcn
     by_cases h2c : 2 * c ≤ n
-    · have := two_mul_digitSum_lt hc h2c hn
+    · have := hlt hc h2c
       omega
     · rw [hhalf c hcn (by omega)]
       omega
   · intro c hc hcb
-    have := two_mul_digitSum_lt hc (by omega) hn
+    have := hlt hc (by omega)
     omega
 
 end D5.S1.Digit.MaxDigitSumBase
