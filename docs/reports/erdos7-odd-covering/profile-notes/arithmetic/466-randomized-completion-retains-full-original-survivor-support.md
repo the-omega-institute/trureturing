@@ -193,7 +193,48 @@ For every target event B,
 
 Therefore averaging the unnormalized F_*nu_F preserves the same lower density c_*kappa on the full original target survivor set, as well as the upper cap, mass interval and simultaneous query inequality. Normalize only once. The displayed lower constant greater than 1/5, upper 455625 and query constant 70871/3375 all remain valid.
 
-For fewer than seven primes, pad with unused primes, perform this construction and project. The padded original survivor set is a product with the unused coordinates, so the full original lower density projects unchanged. No original phase is replaced in the final target task, and no query selects its own law. A compatible choice of target laws over separately increasing finite periods is not asserted.
+For fewer than seven primes, pad with unused primes, perform this construction and project. The padded original survivor set is a product with the unused coordinates, so the full original lower density projects unchanged. No original phase is replaced in the final target task, and no query selects its own law. These independently constructed finite-period laws need not be compatible. The following compactness argument selects a compatible family with the same bounds.
+
+## One compatible law over every finite core depth
+
+For a fixed original finite family and a fixed nonempty set P of at most seven odd core primes containing its support, the finite-period result has an ordinary compactness consequence. Let
+
+    X_P=product_(p in P) Z_p,
+
+with its product p-adic topology and Haar probability H. Write U_infinity for the inverse image of the original finite survivor set. This set is clopen. There exists one Borel probability nu on X_P such that
+
+    nu(U_infinity)=1,
+    (1/5) H|U_infinity <= nu <= 455625 H,
+    sum_(d>1, every prime divisor of d in P)
+        max_(a mod d) nu(a mod d) <=70871/3375.
+
+In particular supp(nu)=U_infinity, and its finite-period marginals satisfy the theorem above simultaneously. Here the countable sum means the supremum of its finite nonnegative partial sums. The empty core has only the trivial one-point version.
+
+To prove this, choose K0 supported on P and divisible by every original modulus, and put K_n=K0 (product_(p in P) p)^n. This is a cofinal divisibility chain among finite P-supported periods. Choose one finite-period probability mu_n from the theorem for each K_n. For n>=N, its projection to Z/K_N lies in a fixed finite-dimensional probability simplex. Repeated subsequence extraction and the diagonal argument give a single sequence along which these projections converge for every N; write nu_N for the limits.
+
+Projection is linear and continuous, so the nu_N are compatible. Because each K_N resolves the original family, projection and the finite coordinatewise limits preserve
+
+    nu_N(U_N)=1,
+    (1/5) H_KN|U_N <= nu_N <=455625 H_KN.
+
+The support condition is retained separately: the two density inequalities by themselves would not imply zero mass off U_N. Moreover R_KN is a finite sum of maxima of finitely many linear cylinder probabilities, hence continuous. Since every d|K_N also divides K_n for n>=N,
+
+    R_KN(projection of mu_n)<=R_Kn(mu_n)<=70871/3375.
+
+It follows that R_KN(nu_N)<=70871/3375. The usual extension of consistent finite probability distributions gives one Borel probability nu on the inverse limit, identified with X_P. The cylinder inequalities extend to Borel sets: each difference nu-(1/5)H|U_infinity and 455625H-nu is nonnegative on the finite cylinder algebra, hence on its generated sigma-algebra by the monotone class argument. Also nu(U_infinity)=1, since U_infinity is already a finite-level event.
+
+Every P-supported divisor divides some K_N. Thus monotone exhaustion of the nonnegative divisor sums gives the stated all-depth query bound. Every open neighbourhood of a point of U_infinity has positive Haar intersection with that clopen set, so the lower inequality gives full topological support there; the retained support condition excludes its complement.
+
+The upper density still supplies an explicit query-tail estimate. If E_p=v_p(K_N) and J_P=product_(p in P) p/(p-1), then
+
+    sum_(d supported on P, d does not divide K_N)
+        max_a nu(a mod d)
+      <=455625 sum_(d supported on P, d does not divide K_N) 1/d
+      =455625 J_P [1-product_(p in P)(1-p^(-(E_p+1)))].
+
+This tends to zero with N. It controls the discarded divisor tail for the chosen law; it does not compute that law or supply a convergence rate for the diagonal subsequence used to obtain it.
+
+This is a direct application of finite-simplex compactness and consistent-distribution extension to the uniform constants already proved. It asserts existence of one compatible choice, not that arbitrary previously chosen finite laws are compatible, and not an effective algorithm for choosing the limiting law. It does not enlarge the fixed set P, turn positive profinite measure into an integer for an infinite forbidden family, or change the finite-family quantifier of the original covering question. For a finite enlarged period, the finite extension criterion below remains the relevant one.
 
 ## Boundary
 
