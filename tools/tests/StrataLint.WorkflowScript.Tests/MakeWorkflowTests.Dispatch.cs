@@ -208,7 +208,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             [
                 "FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests",
-                "FullyQualifiedName~StrataLint.Engine.Tests.RepositoryIoAccessPolicyTests",
+                "FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests",
                 "FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests",
                 "FullyQualifiedName=StrataLint.WorkflowScript.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks",
             ],
