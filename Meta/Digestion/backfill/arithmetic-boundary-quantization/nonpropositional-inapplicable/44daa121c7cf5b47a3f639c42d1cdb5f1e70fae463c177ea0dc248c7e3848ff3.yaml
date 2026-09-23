@@ -5,6 +5,10 @@ cas_ref: sha256:44daa121c7cf5b47a3f639c42d1cdb5f1e70fae463c177ea0dc248c7e3848ff3
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: This parent contains only the section 11 heading and the generic definitions/theorems/proofs label. Neither sentence asserts an object-level proposition. Both lossless children already carry nonpropositional receipts; this receipt settles only that structural parent text.
+    previous_atom_id: f2638303e2ec5c8083edbac9c9a62444bf158d81140924505a70155e6966d769
+    next_atom_id: 1f70580349b16ea3fb2ff5ded0c95550dccd5ddcb1d1fe69ec73d4d261a397a1
   chain_atoms:
     - 557465cae39cc4ca6e670ceb714ee9e8e4177d8e17b8ebacb711367e00be5ace
     - 89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2
