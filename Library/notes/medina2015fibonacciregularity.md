@@ -307,3 +307,235 @@ is not a new WSS search bound or a proof of their absence beyond that
 range. Finite tests do not certify the hypothetical h>=2 cases, whose
 proofs retain h symbolically. No Lean, Scribe, CI, or independent review
 was performed in this written-theory continuation.
+
+## DF. A phase-preserving two-scale filter with no harmonic false-positive branch
+
+This is a written-theory continuation of HD in the SAME WSS/Wieferich
+problem family. It retains the original Fibonacci/Lucas sequences. The
+new observation combines two samplings of that sequence; it does not
+replace the golden unit by a freely chosen Hensel lift. The result removes
+the cancellation that produced the actual p=11 and p=1559 false positives.
+It is not a proof that an original WSS prime exists.
+
+### DF.1 The explicit observable and its exact depth
+
+Fix a prime p>5, epsilon=(5/p), N=p-epsilon, rho=r(p), and the actual
+h=v_p(F_rho)=v_p(F_N)>=1. For a positive integer a with a=1 modulo rho,
+put
+
+$$\mathcal H_\rho(a)=\sum_{k=1}^{\rho-1}\frac{L_{ak}}{F_{ak}},\qquad
+\mathcal D_{\rho,a}=a^2\mathcal H_\rho(1)-\mathcal H_\rho(a).$$
+
+Every denominator is a p-unit: rho dividing ak would imply rho dividing
+k because gcd(a,rho)=1. These are ordinary rational numbers in Z_(p).
+Assume additionally p does not divide a(a-1). Such a scale can always
+be chosen without knowing h or q_p:
+
+$$a=\begin{cases}2\rho+1,&\rho=p-1,\\\rho+1,&\rho\ne p-1.\end{cases}
+\tag{DF1}$$
+
+**Theorem DF1 (cubic-depth congruence and exact valuation).**
+
+$$\boxed{\mathcal D_{\rho,a}\equiv
+\frac{5a(a-1)(\rho^2-1)}{6L_\rho}F_\rho\pmod{p^{3h}}.}
+\tag{DF2}$$
+
+Consequently, with e=1 if rho=N and e=0 otherwise,
+
+$$\boxed{v_p(\mathcal D_{\rho,a})=h+e.}\tag{DF3}$$
+
+In particular, the exceptional cancellation in HD.5 has been removed
+for EVERY prime in the theorem, rather than only excluded by a second
+condition on B_rho. The observable is nonzero as a rational number.
+
+**Proof.** The rank bound gives 2<rho<=p+1 and p does not divide rho.
+It follows that v_p(rho^2-1) is one precisely at rho=N and is zero
+otherwise, as proved in HD.4. The proposed a has a=1 modulo rho;
+a-1 is either rho or2rho and is a p-unit. The only possible nonunit
+rho+1 is p, at rho=p-1, and the alternative2rho+1=2p-1 is a unit.
+Thus DF1 supplies the stated scale in every case.
+
+The proof of DF2 is given in DF.2-DF.3 below using an integral Taylor
+expansion and a torsion point only as a proof coordinate. Its displayed
+leading term has valuation h+e, because L_rho,6,5,a,a-1 are p-units.
+For h>=1 and e<=1, h+e<3h. Hence the remainder cannot change that
+valuation, proving DF3. No actual depth is replaced by one.
+
+### DF.2 Explicit elimination of the unknown quadratic coefficient
+
+Work in O_p=Z[phi] tensor Z_p, and set delta=sqrt(5) and nu=phi/psi.
+For split p this algebra is the product of two unramified local rings;
+coefficientwise p-divisibility is used throughout. Let zeta be the unique
+rho-torsion lift of nu modulo p. HD.2 proves that
+
+$$x=\nu/\zeta-1\in p^hO_p,\qquad v_p(x)=h.$$
+
+Define the actual rational function
+
+$$G_\rho(X)=\sum_{k=1}^{\rho-1}\frac{X^k+1}{X^k-1}.$$
+
+All denominators at zeta are units. Therefore G_rho(zeta(1+X)) has
+an integral power series on X in pO_p. Pairing k and rho-k gives its
+constant coefficient zero. Write its first terms as
+
+$$G_\rho(\zeta(1+X))=A X+B X^2+X^3E(X),\qquad E(X)\in O_p[[X]].$$
+
+Here the same letter B does not denote the rational sum B_rho of HD.
+It is an unknown Taylor coefficient, and no nonvanishing of it is assumed.
+The linear coefficient is known exactly:
+
+$$\boxed{A=\frac{\rho(\rho^2-1)}{12}.}\tag{DF4}$$
+
+Indeed, differentiation gives
+A=-2 sum_(k=1..rho-1) k*zeta^k/(zeta^k-1)^2.
+The unweighted term is unchanged by k -> rho-k, so its weighted sum
+is rho/2 times its unweighted sum. The exact root-of-unity identity
+in HD.2 now gives DF4. A possible middle term at even rho obeys the
+same identity.
+
+Since a=1 modulo rho, nu^a=zeta(1+x)^a. Using the integral expansion
+(1+X)^a-1=aX+a(a-1)X^2/2+X^3J_a(X), one obtains
+
+$$\boxed{
+a^2G_\rho(\zeta(1+X))-G_\rho(\zeta(1+X)^a)
+=a(a-1)A(X-X^2/2)+X^3R_a(X),\quad R_a\in O_p[[X]].
+}\tag{DF5}$$
+
+This follows by substituting into A X+B X^2: the two B terms are
++a^2 B X^2 and -a^2 B X^2 and cancel identically. The coefficient
+of X^2 that remains is -A*a(a-1)/2. Cubic and higher terms remain
+integral because every denominator has a unit constant term. In
+particular no division by a factorial divisible by p occurs.
+
+By Binet, delta*G_rho(nu^a)=H_rho(a). Thus the left side of DF5 at
+X=x is D_(rho,a)/delta. The unwanted quadratic coefficient has been
+eliminated before any arithmetic value of q_p is selected.
+
+### DF.3 Return to the fixed original Fibonacci error
+
+Put z=delta F_rho/L_rho. The norm identity makes L_rho a p-unit,
+so z belongs to p^h O_p. The exact identity is
+
+$$(1+x)^\rho=\nu^\rho=\frac{1+z}{1-z}.$$
+
+To degree two, subtract one from each side and then subtract half
+its square. The left side becomes rho(X-X^2/2) modulo X^3; the
+right side becomes2z modulo z^3. Consequently,
+
+$$\rho(x-x^2/2)\equiv2\delta F_\rho/L_\rho\pmod{p^{3h}}.
+\tag{DF6}$$
+
+This is a finite rational-function computation with unit denominators.
+An infinite logarithm or a characteristic-p substitute for O/p^2O is
+not required. Substitute DF4 and DF6 into delta times DF5. Since
+rho and delta are units and delta^2=5, the result is exactly DF2.
+The resulting congruence is between rational numbers; intersecting
+p^(3h)O_p with Q_p gives the stated Z_(p) congruence.
+
+### DF.4 A single corrected test at the original WSS threshold
+
+**Corollary DF2.** For every permitted a,
+
+$$p\text{ is WSS}\quad\Longleftrightarrow\quad
+\mathcal D_{\rho,a}\in p^{2+e}\mathbb Z_{(p)},\qquad
+ e=1_{\rho=N}.\tag{DF7}$$
+
+At maximal rank and the deterministic choice DF1,
+
+$$\boxed{\frac{\mathcal D_{N,a}}{p^2}
+\equiv-\frac53 q_p\pmod p,\qquad
+p\text{ is WSS}\Longleftrightarrow
+\mathcal D_{N,a}\equiv0\pmod{p^3}.}\tag{DF8}$$
+
+**Proof.** DF7 follows from DF3. At rho=N one has
+(rho^2-1)/p=p-2epsilon and L_rho=2epsilon modulo p. For epsilon=1,
+DF1 gives a=2p-1; for epsilon=-1 it gives a=p+2. In BOTH cases
+a(a-1)=2 modulo p. Divide DF2 by p^2. Its remainder has valuation
+at least3h-2>=1; F_N/p=q_p modulo p. The resulting coefficient is
+-5/3, a unit. This includes h>=2, when both residues vanish.
+
+**Actual false-positive repaired.** At p=11, rho=10 and a=21,
+
+$$\mathcal H_{10}(1)=602943/30940\equiv0\pmod{11^3},$$
+
+but exact rational summation gives
+
+$$\boxed{441\mathcal H_{10}(1)-\mathcal H_{10}(21)
+\equiv1210=10\cdot11^2\not\equiv0\pmod{11^3}.}\tag{DF9}$$
+
+Its valuation is exactly two, as required for the actual h_11=1.
+Likewise, at the prior false-positive prime1559, rho=1558, a=3117,
+q_p=36 and D_(rho,a)/p^2=1499 modulo p, nonzero. Neither false
+positive survives the corrected observation.
+
+The condition p not dividing a(a-1) is essential for the valuation
+claim. For example the tempting scale a=rho+1=11 at p=11 is excluded.
+It introduces an automatic index lift and does not have DF3's depth.
+The valid scale21 avoids this effect. Sampling the fixed sequence is
+not permission to identify a multiplier-produced depth with h_p.
+
+### DF.5 The repaired observable has a unique zero in the entire local ball
+
+The construction has a stronger local normal-form property. For the
+fixed torsion point zeta define, for X in pO_p,
+
+$$D_a(X)=\delta\{a^2G_\rho(\zeta(1+X))
+                  -G_\rho(\zeta(1+X)^a)\}.$$
+
+**Theorem DF3.** For all X,Y in pO_p,
+
+$$\boxed{v_p(D_a(X)-D_a(Y))=e+v_p(X-Y)\quad(X\ne Y).}\tag{DF10}$$
+
+Moreover D_a maps pO_p bijectively onto p^(e+1)O_p. Its unique zero
+is X=0, and division by p^e makes it a distance-preserving coordinate.
+This statement is componentwise in the split algebra as well.
+
+**Proof.** In DF5 put C=delta*a(a-1)*A, so v_p(C)=e and C/p^e is a
+unit in every factor. The divided difference of X-X^2/2 at X,Y is
+1-(X+Y)/2, which is one modulo p. The divided difference of
+X^3 R_a(X) has coefficients with at least two factors from X,Y;
+it therefore belongs to p^2O_p on this ball. After division by p^e,
+where e<=1, that correction belongs to pO_p. The complete divided
+difference is a unit times p^e, proving DF10.
+
+For surjectivity write X=pW. The function D_a(pW)/p^(e+1) has the
+form (C/p^e)W+pE_1(W), with integral coefficients converging on O_p.
+Its reduction is multiplication by a unit, and its derivative is the
+same unit modulo p. Every target has a unique first residue solution
+and a unique successive base-p digit solution. Completeness gives a
+unique preimage. The argument applies to each factor in the split
+case. Since D_a(0)=0, zero is the sole root. Thus the harmonic
+false-positive branch has been removed at all precisions locally,
+not merely from the two previously observed examples.
+
+### DF.6 Scope, prior art, and remaining arithmetic
+
+The same construction admits controlled higher-depth diagnostics:
+replace nu by nu^c with c=1 modulo rho. Its depth becomes
+h_c=h+v_p(c), and replace H_rho(a) by sum L_(ack)/F_(ack) and
+F_rho/L_rho in DF2 by F_(c rho)/L_(c rho). The proof is unchanged.
+These are labelled sampled subsequences; h_c>=2 is NOT evidence of
+an original WSS prime. The theorem itself retains h symbolically.
+
+Classical inputs are the Fibonacci rank/valuation theorem already
+cited in this note, root-of-unity logarithmic derivatives, and
+unit-denominator Taylor expansion. Ballot's published2015 paper,
+Lemma23 and Theorem24, supplies the nearby harmonic/Lucasnomial
+congruence context. The characteristic-zero cancellation of a quadratic
+error by two samplings is also a standard extrapolation mechanism.
+The present contribution is the explicit phase-preserving arithmetic
+construction, cubic-depth remainder, and exact all-depth exclusion of
+the prior harmonic false-positive branch. Bounded searches for Lucas
+harmonic sums with dilation, extrapolation, and the displayed scale
+combination did not establish its global priority; no first-ever or
+external-open-problem-resolution claim is made.
+
+The construction is a correct observation of the original q_p, not
+an independent theorem forcing q_p to vanish. It supplies neither an
+original WSS example nor an unbounded prime-family exclusion. Direct
+Fibonacci doubling tests q_p using O(log p) modular operations; the
+harmonic filter uses O(rho) such operations after initialization,
+with batch inversion available. No faster WSS search is asserted.
+The remaining existence obligation is still a new primewise arithmetic
+constraint or a certified prime at which the original quotient vanishes.
+No Lean/Scribe or kernel/CI status is attached to this written proof.
