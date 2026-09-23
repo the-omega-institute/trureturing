@@ -138,10 +138,11 @@ theorem sum_gram_eq_zero_iff (R : s → Matrix m d ℂ) :
   constructor
   · intro h i
     exact Matrix.conjTranspose_mul_self_eq_zero.mp
-      ((Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mp h i)
+      (congrFun ((Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mp h) i)
   · intro h
-    exact (Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mpr fun i =>
-      Matrix.conjTranspose_mul_self_eq_zero.mpr (h i)
+    apply (Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mpr
+    funext i
+    exact Matrix.conjTranspose_mul_self_eq_zero.mpr (h i)
 
 /-- A compressed normalized instrument is normalized exactly when every Kraus map has zero leakage. -/
 theorem compressed_instrument_iff (U : Matrix n d ℂ) (W : Matrix m e ℂ)
