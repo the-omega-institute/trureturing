@@ -16,10 +16,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan($"tools/tests/StrataLint.RepositoryTopology.Tests/{file}", "", mode);
-            Assert.Equal(new[] {
+            Assert.Equal(WithRepositoryContract(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 RepositoryTopologyProject,
-            }, Strings(plan["execution"]!["tests"]!));
+            }), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
     }
@@ -28,7 +28,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void RepositoryTopologyLockSelectsItsCompleteProject()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] { RepositoryTopologyProject },
+            Assert.Equal(WithRepositoryContract(new[] { RepositoryTopologyProject }),
                 Strings(Plan("tools/tests/StrataLint.RepositoryTopology.Tests/packages.lock.json", "", mode)["execution"]!["tests"]!));
     }
 
@@ -54,7 +54,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void RepositoryTopologyRealInputsSelectTheirCompleteConsumers(string path, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj"),
+            Assert.Equal(WithRepositoryContract(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
