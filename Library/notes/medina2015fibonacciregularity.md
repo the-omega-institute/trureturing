@@ -273,7 +273,7 @@ to find than the original Fibonacci quotient. The primewise joint
 arithmetic of the two sums still needs an independent estimate or an
 explicit witness. WSS existence is not declared completed.
 
-### HD.7 Sources, checks and status
+### HD.7 Sources, finite checks and scope
 
 Christian Ballot, *The Congruence of Wolstenholme for Generalized Binomial
 Coefficients Related to Lucas Sequences*, Journal of Integer Sequences
@@ -283,8 +283,8 @@ The official 22-page PDF, printed page 16, Lemma 23, supplies the related
 maximal-rank quotient-sum congruence modulo p^4; its numbering differs
 from the earlier arXiv version 1409.8629. Lemma 22 and Theorem 24 record
 related higher congruences and Lucasnomial consequences. The publication
-text and displayed formulas were read; web screenshot attempts returned
-an internal error, so successful visual rendering is not claimed.
+text and displayed formulas supply the cited comparison; no claim here
+depends on visual rendering.
 
 The valuation input remains Lengyel's theorem recorded in the original
 Medina-Rowland note above. Root-of-unity power sums, Hensel lifting and
@@ -304,9 +304,9 @@ counterexample. The two harmonic false positives in this range are 11
 and 1559. Earlier exploratory checks of B_rho modulo p^2 covered 854
 maximal-rank primes at most 20000 and gave the same two examples; this
 is not a new WSS search bound or a proof of their absence beyond that
-range. Finite tests do not certify the hypothetical h>=2 cases, whose
-proofs retain h symbolically. No Lean, Scribe, CI, or independent review
-was performed in this written-theory continuation.
+range. Finite tests do not certify the hypothetical h>=2 cases, whose proofs
+retain h symbolically. These written claims are not Lean/Scribe artifacts
+and are not kernel-certified.
 
 ## DF. A phase-preserving two-scale filter with no harmonic false-positive branch
 
@@ -351,8 +351,8 @@ condition on B_rho. The observable is nonzero as a rational number.
 **Proof.** The rank bound gives 2<rho<=p+1 and p does not divide rho.
 It follows that v_p(rho^2-1) is one precisely at rho=N and is zero
 otherwise, as proved in HD.4. The proposed a has a=1 modulo rho;
-a-1 is either rho or2rho and is a p-unit. The only possible nonunit
-rho+1 is p, at rho=p-1, and the alternative2rho+1=2p-1 is a unit.
+a-1 is either rho or 2rho and is a p-unit. The only possible nonunit
+rho+1 is p, at rho=p-1, and the alternative 2rho+1=2p-1 is a unit.
 Thus DF1 supplies the stated scale in every case.
 
 The proof of DF2 is given in DF.2-DF.3 below using an integral Taylor
@@ -420,7 +420,7 @@ $$(1+x)^\rho=\nu^\rho=\frac{1+z}{1-z}.$$
 
 To degree two, subtract one from each side and then subtract half
 its square. The left side becomes rho(X-X^2/2) modulo X^3; the
-right side becomes2z modulo z^3. Consequently,
+right side becomes 2z modulo z^3. Consequently,
 
 $$\rho(x-x^2/2)\equiv2\delta F_\rho/L_\rho\pmod{p^{3h}}.
 \tag{DF6}$$
@@ -464,14 +464,14 @@ $$\boxed{441\mathcal H_{10}(1)-\mathcal H_{10}(21)
 \equiv1210=10\cdot11^2\not\equiv0\pmod{11^3}.}\tag{DF9}$$
 
 Its valuation is exactly two, as required for the actual h_11=1.
-Likewise, at the prior false-positive prime1559, rho=1558, a=3117,
+Likewise, at the prior false-positive prime 1559, rho=1558, a=3117,
 q_p=36 and D_(rho,a)/p^2=1499 modulo p, nonzero. Neither false
 positive survives the corrected observation.
 
 The condition p not dividing a(a-1) is essential for the valuation
 claim. For example the tempting scale a=rho+1=11 at p=11 is excluded.
 It introduces an automatic index lift and does not have DF3's depth.
-The valid scale21 avoids this effect. Sampling the fixed sequence is
+The valid scale 21 avoids this effect. Sampling the fixed sequence is
 not permission to identify a multiplier-produced depth with h_p.
 
 ### DF.5 The repaired observable has a unique zero in the entire local ball
@@ -519,8 +519,8 @@ an original WSS prime. The theorem itself retains h symbolically.
 
 Classical inputs are the Fibonacci rank/valuation theorem already
 cited in this note, root-of-unity logarithmic derivatives, and
-unit-denominator Taylor expansion. Ballot's published2015 paper,
-Lemma23 and Theorem24, supplies the nearby harmonic/Lucasnomial
+unit-denominator Taylor expansion. Ballot's published 2015 paper,
+Lemma 23 and Theorem 24, supplies the nearby harmonic/Lucasnomial
 congruence context. The characteristic-zero cancellation of a quadratic
 error by two samplings is also a standard extrapolation mechanism.
 The present contribution is the explicit phase-preserving arithmetic
@@ -538,4 +538,5 @@ harmonic filter uses O(rho) such operations after initialization,
 with batch inversion available. No faster WSS search is asserted.
 The remaining existence obligation is still a new primewise arithmetic
 constraint or a certified prime at which the original quotient vanishes.
-No Lean/Scribe or kernel/CI status is attached to this written proof.
+This written proof is not a Lean/Scribe artifact and carries no
+kernel-certified claim.

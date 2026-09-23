@@ -19,6 +19,11 @@ https://arxiv.org/html/2607.15305v2 . The abstract and version comment explicitl
 say that the former exactness theorem was corrected to a conjecture. It is
 not valid to quote the superseded version-one exactness label as a proof.
 
+## Verified locator
+
+- DOI: 10.48550/arXiv.2607.15305
+- URL: https://arxiv.org/abs/2607.15305
+
 Theorem 1.1 supplies an explicit irreducible Carlitz-Wieferich quintic over
 F_(19^3). Theorem 4.1 proves that its 6859 translates have product
 mu(T^q-T) and that this product divides the gcd. Those results are established
