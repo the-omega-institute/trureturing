@@ -267,13 +267,14 @@ root = "Cache"
                 self._commands = []
             self._commands.append(command)
             completed = threading.Event()
+            stop_observer = threading.Event()
             outcome = {}
             def wait_for_completion():
                 # Process-table scans and output observers must not hide a
                 # completion observed within the command's absolute budget.
                 # A late observation remains a timeout, even with exit zero.
                 try:
-                    while True:
+                    while not stop_observer.is_set():
                         remaining = started + timeout - self.command_clock()
                         if remaining <= 0:
                             raise subprocess.TimeoutExpired(args, timeout)
@@ -304,8 +305,13 @@ root = "Cache"
                 if 'error' in outcome:
                     raise outcome['error']
             finally:
-                self.join_command(command)
-                waiter.join()
+                try:
+                    self.join_command(command)
+                finally:
+                    # Cleanup failure retains ownership, but must not leave
+                    # this observer waiting out the command's remaining budget.
+                    stop_observer.set()
+                    waiter.join()
                 self._commands.remove(command)
                 observe_pending(final=True)
                 if getattr(self, 'last_command_diagnostic', {}).get('command') == list(args):
@@ -509,6 +515,74 @@ class GuardedCommandTests(unittest.TestCase):
                 result = self.fixture.guarded_command([sys.executable, '-c',
                     f'import sys; print("out"); print("err", file=sys.stderr); sys.exit({status})'])
                 self.assertEqual((result.returncode, result.stdout, result.stderr), (status, 'out\n', 'err\n'))
+
+    def test_sampling_and_cleanup_errors_stop_and_join_observer(self):
+        started = threading.Event()
+        observers = []
+        original_thread = threading.Thread
+        class ObservedThread(original_thread):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.join_calls = 0
+                observers.append(self)
+            def run(self):
+                started.set()
+                super().run()
+            def join(self, timeout=None):
+                self.join_calls += 1
+                # Infrastructure guard for a broken cancellation path. The
+                # verdict below checks settled state, never elapsed time.
+                super().join(timeout=5)
+        ps = ['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command=']
+        sampling_error, cleanup_error, fixture_error = (
+            subprocess.TimeoutExpired(ps, 5) for _ in range(3))
+        failures = iter([sampling_error, cleanup_error, fixture_error])
+        def failed_scan(*args, **kwargs):
+            if not started.wait(5):
+                raise RuntimeError('infrastructure-hang-guard expired: observer never started')
+            raise next(failures)
+        guard_error = fixture_cleanup_error = None
+        try:
+            # A live child and frozen command clock prevent deadline expiry
+            # from concealing a missing observer cancellation.
+            with patch.object(threading, 'Thread', ObservedThread), \
+                    patch.object(self.fixture, 'command_clock', return_value=0.0), \
+                    patch.object(subprocess, 'check_output', side_effect=failed_scan) as scans:
+                try:
+                    self.fixture.guarded_command([sys.executable, '-c', 'import signal; signal.pause()'])
+                except BaseException as error:
+                    guard_error = error
+                try:
+                    self.fixture.cleanup_fixture()
+                except BaseException as error:
+                    fixture_cleanup_error = error
+                observed = [(thread.is_alive(), thread.daemon, thread.join_calls) for thread in observers]
+                commands = list(self.fixture._commands)
+                child_alive = commands[0][0].poll() is None if commands else False
+                fixture_retained = self.fixture.root.exists()
+                finalizer_detached = not self.fixture.temporary._finalizer.alive
+        finally:
+            # Restore sampling and reclaim the real child/thread before any
+            # verdict, including on the prior broken lifecycle or a mutant.
+            try:
+                self.fixture.cleanup_fixture()
+            finally:
+                for thread in observers:
+                    original_thread.join(thread, timeout=5)
+            # Python 3.9's TemporaryDirectory.cleanup is a no-op after detach.
+            shutil.rmtree(self.fixture.root, ignore_errors=True)
+        self.assertIs(guard_error, cleanup_error)
+        self.assertIs(guard_error.__context__, sampling_error)
+        self.assertIs(fixture_cleanup_error, fixture_error)
+        self.assertEqual(len(commands), 1)
+        self.assertTrue(child_alive)
+        self.assertTrue(fixture_retained)
+        self.assertTrue(finalizer_detached)
+        self.assertEqual([call.args[0] for call in scans.call_args_list], [ps] * 3)
+        self.assertTrue(all(call.kwargs['timeout'] == 5 for call in scans.call_args_list))
+        self.assertFalse(any(thread.is_alive() for thread in observers))
+        self.assertIsNotNone(commands[0][0].poll())
+        self.assertEqual(observed, [(False, False, 1)], 'failed cleanup must stop and join its observer')
 
     def test_completion_boundary_survives_delayed_process_sample(self):
         # The child exits during a process-table scan. Advance an injected
