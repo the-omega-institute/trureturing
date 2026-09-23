@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:628ce268c16087ae745101d96703fbdd9aa3fe3e3f698deafb96c4d3d92bc1b1
+  normalized_sha256: sha256:628ce268c16087ae745101d96703fbdd9aa3fe3e3f698deafb96c4d3d92bc1b1
+cas_ref: sha256:628ce268c16087ae745101d96703fbdd9aa3fe3e3f698deafb96c4d3d92bc1b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子校准前节候选筛选条件的适用范围，列出升级为充分判据所需的额外验证义务，没有提出新的定量数学命题。
+    previous_atom_id: 58210d51773a13934a513426039a16d20cd20431b22927e439a56ad6a327431d
+    next_atom_id: 73f22409fd2a7b179a57cf9b2eb07307d9061f3accd144ce7daba69d2507f5b6

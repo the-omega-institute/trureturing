@@ -1,0 +1,16 @@
+**定义 45.2（有限自然商）。** 对 $u\in\mathbb N_0$、$m\ge1$，定义
+$$
+a\mathrel{R_{u,m}}b
+\quad\Longleftrightarrow\quad
+a=b\ \lor\ \bigl(a\ge u,\ b\ge u,\ a\equiv b\pmod m\bigr).
+$$
+记 $Q_{u,m}=\mathbb N_0/R_{u,m}$，自然商映射为 $q_{u,m}$。把其底集记为不交并
+$$
+Q_{u,m}=\{0,\ldots,u-1\}\sqcup(\mathbb Z/m\mathbb Z),
+$$
+其中 $q_{u,m}(n)$ 在 $n<u$ 时是前段标号 $n$，在 $n\ge u$ 时是循环部分的剩余类 $[n]_m$。循环部分的零元标号与整个商的零元不必相同。有限商均取离散拓扑。指标按
+$$
+(u,m)\preceq(v,n)\quad\Longleftrightarrow\quad u\le v\ \text{且}\ m\mid n
+$$
+排序。
+

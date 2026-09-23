@@ -1,0 +1,13 @@
+两个端点尤其清楚：
+
+$$
+\begin{aligned}
+&c=0
+&&\Longrightarrow
+&&D=1,\quad V=0;\\
+&V=1
+&&\Longrightarrow
+&&D=0.
+\end{aligned}
+$$
+

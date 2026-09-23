@@ -1,0 +1,32 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 36,
+      "part": {
+        "path": "content/004-complete_radius/016-heavy/000-costs/000001/item/008-branch_transport/010-branches/000000-000036.json",
+        "sha256": "d3fe2b283001f2a52e70d3aa4ebed0da6199e15e3a9139401f622375186adde1",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 72,
+      "part": {
+        "path": "content/004-complete_radius/016-heavy/000-costs/000001/item/008-branch_transport/010-branches/000036-000072.json",
+        "sha256": "ae09117c0a028fdb90b5c33696f077bf88f7780861fdae205bf7d219da0ec38d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 72,
+      "stop": 100,
+      "part": {
+        "path": "content/004-complete_radius/016-heavy/000-costs/000001/item/008-branch_transport/010-branches/000072-000100.json",
+        "sha256": "90d8abb6865b2aeba19249939605cfb6450665cbfe14b6869d29e4a4f84a4197",
+        "kind": "value"
+      }
+    }
+  ]
+}

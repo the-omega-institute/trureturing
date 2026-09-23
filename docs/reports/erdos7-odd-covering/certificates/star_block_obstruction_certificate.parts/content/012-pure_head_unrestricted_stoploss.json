@@ -1,0 +1,32 @@
+{
+  "length": 3,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000000/single.json",
+        "sha256": "70db8456b98c4e9c90408cf11f6868a2c4d43040a269142385d7ae7bc9621e40",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000001/single.json",
+        "sha256": "5e942ee881d61adaeb996d70de32f54e8d6571403c52932a6176ebe64308feed",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000002/single.json",
+        "sha256": "91aee6b15e323ef1183203a6fffa69f23341d5c69d3f338b4c7f970588d28541",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e98ae804bfc8b1b36f4ba8f76a0de99296b8992895855a4970f7a12ab4ec825a
+  normalized_sha256: sha256:e98ae804bfc8b1b36f4ba8f76a0de99296b8992895855a4970f7a12ab4ec825a
+cas_ref: sha256:e98ae804bfc8b1b36f4ba8f76a0de99296b8992895855a4970f7a12ab4ec825a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该段说“本节接续”三个问题，随后限定来源、载体及沿用定义，末句为“有限核验不替代任意有限上下文的证明”。这些是范围和证据约定，不是那三个问题的答案，也没有通过定义暗断定核定理，故无须新增 Lean 命题。
+    previous_atom_id: f3c5683c574fb43e890b884c36c7d8888de2640827637dcd04d879dd7ad03d3f
+    next_atom_id: ae99cec97a4b1f5887ae1f8245c5dd25b71c3eec45dd643ede2730007ad77fe0

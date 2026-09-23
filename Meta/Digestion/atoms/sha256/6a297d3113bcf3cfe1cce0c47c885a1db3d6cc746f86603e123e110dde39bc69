@@ -1,0 +1,6 @@
+若 $(H,Q)$ 的目标边缘相对于源边缘满足密度比 $dP_t^{H,Q}/dP_s^{H,Q}\le\kappa$，则还有
+$$
+R_t(\alpha_s)-R_t^*
+\le 2M\kappa\,\mathbb E_s[\delta(H,Q)].
+$$
+

@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:4f2e2430fc3bc1df6d20b2a466ffa4533c66d0373860fec5425e7cf8a3848ed0
+  normalized_sha256: sha256:4f2e2430fc3bc1df6d20b2a466ffa4533c66d0373860fec5425e7cf8a3848ed0
+cas_ref: sha256:4f2e2430fc3bc1df6d20b2a466ffa4533c66d0373860fec5425e7cf8a3848ed0
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/ResidueChildPrefixStructure.residue_child_prefix_structure
+    target_statement_id: sha256:3af3799e60d154b619ca9df91325c9b1f66b3d05fb14521e2be39b483a96a83a
+  - gid: D5/S3/Observer/Budget/ResidueFirstStepOptimality.residue_first_step_optimality
+    target_statement_id: sha256:e91a6c0d27002b263a6203684fbb26f134d9247381b370787046753f74d7ec57
+  - gid: D5/S3/Observer/Budget/ResidueLeafOptimality.leaf_sibling_weighted_minimum
+    target_statement_id: sha256:55199bcd59be84377b427bf0c7e39580b402db283fae50d58e132d4f70c6f10f
+  - gid: D5/S3/Observer/Budget/ResiduePosteriorClosure.residue_posterior_closure
+    target_statement_id: sha256:171afa17233edfedab56d5795a4cd9e99a30396c01f3a0c9b42c6769ee3ad644
+receipts:
+  unresolved_subitems: []

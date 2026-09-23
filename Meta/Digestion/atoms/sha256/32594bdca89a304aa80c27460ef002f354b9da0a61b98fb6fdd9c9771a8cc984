@@ -1,0 +1,33 @@
+**theorem 51.10 (理想值最大公因数与最小公倍数的联合连续延拓).** 通过 theorem 51.2.1 的主理想参数识别，定义
+$$
+\mathfrak G:K^2\to\mathcal I,\qquad \mathfrak G(X,Y)=\sigma(X)R+\sigma(Y)R,
+$$
+$$
+\mathfrak L:K^2\to\mathcal I,\qquad \mathfrak L(X,Y)=\sigma(X)R\cap\sigma(Y)R.
+$$
+这两个映射联合连续，并且分别是自然理想值映射的唯一连续延拓：
+$$
+\mathfrak G(j(a),j(b))=\gcd(a,b)R,\qquad \mathfrak L(j(a),j(b))=\operatorname{lcm}(a,b)R.
+$$
+对任意 $(X,Y,G_*,L_*)\in C$，都有
+$$
+\rho(\sigma(G_*))=\mathfrak G(X,Y),\qquad \rho(\sigma(L_*))=\mathfrak L(X,Y),
+$$
+以及
+$$
+\sigma(G_*)\sigma(L_*)=\sigma(X)\sigma(Y).
+$$
+
+**证明。** 第 $p$ 个赋值坐标分别为
+$$
+\mathfrak G_p(X,Y)=\min\{v_p(\sigma(X)_p),v_p(\sigma(Y)_p)\},
+$$
+$$
+\mathfrak L_p(X,Y)=\max\{v_p(\sigma(X)_p),v_p(\sigma(Y)_p)\}.
+$$
+theorem 51.2.1 已证明所有组成映射连续，包括零分量处的赋值连续性以及 $\min,\max$ 在无穷点处的连续性。乘积拓扑因此给出两个映射的联合连续性。
+
+对两个正自然输入，上述坐标公式是普通最大公因数与最小公倍数的赋值公式。若恰有一个输入为零，最小赋值为另一个输入的赋值，最大赋值为 $\infty$；若两个输入均为零，两者均为 $\infty$。这正与规定的零输入约定一致，证明全部自然输入上的等式。由 theorem 51.0.1，$j(\mathbb N_0)^2$ 稠密于 $K^2$；$\mathcal I$ Hausdorff，所以两个连续映射若在该稠密集上相等，便处处相等。这证明延拓的唯一性。
+
+关于 $C$ 的前两个等式，在 $\Gamma$ 上已经由自然输入公式成立。它们各自两边都是 $K^4$ 到 Hausdorff 空间 $\mathcal I$ 的连续映射，故相等点集闭，包含 $\overline\Gamma=C$。最后的乘积等式同理：$\sigma$ 与 $R$ 的乘法连续，自然图上有 $\gcd(a,b)\operatorname{lcm}(a,b)=ab$，故该等式的闭相等点集也包含 $C$。证毕。
+

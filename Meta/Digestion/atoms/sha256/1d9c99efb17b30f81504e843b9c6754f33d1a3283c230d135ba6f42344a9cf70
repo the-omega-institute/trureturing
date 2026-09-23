@@ -1,0 +1,10 @@
+**衰减补充。** 令 H_n=∑_{k=1}^{n-1}h_k，则真实和估计状态同时满足
+
+$$0\preceq T_n,\widehat T_n\preceq
+\frac{L}{1+2LH_n}I,$$
+
+从而
+
+$$\boxed{\|\widehat W_n-W_n\|_F
+\le\min\left\{\epsilon,\frac{\sqrt q\,L}{1+2LH_n}\right\}.}\tag{RS.12}$$
+

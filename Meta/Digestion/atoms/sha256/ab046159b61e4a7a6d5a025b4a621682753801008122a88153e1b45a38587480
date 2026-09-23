@@ -1,0 +1,29 @@
+### 135.5 每个传感器都非退化，仍可没有共同有限记录预算
+
+沿用 RRO 定义 109.1 的四态核族、两个方向、共同初态 $X_0=1$ 和逐时条件独立刷新传感器。取二值读数，并设
+
+$$
+E_i(1)=p_i,\qquad
+p_0=p_2=\frac12,\quad
+p_1=\frac12-\varepsilon,\quad
+p_3=\frac12+\varepsilon,
+\qquad0<\varepsilon<\frac12.
+$$
+
+每个固定 $\varepsilon>0$ 都有三个环发射行两两不同，所以现有命题 109.2 的一致性结论适用。取同一个读数函数 $f(0)=1/4,f(1)=3/4$，则
+
+$$
+\theta_1=\frac12-\frac\varepsilon2,\quad
+\theta_2=\frac12,\quad
+\theta_3=\frac12+\frac\varepsilon2,
+$$
+
+$$
+V_f=(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1)
+=\frac{\varepsilon^3}{4}>0.
+$$
+
+因此整个 $\varepsilon>0$ 族还满足同一份部分标定 $(f,b=1)$，落在 RRO §111 的固定相容类中。这些严格不等式没有给出共同的正信号下界。
+
+令 $N=n+1$ 为实际读取的标签数，$P^{\varepsilon}_{0,k,N}$、$P^{\varepsilon}_{1,k,N}$ 为两方向读数律。
+

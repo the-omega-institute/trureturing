@@ -1,0 +1,8 @@
+### 推论 12.2. 观察所重构的矩阵也具有完整生成性
+
+继续第 4 节的 R,J。若 p 的非锚点坐标非零、t 交替且 det R≠0，则
+
+\[
+\operatorname{Lie}_K\langle N_i(R)\rangle=\mathfrak{sp}(J).
+\]
+

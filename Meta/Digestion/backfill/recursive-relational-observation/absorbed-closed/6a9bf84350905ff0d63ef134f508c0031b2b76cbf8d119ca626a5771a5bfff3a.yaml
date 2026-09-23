@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6a9bf84350905ff0d63ef134f508c0031b2b76cbf8d119ca626a5771a5bfff3a
+  normalized_sha256: sha256:6a9bf84350905ff0d63ef134f508c0031b2b76cbf8d119ca626a5771a5bfff3a
+cas_ref: sha256:6a9bf84350905ff0d63ef134f508c0031b2b76cbf8d119ca626a5771a5bfff3a
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/ResidueFirstStepOptimality.residue_first_step_optimality
+    target_statement_id: sha256:e91a6c0d27002b263a6203684fbb26f134d9247381b370787046753f74d7ec57
+receipts:
+  unresolved_subitems: []

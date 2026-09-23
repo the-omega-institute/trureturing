@@ -1,0 +1,37 @@
+**定理 14.5（保留 Bernstein 时间衰减的联合证书）。** 在定义14.4及式(14.8)下，取同一合法拟合的共同实现 $\widehat C,\widehat J,\widehat h_0$。在概率至少 $1-\alpha$ 的事件 $\mathcal E_n$ 上，对全部 $t\ge0$ 同时有
+$$
+\|K(t)-\widehat K(t)\|\le e^{-at}(B_Kt+D_K),\qquad
+\|f(t)-\widehat f(t)\|\le e^{-at}(B_ft+D_f).
+\tag{14.13}
+$$
+因而
+$$
+\begin{aligned}
+\sup_{t\ge0}\|K(t)-\widehat K(t)\|&\le\varepsilon_K,&
+\int_0^\infty\|K(t)-\widehat K(t)\|\,dt&\le I_K,\\
+\sup_{t\ge0}\|f(t)-\widehat f(t)\|&\le\varepsilon_f,&
+\int_0^\infty\|f(t)-\widehat f(t)\|\,dt&\le I_f.
+\end{aligned}
+\tag{14.14}
+$$
+
+**证明。** 定理14.3给全部矩与交叉前缀的同时误差。对真实模型和同一合法拟合，使用定理11.2及13.6的多项式响应证书；两个核的总质量至多 $2m_*$，两个强迫的夹心范数总和至多 $2\sqrt{m_*}E_*$。
+
+保留第11.4节 Bernstein 证明中的时间因子：对 $\tau=t/h$、$x\in[u,v]$，
+$$
+\left|\frac{d}{dx}x^{\tau}\right|
+\le\frac{t}{hu}v^{t/h}
+=\frac{t}{hu}e^{-at}.
+$$
+故次数 $s\ge1$ 的 Bernstein 多项式 $p_{s,t}$ 满足
+$$
+\|x^{t/h}-p_{s,t}(x)\|_{\infty,[u,v]}
+\le\frac{(v-u)t}{2hu\sqrt s}e^{-at}.
+$$
+其节点值均不超过 $v^{t/h}=e^{-at}$。将第11.5节原始幂基系数展开中的节点上界一换成这个共同因子，得到
+$$
+p_{s,t}(x)=\sum_{j=0}^s c_j(t)x^j,
+\qquad \sum_{j=0}^s|c_j(t)|\le e^{-at}\mathcal R^s.
+$$
+分别取 $s=N$ 与 $s=r$，代入响应证书即得式(14.13)。对确定性全时间界使用 $\sup te^{-at}=1/(ea)$、$\sup e^{-at}=1$，对积分使用 $\int te^{-at}dt=1/a^2$、$\int e^{-at}dt=1/a$，得到式(14.14)。因此在这一共同正谱模型中可直接积分时间衰减，不需先取统一误差再以指数尾拼接。全部时间结论由同一有限前缀事件推出，无需另作统计并集。$\square$
+

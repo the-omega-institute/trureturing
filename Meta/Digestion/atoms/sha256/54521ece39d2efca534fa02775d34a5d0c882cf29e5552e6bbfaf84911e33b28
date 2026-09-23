@@ -1,0 +1,7 @@
+这是命题 29 的完整乘积端点，含空区域和旧档案端点，不用被选父事件的最高时刻替代 $s$。结论为
+
+$$
+\approx_{\Sigma_{\rm mix}}=\ker(\Gamma_t,m,M).
+\tag{MIX-KERNEL}
+$$
+

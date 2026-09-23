@@ -1,0 +1,6 @@
+On the larger carrier $\mathscr E$, actual composition is associative and unital, with precisely the one-sided continuity proved above. On the state carrier $K$, evaluation forgets composition witnesses. Even an injective recoding of evaluated states cannot turn evaluation into a homomorphism for all representatives. In contrast, the composite
+$$
+\mathscr E\xrightarrow{e}K\xrightarrow{H}\mathbb T
+$$
+is the genuine continuous homomorphism $\vartheta$ into circle addition.
+

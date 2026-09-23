@@ -1,0 +1,16 @@
+**证明。** 矩阵指数的标准恒等式 $\det(e^A)=e^{\operatorname{tr}A}$ 给
+$$
+e^{-t\operatorname{tr}(N^{-1}L)}
+=e^{-\phi(t)\operatorname{tr}(M^{-1}L)}.
+$$
+两个迹均为严格正数，因为它们分别为 $\sum_iL_{ii}/N_{ii}$ 和 $\sum_iL_{ii}/M_{ii}$。实指数单射，故对每个 $t\ge0$，
+$$
+\phi(t)=ct,\qquad
+c=\frac{\operatorname{tr}(N^{-1}L)}{\operatorname{tr}(M^{-1}L)}>0.
+$$
+行列式这一步只确定共同时间尺度。将已得的线性时间代回完整矩阵等式，在零处取右导数得到
+$$
+(N^{-1}-cM^{-1})L=0.
+$$
+因前一因子为对角矩阵，比较第 $i$ 个对角元并用 $L_{ii}>0$，得 $N_{ii}^{-1}=cM_{ii}^{-1}$，即 $N=M/c$。反向代入指数立即得式（18.3）。容量总和相同使 $\operatorname{tr}M/c=\operatorname{tr}M>0$，故 $c=1$。本证明只使用主卷第123.4节的图核与正对角性质及有限维矩阵指数恒等式，不另加能量或熵演化假设。$\square$
+

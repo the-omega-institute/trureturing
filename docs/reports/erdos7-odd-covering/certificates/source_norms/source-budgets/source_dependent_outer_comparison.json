@@ -1,0 +1,937 @@
+{
+  "schema": "erdos7-source-dependent-outer-comparison-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/shared_slot_gap_global.py": "74adeac6d398ad9c82d3aec395ef077e2be78a560f0a446958fee9d415eeabd6",
+    "certificates/source_norms/source-budgets/shared_slot_gap_global.json": "4aaf98ae262a469d4a0c0ca9e51efbb053bd49fb17cf3203a546bdf103450b6f",
+    "frontier/source-budgets/shared_slot_defect_polytope.py": "4a775758d4f91f71b70783eddffde7f82e72d059db31b55547e74593b9e038ee"
+  },
+  "delta": "21/500",
+  "slot_cutoff": "3/1000",
+  "decrement_from_K0": "137/1000",
+  "packing_guards": {
+    "delta": "21/500",
+    "r_upper_inclusive": "3/1000",
+    "Delta_upper": "63/2000",
+    "root1_total_deficit_upper": "21/1000",
+    "h1_lower": "331/1000",
+    "eta_first_beta_lower": "979/9000",
+    "h0_upper": "169/1000",
+    "root_mass_difference_lower": "81/500",
+    "first_label_forcing_margin": "337/2000",
+    "four_gap_guards": {
+      "pure5": "97/1000",
+      "alpha": "79/1250",
+      "beta": "211/11250",
+      "remaining": "33347/2000000"
+    },
+    "G_lower": "33347/2000000",
+    "best_slot_credit_lower": "97/5000"
+  },
+  "original_fixed_costs": [
+    {
+      "index": 0,
+      "name": "R17",
+      "tuple": [
+        0,
+        0
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "298469622484874903/5777687856663798075",
+      "weighted_residual_penalty": "18974576223206873593/6419653174070886750",
+      "weighted_escape_penalty": "630053335920064561120723361434337/5844257573827431953164651931250000"
+    },
+    {
+      "index": 1,
+      "name": "R17",
+      "tuple": [
+        0,
+        1
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "2191066581337/43847094966675",
+      "weighted_residual_penalty": "145188348084408/73078491611125",
+      "weighted_escape_penalty": "60483842677693804423/1915659004687931002500"
+    },
+    {
+      "index": 2,
+      "name": "R17",
+      "tuple": [
+        0,
+        2
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "93430123067/3986099542425",
+      "weighted_residual_penalty": "4327866612528/6643499237375",
+      "weighted_escape_penalty": "2932260428807/596075193113400"
+    },
+    {
+      "index": 3,
+      "name": "R17",
+      "tuple": [
+        0,
+        3
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "46651344668/3986099542425",
+      "weighted_residual_penalty": "2332567233400000/47852806118848731",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 4,
+      "name": "R17",
+      "tuple": [
+        0,
+        4
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "9928929068/3986099542425",
+      "weighted_residual_penalty": "496446453400000/47852806118848731",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 5,
+      "name": "R17",
+      "tuple": [
+        0,
+        5
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "19787588/72474537135",
+      "weighted_residual_penalty": "4946897000000/4350255101713521",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 6,
+      "name": "R17",
+      "tuple": [
+        0,
+        6
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "1845716/72474537135",
+      "weighted_residual_penalty": "461429000000/4350255101713521",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 7,
+      "name": "R17",
+      "tuple": [
+        1,
+        0
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "409714889099/8091716475843",
+      "weighted_residual_penalty": "20158288966897/8990796084270",
+      "weighted_escape_penalty": "355939493543309768327/9898652286522560761200"
+    },
+    {
+      "index": 8,
+      "name": "R17",
+      "tuple": [
+        1,
+        1
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "1001887/20469449",
+      "weighted_residual_penalty": "26060616/20469449",
+      "weighted_escape_penalty": "33965675/3060969912"
+    },
+    {
+      "index": 9,
+      "name": "R17",
+      "tuple": [
+        1,
+        2
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "166836/1860859",
+      "weighted_residual_penalty": "69515000000/186162195219",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 10,
+      "name": "R17",
+      "tuple": [
+        2,
+        0
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "17538778493/622439728911",
+      "weighted_residual_penalty": "620873014819/691599698790",
+      "weighted_escape_penalty": "309400077247/46539339730884"
+    },
+    {
+      "index": 11,
+      "name": "R17",
+      "tuple": [
+        2,
+        1
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "166836/1574573",
+      "weighted_residual_penalty": "69515000000/157521857493",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 12,
+      "name": "R17",
+      "tuple": [
+        3,
+        0
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "208603931/47879979147",
+      "weighted_residual_penalty": "3997948813/53199976830",
+      "weighted_escape_penalty": "1260242117/1789974605034"
+    },
+    {
+      "index": 13,
+      "name": "R17",
+      "tuple": [
+        4,
+        0
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "222849659/47879979147",
+      "weighted_residual_penalty": "278562073750000/14369882981535081",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 14,
+      "name": "R17",
+      "tuple": [
+        5,
+        0
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "29157347/47879979147",
+      "weighted_residual_penalty": "36446683750000/14369882981535081",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 15,
+      "name": "R17",
+      "tuple": [
+        6,
+        0
+      ],
+      "quadratic": false,
+      "weight": "1",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "460991/6839997021",
+      "weighted_residual_penalty": "576238750000/2052840425933583",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 16,
+      "name": "R19",
+      "tuple": [
+        0,
+        0
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "272176197106950808531/7562993404372911680175",
+      "weighted_residual_penalty": "2890708204848469107196/1400554334143131792625",
+      "weighted_escape_penalty": "113030172417388488839521339535147647/1487525893027243305190214045723437500"
+    },
+    {
+      "index": 17,
+      "name": "R19",
+      "tuple": [
+        0,
+        1
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "7089421032476/203291076663675",
+      "weighted_residual_penalty": "157287458454848/112939487035375",
+      "weighted_escape_penalty": "8725239578164232407/391839341867985886875"
+    },
+    {
+      "index": 18,
+      "name": "R19",
+      "tuple": [
+        0,
+        2
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "1116627868292/67763692221225",
+      "weighted_residual_penalty": "7423085857344/16134212433625",
+      "weighted_escape_penalty": "26378850607919/7599958712195850"
+    },
+    {
+      "index": 19,
+      "name": "R19",
+      "tuple": [
+        0,
+        3
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "1669413960304/203291076663675",
+      "weighted_residual_penalty": "83470698015200000/2440493112061285281",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 20,
+      "name": "R19",
+      "tuple": [
+        0,
+        4
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "356830871344/203291076663675",
+      "weighted_residual_penalty": "17841543567200000/2440493112061285281",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 21,
+      "name": "R19",
+      "tuple": [
+        0,
+        5
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "7829755952/40658215332735",
+      "weighted_residual_penalty": "1957438988000000/2440493112061285281",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 22,
+      "name": "R19",
+      "tuple": [
+        0,
+        6
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "81185392/4517579481415",
+      "weighted_residual_penalty": "20296348000000/271165901340142809",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 23,
+      "name": "R19",
+      "tuple": [
+        1,
+        0
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "374092820950987/10592056866878487",
+      "weighted_residual_penalty": "181292885857372/115381883081465",
+      "weighted_escape_penalty": "105619404347305786623001/4164857949554367440274900"
+    },
+    {
+      "index": 24,
+      "name": "R19",
+      "tuple": [
+        1,
+        1
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "3246052/94903809",
+      "weighted_residual_penalty": "28469184/31634603",
+      "weighted_escape_penalty": "27781885/3547942398"
+    },
+    {
+      "index": 25,
+      "name": "R19",
+      "tuple": [
+        1,
+        2
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "1636688/25882857",
+      "weighted_residual_penalty": "2045860000000/7768040691411",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 26,
+      "name": "R19",
+      "tuple": [
+        2,
+        0
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "16130515994959/814773605144499",
+      "weighted_residual_penalty": "286993963511524/452652002858055",
+      "weighted_escape_penalty": "1714555496265709/365519974246362936"
+    },
+    {
+      "index": 27,
+      "name": "R19",
+      "tuple": [
+        2,
+        1
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "1636688/21900879",
+      "weighted_residual_penalty": "2045860000000/6572957508117",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 28,
+      "name": "R19",
+      "tuple": [
+        3,
+        0
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "7467902659237/2444320815433497",
+      "weighted_residual_penalty": "72133738909192/1357956008574165",
+      "weighted_escape_penalty": "181606991114569/365519974246362936"
+    },
+    {
+      "index": 29,
+      "name": "R19",
+      "tuple": [
+        4,
+        0
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "8016446463028/2444320815433497",
+      "weighted_residual_penalty": "10020558078785000000/733596896090347420131",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 30,
+      "name": "R19",
+      "tuple": [
+        5,
+        0
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "80759705044/188024678110269",
+      "weighted_residual_penalty": "100949631305000000/56430530468488263087",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 31,
+      "name": "R19",
+      "tuple": [
+        6,
+        0
+      ],
+      "quadratic": false,
+      "weight": "15/17",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "993574276/20891630901141",
+      "weighted_residual_penalty": "1241967845000000/6270058940943140343",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 32,
+      "name": "R5",
+      "tuple": [
+        0,
+        0
+      ],
+      "quadratic": false,
+      "weight": "13299/1360",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "38235633647/417576759600",
+      "weighted_residual_penalty": "13834985133/4093889800",
+      "weighted_escape_penalty": "7047665594160833/177369623346415500"
+    },
+    {
+      "index": 33,
+      "name": "R5",
+      "tuple": [
+        0,
+        1
+      ],
+      "quadratic": false,
+      "weight": "13299/1360",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "10656033/143793650",
+      "weighted_residual_penalty": "114322482/71896825",
+      "weighted_escape_penalty": "92761703/7167560400"
+    },
+    {
+      "index": 34,
+      "name": "R5",
+      "tuple": [
+        0,
+        2
+      ],
+      "quadratic": false,
+      "weight": "13299/1360",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "480066/6536075",
+      "weighted_residual_penalty": "8001100000/26155019163",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 35,
+      "name": "R5",
+      "tuple": [
+        0,
+        3
+      ],
+      "quadratic": false,
+      "weight": "13299/1360",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "12834/1307215",
+      "weighted_residual_penalty": "356500000/8718339721",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 36,
+      "name": "R5",
+      "tuple": [
+        1,
+        0
+      ],
+      "quadratic": false,
+      "weight": "13299/1360",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "39145963/494173680",
+      "weighted_residual_penalty": "152234769/82362280",
+      "weighted_escape_penalty": "219011993/14779594368"
+    },
+    {
+      "index": 37,
+      "name": "R5",
+      "tuple": [
+        1,
+        1
+      ],
+      "quadratic": false,
+      "weight": "13299/1360",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "21018/85085",
+      "weighted_residual_penalty": "1751500000/1702397697",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 38,
+      "name": "R5",
+      "tuple": [
+        2,
+        0
+      ],
+      "quadratic": false,
+      "weight": "13299/1360",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "133393/1357620",
+      "weighted_residual_penalty": "8337062500/20372649363",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 39,
+      "name": "R5",
+      "tuple": [
+        3,
+        0
+      ],
+      "quadratic": false,
+      "weight": "13299/1360",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "49817/3167780",
+      "weighted_residual_penalty": "3113562500/47536181847",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 40,
+      "name": "linear",
+      "tuple": null,
+      "quadratic": false,
+      "weight": "94212612766226/1174116234095805",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "753700902129808/5870581170479025",
+      "weighted_residual_penalty": "37685045106490400000/70475857305107056803",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 41,
+      "name": "H16",
+      "tuple": [
+        0,
+        0
+      ],
+      "quadratic": true,
+      "weight": "2371/2880",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "17871784747/132642029520",
+      "weighted_residual_penalty": "822926914729/184225041000",
+      "weighted_escape_penalty": "136598542916052652/1652142487737616875"
+    },
+    {
+      "index": 42,
+      "name": "H16",
+      "tuple": [
+        0,
+        1
+      ],
+      "quadratic": true,
+      "weight": "2371/2880",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "12350539/23200320",
+      "weighted_residual_penalty": "82985/44928",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 43,
+      "name": "H16",
+      "tuple": [
+        0,
+        2
+      ],
+      "quadratic": true,
+      "weight": "2371/2880",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "694703/4640064",
+      "weighted_residual_penalty": "10854734375/21759217623",
+      "weighted_escape_penalty": "0"
+    },
+    {
+      "index": 44,
+      "name": "H16",
+      "tuple": [
+        1,
+        0
+      ],
+      "quadratic": true,
+      "weight": "2371/2880",
+      "old_fraction": "0",
+      "deep_fraction": "1",
+      "weighted_slot_motion_price": "449823749/3924320400",
+      "weighted_residual_penalty": "2839668457/1090089000",
+      "weighted_escape_penalty": "233733394511483/8759287982324880"
+    },
+    {
+      "index": 45,
+      "name": "H16",
+      "tuple": [
+        2,
+        0
+      ],
+      "quadratic": true,
+      "weight": "2371/2880",
+      "old_fraction": "1",
+      "deep_fraction": "0",
+      "weighted_slot_motion_price": "156412499/784864080",
+      "weighted_residual_penalty": "1955156237500/2944447028523",
+      "weighted_escape_penalty": "0"
+    }
+  ],
+  "credit_groups": {
+    "old_linear_vmin_sum": "42654971227277838187309/72604736681979952129680",
+    "old_quadratic_vmin_sum": "46761514025/106113623616",
+    "deep_vmin_sum": "169013800983138689420551/72604736681979952129680",
+    "old_deep_shift_subtraction": "14880031081/2107477784412"
+  },
+  "zero_slot_credit_polynomial": {
+    "constant": "79546115192572927311700867/3528590202744225673502448000",
+    "negative_linear": "9419397905099791325747/403359648233221956276000",
+    "positive_quadratic": "1511919801502975197199/233372367906364131845400"
+  },
+  "slot_motion_price": "1998435125243256214147273/726047366819799521296800",
+  "slot_motion_residual_price": "1998435125243256214147273/145209473363959904259360",
+  "uniform_cost_residual_penalty": "165484091235323511321055045680077/4358070277441173834603190128000",
+  "unchanged_source_escape_penalty": "1626740964132810385459985700332127421489/3154636730230866529407028478057850000000",
+  "residual_after_target_cost_and_slot_payments": "1316278490336047682603742178433213053502958131204506168402496023/547610261511098433695342467788169050401499412818000000000000000",
+  "near_negative_quadratic": "607226418650100113523652472146994435686502121121/1149688451680829203629989425737419969364000000000",
+  "far_negative_quadratic": "4032485307922166457082470389803906786908540803273/8183076626669431390542865912601636252532000000000",
+  "zero_slot_guard_proof": {
+    "Q_minus_beta_at_delta": "16523/18000000",
+    "Q_minus_beta_derivative_upper": "-4337/18000",
+    "quadratic_uncapped_lower": "2426941/112500000"
+  },
+  "exact_formula_checks": [
+    {
+      "sigma": "0",
+      "r": "0",
+      "gap": "1/45",
+      "weighted_credit": "79546115192572927311700867/3528590202744225673502448000",
+      "slot_transport_slack": "0"
+    },
+    {
+      "sigma": "0",
+      "r": "3/2000",
+      "gap": "373/18000",
+      "weighted_credit": "14825553734804677807943821883/705718040548845134700489600000",
+      "slot_transport_slack": "2510355430582661050521773/968063155759732695062400000"
+    },
+    {
+      "sigma": "0",
+      "r": "3/1000",
+      "gap": "173/9000",
+      "weighted_credit": "6843298519059057215609512183/352859020274422567350244800000",
+      "slot_transport_slack": "66755756015053038691338871/13068852602756391383342400000"
+    },
+    {
+      "sigma": "21/1000",
+      "r": "0",
+      "gap": "1979/90000",
+      "weighted_credit": "972822222531321157065093053501/44107377534302820918780600000000",
+      "slot_transport_slack": "0"
+    },
+    {
+      "sigma": "21/1000",
+      "r": "3/2000",
+      "gap": "461/22500",
+      "weighted_credit": "1811806000715788490641216531747/88214755068605641837561200000000",
+      "slot_transport_slack": "63203390186208400971020831/24201578893993317376560000000"
+    },
+    {
+      "sigma": "21/1000",
+      "r": "3/1000",
+      "gap": "1709/90000",
+      "weighted_credit": "13271085739111221014100374295761/705718040548845134700489600000000",
+      "slot_transport_slack": "26173088917180871270461729687/5227541041102556553336960000000"
+    },
+    {
+      "sigma": "21/500",
+      "r": "0",
+      "gap": "979/45000",
+      "weighted_credit": "1272152458773464793707684423/58967082265110723153450000000",
+      "slot_transport_slack": "0"
+    },
+    {
+      "sigma": "21/500",
+      "r": "3/2000",
+      "gap": "39347/2000000",
+      "weighted_credit": "17835711961664988402197912258671/916516935777720954156480000000000",
+      "slot_transport_slack": "5267022209206970291946478884121/2613770520551278276668480000000000"
+    },
+    {
+      "sigma": "21/500",
+      "r": "3/1000",
+      "gap": "33347/2000000",
+      "weighted_credit": "63996845773953663082612384032451/4151282591463794910002880000000000",
+      "slot_transport_slack": "5488074000669004420014763626121/2613770520551278276668480000000000"
+    }
+  ],
+  "signed_branch_margins": {
+    "concentrated_small_r_zero_escape": "41882055655561544679319961/17642951013721128367512240000",
+    "concentrated_small_r_at_delta": "45327642724323312972065242987290102265008944812295999203/1343720509404663987704720018627055034528585257000000000000000",
+    "concentrated_large_r": "249516988427004980590963660424678097381483651331752932599709/27369291665971873216748256604200730220684490000000000000000000",
+    "middle_at_delta": "1365498360414350446228651267229409943750319005560773/11592691887781694469935726709518984691087000000000000000",
+    "middle_limit_at_half": "385275072508445740394089458484812376343974629466273/3895144474294649341898404174398378856205232000000000",
+    "far_at_half": "437897392371590260044986371546441586252736145666273/3895144474294649341898404174398378856205232000000000",
+    "far_at_one": "4122664975191386938697094441058152753855731346131/324595372857887445158200347866531571350436000000000"
+  },
+  "strict_margin_lower": "45327642724323312972065242987290102265008944812295999203/1343720509404663987704720018627055034528585257000000000000000",
+  "old_K0": "108508024932331114670819517565119344585698949/212986060315016386011231666281461556328000",
+  "canonical118_K": "108481614660852052638954124838500443352714277/212986060315016386011231666281461556328000",
+  "candidate_K": "108478845842067957425935978826838784352482013/212986060315016386011231666281461556328000",
+  "candidate_improvement_over118": "13/1000",
+  "positive_denominator_lower_factor": "40593580507/80223412500",
+  "target_mass_coefficient": "13986478948930438915217677438175827344428254892449219/258053321422020518900769276553892599223596620000000",
+  "fallbacks": [
+    {
+      "branch": "3-absent/5-absent/7-absent",
+      "complete_bound": "10623721541541098531398006957413515968436614038803995147/48604529927104449376459453468816706205357963404880000",
+      "candidate_target_gap": "692018436168040558534136379413924399422393485836940332483019229/2380123447308713928963922841754412459504262054278350067440000"
+    },
+    {
+      "branch": "3-absent/5-absent/7-present",
+      "complete_bound": "274655976598502681815467966359053974332998333315688773/1166651480453367767693627980400737481893436220720000",
+      "candidate_target_gap": "203423528863162667251886928758720530792314799736594271766443943/742689397864294737363274705337682095232725110050656089680000"
+    },
+    {
+      "branch": "3-absent/5-present/7-absent",
+      "complete_bound": "2381350404993261077427780898586784156827491228162671061/9686765730344163334324599918746939270472623899440000",
+      "candidate_target_gap": "739564511182670496867968450120027320271511305946323110325083/2806821713231776950155502787788775439664099565012484880000"
+    },
+    {
+      "branch": "3-absent/5-present/7-present",
+      "complete_bound": "7648549441109159275023077311619968094720716395293174339/28434535675936494345970249002679290491834286810960000",
+      "candidate_target_gap": "334647131473304851173122172266647802846358776468580904195309973/1392415587130118983215359336693365611376804009823549610480000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-absent/7-absent",
+      "complete_bound": "709482385330342838679666295724505275573793823702566240181/2427856787562415133414925307244895534083855238696240000",
+      "candidate_target_gap": "25810796450200598234721526444671686332602159704802323857606210867/118890129694731682636170595493376551640557566461407323743120000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-absent/7-present",
+      "complete_bound": "118486841368476751897599111084939956657784488842841582801/349896108706649529993683856898242365454245461430640000",
+      "candidate_target_gap": "2924611902908135987821359095231222829162159962613075538257622007/17134121731117993150805741593083670882524976414314028810320000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-present/7-absent",
+      "complete_bound": "95071493091965158923104912659267096224040724906003709301/263665054311273887607454910313867237711908271221040000",
+      "candidate_target_gap": "1920539713748753294996665312048169372465383123007537171514926707/12911458642710388893663016527294125463623944806799790405520000"
+    },
+    {
+      "branch": "9-absent-or-ineffective/5-present/7-present",
+      "complete_bound": "16025256609792923789017273811086946633827223715428789321/36750866636855548319852923366192605334740462931440000",
+      "candidate_target_gap": "131865664493538464936500354311840207588716092463482436628579647/1799659404637440020020676545588477681276574500037652960720000"
+    }
+  ],
+  "complete_cores": [
+    {
+      "box": [
+        [
+          3,
+          20
+        ],
+        [
+          5,
+          20
+        ],
+        [
+          7,
+          20
+        ],
+        [
+          11,
+          20
+        ],
+        [
+          13,
+          20
+        ],
+        [
+          17,
+          20
+        ],
+        [
+          19,
+          20
+        ]
+      ],
+      "unchanged_error": "18991066484526553535616665014766541606498475498415351673730712853724798226291341890112453090044199512276028276745811947516332859861953639269455893356400775581/33027923438191785509648339887176402512935211081024774046560717099807773692853598920870845972552296908764122807339978282210749381847166809013002400000000000000000",
+      "candidate_complete_gap": "844856893371651044152299598185715900065713639412463517345142098387314183558970370274025788334795811221558932878434134770007950149857534285284592541897552818529846536006504039/7946040399748476627427138870763113685571396235465565055611977414400535557296040623242161077609713932886277954327249283873665734669378480305564510640514245600000000000000000"
+    },
+    {
+      "box": [
+        [
+          3,
+          17
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          17,
+          6
+        ],
+        [
+          19,
+          6
+        ]
+      ],
+      "unchanged_error": "17351608553457661109217368573484078694167681875704922959013906473541547321078691/78684819668590109973764061819287119927780638345294580679588953162888888320000000",
+      "candidate_complete_gap": "2016927570360550779095760237424953196397113548257019229154175791541145411380290393609804023129/18930428887047548197319305049719349505990882023107575136898104152573083311895121838080000000"
+    }
+  ],
+  "scope": "Ordinary full-source candidate comparison retaining118 fixed46 original alternatives and complete tails. The actual r motion of credits is paid once via r<=5rho after all cost and denominator charges. Source-dependent credits retain an explicit quadratic on the whole near interval; seven endpoints cover every source, with eight fallback branches and both terminal errors unchanged. Independent original labels and both orientations remain. Does not mutate the canonical globalK certificate; no Lean verification, optimality claim or unrestricted Erdos7 resolution."
+}

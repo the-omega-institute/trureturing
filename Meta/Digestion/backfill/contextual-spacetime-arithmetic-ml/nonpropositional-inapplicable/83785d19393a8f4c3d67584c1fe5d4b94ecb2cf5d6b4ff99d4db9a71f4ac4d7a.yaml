@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:83785d19393a8f4c3d67584c1fe5d4b94ecb2cf5d6b4ff99d4db9a71f4ac4d7a
+  normalized_sha256: sha256:83785d19393a8f4c3d67584c1fe5d4b94ecb2cf5d6b4ff99d4db9a71f4ac4d7a
+cas_ref: sha256:83785d19393a8f4c3d67584c1fe5d4b94ecb2cf5d6b4ff99d4db9a71f4ac4d7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅说“该例不反驳主卷，只限定由其已证量词可推出的结论”，是前一逻辑例子的适用范围说明；没有重新断言主卷平方和障碍，也没有通过定义添加命题，故无独立待证内容。
+    previous_atom_id: 028bda85e8491aac46814ca303e619d7d9ba0185398e28a682f5060d72d8420d
+    next_atom_id: 657149bbe5d4982da154ec23ac69944345b91943de83007bc8e12ef9a2264518

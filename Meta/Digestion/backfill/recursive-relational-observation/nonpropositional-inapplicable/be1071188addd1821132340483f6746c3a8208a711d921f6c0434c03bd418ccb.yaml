@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be1071188addd1821132340483f6746c3a8208a711d921f6c0434c03bd418ccb
+  normalized_sha256: sha256:be1071188addd1821132340483f6746c3a8208a711d921f6c0434c03bd418ccb
+cas_ref: sha256:be1071188addd1821132340483f6746c3a8208a711d921f6c0434c03bd418ccb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Define the set of actual self-maps”只取有限迭代的集合及其在乘积拓扑中的闭包；未声称闭包对复合封闭或已经是紧幺半群，定义未夹带这些命题，故本叶可作为定义结算。
+    previous_atom_id: be6f7dac036cb424bd3284fcdbdb4c86ad7c3b7e904826db08fafac82441231e
+    next_atom_id: 8cc6528546735f840eaec986e1199af9705eb2b7670348c2aa83d977ff991e85

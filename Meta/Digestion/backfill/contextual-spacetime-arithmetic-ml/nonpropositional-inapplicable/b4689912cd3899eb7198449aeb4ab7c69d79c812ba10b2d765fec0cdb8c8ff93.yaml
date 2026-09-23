@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b4689912cd3899eb7198449aeb4ab7c69d79c812ba10b2d765fec0cdb8c8ff93
+  normalized_sha256: sha256:b4689912cd3899eb7198449aeb4ab7c69d79c812ba10b2d765fec0cdb8c8ff93
+cas_ref: sha256:b4689912cd3899eb7198449aeb4ab7c69d79c812ba10b2d765fec0cdb8c8ff93
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “可将本章的摘要写成动态接口”只是给更新与查询起记号，并要求“检验其是否能独立运行”；叶中没有预先宣布这种闭合检验成功，因此没有定义夹带命题。
+    previous_atom_id: ffdf53c67f5fdc6bf4f80cf8528675a906fce4c202393348cae6b6cf04e6c713
+    next_atom_id: c96cf93a65926acd672b8e8e76960c398725abcad890a4994aff554b0ca60424

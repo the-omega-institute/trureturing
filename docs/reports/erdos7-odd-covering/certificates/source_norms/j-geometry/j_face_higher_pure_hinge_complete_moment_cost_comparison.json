@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "0f660ef1f83f2df933e6809251cba04e7fbdcd861567881683e60a0c423ed121",
+  "parts_directory": "j_face_higher_pure_hinge_complete_moment_cost_comparison.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "60cce3c1f2a828b216b99722c524fe7d36c6a9ec72acf02cb9a25a4919c83b46",
+    "kind": "object"
+  }
+}

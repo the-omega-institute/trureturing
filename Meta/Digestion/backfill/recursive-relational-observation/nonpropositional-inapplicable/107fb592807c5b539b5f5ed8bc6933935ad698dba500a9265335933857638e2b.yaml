@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:107fb592807c5b539b5f5ed8bc6933935ad698dba500a9265335933857638e2b
+  normalized_sha256: sha256:107fb592807c5b539b5f5ed8bc6933935ad698dba500a9265335933857638e2b
+cas_ref: sha256:107fb592807c5b539b5f5ed8bc6933935ad698dba500a9265335933857638e2b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only bind-only settlement under CLAUDE 3.2; no new Lean declaration or project coverage GID. With the adjacent definition Q(i,j)=K(i,j)/4 and Q^R(i,j)=Q(j,i), the source's displayed four-state kernel gives positive entries and unit total mass by Fintype.sum_prod_type, Fin.sum_univ_succ and finite algebra normalization. For every k>=2, one_div_le_one_div_of_le gives 0<delta=1/k<=1/2. Direct expansion of the 16 terms with Real.sqrt_mul, Real.sqrt_sq, Real.sqrt_nonneg and Real.sq_sqrt yields the four source contributions and b=(7+6*sqrt(2))/16+delta*(3-2*sqrt(2))/16; the same square identities give 3-2*sqrt(2)=(sqrt(2)-1)^2>0, sqrt(2)<3/2 and 0<b<=beta=(17+10*sqrt(2))/32<1. These declarations are available in pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact anonymous symbolic probes compile for the full delta interval with standard axioms only. No existing frozen project GID was found for this complete algebraic clause in the inspected probability, divergence, Hellinger, testing and naming-window declarations. This receipt settles only the exact 642-byte normalization/affinity/beta clause; it does not establish full-path normalization, first-edge marginalization for arbitrary lengths, the risk bounds or whole RRO104.
+    previous_atom_id: 2d01a44cb3f897dffe6ca579feb010bb1c17da92e940a9f29f3cebd59b425cb4
+    next_atom_id: 3f37f3984ee2f3089d8dafade61cefb081f3e48a4acdde36735d82de1ce71fca

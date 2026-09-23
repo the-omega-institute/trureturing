@@ -1,0 +1,27 @@
+**theorem 50.2（连续二元算术延拓的精确有限逃逸判据）。** 设
+$$
+h:\mathbb N_0^2\to\mathbb N_0.
+$$
+存在联合连续
+$$
+H:K_{t,D}^2\to K_{t,D}
+$$
+满足
+$$
+H(j(a),j(b))=j(h(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+\forall\alpha\in I_{t,D}\ \exists\beta\in I_{t,D},\quad
+\alpha\preceq\beta
+$$
+且
+$$
+\forall a,a',b,b'\in\mathbb N_0,\quad
+a\mathrel{R_\beta}a'\ \land\ b\mathrel{R_\beta}b'
+\Longrightarrow
+h(a,b)\mathrel{R_\alpha}h(a',b').
+\tag{50.1}
+$$
+若延拓存在则唯一。因此，要否定延拓，必须为某个输出层 $\alpha$ 证明：对每一个允许的更细输入层 $\beta\succeq\alpha$ 都存在逃逸，而只展示某一个有限商上的同层失败并不足够。
+

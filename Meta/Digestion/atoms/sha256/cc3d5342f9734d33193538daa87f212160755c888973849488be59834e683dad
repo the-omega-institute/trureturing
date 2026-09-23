@@ -1,0 +1,116 @@
+**证明。** 先证明阈值必要性。设 $t\ge2$，取输出层
+$$
+\alpha=(2,1).
+$$
+任取允许的更细输入层
+$$
+\beta=(v,M)\succeq(2,1).
+$$
+选择充分大的整数 $k$，令
+$$
+A=kM+1>v,\qquad B=A+M.
+$$
+则 $A,B\ge v$ 且 $A\equiv B\pmod M$，故
+$$
+A\mathrel{R_\beta}B.
+$$
+比较两对输入
+$$
+(A,A),\qquad(A,B).
+$$
+第一槽完全相同，第二槽在 $R_\beta$ 下相同；然而
+$$
+\gcd(A,A)=A\ge2,
+$$
+而
+$$
+\gcd(A,B)=\gcd(A,M)=1,
+$$
+因为 $A\equiv1\pmod M$。在 $Q_{2,1}$ 中，$1$ 是孤立初始类，而所有不小于 $2$ 的整数属于尾类，因此两个输出不同。这个逃逸对每一个 $\beta\succeq\alpha$ 都成立，定理 50.2 排除连续延拓。故必须 $t\le1$。
+
+再证明模数必要性。若 $D\nmid2$，则存在有限除数 $m\mid D$ 满足 $m>2$。取输出层
+$$
+\alpha=(0,m).
+$$
+任取
+$$
+\beta=(v,M)\succeq(0,m),
+$$
+于是 $m\mid M$。选择充分大的 $k$ 并令
+$$
+a=d=kM-1>v,\qquad b=a+M.
+$$
+则
+$$
+a\equiv b\equiv d\equiv-1\pmod M,
+\qquad
+\gcd(a,b)=\gcd(a,M)=1.
+$$
+令
+$$
+x=da,\qquad y=db.
+$$
+有 $x,y\ge v$ 且
+$$
+x\equiv y\equiv1\pmod M,
+$$
+所以 $x\mathrel{R_\beta}y$。比较
+$$
+(x,x),\qquad(x,y).
+$$
+输入在两个槽中具有相同的 $\beta$ 读数，而
+$$
+\gcd(x,x)=da\equiv1\pmod m,
+$$
+以及
+$$
+\gcd(x,y)=d\gcd(a,b)=d\equiv-1\pmod m.
+$$
+因为 $m>2$，
+$$
+1\not\equiv-1\pmod m.
+$$
+故输出在 $Q_{0,m}$ 中不同。再次，这是对每个允许的更细 $\beta$ 的逃逸，故定理 50.2 给出不连续。这里构造失败的唯一模数例外正是 $m\mid2$：模 $1$ 或模 $2$ 时 $1\equiv-1$，所以该证据不能分离；这不是证明缺口，而恰好对应下面的两个可行模数。
+
+现证明充分性。因 $t\le1$ 且 $D=1$ 或 $2$，$I_{t,D}$ 有最大元 $(t,D)$，所以 $K_{t,D}\cong Q_{t,D}$ 是有限离散空间。更强地，gcd 在每个允许层同层下降。四个最大层的表如下。
+
+当 $(t,D)=(0,1)$ 时只有一个类 $*$：
+$$
+G(*,*)=*.
+$$
+
+当 $(t,D)=(0,2)$ 时记 $E$ 为偶数类、$O$ 为奇数类。因为
+$$
+\gcd(a,b)\ \text{为偶数}
+\iff
+a,b\ \text{都为偶数},
+$$
+其中约定 $\gcd(0,0)=0$ 亦满足此式，所以
+$$
+\begin{array}{c|cc}
+G&E&O\\ \hline
+E&E&O\\
+O&O&O
+\end{array}.
+$$
+
+当 $(t,D)=(1,1)$ 时记 $0$ 为孤立零类、$P$ 为正整数尾类。由 $\gcd(0,n)=n$ 且两个正整数的 gcd 仍为正数，
+$$
+\begin{array}{c|cc}
+G&0&P\\ \hline
+0&0&P\\
+P&P&P
+\end{array}.
+$$
+
+当 $(t,D)=(1,2)$ 时记 $0$ 为孤立零类，$E$ 为正偶数尾类，$O$ 为奇数尾类。由零约定及奇偶判据，
+$$
+\begin{array}{c|ccc}
+G&0&E&O\\ \hline
+0&0&E&O\\
+E&E&E&O\\
+O&O&O&O
+\end{array}.
+$$
+这些表分别由自然数 gcd 诱导，因此与所有遗忘映射相容，并给出所需连续延拓。证毕。
+

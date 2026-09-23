@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6bd931b4305119f7303cce64f456ae04e01d3ba0b1400555c8ecc2bdf82e9481
+  normalized_sha256: sha256:6bd931b4305119f7303cce64f456ae04e01d3ba0b1400555c8ecc2bdf82e9481
+cas_ref: sha256:6bd931b4305119f7303cce64f456ae04e01d3ba0b1400555c8ecc2bdf82e9481
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶限定有限预测商的用途并说明物理仪器实现还需另给动力学模型，只陈述范围和研究义务，没有新增待证命题。
+    previous_atom_id: bff45a5b3389e529d6f2fde2ae8e3f8de61e01e15df9b263ec1bd11edac0f268
+    next_atom_id: 3cd6211f47c2fed323afb491607502c03f93822c4f59c95c448e74040dceba39

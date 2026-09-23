@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:81a52413cf64d0d2b2ff681df1181b590435f10300ed2150b5a8c3f63d803343
+  normalized_sha256: sha256:81a52413cf64d0d2b2ff681df1181b590435f10300ed2150b5a8c3f63d803343
+cas_ref: sha256:81a52413cf64d0d2b2ff681df1181b590435f10300ed2150b5a8c3f63d803343
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶显式断言“两步均使用固定零标签损失”时的输出差公式，非定义夹带主张；探针对任意尺寸实矩阵及任意三个实标量直接展开两次更新，用 Matrix.mul_assoc、分配律和 module 归一化得到三次步长乘第二步长的系数，覆盖零参数情形，仓内无冻结 GID。
+    previous_atom_id: b73366f4f4d080d8ef14582e736a57f3316efaab6443b984802eae6a90f1ad36
+    next_atom_id: c90143b5fdfbde967abf4e19792f2c10f5d81df00f072d438a3cdf00a7d223ee

@@ -1,0 +1,23 @@
+{
+  "length": 3,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/003-actual_cases/000000-000002.json",
+        "sha256": "57dae327c65d387dadf9673b5d478e02eaec4ddd95660a79a32dc5e4df09eca4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/003-actual_cases/000002-000003.json",
+        "sha256": "b3a20ca9731ba07c66dd743a953a4b839dda11bfccfd30e4956b3d10a3962695",
+        "kind": "value"
+      }
+    }
+  ]
+}

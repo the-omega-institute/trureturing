@@ -1,0 +1,6 @@
+# 递归关系观察：相容整体、局部钟与闭轨谱
+
+给定同一实际来源、合法操作和读数任务，本卷研究全部有限续接怎样组成完整行为，何时相容局部读数有共同实现，何时可以有限表示，以及改变截面、坐标与局部钟怎样保持实际响应。闭轨谱是这些过程的一种读数；其恢复能力须与开放端口、来源和完整档案分别检验。
+
+以下“主卷”指 [《递归关系观察》](RECURSIVE_RELATIONAL_OBSERVATION.md)，“Context”指 [上下文卷](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)，“Recovery”指 [恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)。所用既有证明的版本为仓库修订 `e5f7c3993b8fb2af67764dda0955ee31e74921b7`。一般机制的证明归属在相应条目注明；本卷的类型、部分合法域、联合来源及复线性适配以普通数学证明给出，不据引用声称这些适配已获形式核验。
+

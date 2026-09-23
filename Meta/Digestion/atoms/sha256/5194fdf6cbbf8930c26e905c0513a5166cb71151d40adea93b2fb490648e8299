@@ -1,0 +1,11 @@
+**定理 45.5（严格区间捕获给出的有限一致上界；repo-derived）。** 对正有理数 $0<\varepsilon\le1/16$，目标网格取ML 定义41.2的
+$$
+k=8\varepsilon,\qquad K=1+8\varepsilon,\qquad
+m=2\left\lceil\frac{K^3}{4\varepsilon}\right\rceil.
+$$
+从旧编号 $j$ 重启为 $i_0=\operatorname{nearest}_{\downarrow}(mj/28)$，随后按目标网格读取共同新报告。令
+$$
+U_\varepsilon=\min\{T\in\mathbb N:T\ge1,\ 3\le2^{T+1}\varepsilon\}
+=\left\lceil\log_2\frac3{2\varepsilon}\right\rceil.
+$$
+对所有旧历史和每个长度 $n\ge U_\varepsilon$ 的新报告词，真实后验严格位于当前目标区间内部，读出误差至多 $\varepsilon$。

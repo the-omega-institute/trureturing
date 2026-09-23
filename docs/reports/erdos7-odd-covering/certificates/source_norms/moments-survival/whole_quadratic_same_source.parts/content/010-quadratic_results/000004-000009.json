@@ -1,0 +1,775 @@
+[
+  {
+    "index": 45,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "s",
+          "16"
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        2,
+        0
+      ]
+    ],
+    "scaling": {
+      "factor": "2/1090089",
+      "primitive_hinges": {
+        "1": 65969,
+        "2": 67021,
+        "3": 53196,
+        "4": 53196
+      },
+      "primitive_factorial": 53196
+    },
+    "joint_source_uniform_cost_upper": "579333736109/2523828557250",
+    "previous_uniform_cost_upper": "579333736109/2523828557250",
+    "accepted_cost_upper": "579333736109/2523828557250",
+    "additional_gain": "0",
+    "matching_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "geometry": {
+        "source5": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "remainder_scaled": 5460090090,
+        "old_tail": "1/15",
+        "deep_positive7": "1/60",
+        "forced27": "1/675",
+        "mean_correction_scaled": 1507083690
+      },
+      "scaled_joint_source_lp": 74309098324790,
+      "source_dual": [
+        {
+          "gamma": 525109017097,
+          "alpha": [
+            0,
+            0,
+            1595906332020,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 11634715499050
+        },
+        {
+          "gamma": 820122825921,
+          "alpha": [
+            163851291737,
+            163851291737,
+            3261787112717,
+            163851291737,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 52991899763684
+        },
+        {
+          "gamma": 63235050564,
+          "alpha": [
+            0,
+            0,
+            407545658366,
+            0,
+            0,
+            0,
+            0,
+            407545658366,
+            0,
+            0,
+            0,
+            0,
+            407545658366,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 9682483062056
+        }
+      ],
+      "scaled_selected_increments": [
+        109443258489852,
+        147198889918080,
+        25234095414528
+      ],
+      "scaled_mean_deletion": 99420803945610,
+      "scaled_factorial_remainder": 290454952427640
+    }
+  },
+  {
+    "index": 47,
+    "tag": [
+      "s",
+      "81/4"
+    ],
+    "scaling": {
+      "factor": "1/4",
+      "primitive_hinges": {
+        "4": 19,
+        "5": 17
+      },
+      "primitive_factorial": 8
+    },
+    "joint_source_uniform_cost_upper": "1296144121/388962000",
+    "previous_uniform_cost_upper": "1296144121/388962000",
+    "accepted_cost_upper": "1344356641/405168750",
+    "additional_gain": "0",
+    "matching_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "geometry": {
+        "source5": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "remainder_scaled": 5460090090,
+        "old_tail": "1/15",
+        "deep_positive7": "1/60",
+        "forced27": "1/675",
+        "mean_correction_scaled": 1507083690
+      },
+      "scaled_joint_source_lp": 3655860012,
+      "source_dual": [
+        {
+          "gamma": 2521050,
+          "alpha": [
+            0,
+            0,
+            65950668,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 289013172
+        },
+        {
+          "gamma": 17647350,
+          "alpha": [
+            0,
+            0,
+            349417530,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 3324760740
+        },
+        {
+          "gamma": 51450,
+          "alpha": [
+            0,
+            0,
+            2469600,
+            0,
+            0,
+            0,
+            0,
+            2469600,
+            0,
+            0,
+            0,
+            0,
+            2469600,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 42086100
+        }
+      ],
+      "scaled_selected_increments": [
+        13965205212,
+        36967668780,
+        13875052464,
+        9940164010
+      ],
+      "scaled_mean_deletion": 0,
+      "scaled_factorial_remainder": 43680720720
+    }
+  },
+  {
+    "index": 48,
+    "tag": [
+      "s",
+      "9"
+    ],
+    "scaling": {
+      "factor": "1",
+      "primitive_hinges": {
+        "3": 7,
+        "4": 2
+      },
+      "primitive_factorial": 2
+    },
+    "joint_source_uniform_cost_upper": "7289003/1852200",
+    "previous_uniform_cost_upper": "7289003/1852200",
+    "accepted_cost_upper": "7289003/1852200",
+    "additional_gain": "0",
+    "matching_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "geometry": {
+        "source5": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "remainder_scaled": 5460090090,
+        "old_tail": "1/15",
+        "deep_positive7": "1/60",
+        "forced27": "1/675",
+        "mean_correction_scaled": 1507083690
+      },
+      "scaled_joint_source_lp": 1634307878,
+      "source_dual": [
+        {
+          "gamma": 6000099,
+          "alpha": [
+            0,
+            0,
+            42941885,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 231768530
+        },
+        {
+          "gamma": 12353145,
+          "alpha": [
+            0,
+            0,
+            116472510,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 1302374430
+        },
+        {
+          "gamma": 122451,
+          "alpha": [
+            0,
+            0,
+            5877648,
+            0,
+            0,
+            0,
+            0,
+            5877648,
+            0,
+            0,
+            0,
+            0,
+            5877648,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 100164918
+        }
+      ],
+      "scaled_selected_increments": [
+        4383601740,
+        13733167770,
+        948721536
+      ],
+      "scaled_mean_deletion": 0,
+      "scaled_factorial_remainder": 10920180180
+    }
+  },
+  {
+    "index": 49,
+    "tag": [
+      "s",
+      "81/16"
+    ],
+    "scaling": {
+      "factor": "1/16",
+      "primitive_hinges": {
+        "2": 63,
+        "3": 49,
+        "4": 32
+      },
+      "primitive_factorial": 32
+    },
+    "joint_source_uniform_cost_upper": "39800437/9261000",
+    "previous_uniform_cost_upper": "39800437/9261000",
+    "accepted_cost_upper": "39800437/9261000",
+    "additional_gain": "0",
+    "matching_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 2,
+      "geometry": {
+        "source5": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "remainder_scaled": 5460090090,
+        "old_tail": "1/15",
+        "deep_positive7": "1/60",
+        "forced27": "1/675",
+        "mean_correction_scaled": 1507083690
+      },
+      "scaled_joint_source_lp": 34191882284,
+      "source_dual": [
+        {
+          "gamma": 140472906,
+          "alpha": [
+            0,
+            0,
+            902014883,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            4,
+            4,
+            2,
+            0
+          ],
+          "value": 5012788592
+        },
+        {
+          "gamma": 353299947,
+          "alpha": [
+            51883209,
+            51883209,
+            1915443369,
+            51883209,
+            0
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 26648910288
+        },
+        {
+          "gamma": 8312262,
+          "alpha": [
+            0,
+            0,
+            132160644,
+            0,
+            0,
+            0,
+            0,
+            132160644,
+            0,
+            0,
+            0,
+            0,
+            132160644,
+            0,
+            0
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            6
+          ],
+          "value": 2530183404
+        }
+      ],
+      "scaled_selected_increments": [
+        93618485856,
+        112067731440,
+        15179544576
+      ],
+      "scaled_mean_deletion": 0,
+      "scaled_factorial_remainder": 174722882880
+    }
+  },
+  {
+    "index": 50,
+    "tag": [
+      "s",
+      "81/25"
+    ],
+    "scaling": {
+      "factor": "1/25",
+      "primitive_hinges": {
+        "1": 19,
+        "2": 106,
+        "3": 50,
+        "4": 50
+      },
+      "primitive_factorial": 50
+    },
+    "joint_source_uniform_cost_upper": "1040606353/231525000",
+    "previous_uniform_cost_upper": "1040606353/231525000",
+    "accepted_cost_upper": "1040606353/231525000",
+    "additional_gain": "0",
+    "matching_witness": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7_root": 0,
+      "positive7_slot": 4,
+      "geometry": {
+        "source5": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "remainder_scaled": 5460090090,
+        "old_tail": "1/15",
+        "deep_positive7": "1/60",
+        "forced27": "1/675",
+        "mean_correction_scaled": 1507083690
+      },
+      "scaled_joint_source_lp": 60944458148,
+      "source_dual": [
+        {
+          "gamma": 316475810,
+          "alpha": [
+            0,
+            0,
+            1341198600,
+            0,
+            143178833
+          ],
+          "allocation": [
+            0,
+            2,
+            4,
+            0,
+            4
+          ],
+          "value": 9102267832
+        },
+        {
+          "gamma": 783189393,
+          "alpha": [
+            0,
+            0,
+            2752986600,
+            0,
+            40235958
+          ],
+          "allocation": [
+            0,
+            8,
+            8,
+            6,
+            8
+          ],
+          "value": 45841462254
+        },
+        {
+          "gamma": 29078511,
+          "alpha": [
+            0,
+            0,
+            143176432,
+            0,
+            93999150,
+            0,
+            0,
+            143176432,
+            0,
+            93999150,
+            0,
+            0,
+            143176432,
+            0,
+            93999150
+          ],
+          "allocation": [
+            0,
+            0,
+            0,
+            4,
+            8,
+            0,
+            0,
+            8,
+            4,
+            8,
+            0,
+            0,
+            8,
+            2,
+            8
+          ],
+          "value": 6000728062
+        }
+      ],
+      "scaled_selected_increments": [
+        135486874152,
+        138355224000,
+        23718038400
+      ],
+      "scaled_mean_deletion": 28634590110,
+      "scaled_factorial_remainder": 273004504500
+    }
+  }
+]

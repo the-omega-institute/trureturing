@@ -1,0 +1,14 @@
+**定理 13.4（长时极限、归一化和 Abel 边界）。** (a) $r<1$ 时
+$$
+G_N(q)\longrightarrow\frac1{1-q},\qquad G_N(q)-\frac1{1-q}=-\frac{q^N}{1-q},\qquad
+\left|A_N-\frac b{1-q}\right|=\frac{|b|r^N}{|1-q|}\quad(N\ge1).
+$$
+证明用定理13.2及 $r^N\to0$；$r=0,N\ge1$ 时余项也为零。单位圆非共振时 $|G_N|\le2/|1-q|$，但不收敛，因为 $G_{N+1}-G_N=q^N$ 的模恒为一，而收敛序列的相邻差必趋零。其归一化 $G_N/N\to0$；共振 $q=1$ 时 $G_N/N=1$（$N\ge1$）。$\square$
+
+(b) 在共振方向 $q=r$，
+$$
+\lim_{r\uparrow1}\lim_{N\to\infty}\frac{G_N(r)}N=0,\qquad
+\lim_{N\to\infty}\lim_{r\uparrow1}\frac{G_N(r)}N=1.
+$$
+证明固定 $r<1$ 时有限和有界，除以 $N$ 趋零；固定 $N\ge1$ 时逐项令 $r\uparrow1$ 得 $N/N=1$。这两个值只属于归一化量，未归一化几何和没有该零／一结论。非共振 $e^{i\delta}\ne1$ 时径向极限 $(1-re^{i\delta})^{-1}\to(1-e^{i\delta})^{-1}$ 是 Abel 值，与已证明不收敛的单位圆部分和不同。
+

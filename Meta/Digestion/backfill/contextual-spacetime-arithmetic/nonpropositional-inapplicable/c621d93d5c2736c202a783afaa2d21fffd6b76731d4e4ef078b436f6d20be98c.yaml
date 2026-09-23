@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c621d93d5c2736c202a783afaa2d21fffd6b76731d4e4ef078b436f6d20be98c
+  normalized_sha256: sha256:c621d93d5c2736c202a783afaa2d21fffd6b76731d4e4ef078b436f6d20be98c
+cas_ref: sha256:c621d93d5c2736c202a783afaa2d21fffd6b76731d4e4ef078b436f6d20be98c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句提醒显式记录平移以免混淆绝对时间，是建模说明，无待证明命题。
+    previous_atom_id: 4b431a3a95288e7bead147b5ba50d995bb03141c15faf34b0fe45e8d42eece7a
+    next_atom_id: e5c4142a7930f705801cf42fb145ef0ad3e1b452a3b8c4bc1ac97ec6602ad904

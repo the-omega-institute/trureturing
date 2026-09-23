@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:709e09ef57ecee86cb49bde5f13c0fdb3c7563ad50b13533592b31fb9daaabd7
+  normalized_sha256: sha256:709e09ef57ecee86cb49bde5f13c0fdb3c7563ad50b13533592b31fb9daaabd7
+cas_ref: sha256:709e09ef57ecee86cb49bde5f13c0fdb3c7563ad50b13533592b31fb9daaabd7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “零一损失及其风险定义为”引入损失与期望代价，“所有策略只能依赖”限定可用信息；概率总和和实际像是明示模型约定，没有声称风险下界、零风险存在或全局策略存在，因而此定义不夹带这些后续命题，无须为命名本身新增证明。
+    previous_atom_id: 02bbd9551d59376d91c8b9b23a7df1188a6937b12e7d571aadde9de2f377c0b6
+    next_atom_id: a52c25b41680465989879664baaa4e019952d76778efa986c9b3462f1a5606b6

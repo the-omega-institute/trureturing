@@ -331,21 +331,6 @@ def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
   unless expectedContributors == actualContributors do
     throwSnapshotMismatch rootId "contributor-modules" expectedContributors actualContributors
 
-private def stageDeclarations (env : Environment) (declarations : Array Declaration)
-    (minimumHeartbeats : Nat := 0) :
-    CommandElabM Environment := do
-  let options ← getOptions
-  let mut stagedEnv := env
-  for declaration in declarations do
-    match stagedEnv.addDeclCore
-        (max (Core.getMaxHeartbeats options) minimumHeartbeats).toUSize
-        (maxRecDepth.get options).toUSize declaration none true with
-    | .ok nextEnv => stagedEnv := nextEnv
-    | .error error =>
-        let name := declaration.getNames[0]!
-        throwError "IE-C009 ProofConstructionFailed: {name}\n{error.toMessageData options}"
-  pure stagedEnv
-
 private def rootQualifiedEntry (rootId : Name) (localSealNames : Bool)
     (entry : InformationRegistryEntry) : InformationRegistryEntry :=
   if localSealNames then entry else
@@ -355,14 +340,9 @@ private def rootQualifiedEntry (rootId : Name) (localSealNames : Bool)
       realizationName := catalogQualifiedName rootId entry.canonicalObjectArenaName
         entry.effectiveCatalogId entry.theoremName primitiveRealizationSuffix }
 
-private def stageAlias (sourceName targetName : Name) : CommandElabM Unit := do
-  let sourceId := mkIdent (`_root_ ++ sourceName)
-  let targetId := mkIdent (`_root_ ++ targetName)
-  elabCommand (← `(command| abbrev $targetId := $sourceId))
-
 private def prepareRootQualifiedEntries (env : Environment)
     (entries : Array InformationRegistryEntry) :
-    CommandElabM (Array (Name × Name) × Array InformationRegistryEntry) := do
+    CommandElabM (Array InformationRegistryEntry) := do
   let rootId := env.header.mainModule
   let localSealNames := entries.all fun entry =>
     entry.localRegistrationNames && entry.registrationModuleName == rootId
@@ -376,13 +356,7 @@ private def prepareRootQualifiedEntries (env : Environment)
       if owners.size > 1 || (env.contains generatedName && !sourceOwner) then
         throwError (qualifiedNameCollisionError rootId entry.effectiveCatalogId
           generatedName owners)
-  let mut aliases := #[]
-  for (source, target) in entries.zip qualified do
-    if source.realizationName != target.realizationName then
-      aliases := aliases.push (source.realizationName, target.realizationName)
-    if source.unitName != target.unitName then
-      aliases := aliases.push (source.unitName, target.unitName)
-  pure (aliases, qualified)
+  pure qualified
 
 private def retainSealRecords (env : Environment) (records : Array SealArenaRecord) :
     Environment :=
@@ -400,17 +374,15 @@ def prepareSealPublication : CommandElabM Unit := do
   try
     validateRegistrySnapshot baseEnv
     let sourceEntries := InformationRegistry.entries baseEnv
-    validateSourceEntries baseEnv sourceEntries
-    let (aliases, catalogEntries) ←
-      prepareRootQualifiedEntries baseEnv sourceEntries
-    for pair in aliases do
-      stageAlias pair.1 pair.2
+    let snapshot ← validateSourceSnapshot sourceEntries
+    let catalogEntries ← prepareRootQualifiedEntries baseEnv sourceEntries
+    let snapshot ← snapshot.stageAliases catalogEntries
     let aliasEnv ← getEnv
-    let catalogs ← prepareCatalogsFromEntries sourceEntries catalogEntries
+    let catalogs ← prepareCatalogsFromSnapshot snapshot
     let proofs ← prepareProofs catalogs
     let declarations := catalogs.map (·.declaration) ++ proofs.declarations
     preflightNames aliasEnv proofs.records declarations
-    let stagedEnv ← stageDeclarations (← getEnv) declarations
+    let stagedEnv ← liftCoreM <| stageDeclarations (← getEnv) declarations
     let stagedEnv := retainSealRecords stagedEnv proofs.records
     withEnv stagedEnv <| proofs.records.forM logSummary
     setEnv stagedEnv
@@ -430,7 +402,8 @@ def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit := do
     let records := SealRecords.forRoot sealedEnv rootId
     let analysis ← prepareAnalysisProofs rootId records
     preflightNames sealedEnv records analysis.declarations
-    let stagedEnv ← stageDeclarations (← getEnv) analysis.declarations analysisMaxHeartbeats
+    let stagedEnv ← liftCoreM <|
+      stageDeclarations (← getEnv) analysis.declarations analysisMaxHeartbeats
     setEnv <| retainAnalysisState stagedEnv {
       rootId
       records := analysis.records

@@ -1,0 +1,22 @@
+#### 124.10.1 私有变量分开、共享变量保留的精确公式
+
+令 $X,U,Y,V,Z$ 为有限集合，权重取值于交换半环 $\mathbb S$。例如非负实数用于加权计数，布尔半环用于存在性约束。给定
+
+$$
+w_1:X\times U\times Y\to\mathbb S,
+\qquad w_2:Y\times V\times Z\to\mathbb S.
+$$
+
+$u,v$ 是不同私有变量；$y$ 是同一个共享变量。把完整联合权重明确规定为
+
+$$
+w(x,u,y,v,z)=w_1(x,u,y)w_2(y,v,z).
+$$
+
+定义局部边界响应
+
+$$
+Z_1(x,y)=\sum_u w_1(x,u,y),\qquad
+Z_2(y,z)=\sum_v w_2(y,v,z).
+$$
+

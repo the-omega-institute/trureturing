@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2040e139642b3c7a2f63e837c3fa0d880c61cbc39d4045e8a682e9a69e63475d
+  normalized_sha256: sha256:2040e139642b3c7a2f63e837c3fa0d880c61cbc39d4045e8a682e9a69e63475d
+cas_ref: sha256:2040e139642b3c7a2f63e837c3fa0d880c61cbc39d4045e8a682e9a69e63475d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “均为实施自查，不充作独立评审”界定 caller 与 worker 亲验范围；列出的时间、行数与命令名是历史操作读数，不是数学证明，也无定义中的隐藏结论。
+    previous_atom_id: 3cd045992c6326919dcf7857b0f4eab3402ecfc42f43787118a8c133b30ae213
+    next_atom_id: f1f422fa0d78abd5e08ddcd448a3eaf9cb0514e88baf3ada472b44b645fd1eac

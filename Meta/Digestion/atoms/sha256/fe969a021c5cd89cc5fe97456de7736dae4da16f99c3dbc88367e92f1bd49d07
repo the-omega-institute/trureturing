@@ -1,0 +1,34 @@
+**Proof.** Evaluation is a product coordinate and hence continuous. Its image is compact, contains every $Z(n)=e(T^n)$, and is therefore all of $K$. A continuous surjection from a compact space to a Hausdorff space is closed and hence quotient.
+
+The operator classification gives all possible representatives, and
+$$
+e(P_\theta^s)=
+\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^s,&\theta=E_m.
+\end{cases}
+$$
+Natural phases avoid $E$, and distinct nonnegative integers have distinct phases. Combining these facts with the distinctness of the actual operators proves each fibre formula, including the three distinct representatives at zero.
+
+Since every $p$ commutes with $T^k$,
+$$
+p(Z(k))=p(T^k0_K)=T^k(p0_K).
+$$
+This proves the assertion about agreement on the natural core. The discontinuous operators in Theorem 37.8 explain why agreement on a dense set does not force equality here.
+
+If $e(p)=e(p')$, then for every fixed $r$,
+$$
+e(rp)=r(e(p))=r(e(p'))=e(rp').
+$$
+So common left multiplication preserves the kernel.
+
+For failure on the other side, take
+$$
+p=\operatorname{id}_K,\qquad p'=P_0^-,\qquad q=P_{E_1}^+.
+$$
+Then $e(p)=e(p')=0_K$, but
+$$
+e(pq)=x_1^+,\qquad e(p'q)=x_1^-.
+$$
+Thus common right multiplication does not preserve the kernel. Any proposed operation $*$ satisfying the displayed descent identity would assign two different values to the same input pair $(0_K,x_1^+)$, which is impossible. $\square$
+

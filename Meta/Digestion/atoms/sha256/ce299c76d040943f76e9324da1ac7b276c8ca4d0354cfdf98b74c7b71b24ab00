@@ -1,0 +1,9 @@
+**(b) 缺少后续保持时，端点保守可以掩盖中间强化。** 使用命题 88.4 的单公式闭包 $C_0(\Gamma)=\Gamma$、$C_+(\Gamma)=\Gamma\cup\{p\}$，取
+$$
+F_A=F_B=F_C=\{p\},\qquad
+\tau=\sigma=\operatorname{id},
+\qquad
+C_A=C_0,\ C_B=C_+,\ C_C=C_0.
+$$
+则第一步保持但不保守，第二步不保持，复合却保守。
+

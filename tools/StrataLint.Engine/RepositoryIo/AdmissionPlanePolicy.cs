@@ -107,16 +107,31 @@ internal static class AdmissionPlanePolicy
                 "candidate FILEMAP is unavailable");
         }
 
+        // Historical registration applies only when the immutable snapshots confirm
+        // that an endpoint existed in the base and is absent from the candidate.
+        var candidatePaths = candidate.Entries
+            .Select(static entry => entry.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        var protectedBasePaths = protectedBase.Entries
+            .Select(static entry => entry.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        var deletedPaths = endpoints
+            .Select(static change => change.Path.Value)
+            .Where(path => !candidatePaths.Contains(path) && protectedBasePaths.Contains(path))
+            .ToHashSet(StringComparer.Ordinal);
+
         AdmissionPlaneFileMap candidateManifest;
         AdmissionPlaneFileMap? baseManifest = null;
+        var source = "candidate FILEMAP";
         try
         {
             candidateManifest = AdmissionPlaneFileMapLoader.Parse(
                 fileMap.Bytes.AsSpan(),
                 FileMapPath,
                 path => ReadInclude(candidate, path));
-            if (endpoints.Any(static change => change.Kind is RawChangeKind.Deleted))
+            if (deletedPaths.Count > 0)
             {
+                source = "protected-base FILEMAP";
                 var baseFileMap = protectedBase.Entries.FirstOrDefault(
                     static entry => entry.Path == FileMapPath);
                 if (baseFileMap is null)
@@ -138,31 +153,30 @@ internal static class AdmissionPlanePolicy
             return Failed(
                 "ADMISSION-PLANE-FILEMAP-INVALID",
                 FileMapPath,
-                $"FILEMAP cannot be parsed: {exception.Message}");
+                $"{source} cannot be parsed: {exception.Message}");
         }
         catch (FileMapPatternException exception)
         {
             return Failed(
                 FileMapPatternException.FindingCode,
                 exception.Pattern,
-                $"{FileMapPatternException.FindingCode}: {exception.Message}");
+                $"{source}: {FileMapPatternException.FindingCode}: {exception.Message}");
         }
         catch (FormatException exception)
         {
             return Failed(
                 "ADMISSION-PLANE-FILEMAP-INVALID",
                 FileMapPath,
-                exception.Message);
+                $"{source}: {exception.Message}");
         }
 
         var judgePaths = new List<string>();
         var contentPaths = new List<string>();
         foreach (var change in endpoints)
         {
-            // A retired path's registration can be retired in the same delta. Renames
-            // arrive as Deleted + Added, so each endpoint uses its own snapshot.
-            var manifest = change.Kind is RawChangeKind.Deleted ? baseManifest! : candidateManifest;
             var path = change.Path.Value;
+            var deleted = deletedPaths.Contains(path);
+            var manifest = deleted ? baseManifest! : candidateManifest;
             var matches = manifest.Match(path);
             if (matches is not [var match])
             {
@@ -171,7 +185,7 @@ internal static class AdmissionPlanePolicy
                     path,
                     "changed path must match exactly one FILEMAP entry; "
                     + $"path={path} matches={matches.Length} "
-                    + $"manifest={(change.Kind is RawChangeKind.Deleted ? "protected-base" : "candidate")}");
+                    + $"manifest={(deleted ? "protected-base" : "candidate")}");
             }
 
             if (FileMapDocuments.IsPolicyPath(path) && match.AdmissionPlane is not FileMapAdmissionPlane.Judge)

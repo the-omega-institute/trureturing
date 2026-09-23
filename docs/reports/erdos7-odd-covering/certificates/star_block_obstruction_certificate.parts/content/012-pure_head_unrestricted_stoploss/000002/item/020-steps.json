@@ -1,0 +1,68 @@
+{
+  "length": 1020,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 159,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000002/item/020-steps/000000-000159.json",
+        "sha256": "34ba4424d02efe24843a1c65db6509e20256ae80660b1d95594f5815987ccf92",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 159,
+      "stop": 318,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000002/item/020-steps/000159-000318.json",
+        "sha256": "72ee5ab948f611db75b917ca4cfb4500206722b8bac78002a111f90a0926cf78",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 318,
+      "stop": 477,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000002/item/020-steps/000318-000477.json",
+        "sha256": "d3024685620502ae90228e09fe83f29685718d9b48ee0e8a19c0ed5f9e9e8333",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 477,
+      "stop": 636,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000002/item/020-steps/000477-000636.json",
+        "sha256": "d1d37d2b472ffe2f7a94bba53e59ff3c0b5d956c6bbf784ddcdfc0ba08bf9f19",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 636,
+      "stop": 795,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000002/item/020-steps/000636-000795.json",
+        "sha256": "6bf6080f05171b42bbb53a2d196220889492e1661086066d8d4d86e6a472cd2f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 795,
+      "stop": 954,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000002/item/020-steps/000795-000954.json",
+        "sha256": "5bcacfd8b53a7d41ae50235c2e207c3fd93a0c7e77f8da70dc221cbb0013a141",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 954,
+      "stop": 1020,
+      "part": {
+        "path": "content/012-pure_head_unrestricted_stoploss/000002/item/020-steps/000954-001020.json",
+        "sha256": "2639814ffeee3ac98deb34a968159ba7e374ff28b1592d49618ec79ca5f04ffc",
+        "kind": "value"
+      }
+    }
+  ]
+}

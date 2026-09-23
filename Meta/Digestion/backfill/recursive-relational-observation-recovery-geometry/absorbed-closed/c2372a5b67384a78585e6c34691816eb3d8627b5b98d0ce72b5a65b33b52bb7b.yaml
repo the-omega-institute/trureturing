@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c2372a5b67384a78585e6c34691816eb3d8627b5b98d0ce72b5a65b33b52bb7b
+  normalized_sha256: sha256:c2372a5b67384a78585e6c34691816eb3d8627b5b98d0ce72b5a65b33b52bb7b
+cas_ref: sha256:c2372a5b67384a78585e6c34691816eb3d8627b5b98d0ce72b5a65b33b52bb7b
+coverage_gids:
+  - gid: D5/S3/FluidDynamics/Fourier/LowModeReversalWitness.coefficient
+    target_statement_id: sha256:b1596333ea7b08132dd297da7cf0bc1a2c7a3cc183e5065a2ffad996f7bc2622
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,47 @@
+**定理 98.4（四字显露的方向性与单边 Markov 化边界）。** 定义 98.3 中的均匀初态平稳，$K$ 对标签分区 $r$ 在全部允许的 $p,q$ 下都不强可并，包括 $p=q$。正反观察词律具有共同正支撑，且
+$$
+D_m=0\qquad(m=1,2,3),
+\tag{98.4a}
+$$
+$$
+L_{0011}=\frac{q^3}{6},\qquad
+L_{1100}=\frac{p^3}{6},\qquad
+J:=L_{0010}-L_{0100}=\frac{p^3-q^3}{6}.
+\tag{98.4b}
+$$
+因此
+$$
+D_4>0\quad\Longleftrightarrow\quad p\ne q.
+\tag{98.4c}
+$$
+当 $p=q$ 时，全部有限词律都反序对称：
+$$
+L_m=L_m^R,\qquad D_m=0\qquad(m\ge1).
+\tag{98.4d}
+$$
+
+单边数据及其 Markov 化与参数的取值无关，具体为
+$$
+\bar\pi=(1/2,1/2),\qquad
+\bar Q=
+\begin{pmatrix}
+1/6&1/3\\
+1/3&1/6
+\end{pmatrix},\qquad
+\widehat K=
+\begin{pmatrix}
+1/3&2/3\\
+2/3&1/3
+\end{pmatrix}.
+\tag{98.4e}
+$$
+这个新的平稳 Markov 链的每个有限词律都反序对称，但 $\widehat K$ 不是 $K$ 关于 $r$ 的强可并粗核。特别地，$p\ne q$ 时，在四字、即三次转移处，
+$$
+D(L_4\Vert L_4^R)>0
+=3D(\bar Q\Vert\bar Q^{\mathsf T}),
+\qquad
+D(\widehat L_4\Vert\widehat L_4^R)=0.
+\tag{98.4f}
+$$
+所以平稳观察的单边流对称，不能单独保证整个观察路径的反序对称；把观察词律替换成其一步 Markov 化，会在此处丢失四字方向性。
+

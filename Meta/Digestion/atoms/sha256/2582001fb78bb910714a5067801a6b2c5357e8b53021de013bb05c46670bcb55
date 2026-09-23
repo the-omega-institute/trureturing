@@ -1,0 +1,16 @@
+**定理 61.8（$p=3$ 在有限第二层即 NP 完全，并给出二进制全深度分类）。** 采用定义 61.1 的显式位输入模型。下列结论成立。
+
+1. $\mathrm{SPVAL}_3^{12}$ 是 NP-complete；NP-hardness 即使限制约束图本身为二部图仍成立。
+2. 允许任意有限二进制标签与 $\infty$ 的 $\mathrm{SPVAL}_3^\ast$ 仍是 NP-complete。其 NP 证书不需要展开到 $D(I)$ 位：只需给出定理 61.7 的顶点符号 $s_v$，并对每个实际出现的有限正深度层给出一个三值数字着色；若总输入位长为 $N$，这种证书可取 $O(N^2)$ 位。
+3. 对固定有限深度且不允许 $\infty$ 的问题，
+$$
+\mathrm{SPVAL}_3^{\le D}\in\mathrm P\quad(D=0,1),
+$$
+而对每个固定 $D\ge2$，
+$$
+\mathrm{SPVAL}_3^{\le D}\text{ 是 NP-complete},
+$$
+并且后一 NP-hardness 已经发生在只用标签 $\{1,2\}$、约束图二部的子类中。
+
+这里唯一复用的外部图论复杂性输入是 section 59 已采用的一般有限简单图 GRAPH 3-COLORABILITY 的 NP-completeness。其原始来源为 M. R. Garey, D. S. Johnson, L. Stockmeyer, *Some simplified NP-complete graph problems*, Theoretical Computer Science 1 (1976), 237--267, Theorem 2.1, pp. 248--249；可访问全文为 https://www.math.ucdavis.edu/~deloera/MISC/LA-BIBLIO/trunk/JohnsonDavid2.pdf 。在定义 61.1 的显式图编码下，通常显式图实例只需按输入顺序重新编号顶点；以下从三着色到本估值问题的归约全部直接证明。
+

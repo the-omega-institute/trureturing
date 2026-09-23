@@ -1,0 +1,40 @@
+**theorem 37.11 (Exact projected relation and its associativity criterion).** Let $a=H(x)$ and $b=H(y)$. Then
+$$
+x\star y=
+\begin{cases}
+\{k_{a+b}\},&a+b\notin E,\\
+\{x_m^s:s\in\mathcal S(x)\},&a+b=E_m.
+\end{cases}
+$$
+Thus at a split output phase it is the first input, not the union of the two input sign sets, that controls the output signs.
+
+The relation has the unique strict right unit $0_K$, has no strict left unit, and is not commutative. More precisely,
+$$
+x\star0_K=\{x\},\qquad 0_K\star x=H^{-1}(\{H(x)\}).
+$$
+For three inputs, set
+$$
+a=H(x),\qquad b=H(y),\qquad c=H(z),\qquad \sigma=a+b+c.
+$$
+If $\sigma\notin E$, both bracketings and $\mathcal W_3$ equal $\{k_\sigma\}$. If $\sigma=E_m$, then
+$$
+x\star(y\star z)=\mathcal W_3(x,y,z)
+=\{x_m^s:s\in\mathcal S(x)\},
+$$
+whereas
+$$
+(x\star y)\star z=
+\begin{cases}
+\{x_m^s:s\in\mathcal S(x)\},&a+b\in E,\\
+\{x_m^-,x_m^+\},&a+b\notin E.
+\end{cases}
+$$
+Consequently the two bracketings differ exactly when
+$$
+H(x)\in E,\qquad H(x)+H(y)\notin E,\qquad H(x)+H(y)+H(z)\in E.
+$$
+In all cases,
+$$
+\mathcal W_3(x,y,z)=x\star(y\star z)\subseteq(x\star y)\star z.
+$$
+

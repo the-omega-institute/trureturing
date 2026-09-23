@@ -1,0 +1,32 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "predecessor-support-six-v1"
+  },
+  "scalars": {
+    "path": "content/001-scalars.json",
+    "sha256": "059e0eb96b7d8eb5ef499166121dc083411a081a5ecbab8d3842ceef174cca4a",
+    "kind": "value"
+  },
+  "actual": {
+    "path": "content/002-actual.json",
+    "sha256": "cae48717aefeb2b8c1f727789769765adfb514a6d415b4bdc1c89d3725f4c595",
+    "kind": "object"
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "problem-details/53-shared-small-prime-budgets-for-six-or-seven-predecessor-supports.md": "684db767a72b43b56227809556d93b437aea003e3377b058ed4431a4a04d13bb",
+      "problem-details/52-two-or-four-exact-predecessor-supports.md": "6ce31e69b18775949e577f4068c5a63da94ad6f62bb8b59c763b85d376c418ee",
+      "problem-details/07-ordered-local-kernels-unbounded-feedback-sets-and-treewidth.md": "1101e53b540deee5175611a11b0e0bf93883482fb80d2477c3730072bcf1735b",
+      "problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md": "e7bfef78a6774051abee44bc1888fa27be24ad3786eeca0bb8f91ff57a440dc7",
+      "problem-details/41-natural-four-predecessor-orders-are-noncovering.md": "8b16471115e24d67336b49c725eb1086b97df960052bf138871fe330b296ffd4",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "20f16d9c710aeb9cac0300c43059206f7da9e3237b25283fb3d7eec6c4322244"
+  }
+}

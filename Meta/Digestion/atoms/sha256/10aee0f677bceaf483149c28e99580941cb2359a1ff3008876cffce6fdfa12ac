@@ -1,0 +1,23 @@
+**定义 17.1（完整历史上的来源后验与有效似然）。** 固定有限非空来源标签集 $\Theta$、有限当前状态集 $X$、有限非空动作与输出集、有限的已表示旧档案字母集，以及有限时域 $T\ge0$。$\Theta$ 表示同一个固定来源目标，例如初始状态的标签；隐藏当前状态 $X_t$ 可以被动作和输出共同改变。以 $H_0=C$ 开始，$C$ 包括全部已表示的来源记录、内外档案及控制器初始可访问关系；以后 $H_{t+1}=(H_t,A_t,Y_{t+1})$ 保留旧历史。给定允许策略及受控模型，得到一份完整联合律。对正概率条件事件采用顺序生成契约
+$$
+\Pr(A_t=a,Y_{t+1}=y,X_{t+1}=x'\mid
+\Theta=\theta,X_t=x,H_t=h)
+=\pi_t(a\mid h)T_t(x',y\mid\theta,x,h,a),
+\tag{17.1}
+$$
+其中 $T_t$ 是逐输入归一化的非负核；给定更早隐藏路径也使用此核。$\pi_t$ 只能访问实际 $h$ 及允许的独立随机源，不直接访问 $\theta,x$。动作守卫若存在，$\pi_t$ 支撑于已声明的合法动作。这个[机器学习卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)定义17.1型条件因子化，比仅说“开始时抽了一枚独立种子”更具体。
+
+在 $\Pr(H_t=h)>0$ 时令 $b_h(\theta)=\Pr(\Theta=\theta\mid h)$，以下把 $b_h$ 写成概率列向量。对 $\pi_t(a\mid h)>0$ 的动作，及 $b_h(\theta)>0$ 的来源类，定义
+$$
+\begin{aligned}
+\mu_h(\theta,x)&=\Pr(\Theta=\theta,X_t=x\mid h),\\
+L_{h,a}(y\mid\theta)
+&=\sum_x\frac{\mu_h(\theta,x)}{b_h(\theta)}
+\sum_{x'}T_t(x',y\mid\theta,x,h,a).
+\end{aligned}
+\tag{17.2}
+$$
+它是从完整受控联合律导出的有效似然。$b_h(\theta)=0$ 时可给 $L_{h,a}(\cdot\mid\theta)$ 任意概率行，其后总被零质量乘掉；$h$ 无支撑时不定义其后验。未被该策略选择的合法动作若要参与比较，须有已指定的干预核 $T_t$，再用式（17.2）定义相应实验，不能把零概率条件事件当作实际观测。
+
+仅给 $b_h$ 不保证能得到式（17.2）：同来源条件下的当前状态律、历史依赖核及动作守卫均可能仍缺失。若要闭合递推，须增加任务实际需要的联合状态或历史关系。[AdaptivePosteriorPolicySufficiency](../../../D5/S3/Estimation/DataProcessing/AdaptivePosteriorPolicySufficiency.lean)要求共同来源条件实验核及正确 Bayes 历史扩展；它不把这些前提从来源边缘后验中自动导出。本节讨论概率、投影和固定目标风险，不从“状态”“空间”“时间”或“创新”的名称推出物理波、场或衰变定律。
+

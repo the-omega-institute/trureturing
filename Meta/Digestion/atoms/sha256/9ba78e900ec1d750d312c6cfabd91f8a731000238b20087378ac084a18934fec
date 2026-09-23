@@ -1,0 +1,45 @@
+**定理 128.10（一个线性目标完全不更新的条件）。** 对 $\ell\in\mathbb R^d$，标量 $\ell^TZ$ 的后验均值和方差对所有历史值都等于先验，当且仅当
+$$
+\mathbf H\Sigma_0\ell=0.
+$$
+同样，若 $P_N$ 为似然盲空间 $N=\ker\mathbf H$ 的欧氏正交投影，则整个向量 $P_NZ$ 的后验边缘等于先验，当且仅当
+$$
+P_N\Sigma_0\mathbf H^T=0.
+$$
+
+**证明。** 把全部历史看成一次测量，由定理 128.2 得
+$$
+\Sigma_0-\Sigma_n
+=\Sigma_0\mathbf H^T
+(\mathbf R+\mathbf H\Sigma_0\mathbf H^T)^{-1}
+\mathbf H\Sigma_0.
+$$
+因中间矩阵正定，$\ell$ 方向的方差损失为零当且仅当 $\mathbf H\Sigma_0\ell=0$。后验均值在该方向上的改变量为
+$$
+\ell^T\Sigma_0\mathbf H^T
+(\mathbf R+\mathbf H\Sigma_0\mathbf H^T)^{-1}
+(\mathbf y-\mathbf Hm_0),
+$$
+在同一条件下恒为零。反向若后验边缘不变，方差已迫使该条件。向量版将 $\ell^T$ 换成 $P_N$，差协方差为 $BB^T$ 型，零矩阵等价于 $P_N\Sigma_0\mathbf H^T=0$。Gaussian 边缘由均值与协方差唯一决定。证毕。
+
+例如
+$$
+\Sigma_0=\begin{pmatrix}1&\rho\\\rho&1\end{pmatrix},
+\quad 0<|\rho|<1,\qquad m_0=0,\qquad
+Y=Z_1+\epsilon,\quad \epsilon\sim N(0,1).
+$$
+$e_2\in\ker(1,0)$ 是似然盲方向，但
+$$
+\mathbb E[Z_2\mid Y=y]=\rho y/2,\qquad
+\operatorname{Var}(Z_2\mid Y)=1-\rho^2/2.
+$$
+所以未直接读取的第二坐标仍会更新。先验为 $\sigma^2I$ 时，
+$P_N\Sigma_0\mathbf H^T=0$ 自动成立，此时盲空间的欧氏投影边缘才保持。
+
+更一般且不需各向同性的正确结论是：在给定可见坐标之后，盲纤维内部的条件律不变。按 $N\oplus N^\perp$ 写 $Z=(Z_{\mathrm h},Z_{\mathrm v})$，似然只依赖 $Z_{\mathrm v}$。于是在有条件密度的版本中
+$$
+p(z_{\mathrm h}\mid z_{\mathrm v},\mathbf y)
+=p(z_{\mathrm h}\mid z_{\mathrm v}),
+$$
+因为 Bayes 式中只依赖 $z_{\mathrm v}$ 的似然因子约去。读数改变各可见纤维的后验权重；若先验中隐藏、可见相关，隐藏边缘随该混合权重改变。这解释了上述例子，没有声称观察区分了同一个似然纤维内的点。
+

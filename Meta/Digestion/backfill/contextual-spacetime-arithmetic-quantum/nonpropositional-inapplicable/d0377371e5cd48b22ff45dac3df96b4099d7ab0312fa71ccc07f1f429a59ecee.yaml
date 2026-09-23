@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d0377371e5cd48b22ff45dac3df96b4099d7ab0312fa71ccc07f1f429a59ecee
+  normalized_sha256: sha256:d0377371e5cd48b22ff45dac3df96b4099d7ab0312fa71ccc07f1f429a59ecee
+cas_ref: sha256:d0377371e5cd48b22ff45dac3df96b4099d7ab0312fa71ccc07f1f429a59ecee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子明确列出密度态、效应概率、有限记录操作及动力学的额外模型假设，不把这些假设称为算术推论，作为假设文本结算而不证明物理定律。
+    previous_atom_id: 2a994ca5076a1336f1877819fd22abf468b62eed9acd28aae4c354e1b8cde18b
+    next_atom_id: b725e7e27496a20fd3a59ac0cd605243d44a225977bcb9290361330a941d07d8

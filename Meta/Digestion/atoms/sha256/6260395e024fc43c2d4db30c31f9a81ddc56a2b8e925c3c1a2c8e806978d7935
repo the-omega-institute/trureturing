@@ -1,0 +1,6 @@
+**theorem 55.4 交叉数组的精确分支判据与共同整数见证。** 交叉数组 $b$ 可实现，当且仅当它满足 $\mathrm R$，且对每个 $t\in\mathbb N_0$ 和每个 $G_t(b)$ 的混合分量 $H$ 都有
+$$
+D_t(H)\le p.
+$$
+条件成立时，可以选取全部 $z_w\in\mathbb Z$。这里每个同余球恰有 $p$ 个下一层同余子球，使用的是 $\mathbb F_p$ 的基数；这一数字分支机制见 [Bradley，§2，所链接版本第4–5页](https://www2.ipf.kit.edu/Personen/bradley/CV/hier2vis.pdf)。
+

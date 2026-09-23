@@ -85,7 +85,8 @@ internal static class MarkdownAstAtomizer
                         ContentKind(tableTag),
                         Extend: false,
                         IsClaim: true,
-                        ScopeHeadingLevel: ScopeHeadingLevel(headings)));
+                        ScopeHeadingLevel: ScopeHeadingLevel(headings),
+                        IsTableRow: true));
                 }
 
                 continue;
@@ -101,7 +102,9 @@ internal static class MarkdownAstAtomizer
                     identify, line.Text, line.Start, text, failures)))
                 .Where(static item => item.Tag is not null)
                 .ToArray();
-            if (lineClaims.Length > 1)
+            // Scoped claims also need a lone peer lead after unnumbered prose in the
+            // same paragraph; otherwise the whole-paragraph recognizer loses that boundary.
+            if (lineClaims.Length > 1 || (identifyHeadingClaim is not null && lineClaims.Length == 1))
             {
                 foreach (var lineClaim in lineClaims)
                 {
@@ -170,9 +173,13 @@ internal static class MarkdownAstAtomizer
 
         if (identifyHeadingClaim is not null)
         {
-            var claimSpans = candidates.Where(static candidate => candidate.IsClaim).ToArray();
+            // A scoped claim owns its internal tables and following prose. Keep those rows
+            // inside its byte span rather than emitting overlapping row atoms. Outside a
+            // scoped claim, rows remain independent claims with their original boundaries.
+            var claimSpans = candidates.Where(static candidate =>
+                candidate.IsClaim && !candidate.IsTableRow).ToArray();
             candidates.RemoveAll(candidate =>
-                !candidate.IsClaim && claimSpans.Any(claim =>
+                (!candidate.IsClaim || candidate.IsTableRow) && claimSpans.Any(claim =>
                     claim.StartCharacter < candidate.StartCharacter
                     && candidate.StartCharacter < claim.EndCharacter));
         }
@@ -258,7 +265,8 @@ internal static class MarkdownAstAtomizer
         List<HeadingBoundary> headingStarts)
     {
         var nextClaim = candidates
-            .Where(item => item.IsClaim && item.StartCharacter > candidate.StartCharacter)
+            .Where(item => item.IsClaim && !item.IsTableRow
+                && item.StartCharacter > candidate.StartCharacter)
             .Select(static item => item.StartCharacter)
             .DefaultIfEmpty(int.MaxValue)
             .Min();
@@ -299,7 +307,8 @@ internal static class MarkdownAstAtomizer
         bool Extend,
         bool IsClaim,
         int? ScopeHeadingLevel,
-        bool IsHeading = false);
+        bool IsHeading = false,
+        bool IsTableRow = false);
 
     private sealed record SourceLine(string Text, int Start, int End);
 

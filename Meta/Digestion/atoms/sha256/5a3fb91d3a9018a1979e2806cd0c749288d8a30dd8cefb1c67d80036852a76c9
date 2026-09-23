@@ -1,0 +1,8 @@
+**theorem 39.9 (Exact topological weight).** If $w(X)$ denotes the least cardinality of a topological base, then
+$$
+w(\mathscr E)=w(\mathscr D)=\mathfrak c,
+\qquad \mathscr D=\{P_\theta^s:\theta\in\mathbb T,\ s\in\Sigma\}.
+\tag{39.24}
+$$
+The calculation uses the explicit bases of Theorem 37.6, not merely failure of metrizability. The classical split-rotation comparison is Megrelishvili, *Orderable groups and semigroup compactifications*, arXiv:2112.14615v4, Example 6.8; the bases used here are those of the adopted nonnegative-time operator space.
+

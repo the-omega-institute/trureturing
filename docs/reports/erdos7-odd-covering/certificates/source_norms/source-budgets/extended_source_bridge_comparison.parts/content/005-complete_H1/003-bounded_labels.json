@@ -1,0 +1,162 @@
+[
+  {
+    "modulus": 3,
+    "transported_upper": "15790619/164851200",
+    "raw_haar_cap": "1/3",
+    "upper": "15790619/164851200",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          3,
+          1,
+          null
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          3,
+          1,
+          null
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          3,
+          1,
+          null
+        ]
+      }
+    ]
+  },
+  {
+    "modulus": 9,
+    "transported_upper": "4787/77760",
+    "raw_haar_cap": "1/9",
+    "upper": "4787/77760",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          9,
+          1,
+          null
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          9,
+          1,
+          null
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          9,
+          1,
+          null
+        ]
+      }
+    ]
+  },
+  {
+    "modulus": 5,
+    "transported_upper": "706669/9201600",
+    "raw_haar_cap": "1/5",
+    "upper": "706669/9201600",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          5,
+          null,
+          3
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          5,
+          null,
+          3
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          5,
+          null,
+          3
+        ]
+      }
+    ]
+  },
+  {
+    "modulus": 15,
+    "transported_upper": "233191/5112000",
+    "raw_haar_cap": "1/15",
+    "upper": "233191/5112000",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          15,
+          1,
+          3
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          15,
+          1,
+          3
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          15,
+          1,
+          3
+        ]
+      }
+    ]
+  },
+  {
+    "modulus": 45,
+    "transported_upper": "7747/388800",
+    "raw_haar_cap": "1/45",
+    "upper": "7747/388800",
+    "maximizers": [
+      {
+        "first_beta": 2,
+        "label": [
+          45,
+          1,
+          3
+        ]
+      },
+      {
+        "first_beta": 3,
+        "label": [
+          45,
+          1,
+          3
+        ]
+      },
+      {
+        "first_beta": 4,
+        "label": [
+          45,
+          1,
+          3
+        ]
+      }
+    ]
+  }
+]

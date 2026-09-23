@@ -1,0 +1,66 @@
+### 47.1 定义、实际递归像与有限供应
+
+固定实数 $A>0$、$0<\rho<1$，令
+$$
+K_A=[-A,A]^{\mathbb N}.
+$$
+每个 $a\in K_A$ 的数组 $\mathcal E(a)$ 由同一列递推定义：
+$$
+T(n,0)=a_n,\qquad
+T(n,k+1)=T(n+1,k)-\sum_{j=0}^{k}T(n,j)a_{k-j}.
+\tag{47.1}
+$$
+对 $k$ 归纳，右端只使用已经构造的列。每个坐标是 $a_0,\ldots,a_{n+k}$ 的整系数多项式，且没有常数项。因此每份实边界唯一给出一个满足 (47.1) 的实际全层数组，所有有限三角彼此相容。反向由第一列
+$$
+\beta(T)_n=T(n,0)
+$$
+提取边界。只有在对应递归像上，$\beta$ 与 $\mathcal E$ 互逆。
+
+使用第46.2—46.5节中已经建立的以下结果：共同负角点及幅度为（46.6），系数与根为（46.8）、（46.11）—（46.12），坐标 Lipschitz 性为（46.14）—（46.17），同立方体模量为（46.19）。对每个 $n,k\ge0$，
+$$
+|\mathcal E(a)(n,k)|\le u_k(A),\qquad
+\mathcal E(-A\mathbf1)(n,k)=-u_k(A),
+\tag{47.2}
+$$
+其中
+$$
+u_k(A)=\sum_{d=1}^{k+1}\binom{k+d-1}{2d-2}A^d
+=\frac{A}{\lambda+1}\bigl(\lambda^{k+1}+\lambda^{-k}\bigr),
+$$
+$$
+s=\sqrt{A^2+4A},\qquad \lambda=\lambda(A)=\frac{A+2+s}2>1,\qquad
+L_k(A)=u'_k(A).
+\tag{47.3}
+$$
+由 \(\lambda\) 的定义，它与 \(\lambda^{-1}\) 是
+\(x^2-(A+2)x+1=0\) 的两个正根，故
+\(\lambda+\lambda^{-1}=A+2\)、\(\lambda-\lambda^{-1}=s\)。
+
+同一有限依赖坐标的最优 Lipschitz 常数为 $L_k(A)$。对 $0\le h\le A$，
+$$
+|\mathcal E(a)(n,k)-\mathcal E(b)(n,k)|
+\le u_k(A)-u_k(A-h)
+\quad\text{若 }\|a-b\|_\infty\le h.
+\tag{47.4}
+$$
+共同角点对 $a=-A\mathbf1,\ b=-(A-h)\mathbf1$ 同时使所有坐标达到 (47.4)。这些是同一组无限序列的有限限制，不是分别为不同坐标选择不相容的见证。$h=A$ 时约定 $u_k(0)=0$，与多项式公式一致。
+
+定义加权数组空间及其范数：
+$$
+\mathcal B_\rho=
+\left\{T:\mathbb N^2\to\mathbb R:
+\|T\|_\rho:=\sup_{n,k\ge0}\rho^{n+k}|T(n,k)|<\infty\right\}.
+\tag{47.5}
+$$
+逐坐标乘以 $\rho^{n+k}$ 将它线性等距映到通常的 $\ell^\infty(\mathbb N^2)$，因此 $\mathcal B_\rho$ 是 Banach 空间。以下“映射有界”指整个 $K_A$ 的像在这个范数下统一有界，不把非线性 $\mathcal E$ 称为线性算子。
+
+记
+$$
+q=\rho\lambda(A).
+$$
+当 $\mathcal E(K_A)\subseteq\mathcal B_\rho$ 时，记实际像为
+$$
+\mathcal I_{A,\rho}=\mathcal E(K_A).
+$$
+不把 $\mathcal I_{A,\rho}$ 与任意加权有界数组空间混同。
+

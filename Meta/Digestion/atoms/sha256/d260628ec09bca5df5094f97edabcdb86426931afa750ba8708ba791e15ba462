@@ -1,0 +1,10 @@
+**定义 13（结构筛选）。** 对空间区域 $S\subseteq\mathbb Z^3$、来源树集合 $L\subseteq T$、档案子集 $D\subseteq E_C$，定义
+
+$$
+\begin{aligned}
+F_S(C,A)&=(C,\{e\in A:x(e)\in S\}),\\
+F_L(C,A)&=(C,\{e\in A:\rho(e)\in L\}),\\
+F_{\downarrow D}(C,A)&=(C,\{e\in A:\exists d\in D\ (e=d\ \lor\ e\prec d)\}).
+\end{aligned}
+$$
+

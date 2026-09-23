@@ -8,7 +8,7 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    private static ImmutableArray<RuleFinding> Axioms(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Axioms(CurrentRuleContext context)
     {
         const string debtPath = "D5/X_Assumptions/AxiomDebt.lean";
         var registered = ImmutableHashSet<string>.Empty;
@@ -22,11 +22,9 @@ internal static partial class RepositoryRules
         }
 
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var debtAffected = context.IsBaseFactAffected(debtPath);
         foreach (var (path, report) in context.Lean.Report.Files)
         {
-            var closureAffected = IsLeanClosureFactAffected(context, path);
-            if (!string.IsNullOrEmpty(report.Error) && closureAffected)
+            if (!string.IsNullOrEmpty(report.Error))
             {
                 findings.Add(new RuleFinding(path.Value, $"Lean environment inspection failed: {report.Error}"));
                 continue;
@@ -36,7 +34,7 @@ internal static partial class RepositoryRules
                 .Where(static declaration => declaration.Kind == "axiom")
                 .Select(static declaration => declaration.Name)
                 .ToImmutableHashSet(StringComparer.Ordinal);
-            if (path.Value != debtPath && direct.Count > 0 && closureAffected)
+            if (path.Value != debtPath && direct.Count > 0)
             {
                 findings.Add(new RuleFinding(
                     path.Value,
@@ -53,7 +51,7 @@ internal static partial class RepositoryRules
                 .Distinct(StringComparer.Ordinal)
                 .Order(StringComparer.Ordinal)
                 .ToArray();
-            if (extra.Length > 0 && (closureAffected || debtAffected))
+            if (extra.Length > 0)
             {
                 findings.Add(new RuleFinding(
                     path.Value,
@@ -64,11 +62,10 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Instantiation(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Instantiation(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var path in context.Current.Files.Keys
-                     .Where(path => context.IsBaseFactAffected(path.Value)))
+        foreach (var path in context.Current.Files.Keys)
         {
             var parts = path.Value.Split('/');
             var theory = parts.Length > 1 && (parts[0] is "Blueprint" or "Evidence")
@@ -84,7 +81,7 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Bootstrap(RuleEvaluationContext context) =>
+    private static ImmutableArray<RuleFinding> Bootstrap(DeltaRuleContext context) =>
         context.Changes.Paths
             .Where(BootstrapGate.IsProtected)
             .Select(static path => new RuleFinding(path.Value, BootstrapGate.ProtectedSurfaceMessage))

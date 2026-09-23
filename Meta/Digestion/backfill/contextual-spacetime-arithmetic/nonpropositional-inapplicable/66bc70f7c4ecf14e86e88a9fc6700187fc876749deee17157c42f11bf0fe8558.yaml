@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:66bc70f7c4ecf14e86e88a9fc6700187fc876749deee17157c42f11bf0fe8558
+  normalized_sha256: sha256:66bc70f7c4ecf14e86e88a9fc6700187fc876749deee17157c42f11bf0fe8558
+cas_ref: sha256:66bc70f7c4ecf14e86e88a9fc6700187fc876749deee17157c42f11bf0fe8558
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “辅助乘法与平移：定义 26 → 定义 28 → 定义 32”只更正定义的跨稿定位，未给出结合律或平移可逆性断言；无命题被塞进记号说明，故可结算。
+    previous_atom_id: 485e19f9cb6397193aa0e4dbd0ba5636b09069dad5ed4a8da9672ef0786d2c01
+    next_atom_id: 26834c57a4a498342762e99d54182c157ea5741989b7062723ad231e6649629d

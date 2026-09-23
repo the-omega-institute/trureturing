@@ -1,0 +1,20 @@
+**注记 69.5（线性盲核与分区秩）。** 这两个结论对应
+D5/S3/Observer/PositiveWeightedReadoutGramKernel.lean
+的 positive_weighted_readout_gram。它把“正核”与项目的共同纤维直接接起来：条件期望残差描述某一目标在当前概念下的不可预测部分，而 $\ker G$ 描述一族线性读数对所有目标共同留下的盲核。
+
+若在有限层 $L$ 保留有限可测分区 $\mathcal P_L=\{C_i\}$，每格满足 $\mu(C_i)>0$，定义
+$$
+\mathcal H_L=\operatorname{span}\{\mathbf1_{C_i}:C_i\in\mathcal P_L\}\subseteq L^2(X,\mu;\mathbb R),
+$$
+并令
+$$
+e_i=\frac{\mathbf 1_{C_i}}{\sqrt{\mu(C_i)}},
+$$
+则正质量保证这些 $e_i$ 构成正交归一基，故
+$$
+\boxed{
+\dim\mathcal H_L=|\mathcal P_L|.
+}
+$$
+这是该层的可见线性秩；其定义不同于完整 $L^2$ 空间的维数及几何 Hausdorff 维数，特例中的数值可以相同。上述正交基与维数等式由分区互斥和正质量直接计算，不是所引 Gram 声明的结论。
+

@@ -1,0 +1,22 @@
+**证明。** 令输入为 $J=1$，演化为 $C_\epsilon=\epsilon>0$。响应
+$$
+K_\epsilon(t)=e^{-\epsilon t}
+$$
+对任意固定 $0\le T<\infty$ 满足
+$$
+\sup_{0\le t\le T}|K_\epsilon(t)-1|
+\le\epsilon T\longrightarrow0,
+$$
+但
+$$
+\sup_{t\ge0}|K_\epsilon(t)-1|=1,
+\qquad
+\int_0^\infty K_\epsilon(t)\,dt=\epsilon^{-1}.
+$$
+若比较两个严格正演化 $\epsilon$ 与 $2\epsilon$，有限窗口内的响应差仍趋零；令 $u=e^{-\epsilon t}$，则
+$$
+\sup_{t\ge0}|e^{-\epsilon t}-e^{-2\epsilon t}|
+=\sup_{0<u\le1}(u-u^2)=\frac14.
+$$
+两积分之差为 $1/(2\epsilon)$，趋于无穷。这里每个算子都严格正定，但整个实现族没有共同正谱下界。$\square$
+

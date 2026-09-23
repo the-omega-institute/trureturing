@@ -1,0 +1,978 @@
+{
+  "schema": "erdos7-pg1-exact-zero-depth-v1",
+  "source_sha256": {
+    "certificates/mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+    "certificates/original9_conditioned_geometry_certificate.json": "1639c28035bba66f1933dc3430058d064989813e8f30b9432c176ea7c86e0e23",
+    "certificates/pg1_signed_g2_certificate.json": "bea46c0f0b687ae6846ddfe905d33ce888e7b66d48d1aceb96760de41a42366c",
+    "certificates/pg1_joint_tail_certificate.json": "ecefc571b7c185cfc077ae016873056abf3824029e5c49aada951bffd71b36ff"
+  },
+  "result": {
+    "depth_box": [
+      8,
+      5,
+      4
+    ],
+    "exact_depth": [
+      0,
+      0,
+      0
+    ],
+    "exact_depth_probability": "16/35",
+    "outside_probability": "4766753/27348890625",
+    "zero_anchor_coefficient": "12507116753/27348890625",
+    "tail_divisors": [
+      1,
+      7,
+      5,
+      35,
+      3,
+      21,
+      15,
+      105,
+      9,
+      63,
+      45,
+      315
+    ],
+    "complete_outside_square_coefficients": [
+      "0",
+      "80165896/27348890625",
+      "186900559/43758225000",
+      "6390926329/218791125000",
+      "0",
+      "80165896/9116296875",
+      "186900559/14586075000",
+      "6390926329/72930375000",
+      "219125636/27348890625",
+      "103742956/1823259375",
+      "755415799/10418625000",
+      "637606231/1620675000"
+    ],
+    "complete_outside_square_increment": "6266743598126923439/218791126531537875000",
+    "oracle_domain_sha256": "67a11b0d0a27861a1445ac451c659e6a5e6c8d3f1cca68a9709eaaa0995c2d5c",
+    "score_sha256": "b7583dc6c54550d3e99f301eefaca9a0f1d9ac05d3b98e5959dab04817c2b05f",
+    "score_abs_bound": 144000001008,
+    "records": [
+      {
+        "root3": 1,
+        "root9": 1,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "748ed156e67b50754809cb7931d6898d55ca7cde4b7b5faa5e11543174352290",
+        "old_zero_depth_upper_numerator": 11153480431,
+        "exact_zero_depth_numerator": 11045350669,
+        "exact_common_digit_numerator": 11045350669,
+        "other269_depth_upper_bounds_sha256": "aa5805b957cd337670e75a151bd92ad896c0fdb0ae0fab8c20e3ac927472a390",
+        "unconditional_saving": "50088576215114918/1012921882090453125",
+        "new_U": "88323656250073475110627/4594613657162295375000",
+        "inherited_weighted_deletion_upper": "111847218625/8000000056",
+        "new_signed_excess": "117281236289384179844/574326707145286921875",
+        "maximizing_A_index": 9728,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 1
+          },
+          {
+            "modulus": 5,
+            "residue": 4
+          },
+          {
+            "modulus": 9,
+            "residue": 1
+          },
+          {
+            "modulus": 15,
+            "residue": 4
+          },
+          {
+            "modulus": 45,
+            "residue": 19
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 19
+          },
+          {
+            "modulus": 35,
+            "residue": 19
+          },
+          {
+            "modulus": 63,
+            "residue": 19
+          },
+          {
+            "modulus": 105,
+            "residue": 19
+          },
+          {
+            "modulus": 315,
+            "residue": 19
+          }
+        ]
+      },
+      {
+        "root3": 2,
+        "root9": 1,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "081aa2f31e28665e83e5b32c4ae027decbc574800c85197b3c68400ad53d23cf",
+        "old_zero_depth_upper_numerator": 10901294404,
+        "exact_zero_depth_numerator": 10833030125,
+        "exact_common_digit_numerator": 10833030125,
+        "other269_depth_upper_bounds_sha256": "d3da402979a2fcf5759d378ab8a6495d834c8ffd47a4934ebde13d648ba09d82",
+        "unconditional_saving": "853789307512366087/27348890816442234375",
+        "new_U": "254523557903268564842921/13783840971486886125000",
+        "inherited_weighted_deletion_upper": "686784667871/48000000336",
+        "new_signed_excess": "-6247614256447811767283/27567681942973772250000",
+        "maximizing_A_index": 7100,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 2
+          },
+          {
+            "modulus": 5,
+            "residue": 3
+          },
+          {
+            "modulus": 9,
+            "residue": 1
+          },
+          {
+            "modulus": 15,
+            "residue": 8
+          },
+          {
+            "modulus": 45,
+            "residue": 8
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 5
+          },
+          {
+            "modulus": 35,
+            "residue": 33
+          },
+          {
+            "modulus": 63,
+            "residue": 5
+          },
+          {
+            "modulus": 105,
+            "residue": 68
+          },
+          {
+            "modulus": 315,
+            "residue": 68
+          }
+        ]
+      },
+      {
+        "root3": 1,
+        "root9": 2,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "76c61b260f08554b481e095eb50da0ed96b4c63e24c32fe2770ad078067d0bdb",
+        "old_zero_depth_upper_numerator": 10007045204,
+        "exact_zero_depth_numerator": 9953106765,
+        "exact_common_digit_numerator": 9953106765,
+        "other269_depth_upper_bounds_sha256": "b10201e646e3383efa434f394e2a4195ce531090676a687f07fff0b8600aef1c",
+        "unconditional_saving": "674614354047568567/27348890816442234375",
+        "new_U": "242632798658697954042281/13783840971486886125000",
+        "inherited_weighted_deletion_upper": "112868022787/8000000056",
+        "new_signed_excess": "-8882297576942017877297/6891920485743443062500",
+        "maximizing_A_index": 7769,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 1
+          },
+          {
+            "modulus": 5,
+            "residue": 3
+          },
+          {
+            "modulus": 9,
+            "residue": 2
+          },
+          {
+            "modulus": 15,
+            "residue": 8
+          },
+          {
+            "modulus": 45,
+            "residue": 38
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 5
+          },
+          {
+            "modulus": 35,
+            "residue": 33
+          },
+          {
+            "modulus": 63,
+            "residue": 47
+          },
+          {
+            "modulus": 105,
+            "residue": 68
+          },
+          {
+            "modulus": 315,
+            "residue": 173
+          }
+        ]
+      },
+      {
+        "root3": 2,
+        "root9": 2,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "2a7fd953d596f65ea2b860440248f619c63a783f87dbd5ecb2c9b6e83563ad18",
+        "old_zero_depth_upper_numerator": 11408985958,
+        "exact_zero_depth_numerator": 11331111635,
+        "exact_common_digit_numerator": 11331111635,
+        "other269_depth_upper_bounds_sha256": "3a758468d55da8fd4f9bbeae6ae7cc5c23adb5495fa1d216c59f61a50fa84b45",
+        "unconditional_saving": "973983249821833219/27348890816442234375",
+        "new_U": "263181063608211083452153/13783840971486886125000",
+        "inherited_weighted_deletion_upper": "85557565483/6000000042",
+        "new_signed_excess": "4866289594154594264653/13783840971486886125000",
+        "maximizing_A_index": 4429,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 2
+          },
+          {
+            "modulus": 5,
+            "residue": 2
+          },
+          {
+            "modulus": 9,
+            "residue": 2
+          },
+          {
+            "modulus": 15,
+            "residue": 2
+          },
+          {
+            "modulus": 45,
+            "residue": 2
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 5
+          },
+          {
+            "modulus": 35,
+            "residue": 12
+          },
+          {
+            "modulus": 63,
+            "residue": 47
+          },
+          {
+            "modulus": 105,
+            "residue": 47
+          },
+          {
+            "modulus": 315,
+            "residue": 47
+          }
+        ]
+      },
+      {
+        "root3": 1,
+        "root9": 5,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "751a802174842a35b7ec172517e2d6fd0b3d80be9957f06f2412d61a98e17236",
+        "old_zero_depth_upper_numerator": 9946173144,
+        "exact_zero_depth_numerator": 9896886228,
+        "exact_common_digit_numerator": 9896886228,
+        "other269_depth_upper_bounds_sha256": "3e0d9ab4a77df79c788a634ed8d01558f36a4dde63a45842ca1f766335bb4186",
+        "unconditional_saving": "9784717663607996/434109378038765625",
+        "new_U": "16115174836606431919231/918922731432459075000",
+        "inherited_weighted_deletion_upper": "112547716759/8000000056",
+        "new_signed_excess": "-640721739288080760697/459461365716229537500",
+        "maximizing_A_index": 5779,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 1
+          },
+          {
+            "modulus": 5,
+            "residue": 3
+          },
+          {
+            "modulus": 9,
+            "residue": 5
+          },
+          {
+            "modulus": 15,
+            "residue": 8
+          },
+          {
+            "modulus": 45,
+            "residue": 23
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 5
+          },
+          {
+            "modulus": 35,
+            "residue": 33
+          },
+          {
+            "modulus": 63,
+            "residue": 5
+          },
+          {
+            "modulus": 105,
+            "residue": 68
+          },
+          {
+            "modulus": 315,
+            "residue": 68
+          }
+        ]
+      },
+      {
+        "root3": 2,
+        "root9": 5,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "b0d74a120e6fb61fb165493ed3a6d94fdaf3d6d1389ea21f0de7627181fd0a5e",
+        "old_zero_depth_upper_numerator": 11270714139,
+        "exact_zero_depth_numerator": 11221427223,
+        "exact_common_digit_numerator": 11221427223,
+        "other269_depth_upper_bounds_sha256": "d6d44fc5f43031ffb0362b5391eee59704df9a291497de17f6fb3c50bc1a01af",
+        "unconditional_saving": "9784717663607996/434109378038765625",
+        "new_U": "260694236401607359114969/13783840971486886125000",
+        "inherited_weighted_deletion_upper": "42720926939/3000000021",
+        "new_signed_excess": "2113637329099060864969/13783840971486886125000",
+        "maximizing_A_index": 2013,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 2
+          },
+          {
+            "modulus": 5,
+            "residue": 3
+          },
+          {
+            "modulus": 9,
+            "residue": 5
+          },
+          {
+            "modulus": 15,
+            "residue": 8
+          },
+          {
+            "modulus": 45,
+            "residue": 23
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 5
+          },
+          {
+            "modulus": 35,
+            "residue": 33
+          },
+          {
+            "modulus": 63,
+            "residue": 5
+          },
+          {
+            "modulus": 105,
+            "residue": 68
+          },
+          {
+            "modulus": 315,
+            "residue": 68
+          }
+        ]
+      },
+      {
+        "root3": 1,
+        "root9": 7,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "407160159f33f198b85ac0926b89690e5514aceb559619bd3d06c081c600557e",
+        "old_zero_depth_upper_numerator": 10970459757,
+        "exact_zero_depth_numerator": 10952042817,
+        "exact_common_digit_numerator": 10952042817,
+        "other269_depth_upper_bounds_sha256": "6f913e8498ece20271098247fef799ff0402e41a6cc2ab4f86b47b7b13b80cb4",
+        "unconditional_saving": "15356187920866388/1823259387762815625",
+        "new_U": "17454181315139583084391/918922731432459075000",
+        "inherited_weighted_deletion_upper": "328462189237/24000000168",
+        "new_signed_excess": "-146980869542247553117/459461365716229537500",
+        "maximizing_A_index": 11630,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 1
+          },
+          {
+            "modulus": 5,
+            "residue": 1
+          },
+          {
+            "modulus": 9,
+            "residue": 7
+          },
+          {
+            "modulus": 15,
+            "residue": 1
+          },
+          {
+            "modulus": 45,
+            "residue": 16
+          },
+          {
+            "modulus": 7,
+            "residue": 6
+          },
+          {
+            "modulus": 21,
+            "residue": 13
+          },
+          {
+            "modulus": 35,
+            "residue": 6
+          },
+          {
+            "modulus": 63,
+            "residue": 34
+          },
+          {
+            "modulus": 105,
+            "residue": 76
+          },
+          {
+            "modulus": 315,
+            "residue": 286
+          }
+        ]
+      },
+      {
+        "root3": 2,
+        "root9": 7,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "c3e6ecf943190deabd29cce49744b80cbf06ca580a4bff43a0c93160fa7fbe79",
+        "old_zero_depth_upper_numerator": 10933566266,
+        "exact_zero_depth_numerator": 10869637082,
+        "exact_common_digit_numerator": 10869637082,
+        "other269_depth_upper_bounds_sha256": "28fcca0378be3e4950134946bcebec31db649856dd59b51ea61f35d77425285f",
+        "unconditional_saving": "266523256070673184/9116296938814078125",
+        "new_U": "254812061865862114306753/13783840971486886125000",
+        "inherited_weighted_deletion_upper": "336978170117/24000000168",
+        "new_signed_excess": "-3259564362406561151311/6891920485743443062500",
+        "maximizing_A_index": 4383,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 2
+          },
+          {
+            "modulus": 5,
+            "residue": 2
+          },
+          {
+            "modulus": 9,
+            "residue": 7
+          },
+          {
+            "modulus": 15,
+            "residue": 2
+          },
+          {
+            "modulus": 45,
+            "residue": 17
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 5
+          },
+          {
+            "modulus": 35,
+            "residue": 12
+          },
+          {
+            "modulus": 63,
+            "residue": 5
+          },
+          {
+            "modulus": 105,
+            "residue": 47
+          },
+          {
+            "modulus": 315,
+            "residue": 257
+          }
+        ]
+      },
+      {
+        "root3": 1,
+        "root9": 8,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "49b2b24be16a1c0dccffd0085847362a0690472c847e49bc143df4abaec4abb3",
+        "old_zero_depth_upper_numerator": 9945109130,
+        "exact_zero_depth_numerator": 9796825868,
+        "exact_common_digit_numerator": 9796825868,
+        "other269_depth_upper_bounds_sha256": "9c61fd3ece6b751b3781f5ec56a9bf5f4fd3ecf9c27abb071a8666caef494c05",
+        "unconditional_saving": "206066230038854254/3038765646271359375",
+        "new_U": "8937224593795864154659/510512628573588375000",
+        "inherited_weighted_deletion_upper": "112723456095/8000000056",
+        "new_signed_excess": "-358174357683107399233/255256314286794187500",
+        "maximizing_A_index": 5844,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 1
+          },
+          {
+            "modulus": 5,
+            "residue": 3
+          },
+          {
+            "modulus": 9,
+            "residue": 8
+          },
+          {
+            "modulus": 15,
+            "residue": 8
+          },
+          {
+            "modulus": 45,
+            "residue": 8
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 5
+          },
+          {
+            "modulus": 35,
+            "residue": 33
+          },
+          {
+            "modulus": 63,
+            "residue": 5
+          },
+          {
+            "modulus": 105,
+            "residue": 68
+          },
+          {
+            "modulus": 315,
+            "residue": 278
+          }
+        ]
+      },
+      {
+        "root3": 2,
+        "root9": 8,
+        "admissible_distinct_A": 656,
+        "root_A_indices_sha256": "3e22f5644441c8e6141c91b2aad3a5f9604cceb5afcd32477540b540d7e2f876",
+        "old_zero_depth_upper_numerator": 11272711427,
+        "exact_zero_depth_numerator": 11169323537,
+        "exact_common_digit_numerator": 11169323537,
+        "other269_depth_upper_bounds_sha256": "2588d0d993b5aad36f190b87a6684f2b1eda4d339de044c1f5f22cd0e163a1dc",
+        "unconditional_saving": "86205627405088078/1823259387762815625",
+        "new_U": "261018359524684802098697/13783840971486886125000",
+        "inherited_weighted_deletion_upper": "170737695737/12000000084",
+        "new_signed_excess": "2270043249198714129947/13783840971486886125000",
+        "maximizing_A_index": 4338,
+        "original_labels": [
+          {
+            "modulus": 1,
+            "residue": 0
+          },
+          {
+            "modulus": 3,
+            "residue": 2
+          },
+          {
+            "modulus": 5,
+            "residue": 2
+          },
+          {
+            "modulus": 9,
+            "residue": 8
+          },
+          {
+            "modulus": 15,
+            "residue": 2
+          },
+          {
+            "modulus": 45,
+            "residue": 17
+          },
+          {
+            "modulus": 7,
+            "residue": 5
+          },
+          {
+            "modulus": 21,
+            "residue": 5
+          },
+          {
+            "modulus": 35,
+            "residue": 12
+          },
+          {
+            "modulus": 63,
+            "residue": 5
+          },
+          {
+            "modulus": 105,
+            "residue": 47
+          },
+          {
+            "modulus": 315,
+            "residue": 152
+          }
+        ]
+      }
+    ],
+    "source_survival_lower": "25428074957/48000000336",
+    "old_Gamma_upper": "492647095380812739054683/14604022456869186140625",
+    "maximum_nonnegative_excess": "4866289594154594264653/13783840971486886125000",
+    "Gamma_upper": "491665320264992331169931/14604022456869186140625",
+    "improvement": "15583731997149331504/231809880267764859375",
+    "worst_roots": [
+      2,
+      2
+    ],
+    "fixed11_13_consumer": {
+      "source_multiplier_first_moment": "4/3",
+      "source_multiplier_second_moment": "1403/630",
+      "inherited_independent_final_survival_lower": "6058911665321144261668772/12369607020968200661109375",
+      "records": [
+        {
+          "final_root3": 1,
+          "final_root9": 1,
+          "inverse_Q_reduction": "1684361478208498442537/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "40085789877192791240447399609/1050742197256445329308750000",
+              "criterion_excess": "-486304838700820751101810157/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "38374635416920409534269184609/1050742197256445329308750000",
+              "criterion_excess": "-666520773820624840239490157/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "35132542431495450211050434609/1050742197256445329308750000",
+              "criterion_excess": "-666520773820624840239490157/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "signed",
+          "criterion_excess": "-666520773820624840239490157/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 2,
+          "final_root9": 1,
+          "inverse_Q_reduction": "1265535587960079615377/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "39673066000619906499420461069/1050742197256445329308750000",
+              "criterion_excess": "-1311752591846590233155687237/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "37926911654277632301982961069/1050742197256445329308750000",
+              "criterion_excess": "-1561968299106179304811937237/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "34673466307709032421178752069/1050742197256445329308750000",
+              "criterion_excess": "-1584673021393460419982855237/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-1584673021393460419982855237/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 1,
+          "final_root9": 2,
+          "inverse_Q_reduction": "1115028627049649698577/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "38184976305691810899336848969/1050742197256445329308750000",
+              "criterion_excess": "-4287931981702781433322911437/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "36438821959349536701899348969/1050742197256445329308750000",
+              "criterion_excess": "-4538147688962370504979161437/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "33185376612780936821095139969/1050742197256445329308750000",
+              "criterion_excess": "-4560852411249651620150079437/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-4560852411249651620150079437/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 2,
+          "final_root9": 2,
+          "inverse_Q_reduction": "1366498499500032006257/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "10051010738881004789329516541/262685549314111332327187500",
+              "criterion_excess": "-22708971094396810669134277/101205875626103459954531250"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "9614472152295436239970141541/262685549314111332327187500",
+              "criterion_excess": "-500014389297953989016727047/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "8781503833926017830608657791/262685549314111332327187500",
+              "criterion_excess": "-679574965403382617471097047/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-679574965403382617471097047/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 1,
+          "final_root9": 5,
+          "inverse_Q_reduction": "1066159828407827250617/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "38036881029695368437916490729/1050742197256445329308750000",
+              "criterion_excess": "-4584122533695666356163627917/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "36290726683353094240478990729/1050742197256445329308750000",
+              "criterion_excess": "-4834338240955255427819877917/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "33037281336784494359674781729/1050742197256445329308750000",
+              "criterion_excess": "-4857042963242536542990795917/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-4857042963242536542990795917/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 2,
+          "final_root9": 5,
+          "inverse_Q_reduction": "1066159828407827250617/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "40205399855262212839749232289/1050742197256445329308750000",
+              "criterion_excess": "-247084882561977552498144797/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "38459245508919938642311732289/1050742197256445329308750000",
+              "criterion_excess": "-497300589821566624154394797/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "35205800162351338761507523289/1050742197256445329308750000",
+              "criterion_excess": "-520005312108847739325312797/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-520005312108847739325312797/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 1,
+          "final_root9": 7,
+          "inverse_Q_reduction": "741840537452608591097/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "39542395689724363054469426729/1050742197256445329308750000",
+              "criterion_excess": "-1573093213637677123057755917/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "37796241343382088857031926729/1050742197256445329308750000",
+              "criterion_excess": "-1823308920897266194714005917/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "34542795996813488976227717729/1050742197256445329308750000",
+              "criterion_excess": "-1846013643184547309884923917/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-1846013643184547309884923917/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 2,
+          "final_root9": 7,
+          "inverse_Q_reduction": "1219991174947788525977/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "39327965513542578542595283049/1050742197256445329308750000",
+              "criterion_excess": "-2001953566001246146806043277/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "37581811167200304345157783049/1050742197256445329308750000",
+              "criterion_excess": "-2252169273260835218462293277/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "34328365820631704464353574049/1050742197256445329308750000",
+              "criterion_excess": "-2274873995548116333633211277/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-2274873995548116333633211277/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 1,
+          "final_root9": 8,
+          "inverse_Q_reduction": "2106213268743430262537/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "38024708304527388346299508649/1050742197256445329308750000",
+              "criterion_excess": "-4608467984031626539397592077/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "36278553958185114148862008649/1050742197256445329308750000",
+              "criterion_excess": "-4858683691291215611053842077/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "33025108611616514268057799649/1050742197256445329308750000",
+              "criterion_excess": "-4881388413578496726224760077/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-4881388413578496726224760077/1113264631887138059499843750"
+        },
+        {
+          "final_root3": 2,
+          "final_root9": 8,
+          "inverse_Q_reduction": "1634543474953801885097/17229801214358607656250",
+          "candidates": {
+            "prior": {
+              "constant": "-1840997/25410",
+              "inverse_Q": "4992446152632838169793472603/131342774657055666163593750",
+              "criterion_excess": "-778746150960992515301047727/1113264631887138059499843750"
+            },
+            "signed": {
+              "constant": "-588999/8470",
+              "inverse_Q": "4774176859340053895113785103/131342774657055666163593750",
+              "criterion_excess": "-1028961858220581586957297727/1113264631887138059499843750"
+            },
+            "inherited": {
+              "constant": "-1618997/25410",
+              "inverse_Q": "2178846352844199720856521614/65671387328527833081796875",
+              "criterion_excess": "-1208522345797134194931667727/1113264631887138059499843750"
+            }
+          },
+          "selected_complete_criterion": "inherited",
+          "criterion_excess": "-1208522345797134194931667727/1113264631887138059499843750"
+        }
+      ],
+      "maximum_criterion_excess": "-520005312108847739325312797/1113264631887138059499843750",
+      "old_Gamma13_upper": "165486462221025969000254660209/1113264631887138059499843750",
+      "Gamma13_upper": "165356424839074723126151405953/1113264631887138059499843750",
+      "worst_roots": [
+        2,
+        5
+      ]
+    },
+    "target35_conditioning": {
+      "loss_limit": "143201953863449880529/6891920485743443062500",
+      "weight_denominator": 1000000007,
+      "integer_loss_limit": 20778236,
+      "scope": "Threshold only; no new carrier matching or coverage count is claimed."
+    },
+    "scope": "Same actual PG1 probability and higher357 survival event; arbitrary finite physical heights and all original test residues. Exact zero auxiliary depth and exact outside-box anchor; other269 inside-box bounds and full geometric tails retained. The fixed11/13 consumer retains all previously certified physical kernels and tails. No new carrier count or unrestricted-prime resolution is asserted."
+  }
+}

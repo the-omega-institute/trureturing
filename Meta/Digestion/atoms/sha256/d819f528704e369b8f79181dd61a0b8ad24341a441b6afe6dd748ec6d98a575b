@@ -1,0 +1,28 @@
+**命题 114.2（同类上的超对数下界与对数上界）。** 在定义 114.1 的同一模型类上，两种接口有如下分离。
+
+(a) 任意共同参考专用停止和分类规则，若对每个固定 $M\in\mathcal M$ 都有有限常数 $C_M$，使
+$$
+\Pr^M_{d,k}(\Phi_n\ne d)\le C_M/N
+\qquad\text{对全部 }n\ge0,k\ge2,d\in\{0,1\},
+\tag{114.2a}
+$$
+则在固定模型 $C$ 的参考律下，
+$$
+\frac{\mathbb E_C T_n}{\log N}\longrightarrow+\infty
+\qquad(n\longrightarrow\infty).
+\tag{114.2b}
+$$
+此处 $\mathbb E_C T_n$ 与 $k,d$ 无关，因为停止不读取它们或主记录。
+
+(b) 存在一个不读取 $s$、模型身份、混合参数或未来主长度的共同主记录参与规则，在同一对无限记录上满足 $0\le T_n\le\mathcal T_n\le N$，且对每个固定 $M\in\mathcal M$ 存在有限 $C_M',D_M$，使
+$$
+\sup_{k\ge2,\ d\in\{0,1\}}\Pr^M_{d,k}(\Phi_n\ne d)
+ \le C_M'/N,
+\qquad
+\sup_{k\ge2,\ d\in\{0,1\}}\mathbb E^M_{d,k}\mathcal T_n
+ \le D_M\log(eN)
+\quad(n\ge0).
+\tag{114.2c}
+$$
+常数允许依赖固定模型；算法本身不读取这些常数。风险界对每个当前时点分别成立，不声称所有时点同时给出正确答案。
+

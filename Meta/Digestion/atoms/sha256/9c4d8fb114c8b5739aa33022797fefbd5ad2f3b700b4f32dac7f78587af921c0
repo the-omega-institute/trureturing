@@ -1,0 +1,12 @@
+因此，对“保留多少历史才能得到稳定经典现实”的问题，三层结构可以写成
+
+$$
+\boxed{
+\begin{gathered}
+\text{只预测指定未来读数：保留 }V_\infty;\\
+\text{允许可组合后续操作：保留 }\mathcal A_\infty;\\
+\text{只读取稳定经典标签：保留 }Z(\mathcal A_\infty);\\
+\text{存在量子块时：还要保留每个中心块的内部自由度。}
+\end{gathered}}
+$$
+

@@ -1,0 +1,58 @@
+**证明。** 甲中 $m_{\boldsymbol\infty}$ 的标准代表为全零元，任意 $u$ 作用后仍是零，故为 $\delta_0$。而 $m_{\boldsymbol0}$ 是 $U$ 自身的 Haar 律并非点质量，故 $\delta_1\ne m_{\boldsymbol0}$。
+
+乙中对任意 $u\in U$，
+$$
+u(cX)=c(uX).
+$$
+所以 $X\stackrel d=uX$ 推出 $cX\stackrel d=u(cX)$。估值乘法公式给出标签等式。若 $X\sim m_a$，输出既不变又具有确定标签 $\rho(c)\oplus a$，故 theorem 57.4 的唯一性给出 $cX\sim m_{\rho(c)\oplus a}$。
+
+丙的 Feller 性与 theorem 57.3 相同：对 $g\in C(I)$，
+$$
+a\mapsto\int_U g\!\left(\rho(u\,s(a)+c)\right)\,d\lambda_U(u)
+$$
+连续。混合公式由 Fubini 得到。为见不变性一般丢失，取 $c\ne0$，选 $p$ 使 $d=v_p(c_p)<\infty$。若 $p$ 为奇数，取 $a_p=d+1$，则
+$$
+X_p+c_p=p^d(c'_p+pU_p),
+$$
+其中 $c'_p$ 为固定单位，括号中的单位恒与 $c'_p$ 模 $p$ 同余；乘以一个模 $p$ 不等于 $1$ 的单位会把该支撑剩余类移走，所以输出不对全部 $\mathbb Z_p^\times$ 不变。若 $p=2$，取 $a_2=d+2$，括号中的单位固定在 $c'_2\bmod4$，乘以 $3$ 后落到不同奇剩余类。故非零加法常量不能普遍保持继续使用 $k$ 所需的不变性。
+
+证明丁。由 theorem 57.3，$a\mapsto m_a$ 是 Borel 核，所以
+$$
+\theta\longmapsto \mathcal L\nu_{\ell,\theta}
+$$
+也是 Borel 概率核：对 Borel $B\subseteq R$，其取值为
+$$
+\int_I m_a(B)\,\nu_\ell(\theta,da),
+$$
+这是 Borel 函数。有限乘积
+$$
+\theta\longmapsto\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta}
+$$
+也是 Borel 核；在生成矩形上其概率是有限个 Borel 函数的乘积，再用 $\pi$-$\lambda$ 定理扩张。Fritz §4 的公式 $(\mu,\nu)\mapsto\mu\otimes\nu$ 给出同一可测性事实：https://arxiv.org/pdf/1908.07021 。
+
+接着对节点作归纳证明 $\nu_v$ 为 Borel 核。叶节点由假设成立。若 $v=r+s$，则对固定 Borel $C$，函数
+$$
+(a,b)\longmapsto k(a,b)(C)
+$$
+Borel，而 $(\theta,da,db)$ 的乘积核 Borel；核积分的可测性可先对指标函数矩形验证，再用有界函数单调类定理扩张，因此 $\theta\mapsto\nu_v(\theta,C)$ Borel。乘法节点因 $\oplus$ 连续，同理可得。于是递归中每个 $\nu_v$ 都是处处定义的 Borel Markov 核。
+
+对每个节点 $v$，从 $R^L$ 到 $R$ 的子树求值映射 $F_v$ 是连续的，故
+$$
+Q^v_\theta=(F_v)_*Q_\theta
+$$
+是 Borel 核；其标签推前 $\rho_*Q^v_\theta$ 也为 Borel 核。固定任意 $\theta\in S_0$。由
+$$
+Q_\theta=\bigotimes_{\ell\in L}\mathcal L\nu_{\ell,\theta},
+$$
+不同叶条件独立且各叶律 $U$-不变。完全重复 theorem 57.6 的结构归纳，但把叶上的点质量标签 $\delta_{a_\ell}$ 换成 $\nu_{\ell,\theta}$，可得对该同一个 $\theta$、所有有限多个节点同时有
+$$
+\rho_*Q^v_\theta=\nu_{v,\theta},
+\qquad
+Q^v_\theta=\mathcal L\nu_{v,\theta}.
+$$
+由于 $S_0$ 在归纳开始前已经固定，这里没有为不同节点分别丢弃不同的参数零集。最后用条件概率的全概率公式积分 $\beta$ 即得无条件两式。标准 Borel 空间上正规条件核版本的存在以及不同版本只在参数零集上可能不同，见 Simmons Definition 1.1 与 Theorem 2.1：https://www.aimsciences.org/data/article/export-pdf?id=ca5f6a73-6f1a-47f6-adaf-a175eeded371 。
+
+证明戊。若 $\Theta=0$，则 $XY=0$，故标签为 $\boldsymbol\infty$；若 $\Theta=1$，两输入都是单位，故其乘积也是单位，标签为 $\boldsymbol0$。两种参数各概率 $1/2$，所以实际输出成为单位的概率为 $1/2$。丢弃参数后，每个输入独立地以概率 $1/2$ 为单位、以概率 $1/2$ 为零；乘积为单位当且仅当两者均为单位，故概率为 $1/4$。这给出一个具体算术输出的差异，而不只是假定“联合律可能不同”。
+
+己只是两个概率实验的区分：fresh occurrence 使用乘积耦合；copy occurrence 使用对角耦合。Fritz Definition 2.1 对 copy 的解释正是复制同一输入而不增加随机性：https://arxiv.org/pdf/1908.07021 。证毕。
+

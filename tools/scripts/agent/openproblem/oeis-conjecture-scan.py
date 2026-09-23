@@ -18,7 +18,26 @@ SETTLED = re.compile(
     r"(?:^|\s)Proof\s*:"
     r"|\b(proved|proven|a proof|the proof|see the proof|is true|are true|now proved"
     r"|was shown|has been shown|follows from|disproved|counterexample found"
-    r"|no longer a conjecture|theorem of)\b", re.I)
+    r"|no longer a conjecture|theorem of)\b"
+    # A settlement does not have to use the word "proof". A034448's conjecture of 2017-08-20
+    # was answered one line below it on 2021-03-19 with "This conjecture is easily verified
+    # since all the functions involved are multiplicative and proving it for prime powers is
+    # straightforward", and the pattern above read that entry as carrying no marker. A lane was
+    # one step from being opened on it. These phrasings are anchored to the word "conjecture"
+    # or to an explicit verification verb so that an entry merely calling its own *formula*
+    # straightforward is not swept up: a false settled marker discards a live target, which is
+    # the more expensive direction of the two.
+    r"|\bconjecture\b[^.]{0,80}?\b(is|was|can be|has been)\b[^.]{0,40}?"
+    r"\b(easily |readily |straightforwardly |trivially |immediately )?"
+    r"(verified|verifiable|checked|settled|established|resolved|answered|confirmed)\b"
+    r"|\b(verification|proof) of (this|the) conjecture\b"
+    r"|\bthis conjecture (is|was) (easy|straightforward|immediate|trivial)\b"
+    # A refutation settles a conjecture as surely as a proof does, and the entry states it in the
+    # entry's own voice rather than with the word "disproved". A257750 carries "The conjecture
+    # that b < sqrt(n) is false" with three explicit counterexamples, and the pattern above read
+    # both its conjecture lines as unmarked.
+    r"|\bconjecture\b[^.]{0,80}?\b(is|was|turns out to be)\b[^.]{0,30}?\b(false|incorrect|wrong)\b"
+    r"|\brefut(ed|es|ation)\b", re.I)
 CONJ = re.compile(r"\bconjectur", re.I)
 
 def fetch(url, tries=3):
@@ -67,7 +86,20 @@ def main():
     for a in seen:
         txt = entry(a)
         body = lines(txt, "C") + lines(txt, "F")
-        conj_idx = [i for i, l in enumerate(body) if CONJ.search(l)]
+        # A settlement comment usually names the thing it settles, so it contains the word
+        # "conjecture" too. Treating such a line as a NEW conjecture terminates the search window
+        # of the conjecture it settles, and the real conjecture is then reported as unmarked —
+        # which is exactly how A034448 read as open five years after it was answered one line
+        # below. A line that carries a settlement marker is a marker, not a fresh statement,
+        # unless it introduces one with an explicit "Conjecture:".
+        def starts_conjecture(line):
+            if not CONJ.search(line):
+                return False
+            if SETTLED.search(line) and not re.search(r"\bconjecture\s*:", line, re.I):
+                return False
+            return True
+
+        conj_idx = [i for i, l in enumerate(body) if starts_conjecture(l)]
         if not conj_idx:
             continue
         # Settlement is per conjecture, not per entry. An entry can carry five conjectures and one

@@ -1,0 +1,25 @@
+**theorem 42.15 (The full positive-positive fiber for two real lines).** Identify $S(\mathbb R)$ with $\{-1,0,1\}$ by evaluation at the identity functional. The fiber $J^{-1}(1,1)\subseteq S(\mathbb R^2)$ consists exactly of
+$$
+E_0=[(1,0),(0,1)],\qquad
+E_\infty=[(0,1),(1,0)],
+\tag{42.32}
+$$
+and, for every $\rho>0$, the three points
+$$
+H_\rho^0=[(1,\rho)],\qquad
+H_\rho^\eta=[(1,\rho),(0,\eta)]
+\quad(\eta\in\{-1,1\}).
+\tag{42.33}
+$$
+Brackets denote lexicographic signatures, not ordinary vector tuples. All listed points are distinct. For $\ell_{a,b}(x,y)=ax+by$,
+$$
+H_\rho^\eta(\ell_{a,b})=
+\begin{cases}
+\operatorname{sgn}(a+b\rho),&a+b\rho\ne0,\\
+\operatorname{sgn}(\eta b),&a+b\rho=0,
+\end{cases}
+\qquad \eta\in\{-1,0,1\}.
+\tag{42.34}
+$$
+The values at $E_0,E_\infty$ are respectively the first-nonzero signs of $(a,b)$ and $(b,a)$. The fibers with two other nonzero marginal signs are obtained by the corresponding coordinate reflections; every fiber with a zero marginal is the singleton described in Theorem 42.13.
+

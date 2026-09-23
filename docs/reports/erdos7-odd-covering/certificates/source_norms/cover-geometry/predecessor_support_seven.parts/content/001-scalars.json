@@ -1,0 +1,44 @@
+{
+  "scope": {
+    "kind": "inline",
+    "value": "Exact scalar certificate; the actual source and analytic transfer are proved in the accompanying text."
+  },
+  "tables": {
+    "path": "content/001-scalars/001-tables.json",
+    "sha256": "1cac78545318c584406bf09422668dfc9b364a3490de46b656c6e39992656e80",
+    "kind": "value"
+  },
+  "base": {
+    "kind": "inline",
+    "value": "9179/1980"
+  },
+  "cases": {
+    "kind": "inline",
+    "value": 2048
+  },
+  "worst": {
+    "kind": "inline",
+    "value": {
+      "f": 1,
+      "m7": 7,
+      "m11": 63,
+      "B3": 1,
+      "B5": 1,
+      "fee": "11966112491/12596245200",
+      "decimal": 0.9499745599585502,
+      "extra": "154057/3332340",
+      "allocation": [
+        [
+          13,
+          1,
+          1
+        ]
+      ]
+    }
+  },
+  "rows": {
+    "path": "content/001-scalars/005-rows.json",
+    "sha256": "ea48bfe883a499788894474073ee79b6ae0ed9fea4714023f2b1807079b612d4",
+    "kind": "array"
+  }
+}

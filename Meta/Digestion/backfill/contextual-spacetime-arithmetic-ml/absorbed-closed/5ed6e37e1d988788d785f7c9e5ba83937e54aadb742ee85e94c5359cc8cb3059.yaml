@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5ed6e37e1d988788d785f7c9e5ba83937e54aadb742ee85e94c5359cc8cb3059
+  normalized_sha256: sha256:5ed6e37e1d988788d785f7c9e5ba83937e54aadb742ee85e94c5359cc8cb3059
+cas_ref: sha256:5ed6e37e1d988788d785f7c9e5ba83937e54aadb742ee85e94c5359cc8cb3059
+coverage_gids:
+  - gid: D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.bounded_loss_risk_stability_of_simulator
+    target_statement_id: sha256:65e9f70d5fa71ebe707c1acae2fb31c9f07d5c9ee8a5ee275bccc01d349ec6f3
+  - gid: D5/S3/TotalVariation/Metric.total_variation_comm
+    target_statement_id: sha256:6a5bab07e46ac82cef7fb6ade05c2a3f4a9cdda756dbb7d6990b9af9fd5ec47f
+receipts:
+  unresolved_subitems: []

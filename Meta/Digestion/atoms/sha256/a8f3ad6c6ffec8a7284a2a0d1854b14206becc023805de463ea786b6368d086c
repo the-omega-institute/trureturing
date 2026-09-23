@@ -1,0 +1,29 @@
+**命题 41.7（Context12的参考安全终端预算）。** 在每个固定 $n\ge1$，对定义41.1的任意实际联合输入 $\theta$，以及两种表示后使用的同一个合法终端 CPTP 通道
+$\Lambda:\mathcal L(J\otimes M)\to\mathcal L(Y)$，有
+$$
+D\!\left(\Lambda(\theta),
+\Lambda\bigl[(\operatorname{id}_J\otimes\mathcal D_n\Gamma_n)(\theta)\bigr]\right)
+\le\kappa_n=\frac{1-c_n}{2},\qquad
+\kappa_n\le\frac{\alpha^{4n-6}}8\quad(n\ge3).
+\tag{41.51}
+$$
+对一个实际合法终端测量，完整结果律的经典 TV 因而至多 $\kappa_n$；对损失 $0\le\ell\le L$，期望差至多 $L\kappa_n$。本卷定义12.1、定理12.2的接入为
+$$
+\mathcal E=\Gamma_n,\qquad \mathcal Q=\operatorname{id}_M,
+\qquad \mathcal S=\mathcal D_n,
+\qquad \kappa=\kappa_n.
+\tag{41.52}
+$$
+若另有同型合法完整操作 $\mathcal T_r:M\to M$ 与边界操作 $\overline{\mathcal T}_r:H_n\to H_n$，并另证其半 diamond 交织缺陷
+$$
+\delta_r=d_\diamond(\Gamma_n\mathcal T_r,
+                         \overline{\mathcal T}_r\Gamma_n),
+\tag{41.53}
+$$
+则直接应用定理12.2，$m$ 次操作的任务误差至多
+$\min\{1,\kappa_n+\sum_{r=1}^m\delta_r\}$。会参与中间操作的旧记录和参考须按定义12.1计入活动类型；不能仍将其视为惰性 $J$，也不能由（41.51）自动获得新的交织缺陷界。
+
+证明。（41.7）是全算子恒等式，（41.8）是含参考的完整 diamond 范数，故对同一 $\theta$ 恢复前后的半迹距离至多 $\kappa_n$。左接共同 $\Lambda$ 后用引理10.6收缩即得（41.51）；尾界来自（41.9）。测量通道的输出为经典对角态，其半迹距离等于 TV。两结果律差的正、负部分质量均为 TV，故 $\ell\in[0,L]$ 的积分差绝对值至多 $L\operatorname{TV}$，给损失界；这也适用于声明了可测结果空间的终端测量。将（41.52）逐项代入定义12.1后，$\kappa$ 恰为（41.4）的 $\kappa_n$；在另行满足（41.53）的同一合法接线中，由定理12.2的通道望远镜界即得后续预算。$\square$
+
+终端相干访问是本命题的前提。命题36.6允许的输出实验若已消耗相干资源，并不因此允许再实施（41.17）；完整历史、失败及可访问装置仍须留在实际模型中。$n$ 是取得档案的发射数，$m$ 是另行声明的后续操作数，二者均不自动等于物理时间。固定任务可用一个共同解码器恢复到可控误差，不意味着整个观察者对任何扩大后的操作语言都具有同一接口。
+

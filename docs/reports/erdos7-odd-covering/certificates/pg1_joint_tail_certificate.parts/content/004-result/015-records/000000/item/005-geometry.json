@@ -1,0 +1,32 @@
+{
+  "caps": {
+    "kind": "inline",
+    "value": [
+      145189557486,
+      30177307924,
+      44390826712,
+      9770580150,
+      73783889890,
+      17428965144,
+      28181049852,
+      6137567992,
+      38563930010,
+      6738239900,
+      12697213260,
+      2460094332
+    ]
+  },
+  "outside_first_increment": {
+    "kind": "inline",
+    "value": "127534553257589220161/1148653414290573843750"
+  },
+  "records": {
+    "path": "content/004-result/015-records/000000/item/005-geometry/002-records.json",
+    "sha256": "045c549c425618ff5b4ab241ed8980551f1b229139adc0d747029e8f7ba98638",
+    "kind": "array"
+  },
+  "direct_checks": {
+    "kind": "inline",
+    "value": []
+  }
+}

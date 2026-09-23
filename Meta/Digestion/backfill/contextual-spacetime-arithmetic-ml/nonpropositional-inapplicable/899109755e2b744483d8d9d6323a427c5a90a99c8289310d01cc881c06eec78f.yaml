@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:899109755e2b744483d8d9d6323a427c5a90a99c8289310d01cc881c06eec78f
+  normalized_sha256: sha256:899109755e2b744483d8d9d6323a427c5a90a99c8289310d01cc881c06eec78f
+cas_ref: sha256:899109755e2b744483d8d9d6323a427c5a90a99c8289310d01cc881c06eec78f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.2节“则同步参数更新的同一个 Gram 满足”之后是显式合同更新断言，并非只因写了“定义”就成立；探针验证块传播矩阵等于单位减步长乘H、实际参数拼块更新、Gram四块和最终合同式，全部由 Matrix.fromCols_mul_fromBlocks、Matrix.fromRows_mul_fromCols、Matrix.transpose_mul 及结合律闭合，仓内无冻结 GID。
+    previous_atom_id: 02d88ffdd84364b3e84cc004334fd071872f8e8189e53f50ff7cc786d9af3976
+    next_atom_id: b73366f4f4d080d8ef14582e736a57f3316efaab6443b984802eae6a90f1ad36

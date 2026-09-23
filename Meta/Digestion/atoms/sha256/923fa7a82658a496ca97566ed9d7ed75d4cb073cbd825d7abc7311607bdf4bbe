@@ -1,0 +1,27 @@
+**Proof.** For a finite subsystem, choose a rational $s$ larger than all selected lower bounds $p$ and smaller than all selected upper bounds $q$. Such an $s$ exists because every selected lower bound is below $\alpha$ and every selected upper bound is above it. Missing lower or upper bounds can be supplemented by $1$ or $2$, respectively. Then $(1,s)$ is a rational solution.
+
+In a simultaneous real solution, $a=x_1>0$. Dividing the remaining inequalities by $a$ forces
+$$
+p<x_2/a<q
+\qquad(p,q\in\mathbb Q,\ p<\alpha<q).
+$$
+Density of $\mathbb Q$ in $\mathbb R$ implies $x_2/a=\alpha$. Conversely, every point $(a,\alpha a)$ with $a>0$ satisfies all the strict inequalities. In particular, $(1,\alpha)$ is a real witness; its normalization is an orthonormal one-vector witness.
+
+The corresponding simultaneous weak inequalities have solution set
+$$
+K=\{(a,b):a\ge0,\ b-pa\ge0,\ qa-b\ge0
+\text{ for all indicated }p,q\}
+=\{(a,\alpha a):a\ge0\}.
+$$
+Indeed, if $a=0$, the lower and upper inequalities force $b=0$. If $a>0$, the same rational-cut argument forces $b/a=\alpha$.
+
+Suppose a finite rational lexicographic witness exists, and let $v_k$ be its first nonzero vector. Such a vector must exist because of the row $x_1>0$. Every row must evaluate nonnegatively on $v_k$: a negative evaluation would already be its first nonzero entry. Hence
+$$
+v_k\in K\cap\mathbb Q^2=\{0\},
+$$
+contradicting the choice of $v_k$, since $\sqrt2$ is irrational.
+
+The coefficient list of any eventually feasible rational polynomial would be such a witness, proving the polynomial assertion. Finally, a solution in $\mathbb Q(t)^2$ could be multiplied by $tq^2$, with a common rational-polynomial denominator $q$, to produce an eventually feasible rational polynomial tending to zero, exactly as in Theorem 41.5. This is impossible.
+
+In fact, the argument shows that the first nonzero vector of any real lexicographic witness for this family already lies on the displayed positive ray and satisfies every row strictly. The obstruction concerns the coefficient field, not the need for additional real scales. $\square$
+

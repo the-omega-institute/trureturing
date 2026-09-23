@@ -1,0 +1,33 @@
+#### 134.1.1 箭头范畴的定义与复合
+
+固定一个范畴 $\mathcal C$。一个观察方法可表示为箭头 $q:X\to B$；这里 $X$ 是被观察对象，$B$ 是该方法的输出对象。给另一方法 $q':X'\to B'$，一个比较由两条箭头
+
+$$
+\alpha:X\to X',\qquad \beta:B\to B'
+$$
+
+及交换条件
+
+$$
+q'\circ\alpha=\beta\circ q
+\tag{134.1}
+$$
+
+组成。它称为从 $q$ 到 $q'$ 的交换方块，亦即箭头范畴 $\operatorname{Arr}(\mathcal C)$ 的态射。
+
+给依次两个方块 $(\alpha_1,\beta_1):q_0\to q_1$ 与 $(\alpha_2,\beta_2):q_1\to q_2$，定义复合为
+
+$$
+(\alpha_2\circ\alpha_1,\ \beta_2\circ\beta_1).
+$$
+
+它确实交换，因为
+
+$$
+q_2\alpha_2\alpha_1
+=\beta_2q_1\alpha_1
+=\beta_2\beta_1q_0.
+$$
+
+恒等态射为 $(\mathrm{id}_X,\mathrm{id}_B)$。单位律和结合律逐分量由 $\mathcal C$ 的单位律和结合律给出，因此构成一个范畴。这里不要求任何单射、满射或有限性。
+

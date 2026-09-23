@@ -1,0 +1,20 @@
+
+
+对每个已存历史 $h\in\{0,1\}^{t-1}$，在第 $t$ 次写入前施加一个预先确定的实正交矩阵 $U_{t,h}\in O(2)$；它也是合法的系统酉。实际和理想过程使用同一个控制表 $h\mapsto U_{t,h}$，各自按自身已经存储的历史调用。其未归一化结果更新分别为
+
+$$
+\mathcal A_{t,h,z}(\rho)
+=K_{t,z}U_{t,h}\rho U_{t,h}^\dagger K_{t,z}^\dagger,
+\qquad
+\mathcal B_{t,h,z}(\rho)
+=P_zU_{t,h}\rho U_{t,h}^\dagger P_z.
+$$
+
+所有结果都保存在经典历史寄存器 $H_k=Z_1\cdots Z_k$，不改写旧结果、不后选择；量子记录余系统被丢弃且不再耦合。记经过前 $k$ 步的带全部历史输出通道为
+
+$$
+\mathcal H_{{\rm actual},k}^{U},
+\qquad
+\mathcal H_{{\rm ideal},k}^{U}:
+\mathcal L(S)\longrightarrow\mathcal L(H_k\otimes S).
+$$

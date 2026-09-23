@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7ca729ec019fb23459480499cc4cbf1ead4aa7d4c03cc6af3be72245f2386c5a
+  normalized_sha256: sha256:7ca729ec019fb23459480499cc4cbf1ead4aa7d4c03cc6af3be72245f2386c5a
+cas_ref: sha256:7ca729ec019fb23459480499cc4cbf1ead4aa7d4c03cc6af3be72245f2386c5a
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurements/CompleteContextPurityIdentities.complete_context_purity_identities
+    target_statement_id: sha256:3fdc6f899f227c5e664f842222f89b87f600dd2f6951ffc39fdd452b3de2deb0
+receipts:
+  unresolved_subitems: []

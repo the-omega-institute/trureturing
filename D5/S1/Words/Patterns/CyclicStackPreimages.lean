@@ -1,0 +1,261 @@
+/- GID: D5/S1/Words/Patterns/CyclicStackPreimages
+   generality: G
+   mirror-B: D5/B/S1/Words/Patterns/CyclicStackPreimages
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: []
+   utility: none
+   digest: Exact even and odd fibre cardinalities for the consecutive cyclic stack map. -/
+
+import D5.S1.Words.Patterns.CyclicStackPreimagesFinalLow
+
+/-! # Exact consecutive cyclic-stack fibre cardinalities -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S1.Words.Patterns.CyclicStackPreimages
+
+private lemma successful_even_eq_candidate {m : ℕ} (hm : 0 < m) {input : List ℕ}
+    (houtput : cyclicStackSort input = target (2 * m)) :
+    input = candidate m m m := by
+  have hhalf : 2 * m / 2 = m := by
+    rw [Nat.mul_comm, Nat.mul_div_left m (by omega : 0 < 2)]
+  have hgappedN := successful_gapped (n := 2 * m) (by omega) houtput
+  have hgapped : Gapped m input := by simpa only [hhalf] using hgappedN
+  have hlowsPair : (lowEntries m input).Pairwise (fun x y => x < y) := by
+    simpa only [hhalf] using successful_lows_pairwise hgappedN houtput
+  have hperm : input.Perm (List.range' 1 (m + m)) := by
+    simpa [show 2 * m = m + m by omega] using success_perm_range houtput
+  have hlows : lowEntries m input = List.range' 1 m := by
+    have hp := hperm.filter (fun x => decide (x ≤ m))
+    change (lowEntries m input).Perm (lowEntries m (List.range' 1 (m + m))) at hp
+    have hrange : lowEntries m (List.range' 1 (m + m)) = List.range' 1 m := by
+      have hsplit : List.range' 1 (m + m) =
+          List.range' 1 m ++ List.range' (m + 1) m := by
+        simpa [Nat.add_comm] using
+          (List.range'_append_1 (s := 1) (m := m) (n := m)).symm
+      rw [hsplit, lowEntries, List.filter_append]
+      have hleft : (List.range' 1 m).filter (fun x => decide (x ≤ m)) =
+          List.range' 1 m := by
+        apply List.filter_eq_self.mpr
+        intro x hx
+        rw [decide_eq_true_eq]
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        omega
+      have hright : (List.range' (m + 1) m).filter (fun x => decide (x ≤ m)) = [] := by
+        apply List.filter_eq_nil_iff.mpr
+        intro x hx
+        rw [List.mem_range'] at hx
+        obtain ⟨i, _, rfl⟩ := hx
+        simp only [decide_eq_true_eq, not_le]
+        omega
+      rw [hleft, hright, List.append_nil]
+    rw [hrange] at hp
+    exact List.Perm.eq_of_sortedLE (hlowsPair.imp (by omega)).sortedLE
+      (List.sortedLT_range' 1 m (by omega)).sortedLE hp
+  have hdata := gapped_filters_slots hgapped
+  have hhighPerm : (highEntries m input).Perm (List.range' (m + 1) m) := by
+    have hp := hperm.filter (fun x => decide (m < x))
+    change (highEntries m input).Perm (highEntries m (List.range' 1 (m + m))) at hp
+    have hrange : highEntries m (List.range' 1 (m + m)) = List.range' (m + 1) m := by
+      have hsplit : List.range' 1 (m + m) =
+          List.range' 1 m ++ List.range' (m + 1) m := by
+        simpa [Nat.add_comm] using
+          (List.range'_append_1 (s := 1) (m := m) (n := m)).symm
+      rw [hsplit, highEntries, List.filter_append]
+      have hleft : (List.range' 1 m).filter (fun x => decide (m < x)) = [] := by
+        apply List.filter_eq_nil_iff.mpr
+        intro x hx
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        simp
+        omega
+      have hright : (List.range' (m + 1) m).filter (fun x => decide (m < x)) =
+          List.range' (m + 1) m := by
+        apply List.filter_eq_self.mpr
+        intro x hx
+        rw [decide_eq_true_eq]
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        omega
+      rw [hleft, hright, List.nil_append]
+    rw [hrange] at hp
+    exact hp
+  have hhighLen : (highEntries m input).length = m := by
+    simpa using hhighPerm.length_eq
+  have hslotLen : (gapSlots m input).length =
+      ((gapSlots m input).filterMap id).length := by
+    rw [hdata.2.1, hdata.2.2, hlows]
+    simp [hhighLen]
+  have hslots : gapSlots m input = (List.range' 1 m).map some := by
+    have hsome : gapSlots m input = ((gapSlots m input).filterMap id).map some := by
+      symm
+      rw [List.map_filterMap_some_eq_filter_map_isSome, List.map_id]
+      exact List.filter_eq_self.mpr (List.filterMap_length_eq_length.mp hslotLen.symm)
+    rw [hsome, hdata.2.2, hlows]
+  have hfilled : FilledUntilLast (gapSlots m input) := by
+    rw [hslots]
+    exact filledUntilLast_map_some _
+  have hfilledN : FilledUntilLast (gapSlots (2 * m / 2) input) := by
+    simpa only [hhalf] using hfilled
+  have hhighPair : (highEntries m input).Pairwise (fun x y => x < y) := by
+    simpa only [hhalf] using
+      successful_highs_of_filled_until_last hgappedN hfilledN houtput
+  have hhighs : highEntries m input = List.range' (m + 1) m :=
+    List.Perm.eq_of_sortedLE (hhighPair.imp (by omega)).sortedLE
+      (List.sortedLT_range' (m + 1) m (by omega)).sortedLE hhighPerm
+  calc
+    input = assembleGaps (highEntries m input) (gapSlots m input) := hdata.1.symm
+    _ = assembleGaps (List.range' (m + 1) m) (candidateSlots m 0 m) := by
+      rw [hhighs, hslots, candidateSlots_even]
+    _ = candidate m m m := (candidate_eq_assemble m m m).symm
+
+private lemma successful_odd_eq_candidate {m : ℕ} (hm : 0 < m) {input : List ℕ}
+    (houtput : cyclicStackSort input = target (2 * m + 1)) :
+    ∃ omitted < m + 1, input = candidate m (m + 1) omitted := by
+  have hhalf : (2 * m + 1) / 2 = m := by
+    rw [Nat.add_comm, Nat.add_mul_div_left 1 m (by omega : 0 < 2)]
+    simp
+  have hgappedN := successful_gapped (n := 2 * m + 1) (by omega) houtput
+  have hgapped : Gapped m input := by simpa only [hhalf] using hgappedN
+  have hlowsPair : (lowEntries m input).Pairwise (fun x y => x < y) := by
+    simpa only [hhalf] using successful_lows_pairwise hgappedN houtput
+  have hperm : input.Perm (List.range' 1 (m + (m + 1))) := by
+    simpa [show 2 * m + 1 = m + (m + 1) by omega] using success_perm_range houtput
+  have hlows : lowEntries m input = List.range' 1 m := by
+    have hp := hperm.filter (fun x => decide (x ≤ m))
+    change (lowEntries m input).Perm (lowEntries m (List.range' 1 (m + (m + 1)))) at hp
+    have hrange : lowEntries m (List.range' 1 (m + (m + 1))) = List.range' 1 m := by
+      have hsplit : List.range' 1 (m + (m + 1)) =
+          List.range' 1 m ++ List.range' (m + 1) (m + 1) := by
+        simpa [Nat.add_comm] using
+          (List.range'_append_1 (s := 1) (m := m) (n := (m + 1))).symm
+      rw [hsplit, lowEntries, List.filter_append]
+      have hleft : (List.range' 1 m).filter (fun x => decide (x ≤ m)) =
+          List.range' 1 m := by
+        apply List.filter_eq_self.mpr
+        intro x hx
+        rw [decide_eq_true_eq]
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        omega
+      have hright : (List.range' (m + 1) (m + 1)).filter (fun x => decide (x ≤ m)) = [] := by
+        apply List.filter_eq_nil_iff.mpr
+        intro x hx
+        rw [List.mem_range'] at hx
+        obtain ⟨i, _, rfl⟩ := hx
+        simp only [decide_eq_true_eq, not_le]
+        omega
+      rw [hleft, hright, List.append_nil]
+    rw [hrange] at hp
+    exact List.Perm.eq_of_sortedLE (hlowsPair.imp (by omega)).sortedLE
+      (List.sortedLT_range' 1 m (by omega)).sortedLE hp
+  have hdata := gapped_filters_slots hgapped
+  have hhighPerm : (highEntries m input).Perm (List.range' (m + 1) (m + 1)) := by
+    have hp := hperm.filter (fun x => decide (m < x))
+    change (highEntries m input).Perm (highEntries m (List.range' 1 (m + (m + 1)))) at hp
+    have hrange : highEntries m (List.range' 1 (m + (m + 1))) = List.range' (m + 1) (m + 1) := by
+      have hsplit : List.range' 1 (m + (m + 1)) =
+          List.range' 1 m ++ List.range' (m + 1) (m + 1) := by
+        simpa [Nat.add_comm] using
+          (List.range'_append_1 (s := 1) (m := m) (n := (m + 1))).symm
+      rw [hsplit, highEntries, List.filter_append]
+      have hleft : (List.range' 1 m).filter (fun x => decide (m < x)) = [] := by
+        apply List.filter_eq_nil_iff.mpr
+        intro x hx
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        simp
+        omega
+      have hright : (List.range' (m + 1) (m + 1)).filter (fun x => decide (m < x)) =
+          List.range' (m + 1) (m + 1) := by
+        apply List.filter_eq_self.mpr
+        intro x hx
+        rw [decide_eq_true_eq]
+        rw [List.mem_range'] at hx
+        obtain ⟨i, hi, rfl⟩ := hx
+        omega
+      rw [hleft, hright, List.nil_append]
+    rw [hrange] at hp
+    exact hp
+  have hhighLen : (highEntries m input).length = m + 1 := by
+    simpa using hhighPerm.length_eq
+  have hslotLen : (gapSlots m input).length = (List.range' 1 m).length + 1 := by
+    rw [hdata.2.1, hhighLen]
+    simp
+  have hslotFilter : (gapSlots m input).filterMap id = List.range' 1 m := by
+    rw [hdata.2.2, hlows]
+  obtain ⟨omitted, homitted, hslots⟩ := options_one_none hslotFilter hslotLen
+  have homitted' : omitted < m + 1 := by simpa using homitted
+  have hhighs : highEntries m input = List.range' (m + 1) (m + 1) := by
+    by_cases hfinal : omitted = m
+    · subst omitted
+      have hfilled : FilledUntilLast (gapSlots m input) := by
+        rw [hslots]
+        simpa using filledUntilLast_insertNone_last (List.range' 1 m)
+      have hfilledN : FilledUntilLast (gapSlots ((2 * m + 1) / 2) input) := by
+        simpa only [hhalf] using hfilled
+      have hhighPair : (highEntries m input).Pairwise (fun x y => x < y) := by
+        simpa only [hhalf] using
+          successful_highs_of_filled_until_last hgappedN hfilledN houtput
+      exact List.Perm.eq_of_sortedLE (hhighPair.imp (by omega)).sortedLE
+        (List.sortedLT_range' (m + 1) (m + 1) (by omega)).sortedLE hhighPerm
+    · have homittedLt : omitted < m := by omega
+      have hends : EndsWithLow m input := by
+        rw [← hdata.1, hslots]
+        apply assemble_insert_none_ends (by simpa using hhighLen) (by simpa using homittedLt)
+        intro low hmem
+        rw [List.mem_range'] at hmem
+        obtain ⟨i, hi, rfl⟩ := hmem
+        omega
+      have hendsN : EndsWithLow ((2 * m + 1) / 2) input := by
+        simpa only [hhalf] using hends
+      have hglobal := successful_high_entries_final_low hgappedN hendsN houtput
+      simpa only [hhalf, show 2 * m + 1 - m = m + 1 by omega] using hglobal
+  refine ⟨omitted, homitted', ?_⟩
+  calc
+    input = assembleGaps (highEntries m input) (gapSlots m input) := hdata.1.symm
+    _ = assembleGaps (List.range' (m + 1) (m + 1))
+        (candidateSlots omitted 0 (m + 1)) := by
+      rw [hhighs, hslots, candidateSlots_odd m omitted homitted']
+    _ = candidate m (m + 1) omitted :=
+      (candidate_eq_assemble m (m + 1) omitted).symm
+
+/-- Zhan--Bie Conjectures 3 and 4: for every `m ≥ 2`, the full fibre over
+the target of size `2m` has one element, while the full fibre over the target
+of size `2m+1` has `m+1` elements. -/
+theorem zhan_bie_conjectures_3_4 (m : ℕ) (hm : 2 ≤ m) :
+    (fibre (2 * m)).length = 1 ∧ (fibre (2 * m + 1)).length = m + 1 := by
+  have hevenSubset : fibre (2 * m) ⊆ [candidate m m m] := by
+    intro input hinput
+    have houtput : cyclicStackSort input = target (2 * m) := by
+      simpa [fibre] using (List.mem_filter.mp hinput).2
+    simp [successful_even_eq_candidate (by omega) houtput]
+  have hevenUpper := (show (fibre (2 * m)).Nodup from by
+    unfold fibre
+    exact (List.nodup_permutations _ List.nodup_range').filter _).length_le_of_subset
+    hevenSubset
+  have hevenLower := evenCandidate_lower_bound m (by omega)
+  have hoddSubset : fibre (2 * m + 1) ⊆
+      (List.range (m + 1)).map (candidate m (m + 1)) := by
+    intro input hinput
+    have houtput : cyclicStackSort input = target (2 * m + 1) := by
+      simpa [fibre] using (List.mem_filter.mp hinput).2
+    obtain ⟨omitted, homitted, rfl⟩ := successful_odd_eq_candidate (by omega) houtput
+    apply List.mem_map.mpr
+    exact ⟨omitted, by simpa using homitted, rfl⟩
+  have hoddUpper := (show (fibre (2 * m + 1)).Nodup from by
+    unfold fibre
+    exact (List.nodup_permutations _ List.nodup_range').filter _).length_le_of_subset
+    hoddSubset
+  have hoddLower := oddCandidate_lower_bound m (by omega)
+  have hevenUpper' : (fibre (2 * m)).length ≤ 1 := by simpa using hevenUpper
+  have hoddUpper' : (fibre (2 * m + 1)).length ≤ m + 1 := by
+    simpa using hoddUpper
+  constructor
+  · omega
+  · omega
+
+
+end D5.S1.Words.Patterns.CyclicStackPreimages

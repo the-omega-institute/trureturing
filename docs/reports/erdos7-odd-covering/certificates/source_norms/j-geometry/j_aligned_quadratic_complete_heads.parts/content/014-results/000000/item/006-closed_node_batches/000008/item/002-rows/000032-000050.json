@@ -1,0 +1,428 @@
+[
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      456
+    ],
+    "dual_key": "c78d1a14567e84f248f6563af53289d4da494d985087cbd4135b6e00a922ff59",
+    "complete_upper": "8846758950534559717/1984500000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      457
+    ],
+    "dual_key": "0d835127ab0648571406b3b4d1ba6a9adc5ea35f590fc763ca80be85498239a2",
+    "complete_upper": "4446277275163264819/992250000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      458
+    ],
+    "dual_key": "4b9410da31aae926aee662e0dbaca89550279ae3308a4294f72e1c881f3bf222",
+    "complete_upper": "887032395053304589/198450000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      459
+    ],
+    "dual_key": "9885d1a9c285937583b41d5cb3989f835eb21faf024df0be416060f52e629907",
+    "complete_upper": "743406162545371579/165375000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      460,
+      461,
+      462,
+      463,
+      464
+    ],
+    "dual_key": "fb69c76d53cd5d204f4ebe30bb45035d8c6bb07c8fed7f55d018f45fdf94cfc8",
+    "complete_upper": "2975042750128868759/661500000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      465
+    ],
+    "dual_key": "d9cc0b6df5a867633b91c6b881d82f80b1724417fbc3708e095694990b7b8ad7",
+    "complete_upper": "3547762260118439969/793800000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      466
+    ],
+    "dual_key": "d9cc0b6df5a867633b91c6b881d82f80b1724417fbc3708e095694990b7b8ad7",
+    "complete_upper": "3547762260118439969/793800000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      467
+    ],
+    "dual_key": "8ca4611c4e147c61ca5172dda8c426f30a21d3f6ac5af15da42b00bddf7fba3f",
+    "complete_upper": "17830402500510532421/3969000000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      468
+    ],
+    "dual_key": "24961bb9c319b9442df75203a4c57ed3c0b0459e5b8fb00d6057d07d82aa3788",
+    "complete_upper": "5928647100281102503/1323000000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      469
+    ],
+    "dual_key": "36f7ba5c6a80b02860bc4c1cc0678ba69439566128c5ca1d8997209e3437d6a9",
+    "complete_upper": "1987189033450332497/441000000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      470,
+      471,
+      472,
+      473,
+      474
+    ],
+    "dual_key": "9a2c393ac793474a80aa839cbe22bd80b285ca2d4e5aa1bd383b530da241e670",
+    "complete_upper": "740419987528075763/165375000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      475
+    ],
+    "dual_key": "22b7da3a8fd372a73d873f169401d55f7e5fa7c351526e45c3363ac97b0da1ea",
+    "complete_upper": "3537468900122203601/793800000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      476
+    ],
+    "dual_key": "22b7da3a8fd372a73d873f169401d55f7e5fa7c351526e45c3363ac97b0da1ea",
+    "complete_upper": "3537468900122203601/793800000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      477
+    ],
+    "dual_key": "52168b106a570a139dc3ed972bec755b047494164d4586e1662a77df505de607",
+    "complete_upper": "2540516528650086781/567000000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      478
+    ],
+    "dual_key": "c2625bd1d5937269ae12a8d80c2d4a9de80c14fce8ad041111375f3a75255510",
+    "complete_upper": "2534499214377087389/567000000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      479
+    ],
+    "dual_key": "1bdf5152f5898633275e664c2f2e2b0aef538d85806eeff85e19f079f3e3dd0c",
+    "complete_upper": "5948831500322988857/1323000000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      480,
+      481,
+      482,
+      483,
+      484
+    ],
+    "dual_key": "2d6908d198ef34966fa25bada288ad7a8e23e953fa506a24424fad365b85dd10",
+    "complete_upper": "4461555825322406983/992250000000000000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      2
+    ],
+    "second_indices": [
+      485
+    ],
+    "dual_key": "16582dc2354eb5eb573f9ef41369de3f95033ca59c86ba37e961027389a28572",
+    "complete_upper": "17766368100733461949/3969000000000000000"
+  }
+]

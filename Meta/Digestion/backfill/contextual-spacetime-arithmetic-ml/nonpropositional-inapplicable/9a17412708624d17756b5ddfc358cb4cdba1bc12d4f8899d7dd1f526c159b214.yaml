@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9a17412708624d17756b5ddfc358cb4cdba1bc12d4f8899d7dd1f526c159b214
+  normalized_sha256: sha256:9a17412708624d17756b5ddfc358cb4cdba1bc12d4f8899d7dd1f526c159b214
+cas_ref: sha256:9a17412708624d17756b5ddfc358cb4cdba1bc12d4f8899d7dd1f526c159b214
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “有限元组由有序对构造”之后把有限与可数历史分别放在函数集合中；该段包含明确存在性理由，探针在 Mathlib 的 ZFSet 模型里实例化函数集及可数并，而非把集合存在写成新定义公理，仓内无冻结 GID。
+    previous_atom_id: 99d467c146833fccea600edf7f3cf8e722c790171b4804c229893a0419ca01d6
+    next_atom_id: 78e121698634b1e1b5339c054f41eff2ee3f4fe650f78bc6574b6baa3488a130

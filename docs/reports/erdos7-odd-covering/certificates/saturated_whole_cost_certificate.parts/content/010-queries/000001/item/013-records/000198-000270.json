@@ -1,0 +1,578 @@
+[
+  {
+    "depth": [
+      6,
+      3,
+      3
+    ],
+    "cost_numerator": 86917484860981
+  },
+  {
+    "depth": [
+      6,
+      3,
+      4
+    ],
+    "cost_numerator": 99221276572645
+  },
+  {
+    "depth": [
+      6,
+      4,
+      0
+    ],
+    "cost_numerator": 59212121901823
+  },
+  {
+    "depth": [
+      6,
+      4,
+      1
+    ],
+    "cost_numerator": 73229087245357
+  },
+  {
+    "depth": [
+      6,
+      4,
+      2
+    ],
+    "cost_numerator": 87334705508461
+  },
+  {
+    "depth": [
+      6,
+      4,
+      3
+    ],
+    "cost_numerator": 101440323771565
+  },
+  {
+    "depth": [
+      6,
+      4,
+      4
+    ],
+    "cost_numerator": 115545942034669
+  },
+  {
+    "depth": [
+      6,
+      5,
+      0
+    ],
+    "cost_numerator": 68329481158087
+  },
+  {
+    "depth": [
+      6,
+      5,
+      1
+    ],
+    "cost_numerator": 84148273053061
+  },
+  {
+    "depth": [
+      6,
+      5,
+      2
+    ],
+    "cost_numerator": 100055717867605
+  },
+  {
+    "depth": [
+      6,
+      5,
+      3
+    ],
+    "cost_numerator": 115963162682149
+  },
+  {
+    "depth": [
+      6,
+      5,
+      4
+    ],
+    "cost_numerator": 131870607496693
+  },
+  {
+    "depth": [
+      7,
+      0,
+      0
+    ],
+    "cost_numerator": 25652232493888
+  },
+  {
+    "depth": [
+      7,
+      0,
+      1
+    ],
+    "cost_numerator": 32981965757230
+  },
+  {
+    "depth": [
+      7,
+      0,
+      2
+    ],
+    "cost_numerator": 40400351940142
+  },
+  {
+    "depth": [
+      7,
+      0,
+      3
+    ],
+    "cost_numerator": 47818738123054
+  },
+  {
+    "depth": [
+      7,
+      0,
+      4
+    ],
+    "cost_numerator": 55237124305966
+  },
+  {
+    "depth": [
+      7,
+      1,
+      0
+    ],
+    "cost_numerator": 35317375384423
+  },
+  {
+    "depth": [
+      7,
+      1,
+      1
+    ],
+    "cost_numerator": 44581983656053
+  },
+  {
+    "depth": [
+      7,
+      1,
+      2
+    ],
+    "cost_numerator": 53935244847253
+  },
+  {
+    "depth": [
+      7,
+      1,
+      3
+    ],
+    "cost_numerator": 63288506038453
+  },
+  {
+    "depth": [
+      7,
+      1,
+      4
+    ],
+    "cost_numerator": 72641767229653
+  },
+  {
+    "depth": [
+      7,
+      2,
+      0
+    ],
+    "cost_numerator": 45057686611951
+  },
+  {
+    "depth": [
+      7,
+      2,
+      1
+    ],
+    "cost_numerator": 56257169891869
+  },
+  {
+    "depth": [
+      7,
+      2,
+      2
+    ],
+    "cost_numerator": 67545306091357
+  },
+  {
+    "depth": [
+      7,
+      2,
+      3
+    ],
+    "cost_numerator": 78833442290845
+  },
+  {
+    "depth": [
+      7,
+      2,
+      4
+    ],
+    "cost_numerator": 90121578490333
+  },
+  {
+    "depth": [
+      7,
+      3,
+      0
+    ],
+    "cost_numerator": 54797997839479
+  },
+  {
+    "depth": [
+      7,
+      3,
+      1
+    ],
+    "cost_numerator": 67932356127685
+  },
+  {
+    "depth": [
+      7,
+      3,
+      2
+    ],
+    "cost_numerator": 81155367335461
+  },
+  {
+    "depth": [
+      7,
+      3,
+      3
+    ],
+    "cost_numerator": 94378378543237
+  },
+  {
+    "depth": [
+      7,
+      3,
+      4
+    ],
+    "cost_numerator": 107601389751013
+  },
+  {
+    "depth": [
+      7,
+      4,
+      0
+    ],
+    "cost_numerator": 64538309067007
+  },
+  {
+    "depth": [
+      7,
+      4,
+      1
+    ],
+    "cost_numerator": 79607542363501
+  },
+  {
+    "depth": [
+      7,
+      4,
+      2
+    ],
+    "cost_numerator": 94765428579565
+  },
+  {
+    "depth": [
+      7,
+      4,
+      3
+    ],
+    "cost_numerator": 109923314795629
+  },
+  {
+    "depth": [
+      7,
+      4,
+      4
+    ],
+    "cost_numerator": 125081201011693
+  },
+  {
+    "depth": [
+      7,
+      5,
+      0
+    ],
+    "cost_numerator": 74278620294535
+  },
+  {
+    "depth": [
+      7,
+      5,
+      1
+    ],
+    "cost_numerator": 91282728599317
+  },
+  {
+    "depth": [
+      7,
+      5,
+      2
+    ],
+    "cost_numerator": 108375489823669
+  },
+  {
+    "depth": [
+      7,
+      5,
+      3
+    ],
+    "cost_numerator": 125468251048021
+  },
+  {
+    "depth": [
+      7,
+      5,
+      4
+    ],
+    "cost_numerator": 142561012272373
+  },
+  {
+    "depth": [
+      8,
+      0,
+      0
+    ],
+    "cost_numerator": 28485024586576
+  },
+  {
+    "depth": [
+      8,
+      0,
+      1
+    ],
+    "cost_numerator": 36334831975486
+  },
+  {
+    "depth": [
+      8,
+      0,
+      2
+    ],
+    "cost_numerator": 44273292283966
+  },
+  {
+    "depth": [
+      8,
+      0,
+      3
+    ],
+    "cost_numerator": 52211752592446
+  },
+  {
+    "depth": [
+      8,
+      0,
+      4
+    ],
+    "cost_numerator": 60150212900926
+  },
+  {
+    "depth": [
+      8,
+      1,
+      0
+    ],
+    "cost_numerator": 38774706635815
+  },
+  {
+    "depth": [
+      8,
+      1,
+      1
+    ],
+    "cost_numerator": 48692437489861
+  },
+  {
+    "depth": [
+      8,
+      1,
+      2
+    ],
+    "cost_numerator": 58698821263477
+  },
+  {
+    "depth": [
+      8,
+      1,
+      3
+    ],
+    "cost_numerator": 68705205037093
+  },
+  {
+    "depth": [
+      8,
+      1,
+      4
+    ],
+    "cost_numerator": 78711588810709
+  },
+  {
+    "depth": [
+      8,
+      2,
+      0
+    ],
+    "cost_numerator": 49137969834607
+  },
+  {
+    "depth": [
+      8,
+      2,
+      1
+    ],
+    "cost_numerator": 61123624153789
+  },
+  {
+    "depth": [
+      8,
+      2,
+      2
+    ],
+    "cost_numerator": 73197931392541
+  },
+  {
+    "depth": [
+      8,
+      2,
+      3
+    ],
+    "cost_numerator": 85272238631293
+  },
+  {
+    "depth": [
+      8,
+      2,
+      4
+    ],
+    "cost_numerator": 97346545870045
+  },
+  {
+    "depth": [
+      8,
+      3,
+      0
+    ],
+    "cost_numerator": 59501233033399
+  },
+  {
+    "depth": [
+      8,
+      3,
+      1
+    ],
+    "cost_numerator": 73554810817717
+  },
+  {
+    "depth": [
+      8,
+      3,
+      2
+    ],
+    "cost_numerator": 87697041521605
+  },
+  {
+    "depth": [
+      8,
+      3,
+      3
+    ],
+    "cost_numerator": 101839272225493
+  },
+  {
+    "depth": [
+      8,
+      3,
+      4
+    ],
+    "cost_numerator": 115981502929381
+  },
+  {
+    "depth": [
+      8,
+      4,
+      0
+    ],
+    "cost_numerator": 69864496232191
+  },
+  {
+    "depth": [
+      8,
+      4,
+      1
+    ],
+    "cost_numerator": 85985997481645
+  },
+  {
+    "depth": [
+      8,
+      4,
+      2
+    ],
+    "cost_numerator": 102196151650669
+  },
+  {
+    "depth": [
+      8,
+      4,
+      3
+    ],
+    "cost_numerator": 118406305819693
+  },
+  {
+    "depth": [
+      8,
+      4,
+      4
+    ],
+    "cost_numerator": 134616459988717
+  },
+  {
+    "depth": [
+      8,
+      5,
+      0
+    ],
+    "cost_numerator": 80227759430983
+  },
+  {
+    "depth": [
+      8,
+      5,
+      1
+    ],
+    "cost_numerator": 98417184145573
+  },
+  {
+    "depth": [
+      8,
+      5,
+      2
+    ],
+    "cost_numerator": 116695261779733
+  },
+  {
+    "depth": [
+      8,
+      5,
+      3
+    ],
+    "cost_numerator": 134973339413893
+  },
+  {
+    "depth": [
+      8,
+      5,
+      4
+    ],
+    "cost_numerator": 153251417048053
+  }
+]

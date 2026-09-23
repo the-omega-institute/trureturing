@@ -1,0 +1,10 @@
+**定义 46.0（全阈值—周期完成）。** 记 $\mathbb N_0=\{0,1,2,\ldots\}$，并约定 $a^0=1$，包括 $0^0=1$。取全部指标
+$$
+I=\mathbb N_0\times\mathbb N_{>0},\qquad (t,p)\preceq(u,v)\iff t\le u\ \land\ p\mid v,
+$$
+以及
+$$
+nR_{t,p}m\iff n=m\ \lor\bigl(n,m\ge t\ \land\ n\equiv m\pmod p\bigr).
+$$
+记 $q_\alpha:\mathbb N_0\to Q_\alpha=\mathbb N_0/R_\alpha$，$b_{\beta\alpha}q_\beta=q_\alpha$，$K=\varprojlim_{\alpha\in I}Q_\alpha$，$\iota(n)=(q_\alpha(n))_\alpha$。各有限商取离散拓扑，$K$ 取逆极限拓扑。采用此指定完成上的逐坐标加法与乘法；$\pi_\alpha$ 表示坐标投影，$\iota^d,q_\alpha^d,\pi_\alpha^d$ 均表示逐分量映射。取 $c_0=(0,1)$，并对 $k\ge1$ 取 $c_k=(k,\operatorname{lcm}(1,\ldots,k))$。此处只采用[定义 14.0 与定理 14.1 的全指标完成及加乘延拓](https://raw.githubusercontent.com/the-omega-institute/trureturing/492640d0651a5fca476f4b168c97a1d05f65ff8d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，不讨论其他紧致半环的分类。
+

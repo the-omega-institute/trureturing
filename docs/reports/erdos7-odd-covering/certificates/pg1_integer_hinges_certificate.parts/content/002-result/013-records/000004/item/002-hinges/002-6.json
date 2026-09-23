@@ -1,0 +1,65 @@
+{
+  "old_lambda_upper": "10690170977815242924671/27567681942973772250000",
+  "old_zero_depth_upper_numerator": 115490189,
+  "exact_zero_depth_numerator": 106787589,
+  "exact_common_digit_numerator": 106787589,
+  "unconditional_saving": "4353777370186312/1093955632657689375",
+  "lambda_upper": "10580455788086547862271/27567681942973772250000",
+  "nu_upper": "10580455788086547862271/14604022456869186140625",
+  "other269_depths_sha256": "c35c38039e60bdb9d0a7628099d2800d715763a13672d680b1c5f3a8731c1c51",
+  "admissible_distinct_A": 656,
+  "root_A_indices_sha256": "751a802174842a35b7ec172517e2d6fd0b3d80be9957f06f2412d61a98e17236",
+  "maximizing_A_index": 5316,
+  "original_labels": [
+    {
+      "modulus": 1,
+      "residue": 0
+    },
+    {
+      "modulus": 3,
+      "residue": 1
+    },
+    {
+      "modulus": 5,
+      "residue": 4
+    },
+    {
+      "modulus": 9,
+      "residue": 5
+    },
+    {
+      "modulus": 15,
+      "residue": 14
+    },
+    {
+      "modulus": 45,
+      "residue": 44
+    },
+    {
+      "modulus": 7,
+      "residue": 6
+    },
+    {
+      "modulus": 21,
+      "residue": 20
+    },
+    {
+      "modulus": 35,
+      "residue": 34
+    },
+    {
+      "modulus": 63,
+      "residue": 62
+    },
+    {
+      "modulus": 105,
+      "residue": 104
+    },
+    {
+      "modulus": 315,
+      "residue": 314
+    }
+  ],
+  "inherited_depth_source": "certificates/original9_convex_transfer_certificate.json",
+  "inherited_depth_numerators_sha256": "e521ed491070bab56570d0048348178c4f6470136222e64a2fa790ad2cf7ad8d"
+}

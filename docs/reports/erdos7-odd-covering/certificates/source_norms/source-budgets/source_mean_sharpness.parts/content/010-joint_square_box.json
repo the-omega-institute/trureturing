@@ -1,0 +1,37 @@
+{
+  "parameter_order": {
+    "kind": "inline",
+    "value": [
+      "t",
+      "q",
+      "u"
+    ]
+  },
+  "bounds": {
+    "kind": "inline",
+    "value": [
+      [
+        "29524/531441",
+        "1/18"
+      ],
+      [
+        "61035156/244140625",
+        "1/4"
+      ],
+      [
+        "5/6",
+        "11534406001/13841287201"
+      ]
+    ]
+  },
+  "vertices": {
+    "path": "content/010-joint_square_box/002-vertices.json",
+    "sha256": "5cd622531b8c0a5758e31473cf0c5b59e1e2612e24a3a6ebbce102fa12a5734b",
+    "kind": "value"
+  },
+  "limiting_clusters": {
+    "path": "content/010-joint_square_box/003-limiting_clusters.json",
+    "sha256": "454112e6c04f18c3cc756fdd3fdeb0fe71aafbb30bc9524d794ed5dade8f09dd",
+    "kind": "value"
+  }
+}

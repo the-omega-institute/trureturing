@@ -1,0 +1,32 @@
+**theorem 52.2 (单位商、主理想与紧拓扑的同一化).** 有自然同胚
+$$
+I\longrightarrow E^{\mathcal P},\qquad \rho(x)\longmapsto\bigl(v_p(x_p)\bigr)_{p\in\mathcal P}.
+$$
+而且 $\rho(x)=\rho(y)$ 当且仅当 $xR=yR$。因此 $I$ 同时识别为 $R$ 的主理想空间与扩展赋值空间；每个主理想都是闭集。$I$ 是紧 Hausdorff 空间，$\rho$ 是连续、满射、开映射，且 $U=\prod_p\mathbb Z_p^\times$ 是紧空间。以下把 $A\in I$ 写作 $A=(a_p)_p$，并记
+$$
+0_I=\rho(0)=(\infty)_p,\qquad 1_I=\rho(1)=(0)_p.
+$$
+上述商与拓扑识别对应 [Longhi–Mu–Saettone，§4.1，定义4.1、命题4.3、注4.4、引理4.5](https://arxiv.org/pdf/2202.13478v3)。
+
+**证明。** 元素 $x=(x_p)_p$ 在 $R$ 中可逆，当且仅当每个 $x_p$ 在 $\mathbb Z_p$ 中可逆：必要性由逐坐标投影得到，充分性由 $(x_p^{-1})_p$ 给出。因此 $U=\prod_p\mathbb Z_p^\times$。每个局部单位群是 $\mathbb Z_p$ 的闭子集，故紧；于是 $U$ 紧。
+
+在 $\mathbb Z_p$ 中，两个非零元素赋值相同，当且仅当它们相差一个单位因子。两个元素赋值都为 $\infty$ 时，它们都为零，此时单位因子可取 $1$。因此全部坐标赋值相同，当且仅当存在 $u=(u_p)_p\in U$ 使 $x=uy$。任给 $(a_p)_p\in E^{\mathcal P}$，取 $x_p=d_p(a_p)$，便得到具有该赋值向量的 $x\in R$，故所列映射是双射。
+
+逐坐标相乘给出
+$$
+xR=\prod_p x_p\mathbb Z_p.
+$$
+这里反向包含也成立：若 $z_p\in x_p\mathbb Z_p$，当 $x_p\ne0$ 时取 $r_p=z_p/x_p$，当 $x_p=0$ 时取 $r_p=0$，便有 $z=xr$。局部主理想相等当且仅当其生成元赋值相同，故 $xR=yR$ 与 $\rho(x)=\rho(y)$ 等价。乘法映射 $r\mapsto xr$ 连续，因而 $xR$ 是紧空间 $R$ 在 Hausdorff 空间 $R$ 中的紧像，故闭。
+
+$E$ 是紧 Hausdorff 空间：含 $\infty$ 的一个开覆盖成员覆盖一个尾集，剩余只有有限个点；不同点则可由有限点单集及其补集分离。对于有限 $n$，
+$$
+v_p^{-1}(\{n\})=p^n\mathbb Z_p^\times
+$$
+是开闭集，而尾集的原像是 $p^N\mathbb Z_p$。故各赋值映射连续，从而 $R\to E^{\mathcal P}$ 连续。它由紧空间满射到 Hausdorff 空间，因而是商映射；其纤维恰为 $U$ 轨道，所以诱导的双射 $I\to E^{\mathcal P}$ 是同胚。
+
+最后，若 $O\subseteq R$ 开，则
+$$
+\rho^{-1}(\rho(O))=\bigcup_{u\in U}uO
+$$
+开。由商拓扑定义，$\rho(O)$ 开，故 $\rho$ 是开映射。证毕。
+
