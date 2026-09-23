@@ -62,8 +62,7 @@ run_bounded_capture() {
 }
 gh_authenticated() {
   local mode="$1" step="$2" timeout_seconds="$3"; shift 3
-  local deadline remaining
-  local credentials=(-u GH_TOKEN)
+  local deadline remaining fresh_token=""
   deadline=$(($(date +%s) + timeout_seconds))
   # Creation prefers the App identity. Local calls keep native gh auth when
   # GITHUB_TOKEN is absent; when supplied, refresh that credential per call.
@@ -72,8 +71,7 @@ gh_authenticated() {
       && command -v gh-app >/dev/null 2>&1 \
       && run_bounded_capture gh-app-token "$timeout_seconds" bash -c 'exec gh-app token --auto 2>/dev/null' \
       && [[ -n "$BOUNDED_OUTPUT" ]]; then
-    if [[ "$mode" == create ]]; then credentials=("GH_TOKEN=$BOUNDED_OUTPUT")
-    else credentials+=("GITHUB_TOKEN=$BOUNDED_OUTPUT"); fi
+    fresh_token="$BOUNDED_OUTPUT"
   fi
   BOUNDED_OUTPUT=""
   # Creation already had separate token/API budgets; watch calls must share
@@ -81,7 +79,15 @@ gh_authenticated() {
   remaining="$timeout_seconds"
   if [[ "$mode" != create ]]; then remaining=$((deadline - $(date +%s))); fi
   (( remaining > 0 )) || return 124
-  run_bounded_capture "$step" "$remaining" env "${credentials[@]}" LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  # Shell assignments keep credentials out of external argv and restore the
+  # caller's environment after capture; creation still takes GH_TOKEN priority.
+  if [[ -n "$fresh_token" && "$mode" == create ]]; then
+    GH_TOKEN="$fresh_token" run_bounded_capture "$step" "$remaining" env LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  elif [[ -n "$fresh_token" ]]; then
+    GITHUB_TOKEN="$fresh_token" run_bounded_capture "$step" "$remaining" env -u GH_TOKEN LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  else
+    run_bounded_capture "$step" "$remaining" env -u GH_TOKEN LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  fi
 }
 gh_local() {
   gh_authenticated local "$@"

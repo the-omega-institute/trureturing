@@ -1109,6 +1109,24 @@ public sealed class PrOpenScriptTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
+    public void PrScriptKeepsCredentialsOutOfExternalLaunchArguments(bool create)
+    {
+        using var fixture = new PrScriptFixture { GithubToken = create ? "" : "supplied-token" };
+        const string title = "literal 'single' \"double\" $HOME `exit 91` $(exit 92) *";
+        var result = create
+            ? fixture.RunOpen("--head", "topic", "--message-file", fixture.Message(title + "\n"))
+            : fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.NotEmpty(fixture.LaunchArguments("env"));
+        Assert.NotEmpty(fixture.LaunchArguments("gh-app"));
+        if (create) Assert.Contains(title, fixture.LaunchArguments("gh"));
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
     public void PrWatchRefreshesExpiringCredentialsAcrossQueriesForOneHeadAndRun(bool throughMake)
     {
         using var fixture = new PrScriptFixture { GithubToken = "renewed-1", RotatingCredentials = true };
@@ -1138,7 +1156,9 @@ public sealed class PrOpenScriptTests
     [InlineData("absent", "supplied-token", "supplied-token", 0)]
     [InlineData("available", "", "none", 0)]
     [InlineData("absent", "", "none", 0)]
-    public void PrWatchPreservesCredentialModes(string broker, string supplied, string expected, int brokerCalls)
+    [InlineData("available", null, "none", 0)]
+    [InlineData("absent", null, "none", 0)]
+    public void PrWatchPreservesCredentialModes(string broker, string? supplied, string expected, int brokerCalls)
     {
         using var fixture = new PrScriptFixture { GithubToken = supplied, BrokerMode = broker };
         var result = fixture.RunWatch42();
@@ -1200,6 +1220,7 @@ public sealed class PrOpenScriptTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(6, fixture.BrokerCalls.Count);
         Assert.EndsWith("|token=renewed-2", fixture.Invocations[1], StringComparison.Ordinal);
+        Assert.Equal("renewed-1", fixture.GithubCredentials[1]);
         Assert.EndsWith("|token=none", fixture.Invocations[2], StringComparison.Ordinal);
         Assert.Equal("renewed-3", fixture.GithubCredentials[2]);
         fixture.AssertNoCredentialEmission(result);
@@ -1413,6 +1434,7 @@ public sealed class PrOpenScriptTests
             Directory.CreateDirectory(responses);
             WriteExecutable(Path.Combine(bin, "gh"), FakeGh);
             WriteExecutable(Path.Combine(bin, "gh-app"), FakeGhApp);
+            WriteExecutable(Path.Combine(bin, "env"), FakeEnv);
             RequiredResponses(Ok(Required("engineering")));
             HeadResponses(Ok(HeadResponse(HeadSha)));
             SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"))));
@@ -1429,7 +1451,7 @@ public sealed class PrOpenScriptTests
             File.Exists(invocations + ".body") ? File.ReadAllText(invocations + ".body") : "";
         internal string FailStep { get; set; } = "";
         internal bool AppTokenFails { get; set; }
-        internal string GithubToken { get; set; } = "";
+        internal string? GithubToken { get; set; }
         internal string BrokerMode { get; set; } = "available";
         internal bool RotatingCredentials { get; set; }
         internal bool RequireCredential { get; set; }
@@ -1439,11 +1461,21 @@ public sealed class PrOpenScriptTests
         internal bool BrokerChildProcess { get; set; }
         internal IReadOnlyList<string> BrokerCalls => File.Exists(invocations + ".broker") ? File.ReadAllLines(invocations + ".broker") : [];
         internal IReadOnlyList<string> GithubCredentials => File.Exists(invocations + ".github") ? File.ReadAllLines(invocations + ".github") : [];
+        internal IReadOnlyList<string> LaunchArguments(string executable)
+        {
+            var path = invocations + ".argv-" + executable;
+            return File.Exists(path) ? File.ReadAllText(path).Split('\0') : [];
+        }
         internal void AssertNoCredentialEmission(ProcessOutput result)
         {
             var output = Text(result.StandardOutput) + Text(result.StandardError);
+            Assert.NotEmpty(LaunchArguments("gh"));
             foreach (var token in new[] { "caller-token", "supplied-token", "expired-token", "fake-app-credential", "renewed-", "broker-secret" })
+            {
                 Assert.DoesNotContain(token, output, StringComparison.Ordinal);
+                foreach (var executable in new[] { "env", "gh", "gh-app" })
+                    Assert.All(LaunchArguments(executable), argument => Assert.DoesNotContain(token, argument, StringComparison.Ordinal));
+            }
             Assert.All(BrokerCalls, call => Assert.Equal("token --auto|stdout=pipe", call));
         }
         internal ProcessOutput RunMakeWatch42() => Run(["make", "pr-watch", "PR=42", "HEAD_SHA=" + HeadSha, "WATCH_INTERVAL_SECONDS=1"]);
@@ -1558,7 +1590,7 @@ public sealed class PrOpenScriptTests
                 arguments = arguments[1..];
             }
             return TestProcessRunner.Run("env",
-                ["-i", "GH_TOKEN=caller-token", $"GITHUB_TOKEN={GithubToken}", $"TMPDIR={scratch}",
+                ["-i", "GH_TOKEN=caller-token", .. (GithubToken is null ? Array.Empty<string>() : [$"GITHUB_TOKEN={GithubToken}"]), $"TMPDIR={scratch}",
                     $"PATH={bin}:/usr/bin:/bin:/usr/sbin:/sbin", "PR_OPEN_REPO=owner/repo",
                     "PR_OPEN_BASE=dev", $"PR_TEST_INVOCATIONS={invocations}",
                     $"PR_TEST_RESPONSES={responses}", $"PR_TEST_RESPONSE_EVENTS={responseEvents}", $"PR_TEST_FAIL_STEP={FailStep}",
@@ -1596,9 +1628,18 @@ public sealed class PrOpenScriptTests
                 4096);
             Assert.Equal(0, chmod.ExitCode);
         }
+        // Observe the executable boundary before env consumes assignments and
+        // execs gh; gh's own argv alone cannot detect an upstream env leak.
+        private const string FakeEnv = """
+            #!/bin/bash
+            set -euo pipefail
+            printf '%s\0' "$@" >> "$PR_TEST_INVOCATIONS.argv-env"
+            exec /usr/bin/env "$@"
+            """;
         private const string FakeGh = """
             #!/usr/bin/env bash
             set -euo pipefail
+            printf '%s\0' "$@" >> "$PR_TEST_INVOCATIONS.argv-gh"
             printf 'process:%s\n' "$$" >> "$PR_TEST_RESPONSE_EVENTS"
             token="${GH_TOKEN:-none}"
             printf '%s\n' "${GITHUB_TOKEN:-none}" >> "$PR_TEST_INVOCATIONS.github"
@@ -1709,6 +1750,7 @@ public sealed class PrOpenScriptTests
         private const string FakeGhApp = """
             #!/usr/bin/env bash
             set -euo pipefail
+            printf '%s\0' "$@" >> "$PR_TEST_INVOCATIONS.argv-gh-app"
             printf 'process:%s\n' "$$" >> "$PR_TEST_RESPONSE_EVENTS"
             output_kind=pipe
             [[ ! -f /dev/fd/1 ]] || output_kind=file
