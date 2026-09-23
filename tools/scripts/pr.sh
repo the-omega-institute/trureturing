@@ -31,46 +31,63 @@ PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID
 }'
 run_bounded_capture() {
   local step="$1" timeout_seconds="$2"; shift 2
-  local started deadline output errors pid watcher rc=0 result=success
+  local started deadline errors pid watcher rc=0 result=success
   started="$(date +%s)"; deadline=$((started + timeout_seconds))
-  output="$(mktemp "${TMPDIR:-/tmp}/pr-command-out.XXXXXX")"
   errors="$(mktemp "${TMPDIR:-/tmp}/pr-command-err.XXXXXX")"
   receipt "COMMAND_STARTED deadline_kind=api step=$step timeout_seconds=$timeout_seconds deadline_at=$deadline"
-  "$@" >"$output" 2>"$errors" & pid=$!
-  (
-    sleep "$timeout_seconds"
-    kill -TERM "$pid" 2>/dev/null || exit 0
-    sleep 1
-    kill -KILL "$pid" 2>/dev/null || true
-  ) >/dev/null 2>&1 & watcher=$!
-  if wait "$pid"; then rc=0; else rc=$?; fi
-  kill "$watcher" 2>/dev/null || true; wait "$watcher" 2>/dev/null || true
-  BOUNDED_OUTPUT="$(<"$output")"
+  # Capture stdout in memory: the same bounded call also obtains credentials.
+  if BOUNDED_OUTPUT="$(
+    # Isolate the command process group so a broker child cannot hold the
+    # capture pipe open after its parent exits or the deadline expires.
+    set -m
+    "$@" 2>"$errors" & pid=$!
+    (
+      sleep "$timeout_seconds"
+      kill -TERM -- "-$pid" 2>/dev/null || exit 0
+      sleep 1
+      kill -KILL -- "-$pid" 2>/dev/null || true
+    ) >/dev/null 2>&1 & watcher=$!
+    if wait "$pid"; then rc=0; else rc=$?; fi
+    kill -KILL -- "-$pid" 2>/dev/null || true
+    kill -- "-$watcher" 2>/dev/null || true; wait "$watcher" 2>/dev/null || true
+    exit "$rc"
+  )"; then rc=0; else rc=$?; fi
   if [[ "$rc" -eq 143 || "$rc" -eq 137 ]]; then rc=124; result=timeout
   elif [[ "$rc" -ne 0 ]]; then result=exit
   fi
   if [[ "$rc" -ne 0 && -s "$errors" ]]; then head -c 4096 "$errors" >&2; fi
-  rm -f "$output" "$errors"
+  rm -f "$errors"
   receipt "COMMAND_FINISHED deadline_kind=api step=$step timeout_seconds=$timeout_seconds result=$result deadline_at=$deadline exit_code=$rc"
   return "$rc"
 }
+gh_authenticated() {
+  local mode="$1" step="$2" timeout_seconds="$3"; shift 3
+  local deadline remaining
+  local credentials=(-u GH_TOKEN)
+  deadline=$(($(date +%s) + timeout_seconds))
+  # Creation prefers the App identity. Local calls keep native gh auth when
+  # GITHUB_TOKEN is absent; when supplied, refresh that credential per call.
+  # An absent/failing/empty broker preserves the caller's existing fallback.
+  if [[ "$mode" == create || -n "${GITHUB_TOKEN:-}" ]] \
+      && command -v gh-app >/dev/null 2>&1 \
+      && run_bounded_capture gh-app-token "$timeout_seconds" bash -c 'exec gh-app token --auto 2>/dev/null' \
+      && [[ -n "$BOUNDED_OUTPUT" ]]; then
+    if [[ "$mode" == create ]]; then credentials=("GH_TOKEN=$BOUNDED_OUTPUT")
+    else credentials+=("GITHUB_TOKEN=$BOUNDED_OUTPUT"); fi
+  fi
+  BOUNDED_OUTPUT=""
+  # Creation already had separate token/API budgets; watch calls must share
+  # their supplied remaining budget with credential acquisition.
+  remaining="$timeout_seconds"
+  if [[ "$mode" != create ]]; then remaining=$((deadline - $(date +%s))); fi
+  (( remaining > 0 )) || return 124
+  run_bounded_capture "$step" "$remaining" env "${credentials[@]}" LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+}
 gh_local() {
-  local step="$1" timeout_seconds="$2"; shift 2
-  run_bounded_capture "$step" "$timeout_seconds" env -u GH_TOKEN LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
+  gh_authenticated local "$@"
 }
 gh_create() {
-  local token="" CREATE_TOKEN=local
-  if command -v gh-app >/dev/null 2>&1 \
-      && run_bounded_capture gh-app-token "$PR_OPEN_TIMEOUT_SECONDS" gh-app token --auto \
-      && [[ -n "$BOUNDED_OUTPUT" ]]; then
-    token="$BOUNDED_OUTPUT"; CREATE_TOKEN="$token"
-  fi
-  if [[ "$CREATE_TOKEN" == local ]]; then
-    gh_local pr-create "$PR_OPEN_TIMEOUT_SECONDS" "$@"
-  else
-    run_bounded_capture pr-create "$PR_OPEN_TIMEOUT_SECONDS" env GH_TOKEN="$CREATE_TOKEN" \
-      LEAN4_GUARDRAILS_BYPASS=1 gh "$@"
-  fi
+  gh_authenticated create pr-create "$PR_OPEN_TIMEOUT_SECONDS" "$@"
 }
 parse_snapshot() {
   jq -Rsec --argjson required "$1" --arg head "$2" --argjson number "$3" --argjson runs "$4" --arg repo "$PR_REPO" '
