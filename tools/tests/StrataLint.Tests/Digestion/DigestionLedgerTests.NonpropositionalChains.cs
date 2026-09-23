@@ -10,7 +10,7 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionLedgerTests
 {
     [Fact]
-    public void ExplicitUpstreamParentStillFailsAfterCanonicalChildSettlement()
+    public void ExplicitUpstreamParentRequiresOwnReceiptAndReopensAfterDescendantClear()
     {
         const string statement = "**Theorem 1.1** For every natural number n, n + 0 = n.\n\n";
         const string proof = "**Proof** Apply Nat.add_zero to n.\n";
@@ -59,22 +59,36 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal(parentBytes, fixture.Current.Entries.Single(entry => entry.Path == PathFor(parent)).Bytes.ToArray());
         var stream = DigestionAtomContextProjection.MaterializeSource(fixture.Snapshot, fixture.Document, parent.SourceId);
         Assert.Equal(children.ToArray(), stream.AtomIds.ToArray());
-        var missing = Assert.Throws<DigestionAtomContextException>(() =>
-            stream.ResolveOccurrences(parent.AtomId));
-        Assert.Equal(DigestionAtomContextError.OCCURRENCE_MISSING, missing.Code);
+        var parentContext = Assert.Single(stream.ResolveOccurrences(parent.AtomId));
+        Assert.Equal(Encoding.UTF8.GetBytes(statement + proof), parentContext.Current.RawBytes.ToArray());
+        Assert.Null(parentContext.Previous);
+        Assert.Null(parentContext.Next);
+        Assert.Equal((1, 1), (parentContext.Index, parentContext.Count));
 
-        var before = SettleAtomCommandTests.Image(temporary);
         var result = SettleAtomCommandTests.Run(temporary.Path, fixture.Current,
             Request(parent.AtomId, originalContext.Previous?.AtomId, originalContext.Next?.AtomId));
-        Assert.False(result.Success);
-        Assert.Equal($"SETTLE_INVALID CHAIN_PARENT atom_id={parent.AtomId}\n", result.Error);
-        Assert.Equal(before, SettleAtomCommandTests.Image(temporary));
+        Assert.True(result.Success, result.Error);
+        fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
+        evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
+            fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
+        Assert.Empty(evaluation.Findings);
+        Assert.Equal(State, StateName(evaluation.Entries.Single(item => item.Entry.AtomId == parent.AtomId).DerivedStatus));
+
+        var clearParent = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "",
+            ["--clear", parent.AtomId, "--base", "baseline"]);
+        Assert.True(clearParent.Success, clearParent.Error);
+        fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
+        Assert.Equal(parentBytes, fixture.Current.Entries.Single(entry => entry.Path == PathFor(parent)).Bytes.ToArray());
+        result = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, Request(parent.AtomId, null, null));
+        Assert.True(result.Success, result.Error);
+        fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
 
         // A cleared child must restore its own obligation without changing its parent or sibling.
         var closedSnapshot = fixture.Current;
         var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "",
             ["--clear", children[0], "--base", "baseline"]);
         Assert.True(clear.Success, clear.Error);
+        Assert.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + parent.AtomId, clear.Output, StringComparison.Ordinal);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         foreach (var entry in closedSnapshot.Entries.Where(entry =>
                      !entry.Path.EndsWith("/" + children[0] + ".yaml", StringComparison.Ordinal)))
@@ -84,9 +98,9 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal("residual-open", StateName(clearedChild.ProjectedStatus));
         evaluation = DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan,
             fixture.Document, fixture.Snapshot, AcceptedLean(Array.Empty<string>()), baselineDocument: fixture.Document);
-        Assert.Empty(evaluation.Findings);
+        Assert.Contains(evaluation.Findings, finding => finding.Contains("entry " + parent.AtomId + " handwritten status", StringComparison.Ordinal));
         evaluatedParent = evaluation.Entries.Single(item => item.Entry.AtomId == parent.AtomId);
-        Assert.Equal("residual-open", StateName(evaluatedParent.DerivedStatus));
+        Assert.Equal("partial-open", StateName(evaluatedParent.DerivedStatus));
         Assert.Contains(evaluatedParent.Gaps, gap => gap.Code == "chain-migration-incomplete" && gap.Detail == children[0]);
     }
 
