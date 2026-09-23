@@ -2226,7 +2226,7 @@ D_k(x):=\lfloor x+k(\alpha+\delta)\rfloor-\lfloor x+k\alpha\rfloor
 \]
 相邻累计整数相减给 $s_j(\alpha+\delta,x)-s_j(\alpha,x)=D_{j+1}-D_j$。区间不交保证至多一个 $D_k$ 非零，故得到式 (22.3)。在区间并集之外所有 $D_k$ 为零；在每个区间内第 $k-1$ 位实际改变，故错误集恰为该并集。有限测度可加性及 $\sum_{k=1}^n k=n(n+1)/2$ 给出测度公式。
 
-`MechanicalSlopeSensitivity.local_slope_disagreement_law` 的候选 Lean 证明构造上述正半径，证明真实取整差、区间不交、错误集等式、测度及全部有符号变化。半径仅为明确的充分半径，没有被宣称最大。
+`MechanicalSlopeSensitivity.local_slope_disagreement_law` 构造上述正半径，证明真实取整差、区间不交、错误集等式、测度及全部有符号变化。半径仅为明确的充分半径，没有被宣称最大。
 
 **推论。** 对 $n\geq1$，记实际 Hamming 差为 $H_n(x)$，则在同一参数区间内
 \[
@@ -2271,7 +2271,7 @@ V_w(\beta,x)-V_w(\alpha,x)
 \]
 该恒等式可按观察长度归纳：增加最后一项后，中间边界项恰好抵消。它还证明满足式 (22.5) 的权重在整个斜率顺序上保序。取任意 $r\in(0,1-\alpha)$ 得到所需局部命题。
 
-候选 Lean `MechanicalReadoutOrder.local_order_iff_decreasing_weights` 承载这一等价，必要性直接消费已构造的实际错误区域，充分性在证明内推出真实累计取整的求和分部恒等式。求和分部方法本身属于已有数学。
+Lean 定理 `MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出这一等价，必要性直接消费已构造的实际错误区域，充分性在证明内推出真实累计取整的求和分部恒等式。求和分部方法本身属于已有数学。
 
 ### 22.4 定理：二进制数值完成是一个全局 L1 等距读出
 
