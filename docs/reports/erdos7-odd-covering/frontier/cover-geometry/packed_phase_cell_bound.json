@@ -1,0 +1,87 @@
+{
+  "root_sum_caps": [
+    "29/16",
+    "253/16"
+  ],
+  "pure_loss_thresholds": [
+    "3729/184",
+    "1477/116"
+  ],
+  "packed_top_n_0_to_18": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "253/16",
+    "133/8",
+    "279/16"
+  ],
+  "selector_loss_branches": [
+    "9",
+    "9",
+    "9",
+    "9",
+    "12",
+    "15",
+    "18",
+    "21",
+    "24",
+    "27",
+    "30",
+    "33",
+    "36",
+    "39",
+    "42",
+    "45",
+    "48",
+    "51",
+    "54"
+  ],
+  "uniform_loss_numerator": "9",
+  "uniform_deletion_upper": "373/667",
+  "grid_pairs": 972,
+  "grid_inequalities": 8019,
+  "actual_witness_pure_losses": [
+    "11088/529",
+    "10920/841"
+  ],
+  "actual_witness_root_sums": [
+    "25/23",
+    "451/29"
+  ],
+  "actual_witness_selector_loss_branches": [
+    "24272/667",
+    "16529/667",
+    "382/29",
+    "9",
+    "12",
+    "15",
+    "18",
+    "21",
+    "24",
+    "27",
+    "30",
+    "33",
+    "36",
+    "39",
+    "42",
+    "45",
+    "48",
+    "51",
+    "54"
+  ],
+  "actual_witness_deletion": "373/667",
+  "scope": "Arbitrary pure phases under the stated two loss thresholds on the same uniform product fibre; fixed eighteen mixed labels with shared old selectors. Ordinary concentration proof, no new global support bound or Lean verification."
+}
