@@ -4,7 +4,7 @@ using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.CoverBatch.Tests;
 
 public sealed partial class CoverBatchCommandTests
 {

@@ -31,8 +31,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
     }
 
     [Theory]
-    [InlineData("tools/TestSupport/StrataLint.DigestionTestSupport/TheoryAtomizerAssertions.cs", "StrataLint.ArchitectureTests,StrataLint.Digestion.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
-    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeScribeEmissionVerifier.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
+    [InlineData("tools/TestSupport/StrataLint.DigestionTestSupport/TheoryAtomizerAssertions.cs", "StrataLint.ArchitectureTests,StrataLint.CoverBatch.Tests,StrataLint.Digestion.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
+    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeScribeEmissionVerifier.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.CoverBatch.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
     public void SourceAtomizerSharedHelpersSelectAllRegisteredConsumers(string path, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })
@@ -44,7 +44,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void AtomizerConfigurationRetainsEngineeringAndExplicitConsumers()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] { "delta", "engineering", "filemap", "test-digestion", "test-rules", "test-source-atomizer" },
+            Assert.Equal(new[] { "delta", "engineering", "filemap", "test-cover-batch", "test-digestion", "test-rules", "test-source-atomizer" },
                 Strings(Plan("Meta/Digestion/atomizers.toml", "", mode)["declared_require"]!));
     }
 

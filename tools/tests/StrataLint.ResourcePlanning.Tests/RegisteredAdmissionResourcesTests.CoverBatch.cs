@@ -49,4 +49,26 @@ public sealed partial class RegisteredAdmissionResourcesTests
                 "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             }, Strings(Plan($"tools/TestSupport/StrataLint.CoverTestSupport/{file}", "", mode)["execution"]!["tests"]!));
     }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void ValuesKernelBytesSelectCoverBatchEvenWhenFixtureOverwritesThem(string mode)
+    {
+        var plan = Plan("Golden/values-kernels.toml", "", mode);
+        Assert.Equal(new[] { CoverBatchProject }, Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(new[] { "current", "delta", "filemap", "scribe", "test-cover-batch" },
+            Strings(plan["declared_require"]!));
+    }
+
+    [Theory]
+    [InlineData("D5/S3/Constants/Values.lean")]
+    [InlineData("D5/X_Frontier/ValuesProducer.lean")]
+    [InlineData("Meta/Digestion/backfill/admission-resource-probe.json")]
+    [InlineData("docs/reports/prime-slab-corner-order-0909.json")]
+    public void CoverBatchRuntimeReadsDoNotExpandContentOrNoResourcePolicy(string path)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+            Assert.Equal(Array.Empty<string>(), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+    }
 }

@@ -4,7 +4,7 @@ using StrataLint.Engine;
 using StrataLint.Scribe;
 using Tomlyn.Model;
 
-namespace StrataLint.Tests;
+namespace StrataLint.CoverBatch.Tests;
 
 public sealed partial class CoverBatchCommandTests
 {

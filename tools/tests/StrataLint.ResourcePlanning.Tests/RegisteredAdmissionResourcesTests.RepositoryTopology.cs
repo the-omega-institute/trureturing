@@ -49,8 +49,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
 
     [Theory]
     [InlineData("tools/scripts/dotnet-test.sh", "StrataLint.ArchitectureTests,StrataLint.RepositoryTopology.Tests,StrataLint.Tests,StrataLint.WorkflowScript.Tests")]
-    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeRepositoryGateway.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
-    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeLeanReportSource.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
+    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeRepositoryGateway.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.CoverBatch.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
+    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeLeanReportSource.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.CoverBatch.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
     public void RepositoryTopologyRealInputsSelectTheirCompleteConsumers(string path, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })

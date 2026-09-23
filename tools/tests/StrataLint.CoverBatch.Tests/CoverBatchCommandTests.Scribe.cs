@@ -2,7 +2,7 @@ using StrataLint.Cli;
 using StrataLint.Engine;
 using StrataLint.Scribe;
 
-namespace StrataLint.Tests;
+namespace StrataLint.CoverBatch.Tests;
 
 public sealed partial class CoverBatchCommandTests
 {
