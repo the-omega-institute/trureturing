@@ -2387,7 +2387,7 @@ p\geq\left\lceil\log_2\frac{n(n+1)}{2\eta}\right\rceil.
 
 [22-B] Franziskus Wiesnet and Nils Köpp. *Limits of real numbers in the binary signed digit representation*. Logical Methods in Computer Science 18(3:24), 2022. DOI: 10.46298/lmcs-18(3:24)2022. https://arxiv.org/abs/2103.15702v5 . 带收敛模量的带符号数字流极限与可验证程序提取；其 Minlog 结果不被算作本库新的 Lean 声明。
 
-[22-C] The Omega Institute, trureturing, inspected dev `6b430a6586586f56ae4f8f66c0e513f39db9fdeb`. `BisectionCompletion.lean`、`ReadoutTopology.lean`、`MechanicalBalance.lean`、`MechanicalPeriodicity.lean`、`GoldenHurwitzBound.lean` 为本节读取的实际源。新合入 PR #8335 在 `RECURSIVE_RELATIONAL_OBSERVATION.md` 第 36 节研究固定精确动力下的有限读出混合性；这里不将其有限混合性转述为全空间谱隙或数值替代后的同一性质。
+[22-C] The Omega Institute, trureturing. `BisectionCompletion.lean`、`ReadoutTopology.lean`、`MechanicalBalance.lean`、`MechanicalPeriodicity.lean`、`GoldenHurwitzBound.lean` 提供本节使用的形式接口。`RECURSIVE_RELATIONAL_OBSERVATION.md` 第 36 节研究固定精确动力下的有限读出混合性；这里不将其有限混合性转述为全空间谱隙或数值替代后的同一性质。
 
 ### 22.9 定理：一般几何完成与参数、截断的联合误差
 
