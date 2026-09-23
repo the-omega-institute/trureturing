@@ -1,13 +1,10 @@
-using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.UtilityAdmissionTestSupport;
+using static StrataLint.TestSupport.UtilityAdmissionTestSupport;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Rules.Tests;
 
 public sealed class OrdinaryInstanceAdmissionTests
 {
-    private const string Ordinary =
-        "kind=certified-instance; basis=terminal=gid:D5/S0/Carrier/Ring.fixed_sum";
 
     [Theory]
     [InlineData("certified-instance", "ChangedContent")]
@@ -194,26 +191,6 @@ public sealed class OrdinaryInstanceAdmissionTests
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void CurrentOnlyStateDoesNotBypassProductionDepositPrecheck(bool currentPin)
-    {
-        var fixture = InstanceFixture(Ordinary);
-        if (currentPin) AddCandidateState(fixture);
-        var repository = new FakeRepositoryGateway(RawChangeSet.Create([RuleFixture.RingPath]),
-            Raw(fixture.Files), Raw(fixture.Baseline));
-        var console = new BufferedConsole();
-
-        var exit = CliApplication.Run(["deposit-header-check", "--target", RuleFixture.RingPath,
-                "--protected-base", new string('b', 40)],
-            new ProductionCliEnvironment("/repo", repository, new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports))), console);
-
-        Assert.Equal(1, exit);
-        Assert.Contains("DEPOSIT_HEADER_UTILITY_ORDINARY_INSTANCE_BANNED", console.Output, StringComparison.Ordinal);
-        Assert.Equal(["baseline"], repository.ReadRevisionCalls);
-    }
-
-    [Theory]
     [InlineData("ChangedContent")]
     [InlineData("PreDeposit")]
     [InlineData("FirstFreeze")]
@@ -232,25 +209,6 @@ public sealed class OrdinaryInstanceAdmissionTests
         }
     }
 
-    internal static RuleFixture InstanceFixture(string? utility)
-    {
-        var fixture = new RuleFixture();
-        fixture.Baseline.Remove(RuleFixture.RingPath);
-        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath]
-            .Replace("generality: G", "generality: I", StringComparison.Ordinal)
-            .Replace("def goldenRing : Nat := 0", "theorem fixed_sum : 17 + 4 = 21 := rfl", StringComparison.Ordinal);
-        if (utility is not null) fixture.Files[RuleFixture.RingPath] = WithUtility(fixture.Files[RuleFixture.RingPath], utility);
-        fixture.Reports[RuleFixture.RingPath] = new([], [new("fixed_sum", "theorem", "17 + 4 = 21", [])]);
-        return fixture;
-    }
-
-    internal static string AddCandidateState(RuleFixture fixture)
-    {
-        var state = FrozenStatePath.FromModulePath(RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
-        fixture.Files[state] = "{\"statement_id\":\"sha256:" + new string('0', 64) + "\"}\n";
-        return state;
-    }
-
     private static IReadOnlyList<Diagnostic> EvaluateChanged(RuleFixture fixture) =>
         RuleCatalog.Default.EvaluateSingle(UtilityRuleId,
             fixture.Build(RawChangeSet.Create([RuleFixture.RingPath]))).Diagnostics;
@@ -258,7 +216,4 @@ public sealed class OrdinaryInstanceAdmissionTests
     private static bool IsOrdinaryBan(Diagnostic diagnostic) => diagnostic.RuleId == UtilityRuleId
         && diagnostic.AdmissionEffect is AdmissionEffect.Block
         && diagnostic.Message.StartsWith("UTILITY-ORDINARY-INSTANCE-BANNED", StringComparison.Ordinal);
-
-    internal static RawRepositorySnapshot Raw(Dictionary<string, string> files) =>
-        RawRepositorySnapshot.Create(files.Select(static pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 }

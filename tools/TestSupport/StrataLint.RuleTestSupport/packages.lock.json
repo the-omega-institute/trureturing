@@ -19,11 +19,6 @@
           "xunit.core": "[2.9.3]"
         }
       },
-      "Acornima": {
-        "type": "Transitive",
-        "resolved": "1.2.0",
-        "contentHash": "pT3kn/WrVzz4NmrzN5zOAVDOK2VuQFJ7VivKviKmKbbzppMVEToEvnAaVhxerXclptvjpBUudhOwUtDsRjrMYQ=="
-      },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Transitive",
         "resolved": "3.11.0",
@@ -36,6 +31,11 @@
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0"
         }
+      },
+      "Validation": {
+        "type": "Transitive",
+        "resolved": "2.6.68",
+        "contentHash": "5mZ+aXsYQnr3Wxz5O2tmbgPaa5kn9R+ZlfnPyGBogXI2sh4uTiHtvU++N4bURtn9vmDYIu2Zu323K9hFz9poXQ=="
       },
       "xunit.abstractions": {
         "type": "Transitive",
@@ -77,26 +77,19 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
-      "StrataLint": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Configuration": "[1.0.0, )",
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.ExecutionEvidence": "[1.0.0, )",
-          "StrataLint.FileMap": "[1.0.0, )",
-          "StrataLint.InspectionScope": "[1.0.0, )",
-          "StrataLint.Lean": "[1.0.0, )",
-          "StrataLint.ResourcePlanning": "[1.0.0, )",
-          "StrataLint.Scribe": "[1.0.0, )",
-          "StrataLint.Scribe.Documents": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )"
-        }
-      },
       "stratalint.configuration": {
         "type": "Project",
         "dependencies": {
           "StrataLint.Engine": "[1.0.0, )",
           "YamlDotNet": "[16.3.0, )"
+        }
+      },
+      "stratalint.configurationtestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
         }
       },
       "stratalint.engine": {
@@ -111,52 +104,17 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
-      "stratalint.executionevidence": {
+      "stratalint.registrationtestsupport": {
         "type": "Project",
         "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.InspectionScope": "[1.0.0, )",
-          "StrataLint.ResourcePlanning": "[1.0.0, )"
+          "StrataLint.TestSupport": "[1.0.0, )"
         }
       },
-      "stratalint.filemap": {
+      "stratalint.testsupport": {
         "type": "Project",
         "dependencies": {
-          "StrataLint.Configuration": "[1.0.0, )",
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.InspectionScope": "[1.0.0, )",
-          "StrataLint.Scribe": "[1.0.0, )"
-        }
-      },
-      "stratalint.inspectionscope": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )"
-        }
-      },
-      "stratalint.lean": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )"
-        }
-      },
-      "stratalint.resourceplanning": {
-        "type": "Project"
-      },
-      "stratalint.scribe": {
-        "type": "Project",
-        "dependencies": {
-          "Jint": "[4.4.2, )",
-          "QuestPDF": "[2026.7.1, 2026.7.1]",
-          "StrataLint.Engine": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )",
-          "Trureturing.Truth": "[0.1.0, )"
-        }
-      },
-      "stratalint.scribe.documents": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Scribe": "[1.0.0, )"
+          "Xunit.SkippableFact": "[1.5.85, )",
+          "xunit": "[2.9.3, )"
         }
       },
       "trureturing.truth": {
@@ -167,15 +125,6 @@
         "requested": "[1.16.2, )",
         "resolved": "1.16.2",
         "contentHash": "R4PEZo50RK76wRW1kq4xiQqX/hnrx8Gn+8T1XIEYuigyjVh3Guhtt3+b4GG2j3h+E3VadLINtbV+Id79nsFy/Q=="
-      },
-      "Jint": {
-        "type": "CentralTransitive",
-        "requested": "[4.4.2, )",
-        "resolved": "4.4.2",
-        "contentHash": "+2G0SkWWYiHjvCWFYgWgLUDVvemMxjgmlnT3X4p8cllSt1SX3jgO7PSqxenTW4yDE4dOQ8BLRmbuiC8ANp1trw==",
-        "dependencies": {
-          "Acornima": "1.2.0"
-        }
       },
       "Markdig": {
         "type": "CentralTransitive",
@@ -199,17 +148,21 @@
         "resolved": "3.5.1",
         "contentHash": "zU7tkXlF3D6d2GLTjJDomAL3nnl4AwfZvSgSz8D4b+Ry21/clqedYlxBnEAkAU/bkGfEv6uRR7QCdWZUpKrB/g=="
       },
-      "QuestPDF": {
-        "type": "CentralTransitive",
-        "requested": "[2026.7.1, 2026.7.1]",
-        "resolved": "2026.7.1",
-        "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
-      },
       "Tomlyn": {
         "type": "CentralTransitive",
         "requested": "[2.10.1, )",
         "resolved": "2.10.1",
         "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
+      },
+      "Xunit.SkippableFact": {
+        "type": "CentralTransitive",
+        "requested": "[1.5.85, )",
+        "resolved": "1.5.85",
+        "contentHash": "zI3QsePulfENNjZC+POQYtqt/9HkUfe6qq+waSJ1xGVMU9v8LyWbr695IRAgg+UYDkPUgGnBjyULIVQ9Qdpgsg==",
+        "dependencies": {
+          "Validation": "2.6.68",
+          "xunit.extensibility.execution": "2.4.0"
+        }
       },
       "YamlDotNet": {
         "type": "CentralTransitive",

@@ -169,12 +169,7 @@
         "type": "Project",
         "dependencies": {
           "StrataLint": "[1.0.0, )",
-          "StrataLint.AdmissionTestSupport": "[1.0.0, )",
-          "StrataLint.Configuration": "[1.0.0, )",
-          "StrataLint.ConfigurationTestSupport": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
-          "StrataLint.TestSupport": "[1.0.0, )",
           "xunit": "[2.9.3, )"
         }
       },
@@ -269,6 +264,17 @@
       },
       "stratalint.resourceplanning": {
         "type": "Project"
+      },
+      "stratalint.ruletestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Configuration": "[1.0.0, )",
+          "StrataLint.ConfigurationTestSupport": "[1.0.0, )",
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
       },
       "stratalint.scribe": {
         "type": "Project",

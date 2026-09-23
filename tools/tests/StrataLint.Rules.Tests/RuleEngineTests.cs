@@ -1,9 +1,8 @@
 using System.Collections.Immutable;
 using System.Text;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Rules.Tests;
 
 public sealed class RuleEngineTests
 {
@@ -628,6 +627,33 @@ public sealed class RuleEngineTests
             RuleCatalog.Default.EvaluateSingle(
                 RuleId.CreateKnown(18),
                 fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics);
+    }
+
+    [Fact]
+    public void ValuesProjectionFixtureContainsOnlySyntheticData()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddValuesProjection();
+        using var document = System.Text.Json.JsonDocument.Parse(fixture.Files[RuleFixture.ValuesProjectionPath]);
+        Assert.Empty(document.RootElement.EnumerateObject());
+    }
+
+    [Theory]
+    [InlineData("{\"fixture\":\"独立载荷\",\"attestation\":\"stale\"}\n")]
+    [InlineData("not JSON\n")]
+    public void Sl018ChecksProjectionAddressIndependentlyOfPayload(string payload)
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.ValuesProjectionPath] = payload;
+        Assert.Empty(RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18),
+            fixture.BuildScopeProbe(RawChangeSet.Create([RuleFixture.ValuesProjectionPath]))).Diagnostics);
+
+        fixture.Files.Remove(RuleFixture.ValuesProjectionPath);
+        const string wrongAddress = "Evidence/D5/values.result.json";
+        fixture.Files[wrongAddress] = payload;
+        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18),
+            fixture.BuildScopeProbe(RawChangeSet.Create([wrongAddress]))).Diagnostics);
+        Assert.Equal("canonical values projection must be Evidence/D5/values.json", diagnostic.Message);
     }
 
     [Fact]

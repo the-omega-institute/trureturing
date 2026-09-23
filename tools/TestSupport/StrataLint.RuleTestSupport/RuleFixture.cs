@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using System.Text;
-using StrataLint.Cli;
 using StrataLint.TestSupport;
 using StrataLint.Engine;
 
@@ -608,9 +607,7 @@ internal sealed partial class RuleFixture
 
     internal void AddValuesProjection()
     {
-        Files[ValuesProjectionPath] = File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "Evidence/D5/values.json"),
-            Encoding.UTF8);
+        Files[ValuesProjectionPath] = "{}\n";
     }
 
     internal void AddNormalizedBackfillTicketTarget()

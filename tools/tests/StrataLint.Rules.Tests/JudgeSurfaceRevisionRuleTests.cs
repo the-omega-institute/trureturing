@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Rules.Tests;
 
 // SL-030 —— 判官面不得物化非 HEAD 修订的文件(CLAUDE.md 第 19 条 base 判官永久禁止的机器投影)。
 // 这些是对合成文本的规则判词测试,不断言本仓真实 workflow 的内容(器律⑦′ 的豁免类:
