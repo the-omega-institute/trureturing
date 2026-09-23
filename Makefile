@@ -132,6 +132,19 @@ pr-watch:
 
 SEED_EXPORT ?= automatic
 current:
+	@set -euo pipefail; \
+	if [[ "$${GITHUB_EVENT_NAME:-}" == pull_request ]]; then \
+		mkdir -p build/ci/check-material/staging-probe; \
+		{ \
+			probe_setup_start=$$SECONDS; \
+			printf 'STAGING_PROBE phase=setup status=started utc=%s\n' "$$(date -u +%Y-%m-%dT%H:%M:%SZ)"; \
+			source tools/scripts/lib/resource-observation-lib.sh; \
+			printf 'STAGING_PROBE phase=setup status=completed elapsed_seconds=%s\n' "$$((SECONDS - probe_setup_start))"; \
+			printf 'STAGING_PROBE phase=compile status=started target=Trureturing utc=%s\n' "$$(date -u +%Y-%m-%dT%H:%M:%SZ)"; \
+			resource_observe_run_periodic /usr/bin/time -v $(MAKE) lean LEAN_TARGETS=Trureturing; \
+			printf 'STAGING_PROBE phase=current status=handoff utc=%s\n' "$$(date -u +%Y-%m-%dT%H:%M:%SZ)"; \
+		} 2>&1 | tee build/ci/check-material/staging-probe/content.log; \
+	fi
 	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" CI_SEED_EXPORT="$(SEED_EXPORT)" /bin/bash tools/scripts/ci-stage.sh current
 
 delta:

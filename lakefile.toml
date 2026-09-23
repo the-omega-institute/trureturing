@@ -22,6 +22,8 @@ path = "tools/lean-inspector"
 name = "Trureturing"
 roots = ["Trureturing", "D5"]
 globs = ["Trureturing", "D5.+"]
+# #9571 probe diagnostics; weak arguments preserve Lake build traces.
+weakLeanArgs = ["-Dprofiler=true", "-Dtrace.profiler=true", "-Dtrace.profiler.threshold=1000"]
 
 [[lean_lib]]
 name = "LeanInformationAudit"
