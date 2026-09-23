@@ -87,7 +87,7 @@ theorem geometric_readout_continuity_and_jump
       have hmul := mul_le_mul_of_nonneg_left hb.2.le
         (Nat.cast_nonneg (α := ℝ) j)
       have hfloor : ⌊x + (j : ℝ) * beta⌋ ≤ ⌊x + (j : ℝ) * alpha⌋ :=
-        Int.floor_mono (add_le_add_left hmul x)
+        Int.floor_mono (by simpa [add_comm] using add_le_add_left hmul x)
       exact_mod_cast hfloor
     have hkR : 0 < (k : ℝ) := by exact_mod_cast hk
     have hfloor : ⌊x + (k : ℝ) * beta⌋ < z := Int.floor_lt.mpr (by
