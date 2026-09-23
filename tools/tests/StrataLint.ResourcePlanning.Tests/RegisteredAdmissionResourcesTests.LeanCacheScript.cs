@@ -20,4 +20,19 @@ public sealed partial class RegisteredAdmissionResourcesTests
         }.Select(name => $"tools/tests/{name}/{name}.csproj"),
             Strings(plan["execution"]!["tests"]!));
     }
+
+    [Theory]
+    [InlineData("LeanCacheRunScriptTests.cs", true)]
+    [InlineData("StrataLint.LeanCacheScript.Tests.csproj", true)]
+    [InlineData("packages.lock.json", false)]
+    public void LeanCacheAdapterTestInputsSelectOnlyTheirCompleteProject(string file, bool architecture)
+    {
+        var plan = Plan($"tools/tests/StrataLint.LeanCacheScript.Tests/{file}", "", "push");
+        var expected = architecture
+            ? new[] { "StrataLint.ArchitectureTests", "StrataLint.LeanCacheScript.Tests" }
+            : new[] { "StrataLint.LeanCacheScript.Tests" };
+        Assert.Equal(expected.Select(name => $"tools/tests/{name}/{name}.csproj"),
+            Strings(plan["execution"]!["tests"]!));
+    }
+
 }
