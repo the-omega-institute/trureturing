@@ -156,6 +156,7 @@
         "tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj",
         "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
         "tools/tests/StrataLint.PlanningIntegration.Tests/StrataLint.PlanningIntegration.Tests.csproj",
+        "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj",
         "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj",
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj",
@@ -594,6 +595,14 @@
       "id": "test-workflow-script",
       "projects": [
         "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-playbook-script",
+      "projects": [
+        "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj"
       ],
       "checks": [],
       "steps": []

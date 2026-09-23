@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.PlaybookScript.Tests;
 
 public sealed partial class DepositCoverWorkflowScriptTests
 {
