@@ -59,9 +59,9 @@ internal sealed class DualNumberResidueExtensionDocument
     private static Formula ResultFormula() => F.Disp(F.Seq(
         F.Exists, F.Sp, F.Id("hS"), F.Colon, F.Sp,
         F.Id("ShortExact"), F.Open, F.Id("Sepsilon"), F.Close, F.Comma, F.Sp,
-        F.Id("hS"), F.Dot, F.Id("extClass"),
-        F.Sp, F.Neq, F.Sp, F.D(0), F.Sp, F.InMacro, F.Sp,
+        F.Open, F.Id("hS"), F.Dot, F.Id("extClass"), F.Colon, F.Sp,
         F.Id("Ext"), F.Caret, F.Grp(F.D(1)), F.Underscore, F.Grp(F.Id("A")),
         F.Open, F.Mathbb, F.Grp(F.Id("Q")), F.Comma, F.Sp,
-        F.Mathbb, F.Grp(F.Id("Q")), F.Close));
+        F.Mathbb, F.Grp(F.Id("Q")), F.Close, F.Close,
+        F.Sp, F.Neq, F.Sp, F.D(0)));
 }

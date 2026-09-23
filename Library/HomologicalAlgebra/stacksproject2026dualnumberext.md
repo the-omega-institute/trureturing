@@ -2,7 +2,7 @@
 bibkey: stacksproject2026dualnumberext
 authors: "The Stacks Project Authors"
 year: 2026
-title: "Dual numbers, long exact Ext sequences, and Yoneda extensions"
+title: "The Stacks project"
 doi: null
 url: https://stacks.math.columbia.edu/tag/0A5Q
 claim: "The dual-number residue module has a periodic epsilon resolution; short exact module sequences induce contravariant Hom/Ext long exact sequences; degree-one Ext classes represent Yoneda extensions."

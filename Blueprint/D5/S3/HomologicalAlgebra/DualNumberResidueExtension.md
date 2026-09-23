@@ -12,7 +12,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/DualNumberResidueExtension.dualNumberR
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* The Stacks Project Authors (2026). *Dual numbers, long exact Ext sequences, and Yoneda extensions*. URL: <https://stacks.math.columbia.edu/tag/0A5Q>.
+*Acknowledgement.* The Stacks Project Authors (2026). *The Stacks project*. URL: <https://stacks.math.columbia.edu/tag/0A5Q>.
 
 *Acknowledgement.* Charles A. Weibel (1994). *Tor and Ext*. DOI: [10.1017/CBO9781139644136.004](https://doi.org/10.1017/CBO9781139644136.004).
 
@@ -22,13 +22,13 @@ Let A be the rational dual-number ring and let the residue copy of the rationals
 
 **Theorem 1.2 (The residue extension class is nonzero).**
 
-$$\exists hS: ShortExact(Sepsilon), hS.extClass \neq 0 \in Ext^{1}_{A}(\mathbb{Q}, \mathbb{Q})$$
+$$\exists hS: ShortExact(Sepsilon), (hS.extClass: Ext^{1}_{A}(\mathbb{Q}, \mathbb{Q})) \neq 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/DualNumberResidueExtension.dual_number_residue_extension_nonzero` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* The Stacks Project Authors (2026). *Dual numbers, long exact Ext sequences, and Yoneda extensions*. URL: <https://stacks.math.columbia.edu/tag/0A5Q>.
+*Acknowledgement.* The Stacks Project Authors (2026). *The Stacks project*. URL: <https://stacks.math.columbia.edu/tag/0A5Q>.
 
 *Acknowledgement.* Charles A. Weibel (1994). *Tor and Ext*. DOI: [10.1017/CBO9781139644136.004](https://doi.org/10.1017/CBO9781139644136.004).
 
