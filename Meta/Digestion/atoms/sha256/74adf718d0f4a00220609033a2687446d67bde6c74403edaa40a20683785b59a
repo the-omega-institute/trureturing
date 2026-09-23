@@ -1,0 +1,7 @@
+**定义 13.1（带参考的驱动）。** 同一可相加复通道、共同相位参考下，设
+$$
+z_{N+1}=re^{i\omega L}z_N+be^{i(N+1)\vartheta},\quad A_N=e^{-iN\vartheta}z_N,\quad
+q=re^{i(\omega L-\vartheta)},\quad 0\le r\le1,\quad A_0=0.
+$$
+这里没有独立随机相位假设；各输入来自所声明的相干驱动和共同参考。
+

@@ -1,0 +1,1 @@
+**位置限制扩展的精确范围。** 固定一个谓词 $K\subseteq\mathbb Z^d\times\mathbb Z^d$；定义 14 中对每对输入取 $R_{X,Y}=\{(a,b):K(x_X(a),x_Y(b))\}$，记所得总操作为 $M_K$。

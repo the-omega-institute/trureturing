@@ -1,0 +1,4 @@
+**注记 69.7（谱不变量与线性读数的类型）。** 上述反例对应
+D5/S0/Observation/PowerTraceSimilarityCountermodel.lean
+中的 power_traces_do_not_determine_similarity。在线性读数族的适用范围内，共同核为零等价于读数能够分离向量，正加权 Gram 核给出了该条件的表示。但矩阵的幂迹是非线性函数，不能把这里的反例直接纳入线性 Gram 核公式；它单独证明这组谱不变量不足以恢复相似类。有限余数窗口、单条轨道或局部边缘概率的分离能力也须各自验证。
+

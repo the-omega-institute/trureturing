@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:10aa6b7100f9155f654c57bae6a05d137d204a447f2f7f46f433716c6b110fae
+  normalized_sha256: sha256:10aa6b7100f9155f654c57bae6a05d137d204a447f2f7f46f433716c6b110fae
+cas_ref: sha256:10aa6b7100f9155f654c57bae6a05d137d204a447f2f7f46f433716c6b110fae
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 展开实际并行与补集定义，Finset.card_map、Fintype.card_sum 与 Fintype.card_coe 给出两倍原档案基数，Finset.card_pos 把非空假设化为严格正数，仓内无冻结 GID。
+    previous_atom_id: 5357d56a922a06948bee58d6710109de765133d8ec9f3f4be5eb3e88bf420c80
+    next_atom_id: 95aef474b65c3ea88dd0ed483964e74d14c07e0a25e8d8ce35a0cfd3fbe996f0

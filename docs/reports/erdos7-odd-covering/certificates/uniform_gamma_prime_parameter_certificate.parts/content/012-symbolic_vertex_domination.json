@@ -1,0 +1,32 @@
+{
+  "length": 72,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 26,
+      "part": {
+        "path": "content/012-symbolic_vertex_domination/000000-000026.json",
+        "sha256": "dc0593a81e8d2aac0649798fc5d36d0b15d33e4f4389e65f805eb59eafe38a5b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 26,
+      "stop": 52,
+      "part": {
+        "path": "content/012-symbolic_vertex_domination/000026-000052.json",
+        "sha256": "f66531290f4060f967fe63898e2a01fe61c16888acb1acda1782f2d2688887a8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 52,
+      "stop": 72,
+      "part": {
+        "path": "content/012-symbolic_vertex_domination/000052-000072.json",
+        "sha256": "d6bc7ae55193373300407d96dfa8785c66a67d217cc2b42cceb8b1738a09cfa4",
+        "kind": "value"
+      }
+    }
+  ]
+}

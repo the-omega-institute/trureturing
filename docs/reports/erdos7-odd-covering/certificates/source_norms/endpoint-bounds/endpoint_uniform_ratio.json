@@ -1,0 +1,538 @@
+{
+  "schema": "erdos7-endpoint-uniform-ratio-v1",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/endpoint-bounds/endpoint_numerator_common_costs.py": "1b665058c35f8aaadc60d4513939e6c4255cff212b6289d8c0e3beb7bd1d02d6",
+    "certificates/source_norms/endpoint-bounds/endpoint_numerator_common_costs.json": "75154048adef87983ab5c776537f73e74f9864714b5cc24b54bfa674dcca26f6",
+    "frontier/endpoint-bounds/endpoint_square_positive5.py": "e6d4a2ae2ac9f369048603d328da7e73cb719e9a622c2a6633ddd61e5609b00d",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_positive5.json": "feb9333e4714f3408029d9e24711fb2886d016c0c4265c0f039ab99419b99405",
+    "frontier/endpoint-bounds/endpoint_survival_scalar_barrier.py": "10e915082ee01cef1219125367fd455374c82c98d812654cc4283b2fe7ac3358",
+    "certificates/source_norms/endpoint-bounds/endpoint_survival_scalar_barrier.json": "a4a4092e9d198b126b85afe96d00b399105a35e73c1e309f3d364e19633ec430",
+    "frontier/comparison-bounds/exact_tensor_numerator_reference.py": "3b0e5106da53afc055f72554587feb6e0f40784e0ce849d96343163e4d86e892",
+    "frontier/endpoint-bounds/endpoint_linear_numerator.py": "c95c2df2ec24e5c38f0dc75ed1019cbbd2fdeb057d299f6160db6f5c8a1fc8f5",
+    "certificates/source_norms/endpoint-bounds/endpoint_linear_numerator.json": "1ffe75268b153784a15a2c2a56176c7b4ba3aea7530343c3e9ba371cf949389a",
+    "frontier/endpoint-bounds/endpoint_square_common_pure3.py": "4d9ff11fde216b78a89cf68b32215366cd77c4fc231d2813552bbf3504c28a09",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_common_pure3.json": "295db96a2db87d488b1f401ab2357bcdbecf2925bea1732bbce6ca7cabece184",
+    "frontier/moments-survival/exact_survival_comparison_boundary.py": "e84d2f45275a8be328a7bb8bdcb0ef0d6d413148231517d9f457aeb278e7dd79",
+    "certificates/source_norms/moments-survival/exact_survival_comparison_boundary.json": "23fa4a41ee72adafa5df06c2313d2234bde2031f3282cd234593665019b29dda",
+    "certificates/source_norms/source-budgets/full_linear_carrier_frontier.json": "e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529",
+    "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+    "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+    "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "certificates/source_norms/comparison-bounds/allocated_seven_thresholds.json": "3b8afa03444fe045c9dba7e1a74ac051c3d4032eddfeae106a47e360ad0d34e2",
+    "certificates/source_norms/moments-survival/joint_survival_carriers.json": "9ba4c4a91d99e1fac1f224632663675371151f4cc250f18dd5ba4c774ecde89a",
+    "certificates/source_norms/source-budgets/shared_source_deficits.json": "85c042b5b790cb21b491deb22ab095a11a98ef49b1bb170890ee342aed0633b2",
+    "frontier/comparison-bounds/verify_allocated_seven_thresholds.py": "3703d61f0f10775934f831e54c13b4bbdbb7fb06c5ca3c860cd2b50548fc0e84",
+    "frontier/source-budgets/verify_full_linear_carrier_frontier.py": "f012753c39ea325be5b648c51c0e1e0739420b55d3749d8a99eea3a36f0a961d",
+    "frontier/comparison-bounds/allocated_seven_thresholds.py": "b467824a30899cd14ab35ab4a1383c4a3848e5c9dcbdaebd6f4074e9a1d8e78d",
+    "frontier/endpoint-bounds/endpoint_square_numerator.py": "c58ef20557da4bebeb741e27feddc59f6f2925a2992f00316c94c52376961d68",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_numerator.json": "9217c081fcb0bf511d4bd1de134f0d8aacfff2fd09573e4c21519e2f9a563a00",
+    "frontier/endpoint-bounds/endpoint_square_coherent_head.py": "24229193f185d132d2ef0917b0257ddcd20d374b6333dfae327cc70d665ceedb",
+    "certificates/source_norms/endpoint-bounds/endpoint_square_coherent_head.json": "d9f23c6b5ca3fbe8b4e1411b845356c6aea1ea4b2af541a6261b840057573f15",
+    "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+    "verify_killed_core_continuity.py": "6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226",
+    "certificates/layout_gap_frontier_certificate.json": "bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02",
+    "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+    "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+    "certificates/ap_schedule_frontier_certificate.json": "15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05",
+    "frontier/cover-geometry/verify_ap_schedule.py": "70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6",
+    "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+    "certificates/source_norms/retained-transport/retained_five_tests.json": "7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655",
+    "frontier/retained-transport/verify_retained_five_tests.py": "80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace",
+    "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+    "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710",
+    "certificates/source_norms/retained-transport/retained_quadratic_tests.json": "74d01a2b1db2d66d6d1ad0ca80a22c4ebfbc650c330138d9533d2d656223cb0a",
+    "frontier/retained-transport/verify_retained_quadratic_tests.py": "4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43",
+    "frontier/source-budgets/shared_source_deficits.py": "e836b66691213273f272db6bd992f202897fda6bcf336551ab50f41c9a55e883",
+    "frontier/source-budgets/shared_source_consumer.py": "02642a68c8e1c351988f654081757e3b6594cfa4411eabea267593d3658aebf5",
+    "frontier/source-budgets/shared_linear_refinement.py": "2150065bb9eb9369847cf399e9f14b78406b4aecfaa2da10ea2d00eff8d0fe7e",
+    "frontier/source-budgets/shared_square_barrier.py": "6bc57d9b93bc583bbced72092f722a4369743013e0dd9eeea0703f01a3bf10a1",
+    "frontier/source-budgets/verify_shared_source_deficits.py": "a59d3d620f8abfe814c2c04c0592ebf3eff6805acdc63c28d7ee7544c16b4246",
+    "frontier/moments-survival/survival_hinge_deficit.py": "86b6d9b1e542f14b9d7b107f036767455b9db75a43607e9f9e054519a8dbb70a",
+    "frontier/moments-survival/survival_hinge_consumer.py": "9717f3197c0dbe8b8d31e935cfb238eba0ebc0599b5792bfb6bfab1d2dbc3bc7",
+    "certificates/source_norms/moments-survival/survival_hinge_deficit.json": "1545539894d8b6390dad78918d2961ef6292935765886b3742aff61a12143af8",
+    "frontier/moments-survival/verify_survival_hinge_deficit.py": "9e61adfccf2e55992a36ae76ae20adac8aa31e68e35044b6ff1efe35bd48265c",
+    "frontier/moments-survival/absorbed_survival_hinges.py": "03b4d8d9c80470946ce4bfd44cd40a07c241f6c22058952fc59b88c71e1d7e10",
+    "frontier/moments-survival/absorbed_survival_consumer.py": "d47a9e4ccaec3d277899830f92aaaf1e9cc736bb628165aa6547c3521a8f9f53",
+    "certificates/source_norms/moments-survival/absorbed_survival_hinges.json": "244ccad2968a7c9c10fab1dcfc742d8860edce05a0f62dac0fbada6fb7a431a6",
+    "frontier/moments-survival/verify_absorbed_survival_hinges.py": "34c767c38ed8af68ebdcaa30a103501a2748322e0c6d9cb8480f9e53e5745cc2",
+    "frontier/moments-survival/full_absorbed_survival_hinges.py": "3c5b0ba6df9c11bbba8a9b1a31824b504072e4659a2f0a9aa8348a0fe9e8e79d",
+    "frontier/moments-survival/full_absorbed_survival_consumer.py": "29dd25c3d3b4216b69f2a6bf597ec4fbbbcd41146c1ba0248a18e8ff515b1935",
+    "certificates/source_norms/moments-survival/full_absorbed_survival_hinges.json": "af6f87829b34fbb4a34eef2a2041f8912953a4b95b3c88571b00864ac27f4030",
+    "frontier/moments-survival/verify_full_absorbed_survival_hinges.py": "fb2d6b8e99918eec23e1554624050a68782b7da78fa42d46e71017e97ce4d92c",
+    "frontier/moments-survival/joint_survival_carriers.py": "4fd5744bebf3a20ba2a62a1fc798e0278b903b4d139ae1808c62a392d419043d",
+    "frontier/moments-survival/verify_joint_survival_carriers.py": "23914aa7e4775000b01fdea1037e2559bc26c0b596104966e53b102a558ed7de",
+    "frontier/source-budgets/joint_linear_carriers.py": "1bb9e5dac83371f90a1270eb8f4a3e9fcee38b3f373ecef8becf1da6f994ed64",
+    "frontier/source-budgets/source_barrier_saturation.py": "6fe57e39274df1fa4a80ae4d4a22cab7b1d78d28c4f428b789071e3fb7776a64",
+    "certificates/source_norms/source-budgets/joint_linear_carriers.json": "4015bb61396aa4369c4960c2728f20abe345d290f63f6c7b7dbdb4c43382c0c1",
+    "frontier/source-budgets/verify_joint_linear_carriers.py": "a6c19378ba3b6588e7ff0fd89862bc78ab5bbff5db6298dc575f058776588c0c",
+    "frontier/source-budgets/full_linear_carrier_frontier.py": "98cbec50d807ed9208504c8cd2384659a4300d6909d54414e5e2156285298888"
+  },
+  "mass": "3/20",
+  "first_moment_upper": "1157/1800",
+  "old_square_upper": "469/100",
+  "square_upper": "114/25",
+  "square_gain": "13/100",
+  "signed_square_margin": "219/100",
+  "cost_rows": [
+    {
+      "target": 2,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "7512226242302051895666449213387/1264106826058311127602084375000",
+      "new_upper": "7512226242302051895666449213387/1264106826058311127602084375000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 3,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "6445255063093898342713417158221/3709400620997710138500000000000",
+      "new_upper": "6445255063093898342713417158221/3709400620997710138500000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 4,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "8346132480620006104183763958557/44512807451972521662000000000000",
+      "new_upper": "8346132480620006104183763958557/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 5,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "734277392098278549434811937979/44512807451972521662000000000000",
+      "new_upper": "734277392098278549434811937979/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 6,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "201526168559252128504071773/148376024839908405540000000000",
+      "new_upper": "201526168559252128504071773/148376024839908405540000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 7,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "88256477461382423755709977/809323771854045848400000000000",
+      "new_upper": "88256477461382423755709977/809323771854045848400000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 8,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "76920448066173797556731087/8902561490394504332400000000000",
+      "new_upper": "76920448066173797556731087/8902561490394504332400000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 9,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "14700801640561622226795043305973/7418801241995420277000000000000",
+      "new_upper": "14700801640561622226795043305973/7418801241995420277000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 10,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "1030128433131614496542299345607/2472933747331806759000000000000",
+      "new_upper": "1030128433131614496542299345607/2472933747331806759000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 11,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "1612742055327456046449104393999/44512807451972521662000000000000",
+      "new_upper": "1612742055327456046449104393999/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 12,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "868134879395655883317215158829/3424062111690193974000000000000",
+      "new_upper": "868134879395655883317215158829/3424062111690193974000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 13,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "1905967870749683222923670329871/44512807451972521662000000000000",
+      "new_upper": "1905967870749683222923670329871/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 14,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "46998985123772261914278499801/1780512298078900866480000000000",
+      "new_upper": "46998985123772261914278499801/1780512298078900866480000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 15,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "22897563435926079653845286263/8902561490394504332400000000000",
+      "new_upper": "22897563435926079653845286263/8902561490394504332400000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 16,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "543621684868497923865294071/2225640372598626083100000000000",
+      "new_upper": "543621684868497923865294071/2225640372598626083100000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 17,
+      "square_multiplier": 0,
+      "comparison_weight": "1",
+      "old65_upper": "113172887298991015897678061/4945867494663613518000000000000",
+      "new_upper": "113172887298991015897678061/4945867494663613518000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 18,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "25155606975262288527417000106581919/5299416727464453204936293718750000",
+      "new_upper": "25155606975262288527417000106581919/5299416727464453204936293718750000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 19,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "5023870061395392070108939102139207/3616665605472767385037500000000000",
+      "new_upper": "5023870061395392070108939102139207/3616665605472767385037500000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 20,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "139048834917790305258901238477/927350155249427534625000000000",
+      "new_upper": "139048834917790305258901238477/927350155249427534625000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 21,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "3355898071046613264456362549/254358899725557266640000000000",
+      "new_upper": "3355898071046613264456362549/254358899725557266640000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 22,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "3454125647394407226363652499/3179486246569465833000000000000",
+      "new_upper": "3454125647394407226363652499/3179486246569465833000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 23,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "3882874825946497593404229913/44512807451972521662000000000000",
+      "new_upper": "3882874825946497593404229913/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 24,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "15382334819447652861270031/2225640372598626083100000000000",
+      "new_upper": "15382334819447652861270031/2225640372598626083100000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 25,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "70505206575838991746703/44512807451972521662000",
+      "new_upper": "70505206575838991746703/44512807451972521662000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 26,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "1482992809892331273400935513451/4451280745197252166200000000000",
+      "new_upper": "1482992809892331273400935513451/4451280745197252166200000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 27,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "28667716441144443692118485831/989173498932722703600000000000",
+      "new_upper": "28667716441144443692118485831/989173498932722703600000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 28,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "9025087239634975942791272955613/44512807451972521662000000000000",
+      "new_upper": "9025087239634975942791272955613/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 29,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "108900090790646272516564575373/3179486246569465833000000000000",
+      "new_upper": "108900090790646272516564575373/3179486246569465833000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 30,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "36144269854852962617522758801/1712031055845096987000000000000",
+      "new_upper": "36144269854852962617522758801/1712031055845096987000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 31,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "30524619138304034858412953243/14837602483990840554000000000000",
+      "new_upper": "30524619138304034858412953243/14837602483990840554000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 32,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "155303963079826168305777041/794871561642366458250000000000",
+      "new_upper": "155303963079826168305777041/794871561642366458250000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 33,
+      "square_multiplier": 0,
+      "comparison_weight": "15/17",
+      "old65_upper": "271599783995775161784840247/14837602483990840554000000000000",
+      "new_upper": "271599783995775161784840247/14837602483990840554000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 34,
+      "square_multiplier": 0,
+      "comparison_weight": "13299/1360",
+      "old65_upper": "24806205198098471479/109788056537509350000",
+      "new_upper": "24806205198098471479/109788056537509350000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 35,
+      "square_multiplier": 0,
+      "comparison_weight": "13299/1360",
+      "old65_upper": "558635037635014100497125127987/11128201862993130415500000000000",
+      "new_upper": "558635037635014100497125127987/11128201862993130415500000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 36,
+      "square_multiplier": 0,
+      "comparison_weight": "13299/1360",
+      "old65_upper": "200713449235754420804802179179/44512807451972521662000000000000",
+      "new_upper": "200713449235754420804802179179/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 37,
+      "square_multiplier": 0,
+      "comparison_weight": "13299/1360",
+      "old65_upper": "16504643413553229041599544993/44512807451972521662000000000000",
+      "new_upper": "16504643413553229041599544993/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 38,
+      "square_multiplier": 0,
+      "comparison_weight": "13299/1360",
+      "old65_upper": "255958416903857267739792537497/4451280745197252166200000000000",
+      "new_upper": "255958416903857267739792537497/4451280745197252166200000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 39,
+      "square_multiplier": 0,
+      "comparison_weight": "13299/1360",
+      "old65_upper": "421500768416650147644746132891/44512807451972521662000000000000",
+      "new_upper": "421500768416650147644746132891/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 40,
+      "square_multiplier": 0,
+      "comparison_weight": "13299/1360",
+      "old65_upper": "272169771162132120021864702449/44512807451972521662000000000000",
+      "new_upper": "272169771162132120021864702449/44512807451972521662000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 41,
+      "square_multiplier": 0,
+      "comparison_weight": "13299/1360",
+      "old65_upper": "1018421027902920249880930597/1712031055845096987000000000000",
+      "new_upper": "1018421027902920249880930597/1712031055845096987000000000000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 42,
+      "square_multiplier": 0,
+      "comparison_weight": "94212612766226/1174116234095805",
+      "old65_upper": "1157/1800",
+      "new_upper": "1157/1800",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 43,
+      "square_multiplier": "687618737/1000000000",
+      "comparison_weight": "2371/2880",
+      "old65_upper": "121937046853891033/23152500000000000",
+      "new_upper": "14983429348600001/2894062500000000",
+      "weighted_numerator_gain": "21194472330551/288000000000000"
+    },
+    {
+      "target": 44,
+      "square_multiplier": "1795989/6250000",
+      "comparison_weight": "2371/2880",
+      "old65_upper": "79627113695759475121145351/56284016906250000000000000",
+      "new_upper": "77524535810779143271145351/56284016906250000000000000",
+      "weighted_numerator_gain": "18452589649/600000000000"
+    },
+    {
+      "target": 45,
+      "square_multiplier": "8881539/250000000",
+      "comparison_weight": "2371/2880",
+      "old65_upper": "77720382340067/472500000000000",
+      "new_upper": "75538188207767/472500000000000",
+      "weighted_numerator_gain": "91251892199/24000000000000"
+    },
+    {
+      "target": 46,
+      "square_multiplier": "325047831/1000000000",
+      "comparison_weight": "2371/2880",
+      "old65_upper": "90273852520730192311370351/56284016906250000000000000",
+      "new_upper": "87895502830735486241682851/56284016906250000000000000",
+      "weighted_numerator_gain": "3339649764971/96000000000000"
+    },
+    {
+      "target": 47,
+      "square_multiplier": "11870507/250000000",
+      "comparison_weight": "2371/2880",
+      "old65_upper": "7638426554497493/34728750000000000",
+      "new_upper": "7424057662109843/34728750000000000",
+      "weighted_numerator_gain": "365884637261/72000000000000"
+    },
+    {
+      "target": 48,
+      "square_multiplier": 0,
+      "comparison_weight": "316/429",
+      "old65_upper": "92329565716407851/56284016906250000",
+      "new_upper": "92329565716407851/56284016906250000",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 49,
+      "square_multiplier": 0,
+      "comparison_weight": "382808/429429",
+      "old65_upper": "230720317/69457500",
+      "new_upper": "230720317/69457500",
+      "weighted_numerator_gain": "0"
+    },
+    {
+      "target": 50,
+      "square_multiplier": "116883117/200000000",
+      "comparison_weight": "3466266/20469449",
+      "old65_upper": "140085827373852061/34728750000000000",
+      "new_upper": "274894688833336247/69457500000000000",
+      "weighted_numerator_gain": "15582614401197/1211210000000000"
+    },
+    {
+      "target": 51,
+      "square_multiplier": "788961039/1000000000",
+      "comparison_weight": "2580440672/8781393621",
+      "old65_upper": "18592476425949119/4341093750000000",
+      "new_upper": "290355718837561379/69457500000000000",
+      "weighted_numerator_gain": "21206949517281023/703637309375000000"
+    },
+    {
+      "target": 52,
+      "square_multiplier": "220909091/250000000",
+      "comparison_weight": "4296211550/1255739287803",
+      "old65_upper": "33943415501377681/7717500000000000",
+      "new_upper": "33056885228285581/7717500000000000",
+      "weighted_numerator_gain": "1460111058852617/3715204993500000000"
+    },
+    {
+      "target": 53,
+      "square_multiplier": "116883117/125000000",
+      "comparison_weight": "869861030712/8550986578849",
+      "old65_upper": "251076962300548573128095351/56284016906250000000000000",
+      "new_upper": "244235164913934048475595351/56284016906250000000000000",
+      "weighted_numerator_gain": "977616044485108551/79058677689062500000"
+    }
+  ],
+  "all52_majorants_sha256": "83edac27a76336d49ce378b0e6b4c2725e461f36cc3aeda6aec5eb511b1a2de4",
+  "square_direct_coefficient": "2061512697931813067/15514910048663625600",
+  "complete_square_sensitivity": "82443364318785420250033717/48484093902073830000000000",
+  "sensitive_cost_count": 9,
+  "M41": "12054317882574240736398126192465379314484621/6875675238881480166212544922455000000000000",
+  "Mquad": "85710562169600382684629536263343/82293058112687296875000000000000",
+  "raw81": "6967368289520649818416596406663273343/1067937588392871223371093750000000000",
+  "complete_raw81_square_coefficient": "23559508993421/769588792096410",
+  "positive_cost_residual_slope": "-4518624276643341182459/59927719166078690646720",
+  "numerator_gain_components": {
+    "linear41": "0",
+    "quadratic5_and_complement": "143872659668578537/891891000000000000",
+    "six_raw81_costs": "2962548938042587866649/53127431407050000000000",
+    "raw81_square_tail": "23559508993421/5919913785357000"
+  },
+  "old65_numerator": "60715223853310715587770770761289520296229525714779/1686486379348287587938926113055000000000000000000",
+  "numerator_upper": "60342418094263761560698649169612900894733740714779/1686486379348287587938926113055000000000000000000",
+  "total_numerator_gain": "82443364318785420250033717/372954568477491000000000000",
+  "uniform_actual_endpoint_denominator": "4067559874193/52947452250000",
+  "offset": "185694867601/8599322160",
+  "endpoint_comparison_upper": "310207598428524441427986743170597416017200118131709227/636529431664481315486343790845737084220000000000000",
+  "old65_with_same_actual_denominator": "312039193122722126562992076550504647136748909836709227/636529431664481315486343790845737084220000000000000",
+  "endpoint_comparison_gain": "254502665652090592311854084379/88446662156106980075636000000",
+  "required_denominator_for403": "296462300097117860547712463370308182095826868131709227/3160217521337008026153572123584561975687500000000000000",
+  "denominator_gap_to403": "53686237467738471286990195459765371076540118131709227/3160217521337008026153572123584561975687500000000000000",
+  "updated_scalar_primal_feasibility": {
+    "W": {
+      "square_slack": "21144841/33075000",
+      "minimum_constraint_slack": "0"
+    },
+    "V": {
+      "square_slack": "2605571209/2431012500",
+      "minimum_constraint_slack": "0"
+    }
+  },
+  "scope": "Uniform endpoint comparison using square114/25, all52 unchanged rational majorants and profile67 actual survival denominator. No tensor denominator substitution, global source-domain K, finite neighborhood upgrade or Lean verification."
+}

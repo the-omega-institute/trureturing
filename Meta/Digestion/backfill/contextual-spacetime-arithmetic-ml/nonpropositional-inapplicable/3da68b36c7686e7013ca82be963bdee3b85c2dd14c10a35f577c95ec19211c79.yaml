@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3da68b36c7686e7013ca82be963bdee3b85c2dd14c10a35f577c95ec19211c79
+  normalized_sha256: sha256:3da68b36c7686e7013ca82be963bdee3b85c2dd14c10a35f577c95ec19211c79
+cas_ref: sha256:3da68b36c7686e7013ca82be963bdee3b85c2dd14c10a35f577c95ec19211c79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “不把定义性扩展说成新的集合论公理”是对主卷引用与论证强度的说明；本叶不包含新的集合存在或编码可逆性命题，亦不以定义夹带此类命题。
+    previous_atom_id: 78e121698634b1e1b5339c054f41eff2ee3f4fe650f78bc6574b6baa3488a130
+    next_atom_id: 3d4c1e3423fece1b4460ac8ceae3ea7ba23a1a66948cb1124ec9182c8250c438

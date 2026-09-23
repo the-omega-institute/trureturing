@@ -1,0 +1,8 @@
+最后分配有限双重和：
+
+$$
+\sum_{a\in A_X}\sum_{b\in A_Y}\sigma_X(a)\sigma_Y(b)
+=\left(\sum_{a\in A_X}\sigma_X(a)\right)
+ \left(\sum_{b\in A_Y}\sigma_Y(b)\right).
+$$
+

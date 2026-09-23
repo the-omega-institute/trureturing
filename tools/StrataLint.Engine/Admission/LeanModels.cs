@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.Json;
 using Dunet;
 
 namespace StrataLint.Engine;
@@ -68,6 +69,10 @@ public sealed record LeanFileReport(
     string? Error = null)
 {
     internal LeanRefutationEvidence? Refutation { get; init; }
+
+    // Retain the producer payload without reading it. Declared-template admission
+    // selects registration owners before invoking the strict evidence reader.
+    internal JsonElement? InformationTemplates { get; init; }
 
     // Null means the producer does not supply registration evidence. It is only
     // admissible outside the protected-base candidate delta.

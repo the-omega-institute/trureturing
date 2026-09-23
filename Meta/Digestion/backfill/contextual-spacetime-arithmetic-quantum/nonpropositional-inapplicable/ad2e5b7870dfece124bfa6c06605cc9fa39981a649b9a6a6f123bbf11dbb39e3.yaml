@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad2e5b7870dfece124bfa6c06605cc9fa39981a649b9a6a6f123bbf11dbb39e3
+  normalized_sha256: sha256:ad2e5b7870dfece124bfa6c06605cc9fa39981a649b9a6a6f123bbf11dbb39e3
+cas_ref: sha256:ad2e5b7870dfece124bfa6c06605cc9fa39981a649b9a6a6f123bbf11dbb39e3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子交代有限视界、记录协议与记忆容量的章节安排及来源，没有独立待证数学结论。
+    previous_atom_id: 1e2e24da8d7ddc51da6c01eb0cc220826104316cda45b2d219e9f41d451e65da
+    next_atom_id: 4a78dabe7fd95c587ad9eec5a91a1d0cea4f98eed800db176183e5d3a34ded74

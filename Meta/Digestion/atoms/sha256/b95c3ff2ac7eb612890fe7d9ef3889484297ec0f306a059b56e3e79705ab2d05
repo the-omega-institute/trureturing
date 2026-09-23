@@ -1,0 +1,6 @@
+**命题 131.1。** $b_1,\ldots,b_4$ 是 $V$ 的实基，也是 $A_4$ 的整基；其 Gram 矩阵为
+
+$$
+C=I_4+\mathbf1\mathbf1^T,\qquad \det C=5.
+$$
+

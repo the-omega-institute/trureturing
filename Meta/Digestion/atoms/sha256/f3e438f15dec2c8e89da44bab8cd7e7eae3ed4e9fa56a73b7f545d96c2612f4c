@@ -1,0 +1,8 @@
+ 对有限个局部载体上的部分组合 $F:D\subseteq\prod_i\mathcal X_i\to Y$，把完整相容条件并入 $D$，定义第 $i$ 个槽位的完整补全签名为函数
+$$
+\sigma_i(x_i):(x_j)_{j\ne i}\longmapsto
+\begin{cases}\operatorname{ok}(F(x_1,\ldots,x_n)),&(x_j)_j\in D,\\
+\bot,&(x_j)_j\notin D.\end{cases}
+$$
+若还须保留边界映射 $\beta_i$，则签名扩成 $(\beta_i,\sigma_i)$。所谓摘要保留完整边界、补全域及补全观察，精确定义为该签名经 $q_i$ 因子化。
+

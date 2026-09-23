@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46f8e778c4970404e191349ac0e424e75291d6d89c25367c057d02fcc6a832d9
+  normalized_sha256: sha256:46f8e778c4970404e191349ac0e424e75291d6d89c25367c057d02fcc6a832d9
+cas_ref: sha256:46f8e778c4970404e191349ac0e424e75291d6d89c25367c057d02fcc6a832d9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子是既定表示、操作和读数的流程示意图，没有独立量词化命题。
+    previous_atom_id: 3e191fbdce9b165990a8875c4adc0dadebd54eb14d101c2f433299c72deb4afe
+    next_atom_id: f3ec5a6ec27e8bb6fc4a739e07384543e48dc39c2a9771493cf3b5583e695310

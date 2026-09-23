@@ -1,0 +1,6 @@
+**命题 5.4（新原语保持代价的充要条件）。** 在定义5.1下保留原字典，并以单位价格加入集合 $B\subset V$。在新字典中仍只用有限支持。新代价下确界对全部 $v\in V$ 等于 $\gamma_A(v)$，当且仅当
+
+$$
+B\subseteq\{v:\gamma_A(v)\le1\}=\overline{\operatorname{conv}(A\cup-A)}.
+$$
+

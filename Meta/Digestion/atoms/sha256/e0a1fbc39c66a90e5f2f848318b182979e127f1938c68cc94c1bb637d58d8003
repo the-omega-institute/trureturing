@@ -1,0 +1,22 @@
+**命题 92.2（反演下降与四分区的适用条件）。** 在定义与假设 92.1 下，
+$$
+\bigl(\exists\theta:B\to B,\ r\circ\Theta=\theta\circ r\bigr)
+\quad\Longleftrightarrow\quad \Pi R=R\Pi. \tag{92.1}
+$$
+若存在这样的 $\theta$，则它唯一且 $\theta^2=\mathrm{id}$。称式 (92.1) 的等价条件为读出的反演相容性。
+
+置 $P_+=(I+R)/2$、$P_-=(I-R)/2$。在相容条件下，
+$$
+f_{\mathrm{ve}}=\Pi P_+f,\qquad
+f_{\mathrm{vo}}=\Pi P_-f,\qquad
+f_{\mathrm{he}}=(I-\Pi)P_+f,\qquad
+f_{\mathrm{ho}}=(I-\Pi)P_-f
+$$
+分别为可见偶、可见奇、隐藏偶、隐藏奇分量。它们两两正交，并满足
+$$
+f=f_{\mathrm{ve}}+f_{\mathrm{vo}}+f_{\mathrm{he}}+f_{\mathrm{ho}},\qquad
+\|f\|_\nu^2=
+\|f_{\mathrm{ve}}\|_\nu^2+\|f_{\mathrm{vo}}\|_\nu^2+
+\|f_{\mathrm{he}}\|_\nu^2+\|f_{\mathrm{ho}}\|_\nu^2. \tag{92.2}
+$$
+

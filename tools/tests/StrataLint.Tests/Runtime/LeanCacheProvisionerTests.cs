@@ -75,13 +75,7 @@ public sealed partial class LeanCacheProvisionerTests
         Assert.Empty(runner.Invocations);
         Assert.Empty(cloner.Invocations);
 
-        // ── 并入本方法而非新开 [Fact](SL-003 unknown 棘轮)────────────────────
-        // `Provision` 是**新建树**的 API:目标必须在这个边界上不存在,无论有没有 donor。
-        // 此前这条只写在 donor 分支里,「无 donor」那条路进来时目标是否存在无人过问 ——
-        // 而下游据「这棵 .lake 是本次调用造的」决定可否 overlay 归档。
-        //
-        // 不能靠读控制流代替这道门:ensure 在 stamp Mismatch 时会先删掉整个 .lake 再落到
-        // 同一个 Provision,故「到达这里 ⟹ 调用入口时 .lake 不存在」为假。
+        // Provision 只创建新树,有无 donor 都必须拒绝已存在的目标。
         provisionRefusesAPreExistingTarget();
 
         static void provisionRefusesAPreExistingTarget()
@@ -109,14 +103,11 @@ public sealed partial class LeanCacheProvisionerTests
             LeanCachePublisher.Instance,
             _ => cleanups++));
 
-        // 拒绝必须发生在**任何副作用之前**:先动手再报错,与不报错一样坏。
+        // 拒绝必须发生在任何副作用之前。
         Assert.Empty(runner.Invocations);
         Assert.Empty(cloner.Invocations);
         Assert.Equal(0, cleanups);
-        // 哨兵**长度**未变。这比「内容未变」弱,如实标注:同长度的替换抓不住。
-        // 承重的是上面三条零调用断言 —— 拒绝发生在任何副作用之前,那才是本断言组的
-        // 主张;哨兵只是补充。用 FileInfo 而非 File.ReadAllText 是因为后者是 SL-003
-        // deriver 的 repository-input 信号,会把宿主方法计入 conservative unknown。
+        // 长度断言仅补充零调用断言,不验证哨兵内容逐字节相同。
         Assert.Equal("someone else was here\n".Length, new FileInfo(sentinel).Length);
         }
     }
@@ -565,7 +556,7 @@ public sealed partial class LeanCacheProvisionerTests
     private static void WritePins(string root)
     {
         File.WriteAllText(Path.Combine(root, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
-        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
+        File.WriteAllText(Path.Combine(root, "lake-manifest.json"), LeanCacheFixtureFile.Manifest());
     }
 
     private static LeanPinSet ReadPins(string root) =>

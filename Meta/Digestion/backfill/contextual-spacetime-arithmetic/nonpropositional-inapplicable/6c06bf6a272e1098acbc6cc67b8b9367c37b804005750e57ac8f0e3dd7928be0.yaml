@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c06bf6a272e1098acbc6cc67b8b9367c37b804005750e57ac8f0e3dd7928be0
+  normalized_sha256: sha256:6c06bf6a272e1098acbc6cc67b8b9367c37b804005750e57ac8f0e3dd7928be0
+cas_ref: sha256:6c06bf6a272e1098acbc6cc67b8b9367c37b804005750e57ac8f0e3dd7928be0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “34.1 有限时间序列与两尾条件”读作“38.1”只变更标题地址，不主张任意序列满足两尾条件；无定义夹带命题，本条无需数学证明。
+    previous_atom_id: 832e0d6c94e707e8b9c2ec313547168e46fa193099c0c915b3e2b823ede31f4d
+    next_atom_id: f5da5ae6478fa678577db669c770728ce623fa5e76d6e095108db9eb8b7d3246

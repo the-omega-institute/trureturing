@@ -1,0 +1,6 @@
+**可用迹先验。** 在真实零标签任务中，若初态迹≤R且0≤h_n≤4/R，则迹始终≤R。由(41.1)，
+
+$$\operatorname{Tr}\Gamma^+\le\operatorname{Tr}\Gamma-h(4-h\operatorname{Tr}\Gamma)\|W\|_F^2.$$
+
+这里用Tr(W^TBW)+Tr(WAW^T)≤(TrA+TrB)||W||_F²，归纳即可。上面的传播误差证书只要求初始迹先验，不依赖这个可选步长限制。
+

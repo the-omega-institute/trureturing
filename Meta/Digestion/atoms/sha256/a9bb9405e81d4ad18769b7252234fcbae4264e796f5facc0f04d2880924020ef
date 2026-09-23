@@ -1,0 +1,55 @@
+**theorem 50.2（连续二元算术延拓的精确有限逃逸判据）。** 设
+$$
+h:\mathbb N_0^2\to\mathbb N_0.
+$$
+存在联合连续
+$$
+H:K_{t,D}^2\to K_{t,D}
+$$
+满足
+$$
+H(j(a),j(b))=j(h(a,b))
+$$
+对所有 $a,b\in\mathbb N_0$ 成立，当且仅当
+$$
+\forall\alpha\in I_{t,D}\ \exists\beta\in I_{t,D},\quad
+\alpha\preceq\beta
+$$
+且
+$$
+\forall a,a',b,b'\in\mathbb N_0,\quad
+a\mathrel{R_\beta}a'\ \land\ b\mathrel{R_\beta}b'
+\Longrightarrow
+h(a,b)\mathrel{R_\alpha}h(a',b').
+\tag{50.1}
+$$
+若延拓存在则唯一。因此，要否定延拓，必须为某个输出层 $\alpha$ 证明：对每一个允许的更细输入层 $\beta\succeq\alpha$ 都存在逃逸，而只展示某一个有限商上的同层失败并不足够。
+
+**证明。** 必要性：若 $H$ 存在，固定输出坐标 $\alpha$。有限离散值映射
+$$
+\pi_\alpha\circ H:K_{t,D}^2\to Q_\alpha
+$$
+由定理 50.1 经某个共同坐标 $\beta$ 因子化；再共同细化可令 $\beta\succeq\alpha$。在稠密自然核心上代入 $j(a),j(b)$，得到 (50.1)。
+
+充分性：对每个 $\alpha$ 选取满足 (50.1) 的 $\beta(\alpha)$。于是
+$$
+f_\alpha\bigl(q_{\beta(\alpha)}(a),q_{\beta(\alpha)}(b)\bigr)
+=
+q_\alpha(h(a,b))
+$$
+良定义，并给出连续有限值映射
+$$
+H_\alpha=f_\alpha\circ
+(\pi_{\beta(\alpha)}\times\pi_{\beta(\alpha)}).
+$$
+若 $\alpha\preceq\alpha'$，则
+$$
+b_{\alpha',\alpha}\circ H_{\alpha'}
+$$
+与 $H_\alpha$ 在稠密集 $j(\mathbb N_0)^2$ 上都等于
+$q_\alpha\circ h$，而目标 $Q_\alpha$ Hausdorff，故二者处处相等。因此 $(H_\alpha)_\alpha$ 是相容线程，定义唯一映射
+$$
+H:K_{t,D}^2\to K_{t,D}.
+$$
+每个坐标 $H_\alpha$ 连续，所以 $H$ 连续。它在自然核心上等于 $j\circ h$。若 $H,H'$ 都是连续延拓，它们在稠密的 $j(\mathbb N_0)^2$ 上相等，目标 Hausdorff，故 $H=H'$。证毕。
+

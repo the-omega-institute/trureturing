@@ -196,7 +196,7 @@ public sealed partial class IngestRobustTests
     }
 
     private static void AssertSummary(
-        StrataLint.Cli.CommandResult result,
+        StrataLint.EngineeringScope.CommandResult result,
         int residualOpenAdded,
         int skippedExisting)
     {

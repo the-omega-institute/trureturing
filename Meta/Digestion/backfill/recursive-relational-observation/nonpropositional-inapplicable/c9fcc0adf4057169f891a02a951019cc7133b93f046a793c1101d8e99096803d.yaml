@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c9fcc0adf4057169f891a02a951019cc7133b93f046a793c1101d8e99096803d
+  normalized_sha256: sha256:c9fcc0adf4057169f891a02a951019cc7133b93f046a793c1101d8e99096803d
+cas_ref: sha256:c9fcc0adf4057169f891a02a951019cc7133b93f046a793c1101d8e99096803d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条固定概率赋值、支撑许可、Borel 核及弱拓扑逼近的定义，区分定义是否包含可测性，没有独立存在性或连续性结论。
+    previous_atom_id: 0c1ed17d2e1175dd443f7a3f170b5b3e9d45bc24d2a8277b304f5f3d04913933
+    next_atom_id: 1185693986ca2973294433aa8d90f774af6acc628def96b66d1d41c43270eece

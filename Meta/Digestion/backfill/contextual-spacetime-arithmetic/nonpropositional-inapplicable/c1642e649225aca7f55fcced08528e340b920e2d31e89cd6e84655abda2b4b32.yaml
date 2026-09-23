@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1642e649225aca7f55fcced08528e340b920e2d31e89cd6e84655abda2b4b32
+  normalized_sha256: sha256:c1642e649225aca7f55fcced08528e340b920e2d31e89cd6e84655abda2b4b32
+cas_ref: sha256:c1642e649225aca7f55fcced08528e340b920e2d31e89cd6e84655abda2b4b32
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句明确限制结论强度，未提出无条件一致性证明，是认识边界说明，无待证明命题。
+    previous_atom_id: 72d62c2b8925718e19660432575892e07c64d5c592f0e8eeef7885608ac440e9
+    next_atom_id: 6a4b48b33b1011eefe7a9b85d75f9ab5014a8d8a8819dfcd2fa85e209de005ca

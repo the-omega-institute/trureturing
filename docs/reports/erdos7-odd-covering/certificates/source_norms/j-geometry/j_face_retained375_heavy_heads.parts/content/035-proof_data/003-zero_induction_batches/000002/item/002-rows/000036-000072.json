@@ -1,0 +1,784 @@
+[
+  {
+    "kind": "inequality",
+    "row": 3249,
+    "sign": 1,
+    "negative_antecedents": [
+      686
+    ],
+    "new_zero_columns": [
+      3937,
+      4337,
+      4737,
+      5137,
+      5537,
+      5937,
+      6337
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3259,
+    "sign": 1,
+    "negative_antecedents": [
+      687
+    ],
+    "new_zero_columns": [
+      3938,
+      4338,
+      4738,
+      5138,
+      5538,
+      5938,
+      6338
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3269,
+    "sign": 1,
+    "negative_antecedents": [
+      688
+    ],
+    "new_zero_columns": [
+      3939,
+      4339,
+      4739,
+      5139,
+      5539,
+      5939,
+      6339
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3279,
+    "sign": 1,
+    "negative_antecedents": [
+      689
+    ],
+    "new_zero_columns": [
+      3940,
+      4340,
+      4740,
+      5140,
+      5540,
+      5940,
+      6340
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3289,
+    "sign": 1,
+    "negative_antecedents": [
+      690
+    ],
+    "new_zero_columns": [
+      3941,
+      4341,
+      4741,
+      5141,
+      5541,
+      5941,
+      6341
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3299,
+    "sign": 1,
+    "negative_antecedents": [
+      691
+    ],
+    "new_zero_columns": [
+      3942,
+      4342,
+      4742,
+      5142,
+      5542,
+      5942,
+      6342
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3309,
+    "sign": 1,
+    "negative_antecedents": [
+      692
+    ],
+    "new_zero_columns": [
+      3943,
+      4343,
+      4743,
+      5143,
+      5543,
+      5943,
+      6343
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3319,
+    "sign": 1,
+    "negative_antecedents": [
+      693
+    ],
+    "new_zero_columns": [
+      3944,
+      4344,
+      4744,
+      5144,
+      5544,
+      5944,
+      6344
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3329,
+    "sign": 1,
+    "negative_antecedents": [
+      694
+    ],
+    "new_zero_columns": [
+      3945,
+      4345,
+      4745,
+      5145,
+      5545,
+      5945,
+      6345
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3339,
+    "sign": 1,
+    "negative_antecedents": [
+      695
+    ],
+    "new_zero_columns": [
+      3946,
+      4346,
+      4746,
+      5146,
+      5546,
+      5946,
+      6346
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3349,
+    "sign": 1,
+    "negative_antecedents": [
+      696
+    ],
+    "new_zero_columns": [
+      3947,
+      4347,
+      4747,
+      5147,
+      5547,
+      5947,
+      6347
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3847,
+    "sign": 1,
+    "negative_antecedents": [],
+    "new_zero_columns": [
+      1196,
+      1197,
+      1198,
+      1199,
+      1200,
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206,
+      1207,
+      1208,
+      1209,
+      1210,
+      1211,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2796,
+      2797,
+      2798,
+      2799,
+      2800,
+      2801,
+      2802,
+      2803,
+      2804,
+      2805,
+      2806,
+      2807,
+      2808,
+      2809,
+      2810,
+      2811,
+      3596,
+      3597,
+      3598,
+      3599,
+      3600,
+      3601,
+      3602,
+      3603,
+      3604,
+      3605,
+      3606,
+      3607,
+      3608,
+      3609,
+      3610,
+      3611
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3848,
+    "sign": 1,
+    "negative_antecedents": [],
+    "new_zero_columns": [
+      1596,
+      1597,
+      1598,
+      1599,
+      1600,
+      1601,
+      1602,
+      1603,
+      1604,
+      1605,
+      1606,
+      1607,
+      1608,
+      1609,
+      1610,
+      1611,
+      3196,
+      3197,
+      3198,
+      3199,
+      3200,
+      3201,
+      3202,
+      3203,
+      3204,
+      3205,
+      3206,
+      3207,
+      3208,
+      3209,
+      3210,
+      3211
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3849,
+    "sign": 1,
+    "negative_antecedents": [],
+    "new_zero_columns": [
+      2396,
+      2397,
+      2398,
+      2399,
+      2400,
+      2401,
+      2402,
+      2403,
+      2404,
+      2405,
+      2406,
+      2407,
+      2408,
+      2409,
+      2410,
+      2411
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3851,
+    "sign": 1,
+    "negative_antecedents": [
+      745
+    ],
+    "new_zero_columns": [
+      3996,
+      4396,
+      4796,
+      5196,
+      5596,
+      5996,
+      6396
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3861,
+    "sign": 1,
+    "negative_antecedents": [
+      746
+    ],
+    "new_zero_columns": [
+      3997,
+      4397,
+      4797,
+      5197,
+      5597,
+      5997,
+      6397
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3871,
+    "sign": 1,
+    "negative_antecedents": [
+      747
+    ],
+    "new_zero_columns": [
+      3998,
+      4398,
+      4798,
+      5198,
+      5598,
+      5998,
+      6398
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3881,
+    "sign": 1,
+    "negative_antecedents": [
+      748
+    ],
+    "new_zero_columns": [
+      3999,
+      4399,
+      4799,
+      5199,
+      5599,
+      5999,
+      6399
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3891,
+    "sign": 1,
+    "negative_antecedents": [
+      749
+    ],
+    "new_zero_columns": [
+      4000,
+      4400,
+      4800,
+      5200,
+      5600,
+      6000,
+      6400
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3901,
+    "sign": 1,
+    "negative_antecedents": [
+      750
+    ],
+    "new_zero_columns": [
+      4001,
+      4401,
+      4801,
+      5201,
+      5601,
+      6001,
+      6401
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3911,
+    "sign": 1,
+    "negative_antecedents": [
+      751
+    ],
+    "new_zero_columns": [
+      4002,
+      4402,
+      4802,
+      5202,
+      5602,
+      6002,
+      6402
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3921,
+    "sign": 1,
+    "negative_antecedents": [
+      752
+    ],
+    "new_zero_columns": [
+      4003,
+      4403,
+      4803,
+      5203,
+      5603,
+      6003,
+      6403
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3931,
+    "sign": 1,
+    "negative_antecedents": [
+      753
+    ],
+    "new_zero_columns": [
+      4004,
+      4404,
+      4804,
+      5204,
+      5604,
+      6004,
+      6404
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3941,
+    "sign": 1,
+    "negative_antecedents": [
+      754
+    ],
+    "new_zero_columns": [
+      4005,
+      4405,
+      4805,
+      5205,
+      5605,
+      6005,
+      6405
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3951,
+    "sign": 1,
+    "negative_antecedents": [
+      755
+    ],
+    "new_zero_columns": [
+      4006,
+      4406,
+      4806,
+      5206,
+      5606,
+      6006,
+      6406
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3961,
+    "sign": 1,
+    "negative_antecedents": [
+      756
+    ],
+    "new_zero_columns": [
+      4007,
+      4407,
+      4807,
+      5207,
+      5607,
+      6007,
+      6407
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3971,
+    "sign": 1,
+    "negative_antecedents": [
+      757
+    ],
+    "new_zero_columns": [
+      4008,
+      4408,
+      4808,
+      5208,
+      5608,
+      6008,
+      6408
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3981,
+    "sign": 1,
+    "negative_antecedents": [
+      758
+    ],
+    "new_zero_columns": [
+      4009,
+      4409,
+      4809,
+      5209,
+      5609,
+      6009,
+      6409
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 3991,
+    "sign": 1,
+    "negative_antecedents": [
+      759
+    ],
+    "new_zero_columns": [
+      4010,
+      4410,
+      4810,
+      5210,
+      5610,
+      6010,
+      6410
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 4001,
+    "sign": 1,
+    "negative_antecedents": [
+      760
+    ],
+    "new_zero_columns": [
+      4011,
+      4411,
+      4811,
+      5211,
+      5611,
+      6011,
+      6411
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 4010,
+    "sign": 1,
+    "negative_antecedents": [],
+    "new_zero_columns": [
+      1212,
+      1213,
+      1214,
+      1215,
+      1216,
+      1217,
+      1218,
+      1219,
+      1220,
+      1221,
+      1222,
+      1223,
+      1224,
+      1225,
+      1226,
+      1227,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026,
+      2027,
+      2812,
+      2813,
+      2814,
+      2815,
+      2816,
+      2817,
+      2818,
+      2819,
+      2820,
+      2821,
+      2822,
+      2823,
+      2824,
+      2825,
+      2826,
+      2827,
+      3612,
+      3613,
+      3614,
+      3615,
+      3616,
+      3617,
+      3618,
+      3619,
+      3620,
+      3621,
+      3622,
+      3623,
+      3624,
+      3625,
+      3626,
+      3627
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 4011,
+    "sign": 1,
+    "negative_antecedents": [],
+    "new_zero_columns": [
+      1612,
+      1613,
+      1614,
+      1615,
+      1616,
+      1617,
+      1618,
+      1619,
+      1620,
+      1621,
+      1622,
+      1623,
+      1624,
+      1625,
+      1626,
+      1627,
+      3212,
+      3213,
+      3214,
+      3215,
+      3216,
+      3217,
+      3218,
+      3219,
+      3220,
+      3221,
+      3222,
+      3223,
+      3224,
+      3225,
+      3226,
+      3227
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 4012,
+    "sign": 1,
+    "negative_antecedents": [],
+    "new_zero_columns": [
+      2412,
+      2413,
+      2414,
+      2415,
+      2416,
+      2417,
+      2418,
+      2419,
+      2420,
+      2421,
+      2422,
+      2423,
+      2424,
+      2425,
+      2426,
+      2427
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 4014,
+    "sign": 1,
+    "negative_antecedents": [
+      761
+    ],
+    "new_zero_columns": [
+      4012,
+      4412,
+      4812,
+      5212,
+      5612,
+      6012,
+      6412
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 4024,
+    "sign": 1,
+    "negative_antecedents": [
+      762
+    ],
+    "new_zero_columns": [
+      4013,
+      4413,
+      4813,
+      5213,
+      5613,
+      6013,
+      6413
+    ]
+  },
+  {
+    "kind": "inequality",
+    "row": 4034,
+    "sign": 1,
+    "negative_antecedents": [
+      763
+    ],
+    "new_zero_columns": [
+      4014,
+      4414,
+      4814,
+      5214,
+      5614,
+      6014,
+      6414
+    ]
+  }
+]

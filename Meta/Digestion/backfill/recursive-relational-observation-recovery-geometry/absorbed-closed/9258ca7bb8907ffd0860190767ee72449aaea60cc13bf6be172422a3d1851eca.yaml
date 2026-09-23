@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9258ca7bb8907ffd0860190767ee72449aaea60cc13bf6be172422a3d1851eca
+  normalized_sha256: sha256:9258ca7bb8907ffd0860190767ee72449aaea60cc13bf6be172422a3d1851eca
+cas_ref: sha256:9258ca7bb8907ffd0860190767ee72449aaea60cc13bf6be172422a3d1851eca
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.result
+    target_statement_id: sha256:0db215dc8798b46600bfba6e4a0db0a3850011b97398a918cb1d275380c479c7
+receipts:
+  unresolved_subitems: []

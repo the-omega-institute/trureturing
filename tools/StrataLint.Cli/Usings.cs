@@ -1,0 +1,1 @@
+global using StrataLint.EngineeringScope;

@@ -1,0 +1,29 @@
+**theorem 51.4 (生成元、零分量与带稳定子的反对角单位轨道).** 设 $x,y\in R$，令
+$$
+G=xR+yR,\qquad L=xR\cap yR.
+$$
+对 $G$ 的每个生成元 $z$，存在唯一 $w\in R$ 同时满足
+$$
+wR=L,\qquad zw=xy.
+$$
+其分量为
+$$
+w_p=\begin{cases}x_py_p/z_p,&z_p\ne0,\\0,&z_p=0.\end{cases}
+$$
+若 $(z_0,w_0)$ 是一组满足 $z_0R=G$、$w_0R=L$、$z_0w_0=xy$ 的解，则全部解恰为
+$$
+(z,w)=(uz_0,u^{-1}w_0),\qquad u\in R^\times.
+$$
+记
+$$
+S_{00}(x,y)=\{p:x_p=y_p=0\},
+\qquad H_{x,y}=\{u\in R^\times:u_p=1\text{ 对所有 }p\notin S_{00}(x,y)\}.
+$$
+该轨道的稳定子恰为 $H_{x,y}$，故不同解由陪集 $R^\times/H_{x,y}$ 精确参数化；采用子空间拓扑时，该参数化还是同胚。此作用自由当且仅当 $S_{00}(x,y)=\varnothing$。
+
+更明确地，若分别写两个生成元为 $z=uz_0$、$w=vw_0$，其中 $u,v\in R^\times$，则乘积方程等价于
+$$
+u_pv_p=1\quad\text{对每个满足 }x_py_p\ne0\text{ 的素数 }p.
+$$
+在零乘积分量上可能存在不受此式限制的单位参数，但它们的不可见部分不增加上述实际解轨道。
+

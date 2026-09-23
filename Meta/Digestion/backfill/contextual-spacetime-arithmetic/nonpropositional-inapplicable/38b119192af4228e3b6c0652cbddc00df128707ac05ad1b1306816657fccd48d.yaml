@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38b119192af4228e3b6c0652cbddc00df128707ac05ad1b1306816657fccd48d
+  normalized_sha256: sha256:38b119192af4228e3b6c0652cbddc00df128707ac05ad1b1306816657fccd48d
+cas_ref: sha256:38b119192af4228e3b6c0652cbddc00df128707ac05ad1b1306816657fccd48d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此句提示变量命名与联合约束是不同建模信息，是术语警示，无独立待证明命题；实质非蕴含另由后一子句处理。
+    previous_atom_id: 6f19cd023507b68b970605d2c26f099e93657797fa00fa40d3b2c3a9f86ba743
+    next_atom_id: 854364ba367cc26adace868ae89a79efc190119235f8e90ac0926dc7f291c37b

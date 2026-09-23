@@ -1,0 +1,69 @@
+### 129.1 先固定乘法约定，再引用已有的线性识别
+
+令 $V$ 为有限维实内积空间，
+
+$$
+g(a,b)=\langle a,b\rangle,
+\qquad Q(v)=g(v,v).
+\tag{129.1}
+$$
+
+采用正 Clifford 约定。记 $\operatorname{Cl}(V,Q)$ 的标量单位为 $1_{\rm Cl}$，生成映射为 $\iota_Q:V\to\operatorname{Cl}(V,Q)$，关系为
+
+$$
+\iota_Q(v)^2=Q(v)1_{\rm Cl}.
+\tag{129.2}
+$$
+
+对 $a+b$ 展开平方并减去 $a,b$ 的平方，得到
+
+$$
+\iota_Q(a)\iota_Q(b)+\iota_Q(b)\iota_Q(a)
+=2g(a,b)1_{\rm Cl}.
+\tag{129.3}
+$$
+
+这里 $\iota_Q(a)\iota_Q(b)$ 是 Clifford 乘法。外代数 $\Lambda V$ 的乘法另记为 $\wedge$，其标量单位为 $1_\Lambda$。不能把两种乘法先行识别：非零 $v$ 的 $v\wedge v=0$，而式（129.2）非零。
+
+直接使用已有的 Clifford—外代数**线性**同构。记其符号映射及逆为
+
+$$
+s_Q:\operatorname{Cl}(V,Q)\xrightarrow{\;\simeq_{\mathbb R}\;}\Lambda V,
+\qquad j_Q=s_Q^{-1}.
+\tag{129.4}
+$$
+
+这是钉版 Mathlib `CliffordAlgebra.equivExterior` 所提供的 module equivalence 在实数上的实例；向量、标量及二向量乘积的计算直接使用其 change-of-form 接口。所用规范识别满足
+
+$$
+s_Q(1_{\rm Cl})=1_\Lambda,
+\qquad s_Q(\iota_Q(v))=v,
+$$
+
+$$
+\boxed{s_Q(\iota_Q(a)\iota_Q(b))=a\wedge b+g(a,b)1_\Lambda}.
+\tag{129.5}
+$$
+
+在实数上，其逆也可用规范反对称化呈示：
+
+$$
+j_Q(v_1\wedge\cdots\wedge v_k)
+=\frac1{k!}\sum_{\sigma\in S_k}\operatorname{sgn}(\sigma)
+\iota_Q(v_{\sigma(1)})\cdots\iota_Q(v_{\sigma(k)}),
+\tag{129.6}
+$$
+
+$k=0$ 时右边为标量单位。使用式（129.4）是引用既有线性同构定理，不在这里重建 PBW 证明或另选一个未声明的有序基分裂。式（129.6）和式（129.5）指定的是同一个 Chevalley／反对称化识别，不需要选择空间定向。
+
+该识别把外代数的整数阶子空间搬到 Clifford 空间中，但乘法不保持阶数相加：两个一阶向量可以产生零阶标量和二阶外积。Clifford 乘法具有通常的奇偶分次；这里的整数阶分解是线性分解。
+
+反向使用式（129.5），得到之后唯一需要的向量积展开：
+
+$$
+\boxed{\iota_Q(a)\iota_Q(b)=g(a,b)1_{\rm Cl}+j_Q(a\wedge b)}.
+\tag{129.7}
+$$
+
+若改用负约定 $\iota(v)^2=-\|v\|^2 1$，式（129.7）的内积项和后文向量缺陷的符号都会反转。本节所有公式始终使用式（129.2）。
+

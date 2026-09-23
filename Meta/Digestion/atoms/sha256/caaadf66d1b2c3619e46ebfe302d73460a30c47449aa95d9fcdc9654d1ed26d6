@@ -1,0 +1,34 @@
+**theorem 39.12 (Exact finite-observation completion with common witnesses).** The maps $r_{GF}$ form a surjective inverse system, and
+$$
+A_F=Q_F(\mathscr E)
+\qquad(F\in\operatorname{Fin}(\mathcal A)).
+\tag{39.33}
+$$
+There is a canonical homeomorphism
+$$
+\Psi:\mathscr E\longrightarrow L,
+\qquad \Psi(p)=(Q_F(p))_F.
+\tag{39.34}
+$$
+The map $n\mapsto(q_F(n))_F$ embeds the discrete set $\mathbb N$ as a dense subset of $L$.
+
+More explicitly, put
+$$
+\iota(p)=\bigl((p(b))_j\bigr)_{(b,j)\in\mathcal A}.
+$$
+Then
+$$
+\iota(\mathscr E)=
+\overline{\{\iota(T^n):n\ge0\}}^{\,\{0,1\}^{\mathcal A}},
+\tag{39.35}
+$$
+and, for $z\in\{0,1\}^{\mathcal A}$,
+$$
+z\in\iota(\mathscr E)
+\quad\Longleftrightarrow\quad
+\forall F\in\operatorname{Fin}(\mathcal A)\ \exists n\ge0\quad
+\forall(b,j)\in F:\ z_{b,j}=(T^n b)_j.
+\tag{39.36}
+$$
+The integer may depend on $F$, but within each $F$ it must be the same integer for every input and digit.
+

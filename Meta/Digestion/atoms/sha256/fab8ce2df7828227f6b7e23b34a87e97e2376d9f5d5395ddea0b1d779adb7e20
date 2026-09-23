@@ -1,0 +1,66 @@
+**定理 93.3（平稳边流的路径 KL 与读出比较）。** 设 $K=(K_{ij})_{i,j\in S}$ 是非负行随机矩阵，并给定严格正概率 $\pi$，满足
+$$
+\sum_jK_{ij}=1,\qquad \sum_i\pi_iK_{ij}=\pi_j.
+$$
+另要求双向支撑
+$$
+K_{ij}>0\quad\Longleftrightarrow\quad K_{ji}>0. \tag{93.4}
+$$
+不要求不可约、非周期或正的自环概率。定义
+$$
+P_n(w)=\pi_{x_0}\prod_{t=0}^{n-1}K_{x_tx_{t+1}},\qquad
+Q_{ij}=\pi_iK_{ij},\qquad Q^{\mathsf T}_{ij}=Q_{ji},\qquad
+K^{\leftarrow}_{ij}=\frac{\pi_jK_{ji}}{\pi_i}.
+$$
+$P_n$ 的正支撑为使用正转移边的路径集合，记为 $\Omega_n$；$Q,Q^{\mathsf T}$ 在共同正边集上作为概率比较。置
+$$
+A_{ij}=\begin{cases}\log(Q_{ij}/Q_{ji}),&Q_{ij}>0,\\0,&Q_{ij}=0,\end{cases}
+\qquad e=D(Q\Vert Q^{\mathsf T}).
+$$
+则反向实验是在原坐标顺序上由反向核生成的路径律：
+$$
+P_n^R(w)=\pi_{x_0}\prod_{t=0}^{n-1}K^{\leftarrow}_{x_tx_{t+1}}
+=\pi_{x_n}\prod_{t=0}^{n-1}K_{x_{t+1}x_t}. \tag{93.5}
+$$
+在 $\Omega_n$ 上，
+$$
+\begin{aligned}
+\sigma_n(w)
+&=\log\frac{\pi_{x_0}}{\pi_{x_n}}
+ +\sum_{t=0}^{n-1}\log\frac{K_{x_tx_{t+1}}}{K_{x_{t+1}x_t}}\\
+&=\sum_{t=0}^{n-1}A_{x_tx_{t+1}}
+=\sum_{i<j}J_{ij}(w)A_{ij}.
+\end{aligned} \tag{93.6}
+$$
+由此得到精确的有限长度公式
+$$
+D(P_n\Vert P_n^R)=n e,\qquad
+e=\sum_{\substack{i<j\\Q_{ij}>0}}
+(Q_{ij}-Q_{ji})\log\frac{Q_{ij}}{Q_{ji}}\ge0. \tag{93.7}
+$$
+并且
+$$
+e=0\quad\Longleftrightarrow\quad Q=Q^{\mathsf T}
+\quad\Longleftrightarrow\quad
+\forall i,j,\ \pi_iK_{ij}=\pi_jK_{ji}. \tag{93.8}
+$$
+因此当 $n\ge1$ 时，路径方向性为零当且仅当详细平衡成立；$n=0$ 时恒为零。$n\ge1$ 时每次转移的散度为 $e$，按状态词长归一化的散度 $ne/(n+1)$ 趋向 $e$。
+
+净计数精确保留全部方向性，而每个单时刻读出 $r_t(w)=x_t$ 都不显露方向性：
+$$
+D(J_*P_n\Vert J_*P_n^R)=n e,\qquad
+J(\Theta_nw)=-J(w), \tag{93.9}
+$$
+$$
+(r_t)_*P_n=(r_t)_*P_n^R=\pi,\qquad
+D((r_t)_*P_n\Vert(r_t)_*P_n^R)=0
+\quad(0\le t\le n). \tag{93.10}
+$$
+在每条净计数纤维上，两份条件路径律相同，故同一参考条件恢复核恢复这两个指定分布。标量读出 $w\mapsto\sigma_n(w)$ 的似然比同样在每条纤维上恒定，故由定理 73.3 也保留全部正反 KL。这里的充分性只针对正反二分实验，不表示计数确定原来的完整路径，也不表示它是最小或低成本读出。
+
+此外，对任意 $g:S\to\mathbb R$，
+$$
+\sum_{i,j}Q_{ij}(g(i)-g(j))=0. \tag{93.11}
+$$
+若 $e>0$，则 $A$ 不可能在所有正边上等于某个端点势差 $g(i)-g(j)$；这些 $P_n$ 也不可能全部具有命题 93.2 那种势振幅一致有界的端点表示。
+

@@ -1,0 +1,72 @@
+[
+  {
+    "index": 41,
+    "quadratic_index": 0,
+    "tuple": [
+      0,
+      0
+    ],
+    "constant": "1843590625606784/50362520583375",
+    "uniform_new_margin": "3817044356346659/63456775935052500",
+    "new_cost_bound": "4174926132021133/783416986852500",
+    "previous_cost_bound": "12551163536894063/2350250960557500",
+    "accepted_cost_bound": "4174926132021133/783416986852500",
+    "weighted_improvement": "101557092385559/10988186309100000"
+  },
+  {
+    "index": 42,
+    "quadratic_index": 1,
+    "tuple": [
+      0,
+      1
+    ],
+    "constant": "51437677469/4932968040",
+    "uniform_new_margin": "78457029319/1775868494400",
+    "new_cost_bound": "441289979423/295978082400",
+    "previous_cost_bound": "40310591053/26907098400",
+    "accepted_cost_bound": "441289979423/295978082400",
+    "weighted_improvement": "12350539/2088028800"
+  },
+  {
+    "index": 43,
+    "quadratic_index": 2,
+    "tuple": [
+      0,
+      2
+    ],
+    "constant": "868964699/704709720",
+    "uniform_new_margin": "7859954981/1268477496000",
+    "new_cost_bound": "37069281709/211412916000",
+    "previous_cost_bound": "60335035438477/344531250000000",
+    "accepted_cost_bound": "60335035438477/344531250000000",
+    "weighted_improvement": "0"
+  },
+  {
+    "index": 44,
+    "quadratic_index": 3,
+    "tuple": [
+      1,
+      0
+    ],
+    "constant": "197160180946/16688172501",
+    "uniform_new_margin": "933450129769/18774194063625",
+    "new_cost_bound": "522159750443/309040231500",
+    "previous_cost_bound": "47686382713/28094566500",
+    "accepted_cost_bound": "522159750443/309040231500",
+    "weighted_improvement": "449823749/70637767200"
+  },
+  {
+    "index": 45,
+    "quadratic_index": 4,
+    "tuple": [
+      2,
+      0
+    ],
+    "constant": "3930317668/2384024643",
+    "uniform_new_margin": "88769931643/10728110893500",
+    "new_cost_bound": "31050191647/132445813500",
+    "previous_cost_bound": "94873766607095653/405168750000000000",
+    "accepted_cost_bound": "94873766607095653/405168750000000000",
+    "weighted_improvement": "0"
+  }
+]

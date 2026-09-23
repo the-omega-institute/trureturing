@@ -1,0 +1,218 @@
+[
+  {
+    "kind": "K",
+    "index": 398,
+    "carrier": [
+      1,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "K",
+    "index": 410,
+    "carrier": [
+      1,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "K",
+    "index": 422,
+    "carrier": [
+      1,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "K",
+    "index": 616,
+    "carrier": [
+      1,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "K",
+    "index": 628,
+    "carrier": [
+      1,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "K",
+    "index": 640,
+    "carrier": [
+      1,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 402,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 404,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 406,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 414,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 416,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 418,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 426,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 428,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 430,
+    "carrier": [
+      0,
+      1
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 618,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 620,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 622,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 630,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 632,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 634,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 642,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 644,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  },
+  {
+    "kind": "J",
+    "index": 646,
+    "carrier": [
+      0,
+      0
+    ],
+    "raw_mass": "1/4"
+  }
+]

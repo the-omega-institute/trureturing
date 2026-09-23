@@ -1,0 +1,112 @@
+{
+  "centered_square_vertices": [
+    {
+      "beta_cell": 2,
+      "late_cell": 2,
+      "old": "263/48",
+      "new": "304687/57624"
+    },
+    {
+      "beta_cell": 2,
+      "late_cell": 3,
+      "old": "263/48",
+      "new": "304687/57624"
+    },
+    {
+      "beta_cell": 2,
+      "late_cell": 4,
+      "old": "263/48",
+      "new": "304687/57624"
+    },
+    {
+      "beta_cell": 3,
+      "late_cell": 2,
+      "old": "263/48",
+      "new": "304687/57624"
+    },
+    {
+      "beta_cell": 3,
+      "late_cell": 3,
+      "old": "263/48",
+      "new": "304687/57624"
+    },
+    {
+      "beta_cell": 3,
+      "late_cell": 4,
+      "old": "263/48",
+      "new": "304687/57624"
+    },
+    {
+      "beta_cell": 4,
+      "late_cell": 2,
+      "old": "263/48",
+      "new": "304687/57624"
+    },
+    {
+      "beta_cell": 4,
+      "late_cell": 3,
+      "old": "263/48",
+      "new": "304687/57624"
+    },
+    {
+      "beta_cell": 4,
+      "late_cell": 4,
+      "old": "263/48",
+      "new": "304687/57624"
+    }
+  ],
+  "centered_square_upper": "1220880809/230496000",
+  "head_square_multiplier": "1139/560",
+  "head_e": "74535/74536",
+  "head_D": "315424555117789/3758179656000000",
+  "raw_source_mass_upper": "123557689/576240000",
+  "assigned_seed_floor": "334490138381673633/3923164203788188",
+  "scalar_quadratics": [
+    {
+      "prime": 17,
+      "input_floor": 85,
+      "output_strict_floor": 171,
+      "a": "25/128",
+      "b": "1/1024",
+      "quadratic": [
+        "86",
+        "-8883/128",
+        "7225/512"
+      ],
+      "four_AC_minus_B_squared": "625111/16384",
+      "global_minimum": "625111/5636096"
+    },
+    {
+      "prime": 19,
+      "input_floor": 171,
+      "output_strict_floor": 480,
+      "a": "14/81",
+      "b": "1/1296",
+      "quadratic": [
+        "309",
+        "-2515/9",
+        "9101/144"
+      ],
+      "four_AC_minus_B_squared": "8981/324",
+      "global_minimum": "8981/400464"
+    },
+    {
+      "prime": 23,
+      "input_floor": 480,
+      "output_strict_floor": 1000,
+      "a": "17/121",
+      "b": "1/1936",
+      "quadratic": [
+        "520",
+        "-54760/121",
+        "29970/121"
+      ],
+      "four_AC_minus_B_squared": "4544192000/14641",
+      "global_minimum": "28401200/190333"
+    }
+  ],
+  "next_prime": 29,
+  "strict_legal_input_cap": "784",
+  "carried_majorant_floor": 1000,
+  "scope": "The lower bound is on the allocated upper-bound expression, not on actual Gamma. The all-threshold obstruction rejects only this direct weighted-square allocation and scalar recurrence; it does not refute actual survival or the richer through37 hinge account."
+}

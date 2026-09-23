@@ -1,0 +1,12 @@
+**theorem 58.12 统一确定性位复杂度契约。** 在 definition 58.1 的承诺输入上，存在同一确定性算法，以
+$$
+T_{\mathrm{construct}}(L)=O(\Lambda^8),\qquad
+S_{\mathrm{construct}}(L)=O(\Lambda^3)
+$$
+返回一个成功稀疏整数证书或一个诱导否证证书。两种证书均可在
+$$
+T_{\mathrm{check}}(L)=O(\Lambda^8),\qquad
+S_{\mathrm{check}}(L)=O(\Lambda^3)
+$$
+内校验。校验器对成功证书设置 $8\Lambda^3$ 位上限，对失败证书设置 $8\Lambda^2$ 位上限，超限或不合语法即拒绝。所有可实现输入都有通过校验的成功证书，所有不可实现输入都有通过校验的失败证书。主构造及校验均不展开 $p^M$，不扫描 $M$ 个零，也不枚举 $p$ 个剩余类。
+

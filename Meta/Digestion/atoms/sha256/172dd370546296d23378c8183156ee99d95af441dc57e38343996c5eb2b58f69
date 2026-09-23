@@ -1,0 +1,18 @@
+**定义 24.3（实对称截断空间）。** 固定整数 $Q\ge2$、黏性 $\nu\ge0$，令
+$$
+S_Q=\{k\in\mathbb Z^2:0<|k|^2\le Q\},\quad
+\widetilde k=(k_1,k_2,0),\quad
+E_Q=\{(v_k)_{k\in S_Q}:v_{-k}=\overline{v_k},\ \widetilde k\cdot v_k=0\}.
+$$
+这里 $v_k\in\mathbb C^3$，$E_Q$ 视为实向量空间，范数为 $\|v\|_1=\sum_{k\in S_Q}|v_k|_2$。合成场 $\sum_kv_ke^{i(k_1X_1+k_2X_2)}$ 在 $2\pi$ 周期空间中实值、均值零、无散度，且与第三坐标无关。定义
+$$
+P_kw=w-\widetilde k\frac{\widetilde k\cdot w}{|k|^2},\quad
+(L_Qv)_k=-\nu|k|^2v_k,
+$$
+$$
+B_Q(v,w)_k=iP_k\sum_{\substack{p,q\in S_Q\\p+q=k}}
+ (\widetilde q\cdot v_p)w_q,\qquad \dot v=L_Qv-B_Q(v,v).
+\tag{24.107}
+$$
+所有复向量范数为 Hermitian Euclidean 范数，点乘频率表示实频率对复向量的线性收缩。
+

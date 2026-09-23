@@ -1,0 +1,11 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "mixed_pi"
+  },
+  "costs": {
+    "path": "content/010-direction_probes/000005/item/001-costs.json",
+    "sha256": "820719aaa8846a762f0b94a8b33bb11d7e8d5a2d108eb60a9e9e407e2c8f8f85",
+    "kind": "array"
+  }
+}

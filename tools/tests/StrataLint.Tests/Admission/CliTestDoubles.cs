@@ -16,9 +16,18 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? fileMapConform = null,
     CommandResult? cleanLanes = null,
     ExplicitCommandResult? capacityAudit = null,
-    Func<IReadOnlyList<string>, CommandResult>? alignLedger = null) : ICliEnvironment
+    Func<IReadOnlyList<string>, CommandResult>? alignLedger = null,
+    ExplicitCommandResult? checkCurrent = null,
+    ExplicitCommandResult? checkDelta = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
+
+
+    public ExplicitCommandResult CheckCurrent(IReadOnlyList<string> arguments) =>
+        checkCurrent ?? throw new NotSupportedException();
+
+    public ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments) =>
+        checkDelta ?? throw new NotSupportedException();
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
 
@@ -119,18 +128,4 @@ internal sealed class StubCliEnvironment(
 
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "worktree is not configured in this fixture");
-}
-
-internal sealed class BufferedConsole : ICliConsole
-{
-    private readonly StringBuilder output = new();
-    private readonly StringBuilder error = new();
-
-    internal string Output => output.ToString();
-
-    internal string Error => error.ToString();
-
-    public void WriteOutput(string value) => output.Append(value);
-
-    public void WriteError(string value) => error.Append(value);
 }

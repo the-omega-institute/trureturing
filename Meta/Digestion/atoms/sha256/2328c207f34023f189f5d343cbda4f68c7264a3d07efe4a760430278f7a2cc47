@@ -1,0 +1,7 @@
+**定理 12.3（同谱而端口未运输的剪切例）。** 令
+$$
+A=\begin{pmatrix}1&0\\0&2\end{pmatrix},\quad S=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad
+A'=SAS^{-1}=\begin{pmatrix}1&1\\0&2\end{pmatrix},\quad b=\binom01,\quad H=(1,0).
+$$
+同端口下 $HAb=0$ 而 $HA'b=1$，所以同谱不保实际读数。它可由真实两段循环实现：取 $V_0=S,V_1=AS^{-1}$，则截面零返回为 $V_1V_0=A$，截面一返回为 $V_0V_1=A'$。运输 $b'=Sb=(1,1)^{\mathsf T}$、$H'=HS^{-1}=(1,-1)$ 后，$H'A'b'=0$，全部响应由定理12.2保持。所列乘法也给这个例子的直接验证。$\square$
+

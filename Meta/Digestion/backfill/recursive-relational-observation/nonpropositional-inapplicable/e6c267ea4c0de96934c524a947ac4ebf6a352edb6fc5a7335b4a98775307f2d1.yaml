@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e6c267ea4c0de96934c524a947ac4ebf6a352edb6fc5a7335b4a98775307f2d1
+  normalized_sha256: sha256:e6c267ea4c0de96934c524a947ac4ebf6a352edb6fc5a7335b4a98775307f2d1
+cas_ref: sha256:e6c267ea4c0de96934c524a947ac4ebf6a352edb6fc5a7335b4a98775307f2d1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 合法数字空间是在紧致二元乘积空间中逐对排除相邻一所得闭子空间，探针对原文实际载体直接使用 Mathlib 的闭交、连续逆像和闭子空间紧致性接口；未找到可用的公开冻结紧致声明，仓内无冻结 GID。
+    previous_atom_id: 9934b78fc959503007b34dedac270031dc3d5ff678b450ba34df47ef4e8fd1eb
+    next_atom_id: 3f6bff1bd813b12c545f268af54e84db2fcb9c959da7af8fdd0dd97bd00308d9

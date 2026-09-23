@@ -29,11 +29,29 @@ private def assertArtifactsAbsent (paths : Array String) : CommandElabM Unit := 
     if ← liftIO <| (System.FilePath.mk path).pathExists then
       throwError "ImportedRoot rejection wrote artifact {path}"
 
+private def assertProjectionSnapshots (root : Name) (present : Bool) : CommandElabM Unit := do
+  for record in SealRecords.forRoot (← getEnv) root do
+    let certPrefix := catalogQualifiedName root record.catalog.arenaName record.catalog.catalogId
+      record.catalog.arenaName "__kernel_projection"
+    let projection : KernelProjectionRecord := {
+      certificates := #[("readout_reflection", certPrefix.str "readout_reflection")] }
+    let rejection ← try
+      liftTermElabM <| validateProjectionCountingRoute root record.catalog.catalogId
+        projection "reflected-readout"
+      pure none
+    catch error => pure (some (← error.toMessageData.toString))
+    let expected := if present then none else some
+      s!"IE-C028 AnalysisCertificateMismatch root={root} catalog={record.catalog.catalogId} \
+component=proof-method expected=certified-catalog actual=different"
+    unless rejection == expected do
+      throwError "[FAIL] ProjectionStage.snapshot-rollback: root={root} expected-present={present} actual={rejection}"
+
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 16000000 in
 -- Analysis staging constructs and checks the full certificate family in one command.
 run_cmd do
   let expectedStage ← liftIO <| IO.getEnv "IE_EXPECT_STAGE_REJECTION"
+  let expectedKernelStage ← liftIO <| IO.getEnv "IE_EXPECT_KERNEL_STAGE_REJECTION"
   let expectedExport ← liftIO <| IO.getEnv "IE_EXPECT_EXPORT_REJECTION"
   let paths ← #["imported-seal.json", "imported-analysis.json", "imported-ascii.txt"].mapM
     fixturePath
@@ -46,10 +64,30 @@ run_cmd do
     throwError "ImportedRoot missing imported seal"
   unless (SealRecords.analysisForRoot? sealedEnv root).isNone do
     throwError "ImportedRoot was staged before import"
+  let sealArtifact := Syntax.mkStrLit paths[0]!
+  let analysis := Syntax.mkStrLit paths[1]!
+  let ascii := Syntax.mkStrLit paths[2]!
   -- Exercise both accepted root spellings; _root_ must not enter the diagnostic.
   let rootIds := #[mkIdent root, mkIdent (`_root_ ++ root)]
   for rootId in rootIds do
     let errors ← commandErrors (← `(command| #stage_information_analysis root $rootId:ident))
+    if expectedKernelStage.isSome then
+      let expected := s!"IE-C009 ProofConstructionFailed: {root.str "__system_catalog_irredundant"}"
+      unless errors.size == 1 && errors[0]!.startsWith (expected ++ "\n") do
+        throwError "[FAIL] ProjectionStage.kernel-tail: expected={expected} actual={errors}"
+      assertNoNewDeclarations sealedEnv (← getEnv)
+      unless (SealRecords.analysisForRoot? (← getEnv) root).isNone do
+        throwError "[FAIL] ProjectionStage.state-rollback: failed kernel stage published records"
+      assertProjectionSnapshots root false
+      let expectedExport := s!"UnstagedAnalysisExport root={root} catalog=system"
+      let exportErrors ← commandErrors (← `(command| #export_information_analysis root $rootId:ident
+        output $sealArtifact:str analysis_output $analysis:str ascii_output $ascii:str))
+      unless exportErrors == #[expectedExport] do
+        throwError "[FAIL] ProjectionStage.export-after-failure: expected={expectedExport} actual={exportErrors}"
+      assertNoNewDeclarations sealedEnv (← getEnv)
+      assertArtifactsAbsent paths
+      logInfo s!"[PASS] ProjectionStage.kernel-tail: {expected}; {expectedExport}"
+      continue
     match expectedStage with
     | some expected =>
         unless errors == #[expected] do
@@ -62,16 +100,14 @@ run_cmd do
     | none =>
         unless errors.isEmpty do throwError "ImportedRoot stage failed: {errors}"
         break
-  if expectedStage.isSome then return
+  if expectedStage.isSome || expectedKernelStage.isSome then return
   let stagedEnv ← getEnv
   unless stagedEnv.contains (root.str "__system_catalog_irredundant") &&
       (SealRecords.analysisForRoot? stagedEnv root).isSome do
     throwError "ImportedRoot analysis publication missing"
   unless (SealRecords.analysisForRoot? stagedEnv stagedEnv.header.mainModule).isNone do
     throwError "ImportedRoot staged the caller instead of the selected root"
-  let sealArtifact := Syntax.mkStrLit paths[0]!
-  let analysis := Syntax.mkStrLit paths[1]!
-  let ascii := Syntax.mkStrLit paths[2]!
+  assertProjectionSnapshots root true
   for rootId in rootIds do
     let errors ← commandErrors (← `(command| #export_information_analysis root $rootId:ident
       output $sealArtifact:str analysis_output $analysis:str ascii_output $ascii:str))

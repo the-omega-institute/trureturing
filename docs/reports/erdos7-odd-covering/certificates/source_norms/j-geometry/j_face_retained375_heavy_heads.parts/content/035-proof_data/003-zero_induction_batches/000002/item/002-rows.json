@@ -1,0 +1,32 @@
+{
+  "length": 128,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 36,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000002/item/002-rows/000000-000036.json",
+        "sha256": "227bdacbb69f53b281436819be21520aace0184dbf7afd6e44e3f3128abaf6e6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 72,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000002/item/002-rows/000036-000072.json",
+        "sha256": "4c937e36534964754898e82e140610132dafe3a7ad93f4287b19221f915b0ed9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 72,
+      "stop": 128,
+      "part": {
+        "path": "content/035-proof_data/003-zero_induction_batches/000002/item/002-rows/000072-000128.json",
+        "sha256": "858e04cabc4532850cfd91b1a2b024ea51c420d1984c045a94fc3b139c111a83",
+        "kind": "value"
+      }
+    }
+  ]
+}

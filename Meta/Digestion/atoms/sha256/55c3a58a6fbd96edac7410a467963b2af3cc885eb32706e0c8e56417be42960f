@@ -1,0 +1,28 @@
+#### 127.11.2 二阶边界递推
+
+令
+$$
+A=\begin{pmatrix}a&b\\c&d\end{pmatrix}.
+$$
+直接乘法给出二维 Cayley–Hamilton 恒等式
+$$
+A^2-(a+d)A+(ad-bc)I=0.
+$$
+例如左上元为 $a^2+bc-(a+d)a+ad-bc=0$，右下元同理；两个非对角元分别为 $ab+bd-(a+d)b=0$ 和 $ca+dc-(a+d)c=0$。对 $z_t$ 作用并取第一坐标，得到
+$$
+\boxed{
+x_{t+2}=(a+d)x_{t+1}+(bc-ad)x_t
+\qquad(t\ge0).
+}
+$$
+
+也可直接消去同一份 $h_t$：
+$$
+\begin{aligned}
+x_{t+2}
+&=ax_{t+1}+b(cx_t+dh_t)\\
+&=ax_{t+1}+bcx_t+d(x_{t+1}-ax_t).
+\end{aligned}
+$$
+这个推导没有除以 $b$，故二阶关系对 $b=0$ 仍是必要条件。但必要性不意味着任意二阶初值都来自原系统。
+

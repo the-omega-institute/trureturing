@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:89ec26540d1263aaa1b36840f1dbbce4927ad151697774692873e79551d40c45
+  normalized_sha256: sha256:89ec26540d1263aaa1b36840f1dbbce4927ad151697774692873e79551d40c45
+cas_ref: sha256:89ec26540d1263aaa1b36840f1dbbce4927ad151697774692873e79551d40c45
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶规定 Hamiltonian、保留通道、约化态、比较态和误差度量的记号，空张量与空积为显式约定。
+    previous_atom_id: d43c19937c358ebeb9555deff41fa19063f9d8c7e2277be22d913dbf05a7e561
+    next_atom_id: 26f1558e4df2611a6e3b5db2ef9dbc2d2c0a7c81ac706fb414414cf79e3478f1

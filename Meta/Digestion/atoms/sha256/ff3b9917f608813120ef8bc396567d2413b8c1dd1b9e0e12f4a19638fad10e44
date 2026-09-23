@@ -1,0 +1,47 @@
+**Definition 40.1 (Actual circular order, observation, and error).** Let $\theta\in(0,1)\setminus\mathbb Q$, let $\mathbb T=\mathbb R/\mathbb Z$, and let $R_\theta x=x+\theta$. Haar probability is denoted by $\lambda$, and $\{u\}=u-\lfloor u\rfloor$ denotes fractional part. For $N\ge2$, put
+$$
+t_k=\{k\theta\},\qquad 0\le k<N,
+$$
+and let $\sigma$ be the unique permutation such that
+$$
+0=t_{\sigma_0}<t_{\sigma_1}<\cdots<t_{\sigma_{N-1}}<1.
+$$
+Thus $\sigma_0=0$. Set $s_i=t_{\sigma_i}$ for $i<N$, $s_N=1$, and, when endpoint indices are used cyclically, $\sigma_N=\sigma_0=0$. The observation cells and their actual masses are
+$$
+I_i=[s_i,s_{i+1}),\qquad
+\mu_i=s_{i+1}-s_i,\qquad
+\pi_{N,\theta}(x)=i\ \Longleftrightarrow\ \{x\}\in I_i.
+$$
+In particular, a cut belongs to the cell immediately to its right. Write $\boldsymbol\mu=(\mu_i)_{i<N}$, $\mu_{\min}=\min_i\mu_i$, and $\mu_{\max}=\max_i\mu_i$. No comparability between these masses is assumed.
+
+Let $\mathcal P(\mathbb T)$ denote the Borel probability measures. For $p\in[0,1]$ and a finite signed Borel measure $\eta$, define
+$$
+P_p\eta=(1-p)\eta+p(R_\theta)_\#\eta.
+$$
+For $n\in\mathbb N_0$, let $b_{n,p}(j)=\Pr(J=j)$ for $J\sim\operatorname{Bin}(n,p)$, extended by zero outside $0\le j\le n$, and put
+$$
+M_{n,p}=\max_j b_{n,p}(j),\qquad
+v=p(1-p),\qquad V=nv,\qquad s=\sqrt V.
+$$
+For a starting phase $x$, define the probability vector and its full-variation error by
+$$
+\boldsymbol r_{n,p}(x)
+ =\bigl(\Pr(x+J\theta\in I_i)\bigr)_{i<N},
+\qquad
+D_{N,\theta,p}(n,x)
+ =\|\boldsymbol r_{n,p}(x)-\boldsymbol\mu\|_1,
+$$
+$$
+e_{N,\theta,p}(n)=\sup_{x\in\mathbb T}D_{N,\theta,p}(n,x),
+\qquad
+\tau_{N,\theta,p}(\varepsilon)
+ =\inf\{n\in\mathbb N_0:e_{N,\theta,p}(n)\le\varepsilon\}.
+$$
+Here $0<\varepsilon<1$, $\inf\varnothing=+\infty$, and $[a]_+=\max\{a,0\}$. Full variation on a finite alphabet is the sum of absolute coordinate differences, without a factor of one half. For $N=1$, separately define $I_0=\mathbb T$ and $\mu_0=1$.
+
+The fixed countable set
+$$
+\mathcal G_\theta=\{[k\theta]:k\in\mathbb Z\}
+$$
+contains every cut for every observation size. The classical three-gap statement concerns the number of distinct gap lengths, not a bound on $\mu_{\max}/\mu_{\min}$; see [the fixed-revision three-gap statements, especially `three_gap_card_le_three` and `three_gap_lengths_eq`](https://github.com/the-omega-institute/trureturing/blob/698e9f0de668cd049829b372eb436849db61bd1b/D5/S1/Phase/ThreeGap/Main.lean#L221-L246).
+

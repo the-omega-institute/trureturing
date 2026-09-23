@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:525debe3020856d0bfe8234dca491e6e889ff2bea20510f8c5d9b4510c471bba
+  normalized_sha256: sha256:525debe3020856d0bfe8234dca491e6e889ff2bea20510f8c5d9b4510c471bba
+cas_ref: sha256:525debe3020856d0bfe8234dca491e6e889ff2bea20510f8c5d9b4510c471bba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这段说“但它没有把素数指数轴自动变成余数轴”，并要求“至少还需指定”原档案、截断和读出作用对象；它列的是尚需提供的建模数据，没有断言任意档案已经可逆，也未把容量判据的应用当作已完成的桥，因此不夹带新的定义性定理，无需另造数学证明。
+    previous_atom_id: fac54a0a58d9a8d4a1080572b3a5a914386db95a7106331d152d966b2c67d0cd
+    next_atom_id: 78529a977431a35b2544e666846646dbb309d728a3a635a698c1027e78a370e2

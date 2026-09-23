@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "83a117ce3760baf4bf2ab22a9ded145c68d9a8d8ebe303133c0c971d0d7e1a24",
+  "parts_directory": "survivor_cylinder_ceiling.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "182af2814e5664f5eadadb6cb1bf4705d06755cd11c293c081e815d4c27de126",
+    "kind": "object"
+  }
+}

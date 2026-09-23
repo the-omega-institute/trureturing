@@ -1,0 +1,6 @@
+### 44.12 固定供应者与推导的归属边界
+
+本节项目引用均可在不可变提交 `a492391be5b09240e6be894c3e742a75a945feb1` 下按以下路径和声明编号定位；编号是主地址，行号只说明该快照的位置。表中的“恢复卷”是 [RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)，“主卷”是 [RECURSIVE_RELATIONAL_OBSERVATION.md](RECURSIVE_RELATIONAL_OBSERVATION.md)。这些供应各保留原有证明归属。
+
+| 44.12供应 | 实际使用和不迁移的结论 |
+|---|---|

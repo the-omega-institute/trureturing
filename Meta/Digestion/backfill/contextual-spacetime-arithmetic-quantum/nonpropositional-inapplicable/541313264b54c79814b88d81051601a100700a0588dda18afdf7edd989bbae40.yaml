@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:541313264b54c79814b88d81051601a100700a0588dda18afdf7edd989bbae40
+  normalized_sha256: sha256:541313264b54c79814b88d81051601a100700a0588dda18afdf7edd989bbae40
+cas_ref: sha256:541313264b54c79814b88d81051601a100700a0588dda18afdf7edd989bbae40
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶在实向量空间上定义允许效应的逐层线性张成与并集，并限定测量族语义，稳定深度和完备性留给后续定理。
+    previous_atom_id: 6aa8614cb0186b1d28261c8dd375bd715dcf3b606470b00a1ba3aa3d3b6f3284
+    next_atom_id: 9b46b8b1cb1ff1d9e4941cb91f023737d9cc8d15e4dfe09b40c0f9ab9e0283f1

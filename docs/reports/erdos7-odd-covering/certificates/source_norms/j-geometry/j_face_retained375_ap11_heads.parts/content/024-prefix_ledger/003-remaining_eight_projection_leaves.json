@@ -1,0 +1,32 @@
+{
+  "length": 82,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 28,
+      "part": {
+        "path": "content/024-prefix_ledger/003-remaining_eight_projection_leaves/000000-000028.json",
+        "sha256": "c7caec5fcd24f03d31426b7e5f73353a30ef40d15fec0b83a53b41fe3ae5b698",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 28,
+      "stop": 56,
+      "part": {
+        "path": "content/024-prefix_ledger/003-remaining_eight_projection_leaves/000028-000056.json",
+        "sha256": "e7cee829ff1852ec7c39de7ce65846b6f5e650cbc4aeeb42d456655be351239a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 56,
+      "stop": 82,
+      "part": {
+        "path": "content/024-prefix_ledger/003-remaining_eight_projection_leaves/000056-000082.json",
+        "sha256": "2b8ac2daad650a5ad91578229b29e980a890e8a08dc76ab60c039b8a6c12cf15",
+        "kind": "value"
+      }
+    }
+  ]
+}

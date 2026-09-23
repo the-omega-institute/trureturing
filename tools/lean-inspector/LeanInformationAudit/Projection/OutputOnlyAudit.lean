@@ -28,7 +28,9 @@ Residual: definitions owned by Lean/Init/Std/Mathlib remain opaque boundary
 nodes. The explicit lists close the known current-reference and module-loader
 channels at that boundary, but this is not an OS sandbox or a claim that every
 future Lean-core capability is classified. Owned unsafe, extern, implemented_by,
-and compiler-generated partial bodies are rejected fail-closed.
+and compiler-generated partial bodies are rejected fail-closed. The sole unsafe
+exception is an exact, effect-free forwarding implementation of Init.Util.ptrEq;
+its full type, universe and lambda/application shape are checked below.
 -/
 
 inductive ArtifactKind where
@@ -136,6 +138,48 @@ private def declarationDependencies (info : ConstantInfo) : Array Name :=
   | .opaqueInfo info => info.value.getUsedConstants
   | _ => #[]
 
+private def samePointerType (a b : Expr) : Bool :=
+  match a, b with
+  | .forallE _ ta (.forallE _ tb (.forallE _ tc tr ic) ib) ia,
+    .forallE _ ua (.forallE _ ub (.forallE _ uc ur jc) jb) ja =>
+      ta.equal ua && tb.equal ub && tc.equal uc && tr.equal ur &&
+        ia == ja && ib == jb && ic == jc
+  | _, _ => false
+
+/-- Pointer identity reads only the two supplied immutable objects. Recognize
+the precise core forwarding body, never an unsafe name or a claimed pure type.
+This also checks Lean's generated implemented-by boundary before skipping it. -/
+private def pointerIdentityImplementation (env : Environment) (name : Name) : Bool := Id.run do
+  let some (.defnInfo info) := env.find? name | return false
+  let some intrinsic := env.find? ``ptrEq | return false
+  let some owner := env.getModuleIdxFor? ``ptrEq | return false
+  unless env.allImportedModuleNames[owner.toNat]! == `Init.Util &&
+      info.levelParams.length == 1 && intrinsic.levelParams.length == 1 &&
+      info.safety == .unsafe && (Compiler.getImplementedBy? env name).isNone &&
+      (getExternAttrData? env name).isNone do return false
+  let levels := info.levelParams.map Level.param
+  let expectedType := intrinsic.type.instantiateLevelParams intrinsic.levelParams levels
+  unless samePointerType info.type expectedType do return false
+  let .forallE _ ta (.forallE _ tb (.forallE _ tc _ ic) ib) ia := expectedType
+    | return false
+  let .lam _ ua (.lam _ ub (.lam _ uc actual jc) jb) ja := info.value
+    | return false
+  let body := mkApp3 (mkConst ``ptrEq levels) (.bvar 2) (.bvar 1) (.bvar 0)
+  return ta.equal ua && tb.equal ub && tc.equal uc &&
+    ia == ja && ib == jb && ic == jc && actual.equal body
+
+private def checkedPointerIdentityBoundary (env : Environment) (name : Name) : Bool :=
+  match Compiler.getImplementedBy? env name with
+  | none => pointerIdentityImplementation env name
+  | some implementation =>
+      pointerIdentityImplementation env implementation &&
+        (env.find? name).any fun info =>
+          (getExternAttrData? env name).isNone && !info.isUnsafe && !info.isPartial &&
+            (env.find? implementation).any fun target =>
+              info.levelParams.length == target.levelParams.length &&
+                samePointerType info.type (target.type.instantiateLevelParams target.levelParams
+                  (info.levelParams.map Level.param))
+
 private def auditOwnedClosure (env : Environment) (entry rootId : Name)
     (policy : AuditPolicy) : Except String Unit := do
   let mut pending := #[entry]
@@ -147,6 +191,7 @@ private def auditOwnedClosure (env : Environment) (entry rootId : Name)
     visited := visited.insert name
     unless ownedByInspector env name do continue
     if let some info := env.find? name then
+      if checkedPointerIdentityBoundary env name then continue
       let opaquePartial := match info with
         | .opaqueInfo _ => (env.find? (Compiler.mkUnsafeRecName name)).any (·.isPartial)
         | _ => false

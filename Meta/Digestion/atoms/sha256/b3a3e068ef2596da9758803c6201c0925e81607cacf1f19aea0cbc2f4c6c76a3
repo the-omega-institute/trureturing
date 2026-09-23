@@ -1,0 +1,10 @@
+**定义与假设 119.1（固定有限滞后的实际时间字典）。** 固定 $0<\delta\le1/2$，沿用式 (116.1a) 的实际四态核 $K_{\delta,d}$、准备行 $e_1$、目标行 $e_0$，以及式 (118.1a)、(118.2a) 中的 $\lambda,c,H,R,\pi,G_\delta$；简写 $K_d=K_{\delta,d}$，方向为 $d\in\{0,1\}$。取式 (118.2g) 的实际列 $g_d$ 和式 (118.2h) 的共同轨道 $r_t=e_1K_d^tg_d$。[^rro119-model] 对固定整数 $L\ge0$，令
+$$
+\mu_{t,d}=e_1K_d^t,\qquad
+\mathcal A_{d,L}=\left\{a\in\mathbb R^{L+1}:\sum_{t=0}^La_t\mu_{t,d}=e_0\right\},
+\qquad
+\mathcal A_{{\rm com},L}=\mathcal A_{0,L}\cap\mathcal A_{1,L},
+\tag{119.1a}
+$$
+并按 $\Gamma(a)=\sum_{t=0}^L|a_t|$ 计费。共同可行集要求同一个系数向量同时满足两个方向的等式；字典仅含时刻 $0,\ldots,L$ 的实际时间行。
+

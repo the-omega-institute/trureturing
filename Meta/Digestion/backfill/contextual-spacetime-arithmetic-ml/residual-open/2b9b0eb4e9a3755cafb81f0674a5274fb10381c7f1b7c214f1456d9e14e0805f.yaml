@@ -5,3 +5,7 @@ cas_ref: sha256:2b9b0eb4e9a3755cafb81f0674a5274fb10381c7f1b7c214f1456d9e14e0805f
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  chain_atoms:
+    - 3dc9b4964fc427c82e021945f172c35f1e4c12623eb24a422baea4daa8e1e417
+    - d3c6a4c35b296e7cd489e35dda285abee2a5eda9bf2fe21734526baa97e7f7db
+    - 3c02a9ce784cdbb0c320574cf3563ce0d075c49e67f4c0ae8021aa36ade634a8

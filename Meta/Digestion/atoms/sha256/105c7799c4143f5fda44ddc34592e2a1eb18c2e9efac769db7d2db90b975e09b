@@ -1,0 +1,25 @@
+**定义 45.12（底空间与运算的显式实现）。** 令
+$$
+P_t=\{n\in\mathbb N_0:n<t\},\qquad X_{t,D}=P_t\sqcup R_D.
+$$
+当 $t<\infty$ 时，取有限离散前段与 $R_D$ 的拓扑不交并。当 $t=\infty$ 时，令 $\alpha\mathbb N_0=\mathbb N_0\cup\{\infty\}$ 为一点紧化，并把 $X_{\infty,D}$ 识别为
+$$
+\{(n,\bar n):n\in\mathbb N_0\}\ \cup\ \bigl(\{\infty\}\times R_D\bigr)
+\subseteq\alpha\mathbb N_0\times R_D.
+$$
+因此各自然点孤立，边界点 $z\in R_D$ 的邻域基由下列集合给出：
+$$
+U\ \sqcup\ \{n\ge N:\bar n\in U\},
+$$
+其中 $U$ 是 $R_D$ 中含 $z$ 的开集，$N\in\mathbb N_0$。
+
+定义自然核心 $\eta(n)$：若 $n<t$，取前段点 $n$；否则取边界点 $\bar n$。对前段点 $a,b$ 定义
+$$
+a+b=\eta(a+b),\qquad ab=\eta(ab).
+$$
+对前段点 $a$ 与边界点 $z$ 定义
+$$
+a+z=z+a=\bar a+z.
+$$
+当 $a>0$ 时定义 $az=za=\bar a z\in R_D$；当前段点 $a=0$ 存在时，定义 $0z=z0$ 为前段零点，而不是边界零点。两个边界点的加法与乘法均取 $R_D$ 中的环运算。全局零元为 $\eta(0)$，全局幺元为 $\eta(1)$；边界内部零元恒为 $0_{R_D}$。
+

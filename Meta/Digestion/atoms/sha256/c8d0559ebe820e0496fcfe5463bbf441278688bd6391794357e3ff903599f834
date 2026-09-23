@@ -1,0 +1,22 @@
+**定义 15.3（共享投影余量与保留档案的收缩像）。** 令 $D_\lambda^\dagger$ 为 Moore–Penrose 逆，并置
+$$
+P_\lambda=A_\lambda-E_\lambda D_\lambda^\dagger E_\lambda^*,\qquad
+Q_\lambda=B_\lambda-F_\lambda^*D_\lambda^\dagger F_\lambda,\qquad
+X^0_\lambda=E_\lambda D_\lambda^\dagger F_\lambda.
+\tag{15.4}
+$$
+下述定理给 $P_\lambda,Q_\lambda\succeq0$。定义收缩球的有限乘积
+$$
+\mathbb B=\prod_{\lambda\in\Lambda}
+\{T_\lambda:U_B\to U_A:\|T_\lambda\|\le1\},\qquad
+\Phi(T)_\lambda=X^0_\lambda+P_\lambda^{1/2}T_\lambda Q_\lambda^{1/2}.
+\tag{15.5}
+$$
+空乘积含唯一空元组。对 $M\in\mathcal M_2$，记其 $AB$ 谱系数元组为 $X(M)$，定义
+$$
+\mathbb F(\mathcal D,h)
+=\{T\in\mathbb B:\exists M\in\mathcal M(\mathcal D,h),\ X(M)=\Phi(T)\}.
+\tag{15.6}
+$$
+奇异余量时 $T$ 不必唯一；式（15.6）保留同一谱系数元组的全部收缩代表。对任一仅依赖交叉核的任务 $q$，完整观察者的实际可行值集为 $q[\Phi(\mathbb F(\mathcal D,h))]$；两响应问题的值集则为 $q[\Phi(\mathbb B)]$。额外记录可使前者不凸、不对称或不闭。以下用整个 $\mathbb B$ 给出的精确区间与联合值集均指没有额外约束的两响应问题；若 $\mathbb F(\mathcal D,h)=\mathbb B$，它们也是完整观察者的精确结论，否则一般只给外界。
+

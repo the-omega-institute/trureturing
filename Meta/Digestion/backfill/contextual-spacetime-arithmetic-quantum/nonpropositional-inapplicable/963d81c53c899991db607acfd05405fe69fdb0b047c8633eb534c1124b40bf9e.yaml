@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:963d81c53c899991db607acfd05405fe69fdb0b047c8633eb534c1124b40bf9e
+  normalized_sha256: sha256:963d81c53c899991db607acfd05405fe69fdb0b047c8633eb534c1124b40bf9e
+cas_ref: sha256:963d81c53c899991db607acfd05405fe69fdb0b047c8633eb534c1124b40bf9e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶限定有限策略可使用的设置、结果和随机数，并排除其他操作，只有任务范围约定而无待证结论。
+    previous_atom_id: ff9c31e09fe2ca22608f35ad611959911033583b04331134e0e1cd60634c949c
+    next_atom_id: cec28cf668ebc23e09e00816349221e9e651cefb2ddac43a46e67ec9ef7cf13c

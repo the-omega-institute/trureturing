@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "cd77c1eac955444d0c2b8ec5994cd4fe099bb30bd9804660964607d08992241f",
+  "parts_directory": "terminal_phase_reduction_verification.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "7e08f6b0daf4e7cba9c86a314b0aa31204087884d46e697cc50021b34a81b666",
+    "kind": "object"
+  }
+}

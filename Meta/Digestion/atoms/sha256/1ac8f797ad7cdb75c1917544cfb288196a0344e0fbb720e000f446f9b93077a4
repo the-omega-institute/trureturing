@@ -1,0 +1,30 @@
+**引理 15.8（同一共享响应的相对钟匹配）。** 设 $H,U_S$ 有限维实内积，$C=C^*>0$，共享耦合 $J_S\ne0$。两处使用同一 $C,J_S$、伴随输入输出、端口内积和增益。令
+$$
+f(t)=\operatorname{tr}(J_S^*e^{-tC}J_S),\qquad t\ge0.
+$$
+则 $f$ 从 $[0,\infty)$ 连续严格递减地映到 $(0,f(0)]$，且 $f(t)>0,f'(t)<0$。取实区间 $I_A,I_B$，设 $\phi_A:I_A\to I,\phi_B:I_B\to I$ 是到同一个非退化经过时间区间 $I\subseteq[0,\infty)$ 的严格递增双射。给定精确完整观测函数 $F_A=f\circ\phi_A,F_B=f\circ\phi_B$，唯一的同值匹配为
+$$
+\boxed{h_{BA}=F_B^{-1}\circ F_A=\phi_B^{-1}\circ\phi_A.}
+\tag{15.17}
+$$
+$F_B^{-1}$ 只在实际值域 $f(I)$ 上使用；覆盖的实际时间区间不相同时，只在公共区间或等价的观测值域交集内匹配。若在匹配点 $\sigma=h_{BA}(\tau)$，两换钟可微且导数严格正，则
+$$
+h_{BA}'(\tau)=\frac{F_A'(\tau)}{F_B'(\sigma)}
+=\frac{\phi_A'(\tau)}{\phi_B'(\sigma)}.
+\tag{15.18}
+$$
+端点只取存在的单侧导数。在式（15.1）的共同实现中，所用迹
+$$
+f(t)=\sum_\lambda e^{-\lambda t}\operatorname{tr}D_\lambda
+\tag{15.19}
+$$
+由共享数据固定，与未测的 $T_\lambda$ 无关。
+
+**证明。** 谱分解给 $w_\lambda=\operatorname{tr}(J_S^*\Pi_\lambda J_S)=\|\Pi_\lambda J_S\|_{\rm HS}^2\ge0$，且 $\sum_\lambda w_\lambda=\|J_S\|_{\rm HS}^2>0$。于是
+$$
+f(t)=\sum_\lambda w_\lambda e^{-\lambda t}>0,\qquad
+f'(t)=-\sum_\lambda\lambda w_\lambda e^{-\lambda t}<0,\qquad
+\lim_{t\to\infty}f(t)=0.
+$$
+有限和可逐项微分，连续性、严格单调性及极限给所述实际像。$f$ 的单射性使 $F_A(\tau)=F_B(\sigma)$ 等价于 $\phi_A(\tau)=\phi_B(\sigma)$，证明式（15.17）及唯一性。严格单调函数在区间上的逆在对应点连续；若该点导数非零，用逆函数的差商得到逆的导数为原导数的倒数。对 $F_B^{-1}\circ F_A$ 用此结论及链式法则，约去共同的非零 $f'$，得到式（15.18）。共享谱系数等于 $D_\lambda$，给式（15.19）。此证明只使用主卷第126.5节的正谱表示。多钟覆盖同一区间时的 $h_{CB}\circ h_{BA}=h_{CA}$ 及逆关系直接由主卷命题133.1的唯一相容转换承担。$\square$
+

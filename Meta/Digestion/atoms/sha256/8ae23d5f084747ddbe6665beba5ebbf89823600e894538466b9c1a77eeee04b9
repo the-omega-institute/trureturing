@@ -1,0 +1,5 @@
+**定义 43.5（最近新格点重启与量化误差）。** 对任意ML 定义41.2的旧机，保留 $m_c,k_c,K_c=1+k_c$ 及区间 $I^c_j$。另取任意正整数 $m_f$，在同一 $[r,1-r]$ 上指定新网格
+$$
+q^f_i=r+\frac{\eta i}{m_f}\quad(0\le i\le m_f),\qquad
+\Delta=\frac\eta{m_f}.
+$$

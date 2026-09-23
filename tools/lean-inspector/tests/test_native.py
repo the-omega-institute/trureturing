@@ -9,9 +9,10 @@ from test_native_invalidation import *
 from test_native_publication import *
 from test_native_recovery import *
 from test_native_packaging import *
+from test_native_reuse import *
 
 class NativeTests(NativeTestSupport, NativeInvalidationTests, NativePublicationTests,
-                  NativeRecoveryTests, NativePackagingTests, unittest.TestCase):
+                  NativeRecoveryTests, NativePackagingTests, NativeReuseTests, unittest.TestCase):
     pass
 
 if __name__ == '__main__':

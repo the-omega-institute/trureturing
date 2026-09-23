@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2d80b23dd4f336502c67270d9916fa2cc23e518f066968fdfbba7506ec39f04c
+  normalized_sha256: sha256:2d80b23dd4f336502c67270d9916fa2cc23e518f066968fdfbba7506ec39f04c
+cas_ref: sha256:2d80b23dd4f336502c67270d9916fa2cc23e518f066968fdfbba7506ec39f04c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“No separate or joint continuity of arbitrary composition is included in it”只限制所述紧右拓扑幺半群结论的范围；它没有断言任意复合确实不连续，已检查备注未夹带不连续性证明义务，故可结算此说明叶。
+    previous_atom_id: f1b07f93505c12f0b78f1609862d4824a915c6929608f6c4be3d461d70cfad0f
+    next_atom_id: bf1bae2dabdacc46379545d8163b88f62eb1b549822c3ef898ba15cd7d102aae

@@ -122,6 +122,13 @@ public sealed class UtilityAdmissionObservationTests
         Assert.Empty(RuleCatalog.Default.EvaluateSingle(
             UtilityAdmissionTestSupport.UtilityRuleId,
             implementationContext).Diagnostics);
+
+        Assert.Empty(DeclaredTemplateUnregisteredTests.Findings(
+            DeclaredTemplateUnregisteredTests.Build(selected: false, malformed: true)));
+        Assert.Contains(RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId,
+            DeclaredTemplateUnregisteredTests.Build()).Diagnostics,
+            diagnostic => diagnostic.Message.StartsWith("DTR-Unregistered ", StringComparison.Ordinal)
+                && diagnostic.AdmissionEffect == AdmissionEffect.Observe);
     }
 
     [Fact]
@@ -146,6 +153,69 @@ public sealed class UtilityAdmissionObservationTests
             $"UTILITY-RATCHET module={RuleFixture.RingPath}",
             diagnostic.Message,
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SurvivingFrozenModuleWithRemovedUtilityStillBlocksRatchet()
+    {
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        fixture.Baseline[RuleFixture.RingPath] = WithUtility(
+            fixture.Baseline[RuleFixture.RingPath],
+            "kind=certified-instance; basis=terminal=task:D5-T0001");
+
+        var context = fixture.BuildForRuleCompatibility(RawChangeSet.Create([RuleFixture.RingPath]));
+        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            UtilityAdmissionTestSupport.UtilityRuleId,
+            context).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("UTILITY-RATCHET module=D5/S0/Carrier/Ring.lean", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SurvivingFrozenModuleWithMalformedHeaderStillBlocksRatchet()
+    {
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        fixture.Baseline[RuleFixture.RingPath] = WithUtility(
+            fixture.Baseline[RuleFixture.RingPath],
+            "kind=certified-instance; basis=terminal=task:D5-T0001");
+        fixture.Files[RuleFixture.RingPath] = fixture.Files[RuleFixture.RingPath].Replace(
+            "   anchors: []\n",
+            "   anchors: []\n   utility:none\n",
+            StringComparison.Ordinal);
+
+        var context = fixture.BuildForRuleCompatibility(RawChangeSet.Create([RuleFixture.RingPath]));
+        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            UtilityAdmissionTestSupport.UtilityRuleId,
+            context).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("UTILITY-RATCHET module=D5/S0/Carrier/Ring.lean", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RetiredFrozenModuleDoesNotTriggerUtilityRatchet()
+    {
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        fixture.Baseline[RuleFixture.RingPath] = WithUtility(
+            fixture.Baseline[RuleFixture.RingPath],
+            "kind=certified-instance; basis=terminal=task:D5-T0001");
+        fixture.Files.Remove(RuleFixture.RingPath);
+
+        var context = fixture.BuildForRuleCompatibility(RawChangeSet.CreateWithKinds(
+            [(RuleFixture.RingPath, RawChangeKind.Deleted)]));
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            UtilityAdmissionTestSupport.UtilityRuleId,
+            context).Diagnostics;
+        Assert.DoesNotContain(
+            diagnostics,
+            item => item.Message.StartsWith("UTILITY-RATCHET ", StringComparison.Ordinal));
+        Assert.False(UtilityAdmissionRule.IsAffectedBy(context));
+        Assert.Empty(diagnostics);
     }
 
     [Fact]

@@ -1,0 +1,6 @@
+每个 $d_N$ 都有原来的分量质量 $m_C(d)$。若此质量为零，非负性使整个分量上的 $d_N$ 始终为零；若它为正，则 $s_j=q_jm_C(d)/Q_C>0$ 在该分量处处成立。故 $d_N\ll s$，且两投影都固定概率 $s$。式 (76.4) 取 $x=d_k,v=s$，对前 $N$ 个半步求和即得式 (76.2)。已占据的分量之并是固定有限支撑，在其上 $t\mapsto t\ln(t/s_j)$ 于零点连续延拓为零；由 $d_N\to s$ 得 $D(d_N\Vert s)\to0$。最后，对共同分量观察、输入 $d$ 和正参考 $q$ 用同一分解，得到
+$$
+D(d\Vert q)=D(d\Vert\mathcal Jd)+D(\mathcal Jd\Vert q).
+$$
+所以式 (76.3) 成立，不涉及无穷相减。每个半步的两律均非负归一化且满足前述支撑包含，[Gibbs 非负性](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/Divergence/GrandmotherTheorem.lean)和[Gibbs 等号条件](https://github.com/the-omega-institute/trureturing/blob/cfe91e371e87c4b9053ceb76af22c0888b687a3a/D5/S3/Divergence/GibbsEquality.lean)给出所述非负与零损失判据。这里记的是校准重采样的损失；联合观察对应另一个核，这些 KL 项也不能一般地替换为 Shannon 熵增。
+

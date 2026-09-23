@@ -1,0 +1,794 @@
+[
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      2,
+      1,
+      4
+    ],
+    "affine_upper": "15559/81000",
+    "strongest_available_old_upper": "15559/81000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 48,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "15559/81000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      3,
+      0,
+      1
+    ],
+    "affine_upper": "760231/3969000",
+    "strongest_available_old_upper": "760231/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 49,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "760231/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      3,
+      0,
+      2
+    ],
+    "affine_upper": "760231/3969000",
+    "strongest_available_old_upper": "760231/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 50,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "760231/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      3,
+      0,
+      3
+    ],
+    "affine_upper": "759421/3969000",
+    "strongest_available_old_upper": "759421/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 51,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "759421/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      3,
+      0,
+      4
+    ],
+    "affine_upper": "760231/3969000",
+    "strongest_available_old_upper": "760231/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 52,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "760231/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      3,
+      1,
+      2
+    ],
+    "affine_upper": "760231/3969000",
+    "strongest_available_old_upper": "760231/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 53,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "760231/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      3,
+      1,
+      3
+    ],
+    "affine_upper": "759421/3969000",
+    "strongest_available_old_upper": "759421/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 54,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "759421/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      3,
+      1,
+      4
+    ],
+    "affine_upper": "763471/3969000",
+    "strongest_available_old_upper": "763471/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 55,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "763471/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      4,
+      0,
+      1
+    ],
+    "affine_upper": "761311/3969000",
+    "strongest_available_old_upper": "761311/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 56,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "761311/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      4,
+      0,
+      2
+    ],
+    "affine_upper": "761311/3969000",
+    "strongest_available_old_upper": "761311/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 57,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "761311/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      4,
+      0,
+      3
+    ],
+    "affine_upper": "108643/567000",
+    "strongest_available_old_upper": "108643/567000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 58,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "108643/567000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      4,
+      0,
+      4
+    ],
+    "affine_upper": "761311/3969000",
+    "strongest_available_old_upper": "761311/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 59,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "761311/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      4,
+      1,
+      2
+    ],
+    "affine_upper": "761311/3969000",
+    "strongest_available_old_upper": "761311/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 60,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "761311/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      4,
+      1,
+      3
+    ],
+    "affine_upper": "108643/567000",
+    "strongest_available_old_upper": "108643/567000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 61,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "108643/567000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "projection441_735": [
+      4,
+      1,
+      4
+    ],
+    "affine_upper": "764551/3969000",
+    "strongest_available_old_upper": "764551/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 62,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "764551/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      1,
+      1,
+      4
+    ],
+    "affine_upper": "5320537/27783000",
+    "strongest_available_old_upper": "5320537/27783000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 63,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "5320537/27783000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      2,
+      1,
+      4
+    ],
+    "affine_upper": "5322157/27783000",
+    "strongest_available_old_upper": "5322157/27783000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 64,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "5322157/27783000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      3,
+      1,
+      4
+    ],
+    "affine_upper": "5329717/27783000",
+    "strongest_available_old_upper": "5329717/27783000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 65,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "5329717/27783000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      4,
+      0,
+      2
+    ],
+    "affine_upper": "5314597/27783000",
+    "strongest_available_old_upper": "5314597/27783000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 66,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "5314597/27783000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      4,
+      1,
+      2
+    ],
+    "affine_upper": "5314597/27783000",
+    "strongest_available_old_upper": "5314597/27783000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 67,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "5314597/27783000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      0
+    ],
+    "projection441_735": [
+      4,
+      1,
+      4
+    ],
+    "affine_upper": "5337277/27783000",
+    "strongest_available_old_upper": "5337277/27783000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 68,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "5337277/27783000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      0,
+      1,
+      4
+    ],
+    "affine_upper": "759961/3969000",
+    "strongest_available_old_upper": "759961/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 69,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "759961/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      1,
+      0,
+      1
+    ],
+    "affine_upper": "759151/3969000",
+    "strongest_available_old_upper": "759151/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 70,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "759151/3969000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection": [
+      1,
+      2,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "projection441_735": [
+      1,
+      0,
+      2
+    ],
+    "affine_upper": "759151/3969000",
+    "strongest_available_old_upper": "759151/3969000",
+    "maximizing_late_coordinate": "1",
+    "original_prefix_leaf_index": 71,
+    "published_complete375_uniform_upper": "767945288466086119/3969000000000000000",
+    "checked375_branch_upper": null,
+    "checked375_dual_key": null,
+    "strongest_available_upper": "759151/3969000"
+  }
+]

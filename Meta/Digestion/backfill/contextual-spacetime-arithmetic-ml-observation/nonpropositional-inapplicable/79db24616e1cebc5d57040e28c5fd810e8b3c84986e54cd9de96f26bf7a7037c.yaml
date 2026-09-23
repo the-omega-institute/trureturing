@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79db24616e1cebc5d57040e28c5fd810e8b3c84986e54cd9de96f26bf7a7037c
+  normalized_sha256: sha256:79db24616e1cebc5d57040e28c5fd810e8b3c84986e54cd9de96f26bf7a7037c
+cas_ref: sha256:79db24616e1cebc5d57040e28c5fd810e8b3c84986e54cd9de96f26bf7a7037c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “只依赖上述输入及已经收到的前缀”规定非前视停止规则，“要求每条”历史与续词有限停止且满足误差条件是成功标准；这不是已有算法能够完成该标准的断言，未偷带存在性。
+    previous_atom_id: 1dd1e7713ff6ffc19e105741531210e0b6bb7afc3f78287149415d9dba9b8e7f
+    next_atom_id: 7209f116f357b49887973cec8aad8b5ce5c17b1f73b2b05e860f58f8af376505

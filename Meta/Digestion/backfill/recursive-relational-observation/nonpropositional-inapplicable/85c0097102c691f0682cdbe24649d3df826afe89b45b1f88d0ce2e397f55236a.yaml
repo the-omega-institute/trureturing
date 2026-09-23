@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85c0097102c691f0682cdbe24649d3df826afe89b45b1f88d0ce2e397f55236a
+  normalized_sha256: sha256:85c0097102c691f0682cdbe24649d3df826afe89b45b1f88d0ce2e397f55236a
+cas_ref: sha256:85c0097102c691f0682cdbe24649d3df826afe89b45b1f88d0ce2e397f55236a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic acknowledgement and provenance scope of the preceding RRO67.1 proof, not an additional object-level graph proposition. RRO61.5 reuse is limited to its binary graph argument; the Harary citation acknowledges signed balance only, not the arbitrary-anchor, every-forest, counting and probability bundle. The primary article theorem scope remains unverified and is not a proof premise. The preceding mathematical clauses retain their own theorem coverage; this receipt certifies no literature theorem.
+    previous_atom_id: e28efdbee21ce8ceafeae9fb3eecd1b1e21df8c7fd37f6cef7c4914f4ff97e6b
+    next_atom_id: 5f4b48d1377e977bfb36ef3c9dcd97d7d0a1a0092c48c292daa185f3ddd31473

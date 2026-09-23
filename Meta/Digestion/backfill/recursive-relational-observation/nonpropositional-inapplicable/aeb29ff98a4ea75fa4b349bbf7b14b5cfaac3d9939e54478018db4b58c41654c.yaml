@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aeb29ff98a4ea75fa4b349bbf7b14b5cfaac3d9939e54478018db4b58c41654c
+  normalized_sha256: sha256:aeb29ff98a4ea75fa4b349bbf7b14b5cfaac3d9939e54478018db4b58c41654c
+cas_ref: sha256:aeb29ff98a4ea75fa4b349bbf7b14b5cfaac3d9939e54478018db4b58c41654c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“Retain the original carrier and maps”仅重列黄金比例、合法位流及相位级数的命名，没有在本叶断言连续性、满射或纤维分类；已检查定义未夹带待证结论，故此叶无命题需要证明。
+    previous_atom_id: 70ae3a55f551bbfdf852fd83d1007133a634e7a2005522f56b45baf586105a24
+    next_atom_id: 10d1a26b099723989318b18221d8501d7ec14ad910da0e2c1c704a4150d69c4d

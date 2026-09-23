@@ -1,0 +1,7 @@
+**theorem 49.6.1（边界单位幂字符的代表元无关性）。** 在定义 49.6 的条件下，$\mathcal E_{p^e}(x,z;r)$ 与 $\mathcal E_{p^e}(a,z;r)$ 都只依赖 $z_{\lambda(p^e)}$，与所选非负整数代表 $r$ 无关。因此可无歧义地记为
+$$
+\mathcal E_{p^e}(x,z)
+\qquad\text{和}\qquad
+\mathcal E_{p^e}(a,z).
+$$
+

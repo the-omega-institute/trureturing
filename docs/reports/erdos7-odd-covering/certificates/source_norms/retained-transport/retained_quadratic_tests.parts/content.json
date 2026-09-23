@@ -1,0 +1,162 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-retained-quadratic-tests-v1"
+  },
+  "source_G357": {
+    "kind": "inline",
+    "value": "102715/2916"
+  },
+  "H16": {
+    "kind": "inline",
+    "value": "62105726056910993/940100384223000"
+  },
+  "H41": {
+    "kind": "inline",
+    "value": "138463094971779285596846788846625500699/933733674416003479362197458605000000"
+  },
+  "quadratic_H16_gain": {
+    "kind": "inline",
+    "value": "45043781963385281/99650640727638000"
+  },
+  "bound": {
+    "kind": "inline",
+    "value": "1901918324726376971477642961222474203792913803/4373958104899413119892028381994559184464000"
+  },
+  "Gamma13": {
+    "kind": "inline",
+    "value": "902238271422769824617/5987213660861286282"
+  },
+  "T13_81": {
+    "kind": "inline",
+    "value": "51915922153739431127176510521019232999/538907998919806206156995074612316250"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "15447272417/31495117500"
+  },
+  "coefficients": {
+    "kind": "inline",
+    "value": {
+      "bound": "224662194801105772468856208113216976396422824611473/1078444350576056787268009685483204104302540000000",
+      "Gamma13": "37926096464803887436723819/558537951323809610653500",
+      "T13_81": "17695465442308682228413235491069293576421/186731621625712850433398793353167580625",
+      "survival": "7938708479/15747558750"
+    }
+  },
+  "source_inputs": {
+    "kind": "inline",
+    "value": {
+      "G357": "3849/106",
+      "D357": "432/53",
+      "Gamma13": "902238271422769824617/5987213660861286282",
+      "rho13": "15447272417/31495117500",
+      "D13": "733471200000/15447272417"
+    }
+  },
+  "fallbacks": {
+    "path": "content/011-fallbacks.json",
+    "sha256": "750c62f0fb3a9bc849a3b942e025dcb27653bece786ad86a02101a30b8f2d5a6",
+    "kind": "value"
+  },
+  "core_errors": {
+    "path": "content/012-core_errors.json",
+    "sha256": "7f03f89d763a9e6862fb049f87d06517cdbd2a845423e8031c68a4e1e909bb8d",
+    "kind": "value"
+  },
+  "maximizers": {
+    "kind": "inline",
+    "value": {
+      "bound": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "Gamma13": [
+        398,
+        410,
+        422,
+        616,
+        628,
+        640
+      ],
+      "T13_81": [
+        386,
+        388,
+        590,
+        592
+      ]
+    }
+  },
+  "row_sha256": {
+    "kind": "inline",
+    "value": "913fff1d09b2a157e8fd43e0ad36d8ce91bc63f8fedf62b5c5da07bd50d9f5aa"
+  },
+  "norms": {
+    "path": "content/015-norms.json",
+    "sha256": "15eb0177e75cc9fe7c607d1c0b5cad8d7846903e974ad9b20b4fd2407c6baefb",
+    "kind": "value"
+  },
+  "norm_margin_checks": {
+    "kind": "inline",
+    "value": 648000
+  },
+  "consumer_vertex_checks": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "predecessor_consumer_vertex_checks": {
+    "kind": "inline",
+    "value": 1296
+  },
+  "fallback_checks": {
+    "kind": "inline",
+    "value": 8
+  },
+  "complete_core_checks": {
+    "kind": "inline",
+    "value": 2
+  },
+  "verification_scope": {
+    "kind": "inline",
+    "value": "648000 final quadratic norm margins, complete AP45 consumer and predecessor consumer, eight missing-class branches and both full finite-core tails. The existing source and linear norm proofs are reused, not replayed."
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Same actual AP(4,5), independent original residues, complete tails and one final conditioning. Ordinary proof and exact rational arithmetic; no actual-family sharpness, Lean endpoint, negative Q or unrestricted Erdos7 resolution."
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+      "frontier/comparison-bounds/fixed_cost.py": "2df5ca217aced5823c6c9d88324737091b11318c9625f73503ca7cd35db8c21d",
+      "frontier/cover-geometry/layout_gap.py": "f648a578745731d1b877655abaadd60ca8553f93d0ca5d41f32206b60ad7a23a",
+      "verify_killed_core_continuity.py": "6de7cb0f3aafa1d6db95017dd82c99d756e89b398996017ea1c1d77808f65226",
+      "certificates/layout_gap_frontier_certificate.json": "bf7257ebfff334c8bf2bffa85959199d3c44e8e8fbf2a0a9cae2c6326ecf0c02",
+      "certificates/pure_root_profile_certificate.json": "045445deb47f22f4be3d06a8843a87b8ae4e8e19840aecd580c03e5ce3386d1a",
+      "frontier/cover-geometry/ap_schedule.py": "40b6138fc9d0fc1d540880e8a4abb1933d1dcd1b2c5dbf54646008c3f2e62b9f",
+      "frontier/cover-geometry/ap_schedule_core.py": "365b6c1f9a70dff5378a7d3a73a06879ee6193fbc69a4ac68ecfed1972e95617",
+      "certificates/ap_schedule_norms.json": "7cbb82bb2ea8691136fe74779632ffb821f78dd3b0c498ea1625f84a3866d9d8",
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "certificates/ap_schedule_frontier_certificate.json": "15a1d0d493358c52947a5d7ac7b5362b24f933c1641150f4d4e9fcdda131fa05",
+      "frontier/cover-geometry/verify_ap_schedule.py": "70dee971ec6f6ab6042e7c765e196bc0da6aba858e400190f2240acb985106c6",
+      "frontier/retained-transport/retained_five_tests.py": "3dc81efd29363a9eedb43ffeb9dc38cdb294ddc547050428885393a05f1d9c60",
+      "certificates/source_norms/retained-transport/retained_five_tests.json": "7db433b0959a5e39a984af5259bfc22457f83963d9e7210dcf217764e4754655",
+      "frontier/retained-transport/verify_retained_five_tests.py": "80a0196d130d4abdc158173330b5eac67d1f1ca4f58c897329a707692dbbeace"
+    }
+  },
+  "helper_sha256": {
+    "kind": "inline",
+    "value": {
+      "frontier/retained-transport/retained_quadratic_tests.py": "712cf9a4adab36feff0a2ed8b64e6b721e22bcbfa2eb26fede154f049d06f670",
+      "certificates/source_norms/retained-transport/retained_quadratic_inputs.json": "f5353ddbbf7d95ddbc160395272a79611011ac3605d82ad53cabda2127ebb710"
+    }
+  },
+  "verifier_sha256": {
+    "kind": "inline",
+    "value": "4a6d78442d3b71e976b6d880c31b56b9ff1e2a9a63275ac6213c1b0c3090cf43"
+  }
+}

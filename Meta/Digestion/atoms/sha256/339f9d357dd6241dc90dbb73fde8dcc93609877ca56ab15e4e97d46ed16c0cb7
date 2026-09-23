@@ -1,0 +1,33 @@
+**定理 12.2（恢复误差与关系运输误差的共同预算）。** 在定义12.1下，对每个 $n\ge0$，有
+$$
+\boxed{
+d_\diamond\!\left(
+\mathcal S\overline{\mathcal T}_n\cdots
+\overline{\mathcal T}_1\mathcal E,
+\mathcal Q\mathcal T_n\cdots\mathcal T_1
+\right)
+\le\min\left\{1,\kappa+\sum_{j=1}^n\varepsilon_j\right\}.}
+\tag{12.2}
+$$
+因而接上同一个任意合法终端测量，全部输出分布的总变差也受此界控制。有限经典随机核采用 $d_{\rm cl}(P,Q)=\max_x\operatorname{TV}(P(\cdot\mid x),Q(\cdot\mid x))$ 时，同一式（12.2）成立。完整恢复特例就是
+$$
+d_\diamond(\mathcal R\overline{\mathcal T}_n\cdots
+\overline{\mathcal T}_1\mathcal E,
+\mathcal T_n\cdots\mathcal T_1)
+\le\min\{1,\kappa+\textstyle\sum_j\varepsilon_j\}.
+\tag{12.3}
+$$
+同一结论允许轮次类型改变：给 $\mathcal E_j:X_j\to B_j$、$\mathcal T_j:X_{j-1}\to X_j$、$\overline{\mathcal T}_j:B_{j-1}\to B_j$、$\mathcal Q_n:X_n\to A$ 与 $\mathcal S_n:B_n\to A$，取
+$$
+\kappa_n=d_\diamond(\mathcal S_n\mathcal E_n,\mathcal Q_n),\qquad
+\varepsilon_j=d_\diamond(\mathcal E_j\mathcal T_j,
+\overline{\mathcal T}_j\mathcal E_{j-1}).
+$$
+则
+$$
+d_\diamond(\mathcal S_n\overline{\mathcal T}_n\cdots\overline{\mathcal T}_1\mathcal E_0,
+\mathcal Q_n\mathcal T_n\cdots\mathcal T_1)
+\le\min\{1,\kappa_n+\textstyle\sum_j\varepsilon_j\}.
+\tag{12.3a}
+$$
+

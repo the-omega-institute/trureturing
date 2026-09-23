@@ -1,0 +1,15 @@
+**命题 102.2（统一的指数风险界与转移次数预算）。** 在定义与假设 102.1 下，必有 $0<d\eta<1$、$B>0$ 及 $c_0\le B$。对每个整数 $n\ge1$，
+$$
+R_n\le\min\left\{\frac12,
+\exp\left(-\frac{nc_0^2}{72B^2T_\eta}\right)\right\}.
+\tag{102.2a}
+$$
+因此，对任意 $0<\delta<1/2$，
+$$
+n\ge\left\lceil\frac{72B^2T_\eta}{c_0^2}
+                  \log\frac1\delta\right\rceil
+\quad\Longrightarrow\quad R_n\le\delta.
+\tag{102.2b}
+$$
+这个预算按 $n$ 次转移、$n+1$ 个完整状态读数计算，在固定 $d,\eta,c_0$ 的模型类上统一；所给常数不主张最优。$n=0$ 时 $R_0=1/2$。
+

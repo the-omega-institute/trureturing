@@ -1,0 +1,14 @@
+**theorem 39.14 (No countable cofinal family, even under semantic refinement).** For finite $F,G\subseteq\mathcal A$, write $F\preceq G$ when there is a map $h:A_G\to A_F$ satisfying
+$$
+q_F=h\circ q_G\quad\text{on }\mathbb N.
+\tag{39.38}
+$$
+This condition is equivalent to $Q_F=h\circ Q_G$ on $\mathscr E$. It is a refinement preorder, and inclusion $F\subseteq G$ implies $F\preceq G$.
+
+If $\mathcal C\subseteq\operatorname{Fin}(\mathcal A)$ is cofinal for this preorder, meaning
+$$
+\forall F\in\operatorname{Fin}(\mathcal A)\ \exists G\in\mathcal C:
+\quad F\preceq G,
+$$
+then $|\mathcal C|\ge\mathfrak c$. The least cofinal cardinality is exactly $\mathfrak c$, for either this preorder or ordinary inclusion. In particular, no countable family becomes cofinal merely by allowing finite combinations of its tests.
+

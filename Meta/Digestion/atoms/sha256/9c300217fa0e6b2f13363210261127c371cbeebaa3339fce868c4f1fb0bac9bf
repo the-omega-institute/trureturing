@@ -1,0 +1,47 @@
+**theorem 39.3 (Empty, finite, natural, split, and phase-section cases).** The empty family and every finite or countable evaluation family fail to separate $\mathscr E$. The two conditions in Theorem 39.2 are independent in the following explicit senses.
+
+Write
+$$
+\mathcal N=Z(\mathbb N),\qquad
+S_s=\{x_m^s:m\ge1\},\qquad S=S_-\cup S_+,
+$$
+$$
+A=\{n\delta:n\ge0\},\qquad
+G=\{k\delta:k\in\mathbb Z\},\qquad R=K\setminus S.
+$$
+For a nonempty $D\subseteq\mathcal N$, let $k_0$ be the least integer with $Z(k_0)\in D$. Then
+$$
+U(D)=\{E_m:m>k_0\},\qquad N_+(D)=N_-(D)=\varnothing.
+\tag{39.6}
+$$
+In particular, $U(\mathcal N)=E$, and equality on the entire natural core is equivalent to equality of $e$.
+
+For the exceptional inputs,
+$$
+U(S)=U(S_+)=U(S_-)=G.
+\tag{39.7}
+$$
+The family $S$ satisfies (39.2) but not (39.1). Each $S_s$ lacks the opposite signed indices. No subset of $S$ satisfies (39.1).
+
+The family of all nonsplit inputs satisfies
+$$
+U(R)=\mathbb T\setminus A,
+\tag{39.8}
+$$
+and contains no exceptional input.
+
+More generally, for any signs $(\sigma_m)_{m\ge1}$ define the set-theoretic full phase section
+$$
+D_\sigma=\{k_\gamma:\gamma\notin E\}
+\cup\{x_m^{\sigma_m}:m\ge1\}.
+\tag{39.9}
+$$
+Then $H[D_\sigma]=\mathbb T$, so (39.1) always holds, and $\operatorname{Eval}_{D_\sigma}$ is injective exactly when each sign occurs infinitely often in $(\sigma_m)$. In particular, the all-plus section $D_+$ has cardinality $\mathfrak c$ and satisfies
+$$
+\operatorname{Eval}_{D_+}(T^n)
+=\operatorname{Eval}_{D_+}(P_{n\delta}^+)
+\qquad(n\ge0).
+\tag{39.10}
+$$
+The all-minus section has the analogous minus collision. Alternating the chosen signs gives an injectively separating full phase section.
+

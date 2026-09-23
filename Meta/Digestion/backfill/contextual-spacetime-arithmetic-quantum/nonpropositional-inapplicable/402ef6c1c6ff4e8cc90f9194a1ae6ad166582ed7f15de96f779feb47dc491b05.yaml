@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:402ef6c1c6ff4e8cc90f9194a1ae6ad166582ed7f15de96f779feb47dc491b05
+  normalized_sha256: sha256:402ef6c1c6ff4e8cc90f9194a1ae6ad166582ed7f15de96f779feb47dc491b05
+cas_ref: sha256:402ef6c1c6ff4e8cc90f9194a1ae6ad166582ed7f15de96f779feb47dc491b05
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义受限升算符与理想阻塞 Hamiltonian 并给定参数和模型边界，有限长度矩阵计算已分到另一叶。
+    previous_atom_id: 52b89e208c8bd557b275ccce3ba7c20ee7e4b1076d4527be7b8459ba92fae3be
+    next_atom_id: 589ac608678087525b7ddd7a573340ecb87f3c34a38b55d0ea2e8c5c4057bfb6

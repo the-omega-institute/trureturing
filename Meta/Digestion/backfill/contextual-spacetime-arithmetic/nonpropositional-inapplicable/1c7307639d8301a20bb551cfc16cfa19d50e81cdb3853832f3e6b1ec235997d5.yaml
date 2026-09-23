@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1c7307639d8301a20bb551cfc16cfa19d50e81cdb3853832f3e6b1ec235997d5
+  normalized_sha256: sha256:1c7307639d8301a20bb551cfc16cfa19d50e81cdb3853832f3e6b1ec235997d5
+cas_ref: sha256:1c7307639d8301a20bb551cfc16cfa19d50e81cdb3853832f3e6b1ec235997d5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句定义共同位置上的背景和选择电荷、补零表示，或规定旧档案不参与当前空间读数，是定义约定，无独立待证明命题。
+    previous_atom_id: dadf3449b05fcce316ceace88f809a2785e8b32acae1b0178307d0e7d0b1d85f
+    next_atom_id: 17fc612a5f7a00991a979cd25f0166333bcb6fcd6194bdf338355472adc71336

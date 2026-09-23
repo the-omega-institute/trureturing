@@ -1,0 +1,85 @@
+**证明。** 对每个 $i$，满射保证纤维 $J_i=r^{-1}(i)$ 非空，参考正性给出 $p_i>0$。置
+$$
+\lambda_{j\mid i}=\frac{q_j}{p_i}\quad(j\in J_i).
+$$
+这些权重严格为正、总和为一，且
+$$
+\sum_{j\in J_i}\lambda_{j\mid i}u_j
+=\frac1{p_i}\sum_{r(j)=i}d_j
+=m_i.
+$$
+因此 $m_i$ 是 $K$ 中有限个点的凸组合，属于 $K$。按纤维拆分第一项，便得到框中的缺陷分解。有限 Jensen 不等式逐纤维给出
+$$
+\Phi(m_i)\le\sum_{j\in J_i}\lambda_{j\mid i}\Phi(u_j).
+$$
+这正是 [ConvexOn.map_sum_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在指标集 $J_i$、权重 $\lambda_{j\mid i}$ 和点 $u_j$ 上的应用；权重非负归一化及所有点的域内条件已逐项满足。再乘 $p_i>0$ 并求和，得到非负性。
+
+若 $\Phi$ 严格凸，所有方括号均非负且所有外权 $p_i$ 均为正，所以总和为零当且仅当每个纤维的 Jensen 等号成立。[StrictConvexOn.map_sum_eq_iff_of_pos](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Convex/Jensen.lean) 在同一代入下适用，其严格正权重条件也已满足。它给出等号当且仅当该纤维的所有 $u_j$ 相等。若共同值为 $h_i$，上面的加权平均等式使 $h_i=m_i$，故恰为 $u=\Pi u$。反过来，$\Pi u$ 在每条纤维上为常值，故 $u=\Pi u$ 蕴含纤维常值。由 $d=D_qu$、$Ed=D_q\Pi u$ 及 $q_j>0$，这又等价于 $d=Ed$。
+
+若 $a_i=0$，则 $a_i$ 是该纤维所有非负 $d_j$ 的和，故整条纤维的 $d_j=0$，继而所有 $u_j=0$、$m_i=0$。它已满足纤维常值条件，不能因实际粗质量为零而另加一个未定义的后验条件。这里的平均权重是始终正的参考 $q_j/p_i$。
+
+对任意仿射函数 $\ell(t)=\alpha t+\beta$，每条纤维上都有
+$$
+\sum_{j\in J_i}\lambda_{j\mid i}\ell(u_j)
+=\alpha m_i+\beta=\ell(m_i).
+$$
+因而加上仿射函数不改变任何方括号，证明仿射不变性，也给出仿射生成函数的恒零结论。
+
+为明确二次特例的 Hilbert 载体，任取实函数 $v$，$\Pi v$ 在各纤维上常值且
+$$
+\sum_{r(j)=i}q_j(\Pi v)_j
+=\sum_{r(j)=i}q_jv_j.
+$$
+每个 $\mathcal F_r$ 事件是若干纤维的不交并，故同一积分等式在这些事件上成立；$\Pi v$ 又是 $\mathcal F_r$-可测的。有限载体使 $v\in L^2(\mu_q)$，所以这正是命题 69.1、定理 76.1 中的条件正交投影。严格正的每个 $q_j$ 使几乎处处相等在此等价于逐点相等。
+
+坐标适配直接给出，对任意实质量向量 $x$，
+$$
+(D_q\Pi D_q^{-1}x)_j
+=\frac{q_j}{p_{r(j)}}\sum_{r(k)=r(j)}x_k
+=(Ex)_j,
+$$
+且
+$$
+\langle D_qv,D_qw\rangle_{q^{-1}}
+=\sum_jq_jv_jw_j=\langle v,w\rangle_q.
+$$
+所以这一变换是两个带权空间之间的等距同构，说明两个残差平方的精确对应；它不是相同 Euclidean 内积下的算子识别。
+
+下面直接计算全部二次公式。每条纤维的中心化和为零：
+$$
+\sum_{r(j)=i}q_j(u_j-m_i)
+=a_i-p_im_i=0.
+$$
+展开 $u_j=(u_j-m_i)+m_i$，得到
+$$
+\begin{aligned}
+\sum_{r(j)=i}q_ju_j^2
+&=\sum_{r(j)=i}q_j(u_j-m_i)^2
+  +2m_i\sum_{r(j)=i}q_j(u_j-m_i)+p_im_i^2\\
+&=\sum_{r(j)=i}q_j(u_j-m_i)^2+p_im_i^2.
+\end{aligned}
+$$
+按纤维求和并减去 $\sum_i p_im_i^2$，即得第一个二次等式。再用
+$$
+d_j-(Ed)_j=q_j\bigl(u_j-m_{r(j)}\bigr)
+$$
+得到第二个。由于
+$$
+\sum_jq_j=\sum_i p_i=1,
+\qquad
+\sum_jq_ju_j=\sum_i p_im_i=1,
+$$
+有
+$$
+\chi^2(d\Vert q)=\sum_jq_ju_j^2-1,
+\qquad
+\chi^2(Cd\Vert p)=\sum_i p_im_i^2-1.
+$$
+相减得到第三个等式。全部分母来自严格正参考，因此不要求 $d_j>0$。所用的条件投影勾股关系是命题 69.1 的范数恒等式，这里的坐标计算将其识别为所列 $\chi^2$ 差。
+
+最后取 $\Phi(t)=t\ln t$、$\Phi(0)=0$。[Real.strictConvexOn_mul_log](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/NegMulLog.lean) 给出它在 $[0,\infty)$ 上的严格凸性，包含零点的连续值；所有 $u_j,m_i\ge0$，故适用。在 $d_j>0$ 时，
+$$
+q_j\Phi(u_j)=d_j\ln(d_j/q_j),
+$$
+而 $d_j=0$ 时该项为零；粗坐标同理。因此 $\mathcal J_\Phi$ 恰为两个参考 KL 之差。若 $d_j>0$，则 $a_{r(j)}>0$，从而 $(Ed)_j=q_ja_{r(j)}/p_{r(j)}>0$；若 $a_i=0$，该纤维上 $d$ 与 $Ed$ 全为零。$q,p$ 严格正，$d\ll Ed$，而 $Ed$ 是定理 74.2 中已归一化的概率，故三个 KL 都有限。对同一个 $C,B,E,q,p,d$ 直接应用定理 74.2 的缺陷差式，得到最后一个等号；其支撑与恢复条件正是定理 73.3 的条件。对数项始终只在正实际支撑上计算，零粗质量不需要归一化实际后验。若改用 bit，则将这一特例中的全部 KL 项一致除以 $\ln2$。证毕。
+

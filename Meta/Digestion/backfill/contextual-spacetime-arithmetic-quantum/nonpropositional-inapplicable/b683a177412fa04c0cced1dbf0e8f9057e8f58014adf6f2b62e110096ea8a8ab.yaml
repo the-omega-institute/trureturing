@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b683a177412fa04c0cced1dbf0e8f9057e8f58014adf6f2b62e110096ea8a8ab
+  normalized_sha256: sha256:b683a177412fa04c0cced1dbf0e8f9057e8f58014adf6f2b62e110096ea8a8ab
+cas_ref: sha256:b683a177412fa04c0cced1dbf0e8f9057e8f58014adf6f2b62e110096ea8a8ab
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶说明有限完备深度定理需要总词效果张成的前提，不宣称给定仪器自动完备，属于定理适用范围说明。
+    previous_atom_id: 34e4361316077df8b9464b10a0afe4a2c0e50b3ec923fb25acf9057da87ae933
+    next_atom_id: 34b0e3da5afa108126f5039461bacae067c041f9853001ae1e231c1cb79814bf

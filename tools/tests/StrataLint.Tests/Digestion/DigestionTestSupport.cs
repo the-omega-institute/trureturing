@@ -82,6 +82,9 @@ internal static class DigestionTestSupport
     internal static RepositorySnapshot Snapshot(params (string Path, byte[] Bytes)[] files)
     {
         var materialized = files.ToList();
+        if (materialized.All(static file => file.Path != EngineeringRegistrationFixture.Path))
+            materialized.Add((EngineeringRegistrationFixture.Path,
+                System.Text.Encoding.UTF8.GetBytes(EngineeringRegistrationFixture.Manifest())));
         if (materialized.All(static file => file.Path != TheoryAtomizerDataLoader.DataPath))
         {
             materialized.Add((

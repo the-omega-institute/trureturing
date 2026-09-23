@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f82f4945964cd9d6451a12f6164c8e5af961027f94ca269f87dc583ed336789
+  normalized_sha256: sha256:6f82f4945964cd9d6451a12f6164c8e5af961027f94ca269f87dc583ed336789
+cas_ref: sha256:6f82f4945964cd9d6451a12f6164c8e5af961027f94ca269f87dc583ed336789
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅规定调用顺序、无反馈及不复用记录等模型限制，不是对任意动力学的保证。
+    previous_atom_id: 995a29be352349c18208db72625b1a3c232ad9028ab10f4f5d9286c0bf4134e7
+    next_atom_id: 5be63f4cae9411bfd65b665d4db9581af2131901a738e57760564601d118b65b

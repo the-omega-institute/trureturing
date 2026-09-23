@@ -6,6 +6,20 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DeltaGeneratedInventoryIncludesAbsentDeclaredRelatedOutputs(bool related)
+    {
+        var manifest = Parse(DispositionEntry("Generated/output.json", "generated", "JsonEmitter", "reader",
+            "JsonEmitter", "committed-source", "A-OUTPUT"));
+        var inventory = new GeneratedArtifactIdentity("Generated/output.json", "JsonEmitter", "A-OUTPUT");
+        var findings = FileMapPolicy.InspectGeneratedInventory(manifest, [], [inventory],
+            new HashSet<string>(["Blueprint/Producer.scribe.cs"], StringComparer.Ordinal), related ? ["Generated/**"] : []);
+        if (related) Assert.Equal("FILEMAP-GENERATED-STALE-INVENTORY", Assert.Single(findings).Code);
+        else Assert.Empty(findings);
+    }
+
+    [Theory]
     [InlineData("run-local", false)]
     [InlineData("committed-source", true)]
     public void UntrackedGeneratedInventoryRespectsRuntimeDisposition(

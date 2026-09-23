@@ -1,0 +1,21 @@
+**命题 42.7（合法词空间不是源支撑）。** 在三位合法词空间中
+$$
+\psi=(|000\rangle-|010\rangle)/\sqrt2
+\tag{42.30}
+$$
+与 $S_3$ 正交。因而任何由（42.24）的 $\mathcal B_3$ 输出的密度 $\zeta$ 都满足
+$D(|\psi\rangle\langle\psi|,\zeta)=1$，特别包括 $\zeta=\mathcal B_3\mathcal C_3(|\psi\rangle\langle\psi|)$；这里 $D=\tfrac12\|\cdot\|_1$。
+
+证明。$W_3=\{000,001,010,100,101\}$ 张成的合法词空间维数为五，而命题42.2给 $\dim S_3=4$。更具体地，
+$$
+\begin{aligned}
+T_3|0\rangle
+ &=\alpha|000\rangle m_0+\alpha\sqrt\alpha|001\rangle m_1
+      +\alpha|010\rangle m_0,\\
+T_3|1\rangle
+ &=\sqrt\alpha|100\rangle m_0+\alpha|101\rangle m_1.
+\end{aligned}
+\tag{42.31}
+$$
+前一行的 $000,010$ 记忆列完全相同，后一行二者均为零，故 $\psi$ 正交于四列。$\mathcal B_3$ 的两项都支撑在 $S_3$，所以与 $|\psi\rangle$ 支撑正交；两密度之差在不交支撑上正负分块，迹范数为二。这里排除的是把任意合法编码态当作可接收的实际相干来源态。$\square$
+

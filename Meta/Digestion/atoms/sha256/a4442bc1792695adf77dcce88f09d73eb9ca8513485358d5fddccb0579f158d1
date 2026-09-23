@@ -1,0 +1,10 @@
+**theorem 51.1 (边界序列判据).** 对 $x\in R$ 与自然数序列 $(n_N)$，有 $j(n_N)\to\tau(x)$ 当且仅当
+$$
+n_N\longrightarrow+\infty
+$$
+且对每个 $m\ge1$，存在 $N_m$ 使
+$$
+N\ge N_m\quad\Longrightarrow\quad n_N\equiv x\pmod m.
+$$
+每个 $\tau(x)$ 都有正自然数序列如此逼近。
+

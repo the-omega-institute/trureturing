@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82e3b2bc651e2751eca537a6103f70bd674bd38bb0ea3edc7bf6edd0f988fa8f
+  normalized_sha256: sha256:82e3b2bc651e2751eca537a6103f70bd674bd38bb0ea3edc7bf6edd0f988fa8f
+cas_ref: sha256:82e3b2bc651e2751eca537a6103f70bd674bd38bb0ea3edc7bf6edd0f988fa8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句仅为章节定位锚点，没有数学命题，无待证明义务。
+    previous_atom_id: 985de80931b80ab36b787230197cc508910e72a7dfb0e36e773c2f36d8a519a9
+    next_atom_id: c9f696d7457a8bcabfba9f5a990cf1e61ab406688c94bddda258da314119a497

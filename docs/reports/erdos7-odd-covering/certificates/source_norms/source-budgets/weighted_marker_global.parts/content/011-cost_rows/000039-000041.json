@@ -1,0 +1,67 @@
+[
+  {
+    "index": 39,
+    "name": "R5",
+    "tuple": [
+      3,
+      0
+    ],
+    "weight": "13299/1360",
+    "barrier": "16025/2664662",
+    "vmin": "8035/7993986",
+    "vmax": "5/3993",
+    "gain_before_residual": "111660013/14048716646250",
+    "residual_penalty": "168750/16332701",
+    "chosen": true,
+    "finite_prefix_and_tail": {
+      "entrance": 5,
+      "cost_increments": [
+        "8035/7993986",
+        "5/3993",
+        "5/3993",
+        "5/3993",
+        "5/3993",
+        "5/3993"
+      ],
+      "source_increments": [
+        "58615/55957902",
+        "5/3993",
+        "5/3993",
+        "5/3993",
+        "5/3993",
+        "5/3993"
+      ],
+      "common_tail_increment": "5/3993"
+    },
+    "layout_cell_floor_checks": 500
+  },
+  {
+    "index": 40,
+    "name": "linear",
+    "tuple": null,
+    "weight": "94212612766226/1174116234095805",
+    "barrier": "6",
+    "vmin": "1",
+    "vmax": "1",
+    "gain_before_residual": "518738/61509375",
+    "residual_penalty": "101250/12271",
+    "chosen": true,
+    "finite_prefix_and_tail": {
+      "entrance": 3,
+      "cost_increments": [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "source_increments": [
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "common_tail_increment": "1"
+    },
+    "layout_cell_floor_checks": 500
+  }
+]

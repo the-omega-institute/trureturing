@@ -1,0 +1,10 @@
+### 135.1 解析生成关系的零／一结论在参数空间判定
+
+设 $\Omega\subseteq\mathbb R^d$ 为非空连接开集，$d\ge1$，潜参数 $U$ 的概率律为 $\nu$，且 $\nu\ll\lambda_d|_\Omega$。给定开集 $Z\subseteq\mathbb R^m$、可测生成器 $G:\Omega\to Z$ 和待验标量关系 $R:Z\to\mathbb R$，要求拉回
+
+$$
+h(u)=R(G(u))
+$$
+
+在 $\Omega$ 上实解析，从而所验事件可测；$G$ 与 $R$ 分别解析是保证该条件的一种充分方式。
+

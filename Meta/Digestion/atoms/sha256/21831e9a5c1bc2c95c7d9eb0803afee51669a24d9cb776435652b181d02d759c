@@ -1,0 +1,9 @@
+令 $\mathbb P$ 的符号为 $P_k=I-k\otimes k/|k|^2$（$k\ne0$）、$P_0=I$，$E(t)=e^{\nu t\Delta}$。对 $t>0$，
+$$
+\|E(t)v\|_{H^2}\le\|v\|_{H^2},\qquad
+\|E(t)\mathbb P\operatorname{div}Q\|_{H^2}
+\le(\nu t)^{-1/2}\|Q\|_{H^2},
+\tag{25.105}
+$$
+其中 $(v\otimes w)_{ij}=v_iw_j$、$(\operatorname{div}Q)_i=\sum_j\partial_jQ_{ij}$。
+

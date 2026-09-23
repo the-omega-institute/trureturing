@@ -1,0 +1,54 @@
+**精确前缀的模长证书。** 若给定 $a_0,\ldots,a_J$，另置
+$$
+P_J(z)=1+\sum_{i=0}^{J}a_i z^{i+1},\qquad
+B_J=\frac{A\rho^{J+2}}{1-\rho},\qquad
+G_J=\min_{|z|=\rho}|P_J(z)|-\rho-B_J.
+\tag{49.8}
+$$
+这里 $G_J$ 与前面的实部裕度 $\gamma_J=\min g_J$ 是两份不同证书，不能仅因记号相近而视为同一个数。三角不等式给
+$|P_J(z)|\ge1-A\sum_{i=0}^{J}\rho^{i+1}=\rho+B_J>0$，所以 $G_J\ge0$。而且在复来源域有
+$$
+\boxed{G_J>0\quad\Longleftrightarrow\quad
+(a_0,\ldots,a_J)\ne(-A\zeta,-A\zeta^2,\ldots,-A\zeta^{J+1})
+\text{ 对每个 }|\zeta|=1.}
+\tag{49.9}
+$$
+证明。固定 $|z|=\rho$，令 $s_i=a_i z^{i+1}$，把模长下界完整写为
+$$
+|P_J(z)|\ge\operatorname{Re}P_J(z)
+=1+\sum_{i=0}^{J}\operatorname{Re}s_i
+\ge1-\sum_{i=0}^{J}|s_i|
+\ge1-A\sum_{i=0}^{J}\rho^{i+1}
+=\rho+B_J>0.
+$$
+若首尾取等号，则每一步都取等号。因此
+$$
+\sum_{i=0}^{J}(|s_i|+\operatorname{Re}s_i)=0,
+\qquad
+\sum_{i=0}^{J}(A-|a_i|)\rho^{i+1}=0.
+$$
+两和均由非负项组成，必须逐项为零；后一式给每个 $|a_i|=A$，前一式给 $s_i=-|s_i|=-A\rho^{i+1}$。于是
+$a_i=-A e^{-\mathrm i(i+1)\theta}$，其中 $z=\rho e^{\mathrm i\theta}$，恰为某个相位前缀。反向代入同一角度即可取等号。若不存在这样的前缀，连续函数在紧圆周上处处严格，故其最小差严格为正。实前缀的首项 $a_0=-A\zeta$ 已使允许相位只能为 $\pm1$，所以等价于同时排除全负与指定交替两个前缀。即使 $J=0$ 也如此：这时两前缀分别为 $(-A)$、$(A)$，严格正证书恰为 $|a_0|<A$。$\square$
+
+同一前缀的任何幅度合法延伸 $b$ 都满足
+$$
+|F_b(z)|\ge|P_J(z)|-B_J\ge\rho+G_J\qquad(|z|=\rho).
+\tag{49.10}
+$$
+故有限模长证书对全部这些延伸有效。实部证书和模长证书均恰在前缀排除所有相位时严格为正，但数值可不同。它们不要求来源的剩余后缀已被读出。
+
+上述无限圆周刚性也可直接写成
+$$
+\boxed{|F_a(\rho e^{\mathrm i\theta})|=\rho
+\quad\Longleftrightarrow\quad
+ a_i=-A e^{-\mathrm i(i+1)\theta}\text{ 对所有 }i.}
+\tag{49.11}
+$$
+确实，$|F|\ge\operatorname{Re}F\ge\rho$，所以模长等号使（49.7）的非负无穷和为零。每一项都不超过该和，故每项都为零；$|a_i|\le A$ 再使 $a_i e^{\mathrm i(i+1)\theta}=-A$ 对每个 $i$ 成立。反向将这一来源代入一致绝对收敛的临界几何级数，得到 $F_a(\rho e^{\mathrm i\theta})=\rho$。这直接处理无限项的共同对齐。
+
+对非相位来源，还可明确定义整圆模长裕度
+$$
+\gamma_a=\min_{|z|=\rho}\bigl(|F_a(z)|-\rho\bigr)>0.
+$$
+严格性由（49.11）、紧圆周与连续性得到；任一有限实部正证书还给 $\gamma_a\ge\gamma_J>0$。这是来源相关的裕度，不假定已从有限测量中精确取得它。
+

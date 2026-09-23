@@ -1,0 +1,101 @@
+{
+  "schema": "mcnew-setty-v2-finite-excerpts-v1",
+  "source": {
+    "title": "On the densities of covering numbers and abundant numbers",
+    "authors": [
+      "Nathan McNew",
+      "Jai Setty"
+    ],
+    "version": "arXiv:2507.23041v2",
+    "version_date": "2026-02-10",
+    "url": "https://arxiv.org/html/2507.23041v2",
+    "inspected_html_sha256": "d5f622d8b3aaabcb97d3d0e75597ba23ebe775ea0bc6b6f69894197092430b46",
+    "inspection_scope": "The retained statements and context were checked against this v2 HTML. The checker reads these excerpts, without fetching or parsing that HTML. Journal version uninspected."
+  },
+  "statements": {
+    "S3.Thmtheorem1": {
+      "text": "Lemma 3.1. If $n$ is a primitive covering number then $P^{+}(n)\\leq\\tau\\left(\\frac{n}{P^{+}(n)}\\right).$ (4)",
+      "math": [
+        {
+          "alttext": "n",
+          "annotation": "n"
+        },
+        {
+          "alttext": "P^{+}(n)\\leq\\tau\\left(\\frac{n}{P^{+}(n)}\\right).",
+          "annotation": "P^{+}(n)\\leq\\tau\\left(\\frac{n}{P^{+}(n)}\\right)."
+        }
+      ]
+    },
+    "S4.Thmtheorem10": {
+      "text": "Lemma 4.10. Suppose that $M=\\{m_{1},m_{2},\\ldots m_{k}\\}$ is any set (or multiset) of moduli. Then the proportion of integers covered by any residue system whose moduli are the elements of $M$ is at most $\\sum_{m\\in M}\\frac{1}{m}\\ -\\sum_{\\begin{subarray}{c}m,m^{\\prime}\\in M\\\\ \\gcd(m,m^{\\prime})=1\\end{subarray}}\\frac{1}{mm^{\\prime}}\\ +\\ \\sum_{\\begin{subarray}{c}m,m^{\\prime}\\!,m^{\\prime\\prime}\\in M\\\\ \\text{ pairwise coprime}\\end{subarray}}\\frac{1}{mm^{\\prime}m^{\\prime\\prime}}\\ -\\ \\cdots\\ =\\sum_{\\begin{subarray}{c}S\\subseteq M,\\ S\\neq\\emptyset\\\\ S\\text{ pairwise coprime}\\end{subarray}}\\frac{(-1)^{|S|+1}}{\\lcm S}.$",
+      "math": [
+        {
+          "alttext": "M=\\{m_{1},m_{2},\\ldots m_{k}\\}",
+          "annotation": "M=\\{m_{1},m_{2},\\ldots m_{k}\\}"
+        },
+        {
+          "alttext": "M",
+          "annotation": "M"
+        },
+        {
+          "alttext": "\\sum_{m\\in M}\\frac{1}{m}\\ -\\sum_{\\begin{subarray}{c}m,m^{\\prime}\\in M\\\\\n\\gcd(m,m^{\\prime})=1\\end{subarray}}\\frac{1}{mm^{\\prime}}\\ +\\ \\sum_{\\begin{subarray}{c}m,m^{\\prime}\\!,m^{\\prime\\prime}\\in M\\\\\n\\text{ pairwise coprime}\\end{subarray}}\\frac{1}{mm^{\\prime}m^{\\prime\\prime}}\\ -\\ \\cdots\\ =\\sum_{\\begin{subarray}{c}S\\subseteq M,\\ S\\neq\\emptyset\\\\\nS\\text{ pairwise coprime}\\end{subarray}}\\frac{(-1)^{|S|+1}}{\\lcm S}.",
+          "annotation": "\\sum_{m\\in M}\\frac{1}{m}\\ -\\sum_{\\begin{subarray}{c}m,m^{\\prime}\\in M\\\\\n\\gcd(m,m^{\\prime})=1\\end{subarray}}\\frac{1}{mm^{\\prime}}\\ +\\ \\sum_{\\begin{subarray}{c}m,m^{\\prime}\\!,m^{\\prime\\prime}\\in M\\\\\n\\text{ pairwise coprime}\\end{subarray}}\\frac{1}{mm^{\\prime}m^{\\prime\\prime}}\\ -\\ \\cdots\\ =\\sum_{\\begin{subarray}{c}S\\subseteq M,\\ S\\neq\\emptyset\\\\\nS\\text{ pairwise coprime}\\end{subarray}}\\frac{(-1)^{|S|+1}}{\\lcm S}."
+        }
+      ]
+    },
+    "S4.Thmtheorem11": {
+      "text": "Theorem 4.11. If an integer $n$ factors as $n=\\ell b$ where $\\ell$ and $b$ are coprime and $\\ell$ is an almost-covering number, then $c(n)\\leq 1+\\frac{\\ell-1}{\\ell}+\\frac{1}{\\ell}\\sum_{d\\mid b,d>1}\\frac{B(\\tau(\\ell),\\omega(d))}{d}.$ (11)",
+      "math": [
+        {
+          "alttext": "n",
+          "annotation": "n"
+        },
+        {
+          "alttext": "n=\\ell b",
+          "annotation": "n=\\ell b"
+        },
+        {
+          "alttext": "\\ell",
+          "annotation": "\\ell"
+        },
+        {
+          "alttext": "b",
+          "annotation": "b"
+        },
+        {
+          "alttext": "\\ell",
+          "annotation": "\\ell"
+        },
+        {
+          "alttext": "c(n)\\leq 1+\\frac{\\ell-1}{\\ell}+\\frac{1}{\\ell}\\sum_{d\\mid b,d>1}\\frac{B(\\tau(\\ell),\\omega(d))}{d}.",
+          "annotation": "c(n)\\leq 1+\\frac{\\ell-1}{\\ell}+\\frac{1}{\\ell}\\sum_{d\\mid b,d>1}\\frac{B(\\tau(\\ell),\\omega(d))}{d}."
+        }
+      ]
+    }
+  },
+  "context": {
+    "section_4_definitions": {
+      "r": "For a positive integer n we first define r(n) to be the maximum cardinality of the set of residues that can be covered by a set of congruences with distinct moduli greater than 1, each dividing n.",
+      "c_tex": "c(n)\\coloneqq 1+\\frac{r(n)}{n}."
+    },
+    "definition_4_5": {
+      "text": "We call an integer n an almost-covering number if r(n)=n-1."
+    },
+    "section_4_2_B_definition": {
+      "tex": "B(r,n)\\coloneqq-\\sum_{k=1}^{n}(-r)^{k}S_{2}(n,k)."
+    },
+    "theorem_4_11_proof_multiplicity": {
+      "text": "Since each divisor of b appears with multiplicity tau(ell) in M, any fixed subset S of D(b) appears tau(ell)^|S| times in the sum."
+    },
+    "definition_5_1": {
+      "text": "If P^-(b)=p_(j+1)<=tau(ell) then n is a covering number by Corollary 4.8 and we define cprime(n)=2, otherwise we define the displayed Bell-polynomial expression.",
+      "scope": "This later trivial-bound branch applies to n=1920 and is not refuted by its Theorem 4.11 counterexample."
+    },
+    "definition_4_7": {
+      "text": "For even n, take j to be the largest initial prime index such that (9) holds for every preceding step; ell(n) is the product of those first j full prime powers. For odd n, ell(n)=1.",
+      "condition_9_tex": "p_i=\\tau(p_1^{\\alpha_1}\\cdots p_{i-1}^{\\alpha_{i-1}})+1",
+      "example": "For 1920=2^7*3*5, the next prime3 differs from tau(128)+1=9, so j=1 and ell(1920)=128."
+    }
+  },
+  "context_representation": "The three statement containers preserve the extracted text and TeX pairs. Context text is a normalized restatement of the inspected passages; context TeX is retained notation."
+}

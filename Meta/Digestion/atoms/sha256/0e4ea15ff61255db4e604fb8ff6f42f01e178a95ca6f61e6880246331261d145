@@ -1,0 +1,22 @@
+**命题 44.18（源谱下界与大分母不能互换）。** 取
+$$
+S_\varepsilon=
+\begin{pmatrix}
+\varepsilon&\sqrt\varepsilon/2\\
+\sqrt\varepsilon/2&1/2
+\end{pmatrix}.
+$$
+矩阵对角元正、行列式为 $\varepsilon/4>0$，故 $S_\varepsilon>0$。而 $\frac34I-S_\varepsilon$ 的对角元正、行列式为 $3/16-\varepsilon/2>0$，故有共同上谱界 $S_\varepsilon<\frac34I$。另一方面 $\lambda_{\min}(S_\varepsilon)\le\langle e_0,S_\varepsilon e_0\rangle=\varepsilon$，不存在共同正的下谱界。
+
+直接计算
+$$
+A=\varepsilon,\qquad W(2h)=\varepsilon^2+\varepsilon/4,
+\qquad\mathcal T=\log(1/\varepsilon),
+$$
+$$
+R(2)
+=1+\frac{\log(1/(\varepsilon+1/4))}{\log(1/\varepsilon)}
+\longrightarrow1.
+$$
+所以即使共同 $b<1$ 保留、校准分母还趋于无穷，$\delta\to0$ 也不保证钟偏差消失；倍时短缺趋于其可能范围的上端 $1$。
+

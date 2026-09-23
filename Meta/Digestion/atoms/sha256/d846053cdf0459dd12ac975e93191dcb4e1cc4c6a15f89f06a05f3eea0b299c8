@@ -1,0 +1,42 @@
+**定义 94.1（数字空间、双译码与 Monna 观察）。** 设整数 $b\ge2$，取
+$$
+\Sigma_b=\{0,1,\ldots,b-1\}^{\mathbb N_0},
+\qquad
+(C_ba)_n=b-1-a_n.
+$$
+赋予 $\Sigma_b$ 离散字母表的乘积拓扑，并用首差距离表示：
+$$
+d_b(a,c)=
+\begin{cases}
+0,&a=c,\\
+b^{-k},&k=\min\{n\ge0:a_n\ne c_n\}.
+\end{cases}
+$$
+实译码为
+$$
+D_{\infty,b}(a)=\sum_{n\ge0}a_n b^{-(n+1)}\in[0,1].
+$$
+这里的级数按通常实绝对值收敛，端点 $1$ 由全为 $b-1$ 的数字串表示；数字展开的值域、连续性与前缀估计采用通常的位置展开结论。[^rro94-real-digits]
+
+当底数为素数 $p$ 时，在标准归一化 $|p|_p=p^{-1}$ 下，另取通常的 $p$-进数字识别
+$$
+D_p:\Sigma_p\longrightarrow\mathbb Z_p,
+\qquad
+D_p(a)=\sum_{n\ge0}a_np^n.
+$$
+这一次级数在 $p$-进范数下收敛。$D_p$ 是等距双射；下述证明从有限剩余类回顾所需的识别。[^rro94-padic-digits] 定义
+$$
+M_p=D_{\infty,p}\circ D_p^{-1}:\mathbb Z_p\longrightarrow[0,1],
+\qquad
+J_p(z)=-1-z,
+\qquad
+J_\infty(t)=1-t.
+$$
+$M_p$ 是经典 Monna 映射在 $\mathbb Z_p$ 上的限制，其数字公式及连续性估计见 Kozyrev 的式 (12) 与引理 3。[^rro94-monna] 对任意自映射 $F$，以下记 $\operatorname{Fix}(F)=\{x:F(x)=x\}$。
+
+[^rro94-real-digits]: 数字级数的上下界、包含端点的满射性、前缀分解与连续性，可参见 [Mathlib，实数位置展开](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Real/OfDigits.lean)。其第 $n$ 位权重正是 $b^{-(n+1)}$；$[0,1)$ 的通常展开与全为 $b-1$ 的展开共同给出 $[0,1]$。
+
+[^rro94-padic-digits]: 所用完备性、素数幂理想与范数的关系见 [Mathlib，$p$-进整数](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/PadicIntegers.lean)；相容约化、有限剩余类代表及剩余类分离见 [Mathlib，$p$-进整数的剩余类映射](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Padics/RingHoms.lean)。这里仅用整数部分和的完备性、有限余数类代表与相容约化说明数字展开，不需把数字空间赋予环同态结构。
+
+[^rro94-monna]: S. V. Kozyrev，[*Wavelet analysis as a p-adic spectral analysis*，arXiv:math-ph/0012019v3](https://arxiv.org/pdf/math-ph/0012019v3)，式 (12) 将 $\sum_{i\ge\gamma}a_ip^i$ 送到 $\sum_{i\ge\gamma}a_ip^{-i-1}$，引理 3 给出实距离不超过原 $p$-进距离的估计。这里仅使用其在 $\mathbb Z_p$ 上的限制及该估计。
+

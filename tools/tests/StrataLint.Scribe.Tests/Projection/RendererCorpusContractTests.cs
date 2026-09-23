@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "c4adebf5f96205e366557fada211317abd7df4ea33f75364a3854b0ab5c14ee7";
+        "f9d58e56ac69757cd7e473ac29d95e4b4008befc19177fa29f954093cb2e5590";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -39,8 +39,6 @@ public sealed partial class FormulaCorpusInventoryTests
         // 改接就接错了对象,当场红)。这条原先与「固定语料是否覆盖真仓库的组合」同处
         // AssertRendererVocabularyCoverage;后者需要真语料、随文档迁出本程序集而失去
         // 主体并已退役,这一条不依赖仓库,故保留。
-        // **不另开 [Fact]**:新测试身份因反射(typeof(Formula).GetNestedTypes)无法被
-        // 测试映射静态解析,会落进 conservative unknown 桶并撞 SL-003 棘轮。
         AssertClosedFormulaVocabularyIsCovered(
             RendererVocabulary(FixedDocumentCorpus(), FixedFormulaCorpus()));
     }

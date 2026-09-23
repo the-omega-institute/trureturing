@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ecf2b8b4c8e6c42c2ae3c3c2b0ef8694a6bfc9f96558cd596ad9fa7f0f94e361
+  normalized_sha256: sha256:ecf2b8b4c8e6c42c2ae3c3c2b0ef8694a6bfc9f96558cd596ad9fa7f0f94e361
+cas_ref: sha256:ecf2b8b4c8e6c42c2ae3c3c2b0ef8694a6bfc9f96558cd596ad9fa7f0f94e361
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “首次摄入以”及“实际命令如下”报告固定提交的 ingest 操作和控制台计数，不是数学对象的定义，也没有可由 Lean 判定的数学命题；本段未通过定义偷带数学结论，工程检查点文字无需证明。
+    previous_atom_id: c947713abce24e9da97989c88916f766ac76912f8fb5535e5a637389aece659e
+    next_atom_id: a61475bd02c9e1bac6832026ccb49b1d0ef3f7f7e5c27a58e60ed7c7ebac4ab5

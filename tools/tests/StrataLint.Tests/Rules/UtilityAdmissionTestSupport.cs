@@ -57,6 +57,11 @@ internal static class UtilityAdmissionTestSupport
 
     internal static string AddRefutationEvidence(RuleFixture fixture, string utility)
     {
+        // These tests change utility/coverage for an existing theorem. Keep the
+        // protected-base source aligned with the synthetic declaration report.
+        const string source = "\ndef proposed_law : Prop := False\ntheorem refuted_law : Not proposed_law := by intro h; exact h\n";
+        fixture.Files[RuleFixture.RingPath] += source;
+        fixture.Baseline[RuleFixture.RingPath] += source;
         fixture.Reports[RuleFixture.RingPath] = fixture.Reports[RuleFixture.RingPath] with
         {
             Declarations = fixture.Reports[RuleFixture.RingPath].Declarations.AddRange(new LeanDeclaration[] {
@@ -123,9 +128,12 @@ internal static class UtilityAdmissionTestSupport
         string blockCode,
         string observationFields)
     {
-        var block = Assert.Single(
-            diagnostics,
-            item => item.AdmissionEffect is AdmissionEffect.Block);
+        // Registration evidence only observes (DTR-Evidence) when the same
+        // first-pin module also lacks the report required for utility admission;
+        // the utility finding is the only block.
+        var block = Assert.Single(diagnostics, item => item.AdmissionEffect is AdmissionEffect.Block
+            && item.Message.StartsWith("UTILITY-", StringComparison.Ordinal));
+        Assert.DoesNotContain(diagnostics, item => item.AdmissionEffect is AdmissionEffect.Block && item != block);
         Assert.Contains(blockCode, block.Message, StringComparison.Ordinal);
         var observation = Assert.Single(
             diagnostics,

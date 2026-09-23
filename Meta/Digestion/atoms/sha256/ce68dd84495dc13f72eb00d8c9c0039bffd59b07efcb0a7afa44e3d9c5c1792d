@@ -1,0 +1,42 @@
+**theorem 37.2 (Oriented lift limits and the actual finite branch history).** For $s\in\Sigma$ and $0<\varepsilon<1/2$, put
+$$
+I_s(\theta,\varepsilon)=\{\theta+[st]:0<t<\varepsilon\}.
+$$
+The notation $\theta_i\to_s\theta$ means that $\theta_i\to\theta$ and, eventually, $\theta_i\ne\theta$ approaches through the side $s$.
+
+Suppose $y_i\in K$ and $H(y_i)\to\gamma$. If $\gamma\notin E$, then $y_i\to k_\gamma$. If $\gamma=E_m$ and $H(y_i)\ne E_m$ eventually, then
+$$
+y_i\longrightarrow x_m^s
+\quad\Longleftrightarrow\quad
+H(y_i)\longrightarrow_s E_m.
+$$
+These assertions hold for arbitrary nets and arbitrary lifts at the approaching phases.
+
+For every $m\ge1$, $n\ge0$, and $s\in\Sigma$,
+$$
+T^n x_m^s=
+\begin{cases}
+x_{m-n}^s,&n<m,\\
+Z(n-m),&n\ge m.
+\end{cases}
+$$
+In particular, $T^n$ preserves the two incoming branches at $E_m$ whenever $m>n$. Every phase outside $E$ remains outside $E$ under nonnegative rotation by $\delta$.
+
+**Proof.** Fix a positional depth $L$. The phase boundaries of its cylinders form the finite set
+$$
+B_L^{\mathrm{pos}}=\{E_1,\ldots,E_{G_L}\}
+$$
+when $L\ge1$. If $\gamma\notin E$, it is not in this finite set. A sufficiently small phase neighborhood of $\gamma$ lies inside the phase interior of the cylinder containing $k_\gamma$, and every lift of every phase in that neighborhood belongs to this cylinder. Thus the $L$-digit prefixes of $y_i$ eventually equal that of $k_\gamma$. This holds at every depth and proves convergence.
+
+Now let $\gamma=E_m$. At a depth which separates $x_m^-$ and $x_m^+$, the two neighboring phase arcs belong to their respective cylinders, with precisely the orientations established in Theorem 20.2. Consequently convergence to $x_m^s$, together with eventual avoidance of phase $E_m$, forces eventual approach from side $s$.
+
+Conversely, suppose the phases approach from side $s$. At every depth separating the pair, the same adjacent-cylinder description forces the prefix of $x_m^s$. At a depth which does not separate the pair, $E_m$ is not a boundary of that depth, and a two-sided phase neighborhood has all its lifts in their common cylinder. Thus every prefix eventually equals that of $x_m^s$. This proves sufficiency. The proof uses eventual membership in finitely many cylinder conditions and therefore applies to nets, not just sequences.
+
+The displayed formula for $T^n x_m^s$ follows by iterating the oriented successor identities in Definition 37.0, reaching $0_K$ exactly at time $m$, and then using $T^j0_K=Z(j)$. It includes $n=0$ and the coalescence time $n=m$.
+
+Finally, if $\gamma+n\delta=E_m$, then
+$$
+\gamma=E_{m+n}\in E.
+$$
+Its contrapositive proves forward invariance of the nonsplit phases. $\square$
+

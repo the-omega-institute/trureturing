@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b2ef3a37faf94b0abae8402072c57dd4135e600b4bc308b8700274085ef5089f
+  normalized_sha256: sha256:b2ef3a37faf94b0abae8402072c57dd4135e600b4bc308b8700274085ef5089f
+cas_ref: sha256:b2ef3a37faf94b0abae8402072c57dd4135e600b4bc308b8700274085ef5089f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义分支权重、参数域和延续代价，参数充分性明确留给后续定理承担，不以记号定义证明充分性。
+    previous_atom_id: de87353dc64897cba7e9a3ff36eb2532c47a4df0f9ae094beb77f4371c470010
+    next_atom_id: 5f86f63abc0c8848c649c0186fa3c59462e3be844d144cc539731f09752ceb1b

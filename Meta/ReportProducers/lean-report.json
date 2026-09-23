@@ -1,0 +1,8 @@
+{
+  "schema": "report-producer-scope-v2",
+  "registration": "lean-report-inputs.json",
+  "scope": "lean-report",
+  "projects": [
+    "tools/StrataLint.Lean/StrataLint.Lean.csproj"
+  ]
+}

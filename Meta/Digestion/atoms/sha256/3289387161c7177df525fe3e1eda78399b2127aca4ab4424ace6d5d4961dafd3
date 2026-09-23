@@ -1,0 +1,30 @@
+**theorem 45.8（稠密幺元紧环的周期分类）。** 设 $R$ 为紧致 Hausdorff 拓扑幺环，且其幺元的非负整数倍稠密。则存在唯一超自然数 $D$，使 $R$ 与 $R_D$ 存在保持自然核心的拓扑幺环同构。其有限连续满环商恰为 $\mathbb Z/m\mathbb Z$，其中 $m\mid D$。此外，存在唯一连续满幺环同态
+$$
+\widehat{\mathbb Z}\longrightarrow R_D,
+\qquad
+R_D\cong\widehat{\mathbb Z}/J_D.
+$$
+若 $\mathbb Z_p=\varprojlim_k\mathbb Z/p^k\mathbb Z$，则中国剩余同构给出
+$$
+\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p,
+\qquad
+J_D\cong\prod_p p^{e_p}\mathbb Z_p,
+$$
+其中 $p^0\mathbb Z_p=\mathbb Z_p$，$p^\infty\mathbb Z_p=\{0\}$。特别地，有限 $D=d$ 时 $J_D=d\widehat{\mathbb Z}$ 且 $R_D\cong\mathbb Z/d\mathbb Z$。
+
+**证明。** 任一有限连续满环商，其所有元素都是幺元的自然数倍，因为稠密像在有限离散像中必为全体。因此该商是唯一某个 $\mathbb Z/m\mathbb Z$，其中 $m$ 为幺元的加法阶。到这个标定商的连续同态由自然核心唯一决定。
+
+令 $\mathcal M$ 为出现的全部模数。定理 45.6 保证这些商分离点。集合 $\mathcal M$ 含 $1$，对正因子封闭，并对最小公倍数封闭：两个商的联合映射之像是有限乘积中由 $(1,1)$ 生成的循环环，其幺元加法阶为两个模数的最小公倍数。令
+$$
+e_p=\sup_{m\in\mathcal M}v_p(m).
+$$
+显然 $m\in\mathcal M$ 推出 $m\mid D$。反过来，若有限 $m\mid D$，对其有限多个素数幂因子分别选取满足所需估值的模数，再取这些模数的最小公倍数并取因子，得到 $m\in\mathcal M$。
+
+于是所有有限商给出连续单射 $R\to R_D$。在 $R_D$ 的任意非空有限坐标柱集中，取所涉及模数的最小公倍数，再选该坐标的自然数代表，即可找到自然核心中的点。因此自然核心在 $R_D$ 中稠密。上述映射的像紧而闭，又包含此稠密核心，故满射并为拓扑环同构。
+
+反过来，对 $R_D$ 的任一有限连续环商，其核为零点开邻域，故包含某个有限坐标柱集的零纤维。把这些坐标合并为某个 $m\mid D$，可得该核包含模 $m$ 投影的核。因此商中幺元的阶整除 $m$。这证明 $R_D$ 没有额外的有限周期，并同时证明 $D$ 的唯一性。
+
+从 $\widehat{\mathbb Z}$ 限制坐标得到到 $R_D$ 的连续同态；它的紧像包含稠密自然核心，故满射，核恰为 $J_D$。唯一性来自整数核心稠密。拓扑第一同构结论随之成立。
+
+最后，对每个有限模数应用中国剩余同构。这些同构与约化映射相容，因此在所有素幂坐标上取逆极限即得 $\widehat{\mathbb Z}\cong\prod_p\mathbb Z_p$。模 $p^k$ 投影的核为 $p^k\mathbb Z_p$；在固定素数处对 $k\le e_p$ 取交，有限指数时得 $p^{e_p}\mathbb Z_p$，无限指数时得零。由此得到所述 $J_D$ 公式及有限周期特例。证毕。
+

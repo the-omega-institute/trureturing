@@ -1,0 +1,11 @@
+## 13. 更强的精确结果：Lie 生成层等于图距离带
+
+定义实际的线性生成过程
+
+\[
+L_0=\operatorname{span}_K\{N_i\},\qquad
+L_{k+1}=L_k+\operatorname{span}_K\{[X,N_i]:X\in L_k\}.
+\]
+
+L_k 使用至多 k+1 次原始生成元。独立地，令 B_k 为所有由至多 k 条 Γ 边连接的 C_ij 所张成的空间；长度零路径允许 i=j。
+

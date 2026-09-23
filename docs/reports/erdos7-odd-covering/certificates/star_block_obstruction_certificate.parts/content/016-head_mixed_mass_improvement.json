@@ -1,0 +1,70 @@
+{
+  "vertices_checked": 1296,
+  "pure_product_survival_lower": "53/135",
+  "mixed_head_mass_upper": "82/135",
+  "relaxation_minimizer": {
+    "pure_ternary_deficits": [
+      "1/2",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "first_deletions": [
+      "0",
+      "1/4"
+    ],
+    "second_deletions": [
+      "0",
+      "1/4",
+      "0",
+      "0",
+      "0"
+    ],
+    "late_deletions": [
+      "1/72",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    "z": "3/4",
+    "x": "1/2",
+    "cells": [
+      "1/36",
+      "1/18",
+      "1/18",
+      "1/18",
+      "1/18"
+    ],
+    "mass": "1/4",
+    "raw_load_upper": "37/72"
+  },
+  "missing_pure_branches": [
+    {
+      "case": "modulus3_absent",
+      "survival_lower": "43/75"
+    },
+    {
+      "case": "modulus9_absent_or_ineffective",
+      "survival_lower": "73/165"
+    }
+  ],
+  "disjoint_actual_events": {
+    "mixed_head_class": "1 mod 15",
+    "pure_head_classes": [
+      "0 mod 3",
+      "0 mod 5",
+      "0 mod 7"
+    ],
+    "head_bad_mass": "1/8",
+    "tail_bad_mass_lower": "1/6182117286187075045599091677080086678126",
+    "intersection_mass": "0",
+    "tail_primes": [
+      23,
+      29
+    ],
+    "original_modulus_count": 33
+  },
+  "scope": "Exact P12 parameter extrema plus actual CRT regression; the arbitrary-height density inequality is an ordinary proof."
+}

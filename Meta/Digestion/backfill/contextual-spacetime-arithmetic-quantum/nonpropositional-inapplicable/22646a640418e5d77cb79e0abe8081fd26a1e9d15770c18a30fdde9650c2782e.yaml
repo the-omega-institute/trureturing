@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:22646a640418e5d77cb79e0abe8081fd26a1e9d15770c18a30fdde9650c2782e
+  normalized_sha256: sha256:22646a640418e5d77cb79e0abe8081fd26a1e9d15770c18a30fdde9650c2782e
+cas_ref: sha256:22646a640418e5d77cb79e0abe8081fd26a1e9d15770c18a30fdde9650c2782e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子仅定义读数在既有记录后的剩余非对角量，最大值表达式是定义而非待证界。
+    previous_atom_id: e7c40141e621bb06f7f55756ae9da85dc5646c36ab7a45e60354109927e2f227
+    next_atom_id: 08c7261025890537cbc0e8c3ff4c81fefd13c7b771d8c109f36d97009872a731

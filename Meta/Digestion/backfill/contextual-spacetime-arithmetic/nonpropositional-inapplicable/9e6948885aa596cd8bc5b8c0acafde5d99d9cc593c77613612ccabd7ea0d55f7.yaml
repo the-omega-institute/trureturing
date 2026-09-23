@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e6948885aa596cd8bc5b8c0acafde5d99d9cc593c77613612ccabd7ea0d55f7
+  normalized_sha256: sha256:9e6948885aa596cd8bc5b8c0acafde5d99d9cc593c77613612ccabd7ea0d55f7
+cas_ref: sha256:9e6948885aa596cd8bc5b8c0acafde5d99d9cc593c77613612ccabd7ea0d55f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “公开证明已在 §24–25 给出”说明能力与前置的正文归属，“只作已有背景”限定成熟理论的使用；这是复用关系说明，不新增数学量词或从定义偷带结论。
+    previous_atom_id: 785c3a1984ae4a4569b888e29c35c26dd2ad53eb24677de68cfdbf230e19f769
+    next_atom_id: a00e54745d34f9b28edbd82e89f15e2125c29e85ab56d9e7f581346af06cfb03

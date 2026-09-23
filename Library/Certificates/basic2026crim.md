@@ -4,9 +4,10 @@ authors: Ina Bašić; Eric Gottlieb; Matjaž Krnc
 year: 2026
 title: "CRIM: A Natural Game on Integer Partitions"
 doi: 10.48550/arXiv.2606.16828
-claim: Section 3 defines row deletion and conjugate-row-conjugate column deletion; printed Conjecture 3 gives a Sprague–Grundy formula for near-square rectairs with r at least seven.
+claim: Section 3 defines row deletion and conjugate-row-conjugate column deletion; printed Conjectures 2 and 3 give Sprague–Grundy formulas for square and near-square rectairs.
 strata_touched:
   - D5/S0/Certificates/Games/CrimGrundyRefutation
+  - D5/S0/Certificates/Games/CrimRectairSquareBoundaryRefutation
 license: citation-only
 triage: anchor
 ---
@@ -21,11 +22,19 @@ row, or takes the conjugate of a row deletion in the conjugate partition.
 Thus zero rows or columns are absent, and remaining parts reattach.
 
 Section 2.2 on page 5 defines R^k_{r,c} = [c^(r-k), c-1, ..., c-k],
-for positive r,c and 0 ≤ k < min(r,c). Page 18 prints, for r ≥ 7,
-G(R^k_{r,r-1}) = 3 if k = r-2 and r is odd, and 1 otherwise.
-This note attests the printed assertion and definitions, not their truth.
-The formal refutation concerns that r ≥ 7 formula only; it gives no
-conclusion about other results, an intended claim, or a corrected formula.
+for positive r,c and 0 ≤ k < min(r,c). Page 18 prints Conjecture 2:
+
+> Let r and k be integers with 0 ≤ k < r. Then G(R^k_{r,r}) = 0 if r is
+> even or k < r − 1; = 1 if r ∈ {3, 5}, r is odd, and k = r − 1; = 2
+> otherwise.
+
+The page 5 domain permits r=1 and k=0. At those parameters, the printed
+third branch assigns 2 to R^0_{1,1}. Page 18 also prints, for r ≥ 7,
+G(R^k_{r,r-1}) = 3 if k = r-2 and r is odd, and 1 otherwise in
+Conjecture 3. This note attests the printed assertions and definitions,
+not their truth. The formal refutations concern the literal Conjecture 2
+boundary and the r ≥ 7 Conjecture 3 formula only; they give no conclusion
+about other results, intended claims, or corrected formulas.
 
 The arXiv history lists only v1, submitted 2026-06-15 at 15:09:22 UTC.
 The DataCite record also reports version 1, resource type Preprint, with
@@ -50,4 +59,5 @@ establishes only the computation checked by the Lean kernel.
 - DOI: https://doi.org/10.48550/arXiv.2606.16828
 - URL: https://arxiv.org/abs/2606.16828
 - Version and scope: https://arxiv.org/pdf/2606.16828v1, printed pages 4,
-  5, 8 and 18; Conjecture 3 and the partition, rectair and move definitions.
+  5, 8 and 18; Conjectures 2 and 3 and the partition, rectair and move
+  definitions.

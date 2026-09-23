@@ -1,0 +1,16 @@
+**定义 67.4（周期矩形网格、plaquette 和与全局 holonomy）。**
+
+取 $M,N\geq3$，顶点为
+$$
+V=\mathbb Z/M\mathbb Z\times\mathbb Z/N\mathbb Z.
+$$
+水平边 $s_{i,j}$ 连接 $(i,j)$ 与 $(i,j+1)$，竖直边 $u_{i,j}$ 连接 $(i,j)$ 与 $(i+1,j)$，指标分别模 $M,N$。由于 $M,N\geq3$，这些是无自环、无平行边的简单图边。定义 plaquette 和
+$$
+p_{i,j}=s_{i,j}+u_{i,j+1}+s_{i+1,j}+u_{i,j}.
+$$
+称边标签 flat，当且仅当全部 $p_{i,j}=0$。定义第 $i$ 行和第 $j$ 列的 holonomy
+$$
+H_i=\sum_{j\in\mathbb Z/N\mathbb Z}s_{i,j},\qquad
+U_j=\sum_{i\in\mathbb Z/M\mathbb Z}u_{i,j}.
+$$
+

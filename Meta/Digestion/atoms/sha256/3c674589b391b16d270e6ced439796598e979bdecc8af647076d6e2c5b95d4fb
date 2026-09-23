@@ -1,0 +1,33 @@
+**theorem 40.9 (A worst-start witness without a mesh assumption).** For $1\le h\le N$, define the actual consecutive-index mass
+$$
+\beta_h
+ =\min_{0\le a\le N-h}
+   \sum_{k=a}^{a+h-1}\mu_{\sigma^{-1}(k)}.
+$$
+Then
+$$
+\beta_h\le\frac1{\lfloor N/h\rfloor}
+ \le\frac{h}{N-h+1}.
+$$
+For any consecutive integer block $B=\{r,\ldots,r+h-1\}\subseteq\{0,\ldots,n\}$,
+$$
+e_{N,\theta,p}(n)
+ \ge2[\Pr(J\in B)-\beta_h]_+.
+$$
+In particular, if $h=|B_t|\le N$, where $B_t$ is the nonempty central block of Theorem 40.8, then
+$$
+e_{N,\theta,p}(n)
+ \ge2[1-t^{-2}-\beta_h]_+
+ \ge2\left[1-t^{-2}-\frac{h}{N-h+1}\right]_+.
+$$
+
+A single choice
+$$
+\delta\in(0,\mu_{\min})\setminus\mathcal G_\theta
+$$
+works as a reference phase for all these witnesses for the fixed pair $(N,\theta)$: if $a$ attains $\beta_h$, the starting point
+$$
+x=\delta+(a-r)\theta
+$$
+is a witness. Every such witness lies outside $\mathcal G_\theta$. The starting point itself is allowed to depend on the block and hence on $n,p$.
+
