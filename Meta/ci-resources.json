@@ -189,7 +189,8 @@
         "leanInspector/LeanInformationAudit",
         "leanInspector/reportInspector",
         "leanInspectorInterface/LeanInformationAuditInterface",
-        "reg/LeanInformationAuditRegTests"
+        "reg/LeanInformationAuditRegTests",
+        "reg/Reg"
       ]
     },
     {
