@@ -9,17 +9,17 @@ namespace StrataLint.Tests;
 // Lean enrollment and registration controls, not by fabricated C# proofs.
 public sealed class InformationTemplateEvidenceTests
 {
-    private const string PathA = "D5/S0/Carrier/Probe.lean";
-    private const string ModuleA = "D5.S0.Carrier.Probe";
-    private const string PathB = "D5/S0/Carrier/Binding.lean";
+    private const string PathA = "Reg/D5/S0/Carrier/Probe.lean";
+    private const string ModuleA = "Reg.D5.S0.Carrier.Probe";
+    private const string PathB = "Reg/D5/S0/Carrier/Binding.lean";
     private const string TextA = "-- synthetic evidence loader source A\n";
-    private const string TextB = "import D5.S0.Carrier.Probe\n-- synthetic sidecar source\n";
+    private const string TextB = "import Reg.D5.S0.Carrier.Probe\n-- synthetic foreignClaim source\n";
     private static readonly InformationOccurrenceKey Key = new(ModuleA, ModuleA,
         ModuleA + ".target", ModuleA + ".arena", ModuleA + ".catalog");
     private static readonly string Unit = ModuleA + ".target.__information_unit";
     private static readonly string Realization = ModuleA + ".target.__primitive_realization";
     private const string MissingDiagnostic = "IE-C050 ClosedTruthReadout "
-        + "key=D5.S0.Carrier.Probe/D5.S0.Carrier.Probe.catalog/D5.S0.Carrier.Probe.target "
+        + "key=Reg.D5.S0.Carrier.Probe/Reg.D5.S0.Carrier.Probe.catalog/Reg.D5.S0.Carrier.Probe.target "
         + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
         + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
         + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}";
@@ -33,13 +33,13 @@ public sealed class InformationTemplateEvidenceTests
         return DeclaredTemplateReviewTests.Tree(files);
     }
 
-    private static JsonElement Wire(bool declared = false, bool sidecar = false, int? compatibility = null) =>
+    private static JsonElement Wire(bool declared = false, bool foreignClaim = false, int? compatibility = null) =>
         JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
             compatibility_version = compatibility ?? DeclaredTemplateReviewTests.ManifestVersion(DeclaredTemplateReviewTests.PolicyFiles()),
-            inventory = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
-            registered = sidecar ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
+            inventory = foreignClaim ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
+            registered = foreignClaim ? [] : new[] { InformationTemplateJson.KeyJson(Key) },
             records = new[] { new
             {
                 key = InformationTemplateJson.KeyJson(Key),
@@ -49,7 +49,7 @@ public sealed class InformationTemplateEvidenceTests
                 realization_name = Realization,
                 registration_source_path = PathA,
                 statement_identity = Hash("fixture statement A"),
-                binding_source_path = declared ? sidecar ? PathB : PathA : null,
+                binding_source_path = declared ? foreignClaim ? PathB : PathA : null,
                 state = declared ? "declared_validated" : "undeclared",
                 diagnostic = declared ? null : MissingDiagnostic,
                 certificate = declared ? new
@@ -65,13 +65,13 @@ public sealed class InformationTemplateEvidenceTests
             } },
         });
 
-    private static LeanFileReport Module(InformationTemplateModuleEvidence evidence, bool sidecar = false) =>
-        new(sidecar ? [ModuleA] : [], sidecar ? [] :
+    private static LeanFileReport Module(InformationTemplateModuleEvidence evidence, bool foreignClaim = false) =>
+        new(foreignClaim ? [ModuleA] : [], foreignClaim ? [] :
             [new(Unit, "def", "fixture unit", []), new(Realization, "def", "fixture realization", [])])
         { InformationTemplates = evidence.Wire };
 
     [Theory]
-    [InlineData("D5/S0/Carrier/Probe.lean", "D5.S0.Carrier.Probe")]
+    [InlineData("Reg/D5/S0/Carrier/Probe.lean", "Reg.D5.S0.Carrier.Probe")]
     [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Probe.lean", "LeanInformationAudit.Tests.Probe")]
     public void registration_owner_uses_lean_source_root(string path, string module) =>
         Assert.Equal(module, InformationTemplateEvidence.ModuleForSource(path));
@@ -257,7 +257,7 @@ public sealed class InformationTemplateEvidenceTests
     private static InformationTemplateUniverse ImportedRealization(bool imported)
     {
         const string bridgeSource = "-- independently owned realization fixture\n";
-        var registrationSource = imported ? "import D5.S0.Carrier.Binding\n" + TextA : TextA;
+        var registrationSource = imported ? "import Reg.D5.S0.Carrier.Binding\n" + TextA : TextA;
         var snapshot = Snapshot((PathA, registrationSource), (PathB, bridgeSource));
         var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
         var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
@@ -270,7 +270,7 @@ public sealed class InformationTemplateEvidenceTests
         return Collect(snapshot, LeanAxiomReport.Create(
             new Dictionary<string, LeanFileReport>
             {
-                [PathA] = new(imported ? ["D5.S0.Carrier.Binding"] : [],
+                [PathA] = new(imported ? ["Reg.D5.S0.Carrier.Binding"] : [],
                     [new(Unit, "def", "fixture unit", [])]) { InformationTemplates = owner.Wire },
                 [PathB] = new([], [new(Realization, "theorem", "fixture realization", [])])
                     { InformationTemplates = bridge.Wire },
@@ -303,18 +303,18 @@ public sealed class InformationTemplateEvidenceTests
     }
 
     [Fact]
-    public void complete_sidecar_join_accepted()
+    public void unselected_foreign_claim_cannot_supply_a_declaration()
     {
         var snapshot = Snapshot((PathA, TextA), (PathB, TextB));
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
         {
             [PathA] = Module(InformationTemplateEvidence.Read(Wire(), PathA, snapshot)),
-            [PathB] = Module(InformationTemplateEvidence.Read(Wire(declared: true, sidecar: true), PathB, snapshot), sidecar: true),
+            [PathB] = Module(InformationTemplateEvidence.Read(Wire(declared: true, foreignClaim: true), PathB, snapshot), foreignClaim: true),
         });
         var universe = Collect(snapshot, report);
         Assert.Single(universe.Occurrences);
-        Assert.Equal(PathB, universe.Occurrences[Key].BindingSourcePath);
-        Assert.Equal(InformationTemplateBindingState.DeclaredValidated, universe.Occurrences[Key].State);
+        Assert.Null(universe.Occurrences[Key].BindingSourcePath);
+        Assert.Equal(InformationTemplateBindingState.Undeclared, universe.Occurrences[Key].State);
     }
 
     [Fact]
@@ -374,23 +374,24 @@ public sealed class InformationTemplateEvidenceTests
         {
             [PathA] = Module(InformationTemplateEvidence.Read(Wire(), PathA, snapshot)),
         });
-        Assert.Throws<FormatException>(() => Collect(snapshot, report));
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot, report,
+            [RepoPath.CreateKnown(PathA), RepoPath.CreateKnown(PathB)]));
     }
 
     [Fact]
-    public void sidecar_cannot_overwrite_inline_claim()
+    public void unselected_foreign_claim_cannot_overwrite_inline_declaration()
     {
         var snapshot = Snapshot((PathA, TextA), (PathB, TextB));
         var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
         {
             [PathA] = Module(InformationTemplateEvidence.Read(Wire(declared: true), PathA, snapshot)),
-            [PathB] = Module(InformationTemplateEvidence.Read(Wire(declared: true, sidecar: true), PathB, snapshot), sidecar: true),
+            [PathB] = Module(InformationTemplateEvidence.Read(Wire(declared: true, foreignClaim: true), PathB, snapshot), foreignClaim: true),
         });
-        Assert.Throws<FormatException>(() => Collect(snapshot, report));
+        var result = Collect(snapshot, report);
+        Assert.Equal(PathA, result.Occurrences[Key].BindingSourcePath);
     }
     private static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report) =>
-        InformationTemplateEvidence.Collect(snapshot, report, snapshot.Files.Keys.Where(path =>
-            path.Value.StartsWith("D5/", StringComparison.Ordinal) && path.Value.EndsWith(".lean", StringComparison.Ordinal)));
+        InformationTemplateEvidence.Collect(snapshot, report, [RepoPath.CreateKnown(PathA)]);
 
     [Theory]
     [InlineData("Fixture.α₁.lemma?")]
