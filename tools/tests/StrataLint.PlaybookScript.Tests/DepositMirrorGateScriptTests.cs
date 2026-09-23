@@ -1,6 +1,7 @@
+using static StrataLint.TestSupport.TransactionFixture;
 using System.Text;
 
-namespace StrataLint.Tests;
+namespace StrataLint.PlaybookScript.Tests;
 
 public sealed partial class DepositCoverWorkflowScriptTests
 {

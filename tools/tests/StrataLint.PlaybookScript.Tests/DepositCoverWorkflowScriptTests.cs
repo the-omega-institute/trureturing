@@ -1,10 +1,10 @@
+using static StrataLint.TestSupport.TransactionFixture;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.PlaybookScript.Tests;
 
 public sealed partial class DepositCoverWorkflowScriptTests
 {
@@ -321,9 +321,5 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
         Assert.NotEmpty(fixture.Status());
     }
-
-    private static string Diagnostics(ProcessOutput result) =>
-        "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)
-        + "\nstderr:\n" + Encoding.UTF8.GetString(result.StandardError);
 
 }
