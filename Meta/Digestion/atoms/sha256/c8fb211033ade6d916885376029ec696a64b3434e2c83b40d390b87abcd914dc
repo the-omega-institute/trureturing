@@ -1,0 +1,9 @@
+**命题 21.2（混合支撑与素数幂地址）。** 若 $L_i,L_j\ge0$ 且
+$\operatorname{supp}f_i\subseteq[-L_i,L_i]$、$\operatorname{supp}f_j\subseteq[-L_j,L_j]$，则
+$$
+\operatorname{supp}(\widetilde f_i*f_j)
+\subseteq[-L_i-L_j,L_i+L_j].
+\tag{21.7}
+$$
+其素数项只有 $a\log p\le L_i+L_j$ 的素数幂地址可能非零。该可能激活集合有限，并且 $(p,a)\mapsto a\log p$ 在素数与正整数指数上单射。
+

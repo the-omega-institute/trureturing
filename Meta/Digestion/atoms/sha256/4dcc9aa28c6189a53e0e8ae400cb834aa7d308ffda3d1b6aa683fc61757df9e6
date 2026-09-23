@@ -1,0 +1,17 @@
+**证明。** 有限加法与复数数乘保留偶性、光滑性和紧支撑，卷积及 involution 也保留该域。式（21.2）的各项在其已给收敛条件下复线性。involution 共轭标量，因此 $B$ 的两个变量方向如述。
+
+实加法群上的卷积交换律给 $\widetilde f*g=g*\widetilde f$。既有 `fullMixedWeilForm_eq_zeroSum` 将右侧卷积的完整零点和与源码混合型对应，再由 `explicitFormula_unconditional Z` 等于 $W$，得到（21.3）。`fullMixedWeilForm_conj` 给交换参数后的共轭关系，故 $B$ Hermitian，其对角值实，等于取实部定义的 $Q$。这一步不使用 RH 或半正定性。
+
+若 $z=B(f,g)$，展开二次型得
+$$
+Q(f+g)-Q(f-g)=4\Re z,
+\qquad
+Q(f+ig)-Q(f-ig)=-4\Im z.
+$$
+两式合并即（21.5），其中 $-i$ 的符号由第一变量共轭线性决定。再按半线性展开有限和，
+$$
+B\left(\sum_i a_if_i,\sum_jd_jf_j\right)
+=\sum_{i,j}\overline{a_i}d_jB(f_i,f_j)=a^*K_nd.
+$$
+取 $d=a$ 得二次表示；每个 $V_n$ 中的测试都有一个系数表示，故得到最后的等价。源码 `fullWeilGram_isHermitian` 与 `fullWeilGram_quadratic` 正对应这个矩阵约定，完整交叉项没有被丢弃。证毕。
+

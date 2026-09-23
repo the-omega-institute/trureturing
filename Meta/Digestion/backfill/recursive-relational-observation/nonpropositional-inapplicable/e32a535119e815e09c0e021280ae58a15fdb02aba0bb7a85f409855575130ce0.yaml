@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e32a535119e815e09c0e021280ae58a15fdb02aba0bb7a85f409855575130ce0
+  normalized_sha256: sha256:e32a535119e815e09c0e021280ae58a15fdb02aba0bb7a85f409855575130ce0
+cas_ref: sha256:e32a535119e815e09c0e021280ae58a15fdb02aba0bb7a85f409855575130ce0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-only closure of the proof atom of Proposition 138.2, read with its preceding complete statement 400f1f5142fa66faa710b1b850c4d42cd5adc85a801e0c90c729fd3cbfdf463a. This proof repeats exactly the square actual-image, invariant image, semiconjugacy, all-future and two-readout kernel, minimal stable factor, and Z-D inverse claims; it introduces no extra mathematical obligation. No frozen project GID covering the complete concrete atom was found in the audited D5 searches. At pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d, these claims reduce to Real.sq_sqrt, sq_nonneg, mul_nonneg, mul_pow, Function.Semiconj.iterate_right, Function.iterate_zero, Function.iterate_one, mul_left_cancel₀, mul_div_cancel_left₀, mul_div_cancel₀, Set.rangeFactorization_surjective, Function.Surjective.injective_comp_right and Set.eqOn_range, with substitution of the stated maps and hypotheses. The minimal factor is defined and unique on the actual image of the competing representation; gamma is only nonzero and no positivity of alpha or beta is assumed. Equation (138.3) here belongs to Proposition 138.2; no clause of the following Proposition 138.3 is settled. This receipt makes no project Lean truth claim and does not close the chain parent.
+    previous_atom_id: 400f1f5142fa66faa710b1b850c4d42cd5adc85a801e0c90c729fd3cbfdf463a
+    next_atom_id: f2283868435949bd06371ea91d54837f133a66bb6784045b075416d409aca024

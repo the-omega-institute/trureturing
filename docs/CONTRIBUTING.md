@@ -307,7 +307,10 @@ immutable commit SHA and `refs/pull/NUMBER/merge` reference. That executed
 commit must have exactly two ordered parents: the run-associated base and the
 current PR head. The base must be reachable from the observed protected target
 branch (`dev` or `integration-*`). The adapter supports non-strict branch
-protection with required checks bound to GitHub Actions and no active rulesets.
+protection with required checks bound to GitHub Actions. Active rulesets are
+supported only when every active rule is a non-strict required-checks rule
+whose GitHub Actions-bound contexts are exactly the protected required checks;
+any other active rule keeps the PR waiting with `unsupported_rulesets`.
 
 Both the executed candidate and PR head must preserve all base Git object
 identities and modes outside this narrow supported content boundary:

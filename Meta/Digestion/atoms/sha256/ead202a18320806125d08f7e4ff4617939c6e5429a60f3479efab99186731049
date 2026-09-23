@@ -1,0 +1,48 @@
+**命题 21.14（谱公式、极限、单侧误差与单调性）。** 令 $b_\mu$ 为 $b$ 在 $K$ 的特征值 $\mu\ge0$ 的正交谱分量，则
+$$
+\begin{aligned}
+E_\lambda
+&=c-b^*R_\lambda b-\lambda b^*R_\lambda^2b\\
+&=c-\sum_{\mu\ge0}
+\frac{\mu+2\lambda}{(\mu+\lambda)^2}\|b_\mu\|^2,
+\end{aligned}
+\tag{21.26}
+$$
+且
+$$
+\frac{dE_\lambda}{d\lambda}
+=\sum_{\mu\ge0}\frac{2\lambda}{(\mu+\lambda)^3}\|b_\mu\|^2\ge0.
+\tag{21.27}
+$$
+若 $b_0\ne0$，则 $E_\lambda\to-\infty$ 当 $\lambda\downarrow0$。若 $b\in\operatorname{ran}K$，令 $s=c-b^*K^\dagger b$，则
+$$
+E_\lambda\longrightarrow s,\qquad
+E_\lambda-s
+=\sum_{\mu>0}
+\frac{\lambda^2\|b_\mu\|^2}{\mu(\mu+\lambda)^2}\ge0.
+\tag{21.28}
+$$
+若另有 $\gamma>0$ 满足每个正特征值 $\mu\ge\gamma$，则在范围条件下
+$$
+0\le E_\lambda-s\le\frac{\lambda^2}{\gamma^3}\|b\|^2.
+\tag{21.29}
+$$
+
+**证明。** $K+\lambda I$ 正定，故逆存在、Hermitian 且与 $K$ 交换。直接展开原型的值，
+$$
+E_\lambda=b^*R_\lambda KR_\lambda b-2b^*R_\lambda b+c.
+$$
+由 $R_\lambda KR_\lambda=R_\lambda-\lambda R_\lambda^2$ 得第一式。在有限正交谱分解中 $R_\lambda$ 的对应值是 $(\mu+\lambda)^{-1}$，相加得到第二式。所有谱和均有限。
+
+逐项求导使用
+$$
+\frac d{d\lambda}\frac{\mu+2\lambda}{(\mu+\lambda)^2}
+=-\frac{2\lambda}{(\mu+\lambda)^3},
+$$
+得（21.27）。$b\ne0$ 时导数对每个 $\lambda>0$ 严格正；$b=0$ 时恒为 $c$。核分量贡献恰为 $-2\|b_0\|^2/\lambda$，而正谱各项有有限极限，给范围失败时的发散。范围成立等价于 $b_0=0$，于是极限是 $s$。再用
+$$
+\frac1\mu-\frac{\mu+2\lambda}{(\mu+\lambda)^2}
+=\frac{\lambda^2}{\mu(\mu+\lambda)^2}
+$$
+得（21.28）。若 $\mu\ge\gamma$，分母至少为 $\gamma^3$，求和得（21.29），不需 $\lambda\le\gamma$。正谱为空且范围成立时 $b=0$，误差为零，任意正 $\gamma$ 均适用。若把该估计用于认证，$\gamma$ 须是已取得的可靠正谱下界，而非仅有“最小正特征值”这个形式名称。证毕。
+
