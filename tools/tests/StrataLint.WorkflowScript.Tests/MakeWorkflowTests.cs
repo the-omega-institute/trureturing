@@ -1,9 +1,8 @@
 using System.Text;
 using System.Text.RegularExpressions;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {

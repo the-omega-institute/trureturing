@@ -30,7 +30,7 @@ CPU_SLAB_DEADLINE ?=
 TEST_PROJECT ?= $(HERE)/StrataLint.sln
 TEST_FILTER ?=
 SEED_EXPORT ?= automatic
-CHECK_FAST_FILTER := FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests|FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests|FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests|FullyQualifiedName=StrataLint.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks
+CHECK_FAST_FILTER := FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests|FullyQualifiedName~StrataLint.Engine.Tests.RepositoryIoAccessPolicyTests|FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests|FullyQualifiedName=StrataLint.WorkflowScript.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks
 .PHONY: help settle-batch dotnet check-fast test engineering-tests selftest capacity-audit update-renderer-contract clean-lanes xi-quantization xi-quantization-test prime-slab-search prime-slab-test prime-slab-device-test prime-slab-verify prime-slab-mutation-test prime-slab-cpu prime-slab-cpu-test prime-slab-cpu-mutation-test census-test census-frontier-performance ci-build engineering
 
 help:
