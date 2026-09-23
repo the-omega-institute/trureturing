@@ -19,7 +19,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
             Assert.Equal(WithRepositoryContract(architecture
                     ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj" } : []),
                 Strings(plan["execution"]!["tests"]!));
-            Assert.Contains("tools/StrataLint.Cli/StrataLint.Cli.csproj", Strings(plan["execution"]!["projects"]!));
+            Assert.Equal(WithRepositoryContract(new[] { architecture
+                    ? "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj"
+                    : "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" }),
+                Strings(plan["execution"]!["projects"]!));
             Assert.DoesNotContain("test-cli", Strings(plan["resources"]!));
         }
     }
