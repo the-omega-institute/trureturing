@@ -3266,6 +3266,7 @@
         "tools/Architecture/BannedSymbols.Determinism.txt"
       ],
       "execution_inputs": [
+        "Meta/Digestion/atomizers.toml",
         "lean-report-inputs.json",
         "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineProofHelper.lean",
         "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/InlineProvenanceWire.lean",
