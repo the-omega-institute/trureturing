@@ -244,6 +244,8 @@ That equivalence does not prove the latter existence for arbitrary extra primes.
 
 An actual finite completion control uses original classes 0 mod3, 0 mod9 and 2 mod27, and selected moduli 3,9,27. The keep-if-legal/uniform-move rule has 20 outcomes of total probability one: five of weight 1/6 and fifteen of weight 1/90. Each outcome contains the original covered set. The 17 original survivors have preservation probabilities 37/45 or 5/6; target 1 has probability 37/45. The legal fixed completion (0 mod3,1 mod9,2 mod27) removes target 1. Thus this control retains original phases and checks the history-dependent random-choice rule rather than assuming independence.
 
+[Report467](467-the-same-core-law-has-a-smaller-density-cap-and-tail-cutoff.md) applies the retained ordinary seven-core mass bound to this same charged process. It improves the upper density cap to 6075000000000/7235955529<840 while preserving the query bound, full original support and compatible all-depth conclusion. All coarser constants above remain valid.
+
 ## Exact consumers and verification boundary
 
 The [randomized-completion consumer](../../frontier/cover-geometry/randomized_completion_support.py) pins both the retained report462 seed and the relative-ledger summary, checks their common source certificate and mass gap, verifies the proper-divisor budgets and all finite charged-superset probabilities, and computes the rational constants above. Its [result data](../../frontier/cover-geometry/randomized_completion_support.json) also contains the adaptive finite completion control. Its checks remain enabled under optimized Python. The original terminal certificate is supplied from the source edition 1.0.1 archive; it is not copied into this report.
