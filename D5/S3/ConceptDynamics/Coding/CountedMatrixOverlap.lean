@@ -74,8 +74,7 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     split U V (join U V a b h) = (a, b) := by
   rcases a with ⟨i, j, a⟩
   rcases b with ⟨j', k, b⟩
-  dsimp at h
-  subst j'
+  cases h
   let rebuild : Fiber U V i k → Edge U × Edge V := fun p =>
     (⟨i, p.1, p.2.1⟩, ⟨p.1, k, p.2.2⟩)
   have hinv := congrArg rebuild
