@@ -12,7 +12,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -26,8 +26,8 @@ import runpy
 
 HERE=Path(__file__).resolve().parent
 PINS={
-    'certificates/supported13_hinges_certificate.json':'d484812af981dc55ee0c766f69dcdb0eb3301c18d1f0886b00e9cc726d514e7f',
-    'verify_pg1_scalar_schedule.py':'9f7be4b430abbf631a0958e96eaf860f56948d680078fe842c90c308e663289b',
+    'certificates/supported13_hinges_certificate.json':'b342d5b4aec832757c20cbdef0192baf3df82c92f46723bd9b1204394ec39082',
+    'verify_pg1_scalar_schedule.py':'ff5c6d067f417ed2bfd66d034a8e6cab13fadc3ca3ed4cd6e239c7c2964325e9',
 }
 W=F(483)
 

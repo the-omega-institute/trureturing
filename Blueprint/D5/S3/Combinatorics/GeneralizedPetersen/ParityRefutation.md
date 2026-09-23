@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The triangular prism has real-rooted independence polynomial 1+6X+6X^2 and odd step size.
+A Lean formalization of the earlier public refutation: the triangular prism has real-rooted independence polynomial 1+6X+6X^2 and odd step size.
 
 Conjecture 4.1 (Parity Conjecture), page 4 of arXiv:2601.03293v1, states: "For all integers n ≥ 2k+1, the independence polynomial I(GP(n,k),x) has only real roots if and only if k is even." Definition 2.1 supplies n >= 3 and 1 <= k < n/2. The separate computational range 20 <= n <= 30 does not restrict that conjecture.
 
@@ -40,15 +40,15 @@ $$\neg claim$$
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"pandey-parity-conjecture-refutation","declaration_gid":"D5/S3/Combinatorics/GeneralizedPetersen/ParityRefutation.result","resolution_kind":"refuted"} -->
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Rohan Pandey (2026). *Parity-Dependent Real-Rootedness in Independence Polynomials of Generalized Petersen Graphs*. URL: <https://arxiv.org/abs/2601.03293v1>.
+*Citation.* demonstrandum-research/artifacts (repository publisher) (2026). *Refutation of the Parity Conjecture for Independence Polynomials of Generalized Petersen Graphs (arXiv:2601.03293, Conjecture 4.1)*. URL: <https://github.com/demonstrandum-research/artifacts/blob/94db9ed50d48a57aae5ccb72e6a95a2b8f8f39d3/problems/p2-factory/kills/pandey-parity/WRITEUP.md>.
 
 *Commentary.*
 
 For n=3 and k=1 the graph is the triangular prism. Its independent sets are the empty set, six singletons, and six pairs u_i,v_j with i different from j. There are no larger independent sets. Thus its actual polynomial evaluates to 1+6z+6z^2. If z=a+bi is a zero, its imaginary part gives 6b(1+2a)=0. If b is nonzero then a=-1/2, and the real part gives -1/2-6b^2=0, contradicting nonnegativity of b^2. Every zero is real, but k=1 is not even, contradicting the forward direction of the asserted biconditional.
 
-The prism and its real-rooted polynomial are classical ingredients. The prism is claw-free, so its real-rootedness also follows from the Chudnovsky-Seymour theorem cited by Pandey. The argument here uses direct finite counting and elementary arithmetic; it claims no new graph family or root-location technique. It addresses the literal later conjecture, without classifying other parameter pairs.
+The earlier public refutation in demonstrandum-research/artifacts, commit 94db9ed50d48a57aae5ccb72e6a95a2b8f8f39d3, problems/p2-factory/kills/pandey-parity/WRITEUP.md, already gives this exact counterexample. Its provider commit timestamp is 2026-06-13T01:23:03Z; its internal June 11 date is unverified. The separate prior-refutation Library note pins that source. That note also explains the published map u_j to v'_(3j mod 7), v_j to u'_(3j mod 7), an isomorphism GP(7,2) to GP(7,3). Equal independence polynomials and opposite step parity contradict the full biconditional without computing roots. No external enumeration, Sturm, checker, or audit claims are adopted here.
+
+This Lean theorem formalizes the already published refutation; it is not a newly resolved open problem. The graph definition and conjecture are taken from Pandey; the refutation is due to the distinct earlier public note cited above.
 
 ## References
 

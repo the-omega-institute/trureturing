@@ -1,0 +1,16 @@
+**引理 32.6（循环平均和局部合法支撑的尖锐常数）。** 在长度 $\ell\ge2$ 的轨道 $O$ 上置
+$$
+c_{\rm cyc}(O)=\frac{\lfloor\ell^2/4\rfloor}{\ell}.
+$$
+对任意实函数 $f$，以及任意非负、支撑于真子集 $L\subsetneq O$ 的函数 $u$，分别有
+$$
+\sum_{x\in O}|f(x)-\overline f|
+\le c_{\rm cyc}(O)\sum_{x\in O}|f(gx)-f(x)|,
+\qquad
+\sum_{x\in O}u(x)\le\frac{r_L}{2}\sum_{x\in O}|u(gx)-u(x)|,
+\tag{32.13}
+$$
+其中 $\overline f=\ell^{-1}\sum_Of$，$r_L$ 是 $L$ 的最长连续循环段长度，空集时为零。两个常数均尖锐。
+
+证明。$f-\overline f=\ell^{-1}\sum_{r=0}^{\ell-1}(f-f\circ g^r)$。每一平移差沿较短循环路径望远镜展开，$\ell^1$ 范数至多 $\min(r,\ell-r)$ 倍的相邻变差；这些路径长度之和为 $\lfloor\ell^2/4\rfloor$，得第一界。令 $f$ 为连续 $m=\lfloor\ell/2\rfloor$ 个相位的示性函数，其偏差为 $2m(\ell-m)/\ell$，变差为 $2$，达到常数。第二界对每个正水平集成立：它的每个连通段至多长 $r_L$，并有两条边界，所以大小至多 $r_L/2$ 倍边界数。对 $u$ 的有限个正水平增量求和，得到质量与变差的对应公式。最长段上的常数平台达到等号；$L=\varnothing$ 时 $u=0$。$\square$
+

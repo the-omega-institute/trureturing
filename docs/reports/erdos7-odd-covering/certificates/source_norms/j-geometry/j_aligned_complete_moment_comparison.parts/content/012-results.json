@@ -1,0 +1,32 @@
+{
+  "length": 59,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 25,
+      "part": {
+        "path": "content/012-results/000000-000025.json",
+        "sha256": "43c727185b1132e1d0a665936b8fd4433bcb60b89a3ab6a60e2d59da4db061d8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 25,
+      "stop": 50,
+      "part": {
+        "path": "content/012-results/000025-000050.json",
+        "sha256": "f7a52703eaf6cc4cc54c381c17d5d62e3b77d7d53053d7f63a6f25d2639b4b85",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 50,
+      "stop": 59,
+      "part": {
+        "path": "content/012-results/000050-000059.json",
+        "sha256": "3999f4ed7c19cc1000f3e1015d2ab9d7c36fcf31814127d87f4bf75d8f2a1506",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -5,14 +5,46 @@ part is independently SHA-256 bound; assembly rejects missing, duplicate,
 out-of-order, escaped, or unreferenced parts. This is experiment IO, not proof.
 """
 from hashlib import sha256
+from base64 import b85decode, b85encode
 import json
 from pathlib import Path
 import os
 from tempfile import TemporaryDirectory
 from urllib.parse import quote
+import zlib
 
 FORMAT = 'erdos7-semantic-certificate-v1'
 PART_LINES = 800
+COMPRESS_BYTES = 250000
+MAX_COMPRESSED_VALUE_BYTES = 16 * 1024 * 1024
+
+
+def _compressed_value(value):
+    """Decode exactly one bounded zlib stream, retaining the original JSON bytes."""
+    _keys(value, ('byte_length', 'sha256', 'data'))
+    length, digest, data = value['byte_length'], value['sha256'], value['data']
+    if type(length) is not int or not 0 <= length <= MAX_COMPRESSED_VALUE_BYTES:
+        raise ValueError('invalid compressed certificate byte length')
+    if not isinstance(digest, str) or len(digest) != 64 or any(c not in '0123456789abcdef' for c in digest):
+        raise ValueError('invalid compressed certificate SHA-256')
+    if not isinstance(data, str) or not data.isascii():
+        raise ValueError('invalid compressed certificate base85')
+    try:
+        packed = b85decode(data.encode('ascii'))
+    except (ValueError, OverflowError) as error:
+        raise ValueError('invalid compressed certificate base85') from error
+    if b85encode(packed).decode('ascii') != data:
+        raise ValueError('noncanonical compressed certificate base85')
+    decoder = zlib.decompressobj()
+    try:
+        raw = decoder.decompress(packed, length + 1)
+    except (zlib.error, OverflowError) as error:
+        raise ValueError('invalid compressed certificate stream') from error
+    if len(raw) != length or not decoder.eof or decoder.unused_data or decoder.unconsumed_tail:
+        raise ValueError('incomplete or excess compressed certificate bytes')
+    if sha256(raw).hexdigest() != digest:
+        raise ValueError('compressed certificate SHA-256 mismatch')
+    return json.loads(raw.decode('utf-8'), object_pairs_hook=_unique)
 
 
 def _unique(pairs):
@@ -79,6 +111,8 @@ def read_artifact_bytes(path):
         value = json.loads(payload, object_pairs_hook=_unique)
         if reference['kind'] == 'value':
             return value
+        if reference['kind'] == 'value-zlib-base85':
+            return _compressed_value(value)
         if reference['kind'] == 'object':
             if not isinstance(value, dict):
                 raise ValueError('object part is not an object')
@@ -171,6 +205,11 @@ def _write_semantic_certificate(path, text):
     def store_bytes(encoded, route, kind):
         if len(encoded.splitlines()) > 1000:
             raise ValueError('certificate descriptor exceeds file capacity')
+        if kind == 'value' and COMPRESS_BYTES <= len(encoded) <= MAX_COMPRESSED_VALUE_BYTES:
+            compressed = _bytes({'byte_length': len(encoded), 'sha256': sha256(encoded).hexdigest(),
+                                 'data': b85encode(zlib.compress(encoded)).decode('ascii')})
+            if len(compressed) < len(encoded):
+                encoded, kind = compressed, 'value-zlib-base85'
         name = route + '.json'
         target = directory / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -226,3 +265,15 @@ def write_certificate_text(path, text, encoding='utf-8', errors=None):
                 os.replace(previous_parts, directory)
             raise
     return len(text)
+
+
+def named_artifact(directory, name):
+    """Locate one explicitly named artifact among the directory's topic groups."""
+    directory, name = Path(directory), str(name)
+    if not name or Path(name).name != name or name in ('.', '..'):
+        raise ValueError('artifact name must be a single filename')
+    matches = [group / name for group in directory.iterdir()
+               if group.is_dir() and (group / name).is_file()]
+    if len(matches) != 1:
+        raise ValueError('expected one topic owner for artifact: ' + name)
+    return matches[0]

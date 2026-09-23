@@ -1,0 +1,11 @@
+**定理 128.5。**
+$$
+I(Z;Y_n\mid\mathcal Y_n)
+=\frac12\log\frac{\det S_n}{\det R_n}
+=\frac12\log\frac{\det J_{n+1}}{\det J_n}
+$$
+$$
+=\frac12\log\det(I+R_n^{-1/2}H_n\Sigma_nH_n^TR_n^{-1/2})\ge0.
+$$
+增量为零当且仅当 $H_n=0$。
+

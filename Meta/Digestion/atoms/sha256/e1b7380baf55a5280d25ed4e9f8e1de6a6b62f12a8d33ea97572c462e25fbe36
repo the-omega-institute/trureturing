@@ -1,0 +1,31 @@
+### 128.5 Fibonacci 两次读取
+
+取
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\quad
+C_0=C_1=(1,0),\quad m_0=0,\quad\Sigma_0=I_2,\quad R_0=R_1=1.
+$$
+于是 $H_0=(1,0),H_1=(1,1)$，观测为
+$Y_0=Z_1+\epsilon_0,Y_1=Z_1+Z_2+\epsilon_1$。精度与协方差为
+$$
+J_1=\begin{pmatrix}2&0\\0&1\end{pmatrix},\qquad
+J_2=\begin{pmatrix}3&1\\1&2\end{pmatrix},
+$$
+$$
+\Sigma_1=\begin{pmatrix}1/2&0\\0&1\end{pmatrix},\qquad
+\Sigma_2=\frac15\begin{pmatrix}2&-1\\-1&3\end{pmatrix}.
+$$
+均值计算为
+$$
+m_1=(y_0/2,0)^T,\qquad
+\eta_2=(y_0+y_1,y_1)^T,\qquad
+m_2=\frac15(2y_0+y_1,-y_0+2y_1)^T.
+$$
+创新方差 $S_0=2$，$S_1=1+H_1\Sigma_1H_1^T=5/2$，第二次创新为 $\nu_1=Y_1-Y_0/2$。故
+$$
+I(Z;Y_0)=\frac12\log2,\qquad
+I(Z;Y_0,Y_1)=\frac12\log5,\qquad
+I(Z;Y_1\mid Y_0)=\frac12\log(5/2).
+$$
+两步的 $\frac12\log5$ 是累计量，$\frac12\log(5/2)$ 是第二步增量。无噪声时两行 $H_0,H_1$ 线性独立，能恢复 $Z$；当前噪声模型只给所示正定后验协方差，不能称为已经无误恢复初态。
+

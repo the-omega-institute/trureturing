@@ -1,0 +1,32 @@
+{
+  "length": 3,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/005-records/000000/single.json",
+        "sha256": "4042d26c649c1c9ea8ed44e7b700f7feacaf835422c67f06a0144fa93ae055d3",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/005-records/000001/single.json",
+        "sha256": "34982d4792dd5eeb68687aba5541119dc7361e0edd250c93344782618114fea2",
+        "kind": "singleton"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/005-records/000002/single.json",
+        "sha256": "bee920fbe5770f05397386e6dc7c6c352a26dfd66a0d19b637e07ad06c388bb0",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

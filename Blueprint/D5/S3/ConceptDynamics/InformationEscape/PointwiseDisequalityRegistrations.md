@@ -176,5 +176,6 @@ The source theorem satisfies the table law through the bridge; two constant zero
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseDisequalityRegistrations.transient_bridge`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/PointwiseDisequalityRegistrations.transient_lawSensitive`
 - Dependency: [D5/S0/Certificates/SkeletonChannelRetraction](../../../S0/Certificates/SkeletonChannelRetraction.md)
+- Dependency: [D5/S3/ConceptDynamics/InformationEscape/EscapeRecord](EscapeRecord.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/PointwiseRegistrationTemplates](PointwiseRegistrationTemplates.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog](../InformationEscapeHierarchy/StructuralCatalog.md)

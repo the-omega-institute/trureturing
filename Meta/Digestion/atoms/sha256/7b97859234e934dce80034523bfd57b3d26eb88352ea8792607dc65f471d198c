@@ -1,0 +1,24 @@
+**定理 14.9（目标恢复与含隐藏余项的积分风险）。** 在假设14.4下，对任意 $f\in\mathcal H$ 和合法割 $I$，以下三个条件等价：
+$$
+\begin{aligned}
+f=P_If
+&\iff \bigl[Qf=0\ \text{且}\ D_Sf=0\text{ 对每个 }S\nsubseteq I\bigr]\\
+&\iff \bigl[Qf=0\ \text{且}\ K_Jf=0\text{ 对每个 }J\in\mathcal J(E),\ J\nsubseteq I\bigr].
+\end{aligned}
+\tag{14.17}
+$$
+它们也等价于存在 $h:B_I\to\mathbb R$ 使 $f=h(q_I)$ 在 $\mu$ 几乎处处成立。并且
+$$
+\mathscr R_I(f)
+=\|Qf\|_2^2+\sum_{S\nsubseteq I}\|D_Sf\|_2^2
+=\|Qf\|_2^2+\sum_{\substack{J\in\mathcal J(E)\\J\nsubseteq I}}\|K_Jf\|_2^2.
+\tag{14.18}
+$$
+对 $I\subseteq I'$ 的风险下降为
+$$
+\mathscr R_I(f)-\mathscr R_{I'}(f)
+=\sum_{\substack{S\subseteq I'\\S\nsubseteq I}}\|D_Sf\|_2^2
+=\sum_{\substack{J\subseteq I',\ J\nsubseteq I\\J\in\mathcal J(E)}}\|K_Jf\|_2^2.
+\tag{14.19}
+$$
+

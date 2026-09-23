@@ -1,0 +1,18 @@
+**命题 141.11（连续窗口的精确参考移位）。** 固定整数 $a,b\ge0$、$a+b=R$，并固定同一个确定函数 $F:\mathcal L_{k,R}\to\mathbb F_2$。在每个整数顶点 $t$ 使用
+$$
+F_t(r)=F(r_{t-a},\ldots,r_{t+b-1}),
+$$
+即使用这一连续关系窗并在顶点 $t$ 报方向。定义在顶点 $t+b$ 的严格过去规则
+$$
+\widetilde F_{t+b}
+=F_t\oplus\bigoplus_{j=t}^{t+b-1}(1-r_j).
+\tag{141.24}
+$$
+这是合法窗口规则之间的双射，且逐路径保持运输缺陷：
+$$
+\widetilde F_{t+b+1}\oplus\widetilde F_{t+b}\oplus c_{t+b}
+=F_{t+1}\oplus F_t\oplus c_t.
+\tag{141.25}
+$$
+因此在平稳来源中，这些相同总长度的连续窗口合同具有相同最优缺陷。
+

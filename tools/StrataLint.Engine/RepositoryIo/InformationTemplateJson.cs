@@ -7,8 +7,6 @@ namespace StrataLint.Engine;
 internal sealed record InformationOccurrenceKey(
     string Root, string RegistrationModule, string Theorem, string ObjectArena, string Catalog);
 
-internal sealed record InformationTemplateContentInput(string Path, string Sha256);
-
 // Strict declared-template evidence primitives; the Lean producer owns wire bytes.
 internal static class InformationTemplateJson
 {

@@ -1,0 +1,103 @@
+{
+  "schema": "erdos7-joint-orientation-carrier-mass-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/monotone_product_carrier_mass.py": "320fb41c8422ac579e18563d2f776470d9caf109ff5cd84248080b5f285160ac",
+    "certificates/source_norms/source-budgets/monotone_product_carrier_mass.json": "2b0d5a9eff59a3c44fa1c5f9f8854f2471e0d1dc14607817ac9980395a7a5e93"
+  },
+  "sigma_limit": "1/3",
+  "face_mass": "53/360",
+  "S0_sigma_coefficient": "1/10",
+  "E_rho_coefficient": "1",
+  "uniform_final_factor_margin": "8/3",
+  "examples": [
+    {
+      "sigma": "0",
+      "S0_upper": "53/360",
+      "factor_slacks": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/50",
+      "S0_upper": "1343/9000",
+      "factor_slacks": [
+        "482/1225",
+        "72/245",
+        "239/1225",
+        "17/175",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/27",
+      "S0_upper": "163/1080",
+      "factor_slacks": [
+        "28/39",
+        "125/234",
+        "124/351",
+        "41/234",
+        "0"
+      ]
+    },
+    {
+      "sigma": "6/49",
+      "S0_upper": "2813/17640",
+      "factor_slacks": [
+        "4584/2107",
+        "3330/2107",
+        "2148/2107",
+        "1038/2107",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/8",
+      "S0_upper": "23/144",
+      "factor_slacks": [
+        "31/14",
+        "45/28",
+        "29/28",
+        "1/2",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/4",
+      "S0_upper": "31/180",
+      "factor_slacks": [
+        "11/3",
+        "5/2",
+        "3/2",
+        "2/3",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/3",
+      "S0_upper": "13/72",
+      "factor_slacks": [
+        "4",
+        "5/2",
+        "4/3",
+        "1/2",
+        "0"
+      ]
+    }
+  ],
+  "excluded_old_relaxation_witness": {
+    "sigma": "1/8",
+    "common_loss": "123/1000",
+    "pair_losses": [
+      "2/877",
+      "2/877"
+    ],
+    "qK_upper": "765629/877000",
+    "concentration_gap": "873/438500"
+  },
+  "scope": "Ordinary actual-source theorem S0<=53/360+sigma/10 and E<=S0+rho through sigma=1/3. Retains the signed-source polynomial and the common two-orientation concentration. Algebra checks supplement the continuum proof. No actual-source optimality, global comparison, Lean or unrestricted Erdos7 conclusion."
+}

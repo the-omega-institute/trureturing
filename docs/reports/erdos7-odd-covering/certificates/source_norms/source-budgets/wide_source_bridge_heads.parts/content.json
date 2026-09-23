@@ -1,0 +1,57 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-expanded-source-original-heads-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "7697b99e9703032db71af40feef07ee21d930c1c9b154fd5ebdd3e440a16cd31",
+    "kind": "value"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "2/27",
+      "rho": "1/13000",
+      "rbar": "1/2600",
+      "h1min": "80/243",
+      "v0": "27/1300",
+      "v1": "4403/208000",
+      "gap": "13277/631800",
+      "tbar": "58/19",
+      "Cbar": "415/93",
+      "kbar": "160/77",
+      "budget_increments": [
+        "83/24300",
+        "1/486",
+        "1/150"
+      ],
+      "c": [
+        "97/135",
+        "499/1215",
+        "22/81",
+        "22/243"
+      ],
+      "H": [
+        "1847/14580",
+        "1519/13122",
+        "91/1215",
+        "1619/65610"
+      ],
+      "positive7": "263/4200"
+    }
+  },
+  "objective_rows": {
+    "path": "content/003-objective_rows.json",
+    "sha256": "b74cd5e687c4091d7a969b7477bebcf7238ca787a7b1f0a8fabe1cc58da10f6f",
+    "kind": "array"
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "independent_rational_comparisons": {
+    "kind": "inline",
+    "value": 312
+  }
+}

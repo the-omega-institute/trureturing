@@ -1,0 +1,19 @@
+**命题 113.2（确定共同预算的充要条件）。** 对任一上述确定预算序列 $(m_n)$，下列两项等价：
+
+(a)
+$$
+\frac{m_n}{\log(n+1)}\longrightarrow+\infty
+\qquad(n\longrightarrow\infty).
+\tag{113.2a}
+$$
+
+(b) 对每个已知有限字母表 $\mathcal A$、$W,r,b$，存在一族共同规则 $\Phi_n$，只使用这些已知输入、预算和两份可见记录，使
+$$
+\forall(T,E)\text{ 满足定义 113.1}\quad
+\exists C_{T,E,W,r,b,(m_n)}<\infty\quad
+\forall n\ge0,k\ge2,d\in\{0,1\}:
+\quad
+\Pr_{d,k}(\Phi_n\ne d)\le\frac{C_{T,E,W,r,b,(m_n)}}{n+1}.
+\tag{113.2b}
+$$
+规则不使用 $\tau,T,E,\eta,\gamma$ 或传感器规模界。

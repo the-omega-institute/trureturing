@@ -1,0 +1,15 @@
+**推论 28.7（图访问、已获样点时间及既有因子化的任务域）。** 设共同外部钟 $\theta$ 连续严格递增、$\theta(0)=0$，同源且同时的端口读数为 $(r_p(\theta(s)),z_p(\theta(s)))$。若实际访问到零点附近任意小正内部时间，观察到的有向图 germ 就是 $g_p$；此结论无需 $\theta$ 可微或有正导数。三阶射流识别之后，对任一已获且有初始分支证书的样点 $(s_i,r_i,z_i)$，唯一内部时间和准备场分别为
+$$
+\theta(s_i)=t_p(r_i),\qquad u_p(t_p(r_i)).
+\tag{28.114}
+$$
+只有这些实际已获样点的钟值由此确定，不确定未采样钟插值，更不重建或商掉完整档案。
+
+证明。$r_t>0$ 和 $\theta$ 的连续严格单调性保留图与方向，零点相连的小正访问保留 germ。对已识别参数应用定理28.2的单调逆，得到（28.114）。有初始跳跃的钟不必提供 germ；没有到达指定正阈值的钟也不提供该记录。
+
+精确图射流属于理想访问，不是免费有限记录。即便确实取得 $r=0,h,2h,3h$、且 $g(0)=0$ 精确，第三前向差分 $[g(3h)-3g(2h)+3g(h)]/h^3$ 在三个非初始标量各有误差 $\epsilon$ 时仅噪声项已有 $7\epsilon/h^3$ 界；截断偏差还需四阶导数，位置误差另计。第29节另给两份实际记录的局部结论。
+
+对一个选定的参数邻域，以参数 $p$ 为载体，精确射流接口由定理28.3单射；若要解码已获样点的准备场，则载体取带这些实际 $r_i$ 的 $(p,(r_i)_i)$，接口同时保留射流与 $(r_i)_i$，仍单射。直接应用既有 [InjectiveInterfaceTargetFactorization](../../../D5/S3/ConceptDynamics/RefinementFactorization/InjectiveInterfaceTargetFactorization.lean) 的 `injective_interface_factors_every_target`，或 [RealizedImageKernelFactorization](../../../D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean) 的 `realized_image_unique_factorization_iff_reverse_kernel`，可因子化参数与这些指定准备场任务。此单射前提不施于含任意钟和旧记录的完整实现集合；后者可有多个实现共享同一参数任务。任务的稳定性、求值资源和新操作合法性仍须各自的界。
+
+共同钟消去沿用定理21.2与命题23.4—推论23.5的任务区别，初始方向与端点值的区别沿用第27节及 [GoldenThreadBlowup](../../../D5/S3/CompletionDynamics/GoldenMobius/GoldenThreadBlowup.lean)。成熟的初始输出／Lie 导数方法见 Sontag, *Dynamic compensation, parameter identifiability, and equivariances*, PLOS Computational Biology（2017），[作者原文](https://www.sontaglab.org/FTPDIR/dynamic_compensation_parameter_identifiability_equivariances_sontag_plos2017.pdf)第5—6页；这里仅使用有限阶导数，不假定解析性，也不从所有 Taylor 系数相同反推一般光滑轨迹相同。[FiniteCrystalTimeFrequencyBridge](../../../D5/S3/ObserverMemory/FourierFibers/FiniteCrystalTimeFrequencyBridge.lean) 的 `first_crystal_time_window_injective` 与 [FinitePronyNodeIdentification](../../../D5/S3/Analytic/GoldenTomography/FinitePronyNodeIdentification.lean) 的 `recurrence_window_identifies_node_roots` 要求其有限指数模态模型；这里没有这种不变模态前提。[ProjectiveJetScaleInvariance](../../../D5/S3/Analytic/Toroidal/ProjectiveJetScaleInvariance.lean) 处理常值输出尺度，[PairCalibratedSecondMagnusObservability](../../../D5/S3/Observer/AgencyHolonomy/PairCalibratedSecondMagnusObservability.lean) 允许各对不同时间，均不替代此处的共同阈值与全 PDE 桥梁。$\square$
+

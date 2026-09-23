@@ -165,11 +165,10 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let mut sourceModules := #[mod]
   sourceModules := sourceModules ++ (← (← mod.transImports.fetch).await)
   -- Inspector loads this fixed judge even for an empty registration inventory.
-  -- Demand and trace its native closure independently of the reported module.
+  -- Demand its build without making this program a report data dependency.
   let some driver := (← getWorkspace).findModule? `LeanInformationAudit.Registry
     | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
-  exports := exports.push (← driver.exportInfo.fetch)
-  sourceModules := sourceModules.push driver ++ (← (← driver.transImports.fetch).await)
+  let driverBuild ← driver.exportInfo.fetch
   for name in claims do
     let some claim := (← getWorkspace).findModule? name.toName
       | error s!"utility claim module is not in the Lake workspace: {name}"
@@ -191,7 +190,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   let workspace ← getWorkspace
   let env := workspace.augmentedEnvVars
   let file := pkg.buildDir / "lean-inspector" / "modules" / s!"{mod.name}.zip"
-  (deps.add (Job.mixArray exports) |>.add inspector).mapM fun _ => do
+  (deps.add (Job.mixArray exports) |>.add inspector |>.add driverBuild).mapM fun _ => do
     -- Inspector's private import mode reads transitive private values, also
     -- through public imports. Lake's legacy trace follows that same closure;
     -- allTransTrace follows each import's visibility and can omit those values.
@@ -284,14 +283,8 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
   let config ← readJson inputs
   let names ← strings config "modules"
   observePhase "lake-inputs" "finish"
-  -- Demand ordinary defaults independently of row traces. Audit/default-only
-  -- changes still fail the invocation without invalidating unrelated rows.
-  let defaults ← match ← (parseTargetSpec (← getWorkspace) s!"@{pkg.baseName}").toBaseIO with
-    | .ok specs => pure specs
-    | .error err => error err.toString
-  observePhase "lake-defaults" "start"
-  discard <| (← buildSpecs defaults).await
-  observePhase "lake-defaults" "finish"
+  -- The report owns registered modules. The caller supplies program targets
+  -- from its resource selection in the same Lake invocation.
   -- Shared native dependency jobs compose continuations; no per-miss promise
   -- wait, readiness polling, or independent dependency/freshness planner.
   let alreadyStarted ← reportState.started.get

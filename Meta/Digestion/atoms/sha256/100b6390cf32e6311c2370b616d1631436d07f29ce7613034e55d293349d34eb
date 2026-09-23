@@ -1,0 +1,80 @@
+### 45.5 固定目标与范数紧目标族的一致收敛
+
+继续采用第45.4节的非空紧来源类 $\Theta$，并保留同一个目标及同一个来源合同。
+
+对任意 $\theta,\theta'\in\Theta$，三角不等式和通道收缩给
+$$
+|f_n(\theta)-f_n(\theta')|
+\le D(q_n(\theta),q_n(\theta'))
+\le D(\theta,\theta').
+$$
+取上确界后仍有
+$$
+|f(\theta)-f(\theta')|\le D(\theta,\theta').
+$$
+故所有 $f_n$ 与 $f$ 都在来源距离上 $1$-Lipschitz；特别地，$f$ 连续。对于每个固定目标 $\xi$，
+$$
+\boxed{
+\forall\varepsilon>0\ \exists N_{\xi,\varepsilon}\;
+\forall n\ge N_{\xi,\varepsilon}\ \forall\theta\in\Theta,
+\quad0\le f(\theta)-f_n(\theta)<\varepsilon.
+}
+\tag{45.24}
+$$
+有限网证明不需要另设一般极限定理。取 $\Theta$ 的有限 $\varepsilon/4$-网 $\theta_1,\ldots,\theta_s$。每个网点上 $f_n(\theta_i)\uparrow f(\theta_i)$，所以存在共同 $N$ 使全部网点缺口小于 $\varepsilon/2$。任意 $\theta$ 选择距离小于 $\varepsilon/4$ 的网点，由两次 Lipschitz 估计，
+$$
+f(\theta)-f_n(\theta)
+\le2D(\theta,\theta_i)+f(\theta_i)-f_n(\theta_i)
+<\varepsilon.
+$$
+单调性保证所有 $n\ge N$ 同时成立，证明（45.24）。也可将其识别为紧空间上连续单调收敛的 Dini 机制，但这里已完整给出所需有限网证明。
+
+由此得到具体的候选输入保证。若 $n\ge N_{\xi,\varepsilon}$，且某个实际允许候选满足
+$$
+f_n(\widehat\theta_n)\le e_n(\xi)+\eta,\qquad\eta\ge0,
+$$
+则
+$$
+\boxed{
+f(\widehat\theta_n)<e_n(\xi)+\eta+\varepsilon
+\le E(\xi)+\eta+\varepsilon.
+}
+\tag{45.25}
+$$
+这是同一个候选初态 $\widehat\theta_n$ 产生整条历史后的保证，不是逐层选择多个来源再拼接。
+
+（45.24）的 $N_{\xi,\varepsilon}$ 依赖固定目标及来源类。有限网中各点的收敛深度没有显式求出，不能将这个存在量冒称可取得速率或停止条件。仅从当前有限数据看见小缺口或平台，仍不能知道已超过该深度。
+
+**非空完成范数紧目标族。**
+
+固定同一个 $\Theta$。对任意相容目标 $\xi,\zeta$，有限层三角不等式给
+$$
+|e_n(\xi)-e_n(\zeta)|
+\le D(\xi_n,\zeta_n)
+\le\mathsf d_\infty(\xi,\zeta).
+$$
+例如，对所有 $\theta$ 有 $D(\xi_n,q_n\theta)\le D(\xi_n,\zeta_n)+D(\zeta_n,q_n\theta)$；取下确界，再交换 $\xi,\zeta$ 即得。完成距离到固定集合 $\mathcal S_\Theta$ 同样满足
+$$
+|E(\xi)-E(\zeta)|\le\mathsf d_\infty(\xi,\zeta).
+$$
+因此 $e_n$ 与 $E$ 都对目标完成距离 $1$-Lipschitz。
+
+若目标族 $\Xi\ne\varnothing$ 在 $\mathsf d_\infty$ 下紧，则
+$$
+\boxed{
+\sup_{\xi\in\Xi}\bigl(E(\xi)-e_n(\xi)\bigr)\longrightarrow0.
+}
+\tag{45.26}
+$$
+证明。取 $\Xi$ 的有限 $\varepsilon/4$-网 $\xi_1,\ldots,\xi_s$。由（45.19），各网点缺口趋零，选共同 $N$ 使网点缺口都小于 $\varepsilon/2$。任意目标与近网点之间，两次 Lipschitz 估计给
+$$
+E(\xi)-e_n(\xi)
+\le2\mathsf d_\infty(\xi,\xi_i)+E(\xi_i)-e_n(\xi_i)
+<\varepsilon\qquad(n\ge N).
+$$
+这证明额外目标紧性下的一致收敛，但未提供有效有限网或网点收敛期限，故仍不是自动可计算的尾速率。
+
+这里要求的是完成泛函范数所给的紧性。即使来源类固定且紧，所有相容目标的集合也不因而完成范数紧。第45.6节给一个已经弱星紧、但仍完全没有一致尾收敛的明确目标族。
+
+范数紧性是此处一致收敛的充分条件，不声称每一个一致收敛的目标族都必须范数紧。这两项有限网论证是既有紧性／Dini机制在所声明来源检验中的应用。
+

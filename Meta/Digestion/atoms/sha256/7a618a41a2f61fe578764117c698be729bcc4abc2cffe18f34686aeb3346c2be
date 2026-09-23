@@ -1,0 +1,8 @@
+**命题 21.18（有限矩阵误差证书与有理负方向）。** 对固定有限 Hermitian 矩阵 $K$，若已取得 Hermitian 近似 $\widehat K$ 及可靠误差 $\|K-\widehat K\|_{\rm op}\le\varepsilon$，则
+$$
+v^*\widehat Kv+\varepsilon\|v\|^2<0
+\Longrightarrow v^*Kv<0.
+\tag{21.33}
+$$
+若 $K$ 有任意复系数负方向，则也有 $(\mathbb Q+i\mathbb Q)^n$ 中的负方向。
+

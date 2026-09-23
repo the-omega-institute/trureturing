@@ -1,0 +1,18 @@
+### 48.2 全部幅度的最近有限前缀与精确截止长度
+
+固定 \(A>0\)、\(\rho=\lambda(A)^{-1}\)，仍记
+\(T^\star=\mathcal E(-A\mathbf1)\)。对整数 \(N\ge1\)，定义
+\[
+\mathcal F_{A,N}
+=\{b\in[-A,A]^{\mathbb N}:b_i=0\text{ 对所有 }i\ge N\},
+\qquad
+\mathcal J_{A,N}=\mathcal E(\mathcal F_{A,N}),
+\]
+并取同一负前缀
+\[
+b^{A,N}_i=
+\begin{cases}-A,&i<N,\\0,&i\ge N,\end{cases}
+\qquad T_{A,N}=\mathcal E(b^{A,N}).
+\]
+这里 \(N\) 是允许非零坐标的**前缀截止长度**，不是任意散布坐标的非零个数。本节不把这两个资源量混同。
+

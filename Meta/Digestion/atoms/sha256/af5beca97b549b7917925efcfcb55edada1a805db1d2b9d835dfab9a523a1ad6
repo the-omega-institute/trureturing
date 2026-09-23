@@ -1,0 +1,12 @@
+**定理 18.2（完整状态演化的常值容量钟刚性）。** 设 $M,N$ 均为正对角矩阵，$\phi:[0,\infty)\to[0,\infty)$ 是任意函数。则
+$$
+S_N(t)=S_M(\phi(t))\quad\text{对所有 }t\ge0
+\tag{18.3}
+$$
+当且仅当存在 $c>0$ 使
+$$
+\boxed{\phi(t)=ct\quad(t\ge0),\qquad N=M/c.}
+\tag{18.4}
+$$
+若另有 $\operatorname{tr}N=\operatorname{tr}M$，则 $c=1,N=M$。式（18.3）是全部初态上的完整状态等式；一个边界端口的相同响应不具有此推论。无需预设 $\phi$ 连续或可微。
+

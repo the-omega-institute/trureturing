@@ -1,0 +1,10 @@
+- DLMF [18.12.10](https://dlmf.nist.gov/18.12#E10) 给第二类 $U_k$ 的生成式；乘 $(1-z)$ 才得到 $U_k-U_{k-1}$。本模型的解析半径由实际极点证明，不从默认正交区间移植。
+
+Cauchy 系数估计、Banach 齐次幂级数与紧嵌入、几何／负二项分布、对数配分函数的协方差 Hessian 及 Shannon 链式法则均为标准方法。成熟标量族的归属不代替本递归映射的最优性、临界来源闭包或取得条件证明；本节的综合推导不主张文献原创优先权或穷尽文献搜索。
+
+邻近形式结果 [CanonicalDiscountedFutureGeometry](https://github.com/the-omega-institute/trureturing/blob/a492391be5b09240e6be894c3e742a75a945feb1/D5/S3/Observer/MetricGeometryLaws/CanonicalDiscountedFutureGeometry.lean) 的公开定理 `canonical_discounted_future_geometry` 处理全读出距离有界时的折扣预测伪度量与更新 Lipschitz 性；[DiscountedPrimeTimeUltrametric](https://github.com/the-omega-institute/trureturing/blob/a492391be5b09240e6be894c3e742a75a945feb1/D5/S3/Observer/PrimeTimeGeometry/DiscountedPrimeTimeUltrametric.lean) 的 `discounted_prime_time_distance_strong_triangle` 处理有限坐标族上的加权离散相等差异及强三角律。两者不供应本节依赖幅度增长根 $\lambda(A)$ 的数值阈值，其假设不能替代本节证明。第43.1节拥有的 `AntidiagonalArraySourceSeries` 特选自然数组，也不能替代任意实边界族上的全层论证。本节没有新的 Lean 形式认证。
+
+临界有限来源的精确闭包、剩余尾距离、实／有理来源的同一闭包及分次缩放强连续向量刻画见第47.9节；声明查询接口的完整记录下界及次临界充分取得合同见第47.11节。距离等式针对完整自由来源类，任意受限联合来源的完成须另保留同档案纤维可行性，不能由环境尾幅度独自决定。全负角点在闭包中的最近点已由常值边界见证取得且不唯一；有限支撑距离达到性、任意实际数组的一般最近点存在性、随机查询下界与达到下界的最优算法，均不在本单元中断言或证明。无理幅度的有理范数逼近不提供逐字相同的精确读数，数学来源存在性也不认定设备已能制备、读取或认证该来源。
+
+解析球、指定标签归一化与信息矩阵保留各自参数及概率范围；标签统计不是实际来源律，也不导出物理时间、动力学生成元、热力学熵增或普遍信息本体。离散层、数值完成及观察表示的关系在这些已证接口下相容，原有完整研究问题仍超出本单元的结论。
+

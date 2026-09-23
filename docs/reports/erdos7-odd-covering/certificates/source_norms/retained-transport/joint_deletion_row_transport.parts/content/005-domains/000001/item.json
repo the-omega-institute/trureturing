@@ -1,0 +1,41 @@
+{
+  "source_domain": {
+    "kind": "inline",
+    "value": "extended_source_bridge_comparison"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "1/12"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "1/3000"
+  },
+  "gap": {
+    "kind": "inline",
+    "value": "53/2700"
+  },
+  "dual_count": {
+    "kind": "inline",
+    "value": 2060
+  },
+  "joint_row_error_maximum": {
+    "kind": "inline",
+    "value": "520902983734350819467/1219212000000000000000"
+  },
+  "all_priced_rows_sha256": {
+    "kind": "inline",
+    "value": "a939b97d25e412774a40f3d453e8e540e8a3603f10de6a9dbadf0145bcbf78c5"
+  },
+  "maximizing_dual_keys": {
+    "kind": "inline",
+    "value": [
+      "931c74da012c1534a0e29557f85ce5e1be265bbb19d70f5000133d441fb68691"
+    ]
+  },
+  "complete_heavy_controllers": {
+    "path": "content/005-domains/000001/item/008-complete_heavy_controllers.json",
+    "sha256": "aa1823eed33a23c9e1c67ad23e621d00317d3cb811b4edf1aac5a04b3ce872eb",
+    "kind": "array"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "prefix_seed": {
+    "path": "content/035-proof_data/000-prefix_seed.json",
+    "sha256": "0a9365e898c9ed0ce48bd1c0d64c88a4d6f2fc376a94710b855d6958dc1b162e",
+    "kind": "value"
+  },
+  "encoded_prefix_seed_duals": {
+    "path": "content/035-proof_data/001-encoded_prefix_seed_duals.json",
+    "sha256": "517954558fc7d61357985653907192ab7421a0768d89f67b14d6cd6b54e6c566",
+    "kind": "value-zlib-base85"
+  },
+  "independent_prefix_reconstruction": {
+    "path": "content/035-proof_data/002-independent_prefix_reconstruction.json",
+    "sha256": "8a7bbce8e3b644dc83b4b658ba5a561cfdce0076b02fd9baa952c576c10562b5",
+    "kind": "object"
+  },
+  "zero_induction_batches": {
+    "path": "content/035-proof_data/003-zero_induction_batches.json",
+    "sha256": "6086b5499620846c16cc64ed9d094f5d4c5324c141cd10dc5a8fe14613c4a391",
+    "kind": "array"
+  },
+  "zero_induction_sha256": {
+    "kind": "inline",
+    "value": "c0c8c08b60f9cf4704304849fe7219ef636b2bfef2a750c8c09e475b9cfdf03d"
+  },
+  "own_bound_leaf_indices": {
+    "path": "content/035-proof_data/005-own_bound_leaf_indices.json",
+    "sha256": "c931929570b7a040cc8018a14d7547f3da7bb5b85c74a60daadcd399b3456989",
+    "kind": "array"
+  },
+  "covering_node_batches": {
+    "path": "content/035-proof_data/006-covering_node_batches.json",
+    "sha256": "ca781abe247e5c1de49f85779ca93edd0cd178d4419d2667d1b10fd60130fd71",
+    "kind": "array"
+  },
+  "encoded_covering_duals": {
+    "path": "content/035-proof_data/007-encoded_covering_duals.json",
+    "sha256": "c077cc3d83d5e9e0611702b5824446e1479f7d45b795a21b9161feafad03dc3a",
+    "kind": "object"
+  }
+}

@@ -1,0 +1,21 @@
+**定理 17.4（固定目标的风险下降与实际策略总创新）。** 在定义17.1的一份实际联合律下，给定固定函数 $f:\Theta\to\mathbb R$，将其值列记为 $f$。对每个正概率 $h,a$，一次观测的条件 Bayes 均方风险下降等于
+$$
+\operatorname{Var}(f(\Theta)\mid h)
+-\sum_{y:p_y>0}p_y\operatorname{Var}(f(\Theta)\mid h,a,y)
+=f^{\mathsf T}G(h,a)f.
+\tag{17.8}
+$$
+令 $m_t=\mathbb E[f(\Theta)\mid H_t]$。则
+$$
+\begin{aligned}
+\sum_{t=0}^{T-1}\mathbb E[f^{\mathsf T}G(H_t,A_t)f]
+&=\sum_{t=0}^{T-1}\mathbb E[(m_{t+1}-m_t)^2]\\
+&=\mathbb E[(m_T-m_0)^2]\\
+&=\mathbb E[\operatorname{Var}(f(\Theta)\mid C)]
+-\mathbb E[\operatorname{Var}(f(\Theta)\mid H_T)]\\
+&\le\mathbb E[\operatorname{Var}(f(\Theta)\mid C)].
+\end{aligned}
+\tag{17.9}
+$$
+各期望只在其实际历史和动作支撑上求和。停止后的吸收延续不增加来源信息时，其创新为零。$T=0$ 时空和及风险差均为零。
+

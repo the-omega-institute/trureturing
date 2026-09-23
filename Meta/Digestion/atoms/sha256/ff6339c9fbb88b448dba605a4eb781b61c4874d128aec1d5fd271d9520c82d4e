@@ -1,0 +1,42 @@
+### 47.6 乘积拓扑、加权范数拓扑及逆映射
+
+每个输入实坐标均使用通常绝对值拓扑。因为每个输出坐标只依赖有限输入坐标且是多项式，$\mathcal E$ 在输入乘积拓扑到输出乘积拓扑之间连续。第一列提取是坐标投影，故两者在实际递归像上互为乘积拓扑同胚。这一结论不依赖全层加权有界性。
+
+在 $q<1$ 时，输入乘积收敛进一步推出输出加权范数收敛。事实上，若 $a^{(r)}\to a$ 逐坐标，则对给定 $\varepsilon>0$，先由 (47.11) 选 $N$ 使 $2Aq^N<\varepsilon/2$。有限头部 $n+k<N$ 的多项式读数最终全部相差小于对应的 $\varepsilon/2$ 加权阈值；剩余尾部的差由 $2Aq^N$ 控制。于是
+$$
+\|\mathcal E(a^{(r)})-\mathcal E(a)\|_\rho\longrightarrow0.
+\tag{47.17}
+$$
+具体地，固定 $a$ 和输出误差 $\varepsilon$，先如上选择 $N$。对每个 $n+k<N$，坐标多项式的连续性给一个含 $a$ 的输入乘积开邻域，使加权坐标差小于 $\varepsilon/2$；有限多个这样的邻域之交仍是乘积开邻域。在该邻域内有限头部差小于 $\varepsilon/2$，共同尾部差小于 $\varepsilon/2$，故输出范数差小于 $\varepsilon$。这证明乘积到范数的连续性，而不只给序列陈述。
+
+反方向，在所有 $q\le1$ 的情形，只要两个数组属于 $\mathcal I_{A,\rho}$，其第一列满足
+$$
+\sup_{n\ge0}\rho^n|a_n-b_n|
+\le\|\mathcal E(a)-\mathcal E(b)\|_\rho.
+\tag{47.18}
+$$
+因而逆映射到加权输入范数
+$$
+\|a\|_{\partial,\rho}:=\sup_n\rho^n|a_n|
+$$
+是 $1$-Lipschitz，并且逆映射到输入乘积拓扑连续：固定 $n$ 时，坐标差至多为 $\rho^{-n}$ 倍输出范数差。
+
+常数一最优。取 $0<\alpha\le A$ 且 $\rho\alpha<1$，比较 $\alpha e_0$ 与零。由 (47.1)，所有 $n>0$ 的行全零，而
+$$
+\mathcal E(\alpha e_0)(0,k)=\alpha(-\alpha)^k.
+$$
+因此加权输出范数和加权输入范数均为 $\alpha$，取得等号。
+
+但逆映射到通常输入上确界范数，在次临界和临界情形都不连续。统一取 $\alpha=A/2$，令
+$$
+a^{(N)}=\alpha e_N,\qquad q_\alpha=\rho\lambda(\alpha)<1.
+$$
+严格不等式由 $\lambda(\alpha)<\lambda(A)$ 及 $q\le1$ 给出。若 $n+k<N$，有限依赖和零常数项使 $\mathcal E(a^{(N)})(n,k)=0$。对其余坐标使用半径 $\alpha$ 的 (47.11)，得到
+$$
+\|\mathcal E(a^{(N)})\|_\rho\le\alpha q_\alpha^N\longrightarrow0,
+\qquad
+\|a^{(N)}\|_\infty=\alpha.
+\tag{47.19}
+$$
+所以普通上确界逆连续性在零数组处失败。此见证不与临界全负边界的正向不连续性混同。
+

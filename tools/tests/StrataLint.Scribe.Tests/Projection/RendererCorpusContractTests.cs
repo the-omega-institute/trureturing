@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "c4adebf5f96205e366557fada211317abd7df4ea33f75364a3854b0ab5c14ee7";
+        "f9d58e56ac69757cd7e473ac29d95e4b4008befc19177fa29f954093cb2e5590";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]

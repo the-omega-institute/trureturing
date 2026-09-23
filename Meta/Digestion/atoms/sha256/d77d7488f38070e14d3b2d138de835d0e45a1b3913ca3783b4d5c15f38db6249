@@ -1,0 +1,54 @@
+**定理 94.2（补码半共轭与完整半值纤维）。** 对定义 94.1 的每个整数底数 $b\ge2$，$D_{\infty,b}$ 是连续满射，且
+$$
+C_b^2=\mathrm{id},
+\qquad
+D_{\infty,b}\circ C_b=J_\infty\circ D_{\infty,b},
+\qquad
+\operatorname{Fix}(J_\infty)=\{1/2\}.
+\tag{94.2a}
+$$
+数字空间中的不动点与实译码的完整半值纤维分别为
+$$
+\operatorname{Fix}(C_b)=
+\begin{cases}
+\varnothing,&b=2m,\\
+\{(m,m,m,\ldots)\},&b=2m+1,
+\end{cases}
+$$
+$$
+D_{\infty,b}^{-1}(\{1/2\})=
+\begin{cases}
+\{(m,0,0,\ldots),(m-1,b-1,b-1,\ldots)\},&b=2m,\\
+\{(m,m,m,\ldots)\},&b=2m+1.
+\end{cases}
+\tag{94.2b}
+$$
+偶底的两个半值码由 $C_b$ 交换；奇底的唯一半值码由 $C_b$ 固定。
+
+对每个素数 $p$，$D_p$ 是从 $(\Sigma_p,d_p)$ 到 $\mathbb Z_p$ 的等距双射，并满足
+$$
+D_p\circ C_p=J_p\circ D_p,
+\qquad
+M_p\circ J_p=J_\infty\circ M_p.
+\tag{94.2c}
+$$
+$M_p$ 是连续满射，且
+$$
+|M_p(z)-M_p(w)|\le |z-w|_p
+\qquad(z,w\in\mathbb Z_p).
+\tag{94.2d}
+$$
+在素数底的状态空间中，
+$$
+M_2^{-1}(\{1/2\})=\{1,-2\},
+\qquad
+\operatorname{Fix}(J_2)=\varnothing;
+$$
+$$
+M_p^{-1}(\{1/2\})=\{-1/2\}
+=\operatorname{Fix}(J_p)
+\qquad(p\text{ 为奇素数}).
+\tag{94.2e}
+$$
+因此，二进制情形的固定实读数来自一个被观察合并的二周期；奇素数情形的同一实读数则来自唯一的固定状态。这使用半共轭下固定读数与轨道合并的既有关系。[^rro94-fixed-fiber]
+

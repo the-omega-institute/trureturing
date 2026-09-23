@@ -1,0 +1,12 @@
+**定义 16.1（固定输入的跨端口记忆任务）。** 沿用假设15.1及定义15.3，全部候选共用有限正谱集、经过校准的时间和端口内积，交叉核由同一组 $T_\lambda$ 按式（15.8）给出。固定 $T\ge0$、$a\in U_A$ 和已知 $g\in L^1([0,T];U_B)$，所有竞争实现使用同一个预先固定的输入 $g$。令
+$$
+y_T=\int_0^T\langle a,K_{AB}(T-s)g(s)\rangle\,ds,\qquad
+v_\lambda=\int_0^T e^{-\lambda(T-s)}g(s)\,ds,
+$$
+$$
+c_T=\sum_\lambda\langle a,X^0_\lambda v_\lambda\rangle,\qquad
+R_T=\sum_\lambda\|P_\lambda^{1/2}a\|\,\|Q_\lambda^{1/2}v_\lambda\|.
+\tag{16.1}
+$$
+积分按有限维Lebesgue／Bochner意义取值，连续有限谱核在有限区间有界，故积分存在；$T=0$ 或 $\Lambda=\varnothing$ 时全部量为零。两响应问题的参数域为 $\mathbb B$；完整观察者保留全部 $\mathcal D,h$ 后的参数域为 $\mathbb F(\mathcal D,h)$，不因任务只读取 $y_T$ 而删去旧档案。
+

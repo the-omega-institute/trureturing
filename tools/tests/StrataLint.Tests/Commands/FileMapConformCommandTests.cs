@@ -5,6 +5,26 @@ namespace StrataLint.Tests;
 
 public sealed class FileMapConformCommandTests
 {
+    [Theory]
+    [InlineData("{}")]
+    [InlineData("{\"paths\":[]}")]
+    [InlineData("{\"paths\":null,\"actors\":false}")]
+    [InlineData("{\"paths\":[\"../outside\"],\"actors\":false}")]
+    [InlineData("{\"paths\":[\"b\",\"a\"],\"actors\":false}")]
+    [InlineData("{\"paths\":[\"a\",\"a\"],\"actors\":false}")]
+    [InlineData("{\"paths\":[],\"actors\":false,\"actors\":true}")]
+    [InlineData("{\"paths\":[],\"actors\":false,\"unknown\":true}")]
+    public void InvalidInspectionScopeCannotFallBackToAWholeTreeCheck(string json)
+    {
+        using var fixture = new TemporaryDirectory();
+        File.WriteAllText(Path.Combine(fixture.Path, "scope.json"), json);
+        var result = FileMapConformCommand.Run(["--scope", "scope.json"], fixture.Path);
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.Output);
+        Assert.Contains("INFRASTRUCTURE_FAILURE filemap-conform", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("FILEMAP.toml", result.Error, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void TrackedInventoryIncludesDirectoryAndDanglingLinksWithoutTraversingThem()
     {

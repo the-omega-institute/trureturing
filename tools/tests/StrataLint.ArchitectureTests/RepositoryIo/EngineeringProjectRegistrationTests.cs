@@ -11,6 +11,7 @@ public sealed class EngineeringProjectRegistrationTests
     [InlineData("execution_inputs")]
     [InlineData("execution_excludes")]
     [InlineData("execution_environment")]
+    [InlineData("execution_filemap_paths")]
     public void CurrentNonTestRequiresExplicitNullableExecutionDeclarations(string field)
     {
         const string project = "tools/Utility.csproj";
@@ -214,7 +215,7 @@ public sealed class EngineeringProjectRegistrationTests
     public void CurrentExecutionDeclarationsAreRequiredButHistoricalBaseMembershipProjectsOldRows()
     {
         var old = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
-        foreach (var field in new[] { "build_inputs", "execution_inputs", "execution_excludes", "execution_environment" })
+        foreach (var field in new[] { "build_inputs", "execution_inputs", "execution_excludes", "execution_environment", "execution_filemap_paths" })
             old["projects"]![0]!.AsObject().Remove(field);
         var baseline = Snapshot(old.ToJsonString(), (Project, Misleading));
         var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
@@ -225,6 +226,77 @@ public sealed class EngineeringProjectRegistrationTests
         Assert.Empty(current.ExecutionInputs!);
         Assert.Empty(current.ExecutionExcludes!);
         Assert.Empty(current.ExecutionEnvironment!);
+        Assert.Empty(current.ExecutionFileMapPaths!);
+    }
+
+    [Theory]
+    [InlineData("null")]
+    [InlineData("[null]")]
+    [InlineData("[\"\"]")]
+    [InlineData("[\"../README.md\"]")]
+    [InlineData("[\"/README.md\"]")]
+    [InlineData("[\"docs/../README.md\"]")]
+    [InlineData("[\"docs\\\\input.md\"]")]
+    [InlineData("[\"docs/*.md\"]")]
+    [InlineData("[\"docs/input?.md\"]")]
+    [InlineData("[\"C:/README.md\"]")]
+    [InlineData("[\" README.md\"]")]
+    [InlineData("[\"README.md\",\"README.md\"]")]
+    public void InvalidExecutionFileMapPathsFail(string value)
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
+            Test() with { ExecutionInputs = ["Meta/FILEMAP.toml"] }))!;
+        manifest["projects"]![0]!["execution_filemap_paths"] = System.Text.Json.Nodes.JsonNode.Parse(value);
+        var error = Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
+        Assert.Contains("execution_filemap_paths", error.Message);
+    }
+
+    [Fact]
+    public void CurrentTestRequiresExplicitFileMapPaths()
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]!.AsObject().Remove("execution_filemap_paths");
+        var error = Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
+        Assert.Contains("execution_filemap_paths", error.Message);
+    }
+
+    [Theory]
+    [InlineData("production")]
+    [InlineData("test-support")]
+    [InlineData("compile-fail-proof")]
+    public void ExecutionFileMapPathsRequireTestRole(string role)
+    {
+        var project = new EngineeringProjectFixture(Project, "Utility", role, false, [],
+            OwnedTestAssembly: role == "production" ? "Utility.Tests" : null);
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(project))!;
+        manifest["projects"]![0]!["execution_filemap_paths"] = new System.Text.Json.Nodes.JsonArray();
+        Assert.Contains("test role", Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading)))).Message);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ExecutionFileMapPathsRequireIncludedRuntimeFileMap(bool excluded)
+    {
+        var declaration = Test() with { ExecutionFileMapPaths = ["docs/virtual.md"],
+            ExecutionInputs = excluded ? ["Meta/**"] : [],
+            ExecutionExcludes = excluded ? ["Meta/FILEMAP.toml"] : [] };
+        Assert.Contains("execution_filemap_paths", Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.Read(
+            Snapshot(EngineeringRegistrationFixture.Manifest(declaration), (Project, Misleading)))).Message);
+    }
+
+    [Theory]
+    [InlineData("Meta/FILEMAP.toml")]
+    [InlineData("Meta/**")]
+    public void ExecutionFileMapPathsDoNotRequirePhysicalExampleFiles(string runtimeInput)
+    {
+        var declaration = Test() with { ExecutionInputs = [runtimeInput], ExecutionFileMapPaths = ["docs/virtual.md"] };
+        var registry = EngineeringProjectRegistry.Read(Snapshot(EngineeringRegistrationFixture.Manifest(declaration),
+            (Project, Misleading), ("Meta/FILEMAP.toml", "schema_version = 4")));
+        Assert.Equal(["docs/virtual.md"], Assert.Single(registry.Projects).ExecutionFileMapPaths!);
     }
 
     [Theory]

@@ -1,0 +1,35 @@
+**推论 16.5（既有零频积分恒等式的缺失块范围）。** 假设15.1的严格正有限谱使每个合法交叉核在算子范数中可积。应用主卷第126.7节及本卷命题11.8的记忆积分恒等式，其 $AB$ 块为
+$$
+Z_{AB}:=\int_0^\infty K_{AB}(t)dt
+=\sum_\lambda\lambda^{-1}X_\lambda=J_A^*C^{-1}J_B.
+\tag{16.12}
+$$
+固定 $a\in U_A,b\in U_B$，两响应类上 $\langle a,Z_{AB}b\rangle$ 的精确区间中心及半径分别为
+$$
+c_0=\sum_\lambda\lambda^{-1}\langle a,X^0_\lambda b\rangle,\qquad
+R_0=\sum_\lambda\lambda^{-1}\|P_\lambda^{1/2}a\|\,\|Q_\lambda^{1/2}b\|.
+\tag{16.13}
+$$
+它也有定理16.2的唯一标量minimax中心和最坏误差公式。恒定输入 $g(s)=b$ 在每个有限时刻的卷积存在，其中
+$$
+v_\lambda(T)=\frac{1-e^{-\lambda T}}{\lambda}b,
+\qquad
+\lim_{T\to\infty}\int_0^T K_{AB}(T-s)b\,ds=Z_{AB}b.
+\tag{16.14}
+$$
+$ b\ne0$ 时恒定输入不属于 $L^1([0,\infty))$，不影响上述有限时刻及极限结论。完整档案的精确性限定与定理16.2相同；积分增益在换钟下按命题15.9运输。
+
+**证明。** 对所有补全统一有
+$$
+\int_0^\infty\|K_{AB}(t)\|dt
+\le\sum_\lambda\frac{\|X^0_\lambda\|+
+\sqrt{\|P_\lambda\|\|Q_\lambda\|}}{\lambda}<\infty.
+$$
+故既有积分恒等式适用，逐谱积分即其式（16.12）的表达。缺失块的新增范围由
+$$
+\langle a,Z_{AB}b\rangle-c_0
+=\sum_\lambda\lambda^{-1}
+\langle P_\lambda^{1/2}a,T_\lambda Q_\lambda^{1/2}b\rangle
+$$
+和定理16.2证明中的秩一收缩及共同缩放给出：两端和全部中间值都有共同实现，区间为 $[c_0-R_0,c_0+R_0]$，最坏误差为 $R_0+|z-c_0|$。标量指数积分给式（16.14）的 $v_\lambda(T)$，有限和逐项取极限得到卷积极限；同一统一范数界亦给全部补全上的衰减尾界。额外记录只留下其中的可行收缩，故不改变前述信息类限定。$\square$
+

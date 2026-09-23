@@ -1,0 +1,74 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "factorial3"
+  },
+  "original_cost_index": {
+    "kind": "inline",
+    "value": null
+  },
+  "factorial_threshold": {
+    "kind": "inline",
+    "value": 3
+  },
+  "expansion": {
+    "kind": "inline",
+    "value": {
+      "factorial_threshold": 3,
+      "at_one": "0",
+      "factorial_coefficient": "1",
+      "hinge_coefficients": {},
+      "zero_branch_last_integer": 3,
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "1"
+      },
+      "polynomial_tail": {
+        "entrance": 3,
+        "constant": "3",
+        "linear": "-5/2",
+        "leading": "1/2"
+      }
+    }
+  },
+  "all_head_tail_split": {
+    "path": "content/018-results/000005/item/004-all_head_tail_split.json",
+    "sha256": "a7a05e6ab3567f794f77d90a54f26b94e13883e2d286aa71039000161f2bcfad",
+    "kind": "value"
+  },
+  "scan": {
+    "path": "content/018-results/000005/item/005-scan.json",
+    "sha256": "aeb2a9e57bd103776b855840046a8bbd965fd84a5d988b19c9fc989b150f7029",
+    "kind": "object"
+  },
+  "complete_cost_upper": {
+    "kind": "inline",
+    "value": "2264706575156562827/1984500000000000000"
+  },
+  "adopted_upper": {
+    "kind": "inline",
+    "value": "2264706575156562827/1984500000000000000"
+  },
+  "previous_adopted_upper": {
+    "kind": "inline",
+    "value": "555471722428229/484497070312500"
+  },
+  "improvement_over_previous": {
+    "kind": "inline",
+    "value": "3501866636487719/661500000000000000"
+  },
+  "maximizing_cross_components": {
+    "path": "content/018-results/000005/item/010-maximizing_cross_components.json",
+    "sha256": "9e7a5c829a8e25121224c60a775922dac201cc4865d186218720a4a667fa31ce",
+    "kind": "value"
+  },
+  "maximizing_conditional_PZZ_endpoints": {
+    "kind": "inline",
+    "value": [
+      "195197/529200",
+      "89/240"
+    ]
+  }
+}

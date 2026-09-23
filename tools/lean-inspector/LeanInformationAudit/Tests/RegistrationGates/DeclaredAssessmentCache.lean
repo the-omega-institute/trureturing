@@ -21,16 +21,19 @@ run_meta withPrivateSources do
   let before := (observedAssessments primed).size
   discard <| assessJoined
   observe "authoritative_assessment_reused" ((observedAssessments (← getEnv)).size == before)
-  setEnv primed
+  -- Lake hashes source text modulo CRLF. Start a fresh assessment environment
+  -- so native coherence checks the unchanged trace rather than an earlier
+  -- in-process snapshot; only the obsolete enrolled raw hash would reject.
+  setEnv initial
   let path := TemplateAudit.sourcePath plan.enrollmentOwner
   let original ← IO.FS.readBinFile path
   try
-    IO.FS.writeFile path ((String.fromUTF8! original) ++ "\n-- changed selected enrollment input\n")
+    let edited := (String.fromUTF8! original).crlfToLf.replace "\n" "\r\n"
+    unless edited.toUTF8 != original do throwError "setup: line endings did not change bytes"
+    IO.FS.writeFile path edited
     let changed ← assessJoined
-    let rejected := changed.all fun row => match row.result with
-      | .declaredUnresolved diagnostic => (diagnostic.splitOn "E7.stale_source").length > 1
-      | _ => false
-    observe "changed_template_invalidates_users" rejected
+    observe "imported_line_endings_preserve_verdict"
+      (changed.all (fun row => row.result matches .declaredValidated _))
   finally IO.FS.writeBinFile path original
   setEnv primed
   -- An isolated change to the retained statement identity must not reuse the old

@@ -1,0 +1,14 @@
+#### 134.4.6 稠密性是一个精确的充分性条件
+
+下面将 $i:\mathcal D\hookrightarrow\mathcal C$ 限制为小全子范畴的包含。固定 $X$，定义探针在 $X$ 中的实例范畴 $\mathcal E_X$：对象为 $(d,f)$，其中 $f:i(d)\to X$；从 $(d,f)$ 到 $(e,g)$ 的箭头是 $a:d\to e$，满足 $g\circ i(a)=f$。
+
+有典范图
+
+$$
+J_X:\mathcal E_X\to\mathcal C,\qquad J_X(d,f)=i(d),
+$$
+
+及指向 $X$ 的典范余锥，其分量就是 $f:i(d)\to X$。由于 $\mathcal D$ 小且各 Hom 集小，$\mathcal E_X$ 也是所选宇宙中的小范畴。
+
+称这些探针稠密，是指对每个 $X$，该典范余锥把 $X$ 表示为 $J_X$ 的余极限。这里说的是这一指定图的普遍性质，不预先假定 $\mathcal C$ 中任意余极限都存在。
+

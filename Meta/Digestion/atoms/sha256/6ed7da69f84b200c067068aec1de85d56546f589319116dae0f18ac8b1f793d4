@@ -1,0 +1,19 @@
+**定理 21.12（穷尽有理族的全部有限层与实际递归条件）。** 取穷尽（21.21）全部参数的序列 $f_1,f_2,\ldots$，允许重复，并取 $K_0$ 为空矩阵、$K_n=(B(f_i,f_j))_{1\le i,j\le n}$。令
+$$
+b_n=(B(f_i,f_{n+1}))_{1\le i\le n},\qquad
+c_n=Q(f_{n+1}).
+$$
+则以下三个条件与 RH 等价：
+$$
+\forall n\ge0, K_n\succeq0;
+\qquad
+\forall j\ge1, Q(f_j)\ge0;
+\tag{21.23}
+$$
+$$
+\forall n\ge0,\quad
+b_n\in\operatorname{ran}K_n,\qquad
+c_n-b_n^*K_n^\dagger b_n\ge0.
+\tag{21.24}
+$$
+

@@ -1,0 +1,10 @@
+### 131.1 自然整格与外幂坐标
+
+在标准欧氏空间 $\mathbb R^5$ 中取
+
+$$
+V=\{x:\textstyle\sum_{i=1}^5x_i=0\},\qquad
+A_4=V\cap\mathbb Z^5,\qquad
+b_i=e_i-e_5\quad(1\le i\le4).
+$$
+

@@ -1,0 +1,23 @@
+**定义 36.1（词、概率与完整量子输出的三层接口）。** 对每个固定有限 $k\ge2$，沿用恢复卷定义31.1、命题31.3和31.11的 $X_k,\mathcal W_n^{(k)},\lambda_k,\mu_k,H_n,\rho_{k,n}$，其中 $X_k$ 为全部不含 $1^k$ 的单侧无限二元串，坐标从零开始。令 $q_n:X_k\to\mathcal W_n^{(k)}$ 取最先 $n$ 位，$q_0$ 为空词。三种限制分别为
+$$
+\begin{aligned}
+b_n &: \mathcal W_{n+1}^{(k)}\to\mathcal W_n^{(k)},&&b_n(wa)=w,\\
+\mathsf m_n &: \operatorname{Prob}(\mathcal W_{n+1}^{(k)})\to\operatorname{Prob}(\mathcal W_n^{(k)}),&&
+(\mathsf m_n p)(w)=\sum_{a:\,wa\text{ 合法}}p(wa),\\
+\mathsf t_n &: \mathcal D(H_{n+1})\to\mathcal D(H_n),&&\mathsf t_n(\rho)=\operatorname{Tr}_{B_{n+1}}\rho.
+\end{aligned}
+\tag{36.1}
+$$
+$\mathcal D(H)$ 表示完整 $H$ 上的密度矩阵。量子层保留全部 $2^n$ 个基标签；本族仅在非法词的行列为零。一般密度的计算基对角先落到全部二元词的概率单纯形，只有支撑于合法词时才落到式（36.1）的合法词概率层。记此对角操作为 $\mathsf d_n$，则在相应支撑域上
+$$
+b_nq_{n+1}=q_n,\qquad
+\mathsf m_n\mu_{k,n+1}=\mu_{k,n},\qquad
+\mathsf t_n\rho_{k,n+1}=\rho_{k,n},\qquad
+\mathsf d_n\mathsf t_n=\mathsf m_n\mathsf d_{n+1},\qquad
+\mathsf d_n\rho_{k,n}=\mu_{k,n}.
+\tag{36.2}
+$$
+这里 $\mu_{k,n}(w)=\mu_k[w]$。第一式来自删除前缀末位；概率及量子式的全矩阵证明在恢复卷命题31.3，含非法前缀与 $n=0$。这组方块没有把三种对象认成同一个类型。特别是相容密度族是已发出前缀的约化族，不是把每一步正在演化的活动记忆也当成不变的逆系统坐标。
+
+词空间与这些额外结构的供应关系有确定归属。[主卷§132.3.3](RECURSIVE_RELATIONAL_OBSERVATION.md)已给全 $k$ 合法串的逐位共同实现；[Q123.3、命题124.2和124.13](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)分别负责有限支持缺失线程、$k=2$ 前缀拓扑／稠密性和实际像加层间相容的区别。Q125.1–125.5拥有 $k=2$ 全输出态与完成代数，Q130.1拥有二维共同记忆及纯顺序最小性。这里使用恢复卷的全阶扩展，不重复这些通用与 $k=2$ 证明。
+

@@ -1,0 +1,102 @@
+{
+  "d0f5d490e58e1bbac6faafc84a244c29eb28811361d1e897b12dd075de2cc01f": {
+    "path": "content/009-rational_dual_buckets/013-d/000-d0f5d490e58e1bbac6faafc84a244c29eb28811361d1e897b12dd075de2cc01f.json",
+    "sha256": "767708e8176cb981796a4919a8f4afff05e8e243e1d75356b419e16a1b6fdb21",
+    "kind": "value"
+  },
+  "d1848a9efedef8144bbc0c2fe78beb0ce243a64941ce4b13150ad7e56d17c157": {
+    "path": "content/009-rational_dual_buckets/013-d/001-d1848a9efedef8144bbc0c2fe78beb0ce243a64941ce4b13150ad7e56d17c157.json",
+    "sha256": "03fdcff0642ea7672d06c8b55031183926bcc47dc82a0f779016024031687dd9",
+    "kind": "value"
+  },
+  "d18be377b8a9e00fe885d778db773a9f9f6f7b06d3049a54d57986a1cec80b26": {
+    "path": "content/009-rational_dual_buckets/013-d/002-d18be377b8a9e00fe885d778db773a9f9f6f7b06d3049a54d57986a1cec80b26.json",
+    "sha256": "e5efc1b76ceed14671a49be5616dfefe95e56ea3f1c4c61c4a58259fb74af7ef",
+    "kind": "value"
+  },
+  "d27f66311f3ec3f7912d7c7aefc625ca3df9671986f4f9a9fbc55595d65f74ff": {
+    "path": "content/009-rational_dual_buckets/013-d/003-d27f66311f3ec3f7912d7c7aefc625ca3df9671986f4f9a9fbc55595d65f74ff.json",
+    "sha256": "5bd09f816f5764ba870f79d57cd63f7c04a3b22d72c3567027022a109589e02c",
+    "kind": "value"
+  },
+  "d2d986f3cc86ba8529b708633e54063a750eec38c9c3aa422c3b0c39183f7e5c": {
+    "path": "content/009-rational_dual_buckets/013-d/004-d2d986f3cc86ba8529b708633e54063a750eec38c9c3aa422c3b0c39183f7e5c.json",
+    "sha256": "7cfc99721c4b940084ac8d1d8e53e710d9f79ee933d611888ff28af36b9d376d",
+    "kind": "value"
+  },
+  "d6af9a1ad4cdd6954927e0c0533e66052ecdb23c82ec0018304ffb52eabfdf7f": {
+    "path": "content/009-rational_dual_buckets/013-d/005-d6af9a1ad4cdd6954927e0c0533e66052ecdb23c82ec0018304ffb52eabfdf7f.json",
+    "sha256": "139f0c0f4c429b946477ea62b67b4dcf43a41880209b53dd020848537aba9cab",
+    "kind": "value"
+  },
+  "d6f145b467ea2333c779acd2f41095fd609b43766af949ac607297ccaff55d0f": {
+    "path": "content/009-rational_dual_buckets/013-d/006-d6f145b467ea2333c779acd2f41095fd609b43766af949ac607297ccaff55d0f.json",
+    "sha256": "8269b060b5867d09962bf1a58cebdf58617bc9d834a076d021026db8124d8435",
+    "kind": "value"
+  },
+  "d8357f9e13559cc07202c2341771e69b358d19ca5d9dd454592003f40b18e617": {
+    "path": "content/009-rational_dual_buckets/013-d/007-d8357f9e13559cc07202c2341771e69b358d19ca5d9dd454592003f40b18e617.json",
+    "sha256": "7d1aff384810345643c9cad1647414c77a8980e923cefe8a438c810e8cbc4006",
+    "kind": "value"
+  },
+  "d987eea3811a7c3b15de3d4d0ef87ba4804bdd8e3dad690bba5c3a11aac7035c": {
+    "path": "content/009-rational_dual_buckets/013-d/008-d987eea3811a7c3b15de3d4d0ef87ba4804bdd8e3dad690bba5c3a11aac7035c.json",
+    "sha256": "e1f61170c3759bfe695e0b9567a4ed4fc848c487c332735e24ae74a197a58ada",
+    "kind": "value"
+  },
+  "d9a132047dcb69abe567fdcd564630264b949a2d5ac0f9def2afc6d40c05853d": {
+    "path": "content/009-rational_dual_buckets/013-d/009-d9a132047dcb69abe567fdcd564630264b949a2d5ac0f9def2afc6d40c05853d.json",
+    "sha256": "211fd9d62ffe1e5abb77e4032eb5d04b2b9fdffb8caeee1c2ad290b145b12750",
+    "kind": "value"
+  },
+  "da0e2cd20a586aa8f3440d0ac3b930452443b36a671a5f19e51db755bba12aaf": {
+    "path": "content/009-rational_dual_buckets/013-d/010-da0e2cd20a586aa8f3440d0ac3b930452443b36a671a5f19e51db755bba12aaf.json",
+    "sha256": "234b0793f979fabb90ecf6a8ce39f2f90604944b3aeb7fc0758a39f636648c92",
+    "kind": "value"
+  },
+  "da5269aeb18a1b9fe63fc956c481f458ebee5433cd42f1e69092face36ebbe6f": {
+    "path": "content/009-rational_dual_buckets/013-d/011-da5269aeb18a1b9fe63fc956c481f458ebee5433cd42f1e69092face36ebbe6f.json",
+    "sha256": "d888bb6f1949be43371c6eaeb87b420dede66255ebaf6895d861bd1277e5d5e4",
+    "kind": "value"
+  },
+  "db0916e4887d7a86e0301a544d569914d6f7534850578570bd146f1c7ccf75fc": {
+    "path": "content/009-rational_dual_buckets/013-d/012-db0916e4887d7a86e0301a544d569914d6f7534850578570bd146f1c7ccf75fc.json",
+    "sha256": "733ef8e9a40d5002c8668274ee4db61e182629a0da67b69866f9e59a0474d883",
+    "kind": "value"
+  },
+  "db65250421fae6038a8f78ed2660c8b34169cd9c41abd3e2e00da3ae6504be14": {
+    "path": "content/009-rational_dual_buckets/013-d/013-db65250421fae6038a8f78ed2660c8b34169cd9c41abd3e2e00da3ae6504be14.json",
+    "sha256": "2c15b89c01e845548bd7da3b7d9c7645b4ce51b3e6db201739923b40fac655ea",
+    "kind": "value"
+  },
+  "dc2e6ef4ef5fbc250764b8fe0fa10331041ae9c24ddd79929336a1450267d6a1": {
+    "path": "content/009-rational_dual_buckets/013-d/014-dc2e6ef4ef5fbc250764b8fe0fa10331041ae9c24ddd79929336a1450267d6a1.json",
+    "sha256": "0b09c824ed2f6e44c51196dffcf663827a8a0774ceb7d12409ef433ac24e1e0c",
+    "kind": "value"
+  },
+  "dcf61787eab582565a7dc0459e69057767150edabe72e390771a6b26e40dea9c": {
+    "path": "content/009-rational_dual_buckets/013-d/015-dcf61787eab582565a7dc0459e69057767150edabe72e390771a6b26e40dea9c.json",
+    "sha256": "bb6bd724a9fe04c574d45c994cee9d52e083a7c72f7865c66eef5961da35a497",
+    "kind": "value"
+  },
+  "dd694aec3bbd0096f5cd1c0a42252bf21f0ef330df570ac3f3705263f4e9dbc8": {
+    "path": "content/009-rational_dual_buckets/013-d/016-dd694aec3bbd0096f5cd1c0a42252bf21f0ef330df570ac3f3705263f4e9dbc8.json",
+    "sha256": "a95eae09dce99846361f63f590b2cabab331a541b532c24bcef198e20bc5b9db",
+    "kind": "value"
+  },
+  "dddd81431f3b48ae32cdc3f5dd93ce68bcdda0e03172ea06cac67dc30e89991e": {
+    "path": "content/009-rational_dual_buckets/013-d/017-dddd81431f3b48ae32cdc3f5dd93ce68bcdda0e03172ea06cac67dc30e89991e.json",
+    "sha256": "d0ad637ce5be8490a5e124ec1fa923b0e51c490593784468345b519abc9b7d59",
+    "kind": "value"
+  },
+  "de1045ccfc59e3c6effdc0f7e9885b4a57c6409a7af19ffdb0262005eef1fa11": {
+    "path": "content/009-rational_dual_buckets/013-d/018-de1045ccfc59e3c6effdc0f7e9885b4a57c6409a7af19ffdb0262005eef1fa11.json",
+    "sha256": "f7e40dd3a25d2179dcbdae32a296cf1889739617e38edcf46beb730aa28f4351",
+    "kind": "value"
+  },
+  "de809828c18eb48f305bde52b348f7533bdb451c55c44fbc657854b21f2ae24e": {
+    "path": "content/009-rational_dual_buckets/013-d/019-de809828c18eb48f305bde52b348f7533bdb451c55c44fbc657854b21f2ae24e.json",
+    "sha256": "bb5e90fc0fc8bda8b580f8bfbafdff7fb6d85e9de49f6a3ce00644678c625f60",
+    "kind": "value"
+  }
+}

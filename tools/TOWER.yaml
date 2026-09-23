@@ -99,7 +99,7 @@ components:
     kind: repository-files
     members:
       - tools/tests/StrataLint.Tests/Rules/RuleEngineTests.cs
-      - tools/tests/StrataLint.Tests/Rules/RuleFixture.cs
+      - tools/TestSupport/StrataLint.CliTestSupport/RuleFixture.cs
     judged_by:
       - engineering-ci
     verification: verified

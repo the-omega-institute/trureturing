@@ -1,0 +1,65 @@
+**定理 27.2（共同 $H^{12}$ 收缩与黏性光滑性）。** 存在 $T_{12}>0$ 和同一闭球，使每个 $(\beta,\nu)\in\mathcal V$ 的实际解属于 $C([0,T_{12}];H^{12}_\sigma)$，且参数到此 Banach 空间的映射为 $C^\infty$。此解在共同区间上等于定理25.3的 $H^2$ 解。
+
+证明。令 $W(k)=1+|k|^2$。由 $W(p+q)\le2(W(p)+W(q))$ 得
+$W(p+q)^6\le2^{11}(W(p)^6+W(q)^6)$。使用引理25.2的 $\ell^1$ 界和卷积 Young 不等式，先对三角多项式、再以稠密性得
+$$
+\|v\otimes w\|_{H^{12}}\le C_{12}\|v\|_{H^{12}}\|w\|_{H^{12}},
+\qquad C_{12}=2^{14}.
+\tag{27.103}
+$$
+向量／张量仍取原 Euclidean／Frobenius 范数。热散度乘子估计与（25.105）相同，因此在 $X_T=C([0,T];H^{12}_\sigma)$ 上
+$$
+\|\mathcal B_\nu\|_{X_T\times X_T\to X_T}
+ \le2C_{12}\sqrt{T/\underline\nu}=:\Lambda_T.
+\tag{27.104}
+$$
+准备的两组 Fourier 支持不交，故 $\|u_0\|_{H^{12}}^2=2^{11}\alpha^2+3^{12}\beta^2$。可取
+$$
+R_{12}=2\sqrt{2^{11}\alpha^2+3^{12}B^2},\quad
+R_2=2\sqrt{2\alpha^2+9B^2},\quad
+0<T_{12}\le\min\left\{
+\frac{\underline\nu}{64C_{12}^2R_{12}^2},
+\frac{\underline\nu}{16384R_2^2}\right\}.
+\tag{27.105}
+$$
+于是 $\Lambda_{T_{12}}R_{12}\le1/4$。温和映射 $E_\nu(\cdot)u_0-\mathcal B_\nu(u,u)$ 把闭 $R_{12}$ 球映入闭 $3R_{12}/4$ 球，差的系数至多 $1/2$。Bochner 积分的时间连续性由（25.107）证明中的上端 $O(\sqrt\epsilon)$ 分割原样得到，故 Banach 收缩给同一空间、同一时间上的解。
+
+黏性导数不能由固定黏性的收缩自动推出。对张量输入、$s>0$ 和任意整数 $j\ge0$，逐模计算给
+$$
+\partial_\nu^j E_\nu(s)=(s\Delta)^jE_\nu(s),\qquad
+\|\partial_\nu^jE_\nu(s)\mathbb P\operatorname{div}\|_{H^{12}\to H^{12}}
+ \le c_j\nu^{-j-1/2}s^{-1/2},
+$$
+$$
+c_j=\sup_{v\ge0}v^{j+1/2}e^{-v}<\infty,\qquad
+\|\partial_\nu^j\mathcal B_\nu\|
+ \le2C_{12}c_j\sqrt{T_{12}}\,\underline\nu^{-j-1/2}=:M_j.
+\tag{27.106}
+$$
+确实，乘子至多 $\sup_{q\ge0}s^jq^{2j+1}e^{-\nu sq^2}$，换元 $v=\nu sq^2$ 给所列核；$s^{-1/2}$ 可积。更明确地，对黏性线段始终落在 $[\underline\nu,\overline\nu]$ 的增量 $h$，逐模 Taylor 积分式、同一控制核和 Bochner 积分给算子范数余项
+$$
+\left\|\partial_\nu^j\mathcal B_{\nu+h}
+ -\sum_{\ell=0}^N\frac{h^\ell}{\ell!}\partial_\nu^{j+\ell}\mathcal B_\nu\right\|
+ \le\frac{|h|^{N+1}}{(N+1)!}M_{j+N+1}.
+\tag{27.107}
+$$
+这同时证明差商收敛和各阶算子导数连续，不仅是逐模的形式微分。
+
+初始半群项也必须计入。令 $d_j=\sup_{v\ge0}v^je^{-v}$，其中 $d_0=1$；则
+$$
+\sup_{0\le t\le T_{12}}\|(t\Delta)^jE_\nu(t)\|_{H^{12}\to H^{12}}
+ \le d_j\underline\nu^{-j}.
+\tag{27.108}
+$$
+$j>0$ 时取零点值为零，对每个固定 $H^{12}$ 输入，Fourier 控制收敛给其在 $t\downarrow0$ 强收敛至零；$j=0$ 是半群强连续性。因此它们是 $H^{12}\to X_{T_{12}}$ 的有界算子。与（27.107）相同的 Taylor 估计将 $M_{j+N+1}$ 换成 $d_{j+N+1}\underline\nu^{-j-N-1}$，证明 $\nu\mapsto E_\nu(\cdot)$ 在此算子范数中光滑。无需声称在 $t=0$ 对时间为算子范数连续。$u_0$ 对 $\beta$ 线性，故初始项对两参数光滑。
+
+在实际解处，固定点方程对 $u$ 的导数为
+$$
+I+\mathcal A_u,\qquad
+\mathcal A_uv=\mathcal B_\nu(v,u)+\mathcal B_\nu(u,v),\quad
+\|\mathcal A_u\|\le\tfrac12,
+\qquad (I+\mathcal A_u)^{-1}=\sum_{n\ge0}(-\mathcal A_u)^n.
+\tag{27.109}
+$$
+逆范数至多二。Banach 空间隐函数定理给每个内点附近的光滑参数解，收缩唯一性使这些局部解一致，覆盖 $\mathcal V$。最后 $H^{12}\subset H^2$，且该解满足同一温和方程；（27.105）落在既有共同 $H^2$ 时域内，定理25.3不限球半径的 $C_tH^2$ 唯一性给两解相等。$\square$
+

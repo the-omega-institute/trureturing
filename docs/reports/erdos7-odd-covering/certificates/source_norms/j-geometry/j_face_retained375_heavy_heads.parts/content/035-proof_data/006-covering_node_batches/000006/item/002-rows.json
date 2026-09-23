@@ -1,0 +1,32 @@
+{
+  "length": 64,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 18,
+      "part": {
+        "path": "content/035-proof_data/006-covering_node_batches/000006/item/002-rows/000000-000018.json",
+        "sha256": "7fb0dc5046da9b5d187ce53fcf6d9330ecec181cc66dda59c59ab474b23b06db",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 18,
+      "stop": 47,
+      "part": {
+        "path": "content/035-proof_data/006-covering_node_batches/000006/item/002-rows/000018-000047.json",
+        "sha256": "79f81c210d675c9d772501e7edb3038f71148827c26aa2f3682dd61e9c569d97",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 47,
+      "stop": 64,
+      "part": {
+        "path": "content/035-proof_data/006-covering_node_batches/000006/item/002-rows/000047-000064.json",
+        "sha256": "fe2f263aa93726a28c71bb88b5b056e1237e0e1fd191f5a65c29cc3f41e30ad7",
+        "kind": "value"
+      }
+    }
+  ]
+}

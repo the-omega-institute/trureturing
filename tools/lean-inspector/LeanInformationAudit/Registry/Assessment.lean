@@ -356,7 +356,8 @@ private def extract (event : TemplateOccurrenceEvent) : CompareM Expr := do
   let info ← getConstInfo name
   let raw ← if info.type.isAppOfArity
       `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 ||
-      info.type.isAppOfArity escapeForwardBridge 3 then
+      info.type.isAppOfArity escapeForwardBridge 3 ||
+      info.type.isAppOfArity escapeWitnessBridge 3 then
     pure info.type.getAppArgs[2]!
   else if isRealizationType info.type then
     match info with
@@ -454,7 +455,8 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
   catch _ => return Json.null
 
 private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
-    (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate := do
+    (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate :=
+  RegistrationGates.withStatementAliasMemo do
   closed descriptor
   let .const name universeArgs := descriptor.getAppFn
     | throwError "unclassified_form:dtr.descriptor_head"
@@ -462,7 +464,6 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     | .ok plan => pure plan
     | .error reason => throwError reason
   let env ← getEnv
-  validateSourceInputs plan.sourceInputs
   unless env.contains name do throwError "incomplete_closure:dtr.template_owner"
   let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
   unless owner == plan.definitionOwner && universeArgs.length == plan.levelParams.length &&
@@ -508,6 +509,14 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
+    if escape.bridgeKind == "witness" then
+      let rawActual := (← getConstInfo event.realizationName).type.getAppArgs[2]!
+      unless ← RegistrationGates.bounded (do
+          let computed ← mkAppM (RegistrationGates.witnessArenaName.str "realization") #[event.arena]
+          if ← isDefEq rawActual computed then return true
+          let readout := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.readout
+          isDefEq (← mkAppM readout #[rawActual]) (← mkAppM readout #[computed])) do
+        throwError "unclassified_form:dtr.witness_readout_tie"
     let .ok (descriptorIdentity, descriptorWork) ← TemplateAudit.rawIdentity event.levelParams descriptor (← get).remaining
       | throwError "incomplete_closure:dtr.descriptor_identity"
     debit descriptorWork
@@ -515,7 +524,11 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       | throwError "incomplete_closure:dtr.actual_identity"
     debit actualWork
     let argumentInputs ← argumentNames.mapM inputIdentity
-    let extractionNames := ((← get).extractionNames.insert event.realizationName).toArray
+    let mut retained := (← get).extractionNames.insert event.realizationName
+    -- Fingerprint the inspected roots here. Their transitive data/type closure
+    -- is retained below without serializing pinned upstream implementations.
+    for name in ← inspectionRoots event do retained := retained.insert name
+    let extractionNames := retained.toArray
     let extractionInputs ← extractionNames.mapM inputIdentity
     let certificate : TemplateBindingCertificate := {
       evidenceRef := "", key := event.key, planIdentity := plan.planIdentity,
@@ -582,7 +595,6 @@ private structure CachedAssessment where
   planName : Name
   planIdentity : String
   constants : Array (Name × ConstantInfo × Name × CacheSemantics)
-  inputs : Array SourceInput
 
 private initialize assessmentCache : EnvExtension (Std.HashMap TemplateOccurrenceKey CachedAssessment) ←
   registerEnvExtension (pure {})
@@ -622,7 +634,6 @@ private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrence
         (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule == owner do
       return false
   try
-    validateSourceInputs cached.inputs
     NativeCoherence.validate (#[claim.owner, event.key.registrationModule] ++
       cached.constants.map (fun (_, _, owner, _) => owner))
     return true
@@ -635,6 +646,7 @@ private def retainAssessment (record : BindingRecord) (claim : TemplateBindingCl
   let env ← getEnv
   let .ok plan := selectedPlan env name | return
   let mut names : NameSet := {}
+  for name in ← inspectionDependencies record.occurrence do names := names.insert name
   for value in claim.escapeInput.fromObject.toArray ++ claim.escapeInput.continuation.toArray do
     for name in value.getUsedConstants do names := names.insert name
   if let some residual := record.escape.continuation then
@@ -644,25 +656,18 @@ private def retainAssessment (record : BindingRecord) (claim : TemplateBindingCl
   for name in #[plan.name, record.occurrence.key.theoremName, record.occurrence.unitName,
       record.occurrence.realizationName, record.occurrence.key.objectArena] do
     names := names.insert name
-  let mut paths := plan.sourceInputs.map (·.path)
-  for path in #[record.occurrence.registrationSource, TemplateAudit.sourcePath claim.owner] do
-    unless paths.contains path do paths := paths.push path
   let mut constants := #[]
   for name in names do
     let info ← getConstInfo name
     let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
     constants := constants.push (name, info, owner, cacheSemantics env name)
-    if owner.toString.startsWith "D5." || owner.toString.startsWith "LeanInformationAudit." then
-      let path := TemplateAudit.sourcePath owner
-      unless paths.contains path do paths := paths.push path
-  let inputs ← (paths.qsort (· < ·)).mapM fun path => readSourceInput path
   let cached : CachedAssessment := {
-    record, claim, constants, inputs, options := ← getOptions,
+    record, claim, constants, options := ← getOptions,
     registry := InformationRegistry.entries env, planName := name, planIdentity := plan.planIdentity }
   modifyEnv fun env => assessmentCache.modifyState env (·.insert record.occurrence.key cached)
 
 /-- Every caller uses the same assessment. A hit requires exact occurrence,
-claim, selected plan, options, native dependencies and current source bytes.
+claim, selected plan, options and native dependencies.
 The authoritative caller still validates the complete native join first. -/
 def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
   if let some claim := claim then

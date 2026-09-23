@@ -1,0 +1,16 @@
+### 125.3 Fibonacci：当前坐标与边界记忆的精确对应
+
+取
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},
+\quad O=\begin{pmatrix}1&0\end{pmatrix},
+\quad z_0=(x_0,h_0)^{\mathsf T}.
+$$
+两步记录给
+$$
+y_0=x_0,\quad y_1=x_0+h_0,
+\quad\mathcal O_2=\begin{pmatrix}1&0\\1&1\end{pmatrix},
+\quad z_0=(y_0,y_1-y_0)^{\mathsf T}.
+$$
+又 $A^2=A+I$，因此全部边界历史满足 $y_{t+2}=y_{t+1}+y_t$。反过来，任意满足此递推的历史由前两项唯一决定，并由上述初态实现。于是两维一阶状态关系与一维二阶历史关系是相容的两种表示。它保留的是所有合法未来和初态对应；此坐标转换本身没有引入概率耗散。
+

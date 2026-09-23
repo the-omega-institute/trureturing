@@ -1,0 +1,16 @@
+**定义 44.1（解析模型与实际消费者的类型）。** 下列未加下标的范数均为相应有限维 Hilbert 空间间的算子范数；Frobenius 范数明确记为 $\|\cdot\|_F$。解析模型允许实或复数，$*$ 始终使用给定内积的伴随，复数时含共轭。
+
+设 $h>0$，$C=C^*>0$ 作用于有限维空间 $R$，$F:R\to E$ 是余等距映射，即 $FF^*=I_E$。置
+$$
+P=F^*F,\qquad S=e^{-hC},\qquad aI_R\le S\le bI_R,
+\qquad 0<a\le b<1,
+$$
+$$
+A=FSF^*,\qquad
+\Delta=FS^2F^*-A^2=FS(I-P)SF^*.
+$$
+令
+$$
+Q=I-P,\quad \delta=\|\Delta\|,\quad
+\ell=\|QSF^*\|=\sqrt\delta.
+$$

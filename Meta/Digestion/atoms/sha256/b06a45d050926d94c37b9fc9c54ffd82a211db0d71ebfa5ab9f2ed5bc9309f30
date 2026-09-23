@@ -1,0 +1,11 @@
+### 46.4 精确的立方体全局 Lipschitz 常数及逆向常数
+
+先固定 $A>0$。记
+$$
+\boxed{
+L_k(A)=u'_k(A)
+=\sum_{\ell=0}^{k}(\ell+1)\binom{k+\ell}{2\ell}A^\ell.
+}
+\tag{46.13}
+$$
+

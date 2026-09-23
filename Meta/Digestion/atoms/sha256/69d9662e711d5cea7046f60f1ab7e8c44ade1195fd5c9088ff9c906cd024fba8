@@ -1,0 +1,19 @@
+**定理 14.5（逐旧记录纤维的条件 ANOVA）。** 在假设14.4下，对任意 $S,T,A\subseteq E$，
+$$
+P_SP_T=P_{S\cap T},\qquad
+P_AD_S=
+\begin{cases}
+D_S,&S\subseteq A,\\
+0,&S\nsubseteq A.
+\end{cases}
+\tag{14.8}
+$$
+全部 $D_S$ 是两两正交的自伴投影，并且 $QD_S=D_SQ=0$。因此
+$$
+\mathcal H=\operatorname{ran}Q\ \oplus\bigoplus_{S\subseteq E}\operatorname{ran}D_S,
+\qquad
+\|f\|_2^2=\|Qf\|_2^2+\sum_{S\subseteq E}\|D_Sf\|_2^2.
+\tag{14.9}
+$$
+这是标准 Hoeffding／函数 ANOVA 在固定旧记录纤维上的有限乘积形式。非条件乘积分解及正交性见 Owen 所引附录§A.2—A.3，尤其引理A.3—A.4；[QUANTUM-RH 卷](QUANTUM-RH.md)题为“三十一、把 $5040$ 的 $(4,2,1,1)$ 从‘指数向量’提升为真正的交互几何”的一节也使用其有限寄存器形式。这里保留变化的条件权重、完整 $C$ 与 $Q$。
+
