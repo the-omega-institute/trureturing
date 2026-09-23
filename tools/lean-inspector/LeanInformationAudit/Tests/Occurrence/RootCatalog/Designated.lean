@@ -4,7 +4,7 @@ import LeanInformationAudit.Tests.Occurrence.RootCatalog.Contributor
 open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.RootCatalog
 
-run_cmd RootCatalogs.declare designatedContract
+run_cmd RootCatalogs.declare { designatedContract with source := causalRows ++ baselineRows }
 
 -- Use the same finite causal seal limits as SharedInformationRoot.
 set_option maxRecDepth 100000 in
