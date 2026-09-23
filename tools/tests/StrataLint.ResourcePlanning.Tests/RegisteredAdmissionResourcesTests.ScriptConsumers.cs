@@ -5,6 +5,31 @@ namespace StrataLint.ResourcePlanning.Tests;
 public sealed partial class RegisteredAdmissionResourcesTests
 {
     [Theory]
+    [InlineData("Meta/judge-seed.json", "StrataLint.RepositoryConfiguration.Tests")]
+    [InlineData("Meta/package-materials.json", "StrataLint.RepositoryConfiguration.Tests")]
+    [InlineData("Meta/ci-resources.json", "StrataLint.Configuration.Tests")]
+    [InlineData("tools/Trureturing.Truth/TruthExportModel.cs", "StrataLint.Configuration.Tests")]
+    [InlineData("tools/Trureturing.Truth/TruthExportModel.cs", "StrataLint.RepositoryConfiguration.Tests")]
+    public void EngineeringChangesRetainNewConfigurationConsumers(string path, string consumer)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+            Assert.Contains($"tools/tests/{consumer}/{consumer}.csproj",
+                Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+    }
+
+    [Theory]
+    [InlineData("push")]
+    [InlineData("pr")]
+    public void ConfigurationTestsRunWithoutCliTestExecution(string mode)
+    {
+        var plan = Plan("tools/tests/StrataLint.Configuration.Tests/RegistryTests.cs", "", mode);
+        Assert.Equal(new[] {
+            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
+        }, Strings(plan["execution"]!["tests"]!));
+    }
+
+    [Theory]
     [InlineData("push")]
     [InlineData("pr")]
     public void HeaderScriptRunsOnlyItsCompleteScriptProject(string mode)
@@ -20,7 +45,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [Theory]
     [InlineData("Meta/domains.yaml")]
     [InlineData("tools/scripts/agent/header-check.sh")]
-    [InlineData("tools/StrataLint.Cli/Commands/RegistryLoader.cs")]
+    [InlineData("tools/StrataLint.Configuration/RegistryLoader.cs")]
     [InlineData("tools/tests/StrataLint.Tests/Commands/Playbook/DepositHeaderWorkflowScriptTests.cs")]
     public void NonCacheInputsDoNotSelectCacheTests(string path)
     {

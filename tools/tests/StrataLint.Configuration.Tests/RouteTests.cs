@@ -1,9 +1,11 @@
 using System.Text;
 using System.Text.Json;
-using StrataLint.Cli;
+using StrataLint.Configuration;
+using StrataLint.TestSupport;
+using Xunit;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Configuration.Tests;
 
 public sealed class RouteTests
 {
@@ -24,7 +26,7 @@ public sealed class RouteTests
     [InlineData("F", "Carrier", "Probe", "", "lean", "", "D5/S0/Carrier/Probe", "D5/S0/Carrier/Probe.lean")]
     [InlineData("B", "Carrier", "Probe", "", "markdown", "", "D5/B/S0/Carrier/Probe", "Blueprint/D5/S0/Carrier/Probe.md")]
     [InlineData("E", "Carrier", "Probe", "result", "json", "", "D5/E/S0/Carrier/Probe.result--json", "Evidence/D5/S0/Carrier/Probe.result.json")]
-    [InlineData("E", "values", "values", "result", "json", "", "D5/E/values--json", RuleFixture.ValuesProjectionPath)]
+    [InlineData("E", "values", "values", "result", "json", "", "D5/E/values--json", "Evidence/D5/values.json")]
     [InlineData("C", "2026-07-11", "round-168", "", "markdown", "", "D5/C/2026-07-11/round-168", "Chronicle/2026/07/11-round-168.md")]
     [InlineData("L", "Notes", "sample2026paper", "", "markdown", "", "D5/L/sample2026paper", "Library/notes/sample2026paper.md")]
     [InlineData("L", "Weil", "sample2026paper", "", "markdown", "", "D5/L/Weil/sample2026paper", "Library/Weil/sample2026paper.md")]

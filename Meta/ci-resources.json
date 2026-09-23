@@ -140,6 +140,7 @@
         "tools/tests/StrataLint.CheckIntegration.Tests/StrataLint.CheckIntegration.Tests.csproj",
         "tools/tests/StrataLint.CiArtifacts.Tests/StrataLint.CiArtifacts.Tests.csproj",
         "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
+        "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
         "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
         "tools/tests/StrataLint.ExecutionEvidence.Tests/StrataLint.ExecutionEvidence.Tests.csproj",
@@ -151,6 +152,7 @@
         "tools/tests/StrataLint.PlanningIntegration.Tests/StrataLint.PlanningIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj",
         "tools/tests/StrataLint.ResourcePlanning.Tests/StrataLint.ResourcePlanning.Tests.csproj",
         "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
@@ -320,6 +322,14 @@
       "steps": []
     },
     {
+      "id": "test-configuration",
+      "projects": [
+        "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "test-engine",
       "projects": [
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj"
@@ -411,6 +421,14 @@
       "id": "test-release-selection",
       "projects": [
         "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-repository-configuration",
+      "projects": [
+        "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj"
       ],
       "checks": [],
       "steps": []

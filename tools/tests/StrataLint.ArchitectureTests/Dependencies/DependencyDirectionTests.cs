@@ -26,10 +26,11 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet()
+    public void CliReferencesExactlyConfigurationEngineScribeTomlynAndTruth()
     {
         Assert.Equal(
             [
+                "StrataLint.Configuration",
                 "StrataLint.Engine",
                 "StrataLint.ExecutionEvidence",
                 "StrataLint.InspectionScope",
@@ -39,9 +40,16 @@ public sealed class DependencyDirectionTests
                 "StrataLint.Scribe.Documents",
                 "Tomlyn",
                 "Trureturing.Truth",
-                "YamlDotNet",
             ],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
+    }
+
+    [Fact]
+    public void ConfigurationReferencesExactlyEngineAndYamlDotNet()
+    {
+        Assert.Equal(
+            ["StrataLint.Engine", "YamlDotNet"],
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(RegistryLoader).Assembly));
     }
 
     /// <summary>
@@ -68,6 +76,7 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.Cli/StrataLint.Cli.csproj",
                 "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
                 "../../TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
+                "../../TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
                 "../../TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
                 "../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
                 "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
@@ -130,16 +139,17 @@ public sealed class DependencyDirectionTests
         Assert.Equal(
             [
                 "../../StrataLint.Cli/StrataLint.Cli.csproj",
+                "../../StrataLint.Configuration/StrataLint.Configuration.csproj",
                 "../../StrataLint.Engine/StrataLint.Engine.csproj",
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
                 "../../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
                 "../../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
                 "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+                "../../TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
                 "../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
                 "../../TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
-                "../StrataLint.Tests/StrataLint.Tests.csproj",
             ],
             ProjectReferences(XDocument.Load(Path.Combine(
                 RepositoryLayout.FindRoot(),

@@ -3,15 +3,10 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>false</IsTestProject>
     <RootNamespace>StrataLint.TestSupport</RootNamespace>
-    <AssemblyName>StrataLint.CliTestSupport</AssemblyName>
+    <AssemblyName>StrataLint.ConfigurationTestSupport</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj" />
-    <ProjectReference Include="../../StrataLint.Configuration/StrataLint.Configuration.csproj" />
-    <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <ProjectReference Include="../StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj" />
-    <ProjectReference Include="../StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj" />
     <ProjectReference Include="../StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
     <PackageReference Include="xunit" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />

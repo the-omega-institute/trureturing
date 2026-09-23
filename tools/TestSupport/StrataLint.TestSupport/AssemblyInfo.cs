@@ -39,3 +39,6 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.Cache.Native.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Cache.Release.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.HeaderScript.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Configuration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.RepositoryConfiguration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ConfigurationTestSupport")]
