@@ -152,8 +152,8 @@ namespace ArchitectureNamed
 def discard (a : Arena.{0}) (_h : a = ProvenanceProbe.arena) : Arena.{0} :=
   ProvenanceProbe.arena
 def deadUse : Arena.{0} := discard (_h := rfl)
-def explicitUse : Arena.{0} := discard ProvenanceProbe.arena (_h := rfl)
 def keep (a : Arena.{0}) (_h : a = ProvenanceProbe.arena) : Arena.{0} := a
+def explicitUse : Arena.{0} := keep (_h := rfl)
 def liveUse : Arena.{0} := keep (_h := rfl)
 
 end ArchitectureNamed
