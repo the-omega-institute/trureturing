@@ -51,27 +51,6 @@ def rotationPrefix (alpha : Real) (n : Nat) (x : Real) : Fin n → Bool :=
 private def cut (alpha : Real) (k : Nat) : Real :=
   1 - Int.fract (((k + 1 : Nat) : Real) * alpha)
 
-private theorem phase_fract {x : Real} (hx : x ∈ Ico (0 : Real) 1) :
-    Int.fract x = x := by
-  have hf : ⌊x⌋ = 0 := Int.floor_eq_zero_iff.mpr hx
-  simp [Int.fract, hf]
-
-private theorem bit_is_mechanical {alpha : Real}
-    (h0 : 0 ≤ alpha) (h1 : alpha < 1) (x : Real) (n : Nat) (k : Fin n) :
-    rotationPrefix alpha n x k = lowerMechanicalWord alpha x k.val := by
-  have hf : ⌊alpha⌋ = 0 := Int.floor_eq_zero_iff.mpr ⟨h0, h1⟩
-  have hletter : lowerMechanicalLetter alpha x k.val =
-      if 1 - alpha ≤ Int.fract (x + (k.val : Real) * alpha) then 1 else 0 := by
-    unfold lowerMechanicalLetter
-    rw [show x + (((k.val + 1 : Nat) : Real)) * alpha =
-      (x + (k.val : Real) * alpha) + alpha by push_cast; ring]
-    rw [floor_add_sub_floor, floor_fract_add_indicator,
-      phase_fract ⟨h0, h1⟩, hf]
-    simp
-  by_cases h : 1 - alpha ≤ Int.fract (x + (k.val : Real) * alpha)
-  · simp [rotationPrefix, lowerMechanicalWord, hletter, h]
-  · simp [rotationPrefix, lowerMechanicalWord, hletter, h]
-
 /-- Reconstructing all prefix floors from actual bits identifies the cut tests.
 This is the arithmetic step missing from a theorem assuming cylinder bounds. -/
 private theorem prefix_eq_iff_tests {alpha x y : Real}
@@ -79,10 +58,24 @@ private theorem prefix_eq_iff_tests {alpha x y : Real}
     (hx : x ∈ Ico (0 : Real) 1) (hy : y ∈ Ico (0 : Real) 1) (n : Nat) :
     rotationPrefix alpha n x = rotationPrefix alpha n y ↔
       ∀ k < n, (cut alpha k ≤ x ↔ cut alpha k ≤ y) := by
+  have bit_is_mechanical (z : Real) (m : Nat) (k : Fin m) :
+      rotationPrefix alpha m z k = lowerMechanicalWord alpha z k.val := by
+    have hf : ⌊alpha⌋ = 0 := Int.floor_eq_zero_iff.mpr ⟨h0, h1⟩
+    have hletter : lowerMechanicalLetter alpha z k.val =
+        if 1 - alpha ≤ Int.fract (z + (k.val : Real) * alpha) then 1 else 0 := by
+      unfold lowerMechanicalLetter
+      rw [show z + (((k.val + 1 : Nat) : Real)) * alpha =
+        (z + (k.val : Real) * alpha) + alpha by push_cast; ring]
+      rw [floor_add_sub_floor, floor_fract_add_indicator,
+        Int.fract_eq_self.mpr ⟨h0, h1⟩, hf]
+      simp
+    by_cases h : 1 - alpha ≤ Int.fract (z + (k.val : Real) * alpha)
+    · simp [rotationPrefix, lowerMechanicalWord, hletter, h]
+    · simp [rotationPrefix, lowerMechanicalWord, hletter, h]
   have hfloor (z : Real) (hz : z ∈ Ico (0 : Real) 1) (k : Nat) :
       ⌊z + (k : Real) * alpha⌋ = ⌊(k : Real) * alpha⌋ +
         if 1 - Int.fract ((k : Real) * alpha) ≤ z then 1 else 0 := by
-    simpa only [phase_fract hz] using
+    simpa only [Int.fract_eq_self.mpr hz] using
       (floor_fract_add_indicator z ((k : Real) * alpha))
   have hfloor0x : ⌊x⌋ = 0 := Int.floor_eq_zero_iff.mpr hx
   have hfloor0y : ⌊y⌋ = 0 := Int.floor_eq_zero_iff.mpr hy
@@ -91,7 +84,7 @@ private theorem prefix_eq_iff_tests {alpha x y : Real}
     have hletters (k : Nat) (hk : k < n) :
         lowerMechanicalLetter alpha x k = lowerMechanicalLetter alpha y k := by
       have he := congrFun hprefix ⟨k, hk⟩
-      rw [bit_is_mechanical h0 h1, bit_is_mechanical h0 h1] at he
+      rw [bit_is_mechanical, bit_is_mechanical] at he
       rcases lowerMechanicalLetter_eq_zero_or_one (rho := x) h0 h1 k with hxk | hxk <;>
         rcases lowerMechanicalLetter_eq_zero_or_one (rho := y) h0 h1 k with hyk | hyk <;>
         simp_all [lowerMechanicalWord]
@@ -136,66 +129,62 @@ private theorem prefix_eq_iff_tests {alpha x y : Real}
           · rw [if_pos hc, if_pos (htest.mp hc)]
           · rw [if_neg hc, if_neg (fun hy => hc (htest.mpr hy))]
     funext k
-    rw [bit_is_mechanical h0 h1, bit_is_mechanical h0 h1]
+    rw [bit_is_mechanical, bit_is_mechanical]
     have hletter : lowerMechanicalLetter alpha x k.val =
         lowerMechanicalLetter alpha y k.val := by
       unfold lowerMechanicalLetter
       rw [hfloors (k.val + 1) (by omega), hfloors k.val k.isLt.le]
     simp only [lowerMechanicalWord, hletter]
 
-private theorem cut_geometry (alpha : Real) (hi : Irrational alpha) (k : Nat) :
-    cut alpha k ∈ Ioo (0 : Real) 1 ∧
-      cut alpha k = Int.fract (((k + 1 : Nat) : Real) * (-alpha)) := by
-  have hnz : Int.fract (((k + 1 : Nat) : Real) * alpha) ≠ 0 := by
-    rw [Int.fract_ne_zero_iff]
-    rintro ⟨z, hz⟩
-    exact (hi.natCast_mul (Nat.succ_ne_zero k)).ne_int z hz.symm
-  have hpos : 0 < Int.fract (((k + 1 : Nat) : Real) * alpha) :=
-    lt_of_le_of_ne (Int.fract_nonneg _) (Ne.symm hnz)
-  constructor
-  · dsimp [cut]
-    constructor <;> linarith [Int.fract_lt_one (((k + 1 : Nat) : Real) * alpha)]
-  · calc
-      cut alpha k = Int.fract (-(((k + 1 : Nat) : Real) * alpha)) :=
-        (Int.fract_neg hnz).symm
-      _ = Int.fract (((k + 1 : Nat) : Real) * (-alpha)) := by congr 1; ring
-
-private theorem cuts_eq_interior (alpha : Real) (hi : Irrational alpha) (n : Nat) :
-    (Finset.range n).image (cut alpha) = rotationInteriorCutSet alpha (n + 1) := by
-  ext x
-  constructor
-  · intro hx
-    obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hx
-    have hkg := cut_geometry alpha hi k
-    rw [rotationInteriorCutSet]
-    simp only [Finset.mem_erase]
-    refine ⟨hkg.1.2.ne, hkg.1.1.ne', ?_⟩
-    rw [rotationCutSet, Finset.mem_insert]
-    right
-    rw [rotationOrbit, Finset.mem_image]
-    exact ⟨k + 1, Finset.mem_range.mpr (by have := Finset.mem_range.mp hk; omega),
-      hkg.2.symm⟩
-  · intro hx
-    rw [rotationInteriorCutSet] at hx
-    simp only [Finset.mem_erase] at hx
-    rcases hx with ⟨hx1, hx0, hx⟩
-    rw [rotationCutSet, Finset.mem_insert] at hx
-    rcases hx with rfl | hx
-    · exact (hx1 rfl).elim
-    · rw [rotationOrbit, Finset.mem_image] at hx
-      obtain ⟨k, hk, rfl⟩ := hx
-      have hk0 : k ≠ 0 := by intro hk0; subst k; simp at hx0
-      refine Finset.mem_image.mpr ⟨k - 1, Finset.mem_range.mpr ?_, ?_⟩
-      · have := Finset.mem_range.mp hk; omega
-      · rw [(cut_geometry alpha hi (k - 1)).2, show k - 1 + 1 = k by omega]
-
 private theorem prefix_eq_iff_rank {alpha x y : Real} [Fact (Irrational alpha)]
     (h0 : 0 ≤ alpha) (h1 : alpha < 1)
     (hx : x ∈ Ico (0 : Real) 1) (hy : y ∈ Ico (0 : Real) 1) (n : Nat) :
     rotationPrefix alpha n x = rotationPrefix alpha n y ↔
       rotationGapRank alpha (n + 1) x = rotationGapRank alpha (n + 1) y := by
+  have cut_geometry (k : Nat) :
+      cut alpha k ∈ Ioo (0 : Real) 1 ∧
+        cut alpha k = Int.fract (((k + 1 : Nat) : Real) * (-alpha)) := by
+    have hnz : Int.fract (((k + 1 : Nat) : Real) * alpha) ≠ 0 := by
+      rw [Int.fract_ne_zero_iff]
+      rintro ⟨z, hz⟩
+      exact ((Fact.out : Irrational alpha).natCast_mul (Nat.succ_ne_zero k)).ne_int z hz.symm
+    have hpos : 0 < Int.fract (((k + 1 : Nat) : Real) * alpha) :=
+      lt_of_le_of_ne (Int.fract_nonneg _) (Ne.symm hnz)
+    constructor
+    · dsimp [cut]
+      constructor <;> linarith [Int.fract_lt_one (((k + 1 : Nat) : Real) * alpha)]
+    · calc
+        cut alpha k = Int.fract (-(((k + 1 : Nat) : Real) * alpha)) :=
+          (Int.fract_neg hnz).symm
+        _ = Int.fract (((k + 1 : Nat) : Real) * (-alpha)) := by congr 1; ring
   let S := (Finset.range n).image (cut alpha)
-  have hs : S = rotationInteriorCutSet alpha (n + 1) := cuts_eq_interior alpha Fact.out n
+  have hs : S = rotationInteriorCutSet alpha (n + 1) := by
+    ext z
+    constructor
+    · intro hz
+      obtain ⟨k, hk, rfl⟩ := Finset.mem_image.mp hz
+      have hkg := cut_geometry k
+      rw [rotationInteriorCutSet]
+      simp only [Finset.mem_erase]
+      refine ⟨hkg.1.2.ne, hkg.1.1.ne', ?_⟩
+      rw [rotationCutSet, Finset.mem_insert]
+      right
+      rw [rotationOrbit, Finset.mem_image]
+      exact ⟨k + 1, Finset.mem_range.mpr (by have := Finset.mem_range.mp hk; omega),
+        hkg.2.symm⟩
+    · intro hz
+      rw [rotationInteriorCutSet] at hz
+      simp only [Finset.mem_erase] at hz
+      rcases hz with ⟨hz1, hz0, hz⟩
+      rw [rotationCutSet, Finset.mem_insert] at hz
+      rcases hz with rfl | hz
+      · exact (hz1 rfl).elim
+      · rw [rotationOrbit, Finset.mem_image] at hz
+        obtain ⟨k, hk, rfl⟩ := hz
+        have hk0 : k ≠ 0 := by intro hk0; subst k; simp at hz0
+        refine Finset.mem_image.mpr ⟨k - 1, Finset.mem_range.mpr ?_, ?_⟩
+        · have := Finset.mem_range.mp hk; omega
+        · rw [(cut_geometry (k - 1)).2, show k - 1 + 1 = k by omega]
   have htests : (∀ k < n, (cut alpha k ≤ x ↔ cut alpha k ≤ y)) ↔
       S.filter (fun z => z ≤ x) = S.filter (fun z => z ≤ y) := by
     constructor
@@ -318,10 +307,26 @@ theorem rotation_prefix_single_cut (alpha : Real) [Fact (Irrational alpha)]
         rotationPrefix alpha n x = rotationPrefix alpha n y ∧
         rotationPrefix alpha (n + 1) x ≠ rotationPrefix alpha (n + 1) y := by
   let beta := Int.fract (((n + 1 : Nat) : Real) * (-alpha))
-  have hbeta : cut alpha n = beta := (cut_geometry alpha Fact.out n).2
+  have cut_geometry (k : Nat) :
+      cut alpha k ∈ Ioo (0 : Real) 1 ∧
+        cut alpha k = Int.fract (((k + 1 : Nat) : Real) * (-alpha)) := by
+    have hnz : Int.fract (((k + 1 : Nat) : Real) * alpha) ≠ 0 := by
+      rw [Int.fract_ne_zero_iff]
+      rintro ⟨z, hz⟩
+      exact ((Fact.out : Irrational alpha).natCast_mul (Nat.succ_ne_zero k)).ne_int z hz.symm
+    have hpos : 0 < Int.fract (((k + 1 : Nat) : Real) * alpha) :=
+      lt_of_le_of_ne (Int.fract_nonneg _) (Ne.symm hnz)
+    constructor
+    · dsimp [cut]
+      constructor <;> linarith [Int.fract_lt_one (((k + 1 : Nat) : Real) * alpha)]
+    · calc
+        cut alpha k = Int.fract (-(((k + 1 : Nat) : Real) * alpha)) :=
+          (Int.fract_neg hnz).symm
+        _ = Int.fract (((k + 1 : Nat) : Real) * (-alpha)) := by congr 1; ring
+  have hbeta : cut alpha n = beta := (cut_geometry n).2
   have hbeta01 : beta ∈ Ioo (0 : Real) 1 := by
     rw [← hbeta]
-    exact (cut_geometry alpha Fact.out n).1
+    exact (cut_geometry n).1
   have hstep (x : Real) (hx : x ∈ Ico (0 : Real) 1)
       (y : Real) (hy : y ∈ Ico (0 : Real) 1) :
       rotationPrefix alpha (n + 1) x = rotationPrefix alpha (n + 1) y ↔
