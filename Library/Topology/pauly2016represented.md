@@ -50,11 +50,9 @@ kernel but different open tests. Its later sensor construction and finite-noise
 bounds are independently proved in the theory volume and are not attributed to
 Pauly.
 
-## Retrieval record
+## Source scope
 
-On 2026-09-20 the publisher bibliographic page and the author's Swansea record
-were checked. The author PDF was read, and PDF page 5 (zero-based index 4),
-containing Section 4 and Proposition 5, was inspected as an image. Repository
-search for the DOI returned no pre-existing note. This is an original
-citation-only summary; no publisher PDF or copyrighted article text is copied
-into the repository.
+The source basis is the publisher bibliographic page, the author's Swansea
+record, and the author manuscript, including Section 4 and Proposition 5 on
+PDF page 5 (zero-based index 4). This is an original citation-only summary; no
+publisher PDF or copyrighted article text is copied into the repository.

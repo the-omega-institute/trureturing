@@ -6,7 +6,7 @@
 
 **约定 1.1（载体、动作与复合方向）。** 在 ZFC 中工作，全部载体均为集合。记 $\epsilon$ 为空词，$\Sigma^*$ 为字母表 $\Sigma$ 上的有限词集，$uv$ 为先读 $u$ 再读 $v$。状态更新按此顺序复合，即 $F_{uv}=F_v\circ F_u$。除明确增加的条件外，不预设状态有限、观察可计算、矩阵非负或动力学收缩。
 
-**约定 1.2（出处与证明身份）。** 本卷使用仓库 `theory-volume-template` 的新卷结构。数学写作、来源核对及实施由本会话 ChatGPT 单席串行完成，复核为同席自查，没有独立模型评审。仓库来源固定于 `6009fa739f232152b73131c472f48c1e8c8b1886`。下文给出纸面证明；引用既有 Lean 声明只说明相应构件的来源，不构成本卷整体的 Lean 验证收据。形式化及冻结状态由仓库账本给出。文献支持与本卷推导的范围在第 7 节分别列明，不主张全球首创。
+**约定 1.2（出处与证明身份）。** 下文给出纸面证明；引用既有 Lean 声明只说明相应构件的来源，不构成本卷整体的 Lean 验证收据。形式化及冻结状态由仓库账本给出。文献支持与本卷推导的范围在第 7 节分别列明，不主张全球首创。
 
 ## 2. 全未来行为、最大不动点与最小表示
 
@@ -275,7 +275,7 @@
 
 ## 8. 增补一·可更新预测器的前向不变覆盖
 
-**本批导航。** 本批接续 PR #8330 的 `ae239ec5cdd39f52889ab0a7d1f62eb3325a3456`，并核对 `dev` 的 `e984c77223b55a3cda565c7694098e436926183d`。第 8 节刻画可更新近似预测器所需的覆盖条件；第 9 节把第 4.3 条的有限窗口分离加强为无理旋转上的全未来分离，并给出黄金旋转的有限时间状态复杂度；第 10 节在收缩编码上给出达到下界的有限状态构造。第 11 节列本批证明来源。原有条目及其字节保持不变。
+**章节关系。** 第 8 节刻画可更新近似预测器所需的覆盖条件；第 9 节把第 4.3 条的有限窗口分离加强为无理旋转上的全未来分离，并给出黄金旋转的有限时间状态复杂度；第 10 节在收缩编码上给出达到下界的有限状态构造。第 11 节列证明来源。
 
 **定义 8.1（统一可更新预测与状态计费）。** 设 $X\ne\varnothing$，动作更新 $F_a:X\to X$ 总定义且确定，观察 $o:X\to Y$ 取值于度量空间。一个有限状态预测器由非空有限集 $S$、初始化 $e:X\to S$、总确定性更新 $G_a:S\to S$ 及输出 $h:S\to Y$ 组成。误差 $\varepsilon\ge0$ 的全未来要求为
 \[
@@ -511,13 +511,13 @@
 
 [^tcs-golden]: 固定源码：[D5/S1/Depth/GoldenContinuedFraction.lean](https://github.com/the-omega-institute/trureturing/blob/e984c77223b55a3cda565c7694098e436926183d/D5/S1/Depth/GoldenContinuedFraction.lean)，声明 `golden_ratio_continued_fraction` 给出黄金连分数的全一系数。第 9.5 条另以共轭乘积和 Fibonacci 递推完整证明其实际使用的误差不等式，无需假设某个未提供的最优逼近常数。
 
-**约定 11.2（本批产地与证明身份）。** 本批使用 `theory-volume-template/APPEND.md`，数学推导、来源核对、文字实施和有限自检均由本会话 ChatGPT 单席串行完成；没有独立模型评审或外部作者审定。全部新条目是带完整假设的纸面证明。本批没有新增 Lean 或 Scribe，没有运行 Lean kernel、canonical `make ingest` 或生成消化状态；文件前缀的字节核对只验证尾部追加，不替代 atom 账目核验。有限数值或有理数自检的范围仅限被实际检查的实例，不承担第 9.5 条渐近量词或全时间量词。新结果未被标为 kernel-verified，文献优先权未被确立。
+**约定 11.2（证明边界）。** 本节各条是带完整假设的纸面证明，不具有 Lean 证明身份。有限数值或有理数核验只覆盖列明实例，不承担第 9.5 条渐近量词或全时间量词。文献优先权未被确立。
 
 ## 追加锚（本行以下为增补区）
 
 ## 12. 增补二·有限时间预测的熵、状态数与线性维数
 
-**本批导航。** 本批接续 PR #8330 的 `f4202aa59e6053e4be883d7667f3d972946ff628`，读取的 dev 为 `630aac657042e88ca8bb69ee272cfcc6eb070bb8`。第 12 节把第 4、8 节的有限预测问题连接到观察熵；第 13、14 节把仿射状态保持与误差控制的前沿结论连接到仓库的核不变性和记忆核；第 15 节在严格稳定的一阶模型上求出带噪有限样本的外推风险阶。既有第 1 至 11 节不改判、不改字节。第 14.3 条限定所读外部预印本 v1 的一项投影递推，其精确状态保持定理不受此限定影响。
+**章节关系。** 第 12 节把第 4、8 节的有限预测问题连接到观察熵；第 13、14 节把仿射状态保持与误差控制的前沿结论连接到核不变性和记忆核；第 15 节在严格稳定的一阶模型上求出带噪有限样本的外推风险阶。第 14.3 条限定外部预印本 v1 的一项投影递推，其精确状态保持定理不受此限定影响。
 
 **定义 12.1（自主预测的观察覆盖数）。** 设非空紧致度量空间 $X$ 上有连续总更新 $F:X\to X$ 和连续观察 $o:X\to Y$，其中 $Y$ 为度量空间。令
 \[
@@ -792,7 +792,7 @@
 
 **出处 16.2（文献状态）。** 本批 13 条结果均有上述完整纸面证明，列为 `repo-derived`；其中精确仿射中性、Bessel 方法、熵覆盖和两点风险下界属于已有数学方法。下列文献的特定范围列为 `literature-attested`。未建立本批定量式的全球优先权，不列 `suspected-novel`，也不声称解决一个外部开放问题。
 
-[^tcs2-dmd]: Till Hauser、Julian Hölz，*Entropy based lower dimension bounds for finite-time prediction of Dynamic Mode Decomposition algorithms*，arXiv:2504.20269v1，提交于 2025-04-28，[原文](https://arxiv.org/abs/2504.20269v1)。核对了摘要及 PDF 的解析正文，包括第 1 节对有限分区与一般 $L^2$ 子空间的区分。截图接口未成功返回图像，因此不引用其图表。`literature-attested` 范围为熵与预测子空间维数的关系；第 12.2 条的自主状态实现及第 12.3、12.4 条的具体常数由本卷自证。
+[^tcs2-dmd]: Till Hauser、Julian Hölz，*Entropy based lower dimension bounds for finite-time prediction of Dynamic Mode Decomposition algorithms*，arXiv:2504.20269v1，提交于 2025-04-28，[原文](https://arxiv.org/abs/2504.20269v1)。来源范围为摘要及 PDF 正文第 1 节对有限分区与一般 $L^2$ 子空间的区分；不引用图表。`literature-attested` 范围为熵与预测子空间维数的关系；第 12.2 条的自主状态实现及第 12.3、12.4 条的具体常数由本卷自证。
 
 [^tcs2-error]: Jiwan Chung、Heechan Choi、Seon Joo Kim，*Rethinking State Tracking in Recurrent Models Through Error Control Dynamics*，arXiv:2605.07755v1，2026-05-08，[第 3.1、3.2 节及 Appendix D.1 至 D.3](https://arxiv.org/html/2605.07755v1)。`literature-attested` 范围是 Theorem 1 的精确仿射中性及状态依赖纠错的研究背景。本批第 14.3 条针对该固定版本的 Corollary 1 及其投影推导补条件；不据此否定其 Theorem 1、实验结果或所有仿射架构的有限时间表现。本文也不把平均误差与类别间距之比当作逐样本正确性的保证。
 
@@ -800,13 +800,13 @@
 
 [^tcs2-zero-memory]: 当前源码 [D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.lean](https://github.com/the-omega-institute/trureturing/blob/630aac657042e88ca8bb69ee272cfcc6eb070bb8/D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.lean)，已读取 `eventualKernel`、`eventualKernel_is_greatest`、`zero_memory_iff_eventualKernel_eq_ker` 及核不变构件。它们给出零记忆和核不变性的既有基础；第 14 节的具体文献反例、受迫漂移及斜投影公式不因引用该源文件而自动获得 Lean 证明身份。
 
-**约定 16.3（本批产地）。** 本批使用 `theory-volume-template/APPEND.md`；数学推导、原文核对、文字实施和有限检错由本会话 ChatGPT 单席串行完成，没有独立模型评审。正文只追加必要定义、结果、证明及来源。未新增 Lean 或 Scribe，未运行 Lean kernel、canonical `make ingest` 或生成消化账目；有限算术、矩阵和状态机检查只用于发现实现与公式错误。全称结论以本文证明为依据，未标为 kernel-verified。
+**约定 16.3（证明边界）。** 本节只给出定义、结果、证明及来源，不具有 Lean 证明身份。有限算术、矩阵和状态机核验只覆盖列明实例；全称结论以本文证明为依据。
 
 ## 追加锚（本行以下为增补区）
 
 ## 17. 增补三·能量下降、几何长度与受控作用量
 
-**本批导航。** 本批接续 PR #8330 的 `223734ad64ffa1aee016c8ba7c29470e07eb1300`，读取的 dev 为 `11036b0baf142c8e6535e61f29d2cae83ecf7bba`。第 17 节区分能量梯度流、最短路和跨势垒作用量；第 18 节连接路径熵、自由能、Bellman 递推与转移谱；第 19 节给出优化问题沿观察商下降的精确条件及误差界；第 20 节计算隐藏变量消元后的能量、记忆核和快慢误差。既有条目保持原字节，不改判。数学结论均按下列量词和模型成立。
+**章节关系。** 第 17 节区分能量梯度流、最短路和跨势垒作用量；第 18 节连接路径熵、自由能、Bellman 递推与转移谱；第 19 节给出优化问题沿观察商下降的精确条件及误差界；第 20 节计算隐藏变量消元后的能量、记忆核和快慢误差。数学结论均按下列量词和模型成立。
 
 **约定 17.1（熵、几何及费用的载体）。** 第 12 节的观察熵是轨迹覆盖数的渐近增长率。本批的 Shannon 熵、相对熵分别作用于明确给定的概率分布，路径代价作用于轨迹，几何度量作用于状态空间或概率分布空间。参数 $\tau>0$ 在离散优化中是正则化强度；只有给出物理单位、热浴和动力学模型时才另解释为热能尺度。全文自然对数。梯度依赖所给度量；最短路依赖端点、可行路径及长度函数。以下均不从同名“熵”推断这些对象自动相等。
 
@@ -1150,7 +1150,7 @@ $\log r_y-\log r_x$ 项因平稳性抵消。有限不可约 $Q^*$ 有平稳分�
 
 **出处 21.2（前沿几何的额外限制）。** Mathis Hardion、Hugo Lavenant，*Gradient Flows of Potential Energies in the Geometry of Sinkhorn Divergences*，arXiv:2511.14278v1，2025，[原文](https://arxiv.org/pdf/2511.14278)。实际读取引言、Theorem 1.1、Sinkhorn-JKO 定义及论文对 Theorem 4.2、7.1 的适用范围说明。作者明确指出 Sinkhorn divergence 一般不是距离的平方，极限方案收敛另有条件。因此第 17 节的测地距离不被机械替换为任意 Sinkhorn divergence；“改变几何会改变下降动力学”是本批对接该文的范围。
 
-**约定 21.3（产地及核验）。** 本批使用仓库 `theory-volume-template/APPEND.md`。数学推导、资料核对、文字实施和有限自检由本会话 ChatGPT 单席串行完成，无独立模型或作者审定。正文给出纸面证明，不新增 Lean、Scribe 或机器派生状态。未运行 canonical `make ingest`，不宣称消化账本登记完成。有限算例、矩阵代数和数值解核对只用于检错，不替代无限时域、全部温度和全部终端费用的量词。原文献的数学结果与本批结果均未被本次工作标记为 kernel-verified。
+**约定 21.3（证明边界）。** 本节给出纸面证明，不具有 Lean 证明身份。有限算例、矩阵代数和数值解核验不替代无限时域、全部温度和全部终端费用的量词。
 
 ## 追加锚（本行以下为增补区）
 
@@ -1168,7 +1168,7 @@ $\log r_y-\log r_x$ 项因平稳性抵消。有限不可约 $Q^*$ 有平稳分�
 
 ## 23. 增补四·有限可逆系统的热边缘与不可逆性边界
 
-**本批导航。** 本批直接接续本卷 `adba22e5f55087c2ce96e30d99cb55a84e8f3c39`，已核对 `dev@f190d1afb930c1fe9e5f0896736737ae81eeb0a4` 及 PR #8891 的 `8d58dc56d0e6283e725054b5a25c6d5ce8104cc6`。后者已把热相关曲率与隐藏耦合、记忆核、有限数据证书及量子 Kubo 相关连接，本批复用这些对象，不再将其作为新增结果。第 23 节研究边缘演化何时能够形成半群；第 24 节从三时刻相关求条件信息，并证明绝对相关误差、Markov 近似损失与时间反转不对称可以分离；第 25、26 节分别构造经典与量子重置极限。本批扩充第 17–20 节，不改判其数学结论，不修改任何旧字节。此前伴卷保留为固定引用，此后本线推导归入本卷。
+**章节关系。** 热相关曲率与隐藏耦合、记忆核、有限数据证书及量子 Kubo 相关沿用既有定义。第 23 节研究边缘演化何时能够形成半群；第 24 节从三时刻相关求条件信息，并证明绝对相关误差、Markov 近似损失与时间反转不对称可以分离；第 25、26 节分别构造经典与量子重置极限。
 
 **定义 23.1（能量归一的可见与隐藏分块）。** 取有限维实反对称矩阵
 \[
@@ -1396,19 +1396,19 @@ $V_A$ 自伴，$\operatorname{Tr}_B[W(I\otimes\tau_B)]=0$。记 $\Phi_t(\rho)=\o
 
 [^tcs4-sagawa]: Takahiro Sagawa，*Stochastic Thermodynamics for Autoregressive Generative Models: A Non-Markovian Perspective*，实际读取 [arXiv:2604.07867v3](https://arxiv.org/html/2604.07867v3) 第 VII.2 节式 (89)–(93) 与 Appendix A。文中已将回顾推断分成条件互信息压缩损失与模型失配；本文的正向 Markov 拟合使用同一经典 KL 链式法则，但比较对象不是作者指定的反向生成过程。出版方记录该论文于 2026-09-10 被 PRX Intelligence 接收，DOI [10.1103/tv38-b23y](https://doi.org/10.1103/tv38-b23y)；本次可读取全文为 v3，不推断无法读取的更新版字节。第 24.3 条的反转法则是实际平衡路径的坐标反转，不能与任意模型反向协议混同。
 
-[^tcs4-collision]: Stéphane Attal、Yan Pautrat，*From repeated to continuous quantum interactions*，[arXiv:math-ph/0311002v2](https://arxiv.org/abs/math-ph/0311002v2)，明确研究不同耦合尺度下从重复相互作用到连续量子噪声的极限。Francesco Ciccarello、Salvatore Lorenzo、Vittorio Giovannetti、G. Massimo Palma，*Quantum collision models: open system dynamics from repeated interactions*，Physics Reports 954 (2022)，[arXiv:2106.11974v2](https://arxiv.org/abs/2106.11974v2)，第 5 节及第 7 节给出主方程缩放和相关性熵账。已读取 PDF 解析正文；截图接口未成功返回，未引用其中图表。本文第 25 节给出有限实矩阵版本及误差预算，未认领碰撞极限思想的首创。
+[^tcs4-collision]: Stéphane Attal、Yan Pautrat，*From repeated to continuous quantum interactions*，[arXiv:math-ph/0311002v2](https://arxiv.org/abs/math-ph/0311002v2)，明确研究不同耦合尺度下从重复相互作用到连续量子噪声的极限。Francesco Ciccarello、Salvatore Lorenzo、Vittorio Giovannetti、G. Massimo Palma，*Quantum collision models: open system dynamics from repeated interactions*，Physics Reports 954 (2022)，[arXiv:2106.11974v2](https://arxiv.org/abs/2106.11974v2)，第 5 节及第 7 节给出主方程缩放和相关性熵账。来源范围为 PDF 正文，不引用图表。本文第 25 节给出有限实矩阵版本及误差预算，未认领碰撞极限思想的首创。
 
 [^tcs4-recovery]: [PREDICTIVE_THERMODYNAMIC_SUFFICIENCY.md](https://github.com/the-omega-institute/trureturing/blob/e300b5df71f5ce08d857e8f2000a9e495813cdaf/docs/develop/theory/PREDICTIVE_THERMODYNAMIC_SUFFICIENCY.md) 第 3.3、3.4 条给出相互作用的一阶误差与恢复缺陷。定理 26.2 另按热参考重新中心化相互作用，用精确双重 Duhamel 余项把匹配初态改善为二阶，并把偏离该初态族的误差单独量化；这里的 $g_q$ 与伴卷全代数泄漏 $\delta(H)$ 不是同一定义。
 
 **出处 27.2（最新记忆学习结果的范围）。** Quanjun Lang、Jianfeng Lu，*Learning Memory Kernels in Generalized Langevin Equations*，SIAM Journal on Mathematics of Data Science 8(1), 141–166 (2026)，DOI [10.1137/24M1651101](https://doi.org/10.1137/24M1651101)，已核对出版方条目与 [arXiv:2402.11705v3](https://arxiv.org/html/2402.11705v3) 第 2–4 节。其方法控制相关函数误差传向记忆核的误差；本批不重复该算法。本批三时刻证书只需三个已校准的相关值，用来检验删除历史的信息损失；有限浴回归与 Markov 极限又属于不同的模型假设。
 
-**约定 27.3（产地与核验身份）。** 本批按 `theory-volume-template/APPEND.md` 直接追加原卷。数学、文献核对、文字实施及检错由本会话 ChatGPT 单席串行完成，没有独立模型或同行审阅。有限检查使用精确有理数/符号计算、双精度矩阵计算及 80 位标量计算，分别注明用途，不能替代一般证明。未新增 Lean、Scribe、工具、冻结记录或消化结算状态，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。本文新增十条带证明结果，原条目全部保留；完整前缀字节比较用于检测误改，不代替消化账目核验。
+**约定 27.3（证明边界）。** 有限核验使用精确有理数或符号计算、双精度矩阵计算及 80 位标量计算，分别注明用途，不能替代一般证明。本节十条结果均带纸面证明，不具有 Lean 证明身份。
 
 ## 追加锚（本行以下为增补区）
 
 ## 28. 增补五·固定热参考的精确熵收缩及量子维数边界
 
-**本批导航。** 本批接续原卷 `c4b06639e9da9573f53bd841eed5e5312f9516ad`，读取的 dev 为 `806e7401e78a7b65587aac35370714b272ba2b46`，读取的 PR #8891 为 `bbea3408282f1bfb7e713f4f61f7e3b5be01f58d`。后者已将 #8899 合编进《统一预测几何》主卷，包含观测 Gramian、后验热恢复及磁场信息设计。本批不重复这些结果，在本卷第 25 节的耗散极限上继续研究：退化噪声如何经保守旋转耗散全部信息；经典与量子模型何时具有相同的精确收缩系数；有限延迟数据能够认证什么。第 1–27 节全部保留。本批不使用原卷中未完成远端交付的其他草稿编号。
+**章节关系。** 观测 Gramian、后验热恢复及磁场信息设计沿用《统一预测几何》的定义和结果。本卷在第 25 节的耗散极限上继续研究：退化噪声如何经保守旋转耗散全部信息；经典与量子模型何时具有相同的精确收缩系数；有限延迟数据能够认证什么。
 
 **定义 28.1（固定参考的收缩系数）。** 对保持概率参考 $\gamma$ 的 Markov 核 $\mathcal K$，定义
 \[
@@ -1638,13 +1638,13 @@ Markov 不等式及算子范数不超过 Frobenius 范数给所列置信预算�
 
 Pierre Monmarché、Lihan Wang，*On the entropic convergence for piecewise deterministic samplers: speedup and obstruction*，[arXiv:2606.26086v1](https://arxiv.org/html/2606.26086v1)，本批读取 Theorem 2：在其 BPS/ZZP 与速度分布前件下，即使 Gaussian 目标，也不存在文中所定义的统一衰减熵比；其 RHMC 正向结果与此分开。因此本卷从 Gaussian 线性核得到的精确系数，不能从“同一个平衡态”或“同样包含 Hamilton 运动”直接迁移到任意采样器。
 
-**约定 32.3（产地与核验）。** 本批按 `theory-volume-template/APPEND.md` 直接追加原卷，数学推导、原文核对、实施及有限检错均由本会话 ChatGPT 单席串行完成，无独立同行或异模型评审。八条结果均给出纸面证明。仅原理论文件是本次远端变更目标；检错脚本保留本地。未新增 Lean、Scribe、冻结记录或机器消化账目，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。既有时间窗与信息公式的来源分别保留，有限样本核对不代替任意输入分布、所有状态与极限量词。
+**约定 32.3（证明边界）。** 本节八条结果均给出纸面证明，不具有 Lean 证明身份。既有时间窗与信息公式的来源分别保留；有限样本核验不代替任意输入分布、所有状态与极限量词。
 
 ## 追加锚（本行以下为增补区）
 
 ## 33. 增补六·外部记忆下的熵收缩与可分态反例
 
-**本批导航。** 本批接续原卷 `e8105c47b7b6edf23b58f1f65a174c019daa2b0f`，读取 `dev@b585e69b2f039201b4a60f6080638e929ece86ec` 及 PR #8891 的 `854d003ed8f06c535b9afcb4680449a1543f00ef`。后者已把非线性相关缺陷分成真实隐藏条件方差与表达误差，本批不重复该线。这里继续第 28–31 节留下的附加量子记忆义务：先证明一般单比特公式不能直接放大量子记忆，再构造一种对任意记忆维数保真的双去相干分解，进而将原卷受驱动比特与经典振子的共同曲线扩展到时变控制和相关寄存器。第 36 节比较结构已知与一般信道证书的精度。旧条目与字节全部保留，原有无辅助系统的结论不改判。
+**章节关系。** 非线性相关缺陷区分真实隐藏条件方差与表达误差；这里继续第 28–31 节留下的附加量子记忆义务：先证明一般单比特公式不能直接放大量子记忆，再构造一种对任意记忆维数保真的双去相干分解，进而将受驱动比特与经典振子的共同曲线扩展到时变控制和相关寄存器。第 36 节比较结构已知与一般信道证书的精度。
 
 **定义 33.1（带被动记忆的参考缺陷）。** 本批量子载体均有限维，记 $\tau_A=I_A/d_A$，$R$ 是任意有限维外部记忆。演化只作用于 $A$，记忆不参与 Hamilton 耦合、反馈或重置。对联合态定义
 \[
@@ -1876,13 +1876,13 @@ Pinsker 给首个迹距离界。由 Araki–Lieb 与 $S(A_1\cdots A_n)\le n\log2
 
 [^tcs6-laracuente]: Nicholas LaRacuente，*Self-restricting Noise and Exponential Relative Entropy Decay Under Unital Quantum Markov Semigroups*，Quantum 10, 2010 (2026)，DOI [10.22331/q-2026-03-04-2010](https://doi.org/10.22331/q-2026-03-04-2010)，[作者全文 v5](https://arxiv.org/html/2203.03745v5)。实际读取 Introduction 的 Propositions/Theorems 1.1–1.3、§2.1 的完全正序与条件期望、§3 的有限时间结论。该文已在任意有限辅助系统下证明有限时间尺度上的可重复收缩，并指出不交换 Hamilton 项可使零时刻的标准指数界失效。本批在更窄的固定轴受驱动单比特族中算出精确终点系数，三阶起始律与文献的早期边界相容；没有将有限时间收缩误写为带正速率、前因子一的全时间线性指数界。
 
-**约定 37.2（产地与核验）。** 本批按 `theory-volume-template/APPEND.md` 在原卷追加，数学推导、文献核对、文字实施和有限检错由本会话 ChatGPT 单席串行完成，无独立同行或异模型审定。正文保留全部记忆量词和模型前件，九条结果均配套纸面证明。计算中的矩阵样本只用于检错，不代替任意辅助维数、全部联合态和连续时间的证明。未新增 Lean、Scribe、冻结记录或消化账目，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。
+**约定 37.2（证明边界）。** 正文保留全部记忆量词和模型前件，九条结果均配套纸面证明，不具有 Lean 证明身份。矩阵样本核验不代替任意辅助维数、全部联合态和连续时间的证明。
 
 ## 追加锚（本行以下为增补区）
 
 ## 38. 增补七·以 Hirche–Reeb 信息合并上界为目标
 
-**本批导航。** 本批接续本卷 `618199bab3d7916f2905a0a592a9dd6ffac0974d` 的第 37 节，核对的 dev 为 `244bc8e6c766f6498d56ca4681e6e5c739eaa798`。前面第 34 节已使用矩阵对数的预解式微分；本批把这个工具用于一个外部具名猜想的非对易子域，而不再增加没有指定目标的耗散类比。第 39 节证明所需的 BKM 二次型张量不等式，第 40 节给出具有明确边界的参数区域。第 41 节记录该区域与原猜想全部量词之间的差别。本批不改判第 1–37 节，也不据此宣告一般猜想已经解决。
+**章节关系。** 第 34 节使用矩阵对数的预解式微分；这里把该工具用于一个外部具名猜想的非对易子域。第 39 节证明所需的 BKM 二次型张量不等式，第 40 节给出具有明确边界的参数区域，第 41 节记录该区域与原猜想全部量词之间的差别。这些结果不结算一般猜想。
 
 **问题 38.1（外部原题及本批限定）。** Hirche–Reeb 的 *Bounds on Information Combining With Quantum Side Information*，IEEE Transactions on Information Theory 64(7), 4739–4757 (2018)，Conjecture VII.2、式 (73)，提出如下上界。本批固定它在独立均匀二元输入下的版本：
 \[
@@ -2080,13 +2080,13 @@ $\psi$ 非减且 $\psi(1/2)=4\log(4/3)$，给出 $k_0$。为避免依靠小数�
 
 [^tcs7-dlmf]: NIST Digital Library of Mathematical Functions，§4.36，式 [4.36.1](https://dlmf.nist.gov/4.36.E1)，双曲正弦的无限乘积。本批用它构造 $h(x)=\mathbb E e^{-Tx^2}$ 并独立证明引理 39.1，没有依赖未证明的 Gaussian 乘积猜想。
 
-**约定 41.4（产地与验证身份）。** 本批按仓库 `theory-volume-template/APPEND.md` 追加原卷。推导、来源核对和有限检错由本会话 ChatGPT 单席完成，无独立同行或异模型审定。五条带证明的引理、定理或推论是纸面结果；本批未新增 Lean、Scribe、冻结或消化账目，未运行 Lean kernel、canonical `make ingest` 或仓库 CI。数值检查只用于检错，不承担任意维数的量词。本运行环境的已发现 GitHub 动作只有读取与搜索，故本批生成精确尾部追加稿及可应用补丁，尚未写入远端 PR；文件或本地补丁存在不构成远端提交记录。
+**约定 41.4（证明边界）。** 五条带证明的引理、定理或推论是纸面结果，不具有 Lean 证明身份。数值核验只覆盖列明实例，不承担任意维数的量词。
 
 ## 追加锚（本行以下为增补区）
 
 ## 42. 增补八·无指定标签的实验、表示等价与不变量
 
-**本批导航。** 本批接续第 38–41 节的本地研究稿；这些章节在前轮写成本地稿，以远端 `618199bab3d7916f2905a0a592a9dd6ffac0974d` 为精确前缀，本批继续在其后增补。本批读取的 dev 为 `bd92e9c46ba8f70031ae0a21891899e6fefb7f49`。目标仍为问题 38.1 的 Hirche–Reeb 上界：第 42 节区分标签改变、统计等价和真正粗粒化；第 43 节把已证内部区域扩展到带非对易成分的边界及受控的未认证分区；第 44 节量化近似恢复时的余量损失。所有熵以比特计，矩阵对数明确写自然对数时除外。不同表示中的物理能量和实现成本不被统计等价自动保留。
+**章节关系。** 目标仍为问题 38.1 的 Hirche–Reeb 上界：第 42 节区分标签改变、统计等价和真正粗粒化；第 43 节把已证内部区域扩展到带非对易成分的边界及受控的未认证分区；第 44 节量化近似恢复时的余量损失。所有熵以比特计，矩阵对数明确写自然对数时除外。不同表示中的物理能量和实现成本不被统计等价自动保留。
 
 **定义 42.1（无指定原点的二元实验）。** 令 $S$ 是一个恰含两个元素的集合，$\iota:S\to S$ 为唯一无不动点置换。实验 $\mathsf W$ 给每个 $s\in S$ 指定一个有限维密度矩阵 $\rho_s$，先验均匀。这里没有指定哪个元素叫作零。两实验合并的输出标签集定义为
 \[
@@ -2236,13 +2236,13 @@ P 类的非零块在相对归一差分中具有绝对值为一的本征值，块
 
 [^tcs8-continuity]: Andreas Winter，*Tight Uniform Continuity Bounds for Quantum Entropies: Conditional Entropy, Relative Entropy Distance and Energy Constraints*，Communications in Mathematical Physics 347, 291–313 (2016)，[arXiv:1507.07775](https://arxiv.org/abs/1507.07775)。引理 44.1 直接写出该类 Jordan 分解/共同混合证明并使用经典标签的条件熵范围。另核对 Mario Berta 等，*Sharp continuity of quantum conditional entropy*，[arXiv:2607.24687v1](https://arxiv.org/html/2607.24687v1)，Theorem 1.1 给出一般量子条件熵的精确维数模数。本批使用已完整证明的 cq 模数，不将它标成最优，也不误用经典条件系统与经典被条件变量的相反角色。
 
-**约定 45.2（本批来源与检错）。** 按既有 `theory-volume-template/APPEND.md` 继续原卷。数学推导、原文核对、文字实施及有限数值检错由本会话 ChatGPT 单席串行完成，无独立同行或异模型审定。第 42–44 节八条结果均紧跟证明；统计不变量与部分区域证明的价值分别说明，不用条目数量衡量原创性。核对了 HR 原文第 VII 节及式 (73) 页面、后续 BISO 作者论文，以及统计比较和条件熵连续性来源。未运行 Lean kernel、canonical `make ingest`、Scribe 或仓库 CI；本批不新增机器冻结或开放问题结算状态。
+**约定 45.2（证明与来源边界）。** 第 42–44 节八条结果均紧跟纸面证明，不具有 Lean 证明身份；统计不变量与部分区域证明的价值分别说明。来源范围包括 HR 原文第 VII 节及式 (73)、后续 BISO 作者论文，以及统计比较和条件熵连续性文献。
 
 ## 追加锚（本行以下为增补区）
 
 ## 46. 增补九·拓扑等价、时间共轭与全局 Hamilton 障碍
 
-**本批导航。** 本批继续第 45 节的本地完整候选，已读取原卷远端 PR #8330 的 `618199bab3d7916f2905a0a592a9dd6ffac0974d`、`dev@995dec04185b482a7dc2d257b829437c0d8ac9b0` 及 PR #8891 的 `a287cd0501f852193a5c027337a9e0be576500df`。远端原卷仍至第 37 节，第 38–45 节为先前待提交追加，不以本地章节存在推断已经入远端。本批将前一轮几何讨论中的历史坐标和辛缺陷写成完整推导，并补出全局拓扑导致的模型误差、固定时间窗的最优采样和噪声代价。本文不改变 HR 上界已证明的参数域，也不重复 #8891 的测量函数族稳定秩结果。旧字节及旧证明身份保持不变。
+**章节关系。** 第 46–50 节把历史坐标和辛缺陷写成完整推导，并补出全局拓扑导致的模型误差、固定时间窗的最优采样和噪声代价。这些结果不改变 HR 上界已证明的参数域，也不重复既有测量函数族稳定秩结果。
 
 **定义 46.1（空间、结构与演化的不同等价）。** 同胚是连续双射且逆连续的映射。两流 $\Phi_t$ 与 $\Psi_t$ 的保时间拓扑共轭是同胚 $h$，满足 $h\Phi_t=\Psi_t h$ 对全部共同定义的 $t$ 成立；允许另行改变时间参数的轨道等价不使用同一条件。度量的等距、辛形式的辛微分同胚、参考概率的测度保持，分别增加独立的结构条件。本批光滑相空间的辛约定是 $\iota_{X_H}\Omega=dH$，在 $\Omega=dq\wedge dp$ 下有 $X_H=(\partial_pH,-\partial_qH)$。几何流 $g_t$ 本身改变度量，通常仍定义在同一底流形上；它与固定结构上点的流 $\Phi_t$ 分别指定。
 
@@ -2405,7 +2405,7 @@ P 类的非零块在相对归一差分中具有绝对值为一的本征值，块
 
 [^tcs9-topology]: Steven M. LaValle，*Planning Algorithms*，§4.1.1 中 [Homeomorphism: Making a donut into a coffee cup](https://msl.cs.uiuc.edu/planning/node130.html)。同胚忽略度量量，只保留连续结构。甜甜圈和单柄杯子的类比要求比较一致的理想化实体或边界曲面模型，不能混淆材料、内部空腔与只取外壁的不同集合；“洞数相同”不是任意拓扑空间的完整分类。几何本身随时间变化的独立例子是 Ricci 流，可参见 G. Perelman，*The entropy formula for the Ricci flow and its geometric applications*，[arXiv:math/0211159](https://arxiv.org/abs/math/0211159)。本批仅用它说明问题类型，不证明 Ricci 流或 Poincaré 定理。
 
-[^tcs9-symplectic]: Ana Cannas da Silva，*Symplectic Geometry*，Handbook of Differential Geometry, vol. 2，作者稿 [arXiv:math/0505366v1](https://arxiv.org/pdf/math/0505366)。本批核对 §1.4 的拉回求导与 Cartan 公式、§5.1 的闭/恰当一形式及环面上的非 Hamilton 平移实例，使用 PDF 解析文字；页面截图接口本次未返回成功，不引用图表。$H^1_{\mathrm{dR}}$ 的障碍是该文已有内容，第 46.3 条另写当前平坦范数下的 Fourier 分解和误差等号。
+[^tcs9-symplectic]: Ana Cannas da Silva，*Symplectic Geometry*，Handbook of Differential Geometry, vol. 2，作者稿 [arXiv:math/0505366v1](https://arxiv.org/pdf/math/0505366)。来源范围为 §1.4 的拉回求导与 Cartan 公式、§5.1 的闭/恰当一形式及环面上的非 Hamilton 平移实例，不引用图表。$H^1_{\mathrm{dR}}$ 的障碍是该文已有内容，第 46.3 条另写当前平坦范数下的 Fourier 分解和误差等号。
 
 [^tcs9-embedology]: A. Eftekhari、H. L. Yap、M. B. Wakin、C. J. Rozell，*Stabilizing Embedology: Geometry-Preserving Delay-Coordinate Maps*，Physical Review E 97, 022222 (2018)，[arXiv:1609.06347](https://arxiv.org/abs/1609.06347)。本次读取作者摘要，并复用先前已核对的主卷 §12 的原文问题范围：拓扑嵌入不自动给距离稳定性。第 47.2 条只是一个完全可算的谐振子，不声称任意流或任意标量传感器都由两个延迟恢复。
 
@@ -2415,13 +2415,13 @@ P 类的非零块在相对归一差分中具有绝对值为一的本征值，块
 
 Rei Henigman、Yael Karshon 的 *Symplectic torus actions with non-contractible orbits*，[arXiv:2607.21159v1](https://arxiv.org/html/2607.21159v1)，2026-07-23，Theorem 1.1 在闭连通 $2n$ 维辛流形及所规定环面作用维数条件下，把 Hamilton 性与轨道映射的零同伦联系起来。本批已读取引言的精确维数前件及其反例讨论；该定理属于作者，本批没有证明它或其 §8 的开放问题。它说明局部辛性质与全局拓扑之间存在正在研究的严格问题，但本卷仍保持既有有限观察与信息合并目标，不凭一个环面例子另建研究主线。
 
-**约定 50.3（产地与核验）。** 本批按 `theory-volume-template/APPEND.md` 直接追加原卷，推导、来源核对及有限符号/数值检错由本会话 ChatGPT 单席完成，无独立同行或异模型审定。本批八条结果是纸面证明，不新增 Lean、Scribe、冻结或消化账目，未执行 Lean kernel、canonical `make ingest` 或仓库 CI。当前远端写入动作调用返回资源不存在，重新发现的 GitHub 动作仅支持读取；当前环境无已认证的写入 CLI。故本批连同此前待提交的第 38–45 节保存为原路径的完整候选与精确追加补丁，不把本地保存或评论视为远端文件提交。实际后续入远端时须另核对分支头、前缀与 blob，并保留本条对本轮发生情况的记录。
+**约定 50.3（证明边界）。** 本节八条结果是纸面证明，不具有 Lean 证明身份。有限符号和数值核验只覆盖列明实例，不承担一般量词。
 
 ## 追加锚（本行以下为增补区）
 
 ## 51. 增补十·观察拓扑、有限证据与共同核的适用域
 
-**本批导航。** 本批接续第 46–50 节的本地追加稿，所读取的远端本卷为 `618199bab3d7916f2905a0a592a9dd6ffac0974d`，dev 为 `2005cf1f8e500d45722418f2e99f308d4452ba79`，PR #8891 为 `43af212d7552052567390d48419c48dc05758ad7`。仓库《证明拓扑、对合逻辑与观察逃逸统一理论》第六至九部及 `PartitionTopologyKernel.lean` 已证明离散读数的不可分辨关系等于共同核，且目标恢复对应相应观察拓扑下的连续性。本批直接复用这些结果。第 51 节说明有限证据的拓扑与离散分割拓扑的区别；第 52–54 节以公开的稳定延迟嵌入测量设计问题为目标，研究相同可分辨拓扑下的传感器维数、稳定秩与噪声预算。旧章节不改判、不改字节；本批的实际远端交付另由提交记录确认。
+**章节关系。** 《证明拓扑、对合逻辑与观察逃逸统一理论》第六至九部及 `PartitionTopologyKernel.lean` 给出离散读数的不可分辨关系与共同核、目标恢复与观察拓扑连续性的接口。第 51 节说明有限证据拓扑与离散分割拓扑的区别；第 52–54 节以公开的稳定延迟嵌入测量设计问题为目标，研究相同可分辨拓扑下的传感器维数、稳定秩与噪声预算。
 
 **定义 51.1（允许的正观察）。** 给定集合 $X$ 及读数族 $q_i:X\to Y_i$，每个 $Y_i$ 带指定拓扑。定义 $\tau_{\rm obs}$ 为所有 $q_i^{-1}(U)$（$U$ 在 $Y_i$ 中开）生成的初始拓扑。取 Sierpiński 空间 $\mathbb S=\{\bot,\top\}$，其开集为 $\varnothing,\{\top\},\mathbb S$。开集 $U\subseteq X$ 的正检验是 $\chi_U:X\to\mathbb S$。这是一种不指定概率和数值误差的观察语义。把它进一步解释为可执行半判定，需要另给表示、有效索引及算法；任意抽象开集不被自动标成可计算。[^tcs10-pauly]
 
@@ -2570,18 +2570,18 @@ $\|H_\varepsilon(\varphi)-H_\varepsilon(\psi)\|/
 
 **出处 55.1（复用与承重增量）。** 观察拓扑的共同核结论直接复用仓库理论和 Lean；Sierpiński 正检验、初始拓扑和乘积拓扑属于经典理论及 Pauly 的表示空间框架。命题 52.2 的 gcd 与 Fourier 计算是既有方法在本读数族中的展开。外部目标固定为 [EYWR18] 的测量设计问题。当前新增的限定答案是：在指定成对谐波类中两对的严格上限、三对的匹配充分性、六维构造的精确下弦增益和稳定秩缺口，以及同一构造在任意有限延迟设计和固定总增益下的精确统计预算。该结果不解决任意光滑测量族的最小维数，不宣称原文的随机标量嵌入保证已经在两个延迟成立，也不把全部原问题结算为已解决。
 
-[^tcs10-repo]: 固定 dev 来源为 `2005cf1f8e500d45722418f2e99f308d4452ba79` 的 `docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md` 第六至九部，以及 `D5/S3/ConceptDynamics/ObservationTopology/PartitionTopologyKernel.lean` 中 `partition_inseparable_iff_kernel`、`partitionTopology_eq_of_kernel_iff`。实际读取了声明和证明，其离散值域前件明确。本轮不新建绑定包装，不把新增的连续观察与噪声结论冒认为已有 Lean 声明。
+[^tcs10-repo]: 仓库来源为 `docs/develop/theory/PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md` 第六至九部，以及 `D5/S3/ConceptDynamics/ObservationTopology/PartitionTopologyKernel.lean` 中 `partition_inseparable_iff_kernel`、`partitionTopology_eq_of_kernel_iff`。这些结果具有明确的离散值域前件，不承担本文新增的连续观察与噪声结论。
 
 [^tcs10-pauly]: Arno Pauly，*On the topological aspects of the theory of represented spaces*，Computability 5(2), 159–180 (2016)，DOI [10.3233/COM-150049](https://doi.org/10.3233/COM-150049)，作者稿 [arXiv:1204.3763](https://arxiv.org/abs/1204.3763)。核对 §4 的 Sierpiński 值正检验、开集表示与 Proposition 5 的可计算运算，及作者机构的期刊书目信息。期刊正式年份为 2016，在线先行发表于 2015。抽象拓扑连续性与在已指定表示下的可计算性分别使用。本批的概率风险和传感器稳定秩定理不归给该来源。
 
 [^tcs10-eftekhari]: Armin Eftekhari、Han Lun Yap、Michael B. Wakin、Christopher J. Rozell，*Stabilizing Embedology: Geometry-Preserving Delay-Coordinate Maps*，Physical Review E 97, 022222 (2018)，DOI [10.1103/PhysRevE.97.022222](https://doi.org/10.1103/PhysRevE.97.022222)，作者稿 [arXiv:1609.06347v2](https://arxiv.org/abs/1609.06347v2)。核对 §III 的测量族、A1–A3、式 (14)–(16) 及结论部分第二个测量设计问题。原文已区分拓扑嵌入与几何稳定，也分别使用双 Lipschitz 和稳定秩条件。本文没有把这一区分本身计为新发现。所设计的是原定义里的整个基函数族，固定族内的标量系数不改变该族稳定秩。
 
-[^tcs10-design]: 固定 PR #8891 主卷 `docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md`，head `43af212d7552052567390d48419c48dc05758ad7` 的 §12。其四维两谐波提升、所有有限输出维数的下弦裕量障碍、十维五谐波抵消构造及噪声见证均保留原证明身份。本批减少特定趋极值构造的谐波数量，同时明确不同的裕量损失阶；没有修改该主卷或声称解决它在固定裕量下最优常数的剩余问题。
+[^tcs10-design]: `docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md` §12 给出四维两谐波提升、所有有限输出维数的下弦裕量障碍、十维五谐波抵消构造及噪声见证。本文减少特定趋极值构造的谐波数量，同时明确不同的裕量损失阶；不声称解决固定裕量下最优常数的剩余问题。
 
-**约定 55.2（文献登记与本批核验）。** 本批按既有 `theory-volume-template/APPEND.md` 追加。新引用以 `Library` 的规范书目条目登记，并在观察拓扑 Scribe 中说明文献的适用范围。定理 52.3 使用的离散频率障碍另由 `D5/S3/ConceptDynamics/ObservationTopology/TwoHarmonicRotationObstruction.coprime_two_frequency_cosine_obstruction` 给出 Lean 证明：对任意互素自然数 $m,n$，在 $\theta=\pi/6$ 时有
+**约定 55.2（文献与形式化边界）。** 新引用以 `Library` 的规范书目条目登记，并在观察拓扑 Scribe 中说明文献的适用范围。定理 52.3 使用的离散频率障碍另由 `D5/S3/ConceptDynamics/ObservationTopology/TwoHarmonicRotationObstruction.coprime_two_frequency_cosine_obstruction` 给出 Lean 证明：对任意互素自然数 $m,n$，在 $\theta=\pi/6$ 时有
 \[
 \frac12\le\max\{|\cos(m\theta)|,|\cos(n\theta)|\}.
 \]
-该 Lean 结论比正频率前件略强，但只承担模六分类与互素矛盾这一步；命题 52.2 的核与 Gram 公式、定理 52.3 的完整稳定秩结论及达到性、定理 53.2 的六维极值与渐近、定理 54.1 的 Gaussian 风险仍由本文解析证明承担。数学推导、来源核对和有限检错由本会话 ChatGPT 单席完成，有限计算只用于检错；形式声明的冻结和公理闭包以仓库机器账本为准。此前章节中“未写远端”的记述保留其各自写作时的事实，不能用本批后续提交追溯改写。
+该 Lean 结论比正频率前件略强，但只承担模六分类与互素矛盾这一步；命题 52.2 的核与 Gram 公式、定理 52.3 的完整稳定秩结论及达到性、定理 53.2 的六维极值与渐近、定理 54.1 的 Gaussian 风险仍由本文解析证明承担。形式声明的冻结和公理闭包以仓库机器账本为准。
 
 ## 追加锚（本行以下为增补区）

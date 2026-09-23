@@ -15,7 +15,7 @@ triage: anchor
 # Stable observation and the measurement-design question
 
 Eftekhari, Yap, Wakin, Rozell, *Physical Review E* 97, 022222 (2018).
-DOI and authors were checked against the publisher's record.
+The DOI and author list agree with the publisher's record.
 
 ## Verified locator
 
@@ -39,8 +39,7 @@ all of those conditions.
 
 ## Current repository interface
 
-PR #8891, fixed source revision 43af212d7552052567390d48419c48dc05758ad7,
-Section 12 of `SYMPLECTIC_PREDICTIVE_COMPLETION.md`, studies a circle rotation
+Section 12 of `SYMPLECTIC_PREDICTIVE_COMPLETION.md` studies a circle rotation
 by pi/6 with two delays and designs the whole basis family. It already contains
 a four-dimensional comparison, a general separation-margin obstruction and a
 ten-dimensional approaching-extremal construction.
@@ -58,13 +57,10 @@ The Scribe connection is a literature scope note on the existing observation
 kernel document. No new formal theorem is claimed, and the existing Lean
 result establishes none of these quantitative stable-rank claims.
 
-## Retrieval record and limitations
+## Source scope and limitations
 
-On 2026-09-20 the author manuscript arXiv:1609.06347v2 and the publisher accepted
-manuscript were read for the definitions and Section V question. The accepted
-manuscript text explicitly identifies the basis-family/scalar-sensor distinction.
-A screenshot request for its page 34 failed; the question was checked in the
-parsed accepted-manuscript text, without claiming a successful visual check.
-Repository search for the DOI returned no note. This search result is not an
-exhaustive priority determination. The note contains original summary and
-precise scope only; no full paper is reproduced.
+The source basis is arXiv:1609.06347v2 and the publisher accepted manuscript.
+The accepted manuscript explicitly identifies the basis-family/scalar-sensor
+distinction. The source comparison does not establish an exhaustive priority
+determination. This note contains an original summary and precise scope only;
+no full paper is reproduced.
