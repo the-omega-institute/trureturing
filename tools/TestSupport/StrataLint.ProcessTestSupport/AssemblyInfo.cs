@@ -9,3 +9,4 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("StrataLint.CliIntegration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.PrScript.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ReportSupervisor.Tests")]

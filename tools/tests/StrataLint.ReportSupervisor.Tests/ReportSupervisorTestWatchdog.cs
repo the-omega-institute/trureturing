@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using Xunit;
 
-namespace StrataLint.Tests;
+namespace StrataLint.ReportSupervisor.Tests;
 
 internal sealed class ReportSupervisorTestWatchdog : IDisposable
 {
