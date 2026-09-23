@@ -66,6 +66,7 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
 
+        // A failed worker must retain its original exit code.
         var result = fixture.Run("ingest-consumer", leanSlot: false, "/usr/bin/false");
 
         Assert.Equal(1, result.ExitCode);
