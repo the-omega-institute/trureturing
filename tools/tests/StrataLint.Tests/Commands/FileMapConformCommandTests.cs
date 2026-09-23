@@ -1,3 +1,4 @@
+using StrataLint.FileMap;
 using StrataLint.Cli;
 using StrataLint.Engine;
 

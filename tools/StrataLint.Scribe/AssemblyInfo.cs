@@ -6,3 +6,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint")]
 
 [assembly: InternalsVisibleTo("StrataLint.CliIntegration.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.FileMap")]
+
+[assembly: InternalsVisibleTo("StrataLint.FileMap.Tests")]
