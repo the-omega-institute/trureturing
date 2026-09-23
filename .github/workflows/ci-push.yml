@@ -347,6 +347,9 @@ jobs:
           ref: ${{ env.CANDIDATE_SHA }}
           fetch-depth: ${{ inputs.candidate_sha != '' && 2 || 1 }}
           persist-credentials: false
+          clean: false
+      - name: Clean workspace while retaining Lean build cache
+        run: git clean -ffdx -e .lake/
       - name: Use Homebrew Python
         run: echo "/opt/homebrew/opt/python@3.12/libexec/bin" >> "$GITHUB_PATH"
       - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
