@@ -8,6 +8,23 @@ public sealed partial class RegisteredAdmissionResourcesTests
         "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj";
 
     [Theory]
+    [InlineData("CliVerbLinkageTests.cs", true)]
+    [InlineData("StrataLint.RepositoryContract.Tests.csproj", true)]
+    [InlineData("packages.lock.json", false)]
+    public void RepositoryContractChangesSelectOnlyTheirCompleteProjectAndArchitecture(string file, bool architecture)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+        {
+            var plan = Plan("tools/tests/StrataLint.RepositoryContract.Tests/" + file, "", mode);
+            Assert.Equal(WithRepositoryContract(architecture
+                    ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj" } : []),
+                Strings(plan["execution"]!["tests"]!));
+            Assert.Contains("tools/StrataLint.Cli/StrataLint.Cli.csproj", Strings(plan["execution"]!["projects"]!));
+            Assert.DoesNotContain("test-cli", Strings(plan["resources"]!));
+        }
+    }
+
+    [Theory]
     [InlineData("tools/scripts/agent/merge-gate.sh", "StrataLint.ArchitectureTests", "StrataLint.Tests")]
     [InlineData("tools/tests/StrataLint.Configuration.Tests/RegistryTests.cs", "StrataLint.ArchitectureTests", "StrataLint.Configuration.Tests")]
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", "StrataLint.Cache.Release.Tests", null)]

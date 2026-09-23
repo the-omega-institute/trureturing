@@ -12,9 +12,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ReportAndObservationTestsSelectTheirCompleteConsumerProject(string project, string file, string mode)
     {
         var plan = Plan($"tools/tests/{project}/{file}", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             $"tools/tests/{project}/{project}.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
     }
 }

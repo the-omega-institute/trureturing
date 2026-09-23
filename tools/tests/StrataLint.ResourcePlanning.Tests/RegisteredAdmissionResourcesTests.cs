@@ -25,7 +25,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         Assert.Contains("tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
             Strings(plan["execution"]!["projects"]!));
         Assert.Equal(input == "CLAUDE.md"
-            ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj" } : [],
+            ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj", RepositoryContractProject } : [],
             Strings(plan["execution"]!["tests"]!));
         Assert.Equal(input == "CLAUDE.md" ? "required" : "not-required",
             plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
@@ -39,11 +39,11 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void RegistryDataRunsRegisteredConsumersAndRetainsCurrentTruthChecks(string input, string mode)
     {
         var plan = Plan(input, "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj",
             "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
         Assert.Equal(mode == "pr", Strings(plan["resources"]!).Contains("current"));
         Assert.Contains("scribe", Strings(plan["resources"]!));
         Assert.Equal(mode == "push" ? new[] { "lean-report", "scribe", "filemap" }
@@ -61,10 +61,10 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void AgentScriptsRunRegisteredConsumersWithoutCurrentTruthChecks(string input, string mode)
     {
         var plan = Plan(input, "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(mode == "push" ? new[] { "filemap" } : ["SL-003", "SL-015", "SL-019", "filemap"],
             Strings(plan["execution"]!["checks"]!));
@@ -136,10 +136,10 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
             "tools/scripts/worktree/lean_cache.py" => ["StrataLint.Cache.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.BuildIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
             _ => [],
         };
-        Assert.Equal(new[] { "StrataLint.ArchitectureTests", "StrataLint.Tests" }
+        Assert.Equal(WithRepositoryContract(new[] { "StrataLint.ArchitectureTests", "StrataLint.Tests" }
             .Concat(input is "tools/scripts/report/lean-report-selection.py" or "tools/scripts/worktree/lean_cache.py" ? new[] { "StrataLint.Lean.Tests" } : [])
             .Concat(consumers).Order(StringComparer.Ordinal)
-            .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+            .Select(name => $"tools/tests/{name}/{name}.csproj")), Strings(plan["execution"]!["tests"]!));
         Assert.Equal(mode == "push" ? new[] { "lean-report", "scribe", "filemap" }
             : ["lean-report", "scribe", "filemap", "check-current"], Strings(plan["execution"]!["steps"]!));
     }
@@ -152,12 +152,12 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void InspectorTestFixturesRunRegisteredTestConsumersWithoutCurrentTruthChecks(string input, string mode)
     {
         var plan = Plan(input, "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
             "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
         }.Concat(input.EndsWith("test_reuse.py", StringComparison.Ordinal)
             ? new[] { "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj" }
-            : []).Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
+            : []).Order(StringComparer.Ordinal)), Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
         Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
@@ -190,12 +190,12 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void InspectorSourceRunsOnlyRegisteredConsumers(string mode)
     {
         var plan = Plan("tools/lean-inspector/Inspector.lean", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
             "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-        }.Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
+        }.Order(StringComparer.Ordinal)), Strings(plan["execution"]!["tests"]!));
         AssertInspectorSourceObligations(plan, mode);
     }
 
@@ -207,10 +207,10 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void AuditLeanSourcesRunOnlyRegisteredConsumers(string input, string mode)
     {
         var plan = Plan(input, "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
         AssertInspectorSourceObligations(plan, mode);
     }
 
@@ -245,7 +245,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void CachePathChangesRunOnlyRegisteredCacheConsumers(string mode)
     {
         var plan = Plan("Meta/ci-cache-paths.json", "", mode);
-        Assert.Equal(new[] { "StrataLint.BuildIntegration.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.Cache.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(WithRepositoryContract(new[] { "StrataLint.BuildIntegration.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.Cache.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj")), Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
         Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
@@ -308,8 +308,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
         Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         Assert.Equal(judge == "tools/scripts/preflight.sh"
-            ? new[] { "architecture", "build", "current", "delta", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-cli", "test-planning-integration", "test-stage-integration", "test-workflow-script" }
-            : ["build", "current", "delta", "engineering", "filemap", "lean", "lean-report", "scribe"],
+            ? new[] { "architecture", "build", "current", "delta", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-cli", "test-planning-integration", "test-repository-contract", "test-stage-integration", "test-workflow-script" }
+            : ["build", "current", "delta", "engineering", "filemap", "lean", "lean-report", "scribe", "test-repository-contract"],
             Strings(plan["resources"]!));
         Assert.Equal(new[] { "build", "engineering", "current", "delta" }, Strings(plan["selected_stages"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" }, Strings(plan["execution"]!["steps"]!));
@@ -376,11 +376,11 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     {
         var plan = Plan(document, mixed ? RegisteredNoResourceContent : "", mode);
         var readsPrPolicy = document == "CLAUDE.md";
-        var testResources = readsPrPolicy ? new[] { "test-instruction-contract", "test-pr-script" } : [];
+        var testResources = readsPrPolicy ? new[] { "test-instruction-contract", "test-pr-script", "test-repository-contract" } : [];
         Assert.Equal(new[] { "delta-judge", "filemap" }.Concat(testResources),
             Strings(plan["declared_require"]!));
         Assert.Equal(readsPrPolicy
-            ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj" } : [],
+            ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj", RepositoryContractProject } : [],
             Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
@@ -516,9 +516,9 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         {
             var plan = Plan($"tools/tests/{project}/{file}", "", mode);
             var architecture = file.EndsWith(".cs", StringComparison.Ordinal) || file.EndsWith(".csproj", StringComparison.Ordinal);
-            Assert.Equal(new[] { $"tools/tests/{project}/{project}.csproj" }
+            Assert.Equal(WithRepositoryContract(new[] { $"tools/tests/{project}/{project}.csproj" }
                 .Concat(architecture ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj" } : [])
-                .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal), Strings(plan["execution"]!["tests"]!));
+                .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal)), Strings(plan["execution"]!["tests"]!));
             Assert.Contains(resource, Strings(plan["resources"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
             Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
@@ -540,7 +540,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan($"tools/{project}/ResourceRoutingProbe.cs", "", mode);
-            Assert.Equal(assemblies.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj"),
+            Assert.Equal(WithRepositoryContract(assemblies.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
             Assert.Contains("engineering-guards", Strings(plan["resources"]!));
@@ -609,8 +609,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void ProductionAndTestChangesKeepBothRegisteredConsumerSets()
     {
         var plan = Plan("tools/StrataLint.Cli/Program.cs", "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs");
-        Assert.Equal(new[] { "StrataLint.ArchitectureTests", "StrataLint.CliIntegration.Tests", "StrataLint.Engine.Tests", "StrataLint.Tests" }
-            .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(WithRepositoryContract(new[] { "StrataLint.ArchitectureTests", "StrataLint.CliIntegration.Tests", "StrataLint.Engine.Tests", "StrataLint.Tests" }
+            .Select(name => $"tools/tests/{name}/{name}.csproj")), Strings(plan["execution"]!["tests"]!));
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
     }
 
@@ -623,7 +623,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan(path, "", mode);
-            Assert.Equal(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj"),
+            Assert.Equal(WithRepositoryContract(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
@@ -633,7 +633,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void SharedTestSupportSelectsItsDeclaredConsumerProjects()
     {
         var plan = Plan("tools/TestSupport/StrataLint.TestSupport/TestBudgets.cs", "");
-        Assert.Equal(new[] { "JudgeSeedTask.Tests", "StrataLint.ArchitectureTests", "StrataLint.BuildIntegration.Tests", "StrataLint.BuildRuntime.Tests", "StrataLint.Cache.Native.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.Cache.Tests", "StrataLint.CheckIntegration.Tests", "StrataLint.CiArtifacts.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.DeclaredTemplate.Tests", "StrataLint.Digestion.Tests", "StrataLint.Engine.Tests", "StrataLint.ExecutionEvidence.Tests", "StrataLint.FileMap.Tests", "StrataLint.HeaderScript.Tests", "StrataLint.InspectionIntegration.Tests", "StrataLint.InspectionScope.Tests", "StrataLint.InstructionContract.Tests", "StrataLint.Lean.Tests", "StrataLint.LeanReportScript.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.PrScript.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ReleaseSelection.Tests", "StrataLint.ReportSupervisor.Tests", "StrataLint.RepositoryConfiguration.Tests", "StrataLint.ResourceObservation.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.Rules.Tests", "StrataLint.Scribe.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.Tests", "StrataLint.TransportIntegration.Tests", "StrataLint.WorkflowScript.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(WithRepositoryContract(new[] { "JudgeSeedTask.Tests", "StrataLint.ArchitectureTests", "StrataLint.BuildIntegration.Tests", "StrataLint.BuildRuntime.Tests", "StrataLint.Cache.Native.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.Cache.Tests", "StrataLint.CheckIntegration.Tests", "StrataLint.CiArtifacts.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.DeclaredTemplate.Tests", "StrataLint.Digestion.Tests", "StrataLint.Engine.Tests", "StrataLint.ExecutionEvidence.Tests", "StrataLint.FileMap.Tests", "StrataLint.HeaderScript.Tests", "StrataLint.InspectionIntegration.Tests", "StrataLint.InspectionScope.Tests", "StrataLint.InstructionContract.Tests", "StrataLint.Lean.Tests", "StrataLint.LeanReportScript.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.PrScript.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ReleaseSelection.Tests", "StrataLint.ReportSupervisor.Tests", "StrataLint.RepositoryConfiguration.Tests", "StrataLint.ResourceObservation.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.Rules.Tests", "StrataLint.Scribe.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.Tests", "StrataLint.TransportIntegration.Tests", "StrataLint.WorkflowScript.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj")), Strings(plan["execution"]!["tests"]!));
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
     }
 
@@ -651,7 +651,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan("tools/TestSupport/" + fixture, "", mode);
-            Assert.Equal(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj"),
+            Assert.Equal(WithRepositoryContract(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
@@ -668,7 +668,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
             var consumers = script == "source_reference.py"
                 ? new[] { "StrataLint.Cache.Release.Tests", "StrataLint.ReleaseIntegration.Tests" }
                 : ["StrataLint.ReleaseIntegration.Tests"];
-            Assert.Equal(consumers.Select(name => $"tools/tests/{name}/{name}.csproj"),
+            Assert.Equal(WithRepositoryContract(consumers.Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
@@ -680,7 +680,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void CompileFailureFixturesRequestGuardsAndTheirArchitectureCoverage(string path)
     {
         var plan = Plan(path, "");
-        Assert.Equal(new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj" }, Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(WithRepositoryContract(new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj" }), Strings(plan["execution"]!["tests"]!));
         Assert.Equal(new[] { "banned-api-proof", "capability-proof", "filemap", "selftest-pair" }, Strings(plan["execution"]!["checks"]!));
         Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.ToString());
         Assert.Equal(new[] { "lean-report", "filemap" }, Strings(plan["execution"]!["steps"]!));
@@ -710,8 +710,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     public void SharedConfigurationFixtureSelectsItsConsumers()
     {
         var plan = Plan("tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml", "");
-        Assert.Equal(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.DeclaredTemplate.Tests", "StrataLint.Digestion.Tests", "StrataLint.Rules.Tests", "StrataLint.Tests" }
-            .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(WithRepositoryContract(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.DeclaredTemplate.Tests", "StrataLint.Digestion.Tests", "StrataLint.Rules.Tests", "StrataLint.Tests" }
+            .Select(name => $"tools/tests/{name}/{name}.csproj")), Strings(plan["execution"]!["tests"]!));
     }
 
     [Theory]
