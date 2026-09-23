@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.DeclaredTemplate.Tests;
 
 // These are strict wire/ownership fixtures. Kernel behavior is exercised by the
 // Lean enrollment and registration controls, not by fabricated C# proofs.
@@ -30,7 +30,7 @@ public sealed class InformationTemplateEvidenceTests
     {
         var files = InformationTemplateFixture.PolicyFiles();
         foreach (var (path, text) in entries) files[path] = text;
-        return DeclaredTemplateReviewTests.Tree(files);
+        return DeclaredTemplateFixture.Tree(files);
     }
 
     private static JsonElement Wire(bool declared = false, bool sidecar = false, int? compatibility = null) =>
