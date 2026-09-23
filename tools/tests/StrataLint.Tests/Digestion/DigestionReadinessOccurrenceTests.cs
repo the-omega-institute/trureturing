@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.AtomContextFixture;
+using static StrataLint.TestSupport.AtomContextFixture;
 
 namespace StrataLint.Tests;
 

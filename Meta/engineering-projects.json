@@ -843,6 +843,7 @@
         "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
         "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
         "tools/TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
@@ -1527,6 +1528,7 @@
         "tools/StrataLint.Unregistered/Program.cs",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/ProducerInputFixture.cs",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/TestRegistry.cs",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/DigestionTestSupport.cs",
         "tools/TestSupport/StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs",
         "tools/TestSupport/StrataLint.NativeReportTestSupport/NativeReportFixture.cs",
         "tools/TestSupport/StrataLint.ProcessTestSupport/TestProcessRunner.cs",
@@ -1572,6 +1574,7 @@
         "tools/tests/StrataLint.CiArtifacts.Tests/TransportIdentityTests.cs",
         "tools/tests/StrataLint.CliIntegration.Tests/CurrentDeltaCliContractTests.cs",
         "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
+        "tools/tests/StrataLint.Digestion.Tests/DigestionCasStoreTests.cs",
         "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs",
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
         "tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs",
@@ -3037,6 +3040,87 @@
         "STRATALINT_TEST_ENVIRONMENT"
       ],
       "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.Digestion.Tests/StrataLint.Digestion.Tests.csproj",
+      "assembly": "StrataLint.Digestion.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Digestion.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Digestion.Tests",
+      "root_namespace": "StrataLint.Digestion.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Digestion.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.Digestion.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Digestion.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Meta/Digestion/atomizers.toml",
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
+      "assembly": "StrataLint.DigestionTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.DigestionTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.DigestionTestSupport/Usings.cs",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
     }
   ],
   "historical_projects": [],
