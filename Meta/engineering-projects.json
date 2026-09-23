@@ -473,7 +473,7 @@
       ],
       "exclude": [],
       "references": [
-        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
         "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
       ],
       "owner": null,
@@ -494,32 +494,19 @@
       ],
       "execution_inputs": [
         "Meta/ci-cache-paths.json",
-        "tools/**",
-        "Meta/Digestion/atomizers.toml",
-        "Meta/FILEMAP.toml",
-        "Meta/FILEMAP.*.toml",
-        "Meta/ReportConsumers/lean-report.json",
-        "Meta/ReportConsumers/scribe-content.json",
-        "Meta/ReportProducers/lean-report.json",
-        "Meta/ReportProducers/scribe-content.json",
-        "Meta/ci-checks.json",
-        "Meta/ci-resources.json",
-        "Meta/domains.yaml",
-        "Meta/engineering-projects.json",
-        "Meta/judge-seed.json",
-        "Meta/package-materials.json",
-        "Meta/registry.yaml",
-        "*.props",
-        "*.json",
-        "*.toml",
-        "Makefile",
-        "lean-toolchain",
-        ".gitignore"
+        "tools/lean-inspector/materials.py",
+        "tools/lean-inspector/publication.py",
+        "tools/scripts/report/dotnet_producer.py",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/scripts/worktree/cache_deadline.py",
+        "tools/scripts/worktree/cache_material.py",
+        "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_cache.py",
+        "tools/scripts/worktree/lean_cache_release.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py"
       ],
-      "execution_excludes": [
-        "tools/scripts/agent/openproblem/README.md",
-        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
-      ],
+      "execution_excludes": [],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ],
@@ -2432,6 +2419,135 @@
         "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj"
       ]
+    },
+    {
+      "path": "tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj",
+      "assembly": "StrataLint.Cache.Native.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Cache.Native.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Cache.Native.Tests",
+      "root_namespace": "StrataLint.Cache.Native.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Cache.Native.Tests/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Cache.Native.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "lean-toolchain"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj",
+      "assembly": "StrataLint.Cache.Release.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Cache.Release.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Cache.Release.Tests",
+      "root_namespace": "StrataLint.Cache.Release.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Cache.Release.Tests/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Cache.Release.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Makefile",
+        "Meta/ci-cache-paths.json",
+        "tools/scripts/workflow/source_reference.py",
+        "tools/scripts/worktree/cache_deadline.py",
+        "tools/scripts/worktree/cache_material.py",
+        "tools/scripts/worktree/lean-cache-input.sh",
+        "tools/scripts/worktree/lean-cache-publish.sh",
+        "tools/scripts/worktree/lean_cache.py",
+        "tools/scripts/worktree/lean_cache_release.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/cache_deadline_cases.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_legacy.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_verification.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_transport.py"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj",
+      "assembly": "StrataLint.HeaderScript.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.HeaderScript.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.HeaderScript.Tests",
+      "root_namespace": "StrataLint.HeaderScript.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.HeaderScript.Tests/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.HeaderScript.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs",
+        "tools/scripts/agent/header-check.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
     }
   ],
   "historical_projects": [],

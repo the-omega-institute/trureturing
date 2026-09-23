@@ -9,7 +9,7 @@ public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
     [InlineData("StrataLint.ArchitectureTests", true)]
-    [InlineData("StrataLint.Cache.Tests", true)]
+    [InlineData("StrataLint.Cache.Tests", false)]
     [InlineData("StrataLint.EngineeringScope.Tests", false)]
     [InlineData("StrataLint.Lean.Tests", false)]
     [InlineData("StrataLint.ScriptTests", true)]
@@ -41,13 +41,13 @@ public sealed partial class CurrentExecutionContractTests
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
             (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts),
             (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
-            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts),
-            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project != "StrataLint.EngineeringScope.Tests"),
-            (Path: "Meta/FILEMAP.toml", Invalidates: project is "StrataLint.ArchitectureTests" or "StrataLint.Cache.Tests"),
+            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project == "StrataLint.Cache.Tests"),
+            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project is not ("StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
+            (Path: "Meta/FILEMAP.toml", Invalidates: project == "StrataLint.ArchitectureTests"),
             (Path: "Meta/ci-cache-paths.json", Invalidates: cacheInvalidates),
-            (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests")),
-            (Path: "tools/lean-inspector/native_image.c", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests")),
-            (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests")),
+            (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
+            (Path: "tools/lean-inspector/native_image.c", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
+            (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
         };
         foreach (var change in changes) fixture.Write(change.Path,
             change.Path == "Meta/FILEMAP.toml" ? filemap : "original fixture material\n");

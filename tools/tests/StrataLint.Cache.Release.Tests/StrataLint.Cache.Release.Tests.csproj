@@ -3,8 +3,8 @@
     <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <RootNamespace>StrataLint.Cache.Tests</RootNamespace>
-    <AssemblyName>StrataLint.Cache.Tests</AssemblyName>
+    <RootNamespace>StrataLint.Cache.Release.Tests</RootNamespace>
+    <AssemblyName>StrataLint.Cache.Release.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj" />
