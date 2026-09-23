@@ -54,6 +54,7 @@ abbrev Fiber (i k : Fin n) (g : H) :=
 
 private theorem coeff_product_finite (a b : MonoidAlgebra ℕ H) (g : H) :
     (a * b).coeff g = ∑ h : H, a.coeff h * b.coeff (h⁻¹ * g) := by
+  classical
   rw [MonoidAlgebra.coeff_mul_apply_left]
   exact Finsupp.sum_fintype _ _ (fun _ => zero_mul _)
 
@@ -210,20 +211,22 @@ theorem elementary_symm_apply (p : Path (V * U) × H) :
 theorem elementary_step (p : Path (U * V) × H) :
     elementaryHomeomorph U V (step (U * V) p) =
       step (V * U) (elementaryHomeomorph U V p) := by
-  rw [elementary_apply, unpack_step, encode_step]
-  change repack V U (leftStep (boundary V U) Edge.label Edge.label
-      (encode (boundary U V) Edge.label (unpack U V p))) = _
-  rw [repack_step]
-  rfl
+  change repack V U (encode (boundary U V) Edge.label
+      (unpack U V (step (U * V) p))) =
+    step (V * U) (repack V U (encode (boundary U V) Edge.label (unpack U V p)))
+  rw [unpack_step]
+  exact (congrArg (repack V U)
+    (encode_step (boundary U V) Edge.label Edge.label (unpack U V p))).trans
+      (repack_step V U (encode (boundary U V) Edge.label (unpack U V p)))
 
 theorem elementary_equivariant (g : H) (p : Path (U * V) × H) :
     elementaryHomeomorph U V (translate g p) =
       translate g (elementaryHomeomorph U V p) := by
-  rw [elementary_apply]
   change repack V U (encode (boundary U V) Edge.label
-    (translate g (unpack U V p))) = _
-  rw [encode_equivariant]
-  rfl
+      (translate g (unpack U V p))) =
+    repack V U (translate g (encode (boundary U V) Edge.label (unpack U V p)))
+  exact congrArg (repack V U)
+    (encode_equivariant (boundary U V) Edge.label g (unpack U V p))
 
 theorem elementary_inverse_step (p : Path (V * U) × H) :
     (elementaryHomeomorph U V).symm (step (V * U) p) =
@@ -246,16 +249,10 @@ def GroupConjugacy.trans {a b c : ℕ}
     {A : GroupMat H a a} {B : GroupMat H b b} {C : GroupMat H c c}
     (f : GroupConjugacy A B) (g : GroupConjugacy B C) : GroupConjugacy A C where
   homeomorph := f.homeomorph.trans g.homeomorph
-  time_law := by
-    intro p
-    change g.homeomorph (f.homeomorph (step A p)) = _
-    rw [f.time_law, g.time_law]
-    rfl
-  group_law := by
-    intro h p
-    change g.homeomorph (f.homeomorph (translate h p)) = _
-    rw [f.group_law, g.group_law]
-    rfl
+  time_law := fun p =>
+    (congrArg g.homeomorph (f.time_law p)).trans (g.time_law (f.homeomorph p))
+  group_law := fun h p =>
+    (congrArg g.homeomorph (f.group_law h p)).trans (g.group_law h (f.homeomorph p))
 
 /-- The entire chain is interpreted on numbered, group-labelled histories. -/
 theorem chain_has_group_conjugacy {a b L : ℕ}
