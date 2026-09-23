@@ -13,6 +13,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         Assert.Equal(new[]
         {
             "StrataLint.ArchitectureTests",
+            "StrataLint.CoverBatch.Tests",
             "StrataLint.Lean.Tests",
             "StrataLint.LeanCacheScript.Tests",
             "StrataLint.NativeTransportIntegration.Tests",
