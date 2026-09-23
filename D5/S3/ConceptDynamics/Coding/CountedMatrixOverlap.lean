@@ -77,6 +77,7 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   dsimp at h
   subst j'
   simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
+  rw [(fiberEquiv U V i k).apply_symm_apply]
 
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
