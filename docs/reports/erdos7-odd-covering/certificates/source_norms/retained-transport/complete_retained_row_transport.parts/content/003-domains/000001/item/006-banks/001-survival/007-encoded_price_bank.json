@@ -1,0 +1,29 @@
+{
+  "codec": {
+    "kind": "inline",
+    "value": "retained-price-template-rationals-v1"
+  },
+  "template": {
+    "path": "content/003-domains/000001/item/006-banks/001-survival/007-encoded_price_bank/001-template.json",
+    "sha256": "7846c58ed7a7a9ac7f563e07c15d42e50c4737005ba2231652744bbd3f457613",
+    "kind": "value"
+  },
+  "field_count": {
+    "kind": "inline",
+    "value": 77
+  },
+  "record_count": {
+    "kind": "inline",
+    "value": 2792
+  },
+  "rational_table": {
+    "path": "content/003-domains/000001/item/006-banks/001-survival/007-encoded_price_bank/004-rational_table.json",
+    "sha256": "9f17ad79cfec76faeead44184723626dad23bb58aaa23bb7754f809844b20be7",
+    "kind": "value-zlib-base85"
+  },
+  "rows": {
+    "path": "content/003-domains/000001/item/006-banks/001-survival/007-encoded_price_bank/005-rows.json",
+    "sha256": "920a53e74492f3fba79302ef41e90fd19ab8315d13c9f041e7ccce00f21a97a6",
+    "kind": "array"
+  }
+}

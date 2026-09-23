@@ -1,0 +1,6 @@
+(c) 对每个 $\varepsilon\ge\Delta$ 和全部 $0\le r<1/2$，有 $N_{\min}^{(r)}(\varepsilon)=1$。在静态端点 $r=0$，有限观察者的最优全历史误差恰为
+$$
+\inf_{\mathcal A\text{ 为有限确定性观察者}}\mathcal E_0(\mathcal A)=\Delta,
+$$
+此值由单状态、恒定读出 $1/2$ 达到。因此 $0<\varepsilon<\Delta$ 时 $N_{\min}^{(0)}(\varepsilon)=\infty$。这里的地板是误差上确界，有限词上的误差无须达到它。
+

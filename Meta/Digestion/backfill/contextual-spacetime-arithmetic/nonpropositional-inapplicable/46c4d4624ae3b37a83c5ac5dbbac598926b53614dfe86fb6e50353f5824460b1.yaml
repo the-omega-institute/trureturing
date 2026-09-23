@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46c4d4624ae3b37a83c5ac5dbbac598926b53614dfe86fb6e50353f5824460b1
+  normalized_sha256: sha256:46c4d4624ae3b37a83c5ac5dbbac598926b53614dfe86fb6e50353f5824460b1
+cas_ref: sha256:46c4d4624ae3b37a83c5ac5dbbac598926b53614dfe86fb6e50353f5824460b1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子明确限定运输结论的范围，不提出一般物理对称性或协变性命题。
+    previous_atom_id: cf515c52682e913ad115567d9038ff6fc7df6ede8438b0dfd9482cd1489043d3
+    next_atom_id: d260628ec09bca5df5094f97edabcdb86426931afa750ba8708ba791e15ba462

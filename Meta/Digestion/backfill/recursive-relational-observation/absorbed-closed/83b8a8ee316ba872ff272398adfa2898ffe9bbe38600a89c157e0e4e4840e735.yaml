@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:83b8a8ee316ba872ff272398adfa2898ffe9bbe38600a89c157e0e4e4840e735
+  normalized_sha256: sha256:83b8a8ee316ba872ff272398adfa2898ffe9bbe38600a89c157e0e4e4840e735
+cas_ref: sha256:83b8a8ee316ba872ff272398adfa2898ffe9bbe38600a89c157e0e4e4840e735
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/InverseLimitMorphisms/IndependentDescentCriterion.inverse_limit_descent_and_independent_converse
+    target_statement_id: sha256:28bf770d45e83df072c108d3485f4b4c46d40ddada5796225144222954cf4518
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:176338a2f7f36685f2ac7c15ac2aa9ef269e44787ebc0f2fa1b5737973f6c4f1
+  normalized_sha256: sha256:176338a2f7f36685f2ac7c15ac2aa9ef269e44787ebc0f2fa1b5737973f6c4f1
+cas_ref: sha256:176338a2f7f36685f2ac7c15ac2aa9ef269e44787ebc0f2fa1b5737973f6c4f1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 合法数据子类型的值投影保持相等，故两个不同历史不能因附加合法性证明而相等；由 Subtype.val_injective 的逆否规范化闭合，仓内无冻结 GID。
+    previous_atom_id: cdf76d8188b5c08e79daca0967dab4ebc2d594b85fdc6b16e64dc8f573de75e8
+    next_atom_id: 5be1347a0815922b68a59df5369c1f0621abbd292a8babee23b563fe7c90a8f1

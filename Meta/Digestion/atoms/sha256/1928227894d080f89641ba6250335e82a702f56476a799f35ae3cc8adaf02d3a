@@ -1,0 +1,21 @@
+**定理 18.1（有界系数证书的惩罚表示与最小主函数）。** 在定义17.1下，对 $B\ge0$ 及任意 $y\in\mathbb R^n$ 定义
+$$
+U_B^\ell(y)=\min_{\|c\|_1\le B}
+\bigl[c\cdot y+h_\Gamma(\ell-R^*c)\bigr].
+\tag{18.1}
+$$
+则
+$$
+\boxed{U_B^\ell(y)=\max_{v\in\Gamma}
+\bigl[\ell(v)-B\|y-Rv\|_\infty\bigr]
+=\sup_{z\in D}\bigl[U^\ell(z)-B\|y-z\|_\infty\bigr].}
+\tag{18.2}
+$$
+式（18.1）的最小值与式（18.2）的源最大值均达到。$U_B^\ell$ 在整个记录空间中为 $B$-Lipschitz，数据范数为这些固定坐标及单位下的 $\|\cdot\|_\infty$。它是所有在 $D$ 上不小于 $U^\ell$ 的全空间 $B$-Lipschitz 函数中逐点最小者。对 $y\in D$，
+$$
+U_B^\ell(y)\ge U^\ell(y),\qquad
+U_B^\ell(y)\downarrow U^\ell(y)\quad(B\to\infty).
+\tag{18.3}
+$$
+本定理不附加统一收敛速率或连续最优系数选择的结论。
+

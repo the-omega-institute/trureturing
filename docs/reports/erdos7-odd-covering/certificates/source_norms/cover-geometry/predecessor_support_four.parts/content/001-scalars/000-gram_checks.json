@@ -1,0 +1,23 @@
+{
+  "length": 3,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 2,
+      "part": {
+        "path": "content/001-scalars/000-gram_checks/000000-000002.json",
+        "sha256": "9223c19c49712ad67992896538c1c1b85e545117f55bdb39c7cc86562068d760",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/001-scalars/000-gram_checks/000002/single.json",
+        "sha256": "d4a73ab3ab7e7ef9e45442dc41404a746fbdb99dd5a5d3eaeb5992ab8757b6f5",
+        "kind": "singleton"
+      }
+    }
+  ]
+}

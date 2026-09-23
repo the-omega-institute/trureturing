@@ -1,0 +1,33 @@
+**推论 42.6（合法解码类、仪器和 POVM 的运输）。** 任何原来合法的完整终端通道或仪器 $\Lambda$，可在 $\operatorname{id}_J\otimes\mathcal B_n\otimes\operatorname{id}_M$ 后使用同一个 $\Lambda$。在（42.3）的实际族上，每个仪器分支的次归一化联合态、概率、失败和保留记录完全相同。若 $\Lambda$ 原本只访问档案，就仍只访问档案；若原本可读 $J$ 或活动 $M$，也只保留原有权限。接收器本身未得到这些权限。
+
+具体地，任意原档案解码器 $\mathcal D:\mathcal L(H_n)\to\mathcal L(O)$ 对应 $\widehat{\mathcal D}=\mathcal D\mathcal B_n$；反向，任意接收解码器 $\widehat{\mathcal D}:\mathcal L(K)\to\mathcal L(O)$ 对应 $\widehat{\mathcal D}\mathcal C_n$。由于
+$$
+\mathcal B_n\mathcal C_n\Gamma_n=\Gamma_n
+\quad\hbox{在全部源算子上成立},
+\tag{42.27}
+$$
+两个无限制 CPTP 解码类可实现的来源到 $O$ 通道集合相同。故对这些通道的任意相同范数目标，最优值相等。对 $n\ge1$、$O=M$，精确接入定理41.2：
+$$
+\begin{gathered}
+c_n=\|\sqrt{\tau(a_n)}\sqrt{\tau(b_n)}\|_1,\qquad
+c_n^2=1-\alpha^2
+ [\sqrt{a_n(1-b_n)}-\sqrt{b_n(1-a_n)}]^2,\\
+\inf_{\widehat{\mathcal D}\ {\rm CPTP}}
+ \|\widehat{\mathcal D}\mathcal C_n\Gamma_n-\operatorname{id}_M\|_\diamond
+=\inf_{\mathcal D\ {\rm CPTP}}
+ \|\mathcal D\Gamma_n-\operatorname{id}_M\|_\diamond
+=1-c_n.
+\end{gathered}
+\tag{42.28}
+$$
+这里是根保真度和完整 diamond 范数；半 diamond 最优误差仍是 $(1-c_n)/2$。达到值的通道为已有 $\mathcal D_n\mathcal B_n$，其中 $\mathcal D_n$ 正是（41.17）的受控极分解解码器，本节不重证其最优恢复定理。受限硬件类仅在实际允许这两方向的所需复合时继承集合等价；抽象 CPTP 存在性不保证硬件封闭性。
+
+对原档案 POVM $(E_y)$，伴随运输为
+$$
+\widehat E_y=\mathcal B_n^*(E_y)
+=F_nE_yF_n^*+\operatorname{Tr}(\xi_nE_y)(I_K-Q_n),
+\qquad \sum_y\widehat E_y=I_K.
+\tag{42.29}
+$$
+证明。联合逆（42.25）之后接同一仪器的每个 CP 分支，便得完整分支恒等；两方向复合给（42.27）及可实现集合等价。最后对（42.24）逐项作迹配对得到（42.29），正性逐项成立，归一化用 $\sum_yE_y=I_{H_n}$、$\operatorname{Tr}\xi_n=1$。仅用 $F_nE_yF_n^*$ 则总和为 $Q_n$，初期 $\dim S_n<4$ 时并非环境空间上的 POVM。必须运输完整仪器或整个联合 POVM，不能由此声称独立端口代数均被保留。$\square$
+

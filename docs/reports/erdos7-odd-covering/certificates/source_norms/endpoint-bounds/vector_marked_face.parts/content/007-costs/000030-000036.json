@@ -1,0 +1,764 @@
+[
+  {
+    "index": 30,
+    "name": "R19",
+    "tuple": [
+      5,
+      0
+    ],
+    "weight": "15/17",
+    "constant_old_margin": "64393222992817/836156803831549200",
+    "uniform_source_gain": "40379852522/7465685748495975",
+    "uniform_residual_coefficient": "241600083229/132723302195484",
+    "constant_old_support": {
+      "common": {
+        "constant": "72939546083/1238750820491184",
+        "affine_source_coefficient": "8507210650552/132778603571398785",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/405848520"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/2840939640"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/19886577480"
+            }
+          },
+          {
+            "seven_block": 4,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/139206042360"
+            }
+          },
+          {
+            "seven_block": 5,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/974442296520"
+            }
+          },
+          {
+            "seven_block": 6,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/6821096075640"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "403/568424672970",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 8
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "64393222992817/836156803831549200"
+      }
+    },
+    "vertex_new_minima": [
+      "2088356559857/25338084964592400",
+      "2088356559857/25338084964592400",
+      "2088356559857/25338084964592400"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "2ae73b81f3080c7b991de16e81b564aba091b82c91c14d66c20560c647cfa1e3",
+      "496e2be57c9222d6b02d35e0fb48676100eda9188ebaf393e12d1633d245f356",
+      "e52b9d235ebf2d5dfc1ead4d11a32de69fcf75044fef5d15407504bcda9d5468"
+    ],
+    "fixed_capacity_duals_sha256": "0c2aac1ff426753910f83241e08561283f1c659decb121701249111890898530"
+  },
+  {
+    "index": 31,
+    "name": "R19",
+    "tuple": [
+      6,
+      0
+    ],
+    "weight": "15/17",
+    "constant_old_margin": "1987451637539/278718934610516400",
+    "uniform_source_gain": "496787138/829520638721775",
+    "uniform_residual_coefficient": "2484859801/14747033577276",
+    "constant_old_support": {
+      "common": {
+        "constant": "2316981083/412916940163728",
+        "affine_source_coefficient": "101179458238/14753178174599865",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/4464333720"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/31250336040"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/218752352280"
+            }
+          },
+          {
+            "seven_block": 4,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/1531266465960"
+            }
+          },
+          {
+            "seven_block": 5,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/10718865261720"
+            }
+          },
+          {
+            "seven_block": 6,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/75032056832040"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "403/6252671402670",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 8
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "1987451637539/278718934610516400"
+      }
+    },
+    "vertex_new_minima": [
+      "195852010537/25338084964592400",
+      "195852010537/25338084964592400",
+      "195852010537/25338084964592400"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "b6a4be9fdd603c3a27c11f91190c9bfd93efc0a729433cef558e02ae5e918074",
+      "ae3a8cdfdab2c8c457892b4056466551169d36a8015b10ccd4a4140a2b076b03",
+      "d0c04d63db7d60d4944daeb73da458d7a00fc438ddcc9ce8289eb25fd52fed97"
+    ],
+    "fixed_capacity_duals_sha256": "5c3de85f8d6445197c6a43ab078f2a35d8cad9805c6d704744b87e396af725e4"
+  },
+  {
+    "index": 32,
+    "name": "R5",
+    "tuple": [
+      0,
+      0
+    ],
+    "weight": "13299/1360",
+    "constant_old_margin": "2466815074/5927440694175",
+    "uniform_source_gain": "2466815074/5927440694175",
+    "uniform_residual_coefficient": "65291454161/105376723452",
+    "constant_old_support": {
+      "common": {
+        "constant": "617964476116601/9036054036009000",
+        "affine_source_coefficient": "124821750059/15060090060015",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                2,
+                3,
+                1,
+                1,
+                1
+              ],
+              "deep_cell": 1,
+              "value": "11964253247/220941220500"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 1,
+              "value": "49299/4904900"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 1,
+              "value": "24559/14714700"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "1/1715",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 5
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 1,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "2466815074/5927440694175"
+      }
+    },
+    "vertex_new_minima": [
+      "4933630148/5927440694175",
+      "4933630148/5927440694175",
+      "4933630148/5927440694175"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "743751679eee6feb1ccaf8b8b14cdd6a6442262b2577df4ab2a7c44fdaace590",
+      "6740d9680e62afd60bc295263b839688968b5d80f17a32d1979698597d0a84f5",
+      "175e7e45d096b918f8b44b16f9b81272ab967c7b29c6d88afd183d8d6b4934bb"
+    ],
+    "fixed_capacity_duals_sha256": "53cc52c62bf34f19afb44b578cc2bcf51cce2a78eb6fe9322d0424ef072b5513"
+  },
+  {
+    "index": 33,
+    "name": "R5",
+    "tuple": [
+      0,
+      1
+    ],
+    "weight": "13299/1360",
+    "constant_old_margin": "23873292187/1143032640750",
+    "uniform_source_gain": "1833296/5443012575",
+    "uniform_residual_coefficient": "7992346/24191167",
+    "constant_old_support": {
+      "common": {
+        "constant": "358291481/25400725350",
+        "affine_source_coefficient": "235400952/41487851405",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 1,
+              "value": "24439/2277275"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/22295"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/156065"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "12/156065",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 5
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 1,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "23873292187/1143032640750"
+      }
+    },
+    "vertex_new_minima": [
+      "2205298577/103912058250",
+      "2205298577/103912058250",
+      "2205298577/103912058250"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "5f0fde672c00848684c6a6a02715f8fe1ce8205a02ffadc16d83c491a54a115d",
+      "739ac2ef97ca3efe8c585e4f44b876a9228954859b685a9283f83362e36649df",
+      "0f2be432a73b0f6a557aa5301d93d709937a01351e7bd3a3fae5df067638964f"
+    ],
+    "fixed_capacity_duals_sha256": "648456469932b2319f295b23b7cf8dee6ddd9d6bc621e56789c4c9ca0d062c09"
+  },
+  {
+    "index": 34,
+    "name": "R5",
+    "tuple": [
+      0,
+      2
+    ],
+    "weight": "13299/1360",
+    "constant_old_margin": "16164871/8906747850",
+    "uniform_source_gain": "41296/494819325",
+    "uniform_residual_coefficient": "94394/2199197",
+    "constant_old_support": {
+      "common": {
+        "constant": "86837/65975910",
+        "affine_source_coefficient": "821208/754324571",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/41405"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/289835"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/2028845"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "12/2028845",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 5
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "16164871/8906747850"
+      }
+    },
+    "vertex_new_minima": [
+      "219587/115672050",
+      "219587/115672050",
+      "219587/115672050"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "026a0de2951d2312b2704cfee2868b3612543b9946ff610c1beebca6cd7ea3d5",
+      "617012f6c4d64035cdc91c381de2f2663fb6be10cb5f1942f555bba817adfd94",
+      "1e6f537c107fb9ff6090326156b7637b265b71c000e8429f8bc96fb92e449068"
+    ],
+    "fixed_capacity_duals_sha256": "caed4853d4cc661e1d0e07698f2f07395d5d802c38c7544f81c3d1269061460a"
+  },
+  {
+    "index": 35,
+    "name": "R5",
+    "tuple": [
+      0,
+      3
+    ],
+    "weight": "13299/1360",
+    "constant_old_margin": "1294483/8906747850",
+    "uniform_source_gain": "368/32987955",
+    "uniform_residual_coefficient": "7554/2199197",
+    "constant_old_support": {
+      "common": {
+        "constant": "7433/65975910",
+        "affine_source_coefficient": "488088/3771622855",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/538265"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/3767855"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "37/26374985"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "12/26374985",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 5
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "1294483/8906747850"
+      }
+    },
+    "vertex_new_minima": [
+      "126713/809704350",
+      "126713/809704350",
+      "126713/809704350"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "d3fd19626857abe384d2d06d5b962c2935c82a425a86f4d2763541719b310171",
+      "7f9829505cb3dda7f794dfa69c1a3fd61dda02465a2d064914eb743baf4dc253",
+      "ae7d3dff50b225f07d9107e001ea2d4195c5664de4860a6d3a05f37810f3a35a"
+    ],
+    "fixed_capacity_duals_sha256": "00b3dea7bc43376a04f2df37086b222f8f97bc0a3badda9b5a855e3fb03baabd"
+  }
+]

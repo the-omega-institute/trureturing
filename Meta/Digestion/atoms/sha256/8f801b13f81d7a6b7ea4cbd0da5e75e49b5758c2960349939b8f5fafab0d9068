@@ -1,0 +1,13 @@
+**定理 41.4（全有限历史的有理区间不变量；repo-derived）。** 定义41.2的观察者及区间满足
+$$
+\frac12\in I_{m/2},\qquad F_b(I_j)\subseteq I_{T_b(j)}\quad(j\in S,\ b\in\{0,1\}),
+$$
+$$
+\forall w\in\{0,1\}^{*},\qquad q_w\in I_{s(w)},\qquad
+|y_{s(w)}-h(q_w)|\le\varepsilon,
+$$
+且
+$$
+N\le\frac{2K^3\eta}{rk}+3\le\frac{2K^3}{rk}+3.
+$$
+

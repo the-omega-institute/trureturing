@@ -1,0 +1,23 @@
+{
+  "length": 105,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 53,
+      "part": {
+        "path": "content/011-fixed_pure_records/000000-000053.json",
+        "sha256": "d0bbed082f2d0d229331f156cf4fccdd35b6774d6ca235bef6b90af741ee3291",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 53,
+      "stop": 105,
+      "part": {
+        "path": "content/011-fixed_pure_records/000053-000105.json",
+        "sha256": "4e4699c75005b7686ea5146ae8b98570a01b56c7ec6f42881264af71ebe759b5",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+**证明。** 首先构造作用于实际状态行的全时间对偶列。参数范围给
+$$
+1/3\le\lambda<1,\qquad 5/24\le c<1/4,\qquad
+b:=\lambda-c=(3-5\delta)/4>0.
+\tag{118.2f}
+$$
+因而 $H(\lambda)>0$。令
+$$
+u_1=1-R,\qquad
+u_2=\frac{1-R\lambda}{c},\qquad
+u_3=\frac{1-R\lambda^2}{c^2}.
+$$
+由 $RH(\lambda)=H(1)$，
+$$
+c^2(u_1+u_2+u_3)=H(1)-RH(\lambda)=0.
+$$
+取列向量
+$$
+s=(-3,1,1,1)^{\mathsf T},\qquad
+v_0=(0,u_1,u_2,u_3)^{\mathsf T},\qquad
+v_1=(0,u_1,u_3,u_2)^{\mathsf T},\qquad
+g_d=Rs+v_d.
+\tag{118.2g}
+$$
+特别地，按状态 $0,1,2,3$ 的顺序，
+$$
+g_0=\left(-3R,\ 1,\ R+\frac{1-R\lambda}{c},
+R+\frac{1-R\lambda^2}{c^2}\right)^{\mathsf T},
+$$
+而 $g_1$ 交换 $g_0$ 的最后两个坐标。两列均满足 $\pi g_d=0$ 和 $e_0g_d=-3R$。
+
+直接作用实际核可得 $K_{\delta,d}s=\lambda s$。对于陷阱坐标为零、环坐标和为零的列，正方向的作用为
+$$
+K_{\delta,0}(0,x_1,x_2,x_3)^{\mathsf T}
+=c(0,x_2,x_3,x_1)^{\mathsf T};
+$$
+反方向则使用相反的循环。于是两个方向的实际评估
+$$
+r_{t,d}:=e_1K_{\delta,d}^tg_d
+=R\lambda^t+c^tu_{1+(t\bmod3)}
+\tag{118.2h}
+$$
+相同，以下记为 $r_t$。构造给出 $r_0=r_1=r_2=1$；没有以任意递推初值替代实际状态列的存在性。
+
+在环零和列上，三个循环作用之和为零，所以 $H(K_{\delta,d})v_d=0$。结合 $K_{\delta,d}s=\lambda s$，得到
+$$
+(K_{\delta,d}-\lambda I)H(K_{\delta,d})g_d=0.
+$$
+展开多项式并左乘 $e_1K_{\delta,d}^t$，得
+$$
+r_{t+3}=b\,r_{t+2}+cb\,r_{t+1}+\lambda c^2r_t.
+\tag{118.2i}
+$$
+三个递推系数均严格正，其和为
+$$
+\sigma=b+cb+\lambda c^2=1-(1-\lambda)H(1),\qquad 0<\sigma<1.
+$$
+由三个初值为一归纳：若前三项都在 $(0,1]$ 内，后一项严格为正且至多为 $\sigma<1$。因此
+$$
+0<r_t\le1\quad(t\ge0),\qquad 0<r_t<1\quad(t\ge3).
+\tag{118.2j}
+$$
+式 (118.2h) 还给出 $r_t\to0$，因为 $0<c,\lambda<1$ 且三个 $u_j$ 固定有限。[^rro118-limit]
+
+令 $\mathbf1$ 为全一列，取
+$$
+f_d=\mathbf1-2g_d.
+$$
+实际核保总质量，故
+$$
+y_t:=e_1K_{\delta,d}^tf_d=1-2r_t\in[-1,1),
+\qquad e_0f_d=1+6R=G_\delta,
+\qquad \pi f_d=1.
+\tag{118.2k}
+$$
+此处有界的是 $f_d$ 在时间行原子上的评估，不是它在四个单独状态上的全部坐标。
+
+现在取任意方向 $d$ 的任意有限精确表示。右乘 $\mathbf1$ 得 $\sum_ta_t=1$，所以至少一个系数严格正；右乘 $f_d$ 得
+$$
+G_\delta=\sum_{t=0}^{L}a_ty_t.
+$$
+若 $a_t>0$，则由 $y_t<1$ 有 $a_ty_t<|a_t|$；若 $a_t<0$，则由 $y_t\ge-1$ 有 $a_ty_t\le|a_t|$；零系数项相等。有限求和中至少有一个严格项，因而
+$$
+G_\delta<\sum_{t=0}^{L}|a_t|.
+\tag{118.2l}
+$$
+这直接使用有限和弱对偶，并以正系数项的严格余量排除有限达界。[^rro118-dual] 共同表示也是任一方向的表示，故同一严格下界适用于 $\mathcal G_{\rm com}$。
+
+为证明下界可由共同有限表示逼近，固定同一个 $\delta$，令独立的滞后参数 $m\ge3$ 变化。式 (118.2b) 复用第 117 节的延迟多项式形状；这里不将 $m$ 与实际参数分母 $k$ 绑定。直接计算给出
+$$
+A_m>0,\qquad
+B_m=-\frac{\lambda^mH(1)^{-1}+3H(\lambda)^{-1}}{1-\lambda^m}<0,
+\qquad p_m(1)=1,\quad p_m(\lambda)=-3.
+\tag{118.2m}
+$$
+沿用式 (117.2g) 的共同模式关系，置
+$$
+\rho=(0,1/3,1/3,1/3),\qquad w=e_0-\rho,\qquad h=e_1-\rho.
+$$
+两个方向都满足
+$$
+e_1=\pi-\tfrac14w+h,\qquad e_0=\pi+\tfrac34w,
+\qquad \pi K_{\delta,d}=\pi,\qquad
+wK_{\delta,d}=\lambda w,\qquad hH(K_{\delta,d})=0.
+$$
+因此
+$$
+e_1p_m(K_{\delta,d})
+=\pi p_m(1)-\tfrac14wp_m(\lambda)+hp_m(K_{\delta,d})
+=e_0.
+\tag{118.2n}
+$$
+这也证明三个原字典总量集合非空。由于 $m\ge3$，$H(z)$ 与 $z^mH(z)$ 的系数支撑 $\{0,1,2\}$、$\{m,m+1,m+2\}$ 不交。$H$ 的系数全正，所以系数绝对和恰为
+$$
+\begin{aligned}
+\Gamma_m
+&=(A_m-B_m)H(1)\\
+&=\frac{2(1+3R)}{1-\lambda^m}-1\\
+&=G_\delta+\frac{2(1+3R)\lambda^m}{1-\lambda^m}.
+\end{aligned}
+$$
+固定 $\delta$ 时 $\lambda^m\to0$，故式 (118.2c) 成立。对任意 $\varepsilon>0$，同一共同表示族都有某个有限 $m$ 使 $G_\delta<\Gamma_m<G_\delta+\varepsilon$；与式 (118.2l) 合并，证明式 (118.2a) 及其非达性。
+
+同一模式分解也给出实际时间行的极限：
+$$
+\mu_{t,d}=\pi-\tfrac14\lambda^t w+hK_{\delta,d}^t.
+$$
+这里 $h=(0,2/3,-1/3,-1/3)$。令 $C_d$ 为实际环方向的三环置换矩阵；环零和行上的核作用为 $c$ 倍循环，故
+$$
+hK_{\delta,d}^t=(0,c^t h_R C_d^t),\qquad h_R=(2/3,-1/3,-1/3).
+$$
+$C_d^t$ 只循环排列三个固定坐标，而 $c^t,\lambda^t\to0$，所以 $\mu_{t,d}\to\pi$。另一方面，复用式 (117.2d) 的实际陷阱质量，
+$$
+\mu_{t,d}(0)=\frac{1-\lambda^t}{4}<\frac14=\pi(0)
+$$
+对每个有限 $t\ge0$ 都成立，因为 $\lambda>0$。因此没有有限时间行等于 $\pi$；这个极限原子确实不在原实际时间字典中。
+
+最后考虑加入单位成本平稳原子的字典。由 $\pi f_d=1$，每份式 (118.1c) 的表示都满足
+$$
+G_\delta=\beta+\sum_ta_ty_t\le|\beta|+\sum_t|a_t|.
+\tag{118.2o}
+$$
+而共同模式关系给
+$$
+e_1H(K_{\delta,d})=H(1)\pi-\tfrac14H(\lambda)w.
+$$
+这立即产生式 (118.2e)。该表示的平稳原子系数为 $1+3R>0$，时间 $0,1,2$ 的系数依次为
+$$
+-\frac{3c^2}{H(\lambda)},\qquad
+-\frac{3c}{H(\lambda)},\qquad
+-\frac3{H(\lambda)}.
+$$
+它们在两个方向相同，计费恰为 $(1+3R)+3H(1)/H(\lambda)=G_\delta$，结合式 (118.2o) 得式 (118.2d)。
+
+为精确说明字典变化，定义三次多项式
+$$
+s_\delta(z)=\frac{(z-\lambda)H(z)}{(1-\lambda)H(1)}.
+$$
+它满足 $s_\delta(1)=1$、$s_\delta(\lambda)=0$，且含因子 $H$。同一模式关系给
+$$
+\boxed{e_1s_\delta(K_{\delta,d})=\pi\qquad(d=0,1).}
+\tag{118.2p}
+$$
+故 $\pi$ 已有两个方向共同的有限有符号表示。把这份表示代回式 (118.2e) 仍是原字典的有限表示，须按展开后的时间系数总量计费，并由式 (118.2l) 严格大于 $G_\delta$。式 (118.2d) 之所以达界，是新字典将 $\pi$ 本身作为一个单位成本原子，而不是为它在旧字典中的展开免费计账。证毕。
+
+本命题的下确界允许最大滞后在不同候选之间任意增大，但每份原字典表示仍只有有限支撑；它不求解某个指定有限 $L$ 的最优值。$\delta=0$ 不在范围内，此时原时间行没有陷阱质量，不能表示 $e_0$。结论度量的是有符号线性准备的系数总量，不给出实际方差、独立采样数或实验成本下界；新增单位成本 $\pi$ 的代数接口也不由无限等待极限自动取得。
+
+[^rro118-model]: [已发布 RRO §116–117](https://github.com/the-omega-institute/trureturing/blob/d1b69770e9a08e87b8c2e44c9ad169294c7506a7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，式 (116.1a) 给实际四态核，式 (117.2g) 给两个方向的共同模式关系；式 (117.2b)、(117.2f)–(117.2h) 给所复用的延迟多项式、节点值及系数范数估计。本节在固定参数后独立增加滞后，并以实际状态列核对全时间严格下界。
+
+[^rro118-dual]: 有限和弱对偶沿用 §117 的来源：钉版 Mathlib [Finset.abs_sum_le_sum_abs](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Algebra/Order/BigOperators/Group/Finset.lean)；Chandrasekaran、Recht、Parrilo、Willsky，[*The Convex Geometry of Linear Inverse Problems*](https://arxiv.org/abs/1012.0621v3)，§2.1，式 (2)、(3)、(5)、(6)。这里逐份使用有限和证书，不引用紧原子集的极小值必达结论，也不使用强对偶推断未包含平稳原子的时间字典已经闭合。
+
+[^rro118-limit]: 几何幂极限直接见钉版 Mathlib [tendsto_pow_atTop_nhds_zero_of_lt_one](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecificLimits/Basic.lean)。本节的正系数递推只用归纳比较；显式列及其实际核作用承担递推与状态空间之间的对应。
+

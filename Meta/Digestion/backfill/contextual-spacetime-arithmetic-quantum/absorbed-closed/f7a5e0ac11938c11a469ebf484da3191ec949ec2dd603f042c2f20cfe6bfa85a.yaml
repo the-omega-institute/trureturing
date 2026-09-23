@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f7a5e0ac11938c11a469ebf484da3191ec949ec2dd603f042c2f20cfe6bfa85a
+  normalized_sha256: sha256:f7a5e0ac11938c11a469ebf484da3191ec949ec2dd603f042c2f20cfe6bfa85a
+cas_ref: sha256:f7a5e0ac11938c11a469ebf484da3191ec949ec2dd603f042c2f20cfe6bfa85a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Prediction/CoarseGrainingCannotAddInformation.coarse_graining_cannot_add_information
+    target_statement_id: sha256:047dcd681db65491e04f17ddd9819ff6995ef91579521cd62d4e3cefe8bc6fda
+receipts:
+  unresolved_subitems: []

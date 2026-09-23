@@ -1,0 +1,23 @@
+### 133.3 否定、拓扑边界与投影缺陷同步运输
+
+给事件 $E\subseteq\Omega$，取 $E'=sE$。双射满足 $s(E^c)=(sE)^c$。每条纤维同时与 $E,E^c$ 相交，当且仅当其像纤维同时与 $E',(E')^c$ 相交，故
+$$
+\partial_{q'}E'=t(\partial_qE).
+$$
+由纤维并组成的观察拓扑也由 $s$ 双向保持，因此内部、闭包与拓扑前沿分别运输；这是本特定拓扑之间的同胚结论。
+
+令 $Q_E$ 为乘以 $\mathbf1_E$ 的投影，则 $Q_{E'}U=UQ_E$。压缩效应及跨可见隐藏耦合满足
+$$
+\mathsf A=P Q_E|_V,\qquad \mathsf D=(I-P)Q_E|_V,
+$$
+$$
+\mathsf A'=U_V\mathsf A U_V^{-1},
+\qquad \mathsf D'=U_H\mathsf D U_V^{-1}.
+$$
+所以 $\mathsf A-\mathsf A^2=\mathsf D^*\mathsf D$ 的两边按同一个等距同构运输；秩、迹、算子范数和 Hilbert–Schmidt 范数均保持。条件残差也满足
+$$
+\|\mathbf1_{E'}-P'\mathbf1_{E'}\|_{\mu'}^2
+=\|\mathbf1_E-P\mathbf1_E\|_\mu^2.
+$$
+若按各纤维质量定义 $w_{xy}=\mu(x)\mu(y)/\mu(q^{-1}q(x))$（不同纤维为零），则 $w'_{sx,sy}=w_{xy}$，从而割权、Dirichlet 二次型与图总变差的对应数值同样保持。该运输不会把概率加权残差改成未加权矩阵迹；每个量仍保持自己的定义。
+

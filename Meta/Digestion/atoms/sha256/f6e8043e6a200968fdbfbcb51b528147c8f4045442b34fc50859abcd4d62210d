@@ -1,0 +1,17 @@
+**全负来源的一个早期系数改变。** 对 $0<\varepsilon\le2A$，令
+$a=-A\mathbf1+\varepsilon e_j$。这属于原立方体。除 $\varepsilon=0$ 外，它不等于两极端，因而剩余尾为零；即使 $\varepsilon=2A$ 只是把一个符号翻转、所有绝对幅度仍然饱和，结论也成立。
+
+这还可在同一实际生成式中看见。令
+$$
+F_*(z)=1-\frac{Az}{1-z},
+\qquad F_a(z)=F_*(z)+\varepsilon z^{j+1}.
+$$
+(49.4) 给
+$$
+R_{n,a}(z)
+=-\frac A{F_a(z)-z}
++\begin{cases}\displaystyle\frac{\varepsilon z^{j-n}}{F_a(z)^{j-n+1}},&n\le j,\\[4pt]0,&n>j.\end{cases}
+\tag{49.50}
+$$
+这是实际各行的有理式，不是任意数组拟合。严格幅度缺口 $0<\varepsilon<2A$ 可直接用 (49.19)；端点纯符号翻转使用 (49.9)。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d260628ec09bca5df5094f97edabcdb86426931afa750ba8708ba791e15ba462
+  normalized_sha256: sha256:d260628ec09bca5df5094f97edabcdb86426931afa750ba8708ba791e15ba462
+cas_ref: sha256:d260628ec09bca5df5094f97edabcdb86426931afa750ba8708ba791e15ba462
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此叶子通过空间、来源及因果谓词定义三种选择筛选，只有定义，没有另行断言读数下降。
+    previous_atom_id: 46c4d4624ae3b37a83c5ac5dbbac598926b53614dfe86fb6e50353f5824460b1
+    next_atom_id: 9b032af413a577fde222629a2527d3ec60eaa8b57c02530c5d5facaaad33b719

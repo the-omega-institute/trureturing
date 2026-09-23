@@ -1,0 +1,4 @@
+**证明。** 通常实数距离下，$0,\varepsilon,2\varepsilon$ 的相邻距离均为 $\varepsilon$，端点距离为 $2\varepsilon$。一般地，$D(x,y)\le\varepsilon,D(y,z)\le\eta$ 由三角不等式只推出 $D(x,z)\le\varepsilon+\eta$。$\square$
+
+因此零核的精确商不能无条件改成正容差商。近似表示应保留误差大小及其传播关系，而不是把一串各自“足够近”的状态直接认作同一个等价类。
+

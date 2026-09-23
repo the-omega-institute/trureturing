@@ -1,0 +1,62 @@
+**定理 9.18（禁止长串的首差Hausdorff维数）。** 对整数$k\ge2$，采用主卷§132.2定义的根$\lambda_k$：
+$$
+\sum_{j=1}^k\lambda_k^{-j}=1,\qquad 1<\lambda_k<2,\qquad\lambda_k\uparrow2
+\quad(k\ge2).
+\tag{9.18}
+$$
+令
+$$
+X_k=\{x\in\{0,1\}^{\mathbb N_0}:x\text{不含连续}k\text{个}1\},
+$$
+并对$x\ne y$定义
+$$
+d(x,y)=2^{-\min\{j\ge0:x_j\ne y_j\}},\qquad d(x,x)=0.
+$$
+则
+$$
+\dim_{\mathrm H}(X_k,d)=D_k:=\frac{\log\lambda_k}{\log2},
+\qquad D_k\uparrow1.
+\tag{9.19}
+$$
+这里Hausdorff测度沿用主卷定义33.0的无额外系数约定，以任意可数覆盖的直径幂和定义；覆盖集不必可测。
+
+**证明。** 主卷§132.2给出合法长度$n$词数$a_n^{(k)}$的$k$阶递推及界$a_n^{(k)}\le C_k\lambda_k^n$，其中$C_k<\infty$；同时给出式（9.18）的根与极限。$k=2$的维数结论亦是主卷定理33.2的精确实例。
+
+共享前缀使$d$满足强三角不等式；它给出二进制乘积拓扑。禁止模式的补集是开柱的并，故$X_k$闭于紧致二进制乘积空间，所以紧致。每个合法有限词后补全零仍合法，故每个合法柱非空。长度$n$柱的直径至多$2^{-n}$，全部$a_n^{(k)}$个柱覆盖$X_k$。因此对任意$s>D_k$，
+$$
+\mathcal H^s_{d,2^{-n}}(X_k)
+\le C_k\lambda_k^n2^{-ns}
+=C_k2^{-n(s-D_k)}\longrightarrow0,
+$$
+给出维数上界。在临界指数$D_k$同样给$\mathcal H^{D_k}_d(X_k)\le C_k$。
+
+下界需要相容概率，不能将每层均匀词分布自动当作同一个无限来源。令状态$i\in\{0,\ldots,k-1\}$记当前末尾连续$1$的数目，初态为$0$。给出正权
+$$
+r_i=\sum_{j=1}^{k-i}\lambda_k^{-j},\qquad
+r_0=1,\quad0<r_i\le1.
+$$
+当$i<k-1$，有$\lambda_kr_i=r_0+r_{i+1}$；当$i=k-1$，有$\lambda_kr_{k-1}=r_0$。因此以下是逐行归一化的转移：输出$0$并转到$0$的概率为$r_0/(\lambda_kr_i)$；若$i<k-1$，输出$1$并转到$i+1$的概率为$r_{i+1}/(\lambda_kr_i)$。在$i=k-1$时只能输出$0$，其概率为一。其余转移概率为零。
+
+这是对原允许图的Perron正权重加权，即通常的Parry转移构造；此处固定初态$0$，不额外称所构造的词概率平稳。主卷§132.2的计数矩阵按“列输入、行输出”书写，而此处$r$满足其转置的正特征向量方程，故不能误把原右特征向量直接当作这里的行归一化权重。
+
+对合法长度$n$词$w$，其状态路径从$0$唯一确定，末态记$i_n$。沿路径概率相乘，各$r$望远镜相消，得到柱质量
+$$
+\mu([w])=\frac{r_{i_n}}{\lambda_k^nr_0}
+\le\lambda_k^{-n}=2^{-nD_k}.
+\tag{9.20}
+$$
+行和为一使父柱质量恰等于子柱质量之和，空柱质量为一。与主卷定理33.1相同，这在有限柱并的开闭代数上定义相容有限预测度：若不交开闭集之并仍开闭，紧性给有限子覆盖，所以实际只有有限个非空成员，确保该代数上的可数可加性。有限预测度的测度扩张定理因此给$X_k$上的Borel概率$\mu$。由式（9.20），每个点的质量被$2^{-nD_k}\to0$控制，所以$\mu$无原子。
+
+对任意包含至少两点的$U\subseteq X_k$，在其不同点对的首差下标中取最小值$m$。所有点共享前$m$位，且存在两点在第$m$位不同，所以$\operatorname{diam}_dU=2^{-m}$，而$U$包含于一个长度$m$柱。于是外测度满足
+$$
+\mu^*(U)\le2^{-mD_k}=(\operatorname{diam}_dU)^{D_k}.
+$$
+空集及单点由无原子性满足同一界。对任意可数覆盖$X_k\subseteq\bigcup_jU_j$，外测度次可加性给
+$$
+1\le\sum_j\mu^*(U_j)
+\le\sum_j(\operatorname{diam}_dU_j)^{D_k}.
+$$
+故$\mathcal H^{D_k}_d(X_k)\ge1>0$，给出维数下界。与上界合并得到式（9.19）；$D_k\uparrow1$直接由式（9.18）及对数连续严格递增性得到。
+
+下界所用质量分布方法对应钉版Mathlib的[`Measure.le_hausdorffMeasure`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Hausdorff.lean)，其条件是集合质量不超过直径幂；[`dimH_of_hausdorffMeasure_ne_zero_ne_top`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/MetricSpace/HausdorffDimension.lean)给正有限临界测度的维数结论。证毕。
+

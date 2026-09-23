@@ -1,0 +1,4 @@
+**Proof.** Couple the two observations using the same random integer $J$. Their labels can differ only at a cut. Changing a single label changes its point-mass vector by norm at most two, which proves the vector bound; the reverse triangle inequality proves the error bound. Irrationality makes the phases $x+j\theta$ distinct for distinct integers $j$, so at most $N$ indices can hit the cut set.
+
+For fixed $n,p$, the probability vector for the right-closed convention at $x$ is the left-hand limit of the left-closed probability vector at $x$. Conversely, the left-closed vector is a right-hand limit of the right-closed vectors. Norm continuity and taking suprema give equality of the two worst-start errors. Finally, if $x+j\theta=[k\theta]$ for any integers $j,k$, then $x=[(k-j)\theta]\in\mathcal G_\theta$. This single implication proves the simultaneous assertion, without parameter-dependent null sets. $\square$
+

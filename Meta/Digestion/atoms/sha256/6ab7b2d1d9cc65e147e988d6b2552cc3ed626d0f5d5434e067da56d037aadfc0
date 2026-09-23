@@ -1,0 +1,22 @@
+**定理 9.18（禁止长串的首差Hausdorff维数）。** 对整数$k\ge2$，采用主卷§132.2定义的根$\lambda_k$：
+$$
+\sum_{j=1}^k\lambda_k^{-j}=1,\qquad 1<\lambda_k<2,\qquad\lambda_k\uparrow2
+\quad(k\ge2).
+\tag{9.18}
+$$
+令
+$$
+X_k=\{x\in\{0,1\}^{\mathbb N_0}:x\text{不含连续}k\text{个}1\},
+$$
+并对$x\ne y$定义
+$$
+d(x,y)=2^{-\min\{j\ge0:x_j\ne y_j\}},\qquad d(x,x)=0.
+$$
+则
+$$
+\dim_{\mathrm H}(X_k,d)=D_k:=\frac{\log\lambda_k}{\log2},
+\qquad D_k\uparrow1.
+\tag{9.19}
+$$
+这里Hausdorff测度沿用主卷定义33.0的无额外系数约定，以任意可数覆盖的直径幂和定义；覆盖集不必可测。
+

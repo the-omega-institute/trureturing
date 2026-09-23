@@ -1,0 +1,15 @@
+**theorem 54.6（Smith 标准形的模 $p^N$ 核计数，包括秩零与空矩阵）.** 设 $M\in M_{r\times m}(\mathbb Z)$，其中 $r,m\in\mathbb N_0$，整数秩为 $s$，Smith 非零不变量为 $d_1,\ldots,d_s$。对 $N\ge1$，令
+$$
+K_N(M):=\#\{\bar y\in(\mathbb Z/p^N\mathbb Z)^m:M\bar y\equiv0\pmod{p^N}\}.
+$$
+则
+$$
+K_N(M)=p^{N(m-s)}\prod_{j=1}^s\gcd(d_j,p^N)
+=p^{N(m-s)+\sum_{j=1}^s\min(v_p(d_j),N)}.
+$$
+当 $s=0$ 时两个求和与乘积均为空，故
+$$
+K_N(M)=p^{Nm}.
+$$
+特别地，若 $m=0$，则 $K_N(M)=1$。
+

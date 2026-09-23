@@ -1,0 +1,6 @@
+**推论 6.3（终端读取误差）。** 假设对应终端读数取值于同一度量空间，且
+$$
+\rho_f(\widetilde f(\widetilde z),f(r_t\widetilde z))\le\eta_f
+$$
+在实际终端状态上成立。则整棵树的最终读数误差至多 $\eta_f+E_{\mathcal T}$。
+

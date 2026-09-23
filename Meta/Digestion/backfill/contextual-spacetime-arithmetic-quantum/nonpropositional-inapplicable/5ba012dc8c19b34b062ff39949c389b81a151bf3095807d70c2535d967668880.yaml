@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5ba012dc8c19b34b062ff39949c389b81a151bf3095807d70c2535d967668880
+  normalized_sha256: sha256:5ba012dc8c19b34b062ff39949c389b81a151bf3095807d70c2535d967668880
+cas_ref: sha256:5ba012dc8c19b34b062ff39949c389b81a151bf3095807d70c2535d967668880
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子定义全部有限 Heisenberg 迭代生成的实线性空间及其正交投影，没有另行断言充分性或维数界。
+    previous_atom_id: 8e6bdc499b3a9a6e30b40e8c9556cc3c346b11fdd92a5280f2c0c3aee8ca5aea
+    next_atom_id: 3297029a31fc9c094011e2c8da01ea591c3199f8e9f5ab81a4d2759e669b16c6

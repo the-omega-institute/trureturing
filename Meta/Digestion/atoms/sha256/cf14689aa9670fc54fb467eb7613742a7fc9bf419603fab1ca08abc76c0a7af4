@@ -1,0 +1,21 @@
+**引理 10.6（CPTP 后处理的迹距离收缩）。** 若 $\Lambda:\mathcal L(X)\to\mathcal L(Y)$ 为 CPTP，则对任意 $\rho,\sigma\in\mathcal D(X)$，
+$$
+d_1(\Lambda(\rho),\Lambda(\sigma))\le d_1(\rho,\sigma).
+\tag{10.11}
+$$
+这对任何有限维参考系统 $E$ 上的 $\Lambda\otimes\operatorname{id}_E$ 同样成立。
+
+**证明。** 写 Hermitian 差的 Jordan 分解 $\rho-\sigma=H_+-H_-$，其中 $H_\pm\ge0$ 且
+$$
+\|\rho-\sigma\|_1=\operatorname{Tr}H_++\operatorname{Tr}H_-.
+$$
+由正性、保迹性和三角不等式，
+$$
+\|\Lambda(\rho-\sigma)\|_1
+\le\|\Lambda(H_+)\|_1+\|\Lambda(H_-)\|_1
+=\operatorname{Tr}H_++\operatorname{Tr}H_-.
+$$
+除以二得式(10.11)。完全正性保证 $\Lambda\otimes\operatorname{id}_E$ 为正，且该映射仍保迹，故同证适用。
+
+这一证明使用的正负部分分解与本库 [FiniteTraceDistance](../../../D5/S3/Quantum/Foundation/FiniteTraceDistance.lean) 的 **traceDistance_contract** 相同；后者的通道声明采用相同输入输出载体。本节允许不同有限维输入输出，并显式保留参考。一般迹范数收缩也见 John Watrous，[*The Theory of Quantum Information*](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，Corollary 3.40，式(3.241)。 $\square$
+

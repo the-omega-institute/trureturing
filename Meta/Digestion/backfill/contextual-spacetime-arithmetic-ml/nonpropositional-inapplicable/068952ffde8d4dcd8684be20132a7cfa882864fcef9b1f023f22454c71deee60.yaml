@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:068952ffde8d4dcd8684be20132a7cfa882864fcef9b1f023f22454c71deee60
+  normalized_sha256: sha256:068952ffde8d4dcd8684be20132a7cfa882864fcef9b1f023f22454c71deee60
+cas_ref: sha256:068952ffde8d4dcd8684be20132a7cfa882864fcef9b1f023f22454c71deee60
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.9节“原始参数的共同隐藏行正交变换不会改变Γ”是显式等式主张，后句说明参数坐标不能由 Gram 单独恢复；探针在任意有限尺寸以正交条件 R转置乘R等于单位矩阵化简三块，仓内无冻结 GID，未把不变性藏入定义。
+    previous_atom_id: a75435c2d816d0fa3e27fb56d57003730fb317680d5c6fcce94d2d0be427e2ea
+    next_atom_id: 6c57df6cbb694be9ca32abfb4ace2074550928f7a45076a3b6d92515eedfd431

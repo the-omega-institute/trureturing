@@ -1,0 +1,70 @@
+**定理 74.2（族保持恰为全部初态的缺陷不增）。** 在定义与假设 74.1 下，每个 $d\in\Delta(J)$ 的缺陷有限，且
+$$
+\delta(d)=D_{\mathrm{KL}}(d\Vert q)-D_{\mathrm{KL}}(Cd\Vert p).
+$$
+以下五个条件等价：
+$$
+\begin{aligned}
+TE=ETE
+&\ \Longleftrightarrow\ TB=BS\\
+&\ \Longleftrightarrow\ T\bigl(B\Delta(I)\bigr)\subseteq B\Delta(I)\\
+&\ \Longleftrightarrow\ T(\operatorname{Im}B)\subseteq\operatorname{Im}B\\
+&\ \Longleftrightarrow\ \forall d\in\Delta(J),\quad\delta(Td)\le\delta(d).
+\end{aligned}
+$$
+这些条件成立时，还有包含粗输出差异的有限值不等式
+$$
+\delta(Td)+D_{\mathrm{KL}}(CTd\Vert CTEd)
+=D_{\mathrm{KL}}(Td\Vert TEd)\le\delta(d)
+\qquad(d\in\Delta(J)).
+$$
+
+证明。满射和 $q_j>0$ 给出每个 $p_i>0$。$C$ 每列恰有一个 $1$，$B$ 的第 $i$ 列之和为 $\sum_{r(j)=i}q_j/p_i=1$；故二者均非负列随机。非负矩阵乘积仍非负，且若两矩阵的列和均为一，则有限换序给出其乘积的列和为一。因此 $E,S$ 也列随机，所有相应概率输出仍归一化。对 $CB$，不同纤维的交项为零，同一纤维之和为一，故
+$$
+CB=I_I,\qquad E^2=E,\qquad EB=B,\qquad CE=C,\qquad Bp=q.
+$$
+由 $E=BC$ 与 $EB=B$，还得到 $\operatorname{Im}E=\operatorname{Im}B$。
+
+先在证明内处理支撑。任取 $u\in\Delta(J)$，令 $c=Cu$。若 $u_j>0$，则 $c_{r(j)}>0$，从而
+$$
+(Eu)_j=\frac{q_j}{p_{r(j)}}c_{r(j)}>0.
+$$
+所以 $u\ll Eu$，其 KL 是有限实数。若 $c_i=0$，有限非负和为零使该纤维的全部 $u_j=0$。对概率对 $(u,Eu)$ 应用 [GrandmotherTheorem.kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Divergence/GrandmotherTheorem.lean) 与 [GibbsEquality.kl_divergence_eq_zero_iff](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/Divergence/GibbsEquality.lean)，其非负、归一化及绝对连续性前提均已满足，得到
+$$
+\delta(u)\ge0,\qquad \delta(u)=0\ \Longleftrightarrow\ u=Eu.
+$$
+
+给定 $a\in\Delta(I)$ 并假设 $u\ll Ba$。若 $a_i=0$，则 $(Ba)_j=0$ 对整条纤维成立，绝对连续性迫使该纤维的 $u_j$ 全为零。因此 $c\ll a$。若 $c_i>0$，纤维内有某个 $u_j>0$，所以 $a_i>0$；此时 $Ba$ 与 $Eu$ 在该纤维上的参考后验都等于
+$$
+\mathbf1_{r(j)=i}\frac{q_j}{p_i}.
+$$
+在 [ZeroSupportDPI.classical_dpi_identity_zero_support](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/DivergenceSupport/ZeroSupportDPI.lean) 中取确定性行信道 $W(j,i)=C_{ij}$，分别取输入对 $(u,Ba)$ 与 $(u,Eu)$。它们的参考粗输出分别为 $a,c$；前段保证两对输入非负归一化且满足支撑包含。正 $c_i$ 处的后验 KL 项相同，零 $c_i$ 处的加权项均为零，且第二次应用的粗项是 $D_{\mathrm{KL}}(c\Vert c)=0$，故两次链式恒等式给出
+$$
+D_{\mathrm{KL}}(u\Vert Ba)
+=D_{\mathrm{KL}}(u\Vert Eu)+D_{\mathrm{KL}}(Cu\Vert a). \tag{74.1}
+$$
+这里的对数拆分只在 $u_j>0$ 的坐标进行：写 $i=r(j)$，此时 $c_i,a_i,q_j,p_i$ 都严格为正，且
+$$
+\ln\frac{u_j}{(Ba)_j}
+=\ln\frac{u_j}{(Eu)_j}+\ln\frac{c_i}{a_i}.
+$$
+按纤维求和时第二项的系数为 $c_i$；零 $c_i$ 的纤维没有正 $u_j$，贡献为零，不作零分母约分。$u\ll Ba$、$u\ll Eu$、$c\ll a$ 保证式 (74.1) 的三项全有限。取 $a=p$，由 $Bp=q$ 得所述缺陷差式；严格正的 $q,p$ 也直接保证该差式没有无穷项。
+
+先比较四个线性条件。由 $EB=B$，将 $TE=ETE$ 右乘 $B$ 得 $TB=ETB=BCTB=BS$；反之，$TB=BS$ 右乘 $C$ 给出 $TE=BSC=ETE$。若 $TB=BS$，则 $TBa=BSa$，而 $Sa\in\Delta(I)$，所以概率族被保持。若概率族被保持，对每个粗标准基向量 $e_i\in\Delta(I)$，$TBe_i$ 属于该族，因而被 $E$ 固定。逐列比较得 $TB=ETB$，右乘 $C$ 即得 $TE=ETE$。最后，$E$ 是像为 $\operatorname{Im}B$ 的幂等算子，故 $TE=ETE$ 恰说 $T$ 把它的像映入自身：若该式成立，则 $x=Ex$ 蕴含 $Tx=ETx$；反之，对任意实向量 $x$，$Ex$ 在该像中，像保持给出 $TEx=ETEx$。这一步作用于整个实空间，并未把像空间中的向量都当成概率。
+
+设 $TE=ETE$，任取概率 $d$，置 $u=Td$、$v=TEd$。已有 $d\ll Ed$，非负信道保持这个支撑包含，给出 $u\ll v$。具体地，若 $v_k=\sum_jT_{kj}(Ed)_j=0$，则每个非负乘积为零；当 $(Ed)_j>0$ 时 $T_{kj}=0$，当 $(Ed)_j=0$ 时 $d_j=0$，故每个 $T_{kj}d_j=0$，即 $u_k=0$。这正是 [ZeroSupportDPI.channel_output_absolute_continuity](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/DivergenceSupport/ZeroSupportDPI.lean) 在 $W(j,k)=T_{kj}=P_{jk}$ 的代入。若 $(Cv)_i=0$，则纤维上的全部 $v_k=0$，继而全部 $u_k=0$，所以 $Cu\ll Cv$。
+
+族保持给出 $v=Ev=B(Cv)$。在式 (74.1) 中取 $a=Cv$，再对概率对 $(d,Ed)$ 及行信道 $W(j,k)=T_{kj}$ 应用 [ZeroSupportDefect.dpi_defect_nonneg_zero_support](https://github.com/the-omega-institute/trureturing/blob/f74be7da075c8989749602eea64f47f3852d7a21/D5/S3/DivergenceSupport/ZeroSupportDefect.lean)，便得到
+$$
+\delta(Td)+D_{\mathrm{KL}}(CTd\Vert CTEd)
+=D_{\mathrm{KL}}(Td\Vert TEd)
+\le D_{\mathrm{KL}}(d\Vert Ed)=\delta(d).
+$$
+上述支撑包含保证每个 KL 值有限，允许 $v$ 及 $Cv$ 有零坐标。对 $(Cu,Cv)$ 用同一 Gibbs 非负性定理消去非负粗项，即得 $\delta(Td)\le\delta(d)$。
+
+反之，若缺陷对所有概率初态不增，逐个取 $d=Be_i$。它是合法的概率向量，且 $Ed=d$，所以
+$$
+0\le\delta(TBe_i)\le\delta(Be_i)=0.
+$$
+把前述 Gibbs 等号条件用于 $(TBe_i,ETBe_i)$，得到 $TBe_i=ETBe_i$。两者归一化，支撑前提由任意概率 $u\ll Eu$ 在 $u=TBe_i$ 处给出。逐列比较再右乘 $C$，得到 $TE=ETE$。粗标准基可以具有零坐标；整个论证没有删去这些边界初态。证毕。
+

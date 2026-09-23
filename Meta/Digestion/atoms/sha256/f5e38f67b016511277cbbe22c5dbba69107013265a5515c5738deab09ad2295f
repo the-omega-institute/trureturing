@@ -1,0 +1,357 @@
+**命题 109.2（环行分离恰为共同统一一致性的条件）。** 在定义与假设 109.1 下，
+$$
+E_1,E_2,E_3\text{ 两两不同}
+\quad\Longleftrightarrow\quad
+M^E_n\longrightarrow0
+\quad\Longleftrightarrow\quad
+\overline R^{*,E}_n\longrightarrow0.
+\tag{109.2a}
+$$
+若三条环行两两不同，可固定选择一个仅依赖 $E$ 的函数 $f:\mathcal A\to(0,1)$，使
+$$
+\theta_i=\sum_{y\in\mathcal A}E_i(y)f(y),\qquad
+V_f=(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1)\ne0.
+\tag{109.2b}
+$$
+令 $b_f=\operatorname{sgn}(V_f)$。原始读数上的四窗函数及其平稳均值为
+$$
+W_f(y_0,y_1,y_2,y_3)
+=(1-f(y_0))(1-f(y_3))(f(y_2)-f(y_1)),\qquad |W_f|\le1,
+$$
+$$
+\overline{\mathbb E}_{d,k}W_f
+=(-1)^d\frac{a_k^3}{256}V_f.
+\tag{109.2c}
+$$
+置
+$$
+c_*=\frac{(5/6)^3|V_f|}{192},\qquad
+\beta=\frac{c_*}{4},\qquad H=6,\qquad
+\kappa=\frac{\beta^2}{128H^2}=\frac{\beta^2}{4608},
+$$
+$$
+L_0=\max\left\{1,
+\left\lceil\frac{8H}{\beta}\right\rceil,
+\left\lceil\frac{\log20}{\kappa}\right\rceil\right\},
+\tag{109.2d}
+$$
+其中 $\log$ 为自然对数。对 $n\ge0$ 取
+$$
+L_n=\max\left\{L_0,
+\left\lceil\frac{3\log(n+1)}{\kappa}\right\rceil\right\},
+\qquad
+T_n=L_n+3,\qquad
+J_n=\left\lfloor\frac{n+1}{T_n}\right\rfloor.
+\tag{109.2e}
+$$
+定义
+$$
+F_{u,L}
+=b_f\sum_{t=u}^{u+L-1}
+W_f(Y_t,Y_{t+1},Y_{t+2},Y_{t+3}).
+$$
+这里 $L$ 计四窗数，$F_{u,L}$ 使用 $L+3$ 个标签。共同确定规则 $\Gamma_{E,n}$ 依次检查 $j=0,\ldots,J_n-1$ 的块 $F_{jT_n,L_n}$：大于 $\beta L_n$ 时声明方向 $0$，小于 $-\beta L_n$ 时声明方向 $1$，其余情形不声明。首次声明作为结果；全部完整块均无声明时报告 $0$。第 $j$ 块读取 $jT_n,\ldots,(j+1)T_n-1$，相邻块不共享标签，跨块四窗不计分，阈值相等时继续检查。
+
+该原始块规则对每个方向都有
+$$
+\mathbb P^E_{d,k}(\Gamma_{E,n}\ne d)
+\le B_{E,n}
+:=
+\frac{32(L_n+3)}{3(n+1)}
++\frac5{(n+1)^2},
+\qquad k\ge2,\ d=0,1,\ n\ge0.
+\tag{109.2f}
+$$
+对 $n\ge1$，
+$$
+\frac1{24n}
+\le\overline R^{*,E}_n
+\le M^E_n
+\le\min\left\{\frac12,B_{E,n}\right\}
+=O_E\!\left(\frac{\log(n+1)}{n+1}\right).
+\tag{109.2g}
+$$
+其中 $1/2$ 上界由另一条恒报 $0$ 的共同确定规则取得；原始块规则的每方向保证是 (109.2f)。
+
+若两条环发射行相等，则对全部 $k\ge2,n\ge1$，
+$$
+R^{*,E}_{k,n}\ge\frac{a_k}{8}\ge\frac5{48},
+\qquad
+R^{*,E}_{k,\infty}\ge\frac{a_k}{8}\ge\frac5{48}.
+\tag{109.2h}
+$$
+任意通道在 $n=0$ 时都有
+$R^{*,E}_{k,0}=\overline R^{*,E}_0=M^E_0=1/2$。
+因此，达到共同统一一致性的静态随机传感器最小有效字母数为 $2$；静态确定传感器的最小值仍为 $3$。
+
+**证明。** 任意共同确定检验都属于各个参数下允许的随机检验，故总有
+$\overline R^{*,E}_n\le M^E_n$；恒报 $0$ 给出 $M^E_n\le1/2$。对完整隐藏路径施加同一个通道 $E$ 是共同随机后处理：任何可见随机检验都能通过对发射取条件期望变成完整路径上的随机检验，且保持两类错误。因此
+$R^{*,E}_{k,n}\ge R^1_{k,n}$，由[命题 105.2](https://github.com/the-omega-institute/trureturing/blob/b260e76f3e856ce2fe009292892659a1a8a083f8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的 $1/(24n)$ 下界，得到 (109.2g) 的下界。$n=0$ 时两方向都只发射同一分布 $E_1$，所以最优风险为 $1/2$。
+
+先处理行碰撞。设 $E_u=E_v$，其中 $u,v$ 是不同环状态；令 $s$ 交换它们，固定 $0$ 和第三个环状态 $t$。既有核满足
+$$
+K_k(si,sj)=K_k(j,i),\qquad E_{si}(y)=E_i(y).
+$$
+反射隐藏路径保持发射因子，故从 $x$ 出发的正向可见律等于从 $s(x)$ 出发的转置可见律；有限柱集也决定无限可见律。若 $s(1)=1$，全部可见律相同，风险恒为 $1/2$。
+
+若 $s(1)\ne1$，则 $t\ne1$，且
+$\{K_k(1,t),K_k(t,1)\}=\{a_k/2,a_k/4\}$。
+条件于 $X_1=t$，从时刻 $1$ 开始的两份可见尾律相同；初始读数均服从 $E_1$，独立于该隐藏事件和尾部。令 $\eta$ 为共同初始读数与尾部组成的概率律，则有限 $n\ge1$ 及无限记录均有
+$$
+P^E\ge\frac{a_k}{4}\eta,\qquad
+Q^E\ge\frac{a_k}{4}\eta.
+$$
+对任意可测随机检验，把两项风险积分限制到这个共同子测度，得到至少 $a_k/8$ 的错误率。这是[命题 106.2](https://github.com/the-omega-institute/trureturing/blob/b260e76f3e856ce2fe009292892659a1a8a083f8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的公共子测度证明在发射核下的应用：确定初始符号换成共同分布 $E_1$，标签不变换成发射行不变。隐藏事件不必从读数中可见；证明也不除以发射概率。因此零发射项和无限可测检验均包含在内，(109.2h) 成立，并排除 (109.2a) 右侧两个收敛结论。
+
+以下设三条环行两两不同。对每对 $1\le i<j\le3$，线性泛函
+$$
+f\longmapsto\sum_y(E_i(y)-E_j(y))f(y)
+$$
+非零。三个真超平面的并不能覆盖开立方体 $(0,1)^{\mathcal A}$，故可以固定选择避开它们的 $f$，得到 (109.2b)。
+
+先计算平稳四窗均值。暂取发射概率为任意 $\theta_i\in[0,1]$ 的条件独立二元读数 $B_t$，令 $q_t=\theta_{X_t}$，隐藏初态为 $\pi$。两词反差为
+$$
+\begin{aligned}
+J&=\overline{\Pr}_{K_k,\theta}(B_0B_1B_2B_3=0010)
+-\overline{\Pr}_{K_k,\theta}(B_0B_1B_2B_3=0100)\\
+&=\overline{\mathbb E}[(1-q_0)(q_2-q_1)(1-q_3)]\\
+&=\overline{\mathbb E}[q_0q_2q_3-q_0q_1q_3].
+\end{aligned}
+\tag{109.2i}
+$$
+最后一步由平稳性使一次项相消、二次项按滞后 $1$ 和 $2$ 分别相消。写 $K=K_k$、$D=\operatorname{diag}(\theta)$，则
+$$
+J=\frac14\theta^{\mathsf T}(K^2DK-KDK^2)\theta.
+\tag{109.2j}
+$$
+这是发射参数的齐次三次多项式。任意环换位将 $K$ 变成 $K^{\mathsf T}$，并保持 $\pi$；平稳隐藏路径反序给出
+$\overline p_{K^{\mathsf T},\theta}(w)=\overline p_{K,\theta}(w^R)$。
+因此 $J$ 对三个环参数交替变号，被三个差因子的乘积整除。由总次数为 $3$，商是仅依赖 $k$ 的常数，也不依赖 $\theta_0$。
+
+置 $B=K^2$、$\zeta=a_k/4$。式 (109.2j) 中 $\theta_2^2\theta_3$ 的系数，来自三组指标 $(2,2,3),(2,3,2),(3,2,2)$，等于
+$$
+\begin{aligned}
+\frac14(&B_{22}K_{23}-K_{22}B_{23}
++B_{23}K_{32}-K_{23}B_{32}
++B_{32}K_{22}-K_{32}B_{22})\\
+&=\frac{\zeta}{4}(B_{22}-B_{32})
+=-\frac{a_k^3}{256},
+\end{aligned}
+$$
+$$
+B_{22}=\frac{\delta_k^2}{9}+\frac{5a_k^2}{16},
+\qquad
+B_{32}=\frac{\delta_k^2}{9}+\frac{6a_k^2}{16}.
+\tag{109.2k}
+$$
+差因子乘积中同一单项式的系数为 $-1$，故
+$$
+\overline p_{K_k,\theta}(0010)-\overline p_{K_k,\theta}(0100)
+=\frac{a_k^3}{256}
+(\theta_1-\theta_2)(\theta_2-\theta_3)(\theta_3-\theta_1).
+\tag{109.2l}
+$$
+该恒等式也包含二元发射的端点 $\theta_i=0,1$。
+
+回到原通道，逐时条件独立性给出
+$$
+\mathbb E[W_f(Y_0,Y_1,Y_2,Y_3)\mid X_0,X_1,X_2,X_3]
+=(1-\theta_{X_0})(1-\theta_{X_3})
+(\theta_{X_2}-\theta_{X_1}).
+\tag{109.2m}
+$$
+结合 (109.2i)–(109.2l) 即得正向平稳均值；反向均值由路径反序及
+$W_f(y_3,y_2,y_1,y_0)=-W_f(y_0,y_1,y_2,y_3)$
+变号，证明 (109.2c)。分数直接作用于原读数，无需产生辅助二元输出。
+
+为取得统一块界，固定 $k,d$，以下简写 $\delta=\delta_k$、$a=a_k$、$s_d=(-1)^d$。记 $\mathbb P^{E,i}_{d,k}$ 为保持转移核与发射规则不变、将隐藏初态确定重启于 $i$ 的概率律，其期望记为 $\mathbb E^{E,i}_{d,k}$。以下任意起点的块概率均按这份重启律理解。令
+$$
+q_d(i)=\mathbb E^{E,i}_{d,k}\!\left[
+s_db_f W_f(Y_0,Y_1,Y_2,Y_3)\right],
+\qquad c=\frac{a^3|V_f|}{192}.
+$$
+由 $|W_f|\le1$ 及 (109.2c)，有 $|q_d(i)|\le1$、$\sum_{i=0}^3q_d(i)=3c$。从 $X_0=0$ 出发，事件 $X_0=X_1=X_2=X_3=0$ 的概率为 $(1-\delta)^3$。给定该事件，四次发射独立同分布，$W_f$ 的期望为
+$(1-\theta_0)^2(\theta_0-\theta_0)=0$。因此
+$$
+|q_d(0)|\le1-(1-\delta)^3\le3\delta,
+\qquad
+\sum_{i=0}^3q_d(i)=3c.
+\tag{109.2n}
+$$
+平稳均值在此只提供势方程的相容关系，未改变实际准备初态。
+
+在环坐标 $(1,2,3)$ 上，令
+$$
+C_0(v_1,v_2,v_3)=(v_2,v_3,v_1),\qquad
+C_1(v_1,v_2,v_3)=(v_3,v_1,v_2).
+$$
+这是行核对列函数的作用；环内归一化核为
+$R_d=(3/4)U+(1/4)C_d$，其中 $U$ 的各行均为三点均匀分布，$\mathsf K_d$ 的环环块为 $aR_d$。置
+$$
+\bar q=\frac{q_d(1)+q_d(2)+q_d(3)}3
+=c-\frac{q_d(0)}3,\qquad
+v_i=q_d(i)-\bar q,\qquad
+m=-\frac{q_d(0)}{\delta},\qquad \chi=a/4.
+$$
+由 (109.2n)，$\sum_i v_i=0$、$\|v\|_\infty\le2$、$|m|\le3$。定义
+$$
+u=(I-\chi C_d)^{-1}v
+=\frac{v+\chi C_dv+\chi^2C_d^2v}{1-\chi^3},
+$$
+$$
+h_d(0)=0,\qquad h_d(i)=m+u_i\quad(i=1,2,3).
+\tag{109.2o}
+$$
+因为 $C_d^3=I$、$0<\chi\le1/4$，有
+$$
+\sum_i u_i=0,\qquad
+\|u\|_\infty\le\frac2{1-\chi}\le\frac83,\qquad
+\|h_d\|_\infty\le\frac{17}3<H.
+$$
+在状态 $0$，
+$(I-\mathsf K_d)h_d(0)=-\delta m=q_d(0)$；
+在环状态，左侧等于
+$$
+(1-a)m+[(I-\chi C_d)u]_i
+=-\frac{q_d(0)}3+v_i=q_d(i)-c.
+$$
+所以逐状态成立
+$$
+(I-\mathsf K_d)h_d
+=q_d-c\mathbf1_{\{i\ne0\}},\qquad
+\|h_d\|_\infty\le17/3.
+\tag{109.2p}
+$$
+$q_d(0)=O(\delta)$ 抵消了 $m$ 中的除数 $\delta$，故该范数界统一于全部有限 $k$。
+
+现在处理实际四窗重叠。对一个块把起点暂记为 $0$，使用滤过
+$$
+\mathcal F_t
+=\sigma(X_0,\ldots,X_t;\ Y_0,\ldots,Y_{t-1}).
+$$
+当前隐藏状态已知，当前发射尚未读取。定义
+$$
+D_t=s_db_fW_f(Y_t,Y_{t+1},Y_{t+2},Y_{t+3})-q_d(X_t).
+$$
+隐藏链的 Markov 性与独立发射给出
+$$
+|D_t|\le2,\qquad
+\mathbb E[D_t\mid\mathcal F_t]=0,\qquad
+D_t\in\mathcal F_{t+4}.
+\tag{109.2q}
+$$
+按 $t\bmod4$ 分组，每组是滤过
+$\mathcal F_r,\mathcal F_{r+4},\ldots$
+上的有界鞅差和；组之间无需独立。
+
+令
+$$
+N_L=\sum_{t=0}^{L-1}D_t,\qquad
+A_L=\sum_{t=0}^{L-1}\mathbf1_{\{X_t\ne0\}},
+$$
+$$
+M_L=\sum_{t=0}^{L-1}
+\left(h_d(X_{t+1})-(\mathsf K_dh_d)(X_t)\right).
+$$
+$M_L$ 对 $\mathcal F_t$ 是每项绝对值至多 $2H$ 的鞅差和。由 (109.2p) 望远镜求和，
+$$
+s_dF_{0,L}
+=cA_L+M_L+h_d(X_0)-h_d(X_L)+N_L.
+\tag{109.2r}
+$$
+Azuma–Hoeffding 界[^rro109-azuma] 给出，对 $z\ge0$，
+$$
+\Pr(M_L\le-z)\le
+\exp\left(-\frac{z^2}{8H^2L}\right),\qquad
+\Pr(N_L\le-z)\le
+4\exp\left(-\frac{z^2}{128L}\right).
+\tag{109.2s}
+$$
+第二式中，总和小于 $-z$ 必有一个模 $4$ 分组小于 $-z/4$；该组有 $m_r\le L$ 项，每项绝对值至多 $2$，其尾界为
+$\exp[-(z/4)^2/(8m_r)]$，对非空组取并集即得。两式对任意隐藏起点成立，也成立于块开始前实际联合历史的条件概率。
+
+设 $L\ge L_0$。由 (109.2d)，$2H\le\beta L/4$；若
+$M_L\ge-\beta L/4$ 且 $N_L\ge-\beta L/4$，则
+$$
+s_dF_{0,L}\ge cA_L-\frac{3\beta L}{4}.
+$$
+将 $z=\beta L/4$ 代入 (109.2s)，因为 $128H^2=4608\ge2048$，上述两个条件失败的合计概率至多
+$$
+e^{-\beta^2L/(128H^2)}
++4e^{-\beta^2L/2048}
+\le5e^{-\kappa L}.
+$$
+$cA_L\ge0$ 因而排除错向阈值，故从任意隐藏状态开始，
+$$
+\mathbb P^{E,i}_{d,k}(\text{单块错向声明})\le5e^{-\kappa L},\qquad i\in S.
+\tag{109.2t}
+$$
+
+从任意环状态开始，隐藏环指示量每步离环概率为 $\delta/3$，从 $0$ 回环概率为 $\delta$。所以
+$$
+\Pr(X_t\ne0\mid X_0\ne0)
+=\frac34+\frac14(1-4\delta/3)^t\ge\frac34.
+$$
+于是 $\mathbb EA_L\ge3L/4$；结合 $0\le A_L\le L$ 得
+$\Pr(A_L\ge L/2)\ge1/2$。在该事件与上述两个偏差条件上，由 $c\ge c_*=4\beta$，
+$$
+s_dF_{0,L}\ge c_*L/2-3\beta L/4
+=5\beta L/4>\beta L.
+$$
+因此
+$$
+\mathbb P^{E,i}_{d,k}(\text{单块正确声明})
+\ge\frac12-5e^{-\kappa L}\ge\frac14,
+\qquad i\in\{1,2,3\}.
+\tag{109.2u}
+$$
+占用事件与偏差事件无需独立。
+
+应用式 (108.2n)–(108.2r) 的固定块等待论证，此处取 $T=L+3$，并使用块起点历史
+$$
+\mathcal G_j
+=\sigma(X_s:0\le s\le jT;\ Y_s:0\le s<jT).
+$$
+当前块的首次发射尚未读取。令 $0=\sigma_0<\sigma_1<\cdots$ 为隐藏网格 $\mathbf1_{\{X_{jT}\ne0\}}$ 的回环时刻，$C_m=\sigma_{m+1}-\sigma_m$。准备态 $1$ 保证 $\sigma_0=0$；投影核是 (108.2n) 中取 $z=(1-4\delta/3)^T$ 的同一核。该论证给出[^rro109-weber]
+$$
+\mathbb E[C_m\mid\mathcal G_{\sigma_m}]=\frac43.
+\tag{109.2v}
+$$
+
+为核对尝试接口，仅在证明中把 $\sigma_m$ 对应块作为尝试，令 $\nu$ 为首次声明的尝试编号，从 $0$ 开始。此前尝试块的末标签均在当前块起点之前，所以 $\{\nu\ge m\}\in\mathcal G_{\sigma_m}$；式 (109.2u) 对该条件历史仍给至少 $1/4$ 的声明概率。因而 (108.2p)–(108.2r) 可原样应用：只将过去失败事件移出 (109.2v) 的条件期望。若 $W$ 是实际无限固定块扫描首次声明所需的块数，成功块计入，则
+$$
+W\le\sigma_\nu+1\le\sigma_{\nu+1},\qquad
+\mathbb EW\le\mathbb E\sigma_{\nu+1}\le\frac{16}3.
+\tag{109.2w}
+$$
+当前尝试结果与下一次回环间隔可以相关；这里没有把当前成功或失败事件移出条件期望。隐藏网格只承担证明，规则不观察它。
+
+最后取 $L=L_n$。当 $J_n\ge1$，无声明概率由 (109.2w) 至多为 $16/(3J_n)$；对全部扫描块的错向声明应用 (109.2t) 并取并集，得
+$$
+\mathbb P^E_{d,k}(\Gamma_{E,n}\ne d)
+\le\frac{16}{3J_n}+5J_ne^{-\kappa L_n}
+\le\frac{32T_n}{3(n+1)}+\frac5{(n+1)^2}.
+\tag{109.2x}
+$$
+最后一步使用
+$J_n\ge(n+1)/(2T_n)$、
+$J_n\le n+1$ 及
+$e^{-\kappa L_n}\le(n+1)^{-3}$。
+若 $J_n=0$，则 $T_n>n+1$，(109.2f) 右侧已大于 $1$，同一界仍成立。于是 (109.2f) 得证。共同块规则给 $M^E_n\le B_{E,n}$，恒定规则另给 $M^E_n\le1/2$；结合前述比较与下界，得到 (109.2g)。固定 $E$ 时 $L_n=O_E(\log(n+1))$，故两个最坏参数风险均趋零，结合碰撞下界证明 (109.2a)。特别地，统一上界也蕴含每个固定 $k$ 的一致性。
+
+一个有效字母使所有发射行相同，不能一致辨别。二元通道取
+$$
+E_i(1)=p_i,\qquad
+(p_0,p_1,p_2,p_3)=(0,0,1/2,1)
+$$
+已有三条不同环行，故随机最小有效字母数为 $2$；例如可固定
+$f(0)=1/4,f(1)=3/4$ 来执行上述规则。确定发射的各行是点质量，三条环行不同恰要求三个不同环标签，因而至少需要三个有效字母；命题 106.2 给出的三字母读数满足本节行分离条件，由已证统一上界实现一致性，故确定最小值为 $3$。证毕。
+
+平稳公式 (109.2l) 不等于准备态下每个有限窗口的概率公式，行碰撞也不必使全部准备态有限律相同。函数 $f$ 的选择是固定通道下的存在性结论；这里没有给出任意实数通道输入的有效选择算法或计算成本界。全部统一常数允许依赖固定 $E$，没有给出统一 $O_E(1/n)$ 上界，也没有判定对数因子必要。结论针对已知、逐时独立刷新的固定通道和共同环准备态，不包含未知校准、时变或带记忆发射。HMM 的 Vandermonde 通量与发射行分离机制已有成熟三隐藏态结果；二元随机发射保留不可逆性也已有连续时间模型的例子。[^rro109-chen] 此处不对这些机制作新颖性主张。
+
+[^rro109-azuma]: 有界鞅差的 Azuma–Hoeffding 界：若每项绝对值至多 $B$，则 $L$ 项和的下尾至多为 $\exp[-z^2/(2LB^2)]$。钉版 Mathlib 的 [measure_sum_ge_le_of_hasCondSubgaussianMGF](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Probability/Moments/SubGaussian.lean#L932) 给出一般条件 sub-Gaussian 求和接口；有界中心化条件分布由 Hoeffding 引理给出所用矩母函数界。
+
+[^rro109-weber]: Richard Weber, [Markov Chains](https://www.statslab.cam.ac.uk/~rrw1/markov/M.pdf) (2011), §4.4 Theorem 4.4，印刷页 15（PDF 第 19 页），给出停时后的强 Markov 重启；本处过去读数由独立发射扩充，给定当前隐藏状态后不改变未来隐藏转移与尚未读取的发射。平均命中时间的一阶步方程见同书 Theorem 4.2。
+
+[^rro109-chen]: Yong Chen, *On the reversibility of the observed process of three-state hidden Markov model*, [arXiv:1101.5482v1](https://arxiv.org/pdf/1101.5482v1) (2011), Theorems 4.3–4.4，PDF 第 9 页；连续时间二元随机发射例子见 §3.1 Example 2，PDF 第 6 页。Theorem 4.3 已给不等间隔三点通量的 Vandermonde 因子；Theorem 4.4 的离散三隐藏态判据要求隐藏链不可逆、发射行两两不同，并另有发射秩为 $3$，或秩为 $2$ 且转移矩阵没有零特征值的条件。该三态平稳结论不直接覆盖本节四态共同准备实验。
+

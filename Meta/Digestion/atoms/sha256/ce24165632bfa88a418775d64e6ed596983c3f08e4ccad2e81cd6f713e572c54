@@ -1,0 +1,26 @@
+**Proof.** Continuity of $S(a)$ is Theorem 42.12. For a fixed output covector $\ell$, let
+$$
+\alpha(x,y)=\ell(x),\qquad \beta(x,y)=\ell(y).
+$$
+A joint witness with marginals $p,q$ satisfies $h(\alpha)=p(\ell)$ and $h(\beta)=q(\ell)$, while
+$$
+S(a)(h)(\ell)=h(\alpha+\beta).
+$$
+Under (b), the sign addition rule in Theorem 42.3 determines this value uniquely at every $\ell$. Hence (b) implies (a).
+
+If (b) fails, take representing lists for $p$ and $q$. The concatenated joint list with every first-factor vector preceding every second-factor vector, as in (42.23), makes the output sign at the conflicting $\ell$ equal to $p(\ell)$. Reversing the two blocks makes it equal to $q(\ell)$. Both lists are independent joint witnesses with the same marginals, and the two output signs differ. Thus (a) implies (b).
+
+To prove (b) implies (c), use induction on the shorter flag length. If one flag is empty, the assertion holds. Otherwise let $v_1,w_1$ be their first vectors. Unless they are positive multiples, a functional can give them opposite nonzero signs, either by prescribing $1,-1$ when they are independent or by evaluating negatively proportional vectors. Condition (b) excludes both cases, so the first oriented lines agree. Restrict to covectors annihilating that line and pass to the quotient by it. The two projected lists are independent, condition (b) persists, and their lengths decrease by one. Induction gives agreement of every shared subspace and quotient orientation, which is (c).
+
+Conversely, if the flag of $p$ is an initial segment of that of $q$, then every nonzero sign of $p$ is the same nonzero sign of $q$. All remaining signs of $p$ are zero. Hence (b) holds, and the sign addition rule gives precisely $q$ as the output. This also covers equal flags and zero flags.
+
+Each forbidden pair of coordinate signs defines a clopen subset of $S(V)^2$. Therefore (42.42), the intersection of their closed complements, is closed. Its inverse image under $J$ is compact. Apply Theorem 42.16 to this compact subspace and $S(a)$; fiber constancy has just been proved, so the longer-flag rule is continuous on $\mathcal C$.
+
+If $V\ne0$, choose $v\ne0$. The three ordinary joint vectors
+$$
+(2v,-v),\qquad(v,-v),\qquad(v,-2v)
+$$
+have the same two marginal signatures but have output signatures $\sigma_V(v),\mathbf0,\sigma_V(-v)$, which are distinct. Thus global descent fails even as a set map. If $V=0$, every space involved is a singleton and descent holds. For $V=\mathbb R$, equal nonzero marginal signs and pairs with a zero marginal are exactly the legitimate pairs; opposite nonzero signs permit all three output signs. In particular, the positive-positive difference example in Theorem 42.15 is not a counterexample to addition on that particular fiber: its sums are all positive. The obstruction is quotient well-definedness already for finite real vectors, while joint addition remains continuous. No Zeckendorf infinite-addition result is used.
+
+The continuous linear map on the joint witness space descends exactly on the actual fibers where that lost information does not affect the required output. $\square$
+

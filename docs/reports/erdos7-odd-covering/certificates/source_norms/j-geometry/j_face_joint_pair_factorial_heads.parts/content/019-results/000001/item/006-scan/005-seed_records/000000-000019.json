@@ -1,0 +1,800 @@
+[
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      0,
+      0
+    ],
+    "original_affine_complete_upper": "42157349/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "41731829/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4120612762098",
+        "4231409884338"
+      ],
+      [
+        "4103332476978",
+        "4216162573938"
+      ],
+      [
+        "4095491003058",
+        "4208321100018"
+      ]
+    ],
+    "joint_complete_upper": "2489958150042353657/661500000000000000",
+    "adopted_complete_upper": "2489958150042353657/661500000000000000",
+    "dual_key": "06c27583fb615e1bd51c2fa7095b840ca7a31ecb534dfce190e76c2e3d893d04",
+    "complete_tail_constant": "62995957/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      0,
+      1
+    ],
+    "original_affine_complete_upper": "42183269/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "41958869/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4140894105138",
+        "4251691227378"
+      ],
+      [
+        "4123613820018",
+        "4236443916978"
+      ],
+      [
+        "4118386170738",
+        "4231216267698"
+      ]
+    ],
+    "joint_complete_upper": "500829630006488831/132300000000000000",
+    "adopted_complete_upper": "500829630006488831/132300000000000000",
+    "dual_key": "1f3ad3b729e96c586bd885c2abed729a1b8639e3969629195e86532a62b256dc",
+    "complete_tail_constant": "63750157/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      0,
+      2
+    ],
+    "original_affine_complete_upper": "42209189/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "6008507/1512000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4148433053058",
+        "4259230175298"
+      ],
+      [
+        "4131152767938",
+        "4243982864898"
+      ],
+      [
+        "4128538943298",
+        "4241369040258"
+      ]
+    ],
+    "joint_complete_upper": "7552960350228356753/1984500000000000000",
+    "adopted_complete_upper": "7552960350228356753/1984500000000000000",
+    "dual_key": "74ef7e02ea31c459c2e6196996a063d5e6037489530765f1d37db02ce15a1eb8",
+    "complete_tail_constant": "64030507/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      0,
+      3
+    ],
+    "original_affine_complete_upper": "42196229/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "41955749/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4139272565778",
+        "4250069688018"
+      ],
+      [
+        "4121992280658",
+        "4234822377618"
+      ],
+      [
+        "4118071543698",
+        "4230901640658"
+      ]
+    ],
+    "joint_complete_upper": "15031698900189695117/3969000000000000000",
+    "adopted_complete_upper": "15031698900189695117/3969000000000000000",
+    "dual_key": "ebca19777832c2abeb98f5f856ba92b24bfc12190d2c03dda546086262e75644",
+    "complete_tail_constant": "1299793/810000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      0,
+      4
+    ],
+    "original_affine_complete_upper": "861941/216000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "42148709/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4154810301138",
+        "4265607423378"
+      ],
+      [
+        "4137530016018",
+        "4250360112978"
+      ],
+      [
+        "4137530016018",
+        "4250360112978"
+      ]
+    ],
+    "joint_complete_upper": "7557639450143355011/1984500000000000000",
+    "adopted_complete_upper": "7557639450143355011/1984500000000000000",
+    "dual_key": "c08e6c2dc4fa7c78f373edaac9ebedfb47ad7c05e8b9821597ef8ddc59042b09",
+    "complete_tail_constant": "64267657/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      0
+    ],
+    "original_affine_complete_upper": "42157349/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "41733989/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4119878632338",
+        "4231627703058"
+      ],
+      [
+        "4102598347218",
+        "4216380392658"
+      ],
+      [
+        "4094756873298",
+        "4208538918738"
+      ]
+    ],
+    "joint_complete_upper": "2998989060018941389/793800000000000000",
+    "adopted_complete_upper": "2998989060018941389/793800000000000000",
+    "dual_key": "5c5d0395c683b576cc28ee71dd3e1727e5b2ea6fda34f807058c97331c5c2773",
+    "complete_tail_constant": "62968657/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      1
+    ],
+    "original_affine_complete_upper": "42183269/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "41807429/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4124670644178",
+        "4236419714898"
+      ],
+      [
+        "4107390359058",
+        "4221172404498"
+      ],
+      [
+        "4102162709778",
+        "4215944755218"
+      ]
+    ],
+    "joint_complete_upper": "1001499020013775777/264600000000000000",
+    "adopted_complete_upper": "1001499020013775777/264600000000000000",
+    "dual_key": "0b68ab8c1e230d29a0c5888205fe9f7fad2ddcdcdbbd4372f5afa3588a4d8687",
+    "complete_tail_constant": "63146857/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      2
+    ],
+    "original_affine_complete_upper": "42209189/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "41955749/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4136594202258",
+        "4248762775698"
+      ],
+      [
+        "4119313917138",
+        "4233515465298"
+      ],
+      [
+        "4116700092498",
+        "4230901640658"
+      ]
+    ],
+    "joint_complete_upper": "1008092140017791921/264600000000000000",
+    "adopted_complete_upper": "1008092140017791921/264600000000000000",
+    "dual_key": "095027e57e82c01c33cc2344457cf573844a283f60b41b4ee51fe2652e072141",
+    "complete_tail_constant": "63590257/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      3
+    ],
+    "original_affine_complete_upper": "42196229/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "41915309/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4134242566818",
+        "4245991637538"
+      ],
+      [
+        "4116962281698",
+        "4230744327138"
+      ],
+      [
+        "4113041544738",
+        "4226823590178"
+      ]
+    ],
+    "joint_complete_upper": "20094560400155173/5292000000000000",
+    "adopted_complete_upper": "20094560400155173/5292000000000000",
+    "dual_key": "1d2f105ac53542a77459412163eeb44f0b646211cdd907f3773358c84349e40a",
+    "complete_tail_constant": "63502807/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      4,
+      4,
+      1,
+      4,
+      1,
+      4
+    ],
+    "original_affine_complete_upper": "861941/216000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "861941/216000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4162571101458",
+        "4274320172178"
+      ],
+      [
+        "4145290816338",
+        "4259072861778"
+      ],
+      [
+        "4145290816338",
+        "4259072861778"
+      ]
+    ],
+    "joint_complete_upper": "15202065300120603659/3969000000000000000",
+    "adopted_complete_upper": "15202065300120603659/3969000000000000000",
+    "dual_key": "7c48aa52df7572165b80636fa75e8dbe62ea2a021e4501a10765ac09333a45d7",
+    "complete_tail_constant": "64556257/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      0,
+      0
+    ],
+    "original_affine_complete_upper": "5978507/1512000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "40502549/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4003765119858",
+        "4125743603058"
+      ],
+      [
+        "3968188062258",
+        "4092199520178"
+      ],
+      [
+        "3960346588338",
+        "4084358046258"
+      ]
+    ],
+    "joint_complete_upper": "7379798850152034167/1984500000000000000",
+    "adopted_complete_upper": "7379798850152034167/1984500000000000000",
+    "dual_key": "0a5c47408433e377d36220e67b2324aa480dcfe5fb5df0794aa01bc7cca36428",
+    "complete_tail_constant": "59124607/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      0,
+      1
+    ],
+    "original_affine_complete_upper": "41875469/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "40729589/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4024046462898",
+        "4146024946098"
+      ],
+      [
+        "3988469405298",
+        "4112480863218"
+      ],
+      [
+        "3983241756018",
+        "4107253213938"
+      ]
+    ],
+    "joint_complete_upper": "7422368850137966917/1984500000000000000",
+    "adopted_complete_upper": "7422368850137966917/1984500000000000000",
+    "dual_key": "0e3745630c118ab183113ddb0fb45be28b083d8e370b25d8eb4c013cab17a003",
+    "complete_tail_constant": "59878807/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      0,
+      2
+    ],
+    "original_affine_complete_upper": "41901389/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "40830269/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4031585410818",
+        "4153563894018"
+      ],
+      [
+        "3996008353218",
+        "4120019811138"
+      ],
+      [
+        "3993394528578",
+        "4117405986498"
+      ]
+    ],
+    "joint_complete_upper": "2487628250049845009/661500000000000000",
+    "adopted_complete_upper": "2487628250049845009/661500000000000000",
+    "dual_key": "804b3e69afe4716a2b1a37f8c1ba933e7c233744e372d2e4b4bcc51404a34d37",
+    "complete_tail_constant": "60159157/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      0,
+      3
+    ],
+    "original_affine_complete_upper": "5984987/1512000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "40732949/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4022424923538",
+        "4144403406738"
+      ],
+      [
+        "3986847865938",
+        "4110859323858"
+      ],
+      [
+        "3983580585138",
+        "4107592043058"
+      ]
+    ],
+    "joint_complete_upper": "2122228242894725279/567000000000000000",
+    "adopted_complete_upper": "2122228242894725279/567000000000000000",
+    "dual_key": "4a022bed85846516af24a69794c60a7815bcee9f0087a5d2f13b1d1adb0dc598",
+    "complete_tail_constant": "8545501/5670000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      0,
+      4
+    ],
+    "original_affine_complete_upper": "41927309/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "40919429/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4037962658898",
+        "4159941142098"
+      ],
+      [
+        "4002385601298",
+        "4126397059218"
+      ],
+      [
+        "4002385601298",
+        "4126397059218"
+      ]
+    ],
+    "joint_complete_upper": "7467563850105563479/1984500000000000000",
+    "adopted_complete_upper": "7467563850105563479/1984500000000000000",
+    "dual_key": "36b6fbb62f1e1e6b15effe38905732b80e754b98d44d23407e852264a5efe7ed",
+    "complete_tail_constant": "60396307/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      1,
+      0
+    ],
+    "original_affine_complete_upper": "5978507/1512000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "5786387/1512000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4003030990098",
+        "4125961421778"
+      ],
+      [
+        "3967453932498",
+        "4092417338898"
+      ],
+      [
+        "3959612458578",
+        "4084575864978"
+      ]
+    ],
+    "joint_complete_upper": "2962958820093870991/793800000000000000",
+    "adopted_complete_upper": "2962958820093870991/793800000000000000",
+    "dual_key": "f7a7c21fd25365e60bf6b62c61a9f3a6fd2faf6c84a80b1e76c68affed9f17b4",
+    "complete_tail_constant": "59097307/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      1,
+      1
+    ],
+    "original_affine_complete_upper": "41875469/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "40578149/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4007823001938",
+        "4130753433618"
+      ],
+      [
+        "3972245944338",
+        "4097209350738"
+      ],
+      [
+        "3967018295058",
+        "4091981701458"
+      ]
+    ],
+    "joint_complete_upper": "2968466820034341811/793800000000000000",
+    "adopted_complete_upper": "2968466820034341811/793800000000000000",
+    "dual_key": "1f916fb78af3870a3e484edb6a2019a49ea37fc4b16e0837e86eba3ad521e25d",
+    "complete_tail_constant": "59275507/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      1,
+      2
+    ],
+    "original_affine_complete_upper": "41901389/10584000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "5818067/1512000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4019746560018",
+        "4143096494418"
+      ],
+      [
+        "3984169502418",
+        "4109552411538"
+      ],
+      [
+        "3981555677778",
+        "4106938586898"
+      ]
+    ],
+    "joint_complete_upper": "142297437144059371/37800000000000000",
+    "adopted_complete_upper": "142297437144059371/37800000000000000",
+    "dual_key": "15f1d5a19029be3e8b6ff8f580a0eafffa5393a5df0f54db8443e161fc6814e5",
+    "complete_tail_constant": "59718907/39690000"
+  },
+  {
+    "layout": [
+      1,
+      4,
+      2,
+      1,
+      2,
+      4,
+      2
+    ],
+    "projection21_35_63_105_147_245": [
+      1,
+      2,
+      4,
+      1,
+      2,
+      1,
+      3
+    ],
+    "original_affine_complete_upper": "5984987/1512000",
+    "original_affine_maximizing_late_coordinate": "1",
+    "conditional_affine_complete_upper": "40692509/10584000",
+    "conditional_affine_maximizing_late_coordinate": "1",
+    "conditional_lines": [
+      [
+        "4017394924578",
+        "4140325356258"
+      ],
+      [
+        "3981817866978",
+        "4106781273378"
+      ],
+      [
+        "3978550586178",
+        "4103513992578"
+      ]
+    ],
+    "joint_complete_upper": "1489481910029687383/396900000000000000",
+    "adopted_complete_upper": "1489481910029687383/396900000000000000",
+    "dual_key": "2578d572990d645b5fc8c934b8b2107e2c82011319bf43583c0399ba8cf72080",
+    "complete_tail_constant": "59631457/39690000"
+  }
+]

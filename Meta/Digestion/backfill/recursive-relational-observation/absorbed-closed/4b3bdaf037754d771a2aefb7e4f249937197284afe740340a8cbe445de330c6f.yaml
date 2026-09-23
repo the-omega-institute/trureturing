@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4b3bdaf037754d771a2aefb7e4f249937197284afe740340a8cbe445de330c6f
+  normalized_sha256: sha256:4b3bdaf037754d771a2aefb7e4f249937197284afe740340a8cbe445de330c6f
+cas_ref: sha256:4b3bdaf037754d771a2aefb7e4f249937197284afe740340a8cbe445de330c6f
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/ResidueLeafOptimality.leaf_sibling_weighted_minimum
+    target_statement_id: sha256:55199bcd59be84377b427bf0c7e39580b402db283fae50d58e132d4f70c6f10f
+receipts:
+  unresolved_subitems: []

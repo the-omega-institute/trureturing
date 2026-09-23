@@ -1,0 +1,40 @@
+**命题 42.13（熵率与全 $n$ 有限量的定量尾）。** 有
+$$
+n\log\phi-\log2\le\chi_n\le(n+1)\log\phi,
+\qquad
+\lim_{n\to\infty}\frac{H(Y_1,\ldots,Y_n)}n
+=\lim_{n\to\infty}\frac{H(Y_1,\ldots,Y_n\mid M)}n=\log\phi.
+\tag{42.48}
+$$
+更精确地，置 $s(u)=h_2(\nu_-(u))$、$s_*=s(\pi_1)$ 和
+$$
+I_\alpha=[\alpha^3,\alpha^2]\subset(0,1),\qquad
+L=\max_{u\in I_\alpha}|s'(u)|<\infty.
+\tag{42.49}
+$$
+对每个 $n\ge1$，
+$$
+\left|\chi_n-[n\log\phi+\pi_1\log\phi-s_*]\right|
+\le\pi_1(\log\phi+L)\alpha^{2n}.
+\tag{42.50}
+$$
+所以余项为 $O(\alpha^{2n})$，但这里只对有限时域的数列作渐近陈述，不给一个假定无限密度矩阵赋熵。
+
+证明。用 $0\le q_n\le1$、$0\le s(q_n)\le\log2$ 与（42.40）、（42.44）立即得界和速率。$q_1=\alpha^2$、$q_2=\alpha^3$；递推把区间 $I_\alpha$ 映到自身，因为下端像为 $\alpha^2(1-\alpha^3)\le\alpha^2$，上端像为 $\alpha^2(1-\alpha^2)=\alpha^3$。$\pi_1$ 也在此区间：$\pi_1<\alpha^2$，而 $\pi_1>\alpha^3$ 等价于 $\alpha+\alpha^3<1$，由 $\alpha^3<\alpha^2$ 得到。于是所有 $n\ge1$ 都可使用同一个紧内部区间。
+
+在此区间 $\alpha^2u(1-u)>0$，且 $1-4\alpha^2u(1-u)\ge1-\alpha^2=\alpha>0$，故 $\nu_-(u)\in(0,1/2)$，$s$ 为 $C^1$，其导数最大值有限。由
+$$
+q_n-\pi_1=-\pi_1\lambda^n,\qquad
+\chi_n-[n\log\phi+\pi_1\log\phi-s_*]
+=(q_n-\pi_1)\log\phi-[s(q_n)-s(\pi_1)]
+\tag{42.51}
+$$
+和中值定理得（42.50）。若需不用极值符号的保守常数，写
+$r(u)=\sqrt{1-4\alpha^2u(1-u)}$，则
+$\nu_-'(u)=\alpha^2(1-2u)/r(u)$；在 $I_\alpha$ 上有
+$|\nu_-'|\le\alpha^{3/2}$、$\nu_-\ge\alpha^2u(1-u)\ge\alpha^6$，所以
+$|s'|=|\nu_-'\log((1-\nu_-)/\nu_-)|\le6\alpha^{3/2}\log\phi$。
+$n=0$ 时 $\chi_0=0$，不把它强塞入（42.49）的区间。$\square$
+
+在同一纯根准备下，旧有限 $J$ 与新生成 $YM$ 因初始分解和局部作用而保持乘积，故 $H(Y\mid JM)=H(Y\mid M)=\chi_n$。较大旧经典档案须具有定义36.4所述标准 Borel 值空间、实际可测正则条件密度核及逐纤维相同准备；相同公式才可在该核上逐纤维使用。这不是关于任意无限量子参考的紧性结论。更不能把（42.48）称为相对于整个最终观察者的正条件熵：那个观察者一旦已含实际取得的 $Y$，就有 $H(Y\mid Y,\text{其它记录})=0$。旧精确副本 $Y$ 作为解码侧信息，也会把合同改成 $H(Y\mid M,Y)=0$。
+

@@ -1,0 +1,56 @@
+[
+  {
+    "depth": [
+      8,
+      4,
+      4
+    ],
+    "probability": "16/344596021875",
+    "square_numerator": 330327042234
+  },
+  {
+    "depth": [
+      8,
+      5,
+      0
+    ],
+    "probability": "16/717609375",
+    "square_numerator": 75492275936
+  },
+  {
+    "depth": [
+      8,
+      5,
+      1
+    ],
+    "probability": "16/5023265625",
+    "square_numerator": 129306357586
+  },
+  {
+    "depth": [
+      8,
+      5,
+      2
+    ],
+    "probability": "16/35162859375",
+    "square_numerator": 210697886504
+  },
+  {
+    "depth": [
+      8,
+      5,
+      3
+    ],
+    "probability": "16/246140015625",
+    "square_numerator": 315430105970
+  },
+  {
+    "depth": [
+      8,
+      5,
+      4
+    ],
+    "probability": "16/1722980109375",
+    "square_numerator": 443436151984
+  }
+]

@@ -1,0 +1,148 @@
+{
+  "height": {
+    "kind": "inline",
+    "value": null
+  },
+  "cost_index": {
+    "kind": "inline",
+    "value": 1
+  },
+  "cost_tuple": {
+    "kind": "inline",
+    "value": [
+      0,
+      1
+    ]
+  },
+  "g5": {
+    "kind": "inline",
+    "value": "1/45"
+  },
+  "g15": {
+    "kind": "inline",
+    "value": "1/45"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "survivor_mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "mean_scale": {
+    "kind": "inline",
+    "value": 94709725128018000
+  },
+  "exhaustive_vertices": {
+    "path": "content/002-cost_results/000000/item/008-exhaustive_vertices.json",
+    "sha256": "9558472964ac3501453ce000b95a35eadd3b900d80b9fa7d0081142fc732e5d1",
+    "kind": "value"
+  },
+  "support_center_from_full_budget": {
+    "kind": "inline",
+    "value": [
+      10,
+      10,
+      10,
+      10
+    ]
+  },
+  "support_candidates": {
+    "path": "content/002-cost_results/000000/item/010-support_candidates.json",
+    "sha256": "dc4b5527d902a8f49f9322c25460de31c6ba4f890ae94e03b3eb0d00edd885ce",
+    "kind": "array"
+  },
+  "selected_support": {
+    "kind": "inline",
+    "value": {
+      "cuts": {
+        "pure3": 16,
+        "pure5": 16,
+        "root5": 16,
+        "cell5": 16
+      },
+      "upper": "260642384297991510689344051273829/167256599972614995860595703125000",
+      "vertices": [
+        {
+          "q": [
+            "0",
+            "0"
+          ],
+          "coordinate_values": [
+            "260642384297991510689344051273829/167256599972614995860595703125000",
+            "260642384297991510689344051273829/167256599972614995860595703125000",
+            "260642384297991510689344051273829/167256599972614995860595703125000",
+            "260642384297991510689344051273829/167256599972614995860595703125000",
+            "260642384297991510689344051273829/167256599972614995860595703125000",
+            "260642384297991510689344051273829/167256599972614995860595703125000",
+            "260642384297991510689344051273829/167256599972614995860595703125000"
+          ],
+          "upper": "260642384297991510689344051273829/167256599972614995860595703125000"
+        }
+      ],
+      "maximizing_vertices": [
+        0
+      ],
+      "tail_constant": "2126667093262832048276176382959/2986724999510982068939208984375",
+      "tail_defect_prices": {
+        "E5": "301140277/3721718",
+        "E15": "301140277/1860859",
+        "E3": "758397502072241/8769418993335",
+        "E5d": "301140277/3721718",
+        "E15d": "301140277/1860859",
+        "omega": "6108043128543847/17538837986670"
+      }
+    }
+  },
+  "complete_shared_budget_upper": {
+    "kind": "inline",
+    "value": "260642384297991510689344051273829/167256599972614995860595703125000"
+  },
+  "actual_defect126_upper": {
+    "kind": "inline",
+    "value": "18079750684152397381/11601941328182205000"
+  },
+  "budget_relaxation_excess": {
+    "kind": "inline",
+    "value": "59180320631/5108762054443359375"
+  },
+  "chosen_actual_tail_gap": {
+    "kind": "inline",
+    "value": "59180320631/5108762054443359375"
+  },
+  "all_omega_relaxation_lower": {
+    "path": "content/002-cost_results/000000/item/016-all_omega_relaxation_lower.json",
+    "sha256": "5d6eca96658d6ac16ebc6cc66a47d2d042e1dae885d5ef7492ca95819a1ba57c",
+    "kind": "value"
+  },
+  "support_optimality_gap": {
+    "kind": "inline",
+    "value": "59180320631/5108762054443359375"
+  },
+  "maximizing_coordinate": {
+    "kind": "inline",
+    "value": "x5-g5*q5"
+  },
+  "maximizing_witness": {
+    "kind": "inline",
+    "value": {
+      "layout": [
+        0,
+        1,
+        2,
+        0,
+        2,
+        1,
+        2
+      ],
+      "positive7": [
+        0,
+        2
+      ],
+      "finite_upper": "149264427884688863/175786989820942500",
+      "reference_payment": "133655061461557/47354862564009000",
+      "mean_price_payment": "0"
+    }
+  }
+}

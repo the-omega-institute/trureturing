@@ -1,0 +1,315 @@
+{
+  "schema": "erdos7-endpoint-linear-numerator-v1",
+  "source_sha256": {
+    "verify_joint_frontier.py": "0b5cd35851d36f3af83aee19e02267cb05abc8bf07611a12083fca6f3d9bd765",
+    "frontier/source-budgets/sharp_source_mass_endpoints.py": "79bb947d96c36895069f58568d7a5de2c22aa561753f03352e9eb741313147d9",
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b"
+  },
+  "predecessor_logical_certificate_sha256": "e5f648527358ae4dc421a220e651a41a91f0d4995d8e78df7b4d4b5a05367529",
+  "source_vertex": 404,
+  "carrier": [
+    0,
+    1
+  ],
+  "direction": 40,
+  "cost": "f(v)=v",
+  "barrier": "6",
+  "direction_weight": "94212612766226/1174116234095805",
+  "old_margin": "4507/24300",
+  "endpoint": {
+    "slots": [
+      "pure5_first",
+      "alpha_first",
+      "beta_first",
+      "higher_tail",
+      "source_free"
+    ],
+    "late_interval": [
+      "1/90",
+      "1/72"
+    ],
+    "endpoint_tables": [
+      {
+        "late_in_beta_first": "1/90",
+        "source_cell_slots": [
+          [
+            "0",
+            "1/90",
+            "1/90",
+            "1/120",
+            "1/90"
+          ],
+          [
+            "0",
+            "1/45",
+            "1/45",
+            "1/60",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "1/180",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/90",
+            "1/120",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/45",
+            "1/90",
+            "1/45"
+          ]
+        ],
+        "selected_deletion_remainder": [
+          [
+            "0",
+            "2/225",
+            "2/225",
+            "1/150",
+            "1/150"
+          ],
+          [
+            "0",
+            "1/75",
+            "1/75",
+            "1/100",
+            "2/225"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "1/180",
+            "1/75"
+          ],
+          [
+            "0",
+            "0",
+            "1/90",
+            "1/120",
+            "1/75"
+          ],
+          [
+            "0",
+            "0",
+            "1/45",
+            "1/90",
+            "1/75"
+          ]
+        ],
+        "slot_caps": [
+          "0",
+          "1/45",
+          "1/18",
+          "1/24",
+          "1/18"
+        ],
+        "root_slot_caps": [
+          [
+            "0",
+            "1/45",
+            "1/45",
+            "1/60",
+            "7/450"
+          ],
+          [
+            "0",
+            "0",
+            "1/30",
+            "1/40",
+            "1/25"
+          ]
+        ]
+      },
+      {
+        "late_in_beta_first": "1/72",
+        "source_cell_slots": [
+          [
+            "0",
+            "1/90",
+            "1/90",
+            "1/120",
+            "1/90"
+          ],
+          [
+            "0",
+            "1/45",
+            "1/45",
+            "1/60",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "1/180",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/120",
+            "1/90",
+            "1/45"
+          ],
+          [
+            "0",
+            "0",
+            "1/45",
+            "1/90",
+            "1/45"
+          ]
+        ],
+        "selected_deletion_remainder": [
+          [
+            "0",
+            "2/225",
+            "2/225",
+            "1/150",
+            "1/150"
+          ],
+          [
+            "0",
+            "1/75",
+            "1/75",
+            "1/100",
+            "2/225"
+          ],
+          [
+            "0",
+            "0",
+            "0",
+            "1/180",
+            "1/75"
+          ],
+          [
+            "0",
+            "0",
+            "1/120",
+            "1/90",
+            "1/75"
+          ],
+          [
+            "0",
+            "0",
+            "1/45",
+            "1/90",
+            "1/75"
+          ]
+        ],
+        "slot_caps": [
+          "0",
+          "1/45",
+          "19/360",
+          "2/45",
+          "1/18"
+        ],
+        "root_slot_caps": [
+          [
+            "0",
+            "1/45",
+            "1/45",
+            "1/60",
+            "7/450"
+          ],
+          [
+            "0",
+            "0",
+            "11/360",
+            "1/36",
+            "1/25"
+          ]
+        ]
+      }
+    ],
+    "all_positive5_cell_caps": [
+      "11/360",
+      "2/45",
+      "1/60",
+      "11/360",
+      "2/45"
+    ],
+    "all_positive5_root_caps": [
+      "3/40",
+      "11/120"
+    ],
+    "old_cylinder_caps": {
+      "3": "1/8",
+      "9": "1/12",
+      "5": "1/10",
+      "15": "1/15"
+    },
+    "new_cylinder_caps": {
+      "3": "11/120",
+      "9": "2/45",
+      "5": "1/18",
+      "15": "1/25"
+    },
+    "complete_source_cap_categories": {
+      "3": "1/8",
+      "9": "1/12",
+      "deep3": "1/24",
+      "pure5": "1/8",
+      "3_times5": "1/12",
+      "9_times5": "1/36",
+      "deep35": "1/72"
+    },
+    "four_label_loss": "43/300",
+    "deep3_cap_coefficients": [
+      "11/20",
+      "2/5",
+      "3/20",
+      "2/5",
+      "2/5"
+    ],
+    "deep3_tail_loss": "1/90",
+    "pure5_deep_cap_coefficient": "4/9",
+    "pure5_tail_loss": "1/360",
+    "complete_test_tail_loss": "1/72",
+    "total_cylinder_loss": "283/1800",
+    "four_label_numerator_upper": "197/300",
+    "zero7_upper": "887/1800",
+    "positive7_upper": "3/20",
+    "linear_numerator_upper": "1157/1800",
+    "surviving_mass": "3/20",
+    "absolute_margin_C6": "463/1800"
+  },
+  "absolute_margin_improvement": "3487/48600",
+  "fixed_source_all_test_suprema": [
+    {
+      "height": 3,
+      "source_mass": "913/3375",
+      "surviving_mass": "15017/87750",
+      "pure7_normalizer": "286/343",
+      "raw35_all_test_supremum": "21323/27000",
+      "surviving35_all_test_supremum": "985151/1930500",
+      "full357_all_test_supremum": "30957413/46332000",
+      "complete_periodic_tail_factors": [
+        "3/2",
+        "5/4"
+      ]
+    },
+    {
+      "height": 4,
+      "source_mass": "12989/50625",
+      "surviving_mass": "5290463/33766875",
+      "pure7_normalizer": "2001/2401",
+      "raw35_all_test_supremum": "102989/135000",
+      "surviving35_all_test_supremum": "384574727/810405000",
+      "full357_all_test_supremum": "37645409/60030000",
+      "complete_periodic_tail_factors": [
+        "3/2",
+        "5/4"
+      ]
+    }
+  ],
+  "scope": "Ordinary endpoint and approaching-sequence bound for arbitrary independently labelled original357 linear tests. Exact rational cap tables and fixed-source all-test suprema are checked here. No finite-neighborhood or global K bound and no Lean verification are claimed."
+}

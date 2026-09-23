@@ -1,0 +1,58 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "adaptive-core7-positive-policy-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "One attained head law: split each group mass over its matching actual leaves in increasing order up to their cap; finish absorbing histories with legal rows; terminal rows fill allowed residues first. Full tuples remain available for tail queries."
+  },
+  "epsilon_exact": {
+    "kind": "inline",
+    "value": "2630194140308535545098092362189944702313369/6959735993111191545137695312500000000000000"
+  },
+  "boundary_states": {
+    "kind": "inline",
+    "value": 6511
+  },
+  "terminal_states": {
+    "kind": "inline",
+    "value": 2542
+  },
+  "positive_group_edges": {
+    "kind": "inline",
+    "value": 18796
+  },
+  "absorbing_edges": {
+    "kind": "inline",
+    "value": 1291
+  },
+  "selected_coordinate_counts_by_depth": {
+    "path": "content/007.json",
+    "sha256": "9275e1fcf3d52a377191cac038e0b846272af61b1fb5e4eb3ecb7020da77ad9e",
+    "kind": "value"
+  },
+  "policy": {
+    "path": "content/008.json",
+    "sha256": "8fa171e76d6059ad39e408506dc5e04e19cd6862361c53f5692b55e2bd9297d9",
+    "kind": "array"
+  },
+  "terminals": {
+    "path": "content/009.json",
+    "sha256": "7c094e967289f1f213b5b9548410fc2a629d5cec6fc5e88013ff33018cabb845",
+    "kind": "array"
+  },
+  "input_sha256": {
+    "kind": "inline",
+    "value": "ea227d216660f496ecb3a2c89dbc145605f0ad83c94e5996a7ee76d746ea712b"
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "c27bc55cd3a01b91db67498a6f75002f370b52c0f7c27f69c4ceadfa1de4b14d"
+  },
+  "source_sha256": {
+    "path": "content/012.json",
+    "sha256": "042bc5cf764886bc264582cd6e8fd5dcad01e4f48433eba1d2fadc8b0abc88fa",
+    "kind": "value"
+  }
+}

@@ -1,0 +1,6 @@
+**定理 13.1（阈值—周期核双槽保幂的完整分类）。** 对任意 $t\ge0$、$p\ge1$，关系 $R_{t,p}$ 双槽保幂，当且仅当
+$$
+(t,p)=(0,1)
+\quad\text{或}\quad
+\bigl(t\ge\max\{1,h(p)\}\ \land\ \lambda(p)\mid p\bigr).
+$$

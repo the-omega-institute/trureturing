@@ -1,0 +1,5 @@
+For every positive-depth cylinder, its phase image has an open arc interior $J_p$, and its full atom, with the correct split endpoints, satisfies
+$$
+C_p=\overline{\{Z(n):H(Z(n))\in J_p\}}^{\,K}.
+$$
+

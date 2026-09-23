@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a3fbc4d5dc0688ff239a865b7064e5de94c6b5b42c872c1fc390c39bfbf290a3
+  normalized_sha256: sha256:a3fbc4d5dc0688ff239a865b7064e5de94c6b5b42c872c1fc390c39bfbf290a3
+cas_ref: sha256:a3fbc4d5dc0688ff239a865b7064e5de94c6b5b42c872c1fc390c39bfbf290a3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 探针把不预设连续性的非单位复代数乘法线性泛函提升到一次范数单位化，应用 Mathlib 的代数同态范数界得到逐元素压缩及连续性，假设只有原文完备次乘法复 Banach 代数结构，仓内无冻结 GID。
+    previous_atom_id: 4d2e8c06799a7bc62817436d25a89cdbf033954ce34e8981a66a11bff5e1b432
+    next_atom_id: 4eaec36532119bc0f8823807f5d1ee79a2143906e3be97485074428d8149af66

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5d2436da3a3e573f3b1545b2c4a8ada23287633e46881e2285aedd2250981436
+  normalized_sha256: sha256:5d2436da3a3e573f3b1545b2c4a8ada23287633e46881e2285aedd2250981436
+cas_ref: sha256:5d2436da3a3e573f3b1545b2c4a8ada23287633e46881e2285aedd2250981436
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“对有序状态对”定义首次读数分离的最小时间，并约定“若不存在这样的时刻”返回无有限距离；这只对应 exactSeparationDepth 的 Option 记号，没有宣称总存在分离时刻，也未在定义里夹带后面的双向等价式。
+    previous_atom_id: 5f5bd4d2b6eafb33b3a85f3a72bc79fd7864092c86a866131499d1b7f0fce64a
+    next_atom_id: 4a48e37a4e708c652ac90fe4eb458a244a36c5e82e32497f575006119f390f45

@@ -1,0 +1,23 @@
+**命题 70.12（胞腔概率态与 Gibbs 态的区别）。** 对命题 70.10 的有限柱分区，在胞腔基 $e_C=\nu(C)^{-1/2}\mathbf1_C$ 上定义
+$$
+\rho_L^{\mathrm{cell}}
+=\sum_{C\in\mathcal P_L}\nu(C)\,|e_C\rangle\langle e_C|.
+$$
+其熵是胞腔质量的 Shannon 熵
+$$
+S(\rho_L^{\mathrm{cell}})=-\sum_{C\in\mathcal P_L}\nu(C)\ln\nu(C).
+$$
+对于任意 $z>0$、$\beta>0$，第一层的这个态与命题 70.9 的 Gibbs 截断 $\rho_{\beta,1}$ 不相等；将任一有限 $\rho_L^{\mathrm{cell}}$ 延拓到整个观察空间后，它也不等于 $\rho_\beta$。
+
+证明。胞腔基正交，故 $\rho_L^{\mathrm{cell}}$ 的特征值正是 $\nu(C)$，直接按特征值计算熵即得首式。第一层两胞腔的质量为 $\alpha,\alpha^2$，且 $\alpha+\alpha^2=1$。在该胞腔基中，常数单位向量的坐标为
+$$
+u=(\sqrt\alpha,\alpha)^{\mathsf T},\qquad \Pi_0=uu^*.
+$$
+设 $r=e^{-\beta a_1}\in(0,1)$。由于第一层有一个常数方向与一个细节方向，
+$$
+\rho_{\beta,1}=\frac{rI+(1-r)uu^*}{1+r},
+\qquad
+\rho_1^{\mathrm{cell}}=\operatorname{diag}(\alpha,\alpha^2).
+$$
+前一矩阵的非对角元为 $(1-r)\alpha^{3/2}/(1+r)>0$，后一矩阵的非对角元为零，故二者不相等。最后，$\rho_L^{\mathrm{cell}}$ 的秩为有限的 $G_L$，而 $\rho_\beta$ 在可数无限层基的每个向量上都有严格正特征值，因而秩无限，也不可能相等。胞腔态编码各观察类的概率，Gibbs 态编码指定生成元的能级权重；它们不是一个态经坐标变换后的两种记法。证毕。
+

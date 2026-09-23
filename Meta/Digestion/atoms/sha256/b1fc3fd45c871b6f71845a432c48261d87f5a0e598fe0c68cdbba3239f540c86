@@ -1,0 +1,8 @@
+**推论 128.3。**
+$$
+0\prec\Sigma_{n+1}\preceq\Sigma_n,\qquad
+v^T(\Sigma_n-\Sigma_{n+1})v
+=\|S_n^{-1/2}H_n\Sigma_nv\|^2.
+$$
+故 $v^TZ$ 的条件方差严格下降当且仅当 $H_n\Sigma_nv\ne0$；整个矩阵不变当且仅当 $H_n=0$；差矩阵严格正定当且仅当 $H_n$ 列满秩。
+

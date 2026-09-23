@@ -1,0 +1,167 @@
+{
+  "schema": "erdos7-monotone-product-carrier-mass-v1",
+  "source_sha256": {
+    "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+    "frontier/source-budgets/product_coupled_carrier_mass.py": "49f585b464cf29b6497cd33df39b5b7c4b27261f4b085903305a4600f7c711ac",
+    "certificates/source_norms/source-budgets/product_coupled_carrier_mass.json": "1bedb9f7c14fe0df11bb99e55a78f5a8b7035b35debc36289d83f01bad875c50"
+  },
+  "face_mass": "53/360",
+  "sigma_limit": "6/49",
+  "S0_sigma_coefficient": "1/10",
+  "E_rho_coefficient": "1",
+  "width_monotonicity_margin": "1/180",
+  "availability_monotonicity_margin": "1/30",
+  "signed_source_expansion": [
+    {
+      "term": [
+        "alpha"
+      ],
+      "scaled_coefficient": "24"
+    },
+    {
+      "term": [
+        "alpha",
+        "carrier"
+      ],
+      "scaled_coefficient": "6"
+    },
+    {
+      "term": [
+        "beta"
+      ],
+      "scaled_coefficient": "8"
+    },
+    {
+      "term": [
+        "beta",
+        "carrier"
+      ],
+      "scaled_coefficient": "2"
+    },
+    {
+      "term": [
+        "carrier"
+      ],
+      "scaled_coefficient": "16"
+    },
+    {
+      "term": [
+        "carrier",
+        "z"
+      ],
+      "scaled_coefficient": "8"
+    },
+    {
+      "term": [
+        "deficit"
+      ],
+      "scaled_coefficient": "14"
+    },
+    {
+      "term": [
+        "deficit",
+        "z"
+      ],
+      "scaled_coefficient": "5"
+    },
+    {
+      "term": [
+        "late"
+      ],
+      "scaled_coefficient": "5"
+    },
+    {
+      "term": [
+        "z"
+      ],
+      "scaled_coefficient": "36"
+    }
+  ],
+  "examples": [
+    {
+      "sigma": "0",
+      "S0_upper": "53/360",
+      "factor_slacks": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/10000",
+      "S0_upper": "132509/900000",
+      "factor_slacks": [
+        "3/5000",
+        "239951/533320000",
+        "119951/399980000",
+        "239853/1599880000",
+        "0"
+      ]
+    },
+    {
+      "sigma": "1/100",
+      "S0_upper": "667/4500",
+      "factor_slacks": [
+        "3/50",
+        "2351/53200",
+        "1151/39800",
+        "2253/158800",
+        "0"
+      ]
+    },
+    {
+      "sigma": "21/500",
+      "S0_upper": "3407/22500",
+      "factor_slacks": [
+        "63/250",
+        "691173/3958000",
+        "104391/979000",
+        "187173/3874000",
+        "0"
+      ]
+    },
+    {
+      "sigma": "3/61",
+      "S0_upper": "3341/21960",
+      "factor_slacks": [
+        "18/61",
+        "11853/58804",
+        "1755/14518",
+        "3069/57340",
+        "0"
+      ]
+    },
+    {
+      "sigma": "2/27",
+      "S0_upper": "167/1080",
+      "factor_slacks": [
+        "4/9",
+        "275/954",
+        "113/702",
+        "59/918",
+        "0"
+      ]
+    },
+    {
+      "sigma": "6/49",
+      "S0_upper": "2813/17640",
+      "factor_slacks": [
+        "36/49",
+        "81/190",
+        "9/46",
+        "9/178",
+        "0"
+      ]
+    }
+  ],
+  "scalar_nonextension": {
+    "sigma": "1/8",
+    "common_z_loss": "123/1000",
+    "deficit_and_carrier_loss": "2/877",
+    "scaled_excess": "27/438500",
+    "scope": "Only a two-product relaxation witness; actual qK constraints may exclude it."
+  },
+  "scope": "Ordinary theorem S0<=53/360+sigma/10 and E<=S0+rho on0<=sigma<=6/49. Uses monotonicity of the same full carrier mass formula to remove nonselected source losses before expanding and compressing two coupled products. No probabilistic independence, second residual, global comparison, Lean or unrestricted Erdos7 conclusion."
+}

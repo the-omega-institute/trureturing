@@ -1,0 +1,23 @@
+**定义 71.1（位置读出及等格混合）。** 对 Borel 集 $E\subseteq X$，记 $M_E=M_{\mathbf1_E}$，定义
+$$
+\nu_\beta(E)=\operatorname{Tr}(\rho_\beta M_E).
+$$
+若 $C_n(x)$ 是包含 $x$ 的唯一第 $n$ 层格，置
+$$
+d_n(\beta)=e^{-\beta a_n}-e^{-\beta a_{n+1}}>0,
+\qquad
+\eta_n=\frac1{N_n}\sum_{C\in\mathcal P_n}\mu(\,\cdot\mid C),
+\qquad
+\mu(E\mid C)=\frac{\mu(E\cap C)}{\mu(C)},
+$$
+$$
+w_n(\beta)=\frac{d_n(\beta)N_n}{Z_\beta}.
+$$
+$\eta_n$ 是在各格之间等权、在每格内部保留参考条件概率的 Borel 概率；特别地 $\eta_0=\mu$。以下证明 $\nu_\beta$ 也是概率，并采用
+$$
+d_{\mathrm{TV}}(\nu,\eta)
+=\sup_{E\text{ Borel}}|\nu(E)-\eta(E)|
+=\frac12\|\nu-\eta\|_{\mathrm{var}}.
+$$
+符号 $\Rightarrow$ 表示对全部连续函数积分的弱收敛。
+

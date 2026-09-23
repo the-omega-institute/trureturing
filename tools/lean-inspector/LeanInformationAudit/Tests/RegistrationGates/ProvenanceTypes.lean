@@ -15,7 +15,7 @@ check_provenance "StructureField" using fieldRead expects "forbidden_dependency"
 noncomputable def letDecision (_ : Unit) (x : Bool) : Bool :=
   let p : Prop := specificStatement
   if @decide p (Classical.propDecidable p) then x else true
-check_provenance "LetBoundDecision" using letDecision expects "forbidden_dependency" for specificTruth
+check_provenance "LetBoundDecision" using letDecision expects "unclassified_form" for specificTruth
 
 structure Dispatcher where
   family : Prop → Type
@@ -23,11 +23,11 @@ structure Dispatcher where
 noncomputable def dispatcher : Dispatcher := ⟨Decidable, Classical.propDecidable⟩
 noncomputable def projectedDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide specificStatement (dispatcher.choose specificStatement) then x else true
-check_provenance "DependentProjectionDecision" using projectedDecision expects "forbidden_dependency" for specificTruth
+check_provenance "DependentProjectionDecision" using projectedDecision expects "unclassified_form" for specificTruth
 
 def owner (s : String) : Name := .str (.str .anonymous "RegistrationProvenance") s
 def ownerCertificate : Certificate (owner "specificTruth") := ⟨true⟩
-def ownerRead (_ : Unit) (x : Bool) : Bool := if ownerCertificate.bit then x else true
+def ownerRead (_ : Unit) (x : Bool) : Bool := cond ownerCertificate.bit x true
 -- A user record with Bool data reaches no judge API, generated record, or theorem.
 check_provenance "ComputedOwnerCertificate" using ownerRead expects "clean" for specificTruth
 run_cmd Elab.Command.liftTermElabM do
@@ -83,35 +83,46 @@ check_provenance "ClosedStatementInhabitant" using closedStatementRead expects "
 def openAliasFamily (_ : Bool) : Prop := specificStatement
 noncomputable def openAliasDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (openAliasFamily x) (Classical.propDecidable _) then x else false
-check_provenance "OpenAliasDecision" using openAliasDecision expects "forbidden_dependency" for specificTruth
+check_provenance "OpenAliasDecision" using openAliasDecision expects "unclassified_form" for specificTruth
 noncomputable def openAliasBinderControl := unrelatedDecisionRead
-check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "clean" for specificTruth
+check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "unclassified_form" for specificTruth
 
 def structuralAliasFamily (_ : Nat) : Prop := specificStatement
 noncomputable def structuralAliasDecision (_ : Unit) (x : Nat) : Nat :=
   if @decide (structuralAliasFamily x) (Classical.propDecidable _) then x else 0
 noncomputable def structuralBinderDecision (_ : Unit) (x : Nat) : Nat :=
   if @decide (x = 138) (Classical.propDecidable _) then x else 0
+
+-- Structural witness validation no longer audits an undeclared realization.
+-- Assess exact applications against an existing declared structural occurrence.
+-- These noncomputable negative providers are inspected, never executed.
+noncomputable def structuralAliasRealization := structuralTemplate (fun i x => structuralAliasDecision i x)
+noncomputable def structuralBinderRealization := structuralTemplate (fun i x => structuralBinderDecision i x)
+def structuralAliasClean := structuralTemplate (fun _ x => x)
+
 run_cmd Elab.Command.liftTermElabM do
-  let env ← getEnv
-  let entry := ((DispositionCensus.structuralProvenanceEntries env).find?
-    (·.theoremName == ``RegistrationStructural.positive)).get!
-  let .defnInfo template := (env.find? ``RegistrationStructural.good).get!
-    | throwError "fixture template"
-  for (readout, label, forbidden) in [
-      (``structuralAliasDecision, "OpenAliasDecisionStructural", true),
-      (``structuralBinderDecision, "OpenAliasBinderControlStructural", false)] do
-    let holder := readout.str "fixtureRealization"
-    addDecl <| .defnDecl {
-      name := holder, levelParams := [], type := template.type
-      value := mkAppN template.value.getAppFn (template.value.getAppArgs.set! 2 (mkConst readout))
-      hints := .abbrev, safety := .safe }
-    let actual ← RegistrationGates.validateStructural
-      { entry with theoremName := ``specificTruth, realizationConst := holder }
-    let ok := if forbidden then
-        (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
-        ((actual.getD "").splitOn " reason=forbidden_dependency provenance=").length == 2
-      else actual.isNone
+  let some source := (TemplateBinding.records (← getEnv)).find?
+      (·.occurrence.key.theoremName == ``cleanStructural)
+    | throwError "setup: missing declared structural occurrence"
+  for (name, label, expected) in [
+      (``structuralAliasRealization, "OpenAliasDecisionStructural", some "reason=unclassified_form rule=E2.closed_proposition"),
+      (``structuralBinderRealization, "OpenAliasBinderControlStructural", some "reason=forbidden_dependency rule=E6.closed_identity"),
+      (``structuralAliasClean, "OpenAliasStructuralClean", none)] do
+    let .defnInfo info ← getConstInfo name
+      | throwError "setup: missing structural provider {name}"
+    let claim : TemplateBindingClaim := {
+      key := source.occurrence.key, arena := source.occurrence.arena,
+      descriptor := some info.value, owner := (← getEnv).header.mainModule }
+    let row ← TemplateBinding.assess { source.occurrence with realizationName := name }
+      (some claim)
+    let ok := match row.result, expected with
+      | .declaredUnresolved diagnostic, some fragment => diagnostic.contains fragment
+      | .declaredValidated _, none => true
+      | _, _ => false
+    let actual := match row.result with
+      | .declaredUnresolved diagnostic => diagnostic
+      | .declaredValidated _ => "validated"
+      | .undeclared => "undeclared"
     if ok then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {actual}"
 

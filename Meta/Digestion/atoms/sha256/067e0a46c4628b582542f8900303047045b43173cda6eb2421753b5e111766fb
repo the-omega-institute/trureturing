@@ -1,0 +1,25 @@
+**定义 66.2（首差度量与补轨道距离）。**
+
+在 $\{0,1\}^{\mathbb N}$ 上定义
+$$
+d(x,y)=
+\begin{cases}
+0,&x=y,\\
+2^{-m(x,y)},&x\ne y,
+\end{cases}
+\qquad
+m(x,y):=\min\{j\ge0:x_j\ne y_j\}.
+$$
+在 $Y_k$ 上记同型首差度量为
+$$
+\rho(c,c')=
+\begin{cases}
+0,&c=c',\\
+2^{-m(c,c')},&c\ne c'.
+\end{cases}
+$$
+由于 $C$ 是 $d$-等距变换，定义
+$$
+\overline d([x],[y]):=\min\{d(x,y),d(x,Cy)\}.
+$$
+

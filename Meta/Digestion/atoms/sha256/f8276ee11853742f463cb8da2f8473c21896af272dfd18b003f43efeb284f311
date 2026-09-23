@@ -1,0 +1,1 @@
+| 72·经典条件熵 | [D5/S3/Entropy/Fusion/QuotientFiberDecomposition.quotient_fiber_entropy_decomposition](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Entropy/Fusion/QuotientFiberDecomposition.lean) 取源 $J$、父标签 $I$、质量 $q$、观察 $r$；只需非负归一化，不需全标签严格正。它给出经典熵差与纤维条件熵，不给出矩形算子构造。 

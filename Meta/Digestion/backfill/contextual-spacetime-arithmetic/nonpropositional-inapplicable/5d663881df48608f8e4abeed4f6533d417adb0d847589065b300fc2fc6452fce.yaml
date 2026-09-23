@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5d663881df48608f8e4abeed4f6533d417adb0d847589065b300fc2fc6452fce
+  normalized_sha256: sha256:5d663881df48608f8e4abeed4f6533d417adb0d847589065b300fc2fc6452fce
+cas_ref: sha256:5d663881df48608f8e4abeed4f6533d417adb0d847589065b300fc2fc6452fce
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “36.3 剖面方程与完整逆问题的区分”读作“40.3”指向讨论边界的章节，不在本句证明逆问题性质；未借标题夹带结论，故按导航条目结算。
+    previous_atom_id: 2198f6cef89c8571ba3e53618f9a8233134a487a254883f26ad3aa035317af1a
+    next_atom_id: fa77ba10bd73197c0a51f5d703d2b95fd30b56a206c989f035fe8f89a6c9b6f4

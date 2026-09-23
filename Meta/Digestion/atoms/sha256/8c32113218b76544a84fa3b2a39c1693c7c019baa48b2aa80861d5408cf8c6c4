@@ -1,0 +1,28 @@
+**定理 46.3（共同见证量词及严格包含）。** 总有
+$$
+A_\alpha\subseteq C_\alpha\subseteq B_\alpha.
+$$
+两处包含都可能严格。其量词分别为
+$$
+a\in A_\alpha\iff\exists\mathbf n\in\mathbb N_0^d\ \bigl(q_\alpha^d(\mathbf n)=a\ \land\ \forall j,\ \mathbf n\in S_j\bigr),
+$$
+$$
+a\in C_\alpha\iff\forall j\ \exists\mathbf n_j\in\mathbb N_0^d\ \bigl(q_\alpha^d(\mathbf n_j)=a\ \land\ \mathbf n_j\in S_j\bigr).
+$$
+若进一步只保留输出变量 $\mathbf y$，隐藏变量记为 $\mathbf z$，且 $p$ 是有限元组的输出投影，则令
+$$
+A_\alpha^{\rm out}=p(A_\alpha),\quad B_\alpha^{\rm out}=p(B_\alpha),\quad
+C_\alpha^{\rm out}=\bigcap_j p(q_\alpha^d[S_j]).
+$$
+此时还有 $A_\alpha^{\rm out}\subseteq p(C_\alpha)\subseteq B_\alpha^{\rm out}\cap C_\alpha^{\rm out}$，但 $B_\alpha^{\rm out}$ 与 $C_\alpha^{\rm out}$ 一般互不包含。
+
+**证明。** 一个同时满足全部关系的元组也分别满足每个关系，因此第一处包含成立。对任意非负系数多项式 $F$，按常量、变量、加法、乘法归纳得到
+$$
+q_\alpha(F(\mathbf n))=F_\alpha(q_\alpha^d(\mathbf n)).
+$$
+故每个 $S_j$ 的实际像满足对应商方程，得到第二处包含。两条量词式直接展开集合像；它们不允许交换 $\exists\mathbf n$ 与 $\forall j$。
+
+取方程 $x=1$ 与 $x=2$，以及 $\alpha=(1,1)$。共同自然解不存在，但分别实际像都是正数尾类，故 $A_\alpha=\varnothing\subsetneq C_\alpha$。取单方程 $x^2+1=x$。当 $x=0$ 时左边为 $1$；当 $x\ge1$ 时 $x^2+1>x$，所以其自然解集为空。然而在 $Q_{1,1}$ 中正数类满足该方程，故 $C_\alpha=\varnothing\subsetneq B_\alpha$。这些方程已经按定义 46.2 正负分拆，没有使用有限半环中的消去律。
+
+保留共同元组的输出分量给出所述两个包含。为证明互不包含，取自由输出 $y$ 和隐藏变量 $z$。系统 $z=0,z=1$ 在 $Q_{2,1}$ 中没有共同解，但两个关系各自的实际输出像都是整个 $Q_{2,1}$，故 $C_\alpha^{\rm out}\nsubseteq B_\alpha^{\rm out}$。反向取 $z^2+1=z$ 与 $\alpha=(1,1)$：隐藏变量可取正数商类，故 $B_\alpha^{\rm out}=Q_{1,1}$，而不存在任何实际自然见证，故 $C_\alpha^{\rm out}=\varnothing$。证毕。
+

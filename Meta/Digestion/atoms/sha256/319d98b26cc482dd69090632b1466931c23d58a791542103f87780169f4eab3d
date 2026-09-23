@@ -1,0 +1,28 @@
+**定义 52.3（实际生成元和、乘法及集合支撑）。** 对 $A,B\in I$ 定义
+$$
+A\boxplus B=\{\rho(x+y):x,y\in R,\ \rho(x)=A,\ \rho(y)=B\}.
+$$
+其带见证载体为 $R^2$，输入映射为 $(x,y)\mapsto(\rho(x),\rho(y))$，输出映射为 $(x,y)\mapsto\rho(x+y)$。定义赋值乘法
+$$
+A\cdot B=(a_p+b_p)_p.
+$$
+对集合 $S,T\subseteq I$，约定
+$$
+S\boxplus T=\bigcup_{A\in S,\,B\in T}(A\boxplus B),\qquad
+A\cdot S=\{A\cdot B:B\in S\},
+$$
+并把单个元素与其单集在这些表达式中识别。空超和定义为 $\{0_I\}$。局部实际支撑记为
+$$
+a\boxplus_p b=\{v_p(r+s):r,s\in\mathbb Z_p,\ v_p(r)=a,\ v_p(s)=b\}.
+$$
+记
+$$
+\Gamma_+=\{(A,B,C)\in I^3:C\in A\boxplus B\}.
+$$
+$I$ 的非空紧子集集合记为 $\mathcal K(I)$；其 Vietoris 拓扑由开集 $O\subseteq I$ 所给的两类集合
+$$
+\{K\in\mathcal K(I):K\subseteq O\},\qquad
+\{K\in\mathcal K(I):K\cap O\ne\varnothing\}
+$$
+作为子基。
+

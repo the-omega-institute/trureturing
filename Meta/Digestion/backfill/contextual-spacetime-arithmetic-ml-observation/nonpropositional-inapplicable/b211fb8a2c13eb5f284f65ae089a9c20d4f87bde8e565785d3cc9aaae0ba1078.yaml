@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b211fb8a2c13eb5f284f65ae089a9c20d4f87bde8e565785d3cc9aaae0ba1078
+  normalized_sha256: sha256:b211fb8a2c13eb5f284f65ae089a9c20d4f87bde8e565785d3cc9aaae0ba1078
+cas_ref: sha256:b211fb8a2c13eb5f284f65ae089a9c20d4f87bde8e565785d3cc9aaae0ba1078
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “此定理只约束线性实编码”限定编码类别，“完整相位的表示也没有被最小化”限定优化目标；这段不对非线性编码给出任何下界，也没有把最优性放进编码定义，属于适用范围备注。
+    previous_atom_id: 4c96f410539144f1a6a799efa74e4c4830f39b50b413877cc262920f018ddc70
+    next_atom_id: 64899918cfbce38662673ee61d2f12550191ef77f2aaad62df11d18110e2e603

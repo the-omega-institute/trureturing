@@ -1,0 +1,20 @@
+**定义 99.3（带反序扰动的移位族）。** 取整数 $L\ge3$ 与实数 $0<\epsilon<1$，隐藏状态集为
+$$
+S_L=\{0,1\}^L,
+\qquad
+u=(u_0,\ldots,u_{L-1}).
+$$
+定义核
+$$
+K_\epsilon(u,v)=
+\begin{cases}
+\displaystyle\frac{1+\epsilon(-1)^{u_0+b}(u_1-u_{L-1})}{2},
+&v=(u_1,\ldots,u_{L-1},b),\quad b\in\{0,1\},\\[6pt]
+0,&\text{其他情形},
+\end{cases}
+\tag{99.3a}
+$$
+并置 $\pi(u)=2^{-L}$、$r(u)=u_0$。用二元长词作状态、沿移位续接边转移，是 de Bruijn 过程的标准状态表示；均匀短块与更高阶依赖也有既有构造背景。[^rro99-background] 以下核的平稳性及反序性质由具体计算给出。
+
+[^rro99-background]: 均匀短块与有限阶依赖的背景见 Boris Ryabko，[Two-faced processes and random number generators, arXiv:1512.06961v1](https://arxiv.org/pdf/1512.06961v1)，Theorem 1，PDF 第 6 页；移位字状态与 de Bruijn 过程见 Kimpton–Challenor–Wynn，[Binary De Bruijn Processes, arXiv:2211.16921v2](https://arxiv.org/pdf/2211.16921v2)，§§2–3。这里仅引用这些构造背景；式 (99.3a) 的首次反序差异及其词 KL 由下面的证明承担。
+

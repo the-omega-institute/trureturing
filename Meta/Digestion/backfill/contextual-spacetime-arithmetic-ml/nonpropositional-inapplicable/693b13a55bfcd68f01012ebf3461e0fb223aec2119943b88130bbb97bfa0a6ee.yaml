@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:693b13a55bfcd68f01012ebf3461e0fb223aec2119943b88130bbb97bfa0a6ee
+  normalized_sha256: sha256:693b13a55bfcd68f01012ebf3461e0fb223aec2119943b88130bbb97bfa0a6ee
+cas_ref: sha256:693b13a55bfcd68f01012ebf3461e0fb223aec2119943b88130bbb97bfa0a6ee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 第40a.2节以“采用同一个训练集”固定模型，但“可由固定基向量输入取得”确实包含读数可恢复性的主张；探针用 Matrix.mulVec_single_one 逐坐标验证基向量读数就是矩阵列，再用 Matrix.ext_of_mulVec_single 验证恢复唯一性，不将这句误作纯定义，其余损失及费用记号是约定，仓内无冻结 GID。
+    previous_atom_id: 0c10bcce238da1f18c571c4c150a19862c338825c9039cb8172afa1b6ccaa2cb
+    next_atom_id: 394e803f4d61d4a087c6afa86c60938a9eaacec4082d5c2efb56c90524f073cd

@@ -1,0 +1,10 @@
+Define
+$$
+\Phi(x)=(f(T^n x))_{n\ge0},
+\qquad
+S((y_n)_{n\ge0})=(y_{n+1})_{n\ge0}.
+$$
+Here $S$ is the ordinary one-sided shift on binary itineraries.
+
+Attached reference: Berstel, *Sturmian and Episturmian Words* (2007), §3.1, pp. 30–31, gives these lower/upper conventions and their rotation interpretation. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+

@@ -1,0 +1,62 @@
+## 75. 精确下降的选择性：投影态先精确，读出还需因子化
+
+第 74 节的残差界允许完整状态和压缩状态之间存在误差，并用有限视界控制这种误差。仓库还给出了一个更强、但适用范围更窄的结果：如果动力学先在选定投影下精确下降，且目标读出只依赖这个投影，那么目标输出可以逐步完全相同，即使提升回完整空间的状态仍有残差。
+
+令完整系统、压缩系统和读出分别由
+
+$$
+A:V\to V,
+\qquad
+B:U\to V,
+\qquad
+C:V\to Y,
+$$
+
+以及
+
+$$
+P:V\to W,
+\qquad
+J:W\to V
+$$
+
+给出，并定义
+
+$$
+\widetilde A=PAJ,
+\qquad
+\widetilde B=PB,
+\qquad
+\widetilde C=CJ.
+$$
+
+对零初态和任意输入序列，完整状态与压缩状态满足
+
+$$
+ x_{n+1}=Ax_n+Bu_n,
+ \qquad
+ \widetilde x_{n+1}=\widetilde A\widetilde x_n+\widetilde B u_n.
+$$
+
+`D5.S3.Observer.Hankel.ProjectedExactDescent` 的第一条条件是
+
+$$
+PA=(PAJ)P.
+$$
+
+它表示下一步的投影状态只依赖当前投影状态。对任意输入序列和每个有限时刻，源码证明
+
+$$
+\boxed{
+Px_n=\widetilde x_n.
+}
+$$
+
+这是一条精确的投影态结论。它不需要输入有界，也不需要
+
+$$
+\|A\|<1
+\qquad\text{或}\qquad
+\|\widetilde A\|<1.
+$$
+

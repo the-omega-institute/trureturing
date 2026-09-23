@@ -1,0 +1,114 @@
+{
+  "ambient_counterexample": {
+    "F0": [
+      [
+        "77",
+        "152"
+      ],
+      [
+        "79",
+        "154"
+      ]
+    ],
+    "inputs": [
+      [
+        "13",
+        "50"
+      ],
+      [
+        "27",
+        "100"
+      ]
+    ],
+    "m": 32,
+    "output_indices": [
+      16,
+      17
+    ],
+    "p": "1/4",
+    "r": "1/4",
+    "reachable_fixed_prior": false,
+    "shared_index": 1
+  },
+  "cases": [
+    {
+      "checked_readouts": 29,
+      "checked_targets": 58,
+      "label": "reduced",
+      "states": 29
+    },
+    {
+      "checked_readouts": 29,
+      "checked_targets": 58,
+      "label": "unreduced",
+      "states": 29
+    },
+    {
+      "checked_readouts": 33,
+      "checked_targets": 66,
+      "label": "k-saturation",
+      "states": 33
+    },
+    {
+      "checked_readouts": 55,
+      "checked_targets": 110,
+      "label": "general",
+      "states": 55
+    }
+  ],
+  "exact_ties": [
+    {
+      "eps": [
+        "1",
+        "16"
+      ],
+      "p": [
+        "1",
+        "4"
+      ],
+      "r": [
+        "1",
+        "4"
+      ],
+      "report": 0,
+      "state": 6,
+      "target": 17
+    },
+    {
+      "eps": [
+        "1",
+        "16"
+      ],
+      "p": [
+        "1",
+        "3"
+      ],
+      "r": [
+        "1",
+        "4"
+      ],
+      "report": 1,
+      "state": 9,
+      "target": 7
+    }
+  ],
+  "invalid_boundary_rejections": 4,
+  "long_stream": {
+    "emitted_lines": 10001,
+    "reports": 10000
+  },
+  "retained_table": {
+    "states": 29,
+    "targets_and_readouts": 87
+  },
+  "stale_output_regression": {
+    "after_report_0": [
+      "252",
+      "448"
+    ],
+    "initial": [
+      "224",
+      "448"
+    ]
+  }
+}

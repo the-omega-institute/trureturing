@@ -1,0 +1,23 @@
+**最终常量。** 设整数 $M\ge0$，且 $a_i=b$ 对全部 $i\ge M$ 成立，$|b|\le A$。此时
+$$
+F_a(z)=1+z\sum_{i<M}a_i z^i+\frac{b z^{M+1}}{1-z},
+$$
+$$
+C_{n,a}(w)=
+\begin{cases}
+\displaystyle\sum_{j=0}^{M-n-1}a_{n+j}w^j+
+\frac{b w^{M-n}}{1-w},&n<M,\\[4pt]
+\displaystyle\frac b{1-w},&n\ge M.
+\end{cases}
+\tag{49.51}
+$$
+所以各行均由 (49.4) 得到明确有理函数，尾部行是 $b/(F_a-z)$。分类给精确判据
+$$
+\boxed{
+L_\rho(\mathcal E(a))>0
+\Longleftrightarrow b=-A\text{ 且全部前缀系数也等于 }-A.
+}
+\tag{49.52}
+$$
+正尾值仍是 $c_A$。若一个实相位最终常量，$A>0$ 使其最终值非零，且相邻项的比值既等于 $\zeta$ 又等于一，所以必有 $\zeta=1$；$\zeta=-1$ 不可能最终常量。$M=0$ 包括完整常量情形。有限前缀中的任何偏离都会消去最终负常量的临界尾。
+

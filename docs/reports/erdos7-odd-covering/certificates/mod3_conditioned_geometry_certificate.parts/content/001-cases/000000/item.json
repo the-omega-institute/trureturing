@@ -1,0 +1,63 @@
+{
+  "family": {
+    "path": "content/001-cases/000000/item/000-family.json",
+    "sha256": "6df3c9bbdfcab21bb35bb8f3a135e494fea1175aaae96648af1d5bc7b55da1ac",
+    "kind": "value"
+  },
+  "points": {
+    "path": "content/001-cases/000000/item/001-points.json",
+    "sha256": "ebe14689e88f485174314691b6df26a450b0a46d89d042d5225c7e9131c90103",
+    "kind": "value"
+  },
+  "old_points": {
+    "kind": "inline",
+    "value": [
+      1,
+      2,
+      7,
+      8,
+      14,
+      16,
+      17,
+      19,
+      23,
+      28,
+      29,
+      32,
+      34,
+      38,
+      43,
+      44
+    ]
+  },
+  "weight_numerators": {
+    "path": "content/001-cases/000000/item/003-weight_numerators.json",
+    "sha256": "cd0c0a252bedeaeb31e30c7f639e2dce4efff591030ae690d723e9e9d8ab07e7",
+    "kind": "value"
+  },
+  "weight_denominator": {
+    "kind": "inline",
+    "value": 1000000007
+  },
+  "name": {
+    "kind": "inline",
+    "value": "PG1"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "69/2"
+  },
+  "depth_box": {
+    "kind": "inline",
+    "value": [
+      8,
+      5,
+      4
+    ]
+  },
+  "result": {
+    "path": "content/001-cases/000000/item/008-result.json",
+    "sha256": "1c86cd4fa3b5bbe122dbcf5d9c321ee2d2061311dbd7fc242f036ea641438ebe",
+    "kind": "object"
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "source": {
+    "kind": "inline",
+    "value": "extended_source_bridge_comparison"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/12",
+      "rho": "1/3000",
+      "rbar": "1/600",
+      "h1min": "71/216",
+      "v0": "43/1650",
+      "v1": "2171/78100",
+      "gap": "53/2700",
+      "tbar": "13/4",
+      "Cbar": "370/81",
+      "kbar": "71/34",
+      "budget_increments": [
+        "37/9504",
+        "1/432",
+        "1/132"
+      ],
+      "c": [
+        "173/240",
+        "89/216",
+        "49/180",
+        "49/540"
+      ],
+      "H": [
+        "49/360",
+        "763/6480",
+        "41/540",
+        "259/10368"
+      ],
+      "positive7": "3161/50400"
+    }
+  },
+  "guards": {
+    "kind": "inline",
+    "value": {
+      "source_radius": "1/12",
+      "residual_radius": "1/3000",
+      "actual_r_upper": "1/600",
+      "joint_source_Delta_upper": "1/44",
+      "source_z_upper": "37/48",
+      "availability_upper": "3/136",
+      "h1_lower": "71/216",
+      "first_beta_eta_lower": "23/216",
+      "h_upper": "109/216",
+      "five_actual_gap_lowers": [
+        "59/600",
+        "173/2700",
+        "53/2700",
+        "16367/734400",
+        "161/5400"
+      ],
+      "minimum_actual_gap": "53/2700",
+      "common_wrong_slot_gap": "53/2700",
+      "whole_interval_polynomial_lowers": {
+        "carrier_ratio": "2/3",
+        "shallow_C_minus_1_t": "103/72",
+        "shallow_C_minus_k": "6013/144",
+        "pure3_maximizing_cell": "53/48",
+        "root0_below_root1_reference": "203/144",
+        "first_cell_below_reference": "57/16",
+        "other_cells_below_reference": "131/144"
+      },
+      "heavy_residual_price_coefficient": "65/9",
+      "heavy_slot_movement_coefficient": "13/9",
+      "independent_r_cutoff": null,
+      "domain_proof": "106 applies for sigma<1/2. General153/156 replaces the obsolete coarse Delta<=3delta/4 cutoff by Delta<=delta/(4(1-delta)). General117 guards and162 zero-r slab then hold. Every additional134/152/157/158 source-ratio, reference and domination polynomial is positive throughout[0,1/12]. Full original cap, selected-operator, mean, factorial and infinite-tail derivations apply with these source bounds."
+    }
+  },
+  "denominator_costs": {
+    "path": "content/002-domains/000001/item/003-denominator_costs.json",
+    "sha256": "72421dd6be73a5c551519ac80eb6fc6d6f1c952f9b2dbe4be80f7b59ec9ae8da",
+    "kind": "value"
+  },
+  "independent_rational_comparisons": {
+    "kind": "inline",
+    "value": 60
+  },
+  "rational_lp_count": {
+    "kind": "inline",
+    "value": 1889508
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "complete_H1_upper": {
+    "kind": "inline",
+    "value": "53708914973/93269718000"
+  },
+  "actual_survivor_mass_coefficient": {
+    "kind": "inline",
+    "value": "614921/614922"
+  },
+  "actual_survivor_mass_floor": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "separate_survival_loss_upper": {
+    "kind": "inline",
+    "value": "57316934933906831/853945546253184000"
+  },
+  "previous_shared_survival_loss_upper": {
+    "kind": "inline",
+    "value": "181960063475544749/2561836638759552000"
+  },
+  "adopted_survival_loss_upper": {
+    "kind": "inline",
+    "value": "57316934933906831/853945546253184000"
+  },
+  "denominator_gain": {
+    "kind": "inline",
+    "value": "253887446069/64981651754250"
+  },
+  "comparison": {
+    "path": "content/002-domains/000001/item/014-comparison.json",
+    "sha256": "5bd4674e9a1b3080bcabe506cb59d1340227f3f879dc7cdf5b8e4bd4123bc28e",
+    "kind": "value"
+  }
+}

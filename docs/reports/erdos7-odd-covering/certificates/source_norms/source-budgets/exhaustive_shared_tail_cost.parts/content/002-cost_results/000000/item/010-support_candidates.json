@@ -1,0 +1,50 @@
+{
+  "length": 84,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 20,
+      "part": {
+        "path": "content/002-cost_results/000000/item/010-support_candidates/000000-000020.json",
+        "sha256": "4260f141103c5c02851b66190789e699a5966eba0ee7857e4e874d30350f9f76",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 20,
+      "stop": 40,
+      "part": {
+        "path": "content/002-cost_results/000000/item/010-support_candidates/000020-000040.json",
+        "sha256": "81686d2afb753d47ddeb5d1689b8d347412ea2cbee461d632d950439b9673dda",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 40,
+      "stop": 60,
+      "part": {
+        "path": "content/002-cost_results/000000/item/010-support_candidates/000040-000060.json",
+        "sha256": "21f938c0ac7db899339c7cdb758dda8b358a50205698a54bdd7b9eb981e4ce8a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 60,
+      "stop": 80,
+      "part": {
+        "path": "content/002-cost_results/000000/item/010-support_candidates/000060-000080.json",
+        "sha256": "95739185b957a21fb14f05fc6255dd0d4980f740fcf592fca2e06484e648ce22",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 80,
+      "stop": 84,
+      "part": {
+        "path": "content/002-cost_results/000000/item/010-support_candidates/000080-000084.json",
+        "sha256": "6ed1acd24fa20b2208e193d1437b59588bdf590869bfc59eae0ddf93662a61b2",
+        "kind": "value"
+      }
+    }
+  ]
+}

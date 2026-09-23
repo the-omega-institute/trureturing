@@ -5,6 +5,14 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed partial class FileMapPolicyTests
 {
+    [Fact]
+    public void DeltaDirectoryInspectionUsesCompleteResidenceIndexWithoutRecheckingOtherPaths()
+    {
+        const string historical = "tools/FixtureData/known.toml";
+        var manifest = Parse(1, Entry("changed.json", "data", "none", "reader", "SnapshotDecoder"), ResidenceEntry(historical));
+        Assert.Empty(FileMapPolicy.InspectDirectoryKinds(manifest, ["changed.json"], [historical, "changed.json"]));
+    }
+
     [Theory]
     [InlineData("ledger", false)]
     [InlineData("data", true)]

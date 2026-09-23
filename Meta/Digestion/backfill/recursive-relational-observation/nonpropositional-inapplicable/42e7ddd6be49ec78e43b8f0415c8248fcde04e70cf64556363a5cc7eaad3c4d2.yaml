@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:42e7ddd6be49ec78e43b8f0415c8248fcde04e70cf64556363a5cc7eaad3c4d2
+  normalized_sha256: sha256:42e7ddd6be49ec78e43b8f0415c8248fcde04e70cf64556363a5cc7eaad3c4d2
+cas_ref: sha256:42e7ddd6be49ec78e43b8f0415c8248fcde04e70cf64556363a5cc7eaad3c4d2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯上游绑定结算；proof_shape=bind-only，admission_basis=none，零新增 Lean。按同一 RCLike 标量域，U 为任意有限维内积空间，包含零维，E 与 1-E 按正算子序非负。钉版 Mathlib db584cd6d46c92f209a44c0f1c829460d327499d 的 stdOrthonormalBasis、LinearMap.toMatrixOrthonormal、LinearMap.posSemidef_toMatrix_iff 与 Matrix.rank_eq_finrank_range_toLin 提供正交坐标、正性和秩的忠实运输。Matrix.IsHermitian.instContinuousFunctionalCalculus 与 MatrixOrder 的 Matrix.instNonnegSpectrumClass / Matrix.instStarOrderedRing 适用于实和复标量及空矩阵指标；Commute.mul_nonneg 给 D=E(1-E)=E-E²≥0，CFC.sqrt_nonneg、CFC.sqrt_mul_sqrt_self 及 Commute.cfcₙ_nnreal 在 NNReal.sqrt 上给实际 R=sqrt D 的自伴性、R²=D 和 RE=ER。Matrix.IsHermitian.fromBlocks、Matrix.fromBlocks_multiply / Matrix.fromBlocks_conjTranspose 后的代数规范化给 [[E,R],[R,1-E]] 的自伴幂等性。取实际 K=LinearMap.range R；k=Rv 时隐藏输出 Ru+(1-E)k=R(u+(1-E)v)，故值确在 K。LinearMap.restrict / LinearMap.coe_restrict_apply、LinearMap.IsSymmetric.restrict_invariant、Module.End.pow_restrict 给实际 U⊕K 上的投影，WithLp.prod_inner_apply 和 OrthonormalBasis.prod 保证使用正交和；其首坐标在 (u,0) 上恰为 Eu。LinearMap.IsSymmetric.adjoint_eq 与 LinearMap.range_self_comp_adjoint 给 dim K=rank D。对每个实际竞争投影，以自身的坐标块抽取 T；LinearMap.eq_adjoint_iff / LinearMap.toMatrix_adjoint 与块平方恒等式给 D=TT*，LinearMap.range_self_comp_adjoint、LinearMap.finrank_range_le（等价地 Matrix.rank_self_mul_conjTranspose、Matrix.rank_le_card_width）给 rank D≤dim K。若把 dim 的竞争域扩及无限维，用实际两个非对角块 D=TS，再以 LinearMap.rank_comp_le_left 和 lift_rank_range_le 比较 cardinal rank，不对无限维误用 finrank。CFC.sqrt_zero 与零像维数处理 D=0；U=0 不需额外非零假设。上下界及实际见证仅作逻辑合取即为所列最小值。仓内无本整项可用的冻结 GID；所核对 D5/S3/Observer/LinearMemory/ObservationRankEquality.observation_rank_equality（statement_id sha256:907d06a17f364e345d2220f057ff21c4d91068ef0f3a0ab9b995f3c841035fa3）只给 Gram 秩，不作为扩张存在或整项覆盖。此为 CLAUDE 3.2 与 spec 11.21 的文本判形结算依据，不宣称组合已经 Lean elaborate 或 kernel 验证。
+    previous_atom_id: a8e9e26e459e094ae0b68f2e79c79888e73dce3451922fdda5e4c012afcedb98
+    next_atom_id: f6f0c5aecbb4779bcb66dafe5fc28a30a2c7ba64f77b91a21859614db83bd024

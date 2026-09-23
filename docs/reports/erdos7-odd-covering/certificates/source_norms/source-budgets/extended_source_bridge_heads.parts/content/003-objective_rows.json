@@ -1,0 +1,239 @@
+{
+  "length": 26,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/003-objective_rows/000000-000001.json",
+        "sha256": "9628d6bf23ecd9604146ce0962fab9a1f47c9ebaed40209eb57a9963635b4045",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/003-objective_rows/000001-000002.json",
+        "sha256": "9cf96fa33ac626012cd80318dbecc01f010f4da9c3e8bd99ce6e1203e1d39e9c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/003-objective_rows/000002-000003.json",
+        "sha256": "2b7ffed800f8c07dc0f037d394c0b47f16a65c24cf7ab5f59b14be13c07b45fe",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/003-objective_rows/000003-000004.json",
+        "sha256": "cb14071054505423e6d9073c73befb68d4d5d26465efbd397d6a3170168d85af",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/003-objective_rows/000004-000005.json",
+        "sha256": "6f74f1c3c4d957ef13db3277a6892c3a85b14dbc8ea90d050b095a76edee679b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/003-objective_rows/000005-000006.json",
+        "sha256": "15618cb5dc9c83ee7be61c7c49e4142650c2a8edcd5cb31940805d77b96dbd7b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/003-objective_rows/000006-000007.json",
+        "sha256": "9fe811860e6f350fd9cf8f8714680dfbb549ff75ad8d7baeb6950989225746e8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/003-objective_rows/000007-000008.json",
+        "sha256": "9b92127e0999d1cb553008a24f69d4d7cde6ead4391d9186410cb0cc0e5144b9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/003-objective_rows/000008-000009.json",
+        "sha256": "72edf28b21c0914ef426564808bde2aff2714a72ea299fb6e1e83489d69d9640",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/003-objective_rows/000009-000010.json",
+        "sha256": "2ba972c39aaa4428a86fef6e106046fbb63a607797be829806a92a125f6f6601",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10,
+      "stop": 11,
+      "part": {
+        "path": "content/003-objective_rows/000010-000011.json",
+        "sha256": "5f223b5b10a32e2d2713dbcc3f9e0ca740b7afa00ed212490a3a17c2a6e604ab",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11,
+      "stop": 12,
+      "part": {
+        "path": "content/003-objective_rows/000011-000012.json",
+        "sha256": "0f274e56bbef6ddc2d2d0235350235d3611665613df1b801fbf1a08615567cfc",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 12,
+      "stop": 13,
+      "part": {
+        "path": "content/003-objective_rows/000012-000013.json",
+        "sha256": "ff565a01960267393eac33acf10249d3b95932960fcbf63b0291e9b8f9b0c628",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 13,
+      "stop": 14,
+      "part": {
+        "path": "content/003-objective_rows/000013-000014.json",
+        "sha256": "a934dc308060ff192a6a4cb63f7d197a96d2db2a88a9da3612cfd6a853cd49ca",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 14,
+      "stop": 15,
+      "part": {
+        "path": "content/003-objective_rows/000014-000015.json",
+        "sha256": "f87a5263699ca02876d274868d28e6f8276373e4c5927c339788ad7f53951354",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 15,
+      "stop": 16,
+      "part": {
+        "path": "content/003-objective_rows/000015-000016.json",
+        "sha256": "ae12dfdcbf8a1734a1badc2c13b3ce33a90858f138af166af8ebf928906f69b0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 16,
+      "stop": 17,
+      "part": {
+        "path": "content/003-objective_rows/000016-000017.json",
+        "sha256": "bf8232e74c84c318b13fe53447f89d7c09ab9bb8ecfaf29f4f13791b5903665f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 17,
+      "stop": 18,
+      "part": {
+        "path": "content/003-objective_rows/000017-000018.json",
+        "sha256": "ee67a56beac2aa78e8f30b0ff43f73d84d60b794a397194bde2a4455d245ae0c",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 18,
+      "stop": 19,
+      "part": {
+        "path": "content/003-objective_rows/000018-000019.json",
+        "sha256": "a3f5b65ea4e7f29c0ddfaa9334fa200e1e3eb2729f4dfab5dd79f5bd3e445fba",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 19,
+      "stop": 20,
+      "part": {
+        "path": "content/003-objective_rows/000019-000020.json",
+        "sha256": "f4f2e4de96aee67eab691f0107323407d0d89edd1ee649811555e2f70bf624c3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 20,
+      "stop": 21,
+      "part": {
+        "path": "content/003-objective_rows/000020-000021.json",
+        "sha256": "8397323cf736c944c032d42a9fd990a3a72bda4aa5601f12f808d752721d7136",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 21,
+      "stop": 22,
+      "part": {
+        "path": "content/003-objective_rows/000021-000022.json",
+        "sha256": "99300017653a458dafb95458a5cced5b862163df7c2fbee9a41fba2ff6691fd4",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 22,
+      "stop": 23,
+      "part": {
+        "path": "content/003-objective_rows/000022-000023.json",
+        "sha256": "7f815667114a42dbe29e2e23970b6b18f6522a9d40a02bb2a22348f3e9e68f1b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 23,
+      "stop": 24,
+      "part": {
+        "path": "content/003-objective_rows/000023-000024.json",
+        "sha256": "6b5e5f1309c41a8ce436d1dbc86c90f37a685772cd2877ee9c5d405e603adea8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 24,
+      "stop": 25,
+      "part": {
+        "path": "content/003-objective_rows/000024-000025.json",
+        "sha256": "899cf13fb84d2f59b576cb0df06589810a34084ebd8e985f30d972214446a77d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 25,
+      "stop": 26,
+      "part": {
+        "path": "content/003-objective_rows/000025-000026.json",
+        "sha256": "e5194e1412e9ef1c0f53b9592b9e006ed6bdb790088f34ca3841aa9881d6151d",
+        "kind": "value"
+      }
+    }
+  ]
+}

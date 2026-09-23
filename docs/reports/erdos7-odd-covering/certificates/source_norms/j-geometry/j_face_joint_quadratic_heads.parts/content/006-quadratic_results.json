@@ -1,0 +1,220 @@
+[
+  {
+    "index": 47,
+    "tag": [
+      "s",
+      "81/4"
+    ],
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "19/4",
+        "5": "17/4"
+      },
+      "factorial_tail_coefficient": "2",
+      "polynomial_tail": {
+        "leading": "1",
+        "constant": "-81/4",
+        "entrance": 5
+      },
+      "negative_hinge_coefficients": {},
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "0",
+        "5": "19/4",
+        "6": "63/4",
+        "7": "115/4",
+        "8": "175/4"
+      }
+    },
+    "scan": {
+      "hinge_coefficients": {
+        "4": "19/4",
+        "5": "17/4"
+      },
+      "factorial_coefficient": "2",
+      "joint_head_upper": "73028008163303609/37800000000000000",
+      "complete_pair_tail_charge": "5089/3600",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124997,
+        "four_projection_branches": 150,
+        "four_bounded": 149,
+        "joint_dual_branches": 1,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_joint_head_upper": "36220853/18522000",
+        "old_maximizing_late_coordinate": "1",
+        "new_joint_head_upper": "73028008163303609/37800000000000000",
+        "adopted_head_upper": "73028008163303609/37800000000000000",
+        "dual_key": "e344ec2837f8f14d96473cc45f4ec1e37cde8e351e3e7296a39f4a56233f2850",
+        "objective_constant": "55747/63000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_joint_head_upper": "36220853/18522000",
+        "old_maximizing_late_coordinate": "1",
+        "new_joint_head_upper": "73028008163303609/37800000000000000",
+        "adopted_head_upper": "73028008163303609/37800000000000000",
+        "dual_key": "e344ec2837f8f14d96473cc45f4ec1e37cde8e351e3e7296a39f4a56233f2850",
+        "objective_constant": "55747/63000"
+      },
+      "maximum_two_pruned": "35663177/18522000",
+      "maximum_four_pruned": "35774813/18522000",
+      "new_distinct_duals": 1,
+      "independent_affine_checks": 14,
+      "all_branch_decisions_sha256": "0ce2ab12d00a39075f8d114daa0a52cc5fbbb99845353549ad231c7ff904ccc4"
+    },
+    "constant_mass_and_complete_pair_tail": "5089/3600",
+    "cost_upper": "126462508163303609/37800000000000000",
+    "previous_cost_upper": "23677373132199236114018555965568549583199/6964112781452899292320207800000000000000",
+    "cost_improvement": "18922665241371489467428677354355630787/348205639072644964616010390000000000000"
+  },
+  {
+    "index": 48,
+    "tag": [
+      "s",
+      "9"
+    ],
+    "expansion": {
+      "at_one": "0",
+      "hinge_coefficients": {
+        "1": "0",
+        "2": "0",
+        "3": "7",
+        "4": "2",
+        "5": "0"
+      },
+      "factorial_tail_coefficient": "2",
+      "polynomial_tail": {
+        "leading": "1",
+        "constant": "-9",
+        "entrance": 3
+      },
+      "negative_hinge_coefficients": {},
+      "finite_transition_values": {
+        "1": "0",
+        "2": "0",
+        "3": "0",
+        "4": "7",
+        "5": "16",
+        "6": "27",
+        "7": "40",
+        "8": "55"
+      }
+    },
+    "scan": {
+      "hinge_coefficients": {
+        "3": "7",
+        "4": "2"
+      },
+      "factorial_coefficient": "2",
+      "joint_head_upper": "93318950666673439/37044000000000000",
+      "complete_pair_tail_charge": "5089/3600",
+      "counts": {
+        "two_projection_branches": 125000,
+        "two_bounded": 124995,
+        "four_projection_branches": 250,
+        "four_bounded": 237,
+        "joint_dual_branches": 13,
+        "strict_affine_crossings": 0
+      },
+      "covered_containing_choices": 6250000,
+      "seed": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_joint_head_upper": "3417319/1323000",
+        "old_maximizing_late_coordinate": "1",
+        "new_joint_head_upper": "93318950666673439/37044000000000000",
+        "adopted_head_upper": "93318950666673439/37044000000000000",
+        "dual_key": "54e1ad880dafed20bcd941f09fe1a500fce0d8ea047be3099554261e9e2e760f",
+        "objective_constant": "55747/63000"
+      },
+      "maximizing_certificate_branch": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projection21_35_63_105": [
+          1,
+          4,
+          4,
+          1,
+          4
+        ],
+        "old_joint_head_upper": "3417319/1323000",
+        "old_maximizing_late_coordinate": "1",
+        "new_joint_head_upper": "93318950666673439/37044000000000000",
+        "adopted_head_upper": "93318950666673439/37044000000000000",
+        "dual_key": "54e1ad880dafed20bcd941f09fe1a500fce0d8ea047be3099554261e9e2e760f",
+        "objective_constant": "55747/63000"
+      },
+      "maximum_two_pruned": "23310493/9261000",
+      "maximum_four_pruned": "3332269/1323000",
+      "new_distinct_duals": 13,
+      "independent_affine_checks": 14,
+      "all_branch_decisions_sha256": "19cfcaf2fb671f3bcb40a44637c57fb53abca8de08666065ab72b6ebff86715b"
+    },
+    "constant_mass_and_complete_pair_tail": "5089/3600",
+    "cost_upper": "145684760666673439/37044000000000000",
+    "previous_cost_upper": "3471664484127823/875000000000000",
+    "cost_improvement": "161453366670259441/4630500000000000000"
+  }
+]

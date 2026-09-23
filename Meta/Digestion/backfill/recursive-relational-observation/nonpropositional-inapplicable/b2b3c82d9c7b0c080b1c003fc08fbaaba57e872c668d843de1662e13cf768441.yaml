@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b2b3c82d9c7b0c080b1c003fc08fbaaba57e872c668d843de1662e13cf768441
+  normalized_sha256: sha256:b2b3c82d9c7b0c080b1c003fc08fbaaba57e872c668d843de1662e13cf768441
+cas_ref: sha256:b2b3c82d9c7b0c080b1c003fc08fbaaba57e872c668d843de1662e13cf768441
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在现有 pro 对象与阶段图的定义上，Mathlib 的 Ind 全忠实嵌入、Yoneda 余极限同态等价和逐点余极限保持同构直接给出外层极限及内层阶段 Hom 余极限的等价；本仓同名公式是定义而非可覆盖定理，仓内无冻结 GID。
+    previous_atom_id: 7f69a31ff421b51861adfa854fc929de6ef91e358e0ec9142aab4aeb89689e7f
+    next_atom_id: 668c2eb289e60685595e2bae149a79e5d4cbb8602203e8304e1dcff9bd10e85f

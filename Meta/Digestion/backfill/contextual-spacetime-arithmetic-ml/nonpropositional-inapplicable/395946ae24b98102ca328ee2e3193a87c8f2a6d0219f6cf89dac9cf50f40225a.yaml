@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:395946ae24b98102ca328ee2e3193a87c8f2a6d0219f6cf89dac9cf50f40225a
+  normalized_sha256: sha256:395946ae24b98102ca328ee2e3193a87c8f2a6d0219f6cf89dac9cf50f40225a
+cas_ref: sha256:395946ae24b98102ca328ee2e3193a87c8f2a6d0219f6cf89dac9cf50f40225a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 将原文见证明确定义为同摘要上的合法性冲突或共同合法动作的评分差超界，守卫冲突由同一函数输入的同值性消去，评分冲突由 abs_sub_le 和给定两侧误差界归约得到矛盾，全部量词与合法性条件均保留；仓内无冻结 GID。
+    previous_atom_id: 26197c85768840f21d5760f419e9cf1abf4feee49f6ed74f2b1675f2d74087b2
+    next_atom_id: 31aacf1657e639bb41973bb8977f1337a0c7ed6dd318e2b1b439953acc394826

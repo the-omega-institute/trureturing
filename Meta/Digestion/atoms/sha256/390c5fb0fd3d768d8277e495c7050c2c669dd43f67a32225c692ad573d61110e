@@ -1,0 +1,75 @@
+**证明。** 每行恰有概率 $p,q$，每列也恰有来自两相邻状态的概率 $p,q$，故行和、列和都为一。于是 $K$ 为行随机矩阵，且
+$$
+(\pi K)_j=\frac16\sum_iK(i,j)=\frac16=\pi_j.
+$$
+逐次对末坐标求和说明 $P_n$ 为概率。删去末坐标时用行和为一，删去首坐标时用 $\pi K=\pi$，得到平稳路径的左右边缘一致性；经标签推前后，$L_1,\ldots,L_4$ 满足式 (98.1)。
+
+因为 $p,q>0$，每条正转移边的反向边也为正。若 $x\in\Omega_n$，则 $\Theta_nx\in\Omega_n$；反序是对合，故 $\Theta_n[\Omega_n]=\Omega_n$。逐时标签与反序交换：
+$$
+\bigl(r(x_n),\ldots,r(x_0)\bigr)
+=\bigl(r(x_0),\ldots,r(x_n)\bigr)^R.
+$$
+有限非负路径概率求和为正，当且仅当至少有一条正概率路径实现该词。因此 $L_w>0$ 蕴含 $L_{w^R}>0$，反向同理，$W_m$ 确为共同正支撑。两份词律限制到 $W_m$ 后仍归一化，故式 (98.3) 是有限实数。这一论证不要求所有二元词都出现。
+
+接着检查强可并性。在标签为 $0$ 的三个状态 $0,1,3$，下一步标签为 $1$ 的概率依次为
+$$
+\sum_{r(j)=1}K(0,j)=q,\qquad
+\sum_{r(j)=1}K(1,j)=p,\qquad
+\sum_{r(j)=1}K(3,j)=p+q=1.
+$$
+由 $p,q>0$、$p+q=1$，两者 $p,q$ 均严格小于一，所以上述三行不可能相同。按 [命题 74.3](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的逐块行和判据，$K$ 不强可并。具体代入其既有因子化判据 [strongly_lumpable_iff_exact_quotient_kernel](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/D5/S3/Estimation/DecisionRisk/StochasticDescentLumpability.lean) 时，标签映射取 $r$，实际观察行取
+$$
+F(i,b)=\sum_{r(j)=b}K(i,j).
+$$
+这三行的不一致排除 $F(i,\cdot)$ 经 $r(i)$ 因子化，且在 $p=q$ 时仍然排除它。
+
+由定理 98.2，$L_m=L_m^R$ 对 $m=1,2,3$ 成立，式 (98.3) 中每个比值都为一，故得到式 (98.4a)。
+
+为计算四字 $0011$，先确定其前两个零标签所对应的正转移。标签为零的状态只有 $0,1,3$，其中唯一相邻的一对是 $0,1$，所以起始状态对只能为 $0\to1$ 或 $1\to0$。若从 $0\to1$ 开始，第三个标签为一迫使下一状态为 $2$；但 $2$ 的两个相邻状态 $1,3$ 都标为零，无法得到最后一个一。若从 $1\to0$ 开始，第三个标签为一迫使下一状态为 $5$，最后一个一再迫使下一状态为 $4$。因此唯一实现路径是
+$$
+1\longrightarrow0\longrightarrow5\longrightarrow4,
+$$
+三次转移全为逆向，概率为 $q^3/6$。反序路径给出 $1100$ 的唯一实现
+$$
+4\longrightarrow5\longrightarrow0\longrightarrow1,
+$$
+概率为 $p^3/6$；唯一性也由正路径反序的双射性保证。再用式 (98.2b)，得到
+$$
+J=-(L_{0011}-L_{1100})=\frac{p^3-q^3}{6},
+$$
+证明式 (98.4b)。
+
+由于 $p,q>0$，$p^3=q^3$ 等价于 $p=q$。结合式 (98.2d)，四字律反序对称恰好发生在 $p=q$。在共同有限正支撑 $W_4$ 上，$L_4,L_4^R$ 非负且归一化，绝对连续性由严格正性满足，所以可直接应用已有 Gibbs 非负性与等号判据：[^rro98-gibbs]
+$$
+D_4\ge0,\qquad
+D_4=0\quad\Longleftrightarrow\quad L_4=L_4^R.
+$$
+这给出式 (98.4c)。
+
+当 $p=q$ 时，$K(i,j)=K(j,i)$，均匀 $\pi$ 因而满足
+$$
+\pi_iK(i,j)=\pi_jK(j,i).
+$$
+按 [定理 93.3](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)，详细平衡使每个有限细路径律反序不变；其正平稳初态与双向支撑前提已在上面验证。标签读出与反序交换，所以其推前律也满足 $L_m=L_m^R$ 对全部 $m\ge1$ 成立。再由式 (98.3) 得到式 (98.4d)。这与前面已证的不可强并性同时成立。
+
+最后计算单边流。每个标签纤维有三个状态，故 $\bar\pi=(1/2,1/2)$。零标签内部的正边只有 $0\leftrightarrow1$，一标签内部的正边只有 $4\leftrightarrow5$，所以
+$$
+\bar Q_{00}=\bar Q_{11}=\frac{p+q}{6}=\frac16.
+$$
+从零标签到一标签，三个零状态贡献分别为 $q,p,p+q$，故
+$$
+\bar Q_{01}=\frac{q+p+(p+q)}6=\frac13.
+$$
+从一标签到零标签，状态 $2,4,5$ 的贡献分别为 $p+q,q,p$，同样得到 $\bar Q_{10}=1/3$。除以 $\bar\pi_a=1/2$，即得式 (98.4e) 中的 $\widehat K$。
+
+$\widehat K$ 的行和为一，$\bar\pi\widehat K=\bar\pi$，所有转移为正，其平稳边流正是对称的 $\bar Q$。对这个新 Markov 链应用同一定理 93.3，得到对每个 $m\ge1$，
+$$
+D(\widehat L_m\Vert\widehat L_m^R)
+=(m-1)D(\bar Q\Vert\bar Q^{\mathsf T})=0.
+$$
+由 Gibbs 等号条件，$\widehat L_m=\widehat L_m^R$。另一方面，强可并的逐块行和条件已经失败，所以 $\widehat K$ 不能充当 $K$ 对 $r$ 的强可并粗核。
+
+若 $p\ne q$，式 (98.4c) 给出实际四字散度严格为正，而 $\bar Q=\bar Q^{\mathsf T}$ 及新 Markov 链的公式给出另外两项为零，证明式 (98.4f)。这里先以实际四字概率确认差异，再与新的 Markov 词律比较；没有从不可强并性本身推出给定平稳初态下的观察过程必然非 Markov。故这个例子排除了仅凭任意平稳读出的单边流，就把 Markov 路径散度公式应用到其全部词律的做法。证毕。
+
+[^rro98-gibbs]: 有限概率 KL 的非负性采用 [kl_divergence_nonneg](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/D5/S3/Divergence/GrandmotherTheorem.lean)，等号条件采用 [kl_divergence_eq_zero_iff](https://github.com/the-omega-institute/trureturing/blob/d0179e2d71713c0292bee4f0cc1e87640ac68923/D5/S3/Divergence/GibbsEquality.lean)。两者要求有限载体、两份非负归一化概率及输入对参考的绝对连续性；本文每次都在已声明的共同正支撑上应用。
+

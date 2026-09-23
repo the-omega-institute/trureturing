@@ -1,0 +1,8 @@
+因此任意排列都给出同一个标量结果：
+
+$$
+\Pi_{(\omega_1,\ldots,\omega_m)}(t)
+=
+\Pi_{(\omega_{\pi(1)},\ldots,\omega_{\pi(m)})}(t).
+$$
+

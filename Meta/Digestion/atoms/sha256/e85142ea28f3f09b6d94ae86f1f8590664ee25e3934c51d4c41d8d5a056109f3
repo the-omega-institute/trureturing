@@ -1,0 +1,10 @@
+再证 $2\Rightarrow1$。由 $C(V)\subseteq R$，对任意 $v\in V$，
+$$
+D^mCv\in R\cap N.
+$$
+由于 $N$ 对 $D$ 不变，对任意 $j=m+k\ge m$，
+$$
+D^jCv=D^k(D^mCv)\in N,
+$$
+从而 $M_jv=BD^jCv=0$。故 $M_j=0$。
+

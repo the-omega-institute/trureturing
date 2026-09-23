@@ -1,0 +1,168 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "1/100"
+  },
+  "rho_radius": {
+    "kind": "inline",
+    "value": "1/100000"
+  },
+  "slot_bound": {
+    "kind": "inline",
+    "value": "1/520"
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/100",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "599/1800",
+      "v0": "19/2500",
+      "v1": "1833/239600",
+      "gap": "3971/180000",
+      "tbar": "101/48",
+      "Cbar": "602/157",
+      "kbar": "599/298",
+      "budget_increments": [
+        "167/240000",
+        "1/3600",
+        "1/400"
+      ],
+      "c": [
+        "281/400",
+        "3613/9000",
+        "401/1500",
+        "401/4500"
+      ],
+      "H": [
+        "189/3125",
+        "15317/150000",
+        "61/900",
+        "81199/3600000"
+      ],
+      "positive7": "2719/42000"
+    }
+  },
+  "mass_lower": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "mass_upper": {
+    "kind": "inline",
+    "value": "137509/900000"
+  },
+  "denominator_lower": {
+    "kind": "inline",
+    "value": "19942041540956226388339/254132969045571000000000"
+  },
+  "prior_mass_denominator_lower": {
+    "kind": "inline",
+    "value": "18516075533586761638339/254132969045571000000000"
+  },
+  "denominator_shared_cost": {
+    "path": "content/004-complete_radius/008-denominator_shared_cost.json",
+    "sha256": "6b0f88a25733201d13493bb1a25811f7d87ebf9a28d50ee1989993f34b943aae",
+    "kind": "value"
+  },
+  "denominator_costs": {
+    "path": "content/004-complete_radius/009-denominator_costs.json",
+    "sha256": "7ea15e63ec6a465b4864c2ae3d143e49afd846879949c3d628bfa700f9f6d71f",
+    "kind": "array"
+  },
+  "H1": {
+    "path": "content/004-complete_radius/010-H1.json",
+    "sha256": "098ee3c1c3f11f77277de391086d49a9c75f5b38c6cf2e777ab2fdd284e52b67",
+    "kind": "value"
+  },
+  "H2": {
+    "path": "content/004-complete_radius/011-H2.json",
+    "sha256": "084a015550ccee4049fc21e7f3988e899bd61b70a36fd2ff64b5233ca9dbe86c",
+    "kind": "value"
+  },
+  "mean_costs": {
+    "path": "content/004-complete_radius/012-mean_costs.json",
+    "sha256": "321ecc58e4398531b2f6e59fbf9c76af195030d462fb397f92c30eb8d42f3380",
+    "kind": "array"
+  },
+  "mean_shared": {
+    "path": "content/004-complete_radius/013-mean_shared.json",
+    "sha256": "bbd785bef566b1371f6c4d2894bd51cf605662caff81b63d621ab6c27c2c24a8",
+    "kind": "value"
+  },
+  "simple_rows": {
+    "path": "content/004-complete_radius/014-simple_rows.json",
+    "sha256": "37d76e5553684c4881e215df9e9a70b49e4080ebf3dcc25e5375821e6aa53249",
+    "kind": "value"
+  },
+  "quadratic": {
+    "path": "content/004-complete_radius/015-quadratic.json",
+    "sha256": "219527b3ffaf225cec6aabb574c47687e40e6cf0ca113abf1d5541b290020dac",
+    "kind": "object"
+  },
+  "heavy": {
+    "path": "content/004-complete_radius/016-heavy.json",
+    "sha256": "eee0ef5ac29538e54e6e71db9b5eddf144e1b43e0d64c06d609f81bf9503ba11",
+    "kind": "object"
+  },
+  "square": {
+    "path": "content/004-complete_radius/017-square.json",
+    "sha256": "6c41e856fbb0744f5ecb22c2e98ec645aba6dceff1589d18a9ec1057608cba9d",
+    "kind": "value"
+  },
+  "raw81_first": {
+    "path": "content/004-complete_radius/018-raw81_first.json",
+    "sha256": "11b1aa29c06ded189629f787d36f569dd1e463965091ca9835d628c548255761",
+    "kind": "value"
+  },
+  "cost_group_sums": {
+    "kind": "inline",
+    "value": {
+      "mean11": "38678601325000269372127248062935097389/4109827422251816180276601240000000000",
+      "single28": "13713007490690647865954419039132061/11359011053895763510688436000000000",
+      "quadratic10": "323662965849578573821241075879611667473279/25368245653600329402309768501120000000000",
+      "heavy2": "14227269888534998093838708571489693818731501612411/1339963562443083653674273642821919815750000000000",
+      "raw81_first": "69132231156857927/56858343609375000"
+    }
+  },
+  "signed_mass_upper": {
+    "kind": "inline",
+    "value": "-239487086662097082670327/21573978899788328632819200"
+  },
+  "square_payment": {
+    "kind": "inline",
+    "value": "13106531207391601532497084809983/17833280893078218796800000000000"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "1874317255327900702071170048730014096949645738344295767237/52159357313408477034909399455351195295733344000000000000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "9642754133310257544199313680431808798465062244705134956418181/20108867009836618920278997077680522843036921465919934048000"
+  },
+  "target": {
+    "kind": "inline",
+    "value": "509"
+  },
+  "target_margin": {
+    "kind": "inline",
+    "value": "592659174696581486222695832107577328640730781448111474013819/20108867009836618920278997077680522843036921465919934048000"
+  },
+  "certifies_target": {
+    "kind": "inline",
+    "value": true
+  },
+  "original_head_evaluations": {
+    "kind": "inline",
+    "value": 9750000
+  },
+  "independent_rational_comparisons": {
+    "kind": "inline",
+    "value": 312
+  }
+}

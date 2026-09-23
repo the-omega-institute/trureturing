@@ -1,0 +1,24 @@
+**theorem 65.3（引理：独立停止时刻的最大值尾和）。** 若 $S,T$ 是相互独立、取正整数值且有界的停止时刻，记
+$$
+F_S(t)=\Pr(S\le t),\qquad F_T(t)=\Pr(T\le t).
+$$
+则
+$$
+\mathbb E\max(S,T)
+=\sum_{t\ge0}\bigl(1-F_S(t)F_T(t)\bigr).
+$$
+若 $S'\preceq_{\mathrm{st}}S$ 且 $T'\preceq_{\mathrm{st}}T$，并且两对变量分别独立，则
+$$
+\mathbb E\max(S',T')\le \mathbb E\max(S,T).
+$$
+
+**证明。** 对任意非负整数值有界变量 $Z$，尾和恒等式给出
+$$
+\mathbb EZ=\sum_{t\ge0}\Pr(Z>t).
+$$
+独立性给出
+$$
+\Pr(\max(S,T)\le t)=F_S(t)F_T(t),
+$$
+代入即得第一式。随机支配 $S'\preceq_{\mathrm{st}}S$ 等价于 $F_{S'}(t)\ge F_S(t)$，对 $T$ 同理；逐项比较尾和即得第二式。证毕。
+

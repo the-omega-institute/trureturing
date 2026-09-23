@@ -1,0 +1,48 @@
+**证明。** 先证必要性。
+
+设 $t=0$。若 $D>1$，取素数 $p\mid D$。考虑输出坐标 $(0,p)$。由 theorem 49.3，若连续延拓存在，则存在某个输入模数 $n\mid D$，使该输出只依赖模 $n$ 输入。指数 $0$ 与任意正倍数 $kn$ 在 $R_{0,n}$ 中相同。取底数 $a=p$，则
+$$
+a^0=1,
+$$
+而
+$$
+a^{kn}\equiv0\pmod p.
+$$
+两输出在 $Q_{0,p}=\mathbb Z/p\mathbb Z$ 中不同，矛盾。因此 $D=1$。反之 $K_{0,1}$ 是单点，延拓唯一存在。
+
+以下设 $1\le t<\infty$。固定任意有限 $m\mid D$，考察输出坐标 $(t,m)$。theorem 49.3 给出某个 $(v,n)\in I_{t,D}$ 决定该输出。把 $v$ 增大到 $t$，并把 $n$ 替换为 $\operatorname{lcm}(n,m)$；后二者仍满足 $n\mid D$，而输入观察只变细。因此可假设输入为 $(t,n)$ 且 $m\mid n$。theorem 49.4 的必要性给出
+$$
+h(m)\le t,\qquad\lambda(m)\mid n\mid D.
+$$
+由于这对所有有限 $m\mid D$ 成立，第一式等价于每个 $e_p\le t$，即 $H(D)\le t$；第二式正是 Carmichael 闭合。
+
+若 $t=\infty$，固定 $m\mid D$ 并取任意有限输出阈值，例如 $(1,m)$。theorem 49.3 给出某个输入 $(v,n)$。再把 $n$ 替换成 $\operatorname{lcm}(n,m)$。对任意模 $m$ 单位 $a$，取足够大的同余代表，并比较尾指数 $b$ 与 $b+n$，与 theorem 49.4 必要性部分相同，得到
+$$
+\lambda(m)\mid n\mid D.
+$$
+所以 $D$ Carmichael 闭合。
+
+再证充分性。设 $1\le t<\infty$ 且两条件成立。固定任意输出 $(u,m)\in I_{t,D}$。由 Carmichael 闭合，有限整数
+$$
+n=\operatorname{lcm}(m,\lambda(m))
+$$
+满足 $n\mid D$。又由 $H(D)\le t$ 得 $h(m)\le t$。theorem 49.4 因此说明输出 $(u,m)$ 只依赖输入坐标 $(t,n)$。于是对每个有限输出坐标，都有一个有限输入坐标决定自然幂的输出。
+
+这些有限坐标函数彼此相容，因为它们在自然数输入上都等于同一个自然幂函数的相应投影，而每个有限输入商均由自然数商映射满射。故可逐坐标定义
+$$
+\operatorname{Pow}_{t,D}:K_{t,D}^2\to K_{t,D}.
+$$
+每个输出坐标只依赖一个有限离散输入坐标，所以该映射连续，并在稠密自然数像上延拓普通幂。
+
+若 $t=\infty$ 且 $D$ Carmichael 闭合，固定输出 $(u,m)$，仍取
+$$
+n=\operatorname{lcm}(m,\lambda(m))\mid D
+$$
+以及
+$$
+v\ge\max\{u,1,h(m)\}.
+$$
+theorem 49.4 给出所需有限输入依赖，逐坐标同样构造连续延拓。
+
+最后，若有两个连续延拓，它们在稠密集 $j(\mathbb N_0)^2$ 上相等；目标 $K_{t,D}$ 为 Hausdorff 空间，所以两者处处相等。证毕。
+

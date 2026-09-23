@@ -1,0 +1,19 @@
+**定理 8.5（硬预算合法中心问题的 Bellman 递推）。** 在定义8.1–8.3下，
+
+$$
+V_{B,0}(h)=r_B(h),
+\tag{8.6}
+$$
+
+$$
+V_{B,H+1}(h)=\min\left\{
+r_B(h),\quad
+\min_{\substack{a\in\mathcal A(h)\\c(h,a)\le B}}
+\max_{y\in q_{h,a}[C_h]}
+V_{B-c(h,a),H}\bigl(h\mathbin{\frown}(a,y)\bigr)
+\right\}.
+\tag{8.7}
+$$
+
+没有可负担动作时，内层最小值按 $+\infty$ 计。动作集、实际响应集均有限，外侧的动作最小值因此可以取得；式中各个 $V$ 和 $r$ 仍是风险下确界，不因此成为已取得的终端风险。对 $B,H$ 分别增加预算，$V_{B,H}(h)$ 均不增。
+

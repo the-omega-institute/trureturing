@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:48ee7906a90b909afbf1a4770e9f59758cf76f9e2094dbc56671040db3931a91
+  normalized_sha256: sha256:48ee7906a90b909afbf1a4770e9f59758cf76f9e2094dbc56671040db3931a91
+cas_ref: sha256:48ee7906a90b909afbf1a4770e9f59758cf76f9e2094dbc56671040db3931a91
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子句为每个自然数深度定义两条停留状态链、总一元操作及终点读数，是反例族的定义，无独立待证明命题。
+    previous_atom_id: e04c17ad91afff944310fbf46023cea77fb71b105b48d183ce3a71341a021e8d
+    next_atom_id: 56317713d2d98fc99a3569cb4b34cf312162b71e01e7d70cb67e906db6a426ed

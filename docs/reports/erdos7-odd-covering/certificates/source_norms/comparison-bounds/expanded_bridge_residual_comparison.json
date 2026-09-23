@@ -1,0 +1,10 @@
+{
+  "certificate_format": "erdos7-semantic-certificate-v1",
+  "logical_sha256": "eef5e7aa20f28f5804cb0585baeff45b1191b7818a978e05760fbd58a7d780df",
+  "parts_directory": "expanded_bridge_residual_comparison.parts",
+  "root": {
+    "path": "content.json",
+    "sha256": "c4a27eebbbf141aee21bcb28fb3ce1876f6ce4665a9cca36f0e69cd9883eef41",
+    "kind": "object"
+  }
+}

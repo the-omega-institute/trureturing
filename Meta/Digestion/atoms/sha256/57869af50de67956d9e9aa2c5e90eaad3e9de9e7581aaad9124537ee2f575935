@@ -1,0 +1,11 @@
+(b) 对每个固定 $0<\varepsilon<\Delta$ 和每个整数 $N\ge1$，存在 $r_N=r_N(p,\varepsilon)>0$，使
+$$
+\forall r\in\bigl(0,\min\{r_N,1/2\}\bigr),
+\qquad N_{\min}^{(r)}(\varepsilon)>N.
+$$
+即在固定 $p,\varepsilon$ 下，
+$$
+\lim_{r\downarrow0}N_{\min}^{(r)}(\varepsilon)=\infty.
+$$
+每个 $r$ 的观察者允许单独重新选择；结论仍排除这个邻域内的每一张至多 $N$ 状态的表及每一个实数读出。
+

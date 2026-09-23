@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a84ea5b3e276957ca5b5acfedbc5764039aab49d146dc476dc36803ec8b23789
+  normalized_sha256: sha256:a84ea5b3e276957ca5b5acfedbc5764039aab49d146dc476dc36803ec8b23789
+cas_ref: sha256:a84ea5b3e276957ca5b5acfedbc5764039aab49d146dc476dc36803ec8b23789
+coverage_gids:
+  - gid: D5/S3/Analytic/WeightedCapacity/ReadoutTopology.result
+    target_statement_id: sha256:05adbd8790914feab42f257fc812bbd1355d54574ea0b9f656a8306ba5c207b9
+receipts:
+  unresolved_subitems: []

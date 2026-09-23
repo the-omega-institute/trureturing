@@ -1,0 +1,57 @@
+**Definition 35.0 (The space, gauges and normalization).** Put
+$$
+\phi=\frac{1+\sqrt{5}}2,\qquad \alpha=\phi^{-1},\qquad \beta=\alpha^2=1-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{L+2}=G_{L+1}+G_L.
+$$
+For the single auxiliary index needed below, set $G_{-1}=1$. All other indices are nonnegative. Let
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad \mathbb N=\{0,1,2,\ldots\}.
+$$
+Use the successor $T$, phase map $H$, coding homeomorphism $\Phi:K\to X_\beta$, and one-sided shift $S$ of Section 20. Thus $\Phi T=S\Phi$ and $HT=RH$, where $R(\theta)=\theta+[\phi]$. The exact cylinder intervals, split fibers, endpoint conventions and temporal cut sets of 20.2–20.7 are standing inputs. In particular, the cuts for a positive temporal length $t$ are exactly
+$$
+\{e_1,\ldots,e_{t+1}\},\qquad e_m=[-m\phi],
+$$
+and the temporal cylinders are the corresponding arc atoms with their assigned split endpoints, not arcs augmented by singleton boundary atoms.
+
+Use the geometric probability $\nu$ and its temporal image $\eta=\Phi_*\nu$ from Section 33. For an admissible positional word $p$ of length $L\ge1$, its cylinder $C_p$ satisfies
+$$
+\nu(C_p)=
+\begin{cases}
+\alpha^L,&p_{L-1}=0,\\
+\alpha^{L+1},&p_{L-1}=1.
+\end{cases}
+$$
+The measure $\nu$ is nonatomic, has full support, is the unique $T$-invariant probability and the unique probability lift of circle Haar measure $m$ under $H$. The probability $\eta$ is the unique $S$-invariant probability. We also use the established Markov representation of $\nu$, with initial law $(\alpha,\alpha^2)$ and transition matrix
+$$
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+This is not a stationarity assumption for positional deletion.
+
+For distinct $y,z\in X_\beta$, set
+$$
+n(y,z)=\min\{n\ge0:y_n\ne z_n\},\qquad \rho(y,z)=2^{-n(y,z)},
+$$
+and set $\rho(y,y)=0$. All balls in this section are closed balls. For $p>0$, define
+$$
+h_p(0)=0,\qquad h_p(r)=\bigl(1+\log_2(1/r)\bigr)^{-p}\quad(0<r\le1),
+$$
+with the harmless extension $h_p(r)=1$ for $r>1$. In particular,
+$$
+h_p(2^{-n})=(n+1)^{-p}.
+$$
+For a gauge $g$ and an arbitrary subset $A\subseteq X_\beta$, define
+$$
+\mathcal H^g_{\rho,\delta}(A)=\inf\left\{\sum_i g(\operatorname{diam}_\rho A_i):A\subseteq\bigcup_i A_i,\ \operatorname{diam}_\rho A_i\le\delta\right\},
+\qquad
+\mathcal H^g_\rho(A)=\lim_{\delta\downarrow0}\mathcal H^g_{\rho,\delta}(A).
+$$
+The covers are at most countable; their members are arbitrary subsets and need not be measurable. Empty sets and singletons have cost zero. No multiplicative normalization is included. Write $\eta^*$ for the outer measure associated with $\eta$. Unsubscripted logarithms are natural logarithms. The constants used below are
+$$
+A_-:=\frac1{\sqrt{5}},\qquad A_0:=\frac{\phi^2}{\sqrt{5}},\qquad A_+:=\frac{\phi^3}{\sqrt{5}}.
+$$
+Finally, put $u=(10)^\infty$, $v=(01)^\infty$ and $w=\Phi(Z(0))$. The identities $\Phi(u)=1w$ and $\Phi(v)=0w$ are those of 20.7.
+
+Reference: Aedo–Grimm–Short, [Forward limit sets of semigroups of substitutions, §9, pp. 16–19](https://arxiv.org/pdf/2305.00078v2#page=16), uses arbitrary-subset diameter covers and inverse-logarithmic gauges. Its substitution-semigroup forward limit sets are different from the fixed-slope space here; its dimension statements do not determine the normalization below.
+

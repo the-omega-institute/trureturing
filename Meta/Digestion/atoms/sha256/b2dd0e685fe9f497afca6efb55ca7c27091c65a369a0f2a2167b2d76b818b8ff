@@ -1,0 +1,8 @@
+**定理 14.5（势运输的合成与逆）。** 先作 $(U,V_0,c)$，再在新图上作 $(\widehat U,\widehat V_0,\widehat c)$，合成为
+$$
+(U+\widehat U,\ \widehat cV_0+\widehat V_0,\ \widehat c c).
+$$
+逆为 $(-U,-V_0/c,1/c)$。
+
+证明。第二次费用是 $E+\Delta U+\Delta\widehat U$；第二次时长是 $\widehat c(c\tau+\Delta V_0)+\Delta\widehat V_0$，给合成式。代入逆参数分别抵消两势差及倍率，恢复原标签。代数可合成不代替每个中间阶段的新边正性；只在所有阶段合法时得到合法运输。它是坐标重述还是实际改了费用机制，由实验合同决定，不能改写已有原始档案。$\square$
+

@@ -1,0 +1,12 @@
+**Proof.** At $t=G_L-1$, the temporal partition is the positional length-$L$ partition by 20.6. There are $G_{L-1}$ words ending in zero, with mass $\alpha^L$, and $G_{L-2}$ words ending in one, with mass $\alpha^{L+1}$. This includes $L=1$ under the convention $G_{-1}=1$.
+
+The next $G_{L-1}$ cuts have labels $G_L+1,\ldots,G_{L+1}$. By 35.1 they split, once each, the $G_{L-1}$ cylinders represented by block words of digit length $L$. Each such split replaces one mass $\alpha^L$ by the two masses $\alpha^{L+1}$ and $\alpha^{L+2}$. The descendants cannot split again in this batch because their labels exceed $G_{L+1}$. After $a$ cuts the displayed multiplicities follow. The number of atoms is $G_L+a=t+1$, as required, but the argument also determines all their masses.
+
+The first-difference metric gives
+$$
+\rho(y,z)\le r\quad\Longleftrightarrow\quad y_j=z_j\text{ for }0\le j<t(r).
+$$
+Thus the closed ball is exactly a length-$t(r)$ temporal cylinder. Apply its unique representation and lifetime from 35.1. The mass and actual diameter then follow from that theorem, and substitution in the gauge proves the final formula. $\square$
+
+Reference: the general rotation-cut partition and its three interval lengths and multiplicities are described in Dong Han Kim, [A note on the return time of Sturmian sequences, §3, pp. 305–306](https://www.kkms.org/kkms/2008/16305.pdf#page=5). The proof here supplies the exact Fibonacci batch and the separate forced-prefix diameter information.
+

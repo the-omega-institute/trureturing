@@ -1,0 +1,209 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-shared-root-global-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "3800335ae85d2f9273dadabcbbb916cc8c2d0bab41cfdec206d23ed165675865",
+    "kind": "value"
+  },
+  "concentration_delta": {
+    "kind": "inline",
+    "value": "1/27"
+  },
+  "slot_loss_cutoff": {
+    "kind": "inline",
+    "value": "1/520"
+  },
+  "source_guards": {
+    "kind": "inline",
+    "value": {
+      "pure5": "51/520",
+      "alpha": "535/8424",
+      "beta": "2513/126360",
+      "remaining": "7499/379080"
+    }
+  },
+  "slot_gap_lower": {
+    "kind": "inline",
+    "value": "7499/379080"
+  },
+  "best_slot_credit_lower": {
+    "kind": "inline",
+    "value": "51/2600"
+  },
+  "shallow_density_upper": {
+    "kind": "inline",
+    "value": "28/135"
+  },
+  "retained_source_coefficient": {
+    "kind": "inline",
+    "value": "26/135"
+  },
+  "cost_rows": {
+    "path": "content/009-cost_rows.json",
+    "sha256": "4c1557a24205181816538044a7a98d1e25d733d8a0412c7d12e5a3c8fac9b0aa",
+    "kind": "array"
+  },
+  "fixed_old_indices": {
+    "kind": "inline",
+    "value": [
+      3,
+      4,
+      5,
+      6,
+      9,
+      11,
+      13,
+      14,
+      15,
+      19,
+      20,
+      21,
+      22,
+      25,
+      27,
+      29,
+      30,
+      31,
+      34,
+      35,
+      37,
+      38,
+      39,
+      40,
+      42,
+      43,
+      45
+    ]
+  },
+  "fixed_deep_indices": {
+    "kind": "inline",
+    "value": [
+      0,
+      1,
+      2,
+      7,
+      8,
+      10,
+      12,
+      16,
+      17,
+      18,
+      23,
+      24,
+      26,
+      28,
+      32,
+      33,
+      36,
+      41,
+      44
+    ]
+  },
+  "selected_cost_count": {
+    "kind": "inline",
+    "value": 46
+  },
+  "weighted_credit": {
+    "kind": "inline",
+    "value": "292250583636758860113407141069/14862421933958678536792310976000"
+  },
+  "combined_residual_penalty": {
+    "kind": "inline",
+    "value": "1349321394795027825970086351367/36297528025211177401364688000"
+  },
+  "combined_escape_penalty": {
+    "kind": "inline",
+    "value": "1626740964132810385459985700332127421489/3154636730230866529407028478057850000000"
+  },
+  "old_mass_coefficient": {
+    "kind": "inline",
+    "value": "14005839092163790978433304199852525334431910915059219/258053321422020518900769276553892599223596620000000"
+  },
+  "conservative_mass_coefficient": {
+    "kind": "inline",
+    "value": "891280654301453988360055325182031459823273341359752932599709/16421574999583123930048953962520438132410694000000000000000"
+  },
+  "unused_residual_budget": {
+    "kind": "inline",
+    "value": "23165084183653241679737396781076549743500268106747187532217395701/1354599300140612309865808163414348421104425737366000000000000000"
+  },
+  "first_escape_gap": {
+    "kind": "inline",
+    "value": "15240056495574031935365456355486859072608164346131/324595372857887445158200347866531571350436000000000"
+  },
+  "next_escape_gap": {
+    "kind": "inline",
+    "value": "14158742250938240063000691811817435200717494240697/24344652964341558386865026089989867851282700000000"
+  },
+  "escape_polynomial_negative_quadratic": {
+    "kind": "inline",
+    "value": "4180007994886290372984201500283864062683353803273/8183076626669431390542865912601636252532000000000"
+  },
+  "concentrated_denominator_upper": {
+    "kind": "inline",
+    "value": "127/486"
+  },
+  "signed_branch_margins": {
+    "kind": "inline",
+    "value": {
+      "concentrated_small_r_zero_escape": "2433355924564628645957077037/14862421933958678536792310976000",
+      "concentrated_small_r_at_delta": "3114968935042659668061274402032283168561207808330315969/3047558115329777924114305002246160818310831362876000000000",
+      "concentrated_large_r": "21018273521077225617732611854682907635790068959752932599709/42696094998916122218127280302553139144267804400000000000000000",
+      "outside_at_delta": "324532743735782070838530271382672337227189105363273/709890080440199842560984160784104546543403532000000000",
+      "outside_at_one": "8910446724845226754780549572089493431274662346131/324595372857887445158200347866531571350436000000000"
+    }
+  },
+  "strict_margin_lower": {
+    "kind": "inline",
+    "value": "2433355924564628645957077037/14862421933958678536792310976000"
+  },
+  "old_K0": {
+    "kind": "inline",
+    "value": "108508024932331114670819517565119344585698949/212986060315016386011231666281461556328000"
+  },
+  "previous_K100": {
+    "kind": "inline",
+    "value": "108494180838410638605728787506811049584537629/212986060315016386011231666281461556328000"
+  },
+  "decrease_from_K0": {
+    "kind": "inline",
+    "value": "39/500"
+  },
+  "new_K": {
+    "kind": "inline",
+    "value": "21698282403925308678542128299029878116861073/42597212063003277202246333256292311265600"
+  },
+  "improvement_over100": {
+    "kind": "inline",
+    "value": "13/1000"
+  },
+  "old_scalar_template_capacity": {
+    "kind": "inline",
+    "value": "10115878772922446403539237/176429510137211283675122400"
+  },
+  "new_mass_coefficient": {
+    "kind": "inline",
+    "value": "13994816528863050387697399912182580493407931573719219/258053321422020518900769276553892599223596620000000"
+  },
+  "positive_denominator_lower_factor": {
+    "kind": "inline",
+    "value": "40593580507/80223412500"
+  },
+  "fallbacks": {
+    "path": "content/033-fallbacks.json",
+    "sha256": "a77f502dd142520ce12e2e39681d0d5bf28d4822488d474b4234f5522564d88a",
+    "kind": "value"
+  },
+  "complete_cores": {
+    "path": "content/034-complete_cores.json",
+    "sha256": "e4a76ff7b5d2ba1bb1ad8e6a5241215a4db102920a81a3a29c32f6f6dfccd56e",
+    "kind": "value"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Ordinary global comparison with one fixed alternative for each of46 costs, with the shared root-imbalance bound paying both root0 classes once. One residual and one source-escape coordinate pay all losses; no gains from the same cost are added. Independent original test residues, all infinite cofactor tails, original quadratic curvature, eight fallbacks and two full errors remain. No Lean verification or unrestricted Erdos7 resolution."
+  }
+}

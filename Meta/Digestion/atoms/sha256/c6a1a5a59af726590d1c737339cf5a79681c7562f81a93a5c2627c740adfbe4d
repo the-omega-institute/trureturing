@@ -1,0 +1,44 @@
+**命题 130.6。** 当 $n+m>0$ 时，目标与基线得分、信息矩阵和有效得分为
+
+$$
+s_\theta=S_X,\qquad s_b=S_X+S_V,\qquad
+I=\begin{pmatrix}n&n\\n&n+m\end{pmatrix},
+$$
+
+$$
+f=s_\theta-\frac{n}{n+m}s_b
+=\frac{m}{n+m}S_X-\frac{n}{n+m}S_V,
+\qquad
+I_{\mathrm{eff}}=\frac{nm}{n+m}.
+$$
+
+**证明。** 联合对数密度中依赖参数的部分为
+$-\frac12\sum_i(X_i-\theta-b)^2-\frac12\sum_j(V_j-b)^2$，求导给所示得分。独立中心化误差使
+$\operatorname{Var}S_X=n$、$\operatorname{Var}S_V=m$、$\operatorname{Cov}(S_X,S_V)=0$，故信息矩阵如上。将 $s_\theta$ 投影到 $\operatorname{span}(s_b)$ 的系数为
+$\langle s_\theta,s_b\rangle/\|s_b\|^2=n/(n+m)$。残差方差为
+
+$$
+\frac{m^2n+n^2m}{(n+m)^2}=\frac{nm}{n+m}.
+$$
+
+证毕。
+
+所有退化分支都有独立含义：
+
+- 若 $n>0,m=0$，$s_\theta=s_b$，有效得分为零；数据只依赖 $\theta+b$，$(\theta,b)$ 与 $(\theta+c,b-c)$ 完全同分布。
+- 若 $n=0,m>0$，数据不依赖目标 $\theta$，目标得分和有效信息均为零。
+- 若 $n=m=0$，实验只有一个空记录，两得分都是零，有效信息定义为零；不把它代入 $0/0$。
+- 若 $b$ 已知，干扰空间被移除，目标信息为 $n$。
+
+当 $n,m>0$，$T=\overline X-\overline V$ 满足
+
+$$
+\mathbb E T=\theta,\qquad
+\operatorname{Var}T=\frac1n+\frac1m=I_{\mathrm{eff}}^{-1},
+\qquad T-\theta=I_{\mathrm{eff}}^{-1}f.
+$$
+
+这些是指定 Gaussian 模型中的有限样本恒等式。若某个正则无偏估计量满足合法的积分求导，其与 $s_\theta$ 的协方差为一，与 $s_b$ 的协方差为零，因而与 $f$ 的协方差为一；Cauchy–Schwarz 随即给方差至少 $I_{\mathrm{eff}}^{-1}$，上述 $T$ 取等。这里没有借渐近论证替代精确分布。
+
+若两组独立误差的已知方差分别是 $\sigma_X^2,\sigma_V^2>0$，令 $a=n/\sigma_X^2,c=m/\sigma_V^2$，同一得分协方差计算给 $I_{\mathrm{eff}}=ac/(a+c)$（$a+c>0$）。$n\to\infty$、$m$ 固定且方差为一时，信息趋于 $m$；这是本模型的基线校准瓶颈。相关误差、不同偏置、未知方差、参数依赖观察、适应性停止或另一模型类都需重新写实验，不能原样沿用样本数公式。
+

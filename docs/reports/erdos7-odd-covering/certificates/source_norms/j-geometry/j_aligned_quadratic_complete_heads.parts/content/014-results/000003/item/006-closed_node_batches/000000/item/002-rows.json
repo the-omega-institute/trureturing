@@ -1,0 +1,77 @@
+{
+  "length": 50,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 11,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/item/002-rows/000000-000011.json",
+        "sha256": "69163124ac42faef5651aa11b4f87a1c20b7b5d09756fd1051fd4b401b22e339",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 11,
+      "stop": 22,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/item/002-rows/000011-000022.json",
+        "sha256": "f9f18f03519040a2bca224d35c4822fab3aa81b98b3dfddbb95332a542b460ba",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 22,
+      "stop": 25,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/item/002-rows/000022-000025.json",
+        "sha256": "f56ffdefc86db83aed46801a4f67b0f925f75482f41d054411801b11ba7b81e6",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 25,
+      "stop": 32,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/item/002-rows/000025-000032.json",
+        "sha256": "089c1bb4d8e17b364c102b8db811466fec8058f5bb0115a62be5c6f060bef9e0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 32,
+      "stop": 37,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/item/002-rows/000032-000037.json",
+        "sha256": "67a3894e44a1f9b786b029a6a9d295691f519ea6f5218c596f6d1dccd919e580",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 37,
+      "stop": 41,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/item/002-rows/000037-000041.json",
+        "sha256": "c76c5d769660741b5bd4c85a80eedaac59f689233b97a5b529828ebf288bce83",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 41,
+      "stop": 45,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/item/002-rows/000041-000045.json",
+        "sha256": "5f82c1f0940e93f582a78de189f69dde0cf0a54fc92685bd1e59c7b0a1922b49",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 45,
+      "stop": 50,
+      "part": {
+        "path": "content/014-results/000003/item/006-closed_node_batches/000000/item/002-rows/000045-000050.json",
+        "sha256": "ce24438f20853793bcfdf063415fbd0687f3e85db22eeea0c87e2a99d3cc3b45",
+        "kind": "value"
+      }
+    }
+  ]
+}

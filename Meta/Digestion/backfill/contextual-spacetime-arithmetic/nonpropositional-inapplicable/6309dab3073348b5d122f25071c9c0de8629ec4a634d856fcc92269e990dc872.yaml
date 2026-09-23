@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6309dab3073348b5d122f25071c9c0de8629ec4a634d856fcc92269e990dc872
+  normalized_sha256: sha256:6309dab3073348b5d122f25071c9c0de8629ec4a634d856fcc92269e990dc872
+cas_ref: sha256:6309dab3073348b5d122f25071c9c0de8629ec4a634d856fcc92269e990dc872
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “令”引入允许重复输入的项语言，“精确问题为”给出 q 可表达性的量词定义；没有断言每个区域都满足该存在式，也未偷带 Tail 判据，故仅这一定义子项无需证明。
+    previous_atom_id: f750ab048653ad225b3735f5534fb7ec61bddbd77793946639730a32eff182f8
+    next_atom_id: b4f5ee010eaab05ec0b29c6b26a6c799611139d92ffe445a240085ecb06bfa49

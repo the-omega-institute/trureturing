@@ -1,0 +1,498 @@
+[
+  {
+    "shallow_three_root": 0,
+    "shallow_three_cell": 1,
+    "first_five_slot": 2,
+    "shallow_three_moment": "23/45",
+    "first_five_moment": "14/75",
+    "previous_shallow_cross": "59/1350",
+    "additional_shallow_cross_deletion": "1/1350",
+    "shallow_cross": "29/675",
+    "previous_shallow_three_deep_five_coefficients": [
+      "0",
+      "7/30",
+      "7/30",
+      "7/30",
+      "8/45"
+    ],
+    "full_deep_cross_deletion_coefficient": "1/54",
+    "shallow_three_deep_five_coefficients": [
+      "0",
+      "29/135",
+      "29/135",
+      "29/135",
+      "43/270"
+    ],
+    "remaining_root0_q_coefficients": [
+      "0",
+      "29/135",
+      "29/135",
+      "29/135",
+      "43/270"
+    ],
+    "three_bellman": {
+      "prime": 3,
+      "first_depth": 3,
+      "initial_reward": [
+        "39/10",
+        "417/100",
+        "9/10",
+        "61/50",
+        "61/50"
+      ],
+      "repeat_reward": [
+        "7/5",
+        "11/10",
+        "3/5",
+        "3/5",
+        "3/5"
+      ],
+      "potential_intercept": [
+        "69/10",
+        "177/25",
+        "9/5",
+        "57/25",
+        "57/25"
+      ],
+      "potential_count_slope": [
+        "21/10",
+        "33/20",
+        "9/10",
+        "9/10",
+        "9/10"
+      ],
+      "complete_candidates": [
+        "23/90",
+        "59/225",
+        "1/15",
+        "19/225",
+        "19/225"
+      ]
+    },
+    "five_bellman_by_three_cell": [
+      {
+        "prime": 5,
+        "first_depth": 2,
+        "initial_reward": [
+          "0",
+          "127/135",
+          "283/135",
+          "47/27",
+          "299/270"
+        ],
+        "repeat_reward": [
+          "0",
+          "4/15",
+          "28/45",
+          "4/5",
+          "7/15"
+        ],
+        "potential_intercept": [
+          "0",
+          "34/27",
+          "76/27",
+          "131/54",
+          "661/432"
+        ],
+        "potential_count_slope": [
+          "0",
+          "1/3",
+          "7/9",
+          "1",
+          "7/12"
+        ],
+        "complete_candidates": [
+          "0",
+          "34/675",
+          "76/675",
+          "131/1350",
+          "661/10800"
+        ]
+      },
+      {
+        "prime": 5,
+        "first_depth": 2,
+        "initial_reward": [
+          "0",
+          "124/135",
+          "56/27",
+          "232/135",
+          "293/270"
+        ],
+        "repeat_reward": [
+          "0",
+          "4/15",
+          "28/45",
+          "4/5",
+          "7/15"
+        ],
+        "potential_intercept": [
+          "0",
+          "133/108",
+          "301/108",
+          "259/108",
+          "649/432"
+        ],
+        "potential_count_slope": [
+          "0",
+          "1/3",
+          "7/9",
+          "1",
+          "7/12"
+        ],
+        "complete_candidates": [
+          "0",
+          "133/2700",
+          "301/2700",
+          "259/2700",
+          "649/10800"
+        ]
+      },
+      {
+        "prime": 5,
+        "first_depth": 2,
+        "initial_reward": [
+          "0",
+          "112/135",
+          "268/135",
+          "232/135",
+          "287/270"
+        ],
+        "repeat_reward": [
+          "0",
+          "4/15",
+          "28/45",
+          "4/5",
+          "7/15"
+        ],
+        "potential_intercept": [
+          "0",
+          "121/108",
+          "289/108",
+          "259/108",
+          "637/432"
+        ],
+        "potential_count_slope": [
+          "0",
+          "1/3",
+          "7/9",
+          "1",
+          "7/12"
+        ],
+        "complete_candidates": [
+          "0",
+          "121/2700",
+          "289/2700",
+          "259/2700",
+          "637/10800"
+        ]
+      },
+      {
+        "prime": 5,
+        "first_depth": 2,
+        "initial_reward": [
+          "0",
+          "112/135",
+          "56/27",
+          "232/135",
+          "287/270"
+        ],
+        "repeat_reward": [
+          "0",
+          "4/15",
+          "28/45",
+          "4/5",
+          "7/15"
+        ],
+        "potential_intercept": [
+          "0",
+          "121/108",
+          "301/108",
+          "259/108",
+          "637/432"
+        ],
+        "potential_count_slope": [
+          "0",
+          "1/3",
+          "7/9",
+          "1",
+          "7/12"
+        ],
+        "complete_candidates": [
+          "0",
+          "121/2700",
+          "301/2700",
+          "259/2700",
+          "637/10800"
+        ]
+      },
+      {
+        "prime": 5,
+        "first_depth": 2,
+        "initial_reward": [
+          "0",
+          "112/135",
+          "56/27",
+          "232/135",
+          "287/270"
+        ],
+        "repeat_reward": [
+          "0",
+          "4/15",
+          "28/45",
+          "4/5",
+          "7/15"
+        ],
+        "potential_intercept": [
+          "0",
+          "121/108",
+          "301/108",
+          "259/108",
+          "637/432"
+        ],
+        "potential_count_slope": [
+          "0",
+          "1/3",
+          "7/9",
+          "1",
+          "7/12"
+        ],
+        "complete_candidates": [
+          "0",
+          "121/2700",
+          "301/2700",
+          "259/2700",
+          "637/10800"
+        ]
+      }
+    ],
+    "joint_deep_candidates": [
+      {
+        "deep_three_cell": 0,
+        "deep_five_slot": 0,
+        "three_joint_tail": "23/90",
+        "five_joint_tail": "0",
+        "deep_cross": "0",
+        "complete_joint_tail": "23/90",
+        "joint_upper": "1403/1350"
+      },
+      {
+        "deep_three_cell": 0,
+        "deep_five_slot": 1,
+        "three_joint_tail": "23/90",
+        "five_joint_tail": "121/2700",
+        "deep_cross": "1/180",
+        "complete_joint_tail": "413/1350",
+        "joint_upper": "1471/1350"
+      },
+      {
+        "deep_three_cell": 0,
+        "deep_five_slot": 2,
+        "three_joint_tail": "23/90",
+        "five_joint_tail": "289/2700",
+        "deep_cross": "1/180",
+        "complete_joint_tail": "497/1350",
+        "joint_upper": "311/270"
+      },
+      {
+        "deep_three_cell": 0,
+        "deep_five_slot": 3,
+        "three_joint_tail": "23/90",
+        "five_joint_tail": "247/2700",
+        "deep_cross": "1/180",
+        "complete_joint_tail": "238/675",
+        "joint_upper": "767/675"
+      },
+      {
+        "deep_three_cell": 0,
+        "deep_five_slot": 4,
+        "three_joint_tail": "23/90",
+        "five_joint_tail": "613/10800",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "3421/10800",
+        "joint_upper": "2377/2160"
+      },
+      {
+        "deep_three_cell": 1,
+        "deep_five_slot": 0,
+        "three_joint_tail": "59/225",
+        "five_joint_tail": "0",
+        "deep_cross": "0",
+        "complete_joint_tail": "59/225",
+        "joint_upper": "706/675"
+      },
+      {
+        "deep_three_cell": 1,
+        "deep_five_slot": 1,
+        "three_joint_tail": "59/225",
+        "five_joint_tail": "121/2700",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "841/2700",
+        "joint_upper": "2957/2700"
+      },
+      {
+        "deep_three_cell": 1,
+        "deep_five_slot": 2,
+        "three_joint_tail": "59/225",
+        "five_joint_tail": "289/2700",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "1009/2700",
+        "joint_upper": "125/108"
+      },
+      {
+        "deep_three_cell": 1,
+        "deep_five_slot": 3,
+        "three_joint_tail": "59/225",
+        "five_joint_tail": "247/2700",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "967/2700",
+        "joint_upper": "3083/2700"
+      },
+      {
+        "deep_three_cell": 1,
+        "deep_five_slot": 4,
+        "three_joint_tail": "59/225",
+        "five_joint_tail": "613/10800",
+        "deep_cross": "1/300",
+        "complete_joint_tail": "3481/10800",
+        "joint_upper": "2389/2160"
+      },
+      {
+        "deep_three_cell": 2,
+        "deep_five_slot": 0,
+        "three_joint_tail": "1/15",
+        "five_joint_tail": "0",
+        "deep_cross": "0",
+        "complete_joint_tail": "1/15",
+        "joint_upper": "574/675"
+      },
+      {
+        "deep_three_cell": 2,
+        "deep_five_slot": 1,
+        "three_joint_tail": "1/15",
+        "five_joint_tail": "121/2700",
+        "deep_cross": "0",
+        "complete_joint_tail": "301/2700",
+        "joint_upper": "2417/2700"
+      },
+      {
+        "deep_three_cell": 2,
+        "deep_five_slot": 2,
+        "three_joint_tail": "1/15",
+        "five_joint_tail": "289/2700",
+        "deep_cross": "0",
+        "complete_joint_tail": "469/2700",
+        "joint_upper": "517/540"
+      },
+      {
+        "deep_three_cell": 2,
+        "deep_five_slot": 3,
+        "three_joint_tail": "1/15",
+        "five_joint_tail": "247/2700",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "439/2700",
+        "joint_upper": "511/540"
+      },
+      {
+        "deep_three_cell": 2,
+        "deep_five_slot": 4,
+        "three_joint_tail": "1/15",
+        "five_joint_tail": "613/10800",
+        "deep_cross": "1/450",
+        "complete_joint_tail": "1357/10800",
+        "joint_upper": "9821/10800"
+      },
+      {
+        "deep_three_cell": 3,
+        "deep_five_slot": 0,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "0",
+        "deep_cross": "0",
+        "complete_joint_tail": "19/225",
+        "joint_upper": "586/675"
+      },
+      {
+        "deep_three_cell": 3,
+        "deep_five_slot": 1,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "121/2700",
+        "deep_cross": "0",
+        "complete_joint_tail": "349/2700",
+        "joint_upper": "493/540"
+      },
+      {
+        "deep_three_cell": 3,
+        "deep_five_slot": 2,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "289/2700",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "529/2700",
+        "joint_upper": "529/540"
+      },
+      {
+        "deep_three_cell": 3,
+        "deep_five_slot": 3,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "247/2700",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "487/2700",
+        "joint_upper": "2603/2700"
+      },
+      {
+        "deep_three_cell": 3,
+        "deep_five_slot": 4,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "613/10800",
+        "deep_cross": "1/450",
+        "complete_joint_tail": "1549/10800",
+        "joint_upper": "10013/10800"
+      },
+      {
+        "deep_three_cell": 4,
+        "deep_five_slot": 0,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "0",
+        "deep_cross": "0",
+        "complete_joint_tail": "19/225",
+        "joint_upper": "586/675"
+      },
+      {
+        "deep_three_cell": 4,
+        "deep_five_slot": 1,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "121/2700",
+        "deep_cross": "0",
+        "complete_joint_tail": "349/2700",
+        "joint_upper": "493/540"
+      },
+      {
+        "deep_three_cell": 4,
+        "deep_five_slot": 2,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "289/2700",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "529/2700",
+        "joint_upper": "529/540"
+      },
+      {
+        "deep_three_cell": 4,
+        "deep_five_slot": 3,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "247/2700",
+        "deep_cross": "1/225",
+        "complete_joint_tail": "487/2700",
+        "joint_upper": "2603/2700"
+      },
+      {
+        "deep_three_cell": 4,
+        "deep_five_slot": 4,
+        "three_joint_tail": "19/225",
+        "five_joint_tail": "613/10800",
+        "deep_cross": "1/450",
+        "complete_joint_tail": "1549/10800",
+        "joint_upper": "10013/10800"
+      }
+    ],
+    "joint_upper": "125/108"
+  }
+]

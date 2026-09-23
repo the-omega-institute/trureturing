@@ -1,9 +1,19 @@
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("StrataLint.EngineeringScope.Tests")]
-
-// ArchitectureTests asserts ControllerClosure's pure snapshot derivation directly.
-// Reaching it by reflection instead makes ScribeTestMapDeriver record those methods as
-// conservative unknown, which SL-003 blocks per introduced identity; a direct call keeps
-// the same assertions statically resolvable.
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
+[assembly: InternalsVisibleTo("StrataLint.BuildIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.CheckIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.EngineeringScope.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.NativeTransportIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.PlanningIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.PreflightTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.ReleaseIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ReleaseTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.RoutingTestSupport")]
+[assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
+[assembly: InternalsVisibleTo("StrataLint.StageIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.TransportIntegration.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.TransportTestSupport")]
+
+[assembly: InternalsVisibleTo("StrataLint.CliIntegration.Tests")]

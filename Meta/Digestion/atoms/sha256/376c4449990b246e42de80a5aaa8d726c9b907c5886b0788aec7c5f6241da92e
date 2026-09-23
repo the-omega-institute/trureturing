@@ -1,0 +1,8 @@
+For $n\in\mathbb N_0$, $L\ge1$, and $x\in K$, define
+$$
+D_{L,p}(n,x)=\|q_{L\#}P_p^n\delta_x-q_{L\#}m\|_{\mathrm{TV}},
+$$
+$$
+e_{L,p}(n)=\sup_{\eta\in\mathcal P(K)}
+\|q_{L\#}P_p^n\eta-q_{L\#}m\|_{\mathrm{TV}}.
+$$

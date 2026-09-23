@@ -1,0 +1,65 @@
+**定理 29.6（矩阵能量坐标的全时间证书）。** 在定义29.1下，再假设 $S\succeq a_0I_U$、$a_0>0$。用 $C$ 的谱平方根定义
+$$
+G=BC^{-1/2}:H\to U,\qquad G^*=C^{-1/2}B^*:U\to H,
+\qquad w=C^{1/2}h+G^*x\in H,
+$$
+$$
+\Gamma=C+G^*G:H\to H,\qquad
+w_0=C^{1/2}r_0,\qquad N_0=\|(x_0,h_0)\|.
+\tag{29.11}
+$$
+取任何已认证的 $\gamma_0>0$ 使 $\Gamma\succeq\gamma_0I_H$；总可用 $\gamma_0=c_0$。则精确方程为
+$$
+\dot x=-Sx-Gw,\qquad
+\dot w=-\Gamma w-G^*Sx,
+\tag{29.12}
+$$
+且对所有 $t\ge0$，
+$$
+\|w(t)\|\le e^{-\gamma_0t}\|w_0\|
+ +\frac{\|G^*S\|N_0}{\gamma_0}(1-e^{-\gamma_0t}).
+\tag{29.13}
+$$
+不用额外速度前提便有
+$$
+\boxed{
+\sup_{t\ge0}\|x(t)-X(t)\|
+\le\frac{\|G\|\|w_0\|}{\gamma_0}
+ +\frac{\|G\|\|G^*S\|N_0}{a_0\gamma_0}.}
+\tag{29.14}
+$$
+不假定 $C$ 与 $G^*G$ 交换，也不假定 $S$ 与 $BB^*$ 交换。
+
+证明。由定义，$B=GC^{1/2}$、$BC^{-1}B^*=GG^*$、$A=S+GG^*$，从而
+$$
+-Ax-Bh=-(S+GG^*)x-G(w-G^*x)=-Sx-Gw.
+$$
+再对 $w$ 求导，保持算子顺序：
+$$
+\begin{aligned}
+\dot w
+&=C^{1/2}(-B^*x-Ch)+G^*(-Sx-Gw)\\
+&=-C^{1/2}B^*x-C(w-G^*x)-G^*Sx-G^*Gw\\
+&=-(C+G^*G)w-G^*Sx.
+\end{aligned}
+$$
+最后一行恰使用 $CG^*=C^{1/2}B^*$；没有把 $C$ 移过 $G^*G$。命题29.5给 $\|x(t)\|\le N_0$。对第二式作变常数，
+$$
+w(t)=e^{-t\Gamma}w_0
+ -\int_0^t e^{-(t-u)\Gamma}G^*Sx(u)du.
+$$
+因为 $\langle h,\Gamma h\rangle=\langle h,Ch\rangle+\|Gh\|^2\ge c_0\|h\|^2$，$\gamma_0=c_0$ 确实总可使用。$\Gamma$ 自伴且有所选下界 $\gamma_0$，所以积分范数至多
+$\|G^*S\|N_0(1-e^{-\gamma_0t})/\gamma_0$，得到式（29.13）。再令 $e=x-X$，则
+$$
+e(t)=-\int_0^t e^{-(t-u)S}Gw(u)du.
+$$
+代入式（29.13），得到同一证明的时间相关形式
+$$
+\|e(t)\|\le\|G\|\|w_0\|J_{a_0,\gamma_0}(t)
+ +\frac{\|G\|\|G^*S\|N_0}{\gamma_0}
+ \int_0^t e^{-a_0(t-u)}(1-e^{-\gamma_0u})du.
+$$
+首积分至多 $1/\gamma_0$，末积分至多 $1/a_0$，故式（29.14）成立。整个推导只对单个自伴算子各自使用谱界，并未联合对角化不同算子。$\square$
+
+式（29.14）提供另一份充分证书；不声称它在所有矩阵和准备上都小于速度型证书。两份证书适用时可以选择较小的完整上界。
+

@@ -1,0 +1,9 @@
+**命题 16.4（同一锐例中的固定来源创新）。** 在定理16.3的仪器中，把隐藏初始位作为固定来源目标 $Z\sim\operatorname{Bernoulli}(1/2)$，初始档案常值。固定动作词的总均方创新及末端 Bayes 风险分别为
+$$
+I_{\rm ol}=\frac{\alpha}{4},\qquad
+R_{\rm ol}=\frac{1-\alpha}{4},\qquad\alpha=m^{-(H-1)}.
+\tag{16.5}
+$$
+匹配挑战的反馈策略对应 $I_{\rm fb}=1/4$、$R_{\rm fb}=0$。这里总创新指
+$\mathbb E[(\mathbb E[Z\mid H_H]-1/2)^2]$。
+

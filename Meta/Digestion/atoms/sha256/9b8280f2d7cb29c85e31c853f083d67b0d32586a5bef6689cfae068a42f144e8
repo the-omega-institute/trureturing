@@ -1,0 +1,81 @@
+**含奇异块的联合像。** 以下对固定装置取 $c=\sqrt\alpha$，以 $L_c$ 作用于第一层。
+
+给定 $\xi_1\in\mathcal D(J\otimes B)$，按 qubit 基将 $J\otimes B$ 识别为 $J\oplus J$。本小节的 $B_{01}$ 表示交叉块，与输出空间 $B$ 区分：
+
+$$
+\xi_1=
+\begin{pmatrix}A&B_{01}\\B_{01}^*&D\end{pmatrix},
+\qquad
+\theta_{\rm cand}=(\operatorname{id}_J\otimes L_c)(\xi_1)
+=\begin{pmatrix}A&B_{01}/c\\B_{01}^*/c&D\end{pmatrix}.
+\tag{45.8}
+$$
+
+由 $\xi_1$ 为密度，$A,D\succeq0$、$\operatorname{Tr}(A+D)=1$。候选自动自伴、迹一，且其 $J$ 边缘仍为 $A+D$。由（45.4）与唯一性，
+
+$$
+\boxed{
+\xi_1\in q_1[\mathcal D(J\otimes M)]
+\iff\theta_{\rm cand}\succeq0.
+}
+\tag{45.9}
+$$
+
+令 $A^\dagger$ 为有限维 Moore–Penrose 逆：若 $A=\sum_{a>0}aP_a$ 是正特征值的谱分解，则 $A^\dagger=\sum_{a>0}a^{-1}P_a$，在 $\ker A$ 上为零；$AA^\dagger=\sum_{a>0}P_a$ 是 $\operatorname{ran}A$ 的正交投影，$A^{\dagger/2}=(A^\dagger)^{1/2}$。无需假设 $A$ 可逆，（45.9）的正性等价于
+
+$$
+\boxed{
+(I-AA^\dagger)B_{01}=0,
+\qquad D-c^{-2}B_{01}^*A^\dagger B_{01}\succeq0.
+}
+\tag{45.10}
+$$
+
+所用方法已有明确归属：恢复卷定理13.2、式（13.5）使用实空间中标量下块的奇异 Schur 补；定理15.4、式（15.10）—（15.11）处理有限实矩形块及奇异余量的收缩因子化；Q13.3的证明使用复矩阵中两对角块相同的情形，Q 第13.8节注明其一般方法来源。这里需要的是任意有限参考下、两个正对角块可不同且可奇异的复矩阵判据，不能将上述受限陈述只改名后直接使用。该一般因子化见 Watrous 的 Lemma 3.18，以及其完全有界范数论文 §2.1、Lemma 2；Moslehian、Kian、Xu 的 Theorem 5.11也给正算子块的收缩表述。[^rro_signedsource_blocks] 以下保留本像检验的范围条件、合同变换及正性证明，不另建一般块矩阵理论。
+
+若候选正，对 $u\in\ker A$ 及任意 $v$，在向量 $(u,tv)$ 上的二次型是一个常数项为零的二次多项式。对任意小的正负实 $t$，并在需要时将 $u$ 乘相位，都要求非负，迫使 $u^*B_{01}v=0$。所以 $\operatorname{ran}B_{01}\subseteq\operatorname{ran}A$，即第一个条件。在此条件下有
+
+$$
+\theta_{\rm cand}=
+\begin{pmatrix}I&0\\B_{01}^*A^\dagger/c&I\end{pmatrix}
+\begin{pmatrix}A&0\\0&D-c^{-2}B_{01}^*A^\dagger B_{01}\end{pmatrix}
+\begin{pmatrix}I&A^\dagger B_{01}/c\\0&I\end{pmatrix}.
+\tag{45.11}
+$$
+
+两侧三角矩阵可逆且互为伴随，故候选正性等价于中间矩阵正性。这同时证明必要性与充分性，包括 $A=0$ 时必须 $B_{01}=0$ 的端点。
+
+另一等价表达为
+
+$$
+B_{01}=cA^{1/2}KD^{1/2}
+\quad\text{存在算子 }K\text{ 满足 }\|K\|\le1.
+\tag{45.12}
+$$
+
+为从（45.10）得到它，置 $F=B_{01}/c$、$U=A^{\dagger/2}F$。有 $U^*U\preceq D$，从而 $U$ 消去 $\ker D$。取 $K=UD^{\dagger/2}$，则 $K^*K\preceq\operatorname{supp}D\preceq I$，且 $A^{1/2}KD^{1/2}=F$。反向若（45.12）成立，则
+
+$$
+\theta_{\rm cand}=
+\begin{pmatrix}A^{1/2}&0\\0&D^{1/2}\end{pmatrix}
+\begin{pmatrix}I&K\\K^*&I\end{pmatrix}
+\begin{pmatrix}A^{1/2}&0\\0&D^{1/2}\end{pmatrix}\succeq0;
+$$
+
+中间矩阵正性由 $I-K^*K\succeq0$ 的普通 Schur 分解得到。
+
+当 $J=\mathbb C$ 时，（45.10）等价于 $|B_{01}|^2\le c^2AD$；用 Bloch 向量就是恢复卷式（30.35）的实际椭球
+
+$$
+\frac{r_x^2+r_y^2}{c^2}+r_z^2\le1.
+$$
+
+具体地，标量情形 $A=(1+r_z)/2$、$D=(1-r_z)/2$、$B_{01}=(r_x-\mathrm i r_y)/2$，故 $|B_{01}|^2\le c^2AD$ 恰为所写椭球条件；逆候选的特征值是 $\bigl(1\pm\sqrt{(r_x^2+r_y^2)/c^2+r_z^2}\bigr)/2$。边界等号时候选秩一；$A=0$ 时条件迫使 $B_{01}=0,D=1$，所以极点也包含在内。
+
+这些是完整联合态的条件。参考边缘和输出边缘各自合法，不足以推出联合候选正。例如 $J=\mathbb C^2$ 时取第一层目标
+$$
+\xi_1=|\Phi_+\rangle\langle\Phi_+|,
+\qquad |\Phi_+\rangle=(|00\rangle+|11\rangle)/\sqrt2.
+$$
+它的两边缘均为 $I/2$。逆候选只在 $\operatorname{span}\{|00\rangle,|11\rangle\}$ 上非零，该块为 $\frac12\left(\begin{smallmatrix}1&c^{-1}\\c^{-1}&1\end{smallmatrix}\right)$，故当 $c<1$ 时有负特征值 $(1-c^{-1})/2$。这直接排除以分开边缘代替联合正性。正性只给数学状态成员资格，额外的已获档案、控制、实际准备、来源与费用限制仍须逐项检验。
+

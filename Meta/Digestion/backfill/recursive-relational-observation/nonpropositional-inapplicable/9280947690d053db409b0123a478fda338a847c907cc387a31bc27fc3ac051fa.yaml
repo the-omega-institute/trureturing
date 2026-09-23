@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9280947690d053db409b0123a478fda338a847c907cc387a31bc27fc3ac051fa
+  normalized_sha256: sha256:9280947690d053db409b0123a478fda338a847c907cc387a31bc27fc3ac051fa
+cas_ref: sha256:9280947690d053db409b0123a478fda338a847c907cc387a31bc27fc3ac051fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“define”引入有限符号测度上的惰性后继核，其两项线性组合是定义式；本叶未声称保持概率、可测性或不变性，定义未夹带这些结论，故无独立命题待证。
+    previous_atom_id: c7a2000f2ceed44739c6fff5098a5f9380b0ab9e078bb9542326c056d2416c54
+    next_atom_id: dcd5857e8667ba2a30357465eaba37333c289e509f9d9e8f48ac2d0e9ade19d0

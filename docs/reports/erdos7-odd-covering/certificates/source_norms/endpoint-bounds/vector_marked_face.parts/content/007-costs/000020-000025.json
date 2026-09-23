@@ -1,0 +1,787 @@
+[
+  {
+    "index": 20,
+    "name": "R19",
+    "tuple": [
+      0,
+      4
+    ],
+    "weight": "15/17",
+    "constant_old_margin": "98416515396919/226011844055497500",
+    "uniform_source_gain": "178415435672/8071851573410625",
+    "uniform_residual_coefficient": "369410617099/35874895881825",
+    "constant_old_support": {
+      "common": {
+        "constant": "534342470041/1674161807818500",
+        "affine_source_coefficient": "1985439830709472/7034409376001382375",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/5382650"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/37678550"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/263749850"
+            }
+          },
+          {
+            "seven_block": 4,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/1846248950"
+            }
+          },
+          {
+            "seven_block": 5,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/12923742650"
+            }
+          },
+          {
+            "seven_block": 6,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/90466198550"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "186/45233099275",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 8
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "98416515396919/226011844055497500"
+      }
+    },
+    "vertex_new_minima": [
+      "626740288459/1369768751851500",
+      "626740288459/1369768751851500",
+      "626740288459/1369768751851500"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "9563beb4f0e66f3d2eeb6fc8b982dba60e836411de76a7e02363f9c40368d541",
+      "c20766412dda2c2004d38fc40d98adcfd285b1e6f8d0cc5a45b8f6e5fb5b88d1",
+      "af8ad0d51556767622f51410a66b5363f4e83468acb04e391442ea16c5bbda64"
+    ],
+    "fixed_capacity_duals_sha256": "0e00a825815e0b127cd2c3de762dd2b682caa09d100ee72c719565aeb3a12ee9"
+  },
+  {
+    "index": 21,
+    "name": "R19",
+    "tuple": [
+      0,
+      5
+    ],
+    "weight": "15/17",
+    "constant_old_margin": "1553734837799/45202368811099500",
+    "uniform_source_gain": "3914877976/1614370314682125",
+    "uniform_residual_coefficient": "5829493403/7174979176365",
+    "constant_old_support": {
+      "common": {
+        "constant": "1761133189/66966472312740",
+        "affine_source_coefficient": "40377534256544/1406881875200276475",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/69974450"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/489821150"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/3428748050"
+            }
+          },
+          {
+            "seven_block": 4,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/24001236350"
+            }
+          },
+          {
+            "seven_block": 5,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/168008654450"
+            }
+          },
+          {
+            "seven_block": 6,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/1176060581150"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "186/588030290575",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 8
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "1553734837799/45202368811099500"
+      }
+    },
+    "vertex_new_minima": [
+      "50404588519/1369768751851500",
+      "50404588519/1369768751851500",
+      "50404588519/1369768751851500"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "7e3a9e38e61aacb8f02abc520ac752eb05501d7d79d3d617cf51155644e8e331",
+      "2951b727f39f83761d0d6aba25179e99de3b02ed89c1dc91051eff0e52aa2372",
+      "6a156fc93ccb22d48beaa7a871408b5ba7c2be4d91bb49d12bdb0f450c942af3"
+    ],
+    "fixed_capacity_duals_sha256": "e955dcc1312971aefb114223a75b786f765e6f97ce618e3cbca7fa7e5a05d3f7"
+  },
+  {
+    "index": 22,
+    "name": "R19",
+    "tuple": [
+      0,
+      6
+    ],
+    "weight": "15/17",
+    "constant_old_margin": "40564164689/15067456270366500",
+    "uniform_source_gain": "40592696/179374479409125",
+    "uniform_residual_coefficient": "10143251/159443981697",
+    "constant_old_support": {
+      "common": {
+        "constant": "236484607/111610787187900",
+        "affine_source_coefficient": "81008515424/31264041671117255",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/909667850"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/6367674950"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/44573724650"
+            }
+          },
+          {
+            "seven_block": 4,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/312016072550"
+            }
+          },
+          {
+            "seven_block": 5,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/2184112507850"
+            }
+          },
+          {
+            "seven_block": 6,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/15288787554950"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "186/7644393777475",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 8
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "40564164689/15067456270366500"
+      }
+    },
+    "vertex_new_minima": [
+      "3997631923/1369768751851500",
+      "3997631923/1369768751851500",
+      "3997631923/1369768751851500"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "a4f96de06c4d11c5727a4445bf79991fce50f90519eb17ae19370eeaf0a46a1b",
+      "7b5cbd0cdb8867d9e1219880cfca53df818d3fa891334464272e7909e41a2402",
+      "9523514ab039b74b51063b9370074bfa446e9f15be8a142d6e9677b389125215"
+    ],
+    "fixed_capacity_duals_sha256": "39ab457beeb5178e94de989b052cdf2aa8df12cc36c5eedde0fc35f764473e8c"
+  },
+  {
+    "index": 23,
+    "name": "R19",
+    "tuple": [
+      1,
+      0
+    ],
+    "weight": "15/17",
+    "constant_old_margin": "748185641901974/420566963831939925",
+    "uniform_source_gain": "748185641901974/420566963831939925",
+    "uniform_residual_coefficient": "92378989622378873/22430238071036796",
+    "constant_old_support": {
+      "common": {
+        "constant": "1144473514483073063/2442403701068451120",
+        "affine_source_coefficient": "1128487795012936504/22439584003566394665",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                2,
+                3,
+                1,
+                1,
+                1
+              ],
+              "deep_cell": 0,
+              "value": "19839322039/53025892920"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 1,
+              "value": "10974653/158918760"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/1358280"
+            }
+          },
+          {
+            "seven_block": 4,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/9507960"
+            }
+          },
+          {
+            "seven_block": 5,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/66555720"
+            }
+          },
+          {
+            "seven_block": 6,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "14911/465890040"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "403/38824170",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 8
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 1,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "748185641901974/420566963831939925"
+      }
+    },
+    "vertex_new_minima": [
+      "1496371283803948/420566963831939925",
+      "1496371283803948/420566963831939925",
+      "1496371283803948/420566963831939925"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "65b4deb0d3f1029253a45faca6df2f89916887d16becdf4121ece313d50b21b1",
+      "6413b38ff6eca0fbbdf7f845b5495f0c66a749bc0c321d27a7025dee9012b04c",
+      "e0029f42f877a8140b49cc3c41ea7c39c04e4cacbe256a68fa5e7d9fc66818ac"
+    ],
+    "fixed_capacity_duals_sha256": "b9568abec37ed938ca94a74047f9162916b8253f796278724e8b026087ae7d4a"
+  },
+  {
+    "index": 24,
+    "name": "R19",
+    "tuple": [
+      1,
+      1
+    ],
+    "weight": "15/17",
+    "constant_old_margin": "43723952383/316532115900",
+    "uniform_source_gain": "6492104/3768239475",
+    "uniform_residual_coefficient": "7821751/2392533",
+    "constant_old_support": {
+      "common": {
+        "constant": "43452037/468936468",
+        "affine_source_coefficient": "130100407936/3283923007365",
+        "raw_supports": [
+          {
+            "seven_block": 1,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/16170"
+            }
+          },
+          {
+            "seven_block": 2,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/113190"
+            }
+          },
+          {
+            "seven_block": 3,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/792330"
+            }
+          },
+          {
+            "seven_block": 4,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/5546310"
+            }
+          },
+          {
+            "seven_block": 5,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/38824170"
+            }
+          },
+          {
+            "seven_block": 6,
+            "weight": "1",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "1147/271769190"
+            }
+          },
+          {
+            "seven_block": "complete_tail",
+            "weight": "62/45294865",
+            "support": {
+              "baseline": [
+                1,
+                2,
+                2,
+                2,
+                2
+              ],
+              "deep_cell": 0,
+              "value": "55/72"
+            }
+          }
+        ],
+        "cutoff": 8
+      },
+      "old_branch_support": {
+        "b": [
+          2,
+          3,
+          1,
+          1,
+          1
+        ],
+        "c5": [
+          1,
+          1,
+          3,
+          2,
+          2
+        ],
+        "own_deep_cell": 0,
+        "z_cell": 0,
+        "kd_cell": 0,
+        "constant": "43723952383/316532115900"
+      }
+    },
+    "vertex_new_minima": [
+      "4024480829/28775646900",
+      "4024480829/28775646900",
+      "4024480829/28775646900"
+    ],
+    "vertex_branch_and_dual_sha256": [
+      "a0a8b7dd341111acb7874a33290e72945a2ee6547c5dc08c86fc202f7afffc1c",
+      "7e3938f9e64280ccb8a0ad9cf21075e37c783adb0b5907e1a8fc06d091aba5ba",
+      "6a0f3143a938592f7a0d74c7e50c832e957f6bf9e3b79487574b37aa651514b9"
+    ],
+    "fixed_capacity_duals_sha256": "652ca5432db79e438adc239e8e4cc693b84be24827d1bfdcc12de7b3438044c7"
+  }
+]

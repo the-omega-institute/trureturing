@@ -1,0 +1,18 @@
+### 18.6 命题与后续问题：零系数产生的自由噪声面
+
+若允许部分 $p_k=0$，定义紧凸集合
+\[
+\mathcal D_p=\{d\in\mathbb R^N:d_0=0,\ |d_k|\leq1,\
+ d_k=\operatorname{sign}(p_k)\text{ whenever }p_k\neq0,\ 1\leq k<N\}.
+\]
+对 $d\in\mathcal D_p$ 定义 $r_i(d)=\sum_kd_k[\ell_i]_k$、$A_i(d)=Pr_i(d)/c_i-L$。则 $w_\varepsilon=(1+\varepsilon L)/P$ 可行，当且仅当存在 $d\in\mathcal D_p$ 满足
+\[
+\varepsilon A_i(d)\leq1\quad\text{对所有 }i.
+\tag{18.11}
+\]
+若 $L>0$，其精确第一取等区间为 $[0,1/M_*]$，其中
+\[
+\boxed{M_* = \min_{d\in\mathcal D_p}\max_i A_i(d)>0.}
+\tag{18.12}
+\]
+

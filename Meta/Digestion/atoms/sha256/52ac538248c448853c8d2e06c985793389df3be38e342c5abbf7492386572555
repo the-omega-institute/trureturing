@@ -1,0 +1,18 @@
+**定理 95.2（局部化与此剩余类塔的逆极限不交换）。** 定义 95.1 的各 $R_n$ 均有限，各约化态射均满射。存在由投影与局部化诱导的规范含幺环同态
+$$
+\Theta:L_p(R)\longrightarrow\varprojlim_{n\ge1}L_p(R_n).
+$$
+在规范环同构
+$$
+R\cong\mathbb Z_p,\qquad
+L_p(R)\cong\mathbb Z_p[1/p]\cong\mathbb Q_p,
+\qquad
+\varprojlim_{n\ge1}L_p(R_n)\cong0
+$$
+下，$\Theta$ 就是唯一的含幺环同态 $\mathbb Q_p\to0$。因此 $\Theta$ 满射，核为整个源环，但不单射，也不是环同构。与此同时，
+$$
+p_n^n=0\quad(n\ge1),\qquad
+p_R^m\ne0\quad(m\ge0).
+$$
+也就是说，各有限层中的 $p_n$ 都幂零，而极限中的 $p_R$ 没有任何零幂。
+

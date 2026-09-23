@@ -1,0 +1,12 @@
+**定义 25.1（环面、方程与准备范围）。** 本节统一采用
+$$
+\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2,\quad
+ d\mu=(2\pi)^{-2}\,dX_1dX_2,\quad
+\widehat v(k)=\int v(X)e^{-ik\cdot X}\,d\mu,
+$$
+$$
+\|v\|_{H^2}^2=\sum_{k\in\mathbb Z^2}(1+|k|^2)^2|\widehat v(k)|^2,
+\quad \widehat{\partial_jv}(k)=ik_j\widehat v(k),
+\quad \widehat{\Delta v}(k)=-|k|^2\widehat v(k).
+\tag{25.101}
+$$
