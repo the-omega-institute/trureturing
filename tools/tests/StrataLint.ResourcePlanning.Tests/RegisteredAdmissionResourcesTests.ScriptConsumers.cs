@@ -5,6 +5,17 @@ namespace StrataLint.ResourcePlanning.Tests;
 public sealed partial class RegisteredAdmissionResourcesTests
 {
     [Theory]
+    [InlineData("Meta/judge-seed.json", "StrataLint.RepositoryConfiguration.Tests")]
+    [InlineData("Meta/package-materials.json", "StrataLint.RepositoryConfiguration.Tests")]
+    [InlineData("Meta/ci-resources.json", "StrataLint.Configuration.Tests")]
+    public void EngineeringChangesRetainNewConfigurationConsumers(string path, string consumer)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+            Assert.Contains($"tools/tests/{consumer}/{consumer}.csproj",
+                Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+    }
+
+    [Theory]
     [InlineData("push")]
     [InlineData("pr")]
     public void ConfigurationTestsRunWithoutCliTestExecution(string mode)
