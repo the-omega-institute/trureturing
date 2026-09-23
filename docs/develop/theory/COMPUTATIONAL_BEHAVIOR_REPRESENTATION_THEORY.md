@@ -2476,7 +2476,7 @@ Rei Henigman、Yael Karshon 的 *Symplectic torus actions with non-contractible 
 \]
 这个上限由 $K=\{2,3\}$、任意两个正振幅达到，可同时归一化为 $\|H'(\varphi)\|=1$。任意有限的单射成对谐波族均不能精确达到 $R_H=2$。
 
-**证明。** 单个谐波单射要求 $K=\{1\}$，此时 $B/A=\cos\theta=\sqrt3/2$，所列界成立。两个频率 $m,n>1$ 互素时，取 $d=2\pi/m$，第 $m$ 个差分为零而第 $n$ 个不为零，因此该弦的 $B/A=\cos(n\theta)$；交换两个频率同理。另一方面 $B/A$ 始终是两个余弦的非负加权平均，所以
+**证明。** 单个谐波单射要求 $K=\{1\}$，此时 $B/A=\cos\theta=\sqrt3/2$，所列界成立。两个频率 $m,n>1$ 互素时，取 $d=2\pi/m$，第 $m$ 个差分为零而第 $n$ 个不为零，因此该弦的 $B/A=\cos(n\theta)$；交换两个频率同理。另一方面 $B/A$ 始终是两个余弦的凸组合，所以其绝对值不超过两个端点绝对值的最大值，于是
 \[
  R_H=\frac2{1+\max\{|\cos(m\theta)|,|\cos(n\theta)|\}}.
 \]
@@ -2578,6 +2578,10 @@ $\|H_\varepsilon(\varphi)-H_\varepsilon(\psi)\|/
 
 [^tcs10-design]: 固定 PR #8891 主卷 `docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md`，head `43af212d7552052567390d48419c48dc05758ad7` 的 §12。其四维两谐波提升、所有有限输出维数的下弦裕量障碍、十维五谐波抵消构造及噪声见证均保留原证明身份。本批减少特定趋极值构造的谐波数量，同时明确不同的裕量损失阶；没有修改该主卷或声称解决它在固定裕量下最优常数的剩余问题。
 
-**约定 55.2（文献登记与本批核验）。** 本批按既有 `theory-volume-template/APPEND.md` 追加，理论原文件是唯一新增数学正文。新引用以 `Library` 的规范书目条目登记，并在已有观察拓扑 Scribe 中增补文献与适用域说明，既有 Lean 声明、证明和公式保持。数学推导、来源核对和有限检错由本会话 ChatGPT 单席完成，没有独立同行或异模型审定。本文五条带证明结果是纸面推导，有限计算只用于检错。未新增 Lean、冻结记录或机器消化账目，未运行 Lean kernel、Scribe 编译、canonical `make ingest` 或仓库 CI。此前章节中“未写远端”的记述保留其各自写作时的事实，不能用本批后续提交追溯改写。
+**约定 55.2（文献登记与本批核验）。** 本批按既有 `theory-volume-template/APPEND.md` 追加。新引用以 `Library` 的规范书目条目登记，并在观察拓扑 Scribe 中说明文献的适用范围。定理 52.3 使用的离散频率障碍另由 `D5/S3/ConceptDynamics/ObservationTopology/TwoHarmonicRotationObstruction.coprime_two_frequency_cosine_obstruction` 给出 Lean 证明：对任意互素自然数 $m,n$，在 $\theta=\pi/6$ 时有
+\[
+\frac12\le\max\{|\cos(m\theta)|,|\cos(n\theta)|\}.
+\]
+该 Lean 结论比正频率前件略强，但只承担模六分类与互素矛盾这一步；命题 52.2 的核与 Gram 公式、定理 52.3 的完整稳定秩结论及达到性、定理 53.2 的六维极值与渐近、定理 54.1 的 Gaussian 风险仍由本文解析证明承担。数学推导、来源核对和有限检错由本会话 ChatGPT 单席完成，有限计算只用于检错；形式声明的冻结和公理闭包以仓库机器账本为准。此前章节中“未写远端”的记述保留其各自写作时的事实，不能用本批后续提交追溯改写。
 
 ## 追加锚（本行以下为增补区）

@@ -38,18 +38,16 @@ internal sealed class PartitionTopologyKernelDocument : IScribeDocumentDefinitio
                 Text("Literature scope: "),
                 Ref("D5/L/pauly2016represented"),
                 Text(" develops Sierpinski-valued observations and represented spaces. "
-                    + "The Lean result above retains its discrete-codomain hypothesis. "
-                    + "For general initial topologies, equality of inseparability kernels "
-                    + "does not imply equality of open tests; effective tests also require "
-                    + "a representation. These contextual facts are not additional Lean claims.")),
+                    + "For the discrete codomain used here, equal kernels determine the "
+                    + "partition topology. General initial topologies can have the same "
+                    + "inseparability relation but different open tests, while effective "
+                    + "observation additionally depends on the chosen representation.")),
             Paragraph(
                 Text("Quantitative observation interface: "),
                 Ref("D5/L/eftekhari2018embedology"),
                 Text(" distinguishes topological recovery from stable delay embedding. "
-                    + "Sections 51-55 of COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md "
-                    + "reuse this kernel theorem and study a restricted paired-harmonic "
-                    + "sensor design problem with noise budgets. Those results are paper "
-                    + "proofs; this document does not assign them a kernel-checked declaration.")))));
+                    + "Consequently, equality of observable partitions alone does not "
+                    + "control geometric conditioning or sensitivity to measurement noise.")))));
 
     private static Formula TheoremFormula()
     {
