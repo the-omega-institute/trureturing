@@ -1780,3 +1780,217 @@ The use of cyclotomic norms and their exact entry-point valuations is classical 
 **Proposition.** The useful transfer from the repository's spacetime model is task-relative completion: retain phase, the square-level Lie coordinate, the fixed update, and their joint compatibility. It identifies the original WSS defect with a rephasing-invariant cycle displacement and gives a sufficient two-trace observation. It does not make the integer formulation inadequate or establish a new actual WSS prime family.
 
 **Proof.** SJC1-SJC4 construct the extra coordinate and prove the fixed polynomial determines its drift. SJC3 excludes removing a nonzero cycle displacement by a change of coordinates. SJC5 gives exact reconstruction from two required observations, while SJC7 shows that a positive real energy cannot be assumed. SJC8 replaces the same unknown valuation by a specified global norm without independently bounding it. Thus a new prime-family decision still needs an independent constraint on the fixed torsion trace, on G_r, or on their cross-prime distribution. Arbitrarily choosing another lift, treating local states as independent worlds, or substituting a dual-number ring for characteristic p^2 changes the problem instead of proving that constraint.
+
+
+### TBN. A fixed-golden split tower and simultaneous initial-depth balances
+
+#### TBN.1 Calibration of a quantum-information-derived field construction
+
+**Definition.** Keep the original field K=Q(sqrt(5)), O=Z[phi], phi^2=phi+1, v=phi^2, and the original Fibonacci and Lucas sequences. For an integer d>=4 let D(d) be the squarefree part of (d+1)(d-3). The dimensions belonging to the fixed golden field are exactly
+
+$$d=L_{2n}+1=v^n+v^{-n}+1,\qquad n\ge1.$$
+
+**Proof.** D(d)=5 means (d-1)^2-5b^2=4 for an integer b>0. The two coordinates have the same parity, and ((d-1)+b sqrt(5))/2 is a totally positive norm-one unit greater than one in O. The golden unit classification gives v^n for a unique positive n. Conversely the Pell identity for L_(2n),F_(2n) gives the displayed square class.
+
+**Theorem TBN1.** Among square integers d>=4, the equation D(d)=5 holds only at d=4. In particular D(p^(2a))!=5 for every odd prime p and positive a.
+
+**Proof.** Write d=y^2=L_(2n)+1. If n is even, L_(2n)=L_n^2-2, so L_n^2-y^2=1. The positive factors L_n-y and L_n+y would both be one, forcing y=0, a contradiction. If n is odd, y^2-L_n^2=3, so (y-L_n)(y+L_n)=3. The only positive factorization gives y=2,L_n=1, hence n=1. The value d=4 indeed has square class five. The theorem only excludes square seeds; it makes no claim for all nonsquare perfect powers or all mixed seeds.
+
+Gary McConnell, *Some new infinite families of non-p-rational real quadratic fields*, arXiv:2406.14632v1, Theorems 2.1-2.2, constructs fields while D varies, using ideas originating in SIC-POVM quantum information. Its definitions (2.1), (3.2), and Lemma 3.3 describe the associated dimension towers. The argument above enforces the fixed-field condition. In particular the pure p^2 seed in that construction cannot yield an original golden WSS example. This is a restriction on that construction, not an exclusion of p from the original WSS set.
+
+#### TBN.2 A companion to the existing GP3 blocks
+
+**Definition.** For j>=1 put n_j=3^j, r_j=3^(j+1), x_j=L_(n_j), and
+
+$$B_j=L_{2n_j}+1=x_j^2+3.$$
+
+The notation B_j is an integer block, not the cyclotomic coefficient field B of SGN. The existing `PERIODIC_TREE.md`, GP3, uses the different blocks C_j=x_j^2+1. Its results are retained and are not recounted as new theorems.
+
+**Theorem TBN2.** The following exact identities hold:
+
+$$L_{3n_j}=L_{n_j}B_j,\qquad
+B_{j+1}=B_j^3-3B_j^2+3,\qquad B_1=19,$$
+
+$$B_j=\Psi_{r_j}(3),\qquad
+B_j\equiv19\pmod{80},\qquad
+v_3(B_j-1)=j+1,$$
+
+$$\frac{B_j-1}{3^{j+1}}\equiv(-1)^j\pmod3.\tag{TBN1}$$
+
+Here Psi_r is the real cyclotomic polynomial from SJC. Every B_j is odd, greater than one, and nonsquare.
+
+**Proof.** Since n_j is odd, the Lucas triple identity is L_(3n)=L_n^3+3L_n; division gives the first formula. Substituting x_(j+1)=x_j^3+3x_j into x_(j+1)^2+3 gives the displayed cubic in B_j. For r=3^(j+1), the cyclotomic polynomial is 1+Z^(3^j)+Z^(2*3^j). Dividing by Z^(3^j) and evaluating at v, with v+v^(-1)=3, gives B_j=Psi_r(3).
+
+The recursion for x_j sends 4 to -4 and -4 to 4 modulo40. Thus x_j=+/-4 modulo40, giving B_j=19 modulo80. For the ternary claim extend the same definition to B_0=L_2+1=4. The exact factorization
+
+$$B_{j+1}-1=(B_j-1)((B_j-1)^2-3)$$
+
+raises the 3-adic valuation by exactly one and changes the normalized quotient by a minus sign modulo3. Starting with B_0-1=3 proves both ternary statements. Finally x_j>=4, so x_j^2<B_j<(x_j+1)^2. This gives nonsquareness without any factorization.
+
+#### TBN.3 Each factor has a specified original rank and actual depth
+
+**Theorem TBN3.** If p is a prime divisor of B_j, then
+
+$$p>5,\qquad (5/p)=1,\qquad
+\operatorname{ord}_{p}(v)=r_j,\qquad
+\rho(p)=2r_j,\qquad p\equiv1\pmod{2r_j},$$
+
+$$\boxed{v_p(B_j)=h_p.}\tag{TBN2}$$
+
+Here rho(p) is the Fibonacci zero rank, and h_p=v_p(F_(p-(5/p))) is the original initial depth. Different B_j are pairwise coprime.
+
+**Proof.** The congruences in TBN2 exclude 2,3,5. In O/pO let w=v^(n_j). The equation B_j=0 gives w^2+w+1=0. Since p!=3, w!=1 and has order three. The order of v divides 3^(j+1) but not 3^j, hence is r_j. The identity F_a=(phi^a-psi^a)/sqrt(5) shows that rho(p) is the order of phi/psi=-v. The order r_j is odd, so -1 does not belong to the group generated by v; consequently -v has order 2r_j.
+
+The Lucas identity gives p|L_(r_j). The odd-index Pell identity L_(r_j)^2-5F_(r_j)^2=-4 implies 5F_(r_j)^2=4 modulo p. Thus F_(r_j) is a unit modulo p and five is a square. The standard golden Frobenius rank bound now gives 2r_j|p-1.
+
+Also L_(r_j)=L_(n_j)B_j, and L_(n_j)^2=-3 modulo p, so L_(n_j) is a unit. Therefore F_(2r_j)=F_(r_j)L_(r_j) has p-valuation exactly v_p(B_j). This is the valuation at the first Fibonacci zero, so it is h_p. Equality with the valuation at p-(5/p) uses the classical prime-to-p multiplier formula, with multiplier (p-1)/(2r_j) prime to p. Distinct j give distinct exact ranks, so no prime can divide two blocks.
+
+The rank and valuation inputs are classical Lucas arithmetic. They are stated, for example, in Medina-Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, Fibonacci Quarterly53(2015), Theorem1.4, arXiv:0910.2907v4. McConnell's dimension-tower Lemma3.3 has the same order-three mechanism. Ross-Shen-Cai, arXiv:2512.03481v1, explicitly credit the regular cyclotomic valuation case to classical results. TBN does not claim a new general valuation theorem.
+
+#### TBN.4 Three simultaneous balances on the actual initial depths
+
+**Theorem TBN4.** The prime factors of each B_j satisfy
+
+$$\boxed{\sum_{\substack{p\mid B_j\\p\equiv3\ (4)}}h_p\equiv1\pmod2,}\tag{TBN3}$$
+
+$$\boxed{\sum_{\substack{p\mid B_j\\p\equiv4\ (5)}}h_p\equiv1\pmod2,}\tag{TBN4}$$
+
+$$\boxed{\sum_{p\mid B_j}h_p\frac{p-1}{r_j}\equiv(-1)^j\pmod3.}\tag{TBN5}$$
+
+In particular each block has a split prime p with odd initial depth and
+
+$$p\equiv2r_j+1\pmod{4r_j}.$$
+
+Each block also has a prime p with 3 not dividing h_p and v_3(p-1)=j+1. These two existential witnesses are not asserted to be the same prime.
+
+**Proof.** The exact factorization is B_j=product_(p|B_j)p^(h_p) by TBN3. Reduce it modulo4. Since B_j=3 modulo4, the exponents of the prime factors congruent to3 have odd sum. This proves TBN3. All factors split in the golden field, hence are1 or4 modulo5; reducing the same factorization modulo5 and using B_j=4 proves TBN4.
+
+For TBN5 write p=1+r_j a_p, which is legitimate for every factor. Since r_j^2 is divisible by3r_j, expansion of the finite product modulo3r_j gives
+
+$$B_j\equiv1+r_j\sum_{p\mid B_j}h_p a_p\pmod{3r_j}.$$
+
+The last congruence in TBN2 identifies the sum modulo3. Its nonzero right side forces a term with both h_p and a_p nonzero modulo3, proving the second witness claim. The first witness has h_p odd and p=3 modulo4. Combining this with p=1 modulo2r_j, and using r_j odd, gives its displayed class modulo4r_j.
+
+These balances genuinely concern the original h_p, because TBN3 removes index-multiplier contributions. They are elementary joint constraints on one actual finite prime support. They do not specify which factor has depth one.
+
+#### TBN.5 A fifth-power budget for an all-WSS block
+
+**Definition.** For r=3^(j+1), define
+
+$$b(r)=\begin{cases}
+8r+1,&r\equiv1\pmod5,\\
+4r+1,&r\equiv2\pmod5,\\
+6r+1,&r\equiv3\pmod5,\\
+2r+1,&r\equiv4\pmod5.
+\end{cases}$$
+
+**Theorem TBN5.** If every prime factor of B_j is WSS, then
+
+$$\sum_{p\mid B_j}h_p\ge5,\qquad
+\boxed{B_j\ge b(r_j)^5.}\tag{TBN6}$$
+
+Consequently B_j<b(r_j)^5 is a sufficient, independently checkable condition for B_j to have a non-WSS factor. It does not construct a WSS prime.
+
+**Proof.** Under the premise all h_p>=2. The first parity balance excludes total exponent two and every possibility of total exponent four, because all exponents would be even. A total exponent three would consist of a single exponent three; the ternary balance excludes that case because every summand would be zero modulo3. Totals zero and one are impossible as B_j>1 and each exponent is at least two. Hence the total is at least five.
+
+Each prime factor is p=1+2r_j t with integer t>=1, and p is1 or4 modulo5. The smallest positive allowed t is respectively4,2,3,1 in the four residue classes of r shown. This gives p>=b(r_j), without asserting that b(r_j) itself is prime. Multiplying these lower bounds with the actual exponents proves TBN6.
+
+For the fixed indices j=1,2,3 the respective pairs (B_j,b(r_j)^5) are
+
+$$(19,2476099),\quad
+(5779,15386239549),\quad
+(192900153619,115139273278249).$$
+
+All satisfy the strict inequality, establishing a non-WSS factor in each of these three known finite blocks without factoring the third one. These bounded checks are not previously unknown WSS-family decisions. At j=4 this same test fails: B_4=7177905237579946589743592924684179 exceeds1459^5. No conclusion about that block follows from this inequality.
+
+#### TBN.6 The infinite consequence and the unclosed branch
+
+**Corollary.** There are infinitely many distinct split primes p with odd h_p, p=3 modulo4, and rho(p)=2*3^s for some s>=2. Within this restricted set, either infinitely many have h_p=1 or infinitely many have odd h_p>=3, or both. At least J distinct primes of those two types combined lie below B_J.
+
+**Proof.** Choose a parity witness from each of the J pairwise-coprime blocks B_1,...,B_J. TBN3-TBN4 give all stated properties and ensure distinctness. The blocks increase strictly, so each selected prime is at most B_J. Every positive odd h_p is one or at least three. If the union is infinite at least one of these two subsets is infinite.
+
+This is a specialization of the existing GP3 nonsquare-block strategy to the complementary split Lucas tower, with the additional ternary balance displayed above. It is not a proof that either designated subset by itself is infinite. In particular an initial depth of three remains allowed and is itself WSS. The fifth-power lower budget grows polynomially in r_j, whereas B_j grows exponentially in3^j, so the bound does not exclude the all-WSS branch uniformly. No new actual WSS prime-family existence or exclusion, or resolution of WSS, is claimed.
+
+### DCE. Primitive depth vectors from a solved exponential equation
+
+#### DCE.1 The exact classical input
+
+**Theorem (Lebesgue-Nagell, D=3).** There are no integers x,y and integer e>=3 satisfying x^2+3=y^e. In particular this holds for positive x and y. This is a cited theorem, not a newly proved exponential Diophantine result in this dossier. A precise published locator is Y. Bugeaud, M. Mignotte and S. Siksek, *Classical and modular approaches to exponential Diophantine equations II. The Lebesgue-Nagell equation*, Compositio Math. 142 (2006), 31-62, DOI 10.1112/S0010437X05001739, Theorem 1 and Section 16, the empty D=3 row. The primary author preprint is arXiv:math/0405220; the table is on its printed page 47. The historical D=3 case is attributed to Nagell in Section 2. We use the classification as an external mathematical input and do not claim to reproduce its proof or certify it in Lean.
+
+**Lemma DCE1.** For every integer x>=2, x^2+3 is not a perfect power y^e with y>=2 and e>=2.
+
+**Proof.** Exponents e>=3 are excluded by the displayed classical theorem. At e=2, positive factorization gives (y-x)(y+x)=3, so y-x=1 and y+x=3. This forces x=1, contrary to x>=2. This lemma does not say that x^2+3 is never powerful. Mixed exponents are not excluded by the cited equation.
+
+#### DCE.2 No common divisor of the actual initial depths
+
+**Theorem DCE2.** For every j>=1, retain the actual block B_j=L_(3^j)^2+3 and its original depths from TBN. Then
+
+$$\boxed{\gcd\{h_p:p\text{ prime},\ p\mid B_j\}=1.}\tag{DCE1}$$
+
+Equivalently, for every integer e>=2 there is a prime p|B_j such that e does not divide h_p. In particular B_j cannot be a power of a single WSS prime. If B_j has only one distinct prime factor, that factor has h_p=1 and B_j itself is prime.
+
+**Proof.** The support is finite and nonempty because B_j>1. TBN3 gives the exact integer factorization B_j=product_(p|B_j) p^(h_p), without an index-multiplier contribution. If the gcd of these positive exponents were g>1, the integer Y=product p^(h_p/g) would satisfy B_j=Y^g. But L_(3^j)>=4, so DCE1 prohibits this equality. This proves the gcd. If every exponent were divisible by a chosen e>=2, the gcd would also be divisible by e, proving the witness statement. Conversely the witness statement for every e rules out any gcd greater than one. For a one-prime support the gcd equals its only exponent, giving the last conclusion.
+
+This uses a solved global exponential equation to constrain the actual fixed-golden depth vector. It is stronger than the two parity balances and single modulo-three balance of TBN4: it excludes a common exponent divisor of any size. The implication is a repository specialization of the cited theorem, not a new solution of the Lebesgue-Nagell problem or an independent proof of WSS existence.
+
+**Corollary DCE3.** Fix any real bound X and any integer e>=2. There is a split prime p>X with
+
+$$\rho(p)=2\cdot3^s\quad\text{for some }s\ge2,
+\qquad e\nmid h_p.$$
+
+There are infinitely many such primes for every fixed e. More strongly, the positive integers h_p for the primes p>X in the union of these block supports have gcd one.
+
+**Proof.** Choose j so large that 2r_j+1>X. Every prime dividing B_j exceeds X by TBN3. DCE2 gives a witness for e and shows that the depths in this finite subset already have gcd one. Different blocks have disjoint prime support, so repeating with arbitrarily large j gives infinitely many witnesses. A common divisor of the depths in the entire tail would divide the gcd in this one finite block, hence is one. These primes may have depth one or larger depths not divisible by e; neither possibility is selected by this argument.
+
+#### DCE.3 An all-depth covering budget and the exact smallest pattern
+
+**Theorem DCE4.** Let H>=2 be an integer. If every prime divisor of B_j has h_p>=H, then B_j has at least two distinct prime factors and
+
+$$\boxed{\Omega(B_j):=\sum_{p\mid B_j}h_p\ge2H+1,
+\qquad B_j\ge b(r_j)^{2H+1}.}\tag{DCE2}$$
+
+Here b(r_j) is the explicit residue-class lower bound defined in TBN5. If equality Omega(B_j)=2H+1 holds, there are exactly two distinct prime factors and their depths are exactly H and H+1. In particular, under all-WSS covering, total multiplicity five can only have the form P^2 Q^3 with distinct primes P,Q.
+
+**Proof.** A single factor would make the depth gcd at least H, contrary to DCE2. With at least three factors the total is at least 3H>2H+1, since H>=2. With two factors the total is at least 2H, but equality would give the exponent vector (H,H), again contrary to its gcd being one. Hence the total is at least 2H+1. Equality leaves two integers at least H whose sum is 2H+1, necessarily H,H+1. Every actual prime factor is at least b(r_j) by TBN5, so multiplying its powers gives the size bound. No primality of b(r_j) is required.
+
+**Corollary.** For every H>=2, the exact inequality B_j<b(r_j)^(2H+1) guarantees some actual prime p|B_j with h_p<H. For example the fixed fourth block satisfies
+
+$$1459^{10}<B_4=7177905237579946589743592924684179<1459^{11},$$
+
+so it has a prime factor of original depth at most four. This does not decide whether that factor is WSS, and uses no factorization of B_4.
+
+**Proof.** Take the contrapositive of DCE4. In the fourth block r_4=243 and b(r_4)=1459; H=5 gives the conclusion. The two displayed inequalities are exact comparisons of the written integers. The bound permits depths one, two, three or four.
+
+**Theorem DCE5.** Suppose all prime factors of B_j are WSS and Omega(B_j)=5. With the forced factorization B_j=P^2 Q^3, one has
+
+$$\boxed{Q\equiv19\pmod{40},\qquad
+P\equiv1+2(-1)^j r_j\pmod{6r_j},\qquad
+v_3(P-1)=j+1.}\tag{DCE3}$$
+
+Both primes also have the split exact rank 2r_j from TBN3. If Q=19 modulo80 then P^2=9 modulo16; if Q=59 modulo80 then P^2=1 modulo16.
+
+**Proof.** DCE4 forces two distinct factors with the indicated depths. Since P is odd, P^2=1 modulo8. The congruence B_j=19 modulo80 gives Q^3=3 modulo8; cubing is the identity on odd residues modulo8, so Q=3 modulo8. Every factor is 1 or4 modulo5, and hence P^2=1 modulo5. The same product gives Q^3=4 modulo5, so Q=4 modulo5. Combining gives Q=19 modulo40.
+
+Write P=1+2r_j u. In TBN5's depth-balance equation modulo3, the contribution from Q has its factor h_Q=3 and vanishes. The remaining contribution is 2*(P-1)/r_j=4u=u modulo3. Thus u=(-1)^j modulo3, proving the displayed class and exact ternary valuation. Finally B_j=3 modulo16 and Q=19 or59 modulo80 give Q^3=11 or3 modulo16 respectively. Multiplication by P^2 yields the two stated square classes. These necessary conditions do not prove existence or impossibility of this two-prime pattern.
+
+#### DCE.4 Pure prime-power seeds cannot reach the fixed golden field
+
+**Theorem DCE6.** For every odd prime p and every integer a>=2, McConnell's dimension parameter satisfies
+
+$$\boxed{\mathbb D(p^a)\ne5.}\tag{DCE4}$$
+
+This extends TBN1 from square seeds to every pure odd-prime-power seed, including nonsquare exponents.
+
+**Proof.** If D(p^a)=5, TBN1's dimension description gives p^a=L_(2n)+1 for a positive n. If n is odd and n>=3, this is L_n^2+3, prohibited by DCE1. At n=1 the value is four, not an odd prime power. If n is even then n>=2, L_n>=3 and
+
+$$p^a=(L_n-1)(L_n+1).$$
+
+Since p^a is odd, both factors are odd and their gcd, which divides two, is one. Both factors are greater than one. They cannot both be powers of the same prime p. This is a contradiction. No Catalan theorem and no classification of all mixed seed values are used.
+
+The conclusion excludes this unbounded family of parameter inputs from one varying-field construction. It does not exclude any p from being WSS by another mechanism. The fixed-field condition and the prime-power-seed condition are both essential to the stated interpretation.
+
+#### DCE.5 What the new restriction still permits
+
+**Proposition.** DCE2 rules out every common-divisor depth pattern on each actual B_j, but does not prove a simple prime factor in every B_j. The vector (2,3) has gcd one and all entries at least two. DCE5 imposes additional residue conditions on a realization of that vector, without eliminating it. No all-WSS block or WSS prime is constructed in DCE.
+
+**Proof.** The gcd computation on the abstract vector is immediate. The arguments of DCE2-DCE6 exclude common-divisor and pure prime-power branches, whereas none derives a contradiction for two distinct actual primes meeting all conditions of DCE5, nor constructs such primes. DCE4 is a lower size budget. Since B_j grows exponentially in 3^j while b(r_j) grows linearly in r_j, the budget at fixed H cannot exclude covering at every j. Hence a new zero-set decision still requires an independent treatment of the heterogeneous-depth branch, or of a different actual initial-rank block. The published input and its application are not counted as a newly solved external problem.
