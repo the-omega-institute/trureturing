@@ -43,12 +43,6 @@ private def flag : Bool → List Bool → Bool
   | previous, [] => previous
   | _, b :: w => flag b w
 
-private lemma advance_add {R : Type*} [Add R] (n k : ℕ) (z : R × R) :
-    advance (n + k) z = advance k (advance n z) := by
-  induction n generalizing z with
-  | zero => simp [advance]
-  | succ n ih => simpa only [Nat.succ_add, advance] using ih (z.2, z.1 + z.2)
-
 private lemma value_append {R : Type*} [AddMonoid R]
     (w w' : List Bool) (u v : R) :
     value u v (w ++ w') = value u v w +
@@ -65,12 +59,6 @@ private lemma legal_append (w w' : List Bool) (b : Bool) :
   induction w generalizing b with
   | nil => simp [legal, flag]
   | cons c w ih => simp only [List.cons_append, legal, flag, ih, and_assoc]
-
-private lemma flag_append (w w' : List Bool) (b : Bool) :
-    flag b (w ++ w') = flag (flag b w) w' := by
-  induction w generalizing b with
-  | nil => rfl
-  | cons c w ih => exact ih c
 
 private lemma zero_facts {R : Type*} [AddMonoid R] (n : ℕ) :
     (∀ u v : R, value u v (zeros n) = 0) ∧
@@ -106,6 +94,20 @@ theorem result (M T : ℕ) (hM : 2 ≤ M) (hT : 3 ≤ T)
       ∃ a aInv : ZMod M, a*aInv = 1 ∧
         r' = a*r ∧ u' = a*u ∧ v' = a*v) := by
   letI : NeZero M := ⟨by omega⟩
+  have advance_add (n k : ℕ) (z : ZMod M × ZMod M) :
+      advance (n + k) z = advance k (advance n z) := by
+    change
+      (fun z : ZMod M × ZMod M => (z.2, z.1 + z.2))^[n + k] z =
+        (fun z : ZMod M × ZMod M => (z.2, z.1 + z.2))^[k]
+          ((fun z : ZMod M × ZMod M => (z.2, z.1 + z.2))^[n] z)
+    simpa only [Nat.add_comm] using
+      Function.iterate_add_apply
+        (fun z : ZMod M × ZMod M => (z.2, z.1 + z.2)) k n z
+  have flag_append (w w' : List Bool) (b : Bool) :
+      flag b (w ++ w') = flag (flag b w) w' := by
+    change List.foldl (fun _ c => c) b (w ++ w') =
+      List.foldl (fun _ c => c) (List.foldl (fun _ c => c) b w) w'
+    exact List.foldl_append
   have pair_formula : ∀ n : ℕ, ∀ x y : ZMod M,
       advance (n+1) (x,y) =
         ((Nat.fib n : ZMod M)*x + (Nat.fib (n+1) : ZMod M)*y,
