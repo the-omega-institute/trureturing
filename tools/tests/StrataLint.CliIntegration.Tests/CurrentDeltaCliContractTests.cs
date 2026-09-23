@@ -519,7 +519,6 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         if (template)
         {
-            foreach (var pair in InformationTemplateFixture.PolicyFiles()) fixture.Files[pair.Key] = pair.Value;
             fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
                 "  - \"lean-report-inputs.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
             var templatePolicy = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(

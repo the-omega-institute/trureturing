@@ -8,6 +8,8 @@ root_files:
   - "Directory.Packages.props"
   - "Makefile"
   - "README.md"
+  - "Reg/lake-manifest.json"
+  - "Reg/lakefile.toml"
   - "Trureturing.lean"
   - "global.json"
   - "lake-manifest.json"
