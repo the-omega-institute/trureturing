@@ -931,3 +931,5 @@ The complete results and proofs are organized below. Each link opens the corresp
 - [Every literal65/63 equality source has an exact five-column decomposition and one actual private law with Gamma at most25/3; the same law works on any source containing its private structure](profile-notes/arithmetic/449-equality-sources-have-a-private-law-below-nine.md)
 
 - [Weighted original ternary depths have sharp fixed-cofactor bounds34/9 and11/3 with one Gram deletion credit; a702-label actual family separates good head marginals from the uniform outside-lift completion budget](profile-notes/arithmetic/450-weighted-original-depths-and-the-uniform-lift-boundary.md)
+
+- [Trimming actual early-depth cylinders preserves any given core law and bounds all single-outside-prime-power completion tails with a|1225 and p>=43 by3677489/17297280<1/4, retaining arbitrary finite heights and original phases](profile-notes/arithmetic/451-original-phase-trimming-gives-a-summable-single-prime-lift.md)
