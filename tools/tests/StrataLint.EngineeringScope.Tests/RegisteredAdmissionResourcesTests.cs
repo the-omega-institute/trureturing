@@ -60,9 +60,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("tools/lean-inspector/tests/test_reuse.py")]
-    [InlineData("tools/scripts/agent/openproblem/erdos617.py")]
-    public void FileMapOnlyPushPlansKeepBuildAndTestCachesWithoutCurrentOrLeanCaches(string input)
+    [InlineData("tools/lean-inspector/tests/test_reuse.py", true)]
+    [InlineData("tools/scripts/agent/openproblem/erdos617.py", false)]
+    public void FileMapOnlyPushPlansKeepRegisteredDependencyCaches(string input, bool dependency)
     {
         var plan = Plan(input, "", "push");
         var resources = Strings(plan["resources"]!);
@@ -75,7 +75,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.DoesNotContain("lean-report", resources);
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
         Assert.DoesNotContain("current", caches);
-        Assert.DoesNotContain("dependency", caches);
+        Assert.Equal(dependency, caches.Contains("dependency"));
         Assert.DoesNotContain("project", caches);
         Assert.Contains("judge", caches);
         Assert.Contains("engineering", caches);
@@ -220,6 +220,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.Equal(new[] {
             "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
             "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+            "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
         }, Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
@@ -440,7 +441,8 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    // Use an existing D5 owner address to exercise registered semantic-input requirements.
+    [InlineData("D5/S0/Carrier/Ring.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("Meta/ci-checks.json")]
     [InlineData("Meta/registry.yaml")]

@@ -19,13 +19,21 @@ public sealed class DeclaredTemplateUnregisteredTests
     public void new_public_theorem_without_registration_blocks() => Observes(Build());
 
     [Fact]
-    public void validated_readout_registration_covers_new_theorem() => Declared(Build(binding: "inline"));
+    public void existing_inline_registration_is_assessed_but_requires_mirror_for_new_theorem()
+    {
+        Declared(Build(binding: "inline"));
+        Observes(Build(binding: "inline"));
+    }
 
     [Fact]
-    public void validated_sidecar_covers_new_theorem() => Declared(Build(binding: "sidecar"));
+    public void existing_sidecar_is_assessed_but_requires_mirror_for_new_theorem()
+    {
+        Declared(Build(binding: "sidecar"));
+        Observes(Build(binding: "sidecar"));
+    }
 
     [Fact]
-    public void registration_in_another_module_covers_new_theorem() => Declared(Build(binding: "foreign"));
+    public void registration_in_another_module_does_not_replace_owner_mirror() => Observes(Build(binding: "foreign"));
 
     [Theory]
     [InlineData("theorem")]
@@ -142,7 +150,12 @@ public sealed class DeclaredTemplateUnregisteredTests
         source: TwoTheoremSource, declarations: [new(Theorem + "_second", "theorem", "True", [])]), Theorem + "_second");
 
     [Fact]
-    public void unrelated_foreign_records_cannot_fail_selected_theorem() => Declared(Build(binding: "foreign", malformed: true));
+    public void unrelated_foreign_records_cannot_fail_selected_theorem()
+    {
+        var context = Build(binding: "foreign", malformed: true);
+        Observes(context);
+        Assert.DoesNotContain(Findings(context), f => f.Message.StartsWith("DTR-Evidence ", StringComparison.Ordinal));
+    }
 
     [Fact]
     public void sl031_dispatch_blocks_unregistered_theorem()
@@ -183,10 +196,18 @@ public sealed class DeclaredTemplateUnregisteredTests
             after[pin] = "{}\n";
             changes = [pin];
         }
-        var owner = binding == "foreign" ? Registration : Target;
+        const string mirror = "Reg/" + Target;
+        var owner = binding switch { "foreign" => Registration, "mirror" => mirror, _ => Target };
         var ownerModule = InformationTemplateEvidence.ModuleForSource(owner);
         var key = new InformationOccurrenceKey(ownerModule, ownerModule, Theorem, ownerModule + ".arena", ownerModule + ".catalog");
         var reports = Report(after, count: 0).Files.ToDictionary(p => p.Key.Value, p => p.Value);
+        if (binding == "mirror")
+        {
+            before[mirror] = after[mirror] = "import D5.S0.Carrier.Target\n";
+            after["lean-report-inputs.json"] = before["lean-report-inputs.json"] = before["lean-report-inputs.json"]
+                .Replace("\"D5/**/*.lean\"", "\"**/*.lean\"", StringComparison.Ordinal);
+        }
+        if (binding == "mirror") reports[mirror] = new(["D5.S0.Carrier.Target"], []);
         reports[Target] = reports[Target] with { Declarations = (declarations ?? [new(Theorem, "theorem", "True", [])]).ToImmutableArray() };
         var registered = binding != "none";
         if (registered)
@@ -209,11 +230,11 @@ public sealed class DeclaredTemplateUnregisteredTests
                 plan_identity = Hash("plan"), descriptor_identity = Hash("descriptor"), actual_identity = Hash("actual"),
                 argument_inputs = Array.Empty<object>(), extraction_inputs = Array.Empty<object>() } : null,
         };
-        foreach (var path in new[] { Target, Registration })
+        foreach (var path in binding == "mirror" ? new[] { Target, Registration, mirror } : new[] { Target, Registration })
         {
             var own = registered && owner == path;
             var records = new List<object>();
-            if (own) records.Add(Record(path, binding is "inline" or "foreign"));
+            if (own) records.Add(Record(path, binding is "inline" or "foreign" or "mirror"));
             if (binding == "sidecar" && path == Registration) records.Add(Record(path, true));
             if (malformed && path == Registration) records.Add(new { key = new { theorem = "Other.unrelated" }, certificate = "malformed" });
             reports[path] = reports[path] with { InformationTemplates = JsonSerializer.SerializeToElement(new

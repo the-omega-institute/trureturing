@@ -12,10 +12,12 @@ from test_native_packaging import *
 from test_native_reuse import *
 from test_native_interface import *
 from test_native_records import *
+from packages.reg import NativeRegTests
+from Census.tests.relocation_fixture import NativeRelocationTests
 
 class NativeTests(NativeTestSupport, NativeInvalidationTests, NativePublicationTests,
                   NativeRecoveryTests, NativePackagingTests, NativeReuseTests,
-                  NativeInterfaceTests, NativeRecordTests, unittest.TestCase):
+                  NativeInterfaceTests, NativeRecordTests, NativeRegTests, unittest.TestCase):
     pass
 
 if __name__ == '__main__':

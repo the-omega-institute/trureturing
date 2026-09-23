@@ -7,6 +7,48 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
+    [InlineData("tools/lean-inspector/tests/packages/reg.py", true)]
+    [InlineData("README.md", false)]
+    public void RegisteredNativeTransportInputsInvalidateOnlyConsumedSource(string path, bool invalidates)
+    {
+        using var fixture = new CandidateFixture();
+        var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
+        var declaration = registration["projects"]!.AsArray().Single(row => row!["path"]!.ToString()
+            == "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj")!;
+        // ProduceReport imports test_native, including its nested packages.reg source.
+        // Keep the real runtime declaration; the small fixture owns compile inputs.
+        EditRegistration(fixture, rows =>
+        {
+            foreach (var field in new[] { "execution_inputs", "execution_excludes", "execution_filemap_paths" })
+                rows[0]![field] = declaration[field]!.DeepClone();
+        });
+        foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
+            if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, "registered fixture material\n");
+        fixture.Write(path, "original fixture material\n");
+        fixture.Track();
+        Assert.Equal([CandidateFixture.First, CandidateFixture.Second], Execute(fixture));
+        Seed(fixture);
+        var prior = CommonExecutionEvidence.ValidateTests(fixture.Root);
+
+        fixture.Write(path, "changed fixture material\n");
+        fixture.Track();
+        var calls = Execute(fixture);
+        var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        Assert.True(calls.SequenceEqual(invalidates ? new[] { CandidateFixture.First } : []),
+            $"native transport input {path}: invalidates={invalidates}; executed={string.Join(',', calls)}; "
+            + $"before={prior.Projects[0].InputFingerprint}; after={accepted.Projects[0].InputFingerprint}; status={accepted.Projects[0].Status}");
+        Assert.NotEqual(prior.Candidate, accepted.Candidate);
+        if (invalidates)
+        {
+            Assert.NotEqual(prior.Projects[0].InputFingerprint, accepted.Projects[0].InputFingerprint);
+            Assert.Equal("executed", accepted.Projects[0].Status);
+            Assert.Equal(accepted.Candidate, accepted.Projects[0].ExecutionCandidate);
+        }
+        else Assert.Equal(prior.Projects[0] with { Status = "reused" }, accepted.Projects[0]);
+        Assert.Equal(prior.Projects[1] with { Status = "reused" }, accepted.Projects[1]);
+    }
+
+    [Theory]
     [InlineData("Meta/FILEMAP.toml", true)]
     [InlineData("Meta/FILEMAP.fixture.toml", true)]
     [InlineData("tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json", true)]
