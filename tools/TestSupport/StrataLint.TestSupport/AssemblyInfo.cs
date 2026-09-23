@@ -43,3 +43,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.RepositoryConfiguration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.ConfigurationTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.PrScript.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.ReportSupervisor.Tests")]

@@ -3,7 +3,7 @@ using System.Text;
 using StrataLint.Engine;
 using Xunit;
 
-namespace StrataLint.Tests;
+namespace StrataLint.ReportSupervisor.Tests;
 
 internal sealed class ReportSupervisorFixture : IDisposable
 {
