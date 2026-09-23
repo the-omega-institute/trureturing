@@ -66,7 +66,7 @@ public sealed class ReportSupervisorScriptTests
     {
         using var fixture = new ReportSupervisorFixture();
 
-        var result = fixture.Run("ingest-consumer", leanSlot: false, "/usr/bin/false");
+        var result = fixture.Run("ingest-consumer", leanSlot: false, "/usr/bin/true");
 
         Assert.Equal(1, result.ExitCode);
     }
