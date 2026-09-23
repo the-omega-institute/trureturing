@@ -1,0 +1,32 @@
+**定义 21.0（测试域与完整 Weil 泛函）。** 令 $\mathcal E$ 为实直线上偶的、复值的光滑紧支撑函数所成的复线性空间，采用角频率变换
+$$
+\widehat k(z)=\int_{\mathbb R}e^{-izx}k(x)\,dx,
+\qquad
+\widetilde f(x)=\overline{f(-x)}.
+\tag{21.1}
+$$
+固定实际 Riemann $\zeta$ 的同一归一化，定义
+$$
+\begin{aligned}
+\operatorname{Pole}(k)&=\widehat k(-i/2)+\widehat k(i/2),\\
+\operatorname{Prime}(k)&=
+\sum_{\substack{p\ \mathrm{prime}\\a\ge1}}
+ (\log p)p^{-a/2}\bigl(k(a\log p)+k(-a\log p)\bigr),\\
+\operatorname{Arch}(k)&=\frac1{2\pi}\int_{\mathbb R}
+ \left(\Re\psi\left(\frac14+\frac{it}2\right)-\log\pi\right)
+ \widehat k(t)\,dt,\\
+W(k)&=\operatorname{Pole}(k)-\operatorname{Prime}(k)+\operatorname{Arch}(k),\\
+Q(f)&=\Re W(\widetilde f*f).
+\end{aligned}
+\tag{21.2}
+$$
+其中 $\psi=\Gamma'/\Gamma$。本域上的 Archimedean 可积性及完整显式公式采用 [ArchimedeanConvergence](../../../D5/S3/Weil/Separator/ArchimedeanConvergence.lean) 与 [UnconditionalExplicitFormula](../../../D5/S3/Weil/Separator/UnconditionalExplicitFormula.lean) 的既有结论；素数项、极点项和积分归一化与 [PrimePoleTerms](../../../D5/S3/Weil/PrimePoleTerms.lean) 一致。这里的 $Q$ 是二次型值，不是概率质量。
+
+固定 [UnconditionalCanonicalZeroData](../../../D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.lean) 中的实际零点呈现 $Z=\operatorname{zetaZeroData}$。其各项为实际非平凡零点，重数为正，每个实际非平凡零点恰在一个编号出现；排序的存在不作为可计算零点表的假设。定义
+$$
+B(f,g)=W(\widetilde f*g)
+=\operatorname{fullMixedWeilForm}(Z,g,f).
+\tag{21.3}
+$$
+右式采用 [WeilFullGramInertia](../../../D5/S3/Weil/BurnolGram/WeilFullGramInertia.lean) 的完整混合型，两个测试参数按 $(g,f)$ 排列。所有响应均指同一个 $W$；改变观察档案或测试选择不改变这个算术对象。
+

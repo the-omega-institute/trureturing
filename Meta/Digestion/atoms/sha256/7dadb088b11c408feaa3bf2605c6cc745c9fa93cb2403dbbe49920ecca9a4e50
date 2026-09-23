@@ -1,0 +1,12 @@
+**定理 141.9（最优首项一）。** 对全部有限 $k\ge2$，共同常数下有
+$$
+\boxed{d_k(R)=\frac1R+O\!\left(\frac{\log R}{R^2}\right)\quad(R\to\infty).}
+\tag{141.17}
+$$
+特别地，
+$$
+\lim_{R\to\infty}\sup_{k\ge2}|R\,d_k(R)-1|=0.
+\tag{141.18}
+$$
+任意随 $R$ 改变的有限整数参数 $k_R\ge2$，包括无界参数序列，均满足 $R\,d_{k_R}(R)\to1$。
+

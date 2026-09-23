@@ -1,0 +1,15 @@
+**推论 142.10（完整双侧关系的平均缺陷下确界为零而不取到）。** 固定有限整数 $k\ge2$，仍取第139节的平稳 Parry 律 $\mu_k$。对完整双侧关系路径上的任意可测函数 $h:\mathcal Y_k\to\mathbb F_2$，定义同一函数的平移输出 $a_t=h(\sigma^t r)$ 及平均运输缺陷
+$$
+\Delta_k(h)=\int_{\mathcal Y_k}
+\mathbf1_{\{h(\sigma r)\oplus h(r)\oplus(1-r_0)=1\}}\,d\mu_k(r).
+\tag{142.18}
+$$
+则
+$$
+\inf_{\substack{h:\mathcal Y_k\to\mathbb F_2\\h\text{ 可测}}}\Delta_k(h)=0,
+\qquad
+\Delta_k(h)>0\quad\text{对每个这样的 }h.
+\tag{142.19}
+$$
+因而这个下确界不由任何可测关系选择取到。
+
