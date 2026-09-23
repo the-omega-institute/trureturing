@@ -1525,7 +1525,6 @@
         "tools/StrataLint.Unregistered/Program.cs",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/ProducerInputFixture.cs",
         "tools/TestSupport/StrataLint.CliTestSupport/RuleFixture.cs",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/TestSupport/StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs",
         "tools/TestSupport/StrataLint.NativeReportTestSupport/NativeReportFixture.cs",
         "tools/TestSupport/StrataLint.ProcessTestSupport/TestProcessRunner.cs",
@@ -1569,6 +1568,7 @@
         "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
         "tools/tests/StrataLint.CiArtifacts.Tests/TransportIdentityTests.cs",
         "tools/tests/StrataLint.CliIntegration.Tests/CurrentDeltaCliContractTests.cs",
+        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs",
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
         "tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs",
@@ -1587,7 +1587,6 @@
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
         "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
-        "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
