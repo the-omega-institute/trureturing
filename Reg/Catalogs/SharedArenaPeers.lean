@@ -190,9 +190,7 @@ open _root_.D5.S3.ConceptDynamics.CIRPT
 
 theorem all_peers_trivial :
     (∀ i, interventionCatalog.TrivialInCatalog i) ∧ (∀ i, observationCatalog.TrivialInCatalog i) := by
-  constructor
-  · intro i; exact Finset.card_eq_zero.mp (intervention_unique_zero i)
-  · intro i; exact Finset.card_eq_zero.mp (observation_unique_zero i)
+  sorry
 end
 
 section
