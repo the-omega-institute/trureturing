@@ -127,7 +127,20 @@ internal sealed class PrimeCyclotomicTraceImageDocument : IScribeDocumentDefinit
                             + "prove that an unbounded new prime family meets the "
                             + "inequality. This analytic and valuation argument is "
                             + "not part of integral_image; no new formal statement "
-                            + "or kernel certification is attached to this reference."))),
+                            + "or kernel certification is attached to this reference.")),
+                    Paragraph(
+                        Text("Actual split-block depths and the solved exponential input: "),
+                        Ref(LibraryNoteRef.Create("D5/L/bugeaud2006lebesguenagell").Value),
+                        Text(". TBN and DCE in the existing WSS owner identify every "
+                            + "prime exponent in L_(3^j)^2+3 with its original h_p, then "
+                            + "use the cited no-perfect-power theorem to prove that "
+                            + "those depths have gcd one. A covering with all depths "
+                            + "at least H>=2 therefore has multiplicity at least 2H+1; "
+                            + "equality has exactly two depths H,H+1. This is related "
+                            + "ordinary number theory, not a proof dependency or new "
+                            + "conclusion of integral_image. Mixed depths such as2,3 "
+                            + "remain possible; no WSS example or kernel certificate "
+                            + "is introduced by this source reference."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string name) => F.Id(name);
