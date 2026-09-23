@@ -76,7 +76,7 @@ internal sealed class ZeckendorfFutureKernelDocument : IScribeDocumentDefinition
     private static Formula Bits()=>C("List",C("Bool"));
     private static Formula Read(Formula u,Formula v,Formula w)=>C("value",u,v,w);
     private static Formula Leg(Formula b,Formula w)=>C("legal",b,w);
-    private static Formula Fib(Formula n)=>C("castToZMod",V("M"),C("Nat.fib",n));
+    private static Formula Fib(Formula n)=>C("castToZMod",V("M"),C("NatFib",n));
     private static Formula Future()=>C("sameFuture",V("previous"),V("r"),V("u"),V("v"),V("rp"),V("up"),V("vp"));
     private static Formula AdvanceFormula()=>Disp(All("z",C("Prod",V("R"),V("R")),And(
         Eqn(C("advance",D(0),V("z")),V("z")),All("n",N(),Eqn(C("advance",Add(V("n"),D(1)),V("z")),

@@ -91,7 +91,7 @@ internal sealed class GoldenConicStationaryChartDocument : IScribeDocumentDefini
     private static Formula Y(Formula z) => C("b",z);
     private static Formula N(Formula z) => C("normForm",z);
     private static Formula Tan(Formula z) => C("tangent",z);
-    private static Formula Pt(Formula a, Formula b) => C("GoldenMod.mk",a,b);
+    private static Formula Pt(Formula a, Formula b) => C("GoldenModMk",a,b);
     private static Formula Ch(Formula t, Formula d) => C("chart",V("z"),t,d);
     private static Formula A() => C("radial",V("z"),V("w"),V("half"),V("invc"));
     private static Formula B() => C("transverse",V("z"),V("w"),V("half"),V("invc"));

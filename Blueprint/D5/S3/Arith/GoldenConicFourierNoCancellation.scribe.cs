@@ -71,7 +71,7 @@ internal sealed class GoldenConicFourierNoCancellationDocument : IScribeDocument
     private static Formula Neg(Formula x) => C("neg", x);
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
-    private static Formula E(Formula x) => C("ZMod.stdAddChar", x);
+    private static Formula E(Formula x) => C("ZModStdAddChar", x);
     private static Formula Pair(Formula x, Formula s) => C("pairPeriod", x, s);
     private static Formula Quarter(Formula x, Formula i, Formula s) => C("quarterPeriod", x, i, s);
     private static Formula Sign() => C("Or", Eqn(V("s"), D(1)), Eqn(V("s"), Neg(D(1))));
