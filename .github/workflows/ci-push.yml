@@ -334,7 +334,7 @@ jobs:
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
     runs-on: [self-hosted, macOS, ARM64, omega-m3-ultra]
-    timeout-minutes: 60
+    timeout-minutes: 120
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
       artifact_name: ${{ steps.pack.outputs.artifact_name }}
