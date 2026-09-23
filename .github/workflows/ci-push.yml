@@ -367,7 +367,7 @@ jobs:
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage current --job-timeout-minutes 60
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage current --job-timeout-minutes 120
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
         with:
