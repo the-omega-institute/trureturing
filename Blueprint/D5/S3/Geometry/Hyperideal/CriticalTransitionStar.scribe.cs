@@ -106,7 +106,63 @@ internal sealed class CriticalTransitionStarDocument : IScribeDocumentDefinition
                         + "these conclusions. The source note credits the existing small-"
                         + "manifold census; this example is not asserted to be a new "
                         + "homeomorphism type. No compilation or projection receipt for "
-                        + "this new Remark is claimed here.")))))));
+                        + "this new Remark is claimed here.")))),
+            Describe.Remark(
+                DescribeId.Create("written-flat-support-low-edge-closure"),
+                H("Written continuation: two global edges and two-flat support"),
+                F.Disp(TwoEdgeWrittenFormula()),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/cfmp2026criticaltransition")),
+                Blocks(
+                    Paragraph(Text("This is an authored written-mathematics Remark, not a new "
+                        + "Lean declaration or an extension of critical_transition_star. "
+                        + "StrictBoundaryTriangulations means finite connected orientable "
+                        + "actual face-paired ideal triangulations with every vertex link a "
+                        + "closed surface of genus at least two. MinimumDegreeSix counts "
+                        + "local edge occurrences. EdgeCount counts actual global edge "
+                        + "equivalence classes. GenuineRealization means a nondegenerate "
+                        + "hyperbolic metric on that same triangulation with totally geodesic "
+                        + "boundary. No local two/four label quota is a premise below.")),
+                    Paragraph(Text("For actual cosh coordinates (r,a,b,o,c,d)>1, the two "
+                        + "cosine radicands are squared norms of the Cauchy vectors written "
+                        + "in the source note. Their nonnegative remainder J gives the exact "
+                        + "flat condition (r-1)(o-1)>=(sqrt(ac)+sqrt(bd))^2+J. Equality J=0 "
+                        + "holds exactly at a=c,b=d. The necessary product gap "
+                        + "sqrt(ro)>=1+sqrt(ac)+sqrt(bd) is distinct from the previous "
+                        + "cosh-of-mean bound. It is not asserted to be sufficient.")),
+                    Paragraph(Text("The existing strict-angle construction and the cited "
+                        + "Luo-Yang maximizer theorem give common positive generalized "
+                        + "lengths and at most EdgeCount-1 flat blocks. With two edges a "
+                        + "remaining unique flat must have five A cosh coordinates and one "
+                        + "B, with B>4A+5. Every other B-containing block has at least two "
+                        + "B occurrences. The nine continuous local graph estimates make "
+                        + "their total B angle exceed pi/4 per occurrence, contradicting "
+                        + "the global 2pi sum. The (6,18) four-tetrahedron packet explicitly "
+                        + "has singleton-label blocks outside the earlier local quota.")),
+                    Paragraph(Text("There is a further result without restricting the total "
+                        + "global edge count: if minimum degree is six, at least one block "
+                        + "is genuine and at most two are flat, the pi slots use pairwise "
+                        + "distinct global labels. A saturated label is confined to the flat "
+                        + "blocks. Exact face signatures leave only single/five or star/star "
+                        + "supports. Face connectivity excludes the first; matching the "
+                        + "unique longest nonstar edge excludes the second by strict shared "
+                        + "length order or a degree-two contradiction. Thus three global "
+                        + "edges leave at most one flat block. If all actual label types "
+                        + "occur at least twice, none can be flat.")),
+                    Paragraph(Text("The four-tetrahedron witness is not a newly claimed "
+                        + "census type. The positive arccosh(3) cube is already Feng-Ge-Hua "
+                        + "Theorem 3.9. No new kernel, Scribe compilation, projection or "
+                        + "independent review receipt is asserted. Full CFMP, an isolated "
+                        + "flat using three independent lengths, and larger flat sets "
+                        + "remain outside the displayed conclusions.")))))));
+
+    private static Formula TwoEdgeWrittenFormula()
+    {
+        var t=F.Id("T");
+        return All([("T",F.Id("StrictBoundaryTriangulations"))],
+            Imp(And(Call("MinimumDegreeSix",t),Le(Call("EdgeCount",t),F.D(2))),
+                Call("GenuineRealization",t)));
+    }
 
     private static Formula FlatPairMeanFormula()
     {

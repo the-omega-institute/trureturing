@@ -355,3 +355,113 @@ one-flat table is checked in the same actual fibres. These checks do not
 replace the universal written proofs. The new Scribe Remark has no
 compilation or projection receipt in this runtime; no status is inferred
 for unchanged Lean declarations from this new authored text.
+
+## Exact flat remainder, complete two-edge case, and two-flat support, Sections 50-55
+
+This written increment preserves the previous theory and note. It connects
+previously conversation-only calculations to the live Sections 45-49 and
+adds a face-pairing obstruction for at most two flat tetrahedra. It does
+not identify a new formal declaration, claim a full CFMP solution, or change
+the certified scope of CriticalTransitionStar. Its Scribe addition is an
+independent authored research Remark.
+
+### Sources and separation of coordinates
+
+Luo-Yang arXiv:1404.5365v2, Proposition 4.4, Proposition 4.5 and Lemma 4.6
+supply the original whole-positive-length cosine/domain/flat-sector facts.
+Theorem 6.3 supplies a shared positive generalized length vector with the
+maximizing angles after the strict angle hypothesis has been discharged
+by the existing Section 42. The flat-count bound is the existing Section
+43.3. These geometric inputs are not derived from finitely many pairings.
+
+The current source reading again checked the parsed original theorem and
+domain statements. The screenshot of printed page 21 (PDF page index 20)
+was successfully inspected. The attempted screenshot of printed page 16
+failed; no successful visual inspection of that page is claimed here.
+https://arxiv.org/pdf/1404.5365
+
+The prior mean-length necessary bound uses cosh((l_e+l_f)/2). The new bound
+uses sqrt(cosh(l_e)*cosh(l_f)). They are different functions and neither
+proof replaces one by the other without justification. The new exact
+calculation uses cosh coordinates (r,a,b,o,c,d)>1, the actual radicands,
+and a Cauchy remainder J>=0. It proves
+
+phi_1<=-1 iff (r-1)(o-1)>=(sqrt(ac)+sqrt(bd))^2+J.
+
+J vanishes exactly when a=c and b=d. The derived product gap is only
+necessary; the genuine vector (25,50,50,25,2,2), whose target cosine is
+-253/254, shows why dropping J cannot give an equivalence. No cube-only
+neighbour monotonicity is extended beyond its established domain.
+
+Ke Feng, Huabin Ge and Bobo Hua, *Combinatorial Ricci flows and the
+hyperbolization of a class of compact 3-manifolds*, Geometry & Topology
+26 (2022), 1349-1384, DOI 10.2140/gt.2022.26.1349, Theorem 3.9, already
+proves that positive lengths at most arccosh(3) form genuine tetrahedra.
+The cube conclusion reobtained in Sections 45 and 50 is therefore credited
+as an existing result, not as a newly solved theorem or open conjecture.
+https://arxiv.org/abs/2009.03731
+
+The original CFMP and Frigerio-Martelli-Petronio small-manifold work remain
+the external problem and census anchors. The new four-tetrahedron (6,18)
+packet is a witness for the complete two-global-edge criterion. It is not
+claimed to be a new homeomorphism type. The relevant Fominykh-Shumakova
+arXiv:2105.05110 abstract concerns complexity/minimality of few-edge ideal
+triangulations; minimality is not used in place of geometric realization.
+No priority is inferred from this bounded literature comparison.
+
+### Exact consequences for shared global data
+
+All two-global-edge triangulations with minimum degree six in the strict
+boundary setting are realized, including local 1/5 label patterns. The
+proof first reduces to at most one flat tetrahedron. A remaining mixed-pi
+candidate must have five copies of a cosh-length A and one of B, forcing
+B>4A+5 by the exact remainder. Every other tetrahedron containing B must
+contain it at least twice. The sum of those B angles exceeds pi/4 times
+their occurrence count for each of the nine possible local B-edge graph
+types. This contradicts the global B angle sum. The estimate is proved on
+the whole continuous region A>1,B>4A+5, not by numerical sampling.
+
+Same actual global-label types also have identical geometric/flat state,
+without requiring any whole-triangulation automorphism. Multiplicity at
+least three excludes a flat type by pi-angle capacity. An exact logarithmic
+certificate additionally excludes certain acyclic pair-node candidate sets;
+it enforces that pair products come from the same underlying global lengths.
+The AB versus CC/DD and CD versus AA/BB example illustrates this dependency
+only. It is not asserted to be a face-paired manifold.
+
+### New face-pairing support obstruction
+
+With minimum degree six, at least one genuine tetrahedron, and at most two
+flat tetrahedra, every pi occurrence must have a different global edge
+label. If one label A were saturated by two pi angles, all its occurrences
+would be confined to the flat set. Among two nonempty proper A-edge graphs,
+total A degree at least six, positive face-count parity and an A-free exit
+face leave only single-edge/five-edge or star/star. The former isolates the
+five-edge tetrahedron in the dual graph. In the latter, the uniquely longest
+non-A edge in each star must be matched through an AAB face to the other
+star. Distinct selected labels give opposite strict length orders; equal
+labels have total degree two. Both alternatives contradict the hypotheses.
+
+Consequently a three-global-edge minimum-six triangulation has at most one
+flat maximizer tetrahedron, improving the previous at-most-two bound. If
+all its actual global-label types occur at least twice, it is realized.
+No separate new manifold outside all earlier sufficient classes is claimed
+for this last conditional corollary. An isolated flat using three global
+lengths and general larger flat sets are not excluded by these arguments.
+
+### Reproducibility and verification boundary
+
+Exact supplementary checks include the Cauchy identity and square remainder,
+all nine two-length graph types with polynomial coefficient certificates,
+the designated four- and eight-tetrahedron packets and rational angle table,
+the nine A-face signatures and the two surviving signature pairs, and the
+zero-vector logarithmic certificate. The spanning/face-return arguments and
+continuous inequalities are written in the theory, separate from these
+finite checks. The original two-edge calculations were rechecked rather
+than assumed correct from a previous conversation artifact.
+
+The existing Lean file and the Scribe Statement method remain unchanged.
+The new Remark has no compilation/projection receipt in this runtime, and
+no generated Blueprint Markdown, admission state, frozen record or CI
+configuration is modified. The deliverable is ordinary mathematics for
+independent review, not a new kernel-certified CFMP theorem.
