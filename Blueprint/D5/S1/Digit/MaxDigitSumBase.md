@@ -38,7 +38,7 @@ $$(claim) \Leftrightarrow (\forall n, (8<n) \Rightarrow (L(n, \operatorname{ceil
 
 *Commentary.*
 
-The source asserts that for every number above eight the least maximizing base is the ceiling of the number plus one, halved. At eight the assertion fails, since bases three and five both give digit sum four.
+The source asserts that for every number above eight the least maximizing base is the ceiling of the quotient of the number plus one by two. At eight the assertion fails, since bases three and five both give digit sum four.
 
 **Theorem 1.4 (The conjecture holds).**
 
@@ -56,7 +56,7 @@ $$\forall n, (8<n) \Rightarrow (L(n, \operatorname{ceil}(\frac{n+1}{2})))$$
 
 *Commentary.*
 
-The ceiling of the number plus one, halved, is the least base exceeding half of the number. For a base above half and below the number, the number has exactly two digits, one and the number minus the base, so its digit sum is the number minus the base plus one; this is largest at the least such base, where it equals the number minus its floor half. For a base at most half, write the number as the base times a quotient of at least two plus a remainder below the base, so the digit sum is the remainder plus the digit sum of the quotient. A digit sum never exceeds its argument, and when the quotient is at least the base, one more expansion shows that its digit sum is smaller by at least the base minus one. When the quotient is below the base, the base is at least four, since bases two and three with such a quotient force the number to be at most eight. In either case twice the digit sum is below the number, so the digit sum itself is below the number minus its floor half, which is the value at the first base above half. The only case of equality in these bounds is base three with quotient and remainder two, the number eight that the conjecture excludes.
+The ceiling of the quotient of the number plus one by two is the least base exceeding half of the number. For a base above half and below the number, the number has exactly two digits, one and the number minus the base, so its digit sum is the number minus the base plus one; this is largest at the least such base, where it equals the number minus its floor half. For a base at most half, write the number as the base times a quotient of at least two plus a remainder below the base, so the digit sum is the remainder plus the digit sum of the quotient. A digit sum never exceeds its argument, and when the quotient is at least the base, one more expansion shows that its digit sum is smaller by at least the base minus one. When the quotient is below the base, the base is at least four, since bases two and three with such a quotient force the number to be at most eight. In either case twice the digit sum is below the number, so the digit sum itself is below the number minus its floor half, which is the value at the first base above half. The only case of equality in these bounds is base three with quotient and remainder two, the number eight that the conjecture excludes.
 
 ## References
 
