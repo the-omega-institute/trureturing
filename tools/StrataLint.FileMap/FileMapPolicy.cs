@@ -2,11 +2,11 @@ using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
+using StrataLint.Configuration;
 using StrataLint.EngineeringScope;
 using StrataLint.Scribe;
-using StrataLint.Scribe.Documents;
 
-namespace StrataLint.Cli;
+namespace StrataLint.FileMap;
 
 internal sealed record FileMapFinding(string Code, string Path, string Message);
 
@@ -194,7 +194,8 @@ internal static class FileMapPolicy
         return findings;
     }
 
-    internal static IReadOnlyList<FileMapFinding> InspectRepository(string repositoryRoot, FileMapInspectionScope? scope = null)
+    internal static IReadOnlyList<FileMapFinding> InspectRepository(
+        string repositoryRoot, IEnumerable<string> documentPaths, FileMapInspectionScope? scope = null)
     {
         FileMapManifest manifest;
         try
@@ -257,7 +258,7 @@ internal static class FileMapPolicy
             .Concat(InspectGeneratedInventory(
                 manifest,
                 paths,
-                GeneratedArtifactInventory.Create(DocumentAssembly.Definitions), scope is { Inventory: true } ? null : selectedPaths, scope?.RelatedPatterns))
+                GeneratedArtifactInventory.Create(documentPaths), scope is { Inventory: true } ? null : selectedPaths, scope?.RelatedPatterns))
             .Concat(InspectDeclaredModes(selectedManifest, trackedModes))
             .Concat(InspectDirectoryKinds(manifest, selected, paths))
             .Concat(dependencyFindings)

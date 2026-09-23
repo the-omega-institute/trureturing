@@ -1,7 +1,6 @@
-using StrataLint.Cli;
 using StrataLint.Scribe;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.FileMap.Tests;
 
 public sealed partial class FileMapPolicyTests
 {

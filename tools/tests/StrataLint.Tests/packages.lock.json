@@ -138,6 +138,7 @@
           "StrataLint.Configuration": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.ExecutionEvidence": "[1.0.0, )",
+          "StrataLint.FileMap": "[1.0.0, )",
           "StrataLint.InspectionScope": "[1.0.0, )",
           "StrataLint.Lean": "[1.0.0, )",
           "StrataLint.ResourcePlanning": "[1.0.0, )",
@@ -201,6 +202,16 @@
           "StrataLint.Engine": "[1.0.0, )",
           "StrataLint.InspectionScope": "[1.0.0, )",
           "StrataLint.ResourcePlanning": "[1.0.0, )"
+        }
+      },
+      "stratalint.filemap": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Configuration": "[1.0.0, )",
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.InspectionScope": "[1.0.0, )",
+          "StrataLint.Scribe": "[1.0.0, )",
+          "StrataLint.Scribe.Documents": "[1.0.0, )"
         }
       },
       "stratalint.inspectionscope": {

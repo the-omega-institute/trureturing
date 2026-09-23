@@ -10,3 +10,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
 [assembly: InternalsVisibleTo("StrataLint.StageIntegration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.FileMap")]

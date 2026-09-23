@@ -214,6 +214,10 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "tools/TestSupport/StrataLint.ConfigurationTestSupport/Fixtures/fixture-registry.yaml", false)]
     [InlineData("StrataLint.Tests", "Meta/domains.yaml", false)]
     [InlineData("StrataLint.Tests", "Meta/registry.yaml", false)]
+    [InlineData("StrataLint.FileMap.Tests", "Meta/domains.yaml", false)]
+    [InlineData("StrataLint.FileMap.Tests", "Meta/registry.yaml", false)]
+    [InlineData("StrataLint.FileMap.Tests", "tools/scripts/agent/header-check.sh", false)]
+    [InlineData("StrataLint.FileMap.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
     public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates)
     {
         using var fixture = new ExecutionFixture();
