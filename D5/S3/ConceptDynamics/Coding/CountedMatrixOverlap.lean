@@ -75,12 +75,12 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   rcases b with ⟨j', k, b⟩
   dsimp at h
   subst j'
-  simp [join, split]
+  simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
 
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
   rcases a with ⟨i, k, a⟩
-  simp [join, split]
+  simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
 
 /-- Edge counts are not replaced by the support relation. -/
 theorem split_injective : Function.Injective (split U V) := by
@@ -190,17 +190,21 @@ private theorem join_congr (a a' : Edge U) (b b' : Edge V)
 theorem elementary_window (x y : Path (U * V)) (i : ℤ)
     (h0 : x.val i = y.val i) (h1 : x.val (i + 1) = y.val (i + 1)) :
     (elementaryHomeomorph U V x).val i = (elementaryHomeomorph U V y).val i := by
-  apply join_congr V U
-  · exact congrArg (fun a => (split U V a).2) h0
-  · exact congrArg (fun a => (split U V a).1) h1
+  exact join_congr V U _ _ _ _
+    ((forward (boundary U V) (toAlternating U V x)).property i).1
+    ((forward (boundary U V) (toAlternating U V y)).property i).1
+    (congrArg (fun a => (split U V a).2) h0)
+    (congrArg (fun a => (split U V a).1) h1)
 
 theorem elementary_inverse_window (x y : Path (V * U)) (i : ℤ)
     (hm : x.val (i - 1) = y.val (i - 1)) (h0 : x.val i = y.val i) :
     ((elementaryHomeomorph U V).symm x).val i =
       ((elementaryHomeomorph U V).symm y).val i := by
-  apply join_congr U V
-  · exact congrArg (fun a => (split V U a).2) hm
-  · exact congrArg (fun a => (split V U a).1) h0
+  exact join_congr U V _ _ _ _
+    ((backward (boundary U V) (toAlternating V U x)).property i).1
+    ((backward (boundary U V) (toAlternating V U y)).property i).1
+    (congrArg (fun a => (split V U a).2) hm)
+    (congrArg (fun a => (split V U a).1) h0)
 
 /-- A concrete two-factor fiber has two distinct elements despite identical outer endpoints. -/
 theorem parallel_factor_identity :
