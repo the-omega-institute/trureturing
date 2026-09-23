@@ -1,0 +1,10 @@
+**定理 34.4（双轴部分去相干的精确完全系数）。** 对 $0\le a,b\le1$，定义单比特信道
+\[
+ \Psi_{a,b}=\mathcal Z_{X,a}\mathcal Z_{Z,b}.
+\]
+其 Bloch 矩阵为 $\operatorname{diag}(b,ab,a)$，且
+\[
+ \boxed{\eta^{\rm c}(\Psi_{a,b})=\max\{a^2,b^2\}.}
+\]
+所以这一两参数族的原平方范数公式在任意被动量子记忆下保持精确。
+

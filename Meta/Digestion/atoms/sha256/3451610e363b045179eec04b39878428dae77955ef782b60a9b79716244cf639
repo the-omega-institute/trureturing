@@ -1,0 +1,11 @@
+**定理 10.2（收缩数字前缀达到状态下界）。** 对任意整数 $L\ge1$，若
+\[
+ \frac{\lambda^L}{2}\le\varepsilon
+       <\frac{(1-\lambda)\lambda^{L-1}}2,
+\]
+则
+\[
+ N_\varepsilon(\lambda)=2^L.
+\]
+上界由保存前 $L$ 个数字、每步前插新动作并舍弃最后一位的确定性状态机达到。特别地，精度 $\varepsilon_L=\lambda^L/2$ 时恰好需要 $L$ 比特当前状态，且此保证覆盖任意长的动作序列。
+

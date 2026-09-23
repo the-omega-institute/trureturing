@@ -1,0 +1,11 @@
+**定义 30.1（共同的二维漂移）。** 固定 $\gamma>0$、$\omega\in\mathbb R$，令
+\[
+ A_{\gamma,\omega}=\begin{pmatrix}-\gamma&\omega\\-\omega&0\end{pmatrix}.
+\]
+经典模型为 $dX=A_{\gamma,\omega}Xdt+(\sqrt{2\gamma},0)^{\mathsf T}dW$，平衡参考 $\gamma_2$。量子模型为单比特 Lindblad 方程
+\[
+ \dot\rho=-i[(\omega/2)\sigma_y,\rho]
+           +(\gamma/2)(\sigma_z\rho\sigma_z-\rho),
+\]
+参考为 $I_2/2$，取 $\hbar=1$。它可以看作第 26.3 条去相干极限上增加相干旋转。两种模型各自的状态空间、噪声实现及实验读取仍分别指定。
+

@@ -1,0 +1,7 @@
+**推论 6.3（有限行动窗口具有有限观察层）。** 在定理 6.2 的条件下，另设 $\Sigma$ 有限、$F_a:X\to X$ 连续，且 $o:X\to Y$ 连续。对每个 $H\in\mathbb N$，存在 $N(H)$ 使
+\[
+ q_{N(H)}(x)=q_{N(H)}(y)
+ \quad\Longrightarrow\quad
+ \forall |w|\le H,\ o(F_wx)=o(F_wy).
+\]
+

@@ -1,0 +1,28 @@
+**定理 47.2（双位置历史的精确共轭、辛形式及条件数）。** 给定已知频率 $\omega>0$，完整谐振相空间为 $\mathbb R^2$，
+\[
+ \dot q=\omega p,\qquad \dot p=-\omega q,\qquad
+ H(q,p)=\omega(q^2+p^2)/2,\quad\Omega=dq\wedge dp.
+\]
+对延迟 $h>0$，令 $\alpha=\omega h$，用 $y_0=q(t),y_1=q(t-h)$ 定义线性映射
+\[
+ y=S_\alpha(q,p)^T,\qquad S_\alpha=\begin{pmatrix}1&0\\\cos\alpha&-\sin\alpha\end{pmatrix}.
+\]
+它可逆当且仅当 $\sin\alpha\ne0$；成立时
+\[
+ q=y_0,\quad p=(\cos\alpha\,y_0-y_1)/\sin\alpha,
+\]
+\[
+ \dot y=\frac\omega{\sin\alpha}
+ \begin{pmatrix}\cos\alpha&-1\\1&-\cos\alpha\end{pmatrix}y.
+\]
+在新坐标中原辛形式和能量分别为
+\[
+ \boxed{\Omega_y=-\frac1{\sin\alpha}\,dy_0\wedge dy_1,
+ \quad H_y=\frac\omega{2\sin^2\alpha}
+ (y_0^2-2\cos\alpha\,y_0y_1+y_1^2).}
+\]
+因此该变换是保时间的光滑共轭，并且只有在同时搬运上述形式时才是与原模型相容的辛坐标表达。$S_\alpha^TS_\alpha$ 的特征值为 $1\pm|\cos\alpha|$，给出精确的全局上下距离增益；若两个读数各有绝对误差至多 $\varepsilon$，则
+\[
+ |\delta p|\le\frac{1+|\cos\alpha|}{|\sin\alpha|}\varepsilon.
+\]
+

@@ -1,0 +1,12 @@
+**出处 27.1（逐项贡献定位）。** 定理 23.2 的条件 KL 账、定理 24.2 的 Gaussian 信息行列式、定理 24.4 的条件 KL 分解、定理 25.3 的碰撞尺度及命题 26.3 的去相干模型均使用经典构件，不能计为同名理论的首次发现。本批相对于本卷旧版新增的是：有限可逆载体上精确半群与全时间信息单调的联合判据；三时刻残差到条件信息及稳健下界的连接；小残差、发散条件记忆和零时间反转 KL 同时成立的明确双振子族；同一参考恢复缺陷进入量子预测误差的一阶项。这些具体陈述均有正文推导，记为 `repo-derived`，表示在本卷推导得到，不表示已排除文献中的同等或更强结论。
+
+[^tcs4-remote]: 固定远端来源：[PREDICTIVE_OBSERVABILITY_TIME_WINDOWS.md](https://github.com/the-omega-institute/trureturing/blob/8d58dc56d0e6283e725054b5a25c6d5ce8104cc6/docs/develop/theory/PREDICTIVE_OBSERVABILITY_TIME_WINDOWS.md) 第 12–19 节，已经给出相关曲率 $M$、记忆核、二阶条件均值界、Bayes 误差和有限延迟证书。本批读取后直接复用，不重复认领。其 Kubo 相关恒等式属于量子线性响应，未被本文当成无反作用的经典三时刻测量法则。该 PR 的电磁卷进一步区分磁场下的状态可观测性与方向可辨识性，本批不改写其证明。
+
+[^tcs4-gaussian]: Charles R. Baker，*Mutual Information for Gaussian Processes*，SIAM Journal on Applied Mathematics 19(2), 451–458 (1970)，DOI [10.1137/0119044](https://doi.org/10.1137/0119044)，给出协方差算子与 Gaussian 互信息的经典关系。Sarah Marzen、James P. Crutchfield，*Information Anatomy of Stochastic Equilibria*，Entropy 16(9), 4713–4748 (2014)，[作者正文](https://www.mdpi.com/1099-4300/16/9/4713)，第 2、3 节及 Appendix E 已区分过去、现在、未来的条件信息，并讨论小采样间隔的发散。本批定理 24.3 固定有限振子模型，证明其具体系数及零反转 KL，不将一般“隐藏记忆可由条件信息度量”列为新概念。
+
+[^tcs4-sagawa]: Takahiro Sagawa，*Stochastic Thermodynamics for Autoregressive Generative Models: A Non-Markovian Perspective*，实际读取 [arXiv:2604.07867v3](https://arxiv.org/html/2604.07867v3) 第 VII.2 节式 (89)–(93) 与 Appendix A。文中已将回顾推断分成条件互信息压缩损失与模型失配；本文的正向 Markov 拟合使用同一经典 KL 链式法则，但比较对象不是作者指定的反向生成过程。出版方记录该论文于 2026-09-10 被 PRX Intelligence 接收，DOI [10.1103/tv38-b23y](https://doi.org/10.1103/tv38-b23y)；本次可读取全文为 v3，不推断无法读取的更新版字节。第 24.3 条的反转法则是实际平衡路径的坐标反转，不能与任意模型反向协议混同。
+
+[^tcs4-collision]: Stéphane Attal、Yan Pautrat，*From repeated to continuous quantum interactions*，[arXiv:math-ph/0311002v2](https://arxiv.org/abs/math-ph/0311002v2)，明确研究不同耦合尺度下从重复相互作用到连续量子噪声的极限。Francesco Ciccarello、Salvatore Lorenzo、Vittorio Giovannetti、G. Massimo Palma，*Quantum collision models: open system dynamics from repeated interactions*，Physics Reports 954 (2022)，[arXiv:2106.11974v2](https://arxiv.org/abs/2106.11974v2)，第 5 节及第 7 节给出主方程缩放和相关性熵账。来源范围为 PDF 正文，不引用图表。本文第 25 节给出有限实矩阵版本及误差预算，未认领碰撞极限思想的首创。
+
+[^tcs4-recovery]: [PREDICTIVE_THERMODYNAMIC_SUFFICIENCY.md](https://github.com/the-omega-institute/trureturing/blob/e300b5df71f5ce08d857e8f2000a9e495813cdaf/docs/develop/theory/PREDICTIVE_THERMODYNAMIC_SUFFICIENCY.md) 第 3.3、3.4 条给出相互作用的一阶误差与恢复缺陷。定理 26.2 另按热参考重新中心化相互作用，用精确双重 Duhamel 余项把匹配初态改善为二阶，并把偏离该初态族的误差单独量化；这里的 $g_q$ 与伴卷全代数泄漏 $\delta(H)$ 不是同一定义。
+

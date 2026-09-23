@@ -1,0 +1,32 @@
+**定理 17.3（自由能的概率几何耗散）。** 在平坦单位环面 $\mathbb T^d$ 上，设 $U$ 光滑、$\tau>0$，$\rho_t$ 是时间区间 $[0,T]$ 上光滑、严格正、积分为一的周期密度，并满足
+\[
+ \partial_t\rho=\nabla\cdot(\rho\nabla U)+\tau\Delta\rho.
+\]
+定义
+\[
+ \mathcal F_\tau(\rho)=\int U\rho+\tau\int\rho\log\rho,
+ \qquad \pi_\tau=Z_\tau^{-1}e^{-U/\tau}.
+\]
+则
+\[
+ \mathcal F_\tau(\rho)=\tau\operatorname{KL}(\rho\Vert\pi_\tau)-\tau\log Z_\tau,
+\]
+\[
+ \frac{d}{dt}\mathcal F_\tau(\rho_t)
+ =-\int\rho_t\|\nabla(U+\tau\log\rho_t)\|^2,
+\]
+以及
+\[
+ \mathcal F_\tau(\rho_0)-\mathcal F_\tau(\rho_T)
+ \ge T^{-1}W_2(\rho_0,\rho_T)^2.
+\]
+这里 $W_2$ 使用环面的测地距离，质量及迁移率采用方程中所写的归一化。
+
+**证明。** 把 $\log\pi_\tau=-U/\tau-\log Z_\tau$ 代入相对熵，即得第一式。质量守恒和周期分部积分给
+\[
+ \frac{d}{dt}\mathcal F_\tau
+ =\int(U+\tau\log\rho)\,\nabla\cdot\bigl(\rho\nabla(U+\tau\log\rho)\bigr)
+ =-\int\rho\|\nabla(U+\tau\log\rho)\|^2.
+\]
+置速度 $v_t=-\nabla(U+\tau\log\rho_t)$，原方程成为连续性方程。光滑速度的流映射把 $\rho_0$ 推到 $\rho_t$。对每条流线，其端点距离平方至多为 $T\int_0^T|v_t|^2dt$；对初始质量积分便构造一个端点耦合，代价至多为 $T\int_0^T\int\rho_t|v_t|^2$。$W_2^2$ 取全部耦合的下确界，再使用耗散恒等式即得结论。本条直接证明给定光滑解的恒等式与界，没有借此证明 PDE 的存在性或每条样本轨道势能单调。证毕。[^tcs3-thermogeo]
+

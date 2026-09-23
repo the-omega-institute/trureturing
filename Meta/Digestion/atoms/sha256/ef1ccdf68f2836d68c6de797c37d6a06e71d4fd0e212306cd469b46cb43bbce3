@@ -1,0 +1,7 @@
+**定义 19.1（费用加权的观察转移）。** 沿用定理 18.4 的 $X,R,c$，另给满射 $q:X\to Y$。对观察标签 $j\in Y$ 定义
+\[
+ k_\tau(x,j)=\sum_{y:q(y)=j}R_{xy}e^{-c(x,y)/\tau},\qquad
+ \mu_{x,j}=\sum_{y:q(y)=j,\ R_{xy}>0}R_{xy}\delta_{c(x,y)}.
+\]
+于是 $k_\tau(x,j)$ 是有限费用测度 $\mu_{x,j}$ 在 $1/\tau$ 处的 Laplace 变换。不存在支持边时，两者均为零。
+
