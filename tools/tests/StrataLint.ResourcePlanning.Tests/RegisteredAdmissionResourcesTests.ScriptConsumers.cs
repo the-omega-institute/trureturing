@@ -32,11 +32,12 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [Theory]
     [InlineData("push")]
     [InlineData("pr")]
-    public void HeaderScriptRunsOnlyItsCompleteScriptProject(string mode)
+    public void HeaderScriptRunsItsCompleteProjectAndRepositoryContract(string mode)
     {
         var plan = Plan("tools/scripts/agent/header-check.sh", "", mode);
         Assert.Equal(new[] {
             "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj",
+            RepositoryContractProject,
         }, Strings(plan["execution"]!["tests"]!));
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         if (mode == "push") Assert.DoesNotContain("elan", Strings(plan["cache_layers"]!));
