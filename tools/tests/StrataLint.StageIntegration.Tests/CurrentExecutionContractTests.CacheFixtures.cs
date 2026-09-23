@@ -185,6 +185,39 @@ public sealed partial class CurrentExecutionContractTests
     }
 
     [Theory]
+    [InlineData("query-policy", true)]
+    [InlineData("query-target-bytes", false)]
+    [InlineData("content-target-bytes", true)]
+    public void GeneratedFileMapQueriesBindPolicyWithoutBindingTargetBytes(string change, bool invalidates)
+    {
+        using var fixture = new ExecutionFixture();
+        const string target = "Evidence/D5/values.json";
+        const string filemap = "[[files]]\npattern = \"Evidence/D5/values.json\"\nkind = \"generated\"\nrequire = []\n";
+        fixture.Write("Meta/FILEMAP.toml", filemap);
+        fixture.Write(target, "{\"fixture\":1}\n");
+        EditRegistration(fixture, rows =>
+        {
+            rows[0]!["execution_inputs"] = change == "content-target-bytes"
+                ? new JsonArray("Meta/FILEMAP.toml", target) : new JsonArray("Meta/FILEMAP.toml");
+            rows[0]!["execution_filemap_paths"] = new JsonArray(target);
+        });
+        fixture.Track();
+        Execute(fixture);
+        Seed(fixture);
+        var prior = CommonExecutionEvidence.ValidateTests(fixture.Root);
+
+        if (change == "query-policy")
+            fixture.Write("Meta/FILEMAP.toml", filemap.Replace("require = []", "require = [\"filemap\"]", StringComparison.Ordinal));
+        else fixture.Write(target, "{\"fixture\":2}\n");
+        fixture.Track();
+
+        Assert.Equal(invalidates ? new[] { ExecutionFixture.First } : [], Execute(fixture));
+        var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root);
+        Assert.Equal(invalidates, prior.Projects[0].InputFingerprint != accepted.Projects[0].InputFingerprint);
+        Assert.Equal(prior.Projects[1].InputFingerprint, accepted.Projects[1].InputFingerprint);
+    }
+
+    [Theory]
     [InlineData("StrataLint.Cache.Tests", "D5/S0/CacheInputProbe.lean", false)]
     [InlineData("StrataLint.Cache.Tests", "Blueprint/CacheInputProbe.scribe.cs", false)]
     [InlineData("StrataLint.Cache.Tests", "Meta/Digestion/backfill/cache-input-probe.json", false)]
