@@ -135,8 +135,13 @@ theorem sum_gram_eq_zero_iff (R : s → Matrix m d ℂ) :
     (∑ i, (R i)ᴴ * R i) = 0 ↔ ∀ i, R i = 0 := by
   have hnonneg : ∀ i, (0 : Matrix d d ℂ) ≤ (R i)ᴴ * R i :=
     fun i => (Matrix.posSemidef_conjTranspose_mul_self (R i)).nonneg
-  rw [Fintype.sum_eq_zero_iff_of_nonneg hnonneg]
-  simp only [Matrix.conjTranspose_mul_self_eq_zero]
+  constructor
+  · intro h i
+    exact Matrix.conjTranspose_mul_self_eq_zero.mp
+      ((Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mp h i)
+  · intro h
+    exact (Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mpr fun i =>
+      Matrix.conjTranspose_mul_self_eq_zero.mpr (h i)
 
 /-- A compressed normalized instrument is normalized exactly when every Kraus map has zero leakage. -/
 theorem compressed_instrument_iff (U : Matrix n d ℂ) (W : Matrix m e ℂ)
