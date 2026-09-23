@@ -11,6 +11,7 @@ import struct
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import unittest
 from unittest.mock import patch
@@ -265,20 +266,52 @@ root = "Cache"
             if not hasattr(self, '_commands'):
                 self._commands = []
             self._commands.append(command)
+            completed = threading.Event()
+            stop_observer = threading.Event()
+            outcome = {}
+            def wait_for_completion():
+                # Process-table scans and output observers must not hide a
+                # completion observed within the command's absolute budget.
+                # A late observation remains a timeout, even with exit zero.
+                try:
+                    while not stop_observer.is_set():
+                        remaining = started + timeout - self.command_clock()
+                        if remaining <= 0:
+                            raise subprocess.TimeoutExpired(args, timeout)
+                        try:
+                            process.wait(timeout=min(0.1, remaining))
+                        except subprocess.TimeoutExpired:
+                            continue
+                        if self.command_clock() - started >= timeout:
+                            raise subprocess.TimeoutExpired(args, timeout)
+                        break
+                except BaseException as error:
+                    outcome['error'] = error
+                finally:
+                    completed.set()
+            waiter = threading.Thread(target=wait_for_completion)
+            waiter.start()
             try:
                 while True:
                     self.owned_processes(command)
                     observe_pending()
-                    if self.command_clock() - started >= timeout:
-                        stdout.seek(0); stderr.seek(0)
-                        out, err = stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace')
-                        self.command_diagnostics(command, args, out, err)
-                        raise subprocess.TimeoutExpired(args, timeout, output=out, stderr=err)
-                    if process.poll() is not None:
+                    if completed.wait(0.1):
                         break
-                    time.sleep(0.1)
+                if isinstance(outcome.get('error'), subprocess.TimeoutExpired):
+                    stdout.seek(0); stderr.seek(0)
+                    out, err = stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace')
+                    self.command_diagnostics(command, args, out, err)
+                    raise subprocess.TimeoutExpired(args, timeout, output=out, stderr=err)
+                if 'error' in outcome:
+                    raise outcome['error']
             finally:
-                self.join_command(command)
+                try:
+                    self.join_command(command)
+                finally:
+                    # Cleanup failure retains ownership, but must not leave
+                    # this observer waiting out the command's remaining budget.
+                    stop_observer.set()
+                    waiter.join()
                 self._commands.remove(command)
                 observe_pending(final=True)
                 if getattr(self, 'last_command_diagnostic', {}).get('command') == list(args):
@@ -482,6 +515,148 @@ class GuardedCommandTests(unittest.TestCase):
                 result = self.fixture.guarded_command([sys.executable, '-c',
                     f'import sys; print("out"); print("err", file=sys.stderr); sys.exit({status})'])
                 self.assertEqual((result.returncode, result.stdout, result.stderr), (status, 'out\n', 'err\n'))
+
+    def test_sampling_and_cleanup_errors_stop_and_join_observer(self):
+        started = threading.Event()
+        observers = []
+        original_thread = threading.Thread
+        class ObservedThread(original_thread):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.join_calls = 0
+                observers.append(self)
+            def run(self):
+                started.set()
+                super().run()
+            def join(self, timeout=None):
+                self.join_calls += 1
+                # Infrastructure guard for a broken cancellation path. The
+                # verdict below checks settled state, never elapsed time.
+                super().join(timeout=5)
+        ps = ['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command=']
+        sampling_error, cleanup_error, fixture_error = (
+            subprocess.TimeoutExpired(ps, 5) for _ in range(3))
+        failures = iter([sampling_error, cleanup_error, fixture_error])
+        def failed_scan(*args, **kwargs):
+            if not started.wait(5):
+                raise RuntimeError('infrastructure-hang-guard expired: observer never started')
+            raise next(failures)
+        guard_error = fixture_cleanup_error = None
+        try:
+            # A live child and frozen command clock prevent deadline expiry
+            # from concealing a missing observer cancellation.
+            with patch.object(threading, 'Thread', ObservedThread), \
+                    patch.object(self.fixture, 'command_clock', return_value=0.0), \
+                    patch.object(subprocess, 'check_output', side_effect=failed_scan) as scans:
+                try:
+                    self.fixture.guarded_command([sys.executable, '-c', 'import signal; signal.pause()'])
+                except BaseException as error:
+                    guard_error = error
+                try:
+                    self.fixture.cleanup_fixture()
+                except BaseException as error:
+                    fixture_cleanup_error = error
+                observed = [(thread.is_alive(), thread.daemon, thread.join_calls) for thread in observers]
+                commands = list(self.fixture._commands)
+                child_alive = commands[0][0].poll() is None if commands else False
+                fixture_retained = self.fixture.root.exists()
+                finalizer_detached = not self.fixture.temporary._finalizer.alive
+        finally:
+            # Restore sampling and reclaim the real child/thread before any
+            # verdict, including on the prior broken lifecycle or a mutant.
+            try:
+                self.fixture.cleanup_fixture()
+            finally:
+                for thread in observers:
+                    original_thread.join(thread, timeout=5)
+            # Python 3.9's TemporaryDirectory.cleanup is a no-op after detach.
+            shutil.rmtree(self.fixture.root, ignore_errors=True)
+        self.assertIs(guard_error, cleanup_error)
+        self.assertIs(guard_error.__context__, sampling_error)
+        self.assertIs(fixture_cleanup_error, fixture_error)
+        self.assertEqual(len(commands), 1)
+        self.assertTrue(child_alive)
+        self.assertTrue(fixture_retained)
+        self.assertTrue(finalizer_detached)
+        self.assertEqual([call.args[0] for call in scans.call_args_list], [ps] * 3)
+        self.assertTrue(all(call.kwargs['timeout'] == 5 for call in scans.call_args_list))
+        self.assertFalse(any(thread.is_alive() for thread in observers))
+        self.assertIsNotNone(commands[0][0].poll())
+        self.assertEqual(observed, [(False, False, 1)], 'failed cleanup must stop and join its observer')
+
+    def test_completion_boundary_survives_delayed_process_sample(self):
+        # The child exits during a process-table scan. Advance an injected
+        # clock only after the independent completion observation, so scheduler
+        # speed cannot decide the before/exact/after-deadline outcomes.
+        for completion_time in [119.999, 120.0, 120.001]:
+            with self.subTest(completion_time=completion_time):
+                release = self.fixture.root / 'release'
+                release.unlink(missing_ok=True)
+                clock = [0.0]
+                sampled = threading.Event()
+                owner = threading.get_ident()
+                child = []
+                original = self.fixture.owned_processes
+                original_wait = subprocess.Popen.wait
+                def wait(process, timeout=None):
+                    result = original_wait(process, timeout)
+                    if threading.get_ident() != owner:
+                        clock[0] = completion_time
+                    return result
+                def command_clock():
+                    value = clock[0]
+                    if threading.get_ident() != owner and value == completion_time:
+                        sampled.set()
+                    return value
+                def delayed_sample(command, *, sessions=False):
+                    rows = original(command, sessions=sessions)
+                    if not sessions and not child:
+                        child.append(command[0])
+                        release.touch()
+                        command[0].wait(timeout=5)
+                        self.assertTrue(sampled.wait(5), 'completion observer did not run')
+                        clock[0] = 121.0
+                    return rows
+                script = ('import sys, time\nfrom pathlib import Path\n'
+                          'while not Path(sys.argv[1]).exists(): time.sleep(0.001)\n'
+                          'print("finished")\n')
+                with patch.object(self.fixture, 'command_clock', side_effect=command_clock), \
+                        patch.object(self.fixture, 'owned_processes', side_effect=delayed_sample), \
+                        patch.object(subprocess.Popen, 'wait', wait):
+                    if completion_time < 120:
+                        result = self.fixture.guarded_command([sys.executable, '-c', script, str(release)])
+                        self.assertEqual((result.returncode, result.stdout), (0, 'finished\n'))
+                    else:
+                        with self.assertRaises(subprocess.TimeoutExpired):
+                            self.fixture.guarded_command([sys.executable, '-c', script, str(release)])
+                self.assertEqual(child[0].returncode, 0)
+                self.assertEqual(self.fixture._commands, [])
+
+    def test_timeout_cannot_be_reversed_by_successful_cleanup(self):
+        release = self.fixture.root / 'release'
+        clock = [0.0]
+        child = []
+        original_sample = self.fixture.owned_processes
+        original_join = self.fixture.join_command
+        def sample(command, *, sessions=False):
+            rows = original_sample(command, sessions=sessions)
+            if not sessions:
+                child.append(command[0])
+                clock[0] = 120.0
+            return rows
+        def join(command):
+            release.touch()
+            command[0].wait(timeout=5)
+            original_join(command)
+        script = ('import sys, time\nfrom pathlib import Path\n'
+                  'while not Path(sys.argv[1]).exists(): time.sleep(0.001)\n')
+        with patch.object(self.fixture, 'command_clock', side_effect=lambda: clock[0]), \
+                patch.object(self.fixture, 'owned_processes', side_effect=sample), \
+                patch.object(self.fixture, 'join_command', side_effect=join):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                self.fixture.guarded_command([sys.executable, '-c', script, str(release)])
+        self.assertEqual(child[0].returncode, 0)
+        self.assertEqual(self.fixture._commands, [])
 
     def test_timeout_joins_writers_across_groups_before_removal(self):
         root = self.fixture.root
