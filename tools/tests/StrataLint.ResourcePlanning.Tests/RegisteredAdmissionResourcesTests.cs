@@ -639,6 +639,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
 
     [Theory]
     [InlineData("StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Tests")]
+    [InlineData("StrataLint.ConfigurationTestSupport/TestRegistry.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Configuration.Tests,StrataLint.FileMap.Tests,StrataLint.RepositoryConfiguration.Tests,StrataLint.Rules.Tests,StrataLint.Tests")]
     [InlineData("StrataLint.AdmissionTestSupport/ProducerInputFixture.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Tests")]
     [InlineData("StrataLint.ProcessTestSupport/TestProcessRunner.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Engine.Tests,StrataLint.Lean.Tests,StrataLint.PrScript.Tests,StrataLint.ReportSupervisor.Tests,StrataLint.Tests")]
     [InlineData("StrataLint.RegistrationTestSupport/EngineeringRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CliIntegration.Tests,StrataLint.Engine.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ResourcePlanning.Tests,StrataLint.Rules.Tests,StrataLint.Scribe.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests")]
@@ -706,10 +707,10 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     }
 
     [Fact]
-    public void SharedConfigurationFixtureSelectsItsThreeConsumers()
+    public void SharedConfigurationFixtureSelectsItsConsumers()
     {
         var plan = Plan("tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml", "");
-        Assert.Equal(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.Tests" }
+        Assert.Equal(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.Rules.Tests", "StrataLint.Tests" }
             .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
     }
 
