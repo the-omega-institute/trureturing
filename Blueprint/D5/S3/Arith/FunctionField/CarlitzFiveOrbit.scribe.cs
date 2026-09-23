@@ -109,7 +109,7 @@ internal sealed class CarlitzFiveOrbitDocument : IScribeDocumentDefinition
         var root = Eqn(R(Sub(ApplySigma(1),V("theta")), Sub(ApplySigma(2),V("theta")),
             Sub(ApplySigma(3),V("theta")), Sub(ApplySigma(4),V("theta"))), D(0));
         var conclusion = Eqn(Q(Sub(ApplySigma(1),V("theta"))),D(0));
-        return Disp(All("K", C("Type"), Implies(And(C("Field",V("K")), C("CharP",V("K"),D(19))),
+        return Disp(All("K", C("Type"), Implies(And(C("Field",V("K")), C("CharP",V("K"),D(1,9))),
             All("sigma",C("RingHom",V("K"),V("K")),All("theta",V("K"),
                 Implies(And(close,root),conclusion))))));
     }
