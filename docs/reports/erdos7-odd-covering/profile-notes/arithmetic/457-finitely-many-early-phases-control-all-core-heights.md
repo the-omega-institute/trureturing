@@ -152,3 +152,5 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fin
 ```
 
 Output defaults to JSON on stdout; `--output PATH` selects a file. The finite control verifies one changed family. All-phase quantification outside the finite frontier and all-height quantification come from (FF2)--(FF8), not from this example. Arbitrary shallow cofactor phases, arbitrary core prime supports, and unrestricted Erdős #7 remain outside the conclusion.
+
+[Report458](458-distinguished-prime-completion-removes-the-early-phase-restriction.md) gives a different weighted completion interface with arbitrary original phases, by choosing a distinguished prime at least 13 and the old core 3,5,7,11. That change of decomposition does not remove the shallow phase hypotheses from the ternary functional proved here.

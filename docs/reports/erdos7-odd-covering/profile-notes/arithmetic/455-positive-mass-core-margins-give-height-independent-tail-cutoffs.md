@@ -145,6 +145,8 @@ suffices, independently of all finite core and outside exponent heights. In the 
 
 [Report457](457-finitely-many-early-phases-control-all-core-heights.md) permits arbitrary early cofactor phases above 6125, retaining only 57 specified cofactor patterns in each of the old and first layers. Missing shallow labels are allowed. At all finite heights its actual good set has Haar mass greater than 1/100 and pointwise completion margin 1/50, so the present theorem applies with Lambda=100 and cutoff 3^256*487^3. The shallow phase conditions remain hypotheses.
 
+[Report458](458-distinguished-prime-completion-removes-the-early-phase-restriction.md) retains the same tail constants for every distinguished odd prime by keeping the auxiliary base-three depth cutoff. For any distinguished prime at least 13, the actual 3,5,7,11 core has a good set at arbitrary phases and finite heights, with density cap 279 and completion margin 39/40. This changes the completion functional; it does not prove an arbitrary-phase ternary margin.
+
 ## 5. Why arbitrary fixed core marginals cannot have this cutoff
 
 For any outside prime p>=7, p!=5, take Q=5^(p-1). Use the p original 3-free labels
