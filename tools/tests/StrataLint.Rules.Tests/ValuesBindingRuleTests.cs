@@ -17,6 +17,7 @@ public sealed class ValuesBindingRuleTests
         var text = fixture.Files[ValuesKernelBindingValidator.RelativePath];
         var valueStart = text.IndexOf("lean_statement_sha256 = \"", StringComparison.Ordinal)
             + "lean_statement_sha256 = \"".Length;
+        // Alter one SHA byte while keeping the original mismatch assertion.
         fixture.Files[ValuesKernelBindingValidator.RelativePath] = string.Concat(
             text.AsSpan(0, valueStart),
             text[valueStart] == '0' ? "1" : "0",
