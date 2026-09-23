@@ -80,7 +80,12 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   have hinv := congrArg rebuild
     ((fiberEquiv U V i k).apply_symm_apply
       (⟨j, (a, b)⟩ : Fiber U V i k))
-  simpa only [rebuild, join, split] using hinv
+  change rebuild
+      (fiberEquiv U V i k
+        ((fiberEquiv U V i k).symm
+          (⟨j, (a, b)⟩ : Fiber U V i k))) =
+    rebuild (⟨j, (a, b)⟩ : Fiber U V i k)
+  exact hinv
 
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
