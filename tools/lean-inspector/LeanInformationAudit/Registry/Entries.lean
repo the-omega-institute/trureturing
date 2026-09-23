@@ -1,6 +1,5 @@
 import LeanInformationAudit.Registry.Reifier
-import LeanInformationAudit.FixedSnapshot
-import LeanInformationAudit.FrozenBaseline
+import LeanInformationAuditInterface.RootContract
 import LeanInformationAudit.Registry.ArenaProvenance
 
 namespace LeanInformationAudit
@@ -8,30 +7,11 @@ namespace LeanInformationAudit
 open Lean
 open Lean.Meta
 
-def frozenInformationRootId : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
-
-def designatedInformationRootId : Name :=
-  `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
-
-/-- Current production contracts. These rows are content inputs, independent of
-registry output; migration moves their suppliers into Reg with their roots. -/
-def currentRootCatalogContracts : Array RootCatalogContract := #[
-  { rootId := frozenInformationRootId
-    expected := frozenInformationRootBaseline
-    source := fixedInformationSourceSnapshot.occurrences
-    baseline := frozenInformationRootBaseline
-    companionPrefix := some .anonymous },
-  { rootId := designatedInformationRootId
-    expected := fixedInformationSourceSnapshot.occurrences
-    source := fixedInformationSourceSnapshot.occurrences
-    baseline := frozenInformationRootBaseline }]
-
 private initialize rootCatalogExt :
     SimplePersistentEnvExtension RootCatalogContract (Array RootCatalogContract) ←
   registerSimplePersistentEnvExtension {
     addEntryFn := Array.push
-    addImportedFn := fun entries => entries.foldl (· ++ ·) currentRootCatalogContracts }
+    addImportedFn := fun entries => entries.foldl (· ++ ·) #[] }
 
 
 
@@ -142,14 +122,6 @@ unchanged; only the compiler's provenance extension receives evidence. -/
 def acquireProvenance (contract : RootCatalogContract) : MetaM Unit := do
   for row in contract.expected ++ contract.source ++ contract.baseline do
     discard <| resolveCanonicalArenaName row.objectArenaName
-
-/-- The retained default roots may seal without a declaration command. Their
-contributors acquire the independent inputs available in their compilation;
-ordinary imports carry that evidence to the later root. Missing declarations
-remain missing and are rejected by the existing seal membership checks. -/
-def acquireSeededProvenance : MetaM Unit := do
-  for contract in currentRootCatalogContracts do
-    acquireProvenance contract
 
 def find? (env : Environment) (rootId : Name) : Option RootCatalogContract :=
   (rootCatalogExt.getState env).find? (·.rootId == rootId)
@@ -553,7 +525,6 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
 
 def registerSemanticEntry (entry : InformationRegistryEntry) :
     Lean.Elab.Command.CommandElabM InformationRegistryEntry := do
-  Elab.Command.liftTermElabM RootCatalogs.acquireSeededProvenance
   let env ← getEnv
   let entry ← if entry.resolvedArenaName.isAnonymous then
       Lean.Elab.Command.liftTermElabM <| prepareRegistrationEntry env entry

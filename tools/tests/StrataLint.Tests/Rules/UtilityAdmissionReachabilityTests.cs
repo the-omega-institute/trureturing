@@ -151,10 +151,11 @@ public sealed class UtilityAdmissionReachabilityTests
 
         var diagnostic = Assert.Single(
             diagnostics,
-            item => item.AdmissionEffect is AdmissionEffect.Block
-                && item.Message.StartsWith("UTILITY-", StringComparison.Ordinal));
-        Assert.Contains(diagnostics, item => item.AdmissionEffect is AdmissionEffect.Observe
-            && item.Message.StartsWith("DTR-Evidence ", StringComparison.Ordinal));
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+        // A first pin selects utility admission, but creates no new public theorem
+        // and changes no Reg declaration whose evidence DTR would need to read.
+        Assert.DoesNotContain(diagnostics,
+            item => item.Message.StartsWith("DTR-", StringComparison.Ordinal));
         Assert.Contains(
             $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath}",
             diagnostic.Message,

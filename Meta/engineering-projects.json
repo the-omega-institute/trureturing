@@ -661,6 +661,7 @@
         "tools/scripts/report/report-supervisor.sh",
         "tools/scripts/lib/resource-observation-lib.sh",
         "tools/lean-inspector/Inspector.lean",
+        "tools/lean-inspector/LeanInformationAudit/**/*.lean",
         "tools/lean-inspector/inspect.sh",
         "tools/lean-inspector/lakefile.lean",
         "tools/lean-inspector/lake-manifest.json",
@@ -671,6 +672,8 @@
         "tools/lean-inspector/reuse.py",
         "tools/lean-inspector/tests/**/*.py",
         "tools/lean-inspector-interface/**",
+        "Reg/lakefile.toml",
+        "Reg/lake-manifest.json",
         "tools/tests/StrataLint.Lean.Tests/Fixtures/**",
         "tools/tests/StrataLint.Lean.Tests/Native/*.py",
         "Makefile",
@@ -678,10 +681,11 @@
         "lake-manifest.json",
         "lakefile.toml",
         "lean-toolchain",
-        "lean-report-inputs.json",
-        "Meta/ci-cache-paths.json"
+        "lean-report-inputs.json"
       ],
-      "execution_excludes": [],
+      "execution_excludes": [
+        "tools/scripts/worktree/lean_actions.py"
+      ],
       "execution_environment": [
         "STRATALINT_TEST_ENVIRONMENT"
       ],

@@ -31,7 +31,7 @@ public sealed partial class CurrentExecutionContractTests
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
                 : "registered fixture material\n");
         var cacheInvalidates = project is "StrataLint.ArchitectureTests" or "StrataLint.Cache.Tests"
-            or "StrataLint.EngineeringScope.Tests" or "StrataLint.Lean.Tests" or "StrataLint.ScriptTests";
+            or "StrataLint.EngineeringScope.Tests" or "StrataLint.ScriptTests";
         const string filemap = "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
             + "[[files]]\npattern = \"Meta/ci-cache-paths.json\"\nkind = \"data\"\nconsumed_by = [\"automation\"]\n";
         var changes = new[]
@@ -40,7 +40,7 @@ public sealed partial class CurrentExecutionContractTests
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
             (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts),
             (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
-            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project == "StrataLint.Lean.Tests"),
+            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts),
             (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: true),
             (Path: "Meta/FILEMAP.toml", Invalidates: project is "StrataLint.ArchitectureTests" or "StrataLint.Cache.Tests"),
             (Path: "Meta/ci-cache-paths.json", Invalidates: cacheInvalidates),
