@@ -484,10 +484,10 @@ with its stated probability and WSS interfaces.
 The new Lean/Scribe pair is `D5/S3/Arith/ZeckendorfFutureKernel.lean`
 and its Blueprint companion. It proves legal coefficient saturation and
 the full fixed-boundary future equivalence, rather than assuming that
-all affine tests can be realized. It is a proof-script candidate pending
-actual elaboration. The state-count, stationary-law, entropy and topology
-results above are complete ordinary proofs and are not additional
-kernel-certified declarations. No source or conclusion assumes h_p=1.
+all affine tests can be realized. The state-count, stationary-law, entropy,
+and topology results above are complete ordinary proofs and are not
+additional kernel-certified declarations. No source or conclusion assumes
+h_p=1.
 
 ## 8. Probability-state completion: terminal rank and two-read tomography
 
@@ -781,10 +781,10 @@ redundancy; and Ben-Ari-Miller, arXiv:1405.2379, for conditioned finite-word
 probability models. The exact arithmetic proofs above are supplied here.
 The inspected abstracts do not establish priority for our combined result.
 
-The formal companion `ZeckendorfTwoReadTomography` certifies the explicit
-modular two-test separating event and its finite-mass reconstruction. The
-literal word implementation is justified by the earlier guarded compiler
-and the ordinary composition proof in PT4. The Fourier rank, affine image
-dimension, prime inverse, sampling risk and WSS formulas remain ordinary
-proofs rather than additional claims of kernel certification. No new
-external open problem is marked resolved and no new problem entry is opened.
+The explicit modular two-test separating event and its finite-mass
+reconstruction are retained as ordinary proofs in PT4. The literal word
+implementation is justified by the earlier guarded compiler. The Fourier
+rank, affine image dimension, prime inverse, sampling risk, and WSS formulas
+likewise remain ordinary proofs rather than claims of kernel certification.
+No new external open problem is marked resolved and no new problem entry is
+opened.

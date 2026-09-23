@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.1207.4167
 url: https://arxiv.org/abs/1207.4167
 claim: "The system-dynamics-matrix approach represents state through specified observable tests; its linear dimension must be distinguished from a deterministic state count."
 strata_touched:
-  - D5/S3/Arith/ZeckendorfTwoReadTomography
+  - D5/S3/Arith/ZeckendorfFutureKernel
 license: citation-only
 triage: anchor
 ---

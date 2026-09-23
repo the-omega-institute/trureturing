@@ -710,13 +710,12 @@ a slice defined using p^h cannot independently prove what that h is.
 The exact phase formula keeps the initial choice of the original phi
 rather than replacing it by a freely adjusted generator.
 
-The formal companion is
-`D5/S3/Arith/GoldenConicStationaryChart.lean`, with its authored Scribe.
-It uses GoldenApparition.GoldenMod M and proves the norm, inverse and
-quadratic phase theorem ES1 by explicit ring identities. Its assumptions
-are only the displayed inverse certificates. The exact Fourier-sum,
-support-count and original-orbit statements ES2-ES4 are ordinary proofs
-above, not additional claims of Lean kernel certification.
+The exact chart, inverse, and quadratic phase identities ES1 are retained
+here as ordinary mathematics. Their proofs are algebraic normalization from
+the displayed inverse certificates, so they are not delivered as a new Lean
+declaration. The Fourier-sum, support-count, and original-orbit statements
+ES2-ES4 likewise remain ordinary proofs rather than claims of Lean kernel
+certification.
 
 Rational parametrization of a nonsingular conic, quadratic Gauss sums
 and p-adic stationary phase are classical mechanisms. Related primary
