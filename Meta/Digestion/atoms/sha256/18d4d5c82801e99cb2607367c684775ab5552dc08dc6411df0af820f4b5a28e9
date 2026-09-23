@@ -1,0 +1,9 @@
+**定理 139.7（有限表平均与确定性定表）。** 对每个固定 $k,R,m$，存在一对固定表 $(\rho,\beta)$，使
+$$
+\delta_k(f^{\rho,\beta})
+\le\frac1N+\binom N2\lambda^{1-m},
+\qquad N=R-m+2.
+\tag{139.20}
+$$
+若要求 $\beta\equiv0$，仍存在固定全序使右侧的第一项换成 $2/N$。
+

@@ -1,0 +1,10 @@
+**证明。** 有
+$$
+\chi_R(x)=\tau(2-x/R)\tau(2+x/R).
+$$
+当 $x\ge0$ 时第二因子为一，当 $x\le0$ 时第一因子为一，故恒等式成立并证明全局光滑性；偶性直接成立，$|x|\ge2R$ 时截断为零。乘偶多项式后保留这些性质，所以测试合法且有上述支撑。
+
+对 [RightHalfStripRiemannReduction](../../../D5/S3/Weil/ZetaBridge/RightHalfStripRiemannReduction.lean) 的 `RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh` 取逆否命题，再用经典量词否定，若 RH 不成立，就存在实际零点 $\rho$ 满足 $\operatorname{riemannZeta}(\rho)=0$ 及 $1/2<\Re\rho<1$。由于 `classicalZeta` 就是 `riemannZeta`，且 `criticalAbscissa` 为 $1/2$，此 $\rho$ 满足 `IsNontrivialZero`，并有 $\Re\rho\ne1/2$。`zetaZeroData_exhaustiveUnique` 给编号 $n$ 使 $Z.zero(n)=\rho$。将这个 $Z,n$ 及该不等式代入 [OffLineZeroNegativeLiteralRationalEnergy](../../../D5/S3/Weil/Separator/OffLineZeroNegativeLiteralRationalEnergy.lean) 的 `offLineZero_yields_negative_literal_rational_energy`，得到正整数 $R$、有理多项式 $p,q$ 和取值恰为（21.21）的测试，其完整卷积平方零点和的实部严格负。由 `explicitFormula_unconditional` 及卷积交换律，它就是 $Q(f_{R,p,q})$，得（21.22）。
+
+该声明同时将完整零点和识别为完整的素数—Archimedean 能量，不以有限零点截断代替。零点呈现的经典排序用于存在性应用，不提供按该排序读取全部零点的能力；测试的有限描述也不自动提供完整 $Q$ 的认证求值器。证毕。
+
