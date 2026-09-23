@@ -101,7 +101,11 @@ public sealed class AtomContextProjectionTests
         Assert.Equal(Id(fixture.Atomized.Claims[0]), first.Previous!.Value.AtomId);
         var last = Resolve(fixture, Id(plan.Children[2]));
         Assert.Equal(Id(fixture.Atomized.Claims[2]), last.Next!.Value.AtomId);
-        AssertCode("OCCURRENCE_MISSING", () => Resolve(fixture, Id(plan.Parent)));
+        var parent = Resolve(fixture, Id(plan.Parent));
+        Assert.Equal(Id(fixture.Atomized.Claims[0]), parent.Previous!.Value.AtomId);
+        Assert.Equal(Id(fixture.Atomized.Claims[2]), parent.Next!.Value.AtomId);
+        Assert.Equal(plan.Parent.RawBytes.ToArray(), parent.Current.RawBytes.ToArray());
+        Assert.Equal((2, 3), (parent.Index, parent.Count));
     }
 
     [Fact]
