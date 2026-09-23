@@ -17,7 +17,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan("tools/tests/StrataLint.RepositoryContract.Tests/" + file, "", mode);
             Assert.Equal(WithRepositoryContract(architecture
-                    ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj" } : []),
+                    ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj", RepositoryTopologyProject } : []),
                 Strings(plan["execution"]!["tests"]!));
             Assert.Equal(WithRepositoryContract(new[] { architecture
                     ? "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj"
@@ -35,7 +35,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
     {
         foreach (var mode in new[] { "push", "pr" })
         {
-            var consumers = new[] { first }.Concat(second is null ? [] : new[] { second });
+            var consumers = new[] { first }.Concat(second is null ? [] : new[] { second })
+                .Concat(path.EndsWith(".cs", StringComparison.Ordinal) ? new[] { "StrataLint.RepositoryTopology.Tests" } : []);
             Assert.Equal(WithRepositoryContract(consumers.Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
         }

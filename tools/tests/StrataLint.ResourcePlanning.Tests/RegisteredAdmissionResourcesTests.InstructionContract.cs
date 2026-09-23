@@ -22,7 +22,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/scripts/agent/batch_pr.sh" => ["StrataLint.Tests"],
             _ => Array.Empty<string>(),
         });
-        Assert.Equal(consumers.Select(name => $"tools/tests/{name}/{name}.csproj"),
+        Assert.Equal(WithRepositoryContract(consumers.Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
     }

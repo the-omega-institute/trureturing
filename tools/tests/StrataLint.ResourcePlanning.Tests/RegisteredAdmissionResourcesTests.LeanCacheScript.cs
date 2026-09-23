@@ -16,6 +16,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "StrataLint.Lean.Tests",
             "StrataLint.LeanCacheScript.Tests",
             "StrataLint.NativeTransportIntegration.Tests",
+            "StrataLint.RepositoryContract.Tests",
             "StrataLint.Tests",
         }.Select(name => $"tools/tests/{name}/{name}.csproj"),
             Strings(plan["execution"]!["tests"]!));
@@ -29,9 +30,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
     {
         var plan = Plan($"tools/tests/StrataLint.LeanCacheScript.Tests/{file}", "", "push");
         var expected = architecture
-            ? new[] { "StrataLint.ArchitectureTests", "StrataLint.LeanCacheScript.Tests" }
+            ? new[] { "StrataLint.ArchitectureTests", "StrataLint.LeanCacheScript.Tests", "StrataLint.RepositoryTopology.Tests" }
             : new[] { "StrataLint.LeanCacheScript.Tests" };
-        Assert.Equal(expected.Select(name => $"tools/tests/{name}/{name}.csproj"),
+        Assert.Equal(WithRepositoryContract(expected.Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
     }
 
