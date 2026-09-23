@@ -130,7 +130,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         var consumers = input switch
         {
-            "tools/scripts/preflight.sh" => new[] { "StrataLint.PlanningIntegration.Tests", "StrataLint.StageIntegration.Tests" },
+            "tools/scripts/preflight.sh" => new[] { "StrataLint.PlanningIntegration.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.WorkflowScript.Tests" },
             "tools/scripts/report/lean-report-selection.py" => ["StrataLint.LeanReportScript.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
             "tools/scripts/workflow/ci_plan.py" => ["StrataLint.Cache.Tests", "StrataLint.BuildIntegration.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
             "tools/scripts/worktree/lean_cache.py" => ["StrataLint.Cache.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.BuildIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
@@ -308,7 +308,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
         Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         Assert.Equal(judge == "tools/scripts/preflight.sh"
-            ? new[] { "architecture", "build", "current", "delta", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-cli", "test-planning-integration", "test-stage-integration" }
+            ? new[] { "architecture", "build", "current", "delta", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-cli", "test-planning-integration", "test-stage-integration", "test-workflow-script" }
             : ["build", "current", "delta", "engineering", "filemap", "lean", "lean-report", "scribe"],
             Strings(plan["resources"]!));
         Assert.Equal(new[] { "build", "engineering", "current", "delta" }, Strings(plan["selected_stages"]!));
