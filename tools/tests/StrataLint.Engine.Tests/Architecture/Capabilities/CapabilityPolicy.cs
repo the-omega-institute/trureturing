@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.Engine.Tests;
 
 internal static class CapabilityPolicy
 {
