@@ -35903,3 +35903,459 @@ $c_*,r_*,E$ 在 $p,\varepsilon,a_*,b_*$ 固定后均不随 $r$ 或观察者变�
 所计成本始终是全部演化观察者状态的基数；若使用时钟、档案或种子，其全部演化取值都须计入状态。精确 $x_w$ 只出现在证明中的比较轨迹，不是观察者寄存器；有限网格的实数标签、更新表和输出表静态存在。基数与标记状态所需的位数不同，本结论没有给出有限位表编码、精确指数求值算法、最少位数或总实现成本。保证涵盖每一个正 Born 质量的有限词，无论多稀有；它不是典型、平均或几乎处处保证，也不需要某个无限词具有正概率。原仪器在 $r=0$ 时各非空报告分支已是测量制备操作，生成器始终只有两个经典隐藏状态；这里的状态阶不推出物理熵界、量子优势、相干性边界或关于普遍经典实在的结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 161. 未知循环相位的重复记录预测半径与非一致时间极限
+
+**定义 161.1（已校准两条边的共同记录源）。** 令系统空间为 $\mathcal H_S=\mathbb C^3$，固定有序基 $|0\rangle,|1\rangle,|2\rangle$。设 $0\le r\le1$ 为已知参数，定义 Hermitian 矩阵
+$$
+C(r,z)=\begin{pmatrix}
+1&r&rz\\
+r&1&r\\
+r\overline z&r&1
+\end{pmatrix},\qquad z\in\mathbb C.
+\tag{161.1}
+$$
+允许的未知参数为满足 $C(r,e^{i\phi})\succeq0$ 的 $\phi\in[-\pi,\pi]$。两个端点 $-\pi,\pi$ 表示同一个矩阵。源按第3节的有限 Gram 实现提供单位记录向量 $e_j^{(\phi)}\in\mathbb C^3$，方向固定为
+$$
+\langle e_k^{(\phi)}\mid e_j^{(\phi)}\rangle
+=C(r,e^{i\phi})_{jk}.
+\tag{161.2}
+$$
+例如可以取 $C(r,e^{i\phi})^{\mathsf T}$ 的正半定平方根的各列；其通常方向的 Gram 矩阵即为 $C(r,e^{i\phi})^{\mathsf T}$。三标签也可使用第14.4节的两个位置 Zeckendorf 合法基底，以下只使用这三个正交标签。
+
+初态为固定空白向量的环境单元，实施受控记录等距映射 $|j\rangle|m_*\rangle\mapsto|j\rangle|e_j^{(\phi)}\rangle$。丢弃该单元后，系统通道为
+$$
+\mathcal M_{r,\phi}(A)=C(r,e^{i\phi})\odot A.
+\tag{161.3}
+$$
+这里 $\odot$ 表示逐项乘积。单位对角与 Gram 实现保证它完全正且保持迹。参数 $\phi$ 在整个重复协议中固定未知；每一步使用同一受控记录规则和一个与系统、参考及既有记录独立的新空白单元。旧记录不再访问，两步之间没有额外控制或中间结果读取。于是 $N$ 步终端通道是同一个 $\mathcal M_{r,\phi}$ 的 $N$ 次复合，不是每步重新抽取独立相位的平均通道。
+
+所有源的逐对记录转移概率均为 $|\langle e_k^{(\phi)}\mid e_j^{(\phi)}\rangle|^2=r^2$（$j\ne k$），而循环乘积为 $r^3e^{-i\phi}$；故本节参数与第14.6节的有向循环相位相差负号。式（161.1）还声明了相对于系统制备和读出基的两条实际校准边 $C_{01}=C_{12}=r$。它们是来源合同的一部分，不能从逐对模资料推出，也不能以没有运输输入和效果的坐标变换免费取得。以下预测半径针对这一已校准源族；任意未校准边相位的更大源族不在等式的范围内。循环相位作为三态不变量及其可行域使用第8.9、14.6节的既有机制。
+
+逐对区分度之外的三态相位具有成熟先例：A. J. Menssen 等，*Distinguishability and many-particle interference*，[arXiv:1609.09804v1](https://arxiv.org/abs/1609.09804v1)，正文第2页式(4)给三光子 tritter 的符合概率，其中含有 $r_{12}r_{23}r_{31}\cos\varphi$；第3页式(10)—(14)给固定逐对模而改变三者相位的准备。本节使用三标签受控记录通道，不将该三光子散射概率改称式（161.3），也不将循环相位本身当作新增机制。
+
+**定义 161.2（参考安全的终端预测半径）。** 对两个系统 CPTP 通道 $\mathcal T,\mathcal U$，令
+$$
+d_{\rm ref}(\mathcal T,\mathcal U)
+=\sup_{\substack{\dim\mathcal H_R<\infty\\
+\rho_{SR}\succeq0,\ \operatorname{Tr}\rho_{SR}=1}}
+\frac12\left\|\bigl((\mathcal T-\mathcal U)\otimes\operatorname{id}_R\bigr)(\rho_{SR})\right\|_1.
+\tag{161.4}
+$$
+两通道作用于同一份输入和同一个不受操作的参考。它是通常的半 diamond 距离；以下证明直接使用所列态优化，不需要限制参考维数。固定已知 $(r,N)$，预测者选择一个与 $\phi$ 无关的 CPTP 通道 $\mathcal F$。定义
+$$
+\mathcal R_N(r)=\inf_{\mathcal F\ \mathrm{CPTP}}
+\ \sup_{\phi:\ C(r,e^{i\phi})\succeq0}
+ d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F),\qquad N\ge1,
+\qquad \mathcal R_0(r)=0.
+\tag{161.5}
+$$
+这是对未知共同源作统一终端预测的误差，不是已知源通道的恢复误差。允许的预测通道不必属于原来的单参数源族；它须在所有输入及参考上物理合法。没有额外校准试次、环境读出、作用间干预或关于 $\phi$ 的概率先验。
+
+**定理 161.3（全部输入和参考下的精确重复预测半径）。** 定义
+$$
+\alpha(r)=
+\begin{cases}
+\pi,&0\le r\le1/2,\\
+\displaystyle\arccos\!\left(\frac{3r^2-1}{2r^3}\right),&1/2<r<1,\\
+0,&r=1.
+\end{cases}
+\qquad h(t)=\sin\!\bigl(\min\{t,\pi/2\}\bigr)\quad(t\ge0).
+\tag{161.6}
+$$
+则对每个 $N\ge1$，
+$$
+\boxed{\mathcal R_N(r)=\frac{r^N}{2}\,h(N\alpha(r)).}
+\tag{161.7}
+$$
+当 $0<r<1$ 时，令 $s=r^N$、$\beta=N\alpha(r)$，一个达到下确界的预测通道为
+$$
+\mathcal F_{r,N}(A)=C(s,z_*)\odot A,
+\qquad
+z_*=
+\begin{cases}
+\cos\beta,&0\le\beta\le\pi/2,\\
+0,&\beta\ge\pi/2.
+\end{cases}
+\tag{161.8}
+$$
+该通道完全正且保持迹，并且最坏源对的区分无需纠缠参考就能达到式（161.7）的下界。
+
+证明。 对 $0<r<1$，任意二阶主块的行列式为 $1-r^2>0$。用一个二阶主块作 Schur 补，三阶矩阵正半定等价于
+$$
+\det C(r,e^{i\phi})=1-3r^2+2r^3\cos\phi\ge0.
+\tag{161.9}
+$$
+$r\le1/2$ 时，该行列式的最小值为 $(1+r)^2(1-2r)\ge0$，故全部相位允许。对 $1/2<r<1$，阈值 $c(r)=(3r^2-1)/(2r^3)$ 严格递增，因为 $c'(r)=3(1-r^2)/(2r^4)>0$，并从 $-1$ 增至 $1$；允许相位恰为 $[-\alpha(r),\alpha(r)]$。这是第14.6节同一 Schur 补判据在可变 $r$ 上的应用。$r=0$ 时通道不依赖相位；$r=1$ 时正性迫使 $\cos\phi=1$，通道为恒等。后两种情形的预测误差均为零。
+
+由新鲜记录及固定同一参数的合同，逐项复合给出
+$$
+\mathcal M_{r,\phi}^{N}(A)=C(s,e^{iN\phi})\odot A,
+\qquad s=r^N.
+\tag{161.10}
+$$
+对任意两个使 $C(s,z),C(s,w)$ 正半定的复数 $z,w$，对应通道只在 $(0,2),(2,0)$ 两个矩阵元上不同，并满足精确式
+$$
+d_{\rm ref}(M_{C(s,z)},M_{C(s,w)})=\frac{s}{2}|z-w|,
+\qquad M_C(A)=C\odot A.
+\tag{161.11}
+$$
+为证明包括任意参考的上界，将输入态写成系统基下的参考算子块 $X_{jk}$，令 $\delta=s(z-w)$。输出差在 $0,2$ 子块上为
+$$
+\begin{pmatrix}0&\delta X_{02}\\\overline\delta X_{20}&0\end{pmatrix},
+$$
+其迹范数为 $2|\delta|\|X_{02}\|_1$。输入正性给出
+$$
+\|X_{02}\|_1\le\sqrt{\operatorname{Tr}X_{00}\operatorname{Tr}X_{22}}
+\le\frac{\operatorname{Tr}X_{00}+\operatorname{Tr}X_{22}}2\le\frac12.
+\tag{161.12}
+$$
+第一步也可直接由输入的纯态分解证明：写各纯向量为 $\sum_j|j\rangle v_j$，对各项 $|v_0\rangle\langle v_2|$ 使用迹范数的三角不等式，再对带混合权重的 $\|v_0\|\|v_2\|$ 使用 Cauchy–Schwarz。因而半迹范数至多为 $|\delta|/2$。取无参考输入 $(|0\rangle+|2\rangle)/\sqrt2$ 时，输出差的两个非零特征值恰为 $\pm|\delta|/2$，达到该上界。对应的正谱投影也给出达到同一概率差的二结果终端测量。此处使用第9.4节已有的参考算子块估计与二标签达到机制；新的优化对象是整个未知共同相位族。
+
+若 $\beta\le\pi/2$，两个实际源 $\phi=\pm\alpha(r)$ 的终端参数为 $e^{\pm i\beta}$。它们的通道距离为 $s\sin\beta$。对任何 CPTP 预测通道，三角不等式表明其到至少一个端点的距离不小于 $s\sin\beta/2$。端点通道的等权混合就是式（161.8）中 $z_*=\cos\beta$ 的通道，因此物理合法。对任意 $|t|\le\beta$，因 $\cos\beta\ge0$，有
+$$
+|e^{it}-\cos\beta|^2
+=1+\cos^2\beta-2\cos\beta\cos t
+\le1-\cos^2\beta=\sin^2\beta.
+\tag{161.13}
+$$
+结合式（161.11），该预测通道达到下界。
+
+若 $\beta\ge\pi/2$，实际源 $\phi_\pm=\pm\pi/(2N)$ 均在允许区间内，终端参数分别为 $i,-i$。两通道距离为 $s$，故任意预测通道的最坏误差至少为 $s/2$。这两个通道的等权混合使 $z_*=0$，而任意实际终端参数的模长均为一；式（161.11）因此给出恒为 $s/2$ 的误差。式（161.7）在两种情形都成立。证毕。
+
+上述达到通道由实际源通道的凸混合构成，故无须将任意复坐标插值误当成通道。它通常不等于任何一个 $\mathcal M_{r,\phi}^{N}$，因为 $|z_*|<1$。要求预测通道同时来自原始固定逐对模的单一源，是比定义161.2更严格的优化问题，不能将本定理的达到式直接沿用。
+
+**命题 161.4（固定均匀制备与全通道预测的差别）。** 在定义161.1的合同下，若输入限定为 $|s_3\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3$，且仍允许全部终端系统测量，则令
+$$
+\rho_{r,\phi}^{(N)}=\mathcal M_{r,\phi}^{N}(|s_3\rangle\langle s_3|)
+=\frac13 C(r^N,e^{iN\phi}).
+\tag{161.14}
+$$
+对全部密度矩阵预测 $\sigma$ 的最坏半迹范数误差恰为
+$$
+\inf_{\sigma\succeq0,\ \operatorname{Tr}\sigma=1}
+\sup_{|\phi|\le\alpha(r)}\frac12\|\rho_{r,\phi}^{(N)}-\sigma\|_1
+=\frac{r^N}{3}h(N\alpha(r)).
+\tag{161.15}
+$$
+特别地，固定均匀制备的误差严格小于非退化情形的全通道误差，不能以一个三路出口或一种输入的最优值代替定义161.2。
+
+证明。 两个候选矩阵只在 $(0,2),(2,0)$ 上不同，差矩阵的两个非零特征值为 $\pm r^N|z-w|/3$，故半迹范数为 $r^N|z-w|/3$。定理161.3使用的同一端点对给出对任意密度矩阵预测的下界；同一端点态的平均给出合法达到态。将该证明中的系数 $1/2$ 换成 $1/3$ 即得。$r=0,1$ 时两种误差都为零。证毕。
+
+**命题 161.5（新鲜记录中的预测误差先增长而相干模仍衰减）。** 对每个 $1/\sqrt2<r<1$，有
+$$
+\frac{\mathcal R_2(r)}{\mathcal R_1(r)}
+=3-\frac1{r^2}>1,
+\qquad
+\lim_{N\to\infty}\mathcal R_N(r)=0.
+\tag{161.16}
+$$
+与此同时，对每个固定实际源 $\phi$ 和每个异标签矩阵元，$N$ 步通道的乘子模长均为 $r^N$，随 $N$ 严格下降。
+
+证明。 在 $r=1/\sqrt2$，式（161.6）给 $\alpha=\pi/4$；$c(r)$ 的严格递增性表明所给范围内 $0<\alpha(r)<\pi/4$。故第一、二步均使用式（161.7）的正弦支，且
+$$
+\frac{r^2\sin(2\alpha)}{r\sin\alpha}
+=2r\cos\alpha
+=\frac{3r^2-1}{r^2}.
+$$
+另一方面，$0\le\mathcal R_N(r)\le r^N/2\to0$。乘子模长的陈述由式（161.10）直接读出。这里不存在与数据处理收缩的矛盾：两个不同未知参数的源在下一步分别作用不同的通道；不能把该比较改写为对两份输出再施加同一个已知通道。环境各步保持新鲜，增长也不要求旧记录回流。证毕。
+
+**定理 161.6（趋于同射线的记录仍有非零统一视界误差）。** 令 $r=1-\varepsilon$，$\varepsilon\downarrow0$。对每个固定 $t\ge0$，有
+$$
+\lim_{\varepsilon\downarrow0}
+\mathcal R_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+=f(t):=\frac{e^{-t}}2\sin\!\bigl(\min\{\sqrt3t,\pi/2\}\bigr).
+\tag{161.17}
+$$
+该收敛在每个有限 $t$ 区间上一致，且
+$$
+\boxed{
+\lim_{r\uparrow1}\sup_{N\ge1}\mathcal R_N(r)
+=\frac{\sqrt3}{4}\exp\!\left(-\frac{\pi}{3\sqrt3}\right)>0,
+\qquad
+\forall N<\infty,\quad\lim_{r\uparrow1}\mathcal R_N(r)=0.
+}
+\tag{161.18}
+$$
+对每个 $0<r<1$ 选任一达到 $\sup_{N\ge1}\mathcal R_N(r)$ 的整数 $N_*(r)$，则
+$$
+\lim_{r\uparrow1}(1-r)N_*(r)=\frac{\pi}{3\sqrt3}.
+\tag{161.19}
+$$
+
+证明。 对 $1/2<r<1$，阈值具有精确恒等式
+$$
+1-\cos\alpha(r)
+=\frac{(1-r)^2(2r+1)}{2r^3}.
+\tag{161.20}
+$$
+结合 $2(1-\cos u)/u^2\to1$，得到 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$。同时 $\log(1-\varepsilon)/\varepsilon\to-1$。对 $N=\lfloor t/\varepsilon\rfloor$，有 $|N\varepsilon-t|\le\varepsilon$；因而在任意有限 $t$ 区间上一致地成立
+$$
+(1-\varepsilon)^N\longrightarrow e^{-t},
+\qquad N\alpha(1-\varepsilon)\longrightarrow\sqrt3t.
+$$
+$h$ 连续且为全局 Lipschitz 函数，所以定理161.3给出式（161.17），包括 $t=0$ 处的约定。
+
+对任意整数 $N$，$1-\varepsilon\le e^{-\varepsilon}$ 给出统一尾界
+$$
+0\le\mathcal R_N(1-\varepsilon)\le\frac12e^{-\varepsilon N}.
+\tag{161.21}
+$$
+先选择大的 $T$ 控制全部 $\varepsilon N\ge T$ 的尾，再使用 $[0,T]$ 上的一致收敛与网格间距 $\varepsilon\to0$，得到最大值趋于 $\max_{t\ge0}f(t)$。在 $0<t<\pi/(2\sqrt3)$，
+$$
+f'(t)=\frac{e^{-t}}2\bigl(\sqrt3\cos(\sqrt3t)-\sin(\sqrt3t)\bigr).
+$$
+其唯一零点为 $t_* =\pi/(3\sqrt3)$，此前为正，此后为负；在 $t\ge\pi/(2\sqrt3)$，$f(t)=e^{-t}/2$ 严格下降。因此全局最大点唯一，且 $f(t_*)=(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+
+固定 $0<r<1$ 时，$\mathcal R_1(r)>0$ 且 $\mathcal R_N(r)\to0$，所以最大值由有限整数取得。对任意序列 $r\uparrow1$，尾界使其最大点的缩放参数留在某个有限区间；一致收敛和 $f$ 的唯一最大点表明该参数只能趋于 $t_*$，证明式（161.19）。对固定 $N$，$\alpha(r)\to0$，由式（161.7）直接得到式（161.18）的后一式。证毕。
+
+式（161.18）比较的是先取全部视界上确界与先令 $r\uparrow1$，并不声称两个普通迭代极限 $\lim_{r\uparrow1}\lim_{N\to\infty}\mathcal R_N(r)$ 和 $\lim_{N\to\infty}\lim_{r\uparrow1}\mathcal R_N(r)$ 不同；它们都为零。遗漏相位造成的是预测充分性对视界的不一致性。第14节的已知源恢复问题允许恢复依赖完整 $C$，本节预测者只取得定义161.1的共同校准数据；这两个优化的量词不同。第55节的复用记录回流也不承担本节的新鲜记录结论。
+
+## 追加锚（本行以下为增补区）
+
+## 162. 单步最优预测的迭代刚性与共同相位代价
+
+**定义 162.1（单步最优通道的重复使用）。** 沿用定义161.1的已校准三标签记录源、固定未知相位、新鲜空白记录单元与无中间控制合同，以及定义161.2的距离 $d_{\rm ref}$ 和逐视界预测半径 $\mathcal R_N(r)$。所有预测通道均作用于同一个系统代数 $B(\mathbb C^3)$，没有额外的持久记忆寄存器。令
+$$
+\mathfrak F_1(r)=
+\left\{\mathcal F\ \mathrm{CPTP}:
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal F)
+=\mathcal R_1(r)\right\}.
+\tag{162.1}
+$$
+该集合由定理161.3非空。定义
+$$
+\mathcal E_N(r)=
+\inf_{\mathcal F\in\mathfrak F_1(r)}
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^{N}),
+\qquad N\ge1,\qquad \mathcal E_0(r)=0.
+\tag{162.2}
+$$
+下确界允许 $\mathcal F$ 随 $(r,N)$ 选择，但每次必须达到单步最优，并在这 $N$ 步中重复使用同一通道。真实源也在全部步骤保留同一个 $\phi$。本定义没有给未知参数赋予概率先验。
+
+对 $1/\sqrt3<r<1$，简记
+$$
+\alpha=\alpha(r)\in(0,\pi/2),\qquad
+c=\cos\alpha=\frac{3r^2-1}{2r^3}\in(0,1),\qquad
+\mathcal F_*(A)=C(r,c)\odot A.
+\tag{162.3}
+$$
+由式（161.8），$\mathcal F_*\in\mathfrak F_1(r)$。它等于 $\mathcal M_{r,\alpha}$ 与 $\mathcal M_{r,-\alpha}$ 的等权混合。这里的混合给出一个合法预测器，并不把真实未知源改成每步独立抽样的源。
+
+**定理 162.2（全 CPTP 单步最优类的精确迭代误差）。** 对每个 $1/\sqrt3<r<1$ 和每个整数 $N\ge1$，有
+$$
+\boxed{
+\mathcal E_N(r)=
+\frac{r^N}{2}
+\sqrt{1+c^{2N}-2c^N\cos\!\bigl(\min\{N\alpha,\pi\}\bigr)}.
+}
+\tag{162.4}
+$$
+同一个 $\mathcal F_*$ 对所有 $N$ 都达到式（162.2）的下确界。下界适用于全部 $\mathfrak F_1(r)$，不要求其中的通道为 Schur 乘子，也不要求它保持系统基的各个投影。达到下界的输入不需要参考系统。
+
+证明。 令 $P=|0\rangle\langle0|+|2\rangle\langle2|$，并在 $P\mathbb C^3$ 上使用 Pauli 矩阵 $X,Y,Z$。记
+$$
+u_\theta=(\cos\theta,\sin\theta,0),\qquad
+v_\theta=(-\sin\theta,\cos\theta,0),\qquad
+\rho_\theta=\frac12(P+u_\theta\cdot\sigma),
+\qquad q=r\sin\alpha>0.
+\tag{162.5}
+$$
+两端点源作用于 $\rho_\theta$ 后，所得态均支撑于 $P$，其 Bloch 向量构成无序对
+$$
+b_\theta+qv_\theta,\quad b_\theta-qv_\theta,
+\qquad b_\theta=rc\,u_\theta.
+\tag{162.6}
+$$
+这两个态的半迹范数距离为 $q$，且 $\mathcal R_1(r)=q/2$。
+
+先证它们在全三维态空间中半径 $q/2$ 的共同中心唯一。设密度矩阵 $\tau$ 到两态的距离均不大于 $q/2$。令 $t=\langle1|\tau|1\rangle\ge0$，将压缩块写成
+$$
+P\tau P=\frac12\bigl((1-t)P+w\cdot\sigma\bigr),
+\qquad w\in\mathbb R^3.
+\tag{162.7}
+$$
+对分块 $P\oplus(I-P)$ 做 pinching 不增加迹范数。一个 Hermitian 二维矩阵 $(-tP+a\cdot\sigma)/2$ 的迹范数是 $\max\{t,|a|\}$，因为它的两个特征值为 $(-t\pm|a|)/2$。因此上述两个距离分别至少为
+$$
+\frac12\left(\max\{t,|w-b_\theta\mp qv_\theta|\}+t\right).
+\tag{162.8}
+$$
+而
+$$
+\max_{\pm}|w-b_\theta\pm qv_\theta|
+\ge \sqrt{|w-b_\theta|^2+q^2}\ge q.
+\tag{162.9}
+$$
+距离上界迫使 $q+t\le q$，故 $t=0$；再由式（162.9）得 $w=b_\theta$。$\tau$ 正性和 $\langle1|\tau|1\rangle=0$ 还迫使所有与 $|1\rangle$ 相连的非对角元为零。故唯一共同中心为
+$$
+\tau_\theta=\frac12(P+rc\,u_\theta\cdot\sigma).
+\tag{162.10}
+$$
+本步骤使用二维 Bloch 球的 Euclidean 范数公式与 pinching 的迹范数收缩；它不声称任意高维迹范数球的共同中心都唯一。
+
+任取 $\mathcal F\in\mathfrak F_1(r)$。单步全输入距离上界特别适用于每个 $\rho_\theta$，所以前述唯一性给出 $\mathcal F(\rho_\theta)=\tau_\theta$。对 $\theta=0,\pi$ 的等式取和、取差，再用 $\theta=\pi/2,3\pi/2$，由线性性得
+$$
+\mathcal F(P/2)=P/2,\qquad
+\mathcal F(X)=rcX,\qquad
+\mathcal F(Y)=rcY.
+\tag{162.11}
+$$
+因此不论 $\mathcal F$ 在其余方向怎样作用，其在整个赤道圆盘上的迭代已被迫满足
+$$
+\mathcal F^N(\rho_\theta)
+=\frac12\bigl(P+(rc)^Nu_\theta\cdot\sigma\bigr).
+\tag{162.12}
+$$
+真实源在同一输入上的 Bloch 向量为 $r^N u_{\theta-N\phi}$；角度的正负来自式（161.1）的矩阵元约定，不影响以下模长。两输出的半迹范数距离恰为
+$$
+\frac{r^N}{2}|e^{iN\phi}-c^N|.
+\tag{162.13}
+$$
+由于 $c^N>0$，在 $|\phi|\le\alpha$ 上最大化此模长，等价于最小化 $\cos(N\phi)$。当 $N\alpha\le\pi$ 时最小值为 $\cos(N\alpha)$；当 $N\alpha\ge\pi$ 时可取实际源 $\phi=\pi/N$，最小值为 $-1$。这给每个 $\mathcal F\in\mathfrak F_1(r)$ 同一个式（162.4）下界。
+
+另一方面，$\mathcal F_*^N(A)=C(r^N,c^N)\odot A$，且作为 CPTP 通道的复合仍为 CPTP。它与 $\mathcal M_{r,\phi}^N$ 只在 $(0,2),(2,0)$ 两个乘子上不同。式（161.11）的全参考精确距离给出
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_*^N)
+=\frac{r^N}{2}|e^{iN\phi}-c^N|.
+\tag{162.14}
+$$
+故 $\mathcal F_*$ 达到上述下界，同时证明所有有限参考都不能扩大该达到值。证毕。
+
+**命题 162.3（每个后续视界的严格损失与阈值）。** 对所有 $1/\sqrt3<r<1$ 和所有整数 $N\ge2$，
+$$
+\boxed{\mathcal E_N(r)>\mathcal R_N(r).}
+\tag{162.15}
+$$
+对 $0\le r\le1/\sqrt3$，存在同一个单步最优预测通道在每个视界均最优，且
+$$
+\mathcal E_N(r)=\mathcal R_N(r)=\frac{r^N}{2}\qquad(N\ge1).
+\tag{162.16}
+$$
+在 $r=1$，两者对全部 $N$ 均为零。
+
+证明。 先设 $1/\sqrt3<r<1$，令 $\beta=N\alpha$、$a=c^N>0$。若 $\beta<\pi/2$，式（161.7）、（162.4）给出
+$$
+\left(\frac{2\mathcal E_N}{r^N}\right)^2
+-\left(\frac{2\mathcal R_N}{r^N}\right)^2
+=(a-\cos\beta)^2.
+\tag{162.17}
+$$
+由 $0<\alpha$ 和 $N\ge2$，在 $1\le k<N$ 时
+$$
+\cos((k+1)\alpha)
+=c\cos(k\alpha)-\sin(k\alpha)\sin\alpha
+<c\cos(k\alpha).
+$$
+本情形各个中间角均小于 $\pi/2$，故迭代该不等式得到 $\cos(N\alpha)<c^N=a$，式（162.17）严格为正。
+
+若 $\beta\ge\pi/2$，则 $\mathcal R_N=r^N/2$ 且 $\cos(\min\{\beta,\pi\})\le0$，于是
+$$
+\left(\frac{2\mathcal E_N}{r^N}\right)^2-1
+=a^2-2a\cos(\min\{\beta,\pi\})>0.
+\tag{162.18}
+$$
+这也包含 $\beta=\pi/2$，从而证明式（162.15）。
+
+对 $0<r\le1/\sqrt3$，有 $\alpha(r)\ge\pi/2$。式（161.8）的单步最优通道可取 $\mathcal F_0(A)=C(r,0)\odot A$；它是两个合法源 $\phi=\pm\pi/2$ 的平均。对每个 $N\ge1$，$\mathcal F_0^N(A)=C(r^N,0)\odot A$ 正是定理161.3的逐视界达到通道。任何重复预测通道在第 $N$ 步仍为一个 CPTP 通道，因此其误差不能低于无单步限制的 $\mathcal R_N$；这个共同达到者证明式（162.16）。$r=0$ 时唯一真实通道是完全去相干通道，选它作预测即可；$r=1$ 时唯一真实通道是恒等通道，也可精确预测。证毕。
+
+**定理 162.4（单步最优限制的弱记录极限）。** 令 $r=1-\varepsilon$，$\varepsilon\downarrow0$。对每个 $t\ge0$，
+$$
+\lim_{\varepsilon\downarrow0}
+\mathcal E_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+=g(t):=e^{-t}
+\sin\!\left(\min\left\{\frac{\sqrt3\,t}{2},\frac\pi2\right\}\right).
+\tag{162.19}
+$$
+该收敛在每个有限 $t$ 区间上一致。并且
+$$
+\boxed{
+\lim_{r\uparrow1}\sup_{N\ge1}\mathcal E_N(r)
+=\sqrt{\frac37}\,
+\exp\!\left[-\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right)\right].
+}
+\tag{162.20}
+$$
+若 $N^\dagger(r)$ 为任一达到 $\sup_{N\ge1}\mathcal E_N(r)$ 的整数，则
+$$
+\lim_{r\uparrow1}(1-r)N^\dagger(r)
+=\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right).
+\tag{162.21}
+$$
+式（162.20）的常数严格大于定理161.6中的 $(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+
+证明。 定理161.6已给出 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$ 以及 $r^{\lfloor t/\varepsilon\rfloor}\to e^{-t}$，后者在有限 $t$ 区间上一致。由式（161.20），
+$$
+1-c=\frac{\varepsilon^2(3-2\varepsilon)}
+{2(1-\varepsilon)^3}=O(\varepsilon^2).
+\tag{162.22}
+$$
+对 $N=\lfloor t/\varepsilon\rfloor$，在 $0\le t\le T$ 上有
+$$
+0\le1-c^N\le N(1-c)=O(T\varepsilon),
+\tag{162.23}
+$$
+故 $c^N\to1$ 一致。将式（162.4）写成
+$$
+\mathcal E_N(r)=
+\frac{r^N}{2}
+\left|e^{i\min\{N\alpha,\pi\}}-c^N\right|
+\tag{162.24}
+$$
+并使用复数模长的 Lipschitz 性，即得有限区间上一致的极限
+$$
+\frac{e^{-t}}2|e^{i\min\{\sqrt3t,\pi\}}-1|
+=g(t).
+$$
+$N=0$ 时该式也按定义为零，因而包含 $t=0$。
+
+对所有 $N\ge1$，式（162.24）给出统一尾界
+$$
+0\le\mathcal E_N(1-\varepsilon)
+\le (1-\varepsilon)^N
+\le e^{-\varepsilon N}.
+\tag{162.25}
+$$
+和定理161.6一样，有限区间上一致收敛、网格间距趋零及该尾界把最大值问题化为 $\max_{t\ge0}g(t)$。令 $a=\sqrt3/2$；在 $0<t<\pi/(2a)$，
+$$
+g'(t)=e^{-t}(a\cos(at)-\sin(at)).
+$$
+其唯一零点为 $t^\dagger=a^{-1}\arctan a$，此前导数为正，此后为负；在剩余区间 $g(t)=e^{-t}$ 严格下降。唯一最大值为
+$$
+g(t^\dagger)
+=\frac{a}{\sqrt{1+a^2}}e^{-t^\dagger}
+=\sqrt{\frac37}\,e^{-(2/\sqrt3)\arctan(\sqrt3/2)}.
+$$
+固定 $1/\sqrt3<r<1$ 时，$\mathcal E_1(r)>0$ 而 $\mathcal E_N(r)\to0$，所以整数最大点存在。统一尾界和极限的唯一最大点给出式（162.21）。
+
+最后比较定理161.6的函数 $f(t)$。当 $0<t\le\pi/(2\sqrt3)$ 时，写 $x=\sqrt3t/2\in(0,\pi/4]$，有 $g(t)=e^{-t}\sin x>e^{-t}\sin x\cos x=f(t)$。当 $t\ge\pi/(2\sqrt3)$ 时，$f(t)=e^{-t}/2$，而 $g(t)\ge e^{-t}/\sqrt2>f(t)$。在 $f$ 的正最大点代入即得两最大值的严格差。证毕。
+
+为解释上述严格代价，使用通道复合对加法的分配律。在定义162.1的非退化区间内，最优预测器满足
+$$
+\mathcal F_*^N
+=2^{-N}\!\!\sum_{\epsilon_1,\ldots,\epsilon_N\in\{-1,1\}}
+\mathcal M_{r,\epsilon_N\alpha}\circ\cdots\circ
+\mathcal M_{r,\epsilon_1\alpha}.
+\tag{162.26}
+$$
+其 $(0,2)$ 乘子为 $r^Nc^N$；若在开始时仅抽一次等权端点相位，并在所有步骤保持它，所得平均终端通道的该乘子则为 $r^N\cos(N\alpha)$。二者在 $N=2$ 时的通道距离恰为
+$$
+\frac{r^2}{2}\sin^2\alpha>0.
+\tag{162.27}
+$$
+因此单步上相同的混合预测合同，在独立重抽与保持共同参数两种续接下给出不同的多步通道。
+
+事实上，逐次展开 $\bigl((\mathcal M_{r,\alpha}+\mathcal M_{r,-\alpha})/2\bigr)^N$ 即得式（162.26）。其相位因子的平均是
+$$
+2^{-N}\!\!\sum_{\epsilon_1,\ldots,\epsilon_N}
+e^{i\alpha(\epsilon_1+\cdots+\epsilon_N)}
+=\left(\frac{e^{i\alpha}+e^{-i\alpha}}2\right)^N=c^N.
+$$
+固定共同端点的平均因子为 $(e^{iN\alpha}+e^{-iN\alpha})/2=\cos(N\alpha)$。在 $N=2$，二者之差为 $c^2-\cos(2\alpha)=\sin^2\alpha$，再用式（161.11）即得（162.27）。
+
+这两种混合是比较预测合同的数学构造，不改变定义161.1的实际源：每个实际 $\phi$ 固定，环境单元逐步新鲜。静态随机参数产生特征函数退相干已有明确文献：C. M. Kropf、C. Gneiting、A. Buchleitner，*Effective Dynamics of Disordered Quantum Systems*，[Phys. Rev. X 6, 031023 (2016)](https://doi.org/10.1103/PhysRevX.6.031023)，第II A节式(1)—(3)保持每个实现的 Hamiltonian 不变再作平均，第V节式(24)—(25)给出由参数分布特征函数控制的非对角元。式（162.26）的独立乘积平均与固定共同参数平均使用这一成熟的随机参数区分；该文的 Hamiltonian 系综平均不替代本节无参数先验的 minimax 优化。
+
+定理162.2说明任何单步最优的三维 CPTP 模型在赤道圆盘上都被迫给出同一种迭代，因此严格差距不只是选择 Schur 预测器的偶然结果。定理162.4给出的最坏视界常数约为 $0.2871395757$，而逐视界重新选择预测通道的常数约为 $0.2365518148$；前者仅在“必须先达到单步最优”的约束下最优，不是所有平稳预测模型的无约束最优值。固定 $r<1$ 时，两种误差仍随 $N\to\infty$ 趋零；逐视界严格差距不意味着关于全部视界的一致正差距。允许额外持久记忆、随步数改变通道、取得校准数据或中间控制，会改变优化域。平均与复合不交换也可发生在经典未知参数模型中；本节的量子内容在于该已校准记录源的全输入、全参考距离和全 CPTP 最优类的精确界，不由此推出普遍的量子与经典分界。
+
+## 追加锚（本行以下为增补区）
