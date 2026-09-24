@@ -701,8 +701,9 @@ $`M\ge2`$、$`\ell=\log M`$，置
 J_M=\max\{2,\lceil\ell^2\rceil\},\qquad
 u_j=\frac j{J_M}\quad(1\le j\lt J_M),\qquad
 \eta_M=\min\{1/16,\ell^{-2}\}.
-\tag{22.1}
 ```
+
+式 (22.1)。
 
 对原始观测的出发行计数定义 $`N_{x,\pm}^{+}`$；反转每个有序对，或反转包含两端点的
 整条路径后，以同样方式定义 $`N_{x,\pm}^{-}`$。对于 $`x\in C_+`$、
@@ -711,16 +712,18 @@ $`\sigma\in\{+,-\}`$，定义非负分数
 ```math
 E_x^\sigma=\frac1{J_M-1}\sum_{j=1}^{J_M-1}
  (1+u_j)^{N_{x,+}^\sigma}(1-u_j)^{N_{x,-}^\sigma}.
-\tag{22.2}
 ```
+
+式 (22.2)。
 
 将每个方向的分数按降序记为 $`E_{[1]}^\sigma\ge\cdots\ge E_{[M]}^\sigma`$，并令
 
 ```math
 R_\sigma=\max\left(\{0\}\cup
  \left\{k\in\{1,\ldots,M\}:E_{[k]}^\sigma\ge\frac M{\eta_M k}\right\}\right).
-\tag{22.3}
 ```
+
+式 (22.3)。
 
 当 $`R_\sigma=0`$ 时置 $`A_\sigma=\varnothing`$；否则取最大的
 $`R_\sigma`$ 个分数对应的状态为 $`A_\sigma`$。最后定义
@@ -730,8 +733,9 @@ $`R_\sigma`$ 个分数对应的状态为 $`A_\sigma`$。最后定义
 \widehat\varepsilon=
 \begin{cases}+,&R_+\ge R_-,\\[0pt]-,&R_+\lt R_-.
 \end{cases}
-\tag{22.4}
 ```
+
+式 (22.4)。
 
 这些规则仅使用维数与实际观测，不使用 $`q,r,\beta`$ 或临界偏移。
 (22.3) 的阈值形式是
@@ -750,8 +754,9 @@ $`\mathcal E\in\{\mathrm{pair},\mathrm{path}\}`$，定义 22.1 的同一规则�
 \longrightarrow\mathcal L(c),\qquad
 \max_{S,\varepsilon}\mathbb P_{S,\varepsilon}^{\mathcal E}
  \{\widehat\varepsilon\ne\varepsilon\}\longrightarrow0.
-\tag{22.5}
 ```
+
+式 (22.5)。
 
 更具体地，实际正向下的两次选择满足一致于 $`S`$ 的界
 
@@ -759,8 +764,9 @@ $`\mathcal E\in\{\mathrm{pair},\mathrm{path}\}`$，定义 22.1 的同一规则�
 \mathbb E_{S,+}^{\mathcal E}|A_+\setminus S|
 =O\!\left(\frac q{\ell^2}+\frac1\ell\right),\qquad
 \mathbb E_{S,+}^{\mathcal E}|A_-|=O(\ell^{-1}),
-\tag{22.6}
 ```
+
+式 (22.6)。
 
 反向时交换两个符号。本定理是对每个固定 $`r,\beta,c`$ 的自适应结论，
 不要求这些参数为规则所知，也不声称参数趋近端点时的一致收敛。
@@ -795,8 +801,9 @@ $`\mathbb E E_x=1`$。这是非负鞅与混合的经典期望论证；它在本�
 \mathbb E_{Q_{-a}}(1+u)^{N_+}(1-u)^{N_-}
 =e^{-\lambda a u}\le1,\qquad
 \mathbb E_{Q_0}(1+u)^{N_+}(1-u)^{N_-}=1.
-\tag{22.7}
 ```
+
+式 (22.7)。
 
 算术平均保留此界。因此任一背景比较分数 $`E`$ 满足
 $`Q\{E\ge z\}\le z^{-1}`$。下面只将这一事件概率经 (21.5) 传到实际律，
@@ -812,8 +819,9 @@ $`E_x\ge M/(2\eta_Mm)`$ 的背景行。比较均值至多 $`2\eta_Mm`$。
 \mathbb E B_m\le2\eta_Mm,\qquad
 \mathrm{Var}(B_m)
 \le C\left(\eta_Mm+\delta_M\eta_M^2m^2+M^{2-D}\right).
-\tag{22.8}
 ```
+
+式 (22.8)。
 
 因为 $`\eta_M\le1/16`$，对所有 $`m\ge1`$，充分大 $`M`$ 时均值至多
 $`m/4`$。Chebyshev 不等式于是给出
@@ -822,8 +830,9 @@ $`m/4`$。Chebyshev 不等式于是给出
 \mathbb P\{B_m\ge m/2\}
 \le C\left(\frac{\eta_M}m+\delta_M\eta_M^2+
              \frac{M^{2-D}}{m^2}\right).
-\tag{22.9}
 ```
+
+式 (22.9)。
 
 设 $`R,A`$ 是这个方向按 (22.3) 得到的选择数与集合，以 $`F`$ 记所选背景行数。
 若 $`q_0\ge1`$ 且 $`R\le2q_0`$，所选背景行均超过
@@ -832,8 +841,9 @@ $`M/(2\eta_Mq_0)`$，所以
 ```math
 \mathbb E\bigl[F\mathbf1_{\{R\le2q_0\}}\bigr]
 \le2\eta_Mq_0.
-\tag{22.10}
 ```
+
+式 (22.10)。
 
 对 $`R\gt2q_0`$，按 $`m=2q_0\,2^j\lt M`$ 分成不交事件
 $`m\lt R\le\min\{2m,M\}`$。在每个事件上，至少
@@ -845,8 +855,9 @@ $`R-q_0\ge m/2`$ 个背景行达到 $`M/(\eta_MR)\ge M/(2\eta_Mm)`$，
 \le C\left(
  \eta_M(1+\log M)+M\delta_M\eta_M^2+
  \frac{M^{2-D}}{q_0}\right).
-\tag{22.11}
 ```
+
+式 (22.11)。
 
 其中使用二进段数为 $`O(1+\log M)`$、$`\sum m\le2M`$ 和
 $`\sum m^{-1}\le1/q_0`$。因此 (22.10)–(22.11) 控制的是期望误选个数。
@@ -859,8 +870,9 @@ $`m\le R\lt2m`$ 分解；区间事件仍迫使 $`B_m\ge m`$，同样得到
 ```math
 \mathbb E R
 \le C\left(\eta_M(1+\log M)+M\delta_M\eta_M^2+M^{2-D}\right).
-\tag{22.12}
 ```
+
+式 (22.12)。
 
 由于 $`M\delta_M=\ell^3/2`$、最终 $`\eta_M=\ell^{-2}`$，
 (22.10)–(22.12) 在正向分别取 $`q_0=q`$ 和 $`q_0=0`$，即得 (22.6)。
@@ -874,8 +886,9 @@ $`|u_{j(M)}-r|\le1/J_M`$。充分大 $`M`$ 时该点属于开区间网格。
 ```math
 |Z_x(u_{j(M)})-Z_x(r)|\le C_r\frac\ell{J_M}=o(1),\qquad
 \log E_x^+\ge Z_x(r)-\log(J_M-1)-o(1).
-\tag{22.13}
 ```
+
+式 (22.13)。
 
 截断外比较概率与实际概率均可取为 $`O(M^{-D})`$，见 (17.9) 与 (21.5)。
 网格平均损失 $`\log(J_M-1)=O(\log\ell)=o(\sqrt\ell)`$。
@@ -884,8 +897,9 @@ $`|u_{j(M)}-r|\le1/J_M`$。充分大 $`M`$ 时该点属于开区间网格。
 ```math
 \liminf_{M\to\infty}Q_r\{\log E^+\ge t_M\}
 \ge\rho(c):=\Phi\!\left(\frac{c\phi}{\sqrt{V_A}}\right)\gt0.
-\tag{22.14}
 ```
+
+式 (22.14)。
 
 固定只用于证明的常数 $`0\lt\kappa\lt\rho(c)`$，令
 $`k_M=\lfloor\kappa q\rfloor`$。充分大 $`M`$ 时 $`k_M\ge1`$，且
@@ -893,8 +907,9 @@ $`k_M=\lfloor\kappa q\rfloor`$。充分大 $`M`$ 时 $`k_M\ge1`$，且
 ```math
 \log\frac M{\eta_M k_M}
 =\tau_M+O(\log\ell).
-\tag{22.15}
 ```
+
+式 (22.15)。
 
 在实际信号行中，超过 (22.15) 阈值的个数记为 $`Y_M`$。
 由 (22.14)、一行估计及同一真实支持下的两行协方差估计，
@@ -903,8 +918,9 @@ $`\liminf\mathbb EY_M/q\ge\rho(c)`$，且
 ```math
 \frac{\mathrm{Var}(Y_M)}{q^2}
 \le C\left(\frac1q+\delta_M+M^{-D}\right)\longrightarrow0.
-\tag{22.16}
 ```
+
+式 (22.16)。
 
 因此 $`\mathbb P\{Y_M\ge k_M\}\to1`$，一致于 $`S`$。
 该事件上第 $`k_M`$ 大分数满足 (22.3)，故 $`R_+\ge k_M`$。
@@ -920,16 +936,18 @@ $`M/(\eta_Mk_M)\ge M/(\eta_M(R_++1))`$，与最大性矛盾。
 \limsup_{M\to\infty}\max_S
  \frac{\mathbb E_{S,+}^{\mathcal E}|S\setminus A_+|}{q}
 \le1-\rho(c)=\mathcal L(c).
-\tag{22.17}
 ```
+
+式 (22.17)。
 
 并集只能减少漏选，新增误选个数至多为另一方向的选择数。因此
 
 ```math
 |\widehat S\triangle S|
 \le |S\setminus A_+|+|A_+\setminus S|+|A_-|.
-\tag{22.18}
 ```
+
+式 (22.18)。
 
 (22.6)、(22.17) 给出归一化风险的上极限。实际反向由整份观测的精确反转得到同一界。
 任何不使用参数的规则在揭示这些参数后仍是合法规则，故其最坏支持风险不小于
