@@ -62,7 +62,8 @@ theorem decoder_kraus_gram (F : d → d → Matrix n n ℂ)
     (hstar : ∀ i j, (F i j)ᴴ = F j i) (v : d) :
     (∑ b, (decoderKraus F v b)ᴴ * decoderKraus F v b) = unitSupport F := by
   ext x y
-  change (∑ b, ∑ i, star (F v i b x) * F v i b y) = ∑ i, F i i x y
+  simp only [Matrix.sum_apply, Matrix.mul_apply, Matrix.conjTranspose_apply,
+    decoderKraus, unitSupport]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro i hi
@@ -101,7 +102,9 @@ theorem matrix_unit_decoder_channel (F : d → d → Matrix n n ℂ)
     (decoderKraus F v) (unitSupport F) v hP hPP (decoder_kraus_gram F hmul hstar v)
   refine ⟨decoder, fun X i j => ?_⟩
   have h := congrArg (fun M : Matrix d d ℂ => M i j) (hdecoder X)
-  simpa [decoder_trace_pairing F hmul hstar v X i j] using h
+  simpa only [Matrix.add_apply, Matrix.smul_apply, Matrix.single_apply,
+    smul_eq_mul, mul_ite, mul_one, mul_zero,
+    decoder_trace_pairing F hmul hstar v X i j] using h
 
 /-- Commutant weights have a scalar logical trace pairing, even without a chosen factorization. -/
 theorem commutant_trace_pairing (F : d → d → Matrix n n ℂ)
@@ -137,7 +140,39 @@ theorem represented_matrix_mul (F : d → d → Matrix n n ℂ)
   calc
     _ = ∑ i, ∑ j, ∑ k, ∑ l, (A i j * B k l) • (F i j * F k l) := by
       simp only [representedMatrix, Matrix.sum_mul, Matrix.mul_sum,
-        Matrix.smul_mul, Matrix.mul_smul, smul_smul, mul_comm]
+        Matrix.smul_mul, Matrix.mul_smul, Finset.smul_sum, smul_smul]
+      have hperm (f : d → d → d → d → Matrix n n ℂ) :
+          (∑ k, ∑ l, ∑ i, ∑ j, f i j k l) =
+            ∑ i, ∑ j, ∑ k, ∑ l, f i j k l := by
+        calc
+          _ = ∑ k, ∑ i, ∑ l, ∑ j, f i j k l := by
+            apply Finset.sum_congr rfl
+            intro k hk
+            rw [Finset.sum_comm]
+          _ = ∑ i, ∑ k, ∑ l, ∑ j, f i j k l := Finset.sum_comm
+          _ = ∑ i, ∑ k, ∑ j, ∑ l, f i j k l := by
+            apply Finset.sum_congr rfl
+            intro i hi
+            apply Finset.sum_congr rfl
+            intro k hk
+            rw [Finset.sum_comm]
+          _ = ∑ i, ∑ j, ∑ k, ∑ l, f i j k l := by
+            apply Finset.sum_congr rfl
+            intro i hi
+            rw [Finset.sum_comm]
+      calc
+        _ = ∑ i, ∑ j, ∑ k, ∑ l,
+            (B k l * A i j) • (F i j * F k l) := hperm _
+        _ = _ := by
+          apply Finset.sum_congr rfl
+          intro i hi
+          apply Finset.sum_congr rfl
+          intro j hj
+          apply Finset.sum_congr rfl
+          intro k hk
+          apply Finset.sum_congr rfl
+          intro l hl
+          rw [mul_comm (B k l) (A i j)]
     _ = ∑ i, ∑ j, ∑ l, (A i j * B j l) • F i l := by
       simp_rw [hmul]
       simp [smul_ite]
@@ -187,7 +222,14 @@ private theorem weighted_pairing (F : d → d → Matrix n n ℂ)
         _ = (F j i * F a b) * Q := by rw [hcomm, Matrix.mul_assoc]
     _ = ∑ b, A i b * Matrix.trace (F j b * Q) := by
       simp_rw [hmul]
-      simp [ite_mul]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro b hb
+      rw [Finset.sum_eq_single i]
+      · simp
+      · intro a ha hai
+        simp [Ne.symm hai]
+      · simp
     _ = ∑ b, A i b * (if j = b then (1 : ℂ) else 0) := by
       apply Finset.sum_congr rfl
       intro b hb

@@ -44,9 +44,12 @@ private theorem sum_row_units (v : b) :
     (∑ j : c, (Matrix.single v j (1 : ℂ))ᴴ * Matrix.single v j (1 : ℂ)) =
       (1 : Matrix c c ℂ) := by
   classical
-  simpa only [Matrix.conjTranspose_single, star_one,
-    Matrix.single_mul_single_same, one_mul] using
-    (Matrix.sum_single_one (m := c) (α := ℂ))
+  calc
+    _ = ∑ j : c, Matrix.single j j (1 : ℂ) := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      simp [Matrix.conjTranspose_single]
+    _ = 1 := Matrix.sum_single_one
 
 /-- All discarded rows contribute their exact input effect. -/
 theorem row_reset_gram (v : b) (B : Matrix c a ℂ) :
@@ -62,8 +65,10 @@ private theorem row_unit_sandwich (v : b) (j : c) (X : Matrix c c ℂ) :
     Matrix.single v j (1 : ℂ) * X * (Matrix.single v j (1 : ℂ))ᴴ =
       X j j • Matrix.single v v (1 : ℂ) := by
   classical
-  simp [Matrix.conjTranspose_single, Matrix.single_mul_mul_single,
-    Matrix.smul_single, smul_eq_mul]
+  calc
+    _ = Matrix.single v v (X j j) := by
+      simp [Matrix.conjTranspose_single]
+    _ = _ := by simp [Matrix.smul_single]
 
 /-- Resetting the rows is exactly a measure-and-prepare map. -/
 theorem row_reset_action (v : b) (B : Matrix c a ℂ) (X : Matrix a a ℂ) :

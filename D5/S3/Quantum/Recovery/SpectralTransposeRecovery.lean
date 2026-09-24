@@ -69,7 +69,7 @@ theorem spectral_support_projection (Q : Matrix n n ℂ) :
     rw [spectral_product]
     apply cfc_congr
     intro x hx
-    split_ifs <;> simp
+    by_cases h : x = 0 <;> simp [h]
 
 /-- The computed inverse square root is Hermitian. -/
 theorem spectral_inverse_sqrt_adjoint (Q : Matrix n n ℂ) :
