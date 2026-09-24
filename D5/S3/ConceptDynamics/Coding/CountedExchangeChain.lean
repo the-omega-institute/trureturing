@@ -16,6 +16,7 @@ namespace D5.S3.ConceptDynamics.Coding.CountedExchangeChain
 
 open D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 open D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
+open D5.S3.ConceptDynamics.Coding.BipartiteOverlapConjugacy
 
 /-- One code, both directions, and an explicit two-sided observation budget. -/
 structure WindowConjugacy {n m : ℕ} (A : CountMat n n) (B : CountMat m m) (r : ℕ) where

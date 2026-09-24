@@ -114,7 +114,7 @@ noncomputable def elementary {n m : ℕ}
             leftStep (boundary U V) Edge.label Edge.label (unpack U V p) := by
           apply Prod.ext
           · rfl
-          · simp [unpack, step, split]
+          · simp [unpack, step, leftStep, split, mul_assoc]
         rw [hunpack]
         have hencode : encode (boundary U V) Edge.label
               (leftStep (boundary U V) Edge.label Edge.label (unpack U V p)) =

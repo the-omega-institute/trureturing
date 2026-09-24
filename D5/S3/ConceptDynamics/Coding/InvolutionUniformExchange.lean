@@ -56,7 +56,7 @@ theorem factors_reverse (s t : H) (hs : s * s = 1) :
     rightFactor s * leftFactor s t = target H := by
   classical
   have hss : basis s * basis s = 1 := by
-    simp [basis, hs]
+    simp [basis, hs, MonoidAlgebra.one_def]
   have basis_mul_uniform : basis s * uniform H = uniform H := by
     calc
       basis s * uniform H = ∑ h : H, basis (s * h) := by
