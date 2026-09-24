@@ -199,6 +199,205 @@ is necessary, since `J_q <= (q-K_q) lambda_<q{kappa_q>=K_q+1}`.
 The stronger necessary condition replaces this event by `bq>Kq/q`,
 because `Jq_union <= (q-Kq) lambda_<q{bq>Kq/q}`. This is also necessary for a hypothetical family whose every supported law exceeds the target, because its actual PA law is one such law. These are necessary conditions only; the actual example below meets all four fixed integral thresholds while its law remains below the target.
 
+## Finite first13 heads with an arbitrary actual source and complement
+
+The first13 union estimate also has a finite-label sufficient condition.
+Let `W` be a finite set of full numerical labels `5^a 7^b 11^c 13^d`,
+where `a,b,c>=0` and `d>=1`. Let `r_W(h)` count the distinct first13
+roots of the actual active originals whose labels belong to `W`, on
+the same actual old history `h`. Each original phase remains fixed
+globally. There is no prescribed old5/7 or first11 source.
+
+Each of the following conditions `r_W<=6` almost everywhere under the
+actual unnormalized `lambda11` is sufficient. Every original outside
+the selected head, including every later17/19 original and every higher
+pure13 original, is arbitrary under the two-copy rule.
+
+| Head | Labels in the head | Old residue cells for an everywhere check | Complete-query bound |
+|---|---:|---:|---|
+| `W26` below |26|`125*343*121 = 5187875`|`200081276845190515421/39747143056052967358 = 5.033853038519727...`|
+| `W54: 0<=a,b,c<=2, 1<=d<=2` |54|`25*49*121 = 148225`|`28574763710209932539/5674025374170353362 = 5.036065548858791...`|
+| `W72: 0<=a<=3, 0<=b,c<=2, 1<=d<=2` |72|`125*49*121 = 741125`|`28779458484115209467/5776372761122991826 = 4.982271690949556...`|
+
+All three bounds are strictly below `257/51`. Requiring the root bound
+on every indicated old residue cell is a stronger purely finite check;
+the almost-everywhere condition itself refers to the actual prefix law,
+whose support can depend on originals of arbitrarily large finite height.
+The cell counts describe a sufficient rectangular partition, not a
+proved minimal partition or the cost of constructing the actual law.
+
+In descending order of the anchor cap charge defined below, `W26` is
+
+```
+13,65,91,143,455,325,169,715,1001,845,637,2275,1183,
+1625,1573,5005,3185,3575,1859,5915,4225,2197,7865,9295,7007,4459.
+```
+
+### Complete tail charge and the same-prefix inequality
+
+Put
+
+\[
+u_5(0)=x,\quad u_5(a)=5^{-a}\ (a>0),\qquad
+u_7(0)=y,\quad u_7(b)=7^{-b}\ (b>0),
+\]
+\[
+u_{11}(0)=1,\qquad u_{11}(c)=\tfrac53\,11^{-c}\ (c>0).
+\]
+
+For any fixed phases the actual cylinder cap is
+
+\[
+\lambda_{11}(C_{5^a7^b11^c})\le u_5(a)u_7(b)u_{11}(c).
+\tag{FH1}
+\]
+
+Indeed `lambda0` is dominated by the product of the actual pure5 and
+pure7 survivor restrictions. When `c=0`, the first11 kernel has fibre
+mass at most one; when `c>0`, its density is at most `5/3`.
+This argument does not assume independence of the actual prefix.
+
+Define the full two-slot complement charge
+
+\[
+\Theta_W(x,y)=\frac14(x+\tfrac14)(y+\tfrac16)\frac76
+-3\sum_{(a,b,c,d):\,5^a7^b11^c13^d\in W}
+u_5(a)u_7(b)u_{11}(c)13^{-d}.
+\tag{FH2}
+\]
+
+The factor `3` is `C13` times two original slots. The full coordinate
+sums are `x+1/4`, `y+1/6`, `7/6`, and
+`sum_(d>=1)13^-d=1/12`. Thus (FH2) pays every omitted numerical label,
+including cofactor one, with no finite-height cutoff. For `W54`,
+
+\[
+\Theta_{54}=\frac14\left[
+(x+\tfrac14)(y+\tfrac16)\frac76
+-(x+\tfrac6{25})(y+\tfrac8{49})\frac{141}{121}\frac{168}{169}
+\right].
+\]
+
+For `W72`, replace `x+6/25` by `x+31/125`.
+
+Let `g_H(h)` be the allowed13 fraction using only the actual head
+originals. It is at least `1-r_W(h)/13`. Adding the complement can
+reduce the capped fibre mass `min(1,(3/2)g_H)` by at most `3/2` times
+the added forbidden Haar fraction. Integrate this scalar Lipschitz
+bound and apply (FH1) to obtain the cost (FH2). No domination of
+the head-only capped density over the actual full-row density is used.
+
+Retain the actual old mixed loss `m` and the actual first11 saving
+`S11=F11/3-Loss11`. Define
+
+\[
+A_{11}=xy-\tfrac1{12}-\tfrac13F_{11},\qquad
+F_{11}=x/42+y/20+59/840,\qquad
+H_{11}=\tfrac1{12}-m+S_{11}\ge0.
+\]
+
+The exact prefix identity is `lambda11(1)=A11+H11`. Write
+
+\[
+E_W=\int(r_W-6)_+\,d\lambda_{11},\qquad
+P_W=\int\min\{5,3(6-r_W)_+\}\,d\lambda_{11}.
+\]
+
+For each integer `0<=r<=13`,
+
+\[
+\min(1,\tfrac32(1-r/13))
+=\tfrac{21}{26}-\tfrac3{26}(r-6)_+
++\tfrac1{26}\min\{5,3(6-r)_+\}.
+\]
+
+Integrating, paying the complement, and retaining the ordinary complete
+later17/19 charges gives
+
+\[
+\lambda_{\rm final}(1)\ge
+M_W(x,y)+\frac3{26}(7H_{11}-E_W+P_W/3),
+\tag{FH3}
+\]
+\[
+M_W=\frac{21}{26}A_{11}-\Theta_W-\frac14F_{17}-\frac15F_{19}.
+\]
+
+All terms use the same actual source and the unchanged actual PA chain.
+The head-only row is an intermediate scalar estimate, not a substitute
+law on which subsequent original phases are reoptimized.
+
+### Positive margins, weighted conditions, and the limited cardinality optimum
+
+Set `D_W=M_W-(51/155)Phi`. For each of the three heads, its expansion
+in `d5=x-1/2`, `d7=y-2/3` has four strictly positive coefficients.
+The exact coefficients and four corners are in the
+[companion data](../../frontier/cover-geometry/pa_finite_root_heads.json).
+In particular:
+
+| Head | `min D_W` | `min (26/3)D_W` |
+|---|---|---|
+|`W26`|`2174129260179264907/11550683446299309312000`|`2174129260179264907/1332771166880689536000`|
+|`W54`|`182314388214850909/1650097635185615616000`|`182314388214850909/190395880982955648000`|
+|`W72`|`3355083383746643293/1650097635185615616000`|`3355083383746643293/190395880982955648000`|
+
+The minima occur at the algebraic corner `(1/2,2/3)`. Under `r_W<=6`,
+`E_W=0` and the other credits are nonnegative. The preceding positive
+corner interpolation then bounds `2+Phi/M_W` by its anchor value,
+yielding the table. More generally the same target is certified whenever
+
+\[
+E_W-P_W/3-7H_{11}<\frac{26}{3}D_W(x,y).
+\tag{FH4}
+\]
+
+Consequently a family with actual final mass at most `(51/155)Phi`
+must satisfy the reverse weak inequality for every displayed head,
+with all quantities evaluated on its one actual prefix. These conditions
+have not been proved inconsistent. Nor does failure of a lower-mass
+estimate imply failure of the actual complete-query bound.
+
+The label count26 is minimal for the specific six-root mass certificate
+`M_W>=(51/155)Phi` over the full parameter rectangle, using (FH2) and
+no `H11` or below-six-root credit. To check this limited claim, order
+labels by their summand in (FH2) at `(1/2,2/3)`. Each coordinate factor
+decreases with its exponent, including the step from exponent zero.
+The first26 all lie in `a<=3,b<=3,c<=2,1<=d<=3`, a set of144 labels.
+Any label outside it is bounded by one of the first-outside axial
+charges
+
+\[
+2/8125,\quad3/62426,\quad5/51909,\quad1/28561,
+\]
+
+each less than the26th charge `3/8918`. Exact sorting within the box
+therefore proves the infinite-label ranking. Even the largest possible
+25 summands give anchor margin
+
+\[
+-244500137708955299/1650097635185615616000<0,
+\]
+
+whereas `W26` gives the positive margin above. This is a minimum for
+that scalar certificate, not a minimum sufficient boundary for the
+covering problem, and not a lower bound on actual laws.
+
+These finite-head criteria reuse the preceding integrated-union method.
+Their role is to isolate explicit finite phase hypotheses while paying
+an arbitrary complete complement; no enlargement over every earlier
+union certificate is claimed. In particular `r_W72<=6` implies
+`r_W54<=6`, but gives a better bound by paying a smaller tail. `W26`
+uses fewer labels and a finer rectangular old partition. No domination
+or independence of their weighted success regions is asserted.
+
+The [standard-library producer](../../frontier/cover-geometry/pa_finite_root_heads.py)
+reconstructs the complete auxiliary hinges, verifies all14 possible
+root counts, the box tail formulas, all four corners, the positive
+deficit coefficients and the finite ranking with its infinite complement
+bound. All96 explicit checks pass with Python optimizations enabled.
+The unrestricted-height statement uses the geometric-sum proof above;
+these calculations add no Lean verification.
+
 ## The four fixed limits are not a universal alternative
 
 There is a finite actual family for which all four fixed integral limits
