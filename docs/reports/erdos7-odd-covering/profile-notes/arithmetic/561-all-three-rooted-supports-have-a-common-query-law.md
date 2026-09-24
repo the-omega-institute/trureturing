@@ -450,3 +450,5 @@ mixed originals omitting3, their assigned cofactors need not contain3,
 so AR8 must change. Paying them or reconstructing a law that supports
 the needed stronger joint estimates remains necessary. Unrestricted
 Erdős #7 is not resolved here.
+
+[Report563](563-prefix-free-rooted-labels-admit-all-later-four-mixed-towers.md) gives a complementary uniform-survivor law: under per-cofactor disjoint root prefixes, every rooted support and the complete mixed inventory on the four later primes may coexist. This does not remove that added prefix condition or enlarge AR1 without it.
