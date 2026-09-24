@@ -214,6 +214,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     {
         var plan = Plan(input, "", mode);
         Assert.Equal(WithWorktreeContract(new[] {
+            CoverBatchProject,
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
         }), Strings(plan["execution"]!["tests"]!));
         AssertInspectorSourceObligations(plan, mode);
