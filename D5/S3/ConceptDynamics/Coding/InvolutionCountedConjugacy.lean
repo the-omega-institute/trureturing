@@ -73,9 +73,11 @@ def scalar (p : NAlg H) : GroupMat H 1 1 := fun _ _ => p
 def sourceMatrix (s t : H) : GroupMat H 1 1 := scalar (sourceNat s t)
 def targetMatrix (H : Type u) [Group H] [Fintype H] : GroupMat H 1 1 := scalar (targetNat H)
 
-/-- A chain is constructed without assuming either an exchange or a conjugacy of the endpoints. -/
-theorem involution_exchange (s t : H) (hs : s * s = 1) :
-    ExchangeChain (NAlg H) (sourceMatrix s t) (targetMatrix H) 1 := by
+/-- The exact minimum is one for noncommuting choices of the two group elements. -/
+theorem involution_minimum_one (s t : H) (hs : s * s = 1)
+    (hst : s * t ≠ t * s) :
+    ExchangeChain (NAlg H) (sourceMatrix s t) (targetMatrix H) 1 ∧
+    ¬ExchangeChain (NAlg H) (sourceMatrix s t) (targetMatrix H) 0 := by
   let U := scalar (toNat (leftFactor s t))
   let V := scalar (toNat (rightFactor s))
   have hUV : U * V = sourceMatrix s t := by
@@ -88,15 +90,10 @@ theorem involution_exchange (s t : H) (hs : s * s = 1) :
     intro i j
     simpa [U, V, targetMatrix, scalar, Matrix.mul_apply] using
       (natural_factor_products s t hs).2
-  have c := ExchangeChain.cons U V (ExchangeChain.nil (V * U))
-  simpa only [hUV, hVU] using c
-
-/-- The exact minimum is one for noncommuting choices of the two group elements. -/
-theorem involution_minimum_one (s t : H) (hs : s * s = 1)
-    (hst : s * t ≠ t * s) :
-    ExchangeChain (NAlg H) (sourceMatrix s t) (targetMatrix H) 1 ∧
-    ¬ExchangeChain (NAlg H) (sourceMatrix s t) (targetMatrix H) 0 := by
-  refine ⟨involution_exchange s t hs, ?_⟩
+  have one_step : ExchangeChain (NAlg H) (sourceMatrix s t) (targetMatrix H) 1 := by
+    have chain := ExchangeChain.cons U V (ExchangeChain.nil (V * U))
+    simpa only [hUV, hVU] using chain
+  refine ⟨one_step, ?_⟩
   intro c
   have zero_chain_same {A B : GroupMat H 1 1}
       (chain : ExchangeChain (NAlg H) A B 0) : A = B := by
@@ -139,7 +136,6 @@ theorem involution_minimum_one (s t : H) (hs : s * s = 1)
   exact hsource.symm.trans ((congrArg (liftNat H) hendpoints).trans htarget)
 
 #print axioms natural_factor_products
-#print axioms involution_exchange
 #print axioms involution_minimum_one
 
 end

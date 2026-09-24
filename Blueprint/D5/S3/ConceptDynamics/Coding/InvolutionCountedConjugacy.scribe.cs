@@ -35,12 +35,6 @@ internal sealed class InvolutionCountedConjugacyDocument : IScribeDocumentDefini
                 StatementSource.FromAuthor(Disp(All(Products(), false))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Nonnegative integer factors are converted coefficientwise to natural coefficients. Lifting back is injective, so the two actual products equal the original source and target formulas."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("involution-counted-exchange"),
-                DeclarationHandle.Create(Prefix + "involution_exchange"), H("Construct the one-step matrix chain"),
-                StatementSource.FromAuthor(Disp(All(Chain(Source, Target, F.D(1), F.Id("H")), false))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The one-vertex matrices contain the constructed natural factors. A single rectangular exchange yields the given endpoints without a chain-existence assumption."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("involution-counted-minimum-one"),
                 DeclarationHandle.Create(Prefix + "involution_minimum_one"), H("The chain cannot have length zero"),
                 StatementSource.FromAuthor(Disp(All(new Formula.Logic(
