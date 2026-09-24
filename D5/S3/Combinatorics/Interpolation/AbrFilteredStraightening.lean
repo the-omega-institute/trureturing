@@ -142,6 +142,47 @@ theorem coordinateBox_descent_straightening
               _ = residualDepth a.1 := by simp).trans
           rw [residualDepth_eq_maxExponent_sub_descents hn]
           omega
+        have hGreedy : greedyExponent a.1 (residualDepth a.1) = a.1 := by
+          apply Finsupp.ext
+          intro x
+          let i := (indexPerm a.1).symm x
+          have hbound := suffixHeight_indexPerm_le_exponent a.1 i
+          have hres : residual a.1 i ≤ residualDepth a.1 :=
+            Finset.le_sup (Finset.mem_univ i)
+          rw [← (indexPerm a.1).apply_symm_apply x]
+          rw [greedyExponent_at_perm, min_eq_right hres]
+          unfold AbrCoordinateBoxStraightening.residual
+          exact Nat.add_sub_of_le hbound
+        have hLeaderCoeff : coeff a.1 (abrBasis a.1) = 1 := by
+          rw [abrBasis]
+          have hcoeff := coeff_abrProduct_leader a.1 (residualDepth a.1)
+          rw [hGreedy] at hcoeff
+          exact hcoeff
+        have hSupportTriangular (b : Fin n →₀ Nat)
+            (hb : b ∈ (abrBasis a.1).support) :
+            b = a.1 ∨ AbrLower b a.1 := by
+          have htri := abrProduct_support_triangular
+            a.1 b (residualDepth a.1) (by simpa [abrBasis] using hb)
+          rw [hGreedy] at htri
+          exact htri
+        have hSupportCoordinate (b : Fin n →₀ Nat)
+            (hb : b ∈ (abrBasis a.1).support) (i : Fin n) :
+            b i ≤ maxExponent a.1 := by
+          have hbound := abrProduct_support_coordinate_le
+            a.1 b (residualDepth a.1) (by simpa [abrBasis] using hb) i
+          have hdesc : descents (indexPerm a.1) ≤ maxExponent a.1 := by
+            rw [maxExponent_eq_at_zero hn]
+            have hzero : suffixHeight (indexPerm a.1) ⟨0, hn⟩ =
+                descents (indexPerm a.1) := by
+              unfold suffixHeight descents
+              apply Finset.sum_congr rfl
+              intro j _
+              rw [if_pos]
+              exact Fin.mk_le_mk.mpr (Nat.zero_le _)
+            rw [← hzero]
+            exact suffixHeight_indexPerm_le_exponent a.1 ⟨0, hn⟩
+          rw [residualDepth_eq_maxExponent_sub_descents hn] at hbound
+          omega
         have hBasisRep : Represents (abrBasis a.1) := by
           let target := indexPerm a.1
           let QA : Equiv.Perm (Fin n) → MvPolynomial (Fin n) Rat := fun pi =>
@@ -157,8 +198,26 @@ theorem coordinateBox_descent_straightening
             · subst pi
               exact (not_lt_of_ge hDesc hpi).elim
             · simp [QA, hp]
-          · rw [Finset.sum_eq_single target]
-            · simp [QA, target, abrBasis_eq_descent_mul_esymmSubstitution]
+          · have hBasisFactorization :
+                abrBasis a.1 = descentMonomial (indexPerm a.1) *
+                  esymmSubstitution (abrCoefficientPolynomial a.1) := by
+              have hsubstitution : esymmSubstitution (abrCoefficientPolynomial a.1) =
+                  ∏ j ∈ Finset.range (residualDepth a.1),
+                    MvPolynomial.esymm (Fin n) Rat (columnHeight a.1 j) := by
+                unfold abrCoefficientPolynomial
+                rw [map_prod]
+                rw [Finset.prod_fin_eq_prod_range]
+                apply Finset.prod_congr rfl
+                intro j hj
+                rw [Finset.mem_range] at hj
+                have hpos := columnHeight_pos_of_lt_residualDepth a.1 hj
+                simp [esymmSubstitution, columnIndex,
+                  MvPolynomial.aeval_def, hj,
+                  Nat.sub_add_cancel (Nat.succ_le_iff.mpr hpos)]
+              rw [abrBasis, abrProduct_eq_descent_mul_prod, hsubstitution]
+            rw [Finset.sum_eq_single target]
+            · rw [hBasisFactorization]
+              simp [QA, target]
             · intro pi _ hne
               simp [QA, hne]
             · simp
@@ -175,10 +234,10 @@ theorem coordinateBox_descent_straightening
             rw [Finset.mem_erase] at hb
             have hbBox : ∀ i, b i ≤ D := by
               intro i
-              exact (abrBasis_support_coordinate_le hn a.1 b hb.2 i).trans hMax
+              exact (hSupportCoordinate b hb.2 i).trans hMax
             let bBox : BoxExponent := ⟨b, hbBox⟩
             have hba : lower bBox a := by
-              have htri := (abrBasis_triangular a.1 b).2 hb.2
+              have htri := hSupportTriangular b hb.2
               exact htri.resolve_left hb.1
             have hLowerRep := ih bBox hba
             have hscaled := hsmul (coeff b (abrBasis a.1)) hLowerRep
@@ -186,10 +245,10 @@ theorem coordinateBox_descent_straightening
         have hdecomp : abrBasis a.1 = monomial a.1 1 + remainder := by
           rw [(abrBasis a.1).as_sum]
           have haSupport : a.1 ∈ (abrBasis a.1).support := by
-            rw [MvPolynomial.mem_support_iff, (abrBasis_triangular a.1 a.1).1]
+            rw [MvPolynomial.mem_support_iff, hLeaderCoeff]
             exact one_ne_zero
           rw [← Finset.add_sum_erase _ _ haSupport]
-          rw [(abrBasis_triangular a.1 a.1).1]
+          rw [hLeaderCoeff]
         have hnegRemainder := hsmul (-1) hRemainderRep
         have hcombined := hadd hBasisRep hnegRemainder
         have heq : abrBasis a.1 + (-1 : Rat) • remainder = monomial a.1 1 := by

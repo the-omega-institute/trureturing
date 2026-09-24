@@ -6,7 +6,7 @@
    utility: none
    digest: Iterated ABR order preservation and integer triangularity. -/
 
-import D5.S3.Combinatorics.Interpolation.AbrResidualPartition
+import D5.S3.Combinatorics.Interpolation.AbrIteratedOrder
 
 /-!
 The order lemmas here are the formal content of ABR Lemma 3.3.  They turn the
@@ -26,109 +26,6 @@ open MvPolynomial
 open D5.S1.Words.Patterns.Separable.CutFactorization
 open D5.S3.Combinatorics.Interpolation.AbrCoordinateBoxStraightening
 open D5.S3.Combinatorics.Interpolation.AbrResidualPartition
-
-theorem abrLower_trans {n : Nat} {a b c : Fin n →₀ Nat}
-    (hab : AbrLower a b) (hbc : AbrLower b c) : AbrLower a c := by
-  classical
-  have htrans {u v w : Fin n →₀ Nat}
-      (huv : DominatedBy u v) (hvw : DominatedBy v w) : DominatedBy u w :=
-    ⟨huv.1.trans hvw.1, fun k => (huv.2 k).trans (hvw.2 k)⟩
-  have hsortedDom {u v : Fin n →₀ Nat}
-      (hsorted : (fun i => u (indexPerm u i)) = fun i => v (indexPerm v i)) :
-      DominatedBy u v := by
-    constructor
-    · calc
-        (∑ x, u x) = ∑ i, u (indexPerm u i) := by
-          symm
-          exact Fintype.sum_equiv (indexPerm u)
-            (fun i => u (indexPerm u i)) (fun x => u x) (fun _ => rfl)
-        _ = ∑ i, v (indexPerm v i) := by
-          apply Finset.sum_congr rfl
-          intro i _
-          rw [congrFun hsorted i]
-        _ = ∑ x, v x := by
-          exact Fintype.sum_equiv (indexPerm v)
-            (fun i => v (indexPerm v i)) (fun x => v x) (fun _ => rfl)
-    · intro k
-      unfold prefixWeight
-      apply le_of_eq
-      apply Finset.sum_congr rfl
-      intro i _
-      rw [congrFun hsorted i]
-  rcases hab with hab | hab <;> rcases hbc with hbc | hbc
-  · left
-    refine ⟨htrans hab.1 hbc.1, ?_⟩
-    intro hca
-    exact hab.2 (htrans hbc.1 hca)
-  · left
-    have hbcDom := hsortedDom hbc.1
-    refine ⟨htrans hab.1 hbcDom, ?_⟩
-    intro hca
-    exact hab.2 (htrans hbcDom hca)
-  · left
-    have habDom := hsortedDom hab.1
-    refine ⟨htrans habDom hbc.1, ?_⟩
-    intro hca
-    exact hbc.2 (htrans hca habDom)
-  · right
-    exact ⟨hab.1.trans hbc.1, lt_trans hbc.2 hab.2⟩
-
-theorem abrLower_leadExponent {n : Nat} {a b : Fin n →₀ Nat}
-    (hab : AbrLower a b) (h : Nat) :
-    AbrLower (leadExponent a h) (leadExponent b h) := by
-  classical
-  have hsumSubset (s t : Finset (Fin n)) :
-      (∑ x ∈ s, subsetExponent t x) = (s ∩ t).card := by
-    simp [subsetExponent, Finsupp.indicator_apply, Finset.card_inter]
-  have hcardInitialGeneral (u : Fin n →₀ Nat) (m : Nat) :
-      (initialSet u m).card = min n m := by
-    let e := indexPerm u
-    have himage : initialSet u m =
-        (Finset.univ.filter fun i : Fin n => i.val < m).image e := by
-      ext x
-      simp only [initialSet, Finset.mem_image, Finset.mem_filter,
-        Finset.mem_univ, true_and, e]
-      constructor
-      · intro hx
-        exact ⟨(indexPerm u).symm x, hx, by simp⟩
-      · rintro ⟨i, hi, rfl⟩
-        simpa using hi
-    rw [himage, Finset.card_image_of_injective _ e.injective]
-    exact Fin.card_filter_val_lt
-  have hlead {u v : Fin n →₀ Nat} (huv : DominatedBy u v) :
-      DominatedBy (leadExponent u h) (leadExponent v h) := by
-    constructor
-    · change (Finset.univ.sum fun x : Fin n =>
-          u x + subsetExponent (initialSet u h) x) =
-        Finset.univ.sum fun x : Fin n =>
-          v x + subsetExponent (initialSet v h) x
-      rw [Finset.sum_add_distrib, Finset.sum_add_distrib,
-        hsumSubset, hsumSubset]
-      simp [huv.1, hcardInitialGeneral]
-    · intro k
-      rw [prefixWeight_leadExponent, prefixWeight_leadExponent]
-      exact Nat.add_le_add_right (huv.2 k) _
-  rcases hab with hab | hab
-  · left
-    refine ⟨hlead hab.1, ?_⟩
-    intro hreverse
-    apply hab.2
-    constructor
-    · exact hab.1.1.symm
-    · intro k
-      have hk := hreverse.2 k
-      rw [prefixWeight_leadExponent, prefixWeight_leadExponent] at hk
-      omega
-  · right
-    constructor
-    · funext i
-      rw [indexPerm_leadExponent, indexPerm_leadExponent]
-      simp only [leadExponent, Finsupp.add_apply, subsetExponent,
-        Finsupp.indicator_apply, initialSet, Finset.mem_filter, Finset.mem_univ,
-        Equiv.symm_apply_apply, true_and, congrFun hab.1 i]
-    · rw [indexPerm_leadExponent, indexPerm_leadExponent]
-      exact hab.2
-
 /-- The actual ABR product after the first `k` residual Ferrers columns. -/
 def abrProduct {n : Nat} (a : Fin n →₀ Nat) : Nat → MvPolynomial (Fin n) Rat
   | 0 => descentMonomial (indexPerm a)
@@ -405,71 +302,7 @@ def abrCoefficientPolynomial {n : Nat} (a : Fin n →₀ Nat) :
 def abrBasis {n : Nat} (a : Fin n →₀ Nat) : MvPolynomial (Fin n) Rat :=
   abrProduct a (residualDepth a)
 
-/-- Exact descent-monomial times coefficient-polynomial form of the complete
-ABR basis element. -/
-theorem abrBasis_eq_descent_mul_esymmSubstitution {n : Nat} (a : Fin n →₀ Nat) :
-    abrBasis a = descentMonomial (indexPerm a) *
-      esymmSubstitution (abrCoefficientPolynomial a) := by
-  have hsubstitution : esymmSubstitution (abrCoefficientPolynomial a) =
-      ∏ j ∈ Finset.range (residualDepth a),
-        MvPolynomial.esymm (Fin n) Rat (columnHeight a j) := by
-    unfold abrCoefficientPolynomial
-    rw [map_prod]
-    rw [Finset.prod_fin_eq_prod_range]
-    apply Finset.prod_congr rfl
-    intro j hj
-    rw [Finset.mem_range] at hj
-    have hpos := columnHeight_pos_of_lt_residualDepth a hj
-    simp [esymmSubstitution, columnIndex,
-      MvPolynomial.aeval_def, hj, Nat.sub_add_cancel (Nat.succ_le_iff.mpr hpos)]
-  rw [abrBasis, abrProduct_eq_descent_mul_prod, hsubstitution]
-
-/-- Complete integer-unitriangular endpoint: the target exponent has
-coefficient one and every other supported exponent is strictly ABR-lower. -/
-theorem abrBasis_triangular {n : Nat} (a b : Fin n →₀ Nat) :
-    coeff a (abrBasis a) = 1 ∧
-      (b ∈ (abrBasis a).support → b = a ∨ AbrLower b a) := by
-  rw [abrBasis]
-  constructor
-  · have hcoeff := coeff_abrProduct_leader a (residualDepth a)
-    rw [greedyExponent_residualDepth] at hcoeff
-    exact hcoeff
-  · intro hb
-    have htri := abrProduct_support_triangular a b (residualDepth a) hb
-    rw [greedyExponent_residualDepth] at htri
-    exact htri
-
-/-- Every coefficient in the complete triangular product is the cast of an
-integer coefficient. -/
-theorem abrBasis_coeff_integer {n : Nat} (a b : Fin n →₀ Nat) :
-    ∃ z : Int, coeff b (abrBasis a) = (z : Rat) := by
-  refine ⟨coeff b (abrProductInt a (residualDepth a)), ?_⟩
-  rw [abrBasis, abrProduct_eq_map_int, coeff_map]
-  rfl
-
-/-- The complete basis element stays in the coordinate box of its leader. -/
-theorem abrBasis_support_coordinate_le {n : Nat} (hn : 0 < n)
-    (a b : Fin n →₀ Nat) (hb : b ∈ (abrBasis a).support) (i : Fin n) :
-    b i ≤ maxExponent a := by
-  have hbound := abrProduct_support_coordinate_le a b (residualDepth a) hb i
-  have hdesc : descents (indexPerm a) ≤ maxExponent a := by
-    rw [maxExponent_eq_at_zero hn]
-    have hzero : suffixHeight (indexPerm a) ⟨0, hn⟩ = descents (indexPerm a) := by
-      unfold suffixHeight descents
-      apply Finset.sum_congr rfl
-      intro j _
-      rw [if_pos]
-      exact Fin.mk_le_mk.mpr (Nat.zero_le _)
-    rw [← hzero]
-    exact suffixHeight_indexPerm_le_exponent a ⟨0, hn⟩
-  rw [residualDepth_eq_maxExponent_sub_descents hn] at hbound
-  omega
-
-#print axioms abrLower_trans
-#print axioms abrLower_leadExponent
-#print axioms abrBasis_triangular
-#print axioms abrBasis_coeff_integer
-#print axioms abrBasis_eq_descent_mul_esymmSubstitution
+#print axioms abrProduct_eq_map_int
 #print axioms AbrCoordinateBoxStraightening.inversionCount_indexPerm_lt_of_sorted_eq
 #print axioms AbrCoordinateBoxStraightening.oneFactor_abrLower
 
