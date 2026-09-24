@@ -48,7 +48,6 @@ noncomputable def stationaryWordMass (k : ℕ) (w : List Bool) : ℝ :=
   ∑ v : Prefix k w.length with List.ofFn (relations v.1 v.2) = w,
     referenceLaw k (parryParameter k) w.length (parryLaw k) v
 
-set_option maxHeartbeats 1200000 in
 -- State-path summation and arbitrary finite concatenations are proved together.
 /-- At an actual `10` boundary forward, or an actual `01` boundary backward,
 every finite list of complete zero/one run lengths has the product of the
@@ -321,7 +320,6 @@ theorem parry_complete_run_laws (k : ℕ) (hk : 2 ≤ k)
     rw [hjoint_back]
     exact mul_div_cancel_left₀ _ hback_pos.ne'
 
-set_option maxHeartbeats 1200000 in
 -- Finite path sums and the four-transition conditioning are elaborated together.
 /-- The empty branch of the original complete-run selector has uniformly
 exponentially small mass, both conditionally on a signed starting state and
