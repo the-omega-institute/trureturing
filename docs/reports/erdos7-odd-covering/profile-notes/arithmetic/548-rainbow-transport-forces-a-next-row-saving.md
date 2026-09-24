@@ -7,7 +7,7 @@ One finite first-11 rainbow family prevents a factorized next-row continuation f
 
 This alone exceeds the whole mass-saving requirement c0/(257/51-2) of [report544](544-missing-original-slots-restore-a-common-law-debit.md). The unchanged final PA law consequently has complete query norm strictly below 257/51 for every continuation in the phase class specified below, including arbitrary finite 13-heights and arbitrary later 17/19 originals.
 
-This is a restricted two-copy theorem. The 13-row chains may be arbitrary nested chains, including arbitrarily delayed divergence from the first-11 chains; their first roots must have full pure-survivor mass, and their 5/7 projections must factor by coordinate. A bound for arbitrary support-dependent 13 projections is not proved. The calculations and arguments are ordinary mathematics, not Lean verification or unrestricted Erdős #7.
+This is a restricted two-copy theorem. Every actual continuation family is finite; no height cutoff means that no uniform upper bound is imposed on its finite exponents. The 13-row chains may be arbitrary nested chains, including arbitrarily delayed divergence from the first-11 chains; their first roots must have full pure-survivor mass, and their 5/7 projections must factor by coordinate. A bound for arbitrary support-dependent 13 projections is not proved. The calculations and arguments are ordinary mathematics, not Lean verification or unrestricted Erdős #7.
 
 ## 1. The fixed finite source and the allowed continuation
 
@@ -201,3 +201,5 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/rai
 ```
 
 The theorem excludes simultaneous sharpness of this fixed rainbow 11-row and any 13 continuation in the stated factorized phase class. It does not bound a continuation whose 5/7 phases depend on the old 11-exponent or jointly on the cofactor's other exponents. Such a query has no common product count M=N5*N7 repeated at each 11-depth, so RT3 cannot be integrated using the four joint laws above. Chains starting in the partially surviving root zero are also outside the stated class. Uniform estimates beyond these phase and root restrictions, and arbitrary-family two-copy closure, remain unresolved.
+
+[A finite support-dependent query](549-a-finite-support-dependent-query-exceeds-the-factorized-envelope.md) strictly exceeds RT4 on this same actual lambda11. It falls outside the factorization hypothesis and leaves the larger13-only closure threshold unrefuted.
