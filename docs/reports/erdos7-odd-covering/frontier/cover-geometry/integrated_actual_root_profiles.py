@@ -100,6 +100,7 @@ for active, residues in ((0, [1, 2, 4, 5, 7, 8]), (1, [3, 6]), (2, [0])):
     local_collision = F(1, 5) if active == 2 else F(0)
     check(f'thirteen_profile_{active}_dominates_collision', phi[FULL] >= max(F(0), S0-local_collision))
     profiles13.append({'root_residues_mod9': residues, 'mass': F(len(residues), 9),
+                       'active_depth_count': active,
                        'scope_union_probabilities': weights, 'all64_polynomials': phi,
                        'lower': phi[FULL]})
 s13 = sum((p['mass']*p['lower'] for p in profiles13), F(0))
@@ -150,6 +151,7 @@ for j in range(4):
     check(f'twelve_fibre_{j}_closed_count', actual == F((4-j)*(6-j)-j, 24))
     check(f'twelve_fibre_{j}_profile', lower == actual)
     profiles12.append({'root_residues_mod27': root_classes[j], 'mass': root_mass,
+                       'active_depth_count': j,
                        'all64_polynomials': phi, 'all64_positive': valid,
                        'lower': lower, 'actual_survival': actual})
 check('twelve_root_profile_masses', [p['mass'] for p in profiles12] == [F(1, 2), F(1, 3), F(1, 9), F(1, 18)])
@@ -166,6 +168,54 @@ phi_average = (1-F(1, 15))*(1-F(1, 21))
 check('jensen_actual_is_average_of_profiles', actual_jensen == average_phi == F(31, 35))
 check('jensen_averaged_inputs_overstate', phi_average == F(8, 9) and phi_average-average_phi == F(1, 315))
 
+# A uniform source bound from actual active-depth counts, not a profile search.
+old_cap_weights = {mask_of(s): prod((F(1, p-2) for p in s), start=F(1))
+                   for s in late_supports}
+old_cap_polynomials = polynomials(old_cap_weights)
+for mask, value in old_cap_polynomials.items():
+    check(f'old_only_cap_subset_{mask}', value > 0)
+old_cap = old_cap_polynomials[FULL]
+check('old_only_cap_independent_expansion',
+      old_cap == 1-sum(old_cap_weights.values())+3*prod((F(1, p-2) for p in L), start=F(1))
+      == F(2689, 2805))
+check('old_only_pays_two_single_depth_reserves', old_cap-2*S0 == F(231277, 378675) > 0)
+qpart_cap = prod((1+F(1, q-2) for q in Q), start=F(1))-1
+check('full_nonunit_Qpart_cap', qpart_cap == F(1113, 935))
+beta_limit = 2-F(51, 310)*B5/S0
+check('depth_union_beta_limit', beta_limit == F(19932148793163726757497090936821878241,
+                                               19532111407707480873767044385385318750) > 1)
+depth_consumers = {}
+for name, profiles, actual_source in (('thirteen', profiles13, actual13), ('twelve', profiles12, s12)):
+    beta = sum((p['mass']*p['active_depth_count'] for p in profiles), F(0))
+    zero_mass = sum((p['mass'] for p in profiles if p['active_depth_count'] == 0), F(0))
+    lower = S0*(2-beta)+(old_cap-2*S0)*zero_mass
+    check(name+'_depth_union_bound', beta <= 1 and S0 <= lower <= actual_source)
+    depth_consumers[name] = {'beta': beta, 'zero_depth_mass': zero_mass, 'source_lower': lower}
+
+tail_coefficient = qpart_cap-old_cap+S0
+check('shared_low_depth_tail_coefficient', tail_coefficient == F(153619, 378675) > 0)
+shared_depth = {}
+for depth in (4, 5, 6):
+    low_beta_cap = 1-F(1, 3**depth)
+    high_charge = qpart_cap/F(3**depth)
+    low_source = old_cap-(old_cap-S0)*low_beta_cap
+    source = low_source-high_charge
+    query = 5+B5/source
+    haar = F(935, 4096)*source
+    fresh = haar*(1-(1+query)*F(51, 616))
+    check(f'shared_depth_{depth}_same_source_formula', source == S0-tail_coefficient/F(3**depth))
+    check(f'shared_depth_{depth}_target_direction', (query < TARGET) == (depth >= 5))
+    shared_depth[depth] = {'low_depth_beta_ceiling': low_beta_cap, 'low_family_source_lower': low_source,
+                           'all_higher_original_charge': high_charge, 'full_source_lower': source,
+                           'query_bound': query, 'query_bound_decimal': float(query),
+                           'Haar_lower': haar, 'fresh23_29_Haar_lower': fresh}
+check('shared_five_depth_source', shared_depth[5]['full_source_lower'] == F(15852548, 92018025))
+check('shared_five_depth_query', shared_depth[5]['query_bound'] ==
+      F(35044610507390662344298654333344771759, 3182507297027885470852331299879202500))
+check('shared_five_depth_Haar', shared_depth[5]['Haar_lower'] == F(3963137, 100776960))
+check('shared_five_depth_fresh_Haar', shared_depth[5]['fresh23_29_Haar_lower'] ==
+      F(637734526107735968960930201833297223, 2932401053130816752666186337709977600000) > 0)
+
 result = {
     'scope': 'Actual fixed AP families; conditional integrated certificate and two method refutations, not unrestricted Erdos7.',
     'B5': B5, 'target': TARGET, 'old_s0': S0, 'old_collision_margin': collision_margin,
@@ -179,6 +229,10 @@ result = {
     'jensen': {'originals_modulus_residue': jensen_rows, 'actual_Haar_survival': actual_jensen,
                'mean_profile': average_phi, 'profile_of_means': phi_average,
                'overstatement': phi_average-average_phi},
+    'active_depth_criterion': {'old_only_cap_polynomials': old_cap_polynomials,
+                              'old_only_source_lower': old_cap, 'beta_strict_limit': beta_limit,
+                              'actual_consumers': depth_consumers,
+                              'Qpart_cap': qpart_cap, 'shared_depth_consumers': shared_depth},
     'refuted_claims': ['Every actual root fibre has positive survivor mass under arbitrary nested root prefixes.',
                        'Applying the support polynomial after averaging actual root loads always lower-bounds survival.'],
     'limits': 'No universal integrated lower bound, root-reweighting theorem, general prime-count reduction or Lean verification.',
