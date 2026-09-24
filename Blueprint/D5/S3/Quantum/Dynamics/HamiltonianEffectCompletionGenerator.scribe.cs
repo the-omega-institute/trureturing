@@ -432,7 +432,7 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, n, Comma, Sp, Call(F.Id("Fintype"), n), Comma, RowBreak, Grp(),
-            hamiltonian, Comma, Sp, effect, Sp, InMacro, Sp, matrices, Comma, Sp,
+            hamiltonian, Sp, InMacro, Sp, matrices, Comma, Sp,
             initial, Sp, InMacro, Sp,
             Call(F.Id("Submodule"), ComplexNumbers(), matrices), Comma, RowBreak, Grp(),
             derivativeClause, Sp, Land, RowBreak, Grp(), spanClause, Dot,
@@ -441,7 +441,7 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
 
     private static Formula ZeroHamiltonianFormula()
     {
-        Formula n = F.Id("n"), effect = F.Id("E");
+        Formula n = F.Id("n"), effect = F.Id("E"), time = F.Id("t");
         return Disp(Seq(
             Forall, Sp, n, Comma, Sp, Call(F.Id("Fintype"), n), Comma, Sp,
             effect, Sp, InMacro, Sp, Matrices(n), Comma, Sp,
