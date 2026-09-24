@@ -1484,6 +1484,9 @@
       ],
       "execution_filemap_paths": [
         "D5/F/NumberTheory/AdmissionResourceProbe.lean",
+        "D5/InstructionContractProbe.md",
+        "D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean",
+        "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean",
         "Directory.Build.props",
         "Directory.Packages.props",
         "Evidence/D5/values.json",
@@ -1504,6 +1507,7 @@
         "docs/develop/theory/admission-resource-probe.md",
         "docs/reports/ci-fixture-plane-probe.md",
         "docs/reports/ci-fixture-plane-probe.unregistered",
+        "docs/reports/instruction-contract-renamed.md",
         "docs/reports/prime-slab-corner-order-0909.json",
         "global.json",
         "skills/codex-formal-answer/SKILL.md",
