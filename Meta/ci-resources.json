@@ -150,6 +150,7 @@
         "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj",
         "tools/tests/StrataLint.InspectionIntegration.Tests/StrataLint.InspectionIntegration.Tests.csproj",
         "tools/tests/StrataLint.InspectionScope.Tests/StrataLint.InspectionScope.Tests.csproj",
+        "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj",
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
         "tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj",
         "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
@@ -406,6 +407,14 @@
       "id": "test-inspection-scope",
       "projects": [
         "tools/tests/StrataLint.InspectionScope.Tests/StrataLint.InspectionScope.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-instruction-contract",
+      "projects": [
+        "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj"
       ],
       "checks": [],
       "steps": []

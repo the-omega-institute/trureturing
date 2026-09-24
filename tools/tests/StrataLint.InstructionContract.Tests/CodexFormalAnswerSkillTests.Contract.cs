@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Markdig.Syntax;
 
-namespace StrataLint.ArchitectureTests;
+namespace StrataLint.InstructionContract.Tests;
 
 /// <summary>
 /// The conversation contract and the anchor registries of the codex-formal-answer skill.
@@ -70,7 +70,7 @@ public sealed partial class CodexFormalAnswerSkillTests
     public void CodexFormalAnswerDefinesConversationContract()
     {
         var skill = File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
+            TestRepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md"));
@@ -125,12 +125,13 @@ public sealed partial class CodexFormalAnswerSkillTests
     public void CodexFormalAnswerAnchorsResolveToTrackedTheorems()
     {
         var skill = Parse(File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
+            TestRepositoryLayout.FindRoot(),
             "skills",
             "codex-formal-answer",
             "SKILL.md")));
-        var leanSources = GitIndexRepositoryFiles
-            .EnumerateDeclared(RepositoryLayout.FindRoot(), "D5")
+        var leanSources = StrataLint.Engine.GitIndexRepositoryFiles
+            .Enumerate(TestRepositoryLayout.FindRoot())
+            .Where(static entry => entry.RelativePath.StartsWith("D5/", StringComparison.Ordinal))
             .Select(static entry => (entry.RelativePath, Text: File.ReadAllText(entry.FullPath)))
             .ToDictionary(
                 static entry => entry.RelativePath,

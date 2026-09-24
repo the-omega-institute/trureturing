@@ -1484,6 +1484,9 @@
       ],
       "execution_filemap_paths": [
         "D5/F/NumberTheory/AdmissionResourceProbe.lean",
+        "D5/InstructionContractProbe.md",
+        "D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean",
+        "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean",
         "Directory.Build.props",
         "Directory.Packages.props",
         "Evidence/D5/values.json",
@@ -1504,8 +1507,11 @@
         "docs/develop/theory/admission-resource-probe.md",
         "docs/reports/ci-fixture-plane-probe.md",
         "docs/reports/ci-fixture-plane-probe.unregistered",
+        "docs/reports/instruction-contract-renamed.md",
         "docs/reports/prime-slab-corner-order-0909.json",
         "global.json",
+        "skills/codex-formal-answer/SKILL.md",
+        "skills/codex-theory-ingest/SKILL.md",
         "tools/Makefile",
         "tools/StrataLint.BuildRuntime/Changed.cs",
         "tools/StrataLint.CiArtifacts/Changed.cs",
@@ -1560,6 +1566,7 @@
         "tools/lean-inspector/native_image.c",
         "tools/lean-inspector/tests/test_native_support.py",
         "tools/lean-inspector/tests/test_reuse.py",
+        "tools/scripts/agent/batch_pr.sh",
         "tools/scripts/agent/merge-gate.sh",
         "tools/scripts/agent/openproblem/README.md",
         "tools/scripts/agent/openproblem/SCREENED-OUT.md",
@@ -1618,6 +1625,8 @@
         "tools/tests/StrataLint.ExecutionEvidence.Tests/TestProcessRunnerTests.cs",
         "tools/tests/StrataLint.FileMap.Tests/FileMapPolicyTests.cs",
         "tools/tests/StrataLint.InspectionScope.Tests/FileMapInspectionScopeTests.cs",
+        "tools/tests/StrataLint.InstructionContract.Tests/FormalizationWorkflowInstructionTests.cs",
+        "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj",
         "tools/tests/StrataLint.Lean.Tests/Native/InspectorNativeTests.cs",
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
         "tools/tests/StrataLint.LeanReportScript.Tests/LeanReportInputScriptTests.cs",
@@ -3314,6 +3323,49 @@
       "execution_excludes": null,
       "execution_environment": null,
       "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj",
+      "assembly": "StrataLint.InstructionContract.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.InstructionContract.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.InstructionContract.Tests",
+      "root_namespace": "StrataLint.InstructionContract.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.InstructionContract.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.InstructionContract.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.InstructionContract.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "CLAUDE.md",
+        "D5/**",
+        "skills/codex-formal-answer/SKILL.md",
+        "skills/codex-theory-ingest/SKILL.md",
+        "tools/scripts/agent/batch_pr.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
     }
   ],
   "historical_projects": [],
