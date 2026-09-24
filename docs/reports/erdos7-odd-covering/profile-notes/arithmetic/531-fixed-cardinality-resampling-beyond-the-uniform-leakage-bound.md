@@ -18,6 +18,13 @@ result proves the seven-prime query target or unrestricted Erdős#7;
 the proofs and fixed arithmetic below are ordinary mathematics, not
 new Lean verification.
 
+[Report532](532-fixed-quota-and-reciprocal-payment-obstructions.md)
+shows that the improved fixed-cardinality denominator still cannot
+make its uniform-weight scalar query certificate cross the target
+outside the elementary uniform-survivor regime. It also excludes the
+full reciprocal-density remainder payment for nonuniform selection.
+The strict denominator improvement and the Gibbs law below remain valid.
+
 ## Uniform independent replacement has no additional low-mass range
 
 Throughout let

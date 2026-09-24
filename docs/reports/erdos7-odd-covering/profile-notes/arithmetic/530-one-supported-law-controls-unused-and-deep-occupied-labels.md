@@ -512,7 +512,11 @@ reciprocal-tail payment, it never improves the elementary
 uniform-survivor range h>A/T. The same report gives a different joint
 sampling rule, selecting a fixed number of labels per block, that
 preserves the Gibbs interface with a smaller hypergeometric leakage
-charge. The nonuniform and phase-sensitive tasks remain unresolved.
+charge. [Report532](532-fixed-quota-and-reciprocal-payment-obstructions.md)
+also excludes the resulting uniform fixed-quota scalar certificate and
+the full reciprocal-density payment in(JL7), including nonuniform
+marginals. Actual survivor-cylinder payments and phase-sensitive
+estimates remain unresolved.
 
 Even computing the exact covering cells does not make full replacement
 of all shallow labels automatically feasible. At s=1 let U_deep be
