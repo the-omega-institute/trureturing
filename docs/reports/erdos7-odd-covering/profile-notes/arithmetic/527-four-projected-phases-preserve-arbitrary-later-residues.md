@@ -211,3 +211,90 @@ Their complements have masses at least255/256 and305/324, respectively, hence sa
 This refutes a universal upper bound beta<1 for the bad mass of the literal local-four-phase condition. It does not refute report527's conditional theorem, any noncoverage theorem, or the existence of a good supported law. For this actual grid, arbitrary separately supplied A-only originals and arbitrary finite later23/29 originals retain the full survivor Haar bound>1/8000 from(Q5). It does not establish that arbitrary old A/17/19 interactions admit a small weighted projection assignment. All probability and source claims retain527's ordinary-source assumptions; no source calculation, producer, period enumeration or Lean proof is supplied here.
 
 The retained consumer and numerical result are unchanged. They verify their original fixed input and source constants; they do not check the general weighted-mask hypothesis or the81-class construction. The latter is established by the symbolic counting and geometric-sum arguments in this appendix.
+
+## Three active originals per exponent profile suffice
+
+A further sufficient input permits arbitrary phases and arbitrary finite17/19 heights. At each actual A-only survivor x and each exponent pair(j,k) other than(0,0), assume that at most THREE original moduli d17^j19^k have their actual A-condition x=a_m mod d satisfied. This counts active complete original labels, before merging any equal projected cylinders. It places no condition on the original A-only family, beyond the existing distinct-modulus source hypotheses.
+
+Fix the following selector once for the actual finite family. At every x, assign an active original to17 if j>k and to19 if j<k. At a positive diagonal j=k, order the active complete numerical labels and assign the first to17 and the remaining at most two to19. The finite old activation signature determines this table before any query. No original phase is changed, and no later query reorders or reassigns its labels.
+
+At17-depth e, the profiles k=0,...,e-1 contribute at most3e labels, and the diagonal contributes at most one. At19-depth e, the profiles j=0,...,e-1 contribute at most3e, and the diagonal contributes at most two. The axes are included in these counts. Hence the actual assigned projected unions satisfy, simultaneously at every x,
+
+    H17(F17(x))<=sum_(e>=1)(3e+1)17^-e=67/256,
+    H19(F19(x))<=sum_(e>=1)(3e+2)19^-e=31/108.
+
+These are upper bounds on finite original unions; the infinite geometric sums introduce no new original labels. The corresponding complement masses are at least189/256 and77/108. Normalize Haar on each complement and attach their product conditional on x to the one source mu5. This again produces one probability supported on the actual old survivor set and preserves the complete A-marginal mu5.
+
+Using the fixed coordinate caps256/189 and108/77, positive-depth cylinder sums give
+
+    1+R_P <= (1+C5(6)) (1+16/189)(1+6/77)
+           = (1+C5(6)) (17015/14553)
+           <1752545/145530.
+
+An unqueried coordinate has factor one. These inequalities use uniform caps for each coordinate separately; they do not assume that a bound on a pointwise product of varying caps may be passed through independent old-cylinder maxima.
+
+The same joint probability has full Haar density less than
+
+    47*(256/189)*(108/77)=48128/539.
+
+For any additional finite family touching23 or29, with its actual numerical labels, arbitrary old and outside phases and unit old cofactor included, take its product with full Haar23/29 and delete the one actual forbidden union. Since the outside factor is51/616, the remaining mass is strictly greater than
+
+    1-(51/616)(1752545/145530)=17779/5976432>0.
+
+Consequently the complete original survivor set has full Haar mass
+
+    H(U9)>(17779/5976432)*(539/48128)
+          =17779/533643264>1/31000.
+
+This new density floor belongs to the three-per-profile hypothesis; it does not replace the earlier1/8000 conclusions under their original smaller mask budgets. The source period resolves the entire final family's A-queries, and the selector can be pulled back from the fixed finite activation period. No uniform lifting of an insufficient finite source law is used.
+
+The condition is sufficient, not asserted for every actual old family. It is an ordinary application of the existing conditional endpoint interface and the two geometric sums; no new source calculation, positive instance enumeration, consumer or Lean result is claimed.
+
+## A pointwise product budget does not control the joint query maxima
+
+The preceding bounds use one uniform cap for each queried coordinate. A weaker proposed replacement would require only a bound on the product of the two conditional query factors at each old point. That replacement is false, even for a single law supported on survivors of actual distinct odd original classes.
+
+Here the old coordinate is3 and the added coordinates are5 and7. Include the original class2 modulo3. For1<=j<=4 include the original numerical modulus3^j*5 with its unique CRT residue
+
+    x=0 mod3^j,    y=j mod5.
+
+For1<=k<=6 include the original modulus3^k*7 with its unique CRT residue
+
+    x=1 mod3^k,    z=k mod7.
+
+These eleven numerical moduli are distinct odd integers greater than1; all full residues are fixed simultaneously. Take the old law eta to give mass1/2 to each residue0 and1 modulo3^6, with uniform independent tails in the3-coordinate. On its branch0, choose the5-coordinate Haar conditioned on root0 and unrestricted Haar7. On its branch1, choose unrestricted Haar5 and Haar7 conditioned on root0. Attach these products conditional on the actual old point, giving one law nu. It avoids every displayed original: on branch0 all four5-projections are excluded and every7-original has an inactive old condition; the roles reverse on branch1. No claim that nu has full survivor support is needed.
+
+For a conditional coordinate law rho_p^x define
+
+    s_p(x)=sum_(e>=1) max_b rho_p^x(b modp^e),
+    F(x)=(1+s5(x))(1+s7(x)).
+
+Unrestricted Haarp has s_p=1/(p-1), while Haar conditioned on one root has s_p=p/(p-1). Therefore the two actual branch values are
+
+    F(0)=(1+5/4)(1+1/6)=21/8,
+    F(1)=(1+1/4)(1+7/6)=65/24.
+
+Here ess_sup_eta ranges over the two branches of the old law; no kernel off its support is used. The complete nonunit old query sum is
+
+    R3(eta)=6*(1/2)+sum_(e>=7)(1/2)*3^(-(e-6))=13/4.
+
+Nevertheless the putative bound
+
+    1+R_(3,5,7)(nu) <= ess_sup_eta F(x)*(1+R3(eta))
+
+fails. To compute the left side exactly, first consider query labels with no3-factor. At depth one, the maximal5,7 and5*7 cylinder masses are3/5,4/7 and6/35. All deeper tails are Haar, so the total including the unit query for these labels is
+
+    1+(5/4)*(3/5)+(7/6)*(4/7)+(35/24)*(6/35)=8/3.
+
+For each positive3-depth let w_e be the largest old cylinder mass: it is1/2 for e<=6 and(1/2)*3^(-(e-6)) for e>6. Such a cylinder meets only one old branch. Relative to w_e, the maximal masses for no new root, a5-root, a7-root and a joint5/7-root are respectively1,1,1,1/5. The5-root maximum uses branch0, whereas the7-root and joint maxima use branch1. Uniform new-coordinate tails then give the coefficient
+
+    1+5/4+7/6+(35/24)*(1/5)=89/24.
+
+Consequently all numerical query depths, including their full geometric tails, give
+
+    1+R_(3,5,7)(nu)=8/3+(13/4)*(89/24)=471/32,
+    ess_sup_eta F(x)*(1+R3(eta))=(65/24)*(17/4)=1105/96.
+
+The difference is77/24>0. These are maxima under the same joint law; no phases of the original eleven forbidden classes have been changed. Independent query labels are permitted to choose their own maximizing old residues, exactly as in the complete query functional.
+
+Thus small pointwise conditional products cannot be passed through the separate old-cylinder maxima without further joint control. The fixed separate coordinate caps used in(Q2) and in the three-per-profile deduction do provide that control. This is an ordinary symbolic counterexample to the proposed weaker interface, not a counterexample to either deduction, the five-source construction, or Erdős#7. The retained consumer does not verify this example; the finite CRT support and the all-depth sums are established by the displayed argument.
