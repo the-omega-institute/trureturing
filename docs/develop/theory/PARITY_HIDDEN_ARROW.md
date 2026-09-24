@@ -289,11 +289,11 @@ $c_d$、临界恒信息发散构造，以及 $d=2$ 的完整上边界，均标�
 
 | 来源 | 精确范围与使用边界 |
 | --- | --- |
-| Proesmans et al., *Information Landscape and Flux, Mutual Information Rate Decomposition and Entropy Production*, arXiv:1707.01940 | `literature-attested`：互信息率与熵产生的分解背景；不含本卷的奇偶秩一核或 $c_d$ 阈值 |
-| Horowitz, *The production rate of the system-bath mutual information*, arXiv:1612.03884；Allahverdyan et al., *Role of Mutual Information in Entropy Production under Information Exchanges*, arXiv:1307.6092 | `literature-attested`：信息交换与熵产生的热力学关系；不提供本卷的有限观察纤维构造 |
-| Kolchinsky et al., *Ensemble dependence of information-theoretic contributions to the entropy production*, arXiv:2301.13061 | `literature-attested`：熵产生的分解依赖选定系综；不提供本卷的尖锐有限维界 |
-| — | `repo-derived`：本卷定理 2.1、3.1、3.2 的阈值、渐近式和严格正发散族 |
+| Qian Zeng and Jin Wang, *Information Landscape and Flux, Mutual Information Rate Decomposition and Entropy Production*, arXiv:1707.01940 | `literature-attested`：互信息率与熵产生的分解背景；不含本卷的奇偶秩一核或 $c_d$ 阈值 |
+| Sheng-Wen Li, *The production rate of the system-bath mutual information*, arXiv:1612.03884；Takahiro Sagawa and Masahito Ueda, *Role of Mutual Information in Entropy Production under Information Exchanges*, arXiv:1307.6092 | `literature-attested`：信息交换与熵产生的热力学关系；不提供本卷的有限观察纤维构造 |
+| Krzysztof Ptaszynski and Massimiliano Esposito, *Ensemble dependence of information-theoretic contributions to the entropy production*, arXiv:2301.13061 | `literature-attested`：熵产生的分解依赖选定系综；不提供本卷的尖锐有限维界 |
+| — | `repo-derived`：本卷定理 2.1、3.2 及定义 3.1 中的阈值、渐近式和严格正发散族 |
 
-**边界声明。** $\sigma$ 是平稳相邻状态联合律与其交换律之间的 KL 相对熵率；没有给出热浴、能量函数或局部详细平衡时，不把它等同于物理热。真子坐标分别观察时完全白，但联合读取全部坐标仍能恢复一步方向；“边缘白噪声”不等于“联合过程可逆”。证明均在普通实分析和有限维线性代数内，尚未由 Lean kernel 验证。
+**边界声明。** $\sigma$ 是平稳相邻状态联合律与其交换律之间的 KL 相对熵率；没有给出热浴、能量函数或局部详细平衡时，不把它等同于物理热。真子坐标分别观察时完全白，但在 $\mathcal K_d^0$ 内，只有 $P\ne\Pi$（等价于 $I(P)>0$）时，联合读取全部坐标才能恢复一步方向；在更大的定义 1.1 核族内，这要求 $b$ 非常数。$a=0$、$P=\Pi$ 的端点可逆，不具有时间方向；“边缘白噪声”不等于“联合过程可逆”。证明均在普通实分析和有限维线性代数内，尚未由 Lean kernel 验证。
 
 ## 追加锚（本行以下为增补区）
