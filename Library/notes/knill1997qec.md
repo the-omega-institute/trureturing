@@ -6,8 +6,7 @@ title: Theory of quantum error-correcting codes
 doi: 10.1103/PhysRevA.55.900
 url: https://journals.aps.org/pra/abstract/10.1103/PhysRevA.55.900
 claim: Quantum error correction is characterized by scalar compressions of error products; detecting small-support operators supplies the distance criterion used here.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

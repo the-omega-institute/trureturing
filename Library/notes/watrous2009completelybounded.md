@@ -6,8 +6,7 @@ title: Semidefinite Programs for Completely Bounded Norms
 doi: 10.4086/toc.2009.v005a011
 url: https://theoryofcomputing.org/articles/v005a011/
 claim: Completely bounded trace norms quantify quantum-channel differences with arbitrary ancillary systems and admit semidefinite formulations.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

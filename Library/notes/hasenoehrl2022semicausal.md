@@ -6,8 +6,7 @@ title: Quantum and classical dynamical semigroups of superchannels and semicausa
 doi: 10.1063/5.0070635
 url: https://arxiv.org/abs/2109.03847v2
 claim: Semicausal completely positive semigroups and quantum superchannel semigroups admit constructive generator characterizations.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

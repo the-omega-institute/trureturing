@@ -6,8 +6,7 @@ title: Transitionless quantum driving
 doi: 10.1088/1751-8113/42/36/365303
 url: https://research-information.bris.ac.uk/en/publications/transitionless-quantum-driving/
 claim: Additional driving terms can realize transitionless transport of a prescribed time-dependent quantum eigenbasis.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

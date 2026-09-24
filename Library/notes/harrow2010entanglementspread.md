@@ -6,8 +6,7 @@ title: Entanglement spread and clean resource inequalities
 doi: 10.1142/9789814304634_0046
 url: https://arxiv.org/abs/0909.1557v2
 claim: Conditional disposal of different amounts of entanglement can decohere superposed protocols; clean execution needs appropriate communication or other resources.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

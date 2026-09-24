@@ -6,8 +6,7 @@ title: A topological proof of Wolpert's formula for the Weil-Petersson symplecti
 doi: 10.1007/s10711-025-01016-3
 url: https://arxiv.org/abs/2408.04937v2
 claim: A topological proof expresses the Weil-Petersson symplectic form in length and twist coordinates, with an explicit sign convention.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

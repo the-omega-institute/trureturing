@@ -6,8 +6,7 @@ title: Stochastic exclusion processes versus coherent transport
 doi: 10.1088/1367-2630/14/7/075004
 url: https://arxiv.org/abs/0912.0858v2
 claim: Quantum master equations implement exclusion hopping, and symmetric stochastic hopping gives a diffusive particle current.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

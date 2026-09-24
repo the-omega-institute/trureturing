@@ -6,8 +6,7 @@ title: Conical singularity and quantum corrections to the entropy of a black hol
 doi: 10.1103/PhysRevD.51.609
 url: https://arxiv.org/abs/hep-th/9407001
 claim: Smooth regularization of Euclidean conical singularities relates effective-action curvature terms to black-hole entropy corrections.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

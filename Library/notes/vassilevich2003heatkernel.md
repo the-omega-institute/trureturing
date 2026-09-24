@@ -6,8 +6,7 @@ title: "Heat kernel expansion: user's manual"
 doi: 10.1016/j.physrep.2003.09.002
 url: https://arxiv.org/abs/hep-th/0306138v3
 claim: Heat-kernel coefficients organize local effective-action terms, including curvature contributions and their regularization requirements.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

@@ -6,8 +6,7 @@ title: Entanglement hamiltonians in two-dimensional conformal field theory
 doi: 10.1088/1742-5468/2016/12/123103
 url: https://arxiv.org/abs/1608.01283
 claim: In the specified annulus geometries, reduced-state moments admit open- and closed-channel partition functions with fixed boundary conditions.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

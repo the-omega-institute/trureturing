@@ -6,8 +6,7 @@ title: Green-hyperbolic operators on globally hyperbolic spacetimes
 doi: 10.1007/s00220-014-2097-7
 url: https://arxiv.org/abs/1310.0738
 claim: Green-hyperbolic operators on globally hyperbolic spacetimes have advanced and retarded Green operators with specified causal support properties.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

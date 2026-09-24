@@ -6,8 +6,7 @@ title: Second Renyi entropy and annulus partition function for one-dimensional q
 doi: 10.21468/SciPostPhys.12.4.141
 url: https://arxiv.org/abs/2112.01929v2
 claim: The paper computes a second-Renyi boundary-CFT problem through an annulus and records exact diagonal Ising boundary partition functions.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

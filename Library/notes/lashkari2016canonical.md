@@ -6,8 +6,7 @@ title: Canonical Energy is Quantum Fisher Information
 doi: 10.1007/JHEP04(2016)153
 url: https://arxiv.org/abs/1508.00897v2
 claim: In the stated holographic vacuum-ball setting, second variations of relative entropy match bulk canonical energy.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

@@ -5,8 +5,7 @@ year: 2024
 title: Non-trivial Area Operators Require Non-local Magic
 url: https://arxiv.org/abs/2306.14996v2
 claim: Stabilizer codes over any local dimension have scalar RT area operators for every physical bipartition, including code subalgebras with centers.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

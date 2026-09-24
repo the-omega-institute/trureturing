@@ -5,8 +5,7 @@ year: 1997
 title: Geometrical Formulation of Quantum Mechanics
 url: https://arxiv.org/abs/gr-qc/9706069
 claim: Pure quantum states admit a Kahler geometric formulation in which Schrodinger evolution is Hamiltonian.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

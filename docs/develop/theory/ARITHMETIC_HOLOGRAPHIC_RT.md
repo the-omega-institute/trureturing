@@ -2235,7 +2235,7 @@ $$
 
 [BO10] C. Bény, O. Oreshkov. General conditions for approximate quantum error correction and near-optimal recovery channels. Phys. Rev. Lett. 104 (2010), 120501. DOI:10.1103/PhysRevLett.104.120501. arXiv:0907.5391. 用于区分其最坏纠缠保真度恢复任务与第 31 节当前区域预测任务。
 
-第 27–33 节的来源条目已分别存入 `Library/notes`，Scribe 来源说明为 `Blueprint/D5/S3/Quantum/Entanglement/GeometricDynamicsSources.scribe.cs`。它使用具名 Library 引用与普通说明，不声明这些新增纸面结果已有 Lean 真源。
+第 27–35 节的来源条目分别存入 `Library/notes`。这些文献记录不指向尚不存在的 Lean 声明；本卷新增的纸面结果尚无 Lean 真源。
 
 ## 附录 A. 36 阶矩阵的精确整数重放
 

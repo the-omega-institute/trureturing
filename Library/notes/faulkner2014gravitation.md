@@ -6,8 +6,7 @@ title: Gravitation from Entanglement in Holographic CFTs
 doi: 10.1007/JHEP03(2014)051
 url: https://arxiv.org/abs/1312.7856v2
 claim: The entanglement first law for all ball-shaped regions, with an established holographic entropy dictionary near the AdS vacuum, constrains linearized bulk gravitational equations.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

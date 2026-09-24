@@ -6,8 +6,7 @@ title: Holographic Renyi Entropy from Quantum Error Correction
 doi: 10.1007/JHEP05(2019)052
 url: https://arxiv.org/abs/1811.05171
 claim: Operator-algebra codes separate area sectors and recoverable entropy; the specified cosmic-brane comparison constrains entanglement within area eigenspaces.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

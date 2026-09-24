@@ -6,8 +6,7 @@ title: Holographic Mutual Information is Monogamous
 doi: 10.1103/PhysRevD.87.046003
 url: https://arxiv.org/abs/1107.2940v2
 claim: Entropies given by the static Ryu-Takayanagi prescription obey tripartite-information nonpositivity.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

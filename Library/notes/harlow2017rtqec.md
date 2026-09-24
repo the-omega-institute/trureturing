@@ -6,8 +6,7 @@ title: The Ryu-Takayanagi Formula from Quantum Error Correction
 doi: 10.1007/s00220-017-2904-z
 url: https://arxiv.org/abs/1607.03901
 claim: Exact operator-algebra quantum error correction yields an entropy decomposition with a central area operator and recoverable algebra entropy.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

@@ -6,8 +6,7 @@ title: Nonminimal coupling and quantum entropy of a black hole
 doi: 10.1103/PhysRevD.56.4968
 url: https://arxiv.org/abs/hep-th/9612061
 claim: Nonminimal curvature coupling requires care when comparing conical entropy with a statistical entropy prescription.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

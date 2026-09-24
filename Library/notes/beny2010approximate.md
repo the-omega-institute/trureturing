@@ -6,8 +6,7 @@ title: General conditions for approximate quantum error correction and near-opti
 doi: 10.1103/PhysRevLett.104.120501
 url: https://arxiv.org/abs/0907.5391
 claim: Approximate error correction and near-optimal recovery can be characterized using a worst-case entanglement-fidelity framework.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

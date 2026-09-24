@@ -6,8 +6,7 @@ title: Leading order corrections to the quantum extremal surface prescription
 doi: 10.1007/JHEP04(2021)062
 url: https://arxiv.org/abs/2008.03319
 claim: Replica assumptions and incompressible bulk information can change the leading QES prediction; one-shot entropy conditions refine its validity.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

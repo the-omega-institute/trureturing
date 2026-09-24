@@ -6,8 +6,7 @@ title: The Information-Disturbance Tradeoff and the Continuity of Stinespring's 
 doi: 10.1109/TIT.2008.917696
 url: https://arxiv.org/abs/quant-ph/0605009
 claim: Channel closeness admits dimension-independent control through Stinespring dilations, relating retained information to environment disturbance.
-strata_touched:
-  - D5/S3/Quantum/Entanglement/GeometricDynamicsSources
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
