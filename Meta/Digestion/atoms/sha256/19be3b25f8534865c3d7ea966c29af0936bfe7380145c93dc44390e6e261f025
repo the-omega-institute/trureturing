@@ -1,0 +1,47 @@
+**命题 3.14（模式恢复的条件数）。** 对已声明模式，设平均前读数为 $x_\omega$，平均后为 $y_\omega=\widehat\nu(\omega)x_\omega$。系数已知且非零、两个正交分量确实可读时，
+
+$$
+x_\omega=\frac{y_\omega}{\widehat\nu(\omega)},\qquad
+|\widetilde y_\omega-y_\omega|\le\eta
+\ \Longrightarrow\
+\left|\frac{\widetilde y_\omega}{\widehat\nu(\omega)}-x_\omega\right|
+\le\frac{\eta}{|\widehat\nu(\omega)|}.
+\tag{TM.307}
+$$
+
+这是读数条件数，不是普适完全正逆通道。若某两扇区系数模严格小于一，两等幅反相态的迹距离由一缩成该模长；通道不能再把距离无损恢复为一，所以这个除法不是物理通道逆。系数为零时，该模式的区别从遗忘记录的边缘中消失。
+
+均匀窗口的条件数为 $|\operatorname{sinc}(T\omega/2)|^{-1}$，在非零整数整周处不可逆。近零的展开与全局包络分别为
+
+$$
+|k_T(\omega)|=1-\frac{(T\omega)^2}{24}+O((T\omega)^4),\qquad
+\operatorname{Re}k_T(\omega)=1-\frac{(T\omega)^2}{6}+O((T\omega)^4),
+\qquad
+T\ge\frac2{\eta|\omega|}
+\ \Longrightarrow\ |k_T(\omega)|\le\eta
+\quad(\eta>0,\ \omega\ne0).
+\tag{TM.308}
+$$
+
+前两式针对 $T\omega\to0$，末项给充分而非必要抑制时间，因为更早的窗口零点也可抑制。逐模式信息保留不随矩形窗口长度单调变化。统计误差如何由有限样本取得、源相干大小及参考成本必须另外供应。
+
+平均通道接近 pinching，不表示单时刻状态大部分时间在迹距离上接近平衡。两个不同能量的等幅纯态，逐时刻演化与其 pinching 的迹距离恒为 $1/2$；只有遗忘时间后的平均交叉项趋零。这区分了本文平均通道结论和文献中特定测量族的时间平均可分辨性。
+
+重标记必须同时运输轨迹与测度。若 $\nu=f_*\eta$，则
+
+$$
+\mathcal C_\nu^H(X)=\int e^{-if(\tau)H}Xe^{if(\tau)H}\,d\eta(\tau).
+\tag{TM.309}
+$$
+
+若 $f$ 是覆盖 $[0,T]$ 的 $C^1$ 递增可逆变换，同一个均匀物理窗口写成
+
+$$
+\mathcal A_T^H(X)
+=\frac1T\int_{f^{-1}(0)}^{f^{-1}(T)}
+e^{-if(\tau)H}Xe^{if(\tau)H}f'(\tau)\,d\tau.
+\tag{TM.310}
+$$
+
+删掉 $f'(\tau)$ 并改用均匀新变量，一般改变时间分布；把轨迹改为 $e^{-i\tau H}$ 也一般改变实验。整份推前关系保持才是同一通道的不同表示，不由重命名获得资源节省。
+

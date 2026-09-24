@@ -1,0 +1,12 @@
+**命题 2.9（全阶矩确定紧轨道）。** 在上述固定群作用下，对任意 $\rho,\sigma\in\mathcal D_d$，有
+$$
+\boxed{
+P_n(\rho)=P_n(\sigma)\quad\forall n\ge1
+\quad\Longleftrightarrow\quad
+\exists V\in G:\ \sigma=V\rho V^\dagger.
+}
+\tag{TM.139}
+$$
+
+式(TM.139)是成熟紧群不变量与矩轨道恢复理论在 Hermitian 实表示上的实例；直接来源为B卷第2.2.11节所列 Bandeira 等的矩张量、分离不变量与紧轨道定理。以下通过 Haar 推前、连续函数逼近与测度唯一性保留完整证明，以说明同源量子准备如何满足这份接口。此处的轨道是 $G$ 的实际轨道；当 $G$ 定义为时间演化的闭包时，不将它改写成存在某个精确时刻。
+

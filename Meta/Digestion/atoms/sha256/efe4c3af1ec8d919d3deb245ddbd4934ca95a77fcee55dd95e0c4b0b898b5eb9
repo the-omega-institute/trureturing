@@ -1,0 +1,29 @@
+**命题 2.4（逐分支下降条件）。** 若保留中途结果并依结果选择后续动作，只看未读结果时的平均通道就不够。固定有限结果集的量子仪器 $\{\Phi_y\}_y$，每个 $\Phi_y$ 完全正、迹不增，且 $\sum_y\Phi_y$ 保迹。对未归一化矩阵同样使用 $q=P_H$。使分支观察量只依赖原观察量的一项精确代数条件是
+$$
+P_H\Phi_y=P_H\Phi_yP_H\quad\forall y,\qquad
+\overline\Phi_y(q)=P_H\Phi_y(q)\quad(q\in\operatorname{im}P_H).
+\tag{TM.122}
+$$
+
+于是 $P_H\Phi_y(\rho)=\overline\Phi_y(P_H\rho)$，概率为 $p_y=\operatorname{Tr}\overline\Phi_y(P_H\rho)$；当 $p_y>0$ 时，更新后的摘要为 $\overline\Phi_y(P_H\rho)/p_y$。这是分支归一化的完整下降规则；概率为零的分支无须定义条件态。若实际条件更强，$P_H\Phi_y=\Phi_yP_H$，则式(TM.122)由 $P_H^2=P_H$ 立即成立。式(TM.121)的两个平方根 Kraus 算子都与 $H$ 交换，逐块计算即给这个更强条件。
+
+如果同一策略只依赖已保存的结果档案，且每一步可选择的仪器都满足式(TM.122)，则两份同摘要输入在第一步各结果概率相同、相应正概率后继摘要相同。沿每个有限历史重复这一事实，归纳得到整个记录词的概率相同以及终端摘要相同。这才是从一次分支合同到自适应后续实验的连接，未把单次末端效果的权限自动扩大成任意仪器权限。
+
+平均通道的下降不能替代分支条件。取量子位的 $Z$ 基 pinching $P_Z$，$X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，令
+$$
+E_\pm=(I\pm X)/2=|\pm\rangle\langle\pm|,\qquad
+\Phi_\pm(C)=\operatorname{Tr}(E_\pm C)I/2,\qquad
+K_{b,\pm}=|b\rangle\langle\pm|/\sqrt2\quad(b=0,1).
+\tag{TM.123}
+$$
+
+这里 $\Phi_\pm(C)=\sum_bK_{b,\pm}CK_{b,\pm}^\dagger$，且 $\sum_bK_{b,\pm}^\dagger K_{b,\pm}=E_\pm$，所以各分支 CP 且迹不增。两分支之和为去极化通道 $\Phi(C)=\operatorname{Tr}(C)I/2$，满足 $P_Z\Phi=\Phi P_Z=\Phi$。可是
+$$
+P_Z(|+\rangle\langle+|)=P_Z(|-\rangle\langle-|)=I/2,\qquad
+P_Z\Phi_+(|+\rangle\langle+|)=I/2,\qquad
+P_Z\Phi_+(|-\rangle\langle-|)=0.
+\tag{TM.124}
+$$
+
+因此 $+$ 结果的概率分别为一和零，分支不经原 pinching 下降。最终未读的量子输出完全相同，保留的经典结果却已经分开两态。这不是对完整能量相容仪器合同的反例：此仪器的 $E_\pm$ 不与 $Z$ 交换，正好不满足所需的分支权限。它反驳的具体推断是“平均通道下降足以保证带记录实验下降”。
+

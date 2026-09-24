@@ -1,0 +1,19 @@
+**定理 3.1（边界拼接与核复合）。** 在上述截断条件下，定义
+\[
+K_e(b',b)=\bigoplus_zW_e(b,z,b').
+\]
+则
+\[
+\mathbf H_{\Sigma'}=K_e\mathbf H_\Sigma
+\tag{3.3}
+\]
+并且连续接入 \(e,f\) 满足
+\[
+K_{f\circ e}(b'',b)
+=
+\bigoplus_{b'}K_f(b'',b')\otimes K_e(b',b),
+\qquad
+K_{f\circ e}=K_fK_e.
+\tag{3.4}
+\]
+

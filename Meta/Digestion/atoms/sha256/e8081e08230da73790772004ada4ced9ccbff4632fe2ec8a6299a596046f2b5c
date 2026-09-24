@@ -1,0 +1,50 @@
+**命题 2.24（固定实际支持的格基分离）。** 完整 Hilbert 基对所有零模式同时有效，但其生成集合可能很大。若实际非零支持已经给定，可以改用整数关系格的基，只承担轨道分离，不要求生成整个全空间多项式环。
+
+选每个非对角无向坐标对的一条方向作为代表，记复坐标为 $z_e$、整数权重为 $w_e$。反向坐标由 Hermitian 共轭确定。先保留全部对角项及各 $|z_e|$；两份候选的这些值若相同，其非零支持 $\mathcal S$ 也相同。在此固定支持上令
+$$
+\mathcal S=\{e:z_e\ne0\},\qquad
+W_{\mathcal S}=(w_e)_{e\in\mathcal S},\qquad
+L_{\mathcal S}=\{k\in\mathbb Z^{\mathcal S}:W_{\mathcal S}k=0\},
+\qquad
+L_{\mathcal S}=\bigoplus_{\ell=1}^{q_{\mathcal S}}\mathbb Z k^{(\ell)}.
+\tag{TM.188}
+$$
+
+这里 $q_{\mathcal S}=|\mathcal S|-\operatorname{rank}W_{\mathcal S}$；空支持允许空基。Smith normal form 可以从已给的精确整数矩阵计算一份完整的整数核基，不能用一个仅在 $\mathbb Q$ 上张成的、但遗漏整数格指数的列表替代。对每个核基向量定义普通多项式
+$$
+F_k(z)=\prod_{k_e>0}z_e^{k_e}
+       \prod_{k_e<0}\overline{z_e}^{-k_e},
+\qquad \deg F_k=\|k\|_1,\qquad
+\sum_e k_ew_e=0.
+\tag{TM.189}
+$$
+
+因此 $F_k$ 是B卷第2.3.5节可读取的零权重单项式，没有在实际效果中作负幂。对角项可一次读取，$|z_e|^2=z_e\bar z_e$ 可二次读取；若某个 $w_e=0$，该坐标相位本身已是一阶不变量。以下分离结论包含这种能量简并情形。
+
+**固定支持分离命题。** 对任意两份具有相同对角项、相同逐坐标模长的密度态，令 $\mathcal S$ 为其共同实际非零支持。它们同属一个 $G_H$ 轨道，当且仅当所有 $F_{k^{(\ell)}}$ 的值相同。
+
+**证明。** 在 $\mathcal S$ 上可以定义单位模比值 $\delta_e=z_e(\sigma)/z_e(\rho)$。由式(TM.189)及 $|\delta_e|=1$，有
+$$
+\frac{F_k(z(\sigma))}{F_k(z(\rho))}=\delta^k,
+\qquad
+\delta^k=1\ (k\in L_{\mathcal S})
+\quad\Longleftrightarrow\quad
+\delta_e=e^{iw_e\cdot\theta}\ (e\in\mathcal S)
+\text{，某个 }\theta\in\mathbb T^r.
+\tag{TM.190}
+$$
+
+左侧分母非零是因为只对实际非零支持取乘积。对整数格基验证 $\delta^k=1$ 足以对全部整数线性组合验证，负整数次幂在单位圆上合法。
+
+为核实第二个等价，考虑由 $W_{\mathcal S}^{\mathsf T}$ 给出的环面同态 $\mathbb T^r\to\mathbb T^{\mathcal S}$。Smith normal form 给左右幺模整数矩阵，将其变成
+$$
+P W_{\mathcal S}^{\mathsf T}Q
+=\operatorname{diag}(d_1,\ldots,d_s,0),
+\qquad d_j\ge1,\qquad s=\operatorname{rank}W_{\mathcal S}.
+\tag{TM.191}
+$$
+
+整数幺模换基在环面上是自同构，每个映射 $u\mapsto u^{d_j}$ 在 $U(1)$ 上满射，所以变换后的像恰为前 $s$ 个任意单位相位、其余坐标等于一。其所有消失字符正是 $\ker_{\mathbb Z}W_{\mathcal S}$。因此式(TM.190)确实刻画像；不需要假定各 $d_j=1$，有限稳定子不会制造遗漏。得到 $\theta$ 后，它把全部非零坐标运输到对应值，零坐标和对角项也相同，从而给同轨道。反向来自 $F_k$ 不变。证毕。
+
+这是固定支持上的模长加有限相位关系接口。它并不说一份整数核基经非负乘法就生成所有零权重指数；整数格生成与非负半群生成不同。引用 Laurent 代数时也须允许逆，或同时列出正负基向量，不能把单向基单项式称为普通多项式代数的完整生成集。支持已知时的除法仅用于证明或后处理，不授予跨零坐标的连续相位归一化。
+

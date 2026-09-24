@@ -1,0 +1,45 @@
+**命题 3.6（扇区通用误差界）。** 对含参考的密度态 $\rho$，令 $P_a=\Pi_a\otimes I$，$p_a=\operatorname{Tr}(P_a\rho)$。Schatten Hölder 给
+
+$$
+\|P_a\rho P_b\|_1
+=\|(P_a\sqrt\rho)(\sqrt\rho P_b)\|_1
+\le\|P_a\sqrt\rho\|_2\|\sqrt\rho P_b\|_2
+=\sqrt{p_ap_b}.
+\tag{TM.272}
+$$
+
+因此原始的足够界为
+
+$$
+\frac12\|((\mathcal A_T^H-\mathcal P_H)\otimes\operatorname{id})(\rho)\|_1
+\le\frac1{Tg}\sum_{a\ne b}\sqrt{p_ap_b}
+=\frac{(\sum_a\sqrt{p_a})^2-1}{Tg}
+\le\frac{r-1}{Tg}.
+\tag{TM.273}
+$$
+
+精确公式给更好的平方根因子。对 $M_p=D_pC_TD_p$，
+
+$$
+\begin{aligned}
+\|M_p\|_1&\le\sqrt r\,\|M_p\|_2,\\
+\|M_p\|_2^2
+&=\sum_{a\ne b}p_ap_b|k_T(E_a-E_b)|^2
+\le\frac4{T^2g^2}\left(1-\sum_ap_a^2\right)
+\le\frac4{T^2g^2}\frac{r-1}{r}.
+\end{aligned}
+\tag{TM.274}
+$$
+
+第一行对奇异值用 Cauchy–Schwarz，最后一步用 $\sum_ap_a^2\ge1/r$。两个通道的半 diamond 距离至多一，故
+
+$$
+\boxed{
+d_\diamond(\mathcal A_T^H,\mathcal P_H)
+\le\min\{1,\sqrt{r-1}/(Tg)\}.
+}
+\tag{TM.275}
+$$
+
+$r$ 是不同能量数，不包括简并重数。
+
