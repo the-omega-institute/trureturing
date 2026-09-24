@@ -52,6 +52,10 @@ Lean statement: `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/circular-two-choice-parking-fixed-fiber-bijection` (proved) by `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"circular-two-choice-parking-fixed-fiber-bijection","declaration_gid":"D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Asma Recioui, Hacène Belbachir, Abdelhakim Ait-Zai (2026). *Circular s-choice parking functions: an exact closed formula via rotational symmetry*. DOI: [10.48550/arXiv.2609.23607](https://doi.org/10.48550/arXiv.2609.23607). URL: <https://arxiv.org/html/2609.23607v1>.
