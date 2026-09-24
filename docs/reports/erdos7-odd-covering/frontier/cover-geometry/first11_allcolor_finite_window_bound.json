@@ -1,0 +1,2225 @@
+{
+  "scope": "Uniform bound for all144 independently colored original slots on fixed18 cofactors, oldN4/E4; arbitrary originals outside the two stated finite windows and arbitrary13/17/19 continuations. Color sets may vary by old cell in the relaxation; its minimizing choices are not asserted jointly realizable.",
+  "checks": {
+    "partition_mass_5": true,
+    "partition_mass_7": true,
+    "cofactor_inventory": true,
+    "old_source_mass": true,
+    "active_slot_range": true,
+    "local_pattern_inventory": true,
+    "tail_kink_cases": true,
+    "signed64_group_weights": true,
+    "integer_lookup_exact": true,
+    "signed128_integration_bound": true,
+    "all735000_query_cases": true,
+    "24_python_exact_reevaluations": true,
+    "F11_affine_formula": true,
+    "seven_cap_constant": true,
+    "NC4_constant_from_geometric_laws": true,
+    "positive_PA_mass": true,
+    "NC4_entire_multiaffine_rectangle": true,
+    "cap_polynomial_and_first11_hinge": true,
+    "fixed_source_joint_saving_positive_gap": true,
+    "exact_relaxed_minimum": true,
+    "exact_fixed_source_saving": true,
+    "full_outside_cap_sum": true,
+    "outside_cap_sum_exact": true,
+    "pure_rectangle_charge_exact": true,
+    "finite_window_saving_exact": true,
+    "finite_window_nc4_margin_exact": true,
+    "finite_window_nc4_margin_positive": true,
+    "finite_window_original_inventory": true,
+    "signed_variation_extreme_payoffs": true,
+    "actual_canonical_above_relaxed_optimum": true,
+    "actual_canonical_integral_exact": true,
+    "same_actual_slots_in_two_regions": true,
+    "incompatible_relaxed_cardinalities": true,
+    "strict_pointwise_preference_gaps": true
+  },
+  "partition_sizes": {
+    "5": 73,
+    "7": 91
+  },
+  "old_group_count": 144,
+  "M_mass": {
+    "2": "111704/1500625",
+    "10": "691197488/64339296875",
+    "9": "3733952/64339296875",
+    "8": "23058911/1838265625",
+    "7": "81728/52521875",
+    "6": "352/42875",
+    "5": "66112/1500625",
+    "4": "28082/300125",
+    "22": "4/64339296875",
+    "21": "8/12867859375",
+    "20": "344/64339296875",
+    "19": "2728/64339296875",
+    "18": "20696/64339296875",
+    "17": "152872/64339296875",
+    "15": "25364/514714375",
+    "16": "656736/64339296875",
+    "14": "2720636/12867859375",
+    "13": "305948/367653125",
+    "12": "27164/10504375",
+    "11": "572/300125"
+  },
+  "oldmass": "53759/214375",
+  "query_phase_count": 735000,
+  "local_unique_types": 672,
+  "tail_kink_cases": 168,
+  "lookup_denominator": 103786317137723128422914400,
+  "rows": [
+    {
+      "pattern": 0,
+      "integral": "420749579455862173508/553884116843385453125",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 1,
+      "integral": "1262248822071443611378/1661652350530156359375",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 2,
+      "integral": "16934678623015900034/22268946258388878125",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 3,
+      "integral": "9903124663274808323951729951/12912660536313432344950500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 4,
+      "integral": "9903124663274808323951729951/12912660536313432344950500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 5,
+      "integral": "398529921683020927191235279/519154340757689311728900000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 6,
+      "integral": "1670676117472785381857237/2180087883895565143500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 7,
+      "integral": "1670676117472785381857237/2180087883895565143500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 8,
+      "integral": "336168831629899631222009/438252862365093121500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 9,
+      "integral": "302333431065176492896496353/391292743524649464998500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 10,
+      "integral": "302333431065176492896496353/391292743524649464998500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 11,
+      "integral": "2007501069885421967710517317/2595771703788446558644500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 12,
+      "integral": "9836047247718883066281962461/12912660536313432344950500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 13,
+      "integral": "9836047247718883066281962461/12912660536313432344950500000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 14,
+      "integral": "131955013712871683491023219/173051446919229770576300000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 15,
+      "integral": "4962141390298437878884397317/6456330268156716172475250000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 16,
+      "integral": "4962141390298437878884397317/6456330268156716172475250000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 17,
+      "integral": "998451462849882698982529741/1297885851894223279322250000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 18,
+      "integral": "4959026480729927895407364517/6456330268156716172475250000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 19,
+      "integral": "4959026480729927895407364517/6456330268156716172475250000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 20,
+      "integral": "997825287160135453930530541/1297885851894223279322250000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 21,
+      "integral": "833180111872740974950120361/1076055044692786028745875000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 22,
+      "integral": "2499540173003056784736297707/3228165134078358086237625000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    },
+    {
+      "pattern": 23,
+      "integral": "502895540318706971052608053/648942925947111639661125000",
+      "old_query_phases": [
+        4,
+        6,
+        14,
+        4,
+        6
+      ],
+      "ties": 3,
+      "evaluated_cases": 30625
+    }
+  ],
+  "minimum": {
+    "pattern": 0,
+    "integral": "420749579455862173508/553884116843385453125",
+    "old_query_phases": [
+      4,
+      6,
+      14,
+      4,
+      6
+    ],
+    "ties": 3,
+    "evaluated_cases": 30625
+  },
+  "relaxed_integral": "420749579455862173508/553884116843385453125",
+  "F11": "4159811/36015000",
+  "Cref": "4270892/36315125",
+  "NC4_constant": "6168733163201163811/542935350932041267200",
+  "PA_mass_minimum": "7575003978548161/73724315753088000",
+  "NC4_coefficients": [
+    "44887686823492905683/27146767546602063360",
+    "20281636668601030051/20313907687933516800",
+    "585035299774741193/203139076879335168"
+  ],
+  "joint_saving_lower": "280758968969368570519/39879656412723752625000",
+  "required_saving": "6168733163201163811/1650097635185615616000",
+  "gap_to_required": "18424216620597782913844236831809/5580136418937173098165192032000000",
+  "actual_canonical_integral": "1262248822071443611378/1661652350530156359375",
+  "actual_canonical_lambda11_mass": "121611906311383/565194987328125",
+  "old_source_charge": "10687/466908750",
+  "outside_cap_sum": "149819363/16442035995000",
+  "joint_tail_charge": "149819363/6576814398000",
+  "finite_window_saving": "557875428274563578713/79759312825447505250000",
+  "finite_window_nc4_margin": "6056459552437856401017774855403/612014962076980275282633964800000",
+  "finite_window_query_bound": "3078018937580580393552647498744597/612014962076980275282633964800000",
+  "variation_stress_case_count": 2184,
+  "canonical_colors": {
+    "(0, 0)": [
+      0,
+      4
+    ],
+    "(0, 1)": [
+      2,
+      6
+    ],
+    "(0, 2)": [
+      8,
+      8
+    ],
+    "(0, 3)": [
+      1,
+      1
+    ],
+    "(0, 4)": [
+      3,
+      3
+    ],
+    "(0, 5)": [
+      5,
+      5
+    ],
+    "(0, 6)": [
+      7,
+      7
+    ],
+    "(0, 7)": [
+      9,
+      9
+    ],
+    "(1, 0)": [
+      1,
+      5
+    ],
+    "(1, 1)": [
+      3,
+      7
+    ],
+    "(1, 2)": [
+      9,
+      9
+    ],
+    "(2, 0)": [
+      8,
+      8
+    ],
+    "(2, 1)": [
+      9,
+      9
+    ],
+    "(3, 0)": [
+      2,
+      2
+    ],
+    "(4, 0)": [
+      3,
+      3
+    ],
+    "(5, 0)": [
+      6,
+      6
+    ],
+    "(6, 0)": [
+      7,
+      7
+    ],
+    "(7, 0)": [
+      9,
+      9
+    ]
+  },
+  "relaxed_witness_convention": "For each chosen_K<10 use colors1..K; forK=10 use0..9. This is a pointwise relaxed profile for pattern0, not a global original coloring.",
+  "relaxed_witness": [
+    {
+      "r25": 0,
+      "r7": 0,
+      "M_capped": 2,
+      "weight": "2293/1500625",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 3,
+      "M_capped": 2,
+      "weight": "1/625",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 4,
+      "M_capped": 2,
+      "weight": "1/625",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 5,
+      "M_capped": 4,
+      "weight": "13/6125",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 5,
+      "M_capped": 5,
+      "weight": "156/214375",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 5,
+      "M_capped": 6,
+      "weight": "156/1500625",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 5,
+      "M_capped": 7,
+      "weight": "156/10504375",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "156/73530625",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 5,
+      "M_capped": 9,
+      "weight": "156/514714375",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "26/514714375",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 0,
+      "r7": 6,
+      "M_capped": 2,
+      "weight": "13/4375",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 0,
+      "M_capped": 2,
+      "weight": "23/12005",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 5,
+      "M_capped": 4,
+      "weight": "1/245",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 5,
+      "M_capped": 5,
+      "weight": "12/8575",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 5,
+      "M_capped": 6,
+      "weight": "12/60025",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 5,
+      "M_capped": 7,
+      "weight": "12/420175",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "12/2941225",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 5,
+      "M_capped": 9,
+      "weight": "12/20588575",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/20588575",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 3,
+      "r7": 6,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 0,
+      "M_capped": 5,
+      "weight": "916/300125",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 0,
+      "M_capped": 6,
+      "weight": "916/1500625",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 0,
+      "M_capped": 7,
+      "weight": "916/7503125",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 0,
+      "M_capped": 8,
+      "weight": "916/37515625",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 0,
+      "M_capped": 9,
+      "weight": "916/187578125",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 0,
+      "M_capped": 10,
+      "weight": "229/187578125",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 3,
+      "M_capped": 5,
+      "weight": "4/875",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 3,
+      "M_capped": 6,
+      "weight": "4/4375",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 3,
+      "M_capped": 7,
+      "weight": "4/21875",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 3,
+      "M_capped": 8,
+      "weight": "4/109375",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 3,
+      "M_capped": 9,
+      "weight": "4/546875",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 3,
+      "M_capped": 10,
+      "weight": "1/546875",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 4,
+      "M_capped": 5,
+      "weight": "4/875",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 4,
+      "M_capped": 6,
+      "weight": "4/4375",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 4,
+      "M_capped": 7,
+      "weight": "4/21875",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 4,
+      "M_capped": 8,
+      "weight": "4/109375",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 4,
+      "M_capped": 9,
+      "weight": "4/546875",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 4,
+      "M_capped": 10,
+      "weight": "1/546875",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "1/175",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 6,
+      "M_capped": 5,
+      "weight": "4/875",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 6,
+      "M_capped": 6,
+      "weight": "4/4375",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 6,
+      "M_capped": 7,
+      "weight": "4/21875",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 6,
+      "M_capped": 8,
+      "weight": "4/109375",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 6,
+      "M_capped": 9,
+      "weight": "4/546875",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 4,
+      "r7": 6,
+      "M_capped": 10,
+      "weight": "1/546875",
+      "chosen_Ks": [
+        9,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 0,
+      "M_capped": 2,
+      "weight": "23/12005",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 5,
+      "M_capped": 4,
+      "weight": "1/245",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 5,
+      "M_capped": 5,
+      "weight": "12/8575",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 5,
+      "M_capped": 6,
+      "weight": "12/60025",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 5,
+      "M_capped": 7,
+      "weight": "12/420175",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "12/2941225",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 5,
+      "M_capped": 9,
+      "weight": "12/20588575",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/20588575",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 8,
+      "r7": 6,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 0,
+      "M_capped": 5,
+      "weight": "916/300125",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 0,
+      "M_capped": 6,
+      "weight": "916/1500625",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 0,
+      "M_capped": 7,
+      "weight": "916/7503125",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 0,
+      "M_capped": 8,
+      "weight": "916/37515625",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 0,
+      "M_capped": 9,
+      "weight": "916/187578125",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 0,
+      "M_capped": 10,
+      "weight": "229/187578125",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 3,
+      "M_capped": 5,
+      "weight": "4/875",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 3,
+      "M_capped": 6,
+      "weight": "4/4375",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 3,
+      "M_capped": 7,
+      "weight": "4/21875",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 3,
+      "M_capped": 8,
+      "weight": "4/109375",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 3,
+      "M_capped": 9,
+      "weight": "4/546875",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 3,
+      "M_capped": 10,
+      "weight": "1/546875",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 4,
+      "M_capped": 5,
+      "weight": "4/875",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 4,
+      "M_capped": 6,
+      "weight": "4/4375",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 4,
+      "M_capped": 7,
+      "weight": "4/21875",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 4,
+      "M_capped": 8,
+      "weight": "4/109375",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 4,
+      "M_capped": 9,
+      "weight": "4/546875",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 4,
+      "M_capped": 10,
+      "weight": "1/546875",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "1/175",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 6,
+      "M_capped": 5,
+      "weight": "4/875",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 6,
+      "M_capped": 6,
+      "weight": "4/4375",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 6,
+      "M_capped": 7,
+      "weight": "4/21875",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 6,
+      "M_capped": 8,
+      "weight": "4/109375",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 6,
+      "M_capped": 9,
+      "weight": "4/546875",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 9,
+      "r7": 6,
+      "M_capped": 10,
+      "weight": "1/546875",
+      "chosen_Ks": [
+        9,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 0,
+      "M_capped": 2,
+      "weight": "23/12005",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 5,
+      "M_capped": 4,
+      "weight": "1/245",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 5,
+      "M_capped": 5,
+      "weight": "12/8575",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 5,
+      "M_capped": 6,
+      "weight": "12/60025",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 5,
+      "M_capped": 7,
+      "weight": "12/420175",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "12/2941225",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 5,
+      "M_capped": 9,
+      "weight": "12/20588575",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/20588575",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 13,
+      "r7": 6,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 14,
+      "r7": 0,
+      "M_capped": 4,
+      "weight": "229/60025",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 14,
+      "r7": 3,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 14,
+      "r7": 4,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 14,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "1/245",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 14,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/1225",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 14,
+      "r7": 6,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 0,
+      "M_capped": 2,
+      "weight": "23/12005",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 5,
+      "M_capped": 4,
+      "weight": "1/245",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 5,
+      "M_capped": 5,
+      "weight": "12/8575",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 5,
+      "M_capped": 6,
+      "weight": "12/60025",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 5,
+      "M_capped": 7,
+      "weight": "12/420175",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "12/2941225",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 5,
+      "M_capped": 9,
+      "weight": "12/20588575",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/20588575",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 15,
+      "r7": 6,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 0,
+      "M_capped": 2,
+      "weight": "23/12005",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 5,
+      "M_capped": 4,
+      "weight": "1/245",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 5,
+      "M_capped": 5,
+      "weight": "12/8575",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 5,
+      "M_capped": 6,
+      "weight": "12/60025",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 5,
+      "M_capped": 7,
+      "weight": "12/420175",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "12/2941225",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 5,
+      "M_capped": 9,
+      "weight": "12/20588575",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/20588575",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 18,
+      "r7": 6,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 19,
+      "r7": 0,
+      "M_capped": 4,
+      "weight": "229/60025",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 19,
+      "r7": 3,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 19,
+      "r7": 4,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 19,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "1/245",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 19,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/1225",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 19,
+      "r7": 6,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 0,
+      "M_capped": 2,
+      "weight": "229/60025",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 3,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 4,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 5,
+      "M_capped": 4,
+      "weight": "1/245",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 5,
+      "M_capped": 5,
+      "weight": "12/8575",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 5,
+      "M_capped": 6,
+      "weight": "12/60025",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 5,
+      "M_capped": 7,
+      "weight": "12/420175",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "12/2941225",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 5,
+      "M_capped": 9,
+      "weight": "12/20588575",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/20588575",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 20,
+      "r7": 6,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 0,
+      "M_capped": 2,
+      "weight": "23/12005",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 5,
+      "M_capped": 4,
+      "weight": "1/245",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 5,
+      "M_capped": 5,
+      "weight": "12/8575",
+      "chosen_Ks": [
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 5,
+      "M_capped": 6,
+      "weight": "12/60025",
+      "chosen_Ks": [
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 5,
+      "M_capped": 7,
+      "weight": "12/420175",
+      "chosen_Ks": [
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "12/2941225",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 5,
+      "M_capped": 9,
+      "weight": "12/20588575",
+      "chosen_Ks": [
+        9,
+        9,
+        9,
+        9
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/20588575",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 23,
+      "r7": 6,
+      "M_capped": 2,
+      "weight": "1/175",
+      "chosen_Ks": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "r25": 24,
+      "r7": 0,
+      "M_capped": 4,
+      "weight": "229/60025",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 24,
+      "r7": 3,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 24,
+      "r7": 4,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "r25": 24,
+      "r7": 5,
+      "M_capped": 8,
+      "weight": "1/245",
+      "chosen_Ks": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "r25": 24,
+      "r7": 5,
+      "M_capped": 10,
+      "weight": "2/1225",
+      "chosen_Ks": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "r25": 24,
+      "r7": 6,
+      "M_capped": 4,
+      "weight": "1/175",
+      "chosen_Ks": [
+        4,
+        4,
+        4,
+        4
+      ]
+    }
+  ]
+}

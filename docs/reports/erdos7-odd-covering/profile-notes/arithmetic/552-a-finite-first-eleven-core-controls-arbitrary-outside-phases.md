@@ -317,3 +317,10 @@ outside these two finite windows is arbitrary under the stated finite
 Q-smooth two-copy hypotheses. Removing the finite-core assumptions
 requires a new uniform estimate or an independent source of savings. This result does not settle
 arbitrary first-11 families, arbitrary two-copy closure or Erdős #7.
+
+[Arbitrary core colors](553-arbitrary-core-colors-and-arbitrary-outside-phases.md)
+are possible in a larger two-window theorem: all144 first-11 colors,
+including different colors at different depths of each old slot, may be
+chosen independently. The proof keeps first-11 loss and next-row response
+in one joint estimate. Both results allow arbitrary originals outside
+their respective finite windows; their core hypotheses differ.
