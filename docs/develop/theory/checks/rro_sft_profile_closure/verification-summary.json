@@ -1,0 +1,45 @@
+{
+  "theory": "RECURSIVE_RELATIONAL_OBSERVATION_SFT.md, append chapters 29-33",
+  "baseline_commit": "880295d537cf3f621afbed211857cd0775712428",
+  "baseline_theory_blob": "e3fa492625fab46dc18450aa8c74f0e223d30edb",
+  "method": "exact integer arithmetic and exact rational ranks; no floats",
+  "family_checks": {
+    "groups": ["C2", "C3", "D8", "S3"],
+    "families": 4,
+    "matrices": 32,
+    "ordered_pairs": 272,
+    "elementary_steps": 384,
+    "rank_profiles": 32,
+    "mixed_direction_steps": 24,
+    "se_equalities": 960
+  },
+  "same_depth_example": {
+    "group": "C2",
+    "dimension": 8,
+    "t": [4, 4],
+    "v": [4, 1],
+    "same_depth": 4,
+    "exact_distance_from_paper_lower_and_upper_bounds": 3,
+    "t_profile": [4, 4],
+    "v_profile": [4, 1, 1, 1, 1]
+  },
+  "overlap_checks": {
+    "forward_legal_three_edge_words": 4096,
+    "inverse_legal_three_edge_words": 4096,
+    "group_coordinate_cases": 32768,
+    "equivariance_cases": 262144
+  },
+  "grid_checks": {
+    "full_grid_inputs": 33032,
+    "chain_lengths": [1, 2, 3],
+    "scope": "exhaustive binary half-edge scalar cases; not arbitrary matrices"
+  },
+  "involution_matrix_checks": {
+    "integer_matrix_inputs": 27,
+    "nonuniform_endpoints": 18,
+    "matrix_sizes": [1, 2, 3]
+  },
+  "scope": "finite regression tests, not a universal proof or Lean certificate",
+  "sentinel": "ALL_SFT_PROFILE_AND_PATH_CLOSURE_CHECKS_PASSED",
+  "script_sha256": "c59003cfb11e905c4372205e3c470f841f6ca1231ddfacd03224ea148267ffbf"
+}
