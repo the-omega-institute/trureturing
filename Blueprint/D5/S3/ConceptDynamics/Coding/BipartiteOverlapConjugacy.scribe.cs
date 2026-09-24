@@ -41,34 +41,11 @@ internal sealed class BipartiteOverlapConjugacyDocument : IScribeDocumentDefinit
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Decoding followed by recoding recovers both half-edges at each integer position. The endpoint equations ensure that the decoded sequence is a legal path."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("overlap-one-step-intertwining"),
-                DeclarationHandle.Create(Prefix + "forward_shift"), H("Preserve one time step"),
-                StatementSource.FromAuthor(Disp(All(Equal(
-                    Call("forward", D, Call("leftShift", D, X)),
-                    Call("rightShift", D, Call("forward", D, X))), B("x", L)))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The recoding uses the same adjacent-coordinate formula at every integer position. Applying one shift before recoding or after recoding gives the same path."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("overlap-finite-forward-window"),
-                DeclarationHandle.Create(Prefix + "forward_window"), H("A two-edge forward window"),
-                StatementSource.FromAuthor(Disp(Window())), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Equality at positions i and i+1 forces equality of the recoded edge at i. No information outside this window is used."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("overlap-cannot-read-only-present"),
                 DeclarationHandle.Create(Prefix + "no_present_only_recoder"), H("The present edge alone is insufficient"),
                 StatementSource.FromAuthor(Disp(NoPresent())), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("In the one-vertex example with a binary first half-edge, two histories agree at zero and differ at one. Recoding distinguishes them at zero, so no function of the present input edge alone implements this code."))),
                 DescribeRole.Theorem))));
-
-    private static Formula Window()
-    {
-        Formula i = F.Id("i");
-        Formula next = new Formula.Binary(i, FormulaBinaryOperator.Add, F.D(1));
-        return All(new Formula.Logic(Equal(Read(X, i), Read(Y, i)), FormulaLogicOperator.Implies,
-            new Formula.Logic(Equal(Read(X, next), Read(Y, next)), FormulaLogicOperator.Implies,
-                Equal(Read(Call("forward", D, X), i), Read(Call("forward", D, Y), i)))),
-            B("x", L), B("y", L), B("i", F.Id("Int")));
-    }
 
     private static Formula NoPresent()
     {

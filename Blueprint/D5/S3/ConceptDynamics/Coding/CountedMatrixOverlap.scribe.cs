@@ -12,12 +12,7 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
     private static Formula U => F.Id("U");
     private static Formula V => F.Id("V");
     private static Formula UV => Call("product", U, V);
-    private static Formula VU => Call("product", V, U);
-    private static Formula X => F.Id("x");
-    private static Formula Y => F.Id("y");
     private static Formula I => F.Id("i");
-    private static Formula Read(Formula x, Formula i) => Call("coordinate", x, i);
-    private static Formula Code(Formula x) => Call("elementaryHomeomorph", U, V, x);
     private static Formula All(Formula body, params Formula.BoundVariable[] extra) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
             [B("n", F.Id("Nat")), B("m", F.Id("Nat")),
@@ -55,27 +50,5 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
                         Call("split_boundary", U, V, F.Id("a"))), F.Id("a")),
                     B("a", Call("Edge", UV))))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The inverse finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("counted-time-intertwining"),
-                DeclarationHandle.Create(Prefix + "elementary_shift"), H("Conjugacy of the actual edge shifts"),
-                StatementSource.FromAuthor(Disp(All(Equal(Code(Call("shift", UV, X)),
-                    Call("shift", VU, Code(X))), B("x", Call("Path", UV))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("After splitting every edge, regroup the second half-edge with the first half-edge of its successor and reassemble using the reverse product. Both directions are continuous, recover the input, and preserve one time step."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("counted-two-coordinate-window"),
-                DeclarationHandle.Create(Prefix + "elementary_window"), H("The forward observation window"),
-                StatementSource.FromAuthor(Disp(All(Window(),
-                    B("x", Call("Path", UV)), B("y", Call("Path", UV)), B("i", F.Id("Int"))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The new edge at i is assembled from the second half-edge at i and the first half-edge at i+1. Equality of these two input coordinates therefore determines the entire output edge."))),
                 DescribeRole.Theorem))));
-
-    private static Formula Window()
-    {
-        Formula next = new Formula.Binary(I, FormulaBinaryOperator.Add, F.D(1));
-        return new Formula.Logic(Equal(Read(X, I), Read(Y, I)), FormulaLogicOperator.Implies,
-            new Formula.Logic(Equal(Read(X, next), Read(Y, next)), FormulaLogicOperator.Implies,
-                Equal(Read(Code(X), I), Read(Code(Y), I))));
-    }
 }

@@ -75,23 +75,6 @@ def leftShift (d : Boundary U V I J) (x : LeftPath d) : LeftPath d :=
 def rightShift (d : Boundary U V I J) (y : RightPath d) : RightPath d :=
   ⟨fun i => y.val (i + 1), fun i => y.property (i + 1)⟩
 
-/-- The actual code intertwines one time step, without changing the time unit. -/
-theorem forward_shift (d : Boundary U V I J) (x : LeftPath d) :
-    forward d (leftShift d x) = rightShift d (forward d x) := by
-  rfl
-
-/-- Two adjacent input edges determine one output edge. -/
-theorem forward_window (d : Boundary U V I J) (x y : LeftPath d) (i : ℤ)
-    (h0 : x.val i = y.val i) (h1 : x.val (i + 1) = y.val (i + 1)) :
-    (forward d x).val i = (forward d y).val i := by
-  exact Prod.ext (congrArg Prod.snd h0) (congrArg Prod.fst h1)
-
-/-- The preceding and current output edges determine the recovered input. -/
-theorem backward_window (d : Boundary U V I J) (x y : RightPath d) (i : ℤ)
-    (hm : x.val (i - 1) = y.val (i - 1)) (h0 : x.val i = y.val i) :
-    (backward d x).val i = (backward d y).val i := by
-  exact Prod.ext (congrArg Prod.snd hm) (congrArg Prod.fst h0)
-
 section Topology
 
 variable [TopologicalSpace U] [TopologicalSpace V]
@@ -151,7 +134,6 @@ theorem no_present_only_recoder :
 
 #print axioms backward_forward
 #print axioms forward_backward
-#print axioms forward_shift
 #print axioms pathHomeomorph
 #print axioms no_present_only_recoder
 

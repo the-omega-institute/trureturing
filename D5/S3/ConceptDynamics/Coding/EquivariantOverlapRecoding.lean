@@ -67,7 +67,7 @@ theorem encode_step (d : Boundary U V I J) (alpha : U → H) (beta : V → H)
     encode d alpha (leftStep d alpha beta p) =
       rightStep d alpha beta (encode d alpha p) := by
   apply Prod.ext
-  · exact forward_shift d p.1
+  · rfl
   · simp [encode, leftStep, rightStep, leftShift, forward, mul_assoc]
 
 /-- The left group action on an extension. -/
@@ -79,17 +79,6 @@ theorem encode_equivariant (d : Boundary U V I J) (alpha : U → H)
   apply Prod.ext
   · rfl
   · simp [encode, translate, mul_assoc]
-
-/-- The transfer function is read from a half-edge, rather than assumed to exist. -/
-def transfer (d : Boundary U V I J) (alpha : U → H) (x : LeftPath d) : H :=
-  alpha (x.val 0).1
-
-theorem transfer_cocycle (d : Boundary U V I J) (alpha : U → H) (beta : V → H)
-    (x : LeftPath d) :
-    (alpha (x.val 0).1 * beta (x.val 0).2) * transfer d alpha (leftShift d x) =
-      transfer d alpha x *
-        (beta ((forward d x).val 0).1 * alpha ((forward d x).val 0).2) := by
-  simp [transfer, forward, leftShift, mul_assoc]
 
 section Topology
 
@@ -123,7 +112,6 @@ end Topology
 #print axioms encode_decode
 #print axioms encode_step
 #print axioms encode_equivariant
-#print axioms transfer_cocycle
 #print axioms skewHomeomorph
 
 end D5.S3.ConceptDynamics.Coding.EquivariantOverlapRecoding

@@ -142,55 +142,9 @@ noncomputable def elementaryHomeomorph : Path (U * V) ≃ₜ Path (V * U) :=
   (alternatingHomeomorph U V).trans
     ((pathHomeomorph (boundary U V)).trans (alternatingHomeomorph V U).symm)
 
-theorem elementary_shift (x : Path (U * V)) :
-    elementaryHomeomorph U V (shift (U * V) x) =
-      shift (V * U) (elementaryHomeomorph U V x) := by
-  apply Subtype.ext
-  rfl
-
-theorem elementary_window (x y : Path (U * V)) (i : ℤ)
-    (h0 : x.val i = y.val i) (h1 : x.val (i + 1) = y.val (i + 1)) :
-    (elementaryHomeomorph U V x).val i = (elementaryHomeomorph U V y).val i := by
-  have join_congr (a a' : Edge V) (b b' : Edge U)
-      (h : a.target = b.source) (h' : a'.target = b'.source)
-      (ha : a = a') (hb : b = b') : join V U a b h = join V U a' b' h' := by
-    subst a'
-    subst b'
-    rfl
-  exact join_congr _ _ _ _
-    ((forward (boundary U V) (toAlternating U V x)).property i).1
-    ((forward (boundary U V) (toAlternating U V y)).property i).1
-    (congrArg (fun a => (split U V a).2) h0)
-    (congrArg (fun a => (split U V a).1) h1)
-
-theorem elementary_inverse_window (x y : Path (V * U)) (i : ℤ)
-    (hm : x.val (i - 1) = y.val (i - 1)) (h0 : x.val i = y.val i) :
-    ((elementaryHomeomorph U V).symm x).val i =
-      ((elementaryHomeomorph U V).symm y).val i := by
-  have join_congr (a a' : Edge U) (b b' : Edge V)
-      (h : a.target = b.source) (h' : a'.target = b'.source)
-      (ha : a = a') (hb : b = b') : join U V a b h = join U V a' b' h' := by
-    subst a'
-    subst b'
-    rfl
-  exact join_congr _ _ _ _
-    ((backward (boundary U V) (toAlternating V U x)).property i).1
-    ((backward (boundary U V) (toAlternating V U y)).property i).1
-    (congrArg (fun a => (split V U a).2) hm)
-    (congrArg (fun a => (split V U a).1) h0)
-
-/-- A concrete two-factor fiber has two distinct elements despite identical outer endpoints. -/
-theorem parallel_factor_identity :
-    (⟨0, (0, 0)⟩ : Fiber (fun _ : Fin 1 => fun _ : Fin 1 => 2)
-      (fun _ : Fin 1 => fun _ : Fin 1 => 1) 0 0) ≠ ⟨0, (1, 0)⟩ := by
-  decide
-
 #print axioms fiber_card
 #print axioms split_join
 #print axioms join_split
 #print axioms elementaryHomeomorph
-#print axioms elementary_shift
-#print axioms elementary_window
-#print axioms elementary_inverse_window
 
 end D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap

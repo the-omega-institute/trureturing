@@ -178,67 +178,9 @@ theorem chain_has_window_group_conjugacy {L : ℕ}
         (⟨(elementary U V).trans g⟩ :
           Nonempty (WindowGroupConjugacy (U * V) _ (1 + _)))
 
-noncomputable def chainWindowCode {L : ℕ}
-    (ch : ExchangeChain (MonoidAlgebra ℕ H) A B L) : WindowGroupConjugacy A B L :=
-  Classical.choice (chain_has_window_group_conjugacy ch)
-
-/-- The transfer is read from the selected code, rather than supplied as an unknown solution. -/
-def coordinateTransfer {r : ℕ} (f : WindowGroupConjugacy A B r) (x : Path A) : H :=
-  (f.homeomorph (x, 1)).2
-
-def baseCode {r : ℕ} (f : WindowGroupConjugacy A B r) (x : Path A) : Path B :=
-  (f.homeomorph (x, 1)).1
-
-/-- This is the ordered noncommutative transfer equation for the original one-step dynamics. -/
-theorem constructed_transfer_cocycle {r : ℕ} (f : WindowGroupConjugacy A B r)
-    (x : Path A) :
-    (x.val 0).label * coordinateTransfer f (shift A x) =
-      coordinateTransfer f x * ((baseCode f x).val 0).label := by
-  have hnormal :
-      f.homeomorph (shift A x, (x.val 0).label) =
-        (baseCode f (shift A x),
-          (x.val 0).label * coordinateTransfer f (shift A x)) := by
-    simpa only [translate, mul_one, baseCode, coordinateTransfer] using
-      f.group_law (x.val 0).label (shift A x, 1)
-  calc
-    (x.val 0).label * coordinateTransfer f (shift A x) =
-        (f.homeomorph (shift A x, (x.val 0).label)).2 :=
-      (congrArg Prod.snd hnormal).symm
-    _ = (f.homeomorph (step A (x, 1))).2 := by simp only [step, one_mul]
-    _ = (step B (f.homeomorph (x, 1))).2 := congrArg Prod.snd (f.time_law (x, 1))
-    _ = coordinateTransfer f x * ((baseCode f x).val 0).label := rfl
-
-/-- A complete finite output interval has an explicitly enlarged input interval. -/
-theorem chain_future_interval {L : ℕ}
-    (ch : ExchangeChain (MonoidAlgebra ℕ H) A B L)
-    (x y : Path A × H) (lo hi : ℤ)
-    (h : ∀ i : ℤ, lo ≤ i → i ≤ hi + (L : ℤ) → x.1.val i = y.1.val i) :
-    ∀ i : ℤ, lo ≤ i → i ≤ hi →
-      (((chainWindowCode ch).homeomorph x).1).val i =
-        (((chainWindowCode ch).homeomorph y).1).val i := by
-  intro i hlo hhi
-  apply (chainWindowCode ch).future
-  intro j hj
-  exact h _ (by omega) (by omega)
-
-theorem chain_past_interval {L : ℕ}
-    (ch : ExchangeChain (MonoidAlgebra ℕ H) A B L)
-    (x y : Path B × H) (lo hi : ℤ)
-    (h : ∀ i : ℤ, lo - (L : ℤ) ≤ i → i ≤ hi → x.1.val i = y.1.val i) :
-    ∀ i : ℤ, lo ≤ i → i ≤ hi →
-      (((chainWindowCode ch).homeomorph.symm x).1).val i =
-        (((chainWindowCode ch).homeomorph.symm y).1).val i := by
-  intro i hlo hhi
-  apply (chainWindowCode ch).past
-  intro j hj
-  exact h _ (by omega) (by omega)
-
 #print axioms elementary_future
 #print axioms elementary_past
 #print axioms WindowGroupConjugacy.trans
 #print axioms chain_has_window_group_conjugacy
-#print axioms constructed_transfer_cocycle
-#print axioms chain_future_interval
-#print axioms chain_past_interval
 
 end D5.S3.ConceptDynamics.Coding.CountedGroupWindowChain

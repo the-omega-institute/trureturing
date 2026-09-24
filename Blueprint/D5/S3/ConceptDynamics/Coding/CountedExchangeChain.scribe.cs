@@ -12,9 +12,6 @@ internal sealed class CountedExchangeChainDocument : IScribeDocumentDefinition
     private static Formula A => F.Id("A");
     private static Formula C => F.Id("B");
     private static Formula L => F.Id("L");
-    private static Formula Chain => F.Id("c");
-    private static Formula X => F.Id("x");
-    private static Formula Code(Formula x) => Call("applyHomeomorph", Call("chainCode", Chain), x);
     private static Formula All(Formula body, params Formula.BoundVariable[] extra) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
             [B("n", F.Id("Nat")), B("m", F.Id("Nat")),
@@ -32,35 +29,5 @@ internal sealed class CountedExchangeChainDocument : IScribeDocumentDefinition
                     Call("Nonempty", Call("WindowConjugacy", A, C, L))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The empty chain gives the identity. A nonempty chain composes the first counted-edge overlap homeomorphism with the recursively constructed tail. Every intermediate matrix size is retained."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("counted-chain-output-interval"),
-                DeclarationHandle.Create(Prefix + "chain_full_window"), H("A finite output interval"),
-                StatementSource.FromAuthor(Disp(Interval(false))), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("To recover outputs from a through b, input coordinates from a through b+L suffice. A code of window r followed by one of window s uses positions indexed by sums j+k, bounded by r+s."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("counted-chain-input-interval"),
-                DeclarationHandle.Create(Prefix + "chain_full_inverse_window"), H("The inverse observation interval"),
-                StatementSource.FromAuthor(Disp(Interval(true))), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The inverse code recovers positions a through b from output positions a-L through b. The same homeomorphism supplies both recovery directions."))),
                 DescribeRole.Theorem))));
-
-    private static Formula Interval(bool inverse)
-    {
-        Formula a = F.Id("a"), b = F.Id("b"), i = F.Id("i"), y = F.Id("y");
-        Formula lo = inverse ? new Formula.Binary(a, FormulaBinaryOperator.Subtract, L) : a;
-        Formula hi = inverse ? b : new Formula.Binary(b, FormulaBinaryOperator.Add, L);
-        Formula eq = Equal(Call("coordinate", X, i), Call("coordinate", y, i));
-        Formula hypothesis = new Formula.BindMany(FormulaQuantifier.ForAll, [B("i", F.Id("Int"))],
-            new Formula.Logic(Call("le", lo, i), FormulaLogicOperator.Implies,
-                new Formula.Logic(Call("le", i, hi), FormulaLogicOperator.Implies, eq)));
-        Formula cx = inverse ? Call("applyInverseHomeomorph", Call("chainCode", Chain), X) : Code(X);
-        Formula cy = inverse ? Call("applyInverseHomeomorph", Call("chainCode", Chain), y) : Code(y);
-        Formula conclusion = new Formula.BindMany(FormulaQuantifier.ForAll, [B("i", F.Id("Int"))],
-            new Formula.Logic(Call("le", a, i), FormulaLogicOperator.Implies,
-                new Formula.Logic(Call("le", i, b), FormulaLogicOperator.Implies,
-                    Equal(Call("coordinate", cx, i), Call("coordinate", cy, i)))));
-        return All(new Formula.Logic(hypothesis, FormulaLogicOperator.Implies, conclusion),
-            B("x", Call("Path", inverse ? C : A)), B("y", Call("Path", inverse ? C : A)),
-            B("a", F.Id("Int")), B("b", F.Id("Int")));
-    }
 }

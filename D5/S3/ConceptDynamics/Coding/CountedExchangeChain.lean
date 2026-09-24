@@ -70,17 +70,40 @@ def identity (A : CountMat n n) : WindowConjugacy A A 0 where
 noncomputable def elementary (U : CountMat n m) (V : CountMat m n) :
     WindowConjugacy (U * V) (V * U) 1 where
   homeomorph := elementaryHomeomorph U V
-  intertwines := elementary_shift U V
+  intertwines := by
+    intro x
+    apply Subtype.ext
+    rfl
   future := by
     intro x y i h
-    apply elementary_window U V
-    · simpa using h 0 (by omega)
-    · simpa using h 1 (by omega)
+    have h0 : x.val i = y.val i := by simpa using h 0 (by omega)
+    have h1 : x.val (i + 1) = y.val (i + 1) := by simpa using h 1 (by omega)
+    have join_congr (a a' : Edge V) (b b' : Edge U)
+        (hab : a.target = b.source) (hab' : a'.target = b'.source)
+        (ha : a = a') (hb : b = b') : join V U a b hab = join V U a' b' hab' := by
+      subst a'
+      subst b'
+      rfl
+    exact join_congr _ _ _ _
+      ((forward (boundary U V) (toAlternating U V x)).property i).1
+      ((forward (boundary U V) (toAlternating U V y)).property i).1
+      (congrArg (fun a => (split U V a).2) h0)
+      (congrArg (fun a => (split U V a).1) h1)
   past := by
     intro x y i h
-    apply elementary_inverse_window U V
-    · simpa using h 1 (by omega)
-    · simpa using h 0 (by omega)
+    have hm : x.val (i - 1) = y.val (i - 1) := by simpa using h 1 (by omega)
+    have h0 : x.val i = y.val i := by simpa using h 0 (by omega)
+    have join_congr (a a' : Edge U) (b b' : Edge V)
+        (hab : a.target = b.source) (hab' : a'.target = b'.source)
+        (ha : a = a') (hb : b = b') : join U V a b hab = join U V a' b' hab' := by
+      subst a'
+      subst b'
+      rfl
+    exact join_congr _ _ _ _
+      ((backward (boundary U V) (toAlternating V U x)).property i).1
+      ((backward (boundary U V) (toAlternating V U y)).property i).1
+      (congrArg (fun a => (split V U a).2) hm)
+      (congrArg (fun a => (split V U a).1) h0)
 
 /-- Induction constructs the full homeomorphism for every finite chain and every intermediate size. -/
 theorem chain_has_window_conjugacy {L : ℕ} (c : ExchangeChain ℕ A B L) :
@@ -92,39 +115,7 @@ theorem chain_has_window_conjugacy {L : ℕ} (c : ExchangeChain ℕ A B L) :
       simpa [Nat.add_comm] using
         (⟨(elementary U V).trans g⟩ : Nonempty (WindowConjugacy (U * V) _ (1 + _)))
 
-/-- A concrete choice from the recursively built nonempty code type. -/
-noncomputable def chainCode {L : ℕ} (c : ExchangeChain ℕ A B L) :
-    WindowConjugacy A B L := Classical.choice (chain_has_window_conjugacy c)
-
-/-- Every finite output interval has an explicitly enlarged input interval. -/
-theorem chain_full_window {L : ℕ} (c : ExchangeChain ℕ A B L)
-    (x y : Path A) (a b : ℤ)
-    (h : ∀ i : ℤ, a ≤ i → i ≤ b + (L : ℤ) → x.val i = y.val i) :
-    ∀ i : ℤ, a ≤ i → i ≤ b →
-      ((chainCode c).homeomorph x).val i = ((chainCode c).homeomorph y).val i := by
-  intro i hai hib
-  apply (chainCode c).future
-  intro j hj
-  apply h
-  · omega
-  · omega
-
-/-- The inverse has the corresponding past interval, for the same constructed code. -/
-theorem chain_full_inverse_window {L : ℕ} (c : ExchangeChain ℕ A B L)
-    (x y : Path B) (a b : ℤ)
-    (h : ∀ i : ℤ, a - (L : ℤ) ≤ i → i ≤ b → x.val i = y.val i) :
-    ∀ i : ℤ, a ≤ i → i ≤ b →
-      ((chainCode c).homeomorph.symm x).val i = ((chainCode c).homeomorph.symm y).val i := by
-  intro i hai hib
-  apply (chainCode c).past
-  intro j hj
-  apply h
-  · omega
-  · omega
-
 #print axioms WindowConjugacy.trans
 #print axioms chain_has_window_conjugacy
-#print axioms chain_full_window
-#print axioms chain_full_inverse_window
 
 end D5.S3.ConceptDynamics.Coding.CountedExchangeChain
