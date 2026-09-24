@@ -883,3 +883,120 @@ calculation remains available and keeps its original output contract.
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_capped_query.py --joint-anchor
 ```
+
+## Necessary query carriers and actual pure labels for the remaining lower target
+
+Let T=257/51. Consider a finite actual two-copy family supported within a
+declared query-prime carrier Q of at most six odd primes excluding3,
+and its complete actual survivor V. A lower certificate means
+
+    R_Q(nu)>=r>T for every probability nu supported on V.       (NC1)
+
+Queries include every nonunit Q-smooth numerical label, including labels
+using primes absent from the original family. The following are necessary
+conditions for(NC1); they do not construct such a certificate.
+
+### The declared query carrier must be the first six primes excluding3
+
+Apply the PA construction to Q23={5,7,11,13,17,23}, with the same
+thresholds(2,2,4,4). The last cap becomes11/7 and the raw density cap
+becomes55/7. All four corner masses are positive. The minimum mass and
+maximum paired query ratio occur at(u,v)=(1/2,1/3), giving one law with
+
+    alpha23=57867788809484161/516070210271616000,
+    R_Q23(nu)<=B23=12527664922219194437/2661918285236271406
+                   =4.706254505144301...,
+    nu<=D23 H_Q23,
+    D23=4054837366419840000/57867788809484161<71,
+    T-B23=45202088272542835055/135757832547049841706>0. (NC2)
+
+These four corners use only retained PA moments. Subtract the old
+prefix hinge at4 divided by7 from the mass through17. For the final
+query hinge, remove the N19 factor, whose mean and masses at1,2 are
+11/10,86/95,162/1805; insert N23 with corresponding values
+15/14,150/161,242/3703. The product mass W=w5*w7 stays unchanged, so
+the new hinge remains mean-3W+2*pi(M=1)+pi(M=2).
+The separate-affinity argument of(PA4)–(PA5) proves(NC2) throughout
+the anchor rectangle. The actual law and original phases obey the
+same conditional-comparison proof as before.
+
+Any six-element Q other than{5,7,11,13,17,19} has sorted vector at
+least(5,7,11,13,17,23). Ordered-prime domination gives R_Q<=B23.
+If Q has at most five elements, extend it to six elements containing23,
+apply this bound to the same family with free added coordinates, and
+project back to the entire declared Q. Its cylinder probabilities are
+preserved and its query sum can only decrease. Hence(NC1) requires
+
+    Q={5,7,11,13,17,19}.                              (NC3)
+
+If Q is defined as the original family's minimal prime support, this
+also determines that support. For a fixed ambient Q, however,(NC3)
+alone does not force every prime to occur in an original. Removing an
+unused prime from the query carrier changes R_Q and cannot be used to
+deduce an ambient query bound without paying for its queries.
+
+### Actual pure-union deficits must lie in a strict joint region
+
+For the remaining reference carrier, let u,v be the actual pure-5 and
+pure-7 union masses used in(PA2), and put d5=1/2-u,d7=1/3-v.
+The four stored PA corners give exactly
+
+    G=(T-2)*alpha-Phi=-c+A*d5+B*d7+C*d5*d7,
+    c=6168733163201163811/542935350932041267200,
+    A=44887686823492905683/27146767546602063360,
+    B=20281636668601030051/20313907687933516800,
+    C=585035299774741193/203139076879335168.           (NC4)
+
+All four coefficients are positive. If G>=0, the existing supported
+law has R_Q<=T, contradicting(NC1). Thus that lower certificate requires
+
+    0<=d5<c/A=6168733163201163811/897753736469858113660,
+    0<=d7<(c-A*d5)/(B+C*d5),                         (NC5)
+
+and in particular d5<0.006871297676195501... and
+d7<c/B=67856064795212801921/5962801180568702834994
+=0.011379897256400057.... The two separate cutoffs are weaker than
+the joint inequality. Even G<0 only means this PA estimate does not
+exclude the lower target; it is not a sufficient condition for(NC1).
+
+### Missing numerical slots and overlap both consume the deficit
+
+Let n_(p,e) in{0,1,2} count the actual pure classes at modulus p^e.
+With O_p their reciprocal-density sum minus their actual union mass,
+
+    d_p=sum_(e>=1)(2-n_(p,e))*p^(-e)+O_p,  O_p>=0.   (NC6)
+
+The absent slots beyond the last original exponent are included only
+in this nonnegative budget identity. A missing slot at exponent e
+costs at least p^(-e). Since1/125>c/A and1/49>c/B,(NC1) therefore
+requires exactly two actual classes at each numerical modulus
+
+    5,25,125;  7,49.                                 (NC7)
+
+The six listed5-power cylinders must be pairwise disjoint within the
+5 coordinate; the four listed7-power cylinders must be pairwise
+disjoint within the7 coordinate. Indeed, same-coordinate prime-power
+cylinders are nested or disjoint. An overlap among the listed cylinders
+costs at least1/125 or1/49 in O_p, already contradicting(NC5).
+There is no claim of disjointness across the two prime coordinates.
+
+If every pure-5 exponent is at most3 and every pure-7 exponent is at
+most2, the absent tails give d5>=1/250 and d7>=1/147. Thus
+
+    G>=142559617481812957/67164742018133760000>0.       (NC8)
+
+Consequently(NC1) also requires a pure-5 exponent at least4 or a
+pure-7 exponent at least3. This does not force the particular adjacent
+numerical labels625 or343: a higher exponent can satisfy this height
+requirement while either adjacent label remains absent.
+
+The [deficit consumer](../../frontier/cover-geometry/two_copy_pure_deficit.py)
+and [exact results](../../frontier/cover-geometry/two_copy_pure_deficit.json)
+calculate(NC2),(NC4)–(NC8) from the retained PA ledger. The input is
+bound to that ledger's SHA-256; an alternate input must have the same
+bytes. The actual-label implications and carrier transport are the
+ordinary arguments above, with no additional Lean verification.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_pure_deficit.py
+```
