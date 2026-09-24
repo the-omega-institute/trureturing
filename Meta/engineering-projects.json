@@ -1728,7 +1728,10 @@
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
         "D5/X_Frontier/Hearts.lean",
         "Meta/Digestion/backfill/pzg-v170/source.toml",
-        "Meta/Digestion/backfill/pzg-v170/residual-open/8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d.yaml"
+        "Meta/Digestion/backfill/pzg-v170/residual-open/8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d.yaml",
+        "LICENSE",
+        "Trureturing.lean",
+        "D5/X_Frontier/HeartsAuthorizations.md"
       ]
     },
     {
@@ -3522,10 +3525,16 @@
         "*.json",
         "*.props",
         "*.toml",
+        ".claude/skills",
+        ".codex/skills",
+        ".editorconfig",
         ".gitignore",
+        "AGENTS.md",
         "Blueprint/**",
+        "CLAUDE.md",
         "D5/**",
         "Golden/**",
+        "LICENSE",
         "Library/**",
         "Makefile",
         "Meta/Digestion/atomizers.toml",
@@ -3543,7 +3552,11 @@
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
         "Meta/registry.yaml",
+        "README.md",
+        "Trureturing.lean",
         "agents/**",
+        "docs/CONTRIBUTING.md",
+        "docs/GOVERNANCE.md",
         "docs/develop/spec/**",
         "lean-toolchain",
         "tools/**"
