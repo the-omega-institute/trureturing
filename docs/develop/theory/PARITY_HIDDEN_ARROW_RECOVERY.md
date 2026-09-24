@@ -960,3 +960,297 @@ $`M/(\eta_Mk_M)\ge M/(\eta_M(R_++1))`$，与最大性矛盾。
 也没有用未知基数限制输出大小。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 两种 Hamming 风险在共同极限之下的分离
+
+**定义 23.1（保留实际中心的二阶尺度）。** 沿用定义 21.1 的两个实际平稳实验、
+固定参数 $`r\in(0,1)`$、$`\beta\in(1/2,1)`$、整数基数
+$`q=M^{1-\beta+o(1)}`$ 与四种极小极大风险。假设 $`c_M\to c\in\mathbb R`$，置
+
+```math
+z_M=\frac{\tau_M-\lambda\phi}{\sqrt{\lambda v}},\qquad
+\varphi(z)=\frac{e^{-z^2/2}}{\sqrt{2\pi}},\qquad
+z_*=-\frac{c\phi}{\sqrt{V_A}}.
+```
+
+式 (23.1)。
+
+于是 $`\lambda\sim\alpha_A\ell`$、$`z_M\to z_*`$。
+这里保留实际的 $`\tau_M=\log(M/q)`$ 与 $`\lambda=s/n`$；
+只用一阶等价式替换它们，不保证保留下述余项精度。
+
+**定理 23.2（基数约束的对数修正与风险差）。** 对定义 23.1 的任意序列，
+每个 $`\mathcal E\in\{\mathrm{pair},\mathrm{path}\}`$ 与
+$`\xi\in\{\mathrm k,\mathrm o\}`$ 均满足
+
+```math
+\begin{aligned}
+H_{\mathcal E,q}^{\xi}
+ &=\Phi(z_M)-\frac{\varphi(z_M)\log\lambda}{2\sqrt{\lambda v}}
+       +O(\lambda^{-1/2}),\\[0pt]
+H_{\mathcal E,\mathrm u}^{\xi}
+ &=\Phi(z_M)+O(\lambda^{-1/2}).
+\end{aligned}
+```
+
+式 (23.2)。
+
+因此
+
+```math
+\lim_{d\to\infty}\frac{\sqrt\ell}{\log\ell}
+ \left(H_{\mathcal E,\mathrm u}^{\xi}-H_{\mathcal E,q}^{\xi}\right)
+ =\frac{\varphi(z_*)}{2\sqrt{V_A}}\gt0.
+```
+
+式 (23.3)。
+
+此处比较的是损失分别除以 $`q`$ 与 $`2q`$ 的两种风险。
+余项常数允许依赖固定参数及 $`z_M`$ 所在的有界区间。
+结论同时包括格点与非格点得分，不要求任何无理性条件。
+
+独立高斯序列中的一阶先例见
+[Abraham–Castillo–Roquain 推论 S-3](../../../Library/Dynamics/abraham2024sharp.md)：
+其最大基数排序规则的原始 Hamming 损失除以信号数趋于 $`2\overline\Phi(b)`$，
+故再除以二后，与无约束风险有共同的一阶曲线。
+式 (23.2) 则在这里的两个实际补偿实验中保留实际中心，给出两种归一化风险的
+$`\log\lambda/\sqrt\lambda`$ 差及 $`O(\lambda^{-1/2})`$ 余项。
+
+证明。先固定实际正向及真实支持 $`S`$。
+仍用 (21.4) 的 $`W,Z`$ 与比较律 $`Q_r,Q_{-a}`$，记
+$`\delta_M=\ell^3/n`$，在 (21.5) 中固定取 $`D=6`$。
+
+先提高比较律中的正态近似精度。所用一般工具是经典 Berry–Esseen 不等式，
+其独立同分布、三阶绝对矩版本及统一常数见
+[Shevtsova 的式 (1) 与推论 1](../../../Library/Dynamics/shevtsova2011berryesseen.md)。
+对于 $`k=\lfloor\lambda\rfloor`$，将总强度为 $`\lambda`$ 的复合 Poisson 和
+拆成 $`k`$ 个独立同分布的和，每个强度为 $`\lambda/k\in[1,2]`$。
+两个跳幅 $`h_{\pm,M}`$ 有界并趋于 $`\log(1\pm r)`$；单份方差一致下界为正，
+中心化三阶绝对矩一致有界。后一点可由跳数的三阶矩控制，因为跳数均值不超过二。
+故不等式的同一个常数可用于每个 $`M`$。结合
+$`\mathbb EW=\lambda\phi+O(\lambda a)`$、
+$`\mathrm{Var}W=\lambda v+O(\lambda a)`$ 与 $`\lambda a=o(1)`$，得到
+
+```math
+\sup_t\left|Q_r\{W\lt t\}
+ -\Phi\!\left(\frac{t-\lambda\phi}{\sqrt{\lambda v}}\right)\right|
+ \le\frac C{\sqrt\lambda}.
+```
+
+式 (23.4)。
+
+将真实均值、方差替换为此处中心与尺度的误差也是 $`O(\lambda^{-1/2})`$：
+中心误差除以标准差为 $`O(\sqrt\lambda a)`$，相对方差误差为 $`O(a)`$。
+由左右极限，单点质量至多为 $`2C/\sqrt\lambda`$，所以严格与非严格事件均可用同一阶界。
+
+对任意固定宽度 $`H\gt0`$，(23.4) 给出全实轴上的区间上界
+$`Q_r\{t\le W\lt t+H\}\le C_H/\sqrt\lambda`$。
+若 $`|(t-\lambda\phi)/\sqrt{\lambda v}|\le A`$，取足够大而固定的 $`H`$，
+使高斯区间质量的系数超过 (23.4) 两端误差之和，即有
+
+```math
+\frac{c_H}{\sqrt\lambda}
+ \le Q_r\{t\le W\lt t+H\}
+ \le\frac{C_H}{\sqrt\lambda}.
+```
+
+式 (23.5)。
+
+下界只在所述中心区间断言，上界对所有 $`t`$ 成立。
+$`H`$ 可以依赖 $`A,r`$，不依赖 $`M`$。这一步使用固定宽度内的总质量，
+无需指定格点相位或单点概率。
+
+由精确换测度 $`dQ_r/dQ_{-a}=e^W`$，把上尾分成宽度为 $`H`$ 的半开区间，
+并求和几何级数，得到
+
+```math
+Q_{-a}\{W\ge t\}\le\frac{C e^{-t}}{\sqrt\lambda},\qquad
+\mathbb E_{Q_{-a}}\!\left[e^{2W}\mathbf1_{\{W\le t\}}\right]
+ =\mathbb E_{Q_r}\!\left[e^W\mathbf1_{\{W\le t\}}\right]
+ \le\frac{C e^t}{\sqrt\lambda}.
+```
+
+式 (23.6)。
+
+两项上界对所有实数 $`t`$ 成立；第二项用从 $`t`$ 向下的分段。
+端点质量由 (23.4) 控制。对中心区间的 $`t`$，只取 (23.5) 的一个区间又得
+
+```math
+Q_{-a}\{W\ge t\}\ge\frac{c e^{-t}}{\sqrt\lambda}.
+```
+
+式 (23.7)。
+
+这些是比较律的精确换测度结果，没有把实际律的无界指数矩当作比较矩。
+
+令 $`t_0=\tau_M-\tfrac12\log\lambda`$。取稍后固定的 $`K\gt0`$，置
+$`t_-=t_0-K`$、$`t_+=t_0+K`$。对任一阈值，令 $`B(t)`$、$`Y(t)`$
+分别为实际背景与信号中得分至少为 $`t`$ 的个数。由 (23.6)–(23.7)，
+背景比较均值满足
+
+```math
+c e^Kq\le (M-q)Q_{-a}\{W\ge t_-\}\le C e^Kq,
+\qquad (M-q)Q_{-a}\{W\ge t_+\}\le C e^{-K}q.
+```
+
+式 (23.8)。
+
+这里 $`q/M\to0`$ 已吸收到常数。又由 (23.4)，
+$`Q_r\{W\ge t_+\}=1-\Phi(z_M)+o(1)`$，而 $`\Phi(z_M)`$ 一致远离零。
+因而可取固定 $`K`$，使充分大 $`M`$ 时
+$`\mathbb EB(t_-)\ge(1+\epsilon)q`$ 与
+$`\mathbb E[B(t_+)+Y(t_+)]\le(1-\epsilon)q`$，其中 $`\epsilon\gt0`$ 固定。
+这些均值也使用了 (21.5) 的一行转移。
+
+对上述任一计数 $`N`$，同一真实支持下的单行与双行估计给出
+
+```math
+\mathrm{Var}N\le C\left(q+\delta_Mq^2+M^{2-D}\right).
+```
+
+式 (23.9)。
+
+例如任意两行的协方差绝对值不超过其比较概率乘积的
+$`C\delta_M`$ 倍再加 $`CM^{-D}`$；总比较均值为 $`O(q)`$，故求和给出此式。
+Chebyshev 不等式于是证明
+
+```math
+\mathbb P\{B(t_-)\lt q\}
+ +\mathbb P\{B(t_+)+Y(t_+)\ge q\}
+ \le C\left(q^{-1}+\delta_M+\frac{M^{2-D}}{q^2}\right)
+ =o(\lambda^{-1/2}).
+```
+
+式 (23.10)。
+
+令 $`T_q`$ 是并列时均匀随机的最大 $`q`$ 个得分的集合。
+在 (23.10) 两个坏事件之外，所有得分小于 $`t_-`$ 的信号均被遗漏，
+所有得分至少为 $`t_+`$ 的信号均被选中。
+信号漏选比例的期望因此被两个阈值处的信号分布函数夹住，误差为
+$`o(\lambda^{-1/2})`$。由 (21.5)、(23.4)，两个端点均为
+
+```math
+\Phi\!\left(z_M-\frac{\log\lambda}{2\sqrt{\lambda v}}\right)
+ +O(\lambda^{-1/2}).
+```
+
+式 (23.11)。
+
+第 21 章的完整后验排序与置换对称性说明 $`T_q`$ 在每个有限样本量上就是
+受约束极小极大规则。将 (23.11) 作 Taylor 展开，余项
+$`O((\log\lambda)^2/\lambda)=o(\lambda^{-1/2})`$，得到 (23.2) 第一行的已知方向版本。
+
+无约束上界改用 $`\tau_M`$ 阈值。令 $`F,G`$ 为误选和漏选个数；
+(23.4)、(23.6) 与一行转移给出
+
+```math
+\frac{\mathbb EF}{q}=O(\lambda^{-1/2}),\qquad
+\frac{\mathbb EG}{q}=\Phi(z_M)+O(\lambda^{-1/2}).
+```
+
+式 (23.12)。
+
+若阈值集合超过 $`q`$ 元，保留最大的 $`q`$ 个得分。
+(21.15) 的逐观测界仍给出原始损失至多 $`G+2F`$，故此规则达到
+$`\Phi(z_M)+O(\lambda^{-1/2})`$ 的上界且输出大小不超过 $`q`$。
+
+匹配下界使用的每块一信号先验及块内似然后验已有
+[Abraham–Castillo–Roquain §8.1](../../../Library/Dynamics/abraham2024sharp.md)
+的直接先例。这里对实际补偿律另外控制截断权重之和及其定量误差。取 $`B=\lfloor M/q\rfloor`$，将 $`qB`$ 个正类状态分成
+$`q`$ 个互不相交的 $`B`$ 元块，其余状态不设置信号。
+先验在每块独立、均匀地选择一个信号，因而支持总大小始终精确等于 $`q`$，
+在同一 $`M`$ 下补偿系数 $`a`$ 不随先验支持改变。由实际完整似然
+$`C_a(\mathcal D)\prod_{x\in S}e^{W_x}`$，给定全部观测 $`\mathcal D`$ 后，
+第 $`j`$ 块中状态 $`x`$ 的包含概率为
+
+```math
+\pi_x=\frac{e^{W_x}}{\sum_{y\text{ in block }j}e^{W_y}}.
+```
+
+式 (23.13)。
+
+后验因式分解来自先验的乘积及完整似然；它不要求观测或块之间独立。
+未使用的行也在完整观测中，其共同似然因子不依赖支持。
+无约束 Hamming Bayes 规则逐状态以 $`\pi_x\gt1/2`$ 为选入条件；
+等号时任选，在下文只用严格小于的事件。
+
+固定一个实际支持与其中一块，以 $`x_*`$ 表示该块的真信号。
+设 $`t=\tau_M-K_0`$，其中 $`K_0\gt0`$ 为任一固定常数，并令
+
+```math
+L=e^t,\qquad f(w)=e^w\mathbf1_{\{w\le t\}},\qquad
+T=\sum_{x\ne x_*,\ x\text{ in this block}}f(W_x),\qquad
+m_f=\mathbb E_{Q_{-a}}f(W)=Q_r\{W\le t\}.
+```
+
+式 (23.14)。
+
+这里 $`0\le f\le L`$ 且 $`L\asymp B`$。
+为转移这些有界矩，对任意非负有界函数使用层蛋糕积分
+$`\mathbb E f=\int_0^L\mathbb P\{f\gt u\}\,du`$，
+对两行乘积使用双重积分；(21.5) 的常数一致于所有事件，故
+
+```math
+\begin{aligned}
+\mathbb E f(W_x)&=m_f(1+O(\delta_M))+O(LM^{-D}),\\[0pt]
+|\mathrm{Cov}(f(W_x),f(W_y))|
+ &\le C\delta_M m_f^2+CL^2M^{-D}\quad(x\ne y),\\[0pt]
+\mathbb E f(W_x)^2
+ &\le C\mathbb E_{Q_{-a}}f(W)^2+CL^2M^{-D}
+ \le\frac{CL}{\sqrt\lambda}+CL^2M^{-D}.
+\end{aligned}
+```
+
+式 (23.15)。
+
+协方差式由双行乘积估计减去单行均值之积得到；充分大 $`M`$ 时 $`L\ge1`$、
+$`m_f\le1`$，单行加性余项的交叉项可并入 $`CL^2M^{-D}`$。
+因此 (23.4)、(23.14)–(23.15) 给出
+
+```math
+\frac{\mathbb ET}{B}=\Phi(z_M)+O(\lambda^{-1/2}),\qquad
+\frac{\mathrm{Var}T}{B^2}
+ \le C\left(\lambda^{-1/2}+\delta_M+B^2M^{-D}\right)
+ =O(\lambda^{-1/2}).
+```
+
+式 (23.16)。
+
+均值中 $`B-1`$ 与 $`B`$ 的差、$`O(\delta_M)`$ 与 $`O(BM^{-D})`$ 均为更小的误差。
+因 $`\Phi(z_M)`$ 一致远离零，可固定足够小的 $`\kappa\gt0`$，使
+
+```math
+\mathbb P\{T\lt\kappa B\}=O(\lambda^{-1/2}).
+```
+
+式 (23.17)。
+
+当 $`W_{x_*}\lt\log(\kappa B)`$ 且 $`T\ge\kappa B`$ 时，
+背景权重之和严格大于信号权重，所以 (23.13) 给出 $`\pi_{x_*}\lt1/2`$。
+由 (23.4) 及 $`\log B=\tau_M+o(1)`$，不需要两个事件独立便有
+
+```math
+\mathbb P\{\text{Bayes 规则遗漏 }x_*\}
+\ge\mathbb P\{W_{x_*}\lt\log(\kappa B)\}
+     -\mathbb P\{T\lt\kappa B\}
+\ge\Phi(z_M)-O(\lambda^{-1/2}).
+```
+
+式 (23.18)。
+
+所有界一致于实际支持和块。对先验及 $`q`$ 个块平均，原始 Bayes Hamming 损失
+不小于漏选个数，故任意完整数据规则的最坏归一化风险至少为
+$`\Phi(z_M)-O(\lambda^{-1/2})`$。与 (23.12) 结合，得到 (23.2) 第二行的已知方向版本。
+这一步使用固定基数先验，没有把稀疏模型替换为独立 Bernoulli 支持模型。
+
+最后处理未知方向。采用 (21.16) 的直接方向检验，仍取
+$`h_M=\ell^{1/4}`$。反向错误概率由 (21.17) 至多为
+$`C\ell e^{-h_M}+C\ell M^{1-D}/q=o(\lambda^{-1/2})`$。
+正向信号的平均检出比例趋于严格正数，故 (21.18) 与 Chebyshev 不等式给出
+正向错误概率 $`O(q^{-1}+\delta_M+M^{-D})=o(\lambda^{-1/2})`$。
+两种上界规则的输出均不超过 $`q`$，因此在同一数据上判向再选择支持的风险增加
+至多为错误概率的两倍。揭示方向给出反向下界，证明所有 $`\xi`$ 的 (23.2)。
+由 $`\lambda/\ell\to\alpha_A`$、$`\log\lambda/\log\ell\to1`$ 与 $`z_M\to z_*`$，
+两式相减即得 (23.3)。∎
+
+## 追加锚（本行以下为增补区）
