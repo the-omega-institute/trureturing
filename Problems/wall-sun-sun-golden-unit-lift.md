@@ -1131,3 +1131,206 @@ polynomial searches did not locate the new families in the checked
 primary literature. The companion paper listed as in preparation in
 arXiv:2607.15305v2 could contain related work; priority and external
 acceptance remain unconfirmed.
+
+
+### PCL. Golden-clock sampling, prime-period coupling, and native block periods
+
+#### PCL.1 Three clocks and the retained arithmetic object
+
+**Definition.** Keep the original Fibonacci sequence, the golden integer ring O=Z[phi], phi^2=phi+1, and the matrix
+
+$$Q=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+\pi(m)=\operatorname{ord}(Q\bmod m),\quad \pi(1)=1.$$
+
+For an integer stride s>=1, put Pi_s(m)=ord(Q^s modulo m). The full two-coordinate matrix of golden-clock layer L in `PERIODIC_TREE.md`, Section 8, is Q^(L+2), so its stride is s=L+2. The scalar floor map T_L and the irrational circle rotation are different observables. In particular the former has the parity-carry correction in GC11, while the latter has no nonzero exact integer return. Neither is identified here with the matrix reduced modulo m.
+
+**Lemma PCL1.** For every m,s>=1,
+
+$$\boxed{\Pi_s(m)=\frac{\pi(m)}{\gcd(\pi(m),s)}.}\tag{PCL1}$$
+
+For coprime positive m,n, pi(mn)=lcm(pi(m),pi(n)); the same identity holds for Pi_s.
+
+**Proof.** If an element has order t, its sth power returns after a steps exactly when t divides sa, whose smallest positive solution is t/gcd(t,s). CRT makes simultaneous matrix return modulo mn equivalent to return modulo m and n. These are statements about the fixed invertible matrix, with no choice of a different lift or recurrence coefficient.
+
+The period/rank/lift interfaces are already retained in `PERIODIC_TREE.md`, Appendix R. The classical CRT and lift theorems are also stated in B. Benfield and O. Lippard, *Fixed Points of K-Fibonacci Sequences*, arXiv:2404.08194v2, Theorems 2.1-2.2; the K=1 fixed-point classification and eventual convergence are attributed there to Fulton-Morris (1969). This appendix uses that pinned source only for the stated classical inputs and supplies its specialized arguments below. The paper's separate generalized (a,-1) conjecture is not used.
+
+#### PCL.2 The original lift depth and the exact combined masking formula
+
+**Definition.** For a prime p>5 write tau_p=pi(p), chi_p=(5/p), rho(p) for the first Fibonacci zero, and h_p=v_p(F_(rho(p)))=v_p(F_(p-chi_p)). The equality of depths uses the prime-to-p multiplier law; it does not set h_p to one.
+
+**Lemma PCL2.** For all a>=1,
+
+$$\boxed{p\nmid\tau_p,\qquad
+\pi(p^a)=\tau_p p^{\max(a-h_p,0)}.}\tag{PCL2}$$
+
+Every prime factor of tau_p is strictly smaller than p. If rho(p) is odd, tau_p=4rho(p).
+
+**Proof.** Frobenius in O/pO gives tau_p dividing p-1 in the split case and 2(p+1) in the inert case. Thus p does not divide tau_p. A prime divisor of p+1 is at most (p+1)/2 because p+1 is even and greater than two; this and the split bound give strict prime descent.
+
+The matrix identity Q^n=F_n Q+F_(n-1)I shows that at n=rho(p) the matrix is a nonzero scalar c. Cassini gives c^2=(-1)^rho(p) modulo p. Thus tau_p/rho(p) is 1,2 or4 and is prime to p; if rho(p) is odd, that scalar has exact order four. The classical valuation law v_p(F_(rho(p)u))=h_p+v_p(u) implies v_p(F_(tau_p))=h_p. This law is recorded in the existing GP3.3 and, as a classical input, in Ross-Shen-Cai, arXiv:2512.03481v1, Proposition 3.2 specialized to U(1,-1).
+
+For completeness, the matrix lift has exactly this same depth. Put f=F_(tau_p) and c=F_(tau_p-1). The return matrix is cI+fQ, c=1 modulo p, and tau_p is even. Its determinant gives (c-1)(c+1)=f(f-c). Both c+1 and f-c are p-adic units, so v_p(c-1)=h_p. Hence Q^(tau_p)=I+p^(h_p)A with A nonzero modulo p. Raising such a matrix to an exponent prime to p preserves its first nonzero depth; raising it to p increases the depth by exactly one. This follows by binomial expansion: the first term has depth h_p+1 and all higher terms have depth at least h_p+2 for p>2. Any return exponent is a multiple of tau_p, so the least return modulo p^a is exactly PCL2.
+
+**Theorem PCL3.** Let S be a nonempty finite set of primes greater than five, let a_p>=1, and set
+
+$$M_0=\prod_{p\in S}p,\quad m=\prod_{p\in S}p^{a_p},\quad
+T=\operatorname{lcm}_{p\in S}\tau_p,\quad
+\beta_p=v_p(T),\quad u_p=v_p(s).$$
+
+Then, with no WSS hypothesis,
+
+$$\boxed{\Pi_s(m)=\frac{T}{\gcd(T,s)}
+\prod_{p\in S}p^{\max(0,a_p-h_p-\max(\beta_p,u_p))}.}\tag{PCL3}$$
+
+For a fixed target p, all other exponents held fixed at one, its first contribution beyond the baseline Pi_s(M_0) occurs at a_p=h_p+max(beta_p,u_p)+1. Coupling and stride delays combine by their maximum, not their sum.
+
+**Proof.** By PCL1-PCL2, pi(m) is the least common multiple of tau_p p^max(a_p-h_p,0). At a support prime p its valuation is max(beta_p,a_p-h_p), while at a prime outside S it is v_p(T). Passing to the sth power subtracts v_p(s) and truncates at zero. For any beta,u>=0 and integer a-h,
+
+$$\max(\max(\beta,a-h)-u,0)-\max(\beta-u,0)
+=\max(0,a-h-\max(\beta,u)).$$
+
+This identity proves the formula at support primes; outside S the baseline already has the full valuation. The first-growth level follows immediately. The parameters h_p remain those of the original recurrence.
+
+**Corollary.** At a single target prime, taking stride s=p gives Pi_p(p^2)=Pi_p(p) for every p>5, including non-WSS primes. Thus layer L=p-2 of the full golden matrix clock cannot detect a first lift by that equality alone.
+
+**Proof.** In the one-prime case beta_p=0 and u_p=1, so a_p=1,2 both give zero exponent in PCL3 since h_p>=1. This changes the time sampling, not the fixed integer Fibonacci sequence.
+
+#### PCL.3 The directed period graph and a faithful square-return test
+
+**Definition.** On S place an edge p -> q when p divides tau_q. This is an induced finite graph; an edge only records a prime divisor of a residue period, not a WSS label. A sink has no outgoing edge within S.
+
+**Theorem PCL4.** Every edge satisfies p<q, so the graph is acyclic. If gcd(s,M_0)=1, then
+
+$$\boxed{\frac{\Pi_s(M_0^2)}{\Pi_s(M_0)}
+=\prod_{\substack{p\in S\text{ a sink}\\h_p=1}}p.}\tag{PCL4}$$
+
+In particular the two periods are equal if and only if every sink is WSS. Equality forces the largest prime of S to be WSS.
+
+**Proof.** Strict prime descent in PCL2 proves the edge direction. Since p does not divide tau_p, beta_p=0 exactly for sinks. The stride hypothesis gives u_p=0. At a_p=2 the exponent in PCL3 is one precisely when h_p=1 and beta_p=0, and zero otherwise. This proves the ratio and both directions of the equality criterion. The largest support prime has no outgoing edge. The hypothesis that the whole modulus is raised from squarefree M_0 to M_0^2 is essential; raising only one masked coordinate has a different test.
+
+**Example.** The fixed primes seven and thirteen have tau_7=16, tau_13=28 and h_7=h_13=1, the depths being read from F_8=21 and F_7=13. Thus
+
+$$\pi(7\cdot13)=\pi(7^2\cdot13)=112,\qquad
+\pi((7\cdot13)^2)=1456=13\cdot112.$$
+
+Thirteen's residue period already supplies one factor seven, but the simultaneous square test still exposes the largest prime thirteen. This is an exact example of masking, not a WSS example.
+
+#### PCL.4 Original Fibonacci values produce arbitrarily deep period carriers
+
+**Theorem PCL5.** For every prime p>5 and b>=1, the actual integer
+
+$$R_{p,b}=\frac{F_{p^b}}{F_{p^{b-1}}}>1$$
+
+has the following property: every prime divisor q satisfies
+
+$$\boxed{\rho(q)=p^b,\qquad \tau_q=4p^b,\qquad
+q\ge2p^b-1>p,\qquad v_q(R_{p,b})=h_q.}\tag{PCL5}$$
+
+Consequently for every fixed p>5 and every b>=1 there is an actual larger prime q whose residue period contains exactly p^b. Different b give disjoint prime supports. This prime-existence statement is a special case of classical primitive-divisor theory; the following proof suffices at these prime-power indices and does not assume a simple factor.
+
+**Proof.** Strong Fibonacci divisibility gives integrality, and strict growth gives R_(p,b)>1, including b=1 with denominator F_1=1. A divisor q of F_(p^b) cannot be two, three or five because their ranks are3,4,5 respectively. Also q cannot equal p: the nontrivial rank rho(p), prime to p, cannot divide p^b. Thus q>5 and its rank is p^c with 1<=c<=b.
+
+If c<=b-1, the classical multiplier law gives the same q-valuation to F_(p^b) and F_(p^(b-1)), since their index ratio p is prime to q. Such a q therefore does not divide the quotient. Any prime divisor of R_(p,b) has c=b. Its odd rank gives tau_q=4p^b by PCL2. The Frobenius period bounds now give q>=4p^b+1 in the split case or q>=2p^b-1 in the inert case. The denominator has no q factor, so the quotient's exponent is the original h_q. Distinct b give distinct ranks, hence disjoint supports. Existence follows by taking a prime factor of the actual positive integer R_(p,b); no prime interval is searched.
+
+**Theorem PCL6.** Choose any q as in PCL5. Put T_(p,b)=lcm(tau_p,4p^b). For every a,s>=1,
+
+$$\boxed{\Pi_s(p^a q)=\frac{T_{p,b}}{\gcd(T_{p,b},s)}
+ p^{\max(0,a-h_p-\max(b,v_p(s)))}.}\tag{PCL6}$$
+
+For stride one the joint period is constant for 1<=a<=h_p+b, and in particular for every 1<=a<=b+1 regardless of whether p is WSS. The same formula holds with q replaced by the explicit cofactor F_(p^b), without factoring it.
+
+**Proof.** At q we keep exponent one, so its period is exactly 4p^b; it contributes no power of q. The p-valuation of T_(p,b) is b, since p does not divide tau_p. The same valuation subtraction used in PCL3 proves PCL6.
+
+For the explicit cofactor, gcd(p,F_(p^b))=1 as above and pi(F_n)=4n for every odd n>=3 with F_n>2. To prove the latter directly, strong divisibility and strict growth show that F_n divides F_t only when n divides t. At index n, Q^n is scalar modulo F_n, and Cassini gives scalar square -1. As F_n>2, this scalar has exact order four. Hence the least matrix return is 4n. Taking n=p^b and applying CRT proves the same formula. These are original integer moduli, not independently chosen local lifts. A long stationary stretch in one coordinate of a coupled clock is therefore not by itself evidence of WSS.
+
+#### PCL.5 The two golden ternary blocks have exact native periods
+
+**Definition.** For j>=1 put n_j=3^j, r_j=3^(j+1), x_j=L_(n_j), and retain both established blocks
+
+$$C_j=x_j^2+1,\qquad B_j=x_j^2+3.$$
+
+**Lemma PCL7A (the block prerequisites).** All these integers are odd and coprime to fifteen. Every prime p dividing C_j has rho(p)=r_j and v_p(C_j)=h_p. Every prime p dividing B_j has rho(p)=2r_j, (5/p)=1 and v_p(B_j)=h_p.
+
+**Proof.** For odd n one has L_(3n)=L_n^3+3L_n, F_(3n)=F_n(L_n^2+1), and L_n^2-5F_n^2=-4. Starting from L_3=4, the triple recurrence keeps x_j even, equal to one modulo three, and with square one modulo five. Thus C_j and B_j are odd and have no prime factor three or five.
+
+In the golden residue algebra put v=phi^2, w=v^(n_j), and nu=-v=phi/(1-phi). Since n_j is odd, x_j^2=w+w^(-1)-2. If p divides C_j, then w^2-w+1=0. Hence nu^(n_j)=-w is a nonidentity cube root of one, because p is not three. The order of nu is therefore exactly 3^(j+1)=r_j, which is rho(p) by Binet's identity. The relation C_j=5F_(n_j)^2-3 shows that F_(n_j) is a p-unit. Consequently v_p(C_j)=v_p(F_(3n_j))=h_p.
+
+If p divides B_j, then w^2+w+1=0, so the order of v is r_j, an odd number. The order of -v is 2r_j, giving rho(p)=2r_j. Also L_(r_j)=x_j B_j and x_j^2=-3 modulo p, so x_j is a unit. The odd-index Pell identity gives 5F_(r_j)^2=4 modulo p, proving that F_(r_j) is a unit and that five is a square. Now F_(2r_j)=F_(r_j)x_j B_j has the same valuation as B_j, proving the claimed original depth. The C-family also appears in `PERIODIC_TREE.md`, GP3; these local proofs supply both block inputs directly.
+
+**Theorem PCL7.** Every prime divisor p of C_j has tau_p=4r_j; every prime divisor p of B_j has tau_p=2r_j. The full family consisting of every C_j and B_j has pairwise disjoint prime supports. For all positive a,b,
+
+$$\boxed{\pi(C_j^a)=4r_j C_j^{a-1},\qquad
+\pi(B_j^b)=2r_j B_j^{b-1},}\tag{PCL7}$$
+
+$$\boxed{\pi(C_j^a B_j^b)=4r_j C_j^{a-1}B_j^{b-1}.}\tag{PCL8}$$
+
+No assertion that any h_p equals one is needed for these exact formulas.
+
+**Proof.** PCL7A gives rho(p)=r_j and v_p(C_j)=h_p at each C-prime. Its odd rank gives tau_p=4r_j by PCL2. The same lemma gives rho(p)=2r_j and v_p(B_j)=h_p at each B-prime, and p divides L_(r_j). Cayley-Hamilton for Q^(r_j), whose determinant is -1, gives
+
+$$Q^{2r_j}-L_{r_j}Q^{r_j}-I=0.$$
+
+Thus Q^(2r_j)=I modulo each B-prime; the rank already divides every return, so tau_p=2r_j. Distinct C-indices have distinct odd ranks, distinct B-indices have distinct even ranks, and no odd rank equals an even rank. This proves all support disjointness.
+
+If a prime appears with exponent h_p in a block, raising that block to the ath power gives modulus p^(a h_p). PCL2 gives its local period tau_p p^((a-1)h_p). In a fixed block all tau_p are identical and contain only the primes two and three, absent from every block support. Their least common multiple therefore equals the common base period multiplied by the product of those p-powers. This proves both individual formulas. Disjointness and the common base periods give PCL8. The known support/depth identities are reused; the conclusion concerns native integer block powers, not squarefree support powers.
+
+**Theorem PCL8.** Let I,J be finite index sets with nonempty union, a_j,b_j>=1, and K=max(I union J). Put
+
+$$m=\prod_{j\in I}C_j^{a_j}\prod_{j\in J}B_j^{b_j},\qquad
+\varepsilon=\begin{cases}4,&I\ne\varnothing,\\2,&I=\varnothing.\end{cases}$$
+
+Then
+
+$$\boxed{\pi(m)=\varepsilon\,3^{K+1}
+\prod_{j\in I}C_j^{a_j-1}\prod_{j\in J}B_j^{b_j-1}.}\tag{PCL9}$$
+
+For the product M in which each selected block occurs once, let R=rad(M). For every a>=1,
+
+$$\boxed{\pi(M^a)=\pi(M)M^{a-1},\qquad
+\pi(R^a)=\pi(M)\prod_{p\mid M}p^{\max(0,a-h_p)}.}\tag{PCL10}$$
+
+In particular pi(R)=pi(M), but
+
+$$\boxed{\frac{\pi(R^2)}{\pi(R)}=\prod_{p\parallel M}p.}\tag{PCL11}$$
+
+**Proof.** Apply PCL7 and CRT to the disjoint block supports. The least common multiple of their base periods is epsilon*3^(K+1), coprime to every block value. This proves PCL9 and the first part of PCL10. Passing to R makes each prime exponent one while keeping its residue period. At precision R^a the local exponents are a, giving the second formula by PCL2 and the same coprimality. At a=2 only h_p=1 contributes a prime; since v_p(M)=h_p, this is exactly the displayed simple-factor product. Computing or controlling rad(M) is an additional arithmetic task. Replacing R by M silently cancels the initial depths and invalidates that simple-factor interpretation.
+
+**Fixed example.** The actual fourth B-block is
+
+$$B_4=7177905237579946589743592924684179.$$
+
+Without factoring it, PCL7 gives
+
+$$\pi(B_4)=486,\qquad \pi(B_4^a)=486B_4^{a-1}\quad(a\ge1).$$
+
+The companion C_4=B_4-2 has period972 and pi(C_4^a)=972C_4^(a-1). These exact block-period results permit individual initial depths both equal to one and greater than one. They do not decide whether any factor is WSS.
+
+#### PCL.6 Period iteration: loss at a terminal fixed point and retention in a transient
+
+**Definition.** Write pi^{circ n} for iteration of the function pi on positive integers, distinct from pi(m^n) or the period of Q^n. Let m have largest prime divisor P>5 and let a=v_P(m).
+
+**Theorem PCL9.** For every n>=0,
+
+$$\boxed{v_P(\pi^{\circ n}(m))=\max(a-nh_P,0).}\tag{PCL12}$$
+
+The first iteration at which P disappears is ceil(a/h_P). In particular no fixed point of pi can have a prime divisor greater than five. If pi(m^2)=pi(m), necessarily h_P>=2a.
+
+**Proof.** At any modulus with all prime factors at most P, a smaller prime q>5 contributes only primes smaller than q through tau_q and the possible same prime q through lifting. The prime-power periods at two, three and five have no prime factor greater than five. Hence P can come only from its own factor P^a, and PCL2 gives its next exponent max(a-h_P,0). No larger prime is created. Induction proves PCL12, including permanence after the exponent becomes zero. The first-zero formula follows. A fixed point with P>5 would strictly decrease its P-valuation, which is impossible. Applying the same one-step formula to m and m^2 shows their P-valuations after pi can agree only when h_P>=2a. This last test requires a simultaneous full square and stride one.
+
+**Theorem PCL10.** For a product M of distinct selected C_j and B_j blocks as in PCL8, with largest index K, the first iterate is epsilon*3^(K+1), the second is 8*3^K, and the trajectory first reaches24 after exactly K+1 iterations. This conclusion is independent of every h_p in the blocks.
+
+**Proof.** The first step is equation (PCL9). Direct local matrix lifting gives pi(2)=3, pi(4)=6, pi(8)=12, and pi(3^b)=8*3^(b-1) for b>=1. For the last formula Q^8=I+3A with A nonzero modulo3, so each further power of three lifts once by the same binomial argument as PCL2. CRT therefore gives pi(epsilon*3^(K+1))=8*3^K for epsilon=2 or4, and
+
+$$\pi(8\cdot3^u)=8\cdot3^{\max(1,u-1)}\quad(u\ge1).$$
+
+This reaches24 in exactly K-1 further steps. The preceding first step cannot equal24, and M is coprime to six and larger than one, so no earlier occurrence is possible. For example B_4 gives the exact chain
+
+$$B_4\longmapsto486\longmapsto648\longmapsto216\longmapsto72\longmapsto24.$$
+
+The general fixed-point classification and convergence of Fibonacci period iteration are classical Fulton-Morris results. The asserted exact trajectory here follows from the specified block factorization and is not presented as a new solution of a fixed-point conjecture. Unlike the native block trajectory, the P-valuation in PCL12 retains depth until that prime disappears.
+
+#### PCL.7 The remaining WSS obligation
+
+**Proposition.** PCL identifies three independently describable changes in a clock experiment: passing from single-step to stride s, combining prime coordinates by least common multiple, and starting from an integer block already containing its full h_p multiplicities. The displayed formulas separate them exactly. None independently determines a new prime with h_p=1 or h_p>=2.
+
+**Proof.** Stride and external periods appear in PCL3 only through max(beta_p,v_p(s)); PCL5-PCL6 show that arbitrary external period delays can be realized with original Fibonacci integers or actual larger primes. Native multiplicities cancel h_p in PCL7-PCL10, explaining why their regular-looking growth and terminal trajectory are compatible with WSS. PCL4 and PCL11 specify experiments in which that cancellation is absent, but constructing a stationary squarefree support or bounding its simple-factor product requires additional arithmetic information. A mixture of actual depths two and three is not excluded by these period formulas. No result here eliminates that branch or constructs its occurrence. The progression toward WSS must constrain the original lift, rather than treat a resampled or saturated clock plateau as a witness.
