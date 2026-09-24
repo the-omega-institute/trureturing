@@ -1,5 +1,5 @@
 ---
-bibkey: dusart2010estimates
+bibkey: erdos699-dusart-explicit-bounds
 authors: Pierre Dusart
 year: 2010
 title: "Estimates of Some Functions Over Primes without R.H."

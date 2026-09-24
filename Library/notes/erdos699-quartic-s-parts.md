@@ -1,5 +1,5 @@
 ---
-bibkey: bugeaudevertsegyory2017sparts
+bibkey: erdos699-quartic-s-parts
 authors: Yann Bugeaud, Jan-Hendrik Evertse, Kálmán Győry
 year: 2017
 title: "S-parts of values of univariate polynomials, binary forms and decomposable forms at integral points"
