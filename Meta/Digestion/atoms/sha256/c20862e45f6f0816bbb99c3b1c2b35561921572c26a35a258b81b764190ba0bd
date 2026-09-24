@@ -1,0 +1,19 @@
+**命题 11.1（自适应档案的前向充分性）。** 在 Bayes 条件律、分支更新和实验核均来自同一共同来源的前提下，
+
+$$
+\beta(h)=\beta(h')\Longrightarrow\Phi(h)=\Phi(h').
+\tag{11.1}
+$$
+
+这表示 posterior 是该子合同的一个动态边界；它不表示任意读取档案的策略都能从 posterior 恢复。
+
+为得到反向结论，定义一步预测映射 \(L_e:\mathcal B\to\mathsf{Dist}(Y_e)\)。假设实验族满足可检验的 separating 条件
+
+$$
+\left[
+\forall e,\forall o,\quad
+L_e(o\mid b)=L_e(o\mid b')
+\right]\Longrightarrow b=b'.
+\tag{11.2}
+$$
+

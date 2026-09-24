@@ -1,0 +1,4 @@
+**证明。** 对任意 \(x,p\)，先使用第二个态射得到
+\(E_2(f_1(x),g_2(p))\)，再使用第一个态射得到
+\(E_1(x,g_1(g_2(p)))\)，最后展开复合即可。这个命题正是仓内 ObserverMorphismComposition.observer_morphism_composition 的双侧版本；该既有 Lean 声明已核验这个函数等式，但没有替本节声明新的联合概率或部分域合同。
+

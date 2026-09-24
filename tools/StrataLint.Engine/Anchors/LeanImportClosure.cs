@@ -286,11 +286,14 @@ internal static class LeanImportClosure
     internal static string ModuleName(RepoPath path)
     {
         var value = path.Value;
-        // Both inspector libraries use this source root in lakefile.toml.
-        // Normalize module identity independently of content/tooling ownership.
+        // Implementation and Interface packages have separate source roots.
+        // Module identity is independent of content/tooling ownership.
         const string inspectorRoot = "tools/lean-inspector/";
+        const string interfaceRoot = "tools/lean-inspector-interface/";
         if (value.StartsWith(inspectorRoot, StringComparison.Ordinal))
             value = value[inspectorRoot.Length..];
+        else if (value.StartsWith(interfaceRoot, StringComparison.Ordinal))
+            value = value[interfaceRoot.Length..];
         return value.EndsWith(".lean", StringComparison.Ordinal)
             ? value[..^5].Replace('/', '.')
             : value.Replace('/', '.');

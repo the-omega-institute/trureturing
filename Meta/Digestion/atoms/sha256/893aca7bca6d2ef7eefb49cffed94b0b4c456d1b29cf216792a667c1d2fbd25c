@@ -1,0 +1,10 @@
+**精确公式。**
+
+$$
+\boxed{
+d_\diamond(\mathcal A_T^H,\mathcal P_H)
+=\frac12\max_{p\in\Delta_r}\|D_pC_TD_p\|_1.
+}
+\tag{TM.269}
+$$
+

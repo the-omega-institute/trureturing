@@ -1,0 +1,32 @@
+**反例 2.14（紧轨道与精确时刻）。** 考虑固定三维模型
+$$
+H=\operatorname{diag}(0,1,\sqrt2),\qquad
+|\psi\rangle=(|0\rangle+|1\rangle+|2\rangle)/\sqrt3,\qquad
+|\varphi\rangle=(|0\rangle+|1\rangle-|2\rangle)/\sqrt3,
+\qquad\rho=|\psi\rangle\langle\psi|,\quad\sigma=|\varphi\rangle\langle\varphi|.
+\tag{TM.153}
+$$
+
+对张量基词 $a\in\{0,1,2\}^n$，记三种标签的占据数为 $k_0(a),k_1(a),k_2(a)$。则
+$$
+E(a)=k_1(a)+\sqrt2\,k_2(a),\qquad
+\langle a|\psi^{\otimes n}\rangle=3^{-n/2},\qquad
+\langle a|\varphi^{\otimes n}\rangle=3^{-n/2}(-1)^{k_2(a)}.
+\tag{TM.154}
+$$
+
+如果 $E(a)=E(b)$，不可公度性强迫两个整数差 $k_1(a)-k_1(b)$ 与 $k_2(a)-k_2(b)$ 都为零；总份数固定再给 $k_0$ 相同。所以每个总能量块中的所有基词都有同一个 $(-1)^{k_2}$ 符号。投影到该块后，两个纯态向量只差一个共同符号，其密度矩阵相同。逐块相加，得到 $P_n(\rho)=P_n(\sigma)$ 对每个有限 $n$ 都成立。
+
+由式(TM.139)，两态处于 $G=\overline{\{e^{-itH}\}}$ 的同一轨道。这也给一个不额外借用稠密性定理的闭包成员证明：$G$ 中每个矩阵都对角且第一对角元为一。若 $U\rho U^\dagger=\sigma$，则 $U|\psi\rangle$ 与 $|\varphi\rangle$ 只差全局相位；第一分量强迫该相位为一，余下两分量迫使 $U=\operatorname{diag}(1,1,-1)$。因此这份具体酉矩阵确在 $G$ 中。
+
+但不存在任何实数 $t$，包括负数，精确实现该态变换。因为相同的第一分量再次固定全局相位，随后必须同时满足
+$$
+e^{-it}=1,\qquad e^{-it\sqrt2}=-1
+\quad\Longrightarrow\quad
+t=2\pi k,\qquad 2k\sqrt2\in2\mathbb Z+1,
+\qquad k\in\mathbb Z,
+\tag{TM.155}
+$$
+
+这不可能：$k=0$ 给偶数零，$k\ne0$ 给无理数。闭包成员意味着有时间序列在矩阵拓扑中逼近该酉，不意味着某一项已经相等。全部有限阶相容概率相同因此只能支持所证明的紧闭包轨道等价，不能把近似可达擅自改成存在一次精确时间演化。
+
