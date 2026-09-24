@@ -80,14 +80,6 @@ theorem forward_shift (d : Boundary U V I J) (x : LeftPath d) :
     forward d (leftShift d x) = rightShift d (forward d x) := by
   rfl
 
-/-- The inverse code also intertwines one time step. -/
-theorem backward_shift (d : Boundary U V I J) (y : RightPath d) :
-    backward d (rightShift d y) = leftShift d (backward d y) := by
-  apply (pathEquiv d).injective
-  change forward d (backward d (rightShift d y)) =
-    forward d (leftShift d (backward d y))
-  rw [forward_backward, forward_shift, forward_backward]
-
 /-- Two adjacent input edges determine one output edge. -/
 theorem forward_window (d : Boundary U V I J) (x y : LeftPath d) (i : ℤ)
     (h0 : x.val i = y.val i) (h1 : x.val (i + 1) = y.val (i + 1)) :

@@ -70,15 +70,6 @@ theorem encode_step (d : Boundary U V I J) (alpha : U → H) (beta : V → H)
   · exact forward_shift d p.1
   · simp [encode, leftStep, rightStep, leftShift, forward, mul_assoc]
 
-theorem decode_step (d : Boundary U V I J) (alpha : U → H) (beta : V → H)
-    (p : RightPath d × H) :
-    decode d alpha (rightStep d alpha beta p) =
-      leftStep d alpha beta (decode d alpha p) := by
-  apply (skewEquiv d alpha).injective
-  change encode d alpha (decode d alpha (rightStep d alpha beta p)) =
-    encode d alpha (leftStep d alpha beta (decode d alpha p))
-  rw [encode_decode, encode_step, encode_decode]
-
 /-- The left group action on an extension. -/
 def translate {X : Type*} (g : H) (p : X × H) : X × H := (p.1, g * p.2)
 
@@ -88,13 +79,6 @@ theorem encode_equivariant (d : Boundary U V I J) (alpha : U → H)
   apply Prod.ext
   · rfl
   · simp [encode, translate, mul_assoc]
-
-theorem decode_equivariant (d : Boundary U V I J) (alpha : U → H)
-    (g : H) (p : RightPath d × H) :
-    decode d alpha (translate g p) = translate g (decode d alpha p) := by
-  apply Prod.ext
-  · rfl
-  · simp [decode, translate, mul_assoc]
 
 /-- The transfer function is read from a half-edge, rather than assumed to exist. -/
 def transfer (d : Boundary U V I J) (alpha : U → H) (x : LeftPath d) : H :=

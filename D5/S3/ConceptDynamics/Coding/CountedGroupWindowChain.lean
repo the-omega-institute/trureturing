@@ -23,14 +23,6 @@ universe u
 variable {H : Type u} [Group H] [Fintype H]
   [TopologicalSpace H] [IsTopologicalGroup H]
 
-private theorem join_congr {n m : ℕ} (U : GroupMat H n m) (V : GroupMat H m n)
-    (a a' : Edge U) (b b' : Edge V)
-    (h : a.target = b.source) (h' : a'.target = b'.source)
-    (ha : a = a') (hb : b = b') : join U V a b h = join U V a' b' h' := by
-  subst a'
-  subst b'
-  rfl
-
 section Elementary
 variable {n m : ℕ} (U : GroupMat H n m) (V : GroupMat H m n)
 
@@ -39,7 +31,13 @@ theorem elementary_future (x y : Path (U * V) × H) (i : ℤ)
     (h0 : x.1.val i = y.1.val i) (h1 : x.1.val (i + 1) = y.1.val (i + 1)) :
     ((elementaryHomeomorph U V x).1).val i =
       ((elementaryHomeomorph U V y).1).val i := by
-  exact join_congr V U _ _ _ _
+  have join_congr (a a' : Edge V) (b b' : Edge U)
+      (h : a.target = b.source) (h' : a'.target = b'.source)
+      (ha : a = a') (hb : b = b') : join V U a b h = join V U a' b' h' := by
+    subst a'
+    subst b'
+    rfl
+  exact join_congr _ _ _ _
     ((forward (boundary U V) (toAlternating U V x.1)).property i).1
     ((forward (boundary U V) (toAlternating U V y.1)).property i).1
     (congrArg (fun a => (split U V a).2) h0)
@@ -50,7 +48,13 @@ theorem elementary_past (x y : Path (V * U) × H) (i : ℤ)
     (hm : x.1.val (i - 1) = y.1.val (i - 1)) (h0 : x.1.val i = y.1.val i) :
     (((elementaryHomeomorph U V).symm x).1).val i =
       (((elementaryHomeomorph U V).symm y).1).val i := by
-  exact join_congr U V _ _ _ _
+  have join_congr (a a' : Edge U) (b b' : Edge V)
+      (h : a.target = b.source) (h' : a'.target = b'.source)
+      (ha : a = a') (hb : b = b') : join U V a b h = join U V a' b' h' := by
+    subst a'
+    subst b'
+    rfl
+  exact join_congr _ _ _ _
     ((backward (boundary U V) (toAlternating V U x.1)).property i).1
     ((backward (boundary U V) (toAlternating V U y.1)).property i).1
     (congrArg (fun a => (split V U a).2) hm)

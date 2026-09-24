@@ -84,18 +84,6 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
   exact (fiberEquiv U V i k).symm_apply_apply a
 
-/-- Edge counts are not replaced by the support relation. -/
-theorem split_injective : Function.Injective (split U V) := by
-  intro a b h
-  have hs := congrArg (fun p : Edge U × Edge V => p.1) h
-  have ht := congrArg (fun p : Edge U × Edge V => p.2) h
-  calc
-    a = join U V (split U V a).1 (split U V a).2 (by rfl) :=
-      (join_split U V a).symm
-    _ = join U V (split U V b).1 (split U V b).2 (by rfl) := by
-      simp only [hs, ht]
-    _ = b := join_split U V b
-
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
 
@@ -160,24 +148,16 @@ theorem elementary_shift (x : Path (U * V)) :
   apply Subtype.ext
   rfl
 
-theorem elementary_inverse_shift (x : Path (V * U)) :
-    (elementaryHomeomorph U V).symm (shift (V * U) x) =
-      shift (U * V) ((elementaryHomeomorph U V).symm x) := by
-  apply (elementaryHomeomorph U V).injective
-  rw [(elementaryHomeomorph U V).apply_symm_apply,
-    elementary_shift, (elementaryHomeomorph U V).apply_symm_apply]
-
-private theorem join_congr (a a' : Edge U) (b b' : Edge V)
-    (h : a.target = b.source) (h' : a'.target = b'.source)
-    (ha : a = a') (hb : b = b') : join U V a b h = join U V a' b' h' := by
-  subst a'
-  subst b'
-  rfl
-
 theorem elementary_window (x y : Path (U * V)) (i : ℤ)
     (h0 : x.val i = y.val i) (h1 : x.val (i + 1) = y.val (i + 1)) :
     (elementaryHomeomorph U V x).val i = (elementaryHomeomorph U V y).val i := by
-  exact join_congr V U _ _ _ _
+  have join_congr (a a' : Edge V) (b b' : Edge U)
+      (h : a.target = b.source) (h' : a'.target = b'.source)
+      (ha : a = a') (hb : b = b') : join V U a b h = join V U a' b' h' := by
+    subst a'
+    subst b'
+    rfl
+  exact join_congr _ _ _ _
     ((forward (boundary U V) (toAlternating U V x)).property i).1
     ((forward (boundary U V) (toAlternating U V y)).property i).1
     (congrArg (fun a => (split U V a).2) h0)
@@ -187,7 +167,13 @@ theorem elementary_inverse_window (x y : Path (V * U)) (i : ℤ)
     (hm : x.val (i - 1) = y.val (i - 1)) (h0 : x.val i = y.val i) :
     ((elementaryHomeomorph U V).symm x).val i =
       ((elementaryHomeomorph U V).symm y).val i := by
-  exact join_congr U V _ _ _ _
+  have join_congr (a a' : Edge U) (b b' : Edge V)
+      (h : a.target = b.source) (h' : a'.target = b'.source)
+      (ha : a = a') (hb : b = b') : join U V a b h = join U V a' b' h' := by
+    subst a'
+    subst b'
+    rfl
+  exact join_congr _ _ _ _
     ((backward (boundary U V) (toAlternating V U x)).property i).1
     ((backward (boundary U V) (toAlternating V U y)).property i).1
     (congrArg (fun a => (split V U a).2) hm)

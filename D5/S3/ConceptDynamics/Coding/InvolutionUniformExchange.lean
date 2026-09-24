@@ -27,33 +27,6 @@ def basis (g : H) : ZAlg H := MonoidAlgebra.single g 1
 
 def uniform (H : Type u) [Group H] [Fintype H] : ZAlg H := ∑ g : H, basis g
 
-@[simp] theorem basis_mul (g h : H) : basis g * basis h = basis (g * h) := by
-  simp [basis]
-
-@[simp] theorem uniform_coeff (g : H) : (uniform H).coeff g = 1 := by
-  classical
-  simp [uniform, basis, Finsupp.single_apply]
-
-@[simp] theorem uniform_mul_basis (g : H) : uniform H * basis g = uniform H := by
-  classical
-  calc
-    uniform H * basis g = ∑ h : H, basis (h * g) := by
-      simp [uniform, Finset.sum_mul]
-    _ = uniform H := by
-      simpa [uniform, Function.comp_def] using
-        (Finset.sum_comp_equiv (s := (Finset.univ : Finset H))
-          (f := basis) (Equiv.mulRight g))
-
-@[simp] theorem basis_mul_uniform (g : H) : basis g * uniform H = uniform H := by
-  classical
-  calc
-    basis g * uniform H = ∑ h : H, basis (g * h) := by
-      simp [uniform, Finset.mul_sum]
-    _ = uniform H := by
-      simpa [uniform, Function.comp_def] using
-        (Finset.sum_comp_equiv (s := (Finset.univ : Finset H))
-          (f := basis) (Equiv.mulLeft g))
-
 /-- These factors use every group element with coefficient one before one subtraction. -/
 def leftFactor (s t : H) : ZAlg H := uniform H + (1 - basis s) * basis t
 
@@ -69,7 +42,7 @@ theorem leftFactor_coeff [DecidableEq H] (s t g : H) :
       1 + (if t = g then 1 else 0) - (if s * t = g then 1 else 0) := by
   classical
   unfold leftFactor
-  rw [sub_mul, one_mul, basis_mul]
+  rw [sub_mul, one_mul]
   simp [basis, Finsupp.single_apply, add_sub_assoc]
 
 theorem leftFactor_nonnegative (s t g : H) : 0 ≤ (leftFactor s t).coeff g := by
@@ -96,15 +69,32 @@ theorem rightFactor_nonnegative (s g : H) : 0 ≤ (rightFactor s).coeff g := by
 
 /-- The original nonuniform matrix is exactly the forward product. -/
 theorem factors_forward (s t : H) : leftFactor s t * rightFactor s = source s t := by
+  classical
+  have uniform_mul_basis : uniform H * basis s = uniform H := by
+    calc
+      uniform H * basis s = ∑ h : H, basis (h * s) := by
+        simp [uniform, basis, Finset.sum_mul]
+      _ = uniform H := by
+        simpa [uniform, Function.comp_def] using
+          (Finset.sum_comp_equiv (s := (Finset.univ : Finset H))
+            (f := basis) (Equiv.mulRight s))
   unfold leftFactor rightFactor source
   rw [add_mul, mul_add, mul_one, uniform_mul_basis]
 
 /-- Reversing the factors kills the nonuniform term through the involution identity. -/
 theorem factors_reverse (s t : H) (hs : s * s = 1) :
     rightFactor s * leftFactor s t = target H := by
+  classical
   have hss : basis s * basis s = 1 := by
-    rw [basis_mul, hs]
-    rfl
+    simp [basis, hs]
+  have basis_mul_uniform : basis s * uniform H = uniform H := by
+    calc
+      basis s * uniform H = ∑ h : H, basis (s * h) := by
+        simp [uniform, basis, Finset.mul_sum]
+      _ = uniform H := by
+        simpa [uniform, Function.comp_def] using
+          (Finset.sum_comp_equiv (s := (Finset.univ : Finset H))
+            (f := basis) (Equiv.mulLeft s))
   have hcancel : (1 + basis s) * (1 - basis s) = (0 : ZAlg H) := by
     rw [add_mul, one_mul, mul_sub, mul_one, hss]
     simp [sub_eq_add_neg, add_assoc]
@@ -161,7 +151,8 @@ theorem source_ne_target (s t : H) (hs : s * s = 1) (hst : s * t ≠ t * s) :
   have hexpand : source s t = target H + basis t + basis (t * s) -
       basis (s * t) - basis ((s * t) * s) := by
     unfold source target
-    simp only [mul_add, add_mul, sub_mul, mul_sub, one_mul, mul_one, basis_mul]
+    simp only [mul_add, add_mul, sub_mul, mul_sub, one_mul, mul_one]
+    simp only [basis, MonoidAlgebra.single_mul_single, one_mul]
     abel
   intro h
   have heq := congrArg (fun p : ZAlg H => p.coeff t) h

@@ -53,16 +53,14 @@ abbrev Fiber (i k : Fin n) (g : H) :=
   Σ j : Fin m, Σ h : H,
     Fin ((U i j).coeff h) × Fin ((V j k).coeff (h⁻¹ * g))
 
-private theorem coeff_product_finite (a b : MonoidAlgebra ℕ H) (g : H) :
-    (a * b).coeff g = ∑ h : H, a.coeff h * b.coeff (h⁻¹ * g) := by
-  classical
-  rw [MonoidAlgebra.coeff_mul_apply_left]
-  exact Finsupp.sum_fintype _ _ (fun _ => zero_mul _)
-
 /-- Counting is performed separately in each endpoint and total-label fiber. -/
 theorem fiber_card (i k : Fin n) (g : H) :
     Fintype.card (Fiber U V i k g) = ((U * V) i k).coeff g := by
   classical
+  have coeff_product_finite (a b : MonoidAlgebra ℕ H) :
+      (a * b).coeff g = ∑ h : H, a.coeff h * b.coeff (h⁻¹ * g) := by
+    rw [MonoidAlgebra.coeff_mul_apply_left]
+    exact Finsupp.sum_fintype _ _ (fun _ => zero_mul _)
   simp [Fiber, Matrix.mul_apply, Fintype.card_sigma, Fintype.card_prod,
     coeff_product_finite]
 
@@ -126,12 +124,9 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
       by simpa [mul_assoc] using q.2.2.2.2⟩
   have recovered_eq : recovered = q := by
     rcases q with ⟨qg, qj, qh, qa, qb⟩
-    generalize hr : qh⁻¹ * qg = r at qb ⊢
-    have hg : qh * r = qg := by
-      rw [← hr]
-      simp [mul_assoc]
-    subst qg
-    simp [recovered, mul_assoc]
+    apply Sigma.ext
+    · simp [recovered, mul_assoc]
+    · simp [recovered]
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
@@ -218,11 +213,6 @@ theorem unpack_step (p : Path (U * V) × H) :
   · rfl
   · exact congrArg (fun g : H => p.2 * g) (split_label U V (p.1.val 0)).symm
 
-theorem repack_step (p : LeftPath (boundary U V) × H) :
-    repack U V (leftStep (boundary U V) Edge.label Edge.label p) =
-      step (U * V) (repack U V p) := by
-  apply Prod.ext <;> rfl
-
 section Topology
 variable [TopologicalSpace H] [IsTopologicalGroup H]
 
@@ -241,9 +231,8 @@ theorem elementary_step (p : Path (U * V) × H) :
       (unpack U V (step (U * V) p))) =
     step (V * U) (repack V U (encode (boundary U V) Edge.label (unpack U V p)))
   rw [unpack_step]
-  exact (congrArg (repack V U)
-    (encode_step (boundary U V) Edge.label Edge.label (unpack U V p))).trans
-      (repack_step V U (encode (boundary U V) Edge.label (unpack U V p)))
+  rw [encode_step]
+  apply Prod.ext <;> rfl
 
 theorem elementary_equivariant (g : H) (p : Path (U * V) × H) :
     elementaryHomeomorph U V (translate g p) =
@@ -253,13 +242,6 @@ theorem elementary_equivariant (g : H) (p : Path (U * V) × H) :
     repack V U (translate g (encode (boundary U V) Edge.label (unpack U V p)))
   exact congrArg (repack V U)
     (encode_equivariant (boundary U V) Edge.label g (unpack U V p))
-
-theorem elementary_inverse_step (p : Path (V * U) × H) :
-    (elementaryHomeomorph U V).symm (step (V * U) p) =
-      step (U * V) ((elementaryHomeomorph U V).symm p) := by
-  apply (elementaryHomeomorph U V).injective
-  rw [(elementaryHomeomorph U V).apply_symm_apply, elementary_step,
-    (elementaryHomeomorph U V).apply_symm_apply]
 
 /-- A homeomorphism together with the specified time and group laws. -/
 structure GroupConjugacy {a b : ℕ} (A : GroupMat H a a) (B : GroupMat H b b) where

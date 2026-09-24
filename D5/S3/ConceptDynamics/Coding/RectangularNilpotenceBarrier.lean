@@ -32,19 +32,9 @@ theorem rectangular_exchange_power (U : Mat R n m) (V : Mat R m n) (j : ℕ) :
       rw [pow_succ _ (j + 1), ih, pow_succ (V * U) j]
       simp only [Matrix.mul_assoc]
 
-theorem exchange_zero_power (U : Mat R n m) (V : Mat R m n) {j : ℕ}
-    (h : (V * U) ^ j = 0) : (U * V) ^ (j + 1) = 0 := by
-  rw [rectangular_exchange_power, h]
-  simp
-
 /-- A positive nilpotence depth, including depth one for a zero matrix. -/
 def ExactDepth (A : Mat R n n) (d : ℕ) : Prop :=
   0 < d ∧ A ^ d = 0 ∧ ∀ j : ℕ, 0 < j → j < d → A ^ j ≠ 0
-
-theorem depth_le_of_zero {A : Mat R n n} {d j : ℕ}
-    (hd : ExactDepth A d) (hj : 0 < j) (hz : A ^ j = 0) : d ≤ j := by
-  by_contra h
-  exact hd.2.2 j hj (Nat.lt_of_not_ge h) hz
 
 /-- Every node can have a different finite matrix size. -/
 inductive ExchangeChain (R : Type u) [Semiring R] :
@@ -64,7 +54,10 @@ theorem chain_zero_power {A : Mat R n n} {B : Mat R m m} {L : ℕ}
       simpa using hj
   | cons U V tail ih =>
       intro j hj
-      simpa [Nat.add_assoc] using exchange_zero_power U V (ih j hj)
+      have hz : (U * V) ^ ((j + _) + 1) = 0 := by
+        rw [rectangular_exchange_power, ih j hj]
+        simp
+      simpa [Nat.add_assoc] using hz
 
 /-- The same propagation holds in the opposite direction. -/
 theorem chain_zero_power_reverse {A : Mat R n n} {B : Mat R m m} {L : ℕ}
@@ -76,8 +69,11 @@ theorem chain_zero_power_reverse {A : Mat R n n} {B : Mat R m m} {L : ℕ}
       simpa using hj
   | cons U V tail ih =>
       intro j hj
+      have hz : (V * U) ^ (j + 1) = 0 := by
+        rw [rectangular_exchange_power, hj]
+        simp
       simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
-        ih (j + 1) (exchange_zero_power V U hj)
+        ih (j + 1) hz
 
 /-- A short chain cannot cross a larger positive nilpotence-depth gap. -/
 theorem chain_depth_barrier {A : Mat R n n} {B : Mat R m m} {a b L : ℕ}
@@ -86,8 +82,12 @@ theorem chain_depth_barrier {A : Mat R n n} {B : Mat R m m} {a b L : ℕ}
   have hap : 0 < a := ha.1
   have hbp : 0 < b := hb.1
   constructor
-  · exact depth_le_of_zero ha (by omega) (chain_zero_power c b hb.2.1)
-  · exact depth_le_of_zero hb (by omega) (chain_zero_power_reverse c a ha.2.1)
+  · by_contra h
+    exact ha.2.2 (b + L) (by omega) (Nat.lt_of_not_ge h)
+      (chain_zero_power c b hb.2.1)
+  · by_contra h
+    exact hb.2.2 (a + L) (by omega) (Nat.lt_of_not_ge h)
+      (chain_zero_power_reverse c a ha.2.1)
 
 end Semiring
 
