@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj" />
+    <ProjectReference Include="../../Trureturing.Truth/Trureturing.Truth.csproj" />
     <ProjectReference Include="../../StrataLint.Lean/StrataLint.Lean.csproj" />
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />

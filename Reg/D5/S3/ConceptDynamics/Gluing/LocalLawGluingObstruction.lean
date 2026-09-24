@@ -1,0 +1,2 @@
+import Reg.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.InformationRoot
+import Reg.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.TemplateShadow

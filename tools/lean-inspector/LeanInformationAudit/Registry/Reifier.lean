@@ -1,8 +1,6 @@
 import LeanInformationAudit.RegistrationGates
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.Sha256
-import LeanInformationAudit.FixedSnapshot
-import LeanInformationAudit.FrozenBaseline
 import Lean
 import Std.Sync.Mutex
 

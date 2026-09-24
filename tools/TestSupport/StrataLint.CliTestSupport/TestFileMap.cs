@@ -442,6 +442,66 @@ internal static class TestFileMap
 
 
         [[files]]
+        pattern = "Reg/Catalogs/**/*.lean"
+        require = []
+        kind = "data"
+        admission_plane = "content"
+        produced_by = "none"
+        consumed_by = ["Lean", "StrataLint"]
+        verified_by = ["lean-build", "lean-inspector"]
+        artifact_id = "none"
+        runtime_disposition = "committed-source"
+
+
+        [[files]]
+        pattern = "Reg/D5/**/*.lean"
+        require = []
+        kind = "data"
+        admission_plane = "content"
+        produced_by = "none"
+        consumed_by = ["Lean", "StrataLint"]
+        verified_by = ["lean-build", "lean-inspector"]
+        artifact_id = "none"
+        runtime_disposition = "committed-source"
+
+
+        [[files]]
+        pattern = "Reg/Support/**/*.lean"
+        require = []
+        kind = "data"
+        admission_plane = "content"
+        produced_by = "none"
+        consumed_by = ["Lean", "StrataLint"]
+        verified_by = ["lean-build", "lean-inspector"]
+        artifact_id = "none"
+        runtime_disposition = "committed-source"
+
+
+        [[files]]
+        pattern = "Reg/lake-manifest.json"
+        require = []
+        kind = "program"
+        admission_plane = "judge"
+        produced_by = "none"
+        consumed_by = ["Lean", "StrataLint"]
+        verified_by = ["repository-policy"]
+        artifact_id = "none"
+        runtime_disposition = "committed-source"
+
+
+        [[files]]
+        pattern = "Reg/lakefile.toml"
+        require = []
+        kind = "program"
+        admission_plane = "judge"
+        produced_by = "none"
+        consumed_by = ["Lean", "StrataLint"]
+        verified_by = ["repository-policy"]
+        artifact_id = "none"
+        runtime_disposition = "committed-source"
+
+
+        [[files]]
         pattern = "Trureturing.lean"
         require = []
         kind = "program"

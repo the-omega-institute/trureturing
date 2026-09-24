@@ -1,6 +1,7 @@
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Occurrence.RootCatalog.Snapshot
 
 open Lean Lean.Elab.Command LeanInformationAudit
+open LeanInformationAudit.Tests.Occurrence.RootCatalog
 
 namespace LeanInformationAudit.Tests.RootBaselineSubset
 
@@ -17,22 +18,28 @@ private def rejects (root : Name) (rows : Array ExpectedOccurrence)
     throwError "ROOT-B-baseline-subset: wrong failure: {message}"
 
 run_cmd do
-  for root in #[frozenInformationRootId, designatedInformationRootId] do
-    let rows := fixedSnapshotOccurrences root
-    validateFrozenBaselineInSnapshot root rows
-    let baselineRow := rows.find? (·.registrationModuleName == frozenInformationRootId)
-    let some baselineRow := baselineRow
-      | throwError "ROOT-B-baseline-subset: missing test input"
-    let sameKey := fun (row : ExpectedOccurrence) =>
-      row.objectArenaName == baselineRow.objectArenaName &&
-        row.theoremName == baselineRow.theoremName
-    rejects root (rows.filter fun row => !sameKey row) "member-set"
-    rejects root (rows.map fun row =>
-      if sameKey row then { row with statementIdentity := "sha256:corrupt" } else row)
-      "statement-identities"
-    rejects root (rows.map fun row =>
-      if sameKey row then { row with registrationModuleName := `CorruptContributor } else row)
-      "contributor-modules"
-  logInfo "ROOT-B-baseline-subset: both fixed roots reject missing or changed baseline rows"
+  for contract in #[baselineContract, designatedContract] do
+    let original ← getEnv
+    try
+      modifyEnv (·.setMainModule contract.rootId)
+      RootCatalogs.declare contract
+      let root := contract.rootId
+      let rows := snapshotExpectations root contract.source
+      validateFrozenBaselineInSnapshot root rows
+      let some baselineRow := rows.find? (·.registrationModuleName == baselineRoot)
+        | throwError "ROOT-B-baseline-subset: missing test input"
+      let sameKey := fun (row : ExpectedOccurrence) =>
+        row.objectArenaName == baselineRow.objectArenaName &&
+          row.theoremName == baselineRow.theoremName
+      rejects root (rows.filter fun row => !sameKey row) "member-set"
+      rejects root (rows.map fun row =>
+        if sameKey row then { row with statementIdentity := "sha256:corrupt" } else row)
+        "statement-identities"
+      rejects root (rows.map fun row =>
+        if sameKey row then { row with registrationModuleName := `CorruptContributor } else row)
+        "contributor-modules"
+    finally
+      setEnv original
+  logInfo "ROOT-B-baseline-subset: both supplied roots reject missing or changed baseline rows"
 
 end LeanInformationAudit.Tests.RootBaselineSubset
