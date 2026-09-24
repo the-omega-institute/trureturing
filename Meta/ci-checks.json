@@ -218,6 +218,7 @@
           "Meta/registry.yaml",
           "Meta/domains.yaml",
           "tools/StrataLint.Cli/Commands/FileMap/**",
+          "tools/StrataLint.FileMap/**",
           "tools/StrataLint.InspectionScope/FileMapInspectionScope.cs",
           "tools/StrataLint.Scribe/FileMap/**",
           "tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs"

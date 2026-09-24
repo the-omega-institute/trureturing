@@ -248,11 +248,18 @@ internal static class FileMapPolicy
                 manifest,
                 registryAccepted.Policy.GovernanceDocuments.Select(static path => path.Value))
             : [];
+        var libraryPathFindings = registry is RegistryLoadOutcome.Accepted libraryRegistry
+            ? selected.Where(static path => path.StartsWith("Library/", StringComparison.Ordinal))
+                .Select(path => RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), libraryRegistry.Policy))
+                .OfType<RepositoryPathIssue>()
+                .Select(static issue => new FileMapFinding("FILEMAP-PATH-POLICY", issue.Path, issue.Message))
+            : [];
 
         return InspectCoverage(manifest, selected)
             .Concat(InspectPatternPopulation(selectedManifest, paths))
             .Concat(registryFindings)
             .Concat(projectionRegistrationFindings)
+            .Concat(libraryPathFindings)
             .Concat(scope is null || scope.Actors ? InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot) : [])
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
