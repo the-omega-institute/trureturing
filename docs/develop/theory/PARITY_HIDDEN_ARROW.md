@@ -4452,7 +4452,7 @@ $`g=g_r`$，并取定理 18.2 的唯一临界点
 $`\alpha=\alpha_E(r,\beta)`$、$`\theta=\theta_E(r,\beta)\in(0,1)`$。置
 
 ```math
-\gamma=-g(\theta)>0,\qquad V=\alpha g''(\theta)>0,\qquad
+\gamma=-g(\theta)\gt 0,\qquad V=\alpha g''(\theta)\gt 0,\qquad
 c_M=\lambda-\alpha\ell+\frac{\log\ell}{2\gamma}.
 \tag{19.2}
 ```
@@ -4476,7 +4476,7 @@ p=\frac{1-\theta}{\theta},\qquad K_c=B_cA_c^p,
 \tag{19.4}
 ```
 
-例如 $`r=1/2`$ 满足此条件：若其比值为 $`u/v`$、$`v>0`$，则
+例如 $`r=1/2`$ 满足此条件：若其比值为 $`u/v`$、$`v\gt 0`$，则
 $`(3/2)^v=(1/2)^u`$，与整数的素因子分解唯一性矛盾。
 固定宽度区间的局部极限定理采用
 [Stone](../../../Library/Dynamics/stone1967local.md) 的非格点结论；
@@ -4517,7 +4517,7 @@ Z_x=N_{x,+}\log(1+r)+N_{x,-}\log(1-r).
 但证明中的有限秩表示 (17.15)、(17.17) 对支持在任意固定 $`k`$ 行的标记仍为恒等式。
 在任意固定复多圆盘上，各矩阵相对于 (17.18) 的扰动为 $`O(k/n)`$；
 $`k`$ 固定，围道与预解式界仍可选为与 $`S`$ 无关的常数。
-当 $`\lambda/\ell\to\alpha>0`$ 时，同一围道展开给出
+当 $`\lambda/\ell\to\alpha\gt 0`$ 时，同一围道展开给出
 
 ```math
 \left|F_{K,s}(z)-\exp\left(\sum_j\mu_j(z_j-1)\right)\right|
@@ -4541,7 +4541,7 @@ C_k\frac{\ell}{n}
 ```
 
 在 $`z_j=2`$ 处应用 (19.7)，再选充分大的固定计数截断，得到任意预先固定
-$`D>0`$ 所需的 $`M^{-D}`$ 尾界。因此对任意固定 $`k`$ 行的计数事件 $`E`$，
+$`D\gt 0`$ 所需的 $`M^{-D}`$ 尾界。因此对任意固定 $`k`$ 行的计数事件 $`E`$，
 
 ```math
 \mathbb P_{S,+}^{\mathcal E}(E)
@@ -4565,14 +4565,14 @@ N_\sigma\sim\operatorname{Pois}\left(\frac{\lambda e^{\theta h_\sigma}}2\right)
 ```
 
 该复合泊松过程的单位时间增量均值为 $`g'(\theta)`$，方差为
-$`g''(\theta)>0`$。它在零及两个跳幅处均有正质量；由 (19.4)，
+$`g''(\theta)\gt 0`$。它在零及两个跳幅处均有正质量；由 (19.4)，
 其支持不包含于任意平移格点。它具有任意阶指数矩，特别满足 Stone
 1967 年推论 1 的有限协方差条件。这里用的是区间局部极限定理，不是假定离散得分有密度。
 
 将时间 $`\lambda`$ 分成 $`\lfloor\lambda\rfloor`$ 个单位时间和一个独立的
 不足单位时间的余项。Stone 的结论一致于区间位置；余项的二阶矩一致有界。
 在余项绝对值不超过 $`\lambda^{1/4}`$ 的区域，平移对归一化高斯项的影响一致趋零；
-补集概率趋零，且区间概率乘以 $`\sqrt\lambda`$ 一致有界。因此，对每个固定 $`h>0`$，
+补集概率趋零，且区间概率乘以 $`\sqrt\lambda`$ 一致有界。因此，对每个固定 $`h\gt 0`$，
 
 ```math
 \sup_{x\in\mathbb R}
@@ -4590,7 +4590,7 @@ $`O_h(\lambda^{-1/2})`$ 浓集界。把一个原子放入宽度 $`h`$ 的区间�
 先令 $`\lambda\to\infty`$ 再令 $`h\downarrow0`$，还得到
 
 ```math
-\sqrt\lambda\sup_x Q_\theta{Z=x}\longrightarrow0.
+\sqrt\lambda\sup_x Q_\theta\{Z=x\}\longrightarrow0.
 \tag{19.12}
 ```
 
@@ -4602,10 +4602,10 @@ $`u-\lambda g'(\theta)=O(\log\ell)=o(\sqrt\lambda)`$。
 ```math
 \begin{aligned}
 \sqrt\lambda\,\mathbb E_\theta
- [e^{-\theta(Z-u)}\mathbf1_{\{Z>u\}}]
+ [e^{-\theta(Z-u)}\mathbf1_{\{Z\gt u\}}]
  &\longrightarrow\frac1{\theta\sqrt{2\pi g''(\theta)}},\\[0pt]
 \sqrt\lambda\,\mathbb E_\theta
- [e^{(1-\theta)(Z-u)}\mathbf1_{\{Z<u\}}]
+ [e^{(1-\theta)(Z-u)}\mathbf1_{\{Z\lt u\}}]
  &\longrightarrow\frac1{(1-\theta)\sqrt{2\pi g''(\theta)}}.
 \end{aligned}
 \tag{19.13}
@@ -4619,8 +4619,8 @@ $`u-\lambda g'(\theta)=O(\log\ell)=o(\sqrt\lambda)`$。
 撤去 (19.10) 的倾斜并代入 (19.2)，得到
 
 ```math
-M Q_0\{Z>\beta\ell+z\}\longrightarrow A_ce^{-\theta z},\qquad
-q Q_1\{Z<\beta\ell+z\}\longrightarrow B_ce^{(1-\theta)z}.
+M Q_0\{Z\gt \beta\ell+z\}\longrightarrow A_ce^{-\theta z},\qquad
+q Q_1\{Z\lt \beta\ell+z\}\longrightarrow B_ce^{(1-\theta)z}.
 \tag{19.14}
 ```
 
@@ -4631,12 +4631,12 @@ $`q/M^{1-\beta}\to1`$，所以取整不改变信号侧常数。
 补偿的传递须保留稀有尾部的相对精度。总计数不超过 $`C\ell`$ 时，
 $`|W-Z|\le C' a\ell=o(1)`$；背景泊松律 $`Q_{-a}`$ 相对于 $`Q_0`$
 的质量比精确为 $`(1-a)^{N_+}(1+a)^{N_-}=1+o(1)`$。
-截断外用任意固定指数的尾界，在一行比较中取 $`D>1`$，再用 (19.14)
+截断外用任意固定指数的尾界，在一行比较中取 $`D\gt 1`$，再用 (19.14)
 的趋零偏移稳定性，便将 (19.14) 传到补偿得分。对实际行律再应用 (19.9)，可得
 
 ```math
 \begin{aligned}
-(M-q)\mathbb P_{S,+}^{\mathcal E}\{W_x>\beta\ell+z\}
+(M-q)\mathbb P_{S,+}^{\mathcal E}\{W_x\gt \beta\ell+z\}
  &\longrightarrow A_ce^{-\theta z},&&x\notin S,\\[0pt]
 q\mathbb P_{S,+}^{\mathcal E}\{W_x\le\beta\ell+z\}
  &\longrightarrow B_ce^{(1-\theta)z},&&x\in S.
@@ -4654,7 +4654,7 @@ $`T_M=U_M(x)+V_M(y)`$。所有计数均在同一个真实 $`S`$ 下。
 记 $`(z)_k=z(z-1)\cdots(z-k+1)`$。对任意固定正整数 $`k`$，
 将 $`\mathbb E(T_M)_k`$ 按背景行数 $`j`$ 展开。
 每一项有 $`\binom{k}{j}(M-q)_j(q)_{k-j}`$ 个有序不同指标。
-在 (19.9) 中取固定 $`D>k`$，加法余项求和后为 $`O(M^{k-D})=o(1)`$；
+在 (19.9) 中取固定 $`D\gt k`$，加法余项求和后为 $`O(M^{k-D})=o(1)`$；
 乘法余项趋零。泊松比较律下不同选中行独立，故 (19.14)–(19.15) 给出
 
 ```math
@@ -4685,13 +4685,13 @@ S_M^*=\min_{x\in S}W_x-\beta\ell.
 \tag{19.18}
 ```
 
-(19.17) 正是事件 $`\{B_M^*\le x,S_M^*>y\}`$ 的极限。
+(19.17) 正是事件 $`\{B_M^*\le x,S_M^*\gt y\}`$ 的极限。
 用背景边缘减去该式得到通常的二维分布函数，证明
 $`(B_M^*,S_M^*)\Rightarrow(B^*,S^*)`$，其中两者独立且
 
 ```math
 \mathbb P(B^*\le z)=e^{-A_ce^{-\theta z}},\qquad
-\mathbb P(S^*>z)=e^{-B_ce^{(1-\theta)z}}.
+\mathbb P(S^*\gt z)=e^{-B_ce^{(1-\theta)z}}.
 \tag{19.19}
 ```
 
@@ -4702,12 +4702,12 @@ $`(B_M^*,S_M^*)\Rightarrow(B^*,S^*)`$，其中两者独立且
 第 18 章的完整似然为 $`L_S=C(\mathrm{data})\prod_{x\in S}e^{W_x}`$。
 均匀固定基数先验与支持置换对称性使最大 $`q`$ 个得分、边界并列时均匀随机化的规则，
 成为精确损失的有限样本 Bayes 与极小极大规则。
-其成功概率被 $`\mathbb P(B_M^*<S_M^*)`$ 与
+其成功概率被 $`\mathbb P(B_M^*\lt S_M^*)`$ 与
 $`\mathbb P(B_M^*\le S_M^*)`$ 夹住。由 (19.19)，变量
 $`T=A_ce^{-\theta B^*}`$ 服从均值一的指数分布，于是
 
 ```math
-\mathbb P(B^*<S^*)
+\mathbb P(B^*\lt S^*)
 =\mathbb E\exp\{-B_ce^{(1-\theta)B^*}\}
 =\int_0^\infty e^{-t-B_cA_c^pt^{-p}}\,dt=\Psi(c).
 \tag{19.20}
@@ -4715,7 +4715,7 @@ $`T=A_ce^{-\theta B^*}`$ 服从均值一的指数分布，于是
 
 这证明已知方向的结论，并使下界约束所有完整观测规则，而非只约束得分阈值规则。
 
-又因 $`\alpha_E>1/\phi(r)>\alpha_A`$，第 18 章以已知有限参数定义的方向规则
+又因 $`\alpha_E\gt 1/\phi(r)\gt \alpha_A`$，第 18 章以已知有限参数定义的方向规则
 在当前尺度下一致正确。先判方向、必要时反转完整观测，再用上述排序规则；
 正确判向事件上它等于相应的方向已知规则。联合错误率至多为方向错误率加已知方向支持错误率，
 无需拆分数据或假定两事件独立。方向已知实验给出的下界与此上界夹住
@@ -4741,7 +4741,7 @@ J_{\mathcal E}\longrightarrow0.
 \tag{19.21}
 ```
 
-证明。仍用 (19.10) 的固定倾斜。给定 $`N_-`$，任意宽度为固定 $`h>0`$
+证明。仍用 (19.10) 的固定倾斜。给定 $`N_-`$，任意宽度为固定 $`h\gt 0`$
 的得分区间至多包含 $`\lfloor h/h_+\rfloor+1`$ 个可行 $`N_+`$。
 $`N_+`$ 的均值是 $`\lambda e^{\theta h_+}/2`$，最大泊松质量为
 $`O(\lambda^{-1/2})`$，故对全部区间位置有
@@ -4762,7 +4762,7 @@ Q_1\{Z\le u\}\le C\lambda^{-1/2}e^{\lambda g(\theta)+(1-\theta)u}.
 令 $`u=\beta\ell+O(1)`$。由临界点的两个恒等式及本定理的样本数条件，
 $`M`$ 倍第一尾部、$`q`$ 倍第二尾部均为 $`O(\ell^{-1/2})`$。
 截断计数后有 $`W-Z=o(1)`$，将其用绝对值不超过一的偏移夹住即可；
-背景补偿的质量比仍为 $`1+o(1)`$。一行的实际律比较取 $`D>1`$，
+背景补偿的质量比仍为 $`1+o(1)`$。一行的实际律比较取 $`D\gt 1`$，
 经全部行的联合界，背景得分达到 $`\beta\ell`$ 或信号得分不超过
 $`\beta\ell`$ 的概率趋零。因此排序精确恢复支持。
 第 18 章的一致方向规则及同数据联合界给出其余两式。

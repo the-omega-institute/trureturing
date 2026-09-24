@@ -25,7 +25,7 @@ nonlattice coordinates through the set where the characteristic function has
 modulus one. In the one-dimensional nonlattice case, the normalization imposes
 no lattice rescaling. Corollary 1 specializes as follows: if independent,
 identically distributed real variables have mean $`m`$, variance
-$`v\in(0,\infty)`$ and a nonlattice law, then for every fixed $`h>0`$,
+$`v\in(0,\infty)`$ and a nonlattice law, then for every fixed $`h\gt 0`$,
 
 ```math
 \sup_{x\in\mathbb R}
