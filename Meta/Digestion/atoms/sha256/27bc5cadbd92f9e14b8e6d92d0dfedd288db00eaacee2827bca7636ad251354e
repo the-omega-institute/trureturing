@@ -1,0 +1,32 @@
+### 15.4 双侧态射与联合边界的关系
+
+令当前读出 \(c:S\to C\)，策略或协议摘要 \(p:S\to P\)。若存在策略残余，即
+
+$$
+c(s)=c(t),\qquad p(s)\ne p(t),
+$$
+
+则一个只保留 \(c\) 的边界无法为所有依赖 \(p\) 的协议定义统一评价。联合读出
+
+$$
+e=(c,p):S\to C\times P
+$$
+
+的核为
+
+$$
+\ker e=\ker c\cap\ker p,
+\tag{15.7}
+$$
+
+并且它是同时保留两项读出的最小共同细化。仓内 JointReadoutSupremum.pair_readout_kernel 和 pair_readout_least_common_refinement 已分别核验核交与最小共同细化；本节只把它们解释成协议运输的必要边界。
+
+若策略实际能由 \(c\) 的实际像因子化，
+
+$$
+p=\widehat p\circ c,
+\tag{15.8}
+$$
+
+则联合边界对该策略不增加区别。仓内 AgencyEnrichment.strategy_factorization_iff_no_residual 给出在实际像上的充要条件。注意式（15.8）只解决策略摘要的恢复；它还不保证 \(c\) 对其他协议、参考或隐藏来源充分。
+

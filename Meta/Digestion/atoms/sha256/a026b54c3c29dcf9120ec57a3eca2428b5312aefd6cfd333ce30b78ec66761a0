@@ -1,0 +1,22 @@
+### 20.5 有限词、无限词与实际来源
+
+对词长不超过 $N$ 的任务，使用
+
+$$
+s\sim_N t
+\iff
+\forall w\in A^*,\ |w|\le N\Rightarrow
+\Phi(s)(w)=\Phi(t)(w).
+$$
+
+有
+
+$$
+\sim_{N+1}\subseteq\sim_N,
+\qquad
+\sim_{\mathrm{word}}=\bigcap_N\sim_N.
+\tag{20.7}
+$$
+
+在有限状态且全动作更新已固定时，`FiniteFutureCongruence.infinite_relation_stabilizes` 说明某个有限深度达到最大分离深度后，有限商就等于无限未来商；没有该稳定条件时，所有有限层相容不等于一个固定有限边界足够。对阶段化或逆极限系统，还要保留第 17 节的实际来源像闭合与更新提升条件：形式上存在的 profile 线程可能不来自任何共同配置。
+

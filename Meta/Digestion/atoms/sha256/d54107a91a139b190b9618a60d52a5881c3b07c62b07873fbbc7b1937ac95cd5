@@ -1,0 +1,51 @@
+**命题 1.6（零能量逻辑量子位的闭合表示）。** 将等对角限制放开，$\mathcal D_0$ 的每个态在 $E_0$ 上唯一具有形式
+$$
+R(p,c)=\begin{pmatrix}p&c\\\overline c&1-p\end{pmatrix},\qquad
+0\le p\le1,\quad |c|^2\le p(1-p).
+\tag{TM.60}
+$$
+
+这些条件正好是迹为一的二阶 Hermitian 矩阵正半定的条件。将任意 $V\in U(2)$ 作为 $E_0$ 上的酉操作，并在 $E_0^\perp$ 上扩展为恒等，得到 $\widetilde V$。所有这些扩展均与 $H$ 对易，且 $\mathcal D_0$ 在它们之下闭合。
+
+在有序基 $|01\rangle,|10\rangle$ 上，记 Pauli 矩阵为 $\tau_x,\tau_y,\tau_z$。定义
+$$
+\begin{aligned}
+r_x&=2\operatorname{Re}c,\qquad
+r_y=-2\operatorname{Im}c,\qquad
+r_z=2p-1,\\
+R&=\tfrac12\bigl(I+r_x\tau_x+r_y\tau_y+r_z\tau_z\bigr),\qquad
+r_x^2+r_y^2+r_z^2\le1,\qquad c=(r_x-ir_y)/2.
+\end{aligned}
+\tag{TM.61}
+$$
+
+由 $|c|^2\le p(1-p)$ 立即得到球内条件，反向代入也恢复正半定条件。这些 Pauli 矩阵作用于简并本征子空间，并不是把原来的两个局部子系统重新认作同一个局部量子位。其与原读数的具体对应为
+$$
+\left.(X\otimes X)\right|_{E_0}=\tau_x,\qquad
+\left.(X\otimes Y)\right|_{E_0}=-\tau_y,\qquad
+\left.(Z\otimes I)\right|_{E_0}=\tau_z.
+\tag{TM.62}
+$$
+
+因而式(TM.59)与 $r_y$ 的负号相容。当前局部 $Z$ 期望为 $r_z$，三项坐标共同确定整个 $R$，并给出每一项允许酉操作的精确更新：
+$$
+r'_i=\sum_{j\in\{x,y,z\}}O(V)_{ij}r_j,\qquad
+O(V)_{ij}=\tfrac12\operatorname{Tr}(\tau_iV\tau_jV^\dagger),\qquad
+R'=VRV^\dagger.
+\tag{TM.63}
+$$
+
+证明为将式(TM.61)代入 $VRV^\dagger$，再用 $\operatorname{Tr}(\tau_i)=0$ 与 $\operatorname{Tr}(\tau_i\tau_j)=2\delta_{ij}$ 取出坐标。系数是实数，因为 Hermitian 矩阵乘积的迹为实；酉共轭保持 Hilbert–Schmidt 内积，所以 $O(V)$ 为正交矩阵，保持球内条件。这里三项坐标是允许动态闭合的表示，而原摘要 $q$ 在 $\mathcal D_0$ 上仅保留 $p$：能量分布固定，两份边缘态及计算基联合概率均只由对角元确定。
+
+这三项坐标还能只用所声明的守能联合操作与局部 $Z$ 读取来取得。令
+$$
+H_2=\tfrac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+S=\operatorname{diag}(1,i),\qquad
+V_z=I,\quad V_x=H_2,\quad V_y=H_2S^\dagger.
+\qquad
+V_k^\dagger\tau_zV_k=\tau_k\quad(k=x,y,z).
+\tag{TM.64}
+$$
+
+其中 $H_2^\dagger\tau_zH_2=\tau_x$，$S\tau_xS^\dagger=\tau_y$，故等式逐项成立。在同一准备态的不同试次中，执行 $\widetilde V_k$ 后读取第一系统 $Z$，其期望即为 $r_k$。所有 $\widetilde V_k$ 与 $H$ 对易；局部 $Z$ 的谱投影也与 $H$ 对易，故这一指定实验无需用不守能的局部 Pauli 仪器替代。它仍需实际的联合控制、重复准备与统计读取资源，并未将三项未知实数变成一次测量可取得的数据。
+

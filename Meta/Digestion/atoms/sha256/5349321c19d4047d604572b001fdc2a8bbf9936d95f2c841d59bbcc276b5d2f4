@@ -1,0 +1,22 @@
+**定理 10.3（动态互相恢复判据）。** 若 \(e_i,e_j\) 满足 \(\ker e_i=\ker\kappa=\ker e_j\) 及式（10.4），并且策略也因子化，则存在唯一双射
+
+$$
+R_{ij}:e_i(S)\to e_j(S),\qquad R_{ij}\circ e_i=e_j,
+\tag{10.5}
+$$
+
+且
+
+$$
+R_{ij}(D_a^{e_i})=D_a^{e_j},\quad
+O_a^{e_j}\circ R_{ij}=O_a^{e_i},\quad
+R_{ij}\circ T_a^{e_i}=T_a^{e_j}\circ R_{ij}.
+\tag{10.6}
+$$
+
+此外 \(R_{ji}=R_{ij}^{-1}\)，且 \(R_{ik}=R_{jk}\circ R_{ij}\)。
+
+**证明。** 由命题 10.2 取 \(R_{ij}=\widehat\kappa_{e_j}^{-1}\circ\widehat\kappa_{e_i}\)。代入式（10.4）即得所有交换式；唯一性给出逆映射和三角恒等式。证毕。
+
+若端点状态有正费用自环 \(q(T_\ell s)=q(s)\)、\(c(s,\ell)=1\)，则端点表达恒定而路径钟 \(\tau(\ell^n)=n\)。时间不能从端点状态恢复；必须把路径记录、费用标签或钟字段纳入表达，并保留 \(\tau(uv)=\tau(u)+\tau(v)\)。
+

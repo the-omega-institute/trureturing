@@ -1,0 +1,34 @@
+**命题 3.4（均匀窗口极限）。** 取 $T>0$，$\nu_T(dt)=T^{-1}\mathbf1_{[0,T]}(t)\,dt$，记 $\mathcal A_T^H=\mathcal C_{\nu_T}^H$。直接积分得
+
+$$
+k_T(\omega)=\widehat\nu_T(\omega)
+=\begin{cases}
+\dfrac{1-e^{-i\omega T}}{i\omega T},&\omega\ne0,\\
+1,&\omega=0,
+\end{cases}
+=e^{-i\omega T/2}\operatorname{sinc}(\omega T/2),
+\qquad
+\operatorname{sinc}(u)=\begin{cases}\sin u/u,&u\ne0,\\1,&u=0.\end{cases}
+\tag{TM.265}
+$$
+
+于是
+
+$$
+\mathcal A_T^H(X)=\sum_{a,b}k_T(E_a-E_b)\Pi_aX\Pi_b,
+\qquad
+\mathcal P_H(X)=\sum_a\Pi_aX\Pi_a,
+\qquad
+|k_T(\omega)|\le\min\{1,2/(T|\omega|)\}\quad(\omega\ne0).
+\tag{TM.266}
+$$
+
+对每个固定非零能隙，系数随 $T\to\infty$ 趋零，故 $\mathcal A_T^H\to\mathcal P_H$。下面给出包含全部参考的 diamond 范数界；不要求能量公度或时间周期。若 $r\ge2$，令
+
+$$
+g=\min_{a\ne b}|E_a-E_b|>0.
+\tag{TM.267}
+$$
+
+$r=1$ 时 $H$ 为数量算子，两通道均为恒等，不定义 $g$。若要包括零窗口，可另定义 $\mathcal A_0^H=\operatorname{id}$，它是 $T\downarrow0$ 的连续延拓。
+
