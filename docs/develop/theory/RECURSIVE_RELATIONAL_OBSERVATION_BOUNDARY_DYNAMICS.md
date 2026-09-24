@@ -1959,3 +1959,124 @@ $$
 本节把第 18 节的联合协议域和第 20 节的合法动作词树连接成一个有序协议作用商；一般的状态—协议双侧普适性仍是普通数学组合，未新增 Lean 声明。
 
 ## 21.99 追加锚
+
+## 22. 观察者塔与完成化幂等性
+
+前面已经把一个固定任务的边界写成未来响应商。现在把观察者的逐层细化写成一座塔。设 $q_0:S\to B_0$ 是当前可用的表示，$\mathcal T$ 是已经声明的目标、动作、失败和记录标签的任务族，记
+
+$$
+C_{\mathcal T}(q)(s)=\Gamma_{\mathcal T,q}(s)
+$$
+
+为把状态送到全部合法未来响应的完成化。这里的响应仍然只在实际可达配置上取值；它不是把形式上任意的函数或逆极限线程免费加入系统。
+
+下文 $q\preceq r$ 表示 $q$ 从 $r$ 因子化，即存在映射 $h$ 使 $q=h\circ r$；方向与仓内 `Refines q r` 相同。式中的 $C_{\mathcal T}$ 先按确定性对象层的响应特例书写；若任务保留概率、失败、权限或记录标签，就必须把相应联合 profile 纳入 $\Gamma_{\mathcal T,q}$，不能由对象层记号自动推出完整过程结论。
+
+### 22.1 固定任务下的观察者塔
+
+**theorem 22.1: 固定任务下的观察者塔；Claim status: open.** 固定 $\mathcal T$ 时，定义
+
+$$
+B_0=S,\qquad q_{n+1}=C_{\mathcal T}(q_n).
+\tag{22.1}
+$$
+
+每一层都保留前一层的读出，因为
+
+$$
+q_n\preceq C_{\mathcal T}(q_n).
+\tag{22.2}
+$$
+
+若 $q_n\preceq r_n$，则同一任务下的完成化也保持这个细化顺序：
+
+$$
+C_{\mathcal T}(q_n)\preceq C_{\mathcal T}(r_n).
+\tag{22.3}
+$$
+
+完成后的状态已经记录了同一任务的全部未来响应，所以再次完成只改变载体的编码方式：
+
+$$
+C_{\mathcal T}(C_{\mathcal T}(q))\simeq C_{\mathcal T}(q).
+\tag{22.4}
+$$
+
+仓内 `PredictionCompletionIdempotence.prediction_completion_idempotent` 与 `CanonicalCompletionIdempotence.canonical_completion_idempotence` 给出相应的固定任务幂等性；`BehaviorCompletionFunctoriality.behavior_completion_is_functorial` 和 `BehaviorCompletionUniqueStability.behavior_completion_has_unique_induced_update` 说明运输、更新和唯一诱导在该等价下相容。因此，从第一个已经完备的层起，塔只发生规范等价，不再产生新的同一任务响应。
+
+这里的“稳定”是相对于 $(\mathcal T,\text{更新},\text{读出})$ 的稳定。它不表示这个载体已经能够回答尚未加入任务族的所有问题。
+
+### 22.2 新任务如何重新打开边界
+
+**theorem 22.2: 新任务如何重新打开边界；Claim status: open.** 设下一阶段加入一个新目标 $T':S\to Y'$，而旧边界是 $q$。旧纤维中仍能被新目标区分的成对配置组成
+
+$$
+\operatorname{Esc}_{T'}(q)
+ =
+ \{(s,t):q(s)=q(t)\ \land\ T'(s)\ne T'(t)\}.
+\tag{22.5}
+$$
+
+若这个集合非空，$T'$ 就不在旧摘要上因子化；加入它的目标完成化会严格切开旧纤维。反之，若 $T'=g\circ q$，则旧边界已经足以恢复这个目标，加入 $T'$ 不会造成新的区分。仓内 `TargetClosureOperator.target_closure_equivalent_iff_target_sufficient` 正好把这一因子化条件与目标完成的固定点联系起来；`target_closure_three_laws` 则给出扩张、单调和同一目标下的幂等（按 `ConceptEquivalent` 计）。
+
+一个最小例子是 $S=\mathrm{Bool}$，旧读出 $q_0:S\to\{*\}$ 为常值，更新为恒等。对旧任务，未来完成仍只有一个状态类，再次完成稳定。若新任务取 $T'=\mathrm{id}_{\mathrm{Bool}}$，则
+
+$$
+\operatorname{targetClosure}(q_0,T')(x)=(*,x)
+$$
+
+把两个旧配置分开；第二次加入同一个 $T'$ 只给出规范等价的重复坐标。这说明“完成化幂等”不能被误读为“对所有未来任务一次完成就永远足够”。
+
+### 22.3 最大不变核与有限层稳定
+
+**theorem 22.3: 最大不变核与有限层稳定；Claim status: open.** 对确定更新 $F:S\to S$ 和当前读出 $q$，完整未来商的核是当前观察核中最大的前向不变关系：它既包含在 $\ker q$ 中，又满足
+
+$$
+(s,t)\sim\Longrightarrow(Fs,Ft)\sim,
+$$
+
+并且任何同时具有这两项性质的关系都包含在它里面。仓内 `CompletionKernelGreatestFixedPoint.completion_kernel_is_greatest_fixed_point` 给出这一最大不变核表述。因而有限 horizon 商的稳定，只能在已有的有限分离深度、有限状态或其他明确条件下推出；没有这些条件，
+
+$$
+\bigcap_N\ker\Gamma_{\mathcal T,\le N}
+$$
+
+仍可能严格小于任何一个有限层核。
+
+即使所有有限层都彼此相容，也还要检查逆极限线程是否来自同一个实际配置，以及更新是否在实际来源像上闭合。第 17 节的实际来源像条件不能由形式上的逆极限存在自动替代。
+
+### 22.4 动态完成、状态忠实与自描述是不同性质
+
+**theorem 22.4: 动态完成、状态忠实与自描述是不同性质；Claim status: open.** 完成后的动态下降、状态读出忠实、表示映射满射，以及同类型的自描述闭合，必须分开记录。它们分别回答：更新能否在摘要上定义、不同状态是否仍可被读出区分、载体是否覆盖目标对象、以及所有同类型自映射是否都能在对象内部编码。
+
+布尔例子已经足以分开这些性质：恒等读出可以状态忠实，恒等或取反更新也可以下降，但 $\mathrm{Bool}$ 不能在同类型内满射地编码全部布尔自映射；相反，常值读出可以有动态下降，却不是状态忠实。仓内 `DiagonalEscapeNeedsTypeExtension` 的 `state_faithfulness_not_self_description_closure`、`effective_descent_not_self_description_closure` 与 `ClosureNonimplicationTriple.closure_nonimplication_triple` 提供了这些非蕴含的具体支点。
+
+因此，完成化塔在固定任务上达到幂等，不等于存在一个同类型的终端自描述观察者。若把“观察者能够描述所有同类型观察者”也加入任务，旧载体上会出现新的对角逃逸；`ProObjects.NoTerminalSelfDescription.no_terminal_self_description` 说明即使形式上有终端阶段表示，扭曲的自评价仍能逃出该阶段的枚举像。
+
+### 22.5 塔、完成与全局恢复的边界
+
+**theorem 22.5: 塔、完成与全局恢复的边界；Claim status: open.** 观察者塔可以在固定任务下稳定，而全局恢复仍需另外的共同来源条件。一个稳定的形式塔只说明每层的响应商已对声明任务闭合；它不证明：
+
+* 新任务加入后旧纤维仍然充分；
+* 每个相容的无限线程都来自一个实际状态；
+* 完成后的载体对所有自身操作都能做同类型编码；
+* 数学上定义的边界能在固定资源和实际接口下被取得。
+
+所以更准确的收束是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{固定任务完成化}&\Rightarrow\text{同任务响应的规范稳定};\\
+\text{任务扩大且旧纤维不因子化}&\Rightarrow\text{边界重新细化};\\
+\text{逆极限相容}&\not\Rightarrow\text{实际共同来源};\\
+\text{动态下降或状态忠实}&\not\Rightarrow\text{同类型终端自描述}.
+\end{aligned}}
+\tag{22.6}
+$$
+
+这使“无穷观察”获得一个可检验的含义：不是寻找一张容纳所有任务的最大坐标图，而是研究任务族扩张时哪些边界纤维必须继续被切开，以及哪些运输和来源条件能让各层仍然来自同一个关系整体。任务增长下是否总会在某个有限阶段稳定，仍取决于任务族、状态载体和资源条件，不能由固定任务的幂等性推出。
+
+本节只组织既有过程、完成化、目标闭包和对角逃逸结果的关系，没有新增 Lean 声明；正文中的“稳定”“严格细化”和“实际来源”均受各自明示条件限制。
+
+## 22.99 追加锚
