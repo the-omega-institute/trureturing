@@ -33,7 +33,21 @@ internal sealed class PartitionTopologyKernelDocument : IScribeDocumentDefinitio
                     "If the readouts differ, the preimage of the singleton containing the "
                         + "first readout is open and contains exactly one of the two states. "
                         + "Thus topological inseparability is equivalent to kernel equality."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Paragraph(
+                Text("Literature scope: Pauly (2016), recorded in "
+                    + "Library/ConceptDynamics/pauly2016represented.md, develops "
+                    + "Sierpinski-valued observations and represented spaces. "
+                    + "For the discrete codomain used here, equal kernels determine the "
+                    + "partition topology. General initial topologies can have the same "
+                    + "inseparability relation but different open tests, while effective "
+                    + "observation additionally depends on the chosen representation.")),
+            Paragraph(
+                Text("Quantitative observation interface: Eftekhari et al. (2018), "
+                    + "recorded in Library/ConceptDynamics/eftekhari2018embedology.md, "
+                    + "distinguishes topological recovery from stable delay embedding. "
+                    + "Consequently, equality of observable partitions alone does not "
+                    + "control geometric conditioning or sensitivity to measurement noise.")))));
 
     private static Formula TheoremFormula()
     {
