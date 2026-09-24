@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:75c7583d7f3a2e8312f0d1c020cd98cfb62f65a434a8480a5a8147c20582ba36
+  normalized_sha256: sha256:75c7583d7f3a2e8312f0d1c020cd98cfb62f65a434a8480a5a8147c20582ba36
+cas_ref: sha256:75c7583d7f3a2e8312f0d1c020cd98cfb62f65a434a8480a5a8147c20582ba36
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Fully expanded temporary specializations close the actual joint fixed-slot state, not an assumed encoding injection. The same lawful backward history identifies both Nat.find counters, reversed window coordinates, signed endpoints, every chronological nondominated candidate, all-bit parity and zero suffix. Explicit actual-image equivalences transport the verified BitVec codec. Actual source full_step, hat_step, append_valid_iff and current-output premises are discharged; runtime maps use only stored bits, fixed R,k and the new bit. The encoder reserves Q ordered slots of two L-bit offsets and the actual parity bit, followed by L-bit queue length, L-bit ell and optional J-bit exact j. All unused slots are false. The source 140.0 one-step contracts establish both bounds without the stronger finite-word theorem. Configurable parameters use a completed self-delimiting header of length 2L+2J+2, overhead at most 6(log2(R+1)+log2 k), and combined constant 20. The proof reduces to frozen ZeroRunWordGeometry and LongestZeroSelectorResponse definitions and pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d: CovBy, Finset.orderIsoOfFin/card_bij/card_biUnion/sup, List.Pairwise.eq_of_mem_iff, Nat.find, BitVec, Fin.appendEquiv, Nat.le_pow_clog, Nat.card_congr/card_le_card_of_injective, Real.natCeil_logb_natCast and Nat.sInf_le/sInf_mem with normalization. No usable exact frozen project GID carries the whole clause; no new Lean or Freeze is proposed. Fixed parameters have no header. No acquisition, calibration, execution-workspace or time bound is granted; initialization 140.7 remains separate.'
+    previous_atom_id: 1a0de85b8c0679c8344a5bc08fcd14dd5cd21ea952be650626e1ca4381ebb0e3
+    next_atom_id: 301d3336aeb1bf27f963ce4cfa3b4aef541057abf1c6757d9d84a50692d54489
