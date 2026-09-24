@@ -91,6 +91,9 @@ jobs:
         if: steps.keys.outputs.judge_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v4
+        env:
+          # SDK binary modes are part of the verified judge material identity.
+          TAR_OPTIONS: --same-permissions
         with:
           path: ${{ steps.keys.outputs.judge_path }}
           key: ${{ steps.keys.outputs.judge_key }}
