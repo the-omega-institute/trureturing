@@ -37132,3 +37132,524 @@ $$
 定理165.2只用一个有限缩放时刻建立必要条件；其达到性使用第163节的统一尾界。命题165.3显示，这两种义务不可互相替代：每步 $O((1-r)^2)$ 的重置在 $N=O((1-r)^{-1})$ 的任何固定缩放区间上消失，却在更长视界累积成完全可区分的误差。局部最小代价和生成元相同均不足以控制无界视界。本节仍只研究定义165.1的已校准量子记录模型，不由这些预测权衡给出量子性的普遍定义或量子相对经典的普遍优势。
 
 ## 追加锚（本行以下为增补区）
+
+## 166. 全视界误差的半距门槛与稳定记录空间
+
+**定义 166.1（固定模式、周边模式与一阶匹配）。** 沿用定义165.1的已校准三标签记录源、全参考距离和风险 $W_r$，其中 $0<r<1$，每个预测器为在原三维系统上反复使用的 CPTP 通道。令 $\Delta$ 为计算基下的完全去相干通道。对通道 $\mathcal F$，记
+$$
+\operatorname{Fix}(\mathcal F)=\ker(\mathcal F-\mathrm{Id}),\qquad
+m(\mathcal F)=\dim_{\mathbb C}\operatorname{Fix}(\mathcal F).
+\tag{166.1}
+$$
+周边空间指复线性算子 $\mathcal F$ 的全部模长为一的特征值所对应的广义特征空间之和，其维数记为 $p(\mathcal F)$。CPTP 通道的幂有界，因而周边 Jordan 块均为一阶。固定模式是周边模式的一部分，二者不先验等同。
+
+仍以 $\mathcal T_r(A)=C(r,r^{k_*})\odot A$ 表示第163节的达到通道，$k_*=3\sqrt3\log2/\pi$。称通道族 $\mathcal F_r$ 与它一阶匹配，若该族在某个 $(r_0,1)$ 上定义，且
+$$
+\delta_r:=d_{\rm ref}(\mathcal F_r,\mathcal T_r)=o(1-r).
+\tag{166.2}
+$$
+这里使用整个通道的全参考距离，不只比较一个输入、单步风险值或某个相干分量。
+
+**定理 166.2（小于半距的预测必须保留三个稳定纯态）。** 对固定 $0<r<1$ 和任意三维 CPTP 通道 $\mathcal F$，若
+$$
+W_r(\mathcal F)<\frac12,
+\tag{166.3}
+$$
+则 $m(\mathcal F)=p(\mathcal F)=3$，且存在一组正交归一基 $u_0,u_1,u_2$ 与相关矩阵 $B\succeq0$、$B_{ii}=1$，使
+$$
+\mathcal F(|u_i\rangle\langle u_j|)
+=B_{ij}|u_i\rangle\langle u_j|,
+\qquad |B_{ij}|<1\quad(i\ne j).
+\tag{166.4}
+$$
+因此 $\mathcal F$ 是该基下的严格衰减 Schur 通道，固定三个正交纯态，且 $\mathcal F(I)=I$。设 $\Delta_U$ 为这组基下的完全去相干通道，则
+$$
+\mathcal F^N\longrightarrow\Delta_U,
+\qquad
+d_{\rm ref}(\Delta_U,\Delta)\le W_r(\mathcal F).
+\tag{166.5}
+$$
+更一般地，在本模型内只要 $m(\mathcal F)\ne3$ 或 $p(\mathcal F)\ne3$，便有 $W_r(\mathcal F)\ge1/2$。式（166.4）是低风险的必要结构，不是所有此类 Schur 通道都低风险的充分条件；也不要求 $u_i$ 等于原计算基。
+
+证明。 先说明所用的有限维秩障碍。若两个 CPTP 幂等算子 $\mathcal P,\mathcal Q$ 的复秩不同，不妨设 $\operatorname{rank}\mathcal P>\operatorname{rank}\mathcal Q$。二者保 Hermitian，其 Hermitian 像空间的实维数等于复秩，因此存在非零 Hermitian 矩阵
+$$
+A\in\operatorname{ran}\mathcal P\cap\ker\mathcal Q.
+$$
+于是 $(\mathcal P-\mathcal Q)A=A$。将 $A$ 的正负部分分别归一化为态，用 $d_{\rm ref}$ 所包含的无参考输入距离，得到
+$$
+\|A\|_1
+=\|(\mathcal P-\mathcal Q)A\|_1
+\le2d_{\rm ref}(\mathcal P,\mathcal Q)\|A\|_1.
+$$
+故
+$$
+\operatorname{rank}\mathcal P\ne\operatorname{rank}\mathcal Q
+\quad\Longrightarrow\quad
+d_{\rm ref}(\mathcal P,\mathcal Q)\ge\frac12.
+\tag{166.6}
+$$
+这只是不同秩的投影不能在算子范数一以内相互逼近的标准有限维事实在全参考距离下的归一化。
+
+通道幂的有界性保证 Cesàro 极限存在：
+$$
+\mathcal E_{\mathcal F}
+=\lim_{M\to\infty}\frac1M\sum_{N=1}^{M}\mathcal F^N.
+\tag{166.7}
+$$
+逐个 Jordan 块看，模长小于一的块平均后消失，模长为一但不等于一的特征值平均后也消失，而特征值一的空间保留。因此 $\mathcal E_{\mathcal F}$ 是投影到 $\operatorname{Fix}(\mathcal F)$ 的幂等算子；它是 CPTP 通道的平均之极限，所以也是 CPTP。
+
+相位零属于允许源族，且 $\mathcal M_{r,0}^N\to\Delta$。对平均应用距离的凸性，再取极限，得到
+$$
+d_{\rm ref}(\mathcal E_{\mathcal F},\Delta)
+\le W_r(\mathcal F).
+\tag{166.8}
+$$
+由于 $\operatorname{rank}\Delta=3$，式（166.6）已证明：若 $m(\mathcal F)\ne3$，则风险至少为 $1/2$；在假设（166.3）下，$m(\mathcal F)=3$。
+
+接下来使用任意有限维 CPTP 通道的成熟固定空间结构。Blume-Kohout、Ng、Poulin、Viola，[*Information-preserving structures: A general framework for quantum zero-error information*](https://arxiv.org/abs/1006.1358)，定义10及定理5，给出在固定态共同支撑上的分解
+$$
+\mathcal H=
+\left(\bigoplus_a\mathcal A_a\otimes\mathcal B_a\right)\oplus\mathcal K,
+\qquad
+\operatorname{Fix}(\mathcal F)=
+\left(\bigoplus_a M(\mathcal A_a)\otimes\tau_a\right)\oplus0_{\mathcal K},
+\tag{166.9}
+$$
+其中 $\tau_a$ 为固定的非零正矩阵，可归一化为密度矩阵；$\mathcal K$ 是固定态共同支撑之外的空间。该结构适用于非 unital 通道，不要求预先存在满秩固定态。因而
+$$
+m(\mathcal F)=\sum_a(\dim\mathcal A_a)^2.
+\tag{166.10}
+$$
+当此和等于三时，只能有三个一维 $\mathcal A_a$。物理 Hilbert 空间本身也只有三维，故每个 $\mathcal B_a$ 都一维、$\mathcal K=0$。于是存在三个正交纯态投影 $|u_i\rangle\langle u_i|$ 被 $\mathcal F$ 固定。这也证明了一个后面要用的事实：仅有 $m(\mathcal F)=3$，已经足以推出某个基下的 Schur 形式，不必先假设（166.3）。
+
+取任意 Kraus 表示 $\mathcal F(A)=\sum_\ell K_\ell A K_\ell^\dagger$。纯态固定条件意味着每个 $K_\ell u_i$ 都在 $\mathbb C u_i$ 中，否则正算子之和会在该直线之外产生非零支撑。写 $K_\ell u_i=a_{\ell i}u_i$，便得到 Schur 系数
+$$
+B_{ij}=\sum_\ell a_{\ell i}\overline{a_{\ell j}}.
+$$
+它是 Gram 矩阵，且保持迹给出 $B_{ii}=1$。这证明式（166.4）除严格模长外的部分，同时证明 unital 性。上述外部固定空间定理只承担这个结构步骤；本节的误差门槛由式（166.6）与真实源极限共同给出。
+
+最后处理周边模式。设 $\lambda_1,\ldots,\lambda_s$ 是全部周边特征值。有限个单位圆相位的同时回归给出整数 $N_j\to\infty$，使每个 $\lambda_a^{N_j}\to1$。这可由环面上的同时有理逼近得到；若回归取值有有限公共周期，则取其不断增大的整数倍。幂有界排除了周边非平凡 Jordan 块，其余广义特征空间在这些幂下趋于零。因此
+$$
+\mathcal F^{N_j}\longrightarrow\mathcal P_{\rm per},
+\tag{166.11}
+$$
+其中 $\mathcal P_{\rm per}$ 为周边空间上的 CPTP 幂等投影，秩为 $p(\mathcal F)$。与同一序列上的 $\mathcal M_{r,0}^{N_j}\to\Delta$ 比较，得到
+$$
+d_{\rm ref}(\mathcal P_{\rm per},\Delta)\le W_r(\mathcal F).
+\tag{166.12}
+$$
+式（166.6）故也给出 $p(\mathcal F)\ne3$ 时的半距下界；在（166.3）下，周边空间恰好三维。固定空间已经占满这三维，故 Schur 系数 $B_{ij}$ 在 $i\ne j$ 时都必须满足 $|B_{ij}|<1$。其幂于是收敛至 $\Delta_U$，再用式（166.8）得到（166.5）。证毕。
+
+**命题 166.3（半距门槛在每个参数处都精确）。** 令 $P_i=|i\rangle\langle i|$、$Q=P_0+P_1$，并定义块去相干通道
+$$
+\mathcal B(A)=QAQ+P_2AP_2.
+\tag{166.13}
+$$
+则 $m(\mathcal B)=p(\mathcal B)=5$，但对全部 $0<r<1$，
+$$
+\boxed{W_r(\mathcal B)=\frac12.}
+\tag{166.14}
+$$
+所以定理166.2中的严格不等号不能改成非严格不等号，也不能将门槛提高。
+
+证明。 $\mathcal B^2=\mathcal B$，其像为一个完整二阶矩阵块及一个标量块，维数为 $2^2+1^2=5$。令 $\operatorname{Ad}_U(A)=UAU^\dagger$。有
+$$
+\mathcal B=\frac12\left(\mathrm{Id}+
+\operatorname{Ad}_{\operatorname{diag}(1,1,-1)}\right),
+\qquad
+\Delta=\frac12\left(\mathcal B+
+\operatorname{Ad}_{\operatorname{diag}(1,-1,1)}\circ\mathcal B\right).
+\tag{166.15}
+$$
+两个通道的 diamond 距离至多为二，故这两个等式给出
+$$
+\|\mathrm{Id}-\mathcal B\|_\diamond\le1,
+\qquad
+\|\Delta-\mathcal B\|_\diamond\le1.
+$$
+第一个范数以 $02$ 两标签的平衡叠加作输入达到半迹距离 $1/2$，第二个范数则由 $01$ 平衡叠加达到同一值，故两个上界都是等式。
+
+对任意 $N\ge1$，写 $s=r^N$、$\theta=N\phi$ 和 $U_\theta=\operatorname{diag}(e^{i\theta},1,1)$。逐矩阵元计算得
+$$
+\mathcal M_{r,\phi}^{N}-\mathcal B
+=(1-s)(\Delta-\mathcal B)
++s\,\operatorname{Ad}_{U_\theta}\circ(\mathrm{Id}-\mathcal B).
+\tag{166.16}
+$$
+右端第一项只改变 $01$ 相干，第二项只含连接 $\{0,1\}$ 与 $\{2\}$ 的相干，并给 $02$ 项正确相位。由 diamond 范数的三角不等式及输出酉共轭不变性，右端范数至多为 $(1-s)+s=1$。结合 $\mathcal B^N=\mathcal B$，得到 $W_r(\mathcal B)\le1/2$。当 $N\to\infty$ 时真实通道趋于 $\Delta$，而 $d_{\rm ref}(\Delta,\mathcal B)=1/2$，故下界也成立。证毕。
+
+**定理 166.4（一阶匹配下，稳定记录维数刻画全视界稳定性）。** 设任意三维 CPTP 族 $\mathcal F_r$ 满足式（166.2），不要求参数连续。以下三项等价：
+
+1. 对所有充分接近一的 $r<1$，$m(\mathcal F_r)=3$。
+2. $\sup_{N\ge0}d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N)\to0$。
+3. $W_r(\mathcal F_r)\to L$，其中 $L=(\sqrt3/4)e^{-\pi/(3\sqrt3)}$。
+
+此外，对任意满足式（166.2）的族，$W_r(\mathcal F_r)$ 在 $r\uparrow1$ 时的全部聚点均属于
+$$
+\boxed{\{L\}\cup[1/2,1].}
+\tag{166.17}
+$$
+故在这类一阶匹配族中，风险不能收敛到严格介于 $L$ 与 $1/2$ 之间的数。
+
+证明。 先由第一项推出第二项。令 $\varepsilon=1-r$，并把通道视为带 Hilbert–Schmidt 内积的九维矩阵空间上的线性算子。有限维范数等价与式（166.2）给出
+$$
+A_r:=\frac{\mathcal F_r-\mathrm{Id}}{\varepsilon}
+\longrightarrow G_*:=
+\lim_{r\uparrow1}\frac{\mathcal T_r-\mathrm{Id}}{\varepsilon}.
+\tag{166.18}
+$$
+在原计算基的矩阵单位 $E_{ij}$ 上，$G_*$ 的三个对角方向为零；$01,10,12,21$ 四个方向的特征值为 $-1$；$02,20$ 两个方向的特征值为 $-(1+k_*)$。所以零特征值半单且恰好三重，与其余谱有正间隔。
+
+在零附近取固定的小圆，不包围其余两个特征值。沿该圆定义的 Riesz 谱投影连续依赖于算子，故 $A_r$ 对应的谱投影趋于 $\Delta$，且充分接近一时秩为三。这里使用标准有限维矩阵函数演算；例如见 Higham、Lin，[*Matrix Functions: A Short Course*](https://eprints.maths.manchester.ac.uk/2067/1/covered/MIMS_ep2013_42.pdf)，§3.1的 Jordan、插值与 Cauchy 积分表述。
+
+由第一项，$\ker A_r$ 本身已经三维，因此这个零附近谱簇只能由三个精确零特征值组成，没有从零分裂出来的缓慢模式。定理166.2证明中由式（166.9）—（166.10）推出的结构说明：每个这样的 $\mathcal F_r$ 都是某个正交基下的 Schur 通道。它在该基的矩阵单位上对角化，因而是 Hilbert–Schmidt 内积下的正规算子，$A_r$ 也正规。其零谱投影于是为该基下的去相干投影 $\mathcal E_r$，满足
+$$
+d_{\rm ref}(\mathcal E_r,\Delta)\longrightarrow0.
+\tag{166.19}
+$$
+虽然此基可以随 $r$ 旋转，投影的收敛仍由（166.18）的谱间隔控制。
+
+其余六个特征值 $\mu$ 只能趋近 $-1$ 或 $-(1+k_*)$，故充分接近一时统一满足 $\operatorname{Re}\mu\le-1/2$ 及 $|\mu|\le C_0$，其中 $C_0$ 与 $r$ 无关。对应的 $\mathcal F_r$ 特征值为 $1+\varepsilon\mu$，于是
+$$
+|1+\varepsilon\mu|^2
+\le1-\varepsilon+C_0^2\varepsilon^2
+\le1-\frac\varepsilon2,
+\qquad
+|1+\varepsilon\mu|\le1-\frac\varepsilon4
+\tag{166.20}
+$$
+对所有充分小的 $\varepsilon$ 成立。正规性消除了 Jordan 多项式因子及随基变坏的条件数，故
+$$
+\|\mathcal F_r^N-\mathcal E_r\|_{2\to2}
+\le e^{-\varepsilon N/4},
+\qquad
+\|\mathcal T_r^N-\Delta\|_{2\to2}
+\le r^N\le e^{-\varepsilon N}.
+\tag{166.21}
+$$
+
+为明确参考系统不带来隐含维数成本，任意纯系统—参考输入的 Schmidt 秩至多为三，可将参考限制到三维。输出所在空间至多九维，故迹范数至多为三倍 Hilbert–Schmidt 范数；输入纯态的 Hilbert–Schmidt 范数为一，而张量恒等映射不改变 $2\to2$ 算子范数。再由输入的凸分解，对任意三维通道 $\mathcal H,\mathcal K$ 都有
+$$
+d_{\rm ref}(\mathcal H,\mathcal K)
+\le\frac32\|\mathcal H-\mathcal K\|_{2\to2}.
+\tag{166.22}
+$$
+所以式（166.21）给出统一于全部参考系统和整数视界的指数尾界。
+
+固定 $T>0$。当 $\varepsilon N\le T$ 时，通道复合的 telescoping 与式（166.2）给出
+$$
+d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N)
+\le N\delta_r\le T\frac{\delta_r}{\varepsilon}\longrightarrow0.
+\tag{166.23}
+$$
+当 $\varepsilon N>T$ 时，用（166.19）—（166.22），
+$$
+d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N)
+\le d_{\rm ref}(\mathcal E_r,\Delta)
++\frac32\left(e^{-T/4}+e^{-T}\right).
+\tag{166.24}
+$$
+先令 $r\uparrow1$，再令 $T\to\infty$，即得第二项。这个顺序同时控制所有整数 $N$，不把逐个有限缩放区间的收敛冒充无界视界收敛。
+
+三角不等式还给出
+$$
+|W_r(\mathcal F_r)-W_r(\mathcal T_r)|
+\le\sup_{N\ge0}d_{\rm ref}(\mathcal F_r^N,\mathcal T_r^N).
+\tag{166.25}
+$$
+定理163.2给出 $W_r(\mathcal T_r)\to L$，故第二项推出第三项。若第三项成立，由 $L<1/2$，最终有 $W_r(\mathcal F_r)<1/2$，定理166.2遂推出第一项。
+
+最后，若沿某个 $r_n\uparrow1$ 有风险收敛到 $w<1/2$，则该序列最终满足 $m(\mathcal F_{r_n})=3$。刚才的谱投影、有限区间及尾估计逐项适用于这条序列，故 $w=L$。风险总在 $[0,1]$ 内，得到式（166.17）。证毕。
+
+**命题 166.5（一阶匹配仍可达到半距分支）。** 令 $V$ 交换计算基的 $0,1$ 标签并固定 $2$，定义 $\mathcal S=\operatorname{Ad}_V\circ\Delta$。对 $1/2<r<1$，令 $\varepsilon=1-r$、$p_r=\varepsilon^2$，并取
+$$
+\mathcal H_r=(1-p_r)\mathcal T_r+p_r\mathcal S.
+\tag{166.26}
+$$
+则 $\mathcal H_r$ 为 CPTP 通道，满足式（166.2），且 $m(\mathcal H_r)=2$；对所有充分接近一的 $r<1$，恰有
+$$
+\boxed{W_r(\mathcal H_r)=\frac12.}
+\tag{166.27}
+$$
+因此式（166.17）的上分支可以在其左端点达到，即使单步通道偏差只有 $O((1-r)^2)$。
+
+证明。 通道凸组合保持 CPTP，且 $d_{\rm ref}(\mathcal H_r,\mathcal T_r)\le p_r=o(\varepsilon)$。在对角子空间上，$\mathcal H_r$ 是随机矩阵
+$$
+K_r=(1-p_r)I+p_r\Pi_{01},
+\tag{166.28}
+$$
+其中 $\Pi_{01}$ 交换前两个坐标。它有两个固定方向与一个特征值 $1-2p_r$；因 $0<p_r<1/4$，后者严格介于零与一。在非对角子空间上，$\mathcal S$ 为零，故 $\mathcal H_r$ 的系数为 $(1-p_r)$ 乘以 $\mathcal T_r$ 的系数，模长都严格小于一。这证明 $m(\mathcal H_r)=2$。
+
+取输入 $P_0$。真实源在全部步骤保持 $P_0$，而预测器的两个前部标签发生对称混合，第 $N$ 步距离为
+$$
+a_N=\frac{1-(1-2p_r)^N}{2}.
+\tag{166.29}
+$$
+其上确界为 $1/2$，故每个所给 $r$ 的风险都至少为 $1/2$。
+
+为给出渐近上界，把任意输入的对角与非对角响应分开。对全部参考系统，$\Delta-K_r^N\circ\Delta$ 的半 diamond 范数恰为 $a_N\le1/2$：对角输入块是正矩阵，每列经典转移的总变差至多为 $a_N$，三角不等式给出上界；输入 $P_0$ 达到它。真实通道的非对角乘子模长为 $r^N$，预测器的非对角乘子模长至多为 $(1-p_r)^Nr^N$，所以其差的 $2\to2$ 范数至多为 $2r^N$。与式（166.22）相同的 Schmidt 秩及范数估计适用于这个线性差映射，得到
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal H_r^N)
+\le\frac12-\frac12(1-2p_r)^N+3r^N.
+\tag{166.30}
+$$
+保留（166.30）的负项可以得到精确上界。令 $q_r=1-2\varepsilon^2$，当 $0<\varepsilon\le1/4$ 时，
+$$
+\frac r{q_r}=\frac{1-\varepsilon}{1-2\varepsilon^2}
+\le1-\frac\varepsilon2\le e^{-\varepsilon/2}.
+\tag{166.31}
+$$
+取固定常数 $T_0=2\log6$。若 $\varepsilon N\ge T_0$，则 $3r^N\le q_r^N/2$，式（166.30）不超过 $1/2$。若 $\varepsilon N<T_0$，有限视界 telescoping 给出 $d_{\rm ref}(\mathcal H_r^N,\mathcal T_r^N)\le Np_r$，因此
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal H_r^N)
+\le W_r(\mathcal T_r)+T_0\varepsilon<\frac12
+\tag{166.32}
+$$
+对所有充分接近一的 $r$ 成立，最后一个严格号由定理163.2的 $W_r(\mathcal T_r)\to L<1/2$ 保证。两个视界范围一起给出 $W_r(\mathcal H_r)\le1/2$；（166.29）给出相反方向，证明（166.27）。证毕。
+
+命题165.3的稀有重置只保留一个固定方向；命题166.5的稀有交换保留两个。它们的每步变化都可以比 $1-r$ 更小，却改变了无限续接后仍然存在的记录空间。定理166.4指出，在完整通道一阶匹配的前提下，精确保留三个固定方向正是排除这类长时失准的条件。这个条件约束最终保留下来的关系，而不只是漂移速度；它仍属于所给三维、无持久辅助记忆的预测合同。
+
+## 追加锚（本行以下为增补区）
+
+## 167. 长期最优反推观察坐标与临界相干律
+
+**定义 167.1（无局部预设的最优族与双标签接口）。** 沿用定义165.1的源族、风险及渐近最优族 $\mathscr A$。以下只假设三维 CPTP 族 $\mathcal F_r$ 在某个 $(r_0,1)$ 上定义，且
+$$
+W_r(\mathcal F_r)\longrightarrow L,
+\qquad
+L=\frac{\sqrt3}{4}e^{-t_*},\quad
+t_* =\frac\pi{3\sqrt3},\quad
+k_* =\frac{\log2}{t_*}.
+\tag{167.1}
+$$
+不附加单步最优、相对局部误差上界、参数连续性或式（166.2）的一阶匹配条件。仍记 $\varepsilon=1-r$、$E_{ij}=|i\rangle\langle j|$、$P_i=E_{ii}$、$P=P_0+P_2$，并取 $X=E_{02}+E_{20}$、$Y=-iE_{02}+iE_{20}$。令 $J:\mathbb C^2\to\mathbb C^3$ 为将标准基送到 $|0\rangle,|2\rangle$ 的等距映射，定义输入通道
+$$
+\iota_{02}(A)=JAJ^\dagger.
+\tag{167.2}
+$$
+对输入维数为二、输出维数为三的通道，$d_{\rm ref}$ 仍按全部有限参考系统上的半迹距离上确界定义。
+
+**定理 167.2（最优族的弱变化尺度、坐标对齐与生成元约束）。** 在定义167.1的唯一风险假设下，
+$$
+\|\mathcal F_r-\mathrm{Id}\|_\diamond=O(1-r).
+\tag{167.3}
+$$
+对所有充分接近一的 $r$，定理166.2给出 $\mathcal F_r$ 的稳定去相干投影 $\mathcal E_r$。这些投影必满足
+$$
+\boxed{d_{\rm ref}(\mathcal E_r,\Delta)\longrightarrow0.}
+\tag{167.4}
+$$
+定义有界的缩放算子族 $G_r=(\mathcal F_r-\mathrm{Id})/(1-r)$。它的每个算子范数聚点 $G$ 都在原计算基下为 Schur 生成元：存在 $\mu_{ij}$，使
+$$
+G(E_{ii})=0,\qquad
+G(E_{ij})=\mu_{ij}E_{ij}\quad(i\ne j),\qquad
+\operatorname{Re}\mu_{ij}<0,
+\tag{167.5}
+$$
+并且关键系数被唯一确定为
+$$
+\boxed{\mu_{02}=\mu_{20}=-(1+k_*).}
+\tag{167.6}
+$$
+特别地，整个族都满足
+$$
+G_r(P_i)\longrightarrow0\quad(i=0,1,2),\qquad
+G_r(E_{02})\longrightarrow-(1+k_*)E_{02},\qquad
+G_r(E_{20})\longrightarrow-(1+k_*)E_{20}.
+\tag{167.7}
+$$
+本定理不确定另外四个相干方向的生成元系数，也不声称整个 $G_r$ 必有唯一极限。
+
+证明。 先从低全视界风险得到（167.3）。选固定 $w\in(L,1/2)$，则 $r$ 充分接近一时 $W_r(\mathcal F_r)\le w$。令
+$$
+c=\frac{1/2-w}{2}>0,\qquad
+a=2(w+c)=w+\frac12<1,\qquad
+\beta=\arcsin a<\frac\pi2,\qquad
+m=\left\lfloor\frac c\varepsilon\right\rfloor.
+\tag{167.8}
+$$
+充分小的 $\varepsilon$ 下 $m\ge1$。由定理166.2，$\mathcal F_r$ 是某个正交基下的严格 Schur 通道，其非对角系数记为 $b_{ij}(r)$。相位零的真实通道满足
+$$
+\mathcal M_{r,0}^N=r^N\mathrm{Id}+(1-r^N)\Delta,
+\qquad
+d_{\rm ref}(\mathrm{Id},\mathcal M_{r,0}^N)
+\le1-r^N\le N\varepsilon.
+$$
+故对 $1\le N\le m$，
+$$
+d_{\rm ref}(\mathrm{Id},\mathcal F_r^N)\le w+c.
+\tag{167.9}
+$$
+在 $\mathcal F_r$ 自己的 Schur 基中取任意两个标签的平衡叠加，便得到对每个非对角系数 $b=b_{ij}(r)$ 都成立的
+$$
+|1-b^N|\le a\qquad(1\le N\le m).
+\tag{167.10}
+$$
+
+因 $a<1$，$b\ne0$。写 $b=|b|e^{i\theta}$，其中 $\theta$ 为主辐角。圆盘 $\{z:|1-z|\le a\}$ 不含原点，其辐角绝对值至多为 $\beta$，而模长至少为 $1-a$。因此
+$$
+|b|^m\ge1-a,
+\qquad
+|\operatorname{Arg}(b^N)|\le\beta\quad(1\le N\le m).
+\tag{167.11}
+$$
+这些主辐角条件还迫使没有绕圈：$|\theta|\le\beta$；若 $|(N-1)\theta|\le\beta$，则 $|N\theta|\le2\beta<\pi$，此时 $N\theta$ 就是主辐角，再用（167.11）可得 $|N\theta|\le\beta$。归纳给出 $m|\theta|\le\beta$。于是
+$$
+|1-b|\le1-|b|+|\theta|
+\le-\log|b|+|\theta|
+\le\frac{-\log(1-a)+\beta}{m}.
+\tag{167.12}
+$$
+Schur 基的矩阵单位是 Hilbert–Schmidt 正交归一的特征基，故 $\|\mathcal F_r-\mathrm{Id}\|_{2\to2}=\max_{i\ne j}|1-b_{ij}(r)|$。当 $\varepsilon\le c/2$ 时 $m\ge c/(2\varepsilon)$，再由式（166.22）的 diamond 与 Hilbert–Schmidt 算子范数比较，得到（167.3）。这里的 $O(\varepsilon)$ 尺度由全视界风险导出，没有从局部假设取得。
+
+现取任意 $r_n\uparrow1$。上述有界性允许取子列，使 $G_{r_n}\to G$。同时可取各预测器的 Schur 基酉矩阵 $U_n$，再由酉群的紧性取子列，使 $U_n\to U$。在这些基中，$G_{r_n}$ 对三个对角方向为零，对其余方向为有界标量乘法。因此 $G$ 在 $U$ 基中也是 Schur 算子，且是 Hilbert–Schmidt 正规算子。
+
+有界生成元的 Euler 极限给出，对每个固定 $t\ge0$，
+$$
+\mathcal F_{r_n}^{\lfloor t/\varepsilon_n\rfloor}
+\longrightarrow e^{tG},\qquad \varepsilon_n=1-r_n.
+\tag{167.13}
+$$
+例如，$\log(\mathrm{Id}+\varepsilon_nG_{r_n})=\varepsilon_nG_{r_n}+O(\varepsilon_n^2)$ 的一致范数估计给出此式；这与定理165.2使用的有限维矩阵函数论证相同。每个左侧都是 CPTP，故 $e^{tG}$ 也 CPTP；其特征值模长至多为一，因而 $G$ 的谱实部非正。
+
+对固定 $u\in[-\sqrt3,\sqrt3]$，选择实际允许的相位
+$$
+\phi_n=\frac u{\sqrt3}\alpha(r_n).
+$$
+由定理161.6的 $\alpha(r_n)/\varepsilon_n\to\sqrt3$，相同视界上的真实源趋于
+$$
+\mathcal R_{t,u}(A)
+=C(e^{-t},e^{iut})\odot A.
+\tag{167.14}
+$$
+因此对每个固定的 $t\ge0$ 与上述 $u$，原风险假设给出
+$$
+d_{\rm ref}(e^{tG},\mathcal R_{t,u})\le L.
+\tag{167.15}
+$$
+$t=0$ 时两侧通道都是恒等通道。对正 $t$，所用离散视界最终至少为一。式（167.14）由合法通道的极限得到，不另行假设任意连续相位族自动完全正。
+
+先排除 $G$ 的额外零衰减模式。对 CPTP 通道 $\mathcal Q=e^G$ 和整数 $N\ge1$，式（167.15）的 $t=N,u=0$ 给出
+$$
+d_{\rm ref}(\mathcal Q^N,\mathcal M_{e^{-1},0}^N)\le L<\frac12.
+\tag{167.16}
+$$
+定理166.2中式（166.8）与（166.12）的秩论证只用了相位零，故直接适用于（167.16）：$\mathcal Q$ 的固定与周边空间维数均为三。$G$ 在 $U$ 基中的三个对角方向已经为零，若任一非对角特征值的实部为零，就会给 $e^G$ 增加周边维数。因此 $G$ 的其余六个 Schur 系数均有严格负实部，且
+$$
+\ker G=\operatorname{span}\{|u_i\rangle\langle u_i|:i=0,1,2\}.
+\tag{167.17}
+$$
+这里先对每个有限 $t$ 建立（167.15），随后研究这个已得到的半群本身的全部整数幂；没有交换原参数极限与原视界上确界。
+
+在 $t=t_*$ 时，取实际端点 $u=\pm\sqrt3$，并对赤道输入 $\rho_\theta=(P+\cos\theta X+\sin\theta Y)/2$ 应用（167.15）。两端输出的 Bloch 方向相差 $2\pi/3$，模长为 $e^{-t_*}$，距离为 $2L$。式（165.15）的无迹 Hermitian 平行四边形论证表明，在整个三维态空间中，同时距两个端点至多 $L$ 的态只能是其中点。因此
+$$
+e^{t_*G}(P)=P,\qquad
+e^{t_*G}(X)=\lambda_*X,\qquad
+e^{t_*G}(Y)=\lambda_*Y,
+\quad
+\lambda_* =\frac{e^{-t_*}}2=e^{-(1+k_*)t_*}.
+\tag{167.18}
+$$
+由于 $G$ 的非零特征值均有负实部，$e^{t_*G}$ 的固定空间就是 $\ker G$；所以 $P$ 在 $U$ 基中为对角矩阵。$P$ 是秩二正交投影，故 $U$ 基的两个向量位于 $\operatorname{span}\{|0\rangle,|2\rangle\}$，第三个位于 $\mathbb C|1\rangle$。
+
+另一方面，$e^{t_*G}$ 保留 $U$ 基下的全部对角元，且 $\lambda_*\ne1$。式（167.18）于是要求 $X,Y$ 在这个基中的全部对角元为零。对其中任一位于 $P\mathbb C^3$ 的基向量 $v=a|0\rangle+b|2\rangle$，这意味着
+$$
+\langle v,Xv\rangle=2\operatorname{Re}(\overline a b)=0,
+\qquad
+\langle v,Yv\rangle=2\operatorname{Im}(\overline a b)=0.
+$$
+故 $\overline a b=0$，每个这样的基向量只能是 $|0\rangle$ 或 $|2\rangle$ 的相位倍数。$U$ 因此是计算基的置换及逐向量相位变换；$G$ 已在原计算基下为 Schur 算子。这证明（167.5）。
+
+记其 $02$ 系数为 $\mu$。由（167.18），
+$$
+e^{t_*\mu}=\lambda_*,
+\qquad
+\mu=-(1+k_*)+\frac{2\pi i j}{t_*}
+\quad\text{某个 }j\in\mathbb Z.
+\tag{167.19}
+$$
+若 $j\ne0$，取 $t_j=t_*/(2|j|)\le t_*/2$。在输入 $(|0\rangle+|2\rangle)(\langle0|+\langle2|)/2$ 上，$e^{t_jG}$ 的相干系数为负实数 $-e^{-(1+k_*)t_j}$，相位零的真实极限通道系数则为正实数 $e^{-t_j}$。于是
+$$
+d_{\rm ref}(e^{t_jG},\mathcal R_{t_j,0})
+\ge\frac{e^{-t_j}+e^{-(1+k_*)t_j}}2
+\ge\frac{e^{-t_*/2}}2>L.
+\tag{167.20}
+$$
+最后一个严格号等价于 $2e^{t_*/2}>\sqrt3$。这与（167.15）矛盾，故 $j=0$；保 Hermitian 性给出 $20$ 系数为其共轭，得到（167.6）。排除对数分支所用的是实际中间时刻的误差约束，不是预先给定的生成元小范数界。
+
+上述推导适用于任意生成元聚点。若（167.4）不成立，可以选一条投影始终远离 $\Delta$ 的参数序列，再同时提取 $G_{r_n}$ 与 $U_n$ 的收敛子列。但已经证明其极限基只差计算基的置换和相位，因此 $\mathcal E_{r_n}=\operatorname{Ad}_{U_n}\circ\Delta\circ\operatorname{Ad}_{U_n^\dagger}\to\Delta$，矛盾。最后，有界族 $G_r$ 的每个聚点都在（167.7）指定的输入上取同一个值，再用相同的子列反证法，得到整个族的（167.7）。证毕。
+
+**定理 167.3（关键双标签接口的全视界唯一行为）。** 在定义167.1的条件下，即使不假设完整通道一阶匹配，仍有
+$$
+\boxed{
+\sup_{N\ge0}
+d_{\rm ref}\bigl(\mathcal F_r^N\circ\iota_{02},
+\mathcal T_r^N\circ\iota_{02}\bigr)
+\longrightarrow0.
+}
+\tag{167.21}
+$$
+上确界包含所有整数视界，距离包含输入的任意有限参考系统。它只约束 $02$ 双标签输入接口，不宣称所有三标签输入上都有同样的全视界唯一性。
+
+证明。 由（167.4），可以在 $\mathcal F_r$ 的 Schur 基中选择标签与向量相位，使对应酉矩阵满足 $U_r\to I$。说明这种选择为何不需要参数连续性：若无法把基向量逐一对齐到计算基，则可取一条与所有置换、相位对齐均有正距离的序列。酉群紧性给出极限基，而（167.4）要求该极限基的对角代数恰好等于计算基对角代数，其三个最小投影只能是 $P_0,P_1,P_2$ 的置换，与所取正距离矛盾。对齐后逐列选相位，即得 $U_r\to I$。
+
+令
+$$
+\widetilde{\mathcal F}_r
+=\operatorname{Ad}_{U_r^\dagger}\circ\mathcal F_r\circ\operatorname{Ad}_{U_r},
+\qquad
+\widetilde G_r
+=\operatorname{Ad}_{U_r^\dagger}\circ G_r\circ\operatorname{Ad}_{U_r}.
+\tag{167.22}
+$$
+前者在原计算基下为 Schur 通道。由于 $G_r$ 有界且 $U_r\to I$，$\widetilde G_r-G_r\to0$；恒等算子在共轭下不变，所以严格有 $\widetilde{\mathcal F}_r=\mathrm{Id}+\varepsilon\widetilde G_r$。由（167.7），其 $02$ 系数 $b_r$ 满足
+$$
+b_r=1-(1+k_*)\varepsilon+o(\varepsilon).
+\tag{167.23}
+$$
+这里对齐的是有界生成元，因而不需要 $\|U_r-I\|=o(\varepsilon)$ 一类额外速率假设。
+
+$\mathcal T_r$ 在同一方向的系数为 $s_r=r^{1+k_*}=1-(1+k_*)\varepsilon+O(\varepsilon^2)$。因此
+$$
+|b_r-s_r|=o(\varepsilon),\qquad
+q_r:=\max\{|b_r|,s_r\}\le1-c_0\varepsilon
+\tag{167.24}
+$$
+对某个固定 $c_0>0$ 及全部充分接近一的 $r$ 成立。对任意 $N\ge1$，标量幂的 telescoping 给出
+$$
+|b_r^N-s_r^N|
+\le|b_r-s_r|Nq_r^{N-1}
+\le\frac{|b_r-s_r|}{1-q_r}\longrightarrow0,
+\tag{167.25}
+$$
+最后一个上界与 $N$ 无关，其中用到 $Nq^{N-1}\le\sum_{j=0}^{N-1}q^j\le(1-q)^{-1}$。
+
+对 $02$ 输入，这两个 Schur 通道的幂只在该相干系数上不同。式（161.11）的单边块范数论证给出同样的全参考精确距离
+$$
+d_{\rm ref}\bigl(\widetilde{\mathcal F}_r^N\circ\iota_{02},
+\mathcal T_r^N\circ\iota_{02}\bigr)
+=\frac12|b_r^N-s_r^N|.
+\tag{167.26}
+$$
+也可直接由二阶正块矩阵的非对角块迹范数至多为 $1/2$ 得到上界，再由无参考的平衡输入达到等号。$N=0$ 时距离为零。
+
+最后，输入与输出的酉共轭差不随迭代次数累积：
+$$
+\mathcal F_r^N
+=\operatorname{Ad}_{U_r}\circ\widetilde{\mathcal F}_r^N\circ
+\operatorname{Ad}_{U_r^\dagger}.
+$$
+通道前后复合对全参考距离收缩，因此对全部 $N\ge0$，
+$$
+d_{\rm ref}\bigl(\mathcal F_r^N\circ\iota_{02},
+\widetilde{\mathcal F}_r^N\circ\iota_{02}\bigr)
+\le d_{\rm ref}(\operatorname{Ad}_{U_r},\mathrm{Id})
++d_{\rm ref}(\operatorname{Ad}_{U_r^\dagger},\mathrm{Id})
+\longrightarrow0.
+\tag{167.27}
+$$
+此式已包含旋转后输入向第三标签的分量，无需假设原 $02$ 子空间被 $\mathcal F_r$ 精确保持。合并（167.25）—（167.27），得到（167.21）。证毕。
+
+定理167.2—167.3由全视界最优性反推弱变化尺度、稳定坐标及关键输入接口的唯一长期行为。第165节的精确局部代价仍成立；本节移除的是对候选族局部接近程度的预设，并不确定其余相干方向的自由度。这里的坐标对齐始终相对于定义161.1给定的校准基；对整个实验作同一酉共轭，会将校准基、源族、预测器及结论中的投影一同共轭。
+
+## 追加锚（本行以下为增补区）
