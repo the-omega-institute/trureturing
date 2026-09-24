@@ -113,7 +113,7 @@ theorem full_syndrome_decoder (S : s → Matrix n d ℂ)
         Matrix.trace ((1 - codeSupport S) * X) • Matrix.single v v 1 := by
     intro X
     rw [hd X, complete_kraus_action (fun i => (S i)ᴴ) (codeSupport S) v hP hPP]
-    rfl
+    simp only [syndromeDecoding, Matrix.conjTranspose_conjTranspose]
   refine ⟨decoder, haction, ?_⟩
   intro sigma hsigma rho
   rw [haction]
@@ -139,8 +139,16 @@ private theorem encoding_kraus_column_gram (S : s → Matrix n d ℂ)
       (∑ i, star (B i j) * B i j) • (1 : Matrix d d ℂ) := by
   simp only [encodingKraus, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
     Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
-  simp_rw [hS]
-  simp [Finset.sum_smul]
+  rw [← Finset.sum_smul]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [Finset.sum_eq_single i]
+  · rw [hS i i]
+    simp
+  · intro k hk hki
+    rw [hS i k]
+    simp [hki]
+  · simp
 
 /-- The Gram factor's trace is exactly the encoding normalisation. -/
 theorem encoding_kraus_gram (S : s → Matrix n d ℂ)
@@ -164,14 +172,13 @@ theorem encoding_kraus_action (S : s → Matrix n d ℂ) (B : Matrix s s ℂ)
     (rho : Matrix d d ℂ) :
     (∑ j, encodingKraus S B j * rho * (encodingKraus S B j)ᴴ) =
       syndromeEncoding S (B * Bᴴ) rho := by
-  simp only [encodingKraus, syndromeEncoding, Matrix.conjTranspose_sum,
-    Matrix.conjTranspose_smul, Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul,
-    Matrix.mul_smul, smul_smul, Matrix.mul_apply, Matrix.conjTranspose_apply,
-    Finset.sum_smul]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro i hi
-  rw [Finset.sum_comm]
+  ext p q
+  simp only [encodingKraus, syndromeEncoding, Matrix.sum_apply,
+    Matrix.conjTranspose_sum, Matrix.conjTranspose_smul, Matrix.sum_mul,
+    Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+    Matrix.mul_apply, Matrix.conjTranspose_apply, Finset.sum_smul,
+    Finset.sum_mul, Finset.mul_sum, Matrix.smul_apply, smul_eq_mul]
+  ring
 
 /-- Positive syndrome densities admit the Gram construction via the library's C-star factorisation. -/
 theorem positive_syndrome_encoder (S : s → Matrix n d ℂ)
