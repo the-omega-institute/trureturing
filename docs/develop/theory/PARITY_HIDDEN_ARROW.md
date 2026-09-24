@@ -1807,3 +1807,359 @@ $(2M-1)e^{-h_+}\to0$；真似然越界概率由 (13.2) 趋于 $\Phi(t)$。
 完成最坏参数陈述。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 14. 未知振幅的临界最优判别与截断尺度
+
+**定义 14.1（只依赖维度与样本数的判别器）。** 沿用定义 11.1 的正单峰模型，
+但判别器不再知道振幅 $r$。位置仍在已知的 $C_+$ 内固定，方向未知。
+置 $\ell=\log M$、$k=M-1$，并将标量函数连续延伸到 $u=1$：
+
+$$
+F(u)=nF_M(u)=\phi(u)+k\phi(u/k),\qquad I(r)=F(r)/n.
+\tag{14.1}
+$$
+
+所有极限均沿整数 $d\to\infty$，故 $\ell=(d-1)\log2$。
+固定仅依赖 $d$ 的数列 $\eta_d\in(0,1)$ 与 $u_d>0$，满足
+$u_d\to\infty$、$u_d=o(\sqrt\ell)$。对 $s\ge1$，定义替代振幅与门槛
+
+$$
+a=a(d,s)=F^{-1}\!\left(\min\left\{\frac{n\ell}s,F(1-\eta_d)\right\}\right),
+\qquad h=\ell+u_d.
+\tag{14.2}
+$$
+
+$F$ 严格递增，故 $0<a\le1-\eta_d<1$，此逆值总存在。
+计算振幅为 $a$ 的全部 $2M$ 个候选似然 $L_{a,z,s}^{\epsilon,E}$。
+若最大值严格大于 $e^h$，输出取最大值的位置与方向，平局时均匀随机选择；
+否则独立于观测，在 $2M$ 个标签中均匀随机选择。
+$s=0$ 时也作独立均匀选择。
+
+在检测边界代入替代信号强度的既有方法见
+[Chan–Walther，§3.1、定理 4](../../../Library/Dynamics/chanwalther2015aligned.md)。
+这里的候选字典、端点截断与路径观察律由 (14.1)–(14.2) 指定。
+
+**定理 14.2（未知振幅达到同一临界曲线的充要截断条件）。**
+对于定义 14.1 的这一族判别器，下列两项等价。
+
+一、对两个实验 $E\in\{\mathrm{pair},\mathrm{path}\}$，任意
+$r_d\in(0,1)$、正整数 $s_d$ 及有限 $t\in\mathbb R$，只要
+
+$$
+\frac{s_d I(r_d)-\ell}{\sqrt{s_d v(r_d)}}\longrightarrow t,
+\tag{14.3}
+$$
+
+就有一致于真位置和方向的极限
+
+$$
+\Pr_{r_d,z,\epsilon}^E\{\widehat\epsilon\ne\epsilon\}
+ \longrightarrow\frac{\Phi(-t)}2,
+\qquad
+\Pr_{r_d,z,\epsilon}^E\{(\widehat z,\widehat\epsilon)=(z,\epsilon)\}
+ \longrightarrow\Phi(t).
+\tag{14.4}
+$$
+
+二、沿上述维度数列有
+
+$$
+\eta_d\sqrt\ell\longrightarrow0,
+\qquad
+\frac{\log(1/\eta_d)}{\log\ell}\longrightarrow\frac12.
+\tag{14.5}
+$$
+
+条件 (14.5) 已由独立状态对实验的要求强制；满足时两个实验均有 (14.4)。
+由定理 13.3，这些曲线与知道振幅的最优曲线相同。
+这里不估计振幅，也不在固定维度对所有振幅取最坏风险。
+
+等价地，合法截断恰好具有
+
+$$
+\eta_d=\frac{\ell^{-1/2}}{g_d},\qquad
+ g_d\to\infty,\quad \log g_d=o(\log\ell).
+\tag{14.6}
+$$
+
+例如 $\eta_d=(\ell\log\ell)^{-1/2}$ 与
+$\eta_d=(\sqrt\ell\log\ell)^{-1}$ 都合法；任何固定幂次
+$\eta_d=\ell^{-b}$（$b>0$）均不能使本族判别器对所有临界振幅数列达到 (14.4)。
+
+证明。先把问题归约为真位置的替代得分。由定理 10.2，对任意振幅 $r,a$，
+异向候选的交叉似然期望为一；同向异位候选满足
+
+$$
+\mathbb E_{r,z,\epsilon}^E L_{a,w,s}^{\epsilon,E}
+ =\left(1-\frac{ra}{2k^2}\right)^s\le1\qquad(w\ne z).
+$$
+
+令 $B_d$ 为至少一个错误标签的候选超过 $e^h$ 的事件，
+$T_d=\log L_{a,z,s}^{\epsilon,E}$ 为真标签的替代得分。则
+
+$$
+\Pr(B_d)\le(2M-1)e^{-h}\le2e^{-u_d}\longrightarrow0.
+\tag{14.7}
+$$
+
+在 $B_d$ 的补集上，真候选越界就选中真标签；未越界就使用独立均匀选择。
+所以
+
+$$
+\begin{aligned}
+\Pr\{\widehat\epsilon\ne\epsilon\}
+ &=\tfrac12\Pr\{T_d\le h\}+O(e^{-u_d}),\\
+\Pr\{(\widehat z,\widehat\epsilon)=(z,\epsilon)\}
+ &=\Pr\{T_d>h\}+O(e^{-u_d}+M^{-1}).
+\end{aligned}
+\tag{14.8}
+$$
+
+这些估计不要求截断条件，且一致于位置、方向。
+
+现证明充分性，假定 (14.5)。记 $\lambda=s/n$、$c=\log2$。
+由 (13.5) 与临界条件，
+
+$$
+I(r)\asymp v(r)\asymp r^2/n,\qquad
+sI(r)=\ell+O(\sqrt\ell),\qquad sv(r)\asymp\ell.
+\tag{14.9}
+$$
+
+单边替代对数得分在真振幅 $r$ 下的均值为
+
+$$
+m(r,a)=I(a)+(r-a)I'(a).
+\tag{14.10}
+$$
+
+这是因为转移概率关于真振幅仿射。以
+
+$$
+B(u,w)=\frac{1+u}{2}\log\frac{1+u}{1+w}
+       +\frac{1-u}{2}\log\frac{1-u}{1-w}
+$$
+
+记振幅坐标中的 Bernoulli 相对熵，精确有
+
+$$
+n\{I(r)-m(r,a)\}=B(r,a)+kB(r/k,a/k).
+\tag{14.11}
+$$
+
+以下证明总均值损失为 $o(\sqrt\ell)$。
+
+先在任意 $r\le1-\varepsilon$（固定 $\varepsilon>0$）的子列上考虑。
+截断最终不生效，$a$ 也与 $1$ 保持固定间隔，$sI(a)=\ell$，且
+$I(r)/I(a)=1+O(\ell^{-1/2})$。
+由 $F(u)\asymp u^2$ 先得 $a\asymp r$，再用 $F'(u)\ge u$ 得到
+$|r-a|=O(r/\sqrt\ell)$。
+此区间内 $F''$ 有界，$\lambda\asymp\ell/r^2$，故 Taylor 公式给出
+$s\{I(r)-m(r,a)\}=O(1)$。这也覆盖 $r\to0$ 的任意速度。
+
+余下只需处理 $r\to1$ 的子列，此时 $a\to1$、$\lambda\sim\ell/c$。
+置 $x=1-r$、$y=1-a\ge\eta_d$，以及
+
+$$
+\Delta_k(x)=F(1)-F(1-x),\qquad
+\Delta_k(x)=\tfrac{x}{2}\log(1/x)+O(x),\qquad
+F'(1-x)=\tfrac12\log(1/x)+O(1).
+\tag{14.12}
+$$
+
+余项一致于充分大的 $k$。Bernoulli 相对熵的基本界给出
+
+$$
+\begin{cases}
+ B(1-x,1-y)\le C(y-x),&x\le y,\\
+ B(1-x,1-y)\le C(x-y)(1+\log(x/y)),&x>y.
+\end{cases}
+\tag{14.13}
+$$
+
+第一界由两个 Bernoulli 概率为 $x/2\le y/2$ 直接得到；
+第二界可用两方向相对熵之和上界其中一个方向。
+
+若 $r\ge a$，截断不生效时
+$0\le F(r)-F(a)=O(\ell^{-1/2})$，凸性及 $F'(a)\to\infty$ 给出
+$r-a=o(\ell^{-1/2})$；截断生效时 $r-a\le\eta_d=o(\ell^{-1/2})$。
+由 (14.13)，峰位相对熵都是 $o(\ell^{-1/2})$。
+
+若 $r<a$，无论截断是否生效，都有
+
+$$
+0<F(a)-F(r)\le\ell/\lambda-F(r)=O(\ell^{-1/2}).
+\tag{14.14}
+$$
+
+当 $x<2y$，由导数 $F'(r)\to\infty$ 得到
+$x-y=o(\ell^{-1/2})$，再用 (14.13)。
+当 $x\ge2y$，在 $[x/2,x]$ 上积分 (14.12) 的导数得
+$x\log(1/x)=O(\ell^{-1/2})$，从而
+$x=O((\sqrt\ell\log\ell)^{-1})$。
+因此 (14.5) 给出
+
+$$
+0\le\log(x/y)
+\le\log\!\left(\frac{C}{\sqrt\ell\log\ell\,\eta_d}\right)
+=o(\log\ell).
+$$
+
+代入 (14.13) 再得峰位相对熵 $o(\ell^{-1/2})$。
+这一论证使用信息差，未要求
+$\Delta_k(\eta_d)=O(\ell^{-1/2})$；后者并非所有合法截断都满足。
+背景项满足 $kB(r/k,a/k)\le C(r-a)^2/k$，其总贡献至多 $O(\ell/k)$。
+综上，
+
+$$
+s\{I(r)-m(r,a)\}=o(\sqrt\ell).
+\tag{14.15}
+$$
+
+再核对得分的方差与正态极限。令
+
+$$
+Q(u,w)=\frac{(1+u)\log^2(1+w)+(1-u)\log^2(1-w)}2.
+$$
+
+真律下单边替代得分 $A$ 的二阶矩是
+$[Q(r,a)+kQ(r/k,a/k)]/n$。
+$r\to0$ 时 $a/r\to1$，$Q(r,a)\sim a^2\sim r^2\sim\psi(r)$；
+内部极限由连续性得到。
+$r\to1$ 时，上述信息差还给出 $|r-a|=O(\ell^{-1/2})$：
+在 $r<a$ 时用 (14.14)，在 $r\ge a$ 时用凸性或截断本身。
+利用精确仿射恒等式
+
+$$
+Q(r,a)=\psi(a)+\frac{r-a}{2}
+ \{\log^2(1+a)-\log^2(1-a)\},
+$$
+
+及 $\log(1/(1-a))\le\log(1/\eta_d)=O(\log\ell)$，
+得到修正项为 $O((\log\ell)^2/\sqrt\ell)=o(1)$。
+故 $Q(r,a)\to c^2$，与 $\psi(r)\to c^2$ 一致。
+分子中的背景二阶矩为 $O(a^2/k)$，而由 (14.15)，$m(r,a)\sim I(r)$，其平方可忽略。
+于是
+
+$$
+\operatorname{Var}_r(A)/v(r)\longrightarrow1.
+\tag{14.16}
+$$
+
+对平稳路径，记 $A_0(u)=\tfrac12\log(1-u^2)$、$B_0(u)=\operatorname{atanh}u$。
+条件于出发状态的得分均值只在 $C_+$ 非零，均匀均值与乘 $\chi$ 后的均值都是 $m$；
+条件于到达状态的均值是 $m+J_{r,a}\chi$，其中
+
+$$
+J_{r,a}=\frac{B_0(a)-kB_0(a/k)+r\{A_0(a)-A_0(a/k)\}}n.
+\tag{14.17}
+$$
+
+与 (11.7)–(11.8) 相同的条件期望计算给出
+相邻协方差 $mJ_{r,a}$，所有间隔至少二的协方差为零。
+式 (14.17) 显示 $|J_{r,a}|=O(\log\ell/n)$，故两种实验均有
+
+$$
+\operatorname{Var}_r(T_d)=sv(r)(1+o(1)).
+\tag{14.18}
+$$
+
+不需要 $J_{r,a}$ 的符号。每条替代得分的绝对值至多
+$\max\{\log2,\log(1/\eta_d)\}=O(\log\ell)=o(\sqrt\ell)$。
+因此，按总方差标准化的中心化单边得分满足 Lindeberg 条件，其指示函数最终恒为零。
+路径得分由 $P_r^2=\Pi$ 构成真正的 $2$-依赖三角阵，
+可直接应用 [Janson，定理 1.1](../../../Library/Dynamics/janson2021mdependent.md)。
+结合 (14.15) 与 (14.18)，得到两种实验中的
+
+$$
+\frac{T_d-sI(r)}{\sqrt{sv(r)}}\Longrightarrow N(0,1).
+\tag{14.19}
+$$
+
+任意振幅数列的每个子列都有一个在 $[0,1]$ 内收敛的再子列，上述各情形穷尽之，
+故不要求 $r_d$ 本身收敛。方向倒转保留对应得分分布。
+由 $u_d=o(\sqrt\ell)$、(14.3) 与 (14.8)，得到 (14.4)，充分性得证。
+
+为证明必要性，只用独立状态对，固定一个真位置和方向，并取
+
+$$
+s=\left\lfloor\frac{n\ell}{F(1)}\right\rfloor,
+\qquad \lambda=s/n.
+\tag{14.20}
+$$
+
+有 $\lambda F(1)=\ell+O(n^{-1})$、$\lambda\sim\ell/c$，
+且 $\ell/\lambda\ge F(1)$，所以截断精确生效，$a=1-\eta_d$。
+对真缺口 $x=1-r$，以 $N_+$、$N_-$ 计数峰位出发且目标奇偶分别为正、负的样本，
+它们的多项分布边缘均值为 $\lambda(1-x/2)$ 和 $\lambda x/2$。
+置 $w_d=\log(1/\eta_d)$，则
+
+$$
+T_d=\log(2-\eta_d)N_+-w_dN_-+G_d.
+\tag{14.21}
+$$
+
+背景项的均值绝对值与方差均为 $O(\ell/k)$，一致于全部截断。
+确实，背景对数因子为 $O(1/k)$，单样本带符号均值为 $O(1/(nk))$，
+二阶矩也为 $O(1/(nk))$；独立求和即得。因此 $G_d=o_P(1)$。
+
+先取 $x=\ell^{-2}$。真临界坐标趋零，$sv(r)\sim c\ell$，
+$N_-=0$ 的概率趋一，且 $(N_+-\lambda)/\sqrt\lambda\Longrightarrow N(0,1)$。
+若某子列有 $\eta_d\sqrt\ell\to A\in(0,\infty)$，展开正计数的系数得到
+
+$$
+\Pr\{T_d>h\}\longrightarrow
+\Phi\!\left(-\frac{A}{2c^{3/2}}\right)<\frac12.
+\tag{14.22}
+$$
+
+若该乘积趋无穷，正通道的均值损失超过其 $O(\sqrt\ell)$ 波动，越界概率趋零；
+这也覆盖 $\eta_d$ 不趋零，因为
+$c-\log(2-\eta_d)=-\log(1-\eta_d/2)\ge\eta_d/2$。
+概率趋零的负计数事件可以直接排除，不要求其对数权重有界。
+由 (14.8)，这些极限都违反 $t=0$ 的 (14.4)。
+子列论证迫使 $\eta_d\sqrt\ell\to0$。
+
+假定这一必要条件成立，再取任意固定 $C>0$ 及
+$x=C/(\sqrt\ell\log\ell)$。由 (14.12)、(14.20)，真临界坐标趋于
+
+$$
+t_C=-\frac{C}{4c^{3/2}}<0.
+\tag{14.23}
+$$
+
+此时 $m_-:=\mathbb EN_-\sim C\sqrt\ell/(2c\log\ell)\to\infty$，
+故 $N_-/m_-\to1$ 依概率；同时
+
+$$
+\frac{\log(2-\eta_d)N_+-\ell}{\sqrt{c\ell}}
+ \Longrightarrow N(0,1).
+\tag{14.24}
+$$
+
+令 $w_d/\log\ell$ 沿某子列趋于 $\beta\in(1/2,\infty)$。
+负计数的加权均值除以 $\sqrt{c\ell}$ 趋于 $C\beta/(2c^{3/2})$，
+其中心化部分的方差除以 $c\ell$ 为 $O(\log\ell/\sqrt\ell)\to0$。
+所以
+
+$$
+\Pr\{T_d>h\}\longrightarrow\Phi(2\beta t_C)\ne\Phi(t_C).
+\tag{14.25}
+$$
+
+此推导不需要两个计数独立。若该比值趋无穷，改用 $N_-$ 的相对集中，
+得到 $w_dN_-/\sqrt{c\ell}\to+\infty$；(14.24) 的正部分仍紧，
+故越界概率趋零，同样违反目标曲线。
+第一必要条件已保证
+
+$$
+\frac{w_d}{\log\ell}
+=\frac12+\frac{\log(1/(\eta_d\sqrt\ell))}{\log\ell},
+\qquad \liminf\frac{w_d}{\log\ell}\ge\frac12.
+$$
+
+若第二条件不成立，总能取到刚排除的一个子列。这证明必要性，亦覆盖截断数列振荡、
+或 $w_d$ 任意迅速增长的情形。(14.6) 及所列例子由 (14.5) 直接改写得到。
+这些限制属于定义 14.1 的构造，并非对一切未知振幅判别器的限制。$\square$
+
+## 追加锚（本行以下为增补区）
