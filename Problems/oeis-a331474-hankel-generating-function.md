@@ -87,12 +87,9 @@ identity of power series.
 
 ## Evidence
 
-- Accepted Lean owners:
+- Lean owners:
   `D5/S3/Constants/Moments/A331474HankelBridge.lean` and
   `D5/S3/Constants/Moments/A331474HankelGeneratingFunction.lean`.
-- Sealed source SHA-256 values:
-  `fb943e95c5b90a5e5b0477a755a06633b7937c98adb87fdb2d0b62ee179a85ee` and
-  `62224f8050d6316388b15bbb7a665006ec628649b44dee0d759605ff9023c01d`.
 - The bridge theorem states the determinant kernel, both scalar initial-value
   sets, and both quantified recurrences in one public declaration. The final
   theorem states the complete identity for `PowerSeries.mk H`.
