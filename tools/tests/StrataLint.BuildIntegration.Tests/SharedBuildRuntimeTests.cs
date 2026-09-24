@@ -7,7 +7,7 @@ using Xunit;
 namespace StrataLint.BuildIntegration.Tests;
 
 [Collection("StrataLint.BuildIntegration.Tests process boundary")]
-public sealed class SharedBuildRuntimeTests
+public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper diagnostics)
 {
     [Fact]
     public void CompilerOwnedRuntimeMovesAndExecutesWithoutProducerOrPackagePaths()
@@ -153,7 +153,7 @@ public sealed class SharedBuildRuntimeTests
                 new EngineeringProjectFixture(excludedProject, "StrataLint.ScriptTests", "cross-cutting-test", false,
                     ["tools/tests/StrataLint.ScriptTests/**/*.cs"]),
             }).ToArray()));
-        Run("dotnet", "restore", testProject, "--use-lock-file", "-nr:false");
+        Run("dotnet", "restore", testProject, "--use-lock-file", "-nr:false", "--verbosity", "detailed");
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", excludedProject, "--use-lock-file", "-nr:false");
@@ -393,6 +393,7 @@ public sealed class SharedBuildRuntimeTests
         void Run(string executable, params string[] arguments)
         {
             var result = EngineeringProcess.Process(root, executable, arguments, dotnetEnvironment);
+            diagnostics.WriteLine(result.Text);
             Assert.True(result.Exit == 0, result.Text);
         }
         string[] Calls() => File.ReadAllLines(Path.Combine(root, "build/dotnet-calls"));
