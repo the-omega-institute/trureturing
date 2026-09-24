@@ -233,7 +233,7 @@ internal static class DigestionDecomposition
         }, children.ToImmutable(), objects.ToImmutable());
     }
 
-    private static HashSet<string> ValidatedClosure(IEnumerable<string> roots,
+    internal static HashSet<string> ValidatedClosure(IEnumerable<string> roots,
         IReadOnlyDictionary<string, DigestionLedgerEntry> entries,
         RepositorySnapshot snapshot, TheoryAtomizerRules rules)
     {
