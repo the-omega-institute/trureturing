@@ -174,7 +174,7 @@ $$
 | Engl, Hanke, Neubauer, *Regularization of Inverse Problems*, Kluwer 1996, 第 5 章 Tikhonov 正则化 | `literature-attested`：定理 3.3 的极限性质；不用于任何动态陈述 |
 | Jacot, Gabriel, Hongler, *Neural Tangent Kernel*, NeurIPS 2018, arXiv:1806.07572（库内条目 [jacot2018neural](../../../Library/Dynamics/jacot2018neural.md)） | `literature-attested`：命题 4.7 所用线性化的成立条件；不用于有限宽网络的定理 |
 | Li, Wang, Arora, *What Happens after SGD Reaches Zero Loss? A Mathematical Framework*, ICLR 2022, arXiv:2110.06914 | `literature-attested`：零损失流形上的极限流形流形式（标签噪声 SGD 情形）；本卷定理 3.4 只用逐点陈述，不引用其极限定理 |
-| Levi, Oz, Lin, *Grokking in Linear Estimators – A Solvable Model that Groks without Understanding*, ICLR 2024, arXiv:2310.16441 | `literature-attested`：线性师生模型在权重衰减下可解的延迟泛化；定理 4.1 的分解与之同一数学对象，本卷的贡献是定理 4.3 的不可见性陈述与定理 4.4 的逃逸读数记账 |
+| Levi, Beck, Bar-Sinai, *Grokking in Linear Estimators – A Solvable Model that Groks without Understanding*, ICLR 2024, arXiv:2310.16441 | `literature-attested`：线性师生模型在权重衰减下可解的延迟泛化；定理 4.1 的分解与之同一数学对象，本卷的贡献是定理 4.3 的不可见性陈述与定理 4.4 的逃逸读数记账 |
 | Lyu, Jin, Li, Du, Lee, Hu, *Dichotomy of Early and Late Phase Implicit Biases Can Provably Induce Grokking*, ICLR 2024, arXiv:2311.18817 | `literature-attested`：大初始化加小权重衰减先核区后富区的两阶段图景；本卷命题 4.7 的“线性化失效时刻”与之相容，不重证其定理 |
 | Kumar, Bordelon, Gershman, Pehlevan, *Grokking as the Transition from Lazy to Rich Training Dynamics*, ICLR 2024, arXiv:2310.06110 | `literature-attested`：懒区到富区转变解释延迟泛化的经验与理论论证；用于反例 6.2 的边界 |
 | Liu, Michaud, Tegmark, *Omnigrok: Grokking Beyond Algorithmic Data*, ICLR 2023, arXiv:2210.01117 | `literature-attested`：初始化范数与权重衰减控制延迟泛化的经验结论；与定理 4.4（ii）方向一致，本卷不据此声称已验证该定理 |
@@ -182,8 +182,8 @@ $$
 | Power, Burda, Edwards, Babuschkin, Misra, *Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets*, arXiv:2201.02177 | `literature-attested`：现象的原始报告 |
 | Prieto, Barsbey, Mediano, Birdal, *Grokking at the Edge of Numerical Stability*, ICLR 2025, arXiv:2501.04697；Thilak, Littwin, Zhai, Saremi, Paiss, Susskind, *The Slingshot Mechanism*, arXiv:2206.04817 | `literature-attested`：无权重衰减的延迟泛化报告；只用于反例 6.2 的边界，不用于任何正向结论 |
 | Elhage 等, *Toy Models of Superposition*, Transformer Circuits Thread 2022；Bricken 等, *Towards Monosemanticity*, 2023 | `literature-attested`：叠加与稀疏自编码器的背景；本卷第 5 章不使用其任何定理 |
-| Chanin, Wilken-Smith, Dulka, Bhatnagar, Bloom, *A is for Absorption*, arXiv:2409.14507 | `literature-attested`：特征吸收的经验报告，含“加大字典不消除吸收”；第 5 章给其一个精确玩具机制，不声称解释其全部观测 |
-| Bussmann, Leask, Nanda, *Learning Multi-Level Features with Matryoshka Sparse Autoencoders*, arXiv:2503.17547；Leask 等, *Sparse Autoencoders Do Not Find Canonical Units of Analysis*, arXiv:2502.04878 | `literature-attested`：层级特征与非规范单元的经验背景 |
+| Chanin, Wilken-Smith, Dulka, Bhatnagar, Golechha, Bloom, *A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders*, NeurIPS 2025, arXiv:2409.14507 | `literature-attested`：特征吸收的经验报告，含“加大字典不消除吸收”；第 5 章给其一个精确玩具机制，不声称解释其全部观测 |
+| Bussmann, Nabeshima, Karvonen, Nanda, *Learning Multi-Level Features with Matryoshka Sparse Autoencoders*, arXiv:2503.17547；Leask 等, *Sparse Autoencoders Do Not Find Canonical Units of Analysis*, arXiv:2502.04878 | `literature-attested`：层级特征与非规范单元的经验背景 |
 | Gao 等, *Scaling and Evaluating Sparse Autoencoders*, arXiv:2406.04093；Rajamanoharan 等, *Jumping Ahead: JumpReLU SAEs*, arXiv:2407.14435 | `literature-attested`：TopK 与 JumpReLU 目标的定义；命题 5.6 只用 TopK 的定义 |
 | Olshausen, Field, *Emergence of simple-cell receptive field properties by learning a sparse code for natural images*, Nature 381 (1996) | `literature-attested`：稀疏编码目标的来源 |
 | — | `repo-derived`：命题 3.2；定理 3.4；定理 4.1；推论 4.2；定理 4.3；定理 4.4；命题 4.5；命题 4.6；命题 4.7 的记账部分；引理 5.1；定理 5.2；命题 5.3；定理 5.4；命题 5.5；命题 5.6；反例 6.1 |
