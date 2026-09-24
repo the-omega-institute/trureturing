@@ -146,16 +146,16 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     "Mahalanabis and Stefankovic already use precision-matrix messages and "
                     + "finite grids for Gaussian subset selection on bounded-treewidth "
                     + "graphs. Their squared-prediction-error objective and conditioning "
-                    + "dependence are retained as prior-art boundaries. Section 15 of the "
-                    + "unified theory proves a separate additive KL guarantee for whole "
-                    + "modal blocks on a forest: each upward pivot rounding is represented "
-                    + "as a positive semidefinite diagonal increment of the same selected "
-                    + "precision matrix. A finite-state recursion optimizes that rounded "
-                    + "objective. Its runtime depends on a certified spectral margin and "
-                    + "is not claimed to be an unconditional bit-polynomial FPTAS. "
-                    + "Exact rational checks concern finite instances only. The existing "
-                    + "Lean declaration neither proves these algorithmic claims nor "
-                    + "certifies the cited papers; no new Lean handle is introduced.")))),
+                    + "dependence are retained as prior-art boundaries. A separately "
+                    + "referenced rounded-message proposal concerns an additive KL guarantee "
+                    + "for whole modal blocks on a forest, representing upward pivot rounding "
+                    + "by positive semidefinite diagonal increments of the selected precision "
+                    + "matrix. Its full proof has not been incorporated in this main-volume "
+                    + "snapshot, so this remark does not assign it a section or verified "
+                    + "theorem. Any runtime claim still needs a certified spectral margin "
+                    + "and must not be called an unconditional bit-polynomial FPTAS. The "
+                    + "existing Lean declaration certifies none of these algorithmic claims; "
+                    + "no new Lean handle is introduced.")))),
             Describe.Remark(
                 DescribeId.Create("statistical-reduction-source-scope"),
                 DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
@@ -213,13 +213,14 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     LibraryNoteRef.Create("D5/L/PredictiveReduction/koenig2023dataassimilation")),
                 Blocks(Paragraph(Text(
                     "Finite-time H2 reduction, time-limited error bounds, Bayesian balancing "
-                    + "and symplectic projection are established prior art. Section 14 of the "
-                    + "unified theory fixes one initial feature, a canonical encoder/decoder "
-                    + "and a reference generator, then evaluates actual autonomous rollout. "
-                    + "Its spectral optimum is restricted to that class. Peng and Carlberg's "
-                    + "abstract was retrieved; its interior theorems were not checked here. "
-                    + "The existing Lean declaration proves observable closure, not this "
-                    + "finite-horizon statistical optimization.")))),
+                    + "and symplectic projection are established prior art. A separately "
+                    + "referenced finite-horizon proposal fixes one initial feature, a "
+                    + "canonical encoder/decoder and a reference generator, then evaluates "
+                    + "autonomous rollout. Its full derivation is not present in this "
+                    + "main-volume snapshot, so this remark assigns no section or verified "
+                    + "optimum. Peng and Carlberg's abstract was retrieved; its interior "
+                    + "theorems were not checked here. The existing Lean declaration proves "
+                    + "observable closure, not finite-horizon statistical optimization.")))),
             Describe.Remark(
                 DescribeId.Create("supervised-finite-horizon-score-scope"),
                 DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
@@ -251,7 +252,59 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     + "risk optimizer is not thereby a quantum channel or a GKLS generator. "
                     + "The referenced Lean statement supplies the commutator-orbit interface "
                     + "only; complete positivity and finite-temperature recovery retain "
-                    + "their separate hypotheses.")))))));
+                    + "their separate hypotheses.")))),
+            Describe.Remark(
+                DescribeId.Create("thermal-population-coherence-source-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("A common thermal recovery must use jointly compatible amplitudes"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/oi2006interference"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/nuradha2025multivariate")),
+                Blocks(Paragraph(Text(
+                    "Oi and Aberg identify root fidelity with optimal two-path coherence in "
+                    + "their specified operation class. Nuradha and coauthors define the "
+                    + "multivariate positive-block SDP and ask for operational interpretations "
+                    + "in Section 6 item 2. Section 15 of the unified theory realizes that "
+                    + "existing SDP as fixed-phase tests after a population-preserving, "
+                    + "conditional-Gibbs-calibrated CPTP recovery. Modulus tests have a "
+                    + "different objective. The positive-block correspondence and pairwise "
+                    + "Uhlmann optimum are established ingredients, not new Lean results.")))),
+            Describe.Remark(
+                DescribeId.Create("thermal-projective-holonomy-gap-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Projective loop compatibility limits joint coherence"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/aberg2007uhlmann"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/nuradha2025multivariate")),
+                Blocks(Paragraph(Text(
+                    "Discrete Uhlmann transport and its interference meaning are prior art. "
+                    + "The paper derivation in Section 15 bounds the sum of pairwise "
+                    + "coherence deficits using distance of a polar-unitary loop from scalar "
+                    + "phase. Its coisometry proof includes arbitrary common purifying "
+                    + "dimensions. Three orthogonal thermal qubit states give matching "
+                    + "fourth-order lower and realizable upper bounds. Scalar holonomy does "
+                    + "not obstruct all coherence moduli. No equivalence to physical Maxwell "
+                    + "curvature, independent novelty determination, or kernel verification "
+                    + "is asserted by this literature remark.")))),
+            Describe.Remark(
+                DescribeId.Create("thermal-covariance-resource-boundary"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Gibbs calibration and autonomous update are separate requirements"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/faist2015gibbspreserving"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/lostaglio2015coherence")),
+                Blocks(Paragraph(Text(
+                    "Faist, Oppenheim and Renner distinguish Gibbs-preserving maps from "
+                    + "thermal operations. Lostaglio, Jennings and Rudolph identify "
+                    + "time-translation covariance as an additional coherent thermodynamic "
+                    + "constraint. The unified theory independently specifies Gibbs "
+                    + "calibration, exact covariance, and visible-round-trip coherence; "
+                    + "commuting conditional Hamiltonians restrict useful recovery blocks "
+                    + "to exact energy-gap classes. The Ising example separates arbitrary "
+                    + "logical gaps from the Hamiltonian fixed by the visible Gibbs state. "
+                    + "Neither CPTP realizability nor these two conditions alone certifies "
+                    + "a zero-work thermal implementation. The existing declaration proves "
+                    + "commutator-generated observable closure only.")))))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {
@@ -311,7 +364,7 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
         Formula orbitClause = Seq(
             Exists, Sp, time, Sp, InMacro, Sp, RealNumbers(), Comma, Sp,
             effect, Sp, InMacro, Sp, initial, Comma, Sp,
-            observable, Sp, Eq, Sp, Orbit(hamiltonian, effect, time));
+            observable, Sp, Eq, Sp, effect, Dot);
         Formula commutator = Call(F.Id("ad"), hamiltonian);
         Formula spanClause = Seq(
             Call(
