@@ -328,3 +328,5 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fib
 ```
 
 Default execution checks the retained result; `--output PATH` writes the recomputed result. No optimizer, source geometry helper or Lean build is used. The obstruction is to proving the target from this enlarged two-tier budget and these predeletion query caps. Stronger actual-prefix incidence, overlap credits, or a different jointly supported source law remain possible routes; their sufficiency for unrestricted originals is unresolved.
+
+[Report529](529-an-irredundant-comb-separates-fibre-credits-from-supported-query-laws.md) supplies a separate obstruction with actual distinct original labels at unbounded ternary heights. Every original has a private integer, and positive exact-single-class fibre certification forces excessive query concentration for every ternary reweighting of the specified pure-q sources. The same family admits both an overlap mass repair and a different supported product law meeting the query target.
