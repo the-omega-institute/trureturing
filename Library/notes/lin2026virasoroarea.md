@@ -28,3 +28,11 @@ The primary introduction, equations (1.2) and (1.4), explicitly separate the cen
 The new finite RG theorem in PR #8890 optimizes independent local CPTP maps with exact pure target outputs on each basis sector. It yields a simultaneous optimum for arbitrary finite sector count and a scale semigroup for integer power-rank towers. Applying it here would require a common finite regulator, positive density operators, actual integer source and target multiplicities, and a proof that the chosen Virasoro coarse graining obeys those local-channel and exact-sector hypotheses. None of those bridges is inferred from the entropy formula alone.
 
 The existing source note's reference to a numbered section 42 does not establish that the corresponding body is present in the main owner. The current named RG theorem is separately reproduced in the PR result comment and supplied as a guarded same-owner insertion. It neither evaluates the unknown conformal block nor establishes the full gravitational RT formula. This preserves the distinction between a quantitative finite quantum-channel obstruction and the physical CFT problem.
+
+## Conditional momentum-window bound
+
+Equation (1.3) gives S(P)=4 sinh(2 pi b P) sinh(2 pi P/b), Q=b+1/b, and c=1+6Q^2. For positive P and b, the derivative of log S(P) is at least 2 pi Q. This derivative is evaluated directly from the displayed primary-source formula.
+
+If, in addition to all finite RG operation hypotheses, actual integer loss ranks satisfy abs(log m_s-log S(P_s)-C0)<=eta with a common C0, a window of width DeltaP has discarded-area span at least max(0,2 pi Q DeltaP-2eta). The RG lower bound then gives delta_*>=1-exp(-max(0,pi Q DeltaP-eta)). Requiring delta_*<=epsilon<1 therefore requires DeltaP<=[eta-log(1-epsilon)]/(pi Q).
+
+The c^(-1/2) scale of this conditional necessary budget does not establish the rank-matching hypothesis, positivity of the proposed sector description, or physical locality of the CFT coarse-graining map. It is not attributed to Lin as a theorem already proved there. The source-supported derivative and the separately proved finite-channel result are distinguished from the unproved bridge between them. The paper's own conformal-block and saddle assumptions remain in force.
