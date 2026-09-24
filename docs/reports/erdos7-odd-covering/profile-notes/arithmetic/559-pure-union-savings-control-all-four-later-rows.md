@@ -263,3 +263,5 @@ a joint estimate involving actual nonpure unions, transported source
 deletions or final-query response. The two-copy problem without the
 stated sufficient conditions, and its separate connection to unrestricted
 Erdős #7, remain unresolved.
+
+[Report560](560-reordered-pa-pure-union-savings.md) applies the same local pure-union estimate to the fixed order13,11,19,17. It certifies root17 scarcity by itself, with all other two-copy labels unrestricted. Its sufficient region and this report's region are alternatives under their respective complete laws; their union is strictly larger, and savings from the two laws are not added.
