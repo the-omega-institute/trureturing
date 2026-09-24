@@ -99,7 +99,12 @@ def filemap_policy_path(value):
 
 
 def glob(pattern):
-    string(pattern, "pattern")
+    return _compiled_glob(string(pattern, "pattern"))
+
+
+@functools.cache
+def _compiled_glob(pattern):
+    # Only the pattern determines this immutable regex, never FILEMAP or tree state.
     path(pattern)
     if "?" in pattern or any(ord(c) < 32 or ord(c) > 126 for c in pattern):
         raise ValueError(f"unsafe FILEMAP pattern: {pattern}")

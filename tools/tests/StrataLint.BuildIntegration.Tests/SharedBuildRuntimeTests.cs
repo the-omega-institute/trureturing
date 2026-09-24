@@ -160,7 +160,7 @@ public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper
             source tools/scripts/lib/resource-observation-lib.sh
             export GITHUB_WORKSPACE="$PWD" RUNNER_TEMP="$PWD" RESOURCE_OBSERVATION_INTERVAL_SECONDS=1
             resource_observe_run_periodic dotnet "$@"
-            """, "runtime-restore", "restore", testProject, "--use-lock-file", "-nr:false",
+            """, "runtime-restore", "restore", testProject, "--use-lock-file", "-nr:false", "-m:1",
             "--verbosity", "detailed", "-clp:ShowTimestamp");
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
