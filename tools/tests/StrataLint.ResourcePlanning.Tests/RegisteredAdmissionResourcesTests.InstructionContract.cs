@@ -48,8 +48,12 @@ public sealed partial class RegisteredAdmissionResourcesTests
         })
         {
             var plan = Plan(path, "", mode, change);
-            Assert.Equal(WithWorktreeContract(new[] { InstructionContractProject }), Strings(plan["execution"]!["tests"]!));
-            Assert.Equal(new[] { "test-instruction-contract", "test-worktree-contract" },
+            Assert.Equal(WithWorktreeContract(path.EndsWith(".lean", StringComparison.Ordinal)
+                    ? new[] { InstructionContractProject, RepositoryDigestionProject }
+                    : new[] { InstructionContractProject }), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(path.EndsWith(".lean", StringComparison.Ordinal)
+                    ? new[] { "test-instruction-contract", "test-repository-digestion", "test-worktree-contract" }
+                    : new[] { "test-instruction-contract", "test-worktree-contract" },
                 Strings(plan["stages"]!["engineering"]!["resources"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
             var input = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);

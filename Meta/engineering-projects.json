@@ -1725,7 +1725,10 @@
         "tools/tests/StrataLint.WorktreeContract.Tests/WorktreeCacheStrategyTests.cs",
         "tools/tests/StrataLint.WorktreeContract.Tests/packages.lock.json",
         "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
-        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
+        "D5/X_Frontier/Hearts.lean",
+        "Meta/Digestion/backfill/pzg-v170/source.toml",
+        "Meta/Digestion/backfill/pzg-v170/residual-open/8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d.yaml"
       ]
     },
     {

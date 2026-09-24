@@ -26,7 +26,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
             Strings(plan["execution"]!["projects"]!));
         Assert.Equal(WithWorktreeContract(input == "CLAUDE.md"
             ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj", "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj" }
-            : input.StartsWith("D5/", StringComparison.Ordinal) ? [InstructionContractProject] : []),
+            : input.StartsWith("D5/", StringComparison.Ordinal)
+                ? [InstructionContractProject, RepositoryDigestionProject] : [RepositoryDigestionProject]),
             Strings(plan["execution"]!["tests"]!));
         Assert.Equal("required",
             plan["stages"]!["engineering"]!["status"]!.GetValue<string>());

@@ -57,7 +57,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan(path, "", mode);
             var readsInstructions = path.StartsWith("D5/", StringComparison.Ordinal);
-            Assert.Equal(WithWorktreeContract(readsInstructions ? new[] { InstructionContractProject } : []),
+            var readsDigestion = readsInstructions || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
+            Assert.Equal(WithWorktreeContract((readsInstructions ? new[] { InstructionContractProject } : [])
+                    .Concat(readsDigestion ? new[] { RepositoryDigestionProject } : [])),
                 Strings(plan["execution"]!["tests"]!));
             Assert.Equal("required",
                 plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
