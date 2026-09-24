@@ -232,7 +232,7 @@ internal static class FileMapPolicy
             manifest,
             File.ReadAllBytes(Absolute(repositoryRoot, "Meta/domains.yaml")));
         var pathFindings = policy is PolicyLoadOutcome.Accepted accepted
-            ? paths.Select(path => RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), accepted.Policy))
+            ? selected.Select(path => RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), accepted.Policy))
                 .OfType<RepositoryPathIssue>()
                 .Select(issue => new FileMapFinding("FILEMAP-PATH-POLICY", issue.Path, issue.Message))
             : [new FileMapFinding("FILEMAP-POLICY-INVALID", FileMapLoader.RelativePath,
