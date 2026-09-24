@@ -3834,3 +3834,603 @@ c_r\longrightarrow4\log2-1.
 再次代入 (17.29) 得到第二极限，完成证明。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 增补十五·固定振幅稀疏支持恢复与方向分离
+
+**定义 18.1（支持损失、方向信息与恢复相界）。** 沿用定义 16.1、17.1
+的正负奇偶类、补偿核及两个实际平稳实验。固定
+$`r\in(0,1)`$、$`\beta\in(1/2,1)`$、$`\alpha\in(0,\infty)`$。
+沿 $`d\to\infty`$ 取整数数列 $`q=q_d,s=s_d`$，满足
+
+```math
+n=2^d=2M,\qquad \ell=\log M,\qquad
+q=M^{1-\beta+o(1)},\qquad \lambda=\frac{s}{n},\qquad
+\frac{\lambda}{\ell}\longrightarrow\alpha,\qquad
+a=\frac{rq}{M-q}.
+\tag{18.1}
+```
+
+未知支持属于 $`\mathfrak S_q=\{S\subset C_+:|S|=q\}`$，在全部观测期间固定。
+正向核为 $`P_S(x,y)=(1+b_S(x)\chi(y))/n`$，其中 $`b_S`$ 在
+$`S,C_+\setminus S,C_-`$ 上分别取 $`r,-a,0`$；反向核为
+$`P_S^{\mathsf T}`$。实验 $`\mathcal E=\mathrm{pair}`$ 观察
+$`s`$ 个独立均匀平稳相邻对，实验 $`\mathcal E=\mathrm{path}`$
+观察均匀起点后的 $`s`$ 次连续转移。观测保留每条边的先后次序；
+未知方向指生成概率律中的参数 $`\varepsilon\in\{+,-\}`$。
+
+记 $`\mathcal A_q`$ 为输出恰好 $`q`$ 个正类状态的随机化估计规则，
+$`\mathcal A`$ 为输出任意正类子集的随机化估计规则。两种 Hamming 损失分别为
+
+```math
+L_q(T,S)=\frac{|T\triangle S|}{2q}
+=1-\frac{|T\cap S|}{q}\quad(|T|=q),\qquad
+L_{\mathrm u}(T,S)=\frac{|T\triangle S|}{q}\quad(T\subset C_+).
+\tag{18.2}
+```
+
+方向已知时先固定正向，并定义
+
+```math
+\begin{aligned}
+H_{\mathcal E,q}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A_q}\max_{S\in\mathfrak S_q}
+   \mathbb E_{S,+}^{\mathcal E}L_q(\widehat S,S),\\[0pt]
+H_{\mathcal E,\mathrm u}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A}\max_{S\in\mathfrak S_q}
+   \mathbb E_{S,+}^{\mathcal E}L_{\mathrm u}(\widehat S,S),\\[0pt]
+F_{\mathcal E}^{\mathrm k}
+ &=\inf_{\widehat S\in\mathcal A}\max_{S\in\mathfrak S_q}
+   \mathbb P_{S,+}^{\mathcal E}\{\widehat S\ne S\}.
+\end{aligned}
+\tag{18.3}
+```
+
+上标 $`\mathrm k`$ 表示方向已知。将三式中的最大值改为遍历
+$`(S,\varepsilon)\in\mathfrak S_q\times\{+,-\}`$，并令规则不知
+$`\varepsilon`$，分别得到方向未知的
+$`H_{\mathcal E,q}^{\mathrm o},H_{\mathcal E,\mathrm u}^{\mathrm o},F_{\mathcal E}^{\mathrm o}`$。
+联合恢复支持与方向时，对所有输出于
+$`2^{C_+}\times\{+,-\}`$ 的随机化规则取下确界，定义错误率
+
+```math
+J_{\mathcal E}
+=\inf_{(\widehat S,\widehat\varepsilon)}
+ \max_{S\in\mathfrak S_q,\ \varepsilon\in\{+,-\}}
+ \mathbb P_{S,\varepsilon}^{\mathcal E}
+ \{(\widehat S,\widehat\varepsilon)\ne(S,\varepsilon)\}.
+\tag{18.4}
+```
+
+此处及以下下确界均取遍相应随机化规则；规则可知道 $`d,s,q,r`$，不知道
+真实支持，只有上标 $`\mathrm k`$ 的规则还可知道真实方向。
+保留 (17.4) 的 $`g_r,I_{\alpha,r},\phi(r)=g_r'(1)`$ 与 (17.5) 的
+$`B_r`$，置
+
+```math
+\alpha_A(r,\beta)=\frac{\beta}{\phi(r)},\qquad
+\alpha_E(r,\beta)
+=\min_{0\lt\theta\lt1}\frac{1-\beta\theta}{-g_r(\theta)}.
+\tag{18.5}
+```
+
+受约束选择、无约束 Hamming 风险与精确恢复概率的区别，以及似然排序的先例，见
+[Butucea–Mammen–Ndaoud–Tsybakov](../../../Library/Dynamics/butucea2023selection.md)；
+几乎全恢复与精确恢复的高斯相界见
+[Butucea–Ndaoud–Stepanova–Tsybakov](../../../Library/Dynamics/butucea2018hamming.md)。
+这些独立坐标结果不提供本模型的路径联合计数律；下述证明使用完整实际似然与定理 17.2。
+
+**定理 18.2（已知方向下两种真实实验的尖锐支持恢复）。** 对 (18.1)
+的每条序列与 $`\mathcal E\in\{\mathrm{pair},\mathrm{path}\}`$，有
+
+```math
+\lim_{d\to\infty}H_{\mathcal E,q}^{\mathrm k}
+=\lim_{d\to\infty}H_{\mathcal E,\mathrm u}^{\mathrm k}
+=\begin{cases}
+0,&\alpha\gt\alpha_A(r,\beta),\\[0pt]
+1,&\alpha\lt\alpha_A(r,\beta),
+\end{cases}
+\qquad
+\lim_{d\to\infty}F_{\mathcal E}^{\mathrm k}
+=\begin{cases}
+0,&\alpha\gt\alpha_E(r,\beta),\\[0pt]
+1,&\alpha\lt\alpha_E(r,\beta).
+\end{cases}
+\tag{18.6}
+```
+
+最小值 (18.5) 由唯一的 $`\theta_E\in(0,1)`$ 取得。
+方程 $`I_{\alpha,r}(\beta)=1`$ 恰有两个正根，且
+
+```math
+\alpha_L(r,\beta)\lt\alpha_A(r,\beta)\lt\alpha_E(r,\beta),\qquad
+\alpha_Eg_r'(\theta_E)=\beta,\qquad
+\theta_E\beta-\alpha_Eg_r(\theta_E)=1.
+\tag{18.7}
+```
+
+因此精确恢复使用该方程的大根。已知反向具有相同风险与结论。
+上侧存在风险一致于真实支持趋零的规则；下侧是极小极大下界，不是任意规则
+在每个预先固定支持上均失败的逐点断言。在 $`\alpha\lt\alpha_A`$ 时，
+更有：对均匀固定基数支持先验，任意 $`q`$ 元输出规则的期望恢复比例趋零。
+本定理不包含两条恢复边界上的等号情形。
+
+证明。先处理真实正向律。以 (17.6) 的出发行计数定义
+
+```math
+\begin{aligned}
+W_x&=N_{x,+}\log\frac{1+r}{1-a}
+       +N_{x,-}\log\frac{1-r}{1+a},\qquad w_x=e^{W_x},\\[0pt]
+Z_x&=N_{x,+}\log(1+r)+N_{x,-}\log(1-r),\qquad x\in C_+.
+\end{aligned}
+\tag{18.8}
+```
+
+相对于均匀参考律 $`U_{\mathcal E}`$，两种实验的完整似然精确满足
+
+```math
+L_S
+=\prod_{\text{观测边 }(x,y)}(1+b_S(x)\chi(y))
+=C_a\prod_{x\in S}w_x,\qquad
+C_a=\prod_{\substack{\text{观测边 }(x,y)\\[0pt]x\in C_+}}
+ (1-a\chi(y)).
+\tag{18.9}
+```
+
+路径起点的均匀因子在密度比中相消。固定 $`q,r`$ 后，$`C_a`$ 与
+$`S`$ 无关；此处只使用代数公因子，不引入另一个平稳背景实验。
+特别地，(18.9) 不要求不同行计数独立。
+
+令 $`\Pi`$ 为 $`\mathfrak S_q`$ 上的均匀先验，$`e_j`$ 为基本对称多项式，
+$`e_0=1`$。后验质量与包含概率差为
+
+```math
+\Pi(S\mid\mathcal D)=\frac{\prod_{x\in S}w_x}{e_q(w)},\qquad
+\pi_x:=\Pi(x\in S\mid\mathcal D),\qquad
+\pi_x-\pi_y
+=\frac{(w_x-w_y)e_{q-1}(w_{-\{x,y\}})}{e_q(w)}.
+\tag{18.10}
+```
+
+最后一式通过分别求和包含两个、一个或零个指定位置的支持直接得到。
+所有权重均为正，且 $`1\le q\lt M`$，故差式中的乘数为正。
+因此最大的 $`q`$ 个得分组成的集合 $`T_q`$ 同时最大化后验支持质量与
+$`\sum_{x\in T_q}\pi_x`$。它分别是精确错误损失、受约束 Hamming
+损失的 Bayes 规则。对精确损失，输出非 $`q`$ 元集合的后验成功概率为零，
+故扩大输出类到 $`\mathcal A`$ 不改变该结论。
+
+在截断位置的并列得分中均匀选择所需子集。任意正类状态的置换作用于全部观测，
+把真实支持 $`S`$ 的实际概率律送到置换后支持的实际概率律；
+这对独立对与完整路径都成立。规则 $`T_q`$ 对置换等变，故其两种风险均不依赖
+$`S`$，等于均匀先验 Bayes 风险。任意规则的最坏风险不小于最小 Bayes 风险，
+所以 $`T_q`$ 对这两种已知方向损失还是有限样本极小极大规则。
+这里的后验排序不含“无约束 Bayes 输出必为 $`T_q`$ 的子集”这一附加断言。
+
+下面从定理 17.2 取得恢复所需的尾估计。对任意固定一行或两行及其任意计数事件
+$`E`$，在同一个固定真实 $`(S,\varepsilon)`$ 下，(17.10) 给出
+
+```math
+\mathbb P_{S,\varepsilon}^{\mathcal E}(E)
+=\nu_{S,\varepsilon}(E)
+ \left(1+O\!\left(\frac{\ell^{k+1}}n\right)\right)+O(M^{-D}),
+\qquad k\in\{1,2\},\quad D\gt0.
+\tag{18.11}
+```
+
+常数一致于支持、标记行与事件，$`D`$ 可取任意固定正数。
+比较律的均值精确为 (17.7) 给出的均值；正向信号行对应
+$`Q_r`$，正向背景行对应 $`Q_{-a}`$，反向出发行对应 $`Q_0`$，其中
+$`Q_v`$ 表示均值为 $`\lambda(1+v)/2,\lambda(1-v)/2`$ 的两个
+独立 Poisson 计数的概率律。这里只在所标记的一行或两行比较律内使用独立性。
+
+由 (17.9)，总计数超过 $`C_D\ell`$ 的余项可以小于任意指定的
+$`M^{-D}`$。在有界计数区，
+
+```math
+|W_x-Z_x|=O(a\ell)=o(1),\qquad
+\frac{dQ_{-a}}{dQ_0}
+=(1-a)^{N_+}(1+a)^{N_-}=1+O(a\ell).
+\tag{18.12}
+```
+
+其中 $`a\ell\to0`$ 由 (18.1) 得到。
+选取余项指数大于待估尾概率的固定指数，可知背景补偿与得分修正均不改变其对数率。
+
+暂略 $`r`$ 的下标，令 $`m=\alpha\phi(r)`$、$`I=I_{\alpha,r}`$。
+辅助得分的母函数及换测度恒等式为
+
+```math
+\mathbb E_{Q_0}e^{\theta Z}=e^{\lambda g(\theta)},\qquad
+\frac{dQ_r}{dQ_0}=e^Z,\qquad
+\mathbb E_{Q_r}e^{tZ}=e^{\lambda g(1+t)}.
+\tag{18.13}
+```
+
+由 (17.31)–(17.33)，$`g''\gt0`$，$`g'`$ 从负无穷增至正无穷；
+每个实数 $`x`$ 对应唯一 $`\theta_x`$，使
+
+```math
+x=\alpha g'(\theta_x),\qquad
+I(x)=\theta_xx-\alpha g(\theta_x),\qquad
+I'(x)=\theta_x,\qquad I(m)=m,\qquad I(x)\ge x.
+\tag{18.14}
+```
+
+置 $`K(x)=I(x)-x`$。对 $`x\gt0`$，$`I`$ 严格递增；
+对 $`0\lt x\lt m`$，有 $`0\lt\theta_x\lt1`$，所以
+$`K'(x)=\theta_x-1\lt0`$。从 (18.13) 的指数倾斜得到
+
+```math
+\begin{aligned}
+Q_{-a}\{W\ge x\ell\}&=M^{-I(x)+o(1)},&&x\gt0,\\[0pt]
+Q_r\{W\le x\ell\}&=M^{-K(x)+o(1)},&&0\lt x\lt m,\\[0pt]
+Q_r\{W\ge x\ell\}&=M^{-K(x)+o(1)},&&x\gt m.
+\end{aligned}
+\tag{18.15}
+```
+
+同一零假设率也给出 $`Q_0\{Z\ge x\ell\}=M^{-I(x)+o(1)}`$。
+严格尾事件具有相同指数；阈值系数趋向固定 $`x`$ 时也成立。
+为说明下界与格点情形，先在 $`Q_0`$ 下按 $`e^{\theta Z}`$ 倾斜。
+倾斜后的计数仍为 Poisson，得分均值与方差分别为
+$`\lambda g'(\theta)`$、$`\lambda g''(\theta)`$。
+选取 $`\theta=\theta_M\to\theta_x`$，使均值位于目标阈值所需一侧、
+距离为一个充分大的固定常数乘 $`\sqrt\ell`$。均值附近宽度为
+$`O(\sqrt\ell)`$ 的区间由 Chebyshev 不等式获得固定正概率，且完全位于目标尾内。
+换回原测度的指数为 $`-I(x)\ell+o(\ell)`$，与 Chernoff 上界匹配。
+在信号律下使用倾斜参数 $`\theta_M-1`$，得到
+$`-K(x)\ell+o(\ell)`$。最后用 (18.12) 处理补偿。
+这一论证不要求两个得分跳幅的比值无理；并列与格点均不改变严格侧的指数。
+当 $`x\lt m`$ 时，信号位于阈值之上的概率趋一；当 $`x\gt m`$ 时，
+信号位于阈值之下的概率趋一，这也直接由均值和 $`O(\ell)`$ 方差得到。
+(18.11) 将所有这些单行结论传到实际实验，且一致于真实支持。
+
+对任意同一真实律下的行事件 $`E_x`$，在某个至多含 $`M`$ 行的集合上求和，
+记 $`T=\sum_x\mathbf1_{E_x}`$、$`p_x=\nu_x(E_x)`$、
+$`\mu=\sum_xp_x`$、$`\delta_M=\ell^3/n`$。分别应用 (18.11)
+的一行式与两行式，得到
+
+```math
+\begin{aligned}
+\mathbb ET&=\mu+O(\delta_M\mu)+O(M^{1-D}),\\[0pt]
+\left|\operatorname{Cov}(\mathbf1_{E_x},\mathbf1_{E_y})\right|
+ &\le C\delta_Mp_xp_y+CM^{-D}\quad(x\ne y),\\[0pt]
+\operatorname{Var}T&\le C(\mu+\delta_M\mu^2)+CM^{2-D}.
+\end{aligned}
+\tag{18.16}
+```
+
+乘积 $`p_xp_y`$ 来自同一真实 $`(S,\varepsilon)`$ 的两行比较律，
+不把不同真实支持下的边缘相乘。于是对任何固定 $`c\gt0`$，只要比较均值
+在所考察的真实支持与方向上一致满足下列下界，就有
+
+```math
+\mu\ge M^c\quad\Longrightarrow\quad
+T/\mu\longrightarrow1\quad\text{依概率，一致于真实支持与方向}.
+\tag{18.17}
+```
+
+取固定 $`D\gt4`$ 后，(18.16) 除以 $`\mu^2`$ 即可应用 Chebyshev。
+期望为 $`o(q)`$ 或 $`o(1)`$ 的计数则用一阶矩控制。
+
+现在证明几乎全恢复。若 $`m\gt\beta`$，选取固定
+$`\beta\lt x\lt m`$。令 $`F_x`$ 为背景行中满足
+$`W\ge x\ell`$ 的个数，$`G_x`$ 为信号行中满足
+$`W\le x\ell`$ 的个数。由 $`I(x)\ge x\gt\beta`$ 及信号尾，
+
+```math
+\mathbb EF_x
+\le M^{1-I(x)+o(1)}+O(M^{1-D})=o(q),\qquad
+\mathbb EG_x=o(q),\qquad
+q-|T_q\cap S|\le F_x+G_x.
+\tag{18.18}
+```
+
+最后一式是确定性的排序界，也覆盖截断位置的并列值。
+所以 $`T_q`$ 的两种归一化 Hamming 风险均一致趋零。
+
+若 $`m\lt\beta`$，由 $`I(m)=m`$ 与连续性，可选
+$`x\gt m`$ 使 $`I(x)\lt\beta`$。背景越界数的比较均值满足
+
+```math
+\mu_0=(M-q)M^{-I(x)+o(1)},\qquad
+\frac{\mu_0}{q}=M^{\beta-I(x)+o(1)}\longrightarrow\infty.
+\tag{18.19}
+```
+
+由 (18.17)，实际背景越界数至少为 $`q`$ 的概率一致趋一。
+在该事件上，$`T_q`$ 中每个得分都不低于 $`x\ell`$；
+而每个信号到达该阈值的概率趋零。因此
+
+```math
+\sup_{S\in\mathfrak S_q}
+\mathbb E_{S,+}^{\mathcal E}\frac{|T_q\cap S|}{q}
+\le o(1)+Q_r\{W\ge x\ell\}\longrightarrow0.
+\tag{18.20}
+```
+
+$`T_q`$ 的受约束 Bayes 与极小极大最优性证明
+$`H_{\mathcal E,q}^{\mathrm k}\to1`$；其 Bayes 最优性也证明任意
+$`q`$ 元输出在均匀先验下的期望恢复比例趋零。
+
+无约束 Hamming 风险需要另外处理。固定数据后，
+$`\sum_x\pi_x=q`$。令 $`J=\{x:\pi_x\ge1/2\}`$，则
+$`|J|\le2q`$；由 (18.10) 的后验排序，
+$`\sum_{x\in J}\pi_x\le2\sum_{x\in T_q}\pi_x`$。
+无约束未归一化条件 Bayes 风险恰为
+
+```math
+\inf_{T\subset C_+}\mathbb E_\Pi(|T\triangle S|\mid\mathcal D)
+=q-\sum_x(2\pi_x-1)_+,\qquad
+\sum_x(2\pi_x-1)_+
+\le2\sum_{x\in J}\pi_x
+\le4\sum_{x\in T_q}\pi_x.
+\tag{18.21}
+```
+
+取先验与观测的联合期望，右端末项等于
+$`4\mathbb E_\Pi|T_q\cap S|=o(q)`$，其中使用 (18.20)。
+故无约束 Bayes 风险除以 $`q`$ 至少为 $`1-o(1)`$，
+极小极大风险不小于它；恒为空集的规则又给出风险恰为 $`1`$。
+这证明 $`H_{\mathcal E,\mathrm u}^{\mathrm k}\to1`$。
+这个论证既不限制无约束输出的大小，也不假设 $`J\subset T_q`$。
+
+接着确定精确恢复相界。$`g(\theta)\lt0`$ 于 $`0\lt\theta\lt1`$，
+故 (18.5) 的目标函数为正，并在两端趋于正无穷。其导数的符号是
+
+```math
+h(\theta)=\beta g(\theta)+(1-\beta\theta)g'(\theta),\qquad
+h'(\theta)=(1-\beta\theta)g''(\theta)\gt0,\qquad
+h(0)=g'(0)\lt0,\quad h(1)=(1-\beta)\phi(r)\gt0.
+\tag{18.22}
+```
+
+所以唯一最小点为 $`h(\theta_E)=0`$。
+将 (18.5) 代入此等式即得 (18.7) 的两个鞍点恒等式，特别有
+$`\alpha_E\gt\alpha_A`$。
+令 $`\theta_0\in(0,1)`$ 为 $`g'(\theta_0)=0`$ 的唯一根。
+当 $`\alpha\gt\alpha_A`$ 时，$`I_{\alpha,r}(\beta)`$ 的最优参数
+位于 $`(\theta_0,1)`$，并且
+
+```math
+\frac{\partial}{\partial\alpha}I_{\alpha,r}(\beta)
+=-g_r(\theta_\beta)\gt0,\qquad
+I_{\alpha_A,r}(\beta)=\beta\lt1,\qquad
+I_{\alpha,r}(\beta)\ge\theta_0\beta-\alpha g_r(\theta_0)
+\longrightarrow\infty.
+\tag{18.23}
+```
+
+因此这一分支有唯一根，恰为 $`\alpha_E`$。
+当 $`0\lt\alpha\lt\alpha_A`$ 时，最优参数大于一，
+$`g_r(\theta_\beta)\gt0`$，同一导数公式为负。
+对任意固定 $`t\gt1`$，有
+$`I_{\alpha,r}(\beta)\ge t\beta-\alpha g_r(t)`$；
+先令 $`\alpha\downarrow0`$，再令 $`t\to\infty`$，可知该函数在零端趋于无穷。
+故还恰有一个小根 $`\alpha_L\lt\alpha_A`$。
+小根处 $`\beta`$ 在信号均值之上，不能用作信号下尾的精确恢复界。
+
+若 $`\alpha\gt\alpha_E`$，则
+$`\beta\lt m`$、$`I(\beta)\gt1`$、
+$`K(\beta)=I(\beta)-\beta\gt1-\beta`$。
+在同一真实正向律下用 (18.11)、(18.15) 及并集界，
+
+```math
+\begin{aligned}
+\mathbb P_{S,+}^{\mathcal E}
+ \{\exists x\in C_+\setminus S:W_x\ge\beta\ell\}
+ &\le M^{1-I(\beta)+o(1)}+O(M^{1-D})\longrightarrow0,\\[0pt]
+\mathbb P_{S,+}^{\mathcal E}
+ \{\exists x\in S:W_x\le\beta\ell\}
+ &\le M^{1-\beta-K(\beta)+o(1)}+O(M^{1-D})\longrightarrow0.
+\end{aligned}
+\tag{18.24}
+```
+
+所以所有信号得分严格高于所有背景得分的概率一致趋一，$`T_q`$ 精确恢复支持。
+
+反之设 $`\alpha\lt\alpha_E`$。若 $`m\le\beta`$，则
+$`I(m)=m\le\beta\lt1`$。可取固定
+$`m\lt u\lt v`$，使 $`I(v)\lt1`$。
+背景得分至少为 $`v\ell`$ 的比较期望数是
+$`M^{1-I(v)+o(1)}\to\infty`$，所以由 (18.17) 至少存在一个的概率趋一。
+任取一条真实信号行，它的得分不超过 $`u\ell`$ 的概率也趋一，因为
+$`u\gt m`$。两个事件在同一真实律下同时出现的概率由并集界趋一，
+且 $`u\lt v`$ 排除了并列的影响。
+
+余下为 $`\beta\lt m`$ 且 $`\alpha\lt\alpha_E`$。
+由 (18.23)，$`I(\beta)\lt1`$、$`K(\beta)\lt1-\beta`$。
+可取固定 $`0\lt u\lt\beta\lt v\lt m`$，使
+
+```math
+I(v)\lt1,\qquad K(u)\lt1-\beta,\qquad
+\mu_{\mathrm b}=M^{1-I(v)+o(1)}\longrightarrow\infty,\qquad
+\mu_{\mathrm s}=M^{1-\beta-K(u)+o(1)}\longrightarrow\infty.
+\tag{18.25}
+```
+
+这里 $`\mu_{\mathrm b}`$、$`\mu_{\mathrm s}`$ 分别是背景高于
+$`v\ell`$ 与信号低于 $`u\ell`$ 的比较期望计数。
+对两个计数分别用 (18.17)，再对失败事件取并集，可知二者同时为正的概率趋一。
+不需要两个计数彼此独立。两种情形都在真实律下以趋一概率产生严格倒序的信号与背景，
+从而 $`T_q\ne S`$。$`T_q`$ 的精确损失 Bayes 与极小极大最优性遂给出
+$`F_{\mathcal E}^{\mathrm k}\to1`$，而不只是某个特定规则的失败。
+
+最后，令 $`\mathcal R`$ 为整条路径反序或每个独立对交换两端。
+由均匀平稳性，
+
+```math
+\mathcal R_*\mathbb P_{S,-}^{\mathcal E}
+=\mathbb P_{S,+}^{\mathcal E}.
+\tag{18.26}
+```
+
+它不删去转移或端点。已知反向时先施以此变换，便得到相同的最优风险。
+上述上界均一致于 $`S`$；下界则通过固定基数均匀先验作用于所有规则。
+定理得证。∎
+
+**定理 18.3（未知方向的恢复与三种信息任务的严格分离）。** 在定义 18.1
+的假设下，两种实验都满足
+
+```math
+\lim_{d\to\infty}H_{\mathcal E,q}^{\mathrm o}
+=\lim_{d\to\infty}H_{\mathcal E,\mathrm u}^{\mathrm o}
+=\begin{cases}
+0,&\alpha\gt\alpha_A,\\[0pt]
+1,&\alpha\lt\alpha_A,
+\end{cases}
+\qquad
+\lim_{d\to\infty}F_{\mathcal E}^{\mathrm o}
+=\lim_{d\to\infty}J_{\mathcal E}
+=\begin{cases}
+0,&\alpha\gt\alpha_E,\\[0pt]
+1,&\alpha\lt\alpha_E.
+\end{cases}
+\tag{18.27}
+```
+
+设 $`\alpha_D(r,\beta)`$ 是 $`B_r(\alpha_D)=\beta`$ 的唯一解，则
+
+```math
+0\lt\alpha_D(r,\beta)
+\lt\alpha_A(r,\beta)=\frac{\beta}{\phi(r)}
+\lt\frac1{\phi(r)}\lt\alpha_E(r,\beta)\lt\infty.
+\tag{18.28}
+```
+
+因而在 $`\alpha_D\lt\alpha\lt\alpha_A`$ 区间，方向错误率可一致趋零，
+但两种支持 Hamming 极小极大风险均趋一；在
+$`\alpha_A\lt\alpha\lt\alpha_E`$ 区间，几乎全支持与方向可以同时恢复，
+而精确支持及联合恢复的极小极大错误率均趋一；在 $`\alpha\gt\alpha_E`$
+区间，联合精确错误率趋零。$`\alpha\lt\alpha_D`$ 时方向极小极大错误率趋于
+$`1/2`$，支持风险的下侧结论仍成立。
+
+此外，对固定 $`\beta\in(1/2,1)`$，标量相界函数满足
+
+```math
+\lim_{r\downarrow0}\frac{r^2\alpha_A(r,\beta)}2=\beta,\qquad
+\lim_{r\downarrow0}\frac{r^2\alpha_E(r,\beta)}2
+=(1+\sqrt{1-\beta})^2.
+\tag{18.29}
+```
+
+右端是上述高斯选择文献中的两条已知归一化相界。
+(18.29) 只给出固定振幅相界函数的端点极限；(18.27) 不包含随维数变化的
+$`r`$、未知 $`q,r`$ 的适应性、任何等号情形或两个完整实验的渐近等价性。
+精确恢复的未知方向结论采用错误概率，不把它加强为未归一化期望 Hamming 损失趋零。
+
+证明。先构造贯穿几乎全恢复区间的方向规则。设
+$`m=\alpha\phi(r)\gt\beta`$，选择固定 $`\beta\lt x\lt m`$，
+在原始观测上形成 (18.8) 的出发行辅助得分 $`Z_u`$，并置
+
+```math
+T_x=\sum_{u\in C_+}\mathbf1_{\{Z_u\ge x\ell\}},\qquad
+\widehat\varepsilon=
+\begin{cases}
++,&T_x\gt q/2,\\[0pt]
+-,&T_x\le q/2.
+\end{cases}
+\tag{18.30}
+```
+
+真实正向时，每条信号行低于阈值的概率趋零，所以未越界信号数的期望为
+$`o(q)`$，Markov 不等式给出正向错误概率趋零。
+真实反向时，(17.7) 的每条出发行比较律都精确为 $`Q_0`$，故
+
+```math
+\mathbb E_{S,-}^{\mathcal E}T_x
+=M^{1-I_{\alpha,r}(x)+o(1)}+O(M^{1-D})=o(q),\qquad
+\max_{S,\varepsilon}
+\mathbb P_{S,\varepsilon}^{\mathcal E}
+ \{\widehat\varepsilon\ne\varepsilon\}\longrightarrow0.
+\tag{18.31}
+```
+
+这里使用 $`I_{\alpha,r}(x)\ge x\gt\beta`$，再用 Markov 不等式。
+不必知道极限参数：取
+$`\beta_M=\log(M/q)/\ell`$、$`\alpha_M=\lambda/\ell`$，
+将阈值系数换为 $`x_M=(\beta_M+\alpha_M\phi(r))/2`$ 即可；
+它趋向严格位于 $`\beta,m`$ 之间的常数，(18.15) 的尾估计仍适用。
+
+估计方向为反向时对同一份数据施以 $`\mathcal R`$，然后按
+$`W`$ 取最大的 $`q`$ 行。记所得支持为 $`\widehat S`$，
+记真实方向已知时对同一数据应用该排序所得支持为 $`T_q^\varepsilon`$。
+在方向判断正确的事件上两者相同，而且二者始终输出 $`q`$ 元集合，所以逐点有
+
+```math
+\begin{aligned}
+L_q(\widehat S,S)
+ &\le\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +L_q(T_q^\varepsilon,S),\\[0pt]
+L_{\mathrm u}(\widehat S,S)
+ &\le2\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +L_{\mathrm u}(T_q^\varepsilon,S),\\[0pt]
+\mathbf1_{\{(\widehat S,\widehat\varepsilon)\ne(S,\varepsilon)\}}
+ &\le\mathbf1_{\{\widehat\varepsilon\ne\varepsilon\}}
+       +\mathbf1_{\{T_q^\varepsilon\ne S\}}.
+\end{aligned}
+\tag{18.32}
+```
+
+无需拆分样本，也无需对方向估计与排序规则假设独立。
+由定理 18.2 及 (18.31) 得到 (18.27) 的全部上侧。
+向估计者揭示真实方向只能降低风险，故已知方向的 Bayes 下界也给出
+未知方向的支持下界；联合错误至少包含支持错误，得到联合下界。
+受约束风险上界为一，无约束风险由空集规则给出上界一，精确与联合错误上界也为一，
+所以这些下界确实使相应极小极大风险趋一。
+
+由定理 17.3，$`B_r`$ 从 $`1/2`$ 连续严格递增到在
+$`\alpha_1=1/\phi(r)`$ 取得的一，故 $`\alpha_D`$ 存在唯一。
+为与恢复界严格比较，记 $`\alpha_0=1/c_r`$。
+当 $`0\lt\alpha\le\alpha_0`$ 时，(17.5) 给出
+
+```math
+B_r(\alpha)-\alpha\phi(r)
+=\frac12+\alpha\left(\frac{r^2}{2}-\phi(r)\right)
+\ge\frac{g_r'(2)-\phi(r)}{c_r}\gt0.
+\tag{18.33}
+```
+
+其中 $`\phi(r)\gt r^2/2`$ 由其正项幂级数得到，
+$`g_r'(2)\gt g_r'(1)=\phi(r)`$ 由严格凸性得到。
+当 $`\alpha_0\lt\alpha\lt\alpha_1`$ 时，$`B_r(\alpha)`$
+是位于信号均值 $`\alpha\phi(r)`$ 之上的 $`I_{\alpha,r}(x)=1`$ 根，
+所以仍有同一严格比较。特别地
+$`B_r(\alpha_A)\gt\alpha_A\phi(r)=\beta`$，从而
+$`\alpha_D\lt\alpha_A`$。这也说明定理 17.3 的方向规则在整个
+几乎全恢复区间都适用。
+
+另一方面，严格凸性给出 $`0\lt\theta\lt1`$ 时
+
+```math
+-g_r(\theta)\lt\phi(r)(1-\theta),\qquad
+\frac{1-\beta\theta}{-g_r(\theta)}
+\gt\frac{1-\theta}{\phi(r)(1-\theta)}
+=\frac1{\phi(r)}.
+\tag{18.34}
+```
+
+(18.5) 的最小值在内部取得，所以
+$`\alpha_E\gt1/\phi(r)`$；又 $`\beta\lt1`$，故 (18.28) 成立。
+各开放区间的风险结论由定理 18.2、(18.27) 与定理 17.3 组合得到。
+这些下界仍是最坏风险或均匀先验下的断言；例如恒定输出某个指定支持的规则，
+在那个支持上可以没有支持错误。
+
+最后，在 $`0\le\theta\le1`$ 上作一致展开。$`g_r(0)=g_r(1)=0`$
+与关于 $`r`$ 的偶次解析展开使余项也含有 $`\theta(1-\theta)`$ 因子，故
+
+```math
+g_r(\theta)
+=-\frac{r^2}{2}\theta(1-\theta)
+ +O\!\left(r^4\theta(1-\theta)\right),\qquad
+\phi(r)=\frac{r^2}{2}+O(r^4).
+\tag{18.35}
+```
+
+由此 (18.5) 中的缩放目标函数与
+$`(1-\beta\theta)/(\theta(1-\theta))`$ 在整个开区间内有一致的相对
+$`1+O(r^2)`$ 误差。后者的唯一最小点为
+$`\theta=(1+\sqrt{1-\beta})^{-1}`$，最小值为
+$`(1+\sqrt{1-\beta})^2`$，证明 (18.29)。此处只对标量函数取极限，
+没有对 (18.11) 的常数作变动振幅的一致估计。∎
+
+## 追加锚（本行以下为增补区）
