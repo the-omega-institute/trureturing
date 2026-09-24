@@ -1250,3 +1250,5 @@ and [result](../../frontier/cover-geometry/two_copy_zero_cap_grid.json),
 are the completed exact calculations used here. The rounding argument
 extends their finite arithmetic conclusion to(CT3). This is an ordinary
 proof with exact computational evidence, without Lean verification.
+
+[Report537](../arithmetic/537-two-copy-lower-witnesses-require-nested-pure-five-prefixes.md) strengthens NC/RC using actual root and cell probabilities: both25 originals must share one surviving5-root, and both125 originals must share a live25-cell inside it. Three exact positive-mass same-law kernel comparisons exclude the other layouts. The remaining nested geometry still permits disjoint mixed-prefix packing approaching the full raw1/12 charge, so a uniform overlap rebate cannot close its query gap.
