@@ -5,6 +5,7 @@ namespace StrataLint.Digestion.Tests;
 
 public sealed class DigestionContentKindTests
 {
+    // Exercise the content-kind consumer through its complete project.
     [Theory]
     [InlineData("## 定理 364.1（内容地址）\n\n陈述。\n", "定理")]
     [InlineData("**proposition 6.30**. Claim.\n", "proposition")]
