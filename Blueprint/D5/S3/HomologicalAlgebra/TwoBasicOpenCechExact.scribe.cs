@@ -44,7 +44,7 @@ internal sealed class TwoBasicOpenCechExactDocument
                         "Surjectivity remains constructive. An overlap fraction with "
                             + "denominator (f g)^n is split using coefficients u and v with "
                             + "u f^n + v g^n = 1; the fractions (a v)/f^n and "
-                            + "-(a u)/g^n give its two preimages.")),
+                            + "-(a u)/g^n form a preimage pair under the overlap-difference map.")),
                     Paragraph(Text(
                         "Stacks tags 00EK and 01X9 supply the classical localization and "
                             + "affine-Cech mathematics. The exact ModuleCat object, chosen "

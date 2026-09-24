@@ -30,7 +30,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/TwoBasicOpenCechExact.two_basic_open_c
 
 If f and g generate the unit ideal, the diagonal is injective and its image is the kernel of the overlap difference. The kernel argument uses the unique gluing theorem for localizations.
 
-Surjectivity remains constructive. An overlap fraction with denominator (f g)^n is split using coefficients u and v with u f^n + v g^n = 1; the fractions (a v)/f^n and -(a u)/g^n give its two preimages.
+Surjectivity remains constructive. An overlap fraction with denominator (f g)^n is split using coefficients u and v with u f^n + v g^n = 1; the fractions (a v)/f^n and -(a u)/g^n form a preimage pair under the overlap-difference map.
 
 Stacks tags 00EK and 01X9 supply the classical localization and affine-Cech mathematics. The exact ModuleCat object, chosen map orientation, and explicit powered-denominator proof are the repository's concrete Lean realization.
 
