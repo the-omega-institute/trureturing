@@ -84,15 +84,11 @@ theorem gauge_and_source_descent
       _ = -(⅟D * C * Rv) := by rw [hh]; simp
   refine ⟨hr, ?_, ?_⟩
   · rw [hr] at hvisible
-    simpa only [Matrix.sub_mul, Matrix.add_mul, Matrix.mul_neg, Matrix.neg_mul,
-      Matrix.mul_assoc,
-      sub_eq_add_neg]
-      using hvisible
+    simpa only [Matrix.sub_mul, Matrix.mul_assoc, Matrix.mul_neg,
+      sub_eq_add_neg] using hvisible
   · rw [hr] at hsource
-    simpa only [Matrix.sub_mul, Matrix.add_mul, Matrix.mul_neg, Matrix.neg_mul,
-      Matrix.mul_assoc,
-      sub_eq_add_neg]
-      using hsource
+    simpa only [Matrix.sub_mul, Matrix.mul_assoc, Matrix.mul_neg,
+      sub_eq_add_neg] using hsource
 
 /-- A graph frame has the genuine pullback norm I + X-adjoint X. -/
 theorem graph_gram (X : Matrix n m ℂ) :
@@ -175,9 +171,7 @@ theorem projected_nilpotency_counterexample :
         norm_num [Matrix.mul_apply, Fin.sum_univ_succ]
     · intro hzero
       have hentry := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℚ => M 3 0) hzero
-      norm_num [Matrix.mul_apply, Fin.sum_univ_succ] at hentry
-      change (1 : ℚ) = 0 at hentry
-      norm_num at hentry
+      norm_num [Matrix.mul_apply, Fin.sum_univ_succ, Matrix.vecCons] at hentry
 
 #print axioms source_preserving_schur
 #print axioms schur_graph_lift
