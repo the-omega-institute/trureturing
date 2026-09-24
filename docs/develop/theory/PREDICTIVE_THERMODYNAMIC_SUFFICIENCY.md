@@ -19,7 +19,9 @@
 \]
 令 $R$ 的列为 $\ker O$ 的一组欧氏正交基，$C_h=R^{\mathsf T}SR$，$y=Oz$、$u=R^{\mathsf T}Nz$。满行秩和正定性保证 $P,C_h$ 正定。这里 $R$ 表示矩阵，不表示概率参考。
 
-**定理 2.2（同一预测分解同时分离能量、流与热参考）。** 变换 $z=Ly+Ru$ 可逆，且
+## theorem 2.2: 同一预测分解同时分离能量、流与热参考
+
+变换 $z=Ly+Ru$ 可逆，且
 \[
  H(z)=\tfrac12y^{\mathsf T}P^{-1}y+\tfrac12u^{\mathsf T}C_hu.
 \]
@@ -46,7 +48,9 @@
 \]
 所以 $AN=NA$。$\ker O$ 在 $A$ 下不变，因而 $AR=RA_h$，两条自治方程随之成立。常数 Jacobian $\kappa$ 与完成平方给出配分函数及归一化后的乘积分解。最后 $KP+PK^{\mathsf T}=0$ 及 $A_h^{\mathsf T}C_h+C_hA_h=0$ 保证两协方差在各自线性流下不变。这一证明同时保留了非正交坐标变换的测度因子。证毕。[^suff-symplectic]
 
-**定理 2.3（经典自由能的恢复缺陷及其守恒）。** 对 $D(\mu\Vert\pi_\beta)<\infty$ 的概率分布，令 $\nu$ 为其 $y$ 边缘，$\mu(du\mid y)$ 为条件分布，定义恢复 $\mathcal R\nu=\nu\otimes\gamma_h$，再以定义 2.1 的逆变换送回相空间。则
+## theorem 2.3: 经典自由能的恢复缺陷及其守恒
+
+对 $D(\mu\Vert\pi_\beta)<\infty$ 的概率分布，令 $\nu$ 为其 $y$ 边缘，$\mu(du\mid y)$ 为条件分布，定义恢复 $\mathcal R\nu=\nu\otimes\gamma_h$，再以定义 2.1 的逆变换送回相空间。则
 \[
  D(\mu\Vert\pi_\beta)-D(\nu\Vert\gamma_r)
  =\int D(\mu(\cdot\mid y)\Vert\gamma_h)d\nu(y)
@@ -62,7 +66,9 @@
 \]
 积分得到链式恒等式；有限总相对熵保证各项有定义。第二个等号对参考 $\nu\otimes\gamma_h$ 使用同一分解。条件 KL 非负且零值要求条件分布相同，故得到唯一极小提升。完整流在两坐标上分别可逆并保持各自热参考，所以总相对熵、边缘相对熵各自不变，其差亦不变。可预测性没有自动使隐藏状态处于条件热平衡，粗粒化也没有自动产生单调熵增长。证毕。
 
-**定理 2.4（正则量子模式上的相容热分解）。** 对定义 2.1 的数据，$r=2k$ 为偶数。有限 $n$ 模 Schrödinger 表示中的 Weyl 对称二次量子 Hamilton 算子，经一个与 $O$ 的预测子空间相容的线性正则变换及其酉实现后，可写为
+## theorem 2.4: 正则量子模式上的相容热分解
+
+对定义 2.1 的数据，$r=2k$ 为偶数。有限 $n$ 模 Schrödinger 表示中的 Weyl 对称二次量子 Hamilton 算子，经一个与 $O$ 的预测子空间相容的线性正则变换及其酉实现后，可写为
 \[
  \widehat H=\widehat H_r\otimes I+I\otimes\widehat H_h
  \quad\text{于 }L^2(\mathbb R^k)\otimes L^2(\mathbb R^{n-k}).
@@ -101,7 +107,9 @@
 \]
 归一化 Hilbert–Schmidt 范数记为 $\|M\|_{2,\mathrm n}^2=\operatorname{Tr}M^\dagger M/(de)$。这些有限矩阵是代数证书，不预设测量它们只需多项式于量子比特数的资源。
 
-**定理 3.2（有限观测泄漏等价于隐藏相互作用）。** 对定义 3.1 有
+## theorem 3.2: 有限观测泄漏等价于隐藏相互作用
+
+对定义 3.1 有
 \[
  R_{ab}=[V,W_{ab}\otimes I],\qquad
  \|V\|\le\delta(H)\le2\|V\|,
@@ -122,7 +130,9 @@
 \]
 因此 $V=d^{-2}\sum_{a,b}R_{ab}(W_{ab}^\dagger\otimes I)$，三角不等式给 $\|V\|\le\delta$。反向用交换子范数界得到 $\delta\le2\|V\|$。展开每个交换子的平方范数，两个平方项各为 $\|V\|_{2,\mathrm n}^2$，交叉项的平均由上述酉平均等式为零，得到平方恒等式。Weyl 矩阵张成完整可见矩阵代数，所以零泄漏与全代数闭合等价；前述界再给 $V=0$。证毕。
 
-**定理 3.3（同一证书控制预测与自由能）。** 令 $U_t=e^{-itH}$、$U_t^0=e^{-itH_0}$。对任意联合态 $\rho$、任意实数 $t$，包括初始相关态，有
+## theorem 3.3: 同一证书控制预测与自由能
+
+令 $U_t=e^{-itH}$、$U_t^0=e^{-itH_0}$。对任意联合态 $\rho$、任意实数 $t$，包括初始相关态，有
 \[
  \left\|\operatorname{Tr}_B(U_t\rho U_t^\dagger)
  -e^{-itH_A}\rho_Ae^{itH_A}\right\|_1
@@ -142,7 +152,9 @@
 \]
 两目标之差为 $\operatorname{Tr}(\rho V)-[f_\beta(H)-f_\beta(H_0)]$，绝对值至多 $2\|V\|$。这里使用迹指数的特征值界，不假设一般矩阵指数保持算子序。证毕。
 
-**定理 3.4（热恢复的精确缺陷与扰动界）。** 记 $\gamma_A,\gamma_B$ 为 $H_A,H_B$ 的 Gibbs 态，定义恢复 $\mathcal R(\rho_A)=\rho_A\otimes\gamma_B$。任意联合态均满足
+## theorem 3.4: 热恢复的精确缺陷与扰动界
+
+记 $\gamma_A,\gamma_B$ 为 $H_A,H_B$ 的 Gibbs 态，定义恢复 $\mathcal R(\rho_A)=\rho_A\otimes\gamma_B$。任意联合态均满足
 \[
  D(\rho\Vert\gamma_A\otimes\gamma_B)-D(\rho_A\Vert\gamma_A)
  =I(A:B)_\rho+D(\rho_B\Vert\gamma_B)
@@ -167,7 +179,9 @@ $\Delta_H$ 使用指定局部 Gibbs 参考；$V\ne0$ 时它本身不被断言为
 
 相对熵非负且仅在同态时为零，得到恢复刻画。$V=0$ 时演化为两个局部酉的张量积，各自保持 Gibbs 参考、边缘熵及联合熵，故缺陷守恒。一般情形将定理 3.3 的 $G$ 界代入恒等式即得第一条误差界。最后使用自然对数约定下的量子 Pinsker 界 $\|\rho-\sigma\|_1^2\le2D(\rho\Vert\sigma)$。该界可由相对熵的数据处理、投影到 $\rho-\sigma$ 的正谱空间以及二元经典 Pinsker 推出；结合第一条界得到结论，并保证根号内非负。证毕。[^suff-dpi]
 
-**命题 3.5（少量观测闭合不推出热解耦）。** 取两个量子比特，$H=Z\otimes Z$。可见线性观测空间 $\operatorname{span}\{I,Z\}\otimes I$ 完全闭合，但 $V\ne0$、$\delta(H)=2$；存在相同初始可见边缘，其后续可见边缘不同。热态在任何 $\beta>0$ 都不分解为两个边缘的乘积。
+## proposition 3.5: 少量观测闭合不推出热解耦
+
+取两个量子比特，$H=Z\otimes Z$。可见线性观测空间 $\operatorname{span}\{I,Z\}\otimes I$ 完全闭合，但 $V\ne0$、$\delta(H)=2$；存在相同初始可见边缘，其后续可见边缘不同。热态在任何 $\beta>0$ 都不分解为两个边缘的乘积。
 
 **证明。** $[H,Z\otimes I]=0$。定义 3.1 给 $H_A=H_B=0$、$V=H$，取 Weyl 矩阵 $X$ 得 $\|[Z\otimes Z,X\otimes I]\|=2$，且定理 3.2 给反向上界。初态 $|+\rangle\langle+|\otimes|0\rangle\langle0|$ 与 $|+\rangle\langle+|\otimes|1\rangle\langle1|$ 的可见边缘相同，之后分别按 $e^{-itZ}$ 和 $e^{itZ}$ 旋转。在 $t=\pi/4$，两者的 Pauli $Y$ 期望值为 $1$ 和 $-1$；其 $Z$ 读数却一直相同。另有
 \[
@@ -180,7 +194,9 @@ $\Delta_H$ 使用指定局部 Gibbs 参考；$V\ne0$ 时它本身不被断言为
 
 **定义 4.1（只访问可见子系统）。** 一个可见实验可以使用任意有限次数的联合动力学等待和仅作用于 $A$ 的量子仪器，可按此前结果选择后续仪器及等待时间。仪器的 Kraus 算子均形如 $M\otimes I_B$。实验只返回 $A$ 的经典记录，没有隐藏能量或隐藏态的额外预言机。
 
-**定理 4.2（无相互作用时仍有精确的热量辨识下界）。** 设 $H=H_A\otimes I_B$、$\dim\mathcal H_B=e\ge2$，固定可见初态 $\rho_A$，隐藏初态 $\sigma_B$ 任意。所有定义 4.1 实验的记录分布与 $\sigma_B$ 无关。若目标为隐藏的超额自由能
+## theorem 4.2: 无相互作用时仍有精确的热量辨识下界
+
+设 $H=H_A\otimes I_B$、$\dim\mathcal H_B=e\ge2$，固定可见初态 $\rho_A$，隐藏初态 $\sigma_B$ 任意。所有定义 4.1 实验的记录分布与 $\sigma_B$ 无关。若目标为隐藏的超额自由能
 \[
  \theta(\sigma_B)=\beta^{-1}D(\sigma_B\Vert I/e)
  =\beta^{-1}(\log e-S(\sigma_B)),
@@ -189,7 +205,9 @@ $\Delta_H$ 使用指定局部 Gibbs 参考；$V\ne0$ 时它本身不被断言为
 
 **证明。** 每个产品初态经等待后仍为产品态，可见因子独立演化；任一可见仪器的分支概率及更新只作用于第一因子。按实验记录长度归纳，包括自适应分支选择，全部记录分布与隐藏因子无关。特别地，隐藏纯态与 $I/e$ 产生相同数据，其目标值分别是 $L=\log e/\beta$ 与零。对同一随机估计值 $Z$，有 $\mathbb E|Z|+\mathbb E|Z-L|\ge L$，故最坏风险至少为 $L/2$。恒输出 $L/2$ 对全部 $0\le\theta\le L$ 达到上界。这是观测限制下的辨识结论，尚未限制算法运行时间。证毕。
 
-**定理 4.3（零泄漏可见系统中的单次配分函数计数归约）。** 给定 $n$ 个变量、$m$ 个至多三文字子句的 CNF 公式 $F$，可在多项式时间内构造对角、相互对易、至多三局域的隐藏 Hamilton 算子 $H_F$，并增加一个与其解耦的可见量子比特，使可见观测代数泄漏严格为零，而在固定 $\beta=\log2$ 下，完整配分函数的一次精确有理数求值即可恢复 $\#\mathrm{SAT}(F)$。
+## theorem 4.3: 零泄漏可见系统中的单次配分函数计数归约
+
+给定 $n$ 个变量、$m$ 个至多三文字子句的 CNF 公式 $F$，可在多项式时间内构造对角、相互对易、至多三局域的隐藏 Hamilton 算子 $H_F$，并增加一个与其解耦的可见量子比特，使可见观测代数泄漏严格为零，而在固定 $\beta=\log2$ 下，完整配分函数的一次精确有理数求值即可恢复 $\#\mathrm{SAT}(F)$。
 
 **证明。** 对每个子句取其被违反的计算基赋值投影 $\Pi_j$，并令
 \[
@@ -227,7 +245,9 @@ $\Delta_H$ 使用指定局部 Gibbs 参考；$V\ne0$ 时它本身不被断言为
 \]
 所有短窗极限都在固定矩阵、固定欧氏范数及已固定时间单位下令 $T\downarrow0$。$\mathfrak q$ 是本节行列式缩放指数，不是量子比特数。
 
-**定理 5.2（分层极限矩阵、全谱幂次与行列式首项）。** 对 $x=\sum_jx_j$、$x_j\in E_j$，定义
+## theorem 5.2: 分层极限矩阵、全谱幂次与行列式首项
+
+对 $x=\sum_jx_j$、$x_j\in E_j$，定义
 \[
  \mathcal P(s)x=\sum_{j=0}^m\frac{s^j}{j!}CB^jx_j,
  \qquad M=\int_0^1\mathcal P(s)^{\mathsf T}\mathcal P(s)ds.
@@ -255,7 +275,9 @@ $\Delta_H$ 使用指定局部 Gibbs 参考；$V\ne0$ 时它本身不被断言为
 
 对足够小 $T$，极限矩阵的正特征值从上下控制缩放后的 Gramian。合同变换给出 Loewner 夹逼；Courant–Fischer 原理将该夹逼逐项转成排序特征值界。最后 $\det D_T^2=T^{\mathfrak q}$，行列式在 $M$ 附近连续可微，得到首项公式。整个谱的幂次与经典可控 Gramian 结果对偶，本卷不认领该幂次的首创；这里显式保留分层极限矩阵，供后续统计信息计算。证毕。[^suff-gramian]
 
-**定理 5.3（有限正交积分矩保留整个分层首项）。** 取 $L^2(0,1)$ 中次数至多 $m$ 的正交归一多项式 $\ell_0,\ldots,\ell_m$。令
+## theorem 5.3: 有限正交积分矩保留整个分层首项
+
+取 $L^2(0,1)$ 中次数至多 $m$ 的正交归一多项式 $\ell_0,\ldots,\ell_m$。令
 \[
  (\mathcal M_Tx)_k=T^{-1/2}\int_0^T\ell_k(t/T)Ce^{tB}x\,dt,
  \qquad G_{\rm mom}(T)=\mathcal M_T^{\mathsf T}\mathcal M_T.
@@ -276,7 +298,9 @@ $\Delta_H$ 使用指定局部 Gibbs 参考；$V\ne0$ 时它本身不被断言为
 \]
 其中 $\sigma^2>0$ 是每个归一积分坐标的噪声方差。也可使用定理 5.3 的有限积分矩、独立等方差噪声和 $G_{\rm mom}$。这是有限维经典统计实验，没有把白噪声当作普通 $L^2$ 随机函数，也没有假定对不对易量子观测可以无扰动地连续测量。
 
-**定理 6.2（信息、Bayes 能量风险与条件自由能）。** 在定义 6.1 下，后验为 Gaussian，其协方差和均值是
+## theorem 6.2: 信息、Bayes 能量风险与条件自由能
+
+在定义 6.1 下，后验为 Gaussian，其协方差和均值是
 \[
  \Sigma_T=(\beta I+\sigma^{-2}G(T))^{-1},\qquad
  \widehat X=\sigma^{-2}\Sigma_TM_T^{\mathsf T}Y_T.
@@ -301,7 +325,9 @@ $\Delta_H$ 使用指定局部 Gibbs 参考；$V\ne0$ 时它本身不被断言为
 \]
 整理得所述行列式。平均条件能量等于先验能量，而 $h(X)-h(X|Y_T)=I_T$，因此条件自由能式成立。它衡量条件概率描述的自由能泛函，未指定实际测量、反馈或擦除协议，不能直接解释为已经付出的热量。最后反对称生成元的流正交，平方误差在该流下保持，且条件期望随已知线性映射交换，得到全部未来的同一 Bayes 风险。未知生成元的辨识误差不包含在此结论中。证毕。[^suff-information]
 
-**定理 6.3（噪声指数选择可恢复的导数层）。** 在定义 6.1 中固定 $\beta$，令 $\sigma^2=T^\alpha$，$\alpha\in\mathbb R$。则
+## theorem 6.3: 噪声指数选择可恢复的导数层
+
+在定义 6.1 中固定 $\beta$，令 $\sigma^2=T^\alpha$，$\alpha\in\mathbb R$。则
 \[
  \boxed{I_T=\frac12\sum_{j=0}^m d_j(\alpha-2j-1)_+\log(1/T)+O(1).}
 \]
@@ -319,7 +345,9 @@ $\Delta_H$ 使用指定局部 Gibbs 参考；$V\ne0$ 时它本身不被断言为
 
 后验的对应特征值为 $(\beta+T^{-\alpha}\lambda_i(T))^{-1}$，在严格大于阈值时趋零，在严格小于时趋于 $1/\beta$，得到第二式。有限维下风险趋零等价于最大后验特征值趋零，也就是 $\lambda_{\min}(G(T))/\sigma^2(T)\to\infty$；用 $\lambda_{\min}(G(T))=\Theta(T^{2m+1})$ 得充要条件。固定噪声时 $G(T)=TC^{\mathsf T}C+O(T^2)$，对 $\log\det(I+M)$ 作零点展开得到最后一式。这个首阶互信息只能读取初始观测增益，不能单独认证高阶隐藏方向的恢复。证毕。
 
-**定理 6.4（同一双振子的等增益传感器有不同信息与恢复极限）。** 在能量归一坐标 $(q_1,p_1,q_2,p_2)$ 中取
+## theorem 6.4: 同一双振子的等增益传感器有不同信息与恢复极限
+
+在能量归一坐标 $(q_1,p_1,q_2,p_2)$ 中取
 \[
  B=\operatorname{diag}(J_2,2J_2),\quad J_2=\begin{pmatrix}0&1\\-1&0\end{pmatrix},
 \]
