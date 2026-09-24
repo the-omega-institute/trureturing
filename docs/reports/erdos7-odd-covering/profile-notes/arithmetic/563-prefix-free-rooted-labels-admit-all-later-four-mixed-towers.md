@@ -244,6 +244,26 @@ The finite3-adic cylinders and pure survivor determine every term.
 This formula retains the actual joint prefix overlaps; numerical
 distinctness alone supplies no upper bound as small as PF15.
 
+There is a finite root-depth sufficient condition. For each actual u,
+require disjointness on S3 only among its present root cylinders with
+a<=6; all root phases at a>6 may be arbitrary. At a fixed x3 there is
+at most one active low label. Whether the largest active weight belongs
+to a low or high label,
+
+    sum_active v-max_active v<=sum_(active a>6)v.
+
+Since each full numerical label occurs at most once, PF2--PF3 give
+
+    Omega<=sum_u mu_u * sum_(a>6)2/3^a
+         <=[product_(q in Q)(1+1/(q-2))-1]*3^-6
+          =(1113/935)*3^-6=371/227205<1/300.        (PF18)
+
+The resulting sharper query bound is11.010360123156282..., and
+H(U)>=24469/622080. The exact query fraction and positive fresh-prime
+Haar bound are in the result data. This is not a height truncation:
+every high-root original remains in U and is paid by PF18, and the
+Q-exponents are entirely unrestricted.
+
 ## 6. Ordered prime carriers and scope
 
 Replace3,5,7,11,13,17,19 by any seven ordered odd primes
@@ -261,6 +281,9 @@ mutually distinct and disjoint from the core; they need not exceed its
 largest prime. The collision extension also holds with the same
 threshold if Omega is measured under this carrier's actual pure source;
 no monotonicity of Omega across different carriers is assumed.
+For PF18, the root tail becomes1/[(r0-2)*r0^6]<=3^-6 and the total
+Q-part ceiling is at most1113/935. Thus the same six-layer sufficient
+condition and its constants also transport.
 
 The prefix-free condition is an actual arithmetic condition, checked
 separately for every numerical u. Nested active prefixes at different
@@ -288,7 +311,7 @@ four coordinates.
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/prefix_free_later_four_shearer.py
 ```
 
-All411 explicit checks pass, and `--output` selects another result path.
+All417 explicit checks pass, and `--output` selects another result path.
 These finite polynomial and rational checks certify the stated constants.
 The source reduction, all-induced positivity argument, avoidance theorem
 and complete-query comparison provide the ordinary general proof.

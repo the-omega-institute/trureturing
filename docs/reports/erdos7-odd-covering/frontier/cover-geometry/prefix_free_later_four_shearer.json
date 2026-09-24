@@ -2174,6 +2174,21 @@
     "fresh23_29_Haar_lower": "51485673632169681716801060320397107/1954934035420544501777457558473318400000",
     "fresh23_29_Haar_decimal": 2.633627155664826e-05
   },
+  "complete_Qpart_weight": "1113/935",
+  "six_layer_root_tail_allowance": "371/227205",
+  "six_layer_consumer": {
+    "source_survivor_reserve": "195752/1136025",
+    "mixed_loss_upper": "940273/1136025",
+    "R_upper": "35047987237285188387280497770277684259/3183182643006790679448699987265785000",
+    "R_decimal": 11.010360123156282,
+    "target_minus_R": "216683219554747571317845225902090741/3183182643006790679448699987265785000",
+    "crossed": true,
+    "Haar_survivor_lower": "24469/622080",
+    "Haar_survivor_decimal": 0.03933416923868313,
+    "fresh23_29_relative_reserve": "216683219554747571317845225902090741/38447853099846726638047042983445560000",
+    "fresh23_29_Haar_lower": "216683219554747571317845225902090741/977467017710272250888728779236659200000",
+    "fresh23_29_Haar_decimal": 0.00022167829259582642
+  },
   "checks": {
     "source_pure_mass": true,
     "base_all63_scopes_formula_0": true,
@@ -2585,8 +2600,14 @@
     "collision_allowance": true,
     "collision_R_exact": true,
     "collision_crosses": true,
-    "collision_fresh_positive": true
+    "collision_fresh_positive": true,
+    "fresh_identity_195752/1136025": true,
+    "complete_Qpart_weight": true,
+    "six_layer_tail": true,
+    "six_layer_query": true,
+    "six_layer_Haar": true,
+    "six_layer_fresh_positive": true
   },
-  "passed_checks": 411,
+  "passed_checks": 417,
   "claim_limit": "No broader pair-inventory search. Positive coordinate-subset values plus the separate downward-closure argument are required for all induced event subgraphs."
 }

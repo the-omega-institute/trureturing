@@ -161,6 +161,17 @@ check('collision_crosses', collision_consumer['crossed'])
 check('collision_fresh_positive', collision_consumer['fresh23_29_Haar_lower'] > 0)
 
 
+qpart_cap = prod((1+X[q] for q in Q), start=F(1))-1
+root_tail = qpart_cap/3**6
+six_layer_consumer = consumer(F(65869,378675)-root_tail)
+check('complete_Qpart_weight', qpart_cap == F(1113,935))
+check('six_layer_tail', root_tail == F(371,227205) < F(1,300))
+check('six_layer_query', six_layer_consumer['R_upper'] ==
+      F(35047987237285188387280497770277684259,3183182643006790679448699987265785000)
+      and six_layer_consumer['crossed'])
+check('six_layer_Haar', six_layer_consumer['Haar_survivor_lower'] == F(24469,622080))
+check('six_layer_fresh_positive', six_layer_consumer['fresh23_29_Haar_lower'] > 0)
+
 result = {'scope': 'Exact arithmetic only; ordinary scope-Shearer applicability is a separate proof obligation.',
           'primes': Q, 'scope_weights_x': X, 'six_old_pair_towers': PAIRS,
           'all11_later_four_scopes': [scopes(mask) for mask in sorted(LATE_MIXED_MASKS)],
@@ -168,6 +179,9 @@ result = {'scope': 'Exact arithmetic only; ordinary scope-Shearer applicability 
           'results': results,
           'actual_collision_budget_maximum': collision_margin,
           'collision_allowance_1over300_consumer': collision_consumer,
+          'complete_Qpart_weight': qpart_cap,
+          'six_layer_root_tail_allowance': root_tail,
+          'six_layer_consumer': six_layer_consumer,
           'checks': checks, 'passed_checks': len(checks),
           'claim_limit': 'No broader pair-inventory search. Positive coordinate-subset values plus the separate downward-closure argument are required for all induced event subgraphs.'}
 
