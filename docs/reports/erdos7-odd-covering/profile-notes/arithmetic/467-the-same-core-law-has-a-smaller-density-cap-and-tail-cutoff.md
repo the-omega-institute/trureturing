@@ -15,7 +15,7 @@ The proof combines the already retained ordinary prefix mass with the refined qu
 
 The same law also gives the [six-prime two-copy estimate](../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#a-quantitative-common-law-for-six-prime-two-copy-families): arbitrary fixed residues with at most two classes per numerical modulus, on at most six odd primes excluding3, admit one full-support law with all-depth query bound33748/3375<10 and density below420. That deduction uses actual ternary comb families and their joint query partitions; it adds no hypothesis to the seven-prime result here.
 
-Report348's separate [direct capped law](../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#a-direct-capped-law-improves-the-two-copy-query-and-density-bounds) improves that two-copy interface to a query upper bound9.250328706548595... and density below192. Both improved bounds belong to the new direct law; they are not additional estimates on the seven-prime law constructed here.
+Report348's separate [direct capped law with the actual pure-anchor masses retained](../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#retaining-the-actual-pure-anchor-masses) improves that two-copy interface to a query upper bound5.149795473527814... and density below88. Both improved bounds belong to the direct law; they are not additional estimates on the seven-prime law constructed here.
 
 ## The ordinary prefix mass bounds the charged process itself
 

@@ -17,8 +17,9 @@ The arguments below are ordinary proofs, not Lean verification.
 The quantitative sections also give a common all-depth law for arbitrary
 two-copy families on at most six odd primes excluding3. The
 [direct capped construction](#a-direct-capped-law-improves-the-two-copy-query-and-density-bounds)
-has query bound9.250328706548595... and density below192, both under one
-law. Its source comparison and verification limits are specified there.
+has a [joint pure-anchor estimate](#retaining-the-actual-pure-anchor-masses)
+with query bound5.149795473527814... and density below88, both under one
+law. Its source comparison and verification limits are specified below.
 
 ## 1. Replace one digit and retain the complete remaining coordinates
 
@@ -398,8 +399,9 @@ phases; the unrestricted seven-prime target565/51 remains open.
 
 The same actual construction transfers a lower certificate back to
 that target. Suppose, for a particular nonempty two-copy survivor V,
-every probability supported on V has R_Q>=r, with r>=0. No such example
-with r>=6 is supplied here. Put a=1+2r. For ANY probability mu on the
+every probability supported on V has R_Q>=r, with r>=0. The stronger
+upper bound(PA1) below rules out r>=6 on at most six odd support primes
+excluding3; the conditional transfer remains valid. Put a=1+2r. For ANY probability mu on the
 actual U_H in(TC2), let z be its Z_H mass and eta its restricted
 W_H marginal. The spine queries give R_(3,Q)(mu)>=Hz. Keeping the
 unit query's additional mass z in the argument for(TC5) gives
@@ -425,8 +427,10 @@ an actual two-copy cofactor certificate r>=6 would suffice at H=75:
 A cofactor lower certificate can use finitely many fixed query labels
 and phase weights, but it must hold throughout that family's complete
 actual V. A desired abstract support or one chosen law with large R
-does not meet the premise. Finding such a cofactor family, or a uniform
-bound ruling it out, remains open. Even a successful(TC6) counterexample
+does not meet the premise. The r>=6 example is excluded by(PA1).
+Finding an actual cofactor lower certificate with257/51<r<=B_pure,
+or a uniform bound ruling out that remaining interval, remains open.
+Even a successful(TC6) counterexample
 would refute the intermediate query target, not settle Erdős#7.
 
 The [partial-comb checker](../../frontier/cover-geometry/two_copy_comb_transfer.py)
@@ -562,8 +566,9 @@ heights. The query sum still uses one maximum per numerical query label.
 The bound B is greater than37/4; rounding it down to9.25 is invalid.
 These are simultaneous bounds for the direct law constructed below.
 They improve(TC1)'s quantitative interface without using its comb limit.
-The actual-family lower-certificate transfer(TC6) remains valid, and no
-actual two-copy example meeting its lower target is supplied here.
+The actual-family lower-certificate transfer(TC6) remains valid. The
+joint pure-anchor estimate below further improves this same direct law
+and excludes the proposed cofactor lower target6.
 
 The proof applies the existing
 [conditional convex comparison](../../../../../Library/Arith/schroeder2026noncoverage.md#conditional-comparison-and-the-unrestricted-positive-part-bound),
@@ -734,4 +739,147 @@ It does not enumerate original families or rerun source geometry.
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_capped_query.py
+```
+
+## Retaining the actual pure-anchor masses
+
+The same direct law in(CP2)–(CP3), with the same stage thresholds and
+caps, satisfies the stronger simultaneous bounds
+
+    H_Q|V <= nu <= D_pure H_Q,
+    R_Q(nu)<=B_pure,
+    B_pure=28165018706892770299/5469152872511772242
+          =5.149795473527814... <103/20<6,
+    D_pure=663518841777792000/7575003978548161
+          =87.59320043353472... <88.                   (PA1)
+
+This holds for arbitrary finite two-copy inputs on at most six odd
+support primes excluding3. No original modulus or phase is changed.
+The improvement retains two actual pure-union masses in the comparison
+instead of replacing the anchor comparison carrier by full Haar.
+The kernel and its normalization are the same as in(CP1); this is a
+stronger estimate on that law, with the same ordinary source-comparison
+premise and no additional Lean verification.
+
+### One joint anchor parameter for all charges and queries
+
+For the reference first primes5,7 let u and v be the actual Haar masses
+of their respective pure forbidden unions. Thus
+
+    0<=u<=1/2,  0<=v<=1/3,
+    w5=1-u, w7=1-v.
+
+The initial full57 survivor restriction is dominated by the product
+of these actual pure-survivor Haar restrictions, of total mass w5*w7.
+Its own mass is at least w5*w7-1/12. For comparison, normalize each
+pure-survivor restriction: its conditional cylinder bounds are
+1/(w_p*p^e). Apply the same completed later kernels and the same
+conditional comparison as in(CP4), then multiply by w5*w7.
+
+Equivalently, each initial auxiliary coordinate has unnormalized masses
+
+    pi_p(1)=w_p-1/p,
+    pi_p(n)=(p-1)/p^n, n>=2,
+    sum_n pi_p(n)=w_p,
+    sum_n n*pi_p(n)=w_p+1/(p-1).                       (PA2)
+
+These masses are nonnegative throughout the stated rectangle. The later
+auxiliary coordinate probabilities remain exactly those of(CP4).
+For their product M the total comparison mass is w5*w7, so its hinge is
+
+    F_t(u,v)=integral (M-t)_+ d pi
+       =integral M d pi-t*w5*w7
+          +sum_(m<t)(t-m)pi(M=m).                     (PA3)
+
+The subtraction is t*w5*w7, not t. Every geometric upper tail remains
+in the full first moment. The earlier absolute stage charge(CP5) now
+uses the corresponding prefix F_(t_q)(u,v). Consequently define
+
+    alpha(u,v)=w5*w7-1/12
+       -sum_q [2/(q-1-2t_q)] F_(t_q)^old(u,v),
+    Phi(u,v)=F_3^final(u,v).                           (PA4)
+
+The actual final lambda obeys lambda(1)>=alpha(u,v) and
+lambda(L-1)<=2*lambda(1)+Phi(u,v) for every complete query L.
+Both use the same actual pair(u,v), the same originals and the same
+law. There is no independent selection of a denominator or numerator
+at different anchor parameters.
+
+### Four endpoints certify the entire parameter rectangle
+
+For these fixed thresholds and caps, the auxiliary atom masses are
+affine in each of u,v, and integration against the fixed hinge payoff
+preserves this separate affinity. This does not assert that taking the
+positive part of an arbitrary affine expression preserves affinity.
+Thus each function in(PA3)–(PA4) is affine in u with v fixed and affine
+in v with u fixed. All four corner alpha values are positive. Their minimum
+and the maximum of2+Phi/alpha are both attained at(u,v)=(1/2,1/3), where
+
+    alpha_pure=7575003978548161/73724315753088000,
+    Phi_pure=22496082952171/69510823782400.              (PA5)
+
+The four exact query bounds are
+
+| u | v | 2+Phi(u,v)/alpha(u,v) |
+| --- | --- | --- |
+| 0 | 0 | 128000709329279979373/46421374761426808734 |
+| 0 | 1/3 | 66583813686862230349/21826129079333125342 |
+| 1/2 | 0 | 58202896526211567323/15699892412092326034 |
+| 1/2 | 1/3 | 28165018706892770299/5469152872511772242 |
+
+For completeness, the interpolation certificate is the four nonnegative
+corner values of (B_pure-2)*alpha-Phi. Multilinear interpolation preserves
+this inequality throughout the rectangle, as well as
+alpha>=alpha_pure>0. Normalize the actual lambda once and use its raw
+density bound9 to obtain(PA1), with D_pure=9/alpha_pure.
+The lower density and all-depth argument are unchanged from(CP3)–(CP6).
+
+For larger actual primes, their two pure masses lie within this same
+rectangle. The actual mixed-anchor Haar bound is at most1/12, and their
+positive-depth auxiliary tails are no larger than the reference tails,
+with the same w5,w7 total masses. The later caps and charge coefficients
+are no larger either. The earlier ordered-prime domination and padding
+argument therefore proves(PA1) for the stated arbitrary support.
+
+### Consequences for actual lower certificates and continuation
+
+Since every actual V in this class admits a law with R<=B_pure<6,
+no such V can have R>=6 for every supported law. This excludes the
+specific cofactor premise used in the H=75 example of(TC6); it does not
+invalidate that conditional inequality or refute Erdős#7.
+The remaining interval for a successful(TC6) cofactor certificate is
+
+    257/51 < r <= B_pure,
+    B_pure-257/51
+      =30843665816005819055/278926796498100384342>0.
+
+Even at this upper endpoint, the strict(TC6) crossing requires
+
+    H>3491654251175798175460/6168733163201163811
+      =566.024523804...,
+
+so H>=567 is necessary for that certificate. This bounds what(TC6)
+alone can certify; it is not an upper bound on an actual comb's R_*.
+
+For the reference six primes, arbitrary additional distinct full labels
+touching23 or29 retain probability at least
+
+    1-(1+B_pure)*51/616
+      =1653655418917620031481/3368998169467251701072
+      >49/100.
+
+Together with the same-law density cap below88, this gives full Haar
+survivor mass greater than49/8800>1/180. The original fixed phases,
+full labels and permitted old multiplicity two are retained.
+
+The existing [consumer](../../frontier/cover-geometry/two_copy_capped_query.py)
+with `--joint-anchor` computes the four full prefix ledgers, their exact
+tail hinges and the common bounds in
+[these data](../../frontier/cover-geometry/two_copy_pure_anchor.json).
+It is a numerical consumer of(PA2)–(PA4); the interpolation and actual
+source comparison are the ordinary proof above. The earlier default
+calculation remains available and keeps its original output contract.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_capped_query.py --joint-anchor
 ```
