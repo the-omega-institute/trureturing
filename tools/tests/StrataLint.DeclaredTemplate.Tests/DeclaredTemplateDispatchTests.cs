@@ -17,7 +17,7 @@ public sealed class DeclaredTemplateDispatchTests
     public void dispatched_validated_registration_observed()
     {
         var diagnostics = RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId,
-            DeclaredTemplateBindingRuleTests.Delta(declared: true, added: true)).Diagnostics;
+            DeclaredTemplateBindingRuleTests.Delta(declared: false, added: true)).Diagnostics;
         var finding = Assert.Single(diagnostics, diagnostic => diagnostic.Message.StartsWith("DTR-", StringComparison.Ordinal));
         Assert.Equal(AdmissionEffect.Observe, finding.AdmissionEffect);
         Assert.StartsWith("DTR-Declared ", finding.Message, StringComparison.Ordinal);
