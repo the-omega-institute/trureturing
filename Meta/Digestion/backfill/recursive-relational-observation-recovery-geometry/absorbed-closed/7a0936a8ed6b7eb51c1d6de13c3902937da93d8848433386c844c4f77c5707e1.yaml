@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7a0936a8ed6b7eb51c1d6de13c3902937da93d8848433386c844c4f77c5707e1
   normalized_sha256: sha256:7a0936a8ed6b7eb51c1d6de13c3902937da93d8848433386c844c4f77c5707e1
 cas_ref: sha256:7a0936a8ed6b7eb51c1d6de13c3902937da93d8848433386c844c4f77c5707e1
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Estimation/DataProcessing/InverseLimitFeasibleMinimum.exists_feasible_minimum_eq_iSup
+    target_statement_id: sha256:37dd27400116f0582a7266d73f9c33ea690c7015e23bb5798149c58d055eb6cb
 receipts:
   unresolved_subitems: []
