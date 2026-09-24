@@ -7,9 +7,6 @@
    digest: Lyndon words have a longest Lyndon suffix and integral homogeneous word polynomials. -/
 
 import Mathlib.Algebra.MonoidAlgebra.Support
-import Mathlib.Data.List.Lex
-import Mathlib.Data.List.TakeDrop
-import Mathlib.Data.Nat.Find
 import Mathlib.LinearAlgebra.LinearIndependent.Defs
 
 /-!

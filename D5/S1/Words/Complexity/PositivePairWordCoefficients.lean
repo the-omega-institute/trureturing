@@ -1,5 +1,5 @@
 /- GID: D5/S1/Words/Complexity/PositivePairWordCoefficients
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Words/Complexity/PositivePairWordCoefficients
    mirror-E: none(waiver:pure-word-combinatorics)
    anchors: []
@@ -8,8 +8,6 @@
 
 import D5.S1.Words.Complexity.LyndonStandardBracket
 import D5.S1.Words.Complexity.VivionBinomialConverseFails
-import Mathlib.Algebra.MonoidAlgebra.MapDomain
-import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.Data.Set.Finite.List
 
 set_option autoImplicit false

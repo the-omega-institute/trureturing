@@ -1,15 +1,12 @@
 /- GID: D5/S1/Words/Complexity/PositivePairCentralDigits
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Words/Complexity/PositivePairCentralDigits
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: actual-consumer
+   utility: none
    digest: Actual positive-pair directions form injective equal-length multi-scale digit words. -/
 import D5.S1.Words.Complexity.PositivePairFullFamilySpan
-import Mathlib.Data.Fintype.List
 import Mathlib.Data.List.Indexes
-import Mathlib.Data.Nat.Digits.Lemmas
-import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 /-!

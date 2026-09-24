@@ -1,12 +1,11 @@
 /- GID: D5/S1/Words/Complexity/PositivePairFullFamilySpan
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Words/Complexity/PositivePairFullFamilySpan
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Actual full positive-pair leading differences span every Lyndon standard bracket. -/
 import D5.S1.Words.Complexity.PositivePairWordCoefficients
-import Mathlib.Algebra.MonoidAlgebra.Lift
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 /-!

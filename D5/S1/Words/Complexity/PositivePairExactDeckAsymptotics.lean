@@ -1,5 +1,5 @@
 /- GID: D5/S1/Words/Complexity/PositivePairExactDeckAsymptotics
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Words/Complexity/PositivePairExactDeckAsymptotics
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -27,9 +27,6 @@ Library search: no project declaration packages the exact upper injection or
 -/
 
 import D5.S1.Words.Complexity.PositivePairExactDeckUpperBound
-import Batteries.Tactic.OpenPrivate
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Data.Nat.Choose.Bounds
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
