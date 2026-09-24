@@ -32,6 +32,9 @@ not inferred from numerical distinctness. Removing it, allowing arbitrary
 omitted supports, and unrestricted Erdős #7 remain unresolved.
 Section5 permits overlapping root prefixes under a measured collision
 budget; this is not a universal bound on arbitrary root phases.
+[Report564](564-integrated-actual-profiles-permit-empty-root-fibres.md)
+adds an integrated actual-profile certificate that retains every success
+of this collision criterion and permits zero-survivor root fibres.
 
 This is an ordinary application of the existing dependency-graph
 avoidance theorem and complete-query comparison, with exact rational
