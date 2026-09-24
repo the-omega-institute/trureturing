@@ -124,3 +124,4 @@ An inhabited arena and two distinct values witness each guard and equality slot 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/GuardedEqualityRegistrationTemplates.isLeftSlot`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/GuardedEqualityRegistrationTemplates.leftSlot`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/RegistrationTemplates](RegistrationTemplates.md)
+- Dependency: [D5/S3/ConceptDynamics/RegistrationWitnesses](../RegistrationWitnesses.md)

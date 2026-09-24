@@ -6,6 +6,7 @@
    utility: none
    digest: Pointwise registration descriptor with sensitivity and variation providers. -/
 
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
 
 set_option autoImplicit false

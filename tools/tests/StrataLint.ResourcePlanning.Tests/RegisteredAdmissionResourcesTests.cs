@@ -227,7 +227,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.Equal(CommonCheckRegistrationFixture.Ids
             .Where(id => id is not ("banned-api-proof" or "capability-proof" or "selftest-pair")).Order(StringComparer.Ordinal),
             Strings(plan["execution"]!["checks"]!));
-        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface" },
+        Assert.Equal(new[] { "leanInspector/LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface", "reg/LeanInformationAuditRegTests", "reg/Reg" },
             Strings(plan["execution"]!["lean_targets"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
             Strings(plan["execution"]!["steps"]!));
@@ -264,11 +264,13 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "pr")]
     [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", "push")]
     [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", "pr")]
+    [InlineData("tools/lean-inspector/LeanInformationAuditRegTests/LandedFinite.lean", "push")]
+    [InlineData("tools/lean-inspector/LeanInformationAuditRegTests/LandedFinite.lean", "pr")]
     public void RegisteredInspectorProgramsAndTestsRequireCompilationWithoutAnotherReportStep(string input, string mode)
     {
         var plan = Plan(input, "", mode);
         Assert.Contains("lean-inspector-build", Strings(plan["resources"]!));
-        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface" },
+        Assert.Equal(new[] { "leanInspector/LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface", "reg/LeanInformationAuditRegTests", "reg/Reg" },
             Strings(plan["execution"]!["lean_targets"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
             Strings(plan["execution"]!["steps"]!));
@@ -467,7 +469,8 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    // Use an existing D5 owner address to exercise registered semantic-input requirements.
+    [InlineData("D5/S0/Carrier/Ring.lean")]
     [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("Meta/ci-checks.json")]
     public void AdditionalSemanticOrJudgeInputRetainsItsFullRegisteredRequirements(string input)

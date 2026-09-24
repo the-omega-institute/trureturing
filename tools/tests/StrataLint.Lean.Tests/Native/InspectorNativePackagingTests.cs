@@ -14,4 +14,8 @@ public sealed class InspectorNativePackagingTests(InspectorCompilerFixture compi
     [InlineData("test_native.NativeTests.test_release_publisher_legacy_seed_current_pack_restore_and_unchanged")]
     [InlineData("test_native.NativeTests.test_release_partition_preserves_semantic_and_selection_changes")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
+
+    [Fact]
+    public void WorkloadRejectsNonfixtureBeforeWrites() => InspectorNativeTestRunner.Run(compiler,
+        "test_native.NativeTests.test_native_workload_rejects_nonfixture_before_writes");
 }

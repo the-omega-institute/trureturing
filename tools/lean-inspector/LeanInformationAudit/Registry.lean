@@ -1,14 +1,8 @@
 import LeanInformationAudit.Registry.Assessment
+import LeanInformationAuditInterface.Store
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
-
-private initialize occurrenceInventory : SimplePersistentEnvExtension TemplateOccurrenceEvent (Array TemplateOccurrenceEvent) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
-private initialize bindingRecords : SimplePersistentEnvExtension BindingRecord (Array BindingRecord) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
-private initialize bindingClaims : SimplePersistentEnvExtension TemplateBindingClaim (Array TemplateBindingClaim) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
 
 structure ResolvedDeclaration where
   theoremName : Name
@@ -43,31 +37,6 @@ def withDeclaration (declaration : ResolvedDeclaration)
   try action
   finally modifyEnv (pendingDeclaration.setState · previous)
 
-def inventory (env : Environment) : Array TemplateOccurrenceEvent := occurrenceInventory.getState env
-def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
-
-/-- Origin labels come from the native extension container, separately from
-the owner asserted in a claim. Local claims have the current module as origin. -/
-private def ownedClaims (env : Environment) : Array (Name × TemplateBindingClaim) := Id.run do
-  let mut result := #[]
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for claim in bindingClaims.getModuleEntries env index do
-      result := result.push (owner, claim)
-  for claim in bindingClaims.getEntries env do
-    result := result.push (env.header.mainModule, claim)
-  return result
-
-private def ownedEvents (env : Environment) : Array (Name × TemplateOccurrenceEvent) := Id.run do
-  let mut result := #[]
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for event in occurrenceInventory.getModuleEntries env index do
-      result := result.push (owner, event)
-  for event in (occurrenceInventory.getEntries env).reverse do
-    result := result.push (env.header.mainModule, event)
-  return result
-
 /-- Pure join validation grants no insertion or certification capability.
 Both publication and authoritative assessment consume this same relation. -/
 def joinClaims (events : Array (Name × TemplateOccurrenceEvent))
@@ -80,7 +49,7 @@ def joinClaims (events : Array (Name × TemplateOccurrenceEvent))
     indexed := indexed.insert event.key event
   let mut selected : Std.HashMap TemplateOccurrenceKey TemplateBindingClaim := {}
   for (producer, claim) in claims do
-    unless producer == claim.owner do throw "incomplete_closure:dtr.claim_owner"
+    unless producer == claim.owner && claim.owner == claim.key.registrationModule do throw "incomplete_closure:dtr.claim_owner"
     unless indexed.contains claim.key do throw "unclassified_form:dtr.dangling_claim"
     if selected.contains claim.key then throw "unclassified_form:dtr.duplicate_claim"
     if let some event := indexed[claim.key]? then
@@ -95,11 +64,9 @@ the full join through `assessJoined` before admission can consume its evidence. 
 def cachedJoinedRecords (env : Environment) : Except String (Array BindingRecord) := do
   let joined ← joinClaims (ownedEvents env) (ownedClaims env)
   let retained := records env
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for record in bindingRecords.getModuleEntries env index do
-      unless record.bindingOwner.getD record.occurrence.key.registrationModule == owner do
-        throw "incomplete_closure:dtr.cached_record_owner"
+  for (owner, record) in importedRecords env do
+    unless record.bindingOwner.getD record.occurrence.key.registrationModule == owner do
+      throw "incomplete_closure:dtr.cached_record_owner"
   joined.mapM fun (event, claim) => do
     let owner := claim.map (·.owner)
     let candidates := retained.filter fun record =>
@@ -140,7 +107,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
     | .ok (identity, _) => identity
     | .error _ => ""
   let path := sourcePath entry.registrationModuleName
-  let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile path)) catch _ => pure ""
+  let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile (← Repository.source path))) catch _ => pure ""
   -- An occurrence can name a separate finite object arena. Witness checks use
   -- the original law arena, which retains the quantifier domain and predicate.
   let bridgeType := (← getConstInfo entry.realizationName).type
@@ -167,29 +134,9 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
         key := event.key, arena := event.arena, descriptor := declaration.descriptor,
         resolutionDiagnostic := declaration.diagnostic, escapeInput := declaration.escapeInput, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
   let record ← Elab.Command.liftTermElabM <| assess event claim
-  modifyEnv fun current => bindingRecords.addEntry (occurrenceInventory.addEntry current event) record
-  if let some claim := claim then modifyEnv (bindingClaims.addEntry · claim)
+  modifyEnv fun current => addRecord (addOccurrence current event) record
+  if let some claim := claim then modifyEnv (addClaim · claim)
   if record.result matches .undeclared then logWarning (missingDeclarationDiagnostic event.key)
-  if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
-
-/-- Claims join by their exact occurrence identity before authoritative assessment.
-An overlay retains the original registration owner and cannot replace an inline claim. -/
-def declareSidecar (theoremName arena : Name) (catalog : Option Name)
-    (descriptor : Option Expr) (resolutionDiagnostic : Option String)
-    (escapeInput : EscapeRecordInput := {}) : Elab.Command.CommandElabM Unit := do
-  let env ← getEnv
-  let matching := (inventory env).filter fun event => event.key.theoremName == theoremName &&
-    event.key.objectArena == arena && (catalog.isNone || catalog == some event.key.catalog)
-  unless matching.size == 1 do throwError "unclassified_form:dtr.sidecar_occurrence"
-  let event := matching[0]!
-  if (bindingClaims.getState env).any (·.key == event.key) then
-    throwError "unclassified_form:dtr.duplicate_claim"
-  let (descriptor, resolutionDiagnostic) ← eraseDescriptor descriptor resolutionDiagnostic
-  let claim : TemplateBindingClaim := {
-    key := event.key, arena := event.arena, descriptor, resolutionDiagnostic, escapeInput,
-    owner := env.header.mainModule }
-  let record ← Elab.Command.liftTermElabM <| assess event (some claim)
-  modifyEnv fun current => bindingRecords.addEntry (bindingClaims.addEntry current claim) record
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
 /-- A realization provider may be imported by its registration source. The
@@ -235,14 +182,14 @@ def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
       ownerReachable env event.key.registrationModule realizationOwner do
     throwError "incomplete_closure:dtr.event_unit_owner"
 
-/-- Snapshot for the complete imported join. Original provisional records are
-retained only for transport to the C# join; selected contains one final result. -/
+/-- Snapshot for the complete imported join. Original producer records retain
+the command inventory; selected contains one authoritative result per occurrence. -/
 structure JoinedRecords where
   selected : Array BindingRecord
   originals : Array BindingRecord
 
 /-- Shared final assessment after the full imported claim set has been joined.
-Callers must establish complete governed sidecar inputs before claiming coverage. -/
+Callers must establish complete governed registration inputs before claiming coverage. -/
 def assessJoined : MetaM (Array BindingRecord) := do
   let env ← getEnv
   let joined ← match joinClaims (ownedEvents env) (ownedClaims env) with
@@ -277,11 +224,11 @@ private def certificateJson (certificate : TemplateBindingCertificate) : Json :=
   ("extraction_inputs", Json.arr (certificate.extractionInputs.map dependencyJson))]
 
 private def isRepositoryModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
+  #[`D5, `Reg, `LeanInformationAudit, `LeanInformationAuditInterface].any (·.isPrefixOf name) ||
     name == `Trureturing
 
 private def isRecordedModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit.Tests." ||
+  #[`D5, `Reg, `LeanInformationAudit.Tests].any (·.isPrefixOf name) ||
     name == `Trureturing
 
 private def moduleSourceInputs (env : Environment) (root : Name) :
@@ -339,18 +286,12 @@ def recordJson (record : BindingRecord) : MetaM Json := do
     ("binding_source_path", record.bindingOwner.map (toJson ∘ sourcePath) |>.getD Json.null),
     ("state", toJson state), ("diagnostic", diagnostic), ("certificate", certificate)]
 
-/-- Records are partitioned by their actual producing module. An original
-undeclared row and a sidecar overlay remain distinguishable until the final join. -/
+/-- Each record is exported only by its registration owner. -/
 private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
     (registered : Array TemplateOccurrenceKey) : MetaM Json := do
   let env ← getEnv
-  let originals := snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
-  let overlays := snapshot.selected.filter fun row => row.bindingOwner == some moduleName &&
-    row.occurrence.key.registrationModule != moduleName
-  let rows ← (originals ++ overlays).mapM fun row => do
-    let some selected := snapshot.selected.find? (·.occurrence.key == row.occurrence.key)
-      | throwError "incomplete_closure:dtr.final_record"
-    recordJson (if selected.bindingOwner == some moduleName then selected else row)
+  let rows ← (snapshot.selected.filter
+    (·.occurrence.key.registrationModule == moduleName)).mapM recordJson
   let version ← TemplateAudit.readReportCacheReleaseVersion
   return Json.mkObj [
     ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson version),
