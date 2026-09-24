@@ -110,8 +110,8 @@ internal static class DigestionAtomContextProjection
             var byId = byAtomId
                 .Where(static group => group.Count() == 1)
                 .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
-            var stream = MaterializedStream(document, byHash, byId, atomizer, rules, snapshot);
-            return new SourceStream(source, stream, byHash, byAtomId);
+            var stream = MaterializedStream(document, byHash, byId, atomizer, rules, snapshot, out var spans);
+            return new SourceStream(source, stream, spans, byHash, byAtomId);
         }
         catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
         {
@@ -122,6 +122,7 @@ internal static class DigestionAtomContextProjection
     internal sealed class SourceStream(
         DigestionLedgerSource source,
         ImmutableArray<DigestionAtom> stream,
+        ImmutableArray<DigestionAtom> spans,
         ILookup<string, DigestionLedgerEntry> byHash,
         ILookup<string, DigestionLedgerEntry> byAtomId)
     {
@@ -138,19 +139,25 @@ internal static class DigestionAtomContextProjection
             var target = RequireTarget(byAtomId[atomId], atomId);
             try
             {
-                var matches = Enumerable.Range(0, stream.Length)
-                    .Where(index => target.SourceId == source.SourceId
-                        && stream[index].Fingerprints.RawSha256 == target.Fingerprints.RawSha256).ToArray();
+                var matches = spans.Where(atom => target.SourceId == source.SourceId
+                    && atom.Fingerprints.RawSha256 == target.Fingerprints.RawSha256).ToArray();
                 if (matches.Length == 0)
                     throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING,
                         $"atom_id={atomId} source_id={source.SourceId}");
                 var contexts = ImmutableArray.CreateBuilder<DigestionAtomContext>(matches.Length);
-                foreach (var position in matches)
+                foreach (var atom in matches)
+                {
+                    // Collapse only this occurrence's subtree. Ordinary leaf membership and
+                    // its neighbors remain unchanged; parent neighbors lie outside its span.
+                    var before = stream.TakeWhile(leaf => leaf.EndByte <= atom.StartByte).Count();
+                    var after = stream.SkipWhile(leaf => leaf.StartByte < atom.EndByte).ToArray();
                     contexts.Add(new DigestionAtomContext(target,
-                        position == 0 ? null : Neighbor(stream[position - 1], byHash),
-                        Neighbor(stream[position], byHash),
-                        position + 1 == stream.Length ? null : Neighbor(stream[position + 1], byHash),
-                        position + 1, stream.Length, source.SourceId, source.SourcePath, source.Atomizer));
+                        before == 0 ? null : Neighbor(stream[before - 1], byHash),
+                        Neighbor(atom, byHash),
+                        after.Length == 0 ? null : Neighbor(after[0], byHash),
+                        before + 1, before + 1 + after.Length,
+                        source.SourceId, source.SourcePath, source.Atomizer));
+                }
                 return contexts.ToImmutable();
             }
             catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
@@ -166,12 +173,15 @@ internal static class DigestionAtomContextProjection
         IReadOnlyDictionary<string, DigestionLedgerEntry> byId,
         TheoryAtomizer atomizer,
         TheoryAtomizerRules rules,
-        RepositorySnapshot snapshot)
+        RepositorySnapshot snapshot,
+        out ImmutableArray<DigestionAtom> spans)
     {
         var stream = ImmutableArray.CreateBuilder<DigestionAtom>();
+        var occurrences = ImmutableArray.CreateBuilder<DigestionAtom>();
         var pending = new Stack<DigestionAtom>(document.Claims.OrderByDescending(static atom => atom.StartByte));
         while (pending.TryPop(out var atom))
         {
+            occurrences.Add(atom);
             var entry = FindEntry(atom, byHash);
             if (entry is null || entry.Receipts.ChainAtoms.IsEmpty)
             {
@@ -202,6 +212,7 @@ internal static class DigestionAtomContextProjection
                 });
             }
         }
+        spans = occurrences.ToImmutable();
         return stream.ToImmutable();
     }
 

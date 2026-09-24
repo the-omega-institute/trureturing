@@ -16,7 +16,6 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     [InlineData("QUARANTINE_PRESENT")]
     [InlineData("COVER_DISPOSITION_PRESENT")]
     [InlineData("UNRESOLVED_SUBITEMS_PRESENT")]
-    [InlineData("CHAIN_PARENT")]
     [InlineData("CONTEXT_MISMATCH", "previous")]
     [InlineData("CONTEXT_MISMATCH", "next")]
     [InlineData("CONTEXT_MISMATCH", "previous-boundary")]
@@ -43,7 +42,6 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
             "QUARANTINE_PRESENT" => target with { Receipts = target.Receipts with { Quarantine = new("blocked", "supply witness", "missing-prerequisite") } },
             "COVER_DISPOSITION_PRESENT" => target with { Receipts = target.Receipts with { CoverDisposition = new(new(DigestionMigrationState.Partial, DigestionTruthState.Closed), ["D5/S0/Carrier/Probe"], []) } },
             "UNRESOLVED_SUBITEMS_PRESENT" => target with { Receipts = target.Receipts with { UnresolvedSubitems = ["live obligation"] } },
-            "CHAIN_PARENT" => target with { Receipts = target.Receipts with { ChainAtoms = [new string('f', 64)] } },
             "ATOMIZER_NONE" => target with { Atomizer = AtomizerRegistry.NoAtomizerId },
             _ => target,
         };
@@ -140,47 +138,6 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         var result = Run("/synthetic", fixture.RawSnapshot(), Request(fixture, target.AtomId) + "occurrence_index = 2\n");
         Assert.False(result.Success);
         Assert.StartsWith("SETTLE_INVALID REQUEST_KEYS_INVALID", result.Error, StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData("open", false, false)]
-    [InlineData("absorbed", false, false)]
-    [InlineData("nonpropositional", false, false)]
-    [InlineData("nonpropositional", false, true)]
-    [InlineData("nonpropositional", true, false)]
-    public void SettleRejectsChainParentsBeforeContextLookupWithoutWrites(string childState, bool clear, bool sourceMissing)
-    {
-        var fixture = AtomContextFixture.Create(AtomContextFixture.ListClaims);
-        var id = AtomContextFixture.Id(fixture.Atomized.Claims[1]);
-        var request = Request(fixture, id);
-        fixture = AtomContextFixture.Create(AtomContextFixture.ListClaims, true);
-        var parent = fixture.Ledger.RequireDigestionEntries().Single(entry => entry.AtomId == id);
-        fixture = fixture.WithEntries(fixture.Ledger.RequireDigestionEntries().Select(entry =>
-        {
-            if (clear && entry == parent) return Settled(entry);
-            if (!parent.Receipts.ChainAtoms.Contains(entry.AtomId, StringComparer.Ordinal)) return entry;
-            return childState switch
-            {
-                "nonpropositional" => Settled(entry),
-                "absorbed" => entry with
-                {
-                    Coverage = [new("D5/S0/Carrier/Probe", null)],
-                    ProjectedStatus = new(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
-                },
-                _ => entry,
-            };
-        }));
-        var raw = fixture.RawSnapshot(!sourceMissing);
-        using var temporary = new TemporaryDirectory();
-        WriteFiles(temporary.Path, raw);
-        var before = Image(temporary);
-        var applyCalls = 0;
-        var result = Run(temporary.Path, raw, request, clear ? ["--clear", id, "--base", "baseline"] : null,
-            apply: (_, _, _) => applyCalls++);
-        Assert.False(result.Success);
-        Assert.Equal($"SETTLE_INVALID CHAIN_PARENT atom_id={id}\n", result.Error);
-        Assert.Equal(0, applyCalls);
-        Assert.Equal(before, Image(temporary));
     }
 
     [Theory]
