@@ -24,6 +24,7 @@ internal static class EngineeringProcess
         start.Environment["CI_WORKFLOW_INPUTS"] = "null";
         start.Environment.Remove("STRATALINT_CACHE_WRITES");
         foreach (var pair in environment ?? new Dictionary<string, string>()) start.Environment[pair.Key] = pair.Value;
+        var probe = GitGuardProbe.Start(start);
         using var process = System.Diagnostics.Process.Start(start)!;
         using var deadline = new CancellationTokenSource(hangGuard ?? TestBudgets.ScriptProcessHangGuard);
         using var cleanup = new CancellationTokenSource();
@@ -31,11 +32,14 @@ internal static class EngineeringProcess
         var stderrText = new System.Text.StringBuilder();
         var stdout = Drain(process.StandardOutput, stdoutText);
         var stderr = Drain(process.StandardError, stderrText);
+        probe?.Started(process);
         var phase = "child-exit";
         var expired = false;
+        Task? exit = null;
         try
         {
-            process.WaitForExitAsync(deadline.Token).GetAwaiter().GetResult();
+            exit = process.WaitForExitAsync(deadline.Token);
+            exit.GetAwaiter().GetResult();
             phase = "output-drain";
             Task.WhenAll(stdout, stderr).WaitAsync(deadline.Token).GetAwaiter().GetResult();
             return (process.ExitCode, stdoutText.ToString() + stderrText);
@@ -43,6 +47,7 @@ internal static class EngineeringProcess
         catch (OperationCanceledException)
         {
             expired = true;
+            probe?.Failure(process, exit, stdout, stderr, phase);
         }
         finally
         {
@@ -52,6 +57,7 @@ internal static class EngineeringProcess
             catch (OperationCanceledException) when (expired) { } // Preserve the original guard phase after draining retained bytes.
             finally
             {
+                probe?.Finish(process, exit, stdout, stderr, expired);
                 if (Environment.GetEnvironmentVariable("JUDGE_SEED_EVIDENCE") is { Length: > 0 } evidence)
                 {
                     Directory.CreateDirectory(evidence);
