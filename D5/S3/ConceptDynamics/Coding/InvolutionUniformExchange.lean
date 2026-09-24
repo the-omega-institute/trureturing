@@ -37,36 +37,6 @@ def source (s t : H) : ZAlg H :=
 
 def target (H : Type u) [Group H] [Fintype H] : ZAlg H := uniform H + uniform H
 
-theorem leftFactor_coeff [DecidableEq H] (s t g : H) :
-    (leftFactor s t).coeff g =
-      1 + (if t = g then 1 else 0) - (if s * t = g then 1 else 0) := by
-  classical
-  unfold leftFactor
-  rw [sub_mul, one_mul]
-  simp [basis, Finsupp.single_apply, add_sub_assoc]
-
-theorem leftFactor_nonnegative (s t g : H) : 0 ≤ (leftFactor s t).coeff g := by
-  classical
-  rw [leftFactor_coeff]
-  by_cases ht : t = g
-  · rw [if_pos ht]
-    by_cases hst : s * t = g
-    · rw [if_pos hst]
-      decide
-    · rw [if_neg hst]
-      decide
-  · rw [if_neg ht]
-    by_cases hst : s * t = g
-    · rw [if_pos hst]
-      decide
-    · rw [if_neg hst]
-      decide
-
-theorem rightFactor_nonnegative (s g : H) : 0 ≤ (rightFactor s).coeff g := by
-  classical
-  by_cases h1 : (1 : H) = g <;> by_cases hs : s = g <;>
-    simp [rightFactor, basis, MonoidAlgebra.one_def, Finsupp.single_apply, h1, hs]
-
 /-- The original nonuniform matrix is exactly the forward product. -/
 theorem factors_forward (s t : H) : leftFactor s t * rightFactor s = source s t := by
   classical
@@ -109,23 +79,6 @@ def toNat (p : ZAlg H) : NAlg H :=
 def liftNat (H : Type u) [Group H] : NAlg H →+* ZAlg H :=
   MonoidAlgebra.mapRingHom H (Nat.castRingHom ℤ)
 
-theorem lift_toNat (p : ZAlg H) (hp : ∀ g : H, 0 ≤ p.coeff g) :
-    liftNat H (toNat p) = p := by
-  ext g
-  simp [liftNat, toNat, Int.toNat_of_nonneg (hp g)]
-
-/-- Every coefficient is constructed; nonnegativity is proved rather than assumed. -/
-theorem nonnegative_involution_certificate (s t : H) (hs : s * s = 1) :
-    ∃ U V : NAlg H,
-      liftNat H (U * V) = source s t ∧ liftNat H (V * U) = target H := by
-  refine ⟨toNat (leftFactor s t), toNat (rightFactor s), ?_, ?_⟩
-  · rw [map_mul, lift_toNat _ (leftFactor_nonnegative s t),
-      lift_toNat _ (rightFactor_nonnegative s)]
-    exact factors_forward s t
-  · rw [map_mul, lift_toNat _ (rightFactor_nonnegative s),
-      lift_toNat _ (leftFactor_nonnegative s t)]
-    exact factors_reverse s t hs
-
 /-- Noncommuting choices give distinct endpoints, ruling out a zero-step exchange. -/
 theorem source_ne_target (s t : H) (hs : s * s = 1) (hst : s * t ≠ t * s) :
     source s t ≠ target H := by
@@ -160,7 +113,6 @@ theorem source_ne_target (s t : H) (hs : s * s = 1) (hst : s * t ≠ t * s) :
 
 #print axioms factors_forward
 #print axioms factors_reverse
-#print axioms nonnegative_involution_certificate
 #print axioms source_ne_target
 
 end

@@ -47,7 +47,14 @@ variable {a b c : ℕ} {A : GroupMat H a a} {B : GroupMat H b b}
 def WindowGroupConjugacy.trans {r s : ℕ}
     (f : WindowGroupConjugacy A B r) (g : WindowGroupConjugacy B C s) :
     WindowGroupConjugacy A C (r + s) where
-  toGroupConjugacy := f.toGroupConjugacy.trans g.toGroupConjugacy
+  toGroupConjugacy :=
+    { homeomorph := f.homeomorph.trans g.homeomorph
+      time_law := fun p =>
+        (congrArg g.homeomorph (f.time_law p)).trans
+          (g.time_law (f.homeomorph p))
+      group_law := fun h p =>
+        (congrArg g.homeomorph (f.group_law h p)).trans
+          (g.group_law h (f.homeomorph p)) }
   future := by
     intro x y i h
     apply g.future
@@ -87,23 +94,47 @@ def WindowGroupConjugacy.trans {r s : ℕ}
       have hi : -(j : ℤ) - (l : ℤ) = -((j + l : ℕ) : ℤ) := by omega
       simpa only [hi] using h (j + l) (by omega)
 
-def identity (A : GroupMat H a a) : WindowGroupConjugacy A A 0 where
-  toGroupConjugacy := ⟨Homeomorph.refl _, fun _ => rfl, fun _ _ => rfl⟩
-  future := by
-    intro x y i h
-    simpa using h 0 (by omega)
-  past := by
-    intro x y i h
-    simpa using h 0 (by omega)
-  coordinate_future := fun _ _ h _ => h
-  coordinate_past := fun _ _ h _ => h
-
 /-- This constructor assumes matrices only; the path splitting is counted internally. -/
 noncomputable def elementary {n m : ℕ}
     (U : GroupMat H n m) (V : GroupMat H m n) :
     WindowGroupConjugacy (U * V) (V * U) 1 where
   toGroupConjugacy :=
-    ⟨elementaryHomeomorph U V, elementary_step U V, elementary_equivariant U V⟩
+    { homeomorph :=
+        ((alternatingHomeomorph U V).prodCongr (Homeomorph.refl H)).trans
+          ((skewHomeomorph (boundary U V) (Edge.label : Edge U → H)
+            continuous_of_discreteTopology).trans
+            ((alternatingHomeomorph V U).prodCongr (Homeomorph.refl H)).symm)
+      time_law := by
+        intro p
+        change repack V U (encode (boundary U V) Edge.label
+            (unpack U V (step (U * V) p))) =
+          step (V * U) (repack V U
+            (encode (boundary U V) Edge.label (unpack U V p)))
+        have hunpack : unpack U V (step (U * V) p) =
+            leftStep (boundary U V) Edge.label Edge.label (unpack U V p) := by
+          apply Prod.ext
+          · rfl
+          · simp [unpack, step, split]
+        rw [hunpack]
+        have hencode : encode (boundary U V) Edge.label
+              (leftStep (boundary U V) Edge.label Edge.label (unpack U V p)) =
+            rightStep (boundary U V) Edge.label Edge.label
+              (encode (boundary U V) Edge.label (unpack U V p)) := by
+          apply Prod.ext
+          · rfl
+          · simp [encode, leftStep, rightStep, leftShift, forward, mul_assoc]
+        rw [hencode]
+        apply Prod.ext <;> rfl
+      group_law := by
+        intro g p
+        change repack V U (encode (boundary U V) Edge.label
+            (translate g (unpack U V p))) =
+          repack V U (translate g
+            (encode (boundary U V) Edge.label (unpack U V p)))
+        apply congrArg (repack V U)
+        apply Prod.ext
+        · rfl
+        · simp [encode, translate, mul_assoc] }
   future := by
     intro x y i h
     have h0 : x.1.val i = y.1.val i := by simpa using h 0 (by omega)
@@ -152,7 +183,17 @@ theorem chain_has_window_group_conjugacy {L : ℕ}
     (ch : ExchangeChain (MonoidAlgebra ℕ H) A B L) :
     Nonempty (WindowGroupConjugacy A B L) := by
   induction ch with
-  | nil A => exact ⟨identity A⟩
+  | nil A =>
+      exact ⟨{
+        toGroupConjugacy := ⟨Homeomorph.refl _, fun _ => rfl, fun _ _ => rfl⟩
+        future := by
+          intro x y i h
+          simpa using h 0 (by omega)
+        past := by
+          intro x y i h
+          simpa using h 0 (by omega)
+        coordinate_future := fun _ _ h _ => h
+        coordinate_past := fun _ _ h _ => h }⟩
   | cons U V tail ih =>
       obtain ⟨g⟩ := ih
       simpa only [Nat.add_comm] using

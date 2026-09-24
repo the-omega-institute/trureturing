@@ -16,38 +16,19 @@ internal sealed class EquivariantOverlapRecodingDocument : IScribeDocumentDefini
              B("alpha", new Formula.TypeArrow(F.Id("U"), F.Id("H"))), .. extra], body);
     private static Formula L => Call("Prod", Call("LeftPath", F.Id("d")), F.Id("H"));
     private static Formula R => Call("Prod", Call("RightPath", F.Id("d")), F.Id("H"));
-    private static Formula E(Formula p) => Call("encode", F.Id("d"), F.Id("alpha"), p);
-    private static Formula D(Formula p) => Call("decode", F.Id("d"), F.Id("alpha"), p);
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The boundary transfer supplies an equivariant conjugacy of the two skew-product dynamics.",
         H("Equivariant overlap recoding"), Blocks(
-            Describe.Lean(DescribeId.Create("skew-overlap-input-recovery"),
-                DeclarationHandle.Create(Prefix + "decode_encode"), H("Recover the input group coordinate"),
-                StatementSource.FromAuthor(Disp(All(Equal(D(E(F.Id("p"))), F.Id("p")), B("p", L)))),
+            Describe.Lean(DescribeId.Create("skew-overlap-homeomorphism"),
+                DeclarationHandle.Create(Prefix + "skewHomeomorph"),
+                H("Construct the skew-product homeomorphism"),
+                StatementSource.FromAuthor(Disp(All(Call("Homeomorph", L, R),
+                    B("topologyU", Call("TopologicalSpace", F.Id("U"))),
+                    B("topologyV", Call("TopologicalSpace", F.Id("V"))),
+                    B("topologyH", Call("TopologicalSpace", F.Id("H"))),
+                    B("continuousGroup", Call("IsTopologicalGroup", F.Id("H"))),
+                    B("alphaContinuous", Call("Continuous", F.Id("alpha"))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The first half-edge label multiplies the group coordinate on the right. The inverse code reads that half-edge in the preceding output and multiplies by its inverse."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("skew-overlap-output-recovery"),
-                DeclarationHandle.Create(Prefix + "encode_decode"), H("Recover the output group coordinate"),
-                StatementSource.FromAuthor(Disp(All(Equal(E(D(F.Id("p"))), F.Id("p")), B("p", R)))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The two group multipliers cancel in their written order, while the path inverse law recovers the full output history."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("skew-overlap-original-time"),
-                DeclarationHandle.Create(Prefix + "encode_step"), H("Intertwine the original skew time step"),
-                StatementSource.FromAuthor(Disp(All(Equal(
-                    E(Call("leftStep", F.Id("d"), F.Id("alpha"), F.Id("beta"), F.Id("p"))),
-                    Call("rightStep", F.Id("d"), F.Id("alpha"), F.Id("beta"), E(F.Id("p")))),
-                    B("beta", new Formula.TypeArrow(F.Id("V"), F.Id("H"))), B("p", L)))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The input product alpha(u_i) beta(v_i) and the transfer alpha(u_(i+1)) equal the transfer alpha(u_i) followed by the output product beta(v_i) alpha(u_(i+1)). Associativity suffices; the group need not commute."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("skew-overlap-preserves-left-action"),
-                DeclarationHandle.Create(Prefix + "encode_equivariant"), H("Preserve the specified left group action"),
-                StatementSource.FromAuthor(Disp(All(Equal(E(Call("translate", F.Id("g"), F.Id("p"))),
-                    Call("translate", F.Id("g"), E(F.Id("p")))), B("g", F.Id("H")), B("p", L)))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Left multiplication by a group element commutes with the constructed right boundary transfer. The same statement holds for the explicit inverse."))),
-                DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The path overlap code and the right group-coordinate transfer are constructed together. The inverse reads the preceding half-edge, and both directions are continuous."))),
+                DescribeRole.Definition))));
 }

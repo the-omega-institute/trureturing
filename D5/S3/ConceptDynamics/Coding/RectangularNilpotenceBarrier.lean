@@ -95,20 +95,19 @@ section Projection
 
 variable {R : Type u} {S : Type v} [Semiring R] [Semiring S]
 
-/-- Additivity and multiplicativity suffice; preservation of one is unnecessary. -/
-theorem map_rectangular_product (f : R →ₙ+* S) {n k m : ℕ}
-    (U : Mat R n k) (V : Mat R k m) :
-    (U * V).map f = U.map f * V.map f := by
-  ext i j
-  simp [Matrix.mul_apply, map_sum, map_mul]
-
 theorem map_exchange_chain (f : R →ₙ+* S) {n m L : ℕ}
     {A : Mat R n n} {B : Mat R m m} (c : ExchangeChain R A B L) :
     ExchangeChain S (A.map f) (B.map f) L := by
   induction c with
   | nil A => exact ExchangeChain.nil _
   | cons U V tail ih =>
-      rw [map_rectangular_product] at ih ⊢
+      have hUV : (U * V).map f = U.map f * V.map f := by
+        ext i j
+        simp [Matrix.mul_apply, map_sum, map_mul]
+      have hVU : (V * U).map f = V.map f * U.map f := by
+        ext i j
+        simp [Matrix.mul_apply, map_sum, map_mul]
+      rw [hUV, hVU] at ih ⊢
       exact ExchangeChain.cons (U.map f) (V.map f) ih
 
 end Projection

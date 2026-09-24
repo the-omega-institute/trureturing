@@ -53,20 +53,17 @@ abbrev Fiber (i k : Fin n) (g : H) :=
   Σ j : Fin m, Σ h : H,
     Fin ((U i j).coeff h) × Fin ((V j k).coeff (h⁻¹ * g))
 
-/-- Counting is performed separately in each endpoint and total-label fiber. -/
-theorem fiber_card (i k : Fin n) (g : H) :
-    Fintype.card (Fiber U V i k g) = ((U * V) i k).coeff g := by
+noncomputable def fiberEquiv (i k : Fin n) (g : H) :
+    Fin (((U * V) i k).coeff g) ≃ Fiber U V i k g := by
   classical
   have coeff_product_finite (a b : MonoidAlgebra ℕ H) :
       (a * b).coeff g = ∑ h : H, a.coeff h * b.coeff (h⁻¹ * g) := by
     rw [MonoidAlgebra.coeff_mul_apply_left]
     exact Finsupp.sum_fintype _ _ (fun _ => zero_mul _)
-  simp [Fiber, Matrix.mul_apply, Fintype.card_sigma, Fintype.card_prod,
-    coeff_product_finite]
-
-noncomputable def fiberEquiv (i k : Fin n) (g : H) :
-    Fin (((U * V) i k).coeff g) ≃ Fiber U V i k g :=
-  (Fintype.equivFinOfCardEq (fiber_card U V i k g)).symm
+  have hcard : Fintype.card (Fiber U V i k g) = ((U * V) i k).coeff g := by
+    simp [Fiber, Matrix.mul_apply, Fintype.card_sigma, Fintype.card_prod,
+      coeff_product_finite]
+  exact (Fintype.equivFinOfCardEq hcard).symm
 
 noncomputable def split (a : Edge (U * V)) : Edge U × Edge V :=
   let totalFiberEquiv :
@@ -76,10 +73,6 @@ noncomputable def split (a : Edge (U * V)) : Edge U × Edge V :=
   let p := totalFiberEquiv ⟨a.label, a.number⟩
   (⟨a.source, p.2.1, p.2.2.1, p.2.2.2.1⟩,
    ⟨p.2.1, a.target, p.2.2.1⁻¹ * p.1, p.2.2.2.2⟩)
-
-@[simp] theorem split_label (a : Edge (U * V)) :
-    (split U V a).1.label * (split U V a).2.label = a.label := by
-  simp [split]
 
 noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     Edge (U * V) :=
@@ -145,48 +138,40 @@ noncomputable def fromAlternating (x : LeftPath (boundary U V)) : Path (U * V) :
   ⟨fun i => join U V (x.val i).1 (x.val i).2 (x.property i).1,
     fun i => (x.property i).2⟩
 
-@[simp] theorem from_to (x : Path (U * V)) :
-    fromAlternating U V (toAlternating U V x) = x := by
-  apply Subtype.ext
-  funext i
-  exact join_split U V (x.val i)
-
-@[simp] theorem to_from (x : LeftPath (boundary U V)) :
-    toAlternating U V (fromAlternating U V x) = x := by
-  apply Subtype.ext
-  funext i
-  exact split_join U V (x.val i).1 (x.val i).2 (x.property i).1
-
 noncomputable def alternatingEquiv : Path (U * V) ≃ LeftPath (boundary U V) where
   toFun := toAlternating U V
   invFun := fromAlternating U V
-  left_inv := from_to U V
-  right_inv := to_from U V
-
-theorem continuous_toAlternating : Continuous (toAlternating U V) := by
-  apply Continuous.subtype_mk
-  apply continuous_pi
-  intro i
-  exact (continuous_of_discreteTopology : Continuous (split U V)).comp
-    ((continuous_apply i).comp continuous_subtype_val)
-
-theorem continuous_fromAlternating : Continuous (fromAlternating U V) := by
-  apply Continuous.subtype_mk
-  apply continuous_pi
-  intro i
-  let P := {p : Edge U × Edge V // p.1.target = p.2.source}
-  let f : P → Edge (U * V) := fun p => join U V p.val.1 p.val.2 p.property
-  have hf : Continuous f := continuous_of_discreteTopology
-  have hi : Continuous (fun x : LeftPath (boundary U V) =>
-      (⟨x.val i, (x.property i).1⟩ : P)) := by
-    apply Continuous.subtype_mk
-    exact (continuous_apply i).comp continuous_subtype_val
-  exact hf.comp hi
+  left_inv := by
+    intro x
+    apply Subtype.ext
+    funext i
+    exact join_split U V (x.val i)
+  right_inv := by
+    intro x
+    apply Subtype.ext
+    funext i
+    exact split_join U V (x.val i).1 (x.val i).2 (x.property i).1
 
 noncomputable def alternatingHomeomorph : Path (U * V) ≃ₜ LeftPath (boundary U V) where
   toEquiv := alternatingEquiv U V
-  continuous_toFun := continuous_toAlternating U V
-  continuous_invFun := continuous_fromAlternating U V
+  continuous_toFun := by
+    apply Continuous.subtype_mk
+    apply continuous_pi
+    intro i
+    exact (continuous_of_discreteTopology : Continuous (split U V)).comp
+      ((continuous_apply i).comp continuous_subtype_val)
+  continuous_invFun := by
+    apply Continuous.subtype_mk
+    apply continuous_pi
+    intro i
+    let P := {p : Edge U × Edge V // p.1.target = p.2.source}
+    let f : P → Edge (U * V) := fun p => join U V p.val.1 p.val.2 p.property
+    have hf : Continuous f := continuous_of_discreteTopology
+    have hi : Continuous (fun x : LeftPath (boundary U V) =>
+        (⟨x.val i, (x.property i).1⟩ : P)) := by
+      apply Continuous.subtype_mk
+      exact (continuous_apply i).comp continuous_subtype_val
+    exact hf.comp hi
 
 noncomputable def unpack (p : Path (U * V) × H) : LeftPath (boundary U V) × H :=
   (toAlternating U V p.1, p.2)
@@ -194,54 +179,8 @@ noncomputable def unpack (p : Path (U * V) × H) : LeftPath (boundary U V) × H 
 noncomputable def repack (p : LeftPath (boundary U V) × H) : Path (U * V) × H :=
   (fromAlternating U V p.1, p.2)
 
-@[simp] theorem repack_unpack (p : Path (U * V) × H) :
-    repack U V (unpack U V p) = p := by
-  apply Prod.ext
-  · exact from_to U V p.1
-  · rfl
-
-@[simp] theorem unpack_repack (p : LeftPath (boundary U V) × H) :
-    unpack U V (repack U V p) = p := by
-  apply Prod.ext
-  · exact to_from U V p.1
-  · rfl
-
-theorem unpack_step (p : Path (U * V) × H) :
-    unpack U V (step (U * V) p) =
-      leftStep (boundary U V) Edge.label Edge.label (unpack U V p) := by
-  apply Prod.ext
-  · rfl
-  · exact congrArg (fun g : H => p.2 * g) (split_label U V (p.1.val 0)).symm
-
 section Topology
 variable [TopologicalSpace H] [IsTopologicalGroup H]
-
-/-- The group action is preserved by constructing the label transfer, without a cocycle premise. -/
-noncomputable def elementaryHomeomorph : Path (U * V) × H ≃ₜ Path (V * U) × H :=
-  ((alternatingHomeomorph U V).prodCongr (Homeomorph.refl H)).trans
-    ((skewHomeomorph (boundary U V) (Edge.label : Edge U → H)
-      continuous_of_discreteTopology).trans
-      ((alternatingHomeomorph V U).prodCongr (Homeomorph.refl H)).symm)
-
-/-- Both time maps act on the original one-step group extensions. -/
-theorem elementary_step (p : Path (U * V) × H) :
-    elementaryHomeomorph U V (step (U * V) p) =
-      step (V * U) (elementaryHomeomorph U V p) := by
-  change repack V U (encode (boundary U V) Edge.label
-      (unpack U V (step (U * V) p))) =
-    step (V * U) (repack V U (encode (boundary U V) Edge.label (unpack U V p)))
-  rw [unpack_step]
-  rw [encode_step]
-  apply Prod.ext <;> rfl
-
-theorem elementary_equivariant (g : H) (p : Path (U * V) × H) :
-    elementaryHomeomorph U V (translate g p) =
-      translate g (elementaryHomeomorph U V p) := by
-  change repack V U (encode (boundary U V) Edge.label
-      (translate g (unpack U V p))) =
-    repack V U (translate g (encode (boundary U V) Edge.label (unpack U V p)))
-  exact congrArg (repack V U)
-    (encode_equivariant (boundary U V) Edge.label g (unpack U V p))
 
 /-- A homeomorphism together with the specified time and group laws. -/
 structure GroupConjugacy {a b : ℕ} (A : GroupMat H a a) (B : GroupMat H b b) where
@@ -249,36 +188,9 @@ structure GroupConjugacy {a b : ℕ} (A : GroupMat H a a) (B : GroupMat H b b) w
   time_law : ∀ p, homeomorph (step A p) = step B (homeomorph p)
   group_law : ∀ g p, homeomorph (translate g p) = translate g (homeomorph p)
 
-def GroupConjugacy.trans {a b c : ℕ}
-    {A : GroupMat H a a} {B : GroupMat H b b} {C : GroupMat H c c}
-    (f : GroupConjugacy A B) (g : GroupConjugacy B C) : GroupConjugacy A C where
-  homeomorph := f.homeomorph.trans g.homeomorph
-  time_law := fun p =>
-    (congrArg g.homeomorph (f.time_law p)).trans (g.time_law (f.homeomorph p))
-  group_law := fun h p =>
-    (congrArg g.homeomorph (f.group_law h p)).trans (g.group_law h (f.homeomorph p))
-
-/-- The entire chain is interpreted on numbered, group-labelled histories. -/
-theorem chain_has_group_conjugacy {a b L : ℕ}
-    {A : GroupMat H a a} {B : GroupMat H b b}
-    (c : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain
-      (MonoidAlgebra ℕ H) A B L) : Nonempty (GroupConjugacy A B) := by
-  induction c with
-  | nil A => exact ⟨⟨Homeomorph.refl _, fun _ => rfl, fun _ _ => rfl⟩⟩
-  | cons R S tail ih =>
-      obtain ⟨g⟩ := ih
-      let f : GroupConjugacy (R * S) (S * R) :=
-        ⟨elementaryHomeomorph R S, elementary_step R S, elementary_equivariant R S⟩
-      exact ⟨f.trans g⟩
-
 end Topology
 
-#print axioms fiber_card
 #print axioms split_join
 #print axioms join_split
-#print axioms elementaryHomeomorph
-#print axioms elementary_step
-#print axioms elementary_equivariant
-#print axioms chain_has_group_conjugacy
 
 end D5.S3.ConceptDynamics.Coding.CountedGroupOverlap

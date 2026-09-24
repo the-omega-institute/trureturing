@@ -20,27 +20,20 @@ internal sealed class BipartiteOverlapConjugacyDocument : IScribeDocumentDefinit
     private static Formula L => Call("LeftPath", F.Id("d"));
     private static Formula R => Call("RightPath", F.Id("d"));
     private static Formula X => F.Id("x");
-    private static Formula Y => F.Id("y");
-    private static Formula D => F.Id("d");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Rebracketing a legal alternating path preserves every half-edge and gives an invertible code.",
         H("Bipartite overlap conjugacy"),
         Blocks(
-            Describe.Lean(DescribeId.Create("overlap-left-recovery"),
-                DeclarationHandle.Create(Prefix + "backward_forward"), H("Recover the input path"),
-                StatementSource.FromAuthor(Disp(All(
-                    Equal(Call("backward", D, Call("forward", D, X)), X), B("x", L)))),
+            Describe.Lean(DescribeId.Create("overlap-path-homeomorphism"),
+                DeclarationHandle.Create(Prefix + "pathHomeomorph"),
+                H("Construct the overlap homeomorphism"),
+                StatementSource.FromAuthor(Disp(All(Call("Homeomorph", L, R),
+                    B("topologyU", Call("TopologicalSpace", F.Id("U"))),
+                    B("topologyV", Call("TopologicalSpace", F.Id("V"))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The previous output contains the first half-edge of the current input. The current output contains its second half-edge. Their combination recovers the complete legal input path."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("overlap-right-recovery"),
-                DeclarationHandle.Create(Prefix + "forward_backward"), H("Recover the output path"),
-                StatementSource.FromAuthor(Disp(All(
-                    Equal(Call("forward", D, Call("backward", D, Y)), Y), B("y", R)))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Decoding followed by recoding recovers both half-edges at each integer position. The endpoint equations ensure that the decoded sequence is a legal path."))),
-                DescribeRole.Theorem),
+                Blocks(Paragraph(Text("The preceding and current half-edges give an explicit inverse in both directions. Coordinate evaluation proves continuity on the legal-path subspaces."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("overlap-cannot-read-only-present"),
                 DeclarationHandle.Create(Prefix + "no_present_only_recoder"), H("The present edge alone is insufficient"),
                 StatementSource.FromAuthor(Disp(NoPresent())), AssessedProvenance.FromRepo(),

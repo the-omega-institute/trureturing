@@ -56,16 +56,6 @@ def WindowConjugacy.trans {r s : ℕ} (f : WindowConjugacy A B r)
     have hh := h (j + l) (by omega)
     simpa [Nat.cast_add, sub_sub] using hh
 
-def identity (A : CountMat n n) : WindowConjugacy A A 0 where
-  homeomorph := Homeomorph.refl _
-  intertwines := fun _ => rfl
-  future := by
-    intro x y i h
-    simpa using h 0 (by omega)
-  past := by
-    intro x y i h
-    simpa using h 0 (by omega)
-
 /-- The elementary witness is the counted-edge construction itself. -/
 noncomputable def elementary (U : CountMat n m) (V : CountMat m n) :
     WindowConjugacy (U * V) (V * U) 1 where
@@ -109,7 +99,16 @@ noncomputable def elementary (U : CountMat n m) (V : CountMat m n) :
 theorem chain_has_window_conjugacy {L : ℕ} (c : ExchangeChain ℕ A B L) :
     Nonempty (WindowConjugacy A B L) := by
   induction c with
-  | nil A => exact ⟨identity A⟩
+  | nil A =>
+      exact ⟨{
+        homeomorph := Homeomorph.refl _
+        intertwines := fun _ => rfl
+        future := by
+          intro x y i h
+          simpa using h 0 (by omega)
+        past := by
+          intro x y i h
+          simpa using h 0 (by omega) }⟩
   | cons U V tail ih =>
       obtain ⟨g⟩ := ih
       simpa [Nat.add_comm] using

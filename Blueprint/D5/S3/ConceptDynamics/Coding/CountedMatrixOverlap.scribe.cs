@@ -12,7 +12,6 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
     private static Formula U => F.Id("U");
     private static Formula V => F.Id("V");
     private static Formula UV => Call("product", U, V);
-    private static Formula I => F.Id("i");
     private static Formula All(Formula body, params Formula.BoundVariable[] extra) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
             [B("n", F.Id("Nat")), B("m", F.Id("Nat")),
@@ -23,15 +22,6 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
         "A nonnegative matrix records numbered parallel edges. Its product provides all data needed to split and reassemble each edge.",
         H("Counted edges and overlap conjugacy"),
         Blocks(
-            Describe.Lean(DescribeId.Create("counted-product-fiber-card"),
-                DeclarationHandle.Create(Prefix + "fiber_card"), H("Count the actual factor paths"),
-                StatementSource.FromAuthor(Disp(All(Equal(
-                    Call("card", Call("Fiber", U, V, I, F.Id("k"))),
-                    Call("entry", UV, I, F.Id("k"))),
-                    B("i", Call("Fin", F.Id("n"))), B("k", Call("Fin", F.Id("n")))))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For each middle vertex, independently choose a numbered U edge and a numbered V edge. Summing their product cardinalities gives the corresponding matrix-product entry."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("counted-split-join"),
                 DeclarationHandle.Create(Prefix + "split_join"), H("Recover both numbered half-edges"),
                 StatementSource.FromAuthor(Disp(All(Equal(

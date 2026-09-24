@@ -41,14 +41,12 @@ variable {n m : ℕ} (U : CountMat n m) (V : CountMat m n)
 /-- All factorizations with these fixed outside endpoints. -/
 abbrev Fiber (i k : Fin n) := Σ j : Fin m, Fin (U i j) × Fin (V j k)
 
-theorem fiber_card (i k : Fin n) :
-    Fintype.card (Fiber U V i k) = (U * V) i k := by
-  simp [Fiber, Matrix.mul_apply, Fintype.card_sigma, Fintype.card_prod]
-
 /-- The equivalence is constructed from the proved count identity, not supplied as a premise. -/
 noncomputable def fiberEquiv (i k : Fin n) :
-    Fin ((U * V) i k) ≃ Fiber U V i k :=
-  (Fintype.equivFinOfCardEq (fiber_card U V i k)).symm
+    Fin ((U * V) i k) ≃ Fiber U V i k := by
+  have hcard : Fintype.card (Fiber U V i k) = (U * V) i k := by
+    simp [Fiber, Matrix.mul_apply, Fintype.card_sigma, Fintype.card_prod]
+  exact (Fintype.equivFinOfCardEq hcard).symm
 
 noncomputable def split (a : Edge (U * V)) : Edge U × Edge V :=
   let p := fiberEquiv U V a.source a.target a.number
@@ -94,55 +92,46 @@ noncomputable def fromAlternating (x : LeftPath (boundary U V)) : Path (U * V) :
   ⟨fun i => join U V (x.val i).1 (x.val i).2 (x.property i).1,
     fun i => (x.property i).2⟩
 
-@[simp] theorem from_to (x : Path (U * V)) :
-    fromAlternating U V (toAlternating U V x) = x := by
-  apply Subtype.ext
-  funext i
-  exact join_split U V (x.val i)
-
-@[simp] theorem to_from (x : LeftPath (boundary U V)) :
-    toAlternating U V (fromAlternating U V x) = x := by
-  apply Subtype.ext
-  funext i
-  exact split_join U V (x.val i).1 (x.val i).2 (x.property i).1
-
 noncomputable def alternatingEquiv : Path (U * V) ≃ LeftPath (boundary U V) where
   toFun := toAlternating U V
   invFun := fromAlternating U V
-  left_inv := from_to U V
-  right_inv := to_from U V
-
-theorem continuous_toAlternating : Continuous (toAlternating U V) := by
-  apply Continuous.subtype_mk
-  apply continuous_pi
-  intro i
-  exact (continuous_of_discreteTopology : Continuous (split U V)).comp
-    ((continuous_apply i).comp continuous_subtype_val)
-
-theorem continuous_fromAlternating : Continuous (fromAlternating U V) := by
-  apply Continuous.subtype_mk
-  apply continuous_pi
-  intro i
-  let P := {p : Edge U × Edge V // p.1.target = p.2.source}
-  let f : P → Edge (U * V) := fun p => join U V p.val.1 p.val.2 p.property
-  have hf : Continuous f := continuous_of_discreteTopology
-  have hi : Continuous (fun x : LeftPath (boundary U V) =>
-      (⟨x.val i, (x.property i).1⟩ : P)) := by
-    apply Continuous.subtype_mk
-    exact (continuous_apply i).comp continuous_subtype_val
-  exact hf.comp hi
+  left_inv := by
+    intro x
+    apply Subtype.ext
+    funext i
+    exact join_split U V (x.val i)
+  right_inv := by
+    intro x
+    apply Subtype.ext
+    funext i
+    exact split_join U V (x.val i).1 (x.val i).2 (x.property i).1
 
 noncomputable def alternatingHomeomorph : Path (U * V) ≃ₜ LeftPath (boundary U V) where
   toEquiv := alternatingEquiv U V
-  continuous_toFun := continuous_toAlternating U V
-  continuous_invFun := continuous_fromAlternating U V
+  continuous_toFun := by
+    apply Continuous.subtype_mk
+    apply continuous_pi
+    intro i
+    exact (continuous_of_discreteTopology : Continuous (split U V)).comp
+      ((continuous_apply i).comp continuous_subtype_val)
+  continuous_invFun := by
+    apply Continuous.subtype_mk
+    apply continuous_pi
+    intro i
+    let P := {p : Edge U × Edge V // p.1.target = p.2.source}
+    let f : P → Edge (U * V) := fun p => join U V p.val.1 p.val.2 p.property
+    have hf : Continuous f := continuous_of_discreteTopology
+    have hi : Continuous (fun x : LeftPath (boundary U V) =>
+        (⟨x.val i, (x.property i).1⟩ : P)) := by
+      apply Continuous.subtype_mk
+      exact (continuous_apply i).comp continuous_subtype_val
+    exact hf.comp hi
 
 /-- A matrix-product equality now produces a homeomorphism of its actual edge shifts. -/
 noncomputable def elementaryHomeomorph : Path (U * V) ≃ₜ Path (V * U) :=
   (alternatingHomeomorph U V).trans
     ((pathHomeomorph (boundary U V)).trans (alternatingHomeomorph V U).symm)
 
-#print axioms fiber_card
 #print axioms split_join
 #print axioms join_split
 #print axioms elementaryHomeomorph
