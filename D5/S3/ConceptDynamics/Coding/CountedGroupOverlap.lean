@@ -117,10 +117,17 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
       by simpa [mul_assoc] using q.2.2.2.2⟩
   have recovered_eq : recovered = q := by
     rcases q with ⟨qg, qj, qh, qa, qb⟩
-    change
-      (⟨qh * (qh⁻¹ * qg), qj, qh, qa, _⟩ : Σ h : H, Fiber U V i k h) =
-        ⟨qg, qj, qh, qa, qb⟩
-    simp only [mul_inv_cancel_left]
+    apply Sigma.ext
+    · simp [recovered]
+    · simp [recovered]
+      apply Sigma.ext
+      · rfl
+      · apply Sigma.ext
+        · rfl
+        · apply Prod.ext
+          · rfl
+          · apply Fin.ext
+            rfl
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
