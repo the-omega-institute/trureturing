@@ -1,4 +1,4 @@
-schema_version = 4
+schema_version = 5
 # Experimental programs, results, and licenses; recursive patterns cover report directories.
 files = [
 { pattern = "docs/reports/**/*.b64", require = [], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },

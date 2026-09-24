@@ -185,6 +185,9 @@ domains:
   Solenoid:
     stratum: S1
     definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
+  SparseCoding:
+    stratum: S3
+    definition: Sparse feature representations, dictionary learning, superposition, identifiability, and sparse autoencoder methods.
   SpectralTopology:
     stratum: S3
     definition: Finite spectral localizers, point gaps, and chiral inertia counts for doubled Hermitian block operators.

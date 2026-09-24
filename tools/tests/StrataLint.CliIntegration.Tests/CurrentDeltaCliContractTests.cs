@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -205,22 +206,16 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
         fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
-        fixture.Files["Meta/registry.yaml"] = TestRegistry.Canonical;
-        fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         if (selected)
         {
-            const string producer = "Meta/ReportProducers/fixture.json";
-            const string consumer = "Meta/ReportConsumers/fixture.json";
+            const string producer = "Meta/ReportProducers/lean-report.json";
+            const string consumer = "Meta/ReportConsumers/lean-report.json";
             fixture.Files[producer] = "{\"schema\":\"report-producer-scope-v2\",\"registration\":\"lean-report-inputs.json\",\"scope\":\"lean-report\",\"projects\":[]}";
             fixture.Files["lean-report-inputs.json"] = "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}";
             fixture.Files[consumer] = JsonSerializer.Serialize(new
             {
                 schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { "global.json" },
             });
-            if (metadata)
-                foreach (var path in new[] { producer, consumer, "lean-report-inputs.json" })
-                    fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
-                        "  - \"" + path + "\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
             var registration = JsonNode.Parse(fixture.Files[CommonExecutionEvidence.CheckManifestPath])!;
             registration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "SL-012")!["report_inputs"] =
                 JsonSerializer.SerializeToNode(new[] { new { producer, consumer, artifact = "raw-lean-report", materials = new[] { "global.json" } } });
@@ -232,27 +227,33 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 schema = "ci-resource-execution-v1", resources = new[] {
                     new { id = "current", projects = new[] { "tools/StrataLint.Scribe/StrataLint.Scribe.csproj" },
                         checks = selectedChecks, steps = metadata ? ["check-current"] : new[] { "check-current", "lean-report" } } } });
-            fixture.Files["Meta/FILEMAP.toml"] = """
-                schema_version = 4
-                resources = [
-                  { id = "current", stage = "current", owner = "tools/scripts/workflow/ci.py", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
-                ]
-                [residence_policy]
-                case_id = "FIXTURE"
-                desired = "explicit"
-                known_violation_count = 0
-                status = "closed"
-                [[files]]
-                pattern = "**"
-                require = ["current"]
-                kind = "program"
-                admission_plane = "judge"
-                produced_by = "none"
-                consumed_by = ["test"]
-                verified_by = ["test"]
-                artifact_id = "none"
-                runtime_disposition = "committed-source"
-                """ + "\n";
+            var policy = FileMapLoader.Parse(Encoding.UTF8.GetBytes(TestFileMap.Canonical), "current fixture");
+            var entries = policy.Entries.Select(entry => new FileMapEntry(
+                entry.Pattern,
+                entry.Kind,
+                entry.AdmissionPlane,
+                entry.ProducedBy,
+                entry.ConsumedBy,
+                entry.VerifiedBy,
+                entry.ResidenceViolation,
+                entry.ArtifactId,
+                entry.Mode,
+                entry.RuntimeDisposition,
+                entry.HistoryRequirement,
+                ["current"],
+                entry.Symlink,
+                entry.DigestionSource)).ToImmutableArray();
+            var current = new FileMapResource(
+                "current",
+                "current",
+                "tools/scripts/workflow/ci.py",
+                [],
+                [],
+                [],
+                ImmutableDictionary<string, string>.Empty,
+                ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"]);
+            fixture.Files["Meta/FILEMAP.toml"] = Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(
+                new FileMapManifest(policy.ResidencePolicy, entries, policy.ArtifactKinds, [current])).AsSpan());
         }
         foreach (var pair in fixture.Files)
         {
@@ -464,7 +465,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("valid", 0, "")]
     [InlineData("reused", 0, "")]
     [InlineData("template-changed-undeclared", 1, "DTR-Undeclared")]
-    [InlineData("template-unchanged", 0, "")]
+    [InlineData("template-unchanged", 3, "SL-022")]
     [InlineData("template-missing-evidence", 1, "DTR-Evidence")]
     [InlineData("disabled-base-project", 2, "base test project")]
     [InlineData("premanifest-base", 0, "")]
@@ -472,13 +473,33 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("original-registration-base", 0, "")]
     [InlineData("original-registration-missing-base-project", 2, "base test project")]
     [InlineData("annotation", 3, "SL-022")]
-    [InlineData("mixed", 1, "SL-029")]
-    [InlineData("retired-content-delete", 1, "SL-029")]
-    [InlineData("retired-content-rename", 1, "SL-029")]
+    [InlineData("mixed", 3, "SL-029")]
+    [InlineData("mixed-block", 1, "SL-008")]
+    [InlineData("mixed-missing-base", 2, "explicit 40-hex base")]
+    [InlineData("mixed-missing-report", 2, "raw-lean-report.json")]
+    [InlineData("mixed-invalid-report", 2, "Raw Lean report is not valid JSON")]
+    [InlineData("mixed-stale-report", 2, "Raw Lean report source hash does not match")]
+    [InlineData("mixed-missing-report-archive", 2, "materials")]
+    [InlineData("mixed-current-round", 2, "round mismatch")]
+    [InlineData("mixed-unbound-report-archive", 2, "missing required materials")]
+    [InlineData("mixed-contradictory-material", 2, "artifact integrity")]
+    [InlineData("mixed-failed-trx", 2, "artifact integrity")]
+    [InlineData("retired-content-delete", 3, "SL-029")]
+    [InlineData("retired-content-rename", 3, "SL-029")]
+    [InlineData("retired-content-delete-base-missing", 2, "protected-base FILEMAP is unavailable")]
+    [InlineData("retired-content-rename-base-missing", 2, "protected-base FILEMAP is unavailable")]
+    [InlineData("retired-content-delete-base-malformed", 2, "protected-base FILEMAP cannot be parsed")]
+    [InlineData("retired-content-rename-base-ambiguous", 2, "matches=2")]
+    [InlineData("retired-content-delete-base-unregistered", 2, "matches=0")]
+    [InlineData("retired-content-rename-base-unsafe", 2, "FILEMAP-PATTERN-UNSAFE")]
+    [InlineData("mixed-missing-filemap", 2, "FILEMAP source is unavailable in this snapshot")]
+    [InlineData("mixed-malformed-filemap", 2, "Invalid FILEMAP at Meta/FILEMAP.toml")]
+    [InlineData("mixed-ambiguous-filemap", 1, "matches=2")]
+    [InlineData("mixed-unsafe-filemap", 2, "unsafe FILEMAP pattern")]
+    [InlineData("mixed-policy-content", 2, "policy source must be assigned to the judge")]
     [InlineData("first-freeze", 1, "SL-008")]
     [InlineData("ratchet", 1, "SL-003")]
     [InlineData("unowned-project", 1, "TEST_PROJECT_TOPOLOGY candidate introduces topology debt: missing-owned-project StrataLint.NewProduct -> StrataLint.NewProduct.Tests")]
-    [InlineData("unregistered-project", 2, "changed path must match exactly one FILEMAP entry; path=tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj matches=0")]
     [InlineData("missing-base-project", 2, "base test project")]
     [InlineData("missing-report", 2, "")]
     [InlineData("candidate-mismatch", 2, "candidate identity")]
@@ -503,7 +524,11 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     {
         var staged = scenario.StartsWith("staged-", StringComparison.Ordinal);
         var afterValid = scenario.StartsWith("after-valid-", StringComparison.Ordinal);
-        var defect = staged ? scenario["staged-".Length..] : afterValid ? scenario["after-valid-".Length..] : scenario;
+        var mixedEvidenceFailure = scenario is "mixed-missing-report" or "mixed-invalid-report" or "mixed-stale-report"
+            or "mixed-missing-report-archive" or "mixed-current-round" or "mixed-unbound-report-archive"
+            or "mixed-contradictory-material" or "mixed-failed-trx";
+        var defect = staged ? scenario["staged-".Length..] : afterValid ? scenario["after-valid-".Length..]
+            : mixedEvidenceFailure ? scenario["mixed-".Length..] : scenario;
         var template = scenario.StartsWith("template-", StringComparison.Ordinal);
         const string contentPath = "Blueprint/D5/S0/Carrier/DeltaFixture.md";
         using var temporary = new TemporaryDirectory();
@@ -520,12 +545,6 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         if (template)
         {
             foreach (var pair in InformationTemplateFixture.PolicyFiles()) fixture.Files[pair.Key] = pair.Value;
-            fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
-                "  - \"lean-report-inputs.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
-            var templatePolicy = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(fixture.Files["Meta/registry.yaml"]),
-                Encoding.UTF8.GetBytes(fixture.Files["Meta/domains.yaml"]))).Policy;
-            fixture.Files["Meta/registry.yaml"] = Encoding.UTF8.GetString(templatePolicy.CanonicalRegistryBytes.AsSpan());
         }
         foreach (var pair in fixture.Files) Write(pair.Key, pair.Value);
         Write(".gitignore", ".lake/\nbuild/\ntools/StrataLint.Cli/bin/\n");
@@ -536,12 +555,36 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             path => File.ReadAllBytes(Path.Combine(repository, path)));
         foreach (var document in filemapDocuments)
             Write(document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
-        const string firstProject = "tools/tests/First/First.csproj";
+        var syntheticFileMap = TomlSerializer.Deserialize<TomlTable>(
+            File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml")))!;
+        var syntheticEntries = new[]
+        {
+            "tools/tests/StrataLint.First/**",
+            "tools/tests/StrataLint.Second/**",
+        }.Select(pattern => TomlSerializer.Deserialize<TomlTable>($$"""
+            pattern = "{{pattern}}"
+            require = []
+            kind = "program"
+            admission_plane = "judge"
+            produced_by = "none"
+            consumed_by = ["dotnet"]
+            verified_by = ["dotnet-test"]
+            artifact_id = "none"
+            runtime_disposition = "committed-source"
+            """)!);
+        var syntheticRows = new TomlArray();
+        foreach (var row in ((TomlArray)syntheticFileMap["files"]).Cast<TomlTable>()
+            .Concat(syntheticEntries).OrderBy(row => (string)row["pattern"], StringComparer.Ordinal))
+            syntheticRows.Add(row);
+        syntheticFileMap["files"] = syntheticRows;
+        var candidateFileMap = TomlSerializer.Serialize(syntheticFileMap);
+        Write("Meta/FILEMAP.toml", candidateFileMap);
+        const string firstProject = "tools/tests/StrataLint.First/First.csproj";
         Write(firstProject, "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
-        Write("tools/tests/Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
+        Write("tools/tests/StrataLint.Second/Second.csproj", "<Project><PropertyGroup><IsTestProject>true</IsTestProject></PropertyGroup></Project>\n");
         var registration = JsonNode.Parse(fixture.Files[EngineeringRegistrationFixture.Path])!;
         var projects = registration["projects"]!.AsArray();
-        foreach (var (path, assembly) in new[] { (firstProject, "First"), ("tools/tests/Second/Second.csproj", "Second") })
+        foreach (var (path, assembly) in new[] { (firstProject, "First"), ("tools/tests/StrataLint.Second/Second.csproj", "Second") })
             projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(
                 new EngineeringProjectFixture(path, assembly, "cross-cutting-test", true, [])))!["projects"]![0]!.DeepClone());
         Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
@@ -578,6 +621,15 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             filemap["files"] = rows;
             Write("Meta/FILEMAP.toml", TomlSerializer.Serialize(filemap));
         }
+        var validFileMap = File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml"));
+        if (scenario.EndsWith("base-missing", StringComparison.Ordinal)) File.Delete(Path.Combine(root, "Meta/FILEMAP.toml"));
+        if (scenario.EndsWith("base-malformed", StringComparison.Ordinal)) Write("Meta/FILEMAP.toml", "files = [");
+        if (scenario.EndsWith("base-ambiguous", StringComparison.Ordinal)) Write("Meta/FILEMAP.toml",
+            WithClassificationRow(validFileMap, "Retired/*"));
+        if (scenario.EndsWith("base-unregistered", StringComparison.Ordinal)) Write("Meta/FILEMAP.toml",
+            File.ReadAllText(Path.Combine(repository, "Meta/FILEMAP.toml")));
+        if (scenario.EndsWith("base-unsafe", StringComparison.Ordinal)) Write("Meta/FILEMAP.toml",
+            WithClassificationRow(validFileMap, "unsafe/?.md"));
         const string protectedPath = "tools/scripts/ci-stage.sh";
         Git(root, "init", "-q"); Git(root, "add", ".");
         Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "base");
@@ -594,45 +646,45 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 Write(AdmissionPlanePolicy.FileMapPath, File.ReadAllText(Path.Combine(root, AdmissionPlanePolicy.FileMapPath))
                     + "\n# Judge metadata leaves historical template content unselected.\n");
                 break;
-            case "retired-content-delete":
-            case "retired-content-rename":
+            case var retired when retired.StartsWith("retired-content-", StringComparison.Ordinal):
                 File.Delete(Path.Combine(root, retiredContent));
-                Write("Meta/FILEMAP.toml", File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")));
-                if (scenario == "retired-content-rename") Write("README.md", "prior content\n");
+                Write("tools/tests/StrataLint.First/probe.txt", "candidate judge\n");
+                if (scenario is not ("retired-content-delete" or "retired-content-rename"))
+                    Write("Meta/FILEMAP.toml", validFileMap);
+                if (scenario.StartsWith("retired-content-rename", StringComparison.Ordinal)) Write("README.md", "prior content\n");
                 break;
             case "premanifest-base": break;
             case "original-registration-base": break;
             case "annotation": Write(protectedPath, "#!/bin/sh\nexit 0\n"); break;
+            case "mixed-block":
+                Write("Golden/Frozen/accepted/" + new string('a', 64) + ".json", "{}\n");
+                goto case "mixed";
             case "mixed": Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n"); Write(contentPath, "# changed\n"); break;
             case "first-freeze": Write("Golden/Frozen/accepted/" + new string('a', 64) + ".json", "{}\n"); break;
             case "ratchet": for (var i = 0; i <= RepositoryRules.DirectoryFileLimit; i++) Write($"docs/reports/ratchet/{i}.json", "{}\n"); break;
             case "unowned-project":
-            case "unregistered-project":
                 const string product = "tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj";
                 Write(product, "<Project />\n");
                 projects.Add(JsonNode.Parse(EngineeringRegistrationFixture.Manifest(new EngineeringProjectFixture(
                     product, "StrataLint.NewProduct", "production", false, [], OwnedTestAssembly: "StrataLint.NewProduct.Tests")))!["projects"]![0]!.DeepClone());
-                if (scenario == "unowned-project")
-                {
-                    // Reach the owned-test topology predicate with an explicitly registered path.
-                    var filemap = TomlSerializer.Deserialize<TomlTable>(File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml")))!;
-                    var entry = TomlSerializer.Deserialize<TomlTable>("""
-                        pattern = "tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj"
-                        require = ["delta"]
-                        kind = "program"
-                        admission_plane = "judge"
-                        produced_by = "none"
-                        consumed_by = ["dotnet"]
-                        verified_by = ["dotnet-test"]
-                        artifact_id = "none"
-                        runtime_disposition = "committed-source"
-                        """)!;
-                    var rows = new TomlArray();
-                    foreach (var row in ((TomlArray)filemap["files"]).Cast<TomlTable>().Append(entry)
-                        .OrderBy(row => (string)row["pattern"], StringComparer.Ordinal)) rows.Add(row);
-                    filemap["files"] = rows;
-                    Write("Meta/FILEMAP.toml", TomlSerializer.Serialize(filemap));
-                }
+                // Reach the owned-test topology predicate with an explicitly registered path.
+                var filemap = TomlSerializer.Deserialize<TomlTable>(File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml")))!;
+                var entry = TomlSerializer.Deserialize<TomlTable>("""
+                    pattern = "tools/StrataLint.NewProduct/StrataLint.NewProduct.csproj"
+                    require = ["delta"]
+                    kind = "program"
+                    admission_plane = "judge"
+                    produced_by = "none"
+                    consumed_by = ["dotnet"]
+                    verified_by = ["dotnet-test"]
+                    artifact_id = "none"
+                    runtime_disposition = "committed-source"
+                    """)!;
+                var rows = new TomlArray();
+                foreach (var row in ((TomlArray)filemap["files"]).Cast<TomlTable>().Append(entry)
+                    .OrderBy(row => (string)row["pattern"], StringComparer.Ordinal)) rows.Add(row);
+                filemap["files"] = rows;
+                Write("Meta/FILEMAP.toml", TomlSerializer.Serialize(filemap));
                 break;
             case "disabled-base-project":
                 projects.Single(item => item!["path"]!.GetValue<string>() == firstProject)!["ci"] = false;
@@ -647,6 +699,19 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 break;
             default: Write(contentPath, "# changed\n"); break;
         }
+        if (scenario.StartsWith("mixed-", StringComparison.Ordinal) && scenario != "mixed-block")
+        {
+            Write("tools/StrataLint.Cli/probe.cs", "// candidate judge\n");
+            Write(contentPath, "# changed\n");
+            switch (scenario)
+            {
+                case "mixed-missing-filemap": File.Delete(Path.Combine(root, "Meta/FILEMAP.toml")); break;
+                case "mixed-malformed-filemap": Write("Meta/FILEMAP.toml", "files = [\n"); break;
+                case "mixed-ambiguous-filemap": Write("Meta/FILEMAP.toml", WithClassificationRow(validFileMap, contentPath)); break;
+                case "mixed-unsafe-filemap": Write("Meta/FILEMAP.toml", WithClassificationRow(validFileMap, "unsafe/?.md")); break;
+                case "mixed-policy-content": Write("Meta/FILEMAP.toml", WithAdmissionPlane(validFileMap, "Meta/FILEMAP.toml", "content")); break;
+            }
+        }
         Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
         var report = Path.Combine(root, CommonExecutionEvidence.ReportPath);
         var candidateSnapshot = CommonExecutionEvidence.Snapshot(root);
@@ -657,7 +722,16 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         var environment = new ProductionCliEnvironment(root, new GitRepositoryGateway(root), new FakeLeanReportSource(null));
         var currentConsole = new BufferedConsole();
         var currentExit = CliApplication.Run(["check-current", "--candidate-lean-report", report], environment, currentConsole);
+        if (scenario is "mixed-missing-filemap" or "mixed-malformed-filemap" or "mixed-ambiguous-filemap"
+            or "mixed-unsafe-filemap")
+        {
+            Assert.Equal(expectedExit, currentExit);
+            Assert.Contains(diagnostic, currentConsole.Output + currentConsole.Error, StringComparison.Ordinal);
+            Assert.DoesNotContain("SL-029", currentConsole.Output, StringComparison.Ordinal);
+            return;
+        }
         Assert.True(currentExit == 0, currentConsole.Output + currentConsole.Error);
+        Assert.DoesNotContain("SL-029", currentConsole.Output, StringComparison.Ordinal);
         if (scenario == "annotation")
         {
             using var currentJson = JsonDocument.Parse(currentConsole.Output);
@@ -728,11 +802,18 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                         file.Path.Value[..^".scribe.cs".Length] + ".md", "sha256:" + new string('a', 64)))).WriteMaterial() : null));
             checks.Seal();
         }
-        if (afterValid)
+        if (afterValid || mixedEvidenceFailure || scenario == "mixed-missing-base")
         {
             var accepted = environment.CheckDelta(["--protected-base", basis, "--candidate-lean-report", report]);
-            Assert.True(accepted.ExitCode == 0, accepted.Output + accepted.Error);
+            Assert.True(accepted.ExitCode == (afterValid ? 0 : 3), accepted.Output + accepted.Error);
             AssertAcceptedBaseTests(accepted.Output);
+            if (!afterValid)
+            {
+                using var classified = JsonDocument.Parse(accepted.Output);
+                AssertMixedWarning(classified.RootElement);
+                Assert.DoesNotContain(classified.RootElement.GetProperty("executed").EnumerateArray(),
+                    rule => rule.GetString() == "SL-029");
+            }
         }
         switch (defect)
         {
@@ -785,7 +866,9 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                 exit = new CommonStages(root, output).Run("delta", basis);
                 console.WriteOutput(output.ToString());
             }
-            else exit = CliApplication.Run(["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
+            else exit = CliApplication.Run(scenario == "mixed-missing-base"
+                ? ["check-delta", "--candidate-lean-report", report]
+                : ["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
         }
         finally
         {
@@ -805,6 +888,51 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             Assert.True(effects.Count > 0 && effects.All(m => m.Groups[1].Value == ((int)AdmissionEffect.Observe).ToString()),
                 "[FAIL] dtr_findings_observe_only: " + console.Output);
         }
+        if (scenario is "mixed" or "mixed-block" or "retired-content-delete" or "retired-content-rename" or "valid" or "annotation")
+        {
+            Assert.Empty(console.Error);
+            using var verdict = JsonDocument.Parse(console.Output);
+            var findings = verdict.RootElement.GetProperty("diagnostics").EnumerateArray().ToArray();
+            var executed = verdict.RootElement.GetProperty("executed").EnumerateArray().Select(rule => rule.GetString()).ToArray();
+            Assert.NotEmpty(executed);
+            Assert.DoesNotContain("SL-029", executed); // The precheck does not forge catalog execution.
+            AssertAcceptedBaseTests(console.Output);
+            if (scenario is "valid" or "annotation")
+                Assert.DoesNotContain(findings, finding => finding.GetProperty("RuleId").GetProperty("Value").GetString() == "SL-029");
+            else
+            {
+                var warning = Assert.Single(findings, finding => finding.GetProperty("RuleId").GetProperty("Value").GetString() == "SL-029");
+                Assert.Equal((int)DisplaySeverity.Warning, warning.GetProperty("DisplaySeverity").GetInt32());
+                Assert.Equal((int)AdmissionEffect.Observe, warning.GetProperty("AdmissionEffect").GetInt32());
+                Assert.StartsWith("ADMISSION-PLANE-MIXED:", warning.GetProperty("Message").GetString(), StringComparison.Ordinal);
+            }
+            if (scenario == "mixed-block")
+            {
+                Assert.Contains("SL-008", executed);
+                Assert.Contains(findings, finding => finding.GetProperty("RuleId").GetProperty("Value").GetString() == "SL-008"
+                    && finding.GetProperty("AdmissionEffect").GetInt32() == (int)AdmissionEffect.Block);
+            }
+        }
+        if (mixedEvidenceFailure)
+        {
+            using var failureJson = JsonDocument.Parse(console.Output);
+            AssertMixedWarning(failureJson.RootElement);
+            Assert.Equal(new[] { "diagnostics" }, failureJson.RootElement.EnumerateObject().Select(property => property.Name));
+            Assert.DoesNotContain("ADMITTED", console.Output, StringComparison.Ordinal);
+        }
+        if (scenario is "mixed-invalid-report" or "mixed-stale-report")
+        {
+            var fullConsole = new BufferedConsole();
+            var fullExit = CliApplication.Run(["check", "--protected-base", basis, "--candidate-lean-report", report], environment, fullConsole);
+            Assert.Equal(2, fullExit);
+            Assert.Equal(1, fullConsole.Output.Split("ADMISSION-PLANE-MIXED:", StringSplitOptions.None).Length - 1);
+            Assert.Contains("SL-029", fullConsole.Output, StringComparison.Ordinal);
+            Assert.Contains(diagnostic, fullConsole.Error, StringComparison.Ordinal);
+        }
+        if (scenario is "mixed-missing-base" or "mixed-missing-filemap" or "mixed-malformed-filemap"
+            or "mixed-ambiguous-filemap" or "mixed-unsafe-filemap" or "mixed-policy-content"
+            || scenario.StartsWith("retired-content-", StringComparison.Ordinal) && expectedExit == 2)
+            Assert.DoesNotContain("SL-029", console.Output, StringComparison.Ordinal);
         if (scenario is "valid" or "reused")
         {
             Assert.All(hashes, row => Assert.Equal(1, row.Value));
@@ -849,6 +977,45 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             Assert.Equal(protectedPath, finding.GetProperty("Path").GetString());
             Assert.Equal((int)AdmissionEffect.HumanGate, finding.GetProperty("AdmissionEffect").GetInt32());
             Assert.Equal("protected-surface change detected (SL-022)", finding.GetProperty("Message").GetString());
+        }
+
+        static string WithClassificationRow(string manifest, string pattern)
+        {
+            var filemap = TomlSerializer.Deserialize<TomlTable>(manifest)!;
+            var entry = TomlSerializer.Deserialize<TomlTable>($$"""
+                pattern = "{{pattern}}"
+                require = []
+                kind = "data"
+                admission_plane = "content"
+                produced_by = "none"
+                consumed_by = ["test"]
+                verified_by = ["test"]
+                artifact_id = "none"
+                runtime_disposition = "committed-source"
+                """)!;
+            var rows = new TomlArray();
+            foreach (var row in ((TomlArray)filemap["files"]).Cast<TomlTable>().Append(entry)
+                .OrderBy(row => (string)row["pattern"], StringComparer.Ordinal)) rows.Add(row);
+            filemap["files"] = rows;
+            return TomlSerializer.Serialize(filemap);
+        }
+
+        static string WithAdmissionPlane(string manifest, string pattern, string admissionPlane)
+        {
+            var filemap = TomlSerializer.Deserialize<TomlTable>(manifest)!;
+            var row = ((TomlArray)filemap["files"]).Cast<TomlTable>()
+                .Single(entry => string.Equals((string)entry["pattern"], pattern, StringComparison.Ordinal));
+            row["admission_plane"] = admissionPlane;
+            return TomlSerializer.Serialize(filemap);
+        }
+
+        static void AssertMixedWarning(JsonElement result)
+        {
+            var warning = Assert.Single(result.GetProperty("diagnostics").EnumerateArray(),
+                finding => finding.GetProperty("RuleId").GetProperty("Value").GetString() == "SL-029");
+            Assert.Equal((int)DisplaySeverity.Warning, warning.GetProperty("DisplaySeverity").GetInt32());
+            Assert.Equal((int)AdmissionEffect.Observe, warning.GetProperty("AdmissionEffect").GetInt32());
+            Assert.StartsWith("ADMISSION-PLANE-MIXED:", warning.GetProperty("Message").GetString(), StringComparison.Ordinal);
         }
 
         void Write(string path, string text)
