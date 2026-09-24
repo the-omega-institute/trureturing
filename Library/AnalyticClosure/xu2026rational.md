@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionBanks
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionContinuation
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionSlit
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionZeroFreeCollar
 license: citation-only
 triage: anchor
 ---
@@ -119,14 +120,39 @@ radial and angular integral identities transport the source estimates; and
 local analytic representatives retain the ordinary-head derivative needed
 for the strict sign.
 
-These are intermediate disk, boundary, slit and local Banks results, not a
-resolution of Conjecture 1.3. The Banks radius is local and
-composition-dependent. No general power-log asymptotic is asserted, and the
-theorem does not supply a normalized extension on a fixed slit disk, Taylor
-or formal-inverse coefficient identification, finite-contour sign transfer,
-or the all-$j$ assembly. It therefore supplies no coefficient-sign theorem
-or global slit nonvanishing. Solved-problem credit is zero. The preregistered
-target is
+`CompositionZeroFreeCollar.normalizedContinuation` is the actual
+depth-normalized slit branch. At zero it is `CompositionDisk.normalized`; away
+from zero it is
+$\operatorname{continued}_k(z)/z^d$, with $d$ the composition depth.
+`CompositionZeroFreeCollar.result` proves disk agreement and
+`AnalyticOnNhd` on the full source domain $\Omega$. For each positive
+composition it also produces one $R_0>1$ such that this actual normalized
+continuation is nonzero throughout
+$\Omega\cap\{|z|<R_0\}$.
+
+The proof obtains unit-circle nonvanishing directly from the radial squared
+norm. If $F(r)=\operatorname{continued}_k(r\zeta)$ and
+$H(r)=|F(r)|^2$, then on the interior radial segment
+
+$$
+H'(r)=\frac{2}{r}|F(r)|^2\operatorname{Re}Q(r\zeta)>0,
+$$
+
+using the positive-real logarithmic derivative from
+`CompositionZeroFree.result`. This route avoids taking an endpoint logarithm.
+The actual Banks theorem at $\ell=1$ supplies the neighborhood of the missing
+boundary point one. The union of that Banks ball with the open zero-free locus
+in $\Omega$ contains the closed unit disk; compact thickening then supplies
+$R_0=1+\delta$. This is a source-specific, composition-dependent collar, not
+global slit-domain nonvanishing and not a composition-uniform radius.
+
+These are intermediate disk, boundary, slit, local Banks and zero-free collar
+results, not a resolution of Conjecture 1.3. No general power-log asymptotic is
+asserted. The full Taylor/formal-inverse coefficient correspondence,
+finite-contour sign transfer and all-$j$/$\ell$ assembly remain open. The
+collar therefore supplies no coefficient-sign theorem. Solved-problem credit
+is zero, and this auxiliary carries no `OpenProblemResolutionClaim`, novelty
+claim or worldwide-priority claim. The preregistered target is
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Reuse and literature boundary
