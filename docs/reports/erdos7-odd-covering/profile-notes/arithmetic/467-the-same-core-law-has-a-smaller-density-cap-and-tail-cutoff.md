@@ -19,7 +19,7 @@ Report348's separate [direct capped law with the actual pure-anchor masses retai
 
 On P={3,5,7,11,13,17,19}, the uniform survivor-mass consequence
 H(U)>=1/Lambda7 also gives a
-[different supported law by legal phase resampling](530-one-supported-law-controls-unused-and-deep-occupied-labels.md): all unused numerical labels and all occupied labels above10^9 have combined query sum below6.737023. Controlling the remaining shallow labels under that same law remains open; this new law does not inherit the density cap proved here.
+[different supported law by legal phase resampling](530-one-supported-law-controls-unused-and-deep-occupied-labels.md): all unused numerical labels and all occupied labels above10^9 have combined query sum below6.737016. A Gibbs refinement and fixed mixture give this same law full actual survivor support and the density cap Lambda7; controlling the remaining shallow labels under that law remains open.
 
 ## The ordinary prefix mass bounds the charged process itself
 

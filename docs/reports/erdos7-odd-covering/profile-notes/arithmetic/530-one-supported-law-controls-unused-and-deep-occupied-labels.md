@@ -10,7 +10,7 @@ Legal replacement and addition of classes give a different common-law conclusion
 
     log(H(U)/alpha7)<=log(1/alpha7)<27/4.              (PR2)
 
-More generally, one law can control all unused labels and all occupied labels above10^9 with total query sum below6.737023. Controlling the remaining occupied labels under that same law is unresolved. The new law need not have full support or a bounded Haar density. These statements are ordinary proofs using(PR1), finite minimax and compactness; they are not new Lean results or an unrestricted Erdős#7 resolution.
+The fixed mixture below controls all unused labels and all occupied labels above10^9 with total query sum below6.737016, while retaining density at most Lambda7 and full actual survivor support. The Gibbs refinement and fixed mixture below establish these bounds simultaneously. Controlling the remaining occupied labels under that same law is unresolved. These statements are ordinary proofs using(PR1), finite minimax and compactness; they are not new Lean results or an unrestricted Erdős#7 resolution.
 
 ## Legal phase resampling preserves the original quantifiers
 
@@ -133,4 +133,107 @@ The [arithmetic consumer](../../frontier/cover-geometry/phase_resampling_arithme
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_resampling_arithmetic.py
+```
+
+## The same common law can also retain a density bound
+
+The finite minimax step has a constructive variational refinement.
+Keep the same original U, replacement probabilities r_d, beta and finite
+query inventory J. Set h=H(U)>0, rho=H|U/h, and define
+
+    Z(theta)=integral_U exp(-g_theta) dH>=beta.
+
+The finite product of phase simplexes is compact, and Z is differentiable
+and convex on it. Choose a minimizer theta_star and set
+
+    dnu_star/dH=1_U*exp(-g_theta_star)/Z(theta_star).
+
+Since g_theta_star>=0, this probability has density at most1/beta.
+For every feasible theta, the right derivative toward theta at a minimum
+is nonnegative:
+
+    -Z(theta_star)*E_nu_star(g_theta-g_theta_star)>=0.
+
+Thus theta_star maximizes the linear query payoff under this same
+nu_star. Its expected payoff is exactly the finite weighted sum of
+labelwise cylinder maxima. The relative entropy identity gives
+
+    R_weighted,J(nu_star)+KL(nu_star || rho)
+       =log(h/Z(theta_star))<=log(h/beta).            (GD1)
+
+In particular this obtains the query bound and density bound on one
+probability, rather than combining estimates from different measures.
+
+Pass to all finite query inventories inside the compact set of
+probabilities supported on U and dominated by H/beta. Domination is
+closed in the weak topology; each finite query sum is continuous, and
+relative entropy to rho is lower semicontinuous. Unions of finite query
+inventories again give the finite intersection property. Consequently
+one all-depth probability satisfies
+
+    nu<=H|U/beta,
+    R_weighted(nu)+KL(nu || rho)<=log(H(U)/beta).      (GD2)
+
+Only the inequalities are passed to the limit. This does not assert an
+infinite phase minimizer, a global Gibbs formula, or a positive density
+lower bound for this limiting nu.
+
+### Pay the deep occupied labels under that same density bound
+
+Take r_d=0 for every occupied label, so beta=alpha7 and
+Lambda7=1/alpha7. The same law then satisfies
+
+    R_unused(nu)+KL(nu || rho)<=log(H(U)/alpha7),
+    nu<=Lambda7 H.
+
+Each occupied deep label costs at most Lambda7/d, so
+
+    R_unused(nu)+sum_(d in M,d>B)q_d(nu)+KL(nu || rho)
+       <=log(H(U)/alpha7)+Lambda7*tau_P(B).           (GD3)
+
+For B=10^9, its uniform right side is at most
+log(Lambda7)+Lambda7*tau_P(B)=6.737013967890102... .
+It is strictly smaller than the earlier uniform cost -log(beta_B),
+because x<-log(1-x) for x=Lambda7*tau_P(B) in(0,1).
+This improvement uses the newly constructed density bound, not an
+inheritance assertion about the arbitrary minimax law of(PR5).
+
+### Restore full survivor support with a fixed mixture
+
+Let mu be report467's one all-depth law for this same actual family:
+
+    (1/5)H|U<=mu<=Lambda7 H,
+    R_P(mu)<=70871/3375.
+
+Set epsilon=1/10^7 and nu_hat=(1-epsilon)*nu+epsilon*mu. Convexity of
+each cylinder maximum and the common density cap give
+
+    (1/50000000)H|U<=nu_hat<=Lambda7 H,
+    R_unused(nu_hat)+sum_(d in M,d>B)q_d(nu_hat)
+      <=(1-epsilon)*log(Lambda7)
+           +epsilon*(70871/3375)+Lambda7*tau_P(B)
+       <842127/125000=6.737016.                      (GD4)
+
+Thus the complete actual survivor support, both density inequalities,
+and the combined query estimate belong to this single mixed law. There
+is no claim that the mixture retains the original joint entropy budget
+in(GD2).
+The remaining shallow occupied-label contribution still has to be
+controlled under the same nu_hat or another single law satisfying the
+required joint budgets; neither construction settles that step.
+
+For the strict arithmetic in(GD4), x0=53863/8000=6.732875 satisfies
+alpha7*S50(x0)>1 and hence log(Lambda7)<x0. Substitution gives
+
+    A_epsilon=(1-epsilon)*x0+epsilon*(70871/3375)
+                   +Lambda7*tau_P(B)<842127/125000.
+
+The [Gibbs-mixture consumer](../../frontier/cover-geometry/phase_resampling_gibbs.py)
+and [exact bounds](../../frontier/cover-geometry/phase_resampling_gibbs.json)
+consume the pinned alpha7 and reciprocal tail from(PR7). They check the
+Taylor direction, mixture coefficient and strict rational margin;
+the variational and compactness arguments are the ordinary proof above.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_resampling_gibbs.py
 ```
