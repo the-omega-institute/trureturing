@@ -1,0 +1,22 @@
+#### 2.2.11 已有供应、原始来源与本节所证明的边界
+
+紧群矩轨道恢复的直接成熟来源是 Afonso S. Bandeira、Ben Blum-Smith、Joe Kileel、Jonathan Niles-Weed、Amelia Perry、Alexander S. Wein，*Estimation under group actions: recovering orbits from invariants*，[arXiv:1712.10163v4](https://arxiv.org/pdf/1712.10163v4)。固定版本 PDF第11页 Definition 2.4 定义 $T_n(\theta)=\mathbb E_g[(g\cdot\theta)^{\otimes n}]$；同页 Definition 2.5 后明确，第 $n$ 阶矩与全部齐次 $n$ 次不变量的取值包含同一信息。第25页 Proposition 3.39 将对每个轨道的唯一恢复等价于有限维不变量子空间具有分离性；第72页 Theorem A.31 给实不变量环的有限生成，第73页 Theorem A.32 证明紧群的不变量环分离全部轨道。后两项是该文明确归于成熟不变量理论的标准结果；本文直接复用其范围。
+
+其对象对应是 $V=\operatorname{Herm}(d)$ 作为 $d^2$ 维实内积空间，内积为 $\operatorname{Tr}(AB)$，群作用为 $X\mapsto UXU^\dagger$。迹循环性证明这个作用实线性且正交；将无效作用核商去不改变轨道。取 Hermitian 实正交基 $A_j$，映射 $A_{j_1}\otimes_{\mathbb R}\cdots\otimes_{\mathbb R}A_{j_n}\mapsto A_{j_1}\otimes\cdots\otimes A_{j_n}$ 将实矩张量的坐标与 $\operatorname{Herm}(\mathcal H^{\otimes n})$ 的矩阵坐标对应，恰把该文的 $T_n(\rho)$ 送到式(TM.135)的 $P_n(\rho)$。这也说明为什么应使用 Hermitian 实表示：原文第11页脚注对直接采用复向量表示的矩约定另有说明，不能省略共轭后套用。正性与迹一仅把环境实空间限制到群不变的密度态子集，不破坏上述轨道分离结论。
+
+该文第2页 Proposition 1.1 的证明也用到轨道分布及其支撑，但其完整统计任务在第10页 Problem 2.1 定义为独立观测 $y_i=g_i\cdot\theta+\xi_i$，其中各 $g_i$ 独立 Haar、各 $\xi_i$ 独立 Gaussian。这里一批 $n$ 份量子准备共享同一个群参数，实验通过允许的联合效果取得 Born 概率；两种数据取得模型不同。第11页及后续的高噪声样本复杂度、估计器和置信度结论不能未经统计归约直接迁移。原文 Definition 2.3 使用欧氏轨道距离，本节式(TM.146)使用半迹轨道距离；有限维范数拓扑相容，但数值常数仍需另换算，B卷第2.2.12节的精确常数由本文所列量子位计算承担。
+
+仓内归属仍固定在 `237012b49d0d4729a86f7e9dd252d94df1de8dd0`。`docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md` 的外部章节31.9证明（约第10386行）验证三角多项式含常数、共轭封闭与分离点的 Stone–Weierstrass 条件；定理31.11（第10425行起，证明约第10444行）已通过一致稠密和 Riesz 唯一性由全部 Fourier 读数确定圆周测度，脚注约第10577行给出相应 Mathlib 供应。那里的对象是该卷构造的相位及剩余测度坐标；本节把同一成熟测度确定机制用于 $\mathcal D_d$ 上的轨道推前测度，并额外证明其全轨道支撑，没有把不同对象的测度定理当作逐字同一陈述。
+
+`docs/develop/theory/BEDC-WM.md:219` 已明确观察纤维、群轨道和 twirling 像不能通用互换。式(TM.139)没有取消这条边界：它补入全部共同来源有限份数的语言和固定紧群作用，才证明全阶等价恰为轨道。`QUANTUM-REALITY.md` 的假设373.1（第49986—50024行）声明系统与参考为乘积、联合效果与总激发交换及其他辅助资源的归属；定理373.1（第50026—50048行）证明不变参考不能区分相位正负。本节只确定相位轨道，量子位正负纯态本来同轨道，因此并未从不变参考恢复原共同相位。B卷第2.1节关于固定独立参考和新同源样本的区别继续适用。
+
+`D5/S3/QuantumChannels/Pinching.lean:16`、`:30`、`:35` 已有标准基量子位 pinching、幂等与 Hilbert–Schmidt 自伴；`D5/S3/QuantumChannels/PinchingProjection.lean:48`、`:68`、`:104` 已有正交、Pythagoras 与丢失相干量接口。B卷第2.1.8节所列 `Observer/Conditioning`、`DynamicClosureMinimality`、`AllFutureStatisticsSufficiency` 也各自承担一般记录投影、动态闭包或单算子未来统计供应。这些既有模块的已读陈述不自动成为任意 $n$ 的紧轨道定理；本节的普通证明也不冒领已完成新增形式化。定向查重只给出上述命中，不构成全仓无同类结果或全球原创性的认定。
+
+成熟参考系框架来自 S. D. Bartlett、T. Rudolph、R. W. Spekkens，*Reference frames, superselection rules, and quantum information*，Reviews of Modern Physics 79（2007），555，[arXiv:quant-ph/0610030](https://arxiv.org/abs/quant-ph/0610030)，[doi:10.1103/RevModPhys.79.555](https://doi.org/10.1103/RevModPhys.79.555)。原始 TeX 来源为 [arXiv source](https://arxiv.org/src/quant-ph/0610030)：小节 “Lacking a phase reference implies a photon-number superselection rule” 的 `eq:LPNSSR2` 给能量／粒子数 pinching；“A general framework for reference frames and superselection rules” 的 `eq:AveragedState` 与 `eq:GinvariantPOVM2` 给 Haar 平均与不变效果；collective 情形明确共同参考导致同一个变换的张量作用，局部互不相关参考则分别平均。B卷第2.1.9节已给对应固定 PDF 版本的页码与公式锚点。这些内容支撑本节的成熟操作框架；没有据此声称该综述逐字证明了式(TM.139)的全部混态矩轨道结论。
+
+Stone–Weierstrass 的固定源码为 Mathlib 提交 `db584cd6d46c92f209a44c0f1c829460d327499d` 的 [Topology/ContinuousMap/StoneWeierstrass.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/ContinuousMap/StoneWeierstrass.lean)，第401行 `ContinuousMap.starSubalgebra_topologicalClosure_eq_top_of_separatesPoints`：紧空间上分离点的实／复连续函数星子代数稠密。Riesz 唯一性的同版本供应为 [MeasureTheory/Integral/RieszMarkovKakutani/Real.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/RieszMarkovKakutani/Real.lean)，第409—420行的 `MeasureTheory.Measure.ext_of_integral_eq_on_compactlySupported`：两个正则测度对全部紧支撑实连续函数积分相同则测度相同。本节的 $K$ 紧，所以连续函数的支撑均紧，所需条件已在B卷第2.2.2节逐项说明。引用固定源码是复用候选与命题范围核对，不表示本节已经写出或编译了对这些声明的 Lean 应用。
+
+Noetherian 供应为 [Stacks Project，§10.31，tag 00FM](https://stacks.math.columbia.edu/tag/00FM)：该节明确 Noetherian 环的理想有限生成与升链条件等价，Lemma 10.31.1 证明 Noetherian 环上的有限生成环仍 Noetherian，其中包含从系数环到有限变量多项式环的 Hilbert 基定理。B卷第2.2.3节将它作用于固定群作用所给的多项式坐标差；来源没有替本节给显式稳定阶数，更没有将一次相邻平台变成无限后续的证书。
+
+这组结果把离散份数与完整轨道结构接成一条具体关系：增加同源样本可以使更高阶的共同相位关系进入边界；固定有限维群作用下，全部这些区别最终由某个有限阶的完整律承载。与此同时，参考群的闭包、具体表示的谱权重、真实可用效果以及统计取得成本仍各自保留。有限生成性、精确可区分性、实际时间可达性和有限资源可读性由不同命题承担，不能用其中一项替其余项结算。
+

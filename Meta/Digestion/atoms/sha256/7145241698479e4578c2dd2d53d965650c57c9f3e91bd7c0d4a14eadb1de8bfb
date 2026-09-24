@@ -1,0 +1,24 @@
+### 12.1 当前读出与策略读出的共同细化
+
+设 (S) 是同一共同来源的实际配置像，令
+
+$$
+c:S\to C,\qquad p:S\to P
+$$
+
+分别表示当前边界读出和下一步策略（也可以是权限、参考或控制器摘要）。只取实际联合像
+
+$$
+E=\operatorname{ran}(c,p)\subseteq C\times P,\qquad
+e(s)=(c(s),p(s)).
+$$
+
+于是有精确的核恒等式
+
+$$
+\boxed{\ker e=\ker c\cap\ker p.}
+\tag{12.1}
+$$
+
+这里的交集是历史在两份读出上同时相等；它不是把 \(\operatorname{ran}c\) 与 \(\operatorname{ran}p\) 的边缘值任意配成笛卡尔积。仓内 `JointReadoutSupremum.pair_readout_kernel` 对同一事实给出了集合商版本。
+
