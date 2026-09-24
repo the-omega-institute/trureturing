@@ -1131,13 +1131,13 @@ $$
 
 $$
 \mathbb E_{\mathsf U^{\mathrm{path}}_s}[L_{b,s}^+L_{c,s}^+]
-=\pi^\top K_{bc}^{,s}\mathbf1=(1+\mathbb E[bc])^s.
+=\pi^\top K_{bc}^{s}\mathbf1=(1+\mathbb E[bc])^s.
 $$
 
 反向与反向的情形由参考律在路径倒序下不变得到。
 异向内积的矩阵为 $H_{bc}(x,y)=nP_b(x,y)P_c(y,x)$。
 由 (10.2)，其每行之和为 $n(P_bP_c)(x,x)=1$，
-所以 $\pi^\top H_{bc}^{,s}\mathbf1=1$。
+所以 $\pi^\top H_{bc}^{s}\mathbf1=1$。
 这类逐边乘积的矩阵求和与
 [马尔可夫亲和递推](../../../Library/Dynamics/daskalakis2018testing.md)
 采用相同的路径求和步骤；这里的列和、行和恒等式来自共同奇偶结构。
@@ -1442,7 +1442,7 @@ $P_b,P_c\in\mathcal K_d^0$，在正向 $P_c$ 路径律下，
 $(L^{-,\mathrm{path}}_{b,s})_{s\ge0}$ 是非负、均值为一的鞅；
 在反向 $P_c$ 路径律下，$(L^{+,\mathrm{path}}_{b,s})_{s\ge0}$ 具有同一性质。
 两项结论也适用于按样本对增长的独立状态对实验。
-因此，同一方向中预先固定权重的任意有限似然混合，
+因此，同一方向中预先固定非负权重且权重之和为一的任意有限似然混合，
 都是整个相反方向核族下的均值一非负鞅。
 
 对定义 11.1 的单峰族，取 $\overline L_s^\pm=M^{-1}\sum_z L_{b_z,s}^\pm$。
