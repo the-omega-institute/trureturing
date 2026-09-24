@@ -246,26 +246,21 @@ theorem finite_kraus_left_inverse_iff (E : s → Matrix n d ℂ)
       (Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) • (1 : Matrix d d ℂ)) := by
   constructor
   · rintro ⟨r, A, hA, hleft⟩ a b
-    exact left_inverse_normalized_trace_condition E A hA hleft v a b
+    letI : Nonempty d := ⟨v⟩
+    have hn : (Fintype.card d : ℂ) ≠ 0 := by exact_mod_cast Fintype.card_ne_zero
+    let z := ∑ k, star ((A k * E a) v v) * ((A k * E b) v v)
+    have hz : (E a)ᴴ * E b = z • (1 : Matrix d d ℂ) :=
+      left_inverse_error_products E A hA hleft v a b
+    have hc : Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ) = z := by
+      rw [hz, Matrix.trace_smul]
+      simp [hn, smul_eq_mul]
+    rw [hc]
+    exact hz
   · intro hE
     exact scalar_products_construct_left_inverse E hTP v
       (fun a b => Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) hE
 
-/-- The constructed inverse inhabits the repository's canonical all-amplification quantum channel interface. -/
-theorem canonical_recovery_of_scalar_products (E : s → Matrix n d ℂ)
-    (hTP : (∑ a, (E a)ᴴ * E a) = 1) (v : d) (c : Matrix s s ℂ)
-    (hE : ∀ a b, (E a)ᴴ * E b = c a b • (1 : Matrix d d ℂ)) :
-    ∃ recovery : QuantumChannel n d, ∀ X : Matrix d d ℂ,
-      CStarMatrix.ofMatrix.symm
-        (recovery.toCompletelyPositiveMap
-          (CStarMatrix.ofMatrix (∑ a, E a * X * (E a)ᴴ))) = X := by
-  obtain ⟨r, A, hA, hrec⟩ := scalar_products_construct_left_inverse E hTP v c hE
-  obtain ⟨recovery, haction⟩ := finite_kraus_quantum_channel A hA
-  refine ⟨recovery, fun X => ?_⟩
-  rw [haction, hrec]
-
 #print axioms scalar_products_construct_left_inverse
 #print axioms finite_kraus_left_inverse_iff
-#print axioms canonical_recovery_of_scalar_products
 
 end D5.S3.Quantum.Recovery.FiniteKrausReversibility

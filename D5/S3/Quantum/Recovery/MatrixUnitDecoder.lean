@@ -211,24 +211,6 @@ theorem decoder_recovers_commutant_weight (F : d → d → Matrix n n ℂ)
   ext i j
   rw [hd, weighted_pairing F hmul v Q hcomm htrace, hz, Matrix.trace_zero, zero_mul, add_zero]
 
-/-- A normalized logical instrument has an explicit normalized physical realization; the complement is one failure Kraus operator. -/
-theorem represented_instrument_normalized {s : Type*} [Fintype s]
-    (F : d → d → Matrix n n ℂ)
-    (hmul : ∀ i j k l, F i j * F k l = if j = k then F i l else 0)
-    (hstar : ∀ i j, (F i j)ᴴ = F j i)
-    (L : s → Matrix d d ℂ) (hL : (∑ a, (L a)ᴴ * L a) = 1) :
-    (∑ a, (representedMatrix F (L a))ᴴ * representedMatrix F (L a)) +
-      (1 - unitSupport F)ᴴ * (1 - unitSupport F) = (1 : Matrix n n ℂ) := by
-  obtain ⟨hP, hPP⟩ := unit_support_projection F hmul hstar
-  have hnorm : (∑ a, (representedMatrix F (L a))ᴴ * representedMatrix F (L a)) =
-      unitSupport F := by
-    simp_rw [represented_matrix_star F hstar, represented_matrix_mul F hmul]
-    rw [← represented_sum, hL, represented_one]
-  rw [hnorm]
-  simp only [Matrix.conjTranspose_sub, Matrix.conjTranspose_one, hP,
-    Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one, hPP]
-  abel
-
 #print axioms unit_support_projection
 #print axioms unit_support_action
 #print axioms decoder_kraus_gram
@@ -239,6 +221,4 @@ theorem represented_instrument_normalized {s : Type*} [Fintype s]
 #print axioms represented_matrix_mul
 #print axioms represented_matrix_star
 #print axioms decoder_recovers_commutant_weight
-#print axioms represented_instrument_normalized
-
 end D5.S3.Quantum.Recovery.MatrixUnitDecoder

@@ -140,27 +140,6 @@ theorem computed_recovery_of_kraus_left_inverse (E : s → Matrix n d ℂ)
   simp_rw [hterm]
   rw [← Matrix.sum_mul, hTP, Matrix.one_mul]
 
-/-- Under the scalar criterion the same canonical channel has the computed formula and is an exact left inverse. -/
-theorem canonical_spectral_left_inverse (E : s → Matrix n d ℂ)
-    (hTP : (∑ a, (E a)ᴴ * E a) = 1) (v : d)
-    (hE : ∀ a b, (E a)ᴴ * E b =
-      (Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ)) • (1 : Matrix d d ℂ)) :
-    ∃ recovery : QuantumChannel n d,
-      (∀ Y : Matrix n n ℂ, CStarMatrix.ofMatrix.symm
-        (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix Y)) = spectralRecoveryAction E v Y) ∧
-      (∀ X : Matrix d d ℂ, CStarMatrix.ofMatrix.symm
-        (recovery.toCompletelyPositiveMap
-          (CStarMatrix.ofMatrix (∑ a, E a * X * (E a)ᴴ))) = X) := by
-  obtain ⟨r, A, hA, hleft⟩ := (finite_kraus_left_inverse_iff E hTP v).mpr hE
-  obtain ⟨recovery, hr⟩ := spectral_transpose_candidate E v
-  have haction : ∀ Y : Matrix n n ℂ, CStarMatrix.ofMatrix.symm
-      (recovery.toCompletelyPositiveMap (CStarMatrix.ofMatrix Y)) = spectralRecoveryAction E v Y := by
-    intro Y
-    simpa only [spectralRecoveryAction] using hr Y
-  refine ⟨recovery, haction, fun X => ?_⟩
-  rw [haction]
-  exact computed_recovery_of_kraus_left_inverse E hTP A hA hleft v X
-
 /-- The normalized-trace scalar criterion is equivalent to exactness of the computed spectral formula, completing the three-way finite-Kraus criterion. -/
 theorem scalar_condition_iff_spectral_left_inverse (E : s → Matrix n d ℂ)
     (hTP : (∑ a, (E a)ᴴ * E a) = 1) (v : d) :
@@ -198,11 +177,20 @@ theorem scalar_condition_iff_spectral_left_inverse (E : s → Matrix n d ℂ)
         (∑ b, G b * (∑ a, E a * X * (E a)ᴴ) * (G b)ᴴ) = X := by
       intro X
       rw [hGaction, hspec]
-    exact fun a b => left_inverse_normalized_trace_condition E G hG hleft v a b
+    intro a b
+    letI : Nonempty d := ⟨v⟩
+    have hn : (Fintype.card d : ℂ) ≠ 0 := by exact_mod_cast Fintype.card_ne_zero
+    let z := ∑ k, star ((G k * E a) v v) * ((G k * E b) v v)
+    have hz : (E a)ᴴ * E b = z • (1 : Matrix d d ℂ) :=
+      left_inverse_error_products E G hG hleft v a b
+    have hc : Matrix.trace ((E a)ᴴ * E b) / (Fintype.card d : ℂ) = z := by
+      rw [hz, Matrix.trace_smul]
+      simp [hn, smul_eq_mul]
+    rw [hc]
+    exact hz
 
 #print axioms left_inverse_observable_intertwines
 #print axioms computed_recovery_of_kraus_left_inverse
-#print axioms canonical_spectral_left_inverse
 #print axioms scalar_condition_iff_spectral_left_inverse
 
 end D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness

@@ -14,8 +14,7 @@ internal sealed class KrausCompletionDocument : IScribeDocumentDefinition
                 "row_reset_action",
                 "complete_kraus_normalised",
                 "complete_kraus_action",
-                "complete_quantum_channel",
-                "reset_compressed_instrument"
+                "complete_quantum_channel"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/KrausCompletion." + name),

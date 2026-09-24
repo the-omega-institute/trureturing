@@ -87,26 +87,7 @@ theorem orthogonal_syndrome_recovery (S : s → Matrix n d ℂ)
     decoding_syndrome_block S hS rho]
   simp [smul_ite, Matrix.trace, Matrix.diag_apply, Finset.sum_smul]
 
-/-- Logical unitary transport within each syndrome preserves orthogonality.
-This constructs the corrected decoding frame for a known syndrome history. -/
-theorem syndrome_transport_orthogonal (S : s → Matrix n d ℂ)
-    (hS : OrthogonalSyndromes S) (V : s → Matrix d d ℂ)
-    (hV : ∀ i, (V i)ᴴ * V i = 1) :
-    OrthogonalSyndromes (fun i => S i * V i) := by
-  intro i j
-  calc
-    (S i * V i)ᴴ * (S j * V j) =
-        (V i)ᴴ * ((S i)ᴴ * S j) * V j := by
-      simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
-    _ = if i = j then 1 else 0 := by
-      rw [hS i j]
-      by_cases hij : i = j
-      · subst j
-        simpa using hV i
-      · simp [hij]
-
 #print axioms decoding_syndrome_block
 #print axioms orthogonal_syndrome_recovery
-#print axioms syndrome_transport_orthogonal
 
 end D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding

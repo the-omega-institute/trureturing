@@ -12,7 +12,6 @@ internal sealed class SpectralRecoveryCorrectnessDocument : IScribeDocumentDefin
         {
             "left_inverse_observable_intertwines",
             "computed_recovery_of_kraus_left_inverse",
-            "canonical_spectral_left_inverse",
             "scalar_condition_iff_spectral_left_inverse"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),

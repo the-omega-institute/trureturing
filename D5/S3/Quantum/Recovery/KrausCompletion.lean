@@ -138,29 +138,10 @@ theorem complete_quantum_channel (K : s → Matrix b a ℂ) (P : Matrix a a ℂ)
   refine ⟨channel, fun X => ?_⟩
   rw [hc X, complete_kraus_action K P v hP hPP]
 
-/-- A zero-leakage hypothesis is not needed for an explicit reset completion of a compressed instrument. -/
-theorem reset_compressed_instrument
-    {n d m e : Type*} [Fintype n] [DecidableEq n]
-    [Fintype d] [DecidableEq d] [Fintype m] [DecidableEq m]
-    [Fintype e] [DecidableEq e]
-    (U : Matrix n d ℂ) (W : Matrix m e ℂ)
-    (hU : Uᴴ * U = 1) (hW : Wᴴ * W = 1)
-    (K : s → Matrix m n ℂ) (hK : (∑ i, (K i)ᴴ * K i) = 1) (v : e) :
-    let T : s ⊕ (s × m) → Matrix e d ℂ := Sum.elim
-      (fun i => Wᴴ * (K i * U))
-      (fun j => rowReset v (normal W (K j.1 * U)) j.2)
-    (∑ i, (T i)ᴴ * T i) = 1 := by
-  dsimp only
-  simp only [Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr,
-    Fintype.sum_prod_type]
-  simp_rw [row_reset_gram]
-  exact instrument_mass_balance U W hU hW K hK
-
 #print axioms row_reset_gram
 #print axioms row_reset_action
 #print axioms complete_kraus_normalised
 #print axioms complete_kraus_action
 #print axioms complete_quantum_channel
-#print axioms reset_compressed_instrument
 
 end D5.S3.Quantum.Recovery.KrausCompletion
