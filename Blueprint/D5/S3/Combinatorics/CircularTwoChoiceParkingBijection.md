@@ -44,9 +44,23 @@ Lean statement: `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.fixedFibe
 
 *Commentary.*
 
-For every natural n, every per-car increment matrix, and every vacancy j, this is the composition of fixedFiberOneChoiceEquiv with oneChoiceClassicalEquiv. Its forward map performs orbit normalization and then cuts at j. Its inverse uncuts a classical parking function, reverses the normalization, and reconstructs each literal ordered pair. Both equivalence laws are inherited from those explicit two-sided constructions. For the source's range n >= 1, this is the canonical bijection requested for every fixed increment class and prescribed vacancy.
+For every natural n, every per-car increment matrix, and every vacancy j, this is the composition of fixedFiberOneChoiceEquiv with oneChoiceClassicalEquiv. Its forward map performs orbit normalization and then cuts at j. Its inverse uncuts a classical parking function, reverses the normalization, and reconstructs each literal ordered pair. Both equivalence laws are inherited from those explicit two-sided constructions. This definition remains the explicit map and inverse used by the source-level settlement.
 
-**Definition 1.4 (The auxiliary global observable equivalence).**
+**Theorem 1.4 (Every source-level fixed fiber is bijective).**
+
+Lean statement: `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Asma Recioui, Hacène Belbachir, Abdelhakim Ait-Zai (2026). *Circular s-choice parking functions: an exact closed formula via rotational symmetry*. DOI: [10.48550/arXiv.2609.23607](https://doi.org/10.48550/arXiv.2609.23607). URL: <https://arxiv.org/html/2609.23607v1>.
+
+*Commentary.*
+
+For every n with 1 <= n, every per-car increment matrix with entries in 1 through n, and every vacancy j, fixedFiberEquiv n increments j is bijective. The theorem certifies the exact explicit equivalence above, so its surjectivity and injectivity retain the orbit normalization, vacancy cut and uncut maps, and both proved inverse laws. This is the sole typed settlement of the paper's fixed-increment, fixed-vacancy problem.
+
+**Definition 1.5 (The auxiliary global observable equivalence).**
 
 Lean statement: `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.globalParkingEquiv`
 
@@ -66,4 +80,5 @@ For n with hypothesis 1 <= n, every literal actual preference is equivalent to a
 - Truth anchor: `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.fixedFiberEquiv`
 - Truth anchor: `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.globalParkingEquiv`
 - Truth anchor: `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.oneChoiceClassicalEquiv`
+- Truth anchor: `D5/S3/Combinatorics/CircularTwoChoiceParkingBijection.result`
 - Dependency: [D5/S3/Combinatorics/CircularTwoChoiceParkingOperational](CircularTwoChoiceParkingOperational.md)

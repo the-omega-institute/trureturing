@@ -212,6 +212,11 @@ def fixedFiberEquiv (n : Nat) (increments : IncrementMatrix n) (j : Spot n) :
     FixedActualFiber n increments j ≃ ClassicalPF n :=
   (fixedFiberOneChoiceEquiv increments j).trans (oneChoiceClassicalEquiv n j)
 
+/-- The source-level fixed-increment, fixed-vacancy bijectivity statement. -/
+theorem result (n : Nat) (hn : 1 <= n) (increments : IncrementMatrix n) (j : Spot n) :
+    Function.Bijective (fixedFiberEquiv n increments j) :=
+  (fixedFiberEquiv n increments j).bijective
+
 /-- The observable global product: the classical parking function, every
 original increment, and the actual process's unique empty spot. -/
 def globalParkingEquiv (n : Nat) (_hn : 1 <= n) :
@@ -285,6 +290,7 @@ end GenericConsumer
 #print axioms fixedFiberOneChoiceEquiv
 #print axioms oneChoiceClassicalEquiv
 #print axioms fixedFiberEquiv
+#print axioms result
 #print axioms globalParkingEquiv
 
 end D5.S3.Combinatorics.CircularTwoChoiceParkingBijection

@@ -37,8 +37,16 @@ internal sealed class CircularTwoChoiceParkingBijectionDocument
                     + "map performs orbit normalization and then cuts at j. Its inverse uncuts a "
                     + "classical parking function, reverses the normalization, and reconstructs each "
                     + "literal ordered pair. Both equivalence laws are inherited from those explicit "
-                    + "two-sided constructions. For the source's range n >= 1, this is the canonical "
-                    + "bijection requested for every fixed increment class and prescribed vacancy."),
+                    + "two-sided constructions. This definition remains the explicit map and inverse "
+                    + "used by the source-level settlement."),
+            Theorem("fixed-fiber-bijectivity-result", "Every source-level fixed fiber is bijective",
+                "result",
+                "For every n with 1 <= n, every per-car increment matrix with entries in 1 through n, "
+                    + "and every vacancy j, fixedFiberEquiv n increments j is bijective. The theorem "
+                    + "certifies the exact explicit equivalence above, so its surjectivity and injectivity "
+                    + "retain the orbit normalization, vacancy cut and uncut maps, and both proved inverse "
+                    + "laws. This is the sole typed settlement of the paper's fixed-increment, "
+                    + "fixed-vacancy problem."),
             Node("global-observable-equivalence", "The auxiliary global observable equivalence",
                 "globalParkingEquiv",
                 "For n with hypothesis 1 <= n, every literal actual preference is equivalent to a "
@@ -64,4 +72,17 @@ internal sealed class CircularTwoChoiceParkingBijectionDocument
             AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))),
             DescribeRole.Definition);
+
+    private static DocumentBlock Theorem(
+        string id,
+        string title,
+        string declaration,
+        string prose) => Describe.Lean(
+            DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + declaration),
+            H(title),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))),
+            DescribeRole.Theorem);
 }
