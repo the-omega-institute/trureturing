@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Nonnegative involution factors yield an exact one-step exchange
-     with a matching lower bound. -/
+   digest: Nonnegative involution factors yield an exact one-step exchange with a matching lower bound. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedGroupOverlap
 import D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange
