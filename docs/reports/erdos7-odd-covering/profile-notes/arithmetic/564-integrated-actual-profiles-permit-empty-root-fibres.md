@@ -789,10 +789,10 @@ at least
       =0.00472644343391005...>0.                              (IP31)
 
 No query bound after this final conditioning is asserted. The same exact
-calculation at n=4 gives source mass after the outside charge
+calculation at n=4 gives a source-mass lower bound after the outside charge
 0.23422374465768897 and query bound9.421685949846331. At n=2 the defining
 construction still makes sense, with the shifted singleton7 branch empty;
-the charge leaves only0.12551894750218565 and gives query bound
+the resulting source-mass lower bound is0.12551894750218565, giving query bound
 13.25105580856838, so this certificate fails there. This failure says
 nothing about existence of a covering or success of another estimate.
 These are specific finite cores; no claim of success for all core heights
