@@ -1,0 +1,486 @@
+[
+  {
+    "bound": {
+      "source_radius": "0",
+      "residual_radius": "1/1000",
+      "single_actual_capacity_budget_upper": "1/1000",
+      "coefficients": {
+        "delta": "0",
+        "wrong_root_price": "2",
+        "shallow5_price": "5",
+        "shallow15_price": "5",
+        "carrier_error": "0",
+        "P_coefficients": [
+          "1",
+          "2",
+          "1",
+          "2",
+          "0",
+          "1"
+        ],
+        "Q_coefficients": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "1",
+          "1"
+        ],
+        "shallow_coefficients": [
+          [
+            "1",
+            "2",
+            "1",
+            "2",
+            "0",
+            "1"
+          ],
+          [
+            "1",
+            "2",
+            "1",
+            "2",
+            "0",
+            "1"
+          ],
+          [
+            "91/9",
+            "5",
+            "0",
+            "0",
+            "1",
+            "1"
+          ],
+          [
+            "10",
+            "5",
+            "0",
+            "0",
+            "0",
+            "1"
+          ]
+        ],
+        "shallow_drifts": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "joint_defect_prices": {
+          "E5": "244/9",
+          "E15": "24",
+          "E5d": "7",
+          "E15d": "14",
+          "E3": "9",
+          "omega": "17"
+        },
+        "maximum_defect_price": "244/9",
+        "axis_linear_delta_coefficients": [
+          "121/729",
+          "65104/9765625"
+        ],
+        "axis_defect_multipliers": [
+          5,
+          8
+        ],
+        "axis_complete_remainder_constants": [
+          "1/9720",
+          "17/234375000"
+        ]
+      },
+      "complete_zero7_error_upper": "258321001/9492187500",
+      "coarse_old49_replacement_reserve_lower": "43720531/2373046875",
+      "old49_replacement_reserve_lower": "43720531/2373046875",
+      "sharp_affine_support_gain": "0",
+      "identity_margin_lower": "4514217373/18984375000",
+      "old49_margin_upper": "10661/48600",
+      "favorable_actual_residual_margin_coefficient": "5"
+    },
+    "complete_tail_and_dual_checks": [
+      {
+        "defects": {
+          "E5": "0",
+          "E15": "0",
+          "E5d": "0",
+          "E15d": "0",
+          "E3": "0",
+          "omega": "0"
+        },
+        "shallow_clipped_errors": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "complete_axes": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "cap_coefficient": "9/20",
+            "drift_coefficient": "0",
+            "residual_error": "0",
+            "first_clipped_depth": null,
+            "unclipped_depths": 0,
+            "finite_part": "0",
+            "complete_remainder": "0",
+            "value": "0"
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "cap_coefficient": "17/30",
+            "drift_coefficient": "0",
+            "residual_error": "0",
+            "first_clipped_depth": null,
+            "unclipped_depths": 0,
+            "finite_part": "0",
+            "complete_remainder": "0",
+            "value": "0"
+          }
+        ],
+        "axis_dual_uppers": [
+          "1/9720",
+          "17/234375000"
+        ],
+        "complete_vector_error": "0",
+        "joint_dual_upper": "258321001/9492187500"
+      },
+      {
+        "defects": {
+          "E5": "1/1000",
+          "E15": "0",
+          "E5d": "0",
+          "E15d": "0",
+          "E3": "0",
+          "omega": "0"
+        },
+        "shallow_clipped_errors": [
+          "1/1000",
+          "1/1000",
+          "91/9000",
+          "1/100"
+        ],
+        "complete_axes": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "cap_coefficient": "9/20",
+            "drift_coefficient": "0",
+            "residual_error": "1/1000",
+            "first_clipped_depth": 6,
+            "unclipped_depths": 3,
+            "finite_part": "3/1000",
+            "complete_remainder": "1/1080",
+            "value": "53/13500"
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "cap_coefficient": "17/30",
+            "drift_coefficient": "0",
+            "residual_error": "0",
+            "first_clipped_depth": null,
+            "unclipped_depths": 0,
+            "finite_part": "0",
+            "complete_remainder": "0",
+            "value": "0"
+          }
+        ],
+        "axis_dual_uppers": [
+          "31/6075",
+          "17/234375000"
+        ],
+        "complete_vector_error": "703/27000",
+        "joint_dual_upper": "258321001/9492187500"
+      },
+      {
+        "defects": {
+          "E5": "0",
+          "E15": "1/1000",
+          "E5d": "0",
+          "E15d": "0",
+          "E3": "0",
+          "omega": "0"
+        },
+        "shallow_clipped_errors": [
+          "1/500",
+          "1/500",
+          "1/200",
+          "1/200"
+        ],
+        "complete_axes": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "cap_coefficient": "9/20",
+            "drift_coefficient": "0",
+            "residual_error": "1/500",
+            "first_clipped_depth": 5,
+            "unclipped_depths": 2,
+            "finite_part": "1/250",
+            "complete_remainder": "1/360",
+            "value": "61/9000"
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "cap_coefficient": "17/30",
+            "drift_coefficient": "0",
+            "residual_error": "0",
+            "first_clipped_depth": null,
+            "unclipped_depths": 0,
+            "finite_part": "0",
+            "complete_remainder": "0",
+            "value": "0"
+          }
+        ],
+        "axis_dual_uppers": [
+          "491/48600",
+          "17/234375000"
+        ],
+        "complete_vector_error": "187/9000",
+        "joint_dual_upper": "258321001/9492187500"
+      },
+      {
+        "defects": {
+          "E5": "0",
+          "E15": "0",
+          "E5d": "1/1000",
+          "E15d": "0",
+          "E3": "0",
+          "omega": "0"
+        },
+        "shallow_clipped_errors": [
+          "1/1000",
+          "1/1000",
+          "0",
+          "0"
+        ],
+        "complete_axes": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "cap_coefficient": "9/20",
+            "drift_coefficient": "0",
+            "residual_error": "1/1000",
+            "first_clipped_depth": 6,
+            "unclipped_depths": 3,
+            "finite_part": "3/1000",
+            "complete_remainder": "1/1080",
+            "value": "53/13500"
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "cap_coefficient": "17/30",
+            "drift_coefficient": "0",
+            "residual_error": "0",
+            "first_clipped_depth": null,
+            "unclipped_depths": 0,
+            "finite_part": "0",
+            "complete_remainder": "0",
+            "value": "0"
+          }
+        ],
+        "axis_dual_uppers": [
+          "31/6075",
+          "17/234375000"
+        ],
+        "complete_vector_error": "4/675",
+        "joint_dual_upper": "258321001/9492187500"
+      },
+      {
+        "defects": {
+          "E5": "0",
+          "E15": "0",
+          "E5d": "0",
+          "E15d": "1/1000",
+          "E3": "0",
+          "omega": "0"
+        },
+        "shallow_clipped_errors": [
+          "1/500",
+          "1/500",
+          "0",
+          "0"
+        ],
+        "complete_axes": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "cap_coefficient": "9/20",
+            "drift_coefficient": "0",
+            "residual_error": "1/500",
+            "first_clipped_depth": 5,
+            "unclipped_depths": 2,
+            "finite_part": "1/250",
+            "complete_remainder": "1/360",
+            "value": "61/9000"
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "cap_coefficient": "17/30",
+            "drift_coefficient": "0",
+            "residual_error": "0",
+            "first_clipped_depth": null,
+            "unclipped_depths": 0,
+            "finite_part": "0",
+            "complete_remainder": "0",
+            "value": "0"
+          }
+        ],
+        "axis_dual_uppers": [
+          "491/48600",
+          "17/234375000"
+        ],
+        "complete_vector_error": "97/9000",
+        "joint_dual_upper": "258321001/9492187500"
+      },
+      {
+        "defects": {
+          "E5": "0",
+          "E15": "0",
+          "E5d": "0",
+          "E15d": "0",
+          "E3": "1/1000",
+          "omega": "0"
+        },
+        "shallow_clipped_errors": [
+          "0",
+          "0",
+          "1/1000",
+          "0"
+        ],
+        "complete_axes": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "cap_coefficient": "9/20",
+            "drift_coefficient": "0",
+            "residual_error": "0",
+            "first_clipped_depth": null,
+            "unclipped_depths": 0,
+            "finite_part": "0",
+            "complete_remainder": "0",
+            "value": "0"
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "cap_coefficient": "17/30",
+            "drift_coefficient": "0",
+            "residual_error": "1/1000",
+            "first_clipped_depth": 4,
+            "unclipped_depths": 2,
+            "finite_part": "1/500",
+            "complete_remainder": "17/15000",
+            "value": "47/15000"
+          }
+        ],
+        "axis_dual_uppers": [
+          "1/9720",
+          "1875017/234375000"
+        ],
+        "complete_vector_error": "31/7500",
+        "joint_dual_upper": "258321001/9492187500"
+      },
+      {
+        "defects": {
+          "E5": "0",
+          "E15": "0",
+          "E5d": "0",
+          "E15d": "0",
+          "E3": "0",
+          "omega": "1/1000"
+        },
+        "shallow_clipped_errors": [
+          "1/1000",
+          "1/1000",
+          "1/1000",
+          "1/1000"
+        ],
+        "complete_axes": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "cap_coefficient": "9/20",
+            "drift_coefficient": "0",
+            "residual_error": "1/1000",
+            "first_clipped_depth": 6,
+            "unclipped_depths": 3,
+            "finite_part": "3/1000",
+            "complete_remainder": "1/1080",
+            "value": "53/13500"
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "cap_coefficient": "17/30",
+            "drift_coefficient": "0",
+            "residual_error": "1/1000",
+            "first_clipped_depth": 4,
+            "unclipped_depths": 2,
+            "finite_part": "1/500",
+            "complete_remainder": "17/15000",
+            "value": "47/15000"
+          }
+        ],
+        "axis_dual_uppers": [
+          "31/6075",
+          "1875017/234375000"
+        ],
+        "complete_vector_error": "1493/135000",
+        "joint_dual_upper": "258321001/9492187500"
+      },
+      {
+        "defects": {
+          "E5": "1/6000",
+          "E15": "1/6000",
+          "E5d": "1/6000",
+          "E15d": "1/6000",
+          "E3": "1/6000",
+          "omega": "1/6000"
+        },
+        "shallow_clipped_errors": [
+          "7/6000",
+          "7/6000",
+          "77/27000",
+          "1/375"
+        ],
+        "complete_axes": [
+          {
+            "prime": 3,
+            "first_depth": 3,
+            "cap_coefficient": "9/20",
+            "drift_coefficient": "0",
+            "residual_error": "7/6000",
+            "first_clipped_depth": 6,
+            "unclipped_depths": 3,
+            "finite_part": "7/2000",
+            "complete_remainder": "1/1080",
+            "value": "239/54000"
+          },
+          {
+            "prime": 5,
+            "first_depth": 2,
+            "cap_coefficient": "17/30",
+            "drift_coefficient": "0",
+            "residual_error": "1/3000",
+            "first_clipped_depth": 5,
+            "unclipped_depths": 3,
+            "finite_part": "1/1000",
+            "complete_remainder": "17/75000",
+            "value": "23/18750"
+          }
+        ],
+        "axis_dual_uppers": [
+          "577/97200",
+          "208339/78125000"
+        ],
+        "complete_vector_error": "6077/450000",
+        "joint_dual_upper": "258321001/9492187500"
+      }
+    ]
+  }
+]

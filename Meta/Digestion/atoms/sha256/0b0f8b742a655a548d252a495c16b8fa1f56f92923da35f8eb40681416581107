@@ -1,0 +1,14 @@
+**theorem 52.14 (无限赋值与精确零和的边界).** 对每个素数 $p$，$(\infty,\infty,\infty)\notin J_p$。恰有两个无限坐标时，可实现的三元组恰为 $(\delta_p,\infty,\infty)$ 的各个排列。恰有一个无限坐标时，其余两个有限坐标的无序模式恰为
+$$
+\begin{cases}
+\{1,k\},\quad k\ge2,&p=2,\\
+\{0,k\},\quad k\ge1,&p=3,\\
+\{0,k\},\quad k\ge0,&p\ge5.
+\end{cases}
+$$
+全局特别有
+$$
+(A,0_I,0_I)\in\mathcal J\quad\Longleftrightarrow\quad A=D,
+\qquad (0_I,0_I,0_I)\notin\mathcal J.
+$$
+

@@ -11,8 +11,7 @@ internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid,
 
 internal sealed record CheckArguments(
     string? ProtectedBase,
-    string? CandidateLeanReport,
-    string? TestMapCacheRoot);
+    string? CandidateLeanReport);
 
 internal sealed class AdmissionCheckTiming(TimeProvider timeProvider, bool enabled = true)
 {
@@ -280,8 +279,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
     {
         var timing = new AdmissionCheckTiming(timeProvider);
-        ScribeTestMapStore? testMapStore = null;
-        string? cacheSetupOutcome = null;
+        ImmutableArray<Diagnostic> planeObservations = [];
         try
         {
             var repositoryPhase = timing.Measure(
@@ -310,13 +308,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 return new AdmissionOutcome.InfrastructureFailure(
                     "check requires --candidate-lean-report FILE");
             }
-            if (options.TestMapCacheRoot is not null)
-            {
-                testMapStore = TryCreateTestMapStore(
-                    options.TestMapCacheRoot,
-                    out cacheSetupOutcome);
-            }
-
             var rawSnapshots = timing.Measure(
                 "repository-read",
                 () => (
@@ -326,7 +317,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",
-                () => EvaluateAdmissionPlane(currentRaw, baselineRaw, prepared.Changes),
+                () => EvaluateAdmissionPlane(currentRaw, baselineRaw, prepared.Changes, out planeObservations),
                 static result => result is not null);
             if (admissionPlane is not null)
             {
@@ -355,34 +346,18 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                     current,
                     candidateLeanReport,
                     prepared.Changes));
-            return SnapshotAdmissionCore.Evaluate(
+            return WithAdmissionPlaneObservations(SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
                 candidateLeanReport,
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
-                timing,
-                testMapStore,
-                DeriveTestMap).Outcome;
+                timing).Outcome, planeObservations);
         }
         catch (Exception exception)
         {
-            return new AdmissionOutcome.InfrastructureFailure(exception.Message);
-        }
-        finally
-        {
-            if (cacheSetupOutcome is not null)
-            {
-                WriteTestMapCacheEvent(string.Empty, cacheSetupOutcome);
-            }
-            if (testMapStore is not null)
-            {
-                foreach (var cacheEvent in testMapStore.Events)
-                {
-                    WriteTestMapCacheEvent(cacheEvent.InputDigest, cacheEvent.Outcome);
-                }
-            }
+            return WithAdmissionPlaneObservations(new AdmissionOutcome.InfrastructureFailure(exception.Message), planeObservations);
         }
     }
 
@@ -395,9 +370,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 return new CommandResult(false, string.Empty, "USAGE: StrataLint selftest\n");
             }
 
-            var registry = LoadRegistry();
+            var fileMap = LoadPolicy();
             var probe = new ManifestSyntax("D5", "F", "Carrier", "Probe", "G", string.Empty, "lean", string.Empty, null);
-            var route = RouteEngine.Route(registry.Policy, probe);
+            var route = RouteEngine.Route(fileMap.Policy, probe);
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
@@ -426,8 +401,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                     .Select(static item => $"{item.Id.Value}:{item.DeferredCase?.Value}")
                     .Order(StringComparer.Ordinal));
             var output = "SELFTEST PASS\n"
-                + $"CANONICAL_REGISTRY {registry.Policy.RegistrySha256}\n"
-                + $"CANONICAL_DOMAINS {registry.Policy.DomainsSha256}\n"
+                + $"CANONICAL_FILEMAP {fileMap.Policy.FileMapSha256}\n"
+                + $"CANONICAL_DOMAINS {fileMap.Policy.DomainsSha256}\n"
                 + "GOVERNANCE tower=pass banned-api=pass banned-symbols=pass tools-namespace=pass\n"
                 + $"RULES {rules}\n"
                 + $"DEFERRED {deferred}\n";
@@ -484,16 +459,12 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public CommandResult Worktree(IReadOnlyList<string> arguments) =>
         WorktreeCommand.Run(repositoryRoot, arguments);
 
-    private RegistryLoadOutcome.Accepted LoadRegistry()
+    private PolicyLoadOutcome.Accepted LoadPolicy()
     {
-        var registryPath = Path.Combine(repositoryRoot, "Meta", "registry.yaml");
-        var domainsPath = Path.Combine(repositoryRoot, "Meta", "domains.yaml");
-        var outcome = RegistryLoader.Load(
-            File.ReadAllBytes(registryPath),
-            File.ReadAllBytes(domainsPath));
-        return outcome is RegistryLoadOutcome.Accepted accepted
+        var outcome = RepositoryPolicyLoader.LoadRepository(repositoryRoot);
+        return outcome is PolicyLoadOutcome.Accepted accepted
             ? accepted
-            : throw new InvalidOperationException(((RegistryLoadOutcome.InfrastructureFailure)outcome).Message);
+            : throw new InvalidOperationException(((PolicyLoadOutcome.InfrastructureFailure)outcome).Message);
     }
 
     private byte[] ReadRepositoryFile(string relativePath)
@@ -517,7 +488,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     {
         string? protectedBase = null;
         string? candidateLeanReport = null;
-        string? testMapCacheRoot = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -529,7 +499,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             {
                 "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
-                "--test-map-cache-root" when testMapCacheRoot is null => 2,
                 _ => throw CheckUsage(),
             };
             switch (target)
@@ -540,22 +509,15 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 case 1:
                     candidateLeanReport = arguments[index + 1];
                     break;
-                case 2:
-                    if (string.IsNullOrWhiteSpace(arguments[index + 1]))
-                    {
-                        throw CheckUsage();
-                    }
-                    testMapCacheRoot = arguments[index + 1];
-                    break;
             }
         }
 
-        return new CheckArguments(protectedBase, candidateLeanReport, testMapCacheRoot);
+        return new CheckArguments(protectedBase, candidateLeanReport);
     }
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "[--test-map-cache-root DIR] --candidate-lean-report FILE");
+        + "--candidate-lean-report FILE");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

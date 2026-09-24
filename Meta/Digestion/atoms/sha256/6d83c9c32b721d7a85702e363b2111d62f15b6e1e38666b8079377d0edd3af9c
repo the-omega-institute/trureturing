@@ -1,0 +1,14 @@
+**Proof.** The sequence $(\mu_{\sigma^{-1}(k)})_{0\le k<N}$ is a permutation of the cell masses, so its sum is one. Its first $\lfloor N/h\rfloor$ disjoint blocks of length $h$ have total mass at most one. One of them has mass at most $1/\lfloor N/h\rfloor$, proving the first bound. If $N=qh+r_0$ with $0\le r_0<h$, then
+$$
+N-h+1=(q-1)h+r_0+1\le qh,
+$$
+which proves the second bound.
+
+The set $\mathcal G_\theta$ is countable, whereas $(0,\mu_{\min})$ is a nonempty interval, so the stated $\delta$ exists and can be fixed before choosing $p,n,B$. For $j=r+u\in B$,
+$$
+x+j\theta=\delta+(a+u)\theta.
+$$
+Since $0\le a+u<N$ and $0<\delta<\mu_{\min}$, this point lies strictly inside the cell immediately to the right of $t_{a+u}$. These are $h$ distinct cells, and their stationary mass is precisely $\beta_h$. The observation law assigns their union probability at least $\Pr(J\in B)$. Testing variation on that union proves the bound with the displayed actual starting point. Substituting the central-block probability proves the remaining estimates. Finally, an integer rotation of $\delta\notin\mathcal G_\theta$ cannot enter $\mathcal G_\theta$.
+
+For $t>1$, Chebyshev's lower bound is positive when $s>0$, so $B_t$ is nonempty; when $s=0$, it contains the deterministic value of $J$. Thus no empty central-block case has been suppressed. $\square$
+

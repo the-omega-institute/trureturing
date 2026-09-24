@@ -1,0 +1,8 @@
+**假设 26.4（独立的受迫三维存在来源）。** 本节的流体应用仅以 OpenAI, *Finite time blowup for Navier–Stokes*，[166页论文](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf) Theorem 1.1 的下述结论为外部前提：对每个 $\nu>0$，存在 $f\in C_c^\infty(\mathbb R^3\times(0,\infty);\mathbb R^3)$、共同紧空间支撑 $K$ 及 $[0,1)$ 上光滑 $u,p$，满足受迫不可压缩 Navier–Stokes 方程、$u(0)=0$，且
+$$
+E_0:=\sup_{0\le t<1}\|u(t)\|_{L^2(\mathbb R^3)}<\infty,
+\qquad \limsup_{t\uparrow1}\|u(t)\|_{L^\infty(\mathbb R^3)}=+\infty.
+\tag{26.103}
+$$
+每个空间切片的速度支撑于同一 $K$。其竞争解结论对应官方 C，周期化结论对应 D；这是受迫命题，不是无外力爆破。相关明确版本为官方仓库提交 `f9e8bc5b38b6e212696e8a30e3e91517af887bbd` 的 [R3 问题陈述](https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/ProblemStatement.lean)、[Theorem](https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/Theorem.lean)、[ComparatorR3Theorem](https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ComparatorR3Theorem.lean) 与 [ComparatorTheorem](https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ComparatorTheorem.lean)。这些引用不等于本卷独立完成其全依赖内核核验；以下是以（26.103）为前提的普通数学推论。[Clay 2026-09-11 公告](https://www.claymath.org/news/navier-stokes-announcement/)使用 “has apparently been settled” 并保留后续评价程序，不将它写成最终评奖认定。第25节的平面周期解不承担本假设。
+

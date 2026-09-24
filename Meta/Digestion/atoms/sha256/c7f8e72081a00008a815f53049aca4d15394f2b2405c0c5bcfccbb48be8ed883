@@ -1,0 +1,10 @@
+**定义 17（强保域同余）。** $\theta$ 是 $X$ 上的等价关系；对任意 $f\in\Sigma$ 及逐坐标 $x_j\mathrel\theta y_j$ 的两元组 $\boldsymbol x,\boldsymbol y\in X^{n_f}$，要求
+
+$$
+\boldsymbol x\in D_f\iff\boldsymbol y\in D_f,
+\qquad
+\boldsymbol x,\boldsymbol y\in D_f\Longrightarrow
+f(\boldsymbol x)\mathrel\theta f(\boldsymbol y).
+\tag{SC}
+$$
+

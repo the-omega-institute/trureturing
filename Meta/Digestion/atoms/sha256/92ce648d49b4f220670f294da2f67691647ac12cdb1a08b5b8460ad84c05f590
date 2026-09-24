@@ -1,0 +1,5 @@
+加细给出 $H_{L-1}\subseteq H_L$，从而
+$$
+\Pi_{L-1}\Pi_L=\Pi_{L-1}=\Pi_L\Pi_{L-1}.
+$$
+这里直接使用钉版 Mathlib 的 [Submodule.starProjection_comp_starProjection_of_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/InnerProductSpace/Projection/Basic.lean)：取 $U=H_{L-1}$、$V=H_L$，两个子空间有限维而闭；另一乘法方向由取伴随得到。

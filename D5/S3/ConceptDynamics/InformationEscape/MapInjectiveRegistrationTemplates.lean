@@ -7,7 +7,9 @@
    digest: A single typed CUT readout retains map injectivity and supplies checked slot sensitivity. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
-import LeanInformationAudit.RegistrationWitnesses
+import D5.S0.History.HistoryCarrier
+import D5.S3.ConceptDynamics.RegistrationWitnesses
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -21,6 +23,8 @@ abbrev mapInjectiveSignature (X Y : Type) [DecidableEq Y] := cutSignature X Y
 
 def mapInjectiveRealization {X Y : Type} [DecidableEq Y] (f : X → Y) :
     PrimitiveRealization (mapInjectiveSignature X Y) := cutRealization f
+
+
 
 def mapInjectiveArena (A : Arena) (Y : Type) [DecidableEq Y] : PrimitiveLawArena where
   toArena := A

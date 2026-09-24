@@ -1,0 +1,1 @@
+记 $\mathcal N_\mu=\{B\in\mathcal F:\mu(B)=0\}$，令 $\mathcal F_L=\sigma(\mathcal P_L\cup\mathcal N_\mu)$；加入环境内的可测零集后，有真正的包含 $\mathcal F_L\subseteq\mathcal F_{L+1}\subseteq\mathcal F$。

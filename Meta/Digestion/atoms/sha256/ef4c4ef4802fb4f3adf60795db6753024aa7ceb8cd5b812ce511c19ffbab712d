@@ -1,0 +1,42 @@
+### 13.1 两个完整 profile
+
+设 \(H\) 是实际历史集合，令
+
+$$
+\beta:H\to\mathcal B,\qquad r:H\to\mathcal R
+$$
+
+分别记录后验 belief 与续接残余。这里 \(r\) 可以是带类型的完整 continuation profile：它至少包含未来动作的合法性、策略所需控制读数以及任务要求保留的费用或终止标签。定义
+
+$$
+\Psi(h)=(\beta(h),r(h))
+$$
+
+并只取 \(\operatorname{ran}\Psi\) 作为联合边界值域。
+
+若 \(H,\mathcal B,\mathcal R\) 的相关实际像均为有限集，则
+
+$$
+|\operatorname{ran}\Psi|
+\le |\operatorname{ran}\beta|\,|\operatorname{ran}r|.
+\tag{13.0}
+$$
+
+等号还需要每个 \(\beta\)-值纤维都与每个 \(r\)-值纤维相交；共同来源通常只实现其中一部分配对。仓内 `JointPredictionProductFullness.joint_prediction_product_fullness_criterion` 给出了这一有限乘积满性判据。
+
+令 \(\Phi_\beta(h)\) 是所有 posterior-adaptive 有限实验的未来输出律族，令 \(\Phi_r(h)\) 是所有指定续接的合法性、控制读数、费用和终止 profile。联合 profile 为
+
+$$
+\Phi_J(h)=\bigl(\Phi_\beta(h),\Phi_r(h)\bigr).
+$$
+
+假设
+
+$$
+\ker\Phi_\beta=\ker\beta,\qquad
+\ker\Phi_r=\ker r.
+\tag{13.1}
+$$
+
+第一项可由第 11.2 节的一步 separating 条件得到；第二项是把 \(r\) 定义为完整续接 profile 的结果，或需要另行证明的策略最小性条件。
+

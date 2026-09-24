@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:73189a377894b616468c4eef564a6253360094b164f8a7eadd6f9a1c9d0911ce
+  normalized_sha256: sha256:73189a377894b616468c4eef564a6253360094b164f8a7eadd6f9a1c9d0911ce
+cas_ref: sha256:73189a377894b616468c4eef564a6253360094b164f8a7eadd6f9a1c9d0911ce
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Causal/BenefitProbabilityBounds.benefit_probability_bounds
+    target_statement_id: sha256:9e259240ce83f766d49bc98a31501cbaa73fad3cc82f3384a496f158c1caa8de
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteEventCouplingSharpBounds.event_coupling_target_feasible_with_disagreement_cap_iff
+    target_statement_id: sha256:99f3c81466d1ac5dfe61790d4dea99354aff9397dc60210b4e51aa7fa75582de
+receipts:
+  unresolved_subitems: []

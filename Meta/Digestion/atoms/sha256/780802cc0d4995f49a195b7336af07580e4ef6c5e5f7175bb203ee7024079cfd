@@ -1,0 +1,9 @@
+### 124.8 Gibbs 配分函数、重数与边界替换
+
+取有限非空集合 $X$、实能量 $E(x)$、基础权 $w(x)\ge0$，$M=\sum_xw(x)>0$，以及温度 $\tau>0$。令
+$$
+Z_w=\sum_x w(x)e^{-E(x)/\tau},\qquad
+\pi_w(x)=\frac{w(x)e^{-E(x)/\tau}}{Z_w}.
+$$
+对概率 $q\ll w$，定义 $F_w(q)=\mathbb E_qE+\tau\sum_{x:q(x)>0}q(x)\log(q(x)/w(x))$。
+

@@ -1,0 +1,7 @@
+证明。在ML 定义41.1的概率坐标中，令 $D_0(q)=p+dq$、$D_1(q)=1-p-dq$。对 $0\le x<z\le1$，通分给
+$$
+F_\beta(z)-F_\beta(x)
+=\frac{\eta p(1-p)(z-x)}{D_\beta(z)D_\beta(x)}
+\ge\frac{\eta p}{1-p}(z-x)=\frac16(z-x).
+$$
+这里 $0<D_\beta(q)\le1-p$，所有分母为正；故两个更新均保序，并在每个共同报告下至少保留原差的 $1/6$。

@@ -1,0 +1,6 @@
+所以每增加一个未来坐标，关系只会细化，不会重新合并：
+
+$$
+m\le n\quad\Longrightarrow\quad R_n\subseteq R_m.
+$$
+

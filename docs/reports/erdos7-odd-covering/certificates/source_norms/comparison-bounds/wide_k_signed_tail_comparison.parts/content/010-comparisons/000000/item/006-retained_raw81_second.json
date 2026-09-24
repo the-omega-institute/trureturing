@@ -1,0 +1,106 @@
+{
+  "index": 47,
+  "controller": "original square357(81/4)",
+  "face_vertices": [
+    "1344356641/405168750",
+    "1344356641/405168750",
+    "1344356641/405168750",
+    "1344356641/405168750",
+    "1344356641/405168750",
+    "1344356641/405168750"
+  ],
+  "face_upper": "1344356641/405168750",
+  "delta_price": "25207/6480",
+  "uniform_upper": "908969357743/262549350000",
+  "source_prices": {
+    "mass_L1": "57/14",
+    "pure_L1": "3153/280",
+    "availability_Linfinity": "5471/11340"
+  },
+  "source_mass_price_included": "1/4802",
+  "finite_seven_blocks": [
+    {
+      "tag": [
+        "seven_block",
+        [
+          [
+            "s",
+            "81/4"
+          ],
+          0
+        ]
+      ],
+      "mass_L1": "16285/9604",
+      "pure_L1": "531/70",
+      "availability_Linfinity": "3119/11340",
+      "positive_five_pure_price": "36105256/7503125",
+      "polynomial_cutoff": 5
+    },
+    {
+      "tag": [
+        "seven_block",
+        [
+          [
+            "s",
+            "81/4"
+          ],
+          1
+        ]
+      ],
+      "mass_L1": "16285/9604",
+      "pure_L1": "117/40",
+      "availability_Linfinity": "52/315",
+      "positive_five_pure_price": "4686671/2401000",
+      "polynomial_cutoff": 5
+    },
+    {
+      "tag": [
+        "seven_block",
+        [
+          [
+            "s",
+            "81/4"
+          ],
+          2
+        ]
+      ],
+      "mass_L1": "25859/48020",
+      "pure_L1": "171/280",
+      "availability_Linfinity": "76/2205",
+      "positive_five_pure_price": "210919/480200",
+      "polynomial_cutoff": 5
+    },
+    {
+      "tag": [
+        "seven_block",
+        [
+          [
+            "s",
+            "81/4"
+          ],
+          3
+        ]
+      ],
+      "mass_L1": "5447/48020",
+      "pure_L1": "45/392",
+      "availability_Linfinity": "20/3087",
+      "positive_five_pure_price": "40819/480200",
+      "polynomial_cutoff": 5
+    }
+  ],
+  "full_monomial_tail": {
+    "coefficient": "16/5145",
+    "prices": {
+      "tag": [
+        "s",
+        "0"
+      ],
+      "mass_L1": "9",
+      "pure_L1": "63/8",
+      "availability_Linfinity": "4/9",
+      "positive_five_pure_price": "243/40",
+      "polynomial_cutoff": 2
+    }
+  },
+  "weight": "382808/429429"
+}

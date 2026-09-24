@@ -1,0 +1,6 @@
+黏性导数不能由固定黏性的收缩自动推出。对张量输入、$s>0$ 和任意整数 $j\ge0$，逐模计算给
+$$
+\partial_\nu^j E_\nu(s)=(s\Delta)^jE_\nu(s),\qquad
+\|\partial_\nu^jE_\nu(s)\mathbb P\operatorname{div}\|_{H^{12}\to H^{12}}
+ \le c_j\nu^{-j-1/2}s^{-1/2},
+$$

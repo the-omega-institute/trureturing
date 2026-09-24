@@ -1,0 +1,794 @@
+[
+  {
+    "prime": 2753,
+    "threshold": 1024,
+    "s": 1728,
+    "delta": "341/917",
+    "charge_scaled_upper": 39199328840757,
+    "cumulative_scaled_upper": 956800347118787101
+  },
+  {
+    "prime": 2767,
+    "threshold": 1024,
+    "s": 1742,
+    "delta": "1023/2765",
+    "charge_scaled_upper": 38988825899804,
+    "cumulative_scaled_upper": 956839335944686905
+  },
+  {
+    "prime": 2777,
+    "threshold": 1024,
+    "s": 1752,
+    "delta": "341/925",
+    "charge_scaled_upper": 38869622634697,
+    "cumulative_scaled_upper": 956878205567321602
+  },
+  {
+    "prime": 2789,
+    "threshold": 1024,
+    "s": 1764,
+    "delta": "341/929",
+    "charge_scaled_upper": 38707481839753,
+    "cumulative_scaled_upper": 956916913049161355
+  },
+  {
+    "prime": 2791,
+    "threshold": 1024,
+    "s": 1766,
+    "delta": "1023/2789",
+    "charge_scaled_upper": 38765341828657,
+    "cumulative_scaled_upper": 956955678390990012
+  },
+  {
+    "prime": 2797,
+    "threshold": 1024,
+    "s": 1772,
+    "delta": "1023/2795",
+    "charge_scaled_upper": 38735546127041,
+    "cumulative_scaled_upper": 956994413937117053
+  },
+  {
+    "prime": 2801,
+    "threshold": 1024,
+    "s": 1776,
+    "delta": "341/933",
+    "charge_scaled_upper": 38749422068747,
+    "cumulative_scaled_upper": 957033163359185800
+  },
+  {
+    "prime": 2803,
+    "threshold": 1024,
+    "s": 1778,
+    "delta": "1023/2801",
+    "charge_scaled_upper": 38806835819201,
+    "cumulative_scaled_upper": 957071970195005001
+  },
+  {
+    "prime": 2819,
+    "threshold": 1024,
+    "s": 1794,
+    "delta": "341/939",
+    "charge_scaled_upper": 38560942655892,
+    "cumulative_scaled_upper": 957110531137660893
+  },
+  {
+    "prime": 2833,
+    "threshold": 1024,
+    "s": 1808,
+    "delta": "1023/2831",
+    "charge_scaled_upper": 38361117088753,
+    "cumulative_scaled_upper": 957148892254749646
+  },
+  {
+    "prime": 2837,
+    "threshold": 1024,
+    "s": 1812,
+    "delta": "341/945",
+    "charge_scaled_upper": 38374434136579,
+    "cumulative_scaled_upper": 957187266688886225
+  },
+  {
+    "prime": 2843,
+    "threshold": 1024,
+    "s": 1818,
+    "delta": "341/947",
+    "charge_scaled_upper": 38345458648076,
+    "cumulative_scaled_upper": 957225612147534301
+  },
+  {
+    "prime": 2851,
+    "threshold": 1024,
+    "s": 1826,
+    "delta": "93/259",
+    "charge_scaled_upper": 38274595658788,
+    "cumulative_scaled_upper": 957263886743193089
+  },
+  {
+    "prime": 2857,
+    "threshold": 1024,
+    "s": 1832,
+    "delta": "1023/2855",
+    "charge_scaled_upper": 38245843259739,
+    "cumulative_scaled_upper": 957302132586452828
+  },
+  {
+    "prime": 2861,
+    "threshold": 1024,
+    "s": 1836,
+    "delta": "341/953",
+    "charge_scaled_upper": 38258801001152,
+    "cumulative_scaled_upper": 957340391387453980
+  },
+  {
+    "prime": 2879,
+    "threshold": 1024,
+    "s": 1854,
+    "delta": "341/959",
+    "charge_scaled_upper": 37982700196786,
+    "cumulative_scaled_upper": 957378374087650766
+  },
+  {
+    "prime": 2887,
+    "threshold": 1024,
+    "s": 1862,
+    "delta": "1023/2885",
+    "charge_scaled_upper": 37913722977474,
+    "cumulative_scaled_upper": 957416287810628240
+  },
+  {
+    "prime": 2897,
+    "threshold": 1024,
+    "s": 1872,
+    "delta": "341/965",
+    "charge_scaled_upper": 37804698102332,
+    "cumulative_scaled_upper": 957454092508730572
+  },
+  {
+    "prime": 2903,
+    "threshold": 1024,
+    "s": 1878,
+    "delta": "341/967",
+    "charge_scaled_upper": 37776821001240,
+    "cumulative_scaled_upper": 957491869329731812
+  },
+  {
+    "prime": 2909,
+    "threshold": 1024,
+    "s": 1884,
+    "delta": "341/969",
+    "charge_scaled_upper": 37749019318118,
+    "cumulative_scaled_upper": 957529618349049930
+  },
+  {
+    "prime": 2917,
+    "threshold": 1024,
+    "s": 1892,
+    "delta": "93/265",
+    "charge_scaled_upper": 37681418184546,
+    "cumulative_scaled_upper": 957567299767234476
+  },
+  {
+    "prime": 2927,
+    "threshold": 1024,
+    "s": 1902,
+    "delta": "341/975",
+    "charge_scaled_upper": 37574636741850,
+    "cumulative_scaled_upper": 957604874403976326
+  },
+  {
+    "prime": 2939,
+    "threshold": 1024,
+    "s": 1914,
+    "delta": "31/89",
+    "charge_scaled_upper": 37429529759288,
+    "cumulative_scaled_upper": 957642303933735614
+  },
+  {
+    "prime": 2953,
+    "threshold": 1024,
+    "s": 1928,
+    "delta": "1023/2951",
+    "charge_scaled_upper": 37247173215671,
+    "cumulative_scaled_upper": 957679551106951285
+  },
+  {
+    "prime": 2957,
+    "threshold": 1024,
+    "s": 1932,
+    "delta": "341/985",
+    "charge_scaled_upper": 37258839758329,
+    "cumulative_scaled_upper": 957716809946709614
+  },
+  {
+    "prime": 2963,
+    "threshold": 1024,
+    "s": 1938,
+    "delta": "341/987",
+    "charge_scaled_upper": 37231991655043,
+    "cumulative_scaled_upper": 957754041938364657
+  },
+  {
+    "prime": 2969,
+    "threshold": 1024,
+    "s": 1944,
+    "delta": "341/989",
+    "charge_scaled_upper": 37205214530880,
+    "cumulative_scaled_upper": 957791247152895537
+  },
+  {
+    "prime": 2971,
+    "threshold": 1024,
+    "s": 1946,
+    "delta": "1023/2969",
+    "charge_scaled_upper": 37254928427194,
+    "cumulative_scaled_upper": 957828502081322731
+  },
+  {
+    "prime": 2999,
+    "threshold": 1024,
+    "s": 1974,
+    "delta": "341/999",
+    "charge_scaled_upper": 36813279130601,
+    "cumulative_scaled_upper": 957865315360453332
+  },
+  {
+    "prime": 3001,
+    "threshold": 1024,
+    "s": 1976,
+    "delta": "1023/2999",
+    "charge_scaled_upper": 36861662168773,
+    "cumulative_scaled_upper": 957902177022622105
+  },
+  {
+    "prime": 3011,
+    "threshold": 1024,
+    "s": 1986,
+    "delta": "341/1003",
+    "charge_scaled_upper": 36761349366273,
+    "cumulative_scaled_upper": 957938938371988378
+  },
+  {
+    "prime": 3019,
+    "threshold": 1024,
+    "s": 1994,
+    "delta": "1023/3017",
+    "charge_scaled_upper": 36698553598015,
+    "cumulative_scaled_upper": 957975636925586393
+  },
+  {
+    "prime": 3023,
+    "threshold": 1024,
+    "s": 1998,
+    "delta": "341/1007",
+    "charge_scaled_upper": 36709432196722,
+    "cumulative_scaled_upper": 958012346357783115
+  },
+  {
+    "prime": 3037,
+    "threshold": 1024,
+    "s": 2012,
+    "delta": "1023/3035",
+    "charge_scaled_upper": 36537757246240,
+    "cumulative_scaled_upper": 958048884115029355
+  },
+  {
+    "prime": 3041,
+    "threshold": 1024,
+    "s": 2016,
+    "delta": "341/1013",
+    "charge_scaled_upper": 36548434606559,
+    "cumulative_scaled_upper": 958085432549635914
+  },
+  {
+    "prime": 3049,
+    "threshold": 1024,
+    "s": 2024,
+    "delta": "93/277",
+    "charge_scaled_upper": 36486814740888,
+    "cumulative_scaled_upper": 958121919364376802
+  },
+  {
+    "prime": 3061,
+    "threshold": 1024,
+    "s": 2036,
+    "delta": "1023/3059",
+    "charge_scaled_upper": 36353950226499,
+    "cumulative_scaled_upper": 958158273314603301
+  },
+  {
+    "prime": 3067,
+    "threshold": 1024,
+    "s": 2042,
+    "delta": "1023/3065",
+    "charge_scaled_upper": 36328749653070,
+    "cumulative_scaled_upper": 958194602064256371
+  },
+  {
+    "prime": 3079,
+    "threshold": 1024,
+    "s": 2054,
+    "delta": "1023/3077",
+    "charge_scaled_upper": 36197565603232,
+    "cumulative_scaled_upper": 958230799629859603
+  },
+  {
+    "prime": 3083,
+    "threshold": 1024,
+    "s": 2058,
+    "delta": "341/1027",
+    "charge_scaled_upper": 36207792095245,
+    "cumulative_scaled_upper": 958267007421954848
+  },
+  {
+    "prime": 3089,
+    "threshold": 1024,
+    "s": 2064,
+    "delta": "341/1029",
+    "charge_scaled_upper": 36182880092954,
+    "cumulative_scaled_upper": 958303190302047802
+  },
+  {
+    "prime": 3109,
+    "threshold": 1024,
+    "s": 2084,
+    "delta": "1023/3107",
+    "charge_scaled_upper": 35915126718835,
+    "cumulative_scaled_upper": 958339105428766637
+  },
+  {
+    "prime": 3119,
+    "threshold": 1024,
+    "s": 2094,
+    "delta": "341/1039",
+    "charge_scaled_upper": 35822112403554,
+    "cumulative_scaled_upper": 958374927541170191
+  },
+  {
+    "prime": 3121,
+    "threshold": 1024,
+    "s": 2096,
+    "delta": "1023/3119",
+    "charge_scaled_upper": 35866127598406,
+    "cumulative_scaled_upper": 958410793668768597
+  },
+  {
+    "prime": 3137,
+    "threshold": 1024,
+    "s": 2112,
+    "delta": "31/95",
+    "charge_scaled_upper": 35672088914643,
+    "cumulative_scaled_upper": 958446465757683240
+  },
+  {
+    "prime": 3163,
+    "threshold": 1024,
+    "s": 2138,
+    "delta": "1023/3161",
+    "charge_scaled_upper": 35314574178552,
+    "cumulative_scaled_upper": 958481780331861792
+  },
+  {
+    "prime": 3167,
+    "threshold": 1024,
+    "s": 2142,
+    "delta": "341/1055",
+    "charge_scaled_upper": 35323987135373,
+    "cumulative_scaled_upper": 958517104318997165
+  },
+  {
+    "prime": 3169,
+    "threshold": 1024,
+    "s": 2144,
+    "delta": "1023/3167",
+    "charge_scaled_upper": 35366321428614,
+    "cumulative_scaled_upper": 958552470640425779
+  },
+  {
+    "prime": 3181,
+    "threshold": 1024,
+    "s": 2156,
+    "delta": "93/289",
+    "charge_scaled_upper": 35244410118758,
+    "cumulative_scaled_upper": 958587715050544537
+  },
+  {
+    "prime": 3187,
+    "threshold": 1024,
+    "s": 2162,
+    "delta": "1023/3185",
+    "charge_scaled_upper": 35221043195428,
+    "cumulative_scaled_upper": 958622936093739965
+  },
+  {
+    "prime": 3191,
+    "threshold": 1024,
+    "s": 2166,
+    "delta": "341/1063",
+    "charge_scaled_upper": 35230233292449,
+    "cumulative_scaled_upper": 958658166327032414
+  },
+  {
+    "prime": 3203,
+    "threshold": 1024,
+    "s": 2178,
+    "delta": "31/97",
+    "charge_scaled_upper": 35109948045261,
+    "cumulative_scaled_upper": 958693276275077675
+  },
+  {
+    "prime": 3209,
+    "threshold": 1024,
+    "s": 2184,
+    "delta": "341/1069",
+    "charge_scaled_upper": 35086835726381,
+    "cumulative_scaled_upper": 958728363110804056
+  },
+  {
+    "prime": 3217,
+    "threshold": 1024,
+    "s": 2192,
+    "delta": "1023/3215",
+    "charge_scaled_upper": 35031786687194,
+    "cumulative_scaled_upper": 958763394897491250
+  },
+  {
+    "prime": 3221,
+    "threshold": 1024,
+    "s": 2196,
+    "delta": "341/1073",
+    "charge_scaled_upper": 35040711748921,
+    "cumulative_scaled_upper": 958798435609240171
+  },
+  {
+    "prime": 3229,
+    "threshold": 1024,
+    "s": 2204,
+    "delta": "1023/3227",
+    "charge_scaled_upper": 34985989569263,
+    "cumulative_scaled_upper": 958833421598809434
+  },
+  {
+    "prime": 3251,
+    "threshold": 1024,
+    "s": 2226,
+    "delta": "341/1083",
+    "charge_scaled_upper": 34711833087496,
+    "cumulative_scaled_upper": 958868133431896930
+  },
+  {
+    "prime": 3253,
+    "threshold": 1024,
+    "s": 2228,
+    "delta": "1023/3251",
+    "charge_scaled_upper": 34751643564031,
+    "cumulative_scaled_upper": 958902885075460961
+  },
+  {
+    "prime": 3257,
+    "threshold": 1024,
+    "s": 2232,
+    "delta": "11/35",
+    "charge_scaled_upper": 34760267305963,
+    "cumulative_scaled_upper": 958937645342766924
+  },
+  {
+    "prime": 3259,
+    "threshold": 1024,
+    "s": 2234,
+    "delta": "1023/3257",
+    "charge_scaled_upper": 34799983304273,
+    "cumulative_scaled_upper": 958972445326071197
+  },
+  {
+    "prime": 3271,
+    "threshold": 1024,
+    "s": 2246,
+    "delta": "1023/3269",
+    "charge_scaled_upper": 34684568885254,
+    "cumulative_scaled_upper": 959007129894956451
+  },
+  {
+    "prime": 3299,
+    "threshold": 1024,
+    "s": 2274,
+    "delta": "341/1099",
+    "charge_scaled_upper": 34326889910143,
+    "cumulative_scaled_upper": 959041456784866594
+  },
+  {
+    "prime": 3301,
+    "threshold": 1024,
+    "s": 2276,
+    "delta": "1023/3299",
+    "charge_scaled_upper": 34365324666677,
+    "cumulative_scaled_upper": 959075822109533271
+  },
+  {
+    "prime": 3307,
+    "threshold": 1024,
+    "s": 2282,
+    "delta": "1023/3305",
+    "charge_scaled_upper": 34343443790585,
+    "cumulative_scaled_upper": 959110165553323856
+  },
+  {
+    "prime": 3313,
+    "threshold": 1024,
+    "s": 2288,
+    "delta": "93/301",
+    "charge_scaled_upper": 34321613961974,
+    "cumulative_scaled_upper": 959144487167285830
+  },
+  {
+    "prime": 3319,
+    "threshold": 1024,
+    "s": 2294,
+    "delta": "33/107",
+    "charge_scaled_upper": 34299834972148,
+    "cumulative_scaled_upper": 959178787002257978
+  },
+  {
+    "prime": 3323,
+    "threshold": 1024,
+    "s": 2298,
+    "delta": "341/1107",
+    "charge_scaled_upper": 34307939604607,
+    "cumulative_scaled_upper": 959213094941862585
+  },
+  {
+    "prime": 3329,
+    "threshold": 1024,
+    "s": 2304,
+    "delta": "341/1109",
+    "charge_scaled_upper": 34286223984677,
+    "cumulative_scaled_upper": 959247381165847262
+  },
+  {
+    "prime": 3331,
+    "threshold": 1024,
+    "s": 2306,
+    "delta": "1023/3329",
+    "charge_scaled_upper": 34323994203124,
+    "cumulative_scaled_upper": 959281705160050386
+  },
+  {
+    "prime": 3343,
+    "threshold": 1024,
+    "s": 2318,
+    "delta": "1023/3341",
+    "charge_scaled_upper": 34213514754872,
+    "cumulative_scaled_upper": 959315918674805258
+  },
+  {
+    "prime": 3347,
+    "threshold": 1024,
+    "s": 2322,
+    "delta": "341/1115",
+    "charge_scaled_upper": 34221437064388,
+    "cumulative_scaled_upper": 959350140111869646
+  },
+  {
+    "prime": 3359,
+    "threshold": 1024,
+    "s": 2334,
+    "delta": "341/1119",
+    "charge_scaled_upper": 34112004033130,
+    "cumulative_scaled_upper": 959384252115902776
+  },
+  {
+    "prime": 3361,
+    "threshold": 1024,
+    "s": 2336,
+    "delta": "1023/3359",
+    "charge_scaled_upper": 34149022514954,
+    "cumulative_scaled_upper": 959418401138417730
+  },
+  {
+    "prime": 3371,
+    "threshold": 1024,
+    "s": 2346,
+    "delta": "341/1123",
+    "charge_scaled_upper": 34069453999828,
+    "cumulative_scaled_upper": 959452470592417558
+  },
+  {
+    "prime": 3373,
+    "threshold": 1024,
+    "s": 2348,
+    "delta": "1023/3371",
+    "charge_scaled_upper": 34106199445389,
+    "cumulative_scaled_upper": 959486576791862947
+  },
+  {
+    "prime": 3389,
+    "threshold": 1024,
+    "s": 2364,
+    "delta": "341/1129",
+    "charge_scaled_upper": 33940734272402,
+    "cumulative_scaled_upper": 959520517526135349
+  },
+  {
+    "prime": 3391,
+    "threshold": 1024,
+    "s": 2366,
+    "delta": "1023/3389",
+    "charge_scaled_upper": 33977025113653,
+    "cumulative_scaled_upper": 959554494551249002
+  },
+  {
+    "prime": 3407,
+    "threshold": 1024,
+    "s": 2382,
+    "delta": "341/1135",
+    "charge_scaled_upper": 33813395350309,
+    "cumulative_scaled_upper": 959588307946599311
+  },
+  {
+    "prime": 3413,
+    "threshold": 1024,
+    "s": 2388,
+    "delta": "341/1137",
+    "charge_scaled_upper": 33792541623954,
+    "cumulative_scaled_upper": 959622100488223265
+  },
+  {
+    "prime": 3433,
+    "threshold": 1024,
+    "s": 2408,
+    "delta": "1023/3431",
+    "charge_scaled_upper": 33575387678795,
+    "cumulative_scaled_upper": 959655675875902060
+  },
+  {
+    "prime": 3449,
+    "threshold": 1024,
+    "s": 2424,
+    "delta": "341/1149",
+    "charge_scaled_upper": 33416440551898,
+    "cumulative_scaled_upper": 959689092316453958
+  },
+  {
+    "prime": 3457,
+    "threshold": 1024,
+    "s": 2432,
+    "delta": "1023/3455",
+    "charge_scaled_upper": 33368671376296,
+    "cumulative_scaled_upper": 959722460987830254
+  },
+  {
+    "prime": 3461,
+    "threshold": 1024,
+    "s": 2436,
+    "delta": "341/1153",
+    "charge_scaled_upper": 33375824214255,
+    "cumulative_scaled_upper": 959755836812044509
+  },
+  {
+    "prime": 3463,
+    "threshold": 1024,
+    "s": 2438,
+    "delta": "1023/3461",
+    "charge_scaled_upper": 33410335328857,
+    "cumulative_scaled_upper": 959789247147373366
+  },
+  {
+    "prime": 3467,
+    "threshold": 1024,
+    "s": 2442,
+    "delta": "31/105",
+    "charge_scaled_upper": 33417445445506,
+    "cumulative_scaled_upper": 959822664592818872
+  },
+  {
+    "prime": 3469,
+    "threshold": 1152,
+    "s": 2316,
+    "delta": "1151/3467",
+    "charge_scaled_upper": 30724829956223,
+    "cumulative_scaled_upper": 959853389422775095
+  },
+  {
+    "prime": 3491,
+    "threshold": 1152,
+    "s": 2338,
+    "delta": "1151/3489",
+    "charge_scaled_upper": 30496222381508,
+    "cumulative_scaled_upper": 959883885645156603
+  },
+  {
+    "prime": 3499,
+    "threshold": 1152,
+    "s": 2346,
+    "delta": "1151/3497",
+    "charge_scaled_upper": 30452061234990,
+    "cumulative_scaled_upper": 959914337706391593
+  },
+  {
+    "prime": 3511,
+    "threshold": 1152,
+    "s": 2358,
+    "delta": "1151/3509",
+    "charge_scaled_upper": 30356513687209,
+    "cumulative_scaled_upper": 959944694220078802
+  },
+  {
+    "prime": 3517,
+    "threshold": 1152,
+    "s": 2364,
+    "delta": "1151/3515",
+    "charge_scaled_upper": 30338537493248,
+    "cumulative_scaled_upper": 959975032757572050
+  },
+  {
+    "prime": 3527,
+    "threshold": 1152,
+    "s": 2374,
+    "delta": "1151/3525",
+    "charge_scaled_upper": 30269512645452,
+    "cumulative_scaled_upper": 960005302270217502
+  },
+  {
+    "prime": 3529,
+    "threshold": 1152,
+    "s": 2376,
+    "delta": "1151/3527",
+    "charge_scaled_upper": 30302603480365,
+    "cumulative_scaled_upper": 960035604873697867
+  },
+  {
+    "prime": 3533,
+    "threshold": 1152,
+    "s": 2380,
+    "delta": "1151/3531",
+    "charge_scaled_upper": 30310193689077,
+    "cumulative_scaled_upper": 960065915067386944
+  },
+  {
+    "prime": 3539,
+    "threshold": 1152,
+    "s": 2386,
+    "delta": "1151/3537",
+    "charge_scaled_upper": 30292343306581,
+    "cumulative_scaled_upper": 960096207410693525
+  },
+  {
+    "prime": 3541,
+    "threshold": 1152,
+    "s": 2388,
+    "delta": "1151/3539",
+    "charge_scaled_upper": 30325242673709,
+    "cumulative_scaled_upper": 960126532653367234
+  },
+  {
+    "prime": 3547,
+    "threshold": 1152,
+    "s": 2394,
+    "delta": "1151/3545",
+    "charge_scaled_upper": 30307409929758,
+    "cumulative_scaled_upper": 960156840063296992
+  },
+  {
+    "prime": 3557,
+    "threshold": 1152,
+    "s": 2404,
+    "delta": "1151/3555",
+    "charge_scaled_upper": 30239217034894,
+    "cumulative_scaled_upper": 960187079280331886
+  },
+  {
+    "prime": 3559,
+    "threshold": 1152,
+    "s": 2406,
+    "delta": "1151/3557",
+    "charge_scaled_upper": 30271763773193,
+    "cumulative_scaled_upper": 960217351044105079
+  },
+  {
+    "prime": 3571,
+    "threshold": 1152,
+    "s": 2418,
+    "delta": "1151/3569",
+    "charge_scaled_upper": 30178974236206,
+    "cumulative_scaled_upper": 960247530018341285
+  }
+]

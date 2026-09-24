@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5846a59bf09e6525d0743ed0775325b17db21970299a0cae784f275df97ab79
+  normalized_sha256: sha256:a5846a59bf09e6525d0743ed0775325b17db21970299a0cae784f275df97ab79
+cas_ref: sha256:a5846a59bf09e6525d0743ed0775325b17db21970299a0cae784f275df97ab79
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “36.1 已完成的主推理与既有结果复用”读作“40.1”说明来源小节的位置，不声称新的数学验证；不存在定义内暗含定理，按定位文字结算。
+    previous_atom_id: 2b8f4d61f668ba36bd8795cab0895e7a7b82297c789000355615d7b50c6226b0
+    next_atom_id: 2198f6cef89c8571ba3e53618f9a8233134a487a254883f26ad3aa035317af1a

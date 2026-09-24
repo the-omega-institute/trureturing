@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6f153b871644a54413877d59dfe414a6d1538675ebe1c7e30886f6d9a6675f60
+  normalized_sha256: sha256:6f153b871644a54413877d59dfe414a6d1538675ebe1c7e30886f6d9a6675f60
+cas_ref: sha256:6f153b871644a54413877d59dfe414a6d1538675ebe1c7e30886f6d9a6675f60
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “第一个阈值只对这条充分不等式最小”限定搜索所优化的谓词，“不是实际成员捕获时间的最小值”拒绝把充分条件最小性升级为任务最优性；本叶未给新的捕获时间数值或反例，也未通过定义宣称最优。
+    previous_atom_id: d037843cdc64a43ca47ed51e7478d0dd1e62d3344c27ee0378d7db0a4bffab74
+    next_atom_id: 42fc865be2d07103846e81f486395fbf8cad62db62ffb9086eef42ae3a19dbdb

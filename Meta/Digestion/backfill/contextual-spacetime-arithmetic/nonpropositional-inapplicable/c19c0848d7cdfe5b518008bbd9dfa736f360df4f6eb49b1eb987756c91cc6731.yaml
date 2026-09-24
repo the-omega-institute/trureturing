@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c19c0848d7cdfe5b518008bbd9dfa736f360df4f6eb49b1eb987756c91cc6731
+  normalized_sha256: sha256:c19c0848d7cdfe5b518008bbd9dfa736f360df4f6eb49b1eb987756c91cc6731
+cas_ref: sha256:c19c0848d7cdfe5b518008bbd9dfa736f360df4f6eb49b1eb987756c91cc6731
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此段说明未构造集合模型且未将类型论基础等同集合论基础，是解释范围说明，无待证明命题。
+    previous_atom_id: 6a4b48b33b1011eefe7a9b85d75f9ab5014a8d8a8819dfcd2fa85e209de005ca
+    next_atom_id: 3b9e3b133aebee78b6a9ba925b0606217ff533a80ddefbe6a2a889078b507557

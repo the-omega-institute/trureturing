@@ -1,0 +1,722 @@
+[
+  {
+    "mode": "aligned",
+    "defects": {
+      "E5": "2/33075",
+      "E15": "1/25725",
+      "E3": "1081/385875",
+      "E5d": "367/1653750",
+      "E15d": "367/2572500",
+      "omega": "5698064/275900625",
+      "rho": "213555547/6621615000"
+    },
+    "tail_interface": {
+      "old_remainders": {
+        "0": "2803/27000",
+        "1": "2243/27000",
+        "2": "497/9000",
+        "3": "377/9000",
+        "4": "2641/81000"
+      },
+      "selected_caps": [
+        "14/675",
+        "94/3375",
+        "1/75",
+        "94/10125"
+      ],
+      "positive7": "19591/315000",
+      "family_parameters": {
+        "pure3": {
+          "prime": 3,
+          "start": 3,
+          "raw": "94/125",
+          "branches": [
+            [
+              "351/500",
+              "282656069/13243230000",
+              "1/20"
+            ]
+          ]
+        },
+        "pure5": {
+          "prime": 5,
+          "start": 2,
+          "raw": "14/27",
+          "branches": [
+            [
+              "38783/92610",
+              "2156993/91966875",
+              "3079/30870"
+            ]
+          ]
+        },
+        "root5": {
+          "prime": 5,
+          "start": 2,
+          "raw": "1/3",
+          "branches": [
+            [
+              "1373/5145",
+              "5698064/275900625",
+              "114/1715"
+            ]
+          ]
+        },
+        "cell5": {
+          "prime": 5,
+          "start": 2,
+          "raw": "1/9",
+          "branches": [
+            [
+              "2/27",
+              "5698064/275900625",
+              "0"
+            ],
+            [
+              "1373/15435",
+              "5698064/275900625",
+              "38/1715"
+            ],
+            [
+              "1373/15435",
+              "5698064/275900625",
+              "38/1715"
+            ],
+            [
+              "1373/15435",
+              "5698064/275900625",
+              "38/1715"
+            ],
+            [
+              "1373/15435",
+              "5698064/275900625",
+              "38/1715"
+            ]
+          ]
+        }
+      },
+      "complete_series": {
+        "0": {
+          "pure3": {
+            "upper": "47/1125",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": []
+          },
+          "pure5": {
+            "upper": "7/270",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": []
+          },
+          "root5": {
+            "upper": "1/60",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": []
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        },
+        "1": {
+          "pure3": {
+            "upper": "47/1125",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": []
+          },
+          "pure5": {
+            "upper": "7/1350",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": [
+              2
+            ]
+          },
+          "root5": {
+            "upper": "1/60",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": []
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        },
+        "2": {
+          "pure3": {
+            "upper": "47/3375",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": [
+              3
+            ]
+          },
+          "pure5": {
+            "upper": "7/1350",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": [
+              2
+            ]
+          },
+          "root5": {
+            "upper": "1/60",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": []
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        },
+        "3": {
+          "pure3": {
+            "upper": "47/3375",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": [
+              3
+            ]
+          },
+          "pure5": {
+            "upper": "7/1350",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": [
+              2
+            ]
+          },
+          "root5": {
+            "upper": "1/300",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": [
+              2
+            ]
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        },
+        "4": {
+          "pure3": {
+            "upper": "47/10125",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": [
+              3,
+              4
+            ]
+          },
+          "pure5": {
+            "upper": "7/1350",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": [
+              2
+            ]
+          },
+          "root5": {
+            "upper": "1/300",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": [
+              2
+            ]
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        }
+      },
+      "raw_old_nonunit_cap": "4673/9000",
+      "raw_deep_mixed": "1/72",
+      "actual_source_mass": "913/3375",
+      "z": "94/125",
+      "root0_raw_dominated": true,
+      "root_wrong_price": "9/4",
+      "shared_defects": {
+        "E5": "2/33075",
+        "E15": "1/25725",
+        "E3": "1081/385875",
+        "E5d": "367/1653750",
+        "E15d": "367/2572500",
+        "omega": "5698064/275900625",
+        "rho": "213555547/6621615000"
+      },
+      "unused_named_defect_budget": "1/120"
+    },
+    "cylinder_checks": 747,
+    "cylinder_digest": "0a501c3153c4da13c64d1bc34f9df03997c231fff32156a8d1a5f458c1936a5a",
+    "finite_tail_checks": [
+      {
+        "prefix": 0,
+        "pattern": 0,
+        "finite_load": "4894/219375",
+        "complete_upper": "2803/27000"
+      },
+      {
+        "prefix": 0,
+        "pattern": 1,
+        "finite_load": "5189/222750",
+        "complete_upper": "2803/27000"
+      },
+      {
+        "prefix": 0,
+        "pattern": 2,
+        "finite_load": "101209/2895750",
+        "complete_upper": "2803/27000"
+      },
+      {
+        "prefix": 1,
+        "pattern": 0,
+        "finite_load": "24034/2413125",
+        "complete_upper": "2243/27000"
+      },
+      {
+        "prefix": 1,
+        "pattern": 1,
+        "finite_load": "5189/222750",
+        "complete_upper": "2243/27000"
+      },
+      {
+        "prefix": 1,
+        "pattern": 2,
+        "finite_load": "31277/1447875",
+        "complete_upper": "2243/27000"
+      },
+      {
+        "prefix": 2,
+        "pattern": 0,
+        "finite_load": "24034/2413125",
+        "complete_upper": "497/9000"
+      },
+      {
+        "prefix": 2,
+        "pattern": 1,
+        "finite_load": "25249/1447875",
+        "complete_upper": "497/9000"
+      },
+      {
+        "prefix": 2,
+        "pattern": 2,
+        "finite_load": "31277/1447875",
+        "complete_upper": "497/9000"
+      },
+      {
+        "prefix": 3,
+        "pattern": 0,
+        "finite_load": "24034/2413125",
+        "complete_upper": "377/9000"
+      },
+      {
+        "prefix": 3,
+        "pattern": 1,
+        "finite_load": "16219/1447875",
+        "complete_upper": "377/9000"
+      },
+      {
+        "prefix": 3,
+        "pattern": 2,
+        "finite_load": "22427/1447875",
+        "complete_upper": "377/9000"
+      },
+      {
+        "prefix": 4,
+        "pattern": 0,
+        "finite_load": "26453/4826250",
+        "complete_upper": "2641/81000"
+      },
+      {
+        "prefix": 4,
+        "pattern": 1,
+        "finite_load": "16219/1447875",
+        "complete_upper": "2641/81000"
+      },
+      {
+        "prefix": 4,
+        "pattern": 2,
+        "finite_load": "3911/579150",
+        "complete_upper": "2641/81000"
+      }
+    ],
+    "finite_positive7_complement": "5413/965250"
+  },
+  {
+    "mode": "root-spill",
+    "defects": {
+      "E5": "2/33075",
+      "E15": "1/25725",
+      "E3": "1277/275625",
+      "E5d": "367/1653750",
+      "E15d": "367/2572500",
+      "omega": "36278917/1655403750",
+      "rho": "234046367/6621615000"
+    },
+    "tail_interface": {
+      "old_remainders": {
+        "0": "2803/27000",
+        "1": "2243/27000",
+        "2": "497/9000",
+        "3": "377/9000",
+        "4": "2641/81000"
+      },
+      "selected_caps": [
+        "14/675",
+        "94/3375",
+        "1/75",
+        "94/10125"
+      ],
+      "positive7": "19591/315000",
+      "family_parameters": {
+        "pure3": {
+          "prime": 3,
+          "start": 3,
+          "raw": "94/125",
+          "branches": [
+            [
+              "351/500",
+              "42768619/1891890000",
+              "1/20"
+            ]
+          ]
+        },
+        "pure5": {
+          "prime": 5,
+          "start": 2,
+          "raw": "14/27",
+          "branches": [
+            [
+              "38783/92610",
+              "43948579/1655403750",
+              "3079/30870"
+            ]
+          ]
+        },
+        "root5": {
+          "prime": 5,
+          "start": 2,
+          "raw": "1/3",
+          "branches": [
+            [
+              "1373/5145",
+              "36278917/1655403750",
+              "114/1715"
+            ]
+          ]
+        },
+        "cell5": {
+          "prime": 5,
+          "start": 2,
+          "raw": "1/9",
+          "branches": [
+            [
+              "2/27",
+              "36278917/1655403750",
+              "0"
+            ],
+            [
+              "1373/15435",
+              "36278917/1655403750",
+              "38/1715"
+            ],
+            [
+              "1373/15435",
+              "36278917/1655403750",
+              "38/1715"
+            ],
+            [
+              "1373/15435",
+              "36278917/1655403750",
+              "38/1715"
+            ],
+            [
+              "1373/15435",
+              "36278917/1655403750",
+              "38/1715"
+            ]
+          ]
+        }
+      },
+      "complete_series": {
+        "0": {
+          "pure3": {
+            "upper": "47/1125",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": []
+          },
+          "pure5": {
+            "upper": "7/270",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": []
+          },
+          "root5": {
+            "upper": "1/60",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": []
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        },
+        "1": {
+          "pure3": {
+            "upper": "47/1125",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": []
+          },
+          "pure5": {
+            "upper": "7/1350",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": [
+              2
+            ]
+          },
+          "root5": {
+            "upper": "1/60",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": []
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        },
+        "2": {
+          "pure3": {
+            "upper": "47/3375",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": [
+              3
+            ]
+          },
+          "pure5": {
+            "upper": "7/1350",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": [
+              2
+            ]
+          },
+          "root5": {
+            "upper": "1/60",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": []
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        },
+        "3": {
+          "pure3": {
+            "upper": "47/3375",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": [
+              3
+            ]
+          },
+          "pure5": {
+            "upper": "7/1350",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": [
+              2
+            ]
+          },
+          "root5": {
+            "upper": "1/300",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": [
+              2
+            ]
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        },
+        "4": {
+          "pure3": {
+            "upper": "47/10125",
+            "crossing": 3,
+            "tail_coefficient": "94/125",
+            "omitted": [
+              3,
+              4
+            ]
+          },
+          "pure5": {
+            "upper": "7/1350",
+            "crossing": 2,
+            "tail_coefficient": "14/27",
+            "omitted": [
+              2
+            ]
+          },
+          "root5": {
+            "upper": "1/300",
+            "crossing": 2,
+            "tail_coefficient": "1/3",
+            "omitted": [
+              2
+            ]
+          },
+          "cell5": {
+            "upper": "1/180",
+            "crossing": 2,
+            "tail_coefficient": "1/9",
+            "omitted": []
+          }
+        }
+      },
+      "raw_old_nonunit_cap": "4673/9000",
+      "raw_deep_mixed": "1/72",
+      "actual_source_mass": "913/3375",
+      "z": "94/125",
+      "root0_raw_dominated": true,
+      "root_wrong_price": "9/4",
+      "shared_defects": {
+        "E5": "2/33075",
+        "E15": "1/25725",
+        "E3": "1277/275625",
+        "E5d": "367/1653750",
+        "E15d": "367/2572500",
+        "omega": "36278917/1655403750",
+        "rho": "234046367/6621615000"
+      },
+      "unused_named_defect_budget": "1/120"
+    },
+    "cylinder_checks": 747,
+    "cylinder_digest": "6ac608c0530ce49219ac59249cd4604e75c4a226a81095aeb52d81f2b7d4d0ec",
+    "finite_tail_checks": [
+      {
+        "prefix": 0,
+        "pattern": 0,
+        "finite_load": "107803/4826250",
+        "complete_upper": "2803/27000"
+      },
+      {
+        "prefix": 0,
+        "pattern": 1,
+        "finite_load": "15556/658125",
+        "complete_upper": "2803/27000"
+      },
+      {
+        "prefix": 0,
+        "pattern": 2,
+        "finite_load": "101557/2895750",
+        "complete_upper": "2803/27000"
+      },
+      {
+        "prefix": 1,
+        "pattern": 0,
+        "finite_load": "8038/804375",
+        "complete_upper": "2243/27000"
+      },
+      {
+        "prefix": 1,
+        "pattern": 1,
+        "finite_load": "15556/658125",
+        "complete_upper": "2243/27000"
+      },
+      {
+        "prefix": 1,
+        "pattern": 2,
+        "finite_load": "62077/2895750",
+        "complete_upper": "2243/27000"
+      },
+      {
+        "prefix": 2,
+        "pattern": 0,
+        "finite_load": "8038/804375",
+        "complete_upper": "497/9000"
+      },
+      {
+        "prefix": 2,
+        "pattern": 1,
+        "finite_load": "257437/14478750",
+        "complete_upper": "497/9000"
+      },
+      {
+        "prefix": 2,
+        "pattern": 2,
+        "finite_load": "62077/2895750",
+        "complete_upper": "497/9000"
+      },
+      {
+        "prefix": 3,
+        "pattern": 0,
+        "finite_load": "8038/804375",
+        "complete_upper": "377/9000"
+      },
+      {
+        "prefix": 3,
+        "pattern": 1,
+        "finite_load": "81506/7239375",
+        "complete_upper": "377/9000"
+      },
+      {
+        "prefix": 3,
+        "pattern": 2,
+        "finite_load": "45217/2895750",
+        "complete_upper": "377/9000"
+      },
+      {
+        "prefix": 4,
+        "pattern": 0,
+        "finite_load": "2957/536250",
+        "complete_upper": "2641/81000"
+      },
+      {
+        "prefix": 4,
+        "pattern": 1,
+        "finite_load": "81506/7239375",
+        "complete_upper": "2641/81000"
+      },
+      {
+        "prefix": 4,
+        "pattern": 2,
+        "finite_load": "9959/1447875",
+        "complete_upper": "2641/81000"
+      }
+    ],
+    "finite_positive7_complement": "5581/965250"
+  }
+]

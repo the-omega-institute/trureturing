@@ -1,0 +1,22 @@
+**命题 37.5（凸性、逐点合法与共同割仍不足）。** 恢复卷定理32.7、定义32.10和定理32.14的输出属于 $\mathcal C_S$；它们不因逐元组合法或准入类凸而自动属于更强类。即使全部共同割混合已准入，依轨道修复仍可能不被准入。
+
+证明及反例。二元翻转三角形中让全部元组合法，却只准入独立均匀乘积律构成的凸单点类。它的三边误差都是 $1/2$，所以预算 $(1/3,1/3,1/3)$ 不可行，尽管预算和等于 $a=1$。这里缺失的是割律的准入。
+
+再取 $n=3$、$g=(01)(23)$、均匀 $\mu$，令 $\mathcal F_c=\operatorname{conv}\{P^0,P^1,P^2\}$，$J$ 为独立均匀乘积。令 $Q_*$ 在轨道 $\{0,1\}$ 选割 $0$，在轨道 $\{2,3\}$ 选割 $1$。对共同割混合 $Q_\pi$，重叠质量为 $(\pi_0+\pi_1)/2$，故 $\operatorname{TV}(Q_*,Q_\pi)\ge1/2$。置
+$$
+\varepsilon=1/100,\quad P_\varepsilon=(1-\varepsilon)Q_*+\varepsilon J,
+\qquad \mathcal A_\varepsilon=\operatorname{conv}(\mathcal F_c\cup\{P_\varepsilon\}).
+\tag{37.9}
+$$
+所有成员节点边缘相同。$Q_*$ 的误差是 $(1/2,1/2,0)$，$J$ 的误差是 $(3/4,3/4,3/4)$，所以 $P_\varepsilon$ 的误差及剩余量为
+$$
+(201/400,201/400,3/400),\qquad R(P_\varepsilon)=1/80.
+\tag{37.10}
+$$
+$R$ 在这同一固定节点类上非负且仿射，故 $\mathcal A_\varepsilon$ 的零面恰为 $\mathcal F_c$。三角不等式与 $\operatorname{TV}(P_\varepsilon,Q_*)\le\varepsilon$ 给
+$$
+\operatorname{dist}_{\rm TV}(P_\varepsilon,\mathcal F_c)\ge49/100.
+\tag{37.11}
+$$
+无限制支撑时 $M_{\max}=1/2$，恢复卷（32.18）的界为 $2R=1/40$；可见其构造不能直接作为此更强类的成员。$\square$
+

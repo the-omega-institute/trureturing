@@ -1,0 +1,11 @@
+**Definition 37.0 (Original carrier, adopted hypotheses, and conventions).** Let
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \delta=[\phi]\in\mathbb T=\mathbb R/\mathbb Z,
+$$
+and retain the original carrier and phase observation of §20:
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad 0_K=Z(0),
+$$
+$$
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$

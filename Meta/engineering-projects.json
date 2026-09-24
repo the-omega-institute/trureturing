@@ -1,0 +1,2458 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "path": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+      "assembly": "StrataLint",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.Cli/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.Cli",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Cli/AssemblyInfo.cs",
+        "tools/StrataLint.Cli/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Cli/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+      "assembly": "StrataLint.Engine",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.Engine/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.Engine.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.Engine",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Engine/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Engine/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+      "assembly": "StrataLint.EngineeringScope",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.EngineeringScope/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.EngineeringScope.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.EngineeringScope/Properties/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.EngineeringScope/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+      "assembly": "StrataLint.Lean",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.Lean/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.Lean.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Lean/Properties/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Lean/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+      "assembly": "StrataLint.Scribe.Documents",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.Scribe.Documents/**/*.cs",
+        "Blueprint/**/*.scribe.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.Scribe.Documents.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.Scribe.Documents",
+      "namespace_exclude": [
+        "Blueprint/**/*.scribe.cs"
+      ],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Scribe.Documents/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+      "assembly": "StrataLint.Scribe",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.Scribe/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.Scribe.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.Scribe",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.Scribe/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.Scribe/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+      "assembly": "StrataLint.TestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.TestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.TestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.TestSupport/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+      "assembly": "Trureturing.Truth",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/Trureturing.Truth/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [],
+      "owner": null,
+      "owned_test_assembly": "Trureturing.Truth.Tests",
+      "test_partition": null,
+      "root_namespace": "Trureturing.Truth",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/Trureturing.Truth/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/scripts/report/JudgeSeedTask.csproj",
+      "assembly": "JudgeSeedTask",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/scripts/report/JudgeSeedTask.cs"
+      ],
+      "exclude": [],
+      "references": [],
+      "owner": null,
+      "owned_test_assembly": "JudgeSeedTask.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.JudgeSeed",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/scripts/report/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+      "assembly": "StrataLint.BannedApiCompileFailProof",
+      "role": "compile-fail-proof",
+      "ci": false,
+      "include": [
+        "tools/tests/BannedApiCompileFailProof/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.BannedApiCompileFailProof",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/BannedApiCompileFailProof/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/CompileFailProof/CompileFailProof.csproj",
+      "assembly": "StrataLint.CompileFailProof",
+      "role": "compile-fail-proof",
+      "ci": false,
+      "include": [
+        "tools/tests/CompileFailProof/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.CompileFailProof",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/CompileFailProof/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
+      "assembly": "JudgeSeedTask.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/JudgeSeedTask.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/scripts/report/JudgeSeedTask.csproj"
+      ],
+      "owner": {
+        "path": "tools/scripts/report/JudgeSeedTask.csproj",
+        "assembly": "JudgeSeedTask"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/JudgeSeedTask.Tests",
+      "root_namespace": "JudgeSeedTask.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/JudgeSeedTask.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/report/JudgeSeedTask.csproj",
+        "tools/scripts/report/packages.lock.json"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+      "assembly": "StrataLint.ArchitectureTests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.ArchitectureTests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ArchitectureTests",
+      "root_namespace": "StrataLint.ArchitectureTests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.ArchitectureTests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ArchitectureTests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/**",
+        "D5/**",
+        "Reg/**",
+        "Blueprint/**",
+        "Golden/**",
+        "Library/**",
+        "Meta/Digestion/atomizers.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/FILEMAP.*.toml",
+        "Meta/ReportConsumers/lean-report.json",
+        "Meta/ReportConsumers/scribe-content.json",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-cache-paths.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
+        "Meta/domains.yaml",
+        "Meta/engineering-projects.json",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "agents/**",
+        "docs/develop/spec/**",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore"
+      ],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+      "assembly": "StrataLint.Cache.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Cache.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Cache.Tests",
+      "root_namespace": "StrataLint.Cache.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Cache.Tests/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Cache.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Meta/ci-cache-paths.json",
+        "tools/**",
+        "Meta/Digestion/atomizers.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/FILEMAP.*.toml",
+        "Meta/ReportConsumers/lean-report.json",
+        "Meta/ReportConsumers/scribe-content.json",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
+        "Meta/domains.yaml",
+        "Meta/engineering-projects.json",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore"
+      ],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+      "assembly": "StrataLint.Engine.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Engine.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "assembly": "StrataLint.Engine"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Engine.Tests",
+      "root_namespace": "StrataLint.Engine.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Engine.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Engine.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/tests/StrataLint.Engine.Tests/Fixtures/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+      "assembly": "StrataLint.EngineeringScope.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.EngineeringScope.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "assembly": "StrataLint.EngineeringScope"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.EngineeringScope.Tests",
+      "root_namespace": "StrataLint.EngineeringScope.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.EngineeringScope.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+      "assembly": "StrataLint.Lean.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Lean.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "assembly": "StrataLint.Lean"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Lean.Tests",
+      "root_namespace": "StrataLint.Lean.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Lean.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Lean.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/scripts/worktree/**",
+        "tools/scripts/report/lean-report-selection.py",
+        "tools/scripts/report/lean-report-input.sh",
+        "tools/scripts/report/lean-report.sh",
+        "tools/scripts/report/report-supervisor.sh",
+        "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/lean-inspector/Inspector.lean",
+        "tools/lean-inspector/LeanInformationAudit/**/*.lean",
+        "tools/lean-inspector/inspect.sh",
+        "tools/lean-inspector/lakefile.lean",
+        "tools/lean-inspector/lake-manifest.json",
+        "tools/lean-inspector/materials.py",
+        "tools/lean-inspector/native.py",
+        "tools/lean-inspector/native_image.c",
+        "tools/lean-inspector/publication.py",
+        "tools/lean-inspector/reuse.py",
+        "tools/lean-inspector/tests/**/*.py",
+        "tools/lean-inspector-interface/**",
+        "Reg/lakefile.toml",
+        "Reg/lake-manifest.json",
+        "tools/tests/StrataLint.Lean.Tests/Fixtures/**",
+        "tools/tests/StrataLint.Lean.Tests/Native/*.py",
+        "Makefile",
+        "global.json",
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-toolchain",
+        "lean-report-inputs.json"
+      ],
+      "execution_excludes": [
+        "tools/scripts/worktree/lean_actions.py"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+      "assembly": "StrataLint.Scribe.Documents.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Scribe.Documents.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+        "assembly": "StrataLint.Scribe.Documents"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Scribe.Documents.Tests",
+      "root_namespace": "StrataLint.Scribe.Documents.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Scribe.Documents.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+      "assembly": "StrataLint.Scribe.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Scribe.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "assembly": "StrataLint.Scribe"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Scribe.Tests",
+      "root_namespace": "StrataLint.Scribe.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Scribe.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Scribe.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Golden/Projection/**",
+        "tools/tests/StrataLint.Scribe.Tests/Fixtures/**",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
+        "D5/**",
+        "Blueprint/**",
+        "Library/**",
+        "Meta/FILEMAP.toml",
+        "Meta/FILEMAP.*.toml",
+        "Meta/domains.yaml",
+        "tools/scripts/katex/**",
+        "tools/scripts/renderer/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": [
+        "README.md",
+        "tools/lean-inspector/README.md",
+        "docs/develop/theory/input.md",
+        "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
+        "docs/develop/spec/trureturing_engineering_optimization_v1.md",
+        "docs/reports/a110037-0910/BoundaryProbe.lean",
+        "docs/reports/prime-slab-corner-order-0909.json",
+        "Library/Notes/input.md",
+        "Problems/input.md",
+        "Blueprint/D5/Result.md",
+        "D5/ledger.md",
+        "CLAUDE.md",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
+        "Meta/Digestion/atoms/sha256/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "path": "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+      "assembly": "StrataLint.ScriptTests",
+      "role": "cross-cutting-test",
+      "ci": false,
+      "include": [
+        "tools/tests/StrataLint.ScriptTests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ScriptTests",
+      "root_namespace": "StrataLint.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.ScriptTests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ScriptTests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Meta/ci-cache-paths.json",
+        "tools/scripts/**",
+        "tools/Makefile",
+        "Makefile",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "lean-toolchain",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/**",
+        ".gitignore",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
+        "lean-report-inputs.json"
+      ],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+      "assembly": "StrataLint.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
+        "tools/TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "assembly": "StrataLint"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.Tests",
+      "root_namespace": "StrataLint.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/**",
+        "Golden/**",
+        "Meta/Digestion/atomizers.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/FILEMAP.*.toml",
+        "Meta/ReportConsumers/lean-report.json",
+        "Meta/ReportConsumers/scribe-content.json",
+        "Meta/ReportProducers/lean-report.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
+        "Meta/domains.yaml",
+        "Meta/engineering-projects.json",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "D5/**",
+        "Reg/**",
+        "Blueprint/**",
+        "Library/**",
+        "agents/**",
+        "*.props",
+        "*.json",
+        "*.toml",
+        "Makefile",
+        "lean-toolchain",
+        ".gitignore",
+        "docs/develop/spec/**"
+      ],
+      "execution_excludes": [
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md"
+      ],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
+      "assembly": "Trureturing.Truth.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/Trureturing.Truth.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": {
+        "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+        "assembly": "Trureturing.Truth"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/Trureturing.Truth.Tests",
+      "root_namespace": "Trureturing.Truth.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/Trureturing.Truth.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+      "assembly": "StrataLint.RegistrationTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+      "assembly": "StrataLint.ProcessTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.ProcessTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.ProcessTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
+      "assembly": "StrataLint.LeanTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.LeanTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.LeanTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.LeanTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+      "assembly": "StrataLint.AdmissionTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj",
+      "assembly": "StrataLint.ReleaseSelection",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.ReleaseSelection/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.ReleaseSelection.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.ReleaseSelection",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.ReleaseSelection/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj",
+      "assembly": "StrataLint.ReleaseSelection.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.ReleaseSelection.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.ReleaseSelection/StrataLint.ReleaseSelection.csproj",
+        "assembly": "StrataLint.ReleaseSelection"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ReleaseSelection.Tests",
+      "root_namespace": "StrataLint.ReleaseSelection.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ReleaseSelection.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
+      "assembly": "StrataLint.ReleaseIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.ReleaseIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ReleaseTestSupport/StrataLint.ReleaseTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ReleaseIntegration.Tests",
+      "root_namespace": "StrataLint.ReleaseIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ReleaseIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Makefile",
+        "tools/scripts/ci-build-outputs.targets",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/scripts/workflow/source_reference.py",
+        "tools/scripts/workflow/truth_release.py"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+      "assembly": "StrataLint.ScriptProcessTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+      "assembly": "StrataLint.ExecutionTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+      "assembly": "StrataLint.RoutingTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.RoutingTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.RoutingTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj",
+      "assembly": "StrataLint.TransportTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.TransportTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.TransportTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.TransportTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.NativeReportTestSupport/StrataLint.NativeReportTestSupport.csproj",
+      "assembly": "StrataLint.NativeReportTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.NativeReportTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.NativeReportTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.NativeReportTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.ReleaseTestSupport/StrataLint.ReleaseTestSupport.csproj",
+      "assembly": "StrataLint.ReleaseTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.ReleaseTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.ReleaseTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.ReleaseTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.PreflightTestSupport/StrataLint.PreflightTestSupport.csproj",
+      "assembly": "StrataLint.PreflightTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.PreflightTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.PreflightTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.PreflightTestSupport/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.ResourcePlanning.Tests/StrataLint.ResourcePlanning.Tests.csproj",
+      "assembly": "StrataLint.ResourcePlanning.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.ResourcePlanning.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "assembly": "StrataLint.ResourcePlanning"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ResourcePlanning.Tests",
+      "root_namespace": "StrataLint.ResourcePlanning.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ResourcePlanning.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Meta/FILEMAP.docs.reports.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/ci-checks.json",
+        "Meta/ci-resources.json",
+        "Meta/engineering-projects.json",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/ci_plan.py"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": [
+        "D5/F/NumberTheory/AdmissionResourceProbe.lean",
+        "D5/S0/Carrier/Ring.lean",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json",
+        "Meta/Digestion/atoms/sha256/admission-resource-probe",
+        "Meta/Digestion/backfill/admission-resource-probe.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-cache-paths.json",
+        "Meta/ci-checks.json",
+        "Meta/domains.yaml",
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "docs/develop/spec/golden-ledger-repo-spec.md",
+        "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
+        "docs/develop/spec/trureturing_engineering_optimization_v1.md",
+        "docs/develop/theory/admission-resource-probe.md",
+        "docs/reports/ci-fixture-plane-probe.md",
+        "docs/reports/ci-fixture-plane-probe.unregistered",
+        "docs/reports/prime-slab-corner-order-0909.json",
+        "tools/StrataLint.BuildRuntime/Changed.cs",
+        "tools/StrataLint.CiArtifacts/Changed.cs",
+        "tools/StrataLint.Cli/Program.cs",
+        "tools/StrataLint.Cli/ResourceRoutingProbe.cs",
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Cli/packages.lock.json",
+        "tools/StrataLint.Engine/ResourceRoutingProbe.cs",
+        "tools/StrataLint.Engine/Rules/CapacityRule.cs",
+        "tools/StrataLint.EngineeringScope/ResourceRoutingProbe.cs",
+        "tools/StrataLint.ExecutionEvidence/Changed.cs",
+        "tools/StrataLint.InspectionScope/Changed.cs",
+        "tools/StrataLint.InspectionScope/MarkdownInspectionScope.cs",
+        "tools/StrataLint.Lean/ResourceRoutingProbe.cs",
+        "tools/StrataLint.ReleaseSelection/TruthReleaseSelection.cs",
+        "tools/StrataLint.ResourcePlanning/Changed.cs",
+        "tools/StrataLint.Scribe.Documents/ResourceRoutingProbe.cs",
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
+        "tools/StrataLint.Scribe.Documents/packages.lock.json",
+        "tools/StrataLint.Scribe/ResourceRoutingProbe.cs",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/StrataLint.Scribe/packages.lock.json",
+        "tools/StrataLint.Unregistered/Program.cs",
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/ProducerInputFixture.cs",
+        "tools/TestSupport/StrataLint.CliTestSupport/RuleFixture.cs",
+        "tools/TestSupport/StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs",
+        "tools/TestSupport/StrataLint.NativeReportTestSupport/NativeReportFixture.cs",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/TestProcessRunner.cs",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/EngineeringRegistrationFixture.cs",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/EngineeringProcess.cs",
+        "tools/TestSupport/StrataLint.TestSupport/TestBudgets.cs",
+        "tools/Trureturing.Truth/ResourceRoutingProbe.cs",
+        "tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean",
+        "tools/lean-inspector/Census/config.lean",
+        "tools/lean-inspector/Census/native.py",
+        "tools/lean-inspector/Inspector.lean",
+        "tools/lean-inspector/LeanInformationAudit/NameWire.lean",
+        "tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean",
+        "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/MutationMatrix.py",
+        "tools/lean-inspector/LeanInformationAuditAnalysis/Tests/WitnessCarriers.lean",
+        "tools/lean-inspector/LeanInformationAuditRegTests/LandedFinite.lean",
+        "tools/lean-inspector/lakefile.lean",
+        "tools/lean-inspector/native.py",
+        "tools/lean-inspector/native_image.c",
+        "tools/lean-inspector/tests/test_native_support.py",
+        "tools/lean-inspector/tests/test_reuse.py",
+        "tools/scripts/agent/merge-gate.sh",
+        "tools/scripts/agent/openproblem/README.md",
+        "tools/scripts/agent/openproblem/SCREENED-OUT.md",
+        "tools/scripts/agent/openproblem/TARGET-GATES.md",
+        "tools/scripts/agent/openproblem/erdos617.py",
+        "tools/scripts/agent/openproblem/standing-check.py",
+        "tools/scripts/lib/admission-base-lib.sh",
+        "tools/scripts/preflight.sh",
+        "tools/scripts/report/JudgeSeedTask.cs",
+        "tools/scripts/report/lean-report-selection.py",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/scripts/workflow/source_reference.py",
+        "tools/scripts/workflow/truth_release.py",
+        "tools/scripts/worktree/lean_cache.py",
+        "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs",
+        "tools/tests/CompileFailProof/MissingCapability.cs",
+        "tools/tests/JudgeSeedTask.Tests/JudgeSeedInputsTests.cs",
+        "tools/tests/StrataLint.ArchitectureTests/ArchitectureTests.cs",
+        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+        "tools/tests/StrataLint.BuildRuntime.Tests/PackageMaterialRegistryTests.cs",
+        "tools/tests/StrataLint.Cache.Tests/LeanCachePublishTests.cs",
+        "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+        "tools/tests/StrataLint.CiArtifacts.Tests/TransportIdentityTests.cs",
+        "tools/tests/StrataLint.CliIntegration.Tests/CurrentDeltaCliContractTests.cs",
+        "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs",
+        "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+        "tools/tests/StrataLint.EngineeringScope.Tests/ResourceAdapterTests.cs",
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.ExecutionEvidence.Tests/Fixtures/infrastructure-skip.trx",
+        "tools/tests/StrataLint.ExecutionEvidence.Tests/TestProcessRunnerTests.cs",
+        "tools/tests/StrataLint.InspectionScope.Tests/FileMapInspectionScopeTests.cs",
+        "tools/tests/StrataLint.Lean.Tests/Native/InspectorNativeTests.cs",
+        "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+        "tools/tests/StrataLint.ReleaseIntegration.Tests/ReleaseCommandTests.cs",
+        "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
+        "tools/tests/StrataLint.ReleaseSelection.Tests/TruthReleaseSelectionTests.cs",
+        "tools/tests/StrataLint.ResourcePlanning.Tests/RegisteredAdmissionResourcesTests.cs",
+        "tools/tests/StrataLint.Scribe.Tests/FileMap/ResourceTests.cs",
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ]
+    },
+    {
+      "path": "tools/tests/StrataLint.InspectionScope.Tests/StrataLint.InspectionScope.Tests.csproj",
+      "assembly": "StrataLint.InspectionScope.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.InspectionScope.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "assembly": "StrataLint.InspectionScope"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.InspectionScope.Tests",
+      "root_namespace": "StrataLint.InspectionScope.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.InspectionScope.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.ExecutionEvidence.Tests/StrataLint.ExecutionEvidence.Tests.csproj",
+      "assembly": "StrataLint.ExecutionEvidence.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.ExecutionEvidence.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "assembly": "StrataLint.ExecutionEvidence"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.ExecutionEvidence.Tests",
+      "root_namespace": "StrataLint.ExecutionEvidence.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.ExecutionEvidence.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/tests/StrataLint.ExecutionEvidence.Tests/Fixtures/**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.PlanningIntegration.Tests/StrataLint.PlanningIntegration.Tests.csproj",
+      "assembly": "StrataLint.PlanningIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.PlanningIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.PreflightTestSupport/StrataLint.PreflightTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.PlanningIntegration.Tests",
+      "root_namespace": "StrataLint.PlanningIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.PlanningIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Meta/ci-cache-paths.json",
+        "tools/scripts/ci-build-outputs.targets",
+        "tools/scripts/ci-stage.sh",
+        "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/scripts/preflight.sh",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/scripts/worktree/cache_deadline.py",
+        "tools/scripts/worktree/cache_material.py",
+        "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_cache.py",
+        "tools/scripts/worktree/lean_cache_release.py"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.BuildIntegration.Tests/StrataLint.BuildIntegration.Tests.csproj",
+      "assembly": "StrataLint.BuildIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.BuildIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.BuildIntegration.Tests",
+      "root_namespace": "StrataLint.BuildIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.BuildIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Meta/judge-seed.json",
+        "Meta/package-materials.json",
+        "global.json",
+        "tools/scripts/ci-build-outputs.targets",
+        "tools/scripts/ci-stage.sh",
+        "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/scripts/report/JudgeSeed.targets",
+        "tools/scripts/report/JudgeSeedTask.cs",
+        "tools/scripts/report/JudgeSeedTask.csproj",
+        "tools/scripts/report/dotnet_producer.py",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/scripts/worktree/cache_deadline.py",
+        "tools/scripts/worktree/cache_material.py",
+        "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_cache.py",
+        "tools/scripts/worktree/lean_cache_release.py"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.CheckIntegration.Tests/StrataLint.CheckIntegration.Tests.csproj",
+      "assembly": "StrataLint.CheckIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.CheckIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.CheckIntegration.Tests",
+      "root_namespace": "StrataLint.CheckIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.CheckIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+      "assembly": "StrataLint.TransportIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.TransportIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ReleaseTestSupport/StrataLint.ReleaseTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.TransportIntegration.Tests",
+      "root_namespace": "StrataLint.TransportIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.TransportIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "tools/lean-inspector/materials.py",
+        "tools/lean-inspector/publication.py",
+        "tools/lean-inspector/reuse.py",
+        "tools/lean-inspector/tests/test_reuse.py",
+        "tools/scripts/ci-build-outputs.targets",
+        "tools/scripts/report/dotnet_producer.py",
+        "tools/scripts/report/lean-report-input.sh",
+        "tools/scripts/report/lean-report-selection.py",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/scripts/worktree/cache_deadline.py",
+        "tools/scripts/worktree/cache_material.py",
+        "tools/scripts/worktree/lean-cache-input.sh",
+        "tools/scripts/worktree/lean_actions.py",
+        "tools/scripts/worktree/lean_cache.py",
+        "tools/scripts/worktree/lean_cache_release.py"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
+      "assembly": "StrataLint.StageIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.StageIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.PreflightTestSupport/StrataLint.PreflightTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ReleaseTestSupport/StrataLint.ReleaseTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.StageIntegration.Tests",
+      "root_namespace": "StrataLint.StageIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.StageIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Makefile",
+        "Meta/FILEMAP.docs.reports.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/engineering-projects.json",
+        "global.json",
+        "tools/scripts/ci-build-outputs.targets",
+        "tools/scripts/ci-stage.sh",
+        "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/scripts/preflight.sh",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/ci_plan.py"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": [
+        "README.md",
+        "docs/develop/theory/input.md",
+        "Meta/Digestion/atoms/sha256/input",
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+        "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj"
+      ]
+    },
+    {
+      "path": "tools/tests/StrataLint.InspectionIntegration.Tests/StrataLint.InspectionIntegration.Tests.csproj",
+      "assembly": "StrataLint.InspectionIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.InspectionIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.InspectionIntegration.Tests",
+      "root_namespace": "StrataLint.InspectionIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.InspectionIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Meta/ci-checks.json"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+      "assembly": "StrataLint.ResourcePlanning",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.ResourcePlanning/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.ResourcePlanning.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.ResourcePlanning/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.ResourcePlanning/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+      "assembly": "StrataLint.InspectionScope",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.InspectionScope/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.InspectionScope.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.InspectionScope/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.InspectionScope/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+      "assembly": "StrataLint.ExecutionEvidence",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.ExecutionEvidence/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.ExecutionEvidence.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.ExecutionEvidence/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.ExecutionEvidence/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+      "assembly": "StrataLint.BuildRuntime",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.BuildRuntime/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.BuildRuntime.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.BuildRuntime/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.BuildRuntime/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+      "assembly": "StrataLint.CiArtifacts",
+      "role": "production",
+      "ci": false,
+      "include": [
+        "tools/StrataLint.CiArtifacts/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.CiArtifacts.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.EngineeringScope",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.CiArtifacts/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/StrataLint.CiArtifacts/packages.lock.json"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.BuildRuntime.Tests/StrataLint.BuildRuntime.Tests.csproj",
+      "assembly": "StrataLint.BuildRuntime.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.BuildRuntime.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "assembly": "StrataLint.BuildRuntime"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.BuildRuntime.Tests",
+      "root_namespace": "StrataLint.BuildRuntime.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.BuildRuntime.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.CiArtifacts.Tests/StrataLint.CiArtifacts.Tests.csproj",
+      "assembly": "StrataLint.CiArtifacts.Tests",
+      "role": "owned-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.CiArtifacts.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "assembly": "StrataLint.CiArtifacts"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.CiArtifacts.Tests",
+      "root_namespace": "StrataLint.CiArtifacts.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.CiArtifacts.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
+      "assembly": "StrataLint.NativeTransportIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.NativeTransportIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/TestSupport/StrataLint.ExecutionTestSupport/StrataLint.ExecutionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.NativeReportTestSupport/StrataLint.NativeReportTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RoutingTestSupport/StrataLint.RoutingTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/TestSupport/StrataLint.TransportTestSupport/StrataLint.TransportTestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.NativeTransportIntegration.Tests",
+      "root_namespace": "StrataLint.NativeTransportIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.NativeTransportIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "Makefile",
+        "lean-toolchain",
+        "tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs",
+        "tools/lean-inspector/Inspector.lean",
+        "tools/lean-inspector/inspect.sh",
+        "tools/lean-inspector/lake-manifest.json",
+        "tools/lean-inspector/lakefile.lean",
+        "tools/lean-inspector/materials.py",
+        "tools/lean-inspector/native.py",
+        "tools/lean-inspector/native_image.c",
+        "tools/lean-inspector/publication.py",
+        "tools/lean-inspector/reuse.py",
+        "tools/lean-inspector/tests/packages/reg.py",
+        "tools/lean-inspector/tests/test_native*.py",
+        "tools/lean-inspector/tests/test_reuse.py",
+        "tools/scripts/ci-build-outputs.targets",
+        "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/scripts/report/lean-report-input.sh",
+        "tools/scripts/report/lean-report-selection.py",
+        "tools/scripts/report/lean-report.sh",
+        "tools/scripts/report/report-supervisor.sh",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/scripts/worktree/cache_deadline.py",
+        "tools/scripts/worktree/cache_material.py",
+        "tools/scripts/worktree/lean-cache-ensure.sh",
+        "tools/scripts/worktree/lean-cache-input.sh",
+        "tools/scripts/worktree/lean-cache-run.sh",
+        "tools/scripts/worktree/lean_cache.py"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
+      "assembly": "StrataLint.CliTestSupport",
+      "role": "test-support",
+      "ci": false,
+      "include": [
+        "tools/TestSupport/StrataLint.CliTestSupport/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestSupport",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/TestSupport/StrataLint.CliTestSupport/Usings.cs",
+        "tools/TestSupport/StrataLint.CliTestSupport/AssemblyInfo.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/TestSupport/StrataLint.CliTestSupport/packages.lock.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": null,
+      "execution_excludes": null,
+      "execution_environment": null,
+      "execution_filemap_paths": null
+    },
+    {
+      "path": "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
+      "assembly": "StrataLint.CliIntegration.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.CliIntegration.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.BuildRuntime/StrataLint.BuildRuntime.csproj",
+        "tools/StrataLint.CiArtifacts/StrataLint.CiArtifacts.csproj",
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+        "tools/StrataLint.ResourcePlanning/StrataLint.ResourcePlanning.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.CliIntegration.Tests",
+      "root_namespace": "StrataLint.CliIntegration.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.CliIntegration.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.CliIntegration.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        ".editorconfig",
+        ".github/scripts/harness-gate.sh",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "Meta/Digestion/atomizers.toml",
+        "Meta/FILEMAP.docs.reports.toml",
+        "Meta/FILEMAP.toml",
+        "Meta/ReportConsumers/scribe-content.json",
+        "Meta/ReportProducers/scribe-content.json",
+        "Meta/ci-checks.json",
+        "Reg/lake-manifest.json",
+        "Reg/lakefile.toml",
+        "global.json",
+        "lake-manifest.json",
+        "lean-report-inputs.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/Architecture/BannedSymbols.Guid.txt",
+        "tools/Architecture/BannedSymbols.txt",
+        "tools/StrataLint.Cli/Admission/ProductionCliEnvironment.CurrentChecks.cs",
+        "tools/StrataLint.Cli/Runtime/ScribeEmissionVerifier.cs",
+        "tools/StrataLint.Engine/packages.lock.json",
+        "tools/StrataLint.Lean/packages.lock.json",
+        "tools/StrataLint.Scribe.Documents/packages.lock.json",
+        "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js",
+        "tools/StrataLint.Scribe/packages.lock.json",
+        "tools/Trureturing.Truth/packages.lock.json",
+        "tools/scripts/workflow/ci.py",
+        "tools/scripts/workflow/ci_plan.py",
+        "tools/scripts/workflow/scribe-content-checks.sh",
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": [
+        "Blueprint/D5/S0/Carrier/DeltaFixture.md",
+        "Blueprint/D5/S0/Carrier/DeltaFixture.scribe.cs",
+        "Blueprint/D5/S0/Carrier/Ring.scribe.cs",
+        "D5/S0/Carrier/BackfillTarget.lean",
+        "D5/S0/Carrier/Ring.lean",
+        "D5/S0/Carrier/ValuesBinding.lean",
+        "Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+        "Library/queries.yaml",
+        "Meta/Digestion/atoms/sha256/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881",
+        "Meta/Digestion/backfill/fixture-source/partial-open/2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881.yaml",
+        "Meta/Digestion/backfill/fixture-source/source.toml",
+        "Meta/Values/bindings.toml",
+        "Meta/domains.yaml",
+        "README.md",
+        "Reg/D5/S0/Carrier/Ring.lean",
+        "Reg/D5/S0/Carrier/ValuesBinding.lean",
+        "docs/GOVERNANCE.md",
+        "docs/reports/ratchet/0.json",
+        "tools/StrataLint.Cli/probe.cs",
+        "tools/scripts/ci-stage.sh",
+        "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
+        "tools/tests/CompileFailProof/CompileFailProof.csproj",
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj"
+      ]
+    }
+  ],
+  "historical_projects": [],
+  "rule_build_inputs": [
+    "global.json",
+    "Directory.Build.props",
+    "Directory.Packages.props",
+    ".editorconfig",
+    "tools/Architecture/BannedSymbols.txt",
+    "tools/Architecture/BannedSymbols.Determinism.txt",
+    "tools/Architecture/BannedSymbols.Guid.txt",
+    "tools/StrataLint.Engine/packages.lock.json",
+    "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs"
+  ]
+}

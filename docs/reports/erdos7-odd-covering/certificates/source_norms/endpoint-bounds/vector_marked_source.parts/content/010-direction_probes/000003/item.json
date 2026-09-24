@@ -1,0 +1,11 @@
+{
+  "name": {
+    "kind": "inline",
+    "value": "late3"
+  },
+  "costs": {
+    "path": "content/010-direction_probes/000003/item/001-costs.json",
+    "sha256": "af948ef75778ac7e49464a30948f5c3a1b0922df9afdce6665f592ba21d2fdda",
+    "kind": "array"
+  }
+}

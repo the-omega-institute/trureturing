@@ -7,7 +7,8 @@
    digest: Existential witness registration uses one ADMIT slot over complete witness states with checked slot sensitivity. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
-import LeanInformationAudit.RegistrationWitnesses
+import D5.S3.ConceptDynamics.RegistrationWitnesses
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -33,6 +34,8 @@ def existentialWitnessSignature (X : Type) : PrimitiveSignature X where
 def existentialWitnessRealization {X : Type} (P : X → Prop) [DecidablePred P] :
     PrimitiveRealization (existentialWitnessSignature X) :=
   ⟨fun _ x => decide (P x), Fin.elim0⟩
+
+
 
 /-- The fixed law asks for an accepted state, with no raw Law parameter. -/
 def existentialWitnessArena (A : Arena) : PrimitiveLawArena where

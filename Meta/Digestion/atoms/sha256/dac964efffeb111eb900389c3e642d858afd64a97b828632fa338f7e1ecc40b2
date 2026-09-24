@@ -1,0 +1,22 @@
+### 133.2 有限关系模型与换名
+
+设 $\Omega,\Omega'$ 为非空有限集，$\mu,\mu'$ 为严格正概率，$q:\Omega\twoheadrightarrow B$、$q':\Omega'\twoheadrightarrow B'$ 为观察。设双射 $s:\Omega\to\Omega'$、$t:B\to B'$ 满足
+$$
+\mu'(sx)=\mu(x),\qquad q's=tq.
+$$
+参考权重及观察关系因而一并运输。定义
+$$
+U:L^2(\Omega,\mu)\to L^2(\Omega',\mu'),
+\qquad (Uf)(sx)=f(x).
+$$
+换指标求和给 $\langle Uf,Ug\rangle_{\mu'}=\langle f,g\rangle_\mu$，所以 $U$ 是保常数的线性等距同构；同时它保持逐点乘积、指标、顺序及任意已定义的逐点标量函数。
+
+设 $P,P'$ 是相应条件期望。对 $b=q(x)$，纤维双射 $q^{-1}(b)\to(q')^{-1}(tb)$ 保持各点质量及纤维总质量。因此
+$$
+(P'Uf)(sx)
+=\frac{\sum_{y:q(y)=b}\mu(y)f(y)}{\sum_{y:q(y)=b}\mu(y)}
+=(UPf)(sx),
+\qquad P'U=UP.
+$$
+换名把可见空间 $V=\operatorname{ran}P$ 等距映到 $V'=\operatorname{ran}P'$，隐藏空间 $H=\ker P$ 等距映到 $H'=\ker P'$。记限制同构为 $U_V,U_H$。
+

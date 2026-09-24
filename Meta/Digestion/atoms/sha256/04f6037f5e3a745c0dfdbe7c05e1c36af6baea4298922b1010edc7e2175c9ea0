@@ -1,0 +1,20 @@
+**引理 28.4（一次统一的混合四阶图余项）。** 在定理28.2的较小紧参数邻域和共同 $[0,r_*]$ 上，定义
+$$
+R(p,r)=g(p,r)-mr-\tfrac12F(m)r^2-\tfrac16G(m,k)r^3.
+\tag{28.109}
+$$
+对 $a=0,m,k$，记 $D_0$ 为恒等、$D_m=\partial_m,D_k=\partial_k$，并令 $M_a=\sup|D_a\partial_r^4g|<\infty$。则
+$$
+D_aR(p,r)=\frac16\int_0^r(r-v)^3D_a\partial_r^4g(p,v)\,dv,
+\qquad |D_aR(p,r)|\le\frac{M_a}{24}r^4.
+\tag{28.110}
+$$
+因此 $g=mr+F(m)r^2/2+G(p)r^3/6+O_{C^1(p)}(r^4)$，一致地有
+$$
+\partial_mg(p,r)=r+O(r^2),\qquad
+\partial_kg(p,r)=-\frac m{60}r^3+O(r^4).
+\tag{28.111}
+$$
+
+证明。对 $g$ 使用四阶积分 Taylor 公式，定理28.3给零至三阶系数。定理28.2的联合 $C^5$ 保证对参数在积分下微分合法且混合导数交换，得到同一公式的 $D_m,D_k$ 版本。$\int_0^r(r-v)^3dv=r^4/4$ 给常数 $1/24$；紧性给有限的 $M_a$。最后对系数求导，$G_k=-m/10$，即得（28.111）。后文的有限记录和有限差分共用此余项，不另假定解析性。积分 Taylor 的钉版直接供应者是 Mathlib [Taylor.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Calculus/Taylor.lean) 的 `taylor_integral_remainder`、`taylor_mean_remainder_bound`；这里的 $1/24$ 来自所展示的积分而非额外经验常数。$\square$
+

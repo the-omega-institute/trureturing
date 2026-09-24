@@ -1,0 +1,22 @@
+{
+  "heavy-0": {
+    "path": "content/008-tests/000-heavy-0.json",
+    "sha256": "622d28be29e237bb06510b82bb27ebf2c211eb4f5a583c802af3e4a0928356f9",
+    "kind": "value"
+  },
+  "heavy-16": {
+    "path": "content/008-tests/001-heavy-16.json",
+    "sha256": "72ac2640d9f219b3bd39fe9e72f3a196ed8c00ea62001c2c3a91c0e6046c8032",
+    "kind": "value"
+  },
+  "AP13": {
+    "path": "content/008-tests/002-AP13.json",
+    "sha256": "c57599171fe180ccd776a17a8be5c4ef6d0c605e56bdf6d429ac0e2022a3e132",
+    "kind": "value"
+  },
+  "AP11-block0": {
+    "path": "content/008-tests/003-AP11-block0.json",
+    "sha256": "d32b45f0f16199cc68a1db94884a11d83fe239996c35ec8b875ef5ea15ae1c63",
+    "kind": "value"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "all_states": 165141,
+  "covered_states": 1339,
+  "covered_orbits": 562,
+  "covered_profiles": 477,
+  "covered_minimal_orbits": 8,
+  "minimal_representatives": [
+    [
+      2,
+      4160,
+      36866,
+      37442,
+      70736
+    ],
+    [
+      2,
+      4160,
+      37442,
+      103506
+    ],
+    [
+      2,
+      36930,
+      37442,
+      70736
+    ],
+    [
+      4096,
+      4160,
+      37442,
+      103506
+    ],
+    [
+      4160,
+      36866,
+      37442,
+      70738
+    ],
+    [
+      4162,
+      36866,
+      37442,
+      70736
+    ],
+    [
+      4162,
+      37442,
+      103506
+    ],
+    [
+      36930,
+      37442,
+      70738
+    ]
+  ],
+  "covered_states_sha256": "3ab2a9ffe29a2289e63d1ac121f0b78f993cc4755659c62c7186a0bfa214c01d",
+  "covered_orbits_sha256": "f13a35bc250653dfd7e215a3f39c02cfba9baec03840fcceaf8913a425def4ac",
+  "covered_profiles_sha256": "b122a26127dfa1010ff98adf308997b92ac5ea08738929703b5a3c786add6372",
+  "former_states": 821,
+  "former_orbits": 355,
+  "additional_states": 518,
+  "additional_orbits": 207,
+  "additional_minimal_orbits": 5,
+  "additional_orbits_sha256": "4ea1386238d51eb6d2cf44a6bddebeb17d1f0a963921f6193f97ce622fad9c8a"
+}

@@ -1,0 +1,12 @@
+### 112.2 精确恢复的充要条件
+
+retained_residue_recovery_iff_product_capacity 证明：
+
+$$
+\boxed{
+R\text{ 在 }\operatorname{Fin}(K)\text{ 上单射}
+\quad\Longleftrightarrow\quad
+K\le\prod_{i\in\iota}m(i).
+}
+$$
+

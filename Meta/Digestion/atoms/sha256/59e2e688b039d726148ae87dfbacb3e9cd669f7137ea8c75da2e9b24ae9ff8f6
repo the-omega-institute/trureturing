@@ -1,0 +1,10 @@
+项目进一步把扇区系数矩阵的秩写成边界数量，得到 `sequential_memory_necessity`：
+
+$$
+\boxed{
+|\operatorname{Boundary}(a,t)|
+\le
+\dim(\text{任何精确链在切口 }t\text{ 的记忆} ) .
+}
+$$
+

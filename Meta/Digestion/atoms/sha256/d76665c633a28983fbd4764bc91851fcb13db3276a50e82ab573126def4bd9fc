@@ -1,0 +1,19 @@
+**定义 70.1（观察塔及其细节层）。** 设 $(X,\mathcal F,\mu)$ 为概率空间，$(\mathcal P_L)_{L\ge0}$ 为逐层加细的有限可测分区，$\mathcal P_0=\{X\}$。分区与加细均按零测集等价理解；每层删去零质量胞腔，记剩下的胞腔数为 $N_L$，故 $N_0=1$。记 $\mathcal N_\mu=\{B\in\mathcal F:\mu(B)=0\}$，令 $\mathcal F_L=\sigma(\mathcal P_L\cup\mathcal N_\mu)$；加入环境内的可测零集后，有真正的包含 $\mathcal F_L\subseteq\mathcal F_{L+1}\subseteq\mathcal F$。在复 Hilbert 空间 $L^2(X,\mu;\mathbb C)$ 中置
+$$
+H_L=\operatorname{span}_{\mathbb C}\{\mathbf1_C:C\in\mathcal P_L,\ \mu(C)>0\},
+\qquad
+H_{\mathrm{obs}}=\overline{\bigcup_{L\ge0}H_L}.
+$$
+内积取 $\langle f,g\rangle=\int_X\overline f g\,d\mu$。条件平均在零测集外写为
+$$
+\Pi_L f=\sum_{C\in\mathcal P_L,\ \mu(C)>0}
+\left(\frac1{\mu(C)}\int_C f\,d\mu\right)\mathbf1_C.
+$$
+以下算子均限制在 $H_{\mathrm{obs}}$ 上。定义
+$$
+\Delta_0=\Pi_0,\qquad
+\Delta_L=\Pi_L-\Pi_{L-1}\quad(L\ge1),\qquad
+V_L=\operatorname{ran}\Delta_L,
+$$
+并记 $m_0=1$、$m_L=N_L-N_{L-1}$（$L\ge1$）。允许 $m_L=0$，即该步没有新增正质量可见方向。
+

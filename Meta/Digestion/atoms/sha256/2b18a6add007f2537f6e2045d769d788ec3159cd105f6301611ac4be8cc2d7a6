@@ -1,0 +1,7 @@
+**定理 50.2（有限经典读数的闭合判据）。** 上述 $\bar F$ 存在，当且仅当
+
+$$
+q(x)=q(y)\Longrightarrow q(F(x))=q(F(y))
+\qquad(x,y\in X).
+$$
+

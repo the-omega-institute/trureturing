@@ -1,0 +1,108 @@
+{
+  "head": {
+    "kind": "inline",
+    "value": "head_divides_945"
+  },
+  "head_period_bound": {
+    "kind": "inline",
+    "value": 945
+  },
+  "head_primes": {
+    "kind": "inline",
+    "value": [
+      3,
+      5,
+      7
+    ]
+  },
+  "tail_prime_lower_bound": {
+    "kind": "inline",
+    "value": 17
+  },
+  "prime_cutoff": {
+    "kind": "inline",
+    "value": 8192
+  },
+  "last_prime": {
+    "kind": "inline",
+    "value": 8191
+  },
+  "global_prime_index": {
+    "kind": "inline",
+    "value": 1028
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "2/5"
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000000
+  },
+  "retained_product_states": {
+    "kind": "inline",
+    "value": 3277
+  },
+  "mixed_head_charge": {
+    "kind": "inline",
+    "value": "157/336"
+  },
+  "head_product_mean": {
+    "kind": "inline",
+    "value": "45/16"
+  },
+  "head_product_second_moment": {
+    "kind": "inline",
+    "value": "189/16"
+  },
+  "head_product_distribution": {
+    "kind": "inline",
+    "value": {
+      "1": "25/112",
+      "2": "65/168",
+      "3": "5/56",
+      "4": "17/84",
+      "6": "1/21",
+      "8": "1/24",
+      "12": "1/168",
+      "16": "1/336"
+    }
+  },
+  "total_charge_upper": {
+    "kind": "inline",
+    "value": "792001218575786359/1000000000000000000"
+  },
+  "mean_upper": {
+    "kind": "inline",
+    "value": "2339510580227351927/125000000000000000"
+  },
+  "second_moment_upper": {
+    "kind": "inline",
+    "value": "3198136266025222684001/1000000000000000000"
+  },
+  "supported_Gamma_upper": {
+    "kind": "inline",
+    "value": "3197344264806646897642/207998781424213641"
+  },
+  "stopping_lower": {
+    "kind": "inline",
+    "value": "8861473523187882599326452722900980214033/250000000000000000000000000000000000"
+  },
+  "stopping_margin": {
+    "kind": "inline",
+    "value": "1043839628244351038117143191958353325420171992836898224153/51999695356053410250000000000000000000000000000000000"
+  },
+  "steps": {
+    "path": "content/013-finite_945_tail17_stoploss/020-steps.json",
+    "sha256": "4cebcafa99d9c42687bdd28f579363be606400c4784d5849888aa3a71bf25842",
+    "kind": "array"
+  },
+  "final_low_state_digest": {
+    "kind": "inline",
+    "value": "0a3ad8ba424092a543e79a9e97df6f64711ab8025b3ca8378d8f3f34b8ea590b"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Arbitrary head residues with full head period dividing the stated bound, or arbitrary exponents on the listed head primes when that bound is null; all tail primes at least the stated lower bound; no restrictions on original tail support, heights or graph. Ordinary comparison and BBMST continuation are separate inputs."
+  }
+}

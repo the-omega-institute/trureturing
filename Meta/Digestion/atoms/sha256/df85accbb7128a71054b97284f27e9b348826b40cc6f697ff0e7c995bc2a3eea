@@ -1,0 +1,69 @@
+**定理 66.1（精确像、两点互补纤维、锚定重构与拓扑商）。**
+
+对每个 $k\ge2$，映射
+$$
+R:K_{k,k}\longrightarrow Y_k
+$$
+连续且满射，并且对每个 $c\in Y_k$，其纤维恰有两个点；若其中一个是 $x$，另一个就是 $Cx$。更精确地，对任意 $b\in\{0,1\}$ 与 $c\in Y_k$，递推
+$$
+x^{b,c}_0=b,\qquad
+x^{b,c}_{j+1}=x^{b,c}_j\oplus(1-c_j)\qquad(j\ge0)
+$$
+给出 $K_{k,k}$ 中唯一满足 $x_0=b$ 且 $R(x)=c$ 的点；两个锚 $b=0,1$ 所得序列互为逐位补。于是
+$$
+\Theta:K_{k,k}\longrightarrow\{0,1\}\times Y_k,\qquad
+\Theta(x)=(x_0,R(x))
+$$
+是同胚，并且
+$$
+\Theta(Cx)=(1-x_0,R(x)).
+$$
+因此 $R$ 在补变换轨道商上诱导同胚
+$$
+\overline R:K_{k,k}/\langle C\rangle\longrightarrow Y_k,\qquad
+\overline R([x])=R(x).
+$$
+
+当 $k=2$ 时，
+$$
+Y_2=\{0^\infty\},\qquad
+K_{2,2}=\{0101\ldots,1010\ldots\},
+$$
+故上述像、纤维、锚定重构和商结论仍成立。
+
+**证明。**
+
+若 $x\in K_{k,k}$ 而
+$$
+R(x)_j=R(x)_{j+1}=\cdots=R(x)_{j+k-2}=1,
+$$
+则
+$$
+x_j=x_{j+1}=\cdots=x_{j+k-1},
+$$
+与 $x\in K_{k,k}$ 矛盾。因此 $R(K_{k,k})\subseteq Y_k$。
+
+反之，给定 $b\in\{0,1\}$ 与 $c\in Y_k$，上述递推唯一确定 $x^{b,c}$。递推式直接给出
+$$
+c_j=1\Longleftrightarrow x^{b,c}_{j+1}=x^{b,c}_j,
+$$
+故 $R(x^{b,c})=c$。若 $x^{b,c}$ 含有长度 $k$ 的常值块，则对应的 $k-1$ 个关系位全为 $1$，与 $c\in Y_k$ 矛盾。因此 $x^{b,c}\in K_{k,k}$，从而 $R$ 满射，并且锚 $b$ 与关系记录 $c$ 唯一确定原序列。
+
+若 $R(x)=R(y)$，令
+$$
+\delta_j:=x_j\oplus y_j.
+$$
+由于两序列在每一步同为“保持”或同为“翻转”，有
+$$
+\delta_{j+1}=\delta_j\qquad(j\ge0).
+$$
+故 $\delta_j$ 恒等于 $\delta_0$。若 $\delta_0=0$，则 $x=y$；若 $\delta_0=1$，则 $y=Cx$。反过来 $R(Cx)=R(x)$，且 $(Cx)_0=1-x_0\ne x_0$，所以 $Cx\ne x$。因此每个纤维恰为两个互补点。
+
+$R$ 的第 $j$ 个坐标只依赖 $x_j,x_{j+1}$，故 $R$ 连续。对每个 $n\ge0$，$(\Theta^{-1}(b,c))_n$ 只依赖 $b,c_0,\ldots,c_{n-1}$，故 $\Theta^{-1}$ 连续；因此 $\Theta$ 是同胚。补变换在锚定坐标中恰为
+$$
+(b,c)\longmapsto(1-b,c).
+$$
+所以 $R$ 在轨道商上给出连续双射 $\overline R$。空间 $K_{k,k}$ 是紧空间，有限群的连续像 $K_{k,k}/\langle C\rangle$ 仍紧，而 $Y_k$ 是 Hausdorff 空间，故 $\overline R$ 为同胚。
+
+当 $k=2$ 时，$Y_2$ 禁止单个 $1$，所以只有 $0^\infty$；重构递推在每一步都翻转，恰给出两个交替序列。证毕。
+

@@ -1,0 +1,443 @@
+{
+  "schema": "ci-resource-execution-v1",
+  "resources": [
+    {
+      "id": "anchors",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "architecture",
+      "projects": [
+        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "build",
+      "projects": [
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "current",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "SL-001",
+        "SL-002",
+        "SL-003",
+        "SL-004",
+        "SL-006",
+        "SL-008",
+        "SL-010",
+        "SL-011",
+        "SL-012",
+        "SL-015",
+        "SL-018",
+        "SL-019",
+        "SL-020",
+        "SL-021",
+        "SL-023",
+        "SL-025",
+        "SL-026",
+        "scribe-describe"
+      ],
+      "steps": [
+        "check-current",
+        "scribe"
+      ]
+    },
+    {
+      "id": "current-data",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "current-metadata",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "SL-003",
+        "SL-015",
+        "SL-019"
+      ],
+      "steps": [
+        "check-current"
+      ]
+    },
+    {
+      "id": "current-scribe",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "SL-006",
+        "SL-023",
+        "SL-025"
+      ],
+      "steps": [
+        "check-current"
+      ]
+    },
+    {
+      "id": "delta",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "delta-data",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "delta-judge",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "delta-metadata",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "delta-scribe",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "engineering",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+        "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
+        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+        "tools/tests/StrataLint.BuildIntegration.Tests/StrataLint.BuildIntegration.Tests.csproj",
+        "tools/tests/StrataLint.BuildRuntime.Tests/StrataLint.BuildRuntime.Tests.csproj",
+        "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+        "tools/tests/StrataLint.CheckIntegration.Tests/StrataLint.CheckIntegration.Tests.csproj",
+        "tools/tests/StrataLint.CiArtifacts.Tests/StrataLint.CiArtifacts.Tests.csproj",
+        "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
+        "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+        "tools/tests/StrataLint.ExecutionEvidence.Tests/StrataLint.ExecutionEvidence.Tests.csproj",
+        "tools/tests/StrataLint.InspectionIntegration.Tests/StrataLint.InspectionIntegration.Tests.csproj",
+        "tools/tests/StrataLint.InspectionScope.Tests/StrataLint.InspectionScope.Tests.csproj",
+        "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+        "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
+        "tools/tests/StrataLint.PlanningIntegration.Tests/StrataLint.PlanningIntegration.Tests.csproj",
+        "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
+        "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj",
+        "tools/tests/StrataLint.ResourcePlanning.Tests/StrataLint.ResourcePlanning.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+        "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ],
+      "checks": [
+        "banned-api-proof",
+        "capability-proof",
+        "selftest-pair"
+      ],
+      "steps": []
+    },
+    {
+      "id": "engineering-guards",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "banned-api-proof",
+        "capability-proof",
+        "selftest-pair"
+      ],
+      "steps": []
+    },
+    {
+      "id": "filemap",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj"
+      ],
+      "checks": [
+        "filemap"
+      ],
+      "steps": [
+        "filemap"
+      ]
+    },
+    {
+      "id": "lean",
+      "projects": [
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj"
+      ],
+      "checks": [],
+      "steps": [
+        "lean"
+      ]
+    },
+    {
+      "id": "lean-inspector-build",
+      "projects": [],
+      "checks": [],
+      "steps": [],
+      "lean_targets": [
+        "leanInspector/LeanInformationAudit",
+        "leanInspector/reportInspector",
+        "leanInspectorInterface/LeanInformationAuditInterface",
+        "reg/LeanInformationAuditRegTests",
+        "reg/Reg"
+      ]
+    },
+    {
+      "id": "lean-report",
+      "projects": [
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj"
+      ],
+      "checks": [],
+      "steps": [
+        "lean-report"
+      ]
+    },
+    {
+      "id": "policy",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "repository",
+      "projects": [],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "scribe",
+      "projects": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+      ],
+      "checks": [
+        "scribe-describe",
+        "scribe-markdown",
+        "scribe-projections"
+      ],
+      "steps": [
+        "scribe"
+      ]
+    },
+    {
+      "id": "test-build-integration",
+      "projects": [
+        "tools/tests/StrataLint.BuildIntegration.Tests/StrataLint.BuildIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-build-runtime",
+      "projects": [
+        "tools/tests/StrataLint.BuildRuntime.Tests/StrataLint.BuildRuntime.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-cache",
+      "projects": [
+        "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-check-integration",
+      "projects": [
+        "tools/tests/StrataLint.CheckIntegration.Tests/StrataLint.CheckIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-ci-artifacts",
+      "projects": [
+        "tools/tests/StrataLint.CiArtifacts.Tests/StrataLint.CiArtifacts.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-cli",
+      "projects": [
+        "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-cli-integration",
+      "projects": [
+        "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-engine",
+      "projects": [
+        "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-engineering-scope",
+      "projects": [
+        "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-execution-evidence",
+      "projects": [
+        "tools/tests/StrataLint.ExecutionEvidence.Tests/StrataLint.ExecutionEvidence.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-inspection-integration",
+      "projects": [
+        "tools/tests/StrataLint.InspectionIntegration.Tests/StrataLint.InspectionIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-inspection-scope",
+      "projects": [
+        "tools/tests/StrataLint.InspectionScope.Tests/StrataLint.InspectionScope.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-judge-seed",
+      "projects": [
+        "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-lean",
+      "projects": [
+        "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-native-transport-integration",
+      "projects": [
+        "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-planning-integration",
+      "projects": [
+        "tools/tests/StrataLint.PlanningIntegration.Tests/StrataLint.PlanningIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-release-integration",
+      "projects": [
+        "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-release-selection",
+      "projects": [
+        "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-resource-planning",
+      "projects": [
+        "tools/tests/StrataLint.ResourcePlanning.Tests/StrataLint.ResourcePlanning.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-scribe",
+      "projects": [
+        "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-scribe-documents",
+      "projects": [
+        "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-stage-integration",
+      "projects": [
+        "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-transport-integration",
+      "projects": [
+        "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-truth",
+      "projects": [
+        "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    }
+  ]
+}

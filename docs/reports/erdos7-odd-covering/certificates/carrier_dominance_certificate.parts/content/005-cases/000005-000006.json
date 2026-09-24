@@ -1,0 +1,140 @@
+[
+  {
+    "shape": "root2_other_other_column",
+    "old_points": 16,
+    "essential_carriers": 102083,
+    "essential_carrier_orbits": 21524,
+    "essential_carriers_sha256": "0b3fc11a22b41fdc05a150149da5f3379e8ff88d54f944643ec5584fb919690f",
+    "essential_orbits_sha256": "db95e9dcfc186a939e1af5d84476549268a06ce27759343639af25acdcb689c6",
+    "minimal_carrier_orbits": 10554,
+    "strictly_dominated_essential_orbits": 10970,
+    "minimal_orbits_by_support_size": {
+      "74": 387,
+      "75": 1332,
+      "76": 2306,
+      "77": 2497,
+      "78": 2224,
+      "79": 1380,
+      "80": 295,
+      "81": 133
+    },
+    "additional_deletions": {
+      "0": 10554,
+      "1": 3092,
+      "2": 3217,
+      "3": 2847,
+      "4": 1514,
+      "5": 247,
+      "6": 53
+    },
+    "minimal_orbits_sha256": "2d7bc8550bc38515292612a0e4482f054c4f04fdcb3d661efbb4b94b53785254",
+    "block_union_counts": [
+      0,
+      2,
+      4,
+      8,
+      5,
+      7,
+      20,
+      28,
+      7,
+      9,
+      25,
+      17,
+      35,
+      30,
+      121,
+      55,
+      16,
+      18,
+      52,
+      56,
+      69,
+      48,
+      212,
+      139,
+      103,
+      63,
+      275,
+      92,
+      407,
+      147,
+      1022,
+      186
+    ],
+    "strict_dominance_example": {
+      "larger_support_masks": [
+        1,
+        4,
+        33,
+        641,
+        21157
+      ],
+      "smaller_support_masks": [
+        1,
+        33,
+        641,
+        2118,
+        21157
+      ],
+      "larger_support_size": 82,
+      "smaller_support_size": 79,
+      "original_label_assignment_by_digit": [
+        [
+          [
+            0,
+            21157
+          ]
+        ],
+        [
+          [
+            2,
+            641
+          ]
+        ],
+        [
+          [
+            3,
+            33
+          ]
+        ],
+        [
+          [
+            4,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            2118
+          ]
+        ]
+      ]
+    },
+    "independent_exhaustive_checks": [
+      {
+        "kind": "dominated",
+        "target_masks": [
+          1,
+          4,
+          33,
+          641,
+          21157
+        ],
+        "maximum_deletions": 17
+      },
+      {
+        "kind": "minimal",
+        "target_masks": [
+          1,
+          33,
+          33,
+          641,
+          21157
+        ],
+        "maximum_deletions": 15
+      }
+    ]
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "index": 42,
+    "name": "H16",
+    "tuple": [
+      0,
+      1
+    ],
+    "weight": "2371/2880",
+    "barrier": "51437677469/4932968040",
+    "vmin": "15627/48334",
+    "vmax": "175/78",
+    "selected_cofactor_count": 6,
+    "source_multiplier": "6/5",
+    "selected_deep_coefficient": "8/729",
+    "g": "671961/511736225",
+    "P": "51437677469/4932968040",
+    "Q": "51437677469/449516712645",
+    "escape_charge_coefficient": "51437677469/1798066850580"
+  },
+  {
+    "index": 43,
+    "name": "H16",
+    "tuple": [
+      0,
+      2
+    ],
+    "weight": "2371/2880",
+    "barrier": "868964699/704709720",
+    "vmin": "4395/48334",
+    "vmax": "259/1014",
+    "selected_cofactor_count": 6,
+    "source_multiplier": "6/5",
+    "selected_deep_coefficient": "8/729",
+    "g": "37797/102347245",
+    "P": "868964699/704709720",
+    "Q": "868964699/64216673235",
+    "escape_charge_coefficient": "868964699/256866692940"
+  },
+  {
+    "index": 44,
+    "name": "H16",
+    "tuple": [
+      1,
+      0
+    ],
+    "weight": "2371/2880",
+    "barrier": "197160180946/16688172501",
+    "vmin": "379438/1090089",
+    "vmax": "28/11",
+    "selected_cofactor_count": 6,
+    "source_multiplier": "6/5",
+    "selected_deep_coefficient": "8/729",
+    "g": "32631668/23082634575",
+    "P": "197160180946/16688172501",
+    "Q": "1577281447568/12165677753229",
+    "escape_charge_coefficient": "394320361892/12165677753229"
+  },
+  {
+    "index": 45,
+    "name": "H16",
+    "tuple": [
+      2,
+      0
+    ],
+    "weight": "2371/2880",
+    "barrier": "3930317668/2384024643",
+    "vmin": "131938/1090089",
+    "vmax": "124/363",
+    "selected_cofactor_count": 6,
+    "source_multiplier": "6/5",
+    "selected_deep_coefficient": "8/729",
+    "g": "11346668/23082634575",
+    "P": "3930317668/2384024643",
+    "Q": "31442541344/1737953964747",
+    "escape_charge_coefficient": "7860635336/1737953964747"
+  }
+]

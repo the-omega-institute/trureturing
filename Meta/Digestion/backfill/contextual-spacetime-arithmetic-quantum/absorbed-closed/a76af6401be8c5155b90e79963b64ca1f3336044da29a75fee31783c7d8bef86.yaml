@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a76af6401be8c5155b90e79963b64ca1f3336044da29a75fee31783c7d8bef86
+  normalized_sha256: sha256:a76af6401be8c5155b90e79963b64ca1f3336044da29a75fee31783c7d8bef86
+cas_ref: sha256:a76af6401be8c5155b90e79963b64ca1f3336044da29a75fee31783c7d8bef86
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/RefinementClosure/FiniteHorizonKernelRecurrence.finite_horizon_stabilizes_at_completionDepth
+    target_statement_id: sha256:7aca4e93f580b0ec9b32eaa86f6c7d2959d88e0016bcc4b69b1d1760383af029
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+**定理 70.2（层对角算子的自伴实现）。** 在定义 70.1 下，给定实数列
+$$
+0=a_0<a_1<a_2<\cdots,\qquad a_L\longrightarrow\infty.
+$$
+按最大定义域设置
+$$
+\mathcal D(A)=\left\{f\in H_{\mathrm{obs}}:
+\sum_{L\ge0}a_L^2\|\Delta_L f\|_2^2<\infty\right\},
+\qquad
+Af=\sum_{L\ge0}a_L\Delta_L f.
+$$
+则级数在 $H_{\mathrm{obs}}$ 中收敛，$A$ 是稠密定义的非负自伴算子；$\bigcup_L H_L$ 是它的图范数核心。
+

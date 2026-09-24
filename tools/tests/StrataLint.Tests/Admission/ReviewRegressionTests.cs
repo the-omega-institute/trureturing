@@ -7,6 +7,10 @@ namespace StrataLint.Tests;
 
 public sealed partial class ReviewRegressionTests
 {
+    private static DeltaRuleContext ActualDelta(RuleFixture fixture) =>
+        fixture.Build(RawChangeSet.Create(fixture.Changes.Concat(fixture.Files.Keys.Union(fixture.Baseline.Keys)
+            .Where(path => fixture.Files.GetValueOrDefault(path) != fixture.Baseline.GetValueOrDefault(path))).Distinct(StringComparer.Ordinal)));
+
     [Fact]
     public void Cf1TopologyReportsBootstrapNotActiveWhenDefaultBranchLacksWorkflow()
     {
@@ -57,9 +61,7 @@ public sealed partial class ReviewRegressionTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
 
         Assert.Empty(evaluation.Diagnostics);
     }
@@ -84,24 +86,22 @@ public sealed partial class ReviewRegressionTests
             Assert.Single(BackfillInventoryLoader.Load(
                 fixture.Build().Current).RequireDigestionEntries()).CasRef);
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
             diagnostic.Message.Contains("source path is dangling", StringComparison.Ordinal));
     }
 
     [Fact]
-    public void Sl016StillRejectsMissingNoAtomizerSourceAfterCasMigration()
+    public void Sl016ChangedNoAtomizerMetadataRejectsMissingSourceAfterCasMigration()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files.Remove(RuleFixture.FixtureDigestionSourcePath);
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build());
+        fixture.Changes.Add(RuleFixture.FixtureBackfillSourcePath);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
             $"source path is dangling: {RuleFixture.FixtureDigestionSourcePath}",
@@ -120,9 +120,7 @@ public sealed partial class ReviewRegressionTests
                 string.Empty,
                 StringComparison.Ordinal);
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
             "source fixture-source entry keys are not canonical",
@@ -262,7 +260,7 @@ public sealed partial class ReviewRegressionTests
         fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
         fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml"] = atom;
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
             diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
@@ -283,9 +281,7 @@ public sealed partial class ReviewRegressionTests
                 replacement,
                 StringComparison.Ordinal);
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
             diagnostic.Message.Contains("CAS blob is missing", StringComparison.Ordinal)
@@ -300,10 +296,11 @@ public sealed partial class ReviewRegressionTests
         fixture.Files[$"{BackfillInventoryLoader.RootPath}different-directory/source.toml"] =
             fixture.Files[RuleFixture.FixtureBackfillSourcePath];
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
             diagnostic.Message.Contains("source metadata path disagrees with source_id", StringComparison.Ordinal));
+        AssertFileMapSourceEligibility();
     }
 
     [Fact]
@@ -388,7 +385,7 @@ public sealed partial class ReviewRegressionTests
         Assert.Equal(RuleId.CreateKnown(15), diagnostic.RuleId);
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
 
-        var policy = AcceptedPolicy(TestRegistry.Canonical);
+        var policy = AcceptedPolicy(TestFileMap.Canonical);
         var canonical = RepositoryCanonicalizer.Validate(context.Current, policy);
         Assert.IsType<CanonicalizationOutcome.InfrastructureFailure>(canonical);
     }
@@ -567,7 +564,7 @@ public sealed partial class ReviewRegressionTests
         string noncanonicalBytes)
     {
         var fixture = new RuleFixture();
-        var policy = AcceptedPolicy(TestRegistry.Canonical);
+        var policy = AcceptedPolicy(TestFileMap.Canonical);
         fixture.Files[path] = canonicalBytes;
         var canonicalSnapshot = fixture.BuildForRuleCompatibility().Current;
         Assert.IsType<CanonicalizationOutcome.Accepted>(
@@ -587,8 +584,8 @@ public sealed partial class ReviewRegressionTests
         using var repository = new TemporaryDirectory();
         Directory.CreateDirectory(Path.Combine(repository.Path, "Meta"));
         File.WriteAllText(
-            Path.Combine(repository.Path, "Meta", "registry.yaml"),
-            TestRegistry.Canonical,
+            Path.Combine(repository.Path, "Meta", "FILEMAP.toml"),
+            TestFileMap.Canonical,
             new UTF8Encoding(false));
         File.WriteAllText(
             Path.Combine(repository.Path, "Meta", "domains.yaml"),
@@ -658,22 +655,22 @@ public sealed partial class ReviewRegressionTests
 
         var diagnostic = Assert.Single(completed.Capability.Diagnostics, item => item.Path == "rogue.txt");
         Assert.Equal(sl000, diagnostic.RuleId);
-        Assert.Equal("unknown top-level artifact", diagnostic.Message);
+        Assert.Equal("path must match exactly one FILEMAP entry; matches=0", diagnostic.Message);
     }
 
-    [Fact]
-    public void Cf9BackfillProtectedPathMembershipComesFromRegistry()
+    private static void AssertFileMapSourceEligibility()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
+        fixture.Changes.Add(RuleFixture.FixtureBackfillSourcePath);
         var source = Assert.Single(BackfillInventoryLoader
             .Load(fixture.Build().Current)
             .RequireDigestionSources());
-        var registryWithoutSource = TestRegistry.Canonical.Replace(
-            $"  - \"{source.SourcePath}\"\n",
+        var fileMapWithoutSource = TestFileMap.Canonical.Replace(
+            "digestion_source = true\n",
             string.Empty,
             StringComparison.Ordinal);
-        var policy = AcceptedPolicy(registryWithoutSource);
+        var policy = AcceptedPolicy(fileMapWithoutSource);
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build(policy));
 
@@ -685,8 +682,8 @@ public sealed partial class ReviewRegressionTests
                 $"source {source.SourceId} has an invalid governance path",
                 StringComparison.Ordinal));
         Assert.Contains(source.SourcePath, diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("Meta/registry.yaml", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("governance_documents", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("Meta/FILEMAP.toml", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains("digestion_source", diagnostic.Message, StringComparison.Ordinal);
         var enginePath = Directory.EnumerateFiles(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine"),
             "BackfillInventoryRule.cs",
@@ -700,10 +697,8 @@ public sealed partial class ReviewRegressionTests
         // chain instead. DigestionCasStoreTests keeps pinning what the pass itself rejects; this
         // pins the shape of the chain that carries its result.
         //
-        // These assertions live inside this test because Cf9 already reads
-        // BackfillInventoryRule.cs, so they extend a read that is already paid for. Unknown
-        // repository-read debt is now charged to the candidate that introduces a method identity
-        // after the protected baseline; the repository-wide tolerance net remains separate.
+        // Keep these assertions in the existing SL-016 test identity because they share the
+        // BackfillInventoryRule source read and do not create new repository-read debt.
         var casChainSource = engineSource
             + File.ReadAllText(
                 Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine", "Digestion", "DigestionLedgerAligner.cs"),

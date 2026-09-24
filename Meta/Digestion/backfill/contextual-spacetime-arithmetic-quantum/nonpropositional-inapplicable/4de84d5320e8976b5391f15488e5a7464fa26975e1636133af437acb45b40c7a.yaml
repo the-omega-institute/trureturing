@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4de84d5320e8976b5391f15488e5a7464fa26975e1636133af437acb45b40c7a
+  normalized_sha256: sha256:4de84d5320e8976b5391f15488e5a7464fa26975e1636133af437acb45b40c7a
+cas_ref: sha256:4de84d5320e8976b5391f15488e5a7464fa26975e1636133af437acb45b40c7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 修订版写“保留的记录是联合余数读出”，并说明“余数坐标”所在的模数类型；正模数及两两互素在前文明确作为假设，末句只解释接口用途，未由命名偷渡单射或乘积容量结论，故这里只是联合记录的定义。
+    previous_atom_id: df843b03e707905b8935dd48ccc3dbf490ed4a249bca556a98c68b86ef89e633
+    next_atom_id: 6a07883a35afdcf2d41b37b8d95ed2f793d8dd2d648782e90296f8b222e7c026

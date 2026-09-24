@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using StrataLint.Cli;
 
 namespace StrataLint.ArchitectureTests;
@@ -93,6 +94,7 @@ public sealed partial class FileMapPolicyTests
         string kind,
         string admissionPlane) => $$"""
         [[files]]
+        require = []
         pattern = "{{pattern}}"
         kind = "{{kind}}"
         admission_plane = "{{admissionPlane}}"

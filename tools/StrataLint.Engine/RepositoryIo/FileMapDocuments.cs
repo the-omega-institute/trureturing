@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Tomlyn;
 using Tomlyn.Model;
+using Tomlyn.Parsing;
 
 namespace StrataLint.Engine;
 
@@ -29,6 +30,8 @@ internal static class FileMapDocuments
         var root = Decode(bytes, location);
         var documents = ImmutableArray.CreateBuilder<FileMapDocument>();
         documents.Add(root);
+        if (!root.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L or 4L or 5L))
+            throw new FileMapParseException(location, "root schema_version must be 2, 3, 4 or 5");
         if (!root.Table.TryGetValue("include", out var rawInclude)) return documents.ToImmutable();
         if (rawInclude is not TomlArray includes || includes.Count == 0
             || includes.Any(item => item is not string name || !FragmentName.IsMatch(name)))
@@ -39,8 +42,6 @@ internal static class FileMapDocuments
         if (!names.SequenceEqual(names.Order(StringComparer.Ordinal), StringComparer.Ordinal)
             || names.Distinct(StringComparer.Ordinal).Count() != names.Length)
             throw new FileMapParseException(location, "include names must be unique and ordinally sorted");
-        if (!root.Table.TryGetValue("schema_version", out var version) || version is not 2L)
-            throw new FileMapParseException(location, "include requires schema_version 2");
         if (readInclude is null)
             throw new FileMapParseException(location, "include requires a reader for the same repository snapshot");
 
@@ -60,14 +61,15 @@ internal static class FileMapDocuments
             RequireCanonicalBytes(includedBytes, path);
             var document = Decode(includedBytes, path);
             if (document.Table.Keys.Order(StringComparer.Ordinal).SequenceEqual(["files", "schema_version"])
-                && document.Table["schema_version"] is 2L)
+                && document.Table["schema_version"] is long fragmentVersion
+                && fragmentVersion == (long)version)
             {
                 _ = FileMapTomlTables.Parse(document.Table["files"], path, allowEmpty: false);
                 documents.Add(document);
             }
             else
                 throw new FileMapParseException(path,
-                    "included files require exactly schema_version = 2 and nonempty files tables; nested include and residence_policy are not allowed");
+                    $"included files require exactly schema_version = {version} and nonempty files tables; nested include, resources, and residence_policy are not allowed");
         }
 
         return documents.ToImmutable();
@@ -85,7 +87,9 @@ internal static class FileMapDocuments
     {
         try
         {
-            var table = TomlSerializer.Deserialize<TomlTable>(StrictUtf8.GetString(bytes))
+            var text = StrictUtf8.GetString(bytes);
+            _ = Tomlyn.Parsing.SyntaxParser.ParseStrict(text, sourceName: location, validate: true);
+            var table = TomlSerializer.Deserialize<TomlTable>(text)
                 ?? throw new FileMapParseException(location, "TOML decoded to null");
             return new(location, ImmutableArray.Create(bytes.ToArray()), table);
         }

@@ -40,6 +40,10 @@ run_cmd do
 run_cmd do
   let inRepo := (← getEnv).header.moduleNames.filter fun name =>
     name != `LeanInformationAudit.Tests.Seal.M3 &&
-      (name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit.")
-  if inRepo.size > 125 then
-    throwError "ImportCost: M3 import closure exceeded 125 modules: {inRepo.size}"
+      LeanInformationAudit.Repository.isModule name
+  logInfo m!"DTR_M3_MODULE_SET {(toJson (inRepo.map Name.toString |>.qsort (· < ·))).compress}"
+  -- Count the split closure's five Interface owners as well as its 133 D5/Impl modules.
+  let interface := inRepo.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
+  if inRepo.size > 138 || interface.size != 5 then
+    throwError "ImportCost: M3 closure changed: modules={inRepo.size} interface={interface.size}"
+  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=138 interface={interface.size}"

@@ -1,0 +1,583 @@
+[
+  {
+    "index": 23,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        1,
+        0
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "403/66",
+    "complete_tail_constant": "-246400234551501617/11215119035518398",
+    "previous_cost_upper": "3977145688415331437285181577147/3028082139589967460000000000000",
+    "retained_deletion_upper": "1790395638329826475981374932887/1376400972540894300000000000000",
+    "cost_upper": "1790395638329826475981374932887/1376400972540894300000000000000",
+    "weighted_gain": "4556581439251570253113895809/408550764865313070000000000000",
+    "scan": {
+      "pruning_credit": "whole-hinge-deletion",
+      "coefficients": {
+        "1": "374092820950987/3738373011839466",
+        "2": "5142405216043889/5607559517759199",
+        "3": "11116090/34783749",
+        "4": "35155/7371",
+        "5": "0",
+        "6": "0",
+        "7": "0",
+        "8": "0"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4,
+        "3": 4,
+        "4": 4
+      },
+      "complete_hinge_upper": "1790395638329826475981374932887/1376400972540894300000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124910,
+        "four": 4500,
+        "four_bounded": 4331,
+        "six": 1690,
+        "six_bounded": 753,
+        "joint": 938,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 937,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 131193,
+      "maximum_pruned_uppers": {
+        "two": "1378276066280674126373/1059828748856488611000",
+        "four": "9641931209902599464821/7418801241995420277000",
+        "six": "1378525562373829225453/1059828748856488611000",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          1,
+          4,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          4,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "10279732743152435594281/7418801241995420277000",
+        "four_projection_upper": "10064020124066998770931/7418801241995420277000",
+        "six_projection_upper": "10064020124066998770931/7418801241995420277000",
+        "joint_raw_upper": "4697782257297503310598374753919/5046803565983279100000000000000",
+        "complete_tail_constant": "1400251312433895326/3785102674487459325",
+        "prior_prefix_upper": null,
+        "mean_credit_outside_lp": "0",
+        "whole_hinge_deletion_credit_in_pruning": "15896202746352583/5046803565983279100",
+        "joint_complete_upper": "1790395638329826475981374932887/1376400972540894300000000000000",
+        "accepted_upper": "1790395638329826475981374932887/1376400972540894300000000000000",
+        "dual_key": "77f5756a11da22a03a5cbd5eb595a41f35d28410f5b460fe8570de488f04bf86"
+      },
+      "branch_decisions_sha256": "5251e98f772a2bf54e3a154d83b94e76b574d3027a6f58499d3d925190c75f32"
+    }
+  },
+  {
+    "index": 26,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "112/351"
+              ],
+              [
+                6,
+                "224/3861"
+              ],
+              [
+                7,
+                "112/1485"
+              ],
+              [
+                8,
+                "39449/990"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        2,
+        0
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 8,
+    "complete_tail_slope": "403/726",
+    "complete_tail_constant": "-1158739463247269/862701464270646",
+    "previous_cost_upper": "100272007995895841256543073393/582323488382686050000000000000",
+    "retained_deletion_upper": "195691016542285156421338656647/1164646976765372100000000000000",
+    "cost_upper": "195691016542285156421338656647/1164646976765372100000000000000",
+    "weighted_gain": "231095211881263147226070959/62853963825432780000000000000",
+    "scan": {
+      "pruning_credit": "whole-hinge-deletion",
+      "coefficients": {
+        "1": "16130515994959/287567154756882",
+        "2": "90562460269733/431350732135323",
+        "3": "70310/243243",
+        "4": "0",
+        "5": "0",
+        "6": "0",
+        "7": "0",
+        "8": "0"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4,
+        "3": 4
+      },
+      "complete_hinge_upper": "195691016542285156421338656647/1164646976765372100000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124880,
+        "four": 6000,
+        "four_bounded": 5731,
+        "six": 2690,
+        "six_bounded": 1186,
+        "joint": 1505,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 1504,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 133693,
+      "maximum_pruned_uppers": {
+        "two": "6847245220894369583/40762644186788023500",
+        "four": "13693956540342191761/81525288373576047000",
+        "six": "13698170945779433761/81525288373576047000",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          0,
+          2,
+          1,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "14003259951584160841/81525288373576047000",
+        "four_projection_upper": "14003259951584160841/81525288373576047000",
+        "six_projection_upper": "14003259951584160841/81525288373576047000",
+        "joint_raw_upper": "51057185352358542807112885549/388215658921790700000000000000",
+        "complete_tail_constant": "10629865121302382/291161744191343025",
+        "prior_prefix_upper": null,
+        "mean_credit_outside_lp": "0",
+        "whole_hinge_deletion_credit_in_pruning": "12601256071608821/2329293953530744200",
+        "joint_complete_upper": "195691016542285156421338656647/1164646976765372100000000000000",
+        "accepted_upper": "195691016542285156421338656647/1164646976765372100000000000000",
+        "dual_key": "1fe618f8daf5e3119532842332c205d67378dfb4a84e141ed2ce9e4845a3265f"
+      },
+      "branch_decisions_sha256": "bc8bf7f5309477fea9b4e35a911e3349bb12b34e310d1562cb3ce02cc0dad673"
+    }
+  },
+  {
+    "index": 32,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "1"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        0
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 5,
+    "complete_tail_slope": "1",
+    "complete_tail_constant": "-226444572421/52688361726",
+    "previous_cost_upper": "27253140750350177644000437311/146384075383345800000000000000",
+    "retained_deletion_upper": "138635105938902854693909681/746857527466050000000000000",
+    "cost_upper": "138635105938902854693909681/746857527466050000000000000",
+    "weighted_gain": "166697305072117456254555659/30937426965244800000000000000",
+    "scan": {
+      "pruning_credit": "whole-hinge-deletion",
+      "coefficients": {
+        "1": "1233407537/52688361726",
+        "2": "967692613/7526908818",
+        "3": "47851/429429",
+        "4": "0",
+        "5": "316/429",
+        "6": "0",
+        "7": "0",
+        "8": "0"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4,
+        "3": 4,
+        "5": 4
+      },
+      "complete_hinge_upper": "138635105938902854693909681/746857527466050000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124968,
+        "four": 1600,
+        "four_bounded": 1570,
+        "six": 300,
+        "six_bounded": 176,
+        "joint": 125,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 124,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 126903,
+      "maximum_pruned_uppers": {
+        "two": "97927029249479/528081080026500",
+        "four": "22612128304934263/121986729486121500",
+        "six": "22642145196214639/121986729486121500",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          1,
+          3,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          3,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "23804430928035853/121986729486121500",
+        "four_projection_upper": "23223541740006703/121986729486121500",
+        "six_projection_upper": "23160669418014223/121986729486121500",
+        "joint_raw_upper": "1148955842774948823381601/9220463302050000000000000",
+        "complete_tail_constant": "22784841337066/373428763733025",
+        "prior_prefix_upper": null,
+        "mean_credit_outside_lp": "0",
+        "whole_hinge_deletion_credit_in_pruning": "3235221494/5927440694175",
+        "joint_complete_upper": "138635105938902854693909681/746857527466050000000000000",
+        "accepted_upper": "138635105938902854693909681/746857527466050000000000000",
+        "dual_key": "a24b9dea2434ff1cfe5803809f3d457f3aecdf615cfb871a1836d43711774cce"
+      },
+      "branch_decisions_sha256": "09a2faecc7d6c9fd6f2a9a9ce1a0c75fe138ea49c0f61921763eeff35c392283"
+    }
+  },
+  {
+    "index": 33,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "1"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        0,
+        1
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 5,
+    "complete_tail_slope": "12/91",
+    "complete_tail_constant": "-7171012/24191167",
+    "previous_cost_upper": "208850586804365867633791/4800737091150000000000000",
+    "retained_deletion_upper": "409671657134302894375571/9601474182300000000000000",
+    "cost_upper": "409671657134302894375571/9601474182300000000000000",
+    "weighted_gain": "11853095747966384173921/1449439992000000000000000",
+    "scan": {
+      "pruning_credit": "whole-hinge-deletion",
+      "coefficients": {
+        "1": "458324/24191167",
+        "2": "1482472/24191167",
+        "3": "96/1859",
+        "4": "0",
+        "5": "0",
+        "6": "0",
+        "7": "0",
+        "8": "0"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4,
+        "3": 4
+      },
+      "complete_hinge_upper": "409671657134302894375571/9601474182300000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124889,
+        "four": 5550,
+        "four_bounded": 5314,
+        "six": 2360,
+        "six_bounded": 1013,
+        "joint": 1348,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 1348,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 132913,
+      "maximum_pruned_uppers": {
+        "two": "2707133263/63501813375",
+        "four": "8126328913/190505440125",
+        "six": "56895177541/1333538080875",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          3,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "920827451/21167271125",
+        "four_projection_upper": "920827451/21167271125",
+        "six_projection_upper": "920827451/21167271125",
+        "joint_raw_upper": "107698130042100964791857/3200491394100000000000000",
+        "complete_tail_constant": "21644316752/2400368545575",
+        "prior_prefix_upper": null,
+        "mean_credit_outside_lp": "0",
+        "whole_hinge_deletion_credit_in_pruning": "5329237/5443012575",
+        "joint_complete_upper": "409671657134302894375571/9601474182300000000000000",
+        "accepted_upper": "409671657134302894375571/9601474182300000000000000",
+        "dual_key": "2501e93dff071a912ffd7d088a9a5aab59f81c1cb71f129457bce30d47b49a23"
+      },
+      "branch_decisions_sha256": "85c43def73452bb3856bf530b41d5f5b69a6f56f5a98da72f39fbba9e8be6583"
+    }
+  },
+  {
+    "index": 36,
+    "tag": [
+      "ap_block",
+      [
+        [
+          "w",
+          [
+            [
+              [
+                5,
+                "1"
+              ]
+            ],
+            1
+          ]
+        ],
+        [
+          [
+            11,
+            "5/3"
+          ],
+          [
+            13,
+            "12/7"
+          ]
+        ],
+        1,
+        0
+      ]
+    ],
+    "at_one": "0",
+    "tail_cutoff": 5,
+    "complete_tail_slope": "5/33",
+    "complete_tail_constant": "-106800565/311765454",
+    "previous_cost_upper": "429350612968232084449/8631397090722656250000",
+    "retained_deletion_upper": "86186310908423544708077/1767710124180000000000000",
+    "cost_upper": "86186310908423544708077/1767710124180000000000000",
+    "weighted_gain": "90142555752636619665707/9339882552000000000000000",
+    "scan": {
+      "pruning_credit": "whole-hinge-deletion",
+      "coefficients": {
+        "1": "6313865/311765454",
+        "2": "3183325/44537922",
+        "3": "1975/33033",
+        "4": "0",
+        "5": "0",
+        "6": "0",
+        "7": "0",
+        "8": "0"
+      },
+      "selected_prefix_lengths": {
+        "1": 0,
+        "2": 4,
+        "3": 4
+      },
+      "complete_hinge_upper": "86186310908423544708077/1767710124180000000000000",
+      "counts": {
+        "two": 125000,
+        "two_bounded": 124888,
+        "four": 5600,
+        "four_bounded": 5351,
+        "six": 2490,
+        "six_bounded": 1065,
+        "joint": 1426,
+        "prefix_available": 0,
+        "prefix_bounded": 0
+      },
+      "unique_dual_certificates": 1426,
+      "covered_containing_choices": 62500000,
+      "source_capacity_lp_count": 133093,
+      "maximum_pruned_uppers": {
+        "two": "15468775859/317281304340",
+        "four": "580172491/11903771880",
+        "six": "4786237649/98206118010",
+        "prefix": "-1"
+      },
+      "maximizing_witness": {
+        "layout": [
+          0,
+          1,
+          2,
+          1,
+          2,
+          4,
+          2
+        ],
+        "projections21_35_63_105_147_245": [
+          1,
+          4,
+          1,
+          1,
+          4,
+          1,
+          4
+        ],
+        "two_projection_upper": "4883411297/98206118010",
+        "four_projection_upper": "4883411297/98206118010",
+        "six_projection_upper": "4883411297/98206118010",
+        "joint_raw_upper": "359979177589542564593/9352963620000000000000",
+        "complete_tail_constant": "4537561586/441927531045",
+        "prior_prefix_upper": null,
+        "mean_credit_outside_lp": "0",
+        "whole_hinge_deletion_credit_in_pruning": "62091061/56117781720",
+        "joint_complete_upper": "86186310908423544708077/1767710124180000000000000",
+        "accepted_upper": "86186310908423544708077/1767710124180000000000000",
+        "dual_key": "4de1169d12f7f7c2f5e52051b6ac0e00af42c0e125b658dbd17f2e9ad76188c3"
+      },
+      "branch_decisions_sha256": "6b42f1df86f950f633559600b4a2eb4e7e40a73c587f30487c45b40cbb71b5fb"
+    }
+  }
+]

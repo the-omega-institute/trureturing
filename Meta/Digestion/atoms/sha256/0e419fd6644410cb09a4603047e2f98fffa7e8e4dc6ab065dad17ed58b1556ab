@@ -1,0 +1,13 @@
+**命题 92.4（四态分区诊断与高阶可见反演）。** 取
+$$
+\Omega=\{-1,+1\}^2,\qquad \nu(a,b)=\frac14,\qquad
+\Theta(a,b)=(-a,b),\qquad r(a,b)=a.
+$$
+读出相容，下降反演为 $\theta(a)=-a$。置
+$$
+L(t)=t\tanh t-\log\cosh t,\qquad Q(t)=2t\tanh t.
+$$
+三条纯分区方向的精确值为
+
+| $f(a,b)$ | 分区 | $\Delta(t)$ | $A(t)$ | $A_r(t)$ |
+|---|---|---|---|---|

@@ -1,0 +1,24 @@
+**定义 31.1（合法词及指定相干准备）。** 固定 $k\in\mathbb N$、$k\ge2$，记 $\mathcal W_n^{(k)}$ 为长度 $n$ 且不含 $1^k$ 的二元词，$\mathcal W_0^{(k)}=\{\varnothing\}$。合法词 $w$ 的后缀连续一数为 $i(w)$，$i(\varnothing)=0$。取主卷§132.2的唯一根 $\lambda=\lambda_k\in(1,2)$，并置
+$$
+\sum_{j=1}^k\lambda^{-j}=1,\qquad
+r_i=\sum_{j=1}^{k-i}\lambda^{-j}\ (0\le i<k),\qquad r_k=0,
+\qquad d_t=r_t-r_{t+1}=\lambda^{t-k}\ (0\le t<k).
+\tag{31.1}
+$$
+直接移项与等比和给
+$$
+r_0=1,\qquad \lambda r_i=1+r_{i+1},\qquad
+r_{k-1}=\lambda^{-1},\qquad
+\sum_{t=0}^{k-1}\lambda^t=\lambda^k,\qquad
+\epsilon:=2-\lambda=\lambda^{-k}>0.
+\tag{31.2}
+$$
+其中递推包括 $i=k-1$。上下文卷定理9.18的根柱律是
+$$
+\mu_k[w]=\begin{cases}\lambda^{-|w|}r_{i(w)},&w\text{ 合法},\\0,&w\text{ 非法}.\end{cases}
+\tag{31.3}
+$$
+该记号指从后缀零开始的柱概率，不声称对位置删除平稳。
+
+取 $M=\mathbb C^k$ 及正交基 $e_0,\ldots,e_{k-1}$，输出 $B=\mathbb C^2$ 取指定计算基 $|0\rangle,|1\rangle$；全输出空间为 $H_n=B^{\otimes n}$、$H_0=\mathbb C$。复 Hilbert 空间、张量接口、正实振幅及相位约定、Born 迹规则均为额外准备结构，不由合法词集合或完成化推出。只在当前任务未访问最终活动记忆时对该记忆取偏迹；已取得档案的保留由上下文卷§36规定。
+

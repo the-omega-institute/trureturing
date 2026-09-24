@@ -185,8 +185,8 @@ ingest 判 `INGEST_TRUTH_ALIGNMENT_REQUIRED planned rewrite of existing entry <i
 **第 7 步的四零**(`residual_open_added=0`、`cas_objects_written=0`、`ledger_changed=false`、
 工作树零改动)是合并前真能取到的闭合判据,别省。
 
-**理论卷是 content 面。** 同一个 PR 里不得夹带 `tools/**`、`.github/**`、`skills/**` 一类判官面改动
-(分区门 SL-029 机器强制)。
+**理论卷是 content 面。** 可与 `tools/**`、`.github/**`、`skills/**` 一类判官面改动在一个完整 PR 交付;
+合法混面由 SL-029 报 `Warning`/`Observe` 并继续全部普通验证,不强制分面。FILEMAP 无效仍拒绝。
 
 **别用管道判绿**:`make ingest | tail` 会吞掉真退出码,zsh 里 `${PIPESTATUS[0]}` 恒空。
 落文件、读哨兵。

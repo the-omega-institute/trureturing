@@ -1,0 +1,40 @@
+**证明。** 使用第一类 Chebyshev 多项式 $T_0=1,T_1=z,T_{k+2}=2zT_{k+1}-T_k$。对 $z\geq1$，共同归纳两个不变量
+\[
+T_k(z)\geq1+k^2(z-1),\qquad
+T_{k+1}(z)-T_k(z)\geq(2k+1)(z-1).
+\tag{17.3}
+\]
+第一式在下一阶由当前两式相加得到。第二式的递推使用
+\[
+T_{k+2}-T_{k+1}=(T_{k+1}-T_k)+2(z-1)T_{k+1}
+\]
+及 $T_{k+1}(z)\geq1$。基例 $k=0$ 直接成立。
+
+对实线性泛函 $F$，若 $|F(x^j)|\leq\delta$ 对 $j\leq n$ 成立，令 $S=|\alpha|+|\beta|$，则
+\[
+|F(T_n(\alpha x+\beta))|\leq\delta(2S+1)^n.
+\tag{17.4}
+\]
+证明对次数作强归纳：泛函 $F_A(f)=F((\alpha x+\beta)f)$ 在下一阶可用的原始矩预算为 $S\delta$。递推项因此不超过
+\[
+2S\delta(2S+1)^{n-1}+\delta(2S+1)^{n-2}
+\leq\delta(2S+1)^n.
+\]
+次数零、一分别由常数矩和一次矩直接处理。
+
+现在取
+\[
+A(x)=\frac{2x-a-b}{b-a},\qquad p_n(x)=\frac{1+T_n(A(x))}{2}.
+\]
+在 $[a,b]$ 上有 $0\leq p_n\leq1$；在 $[b,\infty)$ 上有 $p_n\geq1$。由式 (17.3)，
+\[
+p_n(x_*)\geq1+\frac{n^2(x_*-b)}{b-a}.
+\]
+对 $F(f)=\int f\,d\mu-\int f\,d\nu$ 应用式 (17.4)。两测度的总质量均为一，故 $F(1)=0$，而 $S=(2+a+b)/(b-a)$。于是
+\[
+\eta p_n(x_*)\leq\int p_n\,d\mu
+\leq\int p_n\,d\nu+\frac{\delta Q^n}{2}
+\leq1+\frac{\delta Q^n}{2}.
+\]
+整理得到式 (17.2)。这也证明了一般测度版本；有限原子情形的积分就是实际加权幂和。
+

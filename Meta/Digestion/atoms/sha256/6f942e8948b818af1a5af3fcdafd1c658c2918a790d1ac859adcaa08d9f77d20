@@ -1,0 +1,13 @@
+**theorem 36.5 (Dirac reduction and monotonicity without a quotient chain).** For every $L\ge1$, $0\le p\le1$, and $n,r\ge0$,
+$$
+e_{L,p}(n)=\max_{x\in K}D_{L,p}(n,x),
+$$
+$$
+e_{L,p}(n+r)\le e_{L,p}(n),\qquad
+e_{L,p}(n)\le e_{L+1,p}(n),
+$$
+$$
+e_{L,p}(0)=2(1-\alpha^{L+1}).
+$$
+Thus the first-passage definition of $\tau$ agrees with the definition requiring the error bound at every subsequent time.
+

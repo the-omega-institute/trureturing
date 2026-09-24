@@ -1,0 +1,6 @@
+若某一对状态在前 $$m$$ 步相同、在第 $$m+1$$ 步第一次不同，`finite_horizon_first_new_coordinate_strict` 证明
+
+$$
+R_{m+1}\subsetneq R_m.
+$$
+

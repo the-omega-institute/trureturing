@@ -1,0 +1,226 @@
+[
+  {
+    "labels": [
+      25,
+      27
+    ],
+    "lcm": 675,
+    "assigned_cap": "1/675"
+  },
+  {
+    "labels": [
+      25,
+      75
+    ],
+    "lcm": 75,
+    "assigned_cap": "1/75"
+  },
+  {
+    "labels": [
+      25,
+      81
+    ],
+    "lcm": 2025,
+    "assigned_cap": "1/2025"
+  },
+  {
+    "labels": [
+      25,
+      135
+    ],
+    "lcm": 675,
+    "assigned_cap": "1/675"
+  },
+  {
+    "labels": [
+      25,
+      125
+    ],
+    "lcm": 125,
+    "assigned_cap": "13/3750"
+  },
+  {
+    "labels": [
+      25,
+      225
+    ],
+    "lcm": 225,
+    "assigned_cap": "1/225"
+  },
+  {
+    "labels": [
+      25,
+      375
+    ],
+    "lcm": 375,
+    "assigned_cap": "1/375"
+  },
+  {
+    "labels": [
+      27,
+      75
+    ],
+    "lcm": 675,
+    "assigned_cap": "1/675"
+  },
+  {
+    "labels": [
+      27,
+      81
+    ],
+    "lcm": 81,
+    "assigned_cap": "11/1620"
+  },
+  {
+    "labels": [
+      27,
+      135
+    ],
+    "lcm": 135,
+    "assigned_cap": "1/135"
+  },
+  {
+    "labels": [
+      27,
+      125
+    ],
+    "lcm": 3375,
+    "assigned_cap": "1/3375"
+  },
+  {
+    "labels": [
+      27,
+      225
+    ],
+    "lcm": 675,
+    "assigned_cap": "1/675"
+  },
+  {
+    "labels": [
+      27,
+      375
+    ],
+    "lcm": 3375,
+    "assigned_cap": "1/3375"
+  },
+  {
+    "labels": [
+      75,
+      81
+    ],
+    "lcm": 2025,
+    "assigned_cap": "1/2025"
+  },
+  {
+    "labels": [
+      75,
+      135
+    ],
+    "lcm": 675,
+    "assigned_cap": "1/675"
+  },
+  {
+    "labels": [
+      75,
+      125
+    ],
+    "lcm": 375,
+    "assigned_cap": "1/375"
+  },
+  {
+    "labels": [
+      75,
+      225
+    ],
+    "lcm": 225,
+    "assigned_cap": "1/225"
+  },
+  {
+    "labels": [
+      75,
+      375
+    ],
+    "lcm": 375,
+    "assigned_cap": "1/375"
+  },
+  {
+    "labels": [
+      81,
+      135
+    ],
+    "lcm": 405,
+    "assigned_cap": "1/405"
+  },
+  {
+    "labels": [
+      81,
+      125
+    ],
+    "lcm": 10125,
+    "assigned_cap": "1/10125"
+  },
+  {
+    "labels": [
+      81,
+      225
+    ],
+    "lcm": 2025,
+    "assigned_cap": "1/2025"
+  },
+  {
+    "labels": [
+      81,
+      375
+    ],
+    "lcm": 10125,
+    "assigned_cap": "1/10125"
+  },
+  {
+    "labels": [
+      135,
+      125
+    ],
+    "lcm": 3375,
+    "assigned_cap": "1/3375"
+  },
+  {
+    "labels": [
+      135,
+      225
+    ],
+    "lcm": 675,
+    "assigned_cap": "1/675"
+  },
+  {
+    "labels": [
+      135,
+      375
+    ],
+    "lcm": 3375,
+    "assigned_cap": "1/3375"
+  },
+  {
+    "labels": [
+      125,
+      225
+    ],
+    "lcm": 1125,
+    "assigned_cap": "1/1125"
+  },
+  {
+    "labels": [
+      125,
+      375
+    ],
+    "lcm": 375,
+    "assigned_cap": "1/375"
+  },
+  {
+    "labels": [
+      225,
+      375
+    ],
+    "lcm": 1125,
+    "assigned_cap": "1/1125"
+  }
+]

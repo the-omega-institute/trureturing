@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5868c2c3afd047064146abc040fc27845fc2101ed80dd8dea1495b48e97a54a4
+  normalized_sha256: sha256:5868c2c3afd047064146abc040fc27845fc2101ed80dd8dea1495b48e97a54a4
+cas_ref: sha256:5868c2c3afd047064146abc040fc27845fc2101ed80dd8dea1495b48e97a54a4
+coverage_gids:
+  - gid: D5/S3/Observer/Hankel/SequenceHankelRealization.realizationFromSequence_is_minimal
+    target_statement_id: sha256:66202932fdaf095424e6aa3d4e515a699a49f6b1084951b4b02c9c28c7cd607f
+receipts:
+  unresolved_subitems: []

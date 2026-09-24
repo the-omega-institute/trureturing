@@ -12,6 +12,7 @@
 .echo-review.md
 .sshx-*
 /.lake/
+/.judge-binaries/
 /Papers/build/
 /build/
 __pycache__/
@@ -23,3 +24,6 @@ __pycache__/
 /Golden/Frozen/accepted/.ledger-stage-*/
 /Golden/Frozen/accepted/.ledger-write.lock
 /tools/lean-inspector/.lake/
+/tools/lean-inspector-interface/.lake/
+
+/Reg/.lake/

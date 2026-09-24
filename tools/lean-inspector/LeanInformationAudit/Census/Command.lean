@@ -28,6 +28,11 @@ elab "#census_validate " requestPath:str " using " membershipPath:str
     let mut entries := #[]
     let mut sources : Array ProvenanceSource := #[]
     let mut keySources : Array (String × Array ProvenanceSource) := #[]
+    let bindingSnapshot ← do
+      match metadata.getObjValAs? (Array String) "evidence_modules" with
+      | .ok modules => prepareBindingSnapshot (modules.map String.toName)
+      | .error _ => pure (.error "incomplete_closure:dtr.census_discovery")
+    let mut keyBindings : Array (String × Json) := #[]
     for request in requests do
       unless requested.contains request && request.size == 3 do
         throwError "IE-C044 candidate key is outside the immutable request"
@@ -79,10 +84,13 @@ elab "#census_validate " requestPath:str " using " membershipPath:str
           root (some (← error.toMessageData.toString)))
       sources := sources ++ rowSources
       keySources := keySources.push (key.statementId, rowSources)
+      keyBindings := keyBindings.push
+        (key.statementId, ← bindingEvidence index key.theoremName bindingSnapshot)
     return Json.mkObj [("head", toJson head),
       ("report_sha256", ← ofExcept <| input.getObjVal? "report_sha256"), ("entries", Json.arr entries),
       ("source_inputs", toJson sources),
       ("key_source_inputs", toJson keySources),
+      ("key_binding_evidence", toJson keyBindings),
       ("environment_modules", toJson env.header.moduleNames.size),
       ("direct_imports", toJson (env.header.imports.map (·.module.toString)))]
   CensusReceipt.write destination.getString result

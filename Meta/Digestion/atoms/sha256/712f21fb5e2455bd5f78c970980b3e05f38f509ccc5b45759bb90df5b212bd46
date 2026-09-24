@@ -1,0 +1,22 @@
+**定义与假设 83.1（平稳似然比动力学与联合凸核）。** 沿用定义与假设 74.1、82.1 的有限非空集合 $J,I$、满射 $r:J\to I$、严格正参考概率 $q$、粗参考 $p=Cq$，以及质量算子 $C,B,E=BC$、对角矩阵 $D_q$ 和条件投影 $\Pi=D_q^{-1}ED_q$。取非负列随机矩阵 $T$，要求同一参考平稳及参考恢复族保持：
+$$
+\sum_jT_{jk}=1\quad(k\in J),\qquad
+Tq=q,\qquad TE=ETE.
+$$
+按定义 74.1 置 $S=CTB$，并在似然比坐标中置
+$$
+L=D_q^{-1}TD_q,\qquad L_{jk}=\frac{T_{jk}q_k}{q_j}.
+$$
+取任意 $d\in\Delta(J)$，允许零坐标，记 $u=D_q^{-1}d$。令 $\mathcal K\subseteq\mathbb R$ 为包含全部 $u_j$ 的凸区间，$\Phi$ 在包含 $\mathcal K$ 的开区间上为实值凸 $C^1$ 函数。定义 Bregman 核
+$$
+B_\Phi(s,t)=\Phi(s)-\Phi(t)-\Phi'(t)(s-t),
+\qquad (s,t)\in\mathcal K\times\mathcal K,
+$$
+并要求 $B_\Phi$ 在 $\mathcal K\times\mathcal K$ 上联合凸。纤维缺陷 $\mathcal J_\Phi(d;q,r)$ 使用定义 82.1 的有限和；其生成函数只在这些似然比及纤维均值上取值。
+
+附引：Chafaï，*Entropies, convexity, and functional inequalities: On $\Phi$-entropies and $\Phi$-Sobolev inequalities*，J. Math. Kyoto Univ. 44(2) (2004), 325–363，[DOI:10.1215/kjm/1250283556](https://doi.org/10.1215/kjm/1250283556)，[arXiv:math/0211103v2，(H2)、式 (19)](https://arxiv.org/abs/math/0211103v2)，将二变量条件写为
+$$
+\Psi(t,h)=\Phi(t+h)-\Phi(t)-\Phi'(t)h.
+$$
+线性变换 $(s,t)\mapsto(t,s-t)$ 给出 $B_\Phi(s,t)=\Psi(t,s-t)$。这里的联合凸性是附加假设；单变量 $\Phi$ 的凸性或其透视函数的凸性均不替代这一假设。
+

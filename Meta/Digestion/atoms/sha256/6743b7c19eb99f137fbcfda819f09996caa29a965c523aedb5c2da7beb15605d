@@ -1,0 +1,50 @@
+**定理 27.2（闭合提升图及两种完成）。** 令
+$$
+\overline W=\{(\beta,t):|\beta|\le B_0,\ 0\le t\le T,
+\ r(\beta,t)\le s_*\},\quad
+\widetilde\Psi(\beta,t)=(r(\beta,t),\vartheta(\beta,t)).
+\tag{27.106}
+$$
+该图在闭域上单射，且为双 Lipschitz 坐标。置 $\Theta_s(\beta)=\vartheta(\beta,t_\beta(s))$，包括 $\Theta_0(\beta)=\beta$，$L_s=2L_\vartheta/\nu$。其精确像是闭带
+$$
+\widetilde Y=\{(s,v):0\le s\le s_*,\quad
+\Theta_s(-B_0)\le v\le\Theta_s(B_0)\},
+\tag{27.107}
+$$
+且任意两份提升图读数 $(s,v),(s',v')$、$m=\min\{s,s'\}\ge0$ 满足
+$$
+|\beta-\beta'|\le3(|v-v'|+L_s|s-s'|),
+\qquad
+|t-t'|\le\frac2\nu|s-s'|+
+ \frac{4A_1m^2}{\nu^3}|\beta-\beta'|.
+\tag{27.108}
+$$
+当 $B_0>0$ 时，原始正时间图 $Y$ 的 Euclidean 完成只在初始边界加一个点 $(0,0)$，提升图正时间部分的 Euclidean 完成却加整段 $\{0\}\times[-B_0,B_0]$。两种误差几何在该边界附近不统一等价。
+
+证明。正 $s$ 处，$\Theta_s=(\nu/s)G_s$，所以（25.105）给 $1/3\le\partial_\beta\Theta_s\le3$；零点的导数为一。$|\partial_s\Theta_s|=|\vartheta_t/r_t|\le L_s$。正时间的单射性复用定理25.2；$s=0$ 强制 $t=0$，第二坐标恰是参数。连续单调阈值图给闭带像。两参数先在较小阈值 $m$ 比较，再沿阈值移动，得（27.108）；$m=0$ 时阈值时间恒为零，所以其参数变化项就是零，毋须除零或极限论证。前向估计为
+$$
+|s-s'|\le\tfrac12A_1T^2|\beta-\beta'|+\tfrac32\nu|t-t'|,
+\quad
+|v-v'|\le3|\beta-\beta'|+L_\vartheta|t-t'|.
+\tag{27.109}
+$$
+这是沿环境参数／时间矩形的两段比较，故不要求连接线留在 $\overline W$。逆估计中的 $m\le s_*$ 给统一常数，证明双 Lipschitz 性。
+
+正时 Jacobian 为
+$$
+r_t\vartheta_\beta-r_\beta\vartheta_t
+=\frac\nu r\Delta\ge\nu/6,
+\tag{27.110}
+$$
+零时为 $\nu$。若需普通开集上的局部逆，可以在负时间附近定义 $U=\nu+t r_{tt}(\beta,0)/2$、$V=\beta+t z_{tt}(\beta,0)/2$。第26节混合导数使这些初始系数对参数 $C^1$，两侧的一阶值吻合，给 $C^1$ 延伸及非零 Jacobian。正阈值端点严格小于 $T$，参数端点有开邻域，故局部逆在所有相关边界均以限制意义成立。此代数延伸不声称负时间 PDE 演化存在。
+
+原始图精确分解为
+$$
+(\beta,t)\longmapsto(s,\vartheta)
+\longmapsto(s,s\vartheta/\nu)=(r,z).
+\tag{27.111}
+$$
+闭参数／阈值域紧，两个完整像均为紧集，其正阈值部分稠密，故各自闭像就是各自 Euclidean 完成。第二映射在 $s=0$ 将整段压为一点。选不同的 $\beta,\beta'$，$s_n=s_*/(n+1)\downarrow0$，两原始序列 $(s_n,G_{s_n}(\beta))$、$(s_n,G_{s_n}(\beta'))$ 均趋 $(0,0)$，但提升序列分别趋 $(0,\beta)$、$(0,\beta')$。所以原始到提升的正时间变换不统一连续。普通原始度量的完成不能凭空恢复这些标签。
+
+已有 [GoldenThreadBlowup](../../../D5/S3/CompletionDynamics/GoldenMobius/GoldenThreadBlowup.lean) 的 `golden_thread_completion_value_eq`、`golden_thread_tangent_injective` 与 `golden_geometric_thread_origin_recovery` 分别给相同完成值、可区别的来源切向与有限深度交比重标后的来源恢复。本节使用同样的“端点值与归一化方向不同”区分，其实际 PDE 估计与取得条件由第25—26节供应，不声称除以消失坐标能增加观测信息。该来源中的几何 blowup 是坐标分辨，和恢复卷第26节的流体奇异性不同。$\square$
+

@@ -1,0 +1,98 @@
+[
+  {
+    "cofactor": 25,
+    "old_label": 25,
+    "lcm": 25,
+    "raw_upper": "1/25"
+  },
+  {
+    "cofactor": 25,
+    "old_label": 27,
+    "lcm": 675,
+    "raw_upper": "1/675"
+  },
+  {
+    "cofactor": 25,
+    "old_label": 75,
+    "lcm": 75,
+    "raw_upper": "1/75"
+  },
+  {
+    "cofactor": 25,
+    "old_label": 81,
+    "lcm": 2025,
+    "raw_upper": "1/2025"
+  },
+  {
+    "cofactor": 25,
+    "old_label": 135,
+    "lcm": 675,
+    "raw_upper": "1/675"
+  },
+  {
+    "cofactor": 25,
+    "old_label": 125,
+    "lcm": 125,
+    "raw_upper": "1/125"
+  },
+  {
+    "cofactor": 25,
+    "old_label": 225,
+    "lcm": 225,
+    "raw_upper": "1/225"
+  },
+  {
+    "cofactor": 25,
+    "old_label": 375,
+    "lcm": 375,
+    "raw_upper": "1/375"
+  },
+  {
+    "cofactor": 27,
+    "old_label": 25,
+    "lcm": 675,
+    "raw_upper": "1/675"
+  },
+  {
+    "cofactor": 27,
+    "old_label": 27,
+    "lcm": 27,
+    "raw_upper": "1/27"
+  },
+  {
+    "cofactor": 27,
+    "old_label": 75,
+    "lcm": 675,
+    "raw_upper": "1/675"
+  },
+  {
+    "cofactor": 27,
+    "old_label": 81,
+    "lcm": 81,
+    "raw_upper": "1/81"
+  },
+  {
+    "cofactor": 27,
+    "old_label": 135,
+    "lcm": 135,
+    "raw_upper": "1/135"
+  },
+  {
+    "cofactor": 27,
+    "old_label": 125,
+    "lcm": 3375,
+    "raw_upper": "1/3375"
+  },
+  {
+    "cofactor": 27,
+    "old_label": 225,
+    "lcm": 675,
+    "raw_upper": "1/675"
+  },
+  {
+    "cofactor": 27,
+    "old_label": 375,
+    "lcm": 3375,
+    "raw_upper": "1/3375"
+  }
+]

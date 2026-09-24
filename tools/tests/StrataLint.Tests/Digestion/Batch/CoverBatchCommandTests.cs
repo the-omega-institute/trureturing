@@ -108,14 +108,18 @@ public sealed partial class CoverBatchCommandTests
         Assert.Empty(world.Entry(First).Coverage);
     }
 
-    [Fact]
-    public void SharedContextFailureAfterSuccessKeepsCommittedAtoms()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SharedContextFailureAfterSuccessKeepsCommittedAtoms(bool deletePolicy)
     {
         using var world = new BatchWorld();
         world.DuringVerification = () =>
         {
-            if (world.VerificationCount == 2)
-                File.AppendAllText(Path.Combine(world.Root, "Meta/registry.yaml"), "# changed\n");
+            if (world.VerificationCount != 2) return;
+            var policyPath = Path.Combine(world.Root, "Meta/FILEMAP.toml");
+            if (deletePolicy) File.Delete(policyPath);
+            else File.AppendAllText(policyPath, "# changed\n");
         };
 
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid) + Row("missing-atom", Gid));
@@ -149,7 +153,7 @@ public sealed partial class CoverBatchCommandTests
         world.DuringVerification = () =>
         {
             if (change == "added") File.WriteAllText(Path.Combine(world.Root, "new-input.txt"), "new input");
-            else File.Delete(Path.Combine(world.Root, "Meta/registry.yaml"));
+            else File.Delete(Path.Combine(world.Root, "Meta/FILEMAP.toml"));
         };
 
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
@@ -476,6 +480,8 @@ public sealed partial class CoverBatchCommandTests
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
                 File.WriteAllText(fullPath, contents);
             }
+            foreach (var path in ProducerInputFixture.CopyBatchProducerInputs(Root))
+                inputs.Baseline[path] = File.ReadAllText(Path.Combine(Root, path));
             Repository = new FakeRepositoryGateway(RawChangeSet.Create([]), null,
                 CoverWorld.Raw(inputs.Baseline), currentReader: () => UseGitReader
                     ? GitRepositorySnapshotReader.ReadCurrent(Root) : ReadFiles());
@@ -521,7 +527,7 @@ public sealed partial class CoverBatchCommandTests
                 reports.TryAdd(path.Value, new LeanFileReport([], []));
             var reportPath = RawLeanReportArtifact.DefaultPath(Root);
             RawLeanReportArtifact.WriteFile(reportPath, snapshot, LeanAxiomReport.Create(reports));
-            LeanReportInputScriptTests.AttestBatchReport(Root, reportPath);
+            ProducerInputFixture.AttestBatchReport(Root, reportPath);
             return reportPath;
         }
 

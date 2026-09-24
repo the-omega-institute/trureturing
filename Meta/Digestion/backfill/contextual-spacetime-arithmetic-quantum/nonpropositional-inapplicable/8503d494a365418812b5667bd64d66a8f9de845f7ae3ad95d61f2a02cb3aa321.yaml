@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8503d494a365418812b5667bd64d66a8f9de845f7ae3ad95d61f2a02cb3aa321
+  normalized_sha256: sha256:8503d494a365418812b5667bd64d66a8f9de845f7ae3ad95d61f2a02cb3aa321
+cas_ref: sha256:8503d494a365418812b5667bd64d66a8f9de845f7ae3ad95d61f2a02cb3aa321
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给定有限输入和确定性基态输出并定义线性映射，等距条件与最小环境维数已分别分叶。
+    previous_atom_id: 56a54fd2f171725024b3b44833dd5829b4779e4d39fa0be9e20a8d208efd4c34
+    next_atom_id: 91df8579f2639eb96be2e4be0dd03db189013155e081b58e0186f07c6aa3f16a

@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Scribe;
@@ -55,6 +56,7 @@ public sealed class FileMapRunLocalTrackingTests
 
     private const string DataKeyedRunLocalEntry = """
         [[files]]
+        require = []
         pattern = "Generated/partitions/*.md"
         kind = "generated"
         admission_plane = "content"
@@ -68,6 +70,7 @@ public sealed class FileMapRunLocalTrackingTests
 
     private const string DataKeyedCommittedSourceEntry = """
         [[files]]
+        require = []
         pattern = "Blueprint/**/*.md"
         kind = "generated"
         admission_plane = "content"
@@ -83,7 +86,9 @@ public sealed class FileMapRunLocalTrackingTests
         FileMapLoader.Parse(
             Encoding.UTF8.GetBytes(
                 """
-                schema_version = 2
+                schema_version = 5
+                resources = []
+                evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
 
                 [residence_policy]
                 case_id = "RESIDENCE-EPOCH"

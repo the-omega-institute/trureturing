@@ -1,0 +1,20 @@
+**theorem 42.4 (Real finite-rank lexicographic feasibility).** Let $H$ be a finite-dimensional real inner-product space and $(\alpha_i)_{i\in I}$ a set-indexed family in $H^*$. Suppose every finite subfamily is simultaneously strictly positive at some vector of $H$. Then there is an orthonormal list $u_1,\ldots,u_k$, with $0\le k\le\dim H$, such that, for every $i$, the tuple
+$$
+(\alpha_i(u_1),\ldots,\alpha_i(u_k))
+$$
+has a first nonzero entry and that entry is positive. The empty list is used when $I$ is empty.
+
+**Proof.** We induct on $\dim H$. If $I$ is empty, the empty list works in every dimension. If $\dim H=0$, any nonempty family would contain a form whose inequality is impossible, so this case has already been handled.
+
+Assume $I\ne\varnothing$ and $\dim H>0$. On the compact unit sphere consider the closed sets
+$$
+C_i=\{u:\|u\|=1,\ \alpha_i(u)\ge0\}.
+$$
+They have the finite intersection property. Indeed, a vector satisfying a nonempty finite subsystem is nonzero and can be normalized; the empty subsystem only requires that the sphere be nonempty. Choose $u_1\in\bigcap_iC_i$.
+
+Let $I_0=\{i:\alpha_i(u_1)=0\}$ and $H_1=u_1^\perp$. The restrictions $(\alpha_i|_{H_1})_{i\in I_0}$ remain finitely strictly feasible. To see this, take a witness $x\in H$ for a finite subset of $I_0$ and replace it by
+$$
+x-\langle x,u_1\rangle u_1.
+$$
+This lies in $H_1$ and preserves all those evaluations. The induction hypothesis supplies an orthonormal list in $H_1$ of length at most $\dim H-1$. Prepend $u_1$. For $i\notin I_0$, the first evaluation is positive. For $i\in I_0$, the induction hypothesis gives the required first positive entry later in the list. Orthogonality and the dimension bound follow from the construction. $\square$
+

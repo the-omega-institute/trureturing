@@ -1,0 +1,39 @@
+**theorem 39.6 (Readouts on the actual operator space and finite digit factorization).** For every metrizable space $M$ and continuous $f:\mathscr E\to M$, there is an at most countable $D_f\subseteq K$ such that
+$$
+\operatorname{Eval}_{D_f}(p)=\operatorname{Eval}_{D_f}(q)
+\ \Longrightarrow\ f(p)=f(q)
+\qquad(p,q\in\mathscr E).
+\tag{39.16}
+$$
+Moreover,
+$$
+f=\bar f\circ\operatorname{Eval}_{D_f},\qquad
+\bar f:\operatorname{Eval}_{D_f}(\mathscr E)\to M
+$$
+with $\bar f$ continuous. The countable binary coordinate set $D_f\times\mathbb N$ also determines $f$.
+
+If the target is discrete, its attained image is finite, and finite $D_f$ suffices. More strongly, there are a finite $F\subseteq K\times\mathbb N$ and a continuous map
+$$
+h_F:Q_F(\mathscr E)\to M
+$$
+with
+$$
+f=h_F\circ Q_F.
+\tag{39.17}
+$$
+Equivalently, some finite $D\subseteq K$ and some $L\ge0$ give a factorization through
+$$
+p\longmapsto(q_L(p(b)))_{b\in D},\qquad
+q_L(x)=(x_0,\ldots,x_{L-1}),
+\tag{39.18}
+$$
+on its actual finite image.
+
+**Proof.** Apply Theorem 39.5 to the compact subspace $\mathscr E\subseteq K^K$, with the input points $b\in K$ as product-coordinate indices. Equality of all digits at a given $b$ is equality of the value $p(b)\in K$, proving the assertion about $D_f\times\mathbb N$. The continuity of the factor follows on exactly the actual image specified in Theorem 39.5.
+
+A compact subset of a discrete space is finite, since its cover by singletons has a finite subcover. For a discrete-valued continuous $f$, every $p\in\mathscr E$ has a neighborhood on which $f$ is constant. The product topology on $K^K$, followed by the binary-cylinder basis of each $K$ coordinate, gives a neighborhood $W_p$ of $p$ in $\mathscr E$ specified by finitely many digit equalities and contained in that constant fibre. Cover $\mathscr E$ by finitely many such $W_{p_1},\ldots,W_{p_r}$, and let $F$ be the union of their finite digit supports.
+
+If $Q_F(p)=Q_F(q)$, choose $a$ with $p\in W_{p_a}$. The same digit equalities place $q$ in $W_{p_a}$, and hence $f(p)=f(q)$. This defines $h_F$ on $Q_F(\mathscr E)$. That image is a finite discrete space, so $h_F$ is continuous. Taking the finite projection of $F$ onto $K$ gives finite $D_f$, and its factor is continuous by the compact-Hausdorff quotient argument.
+
+For $F\ne\varnothing$, take $D$ to be that projection and $L=1+\max\{j:(b,j)\in F\}$. The prefixes in (39.18) determine every coordinate in $F$, so they determine $f$ and give a continuous factor on their finite image. For $F=\varnothing$, the map is constant and $D=\varnothing$, $L=0$ suffice. The finite input set in this argument consists of $K$-valued evaluations; finite-valued observations arise only after the stated digit truncation. $\square$
+

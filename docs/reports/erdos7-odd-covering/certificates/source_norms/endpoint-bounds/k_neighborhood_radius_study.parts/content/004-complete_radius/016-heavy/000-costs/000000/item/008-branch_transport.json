@@ -1,0 +1,82 @@
+{
+  "index": {
+    "kind": "inline",
+    "value": 0
+  },
+  "parameters": {
+    "kind": "inline",
+    "value": {
+      "delta": "1/100",
+      "rho": "1/100000",
+      "rbar": "1/20000",
+      "h1min": "599/1800",
+      "v0": "19/2500",
+      "v1": "1833/239600",
+      "gap": "3971/180000",
+      "tbar": "101/48",
+      "Cbar": "602/157",
+      "kbar": "599/298",
+      "budget_increments": [
+        "167/240000",
+        "1/3600",
+        "1/400"
+      ],
+      "c": [
+        "281/400",
+        "3613/9000",
+        "401/1500",
+        "401/4500"
+      ],
+      "H": [
+        "189/3125",
+        "15317/150000",
+        "61/900",
+        "81199/3600000"
+      ],
+      "positive7": "2719/42000"
+    }
+  },
+  "barrier": {
+    "kind": "inline",
+    "value": "630053335920064561120723361434337/15632787748921114278012443437500"
+  },
+  "raw_zero_prices": {
+    "path": "content/004-complete_radius/016-heavy/000-costs/000000/item/008-branch_transport/003-raw_zero_prices.json",
+    "sha256": "1a1ac4a5a8cf46a4ae690055ad4a0e80baa6a475a6d3c5c0658cffb57acb73bf",
+    "kind": "value"
+  },
+  "raw_complete_prices": {
+    "path": "content/004-complete_radius/016-heavy/000-costs/000000/item/008-branch_transport/004-raw_complete_prices.json",
+    "sha256": "4e5d2de1e432691e77453fd9774f8d26dba51239f7112e2f6d637dbd01fe4e9f",
+    "kind": "value"
+  },
+  "common_price": {
+    "kind": "inline",
+    "value": "266745062262535304243290697737/2265279432296493540662935200000"
+  },
+  "non_H_cap_growth": {
+    "kind": "inline",
+    "value": "211751/53910000"
+  },
+  "non_H_budget_growth": {
+    "kind": "inline",
+    "value": "923/240000"
+  },
+  "non_H_marker_price_per_max_derivative": {
+    "kind": "inline",
+    "value": "532718921/58222800000"
+  },
+  "H_marker_price_per_max_derivative": {
+    "kind": "inline",
+    "value": "1049/4050000"
+  },
+  "branches": {
+    "path": "content/004-complete_radius/016-heavy/000-costs/000000/item/008-branch_transport/010-branches.json",
+    "sha256": "2fdf2422cfd82668284e03d33efca197a40e0418f629b225e0a6681e948996af",
+    "kind": "array"
+  },
+  "uniform_margin_error": {
+    "kind": "inline",
+    "value": "122283559554563738472442540710392304286301/233978140337109445146659154045080400000000"
+  }
+}

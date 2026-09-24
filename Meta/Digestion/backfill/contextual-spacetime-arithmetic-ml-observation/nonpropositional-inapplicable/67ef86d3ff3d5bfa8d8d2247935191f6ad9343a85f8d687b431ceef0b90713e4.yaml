@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:67ef86d3ff3d5bfa8d8d2247935191f6ad9343a85f8d687b431ceef0b90713e4
+  normalized_sha256: sha256:67ef86d3ff3d5bfa8d8d2247935191f6ad9343a85f8d687b431ceef0b90713e4
+cas_ref: sha256:67ef86d3ff3d5bfa8d8d2247935191f6ad9343a85f8d687b431ceef0b90713e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文的“记”引入对数坐标和五个代数量，并明确“新网格仅要求上述端点、步长和舍入契约”；名称含误差不等于断言误差受其控制，且不预设新区间证书，因而是纯定义。
+    previous_atom_id: ac32f6197778f9cb42df9dfdf669fd8a1d5b1d895c8adf5c771094bafa6525c6
+    next_atom_id: e90ba38af5285b8857778109c87da9ed03cc01d167afa7858ec5ffbeb57a4420

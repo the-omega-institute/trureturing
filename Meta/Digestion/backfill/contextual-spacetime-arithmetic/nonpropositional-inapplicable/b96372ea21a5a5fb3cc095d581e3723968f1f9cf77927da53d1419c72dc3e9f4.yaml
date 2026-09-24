@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b96372ea21a5a5fb3cc095d581e3723968f1f9cf77927da53d1419c72dc3e9f4
+  normalized_sha256: sha256:b96372ea21a5a5fb3cc095d581e3723968f1f9cf77927da53d1419c72dc3e9f4
+cas_ref: sha256:b96372ea21a5a5fb3cc095d581e3723968f1f9cf77927da53d1419c72dc3e9f4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “这两处在初稿、中间稿均指命题 28”说明有限支撑解引用的历史对应，未声称某个新方程满足存在条件；无定义内夹带结论，按编辑说明结算。
+    previous_atom_id: bf33a038c75cedea893e0c142ec273efdf42bd2b4891e1d5aea46e03d8ce17c0
+    next_atom_id: c19df0310b7ec0a15e1016a65e4db1a6d10771040e0baf64ecf6e2aaabb711e8

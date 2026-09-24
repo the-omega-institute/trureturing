@@ -1,0 +1,17 @@
+### 18.3 推论：精确第一转折点
+
+若 $N\geq2$ 且第 18.2 节的系数条件成立，则 $L>0$，并且
+\[
+M=\max_i A_i>0,\qquad \varepsilon_*=\frac1M
+\tag{18.6}
+\]
+满足
+\[
+W(\varepsilon)=\frac{1+\varepsilon L}{P}\quad(0\leq\varepsilon\leq\varepsilon_*),
+\qquad
+W(\varepsilon)<\frac{1+\varepsilon L}{P}\quad(\varepsilon>\varepsilon_*).
+\tag{18.7}
+\]
+
+**证明。** 式 (18.4) 对所有可行对给出 $wP\leq1+\varepsilon L$。若全部 $A_i\leq0$，式 (18.3) 会对任意大 $\varepsilon$ 构造可行的 $w_\varepsilon$；但 $L>0$ 会使 $w_\varepsilon>1$，与概率归一化矛盾。因此 $M>0$。当 $0\leq\varepsilon\leq1/M$ 时，式 (18.3) 构造取等。超过该阈值时至少一个条件失败，而必要性排除了所有取等概率对。由于最大值确实取得，故为严格不等式。第 15.2 节的 $1/[2P(1+B)]$ 是有效的充分半径；式 (18.6) 给出此系数条件下的精确半径。
+

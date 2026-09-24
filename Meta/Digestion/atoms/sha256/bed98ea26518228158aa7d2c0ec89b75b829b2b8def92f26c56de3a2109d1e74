@@ -1,0 +1,37 @@
+**Assumption 39.0 (The adopted carrier and actual operator completion).** Work in ZFC and put $\mathbb N=\{0,1,2,\ldots\}$, $\mathfrak c=2^{\aleph_0}$, $\phi=(1+\sqrt5)/2$, $\delta=[\phi]\in\mathbb T=\mathbb R/\mathbb Z$, and $\Sigma=\{-,+\}$. Retain the carrier, phase map, natural points, and actual successor from Definition 20.1:
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad 0_K=Z(0).
+$$
+The space $K$ is compact metrizable, $H:K\to\mathbb T$ is a continuous surjection, $Z(\mathbb N)$ is dense, and $T$ is continuous with $TZ(n)=Z(n+1)$. Write
+$$
+E_m=-m\delta\quad(m\ge1),\qquad E=\{E_m:m\ge1\}.
+$$
+For $\gamma\notin E$, the unique lift of $\gamma$ is $k_\gamma$; above $E_m$ the two oriented lifts are $x_m^-,x_m^+$. The phase $n\delta$ is nonsplit and has lift $Z(n)$ for every $n\ge0$.
+
+Adopt the actual-function classification and product topology of Theorems 37.1–37.4:
+$$
+\mathscr E=\overline{\{T^n:n\ge0\}}^{\,K^K}
+=\{T^n:n\ge0\}\ \dot\cup\ \{P_\theta^s:\theta\in\mathbb T,\ s\in\Sigma\}.
+$$
+All displayed operators are distinct. The space $\mathscr E$ is compact Hausdorff, its iterates are dense and isolated, and
+$$
+e(p)=p(0_K),\qquad \theta(p)=H(e(p)),\qquad
+H(p(b))=H(b)+\theta(p).
+$$
+The selector and finite-branch formulas are
+$$
+P_\theta^s(b)=
+\begin{cases}
+k_{H(b)+\theta},&H(b)+\theta\notin E,\\
+x_m^s,&H(b)+\theta=E_m,
+\end{cases}
+$$
+$$
+T^n x_m^s=
+\begin{cases}
+x_{m-n}^s,&n<m,\\
+Z(n-m),&n\ge m.
+\end{cases}
+$$
+Retain the intrinsic neighborhood bases of Theorem 37.6 and the exact evaluation fibres of Theorem 37.9. For the digit bounds below, retain $G_0=1$, $G_1=2$, $G_{L+2}=G_{L+1}+G_L$ and the following consequence of Theorem 20.2: the two lifts above $E_m$ have different prefixes of length $L\ge1$ exactly when $m\le G_L$. These are adopted results about the original successor, not definitions of a replacement dynamics.
+

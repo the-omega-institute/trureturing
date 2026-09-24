@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:473de6f4af23e7954c220cc687898df599956eb832dffc3489b99eced5a8669b
+  normalized_sha256: sha256:473de6f4af23e7954c220cc687898df599956eb832dffc3489b99eced5a8669b
+cas_ref: sha256:473de6f4af23e7954c220cc687898df599956eb832dffc3489b99eced5a8669b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “所有下标从”零开始及“令”后分别约定无相邻一串和最终全零子载体；本叶不含实际前缀像相等或稠密性，这些断言已分开，两个集合定义未偷渡可实现性。
+    previous_atom_id: bce7c926507c7b564875334421c3bf37d282a74879fa54bd6a6742f7705b9207
+    next_atom_id: d9005b1257732b8660f6afff56f85a6afe7141537bdc46b4a135453227147f76

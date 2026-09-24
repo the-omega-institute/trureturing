@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:bf796033897c94b00f231f2f4f5721e351ac6c5dcca44e1f7db1856574f5ce16
+  normalized_sha256: sha256:bf796033897c94b00f231f2f4f5721e351ac6c5dcca44e1f7db1856574f5ce16
+cas_ref: sha256:bf796033897c94b00f231f2f4f5721e351ac6c5dcca44e1f7db1856574f5ce16
+coverage_gids:
+  - gid: D5/S3/DivergenceSupport/Equality/PetzRecovery.dpi_defect_eq_zero_iff_exists_bayes_recovery
+    target_statement_id: sha256:0a4533cd6594360c0f9d6982c16a7a1e99e884367abda0282d1867fc7d502969
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDPI.classical_dpi_identity_zero_support
+    target_statement_id: sha256:1d1f07c23fa99f741789f3cf39a6cfc04affc13728a6927107d205b5f73e5cd5
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
+    target_statement_id: sha256:2bec750f0e24b41141b6489925caf191ab445e94cd503f0220b1d621e05880f2
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDefectEquality.dpi_defect_eq_zero_iff_zero_output_or_posteriors_eq
+    target_statement_id: sha256:1bde2eb76b2d093de2cd0c16093013933ca4fa3a8c878f6d30668fce720846c7
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel
+    target_statement_id: sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
+receipts:
+  unresolved_subitems: []

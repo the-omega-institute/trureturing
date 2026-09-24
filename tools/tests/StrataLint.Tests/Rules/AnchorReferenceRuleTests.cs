@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -65,6 +66,21 @@ public sealed class AnchorReferenceRuleTests
             ("D5/A.lean", ["D5.B"]),
             ("D5/B.lean", ["D5.C"]),
             ("D5/C.lean", [Target])));
+
+    [Theory]
+    [InlineData("tools/lean-inspector", "LeanInformationAudit.Syntax")]
+    [InlineData("tools/lean-inspector", "LeanInformationAuditAnalysis.Probe")]
+    [InlineData("tools/lean-inspector-interface", "LeanInformationAuditInterface.Syntax")]
+    public void ImportClosureUsesInspectorSourceRootForTooling(string sourceRoot, string module)
+    {
+        var path = sourceRoot + "/" + module.Replace('.', '/') + ".lean";
+        var report = Report(("D5/A.lean", [module]), (path, ["D5.B"]),
+            ("D5/B.lean", [Target]));
+        Assert.Equal(module, LeanImportClosure.ModuleName(RepoPath.CreateKnown(path)));
+        Assert.Contains(RepoPath.CreateKnown("D5/B.lean"),
+            LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown("D5/A.lean")));
+        Assert.True(LeanImportClosure.ImportsExternalModule(report, "D5.A", Target));
+    }
 
     [Fact]
     public void ImportClosureRejectsUnreachableTarget() =>
@@ -225,6 +241,7 @@ public sealed class AnchorReferenceRuleTests
             [helper] = "-- helper\n",
             [unrelated] = "-- unrelated\n",
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
+            [EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Manifest(),
             [RuleFixture.FixtureBackfillSourcePath] = RuleFixture.FixtureBackfillSource,
             [RuleFixture.FixtureDigestionSourcePath] = RuleFixture.FixtureDigestionSource,
             ["lean-toolchain"] = "leanprover/lean4:v4.23.0\n",
@@ -247,13 +264,12 @@ public sealed class AnchorReferenceRuleTests
             current[changedPath] += "-- changed\n";
         }
 
-        var policy = RegistryLoadAssert.Accepted(RegistryPolicyCompiler.Compile(
-            new RegistrySyntax(1, [], [], [],
-                [new ArtifactKindSyntax("lean", "lean-module", ["module"], ["formal"])]),
-            [new DomainSyntax("Carrier", "S0", "Synthetic carrier")])).Policy;
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         var changes = RawChangeSet.CreateWithKinds(
             [(changedPath, added ? RawChangeKind.Added : RawChangeKind.Modified)]);
-        var context = RuleEvaluationContext.Create(
+        var context = DeltaRuleContext.Create(
             SyntheticSnapshot(current),
             SyntheticSnapshot(baseline),
             policy,

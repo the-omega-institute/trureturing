@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cc6831603673a451f622b48f68de3f069404a59bfa0c11f0d704cdab2b4986cb
+  normalized_sha256: sha256:cc6831603673a451f622b48f68de3f069404a59bfa0c11f0d704cdab2b4986cb
+cas_ref: sha256:cc6831603673a451f622b48f68de3f069404a59bfa0c11f0d704cdab2b4986cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该子句仅含名为“pr3-source”的空 HTML 锚点，承担页面定位，没有命题、数值读数或定义内结论，故无需 Lean 证明。
+    previous_atom_id: a00e54745d34f9b28edbd82e89f15e2125c29e85ab56d9e7f581346af06cfb03
+    next_atom_id: 270c1fbd930ea0963dd99fd7861ac15aee4a01d66c07a01131e5ee511cede9bc

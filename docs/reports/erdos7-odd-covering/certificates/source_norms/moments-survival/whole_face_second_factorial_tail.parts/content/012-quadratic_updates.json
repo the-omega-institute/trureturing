@@ -1,0 +1,147 @@
+[
+  {
+    "index": 41,
+    "name": "H16",
+    "tuple": [
+      0,
+      0
+    ],
+    "weight": "2371/2880",
+    "expansion": {
+      "at_one": "0",
+      "first_difference": "75376570/184225041",
+      "curvatures": {
+        "2": "474292550/184225041",
+        "3": "512/429",
+        "4": "3356/429"
+      },
+      "factorial_tail_coefficient": "8/3",
+      "polynomial_tail": {
+        "leading": "4/3",
+        "constant": "-2535551750/184225041",
+        "entrance": 4
+      },
+      "cost_upper": "36154880127943/6770270256750"
+    },
+    "previous104_bound": "4174926132021133/783416986852500",
+    "accepted_bound": "4174926132021133/783416986852500",
+    "candidate_gain": "-5542725407809/498538082542500",
+    "weighted_direct_improvement": "0"
+  },
+  {
+    "index": 42,
+    "name": "H16",
+    "tuple": [
+      0,
+      1
+    ],
+    "weight": "2371/2880",
+    "expansion": {
+      "at_one": "0",
+      "first_difference": "15627/48334",
+      "curvatures": {
+        "2": "92747/72501",
+        "3": "25/39",
+        "4": "25/39"
+      },
+      "factorial_tail_coefficient": "25/39",
+      "polynomial_tail": {
+        "leading": "25/78",
+        "constant": "-139019/145002",
+        "entrance": 4
+      },
+      "cost_upper": "1986612375947/1342863522000"
+    },
+    "previous104_bound": "441289979423/295978082400",
+    "accepted_bound": "1986612375947/1342863522000",
+    "candidate_gain": "76270605227/6592239108000",
+    "weighted_direct_improvement": "180837604993217/18985648631040000"
+  },
+  {
+    "index": 43,
+    "name": "H16",
+    "tuple": [
+      0,
+      2
+    ],
+    "weight": "2371/2880",
+    "expansion": {
+      "at_one": "0",
+      "first_difference": "4395/48334",
+      "curvatures": {
+        "2": "6635/72501",
+        "3": "37/507",
+        "4": "37/507"
+      },
+      "factorial_tail_coefficient": "37/507",
+      "polynomial_tail": {
+        "leading": "37/1014",
+        "constant": "-7979/145002",
+        "entrance": 4
+      },
+      "cost_upper": "9406473059/53714540880"
+    },
+    "previous104_bound": "60335035438477/344531250000000",
+    "accepted_bound": "9406473059/53714540880",
+    "candidate_gain": "1270024028565517/524556063281250000000",
+    "weighted_direct_improvement": "3011226971728840807/1510721462250000000000000"
+  },
+  {
+    "index": 44,
+    "name": "H16",
+    "tuple": [
+      1,
+      0
+    ],
+    "weight": "2371/2880",
+    "expansion": {
+      "at_one": "0",
+      "first_difference": "379438/1090089",
+      "curvatures": {
+        "2": "1602542/1090089",
+        "3": "8/11",
+        "4": "8/11"
+      },
+      "factorial_tail_coefficient": "8/11",
+      "polynomial_tail": {
+        "leading": "4/11",
+        "constant": "-1206146/1090089",
+        "entrance": 4
+      },
+      "cost_upper": "201438962429/120182312250"
+    },
+    "previous104_bound": "522159750443/309040231500",
+    "accepted_bound": "201438962429/120182312250",
+    "candidate_gain": "2656084489/196661965500",
+    "weighted_direct_improvement": "6297576323419/566386460640000"
+  },
+  {
+    "index": 45,
+    "name": "H16",
+    "tuple": [
+      2,
+      0
+    ],
+    "weight": "2371/2880",
+    "expansion": {
+      "at_one": "0",
+      "first_difference": "131938/1090089",
+      "curvatures": {
+        "2": "134042/1090089",
+        "3": "248/2541",
+        "4": "248/2541"
+      },
+      "factorial_tail_coefficient": "248/2541",
+      "polynomial_tail": {
+        "leading": "124/2541",
+        "constant": "-80846/1090089",
+        "entrance": 4
+      },
+      "cost_upper": "196967816503/841276185750"
+    },
+    "previous104_bound": "94873766607095653/405168750000000000",
+    "accepted_bound": "196967816503/841276185750",
+    "candidate_gain": "606938232728251577/21031904643750000000000",
+    "weighted_direct_improvement": "1439050549798684489067/60571885374000000000000000"
+  }
+]

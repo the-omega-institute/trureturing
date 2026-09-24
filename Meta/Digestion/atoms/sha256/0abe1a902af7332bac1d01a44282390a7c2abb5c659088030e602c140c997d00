@@ -1,0 +1,36 @@
+#### 134.6.3 两种观察闭合如何连接，又为何不可随意交换
+
+在上一节固定且对操作封闭的读数宇宙中，
+
+$$
+K_{\operatorname{Cl}_{\rm dyn}(D)}=\operatorname{Stab}(K_D).
+$$
+
+结合 (134.15)，得到
+
+$$
+\operatorname{Cl}_{\rm name}\operatorname{Cl}_{\rm dyn}
+\operatorname{Cl}_{\rm name}(D)
+= \operatorname{Cl}_{\rm name}\operatorname{Cl}_{\rm dyn}(D).
+\tag{134.17}
+$$
+
+证明为：命名闭合先不改变 $K_D$，动态闭合的核只由 $K_D$ 通过 (134.16) 决定，最后命名闭合又只依赖所得核。
+
+更具体地，令
+
+$$
+\widehat{\operatorname{Cl}}(D)
+=\operatorname{Cl}_{\rm name}(\operatorname{Cl}_{\rm dyn}(D)).
+$$
+
+这是同时命名闭合、动态闭合且包含 $D$ 的最小读数族。首先它已命名闭合；其核 $E=\operatorname{Stab}(K_D)$ 稳定，故任意在 $E$ 上恒定的 $r$，其 $r\circ T_a$ 仍在 $E$ 上恒定，说明它也动态闭合。若 $L$ 同时具有两种闭合性且包含 $D$，则它先包含 $\operatorname{Cl}_{\rm dyn}(D)$，再包含其命名闭合，因此包含 $\widehat{\operatorname{Cl}}(D)$。这也证明共同闭合的幂等性。
+
+这个特定相容结构不能被误写为两个算子总能交换。取 $X=\{0,1\}^2$，操作交换两个坐标，$\Omega$ 为全部二值读数，$D=\{a\}$ 为第一坐标。先命名闭合得到 $\{0,1,a,1-a\}$，再取动态轨道得到
+
+$$
+\{0,1,a,1-a,b,1-b\}.
+$$
+
+先取动态轨道得到 $\{a,b\}$，其联合观察区分全部四个状态，故再命名闭合得到全部 $16$ 个二值函数。异或 $a\mathbin{\mathrm{xor}}b$ 属于后一集合，不属于前一集合；其在 $00,01,10,11$ 上的值依次为 $0,1,1,0$，不等于前述六个函数中的任何一个。
+

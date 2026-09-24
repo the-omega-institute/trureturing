@@ -1,0 +1,1 @@
+| 72·有限分支桥 | [D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary.legacy_quantumRelativeEntropy_eq_finite_branch](https://github.com/the-omega-institute/trureturing/blob/6dcc8b24cb208a3a0e06a657b3bf8111e5f70801/D5/S3/Quantum/Divergence/LegacyRelativeEntropyBoundary.lean) 通过不改变矩阵的 `toLegacyDensityState` 连接旧表达式与有限迹对数分支；还须结合下一行的实际支撑条件，不能单独获得 Umegaki 的无穷分支。 

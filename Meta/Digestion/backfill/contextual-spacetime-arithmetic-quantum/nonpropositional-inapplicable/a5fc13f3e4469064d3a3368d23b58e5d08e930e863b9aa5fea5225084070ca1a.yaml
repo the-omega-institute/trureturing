@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a5fc13f3e4469064d3a3368d23b58e5d08e930e863b9aa5fea5225084070ca1a
+  normalized_sha256: sha256:a5fc13f3e4469064d3a3368d23b58e5d08e930e863b9aa5fea5225084070ca1a
+cas_ref: sha256:a5fc13f3e4469064d3a3368d23b58e5d08e930e863b9aa5fea5225084070ca1a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本原子定义历史冗余度与任务指定的阈值，并说明优化问题的参数口径，没有给出最小耦合数的断言。
+    previous_atom_id: e13626be9060fd3f350d8a4e4d489e5e062347abbcb07a2c530bfaba12149247
+    next_atom_id: 4069b58b78f889f48c8ef1ee9580a952f2ed99db64f234ad407189d44e193664

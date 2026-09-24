@@ -28,7 +28,7 @@ public static class CoverageCanonicalWriter
             .Append(" profiles=\"ValidatedPolicy/ArtifactPolicy\"")
             .Append(" mirrors=\"active SL-004 applicability\"")
             .Append(" ledger=\"FrozenLedger+TruthDAG\"")
-            .Append(" registrations=\"registry/domains/path-policy\"\n");
+            .Append(" registrations=\"filemap/domains/path-policy\"\n");
         foreach (var row in report.Matrix)
         {
             builder.Append("MATRIX class=").Append(CoverageNames.Class(row.Class))
@@ -139,7 +139,7 @@ public static class CoverageCanonicalWriter
                 "ValidatedPolicy/ArtifactPolicy",
                 "active SL-004 applicability",
                 "FrozenLedger+TruthDAG",
-                "registry/domains/path-policy",
+                "filemap/domains/path-policy",
             },
             schema_version = 1,
             summary = new

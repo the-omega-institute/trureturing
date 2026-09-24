@@ -1,0 +1,112 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "fixed-continuation-profile-neighborhood-lower-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Lower bounds on exact independent auxiliary C,J. Every finite nonroot depth cap of all20 head coordinates may vary in its relative box, with geometric higher-digit lift and fixed delta2/5,B,T. This is not a lower bound on actual tail losses."
+  },
+  "B": {
+    "kind": "inline",
+    "value": 16384
+  },
+  "T": {
+    "kind": "inline",
+    "value": "326059/4"
+  },
+  "scale": {
+    "kind": "inline",
+    "value": 1000000000000000
+  },
+  "stages": {
+    "path": "content/005-stages.json",
+    "sha256": "fa270b05e723f276a9d37e5eaafea6074ab0203cf66ac3028e25359e5ca27497",
+    "kind": "array"
+  },
+  "C_lower": {
+    "kind": "inline",
+    "value": "130197166187131/250000000000000"
+  },
+  "J_lower": {
+    "kind": "inline",
+    "value": "2468848925830800739/250000000000000"
+  },
+  "h": {
+    "kind": "inline",
+    "value": "1/50000"
+  },
+  "head_coordinates": {
+    "kind": "inline",
+    "value": 20
+  },
+  "polynomial_degree_bound": {
+    "kind": "inline",
+    "value": 12
+  },
+  "base_survivor_upper": {
+    "kind": "inline",
+    "value": "696181396681816852739454137354543/1086338369123261718750000000000000"
+  },
+  "new_auxiliary_B_lower": {
+    "kind": "inline",
+    "value": "166272819416251277624961105892596309189393309253380768740086958885370146811501169325831384302069268138666102400387/259125232696533203125000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "new_survivor_upper": {
+    "kind": "inline",
+    "value": "6296553987607012221332172099533896965501486419212278584708531685581409235971165254190909/9822938088860511779785156250000000000000000000000000000000000000000000000000000000000000"
+  },
+  "score_excess_lower": {
+    "kind": "inline",
+    "value": "354752923942358689456571608399832327780199397081606699757554854228773625666715498227877812370186242933620981665176961020591/533803013093902361392974853515625000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "score_excess_lower_decimal": {
+    "kind": "inline",
+    "value": 0.0006645764734189565
+  },
+  "source_sha256": {
+    "kind": "inline",
+    "value": {
+      "certificate_io.py": "2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b",
+      "frontier/source-budgets/adaptive_phase_io.py": "befaad88f3e9e7303920faf30e4f6ae8e14a8f79b8e167ada5d3afa51f3324c3",
+      "problem-details/61-coordinate-retention-and-profile-neighborhood-obstruction.md": "3f3c7b9f74d6734ce1a2c4aa6d34ee12aac772ed3886471b446c3a7d0d5ce527",
+      "problem-details/60-positive-cylinder-covers-across-head-profiles.md": "61e99293808253d8c0ac9000cf8f1da45317b1ddcdd6be26077d842cef32d288",
+      "frontier/source-budgets/uniform_phase_capacity_input.json": "ea227d216660f496ecb3a2c89dbc145605f0ad83c94e5996a7ee76d746ea712b",
+      "certificates/source_norms/source-budgets/positive_cylinder_polynomial.json": "94c44dde03b84e25ab6a85a6a48d81d1539f9a4bfcbaabf8a7449eb016a4ea46",
+      "frontier/source-budgets/positive_cylinder_polynomial.py": "feed97713b97c5297b4434f57e856a93a4bdabc954e775b1dd57d6ee43406cfb",
+      "problem-details/59-terminal-phase-elimination-and-uniform-balanced-profile-obstruction.md": "1a946aea6c102017f2f19e66d34b605b6dda338bb62efc104123ce7b2dafc409",
+      "frontier/source-budgets/uniform_phase_capacity.py": "7108c17a504ff7ee68faccd223964682ff0e21d86297f2b85fa2ed285dbdb32f",
+      "certificates/source_norms/source-budgets/uniform_phase_capacity.json": "23870ef8d682d5e0a4d1e4c96323532c844d0549be99359cf74412c5ae306b3e",
+      "problem-details/58-adaptive-initial-block-recovery-and-all-schedule-budget-obstruction.md": "2aac02eaaaf2dda17068b37c2b5e8964bc609b0db30ba238bc54f5d2da5d66f5",
+      "frontier/source-budgets/uniform_phase_private_witnesses_input.json": "984cc949bc2ee28241be008c9506d82afbd1b410de50ba41286c3e82040fae93",
+      "frontier/source-budgets/balanced_profile_head_input.json": "9f09fbd5b17ab3f588439e9949b8b0bf183f64684930df63491308d12da167bc",
+      "frontier/source-budgets/capped_head_bellman.py": "c944dccdceca998f6ab46698e19831c3c81d06be6ceb8238d283c2db478718f3",
+      "frontier/source-budgets/verify_balanced_profile_tail_budget.py": "47c879983216081dc6cda36e0625b2b4e2f3c9527b519d6bd65fe991701e27eb",
+      "certificates/source_norms/source-budgets/balanced_profile_tail_verification.json": "efe77669ceabee38d5c5b94af03856a894c99f42e6792ef95a61a4fe2b8253a7",
+      "problem-details/57-balanced-depth-profile-and-degree-seven-frontier.md": "dc243704b9e01b5719f6becf97ea93a6c5c25fb0a254e0b7a8fd8aab29b0a370",
+      "certificates/source_norms/source-budgets/balanced_profile_head_verification.json": "22c110d6b64544bcf143afefcd8cab0236fa520228f814b5b634efebb49ac650",
+      "frontier/source-budgets/balanced_profile_head.py": "daa64daeff8c6a7dc474a965b59473929f1b63fec48e3ef2465b399eb1945dc5",
+      "certificates/source_norms/source-budgets/balanced_profile_head.json": "13ef27bd3ea3472257faf3ec3394949f7f2fad28fca1998c7ffd201f6ff53914",
+      "problem-details/04b-arbitrary-star-head-residues-with-unrestricted-tails.md": "25f3724b5a48f2856721512d7582f655576f8879830333cd8d2d0936bdd4ac8f",
+      "problem-details/04c-full-history-capped-laws-and-exact-global-optimization.md": "3bb8fed84c5fd5a66b40105d28ee9720328cc89f22827f67fb4606d7fcd097cd",
+      "problem-details/04-a-complete-star-family-refutes-the-unrestricted-gamma-73-bound.md": "4bdbb770b9d1f11abec52ba6fd3f814e81e5ea5da7a93e7a5c125af85dccc32d",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison.lean": "01f4aa3aeea067a86233bd6a9a22ff3c097455f07a9535184330a543339004a2",
+      "../../../D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Probability.lean": "286ab22b894cd2e7e2fc8c3ff8db1897f8aca80c82dac3e849d4d2c5f800adaf",
+      "../../../D5/S3/Arith/GoldenResourceOptimalInteger.lean": "b6ddfbcbc297168f0090cc7c2ab6e1f1316db42db7a0cc94607fe682d78d75f9",
+      "../../../Library/Arith/schroeder2026noncoverage.md": "522073ba1fe27b8d80cada26d6aaf8350506ccafbc86639a1e3a885159e0ade6",
+      "../../../Library/Arith/balister2018covering.md": "e346dd5e037430db8903e2d81cc42c7cda9eed0ce61582f86f0139b7062260d9",
+      "frontier/source-budgets/depth_cap_bellman.py": "40f04786e14ceb29e1ad125987946ce5a077ce185f283eb615a8251546bcdb14",
+      "problem-details/54-depth-profile-head-laws-with-unrestricted-original-tails.md": "c276c0dc1756da4e3208122c0290d08a928b1a135483f64aed420b7daccf65d9",
+      "frontier/source-budgets/verify_balanced_profile_head.py": "9f81ef4a32e3818e27c84f027807bcda7cca9e4beb02d755eba0694342031307",
+      "certificates/source_norms/source-budgets/balanced_profile_tail_budget.json": "43ee684630214cc0bc5b94ea05528f4f7fda023d3071e890224d4e7dce21164a",
+      "star_block/stoploss.py": "f8b1a2132defc8375f99a34756f761b887e55875346816e37128f67f363aacce",
+      "star_block/base.py": "8b0b108bfdcaa0c2aad5659d41e7f157d10693ed52f2bd3c8e52683bd1b4d8ff",
+      "verify_finite_continuation.py": "c0a4fa266d5e114b77303d195b2f88fe570ee09ae2b34b2b0889e0585c2f9390",
+      "frontier/source-budgets/balanced_profile_tail_budget.py": "e29ce190d3cc7a4ce5126f5d35fe60ac17745016b80b89bbb7cc01c8a47a0dd3"
+    }
+  },
+  "producer_sha256": {
+    "kind": "inline",
+    "value": "9635097a3908fdafa4d2059a7837a4d3f8e362762ab400988bb3e4aec6630412"
+  }
+}

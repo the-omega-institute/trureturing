@@ -1,0 +1,24 @@
+**定义 67.7（有限图上的概率提升与分量翻转）。**
+
+固定有限简单图 $G$，选每个非空连通分量一个根，记
+$$
+R(G)=\operatorname{im}\delta\subseteq C^1(G).
+$$
+有限集合均取离散拓扑及其 Borel $\sigma$-代数。定义
+$$
+\Phi:C^0(G)\longrightarrow R(G)\times\mathbb F_2^{c(G)},\qquad
+\Phi(x)=\bigl(\delta x,(x_{o_K})_K\bigr).
+$$
+令分量翻转群
+$$
+\mathcal H=\mathbb F_2^{c(G)}
+$$
+作用于顶点配置：若 $v\in K$，
+$$
+(g\cdot x)_v=x_v+g_K.
+$$
+给定 $R(G)$ 上的概率测度 $\nu$，定义其正质量支撑
+$$
+S_\nu=\{y\in R(G):\nu(y)>0\}.
+$$
+

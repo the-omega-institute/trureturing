@@ -1,0 +1,9 @@
+**定理 RS5。** 令 W₀=σI、σ>0，首步取 h₀=1/σ。对每个实际初态，令 S=A₀+B₀、T₁=S-2σI。则
+
+$$\boxed{T_1\succeq0,\qquad A_1=B_1=T_1,\qquad W_1=-T_1.}\tag{RS.8}$$
+
+之后对任意共同步长序列，完整后继 Gram 和输出都由 T₁ 决定，闭合规则为
+
+$$\boxed{T_{n+1}=F_{h_n}(T_n):=T_n(I-h_nT_n)^2,
+\qquad A_n=B_n=T_n,\quad W_n=-T_n\quad(n\ge1).}\tag{RS.9}$$
+

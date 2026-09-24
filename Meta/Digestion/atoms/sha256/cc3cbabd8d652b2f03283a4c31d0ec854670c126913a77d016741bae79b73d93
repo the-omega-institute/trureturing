@@ -1,0 +1,39 @@
+**定理 33.5（投影残差上的固定邻域比较）。** 在定理33.4下，进一步要求
+$$
+r_{{\rm obs},1}\in[3\eta/4,5\eta/4],\qquad
+r_{{\rm obs},2}\in[7\eta/4,9\eta/4],\qquad
+e_r\le\eta/8,\qquad 0<\eta\le\eta_0\le\min\{1,r_*/3\}.
+\tag{33.118}
+$$
+置
+$$
+e=e_Z+L_ge_r,\qquad C_F=3+3L_g^2/10,\qquad
+C_T=\sqrt{(4/3)^2+(64/7+4C_F/3)^2},
+$$
+$$
+D_p=\min\left\{2\rho,\frac{4KC_T(e_Z+L_ge_r)}{\eta^3}\right\}.
+\tag{33.119}
+$$
+每份完整候选满足 $|g_p(r_{{\rm obs},j})-z_{{\rm obs},j}|\le e$；任意两个完整候选的径向参数 $p,p'$ 满足 $\|p-p'\|_2\le D_p$。
+
+证明。（33.115）与窗口使真实两位置分别落在
+$[5\eta/8,11\eta/8]$、$[13\eta/8,19\eta/8]$，均处于共同图域。所需同源第一分支由（33.104）承担，不能由位置窗口替代。在同一个候选世界内沿图积分，
+$$
+|g_p(r_{{\rm obs},j})-z_{{\rm obs},j}|
+ \le L_g|r_{{\rm obs},j}-r_j|+
+       |g_p(r_j)-|W_j||\le e.
+\tag{33.120}
+$$
+任意两候选在这两个固定观测位置的真实预测差各至多 $2e$。令
+$\lambda=r_{{\rm obs},1}/\eta,\mu=r_{{\rm obs},2}/\eta$，它们属于定理29.3的设计域。将（29.107）的预条件算子作用于两组精确预测，其两坐标差记为 $\Delta A_{\rm pre},\Delta B_{\rm pre}$；这些符号不是原始 Fourier 端口。因 $|g_p(\lambda\eta)/(\lambda\eta)|\le L_g$，$F'(v)=-3-3v^2/10$ 的中值界给
+$$
+|\Delta A_{\rm pre}|\le\frac{2e}{\lambda\eta},\qquad
+|\Delta B_{\rm pre}|\le2e\left[
+\frac{2(1+\mu/\lambda)}{\mu(\mu-\lambda)\eta^3}
+ +\frac{C_F}{\lambda\eta^2}\right].
+\tag{33.121}
+$$
+这正是定理29.4（29.119）的解析残差计算。$\lambda\ge3/4,\mu\ge7/4,\mu-\lambda\ge1/2,\mu/\lambda\le3$，又 $\eta\le1$，故两坐标差的 Euclidean 范数至多 $2eC_T/\eta^3$。定理29.3（29.108）给参数差至多 $2K$ 倍该范数，球 $U$ 的直径又至多 $2\rho$，得到（33.119）。
+
+此处与定理31.1同样，仅将真正复数世界投到必要标量残差，再使用定理29.3的解析比较；未把它们变成定义29.1的一钟、有符号实端口世界。反向提升不存在于本结论：任意两个模的拟合可以违反相位、$\operatorname{Im}V_j$、参考、旧档案或联合时间条件。只有 $w_*\in\mathfrak F_H^{\rm phase}$ 才给非空与真实参数；任一同样有完整世界见证的拟合相对它才享有所列误差界。$\square$
+

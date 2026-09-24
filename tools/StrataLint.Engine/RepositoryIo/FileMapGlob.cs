@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -13,6 +14,7 @@ internal sealed class FileMapPatternException(string pattern)
 
 internal sealed class FileMapGlob
 {
+    private static readonly ConcurrentDictionary<string, Lazy<FileMapGlob>> compiledPatterns = new(StringComparer.Ordinal);
     private readonly Regex regex;
 
     private FileMapGlob(string pattern, Regex regex)
@@ -39,7 +41,7 @@ internal sealed class FileMapGlob
             throw new FileMapPatternException(pattern);
         }
 
-        return Compile(pattern);
+        return GetOrCompile(pattern);
     }
 
     internal static FileMapGlob CreateForAdmissionPlane(string pattern)
@@ -49,8 +51,13 @@ internal sealed class FileMapGlob
             throw new FileMapPatternException(pattern);
         }
 
-        return Compile(pattern);
+        return GetOrCompile(pattern);
     }
+
+    // Each entry validates before sharing the immutable compiled pattern.
+    private static FileMapGlob GetOrCompile(string pattern) =>
+        compiledPatterns.GetOrAdd(pattern, static value =>
+            new Lazy<FileMapGlob>(() => Compile(value), LazyThreadSafetyMode.ExecutionAndPublication)).Value;
 
     private static FileMapGlob Compile(string pattern)
     {

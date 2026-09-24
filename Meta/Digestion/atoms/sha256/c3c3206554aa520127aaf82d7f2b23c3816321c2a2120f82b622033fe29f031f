@@ -1,0 +1,68 @@
+**定理 29.4（已获含噪记录的完整可行集直径）。** 使用定理29.3的同一个 $U,\eta_0$，取 $0<\eta\le\eta_0$。实际测得位置满足
+$$
+\widetilde r_1\in[3\eta/4,5\eta/4],\qquad
+\widetilde r_2\in[7\eta/4,9\eta/4],\qquad
+0\le\epsilon_r\le\eta/8.
+\tag{29.114}
+$$
+取实际记录的固定设计比 $\lambda=\widetilde r_1/\eta,\mu=\widetilde r_2/\eta$。令
+$$
+L_g=\sup_{p\in U,0\le r\le r_*}|\partial_rg_p(r)|,\quad
+e=\epsilon_z+L_g\epsilon_r,\quad
+C_F=\sup_{|v|\le L_g}|F'(v)|=3+\tfrac3{10}L_g^2,
+$$
+$$
+C_T=\sqrt{(4/3)^2+(64/7+4C_F/3)^2}.
+\tag{29.115}
+$$
+对完整可行集 $\mathcal K_H$ 中任意两候选 $p,q$，都有
+$$
+\|p-q\|_2\le4Ke\left[
+\frac1{\lambda^2\eta^2}
+ +\left\{\frac{2(1+\mu/\lambda)}{\mu(\mu-\lambda)\eta^3}
+             +\frac{C_F}{\lambda\eta^2}\right\}^2\right]^{1/2},
+\tag{29.116}
+$$
+$$
+\|p-q\|_2\le\min\left\{2\rho,\frac{4KC_Te}{\eta^3}\right\}.
+\tag{29.117}
+$$
+若一个真实完整实现同时满足全部旧约束、取得历史和两条新原始误差约束，则 $\mathfrak F_H\ne\varnothing$；此时对任意有完整见证的拟合 $q$ 与真实参数 $p_*$，同一界给 $\|q-p_*\|_2$。
+
+证明。任何候选的真实 $r$ 值落在互不相交的正区间 $[5\eta/8,11\eta/8]$ 和 $[13\eta/8,19\eta/8]$，均含于 $[0,r_*]$，因为 $3\eta\le r_*$。窗口本身不证明同源或第一分支，这两项由定义29.1的见证承担。沿图坐标用中值定理，得到
+$$
+|g_p(\widetilde r_j)-\widetilde z_j|\le e\quad(j=1,2).
+\tag{29.118}
+$$
+故任意两候选在这两个固定测得位置的精确预测值各相差至多 $2e$。$g_p(0)=0$ 还给 $|A_{\eta,\lambda}(p)|\le L_g$。将（29.107）用于两组精确预测，用 $F$ 的中值界得到
+$$
+|\Delta A|\le\frac{2e}{\lambda\eta},\qquad
+|\Delta B|\le2e\left[
+\frac{2(1+\mu/\lambda)}{\mu(\mu-\lambda)\eta^3}
+ +\frac{C_F}{\lambda\eta^2}\right].
+\tag{29.119}
+$$
+与（29.108）合用即得（29.116）。设计域给 $\lambda\ge3/4,\mu\ge7/4,\mu-\lambda\ge1/2,\mu/\lambda\le3$；再用 $\eta\le1$ 得 $C_T/\eta^3$ 的上界。$p,q\in\overline B(p_0,\rho)$ 给直径上限 $2\rho$。这些是整个完整可行集的成对界，无需噪声记录本身位于精确模型像内。
+
+一个真实完整见证才保证非空；只对新对成立的原始误差假设至多保证对记录外包集合非空，不保证与旧档案交集非空。若 $\mathfrak F_H$ 为空，本定理不产生拟合参数，不能用静默投影替代；空集上的全称界也不授权后续操作。较强旧约束只缩小可行集，仍保留上界。已知的测得位置偏移属于这份设计，只有未确定的真实 $r$ 偏差由 $\epsilon_r$ 计入噪声。
+
+因此请求参数坐标误差 $\delta>0$ 时，一个明确充分精度条件为
+$$
+\epsilon_z+L_g\epsilon_r\le\frac{\delta\eta^3}{4KC_T},\qquad
+\epsilon_r\le\eta/8,
+\tag{29.120}
+$$
+同时保留局部先验、同源第一分支和非空完整见证。为转换物理参数，令 $k_{\min}=\min_Uk>0,M_m=\max_U|m|$，
+$$
+N=\frac{|\alpha|}{\sqrt{k_{\min}}},\qquad
+C_\nu=\frac{|\alpha|}{2k_{\min}^{3/2}}.
+$$
+$$
+|\nu(p)-\nu(q)|\le C_\nu|k_p-k_q|,\qquad
+|\beta(p)-\beta(q)|\le N|m_p-m_q|+M_mC_\nu|k_p-k_q|.
+\tag{29.121}
+$$
+第一式由 $k^{-1/2}$ 的中值定理，第二式由 $m_p\nu_p-m_q\nu_q=\nu_p(m_p-m_q)+m_q(\nu_p-\nu_q)$。代入（29.117）给黏性及隐藏幅度的实际误差界。$g_q(\widetilde r_j)$ 是核对候选的预测，不是另一条取得记录；新增记录仍取同一个完整实现集合的交集。
+
+精确两记录在 $U$ 上单射后，对参数载体或带已获 $r_i$ 的准备场载体，直接应用推论28.7所引现成因子化结果。它不声称对整个 $\Omega$ 单射，不消除已保留钟信息，也不赋予含噪档案一个精确一般解码器。$\square$
+

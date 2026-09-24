@@ -1,0 +1,68 @@
+**定理 137.2（有限奇数阶矩的精确正实现）。** 定义137.1的前缀存在正实现，当且仅当
+$$
+\boxed{H_r\succeq0,\qquad S_r\succeq0,\qquad
+\ker H_r\subseteq\ker S_r.}
+\tag{137.3}
+$$
+条件成立时，可以取
+$$
+E=P_r/\ker H_r,\qquad \dim E=\operatorname{rank}H_r,
+\tag{137.4}
+$$
+且此维数在全部正实现中最小。
+
+此精确等号问题的矩阵 Stieltjes 判据见 V. Bolotnikov, “Degenerate Stieltjes Moment Problem and Associated J-Inner Polynomials”, *Zeitschrift für Analysis und ihre Anwendungen* 14(3) (1995), 441–468，[DOI 10.4171/ZAA/633](https://doi.org/10.4171/ZAA/633)，Definition 2.1及Lemma 2.5，445–448页。其复 Hermitian 矩阵表述限制到实对称数据给上述条件；以下直接构造有限实实现。
+
+**证明。** 若有正实现，定义
+$$
+T:P_r\to E,\qquad
+T(v_0,\ldots,v_r)=\sum_{j=0}^rC^jJv_j.
+$$
+自伴性与矩匹配给
+$$
+H_r=T^*T,\qquad S_r=T^*CT.
+$$
+故两个块算子均半正定。又 $\ker(T^*T)=\ker T$，所以 $\ker H_r\subseteq\ker S_r$，并且
+$$
+\operatorname{rank}H_r=\dim\operatorname{ran}T\le\dim E.
+\tag{137.5}
+$$
+
+反过来，假设式(137.3)。在式(137.4)的商上定义
+$$
+\langle[v],[w]\rangle_E=\langle v,H_rw\rangle_{P_r}.
+$$
+半正定算子的零二次型向量恰为其核，因此这是正定内积。核包含及 $S_r$ 的自伴性使
+$$
+([v],[w])\longmapsto\langle v,S_rw\rangle_{P_r}
+$$
+对两个代表元均无关。有限维 Riesz 表示于是唯一给出线性算子 $C:E\to E$，满足
+$$
+\langle[v],C[w]\rangle_E=\langle v,S_rw\rangle_{P_r}.
+\tag{137.6}
+$$
+右端对称且在对角线上非负，所以 $C=C^*\succeq0$。
+
+记 $e_j:U\to E$ 为在第 $j$ 个系数位插入向量后取商的映射，令 $J=e_0$。对 $j<r$、$0\le i\le r$ 及 $u,v\in U$，
+$$
+\langle e_i u,Ce_jv\rangle_E
+=\langle u,M_{i+j+1}v\rangle_U
+=\langle e_i u,e_{j+1}v\rangle_E.
+$$
+所有 $e_i(U)$ 张成 $E$，故
+$$
+Ce_j=e_{j+1}\quad(j<r),\qquad C^jJ=e_j\quad(0\le j\le r).
+\tag{137.7}
+$$
+对 $0\le k\le2r$，选择 $i,j\le r$ 使 $i+j=k$，再用自伴性得
+$$
+\langle u,J^*C^kJv\rangle_U
+=\langle C^iJu,C^jJv\rangle_E
+=\langle u,M_kv\rangle_U.
+$$
+最后一阶由式(137.6)的右下块给出：
+$$
+J^*C^{2r+1}J=e_r^*Ce_r=M_{2r+1}.
+$$
+故全部指定矩匹配。商的维数等于 $\operatorname{rank}H_r$，达到式(137.5)的下界。若 $H_r=0$，核包含迫使 $S_r=0$；全部指定矩为零，上述构造给 $E=0$，论证仍成立。$\square$
+

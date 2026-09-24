@@ -1,0 +1,58 @@
+**命题 80.3（保留原见证副本时的条件熵与精确全变差）。** 在定义与假设 80.1 中，令 $W$ 为 $E$ 的一份固定副本，并取
+$$
+J(e,w)=q_e\mathbf1_{e=w}.
+$$
+仍使用同一个仅依赖 $B,q$ 的抽样器。此时在 $\Omega$ 中 $W=E_0$ 几乎处处，且
+$$
+d=d^{\mathrm{rec}}=q,\qquad c=p,\qquad
+J^{\mathrm{rec}}(e,w)=\mathbf1_{r(e)=r(w)}\frac{q_eq_w}{p_{r(e)}}.
+$$
+置 $H_q(E\mid B)=\sum_b p_bH(R_b)$，以及命题 72.3 中的条件碰撞标量
+$$
+C_q=\sum_e\frac{q_e^2}{p_{r(e)}}
+=\sum_b p_b\sum_{r(e)=b}\left(\frac{q_e}{p_b}\right)^2.
+$$
+则
+$$
+\boxed{
+D(J\Vert J^{\mathrm{rec}})=H_q(E\mid B),\qquad
+\Pr_\Omega(E_1=E_0)=C_q,\qquad
+d_{\mathrm{TV}}(J,J^{\mathrm{rec}})=1-C_q,
+} \tag{80.5}
+$$
+其中采用概率全变差的归一化
+$$
+d_{\mathrm{TV}}(J,J^{\mathrm{rec}})
+=\frac12\sum_{e,w}|J(e,w)-J^{\mathrm{rec}}(e,w)|.
+$$
+对这一抽样器，$\Pr_\Omega(E_1=E_0)=1$ 当且仅当每条 $r$ 纤维为单点，等价于 $r$ 单射。
+
+证明。复制联合律给出 $d=q$、$a(b,w)=\mathbf1_{r(w)=b}q_w$，因此 $c=p$，代入定义即得 $J^{\mathrm{rec}}$。定理 80.2 给出新实现边缘仍为 $q$；而 $\Omega$ 的全部质量都满足 $w=e_0$，所以记录确为未改变的原见证。$J$ 的正质量全在对角线上，且
+$$
+0<J^{\mathrm{rec}}(e,e)=\frac{q_e^2}{p_{r(e)}}\le q_e=J(e,e),
+$$
+其中不等式由 $q_e\le p_{r(e)}$ 给出。因此
+$$
+\begin{aligned}
+D(J\Vert J^{\mathrm{rec}})
+&=\sum_e q_e\ln\frac{q_e}{q_e^2/p_{r(e)}}
+=\sum_e q_e\ln\frac{p_{r(e)}}{q_e}\\
+&=\sum_b p_b\left[-\sum_{r(e)=b}\frac{q_e}{p_b}
+ \ln\frac{q_e}{p_b}\right]
+=H_q(E\mid B).
+\end{aligned}
+$$
+这里 $(B,E)$ 的实际律为 $\mathbf1_{b=r(e)}q_e$，第一边缘是 $p$，各条件律是 $R_b$，故最后一式恰为定义与假设 72.1 及 80.1 的条件熵。
+
+因为 $W=E_0$，事件 $\{E_1=E_0\}$ 恰为 $(E_1,W)$ 的对角事件，因而
+$$
+\Pr_\Omega(E_1=E_0)
+=\sum_eJ^{\mathrm{rec}}(e,e)
+=\sum_e\frac{q_e^2}{p_{r(e)}}=C_q.
+$$
+这仅使用命题 72.3 已给出的标量及其等号条件：每个正质量纤维的条件参考律为点质量时、且仅此时，$C_q=1$。由于所有 $q_e,p_b$ 严格正，此条件就是每条纤维为单点；满射 $r:E\to B$ 此时也是单射。
+
+原联合律的对角总质量为一，重建联合律的对角总质量为 $C_q$，并且每个重建对角项不超过原项。因此对角上的绝对差之和为 $1-C_q$。对角外 $J=0$，绝对差之和等于归一化的 $J^{\mathrm{rec}}$ 的非对角质量，也为 $1-C_q$。乘以 $1/2$ 即得式 (80.5) 的全变差恒等式。这也是[等总质量时全变差等于正超额之和](https://github.com/the-omega-institute/trureturing/blob/b59e6c7d9eb887ffc2b72aaf7a57fc0f444a83ef/D5/S3/TotalVariation/Pinsker.lean)的对角情形；其等总质量前提已由两联合律的归一化满足。
+
+若另一个解码器获准读取 $W$，则映射 $(b,w)\mapsto w$ 直接返回 $E_0$，命中概率为一。式 (80.5) 及其单点纤维判据限定于指定的 $R_B$ 抽样器，所比较的是有限实现标签及其保留记录。证毕。
+

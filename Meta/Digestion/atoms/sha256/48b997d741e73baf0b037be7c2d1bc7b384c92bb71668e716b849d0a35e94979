@@ -1,0 +1,77 @@
+### 127.1 共同模型：关系、权重、概率与观察必须一起声明
+
+令 $V$ 为有限非空集合，$N=|V|$。给定 $w_{ij}=w_{ji}\ge0$、$w_{ii}=0$，并假设正权边组成的无向图连通。定义作用于列向量的加权 Laplace 算子
+
+$$
+(Lx)_i=\sum_jw_{ij}(x_i-x_j),\qquad T_t=e^{-tL},\qquad p_t=T_tp_0,
+\qquad p_{0,i}>0,\quad\sum_i p_{0,i}=1.
+\tag{127.1}
+$$
+
+这不是仅从连接图自动决定的概率过程：边权、生成元符号和演化规则已经作为模型输入。内积取未除以 $N$ 的 Euclidean 内积；所有对数为自然对数，熵单位为 nat。
+
+对任意 $x,y$，交换 $i,j$ 后取平均得
+
+$$
+\langle x,Ly\rangle
+=\frac12\sum_{i,j}w_{ij}(x_i-x_j)(y_i-y_j).
+\tag{127.2}
+$$
+
+因此 $L=L^*\ge0$、$L\mathbf1=0$。式（127.2）的平方和在 $x=y$ 时为零，当且仅当 $x$ 在每条正权边上相等；连通性使
+
+$$
+\ker L=\mathbb R\mathbf1,
+\qquad \pi=\frac1N\mathbf1
+\tag{127.3}
+$$
+
+成为唯一平稳概率。
+
+概率性可以直接核验。选 $\alpha>\max_i\sum_jw_{ij}$，令 $R=I-L/\alpha$。它非负、对称、行列和均为一，且
+
+$$
+T_t=e^{-\alpha t}\sum_{k=0}^{\infty}\frac{(\alpha t)^k}{k!}R^k.
+\tag{127.4}
+$$
+
+各项非负，Poisson 系数之和为一，所以 $T_t$ 非负、双随机、对称，满足 $T_{t+s}=T_tT_s$ 和 $T_t\pi=\pi$。当 $t>0$ 时，每两个顶点之间的一条正权路径提供某个正的 $(R^k)_{ij}$，所以 $(T_t)_{ij}>0$；$N=1$ 时结论直接成立。即使只用级数的 $k=0$ 项，也已有 $p_{t,i}\ge e^{-\alpha t}p_{0,i}>0$。以下所有有限时间的对数和导数均合法。
+
+固定满射观察 $q:V\to Y$，记 $F_a=q^{-1}(a)$、$n_a=|F_a|>0$。定义纤维求和与均匀提升
+
+$$
+(\mathsf Cx)_a=\sum_{i\in F_a}x_i,
+\qquad (\mathsf Ub)_i=\frac{b_{q(i)}}{n_{q(i)}}.
+\tag{127.5}
+$$
+
+于是
+
+$$
+\mathsf C\mathsf U=I_Y,
+\qquad P=\mathsf U\mathsf C=P^*=P^2,
+\qquad Q=I-P,
+\qquad P\mathbf1=\mathbf1.
+\tag{127.6}
+$$
+
+$P$ 把一条纤维内的数值替换为其算术平均，$Q$ 保留其零和偏差。观察概率及其参考为
+
+$$
+b=\mathsf Cp,
+\qquad \bar\pi=\mathsf C\pi,
+\qquad \boxed{\bar\pi_a=\frac{n_a}{N}}.
+\tag{127.7}
+$$
+
+标签的平稳质量一般不均匀。若改用标签均匀律，就改变了后续 KL 结论中的参考。
+
+还要分清概率和正交坐标。$\operatorname{im}P$ 的一组正交归一基是 $e_a=\mathbf1_{F_a}/\sqrt{n_a}$，故 $Pp$ 的系数为
+
+$$
+v_a=\langle e_a,p\rangle=\frac{b_a}{\sqrt{n_a}}.
+\tag{127.8}
+$$
+
+$v_a$ 不以和为一归一化；一般的隐藏坐标还有正负值。不能把正交分块中的每个坐标或算子直接当作概率或 Markov 核。
+

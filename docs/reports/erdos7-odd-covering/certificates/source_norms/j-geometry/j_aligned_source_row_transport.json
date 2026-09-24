@@ -1,0 +1,125 @@
+{
+  "schema": "erdos7-aligned-source-row-transport-v1",
+  "source_sha256": {
+    "certificates/source_norms/j-geometry/j_actual_rows_zero_restoration.json": "c8a22970a4b7494074b615457386e34f71615316e202ed0eade84ddeb0872afe",
+    "certificates/source_norms/j-geometry/j_aligned_retained375_heavy553_heads.json": "e058014436eb3385567887c86db80d94e2ae1bceb8504443922367185f796a59",
+    "certificates/source_norms/j-geometry/j_aligned_retained375_h4_heads.json": "571cee21028841677d4fee195d23b621607fb8851c6679349beafd491cf6b416",
+    "certificates/source_norms/j-geometry/j_aligned_quadratic_complete_heads.json": "7bd27e1dce49f74bd5fa67d35c5e53af634a446c02b681def0071ba64bab23da"
+  },
+  "domain": {
+    "delta_max": "1/1000",
+    "epsilon_star_max": "1/10000",
+    "lambda_over_a": "600/1597",
+    "chi_upper": "7191/6388",
+    "q_slot_l1_upper": "12785/6388"
+  },
+  "row_budgets": {
+    "raw25-total-positive-excess": [
+      "42343/57492",
+      "5"
+    ],
+    "raw-three-groups": [
+      "1",
+      "0"
+    ],
+    "raw-total-equality": [
+      "1/2",
+      "0"
+    ],
+    "survivor-total-equality": [
+      "53/72",
+      "1"
+    ],
+    "same-positive-density-error": [
+      "1",
+      "20"
+    ],
+    "E3-root1-zero-rows": [
+      "1/60",
+      "3"
+    ],
+    "E3-root0-slot-equalities": [
+      "25561/574920",
+      "4"
+    ],
+    "E5-cell-equalities": [
+      "1/450",
+      "5"
+    ],
+    "marked27-81": [
+      "901/900",
+      "25"
+    ],
+    "marked25-75": [
+      "40085/38328",
+      "27"
+    ],
+    "pretable27-81-135": [
+      "799/19164",
+      "0"
+    ],
+    "descendants25-75-125-225": [
+      "1/450",
+      "0"
+    ],
+    "descendant375": [
+      "1/2250",
+      "0"
+    ],
+    "own25-125": [
+      "2",
+      "1"
+    ],
+    "own27-81": [
+      "5",
+      "20"
+    ],
+    "three-root1-H-equalities-joint-deficit": [
+      "1/90",
+      "5"
+    ],
+    "twenty-E5-off-Q-rows-joint-mass": [
+      "0",
+      "13"
+    ],
+    "exact-normalization-CRT-partition-unit-own75-135-225-375-Hsharp": [
+      "0",
+      "0"
+    ]
+  },
+  "uniform_row_modulus": {
+    "delta": 5,
+    "epsilon_star": 30
+  },
+  "consumed_models": {
+    "306": {
+      "variables": 12941,
+      "inequalities": 30454,
+      "equalities": 20,
+      "rows_sha256": "e591c59f8891f6647f0e21f303cd3be9ca661f1d5b48ebd0625c2de85cfa32d0"
+    },
+    "315": {
+      "variables": 12941,
+      "inequalities": 30454,
+      "equalities": 23,
+      "rows_sha256": "3a0c4f4ec91c231a11be68e43fef7a9a235dfcb136271d3ecd71fafdb86827a5"
+    },
+    "316": {
+      "variables": 12941,
+      "inequalities": 30479,
+      "equalities": 23,
+      "rows_sha256": "0f356c4d9f79a67d9e6d85919e06b0645973c17b080912d596541b90b13ee79d"
+    }
+  },
+  "published_model_relations": [
+    "315.old_model=306.model",
+    "316.actual375_predecessor=315.model"
+  ],
+  "consumed_zero_restoration": {
+    "zero_columns": 4634,
+    "zero_rows": 2645,
+    "maximum_column_bound": "17",
+    "sum_column_bounds": "56866/5"
+  },
+  "scope": "New source row arithmetic only; consumes published zero restoration and 315/316 model facts. No LP, source scan, measure embedding, tail transport, full prefix transport, numerical radius, or 403 claim."
+}

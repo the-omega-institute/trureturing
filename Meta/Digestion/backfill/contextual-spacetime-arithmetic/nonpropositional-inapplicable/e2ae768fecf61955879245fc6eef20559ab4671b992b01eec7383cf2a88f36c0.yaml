@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e2ae768fecf61955879245fc6eef20559ab4671b992b01eec7383cf2a88f36c0
+  normalized_sha256: sha256:e2ae768fecf61955879245fc6eef20559ab4671b992b01eec7383cf2a88f36c0
+cas_ref: sha256:e2ae768fecf61955879245fc6eef20559ab4671b992b01eec7383cf2a88f36c0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “此处未改变”只说明本文整数整除、有理分母和实数非零类守卫的适用范围，并未定义新的逆运算，也未偷带二点支撑不可逆的数学断言；该断言在前两个子项保留，本叶是范围说明而无新增待证命题。
+    previous_atom_id: efc7b51ea0444541590c71a49faeb7dd66c69ef8623f08865e36a62ffccdeec3
+    next_atom_id: 814a568f8aa4908a93f48d7c97728b5b2cd1f5b52ff1b85fdae447ac897d6546

@@ -1,0 +1,47 @@
+**证明。** 有界停止值和全部有限和均可积。逐路径的有限望远镜恒等式为
+$$
+\delta_\tau=\delta_0+
+ \sum_{s=0}^{N-1}\mathbf1_{\{\tau>s\}}(\delta_{s+1}-\delta_s),
+\qquad
+A_\tau=\sum_{s=0}^{N-1}\mathbf1_{\{\tau>s\}}G_s.
+$$
+停止时刻条件给出 $\{\tau>s\}\in\mathcal F_s$。对第一式取期望，利用这个指示函数的可测性及式 (86.3)，得到
+$$
+\begin{aligned}
+\mathbb E_d\delta_\tau
+&=\delta_0+\sum_{s=0}^{N-1}
+ \mathbb E_d\!\left[\mathbf1_{\{\tau>s\}}
+   \mathbb E_d[\delta_{s+1}-\delta_s\mid\mathcal F_s]\right]\\
+&=\delta_0-\sum_{s=0}^{N-1}
+ \mathbb E_d[\mathbf1_{\{\tau>s\}}G_s].
+\end{aligned}
+$$
+这与 $A_\tau$ 的表达式给出式 (86.9)，再由非负费用得停止期望上界。
+
+令
+$$
+B_\lambda=\left\{\max_{0\le t\le N}\delta_t\ge\lambda\right\},
+\qquad
+\sigma(\omega)=
+\begin{cases}
+\min\{t\in\{0,\ldots,N\}:\delta_t(\omega)\ge\lambda\},
+ &\omega\in B_\lambda,\\
+N,&\omega\notin B_\lambda.
+\end{cases}
+$$
+对每个 $s<N$，
+$$
+\{\sigma>s\}=\bigcap_{t=0}^{s}\{\delta_t<\lambda\}\in\mathcal F_s,
+$$
+而 $\{\sigma\le N\}=\Omega$，故 $\sigma$ 是有界停止时刻。在 $B_\lambda$ 上，包括首次在 $N$ 命中的路径，$\delta_\sigma\ge\lambda$；在补集上 $\sigma=N$ 且 $\delta_\sigma\ge0$。因此不把事件 $B_\lambda$ 等同于 $\{\sigma\le N\}$，而是使用
+$$
+\lambda\mathbf1_{B_\lambda}\le\delta_\sigma.
+$$
+由式 (86.9) 得
+$$
+\lambda\mathbb P_d(B_\lambda)\le\mathbb E_d\delta_\sigma\le\delta_0.
+$$
+除以 $\lambda>0$，再结合概率至多为一，即得式 (86.10)。初始即命中时 $\sigma=0$；$N=0$ 时全部费用和为空、$\sigma=0$，上述两种事件分支和不等式仍成立。证明仅使用确定有限时域内的求和。证毕。
+
+附引：Lalley 同文，[§3.1 Theorem 1，PDF 第 7–8 页](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=7)给出有界停止期望，[§4 Proposition 7 证明中的有限 $n$ 最大界，PDF 第 12 页](https://www.stat.uchicago.edu/~lalley/Courses/385/Martingales.pdf#page=12)给出式 (86.10) 的非负超鞅形式。Steven R. Howard、Aaditya Ramdas、Jon McAuliffe、Jasjeet Sekhon，*Time-uniform Chernoff bounds via nonnegative supermartingales*，[arXiv:1808.03204v8，Lemma 1、式 (2.11)，PDF 第 15 页](https://arxiv.org/pdf/1808.03204v8#page=15)，其[§6.1 式 (6.1)，PDF 第 45 页](https://arxiv.org/pdf/1808.03204v8#page=45)给出固定有限时域的首次越界停止论证；这里仅使用这一有限步骤。
+

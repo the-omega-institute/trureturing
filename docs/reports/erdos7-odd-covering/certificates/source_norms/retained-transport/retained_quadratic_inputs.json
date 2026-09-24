@@ -1,0 +1,10 @@
+{
+  "schema": "erdos7-retained-quadratic-input-v1",
+  "constants": [
+    {"tuple": [0, 0], "constant": "1843590625606784/50362520583375"},
+    {"tuple": [0, 1], "constant": "51437677469/4932968040"},
+    {"tuple": [0, 2], "constant": "868964699/704709720"},
+    {"tuple": [1, 0], "constant": "197160180946/16688172501"},
+    {"tuple": [2, 0], "constant": "3930317668/2384024643"}
+  ]
+}

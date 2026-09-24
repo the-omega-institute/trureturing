@@ -1,0 +1,38 @@
+#### 132.1.2 张量切口给出秩界与熵界
+
+取有限张量网络，所有张量空间为有限维复内积空间，其外部物理指标分为 $A,B$ 两侧。选定一个确实把两侧分开的切边集，每条切边的指标维数为正整数 $\chi_e$。把每侧内部张量全部收缩，得到
+
+$$
+|\psi\rangle=
+\sum_{\alpha\in\prod_e\{1,\ldots,\chi_e\}}
+|L_\alpha\rangle_A\otimes|R_\alpha\rangle_B.
+$$
+
+令 $D=\prod_e\chi_e$。在任意正交基中，系数矩阵 $M$ 有分解 $M=LR$，其中中间指标维数为 $D$；等价地，所有列都属于至多 $D$ 个向量 $L_\alpha$ 的张成。因此
+
+$$
+\operatorname{rank}M\le D.
+$$
+
+若 $|\psi\rangle\ne0$，归一化后对 $M$ 作奇异值分解，得到 Schmidt 分解
+
+$$
+|\psi\rangle=\sum_{i=1}^r\sqrt{p_i}|a_i\rangle|b_i\rangle,
+\qquad p_i>0,\quad\sum_ip_i=1,\quad r=\operatorname{rank}M.
+$$
+
+对一侧取偏迹得到本征值为 $p_i$ 的约化密度矩阵，所以纠缠熵为 $S=-\sum_ip_i\log p_i$。对凹函数 $\log$ 应用 Jensen 不等式，
+
+$$
+S=\sum_ip_i\log(1/p_i)
+\le\log\left(\sum_ip_i/p_i\right)=\log r.
+$$
+
+于是
+
+$$
+S\le\log r\le\sum_e\log\chi_e.
+$$
+
+这给出指定网络、切口、纯态和二分割下的必要上界。零张量没有可归一化纯态；混态的一侧熵一般不能直接称为这一二分割的纯态纠缠熵。切边维数也没有在此被识别为物理面积。
+

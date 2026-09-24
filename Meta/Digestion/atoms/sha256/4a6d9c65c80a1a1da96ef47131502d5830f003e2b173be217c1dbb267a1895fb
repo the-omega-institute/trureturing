@@ -1,0 +1,6 @@
+它等价于一个有限 POVM $\{E_k\}_{k=1}^m$，满足 $E_k\ge0$、$\sum_kE_k=I$，并具有形式
+
+$$
+\Phi(\rho)=\sum_{k=1}^m\operatorname{tr}(E_k\rho)|k\rangle\langle k|.
+$$
+

@@ -1,0 +1,6 @@
+**定理 120.4（状态与响应的交织表示）。** $\ker\Phi$ 是 $\ker o$ 内最大的操作稳定等价关系。在实际响应空间 $Q=\Phi[X]$ 上定义
+$$
+(\mathsf S_a b)(w)=b(aw),\qquad \bar o(b)=b(\varepsilon).
+$$
+则 $\Phi T_a=\mathsf S_a\Phi$，$o=\bar o\Phi$，且 $X/\ker\Phi\cong Q$。这给出有效状态与全部允许未来响应之间的可逆表示。
+

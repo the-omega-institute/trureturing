@@ -1,0 +1,14 @@
+**命题 130.6。** 当 $n+m>0$ 时，目标与基线得分、信息矩阵和有效得分为
+
+$$
+s_\theta=S_X,\qquad s_b=S_X+S_V,\qquad
+I=\begin{pmatrix}n&n\\n&n+m\end{pmatrix},
+$$
+
+$$
+f=s_\theta-\frac{n}{n+m}s_b
+=\frac{m}{n+m}S_X-\frac{n}{n+m}S_V,
+\qquad
+I_{\mathrm{eff}}=\frac{nm}{n+m}.
+$$
+

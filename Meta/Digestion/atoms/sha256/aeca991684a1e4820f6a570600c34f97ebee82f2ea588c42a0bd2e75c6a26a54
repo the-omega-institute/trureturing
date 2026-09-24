@@ -1,0 +1,14 @@
+**证明。** 对有限树归纳。叶处由假设成立。设内部节点的理想子值为 $x_i$、实现子值为 $\widetilde x_i$，插入 $g(r\widetilde x_1,\ldots,r\widetilde x_m)$，依次使用三角不等式、局部缺陷和式(4.1)，得到
+$$
+\begin{aligned}
+&D_t(r\widetilde g(\widetilde{\boldsymbol x}),g(\boldsymbol x))\\
+&\le\delta_g+
+D_t(g(r\widetilde x_1,\ldots,r\widetilde x_m),g(x_1,\ldots,x_m))\\
+&\le\delta_g+\sum_iL_{g,i}D_{s_i}(r\widetilde x_i,x_i)\\
+&\le\delta_g+\sum_iL_{g,i}E_{\mathcal T_i}.
+\end{aligned}
+$$
+零元节点直接使用式(6.1)。反复分配式(6.2)得到路径展开。$\square$
+
+若只知道合法混合链，则在每个节点用式(4.2)替代式(4.1)，使用实际链上各步误差；只有链上这些误差由子预算控制时才能继续递推。定理6.2的简洁端点和式不免除这项义务。
+

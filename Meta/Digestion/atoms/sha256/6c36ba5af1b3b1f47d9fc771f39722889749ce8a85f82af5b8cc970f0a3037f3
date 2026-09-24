@@ -1,0 +1,80 @@
+**命题 42.2（所有来源块的共同档案支撑）。** 令
+$$
+T_n|i\rangle=\sum_{a=0}^1v^n_{i,a}\otimes|a\rangle,
+\qquad v^n_{i,a}=(I_{H_n}\otimes\langle a|)T_n|i\rangle,
+\qquad S_n=\operatorname{span}\{v^n_{i,a}:i,a\in\{0,1\}\}.
+\tag{42.4}
+$$
+$\Omega_n(\theta)$ 支撑在 $J\otimes S_n\otimes M$。内积第一变量共轭线性时，以 $(0,0),(0,1),(1,0),(1,1)$ 排序的 Gram 矩阵满足
+$$
+G_n[(i,a),(j,b)]=\langle v^n_{i,a},v^n_{j,b}\rangle
+=[E^n(|j\rangle\langle i|)]_{b,a},
+\qquad \operatorname{rank}G_n=\dim S_n.
+\tag{42.5}
+$$
+特别地，
+$$
+\dim S_n=1,2,3,4,4,\ldots\quad(n=0,1,2,3,4,\ldots),
+\qquad S_2=\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}.
+\tag{42.6}
+$$
+这些是已知来源族在 $H_n$ 中的支撑，不是整个 $H_n$ 的维数。
+
+证明。写 $\theta=\sum_{i,j}\theta^J_{ij}\otimes|i\rangle\langle j|$，直接展开
+$$
+\Omega_n(\theta)=\sum_{i,j,a,b}\theta^J_{ij}\otimes
+|v^n_{i,a}\rangle\langle v^n_{j,b}|\otimes|a\rangle\langle b|.
+\tag{42.7}
+$$
+每一个参考／来源非对角块也在声明支撑内。对 $T_n|j\rangle\langle i|T_n^*$ 取档案偏迹，得到
+$$
+E^n(|j\rangle\langle i|)
+=\sum_{b,a}\langle v^n_{i,a},v^n_{j,b}\rangle|b\rangle\langle a|,
+\tag{42.8}
+$$
+即（42.5）。若 $V_n$ 为这四列组成的映射，则 $G_n=V_n^*V_n$，两者核相同，给秩等式。这里复用 Q定理3.1的 Gram 因子化论证，保留各列的实际范数；列可能为零或非单位向量，不能原样套用其单位对角陈述。
+
+$n=0$ 时 $v^0_{i,a}=\delta_{ai}\in\mathbb C$，因此
+$$
+G_0=uu^*,\qquad u=(1,0,0,1)^{\mathsf T},\qquad \operatorname{rank}G_0=1.
+\tag{42.9}
+$$
+从 $n\ge1$ 才有 $E^n(|0\rangle\langle1|)=E^n(|1\rangle\langle0|)=0$。沿用定理41.2的条件记忆权重，置
+$$
+\begin{gathered}
+\tau(u)=(1-u)P_0^{\rm mem}+uP_1^{\rm mem},\qquad
+\lambda=-\alpha^2,\quad \pi_1=\frac{\alpha^2}{1+\alpha^2},\quad
+\pi_0=\frac1{1+\alpha^2},\\
+a_n=\pi_1(1-\lambda^{n-1}),\qquad b_n=\pi_1+\pi_0\lambda^{n-1},\\
+G_n=\tau(a_n)^{\mathsf T}\oplus\tau(b_n)^{\mathsf T}\quad(n\ge1).
+\end{gathered}
+\tag{42.10}
+$$
+转置来自（42.5）的 $b,a$ 次序，即使本装置的所选基中矩阵为实，也不得省去这一类型关系。该分块式不用于 $G_0$。
+
+第一步权重是 $(a_1,b_1)=(0,1)$。由 $\tau(u)_{11}=\alpha^2(1-u)$ 得
+$$
+E(\tau(u))=\tau(\alpha^2(1-u)),\qquad
+\operatorname{Tr}\tau(u)=1,\qquad \det\tau(u)=\alpha^2u(1-u).
+\tag{42.11}
+$$
+仿射递推的不动点为 $\pi_1$，偏差每步乘 $\lambda$，解出（42.10）。实际前三组权重为 $(0,1)$、$(\alpha^2,0)$、$(\alpha^3,\alpha^2)$。端点 $0,1$ 给秩一，内部权重给正行列式与秩二，而 $0<u<1$ 蕴含 $0<\alpha^2(1-u)<1$。于是两块的秩依次为 $(1,1),(2,1),(2,2)$，以后均为 $(2,2)$，加上（42.9）即得全 $n$ 秩序列。
+
+也可直接看第二步的四列：
+$$
+\begin{aligned}
+v^2_{0,0}&=\alpha|00\rangle+\alpha|01\rangle,&
+v^2_{0,1}&=\alpha\sqrt\alpha|00\rangle,\\
+v^2_{1,0}&=\sqrt\alpha|10\rangle,&
+v^2_{1,1}&=\alpha|10\rangle.
+\end{aligned}
+\tag{42.12}
+$$
+它们张成所列 $S_2$；前三列在行 $00,01,10$ 的子式为 $-\alpha^3\ne0$，所以不是仅凭数值阈值判断秩。最后，源非对角单位在记忆通道中消失不表示其从联合态或档案消失：
+$$
+\Gamma_1(|0\rangle\langle1|)=\langle m_1,m_0\rangle|0\rangle\langle1|
+=\sqrt\alpha\,|0\rangle\langle1|.
+\tag{42.13}
+$$
+$\square$
+

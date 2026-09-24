@@ -1,0 +1,11 @@
+**端点的常值准备及其代价。** 若 $p_0=0$，目标为 $|1\rangle\langle1|$；若 $p_0=1$，目标为 $|0\rangle\langle0|$。分别令 $b=1,0$，定义
+$$
+K_0=|b\rangle\langle0|,\qquad K_1=|b\rangle\langle1|,\qquad
+\sum_{j=0}^1K_j^\dagger K_j=I,\qquad
+\Phi_b(A)=\sum_{j=0}^1K_jAK_j^\dagger
+=\operatorname{Tr}(A)|b\rangle\langle b|.
+\tag{TM.107}
+$$
+
+这给出明确的 CPTP 常值制备，在全部输入态上实现端点最近点。内部证明所需的正 $\varepsilon\le r_0$ 在端点不存在，所以两种结论相容。常值准备会丢弃输入区别；目标态制备、环境控制和重置等资源须按实际协议计费，通道的数学合法性不使这些资源免费。
+

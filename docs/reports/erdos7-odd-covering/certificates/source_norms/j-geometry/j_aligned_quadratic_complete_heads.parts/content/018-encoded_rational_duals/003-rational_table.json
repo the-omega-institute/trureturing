@@ -1,0 +1,77 @@
+{
+  "length": 5631,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 798,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/000000-000798.json",
+        "sha256": "b6213bfa892a2af763c3560ecff991f0bf91a8008e0e700dabf0d0de4d096288",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 798,
+      "stop": 1596,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/000798-001596.json",
+        "sha256": "96f41aa2347bcbb54b162bca7ae38c2cf5a604f238c09f2789ec075e58254f70",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 1596,
+      "stop": 2394,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/001596-002394.json",
+        "sha256": "d084867f7351469a4fdec4c60bd5da4875b9574e60f894304e7f195c86631b7c",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 2394,
+      "stop": 3192,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/002394-003192.json",
+        "sha256": "5cdd82584abcc616797b588c40e520b856030ef49073931a4c6915c4b5e74614",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 3192,
+      "stop": 3990,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/003192-003990.json",
+        "sha256": "2fa67fb8c1fed1fa00a613db5723aa3a4e4cb4b14bb65efd8ea1b209cb391b6f",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 3990,
+      "stop": 4788,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/003990-004788.json",
+        "sha256": "d30d26fec8d78e568321275c00c867bf93182b05960ddc9918a3b1a10f7ea2e2",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 4788,
+      "stop": 5586,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/004788-005586.json",
+        "sha256": "7c2e8ad6e3780376b0a563afdd5d6f82922d29de2e3be7be4a6fad3ef4857894",
+        "kind": "value-zlib-base85"
+      }
+    },
+    {
+      "start": 5586,
+      "stop": 5631,
+      "part": {
+        "path": "content/018-encoded_rational_duals/003-rational_table/005586-005631.json",
+        "sha256": "eb48721b03216acdbd449669c1ccb3f1819357cc5cbba3dbc911c3f10a18cf6a",
+        "kind": "value"
+      }
+    }
+  ]
+}

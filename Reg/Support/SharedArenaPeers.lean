@@ -1,0 +1,41 @@
+import LeanInformationAudit.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
+
+section
+open _root_.D5.S3.ConceptDynamics
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency.types false
+set_option maxHeartbeats 2000000
+set_option maxRecDepth 100000
+open _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
+open RegistrationTemplates
+open _root_.D5.S3.ConceptDynamics.InformationEscapeArenas
+open SharedArenaFiniteTemplates
+open EscapeRecord
+open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.CIRPT
+register_information_template interventionFiniteRealization constructors 1
+  [D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM]
+end
+
+section
+open _root_.D5.S3.ConceptDynamics
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency.types false
+set_option maxHeartbeats 2000000
+set_option maxRecDepth 100000
+open _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
+open RegistrationTemplates
+open _root_.D5.S3.ConceptDynamics.InformationEscapeArenas
+open SharedArenaFiniteTemplates
+open EscapeRecord
+open LeanInformationAudit
+open _root_.D5.S3.ConceptDynamics.CIRPT
+register_information_template observationFiniteRealization constructors 1
+  [D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.CausalDirection,
+   D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM]
+end

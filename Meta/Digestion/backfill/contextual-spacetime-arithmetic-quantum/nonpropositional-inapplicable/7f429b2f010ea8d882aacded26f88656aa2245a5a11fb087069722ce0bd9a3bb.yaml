@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7f429b2f010ea8d882aacded26f88656aa2245a5a11fb087069722ce0bd9a3bb
+  normalized_sha256: sha256:7f429b2f010ea8d882aacded26f88656aa2245a5a11fb087069722ce0bd9a3bb
+cas_ref: sha256:7f429b2f010ea8d882aacded26f88656aa2245a5a11fb087069722ce0bd9a3bb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: “输入寄存器”为前缀正交基寄存器，“模拟器遍历所有 CPTP 映射”规定共同接口与可访问资源；末句拒绝预设不相容观测的共同结果，未声称任意混态表已经可实现，定义不承担后续构造。
+    previous_atom_id: 542f4b2e36309ec4ac84f92239dd3bbbb552b165f644abe0803caaaea1da7a1e
+    next_atom_id: 9d2db663e7a205e7d8715551d51820ed9c6bbfda08be731ad0cd10361a5091f4

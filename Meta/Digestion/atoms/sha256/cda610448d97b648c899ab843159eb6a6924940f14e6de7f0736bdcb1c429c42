@@ -1,0 +1,23 @@
+**命题 2.24（固定实际支持的格基分离）。** 完整 Hilbert 基对所有零模式同时有效，但其生成集合可能很大。若实际非零支持已经给定，可以改用整数关系格的基，只承担轨道分离，不要求生成整个全空间多项式环。
+
+选每个非对角无向坐标对的一条方向作为代表，记复坐标为 $z_e$、整数权重为 $w_e$。反向坐标由 Hermitian 共轭确定。先保留全部对角项及各 $|z_e|$；两份候选的这些值若相同，其非零支持 $\mathcal S$ 也相同。在此固定支持上令
+$$
+\mathcal S=\{e:z_e\ne0\},\qquad
+W_{\mathcal S}=(w_e)_{e\in\mathcal S},\qquad
+L_{\mathcal S}=\{k\in\mathbb Z^{\mathcal S}:W_{\mathcal S}k=0\},
+\qquad
+L_{\mathcal S}=\bigoplus_{\ell=1}^{q_{\mathcal S}}\mathbb Z k^{(\ell)}.
+\tag{TM.188}
+$$
+
+这里 $q_{\mathcal S}=|\mathcal S|-\operatorname{rank}W_{\mathcal S}$；空支持允许空基。Smith normal form 可以从已给的精确整数矩阵计算一份完整的整数核基，不能用一个仅在 $\mathbb Q$ 上张成的、但遗漏整数格指数的列表替代。对每个核基向量定义普通多项式
+$$
+F_k(z)=\prod_{k_e>0}z_e^{k_e}
+       \prod_{k_e<0}\overline{z_e}^{-k_e},
+\qquad \deg F_k=\|k\|_1,\qquad
+\sum_e k_ew_e=0.
+\tag{TM.189}
+$$
+
+因此 $F_k$ 是B卷第2.3.5节可读取的零权重单项式，没有在实际效果中作负幂。对角项可一次读取，$|z_e|^2=z_e\bar z_e$ 可二次读取；若某个 $w_e=0$，该坐标相位本身已是一阶不变量。以下分离结论包含这种能量简并情形。
+

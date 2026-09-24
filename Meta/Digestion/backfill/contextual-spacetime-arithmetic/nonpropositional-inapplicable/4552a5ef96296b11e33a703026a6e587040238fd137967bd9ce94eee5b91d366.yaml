@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4552a5ef96296b11e33a703026a6e587040238fd137967bd9ce94eee5b91d366
+  normalized_sha256: sha256:4552a5ef96296b11e33a703026a6e587040238fd137967bd9ce94eee5b91d366
+cas_ref: sha256:4552a5ef96296b11e33a703026a6e587040238fd137967bd9ce94eee5b91d366
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此项定义在完整乘积情境内用关系限制选择的运算，并列出关系来源的许可形式，没有提出读数兼容性定理。
+    previous_atom_id: 8dbab9c54cd91267dd0dd89825a6aeb4c0a2030837355e4e21df925c2df07896
+    next_atom_id: 5445449f2baf1e924450a0a38205ae6d626afd2fad03c9fd1f618dce85361ea8

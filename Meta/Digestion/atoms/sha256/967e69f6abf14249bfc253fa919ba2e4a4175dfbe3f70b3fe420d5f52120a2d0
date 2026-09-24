@@ -1,0 +1,13 @@
+**定理 46.7（实际锚的统一数值界判据）。** 设 $R\subseteq\mathbb N_0^d$，$x\in\overline{\iota^d[R]}$，并置 $\|\mathbf n\|_\infty=\max(\{0\}\cup\{n_i:1\le i\le d\})$。令
+$$
+W_k(x)=\{\mathbf n\in R:q_{c_k}^d(\mathbf n)=\pi_{c_k}^d(x)\},\qquad
+h_x(k)=\min_{\mathbf n\in W_k(x)}\|\mathbf n\|_\infty.
+$$
+则 $W_k(x)$ 非空，$h_x(k)$ 单调不减，且以下三者等价：$x\in\iota^d[R]$；存在 $M\in\mathbb N_0$ 使对每个 $k$ 都有 $W_k(x)\cap[0,M]^d\ne\varnothing$；存在 $\mathbf n_k\in W_k(x)$，使所有 $\mathbf n_k$ 属于离散空间 $\mathbb N_0^d$ 的某个紧致子集。等价地，$x$ 是实际锚当且仅当 $\sup_k h_x(k)<\infty$。若不是实际锚，则 $h_x(k)\to\infty$。
+
+**证明。** 非空性来自定理 46.6，且 $W_{k+1}(x)\subseteq W_k(x)$，所以最小高度存在并单调不减。若 $x=\iota^d(\mathbf n)$ 且 $\mathbf n\in R$，取常值见证即给出统一界。反向设存在 $M$。有限集合 $W_k(x)\cap[0,M]^d$ 非空且递减，故其交非空：若交空，则有限盒中的每个元素都在某一层被排除，取这些有限层的最大值便与该层非空矛盾。取交中 $\mathbf n$，它在全部共尾层匹配 $x$，因而在全部指标上匹配，故 $x=\iota^d(\mathbf n)$。
+
+离散空间的紧致子集必有限，否则其单点开覆盖没有有限子覆盖；反之有限集紧致。自然元组的有限集等价于被某个有限盒包含，故第三条件与第二条件等价。单调不减的自然数列若无统一上界便趋于无穷，证明最后断言。实际上，若目标是 $\iota^d(\mathbf n)$，则当 $k>\|\mathbf n\|_\infty$ 时，阈值坐标已强制 $W_k(x)=\{\mathbf n\}$。
+
+这里数值界约束的是见证本身，而不是商集合的基数或观察层数。比如固定 $(t,1)$ 后，$t,t+1,t+2,\ldots$ 有相同读数却无数值上界。完成空间的紧致性并不使离散见证集紧致。定理 46.5 的理想解不属于空实际解集的闭包，因而不能被当作本条对实际解集的逼近目标。证毕。
+

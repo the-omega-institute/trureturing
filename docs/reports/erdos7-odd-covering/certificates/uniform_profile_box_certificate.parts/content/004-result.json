@@ -1,0 +1,146 @@
+{
+  "shape": {
+    "kind": "inline",
+    "value": "root1_same_other_column"
+  },
+  "old_points": {
+    "kind": "inline",
+    "value": [
+      2,
+      7,
+      8,
+      11,
+      14,
+      17,
+      19,
+      23,
+      26,
+      28,
+      29,
+      32,
+      34,
+      38,
+      41,
+      43,
+      44
+    ]
+  },
+  "source_profile": {
+    "kind": "inline",
+    "value": [
+      0,
+      3,
+      0,
+      0,
+      1,
+      0,
+      3,
+      0,
+      0,
+      1,
+      1,
+      0,
+      4,
+      0,
+      0,
+      2,
+      1
+    ]
+  },
+  "profile_images": {
+    "kind": "inline",
+    "value": [
+      [
+        0,
+        3,
+        0,
+        0,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        1,
+        0,
+        4,
+        0,
+        0,
+        2,
+        1
+      ],
+      [
+        0,
+        3,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3,
+        0,
+        0,
+        2,
+        1,
+        0,
+        4,
+        0
+      ]
+    ]
+  },
+  "box_vertices": {
+    "kind": "inline",
+    "value": 256
+  },
+  "corners": {
+    "path": "content/004-result/005-corners.json",
+    "sha256": "fdd17b83b1d5068a6ca0c97358bf3d187d5adf67c9e33dc0272074e0d77b0591",
+    "kind": "array"
+  },
+  "minimum_survival": {
+    "kind": "inline",
+    "value": "2357/4176"
+  },
+  "minimum_survival_vertex": {
+    "kind": "inline",
+    "value": 191
+  },
+  "minimum_root_margins": {
+    "kind": "inline",
+    "value": [
+      "159032185718981/43904085750000",
+      "265/3096"
+    ]
+  },
+  "minimum_root_margin_vertices": {
+    "kind": "inline",
+    "value": [
+      255,
+      255
+    ]
+  },
+  "group_integer_ranges": {
+    "kind": "inline",
+    "value": [
+      {
+        "layout_pairs": 77760,
+        "exact_integer_bound": 1692
+      },
+      {
+        "layout_pairs": 77760,
+        "exact_integer_bound": 56856
+      },
+      {
+        "layout_pairs": 77760,
+        "exact_integer_bound": 53796
+      }
+    ]
+  },
+  "actual_geometry": {
+    "path": "content/004-result/011-actual_geometry.json",
+    "sha256": "87e7965d5f5b9763d4c76dc51900f206fa122c45f1ce8e3930db99b5035a7459",
+    "kind": "value"
+  }
+}

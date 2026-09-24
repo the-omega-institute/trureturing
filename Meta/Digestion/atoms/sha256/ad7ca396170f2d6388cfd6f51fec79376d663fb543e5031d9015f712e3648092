@@ -1,0 +1,8 @@
+### 128.3 创新递推与协方差的准确递减
+
+定义
+$$
+\nu_n=Y_n-H_nm_n,\qquad S_n=R_n+H_n\Sigma_nH_n^T,\qquad
+K_n=\Sigma_nH_n^TS_n^{-1}.
+$$
+

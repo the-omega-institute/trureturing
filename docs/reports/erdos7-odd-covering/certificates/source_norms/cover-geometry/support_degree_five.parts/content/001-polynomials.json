@@ -1,0 +1,290 @@
+{
+  "top_monomials": [
+    {
+      "value": "5/12",
+      "support": [
+        5
+      ]
+    },
+    {
+      "value": "4/17",
+      "support": [
+        7
+      ]
+    },
+    {
+      "value": "1/8",
+      "support": [
+        11
+      ]
+    },
+    {
+      "value": "1/10",
+      "support": [
+        13
+      ]
+    },
+    {
+      "value": "5/51",
+      "support": [
+        5,
+        7
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "all pair supports on six primes",
+      "supports": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          3,
+          13
+        ],
+        [
+          3,
+          17
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          5,
+          17
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          7,
+          13
+        ],
+        [
+          7,
+          17
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          11,
+          17
+        ],
+        [
+          13,
+          17
+        ]
+      ],
+      "subfamilies": 32768,
+      "Z": "52/825",
+      "ternary_free_Z": "5734/7425",
+      "min_root_ratio": "234/2867",
+      "min_away_degree4_ratio": "2867/3427",
+      "ratio_checks": 37888,
+      "vertex_deletion_checks": 196608
+    },
+    {
+      "name": "six rank-five complements",
+      "supports": [
+        [
+          3,
+          5,
+          7,
+          11,
+          13
+        ],
+        [
+          3,
+          5,
+          7,
+          11,
+          17
+        ],
+        [
+          3,
+          5,
+          7,
+          13,
+          17
+        ],
+        [
+          3,
+          5,
+          11,
+          13,
+          17
+        ],
+        [
+          3,
+          7,
+          11,
+          13,
+          17
+        ],
+        [
+          5,
+          7,
+          11,
+          13,
+          17
+        ]
+      ],
+      "subfamilies": 64,
+      "Z": "2021/2025",
+      "ternary_free_Z": "22274/22275",
+      "min_root_ratio": "517/518",
+      "min_away_degree4_ratio": "22274/22275",
+      "ratio_checks": 74,
+      "vertex_deletion_checks": 384
+    },
+    {
+      "name": "five arbitrary-rank ternary cosupports near the certificate",
+      "supports": [
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          3,
+          13
+        ],
+        [
+          3,
+          5,
+          7
+        ],
+        [
+          5,
+          7,
+          17
+        ],
+        [
+          5,
+          11,
+          19
+        ],
+        [
+          5,
+          13,
+          17,
+          19
+        ],
+        [
+          7,
+          11,
+          13,
+          17
+        ],
+        [
+          7,
+          11,
+          13,
+          19
+        ],
+        [
+          11,
+          13,
+          17,
+          19
+        ]
+      ],
+      "subfamilies": 2048,
+      "Z": "6631/34425",
+      "ternary_free_Z": "41779/42075",
+      "min_root_ratio": "72941/376011",
+      "min_away_degree4_ratio": "125337/126188",
+      "ratio_checks": 2432,
+      "vertex_deletion_checks": 14336
+    },
+    {
+      "name": "ternary-free rank mixtures with incidence5",
+      "supports": [
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          5,
+          17
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          7,
+          13
+        ],
+        [
+          7,
+          17
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          11,
+          17
+        ],
+        [
+          13,
+          17
+        ],
+        [
+          5,
+          7,
+          11,
+          13,
+          17
+        ]
+      ],
+      "subfamilies": 2048,
+      "Z": "17201/22275",
+      "ternary_free_Z": "17201/22275",
+      "min_root_ratio": "1",
+      "min_away_degree4_ratio": "2867/3427",
+      "ratio_checks": 9920,
+      "vertex_deletion_checks": 10240
+    }
+  ],
+  "scope": "All induced polynomials and exact ratios for actual simple support systems; finite checks supplement the rank-uniform induction."
+}

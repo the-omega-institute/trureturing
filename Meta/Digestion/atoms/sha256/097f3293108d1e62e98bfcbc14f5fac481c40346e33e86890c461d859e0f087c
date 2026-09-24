@@ -1,0 +1,53 @@
+**定理 139.11（有限下界与一致渐近系数）。** 对 $R\ge1$、$g\ge1$ 且 $q_g<1/2$，
+$$
+d_k(R)\ge\frac{1/2-q_g}{R+g-1}.
+\tag{139.27}
+$$
+特别地，对全部 $k\ge2$、$R\ge1$，
+$$
+d_k(R)\ge\frac1{4(R+14)},
+\qquad
+\liminf_{R\to\infty}\inf_{k\ge2}R\,d_k(R)\ge\frac12.
+\tag{139.28}
+$$
+结合推论139.8，统一渐近系数被限制为
+$$
+\boxed{
+\frac12\le\liminf_{R\to\infty}\inf_{k\ge2}R\,d_k(R),
+\qquad
+\limsup_{R\to\infty}\sup_{k\ge2}R\,d_k(R)\le1.
+}
+\tag{139.29}
+$$
+
+**证明。** 对任意规则置 $E_t=A_t\oplus f_t$。每个 $E_t$ 在平稳律下公平，且
+$$
+E_{t+1}\oplus E_t=D_t.
+$$
+两端误差不同必有中间缺陷，故由平稳性及并集界，
+$$
+\Pr(E_t\ne E_0)\le t\,\delta_k(f)\qquad(t\ge1).
+\tag{139.30}
+$$
+令 $\mathcal F_0=\sigma(Z_s:s\le0)$。因为
+$$
+r_i=\mathbf1_{\{j_{i+1}>0\}},
+$$
+$E_0$ 关于 $\mathcal F_0$ 可测，而 $E_t$ 由块
+$$
+(Z_{t-R+1},\ldots,Z_t)
+$$
+决定。取 $t=R+g-1$，块首恰为 $Z_g$。给定 $\mathcal F_0$，整个未来块的条件律与其平稳块律的总变差至多 $q_g$。在平稳块律下 $E_t$ 公平，条件化后的 $E_0$ 已固定，因此
+$$
+\Pr(E_t\ne E_0\mid\mathcal F_0)\ge\tfrac12-q_g.
+$$
+这一步没有条件化于包含未来在内的整条关系路径。取平均，与（139.30）比较，得到每个 $f$ 的（139.27），再取最小值。
+
+当 $g=15$，有 $1/2-(3/4)^5=269/1024>1/4$，即得有限下界。取 $g_R=\lceil\sqrt R\rceil$，有 $g_R\to\infty$、$g_R/R\to0$，统一的（139.27）给下极限至少 $1/2$。上极限由推论139.8给出。证毕。
+
+因而 $d_k(R)=\Theta(R^{-1})$ 对全部 $k\ge2$ 一致成立。给定 $0<\varepsilon\le1$，同一显式规则可用 $R=\lceil512/\varepsilon\rceil$；允许按参数固定表时，可用
+$$
+R=\max\{128,\lceil3/\varepsilon\rceil\}.
+$$
+任何达到该缺陷的确定严格过去规则都必须满足 $R\ge1/(4\varepsilon)-14$。这确定了窗口长度关于 $\varepsilon$ 的一致逆一次阶，没有证明任一 $k$ 的 $R\,d_k(R)$ 极限存在，也没有确定最佳首项究竟在 $1/2$ 与 $1$ 之间何处取得。固定标记法的较弱充分上界与这些不同选择规则的更短窗口并不矛盾。
+

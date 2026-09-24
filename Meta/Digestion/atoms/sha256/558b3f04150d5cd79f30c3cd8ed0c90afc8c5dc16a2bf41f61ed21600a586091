@@ -1,0 +1,19 @@
+**命题 12.1（最小共同细化）。** 若另一读出 \(d:S\to D\) 能分别恢复 \(c\) 与 \(p\)，即存在实际像上的映射
+
+$$
+\bar c:\operatorname{ran}d\to\operatorname{ran}c,\qquad
+\bar p:\operatorname{ran}d\to\operatorname{ran}p
+$$
+
+满足
+
+$$
+c=\bar c\circ d,\qquad p=\bar p\circ d,
+$$
+
+则存在唯一
+
+$$
+\bar e:\operatorname{ran}d\to E,\qquad e=\bar e\circ d.
+$$
+

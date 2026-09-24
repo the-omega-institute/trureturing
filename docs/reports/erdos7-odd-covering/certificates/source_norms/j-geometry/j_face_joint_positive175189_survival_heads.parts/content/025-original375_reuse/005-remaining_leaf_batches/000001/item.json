@@ -1,0 +1,50 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 24,
+      "part": {
+        "path": "content/025-original375_reuse/005-remaining_leaf_batches/000001/item/000000-000024.json",
+        "sha256": "c3e49cd473e111bbd37a886d64c1793af737c80c1c96466b702a94721f0200ce",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 24,
+      "stop": 48,
+      "part": {
+        "path": "content/025-original375_reuse/005-remaining_leaf_batches/000001/item/000024-000048.json",
+        "sha256": "10c49a26616bf0a5e3ffd53974890efe10f5e53fb13d58ba19763fa78372dbea",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 48,
+      "stop": 72,
+      "part": {
+        "path": "content/025-original375_reuse/005-remaining_leaf_batches/000001/item/000048-000072.json",
+        "sha256": "0998ec29db9001903740d57966528ddc0fd15540b9801c4b23393eedd0c6345f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 72,
+      "stop": 96,
+      "part": {
+        "path": "content/025-original375_reuse/005-remaining_leaf_batches/000001/item/000072-000096.json",
+        "sha256": "7a49503330514a40ccc358161e45805e22d6c7d451ab303352e70928557c1ef9",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 96,
+      "stop": 100,
+      "part": {
+        "path": "content/025-original375_reuse/005-remaining_leaf_batches/000001/item/000096-000100.json",
+        "sha256": "08c97b1c411f66ccbb38d509fd5b827653f567cd9fadd36bce723705dd4454b8",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+**theorem 48.8 (Positive quotient fibers and actual finite joint images).** Every fiber of $\pi_{t,p}$ has an effectively obtainable positive existential definition using only ambient natural numerals. A head fiber with $a<t$ is defined by $x=a$. A tail fiber represented by the unique $a\in\{t,\ldots,t+p-1\}$ in its residue class is defined by
+$$
+\exists u\in K\quad x=a+pu.
+$$
+Consequently, given $\Sigma$, finitely many arithmetic output terms $T_1,\ldots,T_h$, and indices $\alpha_1,\ldots,\alpha_h$, the actual finite joint image
+$$
+J=\{(\pi_{\alpha_1}(T_1(\mathbf x)),\ldots,\pi_{\alpha_h}(T_h(\mathbf x))):\mathbf x\in K^r,\ \Sigma(\mathbf x)\}
+$$
+is uniformly computable as a finite subset of $\prod_{i=1}^hQ_{\alpha_i}$.
+
+**证明。** The assertion for a head follows from Theorem 48.1. The tail fiber in question consists of the natural numbers $a+pk$ with $k\in\mathbb N_0$, together with the boundary elements $\tau(z)$ satisfying $z\equiv a\pmod p$. Natural witnesses $u=k$ give exactly those natural values. Since $p>0$, boundary witnesses give
+$$
+a+p\tau(w)=\tau(a+pw).
+$$
+It remains to prove that $z\equiv a\pmod p$ is sufficient for $z-a=pw$ in $R$, without any assumption about coherent choices of divisibility witnesses.
+
+For each $m\geq1$, choose an integer representative $v$ of $z-a$ modulo $pm$. Compatibility with reduction modulo $p$ implies $p\mid v$. Define $w_m$ to be the class of $v/p$ modulo $m$. A different representative differs by a multiple of $pm$, so gives the same $w_m$. If $m\mid n$, representatives modulo $pm$ and $pn$ differ by a multiple of $pm$ after reduction, and dividing that integer congruence by $p$ gives $w_n\equiv w_m\pmod m$. Thus $(w_m)_m$ defines $w\in R$. Its coordinates satisfy $pw=z-a$. Necessity follows immediately by reduction modulo $p$. This proves the fiber formula, including $p=1$, $t=0$, $a=0$, and the ambient-zero witness case.
+
+Now enumerate each candidate tuple $\mathbf q$ of finite outputs. Append to $\Sigma$ the corresponding fiber formula for each $T_i(\mathbf x)$, using a distinct fresh witness variable for each tail formula. This is another finite positive equality system, so Theorem 48.7 decides its satisfiability. Include $\mathbf q$ exactly when that test succeeds. All constraints share the same original tuple $\mathbf x$; the auxiliary divisibility witnesses are not identified with one another. Therefore the resulting finite set is precisely the displayed actual common-witness image, rather than an intersection of images obtained from unrelated witnesses. 证毕。
+

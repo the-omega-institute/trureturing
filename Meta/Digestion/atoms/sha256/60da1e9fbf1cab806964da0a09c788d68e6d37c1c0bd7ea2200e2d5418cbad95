@@ -1,0 +1,33 @@
+**定义 10.1（表达族）。** 设 \(S\) 是共同来源的实际配置像，\(\mathcal T\) 是对前后合法接续封闭的未来实验族。令
+
+$$
+s\sim_{\mathcal T}t
+\quad\Longleftrightarrow\quad
+\forall E\in\mathcal T,
+\operatorname{Obs}(E[s])=\operatorname{Obs}(E[t]).
+$$
+
+记 \(K=S/{\sim_{\mathcal T}}\)、\(\kappa:S\to K\)。连接、路径、边界和记忆是同一 \(S\) 上的四个表示
+
+$$
+j:S\to J,\qquad p:S\to P,\qquad b:S\to B,\qquad m:S\to M.
+$$
+
+值域只取实际像 \(j(S),p(S),b(S),m(S)\)，不能把各部分分别可实现的值任意组成笛卡尔积。路径若携带累积钟读数，必须把 \((p,\tau)\) 作为联合表示。
+
+称 \(e:S\to E\) 对 \(\mathcal T\) 充分，如果
+
+$$
+e(s)=e(t)\Longrightarrow\kappa(s)=\kappa(t),
+\tag{10.1}
+$$
+
+称它无冗余，如果
+
+$$
+\kappa(s)=\kappa(t)\Longrightarrow e(s)=e(t).
+\tag{10.2}
+$$
+
+因此精确、无冗余的表达满足 \(\ker e=\ker\kappa\)。
+

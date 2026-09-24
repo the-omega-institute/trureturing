@@ -1,0 +1,62 @@
+{
+  "target_minus_unclipped_gaps": {
+    "1": "-1/90",
+    "LB": "1",
+    "R5A*h0": "-1",
+    "R5B*h0": "-1",
+    "R5H*h0": "-1",
+    "RB*h1": "-1",
+    "RH*h1": "-1",
+    "a*h0": "1",
+    "b*h0": "1",
+    "b*h1": "1",
+    "ell": "1",
+    "lambda": "5"
+  },
+  "nonnegative_slack_terms": [
+    {
+      "R5A*h0": "-1",
+      "a*h0": "1"
+    },
+    {
+      "R5B*h0": "-1",
+      "b*h0": "1"
+    },
+    {
+      "RB*h1": "-1",
+      "b*h1": "1"
+    },
+    {
+      "LH": "-1",
+      "R5H*h0": "-1",
+      "RH*h1": "-1",
+      "ell": "1"
+    },
+    {
+      "1": "-1/90",
+      "LB": "1",
+      "LH": "1",
+      "lambda": "5"
+    }
+  ],
+  "positive_part_bounds": [
+    "(1/20-|R5 intersect Q|)_+<=Delta+|R5 intersect H|",
+    "(1/10-|R intersect Q|)_+<=Delta+|R intersect H|",
+    "(1/90-LB)_+<=5lambda+LH"
+  ],
+  "actual_disjoint_H_pieces": [
+    "root0 times(R5 intersect H)",
+    "root1 times(R intersect H)",
+    "later assigned b=1 late deletion in H"
+  ],
+  "required_set_facts": [
+    "|R5|=1/20-p",
+    "|R|=1/10-p-a",
+    "|R5 intersect A|<=a",
+    "|R5 intersect B|<=b",
+    "|R intersect B|<=b",
+    "h0|R5 intersect H|+h1|R intersect H|+LH<=ell",
+    "LB+LH>=1/90-5lambda"
+  ],
+  "view_scope": "Full columns and root-columns with0<=w<=1 and w=1 on root1/B; no arbitrary cellwise B allocation or raw-family disjointness claim."
+}

@@ -1,0 +1,8 @@
+**证明。** $pB=qB$ 使 $p-q$ 消去 $V$，故消去每个词列；反向由生成元张成 $V$ 得到。各输出词的概率相等即为固定动作词下的完整输出律相等。直接应用[机器学习卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)定理17.2的逐记录策略乘子论证得到自适应等价；初态是混合律时，同一乘子仍与被求和的隐藏状态无关。固定词本身属于策略族，给反向。确定性闭包对应[观察者闭包谱卷](OBSERVER_CLOSURE_SPECTRUM.md)§16；这里不将控制器能读取隐藏状态的策略算入允许族。
+
+若 $T(p)=T(q)$，其预测充分性使式（15.9）右侧成立，故可定义 $\varphi(T(p))=pB$。它良定义且在实际像上唯一，给集合意义的最小性；此为[PredictiveStateUniversalMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/PredictiveStateUniversalMinimality.lean)的实际像唯一因子化结构，不是任意编码长度下界。[CanonicalPredictiveStateSufficiency](../../../D5/S3/ObserverMemory/PredictionFactors/CanonicalPredictiveStateSufficiency.lean)的充分性也针对已指定的未来条件律。
+
+对齐次线性下界，取 $d\in\ker L$，将它分成 $d=d^+-d^-$，其中 $d^\pm\ge0$。线性性给 $L(d^+)=L(d^-)$，假设遂给 $dK_w\mathbf1=0$ 对所有词成立，故 $dB=0$。于是 $u\mapsto uB$ 通过 $\operatorname{ran}L$ 线性因子化，而 $B$ 列满秩使其像维数为 $r$，得到下界。归一化方面，$\mathcal P$ 的全部行顶点候选均在 $se_1=1$ 上。固定一个这样的行 $v_0$，其余行之差都在 $se_1=0$；$v_0$ 与差空间线性独立。全部行的线性张成维数为 $r$，所以差空间维数为 $r-1$，正是仿射维数。$r=1$ 时 $\mathcal P$ 是单点。这与[MinimalPredictiveSummary](../../../D5/S3/Quantum/Fibers/MinimalPredictiveSummary.lean)的线性范围维数界、[AllFutureStatisticsSufficiency](../../../D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.lean)的未来张成判据使用同一线性结构，但载体及生成算子按本节重新指定。
+
+若 $h=B\alpha$，取 $g(s)=s\alpha$ 即可恢复。若 $h\notin V$，有限维线性分离给非零行向量 $d$，满足 $dB=0$ 而 $dh\ne0$；因 $\mathbf1\in V$，有 $d\mathbf1=0$。取内点均匀先验 $p_0$，再取 $\varepsilon>0$ 足够小使 $\varepsilon|d_x|<1/n$ 对所有 $x$ 成立。则 $p_\pm=p_0\pm\varepsilon d\in\Delta_X$，两者预测态相同而目标差为 $2\varepsilon dh\ne0$，排除任何解码器。恢复全部 $p$ 等价于恢复每个坐标指标函数；这些函数张成 $\mathbb R^X$，得最后结论。任意非线性集合编码的实坐标数或位数，均未受这里的线性维数论证约束。$\square$
+

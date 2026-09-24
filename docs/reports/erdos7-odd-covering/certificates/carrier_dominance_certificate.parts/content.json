@@ -1,0 +1,83 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-carrier-support-dominance-v1"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Complete six-shape support reduction by the five distinct original mixed7 labels; essential and inclusion-minimal carrier orbits; inherited PG1 bound for containing carriers, with arbitrary finite higher357 families"
+  },
+  "source_geometry_sha256": {
+    "kind": "inline",
+    "value": "cf4ac2572e609b3d51e1175534f40d2c17ccad853028ae5de2189e745528edd2"
+  },
+  "source_PG1_certificate_sha256": {
+    "kind": "inline",
+    "value": "57413882013965dbd57d6a31a9019ebe2b0c7ae8d045d696a9f688e0dbd1d068"
+  },
+  "inherited_PG1_verification": {
+    "kind": "inline",
+    "value": "existing canonical verify_point_geometry.py"
+  },
+  "cases": {
+    "path": "content/005-cases.json",
+    "sha256": "b136515aaf013f49b05c40e3455327d17131960eced39e2173b6f89b1f6a8df5",
+    "kind": "array"
+  },
+  "totals": {
+    "kind": "inline",
+    "value": {
+      "essential_carriers": 640932,
+      "essential_carrier_orbits": 107695,
+      "minimal_carrier_orbits": 56966,
+      "strictly_dominated_essential_orbits": 50729
+    }
+  },
+  "PG1_support_coverage": {
+    "kind": "inline",
+    "value": {
+      "shape": "root2_other_other_column",
+      "Gamma": "105976769844774468812903/2920804491373837228125",
+      "PG1_nonempty_deletion_masks": [
+        2320,
+        32768,
+        33808,
+        38032,
+        44378
+      ],
+      "old_root_images": 12,
+      "covered_carriers": 1648,
+      "covered_carrier_orbits": 232,
+      "covered_minimal_carrier_orbits": 1,
+      "covered_orbits_by_support_size": {
+        "75": 1,
+        "76": 1,
+        "78": 5,
+        "79": 2,
+        "80": 6,
+        "81": 8,
+        "82": 2,
+        "83": 11,
+        "84": 31,
+        "85": 28,
+        "86": 7,
+        "87": 25,
+        "88": 4,
+        "89": 25,
+        "90": 35,
+        "91": 4,
+        "92": 24,
+        "93": 7,
+        "94": 1,
+        "95": 4,
+        "96": 1
+      },
+      "covered_orbits_sha256": "2150d8247381b7e79543bbfed14489f11290d1dcc84474086f91171d88d40aee"
+    }
+  },
+  "mod3_conditioned_support_coverage": {
+    "path": "content/008-mod3_conditioned_support_coverage.json",
+    "sha256": "72870b7efdf1203643236458ffb1d8e68bc9c750eff5167c6aac549f867e0b20",
+    "kind": "value"
+  }
+}

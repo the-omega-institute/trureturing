@@ -1,0 +1,81 @@
+**定理 66.11（关系位的二点相关）。**
+
+置
+$$
+p:=\mathbb E[c_0]=\pi_1=\frac{\alpha^2}{1+\alpha^2},
+\qquad
+\vartheta:=-\alpha^2=-\phi^{-2}.
+$$
+则对每个 $n\ge0$，
+$$
+\operatorname{Cov}(c_0,c_n)
+=p(1-p)\vartheta^n.
+$$
+因此 Pearson 相关系数为
+$$
+\boxed{\ \operatorname{Corr}(c_0,c_n)=(-\phi^{-2})^n\ }.
+$$
+等价地，
+$$
+\mathbb E[c_0c_n]
+=p^2+p(1-p)(-\phi^{-2})^n.
+$$
+
+若定义符号关系位
+$$
+g_j:=2c_j-1\in\{-1,1\},
+$$
+则
+$$
+\mathbb E[g_0]=-\frac1{\sqrt5},
+\qquad
+\mathbb E[g_0g_n]
+=\frac15+\frac45(-\phi^{-2})^n.
+$$
+
+**证明。**
+
+令 $f(i):=i-p$，按列向量写成
+$$
+f=
+\frac1{1+\alpha^2}
+\begin{pmatrix}-\alpha^2\\1\end{pmatrix}.
+$$
+直接计算
+$$
+Pf = \frac1{1+\alpha^2}
+\begin{pmatrix}-\alpha^3+\alpha^2\\-\alpha^2\end{pmatrix} = \frac1{1+\alpha^2}
+\begin{pmatrix}\alpha^4\\-\alpha^2\end{pmatrix} = -\alpha^2 f,
+$$
+其中使用
+$$
+1-\alpha=\alpha^2.
+$$
+因此由 Markov 性，
+$$
+\mathbb E[f(c_n)\mid c_0]
+=(P^nf)(c_0)
+=\vartheta^n f(c_0).
+$$
+于是
+$$
+\operatorname{Cov}(c_0,c_n) = \mathbb E[f(c_0)f(c_n)] = \vartheta^n\mathbb E[f(c_0)^2] = \vartheta^n p(1-p).
+$$
+因 $0<p<1$，除以方差得到 Pearson 相关公式。
+
+又因为 $g=2c-1$，
+$$
+\mathbb E[g_0]=2p-1
+=-\frac{\alpha}{1+\alpha^2}
+=-\frac1{\sqrt5}.
+$$
+所以
+$$
+\operatorname{Var}(g_0)=1-\frac15=\frac45.
+$$
+仿射变换不改变非退化二变量的 Pearson 相关系数，故
+$$
+\mathbb E[g_0g_n] = \mathbb E[g_0]^2+\operatorname{Var}(g_0)\vartheta^n = \frac15+\frac45\vartheta^n.
+$$
+证毕。
+

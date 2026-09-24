@@ -1,0 +1,11 @@
+**theorem 58.9 无须展开幂的成功证书校验。** definition 58.5 的证书有一个直接校验器，不需要森林或构造历史。通过语法校验后，对每个 $i<j$，其真实和估值由下列规则完全确定：
+$$
+v_p(x_i+x_j)=
+\begin{cases}
+\delta,&\sigma_i=\sigma_j,\\
+\infty,&\sigma_i=-\sigma_j\ \text{且 }Y_i,Y_j\text{ 的完整稀疏数字表相同},\\
+e,&\sigma_i=-\sigma_j\ \text{且 }e\text{ 是两表首次不同的指数}.
+\end{cases}
+$$
+这里把常数项视为指数 $0$ 的数字，未列指数视为数字 $0$。将这些值与全部原标签逐项比较即可。
+

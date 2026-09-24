@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f55d9405c1080e31541ee9a4ce01ebf112bca2d56e4b05c6accd2c9683551e52
+  normalized_sha256: sha256:f55d9405c1080e31541ee9a4ce01ebf112bca2d56e4b05c6accd2c9683551e52
+cas_ref: sha256:f55d9405c1080e31541ee9a4ce01ebf112bca2d56e4b05c6accd2c9683551e52
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“is not part of this definition”只声明本定义没有包含属于算子闭包的证明；它不宣称这些函数不属于闭包，已检查该范围说明未夹带否定成员资格的命题，故作为备注结算。
+    previous_atom_id: 4d6bf9e1573f36fd508bd5dd0f40725990b4917368bd7511941693ca0ab3c97e
+    next_atom_id: 5ce000c7d3b6d2ccf59efbc81b235579b3626b37cc8985e5a6763c2e2fed6405

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.Json;
 using Dunet;
 
 namespace StrataLint.Engine;
@@ -69,6 +70,10 @@ public sealed record LeanFileReport(
 {
     internal LeanRefutationEvidence? Refutation { get; init; }
 
+    // Retain the producer payload without reading it. Declared-template admission
+    // selects registration owners before invoking the strict evidence reader.
+    internal JsonElement? InformationTemplates { get; init; }
+
     // Null means the producer does not supply registration evidence. It is only
     // admissible outside the protected-base candidate delta.
     internal ImmutableArray<string>? InformationRegistrationErrors { get; init; } = [];
@@ -131,7 +136,7 @@ public static class LeanClosureValidator
         ArgumentNullException.ThrowIfNull(report);
         foreach (var (path, file) in snapshot.Files)
         {
-            if (!IsManagedLean(path.Value))
+            if (!IsReportLean(path.Value))
             {
                 continue;
             }
@@ -167,6 +172,11 @@ public static class LeanClosureValidator
 
         return new LeanValidationOutcome.Accepted(AcceptedLeanClosure.Create(report));
     }
+
+    // Report membership includes declaration proofs. Mathematical consumers retain
+    // IsManagedLean: Reg has no GID, Scribe, header, deposit or utility obligations.
+    public static bool IsReportLean(string path) => IsManagedLean(path)
+        || path.StartsWith("Reg/", StringComparison.Ordinal) && path.EndsWith(".lean", StringComparison.Ordinal);
 
     public static bool IsManagedLean(string path) =>
         string.Equals(path, "Trureturing.lean", StringComparison.Ordinal)
