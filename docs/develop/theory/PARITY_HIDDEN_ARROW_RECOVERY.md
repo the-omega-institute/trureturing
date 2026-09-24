@@ -1187,7 +1187,7 @@ m_f=\mathbb E_{Q_{-a}}f(W)=Q_r\{W\le t\}.
 
 这里 $`0\le f\le L`$ 且 $`L\asymp B`$。
 为转移这些有界矩，对任意非负有界函数使用层蛋糕积分
-$`\mathbb E f=\int_0^L\mathbb P\{f>u\}\,du`$，
+$`\mathbb E f=\int_0^L\mathbb P\{f\gt u\}\,du`$，
 对两行乘积使用双重积分；(21.5) 的常数一致于所有事件，故
 
 ```math
