@@ -6,14 +6,16 @@ public sealed class WorktreeMakeWorkflowTests
 {
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
 
-    [Fact]
-    public void MakePassesStructuredCreationInputsToCanonicalCli()
+    [Theory]
+    [InlineData("target")]
+    [InlineData("target with spaces")]
+    public void MakePassesStructuredCreationInputsToCanonicalCli(string targetName)
     {
         if (OperatingSystem.IsWindows()) return;
 
         using var fixture = new TemporaryDirectory();
         var marker = PrepareFixture(fixture.Path);
-        var target = Path.Combine(fixture.Path, "target");
+        var target = Path.Combine(fixture.Path, targetName);
 
         var result = RunMake(
             fixture.Path,

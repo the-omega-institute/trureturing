@@ -27,7 +27,6 @@ import materials
 import native
 
 
-
 class NativeTestSupport:
     @classmethod
     def setUpClass(cls):
@@ -43,7 +42,7 @@ class NativeTestSupport:
             dir=os.environ.get('STRATALINT_NATIVE_TMPDIR'))
         self.addCleanup(self.cleanup_fixture)
         self.root = Path(self.temporary.name)
-        self.write('lakefile.toml', '''name = "fixture"
+        self.write('lakefile.toml', '''name = "trureturing"
 defaultTargets = ["Fixture", "Audit"]
 [[require]]
 name = "leanInspector"
@@ -59,23 +58,41 @@ globs = ["Fixture", "D5.+"]
 name = "Audit"
 globs = ["Audit"]
 defaultFacets = ["static"]
-[[lean_exe]]
-name = "cache"
-root = "Cache"
 ''')
-        # No external dependencies need downloading. Let the actual ensure
-        # owner invoke this fixture cache provider before the first raw Lake
-        # build; only that owner creates the stamp and admits donor seeding.
-        self.write('fixture-mathlib/lakefile.toml', 'name = "mathlib"\n')
+        # The local Git dependency supplies the real cache executable. Its
+        # compiled Cache module makes the dependency warm without downloading
+        # Mathlib or inventing a content module to satisfy cache admission.
+        self.write('fixture-mathlib/lakefile.toml', '\n'.join([
+            'name = "mathlib"', '[[lean_exe]]', 'name = "cache"',
+            'root = "Cache"', 'supportInterpreter = true', '']))
         self.write('fixture-mathlib/lake-manifest.json', '{"version":"1.2.0","packages":[]}\n')
-        self.write('Cache.lean', 'def main : IO Unit := pure ()\n')
+        self.write('fixture-mathlib/Cache.lean', 'def main : IO Unit := pure ()\n')
+        mathlib = self.root / 'fixture-mathlib'
+        subprocess.run(['git', 'init', '--quiet', str(mathlib)], check=True)
+        subprocess.run(['git', '-C', str(mathlib), 'add', '.'], check=True)
+        subprocess.run(['git', '-C', str(mathlib), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '-qm', 'fixture cache provider'], check=True)
+        rev = subprocess.check_output(['git', '-C', str(mathlib), 'rev-parse', 'HEAD'], text=True).strip()
+        config = self.root / 'lakefile.toml'
+        config.write_text(config.read_text().replace('path = "fixture-mathlib"',
+            f'git = "{mathlib}"\nrev = "{rev}"'))
+        git = dict(type='git', name='mathlib', url=str(mathlib), rev=rev, inputRev=rev,
+                   subDir=None, configFile='lakefile.toml', manifestFile='lake-manifest.json',
+                   scope='', inherited=False)
         self.write('lake-manifest.json', json.dumps(dict(version='1.2.0',
             packagesDir='.lake/packages', packages=[dict(type='path', scope='',
                 name='leanInspector', manifestFile='lake-manifest.json', inherited=False,
-                dir='tools/lean-inspector', configFile='lakefile.lean'),
-                dict(type='path', scope='', name='mathlib', manifestFile='lake-manifest.json', inherited=False,
-                    dir='fixture-mathlib', configFile='lakefile.toml', rev='0123456789abcdef0123456789abcdef01234567')],
-            name='fixture', lakeDir='.lake', fixedToolchain=False)))
+                dir='tools/lean-inspector', configFile='lakefile.lean'), git],
+            name='trureturing', lakeDir='.lake', fixedToolchain=False)))
+        # Admission runs during compiler staging, before any per-case setup.
+        # Even root-selected tests need the mandatory, valid empty Reg package.
+        self.copy('Reg/lakefile.toml')
+        reg = json.loads((ROOT / 'Reg/lake-manifest.json').read_text())
+        reg['packages'] = [p for p in reg['packages'] if p['type'] == 'path'] + [dict(git, inherited=True)]
+        self.write('Reg/lake-manifest.json', json.dumps(reg))
+        shutil.copytree(ROOT / 'tools/lean-inspector-interface',
+                        self.root / 'tools/lean-inspector-interface', ignore=shutil.ignore_patterns('.lake'))
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
         self.write('D5/B.lean', 'module\npublic section\nnamespace D5\nprivate def secret : Nat := 1\ndef hidden : Nat := secret\n')
@@ -89,6 +106,19 @@ root = "Cache"
             target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
         for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
+        # The native-report fixtures supply their own tiny driver at the root.
+        # Keep the production facets verbatim with a fixture package header;
+        # the real D5/Interface/Impl/Reg graph is tested on the full repository.
+        lakefile = self.root / 'tools/lean-inspector/lakefile.lean'
+        source = lakefile.read_text()
+        lakefile.write_text(source[:source.index('package leanInspector where')]
+            + 'package leanInspector where\n'
+            + '  buildDir := "../../.lake/build/lean-inspector/producer"\n\n'
+            + source[source.index('target nativeImage'):].replace(
+                'lean_exe reportInspector where', '@[default_target]\nlean_exe reportInspector where'))
+        self.write('tools/lean-inspector/lake-manifest.json', json.dumps(dict(
+            version='1.2.0', packagesDir='.lake/packages', packages=[],
+            name='leanInspector', lakeDir='.lake', fixedToolchain=False)))
         # These native-facet fixtures test statement extraction and publication,
         # with no D5 registration library. Use the explicit statement-only API;
         # their reports cannot satisfy the declared-template admission reader.
@@ -122,7 +152,8 @@ root = "Cache"
         policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
             dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/Registry.lean'),
-            config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json'),
+            config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json',
+                'Reg/lakefile.toml', 'Reg/lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
                 'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',

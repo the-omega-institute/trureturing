@@ -2163,3 +2163,359 @@ $$
 这些限制属于定义 14.1 的构造，并非对一切未知振幅判别器的限制。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 15. 固定多峰的异质临界曲线与未知参数适应
+
+**定义 15.1（不同振幅的固定多峰）。** 固定已知整数 $q\ge2$，考虑 $M>2q$，
+并给定正振幅向量 $\boldsymbol r=(r_1,\ldots,r_q)\in(0,1)^q$。
+令 $\mathcal Z_{M,q}$ 为 $C_+$ 中全部有序、互异的 $q$ 元组，
+$\boldsymbol z=(z_1,\ldots,z_q)\in\mathcal Z_{M,q}$ 是整个观察期间固定的未知位置。
+记 $S=\{z_1,\ldots,z_q\}$、$R=\sum_i r_i$，定义
+
+$$
+b_{\boldsymbol z}(x)=
+\begin{cases}
+r_i,&x=z_i,\\
+-R/(M-q),&x\in C_+\setminus S,\\
+0,&x\in C_-.
+\end{cases}
+\qquad
+P_{\boldsymbol z}(x,y)=\frac{1+\chi(x)\chi(y)b_{\boldsymbol z}(x)}n.
+\tag{15.1}
+$$
+
+该向量在 $C_+$ 上的和为零，故 $P_{\boldsymbol z}\in\mathcal K_d^0$，
+平稳律均匀且 $P_{\boldsymbol z}^2=\Pi$。
+沿用定义 10.1 的独立状态对与平稳离散轨迹实验，记似然为
+$L^{\epsilon,E}_{\boldsymbol z,s}$。置 $(M)_q=M(M-1)\cdots(M-q+1)$，以及
+
+$$
+\overline L^{\epsilon,E}_{\boldsymbol r,q,s}
+ =\frac1{(M)_q}\sum_{\boldsymbol z\in\mathcal Z_{M,q}}
+ L^{\epsilon,E}_{\boldsymbol z,s},
+\qquad
+\mathcal R^E_{d,\boldsymbol r,q}(s)
+ =\inf_{\widehat\epsilon}\max_{\boldsymbol z,\epsilon}
+ \Pr_{\boldsymbol z,\epsilon}^E\{\widehat\epsilon\ne\epsilon\}.
+\tag{15.2}
+$$
+
+此风险中的判别器知道 $q,\boldsymbol r$，可随机化；重复的振幅值允许出现。
+以下 $I_i=F_M(r_i)$、$v_i=v(r_i)$ 仍取定义 13.1 的单峰函数，$q$ 不随维度增长。
+独立 Bernoulli 信号计数的极端稀疏高斯临界极限见
+[Ditzhaus–Janssen，§1.1、定理 4.10](../../../Library/Dynamics/ditzhaus2018detectability.md)；
+本定义把峰数固定，并使用有补偿的转移核。
+[Hall–Jin，式 (2.2)–(2.3) 与定理 2.1](../../../Library/Dynamics/halljin2010innovated.md)
+则固定一个随维数增长的精确支持数 $m=n^{1-\beta}$，位置无放回均匀抽取；
+其独立高斯模型的 Higher Criticism 在可检测区域内部适应未知稀疏度和强度，功效趋一。
+该结论不涉及常数峰数、各坐标的有限临界参数或下面的乘积风险极限。
+
+**定理 15.2（异质临界坐标的乘积风险）。** 对任意振幅数列
+$\boldsymbol r=\boldsymbol r_d\in(0,1)^q$ 与正整数 $s=s_d$，若每个 $i$ 都满足
+
+$$
+\frac{sI_i-\log M}{\sqrt{sv_i}}\longrightarrow t_i\in\mathbb R,
+\tag{15.3}
+$$
+
+则对两个实验 $E\in\{\mathrm{pair},\mathrm{path}\}$ 及两个方向，都有
+
+$$
+\overline L^{\epsilon,E}_{\boldsymbol r,q,s}
+ \xrightarrow[\mathsf U_s^E]{P}\prod_{i=1}^q\Phi(-t_i),
+\qquad
+\mathcal R^E_{d,\boldsymbol r,q}(s)
+ \longrightarrow\frac12\prod_{i=1}^q\Phi(-t_i).
+\tag{15.4}
+$$
+
+结论不限制各振幅接近 $0$ 或 $1$ 的速度，也不假设不同峰或不同振幅字典的似然独立。
+相同振幅时，所有 $t_i=t$，风险即为 $\Phi(-t)^q/2$。
+
+证明。记 $\ell=\log M$、$r_* =\max_i r_i$。
+由 (13.5) 与 (15.3)，一致于有限多个 $i$ 有
+
+$$
+\frac{sr_i^2}{n}\asymp\ell,\qquad
+\frac{sr_*^2}{n}\asymp\ell,\qquad r_i\asymp r_*.
+\tag{15.5}
+$$
+
+常数只需在充分大的维度成立。以下 $C_q$ 可依赖固定的 $q$。
+对每个振幅 $r_i$，令 $l_{i,z}$ 为定义 11.1 中同一样本数、方向和实验的单峰似然，
+并置
+
+$$
+R_{\boldsymbol z}=\prod_{i=1}^q l_{i,z_i}.
+\tag{15.6}
+$$
+
+该乘积尚不是概率密度。先证明一致于位置元组的比较
+
+$$
+\mathbb E_{\mathsf U_s^E}
+ |R_{\boldsymbol z}-L^{\epsilon,E}_{\boldsymbol z,s}|
+ \le C_q\ell/n\longrightarrow0.
+\tag{15.7}
+$$
+
+先取正向，置 $k=M-1$、$u_i=r_i/k$、$w=R/(M-q)$。
+在出发状态 $x\in C_+$ 上记 $\sigma=\chi(y)$。
+对数比值 $D_{\boldsymbol z}=\log(R_{\boldsymbol z}/L^{+,E}_{\boldsymbol z,s})$
+是逐边增量 $D_t$ 的和，其增量精确为
+
+$$
+D_t=
+\begin{cases}
+\displaystyle\sum_{j\ne i}\log(1-u_j\sigma),&x=z_i,\\
+\displaystyle\sum_{i=1}^q\log(1-u_i\sigma)-\log(1-w\sigma),
+ &x\in C_+\setminus S,\\
+0,&x\in C_-.
+\end{cases}
+\tag{15.8}
+$$
+
+在每个真峰位，可能奇异的因子 $1+r_i\sigma$ 已精确抵消。
+真律下 $\mathbb E(\sigma\mid x)=b_{\boldsymbol z}(x)$。
+峰位 $z_i$ 的条件均值为
+
+$$
+\sum_{j\ne i}\left\{\tfrac12\log(1-u_j^2)
+-r_i\operatorname{atanh}u_j\right\},
+$$
+
+其绝对值至多 $C_qr_*^2/n$，而条件二阶矩至多 $C_qr_*^2/n^2$。
+背景中线性项的系数满足
+
+$$
+w-\sum_i u_i
+ =R\left(\frac1{M-q}-\frac1k\right)=O_q(r_*/n^2),
+$$
+
+其余项为 $O_q(r_*^2/n^2)$。
+故背景条件均值绝对值至多 $C_qr_*^2/n^2$，条件二阶矩至多 $C_qr_*^2/n^4$。
+这些展开只涉及小参数 $u_i,w$，对全部振幅一致。
+出发状态均匀，因此
+
+$$
+|\mathbb E D_t|\le C_qr_*^2/n^2,
+\qquad \mathbb E D_t^2\le C_qr_*^2/n^3.
+\tag{15.9}
+$$
+
+路径增量构成真正的 $2$-依赖序列，这是 $P_{\boldsymbol z}^2=\Pi$ 对过去与未来
+状态块的独立性结论。由 Cauchy–Schwarz，和的方差至多 $5s\mathbb E D_t^2$；
+独立状态对也满足此上界。由 (15.5)，
+
+$$
+|\mathbb E D_{\boldsymbol z}|=O_q(\ell/n),\qquad
+\operatorname{Var}(D_{\boldsymbol z})=O_q(\ell/n^2),\qquad
+\mathbb E|D_{\boldsymbol z}|=O_q(\ell/n).
+\tag{15.10}
+$$
+
+再控制乘积的总质量。逐边乘积因子的行均值，在 $z_i$ 处为
+
+$$
+\frac{(1+r_i)\prod_{j\ne i}(1-u_j)
+ +(1-r_i)\prod_{j\ne i}(1+u_j)}2.
+\tag{15.11}
+$$
+
+这是其余 $u_j$ 的偶次初等对称和，减去 $r_i$ 乘奇次初等对称和；
+后者非负。在背景处，行均值是所有 $u_j$ 的偶次初等对称和；在 $C_-$ 为一。
+故全部行均值至多 $1+C_qr_*^2/k^2$。
+路径的非负转移乘积与独立状态对都给出
+
+$$
+\mathbb E_{\mathsf U_s^E}R_{\boldsymbol z}
+ \le(1+C_qr_*^2/k^2)^s
+ =\exp(O_q(\ell/n))=1+O_q(\ell/n).
+\tag{15.12}
+$$
+
+令 $Z=R_{\boldsymbol z}/L^{+,E}_{\boldsymbol z,s}=e^{D_{\boldsymbol z}}$。
+真律下的恒等式与不等式
+
+$$
+\mathbb E|Z-1|=\mathbb EZ-1+2\mathbb E(1-Z)_+,
+\qquad (1-e^{D_{\boldsymbol z}})_+\le|D_{\boldsymbol z}|
+$$
+
+结合 (15.10)–(15.12) 得到 (15.7)。反向由观测倒序得到。
+
+现固定方向与实验。分别对每个振幅字典应用定理 13.3，有
+
+$$
+A_i:=\frac1M\sum_zl_{i,z}\xrightarrow[\mathsf U_s^E]{P}p_i,
+\qquad p_i=\Phi(-t_i).
+\tag{15.13}
+$$
+
+真律正态极限还给出
+
+$$
+B_i:=\max_z\frac{l_{i,z}}M\xrightarrow[\mathsf U_s^E]{P}0.
+\tag{15.14}
+$$
+
+具体地，取 $a_\ell=\ell^{1/4}$、$h_\pm=\ell\pm a_\ell$。
+低于 $e^{h_-}$ 的任一项除以 $M$ 至多为 $e^{-a_\ell}$；
+中间带的归一化和之期望为对应真单峰律下
+$\Pr\{h_-<\log l_{i,z}\le h_+\}\to0$，因为标准化区间长度趋零而中心趋于有限值。
+上部则有 $\Pr_{\mathsf U_s^E}\{\max_zl_{i,z}>e^{h_+}\}\le e^{-a_\ell}$。
+这些结论证明 (15.14)，不要求不同字典彼此独立。
+
+把乘积 $\prod_i A_i$ 中的有序位置元组按是否重复分开。
+对发生 $z_i=z_j$ 的项，使用
+$\sum_z(l_{i,z}/M)(l_{j,z}/M)\le B_iA_j$，得到确定性界
+
+$$
+0\le\prod_i A_i-
+ \frac1{M^q}\sum_{\boldsymbol z\in\mathcal Z_{M,q}}R_{\boldsymbol z}
+ \le\sum_{i<j}B_i\prod_{h\ne i}A_h.
+\tag{15.15}
+$$
+
+有限多个 $A_i,B_i$ 的联合概率极限及 $M^q/(M)_q\to1$ 给出
+
+$$
+\frac1{(M)_q}\sum_{\boldsymbol z\in\mathcal Z_{M,q}}R_{\boldsymbol z}
+ \xrightarrow[\mathsf U_s^E]{P}\prod_i p_i.
+\tag{15.16}
+$$
+
+对 (15.7) 在全部位置元组上平均，真实混合与 (15.16) 的 $L^1$ 距离趋零。
+这证明 (15.4) 的第一个极限。
+
+每个核仍属 $\mathcal K_d^0$，故定理 10.2 精确给出
+
+$$
+\mathbb E_{\mathsf U_s^E}
+ [\overline L^{+,E}_{\boldsymbol r,q,s}
+  \overline L^{-,E}_{\boldsymbol r,q,s}]=1.
+\tag{15.17}
+$$
+
+两个混合的最小值平方不超过其乘积，故这些最小值一致可积，期望趋于 $\prod_i p_i$。
+保持奇偶类的状态置换在有序互异位置元组上传递，观测倒序交换两个方向。
+有限群随机对称化使均匀先验 Bayes 规则在每个真参数处有相同风险，因而
+
+$$
+\mathcal R^E_{d,\boldsymbol r,q}(s)
+ =\frac12\mathbb E_{\mathsf U_s^E}
+ \min(\overline L^{+,E}_{\boldsymbol r,q,s},
+      \overline L^{-,E}_{\boldsymbol r,q,s})
+ \longrightarrow\frac12\prod_i p_i.
+\tag{15.18}
+$$
+
+这就证明两个实验中的结论。$\square$
+
+**定理 15.3（同时不知道峰数与各振幅的最优方向判别）。**
+仍使用定义 14.1 的单峰候选字典与规则，并假定截断满足 (14.5)。
+此规则只依赖维度与样本数。对每个固定正整数 $q$ 以及满足 (15.3) 的任意
+正振幅向量数列，两个实验均有
+
+$$
+\max_{\boldsymbol z,\epsilon}
+ \Pr_{\boldsymbol z,\epsilon}^E\{\widehat\epsilon\ne\epsilon\}
+ \longrightarrow\frac12\prod_{i=1}^q\Phi(-t_i).
+\tag{15.19}
+$$
+
+因此同一个规则达到知道 $q,\boldsymbol r$ 的最优方向曲线。
+本结论不对增长的峰数取统一极限，也不在固定维度对全部振幅取最坏风险。
+
+证明。$q=1$ 已由定理 14.2 处理。固定 $q\ge2$，先取正向，记
+$T_i=\log L^{+,E}_{a,z_i,s}$，其中 $a$ 仍由 (14.2) 给定。
+候选 $i$ 的逐边得分 $A_i$ 只区分出发状态为 $z_i$、其余 $C_+$ 或 $C_-$，
+以及到达状态的奇偶。因为
+
+$$
+b_{\boldsymbol z}(z_i)=r_i,\qquad
+\sum_{x\in C_+\setminus\{z_i\}}b_{\boldsymbol z}(x)=-r_i,
+$$
+
+其单边分布与真振幅 $r_i$ 的单峰模型完全相同。
+故 (14.10)、(14.16)、(14.15) 分别给出均值 $m_i=m(r_i,a)$、单边方差
+与总均值损失。记 $J_i=J_{r_i,a}$。
+
+路径上，条件于到达状态 $y$ 的得分均值精确为 $m_i+J_i\chi(y)$；
+真转移概率对 $b_{\boldsymbol z}$ 仿射，而上述两条求和关系决定了所需的和。
+条件于出发状态的均值函数 $g_i$ 支持在 $C_+$，故
+$\mathbb E g_i=\mathbb E(\chi g_i)=m_i$，并且
+
+$$
+(P_{\boldsymbol z}g_i)(x)=m_i\{1+\chi(x)b_{\boldsymbol z}(x)\}.
+$$
+
+条件期望计算给出所有有序坐标对的时间协方差
+
+$$
+\operatorname{Cov}(A_{i,t},A_{j,t+1})=J_i m_j,
+\qquad
+\operatorname{Cov}(A_{i,t},A_{j,t+h})=0\quad(h\ge2).
+\tag{15.20}
+$$
+
+$h=2$ 时用 $\mathbb E b_{\boldsymbol z}=\mathbb E(\chi b_{\boldsymbol z})=0$；
+$h\ge3$ 由两步重置的块独立性得到。
+
+再控制同一边上异位候选的交叉矩。置 $u=a/k$。
+在两个候选的真峰位，一个对数因子为 $\log(1+a\sigma)$，另一个为
+$\log(1-u\sigma)$。当 $r_*\le1/2$ 时，(14.2)–(14.9) 给出
+$a\le Cr_*$ 且 $a$ 与 $1$ 有固定间隔，乘积绝对期望为 $O(r_*^2/k)$。
+当 $r_*>1/2$ 时，截断对数界给出 $O(\log\ell/k)=O(r_*^2\log\ell/k)$。
+其余 $C_+$ 上两个因子相同，乘积绝对值至多 $C a^2/k^2\le C r_*^2/k^2$。
+中心化减去的 $m_i m_j=O(r_*^4/n^2)$ 也被下式吸收，因此
+
+$$
+|\operatorname{Cov}(A_{i,t},A_{j,t})|
+ \le C\frac{r_*^2\log\ell}{n^2}\quad(i\ne j).
+\tag{15.21}
+$$
+
+令 $\sigma_i=\sqrt{sv_i}\asymp\sqrt\ell$。
+由 (15.20)、$m_i\sim I_i$、$|J_i|=O(\log\ell/n)$ 及 (15.5)，
+各 $T_i$ 的方差为 $\sigma_i^2(1+o(1))$，而不同坐标的协方差除以
+$\sigma_i\sigma_j$ 后为 $O(\log\ell/n)\to0$。
+对每个固定非零系数向量 $c\in\mathbb R^q$，标准化线性组合的逐边中心化增量
+
+$$
+\sum_i\frac{c_i(A_{i,t}-m_i)}{\sigma_i}
+$$
+
+绝对值为 $O_{q,c}(\log\ell/\sqrt\ell)\to0$，总和方差趋于 $\|c\|_2^2>0$。
+路径上这些增量构成 $2$-依赖三角阵，Lindeberg 指示函数最终为零。
+由 [Janson，定理 1.1](../../../Library/Dynamics/janson2021mdependent.md)
+及 Cramér–Wold 法，再用 (14.15) 将各坐标中心换成 $sI_i$，两个实验均有
+
+$$
+\left(\frac{T_i-sI_i}{\sigma_i}\right)_{i=1}^q
+ \Longrightarrow N(0,I_q).
+\tag{15.22}
+$$
+
+错误方向的任一候选在真律下期望为一；正确方向但位于 $w\notin S$ 的候选满足
+
+$$
+\mathbb E_{\boldsymbol z,+}^E L^{+,E}_{a,w,s}
+ =\left(1-\frac{aR}{2k(M-q)}\right)^s\le1.
+\tag{15.23}
+$$
+
+因此至少一个上述错误候选超过 $e^{\ell+u_d}$ 的概率至多 $2e^{-u_d}$。
+在其补集上，至少一个真峰候选越界就选对方向；全部候选未越界时使用独立均匀回退。
+故方向风险为
+
+$$
+\frac12\Pr_{\boldsymbol z,+}^E
+ \{T_i\le\ell+u_d\text{ 对所有 }i\}+O(e^{-u_d}).
+$$
+
+式 (15.22)、$u_d=o(\sqrt\ell)$ 与 (15.3) 使此式趋于 $\tfrac12\prod_i\Phi(-t_i)$。
+峰位置换与观测倒序给出全部真参数上的相同结论。
+最后应用定理 15.2 的已知参数最优风险，得证。$\square$
+
+## 追加锚（本行以下为增补区）

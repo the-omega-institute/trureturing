@@ -349,9 +349,7 @@ public sealed partial class ProductionEnvironmentTests
                 .OrderBy(static item => item.Value, StringComparer.Ordinal));
     }
 
-    private static FrozenLedgerConsistent AddFrozenLedger(
-        RuleFixture fixture,
-        string manifest = "{}\n")
+    private static FrozenLedgerConsistent AddFrozenLedger(RuleFixture fixture)
     {
         const string toolchain = "leanprover/lean4:v4.24.0\n";
         const string lakefile = "name = \"Fixture\"\n";
@@ -359,8 +357,6 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline["lean-toolchain"] = toolchain;
         fixture.Files["lakefile.toml"] = lakefile;
         fixture.Baseline["lakefile.toml"] = lakefile;
-        fixture.Files["lake-manifest.json"] = manifest;
-        fixture.Baseline["lake-manifest.json"] = manifest;
         var baselineCatalog = Catalog(fixture.Baseline, fixture.BaselineReports);
         var currentCatalog = Catalog(fixture.Files, fixture.Reports);
         var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);
