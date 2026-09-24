@@ -60,6 +60,8 @@ If selected chains have pairwise disjoint prime supports, the corresponding func
 
 Overlapping prime supports do not satisfy this factorization hypothesis. Adding separate instances of(MC4) gives two copies of log Lambda and R_unused; it does not yield the estimate with one copy of that budget. The counterexample below shows that even a pure3 chain and one5-times-3 chain cannot be multiplied as if their boundary data were independent.
 
+[Report540](540-pivot-layer-multiplicities-control-one-entropy-budget.md) gives a different sufficient composition: retain each mixed query's multiplicity in its pivot-prime layer, bound each conditional moment uniformly and integrate in reverse pivot order. It cancels one entropy budget without asserting independence of the overlapping query blocks. Keeping the full nonconstant conditional weights needs another weighted estimate.
+
 ## An actual two-chain family at arbitrary height
 
 For every n>=1 use the2n distinct odd labels

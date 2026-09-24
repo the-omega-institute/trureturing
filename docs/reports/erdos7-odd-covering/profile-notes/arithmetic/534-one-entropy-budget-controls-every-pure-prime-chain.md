@@ -194,6 +194,14 @@ criterion holds uniformly for at most eight shallow mixed labels while
 retaining every pure and deeper mixed original. Larger inventories that
 do not meet the criterion still require another joint estimate.
 
+[Report540](540-pivot-layer-multiplicities-control-one-entropy-budget.md)
+extends the moment to extra mixed queries with bounded multiplicity in
+each pivot-prime layer. Reverse-order integration gives a profile bound
+for every law in this same G. Its three sparse profiles cross565/51;
+their existence cases already lie in report539's sufficient region.
+Retaining nonconstant cofactor weights instead of uniform profile caps
+still requires a further weighted estimate.
+
 ## Full support without claiming entropy preservation
 
 Report467 supplies a law mu for this same actual U with
