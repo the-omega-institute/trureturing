@@ -34,7 +34,7 @@ r^2 dividing F_ell, hence Z(r^2)=Z(r)=ell. Lemma 5 identifies this entry-point
 equality with the WSS square condition at the signed index r-(r/5).
 
 This supplies a method precedent for FPD.4–FPD.5 of
-`Problems/wall-sun-sun-golden-unit-lift.md`. A WSS prime alone does not
+`docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md`. A WSS prime alone does not
 force all other factors of its rank block to have exponent at least two.
 The cited implication neither gives its converse nor classifies all
 powerful Fibonacci values.

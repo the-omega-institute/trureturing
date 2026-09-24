@@ -34,7 +34,8 @@ theorem number as an input.
 
 ## Precise transfer boundary
 
-`Problems/wall-sun-sun-golden-unit-lift.md`, CTG.4-CTG.7, constructs an
+`docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md`, CTG.4-CTG.7,
+constructs an
 Eisenstein-type coefficient system b(n)=sum_(d|n)chi_5(d) and computes its
 exact congruence module against the COMPLETE finite-order golden dihedral
 tower. The family consists of weight-zero Maass forms with parameter zero

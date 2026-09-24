@@ -42,7 +42,7 @@ triage: anchor
 
 ## Correspondence to the theory
 
-PH.1-PH.7 of `Problems/wall-sun-sun-golden-unit-lift.md` give the
+PH.1-PH.7 of `docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md` give the
 fixed-golden Pell-block argument.
 
 At a prime INDEX ell>=7, use the actual original values

@@ -37,7 +37,7 @@ alpha(p) divides n, and v_p(F_n)=0 otherwise. The initial valuation
 v_p(F_alpha(p)) is not assumed to be one.
 
 These formulas imply the square-transport equivalence in FPD.1 of
-`Problems/wall-sun-sun-golden-unit-lift.md` for positive multipliers;
+`docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md` for positive multipliers;
 the zero multiplier is handled separately by F_0=0. The full valuation
 formula is attributed to Lengyel, rather than claimed as a new consequence
 of the dossier. The paper's computational WSS bound is historical.

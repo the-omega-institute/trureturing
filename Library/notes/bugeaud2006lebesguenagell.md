@@ -33,7 +33,8 @@ full proof of the classification.
 
 ## Exact use in the WSS owner
 
-`Problems/wall-sun-sun-golden-unit-lift.md`, DCE.1-DCE.2, combines that
+`docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md`, DCE.1-DCE.2,
+combines that
 published theorem with elementary factorization at e=2. For x>=2,
 x^2+3 is therefore not a perfect power. Apply it to x=L_(3^j), j>=1.
 TBN.3 separately proves that every prime factor of the actual block

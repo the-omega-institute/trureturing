@@ -37,7 +37,7 @@ identified with reduction modulo a prime or a prime square.
 
 ## Existing owner: GPC.1-GPC.6
 
-`Problems/wall-sun-sun-golden-unit-lift.md` keeps the actual blocks
+`docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md` keeps the actual blocks
 B_j=L_(3^j)^2+3 and r_j=3^(j+1), whose factor valuations are the original
 h_p by TBN. Its GPC section proves the following ordinary specializations:
 

@@ -38,6 +38,7 @@ one when n is three modulo six, and v_2(n)+2 when six divides n;
 v_2(L_n) is respectively zero, two and one in those three cases.
 
 These formulas supply the classical square-divisibility threshold
-attributed inline in FPD.1 of `Problems/wall-sun-sun-golden-unit-lift.md`.
+attributed inline in FPD.1 of
+`docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md`.
 The dossier provides a recurrence proof of that corollary. It does not
 claim the valuation theory as new or infer the existence of a WSS prime.

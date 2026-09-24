@@ -37,7 +37,8 @@ correction is an input to CTG.
 
 ## Actual mathematical consumer
 
-`Problems/wall-sun-sun-golden-unit-lift.md`, ROC and CTG.1, starts with an
+`docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md`, ROC and CTG.1,
+starts with an
 ACTUAL golden ordinary ring-class character eta of order p^k. This is an
 arithmetic hypothesis, equivalent in ROC to h_p>=k+1. Its nontrivial powers
 have primitive conductors appropriate to their orders. Apply the cited

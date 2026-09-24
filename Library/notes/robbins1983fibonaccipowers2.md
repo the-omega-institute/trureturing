@@ -33,7 +33,7 @@ from prime divisors of the Fibonacci block; Lemma 3 uses
 F_25/5^2=3001 to exclude the remaining pure-five case.
 
 This is a method precedent for FPD.2–FPD.4 of
-`Problems/wall-sun-sun-golden-unit-lift.md`. Robbins studies perfect powers;
+`docs/develop/theory/WALL_SUN_SUN_GOLDEN_UNIT_RESEARCH.md`. Robbins studies perfect powers;
 the dossier states its own reduction for powerful values, whose prime
 exponents need not share a common divisor greater than one. The citation
 does not identify these two hypotheses or settle the powerful classification.
