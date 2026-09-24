@@ -20,7 +20,7 @@ Proceedings of the XVIth International Congress on Mathematical Physics (2010), 
 
 ## Use and boundary
 
-The general obstruction to coherently discarding branch-dependent entanglement is established literature. RT sections 39-41 specialize it to flat sector encodings, compute attainable Gram coefficients and two-sector diamond errors, prove a robust lower bound, and compare coarse-graining paths. No priority for the general obstruction is claimed.
+The general obstruction to coherently discarding branch-dependent entanglement is established literature. RT section 34 specializes it to flat sector encodings, computes the simultaneous multisector optimum, and constructs a scale semigroup. No priority for the general obstruction is claimed.
 
 Uniform additional maximally entangled assistance leaves the rank-ratio bound unchanged in the specified integer-ratio family. Nonflat shared resources, communication and retained environments are outside that bound. The source's broader resource results are not all imported into the finite-code claim. The paper uses base-two quantities; the RT volume uses natural logarithms.
 
@@ -32,4 +32,4 @@ The RG proof constructs one nested family of environmental supports that attains
 
 For actual integer rank towers r_s(n)=b_s^n, optimal induced logical channels compose as an exponential dephasing semigroup in the scale difference. The continuous scale extension has a Lindblad generator built from threshold projections of log(b_s). Scale is not physical time, and only integer scales are used as finite Schmidt-rank encodings. This is a concrete consequence of the constructed maps; it is not a general gravitational renormalization statement.
 
-These are written-mathematics results with finite checks. They are not attributed to Harrow's paper as explicit formulas, and no global novelty or Lean certification is claimed. The exact-basis-sector condition is essential: the optimum over maps allowed to perturb those basis outputs is a different problem. A bounded primary-source search did not establish priority for the multisector formula. Earlier references to numbered sections 39-41 describe prior source records and do not by themselves establish that those bodies have been synchronized to the theory owner.
+These are written-mathematics results with finite checks. They are not attributed to Harrow's paper as explicit formulas, and no global novelty or Lean certification is claimed. The exact-basis-sector condition is essential: the optimum over maps allowed to perturb those basis outputs is a different problem. A bounded primary-source search did not establish priority for the multisector formula. Section 34 is the current theory owner; Lean formalization remains open.

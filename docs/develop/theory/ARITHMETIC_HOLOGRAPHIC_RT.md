@@ -2060,9 +2060,96 @@ $$
 
 上述结论为普通纸面推导。来源说明和相应 Library 引用区分已有几何量子力学、Wolpert 公式、反绝热驱动、热核及诱导曲率机制、钻石范数和绝热消元，与本卷指定编码中的计算。没有 Lean 声明、内核验证、独立审查或具名开放问题结算。具体结果的文献优先权未作穷尽排查。
 
+## 34. 多面积扇区的共同最优相干粗化
+
+这里的任务是有限维操作问题，不把面积扇区的代数标签直接认作连续 CFT 谱。令逻辑基为 $|s\rangle$，两侧物理空间按 $s$ 作正交直和。源编码 $J_r$ 在第 $s$ 扇区制备 Schmidt 秩 $r_s$ 的平坦纯态，目标编码 $J_d$ 同理，$r_s,d_s$ 均为正整数。允许两侧各自作一个 CPTP 映射，不允许通信、后选择或额外共享纠缠；每个基扇区的输出必须**精确**等于目标纯态。跨扇区相干可以受损。把编码视为输入逻辑矩阵到双侧输出的信道，误差采用包含任意被动参考且不除以二的钻石范数。
+
+## theorem 34.1: 有限多个面积扇区的共同最优误差
+
+上述任务可行，当且仅当每个 $m_s=r_s/d_s$ 为正整数。把不同的 $\ell_s=\log m_s$ 排为 $\ell_1<\cdots<\ell_k$，令
+
+$$
+T=\sum_{i=1}^{k-1}\tanh\frac{\ell_{i+1}-\ell_i}{4}.
+$$
+
+对全部允许的两侧局部信道，精确最优值为
+
+$$
+\boxed{\inf_{\Lambda_X,\Lambda_Y}
+\| (\Lambda_X\otimes\Lambda_Y)J_r-J_d\|_\diamond
+=\frac{2T}{1+T}.}
+$$
+
+这里的 $J_r,J_d$ 代表等距编码诱导的信道。同一对局部等距在所有扇区同时达到最优：每侧按 $|s,a+d_sb\rangle\mapsto|s,a\rangle|b\rangle$ 拆分，再丢弃环境。环境态是前 $m_s$ 个标签上的最大纠缠态，故诱导的逻辑信道是 Schur 乘子，Gram 核为
+
+$$
+K_{st}=\sqrt{\frac{\min(m_s,m_t)}{\max(m_s,m_t)}}
+=e^{-|\ell_s-\ell_t|/2}.
+$$
+
+**证明。** 对任意可行局部信道取 Stinespring 等距。每个扇区的目标输出为纯态，故总输出在该扇区必分解成目标纯态与一个环境态的张量积。局部等距保持两侧的非零 Schmidt 谱：源谱有 $r_s$ 个 $1/r_s$，目标谱有 $d_s$ 个 $1/d_s$。环境谱只能有 $m_s=r_s/d_s$ 个 $1/m_s$，所以 $m_s$ 必为整数，环境态最大纠缠。任意两环境态的重叠 $C_{st}$ 受归一化部分等距的奇异值迹界约束，$|C_{st}|\le K_{st}$。上述嵌套环境构造同时取等所有这些界，证明可行性的充分性。
+
+候选通道与理想通道之差作用在任意带参考的纯输入 $\sum_s|s\rangle|v_s\rangle$ 上。令 $p_s=\|v_s\|^2$；由于不同逻辑标签正交，输出差的非零谱等于矩阵 $B_p=D_{\sqrt p}(\mathbf1\mathbf1^T-K)D_{\sqrt p}$ 的谱。$B_p$ 是秩一正矩阵减去正半定矩阵，迹为零，因而迹范数为其最大正本征值的两倍。$\mathbf1\mathbf1^T-K$ 逐项非负，最大 Rayleigh 向量可取非负。写 $y_s=\sqrt{p_s}x_s$，Cauchy 给出 $\sum_s y_s\le1$；反向取 $p_s=y_s,x_s=\sqrt{y_s}$ 可取等。于是包含任意参考的候选钻石误差为
+
+$$
+2\left(1-\min_{p_s\ge0,\,\sum p_s=1}p^TKp\right).
+$$
+
+相同 $\ell$ 的标签只通过其总概率进入二次型。对不同的 $\ell_i$，设 $\kappa_i=e^{-(\ell_{i+1}-\ell_i)/2}$。指数核的逆满足
+
+$$
+x^TK^{-1}x=x_1^2+\sum_{i=1}^{k-1}
+\frac{(x_{i+1}-\kappa_i x_i)^2}{1-\kappa_i^2}.
+$$
+
+代入 $x=\mathbf1$ 得 $Z=\mathbf1^TK^{-1}\mathbf1=1+T$。$v=K^{-1}\mathbf1$ 的端点分量为 $1/(1+\kappa_i)$，内部第 $i$ 分量为 $1/(1+\kappa_{i-1})+1/(1+\kappa_i)-1$，均严格正。正定 Cauchy 给 $p^TKp\ge1/Z$，概率向量 $p_*=v/Z$ 取等。只有一个不同秩时 $K=\mathbf1\mathbf1^T$，误差为零。
+
+最后须证明候选也在全部允许操作中最优。对所有允许的环境 Gram 核 $C$，同一个输入 $|\psi_*\rangle=\sum_s\sqrt{p_{*,s}}|s\rangle$ 的理想输出投影成功概率至多 $p_*^TKp_*=1/Z$，因为 $\operatorname{Re}C_{st}\le K_{st}$。这个二元投影测试给出迹距离下界 $2(1-1/Z)$；候选通道已经达到相同上界。故单个共同输入与投影证明全操作下界，并且被动参考不能增大该最优值。证毕。
+
+例如 $d=(3,3,3)$、$r=(3,12,48)$ 时 $m=(1,4,16)$，$K$ 的相邻非对角元为 $1/2$、端点元为 $1/4$。$p_*=(2/5,1/5,2/5)$、$T=2/3$，误差为 $4/5$；只看任意一对扇区得到的最大界为 $3/4$。这是一个共同物理构造和联合测试，不能用逐对可达性替代。
+
+## corollary 34.2: 维数无关的稳定性判据
+
+设 $R=\max_s\ell_s-\min_s\ell_s$，则
+
+$$
+1-e^{-R/2}\le\delta_*\le\frac{2R}{4+R}.
+$$
+
+因此，扇区数可随精度变化时，$\delta_*\to0$ 当且仅当损失面积算符 $\operatorname{diag}(\ell_s)$ 在算子范数下趋近某个公共标量。对 $\epsilon<2$，精确误差预算为 $T\le\epsilon/(2-\epsilon)$。两端点扇区给左界；$\tanh x\le x$ 给 $T\le R/4$ 和右界。平均损失面积不足以决定该误差。
+
+## theorem 34.3: 整数秩塔的最优尺度半群
+
+若 $r_s(n)=b_s^n$、$b_s\ge2$ 为整数，令 $a_s=\log b_s$，则从层 $n$ 到 $j\le n$ 的上述最优粗化在逻辑矩阵单位上乘以 $e^{-(n-j)|a_s-a_t|/2}$。顺次从 $n$ 到 $j$ 再到 $h$ 与直接从 $n$ 到 $h$ 严格相同，且每段均达到定理 34.1 的最优值。把相邻不同 $a_i$ 之间的阈值投影记为 $P_i$，连续尺度延拓的生成元为
+
+$$
+\mathcal G_{\rm scale}(\rho)=\sum_i(a_{i+1}-a_i)
+\left(P_i\rho P_i-\frac{P_i\rho+\rho P_i}{2}\right).
+$$
+
+每个矩阵单位只受分开其两个 $a$ 值的阈值项作用，速率总和为 $|a_s-a_t|/2$；系数非负给出 CPTP 半群。该连续参数是**尺度**，并非物理时间；非整数尺度不代表一个非整数 Schmidt 秩的有限编码。若有固定 $k$ 个不同的 $b_s$，从 $n$ 降至 $\lfloor\lambda n\rfloor$、$0\le\lambda<1$，误差趋于 $2(k-1)/k$。单侧端点约化通道始终精确正确，联合相干误差却可非零，因此静态面积或端点熵的吻合不能认证整个粗化信道。
+
+## 35. 与 Virasoro 面积密度的条件化接口
+
+Lin 的式 (1.3) 取 $S(P)=4\sinh(2\pi bP)\sinh(2\pi P/b)$、$Q=b+b^{-1}$、$c=1+6Q^2$，其中 $b,P>0$ [Lin26]。此处额外假设有限实现已满足定理 34.1 的全部局部操作条件，而且实际**整数**损失秩存在共同常数 $C_0$ 及误差 $\eta\ge0$，满足 $|\log m_s-\log S(P_s)-C_0|\le\eta$。这项秩匹配尚未从 CFT 证明，连续谱密度不能直接当作有限维数。
+
+## corollary 35.1: 条件化动量窗口的必要预算
+
+令 $\Delta P=\max_sP_s-\min_sP_s$。在上述额外前提下，
+
+$$
+\delta_*\ge1-\exp[-\max(0,\pi Q\Delta P-\eta)].
+$$
+
+若要求 $\delta_*\le\epsilon<1$，则必须有 $\Delta P\le[\eta-\log(1-\epsilon)]/(\pi Q)$。证明是 $d\log S(P)/dP=2\pi b\coth(2\pi bP)+2\pi b^{-1}\coth(2\pi P/b)\ge2\pi Q$。取动量两端点，并计入各自的匹配误差，得到 $R\ge\max(0,2\pi Q\Delta P-2\eta)$；代入推论 34.2 左界并反解。固定误差和匹配预算时，窗口上界按 $c^{-1/2}$ 缩小。
+
+这并未证明未知共形块的主导性、准概率正性、实际 CFT 粗化的两侧独立 CPTP 实现、连续引力字典或原始引力 RT。定理 34.1 和这些条件推论目前是纸面证明，尚未由 Lean kernel 验证。
+
 ## 参考文献
 
 [RT] S. Ryu, T. Takayanagi. Holographic Derivation of Entanglement Entropy from AdS/CFT. Phys. Rev. Lett. 96 (2006), 181602. arXiv:hep-th/0603001.
+
+[Lin26] J. Lin. Ryu-Takayanagi area from Virasoro modular data. arXiv:2606.30723v1 (2026). 式 (1.3) 用作第 35 节的条件性密度输入；有限维秩匹配另作假设。
 
 [LM] A. Lewkowycz, J. Maldacena. Generalized gravitational entropy. JHEP 08 (2013), 090. arXiv:1304.4926.
 

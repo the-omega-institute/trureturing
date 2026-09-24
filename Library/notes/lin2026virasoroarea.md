@@ -19,7 +19,7 @@ Preprint arXiv:2606.30723v1, submitted 29 June 2026. The primary HTML introducti
 
 ## Use and boundary
 
-The finite RT code has a structural sector-multiplicity interface, not an established CFT identification. Multi-interval and heavy-state claims retain conformal-block and saddle assumptions; quasi-probabilities require positivity checks. The finite spectral counterexample in section 42 concerns insufficient moment asymptotics, not the actual unknown Virasoro block. No claim that this preprint's open problem is solved, or that its coarse-graining is an independent two-party CPTP map, is made.
+The finite RT code has a structural sector-multiplicity interface, not an established CFT identification. Multi-interval and heavy-state claims retain conformal-block and saddle assumptions; quasi-probabilities require positivity checks. A prior source record's finite spectral counterexample to insufficient moment asymptotics remains separate from the current RT owner and does not evaluate the unknown Virasoro block. No claim that this preprint's open problem is solved, or that its coarse-graining is an independent two-party CPTP map, is made.
 
 ## Operational interface to the finite-multisector RG result
 
@@ -27,7 +27,7 @@ The primary introduction, equations (1.2) and (1.4), explicitly separate the cen
 
 The new finite RG theorem in PR #8890 optimizes independent local CPTP maps with exact pure target outputs on each basis sector. It yields a simultaneous optimum for arbitrary finite sector count and a scale semigroup for integer power-rank towers. Applying it here would require a common finite regulator, positive density operators, actual integer source and target multiplicities, and a proof that the chosen Virasoro coarse graining obeys those local-channel and exact-sector hypotheses. None of those bridges is inferred from the entropy formula alone.
 
-The existing source note's reference to a numbered section 42 does not establish that the corresponding body is present in the main owner. The current named RG theorem is separately reproduced in the PR result comment and supplied as a guarded same-owner insertion. It neither evaluates the unknown conformal block nor establishes the full gravitational RT formula. This preserves the distinction between a quantitative finite quantum-channel obstruction and the physical CFT problem.
+The finite RG theorem and its conditional Virasoro interface are in sections 34-35 of the same RT theory owner. They neither evaluate the unknown conformal block nor establish the full gravitational RT formula. The quantum-channel theorem and the unproved physical bridge remain distinct.
 
 ## Conditional momentum-window bound
 
