@@ -179,7 +179,8 @@ public sealed class FileMapIncludeTests
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, RawChangeSet.CreateWithKinds(
             [("docs/reports/old.json", RawChangeKind.Deleted), ("docs/reports/new.json", RawChangeKind.Added)]));
 
-        Assert.False(decision.IsAdmissible);
+        Assert.True(decision.IsAdmissible);
+        Assert.True(decision.RequiresFullEngineering());
         Assert.Equal(AdmissionPlaneClassification.Mixed, decision.Classification);
     }
 
@@ -230,7 +231,8 @@ public sealed class FileMapIncludeTests
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, RawChangeSet.CreateWithKinds(
             [(FragmentPath, RawChangeKind.Modified), (deletedPath, RawChangeKind.Deleted)]));
 
-        Assert.Equal(deletedPlane == "judge", decision.IsAdmissible);
+        Assert.True(decision.IsAdmissible);
+        Assert.True(decision.RequiresFullEngineering());
         Assert.Equal(deletedPlane == "judge" ? AdmissionPlaneClassification.JudgeOnly : AdmissionPlaneClassification.Mixed,
             decision.Classification);
         Assert.Equal(deletedPlane == "judge" ? string.Empty : AdmissionPlanePolicy.MixedCode, decision.Code);
@@ -279,7 +281,8 @@ public sealed class FileMapIncludeTests
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, RawChangeSet.CreateWithKinds(
             [(FragmentPath, RawChangeKind.Modified), (source, RawChangeKind.Deleted), (destination, RawChangeKind.Added)]));
 
-        Assert.Equal(destinationPlane == "judge", decision.IsAdmissible);
+        Assert.True(decision.IsAdmissible);
+        Assert.True(decision.RequiresFullEngineering());
         Assert.Equal(destinationPlane == "judge" ? AdmissionPlaneClassification.JudgeOnly : AdmissionPlaneClassification.Mixed,
             decision.Classification);
         Assert.Equal(destinationPlane == "judge" ? string.Empty : AdmissionPlanePolicy.MixedCode, decision.Code);
