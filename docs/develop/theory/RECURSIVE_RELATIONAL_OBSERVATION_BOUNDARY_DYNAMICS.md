@@ -518,3 +518,329 @@ $$
 此时必须分别证明策略、控制更新、参考更新和权限更新在 \(B\)-纤维上常值；posterior-only 的式（11.3）不能自动升级为完整内部观察者定理。这个区分把概率 belief 的动态充分性与一般档案记忆的动态充分性分开，避免把单一后验误当作所有关系的边界。
 
 ## 11.99 追加锚
+
+## 12. 联合边界与策略残余的最小细化
+
+第 11 节的 posterior 边界只对“策略由当前 belief 决定”的子合同充分。一般内部观察者还可能保留控制器、权限标签、校准状态或策略程序；这些量即使不改变当前目标的后验，也可能改变下一步是否合法、读出什么以及怎样更新。因此需要把当前状态和继续行动所用的策略作为同一实际来源上的联合读出处理。
+
+### 12.1 当前读出与策略读出的共同细化
+
+设 (S) 是同一共同来源的实际配置像，令
+
+$$
+c:S\to C,\qquad p:S\to P
+$$
+
+分别表示当前边界读出和下一步策略（也可以是权限、参考或控制器摘要）。只取实际联合像
+
+$$
+E=\operatorname{ran}(c,p)\subseteq C\times P,\qquad
+e(s)=(c(s),p(s)).
+$$
+
+于是有精确的核恒等式
+
+$$
+\boxed{\ker e=\ker c\cap\ker p.}
+\tag{12.1}
+$$
+
+这里的交集是历史在两份读出上同时相等；它不是把 \(\operatorname{ran}c\) 与 \(\operatorname{ran}p\) 的边缘值任意配成笛卡尔积。仓内 `JointReadoutSupremum.pair_readout_kernel` 对同一事实给出了集合商版本。
+
+**命题 12.1（最小共同细化）。** 若另一读出 \(d:S\to D\) 能分别恢复 \(c\) 与 \(p\)，即存在实际像上的映射
+
+$$
+\bar c:\operatorname{ran}d\to\operatorname{ran}c,\qquad
+\bar p:\operatorname{ran}d\to\operatorname{ran}p
+$$
+
+满足
+
+$$
+c=\bar c\circ d,\qquad p=\bar p\circ d,
+$$
+
+则存在唯一
+
+$$
+\bar e:\operatorname{ran}d\to E,\qquad e=\bar e\circ d.
+$$
+
+**证明。** 对 \(v=d(s)\) 定义
+
+$$
+\bar e(v)=\bigl(\bar c(v),\bar p(v)\bigr).
+$$
+
+若 \(d(s)=d(t)\)，两项分别相等，所以定义与代表无关；它落在 \(E\) 是因为该值等于 \(e(s)\)。唯一性由 \(e=\bar e\circ d\) 在实际像上逐点决定。证毕。
+
+因此 \(e\) 是同时保留当前读出和策略读出的最小共同细化。它只是在任务确实需要两者时加入联合区别，并不声称恢复 \(S\) 中未声明的内部细节。
+
+### 12.2 策略残余与何时可以只保存当前边界
+
+定义当前 \(c\)-纤维中的策略残余为
+
+$$
+\operatorname{Res}_{c,p}(s,t)
+\iff c(s)=c(t)\land p(s)\ne p(t).
+$$
+
+**定理 12.2（策略因子化的充要条件）。** 下列命题等价：
+
+1. 存在唯一的实际像映射 \(\widehat p:\operatorname{ran}c\to\operatorname{ran}p\)，使 \(p=\widehat p\circ c\)；
+2. 任意 \(c\)-纤维上的策略残余都为空：
+   $$
+   \forall s,t,\quad c(s)=c(t)\Longrightarrow p(s)=p(t);
+   $$
+3. 联合边界没有增加区别：
+   $$
+   \ker e=\ker c.
+   $$
+
+**证明。** \(1\Rightarrow2\) 由因子化直接得到。\(2\Rightarrow1\) 在 \(c\)-纤维上取代表定义 \(\widehat p\)，条件 2 保证无歧义；实际像保证值域正确，且逐点给出唯一性。由式（12.1），条件 2 等价于 \(\ker c\subseteq\ker p\)，再与 \(\ker e=\ker c\cap\ker p\) 合并即得 \(3\)。反向同理。证毕。
+
+仓内 `AgencyEnrichment.strategy_factorization_iff_no_residual` 和 `agency_enrichment_kernel_eq_current_iff_no_residual` 正好供应这一充要条件。它只说明策略能否由当前读出恢复；不自动说明当前读出对外部任务充分。
+
+若存在 \(s,t\) 使 \(\operatorname{Res}_{c,p}(s,t)\)，但策略会影响某个后续合法性、输出或后继，那么任何只使用 \(c\) 的表示都会把两份配置错误合并。此时 \(e\) 是至少要保留的联合边界；若策略对任务完全惰性，则可以在任务商中把这项残余声明为不相关，但不能同时声称恢复策略本身。
+
+### 12.3 联合边界的动态闭合
+
+令 \(T_a\) 是完整配置在操作 \(a\) 下的后继，\(D_a\) 是合法域，\(O_a\) 是指定输出。若存在实际像上的
+
+$$
+\bar T_a:E\to E,\qquad
+\bar D_a\subseteq E,\qquad
+\bar O_a:E\to Y_a
+$$
+
+满足
+
+$$
+\begin{aligned}
+s\in D_a&\Longleftrightarrow e(s)\in\bar D_a,\\
+O_a(s)&=\bar O_a(e(s)),\\
+e(T_a(s))&=\bar T_a(e(s))\qquad(s\in D_a),
+\end{aligned}
+\tag{12.2}
+$$
+
+那么 \(e\) 是该操作合同下的动态充分边界。若当前读出与策略各自已有因子化更新
+
+$$
+c(T_a(s))=\bar c_a(c(s),p(s)),\qquad
+p(T_a(s))=\bar p_a(c(s),p(s)),
+$$
+
+且合法性与输出也只依赖 \((c(s),p(s))\)，则可取
+
+$$
+\bar T_a(c,p)=\bigl(\bar c_a(c,p),\bar p_a(c,p)\bigr).
+$$
+
+仍需检查该联合值落在实际像 \(E\)；分别可实现的 \(c'\) 与 \(p'\) 可能没有同一份来源。反过来，若式（12.2）成立，投影 \(\operatorname{fst}\circ\bar T_a\) 和 \(\operatorname{snd}\circ\bar T_a\) 就给出两个分量的更新。
+
+### 12.4 一个即时后验相同而未来解码不同的有限例
+
+令共同来源为两个均匀 bit \((X,K)\)，观察者当前只显示
+
+$$
+C=X\mathbin\oplus K,
+$$
+
+而策略或参考摘要保存 \(P=K\)。四个来源配置均有正概率；对目标 \(X\) 而言，给定 \(C\) 仍为均匀后验：
+
+$$
+I(X;C)=0.
+$$
+
+未来允许一次 `decode` 操作，输出
+
+$$
+Y=C\mathbin\oplus P=X.
+$$
+
+同一 \(C\) 的两份历史具有不同 \(P\)，所以要求不同的未来输出。只保存当前后验或显示值不能定义统一的 `decode` 后继；联合边界 \(e=(C,P)\) 则在实际四点像上区分全部来源，并直接支持该操作。
+
+这个例子说明“当前目标信息为零”与“该记录对未来没有作用”是两个不同命题。策略残余不要求整体联合熵增加，也不把 \(P\) 当作系统外免费输入。
+
+### 12.5 递归观察者的有限层组合
+
+若策略 \(p\) 本身由另一个内部观察者的边界 \(r:S\to R\) 产生，可继续取
+
+$$
+e_2(s)=\bigl(c(s),p(s),r(s)\bigr).
+$$
+
+有限次联合读出的核为所有分量核的交：
+
+$$
+\ker e_2=\ker c\cap\ker p\cap\ker r.
+$$
+
+改变配对顺序只改变乘积类型的括号；在实际像上由投影给出规范的重括号双射。因此“观察者观察策略，策略又读取参考”仍然是在同一关系结构内做共同细化，不需要在模型外增加一个观察宇宙。
+
+但有限层逐次配对不自动给出无限递归的全局状态。无限层仍须满足第 10 节的三个条件：层间更新交换、逆极限线程落在实际来源像中、以及线程读出分离实际配置。
+
+## 12.99 追加锚
+
+## 13. 后验与续接残余的联合最小边界
+
+第 12 节的 \((c,p)\) 可以具体化为隐藏来源的后验和仍决定未来续接的残余。这样可以说明何时联合边界确实是最小精确边界，而不把两个坐标分别可区分误当作联合 profile 必然可区分。
+
+### 13.1 两个完整 profile
+
+设 \(H\) 是实际历史集合，令
+
+$$
+\beta:H\to\mathcal B,\qquad r:H\to\mathcal R
+$$
+
+分别记录后验 belief 与续接残余。这里 \(r\) 可以是带类型的完整 continuation profile：它至少包含未来动作的合法性、策略所需控制读数以及任务要求保留的费用或终止标签。定义
+
+$$
+\Psi(h)=(\beta(h),r(h))
+$$
+
+并只取 \(\operatorname{ran}\Psi\) 作为联合边界值域。
+
+若 \(H,\mathcal B,\mathcal R\) 的相关实际像均为有限集，则
+
+$$
+|\operatorname{ran}\Psi|
+\le |\operatorname{ran}\beta|\,|\operatorname{ran}r|.
+\tag{13.0}
+$$
+
+等号还需要每个 \(\beta\)-值纤维都与每个 \(r\)-值纤维相交；共同来源通常只实现其中一部分配对。仓内 `JointPredictionProductFullness.joint_prediction_product_fullness_criterion` 给出了这一有限乘积满性判据。
+
+令 \(\Phi_\beta(h)\) 是所有 posterior-adaptive 有限实验的未来输出律族，令 \(\Phi_r(h)\) 是所有指定续接的合法性、控制读数、费用和终止 profile。联合 profile 为
+
+$$
+\Phi_J(h)=\bigl(\Phi_\beta(h),\Phi_r(h)\bigr).
+$$
+
+假设
+
+$$
+\ker\Phi_\beta=\ker\beta,\qquad
+\ker\Phi_r=\ker r.
+\tag{13.1}
+$$
+
+第一项可由第 11.2 节的一步 separating 条件得到；第二项是把 \(r\) 定义为完整续接 profile 的结果，或需要另行证明的策略最小性条件。
+
+**定理 13.1（联合 profile 的最小性）。** 在式（13.1）下，
+
+$$
+\boxed{\ker\Phi_J=\ker\Psi=\ker\beta\cap\ker r.}
+\tag{13.2}
+$$
+
+因此，任何摘要 \(q:H\to Q\) 若能因子化全部联合 profile，存在 \(F:\operatorname{ran}q\to\operatorname{ran}\Phi_J\) 使 \(\Phi_J=F\circ q\)，则
+
+$$
+\ker q\subseteq\ker\Psi.
+\tag{13.3}
+$$
+
+也就是说，\(q\) 至少必须细化 \(\Psi\)。在前述联合 profile 已能由 \(q\) 因子化的充分性条件下，若再有 \(\Psi\) 能由 \(q\) 因子化（即 \(\ker\Psi\subseteq\ker q\)），两边核相等，因而在实际像上由唯一双射互相恢复。
+
+**证明。** 有序对相等当且仅当两个坐标分别相等，所以
+\(\ker\Phi_J=\ker\Phi_\beta\cap\ker\Phi_r
+=\ker\beta\cap\ker r\)。若 \(\Phi_J=F\circ q\)，则 \(q(h)=q(h')\) 蕴含 \(\Phi_J(h)=\Phi_J(h')\)，得到式（13.3）。核相等时应用实际像上的商因子化即可。证毕。
+
+不能把“\(\beta\) 能分离”和“\(r\) 能分离”替换成一个未经检验的逐坐标实验选择。两个坐标同时变化时，不同实验的输出差可能抵消；式（13.1）直接使用完整 profile，避免了这个量词错误。
+
+### 13.2 联合分支更新的闭合
+
+对合法实验 \(a\) 和正概率结果 \(y\)，假设共同来源给出
+
+$$
+\beta(h\cdot a,y)=B_{a,y}(\beta(h)),\qquad
+r(h\cdot a,y)=R_{a,y}(r(h)).
+\tag{13.4}
+$$
+
+并且动作合法性、策略选择以及输出核分别能从 \(r\)、\(\Psi\) 和 \(\beta\)（或 \(\Psi\)）恢复。若实际联合像对
+
+$$
+\Psi_{a,y}(b,u)=\bigl(B_{a,y}(b),R_{a,y}(u)\bigr)
+$$
+
+闭合，则
+
+$$
+\Psi(h\cdot a,y)=\Psi_{a,y}(\Psi(h)).
+\tag{13.5}
+$$
+
+对 transcript 长度归纳，式（13.5）推出：任意 \(\Psi\)-adaptive policy 的联合合法性与未来输出律只依赖 \(\Psi(h)\)。令 \(\bar D_a\subseteq\operatorname{ran}\Psi\) 为由残余和联合边界恢复的合法域；若输出核还依赖 \(\beta\)--\(r\) 的联合相关，该相关必须已经纳入 \(r\) 或直接纳入 \(\Psi\)。更明确地，对固定 policy \(\pi_n\)，令 \(L_0((b,u),\varepsilon)=1\)，并在实际支持上定义
+
+$$
+L_{n+1}\bigl((b,u),y::w\bigr)
+=\mathbf 1_{\{(b,u)\in\bar D_a\}}\,
+K_{a}(y\mid b,u)
+L_n\bigl(\Psi_{a,y}(b,u),w\bigr),
+\qquad a=\pi_n(b,u),
+\tag{13.6}
+$$
+
+非法分支质量取零。对 \(\Psi(h)=\Psi(h')\) 的两份历史，按 \(n\) 归纳得全部有限 transcript 律相同。式（13.6）应按分支理解：若 \(K_a(y\mid b,u)=0\)，则该 transcript 分支的质量定义为零；只有在 \(K_a(y\mid b,u)>0\) 时才调用 \(\Psi_{a,y}\) 的条件更新。随机策略若依赖随机源，必须把该源并入 \(r\) 或 \(\Psi\)。
+
+## 13.99 追加锚
+
+## 14. 嵌套观察者的复合下降
+
+有限层递归还可以写成两个边界下降的复合。设
+
+$$
+q_1:S\to B_1,\qquad q_2:B_1\to B_2,\qquad q=q_2\circ q_1.
+$$
+
+对操作 \(a\)，假设内层更新满足
+
+$$
+q_1\circ T_a=\bar T^1_a\circ q_1.
+\tag{14.1}
+$$
+
+若 \(q_2\) 的纤维在每个 \(\bar T^1_a\) 下稳定，即
+
+$$
+q_2(b)=q_2(b')
+\Longrightarrow
+q_2(\bar T^1_a(b))=q_2(\bar T^1_a(b')),
+\tag{14.2}
+$$
+
+由 \(T_a:S\to S\) 和式（14.1）可知 \(\bar T^1_a(q_1(S))\subseteq q_1(S)\)。因此存在唯一实际像更新
+\(\bar T^2_a:q_2(q_1(S))\to q_2(q_1(S))\)，使
+
+$$
+q\circ T_a=\bar T^2_a\circ q.
+\tag{14.3}
+$$
+
+证明是在 \(q_2\)-纤维上定义 \(\bar T^2_a(q_2(b))=q_2(\bar T^1_a(b))\)，其中
+\(b\in q_1(S)\)；式（14.2）保证无歧义，实际像保证值域正确，唯一性逐点成立。合法域、输出、费用和控制器也必须先在 \(q_1\)-纤维上因子化，再在 \(q_2\)-纤维上保持常值。
+
+若外层观察者还要读取内层策略或档案 \(p:S\to P\)，这里的 \(p\) 必须是同一共同来源实际配置 \(S\) 的函数；若它依赖外置档案、控制器或随机种子，这些分量必须先并入 \(S\)，或作为明确匹配参数纳入合同。复合边界必须满足
+
+$$
+\ker q\subseteq\ker p,
+\tag{14.4}
+$$
+
+等价地，\(p\) 在 \(q\)-实际像上因子化。否则 \(q\) 虽然对两层各自原任务充分，却不能支持 observer-of-observer 的首步选择；应改用联合边界 \((q,p)\)。
+
+**反例 14.1（逐层充分不推出嵌套充分）。** 令
+
+$$
+S=\{0,1\}\times\{0,1\},\qquad q_1(x,b)=x,\qquad q_2=\operatorname{id}.
+$$
+
+内层和外层原合同都只读 \(x\)，因而 \(q_1\) 与 \(q_2\) 各自精确。现在允许外层的自读操作报告 \(p(x,b)=b\)，或根据 \(b\) 在两个动作之间选择。状态 \((0,0)\) 与 \((0,1)\) 具有相同复合边界 \(q=0\)，却要求不同报告或不同首步，违反式（14.4）；复合边界失效。加入 \(p\) 后，\((x,b)\) 恢复实际四状态并闭合。
+
+所以递归观察的正确组合条件不是“每一层单独都有充分边界”，而是“外层核稳定于内层更新，并且外层要读取的内层 profile 在复合核上因子化”。这正是 `DescentCompositionLaw.descent_composition_law`、`ObserverMorphismComposition.observer_morphism_composition` 与 `AgencyEnrichment.strategy_factorization_iff_no_residual` 所对应的普通数学组合；这些仓内支点没有自动核验本节的联合概率合同。
+
+## 14.99 追加锚
