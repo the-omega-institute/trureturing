@@ -191,6 +191,134 @@ and the old margin is strictly positive while the new margin is strictly negativ
 
 Any finite nonpure originals can be added while preserving the two-copy condition, without changing these pure unions. Pure5/7 originals can also vary arbitrarily. Thus the differences are not merely unattainable numeric parameter points. The union of the two baseline Gamma sufficient regions strictly contains report559's region and applies to a larger class of actual families with arbitrary remaining geometry. This does not assert that every family in the difference lacked some other earlier noncoverage proof, or that failure of either sufficient criterion is a lower bound on the actual query norm.
 
+## 7. Allowing every pair of anchor primes does not improve this certificate
+
+Allow any two distinct primes `r,s` in `Q` as the initial anchors,
+all constant caps on the remaining four coordinates, all fixed orders
+of those coordinates, and any final real query threshold `h>=1`.
+Continue to use only the unrefined pure-anchor comparison and the full
+mixed-anchor reciprocal charge. The optimum uniform certificate in this
+larger family is still the exact value in O2:
+
+\[
+\frac{157471921154183512277}{30602497889515978126}
+=5.145721167033602\ldots>\frac{257}{51}.
+\]
+
+Thus changing the two anchors cannot close the remaining gap within
+this comparison. The conclusion does not optimize actual survivor laws,
+phase-sensitive estimates, nonconstant caps or adaptive orders.
+
+### The actual source and parameter rectangle for each pair
+
+For the chosen anchors retain their actual complete pure-survivor masses
+
+\[
+x\in[1-2/(r-1),1],\qquad y\in[1-2/(s-1),1],
+\quad D_{r,s}=\frac{2}{(r-1)(s-1)}.
+\]
+
+The actual mixed union on these coordinates has Haar mass at most
+`D_(r,s)`, by summing the two occurrences of every full mixed numerical
+label. The initial actual survivor therefore has mass at least
+`xy-D_(r,s)` and is dominated by the raw pure-product restriction.
+The raw auxiliary anchor coordinate has weights
+
+\[
+\pi_p(1)=w_p-1/p,\qquad
+\pi_p(n)=(p-1)/p^n\quad(n\ge2).
+\]
+
+Its mass is `w_p` and its mean is `w_p+1/(p-1)`. These weights are
+nonnegative throughout every anchor rectangle. In particular, the old
+values `D=1/12` and initial lower mass `1/4` are used only for anchors5/7.
+
+Assign every original involving later primes to its last coordinate in
+the selected order, exactly as in Section1. Every full numerical label,
+original residue and finite height is retained. The same PA comparison
+and one final normalization give
+
+\[
+\alpha_{r,s}(x,y)
+=xy-D_{r,s}-\sum_q\frac{2C_q}{q-1}F_{t_q}^{\rm prefix}(x,y),
+\qquad
+B_h=h-1+\frac{\Phi_h(x,y)}{\alpha_{r,s}(x,y)},
+\quad t_q=\frac{q-1}{2}(1-C_q^{-1}).
+\]
+
+After normalizing only the two auxiliary anchor measures, their tails
+are `1/(w_p*p^e)` at `N_p>=e+1`. Decreasing an anchor mass increases
+every normalized hinge. It also increases `D_(r,s)/(xy)`, so
+`alpha_(r,s)/(xy)` cannot increase. Consequently the common worst
+corner for every fixed pair, order and cap tuple is
+
+\[
+(x,y)=\left(\frac{r-3}{r-1},\frac{s-3}{s-1}\right).
+\]
+
+Positivity there is equivalent to uniform admissibility of this
+certificate on its rectangle. These are comparison endpoints; the
+argument does not introduce an infinite actual original family or
+assert that the worst comparison losses are simultaneously attained.
+
+### Complete finite reduction and exact computation
+
+Report348's CT endpoint argument applies to any current prime `q` and
+integer-valued old complete query. For caps exceeding `(q-1)/2`, use the
+valid auxiliary tails `min(C_q/q^e,1)`. Lowering such a cap to `(q-1)/2`
+cannot worsen the current debit, later debits or final hinge. Within
+the remaining cap range, between consecutive integer values of `t_q`,
+the current debit, later hinges and final hinge are affine in that cap.
+The ratio is fractional-linear wherever its mass denominator is positive;
+a zero denominator cannot improve it. Hence a feasible integer-threshold
+endpoint is at least as good. The complete ranges are
+
+\[
+t_q=0,\ldots,(q-3)/2,\qquad
+C_q=\frac{q-1}{q-1-2t_q}.
+\]
+
+For later primes5 and7 these ranges are respectively `0,1` and `0,1,2`.
+The endpoint `C_q=1` uses direct Haar completion. For each fixed tuple,
+the same16-subset recurrence as Section2 covers all24 later orders.
+Only auxiliary prefix laws are order-independent; actual prefixes are
+not identified across orders. The final auxiliary numerator is independent
+of the order, so minimum comparison loss gives the smallest positive-mass
+query ratio for that tuple.
+
+The dependence on `h` is affine between integers. Since `B_h>=h-1`
+and the existing global incumbent is below6, every possible improvement
+has an integer representative `h=1,...,6`.
+
+The [exact all-anchor program](../../frontier/cover-geometry/pa_all_anchor_cap_grid.py)
+evaluates all15 pairs and10404 cap tuples with rational arithmetic;
+4546 tuples have positive mass under at least one order. It tests all
+six query thresholds after the subset recurrence and independently sums
+all24 orders at each pair's winning tuple. The
+[retained data](../../frontier/cover-geometry/pa_all_anchor_cap_grid.json)
+include exact pairwise winners and a digest of each complete grid.
+
+| Anchors | Best certificate among `h=1,...,6` |
+|---|---:|
+|5,7|5.145721167033602...|
+|5,11 or7,11|5.486948232815869...|
+|5,13 or7,13|5.533465420670478...|
+|5,17 or7,17|5.709655310568957...|
+|5,19 or7,19|5.743024269132015...|
+|11,13|6.437079849180296...|
+|11,17|6.783768029751690...|
+|11,19|6.751487903801420...|
+|13,17|6.779953438124876...|
+|13,19|6.744107658358822...|
+|17,19|7.484128885028350...|
+
+For rows above6, the table does not claim that the restricted `h` range
+finds that pair's independent optimum over every threshold. It excludes
+every improvement on the common incumbent, which suffices for the stated
+global optimum. The winner is precisely anchors5/7, order13,11,19,17,
+caps from O2 and `h=3`. This closes the anchor-choice variation of the
+unrefined certificate; the actual joint mass and query problem remains.
+
 ## Exact evidence and remaining boundary
 
 The all-order grid program and data are
@@ -210,5 +338,16 @@ and [result data](../../frontier/cover-geometry/reordered_pure_union_savings.jso
 with25 checks and data SHA256
 `d6d2e29c6bee3b837ea33dcd59dd427b6e02c636287b38d28a91b9aa53e38045`.
 It computes both orders using full means and the closed low-product formulas at thresholds2,3,4, reconstructs all four anchor corners and each order's raw coefficients, and checks the two realizable finite theta differences. It does not import a prior producer or scan original families. An independent low-product convolution and savings calculation checks64 displayed fields. Both scripts accept --output, default beside their own file, and their JSON contains no temporary path dependency.
+
+The all-anchor extension has51 explicit checks and accepts `--output`,
+defaulting beside the program. It uses full auxiliary means plus exact
+below-threshold corrections, so its finite cap grid does not truncate
+query heights. A scoped search found the existing fixed5/7 grid but no
+earlier all-pair grid; the extension reuses the PA/CT proof and makes no
+new general-theorem or literature-priority claim.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pa_all_anchor_cap_grid.py
+```
 
 All tests use explicit runtime failures under Python -O. These finite computations do not replace the displayed source-comparison proofs. No new Lean verification is claimed. Dense pure unions can still make both Gamma values small; the unrestricted two-copy target and Erdős #7 remain unresolved.
