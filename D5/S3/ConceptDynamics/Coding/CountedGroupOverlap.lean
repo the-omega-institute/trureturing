@@ -124,7 +124,8 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     rw [← hp]
     exact (fiberEquiv U V i k g).symm_apply_apply a
   simp only [join, split, hp]
-  simpa only [mul_inv_cancel_left] using hinv
+  rw [mul_inv_cancel_left]
+  simpa using hinv
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
