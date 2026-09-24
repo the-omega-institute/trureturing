@@ -1,4 +1,4 @@
-# Surviving-fibre credits give a common seven-prime query law at ternary height one
+# Surviving-fibre credits give common query laws at ternary height one
 
 Let P={3,5,7,11,13,17,19}. For every finite family of pairwise distinct odd numerical moduli greater than1 supported on P, with arbitrary original residues and v3(m)<=1, there is one probability mu on its actual survivor set such that
 
@@ -182,4 +182,67 @@ Under the pure5 survivor law, nonzero first digits each have mass1/4. The15-clas
 
 The unresolved estimate is therefore on the jointly sampled original-prefix expression in(FC4), or on a new supported law retaining that expression. Neither the height-one condition nor a phase-count condition can be assumed for an unrestricted family. The result is a conditional seven-prime source and nine-prime extension, not a solution of unrestricted Erdős#7.
 
-All displayed constants follow from finite rational products, symmetric polynomial coefficients and nonnegative geometric sums. The proof is analytic, with independent ordinary review; no configuration enumeration, new consumer, cached source-geometry calculation or Lean build is claimed.
+The seven-prime constants above follow from finite rational products, symmetric polynomial coefficients and nonnegative geometric sums. That part is analytic, with independent ordinary review; it uses no configuration enumeration, new consumer, cached source geometry or Lean build. The following eight-prime extension keeps a finite partition comparison explicitly.
+
+## Eight old primes and arbitrary29/31 originals
+
+Put P8=P union{23} and Q8=P8 minus{3}. For any finite distinct original family supported on P8, with arbitrary original residues and nonternary heights but v3(m)<=1, the same fibre construction gives one probability mu8 supported on its actual survivors with
+
+    R_P8(mu8)<105/8,
+    mu8<(3072/119)H_P8<26H_P8.                         (FC13)
+
+Consequently any finite additional original family supported on P8 union{29,31}, every added modulus divisible by29 or31, may have arbitrary old and outside phases and heights. The complete first-ten-prime survivor Haar mass is greater than
+
+    901/2949120>1/3300.                                (FC14)
+
+The old-only ternary-height condition now includes originals involving23; the later29/31 originals have no such height restriction. This is a different sufficient family from(FC2), whose later23 originals could already have unrestricted ternary depth.
+
+The proof through(FC6), including artificial carrier enlargement and coordinatewise concavity, applies unchanged with Q8. At a partition A disjoint union B=Q8, retain the exact maximum in F. Define
+
+    n_q=q-2,    D0=product_(q in Q8)n_q=7952175,
+    I_A(E)=product_(q in A minus E)(n_q-1)
+             *product_(q in B minus E)n_q.
+
+Then clearing denominators in the actual F formula gives
+
+    2D0 F(A)=I_A(empty)+I_B(empty)
+       -sum_(E subset Q8, |E|>=2)
+          [I_A(E)+I_B(E)+max(I_A(E),I_B(E))].            (FC15)
+
+All terms are integers. Complementing A exchanges I_A and I_B without changing the numerator, so it suffices to check the64 partitions containing5. The [exact partition consumer](../../frontier/cover-geometry/fibre_credit_partition.py), with its [input](../../frontier/cover-geometry/fibre_credit_partition_input.json), evaluates every term of(FC15). Its [result](../../frontier/cover-geometry/fibre_credit_partition.json) retains all64 integer numerators. Their minimum is2142533, attained at A={5}; among all128 partitions the complementary partition has the same value. Thus
+
+    min_A F(A)=2142533/15904350
+       >2120580/15904350=2/15.                         (FC16)
+
+The exact numerator surplus is21953. This is an exhaustive finite comparison after the proved reduction of all continuous budgets to partitions. It does not enumerate original congruence families or truncate their prime-power heights. No analytic exchange rule claiming that A={5} must be extremal is assumed.
+
+Use lambda8 formed from the actual pure-coordinate survivors and the two ternary roots, and let alpha8=lambda8(U8). Concavity, the same-label deletion bound and(FC16) imply alpha8>2/15 for every admitted actual old family. Normalize the one restriction mu8=lambda8|U8/alpha8 before all queries. The independent auxiliary product M8 in(FC10) now includes23, with C23=22/21. The same three-small-atom identity gives exactly
+
+    E(M8-4)_+
+       =180301179496850337824724227641
+          /133782425313748456576602521250
+       <27/20.
+
+Every complete query therefore has, under that single mu8,
+
+    E_mu8(L-1)<3+(27/20)/(2/15)=105/8.
+
+As above, maximizing each numerical label and then exhausting all query depths preserves the strict common bound. The product predeletion Haar cap is2048/595. Hence the very same normalized law has cap below(2048/595)/(2/15)=3072/119, proving(FC13).
+
+For the admitted additional29/31 originals, the complete outside reciprocal inventory is59/840, with the old unit cofactor included. Under mu8 tensor H29 tensor H31, deletion of their one actual forbidden union leaves mass greater than
+
+    1-(59/840)(1+105/8)=53/6720.
+
+The full Haar survivor mass is consequently greater than
+
+    (53/6720)(119/3072)=901/2949120>1/3300,
+
+which proves(FC14). The source period resolves the original finite family; mu8 has actual Haar tails on that product, so arbitrary later old-coordinate query depths use this same law. No residue is changed between branches or tests.
+
+The retained program also checks the exact auxiliary moment, its27/20 bound, the density conversion and the complete later deletion margin. Run:
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre_credit_partition.py
+```
+
+Default execution compares the retained result. `--input-dir` selects a directory holding the input and retained result; `--output PATH` writes a newly computed result after all inequalities pass. Checks remain active under optimization, and the program imports no source geometry helper. Its mathematical role is the finite numerical premise(FC16) and the displayed rational constants; the preceding actual-family reduction, source support and arbitrary-height query argument remain ordinary proofs. No Lean certification or unrestricted Erdős#7 conclusion is claimed.
