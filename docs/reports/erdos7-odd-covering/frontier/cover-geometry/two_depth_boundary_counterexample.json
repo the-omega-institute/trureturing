@@ -1,0 +1,324 @@
+{
+  "scope": "fixed counterexample to sufficiency of common source cells and separate depth laws",
+  "complete_period": 315,
+  "common_pure_source_count": 120,
+  "common_pure_originals": [
+    {
+      "label": 3,
+      "phase": 1
+    },
+    {
+      "label": 9,
+      "phase": 3
+    },
+    {
+      "label": 5,
+      "phase": 1
+    },
+    {
+      "label": 7,
+      "phase": 1
+    }
+  ],
+  "common_nine_cell_law": [
+    "1/5",
+    "0",
+    "1/5",
+    "0",
+    "0",
+    "1/5",
+    "1/5",
+    "0",
+    "1/5"
+  ],
+  "families": {
+    "A": {
+      "originals": [
+        {
+          "label": 3,
+          "phase": 1
+        },
+        {
+          "label": 9,
+          "phase": 3
+        },
+        {
+          "label": 5,
+          "phase": 1
+        },
+        {
+          "label": 7,
+          "phase": 1
+        },
+        {
+          "label": 15,
+          "phase": 12
+        },
+        {
+          "label": 63,
+          "phase": 9
+        }
+      ],
+      "private_point_certificates": [
+        {
+          "label": 3,
+          "phase": 1,
+          "point": 280,
+          "crt_coordinates": [
+            1,
+            0,
+            0
+          ],
+          "hit_labels": [
+            3
+          ]
+        },
+        {
+          "label": 9,
+          "phase": 3,
+          "point": 210,
+          "crt_coordinates": [
+            3,
+            0,
+            0
+          ],
+          "hit_labels": [
+            9
+          ]
+        },
+        {
+          "label": 5,
+          "phase": 1,
+          "point": 126,
+          "crt_coordinates": [
+            0,
+            1,
+            0
+          ],
+          "hit_labels": [
+            5
+          ]
+        },
+        {
+          "label": 7,
+          "phase": 1,
+          "point": 225,
+          "crt_coordinates": [
+            0,
+            0,
+            1
+          ],
+          "hit_labels": [
+            7
+          ]
+        },
+        {
+          "label": 15,
+          "phase": 12,
+          "point": 252,
+          "crt_coordinates": [
+            0,
+            2,
+            0
+          ],
+          "hit_labels": [
+            15
+          ]
+        },
+        {
+          "label": 63,
+          "phase": 9,
+          "point": 135,
+          "crt_coordinates": [
+            0,
+            0,
+            2
+          ],
+          "hit_labels": [
+            63
+          ]
+        }
+      ],
+      "first_depth_mass": "1/10",
+      "second_depth_mass": "1/30",
+      "joint_indicator_law": [
+        [
+          "7/8",
+          "1/40"
+        ],
+        [
+          "11/120",
+          "1/120"
+        ]
+      ],
+      "intersection_mass": "1/120",
+      "mixed_union_mass": "1/8",
+      "additional_second_depth_mass": "1/40",
+      "full_survivor_count": 105
+    },
+    "B": {
+      "originals": [
+        {
+          "label": 3,
+          "phase": 1
+        },
+        {
+          "label": 9,
+          "phase": 3
+        },
+        {
+          "label": 5,
+          "phase": 1
+        },
+        {
+          "label": 7,
+          "phase": 1
+        },
+        {
+          "label": 15,
+          "phase": 12
+        },
+        {
+          "label": 63,
+          "phase": 2
+        }
+      ],
+      "private_point_certificates": [
+        {
+          "label": 3,
+          "phase": 1,
+          "point": 280,
+          "crt_coordinates": [
+            1,
+            0,
+            0
+          ],
+          "hit_labels": [
+            3
+          ]
+        },
+        {
+          "label": 9,
+          "phase": 3,
+          "point": 210,
+          "crt_coordinates": [
+            3,
+            0,
+            0
+          ],
+          "hit_labels": [
+            9
+          ]
+        },
+        {
+          "label": 5,
+          "phase": 1,
+          "point": 126,
+          "crt_coordinates": [
+            0,
+            1,
+            0
+          ],
+          "hit_labels": [
+            5
+          ]
+        },
+        {
+          "label": 7,
+          "phase": 1,
+          "point": 225,
+          "crt_coordinates": [
+            0,
+            0,
+            1
+          ],
+          "hit_labels": [
+            7
+          ]
+        },
+        {
+          "label": 15,
+          "phase": 12,
+          "point": 252,
+          "crt_coordinates": [
+            0,
+            2,
+            0
+          ],
+          "hit_labels": [
+            15
+          ]
+        },
+        {
+          "label": 63,
+          "phase": 2,
+          "point": 65,
+          "crt_coordinates": [
+            2,
+            0,
+            2
+          ],
+          "hit_labels": [
+            63
+          ]
+        }
+      ],
+      "first_depth_mass": "1/10",
+      "second_depth_mass": "1/30",
+      "joint_indicator_law": [
+        [
+          "13/15",
+          "1/30"
+        ],
+        [
+          "1/10",
+          "0"
+        ]
+      ],
+      "intersection_mass": "0",
+      "mixed_union_mass": "2/15",
+      "additional_second_depth_mass": "1/30",
+      "full_survivor_count": 104
+    }
+  },
+  "claim_refuted": "common pure source and separate depth event laws determine mixed union mass",
+  "conclusion_boundary": "the common law is the pure product source; full conditioned survivors differ",
+  "checks": {
+    "complete_common_pure_source": true,
+    "complete_nine_cell_source_profile": true,
+    "A_six_distinct_odd_labels": true,
+    "A_one_complete_period": true,
+    "A_normalized_phases": true,
+    "A_private_point_3": true,
+    "A_private_point_9": true,
+    "A_private_point_5": true,
+    "A_private_point_7": true,
+    "A_private_point_15": true,
+    "A_private_point_63": true,
+    "A_zero_survives_all_originals": true,
+    "A_full_survivor_matches_joint_complement": true,
+    "A_first_depth_mass": true,
+    "A_second_depth_mass": true,
+    "A_intersection": true,
+    "A_union": true,
+    "B_six_distinct_odd_labels": true,
+    "B_one_complete_period": true,
+    "B_normalized_phases": true,
+    "B_private_point_3": true,
+    "B_private_point_9": true,
+    "B_private_point_5": true,
+    "B_private_point_7": true,
+    "B_private_point_15": true,
+    "B_private_point_63": true,
+    "B_zero_survives_all_originals": true,
+    "B_full_survivor_matches_joint_complement": true,
+    "B_first_depth_mass": true,
+    "B_second_depth_mass": true,
+    "B_intersection": true,
+    "B_union": true,
+    "same_separate_depth_marginals": true,
+    "different_actual_joint_union": true,
+    "different_full_survivors": true
+  },
+  "passed_count": 35
+}

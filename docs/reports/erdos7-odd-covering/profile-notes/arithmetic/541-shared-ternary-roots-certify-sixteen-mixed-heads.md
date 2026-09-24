@@ -196,6 +196,8 @@ The [new consumer](../../frontier/cover-geometry/mixed_star_capacity.py) and [re
 
 Larger shallow inventories require a stronger joint deletion estimate, another supported law, or a different sufficient criterion. The six-label block only resolves a specified part of the mixed incidence structure; it does not establish a uniform law for arbitrary actual cores or settle unrestricted Erdős #7.
 
+[Report542](542-an-actual-sharp-nine-cell-interface-for-two-depth-stars.md) proves that SC4's C(J) is the supremum over actual finite irredundant families, with one fixed star-phase layout through increasing pure heights. It does not make the complete sixteen-head bound sharp. For selected3p/9p originals, a shared nine-cell response and a matching actual extremal construction reduce the block's all-height optimum to a finite parent/child incidence problem. Two actual six-class families have identical source cells and separate depth marginals but mixed unions1/8 and2/15, so those marginals cannot replace the shared incidence.
+
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/mixed_star_capacity.py
 ```
