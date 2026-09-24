@@ -38857,3 +38857,180 @@ $$
 式（174.27）区分了同一实现中是否保留相干，没有比较所有经典实现与所有量子实现的最小资源。当前上界的成立也没有要求在所有 $r\uparrow1$ 上统一选择正的重置率。允许的内部条件通道依旧是定义173.1的较大 CPTP 类，而非定义172.1的校准源选择器；该区别与实际源、未知固定相位及终端风险的定义分别承担不同假设。
 
 ## 追加锚（本行以下为增补区）
+
+## 175. 平稳经典三态的双视界校准与精确可遗忘预测
+
+**定义 175.1（带去相位状态的平稳选择器）。** 沿用定义173.1的一般 CPTP 预测器合同及定义174.1的 $n,m=n+1$；在充分近一的区间中，全部最大风险视界都属于 $\{n,m\}$，且 $n\ge2$、$m\alpha<\pi/2$。记 $c_0=r\cos\alpha$，并对零点邻域内的参数 $p,w,\theta$ 定义
+$$
+c=\frac{c_0}{1-w},\qquad q=\frac c{\cos\theta},\qquad
+a=\sqrt{\frac{1-q^2}{2(1-c)}}.
+\tag{175.1}
+$$
+物理取值要求 $0<p,w<1$、$0<a,q<1$、$c<1$。三个经典标签为 $+,-,0$，其初始分布和每次条件通道之后的转移为
+$$
+\pi=\left(\frac{1-w}{2},\frac{1-w}{2},w\right),
+\qquad T=(1-p)I+p\mathbf1\pi.
+\tag{175.2}
+$$
+标签 $\pm$ 的条件通道是相关矩阵
+$$
+C_\pm=
+\begin{pmatrix}1&a&qe^{\pm i\theta}\\a&1&a\\qe^{\mp i\theta}&a&1\end{pmatrix}
+\tag{175.3}
+$$
+的 Schur 通道，标签 $0$ 的条件通道为完全去相位。记这些通道为 $\mathcal Q_v$，则在任意系统—记忆联合输入上的处理器及初始化为
+$$
+\Lambda(X)=\sum_{v,u}T(v,u)\mathcal Q_v(X_{vv})\otimes|u\rangle\langle u|,
+\qquad \sigma=\sum_v\pi_v|v\rangle\langle v|.
+\tag{175.4}
+$$
+它在每步丢弃经典标签间的相干。真实源仍为固定未知相位的 $\mathcal M_{r,\phi}$，其环境逐步新鲜；仅预测器的内部条件通道允许离开原校准源族。
+
+**定理 175.2（不使用记忆相干的全参数三态上界）。** 对每个充分接近一的 $r<1$，存在定义175.1的合法正参数，使同一个平稳初始化、时间齐次的经典三态预测器同时满足
+$$
+\sup_{|\phi|\le\alpha}d_{\rm ref}(\mathcal M_{r,\phi},\mathcal P_{r,1})=\mathcal R_1(r),
+\qquad
+\sup_{N\ge1,\,|\phi|\le\alpha}d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})=H(r),
+\tag{175.5}
+$$
+以及标准遗忘条件（173.1）。该结论包含并列最大点，不使用量子记忆相干或单独的启动状态。参数由已知 $r$ 一次选定，不随所比较的运行视界 $N$ 改变。
+
+证明。 在 $(p,w,\theta)=(0,0,\alpha)$，原端点关系
+$$
+1-r^2=2r^2(1-c_0)
+\tag{175.6}
+$$
+给出 $q=a=r$。此时标签 $0$ 不被初始化，两个端点标签永不切换，故终端预测器正是持续端点比特。
+
+首先计算一般参数的终端系数。由（175.2），转移矩阵限制到两个端点标签的行和为 $1-pw$。因此前 $N$ 次条件通道都避开 $0$ 的概率是 $(1-w)(1-pw)^{N-1}$；最后一次使用后的转移不影响该终端通道。条件于避开 $0$，符号初始均匀，转移为对称翻转链，翻转率
+$$
+f=\frac{p(1-w)}{2(1-pw)}.
+\tag{175.7}
+$$
+任何访问 $0$ 的路径都使非对角系统矩阵元归零，后续 Schur 通道不能重建它们。因此，写 $Z_{N,f}(\theta)$ 为式（173.7）的符号和余弦期望，终端系数恰为
+$$
+A_N=(1-w)a^N(1-pw)^{N-1},\qquad
+u_N=(1-w)q^N(1-pw)^{N-1}Z_{N,f}(\theta),
+\tag{175.8}
+$$
+其中 $01=12=A_N$、$02=u_N\in\mathbb R$。特别地，$u_1=(1-w)q\cos\theta=c_0$，所以关键的单步系数已被恒等地保留。
+
+用 $w,\theta$ 同时校准 $n,m$ 两个视界。定义 $F_N=u_N-r^N\cos(N\alpha)$，有限路径和使其在基点邻域具有实解析延拓。负的 $p,w$ 只用于此延拓。将基点偏导除以 $r^N$，分别记为
+$$
+d_N=\frac{\partial_\theta u_N}{r^N}
+=-\frac{N\sin((N-1)\alpha)}{\cos\alpha},\qquad
+b_N=\frac{\partial_wu_N}{r^N}=(N-1)\cos(N\alpha),
+\tag{175.9}
+$$
+以及
+$$
+h_N=\frac{\partial_pu_N}{r^N}
+=\frac12\bigl[\cot\alpha\sin(N\alpha)-N\cos(N\alpha)\bigr].
+\tag{175.10}
+$$
+前两式直接微分（175.8）；在基点有 $q_w=r$。第三式中生存因子的一阶贡献为零，而 $f_p=1/2$；零次与一次翻转路径给出
+$$
+2h_N=\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos(N\alpha)\bigr].
+\tag{175.11}
+$$
+三角和恒等式把它化为（175.10）。对当前的早视界 $n,m$，每个括号严格为正，所以 $h_N>0$，同时 $b_N>0,d_N<0$。
+
+令 $x=n\alpha$、$\lambda=d_m/d_n$，消去共同的 $\theta$ 方向，得到两个余项
+$$
+\begin{aligned}
+R_b&=b_m-\lambda b_n
+=\frac{\sin x\cos x-n^2\sin\alpha\cos\alpha}
+{n\sin(x-\alpha)},\\
+R_h&=h_m-\lambda h_n
+=\frac{\cos\alpha\,[n^2\sin^2\alpha-\sin^2x]}
+{2n\sin\alpha\sin(x-\alpha)}.
+\end{aligned}
+\tag{175.12}
+$$
+这两个等式由 $m=n+1$ 及和角公式直接展开得到。其符号无需渐近估计：$\sin t/t$ 在 $(0,\pi)$ 严格递减，而 $0<\alpha<x<\pi/2$、$n\ge2$，所以
+$$
+\sin x<n\sin\alpha,
+\qquad
+\sin x\cos x<n\sin\alpha\cos\alpha
+<n^2\sin\alpha\cos\alpha.
+\tag{175.13}
+$$
+因此 $R_h>0$、$R_b<0$，而 $(F_n,F_m)$ 对 $(\theta,w)$ 的 Jacobian 行列式为 $r^{n+m}d_nR_b>0$。
+
+隐函数定理给出 $w(p),\theta(p)$，满足 $w(0)=0,\theta(0)=\alpha$，并精确保留
+$$
+u_n=r^n\cos(n\alpha),\qquad u_m=r^m\cos(m\alpha).
+\tag{175.14}
+$$
+对两等式微分并消元可得
+$$
+w'(0)=-\frac{R_h}{R_b}>0,\qquad
+\theta'(0)=-\frac{h_n+b_nw'(0)}{d_n}>0.
+\tag{175.15}
+$$
+沿此解支，式（175.1）及（175.6）又给出
+$$
+q'(0)=r\bigl[w'(0)+\tan\alpha\,\theta'(0)\bigr]>0,
+\qquad
+a'(0)=-\frac r2w'(0)
+-\frac{r^3\tan\alpha}{1-r^2}\theta'(0)<0.
+\tag{175.16}
+$$
+例如，对 $a^2$ 分别求偏导，基点值为 $\partial_w(a^2)=-r^2$、$\partial_\theta(a^2)=-2r^4\tan\alpha/(1-r^2)$，即得后一式。故对所选固定 $r$，全部充分小的正 $p$ 都满足 $0<w<1$、$\theta>\alpha$、$r<q<1$、$0<a<r$、$c<1$。
+
+矩阵（175.3）的一阶与二阶主子式为正，且
+$$
+\det C_\pm=1-2a^2-q^2+2a^2q\cos\theta
+=1-q^2-2a^2(1-c)=0.
+\tag{175.17}
+$$
+所以它们为半正定的秩二相关矩阵，条件 Schur 通道合法。若 $K_{v,j}$ 是 $\mathcal Q_v$ 的 Kraus 算符，则（175.4）的 Kraus 算符为 $\sqrt{T(v,u)}K_{v,j}\otimes|u\rangle\langle v|$，其伴随乘积之和为单位算符。这验证了任意联合输入上的完全正性与保迹性。
+
+对三个视界 $S=\{1,n,m\}$，单步恒等式及（175.14）给出 $u_N=r^N\cos(N\alpha)$。又有 $0\le A_N\le r^N$，且 $A_N\to r^N$ 当 $p\downarrow0$。源与预测器的 Schur 差因而为式（174.18）的矩阵，其中
+$$
+d=r^N-A_N,\qquad
+w=r^N\bigl(e^{iN\phi}-\cos(N\alpha)\bigr).
+\tag{175.18}
+$$
+由早段相位弧几何，$|w|\le Q_N:=r^N\sin(N\alpha)$。将正 $p$ 限得充分小，可同时保证 $2(r^N-A_N)<Q_N$。包含任意参考的支配估计（174.19）于是给出风险上界 $Q_N/2$，端点相位与均衡 $02$ 输入达到它。因此单步风险精确为 $\mathcal R_1$，在 $n$ 精确达到 $H$，并在 $m$ 也保留原最优风险 $\mathcal R_m\le H$。
+
+为同时控制其余全部视界，固定 $r<\bar q<1$，缩小正 $p$ 使 $q\le\bar q$。由（175.8）有 $|u_N|\le q^N$，逐边距离估计给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le r^N-A_N+\frac{r^N+|u_N|}{2}
+\le2\bar q^N.
+\tag{175.19}
+$$
+选 $K>m$ 使 $2\bar q^K<H$，则所有 $N\ge K$ 都严格低于 $H$。其余有限个 $N<K$、$N\notin S$ 满足 $B_N<H$，而
+$$
+d_{\rm ref}(\mathcal P_{r,N},\mathcal P_{r,N}^{\rm bit})
+\le r^N-A_N+
+\frac12|u_N-r^N\cos(N\alpha)|\longrightarrow0.
+\tag{175.20}
+$$
+故这些严格余量在同一个充分小的正 $p$ 下全部保留。有限多个正邻域的交仍含正参数，并列最大点已由（175.14）精确保持。至此得到（175.5）。
+
+最后在新鲜系统输入、丢弃全部系统输出的接线中检验遗忘。记 $\Pi=\mathbf1\pi$，则 $\Pi^2=\Pi$，故
+$$
+T^N=(1-p)^NI+[1-(1-p)^N]\Pi.
+\tag{175.21}
+$$
+初始记忆可与全部系统输入及惰性参考任意相关。令 $A_v$ 为初始记忆对角块 $v$ 在偏迹全部系统输入后得到的参考正算符，则 $\sum_vA_v=\tau_R$。因为所有条件系统通道保迹，在丢弃输出后这些参考算符块只受 $T$ 作用。因此最终记忆—参考态恰为
+$$
+\tau_{KR}^{(N)}
+=(1-p)^N\sum_v|v\rangle\langle v|\otimes A_v
++[1-(1-p)^N]\sigma\otimes\tau_R.
+\tag{175.22}
+$$
+从而 $\frac12\|\tau_{KR}^{(N)}-\sigma\otimes\tau_R\|_1\le(1-p)^N$。取常值制备通道 $E_{r,N}(A)=\operatorname{Tr}(A)\sigma$，便得到
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-p)^N\longrightarrow0,
+\tag{175.23}
+$$
+即定义173.1的标准遗忘条件。证毕。
+
+这里使用的经典开关与遗忘框架见 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C与§V；该文定理10的稀少噪声近似并不单独给出（175.5）的精确等号。当前构造用第三个去相位标签提供第二个可校准方向，（175.12）的相反符号保证了物理正参数下的同时补偿。第174节相干实现的读数差仍成立，但同样的三态维数上界也能由本节的纯经典实现达到；三态上界本身不能作为量子资源优势的依据。并列最大点处是否存在满足同一合同的双态实现，以及能否对 $r\uparrow1$ 保持统一遗忘率，仍未由这些构造确定。
+
+## 追加锚（本行以下为增补区）
