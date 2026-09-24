@@ -91,6 +91,21 @@ public sealed partial class RegisteredAdmissionResourcesTests
     }
 
     [Theory]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Syntax.lean", true)]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean", true)]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Registry/Entries.lean", false)]
+    public void InspectorSourceConsumersSelectOnlyTheirCompleteProjects(string path, bool grammarConsumer)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+            Assert.Equal(WithWorktreeContract(new[] {
+                "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+                CoverBatchProject,
+            }.Concat(grammarConsumer
+                ? new[] { "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj" } : [])),
+                Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+    }
+
+    [Theory]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json")]
     [InlineData("docs/reports/prime-slab-corner-order-0909.json")]
     public void UnrelatedMetadataAndReportsDoNotSelectCoverBatch(string path)

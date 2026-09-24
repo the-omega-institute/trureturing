@@ -609,6 +609,8 @@
         "tools/scripts/report/report-supervisor.sh",
         "tools/scripts/lib/resource-observation-lib.sh",
         "tools/lean-inspector/Inspector.lean",
+        "tools/lean-inspector/LeanInformationAudit/Syntax.lean",
+        "tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean",
         "tools/lean-inspector/inspect.sh",
         "tools/lean-inspector/lakefile.lean",
         "tools/lean-inspector/lake-manifest.json",
@@ -3919,10 +3921,12 @@
         "tools/Trureturing.Truth/**/*.cs",
         "tools/Trureturing.Truth/Trureturing.Truth.csproj",
         "tools/Trureturing.Truth/packages.lock.json",
-        "tools/lean-inspector/Inspector.lean",
+        "tools/lean-inspector-interface/**/*.lean",
+        "tools/lean-inspector-interface/lake-manifest.json",
+        "tools/lean-inspector-interface/lakefile.toml",
+        "tools/lean-inspector/**/*.lean",
         "tools/lean-inspector/inspect.sh",
         "tools/lean-inspector/lake-manifest.json",
-        "tools/lean-inspector/lakefile.lean",
         "tools/lean-inspector/materials.py",
         "tools/lean-inspector/native.py",
         "tools/lean-inspector/native_image.c",
@@ -3949,6 +3953,7 @@
         "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml"
       ],
       "execution_excludes": [
+        "**/.lake/**",
         "**/bin/**",
         "**/obj/**"
       ],
