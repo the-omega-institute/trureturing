@@ -52,9 +52,9 @@ theorem chain_zero_power {A : Mat R n n} {B : Mat R m m} {L : ℕ}
   | nil A =>
       intro j hj
       simpa using hj
-  | cons U V tail ih =>
+  | @cons n k m L U V B tail ih =>
       intro j hj
-      have hz : (U * V) ^ ((j + _) + 1) = 0 := by
+      have hz : (U * V) ^ ((j + L) + 1) = 0 := by
         rw [rectangular_exchange_power, ih j hj]
         simp
       simpa [Nat.add_assoc] using hz
@@ -107,7 +107,8 @@ theorem map_exchange_chain (f : R →ₙ+* S) {n m L : ℕ}
       have hVU : (V * U).map f = V.map f * U.map f := by
         ext i j
         simp [Matrix.mul_apply, map_sum, map_mul]
-      rw [hUV, hVU] at ih ⊢
+      rw [hVU] at ih
+      rw [hUV]
       exact ExchangeChain.cons (U.map f) (V.map f) ih
 
 end Projection
