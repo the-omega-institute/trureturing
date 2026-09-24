@@ -246,11 +246,18 @@ internal static class FileMapPolicy
                 manifest,
                 registryAccepted.Policy.GovernanceDocuments.Select(static path => path.Value))
             : [];
+        var libraryPathFindings = registry is RegistryLoadOutcome.Accepted libraryRegistry
+            ? selected.Where(static path => path.StartsWith("Library/", StringComparison.Ordinal))
+                .Select(path => RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), libraryRegistry.Policy))
+                .OfType<RepositoryPathIssue>()
+                .Select(static issue => new FileMapFinding("FILEMAP-PATH-POLICY", issue.Path, issue.Message))
+            : [];
 
         return InspectCoverage(manifest, selected)
             .Concat(InspectPatternPopulation(selectedManifest, paths))
             .Concat(registryFindings)
             .Concat(projectionRegistrationFindings)
+            .Concat(libraryPathFindings)
             .Concat(scope is null || scope.Actors ? InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot) : [])
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
@@ -564,8 +571,7 @@ internal static class FileMapPolicy
         var trackedPaths = paths.ToHashSet(StringComparer.Ordinal);
         return manifest.Entries
             .Where(static entry => entry.RuntimeDisposition != "run-local")
-            // SL-029 separates a FILEMAP registration from its content addition.
-            // A report pattern is therefore a reservation, including between
+            // Report patterns may reserve future content or remain between
             // content deletion and the subsequent registration cleanup.
             .Where(static entry => !IsReportPath(entry.Pattern))
             .Where(entry => !trackedPaths.Any(entry.Matches))
