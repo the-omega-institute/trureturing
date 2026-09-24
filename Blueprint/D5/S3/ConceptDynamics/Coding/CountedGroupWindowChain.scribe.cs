@@ -13,7 +13,6 @@ internal sealed class CountedGroupWindowChainDocument : IScribeDocumentDefinitio
     private static Formula A => Id("A");
     private static Formula Target => Id("B");
     private static Formula Length => Id("L");
-    private static Formula Chain => Id("ch");
     private static Formula All(Formula body, params Formula.BoundVariable[] extra) =>
         new Formula.BindMany(FormulaQuantifier.ForAll,
             [B("H", Id("Type")), B("group", Call("Group", Id("H"))),
