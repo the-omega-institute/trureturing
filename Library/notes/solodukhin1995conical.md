@@ -20,7 +20,3 @@ Physical Review D 51 (1995), 609-617; arXiv:hep-th/9407001v1. The primary arXiv 
 ## Use and boundary
 
 Credits the smooth-cone method underlying the local curvature contribution to replica/Wald entropy. The RT calculation fixes its Euclidean action sign and uses only the linear-curvature term at a suitable static bifurcation surface. It is not an evaluation of the complete entropy of an arbitrary state or arbitrary dynamical surface.
-
-## Search log
-
-2026-09-20: verified the primary title, DOI and method scope. No verbatim paper excerpt or claim of a new cone theorem is included.

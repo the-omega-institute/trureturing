@@ -20,7 +20,3 @@ Physical Review D 56 (1997), 4968-4974; arXiv:hep-th/9612061. The primary APS an
 ## Use and boundary
 
 A scope warning for the RT effective-action calculation: a local replica/Wald contribution with nonminimal coupling is not automatically positive ordinary von Neumann matter entropy. The citation does not establish a general equality for all curvature couplings or all states.
-
-## Search log
-
-2026-09-20: checked the primary records and the explicit sign-dependent qualification. No unsupported universal entropy identification is deposited.

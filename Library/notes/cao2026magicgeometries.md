@@ -20,11 +20,6 @@ arXiv:2603.13475v2, 27 June 2026, preprint. Primary HTML introduction, footnote 
 ## Use and boundary
 
 Comparison source for the distinction between a fixed entangled resource, input-dependent proto-area, and nontrivial center area operators. The arithmetic RT two-sector code uses an exact subalgebra setting; it is not a counterexample to the paper's restricted subsystem statement. Proto-area is not established there as the area of a particular backreacted surface. No claim that a finite two-sector dissipative model proves physical gravity.
-
-## Search log
-
-2026-09-20: verified v2 date, authors and explicit subsystem/subalgebra qualification in the primary text. The preprint status is retained; no priority or complete external-problem resolution is recorded.
-
 ## 2026-09-24: nonflat spectra and operational rather than entropic matching
 
 Rechecked the arXiv version history and primary v2 text, including the restriction to flat auxiliary spectra preceding Theorem 4.1 and the separate nonflat discussion in section 4.3. The paper does not omit nonflat spectra. Its recovery-based proto-area and perturbative response are different optimization targets from the flagged two-party coarse-graining problem in PR #8890.

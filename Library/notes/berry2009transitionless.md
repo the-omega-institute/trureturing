@@ -20,7 +20,3 @@ Journal of Physics A: Mathematical and Theoretical 42, 365303 (2009). Bibliograp
 ## Use and boundary
 
 Credits the established transitionless-driving mechanism behind moving-code transport. The RT addition separately derives the projector and frame-connection formula for a specified isometry. Constructing a transport Hamiltonian after a path is prescribed does not determine the equation that selects that path, its geometric locality, or spacetime curvature.
-
-## Search log
-
-2026-09-20: verified author, DOI, article number and transitionless-driving scope from the institutional record. No claim of an unrestricted full-text publisher read, independent review, or Lean proof.

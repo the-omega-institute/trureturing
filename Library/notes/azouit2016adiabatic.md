@@ -20,7 +20,3 @@ arXiv:1603.04630v1, 15 March 2016. Primary PDF sections 2-3 and its introduction
 ## Use and boundary
 
 The all-orders Lindblad and Kraus-parameterization statement is explicitly conjectural in this source. The arithmetic RT population-dephasing model has a classical fixed-point algebra and is solved directly; it is not asserted to satisfy every hypothesis of the paper's decoherence-free-subspace theorem. The uniform-in-time diamond bound in the RT volume comes from its own two-dimensional matrix calculation.
-
-## Search log
-
-2026-09-20: checked the primary abstract, pages 2 and 4, and the explicit conjecture. This note credits the general reduction programme without claiming that the research settles its all-orders problem.

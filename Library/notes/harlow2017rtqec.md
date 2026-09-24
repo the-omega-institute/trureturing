@@ -20,7 +20,3 @@ Communications in Mathematical Physics 354 (2017), 865-912; arXiv:1607.03901. Th
 ## Use and boundary
 
 Supports the distinction between a fixed area operator, center sectors and the entropy of the recoverable algebra. The arithmetic 3+6 sector construction is a concrete subspace application. Static complementary recovery does not imply that a region's present marginal autonomously predicts its future under a center-mixing Hamiltonian.
-
-## Search log
-
-2026-09-20: checked the primary arXiv record and the operator-algebra scope. This note credits the general mechanism, not the particular prediction-risk or dephasing estimates derived in the current research.

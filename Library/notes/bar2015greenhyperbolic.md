@@ -20,7 +20,3 @@ Christian Bär, Communications in Mathematical Physics 333 (2015), 1585-1615; ar
 ## Use and boundary
 
 Background for causal elimination of hidden fields. A finite matrix Schur identity does not provide the function spaces, initial data, support conditions or existence of continuum Green operators. The RT field-theory discussion explicitly supplies such hypotheses and distinguishes a retarded kernel from an Euclidean determinant.
-
-## Search log
-
-2026-09-20: verified arXiv and journal metadata and causal scope. No new continuum existence theorem or kernel-checked field operator is claimed.

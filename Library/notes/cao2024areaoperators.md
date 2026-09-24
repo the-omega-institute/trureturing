@@ -20,7 +20,3 @@ arXiv:2306.14996v2, revised 3 September 2024. The primary abstract states the al
 ## Use and boundary
 
 Explains why increasing stabilizer depth or performing local-unitary coordinate changes alone cannot supply a non-scalar area response. It does not rule out the non-stabilizer center grouping used in the arithmetic RT research. A changing boundary spectrum can come entirely from logical entropy and need not imply a changing area operator.
-
-## Search log
-
-2026-09-20: checked v2 title, author and restriction in the primary record. No claim that a finite non-scalar area construction establishes gravitational backreaction.

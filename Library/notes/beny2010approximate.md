@@ -20,7 +20,3 @@ Cédric Bény and Ognyan Oreshkov, Physical Review Letters 104 (2010), 120501; a
 ## Use and boundary
 
 Comparison source for operational recovery criteria. The arithmetic RT quantity inf_C ||N Phi_t - C N||_diamond predicts a future marginal from a present marginal. Its target, feasible maps and norm differ from this paper's static approximate error-correction optimization. No equality between the two tasks is claimed. Exact static recovery of a center algebra can coexist with a nonzero future-prediction deficiency.
-
-## Search log
-
-2026-09-20: verified the title, DOI and worst-case entanglement-fidelity scope. The cited general recovery theory is not claimed as a new result.

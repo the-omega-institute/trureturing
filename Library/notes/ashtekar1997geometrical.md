@@ -20,7 +20,3 @@ Author preprint, arXiv:gr-qc/9706069, submitted 23 June 1997. The primary abstra
 ## Use and boundary
 
 Background for the area-phase coordinates and moving-state discussion in the arithmetic RT research. The source does not identify a finite code's phase space with a spacetime metric, a Weil-Petersson moduli space, or Einstein dynamics. The current finite-code formulas require their own derivations.
-
-## Search log
-
-2026-09-20: checked the primary arXiv record; inspected the repository Quantum and notes catalogues for a matching local entry. This is a bounded source check, not a priority claim. No copied paper text or new Lean theorem is deposited here.

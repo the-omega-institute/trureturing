@@ -20,11 +20,6 @@ Theory of Computing 5 (2009), 217-238. Primary PDF: https://theoryofcomputing.or
 ## Use and boundary
 
 The RT forecast deficiency uses the unhalved diamond norm and includes arbitrary passive reference systems. The exact rank-one norm calculation and the optimization over present-region predictors are proved separately in the current theory. They are not inferred from random-state tests or from solving one numerical semidefinite program.
-
-## Search log
-
-2026-09-20: verified primary publication metadata and norm conventions. This source is distinct from the existing Watrous 2018 invariant-state note and is not used to replace its scope.
-
 ## 2026-09-24: spectral coarse graining and reference bookkeeping
 
 Full written result: https://github.com/the-omega-institute/trureturing/pull/8890#issuecomment-5816839471 . The existing RT theory owner remains `docs/develop/theory/ARITHMETIC_HOLOGRAPHIC_RT.md`; the supplement has not been represented as an already-written main-volume section or a Lean declaration.

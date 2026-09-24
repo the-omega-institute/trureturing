@@ -20,7 +20,3 @@ Author preprint, arXiv:1010.4126v1, submitted 20 October 2010. The primary abstr
 ## Use and boundary
 
 Supports the fixed-boundary moduli-space setting in the arithmetic RT geometric discussion. Outer boundary lengths are fixed parameters, not extra canonical pairs. The research does not use this paper to infer a physical gravitational Hamiltonian or a finite-code continuum limit.
-
-## Search log
-
-2026-09-20: checked the primary arXiv record and fixed-boundary scope. No unverified theorem number, journal locator, or kernel status is asserted.
