@@ -1,0 +1,475 @@
+using System.Text;
+using System.Text.RegularExpressions;
+using StrataLint.Engine;
+
+namespace StrataLint.WorkflowScript.Tests;
+
+public sealed partial class MakeWorkflowTests
+{
+    private const string ScribeScriptPath = "tools/scripts/scribe.sh";
+    private const string LocalHarnessGateScriptPath =
+        "tools/scripts/local-harness-gate.sh";
+    private const string PreflightScriptPath = "tools/scripts/preflight.sh";
+    private const string ScribeContentChecksScriptPath =
+        "tools/scripts/workflow/scribe-content-checks.sh";
+    private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
+    private const string CleanLanesScriptPath = "tools/scripts/clean-lanes.sh";
+    private const string LeanReportScriptPath =
+        "tools/scripts/report/lean-report.sh";
+    private const string LeanCacheEnsureScriptPath =
+        "tools/scripts/worktree/lean-cache-ensure.sh";
+    private const string LeanCacheRunScriptPath =
+        "tools/scripts/worktree/lean-cache-run.sh";
+    private const string WarmDonorScriptPath =
+        "tools/scripts/worktree/warm-donor.sh";
+    private const string IngestScriptPath = "tools/scripts/ingest.sh";
+    private const string EchoResidualSummaryScriptPath =
+        "tools/scripts/report/echo-residual-summary.sh";
+    private const string ReportConsumerScriptPath =
+        "tools/scripts/report/report-consumer.sh";
+    private const string ReportSupervisorScriptPath =
+        "tools/scripts/report/report-supervisor.sh";
+    private const string LeanReportInputScriptPath =
+        "tools/scripts/report/lean-report-input.sh";
+    private const string LeanReportPairScriptPath = "tools/scripts/lean-report-pair.sh";
+    private const string RendererContractUpdateScriptPath =
+        "tools/scripts/update-renderer-contract.sh";
+    private const string ToolsMakefilePath = "tools/Makefile";
+    private const string CheckFastFilterVariable = "CHECK_FAST_FILTER :=";
+    private const string PrOpenScriptPath = "tools/scripts/pr.sh open";
+    private const string PrWatchScriptPath = "tools/scripts/pr.sh watch";
+
+    private static readonly string[] RootTargets =
+    [
+        "help",
+        "test",
+        "lean-cache-ensure",
+        "lean-cache-to-github-without-mathlib",
+        "lean-cache-from-github-without-mathlib",
+        "warm-donor",
+        "lean",
+        "lean-report",
+        "build",
+        "emit",
+        "ingest",
+        "align-digestion-status",
+        "refresh-source-registry",
+        "mathlib-reanchor",
+        "echo-residual-summary",
+        "digestion-readiness",
+        "show-atom",
+        "atom-context",
+        "truth-export",
+        "truth-release-verify",
+        "deliver-check",
+        "deposit",
+        "deposit-uncovered",
+        "cover",
+        "cover-batch",
+        "decompose",
+        "quarantine",
+        "quarantine-clear",
+        "settle",
+        "settle-clear",
+        "worktree",
+        "worktree-clean",
+        "worktree-remove",
+        "pr-open",
+        "pr-watch",
+        "preflight",
+        "gate",
+        "census",
+        "census-derivational",
+        "current",
+        "delta",
+    ];
+
+    private static readonly string[] ToolsTargets =
+    [
+        "help",
+        "settle-batch",
+        "dotnet",
+        "check-fast",
+        "test",
+        "ci-build",
+        "engineering",
+        "engineering-tests",
+        "selftest",
+        "capacity-audit",
+        "update-renderer-contract",
+        "clean-lanes",
+        "xi-quantization",
+        "xi-quantization-test",
+        "prime-slab-search",
+        "prime-slab-test",
+        "prime-slab-device-test",
+        "prime-slab-verify",
+        "prime-slab-mutation-test",
+        "prime-slab-cpu",
+        "prime-slab-cpu-test",
+        "prime-slab-cpu-mutation-test",
+        "census-test",
+        "census-frontier-performance",
+    ];
+
+    [Fact]
+    public void EchoResidualSummaryRunsMakeAndKeepsDiagnosticsOutOfThePasteableBlock()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var reportDirectory = Path.Combine(fixture.Path, "tools", "scripts", "report");
+        var cliDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(reportDirectory);
+        Directory.CreateDirectory(cliDirectory);
+        Directory.CreateDirectory(binDirectory);
+        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
+        File.Copy(
+            Path.Combine(root, EchoResidualSummaryScriptPath),
+            Path.Combine(fixture.Path, EchoResidualSummaryScriptPath));
+        File.WriteAllText(
+            Path.Combine(fixture.Path, LeanReportScriptPath),
+            "#!/usr/bin/env bash\nprintf 'lean provenance\\n' >&2\n");
+        File.WriteAllText(
+            Path.Combine(binDirectory, "dotnet"),
+            """
+            #!/usr/bin/env bash
+            [[ "$*" == *"echo-verify --emit --base synthetic-base"* ]] || exit 19
+            printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
+            """);
+        File.SetUnixFileMode(
+            Path.Combine(fixture.Path, LeanReportScriptPath),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        File.SetUnixFileMode(
+            Path.Combine(binDirectory, "dotnet"),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var result = TestProcessRunner.Run(
+            "/bin/bash",
+            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary BASE=synthetic-base", "echo-make", binDirectory],
+            fixture.Path,
+            BoundedProcessRunner.HangDetectionBudget,
+            64 * 1024);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            """
+            <!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+            # Echo Residual Summary
+            """ + "\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void ReportEntrypointsDelegateToTheSingleHostSupervisor()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var supervisorName = Path.GetFileName(ReportSupervisorScriptPath);
+        var producer = File.ReadAllText(Path.Combine(root, LeanReportScriptPath));
+        var inspector = File.ReadAllText(Path.Combine(root, "tools/lean-inspector/inspect.sh"));
+        var consumer = File.ReadAllText(Path.Combine(root, ReportConsumerScriptPath));
+
+        // Pair argument forwarding and failure propagation are exercised by LeanReportPairScriptTests.
+        // Inspector owns the producer slot for both public entries and direct callers.
+        Assert.Contains("tools/lean-inspector/inspect.sh", producer, StringComparison.Ordinal);
+        Assert.Contains(supervisorName, inspector, StringComparison.Ordinal);
+        Assert.Contains("--lean-slot", inspector, StringComparison.Ordinal);
+        Assert.Contains(supervisorName, consumer, StringComparison.Ordinal);
+        Assert.Contains(LeanReportInputScriptPath, consumer, StringComparison.Ordinal);
+        Assert.DoesNotContain("mktemp", producer, StringComparison.Ordinal);
+        Assert.Contains("mktemp", consumer, StringComparison.Ordinal);
+        Assert.Contains("STRATALINT_LEAN_REPORT", consumer, StringComparison.Ordinal);
+        Assert.Contains(".materials.zip", consumer, StringComparison.Ordinal);
+        Assert.DoesNotContain("may be stale", consumer, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IngestWrapperSeparatesReportFreeDigestionFromTruthAlignment()
+    {
+        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
+        Assert.Contains(
+            "make ingest [BASE=origin/dev] [SOURCE=\"id path ...\"]  "
+                + "Atomize theory sources; add only atom ids absent from the on-disk ledger",
+            makefile,
+            StringComparison.Ordinal);
+        var script = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
+
+        Assert.DoesNotContain("lean-report-input.sh", script, StringComparison.Ordinal);
+        Assert.DoesNotContain(" address --repository ", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("report_input_state", script, StringComparison.Ordinal);
+        Assert.Contains("ingest_args=(ingest --base \"$BASE\")", script, StringComparison.Ordinal);
+        Assert.Contains("align-digestion-status)", script, StringComparison.Ordinal);
+        Assert.Contains(
+            "--role digestion-alignment-consumer --report \"$REPORT\"",
+            script,
+            StringComparison.Ordinal);
+        Assert.Contains("mathlib-reanchor)", script, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$ROOT\" lean-report", script, StringComparison.Ordinal);
+        Assert.Contains("git -C \"$ROOT\" merge-base HEAD \"$BASE\"", script, StringComparison.Ordinal);
+        Assert.Contains(
+            "ledger-reanchor-mathlib --base \"$base_sha\"",
+            script,
+            StringComparison.Ordinal);
+        Assert.Equal(
+            2,
+            Regex.Matches(script, Regex.Escape("exec \"$CONSUMER\"")).Count);
+    }
+
+    [Fact]
+    public void QuarantineMakeDoorsForwardStrictInputsThroughTheIngestWrapper()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
+        Assert.Equal(
+            $"\t@/bin/bash {IngestScriptPath} quarantine \"$(BASE)\" \"$(REQUEST)\"",
+            Recipe(makefile, "quarantine"));
+        Assert.Equal(
+            $"\t@/bin/bash {IngestScriptPath} quarantine-clear \"$(BASE)\" \"$(ATOM_ID)\"",
+            Recipe(makefile, "quarantine-clear"));
+        var help = TestProcessRunner.Run(
+            "make",
+            ["--no-print-directory", "help"],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+        Assert.Equal(0, help.ExitCode);
+        var helpText = Encoding.UTF8.GetString(help.StandardOutput);
+        Assert.Contains(
+            "make quarantine REQUEST=file [BASE=origin/dev]  Write one atom's receipts.quarantine from a strict request file",
+            helpText,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "make quarantine-clear ATOM_ID=x [BASE=origin/dev]  Clear one atom's receipts.quarantine",
+            helpText,
+            StringComparison.Ordinal);
+
+        using var fixture = new TemporaryDirectory();
+        var scriptPath = Path.Combine(fixture.Path, IngestScriptPath);
+        var projectDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        Directory.CreateDirectory(Path.GetDirectoryName(scriptPath)!);
+        Directory.CreateDirectory(projectDirectory);
+        Directory.CreateDirectory(binDirectory);
+        File.Copy(Path.Combine(root, IngestScriptPath), scriptPath);
+        File.SetUnixFileMode(
+            scriptPath,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var dotnetPath = Path.Combine(binDirectory, "dotnet");
+        File.WriteAllText(
+            dotnetPath,
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\"\nexit \"${FAKE_DOTNET_EXIT:-0}\"\n");
+        File.SetUnixFileMode(
+            dotnetPath,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        ProcessOutput Run(int fakeDotnetExit, params string[] arguments) => TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"FAKE_DOTNET_EXIT={fakeDotnetExit}",
+                "/bin/bash",
+                scriptPath,
+                .. arguments,
+            ],
+            fixture.Path,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        var set = Run(0, "quarantine", "baseline", "request.toml");
+        Assert.Equal(0, set.ExitCode);
+        Assert.Contains(
+            "quarantine-atom --request request.toml --base baseline",
+            Encoding.UTF8.GetString(set.StandardOutput),
+            StringComparison.Ordinal);
+
+        var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
+        Assert.Equal(0, clear.ExitCode);
+        Assert.Contains(
+            "quarantine-atom --clear atom-id --base baseline",
+            Encoding.UTF8.GetString(clear.StandardOutput),
+            StringComparison.Ordinal);
+
+        Assert.Equal(23, Run(23, "quarantine", "baseline", "request.toml").ExitCode);
+        Assert.Equal(23, Run(23, "quarantine-clear", "baseline", "atom-id").ExitCode);
+
+        Assert.Equal(2, Run(0, "quarantine").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine", "baseline").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine-clear", "baseline").ExitCode);
+    }
+
+    [Theory]
+    [InlineData("", "ingest --base HEAD")]
+    [InlineData("alpha beta", "ingest --base HEAD --source alpha --source beta")]
+    public void IngestWrapperForwardsBaseAndSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        const string leanSource = "theorem probe : True := by trivial\n";
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var ingestPath = Path.Combine(fixture.Path, IngestScriptPath);
+        Directory.CreateDirectory(binDirectory);
+        Directory.CreateDirectory(Path.GetDirectoryName(ingestPath)!);
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "D5"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Cli"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "StrataLint.Engine"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "tools", "Trureturing.Truth"));
+        Directory.CreateDirectory(Path.Combine(fixture.Path, ".github", "workflows"));
+        File.Copy(Path.Combine(root, IngestScriptPath), ingestPath);
+        File.WriteAllText(Path.Combine(fixture.Path, "Trureturing.lean"), "import D5.Probe\n");
+        File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
+        File.WriteAllText(Path.Combine(fixture.Path, "lean-toolchain"), "leanprover/lean4:v4.31.0\n");
+        File.WriteAllText(Path.Combine(fixture.Path, "lake-manifest.json"), "{\"version\":\"1.1.0\"}\n");
+        File.WriteAllText(Path.Combine(fixture.Path, "lakefile.toml"), "name = \"Fixture\"\n");
+        File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "baseline\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, ".github", "workflows", "ci-pr.yml"),
+            "on: {pull_request: {branches: [dev]}}\njobs: {delta: {steps: []}}\n");
+        File.WriteAllText(
+            Path.Combine(fixture.Path, LeanReportPairScriptPath),
+            "#!/usr/bin/env bash\n");
+        var scribeContentChecks = Path.Combine(
+            fixture.Path, "tools", "scripts", "workflow", "scribe-content-checks.sh");
+        Directory.CreateDirectory(Path.GetDirectoryName(scribeContentChecks)!);
+        File.WriteAllText(scribeContentChecks, "#!/usr/bin/env bash\n");
+        foreach (var project in new[]
+        {
+            "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+            "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+            "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+        })
+        {
+            File.WriteAllText(
+                Path.Combine(fixture.Path, project),
+                "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
+        }
+        File.WriteAllText(
+            Path.Combine(fixture.Path, "tools", "StrataLint.Cli", "FixtureProbe.cs"),
+            "// fixture\n");
+        var dotnetPath = Path.Combine(binDirectory, "dotnet");
+        File.WriteAllText(
+            dotnetPath,
+            """
+            #!/usr/bin/env bash
+            if [[ "${1:-}" == "msbuild" ]]; then
+              repository="$(cd "$(dirname "$2")/../.." && pwd -P)"
+              printf '{"Items":{"Compile":[{"FullPath":"%s/tools/StrataLint.Cli/FixtureProbe.cs"}]}}\n' "$repository"
+              exit 0
+            fi
+            printf '%s\n' "$*"
+            """ + "\n");
+        foreach (var executable in new[] { ingestPath, dotnetPath })
+        {
+            File.SetUnixFileMode(
+                executable,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        }
+
+        TestGit.Run(fixture.Path, "init", "--quiet");
+        TestGit.Run(fixture.Path, "config", "user.email", "stratalint@example.invalid");
+        TestGit.Run(fixture.Path, "config", "user.name", "StrataLint Tests");
+        TestGit.Run(fixture.Path, "add", ".");
+        TestGit.Run(fixture.Path, "commit", "--quiet", "-m", "ingest wrapper fixture");
+
+        ProcessOutput RunWrapper() => TestProcessRunner.Run(
+            "/bin/bash",
+            [
+                "-c",
+                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest HEAD \"$4\"",
+                "ingest-wrapper",
+                binDirectory,
+                Path.Combine(fixture.Path, "cache"),
+                ingestPath,
+                sourcePayload,
+            ],
+            fixture.Path,
+            BoundedProcessRunner.HangDetectionBudget,
+            64 * 1024);
+
+        File.AppendAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), "-- closure delta\n");
+        var changed = RunWrapper();
+        Assert.Equal(0, changed.ExitCode);
+        Assert.Equal(expected, Encoding.UTF8.GetString(changed.StandardOutput).Split(" -- ")[^1].Trim());
+
+        File.WriteAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), leanSource);
+        File.AppendAllText(Path.Combine(fixture.Path, "README.md"), "markdown-only delta\n");
+        var unchanged = RunWrapper();
+        Assert.Equal(0, unchanged.ExitCode);
+        Assert.Equal(expected, Encoding.UTF8.GetString(unchanged.StandardOutput).Split(" -- ")[^1].Trim());
+    }
+
+    [Fact]
+    public void ScribeWrapperConsumesOnlyAPrecomputedLeanReport()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var script = File.ReadAllText(Path.Combine(root, ScribeScriptPath));
+
+        Assert.DoesNotContain("lean-inspector/inspect.sh", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("SCRIBE_USE_EXISTING_REPORT", script, StringComparison.Ordinal);
+        Assert.Contains(ReportConsumerScriptPath, script, StringComparison.Ordinal);
+        Assert.Contains("scribe-consumer", script, StringComparison.Ordinal);
+        Assert.Contains(".lake/build/stratalint/raw-lean-report.json", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("CHECK_ARGS=()", script, StringComparison.Ordinal);
+        Assert.Contains("emit|emit-values|filemap) run_scribe \"$1\"", script, StringComparison.Ordinal);
+        Assert.Contains("generators=(emit emit-values filemap dag)", script, StringComparison.Ordinal);
+        Assert.Contains("for generator in \"${generators[@]}\"", script, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WorktreeAdapterPreservesTheCallerToolPathAndResolvesTheRepositoryRoot()
+    {
+        var root = TestRepositoryLayout.FindRoot();
+        var script = File.ReadAllText(Path.Combine(root, WorktreeInitScriptPath));
+        var dirnameIndex = script.IndexOf("dirname", StringComparison.Ordinal);
+        var dotnetIndex = script.IndexOf("exec dotnet run", StringComparison.Ordinal);
+
+        Assert.DoesNotContain("export PATH=", script, StringComparison.Ordinal);
+        Assert.True(dirnameIndex >= 0, "worktree adapter must resolve its repository root");
+        Assert.True(dotnetIndex > dirnameIndex, "repository root resolution must precede the CLI invocation");
+    }
+
+    [Fact]
+    public void CleanLanesAdapterForwardsTheScopeFlagToTheCli()
+    {
+        var script = File.ReadAllText(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/clean-lanes.sh"));
+
+        // 开关必须一路透到 CLI:断链的开关比没有开关更糟——它看起来限定了作用面,
+        // 实际什么也没限定,而这里限定的是「会不会删掉正在跑的判官树」。
+        // 钉住转发那一行本身,不是钉住「文本里出现过这个参数名」:后者在 case 分支里
+        // 也命中,删掉转发行照样绿(实测变异 EXIT=0),那是格式校验冒充指向校验。
+        Assert.Contains("arguments+=(--lanes-only)", script, StringComparison.Ordinal);
+        Assert.Contains("--lanes-only", script, StringComparison.Ordinal);
+        var parseIndex = script.IndexOf("--lanes-only", StringComparison.Ordinal);
+        var execIndex = script.IndexOf("exec dotnet run", StringComparison.Ordinal);
+        Assert.True(parseIndex >= 0, "clean-lanes adapter must accept the scope flag");
+        Assert.True(execIndex > parseIndex, "flag parsing must precede the CLI invocation");
+    }
+
+    private static int RecipeCount(string makefile, string target) =>
+        RecipeLines(makefile, target).Count;
+
+    private static string Recipe(string makefile, string target) =>
+        Assert.Single(RecipeLines(makefile, target));
+
+    private static IReadOnlyList<string> RecipeLines(string makefile, string target)
+    {
+        var lines = makefile.Split('\n');
+        var start = Array.FindIndex(lines, line => line.StartsWith(target + ":", StringComparison.Ordinal));
+        Assert.True(start >= 0, $"target is absent: {target}");
+        return lines
+            .Skip(start + 1)
+            .TakeWhile(static line => line.Length == 0 || line[0] == '\t')
+            .Where(static line => line.StartsWith('\t'))
+            .ToArray();
+    }
+
+}

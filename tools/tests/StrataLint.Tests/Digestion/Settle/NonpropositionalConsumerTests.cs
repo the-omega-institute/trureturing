@@ -1,7 +1,7 @@
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.NonpropositionalTestSupport;
+using static StrataLint.TestSupport.NonpropositionalTestSupport;
 
 namespace StrataLint.Tests;
 

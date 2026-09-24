@@ -7,7 +7,7 @@ using Xunit;
 namespace StrataLint.BuildIntegration.Tests;
 
 [Collection("StrataLint.BuildIntegration.Tests process boundary")]
-public sealed class SharedBuildRuntimeTests
+public sealed class SharedBuildRuntimeTests(Xunit.Abstractions.ITestOutputHelper diagnostics)
 {
     [Fact]
     public void CompilerOwnedRuntimeMovesAndExecutesWithoutProducerOrPackagePaths()
@@ -153,7 +153,15 @@ public sealed class SharedBuildRuntimeTests
                 new EngineeringProjectFixture(excludedProject, "StrataLint.ScriptTests", "cross-cutting-test", false,
                     ["tools/tests/StrataLint.ScriptTests/**/*.cs"]),
             }).ToArray()));
-        Run("dotnet", "restore", testProject, "--use-lock-file", "-nr:false");
+        // Keep resource samples inside the same process tree and ten-second guard
+        // as the restore, so a timeout retains the work observed before the kill.
+        Run("/bin/bash", "-c", """
+            set -euo pipefail
+            source tools/scripts/lib/resource-observation-lib.sh
+            export GITHUB_WORKSPACE="$PWD" RUNNER_TEMP="$PWD" RESOURCE_OBSERVATION_INTERVAL_SECONDS=1
+            resource_observe_run_periodic dotnet "$@"
+            """, "runtime-restore", "restore", testProject, "--use-lock-file", "-nr:false",
+            "--verbosity", "detailed", "-clp:ShowTimestamp");
         Run("dotnet", "restore", proofProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", bannedProject, "--use-lock-file", "-nr:false");
         Run("dotnet", "restore", excludedProject, "--use-lock-file", "-nr:false");
@@ -393,6 +401,7 @@ public sealed class SharedBuildRuntimeTests
         void Run(string executable, params string[] arguments)
         {
             var result = EngineeringProcess.Process(root, executable, arguments, dotnetEnvironment);
+            diagnostics.WriteLine(result.Text);
             Assert.True(result.Exit == 0, result.Text);
         }
         string[] Calls() => File.ReadAllLines(Path.Combine(root, "build/dotnet-calls"));
