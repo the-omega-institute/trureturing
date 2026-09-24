@@ -426,7 +426,8 @@ internal static partial class BackfillInventoryRule
             }
         }
 
-        var hasStructuralFindings = findings.Count > 0;
+        // Nonblocking source observations must not suppress status/receipt admission.
+        var hasStructuralFindings = findings.Any(static finding => finding.Effect != AdmissionEffect.Observe);
         // CAS integrity is part of SL-016 itself, so it must run even when another
         // receipt-shape finding below would otherwise return before status derivation.
         // The result is threaded into the alignment pass below, which used to recompute it.
