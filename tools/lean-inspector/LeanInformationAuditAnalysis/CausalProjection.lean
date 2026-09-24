@@ -102,8 +102,8 @@ run_cmd do
   unless covers.size == 3 do throwError "causal cover count"
   unless (covers.map (·.captureCount)).qsort (· < ·) == #[44, 92, 2120] do
     throwError "causal cover capture counts"
+  setEnv (← liftCoreM <| stageDeclarations (← getEnv) declarations)
   for declaration in declarations do
-    liftCoreM <| addDecl declaration
     for name in declaration.getNames do
       elabCommand (← `(command| #print axioms $(mkIdent name)))
   let .ok ascii := renderAsciiHierarchy `Causal ``catalog ``unifiedArena projection
@@ -191,8 +191,8 @@ run_cmd do
       let counts ← prepareAnalysisQualifiedCounts counts (← get)
       pure ({ counts, projection, analysis, layerChains := layers : AnalysisCatalogRecord }, system)
       : ProjectionM _).run #[]
+  setEnv (← liftCoreM <| stageDeclarations (← getEnv) countDeclarations)
   for declaration in countDeclarations do
-    liftCoreM <| addDecl declaration
     for name in declaration.getNames do
       elabCommand (← `(command| #print axioms $(mkIdent name)))
   let json ← liftTermElabM <| serializeAnalysisArtifact `Causal #[record] system

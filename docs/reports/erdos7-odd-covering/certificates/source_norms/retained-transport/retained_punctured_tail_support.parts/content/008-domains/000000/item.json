@@ -1,0 +1,61 @@
+{
+  "source_domain": {
+    "kind": "inline",
+    "value": "wide_fresh_full_slot_source_comparison"
+  },
+  "delta": {
+    "kind": "inline",
+    "value": "1/20"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "1/1000"
+  },
+  "gap": {
+    "kind": "inline",
+    "value": "1/60"
+  },
+  "raw_caps": {
+    "kind": "inline",
+    "value": [
+      "0",
+      "7/600",
+      "7/600",
+      "29/2850",
+      "7/600",
+      "0",
+      "1/45",
+      "1/45",
+      "329/17100",
+      "1/45",
+      "0",
+      "0",
+      "0",
+      "5801/406980",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "5801/406980",
+      "1/45",
+      "0",
+      "0",
+      "1/45",
+      "5801/406980",
+      "1/45"
+    ]
+  },
+  "raw_budgets": {
+    "kind": "inline",
+    "value": [
+      "821/27360",
+      "61/720",
+      "49/342"
+    ]
+  },
+  "results": {
+    "path": "content/008-domains/000000/item/006-results.json",
+    "sha256": "17e51d6635a0f2d8bbd75756fe4948ab5420f04bc717703a1efb9486e0f7f6e9",
+    "kind": "array"
+  }
+}

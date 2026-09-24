@@ -1,0 +1,39 @@
+**命题 11.7（谱隙给历史尾和统一卷积误差）。** 设 $a>0$，两模型都具有共同下界 $C,\widehat C\succeq aI$，令 $A=m+\widehat m$。若已有统一核误差 $\|K(t)-\widehat K(t)\|\le\varepsilon$，则
+$$
+\|K(t)-\widehat K(t)\|
+\le\min\{\varepsilon,Ae^{-at}\}.
+\tag{11.18}
+$$
+对 $A>0$ 定义
+$$
+\Phi_a(A,\varepsilon)=
+\begin{cases}
+0,&\varepsilon=0,\\
+\dfrac{\varepsilon}{a}\left(1+\log\dfrac A\varepsilon\right),&0<\varepsilon<A,\\
+\dfrac A a,&\varepsilon\ge A.
+\end{cases}
+\tag{11.19}
+$$
+$A=0$ 时取 $\Phi_a=0$。则
+$$
+\int_0^\infty\|K(t)-\widehat K(t)\|\,dt
+\le\Phi_a(A,\varepsilon).
+\tag{11.20}
+$$
+所以对相同有界输入 $\|g\|_\infty\le G$，全部非负时间上的零初态卷积输出误差至多 $G\Phi_a(A,\varepsilon)$。
+
+另外，若只保留最近 $L\ge0$ 的实际输入历史，并用压缩核计算
+$$
+\widehat y_L(t)=\int_{\max\{0,t-L\}}^t\widehat K(t-s)g(s)\,ds,
+$$
+则
+$$
+\|y(t)-\widehat y_L(t)\|
+\le G\left(\int_0^L\|K(s)-\widehat K(s)\|\,ds
++\frac m a e^{-aL}\right)
+\le G\left(L\varepsilon+\frac m a e^{-aL}\right).
+\tag{11.21}
+$$
+
+有限模态状态可以在线递推而不存储全部旧输入；从一个事后给定的有限窗口重置状态时则仍有式（11.21）的历史尾误差。严格滑窗本身还须记住被移出窗口的输入，不能把该删除操作免费认作同一低维自治递推。维数 $d_r$、采样记录数 $2r+2$、观测总时长 $(2r+1)h$、在线输入历史长度 $L$、矩阵计算和记录取得费用分别为不同资源坐标。前四者由上述关系约束，计算和记录取得费用仍须另给；代数维数不单独确定算法运行时间。
+

@@ -1,0 +1,168 @@
+{
+  "schema": {
+    "kind": "inline",
+    "value": "erdos7-load-two-cost-remainders-v1"
+  },
+  "source_sha256": {
+    "path": "content/001-source_sha256.json",
+    "sha256": "1839b47f46d8f52e78c5e6dba7b545e38f245e962a4243cb84987684f2368fce",
+    "kind": "value"
+  },
+  "faces": {
+    "kind": "inline",
+    "value": [
+      {
+        "vertices": [
+          398,
+          410,
+          422
+        ],
+        "carrier": [
+          1,
+          1
+        ]
+      },
+      {
+        "vertices": [
+          616,
+          628,
+          640
+        ],
+        "carrier": [
+          1,
+          0
+        ]
+      }
+    ]
+  },
+  "r": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "rho": {
+    "kind": "inline",
+    "value": "0"
+  },
+  "mass": {
+    "kind": "inline",
+    "value": "53/360"
+  },
+  "linear_upper": {
+    "kind": "inline",
+    "value": "1151/1800"
+  },
+  "complete_square_upper": {
+    "kind": "inline",
+    "value": "8201/1800"
+  },
+  "uniform_hinge4_upper": {
+    "kind": "inline",
+    "value": "938213/4630500"
+  },
+  "second_factorial_tail_upper": {
+    "kind": "inline",
+    "value": "619/720"
+  },
+  "original_cost_tags": {
+    "path": "content/010-original_cost_tags.json",
+    "sha256": "7e80562dabaa9c33372af5436b6748caeb6f5beeba6b99b81d932ab2c8662f70",
+    "kind": "array"
+  },
+  "all_original_indices": {
+    "path": "content/011-all_original_indices.json",
+    "sha256": "e09a14f16f372ae2c7e13ca3ddcbdcc63acabbe4efc6b5be8905a27513a03e45",
+    "kind": "value"
+  },
+  "cost_weights": {
+    "path": "content/012-cost_weights.json",
+    "sha256": "d9e23377eddc851833cecdf999a119b7cd55d30a994dee228f5fdb5f9a57201d",
+    "kind": "value"
+  },
+  "previous_cost_bounds": {
+    "path": "content/013-previous_cost_bounds.json",
+    "sha256": "4c230186321be8a1f010c8596fb5538b460dca627ef1b4d655f26f9c130a9aa3",
+    "kind": "value"
+  },
+  "improved_cost_bounds": {
+    "path": "content/014-improved_cost_bounds.json",
+    "sha256": "5e4170642b5facf9864e87664cdbce0acc7a6597cf55ec54f058fa00a3149323",
+    "kind": "value"
+  },
+  "exact_integer_identities": {
+    "path": "content/015-exact_integer_identities.json",
+    "sha256": "884ad46a2fb4f3a1c8cd003608d296651e07a111fd292d9acb90f040583852bb",
+    "kind": "value"
+  },
+  "improved_cost_indices": {
+    "kind": "inline",
+    "value": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      49,
+      50,
+      51
+    ]
+  },
+  "signed_mass_coefficient": {
+    "kind": "inline",
+    "value": "-4518624276643341182459/59927719166078690646720"
+  },
+  "complete_square_weight": {
+    "kind": "inline",
+    "value": "2061512697931813067/15514910048663625600"
+  },
+  "numerator_upper": {
+    "kind": "inline",
+    "value": "7755859413418575373479498007323169389317/224864850579771678391856815074000000000"
+  },
+  "numerator_improvement": {
+    "kind": "inline",
+    "value": "114593776179048043939474790521242463144613/4851341441544063963832335000000000000000000"
+  },
+  "AP11_block_results": {
+    "path": "content/021-AP11_block_results.json",
+    "sha256": "25cf8b4bd41892d01b014ca2c592bf8aa9bccff9e96a4902c033462e55dc8112",
+    "kind": "value"
+  },
+  "full_count_tail": {
+    "kind": "inline",
+    "value": {
+      "probability": "5/43923",
+      "first_moment": "17/29282",
+      "remaining_hinge1_coefficient": "1/7986",
+      "whole_constant_coefficient": "1/87846",
+      "remaining_cost_upper": "3337/52707600"
+    }
+  },
+  "standalone_hinge4_penalty": {
+    "kind": "inline",
+    "value": "938213/27783000"
+  },
+  "uniform_denominator_lower": {
+    "kind": "inline",
+    "value": "50511415637/632754738000"
+  },
+  "offset": {
+    "kind": "inline",
+    "value": "185694867601/8599322160"
+  },
+  "previous_comparison": {
+    "kind": "inline",
+    "value": "300262746236495996567844728508827341127777603196305477/661429767923471771517732963287361097500000000000000"
+  },
+  "comparison_upper": {
+    "kind": "inline",
+    "value": "40008937217043554501640531720643762707451921/88190635723129569535697728438314813000000"
+  },
+  "comparison_improvement": {
+    "kind": "inline",
+    "value": "114593776179048043939474790521242463144613/387271891041667638887357977500000000000000"
+  },
+  "scope": {
+    "kind": "inline",
+    "value": "Eight exact identities on every positive integer load. The common positive moment bounds retain the load-two atom as an explicit nonnegative discarded remainder. Each original test has its own load-two event; no shared layout or simultaneous attainment is imposed. The complete consumer retains201 heavy costs,199 square, all52 costs and the full denominator on both saturated K faces. No positive load-two mass, global extension, Lean verification or unrestricted Erdos7 resolution is claimed."
+  }
+}

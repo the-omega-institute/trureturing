@@ -289,6 +289,7 @@ private def validateEntryDeclarations (env : Environment)
     throw (statementMismatchError entry.theoremName)
 
 def compilePrimitiveBundle (arenaExpr realizationExpr : Expr) : MetaM Expr := do
+  let arenaExpr := (← RegistrationGates.normalizeArena arenaExpr).law
   let realizationType <- instantiateMVars (← whnfR (← inferType realizationExpr))
   unless realizationType.getAppFn.constName? == some primitiveRealizationName do
     throwError "realization type mismatch"
@@ -336,12 +337,8 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
     if unitArgs.isEmpty then
       return .error (statementMismatchError entry.theoremName)
     let arenaExpr <- mkConstWithFreshMVarLevels entry.arenaName
-    let arenaType <- instantiateMVars (← whnfR (← inferType arenaExpr))
-    unless arenaType.getAppFn.constName? == some primitiveLawArenaName do
-      return .error s!"IE-C003 ArenaResolutionFailed: {entry.arenaName}"
-    let expectedArena <- mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
-      #[arenaExpr]
+    let normalized ← RegistrationGates.normalizeArena arenaExpr
+    let expectedArena := normalized.finite
     let objectArenaExpr <- if entry.objectArenaName.isAnonymous then
       pure expectedArena
     else
@@ -373,7 +370,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
     if realizationHead == some primitiveRealizationName then
       let expectedLaw <- mkAppM
         `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.Law
-        #[arenaExpr, realizationExpr]
+        #[normalized.law, realizationExpr]
       unless ← isDefEq theoremType expectedLaw do
         return .error (statementMismatchError entry.theoremName)
       let primitivesExpr <- mkAppM
@@ -382,7 +379,9 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
       let compiledBundle <- compilePrimitiveBundle arenaExpr realizationExpr
       unless ← isDefEq primitivesExpr compiledBundle do
         return .error (statementMismatchError entry.theoremName)
-    else if realizationHead == some legacyPrimitiveRealizationName then
+    else if realizationHead == some legacyPrimitiveRealizationName ||
+        realizationHead == some `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization ||
+        realizationHead == some RegistrationGates.witnessBridgeName then
       match env.find? entry.realizationName with
       | some (.thmInfo _) =>
         let legacyArgs := realizationType.getAppArgs
@@ -392,6 +391,8 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
           return .error (statementMismatchError entry.theoremName)
         unless ← isDefEq legacyArgs[1]! theoremType do
           return .error (statementMismatchError entry.theoremName)
+        if realizationHead == some RegistrationGates.witnessBridgeName then
+          discard <| RegistrationGates.witnessStatement arenaExpr legacyArgs[1]! entry.theoremName
         let primitivesExpr <- mkAppM
           `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
           #[unitExpr]
@@ -501,6 +502,12 @@ def registerSemanticEntry (entry : InformationRegistryEntry) :
   | .ok () =>
     Lean.Elab.Command.liftTermElabM do
       let diagnostic ← RegistrationGates.validateFinite entry
+      let type := (← getConstInfo entry.realizationName).type
+      if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
+          diagnostic.isSome then
+        throwError "unclassified_form:dtr.forward_bridge_requires_sensitivity: {diagnostic.get!}"
+      if type.isAppOfArity RegistrationGates.witnessBridgeName 3 then
+        if let some diagnostic := diagnostic then throwError diagnostic
       if entry.derivedCertificate.isSome && diagnostic.isSome then
         RegistrationReifier.checkDiagnostic diagnostic.get!
       RegistrationGates.publishDiagnostic entry.unitName diagnostic

@@ -1,0 +1,12 @@
+{
+  "4674ad4bb095463a35392177b604cdea252ab4929ef026b1e28a6ce2892b29a3": {
+    "path": "content/009-rational_dual_buckets/004-4/004-6/000-4674ad4bb095463a35392177b604cdea252ab4929ef026b1e28a6ce2892b29a3.json",
+    "sha256": "dbed751018965561d339864e0c40de9a6a0613b179767bcfad6a8004226813cb",
+    "kind": "value"
+  },
+  "46c65e903cacf0c85b805ce12623ca33a4ac6e1b462ac2d4a64a6186d7a574ce": {
+    "path": "content/009-rational_dual_buckets/004-4/004-6/001-46c65e903cacf0c85b805ce12623ca33a4ac6e1b462ac2d4a64a6186d7a574ce.json",
+    "sha256": "fd2148b6973aeed43a5dbf54441ee690b6e726e37ef3aa877721c0dbbf324efd",
+    "kind": "value"
+  }
+}

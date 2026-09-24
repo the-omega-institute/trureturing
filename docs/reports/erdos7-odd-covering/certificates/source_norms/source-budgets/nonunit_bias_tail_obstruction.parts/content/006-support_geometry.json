@@ -1,0 +1,29 @@
+{
+  "pure_pair_checks": {
+    "kind": "inline",
+    "value": 198
+  },
+  "original15_checks": {
+    "kind": "inline",
+    "value": 24
+  },
+  "small_prefix_counts": {
+    "path": "content/006-support_geometry/002-small_prefix_counts.json",
+    "sha256": "bc92dfd27e4b0f815232fc3d5f48646aaa51d81143fced88e982411c2fe24820",
+    "kind": "value"
+  },
+  "pure_prefix_counts": {
+    "path": "content/006-support_geometry/003-pure_prefix_counts.json",
+    "sha256": "cedde5b12a162709356e44f7f7ab6463591ef9d219da694890191a757b23a9da",
+    "kind": "value"
+  },
+  "mixed35_prefix_counts": {
+    "path": "content/006-support_geometry/004-mixed35_prefix_counts.json",
+    "sha256": "2bc02764a5a86b83b5b5d3228bf66bd04f237112c7462109d81fd3e47eaf7895",
+    "kind": "array"
+  },
+  "general_bound": {
+    "kind": "inline",
+    "value": "Nd=A35(i,j)*A7(k)*prod_(p in E)(p-1); c_nu(d)>=1/Nd; c_nu(1)=1 exactly."
+  }
+}

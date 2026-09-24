@@ -1,0 +1,9 @@
+准备的两组 Fourier 支持不交，故 $\|u_0\|_{H^{12}}^2=2^{11}\alpha^2+3^{12}\beta^2$。可取
+$$
+R_{12}=2\sqrt{2^{11}\alpha^2+3^{12}B^2},\quad
+R_2=2\sqrt{2\alpha^2+9B^2},\quad
+0<T_{12}\le\min\left\{
+\frac{\underline\nu}{64C_{12}^2R_{12}^2},
+\frac{\underline\nu}{16384R_2^2}\right\}.
+\tag{27.105}
+$$

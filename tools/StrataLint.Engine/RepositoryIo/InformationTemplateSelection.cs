@@ -5,7 +5,8 @@ namespace StrataLint.Engine;
 
 // Routing reads only owner addresses. Payload validation belongs to Read, after
 // this projection; unrelated registrations never acquire an evidence obligation.
-internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sources)
+internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sources,
+    ImmutableHashSet<string>? theorems = null)
 {
     private readonly ImmutableHashSet<string> modules = sources
         .Select(InformationTemplateEvidence.ModuleForSource).ToImmutableHashSet(StringComparer.Ordinal);
@@ -32,6 +33,14 @@ internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sour
                     writer.WriteStartArray();
                     writer.WriteEndArray();
                 }
+                else if (property.Name is "inventory" or "registered" && theorems is not null
+                    && property.Value.ValueKind == JsonValueKind.Array)
+                {
+                    writer.WriteStartArray();
+                    foreach (var key in property.Value.EnumerateArray())
+                        if (IncludesTheorem(key, theorems)) key.WriteTo(writer);
+                    writer.WriteEndArray();
+                }
                 else if (property.Name == "records"
                     && property.Value.ValueKind == JsonValueKind.Array)
                 {
@@ -52,6 +61,7 @@ internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sour
 
     private bool IncludesRecord(JsonElement record, bool ownerSelected)
     {
+        if (theorems is not null && !HasTheorem(record, theorems)) return false;
         var source = String(record, "registration_source_path");
         var module = record.ValueKind == JsonValueKind.Object && record.TryGetProperty("key", out var key)
             ? String(key, "registration_module") : null;
@@ -60,6 +70,13 @@ internal sealed class InformationTemplateSelection(ImmutableHashSet<string> sour
         return source is not null && sources.Contains(source) || module is not null && modules.Contains(module)
             || ownerSelected && source is null && module is null;
     }
+
+    internal static bool HasTheorem(JsonElement record, ImmutableHashSet<string> names) =>
+        record.ValueKind == JsonValueKind.Object && record.TryGetProperty("key", out var key)
+        && IncludesTheorem(key, names);
+
+    internal static bool IncludesTheorem(JsonElement key, ImmutableHashSet<string> names) =>
+        String(key, "theorem") is { } name && names.Contains(name);
 
     private static string? String(JsonElement value, string field) =>
         value.ValueKind == JsonValueKind.Object && value.TryGetProperty(field, out var item)

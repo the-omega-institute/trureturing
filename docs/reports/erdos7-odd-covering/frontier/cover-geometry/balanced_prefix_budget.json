@@ -1,0 +1,1034 @@
+{
+  "fixed_current_leaf_policy": "impossible under the stated Latin, full pair-product, positive-threshold and distinct-modulus assumptions; see manuscript proof",
+  "fixed_threshold_stability": [
+    {
+      "balanced_zeta_cap_assumption": false,
+      "delta7": "1/96",
+      "full_pair_product_assumption": false,
+      "head_surplus": "19747/9618750",
+      "pair_TV_divided_by_surplus_rp_sp": [
+        "2474/3255",
+        "304/455"
+      ],
+      "pair_total_variation_rp_sp": [
+        "112567/72140625",
+        "1736/1265625"
+      ],
+      "same_original_39_label_head": true
+    },
+    {
+      "balanced_zeta_cap_assumption": false,
+      "delta7": "1/5",
+      "full_pair_product_assumption": false,
+      "head_surplus": "19747/506250",
+      "pair_TV_divided_by_surplus_rp_sp": [
+        "2474/3255",
+        "304/455"
+      ],
+      "pair_total_variation_rp_sp": [
+        "112567/3796875",
+        "32984/1265625"
+      ],
+      "same_original_39_label_head": true
+    }
+  ],
+  "mixed_current_heights_head": {
+    "active_threshold_interval": [
+      "7/864975585937507",
+      "1/101"
+    ],
+    "all_full_pair_marginals_equal_product": true,
+    "all_height_upper_bound": "1/8100",
+    "complete_coordinate_sizes": [
+      531441,
+      244140625,
+      49
+    ],
+    "complete_period": 6357570556640625,
+    "constant_test_cell_count": 13824,
+    "current_prefixes": [
+      {
+        "depth": 1,
+        "residue": 2
+      },
+      {
+        "depth": 1,
+        "residue": 3
+      },
+      {
+        "depth": 1,
+        "residue": 4
+      },
+      {
+        "depth": 1,
+        "residue": 5
+      },
+      {
+        "depth": 1,
+        "residue": 6
+      },
+      {
+        "depth": 2,
+        "residue": 1
+      },
+      {
+        "depth": 2,
+        "residue": 8
+      },
+      {
+        "depth": 2,
+        "residue": 15
+      },
+      {
+        "depth": 2,
+        "residue": 22
+      },
+      {
+        "depth": 2,
+        "residue": 29
+      },
+      {
+        "depth": 2,
+        "residue": 36
+      },
+      {
+        "depth": 2,
+        "residue": 43
+      }
+    ],
+    "exact_head_surplus": "1/16018066406250",
+    "full_point_enumeration": false,
+    "head_labels": [
+      {
+        "modulus": 3,
+        "residue": 0
+      },
+      {
+        "modulus": 5,
+        "residue": 0
+      },
+      {
+        "modulus": 7,
+        "residue": 0
+      },
+      {
+        "modulus": 105,
+        "residue": 16
+      },
+      {
+        "modulus": 525,
+        "residue": 178
+      },
+      {
+        "modulus": 2625,
+        "residue": 1138
+      },
+      {
+        "modulus": 13125,
+        "residue": 8188
+      },
+      {
+        "modulus": 65625,
+        "residue": 37813
+      },
+      {
+        "modulus": 2296875,
+        "residue": 1517188
+      },
+      {
+        "modulus": 11484375,
+        "residue": 8210938
+      },
+      {
+        "modulus": 57421875,
+        "residue": 12148438
+      },
+      {
+        "modulus": 287109375,
+        "residue": 105664063
+      },
+      {
+        "modulus": 1435546875,
+        "residue": 245117188
+      },
+      {
+        "modulus": 7177734375,
+        "residue": 1762695313
+      },
+      {
+        "modulus": 35888671875,
+        "residue": 28833007813
+      },
+      {
+        "modulus": 315,
+        "residue": 101
+      },
+      {
+        "modulus": 1575,
+        "residue": 578
+      },
+      {
+        "modulus": 7875,
+        "residue": 3638
+      },
+      {
+        "modulus": 39375,
+        "residue": 36938
+      },
+      {
+        "modulus": 1378125,
+        "residue": 1272188
+      },
+      {
+        "modulus": 6890625,
+        "residue": 1626563
+      },
+      {
+        "modulus": 34453125,
+        "residue": 28992188
+      },
+      {
+        "modulus": 172265625,
+        "residue": 170742188
+      },
+      {
+        "modulus": 861328125,
+        "residue": 91992188
+      },
+      {
+        "modulus": 4306640625,
+        "residue": 3389648438
+      },
+      {
+        "modulus": 21533203125,
+        "residue": 10649414063
+      },
+      {
+        "modulus": 15380859375,
+        "residue": 3442382813
+      },
+      {
+        "modulus": 945,
+        "residue": 221
+      },
+      {
+        "modulus": 4725,
+        "residue": 1328
+      },
+      {
+        "modulus": 23625,
+        "residue": 12263
+      },
+      {
+        "modulus": 826875,
+        "residue": 151313
+      },
+      {
+        "modulus": 4134375,
+        "residue": 1994063
+      },
+      {
+        "modulus": 20671875,
+        "residue": 14751563
+      },
+      {
+        "modulus": 103359375,
+        "residue": 7664063
+      },
+      {
+        "modulus": 516796875,
+        "residue": 252773438
+      },
+      {
+        "modulus": 2583984375,
+        "residue": 1035351563
+      },
+      {
+        "modulus": 12919921875,
+        "residue": 6055664063
+      },
+      {
+        "modulus": 9228515625,
+        "residue": 6108398438
+      },
+      {
+        "modulus": 46142578125,
+        "residue": 32739257813
+      },
+      {
+        "modulus": 2835,
+        "residue": 1391
+      },
+      {
+        "modulus": 14175,
+        "residue": 1553
+      },
+      {
+        "modulus": 496125,
+        "residue": 460013
+      },
+      {
+        "modulus": 2480625,
+        "residue": 1608188
+      },
+      {
+        "modulus": 12403125,
+        "residue": 5931563
+      },
+      {
+        "modulus": 62015625,
+        "residue": 18689063
+      },
+      {
+        "modulus": 310078125,
+        "residue": 135632813
+      },
+      {
+        "modulus": 1550390625,
+        "residue": 277382813
+      },
+      {
+        "modulus": 7751953125,
+        "residue": 543164063
+      },
+      {
+        "modulus": 5537109375,
+        "residue": 3770507813
+      },
+      {
+        "modulus": 27685546875,
+        "residue": 5668945313
+      },
+      {
+        "modulus": 138427734375,
+        "residue": 133813476563
+      },
+      {
+        "modulus": 8505,
+        "residue": 41
+      },
+      {
+        "modulus": 297675,
+        "residue": 135878
+      },
+      {
+        "modulus": 1488375,
+        "residue": 152888
+      },
+      {
+        "modulus": 7441875,
+        "residue": 2789438
+      },
+      {
+        "modulus": 37209375,
+        "residue": 31919063
+      },
+      {
+        "modulus": 186046875,
+        "residue": 119095313
+      },
+      {
+        "modulus": 930234375,
+        "residue": 608132813
+      },
+      {
+        "modulus": 4651171875,
+        "residue": 129726563
+      },
+      {
+        "modulus": 3322265625,
+        "residue": 965039063
+      },
+      {
+        "modulus": 16611328125,
+        "residue": 870117188
+      },
+      {
+        "modulus": 83056640625,
+        "residue": 35991210938
+      },
+      {
+        "modulus": 415283203125,
+        "residue": 81079101563
+      },
+      {
+        "modulus": 178605,
+        "residue": 44591
+      },
+      {
+        "modulus": 893025,
+        "residue": 192578
+      },
+      {
+        "modulus": 4465125,
+        "residue": 3484013
+      },
+      {
+        "modulus": 22325625,
+        "residue": 18027563
+      },
+      {
+        "modulus": 111628125,
+        "residue": 62040938
+      },
+      {
+        "modulus": 558140625,
+        "residue": 74798438
+      },
+      {
+        "modulus": 2790703125,
+        "residue": 1494070313
+      },
+      {
+        "modulus": 1993359375,
+        "residue": 1585195313
+      },
+      {
+        "modulus": 9966796875,
+        "residue": 1756054688
+      },
+      {
+        "modulus": 49833984375,
+        "residue": 18272460938
+      },
+      {
+        "modulus": 249169921875,
+        "residue": 186284179688
+      },
+      {
+        "modulus": 1245849609375,
+        "residue": 812768554688
+      },
+      {
+        "modulus": 535815,
+        "residue": 61601
+      },
+      {
+        "modulus": 2679075,
+        "residue": 1638428
+      },
+      {
+        "modulus": 13395375,
+        "residue": 10288013
+      },
+      {
+        "modulus": 66976875,
+        "residue": 38226938
+      },
+      {
+        "modulus": 334884375,
+        "residue": 216194063
+      },
+      {
+        "modulus": 1674421875,
+        "residue": 340579688
+      },
+      {
+        "modulus": 1196015625,
+        "residue": 1133367188
+      },
+      {
+        "modulus": 5980078125,
+        "residue": 825820313
+      },
+      {
+        "modulus": 29900390625,
+        "residue": 6976757813
+      },
+      {
+        "modulus": 149501953125,
+        "residue": 63360351563
+      },
+      {
+        "modulus": 747509765625,
+        "residue": 281206054688
+      },
+      {
+        "modulus": 26162841796875,
+        "residue": 20271752929688
+      },
+      {
+        "modulus": 1607445,
+        "residue": 1031171
+      },
+      {
+        "modulus": 8037225,
+        "residue": 6358703
+      },
+      {
+        "modulus": 40186125,
+        "residue": 36440888
+      },
+      {
+        "modulus": 200930625,
+        "residue": 117961313
+      },
+      {
+        "modulus": 1004653125,
+        "residue": 295928438
+      },
+      {
+        "modulus": 717609375,
+        "residue": 591173438
+      },
+      {
+        "modulus": 3588046875,
+        "residue": 3297585938
+      },
+      {
+        "modulus": 17940234375,
+        "residue": 17342226563
+      },
+      {
+        "modulus": 89701171875,
+        "residue": 5552929688
+      },
+      {
+        "modulus": 448505859375,
+        "residue": 241338867188
+      },
+      {
+        "modulus": 15697705078125,
+        "residue": 9108940429688
+      },
+      {
+        "modulus": 78488525390625,
+        "residue": 47680444335938
+      },
+      {
+        "modulus": 4822335,
+        "residue": 3250976
+      },
+      {
+        "modulus": 24111675,
+        "residue": 2148728
+      },
+      {
+        "modulus": 120558375,
+        "residue": 82013
+      },
+      {
+        "modulus": 602791875,
+        "residue": 41416313
+      },
+      {
+        "modulus": 430565625,
+        "residue": 371106563
+      },
+      {
+        "modulus": 2152828125,
+        "residue": 1958048438
+      },
+      {
+        "modulus": 10764140625,
+        "residue": 4664460938
+      },
+      {
+        "modulus": 53820703125,
+        "residue": 25885195313
+      },
+      {
+        "modulus": 269103515625,
+        "residue": 193498242188
+      },
+      {
+        "modulus": 9418623046875,
+        "residue": 1992647460938
+      },
+      {
+        "modulus": 47093115234375,
+        "residue": 17331547851563
+      },
+      {
+        "modulus": 235465576171875,
+        "residue": 40205346679688
+      },
+      {
+        "modulus": 14467005,
+        "residue": 9221486
+      },
+      {
+        "modulus": 72335025,
+        "residue": 27408578
+      },
+      {
+        "modulus": 361675125,
+        "residue": 97676888
+      },
+      {
+        "modulus": 258339375,
+        "residue": 20913188
+      },
+      {
+        "modulus": 1291696875,
+        "residue": 781169063
+      },
+      {
+        "modulus": 6458484375,
+        "residue": 2368110938
+      },
+      {
+        "modulus": 32292421875,
+        "residue": 28755632813
+      },
+      {
+        "modulus": 161462109375,
+        "residue": 82268789063
+      },
+      {
+        "modulus": 5651173828125,
+        "residue": 4755443554688
+      },
+      {
+        "modulus": 28255869140625,
+        "residue": 28005987304688
+      },
+      {
+        "modulus": 141279345703125,
+        "residue": 15089018554688
+      },
+      {
+        "modulus": 706396728515625,
+        "residue": 555987084960938
+      },
+      {
+        "modulus": 43401015,
+        "residue": 2332436
+      },
+      {
+        "modulus": 217005075,
+        "residue": 92854553
+      },
+      {
+        "modulus": 155003625,
+        "residue": 14024138
+      },
+      {
+        "modulus": 775018125,
+        "residue": 660610688
+      },
+      {
+        "modulus": 3875090625,
+        "residue": 904187813
+      },
+      {
+        "modulus": 19375453125,
+        "residue": 19283189063
+      },
+      {
+        "modulus": 96877265625,
+        "residue": 77963132813
+      },
+      {
+        "modulus": 3390704296875,
+        "residue": 2419625039063
+      },
+      {
+        "modulus": 16953521484375,
+        "residue": 1257097851563
+      },
+      {
+        "modulus": 84767607421875,
+        "residue": 41461163085938
+      },
+      {
+        "modulus": 423838037109375,
+        "residue": 169823540039063
+      },
+      {
+        "modulus": 2119190185546875,
+        "residue": 993280297851563
+      },
+      {
+        "modulus": 130203045,
+        "residue": 43666736
+      },
+      {
+        "modulus": 93002175,
+        "residue": 36758003
+      },
+      {
+        "modulus": 465010875,
+        "residue": 360937013
+      },
+      {
+        "modulus": 2325054375,
+        "residue": 2247552563
+      },
+      {
+        "modulus": 11625271875,
+        "residue": 4041165938
+      },
+      {
+        "modulus": 58126359375,
+        "residue": 14669985938
+      },
+      {
+        "modulus": 2034422578125,
+        "residue": 972924539063
+      },
+      {
+        "modulus": 10172112890625,
+        "residue": 3065473476563
+      },
+      {
+        "modulus": 50860564453125,
+        "residue": 22247172070313
+      },
+      {
+        "modulus": 254302822265625,
+        "residue": 45497715820313
+      },
+      {
+        "modulus": 1271514111328125,
+        "residue": 89092485351563
+      },
+      {
+        "modulus": 6357570556640625,
+        "residue": 488711206054688
+      }
+    ],
+    "latin_order": 12,
+    "physical_mass": "1",
+    "reference_survivor_mass": "8314165284601/8649755859375",
+    "survivor_mass": "415708264230077/432487792968750",
+    "tau": "7/1153300781250000",
+    "threshold_policy": "history dependent; delta=u/(1+u), u=tau*v/(s_i*t_j)",
+    "zeta": "1/100"
+  },
+  "one_stage_consumer": {
+    "cap_comparator_reachability_claimed": false,
+    "cap_only_first_hit": "1/420",
+    "delta11": "2/11",
+    "extension_labels": [
+      {
+        "current_color": 0,
+        "current_prime": 11,
+        "modulus": 33,
+        "old_depth": 1,
+        "old_prime": 3,
+        "old_residue": 1,
+        "residue": 22
+      },
+      {
+        "current_color": 1,
+        "current_prime": 11,
+        "modulus": 55,
+        "old_depth": 1,
+        "old_prime": 5,
+        "old_residue": 1,
+        "residue": 1
+      },
+      {
+        "current_color": 2,
+        "current_prime": 11,
+        "modulus": 77,
+        "old_depth": 1,
+        "old_prime": 7,
+        "old_residue": 3,
+        "residue": 24
+      }
+    ],
+    "first_hit": "13289063/5740875000",
+    "reference_first_hit": "1/432",
+    "strict_gap": "54241/820125000"
+  },
+  "overlapping_consumer": {
+    "additional_first_hit": "367/28417331250000",
+    "avoiding_integer": 2,
+    "delta11": "2/11",
+    "delta13": "2/13",
+    "extension_labels": [
+      {
+        "current_color": 0,
+        "current_prime": 11,
+        "modulus": 99,
+        "old_depth": 2,
+        "old_prime": 3,
+        "old_residue": 1,
+        "residue": 55
+      },
+      {
+        "current_color": 0,
+        "current_prime": 11,
+        "modulus": 297,
+        "old_depth": 3,
+        "old_prime": 3,
+        "old_residue": 4,
+        "residue": 220
+      },
+      {
+        "current_color": 1,
+        "current_prime": 11,
+        "modulus": 275,
+        "old_depth": 2,
+        "old_prime": 5,
+        "old_residue": 1,
+        "residue": 1
+      },
+      {
+        "current_color": 2,
+        "current_prime": 11,
+        "modulus": 77,
+        "old_depth": 1,
+        "old_prime": 7,
+        "old_residue": 3,
+        "residue": 24
+      },
+      {
+        "current_color": 0,
+        "current_prime": 13,
+        "modulus": 117,
+        "old_depth": 2,
+        "old_prime": 3,
+        "old_residue": 1,
+        "residue": 91
+      },
+      {
+        "current_color": 1,
+        "current_prime": 13,
+        "modulus": 325,
+        "old_depth": 2,
+        "old_prime": 5,
+        "old_residue": 1,
+        "residue": 1
+      },
+      {
+        "current_color": 1,
+        "current_prime": 13,
+        "modulus": 1625,
+        "old_depth": 3,
+        "old_prime": 5,
+        "old_residue": 6,
+        "residue": 131
+      },
+      {
+        "current_color": 2,
+        "current_prime": 13,
+        "modulus": 91,
+        "old_depth": 1,
+        "old_prime": 7,
+        "old_residue": 3,
+        "residue": 80
+      }
+    ],
+    "first_hit": "4877086121/14208665625000",
+    "joint_trigger_masses": [
+      "13289063/7176093750",
+      "13289063/7973437500",
+      "13289063/9568125000"
+    ],
+    "overlap_saving": "13289063/947244375000",
+    "reference_first_hit": "367/1069200",
+    "single_available_extra_budget": "1/7087500"
+  },
+  "scope": "restricted Latin-prefix sources: balanced history-dependent policies and fixed-threshold stability; not unrestricted Erdos 7",
+  "sharp_head": {
+    "active_threshold_interval": [
+      "1/26578126",
+      "1/36"
+    ],
+    "all_full_pair_marginals_equal_product": true,
+    "all_height_upper_bound": "1/2835",
+    "complete_coordinate_sizes": [
+      729,
+      15625,
+      7
+    ],
+    "complete_period": 79734375,
+    "constant_test_cell_count": 3072,
+    "current_prefixes": [
+      {
+        "depth": 1,
+        "residue": 1
+      },
+      {
+        "depth": 1,
+        "residue": 2
+      },
+      {
+        "depth": 1,
+        "residue": 3
+      },
+      {
+        "depth": 1,
+        "residue": 4
+      },
+      {
+        "depth": 1,
+        "residue": 5
+      },
+      {
+        "depth": 1,
+        "residue": 6
+      }
+    ],
+    "exact_head_surplus": "1/7087500",
+    "full_point_enumeration": false,
+    "head_labels": [
+      {
+        "modulus": 3,
+        "residue": 0
+      },
+      {
+        "modulus": 5,
+        "residue": 0
+      },
+      {
+        "modulus": 7,
+        "residue": 0
+      },
+      {
+        "modulus": 105,
+        "residue": 1
+      },
+      {
+        "modulus": 525,
+        "residue": 478
+      },
+      {
+        "modulus": 2625,
+        "residue": 388
+      },
+      {
+        "modulus": 13125,
+        "residue": 10063
+      },
+      {
+        "modulus": 65625,
+        "residue": 313
+      },
+      {
+        "modulus": 328125,
+        "residue": 64063
+      },
+      {
+        "modulus": 315,
+        "residue": 191
+      },
+      {
+        "modulus": 1575,
+        "residue": 353
+      },
+      {
+        "modulus": 7875,
+        "residue": 263
+      },
+      {
+        "modulus": 39375,
+        "residue": 25688
+      },
+      {
+        "modulus": 196875,
+        "residue": 147188
+      },
+      {
+        "modulus": 984375,
+        "residue": 642188
+      },
+      {
+        "modulus": 945,
+        "residue": 626
+      },
+      {
+        "modulus": 4725,
+        "residue": 2678
+      },
+      {
+        "modulus": 23625,
+        "residue": 8888
+      },
+      {
+        "modulus": 118125,
+        "residue": 50063
+      },
+      {
+        "modulus": 590625,
+        "residue": 222188
+      },
+      {
+        "modulus": 2953125,
+        "residue": 2517188
+      },
+      {
+        "modulus": 2835,
+        "residue": 1796
+      },
+      {
+        "modulus": 14175,
+        "residue": 7628
+      },
+      {
+        "modulus": 70875,
+        "residue": 4388
+      },
+      {
+        "modulus": 354375,
+        "residue": 190688
+      },
+      {
+        "modulus": 1771875,
+        "residue": 1375313
+      },
+      {
+        "modulus": 8859375,
+        "residue": 6032813
+      },
+      {
+        "modulus": 8505,
+        "residue": 6116
+      },
+      {
+        "modulus": 42525,
+        "residue": 20453
+      },
+      {
+        "modulus": 212625,
+        "residue": 152888
+      },
+      {
+        "modulus": 1063125,
+        "residue": 359438
+      },
+      {
+        "modulus": 5315625,
+        "residue": 1544063
+      },
+      {
+        "modulus": 26578125,
+        "residue": 20376563
+      },
+      {
+        "modulus": 25515,
+        "residue": 22721
+      },
+      {
+        "modulus": 127575,
+        "residue": 65003
+      },
+      {
+        "modulus": 637875,
+        "residue": 203513
+      },
+      {
+        "modulus": 3189375,
+        "residue": 2536313
+      },
+      {
+        "modulus": 15946875,
+        "residue": 531563
+      },
+      {
+        "modulus": 79734375,
+        "residue": 40626563
+      }
+    ],
+    "latin_order": 6,
+    "physical_mass": "1",
+    "reference_survivor_mass": "486503/506250",
+    "survivor_mass": "6811043/7087500",
+    "tau": "1/35437500",
+    "threshold_policy": "history dependent; delta=u/(1+u), u=tau*v/(s_i*t_j)",
+    "zeta": "1/35"
+  }
+}

@@ -1,0 +1,1 @@
+| 44.12a `D5/S3/Observer/Approximation/IntertwiningDefectPropagation.lean`，`intertwining_defect_telescope`、`uniform_norm_intertwining_defect_le` | 一般交织展开及 $nb^{n-1}\sqrt\delta$ 单侧算子范数界；没有直接供应本节两次跨越的二次泄漏。 

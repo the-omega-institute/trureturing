@@ -1,0 +1,41 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 29,
+      "part": {
+        "path": "content/011-remaining_leaf_batches/000026/item/002-rows/000000-000029.json",
+        "sha256": "467fddb69a7f137e187eeb169beeba581c2d0698a54a44d331c32cc02dbb330b",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 29,
+      "stop": 58,
+      "part": {
+        "path": "content/011-remaining_leaf_batches/000026/item/002-rows/000029-000058.json",
+        "sha256": "c29eb6313f6e449063a328b0701cb35670c11dc8bdffdf568141b1522a10ac21",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 58,
+      "stop": 87,
+      "part": {
+        "path": "content/011-remaining_leaf_batches/000026/item/002-rows/000058-000087.json",
+        "sha256": "c0f74f7870f00617d1327ba07a3825bad792a1573c2b884bbf08b980309b20ae",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 87,
+      "stop": 100,
+      "part": {
+        "path": "content/011-remaining_leaf_batches/000026/item/002-rows/000087-000100.json",
+        "sha256": "01211b3884cb92bf102f753ea2502e6bff3f3db64225859183e646b923ad86ef",
+        "kind": "value"
+      }
+    }
+  ]
+}

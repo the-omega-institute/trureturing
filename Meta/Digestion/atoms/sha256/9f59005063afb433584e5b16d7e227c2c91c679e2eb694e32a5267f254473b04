@@ -1,0 +1,24 @@
+**定理 29.2（两精确阈值的局部识别与三次病态量级）。** 固定 $p_0=(m_0,k_0)$，$m_0\ne0,k_0>0$。对充分小 $\eta>0$，两份已实际取得的初始分支精确阈值响应定义
+$$
+\mathcal O_\eta(p)=(g_p(\eta),g_p(2\eta)).
+\tag{29.103}
+$$
+它在 $p_0$ 附近有 $C^1$ 局部逆，且
+$$
+\det D\mathcal O_\eta(p_0)=-\frac{m_0}{10}\eta^4+O(\eta^5),
+\qquad \|(D\mathcal O_\eta(p_0))^{-1}\|_2=\Theta(\eta^{-3}).
+\tag{29.104}
+$$
+
+证明。仅用引理28.4的一致混合余项，$\partial_mg(r)=r+O(r^2)$，$\partial_kg(r)=-mr^3/60+O(r^4)$，故
+$$
+\det D\mathcal O_\eta
+ =(\eta+O(\eta^2))\left(-\frac{8m}{60}\eta^3+O(\eta^4)\right)
+ -(2\eta+O(\eta^2))\left(-\frac m{60}\eta^3+O(\eta^4)\right)
+ =-\frac m{10}\eta^4+O(\eta^5).
+\tag{29.105}
+$$
+非零 $m_0$ 使充分小正 $\eta$ 时行列式非零，有限维逆函数定理给局部逆。若 $|\det D\mathcal O_\eta+m_0\eta^4/10|\le C_D\eta^5$，$C_D>0$ 时附加 $\eta\le|m_0|/(20C_D)$ 就足以保留非零性；还须满足共同图域限制。第一参数列为 $(\eta,2\eta)+O(\eta^2)$，故大奇异值有上下界常数乘 $\eta$；奇异值乘积为行列式绝对值，给小奇异值为常数乘 $\eta^3$，从而得到逆导数的精确量级。
+
+此为局部两记录逆；定理28.3在其精确三阶射流像上的全局逆并不把这里升级为任意参数盒上的全局两样点逆。精确阈值仍须实际取得，同一完整见证仍须满足定义29.1。把导数识别转成有限样点的 Taylor／Vandermonde、余项与最小奇异值方法，见 Sontag, *A concept of local observability*, Systems & Control Letters 5（1984），41–47，[作者原文](https://www.sontaglab.org/FTPDIR/localobs.pdf)，Lemma 3.4（第44页）及 Section 4 的证明（第45—46页），Lemma 3.5 使用逆函数定理。该文对象是有限维受控系统；这里的全 PDE 参数正则性、阈值图及特定系数分别由恢复卷第27节和本卷第28节承担，不由该有限维结果直接推出。$\square$
+

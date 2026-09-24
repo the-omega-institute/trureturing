@@ -23,7 +23,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Contains(eventPath, error, StringComparison.Ordinal);
         Assert.Contains("is not a v5 Freeze", error, StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet:ledger-align", fixture.Calls());
-        Assert.DoesNotContain("make:preflight", fixture.Calls());
+        Assert.DoesNotContain(fixture.Calls(), call => call.StartsWith("make:preflight", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.Run("deliver-check", baseRevision: deliveryBase);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Contains("make:preflight", fixture.Calls());
+        Assert.Contains($"make:preflight MODE=push BASE={deliveryBase}", fixture.Calls());
     }
 
 }

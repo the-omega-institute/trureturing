@@ -1,0 +1,10 @@
+**(a) 已知速率参照。** 若同时取得R=e^{-κh}、κ>0已知，并且a>0已知，则
+$$
+B=-\log R>0,\quad L=-\log A>0,
+\qquad h=B/\kappa,
+\qquad
+\boxed{p=\exp\!\left[\frac{\kappa}{ac}\frac LB\right].}
+\tag{22.111}
+$$
+要仅识别p，已知κ/a亦足够；要恢复h还须知道κ本身。
+

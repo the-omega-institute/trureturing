@@ -1,0 +1,22 @@
+**证明。** 对任意前提集 $\Gamma$ 和结论 $\varphi$，第一组条件依次给出
+$$
+\begin{aligned}
+\varphi\in C_A(\Gamma)
+&\Longrightarrow\varphi\in S_A(\Gamma)\\
+&\Longrightarrow\tau(\varphi)\in S_B(\tau[\Gamma])\\
+&\Longrightarrow\tau(\varphi)\in C_B(\tau[\Gamma]),
+\end{aligned}
+$$
+中间一步为定理 88.6 的语义保持。第二组条件依次给出
+$$
+\begin{aligned}
+\tau(\varphi)\in C_B(\tau[\Gamma])
+&\Longrightarrow\tau(\varphi)\in S_B(\tau[\Gamma])\\
+&\Longrightarrow\varphi\in S_A(\Gamma)\\
+&\Longrightarrow\varphi\in C_A(\Gamma),
+\end{aligned}
+$$
+中间一步为 CE 所等价的语义反射。两条链分别证明保持与反射，其合取给出等式。
+
+这些条件是充分条件包，不主张各项必要。链中的完备性与可靠性均按所写的全部前提集量化，包括无限前提集；不能只检验有限前提后便无条件取得这里的结论。后承等式没有提供证明对象的可计算转换，也没有提供搜索时间、证书长度或转换成本界。证毕。
+

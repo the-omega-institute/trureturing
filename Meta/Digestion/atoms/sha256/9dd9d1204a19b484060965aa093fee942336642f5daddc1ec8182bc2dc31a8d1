@@ -1,0 +1,51 @@
+### 50.3 指定支持内的共同最优来源
+
+对每个 $a\in\mathcal F_{A,S}$，正系数界或在（50.1）中的三角不等式列归纳给
+$$
+|\mathcal E(a)(n,k)|\le p_{n,k}\le u_k.
+$$
+于是
+$$
+\begin{aligned}
+|T^*(n,k)-\mathcal E(a)(n,k)|
+&\ge u_k-|\mathcal E(a)(n,k)|\\
+&\ge u_k-p_{n,k}\\
+&=|T^*(n,k)-\mathcal E(a^S)(n,k)|.
+\end{aligned}
+\tag{50.6}
+$$
+同一个满幅全负稀疏来源 $a^S$ 因而同时最小化每个坐标误差，并取得整个范数距离的最小值：
+$$
+\boxed{
+\min_{a\in\mathcal F_{A,S}}\|T^*-\mathcal E(a)\|_\rho
+=\|T^*-\mathcal E(a^S)\|_\rho.
+}
+\tag{50.7}
+$$
+因此本问题不需要在固定支持上另作连续系数优化。这是自由幅度立方体内的共同实现；若实际来源—档案约束排除 $a^S$，不能直接移用达到性。
+
+Context47.9.1 的命题47.4给出每个有限来源的消失加权尾。为写清本稿所需的局部依据，若 $a$ 支持于 $\{0,\ldots,L-1\}$，令
+$$
+F_a(z)=1+\sum_{i=0}^{L-1}a_i z^{i+1}.
+$$
+Context43 定理43.4及式（43.6）—（43.9）的逐行形式恒等式给下式；其单位常数项与有限卷积证明在这里按实系数评价，适配已在 Context47.9.1 的式（47.27）中写明：
+$$
+\sum_{k\ge0}\mathcal E(a)(n,k)z^k
+=\sum_{j=0}^{L-n-1}\frac{a_{n+j}z^j}{F_a(z)^{j+1}}
+\quad(n<L),
+\tag{50.8}
+$$
+其他行等于零。因 $\lambda>A+1$，可选
+$\rho<R<(1+A)^{-1}$。在 $|z|\le R$ 上，
+$$
+|F_a(z)-1|\le\frac{AR}{1-R}<1.
+$$
+故每个非零行在该闭圆盘的邻域解析，Cauchy 系数估计给 $\rho^k|\mathcal E(a)(n,k)|\to0$。只有有限个非零行，故加权全尾也趋零。特别地
+$$
+\rho^k|T^*(0,k)-\mathcal E(a)(0,k)|\longrightarrow c,
+\quad\text{从而}\quad
+\|T^*-\mathcal E(a)\|_\rho\ge c.
+\tag{50.9}
+$$
+这与 Context47.9.1 的消失尾框架及（49.21）的有限来源零尾特例一致；本稿不需要重新使用或重证整份分类。
+

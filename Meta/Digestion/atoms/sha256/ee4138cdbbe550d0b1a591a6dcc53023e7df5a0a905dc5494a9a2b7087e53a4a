@@ -1,0 +1,12 @@
+### 130.7 二次约束的 Schur 最小化
+
+令 $x\in\mathbb R^a$ 为保留变量，$y\in\mathbb R^d$ 为消去变量，并取实对称矩阵
+
+$$
+H=\begin{pmatrix}A&B_0\\B_0^T&D\end{pmatrix},\qquad
+D\succ0,\qquad
+S=A-B_0D^{-1}B_0^T.
+$$
+
+这里 $B_0$ 是耦合矩阵，与外幂的楔配对矩阵 $B$ 不同。定义 $Q(x,y)=\frac12(x,y)^TH(x,y)$。
+

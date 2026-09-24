@@ -615,3 +615,202 @@ A293715(Mills 反例 `A007755(34) = (2^16+1)^2`)、A330719(交叉引用 A330718 
 - 仓内去重有两层:文献标识(arXiv 号 / A 号)与**对象**(同一定义、同一见证);席位只搜本文件是第 3.1 条的失败形。一篇论文有多条猜想时,
   仓内结算了其中一条不等于其余的都结算了——逐条读 `Blueprint` 正文里的「Nothing about … is established」句。
 - 被多套求解器过筛过的公开池(OEIS Open)对反驳形几乎零产出(322 条 0 反例);反驳形的矿脉是新发表且未被计算过的猜想。
+
+## R46(2026-09-18):arXiv 2025–26 结尾栏、OEIS 新条目与一条答案印在同一篇论文另一页的问题
+
+### R46(ChatGPT Pro,arXiv math.NT 2025-09 → 2026-09 与 math.CO / cs.DM 2026-06 → 2026-09 结尾栏,OEIS `keyword:new` 猜想)
+
+提出 **Nathanson, *Problems in additive number theory, VII*, arXiv:2605.26425, Problem 12(2)**(printed page 9:
+「(2) If A ∈ \binom{Z}{k} with min(A)<0, then ℓ_h(A) < n_h^♭(k).」):取 `h=2, k=3, A={−1,1,2}` 得 `2A={−2,0,1,2,3,4}`,
+`ℓ_2(A)=4=n_2^♭(3)`(三元非负集覆盖 `[0,5]` 须含 0,1,再由第三元 `t` 分 `t≤3` 缺 5、`t≥4` 缺 3),严格不等式为 `4<4`。
+席位注明该论文第 7 页已把同一个集合及其和集印作反射例子,只是没有把它认作 Problem 12(2) 的答案——「答案印在同一篇论文的另一页」。
+仓内去重(orchestrator,`origin/dev`):`Nathanson|2605\.26425|segmentLength|nonnegativeMaximum|h-basis` 在 D5/Blueprint/Problems/Library
+无命中;结论形 `sSup {n` 仅 `D5/S1/Words/FibonacciMapBound.lean` 一处(词长上确界,无关)。开 lane:#8540 → PR #8561。
+Problem 12(1)(非严格不等式)未结算,不在交付面。
+
+已结算、不派席(席位读出,orchestrator 复核出处):
+
+- **arXiv:2606.17447**(Shtrezi):Theorem 1 对全部 `g ≥ 2` 证明贪心 `{1,g,g+1}` 三和无关序列的 Conjecture 16。仓内
+  `Problems/greedy-three-sumfree-two-parameter.md` 已明写「Conjecture 16 … deliberately out of scope」,该卷宗结算的是两参数成员公式,
+  不是 Conjecture 16;两者都不再是候选。
+- **arXiv:2607.10763**(Shi):已证 Bueno 等人的模乘法矩阵秩猜想。
+- **arXiv:2608.19886**(Mao–Zhao):已在 `l=4` 反驳 Chung–Graham–Spiro 的 `D_l = U_l`(9 ∈ U_4 ∖ D_4);这条小反例已经发表,不能再算一次。
+
+算过、无反例、不提出:
+
+- **OEIS A399308**(Lucas 表示动力系统):席位独立实现并跑全部正整数起点至 10⁶,只见既知的四个循环,无逃逸轨道;交叉引用
+  A399306 / A399307 取不到,源筛未完成。
+- **OEIS A397806 / A397807**(2026 TFJM 题):在猜想限定的区间族内精确计数复现 `n ≤ 9` 的极大值,`n = 7, 8, 9` 的无限制搜索无改进;
+  猜想本身未证,不提出。
+
+席位未取得的读数:GitHub 目录枚举、递归树 API 与代码搜索在该席全部失败,只能逐文件取 raw;精确钉版的仓内去重由 orchestrator 完成(见上),
+席位自报的「无命中」不作读数。
+
+### 方法学读数
+
+- 「答案印在同一篇论文的另一页」是「结算写在被引条目里」(R40/R44,三例)的论文版:一篇末尾提问的论文,其正文例子可能已经是答案。
+  第一关的固定动作再加一条:候选问题所在论文里,凡与问题同对象的显式例子(表、反射例、边界例)逐个代入问题陈述。
+- R46 的三条「已结算」全部来自席位读结尾栏时顺手核对的同题近作;这是搜题席该做的第一关,不是产出——它们不进 KPI,只进本文件。
+
+## R47(2026-09-18):Erdős 全库可有限判定的 41 条逐条列名与分诊
+
+R35 量出「可有限判定的一档共 41 条」却只列了前五条,于是这一档的其余 36 条每次选题都要重取徽章。
+本轮把 41 条的题号全部列出,并对每条给出它死在哪一关,以后这一档不再重新普查,也不再逐条重查。
+
+### 语料边界
+
+扫到 1400 号,`VERIFIABLE` 7 / `FALSIFIABLE` 25 / `DECIDABLE` 9 合计仍是 41,与 R35 的 1–1200 读数逐项相同;
+1201–1400 之间只有 21 页是真条目(12 `OPEN`、4 `SOLVED`、3 `PROVED`、2 `DISPROVED`),其余 179 页返回空壳。
+**该题库到 1221 号为止**,故 41 条即这一档的全部,不是某个窗口的样本。
+
+| 徽章 | 题号 |
+| --- | --- |
+| `VERIFIABLE` | 7, 307, 364, 366, 647, 672, 835 |
+| `FALSIFIABLE` | 23, 64, 97, 107, 114, 128, 167, 242, 287, 375, 398, 458, 488, 583, 617, 628, 699, 723, 743, 779, 982, 993, 1020, 1041, 1082 |
+| `DECIDABLE` | 19, 475, 506, 547, 551, 556, 580, 742, 848 |
+
+### 逐条死因(读数取自各题页正文与其 forum 页,2026-09-18)
+
+已由 R34/R35 跑掉或判不可穷举的六条不重列:#287、#458、#647、#699、#779、#993(见下)。
+
+| # | 死因 |
+| --- | --- |
+| 7 | 奇覆盖系统。更强的「奇且无平方因子」已由 Balister–Bollobás–Morris–Sahasrabudhe–Tiba 否定;搜索面是模的 lcm,无界。 |
+| 19 | Erdős–Faber–Lovász。Kang–Kelly–Kühn–Methuku–Osthus 证得大 n,残余区间无显式截断,Hindman 已覆盖 n<10。 |
+| 23 | 最好界 1.064n²(Balogh–Clemen–Lidicky)。反例需 5n 顶点的三角形无关图;n=3 即 1.4×10¹⁰ 张,再往上不可枚举。 |
+| 64 | Liu–Montgomery 已证最小度大于绝对常数即成立,并因此否掉 Erdős–Gyárfás 的更强形式;残余是小最小度,无反例规模上界。 |
+| 97, 982, 1082 | 几何构型,反例是实坐标,不是有限对象。#97 的三点版已被 Danzer 与 Fishburn–Reeds 否定,四点版无有限搜索面。 |
+| 107 | Erdős–Szekeres「幸福结局」。 |
+| 114 | 多项式 lemniscate 长度,连续量;n=2 已由 Eremenko–Hayman 证。 |
+| 128 | 常数 1/50 已被 Razborov 推进到 27/1024;反例仍是任意大的三角形无关图。 |
+| 167 | Tuza 猜想。Gupta(arXiv:2608.06538,2026-08-06)证到最大度 ≤ 7;无反例阶的上界。 |
+| 242 | Erdős–Straus,已验到 n ≤ 10¹⁸。 |
+| 364, 366 | 连续 powerful 数。#366 已验到 n < 10²²(OEIS A060355);abc 蕴涵只有有限多。 |
+| 375 | Grimm 猜想。Laishram–Shorey 已验到 n ≤ 1.9×10¹⁰,且它蕴涵 p_{n+1}−p_n < p_n^{1/2−c}。 |
+| 398 | Brocard–Ramanujan,已验到 10⁹;Naciri 2025 把 7-free 情形做完。 |
+| 475 | 已证 t ≤ 12、p−3 ≤ t ≤ p−1,以及全部充分大素数(Kravitz;Bedert–Kravitz)。 |
+| 488, 1041 | 题页已载完整 claim。 |
+| 506 | Elliott 已解 n > 393(经 Purdy–Smith 更正);残余只有小 n。 |
+| 547, 548 | Wood,*The Erdős–Sós Theorem*,arXiv:2609.17877(2026-09-15),其 Theorem 2 取 k=2 即给出 R(T,2) ≤ 2t−2。两条一并出局。 |
+| 551 | Bondy–Erdős 证 k > n²−2,Nikiforov 证 k ≥ 4n+2,Keevash–Long–Skokan 证充分大 n。 |
+| 556 | Kohayakawa–Simonovits–Skokan 证充分大奇 n,Benevides–Skokan 证充分大偶 n。 |
+| 580 | Zhao 已证充分大 n;Zeraoulia 2026-07 预印本验到 19 阶。 |
+| 583 | Gallai 路分解猜想,正在被系统攻击(Lovász、Chung、Pyber、Bonamy–Perrett 一长串部分结果)。 |
+| 617 | 见下。 |
+| 628 | Erdős–Lovász Tihany 猜想。 |
+| 672 | Bennett–Bruin–Györy–Hajdu 证 4 ≤ k ≤ 11 及充分大 k 不可能。 |
+| 723 | 射影平面阶,已证 n ≤ 11,n=12 的有限检查是天文数字。 |
+| 742 | Murty–Simon,Füredi 已证充分大 n。 |
+| 743 | 见下。 |
+| 848 | Sawhney 已解充分大 N;van Doorn/Weisenberg 的上界 0.105N。 |
+| 993 | 见下。 |
+| 1020 | Erdős 匹配猜想。 |
+
+### 三条看起来还没被算穿的,实际都已被算穿
+
+题页正文不载计算前沿,forum 讨论页载,**故第一关必须读 forum 页而不止题页**。
+
+- **#993**(树与森林的独立多项式单峰性):forum 页记有 tylersatchelorden 验完 32 顶点的全部 109,972,410,221 棵自由树、零反例,
+  另有两人各自验到 29 顶点。Kadrawi–Levit(arXiv:2305.01784)在 26 顶点找到的是**非对数凹**的树,不是非单峰的。
+  32 顶点以上不在本机预算内。
+- **#743**(树装填猜想):Fishburn 证 n ≤ 9;forum 页另记 RajveerKapoor 验完 n=10 的全部 45,376,056 个序列、
+  Guichard–Massman 验到 n=11、pawelkwaczynski 用 220 核时验完 n=12。
+  Chalise–Clark–Gnang 的完整证明 arXiv:2410.13840 **已于 2026-09-01 撤稿**(Lemma 3.10 组合引理有误),故该题仍开放,但小 n 已无空隙。
+- **#580**:同上,Zeraoulia 的 19 阶只是验证前沿,不是反例阶的上界。
+
+### #307 的一条归约(把两个和的乘积化成一个映射的 2-循环)
+
+设 `P, Q` 为有限素数集,`A = ∏P`,`B = ∏Q`。对每个 `p₀ ∈ P`,和式分子 `N_A = Σ_{p∈P} A/p` 的各项里只有 `A/p₀` 不被 `p₀` 整除,
+故 `gcd(N_A, A) = 1`,即 `Σ_{p∈P} 1/p = N_A/A` 已是既约形;`B` 侧同理。于是 `N_A·N_B = A·B` 配上两个互素条件给出 `N_A ∣ B` 与 `N_B ∣ A`,
+代回即 `N_A = B` 且 `N_B = A`。记 `f(n) = Σ_{p∣n} n/p`(对无平方因子的 `n`,它就是其素因子的第 `ω(n)−1` 个初等对称函数),则原问题等价于
+
+  **存在无平方因子的 `A`,使 `f(A)` 无平方因子且 `f(f(A)) = A`** —— 即 `f` 在无平方因子整数上有一个 2-循环。
+
+`A = B` 不可能(`P, Q` 必不交),故循环长度恰为 2。题页只记了「`P, Q` 不交、`Σ_{P∪Q} 1/p ≥ 2`、故 `|P∪Q| ≥ 60`」,未记此归约;
+是否为已知未查证,记 `ASSUMED-UNVERIFIED`。它不结算该题,但把搜索面从「两个集合」压到「一个整数」,且与 `|P∪Q| ≥ 60` 相容:
+`A` 需带三十余个素因子,故直接枚举仍不可行。
+
+### #617 r=5:四条 claim 同向,已被他方认领(勘误)
+
+Erdős–Gyárfás 证了 r=3(Chung–Liu 1978 已先证)与 r=4,并指出 r=2 为假;r=5 是第一个开放情形。
+题面是「r ≥ 3 时,K_{r²+1} 的任意 r-染色都存在 r+1 个顶点,其导出 K_{r+1} 上缺至少一色」,
+故一个 r=5 的反例(K₂₆ 的 5-染色使每 6 顶点五色齐现)将直接推翻整题,而 r=5 成立只是推进一个情形。
+
+**本节原记「7 条互不相容的 claim,Conner Silverstein 称存在,公开状态未定」是错的,今按原文勘正。**
+2026-09-18 读 `https://www.erdosproblems.com/forum/thread/617/proof-claims` 原文:四条 r=5 claim 方向一致,
+全部主张 K₂₆ 不存在这样的染色——Nick Winter(2026-07-31,附形式化外链)、Anthony Rose(2026-07-25,
+458 个 SAT 实例全 UNSAT,逐个 DRAT 证书)、Conner Silverstein(2026-07-21)、Rob Sneiderman(2026-07-18,
+Kang–Pikhurko 界)。原记之误在于把 Silverstein 摘要开头的「Assume for contradiction that a five-coloring
+… exists」读成了存在性主张,它是反证法的假设句。同页 Sneiderman 另有 r=6(K₃₇)、r=7(K₅₀)、r=8(K₆₅)、
+r=9(K₈₂)四条 claim,均附 LRAT 证书。
+
+**结论**:r=5 至 r=9 的有限情形在 2026 年 7 月已由多方认领,不满足「无人 claim」的选题前提,出局。
+整题(∀r)仍开放,但其可有限判定的前几个情形已被扫过,剩下的是无界方向。
+
+`tools/scripts/agent/openproblem/erdos617.py` 的编码与对照阶梯保留作为可复用工具:
+每条边一个颜色的 exactly-one,加每个 6-子集 × 每色一条长 15 的子句(1625 变元 / 1,151,150 子句),
+颜色置换对称性按首 r 条边破掉;自带对照为 `(r,n) = (2,5)`、`(3,9)`、`(5,25)` 必 SAT,
+`(3,10)`、`(4,17)` 必 UNSAT。同型的「r-染色使每个 K_{r+1} 见全色」判定问题可直接复用它。
+
+### 对选题函数的结论
+
+Erdős 这条线的可结算面就是上表那 41 条,已全部列名。本轮跑掉两条(#458、#699),两条都无反例,
+且两条都没有前人上界可比,故按 §3.6 ③ 都不作进展;#993 仍在预算内未跑。相较之下 OEIS 的 `%F`/`%C` 猜想线本会话产出 8 条已合入的结算。
+**按每小时结算数排序,OEIS 线优先;Erdős 线按上表逐条推进,不再重新普查徽章。**
+
+## R48–R50 与 C1(2026-09-18):arXiv 结尾栏三轮、首个 codex 本地去重搜题席,与「GPT Pro 席不能去重」的两次代价
+
+会话内搜题轮编号(R47–R49)与本文件的节号错开一位;本节按内容记。
+
+### 搜题轮「Kok」(ChatGPT Pro,arXiv math.CO 2025-07/08、math.GM/HO 2025-02..06 题级,期刊问题栏)
+
+提出 Kok, arXiv:2507.16500, **Conjecture 2.12** 与 **Conjecture 2.9**。2.12 仓内已由 #7348 反驳(`JacoExponentialDominationRefutation`)——
+席位无本地树,`D5/`、`Problems/` 去重未完成,orchestrator `git grep -il -P '\bjaco\b|2507\.16500'` 命中 5 个文件全是 2.12 lane。
+2.9 开 lane:#8569 → PR #8588(v1,tests 席编译邻接矩阵变异证明私有定理非见证,关闭)→ PR #8614(v2,bind-only)。
+同轮报 Kourovka 3.46/18.50/19.25/20.125/21.8/21.24/21.147/21.150 已被 arXiv:2607.17477 解决——不派席。
+Crux 累积未解表当轮下载失败,未读。
+
+### 搜题轮「abelian4」(ChatGPT Pro,math.CO 2025-09/10、cs.DM 2025-07/08、math.NT 2025-02/03、math.GM 2024 部分)
+
+唯一候选 Fazekas–Mammoliti–Mercaş–Simpson, arXiv:2604.23188, **Conjecture 4**(`w = abab`,论文自己的 Table 1 印着反例行):
+#8589 → PR #8603 MERGED `1bac71778f`。已结算、不派席:DeLeo–Henderschedt–Wells arXiv:2605.29166 的 lex-merge 最优性猜想已由
+Ramos–Hulak–de Queiroz arXiv:2608.08431 对全部 `n` 证明(附 Isabelle/HOL 形式化);Niu arXiv:2605.04328(Fibonacci 立方 pebbling 数)已撤稿,
+v2 评注指向 Mollard 2025 的先证。
+
+### C1(codex-cli 搜题席,math.CO 2025-02..06 与 cs.DM 2025-01..06 全量清单,本地树去重)
+
+首个用 codex 席做 arXiv 清单搜题的轮次:读 704 篇去重摘要、402 篇 PDF(结尾三分之一自动标记),**一轮出 3 个问题 / 4 条记录**,
+全部经 orchestrator 亲验后开 lane:Misawa–Nishimura arXiv:2505.06893 Conjecture 3.3(`{2,4}`,#8616)、Chauve–Zhang arXiv:2505.13796 §6 结尾问句两部分
+(`n=3,d=2` / `n=4,d=1`,#8618)、Göbel–Misra arXiv:2506.23936 Conjecture 5.3(`m=7`,#8621)。席位自报已在源文内结算的 6 篇
+(2501.00784、2502.01161、2505.02045、2506.20296、2506.04407、2504.19031)与仓内已有卷宗的 2503.04122,均不派席。
+**读数**:同日 GPT Pro 三轮各出 0–1 条,codex 一轮出 3 条;差别在能不能 `git grep`——GPT Pro 席的每条候选都要 orchestrator 再做一遍去重,
+而 codex 席把去重命令与命中数写进候选记录。搜题以 codex 席为主,GPT Pro 席只做文献结算核对。
+
+### 搜题轮 R49(ChatGPT Pro,chrono 池;math.CO 2025-11..2026-05、cs.DM 2025-09..2026-05、math.NT 2025-04..08、math.GM 2025、cs.FL/cs.GT 部分)
+
+五条候选,两条开 lane、三条判掉:
+
+- **开 lane**:Wenpeng Zhang, arXiv:2506.17235, §1 **Question (D)**(两个 Legendre 特征和之差的常数 `c` 只能是 0 或 2?)——`f = X²`, `g = (X+1)²`
+  对每个奇素数差恒为 1(#8626);Bašić–Gottlieb–Krnc, arXiv:2606.16828, **Conjecture 2** 于印刷边界 `r = 1`(`G([1]) = 1` 而公式给 2,与同页
+  Conjecture 4 的 `n = 1` 值一致;#8628)。
+- **仓内已结算**:同文 **Conjecture 3** 的 `r = 7, k = 5`(`R^5_{7,6} = PS_6`,377 个位置)已由 `D5/S0/Certificates/Games/CrimGrundyRefutation` 反驳
+  (`escape-witness` 依据,冻结)。席位无本地树,再一次把已落地的结果当候选。
+- **已发表定理的即时实例**:Fried, arXiv:2607.07013, Conjecture 10.2(加权投票博弈由 swing table 在全部 simple games 中唯一确定)——
+  swing table 经双重计数给出 Chow 参数(`Σ_S v(S)` 与各 `Σ_{S∋i} v(S)`),而 Chow(1961)定理正是「阈值函数由 Chow 参数在全部布尔函数中唯一确定」
+  (arXiv:1206.0985 明写);按 R32 规则「某已发表定理的即时实例」判掉,不开 lane、不 cover。
+- **不派**:Relia, arXiv:2402.19365v2, Conjecture 1(顶点覆盖算法的正确性)——席位的 9 顶点「假阴性」依赖对四个过程与匹配选取/平局规则的转写,
+  论文摘要自述正确性未定;转写不确定的算法反驳不是有限判定,不派。
+- 席位顺手核出的已结算:Zhang 同文 Question (A) 由 Nica arXiv:2507.09991 Example 5.3 直接证明(不触及 (D));Bouras arXiv:2509.09745 / A356247
+  三条猜想 OEIS 记 Cloitre 2025 已证;arXiv:2312.16052 的 vincular 模式 Fibonacci-平方猜想已是其 2026-01 修订版的 Theorem 5。
+
+### 方法学读数
+
+- **GPT Pro 席不能去重,已两次把仓内已落地的结果当候选**(Kok 2.12、CRIM Conjecture 3)。它的候选一律先过 `git grep -il '<arXiv 号>|<对象名>' origin/dev -- D5 Blueprint Problems Library`,
+  命中即读该模块的 `claim` 与卷宗;这一步不能交给席位。
+- `chatgpt-pro-pool` 当日 `online_workers = 0`,两票排队 100 分钟 `Attempts: 0`;派前查 `nyxid oracle pool show <slug> --output json` 的 `online_workers`,
+  `NYX_TIMEOUT` 两次即查任务状态,`queued + Attempts 0` 是死池不是慢。
+
+## R52 起的各轮已移入 `SCREENED-OUT-R52.md`
+
+本文件触及 SL-003 的 1000 行硬上限,按第 4.8 条「桶满只裂不迁」裂为两桶。
+R52 及其后的各轮见同目录的 `SCREENED-OUT-R52.md`;此前各轮留在本文件,编号不变。

@@ -1,0 +1,263 @@
+[
+  [
+    {
+      "objective_key": "c5a4430810ac15ef99776bfba71c85718546d9b9e8a73078203f9122cdc9e416",
+      "bank": "old_dual",
+      "bank_key": "992865eede10c5ba77b04621d0337e52c641184ffa346fade6e7f200a5fc41cb",
+      "upper": "381557843985926749/496125000000000000",
+      "constant": "15614021/26460000"
+    },
+    {
+      "objective_key": "8432737c9effedb260f56472ca145671afafd21d68b4790fa2276847c8d37437",
+      "bank": "old_dual",
+      "bank_key": "c25ad44fc2f018daeef3d48908ac2d0e679a7a923aef34fc4569ddedcbb3743a",
+      "upper": "10272775835067229/13230000000000000",
+      "constant": "15806621/26460000"
+    },
+    {
+      "objective_key": "1c71bd9de9021a67ac9522e13c5ec185fedc9608d40fcd6077f465c4b9040459",
+      "bank": "old_dual",
+      "bank_key": "76fb8e5c54dba76b50f3a0a13dc55d6b2bfb3e5bc665cc2b0626defb61dd3fbf",
+      "upper": "1513343975843949607/1984500000000000000",
+      "constant": "15373621/26460000"
+    },
+    {
+      "objective_key": "cfa0325d43520357f5a730a3ef3fdd0071324a5270505d0325d1e1793d9dc8f9",
+      "bank": "old_dual",
+      "bank_key": "519f70806c2edd907497d9421020967e985ddc6fa353a6944674723c5ea21bc8",
+      "upper": "126483247979300371/165375000000000000",
+      "constant": "15433021/26460000"
+    },
+    {
+      "objective_key": "b04bd6800c3589122b2f47915189231970dd28dd69e361579675ffe4bb03606a",
+      "bank": "old_dual",
+      "bank_key": "a2a8ececf13b0791259974e9860e54c6e11acb5dcbb2dc05cce5940401eff8a4",
+      "upper": "383457293782660297/496125000000000000",
+      "constant": "5193607/8820000"
+    },
+    {
+      "objective_key": "d3b2e03b6ae7df8b4ad2d1ac987b687f0593612ace6c2c7fb456d5399713002d",
+      "bank": "old_dual",
+      "bank_key": "8dc2fa314ca2185ea9d17d06bb5c5ddf47ba973a5bb8587ced360b559514de26",
+      "upper": "76346886290763251/99225000000000000",
+      "constant": "15551671/26460000"
+    },
+    {
+      "objective_key": "57e1649b9ad5971ec8b3706e5488cb6c281af5918a46909ef6b31b18091101fb",
+      "bank": "old_dual",
+      "bank_key": "78869c619e1e4a9d1fbdae12eca3f0a94febf2d1664f03cdc8df9348872ce3cc",
+      "upper": "1553513975124767473/1984500000000000000",
+      "constant": "15902821/26460000"
+    },
+    {
+      "objective_key": "2524f82d4c40a2a8a31713d5f4de5cacd37a6598f833fb2b1feab5a1f0fb9f01",
+      "bank": "old_dual",
+      "bank_key": "f4937649012bc7bae237609476d42ab1323f8882281800c99469c1f0a86c67ea",
+      "upper": "740344187590776401/992250000000000000",
+      "constant": "4866607/8820000"
+    },
+    {
+      "objective_key": "695590b90490e9f715a89236095c45b791a2bd513a63cf195e872d4d5dc9d21a",
+      "bank": "old_dual",
+      "bank_key": "e802c1e077f646ddefdfef175a18105d16bfa4b9724f21efc657c80c2ade99e1",
+      "upper": "298657195018334741/396900000000000000",
+      "constant": "14696021/26460000"
+    },
+    {
+      "objective_key": "2dfaacf632467afb920006db7d211bf8a3714ad8a9006b716761790025c9a03f",
+      "bank": "old_dual",
+      "bank_key": "a2a0a31aeb17d6aaf10d856cc4230e8cd5cbc2c738b07f7ea44d3c3aeb465682",
+      "upper": "33731602791809147/44100000000000000",
+      "constant": "14633471/26460000"
+    },
+    {
+      "objective_key": "435f817bc798f3d56a63ea27792c8758560730080125bc68f089e3cb6c2dc417",
+      "bank": "old_dual",
+      "bank_key": "49102705059596ea1bd1eebb6724168e12601714b2d01f4f4d580421db5d458c",
+      "upper": "1519775675207449411/1984500000000000000",
+      "constant": "14712521/26460000"
+    },
+    {
+      "objective_key": "4984ba13e350f14c53e38ce42964d69ef812084f0cc71151ec6d12e39e4c4d13",
+      "bank": "old_dual",
+      "bank_key": "c48e6faf5ffe72914aae3761b4736b317903e0b8651e9de17b0cb7b3db0325cd",
+      "upper": "27363808483771999/35437500000000000",
+      "constant": "14808721/26460000"
+    },
+    {
+      "objective_key": "031bc3a1c5e3ade704de9b56b6224b09e49c94b5491d6aea9e3dee321efdd191",
+      "bank": "old_dual",
+      "bank_key": "06876586a40ab1d7788c6dfff392f6669a74d1676e229bda4026d668a7a85347",
+      "upper": "297135175050260513/396900000000000000",
+      "constant": "4881307/8820000"
+    },
+    {
+      "objective_key": "b233b2e307904128ef8cc1fe4140aa3b7318acc9e925525ce215935e2d514598",
+      "bank": "old_dual",
+      "bank_key": "50a4a67b02f219bb2b92b0d86655213bff82def8cb750e25d6370aadd0e40458",
+      "upper": "1498273475096752841/1984500000000000000",
+      "constant": "14740121/26460000"
+    },
+    {
+      "objective_key": "f4b8a66886f2a142a955c5befbf28d598d9869b313d193e5717ba579b0029342",
+      "bank": "new_dual",
+      "bank_key": "f4b8a66886f2a142a955c5befbf28d598d9869b313d193e5717ba579b0029342",
+      "upper": "189761609386169953/248062500000000000",
+      "constant": "5141107/8820000"
+    },
+    {
+      "objective_key": "6c65727c62f1ed11d3028b98d5805d77f6506b249ac5eee380451bf98e91bf0c",
+      "bank": "new_dual",
+      "bank_key": "6c65727c62f1ed11d3028b98d5805d77f6506b249ac5eee380451bf98e91bf0c",
+      "upper": "192118484386169953/248062500000000000",
+      "constant": "5224907/8820000"
+    },
+    {
+      "objective_key": "b260fdb7654abafd04b14237f0d812dfec7fa63586b828027a62fbcecbd9fb8e",
+      "bank": "new_dual",
+      "bank_key": "b260fdb7654abafd04b14237f0d812dfec7fa63586b828027a62fbcecbd9fb8e",
+      "upper": "51604100836993391/66150000000000000",
+      "constant": "1752019/2940000"
+    },
+    {
+      "objective_key": "16b1d9e9c23bf7d6c610adf102a92b53b0d9766c7cd9a87ee33bec925e702d3a",
+      "bank": "new_dual",
+      "bank_key": "16b1d9e9c23bf7d6c610adf102a92b53b0d9766c7cd9a87ee33bec925e702d3a",
+      "upper": "767750187554084197/992250000000000000",
+      "constant": "5218207/8820000"
+    },
+    {
+      "objective_key": "bbe92039d8916a32e35e2e4aa9e7d637246a2e3f4e43816b989238b106903d04",
+      "bank": "new_dual",
+      "bank_key": "bbe92039d8916a32e35e2e4aa9e7d637246a2e3f4e43816b989238b106903d04",
+      "upper": "775002687545695433/992250000000000000",
+      "constant": "5282407/8820000"
+    },
+    {
+      "objective_key": "e6ac6a2b6558513324ba7def7fb309597694e96a32173bb056c94d87b903e259",
+      "bank": "new_dual",
+      "bank_key": "e6ac6a2b6558513324ba7def7fb309597694e96a32173bb056c94d87b903e259",
+      "upper": "15226417750392767/19845000000000000",
+      "constant": "15414221/26460000"
+    },
+    {
+      "objective_key": "035d6f981e5f3b8db41dd379761a3166d56042a7ae009da5d3c6c7b4583c9712",
+      "bank": "new_dual",
+      "bank_key": "035d6f981e5f3b8db41dd379761a3166d56042a7ae009da5d3c6c7b4583c9712",
+      "upper": "2181566821484681/2835000000000000",
+      "constant": "15473621/26460000"
+    },
+    {
+      "objective_key": "74a4b848bbd4e393e1cbf1ab7b9659d603130b6c4bbe249619f6a0485d3abb48",
+      "bank": "new_dual",
+      "bank_key": "74a4b848bbd4e393e1cbf1ab7b9659d603130b6c4bbe249619f6a0485d3abb48",
+      "upper": "14284612732423501/18375000000000000",
+      "constant": "15621421/26460000"
+    },
+    {
+      "objective_key": "094e40d2899860b984fff83b31aa1a54b475febf2634ca7278b162d80fd88af7",
+      "bank": "new_dual",
+      "bank_key": "094e40d2899860b984fff83b31aa1a54b475febf2634ca7278b162d80fd88af7",
+      "upper": "153605552502700691/198450000000000000",
+      "constant": "15592271/26460000"
+    },
+    {
+      "objective_key": "a8b47c954d5abfce10166bbcf05a154b502e7a77709ce87912db86fa5eb10d50",
+      "bank": "new_dual",
+      "bank_key": "a8b47c954d5abfce10166bbcf05a154b502e7a77709ce87912db86fa5eb10d50",
+      "upper": "130204314611580731/165375000000000000",
+      "constant": "15943421/26460000"
+    },
+    {
+      "objective_key": "4ea39b04fd9ec29e5bd45a6b5de5d3f5e156d155e2a2594c5f1f63965a7a78e2",
+      "bank": "old_dual",
+      "bank_key": "b332fb8018939bf73df501bcf9fa55ceb7392fcf1ac237edfaae6851ac00527c",
+      "upper": "1498074975250561451/1984500000000000000",
+      "constant": "47243863/79380000"
+    },
+    {
+      "objective_key": "78fc8cd3fbad8bd6e5082d51cbfe0b5f028bbb13635b87b55aae750e180f02a6",
+      "bank": "old_dual",
+      "bank_key": "47269d1cb21feaabaa501f6f501e98c7886932ce0cfa1d453574acb0bcca124c",
+      "upper": "752765887619401379/992250000000000000",
+      "constant": "46930631/79380000"
+    },
+    {
+      "objective_key": "82676bc8d2a47dca9d77428c0ea720b1119c0aca0aec45db9137ff26d96ba1f8",
+      "bank": "old_dual",
+      "bank_key": "7bb3f1f71f326af0cc88d8377217e66ac9d0af583e3cc5a5811ab7e59597b5f4",
+      "upper": "303543915037974889/396900000000000000",
+      "constant": "47219231/79380000"
+    },
+    {
+      "objective_key": "7d57139935e83099f4470a101ce8da88f1c59980291353a8c07433ead1a53199",
+      "bank": "new_dual",
+      "bank_key": "7d57139935e83099f4470a101ce8da88f1c59980291353a8c07433ead1a53199",
+      "upper": "1476000475114089209/1984500000000000000",
+      "constant": "45780731/79380000"
+    },
+    {
+      "objective_key": "13db7a43293713a4a3f84ef8c21669292b5f2568f9f7f16e1a8e640f2403bb1c",
+      "bank": "new_dual",
+      "bank_key": "13db7a43293713a4a3f84ef8c21669292b5f2568f9f7f16e1a8e640f2403bb1c",
+      "upper": "747427737570872951/992250000000000000",
+      "constant": "46534931/79380000"
+    },
+    {
+      "objective_key": "a8b2fe621cd49121c2134faa744b42eb403d9e6bc6ae8a1089689aa4eac963ff",
+      "bank": "new_dual",
+      "bank_key": "a8b2fe621cd49121c2134faa744b42eb403d9e6bc6ae8a1089689aa4eac963ff",
+      "upper": "62582676044423111/82687500000000000",
+      "constant": "46815281/79380000"
+    },
+    {
+      "objective_key": "e4646c69fd3544a3c69e2076870613b1b1f7ac8ad5af8f02469f46e88180cef1",
+      "bank": "new_dual",
+      "bank_key": "e4646c69fd3544a3c69e2076870613b1b1f7ac8ad5af8f02469f46e88180cef1",
+      "upper": "746703987611638519/992250000000000000",
+      "constant": "6639233/11340000"
+    },
+    {
+      "objective_key": "e2e2eff672958ee7553e7a85d09b51a5b871f9216b61370c74318cd36c6d74c5",
+      "bank": "new_dual",
+      "bank_key": "e2e2eff672958ee7553e7a85d09b51a5b871f9216b61370c74318cd36c6d74c5",
+      "upper": "151243457511093089/198450000000000000",
+      "constant": "47052431/79380000"
+    },
+    {
+      "objective_key": "1f9125272173d853cd8d6036e6a909cf9385a4545d458769ae1090cf2f10b35f",
+      "bank": "new_dual",
+      "bank_key": "1f9125272173d853cd8d6036e6a909cf9385a4545d458769ae1090cf2f10b35f",
+      "upper": "740512287537185167/992250000000000000",
+      "constant": "45753431/79380000"
+    },
+    {
+      "objective_key": "ef1c54b0b4a62f59e5f1369fc68492492ecd5ca6c6e5bc509a9d91244ce52944",
+      "bank": "new_dual",
+      "bank_key": "ef1c54b0b4a62f59e5f1369fc68492492ecd5ca6c6e5bc509a9d91244ce52944",
+      "upper": "10610568393425893/14175000000000000",
+      "constant": "45931631/79380000"
+    },
+    {
+      "objective_key": "2dcb7d3ad913502d444d89336a844481ec2c2b62e2152538003b836edefb97a9",
+      "bank": "new_dual",
+      "bank_key": "2dcb7d3ad913502d444d89336a844481ec2c2b62e2152538003b836edefb97a9",
+      "upper": "748537287519805631/992250000000000000",
+      "constant": "46375031/79380000"
+    },
+    {
+      "objective_key": "e9cf589f7ea2f7a17bee672cc8379305614137f943c03bba7cfb05b1f378995d",
+      "bank": "new_dual",
+      "bank_key": "e9cf589f7ea2f7a17bee672cc8379305614137f943c03bba7cfb05b1f378995d",
+      "upper": "26686398661755097/35437500000000000",
+      "constant": "46287581/79380000"
+    },
+    {
+      "objective_key": "c8a997f934f6c3f044ebc7377f36e874e04969aa474ed750c8a9eea5c63d3850",
+      "bank": "new_dual",
+      "bank_key": "c8a997f934f6c3f044ebc7377f36e874e04969aa474ed750c8a9eea5c63d3850",
+      "upper": "381339043763722997/496125000000000000",
+      "constant": "47341031/79380000"
+    }
+  ]
+]

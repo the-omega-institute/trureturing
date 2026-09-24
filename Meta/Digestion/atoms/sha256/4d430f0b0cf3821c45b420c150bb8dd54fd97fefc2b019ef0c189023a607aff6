@@ -1,0 +1,38 @@
+### 51.5 有限来源闭包只落在消失尾中
+
+令
+$$
+X_{\rm fin}=X_A\cap c_{00}(\mathbb N;\mathbb K),\qquad
+I_0=\overline{E(X_{\rm fin})}^{\|\cdot\|_\rho}.
+\tag{51.18}
+$$
+有限来源支撑不等于有限输出支撑，且 $I_0$ 是输出的范数闭包，不是来源乘积闭包。我们只证明
+$$
+\boxed{I_0\subset I_A\cap B_\rho^0.}
+\tag{51.19}
+$$
+
+若 $b_n=0$ 对所有 $n>M$，Context43.3–43.4的行公式在实数和复数上都是同一整系数恒等式。置
+$$
+F_b(z)=1+z\sum_{i=0}^{M}b_i z^i,\qquad
+C_n(z)=\sum_{j\ge0}b_{n+j}z^j,\qquad
+R_n(z)=F_b(z)^{-1}C_n\!\left(\frac z{F_b(z)}\right).
+\tag{51.20}
+$$
+$C_n$ 是有限多项式且 $n>M$ 时为零。由于 $F_b(0)=1$，形式行级数由上述有限递归唯一确定，并且正是这个有理函数在零点处的 Taylor germ；实系数情形把同一多项式恒等式复化后用于 Cauchy 估计。对 $|z|\le\rho$，
+$$
+\begin{aligned}
+|F_b(z)|&\ge1-A\sum_{i=0}^{M}\rho^{i+1}
+=\rho+(1-\rho)\rho^{M+1}>\rho>0,\\
+\exists R&>\rho:\ F_b\text{ 在 }|z|\le R\text{ 及其邻域内无零点},\\
+H_n&=\max_{|z|=R}|R_n(z)|,\qquad
+C=\max_{0\le n\le M}\rho^nH_n,\\
+\sup_{n+k\ge L}\rho^{n+k}|E(b)_{n,k}|
+&\le C\left(\frac\rho R\right)^{L-M}\quad(L\ge M).
+\end{aligned}
+\tag{51.21}
+$$
+只有有限多个非零行参与 $C$；Cauchy 系数界给每一行的几何衰减，故 $E(b)\in B_\rho^0$。常数依赖于这个具体来源和支撑，不作无限级数收敛或对所有支撑一致的尾假设。
+
+再证 $I_A$ 范数闭。若 $E(a^{(q)})\to U$ 于 $B_\rho$，则首列给 $a_n^{(q)}=E(a^{(q)})_{n,0}\to U_{n,0}$。令 $a_n=U_{n,0}$，则 $|a_n|\le A$；每个输出坐标是有限多项式，逐坐标取极限即得 $U_{n,k}=E(a)_{n,k}$。因此 $U\in I_A$。结合 $B_\rho^0$ 的范数闭性和 $E(X_{\rm fin})\subset I_A\cap B_\rho^0$，得到（51.19）。这里不另列乘积像闭性的第二个主证明。
+

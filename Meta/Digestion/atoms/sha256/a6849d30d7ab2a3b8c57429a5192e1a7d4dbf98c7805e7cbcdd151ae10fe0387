@@ -1,0 +1,44 @@
+**定理 27.7（完整相容集合的剩余时域证书）。** 定义
+$$
+\ell_{\rm rem}(\beta,t)=t_\beta(s_*)-t,\qquad
+K_*=4A_1s_*^2/\nu^3.
+\tag{27.121}
+$$
+取定义25.5的一份实际档案相容拟合见证 $\widehat\omega\in\mathfrak F_H$，其投影为 $(\widehat\beta,\widehat t)$。若
+$$
+\underline r=r_{\rm obs}-\epsilon_r>0,
+\quad B_{\rm err}=\frac{6\nu}{\underline r}(\epsilon_z+L_g\epsilon_r),
+\quad T_{\rm err}=\frac{4\epsilon_r}{\nu}+K_*B_{\rm err},
+$$
+$$
+E_{\rm adm}=\frac{4\epsilon_r}{\nu}+2K_*B_{\rm err},\qquad
+\widehat\ell=\ell_{\rm rem}(\widehat\beta,\widehat t),
+\tag{27.122}
+$$
+则任意两个 $K_H$ 中的候选参数差、时间差分别至多 $B_{\rm err},T_{\rm err}$，剩余时域差至多 $E_{\rm adm}$。因此每个相容候选都允许同一个已知内部增量
+$$
+0\le\sigma\le\max\{0,\widehat\ell-E_{\rm adm}\}.
+\tag{27.123}
+$$
+推进后实际相容场与拟合续接场满足
+$$
+\|u_\beta(t+\sigma)-u_{\widehat\beta}(\widehat t+\sigma)\|_2
+\le6B_{\rm err}+M_FT_{\rm err}.
+\tag{27.124}
+$$
+该区间仅为充分证书；不能认证某正增量，不证明该增量非法。
+
+证明。阈值时间导数给 $|\partial_\beta t_\beta(s_*)|\le K_*$，故
+$$
+|\ell_{\rm rem}(\beta,t)-\ell_{\rm rem}(\beta',t')|
+\le K_*|\beta-\beta'|+|t-t'|.
+\tag{27.125}
+$$
+先对较大的 $K_{\rm pair}$ 证明界：任意两个候选坐标差至多 $2\epsilon_r,2\epsilon_z$，其较小真实第一坐标满足 $\underline r\le m\le s_*$。定理25.3依次给 $B_{\rm err}$、$4\epsilon_r/\nu+K_*B_{\rm err}$，代入（27.125）给 $E_{\rm adm}$。这些全称界通过 $K_H\subseteq K_{\rm pair}$ 限制到真正档案交集；拟合点具有交集见证，故任意实际相容剩余时域至少 $\widehat\ell-E_{\rm adm}$。正裕量情形可用（27.118）；若该数为负，只保留零步，零步由图域定义独立合法。因此（27.123）在所有情况成立，且从未对负裕量作不合法的正步授权。（27.124）是（27.115）的直接应用。
+
+若实际来源确在初始图上、旧档案相容、同时取得条件成立且共同误差事件为真，则真实实现在 $\mathfrak F_H$，证书便约束真实动作。若交集空，或拟合只属于 $K_{\rm pair}$ 而无共同档案见证，不能称此证书已对完整观察者实例化。测得原始对不在精确图像中，并不自动使交集空；噪声情形须用残差判断。一个数值实现可以将 $\widehat\ell$ 换成其认证下界，但计算该下界与提供拟合见证仍有独立成本。
+
+每个候选推进后的剩余时域都严格减去同一个 $\sigma$，与拟合的剩余时域差不变。因此对未新增测量的传播候选集，所有累计增量不超过原正裕量的序列继续被同一个 $E_{\rm adm}$ 支持；（27.119）给域与值的复合。实际新增记录只在同一延伸实现上进一步取交，不能重新挑一个不兼容的来源来维持拟合。
+
+$B_0=0$ 时参数已知，可令 $B_{\rm err}=0$、$T_{\rm err}=E_{\rm adm}=4\epsilon_r/\nu$；$r_t\ge\nu/2$ 直接界定任意两候选的时间差，此单点版本可包含已知初始时刻且无需 $\underline r>0$。非空共同见证仍必需。对于非单点参数，正下界失败只表明（27.122）不能使用，不等于实际离开图域或正增量非法。$\square$
+

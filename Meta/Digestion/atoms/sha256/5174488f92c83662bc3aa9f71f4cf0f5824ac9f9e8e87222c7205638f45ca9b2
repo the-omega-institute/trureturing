@@ -1,0 +1,67 @@
+**命题 47.4（固定有限支撑的统一消失尾）。** $\mathcal E(\mathcal F_A^{\mathbb R})\subseteq\mathcal B_{\rho,0}$。对固定支撑上界 $M$，尾收敛对所有满足 $b_i=0\ (i\ge M)$ 的 $b\in K_A$ 一致。
+
+证明。取 $M\ge1$ 使上述支撑条件成立；零边界也允许这样选。第43.3节定理43.4及式（43.6）—（43.9）的有限系数证明只用单位常数项、加减乘及有限卷积，所以在实系数与复系数上仍成立。置
+$$
+F_b(z)=1+z\sum_{i=0}^{M-1}b_i z^i,\qquad
+C_{n,b}(w)=\sum_{j=0}^{M-1-n}b_{n+j}w^j\quad(n<M).
+$$
+实际第 $n$ 行的形式级数是以下有理函数在零点的 Taylor 级数：
+$$
+R_{n,b}(z)
+=\frac1{F_b(z)}C_{n,b}\!\left(\frac z{F_b(z)}\right)
+=\sum_{j=0}^{M-1-n}\frac{b_{n+j}z^j}{F_b(z)^{j+1}}
+\quad(n<M),
+\qquad
+R_{n,b}=0\quad(n\ge M).
+\tag{47.27}
+$$
+后一结论亦可由 (47.1) 对列归纳验证。$C_{n,b}$ 为多项式，没有额外的无限复合级数收敛要求。
+
+由 $A>0$ 得
+$$
+\lambda-(1+A)=\frac{\sqrt{A^2+4A}-A}{2}>0,
+\qquad \rho<\frac1{1+A}<1.
+$$
+固定
+$$
+\rho<r<\frac1{1+A},\qquad
+\delta_r=1-\frac{Ar}{1-r}>0.
+\tag{47.28}
+$$
+对 $|z|\le r$，
+$$
+|F_b(z)-1|
+\le A\sum_{i=0}^{M-1}|z|^{i+1}
+\le\frac{Ar}{1-r}=1-\delta_r.
+$$
+故 $|F_b(z)|\ge\delta_r$；特别地，$F_b$ 在
+$|z|<1/(1+A)$ 无零点，(47.27) 在包含闭圆盘 $|z|\le r$ 的开集上解析。
+
+在 $|z|=r$ 上，非零行具有共同上界
+$$
+|R_{n,b}(z)|
+\le K_{M,r}:=\frac A{\delta_r}
+\sum_{j=0}^{M-1}\left(\frac r{\delta_r}\right)^j.
+$$
+常数可依赖 $M,A,r$，不依赖 $b,n,k$。Cauchy 系数估计给
+$|\mathcal E(b)(n,k)|\le K_{M,r}r^{-k}$ 对 $n<M$ 成立。
+当 $L\ge M-1$、$n+k\ge L$ 且 $n<M$ 时，
+$k\ge L-M+1$，所以
+$$
+\sup_{\substack{b\in K_A\\b_i=0\ (i\ge M)}}
+\sup_{n+k\ge L}\rho^{n+k}|\mathcal E(b)(n,k)|
+\le K_{M,r}\left(\frac\rho r\right)^{L-M+1}
+\longrightarrow0.
+\tag{47.29}
+$$
+这是对固定 $M$ 的一致尾界，不对全部有限支撑长度一致。$\square$
+
+$\mathcal B_{\rho,0}$ 是闭的：若 $T_j\to T$ 为范数收敛，先使
+$\|T_j-T\|_\rho<\varepsilon/2$，再使该 $T_j$ 的尾小于
+$\varepsilon/2$，就使 $T$ 的尾小于 $\varepsilon$。因此
+$$
+\overline{\mathcal J_{A,\rho}^{\mathbb R}}^{\,\|\cdot\|_\rho}
+\subseteq\mathcal B_{\rho,0}.
+\tag{47.30}
+$$
+

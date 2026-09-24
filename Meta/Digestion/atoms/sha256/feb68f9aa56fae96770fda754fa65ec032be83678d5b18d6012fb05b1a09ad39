@@ -1,0 +1,43 @@
+**命题 19.6（能量恒等与容量规范）。** 固定有限连通图 `V`，至少两个顶点。边上 `w_xy=w_yx>0`，无边为零，`w_xx=0`；顶点容量 `m_x>0`。记
+
+$$
+d_x=\sum_yw_{xy},\quad L=D^{\mathsf T}WD,
+\quad (Q_mf)(x)=\frac1{m_x}\sum_yw_{xy}(f(y)-f(x))=(-M^{-1}Lf)(x).
+$$
+
+把 $\langle f,g\rangle_m=\sum_xm_xf(x)g(x)$ 固定为参考内积；对称导纳使每条无向边的两项相加为平方差乘积，因此同一能量形式为
+
+$$
+\mathcal E_w(f,g)=\sum_{\{x,y\}\in E}w_{xy}(f(y)-f(x))(g(y)-g(x))
+=\langle f,-Q_mg\rangle_m.
+\tag{19.111}
+$$
+
+固定 `w` 时，能量形式的这一表达不随 `m` 改变；改变的是参考内积、生成元和下面读数的局部预算。顶点 `x` 的退出速率是 `d_x/m_x`，平均停留时间是 `m_x/d_x`，跳到 `y` 的条件概率 `w_xy/d_x` 不变。
+
+整体缩放 `n=αm` 给出精确关系
+
+$$
+Q_{\alpha m}=Q_m/\alpha,\qquad
+e^{tQ_{\alpha m}}=e^{(t/\alpha)Q_m},\qquad
+H_k^{\alpha m}=\alpha H_k^m
+\tag{19.112}
+$$
+
+（最后一式使用同一跳链、同一指数等待随机数）。若一般容量满足
+
+$$
+0<a\le n_x/m_x\le b<\infty\quad\text{对所有 }x,
+\tag{19.113}
+$$
+
+则定理19.2的共同路径换钟
+
+$$
+A(s)=\int_0^s\frac{n_{X^m(u)}}{m_{X^m(u)}}\,du
+$$
+
+满足 `as≤A(s)≤bs`、`t/b≤A⁻¹(t)≤t/a`，每次共同访问的等待时间也满足 `aH_k^m≤H_k^n≤bH_k^m`。非比例时，这不是一个所有初态和路径通用的确定时钟，不给半群逐项大小排序。
+
+[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)第123.4节 使用归一化概率参考 `μ`。本题保留任意正容量的绝对尺度；若令 `μ=m/Σm`，要保留 `Q_m` 就须同时把边导纳改成 `w/Σm`。只归一化容量会改变时钟，不能省略总容量因子。
+

@@ -1,0 +1,36 @@
+**命题 27.4（准备场上的既有精确因子化及其定量界）。** 置
+$$
+\mathcal S=\{u_\beta(t):(\beta,t)\in W\},\quad
+\mathcal I=\Psi^{-1}:Y\to W,\quad
+\mathcal D(a)=u_\beta(t)\ \text{其中 }\mathcal I(a)=(\beta,t),
+$$
+$$
+\mathcal O(U)=(1-2\ell_x(U)/\alpha,-4\ell_y(U)/\alpha).
+\tag{27.114}
+$$
+则 $\mathcal O|_{\mathcal S}$ 与 $\mathcal D$ 互逆。因此任意精确任务 $\mathcal T:\mathcal S\to Z_{\mathcal T}$ 都在实际读数像上有唯一因子 $\mathcal T\circ\mathcal D$；这直接使用既有 [InjectiveInterfaceTargetFactorization](../../../D5/S3/ConceptDynamics/RefinementFactorization/InjectiveInterfaceTargetFactorization.lean) 的 `injective_interface_factors_every_target` 及 [RealizedImageKernelFactorization](../../../D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean) 的 `realized_image_unique_factorization_iff_reverse_kernel`，不是另立一般解码原理。
+
+具体定量内容为
+$$
+\|u_\beta(t)-u_{\beta'}(t')\|_2
+\le6|\beta-\beta'|+M_F|t-t'|.
+\tag{27.115}
+$$
+对两份原始图坐标，令 $m=\min\{r,r'\}>0$、$P_m=6+4M_FA_1m^2/\nu^3$，则
+$$
+\|\mathcal D(r,z)-\mathcal D(r',z')\|_2
+\le\frac{3\nu P_m}{m}(|z-z'|+L_g|r-r'|)
+ +\frac{2M_F}{\nu}|r-r'|.
+\tag{27.116}
+$$
+在提升闭图上，边界标签已给时定义 $\widetilde{\mathcal D}(\widetilde\Psi(\beta,t))=u_\beta(t)$；此时允许 $m=0$，且
+$$
+\|\widetilde{\mathcal D}(r,v)-\widetilde{\mathcal D}(r',v')\|_2
+\le3P_m(|v-v'|+L_s|r-r'|)+\frac{2M_F}{\nu}|r-r'|.
+\tag{27.117}
+$$
+
+证明。直接有 $\mathcal O(\mathcal D(a))=a$。若 $U=u_\beta(t)\in\mathcal S$，则 $\mathcal O(U)=\Psi(\beta,t)$，图单射给 $\mathcal D(\mathcal O(U))=U$。所以观察在此准备场集合上单射，满足所引现成精确因子化前提。恢复卷（25.106）在共同时间比较参数，恢复卷（25.111）的 $L^2$ 速度界在时间段积分，得（27.115）；没有声称 $H^2$ 时间速度有同一界。代入本卷（25.110）—（25.111）得（27.116），代入（27.108）得（27.117）。提升边界的初态由已给 $\beta$ 决定，定义良好。
+
+任意精确任务可因子化，不意味着它定量稳定。若另外证明 $d_{\mathcal T}(\mathcal T(U),\mathcal T(V))\le L_{\mathcal T}\|U-V\|_2$，才可将这些界乘 $L_{\mathcal T}$；更一般须有自己的 $L^2$ 连续模数。点值、梯度或不连续任务不能自动使用此结论。解码对象是准备场及指定任务，不是整个 $C$ 或取得历史。两数充分也没有证明它们在所有可能传感器或费用合同中全局最优。$\square$
+

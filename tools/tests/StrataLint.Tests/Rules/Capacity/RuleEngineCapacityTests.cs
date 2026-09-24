@@ -10,6 +10,147 @@ public sealed class RuleEngineCapacityTests
 {
     private const int L = RepositoryRules.DirectoryFileLimit;
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Sl003BodyLimitsConsumeOnlyRegisteredMaterials(bool includeExperiment)
+    {
+        const string experiment = "docs/reports/fixture/long.md";
+        var fixture = new RuleFixture();
+        RegisterCapacityMaterials(fixture, includeExperiment ? ["D5/**/*.lean", experiment] : ["D5/**/*.lean"]);
+        fixture.Files[experiment] = fixture.Baseline[experiment] = string.Concat(Enumerable.Repeat("line\n", 1130));
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics;
+
+        Assert.Equal(includeExperiment, diagnostics.Any(diagnostic => diagnostic.Path == experiment && diagnostic.AdmissionEffect == AdmissionEffect.Block));
+    }
+
+    [Fact]
+    public void Sl003ProductionRegistrationExcludesUnchangedExperimentProse()
+    {
+        const string experiment = "docs/reports/erdos7-odd-covering/profile-notes/321-384/339-irredundant-source-seven-labels-bound-the-actual-surplus.md";
+        var fixture = new RuleFixture();
+        fixture.Files["Meta/ci-checks.json"] = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/ci-checks.json"));
+        using var manifest = System.Text.Json.JsonDocument.Parse(fixture.Files["Meta/ci-checks.json"]);
+        var declaration = manifest.RootElement.GetProperty("checks").EnumerateArray().Single(row => row.GetProperty("id").GetString() == "SL-003");
+        foreach (var item in declaration.GetProperty("materials").EnumerateArray())
+        {
+            var path = item.GetString()!;
+            if (!path.Contains('*')) fixture.Files.TryAdd(path, path.EndsWith(".json", StringComparison.Ordinal) ? "{}\n" : "\n");
+        }
+        fixture.Files[experiment] = fixture.Baseline[experiment] = string.Concat(Enumerable.Repeat("line\n", 1130));
+        fixture.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 1001));
+
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+
+        Assert.Equal(RuleFixture.RingPath, finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Sl003EmptyOrExcludedBodiesKeepDirectoryInventoryChecks(bool excluded)
+    {
+        var fixture = new RuleFixture();
+        RegisterCapacityMaterials(fixture, excluded ? ["**"] : [], excluded ? ["D5/**"] : []);
+        fixture.Files[RuleFixture.RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 1001));
+        for (var index = 0; index <= RepositoryRules.DirectoryToleranceLimit; index++)
+            fixture.Files[$"Unselected/path{index}.md"] = "body\n";
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == RuleFixture.RingPath);
+        Assert.Contains(diagnostics, diagnostic => diagnostic.Path == "Unselected" && diagnostic.AdmissionEffect == AdmissionEffect.Block);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("{")]
+    [InlineData("{\"schema\":\"ci-check-input-registration-v2\",\"checks\":[]}")]
+    public void Sl003MissingBodyRegistrationFailsExplicitly(string? manifest)
+    {
+        var fixture = new RuleFixture();
+        if (manifest is null) fixture.Files.Remove("Meta/ci-checks.json");
+        else fixture.Files["Meta/ci-checks.json"] = manifest;
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic => diagnostic.Path == "Meta/ci-checks.json"
+            && diagnostic.AdmissionEffect == AdmissionEffect.Block && diagnostic.Message.Contains("SL-003", StringComparison.Ordinal));
+    }
+
+    private static void RegisterCapacityMaterials(RuleFixture fixture, string[] materials, string[]? excludes = null) =>
+        fixture.Files["Meta/ci-checks.json"] = System.Text.Json.JsonSerializer.Serialize(new
+        {
+            schema = "ci-check-input-registration-v2",
+            checks = new[] { new { id = "SL-003", materials, material_excludes = excludes ?? [] } },
+        });
+
+    [Theory]
+    [InlineData("measurements.json")]
+    [InlineData("Results/sample.JSON")]
+    [InlineData("Results/sample.jsonl")]
+    [InlineData("Results/sample.ndjson")]
+    [InlineData("Results/sample.json5")]
+    [InlineData("Results/sample.jsonc")]
+    [InlineData("Results/sample.yaml")]
+    [InlineData("Results/sample.yml")]
+    [InlineData("Results/sample.toml")]
+    [InlineData("Results/sample.csv")]
+    [InlineData("Results/sample.tsv")]
+    [InlineData("Results/sample.xml")]
+    [InlineData("Results/sample.jsonl.xz.b64")]
+    [InlineData("Results/sample.trx")]
+    public void Sl003ExemptsDataFilesFromSoftAndHardLineLimits(string path)
+    {
+        foreach (var lines in new[] { 801, 1001 })
+        {
+            var fixture = new RuleFixture();
+            fixture.Files[path] = string.Concat(Enumerable.Repeat("data\n", lines));
+            fixture.Changes.Add(path);
+
+            Assert.Empty(RuleCatalog.Default.EvaluateSingle(
+                RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        }
+    }
+
+    [Theory]
+    [InlineData("Results/sample.json.cs")]
+    [InlineData("Results/sample.json.lean")]
+    [InlineData("Results/sample.json.md")]
+    [InlineData("Results/sample.json.py")]
+    [InlineData("Results/data.json/source")]
+    public void Sl003StillBoundsSourceAndProseWithDataNames(string path)
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[path] = string.Concat(Enumerable.Repeat("line\n", 1001));
+        fixture.Changes.Add(path);
+
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal(path, finding.Path);
+        Assert.Equal("artifact exceeds 1000 lines", finding.Message);
+    }
+
+    [Fact]
+    public void Sl003StillCountsDataFilesForDirectoryAdmission()
+    {
+        var fixture = new RuleFixture();
+        for (var index = 0; index <= L; index++)
+        {
+            var path = $"Results/sample{index}.json";
+            fixture.Files[path] = string.Concat(Enumerable.Repeat("data\n", 1001));
+            fixture.Changes.Add(path);
+        }
+
+        var finding = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
+        Assert.Equal("Results", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+        Assert.Contains($"directory contains {L + 1} files", finding.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void Sl003CapacityHardBlocksPastTheHardLimitAndSoftWarnsPastTheSoftLimit()
     {
@@ -39,8 +180,8 @@ public sealed class RuleEngineCapacityTests
     public void Sl003DoesNotTreatTheSingleSourceDigestionLedgerAsASplittableModule()
     {
         var fixture = new RuleFixture();
-        // domains, registry and engineering-projects are the three counted Meta files.
-        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 3; index++)
+        // domains, registry, engineering-projects and ci-checks are the four counted Meta files.
+        for (var index = 0; index < RepositoryRules.DirectoryFileLimit - 4; index++)
         {
             var path = $"Meta/Capacity{index:00}.txt";
             fixture.Files[path] = "fixture\n";

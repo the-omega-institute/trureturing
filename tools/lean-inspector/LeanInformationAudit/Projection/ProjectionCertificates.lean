@@ -9,6 +9,23 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 abbrev ProjectionM := StateT (Array Declaration) Lean.Elab.Term.TermElabM
 
+/-- Check the complete batch synchronously before its environment can be published.
+Preparing declarations does not certify them. A failed batch leaves the caller's
+environment unchanged, including declarations that preceded the failure. -/
+def stageDeclarations (env : Environment) (declarations : Array Declaration)
+    (minimumHeartbeats : Nat := 0) : CoreM Environment := do
+  let options ← getOptions
+  let mut stagedEnv := env
+  for declaration in declarations do
+    match stagedEnv.addDeclCore
+        (max (Core.getMaxHeartbeats options) minimumHeartbeats).toUSize
+        (maxRecDepth.get options).toUSize declaration none true with
+    | .ok nextEnv => stagedEnv := nextEnv
+    | .error error =>
+        let name := declaration.getNames[0]!
+        throwError "IE-C009 ProofConstructionFailed: {name}\n{error.toMessageData options}"
+  pure stagedEnv
+
 namespace ProjectionProof
 
 def fin (index size : Nat) : MetaM Expr := do
@@ -34,10 +51,12 @@ def selection (size : Nat) (indices : Array Nat) : MetaM Expr := do
 def truth (proposition : Expr) : MetaM Bool := do
   withTransparency .all <| reduceEval (← mkDecide proposition)
 
+/-- Prepare a certificate; `stageDeclarations` checks it before publication. -/
 def proof (name : Name) (value : Expr) : ProjectionM Name := do
   let type ← inferType value
   unless ← isProp type do throwError "projection certificate is not a proposition: {name}"
-  checkWithKernel value
+  -- Preserve metavariable-context updates without checking the same proof twice.
+  discard <| instantiateExprMVars value
   modify (·.push (.thmDecl { name, levelParams := [], type, value }))
   pure name
 

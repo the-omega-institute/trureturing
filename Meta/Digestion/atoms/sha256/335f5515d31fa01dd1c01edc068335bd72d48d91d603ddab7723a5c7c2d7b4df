@@ -1,0 +1,37 @@
+#### 127.11.4 可见耦合非零时，两次连续读数恢复隐藏状态
+
+设 $b\ne0$。对任意满足二阶递推的序列，定义
+$$
+\boxed{
+h_t=\frac{x_{t+1}-ax_t}{b}
+\qquad(t\ge0).
+}
+$$
+则 $h_0=(x_1-ax_0)/b$，可见更新按定义成立，而
+$$
+\begin{aligned}
+h_{t+1}
+&=\frac{x_{t+2}-ax_{t+1}}b\\
+&=\frac{dx_{t+1}+(bc-ad)x_t}b
+=cx_t+dh_t.
+\end{aligned}
+$$
+因此每一份二阶历史都唯一提升为完整系统历史；全部 $h_t$ 同时由相邻读数恢复。对指定初态的恢复仍须满足上一节的首步相容性。
+
+将状态与连续读数之间的映射写成
+$$
+T\begin{pmatrix}x\\h\end{pmatrix}
+=\begin{pmatrix}x\\ax+bh\end{pmatrix},
+\qquad
+T=\begin{pmatrix}1&0\\a&b\end{pmatrix},
+\qquad
+N=\begin{pmatrix}0&1\\bc-ad&a+d\end{pmatrix}.
+$$
+矩阵恒等式
+$$
+TA=NT
+$$
+表达完整状态更新与二阶历史更新的相容性：两边第二行均为 $(a^2+bc,ab+bd)$，第一行均为 $(a,b)$。因 $\det T=b\ne0$，这是两份状态表示的真正线性同构，并有 $N=TAT^{-1}$。
+
+这只要求读出耦合 $b\ne0$，不要求 $\det A\ne0$。它证明两次读数能恢复相应状态，没有把原演化变成可逆动力学。实际在时刻 $t+1$ 才取得第二条记录时，公式恢复的是时刻 $t$ 的完整状态；再应用已知 $A$ 可计算时刻 $t+1$ 的状态。数学上的连续读数坐标并不提前提供尚未采集的记录。
+

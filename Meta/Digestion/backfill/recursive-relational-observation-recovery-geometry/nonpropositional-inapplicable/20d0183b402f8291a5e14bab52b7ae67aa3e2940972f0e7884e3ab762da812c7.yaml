@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:20d0183b402f8291a5e14bab52b7ae67aa3e2940972f0e7884e3ab762da812c7
+  normalized_sha256: sha256:20d0183b402f8291a5e14bab52b7ae67aa3e2940972f0e7884e3ab762da812c7
+cas_ref: sha256:20d0183b402f8291a5e14bab52b7ae67aa3e2940972f0e7884e3ab762da812c7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure-upstream bind-only settlement under CLAUDE 3.2; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d; no usable project GID for this complete clause. Inherit the exact original32.6 cycle and function hypotheses. The exact source averaging proof uses dist_le_range_sum_dist, Finset.sum_comm and Equiv.sum_comp for all real functions. The shorter-path sum equals the floor coefficient by sum_range_add, sum_range_reflect and sum_range_id_mul_two with even/odd normalization; no bounded enumeration of cycle lengths is used. The native arbitrary-orbit result uses Equiv.Perm.IsCycleOn.exists_pow_eq/pow_apply_eq_pow_apply, subtypePerm_apply_pow_of_mem and Equiv.ofBijective for exact successor conjugacy; Equiv.sum_comp and Finset.image_image preserve blocks, longest length, mass, deviation and variation.
+    previous_atom_id: 280d553ed820449a0d4c917a868d3d26fcdb3efd7c253b6e3c516ec33118657f
+    next_atom_id: 25136343b1d8b1eda2acc1f3bd002106ddaa2308f9a8576b26d5673514acc330

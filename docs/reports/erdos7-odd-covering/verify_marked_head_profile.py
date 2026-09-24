@@ -14,7 +14,7 @@ from pathlib import Path as _CertificatePath
 from hashlib import sha256 as _certificate_sha256
 _certificate_root = _CertificatePath(__file__).resolve().parent
 _certificate_io_path = _certificate_root / 'certificate_io.py'
-if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '287582353eeb0674f4e80530ebf268228b023f6088d14c819488a56111d0b232':
+if _certificate_sha256(_certificate_io_path.read_bytes()).hexdigest() != '2318639f574d9f6fab4c7187c2736cde559e1925a5f9fa657afe0b8334f7d02b':
     raise ValueError('certificate IO source SHA-256 mismatch')
 _certificate_sys.path.insert(0, str(_certificate_root))
 from certificate_io import read_artifact_bytes, read_artifact_text, write_certificate_text
@@ -34,12 +34,12 @@ THRESHOLDS = range(13)
 
 
 # The entrypoint source pin transitively binds every split arithmetic module.
-_SPLIT_SOURCE_SHA256 = {'head_profile/base.py': 'e0cd80d7c574c717d98a5a45a356910ddbe30f19b303468c4b4034ca2fa9525d',
- 'head_profile/hinges.py': 'a9337a16f256ab6cbfd114b320b3e5f1e25751765bccc1f2589a4cc0efca94a8',
- 'head_profile/holes.py': '0e398c1317548e09befb70708b72ae6eda39a5b1d4cc3fd0d0a820286e53df1e',
- 'head_profile/moments.py': 'f2a71d1c8d5740da88b18dab09ae24ebf5577e3061d6dccc70ffcf981360397e',
- 'head_profile/rectangles.py': '24a1164bfe6ade3f2f5dd62d7e6fdf92a4bb7cd68ece60c7177ef94194e194c0',
- 'head_profile/source.py': '9a989b6111d03e7c3b4a20fbe182e5e0371b3c4e6f0655821179d3aa7cd24a2a'}
+_SPLIT_SOURCE_SHA256 = {'head_profile/base.py': '8907cf8117910c222a10134fe3447d30ac03a9c2e7fcd19f81bab731c4caeef1',
+ 'head_profile/hinges.py': '88e42362f45380e5d80103d625d1e90ce9510b5d7989db9a0666e9d34f192b6c',
+ 'head_profile/holes.py': 'ea9b8b1eb0024c3c3d5a62d6b7ae40aa1d2417683bdf7eab333b3f93fa01f67f',
+ 'head_profile/moments.py': 'b3ba9b63deb7c3e3a2d5e50389b73d9ab6141723501247b2b3a52c46c86bf4dc',
+ 'head_profile/rectangles.py': '7f5cdbbd3ec29f5413e803a6e9954f60554f3283777e7610fc24d2fd57c1d720',
+ 'head_profile/source.py': '01aa42f1e1e5f731eadb586ded1493744f1525b98aa3f07e1fdac4dec5e6ba25'}
 for _relative, _pin in _SPLIT_SOURCE_SHA256.items():
     if _certificate_sha256((_certificate_root / _relative).read_bytes()).hexdigest() != _pin:
         raise ValueError("split arithmetic source SHA-256 mismatch: " + _relative)

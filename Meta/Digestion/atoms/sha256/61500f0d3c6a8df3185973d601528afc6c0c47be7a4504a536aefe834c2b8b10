@@ -1,0 +1,40 @@
+**命题 21.6（四个原始读数的共同误差）。** 沿用恢复几何卷第19节的比值误差界。设每个通道的真实零点及当前读数分别为 $g_u,g_uu$ 和 $g_v,g_vv$，四条已认证原始误差为 $\epsilon_{u0},\epsilon_{us},\epsilon_{v0},\epsilon_{vs}$。若观测零点满足
+
+$$
+\widehat Y_{u0}>\epsilon_{u0},\qquad
+\widehat Y_{v0}>\epsilon_{v0},
+$$
+
+则归一化观测可取
+
+$$
+\widehat u=\widehat Y_{us}/\widehat Y_{u0},\qquad
+\widehat v=\widehat Y_{vs}/\widehat Y_{v0},
+$$
+
+$$
+\delta_u=
+\frac{\epsilon_{us}+\epsilon_{u0}}{\widehat Y_{u0}},
+\qquad
+\delta_v=
+\frac{\epsilon_{vs}+\epsilon_{v0}}{\widehat Y_{v0}}.
+\tag{21.115}
+$$
+
+这里只用 $0<u,v<1$ 和
+$(\widehat Y_{us}-u\widehat Y_{u0})/\widehat Y_{u0}$ 的恒等式，另一通道同理。两通道和零点的误差可以相关；预算必须在同一联合事件上成立，不能把共享校准误差另当独立抽样。若读数来自配对差分，相应制备与差分误差先进入这些原始界。没有安全正分母或增益下界时，不存在这种统一绝对噪声保证。
+
+若要求一份原始仪器记录的合法拟合，应保留同一个 $(r,t,g_u,g_v)$ 的四个残差，而不只保留式（21.115）的两个外包半径。例如默认误差盒的精确候选集为
+$$
+\begin{aligned}
+\mathcal F_Y=\{(r,t,g_u,g_v):\;&r,t,g_u,g_v>0,\\
+&|g_u-\widehat Y_{u0}|\le\epsilon_{u0},\quad
+|g_u e^{-t}-\widehat Y_{us}|\le\epsilon_{us},\\
+&|g_v-\widehat Y_{v0}|\le\epsilon_{v0},\quad
+|g_vk_r(t)-\widehat Y_{vs}|\le\epsilon_{vs},\\
+&\text{同一来源、钟、校准与全部旧档案相容}\}.
+\end{aligned}
+\tag{21.116}
+$$
+已知更小的联合误差集时，四个盒条件换成同一个原始残差向量属于该集；两个归一化区间分别非空不证明 $\mathcal F_Y$ 非空。假设21.1的共同时间、实际读出泛函及制备条件也始终保留。
+

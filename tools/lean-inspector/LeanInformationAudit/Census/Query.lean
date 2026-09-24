@@ -150,7 +150,7 @@ def assess (index : Index) (head : String) (key : StatementKey)
   for entry in index.finite do
     if entry.theoremName != key.theoremName then continue
     candidates := candidates ++ #[entry.unitName, entry.realizationName]
-    let arena ← mkAppM ``PrimitiveLawArena.toArena #[← mkConstWithFreshMVarLevels entry.arenaName]
+    let arena := (← RegistrationGates.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
     let nondegenerate ← matching index ``Arena.Nondegenerate
       (← mkAppM ``Arena.Nondegenerate #[arena])
     let enumerations ← matching index ``Arena.StateEnumeration

@@ -1,0 +1,12 @@
+**命题 4.5（合法混合链）。** 对部分组合 $g:R\to X_t$，其中 $R\subseteq\prod_iX_{s_i}$，设两个合法元组由有限链
+$$
+\boldsymbol z^0=\boldsymbol x,\quad
+\boldsymbol z^1,\ldots,\boldsymbol z^k=\boldsymbol y
+$$
+连接。要求每个 $\boldsymbol z^j\in R$，第 $j$ 步仅改变第 $i_j$ 孔，且该步固定旁支的允许操作已经满足增益 $L_j$。则
+$$
+D_t(g\boldsymbol x,g\boldsymbol y)
+\le\sum_{j=1}^kL_jD_{s_{i_j}}(z^{j-1}_{i_j},z^j_{i_j}).
+\tag{4.2}
+$$
+

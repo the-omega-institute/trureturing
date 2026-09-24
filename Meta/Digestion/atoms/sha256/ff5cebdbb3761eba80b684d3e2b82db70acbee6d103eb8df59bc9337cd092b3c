@@ -1,0 +1,4 @@
+**命题 44.20（固定压缩地板仍不认证真实源地板）。** 对 $F=(1,0)$ 和 $0<\varepsilon<1/4$，取
+$$S_\varepsilon=\begin{pmatrix}1/2&\varepsilon\\\varepsilon&3\varepsilon^2\end{pmatrix}.$$
+对角元正且 $\det S_\varepsilon=\varepsilon^2/2>0$；$3I/4-S_\varepsilon$ 的对角元正、行列式为 $3/16-7\varepsilon^2/4>0$。二阶 Sylvester 判据给 $0<S_\varepsilon<3I/4$。但 $A=1/2$ 固定、$\delta=\varepsilon^2$，且 Rayleigh 商给 $\lambda_{\min}(S_\varepsilon)\le3\varepsilon^2\to0$。$e_1,S_\varepsilon e_1$ 的行列式为 $\varepsilon$，非零耦合产生二维循环空间。以 $B=F,t_0=0,k=0,C=-h^{-1}\log S_\varepsilon$ 实现它，不需附加不可见块。故测得 $A$ 的固定正地板和小残差不能替代独立的有效 $S$ 下界。证毕。
+

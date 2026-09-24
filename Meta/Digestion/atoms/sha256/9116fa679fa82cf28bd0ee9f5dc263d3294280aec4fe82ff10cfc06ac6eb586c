@@ -1,0 +1,26 @@
+**定义 13.1（同一次初始化的核记录与自由响应）。** 沿用第11节，设 $U,E$ 为有限维实内积空间，采样间隔 $h>0$，并给定共同谱合同
+$$
+C=C^*,\qquad aI\preceq C\preceq bI,\qquad
+0\le a\le b<\infty,
+\qquad T=e^{-hC},\quad u=e^{-hb},\quad v=e^{-ha}.
+$$
+取 $J:U\to E$ 及一次实验的隐藏初态 $h_0\in E$。记
+$$
+K(t)=J^*e^{-tC}J,\qquad
+g_0(t)=J^*e^{-tC}h_0,\qquad
+M_j=J^*T^jJ,\quad z_j=J^*T^jh_0.
+\tag{13.1}
+$$
+这里 $g_0$ 是无外加输入时的自由响应；若在受迫实验中取得它，须有已校准的分离方法并把分离误差计入读数。固定 $r\ge0$，记录核前缀 $M_0,\ldots,M_{2r+1}$ 及初态交叉前缀 $z_0,\ldots,z_r$。在 $\mathcal P=U^{r+1}$ 上定义
+$$
+V(c_0,\ldots,c_r)=\sum_{j=0}^rT^jJc_j,\qquad
+\mathcal K_r=\operatorname{ran}V,
+$$
+$$
+H=(M_{i+j})_{i,j=0}^r=V^*V,\qquad
+S=(M_{i+j+1})_{i,j=0}^r=V^*TV,\qquad
+z=\operatorname{col}(z_0,\ldots,z_r)=V^*h_0.
+\tag{13.2}
+$$
+交叉记录共用同一个 $h_0$。多次制备时，该等式要求同一确定初态，或另有明确的平均初态模型；更换初态而只保留各次局部读数不自动满足它。谱区间、耦合质量上界 $\|J\|^2\le m_*$ 和初态范数上界 $\|h_0\|\le E_*$ 都是待取得或认证的实验合同，不由有限记录免费提供。以下 $m_*,E_*\ge0$ 已给定，$H^\dagger$ 表示 Moore–Penrose 逆。能量采用平方范数口径，不另加 $1/2$。
+

@@ -1,0 +1,13 @@
+**推论 10.5（固定边缘态族的共同误差）。** 设 $\mathcal F$ 是非空的一族有限维三方态，所有成员具有同一个 $BC$ 边缘 $\omega_{BC}$；参考系统 $A$ 的有限维数可以随成员变化。若存在 $\varepsilon\ge0$ 使
+$$
+I(A:C\mid B)_\rho\le\varepsilon\qquad(\rho\in\mathcal F),
+$$
+则定理10.4中的同一个 $\mathcal R_\omega$ 满足
+$$
+\sup_{\rho\in\mathcal F}
+d_1\!\left(\rho_{ABC},
+(\operatorname{id}_A\otimes\mathcal R_\omega)(\rho_{AB})\right)
+\le\sqrt{1-e^{-\varepsilon}}\le\sqrt\varepsilon.
+\tag{10.10}
+$$
+

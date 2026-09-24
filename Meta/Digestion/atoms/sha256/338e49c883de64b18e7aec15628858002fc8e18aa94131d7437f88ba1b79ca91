@@ -1,0 +1,22 @@
+**紧性与完备性。** 每个区间 $[-A,A]$ 紧。给定 $K_A$ 中任意序列，对第零坐标取收敛子列，再依次对每个坐标取子列；对角子列在每个固定坐标收敛于某个仍在 $[-A,A]$ 中的值。全部极限给 $a\in K_A$，由 (47.17)，相应数组在加权范数中收敛到 $\mathcal E(a)$。因此 $\mathcal I_{A,\rho}$ 是度量空间中的序列紧集，从而紧且完备。
+
+也可直接验证拉回度量的完备性。若 $a^{(r)}$ 是 $d_\rho$-Cauchy，则 (47.18) 使每个固定实坐标成为 Cauchy 序列，其极限 $a_n$ 仍在闭区间 $[-A,A]$。由 (47.17)，整个数组收敛于 $\mathcal E(a)$。所以 $(K_A,d_\rho)$ 完备，$\mathcal E$ 是它到 $\mathcal I_{A,\rho}$ 的等距双射。特别地，紧像是 $\mathcal B_\rho$ 中的闭子集。
+
+令有限支撑边界类为
+$$
+\mathcal F_A^{\mathbb R}
+=\{a\in K_A:\exists N,\ \forall i\ge N,\ a_i=0\},
+$$
+$$
+\mathcal F_A^{\mathbb Q}
+=\{a\in\mathcal F_A^{\mathbb R}:\forall i,\ a_i\in\mathbb Q\}.
+\tag{47.21}
+$$
+它们的实际数组像分别记为
+$$
+\mathcal J_{A,\rho}^{\mathbb R}=\mathcal E(\mathcal F_A^{\mathbb R}),
+\qquad
+\mathcal J_{A,\rho}^{\mathbb Q}=\mathcal E(\mathcal F_A^{\mathbb Q}).
+$$
+这里是“有限支撑边界所生成的实际无限数组”，不是把有限三角的外部数组坐标补零。后者一般不满足 (47.1)。例如 $\alpha e_0$ 的第零行在所有 $k$ 上均非零。
+

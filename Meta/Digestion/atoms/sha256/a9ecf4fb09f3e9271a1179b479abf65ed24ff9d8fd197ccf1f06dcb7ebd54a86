@@ -1,0 +1,27 @@
+**推论 34.3（声明任务的误差运输）。** 在定义34.1及命题34.2的共同路径、有限误差预算和数值计算合同下，设共同合法状态域 $\mathcal A\subseteq U$ 包含所考察时刻的全部 $x_\theta(t),X_\theta(t)$，且同一终端读出 $f:\mathcal A\to(Y,d_Y)$ 满足
+$$
+d_Y(f(u),f(v))\le\ell\|u-v\|\quad(u,v\in\mathcal A),
+\qquad 0\le\ell<\infty.
+$$
+则
+$$
+d_Y(f(x_\theta(t)),f(X_\theta(t)))\le\ell E_\theta(t).
+\tag{34.5}
+$$
+若还用共同预测 $\widehat p_D(t)\in\mathcal A$，且其任务数值解码 $\widehat f_D(t)$ 满足
+$d_Y(\widehat f_D(t),f(\widehat p_D(t)))\le\varepsilon_{\rm dec}(t)$，那么
+$$
+\sup_{\theta\in\mathcal F(D)}d_Y(f(x_\theta(t)),\widehat f_D(t))
+\le\ell\left(
+ \sup_{\theta\in\mathcal F(D)}[E_\theta(t)+\|X_\theta(t)-p_D(t)\|]
+ +\varepsilon_{\rm eval}\right)+\varepsilon_{\rm dec}(t).
+\tag{34.6}
+$$
+对于共同合法路径域 $\mathcal P\subseteq\{y:I_T\to U\}$，若同一整路径任务 $F:\mathcal P\to(Y,d_Y)$ 对路径上确界距离一致 $\ell$-Lipschitz，且全部待比较路径属于 $\mathcal P$，则式（34.5）–（34.6）分别使用 $\sup_{t\in I_T}E_\theta(t)$、式（34.4）的路径预算及相应整路径计算／解码界。
+
+证明。合法域使每个读出均有定义。把式（34.1）代入 $f$ 的 Lipschitz 条件得到式（34.5）。对 $f(x_\theta(t)),\widehat f_D(t)$ 插入 $f(\widehat p_D(t))$，先用同一 Lipschitz 界，再用命题34.2及解码界，最后对共同世界集取上确界，即得式（34.6）。整路径版本把状态域和范数替换为已声明路径域和路径距离，逐项相同。$\square$
+
+这是本卷第6节误差传播接口在这些指定读出上的应用。若继续接多元拼接或动作链，须使用该节的共同操作、合法混合输入、逐孔增益和实际可达域合同。状态范数小不直接控制任意不连续的自适应动作选择，也不保证换反馈、加干预后仍满足恢复卷的同一自治模型。概率律距离、全部允许实验的行为距离和包含外部量子参考的通道距离，需要各自的合同，不能由这里的实向量范数自动获得。
+
+若把 $X_\theta$ 或 $\widehat p_D$ 宣称为概率状态，正锥和归一化条件须在其实际表示中另外证明。也可提供一个合法修正映射并认证实际修正量 $\varepsilon_{\rm legal}$，把它加入状态预算后再调用上面的读出界；域内性与该修正量都是前提，不能由范数接近自动得到。
+

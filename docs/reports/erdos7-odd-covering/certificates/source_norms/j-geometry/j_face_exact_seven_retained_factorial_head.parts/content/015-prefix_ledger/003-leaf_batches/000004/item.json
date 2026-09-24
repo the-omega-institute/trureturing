@@ -1,0 +1,23 @@
+{
+  "length": 45,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 29,
+      "part": {
+        "path": "content/015-prefix_ledger/003-leaf_batches/000004/item/000000-000029.json",
+        "sha256": "feae8f290127d223104718f4c6b48532a97ffbfcac2a59434373903956215e87",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 29,
+      "stop": 45,
+      "part": {
+        "path": "content/015-prefix_ledger/003-leaf_batches/000004/item/000029-000045.json",
+        "sha256": "30b302efcc6f8489c042d79c024c4621acb8189ad29a921f97c247f37e53aa9e",
+        "kind": "value"
+      }
+    }
+  ]
+}

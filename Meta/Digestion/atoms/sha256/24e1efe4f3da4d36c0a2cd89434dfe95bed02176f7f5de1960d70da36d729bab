@@ -1,0 +1,18 @@
+**命题 11.4（顺序接线的 Choi 收缩）。** 若 $\Phi:\mathcal L(A)\to\mathcal L(B)$、$\Psi:\mathcal L(B)\to\mathcal L(C)$，则在 $A\otimes B\otimes C$ 的次序下
+$$
+J(\Psi\circ\Phi)
+=\operatorname{Tr}_B\!\left[
+\bigl(J(\Phi)^{\mathsf T_B}\otimes I_C\bigr)
+\bigl(I_A\otimes J(\Psi)\bigr)
+\right].
+\tag{11.7}
+$$
+这里 $\mathsf T_B$ 只转置接线空间 $B$；两个乘因子不要求交换。
+
+**证明。** 展开 $J(\Phi)=\sum_{ij}E_{ij}\otimes\Phi(E_{ij})$ 与 $J(\Psi)=\sum_{kl}E_{kl}\otimes\Psi(E_{kl})$，再用
+$$
+\operatorname{Tr}\bigl(\Phi(E_{ij})^{\mathsf T}E_{kl}\bigr)
+=\Phi(E_{ij})_{kl},
+$$
+所得 $(i,j)$ 块正是 $\Psi(\Phi(E_{ij}))$。这是 Chiribella、D’Ariano、Perinotti，*Theoretical framework for quantum networks*，Physical Review A 80，022339（2009），[arXiv:0904.4483v2](https://arxiv.org/pdf/0904.4483v2)，定理1及式(13)，PDF第3页的 link product 在本节次序下的形式。中间乘积不必 Hermitian；复合完全正时最终 Choi 算子的正性由定理11.2保证。$\square$
+

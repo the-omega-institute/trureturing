@@ -1,0 +1,38 @@
+**定义 19.1（固定导纳与有限正容量）。** 设 `V` 有限，图连通且至少有两个顶点。令 `w_ij=w_ji≥0`、`w_ii=0`，正权边组成该连通图；记
+
+$$
+d_i=\sum_j w_{ij}>0,\qquad
+L_{ii}=d_i,\quad L_{ij}=-w_{ij}\quad(i\ne j),
+$$
+$$
+M=\operatorname{diag}(m_i),\qquad
+N=\operatorname{diag}(n_i),\qquad m_i,n_i>0.
+$$
+
+以行生成元作用于函数的约定，
+
+$$
+(Q_Mf)(i)=\frac1{m_i}\sum_jw_{ij}(f(j)-f(i)),
+\qquad Q_M=-M^{-1}L.
+$$
+
+从 `i` 离开的速率是 `λ_i^M=d_i/m_i`，平均停留时间 `m_i/d_i`；离开后跳到 `j` 的条件概率
+
+$$
+P_{ij}=\frac{w_{ij}}{d_i}
+\tag{19.101}
+$$
+
+与 `M` 无关。
+
+这里 `e^{tQ_M}f(i)=E_i[f(X^M_t)]` 是向后半群，解 `M ḟ=−Lf`。若 `p` 是列概率质量，则它解向前方程
+
+$$
+\dot p=Q_M^Tp=-LM^{-1}p,
+\qquad \sum_i p_i=1.
+$$
+
+不能把质量 `p` 和相对参考密度/状态函数混作同一坐标。
+
+这一生成元沿用[主卷](RECURSIVE_RELATIONAL_OBSERVATION.md)第123.4节。路径换钟的成熟背景为 Andres–Deuschel–Slowik, *Heat kernel estimates and intrinsic metric for random walks with general speed measure under degenerate conductances*, arXiv:1711.11119v2，式(1.1)及其后关于速度测度的说明；以下只使用有限图。
+

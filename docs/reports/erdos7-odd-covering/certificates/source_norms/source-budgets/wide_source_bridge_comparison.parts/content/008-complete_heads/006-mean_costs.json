@@ -1,0 +1,104 @@
+{
+  "length": 11,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 1,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000000-000001.json",
+        "sha256": "86051bb109cbb1bc2b41bc7b6d090676234808c5958d2228a84a37b65500423f",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 1,
+      "stop": 2,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000001-000002.json",
+        "sha256": "5a87c8c4be636560244fdc319b99642b6fb4e435967db00154dbd554dd903779",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 2,
+      "stop": 3,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000002-000003.json",
+        "sha256": "b5892648f0f818ce31124008f1a514e605ca6e7e8c492871c912eeb3923610ee",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 3,
+      "stop": 4,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000003-000004.json",
+        "sha256": "5e08a1751054ee7120db94355c1ba4e0a48f939ebf35586d841131f7a30fd9a0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 4,
+      "stop": 5,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000004-000005.json",
+        "sha256": "007c7d5b0a01e82bd3a2a13168c02549989a35cfe69566e055c9a20575a3c8c8",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 5,
+      "stop": 6,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000005-000006.json",
+        "sha256": "c349f00e313f32280f17a72bbd823360063f57db0af6794d7ee398dd0b331f35",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 6,
+      "stop": 7,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000006-000007.json",
+        "sha256": "b76cd4157974cca4e934e160bb00f4e717b19a0268133f6db371daa06fd87133",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 7,
+      "stop": 8,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000007-000008.json",
+        "sha256": "bccce769ef1aec16fcec4da407ecf2564b4cbf3f553305c63638fa933f16cdb0",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 8,
+      "stop": 9,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000008-000009.json",
+        "sha256": "bc25f0283e176f7ed2b4f6ae5f44b528f8b062292707343b3e34e473958d8cc3",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 9,
+      "stop": 10,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000009-000010.json",
+        "sha256": "dc12fb92e30f454821d2d217b69cb3b1ea56310b76d799abcc92f4d61c52e01d",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 10,
+      "stop": 11,
+      "part": {
+        "path": "content/008-complete_heads/006-mean_costs/000010-000011.json",
+        "sha256": "03d73af5cbf7682e567f84c0c755fa2023ab77589b53ea21e2f6bd2a403c0992",
+        "kind": "value"
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "length": 100,
+  "chunks": [
+    {
+      "start": 0,
+      "stop": 36,
+      "part": {
+        "path": "content/003-zero_radius/001-costs/000001/item/005-branches/000000-000036.json",
+        "sha256": "661a02e8444ca50aebfae013a3b94700c6895b9693a3216c4ca1d667da659582",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 36,
+      "stop": 72,
+      "part": {
+        "path": "content/003-zero_radius/001-costs/000001/item/005-branches/000036-000072.json",
+        "sha256": "71f04936f90ac6df029f06d0aa404502e21c3c17245a8f00384cbab3acb30a3a",
+        "kind": "value"
+      }
+    },
+    {
+      "start": 72,
+      "stop": 100,
+      "part": {
+        "path": "content/003-zero_radius/001-costs/000001/item/005-branches/000072-000100.json",
+        "sha256": "6fc742f90b57e70ed241875fba5ce1a1f07c067c07fbd542a6cb815c0956e268",
+        "kind": "value"
+      }
+    }
+  ]
+}

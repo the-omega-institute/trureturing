@@ -38,6 +38,8 @@ stopA='''
 
 Leave the new files UNCOMMITTED in the worktree. What MUST be present: `<module>.lean`, `Blueprint/<module>.scribe.cs`, the emitted `Blueprint/<module>.md`, and every file any `*Ref.Create(...)` in the Scribe names — a `LibraryNoteRef` needs its `Library/` note on disk. Nothing tracked may be modified. **Do not delete an artifact to satisfy a file count**: emission readings describe the tree they ran on, so removing a note after a green `make emit` leaves exit codes that are no longer true of what you hand over, and the envelope cannot show that.
 
+**The second comment block is part of the handover.** Immediately after the 7-line header the module must carry a second comment block recording, per public theorem, `proof_shape:`, `escape_witness:`, `admission_basis:` and `Direct frozen dependencies:` (the values the brief's HEADER AND ADMISSION section names). Before returning, run `grep -c 'admission_basis:' <module>.lean` and report the count: it must be `1`. Also report `grep -cE '^private (theorem|lemma)' <module>.lean` and, for every remaining `private def`, its `#check` type: a proposition-valued `private def` is a theorem for every §3.2 purpose (see the base brief) and must be classified/listed or inlined. The judgement-form seat rejects a module without it (condition (b) of the open-problem-resolution basis; misawa33 and zhangd were both rejected for this omission on 2026-09-18), and the fix then costs a Stage-B edit.
+
 Verify the handover, not the run: after the second `make emit`, re-read `git status`, confirm each `*Ref.Create` target file exists on disk, and check that the emitted `.md` renders what that reference is for — a `LibraryNoteRef` renders as a `*Citation.*` line carrying the author, year, title and URL, **not** as the note's slug, so grepping for the slug is the wrong check and will read as a failure on a correct delivery. `make emit` must exit 0 on both runs, the second reporting 0 changed blueprints, **at the tree you are leaving**. A read-only mirror-check seat will now compare the mirror against the Lean statements symbol by symbol; a Stage-B seat will run the doors afterwards. Return the Stage-A envelope now.
 
 ## Result envelope (Stage A)
@@ -63,7 +65,7 @@ node, the emitted `.md`, and the `Library/` note if the lane cites literature. K
 - **Phase B (after the freeze).** Now add the `OpenProblemResolutionClaim` node to the Scribe and write the
   `Problems/` dossier whose motivation GID names the now-frozen declaration. `make emit` twice again, second run
   0 changed. Then ONE builder commit carrying the door's delta — the Freeze event, the state pin, the new
-  dossier and the re-emitted mirror — followed by `make preflight`, push and `make pr-open`.
+  dossier and the re-emitted mirror — followed by `make preflight MODE=push BASE="$(git rev-parse origin/dev^{{commit}})"`, push and `make pr-open`.
 
 Two commits, in that order. If you find yourself wanting to emit the claim before the deposit, re-read this: the
 validator is asking for a frozen host, and only the door can give it one.
@@ -73,7 +75,7 @@ validator is asking for a frozen host, and only the door can give it one.
 
 
 
-**Render check after ANY Stage-B mirror change (zaremba v3 lesson, 2026-09-05):** if you add or edit Describe nodes here, then after `make emit` run `grep -n -E '&&|\\|\\||==|!=|\\bdecide\\b.*&&' Blueprint/<module>.md` (must be empty — Lean Boolean `&&`/`||`/`==` must be rendered as `∧`/`∨`/`=` inside `Parenthesized`), re-read every new formula, and run `make preflight`: a line `markdown red <your module>.md:…` (KaTeX parse error) or any check naming your module is a STOP-and-fix condition BEFORE `make deposit`; unrelated locale/observe noise is not. '''
+**Render check after ANY Stage-B mirror change (zaremba v3 lesson, 2026-09-05):** if you add or edit Describe nodes here, then after `make emit` run `grep -n -E '&&|\\|\\||==|!=|\\bdecide\\b.*&&' Blueprint/<module>.md` (must be empty — Lean Boolean `&&`/`||`/`==` must be rendered as `∧`/`∨`/`=` inside `Parenthesized`), re-read every new formula, and run `make preflight MODE=push BASE="$(git rev-parse origin/dev^{{commit}})"`: a line `markdown red <your module>.md:…` (KaTeX parse error) or any check naming your module is a STOP-and-fix condition BEFORE `make deposit`; unrelated locale/observe noise is not. '''
 gm=re.search(r'## GoalArtifact.*?(?=\n## |\Z)',pre,re.S); goal=gm.group(0)+'\n\n' if gm else ''
 base=(here/'templates'/'impl-base-brief.md').read_text()
 extra=''.join(re.findall(r'\n6[′″]\. \*\*.*?(?=\n[0-9]+[′″]?\. |\n## )',base,re.S))
@@ -87,6 +89,8 @@ if nyx:
 The first-published standing table lists the CURRENT round's seats and carriers as a fact: `{nyx} nyxid-oracle /
 ChatGPT Pro, {other} codex-cli, tests codex-cli`, at the delivered head, with a zero tally, `Carried-forward
 approvals: none.` and `Disagreement adjudication: none.` Do not write "not established"; the assignment is this one.
+Do not describe the standing table as empty, and do not say what happens when a round closes: a sentence such as
+"the table above is empty until a round closes" is future tense and was a round-1 architecture reject (#9066).
 
 """
 B=B_head+B_intro+goal+layout+stepsB+env

@@ -21,6 +21,11 @@ private def construct (action : Nat → Except String (α × Nat)) : CompareM α
   debit work
   return result
 
+private def eraseInput (e : Expr) : CompareM Expr := do
+  let (erased, work) ← eraseProofs e (← get).remaining
+  debit work
+  return erased
+
 private def materialize (plan : PlanNode) : CompareM Expr :=
   construct (fun fuel => PlanTransform.toExpr plan fuel)
 
@@ -35,10 +40,14 @@ private partial def alpha (e : Expr) (depth : Nat := 0) : CompareM Expr := do
   | .letE _ t v b nd => return .letE .anonymous (← child t) (← child v) (← child b) nd
   | .mdata m b => return .mdata m (← child b)
   | .proj n i b => return .proj n i (← child b)
-  | .mvar _ | .fvar _ => throwError "incomplete_closure:dtr.open_comparison"
+  | .mvar _ => throwError "incomplete_closure:dtr.open_comparison"
   | _ => return e
 
 private def equalRaw (a b : Expr) : CompareM Bool := do
+  let (a, aWork) ← eraseProofs a (← get).remaining
+  debit aWork
+  let (b, bWork) ← eraseProofs b (← get).remaining
+  debit bWork
   return (← alpha a).equal (← alpha b)
 
 private def rawSubstitute (body argument : Expr) (cutoff : Nat) : CompareM Expr :=
@@ -62,8 +71,9 @@ private def isRealizationType (type : Expr) : Bool :=
   #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
     `LeanInformationAudit.StructuralPrimitiveRealization].contains (type.getAppFn.constName?.getD .anonymous)
 
-/-- Expose only a saturated forwarding spine. The parameter vector must contain
-every lambda variable exactly once, in its original order, as a whole argument.
+/-- Expose only a saturated forwarding spine. Every data parameter must occur
+exactly once, in its original order, as a whole argument. Proof parameters and
+arguments are opaque; their propositions still pass the shared compiler.
 No beta reduction is performed inside an actual supplied argument. -/
 private def forwardActual (theoremName selected : Name) (initial : Expr) : CompareM Expr := do
   let mut actual := initial
@@ -84,20 +94,23 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
     if actual.hasFVar || actual.hasLooseBVars || actual.hasMVar ||
         universeArgs.length != info.levelParams.length then
       throwError "incomplete_closure:dtr.extraction_open"
-    let mut body := info.value
-    let mut arity := 0
-    while let .lam _ _ tail _ := body do
-      debit
-      arity := arity + 1
-      body := tail
-    unless body.getAppFn.isConst && arity == arguments.size do return actual
-    let mut forwarded : Array Nat := #[]
-    for argument in body.getAppArgs do
-      debit
-      if argument.hasLooseBVars then
-        let .bvar index := argument | return actual
-        forwarded := forwarded.push index
-    unless forwarded == (List.range arity).reverse.toArray do return actual
+    let erasedValue ← eraseInput info.value
+    let forwarding : CompareM Bool := fun state =>
+      lambdaTelescope erasedValue fun parameters body => (do
+        unless body.getAppFn.isConst && parameters.size == arguments.size do return false
+        let mut expected : Array Expr := #[]
+        for parameter in parameters do
+          debit
+          unless ← isProof parameter do expected := expected.push parameter
+        let mut forwarded : Array Expr := #[]
+        for argument in body.getAppArgs do
+          debit
+          unless ← isProof argument do
+            if argument.hasFVar then
+              unless argument.isFVar do return false
+              forwarded := forwarded.push argument
+        return forwarded == expected).run state
+    unless ← forwarding do return actual
     let (dependencies, typeWork) ← checkExtractionType info.type (← get).remaining (← get).constructorTypes
     debit typeWork
     let indices := indexPositions info.type
@@ -113,10 +126,10 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
       let extracted := names.foldl (fun found n => found.insert n)
         (state.extractionNames.insert name)
       { state with extractionNames := extracted }
-    let .ok (_, bodyWork) := rawIdentity info.levelParams info.value (← get).remaining
+    let .ok (_, bodyWork) ← rawIdentity info.levelParams info.value (← get).remaining
       | throwError "incomplete_closure:E8.extraction_body"
     debit bodyWork
-    let mut value ← construct (fun fuel => PlanTransform.instantiateExpr info.value info.levelParams universeArgs fuel)
+    let mut value ← construct (fun fuel => PlanTransform.instantiateExpr erasedValue info.levelParams universeArgs fuel)
     for argument in arguments do
       let .lam _ _ tail _ := value | throwError "incomplete_closure:dtr.extraction_telescope"
       value ← rawSubstitute tail argument 0
@@ -158,7 +171,7 @@ private partial def retainedTypes (plan : PlanNode) (context : Array Expr := #[]
   let obligation := fun type : Expr => (type, if type.hasLooseBVars then context else #[])
   match plan with
   | .atom _ | .supplied _ => return #[]
-  | .proofLeaf type _ => return #[obligation type]
+  | .proofLeaf type => return #[obligation type]
   | .typeNode checked => return #[obligation (← materialize checked)] ++ (← child checked)
   | .expanded _ checked => child checked
   | .audit input body => return (← child input) ++ (← child body)
@@ -298,7 +311,10 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
   | .expanded raw body =>
     if ← equalRaw raw actual then return true
     child body actual
-  | .atom raw | .supplied raw | .proofLeaf _ raw => equalRaw raw actual
+  | .atom raw | .supplied raw => equalRaw raw actual
+  | .proofLeaf type =>
+    unless ← isProof actual do return false
+    equalRaw type (← inferType actual)
   | .app (.lam _ body _) arg => child (← substitute body arg) actual
   | .app f a =>
     match actual with
@@ -306,15 +322,24 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
     | _ => return false
   | .lam t b bi =>
     match actual with
-    | .lam _ u c bj => return bi == bj && (← child t u) && (← child b c)
+    | .lam _ u c bj =>
+      unless bi == bj && (← child t u) do return false
+      fun state => withLocalDecl .anonymous bj u fun x =>
+        (do child (← substitute b (.atom x)) (c.instantiate1 x)).run state
     | _ => return false
   | .forallE t b bi =>
     match actual with
-    | .forallE _ u c bj => return bi == bj && (← child t u) && (← child b c)
+    | .forallE _ u c bj =>
+      unless bi == bj && (← child t u) do return false
+      fun state => withLocalDecl .anonymous bj u fun x =>
+        (do child (← substitute b (.atom x)) (c.instantiate1 x)).run state
     | _ => return false
   | .letE t v b nd =>
     match actual with
-    | .letE _ u w c ne => return nd == ne && (← child t u) && (← child v w) && (← child b c)
+    | .letE _ u w c ne =>
+      unless nd == ne && (← child t u) && (← child v w) do return false
+      fun state => withLetDecl .anonymous u w fun x =>
+        (do child (← substitute b (.atom x)) (c.instantiate1 x)).run state
     | _ => return false
   | .mdata m b =>
     match actual with
@@ -330,7 +355,9 @@ private def extract (event : TemplateOccurrenceEvent) : CompareM Expr := do
   let name := event.realizationName
   let info ← getConstInfo name
   let raw ← if info.type.isAppOfArity
-      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 then
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 ||
+      info.type.isAppOfArity escapeForwardBridge 3 ||
+      info.type.isAppOfArity escapeWitnessBridge 3 then
     pure info.type.getAppArgs[2]!
   else if isRealizationType info.type then
     match info with
@@ -344,6 +371,7 @@ private def extract (event : TemplateOccurrenceEvent) : CompareM Expr := do
   else throwError "unclassified_form:dtr.extraction_interface"
   -- The named realization is used at the occurrence's rigid universe telescope.
   -- Renaming its binders is permitted; permutation or arity guessing is not.
+  let raw ← eraseInput raw
   if info.levelParams.isEmpty then return raw
   unless info.levelParams.length == event.levelParams.length do
     throwError "unclassified_form:dtr.extraction_universes"
@@ -358,15 +386,15 @@ private def inputIdentity (name : Name) : CompareM DependencyIdentity := do
   debit
   let info ← getConstInfo name
   let owner := (RegistrationReifier.declaringModuleOf (← getEnv) name).getD (← getEnv).header.mainModule
-  let .ok (typeIdentity, typeWork) := TemplateAudit.rawIdentity info.levelParams info.type (← get).remaining
+  let .ok (typeIdentity, typeWork) ← TemplateAudit.rawIdentity info.levelParams info.type (← get).remaining
     | throwError "incomplete_closure:dtr.input_identity"
   debit typeWork
-  -- A proof input retains its raw occurrence and full type identity. Its
-  -- implementation is outside the provenance/evidence boundary.
+  -- Proof implementations contribute no body identity; nested proof arguments
+  -- in data inputs are erased by rawIdentity as well.
   let bodyIdentity ← if ← isProp info.type then pure "" else match info.value? with
     | none => pure ""
     | some value =>
-      let .ok (identity, bodyWork) := TemplateAudit.rawIdentity info.levelParams value (← get).remaining
+      let .ok (identity, bodyWork) ← TemplateAudit.rawIdentity info.levelParams value (← get).remaining
         | throwError "incomplete_closure:dtr.input_identity"
       debit bodyWork
       pure identity
@@ -411,7 +439,8 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
     let action : CompareM Json := do
       let mut names : NameSet := {}
       for argument in descriptor.map Expr.getAppArgs |>.getD #[] do
-        for name in argument.getUsedConstants do names := names.insert name
+        for name in (← eraseProofs argument).1.getUsedConstants do
+          unless name == ``lcProof do names := names.insert name
       let arguments ← (names.toArray.qsort Name.quickLt).mapM inputIdentity
       let extraction ← inputIdentity event.realizationName
       return Json.mkObj [
@@ -426,7 +455,8 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
   catch _ => return Json.null
 
 private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
-    (bindingOwner : Name) : MetaM TemplateBindingCertificate := do
+    (bindingOwner : Name) (escape : EscapeRecordEvidence) : MetaM TemplateBindingCertificate :=
+  RegistrationGates.withStatementAliasMemo do
   closed descriptor
   let .const name universeArgs := descriptor.getAppFn
     | throwError "unclassified_form:dtr.descriptor_head"
@@ -434,14 +464,15 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     | .ok plan => pure plan
     | .error reason => throwError reason
   let env ← getEnv
-  validateSourceInputs plan.sourceInputs
   unless env.contains name do throwError "incomplete_closure:dtr.template_owner"
   let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
   unless owner == plan.definitionOwner && universeArgs.length == plan.levelParams.length &&
       descriptor.getAppArgs.size == plan.slots.size do
     throwError "unclassified_form:dtr.descriptor_telescope"
+  let initialBudget := min 524288 (TemplateAudit.informationTemplate.work.get (← getOptions))
+  let (descriptor, eraseWork) ← eraseProofs descriptor initialBudget
   let arguments := descriptor.getAppArgs
-  let budget := min 524288 (TemplateAudit.informationTemplate.work.get (← getOptions))
+  let budget := initialBudget - eraseWork
   let (argumentNames, argumentWork) ← match ← RegistrationGates.templateArgumentsCurrent event.key.theoremName arguments budget plan.constructorTypes
       (plan.slots.map fun slot => slot.type.isConstOf ``Nat) with
     | .ok result => pure result
@@ -478,18 +509,30 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
-    let .ok (descriptorIdentity, descriptorWork) := TemplateAudit.rawIdentity event.levelParams descriptor (← get).remaining
+    if escape.bridgeKind == "witness" then
+      let rawActual := (← getConstInfo event.realizationName).type.getAppArgs[2]!
+      unless ← RegistrationGates.bounded (do
+          let computed ← mkAppM (RegistrationGates.witnessArenaName.str "realization") #[event.arena]
+          if ← isDefEq rawActual computed then return true
+          let readout := `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.readout
+          isDefEq (← mkAppM readout #[rawActual]) (← mkAppM readout #[computed])) do
+        throwError "unclassified_form:dtr.witness_readout_tie"
+    let .ok (descriptorIdentity, descriptorWork) ← TemplateAudit.rawIdentity event.levelParams descriptor (← get).remaining
       | throwError "incomplete_closure:dtr.descriptor_identity"
     debit descriptorWork
-    let .ok (actualIdentity, actualWork) := TemplateAudit.rawIdentity event.levelParams actual (← get).remaining
+    let .ok (actualIdentity, actualWork) ← TemplateAudit.rawIdentity event.levelParams actual (← get).remaining
       | throwError "incomplete_closure:dtr.actual_identity"
     debit actualWork
     let argumentInputs ← argumentNames.mapM inputIdentity
-    let extractionNames := ((← get).extractionNames.insert event.realizationName).toArray
+    let mut retained := (← get).extractionNames.insert event.realizationName
+    -- Fingerprint the inspected roots here. Their transitive data/type closure
+    -- is retained below without serializing pinned upstream implementations.
+    for name in ← inspectionRoots event do retained := retained.insert name
+    let extractionNames := retained.toArray
     let extractionInputs ← extractionNames.mapM inputIdentity
     let certificate : TemplateBindingCertificate := {
       evidenceRef := "", key := event.key, planIdentity := plan.planIdentity,
-      descriptorIdentity, actualIdentity, argumentInputs, extractionInputs }
+      descriptorIdentity, actualIdentity, argumentInputs, extractionInputs, escape }
     let .ok (evidenceRef, evidenceWork) := bindingIdentity event.statementIdentity certificate (← get).remaining
       | throwError "incomplete_closure:E8.evidence_identity"
     debit evidenceWork
@@ -512,8 +555,11 @@ new binding check is retained metadata, never a module elaboration failure. -/
 private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
   modifyEnv fun env => assessmentEvents.modifyState env (·.push event.key)
   match claim with
-  | none => return { occurrence := event, descriptor := none, bindingOwner := none, result := .undeclared }
+  | none => return {
+      occurrence := event, descriptor := none, bindingOwner := none, result := .undeclared
+      escape := { bridgeKind := (← bridgeKind event) } }
   | some claim =>
+    let escape ← checkEscapeRecord event claim.escapeInput
     let result ← tryCatchRuntimeEx
       (withCumulativeBudget do
         unless claim.key == event.key && claim.arena.equal event.arena do
@@ -521,7 +567,7 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
         if let some diagnostic := claim.resolutionDiagnostic then throwError diagnostic
         let some descriptor := claim.descriptor
           | throwError "unclassified_form:dtr.missing_template"
-        let certificate ← validate event descriptor claim.owner
+        let certificate ← validate event descriptor claim.owner escape
         pure <| TemplateBindingResult.declaredValidated certificate)
       (fun error => do
         let message ← error.toMessageData.toString
@@ -529,7 +575,7 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
         let provenance ← diagnosticProvenance event claim reason
         return .declaredUnresolved (diagnosticMessage event.key reason provenance))
-    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result }
+    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result, escape }
 
 private abbrev CacheSemantics := Bool × ReducibilityStatus × Option Name × Bool ×
   Option (Name × Nat × Nat × Bool)
@@ -549,7 +595,6 @@ private structure CachedAssessment where
   planName : Name
   planIdentity : String
   constants : Array (Name × ConstantInfo × Name × CacheSemantics)
-  inputs : Array SourceInput
 
 private initialize assessmentCache : EnvExtension (Std.HashMap TemplateOccurrenceKey CachedAssessment) ←
   registerEnvExtension (pure {})
@@ -563,17 +608,21 @@ private def sameCacheEvent (a b : TemplateOccurrenceEvent) : Bool :=
   a.registrationSource == b.registrationSource &&
   a.registrationSourceIdentity == b.registrationSourceIdentity
 
-private def sameCacheClaim (a b : TemplateBindingClaim) : Bool :=
-  a.key == b.key && a.owner == b.owner && a.arena.equal b.arena &&
-  a.resolutionDiagnostic == b.resolutionDiagnostic && (match a.descriptor, b.descriptor with
-    | none, none => true
-    | some a, some b => a.equal b
-    | _, _ => false)
+private def sameCacheClaim (a b : TemplateBindingClaim) : MetaM Bool := do
+  let descriptorsMatch ← match a.descriptor, b.descriptor with
+    | none, none => pure true
+    | some a, some b =>
+      let (a, _) ← eraseProofs a
+      let (b, _) ← eraseProofs b
+      pure (a.equal b)
+    | _, _ => pure false
+  return a.key == b.key && a.owner == b.owner && a.arena.equal b.arena &&
+  a.resolutionDiagnostic == b.resolutionDiagnostic && a.escapeInput == b.escapeInput && descriptorsMatch
 
 private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrenceEvent)
     (claim : TemplateBindingClaim) : MetaM Bool := do
   unless sameCacheEvent cached.record.occurrence event do return false
-  unless sameCacheClaim cached.claim claim do return false
+  unless ← sameCacheClaim cached.claim claim do return false
   let env ← getEnv
   unless sameCacheObject cached.options (← getOptions) &&
       sameCacheObject cached.registry (InformationRegistry.entries env) do return false
@@ -585,7 +634,6 @@ private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrence
         (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule == owner do
       return false
   try
-    validateSourceInputs cached.inputs
     NativeCoherence.validate (#[claim.owner, event.key.registrationModule] ++
       cached.constants.map (fun (_, _, owner, _) => owner))
     return true
@@ -598,30 +646,28 @@ private def retainAssessment (record : BindingRecord) (claim : TemplateBindingCl
   let env ← getEnv
   let .ok plan := selectedPlan env name | return
   let mut names : NameSet := {}
+  for name in ← inspectionDependencies record.occurrence do names := names.insert name
+  for value in claim.escapeInput.fromObject.toArray ++ claim.escapeInput.continuation.toArray do
+    for name in value.getUsedConstants do names := names.insert name
+  if let some residual := record.escape.continuation then
+    if let some chain := residual.chainName then names := names.insert chain
   for dependency in plan.dependencies ++ certificate.argumentInputs ++ certificate.extractionInputs do
     names := names.insert dependency.name
   for name in #[plan.name, record.occurrence.key.theoremName, record.occurrence.unitName,
       record.occurrence.realizationName, record.occurrence.key.objectArena] do
     names := names.insert name
-  let mut paths := plan.sourceInputs.map (·.path)
-  for path in #[record.occurrence.registrationSource, TemplateAudit.sourcePath claim.owner] do
-    unless paths.contains path do paths := paths.push path
   let mut constants := #[]
   for name in names do
     let info ← getConstInfo name
     let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
     constants := constants.push (name, info, owner, cacheSemantics env name)
-    if owner.toString.startsWith "D5." || owner.toString.startsWith "LeanInformationAudit." then
-      let path := TemplateAudit.sourcePath owner
-      unless paths.contains path do paths := paths.push path
-  let inputs ← (paths.qsort (· < ·)).mapM fun path => readSourceInput path
   let cached : CachedAssessment := {
-    record, claim, constants, inputs, options := ← getOptions,
+    record, claim, constants, options := ← getOptions,
     registry := InformationRegistry.entries env, planName := name, planIdentity := plan.planIdentity }
   modifyEnv fun env => assessmentCache.modifyState env (·.insert record.occurrence.key cached)
 
 /-- Every caller uses the same assessment. A hit requires exact occurrence,
-claim, selected plan, options, native dependencies and current source bytes.
+claim, selected plan, options and native dependencies.
 The authoritative caller still validates the complete native join first. -/
 def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
   if let some claim := claim then

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:512767ab451b0e78291f5032b753147084d04d5d509a4379ddc904ff3656d000
+  normalized_sha256: sha256:512767ab451b0e78291f5032b753147084d04d5d509a4379ddc904ff3656d000
+cas_ref: sha256:512767ab451b0e78291f5032b753147084d04d5d509a4379ddc904ff3656d000
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber.outputStep
+    target_statement_id: sha256:516adc70478bb522c9f9341fa315c4bb9f3d00fa73bd4d20dac51584d7112f04
+receipts:
+  unresolved_subitems: []

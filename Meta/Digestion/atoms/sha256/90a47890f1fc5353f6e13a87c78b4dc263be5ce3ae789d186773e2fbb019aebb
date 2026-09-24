@@ -1,0 +1,29 @@
+**定理 72.4（经典标签通道的精确矩阵作用）。** 对定义与假设 72.1 的 $r$，令
+$$
+K_j=|e_{r(j)}\rangle\langle f_j|:\mathcal H_f\to\mathcal H_c,
+\qquad
+\mathcal C_r(Y)=\sum_{j\in J}K_jYK_j^*.
+$$
+则 $\sum_jK_j^*K_j=I_{\mathcal H_f}$，且 $\mathcal C_r:\mathcal B(\mathcal H_f)\to\mathcal B(\mathcal H_c)$ 是 CPTP 映射，满足
+$$
+\mathcal C_r(Y)_{ii'}
+=\mathbf1_{i=i'}\sum_{r(j)=i}Y_{jj},
+\qquad \mathcal C_r(\rho_q)=\rho_p.
+$$
+对任意有限非空 $K$ 和映射 $s:K\to J$，按同一 Kraus 公式定义 $\mathcal C_s$，则在全部复矩阵上
+$$
+\mathcal C_r\circ\mathcal C_s=\mathcal C_{r\circ s}.
+$$
+此构造与这些结论不依赖概率权重，也不要求标签映射满射。
+
+证明。逐项有 $K_j^*K_j=F_j$，而 $\sum_jF_j=I_{\mathcal H_f}$。有限 Kraus 通道定理于是给出完全正性、保迹性及其实际 Kraus 和作用。又
+$$
+K_jYK_j^*=Y_{jj}|e_{r(j)}\rangle\langle e_{r(j)}|,
+$$
+求和得矩阵条目公式，代入 $Y=\rho_q$ 得 $\rho_p$。对任意 $Z\in\mathcal B(\mathbb C^K)$，两次通道后第 $i$ 个对角元为
+$$
+\sum_{r(j)=i}\sum_{s(k)=j}Z_{kk}
+=\sum_{r(s(k))=i}Z_{kk},
+$$
+非对角元全为零。这是有限纤维求和复合式，所求和的质量取复数 $Z_{kk}$，故同时证明全部复矩阵上的复合律。以上计算没有使用权重或满射假设。证毕。
+

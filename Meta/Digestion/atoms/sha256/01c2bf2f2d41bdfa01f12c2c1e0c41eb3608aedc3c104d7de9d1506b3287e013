@@ -1,0 +1,35 @@
+**命题 119.2（可行阈值、唯一四点最优解与严格滞后前沿）。** 在定义 119.1 下，$\mathcal A_{0,L},\mathcal A_{1,L},\mathcal A_{{\rm com},L}$ 各自非空当且仅当 $L\ge3$。实际共同轨道满足
+$$
+r_0=r_1=r_2=1>r_3>r_4>\cdots>0.
+\tag{119.2a}
+$$
+当 $L\ge3$ 时，置
+$$
+j=L\bmod3,\qquad \ell=L-j,\qquad
+A_L=\frac{1+3R}{1-r_L},\qquad
+B_L=\frac{-3-A_L(\lambda^L-c^\ell\lambda^j)}{H(\lambda)},
+\tag{119.2b}
+$$
+$$
+p_L(z)=A_Lz^L-A_Lc^\ell z^j+B_LH(z)
+=\sum_{t=0}^La_t^*z^t.
+\tag{119.2c}
+$$
+则同一个 $a^*$ 是两个单方向问题及共同问题各自唯一的优化器。其支撑恰为 $\{0,1,2,L\}$，前三个系数严格负，第 $L$ 个系数严格正，并且
+$$
+\boxed{
+\min_{a\in\mathcal A_{0,L}}\Gamma(a)
+=\min_{a\in\mathcal A_{1,L}}\Gamma(a)
+=\min_{a\in\mathcal A_{{\rm com},L}}\Gamma(a)
+=\Gamma^*_{\delta,L}:=\frac{G_\delta+r_L}{1-r_L}.}
+\tag{119.2d}
+$$
+对固定 $\delta$，这条前沿随整数 $L\ge3$ 严格下降，并满足
+$$
+\Gamma^*_{\delta,L}-G_\delta
+=\frac{(G_\delta+1)r_L}{1-r_L}>0,
+\qquad
+\Gamma^*_{\delta,L}\longrightarrow G_\delta.
+\tag{119.2e}
+$$
+

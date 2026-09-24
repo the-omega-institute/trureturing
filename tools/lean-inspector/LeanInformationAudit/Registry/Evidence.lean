@@ -3,6 +3,46 @@ import LeanInformationAudit.Registry.Entries
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
 
+private abbrev EraseM := StateT Nat MetaM
+
+private partial def erase (e : Expr) (depth : Nat) : EraseM Expr := do
+  Core.checkMaxHeartbeats "template proof erasure"
+  if depth > 256 then throwError "incomplete_closure:E8.erasure_depth"
+  let remaining ← get
+  if remaining == 0 then throwError "incomplete_closure:E8.erasure_work"
+  set (remaining - 1)
+  -- Inference classifies the proposition; no visitor descends into a proof.
+  if ← isProof e then return proofPlaceholder (← erase (← inferType e) (depth + 1))
+  let child := fun e => erase e (depth + 1)
+  match e with
+  | .app f a => return .app (← child f) (← child a)
+  | .lam n t b bi | .forallE n t b bi =>
+    let type ← child t
+    let body ← fun state => withLocalDecl n bi t fun x => do
+      let (body, state) ← (child (b.instantiate1 x)).run state
+      return (body.abstract #[x], state)
+    return if e.isLambda then .lam n type body bi else .forallE n type body bi
+  | .letE n t v b nd =>
+    let type ← child t
+    let value ← child v
+    let body ← fun state => withLetDecl n t v fun x => do
+      let (body, state) ← (child (b.instantiate1 x)).run state
+      return (body.abstract #[x], state)
+    return .letE n type value body nd
+  | .mdata m b => return .mdata m (← child b)
+  | .proj n i b => return .proj n i (← child b)
+  | .mvar _ => throwError "incomplete_closure:E7.metavariable"
+  | .bvar _ => throwError "incomplete_closure:E7.open_expression"
+  | _ => return e
+
+/-- Preserve all data syntax and replace each proof by its proposition. Typing
+uses the original binder domains; the result retains no proof implementation.
+The caller charges this walk before any transformation or serialization. -/
+def eraseProofs (e : Expr) (fuel : Nat := 524288) : MetaM (Expr × Nat) := do
+  let limit := min fuel 524288
+  let (result, remaining) ← (erase e 0).run limit
+  return (result, limit - remaining)
+
 register_option informationTemplate.work : Nat := {
   defValue := 524288
   descr := "Lower-only DTR expression, substitution and byte-work quota" }
@@ -118,10 +158,189 @@ private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr) : Wir
 
 /-- Domain-separated, length-prefixed raw Expr/Level identity. Binder names are
 anonymous; instances, lets and metadata retain their complete structural bytes. -/
-def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : Except String (String × Nat) := do
+def erasedSyntaxIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : Except String (String × Nat) := do
+  let action : WireM Unit := do emit "DTR-proof-erased-expr-v2"; wireExpr params 0 e
+  let (_, state) ← action.run { remaining := min fuel 524288 }
+  return (Sha256.hex state.bytes, state.bytes.size)
+
+/-- Occurrence statements retain their established identity dialect. This is a
+statement address, not a descriptor/realization comparison or body digest. -/
+def rawStatementIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
+    Except String (String × Nat) := do
   let action : WireM Unit := do emit "DTR-raw-expr-v1"; wireExpr params 0 e
   let (_, state) ← action.run { remaining := min fuel 524288 }
   return (Sha256.hex state.bytes, state.bytes.size)
+
+/-- The forward bridge is recognized by its type name, without importing content
+into the finite seal closure. Both bridges retain the exact statement check. -/
+def escapeForwardBridge : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization
+
+def escapeWitnessBridge : Name := RegistrationGates.witnessBridgeName
+
+def bridgeKind (event : TemplateOccurrenceEvent) : MetaM String := do
+  let type := (← getConstInfo event.realizationName).type
+  return if type.isAppOfArity escapeWitnessBridge 3 then "witness"
+    else if type.isAppOfArity escapeForwardBridge 3 then "forward" else "legacy"
+
+/-- Only closed, zero-parameter Prop definitions occurring in the original
+statement qualify. A definition discovered in one of their bodies is not visited. -/
+def statementDefinitions (statement : Expr) : MetaM (Array Name) := do
+  let originalNames := statement.getUsedConstants
+  let (statement, _) ← eraseProofs statement
+  let mut names := #[]
+  for name in statement.getUsedConstants do
+    unless originalNames.contains name do continue
+    if let .defnInfo info ← getConstInfo name then
+      if info.levelParams.isEmpty && (← RegistrationGates.bounded (isDefEq info.type (mkSort .zero))) &&
+          !info.value.hasFVar && !info.value.hasMVar && !info.value.hasLooseBVars then
+        names := names.push name
+  return names
+
+private partial def bodyContainsOrigin (body origin : Expr) (depth : Nat := 0) : MetaM Bool := do
+  if depth > 256 then throwError "incomplete_closure:dtr.statement_depth"
+  if ← isProof body then return false
+  if body.equal origin then return true
+  let child := fun e => bodyContainsOrigin e origin (depth + 1)
+  match body with
+  | .app f a => return (← child f) || (← child a)
+  | .lam name type body bi | .forallE name type body bi =>
+    if ← child type then return true
+    withLocalDecl name bi type fun x => child (body.instantiate1 x)
+  | .letE name type value body _ =>
+    if (← child type) || (← child value) then return true
+    withLetDecl name type value fun x => child (body.instantiate1 x)
+  | .mdata _ body | .proj _ _ body => child body
+  | _ => return false
+
+def statementContainsOrigin (statement origin : Expr) : MetaM Bool := do
+  if (statement.find? (·.equal origin)).isSome then return true
+  for name in ← statementDefinitions statement do
+    let .defnInfo info ← getConstInfo name | continue
+    if ← RegistrationGates.budget (bodyContainsOrigin info.value origin) then return true
+  return false
+
+/-- Semantic inputs used outside template extraction must also bind evidence
+and its cache. These are names only; the content module is never imported here. -/
+def inspectionRoots (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
+  let mut roots ← statementDefinitions event.statement
+  if (← bridgeKind event) == "witness" then
+    roots := roots ++ event.arena.getUsedConstants
+    let type := (← getConstInfo event.realizationName).type
+    roots := roots ++ (← statementDefinitions type.getAppArgs[1]!)
+    let arena := RegistrationGates.witnessArenaName
+    roots := roots ++ (#["Domain", "predicate", "embed", "decision", "check", "signature",
+      "Law", "realization", "constantTrue", "toPrimitiveLawArena", "toArena"].map arena.str)
+    roots := roots ++ #[escapeWitnessBridge, escapeWitnessBridge.str "toTheoremUnit"]
+  return roots
+
+/-- Retain the inspected definitions and their repository data/type closure.
+Proof leaves contribute their types only; upstream data bodies remain pinned
+by the existing native/source checks. -/
+def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name) := do
+  let mut pending := (← inspectionRoots event).toList
+  let mut seen : NameSet := {}
+  let mut remaining := 524288
+  while let name :: rest := pending do
+    pending := rest
+    if name == ``lcProof || seen.contains name then continue
+    if remaining == 0 then throwError "incomplete_closure:dtr.inspection_inputs"
+    remaining := remaining - 1
+    seen := seen.insert name
+    let info ← getConstInfo name
+    let owner := (RegistrationReifier.declaringModuleOf (← getEnv) name).getD (← getEnv).header.mainModule
+    let (type, work) ← eraseProofs info.type remaining
+    remaining := remaining - work
+    pending := type.getUsedConstants.toList ++ pending
+    if (owner.toString.startsWith "D5." || owner.toString.startsWith "LeanInformationAudit.") &&
+        !(← isProp info.type) then
+      if let some value := info.value? then
+        let (value, work) ← eraseProofs value remaining
+        remaining := remaining - work
+        pending := value.getUsedConstants.toList ++ pending
+  return seen.toArray
+
+private def escapeIdentity (params : List Name) (value : Expr) : MetaM String := do
+  let .ok (identity, _) := rawStatementIdentity params value
+    | throwError "incomplete_closure:dtr.escape_identity"
+  return identity
+
+/-- This check consumes only names, expression occurrence, and kernel types.
+No state, chain, certificate body, or residual count is evaluated. -/
+def checkEscapeRecord (event : TemplateOccurrenceEvent) (input : EscapeRecordInput) :
+    MetaM EscapeRecordEvidence := do
+  let kind ← bridgeKind event
+  if kind == "witness" then
+    let type := (← getConstInfo event.realizationName).type
+    discard <| RegistrationGates.witnessStatement event.arena type.getAppArgs[1]! event.key.theoremName
+  -- Structural registrations without escape slots do not consume a finite arena.
+  if input.fromObject.isNone && input.continuation.isNone then
+    let continuation := if input.openContinuation then
+      some ({ kind := "open" } : EscapeContinuationIdentity) else none
+    return { bridgeKind := kind, continuation }
+  let normalized ← RegistrationGates.normalizeArena event.arena
+  let arena := normalized.finite
+  let fromObject ← input.fromObject.mapM fun origin => do
+    unless ← statementContainsOrigin event.statement origin do
+      throwError "unclassified_form:dtr.escape_from_absent"
+    let some name := origin.getAppFn.constName?
+      | throwError "unclassified_form:dtr.escape_from_identity"
+    if origin.hasFVar || origin.hasMVar || origin.hasLooseBVars then
+      throwError "unclassified_form:dtr.escape_from_identity"
+    let type ← inferType origin
+    let state ← if normalized.witness then
+        mkAppM (RegistrationGates.witnessArenaName.str "Domain") #[normalized.original]
+      else mkAppM `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arena]
+    let represented := if ← isType origin then origin else type
+    unless ← isDefEq represented state do
+      throwError "unclassified_form:dtr.escape_from_state"
+    let typeIdentity ← escapeIdentity event.levelParams type
+    let objectIdentity ← escapeIdentity event.levelParams origin
+    return (⟨name, typeIdentity, objectIdentity⟩ : EscapeFromIdentity)
+  let continuation ← if input.openContinuation then
+      if input.continuation.isSome then throwError "unclassified_form:dtr.escape_continues_kind"
+      pure <| some { kind := "open" : EscapeContinuationIdentity }
+    else input.continuation.mapM fun value => do
+      let .const declarationName levels := value
+        | throwError "unclassified_form:dtr.escape_continues_named_certificate"
+      let info ← getConstInfo declarationName
+      unless levels.length == info.levelParams.length do
+        throwError "unclassified_form:dtr.escape_continues_named_certificate"
+      let type ← inferType value
+      let kind ← if type.isAppOfArity
+          `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapeResidualWitness 2 then
+          pure "witness"
+        else if type.isAppOfArity
+          `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapeResidualEmpty 2 then
+          pure "empty"
+        else throwError "unclassified_form:dtr.escape_continues_kind"
+      let args := type.getAppArgs
+      let chain := args[1]!
+      let .const chainName _ := chain
+        | throwError "unclassified_form:dtr.escape_continues_named_chain"
+      let chainType ← inferType chain
+      unless chainType.isAppOfArity `D5.S3.ConceptDynamics.InformationEscape.LayerChain 1 &&
+          (← isDefEq args[0]! arena) && (← isDefEq chainType.appArg! arena) do
+        throwError "unclassified_form:dtr.escape_continues_arena"
+      if kind == "witness" then
+        let membership ← mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapeResidualWitness.unresolved #[value]
+        unless ← isProof membership do throwError "unclassified_form:dtr.escape_continues_membership"
+        unless (← inferType membership).isAppOf ``Membership.mem do
+          throwError "unclassified_form:dtr.escape_continues_membership"
+      else unless ← isProof value do throwError "unclassified_form:dtr.escape_continues_kind"
+      let statementIdentity ← escapeIdentity info.levelParams info.type
+      return (⟨kind, some declarationName, some statementIdentity, some chainName⟩ :
+        EscapeContinuationIdentity)
+  return { fromObject, continuation, bridgeKind := (← bridgeKind event) }
+
+/-- Typed identity stops at each proof and serializes its proposition instead.
+The pure wire encoder is exposed separately for synthetic encoding tests. -/
+def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) :
+    MetaM (Except String (String × Nat)) := do
+  let (erased, work) ← eraseProofs e fuel
+  return (erasedSyntaxIdentity params erased (fuel - work)).map fun (identity, bytes) =>
+    (identity, work + bytes)
 
 /-- Complete binding evidence uses the unshared raw-identity wire format.
 Dependency arrays are separate length-delimited inputs, not annotations
@@ -129,7 +348,7 @@ outside the evidence identity. The evidence reference itself is not encoded. -/
 def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingCertificate)
     (fuel : Nat) : Except String (String × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-binding-evidence-v1"
+    emit "DTR-binding-evidence-v2"
     for name in #[certificate.key.root, certificate.key.registrationModule,
         certificate.key.theoremName, certificate.key.objectArena, certificate.key.catalog] do
       wireName name
@@ -137,6 +356,18 @@ def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingC
     emit certificate.planIdentity
     emit certificate.descriptorIdentity
     emit certificate.actualIdentity
+    emit certificate.escape.bridgeKind
+    match certificate.escape.fromObject with
+    | none => emit "missing-from"
+    | some origin =>
+      wireName origin.name; emit origin.typeIdentity; emit origin.objectIdentity
+    match certificate.escape.continuation with
+    | none => emit "missing-continuation"
+    | some residual =>
+      emit residual.kind
+      wireName (residual.declarationName.getD .anonymous)
+      emit (residual.statementIdentity.getD "")
+      wireName (residual.chainName.getD .anonymous)
     for inputs in #[certificate.argumentInputs, certificate.extractionInputs] do
       emit (toString inputs.size)
       for input in inputs do
@@ -153,7 +384,7 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .atom e => emit "body"; raw e
   | .supplied _ => throw "incomplete_closure:E7.supplied_in_static_plan"
   | .expanded e body => emit "expanded"; raw e; child body
-  | .proofLeaf type e => emit "proof-leaf"; raw type; raw e
+  | .proofLeaf type => emit "proof-leaf"; raw type
   | .typeNode checked => emit "type-node"; child checked
   | .audit input body => emit "audit-input"; child input; child body
   | .app f a => emit "application"; child f; child a
@@ -163,16 +394,16 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .mdata m b => emit "metadata"; raw (.mdata m (.bvar 0)); child b
   | .proj n i b => emit "projection"; wireName n; emit (toString i); child b
 
-/-- The canonical wire includes every retained plan node and raw proof/expansion,
-all slots, identities, policy and source references. The hash and byte count are
+/-- The canonical wire includes every retained plan node and proof proposition/erased expansion,
+all slots, identities, the private frame version tuple. The hash and byte count are
 outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-checked-plan-v3"
+    emit "DTR-checked-plan-v6"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
-    emit plan.compiler; emit plan.toolchain; emit plan.policyIdentity
+    emit plan.compiler; emit plan.toolchain
     wireName plan.name; wireName plan.definitionOwner; wireName plan.enrollmentOwner
     emit (toString plan.levelParams.length)
     emit plan.typeIdentity; emit plan.bodyIdentity
@@ -185,8 +416,6 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
       wireName dep.name; wireName dep.owner; emit dep.typeIdentity; emit dep.bodyIdentity
     emit (toString plan.constructorTypes.size)
     for ast in plan.constructorTypes do wireName ast
-    emit (toString plan.sourceInputs.size)
-    for input in plan.sourceInputs do emit input.path; emit input.sha256
     emit (toString plan.rules.size)
     for rule in plan.rules do emit rule
     -- The fixed-width work field is outside the token table so its changing
@@ -206,11 +435,6 @@ def sourcePath (name : Name) : String :=
   (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
     name.toString.replace "." "/" ++ ".lean"
 
--- Judge implementation bytes do not identify binding semantics; the manual
--- report_semantic_version does. Retain configuration and toolchain inputs.
-def policyPaths : Array String := #[
-  "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json"]
-
 private abbrev HashWorker := IO.Process.Child {
   stdin := .piped, stdout := .piped, stderr := .null }
 
@@ -219,9 +443,10 @@ private initialize hashWorker : Std.Mutex (Option HashWorker) ← Std.Mutex.new 
 /-- Reuse only the fixed worker process, never a file digest. Requests carry the
 caller's current directory because isolated source fixtures may change it. The
 mutex keeps each request/response together; any failure retires the stream. -/
-private def fileInputBatch (paths : Array String) : IO (Array String × Option Nat) := do
-  if paths.isEmpty then return (#[], none)
-  let request := Json.arr #[toJson (← IO.currentDir).toString, toJson paths]
+private def fileInputBatch (paths : Array String) (readVersion : Bool := false) :
+    IO (Array String × Option Nat) := do
+  if paths.isEmpty && !readVersion then return (#[], none)
+  let request := Json.arr #[toJson (← IO.currentDir).toString, toJson paths, toJson readVersion]
   hashWorker.atomically do
     try
       let child ← match ← get with
@@ -240,14 +465,15 @@ private def fileInputBatch (paths : Array String) : IO (Array String × Option N
               "for line in sys.stdin.buffer:\n" ++
               " p=None\n" ++
               " try:\n" ++
-              "  root,paths=json.loads(line)\n" ++
+              "  root,paths,read_version=json.loads(line)\n" ++
               "  hashes=[]; version=None\n" ++
-              "  for p in paths:\n" ++
+              "  if read_version:\n" ++
+              "   p='lean-report-inputs.json'\n" ++
               "   data=(pathlib.Path(root)/p).read_bytes()\n" ++
-              "   hashes.append(hashlib.sha256(data).hexdigest())\n" ++
-              "   if p=='lean-report-inputs.json':\n" ++
-              "    version=json.loads(data.decode('utf-8'),object_pairs_hook=unique)['report_semantic_version']\n" ++
-              "    if type(version) is not int or version<=0: raise ValueError('version')\n" ++
+              "   version=json.loads(data.decode('utf-8'),object_pairs_hook=unique)['report_cache_release_semantic_version']\n" ++
+              "   if type(version) is not int or version<=0: raise ValueError('version')\n" ++
+              "  for p in paths:\n" ++
+              "   hashes.append(hashlib.sha256((pathlib.Path(root)/p).read_bytes()).hexdigest())\n" ++
               "  result=[hashes,version]\n" ++
               " except Exception:\n" ++
               "  result='DTR-ManifestVersion' if p=='lean-report-inputs.json' else None\n" ++
@@ -258,7 +484,7 @@ private def fileInputBatch (paths : Array String) : IO (Array String × Option N
       child.stdin.flush
       let response ← IO.ofExcept <| Json.parse (← child.stdout.getLine)
       if response.getStr? == .ok "DTR-ManifestVersion" then
-        throw <| IO.userError "DTR-ManifestVersion: missing or malformed report_semantic_version"
+        throw <| IO.userError "DTR-ManifestVersion: missing or malformed report_cache_release_semantic_version"
       let (hashes, version) : Array String × Option Nat ← IO.ofExcept <| fromJson? response
       unless hashes.size == paths.size && hashes.all (fun hash => hash.length == 64 &&
           hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f'))) do
@@ -276,12 +502,12 @@ private def fileInputBatch (paths : Array String) : IO (Array String × Option N
 private def fileHashes (paths : Array String) : IO (Array String) := do
   return (← fileInputBatch paths).1
 
-/-- The version and manifest digest come from the same captured policy bytes. -/
-def readVersionedSourceInputs (paths : Array String) : CoreM (Array SourceInput × Nat) := do
-  let (hashes, version) ← fileInputBatch paths
+/-- Read the explicit report release version without hashing source files. -/
+def readReportCacheReleaseVersion : CoreM Nat := do
+  let (_, version) ← fileInputBatch #[] true
   let some version := version
-    | throwError "DTR-ManifestVersion: missing report_semantic_version policy input"
-  return ((paths.zip hashes).map (fun (path, sha256) => { path, sha256 }), version)
+    | throwError "DTR-ManifestVersion: missing report_cache_release_semantic_version"
+  return version
 
 /-- Hash every supplied current file in order, including repeated paths. The
 fixed native worker avoids interpreting SHA-256 separately for every byte. -/
@@ -695,27 +921,5 @@ def validate (roots : Array Name) : CoreM Unit := do
       total_ns={finished - started}"
 
 end NativeCoherence
-
-def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) : CoreM (Array SourceInput) := do
-  let policyOwners := #[`LeanInformationAudit.RegistryTypes, `LeanInformationAudit.Registry,
-    `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]
-    |>.filter (fun name => (env.getModuleIdx? name).isSome)
-  NativeCoherence.validate (#[env.header.mainModule] ++ policyOwners ++ dependencies.map (·.owner))
-  let mut paths := policyPaths.push (sourcePath env.header.mainModule)
-  for dep in dependencies do
-    if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit.Tests." then
-      let path := sourcePath dep.owner
-      unless paths.contains path do paths := paths.push path
-  readSourceInputs (paths.qsort (· < ·))
-
-def sourceIdentity (inputs : Array SourceInput) : String :=
-  Sha256.hex (Json.arr (inputs.map fun input => Json.arr #[Json.str input.path, Json.str input.sha256])).compress.toUTF8
-
-/-- Compare retained bytes; never refresh a stale plan by wrapping old olean
-contents with hashes from the current source tree. -/
-def validateSourceInputs (inputs : Array SourceInput) : CoreM Unit := do
-  for input in inputs do
-    unless (← readSourceInput input.path) == input do
-      throwError "incomplete_closure:E7.stale_source:{input.path}"
 
 end LeanInformationAudit.TemplateAudit

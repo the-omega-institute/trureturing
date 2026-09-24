@@ -14,8 +14,8 @@ elab "observe_enrollment_inputs" : command => do
   elabCommand (← `(command| set_option informationTemplate.work 0))
   let exhausted ← enroll name
   let noEvidence := !(selectedPlan (← getEnv) name).isOk
-  -- The first native dependency must serialize its type within the quota.
-  let incomplete := exhausted matches .error "incomplete_closure:E7.type_identity"
+  -- Typed proof erasure consumes quota before the first identity is serialized.
+  let incomplete := exhausted matches .error "incomplete_closure:E8.erasure_work"
   set saved
   let budgetOk := incomplete && noEvidence
   let budget := s!"[{if incomplete && noEvidence then "PASS" else "FAIL"}] enrollment_budget_incomplete result={repr exhausted}"

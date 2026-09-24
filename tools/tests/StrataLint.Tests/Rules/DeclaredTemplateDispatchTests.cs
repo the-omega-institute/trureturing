@@ -9,7 +9,7 @@ public sealed class DeclaredTemplateDispatchTests
     {
         var diagnostics = RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId,
             DeclaredTemplateBindingRuleTests.Delta()).Diagnostics;
-        Assert.Contains(diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block
+        Assert.Contains(diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Observe
             && diagnostic.Message.StartsWith("DTR-Undeclared ", StringComparison.Ordinal));
     }
 

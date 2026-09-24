@@ -40,6 +40,7 @@ def checkout(root, commit):
         raise ValueError("reusable workflow candidate_sha must match checkout")
     if run(root, "git", "rev-parse", "HEAD") != oid(commit):
         raise ValueError("checkout does not match the fixed candidate")
+    prepare_native_push_range(root, commit)
     for remote in run(root, "git", "remote").splitlines():
         run(root, "git", "remote", "remove", remote)
     for ref in run(root, "git", "for-each-ref", "--format=%(refname)", "refs/remotes/").splitlines():
@@ -48,6 +49,58 @@ def checkout(root, commit):
     print("CI_WORKFLOW_IDENTITY " + json.dumps({name.lower(): os.environ.get("GITHUB_" + name, "")
           for name in ("WORKFLOW_REF", "WORKFLOW_SHA", "EVENT_NAME", "JOB", "RUN_ID", "RUN_ATTEMPT", "SHA")}, sort_keys=True))
     print("CI_CACHE_WRITES enabled=" + os.environ.get("STRATALINT_CACHE_WRITES", "false"))
+
+
+def prepare_native_push_range(root, commit):
+    """Acquire the one event endpoint the offline push planner may need.
+
+    Native push checkouts are intentionally shallow.  The event's before commit
+    is the complete immutable range endpoint, so fetch that object (and its
+    tree) before checkout strips every remote.  Planning remains offline after
+    this preparation boundary and still fails closed when the endpoint cannot
+    be acquired.
+    """
+    import ci_plan
+
+    if not ci_plan.native_push():
+        return
+    # Keep the lightweight checkout contract usable in local/native fixtures
+    # that intentionally omit the Actions event.  stage-input remains the
+    # fail-closed boundary for a real native push with no event payload.
+    if not os.environ.get("GITHUB_EVENT_PATH"):
+        return
+    before, after = ci_plan.push_endpoints()
+    if after != commit:
+        raise ValueError("push event after does not match checked-out candidate")
+    if before == ci_plan.ZERO_OID:
+        return
+
+    def available():
+        for suffix in ("^{commit}", "^{tree}"):
+            try:
+                ci_plan.git(root, "cat-file", "-e", before + suffix)
+            except subprocess.CalledProcessError:
+                return False
+        return True
+
+    if not available():
+        try:
+            subprocess.run(
+                ["git", "fetch", "--no-tags", "--depth=1", "origin", before],
+                cwd=root,
+                check=True,
+                capture_output=True,
+                text=True,
+                env={**os.environ, "GIT_NO_LAZY_FETCH": "1", "GIT_TERMINAL_PROMPT": "0"},
+            )
+        except subprocess.CalledProcessError as error:
+            detail = (error.stderr or error.stdout or "").strip()
+            raise ValueError(
+                f"PUSH_BEFORE_FETCH_FAILED: event.before {before} could not be acquired"
+                + (f": {detail}" if detail else "")
+            ) from error
+    if not available():
+        raise ValueError(f"PUSH_BEFORE_UNAVAILABLE: event.before {before} is not an available commit")
 
 
 def resolve(root, head):
@@ -124,12 +177,12 @@ def transport(args):
                "--run-id", args.run_id, "--run-attempt", args.run_attempt]
     if args.command == "pack":
         command.extend(["--archive", str(args.archive)])
-        seed_archive = args.seed_archive
-        if (seed_archive is None and args.stage == "current"
+        seed_manifest = args.seed_manifest
+        if (seed_manifest is None and args.stage == "current"
                 and os.environ.get("STRATALINT_CACHE_WRITES") == "true"):
-            seed_archive = args.archive.with_name("ci-current-seed.tar.gz")
-        if seed_archive is not None:
-            command.extend(["--seed-archive", str(seed_archive)])
+            seed_manifest = args.archive.with_name("ci-current-seed.json")
+        if seed_manifest is not None:
+            command.extend(["--seed-manifest", str(seed_manifest)])
     # The runner is the upstream candidate runtime. Validation precedes the
     # downstream stage; the non-adversarial runtime bootstrap does not rebuild.
     subprocess.run(command, cwd=args.repository, check=True)
@@ -180,7 +233,8 @@ def stage_input(args):
     if stage == "delta" and (value["mode"] != "pr" or value["base"] != args.base):
         raise ValueError("delta requires the validated plan's explicit immutable base")
     requirements = ci_plan.stage_requirements(root, value, stage)
-    result = {"required": requirements["required"], "cache_layers": " ".join(requirements["cache_layers"]),
+    result = {"required": requirements["required"], "work_required": bool(value["resources"]),
+              "cache_layers": " ".join(requirements["cache_layers"]),
               "dotnet": "dotnet" in requirements["tools"], "lake": "lake" in requirements["tools"],
               "artifact_required": requirements["required"],
               "report_required": stage == "current" and "lean-report" in value["execution"]["steps"]}
@@ -222,7 +276,7 @@ def main():
     parser.add_argument("--allow-direct", action="store_true")
     parser.add_argument("--dispatch", action="store_true")
     parser.add_argument("--archive", type=pathlib.Path)
-    parser.add_argument("--seed-archive", type=pathlib.Path)
+    parser.add_argument("--seed-manifest", type=pathlib.Path)
     parser.add_argument("--run-id", default=os.environ.get("GITHUB_RUN_ID", ""))
     parser.add_argument("--run-attempt", default=os.environ.get("GITHUB_RUN_ATTEMPT", ""))
     args = parser.parse_args()

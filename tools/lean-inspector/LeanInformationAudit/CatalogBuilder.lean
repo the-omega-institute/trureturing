@@ -28,9 +28,7 @@ private def catalogNameFor (env : Environment) (rootId arenaName : Name) (catalo
 
 private def entryArenaValue (entry : InformationRegistryEntry) : MetaM Expr := do
   if entry.objectArenaName.isAnonymous then
-    mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
-      #[mkConst entry.arenaName]
+    return (← RegistrationGates.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
   else
     mkConstWithFreshMVarLevels entry.objectArenaName
 

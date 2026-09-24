@@ -1,0 +1,7 @@
+**定义 1.2（路径及原始事件词）。** 类型可组合词 $u=e_1\cdots e_m$ 从左到右执行。空词 $\epsilon_i$ 的域是 $S_i$，后继是恒等，标签词为空。对可接词 $u:i\to j$、$v:j\to k$ 定义
+$$
+D_{uv}=\{s\in D_u:T_us\in D_v\},\quad T_{uv}s=T_v(T_us),\quad
+\operatorname{tr}_{uv}(s)=\operatorname{tr}_u(s)\mathbin{\|}\operatorname{tr}_v(T_us).
+$$
+标签词保留具名边、源靶类型和发生顺序；串接 $\|$ 不作交换。
+

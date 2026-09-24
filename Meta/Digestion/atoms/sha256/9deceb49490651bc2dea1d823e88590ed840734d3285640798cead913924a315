@@ -1,0 +1,23 @@
+**推论 83.3（二次残差同时控制下一步缺陷与粗预测误差）。** 在定义与假设 83.1 的线性条件下，记
+$$
+\mathcal J_2(d;q,r):=\mathcal J_{t^2}(d;q,r)
+=\sum_j\frac{\bigl(d_j-(Ed)_j\bigr)^2}{q_j}.
+$$
+则对每个 $d\in\Delta(J)$，
+$$
+\boxed{
+\mathcal J_2(Td;q,r)
++\sum_i\frac{\bigl((CTd)_i-(SCd)_i\bigr)^2}{p_i}
+\le\mathcal J_2(d;q,r).
+}
+$$
+
+**证明。** $B_{t^2}(s,t)=(s-t)^2$ 在 $\mathbb R^2$ 上联合凸。取 $\mathcal K=\mathbb R$，在定理 83.2 中代入这一核，再用命题 82.2 的二次残差恒等式，即得结论。
+
+在命题 69.1、82.2 的带权正交残差几何中，$z=L\Pi u$ 属于 $\operatorname{Im}\Pi$，故输出端的精确分解就是
+$$
+\|Lu-z\|_q^2
+=\|(\mathrm{Id}-\Pi)Lu\|_q^2+\|\Pi Lu-z\|_q^2.
+$$
+右侧两项依次是下一步二次纤维缺陷和所列粗预测误差；它们共同受初始残差平方控制。证毕。
+

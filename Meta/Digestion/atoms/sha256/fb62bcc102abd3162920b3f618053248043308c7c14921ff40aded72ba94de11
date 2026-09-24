@@ -1,0 +1,65 @@
+### 127.3 当前边界如何分配完整 KL：可见项与纤维项
+
+令 $p(i\mid a)=p_i/b_a$，$u_{F_a}(i)=1/n_a$。对 $i\in F_a$ 分解似然比：
+
+$$
+\frac{p_i}{1/N}
+=\frac{b_a}{n_a/N}\,
+\frac{p_i/b_a}{1/n_a}.
+\tag{127.12}
+$$
+
+对数后按 $p_i$ 求和，得到精确纤维链式等式
+
+$$
+\boxed{
+D(p\|\pi)
+=D(b\|\bar\pi)
++\sum_a b_aD\bigl(p(\cdot\mid a)\|u_{F_a}\bigr)
+=D(Pp\|\pi)+D(p\|Pp).
+}
+\tag{127.13}
+$$
+
+第二个等号也可直接从 $(Pp)_i=b_a/n_a$ 逐纤维求和得到。定义
+
+$$
+D_c(p)=D(b\|\bar\pi)=D(Pp\|\pi),
+\qquad D_h(p)=D(p\|Pp).
+\tag{127.14}
+$$
+
+$D_h$ 是同一份分布相对于当前纤维均匀重建的 KL 缺陷。它和条件 Shannon 熵的关系是
+
+$$
+D_c(p)=\log N-H(b)-\sum_a b_a\log n_a,
+\qquad
+D_h(p)=\sum_a b_a\log n_a-H(X\mid qX).
+\tag{127.15}
+$$
+
+纤维不等大时，$\sum_ab_a\log n_a$ 也会随动力学改变，不能省略。特别地，$D_h$ 不是未经修正的“隐藏 Shannon 熵”。
+
+沿同一轨道微分式（127.13），得到
+
+$$
+\boxed{\frac d{dt}D_c(p_t)+\frac d{dt}D_h(p_t)=-\sigma(p_t)}.
+\tag{127.16}
+$$
+
+这个式子只规定总和。两项各自不增，需要额外结构。
+
+还可以直接看出粗项为何没有固定符号。令 $x=Pp$。由于 $\log(x/\pi)$ 在每条纤维上常数，$P$ 对它不变；又因质量导数为零，
+
+$$
+\begin{aligned}
+\frac d{dt}D_c(p_t)
+&=\langle P\dot p_t,\log(Pp_t/\pi)\rangle\\
+&=-\frac12\sum_{i,j}w_{ij}(p_{t,i}-p_{t,j})
+\log\frac{(Pp_t)_i}{(Pp_t)_j}.
+\end{aligned}
+\tag{127.17}
+$$
+
+这里同一边上的微观差 $p_i-p_j$ 与纤维平均差 $(Pp)_i-(Pp)_j$ 可以异号，故不能照搬式（127.10）的逐项非负性。
+

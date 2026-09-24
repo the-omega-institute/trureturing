@@ -1,0 +1,56 @@
+{
+  "delta": {
+    "kind": "inline",
+    "value": "1/44"
+  },
+  "r_upper_inclusive": {
+    "kind": "inline",
+    "value": "1/840"
+  },
+  "four_gap_guards": {
+    "kind": "inline",
+    "value": [
+      "83/840",
+      "299/4620",
+      "8/385",
+      "8117/325248"
+    ]
+  },
+  "G_lower": {
+    "kind": "inline",
+    "value": "8/385"
+  },
+  "remaining_hole_coefficient": {
+    "kind": "inline",
+    "value": "43/220"
+  },
+  "best_slot_credit_lower": {
+    "kind": "inline",
+    "value": "83/4200"
+  },
+  "uniform_source_credit": {
+    "kind": "inline",
+    "value": "86/21175"
+  },
+  "cost_rows": {
+    "path": "content/013-uniform_default/007-cost_rows.json",
+    "sha256": "64b9c4c30cfcec2d6041c3e9ba69f2789406a9220cc02b87cef8da57a5e63082",
+    "kind": "array"
+  },
+  "weighted_g_sum": {
+    "kind": "inline",
+    "value": "399144496215145187995979/29283910461731914025637600"
+  },
+  "weighted_P_sum": {
+    "kind": "inline",
+    "value": "17078035063238884512731574446478292782323/82508102866577761994550539069460000000"
+  },
+  "weighted_Q_sum": {
+    "kind": "inline",
+    "value": "3222290486225598233534630653085872009709/1445875168022480492644888052443181250000"
+  },
+  "comparison": {
+    "kind": "inline",
+    "value": "d_i>=m_i_old+[g_i-P_i*(rho-r/5)-Q_i*chi]_+; chi<=b<=sigma_escape/4, r is the actual best-slot loss."
+  }
+}

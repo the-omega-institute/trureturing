@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:21fbb6f47daf49e3e41650f832796c9263aa8a2a916d052534a535daf4e32f91
+  normalized_sha256: sha256:21fbb6f47daf49e3e41650f832796c9263aa8a2a916d052534a535daf4e32f91
+cas_ref: sha256:21fbb6f47daf49e3e41650f832796c9263aa8a2a916d052534a535daf4e32f91
+coverage_gids:
+  - gid: D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.eq_moorePenroseInverse_of_isMoorePenroseInverse
+    target_statement_id: sha256:2c0330c2dba1ed429dd7cb2af63e01e95a7b603cf2228e4240f19f41f137f6b8
+  - gid: D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.isMoorePenroseInverse_moorePenroseInverse
+    target_statement_id: sha256:18736e4b1629c6ccacac40723a79c65171780f9e9f6296b93251162549f27768
+  - gid: D5/S3/Observer/Hilbert/FiniteSynthesisGramDistance.finite_synthesis_gram_projection
+    target_statement_id: sha256:a7587edb071ecb68f233f89f6532e6059ddcbed53b17692d2195b2fb2bf35124
+  - gid: D5/S3/Quantum/Measurements/MinimalSymmetricRealizationUniqueness.minimal_symmetric_realization_uniqueness
+    target_statement_id: sha256:9b08698a12875d1ab641520af8b0e36924b513ddb04d4f56fcb4d328160a1551
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 19bb4296dc5f6a417e1e31675e65105f884395cbf38957294d3db6586b433d52
+    - c9245c0e4e1743639d346d7bb9e512d432de2a0e3c1bf8877278460beaafb5e3

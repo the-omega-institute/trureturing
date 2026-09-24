@@ -1,0 +1,9 @@
+**命题 15.2（全部词的有限不变张成）。** 在约定15.1下，置
+$$
+V=\operatorname{span}\{K_w\mathbf1:w\text{ 为任意有限词}\},\qquad
+V_0=\operatorname{span}\{\mathbf1\},\qquad
+V_{j+1}=V_j+\sum_{a,y}K_{a,y}V_j.
+\tag{15.4}
+$$
+则 $V_j$ 恰由长度至多 $j$ 的词列张成；若 $V_{j+1}=V_j$，此后全部等于 $V_j=V$。特别地 $V_{n-1}=V$，严格增长至多发生 $n-1$ 次。这是词深度界，不是词个数、采样次数或实验预算界。
+

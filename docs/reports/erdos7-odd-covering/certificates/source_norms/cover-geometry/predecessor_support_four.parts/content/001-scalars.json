@@ -1,0 +1,40 @@
+{
+  "gram_checks": {
+    "path": "content/001-scalars/000-gram_checks.json",
+    "sha256": "4f399a5699fd17a6bd3298e3348070c1fa02cd170c87dd49e9cbae9fee81f0a5",
+    "kind": "array"
+  },
+  "projection_count": {
+    "kind": "inline",
+    "value": 30100
+  },
+  "prime_head": {
+    "path": "content/001-scalars/002-prime_head.json",
+    "sha256": "26385d826ac92538163bd4e40b052ca050ff5bf228960c985310fc750c2929a9",
+    "kind": "value"
+  },
+  "tail_bound": {
+    "kind": "inline",
+    "value": "446509229891763752836941915141179889882399425682036689219728317011893093669729/15691276374911088064113238424470887684543000063575118602219630511404339126625000"
+  },
+  "tail_slack": {
+    "kind": "inline",
+    "value": "1812952248553048994864896986559758247400576134395270843689697599659452805271/15691276374911088064113238424470887684543000063575118602219630511404339126625000"
+  },
+  "fee5": {
+    "kind": "inline",
+    "value": "1/3"
+  },
+  "fee7": {
+    "kind": "inline",
+    "value": "13/48"
+  },
+  "fee_total": {
+    "kind": "inline",
+    "value": "403477/408240"
+  },
+  "reserve": {
+    "kind": "inline",
+    "value": "4763/408240"
+  }
+}
