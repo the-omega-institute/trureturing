@@ -38,7 +38,7 @@ R=\max\left(\{0\}\cup
 在其实际共同概率律下满足 $`\mathbb E E_i\le1`$，则不论依赖结构如何，
 
 ```math
-\operatorname{FDR}
+\mathrm{FDR}
 =\mathbb E\frac{F}{R\vee1}\le\frac{\alpha K_0}{K}\le\alpha.
 ```
 

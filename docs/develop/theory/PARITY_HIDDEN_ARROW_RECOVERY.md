@@ -810,7 +810,7 @@ $`E_x\ge M/(2\eta_Mm)`$ 的背景行。比较均值至多 $`2\eta_Mm`$。
 
 ```math
 \mathbb E B_m\le2\eta_Mm,\qquad
-\operatorname{Var}(B_m)
+\mathrm{Var}(B_m)
 \le C\left(\eta_Mm+\delta_M\eta_M^2m^2+M^{2-D}\right).
 \tag{22.8}
 ```
@@ -901,7 +901,7 @@ $`k_M=\lfloor\kappa q\rfloor`$。充分大 $`M`$ 时 $`k_M\ge1`$，且
 $`\liminf\mathbb EY_M/q\ge\rho(c)`$，且
 
 ```math
-\frac{\operatorname{Var}(Y_M)}{q^2}
+\frac{\mathrm{Var}(Y_M)}{q^2}
 \le C\left(\frac1q+\delta_M+M^{-D}\right)\longrightarrow0.
 \tag{22.16}
 ```
