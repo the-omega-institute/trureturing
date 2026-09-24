@@ -893,7 +893,7 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 Draft Ready 前完�
 
 - **地图 / GID 文法 / 风格**:`agents/CONTEXT.md`(≤2K token,有限上下文唯一必读)
 - **完整律法**:`docs/develop/spec/golden-ledger-repo-spec.md`(单一 spec,原位演进)
-- **理论源**(只读):`docs/develop/theory/`(PZG–BEDC 内核卷、GICT 卷)
+- **理论源**(参考输入；补充按第 3.8 条):`docs/develop/theory/`(PZG–BEDC 内核卷、GICT 卷)
 - **八官宪章**:`agents/{scout,prover,numericist,librarian,adversary,scribe,theorist,gate}.md`
 
 ### 12.2 发现、逻辑、账与美
