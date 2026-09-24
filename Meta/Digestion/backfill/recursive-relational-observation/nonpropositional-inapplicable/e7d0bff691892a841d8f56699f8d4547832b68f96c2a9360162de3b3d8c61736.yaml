@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7d0bff691892a841d8f56699f8d4547832b68f96c2a9360162de3b3d8c61736
+  normalized_sha256: sha256:e7d0bff691892a841d8f56699f8d4547832b68f96c2a9360162de3b3d8c61736
+cas_ref: sha256:e7d0bff691892a841d8f56699f8d4547832b68f96c2a9360162de3b3d8c61736
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Complete 140.9 statement binding. For every R>=20,k>=2, put X=sqrt(R)*log2(R),Y=log2(k). The original finite exact persistent-state minima satisfy X/(12*sqrt(5)) <= B_out <= 56*X and (X+Y)/(24*sqrt(5)) <= B_leg <= 56*(X+Y). Costs are ceil(log2(card(range M))) over every admissible finite representation with fixed update and original direction readout. Frozen D5/S3/ObserverMemory/Trajectories/LongestZeroResponseSeparation.source_family_separates, individual statement sha256:040f99df4f1d9a043bafe6185169cd6ae26214744b71ba9a8755bb60c81bf235, supplies the universal direction bound. Cut/zero-extension coordinates preserve legal updates, selector readout and reachable memory images. The actual joint-state fixed-slot codec has widths Q*(2*L+1)+2*L and plus J; its roundtrip and maintained maps bind BitVec/Fin coding, finite-cardinality relations and List.foldl_hom, with Nat.sInf_mem supplying attained minima. Nat.lt_floor_add_one, Int.floor_le, Real.sq_sqrt, Real.logb_le_logb_of_le and Real.logb_pow yield all displayed uniform estimates. The k actual histories h_j(n)=decide(n<j) are separated by the COMMON LEGAL prefix of k-j2-1 ones, followed by a next-one legality QUERY, through Stream append indexing, List.foldl_hom and Nat.find first-zero specifications. Nat.card_le_card_of_injective, Nat.le_ceil and Real.natCeil_logb_natCast give log2(k). Both lower bounds hold on the SAME implementation; max>=half-sum gives the sum bound without independent realizability. Direction-only contracts acquire no log(k) lower bound. These are frozen/upstream instantiations, projections and normalization; no new mathematical declaration or wrapper is admitted and no existing project GID states the whole conjunction. Persistent storage does not grant acquisition/history access or execution-workspace bounds.
+    previous_atom_id: 99b8010f33241ee840c6bf8d8d300c377da99d266190219a0f80c02f6343443f
+    next_atom_id: b9cda0514b228df2c5c45f31b7b57c4f219ec5d9d83d49bdd03a8547edac0a5a
