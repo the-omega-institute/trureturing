@@ -7,12 +7,12 @@ namespace StrataLint.Tests;
 
 public sealed partial class ReviewRegressionTests
 {
-    private static ValidatedPolicy AcceptedPolicy(string registry)
+    private static ValidatedPolicy AcceptedPolicy(string fileMap)
     {
-        var outcome = RegistryLoader.Load(
-            Encoding.UTF8.GetBytes(registry),
-            Encoding.UTF8.GetBytes(TestRegistry.Domains));
-        return RegistryLoadAssert.Accepted(outcome).Policy;
+        var outcome = RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(fileMap),
+            Encoding.UTF8.GetBytes(TestFileMap.Domains));
+        return PolicyLoadAssert.Accepted(outcome).Policy;
     }
 
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>

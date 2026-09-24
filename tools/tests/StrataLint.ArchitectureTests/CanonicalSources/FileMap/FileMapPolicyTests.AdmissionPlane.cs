@@ -1,3 +1,4 @@
+using StrataLint.Engine;
 using StrataLint.Cli;
 
 namespace StrataLint.ArchitectureTests;

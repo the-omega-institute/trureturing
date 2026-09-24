@@ -188,8 +188,9 @@ import D5.S3.Analytic.ZetaGibbs
      threshold. `Zeta/` is a subdirectory and needs no registration.
      `Meta/domains.yaml` registers only the top-level `Analytic` and
      `AnalyticClosure` domains; none of the measured subdirectories `Dilation`,
-     `Displacement`, `EulerGerm`, `Isolation`, or `Zeta` occurs in either
-     `Meta/domains.yaml` or `Meta/registry.yaml`. -/
+     `Displacement`, `EulerGerm`, `Isolation`, or `Zeta` is a registered domain.
+     Their Lean paths are covered by the `D5/**/*.lean` entry in
+     `Meta/FILEMAP.toml`. -/
 
 namespace D5.S3.Analytic.Zeta.PrimeExponentLaw
 

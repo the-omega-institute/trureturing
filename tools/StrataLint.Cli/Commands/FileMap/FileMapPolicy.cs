@@ -15,20 +15,18 @@ internal static class FileMapPolicy
     private const string RunLocalTrackedMessage =
         "run-local artifact must be removed from the Git index; "
         + "the FILEMAP declaration must not be changed to make this finding go away";
-    private const string TestRegistryPath =
-        "tools/TestSupport/StrataLint.CliTestSupport/TestRegistry.cs";
     private const string BackfillLoaderPath =
         "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
-        "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs";
+        "tools/StrataLint.Engine/RepositoryIo/FileMapManifest.cs";
     private const string FrozenStateRecordLoaderPath =
         "tools/StrataLint.Engine/FrozenState/FrozenStateRecord.cs";
     private const string LibraryNoteCatalogPath =
         "tools/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
     private const string ProblemCandidateCatalogPath =
         "tools/StrataLint.Scribe/Problems/ProblemCandidateCatalog.cs";
-    private const string RegistryLoaderPath =
-        "tools/StrataLint.Cli/Commands/RegistryLoader.cs";
+    private const string DomainsLoaderPath =
+        "tools/StrataLint.Cli/Commands/DomainsLoader.cs";
     private const string ScribeEmitterPath =
         "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs";
     private const string ScribeProjectPath =
@@ -67,12 +65,11 @@ internal static class FileMapPolicy
             ["NativeArchivePaths"] = "tools/scripts/worktree/lean_actions.py",
             ["PackageMaterialRegistry"] = "tools/StrataLint.BuildRuntime/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
-            ["RegistryLoader"] = RegistryLoaderPath,
+            ["DomainsLoader"] = DomainsLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,
             ["StatementProjectionFixtureLoader"] = StatementProjectionFixtureLoaderPath,
-            ["TestRegistry"] = TestRegistryPath,
             ["TheoryAtomizerDataLoader"] = TheoryAtomizerDataLoaderPath,
             ["ValuesKernelDataLoader"] = ValuesKernelLoaderPath,
             ["YamlSubsetParser"] = YamlSubsetParserPath,
@@ -217,7 +214,9 @@ internal static class FileMapPolicy
         var selectedPaths = scope?.Paths?.ToHashSet(StringComparer.Ordinal);
         var selected = selectedPaths is null ? paths : paths.Where(selectedPaths.Contains).ToArray();
         var selectedManifest = selectedPaths is null ? manifest : new FileMapManifest(manifest.ResidencePolicy,
-            manifest.Entries.Where(entry => selectedPaths.Any(entry.Matches)).ToImmutableArray(), manifest.Resources);
+            manifest.Entries.Where(entry => selectedPaths.Any(entry.Matches)).ToImmutableArray(),
+            manifest.ArtifactKinds,
+            manifest.Resources);
         var trackedModes = TrackedModes(repositoryRoot);
         var dependencyFindings = InspectDependencies(
             manifest,
@@ -229,35 +228,20 @@ internal static class FileMapPolicy
             DataVerifierImplementations.Values
                 .Where(path => File.Exists(Absolute(repositoryRoot, path)))
                 .ToHashSet(StringComparer.Ordinal));
-        var registry = RegistryLoader.Load(
-            File.ReadAllBytes(Absolute(repositoryRoot, "Meta/registry.yaml")),
+        var policy = RepositoryPolicyLoader.Load(
+            manifest,
             File.ReadAllBytes(Absolute(repositoryRoot, "Meta/domains.yaml")));
-        var registryFindings = registry is RegistryLoadOutcome.Accepted accepted
-            ? InspectRegistryRootAlignment(
-                    accepted.Policy.RootFiles.Select(static path => path.Value),
-                    paths.Where(static path => !path.Contains('/', StringComparison.Ordinal)))
-                .Concat(InspectRegistryReferences(accepted.Policy, paths))
-            : [new FileMapFinding(
-                "FILEMAP-REGISTRY-ALIGNMENT",
-                "Meta/registry.yaml",
-                "registry failed to load before FILEMAP alignment")];
-        var projectionRegistrationFindings = registry is RegistryLoadOutcome.Accepted registryAccepted
-            ? InspectProjectionRegistrations(
-                manifest,
-                registryAccepted.Policy.GovernanceDocuments.Select(static path => path.Value))
-            : [];
-        var libraryPathFindings = registry is RegistryLoadOutcome.Accepted libraryRegistry
-            ? selected.Where(static path => path.StartsWith("Library/", StringComparison.Ordinal))
-                .Select(path => RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), libraryRegistry.Policy))
+        var pathFindings = policy is PolicyLoadOutcome.Accepted accepted
+            ? selected.Select(path => RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), accepted.Policy))
                 .OfType<RepositoryPathIssue>()
-                .Select(static issue => new FileMapFinding("FILEMAP-PATH-POLICY", issue.Path, issue.Message))
-            : [];
+                .Select(issue => new FileMapFinding("FILEMAP-PATH-POLICY", issue.Path, issue.Message))
+            : [new FileMapFinding("FILEMAP-POLICY-INVALID", FileMapLoader.RelativePath,
+                ((PolicyLoadOutcome.InfrastructureFailure)policy).Message)];
 
         return InspectCoverage(manifest, selected)
             .Concat(InspectPatternPopulation(selectedManifest, paths))
-            .Concat(registryFindings)
-            .Concat(projectionRegistrationFindings)
-            .Concat(libraryPathFindings)
+            .Concat(pathFindings)
+            .Concat(InspectProjectionRegistrations(manifest))
             .Concat(scope is null || scope.Actors ? InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot) : [])
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
@@ -431,57 +415,6 @@ internal static class FileMapPolicy
         string.Equals(entry.ArtifactId, "none", StringComparison.Ordinal)
         && entry.Pattern.Contains('*');
 
-    internal static IReadOnlyList<FileMapFinding> InspectRegistryRootAlignment(
-        IEnumerable<string> registryRootFiles,
-        IEnumerable<string> trackedRootFiles)
-    {
-        ArgumentNullException.ThrowIfNull(registryRootFiles);
-        ArgumentNullException.ThrowIfNull(trackedRootFiles);
-        var registry = registryRootFiles.ToHashSet(StringComparer.Ordinal);
-        var tracked = trackedRootFiles.ToHashSet(StringComparer.Ordinal);
-        if (registry.SetEquals(tracked))
-        {
-            return [];
-        }
-
-        var registryOnly = registry.Except(tracked, StringComparer.Ordinal).Order(StringComparer.Ordinal);
-        var trackedOnly = tracked.Except(registry, StringComparer.Ordinal).Order(StringComparer.Ordinal);
-        return
-        [
-            new FileMapFinding(
-                "FILEMAP-REGISTRY-ALIGNMENT",
-                "Meta/registry.yaml",
-                $"registry-only [{string.Join(", ", registryOnly)}]; "
-                + $"tracked-only [{string.Join(", ", trackedOnly)}]"),
-        ];
-    }
-
-    internal static IReadOnlyList<FileMapFinding> InspectRegistryReferences(
-        ValidatedPolicy policy,
-        IEnumerable<string> trackedPaths)
-    {
-        ArgumentNullException.ThrowIfNull(policy);
-        ArgumentNullException.ThrowIfNull(trackedPaths);
-        var tracked = trackedPaths.ToHashSet(StringComparer.Ordinal);
-        var references = policy.RootFiles
-            .Select(static path => (Path: path.Value, Field: "root_files"))
-            .Concat(policy.GovernanceDocuments.Select(
-                static path => (Path: path.Value, Field: "governance_documents")))
-            .Concat(policy.AgentFiles.Select(
-                static name => (
-                    Path: RepositoryPathPolicy.AgentFilesRootPath + name,
-                    Field: "agent_files")));
-
-        return references
-            .Where(reference => !tracked.Contains(reference.Path))
-            .OrderBy(static reference => reference.Path, StringComparer.Ordinal)
-            .Select(static reference => new FileMapFinding(
-                "FILEMAP-REGISTRY-DANGLING",
-                reference.Path,
-                $"registry {reference.Field} reference does not name a tracked, present file"))
-            .ToArray();
-    }
-
     internal static IReadOnlyList<FileMapFinding> InspectGitIgnore(IEnumerable<string> lines)
     {
         ArgumentNullException.ThrowIfNull(lines);
@@ -497,11 +430,9 @@ internal static class FileMapPolicy
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectProjectionRegistrations(
-        FileMapManifest manifest,
-        IEnumerable<string> registryGovernanceDocuments)
+        FileMapManifest manifest)
     {
         ArgumentNullException.ThrowIfNull(manifest);
-        ArgumentNullException.ThrowIfNull(registryGovernanceDocuments);
         const string pattern = "Generated/echo-residuals/*.md";
         const string representative = "Generated/echo-residuals/synthetic.md";
         var findings = new List<FileMapFinding>();
@@ -512,16 +443,6 @@ internal static class FileMapPolicy
                 "FILEMAP-PROJECTION-SHARD",
                 representative,
                 $"run-local echo residuals require the literal FILEMAP shard pattern {pattern}"));
-        }
-
-        foreach (var path in registryGovernanceDocuments
-            .Where(static path => path.StartsWith("Generated/echo-residual", StringComparison.Ordinal))
-            .Order(StringComparer.Ordinal))
-        {
-            findings.Add(new FileMapFinding(
-                "FILEMAP-PROJECTION-REGISTRY",
-                path,
-                "run-local echo residuals must not be enumerated in registry governance documents"));
         }
 
         return findings;

@@ -7,44 +7,6 @@ namespace StrataLint.Tests;
 public sealed class TypeModelTests
 {
     [Theory]
-    [InlineData("Meta/judge-seed.json")]
-    [InlineData("Meta/package-materials.json")]
-    public void RealRepositoryMetadataRegistrationsAreAdmissible(string value)
-    {
-        var path = RepoPath.CreateKnown(value);
-        var policy = RealRepositoryPolicy();
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, policy));
-        Assert.Contains(path, policy.GovernanceDocuments);
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
-    [Theory]
-    [InlineData("Meta/unregistered.json")]
-    [InlineData("Meta/judge-seed-extra.json")]
-    [InlineData("Meta/package-materials-extra.json")]
-    public void RealRepositoryMetadataRegistrationRejectsUnregisteredNeighbors(string value)
-    {
-        var path = RepoPath.CreateKnown(value);
-        var policy = RealRepositoryPolicy();
-
-        var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(path, policy));
-
-        Assert.Equal("SL-000", issue.RuleId.Value);
-        Assert.Equal(value, issue.Path);
-        Assert.Equal("unknown Meta artifact", issue.Message);
-        Assert.DoesNotContain(path, policy.GovernanceDocuments);
-    }
-
-    private static ValidatedPolicy RealRepositoryPolicy()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        return RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml")))).Policy;
-    }
-
-    [Theory]
     [InlineData("Blueprint/Trureturing.Content.csproj")]
     [InlineData("Blueprint/Another.Content.csproj")]
     [InlineData("Blueprint/trureturing.content.csproj")]
@@ -165,7 +127,9 @@ public sealed class TypeModelTests
 
         Assert.Equal("SL-000", issue.RuleId.Value);
         Assert.Equal(value, issue.Path);
-        Assert.Equal("unknown top-level artifact", issue.Message);
+        Assert.Equal(value.StartsWith("Problems/", StringComparison.Ordinal)
+            ? "unknown top-level artifact"
+            : "path must match exactly one FILEMAP entry; matches=0", issue.Message);
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 
@@ -425,7 +389,7 @@ public sealed class TypeModelTests
     }
 
     [Theory]
-    [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml")]
+    [InlineData("tools/tests/StrataLint.Tests/Rules/TestFileMap.cs")]
     [InlineData("Golden/Projection/x.json")]
     [InlineData("Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
     [InlineData("Golden/Frozen/state/D5/S0/Carrier/Ring.lean.json")]
@@ -486,22 +450,22 @@ public sealed class TypeModelTests
     }
 
     [Fact]
-    public void FileMapDataIsGovernanceRegisteredAndBootstrapClear()
+    public void FileMapPolicyIsRegisteredAndBootstrapProtected()
     {
         const string value = "Meta/FILEMAP.toml";
         var path = RepoPath.CreateKnown(value);
         var policy = Policy();
 
-        Assert.Contains(path, policy.GovernanceDocuments);
+        Assert.Single(policy.Manifest.Match(path.Value));
         Assert.Null(RepositoryPathPolicy.Validate(path, policy));
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-        Assert.IsType<BootstrapOutcome.Clear>(
+        Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create([value])));
     }
 
     private static ValidatedPolicy Policy() =>
-        RegistryLoadAssert.Accepted(
-            RegistryLoader.Load(
-                Encoding.UTF8.GetBytes(TestRegistry.Canonical),
-                Encoding.UTF8.GetBytes(TestRegistry.Domains))).Policy;
+        PolicyLoadAssert.Accepted(
+            RepositoryPolicyLoader.Load(
+                Encoding.UTF8.GetBytes(TestFileMap.Canonical),
+                Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
 }
