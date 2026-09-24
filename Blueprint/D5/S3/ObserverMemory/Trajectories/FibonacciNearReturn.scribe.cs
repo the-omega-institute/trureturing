@@ -75,7 +75,49 @@ internal sealed class FibonacciNearReturnDocument : IScribeDocumentDefinition
                     + "common mode must be removed for the stated Gibbs model. Exact rank does "
                     + "not supply a uniform noise margin, and no WSS or P/NP inference follows. "
                     + "The finite Prony observation source retains its own consecutive-window "
-                    + "scope; this source only proves the displayed Fibonacci-return statement.")))))));
+                    + "scope; this source only proves the displayed Fibonacci-return statement.")))),
+            Describe.Remark(
+                DescribeId.Create("multiscale-horizon-phase-source-scope"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn."
+                        + "fibonacci_near_return"),
+                H("Finite-horizon validation and phase reconstruction are different tasks"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/kimmel2015robustphase"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/li2023robustmultiphase")),
+                Blocks(Paragraph(Text(
+                    "Kimmel, Low and Yoder supply prior art for geometric-time robust phase "
+                    + "estimation; their 2021 erratum changes the branch-error margin. The "
+                    + "new scalar decoder uses and independently proves the three-errors-below-pi "
+                    + "condition. Li, Ni and Ying already use prime or coprime amplification "
+                    + "factors for multiple-phase collision avoidance. The proposed Section 19 "
+                    + "instead proves a Hilbert-Schmidt finite-horizon intertwining estimate "
+                    + "from a logarithmic number of dyadic settings, including a matched-time "
+                    + "relative-calibration bound. It does not infer unknown multimode recovery "
+                    + "from a single phase, or universal superiority over a two-clock design. "
+                    + "The complete proof is currently in the original PR discussion and "
+                    + "append patch; the main-volume file has not yet incorporated Sections "
+                    + "17 through 19. This declaration certifies only its original return law.")))),
+            Describe.Remark(
+                DescribeId.Create("multiscale-validation-statistical-scope"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn."
+                        + "fibonacci_near_return"),
+                H("Random probes and sample lower bounds retain an experiment budget"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/avron2011trace"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/scarlett2021fano")),
+                Blocks(Paragraph(Text(
+                    "Avron and Toledo analyze randomized trace estimates; the current "
+                    + "one-sided complex Gaussian probe bound is derived explicitly and "
+                    + "requires a model fixed before independent validation. Scarlett and "
+                    + "Cevher supply the Fano and adaptive-information framework used for "
+                    + "the fixed-amplitude noisy-phase lower bound. Arbitrary Gaussian "
+                    + "superoperator inputs are not free quantum preparations. Frobenius "
+                    + "bounds are not dimension-free diamond bounds, and fixed per-reading "
+                    + "noise is not interchangeable with a fixed total noise budget. The "
+                    + "constructive sample bound still has a log-log gap. These paper "
+                    + "results are not proved by the existing Fibonacci Lean theorem.")))))));
 
     private static Formula Call(string name, params Formula[] arguments)
     {
