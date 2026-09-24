@@ -14,8 +14,14 @@ internal sealed class ParryResetEstimatesDocument : IScribeDocumentDefinition
                 DescribeId.Create("parryresetestimates-parry-three-step-minorization"),
                 DeclarationHandle.Create(Prefix + "parry_three_step_minorization"),
                 H("Three-step common mass"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("From every signed suffix state, the words 000 and 010 reach the two zero-suffix signs. Both path products equal p cubed divided by the starting suffix weight. Each is at least one eighth, uniformly in k. Thus the three-step transition has common mass one quarter on the two zero-suffix states."))),
+                Blocks(Paragraph(Text(
+                    "For every natural k >= 2, every state s in State k, and every sign a in Bool, put "
+                    + "p = parryParameter k and let z be the zero suffix in Fin k. Then the three-step kernel "
+                    + "satisfies (kernel k p)^3(s,(a,z)) >= 1/8. The paths 000 and 010 reach respectively the "
+                    + "complementary and unchanged zero-suffix signs; each path product is p^3 divided by the "
+                    + "starting suffix weight, and each is at least 1/8. Consequently the two zero-suffix states "
+                    + "carry at least common mass 1/4 in every three-step row."))),
                 DescribeRole.Theorem))));
 }

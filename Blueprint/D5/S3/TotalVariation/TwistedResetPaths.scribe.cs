@@ -14,59 +14,61 @@ internal sealed class TwistedResetPathsDocument : IScribeDocumentDefinition
                 DescribeId.Create("twistedresetpaths-twisted-power-support"),
                 DeclarationHandle.Create(Prefix + "twisted_power_support"),
                 H("Twisted power support"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For every finite suffix carrier and real parameter, a nonzero complement-twisted return of "
-                    + "length L starts at suffix less than L. If the terminal suffix were at least L, every edge "
-                    + "would have to increment. Such a path preserves its sign and cannot close at the complemented "
-                    + "start."))),
+                    "For every natural k, real p, natural L, and state s = (b,j) in State k = Bool times Fin k, "
+                    + "if the L-step matrix entry of K = kernel k p from s to flip(s) = (!b,j) is nonzero, then "
+                    + "j.val < L. Thus every nonzero complement-twisted return starts below its return length; "
+                    + "no positivity or stochasticity assumption on p is required."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("twistedresetpaths-twisted-prefix-marginal"),
                 DeclarationHandle.Create(Prefix + "twisted_prefix_marginal"),
                 H("Exact complete-prefix marginal"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Fix the start and all n subsequent states. Sum the transition product over every G-step "
-                    + "continuation ending at the complemented start. The result is the prefix transition product "
-                    + "times the G-th matrix-power entry between its endpoint and the complemented start. No "
-                    + "initial stationary weight occurs."))),
+                    "For every natural k,n,G, real p, state s in State k, and map v : Fin n -> State k, let x be "
+                    + "the endpoint after the n transitions specified by v. Summing over all maps w : Fin G -> "
+                    + "State k, retaining the product pathWeight k p n s v times pathWeight k p G x w exactly "
+                    + "when the closing endpoint is flip(s) and otherwise contributing zero, equals that prefix "
+                    + "product times the (x, flip(s)) entry of (kernel k p)^G. No initial stationary factor appears."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("twistedresetpaths-twisted-prefix-support"),
                 DeclarationHandle.Create(Prefix + "twisted_prefix_support"),
                 H("Support of every complete prefix"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For a nonnegative parameter, the entire prefix mass vanishes whenever the starting suffix is "
-                    + "at least n plus G. Each individual path weight is bounded by the corresponding matrix-power "
-                    + "entry, and concatenation bounds its closing contribution by a twisted return outside the "
-                    + "allowed support."))),
+                    "For every natural k,n,G, real p with 0 <= p, state s in State k, and map v : Fin n -> State k, "
+                    + "if n + G <= s.2.val then twistedPrefixMass k p n G s v is zero. Here the mass sums the "
+                    + "nonnegative n-step prefix weight with every G-step closing continuation that reaches flip(s); "
+                    + "the cutoff excludes all such complete twisted paths of nonzero weight."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("twistedresetpaths-twisted-prefix-total-mass"),
                 DeclarationHandle.Create(Prefix + "twisted_prefix_total_mass"),
                 H("Total prefix mass"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Summing over the start and every full prefix gives exactly the twisted loop mass at length n "
-                    + "plus G. Successively summing each transition composes the prefix with the closing matrix "
-                    + "power."))),
+                    "For every natural k,n,G and real p, summing twistedPrefixMass k p n G s v over every start "
+                    + "state s in State k and every map v : Fin n -> State k equals loopMass k p (n + G). The "
+                    + "latter is the sum, over all s, of the (s, flip(s)) entries of (kernel k p)^(n+G), so the "
+                    + "complete-prefix and twisted-loop masses have exactly the same total."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("twistedresetpaths-loop-mass-pos"),
                 DeclarationHandle.Create(Prefix + "loop_mass_pos"),
                 H("Positive loop mass"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For k at least two and a positive parameter, the twisted loop mass is positive at every "
-                    + "length at least two. Odd lengths admit reset-only loops. Even lengths admit one increment "
-                    + "followed by an odd number of resets. Positivity follows from actual transition weights, "
-                    + "without a lower bound on a stationary mass."))),
+                    "For every natural k with k >= 2, every real p with p > 0, and every natural L with L >= 2, "
+                    + "the twisted loop mass loopMass k p L is strictly positive. Odd L have reset-only positive "
+                    + "loops, while even L have a positive loop with one increment followed by an odd number of "
+                    + "resets; no lower bound on a stationary mass is assumed."))),
                 DescribeRole.Theorem))));
 }
