@@ -643,3 +643,412 @@ $\mathbb E\tau=(1-p-pr)/p=2n-1-r$。
 所以它不被等同于定义 6.1 的最优固定时域判别长度。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 7. 临界邻域的精确单峰极值
+
+**定义 7.1（单峰不可逆率）。** 对 $k=M-1$ 及 $0\le r<1$，记
+
+$$
+G_M(r)=\frac{g(r)+k g(r/k)}n.
+\tag{7.1}
+$$
+
+约定 $P_{d,0}=\Pi$，即将定义 5.1 的单峰族连续延拓到 $r=0$。
+本章仍在固定 $d\ge3$ 的 $\mathcal K_d^0$ 内取极值。
+其约束可表成固定中点的散度问题：令 $\mu_\pm(x)=(1\pm b(x))/n$，则
+
+$$
+\operatorname{JS}(\mu_+,\mu_-)=I(P),\qquad
+D(\mu_+\Vert\mu_-)+D(\mu_-\Vert\mu_+)=4\sigma(P).
+\tag{7.2}
+$$
+
+这里 $\operatorname{JS}$ 取等权混合，每个原子的中点质量固定为 $1/n$，
+且两测度在每个奇偶类上的质量均为 $1/2$。
+[Harremoës–Vajda 的散度联合值域定理（定理 8）](../../../Library/Dynamics/harremoes2010divergences.md)
+允许改变支撑权重；其二点分布凸组合约化不保持这里的固定中点与奇偶类约束。
+
+**定理 7.2（临界邻域的精确极值及全部等号情形）。** 对每个固定 $d\ge3$，
+存在 $c_*(d)\in(0,c_d)$，使对所有 $c_*(d)<c<c_d$，
+
+$$
+\boxed{\quad \Sigma_d(c)=G_M(r_c),\qquad r_c=F_M^{-1}(c).\quad}
+\tag{7.3}
+$$
+
+全部极大化向量恰为：选择一个奇偶类和其中一个位置，在该位置取 $s r_c$，
+同类其余位置取 $-s r_c/(M-1)$，另一类全零，其中 $s\in\{-1,1\}$。
+此结论加强定理 5.2 的渐近式；这里只断言一个临界左邻域，不指定其最大长度。
+
+证明。紧性与可达性已由定理 5.2 给出。对任意可行 $b$，置
+$r=\max_x|b(x)|\le r_c$。信息与不可逆率均不随整体变号、类内置换或交换两类而变，
+故可令 $x_*\in C_+$ 且 $b(x_*)=r$。以 $b^*(r)$ 表示同一位置的正单峰向量，置
+$D=I(b)-F_M(r)\ge0$。在非峰值坐标处展开 $\phi$，由 $\phi''\ge1$ 得
+
+$$
+D\ge\frac1{2n}\sum_{x\ne x_*}\bigl(b(x)-b^*(r)(x)\bigr)^2.
+\tag{7.4}
+$$
+
+线性项在 $C_+\setminus\{x_*\}$ 和 $C_-$ 上分别相消，因为各组参考值恒定，
+且各组偏差之和均为零。又因 $I(b)\le c<c_d$，
+
+$$
+D\le c_d-F_M(r),\qquad
+\max_{x\ne x_*}|b(x)|
+\le\frac1k+\sqrt{2n\bigl(c_d-F_M(r)\bigr)}.
+\tag{7.5}
+$$
+
+固定 $R\in(1/k,1)$。当 $r$ 足够接近 $1$ 时，(7.5) 使全部非峰值坐标及其参考值
+都落在 $[-R,R]$。在此区间 $g''(u)=2/(1-u^2)^2\le K$，其中
+$K=2/(1-R^2)^2$。再次用线性项相消、Taylor 余项界及 (7.4)，有
+
+$$
+\sigma(b)-G_M(r)
+\le\frac K{2n}\sum_{x\ne x_*}\bigl(b(x)-b^*(r)(x)\bigr)^2
+\le K D.
+\tag{7.6}
+$$
+
+另一方面，
+
+$$
+\frac{G_M'(r)}{F_M'(r)}
+=\frac{g'(r)+g'(r/k)}{h(r)+h(r/k)}\longrightarrow\infty,
+\qquad g'(r)=h(r)+\frac r{1-r^2}.
+\tag{7.7}
+$$
+
+因此可固定 $r_0<1$，使 (7.5)–(7.6) 对 $r\ge r_0$ 均适用，且
+$G_M'/F_M'>K$ 在 $[r_0,1)$ 上成立。
+再取 $c_*\in(F_M(r_0),c_d)$，使 $G_M(F_M^{-1}(c_*))>g(r_0)$；
+这是可能的，因为 $G_M(r)\to\infty$。
+
+若 $c>c_*$ 而 $r\le r_0$，则 $\sigma(b)\le g(r_0)<G_M(r_c)$。
+若 $r_0<r<r_c$，积分 (7.7) 得
+
+$$
+G_M(r_c)-G_M(r)>K\bigl(F_M(r_c)-F_M(r)\bigr)
+=K\bigl(c-F_M(r)\bigr)\ge K D.
+\tag{7.8}
+$$
+
+与 (7.6) 合用仍得严格劣于单峰。
+最后，若 $r=r_c$，可行性强迫 $D=0$，由 (7.4) 得 $b=b^*(r_c)$。
+恢复三种对称操作即得全部等号情形。$\square$
+
+## 8. 全核族的两标量方向判别谱
+
+**定义 8.1（路径亲和矩阵与误差指数）。** 固定 $P\in\mathcal K_d^0$，
+令 $\mathsf W_{P,T}$ 为均匀启动的 $T$ 步路径律，$\mathsf W_{P,T}^{\leftarrow}$ 为倒序律。
+记等先验最小错误率为 $e_P(T)$，定义
+
+$$
+R_{xy}=\sqrt{P(x,y)P(y,x)},\qquad
+\mathcal H_P(T)=\sum_{\boldsymbol x}
+ \sqrt{\mathsf W_{P,T}(\boldsymbol x)\mathsf W_{P,T}^{\leftarrow}(\boldsymbol x)},
+\qquad
+\eta_p=\frac1M\sum_{x\in C_p}\sqrt{1-b(x)^2}\quad(p\in\{+,-\}).
+\tag{8.1}
+$$
+
+路径亲和度的矩阵表达式是经典马尔可夫 Bhattacharyya 递推，见
+[Daskalakis–Dikkala–Gravin，引理 5、式 (5)](../../../Library/Dynamics/daskalakis2018testing.md)，
+该处将此递推归于 Kazakos；引理本身不要求转移矩阵对称。
+
+**定理 8.2（秩四约化、四次方程与精确错误指数）。** 对定义 8.1 的任意核，
+令 $\mathbf1$ 为全一列向量，并置
+
+$$
+u_p(x)=\mathbf1_{C_p}(x)\sqrt{1+b(x)},\qquad
+v_p(x)=\mathbf1_{C_p}(x)\sqrt{1-b(x)}.
+$$
+
+则
+
+$$
+R=\frac1n\bigl(u_+u_+^\top+u_-u_-^\top+v_+v_-^\top+v_-v_+^\top\bigr),
+\qquad \operatorname{rank}R\le4,\qquad
+\mathcal H_P(T)=\frac1n\mathbf1^\top R^T\mathbf1.
+\tag{8.2}
+$$
+
+$R$ 的 Perron 特征值为 $\lambda=(1+z)/2$，其中 $z\in(0,1]$ 是方程
+
+$$
+\boxed{\quad z^2(1+z)^2=(z+\eta_+^2)(z+\eta_-^2)\quad}
+\tag{8.3}
+$$
+
+的唯一正根。固定 $d$ 与核 $P$ 后，错误指数存在，且
+
+$$
+C_{\rm path}(P):=\lim_{T\to\infty}-\frac1T\log e_P(T)
+=-\log\lambda.
+\tag{8.4}
+$$
+
+所以长期指数只依赖两个标量 $(\eta_+,\eta_-)$；有限时域的 $\mathcal H_P(T)$
+仍由 (8.2) 中的向量决定。$C_{\rm path}=0$ 当且仅当 $b\equiv0$。
+
+证明。同类边给出 $\sqrt{(1+b(x))(1+b(y))}/n$，异类边给出
+$\sqrt{(1-b(x))(1-b(y))}/n$，逐块得到 (8.2) 的矩阵分解。
+路径概率相乘再求和得到其中的亲和度公式。
+零和约束还给出
+
+$$
+\|u_p\|^2=\|v_p\|^2=M,\qquad u_p^\top v_p=M\eta_p.
+\tag{8.5}
+$$
+
+试取正系数的向量 $h=a_+u_++a_-u_-+c_+v_++c_-v_-$。
+下列系数等式足以保证 $Rh=((1+z)/2)h$：
+
+$$
+z a_+=\eta_+c_+,\qquad z a_-=\eta_-c_-,\qquad
+(1+z)c_+=\eta_-a_-+c_-,\qquad
+(1+z)c_-=\eta_+a_++c_+.
+\tag{8.6}
+$$
+
+消去 $a_\pm$ 后，两式的相容条件正是 (8.3)。
+由于 $0<\eta_\pm\le1$，函数
+
+$$
+f(z)=\frac{z^2(1+z)^2}{(z+\eta_+^2)(z+\eta_-^2)}\quad(z>0)
+$$
+
+严格递增：其对数导数为
+$2/z+2/(1+z)-1/(z+\eta_+^2)-1/(z+\eta_-^2)>0$。
+又 $f(0+)=0$ 且 $f(1)\ge1$，故正根唯一且至多为 $1$。
+对该根，(8.6) 可选全部系数为正，从而 $h>0$。
+$R$ 逐项正，故此特征值即 Perron 值。
+这个构造不要求四个生成向量线性独立，也包括某个 $\eta_p=1$ 的退化情形。
+
+为从亲和度得到精确错误指数，将 $h$ 归一化为 $\sum_xh_x^2=1$，并定义
+
+$$
+\widehat P(x,y)=\frac{R_{xy}h_y}{\lambda h_x},\qquad \widehat\pi(x)=h_x^2.
+\tag{8.7}
+$$
+
+此 Perron 归一化是可逆核族的已知 $e$ 投影构造，见
+[Wolfer–Watanabe，定理 7](../../../Library/Dynamics/wolfer2021reversible.md)；
+严格正性满足其共同支持强连通的假设。这里 $\widehat P$ 逐项正，且
+$\widehat\pi(x)\widehat P(x,y)=h_xR_{xy}h_y/\lambda$
+关于 $x,y$ 对称。因此它平稳且可逆。
+在该平稳路径律 $\widehat{\mathbb P}$ 下，置
+
+$$
+S_T=\sum_{t=0}^{T-1}\log\frac{P(X_t,X_{t+1})}{P(X_{t+1},X_t)}.
+$$
+
+边增量反对称而平稳边律对称，故均值为零；有限正链的遍历定理给出
+$S_T/T\to0$ 几乎处处。直接比较路径质量得到精确恒等式
+
+$$
+e_P(T)=\frac{\lambda^T}{2n}
+\widehat{\mathbb E}\!\left[
+\frac{\exp(-|S_T|/2)}{h_{X_0}h_{X_T}}\right].
+\tag{8.8}
+$$
+
+固定 $P$ 时，端点因子有正的上下界。期望的上界为常数；
+对任意 $\epsilon>0$，其下界为某个正的常数乘以
+$e^{-\epsilon T/2}\widehat{\mathbb P}(|S_T|\le\epsilon T)$。
+后者概率趋于 $1$，因此期望不贡献指数率，证明 (8.4)。
+最后 $\lambda=1$ 等价于 $z=1$，由 (8.3) 等价于 $\eta_+=\eta_-=1$，
+又等价于每个 $b(x)=0$。$\square$
+
+**定理 8.3（单峰的三次谱与维数尺度）。** 对正单峰核 $P_{d,r}$，
+
+$$
+\eta_- =1,\qquad
+\eta_+=\frac{\sqrt{1-r^2}+(M-1)\sqrt{1-r^2/(M-1)^2}}M.
+\tag{8.9}
+$$
+
+其 Perron 值为 $(1+z)/2$，其中 $z>0$ 唯一满足
+
+$$
+z^3+z^2-z-\eta_+^2=0.
+\tag{8.10}
+$$
+
+当 $n=2^d\to\infty$ 时，一致地对 $0\le r<1$ 有
+
+$$
+C_{\rm path}(P_{d,r})
+=\frac{1-\sqrt{1-r^2}}{2n}+O(n^{-2}).
+\tag{8.11}
+$$
+
+特别地，对任意 $r_d\to1$，有 $nC_{\rm path}(P_{d,r_d})\to1/2$。
+
+证明。在 (8.3) 中代入 $\eta_-=1$ 并除以 $1+z$，得到 (8.10)。
+置 $a=1-\sqrt{1-r^2}\in[0,1]$。对 (8.9) 中的第二个平方根一致展开得
+
+$$
+\eta_+=1-\frac{2a}n+O(n^{-2}),\qquad
+\eta_+^2=1-\frac{4a}n+O(n^{-2}).
+$$
+
+三次式在 $(z,\eta_+^2)=(1,1)$ 处对 $z$ 的导数为 $4$，
+故 $z=1-a/n+O(n^{-2})$，从而
+$-\log((1+z)/2)=a/(2n)+O(n^{-2})$。各余项均与 $r$ 无关。$\square$
+
+## 9. 独立状态对与连续轨迹的不同判别曲线
+
+**定义 9.1（独立状态对实验）。** 对已知核 $P\in\mathcal K_d^0$，记
+$Q_P(x,y)=P(x,y)/n$、$Q_P^\top(x,y)=Q_P(y,x)$。
+观察 $m$ 个独立状态对，两假设分别为 $Q_P^{\otimes m}$ 和
+$(Q_P^\top)^{\otimes m}$，等先验错误率记为 $e_P^{\rm pair}(m)$。
+置
+
+$$
+U_p=\sum_{x\in C_p}\sqrt{1+b(x)},\qquad
+V_p=\sum_{x\in C_p}\sqrt{1-b(x)},\qquad
+\rho_P=\sum_{x,y}\sqrt{Q_P(x,y)Q_P(y,x)}.
+\tag{9.1}
+$$
+
+**定理 9.2（独立对的精确亲和度与临界窗口）。** 对定义 9.1 的核，
+
+$$
+\operatorname{TV}(Q_P,Q_P^\top)=\frac1{2n^2}\sum_{x,y}|b(x)-b(y)|,
+\qquad
+\rho_P=\frac{U_+^2+U_-^2+2V_+V_-}{n^2},
+\tag{9.2}
+$$
+
+且固定核的错误指数为
+
+$$
+C_{\rm pair}(P):=\lim_{m\to\infty}-\frac1m\log e_P^{\rm pair}(m)
+=-\log\rho_P.
+\tag{9.3}
+$$
+
+对正单峰，置 $k=M-1$、
+$A_r=\sqrt{1+r}+k\sqrt{1-r/k}$、
+$B_r=\sqrt{1-r}+k\sqrt{1+r/k}$，则
+
+$$
+\operatorname{TV}(Q_{P_{d,r}},Q_{P_{d,r}}^\top)=\frac{3r}{2n},\qquad
+\rho_{P_{d,r}}=\frac{A_r^2+M^2+2MB_r}{n^2},
+\tag{9.4}
+$$
+
+并且一致地对 $0\le r<1$，
+
+$$
+C_{\rm pair}(P_{d,r})
+=\frac{2-\sqrt{1+r}-\sqrt{1-r}}n+O(n^{-2}).
+\tag{9.5}
+$$
+
+令 $d\to\infty$、$r_d\to1$、$m_d/n\to\tau\in[0,\infty)$。
+若 $N_1,N_2$ 为独立的 Poisson 随机变量，均值分别为 $\tau,\tau/2$，则
+
+$$
+\boxed{\quad
+ e_{P_{d,r_d}}^{\rm pair}(m_d)
+ \longrightarrow e^{-\tau/2}
+ \left(\Pr(N_1<N_2)+\tfrac12\Pr(N_1=N_2)\right).
+\quad}
+\tag{9.6}
+$$
+
+当 $\tau>0$ 时，(9.6) 严格小于定理 6.3 的连续轨迹极限
+$\tfrac12e^{-\tau/2}$。两个固定核指数的大维数极限也不同：
+$nC_{\rm pair}\to2-\sqrt2$，而 $nC_{\rm path}\to1/2$。
+两种指数极限均先在固定核下取样本数趋于无穷；(9.6) 则直接处理联合极限。
+
+证明。$Q_P(x,y)-Q_P(y,x)=\chi(x)\chi(y)(b(x)-b(y))/n^2$，
+给出全变差公式。亲和度按同类与异类边分块即得 (9.2)。
+为证明 (9.3)，令
+$\widetilde Q(x,y)=\sqrt{Q_P(x,y)Q_P(y,x)}/\rho_P$。
+该概率律在交换坐标下不变，故单对对数似然比在其下均值为零。
+对 $m$ 个独立的 $\widetilde Q$ 样本，以 $L_m$ 记总对数似然比，直接得到
+
+$$
+e_P^{\rm pair}(m)=\frac{\rho_P^m}2
+\widetilde{\mathbb E}\bigl[e^{-|L_m|/2}\bigr].
+\tag{9.7}
+$$
+
+由大数律 $L_m/m\to0$，如同 (8.8) 的上下界论证得到 (9.3)。
+这是对转置假设的标准 Chernoff 中点倾斜论证。
+
+在单峰族中，$b$ 的三组取值为 $r,-r/k,0$，组大小为 $1,k,M$。
+不同组间绝对差的无序加权和为
+$k(r+r/k)+Mr+kM(r/k)=3Mr$；计入两个顺序后得到 (9.4) 的全变差。
+代入四个平方根和得到其亲和度。又一致地有
+
+$$
+A_r=M+\sqrt{1+r}-1-r/2+O(n^{-1}),\qquad
+B_r=M+\sqrt{1-r}-1+r/2+O(n^{-1}).
+$$
+
+因此 $1-\rho_{P_{d,r}}=(2-\sqrt{1+r}-\sqrt{1-r})/n+O(n^{-2})$，
+取负对数即为 (9.5)。
+
+下面直接证明联合极限。以 $H,B,Z$ 记定义 6.1 的三个状态类，
+但现在 $N_{UV}$ 计数的是独立样本对。置 $q=r/k$，仍用
+
+$$
+A=\log\frac{1+r}{1-q},\qquad B_0=\log(1+q),\qquad C=-\log(1-r).
+$$
+
+总对数似然比精确等于
+
+$$
+L_m=A(N_{HB}-N_{BH})+C(N_{ZH}-N_{HZ})
+       +B_0(N_{BZ}-N_{ZB}).
+\tag{9.8}
+$$
+
+在正向律下，四种稀有类别 $(HB,BH,HZ,ZH)$ 的单次概率分别为
+
+$$
+\frac{k(1+r)}{n^2},\quad \frac{k(1-q)}{n^2},\quad
+\frac{1-r}{2n},\quad \frac1{2n}.
+\tag{9.9}
+$$
+
+多项分布的概率母函数为
+$\bigl(1+\sum_jp_j(t_j-1)\bigr)^m$。
+沿给定序列它趋向
+$\exp(\tau(t_1-1)+\frac\tau2(t_2-1)+\frac\tau2(t_4-1))$。
+故四个计数联合趋于独立 Poisson 变量，均值分别为
+$(\tau,\tau/2,0,\tau/2)$；特别地 $\Pr(N_{HZ}>0)\to0$。
+
+背景类别满足
+$p_{BZ}-p_{ZB}=kMq/n^2=r/(2n)$。
+独立性给出 $\operatorname{Var}(N_{BZ}-N_{ZB})\le m$，故当 $m=O(n)$ 时，
+
+$$
+\mathbb E[B_0(N_{BZ}-N_{ZB})]=O(n^{-1}),\qquad
+\operatorname{Var}[B_0(N_{BZ}-N_{ZB})]=O(n^{-1}).
+\tag{9.10}
+$$
+
+所以背景对数似然趋零。又 $A\to\log2$、$C\to\infty$。
+在 $N_{HZ}=0,N_{ZH}>0$ 上，稀有计数的紧性与 (9.10) 使
+$\min(1,e^{-L_m})$ 依概率趋零；在 $N_{HZ}=N_{ZH}=0$ 上，
+其极限为 $\min(1,2^{N_2-N_1})$。
+函数有界，计数联合收敛及极限独立性遂给出
+
+$$
+\lim e_{P_{d,r_d}}^{\rm pair}(m_d)
+=\frac{e^{-\tau/2}}2\mathbb E\min(1,2^{N_2-N_1}).
+\tag{9.11}
+$$
+
+交换 Poisson 计数 $i,j$ 时，其概率质量之比为 $2^{i-j}$，
+所以 (9.11) 等于 (9.6)。当 $\tau>0$，对每个 $i>j$，
+$\Pr(N_1=i,N_2=j)>\Pr(N_1=j,N_2=i)$。
+求和得到 $\Pr(N_1>N_2)>\Pr(N_1<N_2)$，证明严格比较。$\square$
+
+## 追加锚（本行以下为增补区）
