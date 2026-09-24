@@ -1,0 +1,48 @@
+{
+  "scope": "Two fixed n instances and rational entropy/moment comparisons; no phase or CRT-period enumeration",
+  "separate_pure_ceiling": "15/2",
+  "separate_mixed_ceiling": "23/10",
+  "separate_product_ceiling": "69/4",
+  "n6": {
+    "period": 3645,
+    "original_count": 12,
+    "survivor_mass": "1582/3645",
+    "reciprocal_sum": "728/1215",
+    "joint_moment_lower": "68719476736/1937102445",
+    "joint_minus_separate_margin": "141217838239/7748409780",
+    "mixture_weight": "1/10",
+    "mixture_density_upper": "9531/26",
+    "mixture_G_upper": "15547/2600",
+    "mixture_G_margin_below_six": "53/2600",
+    "all_zero_maximum_phase_gap": "2/65"
+  },
+  "n8": {
+    "largest_original": 32805,
+    "original_count": 16,
+    "survivor_mass": "14218/32805",
+    "joint_moment_lower": "281474976710656/1412147682405",
+    "joint_margin_above_one_hundred": "140260208470156/1412147682405"
+  },
+  "checks": {
+    "finite_euler_upper": true,
+    "separate_pure_ceiling": true,
+    "separate_mixed_ceiling": true,
+    "separate_product_ceiling": true,
+    "n6_joint_exceeds_separate_product": true,
+    "n8_joint_exceeds_one_hundred": true,
+    "n8_all_labels_shallow": true,
+    "both_survivors_above_thirteen_thirtieths": true,
+    "Haar_complete_query_ceiling": true,
+    "Haar_entropy_below_one_argument": true,
+    "log_Lambda_above_six_argument": true,
+    "n6_reciprocal_sum": true,
+    "n6_uniform_cylinder_query_factor": true,
+    "n6_unused_rho_ceiling": true,
+    "n6_unused_cylinder_ceiling": true,
+    "n6_cylinder_entropy_below_nine_argument": true,
+    "n6_mixture_G_ceiling": true,
+    "n6_mixture_density": true,
+    "n6_all_zero_maximum_phase_gap": true,
+    "retained_A_bound": true
+  }
+}

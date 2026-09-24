@@ -270,3 +270,7 @@ not enumerate original phases or substitute for the general proof above.
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure_chain_entropy.py
 ```
+
+[Report536](536-ternary-conditioning-preserves-a-joint-query-and-entropy-boundary.md) gives the exact ternary-prefix query and entropy transport for this same G. An actual four-class core shows that fixing a full ternary coordinate need not give a two-copy cofactor family. The conditional kernels must satisfy the global density, entropy and original-label query conditions before they can pay the remaining mixed cost.
+
+[Report535](535-mixed-chain-moments-retain-shared-prime-correlations.md) extends the individual moment to mixed divisibility chains. Two actual chains sharing3 defeat multiplication of those bounds, even at simultaneous maximizing phases of one law in G; the remaining mixed estimate must retain their common prime correlations.
