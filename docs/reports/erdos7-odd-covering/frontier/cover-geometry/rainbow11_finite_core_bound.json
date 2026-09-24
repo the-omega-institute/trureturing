@@ -1,0 +1,379 @@
+{
+  "scope": "The30 prescribed old originals at 0<=a,b<=3,a+b>0; first11 labels inside 0<=a<6,0<=b<5,1<=e<=3 exactly the78 prescribed originals with empty remaining cells; all labels outside these two finite windows and all13/17/19 labels arbitrary finite Q-smooth two-copy and globally fixed phases.",
+  "anchor_original_count": 108,
+  "partition_sizes": {
+    "5": 53,
+    "7": 49,
+    "11": 131
+  },
+  "color_masks": 12,
+  "actual_anchor_mass": "37407967/171199875",
+  "four_phase_count": 9625,
+  "individual_phase_count": 253,
+  "rows": [
+    {
+      "r11": 0,
+      "minimum": "28700629/855999375",
+      "phases": [
+        [
+          4,
+          3,
+          14
+        ],
+        [
+          4,
+          3,
+          19
+        ],
+        [
+          4,
+          3,
+          24
+        ],
+        [
+          4,
+          4,
+          14
+        ],
+        [
+          4,
+          4,
+          19
+        ],
+        [
+          4,
+          4,
+          24
+        ],
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 1,
+      "minimum": "1737867697/60775955625",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 2,
+      "minimum": "678342615403/48559988544375",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 3,
+      "minimum": "628920310603/48559988544375",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 4,
+      "minimum": "28700629/855999375",
+      "phases": [
+        [
+          4,
+          3,
+          14
+        ],
+        [
+          4,
+          3,
+          19
+        ],
+        [
+          4,
+          3,
+          24
+        ],
+        [
+          4,
+          4,
+          14
+        ],
+        [
+          4,
+          4,
+          19
+        ],
+        [
+          4,
+          4,
+          24
+        ],
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 5,
+      "minimum": "1737867697/60775955625",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 6,
+      "minimum": "619035849643/48559988544375",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 7,
+      "minimum": "616564734403/48559988544375",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 8,
+      "minimum": "835361396278/48559988544375",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 9,
+      "minimum": "526471991278/48559988544375",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    },
+    {
+      "r11": 10,
+      "minimum": "197791493626/9711997708875",
+      "phases": [
+        [
+          4,
+          6,
+          14
+        ],
+        [
+          4,
+          6,
+          19
+        ],
+        [
+          4,
+          6,
+          24
+        ]
+      ]
+    }
+  ],
+  "max55": "267593/15073135",
+  "max77": "25285599/2730083125",
+  "max121": "13280282789/4414544413125",
+  "maximizing55_phases": [
+    [
+      4,
+      9
+    ]
+  ],
+  "maximizing77_phases": [
+    [
+      6,
+      7
+    ],
+    [
+      6,
+      9
+    ]
+  ],
+  "maximizing121_phases": [
+    9,
+    20,
+    31,
+    42,
+    53,
+    64,
+    75,
+    86,
+    97,
+    108,
+    109,
+    119
+  ],
+  "D0": "526471991278/48559988544375",
+  "D1": "3627674504/630649201875",
+  "anchor_deficit": "805802928086/48559988544375",
+  "anchor_hinge_upper": "418855893804637/2330879450130000",
+  "Cref": "366878/3112725",
+  "Cmin": "22402/190575",
+  "pure_rectangle_deficit": "338800827094/20811423661875",
+  "complete_old_cap_sum": "647309/1029000",
+  "arbitrary_outside_box_charge": "4051379/34239975000",
+  "tail_stable_deficit": "8796931120759/582719862532500",
+  "actual13_saving": "8796931120759/2330879450130000",
+  "NC4_margin": "75634593128793577758661/697533477433185357828864000",
+  "final_query_upper": "3514946006589785656657889339/697533477433185357828864000",
+  "variation_stress_cases": 455,
+  "checks": {
+    "original_inventory": true,
+    "all_four_phases": true,
+    "all_individual_phases": true,
+    "actual_anchor_mass": true,
+    "D0": true,
+    "D1": true,
+    "anchor_deficit": true,
+    "maximum55": true,
+    "maximum77": true,
+    "maximum121": true,
+    "all_three_caps": true,
+    "complete_cap_sum": true,
+    "seven_label_constant": true,
+    "limiting_constant": true,
+    "outside_box_cap_sum": true,
+    "pure_rectangle_deficit": true,
+    "complete_old_cap": true,
+    "all_outside_box_original_charge": true,
+    "tail_stable_deficit": true,
+    "positive_raw_margin": true,
+    "positive_NC4_margin": true,
+    "variation_stress_cases": true
+  },
+  "passed_count": 22,
+  "Lean": "not run"
+}

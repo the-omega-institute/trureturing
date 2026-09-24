@@ -121,6 +121,9 @@ block to a surviving node at the same depth. This respects all ST4 budgets
 and can only increase the retained g values. Charges on surviving ancestor
 nodes need not move. The comparison is performed on Cplus, before any
 signed relaxation; its monotonicity is essential to this argument.
+After charge moves, a retained half-weight cell need not still minimize g.
+The new half-minimum envelope is at least that retained fixed-weight mean,
+which is the domination required above.
 
 Exactly two tree shapes remain, up to within-level symmetries:
 
@@ -286,7 +289,9 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/all
 
 The ordinary aggregation, mask domination, signed vertex reduction and
 complete-tail arguments are needed in addition to the finite optimizer.
-The theorem excludes old mixed classes 5^b*7^c without 3, additional
-outside-prime hyperedges and arbitrary P-smooth mixed supports. Uniform
+The base theorem excludes P-only mixed classes 5^b*7^c without 3 and
+arbitrary additional P-smooth mixed supports. Such labels remain allowed
+as cofactors of originals that genuinely touch23 or29 in ST2. Further
+outside-prime supports are not covered. Uniform
 common-law control for those original families, and unrestricted Erdős #7,
 remain unresolved.

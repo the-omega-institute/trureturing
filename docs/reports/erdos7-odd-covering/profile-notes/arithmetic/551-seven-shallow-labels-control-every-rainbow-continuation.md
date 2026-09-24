@@ -334,3 +334,5 @@ with largest prime at most 11, other first-11 geometries,
 arbitrary two-copy families and unrestricted Erdős #7 are not covered.
 The remaining task is a uniform joint estimate over those original
 geometries, preserving their full labels, fixed phases and one law.
+
+[A finite first-11 core](552-a-finite-first-eleven-core-controls-arbitrary-outside-phases.md) permits arbitrary phases outside one finite exponent box, using capped-kernel positive variation to control the changed actual law. Its finite core differs from the prescribed full rainbow family here.
