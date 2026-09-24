@@ -1,0 +1,143 @@
+{
+  "schema": "pure-unit-conditioned-transport-control-v1",
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "R": [
+    23
+  ],
+  "S": [
+    29,
+    31
+  ],
+  "old_labels": [
+    1,
+    3,
+    9
+  ],
+  "split_prime": 7,
+  "split_prefixes": [
+    [
+      3,
+      11,
+      1,
+      2
+    ],
+    [
+      5,
+      7,
+      1,
+      2
+    ],
+    [
+      7,
+      6,
+      1,
+      2
+    ]
+  ],
+  "common_prefixes": [
+    [
+      11,
+      4,
+      1
+    ],
+    [
+      13,
+      4,
+      1
+    ],
+    [
+      17,
+      4,
+      1
+    ],
+    [
+      19,
+      4,
+      1
+    ]
+  ],
+  "classes": [
+    {
+      "modulus": 23,
+      "residue": 0,
+      "selector": "A"
+    },
+    {
+      "modulus": 29,
+      "residue": 0,
+      "selector": "A"
+    },
+    {
+      "modulus": 31,
+      "residue": 0,
+      "selector": "A"
+    },
+    {
+      "modulus": 69,
+      "residue": 1,
+      "selector": "A"
+    },
+    {
+      "modulus": 87,
+      "residue": 1,
+      "selector": "A"
+    },
+    {
+      "modulus": 93,
+      "residue": 1,
+      "selector": "A"
+    },
+    {
+      "modulus": 667,
+      "residue": 2,
+      "selector": "A"
+    },
+    {
+      "modulus": 6003,
+      "residue": 1,
+      "selector": "A"
+    }
+  ],
+  "transports": {
+    "R": [
+      [
+        3,
+        3,
+        "1"
+      ]
+    ],
+    "S": [
+      [
+        3,
+        3,
+        "1"
+      ],
+      [
+        3,
+        1,
+        "14/15"
+      ]
+    ],
+    "M": [
+      [
+        1,
+        1,
+        "1"
+      ],
+      [
+        9,
+        9,
+        "1"
+      ]
+    ]
+  },
+  "purpose": "Actual phase and transport control: the raw unit accounts fail for every partition, while groupwise pure-unit conditioning admits the declared matrices. This is not an integer covering example or a universal transport assertion."
+}
