@@ -113,7 +113,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
         var manifest = FileMapLoader.LoadRepository(root);
         // 文档已迁出本程序集(住 StrataLint.Scribe.Documents),而本测试判的是 FILEMAP 声明
         // 与发射器产物身份的一致性,不判语料内容。故喂一条与下方 manifest.Match 同一字面的
-        // 文档路径即可:六个固定工件与文档集无关,Blueprint/**/*.md 那条只需一个同形路径。
+        // 文档路径即可:六个固定工件与文档集无关,文档分区只需一个同形路径。
         var inventory = GeneratedArtifactInventory.Create(
             ["Blueprint/D5/S0/Carrier/Ring.md"]);
         var artifacts = inventory
@@ -128,7 +128,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
             Assert.Equal(artifact.Producer, entry.ProducedBy);
             Assert.Contains(artifact.Producer, entry.VerifiedBy, StringComparer.Ordinal);
         });
-        const string pattern = "Blueprint/**/*.md";
+        const string pattern = "Blueprint/D5/S0/**/*.md";
         var entry = Assert.Single(manifest.Match("Blueprint/D5/S0/Carrier/Ring.md"));
 
         Assert.Equal(pattern, entry.Pattern);

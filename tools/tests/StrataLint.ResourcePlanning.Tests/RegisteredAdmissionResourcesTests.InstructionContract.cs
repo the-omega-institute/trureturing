@@ -43,16 +43,16 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean",
             "D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean",
-            "D5/F/NumberTheory/AdmissionResourceProbe.lean",
+            "D5/S0/NumberTheory/AdmissionResourceProbe.lean",
             "D5/InstructionContractProbe.md",
         })
         {
             var plan = Plan(path, "", mode, change);
             Assert.Equal(WithWorktreeContract(path.EndsWith(".lean", StringComparison.Ordinal)
-                    ? new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }
+                    ? new[] { InstructionContractProject, RepositoryDigestionProject }
                     : new[] { InstructionContractProject, RepositoryFileMapProject }), Strings(plan["execution"]!["tests"]!));
             Assert.Equal(path.EndsWith(".lean", StringComparison.Ordinal)
-                    ? new[] { "test-cover-batch", "test-instruction-contract", "test-repository-digestion", "test-truth-release", "test-worktree-contract" }
+                    ? new[] { "test-instruction-contract", "test-repository-digestion", "test-worktree-contract" }
                     : new[] { "test-instruction-contract", "test-repository-filemap", "test-worktree-contract" },
                 Strings(plan["stages"]!["engineering"]!["resources"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());

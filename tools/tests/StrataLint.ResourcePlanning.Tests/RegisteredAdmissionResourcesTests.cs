@@ -13,8 +13,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     private const string RegisteredReportContent = "docs/reports/prime-slab-corner-order-0909.json";
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "push")]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "pr")]
+    [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean", "push")]
+    [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean", "pr")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "pr")]
     [InlineData("CLAUDE.md", "push")]
@@ -27,7 +27,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         Assert.Equal(WithWorktreeContract(input == "CLAUDE.md"
             ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj", RepositoryFileMapProject, "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj" }
             : input.StartsWith("D5/", StringComparison.Ordinal)
-                ? [CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject] : [RepositoryDigestionProject, SourceAtomizerProject]),
+                ? [InstructionContractProject, RepositoryDigestionProject] : [RepositoryDigestionProject, SourceAtomizerProject]),
             Strings(plan["execution"]!["tests"]!));
         Assert.Equal("required",
             plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
@@ -282,8 +282,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     }
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "push")]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean", "pr")]
+    [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean", "push")]
+    [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean", "pr")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "push")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "pr")]
     [InlineData("tools/lean-inspector/LeanInformationAuditAnalysis/Tests/WitnessCarriers.lean", "push")]
@@ -497,8 +497,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     }
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
-    [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
+    [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean")]
+    [InlineData("Golden/Frozen/state/D5/S0/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("Meta/ci-checks.json")]
     [InlineData("Meta/registry.yaml")]
     public void TheoryDocumentsDoNotRemoveOtherInputsRequirements(string input)
@@ -513,8 +513,8 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     }
 
     [Theory]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
-    [InlineData("Golden/Frozen/state/D5/F/NumberTheory/AdmissionResourceProbe.lean.json")]
+    [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean")]
+    [InlineData("Golden/Frozen/state/D5/S0/NumberTheory/AdmissionResourceProbe.lean.json")]
     [InlineData("Meta/ci-checks.json")]
     [InlineData("Meta/registry.yaml")]
     public void AdditionalSemanticOrJudgeInputRetainsItsFullRegisteredRequirements(string input)

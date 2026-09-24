@@ -44,7 +44,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var inputs = new[]
         {
             (Path: "D5/S3/Midline/GoldenSpectralMarker.lean",
-                Projects: new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }),
+                Projects: new[] { InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }),
             (Path: "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
                 Projects: new[] { TruthReleaseProject }),
             (Path: "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
@@ -72,6 +72,29 @@ public sealed partial class RegisteredAdmissionResourcesTests
                     row => row!["path"]!.GetValue<string>() == "docs/reports/instruction-contract-renamed.md");
                 Assert.Equal(new[] { "test-worktree-contract" }, Strings(destination!["require"]!));
             }
+        }
+    }
+
+    [Theory]
+    [InlineData("D5/S0/Asymptotics/Bonferroni/TailBounds.lean")]
+    [InlineData("D5/S3/Constants/ElementaryExactValues.lean")]
+    [InlineData("D5/S3/Midline/GoldenHeatSpectrum.lean")]
+    [InlineData("Blueprint/D5/S3/Midline/GoldenHeatSpectrum.md")]
+    [InlineData("Blueprint/D5/S3/Midline/GoldenHeatSpectrum.scribe.cs")]
+    public void UnrelatedContentSelectsOnlyItsActualConsumers(string path)
+    {
+        foreach (var mode in new[] { "push", "pr" })
+        {
+            var plan = Plan(path, "", mode);
+            var consumers = path.EndsWith(".lean", StringComparison.Ordinal)
+                ? new[] { InstructionContractProject, RepositoryDigestionProject }
+                : path.EndsWith(".scribe.cs", StringComparison.Ordinal)
+                    ? new[] { RepositoryContractProject, RepositoryFileMapProject, RepositoryTopologyProject }
+                    : [];
+            Assert.Equal(WithWorktreeContract(consumers), Strings(plan["execution"]!["tests"]!));
+            Assert.DoesNotContain("test-cover-batch", Strings(plan["resources"]!));
+            Assert.DoesNotContain("test-truth-release", Strings(plan["resources"]!));
+            Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
     }
 
