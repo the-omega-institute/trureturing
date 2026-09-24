@@ -60,7 +60,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan(path, "", mode);
-            Assert.Equal(WithWorktreeContract(Array.Empty<string>()), Strings(plan["execution"]!["tests"]!));
+            var readsBackfill = path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
+            Assert.Equal(WithWorktreeContract(readsBackfill ? new[] { RepositoryDigestionProject } : []),
+                Strings(plan["execution"]!["tests"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
         }
     }
