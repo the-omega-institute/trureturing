@@ -68,135 +68,6 @@ noncomputable def twoBasicOpenCechComplex (f g : R) :
       IsLocalization.Away.awayToAwayRight_eq,
       IsLocalization.Away.awayToAwayLeft_eq])
 
-private lemma diagonal_exact {f g : R} (hspan : Ideal.span {f, g} = ⊤) :
-    Function.Exact (diagonal f g) (overlapDifference f g) := by
-  intro p
-  constructor
-  · intro hp
-    have hcompat :
-        IsLocalization.Away.awayToAwayRight (P := Localization.Away (f * g)) f g p.1 =
-          IsLocalization.Away.awayToAwayLeft (P := Localization.Away (f * g)) g f p.2 := by
-      change IsLocalization.Away.awayToAwayRight (P := Localization.Away (f * g)) f g p.1 -
-          IsLocalization.Away.awayToAwayLeft (P := Localization.Away (f * g)) g f p.2 = 0 at hp
-      exact sub_eq_zero.mp hp
-    by_cases hfg : f = g
-    · subst g
-      have hf : IsUnit f := by
-        apply Ideal.span_singleton_eq_top.mp
-        simpa using hspan
-      let ef := IsLocalization.atUnit R (Localization.Away f) f hf
-      let eff := IsLocalization.atUnit R (Localization.Away (f * f)) (f * f) (hf.mul hf)
-      obtain ⟨r, hr⟩ := ef.surjective p.1
-      obtain ⟨s, hs⟩ := ef.surjective p.2
-      have hef (t : R) : ef t = algebraMap R (Localization.Away f) t := by
-        simpa using ef.commutes t
-      have heff (t : R) : eff t = algebraMap R (Localization.Away (f * f)) t := by
-        simpa using eff.commutes t
-      have hrs : r = s := eff.injective (by
-        rw [heff, heff]
-        calc
-          algebraMap R (Localization.Away (f * f)) r =
-              IsLocalization.Away.awayToAwayRight f f
-                (algebraMap R (Localization.Away f) r) := by
-            rw [IsLocalization.Away.awayToAwayRight_eq]
-          _ = IsLocalization.Away.awayToAwayLeft f f
-                (algebraMap R (Localization.Away f) s) := by
-            rw [← hef r, ← hef s, hr, hs]
-            exact hcompat
-          _ = algebraMap R (Localization.Away (f * f)) s := by
-            rw [IsLocalization.Away.awayToAwayLeft_eq])
-      refine ⟨r, ?_⟩
-      apply Prod.ext
-      · change algebraMap R (Localization.Away f) r = p.1
-        exact (hef r).symm.trans hr
-      · change algebraMap R (Localization.Away f) r = p.2
-        rw [hrs]
-        exact (hef s).symm.trans hs
-    · classical
-      let sections : (a : ({f, g} : Set R)) → Localization.Away a.1 := fun a ↦
-        if ha : a.1 = f then
-          cast (congrArg Localization.Away ha.symm) p.1
-        else
-          have hor : a.1 = f ∨ a.1 = g := by
-            simpa only [Set.mem_insert_iff, Set.mem_singleton_iff] using a.2
-          have hag : a.1 = g := hor.resolve_left ha
-          cast (congrArg Localization.Away hag.symm) p.2
-      have hsection : ∀ a b : ({f, g} : Set R),
-          IsLocalization.Away.awayToAwayRight (P := Localization.Away (a.1 * b.1))
-              a.1 b.1 (sections a) =
-            IsLocalization.Away.awayToAwayLeft b.1 a.1 (sections b) := by
-        intro a b
-        have ha : a = (⟨f, by simp⟩ : ({f, g} : Set R)) ∨
-            a = (⟨g, by simp⟩ : ({f, g} : Set R)) := by
-          have hav : a.1 = f ∨ a.1 = g := by
-            simpa only [Set.mem_insert_iff, Set.mem_singleton_iff] using a.2
-          exact hav.imp (fun h ↦ Subtype.ext h) (fun h ↦ Subtype.ext h)
-        have hb : b = (⟨f, by simp⟩ : ({f, g} : Set R)) ∨
-            b = (⟨g, by simp⟩ : ({f, g} : Set R)) := by
-          have hbv : b.1 = f ∨ b.1 = g := by
-            simpa only [Set.mem_insert_iff, Set.mem_singleton_iff] using b.2
-          exact hbv.imp (fun h ↦ Subtype.ext h) (fun h ↦ Subtype.ext h)
-        rcases ha with rfl | rfl
-        · rcases hb with rfl | rfl
-          · simp only [sections, dif_pos rfl, cast_eq]
-            congr 1
-          · simpa [sections, hfg, Ne.symm hfg] using hcompat
-        · rcases hb with rfl | rfl
-          · simp only [sections, dif_neg (Ne.symm hfg), dif_pos rfl, cast_eq]
-            let e : Localization.Away (f * g) ≃ₐ[R] Localization.Away (g * f) :=
-              AlgEquiv.cast (mul_comm f g)
-            have hleftMap :
-                e.toAlgHom.toRingHom.comp
-                    (IsLocalization.Away.awayToAwayLeft
-                      (S := Localization.Away g) (P := Localization.Away (f * g)) g f) =
-                  IsLocalization.Away.awayToAwayRight
-                    (S := Localization.Away g) (P := Localization.Away (g * f)) g f := by
-              apply IsLocalization.ringHom_ext (Submonoid.powers g)
-              ext r
-              simp only [RingHom.comp_apply,
-                IsLocalization.Away.awayToAwayLeft_eq,
-                IsLocalization.Away.awayToAwayRight_eq]
-              change e (algebraMap R (Localization.Away (f * g)) r) = _
-              exact e.commutes r
-            have hrightMap :
-                e.toAlgHom.toRingHom.comp
-                    (IsLocalization.Away.awayToAwayRight
-                      (S := Localization.Away f) (P := Localization.Away (f * g)) f g) =
-                  IsLocalization.Away.awayToAwayLeft
-                    (S := Localization.Away f) (P := Localization.Away (g * f)) f g := by
-              apply IsLocalization.ringHom_ext (Submonoid.powers f)
-              ext r
-              simp only [RingHom.comp_apply,
-                IsLocalization.Away.awayToAwayRight_eq,
-                IsLocalization.Away.awayToAwayLeft_eq]
-              change e (algebraMap R (Localization.Away (f * g)) r) = _
-              exact e.commutes r
-            calc
-              IsLocalization.Away.awayToAwayRight g f p.2 =
-                  e (IsLocalization.Away.awayToAwayLeft g f p.2) :=
-                (DFunLike.congr_fun hleftMap p.2).symm
-              _ = e (IsLocalization.Away.awayToAwayRight f g p.1) :=
-                congrArg e hcompat.symm
-              _ = IsLocalization.Away.awayToAwayLeft f g p.1 :=
-                DFunLike.congr_fun hrightMap p.1
-          · simp only [sections, dif_neg (Ne.symm hfg), cast_eq]
-            congr 1
-      obtain ⟨r, hr, _⟩ :=
-        Localization.existsUnique_algebraMap_eq_of_span_eq_top
-          ({f, g} : Set R) hspan sections hsection
-      refine ⟨r, ?_⟩
-      ext
-      · simpa [diagonal, sections] using hr ⟨f, by simp⟩
-      · simpa [diagonal, sections, hfg, Ne.symm hfg] using hr ⟨g, by simp⟩
-  · rintro ⟨r, hr⟩
-    calc
-      overlapDifference f g p = overlapDifference f g (diagonal f g r) :=
-        congrArg (overlapDifference f g) hr.symm
-      _ = 0 := by
-        simp [diagonal, overlapDifference,
-          IsLocalization.Away.awayToAwayRight_eq,
-          IsLocalization.Away.awayToAwayLeft_eq]
-
 private lemma overlapDifference_surjective {f g : R}
     (hspan : Ideal.span {f, g} = ⊤) :
     Function.Surjective (overlapDifference f g) := by
@@ -289,7 +160,132 @@ theorem two_basic_open_cech_short_exact {f g : R}
   unfold twoBasicOpenCechComplex
   apply ModuleCat.shortComplex_shortExact
   · change Function.Exact (diagonal f g) (overlapDifference f g)
-    exact diagonal_exact hspan
+    intro p
+    constructor
+    · intro hp
+      have hcompat :
+          IsLocalization.Away.awayToAwayRight (P := Localization.Away (f * g)) f g p.1 =
+            IsLocalization.Away.awayToAwayLeft (P := Localization.Away (f * g)) g f p.2 := by
+        change IsLocalization.Away.awayToAwayRight (P := Localization.Away (f * g)) f g p.1 -
+            IsLocalization.Away.awayToAwayLeft (P := Localization.Away (f * g)) g f p.2 = 0 at hp
+        exact sub_eq_zero.mp hp
+      by_cases hfg : f = g
+      · subst g
+        have hf : IsUnit f := by
+          apply Ideal.span_singleton_eq_top.mp
+          simpa using hspan
+        let ef := IsLocalization.atUnit R (Localization.Away f) f hf
+        let eff := IsLocalization.atUnit R (Localization.Away (f * f)) (f * f) (hf.mul hf)
+        obtain ⟨r, hr⟩ := ef.surjective p.1
+        obtain ⟨s, hs⟩ := ef.surjective p.2
+        have hef (t : R) : ef t = algebraMap R (Localization.Away f) t := by
+          simpa using ef.commutes t
+        have heff (t : R) : eff t = algebraMap R (Localization.Away (f * f)) t := by
+          simpa using eff.commutes t
+        have hrs : r = s := eff.injective (by
+          rw [heff, heff]
+          calc
+            algebraMap R (Localization.Away (f * f)) r =
+                IsLocalization.Away.awayToAwayRight f f
+                  (algebraMap R (Localization.Away f) r) := by
+              rw [IsLocalization.Away.awayToAwayRight_eq]
+            _ = IsLocalization.Away.awayToAwayLeft f f
+                  (algebraMap R (Localization.Away f) s) := by
+              rw [← hef r, ← hef s, hr, hs]
+              exact hcompat
+            _ = algebraMap R (Localization.Away (f * f)) s := by
+              rw [IsLocalization.Away.awayToAwayLeft_eq])
+        refine ⟨r, ?_⟩
+        apply Prod.ext
+        · change algebraMap R (Localization.Away f) r = p.1
+          exact (hef r).symm.trans hr
+        · change algebraMap R (Localization.Away f) r = p.2
+          rw [hrs]
+          exact (hef s).symm.trans hs
+      · classical
+        let sections : (a : ({f, g} : Set R)) → Localization.Away a.1 := fun a ↦
+          if ha : a.1 = f then
+            cast (congrArg Localization.Away ha.symm) p.1
+          else
+            have hor : a.1 = f ∨ a.1 = g := by
+              simpa only [Set.mem_insert_iff, Set.mem_singleton_iff] using a.2
+            have hag : a.1 = g := hor.resolve_left ha
+            cast (congrArg Localization.Away hag.symm) p.2
+        have hsection : ∀ a b : ({f, g} : Set R),
+            IsLocalization.Away.awayToAwayRight (P := Localization.Away (a.1 * b.1))
+                a.1 b.1 (sections a) =
+              IsLocalization.Away.awayToAwayLeft b.1 a.1 (sections b) := by
+          intro a b
+          have ha : a = (⟨f, by simp⟩ : ({f, g} : Set R)) ∨
+              a = (⟨g, by simp⟩ : ({f, g} : Set R)) := by
+            have hav : a.1 = f ∨ a.1 = g := by
+              simpa only [Set.mem_insert_iff, Set.mem_singleton_iff] using a.2
+            exact hav.imp (fun h ↦ Subtype.ext h) (fun h ↦ Subtype.ext h)
+          have hb : b = (⟨f, by simp⟩ : ({f, g} : Set R)) ∨
+              b = (⟨g, by simp⟩ : ({f, g} : Set R)) := by
+            have hbv : b.1 = f ∨ b.1 = g := by
+              simpa only [Set.mem_insert_iff, Set.mem_singleton_iff] using b.2
+            exact hbv.imp (fun h ↦ Subtype.ext h) (fun h ↦ Subtype.ext h)
+          rcases ha with rfl | rfl
+          · rcases hb with rfl | rfl
+            · simp only [sections, dif_pos rfl, cast_eq]
+              congr 1
+            · simpa [sections, hfg, Ne.symm hfg] using hcompat
+          · rcases hb with rfl | rfl
+            · simp only [sections, dif_neg (Ne.symm hfg), dif_pos rfl, cast_eq]
+              let e : Localization.Away (f * g) ≃ₐ[R] Localization.Away (g * f) :=
+                AlgEquiv.cast (mul_comm f g)
+              have hleftMap :
+                  e.toAlgHom.toRingHom.comp
+                      (IsLocalization.Away.awayToAwayLeft
+                        (S := Localization.Away g) (P := Localization.Away (f * g)) g f) =
+                    IsLocalization.Away.awayToAwayRight
+                      (S := Localization.Away g) (P := Localization.Away (g * f)) g f := by
+                apply IsLocalization.ringHom_ext (Submonoid.powers g)
+                ext r
+                simp only [RingHom.comp_apply,
+                  IsLocalization.Away.awayToAwayLeft_eq,
+                  IsLocalization.Away.awayToAwayRight_eq]
+                change e (algebraMap R (Localization.Away (f * g)) r) = _
+                exact e.commutes r
+              have hrightMap :
+                  e.toAlgHom.toRingHom.comp
+                      (IsLocalization.Away.awayToAwayRight
+                        (S := Localization.Away f) (P := Localization.Away (f * g)) f g) =
+                    IsLocalization.Away.awayToAwayLeft
+                      (S := Localization.Away f) (P := Localization.Away (g * f)) f g := by
+                apply IsLocalization.ringHom_ext (Submonoid.powers f)
+                ext r
+                simp only [RingHom.comp_apply,
+                  IsLocalization.Away.awayToAwayRight_eq,
+                  IsLocalization.Away.awayToAwayLeft_eq]
+                change e (algebraMap R (Localization.Away (f * g)) r) = _
+                exact e.commutes r
+              calc
+                IsLocalization.Away.awayToAwayRight g f p.2 =
+                    e (IsLocalization.Away.awayToAwayLeft g f p.2) :=
+                  (DFunLike.congr_fun hleftMap p.2).symm
+                _ = e (IsLocalization.Away.awayToAwayRight f g p.1) :=
+                  congrArg e hcompat.symm
+                _ = IsLocalization.Away.awayToAwayLeft f g p.1 :=
+                  DFunLike.congr_fun hrightMap p.1
+            · simp only [sections, dif_neg (Ne.symm hfg), cast_eq]
+              congr 1
+        obtain ⟨r, hr, _⟩ :=
+          Localization.existsUnique_algebraMap_eq_of_span_eq_top
+            ({f, g} : Set R) hspan sections hsection
+        refine ⟨r, ?_⟩
+        ext
+        · simpa [diagonal, sections] using hr ⟨f, by simp⟩
+        · simpa [diagonal, sections, hfg, Ne.symm hfg] using hr ⟨g, by simp⟩
+    · rintro ⟨r, hr⟩
+      calc
+        overlapDifference f g p = overlapDifference f g (diagonal f g r) :=
+          congrArg (overlapDifference f g) hr.symm
+        _ = 0 := by
+          simp [diagonal, overlapDifference,
+            IsLocalization.Away.awayToAwayRight_eq,
+            IsLocalization.Away.awayToAwayLeft_eq]
   · change Function.Injective (diagonal f g)
     intro x y hxy
     apply Localization.algebraMap_injective_of_span_eq_top ({f, g} : Set R) hspan
