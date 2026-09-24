@@ -1028,7 +1028,7 @@ u<3^{1/4}\sqrt M+\frac2M.
 
 第二项是有限证据，不是连续无界证明；高位进位仍必须逐素数检查，且不存在把失败搜索升级成反例排除的逻辑。`(n,j)=(10,5)` 的 gcd 为 `12=2^2\cdot3`，继续作为严格阈值 `p>3` 的负对照；它不反驳原题的 `p>=3`。
 
-本节的精确整数检查器为 `tools/scripts/agent/openproblem/erdos699-i3-lucas-reduction-check.py`，外部来源登记见 `Library/notes/erdos699-i3-lucas-reduction.md`。
+本节的精确整数检查器为 `tools/scripts/agent/openproblem/erdos699-i3-lucas-reduction-check.py`，外部来源登记见 `Library/notes/codex2026erdos699i3.md`。
 
 [9] Yann Bugeaud, Jan-Hendrik Evertse, Kálmán Győry, *S-parts of values of univariate polynomials, binary forms and decomposable forms at integral points*, arXiv:1708.08290。Theorem 2.1(i)，印刷页 3；其证明及 Proposition 3.1，印刷页 13；Introduction 明确说明常数非有效。2026-09-24 本轮实际读取并截图核对这两页。https://arxiv.org/abs/1708.08290 ; https://arxiv.org/pdf/1708.08290
 

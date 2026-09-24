@@ -1,5 +1,5 @@
 ---
-bibkey: erdos699-i3-lucas-reduction
+bibkey: codex2026erdos699i3
 authors: Independent Codex CLI mathematics seat; caller audit
 year: 2026
 title: "Erdos 699 i=3 Lucas/Kummer adjacent-core reduction"

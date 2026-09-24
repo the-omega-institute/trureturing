@@ -1,5 +1,5 @@
 ---
-bibkey: berczesevertsegyory2013effective
+bibkey: berczes2013effective
 authors: Attila Bérczes; Jan-Hendrik Evertse; Kálmán Győry
 year: 2013
 title: "Effective results for hyper- and superelliptic equations over number fields"
@@ -63,4 +63,4 @@ Attila Bérczes, Jan-Hendrik Evertse, Kálmán Győry,
 
 这是显式但极大的截止，未实际枚举它。它只证明每个有界商区域可以有效归约为有限集合，不证明全体 k 有界，不证明 i=3 的全体反例有限或不存在。椭圆曲线整数点必须再还原 A,B,d 并检查光滑分母、合法范围、系数整性及完整 Kummer 条件。
 
-与 `erdos699-quartic-s-parts.md` 的 Bugeaud–Evertse–Győry 2017 非有效 S-part 输入区分：作者首位、论文、定理、使用前提和有效性均不同。来源归原作者；本轮不作优先权声明。
+与 `bugeaud2017sparts.md` 的 Bugeaud–Evertse–Győry 2017 非有效 S-part 输入区分：作者首位、论文、定理、使用前提和有效性均不同。来源归原作者；本轮不作优先权声明。
