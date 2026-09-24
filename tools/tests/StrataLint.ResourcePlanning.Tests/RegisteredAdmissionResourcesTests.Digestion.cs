@@ -12,9 +12,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void DigestionChangesRunOnlyTheirRegisteredConsumers(string path, string mode, bool shared)
     {
         var plan = Plan(path, "", mode);
-        var consumers = new[] { "StrataLint.ArchitectureTests", "StrataLint.Digestion.Tests" }
-            .Concat(shared ? new[] { "StrataLint.Tests" } : []);
-        Assert.Equal(WithWorktreeContract(consumers.Select(name => $"tools/tests/{name}/{name}.csproj")),
+        var consumers = new[] { "StrataLint.ArchitectureTests", "StrataLint.Digestion.Tests", "StrataLint.RepositoryFileMap.Tests" }
+            .Concat(shared ? new[] { "StrataLint.CoverBatch.Tests", "StrataLint.SourceAtomizer.Tests", "StrataLint.Tests", "StrataLint.TruthRelease.Tests" } : []);
+        Assert.Equal(WithWorktreeContract(consumers.Append("StrataLint.RepositoryTopology.Tests").Order(StringComparer.Ordinal).Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
     }
 }

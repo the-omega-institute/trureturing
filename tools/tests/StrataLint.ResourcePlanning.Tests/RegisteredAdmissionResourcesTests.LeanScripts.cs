@@ -14,7 +14,9 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var plan = Plan($"tools/tests/{project}/{file}", "", mode);
         Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
             $"tools/tests/{project}/{project}.csproj",
+            RepositoryTopologyProject,
         }), Strings(plan["execution"]!["tests"]!));
     }
 }

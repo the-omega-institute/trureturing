@@ -22,8 +22,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var plan = Plan(path, "", mode);
         var consumers = new[] { "StrataLint.InstructionContract.Tests" }.Concat(path switch
         {
-            "CLAUDE.md" => ["StrataLint.PrScript.Tests"],
-            "tools/scripts/agent/batch_pr.sh" => ["StrataLint.Tests"],
+            "CLAUDE.md" => ["StrataLint.PrScript.Tests", "StrataLint.RepositoryFileMap.Tests", "StrataLint.Tests"],
             _ => Array.Empty<string>(),
         });
         Assert.Equal(WithWorktreeContract(consumers.Concat(path == "tools/scripts/agent/batch_pr.sh" ? new[] { "StrataLint.RepositoryContract.Tests" } : []).Select(name => $"tools/tests/{name}/{name}.csproj")),
@@ -38,19 +37,23 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("pr", "D")]
     [InlineData("push", "R")]
     [InlineData("pr", "R")]
-    public void TrackedD5InputsSelectTheirCompleteInstructionAndWorktreeConsumers(string mode, string change)
+    public void TrackedD5InputsSelectTheirCompleteInstructionAndRuntimeConsumers(string mode, string change)
     {
         foreach (var path in new[]
         {
             "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean",
             "D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean",
-            "D5/F/NumberTheory/AdmissionResourceProbe.lean",
+            "D5/S0/NumberTheory/AdmissionResourceProbe.lean",
             "D5/InstructionContractProbe.md",
         })
         {
             var plan = Plan(path, "", mode, change);
-            Assert.Equal(WithWorktreeContract(new[] { InstructionContractProject }), Strings(plan["execution"]!["tests"]!));
-            Assert.Equal(new[] { "test-instruction-contract", "test-worktree-contract" },
+            Assert.Equal(WithWorktreeContract(path.EndsWith(".lean", StringComparison.Ordinal)
+                    ? new[] { InstructionContractProject, RepositoryDigestionProject }
+                    : new[] { InstructionContractProject, RepositoryFileMapProject }), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(path.EndsWith(".lean", StringComparison.Ordinal)
+                    ? new[] { "test-instruction-contract", "test-repository-digestion", "test-worktree-contract" }
+                    : new[] { "test-instruction-contract", "test-repository-filemap", "test-worktree-contract" },
                 Strings(plan["stages"]!["engineering"]!["resources"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
             var input = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);

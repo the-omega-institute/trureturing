@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>StrataLint.TruthRelease.Tests</RootNamespace>
+    <AssemblyName>StrataLint.TruthRelease.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
+    <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj" />
+    <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
+    <ProjectReference Include="../../Trureturing.Truth/Trureturing.Truth.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="Xunit.SkippableFact" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
