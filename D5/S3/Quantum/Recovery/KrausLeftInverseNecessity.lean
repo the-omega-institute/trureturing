@@ -6,7 +6,7 @@
    utility: none
    digest: Finite Kraus left inversion forces scalar error products. -/
 
-import D5.S3.Quantum.Reduction.IsometricCompression
+import Mathlib
 
 /-!
 # Necessity of the exact error-product condition
@@ -30,8 +30,6 @@ namespace D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open D5.S3.Quantum.Reduction.IsometricCompression
-
 variable {d n s t : Type*} [Fintype d] [DecidableEq d]
   [Fintype n] [DecidableEq n] [Fintype s] [Fintype t]
 
@@ -51,9 +49,15 @@ theorem identity_kraus_commute (F : s → Matrix d d ℂ)
           Finset.sum_add_distrib, Matrix.mul_one, Matrix.mul_assoc]
         abel
       _ = 0 := by simp_rw [hF]; simp
+  have hnonneg : ∀ b, (0 : Matrix d d ℂ) ≤
+      (F b * X - X * F b) * (F b * X - X * F b)ᴴ :=
+    fun b => (Matrix.posSemidef_self_mul_conjTranspose _).nonneg
+  have hterms : ∀ b, (F b * X - X * F b) * (F b * X - X * F b)ᴴ = 0 :=
+    congrFun ((Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mp hsum)
   have hz : ∀ b, (F b * X - X * F b)ᴴ = 0 := by
-    apply (sum_gram_eq_zero_iff (fun b => (F b * X - X * F b)ᴴ)).mp
-    simpa only [Matrix.conjTranspose_conjTranspose] using hsum
+    intro b
+    apply Matrix.conjTranspose_mul_self_eq_zero.mp
+    simpa only [Matrix.conjTranspose_conjTranspose] using hterms b
   exact sub_eq_zero.mp (Matrix.conjTranspose_eq_zero.mp (hz a))
 
 /-- Scalar coefficients are explicitly the chosen diagonal entries. -/

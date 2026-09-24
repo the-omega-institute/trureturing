@@ -12,7 +12,7 @@ internal sealed class OrthogonalSyndromeDecodingDocument : IScribeDocumentDefini
                 DescribeId.Create("decoding-syndrome-block"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.decoding_syndrome_block"),
                 H("decoding syndrome block"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Finite orthogonal syndrome copies preserve the complete logical matrix. The decoder here is support-restricted; complete-positive extension and global bundle statements are not asserted by these declarations."))),
                 DescribeRole.Theorem),
@@ -20,7 +20,7 @@ internal sealed class OrthogonalSyndromeDecodingDocument : IScribeDocumentDefini
                 DescribeId.Create("orthogonal-syndrome-recovery"),
                 DeclarationHandle.Create("D5/S3/Quantum/Recovery/OrthogonalSyndromeDecoding.orthogonal_syndrome_recovery"),
                 H("orthogonal syndrome recovery"),
-                StatementSource.FromLean(),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Finite orthogonal syndrome copies preserve the complete logical matrix. The decoder here is support-restricted; complete-positive extension and global bundle statements are not asserted by these declarations."))),
                 DescribeRole.Theorem))));

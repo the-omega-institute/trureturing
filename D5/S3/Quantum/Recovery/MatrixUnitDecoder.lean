@@ -27,6 +27,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open D5.S3.Quantum.Recovery.KrausCompletion
+open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 
 variable {d n : Type*} [Fintype d] [DecidableEq d]
@@ -88,22 +89,6 @@ theorem decoder_trace_pairing (F : d → d → Matrix n n ℂ)
         ← Matrix.mul_assoc, hmul]
       simp
 
-/-- The full-space CPTP decoder is constructed without selecting a syndrome frame. -/
-theorem matrix_unit_decoder_channel (F : d → d → Matrix n n ℂ)
-    (hmul : ∀ i j k l, F i j * F k l = if j = k then F i l else 0)
-    (hstar : ∀ i j, (F i j)ᴴ = F j i) (v : d) :
-    ∃ decoder : QuantumChannel n d, ∀ X : Matrix n n ℂ, ∀ i j : d,
-      CStarMatrix.ofMatrix.symm
-        (decoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) i j =
-      Matrix.trace (F j i * X) +
-        Matrix.trace ((1 - unitSupport F) * X) * (Matrix.single v v (1 : ℂ)) i j := by
-  obtain ⟨hP, hPP⟩ := unit_support_projection F hmul hstar
-  obtain ⟨decoder, hdecoder⟩ := complete_quantum_channel
-    (decoderKraus F v) (unitSupport F) v hP hPP (decoder_kraus_gram F hmul hstar v)
-  refine ⟨decoder, fun X i j => ?_⟩
-  have h := congrArg (fun M : Matrix d d ℂ => M i j) (hdecoder X)
-  simpa [decoder_trace_pairing F hmul hstar v X i j] using h
-
 /-- Commutant weights have a scalar logical trace pairing, even without a chosen factorization. -/
 theorem commutant_trace_pairing (F : d → d → Matrix n n ℂ)
     (hmul : ∀ i j k l, F i j * F k l = if j = k then F i l else 0)
@@ -148,14 +133,6 @@ theorem represented_matrix_mul (F : d → d → Matrix n n ℂ)
       rw [Finset.sum_comm]
     _ = representedMatrix F (A * B) := by
       simp only [representedMatrix, Matrix.mul_apply, Finset.sum_smul]
-
-/-- The reconstructed representation preserves the matrix adjoint. -/
-theorem represented_matrix_star (F : d → d → Matrix n n ℂ)
-    (hstar : ∀ i j, (F i j)ᴴ = F j i) (A : Matrix d d ℂ) :
-    (representedMatrix F A)ᴴ = representedMatrix F Aᴴ := by
-  simp only [representedMatrix, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
-    hstar, Matrix.conjTranspose_apply]
-  rw [Finset.sum_comm]
 
 private theorem represented_sum {s : Type*} [Fintype s]
     (F : d → d → Matrix n n ℂ) (A : s → Matrix d d ℂ) :
@@ -204,8 +181,23 @@ theorem decoder_recovers_commutant_weight (F : d → d → Matrix n n ℂ)
     ∃ decoder : QuantumChannel n d, ∀ A : Matrix d d ℂ,
       CStarMatrix.ofMatrix.symm
         (decoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix (Q * representedMatrix F A))) = A := by
-  obtain ⟨decoder, hd⟩ := matrix_unit_decoder_channel F hmul hstar v
+  obtain ⟨hP, hPP⟩ := unit_support_projection F hmul hstar
+  obtain ⟨decoder, hdecoder⟩ := finite_kraus_quantum_channel
+    (completeKraus (decoderKraus F v) (unitSupport F) v)
+    (complete_kraus_normalised (decoderKraus F v) (unitSupport F) v hP hPP
+      (decoder_kraus_gram F hmul hstar v))
   refine ⟨decoder, fun A => ?_⟩
+  have hd (X : Matrix n n ℂ) (i j : d) :
+      CStarMatrix.ofMatrix.symm
+        (decoder.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) i j =
+      Matrix.trace (F j i * X) +
+        Matrix.trace ((1 - unitSupport F) * X) *
+          (Matrix.single v v (1 : ℂ)) i j := by
+    have haction := complete_kraus_action
+      (decoderKraus F v) (unitSupport F) v hP hPP X
+    have h := congrArg (fun M : Matrix d d ℂ => M i j) (hdecoder X)
+    rw [haction] at h
+    simpa [decoder_trace_pairing F hmul hstar v X i j] using h
   have hz : (1 - unitSupport F) * (Q * representedMatrix F A) = 0 := by
     rw [← Matrix.mul_assoc, Matrix.sub_mul, Matrix.one_mul, hsupport, sub_self, Matrix.zero_mul]
   ext i j
@@ -215,10 +207,8 @@ theorem decoder_recovers_commutant_weight (F : d → d → Matrix n n ℂ)
 #print axioms unit_support_action
 #print axioms decoder_kraus_gram
 #print axioms decoder_trace_pairing
-#print axioms matrix_unit_decoder_channel
 #print axioms commutant_trace_pairing
 
 #print axioms represented_matrix_mul
-#print axioms represented_matrix_star
 #print axioms decoder_recovers_commutant_weight
 end D5.S3.Quantum.Recovery.MatrixUnitDecoder

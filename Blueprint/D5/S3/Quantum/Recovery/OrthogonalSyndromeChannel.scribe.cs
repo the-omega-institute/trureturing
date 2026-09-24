@@ -11,25 +11,16 @@ internal sealed class OrthogonalSyndromeChannelDocument : IScribeDocumentDefinit
         Blocks(new[]
         {
                 "logical_representation_mul",
-                "logical_representation_star",
                 "logical_representation_on_copy",
-                "logical_representation_restrict",
-                "logical_representation_injective",
-                "logical_action_on_encoding",
-                "code_support_projection",
-                "code_support_on_copy",
-                "code_support_on_encoding",
                 "full_syndrome_decoder",
                 "encoding_kraus_gram",
                 "encoding_kraus_action",
-                "gram_syndrome_encoder",
-                "positive_syndrome_encoder",
-                "reversible_syndrome_channels"
+                "positive_syndrome_encoder"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/OrthogonalSyndromeChannel." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(
                 LibraryNoteRef.Create("D5/L/knilllaflamme1997correction"),
                 LibraryNoteRef.Create("D5/L/benykempfkribs2007observables")),

@@ -16,7 +16,7 @@ internal sealed class MatrixUnitGeneratorDocument : IScribeDocumentDefinition
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Transport/MatrixUnitGenerator." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/kato1950adiabatic")),
             Blocks(Paragraph(Text("The computed averaged derivative generates every moving logical matrix unit. A real differentiable-path adapter derives the tangent hypotheses. Dyson convergence, global ODE existence, and physical implementability are not assumed or certified by these declarations."))),
             DescribeRole.Theorem)).ToArray())));

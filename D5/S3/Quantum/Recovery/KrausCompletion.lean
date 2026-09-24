@@ -7,7 +7,6 @@
    digest: Row-reset Kraus operators complete a support decoder to a CPTP channel. -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
-import D5.S3.Quantum.Reduction.IsometricCompression
 
 /-!
 # Constructive Kraus completion
@@ -31,8 +30,6 @@ set_option relaxedAutoImplicit false
 
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Foundation.FiniteStateChannel
-open D5.S3.Quantum.Reduction.IsometricCompression
-
 variable {a b c s : Type*}
   [Fintype a] [DecidableEq a] [Fintype b] [DecidableEq b]
   [Fintype c] [DecidableEq c] [Fintype s]
@@ -124,24 +121,9 @@ theorem complete_kraus_action (K : s → Matrix b a ℂ) (P : Matrix a a ℂ)
       ← Matrix.mul_assoc, hi]
   rw [ht]
 
-/-- A support-restricted decoder with its explicit complement reset is a genuine canonical quantum channel. -/
-theorem complete_quantum_channel (K : s → Matrix b a ℂ) (P : Matrix a a ℂ)
-    (v : b) (hP : Pᴴ = P) (hPP : P * P = P)
-    (hK : (∑ i, (K i)ᴴ * K i) = P) :
-    ∃ channel : QuantumChannel a b, ∀ X : Matrix a a ℂ,
-      CStarMatrix.ofMatrix.symm
-        (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) =
-      (∑ i, K i * X * (K i)ᴴ) +
-        Matrix.trace ((1 - P) * X) • Matrix.single v v (1 : ℂ) := by
-  obtain ⟨channel, hc⟩ := finite_kraus_quantum_channel
-    (completeKraus K P v) (complete_kraus_normalised K P v hP hPP hK)
-  refine ⟨channel, fun X => ?_⟩
-  rw [hc X, complete_kraus_action K P v hP hPP]
-
 #print axioms row_reset_gram
 #print axioms row_reset_action
 #print axioms complete_kraus_normalised
 #print axioms complete_kraus_action
-#print axioms complete_quantum_channel
 
 end D5.S3.Quantum.Recovery.KrausCompletion

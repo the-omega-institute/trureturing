@@ -212,7 +212,15 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
         simp [syndromeEncoding, sigma, Matrix.diagonal_apply, ite_smul]
   let P := codeSupport S
   let A₀ : J ⊕ n → Matrix d n ℂ := completeKraus (fun j => (S j)ᴴ) P v
-  obtain ⟨hP, hPP⟩ := code_support_projection S hS
+  have hP : Pᴴ = P := by
+    dsimp only [P, codeSupport, logicalRepresentation]
+    simp only [Matrix.conjTranspose_sum, Matrix.conjTranspose_mul,
+      Matrix.conjTranspose_conjTranspose, Matrix.conjTranspose_one,
+      Matrix.mul_one, Matrix.mul_assoc]
+  have hPP : P * P = P := by
+    dsimp only [P]
+    simpa [codeSupport] using logical_representation_mul S hS
+      (1 : Matrix d d ℂ) 1
   have hbase : (∑ j, ((S j)ᴴ)ᴴ * (S j)ᴴ) = P := by
     simp [P, codeSupport, logicalRepresentation]
   have hA₀ : (∑ b, (A₀ b)ᴴ * A₀ b) = 1 :=
@@ -222,8 +230,15 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
     change (∑ b, completeKraus (fun j => (S j)ᴴ) P v b *
       (∑ a, E a * X * (E a)ᴴ) * (completeKraus (fun j => (S j)ᴴ) P v b)ᴴ) = X
     rw [complete_kraus_action _ P v hP hPP, hnoise X]
+    have hcopy (j : J) : P * S j = S j := by
+      dsimp only [P]
+      simpa [codeSupport] using logical_representation_on_copy S hS
+        (1 : Matrix d d ℂ) j
+    have hsupport : P * syndromeEncoding S sigma X = syndromeEncoding S sigma X := by
+      simp only [syndromeEncoding, Matrix.mul_sum, Matrix.mul_smul,
+        ← Matrix.mul_assoc, hcopy]
     have hz : (1 - P) * syndromeEncoding S sigma X = 0 := by
-      rw [Matrix.sub_mul, Matrix.one_mul, code_support_on_encoding S hS, sub_self]
+      rw [Matrix.sub_mul, Matrix.one_mul, hsupport, sub_self]
     rw [hz, Matrix.trace_zero, zero_smul, add_zero]
     rw [orthogonal_syndrome_recovery S hS, hsigmatrace, one_smul]
   let e := (Fintype.equivFin (J ⊕ n)).symm

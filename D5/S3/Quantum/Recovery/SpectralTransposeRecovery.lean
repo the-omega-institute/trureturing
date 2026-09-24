@@ -34,7 +34,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open D5.S3.Quantum.Recovery.KrausCompletion
-open D5.S3.Quantum.Reduction.IsometricCompression
+open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 
 variable {n d s : Type*} [Fintype n] [DecidableEq n]
@@ -71,13 +71,6 @@ theorem spectral_support_projection (Q : Matrix n n ℂ) :
     apply cfc_congr
     intro x hx
     split_ifs <;> simp
-
-/-- The computed inverse square root is Hermitian. -/
-theorem spectral_inverse_sqrt_adjoint (Q : Matrix n n ℂ) :
-    (spectralInverseSqrt Q)ᴴ = spectralInverseSqrt Q := by
-  change star (cfc _ Q) = cfc _ Q
-  exact (cfc_predicate _ Q : IsSelfAdjoint
-    (cfc (fun x : ℝ => (Real.sqrt x)⁻¹) Q)).star_eq
 
 /-- Every Hermitian Q is supported in the computed nonzero spectral projection. -/
 theorem spectral_support_mul (Q : Matrix n n ℂ) (hQ : Q.IsHermitian) :
@@ -135,8 +128,15 @@ theorem spectral_support_on_kraus (E : s → Matrix n d ℂ) (a : s) :
         simp only [Q, Matrix.conjTranspose_mul, Matrix.mul_sum,
           Matrix.sum_mul, Matrix.mul_assoc]
       _ = 0 := by rw [hzero, Matrix.zero_mul]
-  have hz := (sum_gram_eq_zero_iff (fun b => ((1 - P) * E b)ᴴ)).mp
-    (by simpa only [Matrix.conjTranspose_conjTranspose] using hsum)
+  have hnonneg : ∀ b, (0 : Matrix n n ℂ) ≤
+      ((1 - P) * E b) * ((1 - P) * E b)ᴴ :=
+    fun b => (Matrix.posSemidef_self_mul_conjTranspose _).nonneg
+  have hterms : ∀ b, ((1 - P) * E b) * ((1 - P) * E b)ᴴ = 0 :=
+    congrFun ((Fintype.sum_eq_zero_iff_of_nonneg hnonneg).mp hsum)
+  have hz : ∀ b, ((1 - P) * E b)ᴴ = 0 := by
+    intro b
+    apply Matrix.conjTranspose_mul_self_eq_zero.mp
+    simpa only [Matrix.conjTranspose_conjTranspose] using hterms b
   have ha := Matrix.conjTranspose_eq_zero.mp (hz a)
   exact (sub_eq_zero.mp (by
     simpa only [Matrix.sub_mul, Matrix.one_mul] using ha)).symm
@@ -156,7 +156,11 @@ theorem spectral_transpose_candidate (E : s → Matrix n d ℂ) (v : d) :
   let P := spectralSupport Q
   let W := spectralInverseSqrt Q
   have hQ : Q.PosSemidef := output_gram_positive E
-  have hW : Wᴴ = W := spectral_inverse_sqrt_adjoint Q
+  have hW : Wᴴ = W := by
+    dsimp only [W, spectralInverseSqrt]
+    change star (cfc _ Q) = cfc _ Q
+    exact (cfc_predicate _ Q : IsSelfAdjoint
+      (cfc (fun x : ℝ => (Real.sqrt x)⁻¹) Q)).star_eq
   obtain ⟨hP, hPP⟩ := spectral_support_projection Q
   have hK : (∑ a, ((E a)ᴴ * W)ᴴ * ((E a)ᴴ * W)) = P := by
     calc
@@ -164,13 +168,15 @@ theorem spectral_transpose_candidate (E : s → Matrix n d ℂ) (v : d) :
         simp only [Q, Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
           hW, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_assoc]
       _ = P := inverse_sqrt_sandwich Q hQ
-  obtain ⟨recovery, hr⟩ := complete_quantum_channel (fun a => (E a)ᴴ * W) P v hP hPP hK
+  obtain ⟨recovery, hr⟩ := finite_kraus_quantum_channel
+    (completeKraus (fun a => (E a)ᴴ * W) P v)
+    (complete_kraus_normalised (fun a => (E a)ᴴ * W) P v hP hPP hK)
   refine ⟨recovery, fun X => ?_⟩
-  simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
-    hW, Matrix.mul_assoc] using hr X
+  rw [hr X, complete_kraus_action (fun a => (E a)ᴴ * W) P v hP hPP]
+  simp only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+    hW, Matrix.mul_assoc]
 
 #print axioms spectral_support_projection
-#print axioms spectral_inverse_sqrt_adjoint
 #print axioms spectral_support_mul
 #print axioms inverse_sqrt_sandwich
 #print axioms spectral_support_on_kraus

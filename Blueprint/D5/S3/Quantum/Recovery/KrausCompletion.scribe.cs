@@ -13,13 +13,12 @@ internal sealed class KrausCompletionDocument : IScribeDocumentDefinition
                 "row_reset_gram",
                 "row_reset_action",
                 "complete_kraus_normalised",
-                "complete_kraus_action",
-                "complete_quantum_channel"
+                "complete_kraus_action"
         }.Select(name => Describe.Lean(
             DescribeId.Create(name.Replace('_', '-')),
             DeclarationHandle.Create("D5/S3/Quantum/Recovery/KrausCompletion." + name),
             H(name.Replace('_', ' ')),
-            StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/knilllaflamme1997correction")),
             Blocks(Paragraph(Text("Explicit row-reset Kraus operators complete the input effect and produce the repository canonical CPTP channel. Spectral inverse construction is a separate obligation."))),
             DescribeRole.Theorem)).ToArray())));

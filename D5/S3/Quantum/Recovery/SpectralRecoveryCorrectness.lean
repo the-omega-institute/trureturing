@@ -158,7 +158,11 @@ theorem scalar_condition_iff_spectral_left_inverse (E : s → Matrix n d ℂ)
     let G : s ⊕ n → Matrix d n ℂ := completeKraus K P v
     have hQ : Q.PosSemidef := Matrix.nonneg_iff_posSemidef.mp
       (Finset.sum_nonneg fun a _ => (Matrix.posSemidef_self_mul_conjTranspose (E a)).nonneg)
-    have hW : Wᴴ = W := spectral_inverse_sqrt_adjoint Q
+    have hW : Wᴴ = W := by
+      dsimp only [W, spectralInverseSqrt]
+      change star (cfc _ Q) = cfc _ Q
+      exact (cfc_predicate _ Q : IsSelfAdjoint
+        (cfc (fun q : ℝ => (Real.sqrt q)⁻¹) Q)).star_eq
     obtain ⟨hP, hPP⟩ := spectral_support_projection Q
     have hK : (∑ a, (K a)ᴴ * K a) = P := by
       calc
