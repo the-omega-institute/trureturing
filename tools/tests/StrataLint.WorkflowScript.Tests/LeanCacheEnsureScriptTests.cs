@@ -17,7 +17,7 @@ public sealed class LeanCacheEnsureScriptTests
         var dotnet = Path.Combine(installed.Bin, "dotnet");
         File.WriteAllText(
             dotnet,
-            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nprintf '%s\\n' \"$PWD\" > \"$DOTNET_CWD\"\nprintf 'delegated\\n'\n");
+            "#!/usr/bin/env bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\nprintf '%s\\n' \"$PWD\" > \"$DOTNET_CWD\"\nprintf 'probe-delegated\\n'\n");
         File.SetUnixFileMode(
             dotnet,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
