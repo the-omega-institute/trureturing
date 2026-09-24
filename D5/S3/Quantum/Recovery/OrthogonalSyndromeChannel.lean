@@ -138,15 +138,16 @@ private theorem encoding_kraus_column_gram (S : s → Matrix n d ℂ)
     (encodingKraus S B j)ᴴ * encodingKraus S B j =
       (∑ i, star (B i j) * B i j) • (1 : Matrix d d ℂ) := by
   simp only [encodingKraus, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
-    Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+    Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul,
+    Finset.smul_sum, smul_smul]
   rw [← Finset.sum_smul]
   apply Finset.sum_congr rfl
   intro i hi
   rw [Finset.sum_eq_single i]
   · rw [hS i i]
-    simp
+    simp [mul_comm]
   · intro k hk hki
-    rw [hS i k]
+    rw [hS k i]
     simp [hki]
   · simp
 
@@ -172,13 +173,35 @@ theorem encoding_kraus_action (S : s → Matrix n d ℂ) (B : Matrix s s ℂ)
     (rho : Matrix d d ℂ) :
     (∑ j, encodingKraus S B j * rho * (encodingKraus S B j)ᴴ) =
       syndromeEncoding S (B * Bᴴ) rho := by
-  ext p q
-  simp only [encodingKraus, syndromeEncoding, Matrix.sum_apply,
-    Matrix.conjTranspose_sum, Matrix.conjTranspose_smul, Matrix.sum_mul,
-    Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
-    Matrix.mul_apply, Matrix.conjTranspose_apply, Finset.sum_smul,
-    Finset.sum_mul, Finset.mul_sum, Matrix.smul_apply, smul_eq_mul]
-  ring
+  simp only [encodingKraus, syndromeEncoding, Matrix.conjTranspose_sum,
+    Matrix.conjTranspose_smul, Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul,
+    Matrix.mul_smul, Finset.smul_sum, smul_smul, Matrix.mul_apply,
+    Matrix.conjTranspose_apply, Finset.sum_smul]
+  change (∑ j, ∑ k, ∑ i,
+      (star (B k j) * B i j) • (S i * rho * (S k)ᴴ)) =
+    ∑ i, ∑ k, ∑ j,
+      (B i j * star (B k j)) • (S i * rho * (S k)ᴴ)
+  calc
+    _ = ∑ j, ∑ i, ∑ k,
+        (star (B k j) * B i j) • (S i * rho * (S k)ᴴ) := by
+      apply Finset.sum_congr rfl
+      intro j hj
+      rw [Finset.sum_comm]
+    _ = ∑ i, ∑ j, ∑ k,
+        (star (B k j) * B i j) • (S i * rho * (S k)ᴴ) := Finset.sum_comm
+    _ = ∑ i, ∑ k, ∑ j,
+        (star (B k j) * B i j) • (S i * rho * (S k)ᴴ) := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      rw [Finset.sum_comm]
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      apply Finset.sum_congr rfl
+      intro k hk
+      apply Finset.sum_congr rfl
+      intro j hj
+      rw [mul_comm]
 
 /-- Positive syndrome densities admit the Gram construction via the library's C-star factorisation. -/
 theorem positive_syndrome_encoder (S : s → Matrix n d ℂ)
