@@ -305,7 +305,59 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     + "logical gaps from the Hamiltonian fixed by the visible Gibbs state. "
                     + "Neither CPTP realizability nor these two conditions alone certifies "
                     + "a zero-work thermal implementation. The existing declaration proves "
-                    + "commutator-generated observable closure only.")))))));
+                    + "commutator-generated observable closure only.")))),
+            Describe.Remark(
+                DescribeId.Create("compatibility-versus-complexity-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Common feasibility and uniform computational cost are distinct"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/cook2000pnp"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/singer2011synchronization")),
+                Blocks(Paragraph(Text(
+                    "Cook's decision and certificate definitions do not identify local-to-global "
+                    + "incompatibility with NP-hardness. Singer supplies established tree-based "
+                    + "synchronization methods. Section 16 of the unified predictive theory "
+                    + "checks faithful-state saturation through fundamental projective loops. "
+                    + "Its matrix-operation count assumes given transports; exact real input "
+                    + "representations and noisy polar factors retain separate obligations. "
+                    + "The existing Lean statement concerns commutator closure only, and "
+                    + "does not prove P versus NP or a complexity classification.")))),
+            Describe.Remark(
+                DescribeId.Create("thermal-triple-primal-dual-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Full-temperature triple optima have explicit matched witnesses"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/nuradha2025multivariate"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/lostaglio2015coherence")),
+                Blocks(Paragraph(Text(
+                    "The multivariate fidelity SDP and time-covariance framework are prior art. "
+                    + "Section 16 constructs a primal feasible common recovery and a dual "
+                    + "positive-block witness of identical value for three orthogonal thermal "
+                    + "qubit states at every faithful temperature. With the Gibbs-compatible "
+                    + "scalar logical Hamiltonian, a second energy-sector construction solves "
+                    + "the exact covariant fixed-phase problem. These are paper-level special "
+                    + "case optima, not an all-temperature modulus optimum, an arbitrary-state "
+                    + "compression theorem, a free thermal operation, or a Lean result. "
+                    + "Finite floating checks are separate from the analytic certificates.")))),
+            Describe.Remark(
+                DescribeId.Create("common-response-binary-phase-maxcut-scope"),
+                DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
+                H("Binary phases reuse the actual complete-mediator cut law"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/goemans1995maxcut"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/cook2000pnp")),
+                Blocks(Paragraph(Text(
+                    "CompleteMediatorCutSharpBounds.complete_mediator_maxcut_sharp already "
+                    + "maximizes on one whole Boolean response-table carrier, and its "
+                    + "complementOutcomeLaw_benefit constructs an attaining shared law. "
+                    + "Section 16 maps that same table to a thermally calibrated, covariant "
+                    + "binary phase-flip controller. General thresholds encode MAX-CUT, "
+                    + "whereas perfect saturation has the easy bipartiteness criterion. "
+                    + "Allowing arbitrary PSD correlations enlarges the controller class "
+                    + "to the Goemans-Williamson relaxation; hyperplane rounding returns "
+                    + "legal binary controls. The causal Lean source is reused with its "
+                    + "own scope, not as a new kernel proof of this physical interpretation "
+                    + "or of an efficient exact MAX-CUT algorithm.")))))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {
@@ -380,7 +432,7 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, n, Comma, Sp, Call(F.Id("Fintype"), n), Comma, RowBreak, Grp(),
-            hamiltonian, Sp, InMacro, Sp, matrices, Comma, Sp,
+            hamiltonian, Comma, Sp, effect, Sp, InMacro, Sp, matrices, Comma, Sp,
             initial, Sp, InMacro, Sp,
             Call(F.Id("Submodule"), ComplexNumbers(), matrices), Comma, RowBreak, Grp(),
             derivativeClause, Sp, Land, RowBreak, Grp(), spanClause, Dot,
@@ -389,7 +441,7 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
 
     private static Formula ZeroHamiltonianFormula()
     {
-        Formula n = F.Id("n"), effect = F.Id("E"), time = F.Id("t");
+        Formula n = F.Id("n"), effect = F.Id("E");
         return Disp(Seq(
             Forall, Sp, n, Comma, Sp, Call(F.Id("Fintype"), n), Comma, Sp,
             effect, Sp, InMacro, Sp, Matrices(n), Comma, Sp,
