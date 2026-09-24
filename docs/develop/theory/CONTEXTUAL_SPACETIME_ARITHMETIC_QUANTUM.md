@@ -37653,3 +37653,197 @@ $$
 定理167.2—167.3由全视界最优性反推弱变化尺度、稳定坐标及关键输入接口的唯一长期行为。第165节的精确局部代价仍成立；本节移除的是对候选族局部接近程度的预设，并不确定其余相干方向的自由度。这里的坐标对齐始终相对于定义161.1给定的校准基；对整个实验作同一酉共轭，会将校准基、源族、预测器及结论中的投影一同共轭。
 
 ## 追加锚（本行以下为增补区）
+
+## 168. 最优预测器的连续自由度与完整动力学的不唯一性
+
+**定义 168.1（保留关键相干的附加去相干族）。** 沿用定义165.1的源族、全参考距离、风险 $W_r$ 及常数 $L,t_*,k_*$，并沿用定理163.2的预测器 $\mathcal T_r$。所有预测器仍是同一三维系统上的一个固定 CPTP 通道，以其幂服务全部视界，没有持久辅助记忆。令
+$$
+Z=\operatorname{diag}(1,-1,1),\qquad
+\mathcal D_u=\frac{1+u}{2}\mathrm{Id}
++\frac{1-u}{2}\operatorname{Ad}_Z\quad(0\le u\le1),
+\qquad
+\mathcal F_{h,r}=\mathcal T_r\circ\mathcal D_{r^h}
+\quad(h\ge0).
+\tag{168.1}
+$$
+$\mathcal D_u$ 是酉通道的凸组合，故 $\mathcal F_{h,r}$ 对全部 $0<r<1$ 都为 CPTP。它保留三个对角元，且相干系数为
+$$
+b_{01}=b_{10}=b_{12}=b_{21}=r^{1+h},\qquad
+b_{02}=b_{20}=r^{1+k_*}.
+\tag{168.2}
+$$
+再定义与 $r$ 无关的正数
+$$
+T_0=\log\frac2L,\qquad
+h_0=\frac{1-e^{-k_*T_0}}{2T_0}>0.
+\tag{168.3}
+$$
+该区间是下面构造的充分范围，不定义全部最优预测器的最大参数范围。
+
+**定理 168.2（连续多个预测器的精确风险夹界）。** 对任意 $0<r<1$ 及任意 $h\in[0,h_0]$，
+$$
+\boxed{
+W_r(\mathcal T_r)
+\le W_r(\mathcal F_{h,r})
+\le\max\{W_r(\mathcal T_r),L\}.
+}
+\tag{168.4}
+$$
+因此，对任意函数 $h:(r_0,1)\to[0,h_0]$，不要求它连续或收敛，均有
+$$
+\lim_{r\uparrow1}W_r(\mathcal F_{h(r),r})=L.
+\tag{168.5}
+$$
+
+证明。 固定视界 $N\ge1$ 及合法实际相位 $\phi$，令
+$$
+x=-N\log r>0,\qquad s=e^{-x}=r^N,\qquad
+d=s(1-e^{-hx}),\qquad
+w=s(e^{iN\phi}-e^{-k_*x}),\quad q=|w|.
+\tag{168.6}
+$$
+$\mathcal M_{r,\phi}^N-\mathcal F_{h,r}^N$ 是 Hermitian Schur 乘子，其乘子矩阵为
+$$
+B=\begin{pmatrix}0&d&w\\d&0&d\\\overline w&d&0\end{pmatrix}.
+\tag{168.7}
+$$
+先在本证明内建立所需的支配估计：若 $2d\le q$，则此差的全参考半迹范数恰为 $q/2$。$q=0$ 时 $d=0$，结论直接成立。否则写 $w=qe^{i\theta}$，取
+$$
+Y=\begin{pmatrix}
+q&de^{i\theta}&0\\
+de^{-i\theta}&q&de^{i\theta}\\
+0&de^{-i\theta}&q
+\end{pmatrix}.
+\tag{168.8}
+$$
+两个矩阵 $Y\pm B$ 都半正定。确实，将 $02$ 块排在前面，该块分别为
+$$
+\begin{pmatrix}q&\pm qe^{i\theta}\\\pm qe^{-i\theta}&q\end{pmatrix},
+$$
+其秩为一；连接标签 $1$ 的列向量分别为
+$$
+v_\pm=d\begin{pmatrix}e^{i\theta}\pm1\\e^{-i\theta}\pm1\end{pmatrix}.
+$$
+它们位于对应秩一块的像中。该块的非零特征值为 $2q$，所以 Schur 补条件为
+$$
+q\ge \frac{\|v_\pm\|^2}{2q}
+=\frac{d^2|e^{i\theta}\pm1|^2}{q},
+$$
+这由 $2d\le q$ 保证。正半定乘子给出完全正 Schur 映射，是第161节所用相关矩阵框架的标准正性事实。
+
+记 $S_B,S_Y$ 为对应 Schur 映射。对任意系统与有限参考的联合密度矩阵 $\rho$，令
+$$
+A=(S_Y\otimes\mathrm{Id})(\rho),\qquad
+H=(S_B\otimes\mathrm{Id})(\rho).
+$$
+因为 $S_Y\pm S_B$ 完全正，故 $A\ge0$ 且 $-A\le H\le A$。$Y$ 的三个对角元均为 $q$，从而 $\operatorname{Tr}A=q$。分别以 $H$ 的正、负谱投影压缩上述两个不等式并取迹，可得
+$$
+\|H\|_1\le\operatorname{Tr}A=q.
+\tag{168.9}
+$$
+另一方面，无参考的平衡 $02$ 输入使输出差只含系数 $w/2$ 及其共轭，迹范数为 $q$。因此，当 $2d\le q$ 时，精确距离为
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)=\frac q2.
+\tag{168.10}
+$$
+
+当 $0<x\le T_0$，函数 $1-e^{-k_*x}$ 的凹性及其在零点的零值给出
+$$
+2(1-e^{-hx})\le2hx\le2h_0x
+=\frac{x}{T_0}(1-e^{-k_*T_0})
+\le1-e^{-k_*x}
+\le|e^{iN\phi}-e^{-k_*x}|.
+\tag{168.11}
+$$
+乘以 $s$ 得到 $2d\le q$。故在此范围，式（168.10）与式（161.11）共同给出
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)
+=d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal T_r^N).
+\tag{168.12}
+$$
+当 $x\ge T_0$，将（168.7）拆为三个单边乘子，分别使用式（161.11）的正块矩阵估计及三角不等式，得到
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F_{h,r}^N)
+\le d+\frac q2
+\le2e^{-x}\le2e^{-T_0}=L.
+\tag{168.13}
+$$
+这两段估计都是实际离散视界上的界，不需要交换参数极限与视界上确界。它们证明（168.4）的上界。对于每个 $N,\phi$，平衡 $02$ 输入也总给出下界 $q/2$，而 $\mathcal T_r$ 的完整距离恰为 $q/2$。取上确界便得到（168.4）的下界。最后由定理163.2的 $W_r(\mathcal T_r)\to L$ 夹逼得到（168.5）；夹界与所选 $h$ 无关，所以也允许任意参数函数 $h(r)$。证毕。
+
+**定理 168.3（接近弱记录极限时的有限参数风险相等）。** 存在 $r_1<1$，使对所有 $r\in(r_1,1)$ 及所有 $h\in[0,h_0]$，
+$$
+\boxed{W_r(\mathcal F_{h,r})=W_r(\mathcal T_r)>L.}
+\tag{168.14}
+$$
+此式是这组候选预测器之间的精确比较，不断言它们达到有限 $r$ 的无约束 minimax 值 $J(r)$。
+
+证明。 令 $a=-\log r\downarrow0$。式（161.20）等价于
+$$
+\cos\alpha(r)=\frac{3e^a-e^{3a}}2
+=1-\frac32a^2-2a^3+O(a^4).
+$$
+结合 $\alpha(r)/a\to\sqrt3$ 与余弦的 Taylor 展开，得到
+$$
+\frac{\alpha(r)}a=\sqrt3+\frac2{\sqrt3}a+O(a^2).
+\tag{168.15}
+$$
+在 $(t_*,\sqrt3)$ 邻域定义光滑函数
+$$
+f(x,b)=\frac{e^{-x}}2
+\sqrt{1+e^{-2k_*x}-2e^{-k_*x}\cos(bx)}.
+\tag{168.16}
+$$
+它给出 $\mathcal T_r$ 在实际端点相位 $\phi=\alpha(r)$、缩放视界 $x=Na$ 上的精确距离。由 $k_*t_* =\log2$、$\sqrt3t_* =\pi/3$，直接求导得
+$$
+f(t_*,\sqrt3)=L,\qquad
+\partial_x f(t_*,\sqrt3)=0,\qquad
+\partial_b f(t_*,\sqrt3)=\frac{t_*e^{-t_*}}4>0.
+\tag{168.17}
+$$
+取最接近 $t_*/a$ 的正整数 $N_a$，则 $N_aa=t_*+O(a)$。二元 Taylor 展开、（168.15）及（168.17）给出
+$$
+f\left(N_aa,\frac{\alpha(r)}a\right)
+=L+\frac{t_*e^{-t_*}}{2\sqrt3}a+O(a^2)>L
+\tag{168.18}
+$$
+对所有充分小的正 $a$ 成立。此时 $N_a\alpha(r)$ 接近 $\pi/3$，所用端点始终是原合同允许的实际相位。故 $W_r(\mathcal T_r)>L$；代入（168.4），得到对全部 $h\in[0,h_0]$ 同时成立的（168.14）。证毕。
+
+**定理 168.4（相同最优风险不确定完整动力学）。** 对任意不同的 $h_1,h_2\in[0,h_0]$、任意 $0<r<1$ 和整数 $N\ge1$，
+$$
+d_{\rm ref}(\mathcal F_{h_1,r}^N,\mathcal F_{h_2,r}^N)
+=\frac12\left|r^{(1+h_1)N}-r^{(1+h_2)N}\right|.
+\tag{168.19}
+$$
+特别地，虽两族均满足 $W_r\to L$，仍有
+$$
+\liminf_{r\uparrow1}\sup_{N\ge1}
+d_{\rm ref}(\mathcal F_{h_1,r}^N,\mathcal F_{h_2,r}^N)
+\ge\frac12\left|e^{-(1+h_1)}-e^{-(1+h_2)}\right|>0.
+\tag{168.20}
+$$
+还存在渐近最优族，其缩放生成元在 $r\uparrow1$ 时不收敛。
+
+证明。 令 $v=r^{(1+h_1)N}-r^{(1+h_2)N}$。两个通道幂的差只在 $01,10,12,21$ 四个方向乘以 $v$，故严格等于
+$$
+\mathcal F_{h_1,r}^N-\mathcal F_{h_2,r}^N
+=\frac v2(\mathrm{Id}-\operatorname{Ad}_Z).
+\tag{168.21}
+$$
+任意联合密度矩阵被两个酉通道送出的态，其迹距离至多为二，所以全参考半距离至多为 $|v|/2$。无参考的平衡 $01$ 输入及其 $Z$ 共轭正交，达到该上界，证明（168.19）。取 $N=\lfloor(1-r)^{-1}\rfloor$，即得（168.20）。差异可在固定校准接口上直接读出，不是对同一通道重命名基向量。
+
+最后取
+$$
+h(r)=\frac{h_0}{2}\left(1+\sin\frac1{1-r}\right),\qquad
+\mathcal F_r=\mathcal F_{h(r),r}.
+\tag{168.22}
+$$
+由（168.5），此族仍渐近最优。记 $G_r=(\mathcal F_r-\mathrm{Id})/(1-r)$；对有界的 $h(r)$，一致 Taylor 展开给出
+$$
+G_r(E_{01})=\bigl(-(1+h(r))+O(1-r)\bigr)E_{01}.
+\tag{168.23}
+$$
+选择 $1/(1-r)=\pi/2+2\pi n$ 与 $1/(1-r)=3\pi/2+2\pi n$ 两条趋于无穷的序列，分别得到系数极限 $-(1+h_0)$ 与 $-1$。故整个生成元族不收敛。其 $02$ 系数和稳定去相干投影仍满足第167节的强制结论。证毕。
+
+第167节确定的关键接口与本节构造的连续自由度可同时存在：全视界最优值限定若干关系，却不唯一规定全部动力学。本节给出的自由度只是一段共同改变 $01,12$ 衰减率的显式充分区间，不是所有最优生成元的分类，也不把风险相等解释成各个输入上的预测等价。
+
+## 追加锚（本行以下为增补区）
