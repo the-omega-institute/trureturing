@@ -981,7 +981,7 @@ canonical command 只有在返回 `0` 且 `OUT` 是满足指定 schema 的单个
 | frozen ledger 885,607 bytes、211 行 | GoalArtifact E1 |
 | `ExpectedMacros` 位于测试程序且随全 Blueprint corpus 比较 | `tools/tests/StrataLint.Scribe.Tests/Describe/FormulaCorpusInventoryTests.cs:23-60` |
 | `DocumentDefinitions.All` 已由 assembly reflection 确定性 discovery，不是手写中央表；按 type/output path 排序并拒绝重复 output path | `tools/StrataLint.Scribe/Emission/DocumentDefinitions.cs:39-83` |
-| 当前 FILEMAP schema 为 3；files、Evidence policy、residence policy 严格解析，未知键与大小写冲突 fail-closed | `Meta/FILEMAP.toml`；Engine `FileMapManifest.cs` / `FileMapEvidence.cs` / `FileMapCanonicalWriter.cs` |
+| 当前 FILEMAP schema 为 5；files、Evidence policy、residence policy 严格解析，未知键与大小写冲突 fail-closed | `Meta/FILEMAP.toml`；Engine `FileMapManifest.cs` / `FileMapEvidence.cs` / `FileMapCanonicalWriter.cs` |
 | FILEMAP policy 已检查 tracked path 覆盖、generated inventory producer/verifier 与 data verifier | `FileMapPolicy.cs:67-103,106-162,190-235` |
 | 当前 projection 补偿与 ledger 共用分类器 | `tools/scripts/pr-shepherd.sh:100-131,175-209` |
 | Blueprint markdown 110 tracked files、242,880 bytes，且有仓内语义消费者 | GoalArtifact E1、E8 |
