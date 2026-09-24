@@ -38,7 +38,44 @@ internal sealed class FibonacciNearReturnDocument : IScribeDocumentDefinition
                         "The source's description of Fibonacci times as canonical return times is "
                             + "qualitative and has no in-scope predicate; the displayed mathematical "
                             + "clauses are formalized without inventing one."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Describe.Remark(
+                DescribeId.Create("bounded-band-golden-clock-scope"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn."
+                        + "fibonacci_near_return"),
+                H("Exact returns provide near-alias examples, not universal clock optimality"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/zeng2024sampling")),
+                Blocks(Paragraph(Text(
+                    "Zeng and coauthors study generator ambiguity under finite-period sampling. "
+                    + "The arithmetic-clock addition in PR #8891 independently derives an explicit "
+                    + "two-time Hilbert-Schmidt estimate for finite-dimensional Hermitian "
+                    + "generators. The existing Fibonacci residual supplies matching quadratic "
+                    + "bandwidth amplification and rational clock approximants. Noise, cross-spectral "
+                    + "bandwidth and clock calibration are separate premises. This remark does not "
+                    + "claim that the golden ratio optimizes every finite experiment, that the new "
+                    + "estimate is Lean-verified, or that the pending Section 18 has already been "
+                    + "appended to the main-volume file.")))),
+            Describe.Remark(
+                DescribeId.Create("prime-cycle-and-fourier-scope"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn."
+                        + "fibonacci_near_return"),
+                H("Prime observability and golden frequency have different assumptions"),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/parlangeli2012cycles"),
+                    LibraryNoteRef.Create("D5/L/PredictiveReduction/tao2005primefourier")),
+                Blocks(Paragraph(Text(
+                    "Parlangeli and Notarstefano already give the cycle-Laplacian gcd sensor "
+                    + "criterion and its prime-length corollary. Tao records the prime Fourier "
+                    + "nonzero-minor theorem. The arithmetic-clock draft applies these established "
+                    + "results to explicitly specified modal observations, including a five-site "
+                    + "positive-energy ring whose two frequencies have golden ratio. The free "
+                    + "common mode must be removed for the stated Gibbs model. Exact rank does "
+                    + "not supply a uniform noise margin, and no WSS or P/NP inference follows. "
+                    + "The finite Prony observation source retains its own consecutive-window "
+                    + "scope; this source only proves the displayed Fibonacci-return statement.")))))));
 
     private static Formula Call(string name, params Formula[] arguments)
     {
