@@ -4,6 +4,7 @@ namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class DeclaredTemplateDispatchTests
 {
+    // Exercise this complete project through its registered source consumer.
     [Fact]
     public void declared_template_rule_required()
     {
