@@ -211,9 +211,8 @@ Install [elan](https://github.com/leanprover/elan#installation) and the
 and `dotnet` on your `PATH`. You also need Git, Make and a Bash-compatible shell.
 elan selects Lean from [lean-toolchain](lean-toolchain). Mathlib is declared in
 [lakefile.toml](lakefile.toml), with resolved dependencies in
-[lake-manifest.json](lake-manifest.json). Install a .NET SDK with the major
-version specified in [global.json](global.json), at or above that version; any
-newer minor, feature band or patch release of that major version is accepted.
+[lake-manifest.json](lake-manifest.json). Install the .NET SDK version specified
+in [global.json](global.json); the installed SDK must match that file.
 
 Clone the project, then build just the introductory module. The `make` entry
 prepares a private Lean cache; the first run may download dependencies.

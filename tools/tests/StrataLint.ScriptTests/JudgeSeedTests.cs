@@ -608,6 +608,29 @@ public sealed class JudgeSeedTests
         foreach (var path in preserved) Assert.Equal("retain until registration is valid", File.ReadAllText(path));
     }
 
+    [Theory]
+    [InlineData("10.0.400", true)]
+    [InlineData("10.1.100", true)]
+    [InlineData("11.0.100", false)]
+    public void ResolvedSdkIsCheckedOnlyByMajorVersion(string resolved, bool accepted)
+    {
+        using var fixture = new JudgeSeedFixture();
+        var path = fixture.PathOf("Meta/judge-seed.json");
+        var registry = JsonNode.Parse(File.ReadAllText(path))!;
+        registry["sdk_files"] = new JsonArray("declared/*.dll");
+        File.WriteAllText(path, registry.ToJsonString());
+        fixture.Write($"extra-sdk/sdk/{resolved}/declared/compiler.dll", "resolved SDK bytes");
+
+        var result = fixture.ReadFakeSdkMaterial(resolved, success: accepted);
+
+        if (accepted) Assert.Contains($"sdk/{resolved}/declared/compiler.dll", result.Text, StringComparison.Ordinal);
+        else
+        {
+            Assert.NotEqual(0, result.ExitCode);
+            Assert.Contains("resolved SDK major version differs from the registered SDK", result.Text, StringComparison.Ordinal);
+        }
+    }
+
     [Fact]
     public void DeclaredCompilerBytesChangeIdentityAndUndeclaredSdkFilesDoNot()
     {
