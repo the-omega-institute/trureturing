@@ -55,21 +55,34 @@ origin-correct recurrences. It assumes no continuation or recurrence premise
 and asserts no global slit nonvanishing. This is also an intermediate with
 zero solved-problem credit.
 
-Uniform power-log bank expansions, a fixed zero-free slit collar, formal-inverse/Taylor coefficient
-identity, and the finite-contour sign transfer remain unproved here.
+`CompositionBanks.result` now proves the complete local Banks bridge for every
+positive head, positive-entry tail and positive power $\ell$. It gives an
+actual-branch nonvanishing radius $0<\rho<1$ around one, the reciprocal-power
+endpoint on the full slit-domain filter, jointly continuous conjugate
+extensions on the two closed half-collars, and strictly negative imaginary
+part on the entire upper boundary interval $1+t$ for $0<t\le\rho$. For an
+admissible head the endpoint is $\zeta(k)^{-\ell}$; for leading head one it is
+zero. This is a local, composition-dependent collar theorem, not a general
+power-log asymptotic.
+
+A normalized extension on a fixed slit disk, its Taylor or formal-inverse
+coefficient identity, the finite-contour sign transfer, and the all-$j$
+assembly remain unproved here.
 The eventual sign and strict binomial conclusions therefore remain open
 in this repository. Preregistration:
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Route
 
-Using the disk, admissible-boundary and slit units, prove the remaining source-specific analytic bridges
-and the negative upper-bank sign. A finite contour gives eventual strict
-negativity. Eventual negativity together with the actual finite radial
+Using the proved disk, admissible-boundary, slit and local Banks units,
+construct the normalized reciprocal-power extension on a fixed slit disk and
+identify its Taylor coefficients with the source's formal inverse. A finite
+contour must then transfer the strict upper-bank boundary sign to eventual
+strict negativity. Eventual negativity together with the actual finite radial
 limit yields absolute summability: bound finite sums with radial weights
-first, then pass to radius one. Strict negative tails give the $j=1$
-excess. A uniform positive radial lower bound gives eventually positive
-partial sums, and repeated summation handles every fixed $j\ge2$.
+first, then pass to radius one. Strict negative tails give the $j=1$ excess.
+A uniform positive radial lower bound gives eventually positive partial sums,
+and repeated summation handles every fixed $j\ge2$.
 No coefficient asymptotic equivalent or boundary derivative total is
 assumed in this route.
 
@@ -101,15 +114,26 @@ claims. Grouping by the largest strict index and deleting only the proved
 zero prefix identifies the totals. Dominated convergence applies to the
 actual normalized series on real radii below one.
 
+`CompositionBanks.lean` adds the single public theorem
+`CompositionBanks.result`. Its five private implementation modules supply
+source-weight induction, radial and arc bounds, leading-block transport,
+leading closure and the ordinary-head transport step. The theorem quantifies
+over `head : PNat`, `tail : List PNat` and `ell : PNat`; its one radius is
+used simultaneously for actual-branch nonvanishing, the full-slit endpoint,
+both continuous closed half-collars, their conjugation identity and the
+strict upper boundary sign for every positive $t$ up to that radius.
+
 ## Triage
 
 `window`: the complete conjecture remains the target. The source settles
 all-one compositions for every $\ell\ge1$ by the all-one identity and
 Theorems 1.1 and 8.2; depth one and depth two at $\ell=1$ by Theorems 9.6
 and 9.9, respectively; and depth one at $\ell=2$ by Corollary 9.11.
-The present disk, admissible-boundary and slit results are intermediates, not a new resolution
-of those known cases or of the full conjecture. Admission uses the actual
-source-specific escape content, not the open-problem-resolution exception.
+The present disk, admissible-boundary, slit and Banks results are
+intermediates, not a new resolution of those known cases or of the full
+conjecture. Admission must use the actual source-specific escape content, not
+the open-problem-resolution exception; final six-file publication admission
+review remains separate from kernel compilation.
 
 ## ASSUMED-UNVERIFIED
 

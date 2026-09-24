@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionRecurrences
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionZeroFree
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionBoundary
+  - D5/S3/AnalyticClosure/Polylogarithm/CompositionBanks
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionContinuation
   - D5/S3/AnalyticClosure/Polylogarithm/CompositionSlit
 license: citation-only
@@ -98,10 +99,34 @@ hold on the full domain, with derivative one at zero for a singleton word
 and zero for greater depth. Nested induction uses segment primitives and
 the removable `dslope`; disk agreement fixes the branch normalization.
 
-These are intermediate disk, boundary and slit results, not a resolution of
-Conjecture 1.3. They supply no coefficient-sign theorem, global slit
-nonvanishing, bank asymptotics or contour transfer. Solved-problem credit
-is zero. The preregistered target is
+`CompositionBanks.result` supplies the complete local Banks bridge for every
+positive head, positive-entry tail and positive power $\ell$. For the actual
+continued branch, put
+$A(z)=(z^d/\operatorname{continued}_k(z))^\ell$, where $d$ is the depth.
+The theorem produces $0<\rho<1$ such that the actual branch is nonzero on
+$\Omega\cap\{|z-1|\le\rho\}$. On the full slit-domain filter at one, $A$
+tends to $\zeta(k)^{-\ell}$ for an admissible head and to zero for leading
+head one.
+
+For the same $\rho$, jointly chosen upper and lower functions are continuous
+on the closed upper and lower half-collars, agree with $A$ on their respective
+intersections with $\Omega$, take the common endpoint value at one, and obey
+the conjugation identity on the lower half-collar. For every real
+$0<t\le\rho$, the upper boundary value at $1+t$ has strictly negative
+imaginary part. The proof uses the actual branch throughout: source-weight
+induction closes the admissible and leading-one remainder alternatives;
+radial and angular integral identities transport the source estimates; and
+local analytic representatives retain the ordinary-head derivative needed
+for the strict sign.
+
+These are intermediate disk, boundary, slit and local Banks results, not a
+resolution of Conjecture 1.3. The Banks radius is local and
+composition-dependent. No general power-log asymptotic is asserted, and the
+theorem does not supply a normalized extension on a fixed slit disk, Taylor
+or formal-inverse coefficient identification, finite-contour sign transfer,
+or the all-$j$ assembly. It therefore supplies no coefficient-sign theorem
+or global slit nonvanishing. Solved-problem credit is zero. The preregistered
+target is
 https://github.com/the-omega-institute/trureturing/issues/9372.
 
 ## Reuse and literature boundary
