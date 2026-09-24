@@ -7,7 +7,6 @@
    digest: A two-principal-open affine cover gives a short exact degree-zero Cech complex. -/
 
 import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.RingTheory.Ideal.Span
 import Mathlib.RingTheory.Localization.Away.Basic
 
 /- Library-search audit (2026-09-24):

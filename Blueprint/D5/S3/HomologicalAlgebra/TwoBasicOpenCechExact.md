@@ -24,7 +24,9 @@ Lean statement: `D5/S3/HomologicalAlgebra/TwoBasicOpenCechExact.two_basic_open_c
 
 *Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/TwoBasicOpenCechExact.two_basic_open_cech_short_exact` (`✓ std3`). ∎
 
-*Citation.* The Stacks Project Authors (2026). *The Stacks project*. URL: <https://stacks.math.columbia.edu/tag/00EK>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* The Stacks Project Authors (2026). *The Stacks project*. URL: <https://stacks.math.columbia.edu/tag/00EK>.
 
 *Commentary.*
 

@@ -34,7 +34,7 @@ internal sealed class TwoBasicOpenCechExactDocument
                 DeclarationHandle.Create(Prefix + "two_basic_open_cech_short_exact"),
                 H("Short exactness under the covering condition"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(StacksSource),
+                AssessedProvenance.FromRepo(StacksSource),
                 Blocks(
                     Paragraph(Text(
                         "If f and g generate the unit ideal, the diagonal is injective and "
