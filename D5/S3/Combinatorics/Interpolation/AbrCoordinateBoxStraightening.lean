@@ -161,94 +161,6 @@ theorem inversionCount_indexPerm {n : Nat} (a : Fin n →₀ Nat) :
       simpa [i, j] using hp.1
     · simp [i, j]
 
-theorem subsetExponent_injective {n : Nat} :
-    Function.Injective (subsetExponent (n := n)) := by
-  intro s t h
-  ext x
-  have hx := congrArg (fun u : Fin n →₀ Nat => u x) h
-  simp only [subsetExponent, Finsupp.indicator_apply] at hx
-  by_cases hs : x ∈ s <;> by_cases ht : x ∈ t <;> simp_all
-
-theorem highCount_add_subsetExponent {n : Nat} (a : Fin n →₀ Nat)
-    (t : Finset (Fin n)) (v : Nat) :
-    highCount (a + subsetExponent t) (v + 1) =
-      highCount a (v + 1) + (levelSelection a t v).card := by
-  classical
-  unfold highCount levelSelection
-  rw [show (Finset.univ.filter fun x : Fin n =>
-        v + 1 ≤ (a + subsetExponent t) x).card =
-      ∑ x, if v + 1 ≤ (a + subsetExponent t) x then 1 else 0 by simp]
-  rw [show (Finset.univ.filter fun x : Fin n => v + 1 ≤ a x).card =
-      ∑ x, if v + 1 ≤ a x then 1 else 0 by simp]
-  rw [show (Finset.univ.filter fun x : Fin n => a x = v ∧ x ∈ t).card =
-      ∑ x, if a x = v ∧ x ∈ t then 1 else 0 by simp]
-  rw [← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro x _
-  simp only [Finsupp.add_apply, subsetExponent, Finsupp.indicator_apply]
-  by_cases hx : x ∈ t
-  · rcases lt_trichotomy (a x) v with hav | hav | hav
-    · have hle : ¬v ≤ a x := by omega
-      have hsucc : ¬v + 1 ≤ a x + 1 := by omega
-      have hlt : ¬v < a x := by omega
-      have hne : a x ≠ v := by omega
-      simp [hx, hle, hsucc, hlt, hne]
-    · subst v
-      simp [hx]
-    · have hle : v ≤ a x := hav.le
-      have hsucc : v + 1 ≤ a x := hav
-      have hne : a x ≠ v := hav.ne'
-      simp [hx, hle, hsucc, hne]
-  · simp [hx]
-
-theorem highCount_eq_of_sorted_eq {n : Nat} {a b : Fin n →₀ Nat}
-    (hsorted : (fun i => a (indexPerm a i)) = fun i => b (indexPerm b i))
-    (v : Nat) : highCount a v = highCount b v := by
-  classical
-  unfold highCount
-  rw [show (Finset.univ.filter fun x : Fin n => v ≤ a x).card =
-      ∑ x, if v ≤ a x then 1 else 0 by simp]
-  rw [show (Finset.univ.filter fun x : Fin n => v ≤ b x).card =
-      ∑ x, if v ≤ b x then 1 else 0 by simp]
-  calc
-    (∑ x, if v ≤ a x then 1 else 0) =
-        ∑ i, if v ≤ a (indexPerm a i) then 1 else 0 := by
-          symm
-          exact Fintype.sum_equiv (indexPerm a)
-            (fun i => if v ≤ a (indexPerm a i) then 1 else 0)
-            (fun x => if v ≤ a x then 1 else 0) (fun _ => rfl)
-    _ = ∑ i, if v ≤ b (indexPerm b i) then 1 else 0 := by
-          apply Finset.sum_congr rfl
-          intro i _
-          rw [congrFun hsorted i]
-    _ = ∑ x, if v ≤ b x then 1 else 0 := by
-          exact Fintype.sum_equiv (indexPerm b)
-            (fun i => if v ≤ b (indexPerm b i) then 1 else 0)
-            (fun x => if v ≤ b x then 1 else 0) (fun _ => rfl)
-
-/-- Equality of sorted exponent partitions fixes how many coordinates are
-incremented at every original exponent level. -/
-theorem card_levelSelection_eq_of_sorted_eq {n h : Nat} (a : Fin n →₀ Nat)
-    (t : Finset (Fin n))
-    (hsorted :
-      (fun i => (a + subsetExponent t) (indexPerm (a + subsetExponent t) i)) =
-        fun i => leadExponent a h (indexPerm (leadExponent a h) i))
-    (v : Nat) :
-    (levelSelection a t v).card = (levelSelection a (initialSet a h) v).card := by
-  have hc := highCount_eq_of_sorted_eq hsorted (v + 1)
-  rw [highCount_add_subsetExponent, leadExponent,
-    highCount_add_subsetExponent] at hc
-  omega
-
-theorem subsetExponent_eq_sum_single {n : Nat} (t : Finset (Fin n)) :
-    subsetExponent t = ∑ x ∈ t, Finsupp.single x 1 := by
-  classical
-  ext x
-  simp only [subsetExponent, Finsupp.indicator_apply]
-  rw [Finsupp.finsetSum_apply]
-  simp_rw [Finsupp.single_apply]
-  by_cases hx : x ∈ t <;> simp [hx]
-
 theorem mem_initialSet_of_exponent_lt {n : Nat} (a : Fin n →₀ Nat)
     (h : Nat) {x y : Fin n} (hxy : a x < a y) (hx : x ∈ initialSet a h) :
     y ∈ initialSet a h := by
@@ -297,10 +209,65 @@ theorem exists_initial_mismatch_of_selected_mismatch {n h : Nat}
     {x : Fin n} (hxt : x ∈ t) (hxi : x ∉ initialSet a h) :
     ∃ y, a y = a x ∧ y ∈ initialSet a h ∧ y ∉ t := by
   classical
+  have hhighCountAdd (u : Fin n →₀ Nat) (s : Finset (Fin n)) (v : Nat) :
+      highCount (u + subsetExponent s) (v + 1) =
+        highCount u (v + 1) + (levelSelection u s v).card := by
+    unfold highCount levelSelection
+    rw [show (Finset.univ.filter fun z : Fin n =>
+          v + 1 ≤ (u + subsetExponent s) z).card =
+        ∑ z, if v + 1 ≤ (u + subsetExponent s) z then 1 else 0 by simp]
+    rw [show (Finset.univ.filter fun z : Fin n => v + 1 ≤ u z).card =
+        ∑ z, if v + 1 ≤ u z then 1 else 0 by simp]
+    rw [show (Finset.univ.filter fun z : Fin n => u z = v ∧ z ∈ s).card =
+        ∑ z, if u z = v ∧ z ∈ s then 1 else 0 by simp]
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro z _
+    simp only [Finsupp.add_apply, subsetExponent, Finsupp.indicator_apply]
+    by_cases hz : z ∈ s
+    · rcases lt_trichotomy (u z) v with huv | huv | huv
+      · have hle : ¬v ≤ u z := by omega
+        have hsucc : ¬v + 1 ≤ u z + 1 := by omega
+        have hlt : ¬v < u z := by omega
+        have hne : u z ≠ v := by omega
+        simp [hz, hle, hsucc, hlt, hne]
+      · subst v
+        simp [hz]
+      · have hle : v ≤ u z := huv.le
+        have hsucc : v + 1 ≤ u z := huv
+        have hne : u z ≠ v := huv.ne'
+        simp [hz, hle, hsucc, hne]
+    · simp [hz]
+  have hhighCountEq {u v : Fin n →₀ Nat}
+      (hsorted' : (fun i => u (indexPerm u i)) = fun i => v (indexPerm v i))
+      (w : Nat) : highCount u w = highCount v w := by
+    unfold highCount
+    rw [show (Finset.univ.filter fun z : Fin n => w ≤ u z).card =
+        ∑ z, if w ≤ u z then 1 else 0 by simp]
+    rw [show (Finset.univ.filter fun z : Fin n => w ≤ v z).card =
+        ∑ z, if w ≤ v z then 1 else 0 by simp]
+    calc
+      (∑ z, if w ≤ u z then 1 else 0) =
+          ∑ i, if w ≤ u (indexPerm u i) then 1 else 0 := by
+            symm
+            exact Fintype.sum_equiv (indexPerm u)
+              (fun i => if w ≤ u (indexPerm u i) then 1 else 0)
+              (fun z => if w ≤ u z then 1 else 0) (fun _ => rfl)
+      _ = ∑ i, if w ≤ v (indexPerm v i) then 1 else 0 := by
+            apply Finset.sum_congr rfl
+            intro i _
+            rw [congrFun hsorted' i]
+      _ = ∑ z, if w ≤ v z then 1 else 0 := by
+            exact Fintype.sum_equiv (indexPerm v)
+              (fun i => if w ≤ v (indexPerm v i) then 1 else 0)
+              (fun z => if w ≤ v z then 1 else 0) (fun _ => rfl)
   let A := levelSelection a t (a x)
   let B := levelSelection a (initialSet a h) (a x)
-  have hcard : A.card = B.card :=
-    card_levelSelection_eq_of_sorted_eq a t hsorted (a x)
+  have hc := hhighCountEq hsorted (a x + 1)
+  rw [hhighCountAdd, leadExponent, hhighCountAdd] at hc
+  have hcard : A.card = B.card := by simpa [A, B] using (show
+    (levelSelection a t (a x)).card =
+      (levelSelection a (initialSet a h) (a x)).card by omega)
   have hxA : x ∈ A := by simp [A, levelSelection, hxt]
   have hxB : x ∉ B := by
     intro hxB
@@ -322,10 +289,65 @@ theorem exists_selected_mismatch_of_initial_mismatch {n h : Nat}
     {x : Fin n} (hxi : x ∈ initialSet a h) (hxt : x ∉ t) :
     ∃ y, a y = a x ∧ y ∈ t ∧ y ∉ initialSet a h := by
   classical
+  have hhighCountAdd (u : Fin n →₀ Nat) (s : Finset (Fin n)) (v : Nat) :
+      highCount (u + subsetExponent s) (v + 1) =
+        highCount u (v + 1) + (levelSelection u s v).card := by
+    unfold highCount levelSelection
+    rw [show (Finset.univ.filter fun z : Fin n =>
+          v + 1 ≤ (u + subsetExponent s) z).card =
+        ∑ z, if v + 1 ≤ (u + subsetExponent s) z then 1 else 0 by simp]
+    rw [show (Finset.univ.filter fun z : Fin n => v + 1 ≤ u z).card =
+        ∑ z, if v + 1 ≤ u z then 1 else 0 by simp]
+    rw [show (Finset.univ.filter fun z : Fin n => u z = v ∧ z ∈ s).card =
+        ∑ z, if u z = v ∧ z ∈ s then 1 else 0 by simp]
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro z _
+    simp only [Finsupp.add_apply, subsetExponent, Finsupp.indicator_apply]
+    by_cases hz : z ∈ s
+    · rcases lt_trichotomy (u z) v with huv | huv | huv
+      · have hle : ¬v ≤ u z := by omega
+        have hsucc : ¬v + 1 ≤ u z + 1 := by omega
+        have hlt : ¬v < u z := by omega
+        have hne : u z ≠ v := by omega
+        simp [hz, hle, hsucc, hlt, hne]
+      · subst v
+        simp [hz]
+      · have hle : v ≤ u z := huv.le
+        have hsucc : v + 1 ≤ u z := huv
+        have hne : u z ≠ v := huv.ne'
+        simp [hz, hle, hsucc, hne]
+    · simp [hz]
+  have hhighCountEq {u v : Fin n →₀ Nat}
+      (hsorted' : (fun i => u (indexPerm u i)) = fun i => v (indexPerm v i))
+      (w : Nat) : highCount u w = highCount v w := by
+    unfold highCount
+    rw [show (Finset.univ.filter fun z : Fin n => w ≤ u z).card =
+        ∑ z, if w ≤ u z then 1 else 0 by simp]
+    rw [show (Finset.univ.filter fun z : Fin n => w ≤ v z).card =
+        ∑ z, if w ≤ v z then 1 else 0 by simp]
+    calc
+      (∑ z, if w ≤ u z then 1 else 0) =
+          ∑ i, if w ≤ u (indexPerm u i) then 1 else 0 := by
+            symm
+            exact Fintype.sum_equiv (indexPerm u)
+              (fun i => if w ≤ u (indexPerm u i) then 1 else 0)
+              (fun z => if w ≤ u z then 1 else 0) (fun _ => rfl)
+      _ = ∑ i, if w ≤ v (indexPerm v i) then 1 else 0 := by
+            apply Finset.sum_congr rfl
+            intro i _
+            rw [congrFun hsorted' i]
+      _ = ∑ z, if w ≤ v z then 1 else 0 := by
+            exact Fintype.sum_equiv (indexPerm v)
+              (fun i => if w ≤ v (indexPerm v i) then 1 else 0)
+              (fun z => if w ≤ v z then 1 else 0) (fun _ => rfl)
   let A := levelSelection a t (a x)
   let B := levelSelection a (initialSet a h) (a x)
-  have hcard : A.card = B.card :=
-    card_levelSelection_eq_of_sorted_eq a t hsorted (a x)
+  have hc := hhighCountEq hsorted (a x + 1)
+  rw [hhighCountAdd, leadExponent, hhighCountAdd] at hc
+  have hcard : A.card = B.card := by simpa [A, B] using (show
+    (levelSelection a t (a x)).card =
+      (levelSelection a (initialSet a h) (a x)).card by omega)
   have hxB : x ∈ B := by
     dsimp only [B]
     rw [levelSelection]
@@ -385,46 +407,6 @@ theorem exponent_eq_of_membership_mismatch {n h : Nat}
   · exact hpxi (mem_initialSet_of_exponent_lt a h
       (hmy.trans_lt (hyx.trans_eq hpx.symm)) hmyi)
 
-theorem card_initialSet {n : Nat} (a : Fin n →₀ Nat) {h : Nat} (hh : h ≤ n) :
-    (initialSet a h).card = h := by
-  classical
-  let e := indexPerm a
-  have himage : initialSet a h =
-      (Finset.univ.filter fun i : Fin n => i.val < h).image e := by
-    ext x
-    simp only [initialSet, Finset.mem_image, Finset.mem_filter,
-      Finset.mem_univ, true_and, e]
-    constructor
-    · intro hx
-      exact ⟨(indexPerm a).symm x, hx, by simp⟩
-    · rintro ⟨i, hi, rfl⟩
-      simpa using hi
-  rw [himage, Finset.card_image_of_injective _ e.injective]
-  simpa [Nat.min_eq_right hh] using (Fin.card_filter_val_lt (n := n) (m := h))
-
-theorem card_initialSet_general {n : Nat} (a : Fin n →₀ Nat) (h : Nat) :
-    (initialSet a h).card = min n h := by
-  classical
-  let e := indexPerm a
-  have himage : initialSet a h =
-      (Finset.univ.filter fun i : Fin n => i.val < h).image e := by
-    ext x
-    simp only [initialSet, Finset.mem_image, Finset.mem_filter,
-      Finset.mem_univ, true_and, e]
-    constructor
-    · intro hx
-      exact ⟨(indexPerm a).symm x, hx, by simp⟩
-    · rintro ⟨i, hi, rfl⟩
-      simpa using hi
-  rw [himage, Finset.card_image_of_injective _ e.injective]
-  exact Fin.card_filter_val_lt
-
-@[simp]
-theorem leadExponent_at_perm {n : Nat} (a : Fin n →₀ Nat) (h : Nat) (i : Fin n) :
-    leadExponent a h (indexPerm a i) = a (indexPerm a i) + if i.val < h then 1 else 0 := by
-  classical
-  simp [leadExponent, subsetExponent, Finsupp.indicator_apply, initialSet]
-
 /-- Adding to a stable initial segment preserves the stable index permutation.
 This is the order-preservation assertion in ABR Lemma 3.3 for one factor. -/
 theorem indexPerm_leadExponent {n : Nat} (a : Fin n →₀ Nat) (h : Nat) :
@@ -445,7 +427,9 @@ theorem indexPerm_leadExponent {n : Nat} (a : Fin n →₀ Nat) (h : Nat) :
   · intro i j hij
     change leadExponent a h (indexPerm a j) ≤
       leadExponent a h (indexPerm a i)
-    rw [leadExponent_at_perm, leadExponent_at_perm]
+    simp only [leadExponent, Finsupp.add_apply, subsetExponent,
+      Finsupp.indicator_apply, initialSet, Finset.mem_filter, Finset.mem_univ,
+      Equiv.symm_apply_apply, true_and]
     have ha : a (indexPerm a j) ≤ a (indexPerm a i) :=
       hanti hij
     by_cases hi : i.val < h <;> by_cases hj : j.val < h <;> simp [hi, hj] <;> omega
@@ -454,7 +438,9 @@ theorem indexPerm_leadExponent {n : Nat} (a : Fin n →₀ Nat) (h : Nat) :
       hanti hij.le
     change leadExponent a h (indexPerm a i) =
       leadExponent a h (indexPerm a j) at heq
-    rw [leadExponent_at_perm, leadExponent_at_perm] at heq
+    simp only [leadExponent, Finsupp.add_apply, subsetExponent,
+      Finsupp.indicator_apply, initialSet, Finset.mem_filter, Finset.mem_univ,
+      Equiv.symm_apply_apply, true_and] at heq
     by_cases hi : i.val < h
     · by_cases hj : j.val < h
       · apply htie hij
@@ -476,22 +462,6 @@ theorem fin_val_le_orderEmbedding {k n : Nat} (e : Fin k ↪o Fin n) (i : Fin k)
       | zero => exact Nat.zero_le _
       | succ i hi =>
           simpa using! lt_of_le_of_lt hi (e.strictMono Fin.castSucc_lt_succ)
-
-theorem prefixWeight_eq_sum_fin {n k : Nat} (a : Fin n →₀ Nat) (hk : k ≤ n) :
-    prefixWeight a k =
-      ∑ i : Fin k, a (indexPerm a (Fin.castLE hk i)) := by
-  classical
-  have hset : (Finset.univ.filter fun i : Fin n => i.val < k) =
-      Finset.univ.image (Fin.castLE hk) := by
-    ext x
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image]
-    constructor
-    · intro hx
-      exact ⟨⟨x.val, hx⟩, rfl⟩
-    · rintro ⟨i, rfl⟩
-      exact i.isLt
-  rw [prefixWeight, hset, Finset.sum_image]
-  exact (Fin.castLE_injective hk).injOn
 
 /-- The first `k` stable positions maximize the exponent sum among all
 `k`-element coordinate sets. -/
@@ -525,49 +495,36 @@ theorem sum_le_prefixWeight {n : Nat} (a : Fin n →₀ Nat)
           ((positions.orderIsoOfFin hcard).toEquiv.sum_comp
             (fun j : positions => a (pi j.1))).symm
   have hsle : s.card ≤ n := by simpa using Finset.card_le_univ s
-  rw [hrewrite, henum, prefixWeight_eq_sum_fin a hsle]
+  have hprefix : prefixWeight a s.card =
+      ∑ i : Fin s.card, a (indexPerm a (Fin.castLE hsle i)) := by
+    have hset : (Finset.univ.filter fun i : Fin n => i.val < s.card) =
+        Finset.univ.image (Fin.castLE hsle) := by
+      ext x
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image]
+      constructor
+      · intro hx
+        exact ⟨⟨x.val, hx⟩, rfl⟩
+      · rintro ⟨i, rfl⟩
+        exact i.isLt
+    rw [prefixWeight, hset, Finset.sum_image]
+    exact (Fin.castLE_injective hsle).injOn
+  rw [hrewrite, henum, hprefix]
   apply Finset.sum_le_sum
   intro i _
   apply hanti
   exact Fin.mk_le_mk.mpr (fin_val_le_orderEmbedding e i)
 
-theorem sum_subsetExponent_eq_card_inter {n : Nat} (s t : Finset (Fin n)) :
-    (∑ x ∈ s, subsetExponent t x) = (s ∩ t).card := by
-  classical
-  simp [subsetExponent, Finsupp.indicator_apply, Finset.card_inter]
-
-theorem prefixWeight_min_left {n : Nat} (a : Fin n →₀ Nat) (k : Nat) :
-    prefixWeight a (min n k) = prefixWeight a k := by
-  classical
-  unfold prefixWeight
-  congr 1
-  ext i
-  simp only [Finset.mem_filter, Finset.mem_univ, true_and]
-  omega
-
-theorem prefixWeight_eq_sum_initialSet {n : Nat} (a : Fin n →₀ Nat) (k : Nat) :
-    prefixWeight a k = ∑ x ∈ initialSet a k, a x := by
-  classical
-  have hset : initialSet a k =
-      (Finset.univ.filter fun i : Fin n => i.val < k).image (indexPerm a) := by
-    ext x
-    simp only [initialSet, Finset.mem_image, Finset.mem_filter,
-      Finset.mem_univ, true_and]
-    constructor
-    · intro hx
-      exact ⟨(indexPerm a).symm x, hx, by simp⟩
-    · rintro ⟨i, hi, rfl⟩
-      simpa using hi
-  rw [prefixWeight, hset, Finset.sum_image]
-  exact (indexPerm a).injective.injOn
-
 theorem prefixWeight_leadExponent {n : Nat} (a : Fin n →₀ Nat) (h k : Nat) :
     prefixWeight (leadExponent a h) k =
       prefixWeight a k + min (min n k) h := by
   classical
+  have hindicator (i : Fin n) :
+      subsetExponent (initialSet a h) (indexPerm a i) =
+        if i.val < h then 1 else 0 := by
+    simp [subsetExponent, Finsupp.indicator_apply, initialSet]
   unfold prefixWeight
   rw [indexPerm_leadExponent]
-  simp_rw [leadExponent_at_perm]
+  simp_rw [leadExponent, Finsupp.add_apply, hindicator]
   rw [Finset.sum_add_distrib]
   congr 1
   rw [show min (min n k) h = min n (min k h) by omega,
@@ -584,6 +541,60 @@ theorem oneFactor_dominatedBy {n h : Nat} (a : Fin n →₀ Nat)
     (t : Finset (Fin n)) (ht : t.card = h) :
     DominatedBy (a + subsetExponent t) (leadExponent a h) := by
   classical
+  have hsumSubset (s u : Finset (Fin n)) :
+      (∑ x ∈ s, subsetExponent u x) = (s ∩ u).card := by
+    simp [subsetExponent, Finsupp.indicator_apply, Finset.card_inter]
+  have hcardInitial (u : Fin n →₀ Nat) {m : Nat} (hm : m ≤ n) :
+      (initialSet u m).card = m := by
+    let e := indexPerm u
+    have himage : initialSet u m =
+        (Finset.univ.filter fun i : Fin n => i.val < m).image e := by
+      ext x
+      simp only [initialSet, Finset.mem_image, Finset.mem_filter,
+        Finset.mem_univ, true_and, e]
+      constructor
+      · intro hx
+        exact ⟨(indexPerm u).symm x, hx, by simp⟩
+      · rintro ⟨i, hi, rfl⟩
+        simpa using hi
+    rw [himage, Finset.card_image_of_injective _ e.injective]
+    simpa [Nat.min_eq_right hm] using (Fin.card_filter_val_lt (n := n) (m := m))
+  have hcardInitialGeneral (u : Fin n →₀ Nat) (m : Nat) :
+      (initialSet u m).card = min n m := by
+    let e := indexPerm u
+    have himage : initialSet u m =
+        (Finset.univ.filter fun i : Fin n => i.val < m).image e := by
+      ext x
+      simp only [initialSet, Finset.mem_image, Finset.mem_filter,
+        Finset.mem_univ, true_and, e]
+      constructor
+      · intro hx
+        exact ⟨(indexPerm u).symm x, hx, by simp⟩
+      · rintro ⟨i, hi, rfl⟩
+        simpa using hi
+    rw [himage, Finset.card_image_of_injective _ e.injective]
+    exact Fin.card_filter_val_lt
+  have hprefixInitial (u : Fin n →₀ Nat) (m : Nat) :
+      prefixWeight u m = ∑ x ∈ initialSet u m, u x := by
+    have hset : initialSet u m =
+        (Finset.univ.filter fun i : Fin n => i.val < m).image (indexPerm u) := by
+      ext x
+      simp only [initialSet, Finset.mem_image, Finset.mem_filter,
+        Finset.mem_univ, true_and]
+      constructor
+      · intro hx
+        exact ⟨(indexPerm u).symm x, hx, by simp⟩
+      · rintro ⟨i, hi, rfl⟩
+        simpa using hi
+    rw [prefixWeight, hset, Finset.sum_image]
+    exact (indexPerm u).injective.injOn
+  have hprefixMin (u : Fin n →₀ Nat) (m : Nat) :
+      prefixWeight u (min n m) = prefixWeight u m := by
+    unfold prefixWeight
+    congr 1
+    ext i
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    omega
   constructor
   · have hh : h ≤ n := by
       rw [← ht]
@@ -593,22 +604,22 @@ theorem oneFactor_dominatedBy {n h : Nat} (a : Fin n →₀ Nat)
       (Finset.univ.sum fun x : Fin n =>
         a x + subsetExponent (initialSet a h) x)
     rw [Finset.sum_add_distrib, Finset.sum_add_distrib,
-      sum_subsetExponent_eq_card_inter, sum_subsetExponent_eq_card_inter]
-    simp [ht, card_initialSet a hh]
+      hsumSubset, hsumSubset]
+    simp [ht, hcardInitial a hh]
   · intro k
     let s := initialSet (a + subsetExponent t) k
-    have hscard : s.card = min n k := card_initialSet_general _ _
+    have hscard : s.card = min n k := hcardInitialGeneral _ _
     have ha : (∑ x ∈ s, a x) ≤ prefixWeight a s.card :=
       sum_le_prefixWeight a s
     have hinter : (s ∩ t).card ≤ min s.card t.card := by
       exact le_min
         (Finset.card_le_card Finset.inter_subset_left)
         (Finset.card_le_card Finset.inter_subset_right)
-    rw [prefixWeight_eq_sum_initialSet, prefixWeight_leadExponent]
+    rw [hprefixInitial, prefixWeight_leadExponent]
     change (s.sum fun i => a i + subsetExponent t i) ≤ _
-    rw [Finset.sum_add_distrib, sum_subsetExponent_eq_card_inter]
+    rw [Finset.sum_add_distrib, hsumSubset]
     rw [ht, hscard] at hinter
-    rw [hscard, prefixWeight_min_left] at ha
+    rw [hscard, hprefixMin] at ha
     omega
 
 /-- If a squarefree summand has the leader's sorted exponent partition but
@@ -725,8 +736,21 @@ theorem oneFactor_abrLower {n h : Nat} (a : Fin n →₀ Nat)
         prefixWeight u i.val + u (indexPerm u i) := by
     have hsucc : i.val + 1 ≤ n := i.isLt
     have hval : i.val ≤ n := le_trans (Nat.le_succ _) hsucc
-    rw [prefixWeight_eq_sum_fin u hsucc, prefixWeight_eq_sum_fin u hval,
-      Fin.sum_univ_castSucc]
+    have hsumFin (m : Nat) (hm : m ≤ n) :
+        prefixWeight u m =
+          ∑ j : Fin m, u (indexPerm u (Fin.castLE hm j)) := by
+      have hset : (Finset.univ.filter fun j : Fin n => j.val < m) =
+          Finset.univ.image (Fin.castLE hm) := by
+        ext x
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_image]
+        constructor
+        · intro hx
+          exact ⟨⟨x.val, hx⟩, rfl⟩
+        · rintro ⟨j, rfl⟩
+          exact j.isLt
+      rw [prefixWeight, hset, Finset.sum_image]
+      exact (Fin.castLE_injective hm).injOn
+    rw [hsumFin (i.val + 1) hsucc, hsumFin i.val hval, Fin.sum_univ_castSucc]
     congr
   have hdom := oneFactor_dominatedBy a t ht
   by_cases hreverse : DominatedBy (leadExponent a h) (a + subsetExponent t)
@@ -747,11 +771,5 @@ theorem oneFactor_abrLower {n h : Nat} (a : Fin n →₀ Nat)
       omega
     exact ⟨hsorted, inversionCount_indexPerm_lt_of_sorted_eq a t hsorted hne⟩
   · exact Or.inl ⟨hdom, hreverse⟩
-
-/-- The all-height ABR leader occurs in the one-factor expansion. -/
-theorem initialSet_mem_powersetCard {n h : Nat} (a : Fin n →₀ Nat) (hh : h ≤ n) :
-    initialSet a h ∈ Finset.univ.powersetCard h := by
-  rw [Finset.mem_powersetCard]
-  exact ⟨Finset.subset_univ _, card_initialSet a hh⟩
 
 end D5.S3.Combinatorics.Interpolation.AbrCoordinateBoxStraightening

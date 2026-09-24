@@ -77,6 +77,24 @@ theorem abrLower_leadExponent {n : Nat} {a b : Fin n →₀ Nat}
     (hab : AbrLower a b) (h : Nat) :
     AbrLower (leadExponent a h) (leadExponent b h) := by
   classical
+  have hsumSubset (s t : Finset (Fin n)) :
+      (∑ x ∈ s, subsetExponent t x) = (s ∩ t).card := by
+    simp [subsetExponent, Finsupp.indicator_apply, Finset.card_inter]
+  have hcardInitialGeneral (u : Fin n →₀ Nat) (m : Nat) :
+      (initialSet u m).card = min n m := by
+    let e := indexPerm u
+    have himage : initialSet u m =
+        (Finset.univ.filter fun i : Fin n => i.val < m).image e := by
+      ext x
+      simp only [initialSet, Finset.mem_image, Finset.mem_filter,
+        Finset.mem_univ, true_and, e]
+      constructor
+      · intro hx
+        exact ⟨(indexPerm u).symm x, hx, by simp⟩
+      · rintro ⟨i, hi, rfl⟩
+        simpa using hi
+    rw [himage, Finset.card_image_of_injective _ e.injective]
+    exact Fin.card_filter_val_lt
   have hlead {u v : Fin n →₀ Nat} (huv : DominatedBy u v) :
       DominatedBy (leadExponent u h) (leadExponent v h) := by
     constructor
@@ -85,8 +103,8 @@ theorem abrLower_leadExponent {n : Nat} {a b : Fin n →₀ Nat}
         Finset.univ.sum fun x : Fin n =>
           v x + subsetExponent (initialSet v h) x
       rw [Finset.sum_add_distrib, Finset.sum_add_distrib,
-        sum_subsetExponent_eq_card_inter, sum_subsetExponent_eq_card_inter]
-      simp [huv.1, card_initialSet_general]
+        hsumSubset, hsumSubset]
+      simp [huv.1, hcardInitialGeneral]
     · intro k
       rw [prefixWeight_leadExponent, prefixWeight_leadExponent]
       exact Nat.add_le_add_right (huv.2 k) _
@@ -104,8 +122,10 @@ theorem abrLower_leadExponent {n : Nat} {a b : Fin n →₀ Nat}
   · right
     constructor
     · funext i
-      rw [indexPerm_leadExponent, indexPerm_leadExponent,
-        leadExponent_at_perm, leadExponent_at_perm, congrFun hab.1 i]
+      rw [indexPerm_leadExponent, indexPerm_leadExponent]
+      simp only [leadExponent, Finsupp.add_apply, subsetExponent,
+        Finsupp.indicator_apply, initialSet, Finset.mem_filter, Finset.mem_univ,
+        Equiv.symm_apply_apply, true_and, congrFun hab.1 i]
     · rw [indexPerm_leadExponent, indexPerm_leadExponent]
       exact hab.2
 
@@ -133,6 +153,13 @@ theorem abrProduct_support_triangular {n : Nat} (a b : Fin n →₀ Nat)
     (k : Nat) (hb : b ∈ (abrProduct a k).support) :
     b = greedyExponent a k ∨ AbrLower b (greedyExponent a k) := by
   classical
+  have hsubsetSum (t : Finset (Fin n)) :
+      subsetExponent t = ∑ x ∈ t, Finsupp.single x 1 := by
+    ext x
+    simp only [subsetExponent, Finsupp.indicator_apply]
+    rw [Finsupp.finsetSum_apply]
+    simp_rw [Finsupp.single_apply]
+    by_cases hx : x ∈ t <;> simp [hx]
   induction k generalizing b with
   | zero =>
       left
@@ -145,7 +172,7 @@ theorem abrProduct_support_triangular {n : Nat} (a b : Fin n →₀ Nat)
       obtain ⟨c, hc, d, hd, hcd⟩ := Finset.mem_add.mp hmul
       rw [MvPolynomial.support_esymm] at hd
       obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp hd
-      rw [← subsetExponent_eq_sum_single] at hcd
+      rw [← hsubsetSum] at hcd
       have htcard : t.card = columnHeight a k :=
         (Finset.mem_powersetCard.mp ht).2
       have hstep :
@@ -173,12 +200,25 @@ theorem abrProduct_support_coordinate_le {n : Nat} (a b : Fin n →₀ Nat)
     (k : Nat) (hb : b ∈ (abrProduct a k).support) (i : Fin n) :
     b i ≤ descents (indexPerm a) + k := by
   classical
+  have hsubsetSum (t : Finset (Fin n)) :
+      subsetExponent t = ∑ x ∈ t, Finsupp.single x 1 := by
+    ext x
+    simp only [subsetExponent, Finsupp.indicator_apply]
+    rw [Finsupp.finsetSum_apply]
+    simp_rw [Finsupp.single_apply]
+    by_cases hx : x ∈ t <;> simp [hx]
   induction k generalizing b with
   | zero =>
       have hbase : descentExponent (indexPerm a) = b := by
         simpa [abrProduct, descentMonomial] using hb
       rw [← hbase]
-      exact descentExponent_le_descents _ _
+      change suffixHeight (indexPerm a) ((indexPerm a).symm i) ≤
+        descents (indexPerm a) + 0
+      rw [Nat.add_zero]
+      unfold suffixHeight descents
+      apply Finset.sum_le_sum
+      intro j _
+      split <;> omega
   | succ k ih =>
       have hmul := MvPolynomial.support_mul
         (abrProduct a k) (MvPolynomial.esymm (Fin n) Rat (columnHeight a k)) hb
@@ -186,7 +226,7 @@ theorem abrProduct_support_coordinate_le {n : Nat} (a b : Fin n →₀ Nat)
       rw [MvPolynomial.support_esymm] at hd
       obtain ⟨t, _ht, htexp⟩ := Finset.mem_image.mp hd
       have hdexp : d = subsetExponent t :=
-        htexp.symm.trans (subsetExponent_eq_sum_single t).symm
+        htexp.symm.trans (hsubsetSum t).symm
       have hcBound := ih c hc
       have htBound : subsetExponent t i ≤ 1 := by
         simp only [subsetExponent, Finsupp.indicator_apply]
@@ -198,6 +238,34 @@ theorem abrProduct_support_coordinate_le {n : Nat} (a b : Fin n →₀ Nat)
 theorem coeff_abrProduct_leader {n : Nat} (a : Fin n →₀ Nat) (k : Nat) :
     coeff (greedyExponent a k) (abrProduct a k) = 1 := by
   classical
+  have hsubsetSum (t : Finset (Fin n)) :
+      subsetExponent t = ∑ x ∈ t, Finsupp.single x 1 := by
+    ext x
+    simp only [subsetExponent, Finsupp.indicator_apply]
+    rw [Finsupp.finsetSum_apply]
+    simp_rw [Finsupp.single_apply]
+    by_cases hx : x ∈ t <;> simp [hx]
+  have hsubsetInjective : Function.Injective (subsetExponent (n := n)) := by
+    intro s t hst
+    ext x
+    have hx := congrArg (fun u : Fin n →₀ Nat => u x) hst
+    simp only [subsetExponent, Finsupp.indicator_apply] at hx
+    by_cases hs : x ∈ s <;> by_cases ht : x ∈ t <;> simp_all
+  have hcardInitial (u : Fin n →₀ Nat) {m : Nat} (hm : m ≤ n) :
+      (initialSet u m).card = m := by
+    let order := indexPerm u
+    have himage : initialSet u m =
+        (Finset.univ.filter fun i : Fin n => i.val < m).image order := by
+      ext x
+      simp only [initialSet, Finset.mem_image, Finset.mem_filter,
+        Finset.mem_univ, true_and, order]
+      constructor
+      · intro hx
+        exact ⟨(indexPerm u).symm x, hx, by simp⟩
+      · rintro ⟨i, hi, rfl⟩
+        simpa using hi
+    rw [himage, Finset.card_image_of_injective _ order.injective]
+    simpa [Nat.min_eq_right hm] using (Fin.card_filter_val_lt (n := n) (m := m))
   induction k with
   | zero => simp [abrProduct, greedyExponent, descentMonomial]
   | succ k ih =>
@@ -206,19 +274,24 @@ theorem coeff_abrProduct_leader {n : Nat} (a : Fin n →₀ Nat) (k : Nat) :
       let s := initialSet g h
       let e := subsetExponent s
       let pair : (Fin n →₀ Nat) × (Fin n →₀ Nat) := (g, e)
-      have hs : s ∈ Finset.univ.powersetCard h :=
-        initialSet_mem_powersetCard g (columnHeight_le a k)
+      have hcolumn : h ≤ n := by
+        simpa [h, columnHeight] using
+          Finset.card_le_card
+            (Finset.filter_subset (fun i : Fin n => k < residual a i) Finset.univ)
+      have hs : s ∈ Finset.univ.powersetCard h := by
+        rw [Finset.mem_powersetCard]
+        exact ⟨Finset.subset_univ _, by simpa [s] using hcardInitial g hcolumn⟩
       have heCoeff : coeff e (MvPolynomial.esymm (Fin n) Rat h) = 1 := by
         rw [MvPolynomial.esymm_eq_sum_monomial, coeff_sum]
         rw [Finset.sum_eq_single s]
-        · simp [e, subsetExponent_eq_sum_single]
+        · simp [e, hsubsetSum]
         · intro t ht hts
           rw [coeff_monomial]
           split_ifs with heq
           · exfalso
             apply hts
-            apply subsetExponent_injective
-            rw [subsetExponent_eq_sum_single]
+            apply hsubsetInjective
+            rw [hsubsetSum]
             simpa [e] using heq
           · rfl
         · exact fun hnot => (hnot hs).elim
@@ -255,7 +328,7 @@ theorem coeff_abrProduct_leader {n : Nat} (a : Fin n →₀ Nat) (k : Nat) :
         obtain ⟨t, ht, htexp⟩ := Finset.mem_image.mp hxrightSupport
         have htcard : t.card = h := (Finset.mem_powersetCard.mp ht).2
         have hx2 : x.2 = subsetExponent t := by
-          exact htexp.symm.trans (subsetExponent_eq_sum_single t).symm
+          exact htexp.symm.trans (hsubsetSum t).symm
         have hxsum : x.1 + subsetExponent t = greedyExponent a (k + 1) := by
           rw [← hx2]
           exact Finset.mem_antidiagonal.mp hx
@@ -316,7 +389,10 @@ theorem abrProduct_eq_descent_mul_prod {n : Nat} (a : Fin n →₀ Nat) (k : Nat
 def columnIndex {n : Nat} (a : Fin n →₀ Nat) (k : Fin (residualDepth a)) : Fin n :=
   ⟨columnHeight a k.val - 1, by
     have hpos := columnHeight_pos_of_lt_residualDepth a k.isLt
-    have hle := columnHeight_le a k.val
+    have hle : columnHeight a k.val ≤ n := by
+      simpa [columnHeight] using
+        Finset.card_le_card
+          (Finset.filter_subset (fun i : Fin n => k.val < residual a i) Finset.univ)
     omega⟩
 
 /-- The ordinary coefficient polynomial whose elementary-symmetric
@@ -329,39 +405,24 @@ def abrCoefficientPolynomial {n : Nat} (a : Fin n →₀ Nat) :
 def abrBasis {n : Nat} (a : Fin n →₀ Nat) : MvPolynomial (Fin n) Rat :=
   abrProduct a (residualDepth a)
 
-theorem totalDegree_abrCoefficientPolynomial_le {n : Nat} (a : Fin n →₀ Nat) :
-    (abrCoefficientPolynomial a).totalDegree ≤ residualDepth a := by
-  unfold abrCoefficientPolynomial
-  calc
-    (∏ k : Fin (residualDepth a), X (columnIndex a k)).totalDegree ≤
-        ∑ _k : Fin (residualDepth a), 1 := by
-      apply (totalDegree_finsetProd _ _).trans_eq
-      apply Finset.sum_congr rfl
-      intro k _
-      rw [totalDegree_X]
-    _ = residualDepth a := by simp
-
-theorem esymmSubstitution_abrCoefficientPolynomial {n : Nat} (a : Fin n →₀ Nat) :
-    esymmSubstitution (abrCoefficientPolynomial a) =
-      ∏ j ∈ Finset.range (residualDepth a),
-        MvPolynomial.esymm (Fin n) Rat (columnHeight a j) := by
-  unfold abrCoefficientPolynomial
-  rw [map_prod]
-  rw [Finset.prod_fin_eq_prod_range]
-  apply Finset.prod_congr rfl
-  intro j hj
-  rw [Finset.mem_range] at hj
-  have hpos := columnHeight_pos_of_lt_residualDepth a hj
-  simp [esymmSubstitution, columnIndex,
-    MvPolynomial.aeval_def, hj, Nat.sub_add_cancel (Nat.succ_le_iff.mpr hpos)]
-
 /-- Exact descent-monomial times coefficient-polynomial form of the complete
 ABR basis element. -/
 theorem abrBasis_eq_descent_mul_esymmSubstitution {n : Nat} (a : Fin n →₀ Nat) :
     abrBasis a = descentMonomial (indexPerm a) *
       esymmSubstitution (abrCoefficientPolynomial a) := by
-  rw [abrBasis, abrProduct_eq_descent_mul_prod,
-    esymmSubstitution_abrCoefficientPolynomial]
+  have hsubstitution : esymmSubstitution (abrCoefficientPolynomial a) =
+      ∏ j ∈ Finset.range (residualDepth a),
+        MvPolynomial.esymm (Fin n) Rat (columnHeight a j) := by
+    unfold abrCoefficientPolynomial
+    rw [map_prod]
+    rw [Finset.prod_fin_eq_prod_range]
+    apply Finset.prod_congr rfl
+    intro j hj
+    rw [Finset.mem_range] at hj
+    have hpos := columnHeight_pos_of_lt_residualDepth a hj
+    simp [esymmSubstitution, columnIndex,
+      MvPolynomial.aeval_def, hj, Nat.sub_add_cancel (Nat.succ_le_iff.mpr hpos)]
+  rw [abrBasis, abrProduct_eq_descent_mul_prod, hsubstitution]
 
 /-- Complete integer-unitriangular endpoint: the target exponent has
 coefficient one and every other supported exponent is strictly ABR-lower. -/
@@ -393,7 +454,13 @@ theorem abrBasis_support_coordinate_le {n : Nat} (hn : 0 < n)
   have hbound := abrProduct_support_coordinate_le a b (residualDepth a) hb i
   have hdesc : descents (indexPerm a) ≤ maxExponent a := by
     rw [maxExponent_eq_at_zero hn]
-    rw [← suffixHeight_zero hn]
+    have hzero : suffixHeight (indexPerm a) ⟨0, hn⟩ = descents (indexPerm a) := by
+      unfold suffixHeight descents
+      apply Finset.sum_congr rfl
+      intro j _
+      rw [if_pos]
+      exact Fin.mk_le_mk.mpr (Nat.zero_le _)
+    rw [← hzero]
     exact suffixHeight_indexPerm_le_exponent a ⟨0, hn⟩
   rw [residualDepth_eq_maxExponent_sub_descents hn] at hbound
   omega

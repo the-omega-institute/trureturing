@@ -40,64 +40,6 @@ theorem suffixHeight_antitone {n : Nat} (pi : Equiv.Perm (Fin n)) :
   · simp [hjk, hij.trans hjk]
   · simp [hjk]
 
-theorem suffixHeight_zero {n : Nat} (hn : 0 < n) (pi : Equiv.Perm (Fin n)) :
-    suffixHeight pi ⟨0, hn⟩ = descents pi := by
-  unfold suffixHeight descents
-  apply Finset.sum_congr rfl
-  intro j _
-  rw [if_pos]
-  exact Fin.mk_le_mk.mpr (Nat.zero_le _)
-
-theorem suffixHeight_le_descents {n : Nat} (pi : Equiv.Perm (Fin n)) (i : Fin n) :
-    suffixHeight pi i ≤ descents pi := by
-  unfold suffixHeight descents
-  apply Finset.sum_le_sum
-  intro j _
-  split <;> omega
-
-theorem descentExponent_le_descents {n : Nat} (pi : Equiv.Perm (Fin n)) (x : Fin n) :
-    descentExponent pi x ≤ descents pi := by
-  simp [descentExponent]
-  exact suffixHeight_le_descents pi _
-
-theorem suffixHeight_eq_descentAt_add_succ {n : Nat}
-    (pi : Equiv.Perm (Fin n)) (i : Fin n) (hi : i.val + 1 < n) :
-    suffixHeight pi i = descentAt pi i + suffixHeight pi ⟨i.val + 1, hi⟩ := by
-  classical
-  unfold suffixHeight
-  calc
-    (Finset.univ.sum fun j : Fin n => if i ≤ j then descentAt pi j else 0) =
-        Finset.univ.sum fun j : Fin n =>
-          (if j = i then descentAt pi i else 0) +
-            (if (⟨i.val + 1, hi⟩ : Fin n) ≤ j then descentAt pi j else 0) := by
-      apply Finset.sum_congr rfl
-      intro j _
-      by_cases hji : j = i
-      · subst j
-        have hnle : ¬(⟨i.val + 1, hi⟩ : Fin n) ≤ i := by
-          intro hle
-          have hval := Fin.mk_le_mk.mp hle
-          omega
-        simp [hnle]
-      · by_cases hij : i ≤ j
-        · have hsucc : (⟨i.val + 1, hi⟩ : Fin n) ≤ j := by
-            apply Fin.mk_le_mk.mpr
-            have hij' := Fin.mk_le_mk.mp hij
-            have hval : i.val ≠ j.val := fun h => hji (Fin.ext h.symm)
-            omega
-          simp [hji, hij, hsucc]
-        · have hsucc : ¬(⟨i.val + 1, hi⟩ : Fin n) ≤ j := by
-            intro h
-            exact hij (le_trans (Fin.mk_le_mk.mpr (Nat.le_succ _)) h)
-          simp [hji, hij, hsucc]
-    _ = (Finset.univ.sum fun j : Fin n => if j = i then descentAt pi i else 0) +
-        Finset.univ.sum fun j : Fin n =>
-          if (⟨i.val + 1, hi⟩ : Fin n) ≤ j then descentAt pi j else 0 := by
-      rw [Finset.sum_add_distrib]
-    _ = descentAt pi i + Finset.univ.sum fun j : Fin n =>
-          if (⟨i.val + 1, hi⟩ : Fin n) ≤ j then descentAt pi j else 0 := by
-      simp
-
 theorem descentAt_indexPerm_eq_one_implies {n : Nat} (a : Fin n →₀ Nat)
     (i : Fin n) (hi : descentAt (indexPerm a) i = 1) :
     ∃ hnext : i.val + 1 < n,
@@ -125,12 +67,49 @@ theorem descentAt_indexPerm_eq_one_implies {n : Nat} (a : Fin n →₀ Nat)
 
 theorem suffixHeight_indexPerm_le_exponent {n : Nat} (a : Fin n →₀ Nat)
     (i : Fin n) : suffixHeight (indexPerm a) i ≤ a (indexPerm a i) := by
+  classical
+  have suffixSplit (pi : Equiv.Perm (Fin n)) (j : Fin n)
+      (hj : j.val + 1 < n) :
+      suffixHeight pi j = descentAt pi j + suffixHeight pi ⟨j.val + 1, hj⟩ := by
+    unfold suffixHeight
+    calc
+      (Finset.univ.sum fun k : Fin n => if j ≤ k then descentAt pi k else 0) =
+          Finset.univ.sum fun k : Fin n =>
+            (if k = j then descentAt pi j else 0) +
+              (if (⟨j.val + 1, hj⟩ : Fin n) ≤ k then descentAt pi k else 0) := by
+        apply Finset.sum_congr rfl
+        intro k _
+        by_cases hkj : k = j
+        · subst k
+          have hnle : ¬(⟨j.val + 1, hj⟩ : Fin n) ≤ j := by
+            intro hle
+            have hval := Fin.mk_le_mk.mp hle
+            omega
+          simp [hnle]
+        · by_cases hjk : j ≤ k
+          · have hsucc : (⟨j.val + 1, hj⟩ : Fin n) ≤ k := by
+              apply Fin.mk_le_mk.mpr
+              have hjk' := Fin.mk_le_mk.mp hjk
+              have hval : j.val ≠ k.val := fun h => hkj (Fin.ext h.symm)
+              omega
+            simp [hkj, hjk, hsucc]
+          · have hsucc : ¬(⟨j.val + 1, hj⟩ : Fin n) ≤ k := by
+              intro h
+              exact hjk (le_trans (Fin.mk_le_mk.mpr (Nat.le_succ _)) h)
+            simp [hkj, hjk, hsucc]
+      _ = (Finset.univ.sum fun k : Fin n => if k = j then descentAt pi j else 0) +
+          Finset.univ.sum fun k : Fin n =>
+            if (⟨j.val + 1, hj⟩ : Fin n) ≤ k then descentAt pi k else 0 := by
+        rw [Finset.sum_add_distrib]
+      _ = descentAt pi j + Finset.univ.sum fun k : Fin n =>
+            if (⟨j.val + 1, hj⟩ : Fin n) ≤ k then descentAt pi k else 0 := by
+        simp
   have hanti : Antitone (fun j => a (indexPerm a j)) :=
     fun j k hjk =>
       Tuple.monotone_sort (fun x : Fin n => OrderDual.toDual (a x)) hjk
   by_cases hnext : i.val + 1 < n
   · have ih := suffixHeight_indexPerm_le_exponent a ⟨i.val + 1, hnext⟩
-    rw [suffixHeight_eq_descentAt_add_succ (indexPerm a) i hnext]
+    rw [suffixSplit (indexPerm a) i hnext]
     by_cases hd : descentAt (indexPerm a) i = 0
     · rw [hd, zero_add]
       exact ih.trans (hanti (Fin.mk_le_mk.mpr (Nat.le_succ _)))
@@ -173,6 +152,43 @@ decreasing_by
 index order. -/
 theorem residual_antitone {n : Nat} (a : Fin n →₀ Nat) :
     Antitone (residual a) := by
+  classical
+  have suffixSplit (pi : Equiv.Perm (Fin n)) (j : Fin n)
+      (hj : j.val + 1 < n) :
+      suffixHeight pi j = descentAt pi j + suffixHeight pi ⟨j.val + 1, hj⟩ := by
+    unfold suffixHeight
+    calc
+      (Finset.univ.sum fun k : Fin n => if j ≤ k then descentAt pi k else 0) =
+          Finset.univ.sum fun k : Fin n =>
+            (if k = j then descentAt pi j else 0) +
+              (if (⟨j.val + 1, hj⟩ : Fin n) ≤ k then descentAt pi k else 0) := by
+        apply Finset.sum_congr rfl
+        intro k _
+        by_cases hkj : k = j
+        · subst k
+          have hnle : ¬(⟨j.val + 1, hj⟩ : Fin n) ≤ j := by
+            intro hle
+            have hval := Fin.mk_le_mk.mp hle
+            omega
+          simp [hnle]
+        · by_cases hjk : j ≤ k
+          · have hsucc : (⟨j.val + 1, hj⟩ : Fin n) ≤ k := by
+              apply Fin.mk_le_mk.mpr
+              have hjk' := Fin.mk_le_mk.mp hjk
+              have hval : j.val ≠ k.val := fun h => hkj (Fin.ext h.symm)
+              omega
+            simp [hkj, hjk, hsucc]
+          · have hsucc : ¬(⟨j.val + 1, hj⟩ : Fin n) ≤ k := by
+              intro h
+              exact hjk (le_trans (Fin.mk_le_mk.mpr (Nat.le_succ _)) h)
+            simp [hkj, hjk, hsucc]
+      _ = (Finset.univ.sum fun k : Fin n => if k = j then descentAt pi j else 0) +
+          Finset.univ.sum fun k : Fin n =>
+            if (⟨j.val + 1, hj⟩ : Fin n) ≤ k then descentAt pi k else 0 := by
+        rw [Finset.sum_add_distrib]
+      _ = descentAt pi j + Finset.univ.sum fun k : Fin n =>
+            if (⟨j.val + 1, hj⟩ : Fin n) ≤ k then descentAt pi k else 0 := by
+        simp
   cases n with
   | zero =>
       intro i
@@ -189,8 +205,7 @@ theorem residual_antitone {n : Nat} (a : Fin n →₀ Nat) :
         omega
       have hright : (⟨i.castSucc.val + 1, hnext⟩ : Fin (n + 1)) = i.succ :=
         Fin.ext rfl
-      have hsuffix := suffixHeight_eq_descentAt_add_succ
-        (indexPerm a) i.castSucc hnext
+      have hsuffix := suffixSplit (indexPerm a) i.castSucc hnext
       rw [hright] at hsuffix
       have hrightBound := suffixHeight_indexPerm_le_exponent a i.succ
       have hcast : i.castSucc ≤ i.succ :=
@@ -231,11 +246,6 @@ def greedyExponent {n : Nat} (a : Fin n →₀ Nat) : Nat → Fin n →₀ Nat
   | 0 => descentExponent (indexPerm a)
   | k + 1 => leadExponent (greedyExponent a k) (columnHeight a k)
 
-theorem columnHeight_le {n : Nat} (a : Fin n →₀ Nat) (k : Nat) :
-    columnHeight a k ≤ n := by
-  simpa [columnHeight] using
-    Finset.card_le_card (Finset.filter_subset (fun i : Fin n => k < residual a i) Finset.univ)
-
 /-- An antitone residual partition has each column supported on an initial
 segment of stable positions. -/
 theorem lt_columnHeight_iff {n : Nat} (a : Fin n →₀ Nat) (k : Nat)
@@ -272,6 +282,43 @@ theorem lt_columnHeight_iff {n : Nat} (a : Fin n →₀ Nat) (k : Nat)
 theorem perm_lt_of_lt_of_suffixHeight_eq {n : Nat} (pi : Equiv.Perm (Fin n))
     (i j : Fin n) (hij : i < j)
     (heq : suffixHeight pi i = suffixHeight pi j) : pi i < pi j := by
+  classical
+  have suffixSplit (rho : Equiv.Perm (Fin n)) (k : Fin n)
+      (hk : k.val + 1 < n) :
+      suffixHeight rho k = descentAt rho k + suffixHeight rho ⟨k.val + 1, hk⟩ := by
+    unfold suffixHeight
+    calc
+      (Finset.univ.sum fun l : Fin n => if k ≤ l then descentAt rho l else 0) =
+          Finset.univ.sum fun l : Fin n =>
+            (if l = k then descentAt rho k else 0) +
+              (if (⟨k.val + 1, hk⟩ : Fin n) ≤ l then descentAt rho l else 0) := by
+        apply Finset.sum_congr rfl
+        intro l _
+        by_cases hlk : l = k
+        · subst l
+          have hnle : ¬(⟨k.val + 1, hk⟩ : Fin n) ≤ k := by
+            intro hle
+            have hval := Fin.mk_le_mk.mp hle
+            omega
+          simp [hnle]
+        · by_cases hkl : k ≤ l
+          · have hsucc : (⟨k.val + 1, hk⟩ : Fin n) ≤ l := by
+              apply Fin.mk_le_mk.mpr
+              have hkl' := Fin.mk_le_mk.mp hkl
+              have hval : k.val ≠ l.val := fun h => hlk (Fin.ext h.symm)
+              omega
+            simp [hlk, hkl, hsucc]
+          · have hsucc : ¬(⟨k.val + 1, hk⟩ : Fin n) ≤ l := by
+              intro h
+              exact hkl (le_trans (Fin.mk_le_mk.mpr (Nat.le_succ _)) h)
+            simp [hlk, hkl, hsucc]
+      _ = (Finset.univ.sum fun l : Fin n => if l = k then descentAt rho k else 0) +
+          Finset.univ.sum fun l : Fin n =>
+            if (⟨k.val + 1, hk⟩ : Fin n) ≤ l then descentAt rho l else 0 := by
+        rw [Finset.sum_add_distrib]
+      _ = descentAt rho k + Finset.univ.sum fun l : Fin n =>
+            if (⟨k.val + 1, hk⟩ : Fin n) ≤ l then descentAt rho l else 0 := by
+        simp
   have hnext : i.val + 1 < n := by
     have hj := j.isLt
     have hij' := Fin.mk_lt_mk.mp hij
@@ -281,7 +328,7 @@ theorem perm_lt_of_lt_of_suffixHeight_eq {n : Nat} (pi : Equiv.Perm (Fin n))
   have hnextj : next ≤ j := Fin.mk_le_mk.mpr (by
     have := Fin.mk_lt_mk.mp hij
     omega)
-  have hsplit := suffixHeight_eq_descentAt_add_succ pi i hnext
+  have hsplit := suffixSplit pi i hnext
   have htail := suffixHeight_antitone pi hnextj
   change suffixHeight pi j ≤ suffixHeight pi ⟨i.val + 1, hnext⟩ at htail
   have hdescent : descentAt pi i = 0 := by omega
@@ -340,11 +387,14 @@ theorem greedyExponent_at_perm {n : Nat} (a : Fin n →₀ Nat) (k : Nat)
   | succ k ih =>
       rw [greedyExponent]
       conv_lhs => rw [← indexPerm_greedyExponent a k]
-      rw [leadExponent_at_perm, indexPerm_greedyExponent, ih]
+      simp only [leadExponent, Finsupp.add_apply, subsetExponent,
+        Finsupp.indicator_apply, initialSet, Finset.mem_filter, Finset.mem_univ,
+        Equiv.symm_apply_apply, true_and]
+      rw [indexPerm_greedyExponent, ih]
       by_cases hk : k < residual a i
-      · rw [if_pos ((lt_columnHeight_iff a k i).mpr hk)]
+      · rw [dif_pos ((lt_columnHeight_iff a k i).mpr hk)]
         omega
-      · rw [if_neg ((lt_columnHeight_iff a k i).not.mpr hk)]
+      · rw [dif_neg ((lt_columnHeight_iff a k i).not.mpr hk)]
         omega
 
 theorem columnHeight_pos_of_lt_residualDepth {n : Nat} (a : Fin n →₀ Nat)
@@ -410,7 +460,13 @@ theorem residualDepth_eq_maxExponent_sub_descents {n : Nat} (hn : 0 < n)
       exact Finset.le_sup (Finset.mem_univ _)
   rw [hdepth, maxExponent_eq_at_zero hn]
   unfold AbrCoordinateBoxStraightening.residual
-  rw [suffixHeight_zero hn]
+  have hzero : suffixHeight (indexPerm a) ⟨0, hn⟩ = descents (indexPerm a) := by
+    unfold suffixHeight descents
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [if_pos]
+    exact Fin.mk_le_mk.mpr (Nat.zero_le _)
+  rw [hzero]
 
 #print axioms residual_antitone
 #print axioms greedyExponent_residualDepth

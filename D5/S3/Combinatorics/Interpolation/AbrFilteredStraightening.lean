@@ -117,12 +117,29 @@ theorem coordinateBox_descent_straightening
         have hDesc : descents (indexPerm a.1) ≤ D := by
           apply le_trans _ hMax
           rw [maxExponent_eq_at_zero hn]
-          rw [← suffixHeight_zero hn]
+          have hzero : suffixHeight (indexPerm a.1) ⟨0, hn⟩ =
+              descents (indexPerm a.1) := by
+            unfold suffixHeight descents
+            apply Finset.sum_congr rfl
+            intro j _
+            rw [if_pos]
+            exact Fin.mk_le_mk.mpr (Nat.zero_le _)
+          rw [← hzero]
           exact suffixHeight_indexPerm_le_exponent a.1 ⟨0, hn⟩
         have hCoeffDegree :
             (abrCoefficientPolynomial a.1).totalDegree ≤
               D - descents (indexPerm a.1) := by
-          apply (totalDegree_abrCoefficientPolynomial_le a.1).trans
+          apply (show (abrCoefficientPolynomial a.1).totalDegree ≤
+              residualDepth a.1 by
+            unfold abrCoefficientPolynomial
+            calc
+              (∏ k : Fin (residualDepth a.1), X (columnIndex a.1 k)).totalDegree ≤
+                  ∑ _k : Fin (residualDepth a.1), 1 := by
+                apply (totalDegree_finsetProd _ _).trans_eq
+                apply Finset.sum_congr rfl
+                intro k _
+                rw [totalDegree_X]
+              _ = residualDepth a.1 := by simp).trans
           rw [residualDepth_eq_maxExponent_sub_descents hn]
           omega
         have hBasisRep : Represents (abrBasis a.1) := by
