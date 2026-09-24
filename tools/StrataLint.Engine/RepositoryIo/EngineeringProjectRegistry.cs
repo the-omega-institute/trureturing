@@ -142,7 +142,8 @@ internal sealed class EngineeringProjectRegistry
             throw new InvalidDataException($"invalid or duplicate input registration: {registration}");
     }
 
-    private static EngineeringProjectManifest Parse(string text)
+    // Pure schema validation; repository binding belongs to Read.
+    internal static EngineeringProjectManifest Parse(string text)
     {
         try
         {

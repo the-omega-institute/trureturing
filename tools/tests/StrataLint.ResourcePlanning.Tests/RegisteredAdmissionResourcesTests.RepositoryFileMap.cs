@@ -1,0 +1,29 @@
+using Xunit;
+
+namespace StrataLint.ResourcePlanning.Tests;
+
+public sealed partial class RegisteredAdmissionResourcesTests
+{
+    [Theory]
+    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "push", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "pr", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("Golden/Projection/statement-projection-pilot-v1.json", "push", "StrataLint.RepositoryFileMap.Tests")]
+    [InlineData("Golden/Projection/statement-projection-pilot-v1.json", "pr", "StrataLint.RepositoryFileMap.Tests")]
+    [InlineData("Golden/Projection/statement-projection-expansion-v1.json", "push", "StrataLint.RepositoryFileMap.Tests")]
+    [InlineData("Golden/Projection/statement-projection-expansion-v1.json", "pr", "StrataLint.RepositoryFileMap.Tests")]
+    [InlineData("lean-report-inputs.json", "push", "JudgeSeedTask.Tests,StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.BuildRuntime.Tests,StrataLint.Cache.Native.Tests,StrataLint.Cache.Release.Tests,StrataLint.Cache.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CiArtifacts.Tests,StrataLint.CliIntegration.Tests,StrataLint.Configuration.Tests,StrataLint.CoverBatch.Tests,StrataLint.DeclaredTemplate.Tests,StrataLint.Digestion.Tests,StrataLint.Engine.Tests,StrataLint.EngineeringScope.Tests,StrataLint.ExecutionEvidence.Tests,StrataLint.FileMap.Tests,StrataLint.HeaderScript.Tests,StrataLint.InspectionIntegration.Tests,StrataLint.InspectionScope.Tests,StrataLint.InstructionContract.Tests,StrataLint.Lean.Tests,StrataLint.LeanCacheScript.Tests,StrataLint.LeanReportScript.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.PlaybookScript.Tests,StrataLint.PrScript.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ReleaseSelection.Tests,StrataLint.ReportSupervisor.Tests,StrataLint.RepositoryConfiguration.Tests,StrataLint.RepositoryContract.Tests,StrataLint.RepositoryDigestion.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.ResourceObservation.Tests,StrataLint.ResourcePlanning.Tests,StrataLint.Rules.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests,StrataLint.WorkflowScript.Tests,Trureturing.Truth.Tests")]
+    [InlineData("lean-report-inputs.json", "pr", "JudgeSeedTask.Tests,StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.BuildRuntime.Tests,StrataLint.Cache.Native.Tests,StrataLint.Cache.Release.Tests,StrataLint.Cache.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CiArtifacts.Tests,StrataLint.CliIntegration.Tests,StrataLint.Configuration.Tests,StrataLint.CoverBatch.Tests,StrataLint.DeclaredTemplate.Tests,StrataLint.Digestion.Tests,StrataLint.Engine.Tests,StrataLint.EngineeringScope.Tests,StrataLint.ExecutionEvidence.Tests,StrataLint.FileMap.Tests,StrataLint.HeaderScript.Tests,StrataLint.InspectionIntegration.Tests,StrataLint.InspectionScope.Tests,StrataLint.InstructionContract.Tests,StrataLint.Lean.Tests,StrataLint.LeanCacheScript.Tests,StrataLint.LeanReportScript.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.PlaybookScript.Tests,StrataLint.PrScript.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ReleaseSelection.Tests,StrataLint.ReportSupervisor.Tests,StrataLint.RepositoryConfiguration.Tests,StrataLint.RepositoryContract.Tests,StrataLint.RepositoryDigestion.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.ResourceObservation.Tests,StrataLint.ResourcePlanning.Tests,StrataLint.Rules.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests,StrataLint.WorkflowScript.Tests,Trureturing.Truth.Tests")]
+    [InlineData("tools/tests/StrataLint.RepositoryFileMap.Tests/FileMapPolicyTests.cs", "push", "StrataLint.ArchitectureTests,StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("tools/tests/StrataLint.RepositoryFileMap.Tests/FileMapPolicyTests.cs", "pr", "StrataLint.ArchitectureTests,StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj", "push", "StrataLint.ArchitectureTests,StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj", "pr", "StrataLint.ArchitectureTests,StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("tools/tests/StrataLint.RepositoryFileMap.Tests/packages.lock.json", "push", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests")]
+    [InlineData("tools/tests/StrataLint.RepositoryFileMap.Tests/packages.lock.json", "pr", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests")]
+    public void RepositoryFileMapInputsSelectTheirCompleteConsumers(string path, string mode, string consumers)
+    {
+        var plan = Plan(path, "", mode);
+        Assert.Equal(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj"),
+            Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(path == "lean-report-inputs.json", Strings(plan["resources"]!).Contains("engineering"));
+    }
+}
