@@ -295,7 +295,7 @@ public sealed class EngineeringProjectRegistrationTests
     {
         var declaration = Test() with { ExecutionInputs = [runtimeInput], ExecutionFileMapPaths = ["docs/virtual.md"] };
         var registry = EngineeringProjectRegistry.Read(Snapshot(EngineeringRegistrationFixture.Manifest(declaration),
-            (Project, Misleading), ("Meta/FILEMAP.toml", "schema_version = 4")));
+            (Project, Misleading), ("Meta/FILEMAP.toml", "schema_version = 5")));
         Assert.Equal(["docs/virtual.md"], Assert.Single(registry.Projects).ExecutionFileMapPaths!);
     }
 

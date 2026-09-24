@@ -209,9 +209,7 @@ public sealed class RegManifestAgreementTests
     private static IEnumerable<Diagnostic> Current(Dictionary<string, string> files)
     {
         var root = TestRepositoryLayout.FindRoot();
-        var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml")))).Policy;
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.LoadRepository(root)).Policy;
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create(files.Select(item => RawRepositoryEntry.FromText(item.Key, item.Value))))).Snapshot;
         return RuleCatalog.Default.EvaluateCurrentSingle(RuleId.CreateKnown(15),

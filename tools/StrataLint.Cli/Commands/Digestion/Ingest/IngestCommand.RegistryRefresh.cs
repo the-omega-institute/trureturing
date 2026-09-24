@@ -81,9 +81,9 @@ internal static partial class IngestCommand
                 source_path = selected.SourcePath,
                 atomizer = selected.Atomizer,
                 baseline_revision = arguments[1],
-                input_sha256 = RegistrySnapshotHash(inputs.Current, policy.RegistrySha256),
-                baseline_sha256 = RegistrySnapshotHash(inputs.Baseline, policy.RegistrySha256),
-                candidate_sha256 = RegistrySnapshotHash(candidate, policy.RegistrySha256),
+                input_sha256 = SourceRegistrySnapshotHash(inputs.Current, policy.FileMapSha256),
+                baseline_sha256 = SourceRegistrySnapshotHash(inputs.Baseline, policy.FileMapSha256),
+                candidate_sha256 = SourceRegistrySnapshotHash(candidate, policy.FileMapSha256),
                 lean_report_sha256 = RegistryHash(RawLeanReportArtifact.Write(candidate, report).AsSpan()),
                 writes,
             };
@@ -128,8 +128,8 @@ internal static partial class IngestCommand
 
     private static string RegistryHash(ReadOnlySpan<byte> bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
 
-    private static string RegistrySnapshotHash(RepositorySnapshot snapshot, string registrySha256) =>
-        RegistryHash(CanonicalSnapshotWriter.Write(registrySha256, snapshot.Files
+    private static string SourceRegistrySnapshotHash(RepositorySnapshot snapshot, string fileMapSha256) =>
+        RegistryHash(CanonicalSnapshotWriter.Write(fileMapSha256, snapshot.Files
             .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal)
             .Select(static pair => SnapshotEntry.FromFile(pair.Key, pair.Value)).ToImmutableArray()).AsSpan());
 }

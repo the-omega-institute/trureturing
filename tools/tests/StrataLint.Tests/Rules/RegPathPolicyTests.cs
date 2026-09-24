@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using StrataLint.Cli;
+using System.Text;
 
 namespace StrataLint.Tests;
 
@@ -32,6 +33,20 @@ public sealed class RegPathPolicyTests
     public void UnregisteredOrInvalidSuffixIsRejected(string value) =>
         Assert.NotNull(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(value), Policy()));
 
+    [Theory]
+    [InlineData("Reg/D5/S0/Carrier/Target.lean", true)]
+    [InlineData("Reg/D5/S9/Carrier/Target.lean", false)]
+    [InlineData("Reg/D5/S3/Carrier/Target.lean", false)]
+    [InlineData("Reg/D5/S0/Unknown/Target.lean", false)]
+    public void ExactFileMapMembershipStillChecksDeclarationOwner(string value, bool admitted)
+    {
+        var fileMap = TestFileMap.Canonical.Replace("Reg/D5/**/*.lean", value, StringComparison.Ordinal);
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(fileMap), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+
+        Assert.Equal(admitted, RepositoryPathPolicy.Validate(RepoPath.CreateKnown(value), policy) is null);
+    }
+
     [Fact]
     public void TraversalIsRejectedBeforePathAdmission() =>
         Assert.False(RepoPath.TryCreate("Reg/D5/../x.lean", out _));
@@ -39,8 +54,6 @@ public sealed class RegPathPolicyTests
     private static ValidatedPolicy Policy()
     {
         var root = TestRepositoryLayout.FindRoot();
-        return RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml")))).Policy;
+        return PolicyLoadAssert.Accepted(RepositoryPolicyLoader.LoadRepository(root)).Policy;
     }
 }

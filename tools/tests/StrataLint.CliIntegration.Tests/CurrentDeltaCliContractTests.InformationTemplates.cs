@@ -105,6 +105,17 @@ public sealed partial class CurrentDeltaCliContractTests
         // Changing unfrozen D5 still requires utility, independently of DTR Observe.
         var blockers = findings.Where(f => f.GetProperty("AdmissionEffect").GetInt32() != (int)AdmissionEffect.Observe).ToArray();
         if (expectedExit == 0) Assert.Empty(blockers);
+        else if (scenario == "template-unchanged")
+        {
+            var annotation = Assert.Single(blockers);
+            Assert.Equal(3, expectedExit);
+            Assert.Equal("SL-022", annotation.GetProperty("RuleId").GetProperty("Value").GetString());
+            Assert.Equal((int)AdmissionEffect.HumanGate, annotation.GetProperty("AdmissionEffect").GetInt32());
+            Assert.Equal(AdmissionPlanePolicy.FileMapPath, annotation.GetProperty("Path").GetString());
+            Assert.Equal("protected-surface change detected (SL-022)", annotation.GetProperty("Message").GetString());
+            Assert.DoesNotContain(findings,
+                finding => finding.GetProperty("AdmissionEffect").GetInt32() == (int)AdmissionEffect.Block);
+        }
         else
         {
             var blocker = Assert.Single(blockers);

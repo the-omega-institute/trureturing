@@ -16,7 +16,7 @@ public sealed partial class FileMapPolicyTests
         using var repository = new TemporaryDirectory();
         var root = RepositoryLayout.FindRoot();
         foreach (var path in new[] { "Meta/FILEMAP.toml", "Meta/FILEMAP.docs.reports.toml",
-                     "Meta/registry.yaml", "Meta/domains.yaml", ".gitignore",
+                     "Meta/domains.yaml", ".gitignore",
                      RegManifestAgreement.LakefilePath, RegManifestAgreement.ManifestPath }
                      .Concat(FileMapLoader.LoadRepository(root).Resources.SelectMany(resource =>
                          resource.Materials.Prepend(resource.Owner))).Distinct(StringComparer.Ordinal))
@@ -88,7 +88,7 @@ public sealed partial class FileMapPolicyTests
     {
         var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
         var incomplete = new FileMapManifest(manifest.ResidencePolicy,
-            manifest.Entries.Where(entry => !entry.Matches(unregistered)).ToImmutableArray(), manifest.Resources);
+            manifest.Entries.Where(entry => !entry.Matches(unregistered)).ToImmutableArray(), manifest.ArtifactKinds, manifest.Resources);
         var findings = FileMapPolicy.InspectPatternPopulation(incomplete,
             [RegManifestAgreement.LakefilePath, RegManifestAgreement.ManifestPath]);
         Assert.Equal(3, findings.Count(finding => finding.Path.StartsWith("Reg/", StringComparison.Ordinal)));

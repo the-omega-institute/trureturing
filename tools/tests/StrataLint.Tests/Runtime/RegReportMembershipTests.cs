@@ -60,9 +60,7 @@ public sealed class RegReportMembershipTests
     private static CurrentRuleContext Current(RepositorySnapshot snapshot, LeanAxiomReport report)
     {
         var root = TestRepositoryLayout.FindRoot();
-        var policy = RegistryLoadAssert.Accepted(RegistryLoader.Load(
-            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
-            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml")))).Policy;
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.LoadRepository(root)).Policy;
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(LeanClosureValidator.Validate(snapshot, report)).Capability;
         return CurrentRuleContext.Create(snapshot, policy, lean);
     }

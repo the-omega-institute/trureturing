@@ -445,7 +445,6 @@
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "agents/**",
         "docs/develop/spec/**",
         "*.props",
@@ -509,7 +508,6 @@
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "*.props",
         "*.json",
         "*.toml",
@@ -753,7 +751,6 @@
         "Meta/FILEMAP.toml",
         "Meta/FILEMAP.*.toml",
         "Meta/domains.yaml",
-        "Meta/registry.yaml",
         "tools/scripts/katex/**",
         "tools/scripts/renderer/**"
       ],
@@ -897,7 +894,6 @@
         "Meta/engineering-projects.json",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "D5/**",
         "Reg/**",
         "Blueprint/**",
@@ -1509,7 +1505,6 @@
         "Meta/domains.yaml",
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
-        "Meta/registry.yaml",
         "docs/develop/spec/golden-ledger-repo-spec.md",
         "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
         "docs/develop/spec/trureturing_engineering_optimization_v1.md",
@@ -1603,7 +1598,6 @@
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
         "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
-        "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
@@ -2415,7 +2409,7 @@
         "tools/scripts/workflow/ci.py",
         "tools/scripts/workflow/ci_plan.py",
         "tools/scripts/workflow/scribe-content-checks.sh",
-        "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
+        "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json"
       ],
       "execution_excludes": [],
       "execution_environment": [
@@ -2435,7 +2429,6 @@
         "Meta/Digestion/backfill/fixture-source/source.toml",
         "Meta/Values/bindings.toml",
         "Meta/domains.yaml",
-        "Meta/registry.yaml",
         "README.md",
         "Reg/D5/S0/Carrier/Ring.lean",
         "Reg/D5/S0/Carrier/ValuesBinding.lean",

@@ -9,25 +9,8 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     private const string FileMapPath = "Meta/FILEMAP.toml";
-    private const string DefaultAdmissionPlaneFileMap = """
-        schema_version = 2
-
-        [residence_policy]
-        case_id = "RESIDENCE-EPOCH"
-        desired = "data-must-live-outside-tools"
-        known_violation_count = 0
-        status = "closed"
-
-        [[files]]
-        pattern = "**"
-        kind = "program"
-        admission_plane = "content"
-        produced_by = "none"
-        consumed_by = ["StrataLint"]
-        verified_by = ["StrataLint"]
-        artifact_id = "none"
-        runtime_disposition = "committed-source"
-        """ + "\n";
+    private const string OrdinaryJudgePath = "LICENSE";
+    private static readonly string DefaultAdmissionPlaneFileMap = CreateDefaultAdmissionPlaneFileMap();
 
     [Theory]
     [InlineData("ordinary", 0)]
@@ -39,10 +22,12 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = TrustedFrozenFixture();
         if (scenario == "blocked") fixture.Apply("upward-import");
+        fixture.Files[OrdinaryJudgePath] = "fixture license\n";
+        fixture.Baseline[OrdinaryJudgePath] = fixture.Files[OrdinaryJudgePath];
         InstallAdmissionPlaneFileMap(fixture);
         var changes = RawChangeSet.Create(scenario == "single-plane"
             ? [RuleFixture.BlueprintPath]
-            : [scenario == "protected" ? RuleFixture.SyntheticProtectedPath : FileMapPath,
+            : [scenario == "protected" ? RuleFixture.SyntheticProtectedPath : OrdinaryJudgePath,
                 RuleFixture.BlueprintPath, RuleFixture.RingPath]);
         var environment = new ProductionCliEnvironment("/repo",
             new FakeRepositoryGateway(changes, Snapshot(fixture.Files), Snapshot(fixture.Baseline)),
@@ -88,6 +73,42 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(DisplaySeverity.Warning, diagnostic.DisplaySeverity);
         Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
         Assert.StartsWith("ADMISSION-PLANE-MIXED:", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("judge")]
+    [InlineData("content")]
+    public void CandidateCheckClassifiesDeletedFileAfterRegistrationRemoval(string deletedPlane)
+    {
+        const string deletedPath = "retired/component.txt";
+        var fixture = TrustedFrozenFixture();
+        fixture.Baseline[deletedPath] = "retired component\n";
+        fixture.Baseline[FileMapPath] = Manifest(fixture.Baseline.Keys.Append(FileMapPath)
+            .Distinct(StringComparer.Ordinal)
+            .Select(path => (path, Plane: (string?)(path == FileMapPath ? "judge"
+                : path == deletedPath ? deletedPlane : "content"))).ToArray());
+        fixture.Files[FileMapPath] = CurrentManifest(fixture.Files.Keys.Append(FileMapPath)
+            .Distinct(StringComparer.Ordinal)
+            .Select(static path => (path, Plane: (string?)(path == FileMapPath ? "judge" : "content")))
+            .ToArray());
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.CreateWithKinds(
+                [
+                    (FileMapPath, RawChangeKind.Modified),
+                    (deletedPath, RawChangeKind.Deleted),
+                ]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var outcome = CheckWithReports(environment, fixture);
+
+        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        AssertCompleteRuleDisposition(protectedChange.ContentCertificate);
+        if (deletedPlane == "content") AssertAdmissionPlaneWarning(protectedChange.Observations);
+        else Assert.DoesNotContain(protectedChange.Observations, item => item.RuleId == RuleId.CreateKnown(29));
     }
 
     [Fact]
@@ -163,13 +184,13 @@ public sealed partial class ProductionEnvironmentTests
         const string replacement = "Meta/replacement.toml";
         var fixture = TrustedFrozenFixture();
         fixture.Baseline[retired] = "retired configuration\n";
-        fixture.Baseline[FileMapPath] = Manifest(fixture.Baseline.Keys.Append(FileMapPath)
+        fixture.Baseline[FileMapPath] = CurrentManifest(fixture.Baseline.Keys.Append(FileMapPath)
             .Distinct(StringComparer.Ordinal)
             .Select(path => (path, (string?)(path == retired ? oldPlane : path == FileMapPath ? "judge" : "content")))
             .ToArray());
         if (rename)
             fixture.Files[replacement] = fixture.Baseline[retired];
-        fixture.Files[FileMapPath] = Manifest(fixture.Files.Keys.Append(FileMapPath)
+        fixture.Files[FileMapPath] = CurrentManifest(fixture.Files.Keys.Append(FileMapPath)
             .Distinct(StringComparer.Ordinal)
             .Select(path => (path, (string?)(path is FileMapPath or replacement ? "judge" : "content")))
             .ToArray());
@@ -185,22 +206,9 @@ public sealed partial class ProductionEnvironmentTests
 
         var outcome = CheckWithReports(environment, fixture);
 
-        ImmutableArray<Diagnostic> diagnostics;
-        if (rename)
-        {
-            // The replacement remains an unknown Meta artifact: canonicalization
-            // must still reject it after successful admission-plane classification.
-            diagnostics = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome).Diagnostics;
-            Assert.Contains(diagnostics, item => item.RuleId.Value == "SL-000"
-                && item.Path == replacement && item.AdmissionEffect == AdmissionEffect.Block
-                && item.Message == "unknown Meta artifact");
-        }
-        else
-        {
-            var admitted = Assert.IsType<AdmissionOutcome.Admitted>(outcome);
-            AssertCompleteRuleDisposition(admitted.Certificate);
-            diagnostics = admitted.Observations;
-        }
+        var protectedChange = Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        AssertCompleteRuleDisposition(protectedChange.ContentCertificate);
+        var diagnostics = protectedChange.Observations;
         if (oldPlane == "content") AssertAdmissionPlaneWarning(diagnostics);
         else Assert.DoesNotContain(diagnostics, item => item.RuleId == RuleId.CreateKnown(29));
     }
@@ -485,27 +493,42 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void ClassifiableLegacyFileMapIgnoresNonCoreFormattingAndFields()
+    public void AdmissionPlaneRejectsLegacyRootSchemaForFlatAndIncludedFileMaps()
     {
-        var legacy = "schema_version = 1\r\n"
-            + "legacy_metadata = true\r\n"
-            + "[[files]]\r\n"
-            + "pattern = \"docs/**\"\r\n"
-            + "admission_plane = \"content\"";
+        const string files = "files = [{ pattern = \"docs/**\", admission_plane = \"content\" }]\n";
+        foreach (var manifest in new[]
+        {
+            "schema_version = 1\n" + files,
+            "schema_version = 1\ninclude = [\"FILEMAP.inputs.toml\"]\n" + files,
+        })
+        {
+            var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
-        var outcome = EvaluateAdmissionPlane(legacy, "docs/change.md");
-
-        Assert.Null(outcome);
+            var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+            Assert.Contains("root schema_version must be 2, 3, 4 or 5", failure.Message, StringComparison.Ordinal);
+        }
     }
 
     [Fact]
-    public void InlineTableFileArrayIsClassified()
+    public void AdmissionPlaneRequiresRootSchemaBeforeClassifyingInlineFileArrays()
     {
-        var outcome = EvaluateAdmissionPlane(
-            "files = [{ pattern = \"docs/**\", admission_plane = \"content\" }]\n",
-            "docs/change.md");
+        const string files = "files = [{ pattern = \"docs/**\", admission_plane = \"content\" }]\n";
+        foreach (var manifest in new[]
+        {
+            files,
+            "include = [\"FILEMAP.inputs.toml\"]\n" + files,
+        })
+        {
+            var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
-        Assert.Null(outcome);
+            var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+            Assert.Contains("root schema_version must be 2, 3, 4 or 5", failure.Message, StringComparison.Ordinal);
+        }
+
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 2\n" + files, "docs/change.md"));
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 3\n" + files, "docs/change.md"));
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 4\n" + files, "docs/change.md"));
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 5\n" + files, "docs/change.md"));
     }
 
 
@@ -525,9 +548,10 @@ public sealed partial class ProductionEnvironmentTests
     private static void InstallAdmissionPlaneFileMap(RuleFixture fixture)
     {
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
-            files[FileMapPath] = Manifest(files.Keys.Append(FileMapPath).Append(RuleFixture.SyntheticProtectedPath)
+            files[FileMapPath] = CurrentManifest(files.Keys.Append(FileMapPath).Append(RuleFixture.SyntheticProtectedPath)
                 .Distinct(StringComparer.Ordinal).Select(path => (path,
-                    (string?)(path == FileMapPath || path.StartsWith("tools/", StringComparison.Ordinal) ? "judge" : "content")))
+                    (string?)(path is FileMapPath or OrdinaryJudgePath
+                        || path.StartsWith("tools/", StringComparison.Ordinal) ? "judge" : "content")))
                 .ToArray());
     }
 
@@ -559,7 +583,7 @@ public sealed partial class ProductionEnvironmentTests
         }
 
         fixture.Files[newPath] = "internal sealed class Program { }\n";
-        fixture.Files[FileMapPath] = Manifest(baselinePaths
+        fixture.Files[FileMapPath] = CurrentManifest(baselinePaths
             .Concat(includeNewPath ? [newPath] : [])
             .Select(path => (
                 path,
@@ -571,6 +595,47 @@ public sealed partial class ProductionEnvironmentTests
     {
         fixture.Files[FileMapPath] = DefaultAdmissionPlaneFileMap;
         fixture.Baseline[FileMapPath] = DefaultAdmissionPlaneFileMap;
+    }
+
+    private static string CreateDefaultAdmissionPlaneFileMap()
+    {
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+        var entries = policy.Manifest.Entries.Select(entry => new FileMapEntry(
+            entry.Pattern,
+            entry.Kind,
+            entry.Pattern == FileMapPath ? FileMapAdmissionPlane.Judge : FileMapAdmissionPlane.Content,
+            entry.ProducedBy,
+            entry.ConsumedBy,
+            entry.VerifiedBy,
+            entry.ResidenceViolation,
+            entry.ArtifactId,
+            entry.Mode,
+            entry.RuntimeDisposition,
+            entry.HistoryRequirement,
+            entry.Require,
+            entry.Symlink,
+            entry.DigestionSource)).ToImmutableArray();
+        return Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(new FileMapManifest(
+            policy.Manifest.ResidencePolicy,
+            entries,
+            policy.ArtifactKinds,
+            policy.Manifest.Resources)).AsSpan());
+    }
+
+    private static string CurrentManifest(params (string Pattern, string? Plane)[] entries)
+    {
+        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(
+            Encoding.UTF8.GetBytes(TestFileMap.Canonical), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
+        var manifest = new FileMapManifest(policy.Manifest.ResidencePolicy,
+            entries.OrderBy(item => item.Pattern, StringComparer.Ordinal).Select(item => new FileMapEntry(
+                item.Pattern, FileMapKind.Program,
+                item.Plane == "judge" ? FileMapAdmissionPlane.Judge : FileMapAdmissionPlane.Content,
+                "none", ["StrataLint"], ["StrataLint"], false, "none", null, "committed-source", null, [], null,
+                policy.IsDigestionSource(RepoPath.CreateKnown(item.Pattern)))).ToImmutableArray(),
+            policy.ArtifactKinds,
+            policy.Manifest.Resources);
+        return Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(manifest).AsSpan());
     }
 
     private static string Manifest(params (string Pattern, string? Plane)[] entries)

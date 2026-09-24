@@ -37,7 +37,7 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("policy:unrelated/**", false)]
     [InlineData("source-policy:README.md", true)]
     [InlineData("source-policy:docs/develop/theory/**", true)]
-    [InlineData("source-policy:agents/**", false)]
+    [InlineData("source-policy:agents/CONTEXT.md", false)]
     [InlineData("source-policy:Meta/Digestion/atoms/sha256/*", true)]
     [InlineData("declaration", true)]
     public void RegisteredScribeFileMapInputsInvalidateEvidenceWhileUnrelatedDocumentationReusesIt(string path, bool invalidates)
@@ -55,8 +55,9 @@ public sealed partial class CurrentExecutionContractTests
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             fixture.Write(input, "registered fixture material\n");
         var filemap = """
-            schema_version = 4
+            schema_version = 5
             resources = [{ id = "lean-report", cache_layers = [], cache_activation = {} }]
+            evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             [[files]]
             pattern = "README.md"
             kind = "reference"
@@ -79,7 +80,7 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Write("Meta/FILEMAP.toml", filemap);
         // Keep the fragment independent of root includes to exercise its explicit glob.
         fixture.Write("Meta/FILEMAP.fixture.toml", """
-            schema_version = 4
+            schema_version = 5
             [[files]]
             pattern = "docs/reports/**"
             kind = "reference"
@@ -167,7 +168,9 @@ public sealed partial class CurrentExecutionContractTests
     public void FileMapQueryDeclarationsBindRuntimeReadersWithoutChangingCompileInputs(bool readsRegistration)
     {
         using var fixture = new ExecutionFixture();
-        fixture.Write("Meta/FILEMAP.toml", "[[files]]\npattern = \"README.md\"\nrequire = []\n");
+        fixture.Write("Meta/FILEMAP.toml",
+            "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n"
+            + "[[files]]\npattern = \"README.md\"\nrequire = []\nkind = \"reference\"\n");
         EditRegistration(fixture, rows =>
         {
             rows[0]!["execution_inputs"] = new JsonArray("Meta/FILEMAP.toml");
@@ -226,7 +229,7 @@ public sealed partial class CurrentExecutionContractTests
             new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
-                ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
+                ? "schema_version = 5\nresources = []\nevidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n[[files]]\npattern = \"tools/tests/First/**\"\nrequire = []\nkind = \"program\"\n"
                 : "registered fixture material\n");
         fixture.Write(path, "original registered input\n");
         fixture.Track();
