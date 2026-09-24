@@ -229,6 +229,14 @@ The remaining shallow occupied-label contribution still has to be
 controlled under the same nu_hat or another single law satisfying the
 required joint budgets; neither construction settles that step.
 
+[Report534](534-one-entropy-budget-controls-every-pure-prime-chain.md)
+adds a simultaneous pure-chain moment bound to this same entropy-density
+class after passing to an irredundant core with the identical U. It
+controls unused labels, every pure prime power in that core and mixed
+core labels above10^9 below9.044554. The sufficient remaining budget
+51863873/25500000 is entirely on shallow mixed occupied core labels;
+that common-law estimate remains unproved.
+
 For the strict arithmetic in(GD4), x0=53863/8000=6.732875 satisfies
 alpha7*S50(x0)>1 and hence log(Lambda7)<x0. Substitution gives
 
