@@ -66,6 +66,68 @@ def replace_last_prime(corner):
             "density_upper": pair(F(55, 7) / mass)}
 
 
+def remove_auxiliary(mean, low, prime, cap):
+    """Deconvolve only product indices 1, 2, 3 from a stored PA factor."""
+    atom1 = 1 - cap / prime
+    require(atom1 > 0 and set(low) in ({1, 2}, {1, 2, 3}),
+            "unsupported auxiliary deconvolution")
+    result = {1: low[1] / atom1}
+    for value in (2, 3):
+        if value in low:
+            atom = cap * F(prime - 1, prime ** value)
+            result[value] = (low[value] - result[1] * atom) / atom1
+    require(min(result.values()) >= 0, "negative deconvolved product mass")
+    return mean / (1 + cap / (prime - 1)), result
+
+
+def missing_original_prime(corner, missing):
+    """Skip one absent original coordinate, retaining all ambient queries."""
+    require(missing in (11, 13, 17, 19), "unsupported missing original prime")
+    stages = corner["stages"]
+    missing_stage = next(stage for stage in stages if stage["prime"] == missing)
+    cap = fraction(missing_stage["cap"])
+    total_mass = fraction(corner["multiplier_total_mass"])
+    final_mean = fraction(corner["multiplier_full_mean"])
+    final_low = {row["value"]: fraction(row["probability"])
+                 for row in corner["multiplier_masses_below_threshold"]}
+    mass = fraction(corner["anchor_mass_lower"])
+    retained_stages = []
+    for index, stage in enumerate(stages):
+        prime, threshold = stage["prime"], stage["threshold"]
+        if prime == missing:
+            continue
+        hinge = fraction(stage["hinge"])
+        if missing < prime:
+            mean, low = final_mean, final_low.copy()
+            for factor in stages[index:]:
+                mean, low = remove_auxiliary(
+                    mean, low, factor["prime"], fraction(factor["cap"]))
+            if threshold == 4:
+                low[3] = hinge - mean + 4 * total_mass - 3 * low[1] - 2 * low[2]
+                require(low[3] >= 0, "negative recovered prefix mass at three")
+            mean, low = remove_auxiliary(mean, low, missing, cap)
+            hinge = mean - threshold * total_mass + sum(
+                (threshold - value) * probability
+                for value, probability in low.items() if value < threshold)
+        require(hinge >= 0, "negative missing-coordinate hinge")
+        loss = F(2, prime - 1 - 2 * threshold) * hinge
+        mass -= loss
+        retained_stages.append({"prime": prime, "threshold": threshold,
+                                "hinge": pair(hinge), "loss": pair(loss),
+                                "mass_lower": pair(mass)})
+    mean, low = remove_auxiliary(final_mean, final_low, missing, cap)
+    hinge = mean - 3 * total_mass + 2 * low[1] + low[2]
+    require(mass > 0 and hinge >= 0, "invalid missing-coordinate final budget")
+    query = 2 + hinge / mass
+    ambient = F(missing, missing - 1) * (1 + query) - 1
+    return {"pure_removed_masses": corner["pure_removed_masses"],
+            "stages": retained_stages, "mass_lower": pair(mass),
+            "query_hinge": pair(hinge), "five_query_upper": pair(query),
+            "raw_density_cap": pair(9 / cap),
+            "density_upper": pair(9 / cap / mass),
+            "ambient_query_upper": pair(ambient)}
+
+
 def boundary(data):
     require(data.get("reference_primes") == [5, 7, 11, 13, 17, 19],
             "unexpected reference primes")
@@ -115,6 +177,18 @@ def boundary(data):
     replaced_query = max(fraction(corner["query_upper"]) for corner in replaced)
     replaced_density = max(fraction(corner["density_upper"]) for corner in replaced)
     require(replaced_query < target, "prime-23 reference does not exclude the lower target")
+    missing_benchmarks = []
+    for missing in (11, 13, 17, 19):
+        rows = [missing_original_prime(corner, missing) for corner in corners]
+        ambient = max(fraction(row["ambient_query_upper"]) for row in rows)
+        require(ambient < target, "missing original prime does not exclude the lower target")
+        missing_benchmarks.append({
+            "missing_original_prime": missing, "corners": rows,
+            "five_query_upper": pair(max(fraction(row["five_query_upper"]) for row in rows)),
+            "ambient_query_upper": pair(ambient),
+            "density_upper": pair(max(fraction(row["density_upper"]) for row in rows)),
+            "gap_below_target": pair(target - ambient),
+        })
     return {
         "target": pair(target),
         "deficit_coordinates": ["1/2 - actual pure-5 union mass",
@@ -131,6 +205,7 @@ def boundary(data):
         "excluded_joint_pure_height_upper": [3, 2],
         "joint_height_minimum_deficits": [pair(deficit5), pair(deficit7)],
         "joint_height_positive_gap": pair(height_gap),
+        "missing_original_prime_benchmarks": missing_benchmarks,
         "prime_23_reference": {
             "primes": [5, 7, 11, 13, 17, 23],
             "last_cap": pair(F(11, 7)),

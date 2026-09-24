@@ -990,9 +990,67 @@ pure-7 exponent at least3. This does not force the particular adjacent
 numerical labels625 or343: a higher exponent can satisfy this height
 requirement while either adjacent label remains absent.
 
+### Every remaining prime must occur in an actual original
+
+The distinction after(NC3) can be resolved for(NC1). Suppose some
+p in{11,13,17,19} divides no original modulus, while the declared Q
+remains{5,7,11,13,17,19}. Then the actual full survivor factors as
+V=V0 times Z_p. On Q0=Q minus{p}, run the actual CP/PA construction
+with that row omitted, keeping the thresholds and caps attached to
+each retained numerical prime. The anchor is still the complete
+actual5/7 survivor. All fixed phases and old-history conditional
+kernels remain those of this one actual family.
+
+Let F_t^old,p and F_t^final,p be the comparison hinges with auxiliary
+N_p omitted. Write W=w5*w7 and define
+
+    alpha_p=W-1/12
+      -sum_(q in{11,13,17,19} minus{p})
+          [2/(q-1-2t_q)] F_(t_q)^old,p,
+    Phi_p=F_3^final,p,
+    B_p=max_(four corners)(2+Phi_p/alpha_p).
+
+Each corner alpha_p is positive, and alpha_p and Phi_p are separately
+affine in u,v. The same paired-ratio interpolation therefore yields
+one supported law nu0 with R_Q0(nu0)<=B_p, retaining the full upper
+tails of all query depths. Before the single normalization, the actual
+subprobability has density at most9/C_p.
+
+Tensor this law with Haar on the genuinely free coordinate p.
+For every numerical label d=d0*p^e, its maximum cylinder mass is
+p^(-e) times the maximum nu0 mass at d0. Summing these nonnegative
+terms, including the unit label, proves
+
+    1+R_Q(nu0 tensor H_p)=p/(p-1)*(1+R_Q0(nu0)).      (NC9)
+
+Thus the absent coordinate's full query contribution is paid, with
+the following exact all-depth bounds under this one law:
+
+| Absent original prime p | Ambient upper A_p=p/(p-1)*(1+B_p)-1 |
+| --- | --- |
+| 11 | 1149041533527211729/323118077234730780 <3.557 |
+| 13 | 7868920623067191/2107622446128616 <3.734 |
+| 17 | 60876513409633145/15274538565725856 <3.986 |
+| 19 | 14601841547756567/3528135691190004 <4.139 |
+
+Every A_p<T, contradicting(NC1). These bounds apply even if other
+primes are also unused. Together with(NC7), they imply that(NC1)
+requires every prime in{5,7,11,13,17,19} to divide at least one actual
+original modulus. The family's minimal prime support therefore equals
+the declared query carrier, not merely a subset of it.           (NC10)
+
+The new corner hinges are recovered from the retained PA moments.
+For an auxiliary factor, put a_j=C*(p-1)/p^j for j=2,3 and
+a_1=1-C/p. Removing that factor gives
+mean'=mean/(1+C/(p-1)), P1'=P1/a_1 and
+Pj'=(Pj-P1'*a_j)/a_1 for j=2,3. This last formula is used only for
+the prime product indices2,3. The needed old-prefix P3 is recovered
+from F4-mean+4W-3P1-2P2. These operations omit the absent row and
+recompute the remaining charges without enumerating original families.
+
 The [deficit consumer](../../frontier/cover-geometry/two_copy_pure_deficit.py)
 and [exact results](../../frontier/cover-geometry/two_copy_pure_deficit.json)
-calculate(NC2),(NC4)–(NC8) from the retained PA ledger. The input is
+calculate(NC2),(NC4)–(NC10) from the retained PA ledger. The input is
 bound to that ledger's SHA-256; an alternate input must have the same
 bytes. The actual-label implications and carrier transport are the
 ordinary arguments above, with no additional Lean verification.
