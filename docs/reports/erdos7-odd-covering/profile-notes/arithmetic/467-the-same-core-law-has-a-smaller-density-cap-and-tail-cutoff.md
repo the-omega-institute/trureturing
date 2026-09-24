@@ -17,6 +17,10 @@ The same law also gives the [six-prime two-copy estimate](../321-384/348-fresh-p
 
 Report348's separate [direct capped law with the actual pure-anchor masses retained](../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#retaining-the-actual-pure-anchor-masses) improves that two-copy interface to a query upper bound5.149795473527814... and density below88. Both improved bounds belong to the direct law; they are not additional estimates on the seven-prime law constructed here.
 
+On P={3,5,7,11,13,17,19}, the uniform survivor-mass consequence
+H(U)>=1/Lambda7 also gives a
+[different supported law by legal phase resampling](530-one-supported-law-controls-unused-and-deep-occupied-labels.md): all unused numerical labels and all occupied labels above10^9 have combined query sum below6.737023. Controlling the remaining shallow labels under that same law remains open; this new law does not inherit the density cap proved here.
+
 ## The ordinary prefix mass bounds the charged process itself
 
 Fix one completed source family on the reference primes 3,5,7,11,13,17,19 and one legal charged enlargement at 7, including the randomized choices used in report466. Initialize with unnormalized Haar on the actual completed anchor survivors and use the explicit normalized capped kernels with caps
