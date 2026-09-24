@@ -248,6 +248,192 @@ scope of BBMST Theorem 7.1. The checker certifies the rational endpoint;
 the measure transport and unrestricted tail are ordinary mathematical
 arguments using the cited lemmas, not program or Lean certification.
 
+### A quantitative common law for six-prime two-copy families
+
+Let Q be a set of at most six odd primes, with 3 not in Q. Take any
+finite family of nonunit Q-supported numerical moduli, each used at
+most twice, with arbitrary fixed residues and arbitrary finite heights.
+Let V be its complete survivor set in X_Q=product_(q in Q) Z_q, and
+let H_Q be Haar probability. There is one probability nu with
+
+    nu(V)=1,
+    (1/10) H_Q|V <= nu <= Lambda2 H_Q,
+    R_Q(nu):=sum_(d>1,Q-supported) max_a nu(a mod d)
+             <=33748/3375<10,
+    Lambda2=3037500000000/7235955529<420.                 (TC1)
+
+In particular H_Q(V)>=1/Lambda2>1/420. The same law controls every
+query depth and has full support on V. The multiplicity bound concerns
+the input numerical labels, not the number of classes containing a point.
+There is no bound on the number of moduli or on their prime-power heights.
+
+The input is split once into two families A and B, each with distinct
+numerical moduli; a modulus used only once can go in either family.
+Write V_A for the A-survivor and V=V_A intersect V_B. The split and all
+residues are fixed before the construction or any query. This result
+uses the uniform seven-prime common law of
+[report467](../arithmetic/467-the-same-core-law-has-a-smaller-density-cap-and-tail-cutoff.md),
+whose source attribution and verification limits remain in force. It is
+an ordinary quantitative deduction, not new Lean verification or a
+claim of literature priority. The root transport above alone does not
+supply its common-law query estimate.
+The qualitative noncoverage conclusion also follows from the earlier
+prime-flat construction with a fresh prime at least43 and report467's
+prime-gap theorem. The added result here is the simultaneous quantitative
+query and density control on the original two-copy survivor.
+
+For each integer H>=1, use the disjoint ternary cylinders
+
+    A_i=(3^(i-1)-1) mod3^i,
+    T_i=(2*3^(i-1)-1) mod3^i,  1<=i<=H,
+    Z_H=(-1) mod3^H,   W_H=union_(i=1..H) T_i.
+
+Together the A_i, T_i and Z_H partition Z_3. Keep each class of A at
+its original modulus d. Add the pure class A_i at modulus3^i. For
+each B-class b_d mod d and each i=1,...,H, add the CRT class with
+modulus3^i d, ternary residue T_i and Q-residue b_d. Every new numerical
+modulus is odd, greater than one and distinct: the pure labels, 3-free
+labels and pairs(i,d) are separate, and 3 does not divide d. There are
+|A|+H(1+|B|) original labels on at most seven primes. This is a finite
+actual family for each H, even though H will later tend to infinity.
+
+Its complete survivor is exactly
+
+    U_H=(W_H times V) disjoint-union (Z_H times V_A).       (TC2)
+
+On T_i, precisely the B-copy at level i is active; on Z_H none is
+active. In both cases the original A-classes remain. Thus, with
+h=H_Q(V) and h_A=H_Q(V_A),
+
+    H_(3,Q)(U_H)=((1-3^-H)/2)h+3^-H h_A.                 (TC3)
+
+Report467 gives, for each of these actual finite families, a single
+all-depth law mu_H supported on U_H with
+
+    R_(3,Q)(mu_H)<=C=70871/3375,
+    (1/5) H_(3,Q)|U_H <= mu_H <= Lambda H_(3,Q),
+    Lambda=6075000000000/7235955529.
+
+These are simultaneous properties of the same law. Let z_H be its
+mass on Z_H times V_A, and let eta_H be the Q-marginal of its restriction
+to W_H times V. Each of the H queries (-1)mod3^i contains Z_H, so
+
+    z_H<=min(C/H,Lambda*3^-H),    eta_H(1)=1-z_H,
+    ((1-3^-H)/10) H_Q|V <= eta_H
+          <= (Lambda/2)(1-3^-H) H_Q.                    (TC4)
+
+The exponential bound on z_H is the same law's Haar-density bound on
+Z_H times V_A; it does not require a separate source.
+
+The query gain comes from the actual partition W_H, without a product
+assumption on mu_H. For each fixed Q-supported d, including d=1, choose
+a phase a attaining max_a eta_H(a mod d). At ternary exponent zero,
+the corresponding mu_H cylinder has at least this mass. At positive
+exponents choose the H cylinders T_i, joined to that same Q-phase.
+They partition the restricted mass over a mod d. Consequently
+
+    sum_(i>=0) max_(c mod3^i d) mu_H(c mod3^i d)
+         >=2 max_a eta_H(a mod d).
+
+The labels 3^i d are unique as(i,d) varies. Summing nonnegative terms,
+and writing R_Q also for the homogeneous functional on subprobabilities,
+gives
+
+    1+C >=1+R_(3,Q)(mu_H)
+          >=2[eta_H(1)+R_Q(eta_H)].                    (TC5)
+
+Only the query phases are selected separately, as allowed in R; every
+term is measured under the same mu_H. No independently maximizing
+conditional laws or marginal products occur in this inequality.
+
+Already H=16 gives a finite transfer below the clean targets. With
+delta=Lambda*3^-16<1, normalize eta_16 once to get a probability on V.
+Its query bound is at most(1+C)/[2(1-delta)]-1<10, and its density cap
+is at most Lambda(1-3^-16)/[2(1-delta)]<420. Thus crossing these two
+targets does not require the limiting construction. The limit below
+also gives the sharper exact constants and lower density in(TC1).
+
+Take a weakly convergent subsequence of the eta_H on the compact
+space X_Q. Their masses tend to one by(TC4), so the limit nu is a
+probability. V is clopen because the input family is finite; hence
+nu(V)=1. The measure bounds in(TC4) pass to each finite cylinder
+algebra and then to Borel sets, giving the two bounds in(TC1).
+For every finite set of query labels, the sum of cylinder maxima is
+continuous in these finite marginals. Applying(TC5), passing to the
+limit and then exhausting all Q-supported labels yields
+
+    R_Q(nu)<=(C-1)/2=33748/3375.
+
+Thus the law, its support, its density bounds and all queries survive
+one common limit. There is no assumption that the separately chosen
+mu_H were already projectively compatible. In particular V cannot be
+empty: otherwise eta_H(1)=0 would contradict(TC4) for H>C. Alternatively,
+(TC3) and the common density upper bound already imply h>=2/Lambda by
+letting H grow. This avoids using an assumed nonempty two-copy survivor
+as an input to the construction.
+
+For Q={5,7,11,13,17,19}, retain nu and append Haar coordinates23 and29.
+Any additional finite family with distinct full numerical labels,
+supported on Q union{23,29} and touching23 or29, has total forbidden
+probability at most
+
+    (1+R_Q(nu))[(23/22)(29/28)-1]
+       <=(37123/3375)(51/616).
+
+All later residues and heights are arbitrary; the old Q-only family
+still has multiplicity at most two. The remaining probability is at
+least61909/693000>5/56. Its full Haar survivor mass is greater than
+1/4704, since the same product law has density at most Lambda2<420.
+The unit old cofactor is included in37123/3375. This is a quantitative
+continuation for the stated multiplicity class, not a claim that an
+unrestricted original seven-prime family reduces to two Q-phases per
+cofactor. Arbitrary ternary prefixes can activate more than two such
+phases; the unrestricted seven-prime target565/51 remains open.
+
+The same actual construction transfers a lower certificate back to
+that target. Suppose, for a particular nonempty two-copy survivor V,
+every probability supported on V has R_Q>=r, with r>=0. No such example
+with r>=6 is supplied here. Put a=1+2r. For ANY probability mu on the
+actual U_H in(TC2), let z be its Z_H mass and eta its restricted
+W_H marginal. The spine queries give R_(3,Q)(mu)>=Hz. Keeping the
+unit query's additional mass z in the argument for(TC5) gives
+
+    1+R_(3,Q)(mu)>=z+2[eta(1)+R_Q(eta)]
+                  >=z+2(1-z)(1+r),
+    R_(3,Q)(mu)>=a(1-z).
+
+For z=1 the last inequality is trivial; otherwise normalize eta once
+and apply the assumed cofactor lower bound. Both inequalities concern
+the same mu. Minimizing max(Hz,a(1-z)) over0<=z<=1 proves
+
+    R_*(U_H)>=aH/(H+a),                                (TC6)
+
+where R_* is the infimum over all supported probabilities. The argument
+does not use the particular upper-bound laws from report467.
+If r>257/51, any integer H>(565/51)a/(a-565/51) therefore produces an
+actual distinct seven-prime family with R_*(U_H)>565/51. In particular,
+an actual two-copy cofactor certificate r>=6 would suffice at H=75:
+
+    R_*(U_75)>=975/88=565/51+5/4488.
+
+A cofactor lower certificate can use finitely many fixed query labels
+and phase weights, but it must hold throughout that family's complete
+actual V. A desired abstract support or one chosen law with large R
+does not meet the premise. Finding such a cofactor family, or a uniform
+bound ruling it out, remains open. Even a successful(TC6) counterexample
+would refute the intermediate query target, not settle Erdős#7.
+
+The [partial-comb checker](../../frontier/cover-geometry/two_copy_comb_transfer.py)
+constructs the actual distinct CRT labels for supplied A,B and H,
+compares their full survivor mask with(TC2), and verifies(TC3) and the
+displayed rational constants. Its [retained controls](../../frontier/cover-geometry/two_copy_comb_transfer.json)
+exercise different phases, missing labels and higher cofactor powers.
+The arbitrary-height common-law deduction is the proof above; finite
+controls do not prove its universal quantifiers. Default execution
+checks the retained controls; `--input PATH --height H` checks another
+finite two-list input within an explicit period cap. No source geometry
+or Lean build is rerun.
+
 ## 4. Reciprocal mass is transported, not automatically decreased
 
 After deleting pure-covered classes in section 1, let A be the reciprocal
