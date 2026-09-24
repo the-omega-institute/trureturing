@@ -18,7 +18,7 @@ public sealed class FileMapResourceParityTests
                     ? new[] { "test-source-atomizer", "test-worktree-contract" } : ["test-worktree-contract"],
                 Assert.Single(map.Match(path)).Require);
         foreach (var path in new[] { "Library/Notes/input.md", "Problems/input.md",
-            "Blueprint/D5/Result.md", "D5/ledger.md", "CLAUDE.md", "tools/scripts/workflow/ci_plan.py",
+            "Blueprint/D5/S0/Result.md", "D5/ledger.md", "CLAUDE.md", "tools/scripts/workflow/ci_plan.py",
             "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",
             "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json" })
             Assert.NotEmpty(Assert.Single(map.Match(path)).Require);

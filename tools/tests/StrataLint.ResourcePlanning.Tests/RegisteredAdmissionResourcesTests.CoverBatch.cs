@@ -75,8 +75,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var path in new[] { "D5/S3/Constants/Values.lean", "D5/X_Frontier/ValuesProducer.lean" })
         {
             var plan = Plan(path, "", mode, change);
-            Assert.Equal(WithWorktreeContract(new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }), Strings(plan["execution"]!["tests"]!));
-            Assert.Equal(new[] { "test-cover-batch", "test-instruction-contract", "test-repository-digestion", "test-truth-release", "test-worktree-contract" },
+            Assert.Equal(WithWorktreeContract(new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject }), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(new[] { "test-cover-batch", "test-instruction-contract", "test-repository-digestion", "test-worktree-contract" },
                 Strings(plan["stages"]!["engineering"]!["resources"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
             var input = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);
@@ -97,7 +97,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     {
         foreach (var mode in new[] { "push", "pr" })
             Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal)
-                    ? new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }
+                    ? new[] { InstructionContractProject, RepositoryDigestionProject }
                     : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
                         ? new[] { RepositoryDigestionProject, SourceAtomizerProject } : []),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));

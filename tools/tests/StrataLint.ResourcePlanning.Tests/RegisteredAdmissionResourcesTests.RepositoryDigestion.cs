@@ -25,7 +25,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan(path, "", mode, change);
             Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal)
-                    ? new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }
+                    ? new[] { InstructionContractProject, RepositoryDigestionProject }
                     : new[] { RepositoryDigestionProject, SourceAtomizerProject }),
                 Strings(plan["execution"]!["tests"]!));
             Assert.Contains("test-repository-digestion", Strings(plan["stages"]!["engineering"]!["resources"]!));

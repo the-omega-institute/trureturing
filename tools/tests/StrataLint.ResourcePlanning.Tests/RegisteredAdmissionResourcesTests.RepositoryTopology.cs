@@ -38,7 +38,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("tools/scripts/report/report-supervisor.sh")]
     [InlineData("tools/scripts/worktree/lean-cache-run.sh")]
     [InlineData("tools/scripts/agent/openproblem/README.md")]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json")]
     [InlineData("docs/reports/prime-slab-corner-order-0909.json")]
     public void RepositoryTopologyDoesNotTurnIndexMetadataIntoUnrelatedExecution(string path)

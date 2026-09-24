@@ -49,7 +49,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("docs/develop/theory/RepositoryContractProbe.md")]
     [InlineData("docs/reports/prime-slab-corner-order-0909.json")]
     [InlineData("tools/scripts/agent/openproblem/templates/review-template.md")]
-    [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
+    [InlineData("D5/S0/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json")]
     public void ContentAndMetadataPathsDoNotAcquireUnrelatedEngineeringTests(string path)
     {
@@ -60,7 +60,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             var readsDigestion = readsInstructions || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
             var readsSourceAtomizer = path.StartsWith("docs/develop/theory/", StringComparison.Ordinal) || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
             var readsRegistry = path == "README.md";
-            Assert.Equal(WithWorktreeContract((readsInstructions ? new[] { CoverBatchProject, InstructionContractProject, TruthReleaseProject } : [])
+            Assert.Equal(WithWorktreeContract((readsInstructions ? new[] { InstructionContractProject } : [])
                     .Concat(readsDigestion ? new[] { RepositoryDigestionProject } : [])
                     .Concat(readsRegistry ? new[] { RepositoryFileMapProject } : [])
                     .Concat(readsSourceAtomizer ? new[] { SourceAtomizerProject } : [])),
@@ -87,13 +87,13 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "README.md",
             "docs/develop/theory/WorktreeContractProbe.md",
             "docs/reports/worktree-contract-probe.md",
-            "D5/WorktreeContractProbe.lean",
+            "D5/S0/WorktreeContractProbe.lean",
             "Meta/Digestion/backfill/worktree-contract-probe.json",
         })
         {
             var plan = Plan(path, "", mode, change);
             var consumers = path.StartsWith("D5/", StringComparison.Ordinal)
-                ? new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }
+                ? new[] { InstructionContractProject, RepositoryDigestionProject }
                 : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
                     ? [RepositoryDigestionProject, SourceAtomizerProject]
                     : path == "README.md" ? [RepositoryFileMapProject]

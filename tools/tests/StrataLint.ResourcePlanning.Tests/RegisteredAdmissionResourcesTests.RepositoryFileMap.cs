@@ -5,8 +5,8 @@ namespace StrataLint.ResourcePlanning.Tests;
 public sealed partial class RegisteredAdmissionResourcesTests
 {
     [Theory]
-    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "push", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.TruthRelease.Tests")]
-    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "pr", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.TruthRelease.Tests")]
+    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "push", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
+    [InlineData("Blueprint/D5/S0/Carrier/GoldenRatio.scribe.cs", "pr", "StrataLint.RepositoryContract.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests")]
     [InlineData("Golden/Projection/statement-projection-pilot-v1.json", "push", "StrataLint.RepositoryFileMap.Tests,StrataLint.Tests,StrataLint.TruthRelease.Tests")]
     [InlineData("Golden/Projection/statement-projection-pilot-v1.json", "pr", "StrataLint.RepositoryFileMap.Tests,StrataLint.Tests,StrataLint.TruthRelease.Tests")]
     [InlineData("Golden/Projection/statement-projection-expansion-v1.json", "push", "StrataLint.RepositoryFileMap.Tests,StrataLint.Tests,StrataLint.TruthRelease.Tests")]
