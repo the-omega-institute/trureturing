@@ -343,9 +343,9 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Write(sourceInputs, "<Project />\n");
         File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
             new EngineeringProjectFixture(sourceInputs, "SourceInputs", "test-support", false,
-                ["tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs", "tools/StrataLint.Configuration/**/*.cs",
-                    "tools/StrataLint.Lean/**/*.cs", .. inputs.Where(path => path.StartsWith("tools/", StringComparison.Ordinal)
-                        && path.EndsWith(".cs", StringComparison.Ordinal))].Distinct(StringComparer.Ordinal).ToArray())));
+                new[] { "tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs", "tools/StrataLint.Configuration/**/*.cs",
+                    "tools/StrataLint.Lean/**/*.cs" }.Concat(inputs.Where(path => path.StartsWith("tools/", StringComparison.Ordinal)
+                        && path.EndsWith(".cs", StringComparison.Ordinal))).Distinct(StringComparer.Ordinal).ToArray())));
         // Projects read as runtime bytes still need declarations in the synthetic
         // repository. They do not become compilation references or selected tests.
         foreach (var project in inputs.Where(path => path.EndsWith(".csproj", StringComparison.Ordinal)
