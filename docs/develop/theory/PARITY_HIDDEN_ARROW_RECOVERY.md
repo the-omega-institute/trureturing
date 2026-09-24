@@ -1254,3 +1254,299 @@ $`C\ell e^{-h_M}+C\ell M^{1-D}/q=o(\lambda^{-1/2})`$。
 两式相减即得 (23.3)。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 24. 同批观测的参数修正与自适应二阶精度
+
+**定义 24.1（初选后的振幅估计与再筛选）。** 对定义 22.1 的两组初选集合
+$`A_+,A_-`$ 及基数 $`R_+,R_-`$，取基数较大的方向
+$`\widehat\varepsilon`$，相等时取正向。置
+$`A=A_{\widehat\varepsilon}`$、$`R=|A|`$；以下计数均按这个方向对齐。
+若 $`R=0`$，输出 $`\widetilde S=\varnothing`$。若 $`R\ge1`$，令
+
+```math
+\epsilon_M=\min\{1/4,\ell^{-1}\},\qquad
+U_A=\sum_{x\in A}(N_{x,+}+N_{x,-}),\qquad
+V_A^{\mathrm{obs}}=\sum_{x\in A}(N_{x,+}-N_{x,-}),
+```
+
+式 (24.1)。
+
+并定义
+
+```math
+r_A=
+\begin{cases}V_A^{\mathrm{obs}}/U_A,&U_A\gt0,\\[0pt]1/2,&U_A=0,\end{cases}
+\qquad
+\widehat r=\min\{1-\epsilon_M,\max\{\epsilon_M,r_A\}\}.
+```
+
+式 (24.2)。
+
+以 $`Z_x(u)=N_{x,+}\log(1+u)+N_{x,-}\log(1-u)`$ 为分数，取
+
+```math
+C=\{x\in C_+:Z_x(\widehat r)\ge\log(M/R)\},\qquad
+K=\min\{M,2R\}.
+```
+
+式 (24.3)。
+
+当 $`|C|\le K`$ 时置 $`\widetilde S=C`$；否则保留 $`C`$ 中分数最大的
+$`K`$ 项，边界并列时均匀随机。方向估计仍为 $`\widehat\varepsilon`$。
+该规则只使用维数和同一份观测；初选、估计和再筛选均未引入参数或额外样本。
+
+**定理 24.2（自适应达到无约束的二阶余项）。** 固定
+$`r\in(0,1)`$、$`\beta\in(1/2,1)`$，取定义 23.1 的任意序列，
+其中 $`c_M\to c\in\mathbb R`$。对两个实际平稳实验，定义 24.1 的同一规则满足
+
+```math
+\max_{S\in\mathfrak S_q,\ \varepsilon\in\{+,-\}}
+ \frac{\mathbb E_{S,\varepsilon}^{\mathcal E}
+       |\widetilde S\triangle S|}{q}
+ =\Phi(z_M)+O(\lambda^{-1/2}),\qquad
+\max_{S,\varepsilon}\mathbb P_{S,\varepsilon}^{\mathcal E}
+ \{\widehat\varepsilon\ne\varepsilon\}=o(\lambda^{-1/2}).
+```
+
+式 (24.4)。
+
+余项常数允许依赖固定参数与 $`z_M`$ 所在的有界区间，规则本身不依赖它们。
+这里的精度以实际中心 $`z_M`$ 表示，不将其替换为极限值。
+独立高斯序列中达到一阶 Hamming 曲线的自适应程序已有
+[Abraham–Castillo–Roquain 定理 7](../../../Library/Dynamics/abraham2024sharp.md)
+的先例；本条处理实际补偿律下同批观测修正后的定量余项。
+
+证明。固定实际正向及支持 $`S`$，以下所有实际矩与联合事件均在该同一律下计算。
+置 $`\rho=1-\Phi(z_*)\gt0`$、$`\delta_M=\ell^3/n`$；在 (21.5) 中取
+$`D=8`$。所有常数只用于证明。由 (22.6)、(22.11)–(22.12)，有
+
+```math
+\mathbb E|A_+\setminus S|\le C(q\ell^{-2}+\ell^{-1}),\qquad
+\mathbb ER_-\le C\ell^{-1},\qquad
+\mathbb E\bigl[R\mathbf1_{\{R\gt2q\}}\bigr]\le C\ell^{-1}.
+```
+
+式 (24.5)。
+
+最后一项由 $`R=\max(R_+,R_-)`$ 分别取两个最大值事件得到。
+在 (22.15)–(22.16) 中取一个固定的 $`\kappa\in(3\rho/4,\rho)`$，
+均值与 $`\kappa q`$ 之间最终有固定正比例间隙。故 Chebyshev 不等式给出
+
+```math
+\mathbb P\{R_+\lt3\rho q/4\}
+ \le C(q^{-1}+\delta_M+M^{-D}),\qquad
+\mathbb P\{\widehat\varepsilon\ne+\}
+ \le C(q^{-1}+\delta_M+M^{-D}+(q\ell)^{-1}).
+```
+
+式 (24.6)。
+
+第二项还使用了 $`\mathbb P\{R_-\ge3\rho q/4\}\le C/(q\ell)`$。
+两个上界均为 $`o(\lambda^{-1/2})`$。
+
+先证明振幅估计的充分精度。记
+$`N_x=N_{x,+}+N_{x,-}`$、$`T_x=N_{x,+}-N_{x,-}-rN_x`$。
+在信号比较律 $`Q_r`$ 下，$`\mathbb ET_x=0`$、
+$`\mathbb E T_x^2=\lambda(1-r^2)`$，且
+$`\mathbb E(N_x-\lambda)^2=\lambda`$。
+因此两类非负变量 $`|T_x|`$ 与 $`|N_x-\lambda|`$ 的均值至多为
+$`C\sqrt\lambda`$，二阶矩至多为 $`C\lambda`$。
+取固定充分大的 $`L_0`$，令 $`\mathcal N`$ 表示全部行计数均不超过
+$`L_0\ell`$。比较 Poisson 尾及一行转移给出
+$`\mathbb P(\mathcal N^c)\le CM^{1-D}`$。
+将上述两个变量各截断在 $`N_x\le L_0\ell`$ 上，应用 (23.15) 的层积分论证，
+得到同一实际支持下每类信号总和的方差界
+
+```math
+\mathrm{Var}\!\left(\sum_{x\in S}f_x\right)
+ \le C\left(q\lambda+\delta_Mq^2\lambda+q^2\ell^2M^{-D}\right),
+\qquad f_x\in\{
+ |T_x|\mathbf1_{\{N_x\le L_0\ell\}},
+ |N_x-\lambda|\mathbf1_{\{N_x\le L_0\ell\}}\}.
+```
+
+式 (24.7)。
+
+这里双行协方差以比较均值的乘积为主项，其量级为 $`O(\lambda)`$；
+并未以截断上界平方代替全部协方差。固定足够大的 $`C_1`$，再用 Chebyshev，
+除去概率 $`O(q^{-1}+\delta_M+\ell M^{-D}+M^{1-D})`$ 的事件后，有
+
+```math
+\sum_{x\in S}|T_x|\le C_1q\sqrt\lambda,\qquad
+\sum_{x\in S}|N_x-\lambda|\le C_1q\sqrt\lambda.
+```
+
+式 (24.8)。
+
+又由 (24.5) 与 Markov 不等式，
+
+```math
+\mathbb P\{|A_+\setminus S|\gt q/\sqrt\lambda\}
+ \le C\left(\ell^{-3/2}+(q\sqrt\ell)^{-1}\right)
+ =o(\lambda^{-1/2}).
+```
+
+式 (24.9)。
+
+令 $`\mathcal G_0`$ 为以下事件的交：方向正确、
+$`3\rho q/4\le R\le2q`$、$`\mathcal N`$、(24.8) 以及
+$`|A_+\setminus S|\le q/\sqrt\lambda`$。
+由 (24.5)–(24.9)，$`\mathbb P(\mathcal G_0^c)=o(\lambda^{-1/2})`$。
+在此事件上，$`|A\cap S|\ge\rho q/2`$ 最终成立，且
+
+```math
+U_A\ge |A\cap S|\lambda-\sum_{x\in S}|N_x-\lambda|
+       \ge c_0q\lambda,\qquad
+|V_A^{\mathrm{obs}}-rU_A|
+ \le\sum_{x\in S}|T_x|+2L_0\ell|A\setminus S|
+ \le Cq\sqrt\lambda.
+```
+
+式 (24.10)。
+
+因为固定的 $`r`$ 最终位于剪裁区间内部，剪裁不会增加距 $`r`$ 的距离，故
+$`|\widehat r-r|\le C_2/\sqrt\lambda`$。
+这只控制选择偏差，并未断言给定初选集合后估计无偏。
+
+接着证明该参数误差所需的得分包络。定义信号得分导数
+
+```math
+D_x=\frac{N_{x,+}}{1+r}-\frac{N_{x,-}}{1-r},\qquad
+D_*=D_x/\sqrt\lambda.
+```
+
+式 (24.11)。
+
+在 $`Q_r`$ 下，$`\mathbb ED_x=0`$，但这不表示导数与得分不相关；事实上
+$`\mathrm{Cov}_{Q_r}(W,D_x)=\tfrac\lambda2\log\tfrac{(1+r)(1+a)}{(1-r)(1-a)}\gt0`$。
+下文对两者使用共同的计数实现。对每个固定实数 $`h`$，
+指数矩 $`A_h=\mathbb E_{Q_r}e^{hD_*}`$ 一致有界：其对数为
+
+```math
+\log A_h=
+ \frac{\lambda(1+r)}2\left(e^{h/((1+r)\sqrt\lambda)}-1\right)
+ +\frac{\lambda(1-r)}2\left(e^{-h/((1-r)\sqrt\lambda)}-1\right)
+ =O_h(1).
+```
+
+式 (24.12)。
+
+线性项恰好抵消。以 $`e^{hD_*}/A_h`$ 倾斜 $`Q_r`$ 后，两个计数仍独立 Poisson，
+均值分别乘以上式中的指数因子，均与 $`\lambda`$ 同阶。
+沿用定理 19.3 证明中 (19.22) 的条件计数方法：给定 $`N_-`$ 后，
+$`W`$ 以及 $`W+hD_*`$ 中 $`N_+`$ 的系数均趋于严格正数 $`\log(1+r)`$。
+任意长度 $`b\ge0`$ 的得分区间至多容纳 $`C_h(b+1)`$ 个整数 $`N_+`$。
+由 Poisson 众数公式及 Stirling 不等式，均值与 $`\lambda`$ 同阶的
+Poisson 变量最大单点质量为 $`O(\lambda^{-1/2})`$。条件化后再平均，得到
+
+```math
+Q_r^{(h)}\{t\le W\le t+b\}
+ +Q_r^{(h)}\{t\le W+hD_*\le t+b\}
+ \le\frac{C_h(b+1)}{\sqrt\lambda}.
+```
+
+式 (24.13)。
+
+该上界不依赖区间位置，允许原子及任意固定格点振幅，亦不要求倾斜后的中心与原中心相同。
+右侧大于一时仍是合法上界。
+
+由 $`dQ_r=e^W dQ_{-a}`$，背景律按 $`e^{W+hD_*}`$ 倾斜的归一化常数恰为
+$`A_h`$，所得律就是 $`Q_r^{(h)}`$。用 (24.13) 分割单位宽度上尾并求和，得到
+
+```math
+Q_{-a}\{W+hD_*\ge t\}
+ \le\frac{C_h e^{-t}}{\sqrt\lambda}.
+```
+
+式 (24.14)。
+
+另对任意固定 $`b_0,b_1\ge0`$，有联合交叉界
+
+```math
+Q_r\{|W-\tau_M|\le b_0+b_1|D_*|\}
+ \le C\lambda^{-1/2}.
+```
+
+式 (24.15)。
+
+为证此式，将 $`|D_*|`$ 分成区间 $`[j,j+1)`$，$`j\ge0`$，并分别处理正负号。
+在正号部分按 $`h=1`$ 倾斜，负号部分按 $`h=-1`$ 倾斜。
+逆密度在各自的带上至多为 $`C e^{-j}`$，而所需 $`W`$ 区间的宽度至多为
+$`2b_0+2b_1(j+1)`$。由 (24.13)，每带概率至多
+$`C e^{-j}(j+1)/\sqrt\lambda`$；求和即得 (24.15)。
+该论证在同一二元计数实现上控制得分与导数，没有把两个边缘分布函数相加来替代联合关系。
+
+在 $`\mathcal G_0`$ 上，$`|\log(M/R)-\tau_M|\le C_3`$。
+$`Z_x(u)`$ 关于 $`u`$ 凹，且在固定的 $`r`$ 邻域中二阶导数绝对值至多为
+$`C_rN_x`$。由 Taylor 定理、(24.10) 及计数截断，
+
+```math
+W_x-C_4|D_*|-C_5
+ \le Z_x(\widehat r)
+ \le W_x+C_4|D_*|+C_5.
+```
+
+式 (24.16)。
+
+这里 $`|W_x-Z_x(r)|\le C aN_x=o(1)`$ 已并入 $`C_5`$。
+故背景行被候选集合 $`C`$ 选中，必有
+$`W_x+C_4|D_*|\ge\tau_M-C_6`$。
+这包含在 $`W_x\pm C_4D_*\ge\tau_M-C_6`$ 两事件之并中；
+由 (24.14)、一行转移及 $`Me^{-\tau_M}=q`$，得到
+
+```math
+\mathbb E\bigl[|C\setminus S|\mathbf1_{\mathcal G_0}\bigr]
+ \le Cq\lambda^{-1/2}+CM^{1-D}=O(q\lambda^{-1/2}).
+```
+
+式 (24.17)。
+
+这里的包络是确定的计数事件；没有将估计振幅代入 e-value 的边缘有效性结论。
+同样，由 (24.16)，信号未被候选集合选中只可能在
+$`W_x\lt\tau_M+C_6+C_4|D_*|`$ 时发生。
+此事件与 $`\{W_x\lt\tau_M\}`$ 的差由 (24.15) 控制，再用 (23.4) 及一行转移，得到
+
+```math
+\frac1q\mathbb E\bigl[|S\setminus C|\mathbf1_{\mathcal G_0}\bigr]
+ \le\Phi(z_M)+O(\lambda^{-1/2}).
+```
+
+式 (24.18)。
+
+还须控制规则自身的输出上限。令 $`Y`$ 为信号行中满足确定包络
+$`W_x+C_4|D_*|\ge\tau_M-C_6`$ 的个数。
+由 (23.4)、(24.15)，$`\mathbb EY/q\to\rho`$；同一支持下两行比较给出
+$`\mathrm{Var}Y\le C(q+\delta_Mq^2+q^2M^{-D})`$。
+因此事件 $`\mathcal G_1=\{Y\le5\rho q/4\}`$ 的补集概率为
+$`O(q^{-1}+\delta_M+M^{-D})=o(\lambda^{-1/2})`$。
+在 $`\mathcal G=\mathcal G_0\cap\mathcal G_1`$ 上，最终候选信号数不超过
+$`5\rho q/4`$，而 $`K=2R\ge3\rho q/2`$，其中 $`2R\lt M`$ 最终成立。
+所以从 $`C`$ 删到 $`K`$ 项时，删除个数不超过 $`|C\setminus S|`$，无论删中哪些项。
+逐观测有
+
+```math
+|\widetilde S\triangle S|
+ \le |S\setminus C|+2|C\setminus S|\qquad\text{on }\mathcal G.
+```
+
+式 (24.19)。
+
+坏事件上始终有 $`|\widetilde S\triangle S|\le q+2R`$。
+故 (24.5) 给出
+
+```math
+\frac1q\mathbb E\bigl[|\widetilde S\triangle S|\mathbf1_{\mathcal G^c}\bigr]
+ \le5\mathbb P(\mathcal G^c)
+       +\frac2q\mathbb E\bigl[R\mathbf1_{\{R\gt2q\}}\bigr]
+ =o(\lambda^{-1/2}).
+```
+
+式 (24.20)。
+
+随机输出规模的期望尾部在这里是必要的；不曾用 $`M/q`$ 乘以坏事件概率。
+(24.17)–(24.20) 给出已固定方向的风险上界，(24.6) 给出方向精度。
+实际反向通过反转完整观测得到相同论证，所有界一致于支持。
+揭示 $`r,q`$ 与方向后，本规则仍是合法的无约束选择规则；因此定理 23.2 的
+全规则下界给出 (24.4) 的另一侧，证明风险等式。∎
+
+## 追加锚（本行以下为增补区）
