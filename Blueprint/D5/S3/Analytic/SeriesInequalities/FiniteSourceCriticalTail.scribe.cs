@@ -84,7 +84,7 @@ internal sealed class FiniteSourceCriticalTailDocument : IScribeDocumentDefiniti
             And(LtFormula(rho, radius), And(LtFormula(radius, D(1)), estimates)));
         return Disp(ForAll(
             [Bound("K", F.Id("Type")), Bound("A", reals), Bound("rho", reals),
-             Bound("M", naturals), Bound("b", Seq(naturals, To, field))],
+             Bound("M", naturals), Bound("b", Seq(naturals, To, Sp, field))],
             Implies(hypotheses, conclusion)));
     }
 
