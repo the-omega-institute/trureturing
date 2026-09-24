@@ -36359,3 +36359,261 @@ $$
 定理162.2说明任何单步最优的三维 CPTP 模型在赤道圆盘上都被迫给出同一种迭代，因此严格差距不只是选择 Schur 预测器的偶然结果。定理162.4给出的最坏视界常数约为 $0.2871395757$，而逐视界重新选择预测通道的常数约为 $0.2365518148$；前者仅在“必须先达到单步最优”的约束下最优，不是所有平稳预测模型的无约束最优值。固定 $r<1$ 时，两种误差仍随 $N\to\infty$ 趋零；逐视界严格差距不意味着关于全部视界的一致正差距。允许额外持久记忆、随步数改变通道、取得校准数据或中间控制，会改变优化域。平均与复合不交换也可发生在经典未知参数模型中；本节的量子内容在于该已校准记录源的全输入、全参考距离和全 CPTP 最优类的精确界，不由此推出普遍的量子与经典分界。
 
 ## 追加锚（本行以下为增补区）
+
+## 163. 固定预测通道的全视界最优极限与有限参数间隙
+
+**定义 163.1（一个通道同时服务全部视界）。** 沿用定义161.1的已校准三标签记录源和固定未知共同相位，以及定义161.2的全参考距离。真实过程每步使用一个新鲜空白记录单元，无中间控制、旧记录访问或额外相位校准。固定 $r$ 后，预测者选择一个与 $\phi$、视界 $N$ 均无关的 CPTP 通道 $\mathcal F:B(\mathbb C^3)\to B(\mathbb C^3)$，以后只使用其幂 $\mathcal F^N$；不附加持久记忆寄存器。令
+$$
+\mathcal J(r)=
+\inf_{\mathcal F\ \mathrm{CPTP}}\quad
+\sup_{\substack{N\in\mathbb N,\ N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^N).
+\tag{163.1}
+$$
+这里不施加单步最优条件。另记第162节的受限全视界问题为
+$$
+\mathcal J_{\rm one}(r)=
+\inf_{\mathcal F\in\mathfrak F_1(r)}
+\sup_{\substack{N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal F^N).
+\tag{163.2}
+$$
+两个下确界都在视界上确界之前选定通道。它们不同于允许按 $N$ 重选终端通道的 $\sup_{N\ge1}\mathcal R_N(r)$。
+
+以下使用常数
+$$
+k_*=\frac{3\sqrt3\log2}{\pi},\qquad
+t_*=\frac{\pi}{3\sqrt3},\qquad
+L=\frac{\sqrt3}{4}e^{-t_*}.
+\tag{163.3}
+$$
+有 $0<k_*<3$。对 $0<r\le1$ 定义固定预测通道的候选
+$$
+\mathcal T_r(A)=C(r,r^{k_*})\odot A,
+\tag{163.4}
+$$
+并在 $r=0$ 将 $\mathcal T_0$ 定义为系统基下的完全去相干通道。
+
+**定理 163.2（全 CPTP 固定预测的精确弱记录极限）。** 式（163.4）对所有 $0\le r\le1$ 都是 CPTP 通道。令
+$$
+D_N(r)=
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal T_r^N),
+\qquad N\ge1,\qquad D_0(r)=0.
+\tag{163.5}
+$$
+则
+$$
+\boxed{
+\lim_{r\uparrow1}\mathcal J(r)
+=\lim_{r\uparrow1}\sup_{N\ge1}D_N(r)
+=\lim_{r\uparrow1}\sup_{N\ge1}\mathcal R_N(r)
+=L.
+}
+\tag{163.6}
+$$
+具体地，若 $r=1-\varepsilon$、$\varepsilon\downarrow0$，则在每个有限 $t$ 区间上一致地有
+$$
+D_{\lfloor t/\varepsilon\rfloor}(1-\varepsilon)
+\longrightarrow
+G(t):=\frac{e^{-t}}2
+\left|e^{i\min\{\sqrt3t,\pi\}}-e^{-k_*t}\right|.
+\tag{163.7}
+$$
+$G$ 的唯一全局最大点为 $t_*$，最大值为 $L$。对每个 $0<r<1$ 选取任一达到 $\sup_{N\ge1}D_N(r)$ 的整数 $N_T(r)$，都有
+$$
+(1-r)N_T(r)\longrightarrow t_*.
+\tag{163.8}
+$$
+式（163.6）只给出极限等式，不宣称 $\mathcal T_r$ 在每个固定 $r<1$ 都达到 $\mathcal J(r)$。
+
+证明。 先验证合法性。更一般地，对 $0<r\le1$、$0\le k\le3$，令 $z=r^k$。矩阵 $C(r,z)$ 的对角元为一，二阶主子式分别是 $1-r^2$ 与 $1-r^2z^2$，均非负。其三阶行列式可因式分解为
+$$
+\det C(r,z)=(1-rz)(1+rz-2r^2).
+\tag{163.9}
+$$
+因 $rz=r^{1+k}\le1$，第一个因子非负；又因 $1+k\le4$，
+$$
+1+rz-2r^2\ge1+r^4-2r^2=(1-r^2)^2\ge0.
+\tag{163.10}
+$$
+故所有主子式非负，$C(r,r^k)\succeq0$。取 $k=k_*$，再用第3节的 Gram 通道实现，得到完全正且保持迹。$r=0$ 的定义也显然合法；$r=1$ 时 $\mathcal T_1$ 是恒等通道。这里仅使用有限维正性与既有 Gram 实现，不另行假设插值后的系数自动物理合法。
+
+通道复合给出 $\mathcal T_r^N(A)=C(r^N,r^{k_*N})\odot A$。式（161.11）于是给出每个实际源的全参考精确距离
+$$
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal T_r^N)
+=\frac{r^N}{2}|e^{iN\phi}-r^{k_*N}|.
+$$
+实中心 $r^{k_*N}$ 为正，故和定理162.2一样，最坏相位使 $\cos(N\phi)$ 在允许区间上最小，从而
+$$
+D_N(r)=\frac{r^N}{2}
+\left|e^{i\min\{N\alpha(r),\pi\}}-r^{k_*N}\right|.
+\tag{163.11}
+$$
+该式在 $N=0$ 时也给零，在 $r=0$ 时按 $N\ge1$ 给零，在 $r=1$ 时给零。无需参考的平衡两标签输入仍能达到距离。
+
+定理161.6已给出 $\alpha(1-\varepsilon)/\varepsilon\to\sqrt3$ 与 $\log(1-\varepsilon)/\varepsilon\to-1$。当 $N=\lfloor t/\varepsilon\rfloor$ 时，在有限 $t$ 区间上一致地有
+$$
+r^N\to e^{-t},\qquad
+N\alpha(r)\to\sqrt3t,\qquad
+r^{k_*N}\to e^{-k_*t}.
+\tag{163.12}
+$$
+由复数模长的 Lipschitz 性，得到式（163.7），包括 $t=0$。同时
+$$
+0\le D_N(1-\varepsilon)
+\le(1-\varepsilon)^N
+\le e^{-\varepsilon N}
+\tag{163.13}
+$$
+给出与视界一致的尾界。
+
+现在精确定位 $G$ 的全局峰值。令 $b=\sqrt3$、$k=k_*$。在 $0<t<\pi/b$，
+$$
+G(t)^2=
+\frac14\left(e^{-2t}+e^{-2(1+k)t}
+-2e^{-(2+k)t}\cos(bt)\right),
+$$
+所以
+$$
+\frac{d}{dt}G(t)^2
+=\frac12e^{-(2+k)t}H(t),
+\qquad
+H(t)=(2+k)\cos(bt)+b\sin(bt)-e^{kt}-(1+k)e^{-kt}.
+\tag{163.14}
+$$
+有 $H(0)=0$、$H'(0)=b^2+k^2>0$。记
+$$
+A(t)=(2+k)\cos(bt)+b\sin(bt),\qquad
+t_0=\frac{\pi/2+\arctan(b/(2+k))}{b}\in(0,\pi/b).
+\tag{163.15}
+$$
+在 $[0,t_0)$ 上 $A>0$，在 $(t_0,\pi/b]$ 上 $A<0$。前一区间满足
+$$
+H''(t)=-b^2A(t)-k^2\bigl(e^{kt}+(1+k)e^{-kt}\bigr)<0.
+\tag{163.16}
+$$
+因而 $H$ 在 $[0,t_0]$ 严格凹；结合 $H'(0)>0$ 和 $H(t_0)<0$，它在 $(0,t_0)$ 恰有一个零点。唯一性也可由严格凹性推出 $H(t)/t$ 在 $t>0$ 时严格下降。在 $[t_0,\pi/b]$，$H=A-e^{kt}-(1+k)e^{-kt}<0$。因此 $G$ 在 $(0,\pi/b)$ 先严格增后严格减。在 $t\ge\pi/b$，$G(t)=e^{-t}(1+e^{-kt})/2$ 继续严格下降。
+
+由常数选择，$bt_*=\pi/3$、$kt_*=\log2$。代入式（163.14）得
+$$
+H(t_*)=\frac{2+k}{2}+\frac32-2-\frac{1+k}{2}=0.
+$$
+故 $t_*$ 正是上述唯一最大点，并且
+$$
+G(t_*)=
+\frac{e^{-t_*}}2
+\left|e^{i\pi/3}-\frac12\right|
+=\frac{\sqrt3}{4}e^{-t_*}=L.
+\tag{163.17}
+$$
+有限区间上一致收敛、网格间距 $\varepsilon\to0$ 以及式（163.13）的统一尾界，遂给出 $\sup_N D_N(r)\to L$。固定 $0<r<1$ 时 $D_1(r)>0$ 且 $D_N(r)\to0$，所以整数最大点存在；同一尾界排除缩放最大点逃至无穷，$G$ 的唯一最大点再给出式（163.8）。
+
+最后，任意固定 CPTP 通道 $\mathcal F$ 在每个视界的幂仍为一个 CPTP 通道，故定义161.2直接给出
+$$
+\sup_{N,\phi}d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N)
+\ge\sup_{N\ge1}\mathcal R_N(r).
+$$
+对 $\mathcal F$ 取下确界，再用合法候选 $\mathcal T_r$，得到逐参数夹逼
+$$
+\sup_{N\ge1}\mathcal R_N(r)
+\le\mathcal J(r)\le\sup_{N\ge1}D_N(r).
+\tag{163.18}
+$$
+两端由定理161.6与以上证明趋于同一个 $L$，即得式（163.6）。这里没有交换通道下确界与视界上确界，也没有把任意 CPTP 通道先验限制成 Schur 乘子。证毕。
+
+**命题 163.3（此固定构造的局部代价与全程改进）。** 定义163.1中的固定通道满足
+$$
+\lim_{r\uparrow1}\frac{D_1(r)}{\mathcal R_1(r)}
+=\sqrt{1+\frac{k_*^2}{3}}>1.
+\tag{163.19}
+$$
+另一方面，
+$$
+\lim_{r\uparrow1}\mathcal J_{\rm one}(r)
+=\sqrt{\frac37}\,
+\exp\!\left[-\frac2{\sqrt3}\arctan\!\left(\frac{\sqrt3}{2}\right)\right]
+>L=\lim_{r\uparrow1}\mathcal J(r).
+\tag{163.20}
+$$
+因此对所有充分接近一的 $r<1$，$\mathcal T_r$ 的全视界最坏误差严格小于每一个单步最优固定预测通道的全视界最坏误差。
+
+证明。 令 $\varepsilon=1-r$。当 $\varepsilon\downarrow0$ 时，
+$$
+1-r^{k_*}=k_*\varepsilon+O(\varepsilon^2),\qquad
+1-\cos\alpha(r)=\frac32\varepsilon^2+O(\varepsilon^3).
+$$
+由
+$$
+|e^{i\alpha}-r^{k_*}|^2
+=(1-r^{k_*})^2+2r^{k_*}(1-\cos\alpha)
+$$
+得到
+$$
+D_1(r)=\frac{\sqrt{k_*^2+3}}2\,\varepsilon+o(\varepsilon),
+\qquad
+\mathcal R_1(r)=\frac{\sqrt3}{2}\,\varepsilon+o(\varepsilon).
+\tag{163.21}
+$$
+这证明式（163.19）。
+
+对 $1/\sqrt3<r<1$，每个 $\mathcal F\in\mathfrak F_1(r)$ 的第 $N$ 步误差至少为 $\mathcal E_N(r)$。定理162.2还提供同一个 $\mathcal F_*$ 同时达到每个 $N$ 的下界，因此
+$$
+\mathcal J_{\rm one}(r)=\sup_{N\ge1}\mathcal E_N(r).
+\tag{163.22}
+$$
+应用定理162.4，再用定理163.2，得到式（163.20）及充分接近一时的严格比较。证毕。
+
+式（163.19）的比值约为 $1.1992166662$，是这一显式构造相对于单步最优值的代价，不是所有渐近全视界最优模型必须支付的最小局部代价。式（163.20）消除的是单步最优限制造成的额外常数；残余误差 $L>0$ 仍在，因而没有恢复被遗漏的相位信息，也没有把未知源识别出来。
+
+**命题 163.4（有限参数处仍有严格固定通道间隙）。** 令 $r_0=1/\sqrt2$。则
+$$
+\sup_{N\ge1}\mathcal R_N(r_0)=\frac14,
+\qquad
+\boxed{
+\frac14<\mathcal J(r_0)
+\le \frac1{2\sqrt2}\sqrt{\frac54-\frac1{\sqrt2}}.
+}
+\tag{163.23}
+$$
+右端约为 $0.2605026916$。所以式（163.6）的渐近相等不能升级为所有固定参数上的相等；本命题不确定 $\mathcal J(r_0)$ 的精确值。
+
+证明。 此时 $\alpha(r_0)=\pi/4$，定理161.3给出 $\mathcal R_1(r_0)=\mathcal R_2(r_0)=1/4$；对 $N\ge3$，$\mathcal R_N(r_0)=r_0^N/2<1/4$。
+
+先说明式（163.1）的下确界在固定 $r$ 时可取得。由有限维 Choi 表示，全体三维 CPTP 通道对应于正半定且输出偏迹固定为恒等矩阵的 Choi 矩阵，构成非空紧集。对每个固定 $N$，通道复合与 $d_{\rm ref}$ 连续；具体地，CPTP 通道的距离收缩与复合的 telescoping 给出
+$$
+d_{\rm ref}(\mathcal F^N,\mathcal G^N)
+\le N\,d_{\rm ref}(\mathcal F,\mathcal G).
+\tag{163.24}
+$$
+故每个固定 $(N,\phi)$ 的误差是 $\mathcal F$ 的连续函数，所有 $(N,\phi)$ 的上确界是下半连续函数，在该紧集上达到最小值。这只使用有限维通道空间的紧性，不要求对 $N$ 一致的连续模。
+
+如果 $\mathcal J(r_0)=1/4$，取其达到通道 $\mathcal F$。其单步误差不超过 $1/4=\mathcal R_1(r_0)$，所以 $\mathcal F\in\mathfrak F_1(r_0)$。但定理162.2给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r_0,\phi}^2,\mathcal F^2)
+\ge\mathcal E_2(r_0)=\frac{\sqrt5}{8}>\frac14,
+\tag{163.25}
+$$
+与全视界上界矛盾。结合式（163.18），得到严格下界。
+
+为给上界，取合法通道 $\mathcal Q(A)=C(r_0,1/2)\odot A$。式（163.9）在这里成为 $\det C(r_0,z)=(1-r_0z)r_0z\ge0$，且所有二阶主子式非负，故 $\mathcal Q$ 是 CPTP。其第 $N$ 步最坏误差由式（161.11）等于
+$$
+\frac{r_0^N}{2}
+\left|e^{i\min\{N\pi/4,\pi\}}-2^{-N}\right|.
+\tag{163.26}
+$$
+$N=1$ 时恰为式（163.23）的右端，$N=2$ 时为 $\sqrt{17}/16$；对 $N\ge3$，三角不等式给出不超过
+$$
+\frac{r_0^N}{2}(1+2^{-N})
+\le\frac9{32\sqrt2}<\frac14.
+$$
+而第一步误差严格大于第二步，因为二者平方之差为
+$$
+\left(\frac5{32}-\frac1{8\sqrt2}\right)-\frac{17}{256}
+=\frac{23-16\sqrt2}{256}>0.
+$$
+故 $\mathcal Q$ 的全视界最坏误差由第一步取得，证明所述上界。证毕。
+
+定理163.2与命题163.4共同区分了三个量词层次：逐视界重选的最优终端通道、固定通道服务全部视界，以及再要求该固定通道单步最优。它们使用同一个已校准源族和同一个全参考距离。式（163.4）的预测器增加特定非对角方向的衰减来平衡各视界误差，不改变真实记录源、不访问被丢弃的环境，也不根据实际未知相位选择预测。静态随机参数与每步重抽参数的既有区别仍按第162节所引 Kropf、Gneiting、Buchleitner 的文献范围理解；本节比较的是这些固定预测通道的无先验最坏误差，不由此给出量子性的普遍定义或量子对经典的普遍优势。
+
+## 追加锚（本行以下为增补区）
