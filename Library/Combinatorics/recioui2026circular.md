@@ -15,7 +15,10 @@ triage: anchor
 
 # Circular s-choice parking functions
 
-## Verified source
+## Verified locator
+
+DOI: 10.48550/arXiv.2609.23607
+URL: https://arxiv.org/html/2609.23607v1
 
 The canonical source is arXiv:2609.23607v1, submitted on 2026-09-20. The
 arXiv API returned exactly that version on 2026-09-25, and the current HTML
