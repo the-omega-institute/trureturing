@@ -7,7 +7,7 @@ using Xunit.Abstractions;
 namespace StrataLint.ResourcePlanning.Tests;
 
 [Collection("StrataLint.ResourcePlanning.Tests process boundary")]
-public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
+public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper output, RegisteredAdmissionResourcesTests.RegisteredBase basis)
     : IClassFixture<RegisteredAdmissionResourcesTests.RegisteredBase>
 {
     private const string RegisteredNoResourceContent = "docs/reports/prime-slab-corner-order-0909.json";
@@ -19,13 +19,17 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json", "pr")]
     [InlineData("CLAUDE.md", "push")]
     [InlineData("CLAUDE.md", "pr")]
-    public void CurrentOnlyPlansBuildTransportRunnerWithoutSelectingTests(string input, string mode)
+    public void CurrentAndPolicyPlansBuildTransportWithOnlyExplicitTests(string input, string mode)
     {
         var plan = Plan(input, "", mode);
         Assert.Contains("tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
             Strings(plan["execution"]!["projects"]!));
-        Assert.Empty(plan["execution"]!["tests"]!.AsArray());
-        Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+        Assert.Equal(input == "CLAUDE.md"
+            ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj" }
+            : input.StartsWith("D5/", StringComparison.Ordinal) ? [InstructionContractProject] : [],
+            Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(input == "CLAUDE.md" || input.StartsWith("D5/", StringComparison.Ordinal) ? "required" : "not-required",
+            plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
     }
 
     [Theory]
@@ -38,9 +42,8 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         var plan = Plan(input, "", mode);
         Assert.Equal(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
-            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
+            "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj",
             "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
-            "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         }, Strings(plan["execution"]!["tests"]!));
         Assert.Equal(mode == "pr", Strings(plan["resources"]!).Contains("current"));
         Assert.Contains("scribe", Strings(plan["resources"]!));
@@ -61,7 +64,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         var plan = Plan(input, "", mode);
         Assert.Equal(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
-            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         }, Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
@@ -129,13 +131,13 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         var consumers = input switch
         {
-            "tools/scripts/preflight.sh" => new[] { "StrataLint.PlanningIntegration.Tests", "StrataLint.StageIntegration.Tests" },
-            "tools/scripts/report/lean-report-selection.py" => ["StrataLint.NativeTransportIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
-            "tools/scripts/workflow/ci_plan.py" => ["StrataLint.BuildIntegration.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
-            "tools/scripts/worktree/lean_cache.py" => ["StrataLint.BuildIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
+            "tools/scripts/preflight.sh" => new[] { "StrataLint.PlanningIntegration.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.WorkflowScript.Tests" },
+            "tools/scripts/report/lean-report-selection.py" => ["StrataLint.LeanReportScript.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
+            "tools/scripts/workflow/ci_plan.py" => ["StrataLint.Cache.Tests", "StrataLint.BuildIntegration.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
+            "tools/scripts/worktree/lean_cache.py" => ["StrataLint.Cache.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.BuildIntegration.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests"],
             _ => [],
         };
-        Assert.Equal(new[] { "StrataLint.ArchitectureTests", "StrataLint.Cache.Tests", "StrataLint.Tests" }
+        Assert.Equal(new[] { "StrataLint.ArchitectureTests", "StrataLint.Tests" }
             .Concat(input is "tools/scripts/report/lean-report-selection.py" or "tools/scripts/worktree/lean_cache.py" ? new[] { "StrataLint.Lean.Tests" } : [])
             .Concat(consumers).Order(StringComparer.Ordinal)
             .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
@@ -152,7 +154,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     {
         var plan = Plan(input, "", mode);
         Assert.Equal(new[] {
-            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
             "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
             "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
         }.Concat(input.EndsWith("test_reuse.py", StringComparison.Ordinal)
@@ -192,7 +193,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         var plan = Plan("tools/lean-inspector/Inspector.lean", "", mode);
         Assert.Equal(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
-            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
             "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
             "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
@@ -210,7 +210,6 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         var plan = Plan(input, "", mode);
         Assert.Equal(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
-            "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         }, Strings(plan["execution"]!["tests"]!));
         AssertInspectorSourceObligations(plan, mode);
@@ -247,7 +246,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     public void CachePathChangesRunOnlyRegisteredCacheConsumers(string mode)
     {
         var plan = Plan("Meta/ci-cache-paths.json", "", mode);
-        Assert.Equal(new[] { "StrataLint.BuildIntegration.Tests", "StrataLint.Cache.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(new[] { "StrataLint.BuildIntegration.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.Cache.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
         Assert.Equal(mode == "push" ? new[] { "filemap" } : ["lean-report", "filemap"],
@@ -310,7 +309,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         var plan = Plan(judge, mixed ? RegisteredNoResourceContent : "");
         Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         Assert.Equal(judge == "tools/scripts/preflight.sh"
-            ? new[] { "architecture", "build", "current", "delta", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-cache", "test-cli", "test-planning-integration", "test-stage-integration" }
+            ? new[] { "architecture", "build", "current", "delta", "engineering-guards", "filemap", "lean", "lean-report", "scribe", "test-cli", "test-planning-integration", "test-stage-integration", "test-workflow-script" }
             : ["build", "current", "delta", "engineering", "filemap", "lean", "lean-report", "scribe"],
             Strings(plan["resources"]!));
         Assert.Equal(new[] { "build", "engineering", "current", "delta" }, Strings(plan["selected_stages"]!));
@@ -357,7 +356,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("CLAUDE.md", "pr")]
     [InlineData("docs/develop/spec/golden-ledger-repo-spec.md", "push")]
     [InlineData("docs/develop/spec/golden-ledger-repo-spec.md", "pr")]
-    public void PolicyDocumentsRetainAdmissionWithoutEngineering(string document, string mode) =>
+    public void PolicyDocumentsRetainAdmissionAndTheirExplicitConsumers(string document, string mode) =>
         AssertJudgeDocumentResources(document, mode, mixed: false);
 
     [Theory]
@@ -365,9 +364,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("docs/develop/spec/golden-ledger-repo-spec.md")]
     public void PolicyDocumentsDoNotExpandRegisteredProductionConsumers(string document)
     {
-        var plan = Plan("tools/StrataLint.Engine/Rules/CapacityRule.cs", document);
+        var plan = Plan("tools/StrataLint.Engine/Rules/CurrentCapacity.cs", document);
         var tests = Strings(plan["execution"]!["tests"]!);
-        Assert.Equal(Strings(Plan("tools/StrataLint.Engine/Rules/CapacityRule.cs", "")["execution"]!["tests"]!), tests);
+        Assert.Equal(Strings(Plan("tools/StrataLint.Engine/Rules/CurrentCapacity.cs", "")["execution"]!["tests"]!), tests);
         Assert.Contains("tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj", tests);
         Assert.DoesNotContain("tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj", tests);
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
@@ -377,23 +376,29 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     private void AssertJudgeDocumentResources(string document, string mode, bool mixed)
     {
         var plan = Plan(document, mixed ? RegisteredNoResourceContent : "", mode);
-        Assert.Equal(new[] { "delta-judge", "filemap" }, Strings(plan["declared_require"]!));
-        Assert.Empty(plan["execution"]!["tests"]!.AsArray());
+        var readsPrPolicy = document == "CLAUDE.md";
+        var testResources = readsPrPolicy ? new[] { "test-instruction-contract", "test-pr-script" } : [];
+        Assert.Equal(new[] { "delta-judge", "filemap" }.Concat(testResources),
+            Strings(plan["declared_require"]!));
+        Assert.Equal(readsPrPolicy
+            ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj" } : [],
+            Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
-        Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
-        Assert.DoesNotContain("engineering", Strings(plan["cache_layers"]!));
+        Assert.Equal(readsPrPolicy ? "required" : "not-required",
+            plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+        Assert.Equal(readsPrPolicy, Strings(plan["cache_layers"]!).Contains("engineering"));
         Assert.Equal(mixed ? 2 : 1, plan["paths"]!.AsArray().Count);
         if (mode == "push")
         {
-            Assert.Equal(new[] { "build", "filemap" }, Strings(plan["resources"]!));
+            Assert.Equal(new[] { "build", "filemap" }.Concat(testResources), Strings(plan["resources"]!));
             Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["steps"]!));
-            Assert.Equal(new[] { "judge" }, Strings(plan["cache_layers"]!));
+            Assert.Equal(readsPrPolicy ? new[] { "engineering", "judge" } : new[] { "judge" }, Strings(plan["cache_layers"]!));
             Assert.Equal("not-applicable", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
         }
         else
         {
-            Assert.Equal(new[] { "build", "delta-judge", "filemap", "lean", "lean-report" },
+            Assert.Equal(new[] { "build", "delta-judge", "filemap", "lean", "lean-report" }.Concat(testResources),
                 Strings(plan["resources"]!));
             Assert.Equal(new[] { "lean-report", "filemap" }, Strings(plan["execution"]!["steps"]!));
             Assert.Equal("required", plan["stages"]!["delta"]!["status"]!.GetValue<string>());
@@ -495,6 +500,9 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [InlineData("StrataLint.Engine.Tests", "RegressionTests.cs", "test-engine")]
     [InlineData("StrataLint.Lean.Tests", "Native/InspectorNativeTests.cs", "test-lean")]
     [InlineData("StrataLint.Cache.Tests", "LeanCachePublishTests.cs", "test-cache")]
+    [InlineData("StrataLint.Cache.Native.Tests", "NativeCacheReuseTests.cs", "test-cache-native")]
+    [InlineData("StrataLint.Cache.Release.Tests", "LeanCachePublishTests.cs", "test-cache-release")]
+    [InlineData("StrataLint.HeaderScript.Tests", "HeaderCheckScriptTests.cs", "test-header-script")]
     [InlineData("StrataLint.Scribe.Tests", "FileMap/ResourceTests.cs", "test-scribe")]
     [InlineData("Trureturing.Truth.Tests", "AdmissionResourceProbe.cs", "test-truth")]
     [InlineData("StrataLint.ResourcePlanning.Tests", "RegisteredAdmissionResourcesTests.cs", "test-resource-planning")]
@@ -521,13 +529,13 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Theory]
-    [InlineData("StrataLint.Cli", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.CliIntegration.Tests,StrataLint.Tests")]
-    [InlineData("StrataLint.EngineeringScope", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.Cache.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CliIntegration.Tests,StrataLint.EngineeringScope.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.StageIntegration.Tests,StrataLint.TransportIntegration.Tests")]
-    [InlineData("StrataLint.Lean", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.Cache.Tests,StrataLint.CliIntegration.Tests,StrataLint.Lean.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests")]
-    [InlineData("StrataLint.Scribe", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.CliIntegration.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.Tests")]
-    [InlineData("StrataLint.Scribe.Documents", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.CliIntegration.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Tests")]
-    [InlineData("StrataLint.Engine", "JudgeSeedTask.Tests,StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.BuildRuntime.Tests,StrataLint.Cache.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CiArtifacts.Tests,StrataLint.CliIntegration.Tests,StrataLint.Engine.Tests,StrataLint.ExecutionEvidence.Tests,StrataLint.InspectionIntegration.Tests,StrataLint.InspectionScope.Tests,StrataLint.Lean.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests")]
-    [InlineData("Trureturing.Truth", "JudgeSeedTask.Tests,StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.BuildRuntime.Tests,StrataLint.Cache.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CiArtifacts.Tests,StrataLint.CliIntegration.Tests,StrataLint.Engine.Tests,StrataLint.ExecutionEvidence.Tests,StrataLint.InspectionIntegration.Tests,StrataLint.InspectionScope.Tests,StrataLint.Lean.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ReleaseSelection.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests,Trureturing.Truth.Tests")]
+    [InlineData("StrataLint.Cli", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.EngineeringScope", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CliIntegration.Tests,StrataLint.EngineeringScope.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.StageIntegration.Tests,StrataLint.TransportIntegration.Tests")]
+    [InlineData("StrataLint.Lean", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.CliIntegration.Tests,StrataLint.Lean.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests")]
+    [InlineData("StrataLint.Scribe", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.FileMap.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.Scribe.Documents", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.Engine", "JudgeSeedTask.Tests,StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.BuildRuntime.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CiArtifacts.Tests,StrataLint.CliIntegration.Tests,StrataLint.Configuration.Tests,StrataLint.DeclaredTemplate.Tests,StrataLint.Digestion.Tests,StrataLint.Engine.Tests,StrataLint.ExecutionEvidence.Tests,StrataLint.FileMap.Tests,StrataLint.InspectionIntegration.Tests,StrataLint.InspectionScope.Tests,StrataLint.InstructionContract.Tests,StrataLint.Lean.Tests,StrataLint.LeanReportScript.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.PrScript.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ReportSupervisor.Tests,StrataLint.RepositoryConfiguration.Tests,StrataLint.ResourceObservation.Tests,StrataLint.Rules.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests,StrataLint.WorkflowScript.Tests")]
+    [InlineData("Trureturing.Truth", "JudgeSeedTask.Tests,StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.BuildRuntime.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CiArtifacts.Tests,StrataLint.CliIntegration.Tests,StrataLint.Configuration.Tests,StrataLint.DeclaredTemplate.Tests,StrataLint.Digestion.Tests,StrataLint.Engine.Tests,StrataLint.ExecutionEvidence.Tests,StrataLint.FileMap.Tests,StrataLint.InspectionIntegration.Tests,StrataLint.InspectionScope.Tests,StrataLint.InstructionContract.Tests,StrataLint.Lean.Tests,StrataLint.LeanReportScript.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.PrScript.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ReleaseSelection.Tests,StrataLint.ReportSupervisor.Tests,StrataLint.RepositoryConfiguration.Tests,StrataLint.ResourceObservation.Tests,StrataLint.Rules.Tests,StrataLint.Scribe.Documents.Tests,StrataLint.Scribe.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests,StrataLint.WorkflowScript.Tests,Trureturing.Truth.Tests")]
     public void ProductionProjectsSelectTheirExplicitTestConsumers(string project, string assemblies)
     {
         foreach (var mode in new[] { "push", "pr" })
@@ -602,7 +610,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     public void ProductionAndTestChangesKeepBothRegisteredConsumerSets()
     {
         var plan = Plan("tools/StrataLint.Cli/Program.cs", "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs");
-        Assert.Equal(new[] { "StrataLint.ArchitectureTests", "StrataLint.Cache.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.Engine.Tests", "StrataLint.Tests" }
+        Assert.Equal(new[] { "StrataLint.ArchitectureTests", "StrataLint.CliIntegration.Tests", "StrataLint.Engine.Tests", "StrataLint.Tests" }
             .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
     }
@@ -626,18 +634,19 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     public void SharedTestSupportSelectsItsDeclaredConsumerProjects()
     {
         var plan = Plan("tools/TestSupport/StrataLint.TestSupport/TestBudgets.cs", "");
-        Assert.Equal(new[] { "JudgeSeedTask.Tests", "StrataLint.ArchitectureTests", "StrataLint.BuildIntegration.Tests", "StrataLint.BuildRuntime.Tests", "StrataLint.Cache.Tests", "StrataLint.CheckIntegration.Tests", "StrataLint.CiArtifacts.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.Engine.Tests", "StrataLint.ExecutionEvidence.Tests", "StrataLint.InspectionIntegration.Tests", "StrataLint.InspectionScope.Tests", "StrataLint.Lean.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ReleaseSelection.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.Scribe.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.Tests", "StrataLint.TransportIntegration.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(new[] { "JudgeSeedTask.Tests", "StrataLint.ArchitectureTests", "StrataLint.BuildIntegration.Tests", "StrataLint.BuildRuntime.Tests", "StrataLint.Cache.Native.Tests", "StrataLint.Cache.Release.Tests", "StrataLint.Cache.Tests", "StrataLint.CheckIntegration.Tests", "StrataLint.CiArtifacts.Tests", "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.DeclaredTemplate.Tests", "StrataLint.Digestion.Tests", "StrataLint.Engine.Tests", "StrataLint.ExecutionEvidence.Tests", "StrataLint.FileMap.Tests", "StrataLint.HeaderScript.Tests", "StrataLint.InspectionIntegration.Tests", "StrataLint.InspectionScope.Tests", "StrataLint.InstructionContract.Tests", "StrataLint.Lean.Tests", "StrataLint.LeanReportScript.Tests", "StrataLint.NativeTransportIntegration.Tests", "StrataLint.PlanningIntegration.Tests", "StrataLint.PrScript.Tests", "StrataLint.ReleaseIntegration.Tests", "StrataLint.ReleaseSelection.Tests", "StrataLint.ReportSupervisor.Tests", "StrataLint.RepositoryConfiguration.Tests", "StrataLint.ResourceObservation.Tests", "StrataLint.ResourcePlanning.Tests", "StrataLint.Rules.Tests", "StrataLint.Scribe.Tests", "StrataLint.StageIntegration.Tests", "StrataLint.Tests", "StrataLint.TransportIntegration.Tests", "StrataLint.WorkflowScript.Tests" }.Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
         Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
     }
 
     [Theory]
-    [InlineData("StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.Tests")]
+    [InlineData("StrataLint.LeanTestSupport/LeanReportRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.LeanReportScript.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.ConfigurationTestSupport/TestRegistry.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Configuration.Tests,StrataLint.DeclaredTemplate.Tests,StrataLint.Digestion.Tests,StrataLint.FileMap.Tests,StrataLint.RepositoryConfiguration.Tests,StrataLint.Rules.Tests,StrataLint.Tests")]
     [InlineData("StrataLint.AdmissionTestSupport/ProducerInputFixture.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Tests")]
-    [InlineData("StrataLint.ProcessTestSupport/TestProcessRunner.cs", "StrataLint.ArchitectureTests,StrataLint.Cache.Tests,StrataLint.CliIntegration.Tests,StrataLint.Engine.Tests,StrataLint.Lean.Tests,StrataLint.Tests")]
-    [InlineData("StrataLint.RegistrationTestSupport/EngineeringRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CliIntegration.Tests,StrataLint.Engine.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ResourcePlanning.Tests,StrataLint.Scribe.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests")]
-    [InlineData("StrataLint.ScriptProcessTestSupport/EngineeringProcess.cs", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.CheckIntegration.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ResourcePlanning.Tests,StrataLint.StageIntegration.Tests,StrataLint.TransportIntegration.Tests")]
+    [InlineData("StrataLint.ProcessTestSupport/TestProcessRunner.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Engine.Tests,StrataLint.Lean.Tests,StrataLint.LeanReportScript.Tests,StrataLint.PrScript.Tests,StrataLint.ReportSupervisor.Tests,StrataLint.ResourceObservation.Tests,StrataLint.Tests,StrataLint.WorkflowScript.Tests")]
+    [InlineData("StrataLint.RegistrationTestSupport/EngineeringRegistrationFixture.cs", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.CheckIntegration.Tests,StrataLint.CliIntegration.Tests,StrataLint.DeclaredTemplate.Tests,StrataLint.Digestion.Tests,StrataLint.Engine.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ResourcePlanning.Tests,StrataLint.Rules.Tests,StrataLint.Scribe.Tests,StrataLint.StageIntegration.Tests,StrataLint.Tests,StrataLint.TransportIntegration.Tests")]
+    [InlineData("StrataLint.ScriptProcessTestSupport/EngineeringProcess.cs", "StrataLint.ArchitectureTests,StrataLint.BuildIntegration.Tests,StrataLint.Cache.Native.Tests,StrataLint.Cache.Release.Tests,StrataLint.Cache.Tests,StrataLint.CheckIntegration.Tests,StrataLint.HeaderScript.Tests,StrataLint.NativeTransportIntegration.Tests,StrataLint.PlanningIntegration.Tests,StrataLint.ReleaseIntegration.Tests,StrataLint.ResourcePlanning.Tests,StrataLint.StageIntegration.Tests,StrataLint.TransportIntegration.Tests")]
     [InlineData("StrataLint.NativeReportTestSupport/NativeReportFixture.cs", "StrataLint.ArchitectureTests,StrataLint.NativeTransportIntegration.Tests")]
-    [InlineData("StrataLint.CliTestSupport/RuleFixture.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.Tests")]
+    [InlineData("StrataLint.RuleTestSupport/RuleFixture.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.DeclaredTemplate.Tests,StrataLint.Digestion.Tests,StrataLint.Rules.Tests,StrataLint.Tests")]
     public void SpecializedFixturesSelectOnlyTheirConsumersWithoutCache(string fixture, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })
@@ -652,12 +661,15 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     [Theory]
     [InlineData("source_reference.py")]
     [InlineData("truth_release.py")]
-    public void ReleaseWorkflowChangesSelectOnlyReleaseConsumersWithoutCache(string script)
+    public void ReleaseWorkflowChangesSelectOnlyTheirReleaseConsumers(string script)
     {
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan("tools/scripts/workflow/" + script, "", mode);
-            Assert.Equal(new[] { "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj" },
+            var consumers = script == "source_reference.py"
+                ? new[] { "StrataLint.Cache.Release.Tests", "StrataLint.ReleaseIntegration.Tests" }
+                : ["StrataLint.ReleaseIntegration.Tests"];
+            Assert.Equal(consumers.Select(name => $"tools/tests/{name}/{name}.csproj"),
                 Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
@@ -696,10 +708,10 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
     }
 
     [Fact]
-    public void SharedCliPolicyFixtureSelectsBothConsumers()
+    public void SharedConfigurationFixtureSelectsItsConsumers()
     {
-        var plan = Plan("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml", "");
-        Assert.Equal(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Tests" }
+        var plan = Plan("tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml", "");
+        Assert.Equal(new[] { "StrataLint.CliIntegration.Tests", "StrataLint.Configuration.Tests", "StrataLint.DeclaredTemplate.Tests", "StrataLint.Digestion.Tests", "StrataLint.Rules.Tests", "StrataLint.Tests" }
             .Select(name => $"tools/tests/{name}/{name}.csproj"), Strings(plan["execution"]!["tests"]!));
     }
 
@@ -724,14 +736,14 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
-    private JsonNode Plan(string judge, string content, string mode = "pr")
+    private JsonNode Plan(string judge, string content, string mode = "pr", string change = "append")
     {
-        var result = PlanResult(judge, content, mode);
+        var result = PlanResult(judge, content, mode, change);
         Assert.True(result.Exit == 0, result.Text);
         var plan = JsonNode.Parse(result.Text)!;
         output.WriteLine("REGISTERED_ADMISSION_RESOURCES " + new JsonObject
         {
-            ["judge"] = judge, ["content"] = content,
+            ["judge"] = judge, ["content"] = content, ["change"] = change,
             ["resources"] = plan["resources"]!.DeepClone(),
             ["stages"] = plan["stages"]!.DeepClone(),
             ["cache_layers"] = plan["cache_layers"]!.DeepClone(),
@@ -747,7 +759,7 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
         Assert.Contains("FILEMAP match count 0", result.Text, StringComparison.Ordinal);
     }
 
-    private (int Exit, string Text) PlanResult(string judge, string content, string mode = "pr")
+    private (int Exit, string Text) PlanResult(string judge, string content, string mode = "pr", string change = "append")
     {
         using var temporary = new PlanningFixture();
         var prepared = Python(temporary.Path, """
@@ -760,10 +772,27 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             git('clone', '--quiet', '--no-hardlinks', sys.argv[3], str(root))
             base = git('rev-parse', 'HEAD')
             assert base == sys.argv[4]
-            for path in filter(None, sys.argv[5:7]):
+            paths = list(filter(None, sys.argv[5:7]))
+            operation = sys.argv[8]
+            if operation != 'append':
+                assert operation in {'M', 'D', 'R'} and len(paths) == 1
+                target = root / paths[0]
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text('tracked instruction input\n')
+                git('add', '.')
+                git('commit', '-qm', 'tracked input baseline')
+                base = git('rev-parse', 'HEAD')
+            for path in paths:
                 target = root / path
                 target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes((target.read_bytes() if target.is_file() else b'fixture input\n') + b'\n')
+                if operation == 'D':
+                    target.unlink()
+                elif operation == 'R':
+                    destination = root / 'docs/reports/instruction-contract-renamed.md'
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    target.rename(destination)
+                else:
+                    target.write_bytes((target.read_bytes() if target.is_file() else b'fixture input\n') + b'\n')
             git('add', '.')
             git('commit', '-qm', 'explicit changed paths')
             head = git('rev-parse', 'HEAD')
@@ -771,9 +800,11 @@ public sealed class RegisteredAdmissionResourcesTests(ITestOutputHelper output, 
             git('checkout', '--detach', '-q', merge)
             changes = root / 'build/ci/changes.json'
             scope = ci_plan.push_paths(root, merge, base, merge) if sys.argv[7] == 'push' else ci_plan.pr_paths(root, merge, base, head)
+            if operation != 'append':
+                assert len(scope['changes']) == 1 and scope['changes'][0]['status'] == operation, scope
             ci_plan.write(changes, scope)
             print(merge)
-            """, basis.Path, basis.Commit, judge, content, mode);
+            """, basis.Path, basis.Commit, judge, content, mode, change);
         Assert.True(prepared.Exit == 0, prepared.Text);
         return Python(temporary.Path, """
             import json, pathlib, sys

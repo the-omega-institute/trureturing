@@ -15,7 +15,7 @@ public sealed partial class WorktreeCommandTests
         var branch = $"{WorktreeCommand.CreationNamespace}/math/signal-retry";
         var target = Path.Combine(repository.Path, "signal-retry");
         var missingMetadata = WorktreeMetadataPath(repository.Path, target);
-        ReviewRegressionTests.RunGit(repository.Path, "branch", branch, "HEAD");
+        TestGit.Run(repository.Path, "branch", branch, "HEAD");
         Directory.CreateDirectory(target);
         File.WriteAllText(
             Path.Combine(target, ".git"),
@@ -181,7 +181,7 @@ public sealed partial class WorktreeCommandTests
 
     private static string WorktreeMetadataPath(string repository, string target)
     {
-        var commonDirectory = ReviewRegressionTests.RunGit(
+        var commonDirectory = TestGit.Run(
             repository,
             "rev-parse",
             "--git-common-dir").Trim();
@@ -198,15 +198,15 @@ public sealed partial class WorktreeCommandTests
 
     private static void AssertRegisteredAndUsable(string repository, string target, string branch)
     {
-        var inventory = ReviewRegressionTests.RunGit(repository, "worktree", "list", "--porcelain");
+        var inventory = TestGit.Run(repository, "worktree", "list", "--porcelain");
         Assert.Contains(
             $"worktree {LeanCacheGuard.PhysicalPath(target)}\n",
             inventory,
             StringComparison.Ordinal);
-        Assert.Equal("true\n", ReviewRegressionTests.RunGit(target, "rev-parse", "--is-inside-work-tree"));
+        Assert.Equal("true\n", TestGit.Run(target, "rev-parse", "--is-inside-work-tree"));
         Assert.Equal(
             $"refs/heads/{branch}\n",
-            ReviewRegressionTests.RunGit(target, "symbolic-ref", "HEAD"));
+            TestGit.Run(target, "symbolic-ref", "HEAD"));
     }
 
     private static int GitExit(string workingDirectory, params string[] arguments) =>

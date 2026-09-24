@@ -9,7 +9,7 @@ public sealed partial class CurrentExecutionContractTests
 {
     [Theory]
     [InlineData("StrataLint.ArchitectureTests", true)]
-    [InlineData("StrataLint.Cache.Tests", true)]
+    [InlineData("StrataLint.Cache.Tests", false)]
     [InlineData("StrataLint.EngineeringScope.Tests", false)]
     [InlineData("StrataLint.Lean.Tests", false)]
     [InlineData("StrataLint.ScriptTests", true)]
@@ -41,13 +41,13 @@ public sealed partial class CurrentExecutionContractTests
             (Path: "tools/scripts/agent/openproblem/SCREENED-OUT.md", Invalidates: false),
             (Path: "tools/scripts/preflight.sh", Invalidates: generalScripts),
             (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
-            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts),
-            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project != "StrataLint.EngineeringScope.Tests"),
-            (Path: "Meta/FILEMAP.toml", Invalidates: project is "StrataLint.ArchitectureTests" or "StrataLint.Cache.Tests"),
+            (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project == "StrataLint.Cache.Tests"),
+            (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project is not ("StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
+            (Path: "Meta/FILEMAP.toml", Invalidates: project == "StrataLint.ArchitectureTests"),
             (Path: "Meta/ci-cache-paths.json", Invalidates: cacheInvalidates),
-            (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests")),
-            (Path: "tools/lean-inspector/native_image.c", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests")),
-            (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests")),
+            (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
+            (Path: "tools/lean-inspector/native_image.c", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
+            (Path: "tools/lean-inspector/tests/test_native_support.py", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
         };
         foreach (var change in changes) fixture.Write(change.Path,
             change.Path == "Meta/FILEMAP.toml" ? filemap : "original fixture material\n");
@@ -73,7 +73,7 @@ public sealed partial class CurrentExecutionContractTests
     [Theory]
     [InlineData("StrataLint.ArchitectureTests")]
     [InlineData("StrataLint.Tests")]
-    public void RegisteredDigestionContentReusesEvidenceWhileGovernanceInvalidates(string project)
+    public void RegisteredInputsInvalidateOnlyTheirConsumers(string project)
     {
         using var fixture = new ExecutionFixture();
         var repository = TestRepositoryLayout.FindRoot();
@@ -126,10 +126,16 @@ public sealed partial class CurrentExecutionContractTests
                 fixture.Write(path, File.ReadAllText(Path.Combine(fixture.Root, path)).Replace("program", "data", StringComparison.Ordinal));
             else File.AppendAllText(Path.Combine(fixture.Root, path), "\n");
             fixture.Track();
-            Assert.Equal([ExecutionFixture.First], Execute(fixture));
+            var invalidates = project != "StrataLint.Tests"
+                || path is not ("Meta/domains.yaml" or "Meta/registry.yaml");
+            Assert.Equal(invalidates ? [ExecutionFixture.First] : [], Execute(fixture));
             var accepted = CommonExecutionEvidence.ValidateTests(fixture.Root).Projects[0];
-            Assert.NotEqual(original.InputFingerprint, accepted.InputFingerprint);
-            Assert.Equal("executed", accepted.Status);
+            if (invalidates)
+            {
+                Assert.NotEqual(original.InputFingerprint, accepted.InputFingerprint);
+                Assert.Equal("executed", accepted.Status);
+            }
+            else Assert.Equal(original with { Status = "reused" }, accepted);
         }
     }
 

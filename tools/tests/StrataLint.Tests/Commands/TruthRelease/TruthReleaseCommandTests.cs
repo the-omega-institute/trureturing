@@ -307,13 +307,13 @@ public sealed class TruthReleaseCommandTests
 
     private static void InitializeGitRepository(string repositoryRoot)
     {
-        ReviewRegressionTests.RunGit(repositoryRoot, "init");
-        ReviewRegressionTests.RunGit(
+        TestGit.Run(repositoryRoot, "init");
+        TestGit.Run(
             repositoryRoot,
             "config",
             "user.email",
             "truth-release@example.invalid");
-        ReviewRegressionTests.RunGit(
+        TestGit.Run(
             repositoryRoot,
             "config",
             "user.name",
@@ -334,12 +334,12 @@ public sealed class TruthReleaseCommandTests
 
     private static void CommitAll(string repositoryRoot, string message)
     {
-        ReviewRegressionTests.RunGit(repositoryRoot, "add", ".");
-        ReviewRegressionTests.RunGit(repositoryRoot, "commit", "-m", message);
+        TestGit.Run(repositoryRoot, "add", ".");
+        TestGit.Run(repositoryRoot, "commit", "-m", message);
     }
 
     private static string GitObject(string repositoryRoot, string revision) =>
-        ReviewRegressionTests.RunGit(repositoryRoot, "rev-parse", revision).Trim();
+        TestGit.Run(repositoryRoot, "rev-parse", revision).Trim();
 
     private static string FileMap() => """
         schema_version = 4

@@ -1,7 +1,7 @@
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.NonpropositionalTestSupport;
+using static StrataLint.TestSupport.NonpropositionalTestSupport;
 using static StrataLint.Tests.SettleAtomCommandTests;
 
 namespace StrataLint.Tests;

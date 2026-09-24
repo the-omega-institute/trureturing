@@ -130,7 +130,7 @@ public sealed partial class CoverBatchCommandTests
     public void ProductionInputReaderAllowsOurOwnLedgerMigrations()
     {
         using var world = new BatchWorld { UseGitReader = true };
-        ReviewRegressionTests.RunGit(world.Root, "init");
+        TestGit.Run(world.Root, "init");
 
         var result = world.Run(Row(First, Gid) + Row(Second, OtherGid));
 
@@ -145,7 +145,7 @@ public sealed partial class CoverBatchCommandTests
     public void ProductionInputReaderAbortsOnNewOrMissingSharedInputs(string change)
     {
         using var world = new BatchWorld { UseGitReader = true };
-        ReviewRegressionTests.RunGit(world.Root, "init");
+        TestGit.Run(world.Root, "init");
         world.DuringVerification = () =>
         {
             if (change == "added") File.WriteAllText(Path.Combine(world.Root, "new-input.txt"), "new input");
@@ -513,9 +513,9 @@ public sealed partial class CoverBatchCommandTests
 
         internal string WriteReportBundle()
         {
-            ReviewRegressionTests.RunGit(Root, "init", "--quiet");
-            ReviewRegressionTests.RunGit(Root, "add", ".");
-            ReviewRegressionTests.RunGit(Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.test",
+            TestGit.Run(Root, "init", "--quiet");
+            TestGit.Run(Root, "add", ".");
+            TestGit.Run(Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.test",
                 "commit", "--quiet", "-m", "synthetic producer inputs");
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(Repository.ReadCurrent())).Snapshot;
             var reports = inputs.Report.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value, StringComparer.Ordinal);
