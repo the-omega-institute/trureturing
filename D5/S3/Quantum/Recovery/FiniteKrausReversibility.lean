@@ -225,8 +225,7 @@ theorem scalar_products_construct_left_inverse (E : s → Matrix n d ℂ)
     have hz : (1 - P) * syndromeEncoding S sigma X = 0 := by
       rw [Matrix.sub_mul, Matrix.one_mul, code_support_on_encoding S hS, sub_self]
     rw [hz, Matrix.trace_zero, zero_smul, add_zero]
-    simpa only [syndromeDecoding, Matrix.conjTranspose_conjTranspose] using
-      trace_one_syndrome_recovery S hS sigma hsigmatrace X
+    rw [orthogonal_syndrome_recovery S hS, hsigmatrace, one_smul]
   let e := (Fintype.equivFin (J ⊕ n)).symm
   refine ⟨Fintype.card (J ⊕ n), fun b => A₀ (e b), ?_, fun X => ?_⟩
   · calc

@@ -87,14 +87,6 @@ theorem orthogonal_syndrome_recovery (S : s → Matrix n d ℂ)
     decoding_syndrome_block S hS rho]
   simp [smul_ite, Matrix.trace, Matrix.diag_apply, Finset.sum_smul]
 
-/-- A trace-one syndrome is exactly irrelevant to the recovered logical state. -/
-theorem trace_one_syndrome_recovery (S : s → Matrix n d ℂ)
-    (hS : OrthogonalSyndromes S)
-    (sigma : Matrix s s ℂ) (hTrace : Matrix.trace sigma = 1)
-    (rho : Matrix d d ℂ) :
-    syndromeDecoding S (syndromeEncoding S sigma rho) = rho := by
-  rw [orthogonal_syndrome_recovery S hS, hTrace, one_smul]
-
 /-- Logical unitary transport within each syndrome preserves orthogonality.
 This constructs the corrected decoding frame for a known syndrome history. -/
 theorem syndrome_transport_orthogonal (S : s → Matrix n d ℂ)
@@ -113,22 +105,8 @@ theorem syndrome_transport_orthogonal (S : s → Matrix n d ℂ)
         simpa using hV i
       · simp [hij]
 
-/-- A decoder that transports every syndrome frame recovers all logical
-matrices even when different syndromes carry different logical holonomies. -/
-theorem transported_syndrome_recovery (S : s → Matrix n d ℂ)
-    (hS : OrthogonalSyndromes S) (V : s → Matrix d d ℂ)
-    (hV : ∀ i, (V i)ᴴ * V i = 1)
-    (sigma : Matrix s s ℂ) (hTrace : Matrix.trace sigma = 1)
-    (rho : Matrix d d ℂ) :
-    syndromeDecoding (fun i => S i * V i)
-      (syndromeEncoding (fun i => S i * V i) sigma rho) = rho := by
-  exact trace_one_syndrome_recovery _
-    (syndrome_transport_orthogonal S hS V hV) sigma hTrace rho
-
 #print axioms decoding_syndrome_block
 #print axioms orthogonal_syndrome_recovery
-#print axioms trace_one_syndrome_recovery
 #print axioms syndrome_transport_orthogonal
-#print axioms transported_syndrome_recovery
 
 end D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding

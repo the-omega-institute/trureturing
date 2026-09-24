@@ -24,21 +24,6 @@ set_option relaxedAutoImplicit false
 /-- Coherence multiplier after forgetting which phase branch occurred. -/
 def phaseMix (p u v : ℂ) : ℂ := (1 - p) * u + p * v
 
-/-- The visibility deficit is exactly a weighted phase separation. -/
-theorem weighted_phase_defect (p u v : ℂ)
-    (hp : star p = p) (hu : star u * u = 1) (hv : star v * v = 1) :
-    star (phaseMix p u v) * phaseMix p u v =
-      1 - p * (1 - p) * (star (u - v) * (u - v)) := by
-  calc
-    star (phaseMix p u v) * phaseMix p u v =
-        (1 - p) * (star u * u) + p * (star v * v) -
-          p * (1 - p) * (star (u - v) * (u - v)) := by
-      simp only [phaseMix, star_add, star_mul, star_sub, star_one, hp]
-      ring
-    _ = 1 - p * (1 - p) * (star (u - v) * (u - v)) := by
-      rw [hu, hv]
-      ring
-
 /-- If both branches occur, unit visibility forces equality of their phases.
 No postselection, numerical approximation, or finite grid is used. -/
 theorem unit_visibility_iff_phases_equal (p u v : ℂ)
@@ -47,7 +32,17 @@ theorem unit_visibility_iff_phases_equal (p u v : ℂ)
     star (phaseMix p u v) * phaseMix p u v = 1 ↔ u = v := by
   constructor
   · intro hVisible
-    have h := weighted_phase_defect p u v hp hu hv
+    have h : star (phaseMix p u v) * phaseMix p u v =
+        1 - p * (1 - p) * (star (u - v) * (u - v)) := by
+      calc
+        star (phaseMix p u v) * phaseMix p u v =
+            (1 - p) * (star u * u) + p * (star v * v) -
+              p * (1 - p) * (star (u - v) * (u - v)) := by
+          simp only [phaseMix, star_add, star_mul, star_sub, star_one, hp]
+          ring
+        _ = 1 - p * (1 - p) * (star (u - v) * (u - v)) := by
+          rw [hu, hv]
+          ring
     rw [hVisible] at h
     have hzero : p * (1 - p) * (star (u - v) * (u - v)) = 0 := by
       linear_combination h
@@ -65,13 +60,6 @@ theorem unit_visibility_iff_phases_equal (p u v : ℂ)
     have hMix : phaseMix p u u = u := by unfold phaseMix; ring
     rw [hMix, hu]
 
-/-- Equally weighted opposite phases erase the coherence exactly. -/
-theorem opposite_phase_erasure :
-    phaseMix (1 / 2) 1 (-1) = 0 := by
-  norm_num [phaseMix]
-
-#print axioms weighted_phase_defect
 #print axioms unit_visibility_iff_phases_equal
-#print axioms opposite_phase_erasure
 
 end D5.S3.Quantum.Recovery.TwoSyndromePhaseDefect

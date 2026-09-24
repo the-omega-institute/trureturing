@@ -183,7 +183,7 @@ theorem full_syndrome_decoder (S : s → Matrix n d ℂ)
   have hz : (1 - codeSupport S) * syndromeEncoding S sigma rho = 0 := by
     rw [Matrix.sub_mul, Matrix.one_mul, code_support_on_encoding S hS, sub_self]
   rw [hz, Matrix.trace_zero, zero_smul, add_zero]
-  exact trace_one_syndrome_recovery S hS sigma hsigma rho
+  rw [orthogonal_syndrome_recovery S hS, hsigma, one_smul]
 
 /-- A Gram factor of the syndrome density supplies concrete encoding Kraus maps. -/
 def encodingKraus (S : s → Matrix n d ℂ) (B : Matrix s s ℂ) (j : s) :
