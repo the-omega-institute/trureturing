@@ -116,7 +116,9 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
   rcases a with ⟨i, k, g, a⟩
-  simp [join, split]
+  simp only [join, split]
+  apply (Fin.heq_ext_iff (by simp)).2
+  simpa using congrArg Fin.val ((fiberEquiv U V i k g).symm_apply_apply a)
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
