@@ -239,3 +239,5 @@ specific control instance and do not replace its quantifiers.
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/anchor_hinge_compensation.py
 ```
+
+[Report544](544-missing-original-slots-restore-a-common-law-debit.md) extends this packing with four disjoint later loss regions. A fixed zero-debit completion remains insufficient even with the best labelwise maximizing final queries, but another legal completion gives a first11 debit1/35 and certifies the same actual law at every finite height in the construction. Its general weighted missing-slot criterion and actual-phase refinement also exclude further arbitrary two-copy families. Thus the obstruction concerns the specified completion, not all completion choices or the existence of a good law.
