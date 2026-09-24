@@ -190,7 +190,9 @@ parse_snapshot() {
       (.path | type == "string" and length > 0) and
       (.pull_requests | type == "array") and
       (if native_run then associated_prs as $prs |
-        ($prs | length) == 1 and all(.pull_requests[]; .number == $prs[0])
+        # Same-head PRs may share associations; a nonempty list must include the native origin.
+        ($prs | length) == 1 and
+          ((.pull_requests | length) == 0 or any(.pull_requests[]; .number == $prs[0]))
        elif (.event | pr_event) then (.pull_requests | length > 0) else true end) and
       (.repository.id as $repository_id | all(.pull_requests[];
         type == "object" and (.id | database_id) and (.number | database_id) and
