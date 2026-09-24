@@ -2515,3 +2515,343 @@ $$
 最后应用定理 15.2 的已知参数最优风险，得证。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 增补十三·稀疏支持的方向边界与行样本比较
+
+**定义 16.1（增长支持与两个统计实验）。** 令
+\(n=2^d\)、\(M=n/2\)、\(\ell=\log M\)，沿用奇偶类
+\(C_+,C_-\) 和符号 \(\chi\)。给定整数 \(1\le q<M/2\)
+及 \(0<r<1\)，对未知且在全部观测期间固定的集合
+\(S\subset C_+\)、\(|S|=q\)，定义
+\[
+ a=\frac{rq}{M-q},\qquad
+ b_S(x)=
+ \begin{cases}r,&x\in S,\\-a,&x\in C_+\setminus S,\\0,&x\in C_-,\end{cases}
+ \qquad P_S(x,y)=\frac{1+\chi(x)\chi(y)b_S(x)}n.
+ \tag{16.1}
+\]
+记 \(K_{S,+}=P_S\)、\(K_{S,-}=P_S^{\mathsf T}\)。两者均严格正、
+双随机，且平方等于均匀重置核 \(\Pi\)。参数为
+\(\vartheta=(S,\varepsilon)\)，其中 \(\varepsilon\in\{+,-\}\)。
+实验 \(\mathcal E_{\rm pair}\) 观察 \(s\) 个独立的均匀平稳相邻对；
+实验 \(\mathcal E_{\rm path}\) 观察均匀起点后的 \(s\) 次连续转移。
+令 \(\lambda=s/n\)，并以
+\[
+ R_{\mathcal E}(d,s,q,r)
+ =\inf_\psi\sup_{S,\varepsilon}
+   \Pr_{S,\varepsilon}^{\mathcal E}\{\psi\ne\varepsilon\}
+ \tag{16.2}
+\]
+表示允许随机化的最坏方向错误率。下确界中的规则可知道
+\(d,s,q,r\)，不知道 \(S,\varepsilon\)。
+另记 \(\phi(u)=\tfrac12[(1+u)\log(1+u)+(1-u)\log(1-u)]\)。
+
+**定理 16.2（两个方向实验的稀疏检测边界）。** 设
+\[
+ q=M^{1-\beta+o(1)},\qquad \tfrac12<\beta<1,\qquad r\longrightarrow0,
+ \qquad \frac{\lambda r^2}{2\ell}\longrightarrow\rho\in(0,\infty).
+ \tag{16.3}
+\]
+定义
+\[
+ \rho_*(\beta)=
+ \begin{cases}
+ \beta-\tfrac12,&\tfrac12<\beta\le\tfrac34,\\
+ (1-\sqrt{1-\beta})^2,&\tfrac34<\beta<1.
+ \end{cases}
+ \tag{16.4}
+\]
+则对 \(\mathcal E\in\{\mathcal E_{\rm pair},\mathcal E_{\rm path}\}\)，
+\[
+ R_{\mathcal E}(d,s,q,r)\longrightarrow
+ \begin{cases}\tfrac12,&\rho<\rho_*(\beta),\\0,&\rho>\rho_*(\beta).
+ \end{cases}
+ \tag{16.5}
+\]
+存在只使用 \(d,s\) 的同一组规则，在每条满足严格上侧条件的序列上
+实现错误率趋零；规则不需要 \(q,\beta,r\)。结论不涉及等号处的临界窗。
+
+式 (16.4) 的曲线及独立二项坐标的 Higher Criticism 边界是已知结果，
+见 [Mukherjee–Pillai–Lin，式 (6.1)、(6.4) 与定理 6.8(2)、6.10(2)](../../../Library/Dynamics/mukherjee2015binary.md)。
+其二项成功概率偏移对应这里的 \(r/2\)，文中强度参数对应 \(\rho/4\)。
+本定理的对象是带补偿的固定正支持及其两个实际方向观测律。
+
+**证明。** 首先由 (16.3) 得 \(\lambda/\ell\to\infty\)。取
+\[
+ \delta=(\ell/\lambda)^{1/4},\qquad
+ m_- =\lfloor(1-\delta)\lambda\rfloor,\quad
+ m_+ =\lceil(1+\delta)\lambda\rceil.
+ \tag{16.6}
+\]
+只需考虑使 \(0<\delta<1/2\)、\(m_-\ge1\) 的充分大维数。
+
+（一）把有限观测与独立行样本耦合。对每个状态 \(x\)，预先取无限列
+\(Y_{x,1},Y_{x,2},\ldots\)，各列内部及不同列之间全部独立，
+且 \(Y_{x,j}\sim K(x,\cdot)\)。由独立均匀起点出发，每次处于
+\(x\) 就消费该列的下一项，得到精确的 \(K\)-马尔可夫链。
+严格正性保证无限路径几乎必然访问每个状态无穷次，因此从无限路径
+提取每个状态的前 \(m\) 个后继，恰好恢复这些独立列。
+首访后继抽样是已知构造，见
+[Wolfer–Kontorovich，§6.1.1–6.1.2](../../../Library/Dynamics/wolfer2020identity.md)，
+其中也明确区分无限样本与有限期覆盖事件。
+
+对两个实际核均有 \(K^2=\Pi\)。所以偶数时刻状态相互独立均匀，
+奇数时刻状态也相互独立均匀；这不要求两个子序列之间独立。
+令 \(V_x=\sum_{j=0}^{s-1}{\bf1}_{\{X_j=x\}}\) 为出发次数。
+分别对两个子序列用二项 Chernoff 界，再对状态取并集，得绝对常数
+\(c,C>0\) 使
+\[
+ \sup_{S,\varepsilon}
+ \Pr\{\max_x|V_x-\lambda|>\delta\lambda\}
+ \le Cn\exp(-c\delta^2\lambda)=:\epsilon_M\longrightarrow0.
+ \tag{16.7}
+\]
+整数舍入可吸收到常数中。独立相邻对的出发状态为独立均匀样本，
+满足同一界。因 \(\delta^2\lambda/\ell=\sqrt{\lambda/\ell}\to\infty\)，
+最后的极限成立。
+
+令 \(B_m^c(S)\) 表示 \(M\) 行、每行 \(m\) 个相互独立符号的乘积律，
+其行均值在 \(S\) 为 \(r\)，在 \(C_+\setminus S\) 为 \(-a\)；
+令 \(B_m^0\) 为全部公平符号的乘积律。从实际观测的每个正类出发状态
+提取前 \(m_-\) 个后继奇偶符号；次数不足时输出固定后备值。
+在正向律下，该输出距 \(B_{m_-}^c(S)\) 的总变差不超过 \(\epsilon_M\)。
+在反向律下，精确恒等式
+\[
+ \sum_y\chi(y)P_S^{\mathsf T}(x,y)
+ =\frac1n\sum_y\chi(y)+\frac{\chi(x)}n\sum_y b_S(y)=0
+ \tag{16.8}
+\]
+表明每行提取符号均公平，所以输出距 \(B_{m_-}^0\) 不超过
+\(\epsilon_M\)。这些都是与无限独立列的无条件耦合界；没有在覆盖
+事件条件下宣称行样本独立。
+
+反过来，给定 \(m_+\) 行长的正类符号，可模拟正向观测：在正类
+状态消费该行下一符号，再在对应奇偶类均匀选后继；在负类状态直接
+均匀选后继。路径从均匀状态开始，相邻对则每次独立均匀选出发状态。
+耗尽某行时输出固定后备观测。输入为 \(B_{m_+}^c(S)\) 时，
+输出与真实正向律的总变差至多 \(\epsilon_M\)；输入为
+\(B_{m_+}^0\) 时，与完全均匀参考观测律 \(U_{\mathcal E}\) 的距离
+亦至多 \(\epsilon_M\)。模拟规则本身不使用 \(S,r\)。
+把输出的整条路径反序或交换每对的两端，即得到相应反向比较。
+
+（二）去掉背景补偿。令 \(B_m^u(S)\) 把非信号行改为公平符号，
+保留信号行均值 \(r\)。对 \(m=m_-\) 或 \(m_+\)，相对熵精确为
+\[
+ D(B_m^c(S)\Vert B_m^u(S))
+ =m(M-q)\phi(a)
+ =O\!\left(\frac{mr^2q^2}{M}\right)
+ =M^{1-2\beta+o(1)}\ell\longrightarrow0.
+ \tag{16.9}
+\]
+由 Pinsker，不论固定 \(S\) 还是均匀固定基数混合，两者总变差均趋零。
+以下只需分析 \(B_m^u(S)\)，其中 \(m/\lambda\to1\)。
+
+（三）所需二项尾的对数精度。若 \(Z=m^{-1/2}\sum_{j=1}^m B_j\)，
+符号均值为 \(u\)，且 \(m/\ell\to\infty\)、
+\(\sqrt m\,u/\sqrt{2\ell}\to c_0\ge0\)，则对固定 \(t>0\)，
+\[
+ \Pr_u\{Z\ge\sqrt{2t\ell}\}
+ =M^{-(\sqrt t-c_0)_+^2+o(1)},\qquad
+ \Pr_u\{Z\le\sqrt{2t\ell}\}
+ =M^{-(c_0-\sqrt t)_+^2+o(1)}.
+ \tag{16.10}
+\]
+阈值参数 \(t_M\to t>0\) 也成立。这里仅需对数误差 \(o(\ell)\)。
+事实上，对小 \(u,v\)，
+\(D(\operatorname{Rad}(v)\Vert\operatorname{Rad}(u))
+ =(v-u)^2/2+O((|u|+|v|)^4)\)。在所需尺度上，乘以 \(m\) 后的余项
+为 \(O(\ell^2/m)=o(\ell)\)。Chernoff 给出相应上界。
+下界可倾斜到均值
+\(v=\max\{u,\sqrt{2t\ell/m}+3/\sqrt m\}\)，并限制样本均值
+落在 \([v-2/\sqrt m,v+2/\sqrt m]\)。该区间由 Chebyshev 至少有
+\(3/4\) 的倾斜概率，且位于上尾事件内。区间上的对数似然变化及
+倾斜中心移动仅付出 \(O(\sqrt\ell+1)=o(\ell)\)。
+下尾用对应的最小值和负向移动。此论证不产生 \(\log m\) 的前因子，
+故允许 \(r\) 以任意快的速度趋零。由 (16.3)，余项也可写成
+\(O(r^2\ell)=o(\ell)\)，无须假设 \(r\ell\to0\)。
+
+（四）未知稀疏度和振幅的规则。令 \(m=m_-\)，各行统计量为
+\(Z_x=m^{-1/2}\sum_j B_{x,j}\)。对 \(0<t\le1\)，以 \(C_t\)
+计数满足 \(Z_x\ge\sqrt{2t\ell}\) 的行，令 \(p_0(t)\) 为
+公平符号的精确二项尾概率。信号行相应概率 \(p_1(t)\) 满足
+\[
+ p_0(t)=M^{-t+o(1)},\qquad
+ p_1(t)=M^{-g(t,\rho)+o(1)},\quad
+ g(t,\rho)=(\sqrt t-\sqrt\rho)_+^2.
+ \tag{16.11}
+\]
+因此均值超额为 \(q(p_1-p_0)=M^{1-\beta-g+o(1)}\)，
+零假设下方差不超过 \(Mp_0\)，备择下方差不超过 \(Mp_0+qp_1\)。
+足够的幂次裕量为
+\[
+ F(t)=\tfrac12-\beta+\tfrac t2-(\sqrt t-\sqrt\rho)_+^2>0.
+ \tag{16.12}
+\]
+当 \(\rho\le1/4\) 时最大值在 \(t=4\rho\)，为
+\(1/2-\beta+\rho\)；当 \(\rho>1/4\) 时在 \(t=1\)，为
+\(1-\beta-(1-\sqrt\rho)_+^2\)。最大值严格为正等价于
+\(\rho>\rho_*(\beta)\)。
+
+具体地，置 \(J=\lceil\ell\rceil\)、\(t_j=j/J\)，计算
+\[
+ H=\max_{1\le j\le J}
+ \frac{C_{t_j}-Mp_0(t_j)}{\sqrt{Mp_0(t_j)+1}},
+ \qquad \psi=\begin{cases}+,&H>\ell,\\-,&H\le\ell.\end{cases}
+ \tag{16.13}
+\]
+公平乘积律下，Chebyshev 与并集界给出
+\(\Pr\{H>\ell\}\le J/\ell^2\to0\)。在严格上侧，选网格点
+趋向一个满足 (16.12) 的固定 \(t\)。其标准化均值超额按正幂增长，
+且 \((Mp_0+qp_1)/[q(p_1-p_0)]^2\to0\)，所以
+\(\Pr\{H>\ell\}\to1\)。式 (16.9) 与无条件行提取分别将这两个
+结论送回实际正向和反向观测。各界对 \(S\) 一致，得到 (16.5) 的上侧。
+小维数的无效行长情形可任意定义规则，不影响极限。
+
+（五）固定支持先验的下界。取 \(S\) 在全部 \(q\) 元子集上均匀，
+只抽一次并用于全部观测。两个独立支持的交叠 \(J_0=|S\cap T|\)
+为超几何变量，记 \(\eta=q^2/M\)。由核的精确 Gram 恒等式，
+对两个实验及每个方向都成立
+\[
+ 1+\chi^2(\overline P_{\mathcal E}^{\varepsilon},U_{\mathcal E})
+ =\mathbb E(1+\theta(J_0-\eta))^s,
+ \qquad \theta=\frac{r^2M^2}{n(M-q)^2}.
+ \tag{16.14}
+\]
+该恒等式亦可直接验证：令 \(T(x,y)=nP_S(x,y)P_T(x,y)\)。
+每列之和均为 \(1+\theta(J_0-\eta)\)，因为
+\(\sum_x\chi(x)(b_S(x)+b_T(x))=0\)。故均匀行向量是
+\(T\) 的左特征向量，得到路径乘积；同时转置两个核只把
+\(T\) 转置，不改均匀端点的矩阵乘积。独立对则逐对相乘。
+
+对 \(z\ge1\)，用超几何阶乘矩展开得
+\(\mathbb E z^{J_0}\le(1+(q/M)(z-1))^q\le e^{\eta(z-1)}\)。
+令 \(\tau=s\theta=2\rho\ell(1+o(1))\)，有
+\[
+ 1+\chi^2\le\exp\{\eta(e^\tau-1-\tau)\}\longrightarrow1
+ \quad\text{若 }\rho<\beta-\tfrac12.
+ \tag{16.15}
+\]
+这给出 \(\beta\le3/4\) 的全部严格下侧。
+
+对 \(\beta>3/4\)，在 \(m=m_+\) 的无补偿乘积实验中，单行似然比为
+\(L_x=\prod_{j=1}^m(1+rB_{x,j})\)。定义
+\(A_x=\{Z_x\le\sqrt{2\ell}\}\)，对支持混合似然 \(L\) 作截断
+\[
+ \widetilde L=\binom Mq^{-1}
+  \sum_{|S|=q}\prod_{x\in S}L_x{\bf1}_{A_x}\le L.
+ \tag{16.16}
+\]
+记 \(a_1=\mathbb E_0 L_x{\bf1}_{A_x}=\Pr_r(A_x)\)。
+当 \(\rho<\rho_*(\beta)<1\) 时，由 (16.10)，
+\(q\Pr_r(A_x^c)=M^{1-\beta-(1-\sqrt\rho)^2+o(1)}\to0\)，
+所以 \(\mathbb E_0\widetilde L=a_1^q\to1\)。二次倾斜精确给出
+\[
+ a_2:=\mathbb E_0L_x^2{\bf1}_{A_x}
+ =(1+r^2)^m\Pr_{r_2}(A_x),\quad r_2=\frac{2r}{1+r^2},
+ \qquad a_2=M^{\kappa(\rho)+o(1)},\quad
+ \kappa(\rho)=2\rho-(2\sqrt\rho-1)_+^2.
+ \tag{16.17}
+\]
+利用同一固定基数交叠律，
+\[
+ \mathbb E_0\widetilde L^2
+ =\mathbb E[a_1^{2(q-J_0)}a_2^{J_0}]
+ \le\exp\{\eta(\max\{1,a_2\}-1)\}\longrightarrow1.
+ \tag{16.18}
+\]
+最后极限的指数条件在 \(\rho\le1/4\) 时由
+\(1-2\beta+2\rho<0\) 给出；在 \(\rho>1/4\) 时化为
+\(1-2\beta+\kappa(\rho)=2(2\sqrt\rho-\rho-\beta)<0\)，
+恰由所论严格下侧给出。于是
+\(\mathbb E_0|L-1|\le\mathbb E_0(L-\widetilde L)
+ +\mathbb E_0|\widetilde L-1|\to0\)。
+此处先验只有正振幅，故没有把较大有符号备择类的下界直接用于其子类。
+
+由 (16.9) 和 \(m_+\) 模拟器的总变差收缩，实际正向混合趋近
+\(U_{\mathcal E}\)；反序给出反向混合的同一结论。因此两方向混合的
+总变差趋零，任意规则的最坏错误率至少为其等先验 Bayes 错误率
+\((1-\operatorname{TV}(\overline P^+,\overline P^-))/2\to1/2\)。
+独立公平猜方向给出上界 \(1/2\)，完成严格下侧。∎
+
+**定理 16.3（按需补齐的有限样本实验比较）。** 对定义 16.1 的
+两个实验，每一维的参数集为所有 \((S,\varepsilon)\)，其中 \(q,r\)
+给定。令
+\(A=q\phi(r)+(M-q)\phi(a)\)。对任意 \(s\ge1\)，其 Le Cam 距离满足
+\[
+ \Delta(\mathcal E_{\rm pair},\mathcal E_{\rm path})
+ \le\sqrt{\sqrt\lambda\,A}.
+ \tag{16.19}
+\]
+这里 \(\Delta\) 是两个方向 deficiency 的最大值，deficiency 以
+参数无关随机映射后的最坏总变差定义。两个比较映射只使用 \(d,s\)，
+不使用 \(S,\varepsilon,q,r\)。特别地，在 (16.3) 之外再有
+\[
+ qr\sqrt\ell\longrightarrow0,
+ \tag{16.20}
+\]
+就有 \(\Delta(\mathcal E_{\rm pair},\mathcal E_{\rm path})\to0\)。
+式 (16.20) 是本比较给出的充分条件。
+
+**证明。** 从源观测中按出发状态分组，并保留每行目的状态的原次序，
+得到第 \(x\) 行的 \(V_x\) 个样本。模拟目标实验时，各行的读取位置
+重新从第一项开始；目标路径使用新的独立均匀起点，目标相邻对使用
+新的独立均匀出发状态序列。请求的行尚有已观察项时直接重放它；
+耗尽时才补一个独立均匀目的状态并继续。输出目标观测。
+这是不依赖未知参数的随机映射，不设置覆盖失败事件。
+
+固定真实核 \(K=K_\vartheta\)，另定义理想比较：源观测仍真实，
+但耗尽后按 \(K(x,\cdot)\) 而非均匀律补齐。无限独立行列的延迟
+揭示构造表明，给定全部有限源观测，尚未请求的各行尾部仍按原行律
+条件独立。因为源路径每次请求哪一行仅由起点和此前已揭示值决定，
+包括末状态在内的有限路径不会检视未请求项；独立相邻对的请求次序
+则由独立出发状态序列决定。因此，按真实行律补回未观察尾部后，
+完整无限行列具有原来的无条件乘积律。使用新的独立目标起点或出发
+状态序列重放这些列，所得目标边缘恰好为真实目标实验。
+
+记理想联合律为 \(J_K\)，均匀补齐的联合律为 \(J_U\)，联合观测
+包含源和目标两部分。两者的源律以及目标起点或出发状态的随机性
+相同；重放项在给定源与目标过去后确定；只有新补项的条件律不同。
+令 \(W_x\) 为目标实验从 \(x\) 出发的总次数。相对熵链式法则给出
+\[
+ D(J_K\Vert J_U)
+ =\sum_x\mathbb E_{J_K}(W_x-V_x)_+
+       D(K(x,\cdot)\Vert\mathrm{Unif}).
+ \tag{16.21}
+\]
+每行新增项恰有 \((W_x-V_x)_+\) 个；请求该项的事件在揭示它之前
+已确定，故其条件期望贡献就是对应行的相对熵。
+
+理想联合律下，源和目标的边缘均真实平稳，故
+\(\mathbb EV_x=\mathbb EW_x=\lambda\)。不要求这两个计数独立。
+均值相等及 Cauchy–Schwarz 给出
+\[
+ \mathbb E(W_x-V_x)_+
+ =\tfrac12\mathbb E|W_x-V_x|
+ \le\tfrac12\bigl(\sqrt{\operatorname{Var}V_x}
+                      +\sqrt{\operatorname{Var}W_x}\bigr).
+\]
+对独立相邻对，计数方差为 \(\lambda(1-1/n)\le\lambda\)。
+对路径，由 \(K^2=\Pi\)，相距至少二步的状态指示函数协方差为零，
+而 \(K(x,x)=(1+b_S(x))/n\) 在转置下不变，所以
+\[
+ \operatorname{Var}V_x
+ =\lambda(1-1/n)+\frac{2(s-1)b_S(x)}{n^2}
+ \le\lambda(1+1/n)\le2\lambda.
+\]
+无论比较方向如何，均有
+\(\mathbb E(W_x-V_x)_+\le(1+\sqrt2)\sqrt\lambda/2
+ \le2\sqrt\lambda\)。另一方面，
+\[
+ \sum_xD(K_\vartheta(x,\cdot)\Vert\mathrm{Unif})
+ =q\phi(r)+(M-q)\phi(a)=A.
+\]
+正向逐行计算即可；反向相同是因为对全部转移项的和在转置下不变。
+因此 (16.21) 不超过 \(2\sqrt\lambda A\)。舍去源观测，用数据处理
+和 Pinsker，目标律误差不超过 \(\sqrt{\sqrt\lambda A}\)。两比较
+方向均成立，得到 (16.19)。
+
+在 (16.3) 下，\(A=O(qr^2)\) 且
+\(\sqrt\lambda A=O(qr\sqrt\ell)\)。式 (16.20) 因而使 (16.19)
+趋零。∎
+
+## 追加锚（本行以下为增补区）
