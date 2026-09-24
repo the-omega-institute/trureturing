@@ -71,7 +71,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void CoverBatchRuntimeReadsDoNotExpandContentOrNoResourcePolicy(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal) ? new[] { InstructionContractProject } : []),
+            Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal)
+                    ? new[] { InstructionContractProject, RepositoryDigestionProject }
+                    : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
+                        ? new[] { RepositoryDigestionProject } : []),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 }
