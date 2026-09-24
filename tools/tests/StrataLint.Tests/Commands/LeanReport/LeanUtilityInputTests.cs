@@ -9,9 +9,9 @@ public sealed class LeanUtilityInputTests
     [Fact]
     public void ProducerUsesCanonicalUtilityParserToCreateStructuredObligations()
     {
-        var fixture = UtilityRefutationTests.RefutationFixture();
+        var fixture = UtilityAdmissionTestSupport.RefutationFixture();
         var repository = new FakeRepositoryGateway(RawChangeSet.Create([]),
-            OrdinaryInstanceAdmissionTests.Raw(fixture.Files), null);
+            UtilityAdmissionTestSupport.Raw(fixture.Files), null);
         var console = new BufferedConsole();
         var exit = CliApplication.Run(["lean-utility-input"],
             new ProductionCliEnvironment("/repo", repository, new FakeLeanReportSource(null)), console);
@@ -20,7 +20,7 @@ public sealed class LeanUtilityInputTests
         using var json = JsonDocument.Parse(console.Output);
         var obligation = Assert.Single(json.RootElement.EnumerateArray());
         Assert.Equal(RuleFixture.RingPath, obligation.GetProperty("modulePath").GetString());
-        Assert.Equal(UtilityRefutationTests.Claim, obligation.GetProperty("claimGid").GetString());
+        Assert.Equal(UtilityAdmissionTestSupport.Claim, obligation.GetProperty("claimGid").GetString());
         Assert.Equal("D5.S0.Carrier.Ring", obligation.GetProperty("claimModule").GetString());
         Assert.Equal("proposed_law", obligation.GetProperty("claimSelector").GetString());
         Assert.Equal("refuted_law", obligation.GetProperty("resultSelector").GetString());
@@ -37,9 +37,9 @@ public sealed class LeanUtilityInputTests
     [InlineData("kind=certified-instance; basis=refutes=gid:D5/S0/Carrier/Ring.proposed_law; claim=D5/S0/Carrier/Ring.proposed_law; result=D5/S0/Carrier/Ring.refuted_law")]
     public void NonObligationsDoNotProduceInventedEvidence(string utility)
     {
-        var fixture = OrdinaryInstanceAdmissionTests.InstanceFixture(utility);
+        var fixture = UtilityAdmissionTestSupport.InstanceFixture(utility);
         var repository = new FakeRepositoryGateway(RawChangeSet.Create([]),
-            OrdinaryInstanceAdmissionTests.Raw(fixture.Files), null);
+            UtilityAdmissionTestSupport.Raw(fixture.Files), null);
         var console = new BufferedConsole();
         Assert.Equal(0, CliApplication.Run(["lean-utility-input"],
             new ProductionCliEnvironment("/repo", repository, new FakeLeanReportSource(null)), console));
