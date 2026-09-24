@@ -160,6 +160,8 @@ The n=18 upper expression is larger than173/250. This only marks failure of this
 
 The new algorithm supplies exact block values for arbitrary selected inventories and a complete same-law consumer. Handling further blocks with additional shared outside coordinates, or obtaining a uniform sufficient budget for arbitrary mixed cores, remains unresolved.
 
+[Report547](547-all-height-stars-have-a-common-survivor-law.md) aggregates ALL outside heights of the originals 3*q^b and 9*q^b into fractional parent/child budgets. An extreme-point argument licenses the larger capacities 1/(q-2), and the same subset recurrence then gives the complete all-height star loss at most 443407/681615. There is no mixed-label count cutoff in this structural class. The same full-survivor law has complete query norm at most 2304369/238208; arbitrary original supports involving several outside primes remain outside that result.
+
 ## Reproduction
 
 The DP computes and checks the general tables. The budget consumer reads the retained table and existing tail; it does not recompute the DP or regenerate the tail. The consumer rejects changed input bytes before using the bound.

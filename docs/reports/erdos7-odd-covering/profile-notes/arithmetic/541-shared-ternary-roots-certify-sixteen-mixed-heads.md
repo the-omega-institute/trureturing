@@ -200,6 +200,8 @@ Larger shallow inventories require a stronger joint deletion estimate, another s
 
 [Report543](543-exact-subset-optimization-certifies-seventeen-mixed-heads.md) computes all4096 selected two-depth block suprema through exact subset partitions. Combining that shared3p/9p block with the remaining numerical caps and complete tail gives l<173/250 for every core with at most seventeen shallow mixed originals. This uses SC1--SC3 unchanged, retains the same full-survivor law and does not claim that the eighteen-label envelope failure is an actual lower witness.
 
+[Report547](547-all-height-stars-have-a-common-survivor-law.md) establishes the SC3 premise for EVERY finite star inventory of mixed labels 3^a*q^b, with both exponents unrestricted and q in {5,7,11,13,17,19}. Its actual mixed loss is at most 443407/681615, so this same general bridge gives R_P<=2304369/238208 and positive Haar survivor at least 1861/23328. An arbitrary finite set of outside primes also admits a separate analytic noncoverage result under a stated reciprocal budget; the present seven-prime G constants are not asserted for that variable carrier.
+
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/mixed_star_capacity.py
 ```

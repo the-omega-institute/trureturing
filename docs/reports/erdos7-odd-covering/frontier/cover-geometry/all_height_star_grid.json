@@ -1,0 +1,367 @@
+{
+  "complete": true,
+  "scope": "Exact conservative fractional-budget incidence optimum for all-height3^a q^b families; not a sharp actual-family supremum or unrestricted odd-covering result.",
+  "prime_order": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "base_carrier": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "role_meaning": "Parent q carries all b>=1 at a=1; child q carries all b>=1 at a=2. Each budget is1/(q-2).",
+  "common_denominator": 378675,
+  "leaf_rule": "product(q-2-parent_bit-child_bit)",
+  "anchor_orbits": {
+    "2": {
+      "anchor_root_size": 2,
+      "minimum_integer_cost": 1517020,
+      "linearized_bound": "378211/681615",
+      "roots": [
+        {
+          "parent_mask": 2,
+          "child_masks": [
+            0,
+            58
+          ],
+          "anchor_cell": 0,
+          "integer_avoidance_values": [
+            302940,
+            181440
+          ]
+        },
+        {
+          "parent_mask": 61,
+          "child_masks": [
+            4,
+            1,
+            0
+          ],
+          "anchor_cell": null,
+          "integer_avoidance_values": [
+            156800,
+            89600,
+            179200
+          ]
+        }
+      ],
+      "literal_role_layout": {
+        "7": {
+          "parent_root": 0,
+          "child_cell": [
+            0,
+            1
+          ]
+        },
+        "13": {
+          "child_cell": [
+            0,
+            1
+          ],
+          "parent_root": 1
+        },
+        "17": {
+          "child_cell": [
+            0,
+            1
+          ],
+          "parent_root": 1
+        },
+        "19": {
+          "child_cell": [
+            0,
+            1
+          ],
+          "parent_root": 1
+        },
+        "5": {
+          "parent_root": 1,
+          "child_cell": [
+            1,
+            1
+          ]
+        },
+        "11": {
+          "parent_root": 1,
+          "child_cell": [
+            1,
+            0
+          ]
+        }
+      },
+      "full_phi": "378211/681615",
+      "anchor_avoidance_numerator": 302940,
+      "maximum_avoidance_numerator": 302940
+    },
+    "3": {
+      "anchor_root_size": 3,
+      "minimum_integer_cost": 1569570,
+      "linearized_bound": "122567/227205",
+      "roots": [
+        {
+          "parent_mask": 62,
+          "child_masks": [
+            0,
+            4,
+            2
+          ],
+          "anchor_cell": 0,
+          "integer_avoidance_values": [
+            215040,
+            188160,
+            161280
+          ]
+        },
+        {
+          "parent_mask": 1,
+          "child_masks": [
+            56,
+            1
+          ],
+          "anchor_cell": null,
+          "integer_avoidance_values": [
+            201600,
+            126225
+          ]
+        }
+      ],
+      "literal_role_layout": {
+        "7": {
+          "parent_root": 0,
+          "child_cell": [
+            0,
+            2
+          ]
+        },
+        "11": {
+          "parent_root": 0,
+          "child_cell": [
+            0,
+            1
+          ]
+        },
+        "13": {
+          "parent_root": 0,
+          "child_cell": [
+            1,
+            0
+          ]
+        },
+        "17": {
+          "parent_root": 0,
+          "child_cell": [
+            1,
+            0
+          ]
+        },
+        "19": {
+          "parent_root": 0,
+          "child_cell": [
+            1,
+            0
+          ]
+        },
+        "5": {
+          "parent_root": 1,
+          "child_cell": [
+            1,
+            1
+          ]
+        }
+      },
+      "full_phi": "122567/227205",
+      "anchor_avoidance_numerator": 215040,
+      "maximum_avoidance_numerator": 215040
+    }
+  },
+  "independent_explicit_layout": {
+    "anchor_root_size": 2,
+    "minimum_integer_cost": 1517020,
+    "linearized_bound": "378211/681615",
+    "roots": [
+      {
+        "parent_mask": 2,
+        "child_masks": [
+          58,
+          0
+        ],
+        "anchor_cell": 1,
+        "integer_avoidance_values": [
+          181440,
+          302940
+        ]
+      },
+      {
+        "parent_mask": 61,
+        "child_masks": [
+          1,
+          4,
+          0
+        ],
+        "anchor_cell": null,
+        "integer_avoidance_values": [
+          89600,
+          156800,
+          179200
+        ]
+      }
+    ],
+    "literal_role_layout": {
+      "7": {
+        "parent_root": 0,
+        "child_cell": [
+          0,
+          0
+        ]
+      },
+      "13": {
+        "child_cell": [
+          0,
+          0
+        ],
+        "parent_root": 1
+      },
+      "17": {
+        "child_cell": [
+          0,
+          0
+        ],
+        "parent_root": 1
+      },
+      "19": {
+        "child_cell": [
+          0,
+          0
+        ],
+        "parent_root": 1
+      },
+      "5": {
+        "parent_root": 1,
+        "child_cell": [
+          1,
+          0
+        ]
+      },
+      "11": {
+        "parent_root": 1,
+        "child_cell": [
+          1,
+          1
+        ]
+      }
+    },
+    "full_phi": "378211/681615",
+    "anchor_avoidance_numerator": 302940,
+    "maximum_avoidance_numerator": 302940
+  },
+  "B12": "378211/681615",
+  "all_outside_height_budget": "7244/8415",
+  "complete_a_ge3_tail": "7244/75735",
+  "actual_mixed_loss_upper": "443407/681615",
+  "actual_mixed_loss_threshold_margin": "1413529/34080750",
+  "pure_survivor_mass_lower": "935/4096",
+  "conditional_survivor_mass_lower": "238208/681615",
+  "full_base_H_survivor_mass_lower": "1861/23328",
+  "complete_base_query_upper": "2304369/238208",
+  "base_query_target_margin": "17064701/12148608",
+  "fresh_extension": {
+    "carrier": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29
+    ],
+    "all_height_cap_factor": "51/616",
+    "survivor_under_base_law_times_fresh_Haar_lower": "17064701/146736128",
+    "full_H_survivor_mass_lower": "17064701/1839366144",
+    "hypothesis": "New numerical labels are distinct, supported on the extended carrier, and each touches23or29. Old P-only mixed labels retain the star hypothesis; all new P cofactors, phases and finite heights are arbitrary.",
+    "limitation": "The base query bound and base G are not asserted unchanged after conditioning on the new originals."
+  },
+  "bridge": "Use report541 SC1-SC3 on one fixed core/pure source and its full actual survivor.",
+  "work": {
+    "local_partition_candidates": 186624,
+    "outer_root_splits": 8192
+  },
+  "checks": {
+    "common_denominator": true,
+    "all4096_integer_leaf_factors": true,
+    "all_leaf_factors_positive": true,
+    "empty_leaf_includes_avoidance_cost": true,
+    "anchor2_parent_disjoint_root0": true,
+    "anchor2_child_disjoint_0_0": true,
+    "anchor2_child_disjoint_0_1": true,
+    "anchor2_parent_disjoint_root1": true,
+    "anchor2_child_disjoint_1_0": true,
+    "anchor2_child_disjoint_1_1": true,
+    "anchor2_child_disjoint_1_2": true,
+    "anchor2_all_parent_roles_once": true,
+    "anchor2_all_child_roles_once": true,
+    "anchor2_five_cells_one_anchor": true,
+    "anchor2_literal_integer_cost": true,
+    "anchor2_branch_not_above_its_full_phi": true,
+    "anchor3_parent_disjoint_root0": true,
+    "anchor3_child_disjoint_0_0": true,
+    "anchor3_child_disjoint_0_1": true,
+    "anchor3_child_disjoint_0_2": true,
+    "anchor3_parent_disjoint_root1": true,
+    "anchor3_child_disjoint_1_0": true,
+    "anchor3_child_disjoint_1_1": true,
+    "anchor3_all_parent_roles_once": true,
+    "anchor3_all_child_roles_once": true,
+    "anchor3_five_cells_one_anchor": true,
+    "anchor3_literal_integer_cost": true,
+    "anchor3_branch_not_above_its_full_phi": true,
+    "two_cell_anchor_endpoint": true,
+    "three_cell_anchor_endpoint": true,
+    "complete_low_depth_block": true,
+    "all_reconstructed_full_phis_below_optimum": true,
+    "winning_anchor_is_global_maximum": true,
+    "independent_explicit_layout_parent_disjoint_root0": true,
+    "independent_explicit_layout_child_disjoint_0_0": true,
+    "independent_explicit_layout_child_disjoint_0_1": true,
+    "independent_explicit_layout_parent_disjoint_root1": true,
+    "independent_explicit_layout_child_disjoint_1_0": true,
+    "independent_explicit_layout_child_disjoint_1_1": true,
+    "independent_explicit_layout_child_disjoint_1_2": true,
+    "independent_explicit_layout_all_parent_roles_once": true,
+    "independent_explicit_layout_all_child_roles_once": true,
+    "independent_explicit_layout_five_cells_one_anchor": true,
+    "independent_explicit_layout_literal_integer_cost": true,
+    "independent_explicit_layout_branch_not_above_its_full_phi": true,
+    "explicit_five_leaf_numerators": true,
+    "explicit_layout_attains_relaxed_optimum": true,
+    "full_outside_budget": true,
+    "complete_ternary_tail": true,
+    "actual_mixed_loss_upper": true,
+    "loss_threshold_margin": true,
+    "pure_mass_floor": true,
+    "actual_full_base_survivor_mass": true,
+    "same_law_query_bound": true,
+    "query_target_margin": true,
+    "unused_query_budget_monotonicity": true,
+    "survivor_density_threshold": true,
+    "entropy_rational_guard": true,
+    "lambda_rational_guard": true,
+    "complete_fresh_prime_factor": true,
+    "fresh_remaining_probability": true,
+    "full_fresh_extension_survivor_mass": true,
+    "local_partition_work": true,
+    "outer_root_work": true
+  },
+  "passed_count": 64,
+  "verification": "Exact integers and fractions. No old producer, original-family enumeration, height cutoff, or Lean."
+}
