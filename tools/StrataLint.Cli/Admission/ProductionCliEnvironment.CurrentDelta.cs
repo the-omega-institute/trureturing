@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.EngineeringScope;
@@ -15,6 +16,7 @@ internal sealed partial class ProductionCliEnvironment
     {
         var removedProjectOutput = string.Empty;
         TestProjectExecution[] acceptedBaseTests = [];
+        ImmutableArray<Diagnostic> planeObservations = [];
         try
         {
             string? commonRound = null, commonPlan = null, commonChanges = null;
@@ -74,10 +76,10 @@ internal sealed partial class ProductionCliEnvironment
                     .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray() ?? [];
                 if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport!), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
                     throw new InvalidDataException("check-delta requires this round's canonical report");
-                if (EvaluateAdmissionPlane(raw, baselineRaw, prepared.Changes) is { } plane)
-                    return StageAdmissionFailure(plane);
+                if (EvaluateAdmissionPlane(raw, baselineRaw, prepared.Changes, out planeObservations) is { } plane)
+                    return new(2, "", plane.Message + "\n");
                 var topology = RepositoryRules.EvaluateSnapshots(baseline, current);
-                if (!topology.IsAccepted) return new(1, "TEST_PROJECT_TOPOLOGY " + topology.Message + "\n", "");
+                if (!topology.IsAccepted) return new(1, RenderPlaneObservations(planeObservations) + "TEST_PROJECT_TOPOLOGY " + topology.Message + "\n", "");
                 var meta = BootstrapGate.Evaluate(prepared.Changes) switch
                 {
                     BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),
@@ -100,24 +102,21 @@ internal sealed partial class ProductionCliEnvironment
                 if (RepositoryCanonicalizer.Validate(current, policy) is CanonicalizationOutcome.InfrastructureFailure failure)
                     return new(2, RenderStage(result).Output, "INFRASTRUCTURE_FAILURE " + failure.Message + "\n");
             }
-            return RenderStage(result, acceptedBaseTests);
+            return RenderStage(result, acceptedBaseTests, planeObservations);
         }
         catch (Exception exception)
         {
-            return new(2, removedProjectOutput, "INFRASTRUCTURE_FAILURE " + exception.Message + "\n");
+            return new(2, removedProjectOutput + RenderPlaneObservations(planeObservations), "INFRASTRUCTURE_FAILURE " + exception.Message + "\n");
         }
     }
 
-    private static ExplicitCommandResult StageAdmissionFailure(AdmissionOutcome outcome) => outcome switch
-    {
-        AdmissionOutcome.RuleRejected rejected => new(1, JsonSerializer.Serialize(rejected.Diagnostics) + "\n", ""),
-        AdmissionOutcome.InfrastructureFailure failure => new(2, "", failure.Message + "\n"),
-        _ => new(2, "", "unexpected admission plane outcome\n"),
-    };
+    private static string RenderPlaneObservations(ImmutableArray<Diagnostic> observations) =>
+        observations.IsDefaultOrEmpty ? "" : JsonSerializer.Serialize(new { diagnostics = observations }) + "\n";
 
-    private static ExplicitCommandResult RenderStage(RuleExecutionOutcome result, TestProjectExecution[]? acceptedBaseTests = null)
+    private static ExplicitCommandResult RenderStage(RuleExecutionOutcome result, TestProjectExecution[]? acceptedBaseTests = null,
+        ImmutableArray<Diagnostic> planeObservations = default)
     {
-        if (result is RuleExecutionOutcome.InfrastructureFailure failure) return new(2, "", failure.Message + "\n");
+        if (result is RuleExecutionOutcome.InfrastructureFailure failure) return new(2, RenderPlaneObservations(planeObservations), failure.Message + "\n");
         var rules = ((RuleExecutionOutcome.Completed)result).Capability;
         var blocked = rules.Diagnostics.Any(d => d.AdmissionEffect is AdmissionEffect.Block
             || d.AdmissionEffect is AdmissionEffect.HumanGate && d.RuleId != RuleId.CreateKnown(22));
@@ -127,7 +126,7 @@ internal sealed partial class ProductionCliEnvironment
             executed = rules.ExecutedRules.Select(id => id.Value),
             skipped = rules.SkippedRules.Select(id => id.Value),
             deferred = rules.DeferredRules,
-            diagnostics = rules.Diagnostics,
+            diagnostics = planeObservations.IsDefaultOrEmpty ? rules.Diagnostics : rules.Diagnostics.AddRange(planeObservations),
             accepted_base_tests = (acceptedBaseTests ?? []).Select(row => new { project = row.Project, status = row.Status,
                 execution_candidate = row.ExecutionCandidate, execution_round = row.ExecutionRound }),
         }) + "\n", "");
