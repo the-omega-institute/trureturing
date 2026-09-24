@@ -213,6 +213,12 @@ query target on the remaining nested layout.
 
 ## Exact disjoint mixed packing prevents a uniform overlap rebate
 
+[Report538](538-near-maximal-mixed-packing-preserves-the-anchor-query-hinge.md)
+also rules out a rebate obtained only by removing the mixed union from
+the maximal old-query hinge: a transposed packing leaves every maximizing
+anchor query untouched and removes only load1. This does not show that
+the later actual fibre-loss bounds are sharp.
+
 The nested layout does not force the mixed5^a7^b originals to overlap.
 At finite pure heights H5,H7 choose, for p=5,7,
 

@@ -186,6 +186,14 @@ The estimate(PE6) already holds for any such nu. A core with at most
 two such shallow mixed labels satisfies this sufficient condition, since
 each q_d<=1 and delta>2. The general remaining premise is not proved here.
 
+[Report539](539-a-weighted-mixed-inventory-certifies-one-entropy-law.md)
+constructs a member of this same G whenever the complete occupied mixed
+inventory has pure-conditioned cylinder-cap sum at most2/3. Its one
+full-survivor Haar law pays all occupied mixed queries by2, and the
+criterion holds uniformly for at most eight shallow mixed labels while
+retaining every pure and deeper mixed original. Larger inventories that
+do not meet the criterion still require another joint estimate.
+
 ## Full support without claiming entropy preservation
 
 Report467 supplies a law mu for this same actual U with
