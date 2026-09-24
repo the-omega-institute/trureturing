@@ -238,3 +238,5 @@ python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/sta
 The structural hypothesis covers the complete unbounded collection of star labels. It does not cover old moduli with several outside primes, such as 3^a*5^b*7^c, or old mixed moduli not involving 3, such as 5^b*7^c. Their shared outside supports do not satisfy the separate parent/child simplex model AS3--AS4. Treating such a support as an independent new coordinate would discard its correlation with the existing prime factors.
 
 This closes an unrestricted-height star subclass, not the unrestricted distinct odd covering problem. A common quantitative law for arbitrary original mixed supports remains unresolved.
+
+[The three-level joint extension](550-a-shared-triangle-tower-preserves-one-common-survivor-law.md) admits every3^a*5^b*7^c triangle label alongside these stars, retaining arbitrary fixed phases and all finite heights. Its shared-coordinate estimate replaces the independent-coordinate reduction that is unavailable for triangles.
