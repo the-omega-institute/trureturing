@@ -16,7 +16,18 @@ Blocks(
                 StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Esc, Operatorname, Grp(F.Id("expandingEigenvector")), Neq, Sp, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("fibonacciSubstitution")), Operatorname, Grp(F.Id("expandingEigenvector")), Eq, Varphi, Operatorname, Grp(F.Id("expandingEigenvector")), Sp, Land, Sp, Operatorname, Grp(F.Id("contractingEigenvector")), Neq, Sp, D(0), Sp, Land, Sp, Operatorname, Grp(F.Id("fibonacciSubstitution")), Operatorname, Grp(F.Id("contractingEigenvector")), Eq, Operatorname, Grp(F.Id("contractingEigenvalue")), Operatorname, Grp(F.Id("contractingEigenvector")), Sp, Land, Sp, Open, F.Id("F"), Underscore, Grp(F.Id("n")), Varphi, Minus, F.Id("F"), Underscore, Grp(F.Id("n"), Plus, D(1)), Close, Eq, Minus, Operatorname, Grp(F.Id("contractingEigenvalue")), Caret, Grp(F.Id("n"))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/koshy2001fibonacci")),
                 Blocks(Paragraph(Text(
-                    "The explicit substitution matrix has nonzero expanding and contracting eigenvectors, and the same theorem gives the exact signed Fibonacci error for every natural index."))),
+                    "The explicit substitution matrix has nonzero expanding and contracting eigenvectors, and the same theorem gives the exact signed Fibonacci error for every natural index.")),
+                    Paragraph(
+                        Text("Residue-period applications of the same substitution: "),
+                        Ref(LibraryNoteRef.Create("D5/L/renault2013periodrankorder").Value),
+                        Text(". PCL in the existing WSS dossier separates sampling stride, "
+                            + "external prime-period coupling and native factor multiplicities. "
+                            + "It gives exact joint-period thresholds, arbitrary-depth auxiliary "
+                            + "period carriers, and the paired ternary block periods. "
+                            + "Those are ordinary mathematical results with their own rank "
+                            + "and lifting proofs, not conclusions of this real-eigenpair "
+                            + "Lean theorem. The formal statement and provenance above "
+                            + "remain unchanged; no WSS prime is constructed by this link."))),
                 DescribeRole.Theorem)),
 [
                         DocumentEdge.Dependency.Create(
