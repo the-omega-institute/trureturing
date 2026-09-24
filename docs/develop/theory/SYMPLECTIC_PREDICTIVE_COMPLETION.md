@@ -2160,3 +2160,516 @@ Hamilton 算子为 $H=gZ_L$。编码、解码为
 PDF 文献的解析正文已按上述范围读取，页面截图工具返回错误，未进行图表或页面视觉核验。新候选结论没有获得独立同行或异模型证明审查，也未确立全球优先权。
 
 本章已经解出的是指定 Gaussian 实验下的精确自治子空间最优能量恢复，以及其近自治收益界；量子部分只给限定态族的精确实例。尚未解决的核心扩展是：同一约束下直接最小化条件 KL 或最坏任务风险的全局解；未知近共振生成元与传感器的联合有限数据保证；非线性流形的全局、稳定、低维充分表示；以及一般有限温量子态族的统计充分代数与动力学生成代数的联合最小化。后续在本主卷增补，不另开重复理论。
+
+<a id="sec-information-optimal-autonomy"></a>
+## 14. 信息最优的自治压缩：组合边界、成对统计结构与四阶近优算法
+
+### 14.1 目标、文献和共同实现
+
+本章直接推进 §13.8 的“在自治约束下最小化条件 KL”义务。限制为已知、非共振、有限维保能线性系统和已校准 Gaussian 实验。全部候选保留完整共轭模态，因而精确自治并保留非退化 Poisson 配对；优化只决定舍弃哪组模态。结论包括一般问题的复杂度边界、森林统计结构下的可实现近优算法、匹配误差阶，以及校准误差的传递。不把近优误差解释为整个后验信息损失，也不认领非线性或任意量子态族的压缩结论。
+
+[G18] 已以 KL、期望 KL 和互信息优化 Gaussian 观测投影；它压缩的是数据，本文选择的是后验状态的保留模态与指定恢复通道。[O24] 证明最大主子式选择的多种困难性；[AL23] 在三对角等特殊结构上给出最大熵采样的动态规划；[FL25] 系统梳理其近期算法。最大化观测熵和最小化本章隐藏恢复缺陷是不同目标，下面的最小化复杂度证明单独给出，不能只把前述定理换一个符号。
+
+固定 $n\ge2$，坐标按 $(q_1,p_1,\ldots,q_n,p_n)$ 排列，
+\[
+ \dot x=\Omega x,\quad
+ \Omega=\bigoplus_{j=1}^n\omega_jJ_2,\quad
+ J_2=\begin{pmatrix}0&1\\-1&0\end{pmatrix},
+ \qquad \omega_j>0,\quad \omega_i\ne\omega_j\ (i\ne j).
+\]
+能量为 $|x|^2/2$，Poisson 矩阵为 $\Omega$。初态 $x\sim N(0,I_{2n})$，数据为
+\[
+ Y=Lx+\eta_Y,\qquad \eta_Y\sim N(0,R),\quad R\succ0,
+ \qquad F=L^TR^{-1}L,\quad G=I_{2n}+F\succeq I_{2n}.
+\]
+模型、模态频率、实验矩阵已知；这不是未知生成元的辨识定理。
+
+令 $S\subseteq\{1,\ldots,n\}$ 表示**舍弃的模态**，$|S|=m$，$0\le m\le n$。一个模态始终包含两个坐标。以下 $G_{SS}$ 取相应 $2m$ 个坐标的主子矩阵。保留 $S^c$ 上的准确后验边缘，再在 $S$ 上补回独立热先验，得到
+\[
+ \widetilde p_S(dx\mid Y)=p(dx_{S^c}\mid Y)\,\gamma_S(dx_S),
+ \qquad \gamma_S=N(0,I_{2m}).
+\]
+复用 §13.4 的 Gaussian 条件计算，本章优化目标为
+\[
+ \boxed{\Delta(S)=\mathbb E_YD(p_{x\mid Y}\Vert\widetilde p_S)
+ =I(x_S;Y\mid x_{S^c})=\tfrac12\log\det G_{SS}.}                 \tag{14.1}
+\]
+空集行列式约定为一。
+
+这涵盖当前设定下全部相应秩的精确自治正交投影：$[P,\Omega]=0$ 推出 $[P,\Omega^2]=0$，不同 $\omega_j^2$ 迫使 $P$ 按模态分块。每个实对称二阶块与 $J_2$ 对易时只能是标量矩阵，幂等性又使其为零或单位阵。反向选择任何模态子集均满足自治、辛非退化和能量分解。重复频率时可在共振块内连续旋转，本章的离散可行集不再穷尽全部表示。
+
+### 14.2 一般最小信息缺陷问题已有组合困难
+
+**定理 14.1（条件良好的实验仍可编码 CLIQUE）。** 即使正频率位于 $(1,2)$、互异，$F$ 的谱位于 $[1/2,3/2]$，且不同模态间的归一化关联任意小，精确最小化 (14.1) 的模态子集问题仍是 NP-hard。这里 NP-hard 指返回极小子集；它不声称 $\mathrm P\ne\mathrm{NP}$，也不声称固定常数精度近似同样困难。
+
+**证明。** 给定 $n\ge3$ 点简单图的邻接矩阵 $A$ 和所需点数 $m$，取
+\[
+ \varepsilon=\frac1{8n^3},\qquad
+ F=(I_n+\varepsilon A)\otimes I_2,\quad
+ G=(2I_n+\varepsilon A)\otimes I_2,\quad
+ \omega_j=1+\frac j{n+1}.
+\]
+用 $L=I_{2n}$、$R=F^{-1}$ 实现该实验。矩阵均由有理数给定，逆矩阵的位数有多项式界；$\|A\|\le n-1$ 保证 $F$ 落在所列谱区间。任意候选都已经精确保留动力学与辛结构。
+
+记 $e(S)$ 为诱导子图边数。Kronecker 行列式和 log 级数给
+\[
+ \Delta(S)=\log\det(2I_m+\varepsilon A_{SS})
+ =m\log2-\frac{\varepsilon^2}{4}e(S)+r(S).
+\]
+令 $q=\varepsilon n/2<1/2$。由于 $\operatorname{tr}A_{SS}=0$、
+$\operatorname{tr}A_{SS}^2=2e(S)\le n^2$，余项满足
+\[
+ |r(S)|\le
+ \frac{\varepsilon^3\|A_{SS}\|\operatorname{tr}(A_{SS}^2)}{24(1-q)}
+ \le\frac{\varepsilon^3n^3}{12}
+ =\frac{\varepsilon^2}{96}.
+\]
+因此，若 $e(S_1)\ge e(S_2)+1$，则
+\[
+ \Delta(S_1)\le\Delta(S_2)-\frac{11\varepsilon^2}{48}.
+\]
+极小子集必有最多诱导边。检查其边数是否达到 $m(m-1)/2$ 即可决定 CLIQUE。甚至附加误差不超过 $\varepsilon^2/8$ 的解，也足以给出同一判断。这个精度随输入规模多项式缩小。精确优化还可直接比较有理行列式，不要求实数对数 oracle。证毕。
+
+谱投影解决 §13 的线性能量目标，不能据此推断它也解决带联合相关的 logdet 目标。这个归约是当前物理/统计可行类的明确边界；行列式选择的困难性本身为既有研究，不认领一般复杂性概念的首创。
+
+### 14.3 从独立收益到成对目标：归一化和统一余项
+
+按二阶模态块定义
+\[
+ \mathsf D=\operatorname{blockdiag}(G_{11},\ldots,G_{nn}),\qquad
+ E=\mathsf D^{-1/2}G\mathsf D^{-1/2}-I,
+ \quad E_{ii}=0,\quad \eta=\|E\|_2<1.
+\]
+弱关联预算 $\eta<1$ 是本章近似证书的额外前件，不能从 $G\succeq I$ 自动推出。令
+\[
+ d_i=\tfrac12\log\det G_{ii},\quad
+ w_{ij}=\tfrac12\|E_{ij}\|_F^2,\quad
+ \Delta_0(S)=\sum_{i\in S}d_i,
+\]
+\[
+ \boxed{\Delta_2(S)=\sum_{i\in S}d_i-
+                   \sum_{\{i,j\}\subseteq S}w_{ij}.}           \tag{14.2}
+\]
+两个方向的块都被 Frobenius 范数计入，故
+$\Delta_2=\Delta_0-\|E_{SS}\|_F^2/4$。
+
+令 $e_S=\|E_{SS}\|_F^2\le2m\eta^2$。基础谱估计为
+\[
+ 0\le\Delta_0(S)-\Delta(S)\le\frac{e_S}{4(1-\eta)},
+\quad
+ |\Delta(S)-\Delta_2(S)|\le\frac{\eta e_S}{6(1-\eta)}.       \tag{14.3}
+\]
+证明：$\Delta=\Delta_0+\operatorname{tr}\log(I+E_{SS})/2$，且迹的一次项为零。对实特征值 $|\lambda|\le\eta$，
+$0\le\lambda-\log(1+\lambda)\le\lambda^2/[2(1-\eta)]$；三阶以上项用
+$\sum_{k\ge3}|\lambda|^k/k\le\eta\lambda^2/[3(1-\eta)]$。求和即得。
+
+独立排序选择最小的 $m$ 个 $d_i$，其真实信息遗憾因而至多
+\[
+ \Delta(S_0)-\min_{|S|=m}\Delta(S)
+ \le\frac{m\eta^2}{2(1-\eta)}.                            \tag{14.4}
+\]
+这里“遗憾”是选中子集与同维全局最优子集的差，和 $\Delta$ 总值分开。该式由 $\Delta_0$ 的最优性及 (14.3) 的单侧性得到。
+
+$w_{ij}$ 的含义是同一实验中两个模态的联合信息冗余。它来自精度矩阵的块，不是物理相互作用强度，也不是状态协方差的普通相关系数。本节统计图的边可以由混合传感器或相关噪声产生；当前物理生成元仍按正常模态解耦。
+
+### 14.4 双部结构使信息余项变成单侧四阶
+
+统计支持图在 $E_{ij}\ne0$ 时连边。若该图是双部图，存在按两组顶点取 $\pm I_2$ 的正交矩阵 $T$，使 $TET=-E$。任何诱导子图及其 $E_{SS}$ 也有同一性质。
+
+**定理 14.2（单侧四阶信息余项）。** 在上述双部条件下，
+\[
+ \Delta(S)=\Delta_0(S)+\tfrac14\log\det(I-E_{SS}^2)
+            =\Delta_2(S)-r_4(S),
+\]
+\[
+ \boxed{0\le r_4(S)\le
+ \frac{\eta^2e_S}{8(1-\eta^2)}
+ \le\frac{m\eta^4}{4(1-\eta^2)}.}                       \tag{14.5}
+\]
+
+**证明。** $E_{SS}$ 的谱关于零对称，因此
+$\det(I+E_{SS})=\det(I-E_{SS})$；两者相乘等于 $\det(I-E_{SS}^2)$。展开最后的对数，二阶项为 $-\operatorname{tr}E_{SS}^2/4$，剩余为
+\[
+ r_4(S)=\frac14\sum_{j\ge2}\frac{\operatorname{tr}E_{SS}^{2j}}j\ge0.
+\]
+逐特征值应用 $1/j\le1/2$ 及几何级数，得到
+$r_4\le\sum\lambda^4/[8(1-\eta^2)]\le\eta^2e_S/[8(1-\eta^2)]$。证毕。
+
+森林一定双部。奇数阶消失来自同一统计矩阵的谱对称性，不是把随机正负项平均为零。一般非双部图没有这一保证。双部性只负责更强的估计，下面的森林前件另外负责高效求出 $\Delta_2$ 的全局极小点。
+
+### 14.5 一个真正可计算的森林模态选择器
+
+假定支持图是森林。对任意根 $v$，记 $D_v(a,b)$ 为子树中恰舍弃 $a$ 个模态、且根是否舍弃由 $b\in\{0,1\}$ 指定时的最小 $\Delta_2$。叶子初始化为
+\[
+ D_v(0,0)=0,\quad D_v(1,1)=d_v,
+\]
+其余无效项为 $+\infty$。逐个合并孩子 $w$：
+\[
+ D^{\rm new}_v(a,b)=
+ \min_{a_0+a_1=a,\ c\in\{0,1\}}
+ \{D^{\rm old}_v(a_0,b)+D_w(a_1,c)-w_{vw}bc\}.             \tag{14.6}
+\]
+最后合并不同连通分量，保留总数 $m$。这是一条标准树背包/消息传递递推；归纳每个子树的边界状态，给出其精确最优性。候选拆分总共需要 $O(nm^2)$ 次算术比较/加法；参考实现存储子集元组以便回溯，另有复制开销。
+
+**定理 14.3（精确自治且四阶近优的信息压缩）。** 令 $\widehat S$ 为上述算法输出，$S^*$ 为 (14.1) 的全局极小子集。则保留 $\widehat S^c$ 的表示精确自治、具有非退化 Poisson 配对，并有
+\[
+ \boxed{0\le\Delta(\widehat S)-\Delta(S^*)
+ \le\frac{m\eta^4}{4(1-\eta^2)}.}                       \tag{14.7}
+\]
+
+**证明。** 递推求出 $\Delta_2$ 的全局极小点，故
+\[
+ \Delta(\widehat S)=\Delta_2(\widehat S)-r_4(\widehat S)
+ \le\Delta_2(S^*)=\Delta(S^*)+r_4(S^*).
+\]
+代入 (14.5)。单侧性使这里只需要一次余项预算，而非两次。自治和 Poisson 结论来自选择完整模态。证毕。
+
+这相对于独立排序的统一二阶预算提高了误差阶。预处理包括建立完整实验的 $G$、模态坐标转换、块归一化与谱范数预算；其成本不包含在树递推的 $O(nm^2)$ 内。该算法仍可能需要完整后验求解以计算准确保留边缘，不宣称持续在线滤波的总成本已经降到潜维数。
+
+### 14.6 两个可精确达到的反例族
+
+取三个模态、舍弃两个。令 $0<a<1/3$，
+\[
+ G(a,t)=\begin{pmatrix}2&2a&0\\2a&2&0\\0&0&t\end{pmatrix}\otimes I_2.
+\]
+以下两种 $t$ 都使 $G\succeq I$、支持图为单边森林、$\eta=a$。两模态非零边的权重为 $a^2$。
+
+第一族取 $t=2(1-a^2/2)$。独立排序舍弃第三模态和前两者之一；真实最优及成对选择器均舍弃第一、第二模态。独立排序的信息遗憾恰为
+\[
+ \log\frac{1-a^2/2}{1-a^2}\sim\tfrac12a^2.              \tag{14.8}
+\]
+因此仅看各模态独立收益的二阶代价真实出现。
+
+第二族取 $t=2(1-a^2/2)^2$。真实最优仍舍弃第一、第二模态，因为
+$(1-a^2/2)^2>1-a^2$；成对目标却选择第三模态和其中之一，因为
+$2\log(1-a^2/2)<-a^2$。其信息遗憾恰为
+\[
+ \boxed{\log\frac{(1-a^2/2)^2}{1-a^2}\sim\tfrac14a^4.}  \tag{14.9}
+\]
+所以 (14.7) 的四阶不能对这一个成对截断算法统一改为 $o(a^4)$。这不是所有可能算法的四阶下限，穷举在三模态实例中能够给出零遗憾；也未证明 (14.7) 的常数最优。
+
+### 14.7 稠密实验及校准误差
+
+一般图上选择一棵最大权重生成森林 $\mathcal T$，权重为 $w_{ij}$。在该森林上求解 (14.6)，记遗漏权重总和
+\[
+ W_{\rm tail}=\sum_{\{i,j\}\notin\mathcal T}w_{ij}.
+\]
+支持图中无边的项为零。森林目标等于全成对目标加上所选集合内部的遗漏权重；因此其输出对全成对目标的遗憾至多 $W_{\rm tail}$。合并 (14.3) 的两侧余项得到
+\[
+ \boxed{\Delta(\widehat S)-\Delta(S^*)
+ \le W_{\rm tail}+\frac{2m\eta^3}{3(1-\eta)}.}            \tag{14.10}
+\]
+最大权重森林只优化这个遗漏总量上界，没有保证优化真实信息目标。忽略任意小边以强行制造森林时，必须保留遗漏权重或矩阵扰动预算。
+
+再假定已校准模型 $G$ 与估计 $\widehat G$ 满足
+\[
+ (1-\tau)G\preceq\widehat G\preceq(1+\tau)G,
+ \qquad0\le\tau<1.
+\]
+主子矩阵继承同一 Loewner 界，$2m$ 个特征值逐项求对数给
+\[
+ |\widehat\Delta(S)-\Delta(S)|\le m[-\log(1-\tau)].
+\]
+若算法在估计矩阵上有已证明的遗憾预算 $\varepsilon_{\rm alg}$，则
+\[
+ \boxed{\Delta(\widehat S)-\min\Delta
+ \le\varepsilon_{\rm alg}+2m[-\log(1-\tau)].}            \tag{14.11}
+\]
+该组合不要求真实统计图也是森林，但算法所用图的假设必须对 $\widehat G$ 成立。有限样本不能从小数值估计认证某条边精确为零。未知生成元、频率配对错误和浮点计算误差各需独立预算，不在 $\tau$ 中默认为已处理。
+
+### 14.8 未来更新与统计任务的传递
+
+固定完成的初始实验数据 $Y$。完整条件态及其恢复态一起按 $e^{t\Omega}$ 推前。所选模态的旋转与其补空间各自闭合，隐藏标准 Gaussian 参考不变，因此推前恢复态仍然等于“推前保留边缘乘隐藏热参考”。可逆推前保持 KL，给
+\[
+ \mathbb E_YD(p_{x_t\mid Y}\Vert\widetilde p_{S,t})=\Delta(S)
+ \quad\text{对全部实 }t.
+\]
+这个等式不因预测跨度增加而积累约化模型的动力学误差。它以已知精确生成元和没有后续数据更新为前提，不是无限时长期模型失配保证。
+
+任意额外指定的未来观测核都满足数据处理。于是 Pinsker 和 Jensen 给平均未来观测总变差至多 $\sqrt{\Delta(S)/2}$；对任意取值于 $[0,1]$ 的单个损失，其后验期望差也不超过相同上界。这些是现有数据处理结论的应用，不另列新定理。需注意这里使用的是总损失 $\Delta(S)$，不是近优遗憾 $\Delta(S)-\Delta(S^*)$。两者不能交换。
+
+量子信息侧保留 §13.7 已核对的受限态族通道结论。本章 Classical Gaussian 后验选择和统计图，不自动推广到非对易密度态、Kubo 测量记录或任意量子噪声。
+
+### 14.9 实際实现、读数与文献归属
+
+附属参考程序 `modal_kl.py` 输入模态顺序下的 $G$ 和舍弃数 $m$，输出舍弃/保留集合、实际 logdet、成对代理值、归一化关联强度、遗憾预算和最优值下界。$\eta\ge1$ 时拒绝使用本章级数证书。实际采用 numpy 浮点评估，范数/特征值没有区间算术认证，因此数值预算与纸面严格实数界分别记账。
+
+本轮验证程序实际通过 23 项有名称的分组检查。包含 714 个一般子集的 Taylor 界、1512 个森林子集的单侧界、117 个小系统/舍弃数问题上树递推与穷举代理最优值的核对、明确四阶非最优反例、195 个有理图子集行列式比较、校准扰动和未来 Gaussian KL 不变性。穷举样本有限，不代替上述一般证明。
+
+三模态第二族的数值如下，误差以自然对数信息单位计：
+
+| $a=\eta$ | 第一族独立排序遗憾 | 第二族成对算法遗憾 | 四阶通用预算，$m=2$ |
+|---:|---:|---:|---:|
+| 0.1 | 0.005037794030 | 0.00002525220641 | 0.00005050505051 |
+| 0.03 | 0.0004503039628 | 0.0000002026823936 | 0.0000004053648283 |
+| 0.01 | 0.00005000375029 | 0.000000002500250022 | 0.000000005000500050 |
+
+两列遗憾来自同一定义下的两个不同实验族，不能当作同一个数据集上的两个算法得分来画提升率。每一族的最优子集都已经穷举核对。
+
+一个 128 模态/256 实维的森林实验中，舍弃 64 模态、保留 128 实维，$\eta=0.18$。算法输出实际缺陷 44.1185889566，独立排序为 44.1533076200，差为 0.0347186634；四阶遗憾预算为 0.0173585779，给全局最优值下界 44.1012303787。该大例没有穷举全局最优；预算来自定理而非搜索到最优。它只说明一次有限实现能给出结果及可检查的理论误差预算，没有硬件或神经网络性能声明。
+
+[G18] L. Giraldi, O. P. Le Maître, I. Hoteit, O. M. Knio. *Optimal projection of observations in a Bayesian setting*. Computational Statistics & Data Analysis 124, 252–276 (2018). DOI: https://doi.org/10.1016/j.csda.2018.03.002 ; https://arxiv.org/abs/1709.06606v3 。解析正文 §3.1–3.3 研究观测投影的 KL/平均 KL/互信息目标；本章是自治状态模态选择和隐藏热参考恢复，量词不同。
+
+[O24] N. Ohsaka. *On the Parameterized Intractability of Determinant Maximization*. Algorithmica (2024). DOI: https://doi.org/10.1007/s00453-023-01205-0 ; https://arxiv.org/abs/2209.12519v3 。使用正文的复杂度对象及稀疏/arrowhead 边界。该文目标为最大化主子式；本章定理 14.1 为相应最小化物理可行类单独给出归约。
+
+[AL23] H. Al-Thani, J. Lee. *Tridiagonal maximum-entropy sampling and tridiagonal masks*. Discrete Applied Mathematics 337, 120–138 (2023). DOI: https://doi.org/10.1016/j.dam.2023.04.020 ; https://arxiv.org/abs/2112.12814v2 。使用 §2 的特殊支持结构动态规划思路；本章只精确求解二阶代理，在森林上对原目标给四阶近优界，不认领一般树上原行列式的精确算法。
+
+[FL25] M. Fampa, J. Lee. *Recent Advances in Maximum-Entropy Sampling*. https://arxiv.org/abs/2507.05066v2 (2025), §1.1–1.2 与 §2；期刊 DOI https://doi.org/10.1016/j.kjs.2025.100527 。该文给近期最大熵采样、分支定界与凸松弛背景，不作为本章最小化算法或误差界的证明。
+
+文献笔记拟归入现有 `Library/PredictiveReduction/`，Scribe 文献说明仅附着已有交换子闭包声明，不把该 Lean 声明当作本章定理的证明。新候选内容集中在相同自治可行类中的组合归约、成对图截断的统一/单侧误差、森林近优构造及匹配四阶反例；Gaussian 身份、矩阵 log 级数、树背包和谱工具均为既有构件。没有独立同行审定或全球优先权结论，没有新增外部具名猜想结算。
+
+尚未解决：一般稠密图或大关联的有用近优界；全共振块内连续子空间的直接 KL 优化；未知频率与观测噪声的联合置信保证；非线性/量子充分表示中的对应选择；持续在线滤波与表示切换的长期风险。正文继续在本主卷追加。
+
+<a id="sec-thermal-coherent-recovery"></a>
+## 15. 同一热参考下的概率、相干与动力学：恢复通道的环路相容性
+
+### 15.1 外部问题和共同对象
+
+本章把 §6、§13 的热恢复与量子充分性推进到一个不同的共同实现：给定可见标签与其对应的隐藏热态，能否用**一个**恢复通道同时保留经典概率、量子相干以及指定 Hamilton 更新？对象始终是同一组条件热态、同一个通道及同一条演化，不把不同实验分别可达的最优值当作联合可达。
+
+[NMLW25] §6 第二条公开问题询问多元量子保真度的操作性信息任务。本章给其式 (5.27) 一个标签概率保持的热恢复任务的精确实现，并对“逐对最优与共同最优之间的缺口”给出环路下界和一个高温匹配系数。原 SDP、Uhlmann 两态最优化和净化几何是已有构件 [OA06, AKSO07, NMLW25]；具体通道解释不单独认领新理论。未确立全球优先权，不登记该公开问题的一般解决或 Lean 结算。
+
+有限经典状态可以表示为对角密度矩阵，概率是对角效应的期望；量子状态则允许完整矩阵代数，概率为正效应的迹配对。经典更新、CPTP 量子通道和其对观测的对偶都在正性、归一化与复合下比较。Hamiltonian 决定演化生成元，Gibbs 参考决定条件热态，电磁模型在本章提供受控自旋 Hamiltonian。这个共同语言不证明任意经典系统与任意量子系统等价；辛经典运动、量子完全正性及热操作成本各保留独立前件。
+
+约定所有 Hilbert 空间有限维、根保真度为 $f(\tau,\sigma)=\|\sqrt\tau\sqrt\sigma\|_1$，不取平方；$\|\cdot\|_F$ 为未归一 Frobenius 范数，迹距离如需二分之一会明写。$\beta>0$，并取 $\hbar=1$。
+
+### 15.2 保留经典标签与条件热态的全部通道
+
+可见系统 $A$ 有基 $|a\rangle$，$a=1,\ldots,q$；隐藏系统 $B$ 的维数为 $d$。固定
+\[
+ H=\sum_a|a\rangle\langle a|\otimes H_a,\quad
+ \tau_a=e^{-\beta H_a}/Z_a,\quad
+ p_a=Z_a/\sum_bZ_b,
+\]
+\[
+ \gamma_{AB}=\sum_a p_a|a\rangle\langle a|\otimes\tau_a,
+ \qquad\gamma_A=\sum_a p_a|a\rangle\langle a|.
+\]
+每个 $\tau_a$ 忠实。考虑所有满足
+\[
+ \operatorname{Tr}_B\mathcal R(|a\rangle\langle a|)=|a\rangle\langle a|,
+ \qquad\mathcal R(\gamma_A)=\gamma_{AB}
+\]
+的 CPTP 通道 $\mathcal R:A\to AB$。纯的 $A$ 边缘与正性迫使其对角输出为 $|a\rangle\langle a|\otimes\tau_a$；第二式逐块固定这些 $\tau_a$。
+
+Stinespring 等距可以且必须写成
+\[
+ V|a\rangle=|a\rangle|\psi_a\rangle_{BE},\qquad
+ \operatorname{Tr}_E|\psi_a\rangle\langle\psi_a|=\tau_a.
+\]
+把净化表示成矩形振幅 $A_a=\sqrt{\tau_a}W_a$，其中 $W_aW_a^\dagger=I_d$，所有 $W_a$ 使用同一个环境维数。于是
+\[
+ \mathcal R(|a\rangle\langle b|)
+ =|a\rangle\langle b|\otimes A_aA_b^\dagger,
+ \quad c_{ab}=\operatorname{Tr}(A_aA_b^\dagger),
+\]
+\[
+ \boxed{[\operatorname{Tr}_B\mathcal R(\rho)]_{ab}=c_{ab}\rho_{ab}.} \tag{15.1}
+\]
+反向任何这样的共同振幅族给合法通道，$C=(c_{ab})$ 是半正定、对角为一的 Gram 矩阵。共同环境不能对不同状态对分别重选。
+
+对任意经典分布 $s_a$，其标签概率与相对 Gibbs 的 KL 被精确保留：
+\[
+ D\!\left(\mathcal R\!\left(\sum_as_a|a\rangle\langle a|\right)\middle\|\gamma_{AB}\right)
+ =\sum_as_a\log(s_a/p_a).
+\]
+它由正交对角块上的相同条件态消去得到。一般量子输入的局部相干则受到 $c_{ab}$ 限制。本文度量的是恢复后再读取可见边缘的效果；$\mathcal R$ 的联合输出仍可能把相干编码在 $AB$ 相关中，不能由 $|c_{ab}|<1$ 断言所有联合信息都已消失。
+
+这个通道类保证 Gibbs 校准和 CPTP 可实现性，不自动保证与无功热浴的能量守恒实现。Gibbs-preserving 与 thermal operations 的区别已有明确反例 [FOR15]。若要求时间协变，还要加入 §15.7 的新前件 [LJR15]。
+
+### 15.3 两态的既有最优值与多态的操作性任务
+
+Uhlmann／[OA06] 的两态结果给
+\[
+ |c_{ab}|\le f_{ab}:=\|\sqrt{\tau_a}\sqrt{\tau_b}\|_1,
+\]
+且任一单独指定的状态对可以达到等号。对于输入 $|\pm_{ab}\rangle=(|a\rangle\pm|b\rangle)/\sqrt2$ 的等先验二择一实验，恢复后只读取 $A$，最优判别错误率为 $(1-|c_{ab}|)/2$。若固定按原 $X$ 相位测量，错误率为 $(1-\operatorname{Re}c_{ab})/2$。二者分别对应相位可校准与固定相位任务。
+
+对全部无序对均匀平均，在**同一个**恢复通道上优化固定相位任务，则
+\[
+ \boxed{p_{\mathrm{fixed}}^{\mathrm{opt}}
+ =\tfrac12\bigl(1-F_{\mathrm{SDP}}(\tau_1,\ldots,\tau_q)\bigr).} \tag{15.2}
+\]
+证明是直接识别 [NMLW25, (5.27)] 的正块矩阵：令 $X_{ab}=A_aA_b^\dagger$，对角块为 $\tau_a$；反向任何具有这些对角块的正矩阵都可作 Gram 分解，构造上述通道。目标正是 $2\sum_{a<b}\operatorname{Re}\operatorname{Tr}X_{ab}/[q(q-1)]$。这是对既有 SDP 的标准实现，不把它单独包装为新增定理。
+
+用模长替代实部通常得到另一目标，不能称为同一个 SDP。下节的缺口界同时约束它们，因为 $\operatorname{Re}c_{ab}\le|c_{ab}|$。原文定理 5.33 已有 $F_{\mathrm{SDP}}\le F_U$ 的一般比较；下文追踪这个差何时严格为正及在指定热模型中有多大。
+
+对共同本征基的 $H_\pm=H_B\pm gV$，两态保真度还等于
+\[
+ f_{+-}=\frac{Z(0)}{\sqrt{Z(g)Z(-g)}},\qquad
+ -\log f_{+-}=\frac{\beta^2g^2}{2}\operatorname{Var}_{\gamma_{H_B}}V+O(g^4).
+\]
+这里 $Z(g)=\operatorname{Tr}e^{-\beta(H_B+gV)}$。直接对配分函数求导得到热响应系数，未把这个已知 Gibbs 身份认领为新构造。
+
+### 15.4 环路阻碍逐对最优值由同一个通道实现
+
+对一条长为 $\ell\ge3$ 的简单环，按环方向定义唯一极分解
+\[
+ \sqrt{\tau_i}\sqrt{\tau_j}=T_{ij}|\sqrt{\tau_i}\sqrt{\tau_j}|,
+ \quad \mu_{ij}=\sigma_{\min}(\sqrt{\tau_i}\sqrt{\tau_j})>0,
+\]
+\[
+ U_{\mathcal C}=T_{12}T_{23}\cdots T_{\ell1},\qquad
+ h_{\mathcal C}^2:=\min_{|z|=1}\|I-zU_{\mathcal C}\|_F^2
+ =2d-2|\operatorname{Tr}U_{\mathcal C}|.
+\]
+$U_{\mathcal C}$ 是已知 Uhlmann 离散输运的环路对象 [AKSO07]；模掉标量相位是因为现在比较每对相干的模长。令 $\delta_{ij}=f_{ij}-|c_{ij}|$。
+
+**定理 15.1（任意共同环境下的定量环路缺口）。** 对 §15.2 中全部通道和全部环境维数，
+\[
+ \boxed{\sum_{(i,j)\in\mathcal C}\sqrt{2\delta_{ij}/\mu_{ij}}
+ \ge h_{\mathcal C},\qquad
+ \sum_{(i,j)\in\mathcal C}\delta_{ij}
+ \ge\frac{h_{\mathcal C}^2}{2\sum_{(i,j)\in\mathcal C}\mu_{ij}^{-1}}.} \tag{15.3}
+\]
+环上的每对模长同时达到根保真度，当且仅当 $U_{\mathcal C}$ 是标量相位。树上的全部边总能同时达到各自最优模长。
+
+**证明。** 写 $S_i=\sqrt{\tau_i}$、$M_{ij}=W_iW_j^\dagger$，其范数至多一。若 $c_{ij}\ne0$，取 $\zeta_{ij}=c_{ij}/|c_{ij}|$；零时取任意相位。由迹循环，$c_{ij}=\operatorname{Tr}(|S_iS_j|T_{ij}^\dagger M_{ij})$。于是
+\[
+ \delta_{ij}=\operatorname{Tr}|S_iS_j|
+ [I-\operatorname{Re}(\bar\zeta_{ij}T_{ij}^\dagger M_{ij})]
+ \ge\frac{\mu_{ij}}2\|W_i-\zeta_{ij}T_{ij}W_j\|_F^2. \tag{15.4}
+\]
+中括号半正定，最后使用 $W_iW_i^\dagger=W_jW_j^\dagger=I_d$ 展开平方。沿环逐项相减并使用酉矩阵不改变 Frobenius 范数，得
+\[
+ \|(I-\zeta_{12}\cdots\zeta_{\ell1}U_{\mathcal C})W_1\|_F
+ \le\sum\|W_i-\zeta_{ij}T_{ij}W_j\|_F.
+\]
+左侧等于去掉 $W_1$ 后的范数，因 $W_1W_1^\dagger=I_d$；它至少为 $h_{\mathcal C}$。代入 (15.4) 得第一式，Cauchy–Schwarz 给第二式。
+
+若全部缺口为零，第一式迫使环路为标量。反向沿一棵生成路径选方形酉 $W_i$，逐边令 $W_i=T_{ij}W_j$；最后一边仅差环路的标量相位，所以模长仍取等。树上没有闭环约束，同一递归适用于全部边。证毕。
+
+一般连接图需同时检验独立环。这个结论使用共同矩阵振幅，不能由逐对 Uhlmann 存在性独立相加得到。忠实性保证 $\mu_{ij}>0$；秩亏极限不能沿用正的统一下界。此处净化束的 holonomy 与 §7 的电磁曲率都是几何输运对象，但未证明二者为同一物理场。
+
+### 15.5 三个正交磁方向的匹配高温最优系数
+
+令三个可见标签控制隐藏自旋 Hamiltonian
+\[
+ H_1=-\Delta X,\qquad H_2=-\Delta Y,\qquad H_3=-\Delta Z,\quad\Delta>0,
+\]
+其中 $X,Y,Z$ 是 Pauli 矩阵。它可解释为同幅值、不同方向的条件自旋场；本章不求解该控制装置的 Maxwell 边界值或能量成本。令
+\[
+ r=\tanh(\beta\Delta)\in(0,1),\qquad
+ \tau_i=(I+r\sigma_i)/2,\quad p_i=1/3.
+\]
+每对的根保真度与最小奇异值相同：
+\[
+ f=\sqrt{1-r^2/2},\qquad \mu=\tfrac12(f-r/\sqrt2).
+\]
+设
+\[
+ \theta=\arctan\frac{1-\sqrt{1-r^2}}{1+\sqrt{1-r^2}}.
+\]
+则 $T_{12}=e^{i\theta Z}$、$T_{23}=e^{i\theta X}$、$T_{31}=e^{i\theta Y}$，直接乘 Pauli 矩阵得到
+\[
+ \operatorname{Tr}U_{\mathcal C}=2(\cos^3\theta+\sin^3\theta),
+ \quad h_{\mathcal C}^2=4(1-\cos^3\theta-\sin^3\theta)>0.
+\]
+
+**定理 15.2（全部 CPTP 恢复的最优额外相干代价）。** 定义
+\[
+ D_*(r)=\inf_{\mathcal R}\left[3f-
+ (|c_{12}|+|c_{23}|+|c_{31}|)\right],
+\]
+其中通道类为 §15.2，环境维数不受固定小维限制。则
+\[
+ D_*(r)\ge\mu h_{\mathcal C}^2/6>0,\qquad
+ \boxed{\lim_{r\downarrow0}D_*(r)/r^4=1/32.} \tag{15.5}
+\]
+使用 [NMLW25] 的归一多元定义，还有
+\[
+ \boxed{F_U(\tau_1,\tau_2,\tau_3)-F_{\mathrm{SDP}}(\tau_1,\tau_2,\tau_3)
+ =r^4/96+o(r^4).} \tag{15.6}
+\]
+这是额外联合代价，不包括每对已经具有的 $1-f$。
+
+**证明。** 由 $\sqrt{\tau_i}=aI+b\sigma_i$，其中
+$a^2=(1+\sqrt{1-r^2})/4$、$b^2=(1-\sqrt{1-r^2})/4$，计算二阶极分解得到上述 $f,\mu,T$。$\theta=r^2/4+O(r^4)$，所以 $h_{\mathcal C}^2=3r^4/8+O(r^6)$、$\mu=1/2+O(r)$。定理 15.1 给 $\liminf D_*/r^4\ge1/32$。
+
+为达到此阶，固定二维环境并构造
+\[
+ W_1=e^{i\theta(Z-Y)/3},\quad
+ W_2=e^{i\theta(X-Z)/3},\quad
+ W_3=e^{i\theta(Y-X)/3},\qquad A_i=\sqrt{\tau_i}W_i.
+\]
+这些酉矩阵给一个真正的共同恢复通道。每条有向环边均有
+\[
+ W_i-T_{ij}W_j=-\frac{ir^2}{12}(X+Y+Z)+O(r^4),
+ \quad\|W_i-T_{ij}W_j\|_F^2=r^4/24+O(r^6).
+\]
+又 $|\sqrt{\tau_i}\sqrt{\tau_j}|=I/2+O(r)$。在 (15.4) 的等式部分取相位一，使用二阶矩阵恒等式
+$I-\operatorname{Re}V=(I-V)(I-V)^\dagger/2$（$V$ 酉），得
+\[
+ f-\operatorname{Re}c_{ij}=r^4/96+O(r^5).
+\]
+于是 $\sum(f-|c_{ij}|)\le\sum(f-\operatorname{Re}c_{ij})=r^4/32+O(r^5)$，与下界夹逼得到 (15.5)。固定相位的最优总缺口介于模长最优缺口与这个共同构造的实部缺口之间，所以同样具有系数 $1/32$；除以三即得 (15.6)。证毕。
+
+规范平方根选择 $W_i=I$ 的总额外缺口为
+$3[f-(1+\sqrt{1-r^2})/2]=3r^4/32+O(r^6)$。上述构造把其首项缩小为三分之一，且由全通道下界认证高温一阶最优。这里优化的是控制恢复通道，不能把该比较写成神经网络 benchmark。由于 $r=\beta\Delta+O((\beta\Delta)^3)$，热能尺度下最优额外缺口为 $(\beta\Delta)^4/32+o((\beta\Delta)^4)$。
+
+### 15.6 有限值、读出任务与不能过度解释的范围
+
+对每条边的 $|\pm_{ij}\rangle$ 判别，允许在知道通道后选最优可见测量，则平均错误率超过“每对分别优化”的下界至少 $D_*(r)/6$，高温首项为 $r^4/192$。这是同一固定恢复通道上的一组明确实验，不是对任意 quantum learning 任务的下界。
+
+90 位精度计算的边界如下。下界来自 (15.3)，上界是定理 15.2 的显式共同通道，未把有限温度上界当作已求出的精确极小值。
+
+| $r$ | 最优总额外缺口的下界 | 显式通道的上界 | 平方根基线 |
+|---:|---:|---:|---:|
+| 0.1 | $2.92050124\times10^{-6}$ | $3.13280407\times10^{-6}$ | $9.44582907\times10^{-6}$ |
+| 0.01 | $3.10308337281\times10^{-10}$ | $3.12507812419\times10^{-10}$ | $9.37570317627\times10^{-10}$ |
+| 0.001 | $3.12279211238\times10^{-14}$ | $3.12500078125\times10^{-14}$ | $9.37500703126\times10^{-14}$ |
+
+这是概率、热态与几何输运的联合约束：标签概率可以全部正确，任意单对的相干最优值也可以分别存在，仍然没有一套共同净化能达到全部这些值。环路余量给出可证伪的差额。没有把它解释为完整封闭态熵必然增加、没有将可见边缘损失等同于联合态所有信息的丢失，也没有从 Gibbs 校准计算实际热耗。
+
+### 15.7 加入未来更新后：能隙相容性是另一项独立约束
+
+先处理两个标签、共同本征基的 $H_0=\operatorname{diag}(E_{0j})$、$H_1=\operatorname{diag}(E_{1j})$，$\tau_a=\operatorname{diag}(p_{aj})$。进一步要求一个固定逻辑 Hamiltonian $K=\operatorname{diag}(\kappa_0,\kappa_1)$ 的全部时间协变：
+\[
+ e^{-itH}\mathcal R(\rho)e^{itH}
+ =\mathcal R(e^{-itK}\rho e^{itK}),\quad\forall\rho,t.
+\]
+记 $\omega=\kappa_0-\kappa_1$。这个条件比只在平衡态上静止更强，且不等同于所有真实 thermal operations 的完整刻画 [LJR15, FOR15]。
+
+**定理 15.3（共同本征基中的精确自治相干上限）。** 在 §15.2 通道类和上述协变条件下，
+\[
+ \boxed{\max_{\mathcal R}|c_{01}|
+ =\sum_{j:E_{0j}-E_{1j}=\omega}\sqrt{p_{0j}p_{1j}}.} \tag{15.7}
+\]
+若允许选择任意对角 $K$，取右侧在各能隙类上的最大值。
+
+**证明。** 令 $\mathcal R(|0\rangle\langle1|)=|0\rangle\langle1|\otimes X$。对协变式求零时导数，得 $H_0X-XH_1=\omega X$；因此只有满足该能隙的对角元能进入 $c_{01}=\operatorname{Tr}X$。正块 $\left(\begin{smallmatrix}\tau_0&X\\X^\dagger&\tau_1\end{smallmatrix}\right)$ 的二阶主子式给 $|X_{jj}|\le\sqrt{p_{0j}p_{1j}}$，从而得到上界。选 $X$ 为对角矩阵，在该能隙类取 $\sqrt{p_{0j}p_{1j}}$，其余取零；对应块逐 $j$ 半正定且对角态迹为一，所以定义 CPTP 通道。它逐矩阵元满足协变并达到上界。证毕。
+
+**Ising 实例及三个任务。** 取 $H_0=gZ,H_1=-gZ$、$g\ne0$。仅热校准时最优为 $f=\operatorname{sech}(\beta g)$；允许任意对角逻辑生成元时，两个能隙 $2g,-2g$ 分开，所以精确自治上限为 $f/2$。
+
+若再要求逻辑 Hamiltonian 的 $\beta$-Gibbs 态等于已指定的边缘 $\gamma_A$，则 $K$ 被固定为平均力 Hamiltonian $-\beta^{-1}\operatorname{diag}(\log Z_0,\log Z_1)$ 加常数。本例 $Z_0=Z_1$，故 $K$ 为标量、$\omega=0$，而 (15.7) 的和为空，最优可见相干为零。这不排除联合输出在相关中携带信息。$g=0$ 时全部能隙合并，相干可以完整保留；精确相容条件存在不连续性。
+
+有限时间近似不同：热最优通道可取 $X=fI/2$，逻辑 $K=0$。对全部单比特输入取上确界，直接计算
+\[
+ \sup_\rho\|e^{-itH}\mathcal R(\rho)e^{itH}-\mathcal R(\rho)\|_1
+ =2f|\sin(gt)|,
+\]
+\[
+ \sup_\rho\|\operatorname{Tr}_B(e^{-itH}\mathcal R(\rho)e^{itH})-
+ \operatorname{Tr}_B\mathcal R(\rho)\|_1=2f\sin^2(gt).
+\]
+最大值由均衡相干输入达到。小 $|gt|$ 时可以近似保持，并没有违反严格全部时间的零相干结果。这个例子把热参考、量子相干和未来更新放在同一个 Hamilton 实现中，而非用形式相似性代替相容性。
+
+### 15.8 验证、来源和下一层问题
+
+参考程序 `thermal_recovery.py` 构造实际恢复映射、条件热态、极分解和环路界；`verify.py` 采用固定种子与 90 位精度进行有限检错。检查涵盖不同共同环境维数、随机忠实态、树饱和、标量环相位、Choi 正性、Gibbs 校准、经典 KL、三态 Pauli 公式、高温夹逼、共同能隙通道以及 Ising 有限时间误差。有限计算不证明全称量词或全球优先权；一般结论由上述纸面证明承担。
+
+新增候选内容是任意共同环境下的定量射影环路缺口，以及与明确全通道最优化匹配的三热态四阶系数。标准净化表示、两态保真度、SDP 正块对应、Gibbs 恒等式和 Bohr 能隙选择作为已有数学工具使用。未新增 Lean、冻结或外部问题机器结算；没有独立同行审查、Scribe 编译、CI、硬件实验或神经网络性能验证。
+
+[OA06] D. K. L. Oi, J. Aberg. *Fidelity and Coherence Measures from Interference*. Physical Review Letters 97, 220404 (2006). DOI 10.1103/PhysRevLett.97.220404; arXiv:quant-ph/0603157，式 (6) 的全 subspace-preserving 根保真度上限与局部类的区别。
+
+[AKSO07] J. Aberg, D. Kult, E. Sjoqvist, D. K. L. Oi. *Operational approach to the Uhlmann holonomy*. Physical Review A 75, 032106 (2007). DOI 10.1103/PhysRevA.75.032106; arXiv:quant-ph/0608185v2，§II 的振幅、平行输运和离散环路。
+
+[NMLW25] T. Nuradha, H. K. Mishra, F. Leditzky, M. M. Wilde. *Multivariate Fidelities*. Journal of Physics A 58(16), 165304 (2025). DOI 10.1088/1751-8121/adc645; arXiv:2404.16101v3。核对式 (5.27)、定理 5.33／式 (5.80)、§6 第二条开放问题；后两处已作 PDF 页面视觉核对，式 (5.27) 页面截图失败但解析公式可读。本文的模长目标与原实部 SDP 分开；(15.6) 是在同一三态族上的定量比较。
+
+[FOR15] P. Faist, J. Oppenheim, R. Renner. *Gibbs-Preserving Maps outperform Thermal Operations in the quantum regime*. New Journal of Physics 17, 043003 (2015). DOI 10.1088/1367-2630/17/4/043003; arXiv:1406.3618。全文的例 (1)–(3) 和时间参考讨论限制本章的物理解释，第一页已视觉核对。
+
+[LJR15] M. Lostaglio, D. Jennings, T. Rudolph. *Description of quantum coherence in thermodynamic processes requires constraints beyond free energy*. Nature Communications 6, 6383 (2015). DOI 10.1038/ncomms7383; arXiv:1405.2188，定理 1 及 Methods 式 (15) 的时间平移协变。
+
+各条已登记于 `Library/PredictiveReduction/` 并与现有 Scribe 真实交换子闭包声明关联；该声明不承担本章通道最优值的证明。原有 `WormholeHolonomy` 等仓库回路声明只提供一般观察接口，不被冒用为 Uhlmann 环路定理。
+
+下一层仍需解决：非对易条件 Hamiltonian 下同时施加热校准、全时间协变和多态相干最优的精确结构；一般图上定量环路下界是否达到；有限温度三态问题的全参数精确最优值；实际能量守恒实现的资源代价。它们是明确的数学优化和实验合法性义务，不能由一个统一术语或单个数值结果替代。后续继续在本主卷追加。
