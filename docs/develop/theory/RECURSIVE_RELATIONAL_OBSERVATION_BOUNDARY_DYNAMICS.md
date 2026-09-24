@@ -1679,3 +1679,283 @@ $$
 前两项使摘要可继续执行，第三项防止把两个边缘协议误拼成一个不存在的联合接法，最后一项把形式商和极限线程接回同一个整体。静态双侧商只有在 (19.3) 与选择器条件已经成立时，才是动态双侧商的等价表达。本节是对既有冻结声明的普通数学组合，没有新增 Lean 声明。
 
 ## 19.99 追加锚
+
+## 20. 合法动作词树：把空间、时间、边界和记忆收束到一个过程核
+
+固定的 $F$ 和 $\sigma$ 仍然把“下一步能做什么”预先写死了。内部观察者通常还带有权限、失败和记录：同一个动作在不同状态可能合法，也可能只产生一个失败事件。为此，最小载体应改为一个带标签的合法动作词树。
+
+### 20.1 总化失败而不是删除非法边
+
+令 $A$ 是动作字母表，$S_\bot=S\sqcup\{\dagger\}$ 是加入吸收失败状态后的配置集。对每个 $a\in A$，给出
+
+$$
+T_a:S_\bot\to S_\bot,
+\qquad
+O_a:S_\bot\to\widehat L,
+$$
+
+其中 $T_a$ 把非法接续送到 $\dagger$，$O_a$ 的值域 $\widehat L$ 同时包含正常读数、失败原因、权限结果和必要的记录标签。$\dagger$ 的后续动作仍可得到固定的失败记录；因此非法分支没有从模型中消失，也不会被当作“没有输出”。
+
+对动作词 $w=a_1\cdots a_n\in A^*$，递归运行并收集完整标签词，记为
+
+$$
+\operatorname{Trace}(s,w)\in\widehat L^*.
+$$
+
+完整未来 profile 是
+
+$$
+\Phi(s):A^*\to\widehat L^*,
+\qquad
+\Phi(s)(w)=\operatorname{Trace}(s,w).
+\tag{20.1}
+$$
+
+若任务只允许一部分动作词，则把不允许的词也解释为带原因的失败标签；这样所有未来测试仍在同一个固定的 $A^*$ 上，权限条件成为响应的一部分。
+
+### 20.2 未来核是唯一可递归的最小边界
+
+定义
+
+$$
+s\sim_{\mathrm{word}}t
+\iff
+\forall w\in A^*,\quad \Phi(s)(w)=\Phi(t)(w).
+\tag{20.2}
+$$
+
+对任意首动作 $a$，完整轨迹满足前缀恒等式
+
+$$
+\Phi(T_a s)(w)=\operatorname{tail}_a\bigl(\Phi(s)(aw)\bigr),
+\tag{20.3}
+$$
+
+其中右端删除首个动作对应的标签；若采用终点读数版本，则相应地写成
+
+$$
+\Phi_{\mathrm{end}}(T_a s)(w)=\Phi_{\mathrm{end}}(s)(aw).
+$$
+
+由 (20.3)，$s\sim_{\mathrm{word}}t$ 会被每个 $T_a$ 保持。因此每个动作在商
+
+$$
+S_{\mathrm{word}}:=S_\bot/\!\sim_{\mathrm{word}}
+$$
+
+上都有唯一的前缀更新 $\overline T_a$，并且所有合法性、输出和记录都由商上的 profile 恢复。这个商不是“当前显示值相同”的商，而是对全部有限续接都不可区分的商。
+
+仓内 `ControlledBehaviorUniversality.controlled_behavior_universal_property` 已对有限动作字母和完整有限词读出给出同一普适性：完整行为商的每个动作更新、当前读出和候选实现都唯一因子化，且在有限载体上得到基数上界。对具有共同幺半群协议的可达子系统，`ReachableBehaviorCore.reachable_behavior_core` 进一步给出可达性、未来分离和每个协议前缀的唯一商更新。
+
+### 20.3 任意动态记忆都必须映到这个核
+
+设 $r:S\to M$ 是一个实际记忆摘要。若它满足：
+
+$$
+\begin{aligned}
+\Phi(s)(w)&=\psi_w(r(s))qquad &&(w\in A^*),\\
+r(T_a s)&=\overline T_a(r(s))qquad &&(a\in A),
+\end{aligned}
+\tag{20.4}
+$$
+
+并且选择器、权限和失败标签也由 $r(s)$ 决定，那么
+
+$$
+r(s)=r(t)\Longrightarrow s\sim_{\mathrm{word}}t.
+\tag{20.5}
+$$
+
+在实际记忆像 $r(S)$ 上存在唯一映射
+
+$$
+\theta:r(S)\to S_{\mathrm{word}},
+\qquad
+\theta(r(s))=[s].
+\tag{20.6}
+$$
+
+若 $r$ 还分离所有不同的未来 profile，则 $\theta$ 为双射。故空间切面、时间动作词、边界状态和记忆摘要要互相恢复，不能只要求它们的当前读数相等；它们都必须在同一个实际像上双射到 (20.2) 的未来核。
+
+这正是 `CausalStateFactorization.causal_state_factorization` 的过程化读法：预测律在摘要纤维上恒定时，摘要实际像唯一映到预测律像；`PredictionCompletionUniversality.prediction_completion_universality` 则把当前读出和更新的因子化提升为完整未来轨迹的因子化。两者结合得到 (20.6)，但一般动作词树版本是本节的数学组合，并非仓内已单独冻结的泛化定理。
+
+### 20.4 当前读数相同仍可能没有后继
+
+仓内 `EarliestFutureWitness.memory_is_earliest_future_witness` 的有限例可以直接写成：
+
+$$
+S=\operatorname{Fin}3,
+\quad
+F(0)=0,\quad F(1)=2,\quad F(2)=2,
+\quad
+q(s)=[s=2].
+$$
+
+当前有 $q(0)=q(1)=\mathsf{false}$，但
+
+$$
+q(F(0))=\mathsf{false}\ne\mathsf{true}=q(F(1)).
+$$
+
+所以 $q$ 的当前纤维不能承载后继；完整 profile 在一步处把两者分开。动作词树版本还会同时记录“哪一个动作在何时失败”，因而比只比较一条固定时间轨道更适合内部观察者。
+
+### 20.5 有限词、无限词与实际来源
+
+对词长不超过 $N$ 的任务，使用
+
+$$
+s\sim_N t
+\iff
+\forall w\in A^*,\ |w|\le N\Rightarrow
+\Phi(s)(w)=\Phi(t)(w).
+$$
+
+有
+
+$$
+\sim_{N+1}\subseteq\sim_N,
+\qquad
+\sim_{\mathrm{word}}=\bigcap_N\sim_N.
+\tag{20.7}
+$$
+
+在有限状态且全动作更新已固定时，`FiniteFutureCongruence.infinite_relation_stabilizes` 说明某个有限深度达到最大分离深度后，有限商就等于无限未来商；没有该稳定条件时，所有有限层相容不等于一个固定有限边界足够。对阶段化或逆极限系统，还要保留第 17 节的实际来源像闭合与更新提升条件：形式上存在的 profile 线程可能不来自任何共同配置。
+
+### 20.6 四种表达的最终收束
+
+在这个动作词树模型中，四种通常分开的词只承担不同角色：
+
+* **空间**是可达配置及其接口的局部载体 $S$；
+* **时间**是动作词的前缀序和记录顺序；实际钟读数是 $\widehat L$ 中的一类标签；
+* **边界**是未来核商 $S_{\mathrm{word}}$ 或其指定任务的有限 horizon 商；
+* **记忆**是一个实际像 $r(S)$，以及它到未来核的因子化映射。
+
+在指定任务下，它们互相恢复的充分结构可收束为
+
+$$
+\boxed{
+\begin{gathered}
+\text{固定共同来源与总化失败的动作词树},\\
+\text{完整 profile 对所有允许词包含读数、权限和记录},\\
+\text{未来核对每个动作前缀闭合并给出唯一商更新},\\
+\text{每个表示在实际像上因子化并对未来 profile 分离},\\
+\text{阶段极限的实际来源像与更新闭合}.
+\end{gathered}}
+\tag{20.8}
+$$
+
+这组条件比预设一个外部时空坐标更小：只需一个带标签的关系过程及其未来行为核；空间、时间、边界和记忆是同一过程的不同投影。它也保留了递归性：把一个商类的内部协议再展开成动作词树，重复 (20.1)—(20.6)，无需另造系统外观察者。本节没有新增 Lean 声明。
+
+## 20.99 追加锚
+
+## 21. 词作用商：协议顺序本身也是关系
+
+第 20 节把动作词作为未来测试的索引；还可以把动作词本身当作一个可压缩对象。设 $A^*$ 是由动作字母生成的自由幺半群，并固定以下运行约定：词 $uv$ 表示先执行 $u$，再执行 $v$。写
+
+$$
+\rho(\varepsilon,s)=s,
+\qquad
+\rho(ua,s)=T_a(\rho(u,s)).
+\tag{21.1}
+$$
+
+于是
+
+$$
+\rho(uv,s)=\rho(v,\rho(u,s)).
+\tag{21.2}
+$$
+
+这条约定必须始终保留；若改用左作用，所有乘法次序都要同时反转。动作词不是无序的计数向量。
+
+### 21.1 协议词的有效商
+
+定义两个词在当前状态载体上作用相同为
+
+$$
+u\equiv_{\mathrm{act}}v
+\iff
+\forall s\in S,\quad \rho(u,s)=\rho(v,s).
+\tag{21.3}
+$$
+
+它是一个双侧同余：若 $u\equiv_{\mathrm{act}}v$，则对任意前缀 $x$ 与后缀 $y$，都有
+
+$$
+xuy\equiv_{\mathrm{act}}xvy.
+\tag{21.4}
+$$
+
+因此 $A^*/\!\equiv_{\mathrm{act}}$ 仍是一个幺半群，并且它在 $S$ 上的诱导作用是 faithful 的；作用不同的词类必在某个状态上留下差别。仓内冻结声明 `EffectiveProtocolActionMonoid.effective_protocol_action_monoid` 正好给出 (21.3)—(21.4) 的两侧同余和忠实商。
+
+状态侧的完整控制 profile 则为
+
+$$
+\Gamma(s)(u)=\widehat q(\rho(u,s)),
+\qquad u\in A^*,
+\tag{21.5}
+$$
+
+其中 $\widehat q$ 已包含合法性、读数、失败和记录。由 (21.2)，对任意前缀动作，后续 profile 在商上唯一运输。`ControlQuotientUniversalMinimality.control_quotient_universal_minimality` 把这个商的核识别为动态闭包，并证明当前读出、每个动作后继和每个动作结果都可从中恢复；`BehaviorUpdateWordAction.behavior_update_well_defined` 则在实际行为像上给出词的空词、拼接和运行运输。
+
+### 21.2 深度一的商仍可能丢掉词关系
+
+考虑动作 $a,b$ 和状态
+
+$$
+S=\{s,t,u,v,r_0,r_1\},
+$$
+
+令 $q(r_1)=1$，其余状态读数为 $0$，并规定
+
+$$
+a(s)=u,\quad a(t)=v,\quad b(s)=b(t)=r_0,
+\qquad b(u)=r_0,\quad b(v)=r_1.
+$$
+
+则 $s,t$ 的当前读数相同，执行单步 $a$ 或单步 $b$ 后的读数也相同；但是按 (21.1) 先执行 $a$ 再执行 $b$ 时
+
+$$
+q\bigl(\rho(ab,s)\bigr)=0,
+\qquad
+q\bigl(\rho(ab,t)\bigr)=1.
+\tag{21.6}
+$$
+
+所以深度不超过一的边界不能代替完整词 profile。这个例子说明“当前读数加每个单步读数”仍不等于全部关系；未来区分可能只在一个组合词上出现。
+
+### 21.3 不可默认把时间协议交换化
+
+只有在
+
+$$
+T_a\circ T_b=T_b\circ T_a
+\tag{21.7}
+$$
+
+对所有动作对成立时，才可以把词作用化成按字母计数的正规形，并把协议“时间”压成两个迭代次数。仓内 `CommutingCompletionExchange.commuting_completion_exchange` 在明确交换假设下给出两种完成顺序的相同核；对应的 `commutativity_hypothesis_is_necessary` 给出四状态反例：两个更新不交换时，两种完成顺序的行为核不同。
+
+因此，在没有 (21.7) 时，$ab$ 与 $ba$ 是不同的协议，即使它们使用了同一组动作、总步数相同，也不能互换。把词改写成计数会删除观察者可以取得的顺序关系，随后得到的边界可能无法继续执行原过程。
+
+### 21.4 词商与四种表达的最终关系
+
+在指定动作字母、失败标签和共同来源后，最小的递归对象可以写成
+
+$$
+\boxed{
+\bigl(S,\ A^*\curvearrowright S,\ \widehat q,\ \Gamma\bigr),
+}
+\tag{21.8}
+$$
+
+其中 $A^*$ 的作用保留协议顺序，$\Gamma$ 保留对全部有限词的关系响应。空间是 $S$ 的可达局部载体，时间是词的前缀序，边界是 $\ker\Gamma$ 的商，记忆是实际像上的一个因子化实现。四者互相恢复要求：
+
+$$
+\ker(r)=\ker(\Gamma)
+$$
+
+（或至少在实际像上诱导双射），动作词商满足两侧同余，失败与权限标签没有被删去，并且逆极限阶段的实际共同来源像对词更新闭合。若只满足当前读数或固定深度轨迹相等，最多得到一个有限任务视图，不能称为整个递归过程的恢复。
+
+本节把第 18 节的联合协议域和第 20 节的合法动作词树连接成一个有序协议作用商；一般的状态—协议双侧普适性仍是普通数学组合，未新增 Lean 声明。
+
+## 21.99 追加锚
