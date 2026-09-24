@@ -54,3 +54,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.DeclaredTemplateTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.WorkflowScript.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.InstructionContract.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.RepositoryContract.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.WorktreeContract.Tests")]

@@ -14,7 +14,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var plan = Plan(path, "", mode);
         var consumers = new[] { "StrataLint.ArchitectureTests", "StrataLint.DeclaredTemplate.Tests" }
             .Concat(shared ? new[] { "StrataLint.Tests" } : []);
-        Assert.Equal(consumers.Select(name => $"tools/tests/{name}/{name}.csproj"),
+        Assert.Equal(WithWorktreeContract(consumers.Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
     }
 }

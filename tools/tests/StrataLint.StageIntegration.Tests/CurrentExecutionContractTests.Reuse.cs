@@ -43,7 +43,7 @@ public sealed partial class CurrentExecutionContractTests
             (Path: "tools/scripts/agent/openproblem/templates/judgement-form-check-template.md", Invalidates: generalScripts),
             (Path: "tools/scripts/worktree/lean_actions.py", Invalidates: generalScripts || project == "StrataLint.Cache.Tests"),
             (Path: "tools/scripts/worktree/lean-cache-ensure.sh", Invalidates: project is not ("StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
-            (Path: "Meta/FILEMAP.toml", Invalidates: project == "StrataLint.ArchitectureTests"),
+            (Path: "Meta/FILEMAP.toml", Invalidates: project is "StrataLint.ArchitectureTests" or "StrataLint.Tests"),
             (Path: "Meta/ci-cache-paths.json", Invalidates: cacheInvalidates),
             (Path: "tools/lean-inspector/Inspector.lean", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
             (Path: "tools/lean-inspector/native_image.c", Invalidates: project is not ("StrataLint.ScriptTests" or "StrataLint.EngineeringScope.Tests" or "StrataLint.Cache.Tests")),
@@ -449,8 +449,12 @@ public sealed partial class CurrentExecutionContractTests
         fixture.Write("fixtures/input.txt", "material");
         const string filemap = "[[files]]\npattern = \"fixtures/*.txt\"\nkind = \"data\"\nadmission_plane = \"judge\"\n";
         fixture.Write("Meta/FILEMAP.toml", filemap);
-        EditRegistration(fixture, rows => rows[0]!["execution_inputs"] = new JsonArray(
-            "fixtures/*.txt", "Meta/FILEMAP.toml", EngineeringRegistrationFixture.Path));
+        EditRegistration(fixture, rows =>
+        {
+            rows[0]!["execution_inputs"] = new JsonArray(
+                "fixtures/*.txt", "Meta/FILEMAP.toml", EngineeringRegistrationFixture.Path);
+            rows[0]!["execution_filemap_paths"] = new JsonArray("fixtures/input.txt");
+        });
         fixture.Track();
         Execute(fixture);
         Seed(fixture);

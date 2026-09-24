@@ -23,10 +23,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan($"tools/tests/StrataLint.WorkflowScript.Tests/{file}", "", mode);
-            Assert.Equal(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 WorkflowScriptProject,
-            }, Strings(plan["execution"]!["tests"]!));
+            }), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("engineering", Strings(plan["resources"]!));
         }
     }
@@ -37,7 +37,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void WorkflowScriptLocalInputsSelectOnlyTheirCompleteProject(string file)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] { WorkflowScriptProject },
+            Assert.Equal(WithWorktreeContract(new[] { WorkflowScriptProject }),
                 Strings(Plan($"tools/tests/StrataLint.WorkflowScript.Tests/{file}", "", mode)["execution"]!["tests"]!));
     }
 
