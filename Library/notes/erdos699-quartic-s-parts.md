@@ -1,3 +1,16 @@
+---
+bibkey: bugeaudevertsegyory2017sparts
+authors: Yann Bugeaud, Jan-Hendrik Evertse, Kálmán Győry
+year: 2017
+title: "S-parts of values of univariate polynomials, binary forms and decomposable forms at integral points"
+doi: null
+url: https://arxiv.org/abs/1708.08290
+claim: Theorem 2.1(i) bounds the S-part of values of a squarefree univariate polynomial with an ineffective constant; used in the written fixed-index finiteness argument for Erdős 699.
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Erdős 699：四次消去与 S-part 外部依赖
 
 研究关联：issue #9670，PR #9723。
