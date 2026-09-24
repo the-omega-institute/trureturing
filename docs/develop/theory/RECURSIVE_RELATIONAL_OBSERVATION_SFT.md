@@ -1414,11 +1414,11 @@ phi_R 是第 20.2 条逐层局部重组的复合，每一步均可逆，phi_S �
 
 ## 28. Lean 接口、验证范围与来源
 
-九个相互衔接的 Lean 源位于 D5/S3/ConceptDynamics/Coding。BipartiteOverlapConjugacy 定义带端点约束的完整双边半边路径，构造 forward、backward、pathEquiv 与 pathHomeomorph，证明两个恢复恒等式、一步移位交换及有限窗口性质，并用两条具体二进制历史证明即时单边读数不足。EquivariantOverlapRecoding 在此真实路径空间上构造 skewEquiv、群坐标转移、一步 skew 动力学交换、左右群作用相容与 skewHomeomorph；余循环解是实际读出的第一半边标记，不以未知余循环存在性为前提。
+九个相互衔接的 Lean 源位于 D5/S3/ConceptDynamics/Coding。BipartiteOverlapConjugacy 定义带端点约束的完整双边半边路径，并在 pathEquiv 与 pathHomeomorph 的构造中给出正逆恢复及连续性；两条具体二进制历史证明即时单边读数不足。EquivariantOverlapRecoding 在此真实路径空间上构造 skewEquiv、群坐标转移与 skewHomeomorph；正逆恢复及连续性留在这些构造的活证明路径中，不另立绑定声明。余循环解是实际读出的第一半边标记，不以未知余循环存在性为前提。
 
-CountedMatrixOverlap 从矩阵乘积计数恒等式构造保端点的编号边分解和实际重叠共轭，CountedExchangeChain 将任意有限矩形交换链组合成具有加法恢复窗口的一步共轭。CountedGroupOverlap 对编号边保留有序群标记并构造等变链共轭，CountedGroupWindowChain 在同一个已构造编码上同时证明正向、逆向和群坐标的有限观察界。
+CountedMatrixOverlap 把矩阵乘积的有限纤维计数直接内化到保端点的编号边分解，并构造实际重叠共轭；CountedExchangeChain 将任意有限矩形交换链组合成具有加法恢复窗口的一步共轭。CountedGroupOverlap 对编号边保留有序群标记，构造可逆的标记分解与群共轭数据结构；CountedGroupWindowChain 在同一个已构造编码上内联时间律和群作用律，同时证明正向、逆向和群坐标的有限观察界，并对整条链归纳。
 
-InvolutionUniformExchange 使用 Mathlib 的实际 MonoidAlgebra 自然数及整数系数对象，构造左因子 u+(1-s)t 和右因子 1+s，证明逐系数非负，再转换成自然系数因子；两种乘积和非交换时的端点差异由证明项给出。InvolutionCountedConjugacy 把这些因子接入编号边和群坐标构造，并给出八元二面体的一步实例。RectangularNilpotenceBarrier 的 ExchangeChain 允许每一步改变矩阵阶数，归纳证明矩形交换的幂零传播；它还实际构造中心幂等元的去均匀非保一同态，并把任意此类投影后的深度差约束应用到整条链。
+InvolutionUniformExchange 使用 Mathlib 的实际 MonoidAlgebra 整数系数对象，构造左因子 u+(1-s)t 和右因子 1+s，并证明两种有序乘积及非交换时的端点差异。InvolutionCountedConjugacy 在自然系数转换的活证明路径中逐系数证明非负，把这些因子接入一顶点矩阵，构造精确一步交换，并证明非交换时最小链长为一；没有另报具体有限群实例。RectangularNilpotenceBarrier 的 ExchangeChain 允许每一步改变矩阵阶数，归纳证明矩形交换的幂零传播；它还实际构造中心幂等元的去均匀非保一同态，并把此类投影后的交换链保留为同长度链。
 
 这些模块不以共轭、逆映射存在或链长下界本身作为同名假设。对应 Blueprint 源各有同名 .scribe.cs。定理 20.1 的排序边编号与计数矩阵的具体同构、定理 25.2 的完整闭式族实例、定理 26.2 的一般有理矩阵单位选择及定理 27.2 的整张三角形证书，仍须区别于九个模块已经表达的通用核心。某个核心引理的编译通过不能自动作为上述完整纸面定理的 Lean 验证收据。编译、公理闭包、镜像生成与冻结状态分别由对应机器产物判定，本章不手写机器状态。
 
