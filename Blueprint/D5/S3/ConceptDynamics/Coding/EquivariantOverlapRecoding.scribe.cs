@@ -22,12 +22,14 @@ internal sealed class EquivariantOverlapRecodingDocument : IScribeDocumentDefini
             Describe.Lean(DescribeId.Create("skew-overlap-homeomorphism"),
                 DeclarationHandle.Create(Prefix + "skewHomeomorph"),
                 H("Construct the skew-product homeomorphism"),
-                StatementSource.FromAuthor(Disp(All(Call("Homeomorph", L, R),
-                    B("topologyU", Call("TopologicalSpace", F.Id("U"))),
-                    B("topologyV", Call("TopologicalSpace", F.Id("V"))),
-                    B("topologyH", Call("TopologicalSpace", F.Id("H"))),
-                    B("continuousGroup", Call("IsTopologicalGroup", F.Id("H"))),
-                    B("alphaContinuous", Call("Continuous", F.Id("alpha"))))))),
+                StatementSource.FromAuthor(
+                    Disp(All(
+                        Call("Homeomorph", L, R),
+                        B("topologyU", Call("TopologicalSpace", F.Id("U"))),
+                        B("topologyV", Call("TopologicalSpace", F.Id("V"))),
+                        B("topologyH", Call("TopologicalSpace", F.Id("H"))),
+                        B("continuousGroup", Call("IsTopologicalGroup", F.Id("H"))),
+                        B("alphaContinuous", Call("Continuous", F.Id("alpha"))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The path overlap code and the right group-coordinate transfer are constructed together. The inverse reads the preceding half-edge, and both directions are continuous."))),
                 DescribeRole.Definition))));

@@ -28,9 +28,11 @@ internal sealed class BipartiteOverlapConjugacyDocument : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("overlap-path-homeomorphism"),
                 DeclarationHandle.Create(Prefix + "pathHomeomorph"),
                 H("Construct the overlap homeomorphism"),
-                StatementSource.FromAuthor(Disp(All(Call("Homeomorph", L, R),
-                    B("topologyU", Call("TopologicalSpace", F.Id("U"))),
-                    B("topologyV", Call("TopologicalSpace", F.Id("V"))))))),
+                StatementSource.FromAuthor(
+                    Disp(All(
+                        Call("Homeomorph", L, R),
+                        B("topologyU", Call("TopologicalSpace", F.Id("U"))),
+                        B("topologyV", Call("TopologicalSpace", F.Id("V")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The preceding and current half-edges give an explicit inverse in both directions. Coordinate evaluation proves continuity on the legal-path subspaces."))),
                 DescribeRole.Definition),
