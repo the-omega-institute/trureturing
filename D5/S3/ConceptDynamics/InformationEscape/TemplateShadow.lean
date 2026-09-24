@@ -6,25 +6,14 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.spectrum_kernel_equal; instance=D5/S3/ConceptDynamics/InformationEscape/TemplateShadow.spectrumRealization
    digest: Shadow registration regression checks preserve canonical arenas, primitive kernels and statements, with sensitivity witnesses and sealed query evidence. -/
 
-/- Ten canonical golds use one reused template (separation) and eight helpers.
-The twoStep helper preserves the two-step binary protocol and Nat.find minima.
-Accounting uses inclusive physical spans; source theorem proofs are excluded.
-A/ = InformationEscapeArenas/, R/ = InformationEscapeRealizations/,
-I/ = InformationEscape/, all below D5/S3/ConceptDynamics/.
-Library, instance, and validation are separate authored scopes.
-| Gold | Hand spans | Library | Instance | Validation |
-| two_step_adaptive_residue_identification | A/FirstThreeArenas.lean:88-140 + R/FirstThreeRealizations.lean:86-171 + I/InformationRoot.lean:83-87 (144) | I/RegistrationTemplates.lean:336-392 (57) | I/TemplateShadow.lean:396-401,416-417 (8) | I/TemplateShadow.lean:402-415,418-427,444,471-472 (27) |
-Hand includes the arena/realization sections and InformationRoot registration.
-Authored instance means realization, bridge, and registration; the remaining
-per-gold checks, enumeration, axiom prints, and census entry are validation.
-Residue scaffolding is I/TemplateShadow.lean:393-395,428 (4); shared seal/query is separate.
-Counts describe this regression pack and make no throughput claim.
--/
+/- Pure shadow realizations and kernel comparisons remain at this mathematical
+owner. Reg.Catalogs.TemplateShadow imports the precise registration variants
+and owns their seal and census checks. -/
 
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 import D5.S3.ConceptDynamics.InformationEscapeCounting.Enumerations
-import LeanInformationAudit.SealCommand
-import LeanInformationAudit.Census.Query
+
+
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -55,15 +44,11 @@ theorem spectrum_lawSensitive : spectrumArena.Law spectrumRealization ∧
   intro h
   exact (by decide : SpectrumAtom.t1 ≠ SpectrumAtom.t2) (h.1 rfl)
 example : ¬ spectrumRealization.toPrimitiveBundle.agrees SpectrumAtom.t1 SpectrumAtom.t2 := by decide
-register_information_theorem spectrum_atom_index_bijective in spectrumArena
-  primitives spectrumRealization.toPrimitiveBundle realization spectrum_bridge
-example : spectrum_atom_index_bijective.__information_unit.Statement =
-    (D5.S3.ConceptDynamics.InformationEscapeRealizations.FirstThreeRealizations.spectrum_atom_index_bijective_realization.toTheoremUnit
-      spectrum_atom_index_bijective).Statement := rfl
+
+
 #print axioms spectrum_bridge
 #print axioms spectrum_lawSensitive
-expect_information_occurrence spectrum_atom_index_bijective in spectrumArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Spectrum
 
 section Intervention
@@ -93,17 +78,13 @@ theorem intervention_lawSensitive : interventionArena.Law interventionRealizatio
   rintro ⟨x, y, _, h⟩
   exact h rfl
 example : ¬ interventionTemplate.toPrimitiveBundle.agrees noEffectModel flipEffectModel := by decide
-register_information_theorem intervention_strictly_weaker_than_counterfactual in interventionArena
-  primitives interventionRealization.toPrimitiveBundle realization intervention_bridge
+
 example : ∀ x y, interventionRealization.toPrimitiveBundle.agrees x y ↔
     D5.S3.ConceptDynamics.InformationEscapeRealizations.FourthFifthRealizations.interventionRealization.toPrimitiveBundle.agrees x y := by decide
-example : intervention_strictly_weaker_than_counterfactual.__information_unit.Statement =
-    (D5.S3.ConceptDynamics.InformationEscapeRealizations.FourthFifthRealizations.intervention_strictly_weaker_than_counterfactual_realization.toTheoremUnit
-      intervention_strictly_weaker_than_counterfactual).Statement := rfl
+
 #print axioms intervention_bridge
 #print axioms intervention_lawSensitive
-expect_information_occurrence intervention_strictly_weaker_than_counterfactual in interventionArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Intervention
 
 section Observation
@@ -131,17 +112,13 @@ theorem observation_lawSensitive : observationInterventionArena.Law observationR
   rintro ⟨x, y, _, h⟩
   exact h rfl
 example : ¬ observationTemplate.toPrimitiveBundle.agrees xCausesYModel yCausesXModel := by decide
-register_information_theorem observation_strictly_weaker_than_intervention in observationInterventionArena
-  primitives observationRealization.toPrimitiveBundle realization observation_bridge
+
 example : ∀ x y, observationRealization.toPrimitiveBundle.agrees x y ↔
     D5.S3.ConceptDynamics.InformationEscapeRealizations.ObservationIntervention.observationInterventionRealization.toPrimitiveBundle.agrees x y := by decide
-example : observation_strictly_weaker_than_intervention.__information_unit.Statement =
-    (D5.S3.ConceptDynamics.InformationEscapeRealizations.ObservationIntervention.observation_strictly_weaker_than_intervention_realization.toTheoremUnit
-      observation_strictly_weaker_than_intervention).Statement := rfl
+
 #print axioms observation_bridge
 #print axioms observation_lawSensitive
-expect_information_occurrence observation_strictly_weaker_than_intervention in observationInterventionArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Observation
 
 section Agenda
@@ -170,16 +147,13 @@ theorem agenda_lawSensitive : agendaPowerArena.Law agendaRealization ∧
   rintro ⟨_, a, b, _, _, _, h⟩
   exact h rfl
 example : ¬ agendaTemplate.toPrimitiveBundle.agrees (⟨1, 2, 0⟩ : Agenda) ⟨0, 0, 0⟩ := by decide
-register_information_theorem agenda_power in agendaPowerArena
-  primitives agendaRealization.toPrimitiveBundle realization agenda_bridge
-example : agenda_power.__information_unit.Statement =
-    (FirstThreeRealizations.agenda_power_realization.toTheoremUnit agenda_power).Statement := rfl
+
+
 example : ∀ x y, agendaRealization.toPrimitiveBundle.agrees x y ↔
     D5.S3.ConceptDynamics.InformationEscapeRealizations.FirstThreeRealizations.agendaPowerRealization.toPrimitiveBundle.agrees x y := by decide
 #print axioms agenda_bridge
 #print axioms agenda_lawSensitive
-expect_information_occurrence agenda_power in agendaPowerArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Agenda
 
 section Preemption
@@ -211,17 +185,13 @@ theorem preemption_lawSensitive : endStateOmitsPreemptingCauseArena.Law preempti
   intro h
   exact h.2.2.2.1 rfl
 example : ¬ preemptionTemplate.toPrimitiveBundle.agrees aThenB bThenA := by decide
-register_information_theorem end_state_omits_preempting_cause in endStateOmitsPreemptingCauseArena
-  primitives preemptionRealization.toPrimitiveBundle realization preemption_bridge
-example : end_state_omits_preempting_cause.__information_unit.Statement =
-    (InformationEscapeRealizations.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause_realization.toTheoremUnit
-      end_state_omits_preempting_cause).Statement := rfl
+
+
 example : ∀ x y, preemptionRealization.toPrimitiveBundle.agrees x y ↔
     D5.S3.ConceptDynamics.InformationEscapeRealizations.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseRealization.toPrimitiveBundle.agrees x y := by decide
 #print axioms preemption_bridge
 #print axioms preemption_lawSensitive
-expect_information_occurrence end_state_omits_preempting_cause in endStateOmitsPreemptingCauseArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Preemption
 
 section Context
@@ -266,17 +236,13 @@ theorem context_lawSensitive : contextArena.Law contextRealization ∧
   intro h
   exact h.2.2.1 rfl
 example : ¬ contextTemplate.toPrimitiveBundle.agrees baselineContext alternateContext := by decide
-register_information_theorem context_parameters_can_select_distinct_fixed_points in contextArena
-  primitives contextRealization.toPrimitiveBundle realization context_bridge
-example : context_parameters_can_select_distinct_fixed_points.__information_unit.Statement =
-    (FourthFifthRealizations.context_parameters_can_select_distinct_fixed_points_realization.toTheoremUnit
-      context_parameters_can_select_distinct_fixed_points).Statement := rfl
+
+
 example : ∀ x y, contextRealization.toPrimitiveBundle.agrees x y ↔
     D5.S3.ConceptDynamics.InformationEscapeRealizations.FourthFifthRealizations.contextRealization.toPrimitiveBundle.agrees x y := by decide
 #print axioms context_bridge
 #print axioms context_lawSensitive
-expect_information_occurrence context_parameters_can_select_distinct_fixed_points in contextArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Context
 
 section Static
@@ -301,15 +267,11 @@ theorem static_lawSensitive : staticExactExperimentArena.Law staticRealization �
   funext e
   cases e <;> rfl
 example : ¬ staticRealization.toPrimitiveBundle.agrees (0 : Fin 3) 1 := by decide
-register_information_theorem static_exact_design in staticExactExperimentArena
-  primitives staticRealization.toPrimitiveBundle realization static_bridge
-example : static_exact_design.__information_unit.Statement =
-    (InformationEscapeRealizations.StaticExactExperimentDesign.static_exact_design_realization.toTheoremUnit
-      static_exact_design).Statement := rfl
+
+
 #print axioms static_bridge
 #print axioms static_lawSensitive
-expect_information_occurrence static_exact_design in staticExactExperimentArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Static
 
 section Completion
@@ -335,17 +297,13 @@ theorem completion_lawSensitive : commutingCompletionArena.Law completionRealiza
   intro h
   exact h.1 (fun _ => rfl)
 example : ¬ completionTemplate.toPrimitiveBundle.agrees FourState.a FourState.b := by decide
-register_information_theorem commutativity_hypothesis_is_necessary in commutingCompletionArena
-  primitives completionRealization.toPrimitiveBundle realization completion_bridge
-example : commutativity_hypothesis_is_necessary.__information_unit.Statement =
-    (InformationEscapeRealizations.CommutingCompletionExchange.commutativity_hypothesis_is_necessary_realization.toTheoremUnit
-      commutativity_hypothesis_is_necessary).Statement := rfl
+
+
 example : ∀ x y, completionRealization.toPrimitiveBundle.agrees x y ↔
     D5.S3.ConceptDynamics.InformationEscapeRealizations.CommutingCompletionExchange.commutingCompletionRealization.toPrimitiveBundle.agrees x y := by decide
 #print axioms completion_bridge
 #print axioms completion_lawSensitive
-expect_information_occurrence commutativity_hypothesis_is_necessary in commutingCompletionArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Completion
 
 section Gluing
@@ -377,17 +335,13 @@ theorem gluing_lawSensitive : localLawGluingArena.Law gluingRealization ∧
   intro h
   exact h.2.2.2 ⟨(false, false, false), rfl, rfl, rfl⟩
 example : ¬ gluingTemplate.toPrimitiveBundle.agrees (false, false, false) (false, false, true) := by decide
-register_information_theorem compatible_local_laws_can_lack_global_state in localLawGluingArena
-  primitives gluingRealization.toPrimitiveBundle realization gluing_bridge
-example : compatible_local_laws_can_lack_global_state.__information_unit.Statement =
-    (InformationEscapeRealizations.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state_realization.toTheoremUnit
-      compatible_local_laws_can_lack_global_state).Statement := rfl
+
+
 example : ∀ x y, gluingRealization.toPrimitiveBundle.agrees x y ↔
     D5.S3.ConceptDynamics.InformationEscapeRealizations.LocalLawGluingObstruction.localLawGluingRealization.toPrimitiveBundle.agrees x y := by decide
 #print axioms gluing_bridge
 #print axioms gluing_lawSensitive
-expect_information_occurrence compatible_local_laws_can_lack_global_state in localLawGluingArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Gluing
 
 section Residue
@@ -413,69 +367,30 @@ theorem residue_lawSensitive : residueArena.Law residueRealization ∧
   intro h
   exact (by decide : ¬ (fifteenState = zeroState ∨ fifteenState = tenState)) (h.1 fifteenState |>.mp rfl)
 example : ¬ residueRealization.toPrimitiveBundle.agrees zeroState tenState := by decide
-register_information_theorem two_step_adaptive_residue_identification in residueArena
-  primitives residueRealization.toPrimitiveBundle realization residue_bridge
-example : two_step_adaptive_residue_identification.__information_unit.Statement =
-    (FirstThreeRealizations.two_step_adaptive_residue_identification_realization.toTheoremUnit
-      two_step_adaptive_residue_identification).Statement := rfl
+
+
 #print axioms residue_bridge
 #print axioms residue_kernel_equal
 #print axioms residue_nondegenerate
 #print axioms residueEnumeration
 #print axioms residue_lawSensitive
-expect_information_occurrence two_step_adaptive_residue_identification in residueArena
-  from "D5.S3.ConceptDynamics.InformationEscape.TemplateShadow"
+
 end Residue
 
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 2000000 in
-#seal_information_theory
 
-#print axioms D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective.__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual.__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention.__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause.__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points.__lowers_escape
-#print axioms D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design.__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary.__lowers_escape
-#print axioms D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state.__lowers_escape
 
-#print axioms D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification.__lowers_escape
 
-open Lean Meta LeanInformationAudit in
-run_meta do
-  let env ← getEnv
-  let index ← CensusQuery.indexScope env.header.mainModule
-  let head ← IO.Process.output { cmd := "git", args := #["rev-parse", "HEAD"] }
-  unless head.exitCode == 0 do throwError "cannot read checkout identity"
-  let cases := #[
-    (``D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena),
-    (``D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena),
-    (``D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena),
-    (``D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena),
-    (``D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena),
-    (``D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena),
-    (``D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena),
-    (``D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena),
-    (``D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena),
-    (``D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification,
-      ``D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena)]
-  for (gold, arena) in cases do
-    let key : StatementKey := ⟨gold, theoremStatementIdentity env gold⟩
-    match ← CensusQuery.assess index head.stdout.trimAscii.toString key with
-    | .certified (.finiteOccurrence payload) =>
-        unless payload.canonicalArena == arena do throwError "unexpected canonical arena"
-        logInfo m!"CENSUS_QUERY_FINITE_VALIDATED: {key.theoremName}; {key.statementId}; {repr payload}"
-    | _ => throwError "finite occurrence was not certified: {gold}"
+
+
+
+
+
+
+
+
+
+
+
+
 
 end D5.S3.ConceptDynamics.InformationEscape.TemplateShadow

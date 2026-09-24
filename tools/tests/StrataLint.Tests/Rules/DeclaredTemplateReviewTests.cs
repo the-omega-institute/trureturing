@@ -11,14 +11,14 @@ namespace StrataLint.Tests;
 // production reader and dispatch; they make no kernel-proof claim.
 public sealed class DeclaredTemplateReviewTests
 {
-    internal const string Registration = "D5/S0/Carrier/Registration.lean";
+    internal const string Registration = "Reg/D5/S0/Carrier/Registration.lean";
     internal const string Target = "D5/S0/Carrier/Target.lean";
     internal const string Judge = "tools/lean-inspector/LeanInformationAudit/Registry/Assessment.lean";
-    private const string Module = "D5.S0.Carrier.Registration";
+    private const string Module = "Reg.D5.S0.Carrier.Registration";
     private const string TargetModule = "D5.S0.Carrier.Target";
     internal static Dictionary<string, string> Files()
     {
-        var files = PolicyFiles();
+        var files = InformationTemplateFixture.PolicyFiles();
         files[Judge] = "-- judge implementation\n";
         var engineering = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest())!;
         engineering["rule_build_inputs"] = JsonSerializer.SerializeToNode(new[] { Judge });
@@ -27,7 +27,7 @@ public sealed class DeclaredTemplateReviewTests
         files[Target] = "-- synthetic imported theorem source\n";
         files[AdmissionPlanePolicy.FileMapPath] = "schema_version = 3\ninclude = [\"FILEMAP.inputs.toml\"]\n";
         files["Meta/FILEMAP.inputs.toml"] = "schema_version = 3\nfiles = [\n" + string.Join("\n",
-            new[] { ("D5/**", "content"), ("Meta/**", "judge"), ("tools/**", "judge") }
+            new[] { ("D5/**", "content"), ("Reg/**", "content"), ("Meta/**", "judge"), ("tools/**", "judge") }
                 .Select(pair => "{ pattern = \"" + pair.Item1 + "\", admission_plane = \"" + pair.Item2
                     + "\", kind = \"data\", produced_by = \"none\", consumed_by = [\"StrataLint\"], "
                     + "verified_by = [\"StrataLint\"], artifact_id = \"none\", runtime_disposition = \"committed-source\" },"))
@@ -183,7 +183,7 @@ public sealed class DeclaredTemplateReviewTests
     [Fact]
     public void current_manifest_rejects_immediate_predecessor_eight()
     {
-        var manifest = PolicyFiles()["lean-report-inputs.json"];
+        var manifest = InformationTemplateFixture.PolicyFiles()["lean-report-inputs.json"];
         var error = ReadChangedManifest(manifest, 8);
         Assert.True(error is FormatException && error.Message.Contains("DTR-EvidenceVersion", StringComparison.Ordinal),
             "[FAIL] current_manifest_rejects_immediate_predecessor_eight: " + error?.Message);

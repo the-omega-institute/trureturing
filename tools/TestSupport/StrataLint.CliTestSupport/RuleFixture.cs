@@ -144,6 +144,8 @@ internal sealed partial class RuleFixture
             RegisteredBuildInputs.Select(path => System.Text.Json.Nodes.JsonValue.Create(path)).ToArray());
         Files[EngineeringRegistrationFixture.Path] = registration.ToJsonString();
         foreach (var path in RegisteredBuildInputs) Files.TryAdd(path, path == "global.json" ? "{}" : "<Project />");
+        foreach (var path in new[] { "lake-manifest.json", "Reg/lakefile.toml", "Reg/lake-manifest.json" })
+            Files[path] = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path));
         Baseline = new Dictionary<string, string>(Files, StringComparer.Ordinal);
         Reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {

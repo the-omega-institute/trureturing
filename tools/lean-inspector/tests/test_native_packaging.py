@@ -28,6 +28,54 @@ import native
 from test_native_support import *
 
 class NativePackagingTests:
+    def test_native_workload_rejects_nonfixture_before_writes(self):
+        config = (self.root / 'lakefile.toml').read_text()
+        cases = {
+            'production': (ROOT / 'lakefile.toml').read_text(),
+            'missing-config': None,
+            'malformed-config': config + '\n[',
+            'missing-name': config.replace('name = "trureturing"\n', '', 1),
+            'wrong-name': config.replace('name = "trureturing"', 'name = "other"', 1),
+            'missing-targets': config.replace('defaultTargets = ["Fixture", "Audit"]\n', ''),
+            'wrong-targets': config.replace('["Fixture", "Audit"]', '["D5"]', 1),
+            'malformed-targets': config.replace('["Fixture", "Audit"]', '"Fixture"', 1),
+            'missing-fixture-source': config,
+            'directory-fixture-source': config,
+        }
+        for name, value in cases.items():
+            with self.subTest(case=name), tempfile.TemporaryDirectory() as directory:
+                target = Path(directory)
+                if value is not None:
+                    (target / 'lakefile.toml').write_text(value)
+                if name == 'directory-fixture-source':
+                    (target / 'Fixture.lean').mkdir()
+                elif name not in ('production', 'missing-fixture-source'):
+                    shutil.copyfile(self.root / 'Fixture.lean', target / 'Fixture.lean')
+                for relative in ('tools/lean-inspector/native.py', 'D5/Alone.lean'):
+                    path = target / relative
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes((ROOT / relative).read_bytes() if relative.endswith('.py')
+                                     else b'-- existing non-fixture source sentinel\n')
+                def snapshot():
+                    return {str(path.relative_to(target)): dict(
+                        mode=path.stat().st_mode,
+                        sha256=hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None)
+                        for path in sorted(target.rglob('*'))}
+                before = snapshot()
+                result = self.guarded_command([sys.executable, '-B', str(HERE / 'tests/native_workload.py'),
+                    '--source-root', str(ROOT), '--output', str(target / 'output'),
+                    '--fixture', str(target), '--modules', '4',
+                    '--observer-program', str(target / 'unused-observer.py'),
+                    '--observer-library', str(target / 'unused-observer'),
+                    '--lake-bin', self.lake, '--dotnet-cli', str(self.cli),
+                    '--tool-path', os.environ['PATH']], env=self.env, timeout=120)
+                after = snapshot()
+                self.record_result(name, dict(exit_code=result.returncode, before=before, after=after,
+                    rejected_as_nonsynthetic='--fixture must be a synthetic native fixture package' in result.stderr))
+                self.assertEqual(after, before, 'rejected reuse must not write any target path')
+                self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+                self.assertIn('--fixture must be a synthetic native fixture package', result.stderr)
+
     def test_mapped_image_matches_loaded_bytes(self):
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
@@ -71,7 +119,7 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.Registry'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'mapped.spool.json'
@@ -118,7 +166,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.Registry'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'driver.spool.json'
@@ -164,7 +212,8 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
                              if json.loads(line)['kind'] == 'extract'), 0)
         self.publish()
     def test_native_clonefile_seed_reuses_rows_and_keeps_donor_private(self):
-        self.build()
+        self.reg_package()
+        self.build_reg_report()
         donor = self.root
         expected = self.report()[1:]
         origins = self.origins()
@@ -255,12 +304,13 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
 
     def release_fixture(self):
         """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
+        self.reg_package()
         for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
             self.copy('tools/scripts/worktree/' + name)
         self.copy('tools/scripts/workflow/ci_plan.py')
         self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
             resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[],
-                            lean_targets=['Audit', 'leanInspector/reportInspector'])])))
+                            lean_targets=['leanInspector/reportInspector', 'trureturing/Audit'])])))
         self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
         self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_SHA='a' * 40,
             GITHUB_RUN_ID='4242', GITHUB_RUN_ATTEMPT='1', GITHUB_EVENT_NAME='schedule',

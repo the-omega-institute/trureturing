@@ -10,7 +10,7 @@ namespace StrataLint.Cli;
 
 internal sealed record FileMapFinding(string Code, string Path, string Message);
 
-internal static class FileMapPolicy
+internal static partial class FileMapPolicy
 {
     private const string RunLocalTrackedMessage =
         "run-local artifact must be removed from the Git index; "
@@ -62,6 +62,8 @@ internal static class FileMapPolicy
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
+            ["lean-build"] = "tools/scripts/worktree/lean-cache-run.sh",
+            ["lean-inspector"] = "tools/lean-inspector/inspect.sh",
             ["NativeArchivePaths"] = "tools/scripts/worktree/lean_actions.py",
             ["PackageMaterialRegistry"] = "tools/StrataLint.BuildRuntime/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
@@ -239,7 +241,7 @@ internal static class FileMapPolicy
                 ((PolicyLoadOutcome.InfrastructureFailure)policy).Message)];
 
         return InspectCoverage(manifest, selected)
-            .Concat(InspectPatternPopulation(selectedManifest, paths))
+            .Concat(InspectPatternPopulation(manifest, paths, selectedManifest.Entries))
             .Concat(pathFindings)
             .Concat(InspectProjectionRegistrations(manifest))
             .Concat(scope is null || scope.Actors ? InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot) : [])
@@ -485,16 +487,18 @@ internal static class FileMapPolicy
 
     internal static IReadOnlyList<FileMapFinding> InspectPatternPopulation(
         FileMapManifest manifest,
-        IEnumerable<string> paths)
+        IEnumerable<string> paths,
+        IEnumerable<FileMapEntry>? selectedEntries = null)
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(paths);
         var trackedPaths = paths.ToHashSet(StringComparer.Ordinal);
-        return manifest.Entries
+        return (selectedEntries ?? manifest.Entries)
             .Where(static entry => entry.RuntimeDisposition != "run-local")
             // Report patterns may reserve future content or remain between
             // content deletion and the subsequent registration cleanup.
             .Where(static entry => !IsReportPath(entry.Pattern))
+            .Where(entry => !IsRegFamilyReservation(entry, manifest, trackedPaths))
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(
                 "FILEMAP-PATTERN-EMPTY",
