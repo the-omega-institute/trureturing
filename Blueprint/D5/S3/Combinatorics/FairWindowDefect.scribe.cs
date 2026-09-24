@@ -61,7 +61,7 @@ internal sealed class FairWindowDefectDocument : IScribeDocumentDefinition
     private static Formula Eqn(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Cube(Formula n) => new Formula.Power(Call("Fin", D(2)), Call("Fin", n));
-    private static Formula Tables(Formula r) => Seq(Open, Cube(r), To, Call("Fin", D(2)), Close);
+    private static Formula Tables(Formula r) => Seq(Open, Cube(r), To, Sp, Call("Fin", D(2)), Close);
     private static Formula PlusN(Formula r, byte n) => Add(r, D(n));
     private static Formula Lower(Formula r) => new Formula.Fraction(D(1), PlusN(r, 2));
 
@@ -80,7 +80,7 @@ internal sealed class FairWindowDefectDocument : IScribeDocumentDefinition
     private static Formula FairFormula()
     {
         var r = F.Id("R"); var f = F.Id("f"); var v = F.Id("v");
-        var sum = Seq(Sum, Underscore, Grp(v, InMacro, Cube(PlusN(r, 1))), Call("defect", f, v));
+        var sum = Seq(Sum, Underscore, Grp(v, InMacro, Sp, Cube(PlusN(r, 1))), Call("defect", f, v));
         return Disp(All("R", Nat(), All("f", Tables(r),
             Eqn(Call("fairDefect", r, f), new Formula.Fraction(sum, new Formula.Power(D(2), PlusN(r, 1)))))));
     }
