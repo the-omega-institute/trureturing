@@ -1,0 +1,17 @@
+### 18.4 阶段化协议与 pro-object 的高阶版本
+
+当 $S$、$P$ 或 $Q$ 都由逐步细化的阶段表示时，一个高阶协议不是“每个阶段随意选一张映射表”。对两个阶段图 $X:I^{\mathrm{op}}\to\mathcal C$、$Y:J^{\mathrm{op}}\to\mathcal C$，仓内冻结的
+`GeneralHomFormula.pro_category_hom_formula` 给出
+
+$$
+\operatorname{Hom}(X_\bullet,Y_\bullet)
+\cong
+\varprojlim_{j\in J}\varinjlim_{i\in I}
+\operatorname{Hom}(X_i,Y_j).
+\tag{18.3}
+$$
+
+因此，协议的“关系的关系”同时包含：某个足够细的源阶段代表，以及在目标阶段上的相容类。`pro_hom_has_stage_representatives` 说明每个目标层分量可在某个源层取得代表；`pro_hom_stage_classes_compatible` 说明这些代表不能独立拼接，必须沿目标细化保持相容。
+
+式 (18.3) 也解释了为什么不能把“每一层都找到一个局部接法”当成一个全局协议。全局对象要先成为同一个极限元素，才可以进入 (18.1) 的共同来源像。若再要求协议自读自身，仓内 `NoTerminalSelfDescription.no_terminal_self_description` 提供相应的边界：一个终端阶段不能把扭转后的自评价全部收进自身的同类型列举。
+

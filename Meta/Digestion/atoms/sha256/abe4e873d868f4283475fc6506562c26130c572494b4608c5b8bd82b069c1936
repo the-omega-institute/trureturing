@@ -1,0 +1,16 @@
+**定理 13.1（联合 profile 的最小性）。** 在式（13.1）下，
+
+$$
+\boxed{\ker\Phi_J=\ker\Psi=\ker\beta\cap\ker r.}
+\tag{13.2}
+$$
+
+因此，任何摘要 \(q:H\to Q\) 若能因子化全部联合 profile，存在 \(F:\operatorname{ran}q\to\operatorname{ran}\Phi_J\) 使 \(\Phi_J=F\circ q\)，则
+
+$$
+\ker q\subseteq\ker\Psi.
+\tag{13.3}
+$$
+
+也就是说，\(q\) 至少必须细化 \(\Psi\)。在前述联合 profile 已能由 \(q\) 因子化的充分性条件下，若再有 \(\Psi\) 能由 \(q\) 因子化（即 \(\ker\Psi\subseteq\ker q\)），两边核相等，因而在实际像上由唯一双射互相恢复。
+

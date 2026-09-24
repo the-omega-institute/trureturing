@@ -1,0 +1,32 @@
+**命题 2.20（零关系的有限生成）。** 在 $\mathbb N^{d\times d}$ 上采用逐坐标偏序。令 $\mathcal B_H$ 为 $S_H\setminus\{0\}$ 的极小元集合。Dickson 引理说明有限个自然数坐标的逐坐标序没有无限反链，因而 $\mathcal B_H$ 有限。本处的 $0$ 必须排除，否则唯一极小元是零，不能生成非零关系。
+
+更具体地，若 $\alpha,\beta\in S_H$ 且 $0<\beta\le\alpha$、$\beta\ne\alpha$，则 $\alpha-\beta$ 是非零自然数指数，并且总权重仍为零。所以 $\alpha$ 非极小当且仅当它可写成两个非零 $S_H$ 元素之和。由此，$\mathcal B_H$ 正是全部不可分解零权重指数，且
+$$
+\mathcal B_H=\operatorname{Min}(S_H\setminus\{0\}),\qquad
+|\mathcal B_H|<\infty,\qquad
+S_H=\left\{\sum_{\beta\in\mathcal B_H}n_\beta\beta:
+ n_\beta\in\mathbb N\right\}.
+\tag{TM.178}
+$$
+
+**生成性的证明。** 对 $|\alpha|$ 归纳。零指数是空和。给定非零 $\alpha$，非空有限集合 $\{\gamma\in S_H:0<\gamma\le\alpha\}$ 中有一个极小元 $\beta$，它也是整个 $S_H\setminus\{0\}$ 的极小元。若 $\alpha=\beta$ 已完成；否则 $\alpha-\beta\in S_H$ 且总次数更小，应用归纳假设，再加上 $\beta$。每一步总次数严格下降，故分解有限。证毕。
+
+这份证明只使用坐标数 $d^2$ 有限以及零权重关系的减法闭合，不要求能量先写成整数或有理数。它适用于任意固定实能谱。由于每个对角单位指数都在 $\mathcal B_H$ 中，$d\ge1$ 时该集合非空，可以定义 $N_H=\max_{\beta\in\mathcal B_H}|\beta|$。式(TM.177)、乘积关系与B卷第2.2.2节的紧轨道分离共同给出
+$$
+\boxed{
+\begin{aligned}
+&\forall\rho,\sigma\in\mathcal D_d:\quad
+\bigl[M_\beta(\rho)=M_\beta(\sigma)\quad\forall\beta\in\mathcal B_H\bigr]\\
+&\qquad\Longleftrightarrow
+\bigl[P_n(\rho)=P_n(\sigma)\quad\forall n\ge1\bigr]
+\Longleftrightarrow \sigma\in G_H\cdot\rho,\\
+&P_{N_H}(\rho)=P_{N_H}(\sigma)
+\Longleftrightarrow \sigma\in G_H\cdot\rho.
+\end{aligned}}
+\tag{TM.179}
+$$
+
+正向的关键是：$\alpha=\sum n_\beta\beta$ 给 $M_\alpha=\prod M_\beta^{n_\beta}$，所以有限生成元的值决定全部零权重单项式；非零权重的 $P_n$ 坐标在两态上均为零。最后一行还使用式(TM.145)的部分迹，将 $P_{N_H}$ 送到各个所需的低阶。逆向由每个生成元的不变性得到。
+
+本结论对零坐标、非满秩密度态以及能量简并均成立，未除以任何矩阵元。若 $E_i=E_j$，对应单个坐标指数已经是一次生成元，完整读数必须保留 $\rho_{ij}$ 的实部和虚部。若 $H$ 为数量矩阵，$S_H=\mathbb N^{d\times d}$、$N_H=1$，直接恢复全部密度矩阵。$N_H$ 是足够阶数；有限代数生成集未必是最小分离集，故一般不能仅由这个定义声称 $N_H$ 是最优值。
+
