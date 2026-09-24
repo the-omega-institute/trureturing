@@ -851,10 +851,7 @@
         ".github/scripts/harness-gate.sh",
         ".github/workflows/ci-pr.yml",
         ".github/workflows/ci-push.yml",
-        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
-        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
         "CLAUDE.md",
-        "D5/S3/Midline/GoldenSpectralMarker.lean",
         "Golden/Projection/statement-projection-expansion-v1.json",
         "Golden/Projection/statement-projection-pilot-v1.json",
         "Golden/gate-authority-roots.toml",
@@ -1731,7 +1728,17 @@
         "Meta/Digestion/backfill/pzg-v170/residual-open/8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d.yaml",
         "LICENSE",
         "Trureturing.lean",
-        "D5/X_Frontier/HeartsAuthorizations.md"
+        "D5/X_Frontier/HeartsAuthorizations.md",
+        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
+        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
+        "D5/S3/Midline/GoldenSpectralMarker.lean",
+        "Meta/Digestion/backfill/periodic-tree-registry/residual-open/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901.yaml",
+        "tools/TestSupport/StrataLint.CliTestSupport/FrozenLedgerTestData.cs",
+        "tools/tests/StrataLint.TruthRelease.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
+        "tools/tests/StrataLint.TruthRelease.Tests/TruthReleaseCommandTests.cs",
+        "tools/tests/StrataLint.TruthRelease.Tests/Usings.cs",
+        "tools/tests/StrataLint.TruthRelease.Tests/packages.lock.json"
       ]
     },
     {
@@ -4021,6 +4028,56 @@
       ],
       "execution_inputs": [
         "**"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
+      "assembly": "StrataLint.TruthRelease.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.TruthRelease.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
+        "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.TruthRelease.Tests",
+      "root_namespace": "StrataLint.TruthRelease.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.TruthRelease.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.TruthRelease.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        "tools/Architecture/BannedSymbols.Determinism.txt",
+        "tools/tests/Directory.Build.props",
+        "tools/tests/StrataLint.TruthRelease.Tests/packages.lock.json"
+      ],
+      "execution_inputs": [
+        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
+        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
+        "D5/S3/Midline/GoldenSpectralMarker.lean",
+        "Golden/Projection/statement-projection-expansion-v1.json",
+        "Golden/Projection/statement-projection-pilot-v1.json",
+        "Meta/Digestion/atomizers.toml"
       ],
       "execution_excludes": [],
       "execution_environment": [

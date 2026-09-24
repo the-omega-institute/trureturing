@@ -4,9 +4,9 @@ using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using Trureturing.Truth;
-using static StrataLint.Tests.FrozenLedgerTestData;
+using static StrataLint.TestSupport.FrozenLedgerTestData;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TruthRelease.Tests;
 
 public sealed class TruthReleaseCommandTests
 {

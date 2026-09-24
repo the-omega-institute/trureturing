@@ -109,6 +109,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+            "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
             "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
             }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
@@ -150,6 +151,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
             "tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
+            "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
             }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
@@ -204,6 +206,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+            "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
             }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
@@ -253,6 +256,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+            "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
             }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
@@ -303,6 +307,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+            "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
             "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
             }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));

@@ -5,7 +5,7 @@ using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
 internal static class FrozenLedgerTestData
 {

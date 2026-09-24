@@ -176,6 +176,7 @@
         "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+        "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
         "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
         "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
@@ -648,6 +649,14 @@
       "id": "test-worktree-contract",
       "projects": [
         "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-truth-release",
+      "projects": [
+        "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj"
       ],
       "checks": [],
       "steps": []

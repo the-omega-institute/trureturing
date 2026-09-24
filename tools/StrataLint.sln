@@ -175,6 +175,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.CoverBatch.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.WorktreeContract.Tests", "tests\StrataLint.WorktreeContract.Tests\StrataLint.WorktreeContract.Tests.csproj", "{8FE8340B-78BD-4D75-A26F-D00F012FCEA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.TruthRelease.Tests", "tests\StrataLint.TruthRelease.Tests\StrataLint.TruthRelease.Tests.csproj", "{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1161,6 +1163,18 @@ Global
 		{4FD44DFD-64F6-44A9-AD4A-2C5735D437D0}.Release|x64.Build.0 = Release|Any CPU
 		{4FD44DFD-64F6-44A9-AD4A-2C5735D437D0}.Release|x86.ActiveCfg = Release|Any CPU
 		{4FD44DFD-64F6-44A9-AD4A-2C5735D437D0}.Release|x86.Build.0 = Release|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Debug|x86.Build.0 = Debug|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Release|x64.Build.0 = Release|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Release|x86.ActiveCfg = Release|Any CPU
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1203,5 +1217,6 @@ Global
 		{78360E3A-20B8-4993-8E20-AE8BDCD71420} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{1CB6776B-2419-4606-B83E-FF8404DBC330} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{4FD44DFD-64F6-44A9-AD4A-2C5735D437D0} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{5A5AA2C0-3B02-4B1F-83BD-9C97ECCEE429} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal

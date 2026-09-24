@@ -32,8 +32,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
     }
 
     [Theory]
-    [InlineData("tools/TestSupport/StrataLint.DigestionTestSupport/TheoryAtomizerAssertions.cs", "StrataLint.ArchitectureTests,StrataLint.CoverBatch.Tests,StrataLint.Digestion.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
-    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeScribeEmissionVerifier.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.CoverBatch.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
+    [InlineData("tools/TestSupport/StrataLint.DigestionTestSupport/TheoryAtomizerAssertions.cs", "StrataLint.ArchitectureTests,StrataLint.CoverBatch.Tests,StrataLint.Digestion.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests,StrataLint.TruthRelease.Tests")]
+    [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeScribeEmissionVerifier.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.CoverBatch.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests,StrataLint.TruthRelease.Tests")]
     public void SourceAtomizerSharedHelpersSelectAllRegisteredConsumers(string path, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })
@@ -45,25 +45,43 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void AtomizerConfigurationRetainsEngineeringAndExplicitConsumers()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] { "delta", "engineering", "filemap", "test-cover-batch", "test-digestion", "test-rules", "test-source-atomizer", "test-worktree-contract" },
+            Assert.Equal(new[] { "delta", "engineering", "filemap", "test-cover-batch", "test-digestion", "test-rules", "test-source-atomizer", "test-truth-release", "test-worktree-contract" },
                 Strings(Plan("Meta/Digestion/atomizers.toml", "", mode)["declared_require"]!));
     }
 
     [Theory]
-    [InlineData("docs/develop/theory/INTERFACE_PAPER.md")]
-    [InlineData("docs/develop/theory/INTERFACE_PHILOSOPHY.md")]
-    [InlineData("docs/develop/theory/PERIODIC_TREE_registry.jsonl")]
-    [InlineData("Meta/Digestion/backfill/periodic-tree-registry/source.toml")]
-    [InlineData("Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901")]
-    public void SourceAtomizerRuntimeBytesRetainContentOnlyTriggerPolicy(string path)
+    [InlineData("push", "M")]
+    [InlineData("pr", "M")]
+    [InlineData("push", "D")]
+    [InlineData("pr", "D")]
+    [InlineData("push", "R")]
+    [InlineData("pr", "R")]
+    public void SourceAtomizerRuntimeChangesSelectItsCompleteProject(string mode, string change)
     {
-        foreach (var mode in new[] { "push", "pr" })
+        foreach (var path in new[]
         {
-            var plan = Plan(path, "", mode);
+            "docs/develop/theory/INTERFACE_PAPER.md",
+            "docs/develop/theory/INTERFACE_PHILOSOPHY.md",
+            "docs/develop/theory/PERIODIC_TREE_registry.jsonl",
+            "Meta/Digestion/backfill/periodic-tree-registry/source.toml",
+            "Meta/Digestion/backfill/periodic-tree-registry/residual-open/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901.yaml",
+            "Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901",
+        })
+        {
+            var plan = Plan(path, "", mode, change);
             var readsBackfill = path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
-            Assert.Equal(WithWorktreeContract(readsBackfill ? new[] { RepositoryDigestionProject } : []),
-                Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(WithWorktreeContract(new[] { SourceAtomizerProject }.Concat(readsBackfill ? new[] { RepositoryDigestionProject } : [])), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal((readsBackfill ? new[] { "test-repository-digestion", "test-source-atomizer", "test-worktree-contract" } : new[] { "test-source-atomizer", "test-worktree-contract" }),
+                Strings(plan["stages"]!["engineering"]!["resources"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+            var input = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);
+            Assert.Contains("test-source-atomizer", Strings(input!["require"]!));
+            if (change == "R")
+            {
+                var destination = Assert.Single(plan["paths"]!.AsArray(),
+                    row => row!["path"]!.GetValue<string>() == "docs/reports/instruction-contract-renamed.md");
+                Assert.Equal(new[] { "test-worktree-contract" }, Strings(destination!["require"]!));
+            }
         }
     }
 }

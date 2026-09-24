@@ -3,7 +3,7 @@ using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
 using static StrataLint.TestSupport.DigestionTestSupport;
-using static StrataLint.Tests.FrozenLedgerTestData;
+using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 

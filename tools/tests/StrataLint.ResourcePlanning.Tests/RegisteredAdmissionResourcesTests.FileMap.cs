@@ -33,6 +33,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             RepositoryTopologyProject,
             SourceAtomizerProject,
             CoverBatchProject,
+            TruthReleaseProject,
         }), Strings(plan["execution"]!["tests"]!));
     }
 }

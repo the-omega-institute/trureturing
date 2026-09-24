@@ -37,7 +37,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("pr", "D")]
     [InlineData("push", "R")]
     [InlineData("pr", "R")]
-    public void TrackedD5InputsSelectTheirCompleteInstructionAndWorktreeConsumers(string mode, string change)
+    public void TrackedD5InputsSelectTheirCompleteInstructionAndRuntimeConsumers(string mode, string change)
     {
         foreach (var path in new[]
         {
@@ -49,10 +49,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan(path, "", mode, change);
             Assert.Equal(WithWorktreeContract(path.EndsWith(".lean", StringComparison.Ordinal)
-                    ? new[] { InstructionContractProject, RepositoryDigestionProject }
+                    ? new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }
                     : new[] { InstructionContractProject, RepositoryFileMapProject }), Strings(plan["execution"]!["tests"]!));
             Assert.Equal(path.EndsWith(".lean", StringComparison.Ordinal)
-                    ? new[] { "test-instruction-contract", "test-repository-digestion", "test-worktree-contract" }
+                    ? new[] { "test-cover-batch", "test-instruction-contract", "test-repository-digestion", "test-truth-release", "test-worktree-contract" }
                     : new[] { "test-instruction-contract", "test-repository-filemap", "test-worktree-contract" },
                 Strings(plan["stages"]!["engineering"]!["resources"]!));
             Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());

@@ -64,17 +64,42 @@ public sealed partial class RegisteredAdmissionResourcesTests
     }
 
     [Theory]
-    [InlineData("D5/S3/Constants/Values.lean")]
-    [InlineData("D5/X_Frontier/ValuesProducer.lean")]
+    [InlineData("push", "M")]
+    [InlineData("pr", "M")]
+    [InlineData("push", "D")]
+    [InlineData("pr", "D")]
+    [InlineData("push", "R")]
+    [InlineData("pr", "R")]
+    public void CoverBatchLeanInputChangesSelectItsCompleteProject(string mode, string change)
+    {
+        foreach (var path in new[] { "D5/S3/Constants/Values.lean", "D5/X_Frontier/ValuesProducer.lean" })
+        {
+            var plan = Plan(path, "", mode, change);
+            Assert.Equal(WithWorktreeContract(new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal(new[] { "test-cover-batch", "test-instruction-contract", "test-repository-digestion", "test-truth-release", "test-worktree-contract" },
+                Strings(plan["stages"]!["engineering"]!["resources"]!));
+            Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+            var input = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);
+            Assert.Contains("test-cover-batch", Strings(input!["require"]!));
+            if (change == "R")
+            {
+                var destination = Assert.Single(plan["paths"]!.AsArray(),
+                    row => row!["path"]!.GetValue<string>() == "docs/reports/instruction-contract-renamed.md");
+                Assert.Equal(new[] { "test-worktree-contract" }, Strings(destination!["require"]!));
+            }
+        }
+    }
+
+    [Theory]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json")]
     [InlineData("docs/reports/prime-slab-corner-order-0909.json")]
-    public void CoverBatchRuntimeReadsDoNotExpandContentOrNoResourcePolicy(string path)
+    public void UnrelatedMetadataAndReportsDoNotSelectCoverBatch(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
             Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal)
-                    ? new[] { InstructionContractProject, RepositoryDigestionProject }
+                    ? new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }
                     : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
-                        ? new[] { RepositoryDigestionProject } : []),
+                        ? new[] { RepositoryDigestionProject, SourceAtomizerProject } : []),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 }

@@ -58,10 +58,12 @@ public sealed partial class RegisteredAdmissionResourcesTests
             var plan = Plan(path, "", mode);
             var readsInstructions = path.StartsWith("D5/", StringComparison.Ordinal);
             var readsDigestion = readsInstructions || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
+            var readsSourceAtomizer = path.StartsWith("docs/develop/theory/", StringComparison.Ordinal) || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
             var readsRegistry = path == "README.md";
-            Assert.Equal(WithWorktreeContract((readsInstructions ? new[] { InstructionContractProject } : [])
+            Assert.Equal(WithWorktreeContract((readsInstructions ? new[] { CoverBatchProject, InstructionContractProject, TruthReleaseProject } : [])
                     .Concat(readsDigestion ? new[] { RepositoryDigestionProject } : [])
-                    .Concat(readsRegistry ? new[] { RepositoryFileMapProject } : [])),
+                    .Concat(readsRegistry ? new[] { RepositoryFileMapProject } : [])
+                    .Concat(readsSourceAtomizer ? new[] { SourceAtomizerProject } : [])),
                 Strings(plan["execution"]!["tests"]!));
             Assert.Equal("required",
                 plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
@@ -91,10 +93,11 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan(path, "", mode, change);
             var consumers = path.StartsWith("D5/", StringComparison.Ordinal)
-                ? new[] { InstructionContractProject, RepositoryDigestionProject }
+                ? new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }
                 : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
-                    ? [RepositoryDigestionProject]
-                    : path == "README.md" ? [RepositoryFileMapProject] : [];
+                    ? [RepositoryDigestionProject, SourceAtomizerProject]
+                    : path == "README.md" ? [RepositoryFileMapProject]
+                        : path.StartsWith("docs/develop/theory/", StringComparison.Ordinal) ? [SourceAtomizerProject] : [];
             Assert.Equal(WithWorktreeContract(consumers), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("test-repository-contract", Strings(plan["resources"]!));
             Assert.DoesNotContain("test-cli", Strings(plan["resources"]!));
