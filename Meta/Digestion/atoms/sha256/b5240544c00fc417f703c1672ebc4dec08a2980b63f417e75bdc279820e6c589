@@ -1,0 +1,71 @@
+**命题 3.9（标量优化与扰动积分）。** 令 $H,K$ 在同一空间上自伴，$D=H-K$。数量平移不改变共轭通道。定义
+
+$$
+\delta(H,K)=\inf_{c\in\mathbb R}\|H-K-cI\|_{\rm op}
+=\frac{\lambda_{\max}(D)-\lambda_{\min}(D)}2,
+\qquad c_*=\frac{\lambda_{\max}(D)+\lambda_{\min}(D)}2.
+\tag{TM.283}
+$$
+
+任意平移的范数是 $\max\{|\lambda_{\max}-c|,|\lambda_{\min}-c|\}$，其最小值在两极端中点达到。$\delta=0$ 恰表示两生成元只差数量算子，通道完全相同。
+
+令 $K_c=K+cI$。对 $s\mapsto e^{-i(t-s)H}e^{-isK_c}$ 求导并积分，得到 Duhamel 恒等式；对 $t\ge0$，
+
+$$
+e^{-itH}-e^{-itK_c}
+=-i\int_0^t e^{-i(t-s)H}(H-K_c)e^{-isK_c}\,ds,
+\qquad
+\|e^{-itH}-e^{-itK_c}\|_{\rm op}\le t\|H-K-cI\|_{\rm op}.
+\tag{TM.284}
+$$
+
+两酉 $U,V$ 对任意联合密度态的输出差可写成 $(U-V)\rho U^\dagger+V\rho(U^\dagger-V^\dagger)$，故迹范数至多 $2\|U-V\|_{\rm op}$，参考上的恒等因子省略。密度态迹距离又至多一，故
+
+$$
+d_\diamond(\operatorname{Ad}_U,\operatorname{Ad}_V)
+\le\min\{1,\|U-V\|_{\rm op}\},
+\qquad
+d_\diamond(\operatorname{Ad}_{e^{-itH}},\operatorname{Ad}_{e^{-itK}})
+\le\min\{1,t\delta(H,K)\}.
+\tag{TM.285}
+$$
+
+对同一个均匀时钟积分，并在积分前保留逐时刻截断，可得
+
+$$
+\boxed{
+d_\diamond(\mathcal A_T^H,\mathcal A_T^K)
+\le\frac1T\int_0^T\min\{1,t\delta(H,K)\}\,dt
+=F(T\delta(H,K)),
+\qquad F(x)=\begin{cases}
+x/2,&0\le x\le1,\\
+1-\dfrac1{2x},&x\ge1.
+\end{cases}
+}
+\tag{TM.286}
+$$
+
+$\delta=0$ 时取零；$T\delta>1$ 时在 $1/\delta$ 分段积分。于是 $F(x)\le\min\{1,x/2\}$。这里优化标量平移并准确积分充分界，不声称 $F$ 是所有生成元对的最佳可能扰动模函数。
+
+对一般共同概率时钟，相同证明给
+
+$$
+d_\diamond(\mathcal C_\nu^H,\mathcal C_\nu^K)
+\le\int_{\mathbb R}\min\{1,|t|\delta(H,K)\}\,d\nu(t).
+\tag{TM.287}
+$$
+
+此界始终有限；若再以一阶矩估计，须验证 $\int|t|\,d\nu<\infty$。比较固定同一载体、同一时间分布及同一检验合同，不能静默改变记录访问权。
+
+总生成元之差是 $\sum_jD^{(j)}$，各项作用于不同 tensor 因子。其谱最大最小值分别为 $n\lambda_{\max}(D)$、$n\lambda_{\min}(D)$，由相应极端特征向量的 tensor 幂达到。因此
+
+$$
+\delta(H^{(n)},K^{(n)})=n\delta(H,K),\qquad
+d_\diamond(\mathcal A_T^{H^{(n)}},\mathcal A_T^{K^{(n)}})
+\le F(nT\delta(H,K))
+\le\min\{1,nT\delta(H,K)/2\}.
+\tag{TM.288}
+$$
+
+这是对全部联合输入的界，产品输入作为子类自动满足它。$H,K$ 不必对易。
+

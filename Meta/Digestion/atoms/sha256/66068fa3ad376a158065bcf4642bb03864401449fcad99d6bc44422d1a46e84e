@@ -1,0 +1,34 @@
+### 20.2 未来核是唯一可递归的最小边界
+
+定义
+
+$$
+s\sim_{\mathrm{word}}t
+\iff
+\forall w\in A^*,\quad \Phi(s)(w)=\Phi(t)(w).
+\tag{20.2}
+$$
+
+对任意首动作 $a$，完整轨迹满足前缀恒等式
+
+$$
+\Phi(T_a s)(w)=\operatorname{tail}_a\bigl(\Phi(s)(aw)\bigr),
+\tag{20.3}
+$$
+
+其中右端删除首个动作对应的标签；若采用终点读数版本，则相应地写成
+
+$$
+\Phi_{\mathrm{end}}(T_a s)(w)=\Phi_{\mathrm{end}}(s)(aw).
+$$
+
+由 (20.3)，$s\sim_{\mathrm{word}}t$ 会被每个 $T_a$ 保持。因此每个动作在商
+
+$$
+S_{\mathrm{word}}:=S_\bot/\!\sim_{\mathrm{word}}
+$$
+
+上都有唯一的前缀更新 $\overline T_a$，并且所有合法性、输出和记录都由商上的 profile 恢复。这个商不是“当前显示值相同”的商，而是对全部有限续接都不可区分的商。
+
+仓内 `ControlledBehaviorUniversality.controlled_behavior_universal_property` 已对有限动作字母和完整有限词读出给出同一普适性：完整行为商的每个动作更新、当前读出和候选实现都唯一因子化，且在有限载体上得到基数上界。对具有共同幺半群协议的可达子系统，`ReachableBehaviorCore.reachable_behavior_core` 进一步给出可达性、未来分离和每个协议前缀的唯一商更新。
+

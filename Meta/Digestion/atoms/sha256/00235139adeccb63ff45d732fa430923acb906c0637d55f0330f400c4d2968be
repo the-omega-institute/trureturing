@@ -1,0 +1,6 @@
+**theorem 22.4: 动态完成、状态忠实与自描述是不同性质；Claim status: open.** 完成后的动态下降、状态读出忠实、表示映射满射，以及同类型的自描述闭合，必须分开记录。它们分别回答：更新能否在摘要上定义、不同状态是否仍可被读出区分、载体是否覆盖目标对象、以及所有同类型自映射是否都能在对象内部编码。
+
+布尔例子已经足以分开这些性质：恒等读出可以状态忠实，恒等或取反更新也可以下降，但 $\mathrm{Bool}$ 不能在同类型内满射地编码全部布尔自映射；相反，常值读出可以有动态下降，却不是状态忠实。仓内 `DiagonalEscapeNeedsTypeExtension` 的 `state_faithfulness_not_self_description_closure`、`effective_descent_not_self_description_closure` 与 `ClosureNonimplicationTriple.closure_nonimplication_triple` 提供了这些非蕴含的具体支点。
+
+因此，完成化塔在固定任务上达到幂等，不等于存在一个同类型的终端自描述观察者。若把“观察者能够描述所有同类型观察者”也加入任务，旧载体上会出现新的对角逃逸；`ProObjects.NoTerminalSelfDescription.no_terminal_self_description` 说明即使形式上有终端阶段表示，扭曲的自评价仍能逃出该阶段的枚举像。
+

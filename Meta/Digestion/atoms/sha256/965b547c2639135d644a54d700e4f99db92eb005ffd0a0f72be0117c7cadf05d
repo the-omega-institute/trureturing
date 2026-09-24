@@ -1,0 +1,8 @@
+#### 3.2.11 已有来源与适用范围
+
+黄金恒等式（TM.439）已有精确仓内 owner，按不可变项目快照
+19a8543ea50538700a993a51989d9cbc7b5bf4fd：
+
+- D5/S1/Scale/FibonacciErrorRatio.lean:21，
+  D5.S1.Scale.fibonacci_golden_residual，逐字给
+  $(F_N:\mathbb R)\phi-F_{N+1}=-(-1/\phi)^N$。

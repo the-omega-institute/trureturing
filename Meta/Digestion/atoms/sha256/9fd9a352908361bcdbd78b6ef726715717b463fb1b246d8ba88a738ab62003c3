@@ -1,0 +1,29 @@
+**命题 12.1（最小共同细化）。** 若另一读出 \(d:S\to D\) 能分别恢复 \(c\) 与 \(p\)，即存在实际像上的映射
+
+$$
+\bar c:\operatorname{ran}d\to\operatorname{ran}c,\qquad
+\bar p:\operatorname{ran}d\to\operatorname{ran}p
+$$
+
+满足
+
+$$
+c=\bar c\circ d,\qquad p=\bar p\circ d,
+$$
+
+则存在唯一
+
+$$
+\bar e:\operatorname{ran}d\to E,\qquad e=\bar e\circ d.
+$$
+
+**证明。** 对 \(v=d(s)\) 定义
+
+$$
+\bar e(v)=\bigl(\bar c(v),\bar p(v)\bigr).
+$$
+
+若 \(d(s)=d(t)\)，两项分别相等，所以定义与代表无关；它落在 \(E\) 是因为该值等于 \(e(s)\)。唯一性由 \(e=\bar e\circ d\) 在实际像上逐点决定。证毕。
+
+因此 \(e\) 是同时保留当前读出和策略读出的最小共同细化。它只是在任务确实需要两者时加入联合区别，并不声称恢复 \(S\) 中未声明的内部细节。
+

@@ -1,0 +1,40 @@
+### 16.1 评价矩与两条行为核
+
+固定共同来源的实际状态像 $S$、允许协议像 $P$ 和带标签的评价值 $L$，令
+
+$$
+E:S\times P\longrightarrow L.
+\tag{16.1}
+$$
+
+$L$ 可以是读数、合法性、失败、事件记录、费用和终止标签的打包值。把这些标签省略，所得商只对较弱任务充分。
+
+定义状态行核和协议列核：
+
+$$
+\begin{aligned}
+s\mathrel{\sim_S}t
+&\iff \forall p\in P,\ E(s,p)=E(t,p),\\
+p\mathrel{\sim_P}q
+&\iff \forall s\in S,\ E(s,p)=E(s,q).
+\end{aligned}
+\tag{16.2}
+$$
+
+第一条说两个状态对所有允许协议的行为相同；第二条说两个协议对所有实际状态的作用相同。它们分别是状态边界和协议菜单的任务商，而不是任意坐标的代数核。
+
+令
+
+$$
+\bar S=S/{\sim_S},\qquad \bar P=P/{\sim_P}.
+$$
+
+则存在唯一的双侧评价
+
+$$
+\bar E:\bar S\times\bar P\to L,
+\qquad
+\bar E([s],[p])=E(s,p).
+\tag{16.3}
+$$
+

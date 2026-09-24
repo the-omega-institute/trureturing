@@ -1,0 +1,13 @@
+### 10.2 动力学与策略的恢复
+
+对每个操作 \(a\)，表达 \(e\) 还必须有合法域、输出和后继 \(D_a^e,O_a^e,T_a^e\)，满足
+
+$$
+s\in D_a\Longleftrightarrow e(s)\in D_a^e,\qquad
+O_a(s)=O_a^e(e(s)),\qquad
+e(T_a(s))=T_a^e(e(s)).
+\tag{10.4}
+$$
+
+若表达驱动内部策略，还须满足 \(\pi(s)=\pi^e(e(s))\)。
+

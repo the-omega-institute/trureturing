@@ -1,0 +1,20 @@
+### 20.4 当前读数相同仍可能没有后继
+
+仓内 `EarliestFutureWitness.memory_is_earliest_future_witness` 的有限例可以直接写成：
+
+$$
+S=\operatorname{Fin}3,
+\quad
+F(0)=0,\quad F(1)=2,\quad F(2)=2,
+\quad
+q(s)=[s=2].
+$$
+
+当前有 $q(0)=q(1)=\mathsf{false}$，但
+
+$$
+q(F(0))=\mathsf{false}\ne\mathsf{true}=q(F(1)).
+$$
+
+所以 $q$ 的当前纤维不能承载后继；完整 profile 在一步处把两者分开。动作词树版本还会同时记录“哪一个动作在何时失败”，因而比只比较一条固定时间轨道更适合内部观察者。
+
