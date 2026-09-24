@@ -103,7 +103,7 @@ parse_snapshot() {
     def pr_event: . == "pull_request" or . == "pull_request_target";
     def native_run: .path == ".github/workflows/ci-pr.yml";
     # This repository calls exactly this reusable workflow at its PR merge commit.
-    # GitHub retains that ref after merge even when pull_requests becomes empty.
+    # GitHub retains that ref after merge; pull_requests only lists open head matches.
     def native_pr:
       select(native_run and .event == "pull_request") |
       .referenced_workflows | select(type == "array" and length == 1) | .[0] |
@@ -189,10 +189,7 @@ parse_snapshot() {
       # The workflow path must be known before selecting its PR identity policy.
       (.path | type == "string" and length > 0) and
       (.pull_requests | type == "array") and
-      (if native_run then associated_prs as $prs |
-        # Same-head PRs may share associations; a nonempty list must include the native origin.
-        ($prs | length) == 1 and
-          ((.pull_requests | length) == 0 or any(.pull_requests[]; .number == $prs[0]))
+      (if native_run then (associated_prs | length) == 1
        elif (.event | pr_event) then (.pull_requests | length > 0) else true end) and
       (.repository.id as $repository_id | all(.pull_requests[];
         type == "object" and (.id | database_id) and (.number | database_id) and
