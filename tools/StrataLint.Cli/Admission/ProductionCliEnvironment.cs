@@ -279,6 +279,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public AdmissionOutcome Check(IReadOnlyList<string> arguments)
     {
         var timing = new AdmissionCheckTiming(timeProvider);
+        ImmutableArray<Diagnostic> planeObservations = [];
         try
         {
             var repositoryPhase = timing.Measure(
@@ -316,7 +317,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",
-                () => EvaluateAdmissionPlane(currentRaw, baselineRaw, prepared.Changes),
+                () => EvaluateAdmissionPlane(currentRaw, baselineRaw, prepared.Changes, out planeObservations),
                 static result => result is not null);
             if (admissionPlane is not null)
             {
@@ -345,18 +346,18 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                     current,
                     candidateLeanReport,
                     prepared.Changes));
-            return SnapshotAdmissionCore.Evaluate(
+            return WithAdmissionPlaneObservations(SnapshotAdmissionCore.Evaluate(
                 current,
                 baseline,
                 candidateLeanReport,
                 prepared.Changes,
                 bootstrap,
                 verifiedScribeEmissions,
-                timing).Outcome;
+                timing).Outcome, planeObservations);
         }
         catch (Exception exception)
         {
-            return new AdmissionOutcome.InfrastructureFailure(exception.Message);
+            return WithAdmissionPlaneObservations(new AdmissionOutcome.InfrastructureFailure(exception.Message), planeObservations);
         }
     }
 
