@@ -1,0 +1,36 @@
+**命题 3.11（通道区别与对称效果）。** 若系统效果 $0\le E\le I$ 满足 $[E,H]=0$，循环移迹逐时刻给
+
+$$
+\operatorname{Tr}(E\mathcal C_\nu^H(\rho))
+=\operatorname{Tr}(E\rho)
+=\operatorname{Tr}(E\mathcal P_H(\rho)).
+\tag{TM.297}
+$$
+
+在此固定效果语言中，有限平均、恒等通道和完整 pinching 精确不可区分，无需输入本来不变。若先经过从 $H$ 到 $K$ 作用的协变通道 $\mathcal E$，再用 $[F,K]=0$ 的效果，则
+
+$$
+\mathcal E(e^{-itH}Xe^{itH})=e^{-itK}\mathcal E(X)e^{itK},\qquad
+[F,K]=0\ \Longrightarrow\ [\mathcal E^*(F),H]=0.
+\tag{TM.298}
+$$
+
+将协变式与 $F$ 配对，利用对偶定义及 $F$ 不变，即证明 Heisenberg 拉回不变。有限串接、包含全部结果记录的协变 instrument 同样按最终拉回条件判断，不能遗漏携带相干的辅助资源。
+
+关键条件是**诱导在被平均系统上的效果**与 $H$ 交换。联合效果对 $H+H_R$ 不变，不在任意参考态下推出系统效果不变。若参考与来源独立且 $[\tau_R,H_R]=0$，取参考期望后确实仍不变，这是B卷第2.1节及既有参考资源来源的接口。相干参考则可诱导不对易系统效果；相关参考必须保留联合输入，不能改写为独立 $\tau_R$。
+
+式(TM.291)、(TM.295)的固定叠加效果在 $\epsilon=0$ 对易，在非零失谐时不对易。其曲线属于允许固定效果的共同外部控制实验，或需要显式关系参考。有限窗口没有自动扩大效果菜单。diamond 范数比较使用全部外部测试，严格对称语言下实际区别仍可为零。
+
+例如已知固定 $\epsilon>0$ 时，添参考 $H_R=\epsilon|1\rangle\langle1|$。$|I_*,0\rangle$ 与 $|J_*,1\rangle$ 总能量相等，故
+
+$$
+G=\frac{(|I_*,0\rangle+|J_*,1\rangle)(\langle I_*,0|+\langle J_*,1|)}2,
+\qquad [G,H_{m,\epsilon}^{(N)}+H_R]=0,
+\qquad
+(I_S\otimes\langle+|)G(I_S\otimes|+\rangle)=\frac12Q_*,
+\quad |+\rangle_R=(|0\rangle+|1\rangle)/\sqrt2.
+\tag{TM.299}
+$$
+
+省略的 tensor 恒等因子按总系统理解。这给一份衰减的合法干涉效果；测量 $\{G,I-G\}$ 保留全部结果，不能删去失败后称为免费精确实现 $Q_*$。参考须提供所需谱隙和相干，并作为测量阶段的独立资源；它若也经历遗忘时间平均，应改用实际联合状态。负失谐可交换匹配角色并取 $|\epsilon|$；一份固定有限参考不能一般为连续变化的失谐提供所有精确匹配谱隙。时间记录反馈同样需要显式权限。
+

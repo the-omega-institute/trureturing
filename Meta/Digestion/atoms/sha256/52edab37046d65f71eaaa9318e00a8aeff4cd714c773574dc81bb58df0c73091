@@ -1,0 +1,39 @@
+**命题 2.22（精确整数数据的有限盒算法）。** 有限性的数学证明不等于已知如何从一份数值谱表找全共振。若另外取得精确整数表示，可以使用成熟的有理锥和 Hilbert 基算法。令
+$$
+\Gamma_H=\sum_{i=0}^{d-1}\mathbb Z(E_i-E_0),\qquad
+\Gamma_H=\bigoplus_{a=1}^{r}\mathbb Z\omega_a,\qquad
+E_i-E_0=a_i\cdot\omega,\quad a_i\in\mathbb Z^r,\quad a_0=0.
+\tag{TM.181}
+$$
+
+有限生成的 $\mathbb R$ 加法子群无挠，所以抽象地存在这样一组整数基；$\omega_a$ 在 $\mathbb Q$ 上线性独立。$r=0$ 包含纯数量 Hamiltonian。除去对共轭没有作用的公共数量相位以后，时间闭包的有效作用恰是 $\theta\in\mathbb T^r$ 给出的 $z_{ij}\mapsto e^{i(a_i-a_j)\cdot\theta}z_{ij}$。这里用的是 Kronecker 的紧环面稠密性或等价的字符消失判据；不是说每个 $\theta$ 都由某个精确有限时间取到。原矩阵群 $G_H$ 到该有效作用像的连续映射满射，故没有改变轨道。
+
+把 $a_i-a_j$ 作为整数矩阵 $W$ 的各列，记 $q=d^2$，则
+$$
+W\in\mathbb Z^{r\times q},\qquad
+S_H=\ker_{\mathbb Z}W\cap\mathbb N^q,
+\qquad C_W=\{x\in\mathbb R^q:x\ge0,\ Wx=0\}.
+\tag{TM.182}
+$$
+
+这是一个有理、pointed 的多面锥：若 $x,-x\ge0$，则 $x=0$。可以用精确有理多面计算取得其全部极射线，并在每条射线上选 primitive 整数向量 $v_1,\ldots,v_t\ge0$。若锥只有零点，生成问题平凡；当前完整矩阵坐标中至少有对角零权重射线。定义逐坐标和与有限集合
+$$
+B=\sum_{\ell=1}^t v_\ell,\qquad
+\mathcal F_W=\{b\in\mathbb N^q:0\le b\le B,\ Wb=0\}.
+\tag{TM.183}
+$$
+
+**有限盒完整性。** 任取 $\alpha\in S_H$。极射线生成锥，故存在 $\lambda_\ell\ge0$ 使 $\alpha=\sum_\ell\lambda_\ell v_\ell$。令 $n_\ell=\lfloor\lambda_\ell\rfloor$，并作同一个整数向量的分解：
+$$
+\alpha=\sum_{\ell=1}^t n_\ell v_\ell+b,\qquad
+b=\sum_{\ell=1}^t(\lambda_\ell-n_\ell)v_\ell\in\mathbb Z^q,
+\quad 0\le b\le B,\quad Wb=0.
+\tag{TM.184}
+$$
+
+$b$ 为整数是因为左侧 $\alpha$ 与已扣除项均为整数；非负与盒界来自每个余系数属于 $[0,1)$，权重零来自线性性。每个 $v_\ell$ 也位于 $\mathcal F_W$，故 $\mathcal F_W$ 生成整个 $S_H$。于是可以有限枚举盒内的整数零权重点，并删除其中可分解的非零点；得到的正是 $\mathcal B_H$。一个盒内点若可分解，其两项也逐坐标不超过该点，因而都在同一盒内；所以这个删除判据本身是有限检查。特别地，全部不可分解元都在此盒内，$\sum_jB_j$ 是一份已由完整极射线数据认证的粗次数上界。
+
+这给出真正的停止依据，与B卷第2.2.3节只观察一次相邻理想相等不同。验证一份候选生成表不能只查每行 $Wb=0$；还须有完整锥射线与上述有限盒证明、经认证的 Hilbert 基算法，或另一份覆盖全部零关系的证明。这里没有运行或声称交付某份一般 $W$ 的计算输出，也没有声称盒或最小生成集规模小。
+
+式(TM.181)中的精确关系数据是额外输入。有限精度近似能谱不能一般认证所有整数关系：$\operatorname{diag}(0,1,m)$ 与 $\operatorname{diag}(0,1,m+\varepsilon)$ 可任意接近，而关系 $mE_1-(m-1)E_0-E_2=0$ 在 $\varepsilon\ne0$ 时失效，相应两字之间的效果也不再精确交换。对于任意描述方式的实数，不能凭本节的存在证明宣称已取得有效整数基；某个代数数表示、已验证结构关系或其他精确判定机制须另行供应。若要研究容许近似不对易或有限时间分辨率的装置，则需另写误差与操作合同。
+

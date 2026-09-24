@@ -1,0 +1,35 @@
+**命题 2.10（固定群作用的有限分离阶）。** 式(TM.139)使用全部 $n$，但对一个固定有限维矩阵群作用，可以把分离轨道所需的阶数压到某个有限值。这里得到的是存在性，不是一个已知数值上界。 这一存在性也由成熟不变量理论直接供应：Bandeira 等的 Theorem A.31 给有限齐次代数生成元，Theorem A.32 给紧群轨道的分离性；每个齐次次数 $k$ 的不变量可由第 $k$ 阶矩读取，故生成元的最高次数给一个充分阶数。有限分离集可以小于代数生成集，其准确作用由该文 Proposition 3.39 表述。下面的坐标差理想证明给出同一有限性结论的另一份完整接口，不另将固定模型有限阶存在性申报为新的一般结果。
+
+继续固定 $G\le U(d)$。对任意 Hermitian 矩阵用 $d^2$ 个实坐标 $x$ 表示，暂不施加正性或迹条件；式(TM.135)仍可定义一个齐次次数为 $n$ 的矩阵值多项式 $P_n(x)$。原因是 $UxU^\dagger$ 的每个坐标对 $x$ 线性，张量积给次数为 $n$ 的有限多项式，群积分只把系数替换成固定实数或复数。对两组坐标 $x,y$，令 $f_{n,\alpha}$ 遍历 $P_n(x)-P_n(y)$ 的全部实、虚矩阵坐标差，在有限变量多项式环中定义
+$$
+\mathscr R=\mathbb R[x_1,\ldots,x_{d^2},y_1,\ldots,y_{d^2}],\qquad
+I_N=\langle f_{n,\alpha}:1\le n\le N,\ \alpha\rangle,\qquad
+I_1\subseteq I_2\subseteq\cdots.
+\tag{TM.143}
+$$
+
+实数域 Noetherian，Hilbert 基定理保证有限变量多项式环 $\mathscr R$ Noetherian。由理想升链条件，存在一个 $N\ge1$ 使此后全部理想都等于 $I_N$。等价地，全部高阶坐标差都属于 $I_N$。如果某对态的前 $N$ 阶矩相同，$I_N$ 的每个生成元在该对坐标处为零，则其中每个多项式都为零，故全部高阶矩也相同。结合式(TM.139)，得到
+$$
+\boxed{
+\exists N=N(G,d)<\infty\quad\forall\rho,\sigma\in\mathcal D_d:
+\bigl[P_n(\rho)=P_n(\sigma)\ (1\le n\le N)\bigr]
+\Longleftrightarrow \sigma\in G\cdot\rho.
+}
+\tag{TM.144}
+$$
+
+记号 $N(G,d)$ 中的 $G$ 包含其在 $U(d)$ 内的具体嵌入；只固定抽象群的名称与维数，不固定其表示，并没有取得同一个 $N$。后面的三维整数能谱族将直接检验这个量词。
+
+此外，每个 $U\rho U^\dagger$ 的迹为一，因此部分迹逐项给出
+$$
+\operatorname{Tr}_{n+1,\ldots,N}P_N(\rho)=P_n(\rho)\quad(1\le n\le N),
+\qquad
+\boxed{P_N(\rho)=P_N(\sigma)\Longleftrightarrow\sigma\in G\cdot\rho}
+\quad\text{对式(TM.144)所给 }N.
+\tag{TM.145}
+$$
+
+证明第一式只需 $\operatorname{Tr}_{n+1,\ldots,N}(X^{\otimes N})=X^{\otimes n}(\operatorname{Tr}X)^{N-n}$，再用积分线性性；第二式由第一式与式(TM.144)。因此一个足够高阶的完整概率律已经包含所需低阶律，不必把它们当作相互独立的信息源相加。
+
+Noetherian 条件说明**存在最终稳定点**，没有证明“只要某次 $I_N=I_{N+1}$，往后就都不再增长”。本节没有给这些特殊生成理想的单步递推封闭判据，也没有给显式次数界；故任何一次相邻理想平台都不能单独成为停止证书。实际计算还需要可表示的系数、有效生成方法和经证明的终止判据，不能把抽象实系数理想的有限生成性直接报为已实现算法。
+

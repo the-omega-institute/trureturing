@@ -1,0 +1,33 @@
+**反例 1.3（相同摘要与不同纠缠）。** 对第二系统作部分转置，得到
+$$
+\rho_c^{T_B}=
+\begin{pmatrix}
+0&0&0&c\\
+0&1/2&0&0\\
+0&0&1/2&0\\
+\overline c&0&0&0
+\end{pmatrix},\qquad
+\operatorname{spec}(\rho_c^{T_B})=\{1/2,1/2,|c|,-|c|\}.
+\tag{TM.54}
+$$
+
+若一份态可分，即可写为 $\sum_j p_j A_j\otimes B_j$，其中 $A_j,B_j$ 均为密度矩阵，则部分转置为 $\sum_jp_j A_j\otimes B_j^{\mathsf T}\succeq0$，因为转置保持正半定性。因此 $c\ne0$ 时出现的负特征值已经证明纠缠。$c=0$ 时，式(TM.52)本身就是两个乘积态的概率混合。因此，本族中“可分”等价于 $c=0$，且其 negativity 为 $(\|\rho_c^{T_B}\|_1-1)/2=|c|$。这里仅使用“可分推出部分转置正半定”的必要条件，没有借用一般维度中并不成立的逆命题。
+
+于是，式(TM.53)的整份数据既不能恢复 $c$，也不能判定这族中的可分性或恢复 negativity。合法性、守恒关系、经典相关与量子纠缠是不同问题；完整保留前三者中的这些指定读数仍然可以遗漏第四者。
+
+反过来，遗漏后续会用到的联合关系也不必是遗漏纠缠。开头所引《量子实在》定理164.2的两态恰好可以显式分解为可分态。为该卷的 $\gamma=\operatorname{diag}(2/3,1/3)$ 定义 $\tau_X^\pm=\gamma\pm X/3$、$\tau_Y^\pm=\gamma\pm Y/3$。这四个局部矩阵迹均为一，本征值为 $(3\pm\sqrt5)/6>0$，所以都是合法密度矩阵。对 $s\in\{+1,-1\}$，逐项展开得到
+$$
+\begin{aligned}
+\rho_s
+&=\tfrac14\bigl(
+\tau_X^+\otimes\tau_Y^{-s}
++\tau_X^-\otimes\tau_Y^{s}
++\tau_Y^+\otimes\tau_X^{s}
++\tau_Y^-\otimes\tau_X^{-s}\bigr)\\
+&=\gamma\otimes\gamma+\tfrac{s}{18}(Y\otimes X-X\otimes Y)\\
+&=\gamma\otimes\gamma+\tfrac{si}{9}(|10\rangle\langle01|-|01\rangle\langle10|).
+\end{aligned}
+$$
+
+故该卷的两态可分，而依然具有相同当前局部摘要、不同未来局部读数。这是所引实例的直接分解说明：纠缠是某些遗漏关系的性质，并非动态不充分性的必要条件。上述可分分解也只判定数学可分性；各局部因子带有相干，不能据此声称无相位参照的局部守能准备协议能够执行该分解。
+

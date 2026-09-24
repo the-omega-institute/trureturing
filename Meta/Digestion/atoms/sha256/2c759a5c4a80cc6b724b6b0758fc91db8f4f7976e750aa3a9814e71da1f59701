@@ -1,0 +1,20 @@
+**证明。** 若两空间相同，式(TM.110)说明 $P_H$ 为到该空间的正交投影，故正交性等价于 $P_H(\rho-\sigma)=0$。反之，若 $\mathcal W$ 是 $\mathcal C_H$ 的真子空间，有限维正交分解给非零 $D\in\mathcal C_H\cap\mathcal W^\perp$。因为 $I\in\mathcal W$，有 $\operatorname{Tr}D=0$。取
+$$
+\varepsilon=\frac1{2d\|D\|_{\mathrm{op}}}>0,\qquad
+\rho_\pm=\frac Id\pm\varepsilon D,\qquad
+\rho_\pm\succeq\frac{I}{2d},\qquad
+P_H(\rho_+)-P_H(\rho_-)=2\varepsilon D\ne0.
+\tag{TM.118}
+$$
+
+两者都是实际密度态，且差属于 $\mathcal W^\perp$，所以实际工具全部读数相同，却有不同 pinching，否定式(TM.117)左侧。必要性因此使用了整个态空间内部的合法扰动，不能不加说明地迁移到受限制备族。
+
+具体地，若只允许 $\mathcal S\subseteq\mathcal D(\mathcal H)$，记 $\mathcal S-\mathcal S=\{\rho-\sigma:\rho,\sigma\in\mathcal S\}$。在 $\mathcal W\subseteq\mathcal C_H$ 的同一前件下，正确的任务条件是
+$$
+\mathcal W^\perp\cap(\mathcal S-\mathcal S)
+=\ker P_H\cap(\mathcal S-\mathcal S).
+\tag{TM.119}
+$$
+
+这由逐对应用式(TM.116)直接等价于两种观察关系在 $\mathcal S$ 上相同。若目标是识别整个受限态而非其 pinching，则条件改为 $\mathcal W^\perp\cap(\mathcal S-\mathcal S)=\{0\}$。例如 $\mathcal S$ 只有一个态时，即使 $\mathcal W$ 很小也已充分；全态空间的张成必要性在这里没有适用前提。该差集判据对应下文 Carmeli 等的现成受限信息完备性接口。
+
