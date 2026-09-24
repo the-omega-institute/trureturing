@@ -91,7 +91,7 @@ internal sealed class GeometricDynamicsSourcesDocument : IScribeDocumentDefiniti
             Describe.Remark(
                 DescribeId.Create("local-interaction-and-correlation-memory"),
                 H("Local interactions and overlapping region autonomy"),
-                Equal(Id("delta"), Id("b")),
+                Equal(Id("delta"), Id("b"))),
                 AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/hasenoehrl2022semicausal"),
                     LibraryNoteRef.Create("D5/L/watrous2009completelybounded")),
@@ -122,5 +122,25 @@ internal sealed class GeometricDynamicsSourcesDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/lin2026virasoroarea"),
                     LibraryNoteRef.Create("D5/L/akers2021leadingqes")),
-                Blocks(Paragraph(Text("The Virasoro source retains explicit block, saddle and positivity assumptions. A finite positive-spectrum example shows why leading moments for replica index at least one alone do not control the derivative at one. Subunit-Renyi or rank-tail estimates give sufficient conditions. This does not determine the unknown Virasoro block, identify the finite code with a CFT, or settle the gravitational RT formula.")))))));
+                Blocks(Paragraph(Text("The Virasoro source retains explicit block, saddle and positivity assumptions. A finite positive-spectrum example shows why leading moments for replica index at least one alone do not control the derivative at one. Subunit-Renyi or rank-tail estimates give sufficient conditions. This does not determine the unknown Virasoro block, identify the finite code with a CFT, or settle the gravitational RT formula.")))),
+            Describe.Remark(
+                DescribeId.Create("multisector-optimal-area-coarse-graining"),
+                H("A simultaneous finite-sector optimum and a scale semigroup"),
+                Equal(Id("deltaOptimal"), Call("twoTOverOnePlusT", Id("T"))),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/harrow2010entanglementspread"),
+                    LibraryNoteRef.Create("D5/L/watrous2009completelybounded"),
+                    LibraryNoteRef.Create("D5/L/harlow2017rtqec"),
+                    LibraryNoteRef.Create("D5/L/akers2019holographicrenyi")),
+                Blocks(Paragraph(Text("For independent local CPTP maps with exact pure outputs on every basis sector, T is the sum of tanh of one quarter of each adjacent distinct discarded-area gap. The written RG theorem proves the joint optimal unhalved diamond error 2T/(1+T), constructs one nested environment family attaining all sector overlaps, and gives a common worst input and measurement. This is a finite-multisector result, not a maximum over independently optimized pairs. Integer power-rank towers induce a scale Lindblad semigroup with rates fixed by adjacent area slopes. Scale is not physical time; errors on basis-sector outputs, shared entanglement and communication require a different optimization. No Lean declaration, independent review or gravitational RT proof is asserted.")))),
+            Describe.Remark(
+                DescribeId.Create("positive-annulus-replica-certification"),
+                H("One positive replica remainder controls the entropy derivative"),
+                Equal(Id("Rr"), Call("positiveCylinderSpectralIntegral", Id("r"))),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/cardy2016annulus"),
+                    LibraryNoteRef.Create("D5/L/estienne2022annulus"),
+                    LibraryNoteRef.Create("D5/L/lin2026virasoroarea"),
+                    LibraryNoteRef.Create("D5/L/akers2021leadingqes")),
+                Blocks(Paragraph(Text("For a common nonnegative n-independent cylinder spectrum with finite Rr at r greater than one, the authored RC theorem gives sharp entropy-derivative bounds from an upper budget Q and a spectral gap. At r equal to two, the simpler defect interval is minus 2 log(1+Q) to log(1+Q). Q is an unnormalized closed-channel remainder relative to a specified vacuum term, not purity alone. The optimization is sharp in the positive-measure class; extremizers need not satisfy CFT sewing. Cardy-Tonni supply the established annulus moment identity. Estienne-Ikhlef-Rotaru supply the established free-free Ising annulus partition function used for a true open-channel density-spectrum check, not an arbitrary-n continuation of their different n-equal-to-two geometry. The common-spectrum and boundary-overlap hypotheses are not established for general multi-interval or heavy-state replicas. This is a written proof, with no Lean or gravitational RT closure claim.")))))));
 }
