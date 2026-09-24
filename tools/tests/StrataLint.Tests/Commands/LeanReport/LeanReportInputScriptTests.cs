@@ -300,13 +300,13 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Theory]
-    [InlineData("repository")]
-    [InlineData("repository[cache]")]
-    public void CompatibleInspectorLibraryEditPreservesReportAddress(string repositoryName)
+    [InlineData("repository", "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean")]
+    [InlineData("repository[cache]", "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean")]
+    [InlineData("repository", "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean")]
+    [InlineData("repository[cache]", "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean")]
+    public void CompatibleInspectorLibraryEditPreservesReportAddress(string repositoryName, string judgeSource)
     {
         using var fixture = new LeanReportInputFixture(repositoryName);
-        const string judgeSource =
-            "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean";
         const string unrelated = "tools/lean-inspector/LeanInformationAudit/README.md";
         fixture.WriteSource(judgeSource, "def judgeFixture : True := by trivial\n");
         fixture.WriteSource(unrelated, "fixture documentation\n");

@@ -1,0 +1,6 @@
+**命题 23.4。** 保留式（19.1）、（19.2）的定义。若 $F:S\to S$ 满射，则
+
+$$
+p\approx_P q\Longrightarrow\sigma(p)\approx_P\sigma(q).
+$$
+

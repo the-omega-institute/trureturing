@@ -28,6 +28,14 @@ public static class LeanReportRegistrationFixture
               {
                 "optional": true,
                 "pattern": "lakefile.lean"
+              },
+              {
+                "optional": true,
+                "pattern": "tools/lean-inspector-interface/lakefile.toml"
+              },
+              {
+                "optional": true,
+                "pattern": "tools/lean-inspector-interface/lake-manifest.json"
               }
             ]
           },
@@ -37,6 +45,23 @@ public static class LeanReportRegistrationFixture
               {
                 "optional": true,
                 "pattern": "tools/lean-inspector/**/*.lean"
+              },
+              {
+                "optional": true,
+                "pattern": "tools/lean-inspector-interface/**/*.lean"
+              }
+            ]
+          },
+          "dependency_sources": {
+            "exclude": [],
+            "include": [
+              {
+                "optional": true,
+                "pattern": "tools/lean-inspector/**/*.lean"
+              },
+              {
+                "optional": true,
+                "pattern": "tools/lean-inspector-interface/**/*.lean"
               }
             ]
           },

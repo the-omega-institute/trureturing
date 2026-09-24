@@ -18,6 +18,10 @@ rev = "v4.33.0"
 name = "leanInspector"
 path = "tools/lean-inspector"
 
+[[require]]
+name = "leanInspectorInterface"
+path = "tools/lean-inspector-interface"
+
 [[lean_lib]]
 name = "Trureturing"
 roots = ["Trureturing", "D5"]
