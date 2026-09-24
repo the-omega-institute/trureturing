@@ -126,7 +126,7 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
       by simpa [mul_assoc] using q.2.2.2.2⟩
   have recovered_eq : recovered = q := by
     rcases q with ⟨qg, qj, qh, qa, qb⟩
-    generalize hr : qh⁻¹ * qg = r at qb
+    generalize hr : qh⁻¹ * qg = r at qb ⊢
     have hg : qh * r = qg := by
       rw [← hr]
       simp [mul_assoc]
