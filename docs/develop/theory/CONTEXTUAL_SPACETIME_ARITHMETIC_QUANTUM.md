@@ -39034,3 +39034,204 @@ $$
 这里使用的经典开关与遗忘框架见 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C与§V；该文定理10的稀少噪声近似并不单独给出（175.5）的精确等号。当前构造用第三个去相位标签提供第二个可校准方向，（175.12）的相反符号保证了物理正参数下的同时补偿。第174节相干实现的读数差仍成立，但同样的三态维数上界也能由本节的纯经典实现达到；三态上界本身不能作为量子资源优势的依据。并列最大点处是否存在满足同一合同的双态实现，以及能否对 $r\uparrow1$ 保持统一遗忘率，仍未由这些构造确定。
 
 ## 追加锚（本行以下为增补区）
+
+## 176. 相干相位反转与全部近一参数的双维精确最优
+
+**定义 176.1（活动比特的相位反转校准）。** 沿用定义173.1的一般 CPTP 预测器合同、最小记忆维数 $D_{\rm fg}(r)$ 及定义174.1的 $c=r\cos\alpha$、$b=r\sin\alpha$、$n,m=n+1$。令 $K=\mathbb C^2$，一次初始化为 $I_2/2$。选 $0<\kappa<r$、$z=c+iv$，采用式（174.9）—（174.10）的记录向量及相干通道 $\mathcal Q_z$。在每次 $\mathcal Q_z$ 后，对记忆依次施加 $\mathcal D_\chi$、$U_\gamma=e^{-i\gamma X/2}$ 及重置 $\mathcal R_\delta$。
+
+这里允许 $-1\le\chi<0$：$\mathcal D_\chi$ 将记忆非对角元乘以 $\chi$，仍是 CPTP 通道，因为
+$$
+\mathcal D_\chi=\frac{1+\chi}{2}\,\mathrm{id}
++\frac{1-\chi}{2}\operatorname{Ad}_Z
+=|\chi|\operatorname{Ad}_Z+(1-|\chi|)\mathcal D_0.
+\tag{176.1}
+$$
+负号表示相干的相位反转，不是负概率。此处理器没有启动标志；全部记忆维数为二。
+
+**定理 176.2（并列最大点也允许双维精确最优）。** 存在 $r_2<1$，使对每个 $r\in(r_2,1)$，都能在定义176.1中选择 $-1<\chi<0$、$0<\delta<1$、$0<\gamma<\pi$ 及合法的 $\kappa,v$，使同一个时间齐次处理器满足精确单步最优、全视界风险 $H(r)$ 及标准遗忘条件（173.1）。因此
+$$
+\boxed{D_{\rm fg}(r)=2\qquad(r_2<r<1).}
+\tag{176.2}
+$$
+这个结论包含两个相邻视界并列最大之处。所得实现实际使用相干；它不单独给出经典双态实现的下界。
+
+证明。 所有最大视界都包含在 $\{n,m\}$，且 $n\ge2$、$m\alpha<\pi/2$，见（174.5）的定位。令
+$$
+\varepsilon=1-r,\qquad \beta=-\log r,\qquad
+t_* =\frac{\pi}{3\sqrt3},\qquad
+\varepsilon n\longrightarrow t_*.
+\tag{176.3}
+$$
+以下先核对校准方程具有物理正的重置率，再选择完全正性与全视界风险所需的参数邻域。
+
+令 $q=1-\cos\gamma$、$s=1-\delta$。为在 $q=0$ 处使用解析变量，将式（174.14）的第三个坐标改写成 $j_N=\sin\gamma\,h_N$。由活动比特初始化可得
+$$
+(x_0,y_0,j_0)=(1,0,0),\qquad
+\begin{aligned}
+x_{N+1}&=cx_N-vy_N,\\
+y_{N+1}&=s\bigl[(1-q)(vx_N+cy_N)+\chi j_N\bigr],\\
+j_{N+1}&=s\bigl[-(2q-q^2)(vx_N+cy_N)+\chi(1-q)j_N\bigr].
+\end{aligned}
+\tag{176.4}
+$$
+对 $0<q<2$，取 $\gamma=\arccos(1-q)$ 即恢复实际通道；零点附近其余实参数只用于递推的解析延拓。终端系数为 $01=12=\kappa^N$、$02=x_N\in\mathbb R$，且 $x_1=c$ 恒成立。
+
+在 $q=\delta=0,v=b$，有 $x_N=r^N\cos(N\alpha)$。先暂取 $\chi=-1$，记此基点的三个偏导为
+$$
+V_N=\partial_vx_N=-Nr^{N-1}\sin((N-1)\alpha),\qquad
+D_N=\partial_\delta x_N,\qquad G_N=\partial_qx_N.
+\tag{176.5}
+$$
+后两者可从生成函数明确计算。设 $\rho^2=c^2+v^2$、$A=s(1-q)$、$B=s^2$，消去递推中的 $y,j$，得到形式幂级数恒等式
+$$
+\sum_{N\ge0}x_N\zeta^N
+=\frac{1+A(1-c)\zeta-Bc\zeta^2}
+{1-[c+A(c-1)]\zeta+[A(\rho^2-c)-Bc]\zeta^2+B\rho^2\zeta^3}.
+\tag{176.6}
+$$
+在基点令 $Q(\zeta)=1-2c\zeta+r^2\zeta^2$，直接求导给出
+$$
+\sum_{N\ge0}D_N\zeta^N=\frac{b^2\zeta^2}{Q(\zeta)^2},
+\qquad
+\sum_{N\ge0}G_N\zeta^N
+=\frac{1-\zeta}{1+\zeta}\frac{b^2\zeta^2}{Q(\zeta)^2}.
+\tag{176.7}
+$$
+特别地，
+$$
+D_N=\frac{r^N}{2}
+\bigl[\cot\alpha\sin(N\alpha)-N\cos(N\alpha)\bigr].
+\tag{176.8}
+$$
+式（176.7）的额外因子记录相位反转对重置方向的改变。
+
+为确定两个校准方程所需重置率的符号，以下给出统一的近一渐近式。令 $a=\sqrt3$，对实变量 $t$ 定义
+$$
+\begin{aligned}
+d_\varepsilon(t)&=\frac{e^{-(\beta/\varepsilon)t}}2
+\left[\varepsilon\cot\alpha\sin\!\left(\frac\alpha\varepsilon t\right)
+-t\cos\!\left(\frac\alpha\varepsilon t\right)\right],\\
+f_\varepsilon(t)&=-\frac t r e^{-(\beta/\varepsilon)t}
+\sin\!\left(\frac\alpha\varepsilon t-\alpha\right).
+\end{aligned}
+\tag{176.9}
+$$
+于是 $D_N=\varepsilon^{-1}d_\varepsilon(\varepsilon N)$、$V_N=\varepsilon^{-1}f_\varepsilon(\varepsilon N)$。由 $\alpha/\varepsilon\to a$、$\beta/\varepsilon\to1$，这些函数及其任意固定阶导数在 $t_*$ 的紧邻域上一致收敛，极限为
+$$
+d(t)=\frac{e^{-t}}2\left[\frac{\sin(at)}a-t\cos(at)\right],
+\qquad f(t)=-te^{-t}\sin(at).
+\tag{176.10}
+$$
+
+还需把 $G_N$ 与 $d_\varepsilon'$ 联系起来，并控制相位反转的交替项。令 $z_*=re^{i\alpha}$、$k=\cot\alpha$、$a_0(z)=(z-1)/(z+1)$。对式（176.7）取系数，或对等比数列及其 $N$ 倍分别求有限和，得到精确恒等式
+$$
+G_N=-\frac12\operatorname{Re}\!\left[
+\left(a_0(z_*)(N+ik)+\frac{2z_*}{(1+z_*)^2}\right)z_*^N\right]
++\frac{2b^2}{|1+z_*|^4}(-1)^N.
+\tag{176.11}
+$$
+例如，乘子 $(1-\zeta)/(1+\zeta)$ 把数列 $z^N$ 变成 $a_0(z)z^N+2(-1)^N/(1+z)$，再对 $z$ 求导即可核对此式。由于 $z_*$ 接近一，可选趋于零的主支 $\log z_*=-\beta+i\alpha$；有
+$$
+a_0(z_*)=\tfrac12\log z_*+O(\varepsilon^3),
+\qquad
+\frac{2z_*}{(1+z_*)^2}=\frac12+O(\varepsilon^2).
+\tag{176.12}
+$$
+当 $\varepsilon N$ 在上述紧邻域内，$N+ik=O(\varepsilon^{-1})$，交替项也是 $O(\varepsilon^2)$。把（176.8）延拓到实数 $N$ 并求导，遂得
+$$
+G_N=\frac12d_\varepsilon'(\varepsilon N)+O(\varepsilon^2),
+\tag{176.13}
+$$
+余项对该邻域内的整数一致。
+
+令 $\lambda=V_m/V_n$，并设
+$$
+\Delta_D=D_m-\lambda D_n,\qquad
+\Delta_G=G_m-\lambda G_n.
+\tag{176.14}
+$$
+因为 $f(t_*)\ne0$，对 $m=n+1$ 作 Taylor 展开，利用（176.9）、（176.13）可得
+$$
+\Delta_D\longrightarrow
+d'(t_*)-\frac{f'(t_*)}{f(t_*)}d(t_*),\qquad
+\frac{\Delta_G}{\varepsilon}\longrightarrow
+\frac12\left[d''(t_*)-\frac{f'(t_*)}{f(t_*)}d'(t_*)\right].
+\tag{176.15}
+$$
+这里 $at_*=\pi/3$，直接微分（176.10）给出
+$$
+\frac{f'(t_*)}{f(t_*)}=\frac1{t_*},\quad
+d(t_*)=\frac{e^{-t_*}}4(1-t_*),\quad
+d'(t_*)=e^{-t_*}(t_*-1/4),\quad
+d''(t_*)=e^{-t_*}(1-t_*).
+\tag{176.16}
+$$
+因此记 $A_*=e^{-t_*}(t_*-1/(4t_*))>0$，则
+$$
+\Delta_D\longrightarrow A_*,\qquad
+\frac{\Delta_G}{\varepsilon}\longrightarrow-\frac{A_*}{2}.
+\tag{176.17}
+$$
+严格正号使用 $t_*>1/2$。这些极限只要求 $\varepsilon n\to t_*$，不要求最大点唯一。
+
+现在求解
+$$
+x_n(v,\delta,q)=r^n\cos(n\alpha),\qquad
+x_m(v,\delta,q)=r^m\cos(m\alpha).
+\tag{176.18}
+$$
+在基点，其关于 $(v,\delta)$ 的 Jacobian 行列式为 $V_n\Delta_D\ne0$。隐函数定理给出 $v(q),\delta(q)$，满足 $v(0)=b,\delta(0)=0$，且
+$$
+\delta'(0)=-\frac{\Delta_G}{\Delta_D},\qquad
+\frac{\delta'(0)}{1-r}\longrightarrow\frac12>0
+\quad(\chi=-1).
+\tag{176.19}
+$$
+故在充分近一的整个区间，所需重置率的一阶方向为正。基点处 $j_N=0$，所以 $V_N,D_N$ 与 $\chi$ 无关；$G_N$ 对 $\chi$ 连续。对每个这样的固定 $r$，可先选一个 $-1<\chi<0$ 充分接近 $-1$，使同一 Jacobian 仍非零且 $\delta'(0)>0$。随后固定这个 $\chi$，隐函数解对全部充分小的正 $q$ 满足 $0<\delta(q)<1$。这一步把严格相位反转移入带衰减的合法相干通道内部，并保留两个精确接触等式。
+
+接着确定完全正性与全部视界风险。固定 $\bar\rho\in(r,1)$，令
+$$
+\tau=|\chi|+(1-|\chi|)\bar\rho<1.
+\tag{176.20}
+$$
+对 $z$ 足够接近 $z_*$ 有 $|z|<\bar\rho$。由（176.1），一次 $02$ 交叉块传递的迹范数至多 $|\chi|+(1-|\chi|)|z|\le\tau$：相位反转支与原相干支都是迹范数压缩，完全去相位支的界为 $|z|$；旋转与重置仍压缩。初始 $02$ 记忆块是 $I_2/2$，迹范数为一，故
+$$
+|x_N|\le\tau^N,\qquad
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le r^N-\kappa^N+\frac{r^N+|x_N|}{2}\le2\tau^N.
+\tag{176.21}
+$$
+这同时控制任意惰性参考；最后一步使用 $r<\bar\rho\le\tau$。
+
+先选 $K_0>m$ 使 $2\tau^{K_0}<H$，再选 $\kappa<r$ 充分接近 $r$。对 $N\in\{1,n,m\}$，可保证
+$$
+2(r^N-\kappa^N)<r^N\sin(N\alpha).
+\tag{176.22}
+$$
+对其余有限的 $N<K_0$，$B_N<H$，可同时令 $r^N-\kappa^N$ 小于各严格余量的一半。此 $\kappa$ 又使 $B(\kappa,z_*)$ 严格正定，见（174.8）。固定 $\kappa$ 后，沿（176.18）选足够小的正 $q$，即可保留相关矩阵正性、$|z|<\bar\rho$、正重置率及全部有限余量，因为
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le B_N+(r^N-\kappa^N)
++\frac12|x_N-r^N\cos(N\alpha)|.
+\tag{176.23}
+$$
+在 $1,n,m$，恒等式 $x_1=c$ 与校准（176.18）使（174.19）的完整 Schur 支配估计适用，风险分别精确为 $\mathcal R_1,H,\mathcal R_m$。其他有限视界由（176.23）控制，无限尾由（176.21）控制。因此同一固定处理器在全部视界的最坏风险恰为 $H$。
+
+在新鲜输入、丢弃所有系统输出的接线中，每次使用都含独立概率 $\delta>0$ 的记忆重置。一旦重置发生，未使用的输入与参考的边缘态由保迹性保持，记忆被制备成 $I_2/2$。沿（174.24）—（174.25）的论证，任取固定记忆态 $\sigma_0$ 并令 $E_{r,N}(A)=\Phi_{r,N}(\sigma_0\otimes A)$，有
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-\delta)^N\longrightarrow0.
+\tag{176.24}
+$$
+所以实现满足标准 KW 遗忘合同。这里遗忘接线与计算终端 $x_N$ 的同一系统接线仍分别定义，框架沿用第174节所引 Kretschmann–Werner 原文。
+
+最后，相干确实影响该双维实现。固定其余已选参数，仅将 $\chi$ 改为零，由（176.4）计算前三步可得
+$$
+x_3(\chi)-x_3(0)=(1-\delta)^2\chi v^2\sin^2\gamma\ne0.
+\tag{176.25}
+$$
+对均衡 $02$ 输入，这直接改变终端读数。在系统输入 $|1\rangle$ 上，活动记忆通道的归一化 Choi 态部分转置有特征值 $\delta/4-(1-\delta)|\chi|/2$；进一步缩小正 $q$，它严格为负，因此记忆通道也不是纠缠破坏通道。二维上界结合定理169.4在相同合同中的维数一下界，得到（176.2）。证毕。
+
+本节确定的是允许一般 CPTP 内部处理器时的最小 Hilbert 空间维数。第175节的经典三态上界仍成立；是否能在并列参数处另造经典双态实现，不能由（176.25）的相干使用事实判定。式（176.19）描述零扰动附近的校准方向，不给出对 $r\uparrow1$ 统一的正遗忘率；最终参数还必须同时满足完全正性、有限风险余量与无限尾界。
+
+## 追加锚（本行以下为增补区）
