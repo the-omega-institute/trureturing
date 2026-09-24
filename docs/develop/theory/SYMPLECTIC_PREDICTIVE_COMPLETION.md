@@ -2110,7 +2110,7 @@ Q_\theta=(\cos\theta I_2,\sin\theta I_2),\quad P_\theta=Q_\theta^TQ_\theta.
 \]
 此例 $\|K\|_F=2\rho/|\omega_2-\omega_1|$、$\|[P_\theta,\Omega]\|_F=2|\omega_2-\omega_1||\sin\theta\cos\theta|$。当 $\theta\downarrow0$，定理 13.2 上界与真实收益之比趋于 1；两者差恰为 $(b_1-b_2)\sin^2\theta$。因此线性的残差代价在允许模型中有一阶达到实例。
 
-取 $b_1=.7,b_2=.3,\rho=.2$，不受自治约束的最优混合角为 $\pi/8$、风险为 $1.217157287525381$，异频精确最优为 $1.3$。频差从 2 降至 .05、.001 时，混合的闭包残差分别是 .7071067812、.01767766953、.000353553391，风险不变。频差严格为零时，这一混合本身精确自治，最优风险降到 $1.217157287525381$。
+取 $b_1=.7,b_2=.3,\rho=.2$，不受自治约束的最优混合角为 $\pi/8$、风险为 $1.217157287525381$，异频精确最优为 $1.3$。频差从 2 降至 .05、.001 时，混合的闭包残差分别为 .7071067812、.01767766953、.000353553391，风险不变。频差严格为零时，这一混合本身精确自治，最优风险降到 $1.217157287525381$。
 
 因此，精确自治约束下的最优值可以在共振处不连续；有限时间、允许残差的设计可以连续接近共振收益。算法不应把浮点数近等频默认为数学上的严格等频。该例在已知生成元和所列 Gaussian 实验中成立，不表示通过任意噪声数据可无限准确分辨频率。
 
@@ -2673,3 +2673,218 @@ $3[f-(1+\sqrt{1-r^2})/2]=3r^4/32+O(r^6)$。上述构造把其首项缩小为三�
 各条已登记于 `Library/PredictiveReduction/` 并与现有 Scribe 真实交换子闭包声明关联；该声明不承担本章通道最优值的证明。原有 `WormholeHolonomy` 等仓库回路声明只提供一般观察接口，不被冒用为 Uhlmann 环路定理。
 
 下一层仍需解决：非对易条件 Hamiltonian 下同时施加热校准、全时间协变和多态相干最优的精确结构；一般图上定量环路下界是否达到；有限温度三态问题的全参数精确最优值；实际能量守恒实现的资源代价。它们是明确的数学优化和实验合法性义务，不能由一个统一术语或单个数值结果替代。后续继续在本主卷追加。
+
+<a id="sec-compatibility-complexity"></a>
+## 16. 共同最优的存在与计算：可判环路、全温热态最优值和最大割接口
+
+### 16.1 量词障碍和复杂度问题必须分别成立
+
+本章回答 §15 的局部最优是否能够共同实现与 P/NP 的关系，并推进其末尾留下的有限温三态及非对易协变特例。`dev@cddee871fa646033cab2bf2dc3046d006d9afedb` 的 `CompleteMediatorCutSharpBounds.lean` 已给出一个实际共同响应律的最大割身份；本章复用其对象与结论，不把存在最大值的 Lean 证明当成多项式求解算法，也不新增 P/NP 结算。
+
+设每个局部任务的最优可行集合为 $S_e$。$\forall e,\ S_e\ne\varnothing$ 不推出 $\bigcap_e S_e\ne\varnothing$。这是共同实现的存在性；即使假设 $\mathrm P=\mathrm{NP}$，不存在的交点仍然不存在。复杂度需要进一步指定随输入规模增长的问题族、有限编码、精度与允许操作 [Cook00]。NP 证书通常验证一个给定候选满足阈值，并非自动验证其全局最优性。
+
+最简单的区别是三个 Boolean 变量上的 $x_1\mathbin\oplus x_2=x_2\mathbin\oplus x_3=x_3\mathbin\oplus x_1=1$。每条约束单独可行，合在一起矛盾，而且把三式模二相加即可判定。一般图的全部不等约束同时满足当且仅当支持图二分，深度优先搜索即可检验；但最大化被满足边的总权重是 MAX-CUT。本章最后给出它与同一热恢复模型及仓内共同响应律的精确对应。这里不证明 $\mathrm P\ne\mathrm{NP}$，也不把量子/连续变量或凸优化本身认定为经典难题的高效求解。
+
+### 16.2 一般图的逐对模长饱和可以用生成树检验
+
+沿用 §15.2，给定 $q$ 个忠实 $d$ 维条件态、无向图 $G=(V,E)$、每边的极分解酉 $T_{ij}$，反向约定 $T_{ji}=T_{ij}^\dagger$。目标是同一恢复通道满足 $|c_{ij}|=f_{ij}$ 对全部边成立。不同连通分量可分开处理。
+
+选择一棵生成树，根上置 $W_o=I_d$；沿父子边递推 $W_j=T_{ij}^\dagger W_i$。对每条非树边定义
+\[
+ U_{ij}=W_i^\dagger T_{ij}W_j.
+\]
+
+**定理 16.1（有限图共同饱和的构造判据）。** 存在任意环境维数的共同通道使全部边的模长达到各自根保真度，当且仅当每个非树边的 $U_{ij}$ 都是标量相位。若成立，上述方形酉振幅 $A_i=\sqrt{\tau_i}W_i$ 已构造出一个实现，环境维数 $d$ 足够。若要求每个 $c_{ij}=f_{ij}$ 为正实数而非仅模长取等，判据相应为每个 $U_{ij}=I_d$。
+
+**证明。** §15.4 的严格正最小奇异值将模长取等转换为 $W_i=\zeta_{ij}T_{ij}W_j$。任意共同余等距振幅沿树传播后，与本节树规范只相差节点相位和共同根余等距。非树边闭环作用于根；乘其伴随并使用 $W_oW_o^\dagger=I_d$，得到闭环必须为标量。反向由本节方形构造可知每条树边精确对齐，每条非树边仅有一个标量相位，因此模长全部取等。若固定所有相位为正，传播中的节点相位不能分别补偿任意闭环，条件收紧为单位闭环。证毕。
+
+这是一种已有群同步/平坦连接方法在本通道上的实现 [Singer11]。给定全部边酉矩阵，稠密矩阵实现需要 $O((|V|+|E|)d^3)$ 次矩阵算术操作；不是枚举全部回路。若输入边为精确 Gaussian 有理数单位矩阵，矩阵乘法及与标量矩阵的比较有对应的多项式位复杂度。由任意实 Gibbs 算子计算极分解、对零差做精确判断需要另给输入模型；有限浮点数小残差不能证明精确取等。
+
+还能给任何选择通道的加权总缺口返回有限证书。对选定的基本环 $C$，记 §15.4 的下界为
+\[
+ b_C=\frac{h_C^2}{2\sum_{e\in C}\mu_e^{-1}}.
+\]
+若非负系数 $\lambda_C$ 满足 $\sum_{C\ni e}\lambda_C\le w_e$，则
+\[
+ \sum_e w_e\delta_e\ge\sum_C\lambda_Cb_C.
+\]
+这是对每个同一通道成立的环路不等式作非负组合，有限 LP 可以选择最佳系数。树规范本身给一个合法通道及实际总缺口上界。两界不相遇时，不把此证书称为全局最优算法。
+
+### 16.3 不限环境的固定相位目标是显式半正定规划
+
+对共同正块 $X=[X_{ij}]\succeq0$、$X_{ii}=\tau_i$，任何固定实权重的 $\sum_{ij}w_{ij}\operatorname{Re}\operatorname{Tr}X_{ij}$ 都是线性目标。每个可行块矩阵可作有限 Gram 分解并构造 §15.2 通道，所需环境维数至多 $qd$。因此不限环境并不需要对无穷维对象搜索。
+
+对于全部无序对等权的原 [NMLW25] 固定相位目标，记 $J_q$ 为全一矩阵。原始与对偶问题为
+\[
+ P_* =\max\{\operatorname{Tr}[(J_q\otimes I_d)X]:X\succeq0,\ X_{ii}=\tau_i\},
+\]
+\[
+ D_* =\min\left\{\sum_i\operatorname{Tr}(\tau_iY_i):
+ \operatorname{diag}(Y_i)\succeq J_q\otimes I_d\right\}.
+ \tag{16.1}
+\]
+平均相干 $F_{\mathrm{SDP}}=(P_*-q)/(q(q-1))$。弱对偶由两个半正定矩阵的迹内积非负得到；对角 $X=\operatorname{diag}\tau_i\succ0$ 是相应仿射空间的严格可行点，充分大的标量 $Y_i$ 给严格对偶可行性。因此本设定具有通常的强对偶。若再给定 Hamiltonian 协变条件，它对每个块是线性式 $H_iX_{ij}-X_{ij}H_j=(\kappa_i-\kappa_j)X_{ij}$；可用能隙块先消去这些线性约束。
+
+对显式有理输入、严格正谱裕量与指定加性精度，标准弱 SDP 优化具有相应多项式复杂度；迹固定为 $q$ 给有界可行集合。这个说明保留位复杂度、内点裕量与精度依赖，不把精确代数比较、指数维的简洁量子比特输入、额外秩限制、未知生成元或 $\sum|c_{ij}|$ 的非线性目标包含在同一结论中 [GW95, NMLW25]。
+
+因此 §15 的正相干缺口本身不是 NP-hard 性证据。下面甚至可以在全部有限温度给出精确最优值及同一对原始、对偶见证。
+
+### 16.4 三个正交自旋热态的全部温度固定相位最优解
+
+继续 §15.5 的三个条件态 $\tau_i=(I+r\sigma_i)/2$，$\sigma_i=X,Y,Z$，$0\le r<1$。物理有限正温度取 $r=\tanh(\beta\Delta)\in(0,1)$。本节暂不施加时间协变，目标为 (16.1) 的实部平均；不把它当作模长平均的全温精确解。
+
+**定理 16.2（非对易热三态的闭式原始、对偶最优）。**
+\[
+ \boxed{F_{\mathrm{SDP}}(\tau_x,\tau_y,\tau_z)
+ =\frac{1+3\sqrt{1-2r^2/3}}4.}                         \tag{16.2}
+\]
+最优通道可使用二维环境。对每对根保真度 $f=\sqrt{1-r^2/2}$，
+\[
+ f-F_{\mathrm{SDP}}
+ =\frac{r^4}{96}+\frac{7r^6}{1152}+O(r^8),
+\]
+因此精确延伸了 §15.5 已给出的四阶系数。
+
+**证明。** 定义
+\[
+ s=\sqrt{1-2r^2/3},\quad t=\frac{r}{\sqrt3s},\quad
+ N=\frac{X+Y+Z}{\sqrt3},\quad
+ \rho_*=(I+tN)/2,
+\]
+\[
+ a=\sqrt{(1+s)/2},\quad M=3a,\quad
+ Z_i=(\sqrt{\rho_*}\tau_i\sqrt{\rho_*})^{1/2}.
+\]
+$r<1$ 保证 $t<1$ 及所有逆矩阵合法。正二阶矩阵的平方根身份
+\[
+ \sqrt B=\frac{B+\sqrt{\det B}\,I}{\sqrt{\operatorname{Tr}B+2\sqrt{\det B}}}
+\]
+由 Cayley–Hamilton 直接平方验证。此处 $\operatorname{Tr}(\rho_*\tau_i)=(1+tr/\sqrt3)/2$，
+$\sqrt{\det(\sqrt{\rho_*}\tau_i\sqrt{\rho_*})}=(1-r^2)/(4s)$。代入得到
+\[
+ \operatorname{Tr}Z_i=a,\qquad \sum_i Z_i=M\rho_*.       \tag{16.3}
+\]
+第二式的标量与 $N$ 系数分别使用 $3s^2=3-2r^2$；这在同一个 $\rho_*$ 上成立。
+
+取振幅 $A_i=\rho_*^{-1/2}Z_i$。有 $A_iA_i^\dagger=\tau_i$，且
+$\sum_iA_i=M\sqrt{\rho_*}$。故 $X_{ij}=A_iA_j^\dagger$ 可行，目标值为
+$\|\sum_iA_i\|_F^2=M^2$。
+
+再取对偶
+\[
+ Y_i=M\sqrt{\rho_*}Z_i^{-1}\sqrt{\rho_*}.
+\]
+由 (16.3)，$\sum_iY_i^{-1}=I$。对 $D=\operatorname{diag}Y_i$ 和块列 $B=(I,I,I)^T$，有 $B^\dagger D^{-1}B=I$；因此 $D-BB^\dagger\succeq0$，证明对偶可行。直接循环迹给
+\[
+ \sum_i\operatorname{Tr}(\tau_iY_i)=M\sum_i\operatorname{Tr}Z_i=M^2.
+\]
+原始、对偶同值证明全局最优，不需要假设未证的多元保真度变分等价。$M^2=9(1+s)/2$，代入 $(M^2-3)/6$ 得 (16.2)。两个平方根的标量 Taylor 展开给最后公式。证毕。
+
+该结论针对固定相位任务。两态根保真度、SDP 及原始对偶理论均为已有工具；本章的候选推进是这一热态族的全参数闭式解与明确通道。尚未作独立优先权审查，不能把此实例登记成一般多元保真度问题解决。
+
+### 16.5 同一非对易热三态再要求精确未来更新
+
+仍取 $H_i=-\Delta\sigma_i$、$\Delta>0$。三个配分函数相同，可见 Gibbs 边缘为 $I_3/3$；要求逻辑 Hamiltonian 的同温 Gibbs 态等于该边缘时，逻辑生成元必为标量，可取 $K=0$。本节要求对全部输入和全部时间的 $e^{-itH}\mathcal R(\rho)e^{itH}=\mathcal R(\rho)$。
+
+**定理 16.3（非对易条件场的精确协变最优）。** 在相同热校准、标签保持和固定相位任务上，
+\[
+ \boxed{F_{\mathrm{cov}}(r)=\frac{1+\sqrt3}{4},\quad 0<r<1,\ \Delta>0.} \tag{16.4}
+\]
+这个值与温度无关，且可以由二维环境实现。它与不要求协变的最优值之差为
+\[
+ \boxed{F_{\mathrm{SDP}}-F_{\mathrm{cov}}
+ =\frac34\left(\sqrt{1-2r^2/3}-\frac1{\sqrt3}\right).}  \tag{16.5}
+\]
+
+**证明。** 记 $|n_i,\varepsilon\rangle$ 为 $\sigma_i$ 的 $\varepsilon\in\{+1,-1\}$ 本征态，$p_\varepsilon=(1+\varepsilon r)/2$。协变等价于 $H_iX_{ij}=X_{ij}H_j$，所以完整正块只能在两个共同能量扇区内取值：
+\[
+ X_{ij}=\sum_{\varepsilon=\pm1}C^\varepsilon_{ij}
+ |n_i,\varepsilon\rangle\langle n_j,\varepsilon|,
+ \quad C^\varepsilon\succeq0,\quad C^\varepsilon_{ii}=p_\varepsilon.
+\]
+反向每个这样的两扇区正块给合法协变通道。令 $G_\varepsilon$ 是三个相应自旋向量的 Gram 矩阵；其非零谱等于
+\[
+ \sum_i|n_i,\varepsilon\rangle\langle n_i,\varepsilon|
+ =(3I+\varepsilon(X+Y+Z))/2
+\]
+的谱，即 $\lambda_\pm=(3\pm\sqrt3)/2$。顶特征向量的三个坐标具有相同模长 $1/\sqrt3$，因为三个方向与 $(1,1,1)/\sqrt3$ 的夹角相同。故
+\[
+ \operatorname{Tr}(G_\varepsilon C^\varepsilon)
+ \le3p_\varepsilon\lambda_+,
+\]
+并由 $C^\varepsilon=3p_\varepsilon v_\varepsilon v_\varepsilon^\dagger$ 达到。两扇区相加，原始目标最大值为 $3\lambda_+$；转换到平均非对角实部得 (16.4)。每个 $C^\varepsilon$ 秩一，故两列振幅足够。等价地，将各 $|n_i,\varepsilon\rangle$ 的相位选成与 $N$ 的同号本征态重叠为非负实数，再取两列 $\sqrt{p_+}|n_i,+\rangle,\sqrt{p_-}|n_i,-\rangle$ 就给达到通道。证毕。
+
+此处不用“非对易”推断无共同表示，而是精确计算允许的共同通道。固定 $\beta$ 令 $\Delta\to0$ 时，精确全时间协变最优仍趋于 $(1+\sqrt3)/4$，但严格 $\Delta=0$ 时 $H=0$、所有条件态相同，可保留相干一。精确约束因此不连续；任意通道在有限时间 $T$ 的联合态不变性误差却可由 $2\Delta T$ 控制，来自 $\|e^{-itH}-I\|\le|t|\Delta$。近似协变与严格协变的量词不同。
+
+全部这些通道仅保证指定 CPTP、Gibbs 校准和协变条件。它们不自动有零功 thermal-operation 实现，不从上述差额推断实际耗热；也没有把量子自旋 Hamiltonian 代替完整电磁设备模型。
+
+### 16.6 仓内共同响应律与一个真正的 NP-hard 相位控制问题
+
+在已读取的 `CompleteMediatorCutSharpBounds.lean` 中，`complete_mediator_maxcut_sharp` 对全部 Boolean 响应表取得最大值，`complementOutcomeLaw_benefit` 用同一个公平随机位选择整张表或其补表，精确达到半个 cut mass。该 Lean 源没有假设逐对独立选择，并显式使用 `Finite.exists_max`；本轮没有重新编译或新增这一结果的形式证明。
+
+给定无向图非负有理边权 $w_{ij}$，令 $W=\sum_{i<j}w_{ij}>0$。取有向 mediator coupling $\pi(i,j)=w_{ij}/(2W)$，无边为零。对表 $y_i\in\{0,1\}$，仓内共同补表分布给
+\[
+ \mathrm{benefit}(y)=\frac{\mathrm{Cut}_w(y)}{2W}.
+ \tag{16.6}
+\]
+这与下述同表物理控制具有明确映射。固定一个忠实隐藏热态 $\tau$ 及 $H_B$，全部条件 Hamiltonian 都是 $H_B$，逻辑 $K=0$。只允许二值相位控制器
+\[
+ s_i=(-1)^{y_i},\quad D_s=\operatorname{diag}(s_i),\qquad
+ \mathcal R_s(\rho)=D_s\rho D_s^\dagger\otimes\tau.
+\]
+每个控制器都 CPTP、保持所有标签概率、正确恢复同一个 Gibbs 态并精确时间协变。现规定任务为：按 $w_{ij}/W$ 抽取边，输入 $|+_{ij}\rangle$，固定以 $|-_{ij}\rangle$ 的投影作为成功。它是相位翻转任务，区别于 §15 的相干模长保持任务。其成功率为
+\[
+ \boxed{P_s=\frac1W\sum_{i<j}w_{ij}\frac{1-s_is_j}{2}
+ =\frac{\mathrm{Cut}_w(y)}W=2\,\mathrm{benefit}(y).}     \tag{16.7}
+\]
+逐边计算振幅即可得到。随机选择二值控制器的平均得分是这些得分的凸组合，不能超过最优确定控制器；相同的全局补表机制使所有单标签响应公平，而不改变 cut。
+
+**推论 16.4（限定实际控制类的复杂度）。** 对整数权重，给定阈值 $k$，判断是否存在上述控制器使 $P_s\ge k/W$ 与 MAX-CUT 判定问题等价，因此 NP-complete；求最优控制器 NP-hard。证书是 $q$ 个二值相位，得分可由全部边在多项式时间计算。这个归约不增加任何 Gibbs、自治或辛假设的困难，也没有把一般完全正通道类误认为二值控制类。
+
+相反，判断 $P_s=1$ 是否可行仅需判断正权支持图二分。三角形每条边分别可完全翻转，同一二值控制最多成功 $2/3$，但这个三点不可行性显然容易验证。一般阈值的困难性是输入族的结论，三角形的矛盾本身不是其证明 [Cook00, GW95]。
+
+### 16.7 改变允许的共同实现，凸化有时改变了物理问题
+
+在相同等条件热态、相同边翻转任务下，若允许全部 §15.2 校准通道，其可见系数 $C$ 的实部是任意实相关矩阵：$C\succeq0,C_{ii}=1$。反向可取单位向量 $v_i$ 的 Gram 矩阵，令共同环境带两个因子，并取振幅 $A_i=\sqrt\tau\otimes v_i^T$；有 $A_iA_i^\dagger=\tau$、$c_{ij}=v_i\cdot v_j$。其联合输出为 $C\odot\rho\otimes\tau$，所以 Gibbs 校准和与 $I\otimes H_B$ 的协变都成立。
+
+允许这个更大控制类时，最优任务为
+\[
+ \max_{C\succeq0,\ C_{ii}=1}
+ \frac1{2W}\sum_{i<j}w_{ij}(1-C_{ij}),                 \tag{16.8}
+\]
+即经典 Goemans–Williamson SDP 的归一形式。共同随机二值控制只能产生 $C\in\operatorname{conv}\{ss^T:s_i\in\{\pm1\}\}$；这是 cut 相关多面体，通常严格小于正半定相关矩阵集合。
+
+例如三角形 $C_{ii}=1,C_{ij}=-1/2$ 的谱为 $0,3/2,3/2$，给得分 $3/4$，超过二值最优 $2/3$。任意三个二值相位都满足 $s_1s_2+s_2s_3+s_3s_1\ge-1$，故任何共同二值概率律也满足该式，而上述矩阵的和为 $-3/2$。这证明它没有相应二值共同律。该矩阵却是合法扩大控制类；甚至三个相位 $0,2\pi/3,4\pi/3$ 的普通对角酉已经给相同实部得分。因此这一差不能叫作量子计算加速或 MAX-CUT 被解决。
+
+若最终仍需要二值控制器，可复用 [GW95] 的随机超平面舍入：取标准 Gaussian $g$，置 $s_i=\operatorname{sign}(g\cdot v_i)$，则
+\[
+ \Pr(s_i\ne s_j)=\arccos(C_{ij})/\pi
+ \ge\alpha_{\mathrm{GW}}(1-C_{ij})/2,\qquad
+ \alpha_{\mathrm{GW}}>0.87856.
+\]
+对非负边权求和得到相应期望近似保证，并通过同一个补表映射返回仓内合法响应律。该近似定理是已发表结果，不认领首创、当前所有变体的最佳比例或精确多项式算法。
+
+这说明“把状态写成概率或矩阵”可以统一表达，但不自动保留允许实现的集合及成本。概率化二值控制与允许全部 PSD 相关不同；只验证每对合法、甚至验证整体 PSD，都未必认证来自原二值共同来源。
+
+### 16.8 验证、文献和仍需解决的目标
+
+参考程序 `research.py` 构造生成树净化、闭式热三态原始/对偶证书、精确协变通道，以及共同响应表到相位控制的映射。`verify.py` 固定种子 20260924，实际通过 20 项命名分组检查：10 个温度的通道校准与对偶见证；144 个不同共同环境维数的有限可行比较；50 个任意输入的协变检验；30 个 Gibbs/经典 KL 检验；2/3/4 维生成树实例；504 张 Boolean 表的同律 cut 身份；三角形 cut/PSD 间隙及 4000 次合法舍入；90 位精度的高温常数。舍入在三角形上每次 cut 为 2，不由此认领一般图上的精确性。
+
+| $r$ | 两态逐对上限 $f$ | 全通道固定相位最优 $F_{\mathrm{SDP}}$ | 加入精确协变的最优 $F_{\mathrm{cov}}$ |
+|---:|---:|---:|---:|
+| 0.1 | 0.997496867163 | 0.997495819386 | 0.683012701892 |
+| 0.5 | 0.935414346693 | 0.934653196881 | 0.683012701892 |
+| 0.9 | 0.771362431027 | 0.758674748734 | 0.683012701892 |
+| 0.99 | 0.714107834994 | 0.691545580886 | 0.683012701892 |
+
+数值矩阵运算含浮点舍入；最接近纯态的样本对偶零特征值有约 $1.93\times10^{-13}$ 的符号误差，原始/对偶差最大约 $2.18\times10^{-13}$。这不是严格区间证书。一般最优值由上述解析可行构造和弱对偶相遇证明承担。没有独立同行/异模型审查、Lean kernel 或 Scribe 编译、CI、真实硬件或神经网络 benchmark。
+
+[Cook00] S. Cook. *The P versus NP Problem*. Clay Mathematics Institute, official Millennium problem description, https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf 。采用判定语言、统一多项式算法、NP 证书和归约的定义，不把全文中尚待解决的 P/NP 分离当作本章前件。网络文件路径的 2022 日期不是原始数学问题提出年份。
+
+[Singer11] A. Singer. *Angular synchronization by eigenvectors and semidefinite programming*. Applied and Computational Harmonic Analysis 30(1), 20–36 (2011), DOI 10.1016/j.acha.2010.02.001; arXiv:0905.3174。原文开头无噪数据的生成树传播与含噪同步优化提供方法背景；本章的射影酉回路判据由 §15 的共同振幅等号条件推导，并不将标量同步原文冒认为已证明本章全部量子陈述。
+
+[GW95] M. X. Goemans, D. P. Williamson. *Improved approximation algorithms for maximum cut and satisfiability problems using semidefinite programming*. Journal of the ACM 42(6), 1115–1145 (1995), DOI 10.1145/227683.227684; 作者全文 https://math.mit.edu/~goemans/PAPERS/maxcut-jacm.pdf 。使用二值/单位向量问题、随机超平面舍入及其已知近似保证。接受稿页面 5 的图和公式已视觉核对。NP-hard 性和舍入原理不作本项目新发现。
+
+[NMLW25] 的完整出处与读取范围见 §15.8。本轮又核对原始对偶正块公式，未发现对这里正交热三态闭式值的直接命中，但这不是优先权证明。新增候选主要为 (16.2) 的全温原始/对偶同值构造，以及同一非对易热模型的精确协变最优 (16.4)；群同步、MAX-CUT、SDP 及仓内 cut 恒等式均注明复用身份。
+
+结果集中在本主卷，文献进入 `Library/PredictiveReduction/`，Scribe 只关联已存在的真实声明；它不使本章新最优值自动获得 Lean 身份。剩余目标包括：三态模长而非实部目标的全温精确值；一般非对易条件 Hamiltonian 和多能隙的协变优化；限定辅助环境秩或离散控制时的复杂度及近似界；原始量子态/极分解估计误差对全局回路证书的稳定传播。这里没有证明 P=NP、P≠NP，也没有用几何不可行性替代算法复杂度下界。
