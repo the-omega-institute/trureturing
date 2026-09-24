@@ -38153,3 +38153,216 @@ $$
 式（170.14）中，一段内部的相干合成先把未知相位转成非消失的可测均值，再由多段历史提供多个相互排斥的来源证据。若每次使用后立刻重置，实际单次均值幅度仅为 $r\sin\alpha(r)\sim\sqrt3\varepsilon$，同一集中估计需要 $N\varepsilon^2\to\infty$；分段构造把充分条件改为（170.10），但不声称已求出所有测试的最优有限样本速率。结论依赖本节的允许控制和最坏完整历史损失，不否定从实际数据学习相位的任务，也不把经典样本的可识别性当成量子性的普遍判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 171. 终端最优预测的遗忘尺度与有限时刻擦除
+
+**定义 171.1（可遗忘记忆的终端合同）。** 沿用定义169.1的时间齐次联合 CPTP 通道合同、一次初始化及终端距离 $d_{\rm ref}=\frac12\|\cdot\|_\diamond$。真实相位 $\phi$ 在一条运行中固定，真实环境逐步新鲜；预测器的初始私有记忆与真实相位无关。记
+$$
+\varepsilon=1-r,\qquad \alpha=\alpha(r),\qquad
+H(r)=\sup_{N\ge1}\mathcal R_N(r),\qquad
+t_* =\frac\pi{3\sqrt3},\qquad L=\frac{\sqrt3}{4}e^{-t_*}.
+\tag{171.1}
+$$
+以下取 $1/\sqrt3<r<1$。记忆的遗忘只指丢弃系统输出之后，最终私有记忆对其初始化的依赖消失；它不要求已经输出的系统或已保存的实验记录丢失初始化信息。对本节的自主记忆更新，还将证明包含任意有限惰性参考 $R$ 的具体迹范数界。有关标准有限记忆通道与遗忘性的定义，见 Kretschmann、Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C 的全局经典开关，以及§V定义3、命题9。该文§VI B式(79)还给出有限步后精确消除初始记忆依赖的严格遗忘定义。该文丢弃消息输出后的记忆遗忘与本节所用方向一致；下面另行计算同一系统反复使用时的约化通道，不把不同接线方式等同。
+
+取 $0<p\le1/2$。在记忆基 $s=\pm1$ 上，令 $T_p(s,s)=1-p$、$T_p(s,-s)=p$，并定义
+$$
+\Lambda_{r,p}^{\rm mix}(X)=
+\sum_{s,u=\pm1}T_p(s,u)
+\mathcal M_{r,s\alpha}(X_{ss})\otimes|u\rangle\langle u|,
+\qquad X_{ss}=(I\otimes\langle s|)X(I\otimes|s\rangle).
+\tag{171.2}
+$$
+初始记忆为 $\sigma=I_2/2$。也就是每一步先使用当前标签的端点通道，再以概率 $p$ 翻转标签；标签不是每步重新读取的真实源参数。以 $\mathcal P_{r,N}^{\rm mix}$ 表示其终端系统通道，$W_r^{\rm mix}$ 表示定义169.1的全视界风险。$p$ 随 $r$ 变化时均指这同一个构造族。
+
+**定理 171.2（自主混合比特的全视界风险与遗忘界）。** 式（171.2）给出合法 CPTP 通道，且对每个 $p$ 精确满足单步最优条件（169.3）。设 $S_1$ 为均匀符号，$S_{j+1}$ 以概率 $p$ 从 $S_j$ 翻转，记
+$$
+z_{N,p}=\mathbb E\exp\!\left(i\alpha\sum_{j=1}^N S_j\right)
+=\mathbb E\cos\!\left(\alpha\sum_{j=1}^N S_j\right).
+\tag{171.3}
+$$
+则 $\mathcal P_{r,N}^{\rm mix}$ 的 $01,12$ 系数为 $r^N$，$02$ 系数为 $r^Nz_{N,p}$，并且对第169节的持续比特有
+$$
+d_{\rm ref}(\mathcal P_{r,N}^{\rm mix},\mathcal P_{r,N}^{\rm bit})
+\le r^N\bigl[1-(1-p)^{N-1}\bigr]
+\le r^N(N-1)p.
+\tag{171.4}
+$$
+因而对全部充分接近一的 $r$、全部 $0<p\le1/2$，
+$$
+\boxed{0<W_r^{\rm mix}-H(r)\le\frac p{1-r}.}
+\tag{171.5}
+$$
+同时，对任意初始联合密度 $\tau_{SKR}$，$N\ge1$ 次无中间干预的运行后，有
+$$
+\frac12\left\|\tau_{KR}^{(N)}-\sigma\otimes\tau_R\right\|_1
+\le\frac{(1-2p)^N}{2}.
+\tag{171.6}
+$$
+特别地，每个固定 $r,p>0$ 都有指数记忆遗忘；该结论没有声称遗忘速率对 $r\uparrow1$ 一致。
+
+证明。 选取端点通道的 Kraus 算符 $K_{s,a}$，则（171.2）的 Kraus 算符为 $\sqrt{T_p(s,u)}K_{s,a}\otimes|u\rangle\langle s|$。其伴随乘积之和为恒等算符，故在任意含记忆相干的联合输入上都是 CPTP。均匀符号为 $T_p$ 的平稳分布，整体符号反转保持路径概率不变，故（171.3）为实数。条件于符号路径，Schur 系数逐步相乘，得到所述终端系数。单步时 $z_{1,p}=\cos\alpha$，所以终端通道正是定理162.2中的 $\mathcal F_*$。
+
+将混合链和持续比特取为相同初始符号；在前 $N-1$ 次更新均未翻转的事件上，两条符号路径一致。其补事件概率为 $1-(1-p)^{N-1}$，而任意两个单位复数相距至多二，因此
+$$
+|z_{N,p}-\cos(N\alpha)|\le2\bigl[1-(1-p)^{N-1}\bigr].
+\tag{171.7}
+$$
+两终端通道只有 $02,20$ 系数不同，式（161.11）将其距离精确写成 $r^N|z_{N,p}-\cos(N\alpha)|/2$；该公式已经包含任意惰性参考。由并集界得到（171.4）。又有
+$$
+(N-1)r^N\le\sum_{j=1}^{N-1}r^j\le\frac1{1-r},
+\tag{171.8}
+$$
+故三角不等式及定理169.3给出 $W_r^{\rm mix}\le H(r)+p/(1-r)$。每个终端预测仍为 CPTP，所以逐视界半径下界给出 $W_r^{\rm mix}\ge H(r)$。
+
+为得到严格号，定理169.3的证明表明，充分接近一时 $H(r)$ 在某个早视界 $N_*\alpha<\pi/2$ 取得；因 $\mathcal R_1(r)\to0$ 而 $H(r)\to L>0$，还可保证 $N_*\ge2$。对每条符号路径，$|\sum S_j|\le N_*$，故余弦至少为 $\cos(N_*\alpha)$。恰有一次内部翻转的路径具有正概率，且严格满足 $|\sum S_j|<N_*$，所以
+$$
+z_{N_*,p}>\cos(N_*\alpha).
+\tag{171.9}
+$$
+在实际允许端点 $\phi=\alpha$ 上，精确距离为
+$$
+\frac{r^{N_*}}2
+\sqrt{\sin^2(N_*\alpha)+
+\bigl[z_{N_*,p}-\cos(N_*\alpha)\bigr]^2}
+>\frac{r^{N_*}}2\sin(N_*\alpha)=H(r).
+\tag{171.10}
+$$
+这证明（171.5），且所需邻域不依赖于正数 $p$ 的大小。
+
+最后设 $A_s=\operatorname{tr}_S\tau_{ss}$ 为参考上的次归一化正算符，则 $A_++A_-=\tau_R$。每个条件系统通道保迹，故丢弃系统后，每一步仅以 $T_p$ 更新这两个参考算符。记 $\rho=1-2p$，直接对二态转移矩阵求幂，得到
+$$
+\tau_{KR}^{(N)}=
+\sigma\otimes\tau_R+
+\frac{\rho^N}{2}
+(|+\rangle\langle+|-|-\rangle\langle-|)
+\otimes(A_+-A_-).
+\tag{171.11}
+$$
+因为 $\|A_+-A_-\|_1\le\operatorname{tr}(A_++A_-)=1$，即得（171.6）。同一计算在逐次送入不同系统、最终丢弃全部系统输出的接线中仍然成立，对联合输入及惰性参考统一，因而也满足所引标准记忆遗忘条件。已经发出的系统仍可携带初始符号的信息；（171.11）不对保留这些输出的联合历史作遗忘断言。证毕。
+
+**定理 171.3（此混合比特族内的锐遗忘尺度）。** 对任意参数函数 $p_r\in(0,1/2]$，有
+$$
+\boxed{
+W_r^{\rm mix}\longrightarrow L
+\quad\Longleftrightarrow\quad
+\frac{p_r}{1-r}\longrightarrow0
+\qquad(r\uparrow1).
+}
+\tag{171.12}
+$$
+这是定义171.1的对称 Markov 比特族内的充要条件，不量化所有有限记忆预测器。
+
+证明。 充分性由（171.5）与 $H(r)\to L$ 直接得到。证明必要性，取
+$$
+N_r=\left\lfloor\frac{t_*}{\varepsilon}\right\rfloor,
+\qquad \theta_r=N_r\alpha\longrightarrow\pi/3.
+\tag{171.13}
+$$
+最终 $N_r\ge2$ 且 $\theta_r<\pi/2$。以下略去下标 $r$。每条符号路径均满足 $\cos(\alpha\sum S_j)\ge\cos\theta$。若恰有一次翻转发生在第 $j$ 次与第 $j+1$ 次通道之间，则该余弦为 $\cos((N-2j)\alpha)$，该事件概率为 $p(1-p)^{N-2}$。这些事件互斥，所以
+$$
+z_{N,p}-\cos\theta\ge
+p(1-p)^{N-2}\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos\theta\bigr].
+\tag{171.14}
+$$
+
+先考虑某条子序列满足 $p/\varepsilon\to\lambda\in(0,\infty)$。由 $\alpha/\varepsilon\to\sqrt3$、$\varepsilon N\to t_*$，括号和的 Riemann 极限及翻转概率极限分别为
+$$
+\varepsilon\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos\theta\bigr]
+\longrightarrow
+\int_0^{t_*}
+\bigl[\cos(\sqrt3(t_*-2u))-\cos(\sqrt3t_*)\bigr]\,du
+=\frac{1-t_*}{2},
+\tag{171.15}
+$$
+$$
+(1-p)^{N-2}\longrightarrow e^{-\lambda t_*}.
+\tag{171.16}
+$$
+式（171.15）中，余弦积分为 $\sin(\sqrt3t_*)/\sqrt3=1/2$，常数项积分为 $t_*/2$。又 $t_*<1$，所以（171.14）的右侧趋于
+$$
+a_\lambda:=\lambda e^{-\lambda t_*}\frac{1-t_*}{2}>0.
+\tag{171.17}
+$$
+在同一视界取实际端点，使用（171.10）对应的距离公式，得到
+$$
+\liminf W_r^{\rm mix}\ge
+\frac{e^{-t_*}}2\sqrt{\frac34+a_\lambda^2}>L
+\tag{171.18}
+$$
+沿该子序列成立。
+
+再考虑 $p/\varepsilon\to\infty$ 的子序列。平稳符号链有 $\mathbb E S_j=0$ 及 $\mathbb E S_iS_j=(1-2p)^{|i-j|}$。由于 $0\le\rho=1-2p<1$，
+$$
+\mathbb E\left(\sum_{j=1}^N S_j\right)^2
+=N+2\sum_{h=1}^{N-1}(N-h)\rho^h
+\le N\frac{1+\rho}{1-\rho}
+=N\frac{1-p}{p}\le\frac Np.
+\tag{171.19}
+$$
+利用 $0\le1-\cos x\le x^2/2$，有
+$$
+0\le1-z_{N,p}\le\frac{\alpha^2N}{2p}
+\longrightarrow0,
+\tag{171.20}
+$$
+因为 $\alpha^2N=O(\varepsilon)$。所以 $z_{N,p}\to1$，实际端点距离趋于
+$$
+\frac{e^{-t_*}}2|e^{i\pi/3}-1|
+=\frac{e^{-t_*}}2>L.
+\tag{171.21}
+$$
+
+若 $p_r/\varepsilon$ 不趋于零，可选一条子序列使该比值始终至少为某个 $\delta>0$，再选扩展实数意义下收敛的子序列，其极限属于 $[\delta,\infty]$。有限正极限由（171.18）排除，无穷极限由（171.21）排除。因此 $W_r^{\rm mix}\to L$ 必须有 $p_r/\varepsilon\to0$。本证明只用互斥的单次翻转事件与二态链协方差，不需要把离散路径先替换成连续随机过程。证毕。
+
+**定理 171.4（有限时刻完全擦除仍可达到精确终端最优）。** 对所有充分接近一的 $r$，令
+$$
+J(r)=\left\lceil\frac{\log H(r)}{\log r}\right\rceil.
+\tag{171.22}
+$$
+存在维数 $2J(r)+1$ 的经典私有记忆及同一个时间齐次联合 CPTP 通道，使其满足精确单步最优条件（169.3），全视界风险精确等于 $H(r)$，而从任意初始系统—记忆状态出发，私有记忆至多在 $J(r)$ 步后成为同一个纯状态，并与其余系统完全解耦。此构造满足
+$$
+\varepsilon J(r)\longrightarrow\log\frac1L,
+\qquad
+\varepsilon\dim K_r\longrightarrow2\log\frac1L.
+\tag{171.23}
+$$
+维数为所给实现的上界，不声称最小维数或最短擦除期限。
+
+证明。 $0<H(r)<1$ 且 $0<r<1$，故 $J\ge1$、$r^J\le H(r)$。取经典记忆基
+$$
+\{(s,j):s=\pm1,\ 0\le j\le J-1\}\cup\{*\}.
+\tag{171.24}
+$$
+初始记忆均匀分布在 $(+,0)$ 和 $(-,0)$。在 $(s,j)$ 上先应用 $\mathcal M_{r,s\alpha}$，然后当 $j<J-1$ 时将记忆变成 $(s,j+1)$，当 $j=J-1$ 时变成 $*$；在 $*$ 上应用 $\mathcal M_{r,0}$ 并保持 $*$。先在此记忆基上完全退相干，即把定义扩展到任意输入。若 $f(v)$ 表示上述确定性记忆更新、$K_{v,a}$ 为对应系统通道的 Kraus 算符，则联合 Kraus 算符为 $K_{v,a}\otimes|f(v)\rangle\langle v|$，其伴随乘积之和为恒等算符。这既证明 CPTP，也显示时钟已经计入私有记忆；没有外置的随步数改变通道的控制。
+
+对指定初始化，终端 Schur 系数 $01,12$ 始终为 $r^N$，而 $02$ 系数为
+$$
+c_N=r^N\cos\bigl(\min\{N,J\}\alpha\bigr).
+\tag{171.25}
+$$
+因此当 $N<J$ 时，它与第169节的持续比特完全相同；在 $N=1$，包括 $J=1$ 的情形，都有 $c_1=r\cos\alpha$，故精确单步最优。若 $N\ge J$，由（161.11）及两个单位圆盘元素相距至多二，
+$$
+\sup_{|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N},\mathcal P_{r,N}^{\rm erase})
+=\frac{r^N}{2}
+\sup_{|\phi|\le\alpha}|e^{iN\phi}-\cos(J\alpha)|
+\le r^N\le r^J\le H(r).
+\tag{171.26}
+$$
+充分接近一时，早于 $J$ 的所有风险由定理169.3也不超过 $H(r)$；故全视界风险至多为 $H(r)$。逐视界 CPTP 半径下界使其至少为 $H(r)$，于是精确达到相同最优值。
+
+每一个初始记忆基态至多在 $J$ 步后进入吸收态 $*$，最初的记忆相干又已被去除。因此对任意初始联合密度、任意有限惰性参考，最终态均具有
+$$
+\tau_{SKR}^{(J)}=\omega_{SR}\otimes|*\rangle\langle*|_K
+\tag{171.27}
+$$
+的形式，其中按张量因子次序作自然识别。特别地，丢弃系统后得到 $|*\rangle\langle*|\otimes\tau_R$。这里 $\omega_{SR}$ 仍可依赖初始记忆；擦除的是私有寄存器，未把先前作用于系统的影响倒回，也未擦除已有输出历史。随后每一步都是固定系统通道 $\mathcal M_{r,0}$。
+
+最后由 $\varepsilon/(-\log r)\to1$、$H(r)\to L$，并利用取整误差小于一，得到（171.23）。证毕。
+
+式（171.12）的尺度要求与（171.23）并不矛盾：前者限制只有一个自主对称翻转比特的模型，后者把擦除时刻的计数也存入更大的私有记忆。在第二种实现中，信息先保留到指定阶段，之后完全删除；删除后的所有终端相干已经受到 $r^N\le H(r)$ 的统一抑制。因而“最终会遗忘”“在相关视界内怎样保留”和“用多少内部状态安排删除”是不同的数学条件。标准的全局开关、二态混合与记忆遗忘本身由所引文献承担；本节给出的是当前校准源和终端风险合同下的全视界误差界、混合比特的充要尺度，以及有限期限擦除的精确 minimax 实现。第170节允许中间测试并保留历史时的障碍仍适用，私有记忆擦除不使那个过程距离变成终端距离。
+
+## 追加锚（本行以下为增补区）
