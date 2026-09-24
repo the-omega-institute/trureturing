@@ -23,7 +23,7 @@ $$
 
 ## 2. 读数纤维与正则裁决
 
-**定义 2.1（切向逃逸空间）。** 设 $F:\mathbb R^p\to\mathbb R^N$ 可微，$L(\theta)=\tfrac12\|F(\theta)-y\|^2$，零集 $Z=F^{-1}(y)$。对 $\theta\in Z$，令 $J=DF(\theta)$，切向逃逸空间 $K(\theta)=\ker J$。当 $J$ 在 $\theta$ 的邻域上秩恒定时 $Z$ 是子流形且 $T_\theta Z=K(\theta)$；不满足秩恒定时 $K(\theta)$ 仍有定义，但不必是 $Z$ 的切空间（例如 $F(z)=z^2$、$y=0$、$\theta=0$ 有 $K(0)=\mathbb R$ 而 $Z=\{0\}$）。
+**定义 2.1（切向逃逸空间）。** 设 $F:\mathbb R^p\to\mathbb R^N$ 连续可微，$L(\theta)=\tfrac12\|F(\theta)-y\|^2$，零集 $Z=F^{-1}(y)$。对 $\theta\in Z$，令 $J=DF(\theta)$，切向逃逸空间 $K(\theta)=\ker J$。当 $F\in C^1$ 且 $J$ 在 $\theta$ 的邻域上秩恒定时 $Z$ 是 $C^1$ 子流形且 $T_\theta Z=K(\theta)$；不满足秩恒定时 $K(\theta)$ 仍有定义，但不必是 $Z$ 的切空间（例如 $F(z)=z^2$、$y=0$、$\theta=0$ 有 $K(0)=\mathbb R$ 而 $Z=\{0\}$）。
 
 **命题 2.2（损失对切向逃逸三阶盲，repo-derived）。** 设 $F$ 二次连续可微，$\theta\in Z$，$v\in K(\theta)$。则 $\ell(\varepsilon)=L(\theta+\varepsilon v)$ 在 $\varepsilon=0$ 处的一、二、三阶导数全为零，且 $\ell(\varepsilon)=O(\varepsilon^4)$。
 
@@ -37,7 +37,7 @@ $$
 
 证明。$\theta\in Z$ 给 $\nabla L(\theta)=J^\top(F(\theta)-y)=0$，故速度只剩正则项；正交分解与 $\frac{d}{dt}L=\langle\nabla L,\dot\theta\rangle=0$ 都是直接计算。这是一个逐点陈述：离开 $Z$ 之后 $\nabla L$ 重新出现，长期行为要靠具体模型（第 3 章给线性模型的精确解；非线性情形的极限流形流是文献结果，第 7 章标注，本卷不重证）。证毕。
 
-**评注 2.5（纤维律，semantic）。** 定理 2.3 与 2.4 是同一句话的静态形与动态形：主损失 $L$ 以其像为读数，纤维内部对它不可见；在纤维内挑选的是 $R$。精确的纤维图景属于约束问题或 $\lambda\to0^+$ 极限；有限 $\lambda$ 下最优解一般不在 $L$ 的零集上，比较必须同时计入 $L$ 与 $R$ 的变化（第 3 章的平台值与第 4 章的费用表都是这样的完整比较）。白盒解释的对象恰是纤维坐标——它们可从参数直接读出，但不出现在任何只依赖 $L$ 的曲线里。
+**评注 2.5（纤维律，semantic）。** 定理 2.3 与 2.4 是同一句话的静态形与动态形：主损失 $L$ 以其像为读数，纤维内部对它不可见；在纤维内挑选的是 $R$。精确的纤维图景属于约束问题或 $\lambda\to0^+$ 极限；有限 $\lambda$ 下最优解一般不在 $L$ 的零集上，比较必须同时计入 $L$ 与 $R$ 的变化（第 3 章的平台值与第 4 章的费用表都是这样的完整比较）。白盒解释的对象恰是纤维坐标——它们可从参数直接读出。它们是否也不出现在损失曲线里，取决于正则项是否把纤维坐标耦合回 $L$ 的方向：第 3 章的线性模型加各向同性权重衰减满足这一点（推论 3.2），而一般情形不然——取 $L(x,z)=x^2/2$、$R(x,z)=(x-z)^2/2$、$\lambda=1$，初始化 $(0,0)$ 与 $(0,1)$ 同在零集，前者不动，后者有 $\dot x(0)=1$，故 $L(\theta(t))=t^2/2+O(t^3)$，损失曲线分得开这两个纤维坐标。
 
 ## 3. 线性模型的精确解与延迟泛化
 
@@ -78,8 +78,8 @@ $$
 故 $\rho$ 的衰减率不慢于 $\sigma_N^2+\lambda$。设 $\lambda>0$，则：
 （i）对测试点 $x$ 与容差 $\varepsilon>0$，逃逸读数 $|s(t)b(x)|$ 首次不超过 $\varepsilon$ 的时刻为 $T_\varepsilon(x)=\lambda^{-1}\log(|b(x)|/\varepsilon)$（当 $|b(x)|>\varepsilon$），否则为 $0$；
 （ii）把 $P^\perp\theta(0)$ 换成 $sP^\perp\theta(0)$（$s>1$）而不动 $P\theta(0)$，则每个 $T_\varepsilon(x)>0$ 恰增加 $\lambda^{-1}\log s$，训练曲线不变；
-（iii）若 $b\ne0$ 且 $\langle a,b\rangle\ge0$，归约超出量 $\widetilde L(s(t))-\tfrac12\|a\|^2=s\langle a,b\rangle+\tfrac12s^2\|b\|^2$ 对 $t\ge0$ 严格正，其对数关于 $t$ 的导数落在 $[-2\lambda,-\lambda]$，渐近衰减率在 $\langle a,b\rangle>0$ 时为 $\lambda$、在 $\langle a,b\rangle=0$ 时为 $2\lambda$；若 $\langle a,b\rangle<0$，归约超出量在 $s=-2\langle a,b\rangle/\|b\|^2$ 处变号，本条对它不作对数陈述。这些是关于归约曲线的陈述；对实际曲线它们只在忽略 $\rho$ 后成立，而 $\rho$ 的衰减率 $\sigma_N^2+\lambda$ 与 $\lambda,2\lambda$ 的大小关系不由假设决定；
-（iv）解中只有两类速率：行分量的 $\sigma_i^2+\lambda\ge\sigma_N^2+\lambda$ 与零空间分量的 $\lambda$，两者之比为 $1+\sigma_N^2/\lambda$，本卷不假设它大。
+（iii）若 $b\ne0$ 且 $\langle a,b\rangle\ge0$，归约超出量 $\widetilde L(s(t))-\tfrac12\|a\|^2=s\langle a,b\rangle+\tfrac12s^2\|b\|^2$ 对 $t\ge0$ 严格正，其对数关于 $t$ 的导数落在 $[-2\lambda,-\lambda]$，渐近衰减率在 $\langle a,b\rangle>0$ 时为 $\lambda$、在 $\langle a,b\rangle=0$ 时为 $2\lambda$；若 $\langle a,b\rangle<0$，归约超出量在 $s=-2\langle a,b\rangle/\|b\|^2$ 处变号（该根落在 $(0,1]$ 内时才在 $t\ge0$ 上实际发生），本条对它不作对数陈述。这些是关于归约曲线的陈述；对实际曲线它们只在忽略 $\rho$ 后成立。上面给的是 $\rho$ 的衰减率下界 $\sigma_N^2+\lambda$，它恒大于 $\lambda$，但与 $2\lambda$ 的大小关系不由假设决定；
+（iv）解中只有两类速率：行分量各模态的 $\sigma_i^2+\lambda$ 与零空间分量的 $\lambda$；最慢行模态与零空间模态的速率之比为 $1+\sigma_N^2/\lambda$（第 $i$ 个行模态为 $1+\sigma_i^2/\lambda$），本卷不假设它大。
 
 证明。把定理 3.1 代入 $\varphi(x)^\top\theta(t)$ 并减去 $y(x)$ 得分解；$E$ 的范数界来自谱下界。把 $L_{\rm test}$ 按 $(a+sb)+\varphi^\top E$ 展开，交叉项与平方项按 Cauchy–Schwarz 估计即得 $\rho$ 的界，归约曲线是 $E=0$ 时的精确值。（i）是 $s|b(x)|=\varepsilon$ 的解；（ii）$b(x)$ 变为 $sb(x)$，对数相加，训练曲线由推论 3.2 不变；（iii）令 $g(s)=s\langle a,b\rangle+\tfrac12s^2\|b\|^2$，在 $\langle a,b\rangle\ge0$、$b\ne0$ 时 $g>0$，且 $\frac{d}{dt}\log g=-\lambda\,\frac{\langle a,b\rangle+s\|b\|^2}{\langle a,b\rangle+\tfrac12s\|b\|^2}$，分式落在 $[1,2]$；$s\to0$ 时分式趋于 $1$（若 $\langle a,b\rangle>0$）或恒为 $2$（若 $\langle a,b\rangle=0$）；变号点由 $g(s)=0$ 解出。（iv）由定理 3.1 的两组指数直接读出。证毕。
 
@@ -99,7 +99,7 @@ $$
 $$
 f_{\theta_0}(x)-\varphi(x)^\top P^\perp\theta_0+\varphi(x)^\top\delta_r(t)+e^{-\lambda t}\varphi(x)^\top P^\perp\theta_0 ,
 $$
-其中 $\delta_r(t)$ 以不慢于 $e^{-(\sigma_N^2+\lambda)t}$ 的速率收敛到常向量，故慢尺度上只有末项变化；常数 $f_{\theta_0}(x)-\varphi(x)^\top P^\perp\theta_0$ 在线性化模型内永不衰减（对一次齐次网络它等于 $\varphi(x)^\top P\theta_0$，落在训练可见的行空间读数内）。沿零空间的参数位移为 $\|\delta_n(t)\|=(1-e^{-\lambda t})\|P^\perp\theta_0\|$，在 $\lambda t=O(1)$ 时达到 $\|P^\perp\theta_0\|$ 的常数倍。本卷不给出线性化余项的任何界，因此不断言线性化在何时失效；对非线性网络本章只是这一层记账。
+其中 $\delta_r(t)$ 以不慢于 $e^{-(\sigma_N^2+\lambda)t}$ 的速率收敛到常向量，故在忽略这一瞬态后只有末项随时间变化；常数 $f_{\theta_0}(x)-\varphi(x)^\top P^\perp\theta_0$ 在线性化模型内永不衰减（对一次齐次网络它等于 $\varphi(x)^\top P\theta_0$，落在训练可见的行空间读数内）。沿零空间的参数位移为 $\|\delta_n(t)\|=(1-e^{-\lambda t})\|P^\perp\theta_0\|$，当 $c\le\lambda t\le C$（$0<c\le C$ 固定）时落在 $\|P^\perp\theta_0\|$ 的固定正比例区间 $[1-e^{-c},1-e^{-C}]$ 内。本卷不给出线性化余项的任何界，因此不断言线性化在何时失效；对非线性网络本章只是这一层记账。
 
 证明。流为 $\dot\delta=-\Phi^\top(\Phi\delta+f_{\theta_0}(X)-y)-\lambda(\delta+\theta_0)$；零空间分量 $\dot\delta_n=-\lambda(\delta_n+P^\perp\theta_0)$，$\delta_n(0)=0$，解 $\delta_n(t)=-(1-e^{-\lambda t})P^\perp\theta_0$；行分量是与定理 3.1 同型的线性方程，速率同推论 3.2。代回即得。一次齐次时 Euler 恒等式给 $f_{\theta_0}(x)=\varphi(x)^\top\theta_0$。证毕。
 
@@ -155,7 +155,7 @@ $$
 
 证明。三个非零数据点 $u,v,u+v$ 的方向 $u,v,w$ 都是 $D_3$ 的原子，引理 4.1 的下界逐点取等，故 $\mathcal J(D_3)$ 等于三点下界的加权和，是全局最小值；等号情形的码只用对齐原子，$x=u+v$ 的最优码只在 $w$ 上。证毕。
 
-**评注 4.8（出现与生成，semantic）。** 引理 4.1 说单位原子 $\ell_1$ 稀疏编码在每个数据点上的最好情形是“有一个原子正对着它”，而“生成该点的方向”本身不是数据点。严格层级下父子共现的和 $u+v$ 是高频数据点，于是它赢得原子：父方向 $u$ 被吸进子事件的原子 $w$，子方向 $v$ 本身没有原子（定理 4.2）；$p_B>0$ 时两个典型字典都不是切片上的极小点（命题 4.5），最优原子落在中间，至于它怎样随 $p_B/p_{AB}$ 移动本卷未证（开放问题 5.6）。这是纤维律在有限 $\lambda$ 下的形态：在 $\lambda\to0^+$ 的约束极限里，所有精确重构的字典构成重构损失的纤维，$\ell_1$ 在其中按 $\|x\|_2<\|c\|_1$ 的差额裁决（定理 2.3）；在有限 $\lambda$ 下最优码不再精确重构（$D_A$ 与 $D_F$ 在 $u+v$ 上的重构损失分别为 $\lambda^2/2$ 与 $\lambda^2$），定理 4.4 计入的是两项之和。
+**评注 4.8（出现与生成，semantic）。** 引理 4.1 说单位原子 $\ell_1$ 稀疏编码在每个数据点上的最好情形是“有一个原子正对着它”，而“生成该点的方向”本身不是数据点。严格层级下父子共现的和 $u+v$ 是正概率数据点，于是它赢得原子：父方向 $u$ 被吸进子事件的原子 $w$；在二原子极小点上子方向 $v$ 本身没有原子（定理 4.2 允许更多原子，例如 $[u,v,w]$ 也是极小点，只是 $v$ 不参与共现事件的编码）。当 $p_{AB},p_B>0$ 且 $0<\lambda<1/\sqrt2$ 时两个典型字典都不是切片上的极小点（命题 4.5），最优原子落在中间（$\lambda\ge1/\sqrt2$ 时不然：例如 $\lambda=0.8$ 时 $x=v$ 在 $\alpha=\pi/4$ 附近码为零，$\mathcal J'(\pi/4)=0$、$\mathcal J''(\pi/4^+)=p_{AB}\sqrt2(\sqrt2-\lambda)>0$，吸收端点是切片上的严格局部极小），至于它怎样随 $p_B/p_{AB}$ 移动本卷未证（开放问题 5.6）。这是纤维律在有限 $\lambda$ 下的形态：在 $\lambda\to0^+$ 的约束极限里，所有精确重构的字典构成重构损失的纤维，$\ell_1$ 在其中按 $\|x\|_2<\|c\|_1$ 的差额裁决（定理 2.3）；在有限 $\lambda$ 下最优码不再精确重构（$D_A$ 与 $D_F$ 在 $u+v$ 上的重构损失分别为 $\lambda^2/2$ 与 $\lambda^2$），定理 4.4 计入的是两项之和。
 
 ## 5. 反例、边界与预登记的预测
 
@@ -173,7 +173,7 @@ $$
 
 **开放问题 5.7（富特征区的纤维陈述）。** 在特征学习区是否存在以时变 $K(\theta(t))$ 表述的延迟泛化定理，使定理 3.4（ii）的对数平移律以某种修正形式成立。本卷未证，也未见文献给出。
 
-**可证伪预测 5.8（预登记）。** 对固定特征的线性模型或只训练最后一层的网络，在权重衰减 $\lambda>0$ 下，预测三件可白盒测量的事：（a）$\|P^\perp\theta(t)\|$ 对数线性、斜率 $-\lambda$；（b）测试预测减去收敛后的岭预测，在训练瞬态消退后等于 $e^{-\lambda t}b(x)$，把初始化沿 $\ker\Phi$ 的分量放大 $s$ 倍时，该差进入容差的时刻恰增加 $\lambda^{-1}\log s$（定理 3.4（ii））而训练曲线逐点不变；（c）当 $\langle a,b\rangle\ge0$、$b\ne0$ 时归约超出量的对数斜率落在 $[-2\lambda,-\lambda]$（定理 3.4（iii））。**不**预测全预测误差 $|a(x)+s(t)b(x)|$ 的进入时刻精确平移：$\Phi=(1,0)$、$y=0$、$\lambda=1$、$\theta(0)=(1,1)$、$\varphi(x)=(1,1)$、$y(x)=0$、容差 $\tfrac12$ 时，误差为 $e^{-2t}+e^{-t}$，零空间分量放大四倍后为 $e^{-2t}+4e^{-t}$，进入时刻由 $1.0051$ 变为 $2.1093$，平移 $1.1043$ 而非 $\log4=1.3863$。第 6 章在一个六维实例上核验了（a）（b）（c）；在真实的非线性网络上它们是猜想，若实测的平移与 $\lambda^{-1}\log s$ 系统偏离，按第 2.6 条视为对“线性化图景可外推”的反驳，不改本章定理。
+**可证伪预测 5.8（预登记）。** 对固定特征的线性模型或只训练最后一层的网络，在权重衰减 $\lambda>0$、$P^\perp\theta(0)\ne0$ 下，预测三件可白盒测量的事：（a）$\|P^\perp\theta(t)\|$ 对数线性、斜率 $-\lambda$；（b）投影逃逸读数 $\varphi(x)^\top P^\perp\theta(t)=e^{-\lambda t}b(x)$（把当前参数投到 $\ker\Phi$ 后读出）恒等于 $e^{-\lambda t}b(x)$，把初始化沿 $\ker\Phi$ 的分量放大 $s$ 倍时，凡原进入时刻 $T_\varepsilon(x)>0$ 者恰增加 $\lambda^{-1}\log s$（定理 3.4（ii））而训练曲线逐点不变；（c）当 $\langle a,b\rangle\ge0$、$b\ne0$ 时归约超出量的对数斜率落在 $[-2\lambda,-\lambda]$（定理 3.4（iii））。**不**预测全预测误差 $|a(x)+s(t)b(x)+\varphi(x)^\top E(t)|$ 的进入时刻精确平移，也不预测“测试预测减去岭预测”的进入时刻精确平移（后者仍含瞬态 $\varphi(x)^\top E(t)$）：$\Phi=(1,0)$、$y=0$、$\lambda=1$、$\theta(0)=(1,1)$、$\varphi(x)=(1,1)$、$y(x)=0$、容差 $\tfrac12$ 时 $a(x)=0$，误差为 $e^{-2t}+e^{-t}$，零空间分量放大四倍后为 $e^{-2t}+4e^{-t}$，进入时刻分别为 $\log(1+\sqrt3)\approx1.0051$ 与 $\log(4+3\sqrt2)\approx2.1093$，平移 $1.1043$ 而非 $\log4\approx1.3863$。第 6 章在一个六维实例上给出（a）（b）（c）的精确值与数值读数；在真实的非线性网络上它们是猜想，若实测的平移与 $\lambda^{-1}\log s$ 系统偏离，按第 2.6 条视为对“线性化图景可外推”的反驳，不改本章定理。
 
 ## 6. 一个六维实例
 
@@ -188,11 +188,11 @@ P^\perp\theta(0)=\big(-\tfrac14,-\tfrac94,\tfrac14,\tfrac94,-\tfrac52,6\big)^\to
 b=\big(\tfrac{15}4,\tfrac72,2,-2\big),\qquad
 a=\Big(\tfrac{3341}{69741},-\tfrac{82}{1701},-\tfrac{2}{1701},-\tfrac{2}{1701}\Big),
 $$
-$\langle a,b\rangle=\tfrac{3047}{278964}>0$，$\|b\|^2=\tfrac{549}{16}$，平台值 $L_\infty=\tfrac{11580382}{1621269027}\approx7.1428\times10^{-3}$。逃逸读数的进入时刻 $T_\varepsilon(x)=20\log(|b(x)|/\varepsilon)$，把 $P^\perp\theta(0)$ 放大四倍后每个 $T_\varepsilon(x)>0$ 恰增加 $20\log4\approx27.726$；归约超出量的对数斜率落在 $[-0.1,-0.05]$。
+$\langle a,b\rangle=\tfrac{3047}{278964}>0$，$\|b\|^2=\tfrac{549}{16}$，平台值 $L_\infty=\tfrac{11580382}{1621269027}\approx7.1428\times10^{-3}$。逃逸读数的进入时刻 $T_\varepsilon(x)=\max\{0,20\log(|b(x)|/\varepsilon)\}$，把 $P^\perp\theta(0)$ 放大四倍后每个 $T_\varepsilon(x)>0$ 恰增加 $20\log4\approx27.726$；归约超出量的对数斜率落在 $[-0.1,-0.05]$。
 
 证明。$\Phi\Phi^\top=\begin{pmatrix}2&0&1\\0&2&1\\1&1&3\end{pmatrix}$ 的特征多项式为 $(t-1)(t-2)(t-4)$。$P^\perp\theta(0)$、$\theta_\lambda=\Phi^\top(\Phi\Phi^\top+\tfrac1{20}I)^{-1}y$、$a$、$b$ 与 $L_\infty$ 都是有理算术，逐项按约定 1.2 与推论 3.2 计算即得；后两句是定理 3.4（i）–（iii）在 $\langle a,b\rangle>0$、$b\ne0$ 下的直接代入。证毕。
 
-**数值读数（非证明）。** 以显式 Euler（步长 $1/100$，$12000$ 步）积分上述流并以浮点核对：两条只差零空间分量 $3P^\perp\theta(0)$ 的初始化的训练曲线逐步相等到 $10^{-9}$；逃逸范数在每 $500$ 步的采样点上等于 $(1-\lambda\Delta t)^k\|P^\perp\theta(0)\|$ 到 $10^{-9}$（离散衰减率 $-\log(1-\lambda\Delta t)/\Delta t\approx0.0500125$）；$k\ge6000$ 的采样点上测试损失与 $\widetilde L((1-\lambda\Delta t)^k)$ 一致到 $10^{-8}$；窗口 $t\in[60,90]$ 上超出量的对数斜率为 $-0.0986$；四个测试点符号全部正确的首次时刻为 $27.42$，放大四倍后为 $55.13$，平移 $27.71$。字典部分：定理 4.4 的差额公式在 $28$ 组 $(\lambda,p)$ 上与逐点 KKT 求解一致到 $10^{-12}$；引理 4.1 的下界在 $2000$ 个随机二原子字典上成立；对 $\lambda\in\{0.1,0.3\}$ 与六个共现比在 $\operatorname{span}(u,v)$ 内的 $181\times181$ 角度网格上求最小值，argmin（度）如下，末列是定理 4.4 对两典型字典的预测：
+**数值读数（非证明）。** 以显式 Euler（步长 $\Delta t=1/100$，$12000$ 步）积分命题 6.1 的流并以浮点读数：两条只差零空间分量 $3P^\perp\theta(0)$ 的初始化的训练曲线逐步相差不超过 $10^{-9}$；逃逸范数在每 $500$ 步的采样点上与 $(1-\lambda\Delta t)^k\|P^\perp\theta(0)\|$ 相差不超过 $10^{-9}$（离散衰减率 $-\log(1-\lambda\Delta t)/\Delta t\approx0.0500125$）；$k\ge6000$ 的采样点上测试损失与 $\widetilde L((1-\lambda\Delta t)^k)$ 相差不超过 $10^{-8}$；窗口 $t\in[60,90]$ 上超出量的对数斜率为 $-0.0986$；四个测试点符号全部正确的首次时刻为 $27.42$，零空间分量放大四倍后为 $55.13$，平移 $27.71$。字典部分取 $p_0=0.1$、$p_{AB}=0.4$、$p_B=0.4r$、$p_A=0.5-0.4r$（$r=p_B/p_{AB}$），在 $0^\circ\le\alpha_1\le\alpha_2\le90^\circ$、步距 $0.5^\circ$ 的角度网格上对字典 $[(\cos\alpha_1,\sin\alpha_1),(\cos\alpha_2,\sin\alpha_2)]$ 求 $\mathcal J$ 的离散网格最小值（码由非负 KKT 精确求解），argmin（度）如下，末列是定理 4.4 对两典型字典的预测：
 
 | $\lambda$ | $p_B/p_{AB}$ | argmin $(\alpha_1,\alpha_2)$ | 两点比较 |
 | --- | --- | --- | --- |
@@ -209,7 +209,7 @@ $\langle a,b\rangle=\tfrac{3047}{278964}>0$，$\|b\|^2=\tfrac{549}{16}$，平台
 | 0.3 | 0.5 | (0, 50.5) | 吸收 |
 | 0.3 | 1.0 | (42.5, 90) | 忠实 |
 
-这些浮点核对只证明所述实例上的等式与不等式在给定容差内成立，不是任何全称命题的证明，也不是带误差界的认证；定理的全称范围以第 3、4 章的证明为准。
+这些浮点读数只说明所述实例上的计算结果落在给定容差内，既不是任何全称命题的证明，也不是所述实例上带舍入误差界的认证；定理的全称范围以第 3、4 章的证明为准。
 
 ## 7. 来源与文献状态
 
@@ -234,14 +234,14 @@ $\langle a,b\rangle=\tfrac{3047}{278964}>0$，$\|b\|^2=\tfrac{549}{16}$，平台
 | Chanin, Wilken-Smith, Dulka, Bhatnagar, Golechha, Bloom, *A is for Absorption: Studying Feature Splitting and Absorption in Sparse Autoencoders*, NeurIPS 2025, arXiv:2409.14507（v6，2025-11-17） | `literature-attested`：特征吸收的经验报告，含“加大字典或改稀疏度不消除吸收”（摘要原话）；v6 附录 A.2 命题 1–2 给出严格层级、正交二值特征下解码列 $f_2+\delta f_1$（非单位范数）保持精确重构而使期望 $\ell_1$ 从 $2p_{11}+p_{10}$ 降到 $(2-\delta)p_{11}+p_{10}$ 的下降族，是吸收的稀疏激励的先例，不是全局极小刻画 |
 | Chanin, *Toy Models of Feature Absorption in SAEs*, LessWrong 2024-10-07 | `literature-attested`：共现率与幅值可变下的吸收与部分吸收的玩具实验报告；用于反例 5.5 的边界 |
 | Till, *Do sparse autoencoders find “true features”?*, LessWrong 2024-02-22；Anders, Neo, Hoelscher-Obermaier, Howard, *Sparse autoencoders find composed features in small toy models*, LessWrong 2024-03-14 | `literature-attested`：“高频共现可被复合特征替代”的定性论证与解码归一化下的复合特征实验；引理 4.1 给出其精确形式 |
-| Levine 仓库 MAIS-A3 研究草稿, *The geometry and identifiability of superposition*（`agendas/A3/MAIS-A3.tex`，作者栏“Claude Fable 5, audited by GPT 5.6 Sol”，2026-07） | `literature-attested`（低状态来源，非同行评审）：命题“Positive-penalty merging”——两个嵌套事件、单位系数、无噪声、特征夹角 $\theta\in(0,\pi/2]$，对每个 $\lambda\in(0,1)$，二原子字典上的唯一全局极小是合并对；证明用 $\|\Psi z\|\le\|z\|_1$ 与径向界 $\lambda r-\lambda^2/2$，与引理 4.1 的论证同形，定理 4.2 的二原子正交情形即其陈述。本卷自证的增量是任意原子数、逐点等号刻画、命题 4.3 与命题 4.7 |
+| MAIS-A3 研究草稿, *The geometry and identifiability of superposition*（https://github.com/lionellevine/MAIS，路径 `agendas/A3/MAIS-A3.tex`，提交 84b81190dfe64c8627f19589e4b5a0700fa68bf7，作者栏“Claude Fable 5, audited by GPT 5.6 Sol”，2026-07） | `literature-attested`（低状态来源，非同行评审）：命题“Positive-penalty merging”——两个嵌套事件、单位系数、无噪声、特征夹角 $\theta\in(0,\pi/2]$，对每个 $\lambda\in(0,1)$，二原子字典上的唯一全局极小是合并对；证明用 $\|\Psi z\|\le\|z\|_1$ 与径向界 $\lambda r-\lambda^2/2$，与引理 4.1 的论证同形，定理 4.2 的二原子正交情形即其陈述。本卷自证的增量是任意原子数、逐点等号刻画、命题 4.3 与命题 4.7 |
 | Dorrell, *How Optimality Structures Sparse Dictionaries: A Theory for Understanding SAE Representations*, arXiv:2606.02385 | `literature-attested`：含解码偏置与非负码的一般局部最优必要条件，严格层级除完全对齐外违反该条件；与第 4 章方向一致，本卷不使用其定理 |
 | Nelson, Karaletsos, Locatello, *Toward Identifiable Sparse Autoencoders*, arXiv:2605.31245 | `literature-attested`：SAE 近似可辨识条件（支撑丰富性、支撑内系数多样性）；严格层级违反其丰富性假设，故该定理不适用于本卷玩具模型 |
 | Bussmann, Nabeshima, Karvonen, Nanda, *Learning Multi-Level Features with Matryoshka Sparse Autoencoders*, arXiv:2503.17547；Leask 等, *Sparse Autoencoders Do Not Find Canonical Units of Analysis*, arXiv:2502.04878 | `literature-attested`：层级特征与非规范单元的经验背景 |
 | Gao 等, *Scaling and Evaluating Sparse Autoencoders*, arXiv:2406.04093；Rajamanoharan 等, *Jumping Ahead: JumpReLU SAEs*, arXiv:2407.14435；Bussmann, Leask, Nanda, *BatchTopK Sparse Autoencoders*, arXiv:2412.06410；Plascencia, *A Dominant Diffuse Phase in the Sparse Autoencoder Phase Diagram*, arXiv:2609.10299 | `literature-attested`：TopK、JumpReLU、批级 TopK 目标的定义（命题 4.6 只用理想单原子编码器的定义）；层级—惩罚—宽度扫描中弥散相占主导的经验相图，提示实际训练的 SAE 未必落在本卷比较的两类字典上 |
 | — | `repo-derived`（本卷自证的陈述）：命题 2.2；定理 2.4；定理 3.3；定理 3.4；命题 3.5；命题 3.6；命题 3.7；定理 4.2 的任意原子数与等号刻画；命题 4.3；定理 4.4；命题 4.5；命题 4.6；命题 4.7；反例 5.1、5.4；命题 6.1 |
-| — | `suspected-novel`（新颖性未经证实）：定理 4.4 的显式两点阈值 $\rho^\ast(\lambda)$；命题 4.5 的端点导数陈述（文献只有经验报告与一般必要条件）；命题 4.6 的 $p_B<2p_{AB}$；命题 4.7。定理 3.3 只是经典不可估性加 RRO 判据的改写，不列为新；引理 4.1 与定理 4.2 的二原子情形在 MAIS-A3 草稿中已有同形证明，也不列为新。检索范围：经 GPT Pro 三条检索票查 2020–2026 年 arXiv/OpenReview/LessWrong 与 Transformer Circuits 线程，关键词为 null space / kernel-orthogonal initialization / weight decay grokking time、feature absorption theory、dictionary learning unit-norm ℓ1 composite atoms；上表全部 arXiv 编号已逐条在线解析，Chanin v6 附录 A.2 与 MAIS-A3 的 `.tex` 命题原文已核对。未命中只说明在此范围内未找到，不推出原创 |
+| — | `suspected-novel`（新颖性未经证实）：定理 4.4 的显式两点阈值 $\rho^\ast(\lambda)$；命题 4.5 的端点导数陈述（文献只有经验报告与一般必要条件）；命题 4.6 的 $p_B<2p_{AB}$；命题 4.7。定理 3.3 只是经典不可估性加 RRO 判据的改写，不列为新；引理 4.1 与定理 4.2 的二原子情形在 MAIS-A3 草稿中已有同形证明，也不列为新。检索范围：2020–2026 年 arXiv/OpenReview/LessWrong 与 Transformer Circuits 线程，关键词 null space / kernel-orthogonal initialization / weight decay grokking time、feature absorption theory、dictionary learning unit-norm ℓ1 composite atoms，另含 Chanin v6 附录 A.2 与 MAIS-A3 的命题原文。未命中只说明在此范围内未找到，不推出原创 |
 
-**证明形状。** 为将来的形式化记账，逐条注明相对于所引结果与前文的判形：定理 2.4、命题 3.5、命题 3.6、命题 4.6 与命题 6.1 是对前文定理或定义的直接特化与规范化；定理 3.1、推论 3.2 与引理 4.1 的下界是所引经典结果的重证；命题 2.2、定理 3.3（iv）的见证、定理 3.4 的 $\rho$ 界与（iii）的分式、定理 4.2 的等号刻画、命题 4.5 的两端导数、命题 4.7 含有本卷自己的计算。这一栏不冒充机器判形。
+**证明形状。** 为将来的形式化记账，逐条注明相对于所引结果与前文的判形：定理 2.4、命题 3.5、命题 3.6、命题 4.6 与命题 6.1 是对前文定理或定义的直接特化与规范化；定理 3.1、推论 3.2 与引理 4.1 的下界是所引经典结果的重证；定理 4.2 的极小点刻画、命题 4.3 与命题 4.7 都只是引理 4.1 的逐点应用与按正概率加权求和（4.3 另加正交坐标下的逐坐标收缩），相对该引理为绑定；定理 3.3（i）（ii）是定理 3.1 的直接推论，（iii）是约定 1.1 加 RRO 判据的应用，（iv）给出实际见证；命题 3.7 是与定理 3.1 同型方程的重解与记账，相对定理 3.1 为绑定。含有本卷自己计算的是命题 2.2 的三阶展开、定理 3.3（iv）的见证、定理 3.4 的 $\rho$ 界与（iii）的分式、定理 4.4 的费用表与两段 $\Delta_v$、命题 4.5 的两端导数。“自己的计算”不等于机器判形下的逃逸见证；最终判形以形式化时的依赖闭包为准。
 
 ## 追加锚（本行以下为增补区）
