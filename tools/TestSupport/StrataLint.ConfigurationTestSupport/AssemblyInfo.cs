@@ -9,3 +9,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.FileMap.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.RuleTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.Rules.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.Digestion.Tests")]
