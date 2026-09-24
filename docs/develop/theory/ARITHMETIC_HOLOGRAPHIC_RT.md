@@ -2336,3 +2336,192 @@ for index,axes in enumerate(axes_list):
     assert values == target
     print('Laurent coefficients',index,values)
 ```
+## 36. 任意输出下的最优谱粗化与非平坦扇区
+
+### 36.1 模型和精确最优值
+
+逻辑空间有正交扇区标签 $s=1,\ldots,N$。给定正整数 $d_s$ 和有限概率谱
+$\lambda_s=(\lambda_{sj})_j$，谱项按非增序排列并按需补零。源与目标等距编码分别为
+\[
+J_\lambda|s\rangle
+=\sum_{a=1}^{d_s}\sum_j\sqrt{\lambda_{sj}/d_s}\,
+ |s,a,j\rangle_X|s,a,j\rangle_Y,
+\qquad
+J_d|s\rangle=d_s^{-1/2}\sum_{a=1}^{d_s}|s,a\rangle_X|s,a\rangle_Y.
+\tag{36.1}
+\]
+不同 $s$ 的物理输出旗标正交。源的 Schmidt 概率谱把每个
+$\lambda_{sj}/d_s$ 重复 $d_s$ 次；目标扇区平坦。设
+$v_s=(\sqrt{\lambda_{sj}})_j$，$K_{st}=\langle v_s,v_t\rangle$，以及
+\[
+q_*:=\min_{p\in\Delta_N}p^{\mathsf T}Kp.
+\tag{36.2}
+\]
+允许两侧各自执行任意局部 CPTP 映射、添加并丢弃局部辅助系统，且允许
+乘积映射的共享经典随机混合。不允许通信、后选择或额外共享纠缠；输出不必
+保持旗标、纯度或任何基扇区的目标态。误差是包含任意被动参考、未除以二的
+钻石范数。任意已知的局部基变换可吸收到映射中。
+
+**定理 36.1（全操作最优谱粗化）。** 在上述有限模型中，
+\[
+\boxed{\inf_{\Lambda_X,\Lambda_Y}
+\| (\Lambda_X\otimes\Lambda_Y)\circ\mathcal J_\lambda
+       -\mathcal J_d\|_\diamond=2(1-q_*).}
+\tag{36.3}
+\]
+一对同时适用于全部扇区的局部拆分映射达到下确界。允许乘积映射的共享
+经典随机混合不降低最优值。这个模型不包含任意非平坦目标、一般 LOCC 或
+可分操作的全分类。
+
+**证明。** 任取竞争映射的局部 Stinespring 等距，记源态 $J_\lambda|s\rangle$
+的扩张输出为 $\Xi_s$。它相对于
+$X_{\rm out}E_X\mid Y_{\rm out}E_Y$ 的非零 Schmidt 系数仍为
+$\sqrt{\lambda_{sj}/d_s}$，每项重复 $d_s$ 次。只为分析而投影到该扇区的
+理想目标，得到未必归一的环境向量
+\[
+\zeta_s=(\langle J_d s|\otimes I_{E_XE_Y})\Xi_s.
+\tag{36.4}
+\]
+此投影不属于允许的实现协议。令 $Z_s$ 为 $\zeta_s$ 的环境系数矩阵，
+$Q_s$ 为 $\Xi_s$ 的系数矩阵在目标扇区两侧物理支撑上的压缩。按目标
+物理索引分块，有
+$Z_s=d_s^{-1/2}\sum_{a=1}^{d_s}(Q_s)_{aa}$。对环境空间中任意秩 $k$
+部分等距 $W$，奇异值迹不等式和压缩的奇异值界依次给出
+\[
+|\operatorname{Tr}(W^*Z_s)|
+=d_s^{-1/2}|\operatorname{Tr}((I_{d_s}\otimes W)^*Q_s)|
+\le d_s^{-1/2}\sum_{i=1}^{d_sk}\sigma_i(Q_s)
+\le\sum_{j=1}^k\sqrt{\lambda_{sj}}.
+\tag{36.5}
+\]
+最后一步保留了每个源 Schmidt 系数恰重复 $d_s$ 次的结构。Ky Fan 变分
+公式遂给 $\sigma(Z_s)\prec_w v_s$。若非负递减向量 $a\prec_w b$，则对
+任意非负递减权重 $w$，前缀和的分部求和给 $a\cdot w\le b\cdot w$。
+先后对两侧使用，再用奇异值迹界，得到无需精确基输出假设的交叉界
+\[
+|\langle\zeta_t,\zeta_s\rangle|
+\le\sigma(Z_t)\cdot\sigma(Z_s)
+\le v_t\cdot v_s=K_{st}.
+\tag{36.6}
+\]
+
+任取 $p\in\Delta_N$，加入被动参考标签，输入
+$|\Omega_p\rangle=\sum_s\sqrt{p_s}|s\rangle_R|s\rangle_L$。理想联合输出
+$|\Theta_p\rangle=\sum_s\sqrt{p_s}|s\rangle_RJ_d|s\rangle$。实际输出
+通过理想纯态投影测试的概率为
+\[
+F_p=\bigl\|\sum_s p_s\zeta_s\bigr\|^2
+\le\sum_{s,t}p_sp_tK_{st}=p^{\mathsf T}Kp.
+\tag{36.7}
+\]
+参考标签使两次振幅匹配产生 $p_s$，所以错误旗标不能在另一逻辑标签下
+补偿。理想输出的该测试成功率为一；二元测试和迹距离收缩给竞争信道
+的钻石误差至少 $2(1-p^{\mathsf T}Kp)$。取 (36.2) 的最小点即得
+(36.3) 的下界。同一个测试对每个竞争乘积信道有效，对其共享经典
+随机混合也有效。
+
+为达到下界，两侧同时对所有扇区实行
+$|s,a,j\rangle\mapsto|s,a\rangle_{\rm out}|j\rangle_E$，再丢弃环境。
+环境态 $\eta_s=\sum_j\sqrt{\lambda_{sj}}|j,j\rangle$ 的 Gram 矩阵
+正是 $K$；诱导的逻辑信道为 $\rho\mapsto K\circ\rho$，随后作目标
+编码。带参考纯输入 $\sum_s|s\rangle|w_s\rangle$ 的各标签概率为
+$p_s=\|w_s\|^2$。输出差的非零谱等于
+\[
+B_p=D_{\sqrt p}(\mathbf1\mathbf1^{\mathsf T}-K)D_{\sqrt p}.
+\tag{36.8}
+\]
+$B_p$ 是秩一正矩阵减去正半定矩阵，迹为零且至多有一个正本征值，
+故 $\|B_p\|_1=2\lambda_{\max}(B_p)$。由于
+$\mathbf1\mathbf1^{\mathsf T}-K$ 逐项非负，最大 Rayleigh 向量可取
+非负。写 $y_s=\sqrt{p_s}x_s$，则 $\sum_s y_s\le1$；反过来对任意
+$y\in\Delta_N$ 取 $p=y$、$x_s=\sqrt{y_s}$ 可取等。因此
+\[
+\max_p\|B_p\|_1
+=2\max_{y\in\Delta_N}y^{\mathsf T}
+  (\mathbf1\mathbf1^{\mathsf T}-K)y
+=2(1-q_*).
+\tag{36.9}
+\]
+迹范数的最大化覆盖被动参考：混合输入可纯化到参考中，而上述计算
+对任意纯输入及其标签向量成立。这一共同局部构造达到下界。证明不需要
+$K$ 可逆。有限凸规划的最优性证书可写作
+$Kp\ge q\mathbf1$，在 $p_s>0$ 的支撑上取等，且 $q=p^{\mathsf T}Kp$。
+
+### 36.2 平坦秩比与条件性面积窗口
+
+若 $\lambda_s$ 是正整数 $m_s=r_s/d_s$ 项上的均匀谱，则
+$K_{st}=\sqrt{\min(m_s,m_t)/\max(m_s,m_t)}$。§34 的指数核计算与
+定理 36.1 合用，说明即使基扇区可以输出错误、混态或其他旗标，最优
+误差仍为
+\[
+\delta_*={2T\over1+T},\qquad
+T=\sum_i\tanh\bigl((\ell_{i+1}-\ell_i)/4\bigr).
+\tag{36.10}
+\]
+例如 $d=(3,3,3)$、$r=(3,12,48)$ 给
+$p_*=(2/5,1/5,2/5)$、$q_*=3/5$、$\delta_*=4/5$。
+§35 的条件性动量窗口必要界可在上述全操作模型下使用，而不再要求
+竞争映射精确输出每个基扇区；有限调节器、平坦且为整数的实际秩比、
+秩匹配 $|\log m_s-\mathsf S(P_s)-C_0|\le\eta$ 与两侧独立局部操作仍
+必须保留。由这些条件得到同一必要界
+$\delta_*\ge1-\exp[-\max(0,\pi Q\Delta P-\eta)]$。
+连续 Virasoro 密度不是整数 Hilbert 空间维数；这里没有构造这些
+物理匹配条件，也没有解决原始引力 RT。
+
+### 36.3 非平坦稳定量与等熵反例
+
+定义排序平方根谱直径 $D_H=\max_{s,t}\|v_s-v_t\|_2$。由
+$\|v_s\|_2=1$ 和 (36.3)，
+\[
+\delta_*=\max_{p\in\Delta_N}\sum_{s,t}p_sp_t\|v_s-v_t\|_2^2,
+\qquad \tfrac12D_H^2\le\delta_*\le D_H^2.
+\tag{36.11}
+\]
+下界在最远两谱上各置一半概率，故即使扇区数和谱维数增长，误差趋零
+当且仅当全部排序平方根谱的直径趋零。精确零误差当且仅当这些谱
+全部相同；熵相等不满足这个条件。
+
+例如
+$\lambda=(1/2,1/8,1/8,1/8,1/8)$ 与
+$\mu=(1/4,1/4,1/4,1/4,0)$ 的熵都为 $\log4$，而
+$K_{12}=5/(4\sqrt2)$，所以两扇区最优误差为
+\[
+\delta_*=1-{5\over4\sqrt2}>0.
+\tag{36.12}
+\]
+取两个目标扇区 $d_s=3$，则源、目标面积熵分别同为 $\log12$、
+$\log3$，损失面积算符恰为 $(\log4)I$，联合相干粗化仍有正误差。
+更强地，偶数 $D\ge4$、$R=D^2/4$ 时，取
+$\lambda=(1/2,1/(2R),\ldots,1/(2R))$（末项重复 $R$ 次），
+$\mu$ 为秩 $D$ 的均匀谱。两者熵都为 $\log D$，但
+\[
+K_{12}={3-2/D\over\sqrt{2D}},\qquad
+\delta_*=1-{3-2/D\over\sqrt{2D}}\longrightarrow1.
+\tag{36.13}
+\]
+共同拆分构造的任一单侧约化信道仍与理想目标相同，包括与参考的
+关联；逻辑非对角项在单侧偏迹中消失。因此单侧熵或中心面积等式
+不能认证联合粗化。
+
+现有 `CoherentHistorySchmidt.lean` 的合法词 Schmidt 分解还给出一个
+实际谱来源：两个零、两个一的四字母均匀历史，在第一位置和第二位置
+切分所得排序谱分别为 $(1/2,1/2)$ 与 $(2/3,1/6,1/6)$。将这两个
+实例放入正交标签的源扇区并各自张量平坦目标因子，谱重叠为
+$\sqrt3/2$，(36.3) 给最优误差 $1-\sqrt3/2$。这构造了两个带标签
+实例，不把同一个四腿系统的不同切分自动识别成一个码。
+
+### 36.4 来源与边界
+
+第 36.1 节的无限制输出优化是本卷指定有限模型中的书面推导；仓内
+`CoherentHistorySchmidt.lean` 只证明上述合法历史的振幅和谱权重，
+尚未证明 (36.3)--(36.13) 的信道优化、Ky Fan 投影界或误差公式。
+Harrow, *Entanglement spread and clean resource inequalities* (2010),
+arXiv:0909.1557；Watrous, *Semidefinite Programs for Completely Bounded
+Norms*, Theory of Computing 5 (2009), 217--238，分别提供纠缠扩散与
+完全有界范数的既有背景。Lin, *Ryu-Takayanagi area from Virasoro modular
+data*, arXiv:2606.30723v1，及 Cao--Cheng--Karthikeyan--Li--Preskill,
+*State-dependent geometries from magic-enriched quantum codes*,
+arXiv:2603.13475v2，讨论不同的物理构造与恢复条件；本节没有把它们的
+条件或结论替换为本模型的全操作最优值。
+
+## 追加锚（本行以下为增补区）
