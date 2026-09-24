@@ -13,8 +13,9 @@ triage: "anchor"
 
 # Limiting Distributions for Sums of Independent Random Products
 
-The inspected source is arXiv:0904.4127v2, submitted 24 November 2009,
-31 pages. Theorem 5, section 1.4, page 6, gives the critical limit one half
+The inspected source is arXiv:0904.4127v2, revised 24 November 2009;
+v1 was submitted 27 April 2009. The PDF has 31 pages. Theorem 5,
+section 1.4, page 6, gives the critical limit one half
 for the normalized sum of independent random products. Its assumptions
 (1) and (4) require `exp(-c n) N_n -> 1`, a fixed nondegenerate increment
 law, and finite exponential moments at every nonnegative parameter.

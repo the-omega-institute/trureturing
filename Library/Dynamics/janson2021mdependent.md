@@ -20,8 +20,8 @@ variance and the usual Lindeberg condition. Theorem 4.1, page 7, gives the
 Lyapunov form: for moment order `p > 2`, dependence range `m_N`, and row-sum
 standard deviation `sigma_N`, it suffices that
 `m_N^(p-1) sum_i E|X_Ni|^p / sigma_N^p -> 0`.
-For independent rows one may take dependence range one, as explained in
-Remark 1.5; range two applies directly to the path-edge arrays here.
+For independent summands within each row, one may take dependence range
+one, as explained in Remark 1.5; range two applies to the path-edge arrays here.
 
 This central limit theorem is `literature-attested`. The parity-kernel
 application must separately establish the two-step reset under the normalized
