@@ -6,7 +6,7 @@
    utility: none
    digest: Fair binary window rules have defect at least one over length plus two. -/
 
-import D5.S3.Combinatorics.OddParityExtension
+import D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -15,7 +15,7 @@ namespace D5.S3.Combinatorics.FairWindowDefect
 
 open scoped BigOperators
 open D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
-open D5.S3.Combinatorics.OddParityExtension
+open private prod_paritySign_cases from D5.S3.Analytic.ReflectedSpectrum.ParityConditionedMoments
 
 /-- The transport defect of a fixed table on one complete input context.
 A zero relation bit reverses the output bit, and a one preserves it. -/
@@ -40,6 +40,72 @@ theorem fair_window_defect_lower_bound (R : ℕ) :
     (∀ f : (Fin R → Fin 2) → Fin 2, 1 / (R + 2 : ℚ) ≤ fairDefect R f) ∧
       1 / (R + 2 : ℚ) ≤ optimalFairDefect R := by
   classical
+  have hcompletion {L : ℕ} (_hL : 0 < L) (i : Fin L) (y : Fin L → Fin 2) :
+      ∃! x : Fin L → Fin 2, (∀ j, j ≠ i → x j = y j) ∧ x ∈ parityFiber L (-1) := by
+    let rest : ℤ := (Finset.univ.erase i).prod (fun j => paritySign (y j))
+    have hrest : rest = -1 ∨ rest = 1 :=
+      prod_paritySign_cases (Finset.univ.erase i) y
+    have hprod (b : Fin 2) :
+        (∏ j : Fin L, paritySign ((Function.update y i b) j)) =
+          paritySign b * rest := by
+      have hfun :
+          (fun j : Fin L => paritySign ((Function.update y i b) j)) =
+            Function.update (fun j : Fin L => paritySign (y j)) i (paritySign b) := by
+        funext j
+        by_cases hji : j = i
+        · subst j
+          simp
+        · simp [hji]
+      rw [hfun, Finset.prod_update_of_mem (Finset.mem_univ i)]
+      rw [Finset.sdiff_singleton_eq_erase]
+    have hagree (b : Fin 2) : ∀ j, j ≠ i → (Function.update y i b) j = y j := by
+      intro j hji
+      simp [hji]
+    have hodd0 : (Function.update y i 0) ∈ parityFiber L (-1) ↔ rest = 1 := by
+      simp only [parityFiber, Finset.mem_filter, Finset.mem_univ, true_and]
+      rw [hprod]
+      simp [paritySign, rest]
+    have hodd1 : (Function.update y i 1) ∈ parityFiber L (-1) ↔ rest = -1 := by
+      simp only [parityFiber, Finset.mem_filter, Finset.mem_univ, true_and]
+      rw [hprod]
+      simp [paritySign, rest]
+    rcases hrest with hrest | hrest
+    · refine ⟨Function.update y i 1, ⟨hagree 1, hodd1.mpr hrest⟩, ?_⟩
+      intro z hz
+      have hz_update : z = Function.update y i (z i) := by
+        funext j
+        by_cases hji : j = i
+        · subst j
+          simp
+        · exact (hz.1 j hji).trans (by simp [hji])
+      have hzi : z i = 0 ∨ z i = 1 := by omega
+      rcases hzi with hzi | hzi
+      · exfalso
+        have hz_mem : z ∈ parityFiber L (-1) := hz.2
+        rw [hz_update, hzi] at hz_mem
+        have hzero := hodd0.mp hz_mem
+        omega
+      · calc
+          z = Function.update y i (z i) := hz_update
+          _ = Function.update y i 1 := by rw [hzi]
+    · refine ⟨Function.update y i 0, ⟨hagree 0, hodd0.mpr hrest⟩, ?_⟩
+      intro z hz
+      have hz_update : z = Function.update y i (z i) := by
+        funext j
+        by_cases hji : j = i
+        · subst j
+          simp
+        · exact (hz.1 j hji).trans (by simp [hji])
+      have hzi : z i = 0 ∨ z i = 1 := by omega
+      rcases hzi with hzi | hzi
+      · calc
+          z = Function.update y i (z i) := hz_update
+          _ = Function.update y i 0 := by rw [hzi]
+      · exfalso
+        have hz_mem : z ∈ parityFiber L (-1) := hz.2
+        rw [hz_update, hzi] at hz_mem
+        have hone := hodd1.mp hz_mem
+        omega
   have hR : R < R + 2 := by omega
   let H := {x : Fin (R + 2) → Fin 2 // x ∈ parityFiber (R + 2) (-1)}
   let project (e : Equiv.Perm (Fin (R + 2))) (x : H) : Fin (R + 1) → Fin 2 :=
@@ -48,19 +114,19 @@ theorem fair_window_defect_lower_bound (R : ℕ) :
     constructor
     · intro x z hxz
       apply Subtype.ext
-      have hagree : agreesOff (e (Fin.last (R + 1))) x.val z.val := by
+      have hagree : ∀ j, j ≠ e (Fin.last (R + 1)) → x.val j = z.val j := by
         intro j hj
         obtain ⟨k, rfl⟩ := e.surjective j
         induction k using Fin.lastCases with
         | last => exact (hj rfl).elim
         | cast i => exact congr_fun hxz i
-      obtain ⟨w, hw, huniq⟩ := odd_parity_unique_extension
+      obtain ⟨w, hw, huniq⟩ := hcompletion
         (by omega : 0 < R + 2) (e (Fin.last (R + 1))) z.val
       exact (huniq x.val ⟨hagree, x.property⟩).trans
         (huniq z.val ⟨fun _ _ => rfl, z.property⟩).symm
     · intro v
       let y : Fin (R + 2) → Fin 2 := fun j => Fin.lastCases 0 v (e.symm j)
-      obtain ⟨x, hx, _⟩ := odd_parity_unique_extension
+      obtain ⟨x, hx, _⟩ := hcompletion
         (by omega : 0 < R + 2) (e (Fin.last (R + 1))) y
       refine ⟨⟨x, hx.2⟩, ?_⟩
       funext i
