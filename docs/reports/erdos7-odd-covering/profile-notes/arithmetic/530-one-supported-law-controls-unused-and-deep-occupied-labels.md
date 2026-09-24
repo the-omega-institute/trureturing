@@ -12,6 +12,13 @@ Legal replacement and addition of classes give a different common-law conclusion
 
 The fixed mixture below controls all unused labels and all occupied labels above10^9 with total query sum below6.737016, while retaining density at most Lambda7 and full actual survivor support. The Gibbs refinement and fixed mixture below establish these bounds simultaneously. Controlling the remaining occupied labels under that same law is unresolved. These statements are ordinary proofs using(PR1), finite minimax and compactness; they are not new Lean results or an unrestricted Erdős#7 resolution.
 
+Two further sufficient interfaces are available: actual joint coverage
+reduces the replacement charge, and an exact finite density-constrained
+LP on shallow originals transfers to every deeper extension with a
+quantified conditioning loss. The required finite bound11.03257 remains
+unproved. A35-label irredundant counterexample shows why the necessary
+shallow exponential and pair moments cannot alone settle that gap.
+
 ## Legal phase resampling preserves the original quantifiers
 
 Let M be the set of actual original numerical moduli and C_d=[a_d]_d its fixed classes. Take a finite query set J of nonunit P-smooth labels. For each d in J fix a phase distribution theta_(d,a)>=0 with sum_a theta_(d,a)=1, and set
@@ -236,4 +243,375 @@ the variational and compactness arguments are the ordinary proof above.
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_resampling_gibbs.py
+```
+
+## A finite sufficient certificate with an explicit original-tail payment
+
+The cutoff alone does not make the complete original survivor finite in
+height. A density bound does permit a quantitative transfer from a law
+constructed using only the shallow original family. This gives a separate
+sufficient route to the total query target; it does not assert that the
+Gibbs law already has the missing shallow bound.
+
+Fix B>=19 and D>0 with D*tau_P(B)<1. For the same actual original family
+let M_B={d in M:d<=B}, and let U_B be the survivor of exactly those
+original classes, with their actual phases. Suppose a probability mu_B
+supported on U_B has
+
+    mu_B<=D H,                 R_P(mu_B)<=r.
+
+Numerical distinctness and the union bound give
+
+    mu_B(U_B minus U)
+       <=sum_(d in M,d>B)mu_B(C_d)
+       <=D*sum_(d in M,d>B)1/d
+       <=delta_B=D*tau_P(B)<1.                       (FT1)
+
+Condition this one law on the complete original survivor U. The resulting
+probability nu=mu_B|U/mu_B(U) satisfies simultaneously
+
+    nu<=D/(1-delta_B) H|U,
+    R_P(nu)<=r/(1-delta_B).                          (FT2)
+
+Indeed each cylinder probability is at most its mu_B probability divided
+by mu_B(U); take each maximum and then the nonnegative all-label sum.
+No deep original class is replaced by a projected shallow class. Its
+actual full phase is used in U and paid in(FT1). Nor are query costs from
+different probabilities combined.
+
+### The shallow density-constrained optimum is an exact finite LP
+
+Set
+
+    L_B=lcm{d: d<=B, d is P-smooth},
+    k_p=max{k: p^k<=B},
+    C_D(U_B)=inf{R_P(mu): mu(U_B)=1, mu<=D H}.
+
+Assume this set is nonempty. Averaging any feasible mu over Haar
+translations in the kernel of reduction modulo L_B preserves U_B,
+total mass and the density bound. For every numerical query label d,
+translation only permutes its residue classes, and convexity of the
+maximum gives
+
+    q_d(averaged mu)<=q_d(mu).                       (FT3)
+
+Thus Haar averaging decreases the full nonnegative query sum. The
+averaged law is the Haar-tail extension of a probability v on Z/L_B Z.
+The feasible v form a compact finite polytope. The complete-tail identity
+already used in [report475](475-two-center-density-and-query-bounds-lose-original-survivor-realizability.md#exact-all-depth-tail-sum)
+gives, with q_1(v)=1,
+
+    1+R_P(v extended by Haar)
+       =sum_(c divides L_B) w_B(c)*q_c(v),
+    w_B(c)=product_(p: v_p(c)=k_p) p/(p-1).           (FT4)
+
+For completeness, if c=gcd(d,L_B), each descendant query cylinder has
+probability (c/d) times the corresponding c-cylinder probability. Hence
+q_d=(c/d)q_c. Summing these factors over all d with the same gcd gives
+w_B(c). This retains all query labels above B, including labels not
+dividing L_B; they are not discarded or counted as one unweighted label.
+
+Consequently C_D(U_B) is the minimum of the rational linear program
+
+    minimize sum_(c divides L_B)w_B(c)*y_c - 1
+    subject to
+      0<=v_x<=D/L_B,                sum_x v_x=1,
+      v_x=0 for x outside U_B mod L_B,
+      y_1=1,
+      y_c>=sum_(x=a mod c)v_x       for every c|L_B and a mod c.
+                                                               (FT5)
+
+Here D is rational for a rational LP. The minimum exists; all weights
+are positive, so each y_c can be taken equal to the indicated maximum.
+Together(FT1)--(FT5) give a finite sufficient certificate for every
+arbitrary-height extension of a fixed shallow family. They also give
+
+    C_D(U_B)<=C_D(U),
+    C_(D/(1-delta_B))(U)<=C_D(U_B)/(1-delta_B),
+
+where an infeasible density-constrained infimum is interpreted as
+infinity. The first inequality alone keeps the same density cap; the
+upper transfer explicitly permits its inflation.
+
+### A fixed numerical target for the finite certificate
+
+For B=10^9 and D=Lambda7, report467 guarantees feasibility for every
+shallow original family. The retained reciprocal-tail data give
+
+    delta_B=0.004139121396732251436452023947...,
+    T*(1-delta_B)=11.032576400212672116439306009...,
+    D/(1-delta_B)=843.046871902750045312006602... .
+
+In particular, the following finite hypothesis would suffice:
+
+    For every choice of absent or one fixed residue at each nonunit
+    P-smooth numerical label d<=10^9,
+           C_Lambda7(U_B)<=1103257/100000=11.03257.   (FT6)
+
+Under(FT6), condition its minimizing law on the actual full U and mix
+epsilon=1/10^7 of report467's full-support law for that same U. Then
+
+    R_P(nu_hat)
+      <=(1-epsilon)*11.03257/(1-delta_B)
+             +epsilon*(70871/3375)
+       <565/51,
+    H|U/50000000<=nu_hat<=D_hat H,       D_hat<844.
+
+The strict query margin exceeds0.0000054. This
+mixture makes no claim to the separate Gibbs entropy budget(GD2).
+
+The unresolved hypothesis(FT6) is genuinely finite: its periods and
+constraints depend only on the fixed shallow labels, not on the deeper
+original phases or heights. But its direct period has61 decimal digits:
+
+    (k_3,k_5,k_7,k_11,k_13,k_17,k_19)=(18,12,10,8,8,7,7),
+    L_B=1713598183708474921576632438503877316470966933909293701171875,
+    number of divisors of L_B=14084928.
+
+No LP in(FT6) has been solved here, and no efficient enumeration or
+compressed representation of all shallow original phase patterns is
+established. This is a density-constrained sufficient route, not an
+equivalence with the unrestricted supported-law optimum. Failure of(FT6)
+would not refute the seven-prime query target or Erdős#7.
+
+The [tail-transfer arithmetic](../../frontier/cover-geometry/phase_resampling_finite_transfer.py)
+and [result](../../frontier/cover-geometry/phase_resampling_finite_transfer.json)
+consume the retained alpha7 and reciprocal tail, compute the finite
+period dimensions, and check the strict conditional query and density
+bounds. They do not enumerate shallow families or solve the LP.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/phase_resampling_finite_transfer.py
+```
+
+## Actual joint coverage gives a smaller replacement charge
+
+Keep the full actual original family M and its globally fixed classes
+C_d. For every S subset M define its exact covering cell
+
+    E_S={x: {d in M:x in C_d}=S},
+    U=E_empty.
+
+Fix r in[0,1]^M before varying any finite query inventory or phase
+mixture. The joint leakage bound is
+
+    L(r)=sum_(nonempty S subset M) H(E_S)*product_(d in S)r_d
+         <=sum_(d in M)r_d/d.                        (JL1)
+
+For beta=alpha7-L(r)>0, the existing Gibbs argument gives one probability
+on the same full U with
+
+    nu<=H|U/beta,
+    R_unused(nu)+sum_(d in M)r_d*q_d(nu)+KL(nu||H(.|U))
+       <=log(H(U)/beta).                             (JL2)
+
+This applies the finite coverage/reliability polynomial to the existing
+resampling construction; it is not a new general reliability theorem.
+
+### Every covering original must be replaced
+
+For a finite query set J write O=J intersect M and F=J minus M. At
+x in E_S, an original covering label outside O prevents survival. If
+S is contained in O, the exact averaged survival probability is
+
+    product_(d in S) r_d*(1-w_d(x))
+      *product_(d in O minus S)(1-r_d*w_d(x))
+      *product_(d in F)(1-w_d(x)).                    (JL3)
+
+For nonempty S this is at most product_(d in S)r_d. Thus the exterior
+survivor mass is at most the part of(JL1) with S subset O, and hence at
+most L(r), uniformly in J and theta. The inside-U product remains the
+one in(PR3). Averaging the same legal-family mass bound and subtracting
+this exterior bound gives the exponential lower bound used in(GD1),
+with beta=alpha7-L(r). That beta and the vector r are fixed throughout
+the finite-query compactness step, proving(JL2).
+
+Equivalently, L(r) is exactly the expected newly surviving Haar mass
+after independently deleting original d with probability r_d, before
+installing any replacement classes. Replacement phases can only lower
+that mass. The exact phase-dependent exterior mass is(JL3), not L(r).
+
+In particular, replacing just one label d costs its actual private mass
+times r_d. Simultaneous replacements require the higher-order terms.
+For the actual nested originals0 mod3 and0 mod9,
+
+    L(r_3,r_9)=(2/9)r_3+(1/9)r_3*r_9.
+
+Replacement phases1 at both labels miss the whole old union, so this
+is the exact exterior leakage. Omitting the quadratic term is false.
+For the disjoint originals0 mod3 and1 mod9, replacement phases2 at both
+labels instead give exact leakage r_3/3+r_9/9. Thus the old bound can be
+attained; oddness and numerical distinctness alone do not imply a
+uniform strict saving.
+
+### Partial replacement of a fixed block
+
+Let A be a subset of original labels and V the survivor of the retained
+originals M minus A. Take r_d=s on A and zero outside it. Put
+
+    a_k=H({x in V: exactly k originals in A cover x}),
+    delta_A=H(V)-H(U)=sum_(k>=1)a_k.
+
+Then, for0<=s<=1,
+
+    L_A(s)=sum_(k>=1)a_k*s^k
+           <=a_1*s+(delta_A-a_1)*s^2.                (JL4)
+
+The coefficient a_1 is the sum of the full-family private masses of
+the labels in A. At s=1 the cost is delta_A, the region newly exposed
+by deleting the entire block. If delta_A=0, these occupied labels can
+receive query weight one at zero leakage. This zero-cost case also
+follows by applying(PR2) to the smaller family with exactly the same U;
+it does not allow simultaneous deletion of individually redundant
+labels whose joint deletion changes U.
+
+A separate low-order upper bound is
+
+    L(r)<=sum_d H(E_{d})*r_d
+             +sum_(d<e)H(C_d intersect C_e)*r_d*r_e.  (JL5)
+
+Here E_{d} denotes E_{ {d} }. For a point covered by at least two
+originals, its product of all replacement probabilities is no greater
+than the sum of pair products at that point. Integrate this inequality;
+no independence of the original covering events is assumed. Actual
+intersection masses equal zero for incompatible residues and otherwise
+1/lcm of the original labels. Exclusive masses retain all remaining
+original constraints, so their computation can still involve arbitrary
+finite original heights.
+
+### A joint sufficient query budget and its full-replacement limit
+
+Take A=M intersect{d<=B}, fix0<s<=1 and certify ell(s)>=L_A(s) with
+ell(s)<alpha7. Write beta_s=alpha7-ell(s), m=H(U), and
+
+    a_deep=sum_(d in M,d>B)1/d,
+    f_0=sum_(d unused, d>1, P-smooth)1/d
+        =product_(p in P)p/(p-1)-1-sum_(d in M)1/d.
+
+The same Gibbs law has R_unused>=f_0 and occupied-deep cost at most
+a_deep/beta_s. Rearranging(JL2) therefore gives
+
+    R_P(nu)+KL(nu||H(.|U))/s
+      <=[log(m/beta_s)-(1-s)*f_0]/s+a_deep/beta_s.    (JL6)
+
+A bound strictly below T on this right side suffices for the total
+query target. All terms concern this one probability. A weaker
+certificate may use m<=1 and a_deep<=tau_P(B). More generally, for any
+fixed vector r with beta=alpha7-L(r)>0,
+
+    R_P(nu)+KL(nu||H(.|U))
+      <=log(m/beta)+sum_(d in M)(1-r_d)/(beta*d).      (JL7)
+
+The cylinder payment1/(beta*d) can be reduced to
+min(1,max_a H(U intersect[a]_d)/beta) under the same law. No estimate
+showing that(JL6) or(JL7) crosses T for every original family is proved.
+
+Even computing the exact covering cells does not make full replacement
+of all shallow labels automatically feasible. At s=1 let U_deep be
+the survivor of only the original labels above B. Then
+
+    L_A(1)=H(U_deep)-H(U)>=1-tau_P(B)-H(U).
+
+Thus positive beta requires
+
+    H(U)>1-alpha7-tau_P(B).                           (JL8)
+
+If any actual original label d has1/d>=alpha7+tau_P(B), the bound
+H(U)<=1-1/d already excludes positive beta for this choice. This is a
+limitation of the full-shallow, phase-free leakage bound. Partial
+replacement, a smaller block or a bound retaining the phase factors in
+(JL3) is not excluded.
+
+## Irredundant shallow originals can pass both moment tests with query cost below3
+
+The exponential and pair conditions(PR9)--(PR10) cannot be closed by
+unconditional opposite moment bounds, even after requiring every original
+class to have a private integer. The following actual family admits a
+full-support law within the Gibbs unused-plus-entropy budget and with
+total all-depth query cost below3, while one fixed query phase choice
+passes both necessary moment thresholds by a wide margin.
+
+For each three-element S subset P, take the original class
+
+    C_S=[0]_(d_S),       d_S=product_(p in S)p.
+
+There are35 distinct odd numerical labels, all greater than1 and at
+most13*17*19=4199. Each has a private CRT integer: set the first roots
+to0 at the primes in S and1 at all other primes. A different
+three-element subset contains a prime outside S, so its original class
+does not contain this integer. The family is irredundant on its union.
+
+Its complete survivor and mass are
+
+    U={x: at most two p in P have x=0 mod p},
+    L=product_(p in P)p=4849845,
+    L*H(U)=sum_(Z subset P, |Z|<=2)product_(p notin Z)(p-1)
+           =4608000,
+    H(U)=307200/323323.                               (IM1)
+
+The count has29 terms. There is no chosen subset of survivors in(IM1).
+
+Query precisely these35 occupied labels, always at phase1. All query
+phases differ from their own forbidden original phase0. With k(x) the
+number of first roots equal to1, the same query load is
+
+    h_theta(x)=sum_(d in M)1_[1]_d(x)=binomial(k(x),3).
+
+The all-one root cylinder lies in U, has Haar mass1/L and load35.
+Since exp(1)>2,
+
+    integral_U exp(h_theta)dH
+       >=exp(35)/L>34359738368/4849845>7000>384/5.     (IM2)
+
+For the same phases, consider root vectors with exactly five roots
+equal to1. Their remaining two roots can be any non-1 values; such a
+vector has at most two zero roots and lies in U. There are
+
+    sum_(p<q in P)(p-1)(q-1)=1872
+
+such vectors, each with10 simultaneous queries and hence45 query
+pairs. Therefore
+
+    sum_(d<e in M)H(U intersect[1]_d intersect[1]_e)
+       >=45*1872/L=432/24871>1/329.                  (IM3)
+
+Nevertheless the probability rho=H|U/H(U) has full support on U and,
+for every P-smooth numerical query label at arbitrary depth,
+
+    q_d(rho)<=1/(d*H(U)).
+
+The complete geometric product then gives, on this one law,
+
+    R_P(rho)
+      <=[product_(p in P)p/(p-1)-1]/H(U)
+       =68780825113/33973862400<3,
+    d rho/dH=323323/307200 on U.                     (IM4)
+
+This includes all higher query depths. Relative entropy to the uniform
+law on U is zero for rho itself. Also H(U)/alpha7>27>exp(3), so
+
+    R_unused(rho)+KL(rho||H(.|U))<3<log(H(U)/alpha7).
+
+It also has density below Lambda7 and combined unused-plus-deep cost
+below3. Thus the example belongs to the same constrained class in which
+the shallow-label solution is being sought.
+
+The missing condition is the pointwise dual premise: the actual survivor
+x=2 has h_theta(2)=0. These phases do not satisfy f>=T throughout U.
+Conditions(PR9)--(PR10) remain necessary for such a dual; the example
+shows that those moments alone, even with irredundancy and nonoriginal
+query phases, are not sufficient obstructions to a good common law.
+It refutes the proposed universal shallow exponential-moment ceiling,
+not the seven-prime query target or Erdős#7.
+
+The [fixed counterexample checker](../../frontier/cover-geometry/irredundant_shallow_moment_obstruction.py)
+and [exact data](../../frontier/cover-geometry/irredundant_shallow_moment_obstruction.json)
+retain all35 original labels and their private integers. The1225
+private-point/class checks, the29-term survivor count, and the strict
+rational inequalities passed. The complete period was not enumerated;
+the ordinary proof establishes the all-depth implications. No Lean
+verification is claimed.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/irredundant_shallow_moment_obstruction.py
 ```
