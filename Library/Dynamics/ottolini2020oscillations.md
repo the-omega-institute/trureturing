@@ -36,7 +36,7 @@ assertion that dependence can always be removed by Poissonization.
 
 Discrete extreme oscillations and the need to account for ties are
 `literature-attested`. In the arithmetic extension of
-[PARITY_HIDDEN_ARROW](../../docs/develop/theory/PARITY_HIDDEN_ARROW.md),
+[PARITY_HIDDEN_ARROW_RECOVERY](../../docs/develop/theory/PARITY_HIDDEN_ARROW_RECOVERY.md),
 there are two row classes with different compound-Poisson comparison laws, the Poisson
 time increases logarithmically, and the observed rows come from compensated
 stationary pairs or paths. The proof uses that model's exact likelihood and
