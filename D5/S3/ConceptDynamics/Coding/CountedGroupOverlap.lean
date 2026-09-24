@@ -124,7 +124,8 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
-  simpa [rebuild, totalFiberEquiv, join, split] using hinv
+  simp [rebuild, totalFiberEquiv] at hinv
+  simpa [join, split] using hinv.2
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
