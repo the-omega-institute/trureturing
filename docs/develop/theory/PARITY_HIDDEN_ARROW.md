@@ -2205,6 +2205,10 @@ $$
 独立 Bernoulli 信号计数的极端稀疏高斯临界极限见
 [Ditzhaus–Janssen，§1.1、定理 4.10](../../../Library/Dynamics/ditzhaus2018detectability.md)；
 本定义把峰数固定，并使用有补偿的转移核。
+[Hall–Jin，式 (2.2)–(2.3) 与定理 2.1](../../../Library/Dynamics/halljin2010innovated.md)
+则固定一个随维数增长的精确支持数 $m=n^{1-\beta}$，位置无放回均匀抽取；
+其独立高斯模型的 Higher Criticism 在可检测区域内部适应未知稀疏度和强度，功效趋一。
+该结论不涉及常数峰数、各坐标的有限临界参数或下面的乘积风险极限。
 
 **定理 15.2（异质临界坐标的乘积风险）。** 对任意振幅数列
 $\boldsymbol r=\boldsymbol r_d\in(0,1)^q$ 与正整数 $s=s_d$，若每个 $i$ 都满足
