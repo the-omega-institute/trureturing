@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The literal A331474 moments and Hankel determinants are connected to a signed period-two continuant, yielding an exact all-order scalar bridge.
+The literal A331473 moments and their A331474 Hankel determinants are connected to a signed period-two continuant, yielding an exact all-order scalar bridge.
 
 All indices below are natural numbers. Integer-valued sequences are written with subscripts. The symbol X is the polynomial indeterminate, coeff selects a polynomial coefficient, and det is the determinant of the displayed finite matrix. These definitions use the literal offset-zero OEIS source, not a recurrence-defined replacement for its Hankel transform.
 

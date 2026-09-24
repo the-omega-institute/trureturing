@@ -35,7 +35,7 @@ namespace D5.S3.Constants.Moments.A331474HankelBridge
 def b (n : Nat) : Int :=
   Int.ofNat ((2 * n + 2).choose n)
 
-/-- The literal alternating binomial transform in A331474, at offset zero. -/
+/-- The literal alternating binomial transform in A331473, at offset zero. -/
 def s (n : Nat) : Int :=
   ∑ k ∈ Finset.range (n + 1), (-1 : Int) ^ (n - k) * b k
 

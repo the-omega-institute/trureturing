@@ -13,8 +13,8 @@ internal sealed class A331474HankelBridgeDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/Recurrence/bojicicpetkovicbarry2025hankel");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The literal A331474 moments and Hankel determinants are connected to a signed "
-            + "period-two continuant, yielding an exact all-order scalar bridge.",
+        "The literal A331473 moments and their A331474 Hankel determinants are connected "
+            + "to a signed period-two continuant, yielding an exact all-order scalar bridge.",
         H("A331474 Signed Hankel Bridge"),
         Blocks(
             Paragraph(Text(
