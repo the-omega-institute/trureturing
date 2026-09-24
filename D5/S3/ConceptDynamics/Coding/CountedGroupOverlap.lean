@@ -117,8 +117,33 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
       by simpa [mul_assoc] using q.2.2.2.2⟩
   have recovered_eq : recovered = q := by
     rcases q with ⟨qg, qj, qh, qa, qb⟩
-    dsimp [recovered]
-    rw [mul_inv_cancel_left]
+    let reassociate :
+        (Σ g : H, Fiber U V i k g) ≃
+          (Σ j : Fin m, Σ h : H,
+            Fin ((U i j).coeff h) ×
+              (Σ g : H, Fin ((V j k).coeff (h⁻¹ * g)))) := {
+      toFun := fun z => ⟨z.2.1, z.2.2.1, z.2.2.2.1, z.1, z.2.2.2.2⟩
+      invFun := fun z => ⟨z.2.2.2.1, z.1, z.2.1, z.2.2.1, z.2.2.2.2⟩
+      left_inv := by intro z; rcases z with ⟨g, j, h, x, y⟩; rfl
+      right_inv := by intro z; rcases z with ⟨j, h, x, g, y⟩; rfl }
+    apply reassociate.injective
+    change
+      (⟨qj, qh, qa, qh * (qh⁻¹ * qg), by simpa [mul_assoc] using qb⟩ :
+        Σ j : Fin m, Σ h : H,
+          Fin ((U i j).coeff h) ×
+            (Σ g : H, Fin ((V j k).coeff (h⁻¹ * g)))) =
+      ⟨qj, qh, qa, qg, qb⟩
+    apply Sigma.ext
+    · rfl
+    · apply heq_of_eq
+      apply Sigma.ext
+      · rfl
+      · apply heq_of_eq
+        apply Prod.ext
+        · rfl
+        · apply Sigma.ext
+          · simp
+          · exact cast_heq _ qb
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
