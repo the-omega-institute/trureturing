@@ -230,13 +230,14 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     LibraryNoteRef.Create("D5/L/PredictiveReduction/tropp2012matrix")),
                 Blocks(Paragraph(Text(
                     "Sakamoto and Sato's version 2 uses noisy impulse responses to construct "
-                    + "a regularized finite-time objective and gradient. The unified theory "
-                    + "instead pairs an initial feature with a later supervised state target. "
-                    + "Its sample-score certificate directly applies Tropp's matrix Bernstein "
-                    + "inequality after checking independence, centering, a norm bound and a "
-                    + "variance bound. Unpaired observations, overlapping trajectories and "
-                    + "empirical maxima do not automatically satisfy those premises. These "
-                    + "remarks add literature links, not a new kernel-verified theorem.")))),
+                    + "a regularized finite-time objective and gradient. The separately "
+                    + "referenced finite-horizon proposal instead pairs an initial feature "
+                    + "with a later supervised state target. A sample-score certificate "
+                    + "using Tropp's matrix Bernstein inequality requires independence, "
+                    + "centering, a norm bound and a variance bound. Unpaired observations, "
+                    + "overlapping trajectories and empirical maxima do not automatically "
+                    + "satisfy those premises. These remarks add literature links, not a "
+                    + "new kernel-verified theorem or an incorporated proof of that draft.")))),
             Describe.Remark(
                 DescribeId.Create("finite-time-frequency-coherence-scope"),
                 DeclarationHandle.Create(Gid + "hamiltonian_effect_completion_generator"),
@@ -364,7 +365,7 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
         Formula orbitClause = Seq(
             Exists, Sp, time, Sp, InMacro, Sp, RealNumbers(), Comma, Sp,
             effect, Sp, InMacro, Sp, initial, Comma, Sp,
-            observable, Sp, Eq, Sp, effect, Dot);
+            observable, Sp, Eq, Sp, Orbit(hamiltonian, effect, time));
         Formula commutator = Call(F.Id("ad"), hamiltonian);
         Formula spanClause = Seq(
             Call(
