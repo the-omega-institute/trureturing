@@ -26,6 +26,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
         Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
+            "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
+            RepositoryTopologyProject,
         }), Strings(plan["execution"]!["tests"]!));
     }
 

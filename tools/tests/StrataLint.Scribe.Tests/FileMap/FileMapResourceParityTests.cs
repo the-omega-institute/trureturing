@@ -13,7 +13,10 @@ public sealed class FileMapResourceParityTests
             "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
             "docs/develop/spec/trureturing_engineering_optimization_v1.md",
             "docs/reports/a110037-0910/BoundaryProbe.lean", "docs/reports/prime-slab-corner-order-0909.json" })
-            Assert.Equal(["test-worktree-contract"], Assert.Single(map.Match(path)).Require.ToArray());
+            Assert.Equal(path == "README.md"
+                ? new[] { "test-repository-filemap", "test-worktree-contract" } : path == "docs/develop/theory/input.md"
+                    ? new[] { "test-source-atomizer", "test-worktree-contract" } : ["test-worktree-contract"],
+                Assert.Single(map.Match(path)).Require);
         foreach (var path in new[] { "Library/Notes/input.md", "Problems/input.md",
             "Blueprint/D5/Result.md", "D5/ledger.md", "CLAUDE.md", "tools/scripts/workflow/ci_plan.py",
             "tools/StrataLint.Scribe/FileMap/FileMapResources.cs",

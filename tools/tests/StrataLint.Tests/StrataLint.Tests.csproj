@@ -6,6 +6,7 @@
     <AssemblyName>StrataLint.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../TestSupport/StrataLint.CoverTestSupport/StrataLint.CoverTestSupport.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.DeclaredTemplateTestSupport/StrataLint.DeclaredTemplateTestSupport.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj" />

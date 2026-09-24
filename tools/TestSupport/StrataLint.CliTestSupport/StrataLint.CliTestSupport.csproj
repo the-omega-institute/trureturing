@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj" />
     <PackageReference Include="xunit" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <AdditionalFiles Include="../../Architecture/BannedSymbols.Determinism.txt" />

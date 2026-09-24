@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.FrozenLedgerTestData;
+using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 

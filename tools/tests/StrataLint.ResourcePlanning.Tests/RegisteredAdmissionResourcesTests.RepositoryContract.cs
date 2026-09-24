@@ -17,18 +17,18 @@ public sealed partial class RegisteredAdmissionResourcesTests
         {
             var plan = Plan("tools/tests/StrataLint.RepositoryContract.Tests/" + file, "", mode);
             Assert.Equal(WithRepositoryContract(architecture
-                    ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj" } : []),
+                    ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj", "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj", RepositoryTopologyProject } : []),
                 Strings(plan["execution"]!["tests"]!));
-            Assert.Equal(WithRepositoryContract(new[] { architecture
-                    ? "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj"
-                    : "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" }),
+            Assert.Equal(WithRepositoryContract(architecture
+                    ? new[] { "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj", "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj", RepositoryTopologyProject }
+                    : new[] { "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" }),
                 Strings(plan["execution"]!["projects"]!));
             Assert.DoesNotContain("test-cli", Strings(plan["resources"]!));
         }
     }
 
     [Theory]
-    [InlineData("tools/scripts/agent/merge-gate.sh", "StrataLint.ArchitectureTests", "StrataLint.Tests")]
+    [InlineData("tools/scripts/agent/merge-gate.sh", "StrataLint.ArchitectureTests", null)]
     [InlineData("tools/tests/StrataLint.Configuration.Tests/RegistryTests.cs", "StrataLint.ArchitectureTests", "StrataLint.Configuration.Tests")]
     [InlineData("tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py", "StrataLint.Cache.Release.Tests", null)]
     public void EngineeringPathsSelectOnlyTheirActualContractConsumers(string path, string first, string? second)
@@ -36,7 +36,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var mode in new[] { "push", "pr" })
         {
             var consumers = new[] { first }.Concat(second is null ? [] : new[] { second })
-                .Concat(path == "tools/scripts/agent/merge-gate.sh" ? new[] { "StrataLint.RepositoryContract.Tests" } : []);
+                .Concat(path == "tools/scripts/agent/merge-gate.sh" ? new[] { "StrataLint.RepositoryContract.Tests" } : [])
+                .Concat(path.EndsWith(".cs", StringComparison.Ordinal) ? new[] { "StrataLint.RepositoryFileMap.Tests", "StrataLint.RepositoryTopology.Tests" } : []);
             Assert.Equal(WithWorktreeContract(consumers.Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
         }
@@ -50,13 +51,19 @@ public sealed partial class RegisteredAdmissionResourcesTests
     [InlineData("tools/scripts/agent/openproblem/templates/review-template.md")]
     [InlineData("D5/F/NumberTheory/AdmissionResourceProbe.lean")]
     [InlineData("Meta/Digestion/backfill/admission-resource-probe.json")]
-    public void ContentAndMetadataPathsDoNotAcquireEngineeringTests(string path)
+    public void ContentAndMetadataPathsDoNotAcquireUnrelatedEngineeringTests(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan(path, "", mode);
             var readsInstructions = path.StartsWith("D5/", StringComparison.Ordinal);
-            Assert.Equal(WithWorktreeContract(readsInstructions ? new[] { InstructionContractProject } : []),
+            var readsDigestion = readsInstructions || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
+            var readsSourceAtomizer = path.StartsWith("docs/develop/theory/", StringComparison.Ordinal) || path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal);
+            var readsRegistry = path == "README.md";
+            Assert.Equal(WithWorktreeContract((readsInstructions ? new[] { CoverBatchProject, InstructionContractProject, TruthReleaseProject } : [])
+                    .Concat(readsDigestion ? new[] { RepositoryDigestionProject } : [])
+                    .Concat(readsRegistry ? new[] { RepositoryFileMapProject } : [])
+                    .Concat(readsSourceAtomizer ? new[] { SourceAtomizerProject } : [])),
                 Strings(plan["execution"]!["tests"]!));
             Assert.Equal("required",
                 plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
@@ -85,8 +92,13 @@ public sealed partial class RegisteredAdmissionResourcesTests
         })
         {
             var plan = Plan(path, "", mode, change);
-            Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal)
-                ? new[] { InstructionContractProject } : []), Strings(plan["execution"]!["tests"]!));
+            var consumers = path.StartsWith("D5/", StringComparison.Ordinal)
+                ? new[] { CoverBatchProject, InstructionContractProject, RepositoryDigestionProject, TruthReleaseProject }
+                : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
+                    ? [RepositoryDigestionProject, SourceAtomizerProject]
+                    : path == "README.md" ? [RepositoryFileMapProject]
+                        : path.StartsWith("docs/develop/theory/", StringComparison.Ordinal) ? [SourceAtomizerProject] : [];
+            Assert.Equal(WithWorktreeContract(consumers), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("test-repository-contract", Strings(plan["resources"]!));
             Assert.DoesNotContain("test-cli", Strings(plan["resources"]!));
             var original = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);
@@ -111,6 +123,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
             var plan = Plan("tools/tests/StrataLint.WorktreeContract.Tests/" + file, "", mode);
             Assert.Equal(WithWorktreeContract(architecture ? new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+                "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
+                RepositoryTopologyProject,
             } : []), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("test-repository-contract", Strings(plan["resources"]!));
         }

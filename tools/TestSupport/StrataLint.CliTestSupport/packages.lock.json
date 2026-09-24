@@ -37,6 +37,11 @@
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0"
         }
       },
+      "Validation": {
+        "type": "Transitive",
+        "resolved": "2.6.68",
+        "contentHash": "5mZ+aXsYQnr3Wxz5O2tmbgPaa5kn9R+ZlfnPyGBogXI2sh4uTiHtvU++N4bURtn9vmDYIu2Zu323K9hFz9poXQ=="
+      },
       "xunit.abstractions": {
         "type": "Transitive",
         "resolved": "2.0.3",
@@ -99,6 +104,15 @@
           "YamlDotNet": "[16.3.0, )"
         }
       },
+      "stratalint.digestiontestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.RegistrationTestSupport": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -140,6 +154,12 @@
           "StrataLint.Engine": "[1.0.0, )"
         }
       },
+      "stratalint.registrationtestsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.TestSupport": "[1.0.0, )"
+        }
+      },
       "stratalint.resourceplanning": {
         "type": "Project"
       },
@@ -157,6 +177,13 @@
         "type": "Project",
         "dependencies": {
           "StrataLint.Scribe": "[1.0.0, )"
+        }
+      },
+      "stratalint.testsupport": {
+        "type": "Project",
+        "dependencies": {
+          "Xunit.SkippableFact": "[1.5.85, )",
+          "xunit": "[2.9.3, )"
         }
       },
       "trureturing.truth": {
@@ -210,6 +237,16 @@
         "requested": "[2.10.1, )",
         "resolved": "2.10.1",
         "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
+      },
+      "Xunit.SkippableFact": {
+        "type": "CentralTransitive",
+        "requested": "[1.5.85, )",
+        "resolved": "1.5.85",
+        "contentHash": "zI3QsePulfENNjZC+POQYtqt/9HkUfe6qq+waSJ1xGVMU9v8LyWbr695IRAgg+UYDkPUgGnBjyULIVQ9Qdpgsg==",
+        "dependencies": {
+          "Validation": "2.6.68",
+          "xunit.extensibility.execution": "2.4.0"
+        }
       },
       "YamlDotNet": {
         "type": "CentralTransitive",

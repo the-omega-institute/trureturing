@@ -244,15 +244,36 @@ public sealed partial class CurrentExecutionContractTests
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/package-materials.json", true)]
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "Meta/registry.yaml", true)]
     [InlineData("StrataLint.RepositoryConfiguration.Tests", "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml", false)]
+    [InlineData("StrataLint.Tests", "CLAUDE.md", true)]
+    [InlineData("StrataLint.Tests", "D5/S3/Midline/GoldenSpectralMarker.lean", false)]
+    [InlineData("StrataLint.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md", false)]
+    [InlineData("StrataLint.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs", false)]
+    [InlineData("StrataLint.Tests", "D5/S0/Carrier/Unrelated.lean", false)]
+    [InlineData("StrataLint.Tests", "Golden/Projection/statement-projection-pilot-v1.json", true)]
+    [InlineData("StrataLint.Tests", "Golden/Projection/statement-projection-expansion-v1.json", true)]
+    [InlineData("StrataLint.Tests", "Golden/values-kernels.toml", false)]
+    [InlineData("StrataLint.Tests", "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json", true)]
+    [InlineData("StrataLint.Tests", "tools/StrataLint.Engine/Relocated/BackfillInventoryRule.cs", true, true)]
+    [InlineData("StrataLint.Tests", "tools/scripts/report/lean-report.sh", false)]
+    [InlineData("StrataLint.Tests", "tools/scripts/workflow/playbook-workflows.sh", true)]
+    [InlineData("StrataLint.Tests", "tools/scripts/worktree/lean_cache_release.py", true)]
     [InlineData("StrataLint.Tests", "Meta/domains.yaml", false)]
     [InlineData("StrataLint.Tests", "Meta/registry.yaml", false)]
+    [InlineData("StrataLint.TruthRelease.Tests", "D5/S3/Midline/GoldenSpectralMarker.lean", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Golden/Projection/statement-projection-pilot-v1.json", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Golden/Projection/statement-projection-expansion-v1.json", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Meta/Digestion/atomizers.toml", true)]
+    [InlineData("StrataLint.TruthRelease.Tests", "D5/S0/Carrier/Unrelated.lean", false)]
+    [InlineData("StrataLint.TruthRelease.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
     [InlineData("StrataLint.FileMap.Tests", "Meta/domains.yaml", false)]
     [InlineData("StrataLint.FileMap.Tests", "Meta/registry.yaml", false)]
     [InlineData("StrataLint.FileMap.Tests", "tools/scripts/agent/header-check.sh", false)]
     [InlineData("StrataLint.FileMap.Tests", "Blueprint/D5/S0/Carrier/Fixture.scribe.cs", false)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "Meta/Digestion/atomizers.toml", true)]
     [InlineData("StrataLint.DeclaredTemplate.Tests", "tools/scripts/agent/header-check.sh", false)]
-    public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates)
+    public void RegisteredCacheFixtureInputsReuseContentChangesAndRerunCacheChanges(string project, string path, bool invalidates, bool addInput = false)
     {
         using var fixture = new ExecutionFixture();
         var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), EngineeringRegistrationFixture.Path)))!;
@@ -263,21 +284,12 @@ public sealed partial class CurrentExecutionContractTests
             foreach (var field in new[] { "execution_inputs", "execution_excludes" })
                 rows[0]![field] = declaration[field]!.DeepClone();
         });
-        const string documents = "tools/fixture/BlueprintFixture.csproj";
-        fixture.Write(documents, "<Project />\n");
-        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
-        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
-            new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
-        const string sourceInputs = "tools/fixture/SourceInputs.csproj";
-        fixture.Write(sourceInputs, "<Project />\n");
-        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
-            new EngineeringProjectFixture(sourceInputs, "SourceInputs", "test-support", false,
-                ["tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs", "tools/StrataLint.Configuration/**/*.cs"])));
+        RegisterRuntimeSourceOwners(fixture);
         foreach (var input in declaration["execution_inputs"]!.AsArray().Select(value => value!.ToString()).Where(value => !value.Contains('*')))
             if (!File.Exists(Path.Combine(fixture.Root, input))) fixture.Write(input, input == "Meta/FILEMAP.toml"
                 ? "schema_version = 4\n[[files]]\npattern = \"tools/tests/First/**\"\nkind = \"program\"\n"
                 : "registered fixture material\n");
-        fixture.Write(path, "original registered input\n");
+        if (!addInput) fixture.Write(path, "original registered input\n");
         fixture.Track();
         Execute(fixture);
         Seed(fixture);
@@ -307,5 +319,22 @@ public sealed partial class CurrentExecutionContractTests
                 CommonExecutionEvidence.ValidateEngineering(fixture.Root)).Message);
         }
         else Assert.Equal(prior with { Status = "reused" }, accepted);
+    }
+
+    private static void RegisterRuntimeSourceOwners(ExecutionFixture fixture)
+    {
+        // Byte-read C# materials still require source ownership in the synthetic
+        // candidate; these owners are not compile references of the test projects.
+        const string documents = "tools/fixture/BlueprintFixture.csproj";
+        fixture.Write(documents, "<Project />\n");
+        var manifest = Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path);
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(documents, "BlueprintFixture", "test-support", false, ["Blueprint/**/*.scribe.cs"])));
+        const string sourceInputs = "tools/fixture/SourceInputs.csproj";
+        fixture.Write(sourceInputs, "<Project />\n");
+        File.WriteAllText(manifest, EngineeringRegistrationFixture.Append(File.ReadAllText(manifest),
+            new EngineeringProjectFixture(sourceInputs, "SourceInputs", "test-support", false,
+                ["tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs", "tools/StrataLint.Configuration/**/*.cs",
+                    "tools/StrataLint.Lean/**/*.cs"])));
     }
 }

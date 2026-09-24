@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.ExecutionEvidence")]
 [assembly: InternalsVisibleTo("StrataLint.InspectionIntegration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.InspectionScope.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.RepositoryFileMap.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.ScriptTests")]
 [assembly: InternalsVisibleTo("StrataLint.StageIntegration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.Tests")]

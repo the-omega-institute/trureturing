@@ -141,6 +141,7 @@
         "tools/tests/StrataLint.CiArtifacts.Tests/StrataLint.CiArtifacts.Tests.csproj",
         "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
         "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
+        "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj",
         "tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
         "tools/tests/StrataLint.Digestion.Tests/StrataLint.Digestion.Tests.csproj",
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
@@ -152,23 +153,30 @@
         "tools/tests/StrataLint.InspectionScope.Tests/StrataLint.InspectionScope.Tests.csproj",
         "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj",
         "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
+        "tools/tests/StrataLint.LeanCacheScript.Tests/StrataLint.LeanCacheScript.Tests.csproj",
         "tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj",
         "tools/tests/StrataLint.NativeTransportIntegration.Tests/StrataLint.NativeTransportIntegration.Tests.csproj",
         "tools/tests/StrataLint.PlanningIntegration.Tests/StrataLint.PlanningIntegration.Tests.csproj",
+        "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj",
         "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj",
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/StrataLint.ReleaseSelection.Tests.csproj",
         "tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj",
         "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj",
         "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
         "tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj",
         "tools/tests/StrataLint.ResourcePlanning.Tests/StrataLint.ResourcePlanning.Tests.csproj",
         "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
         "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+        "tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj",
         "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
+        "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
         "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
         "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
@@ -342,6 +350,14 @@
       "steps": []
     },
     {
+      "id": "test-cover-batch",
+      "projects": [
+        "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "test-declared-template",
       "projects": [
         "tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj"
@@ -438,6 +454,14 @@
       "steps": []
     },
     {
+      "id": "test-lean-cache-script",
+      "projects": [
+        "tools/tests/StrataLint.LeanCacheScript.Tests/StrataLint.LeanCacheScript.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "test-lean-report-script",
       "projects": [
         "tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj"
@@ -510,6 +534,30 @@
       "steps": []
     },
     {
+      "id": "test-repository-digestion",
+      "projects": [
+        "tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-repository-filemap",
+      "projects": [
+        "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-repository-topology",
+      "projects": [
+        "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "test-resource-observation",
       "projects": [
         "tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj"
@@ -550,6 +598,14 @@
       "steps": []
     },
     {
+      "id": "test-source-atomizer",
+      "projects": [
+        "tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "test-stage-integration",
       "projects": [
         "tools/tests/StrataLint.StageIntegration.Tests/StrataLint.StageIntegration.Tests.csproj"
@@ -582,9 +638,25 @@
       "steps": []
     },
     {
+      "id": "test-playbook-script",
+      "projects": [
+        "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
       "id": "test-worktree-contract",
       "projects": [
         "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj"
+      ],
+      "checks": [],
+      "steps": []
+    },
+    {
+      "id": "test-truth-release",
+      "projects": [
+        "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj"
       ],
       "checks": [],
       "steps": []
