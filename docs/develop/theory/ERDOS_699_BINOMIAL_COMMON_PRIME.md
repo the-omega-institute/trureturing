@@ -922,6 +922,114 @@ Bergman [10] §2 的 Theorem 2 已证明固定 `i>=2` 时 gcd 随 `n` 发散，�
 
 当前缺口仍包括：完整 `i=3` 的所有素数、所有高位进位相容性；以及 `i>=4` 的有限异常全排除。没有完整证明或反例，整题解决计数不变。所有新增书面内容继续保留在同一卷和同一 PR。
 
+## 20. 独立 CLI 对 `i=3` 的相邻核心约化
+
+本节来自独立 Codex CLI 数学席，结果文件的 SHA-256 为
+`9de452aec61d51260f34446954b49bd714781506660a24eeab67901636d35f0d`。
+调用席没有读取本卷或其他 worker 的结论作为证明前提；本节的代数又由主进程逐式复核。它没有得到完整证明、反例或 Lean 定理，故不增加整题 KPI。
+
+### 20.1 约化定理
+
+令
+
+\[
+R(x)=\frac{x}{2^{v_2(x)}\eta(x)},\qquad
+\eta(x)=\begin{cases}3,&v_3(x)=1,\\1,&v_3(x)\ne1.\end{cases}
+\]
+
+假设 `n>=8`、`4<=j<=n/2`，并假设没有奇素数同时整除
+`binom(n,3)` 和 `binom(n,j)`。写
+
+\[
+n=2^a3^bv,qquad (v,6)=1,
+\]
+
+令 `epsilon=1` 当且仅当 `b=1`，并置
+
+\[
+M=2^a3^\varepsilon,qquad u=n/M.
+\]
+
+则必有
+
+\[
+u\text{ 为奇数},\quad (M,u)=1,\quad v_3(u)\ne1,\quad j=tu,
+\]
+
+其中 `tu>=4`、`1<=t<=M/2`。进一步，所有整除 `binom(n,3)` 的奇素数在
+`binom(n,j)` 中都没有整除，因此 Lucas 定理给出完整的逐位条件：
+
+\[
+\text{每个 }p\text{-进制位满足 }(tu)_r\le(Mu)_r.
+\]
+
+只保留低位块即可得到两个必要整除式
+
+\[
+R(Mu-1)\mid t(M-t),
+\qquad
+R(Mu-2)\mid t(M-t)(M-2t).
+\tag{56}
+\]
+
+由 `M=1,2,3,6` 的直接排除，必有 `4|M`。此时 `t<M/2`，且存在
+`delta_1,delta_2\in\{1,3\}` 使
+
+\[
+Mu-1=\delta_1R(Mu-1),\qquad
+Mu-2=2\delta_2R(Mu-2).
+\]
+
+记 `X=t(M-t)`、`Z=M-2t`。由 (56) 和两个核心互素，
+
+\[
+R(Mu-1)R(Mu-2)\le XZ.
+\]
+
+而在 `0<=x<=1/2` 上
+
+\[
+x(1-x)(1-2x)\le\frac{\sqrt3}{18},
+\]
+
+故得到
+
+\[
+(Mu-1)(Mu-2)\le\sqrt3 M^3,
+\qquad
+u<3^{1/4}\sqrt M+\frac2M.
+\tag{57}
+\]
+
+证明只使用 Lucas/Kummer 的无进位条件和相邻三个整数的整除关系；没有把
+(56) 误当作完整的高位 Lucas 条件。
+
+### 20.2 还剩的数学缺口
+
+把 `t(M-t)=kR(Mu-1)` 代入第二个整除式，可写成
+
+\[
+\delta_1t(M-t)=k(Mu-1),
+\qquad
+2\delta_2k(M-2t)=h(Mu-2),
+\tag{58}
+\]
+
+其中 `k,h` 为正整数。一个足以排除整个 `i=3` 行的候选引理是：在
+`M=2^a3^\varepsilon`、`a>=2`、`u` 奇且 `(M,u)=1`、`v_3(u)\ne1`、
+`1<=t<M/2` 及 `tu>=4` 下，(58) 没有解。目前没有证明这个无界引理；它只得到有限搜索支持。因此 (56)–(58) 是必要条件与下一步靶点，不是 Erdős 699 的解。
+
+### 20.3 独立数值核验
+
+主进程独立重跑了两类检查：
+
+* 直接精确整数检查 `8<=n<=500` 的 61,009 个合法 `(n,j)`，没有缺失共同奇素数；
+* 只用完全因子分解和 Lucas 逐位测试检查 `8<=n<=2,000,000` 的 14,893,045 个 `j=tu` 约化候选，没有候选反例。
+
+第二项是有限证据，不是连续无界证明；高位进位仍必须逐素数检查，且不存在把失败搜索升级成反例排除的逻辑。`(n,j)=(10,5)` 的 gcd 为 `12=2^2\cdot3`，继续作为严格阈值 `p>3` 的负对照；它不反驳原题的 `p>=3`。
+
+本节的精确整数检查器为 `tools/scripts/agent/openproblem/erdos699-i3-lucas-reduction-check.py`，外部来源登记见 `Library/notes/erdos699-i3-lucas-reduction.md`。
+
 [9] Yann Bugeaud, Jan-Hendrik Evertse, Kálmán Győry, *S-parts of values of univariate polynomials, binary forms and decomposable forms at integral points*, arXiv:1708.08290。Theorem 2.1(i)，印刷页 3；其证明及 Proposition 3.1，印刷页 13；Introduction 明确说明常数非有效。2026-09-24 本轮实际读取并截图核对这两页。https://arxiv.org/abs/1708.08290 ; https://arxiv.org/pdf/1708.08290
 
 [10] George M. Bergman, *On common divisors of multinomial coefficients*, arXiv:0806.0607v2；§2，Theorem 2 与其后的高阶消去讨论，印刷页 2–3。该已知结果仅用于比较和方法来源，不是 (42) 的外部前提。https://arxiv.org/abs/0806.0607 ; https://arxiv.org/pdf/0806.0607
