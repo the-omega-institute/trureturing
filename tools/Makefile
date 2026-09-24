@@ -30,6 +30,8 @@ CPU_SLAB_DEADLINE ?=
 TEST_PROJECT ?= $(HERE)/StrataLint.sln
 TEST_FILTER ?=
 SEED_EXPORT ?= automatic
+INHERITED_DOTNET_ROOT := $(DOTNET_ROOT)
+PINNED_DOTNET_ROOT = $(if $(strip $(INHERITED_DOTNET_ROOT)),$(INHERITED_DOTNET_ROOT),$(shell sdk_version="$$(cd "$(REPOSITORY)" && dotnet --version)"; dotnet --list-sdks | awk -v version="$$sdk_version" '$$1 == version { path = $$0; sub(/^[^[]*\[/, "", path); sub(/\]$$/, "", path); sub(/\/sdk$$/, "", path); print path; exit }'))
 CHECK_FAST_FILTER := FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests|FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests|FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests|FullyQualifiedName=StrataLint.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks
 .PHONY: help settle-batch dotnet check-fast test engineering-tests selftest capacity-audit update-renderer-contract clean-lanes xi-quantization xi-quantization-test prime-slab-search prime-slab-test prime-slab-device-test prime-slab-verify prime-slab-mutation-test prime-slab-cpu prime-slab-cpu-test prime-slab-cpu-mutation-test census-test census-frontier-performance ci-build engineering
 
@@ -80,6 +82,7 @@ check-fast:
 
 test:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh "$(TEST_PROJECT)" $(if $(TEST_FILTER),--filter "$(TEST_FILTER)",)
+test: export DOTNET_ROOT := $(PINNED_DOTNET_ROOT)
 
 ci-build:
 	@CI_PLAN_PATH="$(CI_PLAN_PATH)" CI_CHANGES_PATH="$(CI_CHANGES_PATH)" /bin/bash "$(HERE)/scripts/ci-stage.sh" build

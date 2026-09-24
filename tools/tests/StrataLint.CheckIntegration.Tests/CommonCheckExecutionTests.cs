@@ -68,6 +68,47 @@ public sealed partial class CommonCheckExecutionTests
     }
 
     [Theory]
+    [InlineData("domain")]
+    [InlineData("add")]
+    [InlineData("rename")]
+    [InlineData("remove")]
+    public void FileMapEvidenceBindsDomainBytesAndLibraryPathInventory(string change)
+    {
+        using var fixture = new Fixture();
+        var root = fixture.Tree.Root;
+        var registered = CommonExecutionEvidence.Read<CommonCheckManifest>(root, CommonExecutionEvidence.CheckManifestPath);
+        var filemap = registered.Checks.Single(row => row.Id == "filemap") with
+        {
+            Materials = ["Meta/domains.yaml"], PathInventory = ["**"],
+            DeltaScope = new(["Meta/FILEMAP.toml", "Meta/domains.yaml"], ["**/*.cs"], [], ["Blueprint/**"]),
+        };
+        CommonExecutionEvidence.Write(root, CommonExecutionEvidence.CheckManifestPath,
+            registered with { Checks = registered.Checks.Select(row => row.Id == "filemap"
+                ? filemap : row).ToArray() });
+        const string selected = "Library/Carrier/selected.md";
+        const string other = "Library/Carrier/other.md";
+        fixture.Tree.Write(selected, "selected reference\n");
+        fixture.Tree.Write(other, "other reference\n");
+        fixture.Tree.Write("Meta/domains.yaml", "domains:\n  Carrier:\n    stratum: S0\n    definition: Fixture domain.\n");
+        fixture.Tree.Track();
+        string Fingerprint() => CommonExecutionEvidence.CheckInputFingerprints(root,
+            selectedIds: ["filemap"], changedPaths: [selected])["filemap"];
+        var before = Fingerprint();
+        fixture.Tree.Write(other, "unselected reference body changes do not alter path validation\n");
+        Assert.Equal(before, Fingerprint());
+
+        if (change == "domain") fixture.Tree.Write("Meta/domains.yaml", "domains: {}\n");
+        if (change == "add") fixture.Tree.Write("Library/UnknownDomain/added.md", "added reference\n");
+        if (change == "rename")
+            File.Move(Path.Combine(root, other), Path.Combine(root, "Library/Carrier/renamed.md"));
+        if (change == "remove") File.Delete(Path.Combine(root, other));
+        fixture.Tree.Track();
+        Assert.NotEqual(before, Fingerprint());
+        Assert.Null(FileMapInspectionScope.Select(filemap.DeltaScope, ["Meta/domains.yaml"], [selected]).Paths);
+        Assert.Equal(new[] { selected }, FileMapInspectionScope.Select(filemap.DeltaScope, [selected], [selected, other]).Paths);
+    }
+
+    [Theory]
     [InlineData("none")]
     [InlineData("source")]
     [InlineData("build")]
