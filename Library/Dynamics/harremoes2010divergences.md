@@ -3,6 +3,7 @@ bibkey: "harremoes2010divergences"
 authors: "Peter Harremoës; Igor Vajda"
 year: 2010
 title: "On Pairs of f-divergences and their Joint Range"
+doi: null
 url: "https://arxiv.org/abs/1007.0097v1"
 claim: "Every attainable pair of f-divergences is a convex combination of two pairs attained on two-point spaces, and hence is attainable on a four-point space."
 strata_touched: []

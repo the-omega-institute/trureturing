@@ -3,6 +3,7 @@ bibkey: "daskalakis2018testing"
 authors: "Constantinos Daskalakis; Nishanth Dikkala; Nick Gravin"
 year: 2018
 title: "Testing Symmetric Markov Chains From a Single Trajectory"
+doi: null
 url: "https://proceedings.mlr.press/v75/daskalakis18a.html"
 claim: "The Bhattacharyya affinity between two Markov path laws is the initial affinity vector multiplied by a power of the entrywise geometric-mean transition matrix and the all-one vector."
 strata_touched: []

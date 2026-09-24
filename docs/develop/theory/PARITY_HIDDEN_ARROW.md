@@ -653,6 +653,7 @@ G_M(r)=\frac{g(r)+k g(r/k)}n.
 \tag{7.1}
 $$
 
+约定 $P_{d,0}=\Pi$，即将定义 5.1 的单峰族连续延拓到 $r=0$。
 本章仍在固定 $d\ge3$ 的 $\mathcal K_d^0$ 内取极值。
 其约束可表成固定中点的散度问题：令 $\mu_\pm(x)=(1\pm b(x))/n$，则
 
@@ -832,7 +833,9 @@ $$
 \tag{8.7}
 $$
 
-这是逐项正的随机矩阵，且
+此 Perron 归一化是可逆核族的已知 $e$ 投影构造，见
+[Wolfer–Watanabe，定理 7](../../../Library/Dynamics/wolfer2021reversible.md)；
+严格正性满足其共同支持强连通的假设。这里 $\widehat P$ 逐项正，且
 $\widehat\pi(x)\widehat P(x,y)=h_xR_{xy}h_y/\lambda$
 关于 $x,y$ 对称。因此它平稳且可逆。
 在该平稳路径律 $\widehat{\mathbb P}$ 下，置
