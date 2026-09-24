@@ -16749,11 +16749,73 @@ $$
 
 ## 52.99 追加锚
 
-## 53. 后验、联合矩与时钟记录的共同边界
+## 53. 有限来源临界尾的直接递推估计
+
+**定理 53.1（有限支撑给严格较大的共同几何半径）。** 令 $\mathbb K$ 为赋范环，$A>0$、$0<\rho<1$，且 $A\rho=(1-\rho)^2$。固定 $M\in\mathbb N$，取边界 $b:\mathbb N\to\mathbb K$ 满足 $\|b_i\|\le A$，并且 $b_i=0$ 对所有 $i>M$ 成立。以同一列递推
+$$
+E(b)_{n,0}=b_n,\qquad
+E(b)_{n,k+1}=E(b)_{n+1,k}-\sum_{j=0}^{k}E(b)_{n,j}b_{k-j}
+\tag{53.1}
+$$
+定义全部输出。存在 $R\in(\rho,1)$ 使
+$$
+\|E(b)_{n,k}\|R^k\le A\qquad(n,k\in\mathbb N),
+\tag{53.2}
+$$
+并且对每个 $L\in\mathbb N$ 有
+$$
+\sup_{n+k\ge L}\rho^{n+k}\|E(b)_{n,k}\|
+\le A\left(\frac\rho R\right)^L\longrightarrow0.
+\tag{53.3}
+$$
+特别地，在 $\mathbb K=\mathbb R$ 或 $\mathbb C$ 时，$E(b)\in B_\rho^0$。该半径可仅由 $A,\rho,M$ 选定；没有对所有支撑长度共同成立的严格半径要求。
+
+证明。置
+$$
+g_M(x)=x+A\sum_{i=0}^{M}x^{i+1}.
+$$
+有限几何和及临界等式给出
+$$
+g_M(\rho)
+=\rho+(1-\rho)(1-\rho^{M+1})
+=1-(1-\rho)\rho^{M+1}<1.
+\tag{53.4}
+$$
+多项式连续性与 $\rho<1$ 给一个 $\rho<R<1$，满足 $g_M(R)<1$。因 $b$ 在 $M$ 后为零，对任意 $k$ 有
+$$
+\sum_{i=0}^{k}\|b_i\|R^{i+1}
+\le A\sum_{i=0}^{M}R^{i+1}.
+\tag{53.5}
+$$
+对列指标作强归纳，同时保留所有行。第零列的估计是 $\|b_n\|\le A$。若此前各列满足（53.2），则三角不等式、范数的次乘性及 $j+(k-j+1)=k+1$ 给
+$$
+\begin{aligned}
+\|E(b)_{n,k+1}\|R^{k+1}
+&\le AR+A\sum_{j=0}^{k}\|b_{k-j}\|R^{k-j+1}\\
+&\le A\left(R+A\sum_{i=0}^{M}R^{i+1}\right)
+\le A.
+\end{aligned}
+\tag{53.6}
+$$
+这完成了实际递推输出的无界列归纳。令 $q=\rho/R$，则 $0<q<1$ 且 $\rho\le q$，从而
+$$
+\rho^{n+k}\|E(b)_{n,k}\|
+\le A\rho^nq^k\le Aq^{n+k}\le Aq^L
+\qquad(n+k\ge L).
+\tag{53.7}
+$$
+每个尾集合非空，且各值非负并被 $Aq^L$ 所界，故可取上确界；再由几何序列趋零得到（53.3）。$L=0$ 同时给加权数组有界性。$\square$
+
+此定理为第51.5节有限来源消失尾结论给出直接证明，仍截断来源而不截断输出；推导不需要把形式行级数识别为解析 Taylor germ。式（51.20）的有理行恒等式与像集的范数闭性是不同的命题，不由上述递推估计单独推出。
+
+## 53.99 追加锚
+
+
+## 54. 后验、联合矩与时钟记录的共同边界
 
 **本批导航。** 第52节显示单时刻均值不能恢复同一轨迹上的联合矩。本节把这一事实推广到内部观察者：后验、联合读数、动作选择和时钟记录必须由同一实际来源联合产生；边缘相同不能替代联合实现。
 
-### 53.1 联合记录对象
+### 54.1 联合记录对象
 
 令 $X$ 是目标来源，$Z$ 是参考、控制器或隐藏环境，$C$ 是已有档案，$A$ 是由档案确定的动作，$Y$ 是本次读数，$\Delta$ 是本次时钟或费用标签。完整的单步边界权重应写成
 
@@ -16765,7 +16827,7 @@ $$
 
 $$
 K_a(y,\Delta,z'\mid x,z).
-\tag{53.1}
+\tag{54.1}
 $$
 
 未归一化更新为
@@ -16775,12 +16837,12 @@ $$
 =
 \sum_{z,\Delta}
  b_c(x,z)K_a(y,\Delta,z'\mid x,z),
-\tag{53.2}
+\tag{54.2}
 $$
 
 若观察者还要保存费用或记录，就不能把 $\Delta$ 从联合核中删掉后再假定它可由边缘恢复。正概率分支按总质量归一化；零质量分支没有由该事件确定的后验。
 
-### 53.2 边缘矩不足以恢复联合策略
+### 54.2 边缘矩不足以恢复联合策略
 
 存在两个历史族，它们具有相同的 $\Pr(Y=y)$、相同的 $\mathbb E\Delta$ 和相同的当前目标后验，但具有不同的 $\Pr(Y,\Delta)$ 或不同的 $\Pr(A_{t+1}\mid Y,\Delta)$. 任何只保存三个边缘量的摘要都会把这两族合并；下一步依赖联合记录的策略可能因此选择不同动作。
 
@@ -16795,39 +16857,39 @@ $$
  \operatorname{Record}(a,y,\Delta),
  \operatorname{Update}(c,a,y,\Delta)
 \bigr),
-\tag{53.3}
+\tag{54.3}
 $$
 
 或一个与它在实际像上等价的摘要。`CanonicalPredictiveStateSufficiency.canonical_predictive_state_is_sufficient`、`ConditionalProbabilityProfileMinimality.conditional_probability_profile_is_minimal` 和 `CompletionInformationCost.completion_information_cost` 分别承担条件未来律、最小 profile 和条件熵成本的有限接口；后者只约束正质量支持，不供应零质量名义状态的全域因式分解。
 
-### 53.3 时钟记录的自然性
+### 54.3 时钟记录的自然性
 
 若跨接口态射在状态端为 $f$、协议端反变回拉为 $g$，评价保持写作
 
 $$
 E_2(fx,p)=E_1(x,gp).
-\tag{53.4}
+\tag{54.4}
 $$
 
 若时钟标签和联合记录也要保持，须追加
 
 $$
-\Delta_2(fx,gp)=\Delta_1(x,p),
+\Delta_2(fx,p)=\Delta_1(x,gp),
 \qquad
-\operatorname{Record}_2(fx,gp)=\operatorname{Record}_1(x,p),
-\tag{53.5}
+\operatorname{Record}_2(fx,p)=\operatorname{Record}_1(x,gp),
+\tag{54.5}
 $$
 
-在各自声明的实际像和合法域上成立。`ObserverMorphismComposition.observer_morphism_composition` 只供应评价保持的双侧复合；(53.5) 是把它升级为观察者档案态射的额外合同。
+其中 $f:X_1\to X_2$、$g:P_2\to P_1$、$x\in X_1$、$p\in P_2$，等式在各自声明的实际像和合法域上成立。`ObserverMorphismComposition.observer_morphism_composition` 只供应评价保持的双侧复合；(54.5) 是把它升级为观察者档案态射的额外合同。
 
-### 53.4 共同来源与统计取得
+### 54.4 共同来源与统计取得
 
-如果 $Y$ 和 $\Delta$ 来自不同制备批次，边缘分布即使相同，也不能把它们相乘成 (53.1) 的联合核。要估计联合矩，需要同一来源上的联合样本、明确的独立重复或另有已证耦合；`SharedSourceObservationDependence` 系列的有限反例正是禁止把共同来源读数当成独立样本。
+如果 $Y$ 和 $\Delta$ 来自不同制备批次，边缘分布即使相同，也不能把它们相乘成 (54.1) 的联合核。要估计联合矩，需要同一来源上的联合样本、明确的独立重复或另有已证耦合；`SharedSourceObservationDependence` 系列的有限反例正是禁止把共同来源读数当成独立样本。
 
 在指定联合模型和可积性条件下，经验联合频率可逐步收敛；这只是统计取得，不等于观察者已拥有精确的理论 profile。若目标是证明全部未来策略都可执行，还需同时检查合法域、参考和权限在摘要纤维上恒定。
 
-### 53.5 结论范围
+### 54.5 结论范围
 
 本节把“后验、时钟、动作、记忆”收束为同一共同来源上的联合边界，但没有给任意连续状态或未知概率核的统一充分统计定理。边缘信息相同而联合未来不同的成对实例足以否定粗表示的动态充分性；若要声称充分，仍需对全部声明的后续实验证明纤维恒定。Claim status: open；没有新增 Lean 声明。
 
-## 53.99 追加锚
+## 54.99 追加锚
