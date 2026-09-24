@@ -273,6 +273,8 @@ A useful next target is a common-source inequality coupling small missing-slot w
 
 [Report546](546-dense-irredundant-families-separate-stage-debits-from-actual-unions.md) rules out a uniform positive pure/packing/stage credit even for finite irredundant families with dense occupied rectangles: its supremum over ALL comparison completions tends to zero. This does not bound JL or refute PD3. The same constructed family's actual PA law has R_Q<=59509/13850<257/51 because different old cofactors share current-prime phases, reducing the actual forbidden union. A general extension therefore needs the joint relation between completion debits, actual phase overlap and final-query response.
 
+[Report548](548-rainbow-transport-forces-a-next-row-saving.md) gives a quantitative saving directly in the actual 13-row after a fixed finite rainbow 11-prefix. Every continuation admitting factorized nested5/7 completions with full first roots has saving at least 0.0055068697, exceeding the entire NC4 mass requirement. Arbitrarily delayed branch changes and arbitrary fixed old11 phases are included. The same PA law closes without using JL; support-dependent phases, partial first roots and arbitrary prefixes remain outside this result.
+
 ## 8. Exact finite verification
 
 The self-contained [exact consumer](../../frontier/cover-geometry/phase_debit_completion.py) and its [retained result](../../frontier/cover-geometry/phase_debit_completion.json) use N=K=4. The recorded execution with `python3 -I -S -B -O` exited0, with176 named checks passing. It imports no previous producer and has no external data input.

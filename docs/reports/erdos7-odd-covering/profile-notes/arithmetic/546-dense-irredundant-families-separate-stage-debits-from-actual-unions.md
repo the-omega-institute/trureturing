@@ -165,6 +165,8 @@ This holds for every N>=2 and every finite A,E>=1 in the constructed family. It 
 
 DU10 supplies the positive counterpart. The same sequence has a strict upper law once shared current-prime phases are retained in its actual forbidden union. A general extension must control a joint saving from stage debits, actual phase overlap, the final query, or a different common law. Neither separate saturation of local bounds nor failure of a selected certificate establishes an actual lower witness. The arbitrary two-copy problem and the separate unrestricted ternary-gluing problem remain unresolved.
 
+[Report548](548-rainbow-transport-forces-a-next-row-saving.md) analyzes a different actual first-11 geometry: a finite rainbow prefix which spreads the current colors over shared old chains. It forces enough actual 13-row saving to close NC4 for all continuations in a specified factorized full-root phase class. The proof retains the actual transported measure and includes arbitrary chain depths; it does not extend to arbitrary support-dependent later phases.
+
 ## 7. Independent exact finite controls
 
 The standalone [consumer](../../frontier/cover-geometry/dense_stage_debit_obstruction.py) and [retained result](../../frontier/cover-geometry/dense_stage_debit_obstruction.json) use explicit rational inputs without importing previous producers. The final execution exited0 with1019 named checks passing.
