@@ -36617,3 +36617,288 @@ $$
 定理163.2与命题163.4共同区分了三个量词层次：逐视界重选的最优终端通道、固定通道服务全部视界，以及再要求该固定通道单步最优。它们使用同一个已校准源族和同一个全参考距离。式（163.4）的预测器增加特定非对角方向的衰减来平衡各视界误差，不改变真实记录源、不访问被丢弃的环境，也不根据实际未知相位选择预测。静态随机参数与每步重抽参数的既有区别仍按第162节所引 Kropf、Gneiting、Buchleitner 的文献范围理解；本节比较的是这些固定预测通道的无先验最坏误差，不由此给出量子性的普遍定义或量子对经典的普遍优势。
 
 ## 追加锚（本行以下为增补区）
+
+## 164. 近似单步最优的迭代稳定性与必要局部代价
+
+**定义 164.1（单步超额与固定通道的全视界风险）。** 沿用定义161.1的校准记录源、定义161.2的全参考距离和定义163.1的固定三维 CPTP 预测合同。真实相位在全部步骤固定未知，每步记录单元新鲜；预测者不能访问旧记录、取得额外相位校准、插入中间控制或附加持久记忆。对 $1/\sqrt3<r<1$ 和任意 CPTP 通道 $\mathcal F:B(\mathbb C^3)\to B(\mathbb C^3)$，令
+$$
+\ell_r(\mathcal F)=
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal F),
+\qquad
+W_r(\mathcal F)=
+\sup_{\substack{N\ge1\\|\phi|\le\alpha(r)}}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N).
+\tag{164.1}
+$$
+定义非负的单步超额及相对超额
+$$
+\delta_r(\mathcal F)=\ell_r(\mathcal F)-\mathcal R_1(r),
+\qquad
+\xi_r(\mathcal F)=\frac{\delta_r(\mathcal F)}{\mathcal R_1(r)}.
+\tag{164.2}
+$$
+分母在所给区间内严格为正。记
+$$
+q=r\sin\alpha(r)=2\mathcal R_1(r),\qquad
+\eta_r(\mathcal F)=
+\sqrt{\frac43\bigl(q\delta_r(\mathcal F)+\delta_r(\mathcal F)^2\bigr)}
+=\frac{2\mathcal R_1(r)}{\sqrt3}
+\sqrt{\xi_r(\mathcal F)\bigl(2+\xi_r(\mathcal F)\bigr)}.
+\tag{164.3}
+$$
+仍令 $\mathcal F_*(A)=C(r,\cos\alpha(r))\odot A$ 为定理162.2的共同达到通道。对系统态使用距离 $D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$，对矩阵使用 Hilbert–Schmidt 范数 $\|A\|_2^2=\operatorname{Tr}(A^\dagger A)$。
+
+**定理 164.2（全 CPTP 预测器的近似赤道刚性）。** 令 $P=|0\rangle\langle0|+|2\rangle\langle2|$，$X,Y$ 为 $P\mathbb C^3$ 上的 Pauli 矩阵，定义赤道圆盘
+$$
+\mathscr D=
+\left\{\frac12(P+xX+yY):x,y\in\mathbb R,\ x^2+y^2\le1\right\}.
+\tag{164.4}
+$$
+在定义164.1的条件下，对全部 $\rho\in\mathscr D$ 和全部整数 $N\ge1$，
+$$
+D\bigl(\mathcal F(\rho),\mathcal F_*(\rho)\bigr)
+\le\eta_r(\mathcal F),
+\qquad
+D\bigl(\mathcal F^N(\rho),\mathcal F_*^N(\rho)\bigr)
+\le N\eta_r(\mathcal F).
+\tag{164.5}
+$$
+于是每个视界都满足
+$$
+\boxed{
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal F^N)
+\ge
+\bigl[\mathcal E_N(r)-N\eta_r(\mathcal F)\bigr]_+,
+}
+\qquad [u]_+=\max\{u,0\}.
+\tag{164.6}
+$$
+这里 $\mathcal F$ 不必为 Schur 通道，也不必保持 $\mathscr D$；保持该圆盘的是比较通道 $\mathcal F_*$。
+
+证明。 对无迹 Hermitian 矩阵 $A$，正、负特征值的绝对值之和各为 $\|A\|_1/2$，故
+$$
+\|A\|_2^2\le2\left(\frac{\|A\|_1}{2}\right)^2.
+\tag{164.7}
+$$
+若 $A$ 是三维矩阵且非零，设其正、负特征值数目为 $p_+,p_-\ge1$，则 $p_++p_-\le3$。Cauchy–Schwarz 给出
+$$
+\|A\|_2^2
+\ge\left(\frac{\|A\|_1}{2}\right)^2
+\left(\frac1{p_+}+\frac1{p_-}\right)
+\ge\frac32\left(\frac{\|A\|_1}{2}\right)^2.
+\tag{164.8}
+$$
+零矩阵时同样成立。这两步仅使用有限维 Schatten 范数的初等关系，三维常数用于下面的预测误差估计。
+
+先取圆盘边界上的纯态
+$$
+\rho_\theta=\frac12(P+\cos\theta\,X+\sin\theta\,Y).
+$$
+令 $\sigma_\pm=\mathcal M_{r,\pm\alpha(r)}(\rho_\theta)$、$\tau=\mathcal F(\rho_\theta)$。由定理162.2中的端点表达式，其中点为 $\tau_*=\mathcal F_*(\rho_\theta)$，且
+$$
+\sigma_\pm=\tau_*\pm\frac q2 V_\theta,
+\qquad
+V_\theta^2=P,\quad \operatorname{Tr}(V_\theta)=0.
+\tag{164.9}
+$$
+交换两个端点的标签不影响此式。记 $\delta=\delta_r(\mathcal F)$。单步全输入距离上界特别给出
+$$
+D(\tau,\sigma_\pm)\le\mathcal R_1(r)+\delta=\frac q2+\delta.
+\tag{164.10}
+$$
+对两个无迹 Hermitian 差矩阵应用式（164.7），再取平均。Hilbert–Schmidt 平行四边形恒等式及 $\operatorname{Tr}P=2$ 给出
+$$
+\|\tau-\tau_*\|_2^2+\frac{q^2}{2}
+=\frac12\bigl(\|\tau-\sigma_+\|_2^2+\|\tau-\sigma_-\|_2^2\bigr)
+\le2\left(\frac q2+\delta\right)^2.
+\tag{164.11}
+$$
+因此 $\|\tau-\tau_*\|_2^2\le2q\delta+2\delta^2$。差矩阵 $\tau-\tau_*$ 也是三维无迹 Hermitian 矩阵；式（164.8）遂给出
+$$
+D(\tau,\tau_*)^2
+\le\frac23\|\tau-\tau_*\|_2^2
+\le\frac43(q\delta+\delta^2)=\eta_r(\mathcal F)^2.
+\tag{164.12}
+$$
+此估计已包含向第三标签的泄漏与非对角响应，不把 $\tau$ 预先压回二维子空间。$\mathscr D$ 是这些 $\rho_\theta$ 的凸包，通道线性性和迹范数凸性将同一上界延伸至整个圆盘，得到式（164.5）的第一式。
+
+定理162.2给出 $\mathcal F_*(P/2)=P/2$、$\mathcal F_*(X)=r\cos\alpha\,X$ 与 $\mathcal F_*(Y)=r\cos\alpha\,Y$，故 $\mathcal F_*$ 保持 $\mathscr D$。对非交换线性映射仍成立的 telescoping 恒等式为
+$$
+\mathcal F^N-\mathcal F_*^N
+=\sum_{j=0}^{N-1}
+\mathcal F^{N-1-j}\circ(\mathcal F-\mathcal F_*)\circ\mathcal F_*^j.
+\tag{164.13}
+$$
+将其作用于 $\rho\in\mathscr D$，每个比较输入 $\mathcal F_*^j(\rho)$ 仍在同一圆盘内。CPTP 通道对态差的迹距离收缩，所以每一项的半迹范数至多为 $\eta_r(\mathcal F)$，求和即得第二式。
+
+最后取无参考平衡输入 $\rho_0=(|0\rangle+|2\rangle)(\langle0|+\langle2|)/2$。式（162.13）和（162.14）表明
+$$
+\sup_\phi
+D\bigl(\mathcal M_{r,\phi}^N(\rho_0),\mathcal F_*^N(\rho_0)\bigr)
+=\mathcal E_N(r).
+$$
+三角不等式与刚证出的迭代估计给出 $\mathcal F$ 在该输入上的最坏误差至少为 $\mathcal E_N(r)-N\eta_r(\mathcal F)$；全输入、全参考距离包含这个实验，且误差非负，故式（164.6）成立。证毕。
+
+式（164.5）约束的是赤道圆盘上的系统态输出，不声称 $d_{\rm ref}(\mathcal F,\mathcal F_*)\le\eta_r(\mathcal F)$。全视界下界由同一个圆盘内的比较轨道承担；实际 $\mathcal F$ 的轨道可以离开该圆盘。
+
+**定理 164.3（局部相对误差约束下的全视界下界）。** 对每个充分接近一的 $r<1$，任取一个三维 CPTP 通道 $\mathcal F_r$，不要求其关于 $r$ 连续。定义
+$$
+g(t)=e^{-t}\sin\!\left(\min\left\{\frac{\sqrt3t}{2},\frac\pi2\right\}\right),
+\qquad
+\Phi(\xi)=\sup_{t\ge0}
+\left[g(t)-t\sqrt{\xi(2+\xi)}\right]_+,
+\quad \xi\ge0.
+\tag{164.14}
+$$
+若 $\limsup_{r\uparrow1}\xi_r(\mathcal F_r)\le\xi<\infty$，则
+$$
+\boxed{
+\liminf_{r\uparrow1}W_r(\mathcal F_r)\ge\max\{L,\Phi(\xi)\}.
+}
+\tag{164.15}
+$$
+特别地，若单步风险比 $\ell_r(\mathcal F_r)/\mathcal R_1(r)\to1$，则
+$$
+\liminf_{r\uparrow1}W_r(\mathcal F_r)
+\ge K:=
+\sqrt{\frac37}\exp\!\left[-\frac2{\sqrt3}
+\arctan\!\left(\frac{\sqrt3}{2}\right)\right]>L.
+\tag{164.16}
+$$
+此类预测族中的下界 $K$ 由 $\mathcal F_r=\mathcal F_*$ 达到。式（164.16）不要求每个有限 $r$ 的单步误差已经精确最优。
+
+证明。 令 $\varepsilon=1-r$。由式（163.21），$2\mathcal R_1(r)/(\sqrt3\varepsilon)\to1$，故式（164.3）和所给相对超额假设推出
+$$
+\limsup_{r\uparrow1}
+\frac{\eta_r(\mathcal F_r)}{\varepsilon}
+\le\sqrt{\xi(2+\xi)}.
+\tag{164.17}
+$$
+固定 $t>0$，取 $N=\lfloor t/\varepsilon\rfloor$，则充分小的 $\varepsilon$ 下 $N\ge1$ 且 $\varepsilon N\to t$。定理162.4给出 $\mathcal E_N(r)\to g(t)$，而定理164.2给出
+$$
+W_r(\mathcal F_r)\ge
+\bigl[\mathcal E_N(r)-N\eta_r(\mathcal F_r)\bigr]_+.
+$$
+取下极限得到对每个固定 $t>0$ 都成立的
+$$
+\liminf_{r\uparrow1}W_r(\mathcal F_r)
+\ge\left[g(t)-t\sqrt{\xi(2+\xi)}\right]_+.
+\tag{164.18}
+$$
+$t=0$ 时右端为零也成立；随后对这些已成立的不等式取 $t$ 的上确界，得到下界 $\Phi(\xi)$。另一方面，式（163.18）的逐视界下界适用于每个 $\mathcal F_r$，定理161.6因此还给出下界 $L$。合并两者即得（164.15），没有交换未知预测器的优化与视界上确界。$\xi=0$ 时 $\Phi(0)=\max_tg(t)=K$，由定理162.4计算；同一节与式（163.22）还给出 $\mathcal F_*$ 的全视界风险趋于 $K$。证毕。
+
+**命题 164.4（达到最优全视界极限的必要正局部代价）。** 令 $a=\sqrt3/2$、$t^\dagger=\arctan(a)/a$。在区间 $[0,t^\dagger]$ 上，式（164.14）的函数为 $g(t)=e^{-t}\sin(at)$。存在唯一 $t_c\in(0,t^\dagger)$ 使
+$$
+g(t_c)-t_cg'(t_c)=L.
+\tag{164.19}
+$$
+定义
+$$
+B_c=g'(t_c)>0,\qquad
+\xi_c=\sqrt{1+B_c^2}-1>0.
+\tag{164.20}
+$$
+则 $\Phi(\xi_c)=L$，且 $\Phi(\xi)>L$ 当且仅当 $0\le\xi<\xi_c$。若任意固定通道族 $\mathcal F_r$ 满足 $W_r(\mathcal F_r)\to L$，便必须有
+$$
+\boxed{
+\liminf_{r\uparrow1}
+\frac{\ell_r(\mathcal F_r)}{\mathcal R_1(r)}
+\ge1+\xi_c.
+}
+\tag{164.21}
+$$
+数值上，
+$$
+t_c\approx0.7066490123,\qquad
+B_c\approx0.0662831528,\qquad
+\xi_c\approx0.002194320652.
+\tag{164.22}
+$$
+这是所证下界 $\Phi$ 的临界参数，并非实际最小局部代价已经达到的断言。
+
+证明。 在 $[0,t^\dagger]$，
+$$
+g'(t)=e^{-t}(a\cos(at)-\sin(at)),\qquad
+g''(t)=e^{-t}\bigl((1-a^2)\sin(at)-2a\cos(at)\bigr)<0.
+\tag{164.23}
+$$
+最后一个严格号可由 $a^2=3/4$、$\tan(at)\le a$ 及 $\cos(at)>0$ 直接得到。因此 $g'$ 从 $g'(0)=a$ 严格下降至 $g'(t^\dagger)=0$。在 $t>t^\dagger$，包括越过相位截断之后，$g$ 仍严格下降。
+
+令 $B=\sqrt{\xi(2+\xi)}$。若 $B\ge a$，因全部 $t\ge0$ 都有 $g(t)\le at$，故 $\Phi(\xi)=0$。若 $0\le B<a$，存在唯一 $t_B\in(0,t^\dagger]$ 使 $g'(t_B)=B$。函数 $g(t)-Bt$ 在该点之前严格增加、之后严格下降，其最大值为正，所以
+$$
+\Phi(\xi)=g(t_B)-Bt_B.
+\tag{164.24}
+$$
+当 $B<a$ 增大时，这个最优值严格下降：若 $B_1<B_2<a$，在 $B_2$ 的正最大点代入 $B_1$ 的目标，即得严格不等式。
+
+函数 $Q(t)=g(t)-tg'(t)$ 在 $(0,t^\dagger)$ 满足 $Q'(t)=-tg''(t)>0$，且 $Q(0)=0$、$Q(t^\dagger)=K>L$。连续性与严格单调性证明式（164.19）唯一可解，并有 $0<B_c<a$。在 $B=B_c$ 时，式（164.24）的最大点正是 $t_c$，所以 $\Phi(\xi_c)=L$；再由上述严格下降与 $B\ge a$ 时的零值，得到所述阈值性质。
+
+为证明不要求局部误差比收敛的式（164.21），设 $W_r(\mathcal F_r)\to L$，令 $\varepsilon=1-r$、$N=\lfloor t_c/\varepsilon\rfloor$。定理164.2直接给出
+$$
+N\eta_r(\mathcal F_r)
+\ge\mathcal E_N(r)-W_r(\mathcal F_r).
+$$
+右端趋于 $g(t_c)-L=t_cB_c>0$，且 $\varepsilon N\to t_c$，故
+$$
+\liminf_{r\uparrow1}\frac{\eta_r(\mathcal F_r)}{\varepsilon}\ge B_c.
+\tag{164.25}
+$$
+再用精确式
+$$
+\frac{\eta_r(\mathcal F_r)}{\varepsilon}
+=\frac{2\mathcal R_1(r)}{\sqrt3\varepsilon}
+\sqrt{\xi_r(\mathcal F_r)\bigl(2+\xi_r(\mathcal F_r)\bigr)}
+$$
+及前因子趋于一，单调连续函数 $x\mapsto\sqrt{x(2+x)}$ 在非负半轴上的反函数为 $y\mapsto\sqrt{1+y^2}-1$，即得 $\liminf\xi_r(\mathcal F_r)\ge\xi_c$。证毕。
+
+因此约 $0.2194\%$ 是达到 $L$ 的必要相对超额下界，而命题163.3的显式构造给出约 $19.9217\%$ 的可行相对超额。两端之间的差距尚未由这些定理闭合；式（164.21）也不声称 $\Phi$ 对每个 $\xi>0$ 都是可达到的最优权衡。
+
+**命题 164.5（有限参数固定预测风险的定量间隙）。** 令 $r_0=1/\sqrt2$、
+$$
+d=\frac{\sqrt5}{8}-\frac14>0,
+$$
+并令 $x_0$ 为二次方程
+$$
+13x^2+(8+6d)x-3d^2=0
+\tag{164.26}
+$$
+的唯一正根，即
+$$
+x_0=
+\frac{\sqrt{(8+6d)^2+156d^2}-(8+6d)}{26}
+\approx0.0003192995672.
+\tag{164.27}
+$$
+则定义163.1的全 CPTP 固定预测风险满足
+$$
+\boxed{
+\frac14+x_0\le\mathcal J(r_0)
+\le\frac1{2\sqrt2}\sqrt{\frac54-\frac1{\sqrt2}}.
+}
+\tag{164.28}
+$$
+这将命题163.4的严格下界定量化，但不确定 $\mathcal J(r_0)$ 的精确值。
+
+证明。 任取固定 CPTP 通道 $\mathcal F$，设 $w=W_{r_0}(\mathcal F)$、$x=w-1/4$。由 $\mathcal R_1(r_0)=1/4$，有 $x\ge0$，且
+$$
+0\le\delta_{r_0}(\mathcal F)
+=\ell_{r_0}(\mathcal F)-\frac14\le x.
+$$
+此时 $q=1/2$、$\mathcal E_2(r_0)=\sqrt5/8$。定理164.2在 $N=2$ 给出
+$$
+\frac14+x=w
+\ge\frac{\sqrt5}{8}
+-\frac4{\sqrt3}\sqrt{\frac x2+x^2},
+$$
+即
+$$
+x+\frac4{\sqrt3}\sqrt{\frac x2+x^2}\ge d.
+\tag{164.29}
+$$
+左端是 $x\ge0$ 上连续严格增加的函数，从零开始，且在 $x=d$ 时严格大于 $d$。其与 $d$ 相等的唯一解位于 $(0,d)$；在这一区间中两边移项后均非负，可以等价平方，得到式（164.26）。故此唯一解正是 $x_0$，式（164.29）迫使 $x\ge x_0$。对全部 $\mathcal F$ 取下确界即得所述下界；上界由命题163.4的显式通道给出。证毕。
+
+定理164.2把端点中点的精确约束扩展为近似约束，再沿同一个合法比较轨道传播。定理164.3—命题164.4据此比较单步近优与全视界最优的不同要求；源的未知共同相位并未被重新抽取或估计出来。输入域、通道维数和无持久记忆的假设均沿用定义164.1，允许扩维记忆或自适应校准的模型属于不同的优化问题。
+
+## 追加锚（本行以下为增补区）
