@@ -3,6 +3,7 @@ bibkey: azouit2016adiabatic
 authors: Remi Azouit, Alain Sarlette, and Pierre Rouchon
 year: 2016
 title: Adiabatic elimination for open quantum systems with effective Lindblad master equations
+doi: null
 url: https://arxiv.org/abs/1603.04630
 claim: Geometric adiabatic elimination can preserve completely positive reduced descriptions in the stated first-order and special second-order open-system settings.
 strata_touched: []

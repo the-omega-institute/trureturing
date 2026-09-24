@@ -3,6 +3,7 @@ bibkey: ashtekar1997geometrical
 authors: Abhay Ashtekar and Troy A. Schilling
 year: 1997
 title: Geometrical Formulation of Quantum Mechanics
+doi: null
 url: https://arxiv.org/abs/gr-qc/9706069
 claim: Pure quantum states admit a Kahler geometric formulation in which Schrodinger evolution is Hamiltonian.
 strata_touched: []

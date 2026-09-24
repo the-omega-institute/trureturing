@@ -3,6 +3,7 @@ bibkey: do2010asymptoticwp
 authors: Norman Do
 year: 2010
 title: The asymptotic Weil-Petersson form and intersection theory on M_g,n
+doi: null
 url: https://arxiv.org/abs/1010.4126
 claim: Moduli spaces with fixed geodesic boundary lengths carry Weil-Petersson symplectic forms whose large-boundary asymptotics can be studied.
 strata_touched: []

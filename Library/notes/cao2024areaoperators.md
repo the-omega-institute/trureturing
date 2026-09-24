@@ -3,6 +3,7 @@ bibkey: cao2024areaoperators
 authors: ChunJun Cao
 year: 2024
 title: Non-trivial Area Operators Require Non-local Magic
+doi: null
 url: https://arxiv.org/abs/2306.14996v2
 claim: Stabilizer codes over any local dimension have scalar RT area operators for every physical bipartition, including code subalgebras with centers.
 strata_touched: []

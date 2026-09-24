@@ -3,6 +3,7 @@ bibkey: lin2026virasoroarea
 authors: Jennifer Lin
 year: 2026
 title: Ryu-Takayanagi area from Virasoro modular data
+doi: null
 url: https://arxiv.org/html/2606.30723v1
 claim: A conditional cross-channel entropy representation links leading area terms in holographic two-dimensional CFT examples to coarse-grained Virasoro sector multiplicities.
 strata_touched: []

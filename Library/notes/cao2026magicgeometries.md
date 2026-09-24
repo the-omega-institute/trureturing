@@ -3,6 +3,7 @@ bibkey: cao2026magicgeometries
 authors: ChunJun Cao, Gong Cheng, Krishnanand Karthikeyan, Cathy Li, and John Preskill
 year: 2026
 title: State-dependent geometries from magic-enriched quantum codes
+doi: null
 url: https://arxiv.org/html/2603.13475v2
 claim: Approximate subsystem complementary-recovery codes can exhibit state-dependent proto-area responses; the paper excludes general subalgebra codes from its no-go scope.
 strata_touched: []
