@@ -176,3 +176,38 @@ The finite program checks the fixed-global-assignment sufficient case of(Q1); th
 The506 old cylinders are pairwise disjoint. At each old cylinder the two23 classes have different first roots. The consumer additionally constructs one private integer for each of the1012 new nonunit classes and verifies that it avoids every other original in the complete1028-class fixture. Thus none of these1012 classes is redundant in that fixture. No such assertion is made for the initial14 old classes. The complete period is not enumerated.
 
 Default execution compares the retained result. `--input-dir` selects a directory containing the fixed input, retained result and the three pinned source inputs; `--output` writes a fresh result. All consumer checks remain enabled under Python optimization. Input identities and exact finite arithmetic do not replace the inherited source construction, convex comparison, continuous-parameter interpolation or arbitrary-height proofs. No Lean build is run.
+
+## Actual projected mass is the sufficient quantity
+
+The proof of(Q2)--(Q5) uses only the masses of the projected masks, not the number of phases at each depth. More generally, for every actual A-only survivor x, fix one endpoint assignment of its active originals before any query. Let F_p(x) be the union of its assigned actual p-projections. It is sufficient that
+
+    H17(F17(x))<=1/4,    H19(F19(x))<=2/9.
+
+The normalized complement kernels then have the same conditional caps4/3 and9/7. The finite activation signature makes the selector measurable, and the conditional-cylinder proof, common query bound and density conversion are exactly those already given above. Hence arbitrary finite later23/29 originals still have full survivor Haar mass>1/8000 under these actual-mask hypotheses. The four-per-depth rule is one sufficient way to verify these masses; it is not necessary.
+
+## An actual 81-class family separates phase counts from projected mass
+
+Let A={3,5,7,11,13}. For 1<=j,k<=9, include one original class C_(j,k) of numerical modulus17^j19^k. Its full residue is the unique CRT join
+
+    x= k mod17^j,    x= j mod19^k.
+
+The81 moduli are pairwise distinct odd integers greater than1. The coprime coordinate conditions define actual nonempty original congruence classes, with all phases fixed simultaneously. Their A-cofactors are1, so all81 are active at every A-point, including every actual A-only survivor after adjoining any finite A-only original family.
+
+Suppose an endpoint assignment met report527's local four-phase condition at such a point. At fixed17-depth j, the nine possible projected phases k=1,...,9 are distinct. At fixed19-depth k, the nine possible projected phases j=1,...,9 are distinct. Assigning an original therefore assigns one edge of K_(9,9) to its row or column vertex, with at most four edges per vertex. The18 vertices could receive at most72 edges, whereas every one of81 original edges must be assigned. This contradiction proves that no such local assignment exists at any A-point. Thus the good set for that four-phase condition is empty and its bad mass is1 under every probability on A-only survivors. No selected-law or synthetic-support assumption enters the argument.
+
+The example is not an artifact of redundant original classes. If two labels have different k values, their first17 roots differ. If k is the same but j differs, their first19 roots differ. Consequently all81 original classes are pairwise disjoint and each has private points. The root0 modulo17 avoids the entire family. Adding the five pure originals0 modulo3,5,7,11,13 gives an86-label actual family with exactly the first seven odd support primes; an A-point nonzero in those five coordinates and root0 modulo17 remains uncovered. More generally, a nonempty A-only survivor set gives private fibres for every grid class.
+
+A fixed weighted projection assignment nevertheless has small cost. Assign C_(j,k) to17 when j>k, and to19 otherwise. Its complete original phase is retained. At17-depth j the assigned inventory has j-1 phases, and at19-depth k it has k phases. The actual projected union masses therefore satisfy
+
+    H17(F17) <= sum_(j=1..9)(j-1)17^(-j)
+              <= sum_(j>=1)(j-1)17^(-j)=1/256<1/4,
+    H19(F19) <= sum_(k=1..9)k19^(-k)
+              <= sum_(k>=1)k19^(-k)=19/324<2/9.
+
+Only the finite81 original classes are used; the infinite sums are nonnegative upper bounds on their finite costs. No compatibility or simultaneous sharpness of separate union bounds is needed: both projections come from this same fixed assignment and are normalized on the same product carrier.
+
+Their complements have masses at least255/256 and305/324, respectively, hence satisfy report527's weaker required mass floors3/4 and7/9. The corresponding conditional densities obey the same4/3 and9/7 caps. The ordinary five-source law, conditional cylinder inequalities, complete query bound, density conversion and subsequent23/29 single-union deletion therefore apply unchanged. In particular the four-phase counting condition may fail everywhere even while its underlying weighted-mask mass requirement succeeds.
+
+This refutes a universal upper bound beta<1 for the bad mass of the literal local-four-phase condition. It does not refute report527's conditional theorem, any noncoverage theorem, or the existence of a good supported law. For this actual grid, arbitrary separately supplied A-only originals and arbitrary finite later23/29 originals retain the full survivor Haar bound>1/8000 from(Q5). It does not establish that arbitrary old A/17/19 interactions admit a small weighted projection assignment. All probability and source claims retain527's ordinary-source assumptions; no source calculation, producer, period enumeration or Lean proof is supplied here.
+
+The retained consumer and numerical result are unchanged. They verify their original fixed input and source constants; they do not check the general weighted-mask hypothesis or the81-class construction. The latter is established by the symbolic counting and geometric-sum arguments in this appendix.
