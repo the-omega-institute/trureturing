@@ -140,7 +140,7 @@ private theorem encoding_kraus_column_gram (S : s → Matrix n d ℂ)
   simp only [encodingKraus, Matrix.conjTranspose_sum, Matrix.conjTranspose_smul,
     Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul,
     Finset.smul_sum, smul_smul]
-  rw [← Finset.sum_smul]
+  rw [Finset.sum_smul]
   apply Finset.sum_congr rfl
   intro i hi
   rw [Finset.sum_eq_single i]
