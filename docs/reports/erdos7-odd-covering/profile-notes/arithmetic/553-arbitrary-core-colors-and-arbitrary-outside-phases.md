@@ -354,3 +354,9 @@ its184 empty numerical labels remain
 substantive restrictions. Removing these hypotheses requires further
 estimates. Arbitrary first-11 geometry, arbitrary two-copy closure and
 unrestricted Erdős #7 remain unresolved.
+
+[Report554](554-old-slot-rectangles-control-arbitrary-first-eleven-residues.md)
+removes the common-ray, empty-label and required-occurrence restrictions
+inside the first-11 box. Its512 potential slots may be absent, and every
+present occurrence has an arbitrary full11-residue. The fixed old source
+and per-slot old projections remain assumptions.
