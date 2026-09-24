@@ -30,15 +30,6 @@ variable {A : Type*} [LinearOrder A]
 def IsLyndon (w : List A) : Prop :=
   w ≠ [] ∧ ∀ u v : List A, u ≠ [] → v ≠ [] → w = u ++ v → w < v ++ u
 
-theorem isLyndon_singleton (a : A) : IsLyndon [a] := by
-  refine ⟨by simp, ?_⟩
-  intro u v hu hv huv
-  have hlen := congrArg List.length huv
-  simp only [List.length_singleton, List.length_append] at hlen
-  have huPos : 0 < u.length := List.length_pos_of_ne_nil hu
-  have hvPos : 0 < v.length := List.length_pos_of_ne_nil hv
-  omega
-
 private theorem list_lt_self_append (u : List A) {v : List A} (hv : v ≠ []) :
     u < u ++ v := by
   change List.Lex (· < ·) u (u ++ v)
@@ -215,7 +206,13 @@ theorem exists_lyndon_suffix_cut (w : List A) (hw : 2 ≤ w.length) :
     simp [h] at hw
   refine ⟨w.length - 1, by omega, by omega, ?_⟩
   rw [List.drop_length_sub_one hwne]
-  exact isLyndon_singleton _
+  refine ⟨by simp, ?_⟩
+  intro u v hu hv huv
+  have hlen := congrArg List.length huv
+  simp only [List.length_singleton, List.length_append] at hlen
+  have huPos : 0 < u.length := List.length_pos_of_ne_nil hu
+  have hvPos : 0 < v.length := List.length_pos_of_ne_nil hv
+  omega
 
 /-- The least positive cut whose suffix is Lyndon.  Thus its suffix has maximal length. -/
 noncomputable def standardCut (w : List A) (hw : 2 ≤ w.length) : ℕ :=
@@ -360,7 +357,15 @@ theorem isLyndon_standardLeft (w : List A) (hw : 2 ≤ w.length)
     have hone : u.length ≠ 1 := by
       intro hlen
       rcases List.length_eq_one_iff.mp hlen with ⟨a, ha⟩
-      exact huL (ha ▸ isLyndon_singleton a)
+      apply huL
+      rw [ha]
+      refine ⟨by simp, ?_⟩
+      intro x y hx hy hxy
+      have hlength := congrArg List.length hxy
+      simp only [List.length_singleton, List.length_append] at hlength
+      have hxPos : 0 < x.length := List.length_pos_of_ne_nil hx
+      have hyPos : 0 < y.length := List.length_pos_of_ne_nil hy
+      omega
     omega
   have hsu : standardRight u huTwo ≤ u :=
     (lyndon_or_standardRight_le u huTwo).resolve_left huL

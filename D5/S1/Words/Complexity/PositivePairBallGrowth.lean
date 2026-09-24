@@ -107,7 +107,15 @@ private theorem length_flatMap_replicate_le
 
 private noncomputable def letterActualLyndonEquiv
     [Fintype A] [LinearOrder A] : A ≃ ActualLyndonWord A 1 where
-  toFun a := ⟨[a], by exact ⟨rfl, isLyndon_singleton a⟩⟩
+  toFun a := ⟨[a], by
+    refine ⟨rfl, ?_⟩
+    refine ⟨by simp, ?_⟩
+    intro u v hu hv huv
+    have hlen := congrArg List.length huv
+    simp only [List.length_singleton, List.length_append] at hlen
+    have huPos : 0 < u.length := List.length_pos_of_ne_nil hu
+    have hvPos : 0 < v.length := List.length_pos_of_ne_nil hv
+    omega⟩
   invFun w := w.1.get ⟨0, by rw [w.2.1]; omega⟩
   left_inv a := by simp
   right_inv w := by

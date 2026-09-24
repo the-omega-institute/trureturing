@@ -343,7 +343,14 @@ private theorem lyndonFactors_spec [LinearOrder A] (word : List A) :
   induction word with
   | nil => simp [lyndonFactors]
   | cons a word ih =>
-      have hins := insertLyndon_isLyndon [a] (isLyndon_singleton a)
+      have hins := insertLyndon_isLyndon [a] (by
+        refine ⟨by simp, ?_⟩
+        intro u v hu hv huv
+        have hlen := congrArg List.length huv
+        simp only [List.length_singleton, List.length_append] at hlen
+        have huPos : 0 < u.length := List.length_pos_of_ne_nil hu
+        have hvPos : 0 < v.length := List.length_pos_of_ne_nil hv
+        omega)
         (lyndonFactors word) ih.2.1 ih.2.2
       refine ⟨?_, hins⟩
       rw [lyndonFactors, join_insertLyndon, ih.1]

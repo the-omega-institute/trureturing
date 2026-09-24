@@ -64,7 +64,15 @@ theorem actual_exactKDeckImage_weightedLyndon_isTheta
     Classical.choice (Fintype.card_pos_iff.mp (by omega : 0 < Fintype.card A))
   let Coordinate := Σ j : Fin k, ActualLyndonWord A (j.val + 1)
   let missing : Coordinate :=
-    ⟨⟨0, hk⟩, ⟨[a0], by simp [isLyndon_singleton]⟩⟩
+    ⟨⟨0, hk⟩, ⟨[a0], by
+      refine ⟨by simp, ?_⟩
+      refine ⟨by simp, ?_⟩
+      intro u v hu hv huv
+      have hlen := congrArg List.length huv
+      simp only [List.length_singleton, List.length_append] at hlen
+      have huPos : 0 < u.length := List.length_pos_of_ne_nil hu
+      have hvPos : 0 < v.length := List.length_pos_of_ne_nil hv
+      omega⟩⟩
   let retained : Finset Coordinate := Finset.univ.erase missing
   have actualLyndonCount_one :
       actualLyndonCount (A := A) 1 = Fintype.card A := by
@@ -188,7 +196,15 @@ theorem actual_exactKDeckImage_weightedLyndon_isTheta
     have other_singleton_count_eq (a : A) (ha : a ≠ a0) :
         leftSource.count a = rightSource.count a := by
       let coordinate : Coordinate :=
-        ⟨⟨0, hk⟩, ⟨[a], by simp [isLyndon_singleton]⟩⟩
+        ⟨⟨0, hk⟩, ⟨[a], by
+          refine ⟨by simp, ?_⟩
+          refine ⟨by simp, ?_⟩
+          intro u v hu hv huv
+          have hlen := congrArg List.length huv
+          simp only [List.length_singleton, List.length_append] at hlen
+          have huPos : 0 < u.length := List.length_pos_of_ne_nil hu
+          have hvPos : 0 < v.length := List.length_pos_of_ne_nil hv
+          omega⟩⟩
       have hne : coordinate ≠ missing := by
         intro heq
         have hword := congrArg (fun x : Coordinate => x.2.1) heq

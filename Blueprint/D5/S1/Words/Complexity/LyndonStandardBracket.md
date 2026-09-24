@@ -18,19 +18,7 @@ $$IsLyndon$$
 
 For w : List A, IsLyndon w means w is nonempty and, for every factorization w=u++v with u and v nonempty, w is strictly lexicographically smaller than v++u.
 
-**Theorem 1.2 (Singletons are Lyndon).**
-
-$$isLyndonsingleton$$
-
-*Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/LyndonStandardBracket.isLyndon_singleton` (`✓ std3`). ∎
-
-*Citation.* Arman Nilforoushan; Farzad Parvaresh (2026). *Improved upper bound on the number of distinct k-decks for any k and alphabet size by counting the independent parameters*. DOI: [10.48550/arXiv.2609.23106](https://doi.org/10.48550/arXiv.2609.23106). URL: <https://arxiv.org/html/2609.23106v1>.
-
-*Commentary.*
-
-For every a : A, the singleton word [a] is Lyndon.
-
-**Theorem 1.3 (Suffix characterization).**
+**Theorem 1.2 (Suffix characterization).**
 
 $$isLyndoniffltsuffix$$
 
@@ -42,7 +30,7 @@ $$isLyndoniffltsuffix$$
 
 For every word w, IsLyndon w is equivalent to w being nonempty and strictly smaller than every nonempty proper suffix v of w.
 
-**Theorem 1.4 (Increasing concatenation is Lyndon).**
+**Theorem 1.3 (Increasing concatenation is Lyndon).**
 
 $$isLyndonappend$$
 
@@ -54,7 +42,7 @@ $$isLyndonappend$$
 
 If u and v are Lyndon and u<v in list lexicographic order, then u++v is Lyndon.
 
-**Theorem 1.5 (A proper Lyndon suffix exists).**
+**Theorem 1.4 (A proper Lyndon suffix exists).**
 
 $$existslyndonsuffixcut$$
 
@@ -66,7 +54,7 @@ $$existslyndonsuffixcut$$
 
 For every w with 2<=w.length, there is i with 0<i<w.length such that w.drop i is Lyndon.
 
-**Definition 1.6 (The longest-Lyndon-suffix cut).**
+**Definition 1.5 (The longest-Lyndon-suffix cut).**
 
 $$standardCut$$
 
@@ -78,7 +66,7 @@ $$standardCut$$
 
 For w of length at least two, standardCut w is the least positive cut index whose suffix is Lyndon; hence it selects the longest proper Lyndon suffix.
 
-**Definition 1.7 (Standard left factor).**
+**Definition 1.6 (Standard left factor).**
 
 $$standardLeft$$
 
@@ -90,7 +78,7 @@ $$standardLeft$$
 
 standardLeft w hw is w.take (standardCut w hw) for a word whose length is at least two.
 
-**Definition 1.8 (Standard right factor).**
+**Definition 1.7 (Standard right factor).**
 
 $$standardRight$$
 
@@ -102,7 +90,7 @@ $$standardRight$$
 
 standardRight w hw is w.drop (standardCut w hw), the longest proper Lyndon suffix.
 
-**Theorem 1.9 (The left factor remains Lyndon).**
+**Theorem 1.8 (The left factor remains Lyndon).**
 
 $$isLyndonstandardLeft$$
 
@@ -114,7 +102,7 @@ $$isLyndonstandardLeft$$
 
 If w is Lyndon and has length at least two, then its standardLeft factor is Lyndon.
 
-**Definition 1.10 (Integral word algebra).**
+**Definition 1.9 (Integral word algebra).**
 
 $$WordPolynomial$$
 
@@ -126,7 +114,7 @@ $$WordPolynomial$$
 
 WordPolynomial A abbreviates MonoidAlgebra Z (FreeMonoid A), so monomials are finite words and coefficients are integers.
 
-**Definition 1.11 (A word basis monomial).**
+**Definition 1.10 (A word basis monomial).**
 
 $$wordMonomial$$
 
@@ -140,7 +128,7 @@ $$wordMonomial$$
 
 wordMonomial w is the monoid-algebra singleton at FreeMonoid.ofList w with coefficient one.
 
-**Definition 1.12 (Homogeneous word polynomials).**
+**Definition 1.11 (Homogeneous word polynomials).**
 
 $$Homogeneous$$
 
@@ -154,7 +142,7 @@ $$Homogeneous$$
 
 Homogeneous p n means every monomial in the coefficient support of p has free-monoid length n.
 
-**Definition 1.13 (Triangular leading word).**
+**Definition 1.12 (Triangular leading word).**
 
 $$HasLeadingWord$$
 
@@ -168,7 +156,7 @@ $$HasLeadingWord$$
 
 HasLeadingWord p w requires p homogeneous of degree w.length, coefficient one at w, and every supported word lexicographically at least w.
 
-**Definition 1.14 (The word-algebra commutator).**
+**Definition 1.13 (The word-algebra commutator).**
 
 $$commutator$$
 
@@ -180,7 +168,7 @@ $$commutator$$
 
 commutator p q is p*q-q*p in the integral noncommutative word algebra.
 
-**Definition 1.15 (Recursive standard bracketing).**
+**Definition 1.14 (Recursive standard bracketing).**
 
 $$standardBracket$$
 
@@ -192,7 +180,7 @@ $$standardBracket$$
 
 The empty word maps to zero, a singleton maps to its basis monomial, and a longer word maps to the commutator of the recursively bracketed standardLeft and standardRight factors.
 
-**Theorem 1.16 (Standard brackets preserve length).**
+**Theorem 1.15 (Standard brackets preserve length).**
 
 $$standardBrackethomogeneous$$
 
@@ -204,7 +192,7 @@ $$standardBrackethomogeneous$$
 
 For every word w, standardBracket w is homogeneous of degree w.length.
 
-**Definition 1.17 (Recursive word-theoretic closure).**
+**Definition 1.16 (Recursive word-theoretic closure).**
 
 $$StandardFactorClosed$$
 
@@ -218,7 +206,7 @@ $$StandardFactorClosed$$
 
 StandardFactorClosed is false on the empty word, true on singletons, and on longer words requires both standard factors recursively closed and the original word smaller than the reversed factor concatenation.
 
-**Theorem 1.18 (Lyndon words satisfy the closure).**
+**Theorem 1.17 (Lyndon words satisfy the closure).**
 
 $$isLyndonstandardFactorClosed$$
 
@@ -230,7 +218,7 @@ $$isLyndonstandardFactorClosed$$
 
 Every actual Lyndon word is StandardFactorClosed throughout its recursive longest-suffix factorization.
 
-**Theorem 1.19 (The bracket is triangular).**
+**Theorem 1.18 (The bracket is triangular).**
 
 $$standardBrackethasLeadingWord$$
 
@@ -242,7 +230,7 @@ $$standardBrackethasLeadingWord$$
 
 For every StandardFactorClosed word w, standardBracket w has leading word w with coefficient one and no lexicographically smaller supported word.
 
-**Theorem 1.20 (Standard brackets are independent).**
+**Theorem 1.19 (Standard brackets are independent).**
 
 $$standardBracketlinearIndependent$$
 
@@ -265,7 +253,6 @@ Over the integers, the family w |-> standardBracket w indexed by StandardFactorC
 - Truth anchor: `D5/S1/Words/Complexity/LyndonStandardBracket.exists_lyndon_suffix_cut`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonStandardBracket.isLyndon_append`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonStandardBracket.isLyndon_iff_lt_suffix`
-- Truth anchor: `D5/S1/Words/Complexity/LyndonStandardBracket.isLyndon_singleton`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonStandardBracket.isLyndon_standardFactorClosed`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonStandardBracket.isLyndon_standardLeft`
 - Truth anchor: `D5/S1/Words/Complexity/LyndonStandardBracket.standardBracket`

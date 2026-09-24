@@ -22,8 +22,6 @@ internal sealed class LyndonStandardBracketDocument : IScribeDocumentDefinition
                 + "implementation used by the later actual-positive-word construction.")),
             D("is-lyndon", "IsLyndon", "Rotation-minimal Lyndon words",
                 "For w : List A, IsLyndon w means w is nonempty and, for every factorization w=u++v with u and v nonempty, w is strictly lexicographically smaller than v++u.", DescribeRole.Definition, true),
-            D("is-lyndon-singleton", "isLyndon_singleton", "Singletons are Lyndon",
-                "For every a : A, the singleton word [a] is Lyndon.", literature: true),
             D("is-lyndon-iff-suffix", "isLyndon_iff_lt_suffix", "Suffix characterization",
                 "For every word w, IsLyndon w is equivalent to w being nonempty and strictly smaller than every nonempty proper suffix v of w.", literature: true),
             D("is-lyndon-append", "isLyndon_append", "Increasing concatenation is Lyndon",

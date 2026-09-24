@@ -470,7 +470,14 @@ theorem actual_exactKDeckImage_weightedLyndon_lower_bound
       unfold actualLyndonCount
       have hpos : 0 < Fintype.card (ActualLyndonWord A 1) :=
         Fintype.card_pos_iff.mpr ⟨⟨[fixedLetter], by
-          exact ⟨rfl, isLyndon_singleton fixedLetter⟩⟩⟩
+          refine ⟨rfl, ?_⟩
+          refine ⟨by simp, ?_⟩
+          intro u v hu hv huv
+          have hlen := congrArg List.length huv
+          simp only [List.length_singleton, List.length_append] at hlen
+          have huPos : 0 < u.length := List.length_pos_of_ne_nil hu
+          have hvPos : 0 < v.length := List.length_pos_of_ne_nil hv
+          omega⟩⟩
       omega
     have hone_mem : 1 ∈ Finset.range (k + 1) := by simp; omega
     have hterm : 1 * actualLyndonCount (A := A) 1 ≤
