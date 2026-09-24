@@ -165,7 +165,7 @@ actual pure-mass rectangle FC0,
 
     C(x,y)-integral f dlambda_core
       >=Dbase=Dcore+Cmin-Cref
-      =338800827094/20811423661875.               (FCref)
+      =338800827094/20811423661875.               (FC4)
 
 The maxima need not be attained together: each individual deficit is a
 lower bound valid for every phase, and its label is distinct from the
@@ -238,7 +238,7 @@ reference pure masses. Hence
 
     J_actual<=Jmax=4051379/34239975000.                 (FC7)
 
-Combining FCref--FC7 gives the uniform seven-label deficit under the ACTUAL
+Combining FC4--FC7 gives the uniform seven-label deficit under the ACTUAL
 new law:
 
     C(x,y)-integral f dlambda11
