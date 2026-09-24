@@ -319,3 +319,5 @@ nor arbitrary P-only mixed supports are settled here. Unrestricted
 Erdős #7 remains open.
 
 [Report561](561-all-three-rooted-supports-have-a-common-query-law.md) supplies the stronger source/query alternative for all mixed originals divisible by3, with arbitrary supports and phases. Its normalized sequential law gives complete query norm below11 and permits arbitrary23/29 extensions. It also treats all fifteen rooted triangles with three full old pair towers. These are new actual-law constructions, not a proof that the original pure-product mixed loss always satisfies CQ6.
+
+[Report562](562-joint-deletion-certificates-and-an-actual-query-antichain.md) gives a weighted deletion projection that improves CQ6 whenever a finite maximizing-query certificate supplies a positive debit. A twenty-label arithmetic antichain shows that an occupied-query hinge need not supply any such debit.
