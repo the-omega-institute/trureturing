@@ -38651,3 +38651,386 @@ $$
 第172节的下界需要每个内部条件通道都具有校准系数 $01=12=r$ 及 $02=re^{i\theta_v}$、$|\theta_v|\le\alpha$。本节明确改变了这些内部条件：$a<r$、$q>r$、$\theta>\alpha$，但实际源、精确单步最优要求与全视界终端风险合同保持原定义。隐函数调整保留唯一最大视界的接触等式，额外相干方向的距离余量与其他视界的严格风险余量允许正的遗忘率。因此状态数下界依赖允许的内部实现，而不仅取决于相同的最优风险值。并列最大点需要同时保持多个接触等式，当前构造未解决这一例外集；这里也没有给出量子相干记忆相对于经典记忆的优势结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 174. 三维相干记忆的精确最优、可遗忘性与相邻接触校准
+
+**定义 174.1（相邻校准视界与启动记忆）。** 沿用定义173.1的一次初始化、时间齐次联合 CPTP 处理器、同一系统终端通道、标准新鲜输入遗忘条件及最小维数 $D_{\rm fg}(r)$。实际源仍为 $\mathcal M_{r,\phi}$，同一次运行的实际相位 $\phi$ 固定，环境逐步新鲜。记
+$$
+c=r\cos\alpha,\qquad b=r\sin\alpha,\qquad z_*=c+ib,
+\qquad \alpha=\alpha(r).
+\tag{174.1}
+$$
+在充分接近一的区间中，令 $n$ 为持续端点比特风险 $B_N(r)$ 的最小最大点，令 $m=n+1$。以下所用记忆为
+$$
+K=\mathbb C|e\rangle\oplus\mathbb C^2,
+\qquad \sigma=|e\rangle\langle e|,
+\tag{174.2}
+$$
+其中 $|e\rangle$ 是启动态，活动子空间的基为 $|+\rangle,|-\rangle$；启动态计入总维数。所有设计参数只依赖已知的 $r$，同一处理器服务全部运行视界 $N$。
+
+**定理 174.2（全部近一参数上的相干三维实现）。** 存在 $r_1<1$，使每个 $r\in(r_1,1)$ 都有定义174.1的三维实现，满足
+$$
+\sup_{|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi},\mathcal P_{r,1})=\mathcal R_1(r),
+\qquad
+\sup_{N\ge1,\,|\phi|\le\alpha}
+d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})=H(r),
+\tag{174.3}
+$$
+并满足包含任意惰性参考的遗忘条件（173.1）。活动记忆的某个单步输入通道不是纠缠破坏通道；保持其余参数不动而完全擦除活动记忆的相干，会严格改变实际启动运行的第四步终端读数。因此
+$$
+2\le D_{\rm fg}(r)\le3\qquad(r_1<r<1).
+\tag{174.4}
+$$
+与定理173.2结合，在唯一最大点集合 $U$ 上仍有 $D_{\rm fg}(r)=2$。式（174.4）包含并列最大点，但不确定这些点上的最小值究竟是二还是三。
+
+证明。 先说明只需校准两个相邻视界。由定理169.3及式（172.4），充分近一时，$\sup_N B_N=H$ 且全部最大点都在 $N\alpha<\pi/2$ 的早段。令 $\beta=-\log r$，早段的连续延拓为
+$$
+g(t)=\frac12e^{-\beta t}\sin(\alpha t),
+\qquad
+t_c=\frac1\alpha\arctan\frac\alpha\beta.
+\tag{174.5}
+$$
+其导数在 $t_c$ 前正、其后负，故最大整数只可能为 $\lfloor t_c\rfloor,\lceil t_c\rceil$。由 $\alpha/(1-r)\to\sqrt3$、$\beta/(1-r)\to1$，有 $\alpha t_c\to\pi/3$。进一步缩小区间后，$n\ge2$、$m\alpha<\pi/2$，并且全部最大点都属于 $\{n,m\}$。即使只有一个最大点，以下仍同时校准这两个视界。
+
+取 $0<\kappa<r$，稍后把它选得充分接近 $r$。对 $z=u+iv$ 定义
+$$
+B(\kappa,z)=
+\begin{pmatrix}1&\kappa&z\\\kappa&1&\kappa\\\bar z&\kappa&1\end{pmatrix}.
+\tag{174.6}
+$$
+直接检查主子式可得，其半正定条件恰为
+$$
+|z-\kappa^2|\le1-\kappa^2.
+\tag{174.7}
+$$
+在 $z=z_*$ 处，原源的端点行列式为零给出
+$$
+\det B(\kappa,z_*)=2(1-c)(r^2-\kappa^2)>0.
+\tag{174.8}
+$$
+所以固定这样的 $\kappa$ 后，$z_*$ 位于合法圆盘内部。降低另外两条相干系数由此提供完全正性的严格余量。
+
+给出作用于活动子空间的具体相干处理器。取新鲜环境中的实正交单位向量 $f_0,f_1,f_2$，在（174.7）的严格内部定义
+$$
+\eta=\sqrt{\frac{1-u}{2}}f_1,\qquad
+\xi=\kappa f_0+\frac{v}{\sqrt{2(1-u)}}f_1
++\sqrt{\frac{1+u}{2}-\kappa^2-\frac{v^2}{2(1-u)}}f_2.
+\tag{174.9}
+$$
+根号非负正是（174.7）；在当前邻域内 $u<1$。定义单位记录向量
+$$
+e_0^+=\xi+i\eta,\quad e_2^+=\xi-i\eta,\quad
+e_1^+=e_1^-=f_0,\quad
+e_0^-=e_2^+,\quad e_2^-=e_0^+.
+\tag{174.10}
+$$
+等距映射 $V_z|j,s\rangle=|j,s\rangle\otimes e_j^s$ 在丢弃环境后定义联合 CPTP 通道 $\mathcal Q_z$。固定活动标签 $s$ 时，其系统条件通道分别是相关矩阵 $B(\kappa,z)$ 与 $B(\kappa,\bar z)$ 的 Schur 通道。
+
+固定 $\chi=1/4$。在 $\mathcal Q_z$ 后依次对记忆施加：将非对角元乘以 $\chi$ 的去相位通道 $\mathcal D_\chi$、旋转 $U_\gamma=e^{-i\gamma X/2}$、以及
+$$
+\mathcal R_\delta(T)=(1-\delta)T+\delta\operatorname{Tr}(T)I_2/2.
+\tag{174.11}
+$$
+记所得活动处理器为 $\mathcal L_z$。启动块使用通道
+$$
+\mathcal T(A)=\frac12\sum_{s=\pm}
+\operatorname{Schur}(B(\kappa,z_{*,s}))(A)\otimes|s\rangle\langle s|,
+\qquad z_{*,+}=z_*,\quad z_{*,-}=\bar z_*.
+\tag{174.12}
+$$
+对任意系统—记忆输入算符 $X$，同一个时间齐次处理器为
+$$
+\Lambda(X)=\mathcal T(X_{ee})+
+\mathcal L_z(X_{\mathrm{act},\mathrm{act}}).
+\tag{174.13}
+$$
+它先丢弃启动与活动子空间间的非对角块，再分别施加 CPTP 通道，故在任意联合输入上 CPTP。每次输出记忆都位于活动子空间；没有外部时钟切换处理器。
+
+计算同一系统反复使用时的终端通道。其 $01,12$ 系数均为 $\kappa^N$。$02$ 记忆块写成 $(x_NI+iy_NZ+ih_NY)/2$，其中 $X,Y,Z$ 为通常的 Pauli 矩阵，终端 $02$ 系数为实数 $x_N$。令 $s=1-\delta$，直接由记录向量内积得到
+$$
+(x_1,y_1,h_1)=(c,b,0),
+\qquad
+\begin{aligned}
+x_{N+1}&=ux_N-vy_N,\\
+y_{N+1}&=s\bigl[\cos\gamma(vx_N+uy_N)+\chi\sin\gamma h_N\bigr],\\
+h_{N+1}&=s\bigl[-\sin\gamma(vx_N+uy_N)+\chi\cos\gamma h_N\bigr].
+\end{aligned}
+\tag{174.14}
+$$
+具体说，$02$ 块在旋转与重置之前的变换是
+$$
+T\longmapsto
+\begin{pmatrix}zT_{++}&\chi T_{+-}\\\chi T_{-+}&\bar zT_{--}\end{pmatrix};
+\tag{174.15}
+$$
+这也直接验证了递推，没有用正权经典路径分布替代相干处理器。
+
+在 $\delta=\gamma=0$ 时，$x_N=\operatorname{Re}(z_*z^{N-1})$。现在对固定 $r,\kappa$，要求
+$$
+x_n=r^n\cos(n\alpha),\qquad
+x_m=r^m\cos(m\alpha).
+\tag{174.16}
+$$
+在 $(u,v,\delta,\gamma)=(c,b,0,0)$ 处，这两个等式成立。其左侧关于 $(u,v)$ 的 Jacobian 行为
+$$
+\bigl((N-1)r^{N-1}\cos((N-1)\alpha),
+-(N-1)r^{N-1}\sin((N-1)\alpha)\bigr),\qquad N=n,m,
+\tag{174.17}
+$$
+行列式为 $-n(n-1)r^{2n-1}\sin\alpha\ne0$。实解析隐函数定理因此给出 $z=z(\delta,\gamma)$，在零点取值 $z_*$，并精确满足（174.16）。递推式在实参数的零点邻域解析，负 $\delta$ 仅用于解析延拓，不作概率解释。选择充分小的 $\delta=\gamma>0$，利用（174.8）的严格余量，所得 $z$ 仍在合法圆盘内部。
+
+下面验证完整系统及任意参考上的风险。定理168.2证明中的 Schur 支配估计给出：对
+$$
+D(d,w)=\begin{pmatrix}0&d&w\\d&0&d\\\bar w&d&0\end{pmatrix},
+\qquad d\ge0,
+\tag{174.18}
+$$
+当 $2d\le|w|$ 时，$\frac12\|\operatorname{Schur}(D(d,w))\|_\diamond=|w|/2$。固定 $d$，对 $|w|=Q$ 应用该估计，再将圆盘内的 $w$ 写成圆周点的凸组合，得到
+$$
+2d\le Q,\quad |w|\le Q
+\quad\Longrightarrow\quad
+\frac12\|\operatorname{Schur}(D(d,w))\|_\diamond\le Q/2.
+\tag{174.19}
+$$
+对 $N\in\{1,n,m\}$，式（174.14）、（174.16）给出
+$$
+d=r^N-\kappa^N,\qquad
+w=r^N\bigl(e^{iN\phi}-\cos(N\alpha)\bigr),\qquad
+Q=r^N\sin(N\alpha).
+\tag{174.20}
+$$
+因为 $N\alpha<\pi/2$，允许相位弧上有 $|w|\le Q$。选 $\kappa$ 足够接近 $r$，可对这三个视界同时保证 $2d<Q$。故风险至多 $Q/2$；端点相位与均衡 $02$ 输入又达到 $Q/2$。单步风险精确为 $\mathcal R_1$，视界 $n$ 精确达到 $H$。
+
+还须用同一组正参数控制其他全部视界。先令 $\tau=(3+r)/4<1$，将校准解限制在 $|z|<(1+r)/2$。没有 $\mathcal D_\chi$ 时，$02$ 交叉块变换可写成两个等距映射夹住 $T$ 再偏迹，因而在迹范数上压缩。将 $\mathcal D_\chi=\chi\,\mathrm{id}+(1-\chi)\mathcal D_0$ 分解，完全去相位部分在（174.15）中的范数至多 $|z|$，所以一次交叉块传递的诱导迹范数至多
+$$
+\chi+(1-\chi)|z|<\tau.
+\tag{174.21}
+$$
+旋转及重置也是迹范数压缩。启动的 $02$ 块迹范数为 $r$，因此
+$$
+|x_N|\le r\tau^{N-1}\le\tau^N,
+\qquad
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le r^N-\kappa^N+\frac{r^N+|x_N|}{2}
+\le2\tau^N.
+\tag{174.22}
+$$
+中间的不等式按三个非对角边拆分，使用第161节包含参考的单边距离估计。
+
+先固定整数 $K_0>m$ 使 $2\tau^{K_0}<H$。对有限集合 $N<K_0$、$N\notin\{1,n,m\}$，有 $B_N<H$。当前风险又至多
+$$
+B_N+(r^N-\kappa^N)
++\frac12\left|x_N-r^N\cos(N\alpha)\right|.
+\tag{174.23}
+$$
+因此先选足够接近 $r$ 的 $\kappa<r$，使（174.20）的支配条件成立，并让（174.23）的第一项误差小于各有限严格余量的一半；固定该 $\kappa$ 后，再沿校准解选足够小的 $\delta=\gamma>0$，使第二项误差落在其余余量内，同时保持完全正性与（174.21）。这种顺序保留了严格正的选择区间。式（174.22）控制所有 $N\ge K_0$，式（174.20）控制三个保留视界，遂得（174.3）。
+
+遗忘性使用另一种接线：系统输入逐次新鲜，丢弃系统输出，只比较最终记忆。任意初始记忆经过一次使用后都在活动子空间。以后的每次使用都含概率为 $\delta$、独立于输入的重置分支。给定某次重置已发生，在丢弃此前系统输出后，重置记忆为 $I_2/2$，与尚未使用的输入及参考独立。此前处理对被丢弃部分保迹，故不能改变这些未使用输入及参考的边缘态。因而对具有相同完整系统输入—参考边缘态的任意两份初始联合态 $\rho_1,\rho_2$，有
+$$
+\left\|\operatorname{Tr}_{B^N}
+(\Gamma_{r,N}\otimes\mathrm{id}_R)(\rho_1-\rho_2)\right\|_1
+\le2(1-\delta)^{N-1}.
+\tag{174.24}
+$$
+这里 $B^N$ 表示所有系统输出。具体取任意固定记忆态 $\sigma_0$，定义 $E_{r,N}(A)=\Phi_{r,N}(\sigma_0\otimes A)$，在上式比较 $\rho$ 与 $\sigma_0\otimes\operatorname{Tr}_K\rho$，即得
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-\delta)^{N-1}\longrightarrow0.
+\tag{174.25}
+$$
+态输入与任意参考上的一致界等于这里两 CPTP 通道之差的 diamond 范数界。这正是定义173.1的遗忘条件；它不要求保留在外部的输出历史消失。此框架及稀少重置产生遗忘性的背景见 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§V定义3、命题9与定理10；精确保留（174.16）还使用了上述校准与全视界估计。
+
+最后核对相干确实参与该实现。将活动处理器的系统输入固定为 $|1\rangle$，记录向量均为 $f_0$，所以记忆通道恰为 $\mathcal R_\delta\operatorname{Ad}_{U_\gamma}\mathcal D_\chi$。其归一化 Choi 态的部分转置具有特征值
+$$
+\frac\delta4-\frac{(1-\delta)\chi}{2}<0\qquad(0<\delta<1/3).
+\tag{174.26}
+$$
+旋转是局部酉变换，不改变该部分转置的谱。故此通道能保留与参考的纠缠，不是纠缠破坏通道。另一方面，固定已经选好的 $\kappa,z,\delta,\gamma$，只将保留相干的参数 $\chi$ 改为零，由（174.14）得到
+$$
+x_4(\chi)-x_4(0)
+=(1-\delta)^2v\chi\sin^2\gamma\,(vc+ub)>0.
+\tag{174.27}
+$$
+严格正号来自校准解充分接近 $u=c>0,v=b>0$，以及 $0<\gamma<\pi$。对均衡 $02$ 系统输入，终端相干读数因而严格不同。这一比较不重新校准其他参数，证明的是该实现实际使用了记忆相干。三维上界与定理169.4的维数一下界共同给出（174.4）。证毕。
+
+式（174.27）区分了同一实现中是否保留相干，没有比较所有经典实现与所有量子实现的最小资源。当前上界的成立也没有要求在所有 $r\uparrow1$ 上统一选择正的重置率。允许的内部条件通道依旧是定义173.1的较大 CPTP 类，而非定义172.1的校准源选择器；该区别与实际源、未知固定相位及终端风险的定义分别承担不同假设。
+
+## 追加锚（本行以下为增补区）
+
+## 175. 平稳经典三态的双视界校准与精确可遗忘预测
+
+**定义 175.1（带去相位状态的平稳选择器）。** 沿用定义173.1的一般 CPTP 预测器合同及定义174.1的 $n,m=n+1$；在充分近一的区间中，全部最大风险视界都属于 $\{n,m\}$，且 $n\ge2$、$m\alpha<\pi/2$。记 $c_0=r\cos\alpha$，并对零点邻域内的参数 $p,w,\theta$ 定义
+$$
+c=\frac{c_0}{1-w},\qquad q=\frac c{\cos\theta},\qquad
+a=\sqrt{\frac{1-q^2}{2(1-c)}}.
+\tag{175.1}
+$$
+物理取值要求 $0<p,w<1$、$0<a,q<1$、$c<1$。三个经典标签为 $+,-,0$，其初始分布和每次条件通道之后的转移为
+$$
+\pi=\left(\frac{1-w}{2},\frac{1-w}{2},w\right),
+\qquad T=(1-p)I+p\mathbf1\pi.
+\tag{175.2}
+$$
+标签 $\pm$ 的条件通道是相关矩阵
+$$
+C_\pm=
+\begin{pmatrix}1&a&qe^{\pm i\theta}\\a&1&a\\qe^{\mp i\theta}&a&1\end{pmatrix}
+\tag{175.3}
+$$
+的 Schur 通道，标签 $0$ 的条件通道为完全去相位。记这些通道为 $\mathcal Q_v$，则在任意系统—记忆联合输入上的处理器及初始化为
+$$
+\Lambda(X)=\sum_{v,u}T(v,u)\mathcal Q_v(X_{vv})\otimes|u\rangle\langle u|,
+\qquad \sigma=\sum_v\pi_v|v\rangle\langle v|.
+\tag{175.4}
+$$
+它在每步丢弃经典标签间的相干。真实源仍为固定未知相位的 $\mathcal M_{r,\phi}$，其环境逐步新鲜；仅预测器的内部条件通道允许离开原校准源族。
+
+**定理 175.2（不使用记忆相干的全参数三态上界）。** 对每个充分接近一的 $r<1$，存在定义175.1的合法正参数，使同一个平稳初始化、时间齐次的经典三态预测器同时满足
+$$
+\sup_{|\phi|\le\alpha}d_{\rm ref}(\mathcal M_{r,\phi},\mathcal P_{r,1})=\mathcal R_1(r),
+\qquad
+\sup_{N\ge1,\,|\phi|\le\alpha}d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})=H(r),
+\tag{175.5}
+$$
+以及标准遗忘条件（173.1）。该结论包含并列最大点，不使用量子记忆相干或单独的启动状态。参数由已知 $r$ 一次选定，不随所比较的运行视界 $N$ 改变。
+
+证明。 在 $(p,w,\theta)=(0,0,\alpha)$，原端点关系
+$$
+1-r^2=2r^2(1-c_0)
+\tag{175.6}
+$$
+给出 $q=a=r$。此时标签 $0$ 不被初始化，两个端点标签永不切换，故终端预测器正是持续端点比特。
+
+首先计算一般参数的终端系数。由（175.2），转移矩阵限制到两个端点标签的行和为 $1-pw$。因此前 $N$ 次条件通道都避开 $0$ 的概率是 $(1-w)(1-pw)^{N-1}$；最后一次使用后的转移不影响该终端通道。条件于避开 $0$，符号初始均匀，转移为对称翻转链，翻转率
+$$
+f=\frac{p(1-w)}{2(1-pw)}.
+\tag{175.7}
+$$
+任何访问 $0$ 的路径都使非对角系统矩阵元归零，后续 Schur 通道不能重建它们。因此，写 $Z_{N,f}(\theta)$ 为式（173.7）的符号和余弦期望，终端系数恰为
+$$
+A_N=(1-w)a^N(1-pw)^{N-1},\qquad
+u_N=(1-w)q^N(1-pw)^{N-1}Z_{N,f}(\theta),
+\tag{175.8}
+$$
+其中 $01=12=A_N$、$02=u_N\in\mathbb R$。特别地，$u_1=(1-w)q\cos\theta=c_0$，所以关键的单步系数已被恒等地保留。
+
+用 $w,\theta$ 同时校准 $n,m$ 两个视界。定义 $F_N=u_N-r^N\cos(N\alpha)$，有限路径和使其在基点邻域具有实解析延拓。负的 $p,w$ 只用于此延拓。将基点偏导除以 $r^N$，分别记为
+$$
+d_N=\frac{\partial_\theta u_N}{r^N}
+=-\frac{N\sin((N-1)\alpha)}{\cos\alpha},\qquad
+b_N=\frac{\partial_wu_N}{r^N}=(N-1)\cos(N\alpha),
+\tag{175.9}
+$$
+以及
+$$
+h_N=\frac{\partial_pu_N}{r^N}
+=\frac12\bigl[\cot\alpha\sin(N\alpha)-N\cos(N\alpha)\bigr].
+\tag{175.10}
+$$
+前两式直接微分（175.8）；在基点有 $q_w=r$。第三式中生存因子的一阶贡献为零，而 $f_p=1/2$；零次与一次翻转路径给出
+$$
+2h_N=\sum_{j=1}^{N-1}
+\bigl[\cos((N-2j)\alpha)-\cos(N\alpha)\bigr].
+\tag{175.11}
+$$
+三角和恒等式把它化为（175.10）。对当前的早视界 $n,m$，每个括号严格为正，所以 $h_N>0$，同时 $b_N>0,d_N<0$。
+
+令 $x=n\alpha$、$\lambda=d_m/d_n$，消去共同的 $\theta$ 方向，得到两个余项
+$$
+\begin{aligned}
+R_b&=b_m-\lambda b_n
+=\frac{\sin x\cos x-n^2\sin\alpha\cos\alpha}
+{n\sin(x-\alpha)},\\
+R_h&=h_m-\lambda h_n
+=\frac{\cos\alpha\,[n^2\sin^2\alpha-\sin^2x]}
+{2n\sin\alpha\sin(x-\alpha)}.
+\end{aligned}
+\tag{175.12}
+$$
+这两个等式由 $m=n+1$ 及和角公式直接展开得到。其符号无需渐近估计：$\sin t/t$ 在 $(0,\pi)$ 严格递减，而 $0<\alpha<x<\pi/2$、$n\ge2$，所以
+$$
+\sin x<n\sin\alpha,
+\qquad
+\sin x\cos x<n\sin\alpha\cos\alpha
+<n^2\sin\alpha\cos\alpha.
+\tag{175.13}
+$$
+因此 $R_h>0$、$R_b<0$，而 $(F_n,F_m)$ 对 $(\theta,w)$ 的 Jacobian 行列式为 $r^{n+m}d_nR_b>0$。
+
+隐函数定理给出 $w(p),\theta(p)$，满足 $w(0)=0,\theta(0)=\alpha$，并精确保留
+$$
+u_n=r^n\cos(n\alpha),\qquad u_m=r^m\cos(m\alpha).
+\tag{175.14}
+$$
+对两等式微分并消元可得
+$$
+w'(0)=-\frac{R_h}{R_b}>0,\qquad
+\theta'(0)=-\frac{h_n+b_nw'(0)}{d_n}>0.
+\tag{175.15}
+$$
+沿此解支，式（175.1）及（175.6）又给出
+$$
+q'(0)=r\bigl[w'(0)+\tan\alpha\,\theta'(0)\bigr]>0,
+\qquad
+a'(0)=-\frac r2w'(0)
+-\frac{r^3\tan\alpha}{1-r^2}\theta'(0)<0.
+\tag{175.16}
+$$
+例如，对 $a^2$ 分别求偏导，基点值为 $\partial_w(a^2)=-r^2$、$\partial_\theta(a^2)=-2r^4\tan\alpha/(1-r^2)$，即得后一式。故对所选固定 $r$，全部充分小的正 $p$ 都满足 $0<w<1$、$\theta>\alpha$、$r<q<1$、$0<a<r$、$c<1$。
+
+矩阵（175.3）的一阶与二阶主子式为正，且
+$$
+\det C_\pm=1-2a^2-q^2+2a^2q\cos\theta
+=1-q^2-2a^2(1-c)=0.
+\tag{175.17}
+$$
+所以它们为半正定的秩二相关矩阵，条件 Schur 通道合法。若 $K_{v,j}$ 是 $\mathcal Q_v$ 的 Kraus 算符，则（175.4）的 Kraus 算符为 $\sqrt{T(v,u)}K_{v,j}\otimes|u\rangle\langle v|$，其伴随乘积之和为单位算符。这验证了任意联合输入上的完全正性与保迹性。
+
+对三个视界 $S=\{1,n,m\}$，单步恒等式及（175.14）给出 $u_N=r^N\cos(N\alpha)$。又有 $0\le A_N\le r^N$，且 $A_N\to r^N$ 当 $p\downarrow0$。源与预测器的 Schur 差因而为式（174.18）的矩阵，其中
+$$
+d=r^N-A_N,\qquad
+w=r^N\bigl(e^{iN\phi}-\cos(N\alpha)\bigr).
+\tag{175.18}
+$$
+由早段相位弧几何，$|w|\le Q_N:=r^N\sin(N\alpha)$。将正 $p$ 限得充分小，可同时保证 $2(r^N-A_N)<Q_N$。包含任意参考的支配估计（174.19）于是给出风险上界 $Q_N/2$，端点相位与均衡 $02$ 输入达到它。因此单步风险精确为 $\mathcal R_1$，在 $n$ 精确达到 $H$，并在 $m$ 也保留原最优风险 $\mathcal R_m\le H$。
+
+为同时控制其余全部视界，固定 $r<\bar q<1$，缩小正 $p$ 使 $q\le\bar q$。由（175.8）有 $|u_N|\le q^N$，逐边距离估计给出
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal P_{r,N})
+\le r^N-A_N+\frac{r^N+|u_N|}{2}
+\le2\bar q^N.
+\tag{175.19}
+$$
+选 $K>m$ 使 $2\bar q^K<H$，则所有 $N\ge K$ 都严格低于 $H$。其余有限个 $N<K$、$N\notin S$ 满足 $B_N<H$，而
+$$
+d_{\rm ref}(\mathcal P_{r,N},\mathcal P_{r,N}^{\rm bit})
+\le r^N-A_N+
+\frac12|u_N-r^N\cos(N\alpha)|\longrightarrow0.
+\tag{175.20}
+$$
+故这些严格余量在同一个充分小的正 $p$ 下全部保留。有限多个正邻域的交仍含正参数，并列最大点已由（175.14）精确保持。至此得到（175.5）。
+
+最后在新鲜系统输入、丢弃全部系统输出的接线中检验遗忘。记 $\Pi=\mathbf1\pi$，则 $\Pi^2=\Pi$，故
+$$
+T^N=(1-p)^NI+[1-(1-p)^N]\Pi.
+\tag{175.21}
+$$
+初始记忆可与全部系统输入及惰性参考任意相关。令 $A_v$ 为初始记忆对角块 $v$ 在偏迹全部系统输入后得到的参考正算符，则 $\sum_vA_v=\tau_R$。因为所有条件系统通道保迹，在丢弃输出后这些参考算符块只受 $T$ 作用。因此最终记忆—参考态恰为
+$$
+\tau_{KR}^{(N)}
+=(1-p)^N\sum_v|v\rangle\langle v|\otimes A_v
++[1-(1-p)^N]\sigma\otimes\tau_R.
+\tag{175.22}
+$$
+从而 $\frac12\|\tau_{KR}^{(N)}-\sigma\otimes\tau_R\|_1\le(1-p)^N$。取常值制备通道 $E_{r,N}(A)=\operatorname{Tr}(A)\sigma$，便得到
+$$
+\|\Phi_{r,N}-E_{r,N}\circ\operatorname{Tr}_K\|_\diamond
+\le2(1-p)^N\longrightarrow0,
+\tag{175.23}
+$$
+即定义173.1的标准遗忘条件。证毕。
+
+这里使用的经典开关与遗忘框架见 Kretschmann–Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C与§V；该文定理10的稀少噪声近似并不单独给出（175.5）的精确等号。当前构造用第三个去相位标签提供第二个可校准方向，（175.12）的相反符号保证了物理正参数下的同时补偿。第174节相干实现的读数差仍成立，但同样的三态维数上界也能由本节的纯经典实现达到；三态上界本身不能作为量子资源优势的依据。并列最大点处是否存在满足同一合同的双态实现，以及能否对 $r\uparrow1$ 保持统一遗忘率，仍未由这些构造确定。
+
+## 追加锚（本行以下为增补区）
