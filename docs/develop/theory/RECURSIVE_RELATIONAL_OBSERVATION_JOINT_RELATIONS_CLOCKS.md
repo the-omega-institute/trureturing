@@ -3996,3 +3996,93 @@ $$
 本节新增的是跨接口的反变协议复合、平行路径的双侧等价、跨分辨率交换式和闭路时钟的限制。第10节的商下降、像分离和协议族闭合仍是基础；本节没有把这些普通数学推导写成新的 Lean 声明，也没有声称任意分辨率塔的逆极限都由实际配置实现。
 
 ## 11.99 追加锚
+
+## 12. Renewal 时钟、活性策略与分辨率交换
+
+**本批导航。** 时钟卷已有跨接口反变运输、平行路径和闭路限制。本节把“重复校准/重新取得端口”视为 renewal 事件，并区分三种常被混淆的量：路径步数、预测边界的细化深度、以及 renewal 的无穷频次。
+
+### 12.1 路径时钟与 renewal 计数
+
+设局部配置沿合法路径产生状态 $s_0,s_1,\ldots$，每步有非负费用 $c_t$，并给出 renewal 指示 $r_t\in\{0,1\}$. 定义
+
+$$
+T_n=\sum_{t<n}c_t,
+\qquad
+N_n=\sum_{t<n}r_t.
+\tag{12.1}
+$$
+
+$T_n$ 是累积时钟或资源费用，$N_n$ 是实际 renewal 次数。即使每步 $c_t=1$，也可能 $N_n$ 有限；反之，零费用的校准事件可以使 $N_n$ 无限而 $T_n$ 不反映取得难度。若费用依赖动作和来源，严格的路径拼接律是
+
+$$
+T_{u v}(s)=T_u(s)+T_v(T_u s),
+\tag{12.2}
+$$
+
+而不是端点标量的自动差值。`D5/S0/History/Accounting/CumulativeTax.lean` 的 `terminal_balance_eq_initial_add_tax` 是有限累加望远镜的直接形式化锚；它没有把所有路径费用化成势函数。
+
+预测细化深度另有定义。仓内 `ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth` 给出一状态可运行任意时钟步数而边界深度为零，以及延迟四状态循环在短时钟后仍需更深预测商的反例。因此不能用 $T_n$ 或 $N_n$ 代替完成层数。
+
+### 12.2 活性条件在时钟上的两种读法
+
+对 renewal 集 $R$，
+
+$$
+\square\Diamond R
+\quad\Longleftrightarrow\quad
+\forall N\ \exists n\ge N:\ s_n\in R
+\quad\Longleftrightarrow\quad
+\lim_{n\to\infty}N_n=+\infty.
+\tag{12.3}
+$$
+
+最后一个等价只对 $r_t=\mathbf1_R(s_t)$ 的离散事件计数成立。它没有给出相邻 renewal 之间的最大等待时间，也没有给出 $\lim T_n=\infty$；若费用可以为零，二者独立。有限控制系统中的 Büchi 秩可以给出一条所选策略下的有限回到界，但这个界属于策略和对手后继合同，不能从时钟读数单独推出。
+
+若把 renewal 作为边界可见事件，需有
+
+$$
+\mathbf1_R(s)=\bar r(q(s)),
+\qquad
+q(T_a s)=\bar T_a(q(s)),
+\tag{12.4}
+$$
+
+并且费用也在纤维上因子化 $c_a(s)=\bar c_a(q(s))$. 此时 (12.1) 的两种累积量都能在边界上递推。若同一 $q$-纤维含有 renewal 与非-renewal 状态，则 $\bar r$ 不存在；即使普通时钟 $T_n$ 仍可下降，活性时钟也不能由该边界计算。
+
+### 12.3 跨分辨率的 renewal 交换式
+
+设细、粗边界由 $\rho_{s,r}:B_s\to B_r$ 连接，动作更新为 $F_s,F_r$，renewal 标签为 $r_s,r_r$. 要让 renewal 计数在粗化后仍代表同一过程，至少要有
+
+$$
+\rho_{s,r}\circ F_s=F_r\circ\rho_{s,r},
+\qquad
+r_r\circ\rho_{s,r}=r_s,
+\qquad
+\bar c_r\circ\rho_{s,r}=\bar c_s.
+\tag{12.5}
+$$
+
+第一式只说明动态交换，第二式才保证活性事件不被粗化混淆，第三式才保证费用读数一致。若策略由边界决定，还需
+
+$$
+\pi_r\circ\rho_{s,r}=\pi_s.
+\tag{12.6}
+$$
+
+缺少任一项，就只能说状态轨迹有一个粗投影，不能说时钟、活性和选择器组成同一跨层过程。若恢复器 $R_r$ 只在实际来源像上定义，(12.5) 的反向交换也只能在共同实际像上声明。
+
+### 12.4 时钟与闭路
+
+若某个合法闭路 $w$ 在边界上诱导恒等，而每条边费用严格正，则边界上的标量时钟不能同时是状态势差：
+
+$$
+\bar F_w=\operatorname{id}
+\quad\Longrightarrow\quad
+V(\bar F_w b)-V(b)=0,
+$$
+
+但闭路累积费用为正。要保留绕行次数，必须把路径记录、圈数或 renewal 计数加入记忆；或者只要求费用满足 (12.2) 的路径累积而不要求端点势差。这个限制与第11.4节的闭路时钟结论一致，新增的是 renewal 事件和跨分辨率条件。
+
+本节只给有限、确定、已声明动作与费用的普通推导。概率活性、无限费用、连续时间停止时刻和测量反作用需要额外的联合核及可积性假设。Claim status: open；没有新增 Lean 声明。
+
+## 12.99 追加锚

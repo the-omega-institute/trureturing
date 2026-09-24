@@ -5037,3 +5037,224 @@ $$
 本节把局部 gluing、holonomy、细化和实际来源放在同一条证明链上，但没有把它们自动合成无限模型的全局存在定理。相关具体来源、拓扑和策略条件仍须逐模型核对；本节是普通数学综合，Claim status 为 open。
 
 ## 42.99 追加锚
+
+## 43. 活性边界：鲁棒安全核与反复更新
+
+**本批导航。** 前面的动态商保证摘要可以继续执行一项或有限串动作；它没有说明观察者能否在任意对手后继下永远留在安全域，并且无穷次回到一个允许继续校准、读取或换参考的更新集合。本节把这个缺口写成有限控制系统中的 Büchi 活性条件。它补充一阶 descent，不把“能继续一步”冒充“能无限运行”。
+
+### 43.1 安全前驱与反复更新核
+
+设 $S$ 是有限配置集。对每个 $s$，$A(s)$ 是非空合法动作集；动作 $a$ 的对手后继集合记为
+
+$$
+\operatorname{Succ}(s,a)\subseteq S,
+\qquad
+\operatorname{Succ}(s,a)\ne\varnothing.
+$$
+
+对 $Y\subseteq S$ 定义鲁棒控制前驱
+
+$$
+\operatorname{CPre}(Y)
+=
+\{s:\exists a\in A(s),
+\operatorname{Succ}(s,a)\subseteq Y\}.
+\tag{43.1}
+$$
+
+安全核是最大的前向不变集合
+
+$$
+\operatorname{Safe}:=\nu Z.\operatorname{CPre}(Z).
+\tag{43.2}
+$$
+
+再指定一个 renewal 集 $R\subseteq S$，它表示校准、取得新端口、写入必要记录或其它允许循环的状态。对固定 $X$ 定义相对吸引子
+
+$$
+\operatorname{Attr}_{X}(G)
+:=
+\mu Y.\bigl(G\cup(X\cap\operatorname{CPre}(Y))\bigr),
+\tag{43.3}
+$$
+
+并定义反复更新核
+
+$$
+\boxed{
+\operatorname{Live}(R)
+:=
+\nu X.\operatorname{Attr}_{X}\bigl(R\cap\operatorname{CPre}(X)\bigr).
+}
+\tag{43.4}
+$$
+
+在有限状态、有限分支和非空合法动作的条件下，$\operatorname{Live}(R)$ 中的配置有一个位置策略，使所有对手路径满足
+
+$$
+\square\operatorname{Safe}
+\quad\land\quad
+\square\Diamond R.
+\tag{43.5}
+$$
+
+这里 $\square\Diamond R$ 的量词是“对每个路径、任意 $N$，存在 $n\ge N$ 使状态落在 $R$”；它不是一个有限窗口里已经发生一次 renewal 的声明。仓内 `BuchiAgencyKernel.live_agency_buchi_kernel` 在有限控制模型中给出 live 到安全策略、秩下降和无限 renewal 的对应结构；本节把其条件改写成边界语言，未把它外推到无限状态或无限分支。
+
+### 43.2 秩证书与最小边界需要的附加标签
+
+有限不动点迭代可以为每个 live 状态附一个自然数秩。非 renewal 步骤沿所选策略严格降低秩，进入 $R\cap\operatorname{CPre}(X)$ 后重新获得一个可继续的 live 状态。因此，策略不是一个只返回“允许/拒绝”的静态标签；它还需要知道合法动作、对手后继的安全闭包，以及 renewal 是否已经发生。
+
+令 $q:S\to B$ 是候选边界。要在 $B$ 上实现 (43.5)，至少需要：
+
+$$
+q(T_a s)=\bar T_a(qs)
+\tag{43.6}
+$$
+
+对所有被选动作及其实际后继成立；安全谓词和 renewal 谓词在 $q$ 的实际纤维上恒定；并且存在边界策略 $\bar\pi:B\to A$ 使
+
+$$
+\pi=\bar\pi\circ q.
+\tag{43.7}
+$$
+
+若同一 $q$-纤维内有两个配置需要不同动作才能保证所有后继留在安全核，(43.7) 失败，即使 (43.6) 对一个预先固定动作成立，也不能得到内部观察者可执行的 Büchi 策略。若 renewal 标记在同一纤维内一真一假，边界也无法判断何时重置秩；这不是时钟精度问题，而是边界漏掉了活性关系。
+
+因此，动态充分性现在分成三层：
+
+$$
+\boxed{
+\text{单步下降}
+\Rightarrow
+\text{安全闭包}
+\Rightarrow
+\text{安全且无限 renewal 的策略闭包}.
+}
+\tag{43.8}
+$$
+
+右侧两个蕴含都需要新增条件，不能由普通的状态商自动推出。
+
+### 43.3 一阶精确而活性失败的有限反例
+
+取 $S=\{0,1\}$，每个状态只有一个动作，且
+
+$$
+F(0)=1,
+\qquad
+F(1)=1,
+\qquad
+R=\{0\}.
+\tag{43.9}
+$$
+
+取 $q=\operatorname{id}_S$。它当然满足当前读出和后继的精确下降，安全核是 $S$，但任何路径至多一次经过 $0$，所以
+
+$$
+\operatorname{Live}(R)=\varnothing.
+$$
+
+这个例子排除了“边界已经无损”便自动得到持续活性的推论。反向地，若把 $R=S$，同一个更新就满足 $\square\Diamond R$；活性取决于声明的 renewal 任务，而非单靠更新图的名称。
+
+若把 $q$ 改成常值摘要，(43.6) 甚至已经失败，因为两个状态的后继在摘要外的 renewal 关系不同。若把 renewal 标签并入 $q$，静态摘要可能恢复该标签，但仍需检查策略因子化和所有对手后继。仓内 `DeterministicSafePolicyExistence.deterministic_safe_policy_exists_iff` 给出每个纤维有共同合法安全动作与存在安全策略之间的有限判据；`BoundaryRelativeAgency.boundary_relative_agency` 与 `ActionLoopRequiresMemory.policy_change_implies_memory_change` 则分别说明隐藏决策和循环中的策略变化不能免费从粗边界恢复。
+
+### 43.4 反复更新与空间、时间、记忆
+
+在统一读法中，空间是 $S$ 的局部配置载体，时间是策略路径的前缀序，边界是保持 (43.6)—(43.7) 的商，记忆则至少保存 renewal 标签和策略所需的秩或其等价残余。时钟读数可以记录路径长度，却不能单独替代秩：仓内 `ClockTimeVersusRefinementDepth.clock_time_does_not_determine_refinement_depth` 的一状态任意计时与延迟四状态例子，已经给出时钟步数和预测细化深度不相等的有限见证。
+
+本节的普通数学结论只覆盖有限状态、有限分支、非空动作和已声明的安全/renewal 语义。无限状态、概率几乎处处活性、随机策略的种子来源和资源受限的可取得性需要分别建立量词与接口；它们不能由 (43.4) 的符号自动补上。Claim status: open；没有新增 Lean 声明。
+
+## 43.99 追加锚
+
+## 44. 自适应取得的成本与被动联合边界
+
+**本批导航。** 活性核回答“是否能一直运行”，但没有回答“用多少次实验才能得到目标”。本节把被动联合读出、历史自适应策略和取得成本分开：自适应可以改变成本，却不能在固定实验族之外创造被动联合边界没有的区别。
+
+### 44.1 被动联合边界和策略转录
+
+设有限实际来源为 $S$，实验族为 $E$，每个实验 $e$ 有响应类型 $Y_e$ 和读出
+
+$$
+\rho_e:S\to Y_e.
+$$
+
+把同一来源上的全部被动读出合成
+
+$$
+J:S\to\prod_{e\in E}Y_e,
+\qquad
+J(s)=(\rho_e(s))_{e\in E}.
+\tag{44.1}
+$$
+
+一个确定的深度 $N$ 策略由历史选择器
+
+$$
+\pi_t:\prod_{u<t}Y_{\pi_u}\to E,
+\qquad 0\le t<N,
+$$
+
+给出；其实际转录为
+
+$$
+\tau_\pi(s)=
+\bigl(\rho_{\pi_0}(s),\ldots,
+\rho_{\pi_{N-1}}(s)\bigr).
+\tag{44.2}
+$$
+
+归纳可构造唯一函数 $\bar\tau_\pi$ 使
+
+$$
+\boxed{
+\tau_\pi=\bar\tau_\pi\circ J.
+}
+\tag{44.3}
+$$
+
+第一步由 $J$ 的相应坐标给出；若前 $t$ 个响应相同，选择器给出同一实验，下一坐标仍由 $J$ 给出。因而任何只使用这组被动实验的自适应转录，都不会切开 $J$ 的纤维。
+
+若目标 $T:S\to Z$ 不满足 $T=g\circ J$ 的因式分解，则不存在这类策略的转录 $\tau_\pi$ 能精确识别 $T$。仓内 `PassiveAdaptiveTranscriptUpperBound.passive_adaptive_transcript_upper_bound` 和 `ExperimentBoundary.PassiveJointBoundaryObstruction.adaptive_cost_reduction_and_passive_boundary` 给出这一上界；`ProtocolInnovationCriterion.protocol_innovation_iff_separates_current_fiber` 则把加入一个新协议真正带来新分辨率精确化为“存在同一当前纤维而新协议值不同”的成对见证。
+
+### 44.2 成本是另一种路径读出
+
+给每个实验一个非负费用 $c(e)$，策略在来源 $s$ 上的费用为
+
+$$
+C_\pi(s)=\sum_{t=0}^{N-1}c(\pi_t(\text{history}_t(s)));
+\tag{44.4}
+$$
+
+若协议允许提前停止，$N$ 换成由转录决定的停止时刻 $\tau_\pi(s)$。两个策略可能有相同的被动边界 $J$、相同的目标恢复能力，却有不同的 $C_\pi$；因此“边界充分”与“取得便宜”是两个偏序。
+
+四状态余数模型给出具体分离：只允许模 $2,3,5$ 三个被动传感器时，固定套件要三项才精确，而先问模 $2$、再按首个答案选择模 $3$ 或模 $5$ 的自适应树在两轮内精确。仓内 `AdaptiveResidueIdentification.two_step_adaptive_residue_identification` 证明深度 $2$ 与静态基数 $3$ 的严格差异；`AdaptiveEarlyStopping.expected_experiment_count_eq_one_add` 及其严格小于二的条件进一步说明期望查询数要以先验和停止协议为参数，不能由边界类数直接读出。
+
+### 44.3 何时自适应真的扩大边界
+
+若实验族本身随控制器、参考或隐藏随机种子改变，(44.1) 中的来源必须扩大为联合配置 $S'=S\times R\times K$，并把相应的合法性、种子和参考读出纳入 $J'$. 否则把控制器当作免费外部输入，会错误地把不同实际来源拼成一个策略。
+
+一个新协议 $\ell$ 只有在
+
+$$
+\ker(J\mathbin{\times}\ell)\subsetneq\ker J
+\tag{44.5}
+$$
+
+时才增加被动边界的分辨率；若只是 $\ell=g\circ J$ 的后处理，它不增加目标信息。即使 (44.5) 成立，协议仍可能无法在实际接口取得，或其费用使它在给定预算内不可行。于是新区别的三项判据应分别写成：
+
+$$
+\boxed{
+\text{切开旧纤维}
+\quad+
+\text{合法取得}
+\quad+
+\text{预算内可执行}.
+}
+\tag{44.6}
+$$
+
+### 44.4 范围
+
+本节只在有限确定性实验族、共同来源和显式停止/费用合同下给出普通推导。随机实验、未知通道、测量反作用和连续目标需要把概率核、后继和成本一起纳入实际配置；不把自适应成本例子外推成一般信息论最优定理。Claim status: open；没有新增 Lean 声明。
+
+## 44.99 追加锚
