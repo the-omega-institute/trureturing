@@ -1008,7 +1008,7 @@ public sealed class PrOpenScriptTests
         Assert.StartsWith($"42\nPR_WATCH_RESULT pr=42 outcome=green head_sha={HeadSha}\n", Text(result.StandardOutput), StringComparison.Ordinal);
         Assert.Equal(6, fixture.Invocations.Count);
         Assert.EndsWith("|token=none", fixture.Invocations[0], StringComparison.Ordinal);
-        Assert.EndsWith("|token=app-token", fixture.Invocations[1], StringComparison.Ordinal);
+        Assert.EndsWith("|token=fake-app-credential", fixture.Invocations[1], StringComparison.Ordinal);
         Assert.Equal($"pr merge 42 --repo owner/repo --auto --merge --match-head-commit {HeadSha}|token=none", fixture.Invocations[2]);
     }
     [Fact]
@@ -1106,6 +1106,196 @@ public sealed class PrOpenScriptTests
         Assert.Equal(0, fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n")).ExitCode);
         Assert.EndsWith("|token=none", fixture.Invocations[1], StringComparison.Ordinal);
     }
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrScriptKeepsCredentialsOutOfExternalLaunchArguments(bool create)
+    {
+        using var fixture = new PrScriptFixture { GithubToken = create ? "" : "supplied-token" };
+        const string title = "literal 'single' \"double\" $HOME `exit 91` $(exit 92) *";
+        var result = create
+            ? fixture.RunOpen("--head", "topic", "--message-file", fixture.Message(title + "\n"))
+            : fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.NotEmpty(fixture.LaunchArguments("env"));
+        Assert.NotEmpty(fixture.LaunchArguments("gh-app"));
+        if (create) Assert.Contains(title, fixture.LaunchArguments("gh"));
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrWatchRefreshesExpiringCredentialsAcrossQueriesForOneHeadAndRun(bool throughMake)
+    {
+        using var fixture = new PrScriptFixture { GithubToken = "renewed-1", RotatingCredentials = true };
+        fixture.SnapshotResponses(
+            Ok(Snapshot("OPEN", Check("engineering", "IN_PROGRESS", null))),
+            Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"))));
+
+        var result = throughMake ? fixture.RunMakeWatch42() : fixture.RunWatch42();
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains($"PR_WATCH_RESULT pr=42 outcome=green head_sha={HeadSha}", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Contains("state=OPEN pending=1 missing=0", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Equal(2, fixture.Invocations.Count(IsSnapshotInvocation));
+        Assert.Equal(5, fixture.BrokerCalls.Count);
+        Assert.Equal(Enumerable.Range(1, 5).Select(i => $"renewed-{i}"), fixture.GithubCredentials);
+        Assert.All(fixture.Invocations, invocation => Assert.EndsWith("|token=none", invocation, StringComparison.Ordinal));
+        var evidence = Text(result.StandardError).Split('\n').Where(line => line.StartsWith("PR_WATCH_EVIDENCE", StringComparison.Ordinal)).ToArray();
+        Assert.Equal(2, evidence.Length);
+        Assert.All(evidence, line => Assert.Contains("\"run_id\":201", line, StringComparison.Ordinal));
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Theory]
+    [InlineData("available", "supplied-token", "fake-app-credential", 3)]
+    [InlineData("failing", "supplied-token", "supplied-token", 3)]
+    [InlineData("empty", "supplied-token", "supplied-token", 3)]
+    [InlineData("absent", "supplied-token", "supplied-token", 0)]
+    [InlineData("available", "", "none", 0)]
+    [InlineData("absent", "", "none", 0)]
+    [InlineData("available", null, "none", 0)]
+    [InlineData("absent", null, "none", 0)]
+    public void PrWatchPreservesCredentialModes(string broker, string? supplied, string expected, int brokerCalls)
+    {
+        using var fixture = new PrScriptFixture { GithubToken = supplied, BrokerMode = broker };
+        var result = fixture.RunWatch42();
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(brokerCalls, fixture.BrokerCalls.Count);
+        Assert.All(fixture.GithubCredentials, token => Assert.Equal(expected, token));
+        Assert.All(fixture.Invocations, invocation => Assert.EndsWith("|token=none", invocation, StringComparison.Ordinal));
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Theory]
+    [InlineData("absent")]
+    [InlineData("failing")]
+    [InlineData("empty")]
+    public void PrWatchUnavailableCredentialsStayQueryUnavailable(string broker)
+    {
+        using var fixture = new PrScriptFixture
+        { GithubToken = "expired-token", BrokerMode = broker, RotatingCredentials = true };
+        var result = fixture.RunWatch42();
+        Assert.Equal(69, result.ExitCode);
+        Assert.Contains("outcome=query-unavailable step=required-set attempts=3", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Equal(3, fixture.Invocations.Count);
+        Assert.DoesNotContain(fixture.Invocations, IsSnapshotInvocation);
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Fact]
+    public void PrWatchDoesNotAssumeNativeCredentialsWhenOnlyGhTokenIsSupplied()
+    {
+        using var fixture = new PrScriptFixture { RequireCredential = true };
+        var result = fixture.RunWatch42();
+        Assert.Equal(69, result.ExitCode);
+        Assert.Equal(3, fixture.Invocations.Count);
+        Assert.Empty(fixture.BrokerCalls);
+        Assert.Contains("authentication required", Text(result.StandardError), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("available", "fake-app-credential")]
+    [InlineData("failing", "none")]
+    [InlineData("empty", "none")]
+    [InlineData("absent", "none")]
+    public void PrOpenPreservesCreationIdentityAndLocalAutoMerge(string broker, string createToken)
+    {
+        using var fixture = new PrScriptFixture { BrokerMode = broker };
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n"), "--auto-merge");
+        Assert.Equal(0, result.ExitCode);
+        Assert.EndsWith("|token=" + createToken, fixture.Invocations[1], StringComparison.Ordinal);
+        Assert.EndsWith("|token=none", fixture.Invocations[2], StringComparison.Ordinal);
+        Assert.All(fixture.GithubCredentials, token => Assert.Equal("none", token));
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Fact]
+    public void PrOpenRefreshesSuppliedCredentialsWithoutLeakingCreationIdentity()
+    {
+        using var fixture = new PrScriptFixture { GithubToken = "renewed-1", RotatingCredentials = true };
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n"), "--auto-merge");
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(6, fixture.BrokerCalls.Count);
+        Assert.EndsWith("|token=renewed-2", fixture.Invocations[1], StringComparison.Ordinal);
+        Assert.Equal("renewed-1", fixture.GithubCredentials[1]);
+        Assert.EndsWith("|token=none", fixture.Invocations[2], StringComparison.Ordinal);
+        Assert.Equal("renewed-3", fixture.GithubCredentials[2]);
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Theory]
+    [InlineData("SUCCESS", "FAILURE", 1)]
+    [InlineData("FAILURE", "SUCCESS", 0)]
+    public void PrWatchRefreshDoesNotCollapseStaleHeadOrOldRun(string misleading, string current, int exitCode)
+    {
+        using var fixture = new PrScriptFixture { GithubToken = "renewed-1", RotatingCredentials = true };
+        fixture.SnapshotResponses(
+            Ok(BoundSnapshot(OldHeadSha, HeadSha, Check("engineering", "COMPLETED", misleading))),
+            Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", misleading),
+                Check("engineering", "COMPLETED", current, runId: 202, runNumber: 2))));
+        var result = fixture.RunWatch42();
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.Contains("state=stale", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Equal(2, fixture.Invocations.Count(IsSnapshotInvocation));
+        Assert.Contains("\"run_id\":202", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("\"run_id\":201", Text(result.StandardError), StringComparison.Ordinal);
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Fact]
+    public void PrWatchBrokerFailureAfterPendingIsNotCiFailure()
+    {
+        using var fixture = new PrScriptFixture
+        { GithubToken = "renewed-1", RotatingCredentials = true, BrokerFailAt = 4 };
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "IN_PROGRESS", null))));
+        var result = fixture.RunWatch42();
+        Assert.Equal(69, result.ExitCode);
+        Assert.Contains("state=OPEN pending=1 missing=0", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains("outcome=query-unavailable step=snapshot attempts=3", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Equal(6, fixture.BrokerCalls.Count);
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Fact]
+    public void PrOpenKeepsCreationApiBudgetAfterBrokerAcquisition()
+    {
+        using var fixture = new PrScriptFixture { BrokerAdvanceSeconds = 10 };
+        var result = fixture.RunOpen("--head", "topic", "--message-file", fixture.Message("title\n"));
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("step=pr-create timeout_seconds=60", Text(result.StandardError), StringComparison.Ordinal);
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Fact]
+    public void PrWatchSubtractsBrokerTimeFromTheQueryBudget()
+    {
+        using var fixture = new PrScriptFixture { GithubToken = "supplied-token", BrokerAdvanceSeconds = 10 };
+        var result = fixture.RunWatch("--pr", "42", "--head-sha", HeadSha, "--timeout-seconds", "30");
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("step=required-set timeout_seconds=20", Text(result.StandardError), StringComparison.Ordinal);
+        fixture.AssertNoCredentialEmission(result);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrWatchBrokerTimeoutUsesTheRemainingWatchBudget(bool childProcess)
+    {
+        using var fixture = new PrScriptFixture
+        { GithubToken = "renewed-1", RotatingCredentials = true, BrokerBlockAt = 4, BrokerChildProcess = childProcess };
+        fixture.SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "IN_PROGRESS", null))));
+        var result = fixture.RunWatchWithBlockedBroker();
+        Assert.Equal(69, result.ExitCode);
+        Assert.Contains("outcome=query-unavailable step=snapshot attempts=1", Text(result.StandardOutput), StringComparison.Ordinal);
+        Assert.Contains("step=gh-app-token timeout_seconds=29 result=timeout", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Single(fixture.Invocations, IsSnapshotInvocation);
+        Assert.Equal(4, fixture.BrokerCalls.Count);
+        fixture.AssertNoCredentialEmission(result);
+    }
+
     [Fact]
     public void PrOpenAndPrWatchDefaultsAreTenSecondsAnd4200SecondsAndThreeFailures()
     {
@@ -1235,7 +1425,7 @@ public sealed class PrOpenScriptTests
         private bool useDeadlineClock;
         internal PrScriptFixture()
         {
-            bin = Path.Combine(temporary.Path, "bin");
+            bin = Path.Combine(temporary.Path, "bin with spaces");
             invocations = Path.Combine(temporary.Path, "gh-invocations");
             responses = Path.Combine(temporary.Path, "responses");
             responseEvents = Path.Combine(temporary.Path, "response-events");
@@ -1244,6 +1434,7 @@ public sealed class PrOpenScriptTests
             Directory.CreateDirectory(responses);
             WriteExecutable(Path.Combine(bin, "gh"), FakeGh);
             WriteExecutable(Path.Combine(bin, "gh-app"), FakeGhApp);
+            WriteExecutable(Path.Combine(bin, "env"), FakeEnv);
             RequiredResponses(Ok(Required("engineering")));
             HeadResponses(Ok(HeadResponse(HeadSha)));
             SnapshotResponses(Ok(Snapshot("OPEN", Check("engineering", "COMPLETED", "SUCCESS"))));
@@ -1260,6 +1451,44 @@ public sealed class PrOpenScriptTests
             File.Exists(invocations + ".body") ? File.ReadAllText(invocations + ".body") : "";
         internal string FailStep { get; set; } = "";
         internal bool AppTokenFails { get; set; }
+        internal string? GithubToken { get; set; }
+        internal string BrokerMode { get; set; } = "available";
+        internal bool RotatingCredentials { get; set; }
+        internal bool RequireCredential { get; set; }
+        internal int BrokerFailAt { get; set; }
+        internal int BrokerBlockAt { get; set; }
+        internal int BrokerAdvanceSeconds { get; set; }
+        internal bool BrokerChildProcess { get; set; }
+        internal IReadOnlyList<string> BrokerCalls => File.Exists(invocations + ".broker") ? File.ReadAllLines(invocations + ".broker") : [];
+        internal IReadOnlyList<string> GithubCredentials => File.Exists(invocations + ".github") ? File.ReadAllLines(invocations + ".github") : [];
+        internal IReadOnlyList<string> LaunchArguments(string executable)
+        {
+            var path = invocations + ".argv-" + executable;
+            return File.Exists(path) ? File.ReadAllText(path).Split('\0') : [];
+        }
+        internal void AssertNoCredentialEmission(ProcessOutput result)
+        {
+            var output = Text(result.StandardOutput) + Text(result.StandardError);
+            Assert.NotEmpty(LaunchArguments("gh"));
+            foreach (var token in new[] { "caller-token", "supplied-token", "expired-token", "fake-app-credential", "renewed-", "broker-secret" })
+            {
+                Assert.DoesNotContain(token, output, StringComparison.Ordinal);
+                foreach (var executable in new[] { "env", "gh", "gh-app" })
+                    Assert.All(LaunchArguments(executable), argument => Assert.DoesNotContain(token, argument, StringComparison.Ordinal));
+            }
+            Assert.All(BrokerCalls, call => Assert.Equal("token --auto|stdout=pipe", call));
+        }
+        internal ProcessOutput RunMakeWatch42() => Run(["make", "pr-watch", "PR=42", "HEAD_SHA=" + HeadSha, "WATCH_INTERVAL_SECONDS=1"]);
+        internal ProcessOutput RunWatchWithBlockedBroker()
+        {
+            useDeadlineClock = true;
+            delayedSnapshot = true;
+            Directory.CreateDirectory(clock);
+            WriteExecutable(Path.Combine(clock, "launch"), DeadlineClockLauncher);
+            var result = RunWatch("--pr", "42", "--head-sha", HeadSha, "--interval-seconds", "1", "--timeout-seconds", DeadlineBehaviorTimeoutSeconds);
+            AssertProcessesStopped(File.ReadAllLines(responseEvents));
+            return result;
+        }
         internal IReadOnlyList<string> Invocations => File.Exists(invocations) ? File.ReadAllLines(invocations) : [];
         internal ProcessOutput RunOpen(params string[] arguments) => Run(["open", .. arguments]);
         internal ProcessOutput RunWatch(params string[] arguments) => Run(["watch", .. arguments]);
@@ -1289,6 +1518,11 @@ public sealed class PrOpenScriptTests
                 Assert.Contains("clock:watchdog-released", events);
             }
             Assert.Contains($"clock:deadline:{DeadlineBehaviorTimeoutSeconds}", events);
+            AssertProcessesStopped(events);
+            return result;
+        }
+        private void AssertProcessesStopped(string[] events)
+        {
             var processes = events.Where(entry => entry.StartsWith("process:", StringComparison.Ordinal))
                 .Select(entry => entry["process:".Length..]).Distinct().ToArray();
             Assert.NotEmpty(processes);
@@ -1296,7 +1530,6 @@ public sealed class PrOpenScriptTests
                 ["-c", "for pid in \"$@\"; do if kill -0 \"$pid\" 2>/dev/null; then printf 'still running: %s\\n' \"$pid\" >&2; exit 1; fi; done", "process-cleanup", .. processes],
                 temporary.Path, BoundedProcessRunner.HangDetectionBudget, 4096);
             Assert.True(cleanup.ExitCode == 0, Text(cleanup.StandardError));
-            return result;
         }
         internal void RequiredResponses(params FakeResponse[] values) => WriteResponses("required", values);
         internal void RunResponses(int runId, params FakeResponse[] values) => WriteResponses($"run-{runId}", values);
@@ -1334,17 +1567,43 @@ public sealed class PrOpenScriptTests
         public void Dispose() => temporary.Dispose();
         private ProcessOutput Run(string[] arguments)
         {
-            var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "pr.sh");
+            if (BrokerAdvanceSeconds > 0)
+            {
+                useDeadlineClock = true;
+                Directory.CreateDirectory(clock);
+                WriteExecutable(Path.Combine(clock, "launch"), DeadlineClockLauncher);
+            }
+            var root = TestRepositoryLayout.FindRoot();
+            var scriptDirectory = Path.Combine(temporary.Path, "checkout with spaces", "tools", "scripts");
+            Directory.CreateDirectory(scriptDirectory);
+            var script = Path.Combine(scriptDirectory, "pr.sh");
+            File.Copy(Path.Combine(root, "tools", "scripts", "pr.sh"), script, true);
+            var checkout = Path.GetFullPath(Path.Combine(scriptDirectory, "..", ".."));
+            File.Copy(Path.Combine(root, "Makefile"), Path.Combine(checkout, "Makefile"), true);
+            var scratch = Path.Combine(temporary.Path, "temp with spaces");
+            Directory.CreateDirectory(scratch);
+            if (BrokerMode == "absent") File.Delete(Path.Combine(bin, "gh-app"));
             string[] entry = useDeadlineClock ? ["bash", Path.Combine(clock, "launch"), script] : ["bash", script];
+            if (arguments[0] == "make")
+            {
+                entry = ["make", "--no-print-directory", "-C", checkout];
+                arguments = arguments[1..];
+            }
             return TestProcessRunner.Run("env",
-                ["GH_TOKEN=caller-token", $"PATH={bin}:/usr/bin:/bin:/usr/sbin:/sbin", "PR_OPEN_REPO=owner/repo",
+                ["-i", "GH_TOKEN=caller-token", .. (GithubToken is null ? Array.Empty<string>() : [$"GITHUB_TOKEN={GithubToken}"]), $"TMPDIR={scratch}",
+                    $"PATH={bin}:/usr/bin:/bin:/usr/sbin:/sbin", "PR_OPEN_REPO=owner/repo",
                     "PR_OPEN_BASE=dev", $"PR_TEST_INVOCATIONS={invocations}",
                     $"PR_TEST_RESPONSES={responses}", $"PR_TEST_RESPONSE_EVENTS={responseEvents}", $"PR_TEST_FAIL_STEP={FailStep}",
-                    $"PR_TEST_APP_FAIL={(AppTokenFails ? "1" : "0")}", $"PR_TEST_CLOCK={clock}",
+                    $"PR_TEST_APP_FAIL={(AppTokenFails || BrokerMode == "failing" ? "1" : "0")}", $"PR_TEST_CLOCK={clock}",
+                    $"PR_TEST_APP_EMPTY={(BrokerMode == "empty" ? "1" : "0")}",
+                    $"PR_TEST_ROTATE={(RotatingCredentials ? "1" : "0")}", $"PR_TEST_REQUIRE_CREDENTIAL={(RequireCredential ? "1" : "0")}",
+                    $"PR_TEST_APP_FAIL_AT={BrokerFailAt}", $"PR_TEST_APP_BLOCK_AT={BrokerBlockAt}",
+                    $"PR_TEST_APP_ADVANCE={BrokerAdvanceSeconds}", $"PR_TEST_APP_CHILD={(BrokerChildProcess ? "1" : "0")}",
                     $"PR_TEST_DEADLINE={DeadlineBehaviorTimeoutSeconds}", $"PR_TEST_DELAYED_SNAPSHOT={(delayedSnapshot ? "1" : "0")}",
                     .. entry, .. arguments],
                 temporary.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
         }
+
         private void WriteResponses(string kind, FakeResponse[] values)
         {
             Assert.NotEmpty(values);
@@ -1369,13 +1628,33 @@ public sealed class PrOpenScriptTests
                 4096);
             Assert.Equal(0, chmod.ExitCode);
         }
+        // Observe the executable boundary before env consumes assignments and
+        // execs gh; gh's own argv alone cannot detect an upstream env leak.
+        private const string FakeEnv = """
+            #!/bin/bash
+            set -euo pipefail
+            printf '%s\0' "$@" >> "$PR_TEST_INVOCATIONS.argv-env"
+            exec /usr/bin/env "$@"
+            """;
         private const string FakeGh = """
             #!/usr/bin/env bash
             set -euo pipefail
+            printf '%s\0' "$@" >> "$PR_TEST_INVOCATIONS.argv-gh"
             printf 'process:%s\n' "$$" >> "$PR_TEST_RESPONSE_EVENTS"
             token="${GH_TOKEN:-none}"
+            printf '%s\n' "${GITHUB_TOKEN:-none}" >> "$PR_TEST_INVOCATIONS.github"
             arguments="$*"
             printf '%s|token=%s\n' "${arguments//$'\n'/ }" "$token" >> "$PR_TEST_INVOCATIONS"
+            if [[ "$PR_TEST_REQUIRE_CREDENTIAL" == 1 && -z "${GITHUB_TOKEN:-}" && "$token" == none ]]; then
+              printf 'authentication required\n' >&2; exit 4
+            fi
+            if [[ "$PR_TEST_ROTATE" == 1 ]]; then
+              index=0
+              [[ ! -f "$PR_TEST_INVOCATIONS.auth" ]] || index="$(<"$PR_TEST_INVOCATIONS.auth")"
+              index=$((index + 1))
+              printf '%s\n' "$index" > "$PR_TEST_INVOCATIONS.auth"
+              [[ "${GH_TOKEN:-${GITHUB_TOKEN:-}}" == "renewed-$index" ]] || { printf 'HTTP 401: expired credential\n' >&2; exit 1; }
+            fi
             respond() {
               local kind="$1" index count prefix delay
               index="$(<"$PR_TEST_RESPONSES/$kind.next")"
@@ -1471,8 +1750,28 @@ public sealed class PrOpenScriptTests
         private const string FakeGhApp = """
             #!/usr/bin/env bash
             set -euo pipefail
-            [[ "${PR_TEST_APP_FAIL:-0}" != 1 ]] || exit 44
-            printf '%s\n' 'app-token'
+            printf '%s\0' "$@" >> "$PR_TEST_INVOCATIONS.argv-gh-app"
+            printf 'process:%s\n' "$$" >> "$PR_TEST_RESPONSE_EVENTS"
+            output_kind=pipe
+            [[ ! -f /dev/fd/1 ]] || output_kind=file
+            printf '%s|stdout=%s\n' "$*" "$output_kind" >> "$PR_TEST_INVOCATIONS.broker"
+            index=0
+            [[ ! -f "$PR_TEST_INVOCATIONS.broker-count" ]] || index="$(<"$PR_TEST_INVOCATIONS.broker-count")"
+            index=$((index + 1))
+            printf '%s\n' "$index" > "$PR_TEST_INVOCATIONS.broker-count"
+            if [[ "$PR_TEST_APP_FAIL" == 1 ]] || (( PR_TEST_APP_FAIL_AT > 0 && index >= PR_TEST_APP_FAIL_AT )); then
+              printf 'broker-secret\n' >&2; printf 'broker-secret\n'; exit 44
+            fi
+            if (( index == PR_TEST_APP_BLOCK_AT )); then
+              if [[ "$PR_TEST_APP_CHILD" == 1 ]]; then bash -c 'sleep 60'
+              else sleep 60; fi
+            fi
+            if (( index == 1 && PR_TEST_APP_ADVANCE > 0 )); then
+              printf '%s\n' "$PR_TEST_APP_ADVANCE" > "$PR_TEST_CLOCK/now"
+            fi
+            [[ "$PR_TEST_APP_EMPTY" != 1 ]] || exit 0
+            if [[ "$PR_TEST_ROTATE" == 1 ]]; then printf 'renewed-%s\n' "$index"
+            else printf '%s\n' 'fake-app-credential'; fi
             """;
     }
 }
