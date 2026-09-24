@@ -84,11 +84,19 @@ theorem gauge_and_source_descent
       _ = -(⅟D * C * Rv) := by rw [hh]; simp
   refine ⟨hr, ?_, ?_⟩
   · rw [hr] at hvisible
-    simpa only [Matrix.sub_mul, Matrix.mul_assoc, Matrix.mul_neg,
-      sub_eq_add_neg] using hvisible
+    have hv : A * Rv + -(B * (⅟D * (C * Rv))) = 0 := by
+      simpa only [Matrix.mul_neg, Matrix.mul_assoc] using hvisible
+    calc
+      (A - B * ⅟D * C) * Rv = A * Rv + -(B * (⅟D * (C * Rv))) := by
+        simp only [sub_eq_add_neg, Matrix.add_mul, Matrix.neg_mul, Matrix.mul_assoc]
+      _ = 0 := hv
   · rw [hr] at hsource
-    simpa only [Matrix.sub_mul, Matrix.mul_assoc, Matrix.mul_neg,
-      sub_eq_add_neg] using hsource
+    have hj : Jv * Rv + -(Jh * (⅟D * (C * Rv))) = 0 := by
+      simpa only [Matrix.mul_neg, Matrix.mul_assoc] using hsource
+    calc
+      (Jv - Jh * ⅟D * C) * Rv = Jv * Rv + -(Jh * (⅟D * (C * Rv))) := by
+        simp only [sub_eq_add_neg, Matrix.add_mul, Matrix.neg_mul, Matrix.mul_assoc]
+      _ = 0 := hj
 
 /-- A graph frame has the genuine pullback norm I + X-adjoint X. -/
 theorem graph_gram (X : Matrix n m ℂ) :
@@ -171,7 +179,8 @@ theorem projected_nilpotency_counterexample :
         norm_num [Matrix.mul_apply, Fin.sum_univ_succ]
     · intro hzero
       have hentry := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℚ => M 3 0) hzero
-      norm_num [Matrix.mul_apply, Fin.sum_univ_succ, Matrix.vecCons] at hentry
+      norm_num [Matrix.mul_apply, Fin.sum_univ_succ] at hentry
+      exact absurd hentry (by decide)
 
 #print axioms source_preserving_schur
 #print axioms schur_graph_lift
