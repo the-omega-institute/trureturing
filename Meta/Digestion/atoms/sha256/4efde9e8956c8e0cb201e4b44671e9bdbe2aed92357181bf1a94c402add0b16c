@@ -1,0 +1,20 @@
+## corollary 10.2: 明确谱尺度
+
+对 $N=d^L$，
+
+$$
+\mathbb E[N\operatorname{Tr}(\rho_A-I_N/N)^2]=1,
+$$
+
+而未乘 $N$ 的均方距离为 $1/N$，趋于零。另有
+
+$$
+-\log\mathbb E\operatorname{Tr}\rho_A^2=L\log d-\log2,
+$$
+
+$$
+L\log d-\log2\le\mathbb E S_2(\rho_A)\le\mathbb E S(\rho_A)\le L\log d.
+$$
+
+后式来自 Jensen 和 $S\ge S_2$。领先熵斜率与完整谱平坦性不同。该区域至少具有内部顶点全部归左或全部归右两个同容量最小割，不满足 [TPTN26] 第 5.2 节式 (5.23) 前的无领先简并条件。未从二阶平均值推出其他谱距离的概率极限。
+

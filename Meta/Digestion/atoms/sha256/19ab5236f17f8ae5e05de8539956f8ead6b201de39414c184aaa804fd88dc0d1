@@ -1,0 +1,8 @@
+## lemma 31.2: 秩一映射的完全范数
+
+若 $B=B^*$、$Y$ 为有限矩阵，$\Xi(X)=\operatorname{Tr}(BX)Y$，则
+
+$$
+\|\Xi\|_\diamond=\|B\|_\infty\|Y\|_1.
+$$
+

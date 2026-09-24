@@ -1,0 +1,8 @@
+## theorem 10.1: 有限维精确二阶矩
+
+逐个样本 $Z=d^{-2L}$，且
+
+$$
+\mathbb E\operatorname{Tr}(\rho_A^2)=2/d^L.
+$$
+

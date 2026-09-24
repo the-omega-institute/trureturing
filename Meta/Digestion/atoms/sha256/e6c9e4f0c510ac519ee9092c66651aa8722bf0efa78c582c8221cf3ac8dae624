@@ -1,0 +1,27 @@
+## proposition 30.1: 相对面积系数的有限谱公式
+
+考虑四维有限实标量场，恒定严格正定质量平方矩阵
+
+$$
+\mathsf M=\begin{pmatrix}A&B\\B^T&C\end{pmatrix},\qquad
+\mathsf M_0=A\oplus C,
+\qquad D_g=-\nabla_g^2I+\xi RI+\mathsf M.
+$$
+
+比较模型具有同样的场、曲率耦合、正规化与有限重整化处方，仅将跨块质量耦合关闭。设 Euclidean 作用量线性曲率项为 $\Gamma_{E,R}=-\kappa\int\sqrt g R$。在低曲率、低导数展开的这一项中，
+
+$$
+\Delta\kappa=\frac{\hbar}{32\pi^2}(1/6-\xi)\,\mathcal I,
+\quad
+\mathcal I=\operatorname{tr}(\mathsf M\log\mathsf M-\mathsf M_0\log\mathsf M_0)
+=\operatorname{tr}(\mathsf M)\,D\left(\frac{\mathsf M}{\operatorname{tr}\mathsf M}\middle\|\frac{\mathsf M_0}{\operatorname{tr}\mathsf M}\right).
+$$
+
+对一个有适当平滑锥正规化的静态分岔视界截面 $\Sigma$，只取同一局部曲率项的复制熵，则
+
+$$
+\boxed{\Delta S^{(R)}_\Sigma
+=\frac{4\pi}{\hbar}\Delta\kappa\,\operatorname{Area}(\Sigma)
+=\frac{1/6-\xi}{8\pi}\operatorname{Area}(\Sigma)\,\mathcal I.}
+$$
+

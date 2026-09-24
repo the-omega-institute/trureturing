@@ -1,0 +1,24 @@
+## corollary 15.2: 全输入熵与相对熵，面积算符为零
+
+对任意历史密度矩阵 $\rho$，令 $\widehat\rho=\mathcal U^*\rho\mathcal U$，$p_z=\operatorname{Tr}\widehat\rho_{zz}$，$\rho_{b,z}=\operatorname{Tr}_{K_A}\widehat\rho_{zz}/p_z$；零权扇区略去。则
+
+$$
+\operatorname{Tr}_Y(J\rho J^*)\simeq\bigoplus_zp_z\rho_{b,z},
+\qquad
+S(\operatorname{Tr}_YJ\rho J^*)=H(p)+\sum_zp_zS(\rho_{b,z}).
+$$
+
+右侧正是标准分块代数熵 $S_{\mathcal M_X}(\rho)$，不含冗余因子 $\log|K_A|$。对任意两输入，边界相对熵也精确等于此代数上的相对熵：
+
+$$
+D(\rho_X\Vert\sigma_X)=D(p\Vert s)+\sum_zp_zD(\rho_{b,z}\Vert\sigma_{b,z}),
+$$
+
+支持不包含时两侧均按 $+\infty$ 处理。因而若固定算符 $\mathcal L_X$ 要对所有 $\rho$ 满足
+
+$$
+S(\rho_X)=\operatorname{Tr}(\rho\mathcal L_X)+S_{\mathcal M_X}(\rho),
+$$
+
+则唯一可能是 $\mathcal L_X=0$。
+

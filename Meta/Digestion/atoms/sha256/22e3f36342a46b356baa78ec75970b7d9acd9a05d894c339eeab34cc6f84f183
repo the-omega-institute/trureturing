@@ -1,0 +1,29 @@
+## proposition 32.2: 完整记忆与相位缺陷
+
+该流满足
+
+$$
+\dot z=\Omega y,\qquad\dot y=-\Omega z-\gamma y,
+$$
+
+$$
+\binom{z_t}{y_t}
+=\begin{pmatrix}\alpha_t&\beta_t\\-\beta_t&\eta_t\end{pmatrix}
+\binom{z_0}{y_0}
+=\exp\!\left[t\begin{pmatrix}0&\Omega\\-\Omega&-\gamma\end{pmatrix}\right]
+\binom{z_0}{y_0}.
+$$
+
+精确消元为
+
+$$
+\boxed{\dot z(t)=\Omega e^{-\gamma t}y_0
+-\Omega^2\int_0^te^{-\gamma(t-s)}z(s)\,ds.}
+$$
+
+当前区域的最优完整预测缺陷和面积 minimax 风险仍分别为 $|\beta_t|$ 与定理 31.3 的值。若 $\gamma>0$，则
+
+$$
+|\beta_t|\le\min(1,\Omega/\gamma)\qquad(t\ge0).
+$$
+

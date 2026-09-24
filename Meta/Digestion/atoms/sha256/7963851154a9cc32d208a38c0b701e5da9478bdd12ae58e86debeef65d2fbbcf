@@ -1,0 +1,37 @@
+## theorem 29.1: 移动编码的精确生成元
+
+令 $V(t):\mathbb C^k\to\mathbb C^N$ 为光滑等距，$P=VV^*$、$Q=I-P$，给定物理自伴 $H_B(t)$。所有码内初态保持在随时间移动的码空间，当且仅当
+
+$$
+Q(H_BV-i\dot V)=0,
+$$
+
+等价地 $\dot P=-i[H_B,P]$。此时逻辑生成元是
+
+$$
+h(t)=V^*H_BV-iV^*\dot V.
+$$
+
+指定任意逻辑自伴 $h(t)$ 时，一个实际物理实现为
+
+$$
+H_B=i[\dot P,P]+V\bigl(h+iV^*\dot V\bigr)V^*+QH_\perp Q,
+$$
+
+其中 $H_\perp$ 自伴。
+
+**证明。** 对 $|\Psi\rangle=V|\psi\rangle$ 将 Schrödinger 方程分解到 $P,Q$ 两块，得到法向条件及逻辑生成元。由 $P^2=P$ 可知 $\dot P$ 纯为两侧非对角块；法向条件及其共轭恰等价于投影演化方程。$i[\dot P,P]V=iQ\dot V$，另有 $V(iV^*\dot V)=iP\dot V$，故所列 $H_BV=Vh+i\dot V$，实现全方程。证毕。忽略 $iV^*\dot V$ 只在平行框架中正确。
+
+连接 $\mathcal A=iV^*dV$ 的曲率为
+
+$$
+\mathcal F=d\mathcal A-i\mathcal A\wedge\mathcal A
+=i\,dV^*Q\wedge dV.
+$$
+
+这与 #8340 的局部观察子丛关系相同；存在环境连接时必须加 $V^*F^{\rm ambient}V$，不能省掉该项。反绝热输运原理有 [Berry09] 等已有基础。连接描述码子空间及基的运输，其曲率不自动等于物理时空的 Riemann 曲率。换局部框 $V\mapsto Vg$ 时，$h\mapsto g^*hg-i g^*\dot g$、$\mathcal A\mapsto g^*\mathcal A g+i g^*dg$，曲率协变。因此非平凡 Chern 类应沿用 #8340 的局部图册，不要求存在一个全局等距框。给定 $V(t)$ 后构造输运不等于推导了决定 $V$ 的动力学。法向耦合的不可避免强度为 $\|QH_BV\|=\|Q\dot V\|$，单位恢复后右侧乘 $\hbar$。
+
+### 29.3 真实几何与预测几何之间还需要变分字典
+
+量子态射影空间的辛结构与 Schrödinger 流是 [AS97] 的几何量子力学；双曲模空间的 WP 辛结构是另一个载体。把二者相连至少需给出一个明确映射 $\Phi$，检验 $D\Phi\,X_h=X_{H_g}\circ\Phi$ 及指定的 Poisson／辛配对相容。单凭面积数值、维数、相位外形或投影连接，均不能省略该映射。若目标是物理引力，相空间应由所选引力作用量、约束及边界条件决定，不能先指定任意 WP Hamilton 函数再宣称得到 Einstein 动力学。
+

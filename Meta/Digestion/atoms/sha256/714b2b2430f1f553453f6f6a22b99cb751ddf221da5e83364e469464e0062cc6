@@ -1,0 +1,25 @@
+## proposition 18.2: 精确互补恢复的面积–容量界
+
+对任意有限维、精确互补恢复的码，物理两侧维数为 $N_X,N_Y$。设每个中心扇区的面积特征值至少为 $a\ge0$。则码维数 $K$ 满足
+
+$$
+\boxed{\log K+2a\le\log N_X+\log N_Y.}
+$$
+
+**证明。** [Harlow] 的互补恢复正规形将每个扇区写为逻辑因子维数 $k_{X,t},k_{Y,t}$ 与固定纯辅助态 $\chi_t$。设后者的 Schmidt 秩为 $R_t$，则 $a\le S(\chi_{X,t})\le\log R_t$。不同扇区的物理支持正交，因此
+
+$$
+\sum_t k_{X,t}R_t\le N_X,\qquad
+\sum_t k_{Y,t}R_t\le N_Y.
+$$
+
+于是
+
+$$
+K=\sum_t k_{X,t}k_{Y,t}
+\le\left(\sum_t k_{X,t}\right)\left(\sum_t k_{Y,t}\right)
+\le N_XN_Ye^{-2a}.
+$$
+
+证毕。这是文献正规形的容量推论；下述当前算术码的实现达到等号。
+

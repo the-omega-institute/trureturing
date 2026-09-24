@@ -1,0 +1,23 @@
+**构造 28.4（原中心子码中的面积–相位动力学）。** 取第 18 节三维三角环的 $|Z|=9$，分为大小 $3$ 与 $6$ 的两组，均匀固定组内相干并将 $a,b$ 因子固定到一个计算基向量。所得二维子码仍在原物理空间内。其实际支撑坐标可写成
+
+$$
+J_c|0\rangle=3^{-1/2}\sum_{z=0}^{2}|z,z\rangle,\qquad
+J_c|1\rangle=6^{-1/2}\sum_{z=3}^{8}|z,z\rangle.
+$$
+
+这仅使用第 18 节的两侧局部支撑等距，不添加物理维数。对任意逻辑输入，$p=\rho_{11}$，有
+
+$$
+S_X=h_2(p)+a(p),\qquad
+\mathcal L=\operatorname{diag}(\log3,\log6),\qquad
+ a(p)=\log3+p\log2.
+$$
+
+取 $h=(\Omega/2)\sigma_x$。对纯态 $\sqrt{1-p}|0\rangle+e^{i\phi}\sqrt p|1\rangle$、$0<p<1$，Schrödinger 方程等价于
+
+$$
+\dot p=-\Omega\sqrt{p(1-p)}\sin\phi,\qquad
+\dot\phi=-\frac{\Omega(1-2p)}{2\sqrt{p(1-p)}}\cos\phi,
+\qquad\dot a=(\log2)\dot p.
+$$
+

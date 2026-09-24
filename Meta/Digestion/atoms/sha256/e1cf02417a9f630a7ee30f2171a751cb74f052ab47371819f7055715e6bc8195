@@ -1,0 +1,10 @@
+## corollary 34.2: 维数无关的稳定性判据
+
+设 $R=\max_s\ell_s-\min_s\ell_s$，则
+
+$$
+1-e^{-R/2}\le\delta_*\le\frac{2R}{4+R}.
+$$
+
+因此，扇区数可随精度变化时，$\delta_*\to0$ 当且仅当损失面积算符 $\operatorname{diag}(\ell_s)$ 在算子范数下趋近某个公共标量。对 $\epsilon<2$，精确误差预算为 $T\le\epsilon/(2-\epsilon)$。两端点扇区给左界；$\tanh x\le x$ 给 $T\le R/4$ 和右界。平均损失面积不足以决定该误差。
+

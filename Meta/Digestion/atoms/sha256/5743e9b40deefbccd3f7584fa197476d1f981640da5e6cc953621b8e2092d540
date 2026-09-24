@@ -1,0 +1,24 @@
+### 36.1 模型和精确最优值
+
+逻辑空间有正交扇区标签 $s=1,\ldots,N$。给定正整数 $d_s$ 和有限概率谱
+$\lambda_s=(\lambda_{sj})_j$，谱项按非增序排列并按需补零。源与目标等距编码分别为
+\[
+J_\lambda|s\rangle
+=\sum_{a=1}^{d_s}\sum_j\sqrt{\lambda_{sj}/d_s}\,
+ |s,a,j\rangle_X|s,a,j\rangle_Y,
+\qquad
+J_d|s\rangle=d_s^{-1/2}\sum_{a=1}^{d_s}|s,a\rangle_X|s,a\rangle_Y.
+\tag{36.1}
+\]
+不同 $s$ 的物理输出旗标正交。源的 Schmidt 概率谱把每个
+$\lambda_{sj}/d_s$ 重复 $d_s$ 次；目标扇区平坦。设
+$v_s=(\sqrt{\lambda_{sj}})_j$，$K_{st}=\langle v_s,v_t\rangle$，以及
+\[
+q_*:=\min_{p\in\Delta_N}p^{\mathsf T}Kp.
+\tag{36.2}
+\]
+允许两侧各自执行任意局部 CPTP 映射、添加并丢弃局部辅助系统，且允许
+乘积映射的共享经典随机混合。不允许通信、后选择或额外共享纠缠；输出不必
+保持旗标、纯度或任何基扇区的目标态。误差是包含任意被动参考、未除以二的
+钻石范数。任意已知的局部基变换可吸收到映射中。
+

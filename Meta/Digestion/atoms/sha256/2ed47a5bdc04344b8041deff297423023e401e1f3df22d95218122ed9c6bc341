@@ -1,0 +1,99 @@
+## 附录 A. 36 阶矩阵的精确整数重放
+
+程序依赖 NumPy 和 opt_einsum，后者仅决定收缩顺序。根环元写为 $a+b\zeta$，$\zeta^2-\zeta+1=0$，乘法为 $(ac-bd)+(ad+bc+bd)\zeta$，共轭为 $(a+b)-b\zeta$。承重数组均为有符号 64 位整数；完整收缩最多 $6^{16}$ 个单位根项，分量中间运算保守界 $3\cdot6^{16}<2^{63}$。原始向量和掩码来自 [BZ24]。这是有限等式计算证书，不是 Lean 检查。
+
+```python
+import itertools
+from fractions import Fraction
+import numpy as np
+import opt_einsum as oe
+
+perms = ((0,1,2,3),(1,0,3,2),(2,3,1,0),(3,2,0,1))
+units = np.array([(1,0),(0,1),(-1,1),(-1,0),(0,-1),(1,-1)], dtype=np.int64)
+vectors = [
+ [0,1,0,1,3,3,3,3,1,5,2,4,2,1,3,1,2,3,1,1,2,0,3,5,5,3,2,3,2,5,4,4,1,5,5,1],
+ [0,2,3,3,2,0,0,3,2,2,0,4,2,0,3,5,0,0,0,5,0,0,2,0,2,2,5,3,2,4,2,3,0,2,0,0],
+ [0,2,2,0,0,1,0,1,1,1,2,1,0,2,0,2,2,2,2,0,2,2,2,1,1,1,2,0,2,2,0,1,2,2,1,0]
+]
+
+def conj(a,b):
+    return a+b, -b
+
+def mm(a,b,c,d):
+    return a@c-b@d, a@d+b@c+b@d
+
+def make_h(j):
+    lam = np.array(vectors[j]).reshape(6,6)*(2 if j == 2 else 1)
+    a = np.zeros((6,)*4, dtype=np.int64)
+    b = a.copy()
+    for k,l,m,n in itertools.product(range(6), repeat=4):
+        v = sum((units[(x*(l-n)-y*(k+m)+int(lam[x,y]))%6]
+                 for x,y in itertools.product(range(6), repeat=2)),
+                np.zeros(2,dtype=np.int64))
+        assert np.all(v%6 == 0)
+        c,d = v//6
+        e,f = units[(l*k+n*m)%6]
+        value = (e*c-f*d, e*d+f*c+f*d)
+        assert value in [tuple(u) for u in units]
+        a[k,l,m,n], b[k,l,m,n] = value
+    return a,b
+
+def invariant(a,b):
+    labels = [[4*l+i for l in range(4)] for i in range(4)]
+    labels += [[4*l+perms[l][i] for l in range(4)] for i in range(4)]
+    expr = ','.join(''.join(oe.get_symbol(v) for v in ds) for ds in labels)+'->'
+    ac,bc = conj(a,b)
+    work = [(a,b)]*4+[(ac,bc)]*4
+    _,info = oe.contract_path(expr,*([a]*8),optimize='auto-hq')
+    for ids,_,eq,_,_ in info.contraction_list:
+        assert len(ids) == 2
+        (a,b),(c,d) = [work.pop(i) for i in ids]
+        ac = oe.contract(eq,a,c,optimize=False)
+        bd = oe.contract(eq,b,d,optimize=False)
+        ad = oe.contract(eq,a,d,optimize=False)
+        bc = oe.contract(eq,b,c,optimize=False)
+        work.append((ac-bd,ad+bc+bd))
+    assert len(work) == 1 and int(work[0][1]) == 0
+    return Fraction(int(work[0][0]),36**8)
+
+expected = [Fraction(35,419904),Fraction(79,839808),Fraction(1,15552)]
+axes_list = [(0,1,2,3),(0,2,1,3),(0,3,2,1)]
+for j in range(3):
+    a,b = make_h(j)
+    for axes in axes_list:
+        x = a.transpose(axes).reshape(36,36)
+        y = b.transpose(axes).reshape(36,36)
+        c,d = conj(x.T,y.T)
+        g,h = mm(x,y,c,d)
+        assert np.array_equal(g,36*np.eye(36,dtype=np.int64)) and not np.any(h)
+    assert invariant(a,b) == expected[j]
+    print('fixed invariant',j+1,expected[j])
+
+mask = np.zeros((36,36),dtype=np.int64)
+mask[[1,13,25],:] = [0,1,0,0,1,0,0,0,1,0,0,1,1,0,0,1,0,0,
+                     0,1,0,0,1,0,0,0,1,0,0,1,1,0,0,1,0,0]
+a,b = make_h(2)
+for index,axes in enumerate(axes_list):
+    x = a.transpose(axes).reshape(36,36)
+    y = b.transpose(axes).reshape(36,36)
+    m = mask.reshape((6,)*4).transpose(axes).reshape(36,36)
+    parts = [(x*(1-m),y*(1-m)),(x*m,y*m)]
+    coeff = {k:(np.zeros((36,36),np.int64),np.zeros((36,36),np.int64))
+             for k in (-1,0,1)}
+    for k,(x,y) in enumerate(parts):
+        for l,(v,w) in enumerate(parts):
+            v,w = conj(v.T,w.T)
+            value = mm(x,y,v,w)
+            coeff[k-l] = tuple(u+v for u,v in zip(coeff[k-l],value))
+    coeff[0] = (coeff[0][0]-36*np.eye(36,dtype=np.int64),coeff[0][1])
+    poly = {k:np.zeros(2,np.int64) for k in range(-2,3)}
+    for k,(x,y) in coeff.items():
+        for l,(v,w) in coeff.items():
+            v,w = conj(v,w)
+            poly[k-l] += [np.sum(x*v-y*w),np.sum(x*w+y*v+y*w)]
+    assert all(v[1] == 0 for v in poly.values())
+    values = [Fraction(int(poly[k][0]),36**2) for k in range(-2,3)]
+    target = [Fraction(0)]*5 if index == 0 else [0,Fraction(-17,12),Fraction(17,6),Fraction(-17,12),0]
+    assert values == target
+    print('Laurent coefficients',index,values)
+```

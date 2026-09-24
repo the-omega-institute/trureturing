@@ -1,0 +1,10 @@
+## 13. 显式局部 Hamiltonian 与可检验的 RT 误差界
+
+在解码寄存器上定义互不重叠的 $L$ 条量子连接：$i=0,\ldots,L-2$ 的 $(v_i,u_{i+1})$ 取 $\Phi_d$，缝合 $(u_0,v_{L-1})$ 取 $\Omega_{d,\alpha}$。于是
+
+$$
+|\chi_d\rangle=|\Omega_{d,\alpha}\rangle_{u_0,v_{L-1}}
+\otimes\bigotimes_{i=0}^{L-2}|\Phi_d\rangle_{v_i,u_{i+1}},
+\qquad |\Psi^\alpha_{d,L}\rangle=M_d^{\otimes L}|\chi_d\rangle.
+$$
+

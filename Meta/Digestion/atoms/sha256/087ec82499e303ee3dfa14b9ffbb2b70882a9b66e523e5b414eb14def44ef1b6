@@ -1,0 +1,8 @@
+## lemma 24.2: 稳定子与正交群
+
+$\mathscr S$ 各向同性，大小为 $d^{n-1}$，其 Weyl 算符的共同 $+1$ 空间恰为原单自由历史码。其正交群为
+
+$$
+\mathscr N=\mathscr S^\perp=\mathscr S\oplus R_d\ell_X\oplus R_d\ell_Z.
+$$
+

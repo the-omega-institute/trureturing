@@ -1,0 +1,12 @@
+**局部实现。** 两端的双线性缝合相位 $u_0v_{L-1}$ 在偏迹前后相同且只涉及被保留寄存器，故相消。令 $\delta=\alpha_r-\alpha_L$，实际空间通道可写成
+
+$$
+\mathcal S_{\Pi,d}
+=\operatorname{Ad}_{M_d^{\otimes r}}
+\circ\operatorname{Ad}_{D_{d,\delta}^{(u_0)}}
+\circ\operatorname{Ret}_{\Pi}
+\circ\operatorname{Ad}_{(M_d^{\otimes L})^*}.
+$$
+
+所有解码、丢弃和重新编码都位于各自宏块内；额外二次相位只位于第一个宏块。宏块大小为 $b$ 时门支持可达该宏块的 $2b$ 条细腿，不能称为与分块尺寸无关的细格点操作。空间通道不保持任意细腿区域的原熵；它保持的是所指定编码交换图，并把参考态送到满足各自图割等式的粗态。
+

@@ -1,0 +1,39 @@
+## theorem 15.1: 相干单项编码的完整区域正规形
+
+设 $V,X,Y$ 为有限交换群，$A:V\to X$、$B:V\to Y$ 为群同态，$(A,B)$ 单射。允许任意相位函数 $q:V\to U(1)$，不要求二次。取全历史空间 $\mathbb C[V]$ 上的等距编码
+
+$$
+J|v\rangle=q(v)|Av\rangle_X|Bv\rangle_Y.
+$$
+
+记 $K_A=\ker A$、$K_B=\ker B$、$Z=V/(K_A+K_B)$。每个 $z\in Z$ 选代表元 $v_z$，则
+
+$$
+\mathcal U|z,a,b\rangle=\overline{q(v_z+a+b)}|v_z+a+b\rangle,
+\quad a\in K_A,\ b\in K_B
+$$
+
+是从 $\bigoplus_z\mathbb C[K_A]\otimes\mathbb C[K_B]$ 到实际历史空间的幺正。两侧在其实际像空间上分别换基后，编码恰为
+
+$$
+J\mathcal U|z,a,b\rangle=|z,b\rangle_X|z,a\rangle_Y.
+$$
+
+因此从 $X$、$Y$ 可精确恢复的最大含幺逻辑 $*$-代数分别为
+
+$$
+\mathcal M_X=\mathcal U\left[\bigoplus_{z\in Z}
+ I_{K_A}\otimes\mathcal B(\mathbb C[K_B])\right]\mathcal U^*,
+\qquad
+\mathcal M_Y=\mathcal U\left[\bigoplus_{z\in Z}
+ \mathcal B(\mathbb C[K_A])\otimes I_{K_B}\right]\mathcal U^*.
+$$
+
+两者互为交换子代数，交为 $|Z|$ 维中心。这里“恢复”指擦除另一侧后仍能恢复该代数的全部观测统计；不声称恢复全历史态。
+
+**证明。** $K_A\cap K_B=0$，每个历史唯一写成 $v_z+a+b$。$X$ 中的标签是 $A(v_z+b)$；不同 $(z,b)$ 的标签不同，否则两代表元相差 $K_A+K_B$，继而 $b$ 的差同时属于两核，必须为零。$Y$ 的 $(z,a)$ 同理。相位在 $\mathcal U$ 中消除，得到所列正规形，无须任何群扩张分裂假设。
+
+任意块对角 $b$ 算符可在 $X$ 的 $(z,b)$ 标签上直接实施，因此给出可恢复代数。一个显式 CPTP 恢复是读取中心扇区，保留 $b$ 态，并在丢失的 $a$ 因子准备固定态；对像空间外输入可附加固定输出，从而在全输入上定义通道。
+
+最大性由实际错误算符算出：对 $Y$ 的矩阵单位压缩 $J^*(I_X\otimes|z,a\rangle\langle z',a'|)J$，$z\ne z'$ 时为零；$z=z'$ 时恰为经 $\mathcal U$ 共轭的 $|z\rangle\langle z|\otimes|a\rangle\langle a'|\otimes I_{K_B}$。它们张成所列 $\mathcal M_Y$。擦除的可纠正代数必须与全部压缩错误算符交换 [BKK07]，其交换子恰是 $\mathcal M_X$；另一侧对称。证毕。代表元选择只改内部坐标，不改实际可恢复代数。
+

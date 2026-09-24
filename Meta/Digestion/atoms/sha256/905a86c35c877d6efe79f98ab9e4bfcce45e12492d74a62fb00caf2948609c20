@@ -1,0 +1,14 @@
+## corollary 12.3: 原 RT 参考态的精确层分解
+
+对 $D=de$，
+
+$$
+\mathcal V_{D;d,e}|\Psi^\alpha_{D,L}\rangle
+=|\Psi^\alpha_{d,L}\rangle\otimes|\Psi^\alpha_{e,L}\rangle,
+\qquad
+\mathcal R_{D,d}(|\Psi^\alpha_{D,L}\rangle\langle\Psi^\alpha_{D,L}|)
+=|\Psi^\alpha_{d,L}\rangle\langle\Psi^\alpha_{d,L}|.
+$$
+
+**证明。** 每个 $|+_D\rangle$ 的数字分解恰为 $|+_d\rangle\otimes|+_e\rangle$，代入定理 12.2 的等距恒等式。证毕。对固定 $p,L$ 选择定理 5.2 的同一个整数 $\alpha$，这就给出每一精度都满足全区域 RT 的严格相容参考态塔。
+
