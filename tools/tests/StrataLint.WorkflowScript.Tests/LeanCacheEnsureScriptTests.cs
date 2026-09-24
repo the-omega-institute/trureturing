@@ -6,6 +6,7 @@ namespace StrataLint.WorkflowScript.Tests;
 [Collection("Lean cache environment")]
 public sealed class LeanCacheEnsureScriptTests
 {
+    // Exercise this complete project through its registered source consumer.
     [Fact]
     public void MissingLakeDelegatesToCanonicalWorktreeEnsureCacheCommand()
     {
