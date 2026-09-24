@@ -14,6 +14,12 @@ Theorem 3.2. The [source note](../../../../../Library/Arith/harrington2021oddcov
 identifies the inspected primary version and the authors' original scopes.
 The arguments below are ordinary proofs, not Lean verification.
 
+The quantitative sections also give a common all-depth law for arbitrary
+two-copy families on at most six odd primes excluding3. The
+[direct capped construction](#a-direct-capped-law-improves-the-two-copy-query-and-density-bounds)
+has query bound9.250328706548595... and density below192, both under one
+law. Its source comparison and verification limits are specified there.
+
 ## 1. Replace one digit and retain the complete remaining coordinates
 
 Let C be the original cover and M its period. Remove any non-p class
@@ -536,3 +542,196 @@ All five retained entrypoints run from physically copied files in a
 path containing spaces, with cwd `/` and flags `-I -S -O`; their output
 is identical to the corresponding unoptimized run. No new Lean
 declaration, build, deposit or freeze is claimed.
+
+## A direct capped law improves the two-copy query and density bounds
+
+For the same finite two-copy inputs as(TC1), there is one probability nu
+on the complete actual survivor V satisfying, at every query depth,
+
+    H_Q|V <= nu <= D H_Q,
+    R_Q(nu) <= B,
+    B=4202355486461552318913516091708511
+      /454292557570043338374301941417550
+      =9.250328706548595... <10,
+    D=2432902419851904000/12671604668586341
+      =191.99639536444926... <192.                       (CP1)
+
+In particular H_Q(V)>1/192. Every nonunit numerical input label may
+occur at most twice, with arbitrary fixed residues and arbitrary finite
+heights. The query sum still uses one maximum per numerical query label.
+The bound B is greater than37/4; rounding it down to9.25 is invalid.
+These are simultaneous bounds for the direct law constructed below.
+They improve(TC1)'s quantitative interface without using its comb limit.
+The actual-family lower-certificate transfer(TC6) remains valid, and no
+actual two-copy example meeting its lower target is supplied here.
+
+The proof applies the existing
+[conditional convex comparison](../../../../../Library/Arith/schroeder2026noncoverage.md#conditional-comparison-and-the-unrestricted-positive-part-bound),
+source Proposition `prop:comparison`, to a fixed completed probability
+process. That proposition allows arbitrary coordinate supports and
+separately labelled phases. The actual subprobability construction,
+two-copy charge and resulting constants below are ordinary mathematical
+deductions. The source attribution and local verification boundary
+remain in force; this is not new Lean verification or a claim of
+literature priority.
+
+### Actual survivors and a normalized comparison process
+
+First take Q={5,7,11,13,17,19}. At the5/7 anchor start with Haar
+restricted to the complete actual survivor V57. The two pure inventories
+have surviving Haar product at least
+
+    (1-2/(5-1))(1-2/(7-1))=1/3.
+
+The mixed inventory has original Haar union mass at most
+2/[(5-1)(7-1)]=1/12. Thus the initial subprobability lambda0 has mass
+at least1/4 and density at most1. There is no normalization of the pure
+survivors before this subtraction.
+
+Assign each later original to its largest prime q. For every full old
+history x, let G_q(x) be the q-adic set avoiding exactly these originals,
+including the pure-q classes. Put g=H_q(G_q(x)) and use row density
+
+    k_q(x,y)=min(C_q,1/g)*1_(y in G_q(x))  if g>0,
+    k_q(x,y)=0                            if g=0,
+    s_q(x)=integral k_q(x,y)dH_q(y)=min(1,C_q*g).         (CP2)
+
+Use thresholds t=(2,2,4,4) and caps
+
+    C_q=(q-1)/(q-1-2t_q)=(5/3,3/2,2,9/5).
+
+Iterating these rows from lambda0 defines one subprobability lambda.
+All rows use the fixed original phases. On a complete actual survivor,
+every surviving row density is at least1. Consequently
+
+    H_Q|V <= lambda <=9 H_Q,
+    lambda is supported exactly on V.                  (CP3)
+
+For comparison only, complete every row to a normalized row by
+
+    ktilde=k+(1-s)(C-k)/(C-s).
+
+Here C>1 and s<=1, so the denominator is positive. The added density
+has integral1-s, and k<=ktilde<=C. Start this comparison process from
+full independent5/7 Haar. Its prefix laws dominate the actual prefix
+subprobabilities by positivity, and its coordinate cylinder probabilities
+conditional on the entire preceding history are bounded by C_p/p^e.
+This is one fixed comparison law before all queries. Its extra mass may
+lie on forbidden points; it is never normalized as an actual survivor
+or used to assert preservation of live-prefix marginals.
+
+The cited comparison therefore gives, for every finite complete old
+query L including the unit label and every t>=1,
+
+    integral (L-t)_+ d lambda_old <= E(M_old-t)_+,
+    M_old=product_(old p) N_p,
+    Pr(N_p=1)=1-C_p/p,
+    Pr(N_p=n)=C_p*(p-1)/p^n, n>=2,                     (CP4)
+
+with C5=C7=1. Independence belongs only to the auxiliary N_p. Completing
+finite exponent inventories by nonnegative terms is legitimate since
+their full mean is product_p(1+C_p/(p-1))<infinity.
+
+### Charge both original copies without duplicating final queries
+
+For each current q exponent e, split its originals once into two slots,
+each with at most one original for every old numerical cofactor d.
+Complete each slot to an old query L_(e,j), including d=1 for pure-q
+originals. Missing phases are introduced only into this upper bound;
+neither the actual family nor the kernel is changed. All original
+phases remain attached to their own full labels q^e d.
+
+The actual forbidden fibre fraction b=1-g obeys
+
+    b <= sum_(e>=1,j=1,2) q^(-e)L_(e,j).
+
+The weights beta_(e,j)=(q-1)/(2q^e) sum to1. Since
+1-s=C_q*(b-2t_q/(q-1))_+, Jensen followed by(CP4) gives the absolute
+mass loss at this stage:
+
+    lambda_old(1)-lambda_new(1)
+      <= [2/(q-1-2t_q)] E(M_old-t_q)_+.                (CP5)
+
+The same comparison process dominates the actual prefix in each use.
+There is no intermediate normalization, no assumed product survivor
+law and no separate query-dependent source choice. The factor two in
+(CP5) pays original multiplicity; final query labels are not doubled.
+
+Every hinge is computed with its entire upper tail:
+
+    E(M-t)_+=EM-t+sum_(m<t)(t-m)Pr(M=m).
+
+Only the below-threshold probabilities need finite enumeration. The four
+exact charges are
+
+| q | t_q | Mass-loss upper bound |
+| --- | --- | --- |
+| 11 | 2 | 121/2520 |
+| 13 | 2 | 2243/31680 |
+| 17 | 4 | 333667517919/9170313152000 |
+| 19 | 4 | 4318028797945659/90107497031552000 |
+
+Subtracting their sum from1/4 yields
+
+    lambda(1)>=alpha
+      =12671604668586341/270322491094656000 >3/64.       (CP6)
+
+For the final product, EM=4851/2048 and
+
+    Phi=E(M-6)_+
+      =643630899537111875680668794873587
+       /3230464203494254131772080313600000.
+
+For every complete query L, use L-1<=5+(L-6)_+ to obtain
+
+    lambda(L-1)<=5*lambda(1)+Phi.
+
+Normalize this same lambda once. Then B=5+Phi/alpha and D=9/alpha
+give(CP1). The lower density follows from(CP3) and lambda(1)<=1.
+Maximizing each label in a finite query inventory, then exhausting those
+inventories, establishes the all-depth bound for this one nu. The
+actual kernels depend on only finitely many original digits and leave
+Haar tails. The law is defined on the full adic product directly; no
+query-specific finite-period laws or new limit construction are needed.
+
+### Larger actual primes and later23/29 classes
+
+For any six odd primes excluding3, order them as p1<...<p6. Then
+p_i is at least the corresponding reference prime5,7,11,13,17,19.
+Use the same thresholds at positions3,...,6 and the actual caps
+C_i=(p_i-1)/(p_i-1-2t_i). These are at most the reference caps.
+The actual anchor mass is at least1/4, each coefficient in(CP5) is no
+larger, and all auxiliary tails C_i/p_i^e are bounded by the reference
+tails. Increasing hinges and products are therefore dominated by the
+same reference expectations. The density product is at most9. This
+proves(CP1) with the unchanged constants. Pad a smaller support with
+unused odd primes excluding3 and project the constructed law back;
+support, both density inequalities and the query upper bound survive.
+
+For the reference six primes, add any finite family of distinct full
+labels supported on Q union{23,29}, each touching23 or29, with one fixed
+arbitrary residue per new label. Tensor nu with23/29 Haar. A union bound
+under this same law gives remaining probability at least
+
+    1-(1+B)*[(23/22)(29/28)-1]
+      =2491480306913842230405369189634217
+       /16461424439008629202268823289012400 >3/20.
+
+Its density is at most D<192, so the full actual Haar survivor has mass
+greater than1/1280. Old Q-only labels retain the permitted multiplicity
+two. This improves the earlier(TC5) continuation reserve for the same
+class of inputs; it supplies neither an unrestricted seven-prime query
+bound below565/51 nor a resolution of Erdős#7.
+
+The [exact budget consumer](../../frontier/cover-geometry/two_copy_capped_query.py)
+and [rational data](../../frontier/cover-geometry/two_copy_capped_query.json)
+compute(CP5)–(CP6), the complete final hinge, both bounds in(CP1), and
+the continuation reserve. The program accepts four alternative stage
+thresholds and a query threshold, rejecting invalid caps or a schedule
+without a positive certified mass. The query-threshold limit64 bounds
+this calculator's finite work, not the theorem's original heights.
+It does not enumerate original families or rerun source geometry.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_capped_query.py
+```
