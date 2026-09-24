@@ -506,6 +506,14 @@ The cylinder payment1/(beta*d) can be reduced to
 min(1,max_a H(U intersect[a]_d)/beta) under the same law. No estimate
 showing that(JL6) or(JL7) crosses T for every original family is proved.
 
+[Report531](531-fixed-cardinality-resampling-beyond-the-uniform-leakage-bound.md)
+closes the uniform-s independent branch of(JL6): with its stated
+reciprocal-tail payment, it never improves the elementary
+uniform-survivor range h>A/T. The same report gives a different joint
+sampling rule, selecting a fixed number of labels per block, that
+preserves the Gibbs interface with a smaller hypergeometric leakage
+charge. The nonuniform and phase-sensitive tasks remain unresolved.
+
 Even computing the exact covering cells does not make full replacement
 of all shallow labels automatically feasible. At s=1 let U_deep be
 the survivor of only the original labels above B. Then
