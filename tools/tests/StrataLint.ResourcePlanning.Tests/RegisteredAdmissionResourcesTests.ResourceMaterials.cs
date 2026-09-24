@@ -19,6 +19,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
             assert materials, 'resource owner/material declarations must not be empty'
             projects = {row['assembly']: row for row in
                 ci_plan.strict_json_bytes(read('Meta/engineering-projects.json'))['projects']}
+            queries = set(projects['StrataLint.ResourcePlanning.Tests']['execution_filemap_paths'])
+            assert materials <= queries, ('unregistered FILEMAP queries', sorted(materials - queries))
             consumers = [projects[name] for name in [
                 'StrataLint.RepositoryConfiguration.Tests',
                 'StrataLint.RepositoryFileMap.Tests',
