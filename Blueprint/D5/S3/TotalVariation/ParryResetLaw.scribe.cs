@@ -7,17 +7,9 @@ internal sealed class ParryResetLawDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/TotalVariation/ParryResetLaw.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The actual spectral root.",
-        H("The actual spectral root"),
+        "The stationary signed Parry law.",
+        H("The stationary signed Parry law"),
         Blocks(
-            Describe.Lean(
-                DescribeId.Create("parryresetlaw-parry-root-exists-unique"),
-                DeclarationHandle.Create(Prefix + "parry_root_exists_unique"),
-                H("The actual spectral root"),
-                StatementSource.FromLean(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every forbidden-run length k at least two, the polynomial sum of p through p to the k has a unique positive solution at level one. This solution is strictly larger than one half and at most the reciprocal golden ratio. The spectral parameter lambda is its reciprocal."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("parryresetlaw-parry-stationary-law"),
                 DeclarationHandle.Create(Prefix + "parry_stationary_law"),

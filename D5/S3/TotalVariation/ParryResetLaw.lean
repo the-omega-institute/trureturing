@@ -1,5 +1,5 @@
 /- GID: D5/S3/TotalVariation/ParryResetLaw
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/TotalVariation/ParryResetLaw
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,77 +7,20 @@
    digest: The actual geometric root and stationary signed Parry reset chain. -/
 
 import D5.S3.TotalVariation.TwistedResetPaths
-import Mathlib.NumberTheory.Real.GoldenRatio
-import Mathlib.Topology.Order.IntermediateValue
-import Mathlib.Algebra.Order.Field.GeomSum
+import D5.S0.Tower.DBonacci.PerronRoot
 
 open scoped BigOperators
 open D5.S3.TotalVariation.TwistedResetPaths
+open D5.S0.Tower.DBonacci.PerronRoot
 namespace D5.S3.TotalVariation.ParryResetLaw
 
 /-- The geometric polynomial whose level one selects the reciprocal spectral root. -/
 noncomputable def rootSum (k : ℕ) (p : ℝ) : ℝ :=
   ∑ a ∈ Finset.range k, p ^ (a + 1)
 
-/-- The source reciprocal eigenvalue exists uniquely and lies in the exact golden interval. -/
-theorem parry_root_exists_unique (k : ℕ) (hk : 2 ≤ k) :
-    ∃ p : ℝ, (1 / 2 < p ∧ p ≤ Real.goldenRatio⁻¹) ∧ rootSum k p = 1 ∧
-      ∀ q : ℝ, 0 < q → rootSum k q = 1 → q = p := by
-  classical
-  have strict : ∀ x y : ℝ, 0 ≤ x → x < y → rootSum k x < rootSum k y := by
-    intro x y hx hxy
-    unfold rootSum
-    apply Finset.sum_lt_sum
-    · intro a ha
-      exact pow_le_pow_left₀ hx hxy.le _
-    · exact ⟨0, Finset.mem_range.mpr (by omega), by simpa using hxy⟩
-  have hlo : rootSum k (1 / 2) < 1 := by
-    have hg := geom_sum_mul (1 / 2 : ℝ) k
-    have hpos : 0 < (1 / 2 : ℝ) ^ k := by positivity
-    unfold rootSum
-    simp_rw [pow_succ]
-    rw [← Finset.sum_mul]
-    nlinarith
-  have hφ : Real.goldenRatio⁻¹ + (Real.goldenRatio⁻¹)^2 = 1 := by
-    have h := Real.goldenRatio_sq
-    generalize hv : Real.goldenRatio = φ at *
-    have hn : φ ≠ 0 := by rw [← hv]; exact Real.goldenRatio_ne_zero
-    field_simp
-    nlinarith
-  have hhi : 1 ≤ rootSum k Real.goldenRatio⁻¹ := by
-    calc
-      1 = rootSum 2 Real.goldenRatio⁻¹ := by
-        simpa [rootSum, Finset.sum_range_succ] using hφ.symm
-      _ ≤ rootSum k Real.goldenRatio⁻¹ := by
-        exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono hk)
-          (fun i _ _ => pow_nonneg (inv_nonneg.mpr Real.goldenRatio_pos.le) _)
-  have hinterval : (1 / 2 : ℝ) ≤ Real.goldenRatio⁻¹ := by
-    rw [inv_eq_one_div, le_div_iff₀ Real.goldenRatio_pos]
-    nlinarith [Real.goldenRatio_lt_two]
-  have hc : Continuous (rootSum k) := by
-    unfold rootSum
-    fun_prop
-  obtain ⟨p, hp, he⟩ := intermediate_value_Icc hinterval hc.continuousOn ⟨hlo.le, hhi⟩
-  have hp' : 1 / 2 < p := by
-    by_contra hn
-    have heq : p = 1 / 2 := le_antisymm (le_of_not_gt hn) hp.1
-    rw [← heq, he] at hlo
-    exact (lt_irrefl 1) hlo
-  refine ⟨p, ⟨hp', hp.2⟩, he, ?_⟩
-  intro q hq hqe
-  apply le_antisymm
-  · by_contra hn
-    have h := strict p q (by linarith) (lt_of_not_ge hn)
-    rw [he, hqe] at h
-    exact (lt_irrefl 1) h
-  · by_contra hn
-    have h := strict q p hq.le (lt_of_not_ge hn)
-    rw [he, hqe] at h
-    exact (lt_irrefl 1) h
-
 /-- The actual reciprocal Parry root; the unused small carriers have a fixed default. -/
 noncomputable def parryParameter (k : ℕ) : ℝ :=
-  if hk : 2 ≤ k then (parry_root_exists_unique k hk).choose else 1 / 2
+  if 2 ≤ k then (dbonacciPerronRoot k)⁻¹ else 1 / 2
 
 /-- Normalizing sum of the left and right eigenvector products. -/
 noncomputable def normalizer (k : ℕ) : ℝ :=
@@ -104,13 +47,24 @@ theorem parry_stationary_law (k : ℕ) (hk : 2 ≤ k) :
   classical
   let p := parryParameter k
   let z : Fin k := ⟨0, by omega⟩
-  have hr := (parry_root_exists_unique k hk).choose_spec
-  change (1 / 2 < _ ∧ _ ≤ _) ∧ _ at hr
-  have hsel : p = (parry_root_exists_unique k hk).choose := by
+  have hsel : p = (dbonacciPerronRoot k)⁻¹ := by
     simp [p, parryParameter, hk]
-  rw [← hsel] at hr
-  have hp : 0 < p := by linarith [hr.1.1]
-  have hroot : rootSum k p = 1 := hr.2.1
+  have hspec := dbonacciPerronRoot_spec k hk
+  have hβpos : 0 < dbonacciPerronRoot k := lt_trans zero_lt_one hspec.1
+  have hlo : 1 / 2 < p := by
+    rw [hsel]
+    simpa only [one_div] using (inv_lt_inv₀ (by norm_num : (0 : ℝ) < 2) hβpos).2
+      hspec.2.1
+  have hgolden : Real.goldenRatio ≤ dbonacciPerronRoot k := by
+    rw [← dbonacciPerronRoot_two_eq_goldenRatio]
+    exact dbonacciPerronRoot_strictMonoOn.monotoneOn (by simp) hk hk
+  have hhi : p ≤ Real.goldenRatio⁻¹ := by
+    rw [hsel]
+    exact (inv_le_inv₀ hβpos Real.goldenRatio_pos).2 hgolden
+  have hp : 0 < p := by linarith [hlo]
+  have hroot : rootSum k p = 1 := by
+    simpa only [rootSum, hsel, dbonacciReciprocalSum] using
+      dbonacciPerronRoot_reciprocalSum k hk
   have hzero : suffixWeight k p z = 1 := by simpa [suffixWeight, z, rootSum] using hroot
   have hb (j : Fin k) : p ≤ suffixWeight k p j ∧ suffixWeight k p j ≤ 1 := by
     constructor
@@ -231,8 +185,7 @@ theorem parry_stationary_law (k : ℕ) (hk : 2 ≤ k) :
       · intro s _ hs
         exact hf s hs
       · simp
-  exact ⟨⟨hr.1.1, hr.1.2, hroot⟩, hb, hS, hQ, hrow, hπ, hπsum, hstat, fun _ => rfl⟩
+  exact ⟨⟨hlo, hhi, hroot⟩, hb, hS, hQ, hrow, hπ, hπsum, hstat, fun _ => rfl⟩
 
-#print axioms parry_root_exists_unique
 #print axioms parry_stationary_law
 end D5.S3.TotalVariation.ParryResetLaw
