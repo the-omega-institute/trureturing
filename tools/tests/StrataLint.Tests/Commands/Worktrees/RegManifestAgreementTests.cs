@@ -30,6 +30,21 @@ public sealed class RegManifestAgreementTests
     }
 
     [Theory]
+    [InlineData("lake-manifest.json")]
+    [InlineData("Reg/lake-manifest.json")]
+    public void InvalidUtf8ManifestReturnsControlledUnreadablePinFailure(string manifestPath)
+    {
+        using var repository = new TemporaryDirectory();
+        var files = Files();
+        Write(repository.Path, files);
+        AppendInvalidUtf8(repository.Path, manifestPath);
+
+        Assert.Null(LeanPinSet.TryReadWorktree(repository.Path, out var reason));
+        Assert.Contains("pin files are unreadable", reason, StringComparison.Ordinal);
+        Assert.Contains("Unable to translate bytes", reason, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData(false)]
     [InlineData(true)]
     public void MissingBothPackageFilesStopsCacheEntryBeforeMaterialization(bool writer)
@@ -46,6 +61,30 @@ public sealed class RegManifestAgreementTests
             : LeanCacheEnsureCommand.Run(repository.Path, [], runner, cloner);
         Assert.False(result.Success);
         Assert.Contains("REG-MANIFEST-MISSING", result.Output + result.Error, StringComparison.Ordinal);
+        Assert.Empty(runner.Invocations);
+        Assert.Empty(cloner.Invocations);
+        Assert.False(Directory.Exists(Path.Combine(repository.Path, ".lake")));
+    }
+
+    [Theory]
+    [InlineData(false, "lake-manifest.json")]
+    [InlineData(false, "Reg/lake-manifest.json")]
+    [InlineData(true, "lake-manifest.json")]
+    [InlineData(true, "Reg/lake-manifest.json")]
+    public void InvalidUtf8ManifestStopsCacheEntryBeforeMaterialization(bool writer, string manifestPath)
+    {
+        using var repository = new TemporaryDirectory();
+        var files = Files();
+        Write(repository.Path, files);
+        AppendInvalidUtf8(repository.Path, manifestPath);
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
+        var result = writer
+            ? LeanCacheEnsureCommand.RunWithWriter(repository.Path, ["--", "unreachable-producer"], runner, cloner)
+            : LeanCacheEnsureCommand.Run(repository.Path, [], runner, cloner);
+
+        Assert.False(result.Success);
+        Assert.Contains("pin files are unreadable", result.Output + result.Error, StringComparison.Ordinal);
         Assert.Empty(runner.Invocations);
         Assert.Empty(cloner.Invocations);
         Assert.False(Directory.Exists(Path.Combine(repository.Path, ".lake")));
@@ -204,6 +243,15 @@ public sealed class RegManifestAgreementTests
             Directory.CreateDirectory(Path.GetDirectoryName(full)!);
             File.WriteAllText(full, text);
         }
+    }
+
+    private static void AppendInvalidUtf8(string root, string path)
+    {
+        var full = Path.Combine(root, path);
+        var bytes = File.ReadAllBytes(full);
+        Array.Resize(ref bytes, bytes.Length + 1);
+        bytes[^1] = 0xff;
+        File.WriteAllBytes(full, bytes);
     }
 
     private static IEnumerable<Diagnostic> Current(Dictionary<string, string> files)

@@ -43,7 +43,8 @@ internal sealed record LeanPinSet(byte[] LeanToolchain, byte[] LakeManifest, str
             return reason is null ? Create(File.ReadAllBytes(toolchainPath), manifest) : null;
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
-            or JsonException or InvalidOperationException or KeyNotFoundException)
+            or JsonException or InvalidOperationException or KeyNotFoundException
+            or DecoderFallbackException)
         {
             reason = $"pin files are unreadable: {exception.Message}";
             return null;
