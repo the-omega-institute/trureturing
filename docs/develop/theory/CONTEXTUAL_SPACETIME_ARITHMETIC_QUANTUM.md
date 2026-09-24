@@ -38163,7 +38163,7 @@ H(r)=\sup_{N\ge1}\mathcal R_N(r),\qquad
 t_* =\frac\pi{3\sqrt3},\qquad L=\frac{\sqrt3}{4}e^{-t_*}.
 \tag{171.1}
 $$
-以下取 $1/\sqrt3<r<1$。记忆的遗忘只指丢弃系统输出之后，最终私有记忆对其初始化的依赖消失；它不要求已经输出的系统或已保存的实验记录丢失初始化信息。对本节的自主记忆更新，还将证明包含任意有限惰性参考 $R$ 的具体迹范数界。有关标准有限记忆通道与遗忘性的定义，见 Kretschmann、Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C 的全局经典开关，以及§V定义3、命题9。该文丢弃消息输出后的记忆遗忘与本节所用方向一致；下面另行计算同一系统反复使用时的约化通道，不把不同接线方式等同。
+以下取 $1/\sqrt3<r<1$。记忆的遗忘只指丢弃系统输出之后，最终私有记忆对其初始化的依赖消失；它不要求已经输出的系统或已保存的实验记录丢失初始化信息。对本节的自主记忆更新，还将证明包含任意有限惰性参考 $R$ 的具体迹范数界。有关标准有限记忆通道与遗忘性的定义，见 Kretschmann、Werner，*Quantum Channels with Memory*，[arXiv:quant-ph/0502106v2](https://arxiv.org/pdf/quant-ph/0502106v2)，§III C 的全局经典开关，以及§V定义3、命题9。该文§VI B式(79)还给出有限步后精确消除初始记忆依赖的严格遗忘定义。该文丢弃消息输出后的记忆遗忘与本节所用方向一致；下面另行计算同一系统反复使用时的约化通道，不把不同接线方式等同。
 
 取 $0<p\le1/2$。在记忆基 $s=\pm1$ 上，令 $T_p(s,s)=1-p$、$T_p(s,-s)=p$，并定义
 $$
@@ -38273,7 +38273,7 @@ $$
 \bigl[\cos((N-2j)\alpha)-\cos\theta\bigr]
 \longrightarrow
 \int_0^{t_*}
-\bigl[\cos(\sqrt3(t_*-2u))-\cos(\sqrt3t_*)\bigr],du
+\bigl[\cos(\sqrt3(t_*-2u))-\cos(\sqrt3t_*)\bigr]\,du
 =\frac{1-t_*}{2},
 \tag{171.15}
 $$
