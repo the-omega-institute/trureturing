@@ -868,6 +868,267 @@
       ]
     }
   ],
+  "actual_extension_counterexamples": {
+    "families": [
+      {
+        "first11_original_count": 2,
+        "originals": [
+          [
+            11,
+            1
+          ],
+          [
+            11,
+            2
+          ],
+          [
+            143,
+            66
+          ],
+          [
+            143,
+            132
+          ],
+          [
+            715,
+            484
+          ],
+          [
+            715,
+            264
+          ],
+          [
+            1001,
+            902
+          ],
+          [
+            1001,
+            825
+          ],
+          [
+            5005,
+            1749
+          ],
+          [
+            5005,
+            3674
+          ]
+        ],
+        "J11_union": "0",
+        "J13_union": "2/315",
+        "loss11": "0",
+        "mass11": "1",
+        "mass13": "8179/8190",
+        "retained_root_mass": "1/315"
+      },
+      {
+        "first11_original_count": 4,
+        "originals": [
+          [
+            11,
+            1
+          ],
+          [
+            11,
+            2
+          ],
+          [
+            55,
+            14
+          ],
+          [
+            55,
+            4
+          ],
+          [
+            143,
+            66
+          ],
+          [
+            143,
+            132
+          ],
+          [
+            715,
+            484
+          ],
+          [
+            715,
+            264
+          ],
+          [
+            1001,
+            902
+          ],
+          [
+            1001,
+            825
+          ],
+          [
+            5005,
+            1749
+          ],
+          [
+            5005,
+            3674
+          ]
+        ],
+        "J11_union": "0",
+        "J13_union": "2/245",
+        "loss11": "0",
+        "mass11": "1",
+        "mass13": "6359/6370",
+        "retained_root_mass": "1/245"
+      },
+      {
+        "first11_original_count": 6,
+        "originals": [
+          [
+            11,
+            1
+          ],
+          [
+            11,
+            2
+          ],
+          [
+            55,
+            14
+          ],
+          [
+            55,
+            4
+          ],
+          [
+            77,
+            27
+          ],
+          [
+            77,
+            6
+          ],
+          [
+            143,
+            66
+          ],
+          [
+            143,
+            132
+          ],
+          [
+            715,
+            484
+          ],
+          [
+            715,
+            264
+          ],
+          [
+            1001,
+            902
+          ],
+          [
+            1001,
+            825
+          ],
+          [
+            5005,
+            1749
+          ],
+          [
+            5005,
+            3674
+          ]
+        ],
+        "J11_union": "1/35",
+        "J13_union": "2/231",
+        "loss11": "8/1155",
+        "mass11": "1147/1155",
+        "mass13": "29767/30030",
+        "retained_root_mass": "1/231"
+      },
+      {
+        "first11_original_count": 8,
+        "originals": [
+          [
+            11,
+            1
+          ],
+          [
+            11,
+            2
+          ],
+          [
+            55,
+            14
+          ],
+          [
+            55,
+            4
+          ],
+          [
+            77,
+            27
+          ],
+          [
+            77,
+            6
+          ],
+          [
+            385,
+            139
+          ],
+          [
+            385,
+            349
+          ],
+          [
+            143,
+            66
+          ],
+          [
+            143,
+            132
+          ],
+          [
+            715,
+            484
+          ],
+          [
+            715,
+            264
+          ],
+          [
+            1001,
+            902
+          ],
+          [
+            1001,
+            825
+          ],
+          [
+            5005,
+            1749
+          ],
+          [
+            5005,
+            3674
+          ]
+        ],
+        "J11_union": "3/35",
+        "J13_union": "2/231",
+        "loss11": "6/385",
+        "mass11": "379/385",
+        "mass13": "29507/30030",
+        "retained_root_mass": "1/231"
+      }
+    ],
+    "refuted_claims": [
+      "Increasing the earlier actual forbidden union cannot increase the later union excess.",
+      "A strict increase of earlier actual row loss must strictly decrease the later union excess."
+    ],
+    "scope": "Each case is one actual finite two-copy family with the same later13 originals. No old5/7 or later17/19 originals. Not a simultaneous-four-threshold counterexample, PA failure, or odd covering."
+  },
   "checks": {
     "positive_alpha_0": true,
     "margin_mass_identity_0": true,
@@ -977,8 +1238,43 @@
     "profile_envelope_19_16": true,
     "profile_envelope_19_17": true,
     "profile_envelope_19_18": true,
-    "profile_envelope_19_19": true
+    "profile_envelope_19_19": true,
+    "extension_labels_2": true,
+    "extension_J11_2": true,
+    "extension_J13_2": true,
+    "extension_loss11_2": true,
+    "extension_retained_root_2": true,
+    "extension_later_payoff_2": true,
+    "extension_mass13_2": true,
+    "extension_positive_mass_2": true,
+    "extension_labels_4": true,
+    "extension_J11_4": true,
+    "extension_J13_4": true,
+    "extension_loss11_4": true,
+    "extension_retained_root_4": true,
+    "extension_later_payoff_4": true,
+    "extension_mass13_4": true,
+    "extension_positive_mass_4": true,
+    "extension_labels_6": true,
+    "extension_J11_6": true,
+    "extension_J13_6": true,
+    "extension_loss11_6": true,
+    "extension_retained_root_6": true,
+    "extension_later_payoff_6": true,
+    "extension_mass13_6": true,
+    "extension_positive_mass_6": true,
+    "extension_labels_8": true,
+    "extension_J11_8": true,
+    "extension_J13_8": true,
+    "extension_loss11_8": true,
+    "extension_retained_root_8": true,
+    "extension_later_payoff_8": true,
+    "extension_mass13_8": true,
+    "extension_positive_mass_8": true,
+    "extension_increases_later_excess": true,
+    "extension_increases_both_loss_and_later_excess": true,
+    "extension_cap_preserves_later_excess": true
   },
-  "check_count": 109,
+  "check_count": 144,
   "scope": "Maximum integer threshold certified by this one-row PA lower-mass bound. Failure at the next K is certificate failure, not an actual-family counterexample. All root-excess integrals use the actual prefix law from the same original family. Ordinary proof, no Lean."
 }

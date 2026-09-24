@@ -1,0 +1,6831 @@
+{
+  "statement": "A finite actual family refuting universal adequacy of the four fixed union-excess limits.",
+  "source": {
+    "x": "1",
+    "y": "1",
+    "lambda0": "1"
+  },
+  "rows": {
+    "11": {
+      "J_union": "3/35",
+      "mass_after": "379/385",
+      "fixed_threshold": "19844710796976109789/250014793209941760000",
+      "parameter_threshold": "9083013012951505610707/2750162725309359360000",
+      "fixed_margin": "1585128621018898211/250014793209941760000",
+      "parameter_margin": "-8847284779353560522707/2750162725309359360000"
+    },
+    "13": {
+      "J_union": "2/35",
+      "mass_after": "9733/10010",
+      "fixed_threshold": "7500230382235235389/190395880982955648000",
+      "parameter_threshold": "2659028732596080105169/698118230270837376000",
+      "fixed_margin": "3379534245362230211/190395880982955648000",
+      "parameter_margin": "-2619136262294889397969/698118230270837376000"
+    },
+    "17": {
+      "J_union": "7996598579/62494802370",
+      "mass_before": "9733/10010",
+      "mass_after": "65070713641/68103310275",
+      "actual_union_root_histogram": {
+        "2": "1075636/2081079",
+        "4": "48332812256/156237005925",
+        "6": "2692910978/52079001975",
+        "8": "9958878164/156237005925",
+        "12": "3875099/189378189",
+        "14": "291008/121396275",
+        "16": "487313711/62494802370"
+      },
+      "fixed_threshold": "22537098876604348793/194129133551248896000",
+      "parameter_threshold": "1059181037229943292031/237268941007081984000",
+      "fixed_margin": "1595931133045890184051/134531489551015484928000",
+      "parameter_margin": "-53031046132258649334907/12230135413728680448000"
+    },
+    "19": {
+      "J_union": "350316280698322/3418309452633075",
+      "mass_before": "65070713641/68103310275",
+      "mass_after": "305834805525730823/324739398000142125",
+      "actual_union_root_histogram": {
+        "2": "2151272/4459455",
+        "4": "10979673801664/34528378309425",
+        "6": "286520747752/5843264021595",
+        "8": "24567221558816/310755404784825",
+        "10": "1559552/5059103049",
+        "11": "65397704/48291438195",
+        "12": "581991056992/42201351267075",
+        "14": "1931008/1688511825",
+        "15": "388212736/237960978255",
+        "16": "3976329152/885343033575",
+        "17": "7872434/32790482725",
+        "18": "96174706637/23904261906525"
+      },
+      "fixed_threshold": "9646629654437813/100169831553792000",
+      "parameter_threshold": "5483175179901704059/1101868147091712000",
+      "fixed_margin": "127404640646586268447/20617054900233023232000",
+      "parameter_margin": "-100482807188388153270029/20617054900233023232000"
+    }
+  },
+  "Phi": "413209846699493/764619061606400",
+  "final_mass": "305834805525730823/324739398000142125",
+  "complete_query_bound": "520711409554523200723429/202310947194493042337792",
+  "complete_query_bound_decimal": 2.5738172687903718,
+  "target": "257/51",
+  "original_count": 664,
+  "distinct_modulus_count": 332,
+  "originals": [
+    {
+      "modulus": 11,
+      "residue": 1,
+      "prime_exponents": {
+        "11": 1
+      }
+    },
+    {
+      "modulus": 11,
+      "residue": 2,
+      "prime_exponents": {
+        "11": 1
+      }
+    },
+    {
+      "modulus": 55,
+      "residue": 36,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1
+      }
+    },
+    {
+      "modulus": 55,
+      "residue": 26,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1
+      }
+    },
+    {
+      "modulus": 77,
+      "residue": 71,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1
+      }
+    },
+    {
+      "modulus": 77,
+      "residue": 50,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1
+      }
+    },
+    {
+      "modulus": 385,
+      "residue": 106,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1
+      }
+    },
+    {
+      "modulus": 385,
+      "residue": 316,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1
+      }
+    },
+    {
+      "modulus": 13,
+      "residue": 1,
+      "prime_exponents": {
+        "13": 1
+      }
+    },
+    {
+      "modulus": 13,
+      "residue": 2,
+      "prime_exponents": {
+        "13": 1
+      }
+    },
+    {
+      "modulus": 65,
+      "residue": 42,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1
+      }
+    },
+    {
+      "modulus": 65,
+      "residue": 17,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1
+      }
+    },
+    {
+      "modulus": 91,
+      "residue": 44,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1
+      }
+    },
+    {
+      "modulus": 91,
+      "residue": 58,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1
+      }
+    },
+    {
+      "modulus": 455,
+      "residue": 72,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1
+      }
+    },
+    {
+      "modulus": 455,
+      "residue": 177,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1
+      }
+    },
+    {
+      "modulus": 17,
+      "residue": 1,
+      "prime_exponents": {
+        "17": 1
+      }
+    },
+    {
+      "modulus": 17,
+      "residue": 2,
+      "prime_exponents": {
+        "17": 1
+      }
+    },
+    {
+      "modulus": 221,
+      "residue": 117,
+      "prime_exponents": {
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 221,
+      "residue": 169,
+      "prime_exponents": {
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2873,
+      "residue": 676,
+      "prime_exponents": {
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2873,
+      "residue": 507,
+      "prime_exponents": {
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 187,
+      "residue": 11,
+      "prime_exponents": {
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 187,
+      "residue": 165,
+      "prime_exponents": {
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2431,
+      "residue": 1573,
+      "prime_exponents": {
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2431,
+      "residue": 2288,
+      "prime_exponents": {
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 31603,
+      "residue": 7436,
+      "prime_exponents": {
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 31603,
+      "residue": 13013,
+      "prime_exponents": {
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2057,
+      "residue": 1331,
+      "prime_exponents": {
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2057,
+      "residue": 363,
+      "prime_exponents": {
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 26741,
+      "residue": 14157,
+      "prime_exponents": {
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 26741,
+      "residue": 17303,
+      "prime_exponents": {
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 347633,
+      "residue": 143143,
+      "prime_exponents": {
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 347633,
+      "residue": 306735,
+      "prime_exponents": {
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 119,
+      "residue": 7,
+      "prime_exponents": {
+        "7": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 119,
+      "residue": 42,
+      "prime_exponents": {
+        "7": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1547,
+      "residue": 1365,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1547,
+      "residue": 91,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 20111,
+      "residue": 2366,
+      "prime_exponents": {
+        "7": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 20111,
+      "residue": 16562,
+      "prime_exponents": {
+        "7": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1309,
+      "residue": 1001,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1309,
+      "residue": 1155,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 17017,
+      "residue": 7007,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 17017,
+      "residue": 15015,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 221221,
+      "residue": 104104,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 221221,
+      "residue": 78078,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 14399,
+      "residue": 13552,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 14399,
+      "residue": 11858,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 187187,
+      "residue": 55055,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 187187,
+      "residue": 165165,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2433431,
+      "residue": 1145144,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2433431,
+      "residue": 2004002,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 833,
+      "residue": 98,
+      "prime_exponents": {
+        "7": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 833,
+      "residue": 490,
+      "prime_exponents": {
+        "7": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 10829,
+      "residue": 7644,
+      "prime_exponents": {
+        "7": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 10829,
+      "residue": 6370,
+      "prime_exponents": {
+        "7": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 140777,
+      "residue": 107653,
+      "prime_exponents": {
+        "7": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 140777,
+      "residue": 41405,
+      "prime_exponents": {
+        "7": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 9163,
+      "residue": 7007,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 9163,
+      "residue": 3234,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 119119,
+      "residue": 91091,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 119119,
+      "residue": 14014,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1548547,
+      "residue": 364364,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1548547,
+      "residue": 1002001,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 100793,
+      "residue": 11858,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 100793,
+      "residue": 35574,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1310309,
+      "residue": 154154,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1310309,
+      "residue": 77077,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 17034017,
+      "residue": 16032016,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 17034017,
+      "residue": 12024012,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 85,
+      "residue": 20,
+      "prime_exponents": {
+        "5": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 85,
+      "residue": 55,
+      "prime_exponents": {
+        "5": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1105,
+      "residue": 585,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1105,
+      "residue": 195,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 14365,
+      "residue": 6760,
+      "prime_exponents": {
+        "5": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 14365,
+      "residue": 845,
+      "prime_exponents": {
+        "5": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 935,
+      "residue": 880,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 935,
+      "residue": 660,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 12155,
+      "residue": 3575,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 12155,
+      "residue": 4290,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 158015,
+      "residue": 27885,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 158015,
+      "residue": 65065,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 10285,
+      "residue": 9680,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 10285,
+      "residue": 6655,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 133705,
+      "residue": 15730,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 133705,
+      "residue": 125840,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1738165,
+      "residue": 1533675,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1738165,
+      "residue": 306735,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 595,
+      "residue": 315,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 595,
+      "residue": 350,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 7735,
+      "residue": 455,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 7735,
+      "residue": 2275,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 100555,
+      "residue": 70980,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 100555,
+      "residue": 65065,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 6545,
+      "residue": 770,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 6545,
+      "residue": 6160,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 85085,
+      "residue": 25025,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 85085,
+      "residue": 50050,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1106105,
+      "residue": 715715,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 1106105,
+      "residue": 910910,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 71995,
+      "residue": 63525,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 71995,
+      "residue": 29645,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 935935,
+      "residue": 275275,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 935935,
+      "residue": 385385,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 12167155,
+      "residue": 2862860,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 12167155,
+      "residue": 8588580,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 4165,
+      "residue": 1715,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 4165,
+      "residue": 2940,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 54145,
+      "residue": 15925,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 54145,
+      "residue": 25480,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 703885,
+      "residue": 538265,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 703885,
+      "residue": 331240,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 45815,
+      "residue": 2695,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 45815,
+      "residue": 8085,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 595595,
+      "residue": 175175,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 595595,
+      "residue": 455455,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 7742735,
+      "residue": 3188185,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 7742735,
+      "residue": 2277275,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 503965,
+      "residue": 474320,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 503965,
+      "residue": 296450,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 6551545,
+      "residue": 3853850,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 6551545,
+      "residue": 1156155,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 85170085,
+      "residue": 25050025,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 85170085,
+      "residue": 55110055,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 425,
+      "residue": 175,
+      "prime_exponents": {
+        "5": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 425,
+      "residue": 125,
+      "prime_exponents": {
+        "5": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 5525,
+      "residue": 4225,
+      "prime_exponents": {
+        "5": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 5525,
+      "residue": 2275,
+      "prime_exponents": {
+        "5": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 71825,
+      "residue": 59150,
+      "prime_exponents": {
+        "5": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 71825,
+      "residue": 12675,
+      "prime_exponents": {
+        "5": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 4675,
+      "residue": 1375,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 4675,
+      "residue": 3025,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 60775,
+      "residue": 21450,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 60775,
+      "residue": 46475,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 790075,
+      "residue": 92950,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 790075,
+      "residue": 604175,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 51425,
+      "residue": 24200,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 51425,
+      "residue": 21175,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 668525,
+      "residue": 235950,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 668525,
+      "residue": 78650,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 8690825,
+      "residue": 2556125,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 8690825,
+      "residue": 3067350,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2975,
+      "residue": 1575,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2975,
+      "residue": 2800,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 38675,
+      "residue": 31850,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 38675,
+      "residue": 18200,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 502775,
+      "residue": 59150,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 502775,
+      "residue": 354900,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 32725,
+      "residue": 26950,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 32725,
+      "residue": 19250,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 425425,
+      "residue": 75075,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 425425,
+      "residue": 100100,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 5530525,
+      "residue": 1301300,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 5530525,
+      "residue": 2602600,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 359975,
+      "residue": 211750,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 359975,
+      "residue": 105875,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 4679675,
+      "residue": 3303300,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 4679675,
+      "residue": 2477475,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 60835775,
+      "residue": 14314300,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 60835775,
+      "residue": 32207175,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 20825,
+      "residue": 1225,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 20825,
+      "residue": 2450,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 270725,
+      "residue": 143325,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 270725,
+      "residue": 207025,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 3519425,
+      "residue": 828100,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 3519425,
+      "residue": 621075,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 229075,
+      "residue": 13475,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 229075,
+      "residue": 202125,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2977975,
+      "residue": 1926925,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2977975,
+      "residue": 2802800,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 38713675,
+      "residue": 9109100,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 38713675,
+      "residue": 15940925,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2519825,
+      "residue": 1630475,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 2519825,
+      "residue": 444675,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 32757725,
+      "residue": 11561550,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 32757725,
+      "residue": 15415400,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 425850425,
+      "residue": 200400200,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 425850425,
+      "residue": 400800400,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1
+      }
+    },
+    {
+      "modulus": 19,
+      "residue": 8,
+      "prime_exponents": {
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19,
+      "residue": 18,
+      "prime_exponents": {
+        "19": 1
+      }
+    },
+    {
+      "modulus": 323,
+      "residue": 102,
+      "prime_exponents": {
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 323,
+      "residue": 17,
+      "prime_exponents": {
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5491,
+      "residue": 2023,
+      "prime_exponents": {
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5491,
+      "residue": 3468,
+      "prime_exponents": {
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 247,
+      "residue": 39,
+      "prime_exponents": {
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 247,
+      "residue": 182,
+      "prime_exponents": {
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4199,
+      "residue": 2873,
+      "prime_exponents": {
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4199,
+      "residue": 3757,
+      "prime_exponents": {
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 71383,
+      "residue": 33813,
+      "prime_exponents": {
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 71383,
+      "residue": 18785,
+      "prime_exponents": {
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3211,
+      "residue": 2366,
+      "prime_exponents": {
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3211,
+      "residue": 338,
+      "prime_exponents": {
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 54587,
+      "residue": 17238,
+      "prime_exponents": {
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 54587,
+      "residue": 11492,
+      "prime_exponents": {
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 927979,
+      "residue": 683774,
+      "prime_exponents": {
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 927979,
+      "residue": 195364,
+      "prime_exponents": {
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 209,
+      "residue": 176,
+      "prime_exponents": {
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 209,
+      "residue": 143,
+      "prime_exponents": {
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3553,
+      "residue": 2992,
+      "prime_exponents": {
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3553,
+      "residue": 374,
+      "prime_exponents": {
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 60401,
+      "residue": 22253,
+      "prime_exponents": {
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 60401,
+      "residue": 28611,
+      "prime_exponents": {
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2717,
+      "residue": 715,
+      "prime_exponents": {
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2717,
+      "residue": 1859,
+      "prime_exponents": {
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 46189,
+      "residue": 31603,
+      "prime_exponents": {
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 46189,
+      "residue": 9724,
+      "prime_exponents": {
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 785213,
+      "residue": 41327,
+      "prime_exponents": {
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 785213,
+      "residue": 454597,
+      "prime_exponents": {
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 35321,
+      "residue": 22308,
+      "prime_exponents": {
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 35321,
+      "residue": 33462,
+      "prime_exponents": {
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 600457,
+      "residue": 316030,
+      "prime_exponents": {
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 600457,
+      "residue": 252824,
+      "prime_exponents": {
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 10207769,
+      "residue": 4835259,
+      "prime_exponents": {
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 10207769,
+      "residue": 2149004,
+      "prime_exponents": {
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2299,
+      "residue": 1573,
+      "prime_exponents": {
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2299,
+      "residue": 605,
+      "prime_exponents": {
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 39083,
+      "residue": 24684,
+      "prime_exponents": {
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 39083,
+      "residue": 20570,
+      "prime_exponents": {
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 664411,
+      "residue": 594473,
+      "prime_exponents": {
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 664411,
+      "residue": 349690,
+      "prime_exponents": {
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 29887,
+      "residue": 6292,
+      "prime_exponents": {
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 29887,
+      "residue": 4719,
+      "prime_exponents": {
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 508079,
+      "residue": 133705,
+      "prime_exponents": {
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 508079,
+      "residue": 347633,
+      "prime_exponents": {
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8637343,
+      "residue": 7273552,
+      "prime_exponents": {
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8637343,
+      "residue": 5000567,
+      "prime_exponents": {
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 388531,
+      "residue": 245388,
+      "prime_exponents": {
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 388531,
+      "residue": 122694,
+      "prime_exponents": {
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6605027,
+      "residue": 5909761,
+      "prime_exponents": {
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6605027,
+      "residue": 2781064,
+      "prime_exponents": {
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 112285459,
+      "residue": 29548805,
+      "prime_exponents": {
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 112285459,
+      "residue": 88646415,
+      "prime_exponents": {
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 133,
+      "residue": 98,
+      "prime_exponents": {
+        "7": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 133,
+      "residue": 14,
+      "prime_exponents": {
+        "7": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2261,
+      "residue": 714,
+      "prime_exponents": {
+        "7": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2261,
+      "residue": 357,
+      "prime_exponents": {
+        "7": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 38437,
+      "residue": 30345,
+      "prime_exponents": {
+        "7": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 38437,
+      "residue": 12138,
+      "prime_exponents": {
+        "7": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1729,
+      "residue": 1183,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1729,
+      "residue": 728,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 29393,
+      "residue": 7735,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 29393,
+      "residue": 20111,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 499681,
+      "residue": 447083,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 499681,
+      "residue": 473382,
+      "prime_exponents": {
+        "7": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 22477,
+      "residue": 10647,
+      "prime_exponents": {
+        "7": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 22477,
+      "residue": 11830,
+      "prime_exponents": {
+        "7": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 382109,
+      "residue": 361998,
+      "prime_exponents": {
+        "7": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 382109,
+      "residue": 241332,
+      "prime_exponents": {
+        "7": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6495853,
+      "residue": 3076983,
+      "prime_exponents": {
+        "7": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6495853,
+      "residue": 3418870,
+      "prime_exponents": {
+        "7": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1463,
+      "residue": 154,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1463,
+      "residue": 308,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 24871,
+      "residue": 11781,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 24871,
+      "residue": 20944,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 422807,
+      "residue": 66759,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 422807,
+      "residue": 289289,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19019,
+      "residue": 8008,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19019,
+      "residue": 1001,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 323323,
+      "residue": 221221,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 323323,
+      "residue": 204204,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5496491,
+      "residue": 867867,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5496491,
+      "residue": 3760757,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 247247,
+      "residue": 234234,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 247247,
+      "residue": 13013,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4203199,
+      "residue": 3539536,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4203199,
+      "residue": 3981978,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 71454383,
+      "residue": 26325299,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 71454383,
+      "residue": 41368327,
+      "prime_exponents": {
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 16093,
+      "residue": 6776,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 16093,
+      "residue": 4235,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 273581,
+      "residue": 230384,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 273581,
+      "residue": 215985,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4650877,
+      "residue": 3182179,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4650877,
+      "residue": 1713481,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 209209,
+      "residue": 66066,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 209209,
+      "residue": 77077,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3556553,
+      "residue": 3182179,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3556553,
+      "residue": 2059057,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 60461401,
+      "residue": 44550506,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 60461401,
+      "residue": 15910895,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2719717,
+      "residue": 1574573,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2719717,
+      "residue": 1002001,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 46235189,
+      "residue": 24334310,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 46235189,
+      "residue": 2433431,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 785998213,
+      "residue": 372314943,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 785998213,
+      "residue": 82736654,
+      "prime_exponents": {
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 931,
+      "residue": 441,
+      "prime_exponents": {
+        "7": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 931,
+      "residue": 735,
+      "prime_exponents": {
+        "7": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 15827,
+      "residue": 13328,
+      "prime_exponents": {
+        "7": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 15827,
+      "residue": 12495,
+      "prime_exponents": {
+        "7": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 269059,
+      "residue": 226576,
+      "prime_exponents": {
+        "7": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 269059,
+      "residue": 56644,
+      "prime_exponents": {
+        "7": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 12103,
+      "residue": 8918,
+      "prime_exponents": {
+        "7": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 12103,
+      "residue": 8281,
+      "prime_exponents": {
+        "7": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 205751,
+      "residue": 151606,
+      "prime_exponents": {
+        "7": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 205751,
+      "residue": 97461,
+      "prime_exponents": {
+        "7": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3497767,
+      "residue": 2025023,
+      "prime_exponents": {
+        "7": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3497767,
+      "residue": 368186,
+      "prime_exponents": {
+        "7": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 157339,
+      "residue": 49686,
+      "prime_exponents": {
+        "7": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 157339,
+      "residue": 16562,
+      "prime_exponents": {
+        "7": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2674763,
+      "residue": 1830101,
+      "prime_exponents": {
+        "7": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2674763,
+      "residue": 985439,
+      "prime_exponents": {
+        "7": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 45470971,
+      "residue": 26325299,
+      "prime_exponents": {
+        "7": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 45470971,
+      "residue": 31111717,
+      "prime_exponents": {
+        "7": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 10241,
+      "residue": 2695,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 10241,
+      "residue": 8624,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 174097,
+      "residue": 109956,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 174097,
+      "residue": 18326,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2959649,
+      "residue": 2336565,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2959649,
+      "residue": 1713481,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 133133,
+      "residue": 63063,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 133133,
+      "residue": 49049,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2263261,
+      "residue": 1191190,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2263261,
+      "residue": 476476,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 38475437,
+      "residue": 26325299,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 38475437,
+      "residue": 24300276,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1730729,
+      "residue": 364364,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1730729,
+      "residue": 728728,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 29422393,
+      "residue": 27873846,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 29422393,
+      "residue": 15485470,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 500180681,
+      "residue": 52650598,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 500180681,
+      "residue": 394879485,
+      "prime_exponents": {
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 112651,
+      "residue": 11858,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 112651,
+      "residue": 17787,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1915067,
+      "residue": 806344,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1915067,
+      "residue": 201586,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 32556139,
+      "residue": 22275253,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 32556139,
+      "residue": 23988734,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1464463,
+      "residue": 77077,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1464463,
+      "residue": 308308,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 24895871,
+      "residue": 10482472,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 24895871,
+      "residue": 9172163,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 423229807,
+      "residue": 334128795,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 423229807,
+      "residue": 44550506,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19038019,
+      "residue": 17034017,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19038019,
+      "residue": 6012006,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 323646323,
+      "residue": 119238119,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 323646323,
+      "residue": 289578289,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5501987491,
+      "residue": 2027048023,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5501987491,
+      "residue": 4054096046,
+      "prime_exponents": {
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 95,
+      "residue": 40,
+      "prime_exponents": {
+        "5": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 95,
+      "residue": 25,
+      "prime_exponents": {
+        "5": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1615,
+      "residue": 765,
+      "prime_exponents": {
+        "5": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1615,
+      "residue": 1190,
+      "prime_exponents": {
+        "5": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 27455,
+      "residue": 1445,
+      "prime_exponents": {
+        "5": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 27455,
+      "residue": 5780,
+      "prime_exponents": {
+        "5": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1235,
+      "residue": 845,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1235,
+      "residue": 130,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 20995,
+      "residue": 1105,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 20995,
+      "residue": 5525,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 356915,
+      "residue": 262990,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 356915,
+      "residue": 187850,
+      "prime_exponents": {
+        "5": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 16055,
+      "residue": 9295,
+      "prime_exponents": {
+        "5": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 16055,
+      "residue": 10140,
+      "prime_exponents": {
+        "5": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 272935,
+      "residue": 14365,
+      "prime_exponents": {
+        "5": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 272935,
+      "residue": 57460,
+      "prime_exponents": {
+        "5": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4639895,
+      "residue": 2197845,
+      "prime_exponents": {
+        "5": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4639895,
+      "residue": 3663075,
+      "prime_exponents": {
+        "5": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1045,
+      "residue": 935,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1045,
+      "residue": 220,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 17765,
+      "residue": 4675,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 17765,
+      "residue": 16830,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 302005,
+      "residue": 31790,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 302005,
+      "residue": 47685,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 13585,
+      "residue": 5005,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 13585,
+      "residue": 6435,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 230945,
+      "residue": 170170,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 230945,
+      "residue": 194480,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3926065,
+      "residue": 3306160,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3926065,
+      "residue": 206635,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 176605,
+      "residue": 27885,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 176605,
+      "residue": 167310,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3002285,
+      "residue": 2686255,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3002285,
+      "residue": 1896180,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 51038845,
+      "residue": 45666335,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 51038845,
+      "residue": 21490040,
+      "prime_exponents": {
+        "5": 1,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 11495,
+      "residue": 10890,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 11495,
+      "residue": 4840,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 195415,
+      "residue": 102850,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 195415,
+      "residue": 92565,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3322055,
+      "residue": 2272985,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3322055,
+      "residue": 874225,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 149435,
+      "residue": 141570,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 149435,
+      "residue": 94380,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2540395,
+      "residue": 1604460,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2540395,
+      "residue": 2406690,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 43186715,
+      "residue": 31821790,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 43186715,
+      "residue": 20456865,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1942655,
+      "residue": 511225,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1942655,
+      "residue": 1226940,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 33025135,
+      "residue": 15643485,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 33025135,
+      "residue": 8690825,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 561427295,
+      "residue": 59097610,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 561427295,
+      "residue": 88646415,
+      "prime_exponents": {
+        "5": 1,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 665,
+      "residue": 105,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 665,
+      "residue": 35,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 11305,
+      "residue": 4165,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 11305,
+      "residue": 10710,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 192185,
+      "residue": 91035,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 192185,
+      "residue": 161840,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8645,
+      "residue": 1820,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8645,
+      "residue": 910,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 146965,
+      "residue": 77350,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 146965,
+      "residue": 23205,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2498405,
+      "residue": 1709435,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2498405,
+      "residue": 1972425,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 112385,
+      "residue": 76895,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 112385,
+      "residue": 100555,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1910545,
+      "residue": 301665,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1910545,
+      "residue": 1206660,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 32479265,
+      "residue": 6837740,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 32479265,
+      "residue": 10256610,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 7315,
+      "residue": 4620,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 7315,
+      "residue": 6930,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 124355,
+      "residue": 71995,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 124355,
+      "residue": 32725,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2114035,
+      "residue": 667590,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2114035,
+      "residue": 1780240,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 95095,
+      "residue": 75075,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 95095,
+      "residue": 5005,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1616615,
+      "residue": 255255,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1616615,
+      "residue": 850850,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 27482455,
+      "residue": 8678670,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 27482455,
+      "residue": 5785780,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1236235,
+      "residue": 715715,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1236235,
+      "residue": 195195,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 21015995,
+      "residue": 17697680,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 21015995,
+      "residue": 19909890,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 357271915,
+      "residue": 338468130,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 357271915,
+      "residue": 94018925,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 80465,
+      "residue": 33880,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 80465,
+      "residue": 12705,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1367905,
+      "residue": 1151920,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1367905,
+      "residue": 935935,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 23254385,
+      "residue": 2447830,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 23254385,
+      "residue": 19582640,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1046045,
+      "residue": 990990,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1046045,
+      "residue": 165165,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 17782765,
+      "residue": 14039025,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 17782765,
+      "residue": 12167155,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 302307005,
+      "residue": 286396110,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 302307005,
+      "residue": 206841635,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 13598585,
+      "residue": 4294290,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 13598585,
+      "residue": 2862860,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 231175945,
+      "residue": 73002930,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 231175945,
+      "residue": 60835775,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3929991065,
+      "residue": 1861574715,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3929991065,
+      "residue": 413683270,
+      "prime_exponents": {
+        "5": 1,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4655,
+      "residue": 2205,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4655,
+      "residue": 1715,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 79135,
+      "residue": 8330,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 79135,
+      "residue": 33320,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1345295,
+      "residue": 991270,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1345295,
+      "residue": 778855,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 60515,
+      "residue": 15925,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 60515,
+      "residue": 31850,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1028755,
+      "residue": 812175,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1028755,
+      "residue": 703885,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 17488835,
+      "residue": 1840930,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 17488835,
+      "residue": 10125115,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 786695,
+      "residue": 414050,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 786695,
+      "residue": 703885,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 13373815,
+      "residue": 9854390,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 13373815,
+      "residue": 3519425,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 227354855,
+      "residue": 215388810,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 227354855,
+      "residue": 203422765,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 51205,
+      "residue": 13475,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 51205,
+      "residue": 21560,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 870485,
+      "residue": 641410,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 870485,
+      "residue": 687225,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 14798245,
+      "residue": 10125115,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 14798245,
+      "residue": 6230840,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 665665,
+      "residue": 350350,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 665665,
+      "residue": 70070,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 11316305,
+      "residue": 5955950,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 11316305,
+      "residue": 1191190,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 192377185,
+      "residue": 30375345,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 192377185,
+      "residue": 172126955,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8653645,
+      "residue": 1821820,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8653645,
+      "residue": 2277275,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 147111965,
+      "residue": 7742735,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 147111965,
+      "residue": 92912820,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2500903405,
+      "residue": 789758970,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2500903405,
+      "residue": 1842770930,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 563255,
+      "residue": 503965,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 563255,
+      "residue": 415030,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 9575335,
+      "residue": 6551545,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 9575335,
+      "residue": 6047580,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 162780695,
+      "residue": 8567405,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 162780695,
+      "residue": 94241455,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 7322315,
+      "residue": 3853850,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 7322315,
+      "residue": 4239235,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 124479355,
+      "residue": 6551545,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 124479355,
+      "residue": 91721630,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2116149035,
+      "residue": 556881325,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2116149035,
+      "residue": 1225138915,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 95190095,
+      "residue": 35070035,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 95190095,
+      "residue": 5010005,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1618231615,
+      "residue": 340680340,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1618231615,
+      "residue": 1107211105,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 27509937455,
+      "residue": 23166263120,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 27509937455,
+      "residue": 4343674335,
+      "prime_exponents": {
+        "5": 1,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 475,
+      "residue": 450,
+      "prime_exponents": {
+        "5": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 475,
+      "residue": 300,
+      "prime_exponents": {
+        "5": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8075,
+      "residue": 6375,
+      "prime_exponents": {
+        "5": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8075,
+      "residue": 2125,
+      "prime_exponents": {
+        "5": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 137275,
+      "residue": 86700,
+      "prime_exponents": {
+        "5": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 137275,
+      "residue": 130050,
+      "prime_exponents": {
+        "5": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6175,
+      "residue": 1950,
+      "prime_exponents": {
+        "5": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6175,
+      "residue": 5850,
+      "prime_exponents": {
+        "5": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 104975,
+      "residue": 77350,
+      "prime_exponents": {
+        "5": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 104975,
+      "residue": 71825,
+      "prime_exponents": {
+        "5": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1784575,
+      "residue": 187850,
+      "prime_exponents": {
+        "5": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1784575,
+      "residue": 1314950,
+      "prime_exponents": {
+        "5": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 80275,
+      "residue": 71825,
+      "prime_exponents": {
+        "5": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 80275,
+      "residue": 8450,
+      "prime_exponents": {
+        "5": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1364675,
+      "residue": 861900,
+      "prime_exponents": {
+        "5": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1364675,
+      "residue": 215475,
+      "prime_exponents": {
+        "5": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 23199475,
+      "residue": 20757425,
+      "prime_exponents": {
+        "5": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 23199475,
+      "residue": 9768200,
+      "prime_exponents": {
+        "5": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5225,
+      "residue": 3575,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5225,
+      "residue": 1375,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 88825,
+      "residue": 46750,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 88825,
+      "residue": 65450,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1510025,
+      "residue": 556325,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1510025,
+      "residue": 158950,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 67925,
+      "residue": 3575,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 67925,
+      "residue": 21450,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1154725,
+      "residue": 850850,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1154725,
+      "residue": 972400,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19630325,
+      "residue": 13431275,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19630325,
+      "residue": 15497625,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 883025,
+      "residue": 371800,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 883025,
+      "residue": 418275,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 15011425,
+      "residue": 13431275,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 15011425,
+      "residue": 7900750,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 255194225,
+      "residue": 147744025,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 255194225,
+      "residue": 161175300,
+      "prime_exponents": {
+        "5": 2,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 57475,
+      "residue": 15125,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 57475,
+      "residue": 54450,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 977075,
+      "residue": 205700,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 977075,
+      "residue": 925650,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 16610275,
+      "residue": 15736050,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 16610275,
+      "residue": 1748450,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 747175,
+      "residue": 432575,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 747175,
+      "residue": 235950,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 12701975,
+      "residue": 10696400,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 12701975,
+      "residue": 4679675,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 215933575,
+      "residue": 102284325,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 215933575,
+      "residue": 79554475,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 9713275,
+      "residue": 7668375,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 9713275,
+      "residue": 6134700,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 165125675,
+      "residue": 52144950,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 165125675,
+      "residue": 156434850,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2807136475,
+      "residue": 1034208175,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2807136475,
+      "residue": 1329696225,
+      "prime_exponents": {
+        "5": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3325,
+      "residue": 875,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3325,
+      "residue": 1050,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 56525,
+      "residue": 53550,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 56525,
+      "residue": 17850,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 960925,
+      "residue": 505750,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 960925,
+      "residue": 455175,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 43225,
+      "residue": 15925,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 43225,
+      "residue": 13650,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 734825,
+      "residue": 618800,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 734825,
+      "residue": 425425,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 12492025,
+      "residue": 11177075,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 12492025,
+      "residue": 657475,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 561925,
+      "residue": 414050,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 561925,
+      "residue": 266175,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 9552725,
+      "residue": 5027750,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 9552725,
+      "residue": 1508325,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 162396325,
+      "residue": 111113275,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 162396325,
+      "residue": 8547175,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 36575,
+      "residue": 21175,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 36575,
+      "residue": 23100,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 621775,
+      "residue": 130900,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 621775,
+      "residue": 163625,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 10570175,
+      "residue": 8901200,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 10570175,
+      "residue": 10013850,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 475475,
+      "residue": 450450,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 475475,
+      "residue": 225225,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8083075,
+      "residue": 6806800,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8083075,
+      "residue": 2552550,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 137412275,
+      "residue": 86786700,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 137412275,
+      "residue": 72322250,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6181175,
+      "residue": 3253250,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6181175,
+      "residue": 5205200,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 105079975,
+      "residue": 77427350,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 105079975,
+      "residue": 60835775,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1786359575,
+      "residue": 1598321725,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1786359575,
+      "residue": 94018925,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 402325,
+      "residue": 359975,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 402325,
+      "residue": 296450,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6839525,
+      "residue": 4319700,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6839525,
+      "residue": 4679675,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 116271925,
+      "residue": 42837025,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 116271925,
+      "residue": 61195750,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5230225,
+      "residue": 2752750,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5230225,
+      "residue": 3303300,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 88913825,
+      "residue": 23398375,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 88913825,
+      "residue": 18718700,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1511535025,
+      "residue": 795544750,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1511535025,
+      "residue": 715990275,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 67992925,
+      "residue": 10735725,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 67992925,
+      "residue": 53678625,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1155879725,
+      "residue": 486686200,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1155879725,
+      "residue": 912536625,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19649955325,
+      "residue": 4136832700,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 19649955325,
+      "residue": 9307873575,
+      "prime_exponents": {
+        "5": 2,
+        "7": 1,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 23275,
+      "residue": 7350,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 23275,
+      "residue": 2450,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 395675,
+      "residue": 104125,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 395675,
+      "residue": 374850,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6726475,
+      "residue": 2478175,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 6726475,
+      "residue": 4248300,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 302575,
+      "residue": 254800,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 302575,
+      "residue": 95550,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5143775,
+      "residue": 812175,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 5143775,
+      "residue": 2165800,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 87444175,
+      "residue": 55227900,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 87444175,
+      "residue": 64432550,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3933475,
+      "residue": 1242150,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3933475,
+      "residue": 1656200,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 66869075,
+      "residue": 24635975,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 66869075,
+      "residue": 21116550,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1136774275,
+      "residue": 658132475,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 1136774275,
+      "residue": 478641800,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 256025,
+      "residue": 242550,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 256025,
+      "residue": 53900,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4352425,
+      "residue": 687225,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 4352425,
+      "residue": 3894275,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 73991225,
+      "residue": 46731300,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 73991225,
+      "residue": 35048475,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3328325,
+      "residue": 350350,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 3328325,
+      "residue": 700700,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 56581525,
+      "residue": 29779750,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 56581525,
+      "residue": 8933925,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 961885925,
+      "residue": 860634775,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 961885925,
+      "residue": 759383625,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 43268225,
+      "residue": 25050025,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 43268225,
+      "residue": 18218200,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 735559825,
+      "residue": 464564100,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 735559825,
+      "residue": 154854700,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 12504517025,
+      "residue": 4606927325,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 12504517025,
+      "residue": 5265059800,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 1,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2816275,
+      "residue": 592900,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 2816275,
+      "residue": 444675,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 47876675,
+      "residue": 35277550,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 47876675,
+      "residue": 37797375,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 813903475,
+      "residue": 728229425,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 813903475,
+      "residue": 299859175,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 36611575,
+      "residue": 7707700,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 36611575,
+      "residue": 28903875,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 622396775,
+      "residue": 294819525,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 622396775,
+      "residue": 229304075,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 10580745175,
+      "residue": 5011931925,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 10580745175,
+      "residue": 1113762650,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 1,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 475950475,
+      "residue": 300600300,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 475950475,
+      "residue": 200400200,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8091158075,
+      "residue": 851700850,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 8091158075,
+      "residue": 4258504250,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 1,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 137549687275,
+      "residue": 123070772825,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    },
+    {
+      "modulus": 137549687275,
+      "residue": 72394572250,
+      "prime_exponents": {
+        "5": 2,
+        "7": 2,
+        "11": 2,
+        "13": 2,
+        "17": 2,
+        "19": 1
+      }
+    }
+  ],
+  "input_sha256": "b587b29880f2a13696a1702b9569412188bb260314eb90ad322fce2e83208bef",
+  "reference_sha256": "b9c54ee54df7c71f392619b5a0cc61d115459e41180a48bfa5d84a203a203ad9",
+  "checks": {
+    "input_contract": true,
+    "initial_full_Haar_cells": true,
+    "seed_J11": true,
+    "seed_J13": true,
+    "seed_mass11": true,
+    "seed_mass13": true,
+    "seed_joint_partition": true,
+    "literal_root_table_17": true,
+    "prefix_histogram_17": true,
+    "actual_mass_transport_17": true,
+    "positive_subprobability_17": true,
+    "literal_root_table_19": true,
+    "prefix_histogram_19": true,
+    "actual_mass_transport_19": true,
+    "positive_subprobability_19": true,
+    "all664_originals": true,
+    "all332_distinct_labels": true,
+    "different_residues_at_each_label": true,
+    "odd_nonunit_moduli": true,
+    "correct_numerical_factorization": true,
+    "exact_J17": true,
+    "exact_J19": true,
+    "exact_final_mass": true,
+    "complete_hinge_at_actual_parameters": true,
+    "crosses_fixed_limit_11": true,
+    "does_not_cross_parameter_limit_11": true,
+    "crosses_fixed_limit_13": true,
+    "does_not_cross_parameter_limit_13": true,
+    "crosses_fixed_limit_17": true,
+    "does_not_cross_parameter_limit_17": true,
+    "crosses_fixed_limit_19": true,
+    "does_not_cross_parameter_limit_19": true,
+    "complete_query_bound_still_below_target": true
+  },
+  "check_count": 33,
+  "scope": "Every row uses the same fixed originals and the preceding actual unnormalized PA output. All later old exponent tests are retained. The actual law satisfies the target: this is not a PA failure, an all-laws lower witness, or a distinct-odd-modulus cover. Ordinary exact computation; no Lean."
+}

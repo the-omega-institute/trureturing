@@ -83,8 +83,75 @@ for index,(q,t,C,a) in enumerate(stages):
  'strict_root_excess_integral_threshold':Jthreshold,'strict_root_excess_integral_threshold_decimal':float(Jthreshold),
  'strict_exceptional_mass_threshold':Jthreshold/(q-chosen['K']),
  'scan_summary':[{'K':a['K'],'certified':a['certified'],'minimum_alpha':min(c['alpha'] for c in a['corners']),'minimum_gap':min(c['gap'] for c in a['corners'])} for a in scans]})
+# Actual counterexamples to scalar cross-stage monotonicity. A fixed later
+# family reads a retained root whose density increases, then reaches its cap.
+def actual_extension_examples():
+ def crt_class(parts):
+  residue=0;modulus=1
+  for p,r in parts:
+   residue+=modulus*((r-residue)*pow(modulus,-1,p)%p);modulus*=p
+  if not (0<=residue<modulus and all(residue%p==r for p,r in parts)):
+   raise ValueError('actual extension CRT')
+  return modulus,residue
+ parts=((),((5,4),),((7,6),),((5,4),(7,6)))
+ first=[crt_class(old+((11,2*i+j),)) for i,old in enumerate(parts) for j in (1,2)]
+ later=[crt_class(old+((11,0),(13,2*i+j))) for i,old in enumerate(parts) for j in (1,2)]
+ examples=[]
+ for n in (2,4,6,8):
+  originals=first[:n]+later
+  counts=defaultdict(int)
+  for m,r in originals:counts[m]+=1
+  ck('extension_labels_'+str(n),all(m>1 and m%2 and counts[m]==2 for m in counts)
+     and len(set(originals))==len(originals))
+  J11=F();J13=F();mass11=F();mass13=F();safe=F()
+  for x5,x7 in product(range(5),range(7)):
+   forbidden11=set()
+   for z11 in range(11):
+    _,old=crt_class(((5,x5),(7,x7),(11,z11)))
+    if any(old%m==r for m,r in first[:n]):forbidden11.add(z11)
+   h11=min(F(5,3),F(11,11-len(forbidden11)))
+   J11+=F(1,35)*max(len(forbidden11)-5,0)
+   mass11+=F(1,35)*h11*F(11-len(forbidden11),11)
+   for z11 in range(11):
+    if z11 in forbidden11:continue
+    weight=h11/F(385)
+    forbidden13=set()
+    for z13 in range(13):
+     _,full=crt_class(((5,x5),(7,x7),(11,z11),(13,z13)))
+     if any(full%m==r for m,r in later):forbidden13.add(z13)
+    excess=max(len(forbidden13)-6,0)
+    if excess != 2*int((x5,x7,z11)==(4,6,0)):
+     raise ValueError('actual later excess support')
+    if (x5,x7,z11)==(4,6,0):safe+=weight
+    J13+=weight*excess
+    h13=min(F(3,2),F(13,13-len(forbidden13)))
+    mass13+=weight*h13*F(13-len(forbidden13),13)
+  expected_J11={2:F(),4:F(),6:F(1,35),8:F(3,35)}[n]
+  expected_J13={2:F(2,315),4:F(2,245),6:F(2,231),8:F(2,231)}[n]
+  expected_loss={2:F(),4:F(),6:F(8,1155),8:F(6,385)}[n]
+  ck('extension_J11_'+str(n),J11==expected_J11)
+  ck('extension_J13_'+str(n),J13==expected_J13)
+  ck('extension_loss11_'+str(n),1-mass11==expected_loss)
+  ck('extension_retained_root_'+str(n),safe==F(1,385)*min(F(5,3),F(11,11-n)))
+  ck('extension_later_payoff_'+str(n),J13==2*safe)
+  ck('extension_mass13_'+str(n),mass13==mass11-F(11,26)*safe)
+  ck('extension_positive_mass_'+str(n),mass13>0)
+  examples.append({'first11_original_count':n,'originals':originals,
+   'J11_union':J11,'J13_union':J13,'loss11':1-mass11,
+   'mass11':mass11,'mass13':mass13,'retained_root_mass':safe})
+ ck('extension_increases_later_excess',examples[1]['J13_union']>examples[0]['J13_union'])
+ ck('extension_increases_both_loss_and_later_excess',
+    examples[2]['loss11']>examples[1]['loss11'] and examples[2]['J13_union']>examples[1]['J13_union'])
+ ck('extension_cap_preserves_later_excess',examples[3]['loss11']>examples[2]['loss11']
+    and examples[3]['J13_union']==examples[2]['J13_union'])
+ return {'families':examples,
+  'refuted_claims':['Increasing the earlier actual forbidden union cannot increase the later union excess.',
+                    'A strict increase of earlier actual row loss must strictly decrease the later union excess.'],
+  'scope':'Each case is one actual finite two-copy family with the same later13 originals. No old5/7 or later17/19 originals. Not a simultaneous-four-threshold counterexample, PA failure, or odd covering.'}
+extensions=actual_extension_examples()
 result={'statement':'Four actual-root one-row consumers for arbitrary finite two-copy Q-smooth families. No oldcomb, first11-table or oldphase restrictions.',
 'PA_corners':rows,'A5':A5,'A7':A7,'A57':A57,'kreq':kreq,'root_consumers':root_consumers,
+'actual_extension_counterexamples':extensions,
 'checks':checks,'check_count':len(checks),
 'scope':'Maximum integer threshold certified by this one-row PA lower-mass bound. Failure at the next K is certificate failure, not an actual-family counterexample. All root-excess integrals use the actual prefix law from the same original family. Ordinary proof, no Lean.'}
 def enc(x):

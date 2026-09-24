@@ -197,7 +197,182 @@ Therefore any family for which this fixed PA law has `R_Q(nu)>=T` must violate a
 
 is necessary, since `J_q <= (q-K_q) lambda_<q{kappa_q>=K_q+1}`.
 The stronger necessary condition replaces this event by `bq>Kq/q`,
-because `Jq_union <= (q-Kq) lambda_<q{bq>Kq/q}`. This is also necessary for a hypothetical family whose every supported law exceeds the target, because its actual PA law is one such law. No existence of a family meeting these necessary conditions is asserted.
+because `Jq_union <= (q-Kq) lambda_<q{bq>Kq/q}`. This is also necessary for a hypothetical family whose every supported law exceeds the target, because its actual PA law is one such law. These are necessary conditions only; the actual example below meets all four fixed integral thresholds while its law remains below the target.
+
+## The four fixed limits are not a universal alternative
+
+There is a finite actual family for which all four fixed integral limits
+above are exceeded, while the same actual PA law still satisfies the
+complete-query target. Thus the candidate assertion
+
+\[
+\text{every actual family has some }q
+\text{ with }J_q^{\rm union}<\tau_q
+\]
+
+is false for the four displayed uniform constants `tau_q`. This does not
+contradict their sufficiency. The following construction has664 originals
+at332 distinct full numerical moduli, exactly two originals at every
+chosen label; it is an auxiliary two-copy family, not a distinct-modulus
+covering of the integers.
+
+There are no old5/7 originals, so `x=y=1` and `lambda0` is Haar. At row11
+use old cofactors `1,5,7,35`, with current roots respectively
+`(1,2),(3,4),(5,6),(7,8)` and old residues1 on every old coordinate
+that occurs. Row13 uses those same cofactors and current roots, with old
+residues2 instead. Every current exponent is one.
+
+At row17 use every old exponent tuple in `{0,1,2}^4` over
+`(5,7,11,13)`, all old residues zero, and the two nonzero current roots
+from the [fixed root table](../../frontier/cover-geometry/actual_four_union_counterexample.input.json).
+Row19 uses `{0,1,2}^5` over `(5,7,11,13,17)` in the same manner.
+The arrays are indexed by lexicographic exponent order. Each tuple and
+root determines one full integer CRT residue before any history is read.
+The [exact result](../../frontier/cover-geometry/actual_four_union_counterexample.json)
+expands all664 literal moduli and residues.
+
+| `q` | Actual `Jq_union` | Decimal | Uniform limit |
+|---|---|---:|---:|
+|11|`3/35`|0.0857142857142857|0.0793741463942582...|
+|13|`2/35`|0.0571428571428571|0.0393928184975108...|
+|17|`7996598579/62494802370`|0.1279562183692685|0.1160933367616082...|
+|19|`350316280698322/3418309452633075`|0.1024823192729021|0.0963027440977326...|
+
+The inequalities are checked against the exact rational limits, not
+their rounded decimals. The actual masses after11 and13 are `379/385`
+and `9733/10010`; after19 the mass is
+
+\[
+\lambda_{\rm final}(1)
+=\frac{305834805525730823}{324739398000142125}.
+\]
+
+The complete comparison uses
+`Phi(1,1)=413209846699493/764619061606400` and gives
+
+\[
+R_Q(\nu)\le2+\frac{\Phi(1,1)}{\lambda_{\rm final}(1)}
+=2.573817268790\ldots<T.
+\]
+
+### Exactness of the actual finite partition
+
+Retain each truncated valuation `min(v_p(x_p),2)`. Before the seed rows,
+also distinguish the5/7 first roots1,2 and the other nonzero roots.
+An exact positive valuation `v<2` has Haar mass `(p-1)/p^(v+1)`;
+the terminal cell `v>=2` has mass `p^-2`, accounting for all higher digits.
+
+At a stage whose union contains `U` distinct nonzero first roots,
+the actual density is `min(C_q,q/(q-U))`. The allowed valuation-zero
+cell has Haar mass `(q-1-U)/q`; positive-valuation cells are unchanged
+because zero is not forbidden. Multiplying those masses by this density
+therefore gives the actual outgoing subprobability, without normalization.
+
+For rows17 and19, a numerical old tuple `e` is active exactly when
+`e<=v` coordinatewise. Taking the union of its fixed roots gives the
+actual forbidden fraction `U/q`. All future old-coordinate tests have
+exponent at most two and residue zero, so the retained valuations decide
+every one of them. After13 the seed-specific nonzero-root distinctions
+may consequently be aggregated. Row19 is evaluated on the actual row17
+output. The finite calculation is exact for this full original family;
+it does not optimize a phase separately at each valuation or drop a
+future original test.
+
+The [standard-library replay](../../frontier/cover-geometry/actual_four_union_counterexample.py)
+checks the fixed root table, integer CRT classes, actual prefix transport,
+all four rational inequalities and the final query bound; all33 explicit
+checks pass with Python optimizations enabled. Its finite
+original heights do not truncate the complete query bound: that bound
+uses the existing all-height comparison for this same law.
+
+The [optional phase-search program](../../frontier/cover-geometry/actual_four_union_search.py)
+uses NumPy and floating-point scores to select one fixed table at row17,
+recomputes its actual output exactly, and searches row19 on that same
+output. It emits the selected fixed table and exact finite evaluation.
+Optimality is not claimed; verification of the retained example requires
+only the standard-library replay, with no rerun of the heuristic search.
+
+### Preserve the actual pure parameters in the next search
+
+The proof above already supplies the sharper sufficient threshold
+
+\[
+\tau_q(x,y)=\frac{q}{C_q}
+\left(A_{q,K_q}(x,y)-\frac{\Phi(x,y)}{T-2}\right).
+\]
+
+The fixed `tau_q` is its rectangle minimum. At this example's actual
+parameters `(1,1)`, the four parameter-specific limits are approximately
+`3.3027183917,3.8088515917,4.4640526178,4.9762534604`; none is exceeded.
+Hence the example rules out universal adequacy of the four fixed tests,
+not the parameter-specific consumers or the final-mass method.
+[Report348 NC4--NC7](../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#actual-pure-union-deficits-must-lie-in-a-strict-joint-region)
+already excludes this pure-parameter region. A search for failure of
+the PA target must retain those same-source conditions as well as the
+actual final mass, rather than target the four rectangle minima alone.
+
+## Increasing an earlier forbidden union need not reduce later excess
+
+The density caps also prevent a scalar monotonicity argument from closing
+the remaining joint problem. The following four small actual families
+keep the later13 originals fixed and only enlarge the first11 inventory.
+There are no old5/7 or later17/19 originals.
+
+Let `A_n`, for `n=2,4,6,8`, contain the first `n` originals from the
+following ordered pairs:
+
+| First11 old cofactor | Required old residues | Current11 roots |
+|---|---|---|
+|1|none|1,2|
+|5|`x5=4 mod5`|3,4|
+|7|`x7=6 mod7`|5,6|
+|35|both preceding conditions|7,8|
+
+In every family put two row13 originals at each old cofactor
+`11,55,77,385`. Require `x11=0 mod11`, additionally `x5=4 mod5`
+and `x7=6 mod7` whenever those coordinates occur, and assign their
+current13 roots respectively `(1,2),(3,4),(5,6),(7,8)`.
+These prescriptions are fixed full CRT classes; every numerical modulus
+occurs exactly twice. Define
+
+\[
+E=\{x_5=4\bmod5,\ x_7=6\bmod7,\ x_{11}=0\bmod11\}.
+\]
+
+The later excess is exactly `(13b13-6)_+=2*1_E`. On the old5/7 cell
+in `E`, family `A_n` forbids exactly `n` first11 roots and retains root0.
+Thus
+
+\[
+\lambda_{11}^{A_n}(E)
+=\frac1{385}\min\left(\frac53,\frac{11}{11-n}\right).
+\]
+
+Literal CRT evaluation gives:
+
+| Family | `J11_union` | Actual first11 mass loss | `J13_union` |
+|---|---:|---:|---:|
+|`A2`|0|0|`2/315`|
+|`A4`|0|0|`2/245`|
+|`A6`|`1/35`|`8/1155`|`2/231`|
+|`A8`|`3/35`|`6/385`|`2/231`|
+
+From `A4` to `A6`, the earlier union, integrated excess and actual loss
+increase, while the later excess also increases. From `A6` to `A8`,
+the earlier quantities increase again but the later excess is unchanged.
+The added forbidden roots raise the density on the common retained root
+until the cap is reached; beyond that point its density remains `5/3`.
+This refutes both nonincreasing downstream excess under earlier deletion
+and a mandatory strict downstream improvement from larger earlier loss.
+
+The mechanism is already present in the capped transport and the
+[Report334 backward future-payoff formulas](../321-384/334-same-chain-overlap-and-future-risk-certificates.md#a-backward-supersolution-retains-the-future-relation-instead).
+The new finite examples evaluate that limitation for the actual union
+quantities used here. They do not show that a useful joint inequality is
+impossible: such an inequality must retain where the future payoff lies
+relative to the changed prefix measure. Each comparison uses an actual
+fixed family and its own PA law; no mass from different families is
+combined in a certificate.
 
 ## Reuse and scope
 
@@ -208,19 +383,23 @@ supplies the same-law saving notation and pure-union criteria;
 [Report546](546-dense-irredundant-families-separate-stage-debits-from-actual-unions.md)
 treats particular dense families with small actual unions. A scoped search of Reports348,546,559,560 found no existing general occupied-root consumer of the above form. No literature-priority claim is made.
 
-The only added hypotheses are the stated actual root-profile conditions, or their integrated excess versions. There is no old-comb or fixed-first11 restriction. Conversely, no universal bound for these profiles over arbitrary original phases has been proved. Their actual joint activation cannot be reconstructed by independently maximizing marginal phases.
+The only added hypotheses in the four sufficient certificates are the stated actual root-profile conditions, or their integrated excess versions. There is no old-comb or fixed-first11 restriction. The664-original example refutes universal adequacy of the four uniform limits. It does not resolve the parameter-specific joint problem, and their actual joint activation cannot be reconstructed by independently maximizing marginal phases.
 
 The [standard-library producer](../../frontier/cover-geometry/actual_root_union_consumers.py)
 reconstructs all complete auxiliary hinges from rational masses, full first
 moments and below-threshold product corrections; scans the possible integer
-root counts for each current prime; and checks each root-excess envelope
-on its full integer range. All109 explicit checks passed with Python
+root counts for each current prime; checks each root-excess envelope
+on its full integer range; and evaluates the four small extension families
+by their literal CRT classes. All144 explicit checks passed with Python
 optimizations enabled. [Exact data](../../frontier/cover-geometry/actual_root_union_consumers.json)
 retain the four corners, selected bounds and the failure of the next
-integer threshold for this certificate.
+integer threshold for this certificate, together with the four actual
+cross-stage counterexamples. The separate664-original replay verifies
+the simultaneous-threshold example from its fixed input table.
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/actual_root_union_consumers.py
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/actual_four_union_counterexample.py
 ```
 
 The generality comes from the actual-root argument and bilinear
