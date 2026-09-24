@@ -299,9 +299,12 @@ theorem rotation_prefix_single_cut (alpha : Real) [Fact (Irrational alpha)]
       rotationPrefix alpha (n + 1) x = rotationPrefix alpha (n + 1) y ↔
       rotationPrefix alpha n x = rotationPrefix alpha n y ∧
         (beta ≤ x ↔ beta ≤ y)) ∧
-    ∃! j : Fin (n + 1),
+    ∃ j : Fin (n + 1),
       rotationCut alpha (n + 1) j.castSucc < beta ∧
       beta < rotationCut alpha (n + 1) j.succ ∧
+      (∀ k : Fin (n + 1),
+        rotationCut alpha (n + 1) k.castSucc < beta ∧
+        beta < rotationCut alpha (n + 1) k.succ → k = j) ∧
       ∃ x y : Real, x ∈ rotationGapArc alpha (n + 1) j ∧
         y ∈ rotationGapArc alpha (n + 1) j ∧ x < beta ∧ beta ≤ y ∧
         rotationPrefix alpha n x = rotationPrefix alpha n y ∧
@@ -392,13 +395,13 @@ theorem rotation_prefix_single_cut (alpha : Real) [Fact (Irrational alpha)]
     intro heq
     have hc := (hstep x hx01 y hy01).mp heq |>.2
     exact (not_le_of_gt hxlt) (hc.mpr le_rfl)
-  refine ⟨hstep, j, ⟨hjlo, hjhi, x, y, hxab, hyab, hxlt, le_rfl, hxy, hnext⟩, ?_⟩
+  refine ⟨hstep, j, hjlo, hjhi, ?_, x, y, hxab, hyab, hxlt, le_rfl, hxy, hnext⟩
   intro k hk
   by_contra hkj
   have hd := rotation_gap_arcs_pairwise_disjoint alpha (n + 1)
     (Set.mem_univ k) (Set.mem_univ j) hkj
   exact (Set.disjoint_left.mp hd) (show beta ∈ rotationGapArc alpha (n + 1) k from
-    ⟨hk.1.le, hk.2.1⟩) hj
+    ⟨hk.1.le, hk.2⟩) hj
 
 #print axioms rotationPrefix
 #print axioms rotation_prefix_cell_and_decoder

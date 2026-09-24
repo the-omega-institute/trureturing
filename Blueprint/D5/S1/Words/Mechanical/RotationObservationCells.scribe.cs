@@ -104,11 +104,16 @@ internal sealed class RotationObservationCellsDocument : IScribeDocumentDefiniti
             All("y", Reals(), Implies(Member(y, unit),
                 Iff(newWords, And(oldWords, thresholdSide))))));
 
+        Formula StrictContainment(Formula index)
+        {
+            var left = Call("rotationCut", alpha, size, Call("castSucc", index));
+            var right = Call("rotationCut", alpha, size, Call("succ", index));
+            return And(Less(left, beta), Less(beta, right));
+        }
+
         Formula SplitWitness(Formula index)
         {
             var arc = Call("rotationGapArc", alpha, size, index);
-            var left = Call("rotationCut", alpha, size, Call("castSucc", index));
-            var right = Call("rotationCut", alpha, size, Call("succ", index));
             var phases = Exists("x", Reals(), Exists("y", Reals(), And(
                 Member(x, arc),
                 And(Member(y, arc),
@@ -118,12 +123,13 @@ internal sealed class RotationObservationCellsDocument : IScribeDocumentDefiniti
                                 Not(Equal(
                                     ObservationPrefix(alpha, size, x),
                                     ObservationPrefix(alpha, size, y))))))))));
-            return And(Less(left, beta), And(Less(beta, right), phases));
+            return phases;
         }
 
         var uniqueCell = Exists("j", Fin(size), And(
-            SplitWitness(j),
-            All("k", Fin(size), Implies(SplitWitness(k), Equal(k, j)))));
+            StrictContainment(j),
+            And(All("k", Fin(size), Implies(StrictContainment(k), Equal(k, j))),
+                SplitWitness(j))));
         var conclusion = And(stepLaw, uniqueCell);
         var assumptions = And(
             Call("Irrational", alpha),
