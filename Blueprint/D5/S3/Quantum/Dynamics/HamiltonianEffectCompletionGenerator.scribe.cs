@@ -98,7 +98,34 @@ internal sealed class HamiltonianEffectCompletionGeneratorDocument : IScribeDocu
                     Paragraph(Text(
                         "One-by-one complex matrices commute, so the commutator derivative "
                             + "vanishes at time zero."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            Paragraph(
+                Text("Thermal recovery and covariance: "),
+                Ref("D5/L/oi2006interference"),
+                Text(" gives the two-state interference ceiling; "),
+                Ref("D5/L/marvian2014modes"),
+                Text(" supplies the symmetry-mode selection rule. "),
+                Ref("D5/L/lostaglio2015coherence"),
+                Text(" and "),
+                Ref("D5/L/faist2015gibbspreserving"),
+                Text(" distinguish Gibbs calibration, coherent covariance and thermal "
+                    + "implementation. Sections 2-4 of the thermal-dynamical recovery theory "
+                    + "volume combine these conditions in one recovery map, deriving "
+                    + "a noncommuting spectral optimum and a finite-window error frontier. "
+                    + "The Lean declarations here establish the commutator interface, "
+                    + "not those paper-level optimization or channel-norm claims.")),
+            Paragraph(
+                Text("Joint statistical interpretation: "),
+                Ref("D5/L/nuradha2025multivariate"),
+                Text(" poses operational questions for multivariate fidelities; the "
+                    + "two-label dynamic refinement does not solve the unrestricted "
+                    + "multi-label problem. "),
+                Ref("D5/L/beny2015inference"),
+                Text(" motivates observation-based scale descriptions and the distinction "
+                    + "between statistical information loss and dynamical intertwining error. "
+                    + "The cited composition bounds are background rather than a numbered new "
+                    + "result, and do not identify either quantity with physical heat or a "
+                    + "complete renormalisation flow.")))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
     {
