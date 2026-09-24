@@ -129,12 +129,19 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     Equiv.sigmaCongrRight fun h => fiberEquiv U V i k h
   let rebuild : (Σ h : H, Fin (((U * V) i k).coeff h)) → Edge (U * V) :=
     fun q => ⟨i, k, q.1, q.2⟩
+  let q : Σ h : H, Fiber U V i k h := totalFiberEquiv ⟨g, a⟩
+  let recovered : Σ h : H, Fiber U V i k h :=
+    ⟨q.2.2.1 * (q.2.2.1⁻¹ * q.1), q.2.1, q.2.2.1, q.2.2.2.1,
+      by simpa [mul_assoc] using q.2.2.2.2⟩
+  have recovered_eq : recovered = q := by
+    simp [recovered, q, mul_assoc]
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
   simp only [join, split]
-  rw [mul_inv_cancel_left]
-  simpa [rebuild, totalFiberEquiv] using hinv
+  change rebuild (totalFiberEquiv.symm recovered) = rebuild ⟨g, a⟩
+  rw [recovered_eq]
+  simpa [q] using hinv
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
