@@ -7,7 +7,6 @@
    digest: One constructed group-equivariant chain code carries forward, inverse, and coordinate recovery budgets. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedGroupOverlap
-import D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy
 import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
@@ -19,7 +18,6 @@ open D5.S3.ConceptDynamics.Coding.CountedGroupOverlap
 open D5.S3.ConceptDynamics.Coding.BipartiteOverlapConjugacy
 open D5.S3.ConceptDynamics.Coding.EquivariantOverlapRecoding
 open D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
-open D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy
 
 universe u
 variable {H : Type u} [Group H] [Fintype H]
@@ -57,16 +55,6 @@ theorem elementary_past (x y : Path (V * U) × H) (i : ℤ)
     ((backward (boundary U V) (toAlternating V U y.1)).property i).1
     (congrArg (fun a => (split V U a).2) hm)
     (congrArg (fun a => (split V U a).1) h0)
-
-/-- The forward transfer is the actual first split label. -/
-theorem elementary_coordinate (x : Path (U * V) × H) :
-    (elementaryHomeomorph U V x).2 =
-      x.2 * (split U V (x.1.val 0)).1.label := rfl
-
-/-- The inverse transfer reads the actual preceding split label. -/
-theorem elementary_inverse_coordinate (x : Path (V * U) × H) :
-    ((elementaryHomeomorph U V).symm x).2 =
-      x.2 * ((split V U (x.1.val (-1))).2.label)⁻¹ := rfl
 
 end Elementary
 
@@ -164,11 +152,15 @@ noncomputable def elementary {n m : ℕ}
   coordinate_future := by
     intro x y hc h
     have h0 : x.1.val 0 = y.1.val 0 := by simpa using h 0 (by omega)
-    simp only [elementary_coordinate, hc, h0]
+    change x.2 * (split U V (x.1.val 0)).1.label =
+      y.2 * (split U V (y.1.val 0)).1.label
+    rw [hc, h0]
   coordinate_past := by
     intro x y hc h
     have hm : x.1.val (-1) = y.1.val (-1) := by simpa using h 1 (by omega)
-    simp only [elementary_inverse_coordinate, hc, hm]
+    change x.2 * ((split V U (x.1.val (-1))).2.label)⁻¹ =
+      y.2 * ((split V U (y.1.val (-1))).2.label)⁻¹
+    rw [hc, hm]
 
 /-- A finite matrix chain supplies one code carrying all four proved finite windows. -/
 theorem chain_has_window_group_conjugacy {L : ℕ}
@@ -193,36 +185,24 @@ def coordinateTransfer {r : ℕ} (f : WindowGroupConjugacy A B r) (x : Path A) :
 def baseCode {r : ℕ} (f : WindowGroupConjugacy A B r) (x : Path A) : Path B :=
   (f.homeomorph (x, 1)).1
 
-theorem coordinate_normal_form {r : ℕ} (f : WindowGroupConjugacy A B r)
-    (x : Path A) (k : H) :
-    f.homeomorph (x, k) = (baseCode f x, k * coordinateTransfer f x) := by
-  simpa only [translate, mul_one, baseCode, coordinateTransfer] using f.group_law k (x, 1)
-
 /-- This is the ordered noncommutative transfer equation for the original one-step dynamics. -/
 theorem constructed_transfer_cocycle {r : ℕ} (f : WindowGroupConjugacy A B r)
     (x : Path A) :
     (x.val 0).label * coordinateTransfer f (shift A x) =
       coordinateTransfer f x * ((baseCode f x).val 0).label := by
+  have hnormal :
+      f.homeomorph (shift A x, (x.val 0).label) =
+        (baseCode f (shift A x),
+          (x.val 0).label * coordinateTransfer f (shift A x)) := by
+    simpa only [translate, mul_one, baseCode, coordinateTransfer] using
+      f.group_law (x.val 0).label (shift A x, 1)
   calc
     (x.val 0).label * coordinateTransfer f (shift A x) =
         (f.homeomorph (shift A x, (x.val 0).label)).2 :=
-      (congrArg Prod.snd (coordinate_normal_form f (shift A x) (x.val 0).label)).symm
+      (congrArg Prod.snd hnormal).symm
     _ = (f.homeomorph (step A (x, 1))).2 := by simp only [step, one_mul]
     _ = (step B (f.homeomorph (x, 1))).2 := congrArg Prod.snd (f.time_law (x, 1))
     _ = coordinateTransfer f x * ((baseCode f x).val 0).label := rfl
-
-theorem transfer_finite_window {r : ℕ} (f : WindowGroupConjugacy A B r)
-    (x y : Path A) (h : ∀ j : ℕ, j ≤ r → x.val (j : ℤ) = y.val (j : ℤ)) :
-    coordinateTransfer f x = coordinateTransfer f y :=
-  f.coordinate_future (x, 1) (y, 1) rfl h
-
-/-- Both recovery identities concern exactly the code selected from this chain. -/
-theorem chain_two_sided_recovery {L : ℕ}
-    (ch : ExchangeChain (MonoidAlgebra ℕ H) A B L) :
-    (∀ x, (chainWindowCode ch).homeomorph.symm ((chainWindowCode ch).homeomorph x) = x) ∧
-    (∀ y, (chainWindowCode ch).homeomorph ((chainWindowCode ch).homeomorph.symm y) = y) :=
-  ⟨(chainWindowCode ch).homeomorph.symm_apply_apply,
-    (chainWindowCode ch).homeomorph.apply_symm_apply⟩
 
 /-- A complete finite output interval has an explicitly enlarged input interval. -/
 theorem chain_future_interval {L : ℕ}
@@ -249,25 +229,12 @@ theorem chain_past_interval {L : ℕ}
   intro j hj
   exact h _ (by omega) (by omega)
 
-/-- The explicit involution factors, including their natural coefficients, supply the chain. -/
-noncomputable def involutionWindowCode (s t : H) (hs : s * s = 1) :
-    WindowGroupConjugacy (sourceMatrix s t) (targetMatrix H) 1 :=
-  chainWindowCode (involution_exchange s t hs)
-
-/-- The fixed eight-element example now has the same code for time, action and both windows. -/
-noncomputable def dihedralWindowCode [TopologicalSpace D8] [IsTopologicalGroup D8] :
-    WindowGroupConjugacy (sourceMatrix reflection rotation) (targetMatrix D8) 1 :=
-  involutionWindowCode reflection rotation reflection_square
-
 #print axioms elementary_future
 #print axioms elementary_past
 #print axioms WindowGroupConjugacy.trans
 #print axioms chain_has_window_group_conjugacy
 #print axioms constructed_transfer_cocycle
-#print axioms transfer_finite_window
-#print axioms chain_two_sided_recovery
 #print axioms chain_future_interval
 #print axioms chain_past_interval
-#print axioms dihedralWindowCode
 
 end D5.S3.ConceptDynamics.Coding.CountedGroupWindowChain

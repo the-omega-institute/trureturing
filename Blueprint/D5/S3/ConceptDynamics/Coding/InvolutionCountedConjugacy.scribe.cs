@@ -27,8 +27,8 @@ internal sealed class InvolutionCountedConjugacyDocument : IScribeDocumentDefini
              B("hs", Equal(Call("product", S, S), F.D(1))), .. extra], body);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "An involution supplies explicit nonnegative factors. Counted group-labelled recoding turns them into a genuine one-step conjugacy, including a concrete dihedral example.",
-        H("The involution factorization as an actual counted conjugacy"),
+        "An involution supplies explicit nonnegative factors and an exact one-step exchange chain with a proved lower bound.",
+        H("The involution factorization as an exact exchange"),
         Blocks(
             Describe.Lean(DescribeId.Create("involution-natural-products"),
                 DeclarationHandle.Create(Prefix + "natural_factor_products"), H("Natural coefficients satisfy both products"),
@@ -49,23 +49,6 @@ internal sealed class InvolutionCountedConjugacyDocument : IScribeDocumentDefini
                     B("hst", new Formula.Not(Equal(Call("product", S, T), Call("product", T, S))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Noncommuting elements make the source and target coefficients different. A zero-length exchange chain has equal endpoints, while the explicit factors already give a length-one chain."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("involution-counted-conjugacy"),
-                DeclarationHandle.Create(Prefix + "involution_actual_conjugacy"), H("Construct the original-time group conjugacy"),
-                StatementSource.FromAuthor(Disp(All(Call("Nonempty",
-                    Call("GroupConjugacy", Source, Target)), true))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The finite coefficient fibers construct the actual edge splittings. Their overlap recoding is a homeomorphism that preserves both the original time step and the specified left group action."))),
-                DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("dihedral-counted-original-time"),
-                DeclarationHandle.Create(Prefix + "dihedral_original_time_conjugacy"), H("The fixed eight-element dihedral instance"),
-                StatementSource.FromAuthor(Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
-                    [B("topology", Call("TopologicalSpace", F.Id("D8"))),
-                     B("continuousGroup", Call("IsTopologicalGroup", F.Id("D8")))],
-                    Call("Nonempty", Call("GroupConjugacy",
-                        Call("sourceMatrix", F.Id("reflection"), F.Id("rotation")),
-                        Call("targetMatrix", F.Id("D8"))))))), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("In the dihedral group of the square, the chosen reflection squares to one and does not commute with the quarter-turn rotation. These concrete identities instantiate the natural factor construction and its group-equivariant homeomorphism."))),
                 DescribeRole.Theorem))));
 
     private static Formula Products()

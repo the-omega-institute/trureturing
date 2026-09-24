@@ -4,11 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual nonnegative involution factors yield a counted equivariant conjugacy and an exact one-step dihedral example. -/
+   digest: Nonnegative involution factors yield an exact one-step exchange with a matching lower bound. -/
 
 import D5.S3.ConceptDynamics.Coding.CountedGroupOverlap
 import D5.S3.ConceptDynamics.Coding.InvolutionUniformExchange
-import Mathlib.GroupTheory.SpecificGroups.Dihedral
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -22,10 +21,6 @@ open D5.S3.ConceptDynamics.Coding.CountedGroupOverlap
 noncomputable section
 universe u
 variable {H : Type u} [Group H] [Fintype H]
-
-private theorem toNat_lift (p : NAlg H) : toNat (liftNat H p) = p := by
-  ext g
-  simp [toNat, liftNat]
 
 /-- Both endpoints are the original formulas, converted coefficientwise to naturals. -/
 def sourceNat (s t : H) : NAlg H := toNat (source s t)
@@ -43,27 +38,12 @@ theorem natural_factor_products (s t : H) (hs : s * s = 1) :
     rw [map_mul, lift_toNat _ (rightFactor_nonnegative s),
       lift_toNat _ (leftFactor_nonnegative s t)]
     exact factors_reverse s t hs
+  have toNat_lift_local (p : NAlg H) : toNat (liftNat H p) = p := by
+    ext g
+    simp [toNat, liftNat]
   constructor
-  · simpa only [toNat_lift, sourceNat] using congrArg (toNat (H := H)) hf
-  · simpa only [toNat_lift, targetNat] using congrArg (toNat (H := H)) hr
-
-theorem sourceNat_lift (s t : H) (hs : s * s = 1) :
-    liftNat H (sourceNat s t) = source s t := by
-  rw [← (natural_factor_products s t hs).1, map_mul,
-    lift_toNat _ (leftFactor_nonnegative s t), lift_toNat _ (rightFactor_nonnegative s)]
-  exact factors_forward s t
-
-theorem targetNat_lift : liftNat H (targetNat H) = target H := by
-  apply lift_toNat
-  intro g
-  simp [target]
-
-theorem natural_endpoints_differ (s t : H) (hs : s * s = 1)
-    (hst : s * t ≠ t * s) : sourceNat s t ≠ targetNat H := by
-  intro h
-  have hh := congrArg (liftNat H) h
-  rw [sourceNat_lift s t hs, targetNat_lift] at hh
-  exact source_ne_target s t hs hst hh
+  · simpa only [toNat_lift_local, sourceNat] using congrArg (toNat (H := H)) hf
+  · simpa only [toNat_lift_local, targetNat] using congrArg (toNat (H := H)) hr
 
 /-- Place a scalar group-ring element in its genuine one-vertex matrix. -/
 def scalar (p : NAlg H) : GroupMat H 1 1 := fun _ _ => p
@@ -99,41 +79,23 @@ theorem involution_minimum_one (s t : H) (hs : s * s = 1)
     ¬ExchangeChain (NAlg H) (sourceMatrix s t) (targetMatrix H) 0 := by
   refine ⟨involution_exchange s t hs, ?_⟩
   intro c
-  have h := congrArg (fun M : GroupMat H 1 1 => M 0 0) (chain_zero_same c)
-  exact natural_endpoints_differ s t hs hst h
-
-/-- The counted path and group-coordinate constructors interpret the explicit factors. -/
-theorem involution_actual_conjugacy [TopologicalSpace H] [IsTopologicalGroup H]
-    (s t : H) (hs : s * s = 1) :
-    Nonempty (GroupConjugacy (sourceMatrix s t) (targetMatrix H)) :=
-  chain_has_group_conjugacy (involution_exchange s t hs)
-
-abbrev D8 := DihedralGroup 4
-
-def reflection : D8 := DihedralGroup.sr 0
-def rotation : D8 := DihedralGroup.r 1
-
-theorem reflection_square : reflection * reflection = 1 := by decide
-
-theorem reflection_rotation_ne : reflection * rotation ≠ rotation * reflection := by decide
-
-/-- The eight-element dihedral case has actual natural coefficients and exact length one. -/
-theorem dihedral_exact_one :
-    ExchangeChain (NAlg D8) (sourceMatrix reflection rotation) (targetMatrix D8) 1 ∧
-    ¬ExchangeChain (NAlg D8) (sourceMatrix reflection rotation) (targetMatrix D8) 0 :=
-  involution_minimum_one reflection rotation reflection_square reflection_rotation_ne
-
-/-- The original one-step dihedral dynamics admits the constructed equivariant homeomorphism. -/
-theorem dihedral_original_time_conjugacy [TopologicalSpace D8] [IsTopologicalGroup D8] :
-    Nonempty (GroupConjugacy (sourceMatrix reflection rotation) (targetMatrix D8)) :=
-  involution_actual_conjugacy reflection rotation reflection_square
+  have hmatrix := congrArg (fun M : GroupMat H 1 1 => M 0 0) (chain_zero_same c)
+  have hendpoints : sourceNat s t = targetNat H := by
+    simpa [sourceMatrix, targetMatrix, scalar] using hmatrix
+  have hsource : liftNat H (sourceNat s t) = source s t := by
+    rw [← (natural_factor_products s t hs).1, map_mul,
+      lift_toNat _ (leftFactor_nonnegative s t), lift_toNat _ (rightFactor_nonnegative s)]
+    exact factors_forward s t
+  have htarget : liftNat H (targetNat H) = target H := by
+    apply lift_toNat
+    intro g
+    simp [target]
+  apply source_ne_target s t hs hst
+  exact hsource.symm.trans ((congrArg (liftNat H) hendpoints).trans htarget)
 
 #print axioms natural_factor_products
 #print axioms involution_exchange
 #print axioms involution_minimum_one
-#print axioms involution_actual_conjugacy
-#print axioms dihedral_exact_one
-#print axioms dihedral_original_time_conjugacy
 
 end
 end D5.S3.ConceptDynamics.Coding.InvolutionCountedConjugacy

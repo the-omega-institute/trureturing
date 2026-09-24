@@ -19,7 +19,6 @@ internal sealed class CountedGroupWindowChainDocument : IScribeDocumentDefinitio
     private static Formula Inverse(Formula x) => Call("apply", Call("symm", Call("homeomorph", Code)), x);
     private static Formula EdgeAt(Formula x, Formula i) => Call("edgeAt", Call("first", x), i);
     private static Formula Extension(Formula matrix) => Call("Prod", Call("Path", matrix), Id("H"));
-    private static Formula Conj(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
     private static Formula Impl(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula Leq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.LessThanOrEqual, y);
     private static Formula Plus(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
@@ -48,13 +47,6 @@ internal sealed class CountedGroupWindowChainDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The elementary map is built from counted group-labelled edge fibers. Its forward edge uses the present and next input, its inverse uses the preceding and present output. The group transfers use the first split label and the preceding inverse split label. Composition adds all four budgets, and induction handles every intermediate matrix dimension."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("counted-group-chain-both-recoveries"),
-                DeclarationHandle.Create(Prefix + "chain_two_sided_recovery"),
-                H("Recover both directions with the same chosen code"),
-                StatementSource.FromAuthor(Disp(RecoveryStatement())),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Both equalities are the inverse laws of chainWindowCode. No different decoder is chosen for a different precision or for the opposite direction."))),
-                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("counted-group-chain-future-interval"),
                 DeclarationHandle.Create(Prefix + "chain_future_interval"),
                 H("Determine every edge of an output interval"),
@@ -76,12 +68,6 @@ internal sealed class CountedGroupWindowChainDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Evaluate the constructed code at group coordinate one. Equivariance gives its value at every group coordinate, and the original-time law gives the cocycle equation without permuting any group factors. coordinate_future supplies a finite window for this very transfer."))),
                 DescribeRole.Theorem))));
-
-    private static Formula RecoveryStatement() => All(Conj(
-        new Formula.BindMany(FormulaQuantifier.ForAll, [B("x", Extension(A))],
-            Equal(Inverse(Forward(Id("x"))), Id("x"))),
-        new Formula.BindMany(FormulaQuantifier.ForAll, [B("y", Extension(Target))],
-            Equal(Forward(Inverse(Id("y"))), Id("y")))));
 
     private static Formula IntervalStatement(bool inverse)
     {

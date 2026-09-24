@@ -54,15 +54,6 @@ noncomputable def split (a : Edge (U * V)) : Edge U × Edge V :=
   let p := fiberEquiv U V a.source a.target a.number
   (⟨a.source, p.1, p.2.1⟩, ⟨p.1, a.target, p.2.2⟩)
 
-@[simp] theorem split_source (a : Edge (U * V)) :
-    (split U V a).1.source = a.source := rfl
-
-@[simp] theorem split_target (a : Edge (U * V)) :
-    (split U V a).2.target = a.target := rfl
-
-@[simp] theorem split_boundary (a : Edge (U * V)) :
-    (split U V a).1.target = (split U V a).2.source := rfl
-
 /-- Assemble a pair while retaining its middle vertex and both edge numbers. -/
 noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     Edge (U * V) :=
@@ -88,7 +79,7 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   exact hinv
 
 @[simp] theorem join_split (a : Edge (U * V)) :
-    join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
+    join U V (split U V a).1 (split U V a).2 (by rfl) = a := by
   rcases a with ⟨i, k, a⟩
   simp [join, split, Equiv.apply_symm_apply, Equiv.symm_apply_apply]
   exact (fiberEquiv U V i k).symm_apply_apply a
@@ -99,9 +90,9 @@ theorem split_injective : Function.Injective (split U V) := by
   have hs := congrArg (fun p : Edge U × Edge V => p.1) h
   have ht := congrArg (fun p : Edge U × Edge V => p.2) h
   calc
-    a = join U V (split U V a).1 (split U V a).2 (split_boundary U V a) :=
+    a = join U V (split U V a).1 (split U V a).2 (by rfl) :=
       (join_split U V a).symm
-    _ = join U V (split U V b).1 (split U V b).2 (split_boundary U V b) := by
+    _ = join U V (split U V b).1 (split U V b).2 (by rfl) := by
       simp only [hs, ht]
     _ = b := join_split U V b
 
@@ -133,13 +124,6 @@ noncomputable def alternatingEquiv : Path (U * V) ≃ LeftPath (boundary U V) wh
   left_inv := from_to U V
   right_inv := to_from U V
 
-@[simp] theorem toAlternating_shift (x : Path (U * V)) :
-    toAlternating U V (shift (U * V) x) = leftShift (boundary U V) (toAlternating U V x) := rfl
-
-@[simp] theorem fromAlternating_shift (x : LeftPath (boundary U V)) :
-    fromAlternating U V (leftShift (boundary U V) x) =
-      shift (U * V) (fromAlternating U V x) := rfl
-
 theorem continuous_toAlternating : Continuous (toAlternating U V) := by
   apply Continuous.subtype_mk
   apply continuous_pi
@@ -169,14 +153,6 @@ noncomputable def alternatingHomeomorph : Path (U * V) ≃ₜ LeftPath (boundary
 noncomputable def elementaryHomeomorph : Path (U * V) ≃ₜ Path (V * U) :=
   (alternatingHomeomorph U V).trans
     ((pathHomeomorph (boundary U V)).trans (alternatingHomeomorph V U).symm)
-
-theorem elementary_apply (x : Path (U * V)) :
-    elementaryHomeomorph U V x =
-      fromAlternating V U (forward (boundary U V) (toAlternating U V x)) := rfl
-
-theorem elementary_symm_apply (x : Path (V * U)) :
-    (elementaryHomeomorph U V).symm x =
-      fromAlternating U V (backward (boundary U V) (toAlternating V U x)) := rfl
 
 theorem elementary_shift (x : Path (U * V)) :
     elementaryHomeomorph U V (shift (U * V) x) =

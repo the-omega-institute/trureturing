@@ -79,15 +79,6 @@ noncomputable def split (a : Edge (U * V)) : Edge U × Edge V :=
   (⟨a.source, p.2.1, p.2.2.1, p.2.2.2.1⟩,
    ⟨p.2.1, a.target, p.2.2.1⁻¹ * p.1, p.2.2.2.2⟩)
 
-@[simp] theorem split_source (a : Edge (U * V)) :
-    (split U V a).1.source = a.source := rfl
-
-@[simp] theorem split_target (a : Edge (U * V)) :
-    (split U V a).2.target = a.target := rfl
-
-@[simp] theorem split_boundary (a : Edge (U * V)) :
-    (split U V a).1.target = (split U V a).2.source := rfl
-
 @[simp] theorem split_label (a : Edge (U * V)) :
     (split U V a).1.label * (split U V a).2.label = a.label := by
   simp [split]
@@ -122,7 +113,7 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   simp [rebuild, p]
 
 @[simp] theorem join_split (a : Edge (U * V)) :
-    join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
+    join U V (split U V a).1 (split U V a).2 (by rfl) = a := by
   rcases a with ⟨i, k, g, a⟩
   let totalFiberEquiv :
       (Σ h : H, Fin (((U * V) i k).coeff h)) ≃ (Σ h : H, Fiber U V i k h) :=
@@ -135,9 +126,25 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
       by simpa [mul_assoc] using q.2.2.2.2⟩
   have recovered_eq : recovered = q := by
     rcases q with ⟨qg, qj, qh, qa, qb⟩
-    apply Sigma.eq
+    have hbound :
+        (V qj k).coeff (qh⁻¹ * recovered.1) =
+          (V qj k).coeff (qh⁻¹ * qg) := by
+      simp [recovered, mul_assoc]
+    have hqb : recovered.2.2.2.2 ≍ qb := by
+      apply (Fin.heq_ext_iff hbound).2
+      rfl
+    have hpair : recovered.2.2.2 ≍ (qa, qb) := by
+      cases hqb
+      rfl
+    have hinner : recovered.2.2 ≍ ⟨qh, (qa, qb)⟩ := by
+      cases hpair
+      rfl
+    have hfiber : recovered.2 ≍ ⟨qj, ⟨qh, (qa, qb)⟩⟩ := by
+      cases hinner
+      rfl
+    apply Sigma.ext
     · simp [recovered]
-    · simp [recovered]
+    · exact hfiber
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
@@ -239,14 +246,6 @@ noncomputable def elementaryHomeomorph : Path (U * V) × H ≃ₜ Path (V * U) �
       continuous_of_discreteTopology).trans
       ((alternatingHomeomorph V U).prodCongr (Homeomorph.refl H)).symm)
 
-theorem elementary_apply (p : Path (U * V) × H) :
-    elementaryHomeomorph U V p = repack V U
-      (encode (boundary U V) Edge.label (unpack U V p)) := rfl
-
-theorem elementary_symm_apply (p : Path (V * U) × H) :
-    (elementaryHomeomorph U V).symm p = repack U V
-      (decode (boundary U V) Edge.label (unpack V U p)) := rfl
-
 /-- Both time maps act on the original one-step group extensions. -/
 theorem elementary_step (p : Path (U * V) × H) :
     elementaryHomeomorph U V (step (U * V) p) =
@@ -274,10 +273,6 @@ theorem elementary_inverse_step (p : Path (V * U) × H) :
   apply (elementaryHomeomorph U V).injective
   rw [(elementaryHomeomorph U V).apply_symm_apply, elementary_step,
     (elementaryHomeomorph U V).apply_symm_apply]
-
-theorem elementary_recovery (p : Path (U * V) × H) :
-    (elementaryHomeomorph U V).symm (elementaryHomeomorph U V p) = p :=
-  (elementaryHomeomorph U V).symm_apply_apply p
 
 /-- A homeomorphism together with the specified time and group laws. -/
 structure GroupConjugacy {a b : ℕ} (A : GroupMat H a a) (B : GroupMat H b b) where
@@ -315,7 +310,6 @@ end Topology
 #print axioms elementaryHomeomorph
 #print axioms elementary_step
 #print axioms elementary_equivariant
-#print axioms elementary_recovery
 #print axioms chain_has_group_conjugacy
 
 end D5.S3.ConceptDynamics.Coding.CountedGroupOverlap

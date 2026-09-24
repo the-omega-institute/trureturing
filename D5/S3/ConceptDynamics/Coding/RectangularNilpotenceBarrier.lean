@@ -89,12 +89,6 @@ theorem chain_depth_barrier {A : Mat R n n} {B : Mat R m m} {a b L : ℕ}
   · exact depth_le_of_zero ha (by omega) (chain_zero_power c b hb.2.1)
   · exact depth_le_of_zero hb (by omega) (chain_zero_power_reverse c a ha.2.1)
 
-theorem chain_depth_difference {A : Mat R n n} {B : Mat R m m} {a b L : ℕ}
-    (c : ExchangeChain R A B L) (ha : ExactDepth A a) (hb : ExactDepth B b) :
-    a - b ≤ L ∧ b - a ≤ L := by
-  obtain ⟨hab, hba⟩ := chain_depth_barrier c ha hb
-  omega
-
 end Semiring
 
 section Projection
@@ -116,13 +110,6 @@ theorem map_exchange_chain (f : R →ₙ+* S) {n m L : ℕ}
   | cons U V tail ih =>
       rw [map_rectangular_product] at ih ⊢
       exact ExchangeChain.cons (U.map f) (V.map f) ih
-
-/-- This applies to transient projections without imposing essentiality on intermediates. -/
-theorem projected_depth_barrier (f : R →ₙ+* S) {n m a b L : ℕ}
-    {A : Mat R n n} {B : Mat R m m} (c : ExchangeChain R A B L)
-    (ha : ExactDepth (A.map f) a) (hb : ExactDepth (B.map f) b) :
-    a - b ≤ L ∧ b - a ≤ L :=
-  chain_depth_difference (map_exchange_chain f c) ha hb
 
 end Projection
 
@@ -153,26 +140,10 @@ def complementProjection (e : R) (he : e * e = e)
           _ = (p * (x * p)) * y := by rw [hpc x]
           _ = (p * x) * (p * y) := by simp only [mul_assoc] }
 
-theorem complementProjection_apply (e : R) (he : e * e = e)
-    (hc : ∀ x : R, e * x = x * e) (x : R) :
-    complementProjection e he hc x = x - e * x := by
-  change (1 - e) * x = x - e * x
-  rw [sub_mul, one_mul]
-
-/-- Uniform parts are removed before the dimension-independent chain bound is applied. -/
-theorem central_transient_depth_barrier (e : R) (he : e * e = e)
-    (hc : ∀ x : R, e * x = x * e) {n m a b L : ℕ}
-    {A : Mat R n n} {B : Mat R m m} (c : ExchangeChain R A B L)
-    (ha : ExactDepth (A.map (complementProjection e he hc)) a)
-    (hb : ExactDepth (B.map (complementProjection e he hc)) b) :
-    a - b ≤ L ∧ b - a ≤ L :=
-  projected_depth_barrier (complementProjection e he hc) c ha hb
-
 end CentralIdempotent
 
 #print axioms rectangular_exchange_power
 #print axioms chain_depth_barrier
 #print axioms complementProjection
-#print axioms central_transient_depth_barrier
 
 end D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier

@@ -96,10 +96,6 @@ theorem chain_has_window_conjugacy {L : ℕ} (c : ExchangeChain ℕ A B L) :
 noncomputable def chainCode {L : ℕ} (c : ExchangeChain ℕ A B L) :
     WindowConjugacy A B L := Classical.choice (chain_has_window_conjugacy c)
 
-theorem chain_code_intertwines {L : ℕ} (c : ExchangeChain ℕ A B L) (x : Path A) :
-    (chainCode c).homeomorph (shift A x) = shift B ((chainCode c).homeomorph x) :=
-  (chainCode c).intertwines x
-
 /-- Every finite output interval has an explicitly enlarged input interval. -/
 theorem chain_full_window {L : ℕ} (c : ExchangeChain ℕ A B L)
     (x y : Path A) (a b : ℤ)
@@ -128,7 +124,6 @@ theorem chain_full_inverse_window {L : ℕ} (c : ExchangeChain ℕ A B L)
 
 #print axioms WindowConjugacy.trans
 #print axioms chain_has_window_conjugacy
-#print axioms chain_code_intertwines
 #print axioms chain_full_window
 #print axioms chain_full_inverse_window
 

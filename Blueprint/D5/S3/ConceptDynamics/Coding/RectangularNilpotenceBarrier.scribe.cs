@@ -9,34 +9,35 @@ internal sealed class RectangularNilpotenceBarrierDocument : IScribeDocumentDefi
     private static Formula.BoundVariable B(string n, Formula t) => new(FormulaIdentifier.Create(n), t);
     private static Formula Mat(Formula r, Formula n, Formula m) => Call("Mat", r, n, m);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Removing a uniform component leaves a transient depth that cannot change by more than the number of rectangular exchanges.",
+        "Nilpotence depth cannot change by more than the number of rectangular exchanges.",
         H("Rectangular nilpotence barrier"), Blocks(
-            Describe.Lean(DescribeId.Create("projected-nilpotence-depth-bounds-chain-length"),
-                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/RectangularNilpotenceBarrier.projected_depth_barrier"),
-                H("A transient-depth gap excludes short chains"),
+            Describe.Lean(DescribeId.Create("nilpotence-depth-bounds-chain-length"),
+                DeclarationHandle.Create("D5/S3/ConceptDynamics/Coding/RectangularNilpotenceBarrier.chain_depth_barrier"),
+                H("A depth gap excludes short chains"),
                 StatementSource.FromAuthor(Disp(Claim())), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("An elementary exchange has rectangular factors U and V, with potentially different intermediate dimensions. The identity (UV)^(j+1)=U(VU)^j V transfers every zero power with a cost of one exponent.")),
-                    Paragraph(Text("Induction along the actual matrix chain bounds the two endpoint depths in both directions. Here mapCoefficients applies the given map to each matrix entry. Any additive and multiplicative coefficient projection preserves all rectangular products, even if it does not preserve one.")),
-                    Paragraph(Text("The complement of a central idempotent is explicitly constructed as such a projection. Hence uniform components can be removed before applying the barrier. The theorem makes no essentiality assumption about intermediate matrices."))),
+                    Paragraph(Text("Induction along the actual matrix chain bounds the two endpoint depths in both directions. The theorem retains every rectangular intermediate dimension and makes no essentiality assumption about intermediate matrices."))),
                 DescribeRole.Theorem))));
 
     private static Formula Claim()
     {
-        Formula r = F.Id("R"), s = F.Id("S"), n = F.Id("n"), m = F.Id("m");
+        Formula r = F.Id("R"), n = F.Id("n"), m = F.Id("m");
         Formula a = F.Id("a"), b = F.Id("b"), l = F.Id("L");
-        Formula x = F.Id("A"), y = F.Id("B"), f = F.Id("f");
+        Formula x = F.Id("A"), y = F.Id("B");
         return new Formula.BindMany(FormulaQuantifier.ForAll,
-            [B("R", F.Id("Type")), B("S", F.Id("Type")),
-             B("ringR", Call("Semiring", r)), B("ringS", Call("Semiring", s)),
-             B("f", Call("NonUnitalRingHom", r, s)),
+            [B("R", F.Id("Type")), B("ringR", Call("Semiring", r)),
              B("n", F.Id("Nat")), B("m", F.Id("Nat")), B("a", F.Id("Nat")),
              B("b", F.Id("Nat")), B("L", F.Id("Nat")),
              B("A", Mat(r, n, n)), B("B", Mat(r, m, m)),
              B("chain", Call("ExchangeChain", r, x, y, l)),
-             B("depthA", Call("ExactDepth", Call("mapCoefficients", x, f), a)),
-             B("depthB", Call("ExactDepth", Call("mapCoefficients", y, f), b))],
-            new Formula.Logic(new Formula.Relation(new Formula.Binary(a, FormulaBinaryOperator.Subtract, b), FormulaRelationOperator.LessThanOrEqual, l), FormulaLogicOperator.And,
-                new Formula.Relation(new Formula.Binary(b, FormulaBinaryOperator.Subtract, a), FormulaRelationOperator.LessThanOrEqual, l)));
+             B("depthA", Call("ExactDepth", x, a)),
+             B("depthB", Call("ExactDepth", y, b))],
+            new Formula.Logic(
+                new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual,
+                    new Formula.Binary(b, FormulaBinaryOperator.Add, l)),
+                FormulaLogicOperator.And,
+                new Formula.Relation(b, FormulaRelationOperator.LessThanOrEqual,
+                    new Formula.Binary(a, FormulaBinaryOperator.Add, l))));
     }
 }

@@ -30,8 +30,6 @@ def uniform (H : Type u) [Group H] [Fintype H] : ZAlg H := ∑ g : H, basis g
 @[simp] theorem basis_mul (g h : H) : basis g * basis h = basis (g * h) := by
   simp [basis]
 
-@[simp] theorem basis_one : basis (1 : H) = 1 := rfl
-
 @[simp] theorem uniform_coeff (g : H) : (uniform H).coeff g = 1 := by
   classical
   simp [uniform, basis, Finsupp.single_apply]
@@ -104,7 +102,9 @@ theorem factors_forward (s t : H) : leftFactor s t * rightFactor s = source s t 
 /-- Reversing the factors kills the nonuniform term through the involution identity. -/
 theorem factors_reverse (s t : H) (hs : s * s = 1) :
     rightFactor s * leftFactor s t = target H := by
-  have hss : basis s * basis s = 1 := by rw [basis_mul, hs, basis_one]
+  have hss : basis s * basis s = 1 := by
+    rw [basis_mul, hs]
+    rfl
   have hcancel : (1 + basis s) * (1 - basis s) = (0 : ZAlg H) := by
     rw [add_mul, one_mul, mul_sub, mul_one, hss]
     simp [sub_eq_add_neg, add_assoc]
