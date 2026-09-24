@@ -121,6 +121,7 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     · simp [recovered]
     · simp [recovered]
       congr
+      exact cast_heq _ qb
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
