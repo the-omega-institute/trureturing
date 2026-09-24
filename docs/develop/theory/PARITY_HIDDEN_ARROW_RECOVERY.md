@@ -691,3 +691,272 @@ $`\lambda=\alpha_A\ell\pm\ell^{3/4}+O(1/n)`$，则两条序列均保持相同的
 风险却分别趋于零与一。这证明只给出一阶标度不足以指定边界风险。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 22. 未知振幅、基数与方向的自适应 Hamming 窗口
+
+**定义 22.1（双向似然混合与逐步选择）。** 对定义 21.1 的状态空间，令
+$`M\ge2`$、$`\ell=\log M`$，置
+
+```math
+J_M=\max\{2,\lceil\ell^2\rceil\},\qquad
+u_j=\frac j{J_M}\quad(1\le j\lt J_M),\qquad
+\eta_M=\min\{1/16,\ell^{-2}\}.
+```
+
+式 (22.1)。
+
+对原始观测的出发行计数定义 $`N_{x,\pm}^{+}`$；反转每个有序对，或反转包含两端点的
+整条路径后，以同样方式定义 $`N_{x,\pm}^{-}`$。对于 $`x\in C_+`$、
+$`\sigma\in\{+,-\}`$，定义非负分数
+
+```math
+E_x^\sigma=\frac1{J_M-1}\sum_{j=1}^{J_M-1}
+ (1+u_j)^{N_{x,+}^\sigma}(1-u_j)^{N_{x,-}^\sigma}.
+```
+
+式 (22.2)。
+
+将每个方向的分数按降序记为 $`E_{[1]}^\sigma\ge\cdots\ge E_{[M]}^\sigma`$，并令
+
+```math
+R_\sigma=\max\left(\{0\}\cup
+ \left\{k\in\{1,\ldots,M\}:E_{[k]}^\sigma\ge\frac M{\eta_M k}\right\}\right).
+```
+
+式 (22.3)。
+
+当 $`R_\sigma=0`$ 时置 $`A_\sigma=\varnothing`$；否则取最大的
+$`R_\sigma`$ 个分数对应的状态为 $`A_\sigma`$。最后定义
+
+```math
+\widehat S=A_+\cup A_-,\qquad
+\widehat\varepsilon=
+\begin{cases}+,&R_+\ge R_-,\\[0pt]-,&R_+\lt R_-.
+\end{cases}
+```
+
+式 (22.4)。
+
+这些规则仅使用维数与实际观测，不使用 $`q,r,\beta`$ 或临界偏移。
+(22.3) 的阈值形式是
+[Wang–Ramdas 的基本 e-BH 规则](../../../Library/Dynamics/wang2022evalues.md)。
+背景行分数在实际律下的 e-value 期望条件将在证明中直接核对；
+归一化 Hamming 损失还需要比 FDR 更强的期望误选个数控制。
+
+**定理 22.2（未知参数达到已知参数的临界风险）。** 固定
+$`r\in(0,1)`$、$`\beta\in(1/2,1)`$，取定义 21.1 的任意序列，满足
+$`c_M\to c\in\mathbb R`$。对每个
+$`\mathcal E\in\{\mathrm{pair},\mathrm{path}\}`$，定义 22.1 的同一规则满足
+
+```math
+\max_{S\in\mathfrak S_q,\ \varepsilon\in\{+,-\}}
+ \frac{\mathbb E_{S,\varepsilon}^{\mathcal E}|\widehat S\triangle S|}{q}
+\longrightarrow\mathcal L(c),\qquad
+\max_{S,\varepsilon}\mathbb P_{S,\varepsilon}^{\mathcal E}
+ \{\widehat\varepsilon\ne\varepsilon\}\longrightarrow0.
+```
+
+式 (22.5)。
+
+更具体地，实际正向下的两次选择满足一致于 $`S`$ 的界
+
+```math
+\mathbb E_{S,+}^{\mathcal E}|A_+\setminus S|
+=O\!\left(\frac q{\ell^2}+\frac1\ell\right),\qquad
+\mathbb E_{S,+}^{\mathcal E}|A_-|=O(\ell^{-1}),
+```
+
+式 (22.6)。
+
+反向时交换两个符号。本定理是对每个固定 $`r,\beta,c`$ 的自适应结论，
+不要求这些参数为规则所知，也不声称参数趋近端点时的一致收敛。
+
+证明。固定实际正向及真实支持。由 (21.5)，一行、两行的任意计数事件仍有
+相对加加性比较，记 $`\delta_M=\ell^3/n`$，余项指数固定取 $`D=4`$。
+原观测中信号行、背景行的比较律为 $`Q_r,Q_{-a}`$；反转观测的全部出发行
+比较律为 $`Q_0`$。
+
+先核对实际律的精确期望条件。对固定 $`x\in C_+`$ 与 $`u\in(0,1)`$，
+路径乘积 $`(1+u)^{N_{x,+}}(1-u)^{N_{x,-}}`$ 的下一步乘子为
+$`1+u\mathbf1_{\{X_t=x\}}\chi(X_{t+1})`$。
+在正向核下，其条件期望是
+$`1+u b_S(x)\mathbf1_{\{X_t=x\}}`$，背景行 $`x\notin S`$ 时不超过一。
+反向核则满足
+
+```math
+\sum_y\chi(y)P_S^{\mathsf T}(z,y)
+=\frac{\chi(z)}n\sum_y\chi(y)b_S(y)
+=\frac{\chi(z)}n\bigl(rq-a(M-q)\bigr)=0.
+```
+
+所以每个反向出发行乘积都是从一出发的非负鞅；正向背景行乘积是非负超鞅。
+在独立对实验中，下一对的乘子均值分别为 $`1+u b_S(x)/n`$ 与一，结论相同。
+取确定权重的有限平均，得到实际背景行的 $`\mathbb E E_x\le1`$，以及反向出发行的
+$`\mathbb E E_x=1`$。这是非负鞅与混合的经典期望论证；它在本模型中依赖上述补偿恒等式。
+随后由基本 e-BH 的既有结论可控制每个方向的 FDR，但下文另证期望误选个数界。
+
+对于任意 $`u\in(0,1)`$，在比较律下也有
+
+```math
+\mathbb E_{Q_{-a}}(1+u)^{N_+}(1-u)^{N_-}
+=e^{-\lambda a u}\le1,\qquad
+\mathbb E_{Q_0}(1+u)^{N_+}(1-u)^{N_-}=1.
+```
+
+式 (22.7)。
+
+算术平均保留此界。因此任一背景比较分数 $`E`$ 满足
+$`Q\{E\ge z\}\le z^{-1}`$。下面只将这一事件概率经 (21.5) 传到实际律，
+不将无界矩直接移过去。
+
+先证明控制随机选择数所需的误选估计。设某一方向至多有 $`q_0`$ 个信号行，
+其余行的比较分数有 (22.7) 的界，且实际一行、两行估计如上。
+对固定实数 $`m\ge1`$，令 $`B_m`$ 计数其中满足
+$`E_x\ge M/(2\eta_Mm)`$ 的背景行。比较均值至多 $`2\eta_Mm`$。
+实际 e-value 条件直接给出均值界；同一实际律下的两行协方差估计再给出
+
+```math
+\mathbb E B_m\le2\eta_Mm,\qquad
+\mathrm{Var}(B_m)
+\le C\left(\eta_Mm+\delta_M\eta_M^2m^2+M^{2-D}\right).
+```
+
+式 (22.8)。
+
+因为 $`\eta_M\le1/16`$，对所有 $`m\ge1`$，充分大 $`M`$ 时均值至多
+$`m/4`$。Chebyshev 不等式于是给出
+
+```math
+\mathbb P\{B_m\ge m/2\}
+\le C\left(\frac{\eta_M}m+\delta_M\eta_M^2+
+             \frac{M^{2-D}}{m^2}\right).
+```
+
+式 (22.9)。
+
+设 $`R,A`$ 是这个方向按 (22.3) 得到的选择数与集合，以 $`F`$ 记所选背景行数。
+若 $`q_0\ge1`$ 且 $`R\le2q_0`$，所选背景行均超过
+$`M/(2\eta_Mq_0)`$，所以
+
+```math
+\mathbb E\bigl[F\mathbf1_{\{R\le2q_0\}}\bigr]
+\le2\eta_Mq_0.
+```
+
+式 (22.10)。
+
+对 $`R\gt2q_0`$，按 $`m=2q_0\,2^j\lt M`$ 分成不交事件
+$`m\lt R\le\min\{2m,M\}`$。在每个事件上，至少
+$`R-q_0\ge m/2`$ 个背景行达到 $`M/(\eta_MR)\ge M/(2\eta_Mm)`$，
+故该事件包含于 $`\{B_m\ge m/2\}`$。乘以 $`2m`$ 并对 (22.9) 求和，得到
+
+```math
+\mathbb E\bigl[R\mathbf1_{\{R\gt2q_0\}}\bigr]
+\le C\left(
+ \eta_M(1+\log M)+M\delta_M\eta_M^2+
+ \frac{M^{2-D}}{q_0}\right).
+```
+
+式 (22.11)。
+
+其中使用二进段数为 $`O(1+\log M)`$、$`\sum m\le2M`$ 和
+$`\sum m^{-1}\le1/q_0`$。因此 (22.10)–(22.11) 控制的是期望误选个数。
+独立序列中用此类计数界证明自适应 Hamming 风险已有
+[Abraham–Castillo–Roquain 引理 S-9](../../../Library/Dynamics/abraham2024sharp.md)
+的先例；这里的二行估计针对实际补偿路径的共同概率律。
+若 $`q_0=0`$，直接从 $`m=1,2,4,\ldots`$ 的区间
+$`m\le R\lt2m`$ 分解；区间事件仍迫使 $`B_m\ge m`$，同样得到
+
+```math
+\mathbb E R
+\le C\left(\eta_M(1+\log M)+M\delta_M\eta_M^2+M^{2-D}\right).
+```
+
+式 (22.12)。
+
+由于 $`M\delta_M=\ell^3/2`$、最终 $`\eta_M=\ell^{-2}`$，
+(22.10)–(22.12) 在正向分别取 $`q_0=q`$ 和 $`q_0=0`$，即得 (22.6)。
+并未从 FDR 界推出期望误选个数界。
+
+下面证明信号检出率。对固定真实 $`r`$，取一个网格点 $`u_{j(M)}`$，使
+$`|u_{j(M)}-r|\le1/J_M`$。充分大 $`M`$ 时该点属于开区间网格。
+记 $`Z_x(u)=N_{x,+}\log(1+u)+N_{x,-}\log(1-u)`$。
+在 $`N_{x,+}+N_{x,-}\le C_D\ell`$ 上，均值定理给出
+
+```math
+|Z_x(u_{j(M)})-Z_x(r)|\le C_r\frac\ell{J_M}=o(1),\qquad
+\log E_x^+\ge Z_x(r)-\log(J_M-1)-o(1).
+```
+
+式 (22.13)。
+
+截断外比较概率与实际概率均可取为 $`O(M^{-D})`$，见 (17.9) 与 (21.5)。
+网格平均损失 $`\log(J_M-1)=O(\log\ell)=o(\sqrt\ell)`$。
+于是对任意阈值 $`t_M=\tau_M+O(\log\ell)`$，信号中心极限定理给出
+
+```math
+\liminf_{M\to\infty}Q_r\{\log E^+\ge t_M\}
+\ge\rho(c):=\Phi\!\left(\frac{c\phi}{\sqrt{V_A}}\right)\gt0.
+```
+
+式 (22.14)。
+
+固定只用于证明的常数 $`0\lt\kappa\lt\rho(c)`$，令
+$`k_M=\lfloor\kappa q\rfloor`$。充分大 $`M`$ 时 $`k_M\ge1`$，且
+
+```math
+\log\frac M{\eta_M k_M}
+=\tau_M+O(\log\ell).
+```
+
+式 (22.15)。
+
+在实际信号行中，超过 (22.15) 阈值的个数记为 $`Y_M`$。
+由 (22.14)、一行估计及同一真实支持下的两行协方差估计，
+$`\liminf\mathbb EY_M/q\ge\rho(c)`$，且
+
+```math
+\frac{\mathrm{Var}(Y_M)}{q^2}
+\le C\left(\frac1q+\delta_M+M^{-D}\right)\longrightarrow0.
+```
+
+式 (22.16)。
+
+因此 $`\mathbb P\{Y_M\ge k_M\}\to1`$，一致于 $`S`$。
+该事件上第 $`k_M`$ 大分数满足 (22.3)，故 $`R_+\ge k_M`$。
+当 $`R_+\ge k_M`$ 时，所有达到 $`M/(\eta_Mk_M)`$ 的行都在 $`A_+`$ 中：
+若一条被遗漏，则至少 $`R_++1`$ 条分数达到此阈值，因
+$`M/(\eta_Mk_M)\ge M/(\eta_M(R_++1))`$，与最大性矛盾。
+同样的最大性表明，当 $`0\lt R_+\lt M`$ 时，截断处不可能将相同分数拆开。
+所以实际并列值不会影响所选集合或这些包含关系。
+
+结合 (22.13)–(22.16)，被 $`A_+`$ 遗漏的信号比例满足
+
+```math
+\limsup_{M\to\infty}\max_S
+ \frac{\mathbb E_{S,+}^{\mathcal E}|S\setminus A_+|}{q}
+\le1-\rho(c)=\mathcal L(c).
+```
+
+式 (22.17)。
+
+并集只能减少漏选，新增误选个数至多为另一方向的选择数。因此
+
+```math
+|\widehat S\triangle S|
+\le |S\setminus A_+|+|A_+\setminus S|+|A_-|.
+```
+
+式 (22.18)。
+
+(22.6)、(22.17) 给出归一化风险的上极限。实际反向由整份观测的精确反转得到同一界。
+任何不使用参数的规则在揭示这些参数后仍是合法规则，故其最坏支持风险不小于
+定理 21.2 中已知 $`q,r`$ 与方向的无约束极小极大风险。这给出匹配下界，证明 (22.5)
+的风险等式。
+
+最后，在正向下 $`R_+\ge\kappa q+o(q)`$ 以趋于一的概率成立，而由 (22.6)
+与 Markov 不等式，$`\mathbb P\{R_-\ne0\}\le\mathbb ER_-=O(\ell^{-1})`$。
+所以按选择数比较得到的方向也一致正确；反向同理。整段证明没有把方向选择当成独立样本，
+也没有用未知基数限制输出大小。∎
+
+## 追加锚（本行以下为增补区）
