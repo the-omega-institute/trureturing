@@ -1142,3 +1142,111 @@ comparison and(RC4) are ordinary proofs, without new Lean verification.
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/two_copy_root_cap.py
 ```
+
+## Constant-cap tuning has an exact certificate optimum
+
+Fix the unrefined pure-anchor measures(PA2), the mixed-anchor charge1/12,
+and the four later primes11,13,17,19. Allow arbitrary finite constants
+C_p>=1 in the same actual capped kernels, with
+
+    t_p=(p-1)*(1-1/C_p)/2.
+
+Changing a cap changes that actual kernel; the optimization compares
+the resulting certificates. At C_p=1, complete each comparison row
+directly to Haar density1, including the case s=C_p=1 where the
+fractional completion formula would have denominator zero.
+
+For the comparison, use the valid auxiliary tails
+
+    Pr(N_p>=k)=min(C_p/p^(k-1),1), k>=2.              (CT1)
+
+When C_p<=p these are exactly the probabilities in(CP4). For C_p>p,
+the minimum in(CT1) is essential; the expression1-C_p/p is not a
+probability. The conditional-comparison source permits these fixed
+cylinder bounds. Every finite C_p gives a finite full first moment.
+
+For a final real query threshold h>=1, consider the certificate
+
+    alpha=W-1/12-sum_p [2C_p/(p-1)]F_(t_p)^old,
+    B_h=h-1+F_h^final/alpha,  W=w5*w7.                (CT2)
+
+Require alpha>0 throughout the pure-mass rectangle. The minimum over
+such uniformly admissible constant-cap schedules and query thresholds
+of the worst-case certificate B_h is exactly
+
+    B_pure=28165018706892770299/5469152872511772242
+          =5.149795473527814...>257/51.               (CT3)
+
+This optimizes the specified comparison certificate. It is not an
+optimum over supported actual laws, nor does it include the refined
+root cap(RC2) or stronger estimates on the same kernels.
+
+### A common corner and integer stage thresholds suffice
+
+After dividing the two anchor measures by their masses, their tails
+are1/(w_p*p^(k-1)) for k>=2. Thus decreasing either w_p increases every normalized
+hinge, while alpha/W=1-1/(12W) minus the normalized nonnegative charges
+decreases. The final hinge divided by W increases. Wherever alpha>0,
+the query ratio therefore has the same worst corner(1/2,1/3) for every
+schedule. Positivity there is equivalent to uniform admissibility.
+
+First remove large caps without using a negative auxiliary atom. Put
+b=(p-1)/2. For C_p>=b, the associated t_p is in[b-1,b). Holding every
+other cap fixed, integer-valued M_old gives the current charge derivative
+under the raw old-prefix measure:
+
+    integral (M_old/b-1)*1_{M_old>=b}>0.
+
+The strict sign follows from the full unbounded positive tail. The
+tails(CT1) increase with C_p, so every later charge and the final hinge
+are nondecreasing in C_p. Thus alpha decreases and B_h increases on
+its feasible interval. Lowering C_p to b preserves feasibility and
+cannot worsen the bound, even when the starting cap exceeded p.
+Apply this separately to each coordinate.
+
+Now1<=C_p<=b<p, so its auxiliary measure is affine in C_p. On a cell
+between consecutive integer t_p values, write
+
+    F_(t_p)^old=A-t_p D.
+
+Since t_p=b*(1-1/C_p), the current charge is
+C_p*(A/b-D)+D. Each later charge and the final hinge is also affine
+in this one C_p, with the other parameters fixed. Hence alpha and
+F_h^final are affine, and their ratio is fractional-linear on alpha>0.
+The final hinge is strictly positive for every finite h. A boundary
+where alpha approaches zero cannot improve the ratio. Therefore one
+feasible cell endpoint, corresponding to an integer threshold, is at
+least as good. Round the four coordinates successively at their common
+worst anchor corner. All stage thresholds can thus be chosen in
+
+    {0,...,4} times{0,...,5} times{0,...,7} times{0,...,8}.
+                                                               (CT4)
+
+For a fixed rounded schedule, B_h is affine between consecutive integer
+h because M is integer-valued. Round h to an integer endpoint. Since
+B_h>=h-1 and(PA1) supplies B_pure<6, any improvement has an integer
+representative with h<=6.
+
+### Exact finite grid
+
+Two disjoint exact computations cover all2160 schedules in(CT4), each
+testing integer query thresholds1 through8:
+
+| Stage grid | Schedules | Uniformly positive | Best query certificate |
+| --- | ---: | ---: | --- |
+| All four thresholds positive | 1120 | 700 | B_pure, at(2,2,4,4), h=3 |
+| At least one threshold zero | 1040 | 299 | 8.183084551002553..., at(0,2,4,4), h=6 |
+
+The second row's exact grid minimum is
+356233588829209201520069278190553/43532922898317742452872218559650.
+Both programs retain every tail through the full geometric first
+moment and convolve only the finite atoms below each hinge threshold.
+Threshold zero has C=1 and its hinge equals the full mean.
+
+The [positive-grid program](../../frontier/cover-geometry/two_copy_positive_cap_grid.py)
+and [result](../../frontier/cover-geometry/two_copy_positive_cap_grid.json),
+and the [zero-containing grid program](../../frontier/cover-geometry/two_copy_zero_cap_grid.py)
+and [result](../../frontier/cover-geometry/two_copy_zero_cap_grid.json),
+are the completed exact calculations used here. The rounding argument
+extends their finite arithmetic conclusion to(CT3). This is an ordinary
+proof with exact computational evidence, without Lean verification.
