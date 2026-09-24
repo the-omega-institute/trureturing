@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Catalan]
    utility: none
-   digest: Literal A331474 moments admit a signed continuant Hankel bridge. -/
+   digest: Literal A331473 moments admit a signed continuant bridge for their A331474 Hankel determinants. -/
 
 import Mathlib.Algebra.Polynomial.Reverse
 import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
