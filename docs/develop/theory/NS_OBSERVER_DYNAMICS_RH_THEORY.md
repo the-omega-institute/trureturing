@@ -2529,7 +2529,7 @@ p\geq\left\lceil\log_2\frac{n(n+1)}{2\eta}\right\rceil.
 
 ### 22.8 证明覆盖与保留边界
 
-本节的核心证明链由五个 Lean 源和各自的 Scribe 承载。`MechanicalSlopeSensitivity.local_slope_disagreement_law` 给出实际错误区域及其测度；`MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出保序权重的必要充分条件；同源的 `geometric_readout_isometric_completion` 给出第 22.9 节的一般几何完成、积分与混合误差恒等式；`MechanicalReadoutRegularity.geometric_readout_continuity_and_jump` 给出第 22.10 节的精确连续性判据及跳变下界；`MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass` 给出第 22.11 节的实际取整级数、单位总质量及原子分布函数级数；`MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound` 给出第 22.12 节的逐相位一致误差界和联合预算。所有这些声明均从实际机械词出发，不以读出均值、极限存在或跳变公式作为前提。第 22.4 节的二进制积分结论由一般比率结果覆盖；第 22.5--22.7 节的二进制边界推论、黄金预算、联合校准，第 22.11 节的原子测度、精确跳变与相位平均，以及第 22.12 节的极限次序，目前保留本卷所列普通证明。有限记录相等、相位平均数值误差、固定相位连续性及改变位权后的平均化，具有不同量词和损失函数，不互相替代。带误码的圆相位恢复和第 16.7、17.7 节的联合最优上界仍是独立问题，不作为本节的已证前提或完成结论。
+本节的核心证明链由五个 Lean 源和各自的 Scribe 承载。`MechanicalSlopeSensitivity.local_slope_disagreement_law` 给出实际错误区域及其测度；`MechanicalReadoutOrder.local_order_iff_decreasing_weights` 给出保序权重的必要充分条件；同源的 `geometric_readout_isometric_completion` 给出第 22.9 节的一般几何完成、积分与混合误差恒等式；`MechanicalReadoutRegularity.geometric_readout_continuity_and_jump` 给出第 22.10 节的精确连续性判据及跳变下界；`MechanicalReadoutAtomicSeries.geometric_readout_floor_series_and_mass` 给出第 22.11 节的实际取整级数、单位总质量及原子分布函数级数；`MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound` 给出第 22.12 节的逐相位单侧误差界和联合预算。所有这些声明均从实际机械词出发，不以读出均值、极限存在或跳变公式作为前提。第 22.4 节的二进制积分结论由一般比率结果覆盖；第 22.5--22.7 节的二进制边界推论、黄金预算、联合校准，第 22.11 节的原子测度、精确跳变与相位平均，以及第 22.12 节的极限次序，目前保留本卷所列普通证明。有限记录相等、相位平均数值误差、固定相位连续性及改变位权后的平均化，具有不同量词和损失函数，不互相替代。带误码的圆相位恢复和第 16.7、17.7 节的联合最优上界仍是独立问题，不作为本节的已证前提或完成结论。
 
 [22-A] Donghyun Lim and Martin Ziegler. *Quantitative Coding and Complexity Theory of Continuous Data*. arXiv:2002.04005v5, 2021. https://arxiv.org/abs/2002.04005v5 . 连续数据表示与定量可接受性的背景，不将有理完成等同于任意离散后处理的有效性。
 
@@ -2696,7 +2696,7 @@ G_r(\alpha,x)-\alpha
 \leq r^n+(1-r)+|\beta-\alpha|.}
 \tag{22.27}
 \]
-所以 $\beta\to\alpha$、$r\uparrow1$、$r^n\to0$ 是一种明确的联合收敛方案。`geometric_readout_uniform_slope_bound` 从累计机械词误差的有限分部求和证明 $|G_r(\beta,x)-\beta|\leq1-r$，并与已证几何尾界结合给出式 (22.27)；式 (22.25) 更细的单侧界及式 (22.26) 的极限次序仍是本卷的普通证明。这些结论不宣称固定几何位权在参数上的一致连续性。
+所以 $\beta\to\alpha$、$r\uparrow1$、$r^n\to0$ 是一种明确的联合收敛方案。`geometric_readout_uniform_slope_bound` 从累计机械词误差的精确分数部分式和有限分部求和证明式 (22.25) 的单侧界，并与已证几何尾界结合给出式 (22.27)；式 (22.26) 的极限次序仍是本卷的普通证明。这些结论不宣称固定几何位权在参数上的一致连续性。
 
 ### 22.13 文献关系
 

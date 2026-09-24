@@ -27,9 +27,11 @@ theorem geometric_readout_uniform_slope_bound
     (r alpha x : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1)
     (ha : alpha ∈ Ico (0 : ℝ) 1) :
     |geometricReadout r alpha x - alpha| ≤ 1 - r ∧
-      ∀ (target : ℝ) (n : ℕ),
+    (∀ (target : ℝ) (n : ℕ),
         |weightedPrefix (fun j => (1 - r) * r ^ j) alpha x n - target| ≤
-          r ^ n + (1 - r) + |alpha - target| := by
+          r ^ n + (1 - r) + |alpha - target|) ∧
+    (1 - r) * (Int.fract x - 1) ≤ geometricReadout r alpha x - alpha ∧
+      geometricReadout r alpha x - alpha ≤ (1 - r) * Int.fract x := by
   let q : ℕ → ℝ := fun j => (1 - r) * r ^ j
   let P : ℕ → ℝ := fun n => weightedPrefix q alpha x n
   let B : ℕ → ℝ := fun k =>
@@ -56,6 +58,13 @@ theorem geometric_readout_uniform_slope_bound
       rw [hcount]
     rw [heq]
     exact ⟨hd.1.le, hd.2.le⟩
+  have hBfract (k : ℕ) : B k = Int.fract x - Int.fract (x + (k : ℝ) * alpha) := by
+    unfold B Int.fract
+    ring
+  have hBfine (k : ℕ) : Int.fract x - 1 ≤ B k ∧ B k ≤ Int.fract x := by
+    rw [hBfract]
+    exact ⟨sub_le_sub_left (Int.fract_lt_one _).le _,
+      sub_le_self _ (Int.fract_nonneg _)⟩
   have hq0 (k : ℕ) : 0 ≤ q k :=
     mul_nonneg (sub_nonneg.mpr hr1.le) (pow_nonneg hr0 k)
   have hdrop (k : ℕ) : q k - q (k + 1) = (1 - r) ^ 2 * r ^ k := by
@@ -130,6 +139,21 @@ theorem geometric_readout_uniform_slope_bound
         nlinarith [mul_nonneg (hdrop0 j) hb]
     rw [hcoeff n] at htop hbottom
     exact abs_le.mpr ⟨hbottom, htop⟩
+  have hfiniteFine (n : ℕ) :
+      (1 - r) * (Int.fract x - 1) ≤ P n - alpha * (1 - r ^ n) ∧
+        P n - alpha * (1 - r ^ n) ≤ (1 - r) * Int.fract x := by
+    rw [herr]
+    constructor
+    · rw [← hcoeff n, add_mul, Finset.sum_mul]
+      exact add_le_add
+        (mul_le_mul_of_nonneg_left (hBfine n).1 (hq0 n))
+        (sum_le_sum fun j _ =>
+          mul_le_mul_of_nonneg_left (hBfine (j + 1)).1 (hdrop0 j))
+    · rw [← hcoeff n, add_mul, Finset.sum_mul]
+      exact add_le_add
+        (mul_le_mul_of_nonneg_left (hBfine n).2 (hq0 n))
+        (sum_le_sum fun j _ =>
+          mul_le_mul_of_nonneg_left (hBfine (j + 1)).2 (hdrop0 j))
   have htail (n : ℕ) :
       0 ≤ geometricReadout r alpha x - P n ∧
         geometricReadout r alpha x - P n ≤ r ^ n := by
@@ -153,27 +177,29 @@ theorem geometric_readout_uniform_slope_bound
     (continuous_abs.tendsto _).comp he
   have huniform : |geometricReadout r alpha x - alpha| ≤ 1 - r :=
     le_of_tendsto hne (Eventually.of_forall hfinite)
-  refine ⟨huniform, ?_⟩
-  intro target n
-  have htailAbs : |P n - geometricReadout r alpha x| ≤ r ^ n := by
-    rw [abs_sub_comm, abs_of_nonneg (htail n).1]
-    exact (htail n).2
-  have htriangle : |P n - target| ≤
-      |P n - geometricReadout r alpha x| +
-        |geometricReadout r alpha x - alpha| + |alpha - target| := by
-    calc
-      |P n - target| =
-          |(P n - geometricReadout r alpha x) +
-            (geometricReadout r alpha x - alpha) + (alpha - target)| := by
-              congr 1
-              ring
-      _ ≤ |(P n - geometricReadout r alpha x) +
-              (geometricReadout r alpha x - alpha)| + |alpha - target| := abs_add_le _ _
-      _ ≤ _ := add_le_add
-        (abs_add_le (P n - geometricReadout r alpha x)
-          (geometricReadout r alpha x - alpha)) le_rfl
-  change |P n - target| ≤ r ^ n + (1 - r) + |alpha - target|
-  linarith
+  refine ⟨huniform, ?_, ?_, ?_⟩
+  · intro target n
+    have htailAbs : |P n - geometricReadout r alpha x| ≤ r ^ n := by
+      rw [abs_sub_comm, abs_of_nonneg (htail n).1]
+      exact (htail n).2
+    have htriangle : |P n - target| ≤
+        |P n - geometricReadout r alpha x| +
+          |geometricReadout r alpha x - alpha| + |alpha - target| := by
+      calc
+        |P n - target| =
+            |(P n - geometricReadout r alpha x) +
+              (geometricReadout r alpha x - alpha) + (alpha - target)| := by
+                congr 1
+                ring
+        _ ≤ |(P n - geometricReadout r alpha x) +
+                (geometricReadout r alpha x - alpha)| + |alpha - target| := abs_add_le _ _
+        _ ≤ _ := add_le_add
+          (abs_add_le (P n - geometricReadout r alpha x)
+            (geometricReadout r alpha x - alpha)) le_rfl
+    change |P n - target| ≤ r ^ n + (1 - r) + |alpha - target|
+    linarith
+  · exact ge_of_tendsto he (Eventually.of_forall fun n => (hfiniteFine n).1)
+  · exact le_of_tendsto he (Eventually.of_forall fun n => (hfiniteFine n).2)
 
 #print axioms geometric_readout_uniform_slope_bound
 
