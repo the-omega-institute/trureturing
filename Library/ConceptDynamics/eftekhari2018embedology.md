@@ -37,7 +37,7 @@ stable-embedding theorem additionally controls geometric quantities such as
 bi-Lipschitz constants and reach. Increasing stable rank alone does not certify
 all of those conditions.
 
-## Current repository interface
+## Repository interface
 
 Section 12 of `SYMPLECTIC_PREDICTIVE_COMPLETION.md` studies a circle rotation
 by pi/6 with two delays and designs the whole basis family. It already contains

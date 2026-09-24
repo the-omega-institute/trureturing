@@ -36,7 +36,7 @@ internal sealed class PartitionTopologyKernelDocument : IScribeDocumentDefinitio
             DescribeRole.Theorem),
             Paragraph(
                 Text("Literature scope: Pauly (2016), recorded in "
-                    + "Library/Topology/pauly2016represented.md, develops "
+                    + "Library/ConceptDynamics/pauly2016represented.md, develops "
                     + "Sierpinski-valued observations and represented spaces. "
                     + "For the discrete codomain used here, equal kernels determine the "
                     + "partition topology. General initial topologies can have the same "
@@ -44,7 +44,7 @@ internal sealed class PartitionTopologyKernelDocument : IScribeDocumentDefinitio
                     + "observation additionally depends on the chosen representation.")),
             Paragraph(
                 Text("Quantitative observation interface: Eftekhari et al. (2018), "
-                    + "recorded in Library/Topology/eftekhari2018embedology.md, "
+                    + "recorded in Library/ConceptDynamics/eftekhari2018embedology.md, "
                     + "distinguishes topological recovery from stable delay embedding. "
                     + "Consequently, equality of observable partitions alone does not "
                     + "control geometric conditioning or sensitivity to measurement noise.")))));

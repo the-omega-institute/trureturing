@@ -36,7 +36,7 @@ The Sierpinski convention in the cited Section 4 is positive evidence: top is
 recognized by a nonzero entry in a name. No claim is made that every abstract
 open subset is computable without an effective representation and index.
 
-## Repository use and limits
+## Repository use and boundaries
 
 The existing Lean theorem `partition_inseparable_iff_kernel` is about a readout
 into a **discrete** codomain. Its proof and declaration are unchanged. The
