@@ -79,11 +79,13 @@ theorem involution_exchange (s t : H) (hs : s * s = 1) :
   let U := scalar (toNat (leftFactor s t))
   let V := scalar (toNat (rightFactor s))
   have hUV : U * V = sourceMatrix s t := by
-    ext i j
+    apply Matrix.ext
+    intro i j
     simpa [U, V, sourceMatrix, scalar, Matrix.mul_apply] using
       (natural_factor_products s t hs).1
   have hVU : V * U = targetMatrix H := by
-    ext i j
+    apply Matrix.ext
+    intro i j
     simpa [U, V, targetMatrix, scalar, Matrix.mul_apply] using
       (natural_factor_products s t hs).2
   have c := ExchangeChain.cons U V (ExchangeChain.nil (V * U))
@@ -104,28 +106,28 @@ theorem involution_minimum_one (s t : H) (hs : s * s = 1)
   have hmatrix := congrArg (fun M : GroupMat H 1 1 => M 0 0) hsame
   have hendpoints : sourceNat s t = targetNat H := by
     simpa [sourceMatrix, targetMatrix, scalar] using hmatrix
+  have left_nonnegative (g : H) : 0 ≤ (leftFactor s t).coeff g := by
+    classical
+    have hcoeff : (leftFactor s t).coeff g =
+        1 + (if t = g then 1 else 0) - (if s * t = g then 1 else 0) := by
+      unfold leftFactor
+      rw [sub_mul, one_mul]
+      simp [uniform, basis, Finsupp.single_apply, add_sub_assoc]
+    rw [hcoeff]
+    by_cases ht : t = g
+    · rw [if_pos ht]
+      by_cases hst' : s * t = g <;> simp [hst']
+    · rw [if_neg ht]
+      by_cases hst' : s * t = g <;> simp [hst']
+  have right_nonnegative (g : H) : 0 ≤ (rightFactor s).coeff g := by
+    classical
+    by_cases h1 : (1 : H) = g <;> by_cases hs' : s = g <;>
+      simp [rightFactor, basis, MonoidAlgebra.one_def, h1, hs']
+  have lift_toNat_local (p : ZAlg H) (hp : ∀ g : H, 0 ≤ p.coeff g) :
+      liftNat H (toNat p) = p := by
+    ext g
+    simp [liftNat, toNat, Int.toNat_of_nonneg (hp g)]
   have hsource : liftNat H (sourceNat s t) = source s t := by
-    have left_nonnegative (g : H) : 0 ≤ (leftFactor s t).coeff g := by
-      classical
-      have hcoeff : (leftFactor s t).coeff g =
-          1 + (if t = g then 1 else 0) - (if s * t = g then 1 else 0) := by
-        unfold leftFactor
-        rw [sub_mul, one_mul]
-        simp [uniform, basis, Finsupp.single_apply, add_sub_assoc]
-      rw [hcoeff]
-      by_cases ht : t = g
-      · rw [if_pos ht]
-        by_cases hst' : s * t = g <;> simp [hst']
-      · rw [if_neg ht]
-        by_cases hst' : s * t = g <;> simp [hst']
-    have right_nonnegative (g : H) : 0 ≤ (rightFactor s).coeff g := by
-      classical
-      by_cases h1 : (1 : H) = g <;> by_cases hs' : s = g <;>
-        simp [rightFactor, basis, MonoidAlgebra.one_def, h1, hs']
-    have lift_toNat_local (p : ZAlg H) (hp : ∀ g : H, 0 ≤ p.coeff g) :
-        liftNat H (toNat p) = p := by
-      ext g
-      simp [liftNat, toNat, Int.toNat_of_nonneg (hp g)]
     rw [← (natural_factor_products s t hs).1, map_mul,
       lift_toNat_local _ left_nonnegative, lift_toNat_local _ right_nonnegative]
     exact factors_forward s t
