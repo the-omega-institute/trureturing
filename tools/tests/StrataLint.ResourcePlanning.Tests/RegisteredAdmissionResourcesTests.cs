@@ -234,7 +234,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         Assert.Equal(CommonCheckRegistrationFixture.Ids
             .Where(id => id is not ("banned-api-proof" or "capability-proof" or "selftest-pair")).Order(StringComparer.Ordinal),
             Strings(plan["execution"]!["checks"]!));
-        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector" },
+        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface" },
             Strings(plan["execution"]!["lean_targets"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
             Strings(plan["execution"]!["steps"]!));
@@ -269,11 +269,13 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
     [InlineData("tools/lean-inspector/lakefile.lean", "pr")]
     [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "push")]
     [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean", "pr")]
+    [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", "push")]
+    [InlineData("tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean", "pr")]
     public void RegisteredInspectorProgramsAndTestsRequireCompilationWithoutAnotherReportStep(string input, string mode)
     {
         var plan = Plan(input, "", mode);
         Assert.Contains("lean-inspector-build", Strings(plan["resources"]!));
-        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector" },
+        Assert.Equal(new[] { "LeanInformationAudit", "leanInspector/reportInspector", "leanInspectorInterface/LeanInformationAuditInterface" },
             Strings(plan["execution"]!["lean_targets"]!));
         Assert.Equal(new[] { "lean-report", "scribe", "filemap", "check-current" },
             Strings(plan["execution"]!["steps"]!));

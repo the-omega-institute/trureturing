@@ -1,0 +1,8 @@
+设区域 \(\Sigma\) 的边界变量为 \(b\in B_\Sigma\)，内部变量为 \(x\)，局部规则为 \(f_\alpha\)。定义边界响应
+\[
+\mathcal H_\Sigma(b)
+=
+\bigoplus_x\ \bigotimes_{\alpha\in\Sigma} f_\alpha(x,b).
+\tag{3.1}
+\]
+

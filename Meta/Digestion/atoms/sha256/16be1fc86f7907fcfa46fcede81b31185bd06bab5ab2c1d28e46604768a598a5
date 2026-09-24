@@ -1,0 +1,62 @@
+**命题 2.15（任意高的首次可分阶）。** 另固定整数 $m\ge2$，取
+$$
+H_m=\operatorname{diag}(0,1,m),\qquad
+G_m=\{\operatorname{diag}(1,z,z^m):|z|=1\},\qquad
+\rho=|\psi\rangle\langle\psi|,\quad\sigma=|\varphi\rangle\langle\varphi|,
+\tag{TM.156}
+$$
+
+其中 $|\psi\rangle,|\varphi\rangle$ 与式(TM.153)相同。这次时间作用以 $2\pi$ 为周期，$G_m$ 已经是该圆周连续像的紧闭群，没有额外的稠密时间闭包。两态不同轨道：若 $\operatorname{diag}(1,z,z^m)$ 把 $|\psi\rangle$ 送到 $|\varphi\rangle$ 的射线，第一分量令全局相位为一，第二分量令 $z=1$，第三分量却要求 $z^m=-1$，矛盾。
+
+在 $n$ 份张量基中，等总能量要求
+$$
+k_1(a)+m k_2(a)=k_1(b)+m k_2(b)
+\quad\Longleftrightarrow\quad
+k_1(a)-k_1(b)=m\bigl(k_2(b)-k_2(a)\bigr).
+\tag{TM.157}
+$$
+
+当 $n<m$ 时，左侧绝对值至多为 $n$，右侧若非零则绝对值至少为 $m$，所以双方只能为零。于是全部占据数相同，每个能量块内两个候选向量仍只差共同符号，得到
+$$
+P_n^{(m)}(\rho)=P_n^{(m)}(\sigma)\qquad(1\le n<m),
+\tag{TM.158}
+$$
+
+这里上标 $(m)$ 指明以 $H_m$ 及其群定义平均，避免混同不同 Hamiltonian 的同名 $P_n$。
+
+到 $n=m$ 时，若等能量的两份占据数不同，式(TM.157)的非零右侧绝对值只能等于 $m$。因此两个 $k_1$ 必分别为 $m$ 与零；$k_1=m$ 的词其余占据数均零，另一词必须有一个标签 $2$ 和 $m-1$ 个标签 $0$。所以所有新的相位敏感碰撞都在能量 $m$ 块内，且恰好发生于以下一维方向与 $m$ 个排列之间：
+$$
+\begin{aligned}
+|u\rangle&=|1\rangle^{\otimes m},\qquad
+|v_j\rangle=|0\rangle^{\otimes(j-1)}\otimes|2\rangle\otimes|0\rangle^{\otimes(m-j)},\\
+|s\rangle&=\sum_{j=1}^m|v_j\rangle,\qquad
+\langle u|s\rangle=0,\quad\|s\|=\sqrt m,\qquad a=3^{-m/2},\\
+\Pi_m^{(m)}|\psi\rangle^{\otimes m}&=a(|u\rangle+|s\rangle),\qquad
+\Pi_m^{(m)}|\varphi\rangle^{\otimes m}=a(|u\rangle-|s\rangle).
+\end{aligned}
+\tag{TM.159}
+$$
+
+$|v_j\rangle$ 两两正交，且均正交于 $|u\rangle$，证明所列范数关系。其他能量块要么只有同一占据数的排列，要么无此相位符号差，因此两候选的密度块相同。令
+$$
+\begin{aligned}
+\Delta_m
+&=P_m^{(m)}(\rho)-P_m^{(m)}(\sigma)
+ =2\,3^{-m}(|u\rangle\langle s|+|s\rangle\langle u|),\\
+\Delta_m\big|_{\operatorname{span}\{u,s/\sqrt m\}}
+&=\begin{pmatrix}0&2\sqrt m/3^m\\2\sqrt m/3^m&0\end{pmatrix},
+\end{aligned}
+\tag{TM.160}
+$$
+
+在该二维子空间的正交补上差为零。因此非零特征值恰为 $\pm2\sqrt m/3^m$，得到精确半迹距离
+$$
+\boxed{
+D\!\left(P_m^{(m)}(\rho),P_m^{(m)}(\sigma)\right)
+=\tfrac12\|\Delta_m\|_1=\frac{2\sqrt m}{3^m}>0.
+}
+\tag{TM.161}
+$$
+
+这连同式(TM.158)证明此对来源首次可分的份数恰好为 $m$。一个简单但未必最优的效果是投影到 $(|u\rangle+|v_1\rangle)/\sqrt2$，两概率分别为 $2/3^m$ 与零，已经认证首次分离。下面计算使用全部该能量块时的最佳概率。
+

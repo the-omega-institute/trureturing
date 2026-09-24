@@ -1,0 +1,19 @@
+#### 3.2.11 已有来源与适用范围
+
+黄金恒等式（TM.439）已有精确仓内 owner，按不可变项目快照
+19a8543ea50538700a993a51989d9cbc7b5bf4fd：
+
+- D5/S1/Scale/FibonacciErrorRatio.lean:21，
+  D5.S1.Scale.fibonacci_golden_residual，逐字给
+  $(F_N:\mathbb R)\phi-F_{N+1}=-(-1/\phi)^N$。
+- D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn.lean:113，
+  fibonacci_near_return，已组织黄金圆周旋转的 Fibonacci 近回返、交替缺陷及衰减。其回返步长为 $1/\phi$，本文时钟比为 $\phi$；二者模整数关系一致，但不把该声明直接冒充本文的量子通道距离定理。
+
+该快照所钉 Mathlib 修订为
+db584cd6d46c92f209a44c0f1c829460d327499d。
+Mathlib/NumberTheory/Real/GoldenRatio.lean 中，Real.fib_succ_sub_goldenRatio_mul_fib（第211行）给
+$F_{N+1}-\phi F_N=\psi^N$，Real.inv_goldenRatio（第48行）给
+$\phi^{-1}=-\psi$；Real.coe_fib_eq（第198行）为 Binet 公式；Real.goldenRatio_irrational（第120行）给黄金比无理性。本文只直接复用这些已存在的算术事实，不新增绑定声明。
+
+式（TM.420）—（TM.448）的整体通道结论是有限模型中的普通推导，尚无新增 Lean 核验。它们不推出任意无限谱上的 diamond 收敛，不赋予受限观察者额外效果权限，不证明时钟制备免费，也不将能量 pinching 自动解释为全部物理熵、测不准或时间箭头。
+

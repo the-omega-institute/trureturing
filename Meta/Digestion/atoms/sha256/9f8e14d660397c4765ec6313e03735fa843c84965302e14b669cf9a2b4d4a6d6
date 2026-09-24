@@ -1,0 +1,10 @@
+**命题 10.2（商因子化）。** 表达 \(e\) 充分，当且仅当存在唯一
+
+$$
+\widehat\kappa_e:e(S)\to K,\qquad
+\kappa=\widehat\kappa_e\circ e.
+\tag{10.3}
+$$
+
+它同时无冗余，当且仅当 \(\widehat\kappa_e\) 是双射；逆映射就是从任务商恢复该表达的唯一方式。
+
