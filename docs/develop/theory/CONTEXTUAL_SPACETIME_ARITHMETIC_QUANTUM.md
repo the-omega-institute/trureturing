@@ -37366,9 +37366,9 @@ $$
 \mathcal H_r=(1-p_r)\mathcal T_r+p_r\mathcal S.
 \tag{166.26}
 $$
-则 $\mathcal H_r$ 为 CPTP 通道，满足式（166.2），且 $m(\mathcal H_r)=2$，但
+则 $\mathcal H_r$ 为 CPTP 通道，满足式（166.2），且 $m(\mathcal H_r)=2$；对所有充分接近一的 $r<1$，恰有
 $$
-\boxed{\lim_{r\uparrow1}W_r(\mathcal H_r)=\frac12.}
+\boxed{W_r(\mathcal H_r)=\frac12.}
 \tag{166.27}
 $$
 因此式（166.17）的上分支可以在其左端点达到，即使单步通道偏差只有 $O((1-r)^2)$。
@@ -37390,17 +37390,22 @@ $$
 为给出渐近上界，把任意输入的对角与非对角响应分开。对全部参考系统，$\Delta-K_r^N\circ\Delta$ 的半 diamond 范数恰为 $a_N\le1/2$：对角输入块是正矩阵，每列经典转移的总变差至多为 $a_N$，三角不等式给出上界；输入 $P_0$ 达到它。真实通道的非对角乘子模长为 $r^N$，预测器的非对角乘子模长至多为 $(1-p_r)^Nr^N$，所以其差的 $2\to2$ 范数至多为 $2r^N$。与式（166.22）相同的 Schmidt 秩及范数估计适用于这个线性差映射，得到
 $$
 \sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal H_r^N)
-\le\frac12+3r^N.
+\le\frac12-\frac12(1-2p_r)^N+3r^N.
 \tag{166.30}
 $$
-另一方面，有限视界 telescoping 给出 $d_{\rm ref}(\mathcal H_r^N,\mathcal T_r^N)\le Np_r$。固定 $T>0$，将全部视界分为 $\varepsilon N\le T$ 与 $\varepsilon N>T$，分别使用这个估计和（166.30），便有
+保留（166.30）的负项可以得到精确上界。令 $q_r=1-2\varepsilon^2$，当 $0<\varepsilon\le1/4$ 时，
 $$
-W_r(\mathcal H_r)
-\le\max\left\{W_r(\mathcal T_r)+T\varepsilon,
-\frac12+3e^{-T}\right\}.
+\frac r{q_r}=\frac{1-\varepsilon}{1-2\varepsilon^2}
+\le1-\frac\varepsilon2\le e^{-\varepsilon/2}.
 \tag{166.31}
 $$
-先取 $r\uparrow1$ 的上极限，再令 $T\to\infty$，用 $L<1/2$ 得到上界 $1/2$，结合（166.29）即得（166.27）。证毕。
+取固定常数 $T_0=2\log6$。若 $\varepsilon N\ge T_0$，则 $3r^N\le q_r^N/2$，式（166.30）不超过 $1/2$。若 $\varepsilon N<T_0$，有限视界 telescoping 给出 $d_{\rm ref}(\mathcal H_r^N,\mathcal T_r^N)\le Np_r$，因此
+$$
+\sup_\phi d_{\rm ref}(\mathcal M_{r,\phi}^N,\mathcal H_r^N)
+\le W_r(\mathcal T_r)+T_0\varepsilon<\frac12
+\tag{166.32}
+$$
+对所有充分接近一的 $r$ 成立，最后一个严格号由定理163.2的 $W_r(\mathcal T_r)\to L<1/2$ 保证。两个视界范围一起给出 $W_r(\mathcal H_r)\le1/2$；（166.29）给出相反方向，证明（166.27）。证毕。
 
 命题165.3的稀有重置只保留一个固定方向；命题166.5的稀有交换保留两个。它们的每步变化都可以比 $1-r$ 更小，却改变了无限续接后仍然存在的记录空间。定理166.4指出，在完整通道一阶匹配的前提下，精确保留三个固定方向正是排除这类长时失准的条件。这个条件约束最终保留下来的关系，而不只是漂移速度；它仍属于所给三维、无持久辅助记忆的预测合同。
 
