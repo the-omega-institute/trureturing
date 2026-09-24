@@ -18,13 +18,13 @@
 **整个系统是一张不可逆真值 DAG**,架构三分:
 
 ```
-docs/theory(参考输入)──摄入机器──► Lean(唯一真源)◄──针对它── C# harness
+docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)◄──针对它── C# harness
   只进不承重,定位在消化账本       kernel 只看代码          治理/验证/发射/守门,自身零内容
 ```
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门、SL-016 等 fail-closed 消费者读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
 - **C# harness**:程序集只许程序(类型/逻辑/loader/writer);声明性实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(第 4.2 条)。
-- **docs/theory**:经 atomizer+消化账本摄入,Lean/C# 对其零知识零定位(TheoryIsolation)。卷与 atoms 不删属建设者纪律;已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
+- **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
 
 ### 1.3 真值图、冻结与两个偏序
 
@@ -213,6 +213,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 3.8 理论正文与追加纪律
 
 - **形式化遇到理论缺口，可以直接推理补充理论。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补充须保持原问题的目标、假设与量词，归入既有相关理论卷并遵守追加纪律；尚未证成的部分明确标为待证，不冒称定理。理论补充和消化摄入不必先行完成，Lean 证明可以同步推进，数学真值仍只由内核验证的形式化代码承担。
+- **新增理论 PR 可不做消化。** 仅新增或追加 `docs/develop/theory/**` 正文、且不提交形式化、覆盖、冻结或消化工件的 PR，可以不运行 `make ingest`，不要求同时新增 atom CAS 或 backfill，也不要求先取得任何消化状态。正文仍须遵守本节的纯数学、文献尽调与追加纪律；若以后需要把该卷接入消化账本，另行提交 canonical ingest PR。含有 ingest、cover、deposit 或其它消化工件的 PR，仍按第 4.7 条对应链路核对。
 - **理论推理只包含定义、假设、定理与证明。** `docs/develop/theory/**` 的正文保持纯数学:引理、命题、推论归入定理,例子与反例写成命题并给出证明,符号约定与数学引文附于对应条目。不得混入模型调用、工程实现、代码或测试、核验日志、摄入流程、评审记录、工单与交付状态;正式成果按既有归属置于正文之外;过程材料依第 2.10 条不保存。
 - **理论文档须可持续追加。** 新理论接在文末,保留既有条目的文本、编号与引用;新定义、新假设和新定理使用新编号,不复用旧编号、不整体重排。需要修正时,追加明确指向原条目的更正命题、适用假设与证明,说明替代关系;不得静默改写旧假设、结论或证明,也不得把被更正的结论继续当作有效前提。追加纪律自卷合入 `dev` 起生效;合入前的草稿可在其 PR 内就地修订。
 - **禁止把已存在的理论新增到 `docs/develop/theory/**`。** 新卷与新增章节的承重命题必须是本仓新增的数学内容。凡经第 3.7 条尽调判为 `literature-attested`(整体、逐字或仅换记号地对应已发表定理、已公开草稿或教科书结果)者,不得作为新卷、新章或新增定理写入,只以 `Library/` note 引用;需要形式化时走第 3.6 条硬规则①的 `make cover` 或 `FromLiterature` 前置。已知定理只可作为新内容承重推导的中间步骤附于新条目之内,逐条标注先例,不单列为定理;一卷或一批增补的承重命题全部为已知结果者,评审打回、不得合入。
@@ -289,11 +290,11 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 4.7 生产链、冻结与消化状态
 
 **理论产出是一条单向链:什么源产什么、什么 PR 落哪几个面、冻结与消化是两个正交状态。**
-本款描述实际执行消化与冻结时的次序、PR 形态与状态语义，不要求先完成消化整理才能推进形式化；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
+本款描述实际执行消化与冻结时的次序、PR 形态与状态语义；纯理论新增 PR 可以停在正文，不要求先进入这条消化链；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
 
 ```
 docs/develop/theory/**                       参考输入·当前正确,历史归 git,程序对其零知识
-  │ make ingest
+  │ make ingest (可选；仅在该 PR 要登记消化账目时)
   ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
   └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·四态见下
   │ 形式化(先库后证,第 3.1 条)——链上唯一一环不由 make 产出
@@ -313,6 +314,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 ```
 
 **GID 路径在三处逐段同形**(`D5/….lean` ↔ `Blueprint/D5/….scribe.cs` ↔ `Blueprint/D5/….md`),这是第 4.2 条"地址由算法算出"的落点:三处对不齐即地址错,不是文件少写了一个。
+**纯理论正文 PR 不进入上述消化链**:它可以只落 `docs/develop/theory/**`，不要求本 PR 生成 atom、backfill 或 coverage；该 PR 不声明任何消化终态。后续若提交 ingest、cover 或 deposit，才按下列对应形态核对。
 **三类改动形态,面集合封闭;deposit 与 cover 可在同一 PR、同一工作树顺序执行**:
 
 - **deposit**:`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/state/**`(accepted 事件目录的过渡形态仅属 #4687 的有界 contract 证据,非第二种当前成员格式)。
@@ -329,7 +331,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **bind-only atom 的结算**:全 bind-only 的命题 atom 按第 3.2 条直接走既有覆盖与子句链闭合,到达 `absorbed-closed` 即处理完成;不产生新的 Lean 声明或冻结事件。仅由钉版上游闭合而无项目 GID 者按第 3.2 条以 `settle-atom` 的 justification 收据终结,不手写已完成。
 - **文献已发表、仓内无冻结 GID 覆盖的命题 atom**:能由钉版上游闭合者按第 3.2 条以 `settle-atom` 收据终结;其余留 `residual-open`(无 GID 不满足 `absorbed-closed`)。`receipts.quarantine` 仅有封闭 `blocker_class={already-covered, missing-prerequisite, multi-clause-guard}` 与 `reentry_condition`,可用 `make quarantine-clear` 撤;`receipts.cover_disposition` 是 cover 未闭合时 writer 的失败回执。两者均非终态,不得挪用;文献判词的重复选题/核对缺口只在 PR/issue 正文保留必要判词,不另造终态(owner 2026-09-15)。
 - **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 2.4 条冒领。
-**每个理论 PR 的说明须写清三项(承第 5.2 条产地,不另立格式)**:①**形态**(deposit / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
+**含消化或冻结工件的理论 PR 说明须写清三项(承第 5.2 条产地,不另立格式)**:①**形态**(deposit / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。纯理论正文 PR 不要求这三项，只需明确其未进入消化链。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
 **反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 4.2 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第 1.2 条总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
 **多驱动者并行不必分配领域**:GID 代数定地址(第 4.2 条);两人重证同命题却不会使机器红,故开工前、开 PR 前各查本仓声明(第 3.1 条)。
 *成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、事件溯源之"事件是真源、读模型可重建"、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。

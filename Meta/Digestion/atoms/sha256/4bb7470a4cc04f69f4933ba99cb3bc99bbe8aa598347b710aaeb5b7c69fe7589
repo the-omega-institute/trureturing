@@ -1,0 +1,23 @@
+**定理 3.2（固定一步信息的尖锐上下界）。** 对 $d\ge2$ 及 $0\le I_0<\log2$，
+在 $\{P\in\mathcal K_d^0:I(P)=I_0\}$ 上，最小不可逆率恰为
+
+$$
+\boxed{\quad \min\sigma(P)=H(I_0).\quad}
+$$
+
+等号成立当且仅当所有 $|b(x)|$ 都等于 $\phi_+^{-1}(I_0)$。
+当 $d=2$ 时，还可求得完整的上边界：
+
+$$
+\boxed{
+\sup_{P\in\mathcal K_2^0,\ I(P)=I_0}\sigma(P)=
+\begin{cases}
+\frac12 H(2I_0),&0\le I_0<\frac12\log2,\\
++\infty,&\frac12\log2\le I_0<\log2.
+\end{cases}}
+$$
+
+第一行的上界可达；在 $I_0>0$ 时，达到上界恰好要求一奇偶类上的 $b$ 为零，
+另一奇偶类上的两个值为
+$\pm\phi_+^{-1}(2I_0)$，两类的角色可互换。
+
