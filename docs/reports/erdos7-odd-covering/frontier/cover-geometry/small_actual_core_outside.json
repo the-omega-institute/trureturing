@@ -1,0 +1,264 @@
+{
+  "scope": "Actual channel atoms pay every outside-box numerical label under one source.\n\nThe core is Report564's fixed formula with H=A=K=n. The computation uses\n240000 channel atoms, not a full CRT period or a truncation of outside labels.\nThe outside charge is the complete Euler sum minus the complete finite box.\n",
+  "heights": {
+    "2": {
+      "core_original_count": 1542,
+      "root_profile_counts": {
+        "zero": 1,
+        "base": 2,
+        "extra5": 1,
+        "missing5": 1,
+        "missing5_extra7": 0,
+        "missing7": 0
+      },
+      "coordinate_atoms": {
+        "5": {
+          "denominator": 76,
+          "channel": 24,
+          "remainder": 4
+        },
+        "7": {
+          "denominator": 246,
+          "channel": 48,
+          "remainder": 6
+        },
+        "11": {
+          "denominator": 1090,
+          "channel": 120,
+          "remainder": 10
+        },
+        "13": {
+          "denominator": 1860,
+          "channel": 168,
+          "remainder": 348
+        },
+        "17": {
+          "denominator": 4336,
+          "channel": 288,
+          "remainder": 1744
+        },
+        "19": {
+          "denominator": 6138,
+          "channel": 360,
+          "remainder": 2898
+        }
+      },
+      "conditional_actual_survivals": {
+        "zero": "1503641433/1561283845",
+        "base": "59830323265/243248023051",
+        "extra5": "192898734047/1216240115255",
+        "missing5": "483597369611/1216240115255",
+        "missing5_extra7": "410483571491/1216240115255",
+        "missing7": "388320578797/1216240115255"
+      },
+      "actual_core_survival": "489227202523/1216240115255",
+      "full_cap_sum_including_unit": "17604262710660115/4247571373461504",
+      "box_cap_sum_including_unit": "4501626129/1163866139",
+      "complete_outside_charge": "1175416094333971/4247571373461504",
+      "full_source_survival_lower": "4604483216594873/36683570952622080",
+      "target_margin": "-387354387396714301688525333195878314060206650183/8633880797472806316862486343500900212575040000000",
+      "certificate_succeeds": false,
+      "uniform_survivor_query_bound": "146475838271663607280317637253597847612675002826971/11053899431692802388242623710386058405642569409375",
+      "pure_source_Haar_mass": "1163866139/4501626129",
+      "Haar_survival_lower": "4604483216594873/141885493504634880",
+      "fresh23_29_relative_reserve": "-12007986009298143352344285329072227735866406155673/66756882842380061481935845152919725273292379962500",
+      "fresh23_29_Haar_lower": "-12007986009298143352344285329072227735866406155673/2057089323897424970372281261416313288489000704000000"
+    },
+    "3": {
+      "core_original_count": 12549,
+      "root_profile_counts": {
+        "zero": 1,
+        "base": 6,
+        "extra5": 3,
+        "missing5": 2,
+        "missing5_extra7": 1,
+        "missing7": 1
+      },
+      "coordinate_atoms": {
+        "5": {
+          "denominator": 376,
+          "channel": 124,
+          "remainder": 4
+        },
+        "7": {
+          "denominator": 1716,
+          "channel": 342,
+          "remainder": 6
+        },
+        "11": {
+          "denominator": 11980,
+          "channel": 1330,
+          "remainder": 10
+        },
+        "13": {
+          "denominator": 24168,
+          "channel": 2196,
+          "remainder": 4404
+        },
+        "17": {
+          "denominator": 73696,
+          "channel": 4912,
+          "remainder": 29488
+        },
+        "19": {
+          "denominator": 116604,
+          "channel": 6858,
+          "remainder": 54882
+        }
+      },
+      "conditional_actual_survivals": {
+        "zero": "69304791576315/71991489895696",
+        "base": "112072770222270463/483854803588972816",
+        "extra5": "275226408146820415/1935419214355891264",
+        "missing5": "187837992545411837/483854803588972816",
+        "missing5_extra7": "11353703127896431/34561057399212344",
+        "missing7": "36745267945380175/120963700897243204"
+      },
+      "actual_core_survival": "1157864475594883207/3870838428711782528",
+      "full_cap_sum_including_unit": "43376710093507078146195/10089516311638566240256",
+      "box_cap_sum_including_unit": "122405185992375/29074973362816",
+      "complete_outside_charge": "21951298206607522395/246085763698501615616",
+      "full_source_survival_lower": "23298254753076498710959/110984679428024228642816",
+      "target_margin": "264373554436483509961439013728960464355044824732849613/6686271916990414845894831799103534685064001986560000000",
+      "certificate_succeeds": true,
+      "uniform_survivor_query_bound": "4587613444404219674907609338950472086568178291980472649/461830775605551365374079390596155829697684362856203125",
+      "pure_source_Haar_mass": "29074973362816/122405185992375",
+      "Haar_survival_lower": "23298254753076498710959/467243775537397867008000",
+      "fresh23_29_relative_reserve": "264373554436483509961439013728960464355044824732849613/2789095664441369030102283378502274422487976152151187500",
+      "fresh23_29_Haar_lower": "264373554436483509961439013728960464355044824732849613/55934987508731257038770780524072661586745557408000000000"
+    },
+    "4": {
+      "core_original_count": 63132,
+      "root_profile_counts": {
+        "zero": 1,
+        "base": 18,
+        "extra5": 9,
+        "missing5": 5,
+        "missing5_extra7": 4,
+        "missing7": 4
+      },
+      "coordinate_atoms": {
+        "5": {
+          "denominator": 1876,
+          "channel": 624,
+          "remainder": 4
+        },
+        "7": {
+          "denominator": 12006,
+          "channel": 2400,
+          "remainder": 6
+        },
+        "11": {
+          "denominator": 131770,
+          "channel": 14640,
+          "remainder": 10
+        },
+        "13": {
+          "denominator": 314172,
+          "channel": 28560,
+          "remainder": 57132
+        },
+        "17": {
+          "denominator": 1252816,
+          "channel": 83520,
+          "remainder": 501136
+        },
+        "19": {
+          "denominator": 2215458,
+          "channel": 130320,
+          "remainder": 1042578
+        }
+      },
+      "conditional_actual_survivals": {
+        "zero": "3200582286734530337/3324766127277566097",
+        "base": "714669152723569096776265/3120189942700050177485493",
+        "extra5": "433977809259829176759661/3120189942700050177485493",
+        "missing5": "1206763213426922746317733/3120189942700050177485493",
+        "missing5_extra7": "1020868815747862764214933/3120189942700050177485493",
+        "missing7": "312948863568012452880755/1040063314233350059161831"
+      },
+      "actual_core_survival": "1246154443827940315061527/4738066209285261380626119",
+      "full_cap_sum_including_unit": "22533243620164974406277499164749/5176020692146259238427134627840",
+      "box_cap_sum_including_unit": "139389588683093003880625/32231742920307900548477",
+      "complete_outside_charge": "265597111106067414696299693683/9226819494695505598935326945280",
+      "full_source_survival_lower": "49706224906547377467915286608811/212216848377996628775512519741440",
+      "target_margin": "52577650068692381851340954323930914882434888218739283105671479/823580376285344550779306656742762095390240347767525916480000000",
+      "certificate_succeeds": true,
+      "uniform_survivor_query_bound": "5382035044443032390465802830288423378821070225430731947957304003/571239061999388068058914938785979065808760723684548657056334375",
+      "pure_source_Haar_mass": "32231742920307900548477/139389588683093003880625",
+      "Haar_survival_lower": "49706224906547377467915286608811/917754254871324400119362572800000",
+      "fresh23_29_relative_reserve": "473198850618231436662068588915378233941913993968653547951043311/3449835903839441665924427473452579456256829468526293850457862500",
+      "fresh23_29_Haar_lower": "52577650068692381851340954323930914882434888218739283105671479/7077364354954408085999065834828528153088423017325259360000000000"
+    }
+  },
+  "target": "19132074022251234990036997833948759259/112288364592048312861493806382908281250",
+  "channel_atom_count": 240000,
+  "passed_checks": 65,
+  "checks": {
+    "n2_q5_nonnegative_remainder": true,
+    "n2_q7_nonnegative_remainder": true,
+    "n2_q11_nonnegative_remainder": true,
+    "n2_q13_nonnegative_remainder": true,
+    "n2_q17_nonnegative_remainder": true,
+    "n2_q19_nonnegative_remainder": true,
+    "n2_literal_root_partition": true,
+    "n2_root_mass": true,
+    "n3_q5_nonnegative_remainder": true,
+    "n3_q7_nonnegative_remainder": true,
+    "n3_q11_nonnegative_remainder": true,
+    "n3_q13_nonnegative_remainder": true,
+    "n3_q17_nonnegative_remainder": true,
+    "n3_q19_nonnegative_remainder": true,
+    "n3_literal_root_partition": true,
+    "n3_root_mass": true,
+    "n4_q5_nonnegative_remainder": true,
+    "n4_q7_nonnegative_remainder": true,
+    "n4_q11_nonnegative_remainder": true,
+    "n4_q13_nonnegative_remainder": true,
+    "n4_q17_nonnegative_remainder": true,
+    "n4_q19_nonnegative_remainder": true,
+    "n4_literal_root_partition": true,
+    "n4_root_mass": true,
+    "channel_atom_count": true,
+    "n2_channel_normalization": true,
+    "n2_zero_conditional_probability": true,
+    "n2_base_conditional_probability": true,
+    "n2_extra5_conditional_probability": true,
+    "n2_missing5_conditional_probability": true,
+    "n2_missing5_extra7_conditional_probability": true,
+    "n2_missing7_conditional_probability": true,
+    "n2_finite_box_geometric_identity": true,
+    "n2_outside_charge_positive": true,
+    "n2_remaining_source_positive": true,
+    "n2_threshold_query_equivalence": true,
+    "n3_channel_normalization": true,
+    "n3_zero_conditional_probability": true,
+    "n3_base_conditional_probability": true,
+    "n3_extra5_conditional_probability": true,
+    "n3_missing5_conditional_probability": true,
+    "n3_missing5_extra7_conditional_probability": true,
+    "n3_missing7_conditional_probability": true,
+    "n3_finite_box_geometric_identity": true,
+    "n3_outside_charge_positive": true,
+    "n3_remaining_source_positive": true,
+    "n3_threshold_query_equivalence": true,
+    "n4_channel_normalization": true,
+    "n4_zero_conditional_probability": true,
+    "n4_base_conditional_probability": true,
+    "n4_extra5_conditional_probability": true,
+    "n4_missing5_conditional_probability": true,
+    "n4_missing5_extra7_conditional_probability": true,
+    "n4_missing7_conditional_probability": true,
+    "n4_finite_box_geometric_identity": true,
+    "n4_outside_charge_positive": true,
+    "n4_remaining_source_positive": true,
+    "n4_threshold_query_equivalence": true,
+    "height3_original_count": true,
+    "height3_exact_core": true,
+    "height3_exact_remaining": true,
+    "height3_certificate_succeeds": true,
+    "height3_fresh_reserve_positive": true,
+    "height2_certificate_fails": true,
+    "height4_certificate_succeeds": true
+  }
+}

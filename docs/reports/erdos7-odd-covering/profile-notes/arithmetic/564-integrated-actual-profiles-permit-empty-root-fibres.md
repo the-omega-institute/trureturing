@@ -28,6 +28,9 @@ Section8 retains one proper-support intersection and certifies every finite
 height in this counterexample family. Its height-five core also permits
 arbitrary additional P-smooth originals outside the finite exponent box,
 including previously omitted non-rooted supports, with query bound11.051678.
+Keeping the full channel intersections reduces the required core to height
+three and12549 labels, with query bound9.933538 after the entire outside-box
+charge. The low-box originals and their phases remain prescribed.
 Neither arbitrary root overlap nor unrestricted Erdős #7 is resolved. The results use ordinary
 proofs and exact rational computation; no Lean verification is claimed.
 
@@ -715,6 +718,86 @@ The large fixed low-depth core is a genuine hypothesis, not a reduction
 of an arbitrary covering family to C_5. Arbitrary low-depth phases and
 unrestricted prime support remain unresolved.
 
+### Full intersections reduce the fixed core to three layers
+
+Let C_3 be the same original construction with H=A=K=3. In the full box
+0<=v_p(d)<=3 retain exactly C_3, with its prescribed phases and no other
+originals. Outside this box permit any finite collection of additional
+distinct nonunit P-smooth labels, with arbitrary fixed phases and supports,
+including pure labels. This core has only
+
+    7*3+3*(4^6-1)+(4^4-1-4*3)=12549
+
+originals. Its exact channel intersections give the following stronger
+consumer of the same outside-box argument.
+
+For clarity the exact finite computation is specified here. The channel
+cylinders c_q(d,e) for 1<=e<=n are pairwise disjoint for all digits d!=1:
+their base-q words first leave the digit1 at position e. Channel0 is the
+pure forbidden union. Under its complement, each channel d>=2 has mass
+
+    t_q(n)=(q^n-1)/((q-2)*q^n+1).
+
+Retain digits D_q={2,...,min(q-1,10)} and one neutral category for their
+complement. The latter has mass1-|D_q|*t_q(n). All events use only these
+categories. Independent Q-coordinates give exactly240000 channel atoms;
+their integer weights are products of q^n-1 for a named digit and
+(q-2)*q^n+1-|D_q|*(q^n-1) for a neutral coordinate, with denominator
+product_q((q-2)*q^n+1).
+
+An old-L event occurs precisely when at least two late coordinates have
+digit8, at least three have digit9, or all four have digit10. On a nonzero
+root region a rooted event of size k>=2 occurs precisely when at least k
+coordinates q have digit min(k+1,q-1). The remaining rooted singletons
+forbid digit2 at each late coordinate. At5 and7 their forbidden digit sets
+are, respectively,
+
+| Root region | At5 | At7 |
+| --- | --- | --- |
+|base|{2}|{2}|
+|extra5|{2,3}|{2}|
+|missing5|empty|{2}|
+|missing5_extra7|empty|{2,3}|
+|missing7|{2}|empty|
+
+The zero region has only the old-L events. Thus checking these predicates
+on a channel atom decides every original constraint exactly; no product
+of marginal event probabilities replaces an intersection. At n=3 the
+root counts in the preceding six-region order are1,6,3,2,1,1 out of14.
+Summing the allowed atom weights and then these actual root weights gives
+
+    nu0(U_core)=1157864475594883207/3870838428711782528
+               =0.2991249820727395....                         (IP29)
+
+Keep this C_3 pure source throughout. Formula IP26 with5 replaced by3
+charges every permitted outside original once, giving
+
+    J3=21951298206607522395/246085763698501615616
+       =0.08920182084771766...,
+    nu0(U_full)>=s3=nu0(U_core)-J3
+      =23298254753076498710959/110984679428024228642816
+      =0.2099231612250219...>51*B5/310,
+    R_P(H(.|U_full))<=5+B5/s3=9.933537751764058...<565/51.       (IP30)
+
+As before, adding pure originals does not reset the source, the final
+conditional law is uniform Haar on U_full, and every query height is
+covered by IP5. Writing W3=product_p[(p-2+p^-3)/(p-1)], arbitrary additional
+distinct originals touching23 or29 with P-smooth cofactors leave Haar mass
+at least
+
+    W3*s3*[1-(6+B5/s3)*51/616]
+      =0.00472644343391005...>0.                              (IP31)
+
+No query bound after this final conditioning is asserted. The same exact
+calculation at n=4 gives source mass after the outside charge
+0.23422374465768897 and query bound9.421685949846331. At n=2 the defining
+construction still makes sense, with the shifted singleton7 branch empty;
+the charge leaves only0.12551894750218565 and gives query bound
+13.25105580856838, so this certificate fails there. This failure says
+nothing about existence of a covering or success of another estimate.
+These are specific finite cores; no claim of success for all core heights
+or arbitrary low-box layouts is inferred from the three computations.
+
 ## 9. Reproduction and remaining uniform obligation
 
 The [producer](../../frontier/cover-geometry/integrated_actual_root_profiles.py)
@@ -745,6 +828,18 @@ height claims; the sampled finite heights do not replace those proofs.
 
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/proper_support_profile_residual.py
+```
+
+The [small-core producer](../../frontier/cover-geometry/small_actual_core_outside.py)
+and [exact results](../../frontier/cover-geometry/small_actual_core_outside.json)
+reconstruct the actual root regions and all240000 channel atoms at
+heights2,3,4. All65 explicit checks pass, including the full Euler tail,
+the successful height-three query and continuation, and the failed
+height-two certificate. The unrestricted outside heights are handled by
+the geometric sum and union bound, not by finite sampling.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/small_actual_core_outside.py
 ```
 
 Section7 refutes universal success of the present IP1/IP3 certificate,
