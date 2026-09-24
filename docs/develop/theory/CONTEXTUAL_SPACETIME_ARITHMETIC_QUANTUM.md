@@ -38020,3 +38020,136 @@ $$
 第165节的精确局部代价在无持久记忆的合同内仍然成立。这里通过保留一个预测器自己的经典标签改变了可用续接关系，在同一终端风险目标下消除了该代价；没有从真实相位取得额外信息。第162节所引静态随机参数文献承担固定混合与逐步重抽的标准区别，本节的新增结论是这一校准源上的有限参数 minimax 达到性、同时局部与长期最优所需的精确记忆维数，以及相应终端保证在干预历史上的明确边界。
 
 ## 追加锚（本行以下为增补区）
+
+## 170. 终端趋同与干预历史的统一预测障碍
+
+**定义 170.1（允许中间测试的相位盲预测）。** 沿用定义161.1的源族，取 $1/\sqrt3<r<1$，每个实际 $\phi\in[-\alpha(r),\alpha(r)]$ 在全部使用中保持固定，环境记录单元逐步新鲜。记 $\mathbf M_{r,\phi}^{(N)}$ 为这一源在 $N$ 个系统端口上的过程。现在允许测试者在这些端口之间制备、测量和重置系统，保存经典结果；测试者不访问源的环境或预测器的私有记忆。
+
+过程距离直接采用[上下文几何卷定义11.16](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)的共同 tester 接口：令 $\mathfrak T_N$ 包含所有上述合法顺序测试，$p_T^{\mathbf P}$ 是过程 $\mathbf P$ 在测试 $T$ 下的有限输出律，定义
+$$
+d_{\mathfrak T_N}(\mathbf P,\mathbf Q)
+=\sup_{T\in\mathfrak T_N}
+\operatorname{TV}(p_T^{\mathbf P},p_T^{\mathbf Q}).
+\tag{170.1}
+$$
+其中 $\operatorname{TV}(p,q)=\sup_A|p(A)-q(A)|$。每个预测过程 $\mathbf P$ 可有任意有限私有记忆、相关输出和随端口变化的内部通道，并可依赖已知的 $r,N$；但其选择、初始记忆和测试前的资料均与实际 $\phi$ 无关，也不接收另一个真实源的实验结果。所有输入输出端口均与源匹配。定义
+$$
+\mathcal C_N(r)=\inf_{\mathbf P}
+\sup_{|\phi|\le\alpha(r)}
+d_{\mathfrak T_N}(\mathbf M_{r,\phi}^{(N)},\mathbf P).
+\tag{170.2}
+$$
+有限视界中，任意确定性量子梳也可纳入此预测域。tester 的标准概率解释见 Chiribella、D'Ariano、Perinotti，*Theoretical framework for quantum networks*，[arXiv:0904.4483](https://arxiv.org/pdf/0904.4483)，定义11、定理11；本节只用下面显式实现的制备与测量测试，不从抽象表示额外取得控制权限。
+
+**定理 170.2（任意预测记忆都满足的有限视界下界）。** 取整数 $1\le k\le N$，记
+$$
+m=\left\lfloor\frac Nk\right\rfloor,\qquad
+\beta=\min\{k\alpha(r),\pi/4\},\qquad
+q_k=r^k\sin\beta>0.
+\tag{170.3}
+$$
+则对每个整数 $M\ge2$，
+$$
+\boxed{
+\mathcal C_N(r)\ge
+\max\left\{0,1-\frac1M-
+\frac{(M-1)^2}{m q_k^2}\right\}.
+}
+\tag{170.4}
+$$
+该下界不限制预测器的私有记忆维数，也不要求它的输出独立。特别地，对每个固定的上述 $r$，
+$$
+\lim_{N\to\infty}\mathcal C_N(r)=1.
+\tag{170.5}
+$$
+
+证明。 令 $Y=-iE_{02}+iE_{20}$、$P_1=E_{11}$。采用以下固定测试：每段开始制备 $|+_{02}\rangle=(|0\rangle+|2\rangle)/\sqrt2$，连续使用过程 $k$ 次，段内只作恒等连接；段末测量二值可观测量 $Y+P_1$，保存结果，再重新制备下一段的输入。$Y+P_1$ 的谱为 $\{-1,1\}$，所以即使预测器输出泄漏到第三个标签，测量仍完整合法。制备与重置是 CPTP 通道，测量的两个谱投影给归一化仪器；有限次复合及经典记录保存因此构成实际可实现的共同 tester。共作 $m$ 段，剩余不足 $k$ 次使用可忽略其输出，不修改已保存的记录。
+
+对实际源，输入和输出始终支撑于 $02$ 子空间，每段的相干系数为 $r^ke^{ik\phi}$。段末结果 $Y_j\in\{-1,1\}$ 的均值为
+$$
+\mu(\phi)=-r^k\sin(k\phi).
+\tag{170.6}
+$$
+在固定实际 $\phi$ 后，环境逐步新鲜，段首系统又被重新制备，所以这 $m$ 个结果独立同分布。相位没有在段间重新抽取。将合法相位限制到 $[-\beta/k,\beta/k]$，均值连续且单调地扫过 $[-q_k,q_k]$。
+
+在该均值区间取 $M$ 个等距点
+$$
+\mu_j=-q_k+\frac{2q_k(j-1)}{M-1},\qquad
+\phi_j=-\frac1k\arcsin\frac{\mu_j}{r^k},\qquad
+1\le j\le M.
+\tag{170.7}
+$$
+因为 $\beta\le\pi/4$，有 $|\phi_j|\le\beta/k\le\alpha(r)$，故它们都是同一源合同中的实际允许相位。记 $\overline Y_m=m^{-1}\sum_{i=1}^mY_i$，并定义历史事件
+$$
+A_j=\left\{
+|\overline Y_m-\mu_j|<\frac{q_k}{M-1}
+\right\}.
+\tag{170.8}
+$$
+这些开区间只可能在未包含的端点相接，故事件两两不交。
+
+任取一个预测过程 $\mathbf P$。上述共同测试固定后，它产生某个历史律 $Q$；该律可以相关，但因测试及预测器均不知道实际相位，它对所有 $\phi_j$ 是同一个 $Q$。于是 $\sum_jQ(A_j)\le1$，至少存在一个 $j$ 使 $Q(A_j)\le1/M$。在实际源 $\phi_j$ 下，样本均值的方差至多为 $1/m$，故由 Chebyshev 不等式，
+$$
+\Pr_{\phi_j}(A_j)
+\ge1-\frac{(M-1)^2}{m q_k^2}.
+\tag{170.9}
+$$
+将该事件的概率差代入总变差距离定义，再对实际相位取上确界，得到（170.4）。$j$ 的选择可依赖候选预测律，但测试本身并未依赖实际相位；这恰是先选预测器、再取最坏实际来源的量词。最后对全部预测器取下确界不会改变这个统一下界。
+
+对固定 $r$ 取 $k=1$，则 $q_1>0$ 不依赖 $N$。再取例如 $M_N=\max\{2,\lfloor(Nq_1^2)^{1/3}\rfloor\}$，（170.4）的两个损失项都趋于零。过程距离至多为一，因此得到（170.5）。这里的样本集中与互斥事件计数是标准概率工具；它们作用于同一个实际相位产生的共同历史，而非分别选择不可联合实现的最优读数。证毕。
+
+**定理 170.3（弱记录下同一使用预算的相反结论）。** 令 $r\uparrow1$、$\varepsilon=1-r$，并取任意整数视界函数 $N(r)$，满足
+$$
+\varepsilon N(r)\longrightarrow\infty.
+\tag{170.10}
+$$
+则即使预测过程及其记忆维数都随 $r,N(r)$ 改变，仍有
+$$
+\boxed{\mathcal C_{N(r)}(r)\longrightarrow1.}
+\tag{170.11}
+$$
+另一方面，对定理169.2的同一个比特预测器，在相同使用次数下却有
+$$
+\boxed{
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N(r)},
+\mathcal P_{r,N(r)}^{\rm bit})\longrightarrow0.
+}
+\tag{170.12}
+$$
+因此这个比特预测器的终端误差趋零，而其包含允许干预与历史的最坏过程距离趋于一。
+
+证明。 取固定
+$$
+t_0=\frac\pi{6\sqrt3},\qquad
+k_r=\left\lfloor\frac{t_0}{\varepsilon}\right\rfloor.
+\tag{170.13}
+$$
+充分接近一时 $k_r\ge1$，且由定理161.6，
+$$
+\varepsilon k_r\to t_0,\qquad
+k_r\alpha(r)\to\pi/6<\pi/4,\qquad
+q_{k_r}=r^{k_r}\sin(k_r\alpha(r))
+\longrightarrow\frac12e^{-t_0}>0.
+\tag{170.14}
+$$
+式（170.10）还给出 $k_r\le N(r)$ 及
+$$
+m_r=\left\lfloor\frac{N(r)}{k_r}\right\rfloor\longrightarrow\infty.
+\tag{170.15}
+$$
+在（170.4）中取 $k=k_r$ 和 $M_r=\max\{2,\lfloor(m_rq_{k_r}^2)^{1/3}\rfloor\}$，即可使下界趋于一。它对所有预测过程统一成立，因此不需要交换预测器下确界和参数极限，直接得到（170.11）。
+
+对终端读数，式（169.7）的 $m(x)\le2$ 给出
+$$
+\sup_{|\phi|\le\alpha(r)}
+d_{\rm ref}(\mathcal M_{r,\phi}^{N(r)},
+\mathcal P_{r,N(r)}^{\rm bit})
+\le r^{N(r)}\le e^{-\varepsilon N(r)}\longrightarrow0.
+\tag{170.16}
+$$
+该界包含任意有限惰性参考系统。比特预测器的过程也是（170.2）中允许的候选之一，所以其干预距离至少为 $\mathcal C_{N(r)}(r)$、至多为一，得到最后的陈述。终端接线与保存分段测量历史的接线使用相同次数的源；新增资源是声明允许的制备、测量和记录，不是源相位信息。证毕。
+
+式（170.14）中，一段内部的相干合成先把未知相位转成非消失的可测均值，再由多段历史提供多个相互排斥的来源证据。若每次使用后立刻重置，实际单次均值幅度仅为 $r\sin\alpha(r)\sim\sqrt3\varepsilon$，同一集中估计需要 $N\varepsilon^2\to\infty$；分段构造把充分条件改为（170.10），但不声称已求出所有测试的最优有限样本速率。结论依赖本节的允许控制和最坏完整历史损失，不否定从实际数据学习相位的任务，也不把经典样本的可识别性当成量子性的普遍判据。
+
+## 追加锚（本行以下为增补区）
