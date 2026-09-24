@@ -71,9 +71,13 @@ noncomputable def fiberEquiv (i k : Fin n) (g : H) :
   (Fintype.equivFinOfCardEq (fiber_card U V i k g)).symm
 
 noncomputable def split (a : Edge (U * V)) : Edge U × Edge V :=
-  let p := fiberEquiv U V a.source a.target a.label a.number
-  (⟨a.source, p.1, p.2.1, p.2.2.1⟩,
-   ⟨p.1, a.target, p.2.1⁻¹ * a.label, p.2.2.2⟩)
+  let totalFiberEquiv :
+      (Σ g : H, Fin (((U * V) a.source a.target).coeff g)) ≃
+        (Σ g : H, Fiber U V a.source a.target g) :=
+    Equiv.sigmaCongrRight fun g => fiberEquiv U V a.source a.target g
+  let p := totalFiberEquiv ⟨a.label, a.number⟩
+  (⟨a.source, p.2.1, p.2.2.1, p.2.2.2.1⟩,
+   ⟨p.2.1, a.target, p.2.2.1⁻¹ * p.1, p.2.2.2.2⟩)
 
 @[simp] theorem split_source (a : Edge (U * V)) :
     (split U V a).1.source = a.source := rfl
@@ -90,28 +94,31 @@ noncomputable def split (a : Edge (U * V)) : Edge U × Edge V :=
 
 noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     Edge (U * V) :=
-  ⟨a.source, b.target, a.label * b.label,
-    (fiberEquiv U V a.source b.target (a.label * b.label)).symm
-      ⟨a.target, a.label, a.number, by simpa using h.symm ▸ b.number⟩⟩
+  let totalFiberEquiv :
+      (Σ g : H, Fin (((U * V) a.source b.target).coeff g)) ≃
+        (Σ g : H, Fiber U V a.source b.target g) :=
+    Equiv.sigmaCongrRight fun g => fiberEquiv U V a.source b.target g
+  let p := totalFiberEquiv.symm
+    ⟨a.label * b.label,
+      a.target, a.label, a.number, by simpa using h.symm ▸ b.number⟩
+  ⟨a.source, b.target, p.1, p.2⟩
 
 @[simp] theorem split_join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
     split U V (join U V a b h) = (a, b) := by
   rcases a with ⟨i, j, g, a⟩
   rcases b with ⟨j', k, h', b⟩
   cases h
-  let p : Fiber U V i k (g * h') :=
-    ⟨j, g, a, by simpa using b⟩
-  let rebuild : Fiber U V i k (g * h') → Edge U × Edge V := fun q =>
-    (⟨i, q.1, q.2.1, q.2.2.1⟩,
-     ⟨q.1, k, q.2.1⁻¹ * (g * h'), q.2.2.2⟩)
+  let totalFiberEquiv :
+      (Σ h : H, Fin (((U * V) i k).coeff h)) ≃ (Σ h : H, Fiber U V i k h) :=
+    Equiv.sigmaCongrRight fun h => fiberEquiv U V i k h
+  let p : Σ h : H, Fiber U V i k h :=
+    ⟨g * h', j, g, a, by simpa using b⟩
+  let rebuild : (Σ h : H, Fiber U V i k h) → Edge U × Edge V := fun q =>
+    (⟨i, q.2.1, q.2.2.1, q.2.2.2.1⟩,
+     ⟨q.2.1, k, q.2.2.1⁻¹ * q.1, q.2.2.2.2⟩)
   have hinv := congrArg rebuild
-    ((fiberEquiv U V i k (g * h')).apply_symm_apply p)
-  change rebuild
-      (fiberEquiv U V i k (g * h')
-        ((fiberEquiv U V i k (g * h')).symm p)) =
-    (⟨i, j, g, a⟩, ⟨j, k, h', b⟩)
-  rw [Equiv.apply_symm_apply]
-  simpa [rebuild, p] using hinv
+    (totalFiberEquiv.apply_symm_apply p)
+  simpa [join, split, totalFiberEquiv, rebuild, p] using hinv
 
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
@@ -124,8 +131,7 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
-  simp [rebuild, totalFiberEquiv] at hinv
-  simpa [join, split] using hinv.2
+  simpa [rebuild, totalFiberEquiv, join, split] using hinv
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
