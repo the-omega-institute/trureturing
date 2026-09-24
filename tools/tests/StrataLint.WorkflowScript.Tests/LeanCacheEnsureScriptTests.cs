@@ -1,7 +1,7 @@
 using System.Text;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.WorkflowScript.Tests;
 
 [Collection("Lean cache environment")]
 public sealed class LeanCacheEnsureScriptTests
