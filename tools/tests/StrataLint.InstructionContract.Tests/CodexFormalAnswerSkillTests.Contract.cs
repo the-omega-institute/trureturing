@@ -59,7 +59,7 @@ public sealed partial class CodexFormalAnswerSkillTests
             Apply the first matching mode:
 
             1. `plain`: answer in ordinary prose.
-            2. `show-work`: append the run `record` on request.
+            2. `show-work`: append the run `trace` on request.
             3. `in-repository`: model in `D5/`, judge with `make lean`, and retain successful exact specializations as `tracked-S`.
             """);
 
