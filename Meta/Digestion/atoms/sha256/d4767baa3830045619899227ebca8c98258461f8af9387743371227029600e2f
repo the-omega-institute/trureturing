@@ -1,0 +1,34 @@
+**命题 3.3（独立步骤与共同副本时钟）。** 对同一个生成元，两段增量 $t\sim\nu$、$s\sim\eta$ 若相互独立并独立于输入，Fubini 定理和 $U_tU_s=U_{t+s}$ 给
+
+$$
+\mathcal C_\nu^H\circ\mathcal C_\eta^H=\mathcal C_{\nu*\eta}^H,
+\qquad
+\widehat{\nu*\eta}(\omega)=\widehat\nu(\omega)\widehat\eta(\omega).
+\tag{TM.262}
+$$
+
+相关增量须把实际联合律沿 $(t,s)\mapsto t+s$ 推前，不能改成边缘卷积。若增量由已有测量结果自适应选择，须保留 instrument 的条件结构，不能默认存在与输入无关的卷积。生成元不对易时，$e^{-itH}e^{-isK}$ 也一般不由 $t+s$ 决定。两个独立均匀窗口的和具有卷积分布，不是更宽的均匀窗口。
+
+副本之间共同时间是另一层关系。对 $n\ge1$，定义
+
+$$
+H^{(n)}=\sum_{j=1}^n
+ I^{\otimes(j-1)}\otimes H\otimes I^{\otimes(n-j)},
+\qquad
+\mathcal C_\nu^{H^{(n)}}(\rho^{\otimes n})
+=\int(U_t\rho U_t^\dagger)^{\otimes n}\,d\nu(t).
+\tag{TM.263}
+$$
+
+右侧是 $n$ 份同源新准备条件于共同时间独立，再对这个时间平均。若每份副本各抽独立时间，输出才是 $(\mathcal C_\nu^H(\rho))^{\otimes n}$。前者保留总能量相同的跨副本关系，后者分别平均。总生成元通道也可作用于一般联合输入，但那超出 $\rho^{\otimes n}$ 的来源限制。
+
+同一批 $n$ 份若经历 $k$ 段彼此独立、各段在副本间共同的时间增量，则
+
+$$
+(\mathcal C_\nu^{H^{(n)}})^k
+=\mathcal C_{\nu^{*k}}^{H^{(n)}}.
+\tag{TM.264}
+$$
+
+$n$ 计来源份数，$k$ 计顺序随机步骤。未知态没有被免费复制，短算术描述也未代替实际步骤。副本同步时，共同等待不必乘以 $n$；制备、存储、控制及等待仍须分别计量。
+

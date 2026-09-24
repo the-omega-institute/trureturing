@@ -1,0 +1,42 @@
+**反例 3.24（相同等待成本与不同分辨率）。** 三原子律的平均等待为
+$$
+\mu=p_1\tau_1+p_2\tau_2>0.
+\tag{TM.445}
+$$
+以相同均值定义另一份实际实验律
+$d\eta_\mu(t)=1_{\{t\ge0\}}\mu^{-1}e^{-t/\mu}\,dt$。
+直接积分给
+$$
+\widehat\eta_\mu(\Delta)=\frac1{1+i\mu\Delta},
+\qquad
+|\widehat\eta_\mu(\Delta)|=(1+\mu^2\Delta^2)^{-1/2}.
+\tag{TM.446}
+$$
+对两能级 $H_\Delta$，式（TM.435）的相同证明给
+$$
+d_\diamond\!\left(
+(\mathcal C_{\eta_\mu}^{H_\Delta})^k,\mathcal P_{H_\Delta}
+\right)
+=\frac12(1+\mu^2\Delta^2)^{-k/2}.
+\tag{TM.447}
+$$
+因此任意 $g>0$、整数 $k\ge1$ 都有精确比较
+$$
+\begin{aligned}
+\sup_{\Delta\ge g}
+d_\diamond\!\left(
+(\mathcal C_\nu^{H_\Delta})^k,\mathcal P_{H_\Delta}\right)
+&=\frac12,\\
+\sup_{\Delta\ge g}
+d_\diamond\!\left(
+(\mathcal C_{\eta_\mu}^{H_\Delta})^k,\mathcal P_{H_\Delta}\right)
+&=\frac12(1+\mu^2g^2)^{-k/2}.
+\end{aligned}
+\tag{TM.448}
+$$
+第一行仍取无理时刻比的三原子律；第二行不需要能隙上界。两份协议均跨步骤独立，均执行 $k$ 步，均有平均总等待 $k\mu$。差异来自完整时钟分布的 Fourier 模式：有限原子律有高频近回返，指数律的模随 $|\Delta|$ 增大而下降。相同步数与均值不意味着相同支持、尾部、方差或相位分辨率；该比较不证明指数律在任何更大实验类中最优。
+
+这些通道均指随机时间记录被丢弃之后的系统输出，diamond 比较允许任意输入、外部参考及终端测试。若实验保留实际抽样时间，应改为比较含该记录的联合输出；在允许相应控制时，已知时间还可能用于逆演化，不能把丢弃记录后的去相位当作联合信息已经消灭。若只允许与生成元对易的终端效果，两份输出与输入对这些效果都有相同读数，此 diamond 差异不自动成为该受限语言的信号。
+
+把 $\nu$ 换成 $\eta_\mu$ 改变了随机实验律，并非只换时钟坐标。均值相同只结算一个成本坐标，未认证两种时钟制备、维持或访问具有相同总成本。
+

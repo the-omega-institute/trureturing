@@ -1,0 +1,26 @@
+**定义 2.8（固定共同来源与关系矩）。** 固定 $d\ge1$，令 $\mathcal D_d$ 为 $d$ 维密度态的紧集，$G\le U(d)$ 是一个固定的紧矩阵子群，$\lambda_G$ 为归一化 Haar 概率测度。这里固定的是实际矩阵作用；若从抽象紧群及其连续酉表示开始，就以该表示的紧像作为 $G$。对 $n\ge1$ 定义共享群参数的关系矩
+$$
+P_n(\rho)=\int_G(U\rho U^\dagger)^{\otimes n}\,d\lambda_G(U),
+\qquad \rho\in\mathcal D_d.
+\tag{TM.135}
+$$
+
+这是作用在 $\mathcal H^{\otimes n}$ 上的密度矩阵。全部 $n$ 份使用同一个 $U$；这与每份分别随机选择 $U_j$ 的实验不同。数学上的群平均也不要求假定世界真的随机抽取 Haar 参数：如果允许的效果对共同群作用不变，它在每个固定未知 $U$ 下的概率本来就一样，平均只是一份给出相同概率的规范代表。
+
+与能量约束相连时，固定 $H=H^\dagger$，取
+$$
+G=\overline{\{e^{-itH}:t\in\mathbb R\}}\le U(d),\qquad
+H^{(n)}=\sum_{j=1}^n I^{\otimes(j-1)}\otimes H\otimes I^{\otimes(n-j)},\qquad
+(e^{-itH})^{\otimes n}=e^{-itH^{(n)}}.
+\tag{TM.136}
+$$
+
+闭包在有限维矩阵拓扑中取；酉群紧，因此 $G$ 紧。若 $\Pi_E^{(n)}$ 是 $H^{(n)}$ 的完整总能量投影，则
+$$
+\boxed{
+P_n(\rho)=P_{H^{(n)}}(\rho^{\otimes n})
+=\sum_E\Pi_E^{(n)}\rho^{\otimes n}\Pi_E^{(n)}.
+}
+\tag{TM.137}
+$$
+

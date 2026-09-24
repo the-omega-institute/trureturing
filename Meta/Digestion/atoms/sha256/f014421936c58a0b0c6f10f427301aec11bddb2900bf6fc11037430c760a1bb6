@@ -1,0 +1,28 @@
+**定理 2.1（动态充分边界判据）。** 对每个允许操作 \(a\)，下列条件等价于在 \(B\) 上存在相应的合法性、读数和后继
+\[
+\bar D_a,\qquad \bar O_a,\qquad \bar T_a
+\]
+使
+\[
+\begin{aligned}
+s\in\mathsf D(a)&\Longleftrightarrow \eta(s)\in\bar D_a,\\
+\mathsf O_a(s)&=\bar O_a(\eta(s)),\\
+\eta(\mathsf T_a(s))&=\bar T_a(\eta(s))
+\end{aligned}
+\tag{2.1}
+\]
+对每个 \(s\in\mathsf D(a)\) 成立。
+
+等价条件是：只要 \(\eta(s)=\eta(t)\)，则 \(s,t\) 对 \(a\) 同时合法或同时非法；合法时输出相同；且后继边界相同。
+
+**证明。** 若 \(\bar D_a,\bar O_a,\bar T_a\) 存在，三项条件直接由式（2.1）得到。反过来，在每个非空边界纤维上任选代表 \(s\)，定义 \(\bar D_a\) 为该纤维共同的合法性，定义 \(\bar O_a(\eta(s))=\mathsf O_a(s)\)，定义 \(\bar T_a(\eta(s))=\eta(\mathsf T_a(s))\)。纤维内的同合法性、同读数和同后继条件保证这些定义与代表选择无关。$\square$
+
+如果策略也要在边界上运行，还必须加入
+\[
+\pi(s)=\bar\pi(\eta(s)).
+\tag{2.2}
+\]
+否则同一边界可能要求两个不同的下一动作，边界虽能预测被动读数，却不能成为内部观察者的闭环状态。
+
+这一定理是 InterfaceKernelCriterion.interface_refinement_iff_kernel_inclusion 与 PredictionCompletionUniversality.prediction_completion_universality 的过程化读法：先证明纤维上的未来响应恒定，再得到唯一的有效像因子。它并不把任意当前后验自动变成动态充分状态。
+

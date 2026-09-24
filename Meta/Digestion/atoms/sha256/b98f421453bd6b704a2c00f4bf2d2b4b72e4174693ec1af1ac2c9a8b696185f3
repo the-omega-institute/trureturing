@@ -1,0 +1,35 @@
+**命题 1.9（精确纤维投影）。** 对任意合法目标相干参数 $d$，差矩阵为
+$$
+R(p,c)-R(p_0,d)=
+\begin{pmatrix}p-p_0&c-d\\\overline c-\overline d&-(p-p_0)\end{pmatrix},\qquad
+\operatorname{spec}\bigl(R(p,c)-R(p_0,d)\bigr)
+=\left\{\pm\sqrt{(p-p_0)^2+|c-d|^2}\right\}.
+\tag{TM.86}
+$$
+
+这是由迹为零和特征多项式 $\lambda^2-(p-p_0)^2-|c-d|^2$ 直接得到的。Hermitian 矩阵的迹范数等于本征值绝对值之和，故半迹距离就是式(TM.86)根号中的数。第一项与 $d$ 无关，最小化因此化为复平面中到闭圆盘 $|d|\le r_0$ 的欧氏投影。
+
+若 $|c|\le r_0$，唯一最近点是 $d=c$。若 $|c|>r_0$，反三角不等式给 $|c-d|\ge|c|-r_0$，同相位的圆周点达到下界；等号要求 $|d|=r_0$ 且与 $c$ 同向，所以仍唯一。于是
+$$
+d_*(p,c;p_0)=
+\begin{cases}
+c,&|c|\le r_0,\\
+r_0c/|c|,&|c|>r_0,
+\end{cases}
+\qquad
+R_*=R(p_0,d_*).
+\tag{TM.87}
+$$
+
+第二分支自动具有 $c\ne0$，包含 $r_0=0$ 时的唯一值 $d_*=0$，没有除零问题。完整精确距离为
+$$
+\boxed{
+\operatorname{dist}_D(R(p,c),F_{p_0})
+=\min_{\sigma\in F_{p_0}}D(R(p,c),\sigma)
+=\sqrt{(p-p_0)^2+(|c|-r_0)_+^2}.
+}
+\tag{TM.88}
+$$
+
+因此，相干仍落在目标圆盘内时，只需改变占据概率；相干超过目标允许半径时，还必须同时缩小其模长。这两份改变量在半迹距离的平方中相加。
+

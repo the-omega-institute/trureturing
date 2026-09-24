@@ -1,0 +1,16 @@
+**命题 2.7（有限菜单的值下降）。** 动态摘要还能支持决策，但需匹配已有定理的量词。固定有限非空动作集合 $\mathcal A$，微观态空间为密度态，摘要 $q=P_H$ 取值于其实际像；动作以声明的守能酉作确定更新 $T_a(\rho)=U_a\rho U_a^\dagger$。由式(TM.113)，存在 $\overline T_a(q)=U_aqU_a^\dagger$，并有 $qT_a=\overline T_aq$。另须分别给出阶段报酬与终端报酬的因子分解
+$$
+r(\rho,a)=\overline r(q(\rho),a),\qquad
+ g(\rho)=\overline g(q(\rho)),\qquad
+V_0=g,\quad
+V_{n+1}(\rho)=\max_{a\in\mathcal A}
+\{r(\rho,a)+V_n(T_a\rho)\}.
+\tag{TM.133}
+$$
+
+宏观值 $\overline V_n$ 以相同递推、$\overline r,\overline g,\overline T_a$ 定义。于是
+$$
+V_n(\rho)=\overline V_n(q(\rho))\qquad\forall n\in\mathbb N,\ \forall\rho.
+\tag{TM.134}
+$$
+
