@@ -296,3 +296,225 @@ R^h(E)=\alpha_h k_E.
 本卷的最小研究判据是：对指定任务，边界必须同时保留合法性、读数、后继、策略和共同来源；若任一项不能在边界纤维上因子化，就只能把该表示标为近似或未闭合。它把空间、时间、边界和记忆统一为同一关系载体的不同表达，同时保留各自的成本、量词和恢复障碍。
 
 ## 9.99 追加锚
+
+## 10. 四种表达的同一商与互相恢复
+
+本节把连接、路径、边界和记忆放在同一个恢复判据中。恢复始终相对于同一实际来源和同一未来实验族；它不声称恢复未声明的内部细节。
+
+### 10.1 表达的共同任务商
+
+**定义 10.1（表达族）。** 设 \(S\) 是共同来源的实际配置像，\(\mathcal T\) 是对前后合法接续封闭的未来实验族。令
+
+$$
+s\sim_{\mathcal T}t
+\quad\Longleftrightarrow\quad
+\forall E\in\mathcal T,
+\operatorname{Obs}(E[s])=\operatorname{Obs}(E[t]).
+$$
+
+记 \(K=S/{\sim_{\mathcal T}}\)、\(\kappa:S\to K\)。连接、路径、边界和记忆是同一 \(S\) 上的四个表示
+
+$$
+j:S\to J,\qquad p:S\to P,\qquad b:S\to B,\qquad m:S\to M.
+$$
+
+值域只取实际像 \(j(S),p(S),b(S),m(S)\)，不能把各部分分别可实现的值任意组成笛卡尔积。路径若携带累积钟读数，必须把 \((p,\tau)\) 作为联合表示。
+
+称 \(e:S\to E\) 对 \(\mathcal T\) 充分，如果
+
+$$
+e(s)=e(t)\Longrightarrow\kappa(s)=\kappa(t),
+\tag{10.1}
+$$
+
+称它无冗余，如果
+
+$$
+\kappa(s)=\kappa(t)\Longrightarrow e(s)=e(t).
+\tag{10.2}
+$$
+
+因此精确、无冗余的表达满足 \(\ker e=\ker\kappa\)。
+
+**命题 10.2（商因子化）。** 表达 \(e\) 充分，当且仅当存在唯一
+
+$$
+\widehat\kappa_e:e(S)\to K,\qquad
+\kappa=\widehat\kappa_e\circ e.
+\tag{10.3}
+$$
+
+它同时无冗余，当且仅当 \(\widehat\kappa_e\) 是双射；逆映射就是从任务商恢复该表达的唯一方式。
+
+**证明。** 在每个 \(e\)-纤维上取代表定义因子，充分性保证与代表无关。无冗余使因子单射，实际像定义使其满射。反向直接由双射的纤维得到两项包含。证毕。
+
+因此，空间、时间、边界和记忆互相恢复，要求四者在同一任务商上诱导双射，而不是仅仅拥有不同的图形或坐标记号。
+
+### 10.2 动力学与策略的恢复
+
+对每个操作 \(a\)，表达 \(e\) 还必须有合法域、输出和后继 \(D_a^e,O_a^e,T_a^e\)，满足
+
+$$
+s\in D_a\Longleftrightarrow e(s)\in D_a^e,\qquad
+O_a(s)=O_a^e(e(s)),\qquad
+e(T_a(s))=T_a^e(e(s)).
+\tag{10.4}
+$$
+
+若表达驱动内部策略，还须满足 \(\pi(s)=\pi^e(e(s))\)。
+
+**定理 10.3（动态互相恢复判据）。** 若 \(e_i,e_j\) 满足 \(\ker e_i=\ker\kappa=\ker e_j\) 及式（10.4），并且策略也因子化，则存在唯一双射
+
+$$
+R_{ij}:e_i(S)\to e_j(S),\qquad R_{ij}\circ e_i=e_j,
+\tag{10.5}
+$$
+
+且
+
+$$
+R_{ij}(D_a^{e_i})=D_a^{e_j},\quad
+O_a^{e_j}\circ R_{ij}=O_a^{e_i},\quad
+R_{ij}\circ T_a^{e_i}=T_a^{e_j}\circ R_{ij}.
+\tag{10.6}
+$$
+
+此外 \(R_{ji}=R_{ij}^{-1}\)，且 \(R_{ik}=R_{jk}\circ R_{ij}\)。
+
+**证明。** 由命题 10.2 取 \(R_{ij}=\widehat\kappa_{e_j}^{-1}\circ\widehat\kappa_{e_i}\)。代入式（10.4）即得所有交换式；唯一性给出逆映射和三角恒等式。证毕。
+
+若端点状态有正费用自环 \(q(T_\ell s)=q(s)\)、\(c(s,\ell)=1\)，则端点表达恒定而路径钟 \(\tau(\ell^n)=n\)。时间不能从端点状态恢复；必须把路径记录、费用标签或钟字段纳入表达，并保留 \(\tau(uv)=\tau(u)+\tau(v)\)。
+
+### 10.3 共同来源与图册相容
+
+在重叠表达上，恢复映射还必须来自同一来源：
+
+$$
+R_{ij}(e_i(\omega))=e_j(\omega),\qquad
+R_{jk}\circ R_{ij}=R_{ik}.
+\tag{10.7}
+$$
+
+若闭路运输 \(H_\gamma\ne\operatorname{id}\)，这些表示只能组成带 holonomy 的图册，不能压成无路径依赖的全局坐标。若所有闭路恒等、任务商分离且实际来源满足存在条件，才可粘成全局商表示。
+
+**反例 10.4（边缘满不等于共同实现）。** 令
+
+$$
+\Omega=\{(x,y,z)\in\{0,1\}^3:x+y+z=0\pmod 2\}.
+$$
+
+任意两个坐标投影都满，但 \((1,1,1)\notin\Omega\)。二坐标表达可各自合法，不能因此把它们的边缘值任意拼成三坐标记忆。共同来源条件正是截住边界外仍影响联合实现的关系。
+
+### 10.4 完成塔上的动态提升
+
+设边界塔 \(B_0\xleftarrow{r_0^1}B_1\xleftarrow{r_1^2}B_2\leftarrow\cdots\)，层更新为 \(u_n:B_n\to B_n\)，并满足
+
+$$
+r_n^{n+1}\circ u_{n+1}=u_n\circ r_n^{n+1}.
+\tag{10.8}
+$$
+
+对相容线程 \(t=(b_n)_n\) 定义 \((U_\infty t)_n=u_n(b_n)\)。式（10.8）保证它仍是相容线程。令 \(\iota:S\to\varprojlim B_n\) 为完整配置的线程读出。
+
+**定理 10.5（动态完成提升判据）。** 存在 \(U:S\to S\) 使
+
+$$
+\iota\circ U=U_\infty\circ\iota
+\tag{10.9}
+$$
+
+当且仅当
+
+$$
+U_\infty(\operatorname{ran}\iota)\subseteq\operatorname{ran}\iota.
+\tag{10.10}
+$$
+
+若 \(\iota\) 分离配置，则 \(U\) 唯一；若 \(\iota\) 还是满射，则任意满足式（10.8）的层更新都有唯一全局提升，并且 \(\iota\) 给出共轭。
+
+**证明。** 式（10.9）直接推出式（10.10）。反向对每个 \(s\) 选择其像的实际原像即可；分离性给唯一性，满射使像闭合自动成立。证毕。
+
+这把边界运输回落为记忆更新分成三个独立条件：层间交换、实际像闭合和来源分离。InverseLimitCompletion.stateThread_bijective_iff_complete_and_separates 只在声明的完备与分离假设下供应静态双射；StableObservationInverseLimit.stable_observation_inverse_limit_laws 供应限制相容律，不能替代式（10.10）。
+
+**反例 10.6（逐层合法而无全局提升）。** 取 \(B_n=\operatorname{Fin}(n+1)\)，限制为截断，令候选线程第 \(n\) 层值为 \(n\)，并令 \(u_n\) 把所有输入送到该层顶点。各 \(u_n\) 满足式（10.8），但该线程不在给定实际来源的线程像中；因此式（10.10）失败，不存在满足式（10.9）的全局记忆更新。局部交换不保证来源闭合。
+
+因此，逆极限是表达的完成空间，不是免费的全局观察者。若空间、时间、边界和记忆都要在无限细化下互相恢复，必须同时验证式（10.7）和式（10.10）；有限层局部等式不足以推出全局恢复。
+
+## 10.99 追加锚
+
+## 11. 自适应预测档案与联合信念边界
+
+完成塔处理的是分辨率方向的动态恢复；概率观察还需要说明当前档案究竟保留了哪些关于隐藏来源的联合关系。本节限定在 posterior-adaptive 子合同：控制器只能按当前 belief 选实验。完整观察者若还使用控制、参考、权限或旧档案，必须把这些分量并入边界并另证它们的纤维常值。
+
+设 \(H\) 是历史集合，\(\beta:H\to\mathcal B\) 是历史的后验 belief。令 \(\Phi(h)\) 是从 \(h\) 出发、对所有有限 horizon、所有 belief-adaptive policy 和所有输出 transcript 的未来输出律族。
+
+**命题 11.1（自适应档案的前向充分性）。** 在 Bayes 条件律、分支更新和实验核均来自同一共同来源的前提下，
+
+$$
+\beta(h)=\beta(h')\Longrightarrow\Phi(h)=\Phi(h').
+\tag{11.1}
+$$
+
+这表示 posterior 是该子合同的一个动态边界；它不表示任意读取档案的策略都能从 posterior 恢复。
+
+为得到反向结论，定义一步预测映射 \(L_e:\mathcal B\to\mathsf{Dist}(Y_e)\)。假设实验族满足可检验的 separating 条件
+
+$$
+\left[
+\forall e,\forall o,\quad
+L_e(o\mid b)=L_e(o\mid b')
+\right]\Longrightarrow b=b'.
+\tag{11.2}
+$$
+
+**定理 11.2（自适应 profile 的反向恢复）。** 在命题 11.1 的前提和式（11.2）下，
+
+$$
+\Phi(h)=\Phi(h')
+\quad\Longleftrightarrow\quad
+\beta(h)=\beta(h').
+\tag{11.3}
+$$
+
+**证明。** 只取 horizon 一、固定实验 \(e\) 的常策略，以及单一输出 transcript \([o]\)，式（11.3）的左侧给出 \(L_e(o\mid\beta(h))=L_e(o\mid\beta(h'))\)。对全部 \(e,o\) 应用式（11.2）得到后验相等；正向是命题 11.1。证毕。
+
+一步 separating 是容易检查的充分证书；一般的最弱条件是完整 profile 本身分离，即直接要求 \(\ker\Phi=\ker\beta\)。一步混合不分离时，多步自适应实验仍可能分离，不能把式（11.2）冒充必要条件。
+
+### 11.1 分支更新的交换
+
+对合法实验 \(e\) 和输出 \(o\)，写 \(h^+=\operatorname{extend}(h,e,o)\)。若共同来源的 Bayes 条件律给出
+
+$$
+\beta(h^+)=U_{e,o}(\beta(h)),
+\tag{11.4}
+$$
+
+且零概率分支被排除或采用明示的 totalized update，则 profile 等价类上的分支更新
+
+$$
+\overline U_{e,o}([h]_\Phi)=[\operatorname{extend}(h,e,o)]_\Phi
+\tag{11.5}
+$$
+
+是良定义的，并满足
+
+$$
+\overline\beta\circ\overline U_{e,o}
+=U_{e,o}\circ\overline\beta,
+\tag{11.6}
+$$
+
+其中 \(\overline\beta([h]_\Phi)=\beta(h)\)。定理 11.2 使 \(\overline\beta\) 在 realized belief image 上成为双射，所以式（11.6）把 profile 边界和 belief 边界动态互相恢复。
+
+证明只需取 \(\Phi(h)=\Phi(h')\)，由式（11.3）得 \(\beta(h)=\beta(h')\)，再用式（11.4）得到两个扩展历史的后验相等，最后再次使用式（11.3）。正概率条件不能省略：零概率输出没有条件律，不能由分母为零的形式表达冒充可执行分支。
+
+若内部观察者还保留 \((C,\kappa,\rho,P)\)，总边界应写成
+
+$$
+B(h)=\bigl(\beta(h),\kappa(h),\rho(h),P(h)\bigr).
+\tag{11.7}
+$$
+
+此时必须分别证明策略、控制更新、参考更新和权限更新在 \(B\)-纤维上常值；posterior-only 的式（11.3）不能自动升级为完整内部观察者定理。这个区分把概率 belief 的动态充分性与一般档案记忆的动态充分性分开，避免把单一后验误当作所有关系的边界。
+
+## 11.99 追加锚
