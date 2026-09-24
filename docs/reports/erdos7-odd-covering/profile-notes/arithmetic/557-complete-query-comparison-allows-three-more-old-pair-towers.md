@@ -191,6 +191,76 @@ report556 base whose saturated cap sum is at most
 fits CQ6. This is a condition on the inventory, not a new restriction
 on how its arbitrary fixed residues may be selected.
 
+### Two further families allow individual moduli with six prime factors
+
+The same complete-query bound also accepts higher support sets using
+earlier uniform loss theorems. Define these two alternative classes;
+pure originals remain unrestricted in both.
+
+**Family A.** Every mixed original is either3^a*7^b, or3^a*d with d>1
+supported on {5,11,13,17,19}. All exponents are arbitrary positive
+integers on the selected support. Thus the second form allows any
+subset of those five outside primes, not only pairs or triangles.
+
+**Family B.** Every mixed original has one of the forms
+
+    3^a*5^b;
+    3^a*5^b*7^c;
+    3^a*d, d>1 supported on {7,11,13,17,19};
+    7^b*13^c.
+
+These classes differ from the opening theorem; no inclusion in both
+directions is asserted. They remain finite original families with
+distinct numerical labels and globally fixed arbitrary phases.
+
+To apply the previous source-loss theorems directly, take one global
+irredundant core with the same U. Keep all its pure originals when
+splitting the mixed inventory into base and extras. The base subfamily
+inherits every retained original's private point and is already
+irredundant, so no second core is needed. Its complete pure source is
+exactly the chosen core's source. After this choice, all base and extra
+losses are evaluated under that ONE source; taking a global core need
+not preserve the pre-core pure source.
+
+Alternatively, the losses in the cited proofs use only disjoint pure
+cylinders at each prime, distinct numerical labels and the indicated
+support budgets. Deleting nested pure cylinders alone preserves the
+original pure union and supplies their required mask property. Thus
+the same source estimates also hold without discarding mixed originals.
+Neither justification subtracts a previously charged cap from an upper
+bound on loss.
+
+For Family A, use the all-star loss443407/681615 from
+[report547 AS6](547-all-height-stars-have-a-common-survivor-law.md).
+The added labels have at least two outside primes in
+S={5,11,13,17,19}. With u_p=1/(p-2), their complete cap is
+
+    [2*sum_(a>=1)3^(-a)]
+       *[product_(p in S)(1+u_p)-1-sum_(p in S)u_p]
+       =1384/8415.
+
+The factor in the first brackets is one. The subtraction removes the
+unit and singleton SUPPORTS from a disjoint numerical inventory; it
+does not subtract intersecting probabilities. For Family B, start with
+the star/357-triangle loss8564/12393 from
+[report550 ST11](550-a-shared-triangle-tower-preserves-one-common-survivor-law.md).
+The analogous new supports in {7,11,13,17,19} have cap194/1683, and
+the entire old7/13 tower costs1/55. Those extras are disjoint in label
+support from their base. Consequently
+
+| Quantity | Family A | Family B |
+| --- | ---: | ---: |
+| Actual mixed-loss upper |50501/61965|561983/681615|
+| Gap below33/40 |4961/495720|559/1090584|
+| Same uniform-law query upper |6075787/573200|65215657/5981600|
+| Full Haar-survivor lower |15763/373248|7477/186624|
+| Haar lower after arbitrary23/29-touching originals |13992863/8360755200|53605493/91968307200|
+
+Both query bounds are strictly below565/51. The same CQ4--CQ5 and the
+next section's fresh-coordinate bound give every entry. All query and
+original heights are retained. Individual mixed labels may use six of
+the seven fixed primes; the ambient number of primes is not unbounded.
+
 ## 4. The same-law23/29 extension
 
 Tensor the appropriate ONE final law rho with independent Haar
@@ -222,11 +292,13 @@ hinges at all eleven tested thresholds. CQ5 uses only products through5.
 The earlier all-height loss theorem is an explicit cited input; this
 program does not rerun or independently establish report556's optimizer.
 
-All27 checks pass. The result JSON SHA256 is
-`23f4488f22a3bc35434a408d07203c2c0813a2faeb24c420fdc281af158e8a42`.
+All37 checks pass. The result JSON SHA256 is
+`72d148265f01ec9d241fb0c7e6f13a53f252f403970b18446d0b6329ae44f583`.
 A separate calculation enumerates the267 factor assignments with product
 at most10 and independently evaluates the closed forms at1,...,5; it
 reproduces the exact hinges and all displayed endpoint constants.
+The two additional support inventories and their final constants have
+a separate exact reconstruction from the cited all-height loss inputs.
 Running a copied script at a path containing spaces from a different
 working directory gives identical JSON bytes on the tested macOS host.
 Other operating systems were not tested.

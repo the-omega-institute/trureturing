@@ -120,6 +120,35 @@ def calculate():
         bounds_at_enlarged[5] < value for t, value in bounds_at_enlarged.items() if t != 5))
     require("tau5_best_for_uniform_in_checked_range", all(
         bounds_at_uniform[5] < value for t, value in bounds_at_uniform.items() if t != 5))
+
+    # Two different support families use earlier all-height source-loss
+    # theorems. Their added inventories have disjoint supports from each base.
+    broad_cases = {}
+    specifications = (
+        ("no_seven_in_higher_mixed_support", "report547 AS6", F(443407, 681615),
+         (5, 11, 13, 17, 19), F(0), F(1384, 8415), F(50501, 61965),
+         F(6075787, 573200), F(15763, 373248), F(13992863, 8360755200)),
+        ("no_five_in_higher_mixed_support_plus357_and713", "report550 ST11", F(8564, 12393),
+         (7, 11, 13, 17, 19), F(1, 55), F(194, 1683), F(561983, 681615),
+         F(65215657, 5981600), F(7477, 186624), F(53605493, 91968307200)))
+    for name, reference, loss_input, outside, old_cap, expected_cap, expected_loss, expected_query, expected_haar, expected_ext in specifications:
+        weights = [F(1, p - 2) for p in outside]
+        cap = prod(1 + w for w in weights) - 1 - sum(weights)
+        broad_loss = loss_input + cap + old_cap
+        broad_haar = pure_mass * (1 - broad_loss)
+        broad_query = tau + upper_b / (1 - broad_loss)
+        broad_reserve = 1 - (1 + broad_query) * fresh_factor
+        require(name + "_complete_support_cap", cap == expected_cap)
+        require(name + "_loss", broad_loss == expected_loss < uniform_loss)
+        require(name + "_query", broad_query == expected_query < target)
+        require(name + "_Haar", broad_haar == expected_haar)
+        require(name + "_extended_Haar", broad_haar * broad_reserve == expected_ext > 0)
+        broad_cases[name] = {"loss_input_reference": reference, "loss_input": loss_input,
+                            "outside_prime_set": outside, "higher_support_cap": cap,
+                            "additional_old_pair_cap": old_cap, "loss_upper": broad_loss,
+                            "loss_margin": uniform_loss - broad_loss,
+                            "query_upper": broad_query, "Haar_lower": broad_haar,
+                            "extended_Haar_lower": broad_haar * broad_reserve}
     return {
         "primes": primes, "pure_caps": caps, "pure_mass_lower": pure_mass,
         "complete_comparator_mean": mean, "low_product_probabilities": pmf,
@@ -139,6 +168,7 @@ def calculate():
         "exact_query_bounds_at_base_loss": bounds_at_base,
         "exact_query_bounds_at_enlarged_loss": bounds_at_enlarged,
         "exact_query_bounds_at_uniform_loss": bounds_at_uniform,
+        "broader_support_families": broad_cases,
         "checks": checks, "passed_count": len(checks), "Lean": "not run"}
 
 

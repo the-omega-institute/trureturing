@@ -275,6 +275,13 @@ A useful next target is a common-source inequality coupling small missing-slot w
 
 [Report548](548-rainbow-transport-forces-a-next-row-saving.md) gives a quantitative saving directly in the actual 13-row after a fixed finite rainbow 11-prefix. Every continuation admitting factorized nested5/7 completions with full first roots has saving at least 0.0055068697, exceeding the entire NC4 mass requirement. Arbitrarily delayed branch changes and arbitrary fixed old11 phases are included. The same PA law closes without using JL; support-dependent phases, partial first roots and arbitrary prefixes remain outside this result.
 
+[Report559](559-pure-union-savings-control-all-four-later-rows.md) bounds
+the actual saving in each row using its pure-prime forbidden union.
+Its sufficient region includes at most one original at11, at most one
+at13, or at most one at each of17 and19, with all other labels arbitrary.
+These are alternative lower bounds for each same-stage saving; the new
+bound and a_q*Jq cannot simply be added for that stage.
+
 ## 8. Exact finite verification
 
 The self-contained [exact consumer](../../frontier/cover-geometry/phase_debit_completion.py) and its [retained result](../../frontier/cover-geometry/phase_debit_completion.json) use N=K=4. The recorded execution with `python3 -I -S -B -O` exited0, with176 named checks passing. It imports no previous producer and has no external data input.

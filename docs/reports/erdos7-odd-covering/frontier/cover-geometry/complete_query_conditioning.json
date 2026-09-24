@@ -132,6 +132,44 @@
     "9": "174025031144935102737263924066325406985282538919585217310082810787/14308124487626117468526504977118921522083684180459489379357421875",
     "10": "884742213304464146469124450164836976210186304282636456213812442369722478/69392186005691087674145927530755315949269945304180552269029695693359375"
   },
+  "broader_support_families": {
+    "no_seven_in_higher_mixed_support": {
+      "loss_input_reference": "report547 AS6",
+      "loss_input": "443407/681615",
+      "outside_prime_set": [
+        5,
+        11,
+        13,
+        17,
+        19
+      ],
+      "higher_support_cap": "1384/8415",
+      "additional_old_pair_cap": "0",
+      "loss_upper": "50501/61965",
+      "loss_margin": "4961/495720",
+      "query_upper": "6075787/573200",
+      "Haar_lower": "15763/373248",
+      "extended_Haar_lower": "13992863/8360755200"
+    },
+    "no_five_in_higher_mixed_support_plus357_and713": {
+      "loss_input_reference": "report550 ST11",
+      "loss_input": "8564/12393",
+      "outside_prime_set": [
+        7,
+        11,
+        13,
+        17,
+        19
+      ],
+      "higher_support_cap": "194/1683",
+      "additional_old_pair_cap": "1/55",
+      "loss_upper": "561983/681615",
+      "loss_margin": "559/1090584",
+      "query_upper": "65215657/5981600",
+      "Haar_lower": "7477/186624",
+      "extended_Haar_lower": "53605493/91968307200"
+    }
+  },
   "checks": {
     "complete_mean": true,
     "pure_mass": true,
@@ -159,8 +197,18 @@
     "positive_fresh_reserve": true,
     "tau3_best_for_base_in_checked_range": true,
     "tau5_best_for_enlarged_in_checked_range": true,
-    "tau5_best_for_uniform_in_checked_range": true
+    "tau5_best_for_uniform_in_checked_range": true,
+    "no_seven_in_higher_mixed_support_complete_support_cap": true,
+    "no_seven_in_higher_mixed_support_loss": true,
+    "no_seven_in_higher_mixed_support_query": true,
+    "no_seven_in_higher_mixed_support_Haar": true,
+    "no_seven_in_higher_mixed_support_extended_Haar": true,
+    "no_five_in_higher_mixed_support_plus357_and713_complete_support_cap": true,
+    "no_five_in_higher_mixed_support_plus357_and713_loss": true,
+    "no_five_in_higher_mixed_support_plus357_and713_query": true,
+    "no_five_in_higher_mixed_support_plus357_and713_Haar": true,
+    "no_five_in_higher_mixed_support_plus357_and713_extended_Haar": true
   },
-  "passed_count": 27,
+  "passed_count": 37,
   "Lean": "not run"
 }
