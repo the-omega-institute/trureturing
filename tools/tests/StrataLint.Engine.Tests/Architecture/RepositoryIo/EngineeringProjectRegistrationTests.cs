@@ -340,6 +340,51 @@ public sealed class EngineeringProjectRegistrationTests
             Snapshot(manifest.ToJsonString(), (Project, Misleading))));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RegisteredInputsPreserveExactMembershipOrderingAndExclusions(bool glob)
+    {
+        string[] paths = ["inputs/b.json", "unrelated/a.json", "inputs/a.json", "inputs/A.json", "inputs/b.json"];
+        string[] includes = glob ? ["inputs/*.json"] : ["inputs/b.json", "inputs/a.json", "inputs/A.json", "inputs/b.json"];
+        Assert.Equal(["inputs/A.json", "inputs/b.json"],
+            EngineeringProjectRegistry.ExpandInputs(paths, includes, ["inputs/a.*"], Project));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MissingExactInputFailsEvenWhenExcluded(bool mixed)
+    {
+        string[] includes = mixed ? ["inputs/*.json", "inputs/absent.json"] : ["inputs/absent.json"];
+        var error = Assert.Throws<InvalidDataException>(() => EngineeringProjectRegistry.ExpandInputs(
+            ["inputs/present.json"], includes, ["inputs/absent.json"], Project));
+        Assert.Contains("registered input is absent", error.Message);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void EmptyInputSelectionStillRejectsMalformedExclusions(bool empty)
+    {
+        string[] includes = empty ? [] : ["inputs/present.json"];
+        Assert.Throws<FileMapPatternException>(() => EngineeringProjectRegistry.ExpandInputs(
+            ["inputs/present.json"], includes, ["../escape"], Project));
+        Assert.Empty(EngineeringProjectRegistry.ExpandInputs(["inputs/present.json"], [], [], Project));
+    }
+
+    [Fact]
+    public void RegisteredCompileInputsRetainCurrentAndRemovedSourceEndpoints()
+    {
+        var declaration = Test() with { Include = ["source/**/*.cs"], Exclude = ["source/excluded.cs"] };
+        var registry = EngineeringProjectRegistry.Read(Snapshot(EngineeringRegistrationFixture.Manifest(declaration),
+            (Project, Misleading), ("source/current.cs", "class Current {}"), ("source/excluded.cs", "class Excluded {}")));
+        Assert.Equal([Project, "source/current.cs", "source/deleted.cs"], registry.ProjectInputs([Project],
+            [Project, "source/current.cs", "source/excluded.cs", "source/data.json"],
+            ["source/deleted.cs", "source/excluded.cs", "source/deleted.json", "source/UPPER.CS"])
+            .Order(StringComparer.Ordinal));
+    }
+
     private static EngineeringProjectFixture Test() => new(Project, "Explicit.Checks", "cross-cutting-test", true, []);
 
     internal static RepositorySnapshot Snapshot(string? manifest, params (string Path, string Text)[] files) =>
