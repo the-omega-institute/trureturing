@@ -279,7 +279,15 @@ class SeedRegistrationError(ValueError):
     """Registration errors block preparation; cache transport errors do not."""
 
 
-def seed_registration(root, sdk_root=None):
+def resolved_sdk_version(root):
+    """The SDK the dotnet host resolves for global.json; only its major version is pinned."""
+    result = subprocess.run(["dotnet", "--version"], cwd=root, text=True, capture_output=True)
+    if result.returncode or not result.stdout.strip():
+        raise ValueError("dotnet did not resolve an SDK for global.json: " + result.stderr.strip())
+    return result.stdout.strip()
+
+
+def seed_registration(root, sdk_root=None, resolved=None):
     """Read declared paths only. DOTNET_ROOT is a supplied location, not a probe."""
     def unique_fields(pairs):
         fields = {}
@@ -298,12 +306,17 @@ def seed_registration(root, sdk_root=None):
         version = json.loads((root / "global.json").read_text(), object_pairs_hook=unique_fields)["sdk"]["version"]
         if not isinstance(version, str) or version != registration["sdk_version"]:
             raise ValueError("judge seed SDK registration differs from global.json")
+        resolved = resolved or resolved_sdk_version(root)
+        if resolved.split(".")[0] != version.split(".")[0]:
+            raise ValueError(f"resolved SDK major version differs from the registered SDK: {resolved} vs {version}")
+        # Later stages bind the SDK actually used; compiler identity hashes its materials.
+        registration = dict(registration, sdk_version=resolved)
         if not registration["sdk_files"] or registration["target_framework"] != "net10.0":
             raise ValueError("missing SDK materials or unsupported registered framework")
         location = sdk_root or os.environ.get("DOTNET_ROOT")
         if not location:
             raise ValueError("supply DOTNET_ROOT for the pinned SDK")
-        sdk = pathlib.Path(location).resolve() / "sdk" / version
+        sdk = pathlib.Path(location).resolve() / "sdk" / resolved
 
         def expand(base, patterns):
             if not isinstance(patterns, list) or any(not isinstance(item, str) or not item or
