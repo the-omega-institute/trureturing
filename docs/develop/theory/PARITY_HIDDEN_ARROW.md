@@ -1052,3 +1052,454 @@ $\Pr(N_1=i,N_2=j)>\Pr(N_1=j,N_2=i)$。
 求和得到 $\Pr(N_1>N_2)>\Pr(N_1<N_2)$，证明严格比较。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 10. 两种观察实验的精确似然内积
+
+**定义 10.1（相对于均匀参考律的似然）。** 对 $P_b\in\mathcal K_d^0$，
+区分两种实验。路径实验观察均匀启动的 $s$ 步轨迹；状态对实验观察 $s$ 个独立的
+$Q_b(x,y)=P_b(x,y)/n$ 样本。两者的正向律分别记为
+$\mathsf P^{+,\mathrm{path}}_{b,s}$ 与 $\mathsf P^{+,\mathrm{pair}}_{b,s}$，
+反向律由整条路径倒序、或交换每个状态对的两坐标得到。
+相应均匀参考律为
+$\mathsf U^{\mathrm{path}}_s=\operatorname{Unif}(X)^{\otimes(s+1)}$ 和
+$\mathsf U^{\mathrm{pair}}_s=\operatorname{Unif}(X^2)^{\otimes s}$。
+对 $E\in\{\mathrm{path},\mathrm{pair}\}$、$\epsilon\in\{+,-\}$，置
+
+$$
+L^{\epsilon,E}_{b,s}
+=\frac{d\mathsf P^{\epsilon,E}_{b,s}}{d\mathsf U^E_s}.
+\tag{10.1}
+$$
+
+路径上的两个似然分别为 $\prod_{t<s}nP_b(X_t,X_{t+1})$ 与
+$\prod_{t<s}nP_b(X_{t+1},X_t)$；独立状态对上取相应单对因子的乘积。
+$s=0$ 时似然恒为 $1$。不致混淆时略去上标 $E$。
+
+**定理 10.2（全核族的交叉乘积与似然正交）。** 对任意
+$P_b,P_c\in\mathcal K_d^0$，有
+
+$$
+P_bP_c=\Pi.
+\tag{10.2}
+$$
+
+在定义 10.1 的两种实验中，对每个 $s\ge0$ 都有相同的内积公式
+
+$$
+\mathbb E_{\mathsf U^E_s}[L^{\epsilon,E}_{b,s}L^{\epsilon,E}_{c,s}]
+=(1+\mathbb E[bc])^s\quad(\epsilon\in\{+,-\}),\qquad
+\mathbb E_{\mathsf U^E_s}[L^{+,E}_{b,s}L^{-,E}_{c,s}]=1.
+\tag{10.3}
+$$
+
+因此，正向与反向的中心化似然所张成的子空间在 $L^2(\mathsf U^E_s)$ 中正交。
+
+对同一 $r\in(0,1)$，以 $b_z$ 表示峰位为 $z\in C_+$ 的正单峰，置
+$k=M-1$、$\alpha=r^2/(2k)$、
+$\overline L_s^\epsilon=M^{-1}\sum_{z\in C_+}L_{b_z,s}^\epsilon$。则
+
+$$
+\mathbb E[L_{b_z,s}^\epsilon L_{b_w,s}^\epsilon]
+=\begin{cases}(1+\alpha)^s,&z=w,\\
+(1-\alpha/k)^s,&z\ne w,
+\end{cases}
+\qquad
+V_s:=\mathbb E(\overline L_s^\epsilon-1)^2
+=\frac{(1+\alpha)^s+k(1-\alpha/k)^s}{M}-1,
+\tag{10.4}
+$$
+
+且 $\mathbb E(\overline L_s^+-\overline L_s^-)^2=2V_s$。
+这里各期望都在各自实验的均匀参考律下取。
+
+证明。令 $A_b=P_b-\Pi$。作为函数算子，
+$A_bf=\chi b\,\mathbb E(\chi f)$。
+两个奇偶类上的零和约束给出 $\mathbb E b=\mathbb E(\chi b)=0$，
+故 $\Pi A_c=A_b\Pi=A_bA_c=0$，证明 (10.2)。
+
+对于路径的同向内积，逐边乘积给出转移矩阵
+
+$$
+K_{bc}(x,y)=nP_b(x,y)P_c(x,y)
+=\frac{f(x)+g(x)\chi(y)}n,
+\qquad f=1+bc,\quad g=\chi(b+c).
+\tag{10.5}
+$$
+
+由于 $\mathbb E g=0$，每列之和都是 $1+\mathbb E(bc)$。
+以 $\pi^\top=n^{-1}\mathbf1^\top$ 记均匀行向量，得到
+
+$$
+\mathbb E_{\mathsf U^{\mathrm{path}}_s}[L_{b,s}^+L_{c,s}^+]
+=\pi^\top K_{bc}^{,s}\mathbf1=(1+\mathbb E[bc])^s.
+$$
+
+反向与反向的情形由参考律在路径倒序下不变得到。
+异向内积的矩阵为 $H_{bc}(x,y)=nP_b(x,y)P_c(y,x)$。
+由 (10.2)，其每行之和为 $n(P_bP_c)(x,x)=1$，
+所以 $\pi^\top H_{bc}^{,s}\mathbf1=1$。
+这类逐边乘积的矩阵求和与
+[马尔可夫亲和递推](../../../Library/Dynamics/daskalakis2018testing.md)
+采用相同的路径求和步骤；这里的列和、行和恒等式来自共同奇偶结构。
+
+对于独立状态对，直接积分单对乘积分别得到
+$1+\mathbb E(bc)$ 和 $1+\mathbb E b\,\mathbb E c=1$，再用独立性取 $s$ 次幂。
+每个似然的参考期望为一，故中心化后的异向内积为零。
+最后，单峰向量满足
+$\mathbb E b_z^2=\alpha$、$\mathbb E(b_zb_w)=-\alpha/k$（$z\ne w$）。
+代入并展开均值的平方即得 (10.4) 及最后一式。$\square$
+
+**定理 10.3（二步混合与二阶重合的边界）。** 正的双随机矩阵各自满足
+$P^2=Q^2=\Pi$，不足以推出路径异向似然的内积为一。
+另一方面，即使在本卷的单峰族内，(10.3) 的两种实验内积完全相同，
+它们的似然三阶矩仍可不同：当 $d\ge3$、$0<r<1$、$s=2$ 时，置
+
+$$
+\beta_3=\mathbb E b_z^3=\frac{r^3(1-k^{-2})}{n}>0,
+$$
+
+则
+
+$$
+\mathbb E_{\mathsf U^{\mathrm{pair}}_2}[(L^{+,\mathrm{pair}}_{b_z,2})^3]
+=(1+3\alpha)^2,
+\qquad
+\mathbb E_{\mathsf U^{\mathrm{path}}_2}[(L^{+,\mathrm{path}}_{b_z,2})^3]
+=(1+3\alpha)^2+3\alpha\beta_3.
+\tag{10.6}
+$$
+
+证明。第一项反例取 $X=\{-1,1\}^2$、
+$P(x,y)=(1+r x_1y_2)/4$、$Q=P^\top$，其中 $0<r<1$。
+均匀求和时 $\mathbb E(x_1x_2)=0$，故 $P^2=Q^2=\Pi$。
+但 $Q(y,x)=P(x,y)$，因此一步的异向内积为
+$\mathbb E_{x,y}(1+r x_1y_2)^2=1+r^2$。
+这里不具有 (10.2) 的共同奇偶因子结构。
+
+为证明 (10.6)，将单条边的似然因子立方展开为
+$f_3(x)+g_3(x)\chi(y)$，其中
+$f_3=1+3b_z^2$、$g_3=\chi(3b_z+b_z^3)$。
+因为 $b_z$ 只在 $C_+$ 上非零，
+
+$$
+\mathbb E f_3=1+3\alpha,\qquad
+\mathbb E g_3=\beta_3,\qquad
+\mathbb E(\chi f_3)=3\alpha.
+$$
+
+两条独立边给出 $(\mathbb E f_3)^2$。
+两条相邻边先对末状态积分，再对前两状态积分，给出
+$(\mathbb E f_3)^2+\mathbb E g_3\,\mathbb E(\chi f_3)$。
+因此二阶重合并不延伸为全部似然矩相同。$\square$
+
+## 11. 未知峰位的尖锐信息门槛
+
+**定义 11.1（固定未知峰位与最坏方向风险）。** 已知 $d$、$r\in(0,1)$、
+正峰符号及其所在的 $C_+$，未知位置 $z\in C_+$ 在整个样本期间保持不变。
+对实验 $E\in\{\mathrm{path},\mathrm{pair}\}$，定义允许随机化判别器的风险
+
+$$
+\mathcal R^E_{d,r}(s)
+=\inf_\delta\ \max_{z\in C_+,\,\epsilon\in\{+,-\}}
+\mathsf P^{\epsilon,E}_{b_z,s}\{\delta\ne\epsilon\}.
+\tag{11.1}
+$$
+
+置 $I=F_M(r)$、$\mu=sI$，并引入偶函数 $\psi$ 与奇函数 $\xi$：
+
+$$
+\psi(u)=\frac{(1+u)\log^2(1+u)+(1-u)\log^2(1-u)}2,
+\qquad
+\xi(u)=\frac{(1+u)\log(1+u)-(1-u)\log(1-u)}2.
+\tag{11.2}
+$$
+
+以下只在 $|u|<1$ 使用对数。相关的稀疏分布检测文献采用截断似然二阶矩，见
+[Bhattacharya–Mukherjee，§5.2.2](../../../Library/Dynamics/bhattacharya2024sparse.md)。
+其固定稀疏指数模型不包含这里恰好一个固定峰位及其弥散补偿的约束。
+
+**定理 11.2（单峰似然的精确协方差及一致方差界）。** 在各个似然自身的概率律下，
+对任意 $d\ge2$、$0<r<1$、$s\ge0$，有
+
+$$
+\mathbb E_{\mathsf P^{\epsilon,E}_{b_z,s}}\log L^{\epsilon,E}_{b_z,s}=sI,
+\qquad
+\operatorname{Var}_{\mathsf P^{\epsilon,E}_{b_z,s}}
+       (\log L^{\epsilon,E}_{b_z,s})\le2sI.
+\tag{11.3}
+$$
+
+更精确地，在正向平稳路径下置
+$\ell_t=\log(nP_{b_z}(X_t,X_{t+1}))$，以及
+
+$$
+J=\frac{\xi(r)-k\xi(r/k)}n\le0,
+\qquad
+v=\frac{\psi(r)+k\psi(r/k)}n-I^2.
+\tag{11.4}
+$$
+
+则
+
+$$
+\operatorname{Cov}(\ell_t,\ell_{t+1})=IJ,\qquad
+\operatorname{Cov}(\ell_t,\ell_{t+j})=0\quad(j\ge2),
+\tag{11.5}
+$$
+
+故 $s\ge1$ 时，路径总对数似然的方差为 $sv+2(s-1)IJ$；
+独立状态对实验的方差为 $sv$。
+
+证明。条件于出发状态 $x$ 的对数似然均值为 $F(x)=\phi(b_z(x))$，
+二阶矩为 $\psi(b_z(x))$，故每条边的均值是 $I$，方差是 $v$。
+对 $u\in[0,1)$，有
+
+$$
+(2\phi-\psi)'(u)=-h(u)\log(1-u^2)\ge0.
+\tag{11.6}
+$$
+
+由零点取值及偶性得到 $\psi(u)\le2\phi(u)$，从而 $v\le2I$。
+又 $\xi(0)=0$ 且 $\xi''(u)=-u/(1-u^2)\le0$，
+凹性给出 $\xi(r)\le k\xi(r/k)$，所以 $J\le0$。
+
+由于平稳分布均匀，条件于到达状态 $y$ 的上一条边均值为
+
+$$
+R(y):=\mathbb E[\ell_{t-1}\mid X_t=y]=I+J\chi(y).
+\tag{11.7}
+$$
+
+确实，$(1+u)\log(1+u)=\phi(u)+\xi(u)$；在此处以
+$u=\chi(x)\chi(y)b_z(x)$ 代入并对 $x$ 均匀求和，
+利用单峰支撑在 $C_+$，即得 (11.7)。
+函数 $F$ 也只在 $C_+$ 上非零，故
+$\mathbb E(\chi F)=I$，以及
+
+$$
+P_{b_z}F=I(1+b_z).
+\tag{11.8}
+$$
+
+马尔可夫性与条件期望于是给出
+
+$$
+\mathbb E[\ell_t\ell_{t+1}]=\mathbb E(RF)=I^2+IJ,
+\qquad
+\mathbb E[\ell_t\ell_{t+2}]
+=\mathbb E(RP_{b_z}F)=I^2.
+$$
+
+第二式使用 $\mathbb E b_z=\mathbb E(\chi b_z)=\mathbb E\chi=0$。
+对 $j\ge3$，$P_{b_z}^{j-1}F=\Pi F=I$，同样得到乘积均值 $I^2$。
+求和协方差即得路径方差公式及其上界 $sv\le2sI$。
+独立状态对的方差直接相加。反向实验通过倒序或交换坐标变回正向实验，
+不改变相应对数似然的分布；$s=0$ 的结论直接成立。$\square$
+
+**定理 11.3（未知峰位的共同尖锐门槛与定位跃迁）。** 对每个固定
+$\varepsilon\in(0,1)$、任意序列 $r_d\in(0,1)$ 与非负整数 $s_d$，
+令 $d\to\infty$。若充分大的 $d$ 均满足
+
+$$
+s_dF_M(r_d)\le(1-\varepsilon)\log M,
+$$
+
+则两种实验都满足
+
+$$
+\mathcal R^E_{d,r_d}(s_d)\longrightarrow\frac12.
+\tag{11.9}
+$$
+
+在同一条件下，即使预先告知方向，均匀未知峰位的最优精确定位成功率也趋于零。
+若充分大的 $d$ 均满足
+
+$$
+s_dF_M(r_d)\ge(1+\varepsilon)\log M,
+$$
+
+则在全部 $2M$ 个位置与方向假设中作联合最大似然判别，
+其位置或方向判错的最坏概率趋于零，因而
+
+$$
+\mathcal R^E_{d,r_d}(s_d)\longrightarrow0.
+\tag{11.10}
+$$
+
+因此两种实验的一阶临界样本尺度同为
+
+$$
+s_*(d,r)=\frac{\log M}{F_M(r)}
+=\frac{n\log M}{\phi(r)}\bigl(1+O(M^{-1})\bigr),
+\tag{11.11}
+$$
+
+其中相对余项一致地适用于 $0<r<1$。特别地，
+$r_d\to1$ 时 $s_*\sim n\log n/\log2$；
+$r_d\to0$ 时 $s_*\sim2n\log M/r_d^2$。
+这里不要求 $r_d$ 趋近端点的速度，亦不判定临界窗口中的极限风险。
+
+证明。先说明最坏风险与均匀先验的关系。
+$C_+$ 内的置换在峰位上可迁，倒序或交换坐标把两个方向互换。
+将任一随机化判别器对这个有限群平均，同时变换其输出方向，
+使全部 $2M$ 个风险相等，且不改变均匀平均风险。
+因此以 $\overline{\mathsf P}^{\epsilon,E}_s$ 记均匀峰位混合，有
+
+$$
+\mathcal R^E_{d,r}(s)
+=\frac{1-\operatorname{TV}(\overline{\mathsf P}^{+,E}_s,
+                          \overline{\mathsf P}^{-,E}_s)}2.
+\tag{11.12}
+$$
+
+这一步只是有限群对称化；混合中的峰位只选一次，不随样本重抽。
+
+以下固定任一实验，省略 $E$。在某一方向分别截断每个分量似然：
+对 $h>\mu$ 置
+
+$$
+\widetilde L_z=L_{b_z,s}^{\epsilon}
+   \mathbf1_{\{\log L_{b_z,s}^{\epsilon}\le h\}},\qquad
+\widetilde L=\frac1M\sum_z\widetilde L_z,
+\qquad
+\delta_h=\mathsf P_{b_z,s}^{\epsilon}
+          \{\log L_{b_z,s}^{\epsilon}>h\}.
+$$
+
+由对称性 $\delta_h$ 与 $z,\epsilon$ 无关；由 (11.3)，
+$\delta_h\le2\mu/(h-\mu)^2$。
+在参考律下，$\mathbb E\widetilde L=1-\delta_h$。
+对角项满足 $\mathbb E\widetilde L_z^2\le e^h\mathbb E L_{b_z,s}^{\epsilon}=e^h$；
+异位项由非负性及 (10.4) 满足
+$\mathbb E\widetilde L_z\widetilde L_w\le(1-\alpha/k)^s\le1$。
+所以
+
+$$
+\mathbb E\widetilde L^2\le\frac{e^h}{M}+\frac{M-1}{M},\qquad
+\mathbb E|\overline L_s^\epsilon-1|
+\le\delta_h+\sqrt{\frac{e^h}{M}+2\delta_h}.
+\tag{11.13}
+$$
+
+后一式使用截去的总均值为 $\delta_h$，及
+$\mathbb E(\widetilde L-1)^2\le e^h/M+2\delta_h$。
+这种逐分量截断属于既有的截断二阶矩方法；这里的精确异位内积使交叉项直接有界。
+
+若 $\mu\le(1-\varepsilon)\log M$，取
+$h=(1-\varepsilon/2)\log M$。则
+$\delta_h=O(1/\log M)$，$e^h/M=M^{-\varepsilon/2}$。
+故两个方向混合律分别在全变差下趋于均匀参考律。
+由三角不等式及 (11.12) 得到 (11.9)。
+若方向已知，令 $a_z$ 为任意随机化定位规则输出 $z$ 的条件概率，
+则 $\sum_z a_z=1$，并有
+
+$$
+\frac1M\sum_z\mathbb E_{\mathsf P_{b_z,s}^{\epsilon}}a_z
+\le\frac{e^h}{M}+\delta_h\longrightarrow0.
+\tag{11.14}
+$$
+
+这里将每项按真分量似然是否超过 $e^h$ 分开即可，不要求这些事件互斥。
+
+现在考虑上界。若真参数为 $(z,\epsilon)$，每个错误候选 $(w,\epsilon')$ 都满足
+
+$$
+\mathbb E_{\mathsf P_{b_z,s}^{\epsilon}}L_{b_w,s}^{\epsilon'}
+=\mathbb E_{\mathsf U_s}[L_{b_z,s}^{\epsilon}L_{b_w,s}^{\epsilon'}]\le1,
+\tag{11.15}
+$$
+
+其中异向时等于一，同向异位时为 $(1-\alpha/k)^s$。
+若真似然大于 $e^h$ 且其余 $2M-1$ 个似然全小于 $e^h$，最大似然唯一地选中真参数。
+因此对 $h<\mu$，Chebyshev 不等式与逐候选 Markov 不等式给出统一界
+
+$$
+\max_{z,\epsilon}\mathsf P_{b_z,s}^{\epsilon}
+ \{(\widehat z,\widehat\epsilon)\ne(z,\epsilon)\}
+\le\frac{2\mu}{(\mu-h)^2}+(2M-1)e^{-h}.
+\tag{11.16}
+$$
+
+若 $\mu\ge(1+\varepsilon)\log M$，取 $h=(1+\varepsilon/2)\log M$。
+函数 $\mu/(\mu-h)^2$ 在 $\mu>h$ 上递减，故右边至多
+$8(1+\varepsilon)/(\varepsilon^2\log M)+2M^{-\varepsilon/2}$，趋于零。
+这个论证使用全部路径转移，不作独立边抽稀，且对任意 $r_d\in(0,1)$ 一致成立。
+
+最后，正项级数
+$\phi(r)=\sum_{j\ge1}r^{2j}/((2j)(2j-1))$ 给出
+
+$$
+0\le k\phi(r/k)\le\frac{\phi(r)}k.
+$$
+
+代回 $F_M$ 得到 (11.11)。再用 $\phi(r)\to\log2$（$r\to1$）
+及 $\phi(r)\sim r^2/2$（$r\to0$）得到两个端点尺度。$\square$
+
+## 12. 对整个反向族同时有效的似然鞅
+
+**定理 12.1（共同反向鞅与可选停止的方向保证）。** 对任意
+$P_b,P_c\in\mathcal K_d^0$，在正向 $P_c$ 路径律下，
+$(L^{-,\mathrm{path}}_{b,s})_{s\ge0}$ 是非负、均值为一的鞅；
+在反向 $P_c$ 路径律下，$(L^{+,\mathrm{path}}_{b,s})_{s\ge0}$ 具有同一性质。
+两项结论也适用于按样本对增长的独立状态对实验。
+因此，同一方向中预先固定权重的任意有限似然混合，
+都是整个相反方向核族下的均值一非负鞅。
+
+对定义 11.1 的单峰族，取 $\overline L_s^\pm=M^{-1}\sum_z L_{b_z,s}^\pm$。
+给定 $\eta\in(0,1)$，定义停止时刻
+
+$$
+\tau_\eta=\inf\{s\ge1:\max(\overline L_s^+,\overline L_s^-)\ge1/\eta\},
+\tag{12.1}
+$$
+
+在停止时输出达到门槛的方向；若两个方向同时达到则任意破同分。
+对每个固定 $d,r$，两种实验中的 $\tau_\eta$ 都在每个单峰假设下几乎处处有限，且
+
+$$
+\max_{z,\epsilon}
+\mathsf P_{b_z}^{\epsilon}\{\widehat\epsilon_{\tau_\eta}\ne\epsilon\}
+\le\eta.
+\tag{12.2}
+$$
+
+不需要另给两个方向分摊错误预算。
+
+证明。在正向 $P_c$ 下，反向候选似然的下一步乘子条件期望为
+
+$$
+\mathbb E_c\!\left[
+ \frac{L_{b,s+1}^-}{L_{b,s}^-}\,\middle|\,X_0,\ldots,X_s\right]
+=n\sum_yP_c(X_s,y)P_b(y,X_s)
+=n(P_cP_b)(X_s,X_s)=1.
+\tag{12.3}
+$$
+
+最后一步使用 (10.2)，而非仅用单个核的平方等于 $\Pi$。
+似然严格为正且 $L_{b,0}^-=1$，得到鞅性质与均值一。
+交换两个方向时，使用
+$P_c^\top P_b^\top=(P_bP_c)^\top=\Pi$。
+对独立状态对，下一对的异向乘子均值由 (10.3) 在 $s=1$ 时给出，亦为一。
+固定权重的有限和保留鞅性质。
+
+由经典 Ville 不等式，见
+[Howard 等，引理 1](../../../Library/Dynamics/howard2020timeuniform.md)，
+每个真正向核下都有
+
+$$
+\Pr\{\sup_{s\ge0}\overline L_s^-\ge1/\eta\}\le\eta,
+$$
+
+真反向核下也有对应的正向越界界。
+报告错误方向必导致该错误方向的混合似然曾越界，故直接得到 (12.2)。
+对固定真单峰 $(z,\epsilon)$，有限正链的遍历定理或独立样本大数律给出
+
+$$
+\frac1s\log L_{b_z,s}^{\epsilon}\longrightarrow F_M(r)>0
+\quad\text{几乎处处}.
+$$
+
+又 $\overline L_s^\epsilon\ge L_{b_z,s}^\epsilon/M$，故真方向的混合似然最终超过任何固定门槛，
+证明停时有限。这里只给出错误率与几乎处处停止，不断言期望停时的最优尺度。$\square$
+
+## 追加锚（本行以下为增补区）
