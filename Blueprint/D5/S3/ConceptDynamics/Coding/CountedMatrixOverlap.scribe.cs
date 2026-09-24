@@ -37,7 +37,7 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(All(Equal(
                     Call("join", U, V, Call("first", Call("split", U, V, F.Id("a"))),
                         Call("second", Call("split", U, V, F.Id("a"))),
-                        Call("split_boundary", U, V, F.Id("a"))), F.Id("a")),
+                        Call("splitBoundary", U, V, F.Id("a"))), F.Id("a")),
                     B("a", Call("Edge", UV))))), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The inverse finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions."))),
                 DescribeRole.Theorem))));
