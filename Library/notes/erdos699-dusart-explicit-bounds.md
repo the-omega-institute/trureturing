@@ -1,3 +1,16 @@
+---
+bibkey: dusart2010estimates
+authors: Pierre Dusart
+year: 2010
+title: "Estimates of Some Functions Over Primes without R.H."
+doi: null
+url: https://arxiv.org/abs/1002.0442
+claim: Explicit prime-counting and prime-in-short-interval estimates used as external inputs in the Erdős 699 continuation.
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
 # Erdős 699：显式素数估计的来源与用途
 
 研究关联：issue #9670，Draft PR #9723。
