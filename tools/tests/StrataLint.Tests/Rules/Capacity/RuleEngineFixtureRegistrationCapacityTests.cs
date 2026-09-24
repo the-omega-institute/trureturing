@@ -128,7 +128,7 @@ public sealed class RuleEngineFixtureRegistrationCapacityTests
             }
 
             [Fact]
-            public void RegisteredLeanContentAndJudgePathRemainMixedAndRejected()
+            public void RegisteredLeanContentAndJudgePathRemainMixedAndAdmissible()
             {
                 var root = RepositoryLayout.FindRoot();
                 string[] paths =
@@ -143,7 +143,7 @@ public sealed class RuleEngineFixtureRegistrationCapacityTests
                     paths);
 
                 Assert.Equal(AdmissionPlaneClassification.Mixed, decision.Classification);
-                Assert.False(decision.IsAdmissible);
+                Assert.True(decision.IsAdmissible);
                 Assert.Equal("ADMISSION-PLANE-MIXED", decision.Code);
             }
 

@@ -195,7 +195,7 @@ public sealed partial class FileMapPolicyTests
             .Replace("admission_plane = \"judge\"", "admission_plane = \"content\"", StringComparison.Ordinal);
         var manifest = Parse(entry);
 
-        // SL-029 requires the registration PR to precede the content PR.
+        // A registration may reserve report content before it is added.
         Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
         Assert.Empty(FileMapPolicy.InspectCoverage(manifest, [path]));
         var decision = AdmissionPlanePolicy.Evaluate(

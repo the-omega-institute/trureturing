@@ -573,8 +573,7 @@ internal static class FileMapPolicy
         var trackedPaths = paths.ToHashSet(StringComparer.Ordinal);
         return manifest.Entries
             .Where(static entry => entry.RuntimeDisposition != "run-local")
-            // SL-029 separates a FILEMAP registration from its content addition.
-            // A report pattern is therefore a reservation, including between
+            // Report patterns may reserve future content or remain between
             // content deletion and the subsequent registration cleanup.
             .Where(static entry => !IsReportPath(entry.Pattern))
             .Where(entry => !trackedPaths.Any(entry.Matches))

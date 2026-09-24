@@ -24,7 +24,7 @@ public sealed partial class ProductionEnvironmentTests
         var changes = DeletionChanges();
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            candidate, baseline, changes);
+            candidate, baseline, changes, out _);
 
         Assert.True(decision.IsAdmissible, decision.Message);
         Assert.Equal(deletedPlane == "judge"
@@ -51,7 +51,7 @@ public sealed partial class ProductionEnvironmentTests
         var changes = DeletionChanges();
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            candidate, baseline, changes);
+            candidate, baseline, changes, out _);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal(expectedCode, decision.Code);
@@ -75,7 +75,7 @@ public sealed partial class ProductionEnvironmentTests
         var changes = DeletionChanges();
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            candidate, baseline, changes);
+            candidate, baseline, changes, out _);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal(expectedCode, decision.Code);
@@ -114,7 +114,7 @@ public sealed partial class ProductionEnvironmentTests
         var decision = AdmissionPlanePolicy.Evaluate(candidate, baseline, changes);
         // Even a claimed deletion cannot replace the two snapshots' presence evidence.
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            candidate, baseline, changes);
+            candidate, baseline, changes, out _);
 
         Assert.False(decision.IsAdmissible);
         Assert.Equal("ADMISSION-PLANE-PATH-MATCH-COUNT", decision.Code);
@@ -163,12 +163,13 @@ public sealed partial class ProductionEnvironmentTests
         var prepared = gateway.Prepare(baseline);
 
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            gateway.ReadCurrent(), gateway.ReadRevision(prepared.Revision), prepared.Changes);
+            gateway.ReadCurrent(), gateway.ReadRevision(prepared.Revision), prepared.Changes, out var observations);
 
         Assert.Contains(prepared.Changes.Entries, change => change.Path.Value == source && change.Kind == RawChangeKind.Deleted);
         Assert.Contains(prepared.Changes.Entries, change => change.Path.Value == destination && change.Kind == RawChangeKind.Added);
-        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.Contains(rejected.Diagnostics, static item => item.Message.Contains("ADMISSION-PLANE-MIXED", StringComparison.Ordinal));
+        Assert.Null(outcome);
+        AssertAdmissionPlaneWarning(observations);
+        Assert.Contains(observations, static item => item.Message.Contains("ADMISSION-PLANE-MIXED", StringComparison.Ordinal));
     }
 
     private static RawRepositorySnapshot DeletionSnapshot(string? manifest, bool includePath = false)
