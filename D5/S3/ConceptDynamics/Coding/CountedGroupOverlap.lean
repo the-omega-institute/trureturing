@@ -116,9 +116,10 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   let rebuild : (Σ h : H, Fiber U V i k h) → Edge U × Edge V := fun q =>
     (⟨i, q.2.1, q.2.2.1, q.2.2.2.1⟩,
      ⟨q.2.1, k, q.2.2.1⁻¹ * q.1, q.2.2.2.2⟩)
-  have hinv := congrArg rebuild
-    (totalFiberEquiv.apply_symm_apply p)
-  simpa [join, split, totalFiberEquiv, rebuild, p] using hinv
+  change rebuild (totalFiberEquiv (totalFiberEquiv.symm p)) =
+    (⟨i, j, g, a⟩, ⟨j, k, h', b⟩)
+  rw [Equiv.apply_symm_apply]
+  simp [rebuild, p]
 
 @[simp] theorem join_split (a : Edge (U * V)) :
     join U V (split U V a).1 (split U V a).2 (split_boundary U V a) = a := by
@@ -131,7 +132,9 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   have hinv := congrArg rebuild
     (totalFiberEquiv.symm_apply_apply
       (⟨g, a⟩ : Σ h : H, Fin (((U * V) i k).coeff h)))
-  simpa [rebuild, totalFiberEquiv, join, split] using hinv
+  simp only [join, split]
+  rw [mul_inv_cancel_left]
+  simpa [rebuild, totalFiberEquiv] using hinv
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩
