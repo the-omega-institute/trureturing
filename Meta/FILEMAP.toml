@@ -1,4 +1,5 @@
 schema_version = 5
+# CI representative negative probe: cp -c
 include = ["FILEMAP.docs.reports.toml"]
 resources = [
   { id = "anchors", stage = "engineering", owner = "Meta/FILEMAP.toml", prerequisites = ["architecture"], tools = [], cache_layers = [], cache_activation = {}, materials = [] },
