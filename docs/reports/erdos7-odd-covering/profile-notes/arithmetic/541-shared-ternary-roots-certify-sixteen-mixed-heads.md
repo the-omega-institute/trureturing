@@ -198,6 +198,8 @@ Larger shallow inventories require a stronger joint deletion estimate, another s
 
 [Report542](542-an-actual-sharp-nine-cell-interface-for-two-depth-stars.md) proves that SC4's C(J) is the supremum over actual finite irredundant families, with one fixed star-phase layout through increasing pure heights. It does not make the complete sixteen-head bound sharp. For selected3p/9p originals, a shared nine-cell response and a matching actual extremal construction reduce the block's all-height optimum to a finite parent/child incidence problem. Two actual six-class families have identical source cells and separate depth marginals but mixed unions1/8 and2/15, so those marginals cannot replace the shared incidence.
 
+[Report543](543-exact-subset-optimization-certifies-seventeen-mixed-heads.md) computes all4096 selected two-depth block suprema through exact subset partitions. Combining that shared3p/9p block with the remaining numerical caps and complete tail gives l<173/250 for every core with at most seventeen shallow mixed originals. This uses SC1--SC3 unchanged, retains the same full-survivor law and does not claim that the eighteen-label envelope failure is an actual lower witness.
+
 ```sh
 python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/mixed_star_capacity.py
 ```
