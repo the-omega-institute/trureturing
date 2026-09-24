@@ -1,0 +1,28 @@
+**定理 4.2（全辅助系统误差的精确矩阵表达）。** 对任意定义 2.1 的模型和任意校准恢复，
+\[
+ \boxed{\|\mathcal U_H(t)\mathcal R_X-\mathcal R_X\mathcal U_K(t)\|_\diamond
+       =\|Y_t\|_1.}
+\]
+因此 $e_T=\tfrac12\sup_{0\le t\le T}\|Y_t\|_1$；不附辅助系统的输入 $|+\rangle$ 已达到每个固定时刻的范数。
+
+再定义时间均方响应缺陷
+\[
+ a_T(X)^2=T^{-1}\int_0^T\|Y_t\|_F^2dt,
+ \quad v(u)=2(1-\operatorname{sinc}u),\quad v(0)=0,
+\]
+其中 $\operatorname{sinc}u=\sin u/u$。则
+\[
+ a_T(X)^2=\sum_{E,F}v((E-F-\omega)T)\|P_EXQ_F\|_F^2.
+\]
+令
+\[
+ \chi_T^2=\sum_{E-F\ne\omega}
+ \frac{\|P_EQ_F\|_F^2}{v((E-F-\omega)T)},
+\]
+空和为零。对任意校准恢复都有
+\[
+ \boxed{|\operatorname{Tr}X|
+ \le\min\{f_\beta,\ C_\beta(\omega)+\chi_Ta_T(X)\}
+ \le\min\{f_\beta,\ C_\beta(\omega)+2\chi_Te_T(\mathcal R_X)\}.}
+\]
+

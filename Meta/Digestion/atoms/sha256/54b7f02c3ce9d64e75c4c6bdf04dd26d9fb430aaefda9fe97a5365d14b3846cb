@@ -1,0 +1,11 @@
+**定理 3.1（能隙配对与子空间重叠共同决定最优值）。** 令 $H_0=\sum_E E P_E$、$H_1=\sum_F F Q_F$ 为按不同能量值分组的谱分解，允许任意简并和 $[H_0,H_1]\ne0$。在定义 2.1 中固定 $\omega$，则
+\[
+ \boxed{C_\beta(\omega):=
+ \max_{\substack{\mathcal R\in\mathfrak R\\
+ \mathcal U_H(t)\mathcal R=\mathcal R\mathcal U_K(t)\ \forall t}}
+ |\operatorname{Tr}X|
+ =\frac1{\sqrt{Z_0Z_1}}
+ \sum_{E-F=\omega} e^{-\beta(E+F)/2}\|P_EQ_F\|_1.}
+\]
+空和为零。最大值由真实的单个 CPTP 恢复达到。共同本征基中，$\|P_EQ_F\|_1$ 化为公共能量子空间维数，得到相应交换特例。
+

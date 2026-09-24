@@ -1,0 +1,14 @@
+**定义 2.1（正归一状态与热恢复实验）。** 在有限维经典模型中，一个状态是交换代数上的正归一线性泛函；在有限维量子模型中，写为 $a\mapsto\operatorname{Tr}(\rho a)$，其中 $\rho\succeq0$、$\operatorname{Tr}\rho=1$。效应 $0\preceq E\preceq I$ 的概率为 $\operatorname{Tr}(\rho E)$。经典对角子代数给出普通概率向量，但不删除量子代数的非对易乘法或复合规则。量子变换以下均为完全正、迹保持映射，记为 CPTP。
+
+固定隐藏空间 $B=\mathbb C^d$、$d\ge1$、逆温度 $\beta>0$、两个自伴算子 $H_0,H_1$，并令
+\[
+ \tau_i=e^{-\beta H_i}/Z_i,\quad Z_i=\operatorname{Tr}e^{-\beta H_i},\qquad
+ H=|0\rangle\langle0|\otimes H_0+|1\rangle\langle1|\otimes H_1.
+\]
+逻辑空间是 $A=\mathbb C^2$。热校准恢复类 $\mathfrak R$ 包含全部满足
+\[
+ \mathcal R(|i\rangle\langle i|)=|i\rangle\langle i|\otimes\tau_i
+ \quad(i=0,1)
+\]
+的 CPTP 映射 $\mathcal R:\mathcal B(A)\to\mathcal B(A\otimes B)$。其 Stinespring 环境不受另一个预设小维数限制。逻辑 Hamilton 算子为 $K=\operatorname{diag}(\kappa_0,\kappa_1)$，$\omega=\kappa_0-\kappa_1$。记酉信道为 $\mathcal U_H(t)$、$\mathcal U_K(t)$，取 $\hbar=1$。迹范数 $\|\cdot\|_1$ 不含二分之一，$\|\cdot\|_F$ 是未归一 Hilbert--Schmidt 范数。
+

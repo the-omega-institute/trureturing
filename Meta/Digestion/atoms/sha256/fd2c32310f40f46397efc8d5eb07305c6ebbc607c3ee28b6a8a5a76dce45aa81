@@ -1,0 +1,10 @@
+**定义 4.1（统一预测误差）。** 对固定 $T>0$ 和校准恢复 $\mathcal R_X$，定义
+\[
+ e_T(\mathcal R_X)=\frac12\sup_{0\le t\le T}
+ \|\mathcal U_H(t)\mathcal R_X-\mathcal R_X\mathcal U_K(t)\|_\diamond.
+\]
+钻石范数允许任意辅助系统、任意联合输入，故该误差不局限于所选训练态。它比较两条先恢复、先演化路径，不是对某个固定参考的熵。令
+\[
+ Y_t=e^{-itH_0}Xe^{itH_1}-e^{-it\omega}X.
+\]
+

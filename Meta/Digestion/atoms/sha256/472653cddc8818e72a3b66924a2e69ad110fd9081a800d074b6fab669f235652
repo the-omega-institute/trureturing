@@ -1,0 +1,6 @@
+**证明。** 逻辑 Gibbs 权重为 $Z_i/(Z_0+Z_1)$，按校准条件恢复后恰得到 $e^{-\beta H}/(Z_0+Z_1)$。能隙条件 $E-F=\beta^{-1}\log(Z_1/Z_0)$ 等价于 $e^{-\beta E}/Z_0=e^{-\beta F}/Z_1=\lambda$；定理 3.1 的权重此时也为 $\lambda$，得到谱交集公式。
+
+所列比特例中两个热态有相同本征值 $p_\pm=(1\pm\tanh(\beta\Delta))/2$。同号能量的两个秩一谱空间，其态向量重叠模为 $\cos(\vartheta/2)$；所以两项之和是 $(p_++p_-)\cos(\vartheta/2)$。二阶密度矩阵的根保真度恒等式 $f^2=\operatorname{Tr}(\tau_0\tau_1)+2\sqrt{\det\tau_0\det\tau_1}$ 给出第二式，两式之差的严格性随 $0<\tanh(\beta\Delta)<1$ 得到。
+
+固定非零 $\Delta$、令 $\beta\downarrow0$ 时，静态最优值趋一，而全时间协变最优值仍为 $\cos(\vartheta/2)$。若令 $\Delta\downarrow0$，每个非零 $\Delta$ 的同一结论也成立，但在 $\Delta=0$ 精确点最优值为一。这种不连续来自精确全时间量词；有限时间误差在下一节单独计量。保 Gibbs 与时间协变仍只是可实现热操作的必要性质或选定放宽类，不构成能量守恒热浴实施的充分证明。证毕。
+

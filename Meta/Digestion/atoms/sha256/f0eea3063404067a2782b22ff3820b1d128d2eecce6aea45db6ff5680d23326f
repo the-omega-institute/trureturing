@@ -1,0 +1,20 @@
+**推论 3.2（均值力 Hamilton 选择下的热谱交集）。** 要求逻辑 $\beta$-Gibbs 态等于完整 Gibbs 态的可见边缘时，可取
+\[
+ K_{\mathrm{mf}}=-\beta^{-1}\operatorname{diag}(\log Z_0,\log Z_1),
+ \qquad\omega_{\mathrm{mf}}=\beta^{-1}\log(Z_1/Z_0).
+\]
+任意热校准恢复都把这个逻辑 Gibbs 态准确送到完整 Gibbs 态。若 $P^{(0)}_\lambda,P^{(1)}_\lambda$ 是两个 $\tau_i$ 在同一正本征值 $\lambda$ 上的谱投影，则同时精确协变的最大可见相干为
+\[
+ \boxed{C_\beta(\omega_{\mathrm{mf}})
+ =\sum_{\lambda\in\operatorname{spec}\tau_0\cap\operatorname{spec}\tau_1}
+     \lambda\|P^{(0)}_\lambda P^{(1)}_\lambda\|_1.}
+\]
+两个热谱没有共同本征值时，该最优值为零。
+
+具体地，令 $H_0=-\Delta Z$、$H_1=-\Delta(\cos\vartheta\,Z+\sin\vartheta\,X)$，其中 $\Delta>0$、$0\le\vartheta\le\pi$，则 $\omega_{\mathrm{mf}}=0$，且
+\[
+ C_\beta(0)=\cos(\vartheta/2),\qquad
+ f_\beta=\sqrt{1-\tanh^2(\beta\Delta)\sin^2(\vartheta/2)}.
+\]
+对于 $0<\vartheta<\pi$，条件 Hamilton 算子真正非对易；任意有限 $\beta\Delta$ 时，精确自治的相干上限严格小于只作热校准的上限。
+

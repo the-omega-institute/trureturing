@@ -1,0 +1,22 @@
+**引理 2.2（全恢复类的正块参数化）。** 定义 2.1 的每个恢复，且仅有这些恢复，具有形式
+\[
+ \mathcal R_X\!\begin{pmatrix}a&b\\c&e\end{pmatrix}
+ =\begin{pmatrix}a\tau_0&bX\\cX^\dagger&e\tau_1\end{pmatrix},\qquad
+ X=\sqrt{\tau_0}\,M\sqrt{\tau_1},\quad\|M\|\le1.
+\]
+可见概率全部保持，偏迹后的相干乘数为 $c_X=\operatorname{Tr}X$。对等先验 $|+\rangle$ 与 $|-\rangle$，仅测可见输出的最佳判别错误率为 $(1-|c_X|)/2$。没有协变要求时，
+\[
+ \max_{\mathcal R\in\mathfrak R}|c_X|
+ =f_\beta:=\|\sqrt{\tau_0}\sqrt{\tau_1}\|_1.
+\]
+全时间协变 $\mathcal U_H(t)\mathcal R=\mathcal R\mathcal U_K(t)$ 等价于
+\[
+ \boxed{H_0X-XH_1=\omega X.}
+\]
+
+**证明。** 任意 Kraus 算子作用于 $|i\rangle$ 的向量必须全部位于 $|i\rangle\otimes B$：它们的外积和在正交补的迹为零，各项正性迫使相应分量为零。故输出只有所列标签块，非对角块由一个矩阵 $X$ 决定。Choi 正性等价于 $\left(\begin{smallmatrix}\tau_0&X\\X^\dagger&\tau_1\end{smallmatrix}\right)\succeq0$；两热态正定，Schur 补将它等价为 $X=\sqrt{\tau_0}M\sqrt{\tau_1}$、$\|M\|\le1$。块对角迹各为一，非对角标签矩阵迹为零，所以该条件还保证迹保持。
+
+偏迹使非对角元乘 $\operatorname{Tr}X$，对两个相位候选，其输出差的迹范数为 $2|c_X|$，两态 Helstrom 公式给判别错误率。迹范数与算子范数的对偶，以及极分解，给无约束最大值 $f_\beta$。该静态可见度结果采用 [OA06] 的既有干涉保真度公式。
+
+校准对角块与相应 $H_i$ 对易，所以协变只需检查 $|0\rangle\langle1|$。其条件是 $e^{-itH_0}Xe^{itH_1}=e^{-it\omega}X$；在零时求导得到盒中式，反向由这个常系数方程的唯一解得到全部时间。[MS14] 的谱模态保持原则给出这一标准选择规则；上述论证同时确定当前通道类的完整参数化。证毕。
+

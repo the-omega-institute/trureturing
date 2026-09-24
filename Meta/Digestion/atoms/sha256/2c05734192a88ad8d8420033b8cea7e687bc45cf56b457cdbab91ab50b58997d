@@ -1,0 +1,38 @@
+**定理 4.2（全辅助系统误差的精确矩阵表达）。** 对任意定义 2.1 的模型和任意校准恢复，
+\[
+ \boxed{\|\mathcal U_H(t)\mathcal R_X-\mathcal R_X\mathcal U_K(t)\|_\diamond
+       =\|Y_t\|_1.}
+\]
+因此 $e_T=\tfrac12\sup_{0\le t\le T}\|Y_t\|_1$；不附辅助系统的输入 $|+\rangle$ 已达到每个固定时刻的范数。
+
+再定义时间均方响应缺陷
+\[
+ a_T(X)^2=T^{-1}\int_0^T\|Y_t\|_F^2dt,
+ \quad v(u)=2(1-\operatorname{sinc}u),\quad v(0)=0,
+\]
+其中 $\operatorname{sinc}u=\sin u/u$。则
+\[
+ a_T(X)^2=\sum_{E,F}v((E-F-\omega)T)\|P_EXQ_F\|_F^2.
+\]
+令
+\[
+ \chi_T^2=\sum_{E-F\ne\omega}
+ \frac{\|P_EQ_F\|_F^2}{v((E-F-\omega)T)},
+\]
+空和为零。对任意校准恢复都有
+\[
+ \boxed{|\operatorname{Tr}X|
+ \le\min\{f_\beta,\ C_\beta(\omega)+\chi_Ta_T(X)\}
+ \le\min\{f_\beta,\ C_\beta(\omega)+2\chi_Te_T(\mathcal R_X)\}.}
+\]
+
+**证明。** 两条映射在逻辑对角矩阵上相同。对辅助空间上的联合密度矩阵 $\left(\begin{smallmatrix}A&B\\B^\dagger&D\end{smallmatrix}\right)$，它们之差在输出逻辑分块下为
+\[
+ \begin{pmatrix}0&Y_t\otimes B\\Y_t^\dagger\otimes B^\dagger&0\end{pmatrix}.
+\]
+其迹范数等于 $2\|Y_t\|_1\|B\|_1$。正块因子分解及 Schatten Cauchy--Schwarz 给 $\|B\|_1\le\sqrt{\operatorname{Tr}A\operatorname{Tr}D}\le1/2$，于是上界是 $\|Y_t\|_1$。该结论也控制钻石范数定义中的一般输入算子：先用 $\left(\begin{smallmatrix}0&Z\\Z^\dagger&0\end{smallmatrix}\right)/2$ 在加倍辅助空间中作 Hermitian 嵌入，再将 Hermitian 算子作正负部分分解，迹范数权重之和不变。输入 $|+\rangle$ 给 $B=1/2$，达到上界。
+
+谱块 $P_EXQ_F$ 在 Hilbert--Schmidt 内积下两两正交，每块相位因子是 $e^{-it(E-F)}-e^{-it\omega}$；平方积分直接给 $v$ 的表达式。$v(u)>0$ 对非零实数 $u$ 成立，所以 $\chi_T$ 在固定有限谱与 $T>0$ 下有限。
+
+只保留匹配块得到 $X_\omega=\sum_{E-F=\omega}P_EXQ_F$。在 $M$ 坐标中这些块有互相正交的定义域和像，故 $\|M_\omega\|\le1$；所以 $X_\omega$ 仍对应一个校准且精确协变的恢复，$|\operatorname{Tr}X_\omega|\le C_\beta(\omega)$。非匹配部分逐块使用 $|\operatorname{Tr}(P_EXQ_F)|\le\|P_EQ_F\|_F\|P_EXQ_F\|_F$，再用带权 Cauchy--Schwarz 得其总迹模至多 $\chi_Ta_T(X)$。静态保真度上界来自引理 2.2。最后 $\|Y_t\|_F\le\|Y_t\|_1\le2e_T$。近能隙导致 $v(\delta T)=\delta^2T^2/3+O(\delta^4T^4)$ 变小；有限精度不能免费认证精确共振。证毕。
+

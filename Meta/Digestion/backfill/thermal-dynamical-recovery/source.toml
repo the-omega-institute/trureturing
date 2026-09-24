@@ -1,0 +1,5 @@
+source_id = "thermal-dynamical-recovery"
+path = "docs/develop/theory/THERMAL_DYNAMICAL_RECOVERY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

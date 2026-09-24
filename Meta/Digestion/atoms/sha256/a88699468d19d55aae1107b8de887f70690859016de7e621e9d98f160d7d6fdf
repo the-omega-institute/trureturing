@@ -1,0 +1,17 @@
+**定理 4.3（条件 Ising 热恢复的精确有限时间最优前沿）。** 令 $H_0=gZ$、$H_1=-gZ$、$g\ne0$，使用同一温度 $\beta>0$ 和由热边缘固定的逻辑 $K_{\mathrm{mf}}=0$，忽略其无效常数。记
+\[
+ f_\beta=\operatorname{sech}(\beta g),\qquad
+ m_T=\sin(\min\{|g|T,\pi/2\})>0.
+\]
+对任意允许误差 $\epsilon\ge0$，在全部定义 2.1 的校准恢复上有
+\[
+ \boxed{\max_{e_T(\mathcal R)\le\epsilon}|c_X|
+       =\min\{f_\beta,\epsilon/m_T\}.}
+\]
+等号由 $X=(c/2)I_2$、$c=\min\{f_\beta,\epsilon/m_T\}$ 的同一个 CPTP 通道达到。等先验逻辑相位二选一的最优可见错误率因此为
+\[
+ \boxed{p^*_{\beta,g,T,\epsilon}
+ =\tfrac12\left(1-\min\{f_\beta,\epsilon/m_T\}\right).}
+\]
+此结果已包括任意参考系统对预测误差的检验，不把只在两个校准基态上正确称为全输入预测正确。
+

@@ -1,0 +1,16 @@
+## 5. 来源、适用范围与未闭合问题
+
+[OA06] Daniel K. L. Oi、Johan Aberg，*Fidelity and Coherence Measures from Interference*，Physical Review Letters 97, 220404 (2006)，DOI [10.1103/PhysRevLett.97.220404](https://doi.org/10.1103/PhysRevLett.97.220404)。式 (6) 的一般 subspace-preserving 可见度最大值是根保真度；更窄的局部准备类有不同上限。
+
+[MS14] Iman Marvian、Robert W. Spekkens，*Modes of asymmetry: the application of harmonic analysis to symmetric quantum dynamics and quantum reference frames*，Physical Review A 90, 062110 (2014)，DOI [10.1103/PhysRevA.90.062110](https://doi.org/10.1103/PhysRevA.90.062110)。第 II 节式 (2.7)--(2.10) 给出时间对称通道的频率模态保持规则。
+
+[LJR15] Matteo Lostaglio、David Jennings、Terry Rudolph，*Description of quantum coherence in thermodynamic processes requires constraints beyond free energy*，Nature Communications 6, 6383 (2015)，DOI [10.1038/ncomms7383](https://doi.org/10.1038/ncomms7383)。Theorem 1 及 Methods 给出相关时间平移约束。
+
+[FOR15] Philippe Faist、Jonathan Oppenheim、Renato Renner，*Gibbs-Preserving Maps outperform Thermal Operations in the quantum regime*，New Journal of Physics 17, 043003 (2015)，DOI [10.1088/1367-2630/17/4/043003](https://doi.org/10.1088/1367-2630/17/4/043003)。其结论限定了 Gibbs 保持映射的热力学解释。
+
+[NMLW25] Theshani Nuradha、Hemant K. Mishra、Felix Leditzky、Mark M. Wilde，*Multivariate Fidelities*，Journal of Physics A: Mathematical and Theoretical 58(16), 165304 (2025)，DOI [10.1088/1751-8121/adc645](https://doi.org/10.1088/1751-8121/adc645)。第 5 节给出正块半定规划，第 6 节提出相关操作解释问题。
+
+[BO15] Cedric Beny、Tobias J. Osborne，*The renormalisation group via statistical inference*，New Journal of Physics 17, 083005 (2015)，DOI [10.1088/1367-2630/17/8/083005](https://doi.org/10.1088/1367-2630/17/8/083005)。其有限观察与统计可区分性框架只提供尺度解释背景。
+
+本卷的精确谱匹配不等于数值近匹配，有限时间误差预算不等于真实耗热，允许任意 CPTP 恢复不等于免费物理实施。仍未闭合的问题包括一般非对易多标签的共同动态最优值、一般模型的有限窗口完整 Pareto 前沿，以及实际能量守恒实现的工作与参考系成本。
+
