@@ -412,11 +412,12 @@ public sealed class ResourceExecutionPlanTests
                         : new[] { testsRequired ? ExecutionFixture.First : judge },
                     checks = new[] { "selftest-pair" }, steps = Array.Empty<string>() } } }));
             Tree.Write("Meta/FILEMAP.toml", """
-                schema_version = 4
+                schema_version = 5
                 resources = [
                   { id = "build", stage = "build", owner = "tools/scripts/workflow/ci.py", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
                   { id = "test-selected", stage = "engineering", owner = "tools/scripts/workflow/ci.py", prerequisites = ["build"], tools = [], cache_layers = [], cache_activation = {}, materials = [] },
                 ]
+                evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
                 [residence_policy]
                 case_id = "FIXTURE"
                 desired = "registered"

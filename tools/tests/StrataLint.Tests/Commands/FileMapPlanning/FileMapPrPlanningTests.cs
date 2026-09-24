@@ -55,12 +55,12 @@ public sealed class FileMapPrPlanningTests
         var rejected = FileMapPolicy.InspectRepository(fixture.Root, scope);
         var finding = Assert.Single(rejected, row => row.Code == "FILEMAP-PATH-POLICY");
         Assert.Equal(path, finding.Path);
-        Assert.Contains("registry artifact kind/selector whitelist", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("controlled domain vocabulary", finding.Message, StringComparison.Ordinal);
         var result = FileMapConformCommand.Run(["--scope", fixture.Result], fixture.Root);
         Assert.Equal(1, result.ExitCode);
         Assert.Contains($"FILEMAP-PATH-POLICY {path}:", result.Output, StringComparison.Ordinal);
 
-        fixture.Write("Meta/domains.yaml", TestRegistry.Domains
+        fixture.Write("Meta/domains.yaml", TestFileMap.Domains
             + "  UnknownDomain:\n    stratum: S3\n    definition: Registered fixture domain.\n");
         var accepted = FileMapPolicy.InspectRepository(fixture.Root, scope);
         Assert.DoesNotContain(accepted, row => row.Code == "FILEMAP-PATH-POLICY");
