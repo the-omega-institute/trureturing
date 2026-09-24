@@ -1,0 +1,11 @@
+### 10.4 完成塔上的动态提升
+
+设边界塔 \(B_0\xleftarrow{r_0^1}B_1\xleftarrow{r_1^2}B_2\leftarrow\cdots\)，层更新为 \(u_n:B_n\to B_n\)，并满足
+
+$$
+r_n^{n+1}\circ u_{n+1}=u_n\circ r_n^{n+1}.
+\tag{10.8}
+$$
+
+对相容线程 \(t=(b_n)_n\) 定义 \((U_\infty t)_n=u_n(b_n)\)。式（10.8）保证它仍是相容线程。令 \(\iota:S\to\varprojlim B_n\) 为完整配置的线程读出。
+

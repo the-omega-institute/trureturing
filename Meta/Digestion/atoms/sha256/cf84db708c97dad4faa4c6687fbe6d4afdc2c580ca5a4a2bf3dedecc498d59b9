@@ -1,0 +1,44 @@
+**命题 3.15（三原子时钟严格收缩）。** 固定
+$$
+H=\sum_{\lambda\in\Lambda}\lambda\Pi_\lambda,\qquad
+r=|\Lambda|,\qquad
+\nu=p_0\delta_0+p_1\delta_{\tau_1}+p_2\delta_{\tau_2},
+$$
+其中三个权重严格正、总和为一，两个非零时刻严格正。记
+$$
+\chi(\Delta)=\widehat\nu(\Delta)
+=p_0+p_1e^{-i\tau_1\Delta}+p_2e^{-i\tau_2\Delta},
+\qquad
+\mathcal P_H(X)=\sum_\lambda\Pi_\lambda X\Pi_\lambda .
+\tag{TM.420}
+$$
+跨步骤的时钟增量独立且同分布，故
+$$
+(\mathcal C_\nu^H)^k(X)
+=\sum_{\lambda,\mu}\chi(\lambda-\mu)^k
+ \Pi_\lambda X\Pi_\mu .
+\tag{TM.421}
+$$
+这使用了实际卷积律；重复调用同一个随机增量不满足此式。
+
+令 $\tau_0=0$。由单位复数加权平均的模平方直接展开，
+$$
+1-|\chi(\Delta)|^2
+=4\sum_{0\le i<j\le2}
+ p_ip_j\sin^2\!\left(\frac{(\tau_i-\tau_j)\Delta}{2}\right).
+\tag{TM.422}
+$$
+右侧每项非负，且所有权重严格正。因此
+$$
+|\chi(\Delta)|=1
+\iff \tau_1\Delta,\tau_2\Delta\in2\pi\mathbb Z
+\iff\chi(\Delta)=1.
+\tag{TM.423}
+$$
+也可由三角不等式取等条件证明：三个单位相位必须相同，而零时刻的相位固定为一。
+
+于是这份三原子律不会产生模为一但不等于一的旋转外围特征值，直接幂极限总存在。它保留的能量块，恰好满足式（TM.423）的共同整数关系。
+
+零时刻的严格正质量不可从该论证中删除。例如只在 $\tau_1,\tau_2$ 两时刻取正质量，取
+$\Delta=2\pi/|\tau_1-\tau_2|$，两个相位相同，故平均仍为单位模；当时刻比无理时，该共同相位不为一。此时重复幂可以不收敛。单独证明 $\chi(\Delta)=1$ 只有零频解，不能替代对全部单位模点的检查。
+

@@ -1,0 +1,38 @@
+### 19.1 把未来协议读数收进同一个核
+
+设状态更新为 $F:S\to S$，协议推进为 $\sigma:P\to P$。若合法性、失败和记录也需要保留，就把它们一并编码进带标签的结果集 $\widehat L$，并令
+
+$$
+\mathcal E(s,p)(n):=E\bigl(F^{[n]}(s),\sigma^{[n]}(p)\bigr)\in\widehat L.
+\tag{19.1}
+$$
+
+定义未来状态核和未来协议核：
+
+$$
+\begin{aligned}
+s\approx_S t
+&\iff
+\forall n\in\mathbb N,\ \forall p\in P,\quad
+\mathcal E(s,p)(n)=\mathcal E(t,p)(n),\\
+p\approx_P q
+&\iff
+\forall n\in\mathbb N,\ \forall s\in S,\quad
+\mathcal E(s,p)(n)=\mathcal E(s,q)(n).
+\end{aligned}
+\tag{19.2}
+$$
+
+它们分别要求所有未来深度和对方的全部接口都相同。只比较 $n=0$ 得到的是静态商；(19.2) 才是对后续选择、记录和失败都闭合的动态商。
+
+由移位直接得到
+
+$$
+s\approx_S t\Longrightarrow F(s)\approx_S F(t),
+\qquad
+p\approx_P q\Longrightarrow \sigma(p)\approx_P\sigma(q).
+\tag{19.3}
+$$
+
+因此 $F$ 与 $\sigma$ 唯一下降为商上的更新 $\bar F$、$\bar\sigma$。这正是一个边界可以继续运行，而不只是一次性回答问题的条件。
+
