@@ -41,7 +41,7 @@ public sealed partial class CoverBatchCommandTests
         var reportPath = batch.WriteReportBundle();
         foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath })
         {
-            ReviewRegressionTests.RunGit(batch.Root, "ls-files", "--error-unmatch", path);
+            TestGit.Run(batch.Root, "ls-files", "--error-unmatch", path);
             TemporaryFileSystem.File.Delete(Path.Combine(batch.Root, path));
             Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(batch.Root, path)));
         }

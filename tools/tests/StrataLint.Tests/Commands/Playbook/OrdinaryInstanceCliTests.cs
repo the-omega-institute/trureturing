@@ -1,10 +1,10 @@
 using StrataLint.Cli;
 using StrataLint.Engine;
-using static StrataLint.Tests.OrdinaryInstanceAdmissionTests;
+using static StrataLint.TestSupport.UtilityAdmissionTestSupport;
 
 namespace StrataLint.Tests;
 
-public sealed class OrdinaryInstanceCliTests
+public sealed partial class OrdinaryInstanceCliTests
 {
     [Theory]
     [InlineData(false)]
@@ -56,7 +56,7 @@ public sealed class OrdinaryInstanceCliTests
     [InlineData(true)]
     public void DepositAcceptsConsumerFreeRefutationBeforeCoverageOrFirstPin(bool pin)
     {
-        var fixture = UtilityRefutationTests.RefutationFixture();
+        var fixture = UtilityAdmissionTestSupport.RefutationFixture();
         if (pin) AddCandidateState(fixture);
         var repository = new FakeRepositoryGateway(RawChangeSet.Create([]), Raw(fixture.Files), Raw(fixture.Baseline));
         var console = new BufferedConsole();

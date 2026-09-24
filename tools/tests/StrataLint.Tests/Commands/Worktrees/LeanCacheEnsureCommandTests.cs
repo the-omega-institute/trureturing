@@ -549,7 +549,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         JsonDocument.Parse(output["LEAN_CACHE ".Length..]);
 
     private static string Git(string root, params string[] arguments) =>
-        ReviewRegressionTests.RunGit(root, arguments);
+        TestGit.Run(root, arguments);
 }
 
 [Collection("Lean cache environment")]
