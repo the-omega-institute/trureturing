@@ -4602,3 +4602,382 @@ $$
 所有计数依赖有限且已指定的群、钟及实际制备，所有局部最小值依赖定义14.12的完整状态访问合同。一般静态切分须另证动作及合法性下降；多制备须保留实际相位集合，不能改用其子群闭包。所用模钟允许逆动作的负增量，不是严格递增的实时间或热力学量。未指定钟校准的记忆、双线性恢复、自由作用的闭包约减以及其他边界扩张不属于这些陈述。Claim status: open；普通证明不改变既有形式化结果的范围。
 
 ## 14.99 追加锚
+
+## 15. 任意有限校准的补偿图：删钟记忆与原相位恢复
+
+### 15.1 同一来源上的三种状态解码任务
+
+**定义 15.10（单零制备与实际校准像）。** 设 $A,B$ 为有限交换群，$C=\mathbb Z/m\mathbb Z$，$m\ge1$，$H\le C$ 为实际原钟群，$f:A\times B\to C$ 为固定已知函数。取
+
+$$
+S=A\times B\times H,\qquad z_0=(0,0,0),\qquad
+\ell(a,b,h)=h+f(a,b),\qquad n_S=|A||B||H|.
+\tag{15.30}
+$$
+
+制备是双方已知的单点 $z_0$。一步公开标记 $u=(s,t,k)\in S$ 对应处处合法的平移 $\tau_u(z)=z+u$，同一标记同时输入两端。也允许只取一个生成全部 $S$ 的标记集 $U$ 及其逆；所有有限词均允许执行。以下 $U=S$ 或这样的生成集均可，空词也算历史。任意 $z\in S$ 都从 $z_0$ 可达。空间坐标 $a,b$ 属于来源状态；外部类型顶点只有一个固定值，不随 $a,b,h$ 改变。
+
+校准后的实际坐标域及其逆为
+
+$$
+\begin{gathered}
+\Omega_f=\{(a,b,\lambda)\in A\times B\times C:
+                    \lambda-f(a,b)\in H\},\\
+F_f:S\longrightarrow\Omega_f,\quad
+F_f(a,b,h)=(a,b,h+f(a,b)),\qquad
+F_f^{-1}(a,b,\lambda)=(a,b,\lambda-f(a,b)).
+\end{gathered}
+\tag{15.31}
+$$
+
+因此 $|\Omega_f|=n_S$，只有 $H=C$ 时它才是整个 $A\times B\times C$。在此域上的运输是
+
+$$
+\widetilde\tau_u(a,b,\lambda)=
+\bigl(a+s,b+t,\lambda+k+f(a+s,b+t)-f(a,b)\bigr).
+\tag{15.32}
+$$
+
+初始校准读数为 $f(0,0)$，不预设它为零。若改用 $\ell-f(0,0)$，须对全部校准输出作同一个常数平移。
+
+**定义 15.11（完整持久状态与同源联合像）。** 每端 $i\in\{A,B\}$ 的状态集 $W_i$ 可有限或无限。初始化是固定状态 $\mathrm{Init}_i\in W_i$；更新只接收自身状态及当前公开标记，解码只接收自身状态。令 $z(w)=\sum_{u\text{ 在 }w\text{ 中}}u$，要求
+
+$$
+\begin{gathered}
+\sigma_i(\varnothing)=\mathrm{Init}_i,\qquad
+\sigma_i(wu)=\mathrm{Update}_i(\sigma_i(w),u),\qquad
+\mathrm{Decode}_i(\sigma_i(w))=o_i(z(w)),\\
+W_i^{\mathrm{reach}}=\{\sigma_i(w):w\in U^*\},\qquad
+Q=\{(\sigma_A(w),\sigma_B(w)):w\in U^*\}.
+\end{gathered}
+\tag{15.33}
+$$
+
+精确解码要求包含初始边界及每个有限前缀，两端之间没有运行时通信。没有另给的当前 $a$、$b$、$h$、$\ell$、步数或过去输入词；任何能再次参与更新或解码的档案、计数器、索引、缓存及控制状态均属于所计的 $W_i$。状态允许依赖历史，不要求存在 $S\to W_i$ 使它只依赖当前来源点。固定的 $f$、群运算、更新及解码函数是模型参数，不含随实际执行变化的外置状态。
+
+三种任务保持定义15.10的来源、制备和标记不变，只改变 $o_i$：
+
+| 15.11的任务 | $o_A(a,b,h)$ | $o_B(a,b,h)$ |
+| --- | --- | --- |
+| $T_+$：保留原钟及己方位置 | $(a,h,\ell)$ | $(b,h,\ell)$ |
+| $T_-$：删除原钟显示，保留己方位置 | $(a,\ell)$ | $(b,\ell)$ |
+| $T_\ell$：只保留校准钟 | $\ell$ | $\ell$ |
+
+每个输出空间可取指定函数的实际像。$Q$ 只包含同一公共历史产生的局部状态对，通常不等于 $W_A^{\mathrm{reach}}\times W_B^{\mathrm{reach}}$。对任务 $T$，记 $M_A^T,M_B^T,J^T$ 分别为所有满足上述条件的实现中 $|W_A^{\mathrm{reach}}|,|W_B^{\mathrm{reach}}|,|Q|$ 的最小值；三项分别取下确界，以下将给出使三项同时达到的有限实现。
+
+### 15.2 补偿图决定未来核及局部联合最小值
+
+**定理 15.12（任意校准的补偿分类与同时达到）。** 在定义15.10–15.11下，令 $E=A\times B$，并定义恒定差方向及其增量：
+
+$$
+\begin{gathered}
+D_f=\{d\in E:\ f(x+d)-f(x)\text{ 与 }x\in E\text{ 无关}\},
+\qquad \chi_f(d)=f(d)-f(0),\\
+D_{f,H}=\{d\in D_f:\chi_f(d)\in H\},\qquad
+\Gamma_H=\{(s,t,-\chi_f(s,t)):(s,t)\in D_{f,H}\}\subseteq S.
+\end{gathered}
+\tag{15.34}
+$$
+
+再取两条坐标轴上的限制：
+
+$$
+\begin{aligned}
+P_A&=\{s\in A:(s,0)\in D_f\},&
+\chi_A(s)&=\chi_f(s,0),& P_A^H&=\chi_A^{-1}(H),&P_A^0&=\ker\chi_A,\\
+P_B&=\{t\in B:(0,t)\in D_f\},&
+\chi_B(t)&=\chi_f(0,t),& P_B^H&=\chi_B^{-1}(H),&P_B^0&=\ker\chi_B.
+\end{aligned}
+\tag{15.35}
+$$
+
+这些方向集均为相应群的子群，$\chi_f,\chi_A,\chi_B$ 为同态，$\Gamma_H\le S$。两来源点 $z,z'$ 在同端的所有共同未来词后读数相同，当且仅当 $z'-z$ 属于下列对应子群：
+
+$$
+\begin{aligned}
+N_A^+&=\{(0,t,0):t\in P_B^0\},&
+N_B^+&=\{(s,0,0):s\in P_A^0\},\\
+N_A^-&=\{(0,t,-\chi_B(t)):t\in P_B^H\},&
+N_B^-&=\{(s,0,-\chi_A(s)):s\in P_A^H\},\\
+N_A^\ell&=\Gamma_H,&N_B^\ell&=\Gamma_H.
+\end{aligned}
+\tag{15.36}
+$$
+
+最小值为
+
+| 15.12的任务最小值 | $M_A^T$ | $M_B^T$ | $J^T$ |
+| --- | --- | --- | --- |
+| 双钟任务 $T_+$的同时最小实现 | $n_S/|P_B^0|$ | $n_S/|P_A^0|$ | $n_S$ |
+| 删原钟任务 $T_-$的同时最小实现 | $n_S/|P_B^H|$ | $n_S/|P_A^H|$ | $n_S$ |
+| $T_\ell$的同时最小实现 | $n_S/|D_{f,H}|$ | $n_S/|D_{f,H}|$ | $n_S/|D_{f,H}|$ |
+
+每行均有一对局部实现同时达到该行三项；实现依赖任务行。两端各自保存 $S/N_i^T$，它们同源联合像的大小是
+
+$$
+\left|\{(z+N_A^T,z+N_B^T):z\in S\}\right|
+=[S:N_A^T\cap N_B^T].
+\tag{15.37}
+$$
+
+证明。先在本校准计算中使用恒定差的标准加法性质。有限向量空间中的 additive translator 及其子群性见 Lai，*Additive and Linear Structures of Cryptographic Functions*，FSE 1994，LNCS 1008（1995），§2、Theorem 1 及式(5)，[DOI](https://doi.org/10.1007/3-540-60590-8_6)。有限交换群上的差分关系 $f(x+d)=f(x)+c$ 亦见 Baudrin 等，*Commutative Cryptanalysis as a Generalization of Differential Cryptanalysis*（2025），Definition 1，[DOI](https://doi.org/10.1007/s10623-025-01625-9)。这里无需域结构：零方向的差为零；对 $d,e\in D_f$，
+
+$$
+f(x+d+e)-f(x)
+=\bigl(f(x+d+e)-f(x+d)\bigr)+\bigl(f(x+d)-f(x)\bigr)
+=\chi_f(e)+\chi_f(d).
+\tag{15.38}
+$$
+
+且 $f(x-d)-f(x)=-\chi_f(d)$。这证明 $D_f$ 是子群及 $\chi_f$ 可加；其轴限制、核、$H$ 的原像也为子群。补偿图是同态 $d\mapsto(d,-\chi_f(d))$ 的像，其第一坐标投影单射，故 $|\Gamma_H|=|D_{f,H}|$。这些已知的恒定差性质在此只承担补偿分类中的一步。
+
+设 $z=(a,b,h)$，$z'-z=(s,t,k)$。共同续接总增量 $(u,v,w)$ 后的校准读数之差为
+
+$$
+k+f(a+u+s,b+v+t)-f(a+u,b+v).
+\tag{15.39}
+$$
+
+全部平移可由允许词实现，故 $(a+u,b+v)$ 遍历 $E$。式(15.39)恒为零恰好要求 $(s,t)\in D_f$ 且 $k=-\chi_f(s,t)$；$k\in H$ 又恰给 $D_{f,H}$。于是只读 $\ell$ 的未来核为 $\Gamma_H$。加入 $A$ 端的己方位置输出，空续接就强制 $s=0$；再加入原钟输出就强制 $k=0$。$B$ 端对称，得到式(15.36)。反向逐项代入式(15.39)，即可见每个所列差在所有未来词后保持对应读数相等。此论证也覆盖生成元输入，因为任何所需总增量有一个合法生成元词。
+
+现在应用既有未来行为商的最小性。[TransportMemoryCompletion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §2.1–2.3 的实际轨道、历史摘要满射与陪集计数在这里取作用群 $S$、来源轨道 $S$、初态稳定子 $\{0\}$，并取唯一的类型顶点。因而该卷允许外部已知的顶点不携带任何免费位置或钟值。有限确定性机器的经典背景是 Moore，*Gedanken-experiments on Sequential Machines*（1956），Theorem 4，pp.142–143，[原文](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf)；本平移系统由生成元及逆连通，满足其强连通前提。
+
+仓内 `D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean` 的 `controlled_behavior_universal_property` 则适用于有限来源 $Y$、有限状态 $W$、满射实现 $Y\to W$ 及交换的更新、读出方程。这里可取 $Y=S$、来源更新 $z\mapsto z+u$、指定读出 $o_i$；但一般历史摘要未必有这样的 $S\to W$。对于定义15.11所允许的全部候选，所需的历史论证如下。若 $\sigma_i(w)=\sigma_i(w')$，确定性更新使任意共同续接后的状态仍相同，精确解码遂给相同未来读数。因此
+
+$$
+\pi_i:W_i^{\mathrm{reach}}\longrightarrow S/N_i^T,
+\qquad \pi_i(\sigma_i(w))=z(w)+N_i^T
+\tag{15.40}
+$$
+
+良定义。每个来源点可达，所以 $\pi_i$ 满射，得到 $|W_i^{\mathrm{reach}}|\ge[S:N_i^T]$，不要求 $W_i$ 有限。对同一历史产生的状态对，$\pi_A,\pi_B$ 一起满射到式(15.37)左侧的实际像，故联合下界也是该像的大小。两个来源点在此像下相等恰好是差同时落在 $N_A^T,N_B^T$ 中；每条纤维为其交的一个陪集，得到式(15.37)的指数，而不是两个局部指数之积。
+
+达到构造只使用各端自身的商状态：
+
+$$
+\begin{gathered}
+W_i=S/N_i^T,\qquad \mathrm{Init}_i=0+N_i^T,\\
+\mathrm{Update}_i(z+N_i^T,u)=(z+u)+N_i^T,
+\qquad \mathrm{Decode}_i(z+N_i^T)=o_i(z).
+\end{gathered}
+\tag{15.41}
+$$
+
+平移保持陪集相等，空未来词保证读数在陪集上常值，故更新与解码均良定义。所有商状态可达；初态解出的校准钟是 $f(0,0)$。两端从同一零制备出发，按同一标记更新，实际状态对恰遍历式(15.37)的像。这给每行的局部与联合同时达到。
+
+最后，$N_A^+\cap N_B^+=N_A^-\cap N_B^-=\{0\}$，因为交中两个空间分量均须为零，钟分量也随之为零。故前两行的联合最小值均为 $n_S$。也可从联合当前输出恢复 $a,b,\ell$，再由 $h=\ell-f(a,b)$ 恢复整个 $S$。最后一行两核均为 $\Gamma_H$；两端取同一商后，联合像是该商的对角像。代入各子群的阶得到全表。证毕。
+
+### 15.3 删钟比例、相位纤维与坐标运输
+
+**定理 15.13（原钟的精确歧义与位宽差）。** 令
+
+$$
+L_A=\operatorname{im}\chi_A\cap H,\qquad
+L_B=\operatorname{im}\chi_B\cap H.
+\tag{15.42}
+$$
+
+在 $A$ 端的规范 $T_-$ 未来行为类 $z+N_A^-$ 中，原钟的可能值恰为 $h+L_B$；$B$ 端为 $h+L_A$。因此原钟能由该端的完整 $T_-$ 未来行为唯一恢复，恰好当相反轴的 $L$ 为零子群。同时
+
+$$
+\frac{M_A^+}{M_A^-}=|L_B|,\qquad
+\frac{M_B^+}{M_B^-}=|L_A|,\qquad
+1\le |L_A|,|L_B|\le |H|.
+\tag{15.43}
+$$
+
+令 $R_A=|L_B|,R_B=|L_A|$。若以定长二进制字保存端 $i$ 的有限状态，则其最小位宽差满足
+
+$$
+\begin{gathered}
+\Delta_i^{\mathrm{bits}}=
+\lceil\log_2 M_i^+\rceil-\lceil\log_2 M_i^-\rceil,\\
+\lfloor\log_2R_i\rfloor
+\le\Delta_i^{\mathrm{bits}}
+\le\lceil\log_2R_i\rceil
+\le\lceil\log_2|H|\rceil.
+\end{gathered}
+\tag{15.44}
+$$
+
+原钟不在规范商上可恢复时，并不排除更大的非最小 $T_-$ 状态保存它；完整过去公共词也总能恢复原钟。
+
+证明。$A$ 端同类来源点恰写为 $(a,b+t,h-\chi_B(t))$，$t\in P_B^H$。$\chi_B(P_B^H)=L_B$，而子群在取负下不变，故原钟像精确为 $h+L_B$。每个这样的来源点都可达，所以这里没有虚构相位。像为单点当且仅当 $L_B=\{0\}$。这正是函数在观察纤维上常值的恢复判据；其一般有效像形式见 `D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean` 的 `refinement_iff_kernel_inclusion_on_effective_images`，在此以原钟为待恢复函数、未来行为商为观察函数。$B$ 端同理。
+
+限制同态 $\chi_B:P_B^H\to L_B$ 满射，任意像值的纤维都是 $P_B^0$ 的陪集。因此 $|P_B^H|=|P_B^0||L_B|$；另一轴同理。将这一步通常的同态纤维计数代入定理15.12即得式(15.43)。无论 $H$ 是否等于 $C$，交 $\operatorname{im}\chi_i\cap H$ 都不可删去。
+
+含 $M$ 个状态的定长二进制编码需要且只需 $\lceil\log_2M\rceil$ 位，因为 $b$ 位恰有 $2^b$ 个字。置 $x=\log_2M_i^-$、$y=\log_2R_i$，则 $M_i^+=R_iM_i^-$。由
+
+$$
+\lceil x\rceil+\lfloor y\rfloor
+\le\lceil x+y\rceil
+\le\lceil x\rceil+\lceil y\rceil
+\tag{15.45}
+$$
+
+得到式(15.44)。左式来自 $x+\lfloor y\rfloor\le x+y$ 及整数平移下的取整等式；右式来自 $x+y\le\lceil x\rceil+\lceil y\rceil$。对数状态数之差恰为 $\log_2R_i$，定长位宽差一般只是相邻两个整数之一；若 $R_i$ 为二的幂，两者相同。
+
+若一个候选达到局部最小有限状态数，式(15.40)的满射必为双射，因此它与规范未来商有相同的原钟恢复判据。但保存整个 $S$ 并按平移更新也是一个 $T_-$ 候选，它总能读出 $h$。再者，完整公共历史 $w=u_1\cdots u_r$ 从零制备恢复 $z(w)=\sum_j u_j$，特别是 $h=\sum_j k_j$；不恢复结论只约束所指定的压缩边界，不能用于这个额外提供档案的访问模型。本卷 §13 的逐前缀档案恢复与保存其值所需记忆的区分，在此分别对应完整词和式(15.33)的持久状态。证毕。
+
+**命题 15.14（校准共轭保留固定任务）。** $F_f$ 是定义15.10的原坐标系统与实际域 $\Omega_f$ 上系统的共轭。对一个固定任务 $o_i$，若同时将它运输为 $\widetilde o_i=o_i\circ F_f^{-1}$，则未来行为商及局部、联合最小状态数保持。相反，$T_+\to T_-$ 删除输出中的 $h$，是指定任务的改变，其可能节省恰由式(15.43)给出。将 $f$ 加上任意常数不改变这些最小值。
+
+证明。式(15.31)的两个映射互逆，直接代入式(15.32)得 $\widetilde\tau_u F_f=F_f\tau_u$；且新钟减去新位置的 $f$ 等于 $h+k\in H$，故更新保持 $\Omega_f$。对每个词归纳并使用 $\widetilde o_iF_f=o_i$，可见两种坐标下每个来源的全部指定输出逐词相同。原来的状态、初始化、更新与解码于是原样承担运输后的任务，逆方向亦然，给相同最小值。沿词的校准增量还满足
+
+$$
+\ell(z')-\ell(z)=h'-h+f(a',b')-f(a,b),
+\tag{15.46}
+$$
+
+这是 [ProcessGeometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) §9 的群值势差在此来源上的形式。删除 $h$ 没有运输原输出函数，而是对它再作投影，故应改用新的未来核。最后，$f+c$ 与 $f$ 的差分相同，因而 $D_f,\chi_f$ 和全部核不变；校准输出仅加上固定 $c$，原点输出也相应改变。证毕。
+
+### 15.4 真子群时钟上的混合模四校准
+
+**命题 15.15（一个局部节省而联合不变的混合校准）。** 取
+
+$$
+A=B=C=\mathbb Z/4\mathbb Z,\qquad H=\{0,2\},\qquad
+f(a,b)=2ab+b\pmod4.
+\tag{15.47}
+$$
+
+三种任务的 $(M_A^T,M_B^T,J^T)$ 依次为
+
+$$
+T_+:(32,16,32),\qquad T_-:(16,16,32),\qquad T_\ell:(8,8,8).
+\tag{15.48}
+$$
+
+证明。平移差为 $2at+2sb+2st+t$。分别将 $a$、$b$ 增加一，常值条件强制 $t,s$ 都为偶数；这也充分。于是
+
+$$
+\begin{gathered}
+D_f=\{0,2\}\times\{0,2\},\qquad \chi_f(s,t)=t,\qquad D_{f,H}=D_f,\\
+P_B^H=\{0,2\},\quad P_B^0=\{0\},\qquad
+P_A^H=P_A^0=\{0,2\}.
+\end{gathered}
+\tag{15.49}
+$$
+
+$|S|=32$，定理15.12给式(15.48)。以下把同时达到写成直接的局部坐标。置 $r=h+b\pmod4$、$p=a\pmod2$，各项都从零初始化：
+
+| 15.15的任务状态 | $A$端保存 | $B$端保存 |
+| --- | --- | --- |
+| 混合模四双钟任务 $T_+$ | $(a,b,h)$ | $(b,h,p)$ |
+| 混合模四删原钟任务 $T_-$ | $(a,r)$ | $(b,h,p)$ |
+| 混合模四 $T_\ell$ | $(p,r)$ | $(p,r)$ |
+
+公共增量 $(s,t,k)$ 下，上表所需各坐标分别按
+
+$$
+\begin{aligned}
+(a,b,h)&\longmapsto(a+s,b+t,h+k),\\
+(b,h,p)&\longmapsto(b+t,h+k,p+s\bmod2),\\
+(a,r)&\longmapsto(a+s,r+t+k),\\
+(p,r)&\longmapsto(p+s\bmod2,r+t+k)
+\end{aligned}
+\tag{15.50}
+$$
+
+更新，模四分量在模四中计算，$h,k\in H$。由 $h$ 为偶数可得
+
+$$
+\ell=(2a+1)r=(2p+1)r=h+b+2pb\pmod4.
+\tag{15.51}
+$$
+
+这些等式及已保存的己方位置、原钟给每行所需解码。$(a,r)$ 的十六值全部可达，$(b,h,p)$ 的十六值及 $(p,r)$ 的八值也全部可达。前两行的状态对恢复整个 $(a,b,h)$，恰三十二个同源值；最后一行是八个标签的对角像。
+
+空历史到达 $z=(0,0,0)$，公开增量 $(0,2,2)$ 到达 $z'=(0,2,2)$。它们的 $A$ 端 $T_-$ 状态同为 $(a,r)=(0,0)$，原钟却为 $0,2$；差属于 $N_A^-$，所以任何共同未来词后仍给相同 $(a,\ell)$。$T_+$ 当前即用原钟区分二者。这里 $L_B=\{0,2\}$ 而 $L_A=\{0\}$，正好解释两端节省的不对称。证毕。
+
+### 15.5 进位校准的斜向补偿
+
+**命题 15.16（模四高位给出四态的只钟未来商）。** 取 $A=B=\mathbb Z/4\mathbb Z$、$C=H=\mathbb Z/2\mathbb Z$，令 $f(a,b)=g(a+b)$，和先在模四中计算，其中
+
+$$
+g(0)=g(1)=0,\qquad g(2)=g(3)=1.
+\tag{15.52}
+$$
+
+则
+
+$$
+\begin{gathered}
+D_f=\{(s,t):s+t\in\{0,2\}\},\qquad D_{f,H}=D_f,\\
+\chi_f(s,t)=
+\begin{cases}0,&s+t=0\pmod4,\\1,&s+t=2\pmod4,\end{cases}\\
+T_+:(32,32,32),\qquad T_-:(16,16,32),\qquad T_\ell:(4,4,4).
+\end{gathered}
+\tag{15.53}
+$$
+
+证明。对 $g$，平移零的差为零，平移二的差恒为一。平移一在 $x=0,1$ 的差分别为零、一；平移三在 $x=0,1$ 的差分别为一、零，均非常值。由于 $a+b$ 遍历模四，得到所列 $D_f$ 与 $\chi_f$。每条轴的 $P_i^H=\{0,2\}$、$P_i^0=\{0\}$，$|D_f|=8$，代入定理15.12即得三行最小值。特别地 $(1,1)\in D_f$ 且 $\chi_f(1,1)=1$，$(1,3)\in\ker\chi_f$；它们都不在 $P_A\times P_B$。故只钟任务的全补偿群不能换成两条轴向方向的乘积，恒定非零差方向也不能混作严格周期。
+
+还有如下四态坐标，直接表现进位的未来作用。令 $j=a+b\pmod4$，$p=j\pmod2$。对公共 $(s,t,k)$，取 $v$ 为 $s+t\pmod4$ 在 $\{0,1,2,3\}$ 中的代表，并定义
+
+$$
+\kappa(p,v)=\left\lfloor\frac{p+v}{2}\right\rfloor\pmod2,
+\qquad
+(p,\ell)\longmapsto
+\bigl(p+v\bmod2,\ \ell+k+\kappa(p,v)\bmod2\bigr).
+\tag{15.54}
+$$
+
+写 $j=p+2q$，$q\in\{0,1\}$，则 $g(j)=q$ 且 $g(j+v)-g(j)=\kappa(p,v)$，所以该更新无需读取 $j$ 的高位。$T_\ell$ 两端都保存 $(p,\ell)$ 并输出第二分量。$T_-$ 两端分别保存 $(a,p,\ell)$、$(b,p,\ell)$，在式(15.54)之外各更新己方位置。四态和两个十六态局部像均完全可达；$T_-$ 的联合像由 $p=a+b\pmod2$ 约束，含三十二态，且由 $h=\ell-g(a+b)$ 恢复原来源。$T_+$ 两端各存 $(a,b,h)$ 即同时达到三十二态。各实现初始均为零。
+
+本例不能写为双加性配对加两轴同态及常数：若 $f=\beta+u+v+c$ 有这种形式，由 $f(0,0)=0$ 得 $c=0$，由零行得 $g(b)=v(b)$；但同态必须满足 $v(2)=2v(1)=0$，与 $g(2)=1$ 矛盾。证毕。
+
+### 15.6 仿射族的最大节省及取整
+
+**命题 15.17（两端同时达到原钟群阶的比例）。** 对任意 $n\ge1$，取 $A=B=C=\mathbb Z/n\mathbb Z$、任意 $H\le C$，并令 $f(a,b)=a+b$。此时两端删钟比例都为 $|H|$；三行最小值分别为
+
+$$
+\begin{aligned}
+T_+&:(n^2|H|,n^2|H|,n^2|H|),\\
+T_-&:(n^2,n^2,n^2|H|),\\
+T_\ell&:(n,n,n).
+\end{aligned}
+\tag{15.55}
+$$
+
+特别是 $H=C$ 时为 $(n^3,n^3,n^3)$、$(n^2,n^2,n^3)$、$(n,n,n)$。这给出可达到最大比例的群族；不要求对任意固定的 $A,B,H$ 都能选择某个 $f$ 达到同一上界。
+
+证明。$D_f=A\times B$、$\chi_f(s,t)=s+t$；两轴字符均为恒等同态，故 $P_i^0=\{0\}$、$P_i^H=H$、$L_i=H$。对每个 $s$ 及每个 $h_0\in H$，恰有一个 $t=h_0-s$，故 $|D_{f,H}|=n|H|$。定理15.12给式(15.55)。显式地，$T_+$ 两端保存全来源；$T_-$ 两端保存 $(a,\ell)$、$(b,\ell)$；$T_\ell$ 两端都保存 $\ell$。它们从零初始化，原钟按 $h\mapsto h+k$、己方位置按平移更新，新钟统一按 $\ell\mapsto\ell+s+t+k$ 更新。前两行的状态对恢复全来源，最后一行是模 $n$ 标签的对角像。
+
+当 $n=3,H=C$ 时，局部状态数从 $27$ 降为 $9$，对数状态数减少 $\log_2 3$，定长位宽却从 $\lceil\log_2 27\rceil=5$ 降为 $\lceil\log_2 9\rceil=4$，只减少一位。另一方面，若固定 $A=B=\{0\}$、$H=C=\mathbb Z/2\mathbb Z$，则任意 $f$ 都只有零轴方向，$L_A=L_B=\{0\}$，两端删钟比例恒为一。因此最大比例的可达性确实需要对群族作上述限定。证毕。
+
+### 15.7 零节省的充分条件及非必要性
+
+**命题 15.18（恒定行、双加性校准与轴相位）。** 若存在 $a_*\in A$ 使 $b\mapsto f(a_*,b)$ 为常数，则 $L_B=\{0\}$，$A$ 端删除原钟显示不减少最小状态数；恒定列给对称结论。特别地，若 $f=\beta$ 是双加性配对，令
+
+$$
+K_A=\{s:\ \beta(s,b)=0\ \forall b\in B\},\qquad
+K_B=\{t:\ \beta(a,t)=0\ \forall a\in A\},
+\tag{15.56}
+$$
+
+则 $D_\beta=K_A\times K_B$、$\chi_\beta=0$，两端均无删钟节省，并且
+
+$$
+\begin{aligned}
+T_\pm&:\left(\frac{n_S}{|K_B|},\frac{n_S}{|K_A|},n_S\right),\\
+T_\ell&:\left(\frac{n_S}{|K_A||K_B|},
+                 \frac{n_S}{|K_A||K_B|},
+                 \frac{n_S}{|K_A||K_B|}\right).
+\end{aligned}
+\tag{15.57}
+$$
+
+证明。对任意 $t\in P_B$，在恒定行取差即得 $\chi_B(t)=f(a_*,b+t)-f(a_*,b)=0$，所以 $L_B=\{0\}$。双加性校准有零行及零列；进一步，其平移差为 $\beta(a,t)+\beta(s,b)+\beta(s,t)$。若此差恒定，比较 $a$ 与零、$b$ 与零分别迫使 $t\in K_B,s\in K_A$，此时剩下的常数 $\beta(s,t)$ 也为零。反向这些根方向都给零差，故得到 $D_\beta$ 及 $\chi_\beta$，代入定理15.12给式(15.57)。这是补偿分类的双加性特化。证毕。
+
+**命题 15.19（每行非恒定仍可完全没有删钟节省）。** 取 $A=\mathbb Z/2\mathbb Z$、$B=C=H=\mathbb Z/3\mathbb Z$，令 $r(0)=0,r(1)=1$，并取
+
+$$
+f(a,b)=r(a)+b^2\pmod3.
+\tag{15.58}
+$$
+
+两行都非恒定，但 $P_B=\{0\}$，所以 $A$ 端删钟比例为一。事实上 $D_f=\{(0,0)\}$，三种任务的两个局部最小值及联合最小值全为十八。
+
+证明。每行在 $b=0,1$ 的值相差一，故无恒定行。对 $t\ne0$，$B$ 方向差为 $2bt+t^2$；其在 $b=0,1$ 的差是 $2t\ne0\pmod3$，所以没有非零 $B$ 恒定差方向。一般方向 $(s,t)$ 的差为 $r(a+s)-r(a)+2bt+t^2$，在 $b$ 上恒定先强制 $t=0$。若 $s=1$，剩下的差在 $a=0,1$ 分别为一、负一，两者在模三不同，故还须 $s=0$。于是 $D_f$ 平凡、全部未来核平凡，而 $|S|=2\cdot3\cdot3=18$，定理15.12给所述各最小值。恒定行是命题15.18中的充分条件，并非零节省的必要条件。证毕。
+
+## 15.99 追加锚
