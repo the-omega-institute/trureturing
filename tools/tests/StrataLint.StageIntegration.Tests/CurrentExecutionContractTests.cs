@@ -215,4 +215,99 @@ public sealed partial class CurrentExecutionContractTests
         else Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
     }
 
+    [Theory]
+    [InlineData("passed", false)]
+    [InlineData("failed", false)]
+    [InlineData("exception", false)]
+    [InlineData("passed", true)]
+    public void BlockedProjectDoesNotReserveUnstartedProjects(string outcome, bool seeded)
+    {
+        using var fixture = new ExecutionFixture();
+        TestExecutionRecord? seed = null;
+        if (seeded)
+        {
+            Execute(fixture);
+            seed = CommonExecutionEvidence.ValidateTests(fixture.Root);
+            Seed(fixture);
+        }
+        var additional = Enumerable.Range(0, 24).Select(index => $"tools/tests/Project{index:D2}/Project{index:D2}.csproj").ToArray();
+        var manifest = File.ReadAllText(Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path));
+        foreach (var project in additional)
+        {
+            fixture.Write(project, "<Project />\n");
+            manifest = EngineeringRegistrationFixture.Append(manifest,
+                new EngineeringProjectFixture(project, Path.GetFileNameWithoutExtension(project), "cross-cutting-test", true, []));
+        }
+        fixture.Write(EngineeringRegistrationFixture.Path, manifest);
+        fixture.Track();
+        fixture.Build();
+        var projects = additional.Concat([ExecutionFixture.First, ExecutionFixture.Second]).Order(StringComparer.Ordinal).ToArray();
+        var selected = seeded ? additional : projects;
+        using var firstTwo = new CountdownEvent(2);
+        using var othersFinished = new CountdownEvent(selected.Length - 1);
+        var calls = new System.Collections.Concurrent.ConcurrentBag<string>();
+        var activeCounts = new System.Collections.Concurrent.ConcurrentBag<int>();
+        var starts = 0;
+        var active = 0;
+        var finishedBeforeRelease = -1;
+        var prematureEvidence = false;
+        var exit = Program.RunCurrentTests(fixture.Root, (project, results) =>
+        {
+            calls.Add(project);
+            activeCounts.Add(Interlocked.Increment(ref active));
+            var start = Interlocked.Increment(ref starts);
+            try
+            {
+                if (start <= 2)
+                {
+                    firstTwo.Signal();
+                    if (!firstTwo.Wait(TestBudgets.PlaybookProcessHangGuard))
+                        throw new TimeoutException("concurrent runner hang guard");
+                }
+                // Synchronize two workers before holding either one's next project.
+                // A range/chunk may reserve further projects that the free worker cannot take.
+                if (start == 3)
+                {
+                    // The existing guard releases a broken fixture; no elapsed-time assertion.
+                    othersFinished.Wait(TestBudgets.PlaybookProcessHangGuard);
+                    finishedBeforeRelease = selected.Length - 1 - othersFinished.CurrentCount;
+                    prematureEvidence = File.Exists(Path.Combine(fixture.Root, CommonExecutionEvidence.TestsPath));
+                    if (outcome == "exception") throw new IOException("fixture execution error");
+                }
+                var failed = start == 3 && outcome == "failed";
+                fixture.WriteTrx(results, failed ? "Failed" : "Passed", Path.GetFileNameWithoutExtension(project));
+                return failed ? 1 : 0;
+            }
+            finally
+            {
+                Interlocked.Decrement(ref active);
+                if (start != 3) othersFinished.Signal();
+            }
+        }, TextWriter.Null, maxConcurrentProjects: 2);
+
+        Assert.True(finishedBeforeRelease == selected.Length - 1,
+            $"[FAIL] dispatch starvation: only {finishedBeforeRelease} of {selected.Length - 1} other projects finished before the blocked project was released");
+        Assert.False(prematureEvidence);
+        Assert.Equal(2, activeCounts.Max());
+        Assert.Equal(0, active);
+        Assert.Equal(selected, calls.Order(StringComparer.Ordinal));
+        Assert.Equal(outcome == "passed" ? 0 : 1, exit);
+        var record = CommonExecutionEvidence.Read<TestExecutionRecord>(fixture.Root, CommonExecutionEvidence.TestsPath);
+        Assert.Equal(projects, record.Projects.Select(project => project.Project));
+        Assert.Equal(projects.Length, record.Projects.Select(project => project.Results).Distinct().Count());
+        for (var index = 0; index < projects.Length; ++index)
+        {
+            var project = record.Projects[index];
+            var prior = seed?.Projects.SingleOrDefault(row => row.Project == project.Project);
+            if (prior is not null) Assert.Equal(prior with { Status = "reused" }, project);
+            else
+            {
+                Assert.Equal("executed", project.Status);
+                Assert.Equal(index.ToString(System.Globalization.CultureInfo.InvariantCulture), Path.GetFileName(project.Results));
+            }
+        }
+        if (outcome == "passed") CommonExecutionEvidence.ValidateTests(fixture.Root);
+        else Assert.ThrowsAny<Exception>(() => CommonExecutionEvidence.ValidateTests(fixture.Root));
+    }
+
 }
