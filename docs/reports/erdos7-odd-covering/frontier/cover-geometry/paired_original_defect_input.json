@@ -1,0 +1,210 @@
+{
+  "old_primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19
+  ],
+  "R": [
+    23
+  ],
+  "S": [
+    29,
+    31
+  ],
+  "split_prefixes": [
+    [
+      3,
+      11,
+      1,
+      2
+    ],
+    [
+      5,
+      7,
+      1,
+      2
+    ],
+    [
+      7,
+      6,
+      1,
+      2
+    ]
+  ],
+  "common_prefixes": [
+    [
+      11,
+      4,
+      1
+    ],
+    [
+      13,
+      4,
+      1
+    ],
+    [
+      17,
+      4,
+      1
+    ],
+    [
+      19,
+      4,
+      1
+    ]
+  ],
+  "schema": "paired-original-defect-input-v1",
+  "classes": [
+    {
+      "modulus": 23,
+      "residue": 0,
+      "selector": "A"
+    },
+    {
+      "modulus": 29,
+      "residue": 0,
+      "selector": "A"
+    },
+    {
+      "modulus": 31,
+      "residue": 0,
+      "selector": "A"
+    },
+    {
+      "modulus": 69,
+      "residue": 25,
+      "selector": "A"
+    },
+    {
+      "modulus": 87,
+      "residue": 31,
+      "selector": "A"
+    },
+    {
+      "modulus": 93,
+      "residue": 64,
+      "selector": "A"
+    },
+    {
+      "modulus": 667,
+      "residue": 2,
+      "selector": "A"
+    },
+    {
+      "modulus": 713,
+      "residue": 2,
+      "selector": "A"
+    },
+    {
+      "modulus": 6003,
+      "residue": 1,
+      "selector": "A"
+    }
+  ],
+  "old_labels": [
+    1,
+    3,
+    9
+  ],
+  "eta": "1",
+  "transports": {
+    "R": [
+      [
+        3,
+        3,
+        "1914/2047"
+      ]
+    ],
+    "S": [
+      [
+        3,
+        3,
+        "1"
+      ],
+      [
+        3,
+        1,
+        "5227/6141"
+      ]
+    ],
+    "M": [
+      [
+        9,
+        9,
+        "1"
+      ],
+      [
+        9,
+        1,
+        "19/6141"
+      ]
+    ]
+  },
+  "pair_transports": [
+    {
+      "R_modulus": 69,
+      "S_modulus": 87,
+      "payments": [
+        [
+          3,
+          "3751440/4190209"
+        ]
+      ]
+    },
+    {
+      "R_modulus": 69,
+      "S_modulus": 93,
+      "payments": [
+        [
+          3,
+          "438769/4190209"
+        ],
+        [
+          1,
+          "3062575/4190209"
+        ]
+      ]
+    }
+  ],
+  "comparison_witness_old_residue": 1,
+  "lcm_countercontrol": {
+    "reference_A": 1,
+    "reference_B": 2,
+    "old_point": 7,
+    "R_original": [
+      69,
+      1
+    ],
+    "S_original": [
+      145,
+      117
+    ],
+    "old_R": 3,
+    "old_S": 5,
+    "R_selector": "A",
+    "S_selector": "B",
+    "outside_primes": [
+      23,
+      29
+    ],
+    "unit_originals": [
+      [
+        23,
+        0
+      ],
+      [
+        29,
+        0
+      ],
+      [
+        667,
+        2
+      ]
+    ]
+  },
+  "scope": "Fixed outside-kernel pair certificate; no old-activation enumeration. One actual old witness refutes scalar-to-unit adequacy. Pair and mixed payments share each M column. The lcm control concerns endpoint implication, not old-source mass."
+}
