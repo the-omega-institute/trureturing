@@ -90,8 +90,12 @@ public sealed partial class RegisteredAdmissionResourcesTests
         })
         {
             var plan = Plan(path, "", mode, change);
-            Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal)
-                ? new[] { InstructionContractProject } : []), Strings(plan["execution"]!["tests"]!));
+            var consumers = path.StartsWith("D5/", StringComparison.Ordinal)
+                ? new[] { InstructionContractProject, RepositoryDigestionProject }
+                : path.StartsWith("Meta/Digestion/backfill/", StringComparison.Ordinal)
+                    ? [RepositoryDigestionProject]
+                    : path == "README.md" ? [RepositoryFileMapProject] : [];
+            Assert.Equal(WithWorktreeContract(consumers), Strings(plan["execution"]!["tests"]!));
             Assert.DoesNotContain("test-repository-contract", Strings(plan["resources"]!));
             Assert.DoesNotContain("test-cli", Strings(plan["resources"]!));
             var original = Assert.Single(plan["paths"]!.AsArray(), row => row!["path"]!.GetValue<string>() == path);

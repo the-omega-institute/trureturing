@@ -406,7 +406,7 @@ public sealed partial class RegisteredAdmissionResourcesTests(ITestOutputHelper 
         Assert.Equal(new[] { "delta-judge", "filemap" }.Concat(testResources),
             Strings(plan["declared_require"]!));
         Assert.Equal(WithWorktreeContract(readsPrPolicy
-            ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj", "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj" } : []),
+            ? new[] { "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj", "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj", RepositoryFileMapProject, "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj" } : []),
             Strings(plan["execution"]!["tests"]!));
         Assert.Empty(plan["execution"]!["lean_targets"]!.AsArray());
         Assert.Equal(new[] { "filemap" }, Strings(plan["execution"]!["checks"]!));
