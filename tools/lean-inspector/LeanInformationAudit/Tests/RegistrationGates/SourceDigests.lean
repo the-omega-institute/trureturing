@@ -39,17 +39,26 @@ run_meta IO.FS.withTempDir fun directory => do
   let originalDirectory ← IO.currentDir
   let otherDirectory := directory / "other"
   IO.FS.createDir otherDirectory
+  for root in #[directory, otherDirectory] do
+    IO.FS.writeFile (root / "lean-toolchain") "fixture"
+    IO.FS.writeFile (root / "lakefile.toml") ""
   IO.FS.writeFile (directory / "relative") ""
   IO.FS.writeFile (otherDirectory / "relative") "abc"
   let relocated ← try
     IO.Process.setCurrentDir directory
     let first ← readSourceInput "relative"
+    let nested := directory / "Reg" / "nested space"
+    IO.FS.createDirAll nested
+    IO.FS.writeFile (nested / "relative") "wrong cwd"
+    IO.Process.setCurrentDir nested
+    let same ← readSourceInput "relative"
+    unless same.path == first.path && same.sha256 == first.sha256 do throwError "nested cwd changed source identity"
     IO.Process.setCurrentDir otherDirectory
     let second ← readSourceInput "relative"
     pure (first.sha256 == emptyHash && second.sha256 == abcHash)
   finally
     IO.Process.setCurrentDir originalDirectory
-  (if relocated then logInfo else logError) m!"[{if relocated then "PASS" else "FAIL"}] source_digest_current_directory"
+  (if relocated then logInfo else logError) m!"[{if relocated then "PASS" else "FAIL"}] source_digest_repository_relocation_and_nested_cwd"
   IO.FS.removeFile abc
   let missing ← try
     discard <| readSourceInputs paths
@@ -60,3 +69,25 @@ run_meta IO.FS.withTempDir fun directory => do
   let recovered ← readSourceInput abc.toString
   let recoveryStatus := if recovered.sha256 == abcHash then "PASS" else "FAIL"
   (if recovered.sha256 == abcHash then logInfo else logError) m!"[{recoveryStatus}] source_digest_error_recovery"
+
+run_meta IO.FS.withTempDir fun directory => do
+  let original ← IO.currentDir
+  let rejected ← try
+    IO.Process.setCurrentDir directory
+    discard <| readSourceInput "missing"
+    pure false
+  catch _ => pure true
+  finally IO.Process.setCurrentDir original
+  unless rejected do throwError "source read without repository root was accepted"
+
+run_meta do
+  let env ← getEnv
+  let some index := env.getModuleIdxFor? ``LeanInformationAudit.InformationRegistryEntry
+    | throwError "missing imported Interface declaration"
+  let name := env.allImportedModuleNames[index.toNat]!
+  unless name == `LeanInformationAuditInterface.Records do
+    throwError "wrong Interface declaration owner"
+  unless sourcePath name == "tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean" do
+    throwError "incorrect Interface source path"
+  let input ← readSourceInput (sourcePath name)
+  unless input.path == sourcePath name do throwError "logical path changed"

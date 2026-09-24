@@ -35,8 +35,12 @@ internal sealed record LeanPinSet(byte[] LeanToolchain, byte[] LakeManifest, str
 
         try
         {
-            reason = null;
-            return Create(File.ReadAllBytes(toolchainPath), File.ReadAllBytes(manifestPath));
+            var manifest = File.ReadAllBytes(manifestPath);
+            var regPath = Path.Combine(root, RegManifestAgreement.ManifestPath);
+            reason = RegManifestAgreement.Validate(StrictUtf8.GetString(manifest),
+                File.Exists(regPath) ? File.ReadAllText(regPath, StrictUtf8) : null,
+                File.Exists(Path.Combine(root, RegManifestAgreement.LakefilePath)));
+            return reason is null ? Create(File.ReadAllBytes(toolchainPath), manifest) : null;
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
             or JsonException or InvalidOperationException or KeyNotFoundException)

@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -137,7 +138,8 @@ internal static class Program
         var invocation = Guid.NewGuid().ToString("N");
         var records = new TestProjectExecution[projects.Length];
         output.WriteLine($"ENGINEERING_TEST_PLAN state=registered selected={projects.Length - reused.Count} reused={reused.Count} candidate={candidate}");
-        Parallel.For(0, projects.Length, new ParallelOptions { MaxDegreeOfParallelism = maxConcurrentProjects }, index =>
+        Parallel.ForEach(Partitioner.Create(Enumerable.Range(0, projects.Length), EnumerablePartitionerOptions.NoBuffering),
+            new ParallelOptions { MaxDegreeOfParallelism = maxConcurrentProjects }, index =>
         {
             var project = projects[index];
             if (reused.TryGetValue(project, out var prior))
@@ -188,7 +190,7 @@ internal static class Program
 
     internal static IReadOnlyList<string> BuildTestArguments(string projectPath, string resultsDirectory) =>
         new[] { "test", projectPath, "--configuration", "Release", "--verbosity", "minimal", "--no-restore", "--no-build" }
-            .Concat(["--logger", "trx;LogFilePrefix=engineering", "--results-directory", resultsDirectory]).ToArray();
+            .Concat(["--logger", "console;verbosity=normal", "--logger", "trx;LogFilePrefix=engineering", "--results-directory", resultsDirectory]).ToArray();
 
     private static int VerifyTrx(IReadOnlyList<string> arguments, Func<string, TestResultEvidence> load, TextWriter output)
     {
