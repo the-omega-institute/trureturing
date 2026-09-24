@@ -47,7 +47,7 @@ contains the literal alternating-binomial formula above.
 
 The bounded source-family search included Bojičić-Petković-Barry (2025),
 Hacettepe Journal of Mathematics and Statistics 54, 1470-1478,
-DOI 10.15672/hujms.1564485. The caller read the full nine-page primary PDF.
+DOI 10.15672/hujms.1564485.
 Its Theorems 3.1 and 5.1, after matching the first two source moments, predict a
 third moment of 9 or 10 rather than the literal value 12, so they do not
 subsume this source. An exact Crossref search for the A331474 identifier
@@ -93,9 +93,6 @@ identity of power series.
 - Sealed source SHA-256 values:
   `fb943e95c5b90a5e5b0477a755a06633b7937c98adb87fdb2d0b62ee179a85ee` and
   `62224f8050d6316388b15bbb7a665006ec628649b44dee0d759605ff9023c01d`.
-- Three independent source reviews approved the mathematical proof with no
-  remaining mathematical gap. Those reviews are supplied evidence, not a
-  substitute for the repository's Lean report and admission checks.
 - The bridge theorem states the determinant kernel, both scalar initial-value
   sets, and both quantified recurrences in one public declaration. The final
   theorem states the complete identity for `PowerSeries.mk H`.

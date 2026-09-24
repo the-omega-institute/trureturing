@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Constants/Moments/A331474HankelGeneratingFunction
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [D5/S3/Constants/Moments/A331474HankelBridge]
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Inverse]
    utility: none
    digest: The literal A331474 Hankel determinants have the conjectured rational generating function. -/
 

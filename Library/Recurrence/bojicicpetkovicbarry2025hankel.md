@@ -40,7 +40,6 @@ resolution are described as repo-derived.
 - Volume and pages: 54, 1470-1478
 - Publication date: 2025-08-29
 
-The caller supplied a full nine-page primary-PDF reading of Theorems 3.1 and
-5.1. The DOI landing page and Crossref metadata were refreshed on 2026-09-24.
+The DOI landing page and Crossref metadata were refreshed on 2026-09-24.
 The theorem comparison is deliberately bounded to this source family and does
 not establish a worldwide priority or absence claim.
