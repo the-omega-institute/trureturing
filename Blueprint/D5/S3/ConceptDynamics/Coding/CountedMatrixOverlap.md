@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A nonnegative matrix records numbered parallel edges. Its product provides all data needed to split and reassemble each edge.
+A nonnegative matrix records numbered parallel edges. Lexicographic fiber ranks split and reassemble each product edge.
 
 **Theorem 1.1 (Recover both numbered half-edges).**
 
@@ -14,7 +14,7 @@ $$\forall n \in Nat, m \in Nat, U \in \operatorname{CountMat}\left(n, m\right), 
 
 *Commentary.*
 
-The fiber equivalence preserves the middle vertex and both edge numbers. Splitting after joining therefore recovers the full pair, including parallel-edge identity.
+The product edge number is the lexicographic rank of its middle vertex and both factor-edge numbers. The proved finite-fiber count supplies the increasing rank equivalence. Splitting after joining therefore recovers the full pair, including parallel-edge identity.
 
 **Theorem 1.2 (Recover the original matrix edge).**
 
@@ -26,7 +26,7 @@ $$\forall n \in Nat, m \in Nat, U \in \operatorname{CountMat}\left(n, m\right), 
 
 *Commentary.*
 
-The inverse finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions.
+The inverse ordered finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions.
 
 ## References
 

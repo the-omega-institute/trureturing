@@ -19,7 +19,7 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
              B("V", Call("CountMat", F.Id("m"), F.Id("n"))), .. extra], body);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A nonnegative matrix records numbered parallel edges. Its product provides all data needed to split and reassemble each edge.",
+        "A nonnegative matrix records numbered parallel edges. Lexicographic fiber ranks split and reassemble each product edge.",
         H("Counted edges and overlap conjugacy"),
         Blocks(
             Describe.Lean(DescribeId.Create("counted-split-join"),
@@ -30,7 +30,7 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
                     B("a", Call("Edge", U)), B("b", Call("Edge", V)),
                     B("h", Equal(Call("target", F.Id("a")), Call("source", F.Id("b"))))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The fiber equivalence preserves the middle vertex and both edge numbers. Splitting after joining therefore recovers the full pair, including parallel-edge identity."))),
+                Blocks(Paragraph(Text("The product edge number is the lexicographic rank of its middle vertex and both factor-edge numbers. The proved finite-fiber count supplies the increasing rank equivalence. Splitting after joining therefore recovers the full pair, including parallel-edge identity."))),
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("counted-join-split"),
                 DeclarationHandle.Create(Prefix + "join_split"), H("Recover the original matrix edge"),
@@ -39,6 +39,6 @@ internal sealed class CountedMatrixOverlapDocument : IScribeDocumentDefinition
                         Call("second", Call("split", U, V, F.Id("a"))),
                         Call("splitBoundary", U, V, F.Id("a"))), F.Id("a")),
                     B("a", Call("Edge", UV))))), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The inverse finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions."))),
+                Blocks(Paragraph(Text("The inverse ordered finite-fiber equivalence recovers the original numbered edge. The outside endpoints are unchanged in both constructions."))),
                 DescribeRole.Theorem))));
 }

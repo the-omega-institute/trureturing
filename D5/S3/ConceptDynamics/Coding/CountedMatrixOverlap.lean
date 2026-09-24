@@ -9,7 +9,10 @@
 import D5.S3.ConceptDynamics.Coding.BipartiteOverlapConjugacy
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Fintype.EquivFin
+import Mathlib.Data.Fintype.Sort
 import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Sigma.Order
+import Mathlib.Data.Prod.Lex
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -41,12 +44,18 @@ variable {n m : ℕ} (U : CountMat n m) (V : CountMat m n)
 /-- All factorizations with these fixed outside endpoints. -/
 abbrev Fiber (i k : Fin n) := Σ j : Fin m, Fin (U i j) × Fin (V j k)
 
-/-- The equivalence is constructed from the proved count identity, not supplied as a premise. -/
+/-- The numbered edge is ranked by the lexicographic intermediate vertex and
+the two factor-edge numbers, using the proved count identity. -/
 noncomputable def fiberEquiv (i k : Fin n) :
     Fin ((U * V) i k) ≃ Fiber U V i k := by
+  classical
   have hcard : Fintype.card (Fiber U V i k) = (U * V) i k := by
     simp [Fiber, Matrix.mul_apply, Fintype.card_sigma, Fintype.card_prod]
-  exact (Fintype.equivFinOfCardEq hcard).symm
+  let ordered :
+      Lex (Σ j : Fin m, Lex (Fin (U i j) × Fin (V j k))) ≃ Fiber U V i k :=
+    ofLex.trans (Equiv.sigmaCongrRight fun _ => ofLex)
+  exact (Fintype.orderIsoFinOfCardEq _ ((Fintype.card_congr ordered).trans hcard)).toEquiv
+    |>.trans ordered
 
 noncomputable def split (a : Edge (U * V)) : Edge U × Edge V :=
   let p := fiberEquiv U V a.source a.target a.number
