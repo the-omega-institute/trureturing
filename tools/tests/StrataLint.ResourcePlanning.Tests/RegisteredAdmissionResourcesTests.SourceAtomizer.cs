@@ -15,7 +15,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void SourceAtomizerSourcesSelectTheirCompleteProject(string file)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 RepositoryTopologyProject,
                 SourceAtomizerProject,
@@ -27,7 +27,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void SourceAtomizerLockSelectsItsCompleteProject()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(new[] { SourceAtomizerProject }),
+            Assert.Equal(WithWorktreeContract(new[] { SourceAtomizerProject }),
                 Strings(Plan("tools/tests/StrataLint.SourceAtomizer.Tests/packages.lock.json", "", mode)["execution"]!["tests"]!));
     }
 
@@ -37,7 +37,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void SourceAtomizerSharedHelpersSelectAllRegisteredConsumers(string path, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(consumers.Split(',').Append("StrataLint.RepositoryFileMap.Tests").Select(name => $"tools/tests/{name}/{name}.csproj")),
+            Assert.Equal(WithWorktreeContract(consumers.Split(',').Append("StrataLint.RepositoryFileMap.Tests").Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
@@ -45,7 +45,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void AtomizerConfigurationRetainsEngineeringAndExplicitConsumers()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] { "delta", "engineering", "filemap", "test-cover-batch", "test-digestion", "test-repository-contract", "test-rules", "test-source-atomizer" },
+            Assert.Equal(new[] { "delta", "engineering", "filemap", "test-cover-batch", "test-digestion", "test-rules", "test-source-atomizer", "test-worktree-contract" },
                 Strings(Plan("Meta/Digestion/atomizers.toml", "", mode)["declared_require"]!));
     }
 
@@ -60,8 +60,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan(path, "", mode);
-            Assert.Equal(Array.Empty<string>(), Strings(plan["execution"]!["tests"]!));
-            Assert.Equal("not-required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
+            Assert.Equal(WithWorktreeContract(Array.Empty<string>()), Strings(plan["execution"]!["tests"]!));
+            Assert.Equal("required", plan["stages"]!["engineering"]!["status"]!.GetValue<string>());
         }
     }
 }

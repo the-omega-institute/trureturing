@@ -10,7 +10,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void LeanCacheAdapterInputSelectsItsCompleteConsumer(string mode)
     {
         var plan = Plan("tools/scripts/worktree/lean-cache-run.sh", "", mode);
-        Assert.Equal(new[]
+        Assert.Equal(WithWorktreeContract(new[]
         {
             "StrataLint.ArchitectureTests",
             "StrataLint.CoverBatch.Tests",
@@ -19,7 +19,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "StrataLint.NativeTransportIntegration.Tests",
             "StrataLint.RepositoryContract.Tests",
             "StrataLint.Tests",
-        }.Select(name => $"tools/tests/{name}/{name}.csproj"),
+        }.Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
     }
 
@@ -33,7 +33,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         var expected = architecture
             ? new[] { "StrataLint.ArchitectureTests", "StrataLint.LeanCacheScript.Tests", "StrataLint.RepositoryFileMap.Tests", "StrataLint.RepositoryTopology.Tests" }
             : new[] { "StrataLint.LeanCacheScript.Tests" };
-        Assert.Equal(WithRepositoryContract(expected.Select(name => $"tools/tests/{name}/{name}.csproj")),
+        Assert.Equal(WithWorktreeContract(expected.Select(name => $"tools/tests/{name}/{name}.csproj")),
             Strings(plan["execution"]!["tests"]!));
     }
 

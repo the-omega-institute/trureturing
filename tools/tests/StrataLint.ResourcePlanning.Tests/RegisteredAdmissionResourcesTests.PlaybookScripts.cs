@@ -23,7 +23,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan($"tools/tests/StrataLint.PlaybookScript.Tests/{file}", "", mode);
-            Assert.Equal(WithRepositoryContract(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 PlaybookScriptProject,
                 RepositoryTopologyProject,
@@ -39,7 +39,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void PlaybookScriptLockSelectsOnlyItsCompleteProject()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(new[] { PlaybookScriptProject }),
+            Assert.Equal(WithWorktreeContract(new[] { PlaybookScriptProject }),
                 Strings(Plan("tools/tests/StrataLint.PlaybookScript.Tests/packages.lock.json", "", mode)["execution"]!["tests"]!));
     }
 
@@ -48,13 +48,13 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void PlaybookWorkflowRetainsEveryRegisteredConsumer(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj",
             "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
-            }, Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+            }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -62,7 +62,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void PlaybookMakefileRetainsEveryRegisteredConsumer(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.BuildIntegration.Tests/StrataLint.BuildIntegration.Tests.csproj",
@@ -111,7 +111,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
             "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
-            }, Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+            }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -119,16 +119,15 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void PlaybookSharedFixtureRetainsEveryRegisteredConsumer(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
             "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj",
             "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj",
-            "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
             "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
             "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-            }, Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+            }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -136,7 +135,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void PlaybookProcessSupportRetainsEveryRegisteredConsumer(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
             "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj",
@@ -147,13 +146,12 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj",
             "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj",
             "tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj",
-            "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
             "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
             "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
             "tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
-            }, Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+            }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -161,7 +159,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void PlaybookScratchSupportRetainsEveryRegisteredConsumer(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.BuildIntegration.Tests/StrataLint.BuildIntegration.Tests.csproj",
@@ -207,7 +205,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
-            }, Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+            }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -215,7 +213,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void PlaybookEngineRetainsEveryRegisteredConsumer(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.BuildIntegration.Tests/StrataLint.BuildIntegration.Tests.csproj",
@@ -256,7 +254,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
             "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
-            }, Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+            }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -264,7 +262,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void PlaybookTruthRetainsEveryRegisteredConsumer(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/JudgeSeedTask.Tests/JudgeSeedTask.Tests.csproj",
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.BuildIntegration.Tests/StrataLint.BuildIntegration.Tests.csproj",
@@ -307,6 +305,6 @@ public sealed partial class RegisteredAdmissionResourcesTests
             "tools/tests/StrataLint.TransportIntegration.Tests/StrataLint.TransportIntegration.Tests.csproj",
             "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
             "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
-            }, Strings(Plan(path, "", mode)["execution"]!["tests"]!));
+            }), Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 }

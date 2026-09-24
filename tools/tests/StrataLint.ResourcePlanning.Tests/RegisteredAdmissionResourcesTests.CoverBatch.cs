@@ -18,7 +18,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void CoverBatchSourcesSelectTheirCompleteProject(string file)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 CoverBatchProject,
                 RepositoryTopologyProject,
@@ -30,7 +30,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void CoverBatchLockSelectsItsCompleteProject()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(new[] { CoverBatchProject }),
+            Assert.Equal(WithWorktreeContract(new[] { CoverBatchProject }),
                 Strings(Plan("tools/tests/StrataLint.CoverBatch.Tests/packages.lock.json", "", mode)["execution"]!["tests"]!));
     }
 
@@ -43,7 +43,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void CoverSupportSelectsItsConsumersAndRepositoryAudits(string file)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 CoverBatchProject,
                 "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
@@ -58,8 +58,8 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void ValuesKernelBytesSelectCoverBatchEvenWhenFixtureOverwritesThem(string mode)
     {
         var plan = Plan("Golden/values-kernels.toml", "", mode);
-        Assert.Equal(new[] { CoverBatchProject }, Strings(plan["execution"]!["tests"]!));
-        Assert.Equal(new[] { "current", "delta", "filemap", "scribe", "test-cover-batch" },
+        Assert.Equal(WithWorktreeContract(new[] { CoverBatchProject }), Strings(plan["execution"]!["tests"]!));
+        Assert.Equal(new[] { "current", "delta", "filemap", "scribe", "test-cover-batch", "test-worktree-contract" },
             Strings(plan["declared_require"]!));
     }
 
@@ -71,7 +71,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void CoverBatchRuntimeReadsDoNotExpandContentOrNoResourcePolicy(string path)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(path.StartsWith("D5/", StringComparison.Ordinal) ? new[] { InstructionContractProject } : [],
+            Assert.Equal(WithWorktreeContract(path.StartsWith("D5/", StringComparison.Ordinal) ? new[] { InstructionContractProject } : []),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 }

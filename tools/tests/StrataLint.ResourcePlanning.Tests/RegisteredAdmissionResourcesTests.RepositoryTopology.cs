@@ -16,7 +16,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
         foreach (var mode in new[] { "push", "pr" })
         {
             var plan = Plan($"tools/tests/StrataLint.RepositoryTopology.Tests/{file}", "", mode);
-            Assert.Equal(WithRepositoryContract(new[] {
+            Assert.Equal(WithWorktreeContract(new[] {
                 "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
                 "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
                 RepositoryTopologyProject,
@@ -29,7 +29,7 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void RepositoryTopologyLockSelectsItsCompleteProject()
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(new[] { RepositoryTopologyProject }),
+            Assert.Equal(WithWorktreeContract(new[] { RepositoryTopologyProject }),
                 Strings(Plan("tools/tests/StrataLint.RepositoryTopology.Tests/packages.lock.json", "", mode)["execution"]!["tests"]!));
     }
 
@@ -49,13 +49,13 @@ public sealed partial class RegisteredAdmissionResourcesTests
     }
 
     [Theory]
-    [InlineData("tools/scripts/dotnet-test.sh", "StrataLint.ArchitectureTests,StrataLint.RepositoryTopology.Tests,StrataLint.WorkflowScript.Tests")]
+    [InlineData("tools/scripts/dotnet-test.sh", "StrataLint.ArchitectureTests,StrataLint.RepositoryContract.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.WorkflowScript.Tests")]
     [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeRepositoryGateway.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.CoverBatch.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
     [InlineData("tools/TestSupport/StrataLint.CliTestSupport/FakeLeanReportSource.cs", "StrataLint.ArchitectureTests,StrataLint.CliIntegration.Tests,StrataLint.CoverBatch.Tests,StrataLint.RepositoryFileMap.Tests,StrataLint.RepositoryTopology.Tests,StrataLint.SourceAtomizer.Tests,StrataLint.Tests")]
     public void RepositoryTopologyRealInputsSelectTheirCompleteConsumers(string path, string consumers)
     {
         foreach (var mode in new[] { "push", "pr" })
-            Assert.Equal(WithRepositoryContract(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj")),
+            Assert.Equal(WithWorktreeContract(consumers.Split(',').Select(name => $"tools/tests/{name}/{name}.csproj")),
                 Strings(Plan(path, "", mode)["execution"]!["tests"]!));
     }
 
