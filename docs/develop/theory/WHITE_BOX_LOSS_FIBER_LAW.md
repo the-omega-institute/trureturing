@@ -95,13 +95,13 @@ $$
 
 证明。定理 3.1 第三项取范数；其余由定理 3.4 的定义直接读出。证毕。
 
-**命题 3.7（线性化网络中的记账，repo-derived）。** 对可微网络在 $\theta_0$ 处线性化 $f_\theta(x)\approx f_{\theta_0}(x)+\varphi(x)^\top(\theta-\theta_0)$，$\varphi(x)=\nabla_\theta f_\theta(x)|_{\theta_0}$，并对 $\theta$ 施加权重衰减，记 $\delta=\theta-\theta_0$、$\delta_r$ 为其行空间分量。则在线性化模型内测试预测为
+**命题 3.7（线性化网络中的记账，repo-derived）。** 对可微网络在其初始化点 $\theta_0=\theta(0)$ 处线性化 $f_\theta(x)\approx f_{\theta_0}(x)+\varphi(x)^\top(\theta-\theta_0)$，$\varphi(x)=\nabla_\theta f_\theta(x)|_{\theta_0}$，并对 $\theta$ 施加权重衰减，记 $\delta=\theta-\theta_0$、$\delta_r$ 为其行空间分量。则在线性化模型内测试预测为
 $$
 f_{\theta_0}(x)-\varphi(x)^\top P^\perp\theta_0+\varphi(x)^\top\delta_r(t)+e^{-\lambda t}\varphi(x)^\top P^\perp\theta_0 ,
 $$
 其中 $\delta_r(t)$ 以不慢于 $e^{-(\sigma_N^2+\lambda)t}$ 的速率收敛到常向量，故在忽略这一瞬态后只有末项随时间变化；常数 $f_{\theta_0}(x)-\varphi(x)^\top P^\perp\theta_0$ 在线性化模型内永不衰减（对一次齐次网络它等于 $\varphi(x)^\top P\theta_0$，落在训练可见的行空间读数内）。沿零空间的参数位移为 $\|\delta_n(t)\|=(1-e^{-\lambda t})\|P^\perp\theta_0\|$，当 $c\le\lambda t\le C$（$0<c\le C$ 固定）时落在 $\|P^\perp\theta_0\|$ 的固定正比例区间 $[1-e^{-c},1-e^{-C}]$ 内。本卷不给出线性化余项的任何界，因此不断言线性化在何时失效；对非线性网络本章只是这一层记账。
 
-证明。流为 $\dot\delta=-\Phi^\top(\Phi\delta+f_{\theta_0}(X)-y)-\lambda(\delta+\theta_0)$；零空间分量 $\dot\delta_n=-\lambda(\delta_n+P^\perp\theta_0)$，$\delta_n(0)=0$，解 $\delta_n(t)=-(1-e^{-\lambda t})P^\perp\theta_0$；行分量是与定理 3.1 同型的线性方程，速率同推论 3.2。代回即得。一次齐次时 Euler 恒等式给 $f_{\theta_0}(x)=\varphi(x)^\top\theta_0$。证毕。
+证明。流为 $\dot\delta=-\Phi^\top(\Phi\delta+f_{\theta_0}(X)-y)-\lambda(\delta+\theta_0)$；零空间分量 $\dot\delta_n=-\lambda(\delta_n+P^\perp\theta_0)$，由 $\theta(0)=\theta_0$ 得 $\delta_n(0)=0$，解 $\delta_n(t)=-(1-e^{-\lambda t})P^\perp\theta_0$（若线性化点异于初始化，则 $\delta_n(t)=-P^\perp\theta_0+e^{-\lambda t}P^\perp\theta(0)$，各公式相应改写）；行分量是与定理 3.1 同型的线性方程，速率同推论 3.2。代回即得。一次齐次时 Euler 恒等式给 $f_{\theta_0}(x)=\varphi(x)^\top\theta_0$。证毕。
 
 ## 4. 稀疏字典学习中的吸收
 
@@ -161,7 +161,7 @@ $$
 
 **反例 5.1（岭误差反号时测试损失上升，repo-derived）。** 取 $\lambda>0$、单个测试点、$a(x)=-1$、$b(x)=1$，只看归约曲线（$E=0$ 可精确实现：$\Phi=(1,0)$、$y=0$、$\theta(0)=(0,1)$、$\varphi(x)=e_2$、$y(x)=1$）。则 $\widetilde L(s(t))=\tfrac12(-1+e^{-\lambda t})^2$ 从 $0$ 严格增到 $\tfrac12$，导数为 $\lambda e^{-\lambda t}(1-e^{-\lambda t})$：逃逸分量恰好补偿了岭误差，权重衰减把它冲掉后测试反而变差。纤维律只说“纤维内由 $R$ 裁决”，不说 $R$ 裁决出的点在测试上更好；后者要求真值本身落在 $R$ 偏好的那一侧（第 6 章的实例取教师 $\theta^\star\in\operatorname{row}\Phi$ 正是为此）。
 
-**反例 5.2（非线性网络不在定理 3.1–3.4 的范围内）。** 特征随训练变化的网络里 $J(\theta(t))$ 与 $K(\theta(t))$ 都在动，定理 2.4 只是逐点陈述，命题 3.7 只是线性化模型内的记账并且不给失效时刻。文献报告的无权重衰减的延迟泛化（第 7 章表所列）发生在这一范围之外，本卷对其不作断言。
+**反例 5.2（非线性网络不在定理 3.1–3.4 的范围内）。** 特征随训练变化的网络里 $J(\theta(t))$ 随时间变化，$K(\theta(t))$ 也可能变化，定理 2.4 只是逐点陈述，命题 3.7 只是线性化模型内的记账并且不给失效时刻。文献报告的无权重衰减的延迟泛化（第 7 章表所列）发生在这一范围之外，本卷对其不作断言。
 
 **反例 5.3（两参数字典的最优不由两典型字典穷尽）。** 定理 4.4 比较的是 $D_A$ 与 $D_F$ 两点。第 6 章在 $\operatorname{span}(u,v)$ 内对两个原子的角度作网格扫描，读数显示当 $p_B/p_{AB}$ 居中时两个原子都偏离典型位置（例如 $\lambda=0.1$、$p_B/p_{AB}=0.3$ 时 argmin 在约 $(3.5^\circ,75.5^\circ)$）。因此 $\rho^\ast(\lambda)$ 是“两点之间谁更好”的阈值，不是全局最优的相变点；命题 4.5 证明了在 $d_1=u$ 的切片上最优必为内点，全局刻画留为开放问题。
 
@@ -209,7 +209,7 @@ $\langle a,b\rangle=\tfrac{3047}{278964}>0$，$\|b\|^2=\tfrac{549}{16}$，平台
 | 0.3 | 0.5 | (0, 50.5) | 吸收 |
 | 0.3 | 1.0 | (42.5, 90) | 忠实 |
 
-这些浮点读数只说明所述实例上的计算结果落在给定容差内，既不是任何全称命题的证明，也不是所述实例上带舍入误差界的认证；定理的全称范围以第 3、4 章的证明为准。
+这些浮点读数是数值结果，既不是任何全称命题的证明，也不是所述实例上带舍入误差界的认证；定理的全称范围以第 3、4 章的证明为准。
 
 ## 7. 来源与文献状态
 
