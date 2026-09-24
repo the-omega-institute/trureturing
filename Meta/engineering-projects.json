@@ -1487,6 +1487,7 @@
         "D5/InstructionContractProbe.md",
         "D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean",
         "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean",
+        "D5/WorktreeContractProbe.lean",
         "Directory.Build.props",
         "Directory.Packages.props",
         "Evidence/D5/values.json",
@@ -1494,6 +1495,7 @@
         "Makefile",
         "Meta/Digestion/atoms/sha256/admission-resource-probe",
         "Meta/Digestion/backfill/admission-resource-probe.json",
+        "Meta/Digestion/backfill/worktree-contract-probe.json",
         "Meta/ReportProducers/scribe-content.json",
         "Meta/ci-cache-paths.json",
         "Meta/ci-checks.json",
@@ -1501,14 +1503,18 @@
         "Meta/judge-seed.json",
         "Meta/package-materials.json",
         "Meta/registry.yaml",
+        "README.md",
         "docs/develop/spec/golden-ledger-repo-spec.md",
         "docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md",
         "docs/develop/spec/trureturing_engineering_optimization_v1.md",
+        "docs/develop/theory/RepositoryContractProbe.md",
+        "docs/develop/theory/WorktreeContractProbe.md",
         "docs/develop/theory/admission-resource-probe.md",
         "docs/reports/ci-fixture-plane-probe.md",
         "docs/reports/ci-fixture-plane-probe.unregistered",
         "docs/reports/instruction-contract-renamed.md",
         "docs/reports/prime-slab-corner-order-0909.json",
+        "docs/reports/worktree-contract-probe.md",
         "global.json",
         "skills/codex-formal-answer/SKILL.md",
         "skills/codex-theory-ingest/SKILL.md",
@@ -1560,6 +1566,7 @@
         "tools/lean-inspector/LeanInformationAudit/Tests/Projection/AnalysisContract.lean",
         "tools/lean-inspector/LeanInformationAudit/Tests/RegistrationGates/MutationMatrix.py",
         "tools/lean-inspector/LeanInformationAuditAnalysis/Tests/WitnessCarriers.lean",
+        "tools/lean-inspector/README.md",
         "tools/lean-inspector/inspect.sh",
         "tools/lean-inspector/lakefile.lean",
         "tools/lean-inspector/native.py",
@@ -1567,12 +1574,14 @@
         "tools/lean-inspector/tests/test_native_support.py",
         "tools/lean-inspector/tests/test_reuse.py",
         "tools/scripts/agent/batch_pr.sh",
+        "tools/scripts/agent/header-check.sh",
         "tools/scripts/agent/merge-gate.sh",
         "tools/scripts/agent/openproblem/README.md",
         "tools/scripts/agent/openproblem/SCREENED-OUT.md",
         "tools/scripts/agent/openproblem/TARGET-GATES.md",
         "tools/scripts/agent/openproblem/erdos617.py",
         "tools/scripts/agent/openproblem/standing-check.py",
+        "tools/scripts/agent/openproblem/templates/review-template.md",
         "tools/scripts/agent/test_xi_quantization.py",
         "tools/scripts/agent/xi_quantization.py",
         "tools/scripts/clean-lanes.sh",
@@ -1615,6 +1624,7 @@
         "tools/tests/StrataLint.CiArtifacts.Tests/TransportIdentityTests.cs",
         "tools/tests/StrataLint.CliIntegration.Tests/CurrentDeltaCliContractTests.cs",
         "tools/tests/StrataLint.Configuration.Tests/Fixtures/fixture-registry.yaml",
+        "tools/tests/StrataLint.Configuration.Tests/RegistryTests.cs",
         "tools/tests/StrataLint.DeclaredTemplate.Tests/DeclaredTemplateReviewTests.cs",
         "tools/tests/StrataLint.Digestion.Tests/DigestionCasStoreTests.cs",
         "tools/tests/StrataLint.Engine.Tests/RegressionTests.cs",
@@ -1633,12 +1643,16 @@
         "tools/tests/StrataLint.ReleaseIntegration.Tests/ReleaseCommandTests.cs",
         "tools/tests/StrataLint.ReleaseIntegration.Tests/StrataLint.ReleaseIntegration.Tests.csproj",
         "tools/tests/StrataLint.ReleaseSelection.Tests/TruthReleaseSelectionTests.cs",
+        "tools/tests/StrataLint.RepositoryContract.Tests/CliVerbLinkageTests.cs",
+        "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
+        "tools/tests/StrataLint.RepositoryContract.Tests/packages.lock.json",
         "tools/tests/StrataLint.ResourceObservation.Tests/ResourceObservationLibraryTests.cs",
         "tools/tests/StrataLint.ResourcePlanning.Tests/RegisteredAdmissionResourcesTests.cs",
         "tools/tests/StrataLint.Rules.Tests/RuleEngineTests.cs",
         "tools/tests/StrataLint.Scribe.Tests/FileMap/ResourceTests.cs",
         "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
         "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py",
+        "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py",
         "tools/tests/StrataLint.Tests/Commands/FileMapPlanning/canonical.json",
         "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
         "tools/tests/StrataLint.WorkflowScript.Tests/CacheMaterialScriptTests.cs",
@@ -1653,6 +1667,9 @@
         "tools/tests/StrataLint.WorkflowScript.Tests/MakeWorkflowTests.cs",
         "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
         "tools/tests/StrataLint.WorkflowScript.Tests/packages.lock.json",
+        "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj",
+        "tools/tests/StrataLint.WorktreeContract.Tests/WorktreeCacheStrategyTests.cs",
+        "tools/tests/StrataLint.WorktreeContract.Tests/packages.lock.json",
         "tools/tests/Trureturing.Truth.Tests/AdmissionResourceProbe.cs",
         "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj"
       ]
@@ -2620,6 +2637,48 @@
       "execution_filemap_paths": []
     },
     {
+      "path": "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
+      "assembly": "StrataLint.RepositoryContract.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.RepositoryContract.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.RepositoryContract.Tests",
+      "root_namespace": "StrataLint.RepositoryContract.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.RepositoryContract.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.RepositoryContract.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.RepositoryContract.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        ".github/scripts/**/*.sh",
+        "Makefile",
+        "tools/Makefile",
+        "tools/scripts/**/*.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
       "path": "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
       "assembly": "StrataLint.Configuration",
       "role": "production",
@@ -3360,6 +3419,46 @@
         "skills/codex-formal-answer/SKILL.md",
         "skills/codex-theory-ingest/SKILL.md",
         "tools/scripts/agent/batch_pr.sh"
+      ],
+      "execution_excludes": [],
+      "execution_environment": [
+        "STRATALINT_TEST_ENVIRONMENT"
+      ],
+      "execution_filemap_paths": []
+    },
+    {
+      "path": "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj",
+      "assembly": "StrataLint.WorktreeContract.Tests",
+      "role": "cross-cutting-test",
+      "ci": true,
+      "include": [
+        "tools/tests/StrataLint.WorktreeContract.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
+        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.WorktreeContract.Tests",
+      "root_namespace": "StrataLint.WorktreeContract.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/tests/StrataLint.WorktreeContract.Tests/AssemblyInfo.cs",
+        "tools/tests/StrataLint.WorktreeContract.Tests/Usings.cs"
+      ],
+      "build_inputs": [
+        "global.json",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "tools/tests/StrataLint.WorktreeContract.Tests/packages.lock.json",
+        "tools/tests/Directory.Build.props",
+        "tools/Architecture/BannedSymbols.Determinism.txt"
+      ],
+      "execution_inputs": [
+        "**"
       ],
       "execution_excludes": [],
       "execution_environment": [

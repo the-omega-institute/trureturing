@@ -10,10 +10,10 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void FileMapPolicyTestsRunTheirCompleteProjectWithoutCliTests(string mode)
     {
         var plan = Plan("tools/tests/StrataLint.FileMap.Tests/FileMapPolicyTests.cs", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithWorktreeContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
     }
 
     [Theory]
@@ -22,11 +22,11 @@ public sealed partial class RegisteredAdmissionResourcesTests
     public void FileMapPolicyImplementationRetainsItsPolicyAndCommandConsumers(string mode)
     {
         var plan = Plan("tools/StrataLint.FileMap/FileMapPolicy.cs", "", mode);
-        Assert.Equal(new[] {
+        Assert.Equal(WithRepositoryContract(new[] {
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
             "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
             "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
-        }, Strings(plan["execution"]!["tests"]!));
+        }), Strings(plan["execution"]!["tests"]!));
     }
 }

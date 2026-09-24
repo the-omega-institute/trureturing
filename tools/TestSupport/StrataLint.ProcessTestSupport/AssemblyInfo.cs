@@ -13,3 +13,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.LeanReportScript.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.ResourceObservation.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.WorkflowScript.Tests")]
+[assembly: InternalsVisibleTo("StrataLint.WorktreeContract.Tests")]
